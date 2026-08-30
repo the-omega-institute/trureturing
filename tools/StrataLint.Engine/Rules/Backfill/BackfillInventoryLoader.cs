@@ -10,8 +10,6 @@ internal sealed class BackfillInventoryDocument
     internal static IReadOnlyList<string> EntryFieldUniverse { get; } =
     [
         "atom_id",
-        "ast_path",
-        "boundary",
         "fingerprints",
         "cas_ref",
         "coverage_gids",
@@ -87,35 +85,11 @@ internal sealed class BackfillInventoryDocument
         bool projectBaselineCoverage = false)
     {
         var entry = Mapping(rawEntry, $"source {sourceId} entries must be mappings");
-        var hasBoundary = entry.ContainsKey("boundary");
-        var excludedBoundaryField = hasBoundary ? "ast_path" : "boundary";
-        var expectedKeys = EntryFieldUniverse
-            .Where(field => !string.Equals(field, excludedBoundaryField, StringComparison.Ordinal))
-            .ToArray();
         ExactKeys(
             entry,
-            expectedKeys,
+            EntryFieldUniverse,
             $"source {sourceId} entry");
         var atomId = Scalar(entry, "atom_id", $"source {sourceId} atom_id");
-
-        DigestionBoundary? parsedBoundary = null;
-        string astPath;
-        if (hasBoundary)
-        {
-            var boundary = Mapping(
-                entry.GetValueOrDefault("boundary"),
-                $"entry {atomId} boundary must be a mapping");
-            ExactKeys(boundary, ["ast_path", "start_byte", "end_byte"], $"entry {atomId} boundary");
-            parsedBoundary = new DigestionBoundary(
-                Scalar(boundary, "ast_path", $"entry {atomId} ast_path"),
-                Integer(boundary, "start_byte", $"entry {atomId} start_byte"),
-                Integer(boundary, "end_byte", $"entry {atomId} end_byte"));
-            astPath = parsedBoundary.AstPath;
-        }
-        else
-        {
-            astPath = Scalar(entry, "ast_path", $"entry {atomId} ast_path");
-        }
 
         var fingerprints = Mapping(
             entry.GetValueOrDefault("fingerprints"),
@@ -158,8 +132,6 @@ internal sealed class BackfillInventoryDocument
             sourcePath,
             atomizer,
             atomId,
-            astPath,
-            parsedBoundary,
             parsedFingerprints,
             coverageGids,
             receipts,
@@ -413,14 +385,6 @@ internal sealed class BackfillInventoryDocument
         mapping.GetValueOrDefault(key) is string value && !string.IsNullOrWhiteSpace(value)
             ? value
             : throw new FormatException($"{context} must be a nonempty scalar");
-
-    private static int Integer(
-        IReadOnlyDictionary<string, object?> mapping,
-        string key,
-        string context) =>
-        mapping.GetValueOrDefault(key) is int value
-            ? value
-            : throw new FormatException($"{context} must be a nonnegative integer");
 
     private static ImmutableArray<string> Strings(List<object?> values, string context)
     {

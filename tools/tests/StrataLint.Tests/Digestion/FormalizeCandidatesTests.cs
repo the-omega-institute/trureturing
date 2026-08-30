@@ -51,7 +51,7 @@ public sealed partial class FormalizeCandidatesTests
     }
 
     [Fact]
-    public void FormalizeCandidatesIncludesOnlyAtomizerFormalizableKinds()
+    public void FormalizeCandidatesIncludesEveryResidualAtomRegardlessOfGenre()
     {
         var entries = new[]
         {
@@ -70,30 +70,29 @@ public sealed partial class FormalizeCandidatesTests
         Assert.True(result.Success, result.Error);
         using var json = JsonDocument.Parse(result.Output);
         Assert.Equal(
-            ["corollary", "lemma", "proposition", "theorem"],
+            entries.Select(static entry => entry.AtomId).Order(StringComparer.Ordinal),
             json.RootElement.GetProperty("candidates")
                 .EnumerateArray()
-                .Select(static candidate => candidate.GetProperty("kind").GetString())
+                .Select(static candidate => candidate.GetProperty("atom_id").GetString())
                 .Order(StringComparer.Ordinal));
     }
 
     [Theory]
-    [InlineData("定理", "16.8", true)]
-    [InlineData("命题", "16.9", true)]
-    [InlineData("引理", "16.10", true)]
-    [InlineData("推论", "16.11", true)]
-    [InlineData("theorem", "16.12", true)]
-    [InlineData("proposition", "16.13", true)]
-    [InlineData("lemma", "16.14", true)]
-    [InlineData("corollary", "16.15", true)]
-    [InlineData("section", "16.16", false)]
-    [InlineData("定义", "16.17", false)]
-    [InlineData("row", "16.18", false)]
-    [InlineData("item", "16.19", false)]
-    public void FormalizeCandidatesKindAlphabetIsClosed(
+    [InlineData("定理", "16.8")]
+    [InlineData("命题", "16.9")]
+    [InlineData("引理", "16.10")]
+    [InlineData("推论", "16.11")]
+    [InlineData("theorem", "16.12")]
+    [InlineData("proposition", "16.13")]
+    [InlineData("lemma", "16.14")]
+    [InlineData("corollary", "16.15")]
+    [InlineData("section", "16.16")]
+    [InlineData("定义", "16.17")]
+    [InlineData("row", "16.18")]
+    [InlineData("item", "16.19")]
+    public void FormalizeCandidatesTreatEveryAtomGenreUniformly(
         string kind,
-        string number,
-        bool expectedCandidate)
+        string number)
     {
         var entry = Entry(
             "source",
@@ -101,24 +100,17 @@ public sealed partial class FormalizeCandidatesTests
             kind,
             number,
             atomizer: AtomizerRegistry.GenericId);
-        var expectedAstPath = $"{kind}/{number}";
-
         var result = Run([entry], atomizer: AtomizerRegistry.GenericId);
 
-        Assert.Equal(expectedAstPath, entry.Atom.AstPath);
+        Assert.Equal(
+            DigestionFingerprint.Compute(entry.Atom.RawBytes.AsSpan()).RawSha256,
+            entry.Atom.Fingerprints.RawSha256);
         Assert.True(result.Success, result.Error);
         using var json = JsonDocument.Parse(result.Output);
         var candidates = json.RootElement.GetProperty("candidates").EnumerateArray().ToArray();
-        if (expectedCandidate)
-        {
-            Assert.Equal(
-                expectedAstPath,
-                Assert.Single(candidates).GetProperty("ast_path").GetString());
-        }
-        else
-        {
-            Assert.Empty(candidates);
-        }
+        Assert.Equal(
+            entry.AtomId,
+            Assert.Single(candidates).GetProperty("atom_id").GetString());
     }
 
     [Fact]
@@ -200,7 +192,17 @@ public sealed partial class FormalizeCandidatesTests
     [Fact]
     public void FormalizeCandidatesReturnsAnEmptyArrayWhenNoCandidateExists()
     {
-        var result = Run([Entry("source", "definition", "定义", "5.1")]);
+        var result = Run(
+        [
+            Entry(
+                "source",
+                "complete",
+                "定义",
+                "5.1",
+                coverageGids: ["D5/S0/Carrier/Nat"],
+                migration: "absorbed",
+                truth: "closed"),
+        ]);
 
         Assert.True(result.Success, result.Error);
         using var json = JsonDocument.Parse(result.Output);
@@ -679,8 +681,6 @@ public sealed partial class FormalizeCandidatesTests
                         $"synthetic/{entry.SourceId}.md",
                         atomizer,
                         entry.AtomId,
-                        entry.Atom.AstPath,
-                        null,
                         entry.Atom.Fingerprints,
                         ImmutableArray.CreateRange(entry.CoverageGids),
                         new DigestionReceipts(

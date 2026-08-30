@@ -26,31 +26,25 @@ public sealed partial class DigestionAlignmentTests
         ],
         []);
 
-    internal static DigestionLedgerEntry Entry(string atomId, DigestionAtom atom) =>
-        EntryForPath(atomId, atom.AstPath, atom.Fingerprints);
+    internal static string AtomId(DigestionAtom atom) =>
+        atom.Fingerprints.RawSha256["sha256:".Length..];
+
+    internal static DigestionLedgerEntry Entry(string _, DigestionAtom atom) =>
+        EntryWithFingerprints(AtomId(atom), atom.Fingerprints);
 
     private static DigestionLedgerEntry CasEntry(
-        string atomId,
+        string _,
         DigestionAtom atom,
         string casRef) =>
-        EntryForPath(atomId, atom.AstPath, atom.Fingerprints) with { CasRef = casRef };
+        EntryWithFingerprints(AtomId(atom), atom.Fingerprints) with { CasRef = casRef };
 
-    private static DigestionLedgerEntry BoundaryEntry(string atomId, DigestionAtom atom) =>
-        Entry(atomId, atom) with
-        {
-            Boundary = new DigestionBoundary(atom.AstPath, atom.StartByte, atom.EndByte),
-        };
-
-    private static DigestionLedgerEntry EntryForPath(
+    private static DigestionLedgerEntry EntryWithFingerprints(
         string atomId,
-        string astPath,
         DigestionFingerprints fingerprints) => new(
             "source",
             "docs/source.md",
             AtomizerRegistry.GictId,
             atomId,
-            astPath,
-            null,
             fingerprints,
             [],
             new DigestionReceipts([], [], [], [], null),

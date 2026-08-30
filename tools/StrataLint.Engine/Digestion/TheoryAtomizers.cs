@@ -10,7 +10,6 @@ internal sealed record DigestionFingerprints(string RawSha256, string Normalized
 internal sealed record DigestionContext(int Level, string Text);
 
 internal sealed record DigestionAtom(
-    string AstPath,
     int StartByte,
     int EndByte,
     ImmutableArray<byte> RawBytes,
@@ -19,71 +18,41 @@ internal sealed record DigestionAtom(
     DigestionAtomStatusMarker StatusMarker)
 {
     internal DigestionAtom(
-        string astPath,
         int startByte,
         int endByte,
         ImmutableArray<byte> rawBytes,
         DigestionFingerprints fingerprints,
         ImmutableArray<DigestionContext> context)
-        : this(astPath, startByte, endByte, rawBytes, fingerprints, context, DigestionAtomStatusMarker.Absent)
+        : this(startByte, endByte, rawBytes, fingerprints, context, DigestionAtomStatusMarker.Absent)
     {
     }
 
-    internal static DigestionAtom FromFrozenCas(string astPath, ImmutableArray<byte> rawBytes) =>
+    internal static DigestionAtom FromFrozenCas(ImmutableArray<byte> rawBytes) =>
         new(
-            astPath,
             0,
             rawBytes.Length,
             rawBytes,
             DigestionFingerprint.Compute(rawBytes.AsSpan()),
             [],
             DigestionAtomStatusMarker.Parse(rawBytes.AsSpan()));
+
+    internal static DigestionAtom FromFrozenCas(
+        ImmutableArray<byte> rawBytes,
+        DigestionFingerprints fingerprints) =>
+        new(
+            0,
+            rawBytes.Length,
+            rawBytes,
+            fingerprints,
+            [],
+            DigestionAtomStatusMarker.Absent);
 }
 
 internal sealed record DigestionSlice(bool IsClaim, ImmutableArray<byte> RawBytes);
 
 internal sealed record DigestionClausePlan(
-    string ParentAstPath,
+    DigestionAtom Parent,
     ImmutableArray<DigestionAtom> Children);
-
-internal static class UnregisteredGenreLocator
-{
-    internal const string Prefix = "unregistered/";
-
-    internal static string ForToken(string token) =>
-        Prefix + Uri.EscapeDataString(token);
-
-    internal static string ForNumbered(string token, string number) =>
-        ForToken(token) + "/" + number;
-
-    internal static bool MatchesToken(string astPath, string token)
-    {
-        var tokenPath = ForToken(token);
-        return string.Equals(astPath, tokenPath, StringComparison.Ordinal)
-            || astPath.StartsWith(tokenPath + "/", StringComparison.Ordinal);
-    }
-
-    internal static bool TryGetToken(string astPath, out string token)
-    {
-        token = string.Empty;
-        if (!astPath.StartsWith(Prefix, StringComparison.Ordinal))
-        {
-            return false;
-        }
-
-        var suffix = astPath[Prefix.Length..];
-        var separator = suffix.IndexOf('/', StringComparison.Ordinal);
-        var encoded = separator < 0 ? suffix : suffix[..separator];
-        if (encoded.Length == 0)
-        {
-            return false;
-        }
-
-        token = Uri.UnescapeDataString(encoded);
-        return token.Length > 0
-            && string.Equals(Uri.EscapeDataString(token), encoded, StringComparison.Ordinal);
-    }
-}
 
 internal enum GenreRegistryCheckKind
 {
@@ -244,27 +213,6 @@ internal sealed class AtomizedTheoryDocument
     /// </summary>
     internal ImmutableArray<string> UnregisteredGenres => GenreRegistryCheck.UnregisteredGenres;
 
-    internal DigestionAtom ResolveClaim(string astPath)
-    {
-        var exact = Claims
-            .Concat(ClausePlans.SelectMany(static plan => plan.Children))
-            .Where(atom => atom.AstPath == astPath)
-            .ToArray();
-        if (exact.Length == 1)
-        {
-            return exact[0];
-        }
-
-        var prefix = astPath + "/occurrence/";
-        var qualified = Claims.Where(atom => atom.AstPath.StartsWith(prefix, StringComparison.Ordinal)).ToArray();
-        return qualified.Length switch
-        {
-            1 => qualified[0],
-            0 => throw new FormatException($"Markdown claim locator is absent: {astPath}"),
-            _ => throw new FormatException($"ambiguous Markdown claim locator: {astPath}"),
-        };
-    }
-
     internal ImmutableArray<byte> Reassemble()
     {
         var length = Slices.Sum(static slice => slice.RawBytes.Length);
@@ -370,9 +318,7 @@ internal sealed class NumberedClaims
 
         var token = unknown.Groups["kind"].Value;
         unregistered.Add(token);
-        return UnregisteredGenreLocator.ForNumbered(
-            token,
-            unknown.Groups["number"].Value);
+        return token;
     }
 
     private string Kind(string value) =>
@@ -438,7 +384,6 @@ internal static class PeriodicTreeAtomizer
 
         var rawBytes = ImmutableArray.CreateRange(bytes.ToArray());
         var atom = new DigestionAtom(
-            "coarse/source",
             0,
             rawBytes.Length,
             rawBytes,
@@ -524,7 +469,6 @@ internal static class PzgAtomizer
                 : MarkdownAstAtomizer.ByteOffset(text, clauseStarts[index + 1]);
             var childBytes = parent.RawBytes[relativeStart..relativeEnd];
             children.Add(new DigestionAtom(
-                $"{parent.AstPath}/clause/{index + 1}",
                 parent.StartByte + relativeStart,
                 parent.StartByte + relativeEnd,
                 childBytes,
@@ -533,7 +477,7 @@ internal static class PzgAtomizer
                 DigestionAtomStatusMarker.Parse(childBytes.AsSpan())));
         }
 
-        return new DigestionClausePlan(parent.AstPath, children.MoveToImmutable());
+        return new DigestionClausePlan(parent, children.MoveToImmutable());
     }
 
     private static ImmutableArray<PzgSourceLine> SourceLines(string text)

@@ -283,7 +283,6 @@ internal static class DigestStatusCommand
                 {
                     source_id = item.Entry.SourceId,
                     atom_id = item.Entry.AtomId,
-                    ast_path = item.Entry.AstPath,
                     alignment = DigestionReceiptAlignmentNames.Render(item.Alignment),
                     migration = DigestionStatusNames.Migration(item.DerivedStatus.Migration),
                     truth = DigestionStatusNames.Truth(item.DerivedStatus.Truth),
@@ -352,20 +351,6 @@ internal static class DigestStatusCommand
         var dispositionSelection = DigestionCoverDispositionSelector.Classify(
             entry,
             retryDispositions);
-        var separator = entry.AstPath.IndexOf('/', StringComparison.Ordinal);
-        if (separator <= 0)
-        {
-            return null;
-        }
-
-        var kind = entry.AstPath[..separator];
-        if (kind is not (
-            "theorem" or "proposition" or "lemma" or "corollary"
-            or "定理" or "命题" or "引理" or "推论"))
-        {
-            return null;
-        }
-
         if (entry.Receipts.Quarantine is { } quarantine)
         {
             return new FormalizeProjection(
@@ -376,7 +361,6 @@ internal static class DigestStatusCommand
                 new QuarantinedFormalizeCandidate(
                     entry.SourceId,
                     entry.AtomId,
-                    entry.AstPath,
                     quarantine.Justification,
                     quarantine.ReentryCondition,
                     quarantine.BlockerClass),
@@ -470,8 +454,6 @@ internal static class DigestStatusCommand
             new FormalizeCandidate(
                 entry.SourceId,
                 entry.AtomId,
-                entry.AstPath,
-                kind,
                 entry.CasRef,
                 entry.Fingerprints.RawSha256,
                 atomText),
@@ -580,8 +562,6 @@ internal static class DigestStatusCommand
     private sealed record FormalizeCandidate(
         string SourceId,
         string AtomId,
-        string AstPath,
-        string Kind,
         string CasRef,
         string RawSha256,
         string AtomText);
@@ -594,7 +574,6 @@ internal static class DigestStatusCommand
     private sealed record QuarantinedFormalizeCandidate(
         string SourceId,
         string AtomId,
-        string AstPath,
         string Justification,
         string ReentryCondition,
         string? BlockerClass);

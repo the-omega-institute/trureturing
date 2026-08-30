@@ -6,7 +6,6 @@ internal delegate AtomizedTheoryDocument TheoryAtomizer(ReadOnlySpan<byte> bytes
 
 internal sealed record AtomizerRegistration(
     TheoryAtomizer Atomize,
-    string ResidualPrefix,
     bool EmitsClausePlans = false);
 
 internal static class AtomizerRegistry
@@ -29,15 +28,15 @@ internal static class AtomizerRegistry
             .WithComparers(StringComparer.Ordinal)
             .Add(
                 GenericId,
-                new AtomizerRegistration(GenericAtomizer.Atomize, GenericAtomizer.ResidualPrefix))
-            .Add(ConeId, new AtomizerRegistration(ConeAtomizer.Atomize, "cone"))
-            .Add(GictId, new AtomizerRegistration(GictAtomizer.Atomize, "gict"))
-            .Add(ObserverId, new AtomizerRegistration(ObserverAtomizer.Atomize, "observer"))
+                new AtomizerRegistration(GenericAtomizer.Atomize))
+            .Add(ConeId, new AtomizerRegistration(ConeAtomizer.Atomize))
+            .Add(GictId, new AtomizerRegistration(GictAtomizer.Atomize))
+            .Add(ObserverId, new AtomizerRegistration(ObserverAtomizer.Atomize))
             .Add(
                 PeriodicTreeId,
-                new AtomizerRegistration(PeriodicTreeAtomizer.Atomize, "periodic-tree"))
-            .Add(PzgId, new AtomizerRegistration(PzgAtomizer.Atomize, "pzg", EmitsClausePlans: true))
-            .Add(WmId, new AtomizerRegistration(WmAtomizer.Atomize, "wm"));
+                new AtomizerRegistration(PeriodicTreeAtomizer.Atomize))
+            .Add(PzgId, new AtomizerRegistration(PzgAtomizer.Atomize, EmitsClausePlans: true))
+            .Add(WmId, new AtomizerRegistration(WmAtomizer.Atomize));
 
     internal static ImmutableArray<string> RegisteredIds { get; } =
         Atomizers.Keys.Order(StringComparer.Ordinal).ToImmutableArray();
@@ -74,11 +73,8 @@ internal static class AtomizerRegistry
         Atomizers.TryGetValue(id, out var registration)
             ? registration
             : IsDeclaredDialect(id)
-                // A declared dialect resolves its rules at atomization, not here: the
-                // registration only needs the residual stem, which the id already carries.
                 ? new AtomizerRegistration(
-                    (bytes, rules) => DeclaredDialectAtomizer.Atomize(id, bytes, rules),
-                    id[DeclaredDialectAtomizer.IdPrefix.Length..])
+                    (bytes, rules) => DeclaredDialectAtomizer.Atomize(id, bytes, rules))
                 : throw Unknown(id);
 
     private static FormatException Unknown(string id) => new(

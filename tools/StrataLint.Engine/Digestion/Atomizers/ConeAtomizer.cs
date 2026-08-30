@@ -1,3 +1,4 @@
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace StrataLint.Engine;
@@ -27,12 +28,6 @@ internal static class ConeAtomizer
             bytes,
             paragraph => Identify(paragraph, rules, unregistered),
             () => GenreRegistryCheck.Collected([.. unregistered]));
-        if (document.Claims.Any(static atom =>
-                atom.AstPath.Contains("/occurrence/", StringComparison.Ordinal)))
-        {
-            throw new TheorySourceFormatException("duplicate cone claim locator");
-        }
-
         foreach (var atom in document.Claims)
         {
             ValidateChapter(atom);
@@ -64,7 +59,7 @@ internal static class ConeAtomizer
             if (mapping is null)
             {
                 unregistered.Add(genre);
-                return UnregisteredGenreLocator.ForNumbered(genre, semanticNumber);
+                return genre;
             }
 
             var templates = mapping.Value.Split('|');
@@ -92,8 +87,8 @@ internal static class ConeAtomizer
 
     private static void ValidateChapter(DigestionAtom atom)
     {
-        var chapterNumber = atom.AstPath[(atom.AstPath.LastIndexOf('/') + 1)..]
-            .Split('.')[0];
+        var claim = NumberedClaimPattern.Match(Encoding.UTF8.GetString(atom.RawBytes.AsSpan()));
+        var chapterNumber = claim.Success ? claim.Groups["number"].Value.Split('.')[0] : null;
         var actualChapter = atom.Context.LastOrDefault(static item => item.Level == 2)?.Text;
         var heading = actualChapter is null ? null : ChapterHeadingPattern.Match(actualChapter);
         var actualChapterNumber = heading is { Success: true }
@@ -108,7 +103,7 @@ internal static class ConeAtomizer
         if (actualChapterNumber != chapterNumber)
         {
             throw new TheorySourceFormatException(
-                $"cone claim chapter mismatch for {atom.AstPath}: expected chapter {chapterNumber}, got '{actualChapter}'");
+                $"cone claim at byte {atom.StartByte} has chapter mismatch: expected chapter {chapterNumber}, got '{actualChapter}'");
         }
     }
 }

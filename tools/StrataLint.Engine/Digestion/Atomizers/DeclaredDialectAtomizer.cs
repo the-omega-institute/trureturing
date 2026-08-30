@@ -75,8 +75,6 @@ internal static class DeclaredDialectAtomizer
             unregistered.Add(token);
         }
 
-        return genre is null
-            ? UnregisteredGenreLocator.ForNumbered(token, match.Groups["number"].Value)
-            : genre.Value + "/" + match.Groups["number"].Value;
+        return genre is null ? token : genre.Value;
     }
 }

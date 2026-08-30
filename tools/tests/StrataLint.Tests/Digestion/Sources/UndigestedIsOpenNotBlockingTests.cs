@@ -37,14 +37,15 @@ public sealed class UndigestedIsOpenNotBlockingTests
     private static BackfillInventoryDocument LedgerWithOneRegisteredAtom()
     {
         var declared = GenericAtomizer.Atomize(DeclaredBytes, TheoryAtomizerRules.None);
-        var atom = declared.Claims.First(static claim => claim.AstPath == "定理/9.9");
+        Assert.Equal(2, declared.Claims.Length);
+        var atom = declared.Claims[0];
         var capture = DigestionCasStore.Capture(atom.RawBytes.AsSpan());
         return DigestionTestSupport.Document(
             AtomizerRegistry.GenericId,
             [
                 DigestionTestSupport.Entry(
                     atom,
-                    "generic-residual-" + atom.Fingerprints.RawSha256["sha256:".Length..],
+                    atom.Fingerprints.RawSha256["sha256:".Length..],
                     AtomizerRegistry.GenericId,
                     sourceId: "declared",
                     sourcePath: DeclaredPath,

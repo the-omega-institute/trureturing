@@ -50,24 +50,6 @@ VERB="${1:-}"
 
 die() { printf 'lean-cache-publish: %s\n' "$1" >&2; exit 1; }
 
-# 【2026-08-30】此前两处直接写 `shasum -a 256`。`shasum` 是 macOS/Perl 自带,
-# **Linux 上通常没有** —— CI runner 是 ubuntu-24.04-arm,于是取回器以
-# `exit 127`(command not found)静默失败,`LeanArchiveFetch` 只能记
-# `archive fetcher emitted no receipt (exit 127)`,回落全量编译 37 分钟并撞
-# 45 分钟 job 预算(实测 job 99264190096)。本机是 macOS,故本地一直复现不出。
-# 探测顺序与本仓 report 侧的输入哈希 helper 一致(同一真源,不另发明)。
-sha256_of() {
-  if command -v sha256sum >/dev/null 2>&1; then
-    sha256sum "$1" | awk '{print $1}'
-  elif command -v shasum >/dev/null 2>&1; then
-    shasum -a 256 "$1" | awk '{print $1}'
-  elif command -v openssl >/dev/null 2>&1; then
-    openssl dgst -sha256 "$1" | awk '{print $NF}'
-  else
-    die "no sha256 implementation is available (tried sha256sum, shasum, openssl)"
-  fi
-}
-
 usage() {
   cat >&2 <<'USAGE'
 usage: lean-cache-publish.sh <address|publish|fetch> [--repository DIR]
@@ -106,7 +88,7 @@ fi
 
 # ── 身份 ──────────────────────────────────────────────────────────────────────
 # 两个哈希来自本仓既有的唯一真源，不另算一套。
-helper="${repository}/tools/scripts/report/lean-report-input.sh"
+helper="$repository/tools/scripts/report/lean-report-input.sh"
 [[ -x "$helper" ]] || die "input helper is absent: $helper"
 read -r _address _producer sources_sha256 config_sha256 \
   < <("$helper" address --repository "$repository")
@@ -159,7 +141,7 @@ case "$VERB" in
     trap 'rm -rf "$staged"' EXIT
     ( cd "$repository" && lake pack "$staged/$asset" >/dev/null )
     bytes="$(wc -c < "$staged/$asset" | tr -d ' ')"
-    digest="$(sha256_of "$staged/$asset")"
+    digest="$(shasum -a 256 "$staged/$asset" | cut -d' ' -f1)"
     emit_address > "$staged/manifest.txt"
     {
       printf 'archive_sha256=%s\n' "$digest"
@@ -253,7 +235,7 @@ case "$VERB" in
       || { printf 'LEAN_CACHE_FETCH {"status":"miss","tag":"%s","reason":"release is missing the archive or its manifest"}\n' "$tag"; exit 1; }
     # 声明的摘要必须与取到的字节相符；不符即丢弃，绝不静默使用。
     declared="$(sed -n 's/^archive_sha256=//p' "$staged/manifest.txt")"
-    actual="$(sha256_of "$staged/$asset")"
+    actual="$(shasum -a 256 "$staged/$asset" | cut -d' ' -f1)"
     [[ -n "$declared" ]] \
       || { printf 'LEAN_CACHE_FETCH {"status":"miss","tag":"%s","reason":"manifest declares no digest"}\n' "$tag"; exit 1; }
     [[ "$declared" == "$actual" ]] \
@@ -319,18 +301,19 @@ fail_provenance() {
     [[ "$archive_run_id" =~ ^[0-9]+$ ]] \
       || fail_provenance "manifest carries no workflow run id"
 
-    # 一次 REST 调用拿齐 target_commitish 与资产清单。走 api 而非
-    # `gh release view --json`，因为后者的 asset 字段缺少这里要比的信息。
+    # 一次 REST 调用拿齐三样：author、target_commitish、每个 asset 的 uploader。
+    # `gh release view --json` 的 asset 字段里**没有** uploader，故走 api。
     command -v jq >/dev/null 2>&1 \
       || fail_provenance "jq is required to read release provenance and is absent"
     release_json="$(gh api "repos/${REPO}/releases/tags/${resolved}" 2>/dev/null)" \
       || fail_provenance "release metadata is unreadable"
+    release_author="$(printf '%s' "$release_json" | jq -r '.author.login // ""')"
     release_target="$(printf '%s' "$release_json" | jq -r '.target_commitish // ""')"
     [[ "$release_target" == "$producer_commit_sha" ]] \
       || fail_provenance "release target ${release_target:-<absent>} does not match the declared producer commit"
 
-    # 资产必须**恰好**是这两份。多一份就意味着有人往这个 release 里加过东西，
-    # 而逐份比对摘要并不排除「另外还多了一份」这种情形。
+    # 资产必须**恰好**是这两份。多一份就意味着有人往这个 release 里加过东西，而
+    # 「所有 uploader 都对」在多资产下并不排除那种情形。
     for expected in "$asset" manifest.txt; do
       count="$(printf '%s' "$release_json" | jq --arg n "$expected" '[.assets[]? | select(.name == $n)] | length')"
       [[ "$count" == "1" ]] \

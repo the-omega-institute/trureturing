@@ -51,9 +51,8 @@ public sealed partial class TheoryAtomizerTests
         var alignment = AlignUnregisteredGenres(bytes);
 
         Assert.Empty(alignment.Findings);
-        Assert.Equal(
-            ["unregistered/%E7%94%B2%E4%BD%93/1.1", "unregistered/%E4%B9%99%E4%BD%93/2.2", "unregistered/%E4%B8%99%E4%BD%93/3.3"],
-            alignment.Residual.Select(static item => item.Atom.AstPath).ToArray());
+        Assert.Equal(3, alignment.Residual.Length);
+        Assert.All(alignment.Residual, static item => AssertContentIdentity(item.Atom));
         Assert.Equal(
             ["丙体", "乙体", "甲体"],
             alignment.GenreRegistryChecks["source"].UnregisteredGenres.ToArray());
@@ -77,17 +76,15 @@ public sealed partial class TheoryAtomizerTests
     }
 
     [Theory]
-    [InlineData("评注 27.363–27.365", "remark/27.363-27.365")]
-    [InlineData("注记 1.1–1.2", "remark/1.1-1.2")]
-    public void EveryRemarkGenreOpensASectionNotOnlyTheFirstOneListed(
-        string heading,
-        string expectedAstPath)
+    [InlineData("评注 27.363–27.365")]
+    [InlineData("注记 1.1–1.2")]
+    public void EveryRemarkGenreOpensASectionNotOnlyTheFirstOneListed(string heading)
     {
         var bytes = Encoding.UTF8.GetBytes($"# PZG\n\n## {heading}\n\n正文。\n");
 
         var document = PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
 
-        Assert.Equal(expectedAstPath, Assert.Single(document.Claims).AstPath);
+        AssertContentIdentity(Assert.Single(document.Claims));
         Assert.Equal(bytes, document.Reassemble().ToArray());
     }
 
@@ -99,9 +96,7 @@ public sealed partial class TheoryAtomizerTests
 
         var document = PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
 
-        Assert.Equal(
-            ["remark/3.6.1", "remark/3.6.2"],
-            document.Claims.Select(static claim => claim.AstPath).ToArray());
+        AssertContentIdentities(document, 2);
         Assert.Equal(bytes, document.Reassemble().ToArray());
     }
 
@@ -113,9 +108,7 @@ public sealed partial class TheoryAtomizerTests
 
         var document = PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
 
-        Assert.Equal(
-            ["theorem/7.15", "theorem/7.15′"],
-            document.Claims.Select(static claim => claim.AstPath).ToArray());
+        AssertContentIdentities(document, 2);
         Assert.Equal(bytes, document.Reassemble().ToArray());
     }
 
@@ -127,9 +120,7 @@ public sealed partial class TheoryAtomizerTests
 
         var document = PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
 
-        Assert.Equal(
-            ["theorem/7.1′"],
-            document.Claims.Select(static claim => claim.AstPath).ToArray());
+        AssertContentIdentities(document, 1);
         Assert.Equal(bytes, document.Reassemble().ToArray());
     }
 
@@ -141,9 +132,7 @@ public sealed partial class TheoryAtomizerTests
 
         var document = PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
 
-        Assert.Equal(
-            ["theorem/7.1", "theorem/7.2"],
-            document.Claims.Select(static claim => claim.AstPath).ToArray());
+        AssertContentIdentities(document, 2);
         Assert.Equal(bytes, document.Reassemble().ToArray());
     }
 
@@ -164,10 +153,8 @@ public sealed partial class TheoryAtomizerTests
         var second = PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
 
         var plan = Assert.Single(first.ClausePlans);
-        Assert.Equal("theorem/18.7", plan.ParentAstPath);
-        Assert.Equal(
-            ["theorem/18.7/clause/1", "theorem/18.7/clause/2"],
-            plan.Children.Select(static child => child.AstPath).ToArray());
+        AssertContentIdentity(plan.Parent);
+        Assert.All(plan.Children, AssertContentIdentity);
         Assert.Equal([7, 196], plan.Children.Select(static child => child.StartByte).ToArray());
         Assert.Equal([196, 379], plan.Children.Select(static child => child.EndByte).ToArray());
         Assert.Equal(
@@ -177,15 +164,15 @@ public sealed partial class TheoryAtomizerTests
             ],
             plan.Children.Select(static child => child.Fingerprints.RawSha256).ToArray());
         var repeated = Assert.Single(second.ClausePlans);
-        Assert.Equal(plan.ParentAstPath, repeated.ParentAstPath);
+        Assert.Equal(plan.Parent.Fingerprints.RawSha256, repeated.Parent.Fingerprints.RawSha256);
         Assert.Equal(
             plan.Children.Select(static child => (
-                child.AstPath,
+                child.Fingerprints.RawSha256,
                 child.StartByte,
                 child.EndByte,
                 child.Fingerprints.RawSha256)),
             repeated.Children.Select(static child => (
-                child.AstPath,
+                child.Fingerprints.RawSha256,
                 child.StartByte,
                 child.EndByte,
                 child.Fingerprints.RawSha256)));
@@ -194,16 +181,14 @@ public sealed partial class TheoryAtomizerTests
     }
 
     [Fact]
-    public void PzgClausePlanChildrenResolveThroughTheCanonicalClaimResolver()
+    public void PzgClausePlanChildrenArePartOfTheDocumentPlan()
     {
         var bytes = Encoding.UTF8.GetBytes(
             "# PZG\n\n**定理 9.10**。第一条。\n\n**第二条**。第二条。\n");
         var document = PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
         var child = Assert.Single(document.ClausePlans).Children[1];
 
-        var resolved = document.ResolveClaim(child.AstPath);
-
-        Assert.Same(child, resolved);
+        Assert.Contains(child, Assert.Single(document.ClausePlans).Children);
     }
 
     [Fact]
@@ -218,24 +203,11 @@ public sealed partial class TheoryAtomizerTests
             DigestionTestSupport.Rules);
 
         Assert.Equal(37, document.Claims.Length);
-        Assert.Equal(
-            [
-                ("corollary", 2),
-                ("definition", 5),
-                ("example", 1),
-                ("lemma", 2),
-                ("observation", 3),
-                ("proposition", 3),
-                ("remark", 8),
-                ("theorem", 13),
-            ],
-            document.Claims
-                .GroupBy(static atom => atom.AstPath.Split('/')[0], StringComparer.Ordinal)
-                .Select(static group => (Kind: group.Key, Count: group.Count()))
-                .OrderBy(static item => item.Kind, StringComparer.Ordinal));
+        Assert.Equal(35, document.Claims.Select(static atom => atom.Fingerprints.RawSha256)
+            .Distinct(StringComparer.Ordinal).Count());
 
-        var landing = document.ResolveClaim("lemma/3.1");
-        var escape = document.ResolveClaim("theorem/3.4");
+        var landing = ClaimContaining(document, "**引理 3.1(");
+        var escape = ClaimContaining(document, "**定理 3.4(");
         Assert.Equal(
             "sha256:9d52e41b062f81b1ce93cf241bf4ef9806f6e6de3fe9d6d10b5dc2de6d1f929a",
             landing.Fingerprints.RawSha256);
@@ -273,7 +245,7 @@ public sealed partial class TheoryAtomizerTests
             sourceBytes,
             DigestionTestSupport.Rules);
         var registryAtom = Assert.Single(registryDocument.Claims);
-        Assert.Equal("coarse/source", registryAtom.AstPath);
+        AssertContentIdentity(registryAtom);
         Assert.Equal(DigestionFingerprint.ComputeOpaque(sourceBytes), registryAtom.Fingerprints);
         Assert.Equal(sourceBytes, registryAtom.RawBytes.ToArray());
         Assert.Equal(sourceBytes, registryDocument.Reassemble().ToArray());

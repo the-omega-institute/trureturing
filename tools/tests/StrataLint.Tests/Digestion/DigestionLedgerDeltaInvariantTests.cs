@@ -8,12 +8,11 @@ namespace StrataLint.Tests;
 public sealed partial class DigestionLedgerTests
 {
     [Fact]
-    public void DerivedMigrationIsIndependentOfEntryMembershipInCandidateDelta()
+    public void TouchedPartialEntryRecomputesWhileUntouchedEntryKeepsBaselineMigration()
     {
         var receiptSource = Encoding.UTF8.GetBytes("manual specification receipt\n");
         var currentSource = Encoding.UTF8.GetBytes("manual specification receipu\n");
         var atom = new DigestionAtom(
-            "manual/receipt",
             0,
             receiptSource.Length,
             ImmutableArray.CreateRange(receiptSource),
@@ -70,13 +69,12 @@ public sealed partial class DigestionLedgerTests
         var insideDelta = Evaluate(RawChangeSet.Create(
         [
             BackfillInventoryLoader.RootPath
-                + $"{AtomizerRegistry.GictId}/partial-closed/gict-1.1.yaml",
+                + $"{AtomizerRegistry.GictId}/partial-closed/"
+                + atom.Fingerprints.RawSha256["sha256:".Length..]
+                + ".yaml",
         ]));
 
-        Assert.Contains(
-            insideDelta.Gaps,
-            static gap => gap.Code == "boundary-fingerprint-mismatch");
-        Assert.Equal(DigestionMigrationState.Partial, insideDelta.DerivedStatus.Migration);
-        Assert.Equal(insideDelta.DerivedStatus.Migration, outsideDelta.DerivedStatus.Migration);
+        Assert.Equal(DigestionMigrationState.Partial, outsideDelta.DerivedStatus.Migration);
+        Assert.Equal(DigestionMigrationState.Absorbed, insideDelta.DerivedStatus.Migration);
     }
 }

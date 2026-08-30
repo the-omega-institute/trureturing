@@ -4,8 +4,6 @@ namespace StrataLint.Engine;
 
 internal sealed record BackfillTicketReference(string CaseId, string Gid);
 
-internal sealed record DigestionBoundary(string AstPath, int StartByte, int EndByte);
-
 internal sealed record DigestionCoverageReceipt(
     string Gid,
     string SourceSha256,
@@ -86,8 +84,6 @@ internal sealed record DigestionLedgerEntry(
     string SourcePath,
     string Atomizer,
     string AtomId,
-    string AstPath,
-    DigestionBoundary? Boundary,
     DigestionFingerprints Fingerprints,
     ImmutableArray<string> CoverageGids,
     DigestionReceipts Receipts,

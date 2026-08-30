@@ -111,7 +111,6 @@ public sealed partial class DigestionAlignmentTests
         var opaqueBytes = Encoding.UTF8.GetBytes("not a recognised claim\n");
         var coarseBytes = ImmutableArray.CreateRange(opaqueBytes);
         var coarse = new DigestionAtom(
-            "coarse/source",
             0,
             opaqueBytes.Length,
             coarseBytes,
@@ -175,7 +174,7 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
-    public void IngestPreservesTheLegacyResidualIdForASingleOccurrence()
+    public void IngestUsesBareContentHashesForExistingAndNewAtoms()
     {
         var sourceBytes = Encoding.UTF8.GetBytes(
             "# GICT\n\n**定理 1.1(A)**。seen。\n\n**定理 1.2(B)**。new。\n");
@@ -185,13 +184,11 @@ public sealed partial class DigestionAlignmentTests
 
         var plan = DigestionIngestor.Plan(ledger, Snapshot(sourceBytes, [seenCapture]), ledger);
 
-        var residual = Assert.Single(plan.Document.RequireDigestionEntries().Where(static entry =>
-            entry.AtomId != "seen-receipt"));
         Assert.Equal(
-            AtomizerRegistry.Require(AtomizerRegistry.GictId).ResidualPrefix
-            + "-residual-"
-            + atoms[1].Fingerprints.RawSha256["sha256:".Length..],
-            residual.AtomId);
+            atoms.Select(AtomId).Order(StringComparer.Ordinal),
+            plan.Document.RequireDigestionEntries()
+                .Select(static entry => entry.AtomId)
+                .Order(StringComparer.Ordinal));
     }
 
     [Fact]
@@ -220,11 +217,11 @@ public sealed partial class DigestionAlignmentTests
 
         Assert.Empty(result.Findings);
         Assert.Empty(result.Residual);
-        Assert.Equal(DigestionReceiptAlignment.Seen, result.AlignmentFor("cas-receipt"));
+        Assert.Equal(DigestionReceiptAlignment.Seen, result.AlignmentFor(AtomId(atom)));
     }
 
     [Fact]
-    public void IngestCreatesDistinctReceiptsForByteIdenticalOccurrences()
+    public void IngestCollapsesByteIdenticalOccurrencesToOneContentEntry()
     {
         var oldBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。old。\n");
         var oldAtom = Assert.Single(GictAtomizer.Atomize(oldBytes, DigestionTestSupport.Rules).Claims);
@@ -241,12 +238,11 @@ public sealed partial class DigestionAlignmentTests
             ledger);
 
         var added = plan.Document.RequireDigestionEntries()
-            .Where(static entry => entry.AtomId != "old-receipt")
+            .Where(entry => entry.AtomId != AtomId(oldAtom))
             .ToArray();
-        Assert.Equal(2, added.Length);
-        Assert.Equal(2, added.Select(static entry => entry.AtomId).Distinct().Count());
-        Assert.Equal(2, added.Select(static entry => entry.AstPath).Distinct().Count());
-        Assert.Single(added.Select(static entry => entry.CasRef).Distinct());
+        var entry = Assert.Single(added);
+        Assert.Equal(entry.Fingerprints.RawSha256["sha256:".Length..], entry.AtomId);
+        Assert.Equal(entry.Fingerprints.RawSha256, entry.CasRef);
         Assert.Single(plan.CasObjects);
     }
 
@@ -282,8 +278,8 @@ public sealed partial class DigestionAlignmentTests
 
         Assert.Empty(first.Findings);
         Assert.Empty(first.Residual);
-        Assert.Equal(DigestionReceiptAlignment.Seen, first.AlignmentFor("raw-receipt"));
-        Assert.Equal(DigestionReceiptAlignment.Seen, first.AlignmentFor("normalized-receipt"));
+        Assert.Equal(DigestionReceiptAlignment.Seen, first.AlignmentFor(AtomId(current.Claims[0])));
+        Assert.Equal(DigestionReceiptAlignment.Seen, first.AlignmentFor(AtomId(normalized.Claims[1])));
         Assert.Equal(0, calls);
 
         var second = DigestionLedgerAligner.Evaluate(
@@ -299,7 +295,7 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
-    public void CasBackedBoundaryAndStructuralReceiptsAreBothSeen()
+    public void CasBackedHistoricalAndCurrentReceiptsAreBothSeen()
     {
         var bytes = Encoding.UTF8.GetBytes(
             "# GICT\n\n**定理 1.1(A)**。legacy。\n\n**定理 1.2(B)**。structural。\n");
@@ -310,7 +306,7 @@ public sealed partial class DigestionAlignmentTests
         var ledger = WithGenreCheck(
             Ledger(
                 [],
-                BoundaryEntry("legacy-receipt", document.Claims[0]),
+                Entry("legacy-receipt", document.Claims[0]),
                 Entry("structural-receipt", document.Claims[1])),
             GenreRegistryCheck.Collected([]));
 
@@ -324,10 +320,10 @@ public sealed partial class DigestionAlignmentTests
         Assert.Empty(result.Residual);
         Assert.Equal(
             DigestionReceiptAlignment.Seen,
-            result.AlignmentFor("legacy-receipt"));
+            result.AlignmentFor(AtomId(document.Claims[0])));
         Assert.Equal(
             DigestionReceiptAlignment.Seen,
-            result.AlignmentFor("structural-receipt"));
+            result.AlignmentFor(AtomId(document.Claims[1])));
     }
 
     [Fact]
@@ -352,14 +348,14 @@ public sealed partial class DigestionAlignmentTests
             baseline,
             DigestionAlignmentMode.Admission);
 
-        Assert.Equal(DigestionReceiptAlignment.Seen, rejected.AlignmentFor("old-receipt"));
+        Assert.Equal(DigestionReceiptAlignment.Seen, rejected.AlignmentFor(AtomId(oldAtom)));
         Assert.Empty(rejected.ActualStale);
         Assert.Empty(rejected.Residual);
         Assert.Empty(rejected.Findings);
 
         var closed = WithGenreCheck(
             Ledger(
-                ["old-receipt"],
+                [AtomId(oldAtom)],
                 Entry("old-receipt", oldAtom),
                 Entry("new-receipt", newAtom)),
             GenreRegistryCheck.Collected([]));
@@ -370,43 +366,9 @@ public sealed partial class DigestionAlignmentTests
             DigestionAlignmentMode.Admission);
 
         Assert.Empty(admitted.Findings);
-        Assert.Equal(DigestionReceiptAlignment.Stale, admitted.AlignmentFor("old-receipt"));
-        Assert.Equal(DigestionReceiptAlignment.Seen, admitted.AlignmentFor("new-receipt"));
+        Assert.Equal(DigestionReceiptAlignment.Seen, admitted.AlignmentFor(AtomId(oldAtom)));
+        Assert.Equal(DigestionReceiptAlignment.Seen, admitted.AlignmentFor(AtomId(newAtom)));
         Assert.Empty(admitted.Residual);
-    }
-
-    [Fact]
-    public void ChangedAstPathCannotInheritCasIdentity()
-    {
-        var oldBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。old。\n");
-        var newBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。rewritten。\n");
-        var oldAtom = Assert.Single(GictAtomizer.Atomize(oldBytes, DigestionTestSupport.Rules).Claims);
-        var newAtom = Assert.Single(GictAtomizer.Atomize(newBytes, DigestionTestSupport.Rules).Claims);
-        var oldCapture = DigestionCasStore.Capture(oldAtom.RawBytes.AsSpan());
-        var newCapture = DigestionCasStore.Capture(newAtom.RawBytes.AsSpan());
-        var baseline = WithGenreCheck(
-            Ledger(
-                [],
-                BoundaryEntry("old-receipt", oldAtom)),
-            GenreRegistryCheck.Collected([]));
-        var candidate = WithGenreCheck(
-            Ledger(
-                ["old-receipt"],
-                EntryForPath("old-receipt", "promoted/theorem/1.1", oldAtom.Fingerprints),
-                Entry("current-receipt", newAtom)),
-            GenreRegistryCheck.Collected([]));
-
-        var result = DigestionLedgerAligner.Evaluate(
-            candidate,
-            Snapshot(newBytes, [oldCapture, newCapture]),
-            baseline,
-            DigestionAlignmentMode.Admission);
-
-        Assert.Empty(result.Findings);
-        Assert.Empty(result.Residual);
-        Assert.Equal(DigestionReceiptAlignment.Rejected, result.AlignmentFor("old-receipt"));
-        Assert.Equal(DigestionReceiptAlignment.Seen, result.AlignmentFor("current-receipt"));
-        Assert.Empty(result.ActualStale);
     }
 
     [Fact]
@@ -437,7 +399,7 @@ public sealed partial class DigestionAlignmentTests
             DigestionAlignmentMode.Ingest);
 
         Assert.Empty(result.Findings);
-        Assert.Equal(DigestionReceiptAlignment.Rejected, result.AlignmentFor("old-receipt"));
+        Assert.Equal(DigestionReceiptAlignment.Rejected, result.AlignmentFor(AtomId(oldAtom)));
         Assert.Single(result.Residual);
     }
 
@@ -446,7 +408,7 @@ public sealed partial class DigestionAlignmentTests
 
 
     [Fact]
-    public void FingerprintTamperingCannotInheritBoundaryBaselineIdentity()
+    public void FingerprintTamperingCannotInheritBaselineContentIdentity()
     {
         var oldBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。old。\n");
         var currentBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。rewritten。\n");
@@ -454,13 +416,14 @@ public sealed partial class DigestionAlignmentTests
         var currentAtom = Assert.Single(GictAtomizer.Atomize(currentBytes, DigestionTestSupport.Rules).Claims);
         var baseline = Ledger(
             [],
-            BoundaryEntry("old-receipt", oldAtom));
+            Entry("old-receipt", oldAtom));
         var tampered = new DigestionFingerprints(
             "sha256:" + new string('0', 64),
             oldAtom.Fingerprints.NormalizedSha256);
+        var oldAtomId = AtomId(oldAtom);
         var candidate = Ledger(
-            ["old-receipt"],
-            EntryForPath("old-receipt", oldAtom.AstPath, tampered),
+            [oldAtomId],
+            EntryWithFingerprints(oldAtomId, tampered),
             Entry("current-receipt", currentAtom));
 
         var result = DigestionLedgerAligner.Evaluate(
@@ -469,9 +432,9 @@ public sealed partial class DigestionAlignmentTests
             baseline,
             DigestionAlignmentMode.Admission);
 
-        Assert.Equal(DigestionReceiptAlignment.Rejected, result.AlignmentFor("old-receipt"));
+        Assert.Equal(DigestionReceiptAlignment.Rejected, result.AlignmentFor(oldAtomId));
         Assert.Contains(result.Findings, finding => finding.Contains(
-            "entry old-receipt CAS blob is missing",
+            $"entry {oldAtomId} CAS blob is missing",
             StringComparison.Ordinal));
     }
 
@@ -481,14 +444,14 @@ public sealed partial class DigestionAlignmentTests
         var bytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。claim。\n");
         var atom = Assert.Single(GictAtomizer.Atomize(bytes, DigestionTestSupport.Rules).Claims);
         var baseline = Ledger([], Entry("real-receipt", atom));
-        var fake = EntryForPath(
-            "fake-receipt",
-            atom.AstPath,
+        var fakeId = new string('f', 64);
+        var fake = EntryWithFingerprints(
+            fakeId,
             new DigestionFingerprints(
                 "sha256:" + new string('0', 64),
                 "sha256:" + new string('1', 64)));
         var candidate = Ledger(
-            ["fake-receipt"],
+            [fakeId],
             Entry("real-receipt", atom),
             fake);
 
@@ -499,24 +462,22 @@ public sealed partial class DigestionAlignmentTests
             DigestionAlignmentMode.Ingest);
 
         Assert.Contains(result.Findings, finding => finding.Contains(
-            "entry fake-receipt CAS blob is missing",
+            $"entry {fakeId} CAS blob is missing",
             StringComparison.Ordinal));
     }
 
     [Fact]
-    public void DuplicateAtomizedAstPathFailsClosed()
+    public void DistinctContentAtomsNeedNoOccurrenceDisambiguation()
     {
         var firstBytes = ImmutableArray.Create((byte)'a');
         var secondBytes = ImmutableArray.Create((byte)'b');
         var first = new DigestionAtom(
-            "theorem/1.1",
             0,
             1,
             firstBytes,
             DigestionFingerprint.Compute(firstBytes.AsSpan()),
             []);
         var second = new DigestionAtom(
-            "theorem/1.1",
             1,
             2,
             secondBytes,
@@ -526,7 +487,7 @@ public sealed partial class DigestionAlignmentTests
             [first, second],
             [new DigestionSlice(true, firstBytes), new DigestionSlice(true, secondBytes)],
             GenreRegistryCheck.NoGenreRegistry);
-        var ledger = Ledger([], Entry("receipt", first));
+        var ledger = Ledger([]);
         var calls = 0;
 
         var result = DigestionLedgerAligner.Evaluate(
@@ -541,13 +502,18 @@ public sealed partial class DigestionAlignmentTests
             });
 
         Assert.Equal(1, calls);
-        Assert.Contains(result.Findings, finding => finding.Contains(
-            "duplicate atomized ast_path: theorem/1.1",
-            StringComparison.Ordinal));
+        Assert.Empty(result.Findings);
+        Assert.Equal(2, result.Residual.Length);
+        Assert.Equal(
+            [
+                first.Fingerprints.RawSha256["sha256:".Length..],
+                second.Fingerprints.RawSha256["sha256:".Length..],
+            ],
+            result.Residual.Select(static item => item.SuggestedAtomId));
     }
 
     [Fact]
-    public void IngestRetiresReplacedHistoricalCasAndRegistersEveryResidualOpenClaim()
+    public void IngestPreservesHistoricalCasAndRegistersEveryNewContentAtom()
     {
         var oldBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。old。\n");
         var currentBytes = Encoding.UTF8.GetBytes(
@@ -559,23 +525,24 @@ public sealed partial class DigestionAlignmentTests
 
         var plan = DigestionIngestor.Plan(candidate, Snapshot(currentBytes, [oldCapture]), baseline);
         var source = Assert.Single(plan.Document.RequireDigestionSources());
-        var added = source.Entries.Where(static entry => entry.AtomId != "old-receipt").ToArray();
+        var added = source.Entries.Where(entry => entry.AtomId != AtomId(oldAtom)).ToArray();
 
-        Assert.Equal(1, plan.StaleAcknowledged);
+        Assert.Equal(0, plan.StaleAcknowledged);
         Assert.Equal(2, plan.ResidualOpenAdded);
-        Assert.Equal(["old-receipt"], source.AcknowledgedStale.ToArray());
+        Assert.Empty(source.AcknowledgedStale);
         Assert.Equal(2, added.Length);
         Assert.All(added, entry =>
         {
-            Assert.Null(entry.Boundary);
             Assert.Empty(entry.CoverageGids);
             Assert.Empty(entry.Receipts.Coverage);
             Assert.Equal(DigestionMigrationState.Residual, entry.ProjectedStatus.Migration);
             Assert.Equal(DigestionTruthState.Open, entry.ProjectedStatus.Truth);
         });
         Assert.Equal(
-            ["theorem/1.1", "theorem/1.2"],
-            added.Select(static entry => entry.AstPath).Order(StringComparer.Ordinal).ToArray());
+            GictAtomizer.Atomize(currentBytes, DigestionTestSupport.Rules).Claims
+                .Select(static atom => atom.Fingerprints.RawSha256)
+                .Order(StringComparer.Ordinal),
+            added.Select(static entry => entry.Fingerprints.RawSha256).Order(StringComparer.Ordinal));
 
         var admitted = DigestionLedgerAligner.Evaluate(
             plan.Document,
@@ -586,103 +553,12 @@ public sealed partial class DigestionAlignmentTests
         Assert.Empty(admitted.Findings);
         Assert.Empty(admitted.Residual);
         Assert.Equal(
-            DigestionReceiptAlignment.Stale,
-            admitted.AlignmentFor("old-receipt"));
-    }
-
-    [Fact]
-    public void IngestDropsObsoleteAcknowledgmentWithoutCreatingANewOne()
-    {
-        var oldBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。old。\n");
-        var currentBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。rewritten。\n");
-        var oldAtom = Assert.Single(GictAtomizer.Atomize(oldBytes, DigestionTestSupport.Rules).Claims);
-        var oldCapture = DigestionCasStore.Capture(oldAtom.RawBytes.AsSpan());
-        var baseline = Ledger([], Entry("old-receipt", oldAtom));
-        var acknowledged = Ledger(
-            ["old-receipt"],
-            Entry("old-receipt", oldAtom));
-
-        var plan = DigestionIngestor.Plan(
-            acknowledged,
-            Snapshot(currentBytes, [oldCapture]),
-            baseline);
-
-        Assert.Equal(0, plan.StaleAcknowledged);
-        Assert.Equal(
-            ["old-receipt"],
-            Assert.Single(plan.Document.RequireDigestionSources()).AcknowledgedStale.ToArray());
-    }
-
-    [Fact]
-    public void ProjectedStatusKeepsSettledStaleReceiptIdentityAndAlignmentByteIdempotent()
-    {
-        var oldBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。old。\n");
-        var currentBytes = Encoding.UTF8.GetBytes(
-            "# GICT\n\n**定理 1.1(A)**。rewritten。\n\n**定理 1.2(B)**。new。\n");
-        var oldAtom = Assert.Single(GictAtomizer.Atomize(
-            oldBytes,
-            DigestionTestSupport.Rules).Claims);
-        var oldCapture = DigestionCasStore.Capture(oldAtom.RawBytes.AsSpan());
-        var original = Ledger([], Entry("old-receipt", oldAtom));
-        var firstPlan = DigestionIngestor.Plan(
-            original,
-            Snapshot(currentBytes, [oldCapture]),
-            original);
-        var settled = firstPlan.Document;
-        var snapshot = Snapshot(currentBytes, firstPlan.CasObjects.Prepend(oldCapture));
-        var settledAlignment = DigestionLedgerAligner.Evaluate(
-            settled,
-            snapshot,
-            settled,
-            DigestionAlignmentMode.Admission);
-        var source = Assert.Single(settled.RequireDigestionSources());
-        var projected = settled.WithDigestionSources(
-        [
-            source with
-            {
-                Entries = source.Entries.Select(entry => entry.AtomId == "old-receipt"
-                    ? entry with
-                    {
-                        ProjectedStatus = new DigestionStatus(
-                            DigestionMigrationState.Partial,
-                            DigestionTruthState.Closed),
-                    }
-                    : entry).ToImmutableArray(),
-            },
-        ]);
-
-        var projectedAlignment = DigestionLedgerAligner.Evaluate(
-            projected,
-            snapshot,
-            settled,
-            DigestionAlignmentMode.Admission);
-        var replay = DigestionIngestor.Plan(
-            projected,
-            snapshot,
-            settled);
-        var replayBytes = DirectoryLedgerTestSupport.Image(replay.Document);
-        var secondReplay = DigestionIngestor.Plan(
-            replay.Document,
-            snapshot,
-            settled);
-
-        Assert.Empty(projectedAlignment.Findings);
-        Assert.Empty(replay.Alignment.Findings);
-        Assert.Equal(
             DigestionReceiptAlignment.Seen,
-            settledAlignment.AlignmentFor("old-receipt"));
-        Assert.Equal(
-            settledAlignment.AlignmentFor("old-receipt"),
-            projectedAlignment.AlignmentFor("old-receipt"));
-        Assert.Equal(
-            projectedAlignment.AlignmentFor("old-receipt"),
-            replay.Alignment.AlignmentFor("old-receipt"));
-        Assert.Empty(secondReplay.Alignment.Findings);
-        Assert.Equal(replayBytes, DirectoryLedgerTestSupport.Image(secondReplay.Document));
+            admitted.AlignmentFor(AtomId(oldAtom)));
     }
 
     [Fact]
-    public void IngestMigratesCasBackedBoundariesAgainstNewVolumeAndIsByteIdempotent()
+    public void IngestPreservesCasBackedHistoricalAtomAgainstNewVolumeAndIsByteIdempotent()
     {
         var oldBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。old。\n");
         var currentBytes = Encoding.UTF8.GetBytes(
@@ -691,7 +567,7 @@ public sealed partial class DigestionAlignmentTests
         var oldCapture = DigestionCasStore.Capture(oldAtom.RawBytes.AsSpan());
         var baseline = Ledger(
             [],
-            BoundaryEntry("old-receipt", oldAtom));
+            Entry("old-receipt", oldAtom));
 
         var first = DigestionIngestor.Plan(
             baseline,
@@ -709,7 +585,6 @@ public sealed partial class DigestionAlignmentTests
         Assert.Equal(2, first.ResidualOpenAdded);
         var source = Assert.Single(first.Document.RequireDigestionSources());
         Assert.Empty(source.AcknowledgedStale);
-        Assert.All(source.Entries, static entry => Assert.Null(entry.Boundary));
         Assert.Equal(0, second.StaleAcknowledged);
         Assert.Equal(0, second.ResidualOpenAdded);
         Assert.Equal(firstBytes, secondBytes);

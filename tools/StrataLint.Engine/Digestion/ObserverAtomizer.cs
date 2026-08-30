@@ -11,12 +11,6 @@ internal static class ObserverAtomizer
             paragraph => Identify(paragraph, rules, unregistered),
             () => GenreRegistryCheck.Collected([.. unregistered]),
             identifyFirstTableCellSource: paragraph => Identify(paragraph, rules, unregistered));
-        if (document.Claims.Any(atom =>
-                atom.AstPath.Contains("/occurrence/", StringComparison.Ordinal)))
-        {
-            throw new TheorySourceFormatException("duplicate observer claim locator");
-        }
-
         return document;
     }
 
@@ -37,7 +31,7 @@ internal static class ObserverAtomizer
         {
             var token = TheorySourceFormatException.ClaimLead(paragraph);
             unregistered.Add(token);
-            return UnregisteredGenreLocator.ForToken(token);
+            return token;
         }
         return null;
     }

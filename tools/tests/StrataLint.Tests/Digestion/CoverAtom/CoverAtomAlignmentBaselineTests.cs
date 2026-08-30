@@ -9,10 +9,10 @@ public sealed partial class CoverAtomTests
     [Fact]
     public void AlignScribeReceiptPreservesInheritedAbsorbedSibling()
     {
-        const string siblingAtomId = "historical-absorbed-sibling";
+        var siblingAtomId = CoverWorld.OtherAtomId;
         var inputs = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec() with
         {
-            OtherAtomBinding = (siblingAtomId, "D5/S0/Carrier/Probe.probe"),
+            OtherAtomGid = "D5/S0/Carrier/Probe.probe",
         });
         inputs = WithHistoricalAbsorbedEntry(inputs, siblingAtomId, refreshScribeReceipt: true);
 
@@ -28,7 +28,7 @@ public sealed partial class CoverAtomTests
     }
 
     [Fact]
-    public void AlignScribeReceiptRefreshesInheritedHistoricalAtom()
+    public void AlignScribeReceiptPreservesInheritedAtomContentIdentity()
     {
         var inputs = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec());
         inputs = WithHistoricalAbsorbedEntry(
@@ -40,7 +40,7 @@ public sealed partial class CoverAtomTests
 
         Assert.True(result.Success, result.Error);
         var target = Assert.Single(document.RequireDigestionEntries());
-        Assert.Equal("theorem/historical", target.AstPath);
+        Assert.Equal("sha256:" + CoverWorld.DefaultAtomId, target.Fingerprints.RawSha256);
         Assert.Equal(
             new DigestionStatus(DigestionMigrationState.Absorbed, DigestionTruthState.Closed),
             target.ProjectedStatus);
@@ -60,9 +60,6 @@ public sealed partial class CoverAtomTests
                     Entries = source.Entries.Select(entry => entry.AtomId == atomId
                         ? entry with
                         {
-                            AstPath = atomId == CoverWorld.DefaultAtomId
-                                ? "theorem/historical"
-                                : entry.AstPath,
                             Receipts = refreshScribeReceipt
                                 ? entry.Receipts with
                                 {

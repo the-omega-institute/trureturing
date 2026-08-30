@@ -56,9 +56,14 @@ public sealed partial class CoverAtomTests
             DirectoryLedgerTestSupport.Image(BackfillInventoryLoader.LoadRoot(temporary.Path)));
     }
 
+    public static TheoryData<string, string> UnknownAlignTargets => new()
+    {
+        { "no-such-atom", "D5/S0/Carrier/Probe.probe" },
+        { CoverWorld.DefaultAtomId, "D5/S0/Carrier/Probe.missing" },
+    };
+
     [Theory]
-    [InlineData("no-such-atom", "D5/S0/Carrier/Probe.probe")]
-    [InlineData(CoverWorld.DefaultAtomId, "D5/S0/Carrier/Probe.missing")]
+    [MemberData(nameof(UnknownAlignTargets))]
     public void AlignScribeReceiptFailsClosedForUnknownAtomOrGid(string atomId, string gid)
     {
         var inputs = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec());
@@ -80,7 +85,7 @@ public sealed partial class CoverAtomTests
     {
         var spec = CoverWorld.StaleReceiptSpec() with
         {
-            OtherAtomBinding = ("drifted-sibling", "D5/S0/Carrier/Probe.sibling"),
+            OtherAtomGid = "D5/S0/Carrier/Probe.sibling",
         };
         var inputs = CoverWorld.Materialize(spec);
         var currentFiles = DirectoryLedgerTestSupport.Project(inputs.Files);
@@ -91,7 +96,7 @@ public sealed partial class CoverAtomTests
             .AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
         Assert.False(result.Success);
         Assert.Contains("digest status is invalid", result.Error, StringComparison.Ordinal);
-        Assert.Contains("drifted-sibling", result.Error, StringComparison.Ordinal);
+        Assert.Contains(CoverWorld.OtherAtomId, result.Error, StringComparison.Ordinal);
         Assert.Equal(before,
             DirectoryLedgerTestSupport.Image(BackfillInventoryLoader.LoadRoot(temporary.Path)));
     }
@@ -453,7 +458,6 @@ internal sealed record CoverInputs(
     BackfillInventoryDocument Document);
 
 internal sealed record CoverUnrelatedSiblingSpec(
-    string AtomId,
     ImmutableArray<string> CurrentCoverage,
     ImmutableArray<string> BaselineCoverage,
     ImmutableArray<string> UnresolvedSubitems);
@@ -463,7 +467,7 @@ internal sealed record CoverUnrelatedSiblingSpec(
 // closed and Scribe-emitted); each gate test flips exactly one field.
 internal sealed partial record CoverSpec
 {
-    internal string AtomId { get; init; } = CoverWorld.DefaultAtomId;
+    internal string AtomId => CoverWorld.DefaultAtomId;
 
     internal string ModuleGid { get; init; } = "D5/S0/Carrier/Probe";
 
@@ -527,7 +531,11 @@ internal sealed partial record CoverSpec
 
     internal string? BaselineCoverageGid { get; init; }
 
-    internal (string AtomId, string Gid)? OtherAtomBinding { get; init; }
+    internal string? OtherAtomGid { get; init; }
+
+    internal string OtherMigration { get; init; } = "partial";
+
+    internal string OtherTruth { get; init; } = "closed";
 
     // When true the residual entry carries a verified tail authorization, so a
     // target proven only with a non-standard axiom (Tail) derives an
@@ -556,7 +564,18 @@ internal sealed partial record CoverSpec
 
 internal static partial class CoverWorld
 {
-    internal const string DefaultAtomId = "cover-1";
+    private const string DefaultSourceText =
+        "# Synthetic\n\n**定理 1.1(A)**。cover fixture atom body。\n";
+    private const string OtherSourceText =
+        "# Synthetic\n\n**定理 1.1(A)**。cover sibling atom body。\n";
+    private const string UnrelatedSourceText =
+        "# Synthetic\n\n**定理 1.1(A)**。unrelated sibling atom body。\n";
+    private const string OtherSourcePath = "docs/COVER_SIBLING.md";
+    private const string UnrelatedSourcePath = "docs/CONTRIBUTING.md";
+
+    internal static readonly string DefaultAtomId = AtomIdFor(DefaultSourceText);
+    internal static readonly string OtherAtomId = AtomIdFor(OtherSourceText);
+    internal static readonly string UnrelatedAtomId = AtomIdFor(UnrelatedSourceText);
     internal static readonly DateTimeOffset RecordedAtUtc = new(2026, 8, 26, 4, 3, 2, TestBudgets.ZeroDuration);
     internal static TimeProvider TimeProvider { get; } = new FixedTimeProvider(RecordedAtUtc);
 
@@ -591,13 +610,17 @@ internal static partial class CoverWorld
 
     internal static CoverInputs Materialize(CoverSpec spec)
     {
-        var sourceBytes = Encoding.UTF8.GetBytes(
-            "# Synthetic\n\n**定理 1.1(A)**。cover fixture atom body。\n");
+        var sourceBytes = Encoding.UTF8.GetBytes(DefaultSourceText);
         var atom = Assert.Single(
             AtomizerRegistry.Atomize(SyntheticNumberedAtomizer.Id, sourceBytes, DigestionTestSupport.Rules).Claims);
-        const string unrelatedSourcePath = "docs/CONTRIBUTING.md";
-        var unrelatedSourceBytes = Encoding.UTF8.GetBytes(
-            "# Synthetic\n\n**定理 1.1(A)**。unrelated sibling atom body。\n");
+        var otherSourceBytes = Encoding.UTF8.GetBytes(OtherSourceText);
+        var otherAtom = spec.OtherAtomGid is null
+            ? null
+            : Assert.Single(AtomizerRegistry.Atomize(
+                SyntheticNumberedAtomizer.Id,
+                otherSourceBytes,
+                DigestionTestSupport.Rules).Claims);
+        var unrelatedSourceBytes = Encoding.UTF8.GetBytes(UnrelatedSourceText);
         var unrelatedAtom = spec.UnrelatedSibling is null
             ? null
             : Assert.Single(AtomizerRegistry.Atomize(
@@ -635,8 +658,10 @@ internal static partial class CoverWorld
             tailAuthPath,
             tailAuthSha,
             gid => FrozenStatementIdFor(spec, gid),
+            otherAtom,
+            OtherSourcePath,
             unrelatedAtom,
-            unrelatedSourcePath,
+            UnrelatedSourcePath,
             useUnrelatedBaselineCoverage: false);
         var ledger = DirectoryLedgerTestSupport.Image(document);
         var envelopePath = "Meta/Digestion/formalizations/" + spec.AtomId + ".v1.json";
@@ -651,9 +676,15 @@ internal static partial class CoverWorld
             [ScribeEmissionAttestation.RelativePath] = Encoding.UTF8.GetString(attestation.AsSpan()),
         };
         DirectoryLedgerTestSupport.ReplaceWithProjection(files, document);
+        if (otherAtom is not null)
+        {
+            files[OtherSourcePath] = Encoding.UTF8.GetString(otherSourceBytes);
+            var (otherCasPath, otherCasBytes) = DigestionTestSupport.CasFile(otherAtom);
+            files[otherCasPath] = Encoding.UTF8.GetString(otherCasBytes);
+        }
         if (unrelatedAtom is not null)
         {
-            files[unrelatedSourcePath] = Encoding.UTF8.GetString(unrelatedSourceBytes);
+            files[UnrelatedSourcePath] = Encoding.UTF8.GetString(unrelatedSourceBytes);
             var (unrelatedCasPath, unrelatedCasBytes) = DigestionTestSupport.CasFile(unrelatedAtom);
             files[unrelatedCasPath] = Encoding.UTF8.GetString(unrelatedCasBytes);
         }
@@ -662,7 +693,7 @@ internal static partial class CoverWorld
         {
             files[envelopePath] = Encoding.UTF8.GetString(Envelope(spec, atom).AsSpan());
         }
-        MaterializeOtherAtomFormalizationReceipt(spec, atom, files);
+        MaterializeOtherAtomFormalizationReceipt(spec, otherAtom, files);
         if (spec.IncludeCasBlob)
         {
             var (casPath, casBytes) = DigestionTestSupport.CasFile(atom);
@@ -684,8 +715,10 @@ internal static partial class CoverWorld
             includeOtherAtom: false,
             null,
             null,
+            otherAtom: null,
+            otherSourcePath: OtherSourcePath,
             unrelatedAtom: unrelatedAtom,
-            unrelatedSourcePath: unrelatedSourcePath,
+            unrelatedSourcePath: UnrelatedSourcePath,
             useUnrelatedBaselineCoverage: true);
         var baseline = new Dictionary<string, string>(files, StringComparer.Ordinal);
         DirectoryLedgerTestSupport.ReplaceWithProjection(baseline, baselineDocument);
@@ -741,6 +774,15 @@ internal static partial class CoverWorld
             envelopePath,
             ledger,
             document);
+    }
+
+    private static string AtomIdFor(string sourceText)
+    {
+        var atom = Assert.Single(AtomizerRegistry.Atomize(
+            SyntheticNumberedAtomizer.Id,
+            Encoding.UTF8.GetBytes(sourceText),
+            DigestionTestSupport.Rules).Claims);
+        return atom.Fingerprints.RawSha256["sha256:".Length..];
     }
 
     // Build the pre-committed digestion-formalization-v1 receipt bytes. Defaults

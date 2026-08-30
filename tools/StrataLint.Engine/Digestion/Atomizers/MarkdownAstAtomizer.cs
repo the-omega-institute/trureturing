@@ -45,11 +45,10 @@ internal static class MarkdownAstAtomizer
                     headings.RemoveAt(headings.Count - 1);
                 }
 
-                var headingAstPath = identifyHeading?.Invoke(heading.Text);
-                if (headingAstPath is not null)
+                var headingTag = identifyHeading?.Invoke(heading.Text);
+                if (headingTag is not null)
                 {
                     candidates.Add(new Candidate(
-                        headingAstPath,
                         heading.Start,
                         text.Length,
                         headings.ToImmutableArray(),
@@ -66,7 +65,7 @@ internal static class MarkdownAstAtomizer
 
             if (block is MarkdownTableRow row)
             {
-                var tableAstPath = identifyTableRow is not null
+                var tableTag = identifyTableRow is not null
                     ? identifyTableRow(row)
                     : identifyFirstTableCellSource is not null
                     ? TheorySourceFormatException.IdentifyAt(
@@ -75,10 +74,9 @@ internal static class MarkdownAstAtomizer
                     ? TheorySourceFormatException.IdentifyAt(
                         identifyFirstTableCell, row.FirstCellText, row.Start, text, failures)
                     : TheorySourceFormatException.IdentifyAt(identify, row.Text, row.Start, text, failures);
-                if (tableAstPath is not null)
+                if (tableTag is not null)
                 {
                     candidates.Add(new Candidate(
-                        tableAstPath,
                         row.Start,
                         row.End,
                         headings.ToImmutableArray(),
@@ -96,16 +94,15 @@ internal static class MarkdownAstAtomizer
             }
 
             var lineClaims = SourceLines(paragraph.Text, paragraph.Start)
-                .Select(line => (Line: line, AstPath: TheorySourceFormatException.IdentifyAt(
+                .Select(line => (Line: line, Tag: TheorySourceFormatException.IdentifyAt(
                     identify, line.Text, line.Start, text, failures)))
-                .Where(static item => item.AstPath is not null)
+                .Where(static item => item.Tag is not null)
                 .ToArray();
             if (lineClaims.Length > 1)
             {
                 foreach (var lineClaim in lineClaims)
                 {
                     candidates.Add(new Candidate(
-                        lineClaim.AstPath!,
                         lineClaim.Line.Start,
                         extendLineClaims ? text.Length : lineClaim.Line.End,
                         headings.ToImmutableArray(),
@@ -117,15 +114,14 @@ internal static class MarkdownAstAtomizer
                 continue;
             }
 
-            var astPath = TheorySourceFormatException.IdentifyAt(
+            var tag = TheorySourceFormatException.IdentifyAt(
                 identify, paragraph.Text, paragraph.Start, text, failures);
-            if (astPath is null)
+            if (tag is null)
             {
                 continue;
             }
 
             candidates.Add(new Candidate(
-                astPath,
                 paragraph.Start,
                 text.Length,
                 headings.ToImmutableArray(),
@@ -188,24 +184,14 @@ internal static class MarkdownAstAtomizer
 
         var claims = ImmutableArray.CreateBuilder<DigestionAtom>(candidates.Count);
         var slices = ImmutableArray.CreateBuilder<DigestionSlice>(candidates.Count * 2 + 1);
-        var locatorCounts = candidates
-            .GroupBy(static candidate => candidate.AstPath, StringComparer.Ordinal)
-            .ToDictionary(static group => group.Key, static group => group.Count(), StringComparer.Ordinal);
-        var locatorOccurrences = new Dictionary<string, int>(StringComparer.Ordinal);
         var cursor = 0;
         foreach (var candidate in candidates.OrderBy(static item => item.StartCharacter))
         {
-            locatorOccurrences.TryGetValue(candidate.AstPath, out var occurrence);
-            occurrence++;
-            locatorOccurrences[candidate.AstPath] = occurrence;
-            var astPath = locatorCounts[candidate.AstPath] == 1
-                ? candidate.AstPath
-                : $"{candidate.AstPath}/occurrence/{occurrence}";
             var start = ByteOffset(text, candidate.StartCharacter);
             var end = ByteOffset(text, candidate.EndCharacter);
             if (start < cursor || end <= start || end > raw.Length)
             {
-                throw new FormatException($"invalid Markdown AST span for {astPath}");
+                throw new FormatException($"invalid Markdown AST span at byte {start}");
             }
 
             if (start > cursor)
@@ -216,7 +202,6 @@ internal static class MarkdownAstAtomizer
             var atomBytes = ImmutableArray.CreateRange(raw[start..end]);
             slices.Add(new DigestionSlice(true, atomBytes));
             claims.Add(new DigestionAtom(
-                astPath,
                 start,
                 end,
                 atomBytes,
@@ -294,7 +279,6 @@ internal static class MarkdownAstAtomizer
     }
 
     private sealed record Candidate(
-        string AstPath,
         int StartCharacter,
         int EndCharacter,
         ImmutableArray<DigestionContext> Context,

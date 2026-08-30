@@ -50,7 +50,7 @@ public sealed partial class CoverAtomTests
         const string gid = "D5/S0/Carrier/Probe.probe";
         var execution = Execute(new CoverSpec
         {
-            OtherAtomBinding = ("sibling-atom", gid),
+            OtherAtomGid = gid,
             InitialDefinitionSha256 = DigestionFingerprint.Compute(
                 Encoding.UTF8.GetBytes("scribe definition\n")).RawSha256,
             InitialEmissionSha256 = DigestionFingerprint.Compute(
@@ -62,7 +62,7 @@ public sealed partial class CoverAtomTests
         Assert.NotEqual(before, after);
         var entries = execution.AfterDocument.RequireDigestionEntries();
         var target = Assert.Single(entries, candidate => candidate.AtomId == CoverWorld.DefaultAtomId);
-        var sibling = Assert.Single(entries, candidate => candidate.AtomId == "sibling-atom");
+        var sibling = Assert.Single(entries, candidate => candidate.AtomId == CoverWorld.OtherAtomId);
         Assert.Equal([gid], target.CoverageGids.ToArray());
         Assert.Equal([gid], sibling.CoverageGids.ToArray());
         Assert.Equal([gid], target.Receipts.Coverage.Select(static receipt => receipt.Gid).ToArray());

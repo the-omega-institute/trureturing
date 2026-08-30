@@ -27,23 +27,27 @@ public sealed class QdoGenreSuffixTests
         ("关键反例", 1, "example"),
     ];
 
+    private static void AssertContentIdentity(DigestionAtom atom) => Assert.Equal(
+        DigestionFingerprint.Compute(atom.RawBytes.AsSpan()).RawSha256,
+        atom.Fingerprints.RawSha256);
+
     [Fact]
     public void Pr2096HeadTokenMultisetHasNoUnregisteredGenres()
     {
-        var (bytes, expectedPaths) = Pr2096Fixture();
+        var bytes = Pr2096Fixture();
 
         var document = AtomizerRegistry.Atomize("dialect:qdo", bytes, DigestionTestSupport.Rules);
 
         Assert.Equal(363, document.Claims.Length);
         Assert.Empty(document.UnregisteredGenres);
-        Assert.Equal(expectedPaths, document.Claims.Select(static claim => claim.AstPath).ToArray());
+        Assert.All(document.Claims, AssertContentIdentity);
         Assert.Equal(bytes, document.Reassemble().ToArray());
     }
 
     [Fact]
     public void Pr2096FixtureIngestsAll363ClaimsIntoAnEmptyLedger()
     {
-        var (bytes, expectedPaths) = Pr2096Fixture();
+        var bytes = Pr2096Fixture();
         var ledger = DigestionTestSupport.EmptyDocument("dialect:qdo");
 
         var plan = DigestionIngestor.Plan(
@@ -57,9 +61,9 @@ public sealed class QdoGenreSuffixTests
         Assert.Equal(363, plan.CasObjects.Length);
         Assert.Empty(plan.Fallbacks);
         Assert.Empty(source.GenreRegistryCheck.UnregisteredGenres);
-        Assert.Equal(
-            expectedPaths.Order(StringComparer.Ordinal),
-            source.Entries.Select(static entry => entry.AstPath).Order(StringComparer.Ordinal));
+        Assert.All(source.Entries, static entry => Assert.Equal(
+            entry.Fingerprints.RawSha256["sha256:".Length..],
+            entry.AtomId));
     }
 
     [Fact]
@@ -69,7 +73,7 @@ public sealed class QdoGenreSuffixTests
 
         var document = AtomizerRegistry.Atomize("dialect:qdo", bytes, DigestionTestSupport.Rules);
 
-        Assert.Equal("example/40.1", Assert.Single(document.Claims).AstPath);
+        AssertContentIdentity(Assert.Single(document.Claims));
         Assert.Empty(document.UnregisteredGenres);
         Assert.Equal(bytes, document.Reassemble().ToArray());
     }
@@ -81,7 +85,7 @@ public sealed class QdoGenreSuffixTests
 
         var document = AtomizerRegistry.Atomize("dialect:qdo", bytes, DigestionTestSupport.Rules);
 
-        Assert.Equal("theorem-form/40.2", Assert.Single(document.Claims).AstPath);
+        AssertContentIdentity(Assert.Single(document.Claims));
         Assert.Empty(document.UnregisteredGenres);
         Assert.Equal(bytes, document.Reassemble().ToArray());
     }
@@ -90,7 +94,7 @@ public sealed class QdoGenreSuffixTests
     public void RemovingTheSuffixRuleMakesThePr2096FixtureUnregisteredAgain()
     {
         var rules = LoadRules(RemoveQdoSuffixRule(CanonicalData));
-        var (bytes, _) = Pr2096Fixture();
+        var bytes = Pr2096Fixture();
 
         var document = AtomizerRegistry.Atomize("dialect:qdo", bytes, rules);
 
@@ -99,7 +103,7 @@ public sealed class QdoGenreSuffixTests
     }
 
     [Fact]
-    public void MigrationPreservesEveryPreviouslyAcceptedLocatorAndUntouchedTable()
+    public void MigrationPreservesEveryPreviouslyAcceptedGenreAndUntouchedTable()
     {
         var migrated = LoadRules(CanonicalData);
 
@@ -107,7 +111,7 @@ public sealed class QdoGenreSuffixTests
         {
             var bytes = Encoding.UTF8.GetBytes($"# QDO\n\n## {token} 41.1\n\n证。\n");
             var after = AtomizerRegistry.Atomize("dialect:qdo", bytes, migrated);
-            Assert.Equal($"{kind}/41.1", Assert.Single(after.Claims).AstPath);
+            AssertContentIdentity(Assert.Single(after.Claims));
             Assert.Empty(after.UnregisteredGenres);
             Assert.Equal(bytes, after.Reassemble().ToArray());
         }
@@ -192,9 +196,8 @@ public sealed class QdoGenreSuffixTests
 
         var document = AtomizerRegistry.Atomize("dialect:longest-probe", bytes, rules);
 
-        Assert.Equal(
-            ["observation/1.1", "theorem/1.2"],
-            document.Claims.Select(static claim => claim.AstPath).ToArray());
+        Assert.Equal(2, document.Claims.Length);
+        Assert.All(document.Claims, AssertContentIdentity);
         Assert.Empty(document.UnregisteredGenres);
         Assert.Equal(bytes, document.Reassemble().ToArray());
     }
@@ -216,7 +219,7 @@ public sealed class QdoGenreSuffixTests
         var bytes = Encoding.UTF8.GetBytes("# Probe\n\n## 极新体 1.1\n\n证。\n");
         var document = AtomizerRegistry.Atomize("dialect:longest-probe", bytes, rules);
 
-        Assert.Equal("theorem/1.1", Assert.Single(document.Claims).AstPath);
+        AssertContentIdentity(Assert.Single(document.Claims));
         Assert.Empty(document.UnregisteredGenres);
         Assert.Equal(bytes, document.Reassemble().ToArray());
     }
@@ -232,7 +235,7 @@ public sealed class QdoGenreSuffixTests
 
         var document = AtomizerRegistry.Atomize("dialect:exact-priority-probe", bytes, rules);
 
-        Assert.Equal("observation/1.1", Assert.Single(document.Claims).AstPath);
+        AssertContentIdentity(Assert.Single(document.Claims));
         Assert.Empty(document.UnregisteredGenres);
         Assert.Equal(bytes, document.Reassemble().ToArray());
     }
@@ -271,24 +274,22 @@ public sealed class QdoGenreSuffixTests
         }
     }
 
-    private static (byte[] Bytes, string[] ExpectedPaths) Pr2096Fixture()
+    private static byte[] Pr2096Fixture()
     {
         var source = new StringBuilder("# QDO\n\n");
-        var paths = new List<string>(363);
         var number = 1;
-        foreach (var (token, count, kind) in Pr2096TokenMultiset)
+        foreach (var (token, count, _) in Pr2096TokenMultiset)
         {
             for (var occurrence = 0; occurrence < count; occurrence++)
             {
                 source.Append("## ").Append(token).Append(" 40.").Append(number).Append("\n\n证。\n\n");
-                paths.Add($"{kind}/40.{number}");
                 number++;
             }
         }
 
-        Assert.Equal(363, paths.Count);
+        Assert.Equal(364, number);
         Assert.Equal(12, Pr2096TokenMultiset.Length);
-        return (Encoding.UTF8.GetBytes(source.ToString()), paths.ToArray());
+        return Encoding.UTF8.GetBytes(source.ToString());
     }
 
     private static string RemoveQdoSuffixRule(string data) => data.Replace(

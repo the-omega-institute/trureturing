@@ -193,7 +193,6 @@ public sealed class DigestionMathlibReanchorTests
         var baseBEvent = DigestionReanchorLedgerEventFor(baseEvents, "B");
         var sourceBytes = Encoding.UTF8.GetBytes("digestion receipt source\n");
         var atom = new DigestionAtom(
-            "manual/mathlib-reanchor",
             0,
             sourceBytes.Length,
             ImmutableArray.CreateRange(sourceBytes),
@@ -208,13 +207,12 @@ public sealed class DigestionMathlibReanchorTests
             receiptStatementId ?? oldTarget);
         var entry = Entry(
             atom,
-            "mathlib-reanchor-receipt",
+            atom.Fingerprints.RawSha256["sha256:".Length..],
             AtomizerRegistry.NoAtomizerId,
             DigestionMigrationState.Absorbed,
             DigestionTruthState.Closed,
             [receiptGid],
-            new DigestionReceipts([receipt], [], [], [], null),
-            includeBoundary: true);
+            new DigestionReceipts([receipt], [], [], [], null));
         var document = Document(AtomizerRegistry.NoAtomizerId, [entry]);
         var baseFiles = DigestionReanchorInputFiles(
             baseModules,

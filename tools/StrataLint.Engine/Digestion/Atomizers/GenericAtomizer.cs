@@ -25,8 +25,6 @@ namespace StrataLint.Engine;
 /// </summary>
 internal static class GenericAtomizer
 {
-    internal const string ResidualPrefix = "generic";
-
     /// <summary>
     /// 〈word〉 then 〈number〉: the lead shape every numbered dialect already shares. A genre
     /// is a word, so the token holds letters and digits and nothing else — no dash, no

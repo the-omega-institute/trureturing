@@ -46,11 +46,10 @@ internal static partial class WmAtomizer
         var claims = scaffold.Claims.ToList();
         ExtendLastVersionLineEnding(raw, claims);
         ShiftAppendedAuditSeparators(raw, claims);
-        var lastVersion = claims.Last(static atom => atom.AstPath.StartsWith("version/", StringComparison.Ordinal));
-        var sectionZero = claims.Single(static atom => atom.AstPath == "section/0");
+        var lastVersion = claims.Last(static atom => VersionPattern.IsMatch(AtomText(atom)));
+        var sectionZero = claims.Single(static atom => IsSection(atom, "0"));
         claims.Add(CreateAtom(
             raw,
-            "metadata/discipline",
             lastVersion.EndByte,
             sectionZero.StartByte,
             [new DigestionContext(1, rules.WmHeadings["title"])]));
@@ -224,15 +223,11 @@ internal static partial class WmAtomizer
                 "WM appended audits must cover every revision after v0.1 in ledger order");
         }
 
-        var expectedClaims = new List<string> { "metadata/preamble" };
-        expectedClaims.AddRange(versions.Select(static version => "version/" + version));
-        expectedClaims.AddRange(expectedStructure.Skip(1));
-        expectedClaims.AddRange(versions.Skip(2).Select(static version => "audit/" + version));
-
-        if (!scaffold.Claims.Select(static atom => atom.AstPath)
-            .SequenceEqual(expectedClaims, StringComparer.Ordinal))
+        var expectedClaimCount = versions.Length + expectedStructure.Count
+            + versions.Skip(2).Count();
+        if (scaffold.Claims.Length != expectedClaimCount)
         {
-            throw new TheorySourceFormatException("WM locator set does not match the canonical dialect");
+            throw new TheorySourceFormatException("WM atom set does not match the canonical dialect");
         }
 
         var firstAppendedVersion = versions.Length > 2
@@ -245,7 +240,7 @@ internal static partial class WmAtomizer
     {
         var appendedAuditIndexes = claims
             .Select((atom, index) => (Atom: atom, Index: index))
-            .Where(static item => IsAppendedAuditPath(item.Atom.AstPath))
+            .Where(static item => IsAppendedAudit(item.Atom))
             .Select(static item => item.Index)
             .ToArray();
         foreach (var newAuditIndex in appendedAuditIndexes)
@@ -286,8 +281,11 @@ internal static partial class WmAtomizer
         return boundary >= 1 && raw[boundary - 1] is (byte)'\r' or (byte)'\n' ? 1 : 0;
     }
 
-    private static bool IsAppendedAuditPath(string astPath) =>
-        astPath.StartsWith("audit/v0.", StringComparison.Ordinal);
+    private static bool IsAppendedAudit(DigestionAtom atom)
+    {
+        var match = AuditPattern.Match(AtomText(atom));
+        return match.Success && ParseRevision(match, "WM audit block") >= 2;
+    }
 
     private static int ParseRevision(Match match, string source)
     {
@@ -314,7 +312,7 @@ internal static partial class WmAtomizer
     private static void ExtendLastVersionLineEnding(byte[] raw, List<DigestionAtom> claims)
     {
         var index = claims.FindLastIndex(static atom =>
-            atom.AstPath.StartsWith("version/", StringComparison.Ordinal));
+            VersionPattern.IsMatch(AtomText(atom)));
         var atom = claims[index];
         var end = atom.EndByte;
         if (end < raw.Length && raw[end] == (byte)'\r')
@@ -336,28 +334,36 @@ internal static partial class WmAtomizer
     }
 
     private static DigestionAtom ReSpan(byte[] raw, DigestionAtom atom, int start, int end) =>
-        CreateAtom(raw, atom.AstPath, start, end, atom.Context);
+        CreateAtom(raw, start, end, atom.Context);
 
     internal static DigestionAtom CreateAtom(
         byte[] raw,
-        string astPath,
         int start,
         int end,
         ImmutableArray<DigestionContext> context)
     {
         if (start < 0 || end <= start || end > raw.Length)
         {
-            throw new TheorySourceFormatException($"invalid WM atom span for {astPath}");
+            throw new TheorySourceFormatException($"invalid WM atom span at byte {start}");
         }
 
         var atomBytes = ImmutableArray.CreateRange(raw[start..end]);
         return new DigestionAtom(
-            astPath,
             start,
             end,
             atomBytes,
             DigestionFingerprint.Compute(atomBytes.AsSpan()),
             context,
             DigestionAtomStatusMarker.Parse(atomBytes.AsSpan()));
+    }
+
+    private static string AtomText(DigestionAtom atom) =>
+        StrictUtf8.GetString(atom.RawBytes.AsSpan());
+
+    private static bool IsSection(DigestionAtom atom, string number)
+    {
+        var first = MarkdownBlockAst.Parse(AtomText(atom)).OfType<MarkdownHeading>().FirstOrDefault();
+        var match = first is null ? null : SectionHeadingPattern.Match(first.Text);
+        return match is { Success: true } && match.Groups["number"].Value == number;
     }
 }
