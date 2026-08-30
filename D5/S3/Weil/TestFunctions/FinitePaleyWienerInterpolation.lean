@@ -6,6 +6,7 @@
    digest: Finite compatible data admit exact compact smooth Fourier-Laplace interpolation. -/
 
 import D5.S3.Fourier.FourierLaplaceEntire
+import D5.S3.Weil.FourierLaplace
 import Mathlib.Analysis.Calculus.BumpFunction.Normed
 import Mathlib.Analysis.Calculus.Deriv.Support
 import Mathlib.Analysis.Calculus.Deriv.Star
@@ -121,19 +122,6 @@ private theorem fourier_laplace_scale
     rw [Complex.ofReal_mul]
     ring
 
-private theorem fourier_laplace_reflect_conj (g : Real → Complex) (z : Complex) :
-    FL[(fun x : Real => conj (g (-x)))](z) = conj (FL[g](conj z)) := by
-  rw [← integral_conj]
-  rw [← integral_neg_eq_self
-    (fun x : Real =>
-      Complex.exp (-Complex.I * z * (x : Complex)) * conj (g (-x))) volume]
-  apply integral_congr_ae
-  filter_upwards with x
-  simp only [neg_neg, map_mul]
-  rw [← Complex.exp_conj]
-  congr 2
-  simp
-
 private theorem eval_map_conj (P : Complex[X]) (z : Complex) :
     (P.map (starRingEnd Complex)).eval z = conj (P.eval (conj z)) := by
   simpa using
@@ -171,11 +159,9 @@ private theorem iterate_deriv_reflection
 set_option maxHeartbeats 2000000 in
 -- Normalizing the canonical smooth bump expands several bundled support proofs.
 private theorem exists_common_nonvanishing_seed {M : Nat} (z : Fin M -> Complex) :
-    exists psi : Real -> Complex,
-      ContDiff Real ∞ psi /\
-      HasCompactSupport psi /\
+    exists psi : WeilTestFunction,
       (forall x, psi (-x) = conj (psi x)) /\
-      (forall j, FL[psi](z j) ≠ 0) := by
+      (forall j, fourierLaplace psi (z j) ≠ 0) := by
   let psi0 : WeilTestFunction :=
     { toFun := fun x => (standardBump.normed volume x : Complex)
       contDiff' := Complex.ofRealCLM.contDiff.comp standardBump.contDiff_normed
@@ -214,17 +200,19 @@ private theorem exists_common_nonvanishing_seed {M : Nat} (z : Fin M -> Complex)
         rw [div_mul_eq_mul_div]
         apply (div_lt_iff₀ (by linarith : 0 < B + 1)).2
         nlinarith
-  let psi : Real -> Complex := fun x => psi0 (x / a)
-  have hpsiSmooth : ContDiff Real ∞ psi := by
-    exact psi0.contDiff.comp (by fun_prop)
-  have hpsiCompact : HasCompactSupport psi := by
-    have hhome := psi0.hasCompactSupport.comp_homeomorph
-      (Homeomorph.mulRight₀ a⁻¹ (inv_ne_zero ha.ne'))
-    simpa only [psi, Function.comp_def, Homeomorph.coe_mulRight₀, div_eq_mul_inv] using hhome
-  have hpsiNonzero (j : Fin M) : FL[psi](z j) ≠ 0 := by
-    rw [show FL[psi](z j) = (a : Complex) *
-        fourierLaplace psi0 ((a : Complex) * z j) by
-      simpa only [psi] using fourier_laplace_scale psi0 a ha (z j)]
+  let psi : WeilTestFunction :=
+    { toFun := fun x => psi0 (x / a)
+      contDiff' := psi0.contDiff.comp (by fun_prop)
+      hasCompactSupport' := by
+        have hhome := psi0.hasCompactSupport.comp_homeomorph
+          (Homeomorph.mulRight₀ a⁻¹ (inv_ne_zero ha.ne'))
+        simpa only [Function.comp_def, Homeomorph.coe_mulRight₀, div_eq_mul_inv] using hhome
+      even' := by
+        intro x
+        rw [show -x / a = -(x / a) by ring, psi0.even] }
+  have hpsiNonzero (j : Fin M) : fourierLaplace psi (z j) ≠ 0 := by
+    change FL[(fun x : Real => psi0 (x / a))](z j) ≠ 0
+    rw [fourier_laplace_scale psi0 a ha (z j)]
     apply mul_ne_zero (Complex.ofReal_ne_zero.mpr ha.ne')
     intro hvanish
     have himage := hball (haz j)
@@ -236,7 +224,7 @@ private theorem exists_common_nonvanishing_seed {M : Nat} (z : Fin M -> Complex)
     dsimp only [psi0]
     rw [show -x / a = -(x / a) by ring, standardBump.normed_neg]
     exact (Complex.conj_ofReal _).symm
-  exact ⟨psi, hpsiSmooth, hpsiCompact, hpsiHermitian, hpsiNonzero⟩
+  exact ⟨psi, hpsiHermitian, hpsiNonzero⟩
 
 private theorem polynomial_differential_properties
     (P : Complex[X]) (psi : Real -> Complex)
@@ -378,17 +366,19 @@ theorem finite_exact_paley_wiener_interpolation
       (forall x, f (-x) = conj (f x)) /\
       (forall w, FL[f](w) = P.eval w * FL[psi](w)) /\
       forall j, FL[f](z j) = r j := by
-  obtain ⟨psi, hpsiSmooth, hpsiCompact, hpsiHermitian, hpsiNonzero⟩ :=
+  obtain ⟨psi, hpsiHermitian, hpsiNonzero⟩ :=
     exists_common_nonvanishing_seed z
+  have hpsiSmooth : ContDiff Real ∞ (psi : Real -> Complex) := psi.contDiff
+  have hpsiCompact : HasCompactSupport (psi : Real -> Complex) := psi.hasCompactSupport
   have hpsiTransformConj (w : Complex) :
       FL[psi](conj w) = conj (FL[psi](w)) := by
-    have hreflect : (fun x : Real => conj (psi (-x))) = psi := by
-      funext x
-      rw [hpsiHermitian]
+    have hinvolution : involution psi = psi := by
+      ext x
+      rw [involution_apply, hpsiHermitian]
       simp
-    have htransform := fourier_laplace_reflect_conj psi (conj w)
-    rw [hreflect] at htransform
-    simpa using htransform
+    have htransform := fourierLaplace_involution_conj psi (conj w)
+    rw [hinvolution, starRingEnd_self_apply] at htransform
+    simpa only [fourierLaplace_apply] using htransform
   let target : Fin M -> Complex := fun j => r j / FL[psi](z j)
   have htargetConj (j : Fin M) :
       target (conjIndex j) = conj (target j) := by
