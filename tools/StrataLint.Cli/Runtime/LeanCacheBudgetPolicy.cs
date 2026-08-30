@@ -51,7 +51,7 @@ internal static class LeanCacheBudgetPolicy
     /// 外层是 `report-supervisor.sh` 的 `BUILD_TIMEOUT_SECONDS`(#403 挂死上限,默认 7200,**本次不动**)。
     /// 有效上限 = min(本值, 外层 − 已耗):**外层小于本值时,真正杀进程的是外层**,本值在该路径上不承重。
     /// #4122 第 2–4 轮曾试图把外层写成内层之和(21600 → 64800 → 76140),每轮都被指出少算一段,
-    /// 而全部内层挂死上限相加 ≈ 3 × (3 × 21600 + 2580) + 3600 ≈ 202,000s > 脚本自身 86400 上限——
+    /// 而全部内层挂死上限相加 = 3 × (3 × 21600 + 2580) + 3600 = 205,740s > 脚本自身 86400 上限——
     /// **挂死上限之和不是排程**,该关系在当前词汇表里无解(第 5″ 条预算包络),建模另立
     /// https://github.com/the-omega-institute/trureturing/issues/4127 承接。**域不变**(仍是上面列出的
     /// 三个具名消费点,`ConfiguredBudgetAppliesToEveryProvisioningProcess` 钉住三者同值);本条只补一句
