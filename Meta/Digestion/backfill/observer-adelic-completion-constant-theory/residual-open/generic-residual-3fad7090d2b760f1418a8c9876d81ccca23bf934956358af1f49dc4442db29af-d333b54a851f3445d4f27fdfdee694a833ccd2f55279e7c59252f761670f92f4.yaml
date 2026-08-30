@@ -1,0 +1,10 @@
+ast_path: section/第一千零六部-离线零点可能具有-超稀疏-形态/clause/2
+fingerprints:
+  raw_sha256: sha256:3fad7090d2b760f1418a8c9876d81ccca23bf934956358af1f49dc4442db29af
+  normalized_sha256: sha256:3fad7090d2b760f1418a8c9876d81ccca23bf934956358af1f49dc4442db29af
+cas_ref: sha256:3fad7090d2b760f1418a8c9876d81ccca23bf934956358af1f49dc4442db29af
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,10 @@
+ast_path: section/GSR-3-Fricke-drift-消失
+fingerprints:
+  raw_sha256: sha256:97588b0ec3e761688e5eead46ae95d69c9a4d5dd42005c1722ab837a40c9f6de
+  normalized_sha256: sha256:97588b0ec3e761688e5eead46ae95d69c9a4d5dd42005c1722ab837a40c9f6de
+cas_ref: sha256:97588b0ec3e761688e5eead46ae95d69c9a4d5dd42005c1722ab837a40c9f6de
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

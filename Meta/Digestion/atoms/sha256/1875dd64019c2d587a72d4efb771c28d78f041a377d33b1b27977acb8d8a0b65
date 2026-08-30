@@ -1,0 +1,22 @@
+* 在不同区域选取不同的局部对数。
+
+这条分支切口正是 Dirac string 的数学对应：
+
+$$
+\boxed{
+\text{string 的位置依赖 gauge，}
+}
+$$
+
+但：
+
+$$
+\boxed{
+\text{string 的端点与整数绕数不依赖 gauge。}
+}
+$$
+
+Wu–Yang 对 Dirac 单极子的全局描述正是：不应把奇异 string 当作物理对象，而应使用多个局部势和它们之间的纤维丛过渡函数。([APS Journals][5])
+
+---
+

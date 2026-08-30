@@ -1,0 +1,10 @@
+ast_path: section/三-整数-primitive-incidence
+fingerprints:
+  raw_sha256: sha256:1a745a8031f2d2df18d5b9864fd9f1947ce1ed635b3d3951ffa8d1aeadf3d973
+  normalized_sha256: sha256:1a745a8031f2d2df18d5b9864fd9f1947ce1ed635b3d3951ffa8d1aeadf3d973
+cas_ref: sha256:1a745a8031f2d2df18d5b9864fd9f1947ce1ed635b3d3951ffa8d1aeadf3d973
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

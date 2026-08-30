@@ -1,0 +1,14 @@
+### M4　受限测试类的有限 PSD 计划
+
+建立参数化对象 `WeilWindow L`，依次完成：
+
+1. 有限基、有限 Galerkin matrix；
+2. 二次型恒等式；
+3. 矩阵 PSD 与受限测试类正性的等价；
+4. 有理或区间 LDL／Cholesky 证书；
+5. archimedean 尾项和零点截断误差；
+6. $N,T,L$ 改变时的单调性或显式非单调性。
+
+移植 Chuk／Groskin 前先固定：
+
+- angular frequency 还是 ordinary frequency；

@@ -1,0 +1,21 @@
+## 第二步：resolvent correlation
+
+求解：
+
+$$
+\boxed{
+(-\partial_t^2+a^2)H_{a,L,R}
+=
+\mathfrak W_L,
+}
+\tag{978.1}
+$$
+
+配以：
+
+$$
+H(0)=R,\qquad H'(0)=0.
+$$
+
+---
+

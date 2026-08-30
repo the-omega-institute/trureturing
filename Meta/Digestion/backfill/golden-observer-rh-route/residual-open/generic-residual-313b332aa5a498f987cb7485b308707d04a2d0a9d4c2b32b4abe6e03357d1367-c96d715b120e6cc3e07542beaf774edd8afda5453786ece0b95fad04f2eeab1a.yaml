@@ -1,0 +1,10 @@
+ast_path: section/2-预注册进度向量/clause/5
+fingerprints:
+  raw_sha256: sha256:313b332aa5a498f987cb7485b308707d04a2d0a9d4c2b32b4abe6e03357d1367
+  normalized_sha256: sha256:313b332aa5a498f987cb7485b308707d04a2d0a9d4c2b32b4abe6e03357d1367
+cas_ref: sha256:313b332aa5a498f987cb7485b308707d04a2d0a9d4c2b32b4abe6e03357d1367
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

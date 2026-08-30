@@ -1,0 +1,10 @@
+ast_path: section/第九百四十七部-Fibonacci-transfer-cocycle
+fingerprints:
+  raw_sha256: sha256:ea009d603e3be72102a69c24197df7ed335cfcd4e0ed003d873fecd4c32d2d68
+  normalized_sha256: sha256:ea009d603e3be72102a69c24197df7ed335cfcd4e0ed003d873fecd4c32d2d68
+cas_ref: sha256:ea009d603e3be72102a69c24197df7ed335cfcd4e0ed003d873fecd4c32d2d68
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

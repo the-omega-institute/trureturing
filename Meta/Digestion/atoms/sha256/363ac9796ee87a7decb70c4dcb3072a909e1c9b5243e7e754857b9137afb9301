@@ -1,0 +1,6 @@
+- $\zeta(\phi\rho)$ 在该点没有极点。
+
+于是 $Z_{\rm qc}(s)=0$，但 $\Re s\ne1/(2\phi^2)$，违反 O-5 定位。
+
+这给出理论层最短的“定位部分 $\Longleftrightarrow$ RH”证明路线。正式 Lean 证明仍应使用 `meromorphicOrderAt`／divisor order，而不能在可能为零或极点的点上作非受控除法。
+

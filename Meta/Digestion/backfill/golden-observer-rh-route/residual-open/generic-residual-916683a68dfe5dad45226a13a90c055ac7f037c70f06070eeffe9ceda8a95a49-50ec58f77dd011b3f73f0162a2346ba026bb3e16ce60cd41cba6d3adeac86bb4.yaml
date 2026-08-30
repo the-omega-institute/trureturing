@@ -1,0 +1,10 @@
+ast_path: section/证据标签/clause/3
+fingerprints:
+  raw_sha256: sha256:916683a68dfe5dad45226a13a90c055ac7f037c70f06070eeffe9ceda8a95a49
+  normalized_sha256: sha256:916683a68dfe5dad45226a13a90c055ac7f037c70f06070eeffe9ceda8a95a49
+cas_ref: sha256:916683a68dfe5dad45226a13a90c055ac7f037c70f06070eeffe9ceda8a95a49
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

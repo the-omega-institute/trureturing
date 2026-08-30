@@ -1,0 +1,21 @@
+### 1. 已有冻结基建
+
+[repo-derived | selected frozen GIDs]
+
+- `D5/S3/Weil/TestFunctions`：偶、复值、$C^\infty$、紧支撑测试函数及卷积平方。
+- `D5/S3/Weil/FourierLaplace`：Fourier–Laplace 变换和对称性。
+- `D5/S3/Weil/TestFunctions/ConvolutionSquarePositivity`：
+  `fourierLaplace_convolutionSquare_real` 与
+  `fourierLaplace_convolutionSquare_real_nonnegative`。
+- `D5/S3/Weil/ZeroSum`：非平凡零点、谱参数、`ZeroData`、有限对称截断、`SymmetricConvergent` 与 `zeroSum`。
+- `D5/S3/Weil/ZetaBridge/ClassicExplicitFormula`：特定接口下的 `weil_explicit_formula`。
+- `D5/S3/Weil/WeilIdentity`：显式公式和两种重排；注释标记 D5-T0018-F 已 discharge。
+- `D5/S3/Weil/ZetaBridge/ConvolutionSquareCriticalLine`：
+  临界线单项非负、有限截断和非负及 critical/off-line 分裂。
+- `D5/S3/Weil/ZetaBridge/ConvolutionSquareOffLineOrbits`：
+  四点离线轨道贡献为实数；没有证明其为负。
+- `D5/S3/Weil/ZetaBridge/PrimeArchimedeanEnergyIdentity`：
+  把零点侧卷积平方能量改写为极点／边界项、archimedean jump、算术 jump 与 coherent mass 阈值，正性等价于一种 prime–archimedean Poincaré 型不等式。
+
+这些结果不应重证。新增工作必须组合它们。
+

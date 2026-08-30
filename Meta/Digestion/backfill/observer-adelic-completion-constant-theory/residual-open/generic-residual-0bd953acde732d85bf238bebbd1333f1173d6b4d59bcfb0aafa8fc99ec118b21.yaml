@@ -1,0 +1,10 @@
+ast_path: section/二-概率为零的有理数为什么仍然能被看见
+fingerprints:
+  raw_sha256: sha256:0bd953acde732d85bf238bebbd1333f1173d6b4d59bcfb0aafa8fc99ec118b21
+  normalized_sha256: sha256:0bd953acde732d85bf238bebbd1333f1173d6b4d59bcfb0aafa8fc99ec118b21
+cas_ref: sha256:0bd953acde732d85bf238bebbd1333f1173d6b4d59bcfb0aafa8fc99ec118b21
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

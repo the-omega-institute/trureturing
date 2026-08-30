@@ -1,0 +1,57 @@
+# 第一千零九部　不指定候选位置的环带判据
+
+定义：
+
+$$
+\boxed{
+\mathcal A_\epsilon
+=
+\{w:|w|\ge1+\epsilon\}.
+}
+\tag{1009.1}
+$$
+
+以及：
+
+$$
+\boxed{
+\Lambda_N(\epsilon)
+=
+\sup_{w\in\mathcal A_\epsilon}
+\lambda_N^{\mu_a}(w).
+}
+\tag{1009.2}
+$$
+
+若 RH 成立，则：
+
+$$
+\boxed{
+\Lambda_N(\epsilon)
+\le
+(1+\epsilon)^{-2N}.
+}
+\tag{1009.3}
+$$
+
+若存在一个离线零点，其外侧 Cayley 像为 \(w_0\)，且：
+
+$$
+|w_0|\ge1+\epsilon,
+$$
+
+则：
+
+$$
+\boxed{
+\Lambda_N(\epsilon)
+\ge
+c_{\rho_0}
+\qquad
+\forall N.
+}
+\tag{1009.4}
+$$
+
+因此得到一个真正不要求预先知道离线零点位置的判据：
+

@@ -1,0 +1,34 @@
+## 994.2 关键科学校正
+
+所以浅层所见：
+
+$$
++1,-1,+1,-1,\ldots
+$$
+
+首先是以下事实的必然结果：
+
+$$
+\boxed{
+\text{Li--Clark 谱只有一个本质聚点 }1.
+}
+$$
+
+它并不是 Fibonacci word 的证据。
+
+Fibonacci word 是非周期 Sturmian 序列；
+
+而这里的原始极限首先是严格的 period-two reflection。
+
+因此：
+
+$$
+\boxed{
+\text{任何黄金重整化检验都必须先商去该普适二周期。}
+}
+$$
+
+直接在原始 \(\alpha_n\) 上寻找 Fibonacci pattern，会把由单聚点谱强迫的二周期误认作黄金本体。
+
+---
+

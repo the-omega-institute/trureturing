@@ -1,0 +1,10 @@
+ast_path: row/Cayley-cubic-Lorentz-切锥
+fingerprints:
+  raw_sha256: sha256:aa8a12610df6e009dcafb841c51109064accf6a3a5d174b5501f66471785086a
+  normalized_sha256: sha256:aa8a12610df6e009dcafb841c51109064accf6a3a5d174b5501f66471785086a
+cas_ref: sha256:aa8a12610df6e009dcafb841c51109064accf6a3a5d174b5501f66471785086a
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

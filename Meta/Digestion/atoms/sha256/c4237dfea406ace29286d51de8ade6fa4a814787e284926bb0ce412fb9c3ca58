@@ -1,0 +1,145 @@
+# 第九百七十六部　黄金比例应该出现在哪里
+
+现在可以严格排除三个错误位置。
+
+黄金比例不必出现在：
+
+$$
+\boxed{
+\text{单个 Riemann 零点坐标};
+}
+$$
+
+不必出现在：
+
+$$
+\boxed{
+\text{单个 Li coefficient};
+}
+$$
+
+也不必出现在：
+
+$$
+\boxed{
+\text{单个 Verblunsky coefficient}.
+}
+$$
+
+真正自然的位置是：
+
+$$
+\boxed{
+\text{Schur transfer blocks 的重整化倍率。}
+}
+$$
+
+令：
+
+$$
+A_n(z)
+=
+\widetilde A(\alpha_n,z).
+$$
+
+假设经过某种规范 coarse-graining，可得到两个 block types：
+
+$$
+\mathsf A(z),\qquad
+\mathsf B(z),
+$$
+
+并按 Fibonacci substitution：
+
+$$
+A\mapsto AB,
+\qquad
+B\mapsto A
+$$
+
+排列。
+
+令 Fibonacci block products 为：
+
+$$
+M_k(z).
+$$
+
+则：
+
+$$
+\boxed{
+M_{k+1}
+=
+M_{k-1}M_k
+}
+\tag{976.1}
+$$
+
+或依乘法约定反序。
+
+定义：
+
+$$
+x_k(z)
+=
+\frac12\operatorname{tr}M_k(z).
+$$
+
+则：
+
+$$
+\boxed{
+x_{k+1}
+=
+2x_kx_{k-1}-x_{k-2}.
+}
+\tag{976.2}
+$$
+
+并保持 Fricke invariant：
+
+$$
+\boxed{
+I
+=
+x_{k+1}^2+x_k^2+x_{k-1}^2
+-
+2x_{k+1}x_kx_{k-1}
+-1.
+}
+\tag{976.3}
+$$
+
+在完成固定点：
+
+$$
+(1,1,1)
+$$
+
+处，trace-map 线性化的倍率为：
+
+$$
+\boxed{
+\varphi^2,\quad
+\varphi^{-2},\quad
+-1.
+}
+\tag{976.4}
+$$
+
+项目已经独立机器证明：二元非负整数 unimodular 更新的最小扩张率在 determinant \(-1\) 分支为 \(\varphi\)，在 determinant \(+1\) 分支为 \(\varphi^2\)，Fibonacci matrix 及其平方达到等号。
+
+因此：
+
+$$
+\boxed{
+\varphi
+\text{ 的必然性依赖于“二通道、整数、primitive、unimodular”结构。}
+}
+$$
+
+不能只凭 Schur coefficients 存在就断言它们必呈黄金动力。
+
+---
+

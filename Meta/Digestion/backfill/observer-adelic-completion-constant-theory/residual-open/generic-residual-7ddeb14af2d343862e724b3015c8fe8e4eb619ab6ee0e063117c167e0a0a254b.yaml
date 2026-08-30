@@ -1,0 +1,10 @@
+ast_path: row/离线点成为半群源项
+fingerprints:
+  raw_sha256: sha256:7ddeb14af2d343862e724b3015c8fe8e4eb619ab6ee0e063117c167e0a0a254b
+  normalized_sha256: sha256:7ddeb14af2d343862e724b3015c8fe8e4eb619ab6ee0e063117c167e0a0a254b
+cas_ref: sha256:7ddeb14af2d343862e724b3015c8fe8e4eb619ab6ee0e063117c167e0a0a254b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

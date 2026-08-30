@@ -1,0 +1,54 @@
+# 第一千零四十部　黄金负时间显微镜
+
+选择离散完成深度：
+
+$$
+\boxed{
+x_n=x_0\varphi^{-2n}.
+}
+\tag{1040.1}
+$$
+
+则相应的分辨率地平线：
+
+$$
+K_n\asymp x_n^{-1}
+$$
+
+满足：
+
+$$
+\boxed{
+K_{n+1}
+=
+\varphi^2K_n.
+}
+\tag{1040.2}
+$$
+
+所以：
+
+$$
+\boxed{
+x_{n+1}K_{n+1}=x_nK_n.
+}
+\tag{1040.3}
+$$
+
+这给黄金正负时间一个完全明确的角色：
+
+$$
+\boxed{
+\begin{aligned}
+\text{对象深度}
+&:\quad x\mapsto\varphi^{-2}x;\\
+\text{观察频宽}
+&:\quad K\mapsto\varphi^2K.
+\end{aligned}
+}
+$$
+
+它们互为稳定／不稳定方向。
+
+---
+

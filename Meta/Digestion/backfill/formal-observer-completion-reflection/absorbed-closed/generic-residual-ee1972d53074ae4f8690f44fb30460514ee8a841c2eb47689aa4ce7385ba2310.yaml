@@ -1,0 +1,17 @@
+ast_path: 定理/216.1
+fingerprints:
+  raw_sha256: sha256:ee1972d53074ae4f8690f44fb30460514ee8a841c2eb47689aa4ce7385ba2310
+  normalized_sha256: sha256:ee1972d53074ae4f8690f44fb30460514ee8a841c2eb47689aa4ce7385ba2310
+cas_ref: sha256:ee1972d53074ae4f8690f44fb30460514ee8a841c2eb47689aa4ce7385ba2310
+coverage_gids:
+  - D5/S3/Observer/MetricGeometryLaws/DualSupremumPseudometricKernels.dual_supremum_pseudometric_kernels
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/MetricGeometryLaws/DualSupremumPseudometricKernels.dual_supremum_pseudometric_kernels
+      source_sha256: sha256:ee1972d53074ae4f8690f44fb30460514ee8a841c2eb47689aa4ce7385ba2310
+      target_statement_id: sha256:aa6afebd6cc1c0871158fd7973022e8bc1c0cb2f12073a199a4cad80cb762b90
+  scribe:
+    - gid: D5/S3/Observer/MetricGeometryLaws/DualSupremumPseudometricKernels.dual_supremum_pseudometric_kernels
+      definition_sha256: sha256:426db001c98593079f274462441576f38ddc9a3e7d015dc89b1b7163e39fc5b0
+      emission_sha256: sha256:3bbf48003f318e1140dfba7dea475590e1a8344d9ac57817ac87ad26babcbb82
+  unresolved_subitems: []

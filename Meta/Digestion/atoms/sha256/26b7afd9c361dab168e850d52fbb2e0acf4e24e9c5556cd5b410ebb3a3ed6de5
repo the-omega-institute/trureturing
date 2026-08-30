@@ -1,0 +1,13 @@
+## Pick kernel 正性
+
+证明：
+
+$$
+\boxed{
+[K_\xi(z_j,z_k)]\succeq0
+}
+\tag{1047.4}
+$$
+
+对任意有限点集成立。
+

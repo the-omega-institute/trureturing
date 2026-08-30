@@ -1,0 +1,10 @@
+ast_path: section/1017-3-枚举有限对偶证书/clause/3
+fingerprints:
+  raw_sha256: sha256:66f08ba74362c811261ffb66aa3ffbdb9e3d6b4bc364e61ae8e988990468ca08
+  normalized_sha256: sha256:66f08ba74362c811261ffb66aa3ffbdb9e3d6b4bc364e61ae8e988990468ca08
+cas_ref: sha256:66f08ba74362c811261ffb66aa3ffbdb9e3d6b4bc364e61ae8e988990468ca08
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

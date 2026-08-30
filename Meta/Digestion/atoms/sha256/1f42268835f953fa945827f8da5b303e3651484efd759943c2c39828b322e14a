@@ -1,0 +1,12 @@
+## 第四层：Schur／CMV 越界
+
+某个 Schur step：
+
+$$
+\boxed{
+|\alpha_N|>1.
+}
+$$
+
+说明 unitary completion 在有限层失败。
+

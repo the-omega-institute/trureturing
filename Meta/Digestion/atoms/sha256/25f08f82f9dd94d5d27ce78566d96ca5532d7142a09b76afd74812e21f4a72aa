@@ -1,0 +1,52 @@
+## 952.1 与前文证书深度完全吻合
+
+前文 Chebyshev/Power-Packet 检测需要：
+
+$$
+N\asymp\frac1{|\delta|}.
+$$
+
+若：
+
+$$
+\delta_n\asymp F_n^{-2},
+$$
+
+则：
+
+$$
+\boxed{
+N_n\asymp F_n^2.
+}
+\tag{952.5}
+$$
+
+而：
+
+$$
+F_{2n}
+\sim
+\frac{\varphi^{2n}}{\sqrt5}
+$$
+
+恰好具有同一数量级。
+
+所以此前出现的规范整数补偿器：
+
+$$
+N_n=F_{2n+r}
+$$
+
+现在获得了 trace-map 来源：
+
+$$
+\boxed{
+\text{每一步黄金 RG 使 block 长度乘 }\varphi，
+\text{却使横向缺陷除以 }\varphi^2.
+}
+$$
+
+因此要保持相同横向可见度，观察阶数必须按偶 Fibonacci 尺度增长。
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/998-1-与黄金几何层级的冲突/clause/5
+fingerprints:
+  raw_sha256: sha256:94dc09b6f713ca8a98336db2d4c9e55f2757c2c154ff7583f3d269bc6e704723
+  normalized_sha256: sha256:94dc09b6f713ca8a98336db2d4c9e55f2757c2c154ff7583f3d269bc6e704723
+cas_ref: sha256:94dc09b6f713ca8a98336db2d4c9e55f2757c2c154ff7583f3d269bc6e704723
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

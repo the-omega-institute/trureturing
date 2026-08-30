@@ -1,0 +1,10 @@
+ast_path: row/RH-的-Poisson-无源半群
+fingerprints:
+  raw_sha256: sha256:9032550b35c749d775ad96736774ca53f39b54643a99d8c7a7cc9be4fe493829
+  normalized_sha256: sha256:9032550b35c749d775ad96736774ca53f39b54643a99d8c7a7cc9be4fe493829
+cas_ref: sha256:9032550b35c749d775ad96736774ca53f39b54643a99d8c7a7cc9be4fe493829
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
