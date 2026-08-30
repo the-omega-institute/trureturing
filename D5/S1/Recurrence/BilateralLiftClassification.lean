@@ -29,7 +29,6 @@ theorem bilateral_lift_classification :
     Module.finrank Real (Real.fibRec : LinearRecurrence Real).solSpace = 2 /\
       (Real.fibRec : LinearRecurrence Real).solSpace =
         Submodule.span Real {expandingSequence, contractingSequence} /\
-      Real.goldenRatio = (1 + Real.sqrt 5) / 2 /\
       Real.goldenConj = -Real.goldenRatio⁻¹ /\
       (shift expandingSequence = Real.goldenRatio • expandingSequence /\
         shift contractingSequence = Real.goldenConj • contractingSequence) /\
@@ -129,8 +128,8 @@ theorem bilateral_lift_classification :
         _ = scale * (Real.goldenConj * Real.goldenConj⁻¹) := by
           rw [mul_inv_cancel₀ Real.goldenConj_ne_zero]
         _ = v 0 * Real.goldenConj⁻¹ := by rw [initial]; ring
-  exact ⟨solutionDimension, fibonacci_solution_space_eq_span, rfl,
-    conjugateIdentity, shift_golden_eigenvectors, nonzeroCoefficients,
+  exact ⟨solutionDimension, fibonacci_solution_space_eq_span, conjugateIdentity,
+    shift_golden_eigenvectors, nonzeroCoefficients,
     fibonacci_weight_binet, fibonacci_cyclic_span_minimal, carrierDimension,
     expandingClassification, contractingClassification⟩
 

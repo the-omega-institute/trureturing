@@ -17,10 +17,13 @@ internal sealed class BilateralLiftClassificationDocument : IScribeDocumentDefin
                     H("The bilateral lift is two-dimensional and componentwise unique"),
                     StatementSource.FromAuthor(TheoremFormula()),
                     AssessedProvenance.FromRepo(),
-                    Blocks(Paragraph(Text(
-                        "The public statement retains the solution-space dimension, golden scalar identities, "
-                        + "shift eigenlaws, nonzero Binet coefficients, least invariant carrier, its dimension, "
-                        + "and two independently premised unique component-scalar classifications."))),
+                    Blocks(
+                        Paragraph(Text(
+                            "The source row phi = (1+sqrt(5))/2 is a definition (not a conjunct).")),
+                        Paragraph(Text(
+                            "The public statement retains the solution-space dimension, golden conjugacy identity, "
+                                + "shift eigenlaws, nonzero Binet coefficients, least invariant carrier, its dimension, "
+                                + "and two independently premised unique component-scalar classifications."))),
                     DescribeRole.Theorem))));
 
     private static Formula Apply(Formula function, params Formula[] arguments) =>
@@ -61,7 +64,6 @@ internal sealed class BilateralLiftClassificationDocument : IScribeDocumentDefin
             RowBreak, Grp(),
             solutionSpace, Sp, Eq, Sp, carrier, Sp, Land,
             RowBreak, Grp(),
-            phi, Sp, Eq, Sp, Frac, Grp(D(1), Plus, sqrtFive), Grp(D(2)), Sp, Land,
             psi, Sp, Eq, Sp, Minus, Call("inv", phi), Sp, Land,
             RowBreak, Grp(),
             Apply(shift, expanding), Sp, Eq, Sp, phi, Sp, Cdot, Sp, expanding,
