@@ -97,4 +97,4 @@ This assembles the equivariant split, both dimension statements, both irreducibi
 - Truth anchor: `D5/S3/Factorization/Icosahedral/ExteriorSquareThreePlusThree.V3_irreducible`
 - Truth anchor: `D5/S3/Factorization/Icosahedral/ExteriorSquareThreePlusThree.exteriorSquareV4_equiv_V3_prod_V3Prime`
 - Truth anchor: `D5/S3/Factorization/Icosahedral/ExteriorSquareThreePlusThree.exteriorSquareV4_three_plus_three`
-- Dependency: [D5/S3/Arith/Lattices/ExactDualLatticeFormula](../../Arith/Lattices/ExactDualLatticeFormula.md)
+- Dependency: [D5/S3/Factorization/Icosahedral/ExteriorSquareRepresentations](ExteriorSquareRepresentations.md)
