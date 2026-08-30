@@ -204,7 +204,7 @@ public sealed partial class FormalizeCandidatesTests
 
         Assert.True(result.Success, result.Error);
         using var json = JsonDocument.Parse(result.Output);
-        Assert.Equal("stratalint-formalize-candidates-v3", json.RootElement.GetProperty("schema").GetString());
+        Assert.Equal("stratalint-formalize-candidates-v4", json.RootElement.GetProperty("schema").GetString());
         Assert.Empty(json.RootElement.GetProperty("candidates").EnumerateArray());
         Assert.Empty(json.RootElement.GetProperty("recorded_formalizations").EnumerateArray());
         Assert.Empty(json.RootElement.GetProperty("withheld").EnumerateArray());
@@ -481,7 +481,7 @@ public sealed partial class FormalizeCandidatesTests
 
         Assert.True(result.Success, result.Error);
         using var json = JsonDocument.Parse(result.Output);
-        Assert.Equal("stratalint-formalize-candidates-v3", json.RootElement.GetProperty("schema").GetString());
+        Assert.Equal("stratalint-formalize-candidates-v4", json.RootElement.GetProperty("schema").GetString());
         Assert.Equal(
             ["plain-closed", "proved-closed"],
             json.RootElement.GetProperty("candidates")
@@ -537,7 +537,8 @@ public sealed partial class FormalizeCandidatesTests
         byte[]? formalizationReceipt = null,
         LeanAxiomReport? leanReport = null,
         string atomizer = AtomizerRegistry.PzgId,
-        IReadOnlyList<string>? arguments = null)
+        IReadOnlyList<string>? arguments = null,
+        byte[]? rulesBytes = null)
     {
         var sources = entries
             .GroupBy(static entry => entry.SourceId, StringComparer.Ordinal)
@@ -563,7 +564,8 @@ public sealed partial class FormalizeCandidatesTests
         {
             new(
                 TheoryAtomizerDataLoader.DataPath,
-                ImmutableArray.CreateRange(DigestionTestSupport.RulesBytes)),
+                // rulesBytes 覆盖时不触发 DigestionTestSupport.RulesBytes 的 canonical 文件读取(`??` 惰性求值)。
+                ImmutableArray.CreateRange(rulesBytes ?? DigestionTestSupport.RulesBytes)),
         };
         AddLedgerFiles(files, ledger);
         foreach (var source in sources)

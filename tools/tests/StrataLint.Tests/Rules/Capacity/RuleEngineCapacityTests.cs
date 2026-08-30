@@ -188,7 +188,7 @@ public sealed class RuleEngineCapacityTests
     {
         var fixture = OverfullBucket(forkPointCount: (L + 1), currentCount: (L + 1));
         var oldPath = OverfullMemberPath(L);
-        var renamedPath = $"{OverfullBucketPath}/Renamed12.scribe.cs";
+        var renamedPath = $"{OverfullBucketPath}/RenamedMember.scribe.cs";
         fixture.Files.Remove(oldPath);
         fixture.Files[renamedPath] = "-- renamed member\n";
         var changes = RawChangeSet.CreateWithKinds(
@@ -241,7 +241,8 @@ public sealed class RuleEngineCapacityTests
             RuleId.CreateKnown(3),
             fixture.Build(changes)).Diagnostics;
         // A second branch can delete the same old path and add BranchB. Each branch still
-        // has 24 paths, but their union has 25, so cardinality equality is not sufficient.
+        // has the tolerance-sized path set, but their union has one more path, so cardinality
+        // equality is not sufficient.
         AssertOverfullBucketIsBlocked(diagnostics, count);
     }
 
@@ -263,7 +264,7 @@ public sealed class RuleEngineCapacityTests
     }
 
     [Fact]
-    public void Sl003AdmitsTwelveFileCandidateAfterBaselineAdvancesFromItsElevenFileForkPoint()
+    public void Sl003AdmitsCandidateAtLimitAfterBaselineAdvancesPastItsForkPoint()
     {
         var fixture = OverfullBucket(forkPointCount: (L - 1), currentCount: L);
         fixture.Baseline[OverfullMemberPath((L - 1))] = $"// dev member {L - 1}\n";
@@ -277,7 +278,7 @@ public sealed class RuleEngineCapacityTests
         Assert.Equal(L, CapacityPathCount(context.Current));
         var diagnostics = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(3), context).Diagnostics;
-        // Twelve is the admission boundary, so this in-flight candidate remains admitted
+        // The admission limit is the boundary, so this in-flight candidate remains admitted
         // even after dev advances beyond it.
         Assert.DoesNotContain(diagnostics, item => item.Path == OverfullBucketPath);
     }
@@ -321,18 +322,53 @@ public sealed class RuleEngineCapacityTests
     }
 
     [Fact]
-    public void Sl003RejectsRepositoryBucketBeyondToleranceEvenWhenUntouched()
+    public void Sl003DoesNotBlockUntouchedBucketBeyondRepositoryTolerance()
     {
         var count = RepositoryRules.DirectoryToleranceLimit + 1;
         var fixture = OverfullBucket(forkPointCount: count, currentCount: count);
-        var diagnostic = Assert.Single(
-            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(3), fixture.Build()).Diagnostics,
-            item => item.Path == OverfullBucketPath);
-        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
-        Assert.Equal(
-            $"directory contains {count} files (repository tolerance "
-            + $"{RepositoryRules.DirectoryToleranceLimit}; split per CLAUDE.md 8)",
-            diagnostic.Message);
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(3),
+            fixture.Build()).Diagnostics;
+
+        Assert.DoesNotContain(diagnostics, diagnostic =>
+            diagnostic.Path == OverfullBucketPath
+            && diagnostic.AdmissionEffect == AdmissionEffect.Block);
+    }
+
+    [Fact]
+    public void Sl003RefusesFirstCapacityCountedPathPastAdmissionLimit()
+    {
+        var fixture = OverfullBucket(
+            forkPointCount: RepositoryRules.DirectoryFileLimit,
+            currentCount: RepositoryRules.DirectoryFileLimit + 1);
+        var changes = RawChangeSet.CreateWithKinds(
+            [(OverfullMemberPath(RepositoryRules.DirectoryFileLimit), RawChangeKind.Added)]);
+
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(3),
+            fixture.Build(changes)).Diagnostics;
+
+        Assert.Contains(diagnostics, diagnostic =>
+            diagnostic.Path == OverfullBucketPath
+            && diagnostic.AdmissionEffect == AdmissionEffect.Block);
+    }
+
+    [Fact]
+    public void Sl003RefusesNewPathEvenWhenBucketAlreadyExceedsRepositoryTolerance()
+    {
+        var fixture = OverfullBucket(
+            forkPointCount: RepositoryRules.DirectoryToleranceLimit + 1,
+            currentCount: RepositoryRules.DirectoryToleranceLimit + 2);
+        var changes = RawChangeSet.CreateWithKinds(
+            [(OverfullMemberPath(RepositoryRules.DirectoryToleranceLimit + 1), RawChangeKind.Added)]);
+
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(3),
+            fixture.Build(changes)).Diagnostics;
+
+        Assert.Contains(diagnostics, diagnostic =>
+            diagnostic.Path == OverfullBucketPath
+            && diagnostic.AdmissionEffect == AdmissionEffect.Block);
     }
 
     [Fact]
@@ -553,8 +589,8 @@ public sealed class RuleEngineCapacityTests
     // 有没有让它变长。这与目录轴既有的做法同构(带内候选只有引入了分叉点上不存在的路径才阻断,
     // 见 RepositoryRules.Structure.cs 的 DirectoryToleranceLimit 注释与 2026-08-13 判例)。
     //
-    // 检测不降级:超线仍然出 finding,只是无辜者那条是 Observe;而全仓检测由
-    // CapacityPolicy.InspectRepository 在 dotnet test 里承担(本轮一并接上)。
+    // 检测不降级:超线仍然出 finding,只是无辜者那条是 Observe;全仓检测由 push
+    // 侧的 capacity-audit 承担。
     [Fact]
     public void Sl003DoesNotBlockACandidateThatDidNotGrowAnAlreadyOversizeArtifact()
     {

@@ -207,7 +207,7 @@ public sealed partial class MakeWorkflowTests
         Assert.False(string.IsNullOrWhiteSpace(filter));
         Assert.Equal(
             [
-                "FullyQualifiedName=StrataLint.ArchitectureTests.CapacityPolicyTests.RepositoryHasNoOversizeArtifactOrOverfullDirectory",
+                "FullyQualifiedName~StrataLint.Tests.CapacityAuditCommandTests",
                 "FullyQualifiedName~StrataLint.ArchitectureTests.RepositoryIoAccessPolicyTests",
                 "FullyQualifiedName~StrataLint.ArchitectureTests.BannedApiCoverageTests",
                 "FullyQualifiedName=StrataLint.Tests.MakeWorkflowTests.CheckFastFilterIsNonEmptyAndPinsRequiredRepositoryChecks",
