@@ -1,0 +1,65 @@
+name: agent-validate-golden-phase-vandermonde-v1
+
+on:
+  push:
+    branches:
+      - agent/validate/golden-phase-vandermonde-v1-20260831
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/validate/golden-phase-vandermonde-v1-20260831
+          fetch-depth: 0
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+      - name: Install pinned Lean toolchain
+        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - name: Restore Lean dependencies
+        run: lake update
+      - name: Build target Lean modules
+        shell: bash
+        run: |
+          set +e
+          mkdir -p diagnostics
+          : > diagnostics/summary.tsv
+          failed=0
+          modules=(
+            D5.S3.Observer.GoldenCoding.GoldenRationalShellRigidity
+            D5.S3.Analytic.GoldenTomography.FiniteVandermondeTomography
+            D5.S3.Analytic.GoldenTomography.TwoNodeTomographyConditioning
+            D5.S3.PrimeForms.GoldenEuler.LocalEulerTailVanishing
+          )
+          for module in "${modules[@]}"; do
+            safe="${module//./_}"
+            log="diagnostics/${safe}.log"
+            lake build "$module" > "$log" 2>&1
+            status=$?
+            cat "$log"
+            printf '%s\t%s\n' "$module" "$status" >> diagnostics/summary.tsv
+            if [ "$status" -ne 0 ]; then
+              failed=1
+            fi
+          done
+          printf '%s\n' "$failed" > diagnostics/failed
+          exit 0
+      - name: Upload diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: golden-phase-vandermonde-v1-diagnostics
+          path: diagnostics
+          if-no-files-found: error
+          retention-days: 3
+      - name: Enforce successful builds
+        shell: bash
+        run: |
+          cat diagnostics/summary.tsv
+          test "$(cat diagnostics/failed)" = "0"
