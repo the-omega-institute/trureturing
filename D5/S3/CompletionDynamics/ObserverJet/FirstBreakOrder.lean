@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/CompletionDynamics/ObserverJet/FirstBreakOrder
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: The first nonzero normal jet order is totalized in WithTop Nat, with
-     infinity recording threads whose every finite jet remains unbroken. -/
+   digest: The first nonzero normal jet order is totalized in WithTop Nat, with infinity recording threads whose every finite jet remains unbroken. -/
 
 import Mathlib
 

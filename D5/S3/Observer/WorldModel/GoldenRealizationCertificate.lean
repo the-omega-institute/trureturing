@@ -3,9 +3,7 @@
    mirror-B: D5/B/S3/Observer/WorldModel/GoldenRealizationCertificate
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: One certificate packages the quadratic, Fibonacci, rotation-trace,
-     Mobius-fixed, and projective-attraction realizations of the golden structure
-     while exhibiting a repelling countermodel. -/
+   digest: One certificate packages the quadratic, Fibonacci, rotation-trace, Mobius-fixed, and projective-attraction realizations of the golden structure while exhibiting a repelling countermodel. -/
 
 import D5.S3.Observer.GoldenCoding.GoldenAngleTraceBridge
 import D5.S3.Observer.WorldModel.FixedPointStabilityProfile

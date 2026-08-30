@@ -3,9 +3,7 @@
    mirror-B: D5/B/S3/Observer/AgencySelf/AgencyEnrichment
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Agency enrichment pairs current state and strategy, isolates the
-     strategy residual inside current fibers, and becomes agency completion only
-     after controlled behavior closure. -/
+   digest: Agency enrichment pairs current state and strategy, isolates the strategy residual inside current fibers, and becomes agency completion only after controlled behavior closure. -/
 
 import D5.S3.ObserverMemory.Refinement.EffectiveImageKernelCriterion
 import D5.S3.ObserverMemory.Refinement.JointReadoutSupremum

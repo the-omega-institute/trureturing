@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/ObserverMemory/RefinementClosure/CommutingClosureCommonFixedPoint
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Two commuting closure operators compose to a closure whose fixed
-     points are exactly their common fixed points. -/
+   digest: Two commuting closure operators compose to a closure whose fixed points are exactly their common fixed points. -/
 
 import Mathlib.Order.Closure
 

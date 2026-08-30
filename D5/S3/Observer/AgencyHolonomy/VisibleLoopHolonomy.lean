@@ -3,9 +3,7 @@
    mirror-B: D5/B/S3/Observer/AgencyHolonomy/VisibleLoopHolonomy
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Pointed holonomy is a visible return with nontrivial hidden transport;
-     strategy factorization hides policy drift, while a faithful joint readout
-     rules out hidden loops. -/
+   digest: Pointed holonomy is a visible return with nontrivial hidden transport; strategy factorization hides policy drift, while a faithful joint readout rules out hidden loops. -/
 
 import D5.S3.Observer.AgencySelf.AgencyEnrichment
 import D5.S3.ObserverMemory.RefinementClosure.BehaviorUpdateWordAction

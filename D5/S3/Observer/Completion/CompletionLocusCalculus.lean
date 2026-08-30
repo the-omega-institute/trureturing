@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/Observer/Completion/CompletionLocusCalculus
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Structural completion loci compose by intersection, pull back along
-     arbitrary parameter maps, and retain gauge stability under conjunction. -/
+   digest: Structural completion loci compose by intersection, pull back along arbitrary parameter maps, and retain gauge stability under conjunction. -/
 
 import D5.S3.Observer.Completion.StructuralCompletionSignature
 

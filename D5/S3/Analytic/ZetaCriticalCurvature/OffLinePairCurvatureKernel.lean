@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/Analytic/ZetaCriticalCurvature/OffLinePairCurvatureKernel
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: A reflection-paired logarithmic potential has a certified slope
-     whose axis derivative is the off-line curvature dipole. -/
+   digest: A reflection-paired logarithmic potential has a certified slope whose axis derivative is the off-line curvature dipole. -/
 
 import Mathlib
 

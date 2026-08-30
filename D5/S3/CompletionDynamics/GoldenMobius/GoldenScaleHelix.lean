@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/CompletionDynamics/GoldenMobius/GoldenScaleHelix
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Golden completion lifts to a helix whose deck step advances one scale
-     period and reverses orientation. -/
+   digest: Golden completion lifts to a helix whose deck step advances one scale period and reverses orientation. -/
 
 import D5.S3.CompletionDynamics.GoldenMobius.GoldenProjectiveDerivative
 import Mathlib.Analysis.SpecialFunctions.Log.Basic

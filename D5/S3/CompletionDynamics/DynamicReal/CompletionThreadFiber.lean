@@ -3,9 +3,7 @@
    mirror-B: D5/B/S3/CompletionDynamics/DynamicReal/CompletionThreadFiber
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: A constant completed readout has a nontrivial thread fiber, while
-     adjoining the blow-up origin restores injectivity and proves that no
-     completed-value decoder can reconstruct every thread. -/
+   digest: A constant completed readout has a nontrivial thread fiber, while adjoining the blow-up origin restores injectivity and proves that no completed-value decoder can reconstruct every thread. -/
 
 import D5.S3.CompletionDynamics.GoldenMobius.GoldenThreadBlowup
 

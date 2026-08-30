@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/PrimeObserver/ProjectiveMemory/GoldenProjectiveMultiplier
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: The conjugate golden mode scales by minus the inverse golden ratio,
-     while its ratio to the dominant mode scales by its inverse square. -/
+   digest: The conjugate golden mode scales by minus the inverse golden ratio, while its ratio to the dominant mode scales by its inverse square. -/
 
 import D5.S3.CompletionDynamics.GoldenMobius.GoldenMobiusMap
 

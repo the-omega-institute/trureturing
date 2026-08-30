@@ -3,9 +3,7 @@
    mirror-B: D5/B/S3/ObserverMemory/Refinement/PostprocessingKernelCalculus
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Postprocessing enlarges readout kernels, with equality exactly on
-     injective realized postprocessing and strictness witnessed by a realized
-     collision. -/
+   digest: Postprocessing enlarges readout kernels, with equality exactly on injective realized postprocessing and strictness witnessed by a realized collision. -/
 
 import Mathlib.Data.Setoid.Basic
 import Mathlib.Data.Set.Image

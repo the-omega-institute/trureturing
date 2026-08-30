@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/Analytic/ZetaCompletionFlow/NewtonCompletionField
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: The Newton completion vector is scale invariant, detects roots under
-     a regular derivative, and exactly completes affine zero models in one step. -/
+   digest: The Newton completion vector is scale invariant, detects roots under a regular derivative, and exactly completes affine zero models in one step. -/
 
 import Mathlib
 

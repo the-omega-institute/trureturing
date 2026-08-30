@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/Analytic/ZetaCompletionFlow/SimpleZeroCompletionVelocity
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: A nondegenerate zero-thread chain equation determines its completion
-     velocity by the ratio of completion and state derivatives. -/
+   digest: A nondegenerate zero-thread chain equation determines its completion velocity by the ratio of completion and state derivatives. -/
 
 import Mathlib
 

@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/Analytic/ZetaCriticalCurvature/CriticalNormalEvenness
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Reflection-even scalar potentials have zero first normal derivative
-     at the fixed axis. -/
+   digest: Reflection-even scalar potentials have zero first normal derivative at the fixed axis. -/
 
 import Mathlib
 

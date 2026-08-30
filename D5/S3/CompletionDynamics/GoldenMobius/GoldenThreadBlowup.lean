@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/CompletionDynamics/GoldenMobius/GoldenThreadBlowup
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Golden completion curves share the same completed value while their
-     first blow-up coordinate and tangent retain the observer origin. -/
+   digest: Golden completion curves share the same completed value while their first blow-up coordinate and tangent retain the observer origin. -/
 
 import D5.S3.CompletionDynamics.GoldenMobius.GoldenProjectiveDerivative
 import Mathlib.Analysis.Calculus.Deriv.Add

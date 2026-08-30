@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/Analytic/ZetaCompletionFlow/DiscreteCompletionVelocity
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: The finite-difference completion velocity is a Newton predictor and
-     exactly recovers root displacement for affine layer changes. -/
+   digest: The finite-difference completion velocity is a Newton predictor and exactly recovers root displacement for affine layer changes. -/
 
 import D5.S3.Analytic.ZetaCompletionFlow.NewtonCompletionField
 

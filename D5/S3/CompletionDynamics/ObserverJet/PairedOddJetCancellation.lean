@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/CompletionDynamics/ObserverJet/PairedOddJetCancellation
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Reflection pairing cancels odd linear jets while preserving
-     quadratic information in the even channel. -/
+   digest: Reflection pairing cancels odd linear jets while preserving quadratic information in the even channel. -/
 
 import Mathlib
 
