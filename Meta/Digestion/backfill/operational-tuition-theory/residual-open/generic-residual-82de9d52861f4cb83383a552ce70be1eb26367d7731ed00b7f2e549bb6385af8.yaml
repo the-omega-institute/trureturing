@@ -1,0 +1,13 @@
+ast_path: section/第八部-证明义务清单-预登记
+fingerprints:
+  raw_sha256: sha256:82de9d52861f4cb83383a552ce70be1eb26367d7731ed00b7f2e549bb6385af8
+  normalized_sha256: sha256:82de9d52861f4cb83383a552ce70be1eb26367d7731ed00b7f2e549bb6385af8
+cas_ref: sha256:82de9d52861f4cb83383a552ce70be1eb26367d7731ed00b7f2e549bb6385af8
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-f39bf635dbd5ec27987297c3322d3777de9f6498e754ec9e500a67b563ea4a97-4779fff0dc8bc73d072ac9f5bee7a9d53319811cf5539125aaeb64a1673c95dc
+    - generic-residual-61883e31e2268df9a0ad01e6000873b29030321edea33f8969b7e9e77123167e-dd099f19134e114ff53cbef7fb5a2d4cd5cac7f6029d5826fbeac0ac9e41dbe7
