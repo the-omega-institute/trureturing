@@ -42,13 +42,18 @@ internal sealed class LeanCustomSyntaxCatalog(
 
     internal static ImmutableHashSet<string> ParseLiterals(
         ImmutableArray<LeanSourceToken> tokens,
-        ImmutableArray<int> commandStarts)
+        ImmutableArray<int> commandStarts,
+        bool includeLocal)
     {
         var result = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
         for (var index = 0; index < commandStarts.Length; index++)
         {
             var start = commandStarts[index];
             if (tokens[start].Text is not ("macro" or "syntax" or "notation" or "local" or "scoped"))
+            {
+                continue;
+            }
+            if (!includeLocal && tokens[start].Text == "local")
             {
                 continue;
             }
