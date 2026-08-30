@@ -1,0 +1,10 @@
+ast_path: section/第八部-证明义务清单-预登记/clause/1
+fingerprints:
+  raw_sha256: sha256:f39bf635dbd5ec27987297c3322d3777de9f6498e754ec9e500a67b563ea4a97
+  normalized_sha256: sha256:f39bf635dbd5ec27987297c3322d3777de9f6498e754ec9e500a67b563ea4a97
+cas_ref: sha256:f39bf635dbd5ec27987297c3322d3777de9f6498e754ec9e500a67b563ea4a97
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
