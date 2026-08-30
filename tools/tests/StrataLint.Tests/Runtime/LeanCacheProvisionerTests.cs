@@ -48,7 +48,7 @@ public sealed class LeanCacheProvisionerTests
         var previous = Environment.GetEnvironmentVariable(BudgetVariable);
         try
         {
-            // 300..7200 之外的值须被 clamp;取一个远超上界的数,三者都应落到 7200。
+            // 下界..上界之外的值须被 clamp;取一个远超上界的数,三者都应落到上界。
             Environment.SetEnvironmentVariable(BudgetVariable, "99999");
             var clamped = TestBudgets.LeanCacheProvisionCeiling;
             Assert.Equal(clamped, LeanCacheProvisioner.LeanCommandBudget);
@@ -77,11 +77,21 @@ public sealed class LeanCacheProvisionerTests
         // 本地全量冷建实测(2026-08-23,28 核,含并发,EXIT=0,1571 模块)。
         const int LocalFullColdBuildSeconds = 3388;
 
+        // #4120 修订时(2026-08-30)的规模投影:dev `9b629c376` 2672 模块 × 2.156588 s/模块
+        // (= 3388/1571,本机上界侧锚点)= 5763s;CI 侧下界(run 33286112262,72 分钟未建完)
+        // ≥ 4320s 与之同量级。首次收口的判据(清过冷建读数的两倍)须对**当前**规模成立,
+        // 否则复审线被跨过后只改复审线、不改预算,就是「改数让测试绿」。
+        const int ProjectedFullColdBuildSecondsAtRevision = 5763;
+
         // 负读数①:旧值 1800 对 1656 的 8% 余量被并发吃掉而失败。故须显著多于 1 倍。
         Assert.True(
             LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds
                 > LocalFullColdBuildSeconds * 2,
             "预算未清过本地全量冷建的两倍,并发余量不足以避免重演 1800 的失败");
+        Assert.True(
+            LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds
+                > ProjectedFullColdBuildSecondsAtRevision * 2,
+            "预算未清过 #4120 修订时规模投影冷建的两倍:复审线到期后预算本身未重新收口");
 
         // 有限:预算必须封顶,否则挂死检测失效。
         Assert.True(
@@ -110,7 +120,9 @@ public sealed class LeanCacheProvisionerTests
             "**域**",                 // 域
             "**正读数**",             // 正读数
             "**负读数**",             // 负读数
-            "issues/2535",           // 永久案号
+            "issues/2535",           // 永久案号(首次收口)
+            "2026-08-30",            // 修订日期(#4120)
+            "issues/4120",           // 修订案号
             "**owner**",              // owner
             "退出条件",               // 退出条件 / 复审触发
             "**非永久**",             // 非永久
@@ -171,7 +183,7 @@ public sealed class LeanCacheProvisionerTests
     /// </summary>
     [Theory]
     [InlineData("1", 300)]
-    [InlineData("9000", 7200)]
+    [InlineData("30000", 21600)]
     public void ConfiguredBudgetUsesInvariantParsingAndClamps(string raw, int expectedSeconds)
     {
         AssertCacheGetBudget(raw, expectedSeconds);

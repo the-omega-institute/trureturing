@@ -12,7 +12,12 @@ internal static class LeanCacheBudgetPolicy
     /// 不是「报了 policy-override」。本值走完了另外两型都不可行的论证(见下),
     /// 故落在③,并按该型要求报全七项。
     ///
-    /// **日期**:2026-08-25。
+    /// **日期**:2026-08-30(第二次收口;首次收口 2026-08-25 取值 7200,案号 #2535)。
+    ///
+    /// **修订记录(2026-08-30)**:复审触发线 ②(当时 2672 模块)被跨过 —— dev `9b629c376` 实测
+    /// `find D5 -name '*.lean' | wc -l` = 2672,观察者 `ColdBuildBudgetReviewLineHasNotBeenCrossed`
+    /// 如其设计把全仓触碰 D5 的 PR 判红(https://github.com/the-omega-institute/trureturing/issues/4120)。
+    /// 本次是对该到期的**重新收口**,不是「改大让它绿」:型别不变、论证重走、读数更新、复审线重算。
     ///
     /// **域**:`LeanCacheProvisioner` 的三个具名消费点 —— `LeanCommandBudget`(承重,
     /// `worktree with-cache-writer` 包裹的任意 Lake 命令)、`DirectoryCopyBudget`
@@ -26,9 +31,16 @@ internal static class LeanCacheBudgetPolicy
     /// 「整个吃掉」⟹ 超时失败;② 全量内容层冷建实测 **3388s**(本机 28 核,含并发,
     /// 2026-08-23 `18:56:21→19:52:49`,`EXIT=0`,1571 模块)、**>77 分钟未建完**
     /// (`ubuntu-24.04-arm`,run 32493250519);③ 跨机:`D5/S0/Tower` 一族 81 模块
-    /// **6305 秒**@ARM —— 这条同时履行了本文件曾要求的 ANOTHER MACHINE MUST REMEASURE。
+    /// **6305 秒**@ARM —— 这条同时履行了本文件曾要求的 ANOTHER MACHINE MUST REMEASURE;
+    /// ④(2026-08-30 新增)锚点投影:2.156588 s/模块(= 3388/1571,上界侧)× 2672 = **5763s**,
+    /// 恰为 7200 的 80.0%,即首次收口的取值依据按其自设判据到期;⑤(2026-08-30 新增)CI 侧
+    /// 真实读数:run 33286112262(`lean-cache-seed-manual.yml`,
+    /// v4.33 集成分支,ubuntu-24.04-arm)6 个 12 分钟检查点共 **72 分钟建造而未报完成**
+    /// ⟹ CI 冷建**下界 ≥ 4320s**,与 ④ 同量级;且 `lean-inspect` job 自身 `timeout-minutes: 45`,
+    /// 故本预算在 CI 上从不承重,只约束本机 `with-cache-writer` 包裹的 Lake 命令。
     ///
-    /// **永久案号**:https://github.com/the-omega-institute/trureturing/issues/2535
+    /// **永久案号**:https://github.com/the-omega-institute/trureturing/issues/2535(首次收口)
+    ///   → https://github.com/the-omega-institute/trureturing/issues/4120(2026-08-30 修订)
     ///
     /// **owner**:仓库 τ=0 owner。
     ///
@@ -36,8 +48,11 @@ internal static class LeanCacheBudgetPolicy
     ///   ① 拦住**全量冷建**的 fail-closed 门落地(设计、代价与五条开建条件记于 #3029)。
     ///      届时本值不再需要覆盖冷建。在那之前它**必须**覆盖冷建 —— 现有守卫 `AllCold`
     ///      是合取,结构上放过「mathlib 热 / 内容层冷」这一真实未命中态,故冷建当前无人拦。
-    ///      **① 是一个动作,不可机器判**,故它不能单独承担「非永久」。
-    ///   ② D5 内容层模块数达到 <see cref="ColdBuildBudgetReviewModuleCount"/>(#3029 裁定)。
+    ///      **① 是一个动作,不可机器判**,故它不能单独承担「非永久」。〔2026-08-30 勘注:生产者侧
+    ///      的种子 workflow `.github/workflows/lean-cache-seed-manual.yml` 已实际存在并跑过
+    ///      (负读数⑤),#3029 「新 config 的首个 PR 结构上必无种子」这一前提因此改变;
+    ///      门的**消费侧**仍未建,由 #4120 的后续单承接,本次不建(16′ 剥洋葱)。〕
+    ///   ② D5 内容层模块数达到 <see cref="ColdBuildBudgetReviewModuleCount"/>(2026-08-30 重算)。
     ///      **② 可机器判且有观察者**(见该常数的声明),这是「非永久」的实际兑现处。
     ///
     /// **非永久**:上一条即其非永久性。
@@ -49,17 +64,24 @@ internal static class LeanCacheBudgetPolicy
     ///     ⟹ 每次求值都被压回上界,即规矩点名的「**常函数掏空分型仍属硬编码**」。
     ///   `relation-derived` —— 不产末值,做不了 timeout。
     ///
-    /// **取值 7200 的依据**:须清过负读数②的 3388s 且留出并发余量(负读数①证明
-    /// 8% 的余量会被并发吃掉);7200/3388 = **2.13 倍**。它是**选定值,不是算出来的**
-    /// —— 这正是本值属③而非①的原因。
+    /// **取值 21600 的依据**:选定规则与首次相同 —— 须清过**当前规模**的冷建读数且留出并发余量
+    /// (负读数①证明 8% 的余量会被并发吃掉;首次取 7200/3388 = 2.13 倍为足)。当前规模的冷建读数
+    /// 取负读数④(投影 5763s,上界侧)与⑤(CI 下界 ≥ 4320s)中的较大者 5763s;21600/5763 =
+    /// **3.75 倍**,取整小时使它一望可知是选定值。**不取更小**:2 倍(11526)只在今日规模上成立,
+    /// 而本值的域是本机 Lake 命令的挂死上限,误杀一次合法冷建的代价(半建的 `.lake` 无 stamp,
+    /// 连带作废 donor 资格,#2762)高于多等一会儿;**不取更大**:预算必须封顶,否则挂死检测失效。
+    /// 它是**选定值,不是算出来的** —— 这正是本值属③而非①的原因。
     /// </summary>
-    internal const int DefaultProvisionBudgetSeconds = 7200;
+    internal const int DefaultProvisionBudgetSeconds = 21600;
 
     /// <summary>
     /// 上述 `policy-override` 的**复审触发线**:D5 内容层模块数达到此值时,它的取值依据失效。
     ///
-    /// **这不是本文件派生的数,是 #3029 裁定的数** —— 由本机实测的单模块冷建成本
-    /// (负读数② 的 3388s / 1571 模块)与本预算的 80% 线算出。本文件只**登记**它,
+    /// **来源(2026-08-30,#4120 修订)**:首值 2672 由 #3029 裁定(锚点 = 负读数②的
+    /// 3388s / 1571 模块 = 2.156588 s/模块,7200 的 80% 线)。本次重算把取整规则写明:
+    /// **`ceil(0.8 × DefaultProvisionBudgetSeconds / 2.156588)` = ceil(8012.66) = 8013,单阶段向上取整**。
+    /// 锚点沿用 #3029 的本机上界侧读数,**未重测**:重测需要一次全量冷建,而那正是本值要避免的事;
+    /// 负读数⑤ 的 CI 下界与之同量级,不与它矛盾。本文件登记它,
     /// 由 `ColdBuildBudgetReviewLineTests.ColdBuildBudgetReviewLineHasNotBeenCrossed` 盯住。
     ///
     /// **为什么需要这一条**:2026-08-26 实测 `grep -rnw 2672` 全仓 **0 命中**
@@ -79,12 +101,13 @@ internal static class LeanCacheBudgetPolicy
     /// 直到有人收口。80% 而非 100% 只意味着「红出现时预算本身仍够用,收口有时间做」,
     /// **不意味着红是软的**。〔勘正:此前这里写「那条红是提醒,不是事故」,与真实门语义相反。〕
     ///
-    /// **2672 这个数的来源与一处未闭合缺口**:它由 #3029 裁定登记,本文件**忠实抄录、不重新派生**。
-    /// 但按其自述锚点直接算:`3388/1571 = 2.156588` 秒/模块,`7200 × 0.8 / 2.156588 = 2670.885`,
-    /// 向上取整为 **2671**;**2672 只能由一个未声明的两阶段取整复现**。
-    /// 该缺口在 #3029 的裁定文本里,不在本文件;此处如实记下,不代它补。
+    /// **首值的取整缺口(已闭合)**:本文件曾记 `7200 × 0.8 / 2.156588 = 2670.885`,而 2672 只能由
+    /// 未声明的两阶段取整复现。本次修订以上面写明的单阶段规则重算,该缺口不再存在。
+    ///
+    /// **越线时实际发生了什么(2026-08-30 读数)**:2026-08-26 `a9b3cb7b9` 2033 → 08-28 `3add627e3` 2469
+    /// → 08-30 `9b629c376` 2672,四天跨过 80% 线而无人在此期间收口;观察者如设计地红了。
     /// </summary>
-    internal const int ColdBuildBudgetReviewModuleCount = 2672;
+    internal const int ColdBuildBudgetReviewModuleCount = 8013;
 
     /// <summary>
     /// 旋钮的下界。低于此值会把正常路径(见上「正读数」)误杀;它只在调用方显式设置

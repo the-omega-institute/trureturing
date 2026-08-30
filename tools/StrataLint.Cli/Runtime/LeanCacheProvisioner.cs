@@ -61,10 +61,9 @@ internal static class LeanCacheProvisioner
     internal const int MinProvisionBudgetSeconds = LeanCacheBudgetPolicy.MinimumConfigurableBudgetSeconds;
 
     /// <summary>
-    /// clamp 上界。派生式在仓库约 2225 个内容层模块时算到此值
-    /// (2225 × 3 × 1.5 = 10012 > 7200),届时**须重看**:要么该上界随派生式一起长,
-    /// 要么承认单次构建不该由本预算兜底而交给 #2814 的 fail-closed 门。
-    /// 现读 1651 模块 ⟹ 派生 7429,已略过此界,故当前实际取值即为本上界。
+    /// clamp 上界 = <see cref="LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds"/>(policy-override,
+    /// 首次收口 #2535,2026-08-30 经 #4120 重新收口)。此处曾记「派生式约 2225 模块时算到此值」,
+    /// 该派生式已于 #3119 删除,那段文字随之作废;上界现直接取自该声明,不再有派生。
     /// </summary>
     internal const int MaxProvisionBudgetSeconds = LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds;
     private const int MissingOleanSampleLimit = 5;
@@ -74,10 +73,9 @@ internal static class LeanCacheProvisioner
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
     // Cold provisioning spans package clones plus olean download and extraction. The five
-    // minute floor permits useful fail-fast runs; the two hour ceiling leaves twice the
-    // declared default above without an unbounded hang. (That ratio read 4x while the
-    // default was 1800s; the policy-override above moved the default and this sentence
-    // had to move with it.)
+    // minute floor permits useful fail-fast runs; the ceiling is the declared default itself
+    // (six hours since #4120; two hours under #2535; the ratio to a cold build read 4x while
+    // the default was 1800s), so a hang is bounded without a second literal.
     /// <summary>
     /// 按某棵工作树的内容层规模派生预算。**没有无参版本**:预算依赖那棵树有多少模块,
     /// 一个静态属性只能去猜仓库根,而猜出来的工作量会算出看似派生实则无源的值。
