@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""compose_envelope.py WORKTREE OUT.json [--worker RESULT.json] [--lane L] [--pr N] [--pass K] [--note TEXT]
+"""compose_envelope.py WORKTREE OUT.json [--worker RESULT.json]... [--lane L] [--pr N] [--pass K] [--note TEXT]
+(--worker may repeat: a fix-flight result carries no attestations; pass the ORIGINAL deposit result first, then the fix result — later records only fill fields the earlier ones lack)
 
 Thin caller (glue, 第 11 条 辨析): the branch truth comes from the typed verb
   StrataLint review-envelope --base <merge-base origin/dev HEAD> --head <HEAD>
@@ -32,19 +33,22 @@ def main(argv):
     if len(argv) < 3:
         usage()
     wt, out = argv[1], argv[2]
-    opts = {"worker": None, "lane": None, "pr": None, "pass": None, "note": ""}
+    opts = {"worker": [], "lane": None, "pr": None, "pass": None, "note": ""}
     i = 3
     while i < len(argv):
         key = argv[i].lstrip("-")
         if key not in opts or i + 1 >= len(argv):
             usage()
-        opts[key] = argv[i + 1]
+        if key == "worker":
+            opts["worker"].append(argv[i + 1])
+        else:
+            opts[key] = argv[i + 1]
         i += 2
     for key in ("pr", "pass"):
         if opts[key] is not None and not re.fullmatch(r"[0-9]+", opts[key]):
             sys.stderr.write(f"COMPOSE_BAD_INT --{key}={opts[key]}\n")
             sys.exit(64)
-    if opts["worker"] is not None and not os.path.isfile(opts["worker"]):
+    if any(not os.path.isfile(path) for path in opts["worker"]):
         sys.stderr.write(f"COMPOSE_WORKER_MISSING {opts['worker']}\n")
         sys.exit(64)
     if not (os.path.isdir(os.path.join(wt, ".git")) or os.path.isfile(os.path.join(wt, ".git"))):
@@ -82,15 +86,18 @@ def main(argv):
         sys.stderr.write(f"COMPOSE_VERB_REVISION_MISMATCH verb={truth['base'][:9]}..{truth['head'][:9]} requested={base[:9]}..{head[:9]}\n")
         sys.exit(70)
 
-    worker = {}
-    if opts["worker"]:
-        with open(opts["worker"], encoding="utf-8") as fh:
+    worker, per_atom = {}, {}
+    for path in opts["worker"]:
+        with open(path, encoding="utf-8") as fh:
             loaded = json.load(fh)
-        worker = loaded.get("conclusion", loaded)
-    per_atom = {}
-    for record in list(worker.get("atoms", []) or []) + list(worker.get("quarantined_atoms", []) or []):
-        if isinstance(record, dict) and record.get("atom_id"):
-            per_atom.setdefault(record["atom_id"], record)
+        loaded = loaded.get("conclusion", loaded)
+        for key, value in loaded.items():          # earlier results win; later ones only fill gaps
+            worker.setdefault(key, value)
+        for record in list(loaded.get("atoms", []) or []) + list(loaded.get("quarantined_atoms", []) or []):
+            if isinstance(record, dict) and record.get("atom_id"):
+                merged = per_atom.setdefault(record["atom_id"], {})
+                for key, value in record.items():
+                    merged.setdefault(key, value)
 
     # Single-deposit fix-flight envelopes carry the per-atom attestations at conclusion level; with exactly
     # one deposited atom and no per-atom record for it, that level IS the per-atom record (unambiguous).
@@ -135,7 +142,7 @@ def main(argv):
         "atoms": atoms, "deposited_count": len(truth["deposited"]), "extended_count": len(truth["extended"]), "ejected_count": sum(1 for atom in atoms if atom["outcome"] == "ejected"),
         "kind": "deposit PR" if truth["deposited"] else ("hosted-extension PR" if truth["extended"] else "data-only quarantine PR (zero deposits)"),
         "orchestrator_note": opts["note"], "branch_diff_name_status": git(wt, "diff", "--name-status", base, "HEAD"),
-        "log_ref": worker.get("log_ref") or (os.path.dirname(opts["worker"]) + "/worklog.md" if opts["worker"] else None),
+        "log_ref": worker.get("log_ref") or [os.path.dirname(path) + "/worklog.md" for path in opts["worker"]],
         "composer": "tools/scripts/agent/review_envelope.py (branch-derived truth) + compose_envelope.py (whitelisted worker attestations)"}}
     with open(out, "w", encoding="utf-8") as fh:
         json.dump(env, fh, ensure_ascii=False, indent=1)
