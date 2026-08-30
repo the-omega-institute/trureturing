@@ -54,7 +54,13 @@ internal class FrozenLedgerReplacementRecognition
             .Concat(deltaEvents.Select(static item => item.SourcePath))
             .MinBy(static path => path.Value, StringComparer.Ordinal);
 
+        // A replacement necessarily deletes the events it replaces. Without this guard, an
+        // append-only deposit -- which deletes nothing and leaves every existing shard
+        // byte-identical -- makes deletedModulePaths and baseModulePaths.Except(retained) both
+        // empty, so the SetEquals conjunct degenerates to true and the whole predicate fires on
+        // every ordinary deposit. The incremental recognizer below already carries the same guard.
         return !baseModulePaths.IsEmpty
+            && !deletedModulePaths.IsEmpty
             && witnessPath is not null
             && !retainedModulePaths.Overlaps(newModulePaths)
             && deletedModulePaths.SetEquals(baseModulePaths.Except(retainedModulePaths))
