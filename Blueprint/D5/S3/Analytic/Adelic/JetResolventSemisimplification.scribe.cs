@@ -34,7 +34,7 @@ internal sealed class JetResolventSemisimplificationDocument
                         + "differentiating the determinant give the two displayed identities. "
                         + "The punctured identity also proves that the trace resolvent is "
                         + "meromorphic with order minus one and that multiplication by s-rho "
-                        + "converges to the nonzero residue m."))),
+                        + "converges to the residue m."))),
             DescribeRole.Theorem))));
 
     private static Formula.BoundVariable Bound(string name, Formula domain) =>
