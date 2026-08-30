@@ -20,3 +20,4 @@ The positive square scale constructs the resolvent-weighted measure. Finite-sum 
 
 - Truth anchor: `D5/S3/Weil/CayleyLaguerre/LaguerreChebyshevDuality.laguerre_chebyshev_duality`
 - Dependency: [D5/S3/Weil/CayleyLaguerre/CayleyMomentTransport](CayleyMomentTransport.md)
+- Dependency: [D5/S3/Weil/TestFunctions/CayleyLaguerreMomentTomography](../TestFunctions/CayleyLaguerreMomentTomography.md)
