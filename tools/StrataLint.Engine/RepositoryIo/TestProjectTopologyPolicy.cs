@@ -35,8 +35,19 @@ internal static partial class RepositoryRules
     internal const string OwnedTestToOwnedTestReference =
         "owned-test-to-owned-test-reference";
 
-    private const string CanonicalArchitectureHarnessPath =
-        "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj";
+    // 横跨型 harness:测试仓库自身的结构或执行仓库脚本,横跨多个生产项目、
+    // 不拥有其中任何一个,故不参与 `X` ↔ `X.Tests` 的拥有关系。
+    //
+    // 具名精确路径而非「凡不叫 X.Tests 者皆横跨」的命名规则 —— 后者会让任意
+    // `*ArchitectureTests` / `*ScriptTests` 自动逃逸拥有关系检查,削弱
+    // `OnlyExactCanonicalArchitectureHarnessPathIsExcluded` 有意钉住的守卫:
+    // 第三个**未具名**的横跨项目仍须判 orphan-owned-project。加一条具名路径是
+    // 保守扩展(旧判 admit 者仍 admit),换成命名规则则是放宽。
+    private static readonly ImmutableHashSet<string> CrossCuttingHarnessPaths =
+        ImmutableHashSet.Create(
+            StringComparer.Ordinal,
+            "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
+            "tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj");
 
     private static readonly Uri RepositoryUri = new("https://repository.invalid/");
 
@@ -331,7 +342,7 @@ internal static partial class RepositoryRules
         isXunit
         && path.StartsWith("tools/tests/", StringComparison.Ordinal)
         && path.EndsWith(".csproj", StringComparison.Ordinal)
-        && path != CanonicalArchitectureHarnessPath;
+        && !CrossCuttingHarnessPaths.Contains(path);
 
     private static string ResolveProjectReference(string projectPath, string include)
     {

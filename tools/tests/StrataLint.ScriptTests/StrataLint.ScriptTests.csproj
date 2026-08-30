@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <RootNamespace>StrataLint.Tests</RootNamespace>
+    <AssemblyName>StrataLint.ScriptTests</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../StrataLint.Engine/StrataLint.Engine.csproj" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="Xunit.SkippableFact" />
+    <PackageReference Include="xunit.runner.visualstudio">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <!-- 起真进程的能力:脚本测试按定义要执行真实程序(目标③)。
+         以共享编译项而非项目引用取得 —— 测试项目引用测试项目会记
+         owned-test-to-owned-test-reference 债务。此处是同一份源文件的第二次编译,
+         单一真源仍在 StrataLint.Tests/TestProcessRunner.cs。 -->
+    <Compile Include="../StrataLint.Tests/TestProcessRunner.cs" Link="TestProcessRunner.cs" />
+    <Compile Include="../StrataLint.Tests/TestRepositoryLayout.cs" Link="TestRepositoryLayout.cs" />
+    <Compile Include="../StrataLint.Tests/TestScratchRoot.cs" Link="TestScratchRoot.cs" />
+    <Compile Include="../StrataLint.Tests/TemporaryDirectoryTests.cs" Link="TemporaryDirectoryTests.cs" />
+  </ItemGroup>
+</Project>

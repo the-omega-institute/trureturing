@@ -199,6 +199,38 @@ public sealed class TestProjectTopologyPolicyTests
             result.IntroducedDebt.ToArray());
     }
 
+    /// <summary>
+    /// 脚本测试 harness 与 architecture harness 同类:横跨生产项目、不拥有其中任何一个,
+    /// 故不参与 `X` ↔ `X.Tests` 的拥有关系。它按**精确路径**具名排除,与既有 architecture
+    /// harness 同一纪律 —— 不改成「凡不叫 X.Tests 者皆横跨」的命名规则,因为那会削弱
+    /// `OnlyExactCanonicalArchitectureHarnessPathIsExcluded` 有意钉住的守卫:
+    /// 任何**未具名**的第三个横跨项目仍须判 orphan 债务。
+    /// </summary>
+    [Fact]
+    public void CanonicalScriptHarnessPathIsExcludedButAnUnnamedScriptProjectIsNot()
+    {
+        var protectedBase = Snapshot(ProjectWithDefaultProperties(
+            "tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj",
+            "StrataLint.ScriptTests",
+            xunit: true));
+        var unchanged = TestProjectTopologyPolicy.Evaluate(protectedBase, protectedBase);
+
+        Assert.True(unchanged.IsAccepted, unchanged.Message);
+        Assert.Empty(unchanged.BaseDebt);
+
+        var unnamedSecondScriptProject = Snapshot(
+            protectedBase.Projects[0],
+            OwnedTest("Second.ScriptTests", "Second.ScriptTests"));
+        var result = TestProjectTopologyPolicy.Evaluate(
+            protectedBase,
+            unnamedSecondScriptProject);
+
+        Assert.False(result.IsAccepted);
+        Assert.Equal(
+            [Debt("orphan-owned-project", "Second.ScriptTests", string.Empty)],
+            result.IntroducedDebt.ToArray());
+    }
+
     [Fact]
     public void NonXunitCompileFailProofDoesNotBecomeAnOwnedTestProject()
     {

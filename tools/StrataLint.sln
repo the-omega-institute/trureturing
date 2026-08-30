@@ -23,6 +23,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.Engine.Tests", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.EngineeringScope.Tests", "tests\StrataLint.EngineeringScope.Tests\StrataLint.EngineeringScope.Tests.csproj", "{CBFEB510-BA69-4689-BDE7-915D4A19DAC0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0AB3BF05-4346-4AA6-1389-037BE0695223}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.ScriptTests", "tests\StrataLint.ScriptTests\StrataLint.ScriptTests.csproj", "{4DE35DA7-9424-4FFD-8179-50227614749A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -153,8 +157,23 @@ Global
 		{CBFEB510-BA69-4689-BDE7-915D4A19DAC0}.Release|x64.Build.0 = Release|Any CPU
 		{CBFEB510-BA69-4689-BDE7-915D4A19DAC0}.Release|x86.ActiveCfg = Release|Any CPU
 		{CBFEB510-BA69-4689-BDE7-915D4A19DAC0}.Release|x86.Build.0 = Release|Any CPU
+		{4DE35DA7-9424-4FFD-8179-50227614749A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DE35DA7-9424-4FFD-8179-50227614749A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DE35DA7-9424-4FFD-8179-50227614749A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4DE35DA7-9424-4FFD-8179-50227614749A}.Debug|x64.Build.0 = Debug|Any CPU
+		{4DE35DA7-9424-4FFD-8179-50227614749A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4DE35DA7-9424-4FFD-8179-50227614749A}.Debug|x86.Build.0 = Debug|Any CPU
+		{4DE35DA7-9424-4FFD-8179-50227614749A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DE35DA7-9424-4FFD-8179-50227614749A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DE35DA7-9424-4FFD-8179-50227614749A}.Release|x64.ActiveCfg = Release|Any CPU
+		{4DE35DA7-9424-4FFD-8179-50227614749A}.Release|x64.Build.0 = Release|Any CPU
+		{4DE35DA7-9424-4FFD-8179-50227614749A}.Release|x86.ActiveCfg = Release|Any CPU
+		{4DE35DA7-9424-4FFD-8179-50227614749A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4DE35DA7-9424-4FFD-8179-50227614749A} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 	EndGlobalSection
 EndGlobal
