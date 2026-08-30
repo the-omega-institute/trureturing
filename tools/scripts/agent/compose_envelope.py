@@ -76,10 +76,16 @@ def main(argv):
         if isinstance(record, dict) and record.get("atom_id"):
             per_atom.setdefault(record["atom_id"], record)
 
+    # Single-deposit fix-flight envelopes carry the per-atom attestations at conclusion level; with exactly
+    # one deposited atom and no per-atom record for it, that level IS the per-atom record (unambiguous).
+    # With two or more deposited atoms, conclusion-level fields are never attributed (round-1 finding).
+    conclusion_level = {k: v for k, v in worker.items() if k in WHITELIST} if len(truth["deposited"]) == 1 else {}
+
     atoms = []
     for d in truth["deposited"]:
         atom = {"atom_id": d["atom_id"], "outcome": "deposited", "gid": d["gid"], "receipt": d["receipt"], "bind_only": None}
-        atom.update({k: v for k, v in per_atom.get(d["atom_id"], {}).items() if k in WHITELIST})
+        record = per_atom.get(d["atom_id"]) or conclusion_level
+        atom.update({k: v for k, v in record.items() if k in WHITELIST})
         atoms.append(atom)
     for e in truth["ejected"]:
         atom = {"atom_id": e["atom_id"], "outcome": "ejected", "gid": None, "ejection_class": e["blocker_class"],
