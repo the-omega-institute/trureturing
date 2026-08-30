@@ -102,6 +102,16 @@ def main(argv):
     # Single-deposit fix-flight envelopes carry the per-atom attestations at conclusion level; with exactly
     # one deposited atom and no per-atom record for it, that level IS the per-atom record (unambiguous).
     # With two or more deposited atoms, conclusion-level fields are never attributed (round-1 finding).
+    # worker records may key atoms by the bare 64-hex fingerprint; the ledger id is the file stem (<prefix>-residual-<hex>).
+    # Normalize every worker key onto the truth id that ends with it, so attestations attach to the right atom and
+    # nothing is double-counted as a phantom "worker-only" ejection (#4186 pass 2/3 finding).
+    truth_ids = [a["atom_id"] for a in truth["deposited"] + truth["extended"] + truth["ejected"]]
+    def canonical(key):
+        for tid in truth_ids:
+            if tid == key or tid.endswith(key) or key.endswith(tid):
+                return tid
+        return key
+    per_atom = {canonical(k): v for k, v in per_atom.items()}
     single = len(truth["deposited"]) + len(truth["extended"]) == 1
     conclusion_level = {k: v for k, v in worker.items() if k in WHITELIST} if single else {}
 
