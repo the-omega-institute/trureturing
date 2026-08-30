@@ -161,15 +161,23 @@ theorem toeplitz_contact_support
       simpa only [FiniteMeasure.toMeasure_smul] using
         (integrandIntegrable (alpha • normalizedCircleHaar) j k)
     rw [integral_add_measure floorIntegrable (integrandIntegrable residual j k)]
-    simp only [Matrix.add_apply, Matrix.smul_apply, one_apply, residualGram]
     rw [integral_smul_nnreal_measure]
-    simp only [NNReal.smul_def, smul_eq_mul, feature]
-    rw [normalizedCircleHaar_monomial_gram]
+    simp only [NNReal.smul_def]
+    have hHaar :
+        (∫ z : Circle, feature z k * star (feature z j)
+          ∂(normalizedCircleHaar : Measure Circle)) =
+          if (j : Nat) = (k : Nat) then 1 else 0 := by
+      exact normalizedCircleHaar_monomial_gram (j : Nat) (k : Nat)
+    rw [hHaar, Matrix.add_apply, Matrix.smul_apply]
     by_cases h : j = k
     · subst k
-      simp
+      rw [Matrix.one_apply_eq]
+      simp only [if_pos, Complex.real_smul, smul_eq_mul, mul_one]
+      rfl
     · have hval : (j : Nat) ≠ (k : Nat) := fun hv => h (Fin.ext hv)
-      simp [h, hval]
+      rw [Matrix.one_apply_ne h]
+      simp only [if_neg hval, Complex.real_smul, smul_eq_mul, mul_zero, zero_add]
+      rfl
   have residualKernel : residualGram *ᵥ v = 0 := by
     rw [gramDecomposition] at eigenvector
     rw [add_mulVec, smul_mulVec, one_mulVec] at eigenvector
@@ -279,20 +287,30 @@ theorem toeplitz_contact_support
       simpa using coeffZero
     rw [vectorZero] at unitVector
     simp at unitVector
+  have circleCoeInjective : Function.Injective (fun z : Circle => (z : Complex)) :=
+    Circle.coe_injective
   let circleRoots : Finset Circle :=
     contactPolynomial.roots.toFinset.preimage
-      (fun z : Circle => (z : Complex)) Circle.coe_injective.injOn
+      (fun z : Circle => (z : Complex)) circleCoeInjective.injOn
   have circleRootsMem (z : Circle) :
       z ∈ circleRoots ↔ contactPolynomial.eval (z : Complex) = 0 := by
-    simp only [circleRoots, Finset.mem_preimage]
-    rw [Multiset.mem_toFinset, Polynomial.mem_roots contactPolynomialNonzero]
-    rfl
+    calc
+      z ∈ circleRoots ↔ (z : Complex) ∈ contactPolynomial.roots.toFinset := by
+        exact Finset.mem_preimage
+      _ ↔ (z : Complex) ∈ contactPolynomial.roots := Multiset.mem_toFinset
+      _ ↔ Polynomial.IsRoot contactPolynomial (z : Complex) :=
+        Polynomial.mem_roots contactPolynomialNonzero
+      _ ↔ contactPolynomial.eval (z : Complex) = 0 := Iff.rfl
   have circleRootsCard : circleRoots.card ≤ contactPolynomial.natDegree := by
-    dsimp only [circleRoots]
-    rw [Finset.card_preimage]
-    exact (Finset.card_filter_le _ _).trans
-      ((Multiset.toFinset_card_le contactPolynomial.roots).trans
-        (Polynomial.card_roots' contactPolynomial))
+    calc
+      circleRoots.card =
+          {z ∈ contactPolynomial.roots.toFinset |
+            z ∈ Set.range (fun w : Circle => (w : Complex))}.card := by
+        exact Finset.card_preimage _ _ _
+      _ ≤ contactPolynomial.natDegree :=
+        (Finset.card_filter_le _ _).trans
+          ((Multiset.toFinset_card_le contactPolynomial.roots).trans
+            (Polynomial.card_roots' contactPolynomial))
   have residualAlmostEverywhereInRoots :
       ∀ᵐ z ∂(residual : Measure Circle), z ∈ circleRoots := by
     filter_upwards [contactZeroAlmostEverywhere] with z hz
