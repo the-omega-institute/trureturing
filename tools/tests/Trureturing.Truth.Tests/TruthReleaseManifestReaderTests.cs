@@ -2,7 +2,7 @@ using System;
 using Trureturing.Truth;
 using Xunit;
 
-namespace StrataLint.Tests;
+namespace Trureturing.Truth.Tests;
 
 public sealed class TruthReleaseManifestReaderTests
 {
