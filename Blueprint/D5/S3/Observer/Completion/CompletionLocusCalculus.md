@@ -20,7 +20,7 @@ The declaration keeps its parameters and hypotheses explicit; the result makes n
 
 **Theorem 1.2 (Completion Locus Preimage).**
 
-$$\forall A: Type, A': Type, D: Type, parameterMap: A' \to A, normalization: Set A, defect: A \to D, zeroD: D,\\{}(completionPointSet (parameterMap ^{-1}' normalization) (defect \circ parameterMap) zeroD = parameterMap ^{-1}' completionPointSet normalization defect zeroD).$$
+$$\forall A: Type, A': Type, D: Type, parameterMap: A' \to A, normalization: Set A, defect: A \to D, zeroD: D,\\{}(completionPointSet (parameterMap ^{-1} normalization) (defect \circ parameterMap) zeroD = parameterMap ^{-1} (completionPointSet normalization defect zeroD)).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/Completion/CompletionLocusCalculus.completion_locus_preimage` (`✓ std3`). ∎
 
