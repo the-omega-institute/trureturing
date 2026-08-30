@@ -32,10 +32,10 @@ namespace D5.S3.Weil.Pick.CriticalLineOscillatorGram
 def criticalLineOscillatorFeatureMatrix {ι : Type*} [Fintype ι]
     (ordinate : ℝ) (nodes : ι → ℂ) : Matrix (Fin 2) ι ℂ :=
   fun row j =>
-    if row = 0 then
-      (nodes j - Complex.I * (ordinate : ℂ))⁻¹
-    else
+    ![
+      (nodes j - Complex.I * (ordinate : ℂ))⁻¹,
       (nodes j + Complex.I * (ordinate : ℂ))⁻¹
+    ] row
 
 /-- The finite kernel matrix obtained by summing the two reflected resolvent
 rank-one kernels. -/
