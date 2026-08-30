@@ -1,0 +1,336 @@
+using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.InterventionsExchange;
+
+internal sealed class RandomizationBridgeDocument : IScribeDocumentDefinition
+{
+    private const string Base =
+        "D5/S3/ConceptDynamics/InterventionsExchange/RandomizationBridge.";
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Randomization identifies conditional outcome laws with potential and do laws.",
+        H("Randomization Bridge"),
+        Blocks(
+            Describe.Lean(
+                DescribeId.Create("treatment-event"),
+                Handle("treatmentEvent"),
+                H("Treatment event"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The event contains exactly the sample points whose factual treatment "
+                        + "equals the queried value."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("factual-outcome"),
+                Handle("factualOutcome"),
+                H("Factual outcome"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The factual outcome evaluates the shared mechanism at the assigned "
+                        + "treatment."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("potential-outcome"),
+                Handle("potentialOutcome"),
+                H("Potential outcome"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The potential outcome fixes the mechanism's treatment argument while "
+                        + "retaining the sampled exogenous state."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("do-outcome"),
+                Handle("doOutcome"),
+                H("Perfect-intervention outcome"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "A perfect do intervention fixes the same structural treatment argument "
+                        + "as the corresponding potential outcome."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("random-assignment"),
+                Handle("RandomAssignment"),
+                H("Random assignment"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Treatment is independent of the complete function-valued potential "
+                        + "outcome process, not merely of one selected coordinate."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("treatment-positivity"),
+                Handle("TreatmentPositivity"),
+                H("Treatment positivity"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Positivity requires the queried treatment fiber to have strictly "
+                        + "positive measure."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("conditional-outcome-law"),
+                Handle("conditionalOutcomeLaw"),
+                H("Conditional factual law"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "This law pushes the treatment-conditioned sample measure through the "
+                        + "factual outcome."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("potential-outcome-law"),
+                Handle("potentialOutcomeLaw"),
+                H("Potential-outcome law"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "This law pushes the ambient sample measure through one fixed potential "
+                        + "outcome coordinate."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("do-outcome-law"),
+                Handle("doOutcomeLaw"),
+                H("Perfect-intervention law"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The do law is generated by the perfect-intervention outcome under the "
+                        + "same exogenous measure."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("conditional-consistency-law"),
+                Handle("conditional_factual_law_eq_conditional_potential_law"),
+                H("Consistency lifts to conditioned laws"),
+                StatementSource.FromAuthor(ConditionalConsistencyFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "On the treatment fiber, the imported pointwise consistency theorem "
+                            + "identifies factual and matching potential outcomes.")),
+                    Paragraph(Text(
+                        "Conditional almost-everywhere equality and pushforward congruence "
+                            + "then identify their complete conditioned laws."))),
+                DescribeRole.Lemma),
+            Describe.Lean(
+                DescribeId.Create("random-assignment-preserves-potential-law"),
+                Handle("random_assignment_preserves_potential_law"),
+                H("Random assignment removes conditioning"),
+                StatementSource.FromAuthor(RandomAssignmentFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "Independence of treatment from the full potential process descends "
+                            + "to the selected coordinate by measurable projection.")),
+                    Paragraph(Text(
+                        "The intersection factorization cancels the finite positive treatment "
+                            + "mass in the definition of the conditional measure."))),
+                DescribeRole.Lemma),
+            Describe.Lean(
+                DescribeId.Create("potential-law-equals-do-law"),
+                Handle("potential_outcome_law_eq_do_outcome_law"),
+                H("Potential law is the do law"),
+                StatementSource.FromAuthor(PotentialDoFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Both laws evaluate the same shared structural mechanism at the imposed "
+                        + "treatment and push forward the same exogenous measure."))),
+                DescribeRole.Lemma),
+            Describe.Lean(
+                DescribeId.Create("randomization-bridge"),
+                Handle("randomization_bridge"),
+                H("Randomization bridge"),
+                StatementSource.FromAuthor(BridgeFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "Consistency first replaces the factual outcome by its matching "
+                            + "potential outcome inside the treatment-conditioned law.")),
+                    Paragraph(Text(
+                        "Random assignment removes that conditioning, and perfect-intervention "
+                            + "semantics supplies the second equality."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("positivity-is-necessary"),
+                Handle("positive_treatment_probability_is_necessary"),
+                H("Positive treatment mass is necessary"),
+                StatementSource.FromAuthor(PositivityNecessaryFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "Take a fair Boolean sample, constant-false treatment, and a "
+                            + "constant-false outcome mechanism, then query treatment true.")),
+                    Paragraph(Text(
+                        "The treatment event has zero mass. Mathlib's conditional measure is "
+                            + "therefore zero, while the potential law has total mass one."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("finite-measure-is-necessary"),
+                Handle("finite_measure_is_necessary"),
+                H("Finite treatment mass is necessary"),
+                StatementSource.FromAuthor(FiniteMeasureNecessaryFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "Scale the Dirac law on Unit by infinite ENNReal mass, with constant "
+                            + "treatment and outcome mechanism.")),
+                    Paragraph(Text(
+                        "Random assignment and strict positivity still hold. Conditioning on "
+                            + "the infinite-mass fiber is mathlib's zero measure, while the "
+                            + "potential law retains infinite mass."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("random-assignment-is-necessary"),
+                Handle("random_assignment_is_necessary"),
+                H("Random assignment is necessary"),
+                StatementSource.FromAuthor(RandomAssignmentNecessaryFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "On a fair Boolean sample, let treatment and every potential outcome "
+                            + "equal the sampled bit.")),
+                    Paragraph(Text(
+                        "The true-treatment fiber is positive, but its conditional outcome law "
+                            + "assigns zero mass to false while the potential law assigns one "
+                            + "half. Hence random assignment fails and is indispensable."))),
+                DescribeRole.Theorem))));
+
+    private static DeclarationHandle Handle(string declaration) =>
+        DeclarationHandle.Create(Base + declaration);
+
+    private static Formula Call(Formula function, params Formula[] arguments) =>
+        new Formula.Apply(function, [.. arguments]);
+
+    private static Formula And(Formula left, Formula right) =>
+        new Formula.Logic(left, FormulaLogicOperator.And, right);
+
+    private static Formula Implies(Formula left, Formula right) =>
+        new Formula.Logic(left, FormulaLogicOperator.Implies, right);
+
+    private static Formula ConditionalLaw() =>
+        Call(F.Id("conditionalOutcomeLaw"), F.Id("mu"), F.Id("X"), F.Id("Y"), F.Id("x"));
+
+    private static Formula PotentialLaw() =>
+        Call(F.Id("potentialOutcomeLaw"), F.Id("mu"), F.Id("Y"), F.Id("x"));
+
+    private static Formula DoLaw() =>
+        Call(F.Id("doOutcomeLaw"), F.Id("mu"), F.Id("Y"), F.Id("x"));
+
+    private static Formula ConditionedPotentialLaw() =>
+        Call(
+            F.Id("map"),
+            Call(F.Id("potentialOutcome"), F.Id("Y"), F.Id("x")),
+            Call(
+                F.Id("cond"),
+                F.Id("mu"),
+                Call(F.Id("treatmentEvent"), F.Id("X"), F.Id("x"))));
+
+    private static Formula Assumptions() => And(
+        Call(F.Id("RandomAssignment"), F.Id("mu"), F.Id("X"), F.Id("Y")),
+        Call(F.Id("TreatmentPositivity"), F.Id("mu"), F.Id("X"), F.Id("x")));
+
+    private static Formula ConditionalConsistencyFormula() =>
+        Disp(Equal(ConditionalLaw(), ConditionedPotentialLaw()));
+
+    private static Formula RandomAssignmentFormula() =>
+        Disp(Implies(Assumptions(), Equal(ConditionedPotentialLaw(), PotentialLaw())));
+
+    private static Formula PotentialDoFormula() =>
+        Disp(Equal(PotentialLaw(), DoLaw()));
+
+    private static Formula BridgeFormula() => Disp(Implies(
+        Assumptions(),
+        And(Equal(ConditionalLaw(), PotentialLaw()), Equal(PotentialLaw(), DoLaw()))));
+
+    private static Formula PositivityNecessaryFormula()
+    {
+        Formula random = Call(
+            F.Id("RandomAssignment"),
+            F.Id("muBool"),
+            F.Id("constFalse"),
+            F.Id("constFalseProcess"));
+        Formula positive = Call(
+            F.Id("TreatmentPositivity"),
+            F.Id("muBool"),
+            F.Id("constFalse"),
+            F.Id("true"));
+        Formula unequal = new Formula.Not(Equal(
+            Call(
+                F.Id("conditionalOutcomeLaw"),
+                F.Id("muBool"),
+                F.Id("constFalse"),
+                F.Id("constFalseProcess"),
+                F.Id("true")),
+            Call(
+                F.Id("potentialOutcomeLaw"),
+                F.Id("muBool"),
+                F.Id("constFalseProcess"),
+                F.Id("true"))));
+
+        return Disp(And(random, And(new Formula.Not(positive), unequal)));
+    }
+
+    private static Formula FiniteMeasureNecessaryFormula()
+    {
+        Formula infiniteMass = Equal(
+            Call(F.Id("measure"), F.Id("muInf"), F.Id("univ")),
+            F.Id("top"));
+        Formula random = Call(
+            F.Id("RandomAssignment"),
+            F.Id("muInf"),
+            F.Id("constUnit"),
+            F.Id("constUnitProcess"));
+        Formula positive = Call(
+            F.Id("TreatmentPositivity"),
+            F.Id("muInf"),
+            F.Id("constUnit"),
+            F.Id("unit"));
+        Formula unequal = new Formula.Not(Equal(
+            Call(
+                F.Id("conditionalOutcomeLaw"),
+                F.Id("muInf"),
+                F.Id("constUnit"),
+                F.Id("constUnitProcess"),
+                F.Id("unit")),
+            Call(
+                F.Id("potentialOutcomeLaw"),
+                F.Id("muInf"),
+                F.Id("constUnitProcess"),
+                F.Id("unit"))));
+
+        return Disp(And(infiniteMass, And(random, And(positive, unequal))));
+    }
+
+    private static Formula RandomAssignmentNecessaryFormula()
+    {
+        Formula positive = Call(
+            F.Id("TreatmentPositivity"),
+            F.Id("muBool"),
+            F.Id("id"),
+            F.Id("true"));
+        Formula random = Call(
+            F.Id("RandomAssignment"),
+            F.Id("muBool"),
+            F.Id("id"),
+            F.Id("copyProcess"));
+        Formula unequal = new Formula.Not(Equal(
+            Call(
+                F.Id("conditionalOutcomeLaw"),
+                F.Id("muBool"),
+                F.Id("id"),
+                F.Id("copyProcess"),
+                F.Id("true")),
+            Call(
+                F.Id("potentialOutcomeLaw"),
+                F.Id("muBool"),
+                F.Id("copyProcess"),
+                F.Id("true"))));
+
+        return Disp(And(positive, And(new Formula.Not(random), unequal)));
+    }
+}
