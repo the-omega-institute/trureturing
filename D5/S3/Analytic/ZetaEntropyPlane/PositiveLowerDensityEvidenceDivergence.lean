@@ -127,7 +127,7 @@ theorem restricted_reciprocal_evidence_not_summable
     apply sparse_prime_support_diverges.2
     apply hprime.congr
     intro p
-    simp [restrictedPrimeEvidence, primeNaturals]
+    simp [restrictedPrimeEvidence, primeNaturals, p.2]
   have hf_antitone : Antitone f := by
     intro a b hab
     simp only [f, primeEvidence, Real.rpow_neg_one]
