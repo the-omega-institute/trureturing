@@ -1,6 +1,11 @@
+global using FactAttribute = Xunit.SkippableFactAttribute;
+global using TheoryAttribute = Xunit.SkippableTheoryAttribute;
+
 using StrataLint.Engine;
+using System.Runtime.CompilerServices;
 using Xunit;
 
+[assembly: InternalsVisibleTo("StrataLint.ArchitectureTests")]
 
 namespace StrataLint.Tests;
 
