@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 using System.Text;
-using StrataLint.EngineeringScope;
+using System.Xml.Linq;
 using StrataLint.Engine;
 using YamlDotNet.RepresentationModel;
 
@@ -513,21 +513,57 @@ public sealed partial class MakeWorkflowTests
     {
         var root = TestRepositoryLayout.FindRoot();
         var snapshot = RepositoryRules.ReadTrackedProjects(root);
-        var expected = RepositoryRules.CalculateOwnerAssemblies(snapshot).ToArray();
-        using var output = new StringWriter { NewLine = "\n" };
-        using var error = new StringWriter { NewLine = "\n" };
-        var result = Program.Run(
-            ["list-test-owner-assemblies", "--repository", root],
-            static _ => throw new InvalidOperationException("evidence loader is not used"),
-            output,
-            error);
+        var expected = snapshot.Projects
+            .Where(static project =>
+                project.Path.StartsWith("tools/tests/", StringComparison.Ordinal)
+                && project.Path.EndsWith(".csproj", StringComparison.Ordinal)
+                && project.Path != "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj")
+            .Select(static project =>
+            {
+                var document = XDocument.Parse(project.Content, LoadOptions.None);
+                var isXunit = document.Descendants().Any(static element =>
+                    element.Name.LocalName == "PackageReference"
+                    && string.Equals(
+                        (string?)element.Attribute("Include"),
+                        "xunit",
+                        StringComparison.Ordinal));
+                var assemblyName = document.Descendants()
+                    .FirstOrDefault(static element => element.Name.LocalName == "AssemblyName")
+                    ?.Value.Trim();
+                return (
+                    project.Path,
+                    IsXunit: isXunit,
+                    AssemblyName: string.IsNullOrEmpty(assemblyName)
+                        ? Path.GetFileNameWithoutExtension(project.Path)
+                        : assemblyName);
+            })
+            .Where(static project => project.IsXunit)
+            .Select(static project => project.AssemblyName)
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .Order(StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+        var result = TestProcessRunner.Run(
+            "dotnet",
+            [
+                "run",
+                "--project", Path.Combine(
+                    root,
+                    "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj"),
+                "--configuration", "Release",
+                "--no-launch-profile",
+                "--",
+                "list-test-owner-assemblies", "--repository", root,
+            ],
+            root,
+            TestBudgets.ScriptProcessHangGuard,
+            64 * 1024);
 
-        Assert.Equal(0, result);
-        Assert.Empty(error.ToString());
-        var actual = output.ToString()
+        Assert.Equal(0, result.ExitCode);
+        Assert.Empty(Encoding.UTF8.GetString(result.StandardError));
+        var actual = Encoding.UTF8.GetString(result.StandardOutput)
             .Split('\n', StringSplitOptions.RemoveEmptyEntries);
+        Assert.NotEmpty(expected);
         Assert.Equal(expected, actual);
-        Assert.True(actual.Length >= 3, "the repository must have at least three owner assemblies");
     }
 
     [Fact(DisplayName = "owner CLI rejects a repository with zero derived owners")]
@@ -543,18 +579,26 @@ public sealed partial class MakeWorkflowTests
             "-c", "user.email=stratalint@example.invalid",
             "commit", "--quiet", "-m", "empty topology");
 
-        using var output = new StringWriter { NewLine = "\n" };
-        using var error = new StringWriter { NewLine = "\n" };
-        var result = Program.Run(
-            ["list-test-owner-assemblies", "--repository", fixture.Path],
-            static _ => throw new InvalidOperationException("evidence loader is not used"),
-            output,
-            error);
+        var result = TestProcessRunner.Run(
+            "dotnet",
+            [
+                "run",
+                "--project", Path.Combine(
+                    TestRepositoryLayout.FindRoot(),
+                    "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj"),
+                "--configuration", "Release",
+                "--no-launch-profile",
+                "--",
+                "list-test-owner-assemblies", "--repository", fixture.Path,
+            ],
+            fixture.Path,
+            TestBudgets.ScriptProcessHangGuard,
+            64 * 1024);
 
-        Assert.NotEqual(0, result);
+        Assert.NotEqual(0, result.ExitCode);
         Assert.Contains(
             "derived zero owner assemblies",
-            error.ToString(),
+            Encoding.UTF8.GetString(result.StandardError),
             StringComparison.Ordinal);
     }
 

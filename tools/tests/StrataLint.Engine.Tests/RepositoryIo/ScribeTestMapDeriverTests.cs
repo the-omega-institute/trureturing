@@ -1,6 +1,6 @@
 using StrataLint.Engine;
 
-namespace StrataLint.Tests;
+namespace StrataLint.Engine.Tests;
 
 public sealed class ScribeTestMapDeriverTests
 {

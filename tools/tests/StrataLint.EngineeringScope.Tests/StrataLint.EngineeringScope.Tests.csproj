@@ -14,4 +14,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Update="Fixtures/infrastructure-skip.trx" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
 </Project>
