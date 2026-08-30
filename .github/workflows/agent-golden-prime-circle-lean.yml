@@ -35,11 +35,12 @@ jobs:
           modules=(
             D5.S3.Analytic.Zeta.GoldenSpectrum.GoldenCriticalCoordinate
             D5.S3.Analytic.Zeta.GoldenSpectrum.GoldenCriticalSupportCriterion
+            D5.S3.Analytic.Zeta.GoldenSpectrum.ReflectionPairTransfer
+            D5.S3.Analytic.Zeta.GoldenSpectrum.GoldenSpectralPairUnitarity
             D5.S3.PrimeObserver.ChargeTomography.GoldenC2ChargeTomography
+            D5.S3.PrimeObserver.ChargeTomography.SharedChargeDifferentShells
             D5.S3.Analytic.Zeta.GoldenEuler.GoldenLocalEulerFactorTrichotomy
             D5.S3.PrimeObserver.GoldenScale.GoldenLogScaleCharacter
-            D5.S3.Analytic.Zeta.GoldenSpectrum.ReflectionPairTransfer
-            D5.S3.PrimeObserver.ChargeTomography.SharedChargeDifferentShells
             D5.S3.Observer.Bridges.InvolutionIntertwinerParity
           )
           for module in "${modules[@]}"; do
