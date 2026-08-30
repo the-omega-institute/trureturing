@@ -22,6 +22,8 @@ noncomputable section
 
 namespace D5.S3.Analytic.GoldenTomography.FiniteVandermondeTomography
 
+open scoped Matrix
+
 universe u
 
 variable {K : Type u} [Field K]
@@ -60,7 +62,9 @@ theorem finite_moment_readout_injective
   apply sub_eq_zero.mp
   apply Matrix.eq_zero_of_mulVec_eq_zero
     (vandermonde_det_ne_zero_of_injective hNodes)
-  rw [Matrix.mulVec_sub, hMoments, sub_self]
+  rw [Matrix.mulVec_sub]
+  unfold finiteMomentReadout at hMoments
+  rw [hMoments, sub_self]
 
 /-- Equality of the first `n` moments is equivalent to equality of the hidden
 amplitude vectors. -/
