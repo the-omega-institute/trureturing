@@ -24,4 +24,114 @@ public sealed class TestResultEvidenceTests
 
         Assert.Equal([2, 0], counts);
     }
+
+    [Fact]
+    public void RejectsRequiredAssemblyWithoutExecutedIdentity()
+    {
+        var evidence = new TestResultEvidence(
+            1,
+            new HashSet<(string Assembly, string Id)>
+            {
+                ("Other.Owner.Tests", "ExecutedTest"),
+            });
+
+        var result = RunVerifyTrx(
+            evidence,
+            "--results-directory", "unused",
+            "--required-assembly", "Missing.Owner.Tests");
+
+        Assert.Equal(
+            (
+                ExitCode: 2,
+                Output: "",
+                Error: "TEST_EVIDENCE_FAILED TRX has no executed identity from required assembly Missing.Owner.Tests\n"),
+            result);
+    }
+
+    [Fact]
+    public void RejectsWhenAnyRequiredAssemblyLacksExecutedIdentity()
+    {
+        var evidence = new TestResultEvidence(
+            1,
+            new HashSet<(string Assembly, string Id)>
+            {
+                ("Present.Owner.Tests", "ExecutedTest"),
+            });
+
+        var result = RunVerifyTrx(
+            evidence,
+            "--results-directory", "unused",
+            "--required-assembly", "Present.Owner.Tests",
+            "--required-assembly", "Missing.Owner.Tests");
+
+        Assert.Equal(
+            (
+                ExitCode: 2,
+                Output: "ENGINEERING_BASE_FLOOR_EXECUTED assembly=Present.Owner.Tests evidence=trx executed=1\n",
+                Error: "TEST_EVIDENCE_FAILED TRX has no executed identity from required assembly Missing.Owner.Tests\n"),
+            result);
+    }
+
+    [Fact]
+    public void AcceptsWhenEveryRequiredAssemblyHasExecutedIdentity()
+    {
+        var evidence = new TestResultEvidence(
+            2,
+            new HashSet<(string Assembly, string Id)>
+            {
+                ("First.Owner.Tests", "FirstTest"),
+                ("Second.Owner.Tests", "SecondTest"),
+            });
+
+        var result = RunVerifyTrx(
+            evidence,
+            "--results-directory", "unused",
+            "--required-assembly", "First.Owner.Tests",
+            "--required-assembly", "Second.Owner.Tests");
+
+        Assert.Equal(
+            (
+                ExitCode: 0,
+                Output: "ENGINEERING_BASE_FLOOR_EXECUTED assembly=First.Owner.Tests evidence=trx executed=1\n"
+                    + "ENGINEERING_BASE_FLOOR_EXECUTED assembly=Second.Owner.Tests evidence=trx executed=1\n",
+                Error: ""),
+            result);
+    }
+
+    [Fact]
+    public void UnknownVerifyTrxOptionFailsClosed()
+    {
+        var evidence = new TestResultEvidence(
+            1,
+            new HashSet<(string Assembly, string Id)>
+            {
+                ("Missing.Owner.Tests", "ExecutedTest"),
+            });
+
+        var result = RunVerifyTrx(
+            evidence,
+            "--results-directory", "unused",
+            "--required-assmbly", "Missing.Owner.Tests");
+
+        Assert.Equal(
+            (
+                ExitCode: 2,
+                Output: "",
+                Error: "TEST_EVIDENCE_FAILED unknown verify-trx option: --required-assmbly\n"),
+            result);
+    }
+
+    private static (int ExitCode, string Output, string Error) RunVerifyTrx(
+        TestResultEvidence evidence,
+        params string[] options)
+    {
+        using var output = new StringWriter { NewLine = "\n" };
+        using var error = new StringWriter { NewLine = "\n" };
+        var exitCode = Program.Run(
+            ["verify-trx", .. options],
+            _ => evidence,
+            output,
+            error);
+        return (exitCode, output.ToString(), error.ToString());
+    }
 }
