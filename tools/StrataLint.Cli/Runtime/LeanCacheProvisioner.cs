@@ -54,17 +54,17 @@ internal static class LeanCacheProvisioner
     /// pushed this file past the 800-line limit once dev added to it, and shortening the
     /// declaration to fit would trade an audited statement for a line count.
     /// <summary>
-    /// 无法定位内容层时的回退预算。**这不是那个被派生式取代的 3600**,而是「数不出模块
-    /// 就按最保守值走」的兜底:取 clamp 上界,因为「数不出来」多半意味着树不完整,
-    /// 此时误杀一个正常构建的代价高于多等一会儿。
+    /// clamp 下界(300s),只在调用方显式设置 `STRATALINT_LEAN_CACHE_TIMEOUT_SECONDS` 时参与
+    /// clamp;默认路径不经过它(无旋钮或旋钮非法即直接取 <see cref="MaxProvisionBudgetSeconds"/>)。
+    /// 此处曾写「数不出模块就取 clamp 上界的兜底」——那段描述的是已于 #3119 删除的树规模派生路径,
+    /// 与本常数的实际角色(下界)不符,#4122 第二轮评审勘正。
     /// </summary>
     internal const int MinProvisionBudgetSeconds = LeanCacheBudgetPolicy.MinimumConfigurableBudgetSeconds;
 
     /// <summary>
-    /// clamp 上界。派生式在仓库约 2225 个内容层模块时算到此值
-    /// (2225 × 3 × 1.5 = 10012 > 7200),届时**须重看**:要么该上界随派生式一起长,
-    /// 要么承认单次构建不该由本预算兜底而交给 #2814 的 fail-closed 门。
-    /// 现读 1651 模块 ⟹ 派生 7429,已略过此界,故当前实际取值即为本上界。
+    /// clamp 上界 = <see cref="LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds"/>(policy-override,
+    /// 首次收口 #2535,2026-08-30 经 #4120 重新收口)。此处曾记「派生式约 2225 模块时算到此值」,
+    /// 该派生式已于 #3119 删除,那段文字随之作废;上界现直接取自该声明,不再有派生。
     /// </summary>
     internal const int MaxProvisionBudgetSeconds = LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds;
     private const int MissingOleanSampleLimit = 5;
@@ -74,18 +74,20 @@ internal static class LeanCacheProvisioner
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
     // Cold provisioning spans package clones plus olean download and extraction. The five
-    // minute floor permits useful fail-fast runs; the two hour ceiling leaves twice the
-    // declared default above without an unbounded hang. (That ratio read 4x while the
-    // default was 1800s; the policy-override above moved the default and this sentence
-    // had to move with it.)
+    // minute floor permits useful fail-fast runs; the ceiling is the declared default itself
+    // (six hours since #4120; two hours under #2535). Historical note: while the default was
+    // 1800s the clamp ceiling was a separate 7200s literal, i.e. 4x the default — that
+    // second literal is gone, so a hang is bounded by the one declared value.
     /// <summary>
-    /// 按某棵工作树的内容层规模派生预算。**没有无参版本**:预算依赖那棵树有多少模块,
-    /// 一个静态属性只能去猜仓库根,而猜出来的工作量会算出看似派生实则无源的值。
+    /// 本次预算。**不再按树规模派生**(派生式已于 #3119 删除):环境旋钮
+    /// `STRATALINT_LEAN_CACHE_TIMEOUT_SECONDS` 若可解析则 clamp 到 [下界, 上界],否则取上界
+    /// (= <see cref="LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds"/>)。
+    /// 名字里的 ForTree 是派生时代的遗留,保留只为不动调用点。
     /// </summary>
     internal static TimeSpan ProvisionBudgetForTree() => ProvisionBudgetFor();
 
     /// <summary>
-    /// 按内容层规模派生本次预算。环境旋钮仍优先,且仍受同一 clamp。
+    /// 解析环境旋钮并 clamp;无旋钮即上界。无派生、无树读取。
     /// </summary>
     internal static TimeSpan ProvisionBudgetFor()
     {
