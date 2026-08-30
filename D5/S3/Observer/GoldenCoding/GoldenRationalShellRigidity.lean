@@ -121,7 +121,6 @@ theorem rational_coordinate_shell_rigidity
           Real.log (q₂ : ℝ) + (n : ℝ) * goldenScalePeriod := by
         unfold goldenScaleCoordinate
         field_simp [hPeriodNe]
-        ring
   have hLogUnit :
       Real.log ((Real.goldenRatio ^ 2) ^ n) =
         (n : ℝ) * goldenScalePeriod := by
@@ -149,9 +148,8 @@ theorem rational_coordinate_shell_rigidity
         rw [Real.log_mul hUnitPos.ne' hq₂Real.ne']
   have hCollision :
       (q₁ : ℝ) = (Real.goldenRatio ^ 2) ^ n * (q₂ : ℝ) := by
-    have hExp := congrArg Real.exp hLogs
-    simpa [Real.exp_log hq₁Real,
-      Real.exp_log (mul_pos hUnitPos hq₂Real)] using hExp
+    exact Real.strictMonoOn_log.injOn
+      hq₁Real (mul_pos hUnitPos hq₂Real) hLogs
   exact rational_shell_collision_rigidity hq₂.ne' hCollision
 
 /-- The hypotheses are inhabited by every positive rational at zero depth. -/
