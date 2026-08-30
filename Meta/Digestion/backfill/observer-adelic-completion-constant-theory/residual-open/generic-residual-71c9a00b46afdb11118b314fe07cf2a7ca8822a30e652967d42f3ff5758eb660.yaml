@@ -8,3 +8,7 @@ receipts:
   coverage: []
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: The named statement requires a completed observer operator, its semigroup, the constant-mode projection, and a spectral-gap carrier; these linked public D5 prerequisites were absent from the inspected inventory.
+    reentry_condition: D5 contains public theorems defining the completed observer operator and semigroup and proving the matching constant-mode projection and spectral-gap estimate used by this atom.
+    blocker_class: missing-prerequisite

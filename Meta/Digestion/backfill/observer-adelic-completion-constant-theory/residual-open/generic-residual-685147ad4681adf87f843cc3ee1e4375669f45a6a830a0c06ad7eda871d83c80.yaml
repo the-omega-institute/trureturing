@@ -8,3 +8,7 @@ receipts:
   coverage: []
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: The named statement depends on a completed observer Casimir carrier and a combined discrete-plus-Archimedean measure carrier; neither prerequisite has a public D5 theorem in the inspected inventory.
+    reentry_condition: D5 contains public theorems for the completed observer Casimir term and the combined discrete-plus-Archimedean measure, with interfaces matching the normalization and measure identity in this atom.
+    blocker_class: missing-prerequisite
