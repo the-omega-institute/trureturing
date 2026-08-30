@@ -350,6 +350,16 @@ internal static class ScribeTestMapDeriver
         var methodsByTypeAndName = methods
             .GroupBy(static method => (method.TypeName, method.Name))
             .ToDictionary(static group => group.Key, static group => group.ToArray());
+        var scannedTypeNames = methodsByTypeAndName.Keys
+            .Select(static key => key.TypeName)
+            .ToHashSet(StringComparer.Ordinal);
+        var initializersByOwner = parsed
+            .SelectMany(static source => source.Initializers)
+            .GroupBy(static initializer => (
+                initializer.PartitionKey,
+                initializer.Path,
+                initializer.TopLevelTypeName))
+            .ToDictionary(static group => group.Key, static group => group.ToArray());
         var indirect = indirectProductionSites.ToArray();
         var results = new List<ScribeTestMethod>();
 
@@ -357,31 +367,44 @@ internal static class ScribeTestMapDeriver
         {
             var paths = new HashSet<string>(StringComparer.Ordinal);
             var reasons = new HashSet<TestMapUnknownReason>();
-            var pending = new Stack<ParsedMethod>();
-            var visited = new HashSet<ParsedMethod>();
-            pending.Push(test);
-            while (pending.TryPop(out var method))
+            var pending = new Stack<ParsedCallable>();
+            var visited = new HashSet<ParsedCallable>();
+            pending.Push(test.Callable);
+            if (initializersByOwner.TryGetValue(
+                    (test.PartitionKey, test.Path, test.Callable.TopLevelTypeName),
+                    out var ownedInitializers))
             {
-                if (!visited.Add(method))
+                foreach (var initializer in ownedInitializers)
+                {
+                    pending.Push(initializer);
+                }
+            }
+
+            while (pending.TryPop(out var callable))
+            {
+                if (!visited.Add(callable))
                 {
                     continue;
                 }
 
-                InspectMethod(method, discoveryPaths, paths, reasons);
-                if (indirect.Any(site => site.Path == method.Path
-                    && site.Line >= method.StartLine && site.Line <= method.EndLine))
+                InspectCallable(callable, discoveryPaths, paths, reasons);
+                if (indirect.Any(site => site.Path == callable.Path
+                    && site.Line >= callable.StartLine && site.Line <= callable.EndLine))
                 {
                     reasons.Add(TestMapUnknownReason.IndirectViaProductionLoader);
                 }
 
-                foreach (var call in LocalCalls(method.Syntax))
+                foreach (var call in LocalCalls(callable))
                 {
-                    if (methodsByTypeAndName.TryGetValue((method.TypeName, call), out var targets)
+                    if (methodsByTypeAndName.TryGetValue(
+                            (call.ReceiverTypeName, call.MethodName),
+                            out var targets)
                         && targets.Length == 1)
                     {
-                        pending.Push(targets[0]);
+                        pending.Push(targets[0].Callable);
                     }
-                    else if (targets is { Length: > 1 })
+                    else if (targets is { Length: > 1 }
+                        || scannedTypeNames.Contains(call.ReceiverTypeName))
                     {
                         reasons.Add(TestMapUnknownReason.Other);
                     }
@@ -421,17 +444,20 @@ internal static class ScribeTestMapDeriver
                 StringComparison.OrdinalIgnoreCase));
     }
 
-    private static void InspectMethod(
-        ParsedMethod method,
+    private static void InspectCallable(
+        ParsedCallable callable,
         IReadOnlyDictionary<string, IReadOnlyList<string>?> discoveryPaths,
         HashSet<string> paths,
         HashSet<TestMapUnknownReason> reasons)
     {
-        foreach (var invocation in method.Syntax.DescendantNodes().OfType<InvocationExpressionSyntax>())
+        var repositoryAccessorVariables = RepositoryAccessorVariables(callable.Syntax);
+        foreach (var invocation in callable.Syntax.DescendantNodesAndSelf()
+                     .OfType<InvocationExpressionSyntax>())
         {
             if (IsAccessorCall(invocation, "Discover"))
             {
                 AddDiscoveryPaths(invocation, discoveryPaths, paths, reasons);
+                continue;
             }
 
             // 声明式仓库枚举(#2535 / PR #3799 第二轮评审):
@@ -456,6 +482,10 @@ internal static class ScribeTestMapDeriver
 
             if (!IsAccessorCall(invocation, "ReadAllText", "ReadAllBytes", "FileExists", "CopyTo"))
             {
+                if (HasRepositoryAccessorReceiver(invocation, repositoryAccessorVariables))
+                {
+                    reasons.Add(TestMapUnknownReason.Other);
+                }
                 continue;
             }
 
@@ -468,6 +498,39 @@ internal static class ScribeTestMapDeriver
 
             AddLiteralCreatePath(invocation.ArgumentList.Arguments.FirstOrDefault()?.Expression, paths, reasons);
         }
+    }
+
+    private static IReadOnlySet<string> RepositoryAccessorVariables(SyntaxNode callable) =>
+        callable.DescendantNodes().OfType<VariableDeclaratorSyntax>()
+            .Where(static variable => variable.Initializer?.Value
+                .DescendantNodesAndSelf().OfType<InvocationExpressionSyntax>()
+                .Any(static invocation => IsAccessorCall(invocation, "Discover")) == true)
+            .Select(static variable => variable.Identifier.ValueText)
+            .ToHashSet(StringComparer.Ordinal);
+
+    private static bool HasRepositoryAccessorReceiver(
+        InvocationExpressionSyntax invocation,
+        IReadOnlySet<string> repositoryAccessorVariables)
+    {
+        if (invocation.Expression is not MemberAccessExpressionSyntax member)
+        {
+            return false;
+        }
+
+        if (member.Expression.DescendantNodesAndSelf().OfType<InvocationExpressionSyntax>()
+            .Any(static candidate => IsAccessorCall(candidate, "Discover")))
+        {
+            return true;
+        }
+
+        var receiver = member.Expression;
+        while (receiver is MemberAccessExpressionSyntax receiverMember)
+        {
+            receiver = receiverMember.Expression;
+        }
+
+        return receiver is IdentifierNameSyntax identifier
+            && repositoryAccessorVariables.Contains(identifier.Identifier.ValueText);
     }
 
     // 只接受**字面量**前缀:变量前缀无法静态归因,按 fail-closed 记 VariablePath。
@@ -713,22 +776,42 @@ internal static class ScribeTestMapDeriver
         return receiver is IdentifierNameSyntax { Identifier.ValueText: "TemporaryFileSystem" };
     }
 
-    private static IEnumerable<string> LocalCalls(MethodDeclarationSyntax method) =>
-        method.DescendantNodes().OfType<InvocationExpressionSyntax>()
-            .Select(static invocation => invocation.Expression switch
+    private static IEnumerable<(string ReceiverTypeName, string MethodName)> LocalCalls(
+        ParsedCallable callable)
+    {
+        foreach (var invocation in callable.Syntax.DescendantNodesAndSelf()
+                     .OfType<InvocationExpressionSyntax>())
+        {
+            switch (invocation.Expression)
             {
-                IdentifierNameSyntax identifier => identifier.Identifier.ValueText,
-                MemberAccessExpressionSyntax { Expression: ThisExpressionSyntax, Name: var name } => name.Identifier.ValueText,
-                _ => string.Empty,
-            })
-            .Where(static name => name.Length != 0);
+                case IdentifierNameSyntax identifier:
+                    yield return (callable.TypeName, identifier.Identifier.ValueText);
+                    break;
+                case MemberAccessExpressionSyntax
+                    {
+                        Expression: ThisExpressionSyntax,
+                        Name: var thisMethod,
+                    }:
+                    yield return (callable.TypeName, thisMethod.Identifier.ValueText);
+                    break;
+                case MemberAccessExpressionSyntax
+                    {
+                        Expression: IdentifierNameSyntax receiverType,
+                        Name: var typeMethod,
+                    }:
+                    yield return (receiverType.Identifier.ValueText, typeMethod.Identifier.ValueText);
+                    break;
+            }
+        }
+    }
 
     private static ParsedSource Parse(TestMapSource source)
     {
         var root = CSharpSyntaxTree.ParseText(source.Content).GetRoot();
         var methods = root.DescendantNodes().OfType<MethodDeclarationSyntax>().Select(method =>
         {
-            var type = method.Ancestors().OfType<TypeDeclarationSyntax>().First();
+            var types = method.Ancestors().OfType<TypeDeclarationSyntax>().ToArray();
+            var type = types.First();
             var span = method.GetLocation().GetLineSpan();
             return new ParsedMethod(
                 source.Path,
@@ -737,11 +820,39 @@ internal static class ScribeTestMapDeriver
                 method.Identifier.ValueText,
                 method.AttributeLists.SelectMany(static list => list.Attributes).Any(IsTestAttribute),
                 method.AttributeLists.SelectMany(static list => list.Attributes).Any(IsStaticallySkippedTestAttribute),
-                span.StartLinePosition.Line + 1,
-                span.EndLinePosition.Line + 1,
-                method);
+                new ParsedCallable(
+                    source.Path,
+                    source.PartitionKey,
+                    type.Identifier.ValueText,
+                    types.Last().Identifier.ValueText,
+                    span.StartLinePosition.Line + 1,
+                    span.EndLinePosition.Line + 1,
+                    method));
         }).ToArray();
-        return new ParsedSource(root, methods);
+        var initializers = root.DescendantNodes().OfType<FieldDeclarationSyntax>()
+            .SelectMany(static field => field.Declaration.Variables)
+            .Where(static variable => variable.Initializer is not null)
+            .Select(static variable => variable.Initializer!.Value)
+            .Concat(root.DescendantNodes().OfType<PropertyDeclarationSyntax>()
+                .Where(static property => property.Initializer is not null)
+                .Select(static property => property.Initializer!.Value))
+            .Select(initializer => ParseCallable(source, initializer))
+            .ToArray();
+        return new ParsedSource(root, methods, initializers);
+    }
+
+    private static ParsedCallable ParseCallable(TestMapSource source, ExpressionSyntax syntax)
+    {
+        var types = syntax.Ancestors().OfType<TypeDeclarationSyntax>().ToArray();
+        var span = syntax.GetLocation().GetLineSpan();
+        return new ParsedCallable(
+            source.Path,
+            source.PartitionKey,
+            types.First().Identifier.ValueText,
+            types.Last().Identifier.ValueText,
+            span.StartLinePosition.Line + 1,
+            span.EndLinePosition.Line + 1,
+            syntax);
     }
 
     private static bool IsTestAttribute(AttributeSyntax attribute) =>
@@ -753,7 +864,10 @@ internal static class ScribeTestMapDeriver
             argument.NameEquals?.Name.Identifier.ValueText == "Skip"
             && !argument.Expression.IsKind(SyntaxKind.NullLiteralExpression)) == true;
 
-    private sealed record ParsedSource(SyntaxNode Root, IReadOnlyList<ParsedMethod> Methods);
+    private sealed record ParsedSource(
+        SyntaxNode Root,
+        IReadOnlyList<ParsedMethod> Methods,
+        IReadOnlyList<ParsedCallable> Initializers);
     private sealed record ParsedMethod(
         string Path,
         string PartitionKey,
@@ -761,7 +875,13 @@ internal static class ScribeTestMapDeriver
         string Name,
         bool IsTest,
         bool IsStaticallySkipped,
+        ParsedCallable Callable);
+    private sealed record ParsedCallable(
+        string Path,
+        string PartitionKey,
+        string TypeName,
+        string TopLevelTypeName,
         int StartLine,
         int EndLine,
-        MethodDeclarationSyntax Syntax);
+        SyntaxNode Syntax);
 }

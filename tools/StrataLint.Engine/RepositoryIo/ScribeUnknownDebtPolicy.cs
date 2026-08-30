@@ -51,9 +51,16 @@ internal sealed record ScribeUnknownDebtFinding(
 
 internal static class ScribeUnknownDebtPolicy
 {
-    // The admission debt line remains the phase-4a value. New unknown identities block even
-    // below this line; the number describes inherited debt, not spendable capacity.
-    internal const int UnknownDebtLimit = 280;
+    // policy-override #4239, 2026-08-31. Domain: inherited repository-read test methods whose
+    // dependency closure the conservative parser cannot resolve. Positive reading on the same
+    // tree: the previous fail-open parser exposed 149 identities; following all three local-call
+    // shapes, owned member initializers, and missing/ambiguous targets inside scanned types exposes
+    // 1041. Negative boundary: 1043 was not observed and remains a repository-wide block after
+    // the one-identity concurrent-merge reserve below. New identities still block independently,
+    // so 1041 is inherited debt rather than spendable capacity. Owner: repository tau=0 owner.
+    // Exit/review trigger: lower this line whenever symbol-level closure support resolves any of
+    // these identities, and review it when #4239's selector narrowing lands.
+    internal const int UnknownDebtLimit = 1041;
 
     // policy-override #2204, 2026-08-17. Domain: repository-read test methods that the
     // conservative parser cannot resolve. Positive reading: both merge parents had 280 and

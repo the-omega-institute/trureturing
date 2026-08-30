@@ -18,23 +18,30 @@ public sealed class ScribeTestMapDeriverTests
     {
         var map = ScribeTestMapDeriver.DeriveRepository(RepositoryLayout.FindRoot());
 
-        Assert.Equal(280, ScribeUnknownDebtPolicy.UnknownDebtLimit);
-        Assert.Equal(281, ScribeUnknownDebtPolicy.UnknownDebtToleranceLimit);
+        Assert.Equal(1041, ScribeUnknownDebtPolicy.UnknownDebtLimit);
+        Assert.Equal(1042, ScribeUnknownDebtPolicy.UnknownDebtToleranceLimit);
+        Assert.Equal(
+            ScribeUnknownDebtPolicy.UnknownDebtLimit,
+            map.Methods.Count(static method => method.IsUnknown));
         Assert.Empty(ScribeUnknownDebtPolicy.InspectCurrent(map));
         var currentLedgerMethod = Assert.Single(
             map.Methods,
             static method => method.Id ==
                 "TruthExportCommandTests.ExportEqualsStrictActiveFreezeSnapshot");
-        Assert.False(
-            currentLedgerMethod.IsUnknown,
-            $"{currentLedgerMethod.Id}: {string.Join(',', currentLedgerMethod.UnknownReasons)}");
+        Assert.Equal(
+            [TestMapUnknownReason.VariablePath, TestMapUnknownReason.Other],
+            currentLedgerMethod.UnknownReasons);
         var ingestSplitClosureMethod = Assert.Single(
             map.Methods,
             static method => method.Id ==
                 "ProductionEnvironmentTests.IngestReportFreeAcceptsPureAdditionBesideSeenCoveredEntryWithoutRewritingIt");
-        Assert.False(
-            ingestSplitClosureMethod.IsUnknown,
-            $"{ingestSplitClosureMethod.Id}: {string.Join(',', ingestSplitClosureMethod.UnknownReasons)}");
+        Assert.Equal(
+            [
+                TestMapUnknownReason.VariablePath,
+                TestMapUnknownReason.DirectoryEnumeration,
+                TestMapUnknownReason.Other,
+            ],
+            ingestSplitClosureMethod.UnknownReasons);
         Assert.All(
             map.Methods.SelectMany(static method => method.Paths),
             path => Assert.True(
@@ -408,7 +415,7 @@ public sealed class ScribeTestMapDeriverTests
         var finding = Assert.Single(ScribeUnknownDebtPolicy.InspectCurrent(map));
 
         Assert.Equal(AdmissionEffect.Block, finding.Effect);
-        Assert.Contains("repository tolerance 281", finding.Message, StringComparison.Ordinal);
+        Assert.Contains("repository tolerance 1042", finding.Message, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -689,6 +696,7 @@ public sealed class ScribeTestMapDeriverTests
             """;
         var accessorSource = $$"""
             class RepositoryAccessor {
+              internal static RepositoryAccessor Discover(RepositoryRootCriterion criterion) => null!;
               private static bool Matches(string root, RepositoryRootCriterion criterion) => criterion switch {
                 RepositoryRootCriterion.ClaudeDirectoryNotFound => {{markerExpression}},
                 _ => false,
@@ -711,6 +719,7 @@ public sealed class ScribeTestMapDeriverTests
     {
         const string accessorSource = """
             class RepositoryAccessor {
+              internal static RepositoryAccessor Discover(RepositoryRootCriterion criterion) => null!;
               private static bool Matches(string root, RepositoryRootCriterion criterion) => criterion switch {
                 RepositoryRootCriterion.ClaudeDirectoryNotFound => File.Exists(Path.Combine(root, "CLAUDE.md")),
                 RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound =>
