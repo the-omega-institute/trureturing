@@ -16,6 +16,13 @@ namespace D5.S0.Asymptotics.Interference.FiniteLagAutocorrelation
 
 set_option backward.isDefEq.respectTransparency false
 
+local instance {R G : Type*} [Semiring R] :
+    CoeFun (AddMonoidAlgebra R G) (fun _ => G -> R) :=
+  ⟨fun p => p.coeff⟩
+
+local macro:max p:term ".support" : term =>
+  `(Finsupp.support ($p).coeff)
+
 /-- The finite signal coefficients embedded in the integer-exponent Laurent algebra. -/
 noncomputable def finiteCoefficientPolynomial {T : Nat} (f : Fin (T + 1) -> Real) :
     AddMonoidAlgebra Complex Int :=
@@ -47,7 +54,7 @@ private theorem finiteCoefficientPolynomial_apply {T : Nat}
   rw [addMonoidAlgebra_sum_apply]
   apply Finset.sum_congr rfl
   intro n _
-  rw [AddMonoidAlgebra.single_apply]
+  rw [AddMonoidAlgebra.coeff_single, Finsupp.single_apply]
 
 private theorem invert_finiteCoefficientPolynomial {T : Nat}
     (f : Fin (T + 1) -> Real) :
@@ -62,7 +69,7 @@ private theorem invert_finiteCoefficientPolynomial {T : Nat}
   rw [addMonoidAlgebra_sum_apply]
   apply Finset.sum_congr rfl
   intro n _
-  rw [AddMonoidAlgebra.single_apply]
+  rw [AddMonoidAlgebra.coeff_single, Finsupp.single_apply]
   by_cases h : (n : Int) = -m
   · simp [h]
   · have h' : -(n : Int) ≠ m := by omega
@@ -75,7 +82,7 @@ private theorem lag_coefficient {T : Nat} (f : Fin (T + 1) -> Real) (m : Int) :
         (f n : Complex) * finiteCoefficientPolynomial f ((n : Int) + m) := by
   rw [invert_finiteCoefficientPolynomial]
   rw [addMonoidAlgebra_sum_mul_apply]
-  simp only [AddMonoidAlgebra.single_mul_apply, neg_neg]
+  simp only [AddMonoidAlgebra.coeff_single_mul_apply, neg_neg]
 
 private theorem coefficient_support {T : Nat} (f : Fin (T + 1) -> Real) :
     (finiteCoefficientPolynomial f).support ⊆ Finset.Icc (0 : Int) T := by
@@ -117,7 +124,7 @@ private theorem autocorrelation_support {T : Nat} (f : Fin (T + 1) -> Real) :
     (LaurentPolynomial.invert (finiteCoefficientPolynomial f) *
       finiteCoefficientPolynomial f).support ⊆ Finset.Icc (-(T : Int)) T := by
   intro m hm
-  have hadd := AddMonoidAlgebra.support_mul
+  have hadd := AddMonoidAlgebra.support_coeff_mul_subset
     (LaurentPolynomial.invert (finiteCoefficientPolynomial f))
     (finiteCoefficientPolynomial f) hm
   rcases Finset.mem_add.mp hadd with ⟨a, ha, b, hb, rfl⟩
@@ -126,13 +133,21 @@ private theorem autocorrelation_support {T : Nat} (f : Fin (T + 1) -> Real) :
   simp only [Finset.mem_Icc] at ha' hb' ⊢
   omega
 
+local macro:max stx:"p.sum" : term => do
+  let p := Lean.mkIdentFrom stx `p
+  `(Finsupp.sum ($p).coeff)
+
+local macro:max stx:"A.sum" : term => do
+  let A := Lean.mkIdentFrom stx `A
+  `(Finsupp.sum ($A).coeff)
+
 private theorem eval₂_eq_finsupp_sum (p : LaurentPolynomial Complex) (z : Complexˣ) :
     LaurentPolynomial.eval₂ (RingHom.id Complex) z p =
       p.sum fun m a => a * (z ^ m).val := by
   induction p using LaurentPolynomial.induction_on' with
   | add p q hp hq =>
       rw [map_add, hp, hq]
-      rw [Finsupp.sum_add_index']
+      rw [AddMonoidAlgebra.coeff_add, Finsupp.sum_add_index']
       · intro m
         simp
       · intro m a b
@@ -140,7 +155,7 @@ private theorem eval₂_eq_finsupp_sum (p : LaurentPolynomial Complex) (z : Comp
   | C_mul_T m a =>
       rw [LaurentPolynomial.eval₂_C_mul_T]
       rw [← LaurentPolynomial.single_eq_C_mul_T]
-      rw [Finsupp.sum_single_index]
+      rw [AddMonoidAlgebra.coeff_single, Finsupp.sum_single_index]
       · simp
       · simp
 
@@ -242,7 +257,7 @@ theorem finite_lag_autocorrelation_expansion {T : Nat}
             rw [← hinvert, ← hp, map_mul]
       _ = A.sum fun m a => a * (zu ^ m).val := eval₂_eq_finsupp_sum A zu
       _ = ∑ m ∈ Finset.Icc (-(T : Int)) T, A m * z ^ m := by
-        rw [Finsupp.sum_of_support_subset A (autocorrelation_support f)]
+        rw [Finsupp.sum_of_support_subset A.coeff (autocorrelation_support f)]
         · apply Finset.sum_congr rfl
           intro m _
           rw [Units.val_zpow_eq_zpow_val]
