@@ -13,8 +13,10 @@ internal sealed record ScribeCompilationProject(
     string? PackageLockContent);
 
 internal sealed record ScribeProjectCompilation(
+    string ProjectPath,
     CSharpCompilation Compilation,
-    IReadOnlyList<(TestMapSource Source, SyntaxTree Tree)> GovernedSources);
+    IReadOnlyList<(TestMapSource Source, SyntaxTree Tree)> GovernedSources,
+    ScribeMetadataDegradation? MetadataDegradation);
 
 internal sealed record ScribeProjectCompilationContext(
     IReadOnlyList<ScribeCompilationProject> Projects,
@@ -130,6 +132,7 @@ internal static class ScribeProjectCompilationBuilder
         var governedByPath = governedSources.ToDictionary(static source => source.Path, StringComparer.Ordinal);
         var projectsByPath = context.Projects.ToDictionary(static project => project.Path, StringComparer.Ordinal);
         var compilations = new Dictionary<string, CSharpCompilation>(StringComparer.Ordinal);
+        var degradations = new Dictionary<string, ScribeMetadataDegradation?>(StringComparer.Ordinal);
         var visiting = new HashSet<string>(StringComparer.Ordinal);
         CSharpCompilation BuildProject(string path)
         {
@@ -154,8 +157,13 @@ internal static class ScribeProjectCompilationBuilder
             var trees = project.Sources
                 .Select(source => CSharpSyntaxTree.ParseText(source.Content, ParseOptions, source.Path))
                 .Append(ImplicitUsingsTree(project.Path))
-                .ToArray();
-            var references = ScribeMetadataReferenceResolver.Resolve(project)
+                .ToList();
+            var resolution = ScribeMetadataReferenceResolver.Resolve(project);
+            if (resolution.Degradation?.NeedsXunitAttributeFallback == true)
+            {
+                trees.Add(XunitAttributeFallbackTree(project.Path));
+            }
+            var references = resolution.References
                 .Concat(projectReferences)
                 .ToArray();
             var compilation = CSharpCompilation.Create(
@@ -165,6 +173,7 @@ internal static class ScribeProjectCompilationBuilder
                 CompilationOptions());
             visiting.Remove(path);
             compilations.Add(path, compilation);
+            degradations.Add(path, resolution.Degradation);
             return compilation;
         }
 
@@ -176,7 +185,11 @@ internal static class ScribeProjectCompilationBuilder
                 .Where(tree => governedByPath.ContainsKey(tree.FilePath))
                 .Select(tree => (governedByPath[tree.FilePath], tree))
                 .ToArray();
-            return new ScribeProjectCompilation(compilation, sources);
+            return new ScribeProjectCompilation(
+                project.Path,
+                compilation,
+                sources,
+                degradations[project.Path]);
         }).ToArray();
     }
 
@@ -196,8 +209,10 @@ internal static class ScribeProjectCompilationBuilder
                 ScribeMetadataReferenceResolver.PlatformReferences(),
                 CompilationOptions());
             return new ScribeProjectCompilation(
+                group.Key,
                 compilation,
-                parsed.Select(static item => (item.Source, (SyntaxTree)item.Tree)).ToArray());
+                parsed.Select(static item => (item.Source, (SyntaxTree)item.Tree)).ToArray(),
+                null);
         }).ToArray();
 
     private static IEnumerable<ScribeCompilationProject> TransitiveProjectReferences(
@@ -231,6 +246,18 @@ internal static class ScribeProjectCompilationBuilder
         """,
         ParseOptions,
         projectPath + ".ImplicitUsings.g.cs");
+
+    private static SyntaxTree XunitAttributeFallbackTree(string projectPath) =>
+        CSharpSyntaxTree.ParseText(
+            """
+            namespace Xunit {
+              public class FactAttribute : System.Attribute { public string? Skip { get; set; } }
+              public class TheoryAttribute : FactAttribute { }
+              public interface IClassFixture<TFixture> { }
+            }
+            """,
+            ParseOptions,
+            projectPath + ".XunitMetadataFallback.g.cs");
 
     private static SyntaxTree SyntheticSupportTree(IEnumerable<SyntaxNode> roots)
     {

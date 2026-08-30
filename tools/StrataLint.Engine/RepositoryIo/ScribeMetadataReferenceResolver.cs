@@ -5,28 +5,75 @@ using System.Xml.Linq;
 
 namespace StrataLint.Engine;
 
+internal sealed record ScribeMetadataDegradation(
+    string ProjectPath,
+    string Reason,
+    bool NeedsXunitAttributeFallback);
+
+internal sealed record ScribeMetadataReferenceResolution(
+    IReadOnlyList<MetadataReference> References,
+    ScribeMetadataDegradation? Degradation);
+
 internal static class ScribeMetadataReferenceResolver
 {
-    internal static IEnumerable<MetadataReference> Resolve(ScribeCompilationProject project)
+    private static readonly (string Assembly, string Provider)[] RequiredXunitMetadata =
+    [
+        ("xunit.core", "xunit.extensibility.core"),
+        ("xunit.assert", "xunit.assert"),
+    ];
+
+    internal static ScribeMetadataReferenceResolution Resolve(ScribeCompilationProject project)
     {
         var paths = PlatformPaths().ToList();
         var assemblyNames = paths
             .Select(Path.GetFileNameWithoutExtension)
             .ToHashSet(StringComparer.OrdinalIgnoreCase);
-        foreach (var package in Packages(project))
+        var packages = Packages(project).ToArray();
+        foreach (var package in packages)
         {
             foreach (var path in CompileAssets(package.Id, package.Version))
             {
                 if (assemblyNames.Add(Path.GetFileNameWithoutExtension(path))) paths.Add(path);
             }
         }
-        if (ScribeProjectCompilationContext.IsXunitProject(project.ProjectContent)
-            && (!assemblyNames.Contains("xunit.core") || !assemblyNames.Contains("xunit.assert")))
+        ScribeMetadataDegradation? degradation = null;
+        if (ScribeProjectCompilationContext.IsXunitProject(project.ProjectContent))
         {
-            throw new InvalidOperationException(
-                $"xUnit compile assets are unavailable for {project.Path}");
+            var missing = RequiredXunitMetadata
+                .Where(metadata => !assemblyNames.Contains(metadata.Assembly))
+                .ToArray();
+            if (missing.Length != 0)
+            {
+                if (project.PackageLockContent is not { Length: > 0 })
+                {
+                    throw new InvalidOperationException(
+                        $"xUnit compile assets are unavailable for {project.Path}; "
+                        + "the project has no locked package graph");
+                }
+                var absentProviders = missing
+                    .Where(metadata => !packages.Any(package => string.Equals(
+                        package.Id,
+                        metadata.Provider,
+                        StringComparison.OrdinalIgnoreCase)))
+                    .ToArray();
+                if (absentProviders.Length != 0)
+                {
+                    throw new InvalidOperationException(
+                        $"xUnit compile assets are unavailable for {project.Path}; the locked package graph "
+                        + "does not resolve metadata providers: "
+                        + string.Join(", ", absentProviders.Select(static metadata =>
+                            $"{metadata.Assembly} <- {metadata.Provider}")));
+                }
+                degradation = new ScribeMetadataDegradation(
+                    project.Path,
+                    "xUnit compile assets are unavailable from the local NuGet cache "
+                    + $"(missing locked assemblies: {string.Join(", ", missing.Select(static item => item.Assembly))})",
+                    missing.Any(static item => item.Assembly == "xunit.core"));
+            }
         }
-        return paths.Select(static path => MetadataReference.CreateFromFile(path));
+        return new ScribeMetadataReferenceResolution(
+            paths.Select(static path => MetadataReference.CreateFromFile(path)).ToArray(),
+            degradation);
     }
 
     internal static IEnumerable<MetadataReference> PlatformReferences() =>

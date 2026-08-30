@@ -9,6 +9,7 @@ internal enum TestMapUnknownReason
     VariablePath,
     DirectoryEnumeration,
     IndirectViaProductionLoader,
+    MetadataUnavailable,
     RepositoryRootMarker,
     Other,
 }
@@ -39,7 +40,10 @@ internal sealed record ScribeTestMap(
     IReadOnlyList<string> OrphanManagedSourcePaths,
     IReadOnlyList<string> DanglingCompileFailProofProjectExemptionPaths,
     IReadOnlyDictionary<string, string> CompileProjectBySourcePath,
-    IReadOnlyList<MsBuildCompileFinding> CompileQueryFindings);
+    IReadOnlyList<MsBuildCompileFinding> CompileQueryFindings)
+{
+    internal IReadOnlyList<ScribeMetadataDegradation> MetadataDegradations { get; init; } = [];
+}
 
 internal sealed record ScribeTestProjectPartition(string Key, string ProjectPath);
 
@@ -293,7 +297,7 @@ internal static class ScribeTestMapDeriver
     private static string ProjectDirectory(string projectPath) =>
         projectPath.LastIndexOf('/') is var slash && slash >= 0 ? projectPath[..slash] : ".";
 
-    private static ScribeTestMap DeriveTracked(
+    internal static ScribeTestMap DeriveTracked(
         IReadOnlyList<ScribeTrackedSource> tracked,
         MsBuildCompileMap compileMap)
     {
@@ -348,6 +352,7 @@ internal static class ScribeTestMapDeriver
     {
         var parsed = ScribeTestSymbolBinder.Bind(
             sourceFiles,
+            out var metadataDegradations,
             productionAssemblies,
             compilationContext).ToArray();
         var discoveryPaths = ExtractDiscoveryPaths(parsed);
@@ -402,7 +407,10 @@ internal static class ScribeTestMapDeriver
             orphanManagedSourcePaths ?? [],
             danglingCompileFailProofProjectExemptionPaths ?? [],
             compileProjectBySourcePath ?? new Dictionary<string, string>(StringComparer.Ordinal),
-            compileQueryFindings ?? []);
+            compileQueryFindings ?? [])
+        {
+            MetadataDegradations = metadataDegradations,
+        };
     }
 
     private static void InspectMethod(
