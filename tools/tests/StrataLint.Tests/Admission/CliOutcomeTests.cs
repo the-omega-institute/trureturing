@@ -29,6 +29,23 @@ public sealed class CliOutcomeTests
         Assert.Contains("REVIEW_ENVELOPE_STUB --base base-sha --head head-sha", console.Output, StringComparison.Ordinal);
     }
 
+    [Fact]
+    public void ReviewEnvelopeTypedConflictExitCodeCrossesTheCliProcessBoundary()
+    {
+        // 典型冲突 exit 3 必须原样穿过 CliApplication.Run(RenderCommand 的 ExitCode 直通);只在 CommandResult 上钉
+        // 而不在进程边界钉,wrapper 读到的就可能是 2。
+        var console = new BufferedConsole();
+        var environment = new StubCliEnvironment(
+            Outcome("admitted"),
+            reviewEnvelope: new CommandResult(false, string.Empty, "REVIEW_ENVELOPE_CONFLICT synthetic\n", ExitCode: 3));
+
+        var exitCode = CliApplication.Run(
+            ["review-envelope", "--base", "b", "--head", "h"], environment, console);
+
+        Assert.Equal(3, exitCode);
+        Assert.Contains("REVIEW_ENVELOPE_CONFLICT synthetic", console.Error, StringComparison.Ordinal);
+    }
+
     [Theory]
     [MemberData(nameof(Outcomes))]
     public void CheckCommandMapsAllFourOutcomesToStableStreamsAndExitCodes(
@@ -168,7 +185,8 @@ internal sealed class StubCliEnvironment(
     ExplicitCommandResult? echoVerify = null,
     ExplicitCommandResult? fileMapConform = null,
     CommandResult? cleanLanes = null,
-    ExplicitCommandResult? capacityAudit = null) : ICliEnvironment
+    ExplicitCommandResult? capacityAudit = null,
+    CommandResult? reviewEnvelope = null) : ICliEnvironment
 {
     internal IReadOnlyList<string> CleanLanesArguments { get; private set; } = [];
 
@@ -192,7 +210,7 @@ internal sealed class StubCliEnvironment(
     // 回显参数:CliOutcomeTests.ReviewEnvelopeVerbRoutesToTheEnvironmentMember 据此证明 dispatch 表把
     // `review-envelope` 路由到了本成员(把表项改指 ShowAtom 即红)。
     public CommandResult ReviewEnvelope(IReadOnlyList<string> arguments) =>
-        new(true, "REVIEW_ENVELOPE_STUB " + string.Join(' ', arguments) + "\n", string.Empty);
+        reviewEnvelope ?? new(true, "REVIEW_ENVELOPE_STUB " + string.Join(' ', arguments) + "\n", string.Empty);
 
     public ExplicitCommandResult EchoVerify(IReadOnlyList<string> arguments) =>
         echoVerify ?? new(2, string.Empty, "echo verify is not configured in this fixture");

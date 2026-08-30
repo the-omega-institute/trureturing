@@ -34,9 +34,13 @@ internal static class ReviewEnvelopeCommand
         string ReentryCondition,
         string Justification);
 
+    // 既有收据在 head 里只许「追加 hosted_extensions」(收据是 SSOT,不重写):其余任何字段改动 → INVALID。
+    internal sealed record Extended(string AtomId, string Gid, string Receipt, ImmutableArray<string> AddedGids);
+
     internal sealed record Derivation(
         ImmutableArray<Deposited> DepositedAtoms,
-        ImmutableArray<Ejected> EjectedAtoms);
+        ImmutableArray<Ejected> EjectedAtoms,
+        ImmutableArray<Extended> ExtendedAtoms);
 
     internal static CommandResult Run(
         IRepositoryGateway repository,
@@ -117,6 +121,13 @@ internal static class ReviewEnvelopeCommand
             .Where(item => !baseReceipts.Contains(item.Path))
             .Select(item => new Deposited(item.Receipt.AtomId, item.Receipt.PrimaryGid, item.Path))
             .ToImmutableArray();
+        var extended = validated
+            .Where(item => baseReceipts.Contains(item.Path))
+            .Select(item => (item.Path, Head: item.Receipt, Base: DigestionFormalizationReceipt.Load(baseSnapshot, item.Path)))
+            .Where(static item => !DigestionFormalizationReceipt.Write(item.Base)
+                .SequenceEqual(DigestionFormalizationReceipt.Write(item.Head)))
+            .Select(static item => ClassifyChangedReceipt(item.Path, item.Base, item.Head))
+            .ToImmutableArray();
 
         var headQuarantined = headEntries
             .Where(static entry => entry.Receipts.Quarantine is not null)
@@ -135,12 +146,38 @@ internal static class ReviewEnvelopeCommand
         // HEAD 全域互斥(隔离原子不得同时持有收据,不限本次新增)由 BackfillInventoryLoader.Load 自身
         // fail-closed 执法(「entry X cannot be quarantined because …」),上面的 Load 已经把它抛出;
         // 本命令不再重判一遍(可达性:若这里再写一条检查,它永远不会被执行,变异也不会红)。
-        if (deposited.IsEmpty && ejected.IsEmpty)
+        if (deposited.IsEmpty && ejected.IsEmpty && extended.IsEmpty)
         {
-            throw new FormatException("no outcome: head adds no receipt and no quarantine block relative to base");
+            throw new FormatException("no outcome: head adds no receipt, no hosted extension and no quarantine block relative to base");
         }
 
-        return new Derivation(deposited, ejected);
+        return new Derivation(deposited, ejected, extended);
+    }
+
+    private static Extended ClassifyChangedReceipt(
+        string path,
+        DigestionFormalizationReceipt baseReceipt,
+        DigestionFormalizationReceipt headReceipt)
+    {
+        var baseExtensions = baseReceipt.HostedExtensions.IsDefault ? [] : baseReceipt.HostedExtensions;
+        var headExtensions = headReceipt.HostedExtensions.IsDefault ? [] : headReceipt.HostedExtensions;
+        var rootUnchanged = baseReceipt.AtomId == headReceipt.AtomId
+            && baseReceipt.PrimaryGid == headReceipt.PrimaryGid
+            && baseReceipt.Signature == headReceipt.Signature
+            && baseReceipt.CasRef == headReceipt.CasRef
+            && baseReceipt.RawSha256 == headReceipt.RawSha256;
+        var baseKept = baseExtensions.All(extension => headExtensions.Contains(extension));
+        var added = headExtensions
+            .Where(extension => !baseExtensions.Contains(extension))
+            .Select(static extension => extension.Gid)
+            .Order(StringComparer.Ordinal)
+            .ToImmutableArray();
+        if (!rootUnchanged || !baseKept || added.IsEmpty)
+        {
+            throw new FormatException(
+                $"rewritten receipt: {path} — an existing receipt may only gain hosted_extensions (root fields and prior extensions must be unchanged)");
+        }
+        return new Extended(headReceipt.AtomId, headReceipt.PrimaryGid, path, added);
     }
 
     private static ImmutableHashSet<string> ReceiptPaths(RepositorySnapshot snapshot) =>
@@ -201,6 +238,13 @@ internal static class ReviewEnvelopeCommand
                 blocker_class = atom.BlockerClass,
                 reentry_condition = atom.ReentryCondition,
                 justification = atom.Justification,
+            }).ToArray(),
+            extended = derivation.ExtendedAtoms.Select(static atom => new
+            {
+                atom_id = atom.AtomId,
+                gid = atom.Gid,
+                receipt = atom.Receipt,
+                added_gids = atom.AddedGids.ToArray(),
             }).ToArray(),
         };
         return JsonSerializer.Serialize(material, JsonOptions) + "\n";

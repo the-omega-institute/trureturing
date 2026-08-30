@@ -74,8 +74,9 @@ def main(argv):
     except json.JSONDecodeError as error:
         sys.stderr.write(f"COMPOSE_VERB_SCHEMA_MISMATCH (not JSON: {error})\n")
         sys.exit(70)
-    if not isinstance(truth, dict) or truth.get("schema") != "stratalint-review-envelope-v1" or not all(k in truth for k in ("base", "head", "deposited", "ejected")):
-        sys.stderr.write(f"COMPOSE_VERB_SCHEMA_MISMATCH {truth.get('schema')}\n")
+    if not isinstance(truth, dict) or truth.get("schema") != "stratalint-review-envelope-v1" or not all(k in truth for k in ("base", "head", "deposited", "ejected", "extended")):
+        shape = truth.get("schema") if isinstance(truth, dict) else f"non-object JSON ({type(truth).__name__})"
+        sys.stderr.write(f"COMPOSE_VERB_SCHEMA_MISMATCH {shape}\n")
         sys.exit(70)
     if truth["base"] != base or truth["head"] != head:
         sys.stderr.write(f"COMPOSE_VERB_REVISION_MISMATCH verb={truth['base'][:9]}..{truth['head'][:9]} requested={base[:9]}..{head[:9]}\n")
@@ -94,12 +95,19 @@ def main(argv):
     # Single-deposit fix-flight envelopes carry the per-atom attestations at conclusion level; with exactly
     # one deposited atom and no per-atom record for it, that level IS the per-atom record (unambiguous).
     # With two or more deposited atoms, conclusion-level fields are never attributed (round-1 finding).
-    conclusion_level = {k: v for k, v in worker.items() if k in WHITELIST} if len(truth["deposited"]) == 1 else {}
+    single = len(truth["deposited"]) + len(truth["extended"]) == 1
+    conclusion_level = {k: v for k, v in worker.items() if k in WHITELIST} if single else {}
 
     atoms = []
     for d in truth["deposited"]:
         atom = {"atom_id": d["atom_id"], "outcome": "deposited", "gid": d["gid"], "receipt": d["receipt"], "bind_only": None}
         record = per_atom.get(d["atom_id"]) or conclusion_level
+        atom.update({k: v for k, v in record.items() if k in WHITELIST})
+        atoms.append(atom)
+    for x in truth["extended"]:
+        # hosted extension: the existing receipt gained hosted_extensions (never rewritten); the review target is the added GIDs.
+        atom = {"atom_id": x["atom_id"], "outcome": "extended", "gid": x["gid"], "receipt": x["receipt"], "added_gids": x["added_gids"], "bind_only": None}
+        record = per_atom.get(x["atom_id"]) or conclusion_level
         atom.update({k: v for k, v in record.items() if k in WHITELIST})
         atoms.append(atom)
     for e in truth["ejected"]:
@@ -112,14 +120,14 @@ def main(argv):
     env = {"conclusion": {
         "lane": opts["lane"] or branch.split("/")[-1], "branch": branch, "base": base, "head": head,
         "fix_of_pr": int(opts["pr"]) if opts["pr"] else None, "review_pass": int(opts["pass"]) if opts["pass"] else None,
-        "atoms": atoms, "deposited_count": len(truth["deposited"]), "ejected_count": len(truth["ejected"]),
-        "kind": "data-only quarantine PR (zero deposits)" if not truth["deposited"] else "deposit PR",
+        "atoms": atoms, "deposited_count": len(truth["deposited"]), "extended_count": len(truth["extended"]), "ejected_count": len(truth["ejected"]),
+        "kind": "deposit PR" if truth["deposited"] else ("hosted-extension PR" if truth["extended"] else "data-only quarantine PR (zero deposits)"),
         "orchestrator_note": opts["note"], "branch_diff_name_status": git(wt, "diff", "--name-status", base, "HEAD"),
         "log_ref": worker.get("log_ref") or (os.path.dirname(opts["worker"]) + "/worklog.md" if opts["worker"] else None),
         "composer": "StrataLint review-envelope (typed) via tools/scripts/agent/compose_envelope.py"}}
     with open(out, "w", encoding="utf-8") as fh:
         json.dump(env, fh, ensure_ascii=False, indent=1)
-    print(f"COMPOSE_OK deposited={len(truth['deposited'])} ejected={len(truth['ejected'])} head={head[:9]}")
+    print(f"COMPOSE_OK deposited={len(truth['deposited'])} extended={len(truth['extended'])} ejected={len(truth['ejected'])} head={head[:9]}")
 
 
 if __name__ == "__main__":

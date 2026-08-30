@@ -295,6 +295,87 @@ public sealed partial class FormalizeCandidatesTests
 
     // 合成快照:规则文件(Minimal)、账本(按 quarantined 集合给条目加隔离块)、源文与 CAS、以及 receipted
     // 集合的收据。两棵快照的差别只在 quarantined / receipted 两个集合,派生规则由此可被逐条钉住。
+    private static byte[] ExtendedReceipt(EntryFixture entry, params string[] hostedGids) =>
+        DigestionFormalizationReceipt.Write(new DigestionFormalizationReceipt(
+            entry.AtomId,
+            "D5/S0/Synthetic/Receipt." + entry.AtomId.Replace('-', '_'),
+            new DigestionFormalizationSignature(entry.AtomId.Replace('-', '_'), "theorem", "statement-v1"),
+            entry.Atom.Fingerprints.RawSha256,
+            entry.Atom.Fingerprints.RawSha256,
+            ImmutableArray.CreateRange(hostedGids.Select(static gid => new DigestionFormalizationExtension(
+                gid,
+                new DigestionFormalizationSignature(gid.Replace('/', '_').Replace('.', '_'), "theorem", "statement-v1")))))).ToArray();
+
+    private static RawRepositorySnapshot WithReceiptBytes(RawRepositorySnapshot snapshot, EntryFixture entry, byte[] receipt)
+    {
+        var files = snapshot.Entries
+            .Where(file => file.Path != DigestionFormalizationReceipt.PathForAtom(entry.AtomId))
+            .ToList();
+        files.Add(new RawRepositoryEntry(DigestionFormalizationReceipt.PathForAtom(entry.AtomId), ImmutableArray.CreateRange(receipt)));
+        return RawRepositorySnapshot.Create(files);
+    }
+
+    [Fact]
+    public void ReviewEnvelopeReportsAReceiptThatOnlyGainedHostedExtensionsAsExtended()
+    {
+        var entry = Entry("source", "hosted", "theorem", "1.0", atomizer: AtomizerRegistry.GenericId);
+        var baseSnapshot = ReviewSnapshot([entry], quarantined: [], receipted: [entry]);
+        var headSnapshot = WithReceiptBytes(baseSnapshot, entry, ExtendedReceipt(entry, "D5/S0/Synthetic/Receipt.hosted_more"));
+        var gateway = new RevisionKeyedGateway(new Dictionary<string, RawRepositorySnapshot>(StringComparer.Ordinal)
+        {
+            ["b"] = baseSnapshot,
+            ["h"] = headSnapshot,
+        });
+
+        var result = ReviewEnvelopeCommand.Run(gateway, ["--base", "b", "--head", "h"]);
+
+        Assert.True(result.Success, result.Error);
+        using var document = JsonDocument.Parse(result.Output);
+        Assert.Empty(document.RootElement.GetProperty("deposited").EnumerateArray());
+        Assert.Empty(document.RootElement.GetProperty("ejected").EnumerateArray());
+        var extended = Assert.Single(document.RootElement.GetProperty("extended").EnumerateArray());
+        Assert.Equal(entry.AtomId, extended.GetProperty("atom_id").GetString());
+        Assert.Equal(
+            "D5/S0/Synthetic/Receipt.hosted_more",
+            Assert.Single(extended.GetProperty("added_gids").EnumerateArray()).GetString());
+    }
+
+    [Fact]
+    public void ReviewEnvelopeDoesNotReportAnUnchangedReceiptAsExtended()
+    {
+        var kept = Entry("source", "kept", "theorem", "1.0", atomizer: AtomizerRegistry.GenericId);
+        var fresh = Entry("source", "fresh", "theorem", "2.0", atomizer: AtomizerRegistry.GenericId);
+        var baseSnapshot = ReviewSnapshot([kept, fresh], quarantined: [], receipted: [kept]);
+        var headSnapshot = ReviewSnapshot([kept, fresh], quarantined: [], receipted: [kept, fresh]);
+
+        var derivation = ReviewEnvelopeCommand.Derive(baseSnapshot, headSnapshot);
+
+        Assert.Empty(derivation.ExtendedAtoms);
+        Assert.Equal(fresh.AtomId, Assert.Single(derivation.DepositedAtoms).AtomId);
+    }
+
+    [Theory]
+    [InlineData("extension-removed")]
+    [InlineData("primary-gid-rewritten")]
+    public void ReviewEnvelopeRejectsAnExistingReceiptThatWasRewritten(string rewrite)
+    {
+        var entry = Entry("source", "rewritten", "theorem", "1.0", atomizer: AtomizerRegistry.GenericId);
+        var plain = ReviewSnapshot([entry], quarantined: [], receipted: [entry]);
+        var withExtension = WithReceiptBytes(plain, entry, ExtendedReceipt(entry, "D5/S0/Synthetic/Receipt.rewritten_ext"));
+        var otherPrimary = WithReceiptBytes(plain, entry, DigestionFormalizationReceipt.Write(new DigestionFormalizationReceipt(
+            entry.AtomId,
+            "D5/S0/Synthetic/Receipt.other_primary",
+            new DigestionFormalizationSignature("other_primary", "theorem", "statement-v1"),
+            entry.Atom.Fingerprints.RawSha256,
+            entry.Atom.Fingerprints.RawSha256)).ToArray());
+        var (baseSnapshot, headSnapshot) = rewrite == "extension-removed" ? (withExtension, plain) : (plain, otherPrimary);
+
+        var exception = Assert.ThrowsAny<FormatException>(
+            () => ReviewEnvelopeCommand.Derive(baseSnapshot, headSnapshot));
+
+        Assert.StartsWith("rewritten receipt: ", exception.Message, StringComparison.Ordinal);
+    }
+
     private static RawRepositorySnapshot ReviewSnapshot(
         IReadOnlyList<EntryFixture> entries,
         IReadOnlyList<EntryFixture> quarantined,
