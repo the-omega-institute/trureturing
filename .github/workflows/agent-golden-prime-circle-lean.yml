@@ -1,0 +1,48 @@
+name: agent-golden-prime-circle-lean
+
+on:
+  push:
+    branches:
+      - agent/prover/golden-prime-circle-critical-spectrum
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    if: contains(github.event.head_commit.message, '[golden-prime-circle-lean]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/prover/golden-prime-circle-critical-spectrum
+          fetch-depth: 0
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+      - name: Install pinned Lean toolchain
+        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - name: Restore Lean dependencies
+        run: lake update
+      - name: Build golden critical coordinate
+        shell: bash
+        run: |
+          set +e
+          mkdir -p diagnostics
+          module='D5.S3.Analytic.Zeta.GoldenSpectrum.GoldenCriticalCoordinate'
+          lake build "$module" > diagnostics/build.log 2>&1
+          status=$?
+          cat diagnostics/build.log
+          printf '%s\n' "$status" > diagnostics/status
+          exit 0
+      - name: Upload diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: golden-prime-circle-lean-diagnostics
+          path: diagnostics
+          if-no-files-found: error
+          retention-days: 3
+      - name: Enforce successful module build
+        run: test "$(cat diagnostics/status)" = "0"
