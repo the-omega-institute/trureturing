@@ -3,13 +3,14 @@
    mirror-B: D5/B/S3/Analytic/GoldenTomography/TwoNodeTomographyConditioning
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Two distinct phase nodes admit exact amplitude recovery, with reconstruction error controlled by the inverse node separation. -/
+   digest: Two distinct nodes admit exact amplitude recovery, with error
+     controlled by inverse node separation. -/
 
-import D5.S3.Analytic.GoldenTomography.FiniteVandermondeTomography
+import Mathlib
 
 /-!
 The exact kernel condition and metric conditioning are different statements.
-Distinct nodes make the two-moment readout injective.  The explicit recovery
+Distinct nodes make the two-moment readout injective. The explicit recovery
 formula shows that perturbations are divided by `‖z1 - z0‖`, so near-colliding
 nodes can remain exactly distinguishable while becoming numerically unstable.
 -/
@@ -33,8 +34,7 @@ def recoverFirst (z₀ z₁ m₀ m₁ : ℂ) : ℂ :=
 def recoverSecond (z₀ z₁ m₀ m₁ : ℂ) : ℂ :=
   (m₁ - z₀ * m₀) / (z₁ - z₀)
 
-/-- Two distinct nodes recover both amplitudes exactly from the first two
-moments. -/
+/-- Distinct nodes recover both amplitudes exactly from the first two moments. -/
 theorem recover_two_node_amplitudes
     {z₀ z₁ : ℂ} (hNodes : z₀ ≠ z₁) (a₀ a₁ : ℂ) :
     recoverFirst z₀ z₁
@@ -48,7 +48,7 @@ theorem recover_two_node_amplitudes
     unfold recoverFirst recoverSecond twoNodeMoments <;>
     field_simp [hDen] <;> ring
 
-/-- Exact first-amplitude reconstruction error under moment perturbations. -/
+/-- Exact first-amplitude error under moment perturbations. -/
 theorem recover_first_error
     {z₀ z₁ : ℂ} (hNodes : z₀ ≠ z₁)
     (a₀ a₁ e₀ e₁ : ℂ) :
@@ -61,7 +61,7 @@ theorem recover_first_error
   field_simp [hDen]
   ring
 
-/-- Exact second-amplitude reconstruction error under moment perturbations. -/
+/-- Exact second-amplitude error under moment perturbations. -/
 theorem recover_second_error
     {z₀ z₁ : ℂ} (hNodes : z₀ ≠ z₁)
     (a₀ a₁ e₀ e₁ : ℂ) :
@@ -74,7 +74,7 @@ theorem recover_second_error
   field_simp [hDen]
   ring
 
-/-- First-amplitude error is bounded by the perturbation size divided by node
+/-- First-amplitude error is bounded by perturbation size divided by node
 separation. -/
 theorem norm_recover_first_error_le
     {z₀ z₁ : ℂ} (hNodes : z₀ ≠ z₁)
@@ -83,10 +83,10 @@ theorem norm_recover_first_error_le
         ((twoNodeMoments z₀ z₁ a₀ a₁).1 + e₀)
         ((twoNodeMoments z₀ z₁ a₀ a₁).2 + e₁) - a₀‖ ≤
       (‖z₁‖ * ‖e₀‖ + ‖e₁‖) / ‖z₁ - z₀‖ := by
-  rw [recover_first_error hNodes]
-  rw [norm_div]
-  apply (div_le_div_iff_of_pos_right (norm_pos_iff.mpr
-    (sub_ne_zero.mpr hNodes.symm))).2
+  rw [recover_first_error hNodes, norm_div]
+  apply
+    (div_le_div_iff_of_pos_right
+      (norm_pos_iff.mpr (sub_ne_zero.mpr hNodes.symm))).2
   calc
     ‖z₁ * e₀ - e₁‖ ≤ ‖z₁ * e₀‖ + ‖e₁‖ := norm_sub_le _ _
     _ = ‖z₁‖ * ‖e₀‖ + ‖e₁‖ := by rw [norm_mul]
