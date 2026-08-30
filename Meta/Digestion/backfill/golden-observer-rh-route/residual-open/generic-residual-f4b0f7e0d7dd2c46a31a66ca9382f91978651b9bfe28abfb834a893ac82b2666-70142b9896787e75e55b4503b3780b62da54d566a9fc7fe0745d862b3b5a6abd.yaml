@@ -1,0 +1,10 @@
+ast_path: section/追加部二-平行侦察席报告-nyxid-gpt-pro-盲于追加部一/clause/5
+fingerprints:
+  raw_sha256: sha256:f4b0f7e0d7dd2c46a31a66ca9382f91978651b9bfe28abfb834a893ac82b2666
+  normalized_sha256: sha256:f4b0f7e0d7dd2c46a31a66ca9382f91978651b9bfe28abfb834a893ac82b2666
+cas_ref: sha256:f4b0f7e0d7dd2c46a31a66ca9382f91978651b9bfe28abfb834a893ac82b2666
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
