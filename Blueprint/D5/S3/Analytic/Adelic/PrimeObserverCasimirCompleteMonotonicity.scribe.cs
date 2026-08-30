@@ -94,11 +94,14 @@ internal sealed class PrimeObserverCasimirCompleteMonotonicityDocument
                         FormulaLogicOperator.Or,
                         EqualTo(Call("mod", p, D(5)), D(4))))));
         Formula casimirValue = Apply(casimir, sigma);
-        Formula lseriesValue = Call("re", Call("LSeries", coefficient, sigma));
+        Formula zeroModeReading = Call("splitRegulatorModeLog", phase, D(0), sigma);
+        Formula firstModeReading = Call("splitRegulatorModeLog", phase, D(1), sigma);
         Formula casimirClause = new Formula.BindMany(
             FormulaQuantifier.ForAll,
             [Bound("sigma", real)],
-            Implies(LessThan(D(1), sigma), EqualTo(casimirValue, lseriesValue)));
+            EqualTo(
+                casimirValue,
+                Seq(zeroModeReading, Sp, Minus, Sp, firstModeReading)));
         Formula sign = Call("pow", Seq(Open, Minus, D(1), Close), m);
         Formula signedDerivative = Seq(
             sign, Sp, Times, Sp, Call("iteratedDeriv", m, casimir, sigma));
@@ -118,7 +121,7 @@ internal sealed class PrimeObserverCasimirCompleteMonotonicityDocument
             m);
         Formula decayWeight = new Formula.Power(
             p,
-            Seq(Minus, Open, positiveExponent, Sp, Times, Sp, sigma, Close));
+            Grp(Seq(Minus, Open, positiveExponent, Sp, Times, Sp, sigma, Close)));
         Formula splitSummand = Seq(
             coefficientWeight, Sp, Times, Sp,
             logarithmicWeight, Sp, Times, Sp, decayWeight);
@@ -139,6 +142,30 @@ internal sealed class PrimeObserverCasimirCompleteMonotonicityDocument
             Implies(
                 LessThan(D(1), sigma),
                 EqualTo(signedDerivative, differentiatedSeries)));
+        Formula termwisePhaseDistance = Seq(
+            D(1), Sp, Minus, Sp, Call("cos", Seq(k, Sp, Times, Sp, phaseAtP)));
+        Formula termwiseCoefficientWeight = new Formula.Fraction(
+            Seq(D(2), Sp, Times, Sp, Open, termwisePhaseDistance, Close),
+            k);
+        Formula termwiseLogarithmicWeight = new Formula.Power(
+            Seq(Open, k, Sp, Times, Sp, Call("log", p), Close),
+            m);
+        Formula termwiseDecayWeight = new Formula.Power(
+            p,
+            Grp(Seq(Minus, Open, k, Sp, Times, Sp, sigma, Close)));
+        Formula termwiseSummand = Seq(
+            termwiseCoefficientWeight, Sp, Times, Sp,
+            termwiseLogarithmicWeight, Sp, Times, Sp, termwiseDecayWeight);
+        Formula termwiseNonnegativeClause = new Formula.BindMany(
+            FormulaQuantifier.ForAll,
+            [Bound("m", natural), Bound("p", natural), Bound("k", natural),
+                Bound("sigma", real)],
+            Implies(
+                And(
+                    splitAtP,
+                    And(LessThan(D(0), k), LessThan(D(1), sigma))),
+                new Formula.Relation(
+                    D(0), FormulaRelationOperator.LessThanOrEqual, termwiseSummand)));
         Formula nonnegativeClause = new Formula.BindMany(
             FormulaQuantifier.ForAll,
             [Bound("m", natural), Bound("sigma", real)],
@@ -150,7 +177,11 @@ internal sealed class PrimeObserverCasimirCompleteMonotonicityDocument
             coefficientClause,
             And(
                 residueClause,
-                And(casimirClause, And(derivativeClause, nonnegativeClause))));
+                And(
+                    casimirClause,
+                    And(
+                        derivativeClause,
+                        And(termwiseNonnegativeClause, nonnegativeClause)))));
 
         return Disp(new Formula.BindMany(
             FormulaQuantifier.ForAll,
