@@ -1,0 +1,20 @@
+## 1001.1 Toeplitz floor
+
+计算：
+
+$$
+\Lambda_N=\lambda_{\min}(T_N)
+$$
+
+并验证：
+
+$$
+\Lambda_N>0,
+\qquad
+\Lambda_N\downarrow0.
+$$
+
+这检验有限合法、无限边界结构。
+
+---
+

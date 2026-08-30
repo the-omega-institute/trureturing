@@ -1,0 +1,20 @@
+### R-D　O-6 空类型诊断
+
+[repo-audit proposition | proposed GID: `D5/X_Frontier/GoldenObserver/ZeroDataVacuityAudit`]
+
+    import D5.X_Frontier.Hearts
+
+    namespace D5.X_Frontier.GoldenObserver
+
+    open D5.X_Frontier.Hearts
+    open D5.S3.Weil.ZeroSum
+
+    theorem o6_vacuous_if_zeroData_empty
+        (h : ¬ Nonempty ZeroData) :
+        o6WeilPositivityStatement
+
+    end D5.X_Frontier.GoldenObserver
+
+精确证明只有命题逻辑：
+
+- 展开 O-6；

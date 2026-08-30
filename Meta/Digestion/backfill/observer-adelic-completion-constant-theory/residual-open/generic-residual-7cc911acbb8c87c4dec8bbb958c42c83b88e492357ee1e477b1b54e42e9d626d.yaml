@@ -1,0 +1,10 @@
+ast_path: section/第九百五十二部-黄金重整化的平方尺度
+fingerprints:
+  raw_sha256: sha256:7cc911acbb8c87c4dec8bbb958c42c83b88e492357ee1e477b1b54e42e9d626d
+  normalized_sha256: sha256:7cc911acbb8c87c4dec8bbb958c42c83b88e492357ee1e477b1b54e42e9d626d
+cas_ref: sha256:7cc911acbb8c87c4dec8bbb958c42c83b88e492357ee1e477b1b54e42e9d626d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,27 @@
+### 2. 预注册进度向量
+
+[suspected-novel]
+
+使用定理级而不是“投入小时数”的进度向量：
+
+$P=
+(N_{\rm closed},
+ V_{\rm ZeroData},
+ C_{\rm conv},
+ L_{\max}^{\rm cert},
+ B_T,
+ \delta_{\rm PSD},
+ A_{\rm external})$，
+
+其中：
+
+- $N_{\rm closed}$：新增且有消费者的 kernel GID 数；
+- $V_{\rm ZeroData}\in\{0,1\}$：canonical inhabitant 是否已闭合；
+- $C_{\rm conv}$：已有 canonical convergence 的测试子类覆盖；
+- $L_{\max}^{\rm cert}$：在固定规范下取得严格证书的最大窗口；
+- $B_T$：预注册 $(N,T,L)$ 下的尾项上界；
+- $\delta_{\rm PSD}$：经区间证书得到的最小谱隙下界；
+- $A_{\rm external}$：已固定、构建并完成 axioms 审计的外部 theorem 数。
+
+不得在结果出来后把“多算了若干位”新增为成功坐标。
+

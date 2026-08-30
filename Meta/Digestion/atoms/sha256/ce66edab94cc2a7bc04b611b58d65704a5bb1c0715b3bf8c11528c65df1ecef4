@@ -1,0 +1,18 @@
+## 958.4 Trace-map 光锥仍不是 Riemann 光锥
+
+Cayley cubic 的 Lorentz tangent cone 是 Fibonacci transfer recursion 的严格结构。
+
+要把它等同于 Riemann 临界线法向结构，仍需一个规范 functor：
+
+$$
+\boxed{
+\text{Prime--Weil data}
+\longrightarrow
+SL_2\text{ cocycle}.
+}
+$$
+
+没有该 functor，二者只能称为结构同型候选。
+
+---
+

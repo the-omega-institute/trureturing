@@ -1,0 +1,44 @@
+## Golden renormalization depth
+
+$$
+\boxed{
+d_\varphi
+=
+\min
+\left\{
+k:
+\|E_j\|\le\varepsilon_j
+\text{ 对所有 }j\ge k
+\right\}.
+}
+\tag{981.4}
+$$
+
+其中前三个描述正性与谱逃逸；
+
+第四个描述是否真实进入 Fibonacci universality class。
+
+必须严格区分：
+
+$$
+\boxed{
+d_T<\infty
+}
+$$
+
+是 RH 反例信息；
+
+而：
+
+$$
+\boxed{
+d_\varphi<\infty
+}
+$$
+
+只是黄金重整化结构信息。
+
+二者目前没有逻辑蕴含。
+
+---
+

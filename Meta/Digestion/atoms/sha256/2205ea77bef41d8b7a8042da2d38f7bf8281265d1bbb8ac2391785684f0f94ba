@@ -1,0 +1,38 @@
+## 凸锥证书
+
+存在有限 Pick matrix：
+
+$$
+\boxed{
+\mathbb P_N\not\succeq0.
+}
+\tag{1037.3}
+$$
+
+其中一阶 Pick 已可能足够：
+
+$$
+K_\xi(q,q)
+=
+\frac{\Re\mathcal Z_\xi(q)}{\Re q}<0.
+$$
+
+这三者分别属于：
+
+$$
+\boxed{
+\begin{aligned}
+\text{拓扑}
+&:\quad\text{绕数};\\
+\text{调和分析}
+&:\quad\text{负耗散};\\
+\text{凸几何}
+&:\quad\text{正核失效}.
+\end{aligned}
+}
+$$
+
+所以即使某个具体证书数值条件不佳，还可以切换到另一个对偶图表。
+
+---
+

@@ -1,0 +1,130 @@
+# 第一千一百零九部　离线零点的最终纯几何定义
+
+令：
+
+$$
+\rho
+=
+\frac12+\delta+i\gamma.
+$$
+
+在 Mellin 对数时间：
+
+$$
+x=\log n
+$$
+
+上，归一化谱模式为：
+
+$$
+\boxed{
+\psi_\rho(x)
+=
+e^{\delta x}e^{i\gamma x}.
+}
+\tag{1109.1}
+$$
+
+这里：
+
+$$
+\gamma
+=
+\text{沿可见相位流的频率},
+$$
+
+$$
+\delta
+=
+\text{离开紧致 unitary 边界的法向 rapidity}.
+$$
+
+因此：
+
+$$
+\boxed{
+\delta=0
+}
+$$
+
+表示模式纯相位化、没有指数增长或衰减；
+
+而：
+
+$$
+\boxed{
+\delta\neq0
+}
+$$
+
+表示模式获得非紧尺度分量。
+
+在黄金周期：
+
+$$
+P_\varphi=2\log\varphi
+$$
+
+上，其反射双分支的正规化 monodromy 是：
+
+$$
+\boxed{
+B_\rho
+=
+\begin{pmatrix}
+e^{\delta P_\varphi}&0\\
+0&e^{-\delta P_\varphi}
+\end{pmatrix}
+=
+\begin{pmatrix}
+\varphi^{2\delta}&0\\
+0&\varphi^{-2\delta}
+\end{pmatrix}.
+}
+\tag{1109.2}
+$$
+
+其判别式：
+
+$$
+\boxed{
+\operatorname{tr}(B_\rho)^2-4
+=
+4\sinh^2
+\left(
+2\delta\log\varphi
+\right).
+}
+\tag{1109.3}
+$$
+
+所以：
+
+$$
+\boxed{
+\delta=0
+\Longleftrightarrow
+\text{null／unitary boundary};
+}
+$$
+
+$$
+\boxed{
+\delta\neq0
+\Longleftrightarrow
+\text{hyperbolic bulk sector}.
+}
+$$
+
+由此得到最精确的一句话：
+
+$$
+\boxed{
+\textbf{离线零点是紧致相位完成无法吸收的非酉 Floquet 共振，
+即 unitary Solenoid 边界法向上的 hyperbolic bulk defect。}
+}
+\tag{1109.4}
+$$
+
+---
+

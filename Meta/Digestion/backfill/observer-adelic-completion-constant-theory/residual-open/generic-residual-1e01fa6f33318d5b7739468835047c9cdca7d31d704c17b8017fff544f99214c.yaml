@@ -1,0 +1,10 @@
+ast_path: section/第四步-Toeplitz-matrix
+fingerprints:
+  raw_sha256: sha256:1e01fa6f33318d5b7739468835047c9cdca7d31d704c17b8017fff544f99214c
+  normalized_sha256: sha256:1e01fa6f33318d5b7739468835047c9cdca7d31d704c17b8017fff544f99214c
+cas_ref: sha256:1e01fa6f33318d5b7739468835047c9cdca7d31d704c17b8017fff544f99214c
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

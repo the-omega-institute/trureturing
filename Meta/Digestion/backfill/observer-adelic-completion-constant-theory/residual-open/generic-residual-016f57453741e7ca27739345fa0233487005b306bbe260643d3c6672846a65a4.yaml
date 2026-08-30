@@ -1,0 +1,10 @@
+ast_path: row/同谱不能恢复-bundle
+fingerprints:
+  raw_sha256: sha256:016f57453741e7ca27739345fa0233487005b306bbe260643d3c6672846a65a4
+  normalized_sha256: sha256:016f57453741e7ca27739345fa0233487005b306bbe260643d3c6672846a65a4
+cas_ref: sha256:016f57453741e7ca27739345fa0233487005b306bbe260643d3c6672846a65a4
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

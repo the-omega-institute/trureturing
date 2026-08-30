@@ -1,0 +1,10 @@
+ast_path: section/Transfer-hyperbolicity-depth
+fingerprints:
+  raw_sha256: sha256:4c757218836c75a574a19467814271f2aa8b04f2f5d9a005ab52b9edf4d3361f
+  normalized_sha256: sha256:4c757218836c75a574a19467814271f2aa8b04f2f5d9a005ab52b9edf4d3361f
+cas_ref: sha256:4c757218836c75a574a19467814271f2aa8b04f2f5d9a005ab52b9edf4d3361f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

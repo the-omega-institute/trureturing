@@ -1,0 +1,13 @@
+ast_path: section/第一千零六部-离线零点可能具有-超稀疏-形态
+fingerprints:
+  raw_sha256: sha256:97d0e1b34c60f8dea200d6d7c3e469d50bf0a4b15cea534bc1e0c574eaa4bf04
+  normalized_sha256: sha256:97d0e1b34c60f8dea200d6d7c3e469d50bf0a4b15cea534bc1e0c574eaa4bf04
+cas_ref: sha256:97d0e1b34c60f8dea200d6d7c3e469d50bf0a4b15cea534bc1e0c574eaa4bf04
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-fbf48721e10ea798ec9a19f0683bdbc291d847aa34fc59a141ee0e064892bdce-5921900062f516834ed88ac81ec6ae6949537168c6814702c0010b2dc5601aa9
+    - generic-residual-3fad7090d2b760f1418a8c9876d81ccca23bf934956358af1f49dc4442db29af-d333b54a851f3445d4f27fdfdee694a833ccd2f55279e7c59252f761670f92f4

@@ -1,0 +1,10 @@
+ast_path: section/第一千零八部-Christoffel-对偶-不寻找离线点-而测量-原子质量下界
+fingerprints:
+  raw_sha256: sha256:18623c1a5f7c4516748ae14c0f104676b5e9954ca86d00a976fb91f45083e7a5
+  normalized_sha256: sha256:18623c1a5f7c4516748ae14c0f104676b5e9954ca86d00a976fb91f45083e7a5
+cas_ref: sha256:18623c1a5f7c4516748ae14c0f104676b5e9954ca86d00a976fb91f45083e7a5
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

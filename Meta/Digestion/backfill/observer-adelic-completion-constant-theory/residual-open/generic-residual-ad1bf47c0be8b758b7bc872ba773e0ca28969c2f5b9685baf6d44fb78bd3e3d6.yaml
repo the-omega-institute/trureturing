@@ -1,0 +1,10 @@
+ast_path: section/第一千零六十七部-一个新的严格-RH-判据族
+fingerprints:
+  raw_sha256: sha256:ad1bf47c0be8b758b7bc872ba773e0ca28969c2f5b9685baf6d44fb78bd3e3d6
+  normalized_sha256: sha256:ad1bf47c0be8b758b7bc872ba773e0ca28969c2f5b9685baf6d44fb78bd3e3d6
+cas_ref: sha256:ad1bf47c0be8b758b7bc872ba773e0ca28969c2f5b9685baf6d44fb78bd3e3d6
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

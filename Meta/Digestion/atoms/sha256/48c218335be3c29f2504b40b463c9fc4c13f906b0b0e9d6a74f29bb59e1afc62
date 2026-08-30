@@ -1,0 +1,15 @@
+## Christoffel–Annulus RH Criterion
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\forall\epsilon>0,\quad
+\Lambda_N(\epsilon)\longrightarrow0.
+}
+\tag{1009.5}
+$$
+
+这是一种非常接近你所说的“对偶逼近”：
+
+* 不去找稀缺点；

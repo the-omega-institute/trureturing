@@ -1,0 +1,96 @@
+# 第九百七十四部　Haar floor 是 Schur disk 的边界距离
+
+仓库已证明，有限 moment vector 的最大 Haar floor 精确等于：
+
+$$
+\boxed{
+\Lambda_N^{\mathrm{Haar}}
+=
+\lambda_{\min}(T_N).
+}
+\tag{974.1}
+$$
+
+在最优 floor 处：
+
+$$
+S_N
+=
+T_N
+-
+\Lambda_N^{\mathrm{Haar}}I
+$$
+
+正半定且奇异。
+
+仓库进一步证明，该 residual measure 的支撑被限制在 contact polynomial 的有限单位圆零点上，并拥有有限原子表示。
+
+在 Schur–Verblunsky 图表中，有限原子 measure 的递归最终到达：
+
+$$
+\boxed{
+|\alpha_M|=1.
+}
+\tag{974.2}
+$$
+
+即：
+
+$$
+\rho_M=0.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{Toeplitz contact}
+\Longleftrightarrow
+\text{terminal Schur reflection}
+\Longleftrightarrow
+\text{finite atomic completion}.
+}
+$$
+
+定义 Schur disk 的双曲反射长度：
+
+$$
+\boxed{
+\ell_n
+=
+2\operatorname{artanh}|\alpha_n|.
+}
+\tag{974.3}
+$$
+
+则：
+
+$$
+|\alpha_n|=0
+\Longleftrightarrow
+\ell_n=0,
+$$
+
+$$
+|\alpha_n|\uparrow1
+\Longleftrightarrow
+\ell_n\to+\infty.
+$$
+
+因此：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Haar measure}
+&:\quad \alpha_n=0,\ \text{无反射};\\
+\text{一般正 measure}
+&:\quad |\alpha_n|<1,\ \text{有限反射};\\
+\text{finite atomic contact}
+&:\quad |\alpha_M|=1,\ \text{完全反射}.
+\end{aligned}
+}
+$$
+
+---
+

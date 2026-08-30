@@ -1,0 +1,15 @@
+ast_path: section/第一千零五十二部-规范的-xi-Weyl-两能级-Hamiltonian
+fingerprints:
+  raw_sha256: sha256:90c27d0134119ef85d6e211c51e260c95625e041754f0e2ac0662d92555b27f3
+  normalized_sha256: sha256:90c27d0134119ef85d6e211c51e260c95625e041754f0e2ac0662d92555b27f3
+cas_ref: sha256:90c27d0134119ef85d6e211c51e260c95625e041754f0e2ac0662d92555b27f3
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-32e3def31ee33ae0d2acc63720a6577e68c214e243749d595e3eb2c0beb079ac-a75e3c486b337fbf65f9ad89abde332e7e9a1327c26e086bbc5229c6bb1131e8
+    - generic-residual-4d3141c50be34d34c42f54331c34a59e05aebbd65e08b299daaace3a215f93d3-0f0a230a9a5cc58cf45e1510c043054e81ab0cb58c2f9ce925f425f62c23433c
+    - generic-residual-47ea15c40c2721a258f722484abe12afaabba267939397dc26fe2c9f73048134-1e2d48e3329bfa776a92da6baece87feb1a52a200f402e30830596d3df7b76f4
+    - generic-residual-03c8e7a0f220a7e4da84f4cbbc748a88b8a035e79c2772ded8bae7748b6d211d-c69bb0839abc5d21768b816dcfa9a6c12bc33f9c893f663a5fa142727d8d162b

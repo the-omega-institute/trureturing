@@ -1,0 +1,10 @@
+ast_path: row/Fejér-Li-energy-identity
+fingerprints:
+  raw_sha256: sha256:92a0a4025b637648a99b2df23a59764592c59bb58f3b7fa06e27dd816f01a215
+  normalized_sha256: sha256:92a0a4025b637648a99b2df23a59764592c59bb58f3b7fa06e27dd816f01a215
+cas_ref: sha256:92a0a4025b637648a99b2df23a59764592c59bb58f3b7fa06e27dd816f01a215
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

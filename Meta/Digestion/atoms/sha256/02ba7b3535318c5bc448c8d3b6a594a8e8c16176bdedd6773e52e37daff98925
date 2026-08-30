@@ -1,0 +1,78 @@
+# 第一千零十二部　零点—素数的 Mellin 光锥对偶
+
+令：
+
+$$
+x=\log n
+$$
+
+为素数幂的对数时间。
+
+考虑一个假设性的离线零点：
+
+$$
+\boxed{
+\rho
+=
+\frac12+\delta+i\gamma.
+}
+\tag{1012.1}
+$$
+
+函数方程和实结构同时产生四元轨道：
+
+$$
+\frac12\pm\delta\pm i\gamma.
+$$
+
+它们在对数时间中的指数模式之和为：
+
+$$
+\boxed{
+\begin{aligned}
+&
+e^{(\delta+i\gamma)x}
++
+e^{(-\delta+i\gamma)x}
++
+e^{(\delta-i\gamma)x}
++
+e^{(-\delta-i\gamma)x}
+\\
+&=
+4\cosh(\delta x)\cos(\gamma x).
+\end{aligned}
+}
+\tag{1012.2}
+$$
+
+若：
+
+$$
+\delta=0,
+$$
+
+退化为：
+
+$$
+\boxed{
+4\cos(\gamma x).
+}
+\tag{1012.3}
+$$
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+\gamma
+&=\text{沿 log-prime 时间的旋转频率};\\
+\delta
+&=\text{正负时间分支之间的双曲 boost}.
+\end{aligned}
+}
+$$
+
+---
+

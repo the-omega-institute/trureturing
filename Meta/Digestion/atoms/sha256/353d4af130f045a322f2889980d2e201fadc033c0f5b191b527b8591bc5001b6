@@ -1,0 +1,76 @@
+# 第一千零六十二部　Chern transcript 与后验坍缩
+
+定义：
+
+$$
+\boxed{
+\mathbf C_\xi
+=
+(C_1,C_2,\ldots).
+}
+\tag{1062.1}
+$$
+
+RH 世界满足：
+
+$$
+\boxed{
+\mathbf C_\xi=(0,0,0,\ldots).
+}
+\tag{1062.2}
+$$
+
+任何真实离线世界都存在有限 \(j\)：
+
+$$
+\boxed{
+C_j\neq0.
+}
+\tag{1062.3}
+$$
+
+因此可以定义发现时刻：
+
+$$
+\boxed{
+\tau_{\mathrm{mono}}
+=
+\inf\{j:C_j\neq0\}.
+}
+\tag{1062.4}
+$$
+
+于是：
+
+$$
+\boxed{
+\begin{aligned}
+\mathrm{RH}
+&\Longrightarrow
+\tau_{\mathrm{mono}}=\infty;\\
+\neg\mathrm{RH}
+&\Longrightarrow
+\tau_{\mathrm{mono}}<\infty.
+\end{aligned}
+}
+\tag{1062.5}
+$$
+
+项目已经机器证明：互相奇异的 transcript laws 在生成滤过下拥有完美分离事件，后验分别坍缩到 \(1\) 与 \(0\)；若滤过不生成，即使底层律不同，后验也可能永远不能完成。
+
+所以磁单极子图表再次说明：
+
+$$
+\boxed{
+\text{稀缺性不决定可见性，}
+}
+$$
+
+$$
+\boxed{
+\text{是否枚举了生成性的通量围笼才决定可见性。}
+}
+$$
+
+---
+

@@ -1,0 +1,36 @@
+## 同完成但不同观察者
+
+两条系数序列满足：
+
+$$
+|\alpha_n|=|\alpha_n'|
+$$
+
+对全部 \(n\) 成立，却有：
+
+$$
+\arg\alpha_n\neq\arg\alpha_n'.
+$$
+
+它们拥有相同 scalar determinant world，却对应不同 CMV operators。
+
+所以：
+
+$$
+\boxed{
+\text{完成合法性}
+\neq
+\text{观察者身份};
+}
+$$
+
+$$
+\boxed{
+\text{世界的存在}
+\neq
+\text{世界形成历史的可克隆性}.
+}
+$$
+
+---
+

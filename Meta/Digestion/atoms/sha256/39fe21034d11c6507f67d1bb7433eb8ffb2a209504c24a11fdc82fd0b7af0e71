@@ -1,0 +1,96 @@
+## 953.1 三种谱型
+
+若：
+
+$$
+|y|<1,
+$$
+
+写：
+
+$$
+y=\cos\theta.
+$$
+
+则 \(M(y)\) 的特征值为：
+
+$$
+e^{\pm i\theta},
+$$
+
+属于 elliptic/unitary-like 区域，并且：
+
+$$
+W_N(y)=\sin^2(N\theta)\ge0.
+$$
+
+若：
+
+$$
+|y|=1,
+$$
+
+为 parabolic 边界。
+
+若：
+
+$$
+y=-\cosh\kappa<-1,
+$$
+
+则特征值为：
+
+$$
+\boxed{
+-e^{\kappa},
+\qquad
+-e^{-\kappa},
+}
+\tag{953.4}
+$$
+
+并且：
+
+$$
+\boxed{
+T_N(y)=(-1)^N\cosh(N\kappa),
+}
+$$
+
+$$
+\boxed{
+W_N(y)=-\sinh^2(N\kappa)<0.
+}
+\tag{953.5}
+$$
+
+所以此前的离线 Chebyshev 负证书具有一个更直接的含义：
+
+$$
+\boxed{
+\text{离线紧化点产生了一个 hyperbolic transfer channel。}
+}
+$$
+
+临界线允许谱对应 elliptic/parabolic；
+
+离线径向逃逸对应 hyperbolic boost。
+
+因此：
+
+$$
+\boxed{
+\text{Chebyshev 证书不是任意多项式技巧，}
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{有限时间 transfer monodromy 的双曲分类器。}
+}
+$$
+
+---
+

@@ -244,8 +244,24 @@ internal static class EngineeringTestPlanPolicy
             ? assembly
             : Path.GetFileNameWithoutExtension(project);
 
+    // 仓根**文档**不是构建输入。上面那句 reason 自称 "a repository-root build input",
+    // 而此谓词此前判的是任何仓根文件,比它自己声明的契约更宽 —— 收窄是对齐契约,不是削弱。
+    //
+    // 检测不降级(2026-08-30 实测三条):①全仓无任何测试读这三个文件的**内容**
+    // (只当 root marker 与合成夹具字面量);②「本次改动把某工件顶过 800 行」由 admission 的
+    // SL-003 delta 分支无条件 Block(RepositoryRules.Structure.cs),与 engineering 计划无关;
+    // ③dev push 恒为 FULL,全仓容量巡检在合入后照跑。故一个文档 PR 自己能造成的违规,
+    // 仍然逐条有机器拦得住;它此前连坐的是 3101 个与它无关的测试(实测 774s/次)。
+    //
+    // 名单是**排除式白名单**:不在其中的仓根文件一律仍判 full surface,
+    // 故新增一个未分类的仓根文件 fail-closed。
+    private static readonly ImmutableHashSet<string> RepositoryRootDocuments =
+        ImmutableHashSet.Create(StringComparer.Ordinal, "AGENTS.md", "CLAUDE.md", "README.md");
+
     private static bool IsFullSurface(string path) =>
-        path == "tools" || path.StartsWith("tools/", StringComparison.Ordinal) || !path.Contains('/');
+        path == "tools"
+        || path.StartsWith("tools/", StringComparison.Ordinal)
+        || (!path.Contains('/') && !RepositoryRootDocuments.Contains(path));
 
     private static bool Covers(string root, string path) =>
         path == root || path.StartsWith(root + "/", StringComparison.Ordinal);

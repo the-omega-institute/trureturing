@@ -1,0 +1,22 @@
+### R-E　RH 将任意 `ZeroData` 零点定位到临界线
+
+[repo-derived composition | proposed GID: `D5/X_Frontier/GoldenObserver/RhLocatesZeroData`]
+
+    import D5.X_Frontier.Hearts
+
+    namespace D5.X_Frontier.GoldenObserver
+
+    open D5.S3.Weil.Convention
+    open D5.S3.Weil.ZeroSum
+
+    theorem zeroData_zero_on_critical_line_of_rh
+        (hRH : RiemannHypothesis)
+        (Z : ZeroData)
+        (n : ℕ) :
+        (Z.zero n).re = criticalAbscissa
+
+    end D5.X_Frontier.GoldenObserver
+
+闭合路线：
+
+- `Z.zero_isNontrivial n` 给出该点是 zeta 非平凡零点；

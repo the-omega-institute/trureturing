@@ -1,0 +1,19 @@
+## GSR-4：黄金稳定倍率
+
+在完成 fixed orbit 邻域，要求：
+
+$$
+\boxed{
+\frac{
+\|\text{stable defect}_{k+1}\|
+}{
+\|\text{stable defect}_k\|
+}
+\longrightarrow
+\varphi^{-2}.
+}
+\tag{977.4}
+$$
+
+---
+

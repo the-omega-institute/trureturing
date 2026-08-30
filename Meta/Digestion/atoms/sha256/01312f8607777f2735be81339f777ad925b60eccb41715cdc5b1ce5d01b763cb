@@ -1,0 +1,16 @@
+### 1. Schur ladder
+
+计算：
+
+$$
+\alpha_0,\ldots,\alpha_N
+$$
+
+及：
+
+$$
+1-|\alpha_n|^2.
+$$
+
+判断其边界接近速度。
+

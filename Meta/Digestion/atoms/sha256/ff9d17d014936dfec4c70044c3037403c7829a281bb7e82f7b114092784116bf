@@ -1,0 +1,24 @@
+## 1001.5 内生 block extraction
+
+不能预先使用 \(F_n\)。
+
+应从 \(b_n\)、\(G_n\) 或 transfer matrices 中进行：
+
+* 聚类；
+* return-word 抽取；
+* 最小 automaton 重建；
+* incidence matrix 识别。
+
+只有重建出的矩阵自然等于：
+
+$$
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}
+$$
+
+或其共轭形式时，才能调用黄金最小扩张定理。
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/N-1-自然黄金坐标
+fingerprints:
+  raw_sha256: sha256:44c9c390fbc252889c562455456ea67a67154db4cc7494d78b03132011c44a3d
+  normalized_sha256: sha256:44c9c390fbc252889c562455456ea67a67154db4cc7494d78b03132011c44a3d
+cas_ref: sha256:44c9c390fbc252889c562455456ea67a67154db4cc7494d78b03132011c44a3d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

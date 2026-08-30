@@ -1,0 +1,61 @@
+# 第一千零八部　Christoffel 对偶：不寻找离线点，而测量“原子质量下界”
+
+取：
+
+$$
+z_\rho
+=
+-i\left(\rho-\frac12\right).
+$$
+
+临界线零点对应：
+
+$$
+z_\rho\in\mathbb R.
+$$
+
+固定：
+
+$$
+a>\frac12,
+$$
+
+定义 Cayley 映射：
+
+$$
+\boxed{
+w_a(z)
+=
+\frac{z+ia}{z-ia}.
+}
+\tag{1008.1}
+$$
+
+若 \(z\in\mathbb R\)，则：
+
+$$
+|w_a(z)|=1.
+$$
+
+若 \(z\notin\mathbb R\)，反射伙伴映成单位圆内外的 reciprocal pair。
+
+给每个零点选择一个预先固定、对称且绝对可和的正权 \(c_\rho>0\)，并归一化：
+
+$$
+\boxed{
+\mu_a
+=
+\sum_\rho
+c_\rho\delta_{w_a(z_\rho)}.
+}
+\tag{1008.2}
+$$
+
+RH 成立当且仅当：
+
+$$
+\operatorname{supp}\mu_a\subseteq\mathbb T.
+$$
+
+---
+

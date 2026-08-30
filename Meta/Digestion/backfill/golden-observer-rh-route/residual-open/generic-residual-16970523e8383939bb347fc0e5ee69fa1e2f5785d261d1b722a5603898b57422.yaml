@@ -1,0 +1,10 @@
+ast_path: row/结构零点-1-2-phi-2
+fingerprints:
+  raw_sha256: sha256:16970523e8383939bb347fc0e5ee69fa1e2f5785d261d1b722a5603898b57422
+  normalized_sha256: sha256:16970523e8383939bb347fc0e5ee69fa1e2f5785d261d1b722a5603898b57422
+cas_ref: sha256:16970523e8383939bb347fc0e5ee69fa1e2f5785d261d1b722a5603898b57422
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

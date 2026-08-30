@@ -1,0 +1,16 @@
+ast_path: section/1040-2-黄金不是逻辑必要-而是观察顺序
+fingerprints:
+  raw_sha256: sha256:36c38c23eb7610aa0d51eeaf596b62ff8e1e0f08983a6a63b6504d66083b5ab4
+  normalized_sha256: sha256:36c38c23eb7610aa0d51eeaf596b62ff8e1e0f08983a6a63b6504d66083b5ab4
+cas_ref: sha256:36c38c23eb7610aa0d51eeaf596b62ff8e1e0f08983a6a63b6504d66083b5ab4
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-9fc4d57707ef743accacad70ccd8905d3f9220c0e02ce1dda99fbcf408f65c9f-442349f06d120234778db6ba3081ebee031030c78cbae4f6e9c68bd46b779207
+    - generic-residual-85f7046894edb29764037577f5e86ca7b2feb853504505ee794caf6b9f9671cb-6a8bfaa4afbef4746ac80ac6fceb1105017441fe38167a976171a3d29062c997
+    - generic-residual-d798bb8de2c28be6debb032fdb71214edf2a0fb53251be48fca8667fe0ae798b-564d2b7e1d4bdcbbcd4899e476b19de00ad4c69a299834469ac7fff27006b488
+    - generic-residual-af5348b289ca3a8dd132f7aedff218805ecd9aacf89bed2d51a45b983df4cee1-39a1d38987940840143a9a26136ab774b8f0da94271f9508307cafb407ca80bd
+    - generic-residual-0e50c7c218883241b1a435cb98f12eda7385984901f5f46f1f43b53a149c7360-829981c99d10bc28b20cf7e7457a76e1288e9c81a50b11375bcec98af40c36dc

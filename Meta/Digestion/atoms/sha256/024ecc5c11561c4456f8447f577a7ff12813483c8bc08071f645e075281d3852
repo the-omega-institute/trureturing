@@ -1,0 +1,26 @@
+# 第一千零四十四部　通量证书的数值鲁棒性
+
+对有理矩形 \(R\)，令：
+
+$$
+\Gamma=\partial R.
+$$
+
+若有近似函数 \(\widetilde F\)，并能严格证明：
+
+$$
+\boxed{
+\sup_{z\in\Gamma}
+|F(z)-\widetilde F(z)|
+<
+\inf_{z\in\Gamma}
+|\widetilde F(z)|,
+}
+\tag{1044.1}
+$$
+
+则由 Rouché 定理，\(F\) 与 \(\widetilde F\) 在 \(R\) 内零点数相同。
+
+所以可以通过：
+
+* 区间算术；

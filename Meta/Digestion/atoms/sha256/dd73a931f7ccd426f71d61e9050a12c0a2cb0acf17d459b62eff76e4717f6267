@@ -1,0 +1,10 @@
+### 3. 第二处语义缺口：收敛前件按测试函数逐个外置
+
+O-6 只对带有
+
+`hZero : SymmetricConvergent Z (convolutionSquare g)`
+
+的实例提出非负义务。若某个 $g$ 没有已构造的收敛见证，该 $g$ 不会反驳 O-6。
+
+经典 Weil 判据需要证明所选完整测试类的零点和确实存在，并且与显式公式的规范极限一致。当前 `Convention` 仍把“紧支撑 Fourier–Laplace entire 性”的 canonical status 标成 missing，这个缺口不能靠给 theorem 多加一个 `hZero` 参数永久绕开。
+

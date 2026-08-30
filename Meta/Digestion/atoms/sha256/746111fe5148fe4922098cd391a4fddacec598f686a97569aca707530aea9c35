@@ -1,0 +1,76 @@
+# 第一千零六十九部　建议形式化顺序
+
+```text
+D5/S3/Analytic/Zeta/PhaseVortex/
+  CenteredXiFunction.lean
+  XiNormalizedPhase.lean
+  XiPhaseConnection.lean
+  XiArgumentPrincipleFlux.lean
+  XiZeroVorticity.lean
+  XiPoincareLelongInterface.lean
+
+D5/S3/Analytic/Zeta/WeylSuspension/
+  HolomorphicTwoLevelHamiltonian.lean
+  XiWeylHamiltonian.lean
+  XiWeylSpectrum.lean
+  XiDegeneracyIffZero.lean
+  SimpleZeroWeylCone.lean
+  MultipleZeroMultiWeylCone.lean
+
+D5/S3/Analytic/Zeta/MonopoleBundle/
+  XiNorthEigenstate.lean
+  XiSouthEigenstate.lean
+  XiEquatorTransition.lean
+  ZeroWindingEqualsMultiplicity.lean
+  XiZeroChernCharge.lean
+  PositiveNegativeBandOppositeCharge.lean
+
+D5/S3/Analytic/Zeta/MonopoleRH/
+  RightCompletionBulk.lean
+  RHNoBulkDegeneracy.lean
+  RHNoBulkChernCharge.lean
+  RHGlobalHolomorphicLog.lean
+  RHGlobalEigenframe.lean
+  XiBoundaryMonopoleConfinement.lean
+
+D5/S3/Observer/GaugePatching/
+  LocalGaugeFrame.lean
+  GaugeTransitionCocycle.lean
+  LocalSpectrumDoesNotRecoverBundle.lean
+  DiracStringGaugeDependence.lean
+  ObserverBundleNonreconstruction.lean
+
+D5/S3/GoldenObserver/MonopoleRG/
+  GoldenRadialShell.lean
+  GoldenLogRadialShift.lean
+  MonopoleFieldScale.lean
+  MonopoleAreaScale.lean
+  GoldenFluxInvariant.lean
+  GoldenRadialCompactification.lean
+  GoldenMonopoleCylinder.lean
+
+D5/S3/Analytic/Zeta/ChernCage/
+  RationalPolyhedralCage.lean
+  XiCageChernNumber.lean
+  IsolatedZeroRationalCage.lean
+  RHChernCageCriterion.lean
+  MonopoleDiscoveryTime.lean
+
+D5/S3/Weil/PrimeChern/
+  XiLogDerivativeContour.lean
+  PoleGammaPrimeContourDecomposition.lean
+  SmoothedPrimeChernApproximation.lean
+  PrimeChernIntervalCertificate.lean
+  PrimeChernIntegerRecovery.lean
+
+D5/S3/Observer/MonopoleTranscript/
+  RationalCageEnumeration.lean
+  ChernChargeTranscript.lean
+  RHZeroChernTranscript.lean
+  OffLineFiniteChernHit.lean
+  ChernTranscriptGeneratingFiltration.lean
+  ChernPosteriorCollapse.lean
+```
+
+---
+

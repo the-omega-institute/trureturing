@@ -1,0 +1,62 @@
+# 第九百七十五部　RH 真与假对应两种完全不同的边界机制
+
+假设 RH。
+
+Li–Clark measure 是由全部 Riemann ordinates 产生的无限纯点 measure。它具有无限支撑，因此任意非零有限次数多项式不可能在其全部支撑上消失。
+
+所以每个有限 Toeplitz section 都严格正定：
+
+$$
+\boxed{
+T_N^{\mathrm{LC}}\succ0
+\qquad
+\forall N.
+}
+\tag{975.1}
+$$
+
+因此：
+
+$$
+\boxed{
+|\alpha_n^{\mathrm{LC}}|<1
+\qquad
+\forall n.
+}
+\tag{975.2}
+$$
+
+但该 measure 没有 absolutely continuous density。
+
+经典 Szegő theory 把绝对连续密度的对数可积性与 Verblunsky coefficients 的平方可和性联系起来；对纯奇异 measure，Szegő 条件失败，因此其 reflection energy 不可能平方可和。
+
+所以在 RH 下：
+
+$$
+\boxed{
+\sum_{n=0}^{\infty}
+|\alpha_n^{\mathrm{LC}}|^2
+=
++\infty,
+}
+\tag{975.3}
+$$
+
+并且：
+
+$$
+\boxed{
+\prod_{n=0}^{\infty}
+\left(
+1-|\alpha_n^{\mathrm{LC}}|^2
+\right)
+=
+0.
+}
+\tag{975.4}
+$$
+
+这给出一个极其重要的区分。
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/4-其他变换为什么不是主坐标
+fingerprints:
+  raw_sha256: sha256:eeb142a3a049da0e5044d6f265e07d7e481b63e9025ec55a273d42738828af85
+  normalized_sha256: sha256:eeb142a3a049da0e5044d6f265e07d7e481b63e9025ec55a273d42738828af85
+cas_ref: sha256:eeb142a3a049da0e5044d6f265e07d7e481b63e9025ec55a273d42738828af85
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

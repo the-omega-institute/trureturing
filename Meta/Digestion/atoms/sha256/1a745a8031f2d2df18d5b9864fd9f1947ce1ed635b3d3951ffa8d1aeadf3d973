@@ -1,0 +1,26 @@
+## 三、整数 primitive incidence
+
+从 block concatenation 中必须自然得到：
+
+$$
+M\in M_2(\mathbb Z_{\ge0}),
+$$
+
+且：
+
+$$
+M
+$$
+
+primitive、unimodular。
+
+只有此后，项目已经证明的最小二元破缺定理才能强迫：
+
+$$
+\varphi
+\quad\text{或}\quad
+\varphi^2.
+$$
+
+---
+

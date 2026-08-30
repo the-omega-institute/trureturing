@@ -1,0 +1,10 @@
+ast_path: section/1001-6-跨尺度与-prime-side-双盲验证
+fingerprints:
+  raw_sha256: sha256:b43d7cf960ef46c50832cf29b1d9cd57a19f045a0e795e80983370436da18e3b
+  normalized_sha256: sha256:b43d7cf960ef46c50832cf29b1d9cd57a19f045a0e795e80983370436da18e3b
+cas_ref: sha256:b43d7cf960ef46c50832cf29b1d9cd57a19f045a0e795e80983370436da18e3b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

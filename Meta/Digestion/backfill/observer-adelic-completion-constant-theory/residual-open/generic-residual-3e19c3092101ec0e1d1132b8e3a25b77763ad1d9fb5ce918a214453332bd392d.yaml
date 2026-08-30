@@ -1,0 +1,10 @@
+ast_path: section/996-1-与-prediction-error-ratio-的关系
+fingerprints:
+  raw_sha256: sha256:3e19c3092101ec0e1d1132b8e3a25b77763ad1d9fb5ce918a214453332bd392d
+  normalized_sha256: sha256:3e19c3092101ec0e1d1132b8e3a25b77763ad1d9fb5ce918a214453332bd392d
+cas_ref: sha256:3e19c3092101ec0e1d1132b8e3a25b77763ad1d9fb5ce918a214453332bd392d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

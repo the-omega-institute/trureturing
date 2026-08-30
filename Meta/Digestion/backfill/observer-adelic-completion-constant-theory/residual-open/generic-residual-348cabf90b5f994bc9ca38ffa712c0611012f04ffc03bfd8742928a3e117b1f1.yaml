@@ -1,0 +1,10 @@
+ast_path: section/四-有没有不找离线零点的对偶方案
+fingerprints:
+  raw_sha256: sha256:348cabf90b5f994bc9ca38ffa712c0611012f04ffc03bfd8742928a3e117b1f1
+  normalized_sha256: sha256:348cabf90b5f994bc9ca38ffa712c0611012f04ffc03bfd8742928a3e117b1f1
+cas_ref: sha256:348cabf90b5f994bc9ca38ffa712c0611012f04ffc03bfd8742928a3e117b1f1
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
