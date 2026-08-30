@@ -2,7 +2,7 @@
 
 ## Abstract
 
-The reflected off-line curvature dipole is the scale derivative of the real Poisson kernel and retains its zero-total-mass law.
+The off-line curvature dipole is the scale derivative of the Poisson kernel.
 
 **Theorem 1.1 (The off-line curvature dipole is a Poisson scale derivative).**
 
@@ -19,3 +19,4 @@ The pointwise identity differentiates the actual real Poisson kernel in its posi
 ## References
 
 - Truth anchor: `D5/S3/Analytic/Curvature/PoissonScaleDipole.poisson_scale_dipole`
+- Dependency: [D5/S3/Analytic/Adelic/OffLineCurvatureDipole](../Adelic/OffLineCurvatureDipole.md)
