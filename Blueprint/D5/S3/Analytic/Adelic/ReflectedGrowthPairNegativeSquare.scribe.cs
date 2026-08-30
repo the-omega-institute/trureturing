@@ -12,8 +12,8 @@ internal sealed class ReflectedGrowthPairNegativeSquareDocument
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A reflected exponential pair exchanges under time reversal, remains reciprocal, "
-            + "and leaves the negative-square discriminant after first-order cancellation.",
-        H("Reflected Growth Pair and Negative-Square Discriminant"),
+            + "and leaves a negative-square signed determinant after first-order cancellation.",
+        H("Reflected Growth Pair and Negative-Square Signed Determinant"),
         Blocks(
             Describe.Lean(
                 DescribeId.Create("reflected-growth-pair-definition"),
@@ -47,14 +47,15 @@ internal sealed class ReflectedGrowthPairNegativeSquareDocument
                         + "trace cancels while its determinant retains the second-order split."))),
                 DescribeRole.Definition),
             Describe.Lean(
-                DescribeId.Create("reflection-pair-discriminant-definition"),
-                DeclarationHandle.Create(Prefix + "reflectionPairDiscriminant"),
-                H("The reflection-pair discriminant"),
+                DescribeId.Create("reflection-pair-signed-determinant-definition"),
+                DeclarationHandle.Create(Prefix + "reflectionPairSignedDeterminant"),
+                H("The reflection-pair signed determinant"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "The discriminant is the product of the two reflected generator rates. "
-                        + "The main theorem identifies it exactly with minus delta squared."))),
+                    "The signed determinant is the product of the two reflected generator rates. "
+                        + "The main theorem identifies it exactly with minus delta squared. It is "
+                        + "kept distinct from the standard polynomial discriminant."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("reflected-growth-sum-definition"),
@@ -76,12 +77,25 @@ internal sealed class ReflectedGrowthPairNegativeSquareDocument
                     Paragraph(Text(
                         "Time reversal exchanges the two exponential branches, while their "
                             + "pointwise product remains one. At generator level the trace is "
-                            + "zero and the determinant is minus delta squared.")),
+                            + "zero and the signed determinant is minus delta squared.")),
                     Paragraph(Text(
-                        "The same invariant appears in the characteristic factorization "
-                            + "(r minus delta)(r plus delta) equals r squared minus delta squared. "
-                            + "This is a general scalar theorem and carries no completed-zeta or "
-                            + "Riemann-hypothesis premise."))),
+                        "The same invariant appears as the constant term of the characteristic "
+                            + "factorization (r minus delta)(r plus delta) equals r squared minus "
+                            + "delta squared. This is a general scalar theorem and carries no "
+                            + "completed-zeta or Riemann-hypothesis premise."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("polynomial-discriminant"),
+                DeclarationHandle.Create(Prefix +
+                    "reflection_pair_polynomial_discriminant"),
+                H("The standard polynomial discriminant is positive"),
+                StatementSource.FromAuthor(PolynomialDiscriminantFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For the monic polynomial r squared minus delta squared, the standard "
+                        + "quadratic discriminant is four delta squared. This theorem prevents "
+                        + "the negative determinant from being renamed as the conventional "
+                        + "polynomial discriminant."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("forward-orientation"),
@@ -146,10 +160,20 @@ internal sealed class ReflectedGrowthPairNegativeSquareDocument
             Call("fst", pair), Sp, Cdot, Sp, Call("snd", pair), Sp, Eq, Sp,
             D(1), Sp, Land, Sp,
             Call("pairTrace", generator), Sp, Eq, Sp, D(0), Sp, Land, Sp,
-            Call("reflectionPairDiscriminant", delta), Sp, Eq, Sp,
+            Call("reflectionPairSignedDeterminant", delta), Sp, Eq, Sp,
             negativeSquare, Sp, Land, Sp,
             leftFactor, rightFactor, Sp, Eq, Sp,
             PowerTwo(spectral), Sp, Minus, Sp, PowerTwo(delta), Dot));
+    }
+
+    private static Formula PolynomialDiscriminantFormula()
+    {
+        Formula delta = F.Id("delta");
+        return Disp(Seq(
+            Forall, Sp, Typed(delta), Comma, Sp,
+            PowerTwo(D(0)), Sp, Minus, Sp, D(4), Sp, Cdot, Sp, D(1), Sp,
+            Cdot, Sp, Grp(Seq(Minus, PowerTwo(delta))), Sp, Eq, Sp,
+            D(4), Sp, Cdot, Sp, PowerTwo(delta), Dot));
     }
 
     private static Formula OrientationFormula()
