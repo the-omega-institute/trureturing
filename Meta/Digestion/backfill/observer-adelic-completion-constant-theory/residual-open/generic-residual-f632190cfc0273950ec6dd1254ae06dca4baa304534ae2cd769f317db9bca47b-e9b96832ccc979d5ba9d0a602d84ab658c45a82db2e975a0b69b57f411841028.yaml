@@ -1,0 +1,10 @@
+ast_path: section/973-3-平衡尺度恢复-L-delta-定律/clause/4
+fingerprints:
+  raw_sha256: sha256:f632190cfc0273950ec6dd1254ae06dca4baa304534ae2cd769f317db9bca47b
+  normalized_sha256: sha256:f632190cfc0273950ec6dd1254ae06dca4baa304534ae2cd769f317db9bca47b
+cas_ref: sha256:f632190cfc0273950ec6dd1254ae06dca4baa304534ae2cd769f317db9bca47b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

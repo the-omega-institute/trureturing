@@ -1,0 +1,34 @@
+# 第一千零十三部　离线零点的边界 Poisson 对偶
+
+一个零点：
+
+$$
+z_0=\gamma+i\delta
+$$
+
+在对数导数中产生极点：
+
+$$
+\frac1{z-z_0}.
+$$
+
+限制到实边界 \(z=t\)：
+
+$$
+\boxed{
+\Im
+\frac1{t-\gamma-i\delta}
+=
+\frac{\delta}
+{(t-\gamma)^2+\delta^2}.
+}
+\tag{1013.1}
+$$
+
+右边正是宽度为 \(|\delta|\) 的 Poisson kernel。
+
+所以轴外零点虽然不是实轴上的点，却在实轴上留下一个有限宽度的调和影子。
+
+反射伙伴 \(\gamma-i\delta\) 与它配对后：
+
+* odd orientation channel 读取 Poisson kernel；

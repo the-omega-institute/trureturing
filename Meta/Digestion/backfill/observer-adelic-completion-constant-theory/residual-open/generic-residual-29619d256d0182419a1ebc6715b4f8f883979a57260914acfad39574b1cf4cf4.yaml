@@ -1,0 +1,10 @@
+ast_path: row/raw-alpha-n-不能作为-Fibonacci-证据
+fingerprints:
+  raw_sha256: sha256:29619d256d0182419a1ebc6715b4f8f883979a57260914acfad39574b1cf4cf4
+  normalized_sha256: sha256:29619d256d0182419a1ebc6715b4f8f883979a57260914acfad39574b1cf4cf4
+cas_ref: sha256:29619d256d0182419a1ebc6715b4f8f883979a57260914acfad39574b1cf4cf4
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

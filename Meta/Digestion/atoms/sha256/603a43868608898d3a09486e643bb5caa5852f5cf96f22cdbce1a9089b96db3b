@@ -1,0 +1,41 @@
+## 1053.1 一条关键等价链
+
+于是同一个整数 \(m\) 同时是：
+
+$$
+\boxed{
+\begin{aligned}
+m
+&=
+\text{全纯零点重数}\\
+&=
+\frac1{2\pi i}
+\oint\frac{F'}F\,dz\\
+&=
+\frac1{2\pi}
+\oint d\arg F\\
+&=
+\operatorname{wind}\frac F{|F|}\\
+&=
+c_1(\mathcal E_+)[S^2].
+\end{aligned}
+}
+\tag{1053.7}
+$$
+
+这正是：
+
+$$
+\boxed{
+\text{辩值原理}
+=
+\text{Dirac 量子化}
+=
+\text{Berry 单极子荷}
+}
+$$
+
+在该构造中的统一。
+
+---
+

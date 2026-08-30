@@ -1,0 +1,7 @@
+### 4. 第三处语义缺口：测试类是否足够完备
+
+本仓 `WeilTestFunction` 本身已经要求偶性，O-6 再只测试其 `convolutionSquare`。经典文献常从更一般的 hermitian 测试代数出发。
+
+必须单独证明：
+
+- 任意经典 admissible 正型测试能否由本仓偶测试函数卷积平方逼近或表示；

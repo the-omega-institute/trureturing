@@ -1,0 +1,11 @@
+## 一、DECT：路线、前视承诺与预算包络
+
+[repo-derived | path: `docs/develop/theory/DEFINITION_ESCAPE_COMPLETION_THEORY.md` | GID: not present]
+
+DECT 是 Definition-Escape Completion Theory。其适用于本线的核心不是口号，而是：
+
+- 先固定定义语言 $\Gamma$；
+- 先固定目标、收益坐标、预算与停止条件；
+- 不在看到失败后重写成功标准；
+- 当固定语言的 blind kernel 阻止前进时，换 $\Gamma$，而不是在同一坐标中无限投入。
+

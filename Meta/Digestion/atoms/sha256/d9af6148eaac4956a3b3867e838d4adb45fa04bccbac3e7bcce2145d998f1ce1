@@ -1,0 +1,16 @@
+# 第一千零五部　有理—无理的真正有限深度判别
+
+对 \(x\in\mathbb R\)，定义：
+
+$$
+\boxed{
+\varepsilon_Q(x)
+=
+\min_{\substack{1\le q\le Q\\p\in\mathbb Z}}
+|qx-p|.
+}
+\tag{1005.1}
+$$
+
+则：
+

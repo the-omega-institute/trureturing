@@ -1,0 +1,10 @@
+ast_path: row/黄金-SL-2
+fingerprints:
+  raw_sha256: sha256:775b14ff8343f5bdf989c06ed1b5268d492bb36064bc4436ce069727f4f79e63
+  normalized_sha256: sha256:775b14ff8343f5bdf989c06ed1b5268d492bb36064bc4436ce069727f4f79e63
+cas_ref: sha256:775b14ff8343f5bdf989c06ed1b5268d492bb36064bc4436ce069727f4f79e63
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

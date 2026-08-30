@@ -1,0 +1,61 @@
+## 定理 993.1（有限正、极限零 floor）
+
+RH 下：
+
+$$
+\boxed{
+\Lambda_N>0
+\quad
+\forall N,
+}
+\tag{993.4}
+$$
+
+但：
+
+$$
+\boxed{
+\Lambda_N\downarrow0.
+}
+\tag{993.5}
+$$
+
+### 证明
+
+由于 \(T_N\) 是 \(T_{N+1}\) 的主子矩阵，特征值交错给出：
+
+$$
+\Lambda_{N+1}\le\Lambda_N.
+$$
+
+若存在：
+
+$$
+\Lambda_\infty
+=
+\inf_N\Lambda_N>0,
+$$
+
+则对任意解析多项式 \(p\)：
+
+$$
+\int_{\mathbb T}|p|^2\,d\mu_{\mathrm{LC}}
+\ge
+\Lambda_\infty
+\int_{\mathbb T}|p|^2\,dm_{\mathbb T}.
+$$
+
+由 Fejér–Riesz 分解和连续函数逼近，这将推出：
+
+$$
+\mu_{\mathrm{LC}}
+\ge
+\Lambda_\infty m_{\mathbb T}.
+$$
+
+但 \(\mu_{\mathrm{LC}}\) 是纯点测度，与之矛盾。
+
+∎
+
+---
+

@@ -1,0 +1,75 @@
+# 第一千零二部　建议形式化顺序
+
+```text
+D5/S3/Analytic/LiCaratheodory/
+  LiGeneratingFunction.lean
+  LiCaratheodoryIdentity.lean
+  CriticalHalfPlaneDiskEquiv.lean
+  LiCaratheodoryRHCriterion.lean
+
+D5/S3/Analytic/LiClarkMeasure/
+  LiZeroCayleyPoint.lean
+  LiClarkAtomicWeight.lean
+  LiClarkProbabilityMeasure.lean
+  LiClarkMomentFormula.lean
+  FejerLiEnergyIdentity.lean
+  LiToeplitzRHCriterion.lean
+
+D5/S3/Analytic/LiClarkInner/
+  LiClarkInnerFunction.lean
+  ZeroBoundaryFixedValue.lean
+  ClarkAtomAngularDerivative.lean
+  ZeroHeightFromClarkDerivative.lean
+  CayleyAngleJacobianWeight.lean
+
+D5/S3/Analytic/LiCompletionCusp/
+  XiLogDerivativeAtInfinity.lean
+  LiCaratheodoryBoundaryAsymptotic.lean
+  LiInnerLogarithmicCusp.lean
+  InfiniteAngularDerivativeAtOne.lean
+  GoldenScaleAsCuspTranslation.lean
+
+D5/S3/Weil/LiClarkInfiniteFloor/
+  LiClarkFiniteToeplitzPositive.lean
+  LiClarkHaarFloorMonotone.lean
+  LiClarkHaarFloorTendsZero.lean
+  FiniteContinuousInfiniteAtomicCompletion.lean
+
+D5/S3/Weil/LiClarkCMVAsymptotic/
+  LiClarkSupportUniqueAccumulation.lean
+  LiClarkCMVEssentialSpectrum.lean
+  CMVMinusIdentityCompact.lean
+  VerblunskyAdjacentProductLimit.lean
+  RealVerblunskyAsymptoticAlternation.lean
+
+D5/S3/GoldenObserver/SchurPairRapidity/
+  RealSchurRapidity.lean
+  BoundarySzegoBoost.lean
+  AdjacentBoostCancellation.lean
+  PairRapidity.lean
+  PredictionErrorPairRatio.lean
+  ToeplitzDeterminantCrossRatio.lean
+
+D5/S3/GoldenObserver/IntrinsicGoldenAudit/
+  RawSchurTwoCycleNotFibonacci.lean
+  EndogenousBinaryBlock.lean
+  PrimitiveUnimodularBlockTarget.lean
+  CrossScaleBlockConjugacyTarget.lean
+  PrimeSideBlockRecoveryTarget.lean
+
+D5/S3/GoldenObserver/ZeroHeightModes/
+  GoldenZeroHeightPhase.lean
+  GoldenZeroHeightProbabilityMeasure.lean
+  GoldenZeroSuperzetaMode.lean
+  GoldenTailNormalizedMode.lean
+  GoldenLogPeriodicityTarget.lean
+```
+
+其中：
+
+* Li–Carathéodory 恒等式已经存在于理论层，但尚未成为 Lean truth anchor；
+* fixed-depth moment/eigenvalue recovery、truncated Toeplitz representation、exact Haar floor 与 contact support 已经可以直接复用；
+* Schur、Verblunsky 与 CMV 的基础对应可先接入标准 OPUC 接口。
+
+---
+

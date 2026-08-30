@@ -1,0 +1,10 @@
+ast_path: section/第九百九十九部-黄金结构的五条非循环判据
+fingerprints:
+  raw_sha256: sha256:ea4dd357d7bd4add868c83ea7b771b8ad563130297ca918831b95224dc5f53f8
+  normalized_sha256: sha256:ea4dd357d7bd4add868c83ea7b771b8ad563130297ca918831b95224dc5f53f8
+cas_ref: sha256:ea4dd357d7bd4add868c83ea7b771b8ad563130297ca918831b95224dc5f53f8
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

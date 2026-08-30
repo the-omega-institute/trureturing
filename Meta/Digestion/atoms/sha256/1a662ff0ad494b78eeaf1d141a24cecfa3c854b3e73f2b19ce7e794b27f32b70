@@ -1,0 +1,66 @@
+# 第一千部　黄金对数高度模态
+
+边界尖点的自然坐标不是：
+
+$$
+1-z,
+$$
+
+而是：
+
+$$
+R=\log|\rho|.
+$$
+
+因此可以直接构造零点高度的黄金 regulator 观察器。
+
+令：
+
+$$
+P_\varphi=2\log\varphi,
+\qquad
+\tau_k=\frac{\pi k}{\log\varphi}.
+$$
+
+RH 下定义概率测度：
+
+$$
+\boxed{
+\nu_\varphi
+=
+\frac1{2\lambda_1}
+\sum_\rho
+\frac{m_\rho}{|\rho|^2}
+\,
+\delta_{
+\log|\rho|
+\!\!\!\!\pmod{\,2\log\varphi}
+}.
+}
+\tag{1000.1}
+$$
+
+其第 \(k\) 个 Fourier mode 为：
+
+$$
+\boxed{
+\widehat\nu_\varphi(k)
+=
+\frac1{2\lambda_1}
+\sum_\rho
+m_\rho
+|\rho|^{-2-i\tau_k}.
+}
+\tag{1000.2}
+$$
+
+特别地：
+
+$$
+\widehat\nu_\varphi(0)=1.
+$$
+
+它是一个真正可计算的 zero-superzeta observable。
+
+---
+

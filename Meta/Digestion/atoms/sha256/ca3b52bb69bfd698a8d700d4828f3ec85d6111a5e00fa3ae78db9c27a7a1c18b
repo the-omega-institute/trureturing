@@ -1,0 +1,6 @@
+### N-7　有限 Euler／divisor 早期否证器
+
+[suspected-novel]
+
+在投入全解析延拓前，先对 PZG 因子分解做有限素数系数、局部 Euler 指数和 meromorphic divisor 的一致性检查。任何固定阶反例都应立即终止当前黄金桥 statement，而不是等待大型解析证明失败。
+

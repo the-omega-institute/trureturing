@@ -1,0 +1,10 @@
+ast_path: section/R-A-自然缩放命中临界半线/clause/3
+fingerprints:
+  raw_sha256: sha256:1c9ee18c41d8523fdfbb800f7ab9b99d07e6675a1d88cc35deb1c2cbb504bfca
+  normalized_sha256: sha256:1c9ee18c41d8523fdfbb800f7ab9b99d07e6675a1d88cc35deb1c2cbb504bfca
+cas_ref: sha256:1c9ee18c41d8523fdfbb800f7ab9b99d07e6675a1d88cc35deb1c2cbb504bfca
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

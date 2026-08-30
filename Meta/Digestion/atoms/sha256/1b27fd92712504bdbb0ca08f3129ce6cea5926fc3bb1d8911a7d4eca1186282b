@@ -1,0 +1,1 @@
+- `MediumPNT.lean` 可见最终 `MediumPNT` theorem；本次文件级检索未发现 `sorry`。其误差规模约为 $Y\exp(-(\log Y)^{1/10})$，属于已闭合的中等强度 PNT。

@@ -1,0 +1,24 @@
+### R-C　黄金谱参数的实谱等价
+
+[suspected-novel | proposed GID: `D5/X_Frontier/GoldenObserver/GoldenSpectralCoordinate`]
+
+    import D5.X_Frontier.GoldenObserver.GoldenNaturalScale
+
+    namespace D5.X_Frontier.GoldenObserver
+
+    open D5.X_Frontier.Hearts
+
+    theorem golden_spectral_im_eq_zero_iff (s : ℂ) :
+        (goldenSpectralParameter s).im = 0 ↔
+          s.re = structuralZero
+
+    end D5.X_Frontier.GoldenObserver
+
+闭合性质：
+
+- 展开复乘法和虚部；
+- 调用 R-A 或等价实代数；
+- 不重新证明经典 `spectralParameter` 定理。
+
+消费者：把 O-5 线运输到现有 `CriticalLine` 和 off-line orbit 语言。
+

@@ -1,0 +1,10 @@
+ast_path: row/Herglotz-Pick
+fingerprints:
+  raw_sha256: sha256:823e60ca32dbc34644c8668225136d2659efca92486347f734070dbd72c35c65
+  normalized_sha256: sha256:823e60ca32dbc34644c8668225136d2659efca92486347f734070dbd72c35c65
+cas_ref: sha256:823e60ca32dbc34644c8668225136d2659efca92486347f734070dbd72c35c65
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

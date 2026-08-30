@@ -1,0 +1,27 @@
+## 1056.1 与量子无克隆的边界
+
+这不是量子信息中的标准 no-cloning theorem。
+
+它是：
+
+$$
+\boxed{
+\textbf{gauge-patch non-reconstruction}.
+}
+$$
+
+可以复制：
+
+* 本征值；
+* 局部曲率；
+* 某个图表中的波函数表达。
+
+但不能只凭这些局部标量，恢复：
+
+* 全局过渡函数；
+* Chern 数；
+* 观察者选择的 Dirac string；
+* 完整 holonomy history。
+
+---
+

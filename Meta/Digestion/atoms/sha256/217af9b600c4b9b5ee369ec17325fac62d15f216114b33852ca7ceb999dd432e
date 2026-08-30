@@ -1,0 +1,22 @@
+## 1017.6 黄金结构必须通过双盲审计
+
+任何观察到的 \(\varphi\) 规律必须同时满足：
+
+1. 不预先使用 Fibonacci 下标；
+2. 不依赖单一 Cayley scale；
+3. 能从 prime-side 独立重建；
+4. 在商去普适二周期后仍存在；
+5. 控制的是 defect–resolution 对，而不是单个零点坐标。
+
+否则应归类为：
+
+$$
+\boxed{
+\text{observer-chart image},
+}
+$$
+
+而不是 \(\zeta\) 本体常数。
+
+---
+

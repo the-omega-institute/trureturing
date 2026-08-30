@@ -1,5 +1,6 @@
 using StrataLint.Engine;
 using StrataLint.Scribe;
+using System.Xml.Linq;
 
 namespace StrataLint.ArchitectureTests;
 
@@ -47,12 +48,40 @@ public sealed class DependencyDirectionTests
     }
 
     [Fact]
-    public void FunctionalTestsReferenceOnlyCliEngineEngineeringScopeAndScribe()
+    public void FunctionalTestsReferenceOnlyCliEngineAndScribe()
     {
         Assert.Equal(
-            ["StrataLint", "StrataLint.Engine", "StrataLint.EngineeringScope", "StrataLint.Scribe"],
+            ["StrataLint", "StrataLint.Engine", "StrataLint.Scribe"],
             AssemblyReferencePolicy.ApplicationReferences(
                 typeof(StrataLint.Tests.AdmissionTests).Assembly));
+        Assert.Equal(
+            [
+                "../../StrataLint.Cli/StrataLint.Cli.csproj",
+                "../../StrataLint.Engine/StrataLint.Engine.csproj",
+            ],
+            ProjectReferences(XDocument.Load(Path.Combine(
+                RepositoryLayout.FindRoot(),
+                "tools",
+                "tests",
+                "StrataLint.Tests",
+                "StrataLint.Tests.csproj"))));
+    }
+
+    [Fact]
+    public void EngineeringScopeTestsReferenceOnlyEngineeringScope()
+    {
+        Assert.Equal(
+            ["StrataLint.EngineeringScope"],
+            AssemblyReferencePolicy.ApplicationReferences(
+                typeof(StrataLint.EngineeringScope.Tests.TestProcessRunnerTests).Assembly));
+        Assert.Equal(
+            ["../../StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj"],
+            ProjectReferences(XDocument.Load(Path.Combine(
+                RepositoryLayout.FindRoot(),
+                "tools",
+                "tests",
+                "StrataLint.EngineeringScope.Tests",
+                "StrataLint.EngineeringScope.Tests.csproj"))));
     }
 
     [Fact]
@@ -75,4 +104,12 @@ public sealed class DependencyDirectionTests
         Assert.Contains("StrataLint.Engine", unexpected);
         Assert.Contains("YamlDotNet", unexpected);
     }
+
+    private static string[] ProjectReferences(XDocument project) => project
+        .Descendants()
+        .Where(static element => element.Name.LocalName == "ProjectReference")
+        .Select(static element => (string?)element.Attribute("Include"))
+        .OfType<string>()
+        .Order(StringComparer.Ordinal)
+        .ToArray();
 }

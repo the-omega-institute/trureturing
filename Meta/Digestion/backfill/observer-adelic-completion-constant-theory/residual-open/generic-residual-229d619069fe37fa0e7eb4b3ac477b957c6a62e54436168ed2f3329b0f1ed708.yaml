@@ -1,0 +1,10 @@
+ast_path: section/1008-2-这正是所需的对偶方案
+fingerprints:
+  raw_sha256: sha256:229d619069fe37fa0e7eb4b3ac477b957c6a62e54436168ed2f3329b0f1ed708
+  normalized_sha256: sha256:229d619069fe37fa0e7eb4b3ac477b957c6a62e54436168ed2f3329b0f1ed708
+cas_ref: sha256:229d619069fe37fa0e7eb4b3ac477b957c6a62e54436168ed2f3329b0f1ed708
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

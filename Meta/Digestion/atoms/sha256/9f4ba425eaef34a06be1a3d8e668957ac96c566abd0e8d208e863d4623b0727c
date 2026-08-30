@@ -1,0 +1,24 @@
+* \(\Sigma_\lambda\)：只保留全体观察者共有的完成谱。
+
+每一次映射都进一步丢失观察者身份。
+
+所以：
+
+$$
+\boxed{
+\text{同谱不是巧合，}
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{完成过程本来就在逐层商掉观察者起点。}
+}
+$$
+
+但 local \(m\)-function、half-line Weyl data 与 projective transfer direction 仍然保留观察者。
+
+---
+

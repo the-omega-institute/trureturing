@@ -1,0 +1,14 @@
+## 三、近期义务波的统一验收
+
+R-A—R-F 每条必须满足：
+
+1. 一个 public theorem、一个模块、一个稳定拟议 GID；
+2. 不调用 `o5_independence`；
+3. `#print axioms` 不出现 `sorryAx` 或新自定义 axiom；
+4. 不增加测度前件；
+5. 不私自给 `ZeroData` 增加 `[Nonempty ZeroData]` 或 `[Fintype ...]`；
+6. 不复制冻结模块已有 theorem；
+7. 在提交说明中写出唯一消费者；
+8. 声明固定后若需改变数学内容，新开 GID，不原地漂移；
+9. 若实际 API 证明 R-F 需要新的全局解析定理，则 R-F 从“近期 elementary”降级，不用 `sorry` 强行维持计划。
+

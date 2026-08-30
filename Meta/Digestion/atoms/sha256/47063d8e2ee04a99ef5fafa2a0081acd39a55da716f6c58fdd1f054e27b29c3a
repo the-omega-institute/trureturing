@@ -1,0 +1,6 @@
+### N-5　O-6 空洞性审计
+
+[suspected-novel]
+
+把 `ZeroData` inhabitant 和 canonical convergence 设为 O-6 的语义验收门，而不满足于全称命题的类型闭合。
+

@@ -1,0 +1,10 @@
+ast_path: row/RH-真-有限内点-无限边界
+fingerprints:
+  raw_sha256: sha256:c76565934b558fed8572270832c49951d28302da0b7237881e48c4b1c6db19fd
+  normalized_sha256: sha256:c76565934b558fed8572270832c49951d28302da0b7237881e48c4b1c6db19fd
+cas_ref: sha256:c76565934b558fed8572270832c49951d28302da0b7237881e48c4b1c6db19fd
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

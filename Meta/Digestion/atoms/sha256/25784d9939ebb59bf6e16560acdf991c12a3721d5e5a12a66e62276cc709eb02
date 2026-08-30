@@ -1,0 +1,49 @@
+## 任意离线模型
+
+至少存在一个有限位置 \(n\)：
+
+$$
+\boxed{
+X_n\ge1.
+}
+\tag{1041.4}
+$$
+
+定义 stopping time：
+
+$$
+\boxed{
+\tau_{\mathrm{off}}
+=
+\inf
+\{n:X_n>0\}.
+}
+\tag{1041.5}
+$$
+
+于是：
+
+$$
+\boxed{
+\begin{aligned}
+\mathrm{RH}
+&\Longrightarrow
+\tau_{\mathrm{off}}=\infty;\\
+\neg\mathrm{RH}
+&\Longrightarrow
+\tau_{\mathrm{off}}<\infty.
+\end{aligned}
+}
+\tag{1041.6}
+$$
+
+这与有理性终止深度完全平行：
+
+$$
+\tau_{\mathbb Q}(x)
+=
+\inf\{Q:\varepsilon_Q(x)=0\}.
+$$
+
+---
+

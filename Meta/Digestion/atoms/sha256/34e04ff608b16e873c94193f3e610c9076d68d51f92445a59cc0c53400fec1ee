@@ -1,0 +1,14 @@
+### M8　外部形式化消费
+
+对 `Zeta23`、`zeta-23-lean`、`strongpnt` 等依赖采用：
+
+- 精确 commit；
+- source tree digest；
+- Lean 与 mathlib 版本；
+- 成功构建记录；
+- 最终 theorem 的完整类型；
+- `#print axioms`；
+- 与本仓计数规范的桥 theorem。
+
+外部仓 README 不得作为 theorem witness。
+

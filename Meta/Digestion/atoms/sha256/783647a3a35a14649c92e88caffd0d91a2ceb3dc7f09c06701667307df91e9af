@@ -1,0 +1,23 @@
+## 1017.3 枚举有限对偶证书
+
+枚举有理参数：
+
+$$
+(L,N,a,t,Q,\Phi)
+$$
+
+并对相应：
+
+* Toeplitz matrix；
+* Chebyshev localizing matrix；
+* fixed-window Weil matrix；
+* Feshbach matrix；
+
+做区间特征值认证。
+
+若 RH 为假，只要有限证书编译链成立，枚举最终会遇到严格负特征值。
+
+失败的无限搜索不能证明 RH；RH 证明仍需要一个统一正性定理。
+
+---
+

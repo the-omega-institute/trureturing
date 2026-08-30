@@ -1,0 +1,10 @@
+ast_path: section/3-条件等价的直接零点论证/clause/1
+fingerprints:
+  raw_sha256: sha256:d8ab3c0ad9f04531c4db9248ff4089d988be36ef7a85be16ed325945dd9ebb55
+  normalized_sha256: sha256:d8ab3c0ad9f04531c4db9248ff4089d988be36ef7a85be16ed325945dd9ebb55
+cas_ref: sha256:d8ab3c0ad9f04531c4db9248ff4089d988be36ef7a85be16ed325945dd9ebb55
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
