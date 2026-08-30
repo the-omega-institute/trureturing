@@ -123,6 +123,41 @@ public sealed partial class FormalizeCandidatesTests
     }
 
     [Fact]
+    public void ReviewEnvelopeRejectsAReceiptWhosePathDoesNotMatchItsAtomId()
+    {
+        var real = Entry("source", "real-atom", "theorem", "1.0", atomizer: AtomizerRegistry.GenericId);
+        var other = Entry("source", "other-atom", "theorem", "2.0", atomizer: AtomizerRegistry.GenericId);
+        var baseSnapshot = ReviewSnapshot([real, other], quarantined: [], receipted: []);
+        // 收据字节属于 real-atom,却放在 other-atom 的路径下。
+        var headFiles = ReviewSnapshot([real, other], quarantined: [], receipted: []).Entries.ToList();
+        headFiles.Add(new RawRepositoryEntry(
+            DigestionFormalizationReceipt.PathForAtom("other-atom"),
+            ImmutableArray.CreateRange(ValidReceipt(real))));
+
+        var exception = Assert.Throws<FormatException>(
+            () => ReviewEnvelopeCommand.Derive(baseSnapshot, RawRepositorySnapshot.Create(headFiles)));
+
+        Assert.Contains("path/atom mismatch", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ReviewEnvelopeRejectsAReceiptForAnAtomAbsentFromTheHeadLedger()
+    {
+        var listed = Entry("source", "listed", "theorem", "1.0", atomizer: AtomizerRegistry.GenericId);
+        var ghost = Entry("source", "ghost", "theorem", "2.0", atomizer: AtomizerRegistry.GenericId);
+        var baseSnapshot = ReviewSnapshot([listed], quarantined: [], receipted: []);
+        var headFiles = ReviewSnapshot([listed], quarantined: [], receipted: []).Entries.ToList();
+        headFiles.Add(new RawRepositoryEntry(
+            DigestionFormalizationReceipt.PathForAtom("ghost"),
+            ImmutableArray.CreateRange(ValidReceipt(ghost))));
+
+        var exception = Assert.Throws<FormatException>(
+            () => ReviewEnvelopeCommand.Derive(baseSnapshot, RawRepositorySnapshot.Create(headFiles)));
+
+        Assert.Contains("absent from the head ledger", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void ReviewEnvelopeVerbIsRegistered()
     {
         Assert.Contains("review-envelope", CliApplication.ImplementedCommands);

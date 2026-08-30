@@ -71,18 +71,32 @@ internal static class ReviewEnvelopeCommand
 
         var baseReceipts = ReceiptPaths(baseSnapshot);
         var headReceipts = ReceiptPaths(headSnapshot);
+        var baseQuarantined = QuarantinedAtoms(baseSnapshot);
+        var headEntries = BackfillInventoryLoader.Load(headSnapshot).RequireDigestionEntries();
+        var ledgerAtoms = headEntries.Select(static entry => entry.AtomId).ToImmutableHashSet(StringComparer.Ordinal);
+
         var deposited = headReceipts
             .Where(path => !baseReceipts.Contains(path))
             .Order(StringComparer.Ordinal)
             .Select(path =>
             {
                 var receipt = DigestionFormalizationReceipt.Load(headSnapshot, path);
+                // 身份绑定:收据的 atom_id 必须与其路径一致(账本 loader 的互斥检查按 PathForAtom 探测,
+                // 一份路径错位但 schema 合法的收据会绕过它),且该原子必须存在于 head 账本。
+                if (DigestionFormalizationReceipt.PathForAtom(receipt.AtomId) != path)
+                {
+                    throw new FormatException(
+                        $"receipt path/atom mismatch: {path} carries atom_id {receipt.AtomId}");
+                }
+                if (!ledgerAtoms.Contains(receipt.AtomId))
+                {
+                    throw new FormatException(
+                        $"receipt for an atom absent from the head ledger: {receipt.AtomId}");
+                }
                 return new Deposited(receipt.AtomId, receipt.PrimaryGid, path);
             })
             .ToImmutableArray();
 
-        var baseQuarantined = QuarantinedAtoms(baseSnapshot);
-        var headEntries = BackfillInventoryLoader.Load(headSnapshot).RequireDigestionEntries();
         var headQuarantined = headEntries
             .Where(static entry => entry.Receipts.Quarantine is not null)
             .ToImmutableArray();

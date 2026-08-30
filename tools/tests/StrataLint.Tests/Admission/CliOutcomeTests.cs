@@ -16,6 +16,19 @@ public sealed class CliOutcomeTests
         { "protected", 3, "PROTECTED_SURFACE_CHANGE", false },
     };
 
+    [Fact]
+    public void ReviewEnvelopeVerbRoutesToTheEnvironmentMember()
+    {
+        var console = new BufferedConsole();
+        var environment = new StubCliEnvironment(Outcome("admitted"));
+
+        var exitCode = CliApplication.Run(
+            ["review-envelope", "--base", "base-sha", "--head", "head-sha"], environment, console);
+
+        Assert.Equal(0, exitCode);
+        Assert.Contains("REVIEW_ENVELOPE_STUB --base base-sha --head head-sha", console.Output, StringComparison.Ordinal);
+    }
+
     [Theory]
     [MemberData(nameof(Outcomes))]
     public void CheckCommandMapsAllFourOutcomesToStableStreamsAndExitCodes(
@@ -176,8 +189,10 @@ internal sealed class StubCliEnvironment(
     public CommandResult ShowAtom(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "show atom is not configured in this fixture");
 
+    // 回显参数:CliOutcomeTests.ReviewEnvelopeVerbRoutesToTheEnvironmentMember 据此证明 dispatch 表把
+    // `review-envelope` 路由到了本成员(把表项改指 ShowAtom 即红)。
     public CommandResult ReviewEnvelope(IReadOnlyList<string> arguments) =>
-        new(false, string.Empty, "review envelope is not configured in this fixture");
+        new(true, "REVIEW_ENVELOPE_STUB " + string.Join(' ', arguments) + "\n", string.Empty);
 
     public ExplicitCommandResult EchoVerify(IReadOnlyList<string> arguments) =>
         echoVerify ?? new(2, string.Empty, "echo verify is not configured in this fixture");
