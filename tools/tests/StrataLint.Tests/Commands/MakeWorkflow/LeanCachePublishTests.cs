@@ -437,16 +437,15 @@ public sealed class LeanCachePublishTests
     /// 而不是被别的检查顺带拦下。
     /// </summary>
     [Theory]
+    // 【2026-08-30 退役 7 条身份类 provenance 钉子】owner τ=0 裁决:
+    // 「不需要验证作者,直接删了就行,只要 cache 匹配就可以」(见 lean-cache-publish.sh 文件头)。
+    // 退役:wrong-author / wrong-uploader / wrong-workflow / wrong-event /
+    //       wrong-branch / wrong-head-sha / failed-run —— 对应机制已删,钉子失去被守对象。
+    // 失去的是「分辨 archive 出自流水线还是手工上传」的能力;保留的 5 条只证内容与结构自洽,
+    // 不证产地。发布者位于 admission 下方(#2729),故这是检测面收缩,非等价替换。
     [InlineData("no-producer", "manifest carries no producer commit")]
     [InlineData("no-run-id", "manifest carries no workflow run id")]
-    [InlineData("wrong-author", "release author is")]
     [InlineData("wrong-target", "does not match the declared producer commit")]
-    [InlineData("wrong-uploader", "an asset was uploaded by")]
-    [InlineData("wrong-workflow", "workflow_id is")]
-    [InlineData("wrong-event", "event is")]
-    [InlineData("wrong-branch", "head_branch is")]
-    [InlineData("wrong-head-sha", "head_sha is")]
-    [InlineData("failed-run", "conclusion is")]
     [InlineData("wrong-archive-digest", "do not match the digest GitHub recorded")]
     [InlineData("extra-asset", "assets, expected exactly 2")]
     public void FetchRejectsEveryProvenanceDeviation(string deviation, string expected)

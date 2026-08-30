@@ -17,6 +17,9 @@ internal static partial class RepositoryRules
     private static bool ChronicleScoped(RepositoryFile artifact, RuleApplicabilityContext context) =>
         artifact.Path.Value.StartsWith("Chronicle/", StringComparison.Ordinal);
 
+    private static bool TheoryVolumeScoped(RepositoryFile artifact, RuleApplicabilityContext context) =>
+        IsTheoryVolumePath(artifact.Path.Value);
+
     private static bool StatusScoped(RepositoryFile artifact, RuleApplicabilityContext context) =>
         IsStatusScope(artifact.Path.Value);
 
