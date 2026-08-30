@@ -37,15 +37,49 @@ public sealed partial class FrozenLedgerTests
                 acceptedLedgerEvent)));
 
         var candidate = BuildAdmissionCatalog(
-            ["A", "B"],
-            acceptedView.ActiveByPath.ToDictionary(
-                static item => item.Key,
-                static item => item.Value.Material),
+            ["B"],
+            acceptedView.ActiveByPath,
             modules);
 
         Assert.Equal(
-            acceptedView.ActiveByPath[RepoPathFor("A")].Material.FrozenNodeId,
+            FrozenNodeId.Create(acceptedView.ActiveByPath[RepoPathFor("A")].EventHash),
             Assert.Single(candidate.ByPath[RepoPathFor("B")].PrerequisiteFrozenNodeIds));
+    }
+
+    [Fact]
+    public void AdmissionCatalogRejectsImportedDeclarationMissingFromActiveV5Ledger()
+    {
+        var modules = new[]
+        {
+            Module("A"),
+            Module("B", imports: ["A"]),
+        };
+        var baseCatalog = BuildCatalog(modules);
+        var activeLedgerOwner = baseCatalog.ByPath[RepoPathFor("A")] with
+        {
+            DeclarationStatementIds =
+            [
+                new FrozenDeclarationStatement(
+                    "ns(n0,8:recorded)",
+                    "theorem",
+                    StatementId.Create(Sha256("recorded declaration"))),
+            ],
+        };
+        var acceptedLedgerEvent = EventFile(
+            "Freeze",
+            FrozenLedgerCanonicalWriter.FreezeElement(
+                FrozenLedgerCanonicalWriter.FreezePayload(activeLedgerOwner)));
+        var acceptedView = FrozenLedgerBaseViewReader.Read(RepositorySnapshot.Create(
+            ImmutableDictionary<RepoPath, RepositoryFile>.Empty.Add(
+                acceptedLedgerEvent.Path,
+                acceptedLedgerEvent)));
+
+        var exception = Assert.Throws<FormatException>(() => BuildAdmissionCatalog(
+            ["B"],
+            acceptedView.ActiveByPath,
+            modules));
+
+        Assert.Contains("dependency-not-ready", exception.Message, StringComparison.Ordinal);
     }
 
     [Fact]

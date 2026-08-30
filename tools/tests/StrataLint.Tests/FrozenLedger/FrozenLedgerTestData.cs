@@ -39,7 +39,7 @@ internal static class FrozenLedgerTestData
 
     internal static FrozenMaterialCatalog BuildAdmissionCatalog(
         IEnumerable<string> selectedModules,
-        IReadOnlyDictionary<RepoPath, FrozenNodeMaterial> trustedBaseMaterials,
+        IReadOnlyDictionary<RepoPath, FrozenActiveEntry> trustedBaseEntries,
         params ModuleSpec[] modules)
     {
         var (snapshot, closure, states, adjacency) = BuildTruthGraph(
@@ -53,7 +53,7 @@ internal static class FrozenLedgerTestData
             states,
             adjacency,
             selectedModules.Select(RepoPathFor).ToHashSet(),
-            trustedBaseMaterials);
+            trustedBaseEntries);
     }
 
     private static (

@@ -70,14 +70,15 @@ public static class FrozenContentAddress
         ImmutableDictionary<RepoPath, TruthState> states,
         ImmutableDictionary<RepoPath, ImmutableArray<RepoPath>> adjacency,
         IReadOnlySet<RepoPath> selectedPaths,
-        IReadOnlyDictionary<RepoPath, FrozenNodeMaterial> trustedBaseMaterials)
+        IReadOnlyDictionary<RepoPath, FrozenActiveEntry> trustedBaseEntries)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(lean);
         ArgumentNullException.ThrowIfNull(states);
         ArgumentNullException.ThrowIfNull(adjacency);
         ArgumentNullException.ThrowIfNull(selectedPaths);
-        ArgumentNullException.ThrowIfNull(trustedBaseMaterials);
+        ArgumentNullException.ThrowIfNull(trustedBaseEntries);
+        var activeIdentityByDeclaration = BuildActiveIdentityByDeclaration(trustedBaseEntries.Values);
         var materialByPath = new Dictionary<RepoPath, FrozenNodeMaterial>();
         foreach (var path in LeanImportAdjacency.DependenciesFirst(selectedPaths, adjacency)
             .Where(path => states.TryGetValue(path, out var state)
@@ -90,12 +91,11 @@ public static class FrozenContentAddress
                     lean,
                     adjacency,
                     path,
-                    dependencyPath => trustedBaseMaterials.TryGetValue(dependencyPath, out var trustedDependency)
-                            ? trustedDependency.FrozenNodeId
-                        : materialByPath.TryGetValue(dependencyPath, out var selectedDependency)
-                            ? selectedDependency.FrozenNodeId
-                            : throw new FormatException(
-                                $"Selected Closed module {path.Value} depends on unrecorded {dependencyPath.Value}.")));
+                    dependencyPath => ResolveActiveDependencyIdentity(
+                        lean,
+                        path,
+                        dependencyPath,
+                        activeIdentityByDeclaration)));
         }
 
         return FrozenMaterialCatalog.Create(
@@ -106,6 +106,77 @@ public static class FrozenContentAddress
             ImmutableDictionary<RepoPath, ImmutableArray<CaseId>>.Empty,
             ImmutableDictionary<RepoPath, ImmutableArray<string>>.Empty,
             adjacency);
+    }
+
+    private static ImmutableDictionary<string, FrozenNodeId> BuildActiveIdentityByDeclaration(
+        IEnumerable<FrozenActiveEntry> activeEntries)
+    {
+        var result = ImmutableDictionary.CreateBuilder<string, FrozenNodeId>(StringComparer.Ordinal);
+        foreach (var entry in activeEntries)
+        {
+            // Ledger v5 persists the event hash as its identity; FrozenNodeId is only a legacy-derived view.
+            var identity = FrozenNodeId.Create(entry.EventHash);
+            foreach (var declaration in entry.Payload.DeclarationStatementIds)
+            {
+                if (result.TryGetValue(declaration.DeclarationNameKey, out var existing)
+                    && existing != identity)
+                {
+                    throw new FormatException(
+                        $"dependency-not-ready: active declaration {declaration.DeclarationNameKey} "
+                        + "resolves to multiple accepted ledger identities.");
+                }
+
+                result[declaration.DeclarationNameKey] = identity;
+            }
+        }
+
+        return result.ToImmutable();
+    }
+
+    private static FrozenNodeId ResolveActiveDependencyIdentity(
+        AcceptedLeanClosure lean,
+        RepoPath selectedPath,
+        RepoPath dependencyPath,
+        IReadOnlyDictionary<string, FrozenNodeId> activeIdentityByDeclaration)
+    {
+        if (!lean.Report.Files.TryGetValue(dependencyPath, out var dependencyReport))
+        {
+            throw new FormatException(
+                $"Selected Closed module {selectedPath.Value} dependency-not-ready: "
+                + $"imported module {dependencyPath.Value} has no Lean report material.");
+        }
+
+        var declarations = CanonicalStatementWriter.DeclarationStatementIds(
+            dependencyPath,
+            dependencyReport);
+        if (declarations.IsEmpty)
+        {
+            throw new FormatException(
+                $"Selected Closed module {selectedPath.Value} dependency-not-ready: "
+                + $"imported module {dependencyPath.Value} has no declarations to resolve.");
+        }
+
+        FrozenNodeId? resolved = null;
+        foreach (var declaration in declarations)
+        {
+            if (!activeIdentityByDeclaration.TryGetValue(declaration.DeclarationNameKey, out var identity))
+            {
+                throw new FormatException(
+                    $"Selected Closed module {selectedPath.Value} dependency-not-ready: "
+                    + $"imported declaration {declaration.DeclarationNameKey} is not active in the accepted ledger.");
+            }
+
+            if (resolved is not null && resolved != identity)
+            {
+                throw new FormatException(
+                    $"Selected Closed module {selectedPath.Value} dependency-not-ready: "
+                    + $"declarations from {dependencyPath.Value} resolve to multiple accepted ledger identities.");
+            }
+
+            resolved = identity;
+        }
+
+        return resolved!;
     }
 
     private static FrozenNodeMaterial BuildNodeMaterial(
