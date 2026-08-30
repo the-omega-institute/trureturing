@@ -6,6 +6,7 @@
    digest: A paired readout has the intersection kernel and is the least common
      refinement of its two coordinates. -/
 
+import D5.S3.ConceptDynamics.SensorFamilies.PairReadoutKernelIntersection
 import D5.S3.ObserverMemory.Refinement.FactorizationCategory
 import Mathlib.Data.Setoid.Basic
 
@@ -13,8 +14,9 @@ import Mathlib.Data.Setoid.Basic
    * Pinned Mathlib supplies products and the infimum of setoids.
    * The repository `Refines` structure supplies the canonical factorization
      order and is reused without introducing a parallel interface preorder.
-   * Repository search found specialized joint-faithfulness results, but no
-     exact binary supremum package for arbitrary readout codomains.
+   * The frozen SensorFamilies/PairReadoutKernelIntersection carrier states
+     the same kernel-intersection fact in relation-set form; the setoid-lattice
+     equation here is derived from that frozen carrier rather than reproved.
 -/
 
 set_option autoImplicit false
@@ -42,11 +44,18 @@ theorem pair_readout_kernel
       Setoid.ker first ⊓ Setoid.ker second := by
   apply Setoid.ext
   intro x y
+  have frozen := Set.ext_iff.mp
+    (D5.S3.ConceptDynamics.SensorFamilies.PairReadoutKernelIntersection.pair_readout_kernel_eq_intersection
+      (first : X -> Y) (second : X -> Z)) (x, y)
+  have hiff : Setoid.ker (fun a => (first a, second a)) x y ↔
+      Setoid.ker (first : X -> Y) x y ∧ Setoid.ker (second : X -> Z) x y := by
+    exact frozen
   constructor
   · intro samePair
-    exact ⟨congrArg Prod.fst samePair, congrArg Prod.snd samePair⟩
+    have both := hiff.mp samePair
+    exact ⟨both.1, both.2⟩
   · rintro ⟨sameFirst, sameSecond⟩
-    exact Prod.ext sameFirst sameSecond
+    exact hiff.mpr ⟨sameFirst, sameSecond⟩
 
 /-- The pair readout refines its first coordinate by projection. -/
 def pair_readout_refines_first
