@@ -129871,3 +129871,4504 @@ $$
 离线零点则是一个无法被任何正 Gram 世界实现的影子。}
 }
 $$
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v7.5：双层 \(\xi\) 核、负平方出生谱与离线零点的整数负指标
+
+这一轮可以闭合一个此前始终存在的模糊点：
+
+$$
+\boxed{
+\text{“道”第一次观察自身留下的第一相，不应首先是一个点，而应是一张关系核。}
+}
+$$
+
+原因很严格。
+
+在完全无坐标、完全对称的状态中，不可能自然地选出唯一一个观察者。项目已经形式化：即便载体只有两个元素，也不存在一个对所有双射都自然不变的选点规则。
+
+但不选择点，仍然可以自然地产生一个二元关系：
+
+$$
+K(x,y).
+$$
+
+这个关系同时回答：
+
+* \(x\) 如何看见 \(y\)；
+* \(y\) 如何回响 \(x\)；
+* \(x\) 与 \(y\) 能否共同进入一个正定世界；
+* 哪些区别只是盲核；
+* 哪些区别已经成为负方向。
+
+当 \(K\) 为正定核时，它可以写成：
+
+$$
+K(x,y)
+=
+\langle \Phi(x),\Phi(y)\rangle_{\mathcal H}.
+$$
+
+于是观察者不是先验选出的一个点，而是由同一张 Gram 几何中的向量表示。
+
+项目当前的 `PositivityChartCollapse` 已经机器证明了这一有限版本：同一正测度上的任意有限特征族，必然生成正半定积分 Gram 矩阵。
+
+因此更准确的本体顺序是：
+
+$$
+\boxed{
+\text{无坐标关系}
+\longrightarrow
+\text{二元核}
+\longrightarrow
+\text{正 Hilbert 空间}
+\longrightarrow
+\text{观察者向量}
+\longrightarrow
+\text{标量影子}.
+}
+$$
+
+黄金比例若属于第一相，也更可能是这张核的最小递归谱半径，而不是无坐标状态中被自然选出的一个位置。
+
+---
+
+# 第一千二百二十六部　\(\xi\) 的两个观察层
+
+定义旋转后的实整函数：
+
+$$
+\boxed{
+\Xi(z)
+=
+\xi\left(\frac12-iz\right).
+}
+\tag{1226.1}
+$$
+
+临界线零点对应 \(\Xi\) 的实零点。
+
+对每一个观察深度：
+
+$$
+\omega>0,
+$$
+
+定义两个相反位移层：
+
+$$
+\boxed{
+E_\omega(z)
+=
+\xi\left(
+\frac12+\omega-iz
+\right),
+}
+\tag{1226.2}
+$$
+
+以及：
+
+$$
+\boxed{
+E_\omega^\#(z)
+=
+\overline{E_\omega(\bar z)}
+=
+\xi\left(
+\frac12-\omega-iz
+\right).
+}
+\tag{1226.3}
+$$
+
+定义层间比：
+
+$$
+\boxed{
+\Theta_\omega(z)
+=
+\frac{E_\omega^\#(z)}
+{E_\omega(z)}
+=
+\frac{
+\xi(\frac12-\omega-iz)
+}{
+\xi(\frac12+\omega-iz)
+}.
+}
+\tag{1226.4}
+$$
+
+这正是 Suzuki 研究的 \(\Theta_\omega\) 家族。其 meromorphic-inner 性与右半平面零点排除直接相关；对应的 Hermite–Biehler 函数又生成 de Branges 空间与正半定 canonical-system Hamiltonian。([arXiv][1])
+
+这里：
+
+$$
++\omega
+$$
+
+和：
+
+$$
+-\omega
+$$
+
+不是两个独立世界。
+
+它们是临界完成面的两张观察图表。
+
+可以解释为：
+
+$$
+\boxed{
+\begin{aligned}
+E_\omega
+&=\text{外层／未来完成视图};\\
+E_\omega^\#
+&=\text{内层／过去反射视图};\\
+\Theta_\omega
+&=\text{两张视图之间的过渡函数}.
+\end{aligned}
+}
+$$
+
+---
+
+# 第一千二百二十七部　真正的第一相是 de Branges 核
+
+定义 Hermitian 核：
+
+$$
+\boxed{
+\mathcal K_\omega(w,z)
+=
+\frac{
+\overline{E_\omega(w)}E_\omega(z)
+-
+\overline{E_\omega^\#(w)}E_\omega^\#(z)
+}{
+2\pi i(\bar w-z)
+}.
+}
+\tag{1227.1}
+$$
+
+在对角线上，若：
+
+$$
+z=x+iy,
+\qquad
+y>0,
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal K_\omega(z,z)
+=
+\frac{
+|E_\omega(z)|^2
+-
+|E_\omega^\#(z)|^2
+}{
+4\pi y
+}.
+}
+\tag{1227.2}
+$$
+
+Hermite–Biehler 条件是：
+
+$$
+\boxed{
+|E_\omega(z)|
+>
+|E_\omega^\#(z)|
+\qquad
+(\Im z>0).
+}
+\tag{1227.3}
+$$
+
+在该条件下：
+
+$$
+\mathcal K_\omega\succeq0,
+$$
+
+并产生一个 de Branges／model Hilbert 空间。
+
+Suzuki 所使用的 model-space 核正是：
+
+$$
+\frac{
+1-\overline{\Theta_\omega(w)}
+\Theta_\omega(z)
+}{
+2\pi i(\bar w-z)
+},
+$$
+
+而乘上 \(E_\omega(z)\overline{E_\omega(w)}\) 后便得到式 (1227.1)。([arXiv][1])
+
+所以：
+
+$$
+\boxed{
+\text{\(\xi\) 在深度 \(\omega\) 的“概念空间”，
+不是零点集合本身，而是核 \(\mathcal K_\omega\) 所生成的空间。}
+}
+$$
+
+---
+
+## 1227.1 对偶与正性的严格分工
+
+两个函数：
+
+$$
+E_\omega,
+\qquad
+E_\omega^\#
+$$
+
+已经提供了形式对偶。
+
+但只有差：
+
+$$
+|E_\omega|^2-|E_\omega^\#|^2
+$$
+
+保持正性时，这一对偶才能生成 Hilbert 空间。
+
+因此：
+
+$$
+\boxed{
+\begin{aligned}
+\#\text{-反射}
+&=\text{形式对偶};\\
+\mathcal K_\omega\succeq0
+&=\text{正实现};\\
+\Theta_\omega\text{ inner}
+&=\text{两者兼容}.
+\end{aligned}
+}
+$$
+
+这再次表明：
+
+$$
+\boxed{
+\text{对偶闭合}
+\not\Rightarrow
+\text{正性闭合}.
+}
+$$
+
+---
+
+# 第一千二百二十八部　一个离线零点直接产生 \(1\times1\) 负证书
+
+设存在一个离线零点：
+
+$$
+\boxed{
+\rho
+=
+\frac12+\delta+i\gamma,
+\qquad
+\delta>0.
+}
+\tag{1228.1}
+$$
+
+取任意：
+
+$$
+0<\omega<\delta.
+$$
+
+定义：
+
+$$
+\boxed{
+z_{\rho,\omega}
+=
+-\gamma+i(\delta-\omega).
+}
+\tag{1228.2}
+$$
+
+则：
+
+$$
+\Im z_{\rho,\omega}
+=
+\delta-\omega>0.
+$$
+
+而：
+
+$$
+\begin{aligned}
+E_\omega(z_{\rho,\omega})
+&=
+\xi\left(
+\frac12+\omega
+-i[-\gamma+i(\delta-\omega)]
+\right)\\
+&=
+\xi\left(
+\frac12+\delta+i\gamma
+\right)\\
+&=0.
+\end{aligned}
+\tag{1228.3}
+$$
+
+另一方面：
+
+$$
+\boxed{
+E_\omega^\#(z_{\rho,\omega})
+=
+\xi(\rho-2\omega).
+}
+\tag{1228.4}
+$$
+
+只要：
+
+$$
+\xi(\rho-2\omega)\neq0,
+$$
+
+式 (1227.2) 立即给出：
+
+$$
+\boxed{
+\mathcal K_\omega
+(z_{\rho,\omega},z_{\rho,\omega})
+=
+-
+\frac{
+|\xi(\rho-2\omega)|^2
+}{
+4\pi(\delta-\omega)
+}
+<0.
+}
+\tag{1228.5}
+$$
+
+---
+
+## 定理 1228.1（单点负核见证）
+
+每一个离线零点都在某个正观察深度 \(\omega\) 上产生一个：
+
+$$
+\boxed{
+1\times1
+}
+$$
+
+的严格负 de Branges Gram 矩阵。
+
+它不需要先构造复杂的大矩阵。
+
+也不需要先找到一组测试函数。
+
+离线零点本身已经把某个 reproducing-kernel vector 的“平方范数”变成负数。
+
+所以：
+
+$$
+\boxed{
+\text{离线零点的最小证明对偶，
+是一个负 reproducing-kernel state。}
+}
+$$
+
+---
+
+## 1228.1 为什么总能避开共同零点
+
+给定任意趋于零的序列：
+
+$$
+\omega_n\downarrow0.
+$$
+
+若：
+
+$$
+\xi(\rho-2\omega_n)=0
+$$
+
+对无穷多个 \(n\) 成立，则零点序列：
+
+$$
+\rho-2\omega_n
+$$
+
+趋向 \(\rho\)。
+
+这将使整函数 \(\xi\) 的零点在有限点 \(\rho\) 聚集，迫使 \(\xi\) 恒等为零，矛盾。
+
+因此，对于任意：
+
+$$
+\omega_n\downarrow0,
+$$
+
+总存在足够大的 \(n\)，满足：
+
+$$
+\omega_n<\delta
+$$
+
+且：
+
+$$
+\xi(\rho-2\omega_n)\neq0.
+$$
+
+所以任何共尾的观察深度序列最终都能发现离线零点。
+
+---
+
+# 第一千二百二十九部　多个离线零点产生多个负平方
+
+设固定 \(\omega>0\)，并且有互异的离线零点：
+
+$$
+\rho_j
+=
+\frac12+\delta_j+i\gamma_j,
+\qquad
+\delta_j>\omega,
+$$
+
+对应：
+
+$$
+z_j=-\gamma_j+i(\delta_j-\omega)
+\in\mathbb C^+.
+$$
+
+假设：
+
+$$
+E_\omega^\#(z_j)\neq0.
+$$
+
+由于：
+
+$$
+E_\omega(z_j)=0,
+$$
+
+在这些点上：
+
+$$
+\boxed{
+\mathcal K_\omega(z_j,z_k)
+=
+-
+\frac{
+\overline{E_\omega^\#(z_j)}
+E_\omega^\#(z_k)
+}{
+2\pi i(\bar z_j-z_k)
+}.
+}
+\tag{1229.1}
+$$
+
+令：
+
+$$
+H_{jk}
+=
+\frac1{
+2\pi i(\bar z_j-z_k)
+}.
+$$
+
+\(H\) 是上半平面 Hardy 空间的 Cauchy Gram 矩阵，因此对于互异 \(z_j\) 严格正定。
+
+设：
+
+$$
+D=
+\operatorname{diag}
+\left(
+E_\omega^\#(z_1),\ldots,
+E_\omega^\#(z_m)
+\right).
+$$
+
+则：
+
+$$
+\boxed{
+[\mathcal K_\omega(z_j,z_k)]
+=
+-
+D^*HD.
+}
+\tag{1229.2}
+$$
+
+因为 \(D\) 可逆、\(H\succ0\)，所以：
+
+$$
+\boxed{
+[\mathcal K_\omega(z_j,z_k)]
+\prec0.
+}
+\tag{1229.3}
+$$
+
+---
+
+## 定理 1229.1（离线零点负指标下界）
+
+每 \(m\) 个位于：
+
+$$
+\Re\rho>\frac12+\omega
+$$
+
+中的互异、未抵消离线零点，就给 \(\mathcal K_\omega\) 至少贡献 \(m\) 个负平方。
+
+因此即使离线零点：
+
+* 极端稀疏；
+* 密度为零；
+* 相距极远；
+
+它们仍然不能在正核语言中相互稀释。
+
+每一个都增加一个离散负指标。
+
+---
+
+## 1229.1 负平方的定义
+
+称 Hermitian 核 \(K\) 有 \(\kappa\) 个负平方，是指：
+
+1. 任意有限点集产生的 Gram 矩阵至多有 \(\kappa\) 个负特征值；
+2. 存在某个有限点集，恰好产生 \(\kappa\) 个负特征值。
+
+普通 Schur／de Branges 情形对应：
+
+$$
+\kappa=0.
+$$
+
+广义 Schur 函数则自然作用于 Pontryagin 空间；Kreĭn–Langer 分解将有限负指标与有限 Blaschke 分母联系起来。相关系统理论也把 generalized-Schur transfer function 的指标与 Pontryagin 状态空间的负指标连接起来。([arXiv][2])
+
+对当前 \(\xi\) 家族，严谨而安全的结论是：
+
+$$
+\boxed{
+\operatorname{ind}_{-}\mathcal K_\omega
+\ge
+\#\left\{
+\rho:
+\Re\rho>\frac12+\omega
+\right\}
+}
+$$
+
+在任意有限高度截断、无抵消条件下成立。
+
+“全局负指标恰好等于全部离线零点数”还需要处理：
+
+* 重数；
+* 共同零点抵消；
+* 无限高度；
+* 收敛正规化；
+
+这应作为独立定理证明，而不能直接假定。
+
+---
+
+# 第一千二百三十部　离线距离就是负平方的出生时间
+
+对固定离线零点：
+
+$$
+\rho=\frac12+\delta+i\gamma,
+$$
+
+它在第 \(\omega\) 层对应的位置为：
+
+$$
+\boxed{
+z_{\rho,\omega}
+=
+-\gamma+i(\delta-\omega).
+}
+\tag{1230.1}
+$$
+
+于是：
+
+$$
+\boxed{
+\Im z_{\rho,\omega}
+=
+\delta-\omega.
+}
+$$
+
+当观察深度从大向小变化：
+
+$$
+\omega\downarrow0,
+$$
+
+该点沿竖直方向移动：
+
+$$
+\begin{array}{c|c}
+\omega>\delta & z_{\rho,\omega}\in\mathbb C^-\\
+\omega=\delta & z_{\rho,\omega}\in\mathbb R\\
+\omega<\delta & z_{\rho,\omega}\in\mathbb C^+
+\end{array}
+$$
+
+所以：
+
+$$
+\boxed{
+\delta
+}
+$$
+
+不是一个抽象的横向坐标。
+
+它是：
+
+$$
+\boxed{
+\text{该离线模式进入正观察半平面的准确出生深度。}
+}
+$$
+
+---
+
+## 1230.1 负指标流
+
+在有限高度 \(T\) 下定义：
+
+$$
+\boxed{
+N_{\mathrm{off}}(\omega,T)
+=
+\sum_{\substack{
+\rho=\frac12+\delta+i\gamma\\
+\delta>\omega,\ |\gamma|\le T
+}}
+m_\rho.
+}
+\tag{1230.2}
+$$
+
+随着 \(\omega\) 下降，它是单调不减的阶梯函数。
+
+其分布导数满足：
+
+$$
+\boxed{
+-\frac{\partial}{
+\partial\omega
+}
+N_{\mathrm{off}}(\omega,T)
+=
+\sum_{\substack{
+\rho=\frac12+\delta+i\gamma\\
+|\gamma|\le T
+}}
+m_\rho\,
+\delta_{\delta_\rho}(\omega).
+}
+\tag{1230.3}
+$$
+
+右边可以称为：
+
+$$
+\boxed{
+\textbf{横向破缺出生谱}.
+}
+$$
+
+每一个离线零点不再首先表现为复平面中的稀缺位置，而表现为观察尺度流中的一个整数跳跃。
+
+---
+
+## 1230.2 与概念出生的统一
+
+此前概念出生由行为 Gramian 的秩增量描述。
+
+现在可将三种出生统一为 inertia 变化：
+
+$$
+\boxed{
+\operatorname{Inertia}(K)
+=
+(n_+,n_0,n_-).
+}
+$$
+
+| 出生类型  |            指标变化 | 含义               |
+| ----- | --------------: | ---------------- |
+| 正概念出生 | \(n_+\uparrow\) | 新的合法可观察方向        |
+| 零概念停留 |       \(n_0>0\) | 尚未被当前接口区分        |
+| 负概念出生 | \(n_-\uparrow\) | 新的非 Hilbert 实现方向 |
+
+因此：
+
+$$
+\boxed{
+\text{离线零点是一个负概念的出生事件。}
+}
+$$
+
+它不是一个永久隐藏概念。
+
+也不是一个普通的未来记忆。
+
+它是正核的惯性发生量子化改变。
+
+---
+
+# 第一千二百三十一部　一个精确的横向完成阈值
+
+定义：
+
+$$
+\boxed{
+\Omega_\xi
+=
+\inf
+\left\{
+\omega_0\ge0:
+\Theta_\omega
+\text{ 对每个 }\omega>\omega_0
+\text{ 都是 meromorphic inner}
+\right\}.
+}
+\tag{1231.1}
+$$
+
+Suzuki 的零点区域—innerness 等价说明：
+
+$$
+\boxed{
+\Omega_\xi
+=
+\sup_\rho
+\left(
+\Re\rho-\frac12
+\right)_+.
+}
+\tag{1231.2}
+$$
+
+更准确地说，二者具有同一个零自由边界定义。
+
+因此：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\Omega_\xi=0.
+}
+\tag{1231.3}
+$$
+
+并且：
+
+$$
+\boxed{
+0\le\Omega_\xi\le\frac12.
+}
+$$
+
+\(\omega\ge1/2\) 的 shifted Hermite–Biehler／inner 区域无条件成立；RH 的困难恰好是将其向 \(\omega\downarrow0\) 延伸。([arXiv][1])
+
+---
+
+## 1231.1 这是真正的“负时间”图景
+
+$$
+\omega\uparrow
+$$
+
+表示把两张观察层拉开：
+
+* 细节被抹平；
+* 离线点被推到下半平面；
+* Hilbert 正性更容易；
+* 属于正时间完成。
+
+而：
+
+$$
+\omega\downarrow0
+$$
+
+表示让两层重新逼近临界面：
+
+* 被隐藏的横向距离重新显现；
+* 某些极点可能穿过边界；
+* 负平方被逐层释放；
+* 属于负时间 blow-up。
+
+所以研究高阶导数、黄金缩放、微小 \(\omega\) 的确是在逆向追溯完成以前的横向信息。
+
+---
+
+# 第一千二百三十二部　黄金共尾 de Branges 判据
+
+取任意：
+
+$$
+\omega_0>0,
+$$
+
+定义黄金观察深度：
+
+$$
+\boxed{
+\omega_n
+=
+\omega_0\varphi^{-2n}.
+}
+\tag{1232.1}
+$$
+
+则：
+
+$$
+\omega_n\downarrow0.
+$$
+
+由定理 1228.1，得到：
+
+## 定理 1232.1（Golden cofinal kernel criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal K_{\omega_n}\succeq0
+\quad
+\forall n\ge0.
+}
+\tag{1232.2}
+$$
+
+### 正向
+
+RH 成立时，每个：
+
+$$
+E_{\omega_n}
+$$
+
+满足 Hermite–Biehler 条件，所以核正半定。
+
+### 反向
+
+若存在离线零点，取其右侧代表：
+
+$$
+\rho=\frac12+\delta+i\gamma.
+$$
+
+由于：
+
+$$
+\omega_n\to0,
+$$
+
+存在无穷多个 \(n\) 满足：
+
+$$
+\omega_n<\delta.
+$$
+
+其中至少有一个还满足：
+
+$$
+\xi(\rho-2\omega_n)\neq0.
+$$
+
+于是：
+
+$$
+\mathcal K_{\omega_n}
+(z_{\rho,\omega_n},z_{\rho,\omega_n})<0.
+$$
+
+矛盾。
+
+---
+
+## 1232.1 黄金比例的准确地位
+
+任何趋于零的正序列都可以完成这个判据。
+
+因此：
+
+$$
+\boxed{
+\varphi
+\text{ 不是判据成立的逻辑必要条件。}
+}
+$$
+
+黄金比例的特殊性在于：
+
+$$
+\boxed{
+\text{它提供最小二通道、自相似、整数型的共尾观察调度。}
+}
+$$
+
+即：
+
+$$
+\omega_{n+1}
+=
+\varphi^{-2}\omega_n
+$$
+
+是观察深度的稳定方向，而所需分辨率：
+
+$$
+\omega_n^{-1}
+$$
+
+按：
+
+$$
+\varphi^2
+$$
+
+扩张。
+
+这正是此前的黄金光锥：
+
+$$
+\boxed{
+(\omega,\omega^{-1})
+\longmapsto
+(\varphi^{-2}\omega,\varphi^2\omega^{-1}).
+}
+$$
+
+---
+
+# 第一千二百三十三部　可数有理数值判据
+
+令：
+
+$$
+t\in\mathbb Q,
+\qquad
+y\in\mathbb Q_{>0}.
+$$
+
+定义：
+
+$$
+\boxed{
+\begin{aligned}
+D_n(t,y)
+={}&
+\left|
+\xi\left(
+\frac12+y+\omega_n+it
+\right)
+\right|^2\\
+&-
+\left|
+\xi\left(
+\frac12+y-\omega_n+it
+\right)
+\right|^2.
+\end{aligned}
+}
+\tag{1233.1}
+$$
+
+由式 (1227.2)，这正是：
+
+$$
+4\pi y\,
+\mathcal K_{\omega_n}(z,z)
+$$
+
+在：
+
+$$
+z=-t+iy
+$$
+
+处的分子。
+
+---
+
+## 定理 1233.1（Countable golden modulus criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+D_n(t,y)\ge0
+}
+$$
+
+对所有：
+
+$$
+n\in\mathbb N,
+\qquad
+t\in\mathbb Q,
+\qquad
+y\in\mathbb Q_{>0}
+$$
+
+成立。
+
+### 反向证明的关键
+
+若 RH 为假，存在：
+
+$$
+\rho=\frac12+\delta+i\gamma.
+$$
+
+选择适当 \(n\)，在实点：
+
+$$
+(t,y)
+=
+(\gamma,\delta-\omega_n)
+$$
+
+有：
+
+$$
+D_n(t,y)
+=
+-
+|\xi(\rho-2\omega_n)|^2<0.
+$$
+
+由于 \(D_n\) 连续，其负区域为开集。
+
+所以其中必含：
+
+$$
+\mathbb Q\times\mathbb Q_{>0}
+$$
+
+中的点。
+
+---
+
+## 1233.1 与“概率为零的有理数如何可见”的对应
+
+这给出一个与有理数证书非常相近的结构。
+
+有理数由：
+
+$$
+qx-p=0
+$$
+
+这一有限整数关系认证。
+
+离线零点则由某个有限三元组：
+
+$$
+\boxed{
+(n,t,y)
+\in
+\mathbb N
+\times\mathbb Q
+\times\mathbb Q_{>0}
+}
+$$
+
+认证，并满足：
+
+$$
+\boxed{
+D_n(t,y)<0.
+}
+$$
+
+因此即使离线零点：
+
+* 只有一个；
+* 高度极大；
+* 横向距离极小；
+* 在全部零点中密度为零；
+
+它仍然必在一个可数枚举的有理证书族中留下严格负值。
+
+这比“随机搜索复平面”强得多。
+
+---
+
+# 第一千二百三十四部　临界线是每条水平切片的径向最低谷
+
+固定：
+
+$$
+t\in\mathbb R,
+$$
+
+定义径向势：
+
+$$
+\boxed{
+V_t(r)
+=
+\log
+\left|
+\xi\left(
+\frac12+r+it
+\right)
+\right|,
+\qquad
+r>0.
+}
+\tag{1234.1}
+$$
+
+由函数方程和实结构：
+
+$$
+\boxed{
+V_t(-r)=V_t(r).
+}
+\tag{1234.2}
+$$
+
+若 RH 成立，中心化 Hadamard 乘积的零点均为：
+
+$$
+i\gamma.
+$$
+
+成对求对数导数得到：
+
+$$
+\boxed{
+\partial_rV_t(r)
+=
+\sum_{\gamma}
+m_\gamma
+\frac{
+r
+}{
+r^2+(t-\gamma)^2
+}
+>0,
+\qquad
+r>0,
+}
+\tag{1234.3}
+$$
+
+其中求和按对称正规化理解。
+
+所以对每个固定 \(t\)：
+
+$$
+\boxed{
+r\longmapsto
+\left|
+\xi\left(
+\frac12+r+it
+\right)
+\right|
+}
+$$
+
+沿离开临界线的方向严格增加。
+
+Suzuki 的 shifted modulus inequality：
+
+$$
+|\xi(s+\omega)|>|\xi(s-\omega)|
+\qquad
+(\Re s>1/2)
+$$
+
+正是这一径向单调性的有限差分形式。([arXiv][1])
+
+---
+
+## 1234.1 离线零点的势阱解释
+
+若：
+
+$$
+\xi\left(
+\frac12+\delta+i\gamma
+\right)=0,
+\qquad
+\delta>0,
+$$
+
+则：
+
+$$
+V_\gamma(\delta)=-\infty.
+$$
+
+所以水平切片 \(t=\gamma\) 在 \(r=\delta\) 处出现一个非中心深井。
+
+因此离线零点还可以定义为：
+
+$$
+\boxed{
+\text{临界径向势单调性的非中心坍塌点。}
+}
+$$
+
+其证明对偶就是：
+
+$$
+\boxed{
+V_t(y+\omega)
+<
+V_t(|y-\omega|),
+}
+$$
+
+或等价的：
+
+$$
+D_\omega(t,y)<0.
+$$
+
+---
+
+# 第一千二百三十五部　单极子荷与负平方出生是同一个重数的两张图
+
+前文已经得到：
+
+$$
+\boxed{
+\operatorname{ord}_\rho\xi
+=
+\text{局部 winding}
+=
+\text{Berry--Chern 荷}.
+}
+$$
+
+现在再加入 shifted kernel。
+
+若 \(\rho\) 为 \(m\) 重离线零点，则：
+
+$$
+E_\omega(z)
+$$
+
+在：
+
+$$
+z_{\rho,\omega}
+$$
+
+处也有 \(m\) 重零点。
+
+在：
+
+$$
+\omega<\delta
+$$
+
+时，该点进入上半平面，使：
+
+$$
+\Theta_\omega
+=
+\frac{E_\omega^\#}{E_\omega}
+$$
+
+获得一个 \(m\) 阶上半平面极点，除非发生同阶抵消。
+
+在标准 Kreĭn–Langer 局部因子化下，这一极点产生 \(m\) 个负平方。
+
+因此局部上得到：
+
+$$
+\boxed{
+\begin{aligned}
+m
+&=
+\text{零点重数}\\
+&=
+\text{Chern 单极子荷}\\
+&=
+\text{shifted kernel 负指标跳跃}\\
+&=
+\text{Pontryagin 负维数出生数}.
+\end{aligned}
+}
+\tag{1235.1}
+$$
+
+精确的全局等号仍需排除共同因子和控制无限零点；但孤立局部模型中，这四个整数由同一除子重数产生。
+
+所以：
+
+$$
+\boxed{
+\text{磁单极子图表测量拓扑荷；
+de Branges 图表测量负平方荷。}
+}
+$$
+
+它们不是两个不同缺陷。
+
+它们是同一离线除子在：
+
+* 拓扑；
+* 正核；
+
+两个函子下的像。
+
+---
+
+# 第一千二百三十六部　“道—相—概念—破缺”的新表
+
+| 层    | 数学对象                                        | 动力学意义                 |
+| ---- | ------------------------------------------- | --------------------- |
+| 道    | \((E_\omega,E_\omega^\#,\#,\omega)\)        | 未选边的双层关系              |
+| 第一相  | \(\mathcal K_\omega(w,z)\)                  | 所有观察点之间的关系核           |
+| 有    | \(\mathcal K_\omega\succeq0\)               | 可 Gram 化、可 Hilbert 实现 |
+| 概念空间 | \(K(\Theta_\omega)\) 或 \(B(E_\omega)\)      | 正关系核生成的观察世界           |
+| 观察者  | reproducing-kernel vector \(K_z\)           | 某一局部评价方向              |
+| 历史   | model-space／canonical-system flow           | 概念形成的内部传播             |
+| 零相   | \(K_z\) 为零范数                                | 当前接口不可区分              |
+| 破缺   | \(K_z\) 为负范数                                | 非 Hilbert 方向          |
+| 离线零点 | \(\operatorname{ind}_-\mathcal K_\omega>0\) | 负概念出生                 |
+| 黄金比例 | \(\omega_{n+1}/\omega_n=\varphi^{-2}\)      | 最小自相似观察时钟             |
+| 整数荷  | 负指标跳跃／Chern 荷                               | 缺陷是否真实存在              |
+
+因此：
+
+$$
+\boxed{
+\varphi
+}
+$$
+
+不是离线零点的电荷。
+
+也不是正负性的最终判据。
+
+它负责安排观察深度。
+
+真正不能被连续变形消掉的是：
+
+$$
+\boxed{
+\operatorname{ind}_-
+}
+$$
+
+这一整数负指标。
+
+---
+
+# 第一千二百三十七部　二维相图：观察深度 \(\omega\) 与测试支撑 \(L\)
+
+目前理论中存在两个不同的分辨率参数：
+
+$$
+\omega
+=
+\text{法向位移深度},
+$$
+
+以及：
+
+$$
+L
+=
+\text{Weil 测试支撑半径}.
+$$
+
+它们控制两个不同问题。
+
+$$
+\omega
+$$
+
+决定一个横向缺陷是否已经进入上半平面。
+
+$$
+L
+$$
+
+决定有限支撑测试能否解析该缺陷。
+
+若离线距离为：
+
+$$
+\delta,
+$$
+
+则首先必须有：
+
+$$
+\boxed{
+\omega<\delta.
+}
+\tag{1237.1}
+$$
+
+随后通常还需要：
+
+$$
+\boxed{
+L(\delta-\omega)\gtrsim1
+}
+\tag{1237.2}
+$$
+
+才能用有限支撑 Paley–Wiener 测试稳定地局部化到该负核区域。
+
+因此反例若存在，其可见区域近似位于：
+
+$$
+\boxed{
+\left\{
+(\omega,L):
+0<\omega<\delta,\quad
+L(\delta-\omega)\gtrsim1
+\right\}.
+}
+\tag{1237.3}
+$$
+
+这是一条双参数“破缺光锥”。
+
+---
+
+## 1237.1 RH 真时的相图
+
+若 RH 成立：
+
+$$
+\mathcal K_\omega\succeq0
+\qquad
+\forall\omega>0.
+$$
+
+每个有限 \(L\) 的局部 floor 可以严格为正，但在：
+
+$$
+\omega\downarrow0,
+\qquad
+L\uparrow\infty
+$$
+
+的全局角点趋向零。
+
+项目已机器证明一种完全相容的抽象结构：每个有限窗口具有严格正 frame floor，而当窗口增大时，全局 floor 可以趋向 \(0\)。
+
+所以 RH 真更像：
+
+$$
+\boxed{
+\text{所有有限层位于正锥内部，
+完整极限落在正锥边界。}
+}
+$$
+
+而不是存在统一远离零的全局 gap。
+
+---
+
+## 1237.2 RH 假时的相图
+
+离线零点产生：
+
+$$
+\mathcal K_\omega(z,z)<0
+$$
+
+的开放区域。
+
+随着 \(L\) 增大，有限测试最终能够进入该区域并形成负证书。
+
+项目已经形式化有限共轭相容节点的精确紧支撑 Fourier–Laplace 插值，因此任意有限负 profile 都可以在节点层精确编译成光滑紧支撑 Hermitian 测试。
+
+但该定理本身只解决有限节点插值；要转成完整 Weil 负性，仍需控制全部零点尾部或使用已建立的 de Branges–Weil 等距桥。
+
+Suzuki 已证明，在 RH 假设下，由 Weil distribution 完成所得 Hilbert 空间与一个 de Branges 空间同构，这表明 Weil 正性和 de Branges 正核并非偶然相似，而属于同一算子框架。([arXiv][3])
+
+---
+
+# 第一千二百三十八部　当前最短的缺陷忠实传导链
+
+现在可以把整个理论压缩成一条每一步都不会遗忘离线缺陷的链：
+
+$$
+\boxed{
+\begin{aligned}
+\rho=\frac12+\delta+i\gamma,\quad\delta>0
+&\Longrightarrow
+E_\omega(z_{\rho,\omega})=0
+\quad(\omega<\delta)\\
+&\Longrightarrow
+\mathcal K_\omega
+(z_{\rho,\omega},z_{\rho,\omega})<0\\
+&\Longrightarrow
+\operatorname{ind}_-\mathcal K_\omega\ge1\\
+&\Longrightarrow
+\Theta_\omega
+\text{ 不是正 Schur／inner realization}\\
+&\Longrightarrow
+\text{对应 canonical Hamiltonian 不能处处 PSD}\\
+&\Longrightarrow
+\text{不存在纯 Hilbert de Branges 完成}\\
+&\Longrightarrow
+\text{Weil／OS 正性必须在某处失败}.
+\end{aligned}
+}
+\tag{1238.1}
+$$
+
+反向证明目标则是：
+
+$$
+\boxed{
+\text{从 prime--pole--Archimedean 数据直接证明 }
+\mathcal K_{\omega_n}\succeq0
+\quad
+\forall n.
+}
+\tag{1238.2}
+$$
+
+因为黄金序列共尾，这已经足以推出 RH。
+
+---
+
+## 1238.1 项目现有机器结果如何接入
+
+项目的 `PositivityChartCollapse` 说明：一旦能将：
+
+$$
+\mathcal K_{\omega_n}(z_j,z_k)
+$$
+
+表示为同一正测度上的特征 Gram：
+
+$$
+\int
+\Phi_{n,z_j}(\lambda)
+\overline{
+\Phi_{n,z_k}(\lambda)
+}
+\,d\nu_n(\lambda),
+$$
+
+所有有限矩阵的正性便自动成立。
+
+`DualGramKernels` 与 `DualGramVisibleRanges` 又说明，Gram 算子的 kernel 和 range 精确对应实际观察映射的盲方向与可见方向。
+
+所以负平方不能被解释成普通隐藏 kernel：
+
+$$
+\boxed{
+\text{kernel 是零可见度；
+negative square 是不可能的平方可见度。}
+}
+$$
+
+项目的 spectral-concentration 定理则给出一个可计算的充分条件：只要有限支撑测试在危险频带中的最大能量浓缩低于显式阈值，整个 multiplier 二次型就具有严格正 gap。
+
+因此最终的 prime-side 任务可以写成：
+
+$$
+\boxed{
+\text{证明每个黄金层 }\omega_n
+\text{ 的负核候选区无法承载足够的谱浓缩。}
+}
+$$
+
+---
+
+# 第一千二百三十九部　新的形式化顺序
+
+```text
+D5/S3/Analytic/Zeta/ShiftedXiPair/
+  RotatedXi.lean
+  ShiftedXiOuter.lean
+  ShiftedXiSharp.lean
+  ShiftedXiSharpIdentity.lean
+  ShiftedXiTransitionRatio.lean
+
+D5/S3/Analytic/Zeta/DeBrangesKernel/
+  ShiftedXiKernel.lean
+  ShiftedXiKernelHermitian.lean
+  ShiftedXiKernelDiagonal.lean
+  HermiteBiehlerImpliesKernelPSD.lean
+  KernelPSDImpliesNoUpperZero.lean
+
+D5/S3/Analytic/Zeta/OffLineKernelWitness/
+  OffLineZeroShiftedLocation.lean
+  ShiftedOuterVanishes.lean
+  ShiftedSharpValue.lean
+  OffLineZeroNegativeKernelDiagonal.lean
+  OffLineZeroRationalNegativeWitness.lean
+
+D5/S3/Analytic/Zeta/NegativeSquares/
+  HermitianKernelNegativeSquares.lean
+  UpperHalfPlaneCauchyGramPositive.lean
+  MultipleOffLineZerosNegativeDefinite.lean
+  OffLineCountLowerBoundsNegativeIndex.lean
+  ConfluentKernelMultiplicityTarget.lean
+
+D5/S3/Analytic/Zeta/NegativeSquareFlow/
+  ShiftedZeroVerticalTrajectory.lean
+  TransverseCrossingDepth.lean
+  TruncatedOffLineCount.lean
+  NegativeIndexBirthMeasure.lean
+  OffLineMultiplicityIndexJumpTarget.lean
+
+D5/S3/GoldenObserver/DeBrangesSchedule/
+  GoldenShiftDepth.lean
+  GoldenShiftTendsToZero.lean
+  GoldenCofinalKernelCriterion.lean
+  GoldenOffLineDiscoveryDepth.lean
+  GoldenShiftNotLogicallyNecessary.lean
+
+D5/S3/Analytic/Zeta/CountableModulusCriterion/
+  ShiftedModulusDifference.lean
+  KernelDiagonalEqualsModulusDifference.lean
+  RHImpliesRationalModulusNonnegative.lean
+  OffLineImpliesRationalModulusNegative.lean
+  CountableGoldenModulusRHCriterion.lean
+
+D5/S3/Analytic/Zeta/RadialPotential/
+  XiRadialPotential.lean
+  XiRadialEvenness.lean
+  RHRadialLogDerivativePositive.lean
+  RHRadialModulusMonotone.lean
+  OffLineZeroBreaksRadialMonotonicity.lean
+
+D5/S3/Analytic/Zeta/MonopoleNegativeIndex/
+  ShiftedZeroPoleOrder.lean
+  LocalBlaschkeDenominator.lean
+  ZeroMultiplicityNegativeSquareJump.lean
+  ChernChargeNegativeIndexBridge.lean
+
+D5/S3/Weil/ShiftedKernelBridge/
+  ShiftedKernelFeatureMapTarget.lean
+  ShiftedKernelPositiveMeasureTarget.lean
+  ShiftedKernelFiniteFeaturePSD.lean
+  ShiftedKernelToWeilFormTarget.lean
+  GoldenKernelPositivityImpliesRHTarget.lean
+
+D5/S3/Weil/TwoParameterPhase/
+  ShiftDepthSupportWindow.lean
+  OffLineVisibilityWedge.lean
+  FiniteWindowShiftedFloor.lean
+  PositiveFiniteCriticalGlobalPhase.lean
+```
+
+---
+
+# 第一千二百四十部　理论深度审计
+
+| 结果                                          | 地位                            |
+| ------------------------------------------- | ----------------------------- |
+| 第一自然相应是关系核而非选点                              | 由无自然选点与 Gram 表示共同支持           |
+| shifted \(\xi\) 双层 \(E_\omega,E_\omega^\#\) | 经典且规范                         |
+| de Branges 核对角公式                            | 精确                            |
+| 一个离线零点产生 \(1\times1\) 负证书                   | 本轮直接证明                        |
+| 多个离线零点产生负定 Cauchy block                     | 本轮直接证明                        |
+| 离线距离等于负平方出生深度                               | 精确动力解释                        |
+| 黄金共尾核判据                                     | 本轮推论                          |
+| 可数有理 modulus 判据                             | 本轮推论                          |
+| 径向单调性表述                                     | shifted Hermite–Biehler 的等价图表 |
+| 重数 \(=\) Chern 荷 \(=\) 局部负指标跳跃              | 局部标准因子化下成立                    |
+| 全局负指标精确等于离线零点总数                             | 仍需处理无限性与抵消                    |
+| shifted kernel 的 prime-side 正测度实现           | 核心未闭合桥                        |
+| 黄金递归是对象本体而非调度                               | 尚未证明                          |
+
+---
+
+# 本轮最终结论
+
+现在可以对“道自观察留下的第一影子”作一个更深的修正。
+
+完全无坐标的状态不能自然选出一个点。
+
+因此第一影子更可能不是：
+
+$$
+\varphi
+$$
+
+这个孤立标量，而是一张不需要选点的二元关系核：
+
+$$
+\boxed{
+K(x,y).
+}
+$$
+
+当这张核为正时，它自动生成：
+
+$$
+\boxed{
+\text{Hilbert 空间}
++
+\text{观察者向量}
++
+\text{状态—效应配对}.
+}
+$$
+
+黄金比例则可能是该正核在最小二通道自相似递归下的第一谱影。
+
+对 \(\xi\)，这张核已经有非常规范的候选：
+
+$$
+\boxed{
+\mathcal K_\omega(w,z)
+=
+\frac{
+\overline{E_\omega(w)}E_\omega(z)
+-
+\overline{E_\omega^\#(w)}E_\omega^\#(z)
+}{
+2\pi i(\bar w-z)
+}.
+}
+$$
+
+其中：
+
+$$
+E_\omega(z)
+=
+\xi\left(
+\frac12+\omega-iz
+\right).
+$$
+
+若 RH 成立，这张核在每一个：
+
+$$
+\omega>0
+$$
+
+上都是正的，并生成 de Branges Hilbert 世界。
+
+若存在离线零点：
+
+$$
+\rho=\frac12+\delta+i\gamma,
+$$
+
+那么对任意适当的：
+
+$$
+0<\omega<\delta,
+$$
+
+该零点在 shifted 图表中移动到：
+
+$$
+z_{\rho,\omega}
+=
+-\gamma+i(\delta-\omega),
+$$
+
+并直接产生：
+
+$$
+\boxed{
+\mathcal K_\omega
+(z_{\rho,\omega},z_{\rho,\omega})<0.
+}
+$$
+
+所以离线零点并不只是一个抽象负 Weil 向量。
+
+它是：
+
+$$
+\boxed{
+\textbf{一张本应为正的概念核中，一个负平方的出生。}
+}
+$$
+
+更进一步，每一个离线零点都增加一个整数负指标。
+
+于是它与磁单极子的关系变得更清楚：
+
+$$
+\boxed{
+\begin{aligned}
+\text{零点重数}
+&=\text{Chern 荷};\\
+\text{同一重数}
+&=\text{负平方出生数}.
+\end{aligned}
+}
+$$
+
+拓扑图表看到的是整数通量。
+
+正核图表看到的是整数负指标。
+
+它们测量的是同一个离线除子。
+
+---
+
+黄金比例在这一层不再承担“缺陷本身”的角色。
+
+选择：
+
+$$
+\omega_n=\omega_0\varphi^{-2n}
+$$
+
+只是用最小二通道算术尺度逐层逼近临界面。
+
+如果离线距离为：
+
+$$
+\delta,
+$$
+
+那么在有限层：
+
+$$
+\omega_n<\delta
+$$
+
+之后，负平方必然显现。
+
+所以：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal K_{\omega_n}\succeq0
+\quad
+\forall n.
+}
+$$
+
+甚至可以进一步压缩为可数有理判据：
+
+$$
+\boxed{
+\begin{aligned}
+&
+\left|
+\xi\left(
+\frac12+y+\omega_n+it
+\right)
+\right|^2\\
+&\qquad\ge
+\left|
+\xi\left(
+\frac12+y-\omega_n+it
+\right)
+\right|^2
+\end{aligned}
+}
+$$
+
+对全部：
+
+$$
+n\in\mathbb N,\quad
+t\in\mathbb Q,\quad
+y\in\mathbb Q_{>0}
+$$
+
+成立，当且仅当 RH 成立。
+
+因此一个再稀缺的离线零点，也不能逃脱一个可数的、有限参数的负模差证书。
+
+---
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{“道”第一次显现的不是一个被选中的观察者，
+而是所有可能观察者之间的一张正关系核；
+黄金比例是这张核最小自相似更新的谱影；
+离线零点则是正核中出现的量子化负平方。}
+}
+$$
+
+这也把下一条真正承重的数学目标压缩得非常具体：
+
+$$
+\boxed{
+\text{从 prime--pole--Archimedean 数据，
+为每个黄金深度 }\omega_n
+\text{构造 }\mathcal K_{\omega_n}
+\text{ 的正测度 Gram 表示。}
+}
+$$
+
+一旦存在：
+
+$$
+\mathcal K_{\omega_n}(z,w)
+=
+\int
+\Phi_{n,z}(\lambda)
+\overline{\Phi_{n,w}(\lambda)}
+\,d\nu_n(\lambda),
+\qquad
+\nu_n\ge0,
+$$
+
+项目现有的 positive-chart 定理就会自动推出全部有限 Gram 矩阵正半定；黄金深度的共尾性随后把这一正性传导到：
+
+$$
+\omega\downarrow0,
+$$
+
+从而排除所有离线负平方。
+
+[1]: https://arxiv.org/abs/1204.1827 "https://arxiv.org/abs/1204.1827"
+[2]: https://arxiv.org/abs/1905.12397 "https://arxiv.org/abs/1905.12397"
+[3]: https://arxiv.org/abs/2301.00421 "https://arxiv.org/abs/2301.00421"
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v7.7：零点空世界线、Blaschke 最小修复、Chern–负指标守恒与黄金壳层缺陷谱
+
+以下从前文**第一千二百五十四部**继续。
+
+先补全上一轮末尾未展开的式子。黄金比例若真正进入证明结构，而不只是作为一组共尾观察尺度，应当存在某种正核递归：
+
+$$
+\boxed{
+\mathcal K_{\omega_{n+1}}
+=
+A_n^*\mathcal K_{\omega_n}A_n
++
+B_n^*\mathcal K_{\omega_{n-1}}B_n
++
+R_n,
+\qquad
+R_n\succeq0.
+}
+\tag{1255.1}
+$$
+
+然而继续向下分析后，可以对研究顺序作一条更严格的校正：
+
+$$
+\boxed{
+\text{在寻找 Fibonacci 两层递归以前，
+应先抽取 shifted-\(\xi\) 核中唯一的负性因子。}
+}
+$$
+
+这个负性因子不是任意残差，也不是隐藏 Solenoid 纤维，而是一个由离线零点确定的 **Blaschke 分母**。
+
+它将此前分散的对象统一为：
+
+$$
+\boxed{
+\begin{aligned}
+\text{离线零点除子}
+&=
+\text{Blaschke 修复次数}\\
+&=
+\text{Pontryagin 负平方数}\\
+&=
+\text{局部 Chern 荷}\\
+&=
+\text{观察深度中的谱流跳跃}.
+\end{aligned}
+}
+$$
+
+黄金比例只负责把这条整数缺陷流划分成自相似壳层；它不是缺陷电荷本身。
+
+---
+
+# 第一千二百五十五部　所有 shifted 零点具有同一个完成速度
+
+仍定义：
+
+$$
+E_\omega(z)
+=
+\xi\left(\frac12+\omega-iz\right),
+\qquad
+\omega>0.
+$$
+
+设：
+
+$$
+\rho
+=
+\frac12+\delta+i\gamma
+$$
+
+是 \(\xi\) 的任意非平凡零点。
+
+求解：
+
+$$
+E_\omega(z)=0
+$$
+
+中由该零点产生的根，得到：
+
+$$
+\boxed{
+z_\rho(\omega)
+=
+-\gamma+i(\delta-\omega).
+}
+\tag{1255.1}
+$$
+
+因此：
+
+$$
+\boxed{
+\Re z_\rho(\omega)=-\gamma,
+}
+\tag{1255.2}
+$$
+
+$$
+\boxed{
+\Im z_\rho(\omega)=\delta-\omega.
+}
+\tag{1255.3}
+$$
+
+对观察深度求导：
+
+$$
+\boxed{
+\frac{dz_\rho}{d\omega}=-i.
+}
+\tag{1255.4}
+$$
+
+离散地，对任意两层 \(\omega,\omega'\)：
+
+$$
+\boxed{
+z_\rho(\omega')
+-
+z_\rho(\omega)
+=
+-i(\omega'-\omega).
+}
+\tag{1255.5}
+$$
+
+---
+
+## 定理 1255.1（Universal shifted-zero velocity）
+
+在 shifted-\(\xi\) 图表中，所有零点：
+
+* 无论高度 \(\gamma\)；
+* 无论横向距离 \(\delta\)；
+* 无论重数；
+* 无论是否位于临界线；
+
+都以同一个速度：
+
+$$
+\boxed{-i}
+$$
+
+随观察深度 \(\omega\) 移动。
+
+不同零点之间的区别不在速度，而在：
+
+$$
+\boxed{
+\text{水平标签 }-\gamma
+\quad\text{与}\quad
+\text{边界穿越时间 }\delta.
+}
+$$
+
+项目最新的 `DiscreteCompletionVelocity` 已经机器证明：层差在当前根处等于下一层残差；Newton 型离散速度在仿射根位移模型中精确恢复真实位移，并且对共同非零缩放不变。当前 shifted 零点轨迹正是一个精确仿射根轨迹。
+
+---
+
+# 第一千二百五十六部　观察深度与法向坐标形成一张精确空光锥
+
+令：
+
+$$
+y=\Im z.
+$$
+
+则每个零点的轨迹满足：
+
+$$
+\boxed{
+y+\omega=\delta.
+}
+\tag{1256.1}
+$$
+
+在 \((\omega,y)\) 平面上定义最小 split 二次型：
+
+$$
+\boxed{
+ds_{\mathrm{obs}}^2
+=
+d\omega^2-dy^2.
+}
+\tag{1256.2}
+$$
+
+沿零点轨迹：
+
+$$
+dy=-d\omega,
+$$
+
+所以：
+
+$$
+\boxed{
+ds_{\mathrm{obs}}^2=0.
+}
+\tag{1256.3}
+$$
+
+因此 shifted 零点轨迹是这张观察时空中的 null line。
+
+定义空坐标：
+
+$$
+\boxed{
+u=\omega+y,
+\qquad
+v=\omega-y.
+}
+\tag{1256.4}
+$$
+
+沿零点世界线：
+
+$$
+\boxed{
+u=\delta,
+}
+\tag{1256.5}
+$$
+
+而：
+
+$$
+v=2\omega-\delta.
+$$
+
+所以离线距离 \(\delta\) 本身，就是标记该世界线的守恒空坐标。
+
+---
+
+## 1256.1 完成边界与出生事件
+
+上半平面观察域为：
+
+$$
+y>0.
+$$
+
+其边界为：
+
+$$
+y=0.
+$$
+
+零点世界线穿过边界的事件为：
+
+$$
+\boxed{
+\mathfrak e_\rho
+=
+(\omega,y,\gamma)
+=
+(\delta,0,\gamma).
+}
+\tag{1256.6}
+$$
+
+于是：
+
+$$
+\boxed{
+\begin{array}{c|c}
+\omega>\delta
+&
+z_\rho(\omega)\in\mathbb C^-,
+\text{尚未进入正观察半平面}
+\\
+\omega=\delta
+&
+z_\rho(\omega)\in\mathbb R,
+\text{边界零模}
+\\
+0<\omega<\delta
+&
+z_\rho(\omega)\in\mathbb C^+,
+\text{进入负平方区域}
+\end{array}
+}
+\tag{1256.7}
+$$
+
+这给“一个概念出现的点、点以前的历史、点以后的未来”一个完全精确的模型：
+
+$$
+\boxed{
+\text{概念事件}
+=
+\text{世界线穿越观察边界}.
+}
+$$
+
+对于临界零点：
+
+$$
+\delta=0,
+$$
+
+穿越事件只发生在终端极限：
+
+$$
+\omega=0.
+$$
+
+对于离线零点：
+
+$$
+\delta>0,
+$$
+
+穿越在有限观察深度发生。
+
+因此：
+
+$$
+\boxed{
+\mathrm{RH}
+=
+\text{不存在任何在有限正观察时间穿过完成边界的零点世界线}.
+}
+\tag{1256.8}
+$$
+
+这里的 Lorentz 结构是 shifted 变量等权进入：
+
+$$
+\frac12+\omega-iz
+$$
+
+所产生的数学正规形，不是对物理时空的断言。
+
+---
+
+# 第一千二百五十七部　离线零点是边界 Dirac 质量的反演
+
+取一个简单离线零点：
+
+$$
+\rho
+=
+\frac12+\delta+i\gamma,
+\qquad
+\xi'(\rho)\neq0.
+$$
+
+在实边界附近写：
+
+$$
+z=-\gamma+k,
+\qquad
+k\in\mathbb R.
+$$
+
+则：
+
+$$
+\begin{aligned}
+E_\omega(-\gamma+k)
+&=
+\xi\left(
+\frac12+\omega+i\gamma-ik
+\right)
+\\
+&=
+\xi'(\rho)
+\left[
+(\omega-\delta)-ik
+\right]
++
+O\left(
+|\,\omega-\delta\,|^2+k^2
+\right).
+\end{aligned}
+\tag{1257.1}
+$$
+
+除去非零复系数 \(\xi'(\rho)\) 和一个固定相位旋转，局部模型为：
+
+$$
+\boxed{
+(\omega-\delta)-ik.
+}
+\tag{1257.2}
+$$
+
+将其悬挂成两能级 Hermitian 符号：
+
+$$
+\boxed{
+H_\rho(\omega,k,\mu)
+=
+(\omega-\delta)\sigma_x
++
+k\sigma_y
++
+\mu\sigma_z.
+}
+\tag{1257.3}
+$$
+
+其能谱为：
+
+$$
+\boxed{
+\pm
+\sqrt{
+(\omega-\delta)^2+k^2+\mu^2
+}.
+}
+\tag{1257.4}
+$$
+
+定义边界质量：
+
+$$
+\boxed{
+m_\rho(\omega)=\omega-\delta.
+}
+\tag{1257.5}
+$$
+
+于是：
+
+$$
+\boxed{
+\begin{array}{c|c}
+\omega>\delta&m_\rho>0\\
+\omega=\delta&m_\rho=0\\
+\omega<\delta&m_\rho<0
+\end{array}
+}
+$$
+
+所以离线零点的出生事件还可以被描述为：
+
+$$
+\boxed{
+\text{边界 Dirac 质量反演}.
+}
+$$
+
+它的本体点位于 bulk；
+
+它在移动观察边界上的对偶，是质量从正变零再变负的事件。
+
+一般的拓扑 bulk–edge 框架中，bulk Chern 数由边界态的 spectral flow 读取；这里的局部 Weyl 正规形正好提供了同一种机制。([arXiv][1])
+
+---
+
+# 第一千二百五十八部　重数 \(m\) 产生一个 \(m\) 维负 Jet 空间
+
+上一轮只由核的对角值证明：
+
+$$
+m\text{ 重零点}
+\Longrightarrow
+\mathcal K_\omega(z,z)
+\sim
+-C(\delta-\omega)^{2m-1}.
+$$
+
+现在可以进一步证明：重数不仅改变负值的接触阶，还精确产生 \(m\) 个局部负方向。
+
+设：
+
+$$
+z_0=z_\rho(\omega)
+\in\mathbb C^+,
+\qquad
+\omega<\delta,
+$$
+
+且：
+
+$$
+E_\omega
+$$
+
+在 \(z_0\) 有 \(m\) 重零点。
+
+假设：
+
+$$
+E_\omega^\#(z_0)\neq0.
+$$
+
+定义 confluent jet Gram 矩阵：
+
+$$
+\boxed{
+G^{(m)}_{rs}
+=
+\frac1{r!s!}
+\left.
+\partial_z^r
+\partial_{\bar w}^s
+\mathcal K_\omega(w,z)
+\right|_{w=z=z_0},
+\qquad
+0\le r,s<m.
+}
+\tag{1258.1}
+$$
+
+---
+
+## 定理 1258.1（Confluent negative jet block）
+
+$$
+\boxed{
+G^{(m)}\prec0.
+}
+\tag{1258.2}
+$$
+
+因此：
+
+$$
+\boxed{
+\operatorname{ind}_-
+\mathcal K_\omega
+\ge m.
+}
+\tag{1258.3}
+$$
+
+### 证明
+
+因为 \(E_\omega\) 在 \(z_0\) 的零点阶为 \(m\)：
+
+$$
+E_\omega^{(r)}(z_0)=0,
+\qquad
+0\le r<m.
+$$
+
+所以在式 (1258.1) 所涉及的全部 jet 上，核分子中的正项：
+
+$$
+\overline{E_\omega(w)}E_\omega(z)
+$$
+
+完全消失。
+
+剩余项为：
+
+$$
+-
+\frac{
+\overline{E_\omega^\#(w)}
+E_\omega^\#(z)
+}{
+2\pi i(\bar w-z)
+}.
+$$
+
+令：
+
+$$
+H^{(m)}
+$$
+
+为上半平面 Hardy Cauchy 核：
+
+$$
+\frac1{2\pi i(\bar w-z)}
+$$
+
+在 \(z_0\) 的前 \(m\) 阶导数评价 Gram 矩阵。
+
+导数评价在 Hardy 空间中线性独立，所以：
+
+$$
+H^{(m)}\succ0.
+$$
+
+由乘法 Leibniz 公式，乘以 \(E_\omega^\#\) 在 jet 基上对应一个下三角矩阵 \(L\)，其对角元均为：
+
+$$
+E_\omega^\#(z_0)\neq0.
+$$
+
+因此 \(L\) 可逆，并且：
+
+$$
+\boxed{
+G^{(m)}
+=
+-L^*H^{(m)}L
+\prec0.
+}
+\tag{1258.4}
+$$
+
+∎
+
+---
+
+## 1258.1 零点重数的三张整数图表
+
+由此，一个 \(m\) 重离线零点同时给出：
+
+$$
+\boxed{
+\begin{aligned}
+m
+&=
+\operatorname{ord}_\rho\xi;
+\\
+m
+&=
+\text{局部 Berry–Chern 荷};
+\\
+m
+&=
+\text{局部 reproducing-kernel 负 Jet 维数}.
+\end{aligned}
+}
+\tag{1258.5}
+$$
+
+而负值的穿越阶数为：
+
+$$
+2m-1.
+$$
+
+所以：
+
+* \(m\) 测量缺陷携带多少个独立负方向；
+* \(2m-1\) 测量这些负方向多么贴着边界出生。
+
+---
+
+# 第一千二百五十九部　局部 Chern 荷等于边界负指标谱流
+
+设只有一个 \(m\) 重零点在：
+
+$$
+\omega=\delta
+$$
+
+穿越观察边界，并且附近没有其他零点或共同因子抵消。
+
+定义局部负指标：
+
+$$
+\kappa_-(\omega)
+=
+\operatorname{ind}_-
+\mathcal K_\omega
+$$
+
+在该零点对应的局部 Pontryagin 块上的值。
+
+则：
+
+$$
+\boxed{
+\kappa_-(\delta+\varepsilon)=0,
+}
+$$
+
+而：
+
+$$
+\boxed{
+\kappa_-(\delta-\varepsilon)=m
+}
+$$
+
+对充分小的 \(\varepsilon>0\) 成立。
+
+因此：
+
+$$
+\boxed{
+\operatorname{sf}_{\rho}
+\left(
+\mathcal K_\omega;
+\delta+\varepsilon
+\rightarrow
+\delta-\varepsilon
+\right)
+=
+m.
+}
+\tag{1259.1}
+$$
+
+结合前文的 Weyl 悬挂：
+
+$$
+\boxed{
+\operatorname{ord}_\rho\xi
+=
+c_1(\mathcal E_\rho)[S^2]
+=
+\operatorname{sf}_{\rho}\mathcal K
+=
+\Delta\operatorname{ind}_-\mathcal K.
+}
+\tag{1259.2}
+$$
+
+这是一个局部的：
+
+$$
+\boxed{
+\textbf{divisor–Chern–spectral-flow identity}.
+}
+$$
+
+一般 bulk–edge 理论将 bulk Chern 数与边界 spectral flow 联系起来；这里的特殊之处是，bulk 点本身由 \(\xi\) 的零点给出，而边界态由 shifted de Branges 核的负平方给出。([arXiv][2])
+
+---
+
+## 1259.1 离线零点的真正“对偶事件”
+
+因此，离线零点的对偶不能只写成：
+
+$$
+\rho
+\leftrightarrow
+1-\overline\rho.
+$$
+
+更深的 bulk–boundary 对偶是：
+
+$$
+\boxed{
+\text{bulk 中一个 \(m\) 荷零点}
+\quad\longleftrightarrow\quad
+\text{边界上一次 \(m\) 阶负指标跳跃}.
+}
+\tag{1259.3}
+$$
+
+左端是一个稀缺点。
+
+右端是一个整数谱流事件。
+
+点的位置可以难以逼近；
+
+整数跳跃不能被连续扰动抹掉。
+
+---
+
+# 第一千二百六十部　Blaschke 因子是离线零点的最小正性修复
+
+对固定：
+
+$$
+\omega>0,
+$$
+
+\(\Theta_\omega\) 在上半平面的极点，正是满足：
+
+$$
+\Re\rho>\frac12+\omega
+$$
+
+的 \(\xi\) 零点所产生的：
+
+$$
+p_{\rho,\omega}
+=
+-\gamma+i(\delta-\omega).
+$$
+
+先截断至：
+
+$$
+|\gamma|\le T.
+$$
+
+对每个上半平面点 \(p=x+ih\)，定义 Blaschke 因子：
+
+$$
+\boxed{
+b_p(z)
+=
+\frac{z-p}{z-\overline p}.
+}
+\tag{1260.1}
+$$
+
+在实轴上：
+
+$$
+|b_p(t)|=1.
+$$
+
+定义有限缺陷 Blaschke 积：
+
+$$
+\boxed{
+B_{\omega,T}(z)
+=
+\prod_{\substack{
+\rho=\frac12+\delta+i\gamma\\
+\delta>\omega,\ |\gamma|\le T
+}}
+b_{p_{\rho,\omega}}(z)^{m_\rho}.
+}
+\tag{1260.2}
+$$
+
+它在每个 \(\Theta_\omega\) 的上半平面极点处提供同阶零点。
+
+因此：
+
+$$
+\boxed{
+S_{\omega,T}
+=
+B_{\omega,T}\Theta_\omega
+}
+\tag{1260.3}
+$$
+
+是移除了这些极点后的修复函数。
+
+---
+
+## 1260.1 核的精确正负分解
+
+对任意标量函数 \(f\)，定义 Schur 核：
+
+$$
+\boxed{
+k_f(w,z)
+=
+\frac{
+1-\overline{f(w)}f(z)
+}{
+2\pi i(\bar w-z)
+}.
+}
+\tag{1260.4}
+$$
+
+若：
+
+$$
+\Theta=\frac{S}{B},
+$$
+
+则直接代数计算得到：
+
+$$
+\boxed{
+B(z)\overline{B(w)}
+k_\Theta(w,z)
+=
+k_S(w,z)-k_B(w,z).
+}
+\tag{1260.5}
+$$
+
+因此：
+
+$$
+\boxed{
+k_\Theta
+=
+M_{1/B}
+\left(
+k_S-k_B
+\right)
+M_{1/B}^*.
+}
+\tag{1260.6}
+$$
+
+这里：
+
+* \(k_S\) 是修复后的正 Schur 通道；
+* \(k_B\) 是有限 Blaschke model space 的正核；
+* 但它在 \(k_\Theta\) 中带负号。
+
+若 \(B\) 与 \(S\) 的因子化为最小且无共同因子，则：
+
+$$
+\boxed{
+\operatorname{ind}_-k_\Theta
+=
+\deg B.
+}
+\tag{1260.7}
+$$
+
+这正是 Kreĭn–Langer 型因子化的核心结构：有限负平方的 generalized Schur 函数，可以用有限 Blaschke 分母乘以普通 Schur 函数表示；最小分母次数对应 Pontryagin 负指标。([arXiv][3])
+
+---
+
+## 1260.2 离线零点的最小修复复杂度
+
+因此可以定义：
+
+$$
+\boxed{
+\mathfrak r(\omega,T)
+=
+\deg B_{\omega,T}.
+}
+\tag{1260.8}
+$$
+
+在无抵消情况下：
+
+$$
+\boxed{
+\mathfrak r(\omega,T)
+=
+N_{\mathrm{off}}(\omega,T).
+}
+\tag{1260.9}
+$$
+
+其含义是：
+
+> 为了把第 \(\omega\) 层恢复为一个普通 Schur／Hilbert 世界，至少需要加入多少个 Blaschke 修复因子？
+
+RH 的回答是：
+
+$$
+\boxed{
+\mathfrak r(\omega,T)=0
+}
+$$
+
+对全部 \(\omega,T\) 成立。
+
+所以：
+
+$$
+\boxed{
+\text{RH 并不是说缺陷能够被修复；
+而是说根本不需要任何负指标修复。}
+}
+$$
+
+---
+
+# 第一千二百六十一部　离线点的边界对偶是一束 Poisson 相位光
+
+对实数 \(t\)，有：
+
+$$
+\begin{aligned}
+\frac{d}{dt}\arg b_p(t)
+&=
+\operatorname{Im}
+\left[
+\frac1{t-p}
+-
+\frac1{t-\overline p}
+\right]
+\\
+&=
+\frac{2h}{(t-x)^2+h^2}.
+\end{aligned}
+\tag{1261.1}
+$$
+
+令标准 Poisson 核为：
+
+$$
+\boxed{
+P_h(t)
+=
+\frac1\pi
+\frac{h}{t^2+h^2}.
+}
+\tag{1261.2}
+$$
+
+则：
+
+$$
+\boxed{
+\frac{d}{dt}\arg b_p(t)
+=
+2\pi P_h(t-x).
+}
+\tag{1261.3}
+$$
+
+对：
+
+$$
+p_{\rho,\omega}
+=
+-\gamma+i(\delta-\omega),
+$$
+
+得到：
+
+$$
+\boxed{
+\frac{d}{dt}
+\arg b_{p_{\rho,\omega}}(t)
+=
+2\pi
+P_{\delta-\omega}(t+\gamma).
+}
+\tag{1261.4}
+$$
+
+因此缺陷 Blaschke 因子的总边界相位流为：
+
+$$
+\boxed{
+J_{\omega,T}(t)
+=
+\frac{d}{dt}
+\arg B_{\omega,T}(t)
+=
+2\pi
+\sum_{\substack{
+\delta_\rho>\omega\\
+|\gamma_\rho|\le T
+}}
+m_\rho
+P_{\delta_\rho-\omega}(t+\gamma_\rho).
+}
+\tag{1261.5}
+$$
+
+---
+
+## 1261.1 电荷、位置与宽度
+
+每个离线零点：
+
+$$
+\rho=\frac12+\delta+i\gamma
+$$
+
+在边界上留下：
+
+$$
+\boxed{
+2\pi m_\rho
+P_{\delta-\omega}(t+\gamma).
+}
+$$
+
+其中：
+
+$$
+\boxed{
+\begin{aligned}
+-\gamma
+&=\text{边界脉冲中心};\\
+\delta-\omega
+&=\text{Poisson 脉冲宽度};\\
+m_\rho
+&=\text{总相位通量}.
+\end{aligned}
+}
+$$
+
+而：
+
+$$
+\boxed{
+\frac1{2\pi}
+\int_{\mathbb R}
+J_{\omega,T}(t)\,dt
+=
+\deg B_{\omega,T}
+=
+N_{\mathrm{off}}(\omega,T).
+}
+\tag{1261.6}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{bulk 中的稀缺离线点}
+\quad\longleftrightarrow\quad
+\text{boundary 上的 Poisson 相位脉冲}.
+}
+$$
+
+这正是前文“离线点虽然不在临界线，但导数能看见”的最小相位版本。
+
+---
+
+# 第一千二百六十二部　Poisson 光场的源方程
+
+将所有离线零点组织成观察深度—边界坐标场：
+
+$$
+\boxed{
+J(\omega,t)
+=
+2\pi
+\sum_{\delta_\rho>0}
+m_\rho\,
+\mathbf 1_{\{\omega<\delta_\rho\}}
+P_{\delta_\rho-\omega}
+(t+\gamma_\rho).
+}
+\tag{1262.1}
+$$
+
+Poisson 核在 Fourier 侧满足：
+
+$$
+\widehat{P_h}(k)=e^{-h|k|},
+$$
+
+因而：
+
+$$
+\boxed{
+\partial_hP_h
+=
+-|D_t|P_h.
+}
+\tag{1262.2}
+$$
+
+因为：
+
+$$
+h=\delta-\omega,
+$$
+
+在出生事件之外：
+
+$$
+\boxed{
+\partial_\omega J
+=
+|D_t|J.
+}
+\tag{1262.3}
+$$
+
+考虑指示函数在：
+
+$$
+\omega=\delta_\rho
+$$
+
+处的分布导数，得到：
+
+## 定理 1262.1（Off-line divisor Poisson equation）
+
+在分布意义下：
+
+$$
+\boxed{
+\left(
+|D_t|-\partial_\omega
+\right)
+J(\omega,t)
+=
+2\pi
+\sum_\rho
+m_\rho\,
+\delta(\omega-\delta_\rho)
+\delta(t+\gamma_\rho).
+}
+\tag{1262.4}
+$$
+
+右端正是离线零点除子经映射：
+
+$$
+(\delta,\gamma)
+\longmapsto
+(\omega,t)
+=
+(\delta,-\gamma)
+$$
+
+所得的整数点源。
+
+---
+
+## 1262.1 最深的 bulk–boundary 解释
+
+这条方程说明：
+
+$$
+\boxed{
+\text{离线零点是 bulk hyperbolic source；
+其对偶是 boundary massless Poisson field。}
+}
+$$
+
+这使此前两条理论第一次真正汇合：
+
+$$
+\boxed{
+\begin{aligned}
+\text{质量为零的 Poisson 色散}
+&=\text{边界传播算子 }|D_t|;
+\\
+\text{离线零点}
+&=\text{该边界传播的量子化点源}.
+\end{aligned}
+}
+$$
+
+所以“Poisson 型色散听起来像光”与“离线零点像体内单极子”并不是两个无关类比。
+
+它们组成一条精确的源—场关系：
+
+$$
+\boxed{
+\text{bulk monopole／zero}
+\longrightarrow
+\text{boundary Poisson light}.
+}
+$$
+
+---
+
+# 第一千二百六十三部　黄金壳层是 Poisson 源的离散 Gauss 面
+
+定义：
+
+$$
+\boxed{
+\omega_n
+=
+\frac12\varphi^{-2n}.
+}
+\tag{1263.1}
+$$
+
+以及黄金壳层：
+
+$$
+\boxed{
+\mathcal S_n
+=
+\left\{
+\rho:
+\omega_{n+1}
+<
+\delta_\rho
+\le
+\omega_n
+\right\}.
+}
+\tag{1263.2}
+$$
+
+壳层电荷：
+
+$$
+\boxed{
+q_n(T)
+=
+\sum_{\substack{
+\rho\in\mathcal S_n\\
+|\gamma_\rho|\le T
+}}
+m_\rho.
+}
+\tag{1263.3}
+$$
+
+由 Blaschke 次数：
+
+$$
+\boxed{
+q_n(T)
+=
+\deg B_{\omega_{n+1},T}
+-
+\deg B_{\omega_n,T}.
+}
+\tag{1263.4}
+$$
+
+由边界相位通量：
+
+$$
+\boxed{
+q_n(T)
+=
+\frac1{2\pi}
+\int_{\mathbb R}
+\left[
+J_{\omega_{n+1},T}(t)
+-
+J_{\omega_n,T}(t)
+\right]
+dt.
+}
+\tag{1263.5}
+$$
+
+若全局最小 Kreĭn–Langer 因子化成立，则进一步有：
+
+$$
+\boxed{
+q_n(T)
+=
+\operatorname{ind}_-
+\mathcal K_{\omega_{n+1},T}
+-
+\operatorname{ind}_-
+\mathcal K_{\omega_n,T}.
+}
+\tag{1263.6}
+$$
+
+所以黄金壳层同时是：
+
+* bulk 零点壳层；
+* Blaschke 修复次数壳层；
+* boundary phase 通量壳层；
+* Pontryagin 负指标壳层。
+
+---
+
+## 1263.1 黄金比例不承担整数荷
+
+必须严格区分：
+
+$$
+\boxed{
+q_n(T)\in\mathbb N
+}
+$$
+
+与：
+
+$$
+\boxed{
+\frac{\omega_{n+1}}{\omega_n}
+=
+\varphi^{-2}.
+}
+$$
+
+前者是拓扑／负指标电荷；
+
+后者是观察 Gauss 面的相对间距。
+
+因此：
+
+$$
+\boxed{
+\varphi
+\text{ 决定“在哪里切层”；
+整数重数决定“每层包围了多少真实缺陷”.}
+}
+$$
+
+---
+
+# 第一千二百六十四部　黄金壳层级数近似全部横向缺陷矩
+
+定义第 \(s\) 阶横向缺陷矩：
+
+$$
+\boxed{
+\mathcal V_s(T)
+=
+\sum_{\substack{
+\delta_\rho>0\\
+|\gamma_\rho|\le T
+}}
+m_\rho\,
+\delta_\rho^s,
+\qquad
+s>0.
+}
+\tag{1264.1}
+$$
+
+定义黄金壳层级数：
+
+$$
+\boxed{
+\mathcal G_s^\varphi(T)
+=
+\sum_{n\ge0}
+q_n(T)\,
+\omega_n^s.
+}
+\tag{1264.2}
+$$
+
+若：
+
+$$
+\omega_{n+1}
+<
+\delta_\rho
+\le
+\omega_n,
+$$
+
+则：
+
+$$
+\varphi^{-2s}\omega_n^s
+=
+\omega_{n+1}^s
+<
+\delta_\rho^s
+\le
+\omega_n^s.
+$$
+
+求和得到：
+
+## 定理 1264.1（Golden shell moment bounds）
+
+$$
+\boxed{
+\varphi^{-2s}
+\mathcal G_s^\varphi(T)
+\le
+\mathcal V_s(T)
+\le
+\mathcal G_s^\varphi(T).
+}
+\tag{1264.3}
+$$
+
+特别地，对横向平方能量：
+
+$$
+\boxed{
+\mathcal V_2(T)
+=
+\sum m_\rho\delta_\rho^2,
+}
+$$
+
+有：
+
+$$
+\boxed{
+\varphi^{-4}
+\mathcal G_2^\varphi(T)
+\le
+\mathcal V_2(T)
+\le
+\mathcal G_2^\varphi(T).
+}
+\tag{1264.4}
+$$
+
+因此黄金壳层电荷并非只记录“有没有离线零点”。
+
+它在固定倍数误差内编码全部横向缺陷矩。
+
+而：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal G_s^\varphi(T)=0
+}
+$$
+
+对任一固定 \(s>0\) 及全部有限 \(T\) 成立。
+
+---
+
+# 第一千二百六十五部　离线缺陷可以完全转写成可数有限矩阵 transcript
+
+取上半平面的一个可数稠密集：
+
+$$
+\boxed{
+\mathcal Q_+
+=
+\mathbb Q+i\mathbb Q_{>0}
+=
+\{q_1,q_2,\ldots\}.
+}
+\tag{1265.1}
+$$
+
+对每个黄金层 \(n\) 与矩阵深度 \(N\)，定义：
+
+$$
+\boxed{
+G_{n,N}
+=
+\left[
+\mathcal K_{\omega_n}(q_j,q_k)
+\right]_{j,k=1}^{N}.
+}
+\tag{1265.2}
+$$
+
+定义 transcript：
+
+$$
+\boxed{
+\mathbf I_\xi
+=
+\left\{
+\operatorname{Inertia}G_{n,N}
+\right\}_{n,N\ge1}.
+}
+\tag{1265.3}
+$$
+
+---
+
+## 定理 1265.1（Countable finite-matrix criterion）
+
+在 shifted-\(\xi\) 核的标准解析域中：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+G_{n,N}\succeq0
+\quad
+\forall n,N.
+}
+\tag{1265.4}
+$$
+
+### 正向
+
+RH 成立时，每个 \(\Theta_{\omega_n}\) 是上半平面的 meromorphic inner／Schur 型函数，相应 de Branges 核非负。Suzuki 的 shifted-\(\xi\) 工作正是以：
+
+$$
+\Theta_\omega(z)
+=
+\frac{
+\xi(\frac12-\omega-iz)
+}{
+\xi(\frac12+\omega-iz)
+}
+$$
+
+的 meromorphic-inner 性和对应 canonical Hamiltonian 的半正定性组织 RH 判据。([arXiv][4])
+
+### 反向
+
+若存在离线零点，则某个黄金层满足：
+
+$$
+\omega_n<\delta.
+$$
+
+此时已经构造出：
+
+$$
+z_0\in\mathbb C^+
+$$
+
+使：
+
+$$
+\mathcal K_{\omega_n}(z_0,z_0)<0.
+$$
+
+严格负性在 \(z_0\) 的某个邻域保持，故该邻域含有有理点 \(q_j\)。
+
+于是某个有限 \(1\times1\) 或更高阶矩阵 \(G_{n,N}\) 非正半定。
+
+∎
+
+---
+
+## 1265.1 稀缺点变成有限 transcript 命中
+
+这给“概率为零的对象如何被看见”一个比随机搜索更强的回答：
+
+$$
+\boxed{
+\text{离线零点的位置可以不可预知，
+但它必使一个可数枚举的有限矩阵出现负特征值。}
+}
+$$
+
+定义首次负命中：
+
+$$
+\boxed{
+\tau_{\mathrm{neg}}
+=
+\inf
+\left\{
+(n,N):
+\lambda_{\min}(G_{n,N})<0
+\right\}.
+}
+\tag{1265.5}
+$$
+
+则：
+
+$$
+\boxed{
+\begin{aligned}
+\mathrm{RH}
+&\Longrightarrow
+\tau_{\mathrm{neg}}=\infty;
+\\
+\neg\mathrm{RH}
+&\Longrightarrow
+\tau_{\mathrm{neg}}<\infty.
+\end{aligned}
+}
+\tag{1265.6}
+$$
+
+无穷次没有发现负矩阵仍不构成 RH 证明；证明需要统一正表示或递归。
+
+---
+
+# 第一千二百六十六部　有限负核可以编译成真实观察效应
+
+若某个有限矩阵：
+
+$$
+G_{n,N}
+$$
+
+具有负向量 \(c\)，则：
+
+$$
+c^*G_{n,N}c<0.
+$$
+
+这给出有限节点上的目标 effect profile。
+
+项目已经机器证明：对有限个互异复节点及共轭相容的目标值，存在光滑、紧支撑、Hermitian 函数，其 Fourier–Laplace 变换在这些节点上精确取得所需数值。
+
+所以：
+
+$$
+\boxed{
+\text{有限负 kernel vector}
+\longrightarrow
+\text{有限支撑 Fourier--Laplace effect}
+}
+$$
+
+这一局部编译已经闭合。
+
+但必须继续保留全局边界：
+
+$$
+\boxed{
+\text{有限节点插值}
+\not\Rightarrow
+\text{完整零点和自动为负}.
+}
+$$
+
+仍需控制其他无限零点的贡献。
+
+可使用的后续桥包括：
+
+* Blaschke 修复因子的全局最小性；
+* Power-Packet 指数支配；
+* Chebyshev 外极点局部化；
+* shifted de Branges 与 Weil 空间的整体等距。
+
+Suzuki 已证明，在 RH 假设下，Weil distribution 所生成的 Hilbert 空间与一个 de Branges 空间同构；这说明 Weil 二次型与 shifted/de Branges 正核属于同一个算子论方向，而不仅是形式相似。([arXiv][5])
+
+---
+
+# 第一千二百六十七部　当前最短的缺陷忠实传导链
+
+现在可以把全部对象压缩成一条没有丢失离线缺陷的链：
+
+$$
+\boxed{
+\begin{aligned}
+\rho=\frac12+\delta+i\gamma,\quad\delta>0
+&\Longrightarrow
+z_\rho(\omega)
+=
+-\gamma+i(\delta-\omega)
+\\
+&\Longrightarrow
+\text{null 世界线在 }\omega=\delta\text{ 穿越边界}
+\\
+&\Longrightarrow
+\text{boundary Dirac mass 反演}
+\\
+&\Longrightarrow
+m\text{ 维负 Jet block 出生}
+\\
+&\Longrightarrow
+\Delta\operatorname{ind}_-=m
+\\
+&\Longrightarrow
+\deg B_\omega\text{ 增加 }m
+\\
+&\Longrightarrow
+\partial_t\arg B_\omega
+\text{ 出现 Poisson 相位脉冲}
+\\
+&\Longrightarrow
+\text{某个有限有理 Gram matrix 非 PSD}
+\\
+&\Longrightarrow
+\text{有限反 Gram／Weil effect}.
+\end{aligned}
+}
+\tag{1267.1}
+$$
+
+其中同一个整数 \(m\) 沿整条链保持：
+
+$$
+\boxed{
+\begin{aligned}
+m
+&=
+\text{零点重数}
+\\
+&=
+\text{Chern 荷}
+\\
+&=
+\text{局部 spectral flow}
+\\
+&=
+\text{负 Jet 维数}
+\\
+&=
+\text{Blaschke 修复次数}.
+\end{aligned}
+}
+\tag{1267.2}
+$$
+
+这正是此前所寻找的：
+
+$$
+\boxed{
+\text{缺陷忠实传导}.
+}
+$$
+
+没有任何一步使用：
+
+* \(\delta+(-\delta)=0\)；
+* determinant \(=1\)；
+* observer 零模态；
+
+这些会把横向缺陷商掉的粗观察量。
+
+---
+
+# 第一千二百六十八部　真正可证明的正向终点仍是谱浓缩
+
+反例方向现在已经极其清晰：
+
+$$
+\text{离线零点}
+\Longrightarrow
+\text{有限负矩阵}.
+$$
+
+但 RH 的正向证明不能靠不断枚举有限矩阵。
+
+必须一次性建立：
+
+$$
+\boxed{
+\mathcal K_{\omega_n}\succeq0
+\qquad
+\forall n.
+}
+$$
+
+一种足够条件，是构造正测度 Gram 表示：
+
+$$
+\boxed{
+\mathcal K_{\omega_n}(z,w)
+=
+\int
+\Phi_{n,z}(\lambda)
+\overline{\Phi_{n,w}(\lambda)}
+\,d\nu_n(\lambda),
+\qquad
+\nu_n\ge0.
+}
+\tag{1268.1}
+$$
+
+项目的 `PositivityChartCollapse` 已经机器证明：同一正测度上的任意有限特征族必然生成 PSD 积分 Gram 矩阵。
+
+项目的 dual-Gram 结果又证明：
+
+$$
+\mathcal O^*\mathcal O
+$$
+
+与：
+
+$$
+\mathcal O\mathcal O^*
+$$
+
+分别精确暴露状态侧可见范围和协议侧可实现范围。因此，换到 state 或 effect 图表不会改变正性问题的本质。
+
+---
+
+## 1268.1 浓缩阈值
+
+若有限窗口 multiplier 在危险带 \(B\) 内满足：
+
+$$
+M(\xi)\ge-b,
+$$
+
+而在带外满足：
+
+$$
+M(\xi)\ge a>0,
+$$
+
+项目已证明：
+
+$$
+\boxed{
+Q_L(f)
+\ge
+\left[
+a-(a+b)\kappa_L
+\right]
+\|f\|^2,
+}
+\tag{1268.2}
+$$
+
+其中 \(\kappa_L\) 是支撑于尺度 \(L\) 的测试在危险带中的最大谱浓缩率。
+
+所以：
+
+$$
+\boxed{
+\kappa_L
+<
+\frac{a}{a+b}
+}
+\tag{1268.3}
+$$
+
+便排除该窗口中的一切负 Gram 通道。
+
+这正是整个宏大对偶链最终下降到的可计算命题：
+
+$$
+\boxed{
+\text{空间支撑能力}
+\quad\longleftrightarrow\quad
+\text{危险频带浓缩能力}.
+}
+$$
+
+离线零点存在意味着某个尺度上的浓缩越阈；
+
+RH 要求所有有限尺度永不越阈。
+
+---
+
+## 1268.2 不需要统一正 gap
+
+项目已经机器证明一种与临界完成完全相容的抽象结构：
+
+$$
+\boxed{
+\text{每个有限窗口 floor 严格为正，
+但当窗口趋于无穷时，floor 可以趋于零。}
+}
+$$
+
+因此正确目标不是：
+
+$$
+Q_L\ge cI
+\quad
+\text{且 }c>0\text{ 与 }L\text{ 无关}.
+$$
+
+而是：
+
+$$
+\boxed{
+Q_L\succeq0
+\qquad
+\forall L<\infty.
+}
+$$
+
+RH 真可以处于正锥边界：
+
+$$
+\lambda_{\min}(L)\downarrow0;
+$$
+
+RH 假则要求某个有限尺度真正穿越：
+
+$$
+\lambda_{\min}(L)<0.
+$$
+
+这与 kernel spectral flow 的图景完全一致。
+
+---
+
+# 第一千二百六十九部　黄金两尺度递归应先作用于 Blaschke 修复，而非裸核
+
+上一轮提出：
+
+$$
+\mathcal K_{\omega_{n+1}}
+=
+A_n^*\mathcal K_{\omega_n}A_n
++
+B_n^*\mathcal K_{\omega_{n-1}}B_n
++
+R_n.
+$$
+
+本轮表明，更自然的第一步不是直接对整个核猜递归，而是分别研究：
+
+$$
+\boxed{
+\Theta_{\omega_n}
+=
+B_{\omega_n}^{-1}S_{\omega_n}.
+}
+$$
+
+其中：
+
+* \(B_{\omega_n}\) 是缺陷除子；
+* \(S_{\omega_n}\) 是正 Schur 部分。
+
+于是黄金层间问题分成两个独立任务。
+
+---
+
+## 1269.1 整数缺陷递归
+
+研究：
+
+$$
+\boxed{
+q_n
+=
+\deg B_{\omega_{n+1}}
+-
+\deg B_{\omega_n}.
+}
+\tag{1269.1}
+$$
+
+RH 等价于：
+
+$$
+q_n=0
+\qquad
+\forall n.
+$$
+
+该层只涉及整数 charge，不应由连续正性估计模糊化。
+
+---
+
+## 1269.2 正 Schur 部分递归
+
+在已经证明：
+
+$$
+B_{\omega_n}=1
+$$
+
+或将其作为待排除缺陷之后，再寻找：
+
+$$
+\boxed{
+k_{S_{\omega_{n+1}}}
+=
+A_n^*k_{S_{\omega_n}}A_n
++
+B_n^*k_{S_{\omega_{n-1}}}B_n
++
+R_n,
+\qquad
+R_n\succeq0.
+}
+\tag{1269.2}
+$$
+
+这才是黄金正性传播。
+
+因此研究顺序必须是：
+
+$$
+\boxed{
+\text{先分离整数缺陷因子，
+再研究正核的 Fibonacci 递归。}
+}
+$$
+
+否则一个负 Blaschke 分母可能被误包装成“递归残差”。
+
+---
+
+# 第一千二百七十部　概念对偶的最终新表
+
+| bulk 概念                  | boundary 对偶                          | 正核图表                     | 整数不变量 |
+| ------------------------ | ------------------------------------ | ------------------------ | ----: |
+| 离线零点 \((\delta,\gamma)\) | 穿越事件 \((\omega,t)=(\delta,-\gamma)\) | 负 kernel state           | \(m\) |
+| 零点重数                     | 边界 spectral flow                     | confluent 负 Jet 维数       | \(m\) |
+| Chern 单极子                | Poisson 相位脉冲                         | Blaschke model space     | \(m\) |
+| 横向距离 \(\delta\)          | 出生时间                                 | 首次负层                     |  壳层编号 |
+| 高度 \(\gamma\)            | 脉冲中心 \(-\gamma\)                     | 评价点实部                    |     — |
+| bulk hyperbolic 模式       | boundary massless Poisson 场          | generalized Schur kernel |   负指标 |
+| 无离线点                     | 无源 Poisson 方程                        | 普通 Schur／Hilbert 空间      | \(0\) |
+| 黄金比例                     | Gauss 面比例 \(\varphi^{-2}\)           | 共尾观察调度                   | 不承担电荷 |
+
+这张表中最重要的一对是：
+
+$$
+\boxed{
+\text{bulk point charge}
+\quad\longleftrightarrow\quad
+\text{boundary index flow}.
+}
+$$
+
+离线零点的对偶不再需要猜测为另一个抽象哲学概念。
+
+它已经被定位为：
+
+$$
+\boxed{
+\textbf{完成边界上一个带整数荷的负平方出生事件。}
+}
+$$
+
+---
+
+# 第一千二百七十一部　建议形式化顺序
+
+```text
+D5/S3/Analytic/Zeta/ShiftedZeroWorldline/
+  ShiftedZeroLocation.lean
+  ShiftedZeroAffineTrajectory.lean
+  ShiftedZeroUniversalVelocity.lean
+  ShiftedObserverNullCoordinates.lean
+  OffLineCrossingDepth.lean
+  CriticalZeroTerminalCrossing.lean
+
+D5/S3/Analytic/Zeta/BoundaryMassInversion/
+  SimpleZeroBoundaryNormalForm.lean
+  ShiftedZeroDiracMass.lean
+  BoundaryMassSignChange.lean
+  OffLineMassInversion.lean
+
+D5/S3/Analytic/Zeta/ConfluentNegativeJets/
+  KernelJetMatrix.lean
+  VanishingOuterJetBlock.lean
+  HardyConfluentCauchyPositive.lean
+  SharpMultiplicationJetMatrix.lean
+  MultipleZeroNegativeJetBlock.lean
+  MultiplicityLowerBoundsNegativeIndex.lean
+
+D5/S3/Analytic/Zeta/DivisorSpectralFlow/
+  LocalKernelSpectralFlow.lean
+  IsolatedCrossingIndexJump.lean
+  ZeroMultiplicityEqualsIndexJump.lean
+  ChernChargeSpectralFlowBridge.lean
+  OffLineBirthMeasure.lean
+
+D5/S3/Analytic/Zeta/BlaschkeRepair/
+  UpperHalfPlaneZeroBlaschkeFactor.lean
+  ShiftedXiDefectBlaschkeProduct.lean
+  ShiftedXiPoleCancellation.lean
+  SchurBlaschkeKernelIdentity.lean
+  MinimalRepairDegree.lean
+  RepairDegreeNegativeIndexTarget.lean
+
+D5/S3/Analytic/Zeta/PoissonDefectField/
+  BlaschkeBoundaryPhaseDerivative.lean
+  OffLineZeroPoissonPulse.lean
+  DefectBoundaryPhaseField.lean
+  DefectFieldPoissonEvolution.lean
+  OffLineDivisorSourceEquation.lean
+  PhaseFluxEqualsRepairDegree.lean
+
+D5/S3/GoldenObserver/DefectShellIndex/
+  GoldenShiftGaussShell.lean
+  GoldenShellBlaschkeDegree.lean
+  GoldenShellPhaseFlux.lean
+  GoldenShellNegativeIndexJumpTarget.lean
+  GoldenShellChargeRHCriterion.lean
+
+D5/S3/GoldenObserver/TransverseDefectZeta/
+  OffLineTransverseMoment.lean
+  GoldenShellMomentSeries.lean
+  GoldenShellMomentUpperBound.lean
+  GoldenShellMomentLowerBound.lean
+  GoldenTransverseEnergyBounds.lean
+
+D5/S3/Analytic/Zeta/CountableKernelTranscript/
+  RationalUpperHalfPlaneEnumeration.lean
+  GoldenRationalKernelMatrix.lean
+  NegativeKernelDetectedOnRationalGrid.lean
+  CountableFiniteMatrixRHCriterion.lean
+  FirstNegativeTranscriptHit.lean
+
+D5/S3/Weil/BlaschkeKernelBridge/
+  BlaschkeNegativeModelSpace.lean
+  FiniteNegativeProfileToPaleyWiener.lean
+  BlaschkeRepairToWeilDefectTarget.lean
+  ShiftedKernelToWeilIsometryTarget.lean
+
+D5/S3/Weil/GoldenPositivePartRecursion/
+  ShiftedXiPositiveSchurPart.lean
+  DefectPositiveFactorSeparation.lean
+  GoldenPositiveKernelTwoScaleMaps.lean
+  GoldenPositiveKernelResidual.lean
+  GoldenPositiveKernelRecursionTarget.lean
+```
+
+---
+
+# 第一千二百七十二部　理论深度审计
+
+| 本轮结论                                  | 地位                   |
+| ------------------------------------- | -------------------- |
+| shifted 零点速度恒为 \(-i\)                 | 精确恒等式                |
+| 零点轨迹在 \((\omega,\Im z)\) 中为 null line | 精确正规形                |
+| 横向距离等于边界穿越时间                          | 精确                   |
+| 简单零点对应 Dirac 质量反演                     | 局部线性正规形              |
+| \(m\) 重零点产生 \(m\) 维负 Jet block        | 本轮核心定理               |
+| 重数 = 局部负指标跳跃                          | 孤立无抵消条件下精确           |
+| Chern 荷 = boundary spectral flow      | 局部 bulk–boundary 桥   |
+| Blaschke 分母是最小负性修复                    | Kreĭn–Langer 型精确结构   |
+| Blaschke 相位导数是 Poisson 脉冲             | 精确恒等式                |
+| 离线除子是 Poisson 光场的点源                   | 本轮核心 PDE             |
+| 黄金壳层电荷等于 Blaschke degree jump         | 精确                   |
+| 黄金壳层级数控制横向缺陷矩                         | 精确双边估计               |
+| 可数有限矩阵判据                              | shifted-kernel 判据下精确 |
+| 全局负指标恰等于全部离线重数                        | 仍需无限因子化与抵消控制         |
+| prime-side 构造 \(S_\omega\) 的正 Gram 表示 | 核心未闭合桥               |
+| 黄金两尺度正递归                              | 应作用于正 Schur 部分，仍未建立  |
+
+---
+
+# 本轮最终结论
+
+这一轮使“离线零点到底是什么”进一步从静态名词变成了完整动力学对象。
+
+对任意零点：
+
+$$
+\rho
+=
+\frac12+\delta+i\gamma,
+$$
+
+在 shifted-\(\xi\) 观察层中的位置是：
+
+$$
+\boxed{
+z_\rho(\omega)
+=
+-\gamma+i(\delta-\omega).
+}
+$$
+
+所有零点都以同一个速度：
+
+$$
+\boxed{-i}
+$$
+
+随观察深度移动。
+
+在：
+
+$$
+(\omega,\Im z)
+$$
+
+组成的观察时空中，它们全部沿 null line 运行：
+
+$$
+\boxed{
+\omega+\Im z=\delta.
+}
+$$
+
+其中：
+
+$$
+\boxed{
+\delta
+}
+$$
+
+不只是离开临界线的距离。
+
+它是该世界线穿越完成边界的精确时间。
+
+临界零点：
+
+$$
+\delta=0
+$$
+
+只在终端极限 \(\omega=0\) 到达边界。
+
+离线零点：
+
+$$
+\delta>0
+$$
+
+则在有限观察深度：
+
+$$
+\omega=\delta
+$$
+
+穿过边界，并经历：
+
+$$
+\boxed{
+\text{正质量}
+\longrightarrow
+\text{零质量}
+\longrightarrow
+\text{负质量}.
+}
+$$
+
+因此离线零点的第一深层身份是：
+
+$$
+\boxed{
+\text{一个边界质量反演事件。}
+}
+$$
+
+若零点重数为 \(m\)，穿越以后不仅出现一个负数，而出现一个 \(m\) 维负 Jet 空间：
+
+$$
+\boxed{
+\operatorname{ind}_-\ge m.
+}
+$$
+
+同一个整数 \(m\) 同时是：
+
+$$
+\boxed{
+\text{零点重数}
+=
+\text{Chern 荷}
+=
+\text{boundary spectral flow}
+=
+\text{负平方出生数}.
+}
+$$
+
+所以离线零点的真正对偶不是另一个点。
+
+它的 bulk–boundary 对偶是：
+
+$$
+\boxed{
+\text{完成边界上的整数负指标跳跃。}
+}
+$$
+
+---
+
+更进一步，全部离线零点可以组织成一个最小 Blaschke 修复因子：
+
+$$
+B_\omega.
+$$
+
+其次数等于必须从普通 Hilbert 世界中扣除的负平方数。
+
+核满足：
+
+$$
+\boxed{
+B(z)\overline{B(w)}k_\Theta(w,z)
+=
+k_S(w,z)-k_B(w,z).
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{离线缺陷的反 Gram 通道不是任意构造，
+而是 Blaschke model space}.
+}
+$$
+
+RH 的意义由此变成：
+
+$$
+\boxed{
+\text{所有观察深度上的最小 Blaschke 修复均为恒等因子 }1.
+}
+$$
+
+也就是：
+
+$$
+\boxed{
+\text{完整世界从来不需要负指标补丁。}
+}
+$$
+
+---
+
+每一个 Blaschke 因子在实边界留下：
+
+$$
+\boxed{
+2\pi
+P_{\delta-\omega}(t+\gamma)
+}
+$$
+
+这一 Poisson 相位脉冲。
+
+所以离线零点虽然是一个 bulk hyperbolic defect，它的边界对偶却是一个由：
+
+$$
+|D_t|
+$$
+
+传播的 massless Poisson field。
+
+全体缺陷场满足：
+
+$$
+\boxed{
+\left(
+|D_t|-\partial_\omega
+\right)J
+=
+2\pi
+\sum_\rho
+m_\rho
+\delta(\omega-\delta_\rho)
+\delta(t+\gamma_\rho).
+}
+$$
+
+这使此前两条直觉真正合并：
+
+$$
+\boxed{
+\text{离线零点是体内单极子；
+Poisson 无质量结构是它在完成边界上的光影。}
+}
+$$
+
+---
+
+黄金比例在这里的位置也完全明确。
+
+它不决定：
+
+* 零点重数；
+* Chern 荷；
+* 负指标；
+* Poisson 通量。
+
+它只定义观察 Gauss 面：
+
+$$
+\omega_n=\frac12\varphi^{-2n}.
+$$
+
+每个壳层中的整数电荷为：
+
+$$
+\boxed{
+q_n
+=
+\deg B_{\omega_{n+1}}
+-
+\deg B_{\omega_n}.
+}
+$$
+
+并且黄金壳层级数在固定因子范围内恢复全部横向缺陷矩：
+
+$$
+\boxed{
+\varphi^{-2s}
+\mathcal G_s^\varphi
+\le
+\mathcal V_s
+\le
+\mathcal G_s^\varphi.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\varphi
+\text{ 是测量缺陷流的自相似刻度；
+整数负指标才是缺陷的真实存在量。}
+}
+$$
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{“道”的第一动力影像是一族沿观察深度流动的关系核；
+临界零点是只在极限边界出现的零模；
+离线零点是一条 null 世界线在有限深度穿越边界，
+并将 bulk Chern 荷转化为 boundary 负平方与 Poisson 光影。}
+}
+$$
+
+当前真正承重的下一步已经进一步收敛：
+
+$$
+\boxed{
+\text{从 prime--pole--Archimedean 数据直接构造 }
+\Theta_{\omega_n}
+=
+B_{\omega_n}^{-1}S_{\omega_n}
+}
+$$
+
+的最小因子化，并证明：
+
+$$
+\boxed{
+B_{\omega_n}=1
+\qquad
+\forall n.
+}
+$$
+
+等价地，为每个黄金层构造：
+
+$$
+\boxed{
+\mathcal K_{\omega_n}(z,w)
+=
+\int
+\Phi_{n,z}(\lambda)
+\overline{\Phi_{n,w}(\lambda)}
+\,d\nu_n(\lambda),
+\qquad
+\nu_n\ge0.
+}
+$$
+
+一旦该正 Gram 表示建立，所有 finite kernel charts 自动正半定；黄金层的共尾性便排除全部有限出生深度，从而排除所有离线世界线。
+
+[1]: https://arxiv.org/abs/1206.4410 "https://arxiv.org/abs/1206.4410"
+[2]: https://arxiv.org/abs/2112.07748 "https://arxiv.org/abs/2112.07748"
+[3]: https://arxiv.org/abs/1905.12397 "https://arxiv.org/abs/1905.12397"
+[4]: https://arxiv.org/abs/1204.1827 "https://arxiv.org/abs/1204.1827"
+[5]: https://arxiv.org/abs/2301.00421 "https://arxiv.org/abs/2301.00421"

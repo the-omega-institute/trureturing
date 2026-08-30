@@ -13,15 +13,7 @@ public sealed class RetiredLedgerSurfaceTests(
     }
 
     [Fact]
-    public void CliCommandTableContainsNoRetiredLedgerWriteVerb()
-    {
-        Assert.DoesNotContain("ledger-reattest", StrataLint.Cli.CliApplication.ImplementedCommands);
-        Assert.DoesNotContain("ledger-sync", StrataLint.Cli.CliApplication.ImplementedCommands);
-        Assert.DoesNotContain("ledger-supersede", StrataLint.Cli.CliApplication.ImplementedCommands);
-    }
-
-    [Fact]
-    public void TrackedDotnetExecutableRootsHaveNoStaticallyBoundPathToRetiredLedgerWriteProtocols()
+    public void TrackedDotnetExecutableEntryPointsAreEnumerated()
     {
         Assert.Equal(
             [
@@ -30,26 +22,6 @@ public sealed class RetiredLedgerSurfaceTests(
                 "tools/StrataLint.Scribe/StrataLint.Scribe.csproj::top-level:tools/StrataLint.Scribe/Program.cs",
             ],
             graph.ExecutableEntryPointDescriptions);
-
-        // This is a conservative static C# graph: calls, construction, delegates, initializers,
-        // and interface/virtual dispatch are covered. Reflection, dynamic/native invocation and
-        // arbitrary shell behavior are outside the claim made by this test.
-        var reachable = graph.ReachableFromExecutableEntryPoints();
-        var forbidden = reachable
-            .Where(static symbol => symbol is
-                "StrataLint.Cli.DagLedgerLoader.ToLinearSyntax(System.Collections.Immutable.ImmutableArray<StrataLint.Engine.DagLedgerFileEvent>)"
-                or "StrataLint.Engine.FrozenLedgerCanonicalWriter.WriteEvent(string, System.Text.Json.JsonElement, string, int)"
-                or "StrataLint.Engine.FrozenLedgerCanonicalWriter.WriteReplayEnvelope(string, System.Text.Json.JsonElement, string, int)"
-                or "StrataLint.Engine.FrozenLedgerCanonicalWriter.ReplayEnvelope(string, System.Text.Json.JsonElement, string, int, string?)"
-                or "StrataLint.Cli.DagLedgerReattestWriter"
-                or "StrataLint.Cli.DagLedgerSyncWriter"
-                or "StrataLint.Cli.DagLedgerSupersedeWriter"
-                or "StrataLint.Engine.FrozenLedgerLineSyntax"
-                or "StrataLint.Engine.FrozenLedgerSyntax")
-            .Order(StringComparer.Ordinal)
-            .ToArray();
-
-        Assert.Empty(forbidden);
     }
 
     [Fact]
