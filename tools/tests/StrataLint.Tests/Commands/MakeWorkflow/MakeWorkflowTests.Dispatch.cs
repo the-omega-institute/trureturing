@@ -407,6 +407,62 @@ public sealed partial class MakeWorkflowTests
             line => line.Contains("verify-trx", StringComparison.Ordinal));
     }
 
+    [Fact(DisplayName = "dotnet-test rejects a root discovery failure with stdout on Bash 3.2")]
+    public void DotnetTestRejectsRootDiscoveryFailureWithStdoutOnBash32()
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        var root = TestRepositoryLayout.FindRoot();
+        using var fixture = new TemporaryDirectory();
+        var binDirectory = Path.Combine(fixture.Path, "bin");
+        var fakeDirname = Path.Combine(binDirectory, "dirname");
+        var fakeDotnet = Path.Combine(binDirectory, "dotnet");
+        var invocationMarker = Path.Combine(fixture.Path, "dotnet-invoked");
+        Directory.CreateDirectory(binDirectory);
+        WriteExecutable(
+            fakeDirname,
+            """
+            #!/bin/bash
+            printf '%s\n' "$DOTNET_TEST_SCRIPT_DIRECTORY"
+            exit 7
+            """);
+        WriteExecutable(
+            fakeDotnet,
+            """
+            #!/bin/bash
+            printf 'invoked\n' > "$DOTNET_TEST_INVOCATION_MARKER"
+            if [[ "${1:-}" == test ]]; then
+              results=""
+              while [[ $# -gt 0 ]]; do
+                if [[ "$1" == --results-directory ]]; then results="$2"; break; fi
+                shift
+              done
+              mkdir -p "$results"
+              printf '<TestRun><ResultSummary><Counters executed="1" /></ResultSummary></TestRun>\n' > "$results/fake.trx"
+            fi
+            exit 0
+            """);
+
+        var result = TestProcessRunner.Run(
+            "env",
+            [
+                $"PATH={binDirectory}:/usr/bin:/bin",
+                $"DOTNET_TEST_SCRIPT_DIRECTORY={Path.Combine(root, "tools", "scripts")}",
+                $"DOTNET_TEST_INVOCATION_MARKER={invocationMarker}",
+                "/bin/bash",
+                Path.Combine(root, "tools/scripts/dotnet-test.sh"),
+                "--filter", "FullyQualifiedName=Root.Discovery.Probe",
+            ],
+            root,
+            TestBudgets.ScriptProcessHangGuard,
+            64 * 1024);
+
+        Assert.NotEqual(0, result.ExitCode);
+        Assert.False(
+            File.Exists(invocationMarker),
+            "root discovery must fail before dotnet executes");
+    }
+
     [Fact(DisplayName = "dotnet-test rejects EXIT zero before its completion marker")]
     public void DotnetTestRejectsExitZeroBeforeCompletionMarker()
     {

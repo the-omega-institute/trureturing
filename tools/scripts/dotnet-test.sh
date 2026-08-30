@@ -1,7 +1,8 @@
 #!/bin/bash
 set -euo pipefail
 
-ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd -P)"
+SCRIPT_DIRECTORY="$(dirname "${BASH_SOURCE[0]}")"
+ROOT="$(cd "$SCRIPT_DIRECTORY/../.." && pwd -P)"
 RESULTS_DIRECTORY="$(mktemp -d "${TMPDIR:-/tmp}/stratalint-test-results.XXXXXXXX")"
 completed=0
 
