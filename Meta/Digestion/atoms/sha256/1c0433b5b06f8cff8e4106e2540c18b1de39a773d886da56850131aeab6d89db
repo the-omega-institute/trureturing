@@ -1,0 +1,56 @@
+## 定理 1005.1（有限终止与无限逼近）
+
+$$
+\boxed{
+x\in\mathbb Q
+\iff
+\exists Q<\infty:
+\varepsilon_Q(x)=0.
+}
+\tag{1005.2}
+$$
+
+而若 \(x\notin\mathbb Q\)，则：
+
+$$
+\boxed{
+\varepsilon_Q(x)>0
+\quad
+\forall Q<\infty,
+}
+\tag{1005.3}
+$$
+
+但：
+
+$$
+\boxed{
+\liminf_{Q\to\infty}\varepsilon_Q(x)=0.
+}
+\tag{1005.4}
+$$
+
+式 (1005.4) 可直接由抽屉原理证明：考察
+
+$$
+0,x,2x,\ldots,Qx
+$$
+
+的小数部分，其中必有两项距离不超过 \(1/Q\)。
+
+所以无理数的本体不是：
+
+$$
+\text{“逼近不到”},
+$$
+
+而是：
+
+$$
+\boxed{
+\text{“永远逼近，但任何有限层都不终止”。}
+}
+$$
+
+---
+

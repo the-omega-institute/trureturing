@@ -1,0 +1,10 @@
+ast_path: section/第九百七十二部-完成平均只看到径向方差
+fingerprints:
+  raw_sha256: sha256:433b0620f64617f62ceafff15b04f06a92818df2afb44368e1e3a0dfb675d171
+  normalized_sha256: sha256:433b0620f64617f62ceafff15b04f06a92818df2afb44368e1e3a0dfb675d171
+cas_ref: sha256:433b0620f64617f62ceafff15b04f06a92818df2afb44368e1e3a0dfb675d171
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

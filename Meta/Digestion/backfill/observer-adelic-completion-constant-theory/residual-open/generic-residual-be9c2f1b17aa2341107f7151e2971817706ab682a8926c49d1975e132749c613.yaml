@@ -1,0 +1,10 @@
+ast_path: section/第三层-圆盘-moment-负性
+fingerprints:
+  raw_sha256: sha256:be9c2f1b17aa2341107f7151e2971817706ab682a8926c49d1975e132749c613
+  normalized_sha256: sha256:be9c2f1b17aa2341107f7151e2971817706ab682a8926c49d1975e132749c613
+cas_ref: sha256:be9c2f1b17aa2341107f7151e2971817706ab682a8926c49d1975e132749c613
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

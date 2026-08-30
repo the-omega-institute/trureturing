@@ -1,0 +1,10 @@
+ast_path: row/黄金-gap-label-而非点坐标
+fingerprints:
+  raw_sha256: sha256:f4ac07e5ac2d18a8b6755f4af6f05582459ec0d1db8f21652b21d174a571e8cb
+  normalized_sha256: sha256:f4ac07e5ac2d18a8b6755f4af6f05582459ec0d1db8f21652b21d174a571e8cb
+cas_ref: sha256:f4ac07e5ac2d18a8b6755f4af6f05582459ec0d1db8f21652b21d174a571e8cb
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

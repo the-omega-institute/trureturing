@@ -1,0 +1,10 @@
+ast_path: section/Toeplitz-escape-depth
+fingerprints:
+  raw_sha256: sha256:5907f05ed293151a9fc93ce12d4a654996db4f6366bb64e28f05e053a86d744b
+  normalized_sha256: sha256:5907f05ed293151a9fc93ce12d4a654996db4f6366bb64e28f05e053a86d744b
+cas_ref: sha256:5907f05ed293151a9fc93ce12d4a654996db4f6366bb64e28f05e053a86d744b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

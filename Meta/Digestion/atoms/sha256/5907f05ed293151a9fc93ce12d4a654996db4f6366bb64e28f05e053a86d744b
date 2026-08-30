@@ -1,0 +1,12 @@
+## Toeplitz escape depth
+
+$$
+\boxed{
+d_T
+=
+\min
+\{N:T_N\not\succeq0\}.
+}
+\tag{981.1}
+$$
+

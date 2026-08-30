@@ -1,0 +1,47 @@
+## 957.1 需要验证的四个条件
+
+第一，\(I_L\) 应等于项目已有 observer holonomy 的二阶 Casimir，而不能是人为设置的参数。
+
+第二，项目的 Chebyshev–Toeplitz 负证书应等价于某个：
+
+$$
+|\operatorname{tr}M_n|>2
+$$
+
+的 hyperbolic escape。
+
+第三，固定支撑 Weil 正性应等价于所有相关 trace orbit 保持在非逃逸区域。
+
+第四，随着：
+
+$$
+L\to\infty,
+$$
+
+这些有限 cocycles 应胶合成一个共同完成对象。
+
+如果四项全部成立，就会得到一条真正的新 RH 路线：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{全部规范 Riemann observer trace orbits 不发生 hyperbolic escape}.
+}
+\tag{957.5}
+$$
+
+目前还没有构造出这个规范映射。
+
+因此 Fibonacci Hamiltonian 是：
+
+$$
+\boxed{
+\text{一个严格的观察者完成原型，}
+}
+$$
+
+而不是已经完成的 Riemann 证明。
+
+---
+

@@ -1,0 +1,18 @@
+### 2. 预注册进度向量
+
+[suspected-novel]
+
+使用定理级而不是“投入小时数”的进度向量：
+
+$P=
+(N_{\rm closed},
+ V_{\rm ZeroData},
+ C_{\rm conv},
+ L_{\max}^{\rm cert},
+ B_T,
+ \delta_{\rm PSD},
+ A_{\rm external})$，
+
+其中：
+
+- $N_{\rm closed}$：新增且有消费者的 kernel GID 数；

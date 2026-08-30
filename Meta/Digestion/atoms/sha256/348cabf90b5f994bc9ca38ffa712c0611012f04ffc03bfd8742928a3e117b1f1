@@ -1,0 +1,34 @@
+## 四、有没有不找离线零点的对偶方案？
+
+有。
+
+定义 Christoffel evaluation cost：
+
+$$
+\lambda_N(w).
+$$
+
+若候选点不在谱支撑中：
+
+$$
+\lambda_N(w)\to0.
+$$
+
+若该点是真实谱原子，质量为 \(m_w\)：
+
+$$
+\lambda_N(w)\ge m_w.
+$$
+
+所以可以不找点，而证明整个单位圆外：
+
+$$
+\lambda_N(w)
+$$
+
+统一指数趋零。
+
+这就是离线零点不存在的对偶 support certificate。
+
+---
+

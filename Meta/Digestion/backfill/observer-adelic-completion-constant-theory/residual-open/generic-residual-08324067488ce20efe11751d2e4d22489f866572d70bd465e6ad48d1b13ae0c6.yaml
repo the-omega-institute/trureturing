@@ -1,0 +1,10 @@
+ast_path: section/第一千零三十五部-完成势与零点点源
+fingerprints:
+  raw_sha256: sha256:08324067488ce20efe11751d2e4d22489f866572d70bd465e6ad48d1b13ae0c6
+  normalized_sha256: sha256:08324067488ce20efe11751d2e4d22489f866572d70bd465e6ad48d1b13ae0c6
+cas_ref: sha256:08324067488ce20efe11751d2e4d22489f866572d70bd465e6ad48d1b13ae0c6
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,10 @@
+ast_path: section/第一千一百一十三部-当前真正闭合与未闭合的边界/clause/5
+fingerprints:
+  raw_sha256: sha256:e13d66331b6f5e10e9e76b9d19ad9f423f00149ca26139066199913e6628863e
+  normalized_sha256: sha256:e13d66331b6f5e10e9e76b9d19ad9f423f00149ca26139066199913e6628863e
+cas_ref: sha256:e13d66331b6f5e10e9e76b9d19ad9f423f00149ca26139066199913e6628863e
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

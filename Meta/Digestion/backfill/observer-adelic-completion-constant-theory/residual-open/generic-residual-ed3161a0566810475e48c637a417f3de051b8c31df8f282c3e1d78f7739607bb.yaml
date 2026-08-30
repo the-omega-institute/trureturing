@@ -1,0 +1,10 @@
+ast_path: section/1068-3-重数-Chern-荷
+fingerprints:
+  raw_sha256: sha256:ed3161a0566810475e48c637a417f3de051b8c31df8f282c3e1d78f7739607bb
+  normalized_sha256: sha256:ed3161a0566810475e48c637a417f3de051b8c31df8f282c3e1d78f7739607bb
+cas_ref: sha256:ed3161a0566810475e48c637a417f3de051b8c31df8f282c3e1d78f7739607bb
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

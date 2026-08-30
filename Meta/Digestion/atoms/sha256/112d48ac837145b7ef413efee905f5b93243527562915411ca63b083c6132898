@@ -1,0 +1,12 @@
+## Schur escape depth
+
+$$
+\boxed{
+d_S
+=
+\min
+\{n:\text{Schur step }n\text{ 离开单位盘}\}.
+}
+\tag{981.2}
+$$
+

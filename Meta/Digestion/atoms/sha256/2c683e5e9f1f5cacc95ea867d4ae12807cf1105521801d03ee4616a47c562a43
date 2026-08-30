@@ -1,0 +1,20 @@
+### R-B　黄金窗口的严格次序
+
+[suspected-novel | proposed GID: `D5/X_Frontier/GoldenObserver/GoldenBandOrder`]
+
+    import D5.X_Frontier.Hearts
+
+    namespace D5.X_Frontier.GoldenObserver
+
+    open D5.X_Frontier.Hearts
+
+    theorem golden_band_order :
+        1 / (2 * phi ^ 3) < structuralZero ∧
+        structuralZero < structuralPole ∧
+        structuralPole < 1 / phi ^ 2
+
+    end D5.X_Frontier.GoldenObserver
+
+闭合性质：
+
+- 先证明 $2<\sqrt5<3$，继而 $1<\phi<2$；

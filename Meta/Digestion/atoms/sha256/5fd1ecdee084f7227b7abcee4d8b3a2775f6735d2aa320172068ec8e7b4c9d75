@@ -1,0 +1,47 @@
+# 第九百四十五部　同谱不等于同观察者
+
+定义完成谱读出：
+
+$$
+\boxed{
+\Pi_{\mathrm{spec}}:
+X_\varphi\to\mathcal K(\mathbb R),
+\qquad
+\Pi_{\mathrm{spec}}(\omega)
+=
+\sigma(H_{\lambda,\omega}).
+}
+\tag{945.1}
+$$
+
+由定理 944.1：
+
+$$
+\boxed{
+\Pi_{\mathrm{spec}}(\omega)=\Sigma_\lambda
+}
+$$
+
+对所有观察者成立。
+
+所以：
+
+$$
+\boxed{
+\Pi_{\mathrm{spec}}
+\text{ 是常映射。}
+}
+$$
+
+因此不能从共同谱恢复观察者相位。
+
+这就是一个严格的：
+
+$$
+\boxed{
+\textbf{isospectral observer non-cloning}.
+}
+$$
+
+---
+

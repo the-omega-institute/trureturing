@@ -1,0 +1,10 @@
+### 主线
+
+立项 O-6 基建线：
+
+1. 修复非空洞语义；
+2. 证明 RH $\Rightarrow$ 本仓 O-6；
+3. 建立有限窗口 PSD 与尾项证书；
+4. 精确暴露 O-6 $\Rightarrow$ RH 所需的 separator theorem；
+5. 消费 2025–2026 的有限 Weil 压缩与外部形式化。
+

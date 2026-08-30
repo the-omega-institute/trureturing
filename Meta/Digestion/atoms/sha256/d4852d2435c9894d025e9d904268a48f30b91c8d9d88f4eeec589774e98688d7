@@ -1,0 +1,14 @@
+## 正实表示
+
+证明存在正测度 \(\nu\)：
+
+$$
+\boxed{
+\mathcal Z_\xi(z)
+=
+\int_{\mathbb R}
+\frac{d\nu(\gamma)}{z-i\gamma}.
+}
+\tag{1047.1}
+$$
+

@@ -1,0 +1,10 @@
+ast_path: section/1-前视声明/clause/4
+fingerprints:
+  raw_sha256: sha256:8877ffac40ae50efa4ca9a4f48a9e16b3eec69c56046b1c7596e4132c267a453
+  normalized_sha256: sha256:8877ffac40ae50efa4ca9a4f48a9e16b3eec69c56046b1c7596e4132c267a453
+cas_ref: sha256:8877ffac40ae50efa4ca9a4f48a9e16b3eec69c56046b1c7596e4132c267a453
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

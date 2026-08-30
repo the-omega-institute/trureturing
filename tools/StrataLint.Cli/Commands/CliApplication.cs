@@ -13,6 +13,8 @@ internal sealed record ExplicitCommandResult(int ExitCode, string Output, string
 
 internal interface ICliEnvironment
 {
+    ExplicitCommandResult CapacityAudit(IReadOnlyList<string> arguments);
+
     AdmissionOutcome Check(IReadOnlyList<string> arguments);
 
     AdmissionTopologyOutcome Topology(IReadOnlyList<string> arguments);
@@ -89,6 +91,8 @@ internal static class CliApplication
                 RenderCommand(environment.AlignDigestionStatus(tail), console),
             ["align-scribe-receipt"] = static (environment, tail, console) =>
                 RenderCommand(environment.AlignScribeReceipt(tail), console),
+            ["capacity-audit"] = static (environment, tail, console) =>
+                RenderExplicit(environment.CapacityAudit(tail), console),
             ["check"] = static (environment, tail, console) =>
                 RenderAdmission(environment.Check(tail), console),
             ["clean-lanes"] = static (environment, tail, console) =>

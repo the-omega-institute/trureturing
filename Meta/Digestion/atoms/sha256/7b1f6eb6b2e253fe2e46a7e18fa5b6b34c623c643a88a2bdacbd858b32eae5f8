@@ -1,0 +1,35 @@
+* argument increment 包围；
+
+认证：
+
+$$
+\mathfrak F_\xi(R).
+$$
+
+与直接求零点相比，这具有两个优势：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{不需要知道零点的精确坐标};\\
+&\text{输出是整数，具有拓扑稳定性}.
+\end{aligned}
+}
+$$
+
+因此对极稀疏异常，更合理的算法不是：
+
+$$
+\text{Newton search},
+$$
+
+而是：
+
+$$
+\boxed{
+\text{多尺度有理矩形的严格绕数扫描。}
+}
+$$
+
+---
+

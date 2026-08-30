@@ -1,0 +1,10 @@
+ast_path: section/一-DECT-路线-前视承诺与预算包络/clause/2
+fingerprints:
+  raw_sha256: sha256:cf78c453b9fe5ec644c6b9c3ad1754031c862b338214012a4cc98e52041b6616
+  normalized_sha256: sha256:cf78c453b9fe5ec644c6b9c3ad1754031c862b338214012a4cc98e52041b6616
+cas_ref: sha256:cf78c453b9fe5ec644c6b9c3ad1754031c862b338214012a4cc98e52041b6616
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

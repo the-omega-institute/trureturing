@@ -1,0 +1,16 @@
+### 完全 pair cancellation
+
+$$
+G_n\to1.
+$$
+
+则：
+
+$$
+b_n\to0,
+\qquad
+B_n\to I.
+$$
+
+二周期反射在两步后完全消失。
+

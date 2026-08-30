@@ -1,0 +1,10 @@
+ast_path: section/第一千零九部-不指定候选位置的环带判据
+fingerprints:
+  raw_sha256: sha256:0faf5cb9b2af58058d53a3d0d3161a859f8c237107ea92bc3f97a6321f0a2ff9
+  normalized_sha256: sha256:0faf5cb9b2af58058d53a3d0d3161a859f8c237107ea92bc3f97a6321f0a2ff9
+cas_ref: sha256:0faf5cb9b2af58058d53a3d0d3161a859f8c237107ea92bc3f97a6321f0a2ff9
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

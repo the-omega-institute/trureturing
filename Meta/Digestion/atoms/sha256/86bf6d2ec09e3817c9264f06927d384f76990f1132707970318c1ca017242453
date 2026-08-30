@@ -1,0 +1,12 @@
+## 一、内生二分
+
+必须由数据本身产生两个 block types：
+
+$$
+A,\qquad B,
+$$
+
+而不是先按模五、奇偶或 Fibonacci index 人工切分。
+
+---
+

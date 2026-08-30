@@ -1,0 +1,23 @@
+### R-A　自然缩放命中临界半线
+
+[suspected-novel | proposed GID: `D5/X_Frontier/GoldenObserver/GoldenNaturalScale`]
+
+    import D5.X_Frontier.GoldenObserver.Core
+
+    namespace D5.X_Frontier.GoldenObserver
+
+    open D5.X_Frontier.Hearts
+
+    theorem golden_natural_scale_hits_half :
+        goldenNaturalScale (structuralZero : ℂ) = (1 : ℂ) / 2
+
+    end D5.X_Frontier.GoldenObserver
+
+闭合性质：
+
+- 纯 $\sqrt5$ 与域代数；
+- 无测度、级数、拓扑或 zeta；
+- 可由 $\phi^2=\phi+1$、$\phi\ne0$ 和 `field_simp`／`nlinarith` 闭合。
+
+消费者：R-C 与中期黄金因子分解字典。
+

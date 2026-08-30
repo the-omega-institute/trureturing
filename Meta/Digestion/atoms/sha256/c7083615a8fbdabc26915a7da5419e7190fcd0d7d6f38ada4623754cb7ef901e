@@ -1,0 +1,25 @@
+### 1. O-5 的实际 Lean 陈述
+
+[repo-derived | GID: `D5/X_Frontier/Hearts`]
+
+仓库定义：
+
+- $\phi=(1+\sqrt5)/2$；
+- `structuralPole := 1 / phi ^ 3`；
+- `structuralZero := 1 / (2 * phi ^ 2)`；
+- `eulerGerm` 为黄金 Beatty／指数层构造的 Euler germ。
+
+唯一 `sorry` 是 `o5_independence`，其命题要求存在 $Z_{\rm qc}$，满足：
+
+1. $Z_{\rm qc}$ 在 $\Re s>0$ 上亚纯；
+2. 当 $\Re s>1/\phi^2$ 时，$Z_{\rm qc}(s)=\texttt{eulerGerm}(s)$；
+3. 若
+   $1/(2\phi^3)<\Re s<1/\phi^2$，
+   且 $Z_{\rm qc}$ 在 $s$ 解析并且 $Z_{\rm qc}(s)=0$，
+   则
+   $\Re s=1/(2\phi^2)$。
+
+必须指出：该 theorem 没有断言 `structuralPole` 真的是极点。`structuralPole` 在心脏中只是定义；极点结论目前只存在于理论卷的因子分解叙述中。
+
+另一个形式化风险是：Lean 中的无限乘积和无限和是全定义对象。`eulerGerm` 作为函数可被定义，不自动意味着其在种子半平面收敛、解析或等于任何 Euler product。O-5 存在性不能靠“定义已通过类型检查”取得。
+

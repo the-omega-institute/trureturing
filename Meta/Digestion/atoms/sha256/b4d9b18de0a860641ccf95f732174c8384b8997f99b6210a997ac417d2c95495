@@ -1,0 +1,25 @@
+## 1017.4 临界线 Poisson tomography
+
+不直接搜索 \(\xi(\tfrac12+\delta+it)=0\)，而研究：
+
+$$
+\left(
+\frac{\xi'}{\xi}
+\right)
+\left(
+\frac12+it
+\right)
+$$
+
+及其法向、切向导数的局部 kernel decomposition。
+
+目标是排除任何宽度：
+
+$$
+\delta>0
+$$
+
+的 Poisson component。
+
+---
+

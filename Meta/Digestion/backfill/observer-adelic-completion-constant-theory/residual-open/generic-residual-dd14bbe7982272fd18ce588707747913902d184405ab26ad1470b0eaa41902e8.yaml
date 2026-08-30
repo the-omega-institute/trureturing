@@ -1,0 +1,10 @@
+ast_path: section/第五层-Weil-负证书
+fingerprints:
+  raw_sha256: sha256:dd14bbe7982272fd18ce588707747913902d184405ab26ad1470b0eaa41902e8
+  normalized_sha256: sha256:dd14bbe7982272fd18ce588707747913902d184405ab26ad1470b0eaa41902e8
+cas_ref: sha256:dd14bbe7982272fd18ce588707747913902d184405ab26ad1470b0eaa41902e8
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

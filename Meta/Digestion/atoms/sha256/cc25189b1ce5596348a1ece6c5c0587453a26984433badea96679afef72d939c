@@ -1,0 +1,127 @@
+# 第九百六十八部　规范的 Szegő \(SU(1,1)\) 传输矩阵
+
+定义：
+
+$$
+\boxed{
+\rho_n
+=
+\sqrt{1-|\alpha_n|^2}.
+}
+\tag{968.1}
+$$
+
+Szegő recurrence 可以写成：
+
+$$
+\boxed{
+\begin{pmatrix}
+\Phi_{n+1}(z)\\
+\Phi_{n+1}^*(z)
+\end{pmatrix}
+=
+\frac1{\rho_n}
+\begin{pmatrix}
+z&-\overline{\alpha_n}\\
+-\alpha_n z&1
+\end{pmatrix}
+\begin{pmatrix}
+\Phi_n(z)\\
+\Phi_n^*(z)
+\end{pmatrix}.
+}
+\tag{968.2}
+$$
+
+矩阵：
+
+$$
+A(\alpha_n,z)
+=
+\frac1{\rho_n}
+\begin{pmatrix}
+z&-\overline{\alpha_n}\\
+-\alpha_n z&1
+\end{pmatrix}
+$$
+
+满足：
+
+$$
+\det A(\alpha_n,z)=z.
+$$
+
+在：
+
+$$
+|z|=1
+$$
+
+上选取局部平方根，定义 determinant-one normalization：
+
+$$
+\boxed{
+\widetilde A(\alpha_n,z)
+=
+\frac1{\rho_n}
+\begin{pmatrix}
+z^{1/2}&-\overline{\alpha_n}z^{-1/2}\\
+-\alpha_nz^{1/2}&z^{-1/2}
+\end{pmatrix}.
+}
+\tag{968.3}
+$$
+
+于是：
+
+$$
+\det\widetilde A(\alpha_n,z)=1.
+$$
+
+并且：
+
+$$
+\widetilde A(\alpha_n,z)\in SU(1,1).
+$$
+
+当：
+
+$$
+\alpha_n\in\mathbb R
+$$
+
+时，通过固定 Cayley basis change，它与一个：
+
+$$
+SL(2,\mathbb R)
+$$
+
+矩阵共轭。
+
+因此 Li–Clark moments 不仅给出一个 CMV operator，还规范地产生：
+
+$$
+\boxed{
+M_N(z)
+=
+\widetilde A(\alpha_{N-1},z)
+\cdots
+\widetilde A(\alpha_0,z).
+}
+\tag{968.4}
+$$
+
+这就是此前一直寻找的：
+
+$$
+\boxed{
+\textbf{Riemann observer }SL_2\textbf{ cocycle}.
+}
+$$
+
+它不是人为构造的两个 prime channels，而是由 Li–Clark moment functional 唯一递归产生。
+
+在两侧 CMV/动态 OPUC 谱论中，单位圆谱与 Szegő cocycle 的 uniform hyperbolicity 有严格对应；这一点使 transfer escape 成为真实谱概念，而不只是矩阵比喻。
+
+---
+

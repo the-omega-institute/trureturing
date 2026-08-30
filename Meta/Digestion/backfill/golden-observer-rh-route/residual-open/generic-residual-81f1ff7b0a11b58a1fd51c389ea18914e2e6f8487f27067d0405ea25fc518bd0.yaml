@@ -1,0 +1,10 @@
+ast_path: section/三-suspected-novel-声明账
+fingerprints:
+  raw_sha256: sha256:81f1ff7b0a11b58a1fd51c389ea18914e2e6f8487f27067d0405ea25fc518bd0
+  normalized_sha256: sha256:81f1ff7b0a11b58a1fd51c389ea18914e2e6f8487f27067d0405ea25fc518bd0
+cas_ref: sha256:81f1ff7b0a11b58a1fd51c389ea18914e2e6f8487f27067d0405ea25fc518bd0
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,77 @@
+## 主动完成障碍
+
+非酉模式：
+
+$$
+e^{(\delta+i\gamma)\eta},
+\qquad
+\delta\neq0,
+$$
+
+若要下降到黄金 Solenoid，必须满足：
+
+$$
+e^{(\delta+i\gamma)P_\varphi}
+=
+\chi(u_\varphi),
+$$
+
+其中：
+
+$$
+P_\varphi=2\log\varphi,
+\qquad
+\chi(u_\varphi)\in U(1).
+$$
+
+取模得到：
+
+$$
+e^{\delta P_\varphi}=1,
+$$
+
+故只能有：
+
+$$
+\delta=0.
+$$
+
+因此：
+
+$$
+\boxed{
+\delta\neq0
+\Longrightarrow
+\text{不存在紧致酉性的 Solenoid lift。}
+}
+\tag{1105.2}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{离线零点}
+=
+\text{不是“另一个隐藏状态”，而是“合法完成不存在”。}
+}
+$$
+
+在范畴语言中，可以写成：
+
+$$
+\boxed{
+\begin{aligned}
+\ker\pi_\varphi
+&=\text{lift 的非唯一性};\\
+\operatorname{Obs}_{\mathrm{off}}
+&=\text{lift 的不存在性}.
+\end{aligned}
+}
+\tag{1105.3}
+$$
+
+这正是整套几何里最重要的分界。
+
+---
+

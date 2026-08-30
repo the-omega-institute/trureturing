@@ -1,0 +1,10 @@
+ast_path: section/1066-1-拓扑荷不会选择黄金比例/clause/3
+fingerprints:
+  raw_sha256: sha256:35f85eb24a1a98baa478ee2f6588b86c1834ece5eafe308182774236b023bf25
+  normalized_sha256: sha256:35f85eb24a1a98baa478ee2f6588b86c1834ece5eafe308182774236b023bf25
+cas_ref: sha256:35f85eb24a1a98baa478ee2f6588b86c1834ece5eafe308182774236b023bf25
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

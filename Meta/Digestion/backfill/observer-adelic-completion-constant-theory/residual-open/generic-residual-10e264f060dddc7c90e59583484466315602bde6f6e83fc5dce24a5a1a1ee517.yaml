@@ -1,0 +1,10 @@
+ast_path: section/2-determinant-identity-audit
+fingerprints:
+  raw_sha256: sha256:10e264f060dddc7c90e59583484466315602bde6f6e83fc5dce24a5a1a1ee517
+  normalized_sha256: sha256:10e264f060dddc7c90e59583484466315602bde6f6e83fc5dce24a5a1a1ee517
+cas_ref: sha256:10e264f060dddc7c90e59583484466315602bde6f6e83fc5dce24a5a1a1ee517
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

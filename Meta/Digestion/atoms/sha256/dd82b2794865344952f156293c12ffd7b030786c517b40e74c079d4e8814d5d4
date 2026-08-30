@@ -1,0 +1,57 @@
+# 第九百五十五部　完整世界为什么相同，局部起点为什么不同
+
+现在可以写出完整的信息遗忘链：
+
+$$
+\boxed{
+\begin{aligned}
+\omega
+&\longmapsto
+\{A_{\omega_n}(E)\}_{n\in\mathbb Z}
+\\
+&\longmapsto
+M_E(n,\omega)
+\\
+&\longmapsto
+\operatorname{tr}M_E(n,\omega)
+\\
+&\longmapsto
+G=\lambda^2/4
+\\
+&\longmapsto
+\Sigma_\lambda.
+\end{aligned}
+}
+\tag{955.1}
+$$
+
+其中：
+
+* \(\omega\)：完整观察者起点；
+* \(M_E(n,\omega)\)：有序 holonomy；
+* trace：遗忘 projective eigenvectors；
+* \(G\)：遗忘能量和大部分矩阵历史；
+* \(\Sigma_\lambda\)：只保留全体观察者共有的完成谱。
+
+每一次映射都进一步丢失观察者身份。
+
+所以：
+
+$$
+\boxed{
+\text{同谱不是巧合，}
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{完成过程本来就在逐层商掉观察者起点。}
+}
+$$
+
+但 local \(m\)-function、half-line Weyl data 与 projective transfer direction 仍然保留观察者。
+
+---
+
