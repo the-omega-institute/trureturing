@@ -169,6 +169,60 @@ public sealed class EngineeringPathFilterTests
         Assert.Contains(consumer.Id, call.Filter, StringComparison.Ordinal);
     }
 
+    /// <summary>
+    /// `IsFullSurface` 的 reason 串自称 "a repository-root build input",而谓词判的是**任何**仓根文件。
+    /// 仓根文档不是构建输入:构建图不读它,读其内容的测试为零(2026-08-30 实测),
+    /// 而「本次改动把某文件顶过 800 行」由 admission 的 SL-003 delta 分支无条件 Block,
+    /// 与 engineering 计划无关。故文档改动走正常 selected 选择,不再连坐全量。
+    /// </summary>
+    [Fact]
+    public void RepositoryRootDocumentChangeIsSelectedRatherThanForcingTheWholeSolution()
+    {
+        var map = Map(new ScribeTestMethod(
+            "tools/tests/StrataLint.Tests",
+            "tools/tests/StrataLint.Tests/ProductionEnvironmentTests.cs",
+            "ProductionEnvironmentTests.ReadsRepository",
+            [],
+            [TestMapUnknownReason.VariablePath]));
+
+        foreach (var document in new[] { "CLAUDE.md", "AGENTS.md", "README.md" })
+        {
+            var plan = EngineeringTestPlanPolicy.Evaluate(
+                [document],
+                map,
+                compileAffectedTestProjects: EmptyProjects());
+
+            Assert.Equal(EngineeringTestPlanKind.Selected, plan.Kind);
+        }
+    }
+
+    /// <summary>
+    /// 放行侧不能单独立;窄化必须同时钉住**仍然**转 Full 的那一侧,否则一个「什么都放行」的
+    /// 谓词也能通过上一条。仓根的构建输入逐个点名,且一个不在文档名单里的新增仓根文件
+    /// 必须仍然转 Full —— 谓词是白名单式排除,新增项 fail-closed。
+    /// </summary>
+    [Theory]
+    [InlineData("Directory.Build.props")]
+    [InlineData("Directory.Packages.props")]
+    [InlineData("Makefile")]
+    [InlineData("global.json")]
+    [InlineData("lean-toolchain")]
+    [InlineData("lakefile.toml")]
+    [InlineData("lake-manifest.json")]
+    [InlineData("Trureturing.lean")]
+    [InlineData(".editorconfig")]
+    [InlineData(".gitignore")]
+    [InlineData("SomeUnclassifiedNewRootFile.txt")]
+    public void RepositoryRootBuildInputStillForcesTheWholeSolution(string path)
+    {
+        var plan = EngineeringTestPlanPolicy.Evaluate(
+            [path],
+            EmptyMap(),
+            compileAffectedTestProjects: EmptyProjects());
+
+        Assert.Equal(EngineeringTestPlanKind.Full, plan.Kind);
+    }
+
     private static ScribeTestMap EmptyMap() => Map();
 
     private static IReadOnlySet<string> EmptyProjects() => new HashSet<string>(StringComparer.Ordinal);

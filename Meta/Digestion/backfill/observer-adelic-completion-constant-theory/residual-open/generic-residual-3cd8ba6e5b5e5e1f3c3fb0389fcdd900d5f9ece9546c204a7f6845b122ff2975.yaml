@@ -1,0 +1,10 @@
+ast_path: section/1068-1-零点-单极子悬挂
+fingerprints:
+  raw_sha256: sha256:3cd8ba6e5b5e5e1f3c3fb0389fcdd900d5f9ece9546c204a7f6845b122ff2975
+  normalized_sha256: sha256:3cd8ba6e5b5e5e1f3c3fb0389fcdd900d5f9ece9546c204a7f6845b122ff2975
+cas_ref: sha256:3cd8ba6e5b5e5e1f3c3fb0389fcdd900d5f9ece9546c204a7f6845b122ff2975
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

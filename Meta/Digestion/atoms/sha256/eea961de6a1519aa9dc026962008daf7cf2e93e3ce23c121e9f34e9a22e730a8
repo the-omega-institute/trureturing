@@ -1,0 +1,19 @@
+### 3. 多尺度比较
+
+对：
+
+$$
+a\in
+\left\{
+\frac12,1,2,4,\ldots
+\right\}
+$$
+
+分别计算：
+
+$$
+\alpha_n^{(a)}.
+$$
+
+区分 raw coefficient pattern 与 scale-covariant monodromy pattern。
+

@@ -1,0 +1,43 @@
+## 定理 1056.1（Isospectral–nonisomorphic observer principle）
+
+局部本征值：
+
+$$
+\boxed{
+E_\pm
+=
+\pm\sqrt{|F|^2+\mu^2}
+}
+$$
+
+只依赖：
+
+$$
+|F|.
+$$
+
+而 Chern 单极子荷依赖：
+
+$$
+\boxed{
+\operatorname{wind}\frac F{|F|}.
+}
+$$
+
+所以完整局部能谱不足以恢复观察者线丛的拓扑类别。
+
+即：
+
+$$
+\boxed{
+\text{同谱}
+\not\Rightarrow
+\text{同观察者 bundle}.
+}
+\tag{1056.1}
+$$
+
+这与项目的局部—全局余量原则完全一致：局部接口全部可解，并不自动意味着能够无余量地胶合为唯一全局对象。项目的素数观察者理论明确区分局部可解、兼容、可胶合、全局存在与全局唯一。
+
+---
+

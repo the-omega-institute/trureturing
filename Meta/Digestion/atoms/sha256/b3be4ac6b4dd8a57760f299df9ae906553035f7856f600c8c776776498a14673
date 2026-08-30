@@ -1,0 +1,21 @@
+## 假 RH 破缺
+
+$$
+\boxed{
+\exists N:
+T_N\not\succeq0.
+}
+$$
+
+在首个非退化失败层：
+
+$$
+\boxed{
+|\alpha_N|>1.
+}
+$$
+
+单位ary CMV realization 在有限深度即失败。
+
+---
+

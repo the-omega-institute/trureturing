@@ -1,0 +1,53 @@
+## 定理 1054.1（RH as boundary-monopole confinement）
+
+以下命题等价：
+
+$$
+\boxed{
+\begin{aligned}
+&(1)\quad \mathrm{RH};\\
+&(2)\quad
+F(z)\neq0
+\quad
+\forall\,\Re z>0;\\
+&(3)\quad
+\mathsf H_\xi
+\text{ 在 }\mathcal B_+\text{ 中无简并};\\
+&(4)\quad
+\mathcal B_+
+\text{ 中不存在 Berry--Chern 单极子};\\
+&(5)\quad
+\text{任意位于 }\mathcal B_+\text{ 的闭曲面 Chern 通量为零}.
+\end{aligned}
+}
+\tag{1054.2}
+$$
+
+所以，在该严格构造中：
+
+$$
+\boxed{
+\mathrm{RH}
+=
+\text{\(\xi\)-单极子全部禁闭于临界边界 }x=0.
+}
+$$
+
+若存在离线零点：
+
+$$
+\frac12+\delta+i\gamma,
+\qquad
+\delta>0,
+$$
+
+它就对应一个进入完成体内部的 Berry 单极子：
+
+$$
+\boxed{
+(\delta,\gamma,0).
+}
+$$
+
+---
+

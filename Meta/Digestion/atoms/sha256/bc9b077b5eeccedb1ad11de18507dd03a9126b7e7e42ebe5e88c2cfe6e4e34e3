@@ -1,0 +1,45 @@
+## 979.1 Schur 系数误差
+
+当：
+
+$$
+T_N\succeq\eta I
+$$
+
+且：
+
+$$
+\varepsilon_{N,L}<\eta/2,
+$$
+
+Cholesky/Levinson recursion 在该 compact positive cone 上连续，因此：
+
+$$
+\boxed{
+|\widehat\alpha_j-\alpha_j|
+\le
+C_{N,\eta}
+\varepsilon_{N,L}.
+}
+\tag{979.4}
+$$
+
+但：
+
+$$
+\eta\downarrow0
+$$
+
+时，常数 \(C_{N,\eta}\) 必然恶化。
+
+这不是数值实现缺陷，而是 contact boundary 本身的几何：
+
+$$
+\boxed{
+\text{越接近 }|\alpha_j|=1，
+\text{越难稳定恢复观察者方向。}
+}
+$$
+
+---
+

@@ -1,0 +1,23 @@
+* 固定深度 Li–Clark moment 的指数恢复可以传递到 Toeplitz operator norm 和最小特征值。
+
+所以项目已经拥有一种非常接近“有理数有限等式证书”的结构：
+
+$$
+\boxed{
+\text{一个有限矩阵的负特征值，
+就是对完成圆支撑的有限反证书。}
+}
+$$
+
+需要诚实标注：完整的
+
+$$
+\mathrm{RH}
+\iff
+\text{全部 Li–Clark Toeplitz matrices PSD}
+$$
+
+目前仍属于理论链和待形式化目标；项目现有 truth anchors 已经覆盖其有限 moment、表示、floor、contact 与恢复组件，但还没有把整条 RH 等价作为单一 Lean theorem 冻结。项目自身的形式化计划也把 Li curvature、Carathéodory、Schur 与 CMV 链列为后续模块。
+
+---
+

@@ -1,0 +1,24 @@
+## 1001.3 Pair rapidity
+
+计算：
+
+$$
+b_n
+=
+\operatorname{artanh}\alpha_n
++
+\operatorname{artanh}\alpha_{n+1}.
+$$
+
+检验：
+
+$$
+b_n\to0,
+\qquad
+|b_n|\to\log\varphi,
+$$
+
+还是无极限。
+
+---
+

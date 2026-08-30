@@ -1,0 +1,10 @@
+ast_path: section/第一千零三十八部-Poisson-半群-RH-是-体内无源
+fingerprints:
+  raw_sha256: sha256:6b9932bccb9573ba3b068742b5d126d7a4d4f448e8b14c058c639a6bb8e2fa63
+  normalized_sha256: sha256:6b9932bccb9573ba3b068742b5d126d7a4d4f448e8b14c058c639a6bb8e2fa63
+cas_ref: sha256:6b9932bccb9573ba3b068742b5d126d7a4d4f448e8b14c058c639a6bb8e2fa63
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

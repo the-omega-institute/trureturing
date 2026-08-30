@@ -1,0 +1,85 @@
+# 第九百九十三部　有限观察层带有连续 Haar 底座，极限层才完全离散
+
+令：
+
+$$
+T_N=[c_{j-k}]_{j,k=0}^{N}
+$$
+
+为第 \(N\) 阶 Li–Clark Toeplitz matrix，并定义：
+
+$$
+\boxed{
+\Lambda_N
+=
+\lambda_{\min}(T_N).
+}
+\tag{993.1}
+$$
+
+RH 成立时，\(T_N\) 是 \(\mu_{\mathrm{LC}}\) 上单项式：
+
+$$
+1,z,\ldots,z^N
+$$
+
+的 Gram matrix。
+
+由于 \(\mu_{\mathrm{LC}}\) 有无限多个不同支撑点，任何非零有限次数多项式都不可能在其全部支撑上消失。因此：
+
+$$
+\boxed{
+T_N\succ0
+\qquad
+\forall N<\infty.
+}
+\tag{993.2}
+$$
+
+仓库已经机器证明：
+
+$$
+\boxed{
+\Lambda_N
+=
+\text{与前 }2N+1\text{ 个 moments 相容的最大 Haar floor}.
+}
+$$
+
+并证明在 active floor 上，剩余测度可以被压缩到 contact polynomial 的有限零点，并具有有限原子表示。
+
+因此每个有限观察层都存在一个优化完成：
+
+$$
+\boxed{
+\mu_N^*
+=
+\Lambda_N\,m_{\mathbb T}
++
+\sum_{j=1}^{r_N}
+w_{N,j}\delta_{\zeta_{N,j}},
+}
+\tag{993.3}
+$$
+
+其中：
+
+$$
+r_N\le N.
+$$
+
+这具有非常明确的观察者语义：
+
+$$
+\boxed{
+\begin{aligned}
+\Lambda_Nm_{\mathbb T}
+&=\text{有限观察尚不能区分的连续统底座};\\
+\sum_jw_{N,j}\delta_{\zeta_{N,j}}
+&=\text{当前深度已经被分离出的有限观察者}.
+\end{aligned}
+}
+$$
+
+---
+

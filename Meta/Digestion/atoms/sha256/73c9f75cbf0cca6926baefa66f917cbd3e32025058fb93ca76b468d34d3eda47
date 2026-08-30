@@ -1,0 +1,7 @@
+### 2. 第一处语义缺口：`ZeroData` 可能没有 inhabitant
+
+[repo-derived | GID: `D5/S3/Weil/ZeroSum`]
+
+`ZeroData` 要求：
+
+- 无重复、穷尽全部非平凡零点的枚举；

@@ -1,0 +1,62 @@
+## 定理 1055.1（Global logarithmic gauge criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\exists\,L_\xi\in\mathcal O(\mathbb H_+)
+\quad
+e^{L_\xi(z)}=F(z).
+}
+\tag{1055.1}
+$$
+
+### 证明
+
+单连通域上的非消失全纯函数存在全纯对数。
+
+反之，指数函数永不为零。
+
+∎
+
+若 RH 成立，可以定义全局相位规范：
+
+$$
+\boxed{
+A_\xi
+=
+\operatorname{Im}dL_\xi.
+}
+\tag{1055.2}
+$$
+
+它在整个右完成体中无奇点。
+
+若存在离线零点，则不存在全局 \(\log F\)。
+
+必须：
+
+* 删除零点；
+* 选择从零点通向边界或无穷远的分支切口；
+* 在不同区域选取不同的局部对数。
+
+这条分支切口正是 Dirac string 的数学对应：
+
+$$
+\boxed{
+\text{string 的位置依赖 gauge，}
+}
+$$
+
+但：
+
+$$
+\boxed{
+\text{string 的端点与整数绕数不依赖 gauge。}
+}
+$$
+
+Wu–Yang 对 Dirac 单极子的全局描述正是：不应把奇异 string 当作物理对象，而应使用多个局部势和它们之间的纤维丛过渡函数。([APS Journals][5])
+
+---
+

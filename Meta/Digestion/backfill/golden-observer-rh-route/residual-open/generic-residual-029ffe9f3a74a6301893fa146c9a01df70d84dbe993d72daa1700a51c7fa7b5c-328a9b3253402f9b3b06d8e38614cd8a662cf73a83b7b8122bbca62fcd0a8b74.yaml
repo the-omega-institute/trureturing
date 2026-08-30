@@ -1,0 +1,10 @@
+ast_path: section/2-数学角色/clause/4
+fingerprints:
+  raw_sha256: sha256:029ffe9f3a74a6301893fa146c9a01df70d84dbe993d72daa1700a51c7fa7b5c
+  normalized_sha256: sha256:029ffe9f3a74a6301893fa146c9a01df70d84dbe993d72daa1700a51c7fa7b5c
+cas_ref: sha256:029ffe9f3a74a6301893fa146c9a01df70d84dbe993d72daa1700a51c7fa7b5c
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

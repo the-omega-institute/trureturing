@@ -1,0 +1,30 @@
+## 定理 1053.1（Zero multiplicity–Chern charge theorem）
+
+在上述取向约定下：
+
+$$
+\boxed{
+c_1(\mathcal E_+)
+[S_\varepsilon^2]
+=
+m.
+}
+\tag{1053.6}
+$$
+
+负能带携带相反 Chern 荷。
+
+所以：
+
+$$
+\boxed{
+\text{零点重数}
+=
+\text{Berry--Chern 单极子荷的绝对值}.
+}
+$$
+
+高重数零点对应高荷 multi-Weyl 型简并；任意整数拓扑荷的 Weyl 节点正可由相应的高绕数构造。([APS Journals][4])
+
+---
+

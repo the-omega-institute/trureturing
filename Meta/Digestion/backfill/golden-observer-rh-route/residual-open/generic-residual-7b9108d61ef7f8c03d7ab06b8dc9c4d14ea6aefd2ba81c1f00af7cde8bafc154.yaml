@@ -1,0 +1,10 @@
+ast_path: section/2-自然缩放不是把结构极点送到-1-而是把-germ-的收敛边送到-1
+fingerprints:
+  raw_sha256: sha256:7b9108d61ef7f8c03d7ab06b8dc9c4d14ea6aefd2ba81c1f00af7cde8bafc154
+  normalized_sha256: sha256:7b9108d61ef7f8c03d7ab06b8dc9c4d14ea6aefd2ba81c1f00af7cde8bafc154
+cas_ref: sha256:7b9108d61ef7f8c03d7ab06b8dc9c4d14ea6aefd2ba81c1f00af7cde8bafc154
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

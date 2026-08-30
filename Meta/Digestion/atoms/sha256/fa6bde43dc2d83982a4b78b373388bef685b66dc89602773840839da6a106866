@@ -1,0 +1,31 @@
+## 1017.5 固定支撑 Weil floor
+
+定义：
+
+$$
+\lambda^*(L)
+=
+\inf_{\operatorname{supp}f\subset[-L,L]}
+\frac{Q(f)}{\|f\|^2}.
+$$
+
+近期工作已经把紧窗口 Weil positivity 化为有限 PSD 矩阵，并给出了严格认证的正窗口；这说明“在有限证书空间中逐步扩大观察地平线”不是纯概念路线，而是可实施的数值—严格分析程序。([arXiv][4])
+
+理想判据为：
+
+$$
+\boxed{
+\begin{aligned}
+\mathrm{RH}
+&\Longrightarrow
+\lambda^*(L)\ge0\quad\forall L;\\
+\neg\mathrm{RH}
+&\Longrightarrow
+\exists L<\infty:
+\lambda^*(L)<0.
+\end{aligned}
+}
+$$
+
+---
+

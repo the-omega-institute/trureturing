@@ -1,0 +1,47 @@
+## 定理 1008.1（无原子时成本指数归零）
+
+假设：
+
+$$
+\operatorname{supp}\mu_a\subseteq\mathbb T
+$$
+
+且：
+
+$$
+|w|>1.
+$$
+
+取：
+
+$$
+p_N(z)=\left(\frac zw\right)^N.
+$$
+
+则：
+
+$$
+p_N(w)=1,
+$$
+
+且在单位圆上：
+
+$$
+|p_N(z)|=|w|^{-N}.
+$$
+
+因此：
+
+$$
+\boxed{
+0\le
+\lambda_N^{\mu_a}(w)
+\le
+\mu_a(\mathbb T)|w|^{-2N}
+\longrightarrow0.
+}
+\tag{1008.4}
+$$
+
+---
+

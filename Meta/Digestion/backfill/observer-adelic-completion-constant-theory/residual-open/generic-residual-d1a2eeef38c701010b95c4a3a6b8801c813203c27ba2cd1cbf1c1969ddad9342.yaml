@@ -1,0 +1,10 @@
+ast_path: section/945-2-方向仍需要双通道
+fingerprints:
+  raw_sha256: sha256:d1a2eeef38c701010b95c4a3a6b8801c813203c27ba2cd1cbf1c1969ddad9342
+  normalized_sha256: sha256:d1a2eeef38c701010b95c4a3a6b8801c813203c27ba2cd1cbf1c1969ddad9342
+cas_ref: sha256:d1a2eeef38c701010b95c4a3a6b8801c813203c27ba2cd1cbf1c1969ddad9342
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

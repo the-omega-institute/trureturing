@@ -1,0 +1,75 @@
+# 第一千零三十六部　有理矩形整数通量证书
+
+令 \(\mathscr R_{\mathbb Q}\) 为所有闭矩形：
+
+$$
+R=[a,b]\times[c,d]
+\subset\{x>0\},
+$$
+
+其中：
+
+$$
+a,b,c,d\in\mathbb Q,
+\qquad
+0<a<b,
+\qquad
+c<d.
+$$
+
+假设：
+
+$$
+F(z)\neq0
+\qquad
+(z\in\partial R).
+$$
+
+定义零点通量：
+
+$$
+\boxed{
+\mathfrak F_\xi(R)
+=
+\frac1{2\pi}
+\int_{\partial R}
+\partial_nU_\xi\,ds.
+}
+\tag{1036.1}
+$$
+
+由散度定理：
+
+$$
+\boxed{
+\mathfrak F_\xi(R)
+=
+\sum_{z_\rho\in R}m_\rho.
+}
+\tag{1036.2}
+$$
+
+等价地，由辩值原理：
+
+$$
+\boxed{
+\mathfrak F_\xi(R)
+=
+\frac1{2\pi i}
+\oint_{\partial R}
+\frac{F'(z)}{F(z)}\,dz.
+}
+\tag{1036.3}
+$$
+
+因此：
+
+$$
+\boxed{
+\mathfrak F_\xi(R)\in\mathbb N.
+}
+\tag{1036.4}
+$$
+
+---
+

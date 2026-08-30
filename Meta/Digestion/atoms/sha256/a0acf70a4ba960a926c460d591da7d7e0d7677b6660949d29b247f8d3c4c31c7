@@ -1,0 +1,39 @@
+# 第九百五十六部　黄金比例位于 RG 与 gap label，而非单点
+
+Fibonacci 模型同时展示了黄金比例的三种不同生存方式：
+
+$$
+\boxed{
+\begin{aligned}
+\varphi
+&:\quad\text{符号 substitution 的扩张率};\\
+\varphi^2,\varphi^{-2}
+&:\quad\text{完成奇点导数的 unstable/stable multipliers};\\
+\{m\varphi\}
+&:\quad\text{公共谱的 gap labels}.
+\end{aligned}
+}
+\tag{956.1}
+$$
+
+它并不要求某个能量本身恰好等于 \(\varphi\)。
+
+所以对 \(\zeta\) 更科学的搜索原则应当是：
+
+$$
+\boxed{
+\text{不要只在零点坐标中搜索裸 }\varphi.
+}
+$$
+
+还应搜索：
+
+* 完成流的线性化 multiplier；
+* prime/zero transfer cocycle 的 commutator invariant；
+* 零点计数或谱间隙的标签群；
+* 局部 resolvent 的第一 jet；
+* trace-map 固定点的稳定／不稳定方向；
+* observer phase 被平均后的二阶 Casimir。
+
+---
+

@@ -1,0 +1,19 @@
+### M5　黄金 germ 与 completed zeta 的桥
+
+按以下顺序，不跳步：
+
+1. 证明 `eulerGerm` 在 $\Re s>1/\phi^2$ 的收敛和解析性；
+2. 形式化 Beatty／指数计数重组；
+3. 在 $\Re s>1/(2\phi^3)$ 证明 PZG 命题 6.19 的因子分解；
+4. 形式化 $H_2$ 的绝对／局部一致收敛和 $e^{H_2}\ne0$；
+5. 用 meromorphic order 证明命题 6.31；
+6. 在严格窗口中证明无消去；
+7. 得到“窗口零点定位 $\Longleftrightarrow$ RH”；
+8. 最后单独研究从 $1/(2\phi^3)$ 向 $\Re s>0$ 的亚纯延拓。
+
+若希望 heart 同时断言结构极点，应新增 O-5′ GID，例如显式加入
+
+$\operatorname{ord}_{1/\phi^3}Z_{\rm qc}=-1$，
+
+而不是修改原 O-5 statement。
+

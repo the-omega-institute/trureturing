@@ -1,0 +1,17 @@
+## 第六步：Szegő transfer
+
+构造：
+
+$$
+\boxed{
+\widehat M_N^{(a,L)}(z)
+=
+\prod_{j=0}^{N-1}
+\widetilde A(
+\widehat\alpha_j,z).
+}
+\tag{978.4}
+$$
+
+---
+
