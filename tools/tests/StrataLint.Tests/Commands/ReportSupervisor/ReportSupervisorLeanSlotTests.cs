@@ -100,10 +100,15 @@ public sealed class ReportSupervisorLeanSlotTests
     // 若外层小于内层,内层那份「清过当前规模冷建」的论证就是空话——复审线按内层算,
     // 而实际杀进程的是外层(2026-08-30 #4122 architecture 席实测指出:内层已抬到 21600 而外层仍是 7200)。
     // 故外层默认值必须**等于**内层声明值:同一个数只在 C# 声明一次,脚本里的字面量由本条钉住。
+    // 路径以 FindRoot + 字面量内联而不走 SupervisorScriptPath():那是 ScribeTestMapDeriver 认得的
+    // declared-input 形状(#4122 pass 2 admission 实测:经 helper 读文件被记为 unknown,SL-003 对
+    // fork 点之后新增的 unknown 方法 fail-closed),且把脚本登记为本测试的输入——改脚本即选中本测试。
     [Fact]
     public void HolderBudgetMatchesTheProvisionPolicyCeiling()
     {
-        var source = File.ReadAllText(SupervisorScriptPath());
+        var source = File.ReadAllText(Path.Combine(
+            TestRepositoryLayout.FindRoot(),
+            "tools", "scripts", "report", "report-supervisor.sh"));
         var hold = DefaultOf(source, "STRATALINT_BUILD_TIMEOUT_SECONDS");
 
         Assert.True(
