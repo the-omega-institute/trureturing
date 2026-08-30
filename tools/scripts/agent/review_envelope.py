@@ -67,10 +67,11 @@ def main(argv):
                 continue
             if status == "M" and QUAR.search(show(wt, base, path)):
                 continue  # quarantine already present in base: not this branch's outcome
-            atom = re.search(r"^\s*atom_id:\s*(\S+)", text, re.M)
+            # the ledger file has no atom_id key: the atom id IS the file stem (generic-residual-<sha256> / <source>-residual-<sha256>)
+            atom = path.rsplit("/", 1)[1].rsplit(".", 1)[0]
             block = text[QUAR.search(text).end():]
             fields = {k: (re.search(rf"^\s+{k}:\s*(.*)$", block, re.M) or [None, ""])[1].strip().strip('"\'') for k in ("justification", "reentry_condition", "blocker_class")}
-            ejected.append({"atom_id": atom.group(1) if atom else path, "source_id": LEDGER.match(path).group(1), **fields})
+            ejected.append({"atom_id": atom, "source_id": LEDGER.match(path).group(1), **fields})
     head_receipts = {p for p in git(wt, "ls-tree", "-r", "--name-only", head, RECEIPTS).splitlines()}
     for e in ejected:
         if RECEIPTS + e["atom_id"] + SUFFIX in head_receipts:
