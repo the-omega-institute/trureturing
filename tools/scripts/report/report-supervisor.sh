@@ -61,7 +61,12 @@ MAX_CONCURRENCY="${STRATALINT_LEAN_MAX_CONCURRENCY:-5}"
 # 代价(如实记):真死锁的暴露时间因此由 15 分钟变为 2 小时。缓解是 reclaim_stale_lock
 # 对死掉的持槽者立即回收,而活着的持槽者本就是合法的。剩下的饥饿(mkdir 抢占自旋而非
 # FIFO,先到者可被后到者反复抢先)是 #1910 的另一半,本改动不假装修了它。
-LOCK_TIMEOUT_SECONDS="${STRATALINT_LOCK_TIMEOUT_SECONDS:-7200}"
+# 2026-08-30(#4120/#4122):两个默认值随 `LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds`
+# 由 7200 抬到 21600。理由是嵌套 deadline 取最小:worker 构建的内层预算是那条 C# 声明,
+# 外层是本脚本的 BUILD_TIMEOUT;外层若小于内层,内层「清过当前规模冷建」的论证就被外层
+# 静默作废。相等关系由 HolderBudgetMatchesTheProvisionPolicyCeiling 钉住;等待预算 ≥ 持有
+# 预算仍由 WaiterBudgetOutlastsALegitimateHolder 钉住。
+LOCK_TIMEOUT_SECONDS="${STRATALINT_LOCK_TIMEOUT_SECONDS:-21600}"
 [[ "$LOCK_TIMEOUT_SECONDS" =~ ^[1-9][0-9]*$ && "$LOCK_TIMEOUT_SECONDS" -le 86400 ]] \
   || { echo "report-supervisor: STRATALINT_LOCK_TIMEOUT_SECONDS must be 1..86400" >&2; exit 2; }
 # Wall-clock budget for the worker build itself (#403): a build that hangs while
@@ -69,7 +74,7 @@ LOCK_TIMEOUT_SECONDS="${STRATALINT_LOCK_TIMEOUT_SECONDS:-7200}"
 # reaching finish() (which releases the slot), starving every subsequent lean
 # build. 0 disables the bound (legacy unbounded behavior). Default is generous
 # enough for any legitimate lean-report build yet finite so a hang self-releases.
-BUILD_TIMEOUT_SECONDS="${STRATALINT_BUILD_TIMEOUT_SECONDS:-7200}"
+BUILD_TIMEOUT_SECONDS="${STRATALINT_BUILD_TIMEOUT_SECONDS:-21600}"
 [[ "$BUILD_TIMEOUT_SECONDS" =~ ^[0-9]+$ && "$BUILD_TIMEOUT_SECONDS" -le 86400 ]] \
   || { echo "report-supervisor: STRATALINT_BUILD_TIMEOUT_SECONDS must be 0..86400" >&2; exit 2; }
 LOCK_INITIALIZATION_GRACE_SECONDS=5

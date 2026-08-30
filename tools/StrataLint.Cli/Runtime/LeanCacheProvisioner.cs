@@ -74,16 +74,19 @@ internal static class LeanCacheProvisioner
 
     // Cold provisioning spans package clones plus olean download and extraction. The five
     // minute floor permits useful fail-fast runs; the ceiling is the declared default itself
-    // (six hours since #4120; two hours under #2535; the ratio to a cold build read 4x while
-    // the default was 1800s), so a hang is bounded without a second literal.
+    // (six hours since #4120; two hours under #2535). Historical note: while the default was
+    // 1800s the clamp ceiling was a separate 7200s literal, i.e. 4x the default — that
+    // second literal is gone, so a hang is bounded by the one declared value.
     /// <summary>
-    /// 按某棵工作树的内容层规模派生预算。**没有无参版本**:预算依赖那棵树有多少模块,
-    /// 一个静态属性只能去猜仓库根,而猜出来的工作量会算出看似派生实则无源的值。
+    /// 本次预算。**不再按树规模派生**(派生式已于 #3119 删除):环境旋钮
+    /// `STRATALINT_LEAN_CACHE_TIMEOUT_SECONDS` 若可解析则 clamp 到 [下界, 上界],否则取上界
+    /// (= <see cref="LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds"/>)。
+    /// 名字里的 ForTree 是派生时代的遗留,保留只为不动调用点。
     /// </summary>
     internal static TimeSpan ProvisionBudgetForTree() => ProvisionBudgetFor();
 
     /// <summary>
-    /// 按内容层规模派生本次预算。环境旋钮仍优先,且仍受同一 clamp。
+    /// 解析环境旋钮并 clamp;无旋钮即上界。无派生、无树读取。
     /// </summary>
     internal static TimeSpan ProvisionBudgetFor()
     {

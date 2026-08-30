@@ -95,6 +95,24 @@ public sealed class ReportSupervisorLeanSlotTests
             + "one legitimate long build would then red every concurrent waiter");
     }
 
+    // 嵌套 deadline 取最小:`make lean-report` 的 worker 构建外层由本脚本的 BUILD_TIMEOUT 兜住,
+    // 内层由 `LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds`(policy-override,#2535→#4120)兜住。
+    // 若外层小于内层,内层那份「清过当前规模冷建」的论证就是空话——复审线按内层算,
+    // 而实际杀进程的是外层(2026-08-30 #4122 architecture 席实测指出:内层已抬到 21600 而外层仍是 7200)。
+    // 故外层默认值必须**等于**内层声明值:同一个数只在 C# 声明一次,脚本里的字面量由本条钉住。
+    [Fact]
+    public void HolderBudgetMatchesTheProvisionPolicyCeiling()
+    {
+        var source = File.ReadAllText(SupervisorScriptPath());
+        var hold = DefaultOf(source, "STRATALINT_BUILD_TIMEOUT_SECONDS");
+
+        Assert.True(
+            hold == StrataLint.Cli.LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds,
+            $"supervisor BUILD_TIMEOUT default {hold}s != LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds "
+            + $"{StrataLint.Cli.LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds}s; nested deadlines take the minimum, "
+            + "so the smaller outer value silently replaces the declared policy-override");
+    }
+
     private static int DefaultOf(string source, string name)
     {
         var match = System.Text.RegularExpressions.Regex.Match(

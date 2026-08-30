@@ -108,9 +108,18 @@ public sealed class LeanCacheProvisionerTests
     [Fact]
     public void PolicyOverrideDeclarationReportsEveryRequiredItem()
     {
-        var declaration = File.ReadAllText(Path.Combine(
+        var file = File.ReadAllText(Path.Combine(
             TestRepositoryLayout.FindRoot(),
             "tools", "StrataLint.Cli", "Runtime", "LeanCacheBudgetPolicy.cs"));
+
+        // 只看该常数自己的 <summary> 块(#4122 tests 席:全文件 token 检查会被别处出现的同一
+        // 字符串满足,例如复审线常数的注释里也写着案号与日期)。
+        var constantIndex = file.IndexOf("internal const int DefaultProvisionBudgetSeconds", StringComparison.Ordinal);
+        Assert.True(constantIndex > 0, "DefaultProvisionBudgetSeconds declaration not found");
+        var head = file[..constantIndex];
+        var summaryStart = head.LastIndexOf("/// <summary>", StringComparison.Ordinal);
+        Assert.True(summaryStart >= 0, "DefaultProvisionBudgetSeconds has no <summary> block");
+        var declaration = head[summaryStart..];
 
         foreach (var required in new[]
         {
@@ -178,8 +187,8 @@ public sealed class LeanCacheProvisionerTests
     }
 
     /// <summary>
-    /// 旋钮的解析与 clamp。非法值那一档原本期望 3600(旧默认字面量),现改为期望
-    /// **该树的派生值** —— 非法输入应当落回默认路径,而默认路径现在是派生的。
+    /// 旋钮的解析与 clamp:低于下界落到下界,高于上界落到上界(上界 = 声明的 policy-override 值,
+    /// 无派生 —— 派生式已于 #3119 删除)。
     /// </summary>
     [Theory]
     [InlineData("1", 300)]
