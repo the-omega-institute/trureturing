@@ -23,12 +23,12 @@ domains:
   CertificateHistory:
     stratum: S0
     definition: Finite event-history certificates and the finite sets of generating events they reference.
-  Computability:
-    stratum: S0
-    definition: Partial recursive codes with universal evaluation and the recursion-theoretic fixed points of computable code transformations.
   CompletionDynamics:
     stratum: S3
     definition: Dynamical structures of observer completion - golden Mobius fixed points, projective jets and first-break orders, and real-completion thread fibers with blow-up coordinates.
+  Computability:
+    stratum: S0
+    definition: Partial recursive codes with universal evaluation and the recursion-theoretic fixed points of computable code transformations.
   ConceptDynamics:
     stratum: S3
     definition: Abstract concept readouts, dependent fibers, refinements, joins, and descent uniqueness.
