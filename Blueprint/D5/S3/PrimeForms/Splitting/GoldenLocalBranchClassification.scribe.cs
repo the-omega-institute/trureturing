@@ -14,20 +14,15 @@ internal sealed class GoldenLocalBranchClassificationDocument : IScribeDocumentD
         H("Golden Local Branch Classification"),
         Blocks(
             DefinitionNode(
-                "branch-swap",
-                "branchSwap",
-                "Branch swap",
-                "Galois conjugation exchanges the two complex embedding coordinates."),
-            DefinitionNode(
                 "even-branch-projection",
                 "evenBranchProjection",
                 "Even branch projection",
-                "The half-sum of the identity and branch swap projects to the fixed branch."),
+                "The half-sum of the identity and the canonical bit flip projects to the fixed branch."),
             DefinitionNode(
                 "odd-branch-projection",
                 "oddBranchProjection",
                 "Odd branch projection",
-                "The half-difference of the identity and branch swap projects to the negated branch."),
+                "The half-difference of the identity and the canonical bit flip projects to the negated branch."),
             DefinitionNode(
                 "golden-local-branch-operator",
                 "goldenLocalBranchOperator",
@@ -43,7 +38,7 @@ internal sealed class GoldenLocalBranchClassificationDocument : IScribeDocumentD
                 Blocks(
                     Paragraph(Text(
                         "The determinant is the mod-five quadratic character. Character one gives "
-                            + "the identity, character minus one gives branch exchange, and character "
+                            + "the identity, character minus one gives the canonical bit flip, and character "
                             + "zero fixes the even vector while killing the odd vector. For prime "
                             + "indices, noninvertibility is equivalent to the index being five. The "
                             + "same statement includes the ramified-square identity on GoldenInt.")),
@@ -83,22 +78,26 @@ internal sealed class GoldenLocalBranchClassificationDocument : IScribeDocumentD
 
         return Disp(Seq(
             Forall, Sp, prime, Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")), Comma, Sp,
-            Call("Prime", prime), Sp, Rightarrow, RowBreak, Grp(),
-            Call("det", localOperator), Sp, Eq, Sp, character, Sp, Land, RowBreak, Grp(),
+            Open, Call("Prime", prime), Sp, Rightarrow, Sp,
+            Call("det", localOperator), Sp, Eq, Sp, character, Close, Sp, Land, RowBreak, Grp(),
+            Open, Call("Prime", prime), Sp, Rightarrow, Sp,
             Open, character, Sp, Eq, Sp, D(1), Sp, Rightarrow, Sp, Open,
             Call("det", localOperator), Sp, Eq, Sp, D(1), Sp, Land, Sp,
-            localOperator, Sp, Eq, Sp, F.Id("I"), Close, Close, Sp, Land, RowBreak, Grp(),
+            localOperator, Sp, Eq, Sp, F.Id("I"), Close, Close, Close, Sp, Land, RowBreak, Grp(),
+            Open, Call("Prime", prime), Sp, Rightarrow, Sp,
             Open, character, Sp, Eq, Sp, Minus, D(1), Sp, Rightarrow, Sp, Open,
             Call("det", localOperator), Sp, Eq, Sp, Minus, D(1), Sp, Land, Sp,
-            localOperator, Sp, Eq, Sp, F.Id("branchSwap"), Close, Close, Sp, Land, RowBreak, Grp(),
+            localOperator, Sp, Eq, Sp, F.Id("bitFlip"), Close, Close, Close, Sp, Land, RowBreak, Grp(),
+            Open, Call("Prime", prime), Sp, Rightarrow, Sp,
             Open, character, Sp, Eq, Sp, D(0), Sp, Rightarrow, Sp, Open,
             Call("det", localOperator), Sp, Eq, Sp, D(0), Sp, Land, RowBreak, Grp(),
             localOperator, Sp, Eq, Sp, F.Id("evenBranchProjection"), Sp, Land, RowBreak, Grp(),
             Call("mulVec", localOperator, oddVector), Sp, Eq, Sp, D(0), Sp, Land, RowBreak, Grp(),
             Call("mulVec", localOperator, evenVector), Sp, Eq, Sp, evenVector,
-            Close, Close, Sp, Land, RowBreak, Grp(),
+            Close, Close, Close, Sp, Land, RowBreak, Grp(),
+            Open, Call("Prime", prime), Sp, Rightarrow, Sp,
             Open, Neg, Call("IsUnit", localOperator), Sp, Leftrightarrow, Sp,
-            prime, Sp, Eq, Sp, D(5), Close, Sp, Land, RowBreak, Grp(),
+            prime, Sp, Eq, Sp, D(5), Close, Close, Sp, Land, RowBreak, Grp(),
             Call("cast", D(5), F.Id("GoldenInt")), Sp, Eq, Sp, ramifiedSquare, Dot));
     }
 }
