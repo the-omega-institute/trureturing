@@ -517,7 +517,10 @@ public sealed partial class MakeWorkflowTests
             .Where(static project =>
                 project.Path.StartsWith("tools/tests/", StringComparison.Ordinal)
                 && project.Path.EndsWith(".csproj", StringComparison.Ordinal)
-                && project.Path != "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj")
+                // 与 CLI 同一真源:横跨型 harness 的具名集合住在策略里,
+                // 测试不再自带第二份排除清单(此前只硬编码了 ArchitectureTests 一条,
+                // 新增 ScriptTests 后两处定义即分叉)。
+                && !RepositoryRules.CrossCuttingHarnessPaths.Contains(project.Path))
             .Select(static project =>
             {
                 var document = XDocument.Parse(project.Content, LoadOptions.None);
