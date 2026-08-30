@@ -30,8 +30,9 @@ internal sealed class CriticalLineOscillatorGramDocument : IScribeDocumentDefini
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "Each entry is the sum of the two rank-one kernels obtained from the "
-                        + "reflected resolvent coordinates."))),
+                    "The Pick atom is defined as the conjugate-transpose Gram product of "
+                        + "the two reflected resolvent rows. Expanding an entry gives the "
+                        + "sum of the two associated rank-one kernels."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("critical-line-oscillator-pick-gram"),
@@ -41,10 +42,9 @@ internal sealed class CriticalLineOscillatorGramDocument : IScribeDocumentDefini
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "Expanding the two-row matrix product gives the displayed kernel "
-                            + "entry by entry.")),
+                        "The first conjunct records the defining Gram factorization.")),
                     Paragraph(Text(
-                        "Mathlib's conjugate-transpose Gram theorem then proves positive "
+                        "Mathlib's conjugate-transpose Gram theorem proves positive "
                             + "semidefiniteness for every finite family of complex nodes, "
                             + "including repeated nodes and nodes at a pole under the totalized "
                             + "inverse convention."))),

@@ -14,9 +14,9 @@ import Mathlib.Tactic
    * The nearby frozen Weil modules describe the critical line, scattering,
      Cayley-Laguerre moments, and curvature defects, but do not construct this
      finite Pick matrix.
-   * Pinned Mathlib supplies `Matrix.posSemidef_conjTranspose_mul_self` and
-     `Fin.sum_univ_two`; the theorem below instantiates them with the two
-     reflected critical-line resolvent coordinates. -/
+   * Pinned Mathlib supplies `Matrix.posSemidef_conjTranspose_mul_self`; the
+     theorem below instantiates it with the two reflected critical-line
+     resolvent coordinates. -/
 
 noncomputable section
 
@@ -37,36 +37,26 @@ def criticalLineOscillatorFeatureMatrix {ι : Type*} [Fintype ι]
       (nodes j + Complex.I * (ordinate : ℂ))⁻¹
     ] row
 
-/-- The finite kernel matrix obtained by summing the two reflected resolvent
-rank-one kernels. -/
+/-- The finite Pick atom is the Gram matrix of the two reflected resolvent
+coordinates. Entrywise expansion gives the sum of the two associated rank-one
+kernels. -/
 def criticalLineOscillatorPickMatrix {ι : Type*} [Fintype ι]
     (ordinate : ℝ) (nodes : ι → ℂ) : Matrix ι ι ℂ :=
-  fun i j =>
-    star ((nodes i - Complex.I * (ordinate : ℂ))⁻¹) *
-        (nodes j - Complex.I * (ordinate : ℂ))⁻¹ +
-      star ((nodes i + Complex.I * (ordinate : ℂ))⁻¹) *
-        (nodes j + Complex.I * (ordinate : ℂ))⁻¹
+  (criticalLineOscillatorFeatureMatrix ordinate nodes)ᴴ *
+    criticalLineOscillatorFeatureMatrix ordinate nodes
 
-/-- Every finite sampling of one reflected critical-line oscillator is exactly
-the Gram matrix of its two resolvent coordinates and is therefore positive
-semidefinite. -/
+/-- Every finite sampling of one reflected critical-line oscillator has the
+stated two-row Gram factorization and is positive semidefinite. -/
 theorem critical_line_oscillator_pick_gram
     {ι : Type*} [Fintype ι] (ordinate : ℝ) (nodes : ι → ℂ) :
     criticalLineOscillatorPickMatrix ordinate nodes =
         (criticalLineOscillatorFeatureMatrix ordinate nodes)ᴴ *
           criticalLineOscillatorFeatureMatrix ordinate nodes ∧
       (criticalLineOscillatorPickMatrix ordinate nodes).PosSemidef := by
-  have hFactor :
-      criticalLineOscillatorPickMatrix ordinate nodes =
-        (criticalLineOscillatorFeatureMatrix ordinate nodes)ᴴ *
-          criticalLineOscillatorFeatureMatrix ordinate nodes := by
-    ext i j
-    simp [criticalLineOscillatorPickMatrix,
-      criticalLineOscillatorFeatureMatrix, Matrix.mul_apply,
-      Fin.sum_univ_two]
-  refine ⟨hFactor, ?_⟩
-  rw [hFactor]
-  exact Matrix.posSemidef_conjTranspose_mul_self _
+  refine ⟨rfl, ?_⟩
+  simpa only [criticalLineOscillatorPickMatrix] using
+    (Matrix.posSemidef_conjTranspose_mul_self
+      (criticalLineOscillatorFeatureMatrix ordinate nodes))
 
 #print axioms critical_line_oscillator_pick_gram
 
