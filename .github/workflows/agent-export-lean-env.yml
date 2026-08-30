@@ -1,0 +1,39 @@
+name: agent-export-lean-env
+
+on:
+  push:
+    branches:
+      - agent/scratch/export-dev-current-20260830
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/scratch/export-dev-current-20260830
+          fetch-depth: 0
+      - name: Install pinned Lean toolchain
+        run: |
+          tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - name: Fetch pinned Mathlib dependencies and binary cache
+        run: |
+          export PATH="$HOME/.elan/bin:$PATH"
+          lake update
+          lake exe cache get
+      - name: Package Lean environment
+        run: |
+          tar -C "$HOME" -czf "$RUNNER_TEMP/elan-linux-x86_64.tar.gz" .elan
+          tar -C "$GITHUB_WORKSPACE" -czf "$RUNNER_TEMP/lake-packages-v431.tar.gz" .lake/packages
+      - uses: actions/upload-artifact@v4
+        with:
+          name: trureturing-lean-v431-linux-env
+          path: |
+            ${{ runner.temp }}/elan-linux-x86_64.tar.gz
+            ${{ runner.temp }}/lake-packages-v431.tar.gz
+          if-no-files-found: error
+          retention-days: 1
