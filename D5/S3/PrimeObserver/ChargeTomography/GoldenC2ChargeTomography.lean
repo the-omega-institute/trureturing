@@ -3,7 +3,8 @@
    mirror-B: D5/B/S3/PrimeObserver/ChargeTomography/GoldenC2ChargeTomography
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: The neutral and quadratic charge channels form an invertible two-channel tomography of split and inert prime populations, while the neutral channel alone loses the distinction. -/
+   digest: Neutral and quadratic charge channels form invertible two-channel
+     tomography, while the neutral channel alone loses the distinction. -/
 
 import Mathlib
 
@@ -16,6 +17,8 @@ import Mathlib
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+
+noncomputable section
 
 namespace D5.S3.PrimeObserver.ChargeTomography.GoldenC2ChargeTomography
 
@@ -32,20 +35,28 @@ populations. -/
 theorem synthesize_analyze (population : ℝ × ℝ) :
     synthesizePopulation (analyzeCharge population) = population := by
   rcases population with ⟨split, inert⟩
-  ext <;> simp [analyzeCharge, synthesizePopulation] <;> ring
+  ext
+  · dsimp [analyzeCharge, synthesizePopulation]
+    ring
+  · dsimp [analyzeCharge, synthesizePopulation]
+    ring
 
 /-- Analysis exactly recovers the neutral and charge channels after synthesis. -/
 theorem analyze_synthesize (channels : ℝ × ℝ) :
     analyzeCharge (synthesizePopulation channels) = channels := by
   rcases channels with ⟨neutral, charge⟩
-  ext <;> simp [analyzeCharge, synthesizePopulation] <;> ring
+  ext
+  · dsimp [analyzeCharge, synthesizePopulation]
+    ring
+  · dsimp [analyzeCharge, synthesizePopulation]
+    ring
 
 /-- The joint neutral-plus-charge observer is faithful. -/
 theorem analyze_charge_injective :
     Function.Injective analyzeCharge := by
   intro x y h
-  have := congrArg synthesizePopulation h
-  simpa [synthesize_analyze] using this
+  have hDecoded := congrArg synthesizePopulation h
+  simpa only [synthesize_analyze] using hDecoded
 
 /-- The joint observer is also surjective. -/
 theorem analyze_charge_surjective :
@@ -69,20 +80,21 @@ theorem neutral_channel_not_injective :
   intro hInjective
   have hSame : neutralChannel (1, 0) = neutralChannel (0, 1) := by
     norm_num [neutralChannel]
-  have hPairs : (1, 0 : ℝ × ℝ) = (0, 1) := hInjective hSame
+  have hPairs : ((1, 0) : ℝ × ℝ) = (0, 1) := hInjective hSame
   have hFirst := congrArg Prod.fst hPairs
   norm_num at hFirst
 
 /-- A zero charge channel means equal split and inert populations. -/
 theorem charge_channel_eq_zero_iff (split inert : ℝ) :
     (analyzeCharge (split, inert)).2 = 0 ↔ split = inert := by
-  simp [analyzeCharge]
+  change split - inert = 0 ↔ split = inert
+  exact sub_eq_zero
 
 /-- The split population is half the sum of the neutral and charge channels. -/
 theorem split_from_channels (split inert : ℝ) :
     split = ((analyzeCharge (split, inert)).1 +
       (analyzeCharge (split, inert)).2) / 2 := by
-  simp [analyzeCharge]
+  change split = (split + inert + (split - inert)) / 2
   ring
 
 /-- The inert population is half the difference of the neutral and charge
@@ -90,7 +102,7 @@ channels. -/
 theorem inert_from_channels (split inert : ℝ) :
     inert = ((analyzeCharge (split, inert)).1 -
       (analyzeCharge (split, inert)).2) / 2 := by
-  simp [analyzeCharge]
+  change inert = (split + inert - (split - inert)) / 2
   ring
 
 /-- The hypotheses and carrier are inhabited by a nontrivial population. -/
