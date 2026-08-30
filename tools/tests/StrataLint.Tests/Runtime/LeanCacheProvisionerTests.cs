@@ -121,25 +121,28 @@ public sealed class LeanCacheProvisionerTests
         Assert.True(summaryStart >= 0, "DefaultProvisionBudgetSeconds has no <summary> block");
         var declaration = head[summaryStart..];
 
-        foreach (var required in new[]
+        // 逐项按**带标签的字段**核对(#4122 tests 席:无标签的 token 出现在块内任何位置都能满足,
+        // 那不是钉住修订字段)。每个正则都锚在该项的标签上。
+        foreach (var (label, pattern) in new[]
         {
-            "policy-override",       // 明报型别
-            "这不是派生值",           // 明报非派生
-            "2026-08-25",            // 日期
-            "**域**",                 // 域
-            "**正读数**",             // 正读数
-            "**负读数**",             // 负读数
-            "issues/2535",           // 永久案号(首次收口)
-            "2026-08-30",            // 修订日期(#4120)
-            "issues/4120",           // 修订案号
-            "**owner**",              // owner
-            "退出条件",               // 退出条件 / 复审触发
-            "**非永久**",             // 非永久
+            ("型别", @"\*\*分类:`policy-override`。\*\*"),
+            ("非派生", @"「这不是派生值。」"),
+            ("修订日期", @"\*\*日期\*\*:2026-08-30"),
+            ("首次日期", @"首次收口 2026-08-25"),
+            ("修订记录", @"\*\*修订记录\(2026-08-30\)\*\*"),
+            ("域", @"\*\*域\*\*:"),
+            ("正读数", @"\*\*正读数\*\*:"),
+            ("负读数", @"\*\*负读数\*\*:"),
+            ("永久案号(首次)", @"\*\*永久案号\*\*:https://github\.com/the-omega-institute/trureturing/issues/2535"),
+            ("永久案号(修订)", @"→ https://github\.com/the-omega-institute/trureturing/issues/4120"),
+            ("owner", @"\*\*owner\*\*:"),
+            ("退出条件", @"\*\*退出条件 / 复审触发\*\*"),
+            ("非永久", @"\*\*非永久\*\*:"),
         })
         {
             Assert.True(
-                declaration.Contains(required, StringComparison.Ordinal),
-                $"policy-override 声明缺项:{required}");
+                System.Text.RegularExpressions.Regex.IsMatch(declaration, pattern),
+                $"policy-override 声明缺项或标签不符:{label}(pattern {pattern})");
         }
     }
 

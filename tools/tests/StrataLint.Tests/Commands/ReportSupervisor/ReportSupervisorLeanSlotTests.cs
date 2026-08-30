@@ -95,27 +95,51 @@ public sealed class ReportSupervisorLeanSlotTests
             + "one legitimate long build would then red every concurrent waiter");
     }
 
-    // 嵌套 deadline 取最小:`make lean-report` 的 worker 构建外层由本脚本的 BUILD_TIMEOUT 兜住,
-    // 内层由 `LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds`(policy-override,#2535→#4120)兜住。
-    // 若外层小于内层,内层那份「清过当前规模冷建」的论证就是空话——复审线按内层算,
-    // 而实际杀进程的是外层(2026-08-30 #4122 architecture 席实测指出:内层已抬到 21600 而外层仍是 7200)。
-    // 故外层默认值必须**等于**内层声明值:同一个数只在 C# 声明一次,脚本里的字面量由本条钉住。
+    // 嵌套 deadline 取最小:`make lean-report` 的 worker(`tools/lean-inspector/inspect.sh`)外层由本脚本的
+    // BUILD_TIMEOUT 兜住,内层是每条 Lake 命令各自的 `LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds`
+    // (policy-override,#2535→#4120)。inspect.sh 顺序跑最多三条各自预算的 Lake 阶段(build、delta 子集
+    // inspect、全量回退 inspect),故外层必须 ≥ 阶段数 × 内层,否则后面的阶段只剩余量
+    // (2026-08-30 #4122 architecture 席两轮实测指出:先是外层 7200 < 内层 21600,再是「相等」仍不够)。
     // 路径以 FindRoot + 字面量内联而不走 SupervisorScriptPath():那是 ScribeTestMapDeriver 认得的
     // declared-input 形状(#4122 pass 2 admission 实测:经 helper 读文件被记为 unknown,SL-003 对
     // fork 点之后新增的 unknown 方法 fail-closed),且把脚本登记为本测试的输入——改脚本即选中本测试。
     [Fact]
-    public void HolderBudgetMatchesTheProvisionPolicyCeiling()
+    public void HolderBudgetCoversTheInspectorsSequentialLakePhases()
     {
         var source = File.ReadAllText(Path.Combine(
             TestRepositoryLayout.FindRoot(),
             "tools", "scripts", "report", "report-supervisor.sh"));
         var hold = DefaultOf(source, "STRATALINT_BUILD_TIMEOUT_SECONDS");
+        var composite = StrataLint.Cli.LeanCacheBudgetPolicy.InspectorSequentialLakePhasesWorstCase
+            * StrataLint.Cli.LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds;
 
         Assert.True(
-            hold == StrataLint.Cli.LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds,
-            $"supervisor BUILD_TIMEOUT default {hold}s != LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds "
-            + $"{StrataLint.Cli.LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds}s; nested deadlines take the minimum, "
-            + "so the smaller outer value silently replaces the declared policy-override");
+            hold >= composite,
+            $"supervisor BUILD_TIMEOUT default {hold}s < {StrataLint.Cli.LeanCacheBudgetPolicy.InspectorSequentialLakePhasesWorstCase}"
+            + $" sequential Lake phases × {StrataLint.Cli.LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds}s = {composite}s;"
+            + " nested deadlines take the minimum, so later phases would run on the residual of the outer budget only");
+    }
+
+    // 阶段数不是拍的:从 inspect.sh 本身数出来 —— `"$CACHE_RUN" "$LAKE"` 的调用点 2 处(build / inspect),
+    // 其中 inspect 住在 invoke_inspector() 里,该函数有 2 个调用点(delta 子集、全量回退),
+    // 最坏顺序执行 = 1 + 2 = 3。本条把政策常数钉在脚本的实际结构上;脚本多一条 Lake 阶段即红。
+    [Fact]
+    public void InspectorSequentialLakePhaseCountMatchesTheScript()
+    {
+        var inspector = File.ReadAllText(Path.Combine(
+            TestRepositoryLayout.FindRoot(),
+            "tools", "lean-inspector", "inspect.sh"));
+        var lines = inspector.Split('\n');
+        var lakeSites = lines.Count(static line => line.Contains("\"$CACHE_RUN\" \"$LAKE\"", StringComparison.Ordinal));
+        var inspectorCalls = lines.Count(static line =>
+            line.TrimStart().StartsWith("invoke_inspector ", StringComparison.Ordinal)
+            || line.Contains("! invoke_inspector ", StringComparison.Ordinal));
+
+        Assert.Equal(2, lakeSites);
+        Assert.Equal(2, inspectorCalls);
+        Assert.Equal(
+            StrataLint.Cli.LeanCacheBudgetPolicy.InspectorSequentialLakePhasesWorstCase,
+            1 + inspectorCalls);
     }
 
     private static int DefaultOf(string source, string name)

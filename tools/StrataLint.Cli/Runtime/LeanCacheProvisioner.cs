@@ -54,9 +54,10 @@ internal static class LeanCacheProvisioner
     /// pushed this file past the 800-line limit once dev added to it, and shortening the
     /// declaration to fit would trade an audited statement for a line count.
     /// <summary>
-    /// 无法定位内容层时的回退预算。**这不是那个被派生式取代的 3600**,而是「数不出模块
-    /// 就按最保守值走」的兜底:取 clamp 上界,因为「数不出来」多半意味着树不完整,
-    /// 此时误杀一个正常构建的代价高于多等一会儿。
+    /// clamp 下界(300s),只在调用方显式设置 `STRATALINT_LEAN_CACHE_TIMEOUT_SECONDS` 时参与
+    /// clamp;默认路径不经过它(无旋钮或旋钮非法即直接取 <see cref="MaxProvisionBudgetSeconds"/>)。
+    /// 此处曾写「数不出模块就取 clamp 上界的兜底」——那段描述的是已于 #3119 删除的树规模派生路径,
+    /// 与本常数的实际角色(下界)不符,#4122 第二轮评审勘正。
     /// </summary>
     internal const int MinProvisionBudgetSeconds = LeanCacheBudgetPolicy.MinimumConfigurableBudgetSeconds;
 

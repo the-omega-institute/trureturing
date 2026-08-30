@@ -16,7 +16,8 @@ internal static class LeanCacheBudgetPolicy
     ///
     /// **修订记录(2026-08-30)**:复审触发线 ②(当时 2672 模块)被跨过 —— dev `9b629c376` 实测
     /// `find D5 -name '*.lean' | wc -l` = 2672,观察者 `ColdBuildBudgetReviewLineHasNotBeenCrossed`
-    /// 如其设计把全仓触碰 D5 的 PR 判红(https://github.com/the-omega-institute/trureturing/issues/4120)。
+    /// 如其设计变红——它在必跑的架构测试里,故 dev 自身到线后**所有** PR(含只改一行文档的、
+    /// 含干净的 dev 树本身)一律红,不只是触碰 D5 的(https://github.com/the-omega-institute/trureturing/issues/4120)。
     /// 本次是对该到期的**重新收口**,不是「改大让它绿」:型别不变、论证重走、读数更新、复审线重算。
     ///
     /// **域**:`LeanCacheProvisioner` 的三个具名消费点 —— `LeanCommandBudget`(承重,
@@ -35,17 +36,22 @@ internal static class LeanCacheBudgetPolicy
     /// ④(2026-08-30 新增)锚点投影:2.156588 s/模块(= 3388/1571;1571 是那次冷建**建成**的模块数,
     /// 当时 census 为 1575 个 `.lean`,取建成数为分母使 s/模块偏大,是保守方向)× 2672 =
     /// 5762.40,**ceil 为 5763s**,即 7200 的 80.0%,首次收口的取值依据按其自设判据到期;
-    /// ⑤(2026-08-30 新增)CI 侧真实读数(`lean-cache-seed-manual.yml`,v4.33 集成分支,
-    /// ubuntu-24.04-arm,12 分钟检查点 × 6/轮):round 1 = run 33283129303(restore 步 3s、
-    /// 无快照日志,按空缓存首轮读)建造 72 分钟未完成;round 2 = run 33286112262 恢复 round 1 的
-    /// 1.18 GB 进度快照后**续建** 72 分钟仍未报完成 ⟹ 该冷建的**续建下界 ≥ 8640s**(两轮之和,
-    /// 不是一次空缓存连续冷跑;把它当冷建下界的假设是「快照恢复不丢失已建产物」)。
+    /// ⑤(2026-08-30 新增;第二轮评审勘正 run 链)CI 侧观测(`lean-cache-seed-manual.yml`,
+    /// v4.33 集成分支,ubuntu-24.04-arm,12 分钟检查点 × 6/轮,跨轮以进度快照续建):
+    /// run 33281766132(head `7a0e2936e`,restore 步 1s 无命中 = 真正的 cache-miss 起点,checkpoint 1
+    /// 于 12 分钟处失败但存下 97 MB 快照)→ run 33283129303(head `70b127416`,恢复该 97 MB,建造
+    /// 72 分钟未完成,存 1.18 GB)→ run 33286112262(head `75e3ba12b`,恢复 1.18 GB,再建 72 分钟
+    /// 仍未报完成)。三个 head 相隔 26 个提交 / 5 个新增 D5 模块,故这 156 分钟是**移动树上的检查点
+    /// 累计投入**,不是某一棵固定树的冷建下界;它只佐证一件事——单轮续建(第三轮)在恢复 1.18 GB
+    /// 后仍 ≥ 4320s 未完成,ARM 上一次冷建远超旧值 7200 所假设的余量。**本值的取值依据不用它**(见下)。
     /// 且 `lean-inspect` job 自身 `timeout-minutes: 45`,故本预算在 CI 上从不承重,
     /// 只约束本机 `with-cache-writer` 包裹的 Lake 命令。
-    /// ⑥(2026-08-30,#4122 architecture 席)**嵌套 deadline 取最小**:本机 `make lean-report`
-    /// 的外层是 `tools/scripts/report/report-supervisor.sh` 的 `BUILD_TIMEOUT_SECONDS`(#403),
-    /// 有效上限 = min(本值, 外层)。外层若留在 7200,本值抬到 21600 与复审线按 21600 重算都是空话。
-    /// 故外层默认随本值同抬到 21600,并由 `HolderBudgetMatchesTheProvisionPolicyCeiling` 钉住相等。
+    /// ⑥(2026-08-30,#4122 architecture 席两轮)**嵌套 deadline 取最小**:本机 `make lean-report`
+    /// 的 worker `tools/lean-inspector/inspect.sh` 最坏顺序跑 <see cref="InspectorSequentialLakePhasesWorstCase"/>
+    /// = 3 条各自受本值约束的 Lake 阶段,外层是 `report-supervisor.sh` 的 `BUILD_TIMEOUT_SECONDS`(#403),
+    /// 有效上限 = min(本值, 外层 − 已耗)。外层留在 7200 或与本值「相等」都使后面的阶段只剩余量。
+    /// 故外层默认 = 3 × 本值 = 64800,由 `HolderBudgetCoversTheInspectorsSequentialLakePhases` 钉住
+    /// `外层 ≥ 3 × 本值`,阶段数由 `InspectorSequentialLakePhaseCountMatchesTheScript` 从脚本重数。
     ///
     /// **永久案号**:https://github.com/the-omega-institute/trureturing/issues/2535(首次收口)
     ///   → https://github.com/the-omega-institute/trureturing/issues/4120(2026-08-30 修订)
@@ -74,9 +80,9 @@ internal static class LeanCacheBudgetPolicy
     ///
     /// **取值 21600 的依据**:选定规则与首次相同 —— 须清过**当前规模**的冷建读数且留出并发余量
     /// (负读数①证明 8% 的余量会被并发吃掉;首次取 7200/3388 = 2.13 倍为足)。当前规模的冷建读数
-    /// 取负读数④(投影 5763s,上界侧)与⑤(CI 续建下界 ≥ 8640s,ARM、含快照恢复)中的较大者
-    /// 8640s;21600/8640 = **2.5 倍**(对本机投影 5763s 为 3.75 倍),取整小时使它一望可知是选定值。
-    /// **不取更小**:对 ⑤ 的 2 倍(17280)已贴近,对 ④ 的 2 倍(11526)只在今日规模上成立,
+    /// 取负读数④(本机投影 5763s,上界侧;⑤ 是移动树上的累计投入,不作固定树读数,见其说明);
+    /// 21600/5763 = **3.75 倍**,取整小时使它一望可知是选定值。
+    /// **不取更小**:2 倍(11526)只在今日规模上成立,
     /// 而本值的域是本机 Lake 命令的挂死上限,误杀一次合法冷建的代价(半建的 `.lake` 无 stamp,
     /// 连带作废 donor 资格,#2762)高于多等一会儿;**不取更大**:预算必须封顶,否则挂死检测失效。
     /// 它是**选定值,不是算出来的** —— 这正是本值属③而非①的原因。
@@ -90,9 +96,9 @@ internal static class LeanCacheBudgetPolicy
     /// 3388s / 1571 模块 = 2.156588 s/模块,7200 的 80% 线)。本次重算把取整规则写明:
     /// **`ceil(0.8 × DefaultProvisionBudgetSeconds / 2.156588)` = ceil(8012.66) = 8013,单阶段向上取整**。
     /// 锚点沿用 #3029 的本机上界侧读数,**未重测**:重测需要一次全量冷建,而那正是本值要避免的事;
-    /// 负读数⑤ 的 CI 续建下界(≥ 8640s,ARM)高于本机投影,说明本机锚点对 CI 不是上界——
-    /// 但本值的域是本机(见 域 与 负读数⑤),复审线按本机锚点算。有效上限与外层 supervisor
-    /// 的相等由测试钉住(负读数⑥),故本线对真正杀进程的那层不迟到。本文件登记它,
+    /// 负读数⑤ 的 CI 观测(单轮续建 ≥ 4320s 未完成,ARM)说明本机锚点对 CI 不是上界——
+    /// 但本值的域是本机(见 域 与 负读数⑤),复审线按本机锚点算。外层 supervisor ≥ 3 × 本值
+    /// 由测试钉住(负读数⑥),故本线对真正杀进程的那层不迟到。本文件登记它,
     /// 由 `ColdBuildBudgetReviewLineTests.ColdBuildBudgetReviewLineHasNotBeenCrossed` 盯住。
     ///
     /// **为什么需要这一条**:2026-08-26 实测 `grep -rnw 2672` 全仓 **0 命中**
@@ -119,6 +125,16 @@ internal static class LeanCacheBudgetPolicy
     /// → 08-30 `9b629c376` 2672,四天跨过 80% 线而无人在此期间收口;观察者如设计地红了。
     /// </summary>
     internal const int ColdBuildBudgetReviewModuleCount = 8013;
+
+    /// <summary>
+    /// `tools/lean-inspector/inspect.sh` 最坏情况下**顺序**执行的、各自受
+    /// <see cref="DefaultProvisionBudgetSeconds"/> 约束的 Lake 阶段数:`lake build`(:130)+
+    /// delta 子集 inspect + 全量回退 inspect(`invoke_inspector` 的两个调用点 :306/:326)= **3**。
+    /// 不是选定值,是脚本结构的计数,由 `InspectorSequentialLakePhaseCountMatchesTheScript` 从脚本文本
+    /// 重数并钉住;脚本多一条 Lake 阶段即红。它的唯一消费者是嵌套 deadline 关系:supervisor 的外层
+    /// `BUILD_TIMEOUT` 必须 ≥ 本数 × 内层预算(`HolderBudgetCoversTheInspectorsSequentialLakePhases`)。
+    /// </summary>
+    internal const int InspectorSequentialLakePhasesWorstCase = 3;
 
     /// <summary>
     /// 旋钮的下界。低于此值会把正常路径(见上「正读数」)误杀;它只在调用方显式设置

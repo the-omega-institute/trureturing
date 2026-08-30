@@ -44,37 +44,43 @@ SLOT_ROOT="$STATE_ROOT/slots"
 # 已越过它。**这是外推不是实测**——11.5 GB 是某一时刻的总 RSS 而非峰值,且实际很少五槽同时
 # 满载。若出现换页/卡顿,先量 memory_pressure 再谈调整,不要凭感觉回退默认值。
 #
-# 它确实能改善的是**延迟与失败率**:等槽者的耐心 LOCK_TIMEOUT_SECONDS 默认 900s,而持槽者
-# 合法可持有 BUILD_TIMEOUT_SECONDS=7200s,两者差 8 倍,且 acquire_lean_slot 是 mkdir 抢占
-# 自旋而非 FIFO——并行 worktree 下先到者会被后到者反复抢先直到超时判红(实测:持槽 24m24s,
-# 等槽者 15 分钟阵亡)。槽多了撞上这条的概率随之下降。根因另见 #1910,本改动不假装修了它。
+# 它确实能改善的是**延迟与失败率**:历史上(2026-08-15 之前)等槽者的耐心 LOCK_TIMEOUT_SECONDS
+# 默认 900s,而持槽者合法可持有 BUILD_TIMEOUT_SECONDS=7200s,两者差 8 倍,且 acquire_lean_slot 是
+# mkdir 抢占自旋而非 FIFO——并行 worktree 下先到者会被后到者反复抢先直到超时判红(实测:持槽
+# 24m24s,等槽者 15 分钟阵亡)。两值现已对齐(见下方声明处的现值),但抢占自旋仍在;槽多了撞上
+# 这条的概率随之下降。根因另见 #1910,本改动不假装修了它。
 MAX_CONCURRENCY="${STRATALINT_LEAN_MAX_CONCURRENCY:-5}"
 [[ "$MAX_CONCURRENCY" =~ ^[1-9][0-9]*$ && "$MAX_CONCURRENCY" -le 64 ]] \
   || { echo "report-supervisor: STRATALINT_LEAN_MAX_CONCURRENCY must be 1..64" >&2; exit 2; }
 # 等槽者必须熬得过一个**合法**的持槽者,故此默认值不得小于 BUILD_TIMEOUT_SECONDS。
-# 此前是 900s(15 分钟),而持槽者合法可持有 7200s(2 小时),差 8 倍——于是一次正常的长构建
-# 就让所有并发等待者判红。2026-08-15 实测:持槽 24m24s,等待中的 `make preflight` 在 15 分钟
-# 处以 `timed out waiting for a Lean slot` 判红,判词读上去像等待者自己的问题。
-# 多 worktree 并行是本仓常态(第16条),这不是罕见路径。不变量由
+# 历史:2026-08-15 之前等待默认 900s(15 分钟)而持槽者合法可持有 7200s(2 小时),差 8 倍——
+# 一次正常的长构建就让所有并发等待者判红(实测:持槽 24m24s,等待中的 `make preflight` 在
+# 15 分钟处以 `timed out waiting for a Lean slot` 判红,判词读上去像等待者自己的问题)。
+# 多 worktree 并行是本仓常态(第16条),这不是罕见路径。不变量「等待预算 ≥ 持有预算」由
 # WaiterBudgetOutlastsALegitimateHolder 机器守卫。
 #
-# 代价(如实记):真死锁的暴露时间因此由 15 分钟变为 2 小时。缓解是 reclaim_stale_lock
-# 对死掉的持槽者立即回收,而活着的持槽者本就是合法的。剩下的饥饿(mkdir 抢占自旋而非
-# FIFO,先到者可被后到者反复抢先)是 #1910 的另一半,本改动不假装修了它。
-# 2026-08-30(#4120/#4122):两个默认值随 `LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds`
-# 由 7200 抬到 21600。理由是嵌套 deadline 取最小:worker 构建的内层预算是那条 C# 声明,
-# 外层是本脚本的 BUILD_TIMEOUT;外层若小于内层,内层「清过当前规模冷建」的论证就被外层
-# 静默作废。相等关系由 HolderBudgetMatchesTheProvisionPolicyCeiling 钉住;等待预算 ≥ 持有
-# 预算仍由 WaiterBudgetOutlastsALegitimateHolder 钉住。
-LOCK_TIMEOUT_SECONDS="${STRATALINT_LOCK_TIMEOUT_SECONDS:-21600}"
+# 现值(2026-08-30,#4120/#4122):两个默认值 = 64800s(18 小时)。理由是嵌套 deadline 取最小:
+# worker(`tools/lean-inspector/inspect.sh`)最坏顺序跑 3 条各自受
+# `LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds`(21600s)约束的 Lake 阶段(build /
+# delta 子集 inspect / 全量回退 inspect),外层若小于 3 × 内层,后面的阶段就只剩外层的余量,
+# 内层那份「清过当前规模冷建」的论证被外层静默作废(#4122 两轮评审实测:先是 7200 < 21600,
+# 再是「相等」仍不够)。关系 BUILD_TIMEOUT ≥ 3 × 21600 由 HolderBudgetCoversTheInspectorsSequentialLakePhases
+# 钉住,阶段数由 InspectorSequentialLakePhaseCountMatchesTheScript 从 inspect.sh 文本重数。
+#
+# 代价(如实记):**活着但挂死**的持槽者暴露时间由 2 小时变为 18 小时;死掉的持槽者仍由
+# reclaim_stale_lock 立即回收,不受此影响。剩下的饥饿(mkdir 抢占自旋而非 FIFO,先到者可被
+# 后到者反复抢先)是 #1910 的另一半,本改动不假装修了它。
+LOCK_TIMEOUT_SECONDS="${STRATALINT_LOCK_TIMEOUT_SECONDS:-64800}"
 [[ "$LOCK_TIMEOUT_SECONDS" =~ ^[1-9][0-9]*$ && "$LOCK_TIMEOUT_SECONDS" -le 86400 ]] \
   || { echo "report-supervisor: STRATALINT_LOCK_TIMEOUT_SECONDS must be 1..86400" >&2; exit 2; }
 # Wall-clock budget for the worker build itself (#403): a build that hangs while
 # holding the lean slot would otherwise loop the monitor below forever, never
 # reaching finish() (which releases the slot), starving every subsequent lean
-# build. 0 disables the bound (legacy unbounded behavior). Default is generous
-# enough for any legitimate lean-report build yet finite so a hang self-releases.
-BUILD_TIMEOUT_SECONDS="${STRATALINT_BUILD_TIMEOUT_SECONDS:-21600}"
+# build. 0 disables the bound (legacy unbounded behavior). The default is the
+# composite of the worker's sequential per-command budgets (see the note above
+# LOCK_TIMEOUT_SECONDS): finite so a hang self-releases, and never smaller than
+# the phases it encloses.
+BUILD_TIMEOUT_SECONDS="${STRATALINT_BUILD_TIMEOUT_SECONDS:-64800}"
 [[ "$BUILD_TIMEOUT_SECONDS" =~ ^[0-9]+$ && "$BUILD_TIMEOUT_SECONDS" -le 86400 ]] \
   || { echo "report-supervisor: STRATALINT_BUILD_TIMEOUT_SECONDS must be 0..86400" >&2; exit 2; }
 LOCK_INITIALIZATION_GRACE_SECONDS=5
