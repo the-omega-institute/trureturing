@@ -3,14 +3,14 @@
    mirror-B: D5/B/S3/Weil/Pick/CriticalLineOscillatorGram
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Critical-line oscillator resolvents generate a rank-two positive Pick matrix. -/
+   digest: Critical-line oscillator resolvents generate a two-row positive Pick Gram matrix. -/
 
 import Mathlib.Analysis.Matrix.PosDef
 import Mathlib.Tactic
 
 /- Library-search audit trail (2026-08-30):
    * Exact repository searches for `CriticalLineOscillator`, `PickMatrix`, and
-     the displayed two-resolvent Gram factorization found no existing D5 owner.
+     the displayed two-resolvent Gram construction found no existing D5 owner.
    * The nearby frozen Weil modules describe the critical line, scattering,
      Cayley-Laguerre moments, and curvature defects, but do not construct this
      finite Pick matrix.
@@ -38,25 +38,19 @@ def criticalLineOscillatorFeatureMatrix {ι : Type*} [Fintype ι]
     ] row
 
 /-- The finite Pick atom is the Gram matrix of the two reflected resolvent
-coordinates. Entrywise expansion gives the sum of the two associated rank-one
-kernels. -/
+coordinates. Its rank is therefore at most two, with possible degeneracy. -/
 def criticalLineOscillatorPickMatrix {ι : Type*} [Fintype ι]
     (ordinate : ℝ) (nodes : ι → ℂ) : Matrix ι ι ℂ :=
   (criticalLineOscillatorFeatureMatrix ordinate nodes)ᴴ *
     criticalLineOscillatorFeatureMatrix ordinate nodes
 
-/-- Every finite sampling of one reflected critical-line oscillator has the
-stated two-row Gram factorization and is positive semidefinite. -/
+/-- Every finite sampling of one reflected critical-line oscillator is positive
+semidefinite. -/
 theorem critical_line_oscillator_pick_gram
     {ι : Type*} [Fintype ι] (ordinate : ℝ) (nodes : ι → ℂ) :
-    criticalLineOscillatorPickMatrix ordinate nodes =
-        (criticalLineOscillatorFeatureMatrix ordinate nodes)ᴴ *
-          criticalLineOscillatorFeatureMatrix ordinate nodes ∧
-      (criticalLineOscillatorPickMatrix ordinate nodes).PosSemidef := by
-  refine ⟨rfl, ?_⟩
-  simpa only [criticalLineOscillatorPickMatrix] using
-    (Matrix.posSemidef_conjTranspose_mul_self
-      (criticalLineOscillatorFeatureMatrix ordinate nodes))
+    (criticalLineOscillatorPickMatrix ordinate nodes).PosSemidef := by
+  unfold criticalLineOscillatorPickMatrix
+  exact Matrix.posSemidef_conjTranspose_mul_self _
 
 #print axioms critical_line_oscillator_pick_gram
 

@@ -10,7 +10,8 @@ internal sealed class CriticalLineOscillatorGramDocument : IScribeDocumentDefini
         "D5/S3/Weil/Pick/CriticalLineOscillatorGram.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A reflected critical-line pole pair generates a finite rank-two positive Pick matrix.",
+        "A reflected critical-line pole pair generates a finite positive Pick Gram matrix "
+            + "with a two-row factor.",
         H("Critical-Line Oscillator Gram Matrix"),
         Blocks(
             Describe.Lean(
@@ -31,18 +32,18 @@ internal sealed class CriticalLineOscillatorGramDocument : IScribeDocumentDefini
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The Pick atom is defined as the conjugate-transpose Gram product of "
-                        + "the two reflected resolvent rows. Expanding an entry gives the "
-                        + "sum of the two associated rank-one kernels."))),
+                        + "the two reflected resolvent rows. Its rank is at most two, with "
+                        + "possible degeneracy."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("critical-line-oscillator-pick-gram"),
                 DeclarationHandle.Create(Prefix + "critical_line_oscillator_pick_gram"),
-                H("The oscillator Pick matrix is a positive Gram matrix"),
+                H("The oscillator Pick matrix is positive semidefinite"),
                 StatementSource.FromAuthor(TheoremFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "The first conjunct records the defining Gram factorization.")),
+                        "The preceding definition owns the Gram factorization.")),
                     Paragraph(Text(
                         "Mathlib's conjugate-transpose Gram theorem proves positive "
                             + "semidefiniteness for every finite family of complex nodes, "
@@ -59,22 +60,15 @@ internal sealed class CriticalLineOscillatorGramDocument : IScribeDocumentDefini
         Formula complex = Seq(Mathbb, Grp(F.Id("C")));
         Formula carrierType = Seq(Operatorname, Grp(F.Id("Type")));
         Formula nodeMap = Seq(carrier, Sp, Mapsto, Sp, complex);
-        Formula features = Call(
-            "criticalLineOscillatorFeatureMatrix", gamma, nodes);
         Formula pick = Call(
             "criticalLineOscillatorPickMatrix", gamma, nodes);
 
         return Disp(Seq(
-            Begin, Grp(F.Id("gathered")),
             Forall, Sp, carrier, Colon, Sp, carrierType, Comma, Sp,
             gamma, Sp, InMacro, Sp, reals, Comma, Sp,
             nodes, Colon, Sp, nodeMap, Comma, RowBreak, Grp(),
             Call("Fintype", carrier), Sp, Rightarrow, RowBreak, Grp(),
-            pick, Sp, Eq, Sp,
-            Call("conjTranspose", features), Sp, Cdot, Sp, features,
-            Sp, Land, RowBreak, Grp(),
-            Call("PosSemidef", pick), Dot,
-            End, Grp(F.Id("gathered"))));
+            Call("PosSemidef", pick), Dot));
     }
 
     private static Formula Call(string name, params Formula[] arguments)
