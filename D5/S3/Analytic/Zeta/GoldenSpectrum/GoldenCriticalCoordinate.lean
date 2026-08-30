@@ -104,7 +104,7 @@ theorem golden_critical_coordinate_reflection (s : ℂ) :
   unfold goldenCriticalCoordinate criticalReflection
   rw [← Complex.exp_conj, ← Complex.exp_neg]
   congr 1
-  apply Complex.ext <;> simp [goldenScaleLength] <;> ring
+  apply Complex.ext <;> (simp [goldenScaleLength]; ring)
 
 /-- The open critical strip maps to the golden annulus. -/
 theorem golden_annulus_bounds {s : ℂ}
