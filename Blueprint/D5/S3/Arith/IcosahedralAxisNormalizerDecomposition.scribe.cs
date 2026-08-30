@@ -24,10 +24,10 @@ internal sealed class IcosahedralAxisNormalizerDecompositionDocument
             Blocks(Paragraph(Text(
                 "The projective classes and cyclic-axis families are the canonical objects "
                     + "from the finite axis decomposition. The statement publishes their "
-                    + "partition together with the three typed projective-axis equivalences "
-                    + "and their bijectivity witnesses. The cardinalities, normalizer orders, "
-                    + "and twofold normalizer-centralizer identification are retained as "
-                    + "corollary clauses."))),
+                    + "partition together with three structural maps to the unique cyclic axes "
+                    + "that fix the corresponding projective directions. Their bijectivity, "
+                    + "cardinalities, normalizer orders, and the twofold normalizer-centralizer "
+                    + "identification are published in the same statement."))),
             DescribeRole.Theorem))));
 
     private static Formula TheoremFormula()
@@ -47,13 +47,22 @@ internal sealed class IcosahedralAxisNormalizerDecompositionDocument
                 Call("Disjoint", projectiveFive, projectiveTwo), Sp, Land, Sp,
                 Call("Disjoint", projectiveThree, projectiveTwo), Sp, Land),
             Seq(BijectionClause(
-                    "fivefoldProjectiveAxisEquiv", projectiveFive, cyclicFive),
+                    "fivefoldProjectiveAxisMap", projectiveFive, cyclicFive),
                 Sp, Land, Sp,
                 BijectionClause(
-                    "threefoldProjectiveAxisEquiv", projectiveThree, cyclicThree),
+                    "threefoldProjectiveAxisMap", projectiveThree, cyclicThree),
                 Sp, Land, Sp,
                 BijectionClause(
-                    "twofoldProjectiveAxisEquiv", projectiveTwo, cyclicTwo),
+                    "twofoldProjectiveAxisMap", projectiveTwo, cyclicTwo),
+                Sp, Land),
+            Seq(FixedAxisClause(
+                    "fivefoldProjectiveAxisMap", projectiveFive),
+                Sp, Land, Sp,
+                FixedAxisClause(
+                    "threefoldProjectiveAxisMap", projectiveThree),
+                Sp, Land, Sp,
+                FixedAxisClause(
+                    "twofoldProjectiveAxisMap", projectiveTwo),
                 Sp, Land),
             Seq(
                 Card(projectiveFive), Sp, Eq, Sp, D(6), Sp, Land, Sp,
@@ -78,9 +87,17 @@ internal sealed class IcosahedralAxisNormalizerDecompositionDocument
     }
 
     private static Formula BijectionClause(
-        string equivalence, Formula source, Formula target) => Seq(
+        string map, Formula source, Formula target) => Seq(
             Operatorname, Grp(F.Id("Bijective")), Open,
-            F.Id(equivalence), Colon, Sp, source, Sp, Equiv, Sp, target, Close);
+            F.Id(map), Colon, Sp, source, Sp, To, Sp, target, Close);
+
+    private static Formula FixedAxisClause(string map, Formula source)
+    {
+        Formula point = F.Id("p");
+        return Seq(
+            Forall, Sp, point, Colon, Sp, source, Comma, Sp,
+            Call("axisFixesProjectivePoint", Call(map, point), point));
+    }
 
     private static Formula NormalizerCardClause(Formula order, Formula cardinality)
     {
