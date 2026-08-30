@@ -19,6 +19,6 @@ The positive square scale constructs the canonical resolvent-weighted measure. T
 ## References
 
 - Truth anchor: `D5/S3/Weil/CayleyLaguerre/LaguerreChebyshevDuality.laguerre_chebyshev_duality`
-- Dependency: [D5/S3/Weil/Budget/PositiveCayleyScaleTransport](../Budget/PositiveCayleyScaleTransport.md)
+- Dependency: [D5/S3/Weil/Budget/CaratheodoryScaleCovariance](../Budget/CaratheodoryScaleCovariance.md)
 - Dependency: [D5/S3/Weil/CayleyLaguerre/CayleyMomentTransport](CayleyMomentTransport.md)
-- Dependency: [D5/S3/Weil/TestFunctions/CayleyLaguerreMomentTomography](../TestFunctions/CayleyLaguerreMomentTomography.md)
+- Dependency: [D5/S3/Weil/TestFunctions/CayleyMomentTransport](../TestFunctions/CayleyMomentTransport.md)
