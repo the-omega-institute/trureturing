@@ -3,7 +3,8 @@
    mirror-B: D5/B/S3/Analytic/Zeta/GoldenSpectrum/GoldenCriticalSupportCriterion
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: A spectral set lies on the critical line exactly when its golden exponential image lies on the unit circle, and reflection-stable sets are only pairwise charge-balanced without this stronger pointwise condition. -/
+   digest: Critical support is unit golden support; reflection-stable support
+     supplies reciprocal partners but does not force pointwise neutrality. -/
 
 import D5.S3.Analytic.Zeta.GoldenSpectrum.GoldenCriticalCoordinate
 import Mathlib
@@ -47,16 +48,17 @@ theorem critical_support_iff_golden_unitary_support (zeros : Set ℂ) :
     exact (norm_golden_critical_coordinate_eq_one_iff s).1
       (hUnitary s hs)
 
-/-- Reflection stability only guarantees that every observed point has a
-reciprocal-charge partner. -/
+/-- Reflection stability supplies a reflected support point and reciprocal
+charge balance for every observed point. -/
 theorem reflection_stable_support_pair_balance
     {zeros : Set ℂ}
     (hReflection : ∀ s ∈ zeros, criticalReflection s ∈ zeros) :
     ∀ s ∈ zeros,
-      goldenRadialCharge s *
-        goldenRadialCharge (criticalReflection s) = 1 := by
-  intro s _
-  exact golden_reflection_pair_charge_product s
+      criticalReflection s ∈ zeros ∧
+        goldenRadialCharge s *
+          goldenRadialCharge (criticalReflection s) = 1 := by
+  intro s hs
+  exact ⟨hReflection s hs, golden_reflection_pair_charge_product s⟩
 
 /-- A two-point reflected orbit can be globally charge-balanced while failing
 the pointwise unitary condition. -/
@@ -69,7 +71,7 @@ theorem balanced_reflection_orbit_need_not_be_critical :
       ¬ IsCriticalSupport zeros := by
   dsimp
   constructor
-  · intro z hz
+  · intro z _
     exact golden_reflection_pair_charge_product z
   · intro hCritical
     have hs : ((3 / 4 : ℝ) : ℂ) ∈
