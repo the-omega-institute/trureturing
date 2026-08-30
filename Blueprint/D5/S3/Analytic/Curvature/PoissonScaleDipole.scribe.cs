@@ -7,8 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.Curvature;
 internal sealed class PoissonScaleDipoleDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The reflected off-line curvature dipole is the scale derivative of the real "
-            + "Poisson kernel and retains its zero-total-mass law.",
+        "The off-line curvature dipole is the scale derivative of the Poisson kernel.",
         H("Poisson Scale Dipole"),
         Blocks(Describe.Lean(
             DescribeId.Create("poisson-scale-dipole"),
