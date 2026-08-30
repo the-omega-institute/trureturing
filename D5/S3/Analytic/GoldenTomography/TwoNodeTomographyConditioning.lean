@@ -44,9 +44,13 @@ theorem recover_two_node_amplitudes
         (twoNodeMoments z₀ z₁ a₀ a₁).1
         (twoNodeMoments z₀ z₁ a₀ a₁).2 = a₁ := by
   have hDen : z₁ - z₀ ≠ 0 := sub_ne_zero.mpr hNodes.symm
-  constructor <;>
-    unfold recoverFirst recoverSecond twoNodeMoments <;>
-    field_simp [hDen] <;> ring
+  constructor
+  · unfold recoverFirst twoNodeMoments
+    field_simp [hDen]
+    ring
+  · unfold recoverSecond twoNodeMoments
+    field_simp [hDen]
+    ring
 
 /-- Exact first-amplitude error under moment perturbations. -/
 theorem recover_first_error
