@@ -5,13 +5,13 @@
    anchors: []
    digest: Equal local spectra can hide distinct axes related by an observer transition. -/
 
+import D5.S3.Observer.Naturality.InvariantOriginRecoveryObstruction
 import D5.S3.Observer.Naturality.ObserverWorldCovariance
 
 /- Library-search audit trail (2026-08-30):
    * `InvariantOriginRecoveryObstruction.no_absolute_origin_reconstruction`
      is the exact frozen owner for non-recovery and a distinct equal-readout pair,
-     but it does not expose a transition map in its public conclusion. Its two
-     required projections are derived here from the same Mathlib action primitive.
+     but it does not expose a transition map in its public conclusion.
    * `ObserverWorldCovariance.observer_world_covariance` is the exact frozen
      owner for the observer-world equivalence and its transition computation
      rule, but it does not expose indistinguishable internal scalar readings.
@@ -23,6 +23,7 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Observer.Naturality.LocalSpectrumTransitionDistinction
 
+open D5.S3.Observer.Naturality.InvariantOriginRecoveryObstruction
 open D5.S3.Observer.Naturality.ObserverWorldCovariance
 
 /-- An invariant local-spectrum readout cannot recover an absolute axis. Two
@@ -49,25 +50,13 @@ theorem local_spectrum_transition_distinction
         forall state : State,
           (worldEquiv ⟨observer a state, ⟨state, rfl⟩⟩ : Output) =
             transport g (observer a state) := by
-  have sameSpectrum : forall a b : Axis, localSpectrum a = localSpectrum b := by
-    intro a b
-    obtain ⟨g, action_eq⟩ := MulAction.exists_smul_eq G a b
-    calc
-      localSpectrum a = localSpectrum (g • a) := (spectrumInvariant g a).symm
-      _ = localSpectrum b := congrArg localSpectrum action_eq
-  obtain ⟨a, b, distinct⟩ := exists_pair_ne Axis
-  have noDecoder : Not (exists locate : Spectrum -> Axis,
-      Function.LeftInverse locate localSpectrum) := by
-    rintro ⟨locate, leftInverse⟩
-    apply distinct
-    calc
-      a = locate (localSpectrum a) := (leftInverse a).symm
-      _ = locate (localSpectrum b) := congrArg locate (sameSpectrum a b)
-      _ = b := leftInverse b
+  have obstruction :=
+    no_absolute_origin_reconstruction localSpectrum spectrumInvariant
+  obtain ⟨a, b, distinct, sameSpectrum⟩ := obstruction.2.2.2
   obtain ⟨g, worldEquiv, axisTransition, transitionRule⟩ :=
     observer_world_covariance observer transport covariant a b
   exact
-    ⟨noDecoder, a, b, g, worldEquiv, distinct, sameSpectrum a b,
+    ⟨obstruction.2.1, a, b, g, worldEquiv, distinct, sameSpectrum,
       axisTransition, transitionRule⟩
 
 #print axioms local_spectrum_transition_distinction
