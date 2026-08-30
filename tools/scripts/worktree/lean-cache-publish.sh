@@ -50,6 +50,24 @@ VERB="${1:-}"
 
 die() { printf 'lean-cache-publish: %s\n' "$1" >&2; exit 1; }
 
+# 【2026-08-30】此前两处直接写 `shasum -a 256`。`shasum` 是 macOS/Perl 自带,
+# **Linux 上通常没有** —— CI runner 是 ubuntu-24.04-arm,于是取回器以
+# `exit 127`(command not found)静默失败,`LeanArchiveFetch` 只能记
+# `archive fetcher emitted no receipt (exit 127)`,回落全量编译 37 分钟并撞
+# 45 分钟 job 预算(实测 job 99264190096)。本机是 macOS,故本地一直复现不出。
+# 探测顺序与本仓 report 侧的输入哈希 helper 一致(同一真源,不另发明)。
+sha256_of() {
+  if command -v sha256sum >/dev/null 2>&1; then
+    sha256sum "$1" | awk '{print $1}'
+  elif command -v shasum >/dev/null 2>&1; then
+    shasum -a 256 "$1" | awk '{print $1}'
+  elif command -v openssl >/dev/null 2>&1; then
+    openssl dgst -sha256 "$1" | awk '{print $NF}'
+  else
+    die "no sha256 implementation is available (tried sha256sum, shasum, openssl)"
+  fi
+}
+
 usage() {
   cat >&2 <<'USAGE'
 usage: lean-cache-publish.sh <address|publish|fetch> [--repository DIR]
@@ -88,7 +106,7 @@ fi
 
 # ── 身份 ──────────────────────────────────────────────────────────────────────
 # 两个哈希来自本仓既有的唯一真源，不另算一套。
-helper="$repository/tools/scripts/report/lean-report-input.sh"
+helper="${repository}/tools/scripts/report/lean-report-input.sh"
 [[ -x "$helper" ]] || die "input helper is absent: $helper"
 read -r _address _producer sources_sha256 config_sha256 \
   < <("$helper" address --repository "$repository")
@@ -141,7 +159,7 @@ case "$VERB" in
     trap 'rm -rf "$staged"' EXIT
     ( cd "$repository" && lake pack "$staged/$asset" >/dev/null )
     bytes="$(wc -c < "$staged/$asset" | tr -d ' ')"
-    digest="$(shasum -a 256 "$staged/$asset" | cut -d' ' -f1)"
+    digest="$(sha256_of "$staged/$asset")"
     emit_address > "$staged/manifest.txt"
     {
       printf 'archive_sha256=%s\n' "$digest"
@@ -235,7 +253,7 @@ case "$VERB" in
       || { printf 'LEAN_CACHE_FETCH {"status":"miss","tag":"%s","reason":"release is missing the archive or its manifest"}\n' "$tag"; exit 1; }
     # 声明的摘要必须与取到的字节相符；不符即丢弃，绝不静默使用。
     declared="$(sed -n 's/^archive_sha256=//p' "$staged/manifest.txt")"
-    actual="$(shasum -a 256 "$staged/$asset" | cut -d' ' -f1)"
+    actual="$(sha256_of "$staged/$asset")"
     [[ -n "$declared" ]] \
       || { printf 'LEAN_CACHE_FETCH {"status":"miss","tag":"%s","reason":"manifest declares no digest"}\n' "$tag"; exit 1; }
     [[ "$declared" == "$actual" ]] \
