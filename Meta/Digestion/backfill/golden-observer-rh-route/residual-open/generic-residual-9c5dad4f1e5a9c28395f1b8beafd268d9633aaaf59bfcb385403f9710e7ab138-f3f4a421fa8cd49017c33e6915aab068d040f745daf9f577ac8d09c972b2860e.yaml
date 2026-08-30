@@ -1,0 +1,10 @@
+ast_path: section/最终研究命题/clause/7
+fingerprints:
+  raw_sha256: sha256:9c5dad4f1e5a9c28395f1b8beafd268d9633aaaf59bfcb385403f9710e7ab138
+  normalized_sha256: sha256:9c5dad4f1e5a9c28395f1b8beafd268d9633aaaf59bfcb385403f9710e7ab138
+cas_ref: sha256:9c5dad4f1e5a9c28395f1b8beafd268d9633aaaf59bfcb385403f9710e7ab138
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

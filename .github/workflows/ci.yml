@@ -21,9 +21,7 @@ permissions:
 # 并据此断言「缓存几乎从来没被写进去过」——**取样有偏,结论过强**,由第十一轮面板证伪。
 # 同口径全窗(最近 100 次 dev push)是 **56 success / 43 cancelled / 1 failure = 56% 成功**;
 # 那个 20% 取自最忙的尾窗,不能当普遍前提。缓存**一直在被写入**,只是被取消的那部分没写成。
-# 本改动仍然成立(取消是真实且不必要的丢失),但它买到的是「少丢一部分写入」,
-# 不是「从不写变成写」。其效果**尚未被测量**:落地后窗口内成功的 PR run 数一度为 0。
-#
+# 本改动仍成立,但买到的是「少丢一部分写入」而非「从不写变成写」;效果**尚未被测量**(成功 PR run 一度为 0)。
 # 改用 github.sha:每次 dev push 自成一组,彼此既不取消也不排队。
 # 代价是这些 run 会跑完而不是中途被杀 —— 它们本来就已启动,增量是其尾段。
 concurrency:
@@ -552,6 +550,7 @@ jobs:
 
       - name: Produce source-bound canonical Lean reports
         if: steps.report-reuse.outcome != 'success'
+        env: { GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
         shell: bash
         run: |
           set -euo pipefail
