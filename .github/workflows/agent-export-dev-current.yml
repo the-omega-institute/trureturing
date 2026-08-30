@@ -1,0 +1,28 @@
+name: agent-export-dev-current
+
+on:
+  push:
+    branches:
+      - agent/scratch/export-dev-current-20260830
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/scratch/export-dev-current-20260830
+          fetch-depth: 0
+      - name: Package repository checkout
+        run: |
+          tar -C "$GITHUB_WORKSPACE/.." -czf "$RUNNER_TEMP/trureturing-repository.tar.gz" "$(basename "$GITHUB_WORKSPACE")"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: trureturing-dev-current-repository
+          path: ${{ runner.temp }}/trureturing-repository.tar.gz
+          if-no-files-found: error
+          retention-days: 1
