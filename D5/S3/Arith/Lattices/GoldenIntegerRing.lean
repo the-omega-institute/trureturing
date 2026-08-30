@@ -277,12 +277,6 @@ private def sqrtFiveCoordinateOrder : Subring GoldenInt where
 noncomputable def sqrtFiveOrder : Subring GoldenIntegerRing :=
   sqrtFiveCoordinateOrder.map goldenIntegerRingAlgEquiv.toRingEquiv
 
-theorem mem_sqrtFiveOrder_iff (x : GoldenIntegerRing) :
-    x ∈ sqrtFiveOrder ↔
-      ∃ k : Int, (goldenIntegerRingAlgEquiv.toRingEquiv.symm x).b = 2 * k := by
-  rw [sqrtFiveOrder, Subring.mem_map_equiv]
-  rfl
-
 /-- The rational prime ideal `(2)`. -/
 def goldenTwoBaseIdeal : Ideal Int := Ideal.span {(2 : Int)}
 
