@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>LedgerDirectFix</RootNamespace>
+    <AssemblyName>LedgerDirectFix</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../../StrataLint.Engine/StrataLint.Engine.csproj" />
+    <ProjectReference Include="../../../Trureturing.Truth/Trureturing.Truth.csproj" />
+  </ItemGroup>
+</Project>
