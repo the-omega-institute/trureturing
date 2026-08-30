@@ -1,0 +1,57 @@
+# 第七百一十一部　无理数的操作性本体：极限线程而非有限标签
+
+设：
+
+$$
+x\in\mathbb R.
+$$
+
+有限精度观察器只能给出一个有理区间：
+
+$$
+\boxed{
+I_n(x)
+=
+\left[
+\frac{\lfloor 10^nx\rfloor}{10^n},
+\frac{\lfloor 10^nx\rfloor+1}{10^n}
+\right].
+}
+\tag{711.1}
+$$
+
+满足：
+
+$$
+I_{n+1}(x)\subseteq I_n(x),
+$$
+
+$$
+\operatorname{diam}I_n(x)=10^{-n},
+$$
+
+以及：
+
+$$
+\boxed{
+\bigcap_{n\ge0}I_n(x)=\{x\}.
+}
+\tag{711.2}
+$$
+
+对无理数 \(x\)，没有任何有限 \(n\) 使：
+
+$$
+I_n(x)=\{x\}.
+$$
+
+所以有限观察者看到的不是“完成点”，而是：
+
+$$
+\boxed{
+I_0(x)\supset I_1(x)\supset I_2(x)\supset\cdots.
+}
+$$
+
+---
+

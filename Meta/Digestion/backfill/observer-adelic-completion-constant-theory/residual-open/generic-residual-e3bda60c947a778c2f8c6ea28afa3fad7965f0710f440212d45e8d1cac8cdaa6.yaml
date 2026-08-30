@@ -1,0 +1,10 @@
+ast_path: section/第九百零七部-有限竞争轨道的相位消去
+fingerprints:
+  raw_sha256: sha256:e3bda60c947a778c2f8c6ea28afa3fad7965f0710f440212d45e8d1cac8cdaa6
+  normalized_sha256: sha256:e3bda60c947a778c2f8c6ea28afa3fad7965f0710f440212d45e8d1cac8cdaa6
+cas_ref: sha256:e3bda60c947a778c2f8c6ea28afa3fad7965f0710f440212d45e8d1cac8cdaa6
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

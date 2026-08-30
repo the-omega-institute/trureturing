@@ -1,0 +1,15 @@
+ast_path: section/第七百一十七部-零点运动需要两种导数
+fingerprints:
+  raw_sha256: sha256:123efb496c5c66358bd12ceb271b1aea7df681b1c1297b1477c7a7362c321461
+  normalized_sha256: sha256:123efb496c5c66358bd12ceb271b1aea7df681b1c1297b1477c7a7362c321461
+cas_ref: sha256:123efb496c5c66358bd12ceb271b1aea7df681b1c1297b1477c7a7362c321461
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-223e6ab7826876cd322bbbe072f23cce83644a40ea2a205063142c1c2efff08b-4d51f57a028eceb7221a7b4345d32050054f4fd2602d865b5cd9677a43c1fee3
+    - generic-residual-fdcc09f1db3046aacf510695e5889e366bf4f394b95363b373af9170f7bb797c-28754db9c1ffef48f293cab126fd699b5944fdfad88ce5e05e72669527109f95
+    - generic-residual-35eb441e5c8cce652bf0e37d44c5cb166cdc08120c1722e1a51749e96ae8b336-0a5dd719033e5cbeff16587647e005b8d161d24271ac97f9cb9d0d03ff8c307a
+    - generic-residual-e6e6865a9960f71b8d3141918dff68b4fff24e5d457ece34136b11a94a31ec18-cba88c90ffa72ffb3f6a574a44dcb43e999745fecde3b3e688c744e9b83fcfdc

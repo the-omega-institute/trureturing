@@ -1,0 +1,10 @@
+ast_path: section/893-1-单独的正算子还不够
+fingerprints:
+  raw_sha256: sha256:061e902b02c07f0a409ac69b18019088949095419d0f27e51fb25a248a13ca10
+  normalized_sha256: sha256:061e902b02c07f0a409ac69b18019088949095419d0f27e51fb25a248a13ca10
+cas_ref: sha256:061e902b02c07f0a409ac69b18019088949095419d0f27e51fb25a248a13ca10
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

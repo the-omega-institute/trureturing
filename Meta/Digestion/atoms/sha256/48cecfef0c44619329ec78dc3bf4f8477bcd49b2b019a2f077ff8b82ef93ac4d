@@ -1,0 +1,44 @@
+## 871.4 黄金深度归一化
+
+对完成层 \(n\) 定义：
+
+$$
+\boxed{
+\widehat{\mathcal J}_{m,n}(t)
+=
+\varphi^{4mn}
+\left[
+R(\delta_n,t)
+-
+\sum_{k<m}
+\mathcal J_k(t)\delta_n^{2k}
+\right].
+}
+\tag{871.1}
+$$
+
+若：
+
+$$
+\delta_n\sim c(-\varphi^{-2})^n,
+$$
+
+则：
+
+$$
+\widehat{\mathcal J}_{m,n}(t)
+\to
+c^{2m}\mathcal J_m(t).
+$$
+
+这给项目一个直接实验：
+
+$$
+\boxed{
+\text{静态完成极限看不到的 jet，
+能否通过黄金 blow-up 稳定恢复？}
+}
+$$
+
+---
+

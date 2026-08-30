@@ -1,0 +1,57 @@
+# 第七百八十七部　Hecke 模态仍不能克隆素数顺序
+
+全部 \(L_n(s)\) 可以恢复 regulator 圆上的交换谱分布。
+
+但每个 Hecke 字符仍然满足：
+
+$$
+\Psi_n(\mathfrak a\mathfrak b)
+=
+\Psi_n(\mathfrak a)
+\Psi_n(\mathfrak b).
+$$
+
+所以它只读取理想乘法的交换化结果。
+
+对两个素数词：
+
+$$
+pq,
+\qquad
+qp,
+$$
+
+所有 Hecke \(L\)-模态均给出相同乘积。
+
+因此：
+
+$$
+\boxed{
+\{L_n\}_{n\in\mathbb Z}
+}
+$$
+
+能够重建 regulator 观察分布，却不能重建 prime-word holonomy。
+
+完整观察者层级应写成：
+
+$$
+\boxed{
+\begin{aligned}
+\varphi
+&:\text{共同 null 斜率};\\
+\chi_5
+&:\text{有限 Galois 分支};\\
+\{\Psi_n\}
+&:\text{交换 regulator 相位};\\
+\operatorname{Hol}(w)
+&:\text{非交换形成历史}.
+\end{aligned}
+}
+\tag{787.1}
+$$
+
+这四层不能互相替代。
+
+---
+

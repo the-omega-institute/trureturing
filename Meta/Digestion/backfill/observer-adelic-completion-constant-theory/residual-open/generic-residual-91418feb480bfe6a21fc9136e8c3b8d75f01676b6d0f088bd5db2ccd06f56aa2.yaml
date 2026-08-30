@@ -1,0 +1,10 @@
+ast_path: section/第七百九十四部-当前理论深度审计
+fingerprints:
+  raw_sha256: sha256:91418feb480bfe6a21fc9136e8c3b8d75f01676b6d0f088bd5db2ccd06f56aa2
+  normalized_sha256: sha256:91418feb480bfe6a21fc9136e8c3b8d75f01676b6d0f088bd5db2ccd06f56aa2
+cas_ref: sha256:91418feb480bfe6a21fc9136e8c3b8d75f01676b6d0f088bd5db2ccd06f56aa2
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

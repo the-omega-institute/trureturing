@@ -1,0 +1,15 @@
+## 猜想 791.1（Golden observer mode completion）
+
+$$
+\boxed{
+\mathcal V_n(T)=0
+\qquad
+\forall n\in\mathbb Z,\ \forall T>0.
+}
+\tag{791.2}
+$$
+
+它是黄金 regulator Hecke 模态族的 GRH 形式。
+
+---
+

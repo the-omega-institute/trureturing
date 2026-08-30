@@ -1,0 +1,18 @@
+* 当前唯一真正未闭合的是中间的加权 Paley–Wiener 全局逼近。
+
+项目现有结果已经把合法有限支撑测试的零点侧二次型写成：
+
+$$
+\text{pole boundary}
++
+\text{Archimedean jump}
++
+\text{prime jump}
+-
+\text{coherent threshold},
+$$
+
+并把同一 fixed-support form 重写为 renormalized multiplier；安全补空间拥有显式正 gap 和有限负指标。
+
+---
+

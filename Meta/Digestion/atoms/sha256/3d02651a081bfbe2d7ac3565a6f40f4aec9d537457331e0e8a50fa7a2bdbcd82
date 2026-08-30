@@ -1,0 +1,17 @@
+## 条件二：Persistent invariant
+
+必须有一个观察者交换不变量：
+
+$$
+\boxed{
+\mathcal V_\infty(s)
+=
+\lim
+A_{\mathrm{odd}}(s)^2
+\neq0,
+}
+\tag{706.1}
+$$
+
+并且它在全部 ζ 因子抽取与解析延拓后仍然存在。
+

@@ -1,0 +1,13 @@
+ast_path: section/边界与非冒领
+fingerprints:
+  raw_sha256: sha256:b80f5fbefac0598c44a85f3a809e8a95b18781d5df752755fd940c5f01567088
+  normalized_sha256: sha256:b80f5fbefac0598c44a85f3a809e8a95b18781d5df752755fd940c5f01567088
+cas_ref: sha256:b80f5fbefac0598c44a85f3a809e8a95b18781d5df752755fd940c5f01567088
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-b2f878099491eb62b17d65d0d8277fb48b8f21b799e0a52f33bd35b89340fd17-643d4cd0d229ba96eb995c9f795f1938e050dd1b96de512655b455850ee1ba15
+    - generic-residual-a29e5465000d8bfd68dc1da759913affc85de564ec96c3528f730b91ce759bdc-9c972a860a683652ea2ddfd06e2839cb2d0f1ebe4dc74f578639b9ca2274c9da

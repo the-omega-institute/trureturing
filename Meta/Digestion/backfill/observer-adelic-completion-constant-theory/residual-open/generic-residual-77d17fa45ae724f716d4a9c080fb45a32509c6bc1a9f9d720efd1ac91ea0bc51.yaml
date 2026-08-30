@@ -1,0 +1,10 @@
+ast_path: section/第八百三十一部-科学修正-Riemann-点不是精确-log-cosh-点
+fingerprints:
+  raw_sha256: sha256:77d17fa45ae724f716d4a9c080fb45a32509c6bc1a9f9d720efd1ac91ea0bc51
+  normalized_sha256: sha256:77d17fa45ae724f716d4a9c080fb45a32509c6bc1a9f9d720efd1ac91ea0bc51
+cas_ref: sha256:77d17fa45ae724f716d4a9c080fb45a32509c6bc1a9f9d720efd1ac91ea0bc51
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

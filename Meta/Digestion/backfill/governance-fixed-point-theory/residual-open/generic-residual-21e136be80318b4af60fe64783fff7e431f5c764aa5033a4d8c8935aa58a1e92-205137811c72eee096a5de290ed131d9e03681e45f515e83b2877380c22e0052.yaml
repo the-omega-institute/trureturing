@@ -1,0 +1,10 @@
+ast_path: section/3-5-重键存在唯一性定理骨架/clause/1
+fingerprints:
+  raw_sha256: sha256:21e136be80318b4af60fe64783fff7e431f5c764aa5033a4d8c8935aa58a1e92
+  normalized_sha256: sha256:21e136be80318b4af60fe64783fff7e431f5c764aa5033a4d8c8935aa58a1e92
+cas_ref: sha256:21e136be80318b4af60fe64783fff7e431f5c764aa5033a4d8c8935aa58a1e92
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

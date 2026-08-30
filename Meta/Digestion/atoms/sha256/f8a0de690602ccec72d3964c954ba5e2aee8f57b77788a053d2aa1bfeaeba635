@@ -1,0 +1,24 @@
+## 定理 866.1（Observer-Jet RH criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal J_m(t)\ge0
+\quad
+\forall t\in\mathbb R,\ 
+\forall m\ge0.
+}
+\tag{866.4}
+$$
+
+### 证明
+
+RH 推出非负性，由式 (866.3) 和局部一致收敛的乘积直接得到。
+
+反之，若所有 \(\mathcal J_m(t)\ge0\)，定理 865.1 排除了所有 \(\delta\neq0\) 的离线零点。∎
+
+这正是 generalized Laguerre inequalities 在 Riemann \(\Xi\) 上的观察者解释。实 entire 函数全部零点为实与一族扩展 Laguerre 不等式之间的充要刻画已有成熟理论。([arXiv][2])
+
+---
+

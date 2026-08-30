@@ -1,0 +1,12 @@
+## 猜想 828.3（Observer-light principal rigidity）
+
+在 observer-mode Weil extension 中，全部高 \(|n|\) 模态由：
+
+$$
+\frac{\pi}{2}|D_\eta|
+$$
+
+统一控制，故真正的负谱只可能存在于有限低模态块。
+
+---
+

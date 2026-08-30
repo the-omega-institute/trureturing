@@ -1,0 +1,10 @@
+ast_path: section/第七百二十四部-项目化零点速度观察器
+fingerprints:
+  raw_sha256: sha256:ec8c60cded9e9e1e8c279bc87148cf762b470a2be353ec0ce52f1e0db7464be1
+  normalized_sha256: sha256:ec8c60cded9e9e1e8c279bc87148cf762b470a2be353ec0ce52f1e0db7464be1
+cas_ref: sha256:ec8c60cded9e9e1e8c279bc87148cf762b470a2be353ec0ce52f1e0db7464be1
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

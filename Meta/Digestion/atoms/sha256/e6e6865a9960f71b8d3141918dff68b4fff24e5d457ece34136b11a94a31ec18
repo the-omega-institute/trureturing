@@ -1,0 +1,20 @@
+* 平滑或 completion 参数。
+
+设存在简单零点线程：
+
+$$
+F(\tau,\rho(\tau))=0.
+$$
+
+对 \(\tau\) 求导：
+
+$$
+\partial_\tau F
++
+\partial_sF\cdot\rho'(\tau)
+=
+0.
+$$
+
+因此：
+

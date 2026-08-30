@@ -1,0 +1,75 @@
+# 第八百七十部　当前 even 测试束的接口障碍
+
+项目当前的 `WeilTestFunction` 冻结了偶性。
+
+但法向倾斜：
+
+$$
+f_\delta(x)=e^{\delta x}f(x)
+$$
+
+一般不再是偶函数。
+
+而法向强度需要同时配对：
+
+$$
++\delta
+\qquad\text{与}\qquad
+-\delta.
+$$
+
+因此不能直接把现有 even test type 改写成倾斜测试。
+
+正确做法是增加一个独立的 Hermitian 上层接口：
+
+$$
+\boxed{
+\mathfrak q_L(f,h)
+=
+\left\langle
+\mathfrak W_L,
+f*\widetilde h
+\right\rangle.
+}
+\tag{870.1}
+$$
+
+随后令：
+
+$$
+f_\delta=e^{\delta x}f,
+\qquad
+h_\delta=e^{-\delta x}f,
+$$
+
+并研究：
+
+$$
+\boxed{
+\mathfrak q_L(f_\delta,h_\delta).
+}
+\tag{870.2}
+$$
+
+其 \(\delta^{2m}\) 系数才是 Weil 空间中的法向 jet。
+
+这与此前反复出现的结论一致：
+
+$$
+\boxed{
+\text{偶观察器只能看到完成平均，}
+}
+$$
+
+而：
+
+$$
+\boxed{
+\text{完整 Hermitian 配对才能读取隐藏奇向起点及其偶矩。}
+}
+$$
+
+现有 even 链应保留不动；新 jet 结构应作为并行上层，而不是破坏已经冻结的显式公式。
+
+---
+

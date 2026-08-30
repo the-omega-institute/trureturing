@@ -1,0 +1,10 @@
+ast_path: section/928-1-平滑化与有限支撑化/clause/2
+fingerprints:
+  raw_sha256: sha256:c51ec0e129c9a9858851fee65753e15b56d922e3116c1db3536bfaf97f698c77
+  normalized_sha256: sha256:c51ec0e129c9a9858851fee65753e15b56d922e3116c1db3536bfaf97f698c77
+cas_ref: sha256:c51ec0e129c9a9858851fee65753e15b56d922e3116c1db3536bfaf97f698c77
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

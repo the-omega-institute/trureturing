@@ -1,0 +1,89 @@
+# 第七百三十七部　六维完成的最小 split-signature 内核
+
+取：
+
+$$
+\mathcal H=\mathbb R^3.
+$$
+
+则：
+
+$$
+\mathcal V
+=
+\mathbb R^3\oplus\mathbb R^3
+\simeq
+\mathbb R^6.
+$$
+
+二次型：
+
+$$
+\boxed{
+Q_6(X,Y)
+=
+\|X\|^2
+-
+X\cdot Y
+-
+\|Y\|^2
+}
+\tag{737.1}
+$$
+
+具有符号：
+
+$$
+\boxed{
+(3,3).
+}
+$$
+
+其两个三维最大 isotropic 子空间为：
+
+$$
+\boxed{
+\mathcal L_+^{(3)}
+=
+\left\{
+(\varphi Y,Y):Y\in\mathbb R^3
+\right\},
+}
+\tag{737.2}
+$$
+
+$$
+\boxed{
+\mathcal L_-^{(3)}
+=
+\left\{
+(\varphi'Y,Y):Y\in\mathbb R^3
+\right\}.
+}
+\tag{737.3}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{六维完整结构}
+\longrightarrow
+\text{三维物理投影 }X=\varphi Y.
+}
+$$
+
+这正好实现：
+
+$$
+\boxed{
+\text{完整六维中所有方向等价，}
+}
+$$
+
+而投影到一个三维观察通道后，黄金比例表现为统一缩放像。
+
+这一结构与二十面体／准晶体的 \(3+3\) 物理—内部空间架构高度相容，但当前推导本身只是一个 split-signature Lorentz 内核，不能直接替代完整 \(D_6\) 切投影理论。
+
+---
+

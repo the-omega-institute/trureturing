@@ -1,0 +1,63 @@
+## 定理 888.1（有限精确 Paley–Wiener 插值）
+
+存在有限 \(L>0\) 与：
+
+$$
+f\in C_c^\infty((-L,L))
+$$
+
+使其 Fourier–Laplace 变换 \(F_f\) 满足：
+
+$$
+\boxed{
+F_f(z_j)=r_j,
+\qquad
+1\le j\le M.
+}
+\tag{888.1}
+$$
+
+### 构造
+
+选择：
+
+$$
+\psi\in C_c^\infty((-L,L))
+$$
+
+使：
+
+$$
+\widehat\psi(z_j)\neq0
+$$
+
+对全部 \(j\) 成立。
+
+在有限节点上构造插值多项式 \(P\)：
+
+$$
+P(z_j)
+=
+\frac{r_j}{\widehat\psi(z_j)}.
+$$
+
+令：
+
+$$
+f=P(i\partial_x)\psi.
+$$
+
+则：
+
+$$
+\widehat f(z)
+=
+P(z)\widehat\psi(z),
+$$
+
+且支撑仍位于 \((-L,L)\)。
+
+通过对称化，可保证 \(f\) 具有所需 Hermitian 实结构。
+
+---
+

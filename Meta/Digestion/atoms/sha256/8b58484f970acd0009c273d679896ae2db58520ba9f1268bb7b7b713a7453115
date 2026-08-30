@@ -1,0 +1,6 @@
+* 最终一个严格负 Weil quadratic form。
+
+由于项目已有安全补空间 gap，搜索应限制在有限 sticky block，而不是全函数空间。
+
+---
+

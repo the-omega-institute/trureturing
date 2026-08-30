@@ -1,0 +1,4 @@
+### 义务 6（输运证书与越界收口）⇢ 已被第 57.3 侧冻结定理收编
+
+独立裁定席（la40）逐子句映射（C1–C5 五个合法性条件 ↦ `semantic_strict_subset_has_new_only_witness` 供严格扩域见证、`valid_semantic_transport_cert_iff_valid_transport_cert` 双向逐字段搬运至 legacy `ValidTransportCert` 三合取、`receipt_matches_original_coordinates`（57.5.2 强制复用）暴露收据坐标等式、`transport_refutation_witness_projects_to_prop` 与 `semantic_overreach_iff_not_overreach_closure`、`semantic_overreach_iff_overreach` 收束失败/反驳与越界侧）。零 diff 复核：`make lean` 全部 11173 任务通过，五个目标模块直接 Lean 校验通过，其 Freeze 收据只读核验一致。
+

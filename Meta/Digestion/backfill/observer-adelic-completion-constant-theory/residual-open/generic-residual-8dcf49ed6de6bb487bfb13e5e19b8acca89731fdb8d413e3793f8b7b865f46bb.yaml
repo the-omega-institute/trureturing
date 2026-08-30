@@ -1,0 +1,10 @@
+ast_path: row/有限阶区间证书
+fingerprints:
+  raw_sha256: sha256:8dcf49ed6de6bb487bfb13e5e19b8acca89731fdb8d413e3793f8b7b865f46bb
+  normalized_sha256: sha256:8dcf49ed6de6bb487bfb13e5e19b8acca89731fdb8d413e3793f8b7b865f46bb
+cas_ref: sha256:8dcf49ed6de6bb487bfb13e5e19b8acca89731fdb8d413e3793f8b7b865f46bb
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

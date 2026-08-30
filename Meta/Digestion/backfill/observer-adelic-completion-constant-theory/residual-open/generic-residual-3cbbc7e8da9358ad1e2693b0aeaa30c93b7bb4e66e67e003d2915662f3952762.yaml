@@ -1,0 +1,14 @@
+ast_path: section/868-1-深层破缺为何极难观察
+fingerprints:
+  raw_sha256: sha256:3cbbc7e8da9358ad1e2693b0aeaa30c93b7bb4e66e67e003d2915662f3952762
+  normalized_sha256: sha256:3cbbc7e8da9358ad1e2693b0aeaa30c93b7bb4e66e67e003d2915662f3952762
+cas_ref: sha256:3cbbc7e8da9358ad1e2693b0aeaa30c93b7bb4e66e67e003d2915662f3952762
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-de037862ab58b659f4bdecaba50e2d5d1cd71020c139f0163f7cd4d9d392f33f-e0379557c21a75577b781a681d591f451c3888e9b6c2af9e711081bce36cfb3f
+    - generic-residual-590f02de9656e7b21d9976e7978f4e9ab71d1ac301397e453c219bc4b8620bd3-187a6028c9c63912ef4923919f39f277f40a9615804f48e5d6b41e21e289f9f4
+    - generic-residual-cf2425d5b9ab3673aed9cbfbda632b40376eef2c2f0141f7927482110bee92de-7caaed2b2f632c827ccf8e12181aec81d8e9f30a3bcb2e6bebcaee5179064005

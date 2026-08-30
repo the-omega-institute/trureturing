@@ -1,0 +1,15 @@
+ast_path: section/5-2-G-A-状态盲门方程的唯一解
+fingerprints:
+  raw_sha256: sha256:53a50785c2f951cc202ce48a584adb6677e43f1e97a846ddab4f4ff844ed4911
+  normalized_sha256: sha256:53a50785c2f951cc202ce48a584adb6677e43f1e97a846ddab4f4ff844ed4911
+cas_ref: sha256:53a50785c2f951cc202ce48a584adb6677e43f1e97a846ddab4f4ff844ed4911
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-740521f3a5a54ba3613056e9b236926700334bd3d30f2d5ccf2faa4a42569c16-024ed5598affc48cd932ea3217b63c306b882c098c4a22580bf1ad85d11ed1cd
+    - generic-residual-6946f10e74935ec99bb780325358ece8b73026cf997ecfea8809a5dd54e590e2-10c7c9fdfb00dad2e2216ab972dba2feef65e5b5528cba597333ba9005b11fd9
+    - generic-residual-fd223546b5b439c1389f92c046142520d1af605da831faa63816a12ed08d05fa-06611fbba521e9f18bdc9d74cfbe864b29bc43e41c7b288bdf96135d87ae0f99
+    - generic-residual-c322ac263aa0bd10ed19c01eff5f16142cd1f867cd68723135eea319bff8b084-44edb953ce82e38cf327f808bdf717d4b70f9973cd991df11428e5414b9bc978

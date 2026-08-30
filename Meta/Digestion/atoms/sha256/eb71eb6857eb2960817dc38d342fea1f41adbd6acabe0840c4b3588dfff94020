@@ -1,0 +1,31 @@
+# 第七百零五部　一个重要 No-Go：完成对称不会把简单零点推出临界线
+
+令：
+
+$$
+J(s)=1-\overline s.
+$$
+
+假设闭环函数满足 completed reflection：
+
+$$
+\boxed{
+\Theta_{\kappa}(J(s))
+=
+\overline{
+\Theta_{\kappa}(s)
+}.
+}
+\tag{705.1}
+$$
+
+设：
+
+$$
+\rho_0\in\operatorname{Fix}(J)
+$$
+
+是 \(\Theta_0\) 的简单零点。
+
+---
+

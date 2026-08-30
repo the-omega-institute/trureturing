@@ -1,0 +1,162 @@
+## 5.1 Canonical Lean 接口
+
+建议定义落点：
+
+`D5/S3/ConceptDynamics/GovernanceFixedPoint/Core.lean`
+
+以下接口是 G-A—G-H 的唯一词汇表。实现时不得为同一概念另造可供下游二选一的同义谓词。
+
+```lean
+universe u v w
+
+namespace D5.S3.ConceptDynamics.GovernanceFixedPoint
+
+def Gate {Entry : Type u} {Status : Type v}
+    (handwritten derived : Entry → Status) : Prop :=
+  ∀ entry, handwritten entry = derived entry
+
+abbrev BlindDeriver
+    (Context : Type u) (Entry : Type v) (Status : Type w) :=
+  Context → Entry → Status
+
+abbrev SelfReadingDeriver
+    (Context : Type u) (Entry : Type v) (Status : Type w) :=
+  Context → (Entry → Status) → Entry → Status
+
+def liftBlind
+    {Context : Type u} {Entry : Type v} {Status : Type w}
+    (d : BlindDeriver Context Entry Status) :
+    SelfReadingDeriver Context Entry Status :=
+  fun context _handwritten => d context
+
+def StatusBlind
+    {Context : Type u} {Entry : Type v} {Status : Type w}
+    (D : SelfReadingDeriver Context Entry Status) : Prop :=
+  ∃ d : BlindDeriver Context Entry Status, D = liftBlind d
+
+def boolFlip : Bool → Bool
+  | false => true
+  | true => false
+
+def PrefixExtension
+    {Byte : Type u} (oldBytes newBytes : List Byte) : Prop :=
+  ∃ suffix : List Byte, newBytes = oldBytes ++ suffix
+
+def TailBytes
+    {Byte : Type u} (document : List Byte) (start : Nat) :
+    List Byte :=
+  document.drop start
+
+abbrev ContentKey (Byte : Type u) := List Byte
+
+def contentKey
+    {Byte : Type u} (bytes : List Byte) : ContentKey Byte :=
+  bytes
+
+inductive Verdict
+  | pending
+  | admit
+  | reject
+  deriving DecidableEq
+
+abbrev Settlement (Id : Type u) := Id → Verdict
+
+structure LedgerEntry (Id : Type u) (Byte : Type v) where
+  logicalId : Id
+  bytes : List Byte
+
+def LedgerEntry.key
+    {Id : Type u} {Byte : Type v}
+    (entry : LedgerEntry Id Byte) : ContentKey Byte :=
+  contentKey entry.bytes
+
+abbrev ActiveIndex (Id : Type u) (Byte : Type v) :=
+  Id → ContentKey Byte
+
+def ActiveSource
+    {Id : Type u} {Byte : Type v}
+    (active : ActiveIndex Id Byte)
+    (logicalId : Id) (key : ContentKey Byte) : Prop :=
+  active logicalId = key
+
+structure RekeyResult (Id : Type u) (Byte : Type v) where
+  predecessor : ContentKey Byte
+  newEntry : LedgerEntry Id Byte
+  newActive : ActiveIndex Id Byte
+  newSettlement : Settlement Id
+
+def LegalTailRekey
+    {Id : Type u} {Byte : Type v} [DecidableEq Id]
+    (tailEligible : Id → Prop)
+    (oldDocument newDocument : List Byte)
+    (start : Nat)
+    (oldEntry : LedgerEntry Id Byte)
+    (active : ActiveIndex Id Byte)
+    (settlement : Settlement Id)
+    (result : RekeyResult Id Byte) : Prop :=
+  tailEligible oldEntry.logicalId ∧
+    PrefixExtension oldDocument newDocument ∧
+    start ≤ oldDocument.length ∧
+    oldEntry.bytes = TailBytes oldDocument start ∧
+    ActiveSource active oldEntry.logicalId oldEntry.key ∧
+    result.predecessor = oldEntry.key ∧
+    result.newEntry.logicalId = oldEntry.logicalId ∧
+    result.newEntry.bytes = TailBytes newDocument start ∧
+    PrefixExtension oldEntry.bytes result.newEntry.bytes ∧
+    result.newActive =
+      Function.update active oldEntry.logicalId result.newEntry.key ∧
+    result.newSettlement = settlement
+
+def ConservativeRekey
+    {Id : Type u} {Byte : Type v}
+    (active : ActiveIndex Id Byte)
+    (settlement : Settlement Id)
+    (oldEntry : LedgerEntry Id Byte)
+    (result : RekeyResult Id Byte) : Prop :=
+  result.predecessor = oldEntry.key ∧
+    result.newEntry.logicalId = oldEntry.logicalId ∧
+    result.newSettlement = settlement ∧
+    (∀ key,
+      ActiveSource result.newActive oldEntry.logicalId key ↔
+        key = result.newEntry.key) ∧
+    ∀ logicalId,
+      logicalId ≠ oldEntry.logicalId →
+        result.newActive logicalId = active logicalId
+
+def JointAllowed
+    {Repair : Type u}
+    (allow₁ allow₂ : Set Repair) : Set Repair :=
+  allow₁ ∩ allow₂
+
+def ReachableRepair
+    {Repair : Type u}
+    (repairClass allow₁ allow₂ : Set Repair) : Prop :=
+  ∃ repair,
+    repair ∈ repairClass ∧
+      repair ∈ JointAllowed allow₁ allow₂
+
+def Deadlocked
+    {Repair : Type u}
+    (repairClass allow₁ allow₂ : Set Repair) : Prop :=
+  ¬ ReachableRepair repairClass allow₁ allow₂
+
+def AllowedWithChannel
+    {Repair : Type u}
+    (allow₁ allow₂ channel : Set Repair) : Set Repair :=
+  JointAllowed allow₁ allow₂ ∪ channel
+
+def ConservativeChannel
+    {Repair : Type u}
+    (repairClass allow₁ allow₂ channel : Set Repair) : Prop :=
+  JointAllowed allow₁ allow₂ ⊆
+      AllowedWithChannel allow₁ allow₂ channel ∧
+    AllowedWithChannel allow₁ allow₂ channel \
+      JointAllowed allow₁ allow₂ = repairClass
+
+end D5.S3.ConceptDynamics.GovernanceFixedPoint
+```
+
+上述 `Settlement` 与 `ActiveIndex` 是追加事件历史的语义视图。实现不得仅保存这两个函数而丢弃产生它们的事件来源。
+
+以下代码块只冻结 theorem header；证明体由对应模块提供。理论卷不以 `sorry`、`axiom` 或伪占位符冒充证明。
+

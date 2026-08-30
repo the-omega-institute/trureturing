@@ -1,0 +1,10 @@
+ast_path: row/observer-Casimir-进入-ordinary-zeta
+fingerprints:
+  raw_sha256: sha256:7a1174986c0995c8efaabcac72c3ca7c6803cf3430c0a089f015718dcfa303cb
+  normalized_sha256: sha256:7a1174986c0995c8efaabcac72c3ca7c6803cf3430c0a089f015718dcfa303cb
+cas_ref: sha256:7a1174986c0995c8efaabcac72c3ca7c6803cf3430c0a089f015718dcfa303cb
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

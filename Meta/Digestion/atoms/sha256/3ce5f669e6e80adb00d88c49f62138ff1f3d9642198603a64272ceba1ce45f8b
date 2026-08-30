@@ -1,0 +1,42 @@
+## 定理 840.2（Discriminant determinant product）
+
+$$
+\boxed{
+\Delta_1\Delta_2
+=
+\sqrt5.
+}
+\tag{840.4}
+$$
+
+所以：
+
+$$
+\boxed{
+\varphi
+=
+\text{两个 mod-5 observer-light 扇区的行列式比},
+}
+$$
+
+而：
+
+$$
+\boxed{
+\sqrt5
+=
+\text{两个扇区的行列式积}.
+}
+$$
+
+这把前文的：
+
+* 黄金光锥斜率；
+* 判别式五；
+* 观察者 holonomy；
+* 无质量 Poisson 场；
+
+合并为一个精确谱恒等式。
+
+---
+

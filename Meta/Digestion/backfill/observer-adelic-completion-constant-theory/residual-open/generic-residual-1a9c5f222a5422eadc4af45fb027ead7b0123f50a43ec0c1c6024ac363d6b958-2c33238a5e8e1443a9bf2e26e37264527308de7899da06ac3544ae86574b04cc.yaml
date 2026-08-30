@@ -1,0 +1,10 @@
+ast_path: section/815-1-有限最大群速度/clause/1
+fingerprints:
+  raw_sha256: sha256:1a9c5f222a5422eadc4af45fb027ead7b0123f50a43ec0c1c6024ac363d6b958
+  normalized_sha256: sha256:1a9c5f222a5422eadc4af45fb027ead7b0123f50a43ec0c1c6024ac363d6b958
+cas_ref: sha256:1a9c5f222a5422eadc4af45fb027ead7b0123f50a43ec0c1c6024ac363d6b958
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

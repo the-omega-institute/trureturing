@@ -1,0 +1,64 @@
+# 第七百五十九部　为什么普通 \(\zeta\) 看不到黄金比例
+
+普通 \(\zeta\) 对每个素数只读取：
+
+$$
+\boxed{
+1
+}
+$$
+
+这一平凡特征值。
+
+它不读取：
+
+$$
+\chi_5(p).
+$$
+
+因此：
+
+$$
+\boxed{
+\zeta
+\text{ 无法区分 split 与 inert 素数。}
+}
+$$
+
+更准确地说，它只读取：
+
+$$
+P_{\mathrm{ev}}\mathsf F_pP_{\mathrm{ev}}
+=
+1.
+$$
+
+黄金 odd branch：
+
+$$
+P_{\mathrm{odd}}\mathsf F_pP_{\mathrm{odd}}
+=
+\chi_5(p)
+$$
+
+全部被投影掉。
+
+所以直接从普通 \(\zeta\) 的 Euler 系数中寻找裸 \(\varphi\)，本质上是在错误的表示通道中搜索。
+
+正确分层是：
+
+$$
+\boxed{
+\begin{aligned}
+\zeta(s)
+&=\text{branch-blind scalar sector},\\
+L(s,\chi_5)
+&=\text{golden branch-orientation sector},\\
+\zeta_K(s)
+&=\text{full two-branch sector}.
+\end{aligned}
+}
+$$
+
+---
+

@@ -1,0 +1,38 @@
+## 913.1 黄金 prime horizon
+
+因为：
+
+$$
+X_n=e^{2L_n},
+$$
+
+所以：
+
+$$
+\boxed{
+X_n
+=
+\exp\left(
+2L_0\varphi^{2n}
+\right).
+}
+\tag{913.4}
+$$
+
+相对于层数 \(n\)，这是指数的指数增长。
+
+并且：
+
+$$
+\boxed{
+\delta_n\log X_n
+=
+2L_0\delta_0
+}
+\tag{913.5}
+$$
+
+严格不变。
+
+这可以称为：
+

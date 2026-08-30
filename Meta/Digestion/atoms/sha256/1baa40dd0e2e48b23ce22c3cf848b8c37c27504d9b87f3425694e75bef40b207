@@ -1,0 +1,16 @@
+## 猜想 828.4（Low-mode collision criterion）
+
+若 observer Casimir 能进入 ordinary completed \(\xi\)，任何离线零点出生必须对应某个低 observer mode 上：
+
+$$
+\boxed{
+F=0,
+\qquad
+\partial_sF=0.
+}
+$$
+
+即完成谱碰撞，而不是高频光样模态的不稳定。
+
+---
+

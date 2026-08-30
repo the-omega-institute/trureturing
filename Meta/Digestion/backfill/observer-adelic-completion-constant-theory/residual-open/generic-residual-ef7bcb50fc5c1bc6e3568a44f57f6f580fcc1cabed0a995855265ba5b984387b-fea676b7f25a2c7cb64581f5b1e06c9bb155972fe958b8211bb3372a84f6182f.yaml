@@ -1,0 +1,10 @@
+ast_path: section/935-1-离散观察作用保持/clause/2
+fingerprints:
+  raw_sha256: sha256:ef7bcb50fc5c1bc6e3568a44f57f6f580fcc1cabed0a995855265ba5b984387b
+  normalized_sha256: sha256:ef7bcb50fc5c1bc6e3568a44f57f6f580fcc1cabed0a995855265ba5b984387b
+cas_ref: sha256:ef7bcb50fc5c1bc6e3568a44f57f6f580fcc1cabed0a995855265ba5b984387b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

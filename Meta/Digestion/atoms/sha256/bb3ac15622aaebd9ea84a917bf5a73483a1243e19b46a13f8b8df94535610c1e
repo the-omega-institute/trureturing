@@ -1,0 +1,49 @@
+## 定理 798.1（Archimedean observer product）
+
+$$
+\boxed{
+\mathscr C_n^\infty(\sigma)
+=
+\sum_{m=0}^{\infty}
+\log
+\left[
+1+
+\frac{\tau_n^2}
+{(\sigma+2m)^2}
+\right].
+}
+\tag{798.2}
+$$
+
+Gamma 函数的相应无限乘积由其 Weierstrass 乘积直接推出。([DLMF][1])
+
+因此，对所有
+
+$$
+n\neq0,
+\qquad
+\sigma>0,
+$$
+
+有
+
+$$
+\boxed{
+\mathscr C_n^\infty(\sigma)>0.
+}
+\tag{798.3}
+$$
+
+这说明：
+
+$$
+\boxed{
+\Gamma_\infty
+\text{ 并不是 observer difference 的无关背景；}
+}
+$$
+
+它本身就在惩罚所有非零 regulator modes。
+
+---
+

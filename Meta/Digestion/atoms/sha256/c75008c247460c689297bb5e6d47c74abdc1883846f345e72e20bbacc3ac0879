@@ -1,0 +1,73 @@
+# 第八百二十三部　两个手性分支
+
+在黄金圆上：
+
+$$
+n>0
+$$
+
+与：
+
+$$
+n<0
+$$
+
+分别对应：
+
+$$
+e^{+ik_n\eta},
+\qquad
+e^{-ik_n\eta}.
+$$
+
+Lorentzian half-wave 演化为：
+
+$$
+\boxed{
+e^{-ic_\infty T|D|}
+e^{ik_n\eta}
+=
+e^{-ic_\infty|k_n|T}
+e^{ik_n\eta}.
+}
+\tag{823.1}
+$$
+
+对 \(n>0\)，它是一个传播方向；
+
+对 \(n<0\)，它是另一个传播方向。
+
+反射：
+
+$$
+\eta\mapsto-\eta
+$$
+
+交换：
+
+$$
+n\leftrightarrow-n.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{黄金共轭双分支}
+}
+$$
+
+与：
+
+$$
+\boxed{
+\text{massless left/right chirality}
+}
+$$
+
+具有同一个 \(C_2\) 交换结构。
+
+这与项目已经证明的黄金单位 \(\zeta\) 反射完全吻合：共轭交换两个嵌入，同时反射 regulator 参数。
+
+---
+

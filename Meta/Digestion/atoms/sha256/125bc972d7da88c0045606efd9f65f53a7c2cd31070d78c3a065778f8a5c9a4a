@@ -1,0 +1,84 @@
+# 第八百一十八部　黄金 regulator 圆上的 Poisson 光场
+
+黄金 observer circle 的周长为：
+
+$$
+\boxed{
+P_\varphi=2\log\varphi.
+}
+\tag{818.1}
+$$
+
+其 Fourier momentum 为：
+
+$$
+\boxed{
+k_n
+=
+\frac{2\pi n}{P_\varphi}
+=
+\frac{\pi n}{\log\varphi}.
+}
+\tag{818.2}
+$$
+
+纯 Poisson 生成元：
+
+$$
+H_{\mathrm{light}}
+=
+c_\infty|D_\eta|
+$$
+
+的能级为：
+
+$$
+\boxed{
+E_n^{\mathrm{light}}
+=
+c_\infty|k_n|
+=
+\frac{\pi^2}{2\log\varphi}|n|.
+}
+\tag{818.3}
+$$
+
+因此第一非零 observer-light gap 为：
+
+$$
+\boxed{
+\Delta_\varphi^{\mathrm{light}}
+=
+\frac{\pi^2}{2\log\varphi}.
+}
+\tag{818.4}
+$$
+
+并有一个简单但重要的无量纲恒等式：
+
+$$
+\boxed{
+P_\varphi
+\Delta_\varphi^{\mathrm{light}}
+=
+\pi^2.
+}
+\tag{818.5}
+$$
+
+黄金比例在这里并不改变局部“光速”：
+
+$$
+c_\infty=\frac{\pi}{2}.
+$$
+
+它改变的是：
+
+$$
+\boxed{
+\text{观察者空间的周长与允许动量的量子化间距。}
+}
+$$
+
+---
+

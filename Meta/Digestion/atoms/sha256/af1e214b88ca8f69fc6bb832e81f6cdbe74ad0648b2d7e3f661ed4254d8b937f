@@ -1,0 +1,210 @@
+# 本轮最终结论
+
+“质量为零的 Poisson 型色散”之所以听起来像光，不只是语言相似。
+
+其高频完成算子确实是：
+
+$$
+\boxed{
+\frac{\pi}{2}|D_\eta|.
+}
+$$
+
+它对应色散：
+
+$$
+\boxed{
+E(k)=\frac{\pi}{2}|k|,
+}
+$$
+
+具有两个手性分支，并在 Wick 旋转后生成：
+
+$$
+\boxed{
+i\partial_T\psi
+=
+\frac{\pi}{2}|D_\eta|\psi.
+}
+$$
+
+其平方满足标准波动方程：
+
+$$
+\boxed{
+\partial_T^2\psi
+-
+\frac{\pi^2}{4}
+\partial_\eta^2\psi
+=
+0.
+}
+$$
+
+更深的是，这个无质量结构并不是基础层中预先存在的一个单独粒子。
+
+它来自：
+
+$$
+\boxed{
+E_\sigma(k)
+=
+\sum_{m=0}^{\infty}
+\log
+\left(
+1+\frac{k^2}{(\sigma+2m)^2}
+\right).
+}
+$$
+
+每一项都带有自己的完成尺度：
+
+$$
+\sigma+2m.
+$$
+
+但全部层级凝聚后：
+
+$$
+\boxed{
+E_\sigma(k)
+\sim
+\frac{\pi}{2}|k|.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{无限个有尺度完成层，
+在边界上显现为一个无质量光样模式。}
+}
+$$
+
+这正是“极限完成态蕴含全部层，却不再区分各层”的一个精确模型。
+
+在：
+
+$$
+\sigma=1
+$$
+
+时，它甚至具有完全闭合的双曲公式：
+
+$$
+\boxed{
+E_1(k)
+=
+\log\cosh
+\left(
+\frac{\pi k}{2}
+\right),
+}
+$$
+
+$$
+\boxed{
+v_1(k)
+=
+\frac{\pi}{2}
+\tanh
+\left(
+\frac{\pi k}{2}
+\right).
+}
+$$
+
+所以 observer momentum 本身成为 rapidity，而群速度通过 \(\tanh\) 接近极限值。
+
+黄金比例则不充当光速。
+
+它决定：
+
+$$
+\boxed{
+P_\varphi=2\log\varphi
+}
+$$
+
+这一观察者圆周长，从而把 momentum 量子化为：
+
+$$
+\boxed{
+k_n=\frac{\pi n}{\log\varphi}.
+}
+$$
+
+于是 observer-light 能级为：
+
+$$
+\boxed{
+E_n^{\mathrm{light}}
+=
+\frac{\pi^2}{2\log\varphi}|n|.
+}
+$$
+
+所以四个量必须分开：
+
+$$
+\boxed{
+\begin{aligned}
+\varphi
+&=\text{光锥在 Fibonacci 算术基中的 null slope};\\
+2\log\varphi
+&=\text{观察者空间的紧化周长};\\
+\frac{\pi}{2}
+&=\text{Archimedean massless principal speed};\\
+\frac{\pi^2}{2\log\varphi}
+&=\text{第一量子化 observer-light gap}.
+\end{aligned}
+}
+$$
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{光样结构不是某一层的常数，
+而是无限完成层级共同产生的边界切锥。}
+}
+$$
+
+而且这一切锥自动稳定高 observer modes。
+
+因此真正可能承载 RH 破缺的，不是“光样高频”，而是：
+
+$$
+\boxed{
+\text{少数低 observer modes 中的有限维碰撞／重根事件。}
+}
+$$
+
+下一步最承重的研究，不再是继续寻找更多“像光”的公式，而是把这一精确 Archimedean operator：
+
+$$
+\boxed{
+\Phi_\sigma(-\partial_\eta^2)
+}
+$$
+
+接入项目已有的 fixed-scale Weil operator，证明：
+
+$$
+\boxed{
+\text{所有高 observer modes 自动正，}
+}
+$$
+
+并把 ordinary RH 的剩余危险严格压缩到：
+
+$$
+\boxed{
+\text{有限个低 observer modes 的 joint sticky matrix。}
+}
+$$
+
+[1]: https://dlmf.nist.gov/5.11 "https://dlmf.nist.gov/5.11"
+[2]: https://doi.org/10.48550/arXiv.math/0608640 "https://doi.org/10.48550/arXiv.math/0608640"
+[3]: https://arxiv.org/abs/1707.02475 "https://arxiv.org/abs/1707.02475"

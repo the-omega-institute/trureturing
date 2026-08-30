@@ -1,0 +1,13 @@
+- 两元素翻转给出最小非退化失败见证。
+
+取 `Bool`，定义：
+
+$\operatorname{flip}(\mathsf{false})=\mathsf{true}$，  
+$\operatorname{flip}(\mathsf{true})=\mathsf{false}$。
+
+则：
+
+$\neg\exists s:\operatorname{Bool},\ s=\operatorname{flip}(s)$。
+
+在单元素非空状态类型上，每个自映射都固定唯一元素；因此 `Bool` 是最小的非单点状态域反例。空状态类型因根本没有可写状态而属于退化治理接口，不作为这里的状态系统。
+

@@ -1,0 +1,27 @@
+# 第七百六十四部　完成标量对整个 \(D_\infty\) 失明
+
+令项目中的黄金单位格点 \(\zeta\) 记为：
+
+$$
+Z_{\mathrm{unit}}(s,\eta).
+$$
+
+项目已经证明：
+
+$$
+Z_{\mathrm{unit}}(s,-\eta)
+=
+Z_{\mathrm{unit}}(s,\eta),
+$$
+
+$$
+Z_{\mathrm{unit}}
+\left(
+s,\eta+2\log\varphi
+\right)
+=
+Z_{\mathrm{unit}}(s,\eta).
+$$
+
+因为 \(U,J\) 生成 \(D_\infty\)，立即得到：
+

@@ -1,0 +1,10 @@
+ast_path: row/临界-Gamma-二阶差分必变号
+fingerprints:
+  raw_sha256: sha256:9ae59acb83132fe6ac96b7ff24dbdd09751ff7d850e40628af4a783edc8a889e
+  normalized_sha256: sha256:9ae59acb83132fe6ac96b7ff24dbdd09751ff7d850e40628af4a783edc8a889e
+cas_ref: sha256:9ae59acb83132fe6ac96b7ff24dbdd09751ff7d850e40628af4a783edc8a889e
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

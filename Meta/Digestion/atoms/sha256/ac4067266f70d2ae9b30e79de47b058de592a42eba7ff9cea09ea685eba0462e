@@ -1,0 +1,37 @@
+## 目标 892.1（Exterior-pole rationalization）
+
+证明：
+
+$$
+\boxed{
+R
+\in
+\overline{
+\operatorname{span}
+\left\{
+(z-\alpha)^{-m}:
+|\Im\alpha|>\frac12+\varepsilon
+\right\}
+}^{\,\ell^2(\mathcal Z_\Xi,w)}.
+}
+\tag{892.1}
+$$
+
+该命题一旦成立，Jet–Weil 编译即可完成：
+
+$$
+\text{negative jet}
+\to
+R
+\to
+Q
+\to
+\text{exponentially decaying kernel}
+\to
+\text{compact-support approximation}.
+$$
+
+这比一般 Paley–Wiener density 更具体，也更贴近 resolvent 结构。
+
+---
+

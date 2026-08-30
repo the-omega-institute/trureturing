@@ -1,0 +1,79 @@
+# 第八百三十一部　科学修正：Riemann 点不是精确 `log cosh` 点
+
+前文定义连续 Gamma 色散：
+
+$$
+E_\sigma(k)
+=
+2\log\Gamma\left(\frac{\sigma}{2}\right)
+-
+2\Re\log\Gamma
+\left(
+\frac{\sigma+ik}{2}
+\right).
+$$
+
+在：
+
+$$
+\sigma=1
+$$
+
+时有精确公式：
+
+$$
+E_1(k)
+=
+\log\cosh\frac{\pi k}{2}.
+$$
+
+但 completed Riemann \(\zeta\) 在临界线：
+
+$$
+s=\frac12+it
+$$
+
+所使用的 Gamma 参数是：
+
+$$
+\Gamma
+\left(
+\frac14+\frac{it}{2}
+\right),
+$$
+
+即对应：
+
+$$
+\boxed{
+\sigma=\frac12,
+}
+$$
+
+而不是 \(\sigma=1\)。
+
+项目中已机器形式化的 Archimedean jump density 也正是：
+
+$$
+\boxed{
+\kappa_\infty(x)
+=
+\frac{e^{-x/2}}
+{1-e^{-2x}},
+}
+$$
+
+并把它积分成正的连续平移能量。
+
+因此必须修正：
+
+$$
+\boxed{
+\log\cosh
+}
+$$
+
+是一个极其漂亮的精确模型点，但不是 Riemann 临界线的完整精确色散。
+
+---
+

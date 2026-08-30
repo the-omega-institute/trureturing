@@ -1,0 +1,10 @@
+ast_path: section/700-1-交换曲率由-residual-控制
+fingerprints:
+  raw_sha256: sha256:461a0433316be2a9c151ec860b7c3f73570b03ec6e175b019ffb8b4e2076909a
+  normalized_sha256: sha256:461a0433316be2a9c151ec860b7c3f73570b03ec6e175b019ffb8b4e2076909a
+cas_ref: sha256:461a0433316be2a9c151ec860b7c3f73570b03ec6e175b019ffb8b4e2076909a
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

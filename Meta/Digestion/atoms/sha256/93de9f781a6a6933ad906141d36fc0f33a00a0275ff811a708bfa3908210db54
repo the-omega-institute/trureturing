@@ -1,0 +1,19 @@
+* \(U^kJ^\varepsilon\)：完整观察者的 rapidity 与方向记忆。
+
+项目中的：
+
+$$
+\eta\mapsto
+\eta+2\log\varphi
+$$
+
+和：
+
+$$
+\eta\mapsto-\eta
+$$
+
+正是这两个生成元在流参数上的作用。
+
+---
+

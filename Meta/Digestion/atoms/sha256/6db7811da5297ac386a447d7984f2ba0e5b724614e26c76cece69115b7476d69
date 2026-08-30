@@ -1,0 +1,32 @@
+## 5.5 G-D：合法尾节重键存在
+
+建议模块：
+
+`D5/S3/ConceptDynamics/GovernanceFixedPoint/TailRekeyExistence.lean`
+
+精确陈述：
+
+```lean
+theorem legal_tail_rekey_exists
+    {Id : Type u} {Byte : Type v} [DecidableEq Id]
+    (tailEligible : Id → Prop)
+    (oldDocument newDocument : List Byte)
+    (start : Nat)
+    (oldEntry : LedgerEntry Id Byte)
+    (active : ActiveIndex Id Byte)
+    (settlement : Settlement Id)
+    (heligible : tailEligible oldEntry.logicalId)
+    (hprefix : PrefixExtension oldDocument newDocument)
+    (hstart : start ≤ oldDocument.length)
+    (hbytes : oldEntry.bytes = TailBytes oldDocument start)
+    (hactive :
+      ActiveSource active oldEntry.logicalId oldEntry.key) :
+    ∃ result : RekeyResult Id Byte,
+      LegalTailRekey tailEligible
+        oldDocument newDocument start
+        oldEntry active settlement result
+```
+
+规范见证必须逐字段构造，不使用任意选择：
+
+- `predecessor := oldEntry.key`；

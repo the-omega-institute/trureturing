@@ -1,0 +1,34 @@
+## 第三
+
+即使 observer mode 通过二阶 Casimir 进入 completed scalar，在保持函数方程反射时，简单临界零点仍不会直接离线。
+
+它必须先满足：
+
+$$
+\boxed{
+F=0,
+\qquad
+F_s=0,
+}
+$$
+
+即发生重根／碰撞。
+
+因此，真正可导致 ordinary RH 失败的不是：
+
+$$
+\varphi,
+$$
+
+也不是单独的 observer phase，而是：
+
+$$
+\boxed{
+\text{一个规范进入零模态的 shape deformation，}
+}
+$$
+
+并且该 deformation 强到足以使低 observer mode 中的两个临界零点发生碰撞。
+
+---
+

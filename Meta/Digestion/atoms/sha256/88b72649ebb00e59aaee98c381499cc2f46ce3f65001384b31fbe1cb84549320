@@ -1,0 +1,30 @@
+# 第七百九十一部　黄金观察者 GRH 模态塔
+
+对每个 regulator 模态 \(n\)，令：
+
+$$
+\Lambda_n(s)
+$$
+
+表示 \(L_n(s)\) 加上相应 Archimedean gamma factors 后的标准 Hecke completion。
+
+定义其零点横向方差：
+
+$$
+\boxed{
+\mathcal V_n(T)
+=
+\sum_{\substack{
+\Lambda_n(\rho)=0\\
+0<\Im\rho\le T
+}}
+m_\rho
+\left(
+\Re\rho-\frac12
+\right)^2.
+}
+\tag{791.1}
+$$
+
+于是可以定义：
+

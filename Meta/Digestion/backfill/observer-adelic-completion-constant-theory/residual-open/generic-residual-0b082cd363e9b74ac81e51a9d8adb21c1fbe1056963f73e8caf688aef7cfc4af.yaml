@@ -1,0 +1,10 @@
+ast_path: section/758-1-表示论解释
+fingerprints:
+  raw_sha256: sha256:0b082cd363e9b74ac81e51a9d8adb21c1fbe1056963f73e8caf688aef7cfc4af
+  normalized_sha256: sha256:0b082cd363e9b74ac81e51a9d8adb21c1fbe1056963f73e8caf688aef7cfc4af
+cas_ref: sha256:0b082cd363e9b74ac81e51a9d8adb21c1fbe1056963f73e8caf688aef7cfc4af
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

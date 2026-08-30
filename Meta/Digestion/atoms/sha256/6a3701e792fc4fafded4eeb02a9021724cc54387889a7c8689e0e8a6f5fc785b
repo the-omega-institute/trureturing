@@ -1,0 +1,17 @@
+## 2.2 盲派生唯一不动点定理骨架
+
+若 $D$ 状态盲，则对每个固定上下文 $c$，存在唯一手写状态函数 $h$ 通过门：
+
+$\operatorname{StatusBlind}(D)\Longrightarrow\forall c:C,\ \exists!h:E\to\Sigma,\ \operatorname{Gate}(h,D(c,h))$。
+
+证明骨架如下：
+
+1. 由盲性取得 $d$，满足 $D(c,h)=d(c)$；
+2. 取见证 $h_0:=d(c)$；
+3. 逐条有 $h_0(e)=D(c,h_0)(e)$；
+4. 若 $h_1$ 也通过，则逐条有 $h_1(e)=d(c)(e)$；
+5. 函数外延给出 $h_1=h_0$。
+
+该结果不要求：
+
+- $E$ 有限或非空；

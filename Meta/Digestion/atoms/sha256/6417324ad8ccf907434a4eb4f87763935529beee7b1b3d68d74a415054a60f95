@@ -1,0 +1,85 @@
+# 第八百二十五部　对观察者不可克隆的进一步解释
+
+设边界观察者状态：
+
+$$
+f(\eta)
+=
+\sum_{n\in\mathbb Z}
+\widehat f_n e^{ik_n\eta}.
+$$
+
+Poisson completion 后：
+
+$$
+\boxed{
+f_y(\eta)
+=
+\sum_n
+e^{-|k_n|y}
+\widehat f_n
+e^{ik_n\eta}.
+}
+\tag{825.1}
+$$
+
+有限 \(y\) 时，每个 multiplier 非零，因此在无限精度数学中仍可形式反演：
+
+$$
+\widehat f_n
+=
+e^{|k_n|y}
+\widehat{f_y}_n.
+$$
+
+但逆算子指数放大高频噪声，所以不稳定。
+
+当：
+
+$$
+y\to\infty,
+$$
+
+所有：
+
+$$
+n\neq0
+$$
+
+模态消失，只剩：
+
+$$
+\widehat f_0.
+$$
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+\text{有限完成}
+&:\quad\text{观察者信息仍在，但不可稳定克隆};\\
+\text{无限完成}
+&:\quad\text{观察者信息真正被商掉，只剩零模态}.
+\end{aligned}
+}
+$$
+
+这解释了为什么：
+
+$$
+\boxed{
+\text{所有观察者最终看见同一个完成世界，}
+}
+$$
+
+而：
+
+$$
+\boxed{
+\text{不能从完成世界恢复每个观察者的起点。}
+}
+$$
+
+---
+

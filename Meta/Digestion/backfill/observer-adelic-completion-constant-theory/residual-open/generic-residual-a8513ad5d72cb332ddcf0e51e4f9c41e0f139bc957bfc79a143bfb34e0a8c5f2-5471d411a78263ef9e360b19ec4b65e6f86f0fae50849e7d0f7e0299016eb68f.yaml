@@ -1,0 +1,10 @@
+ast_path: section/808-1-热核观察距离/clause/2
+fingerprints:
+  raw_sha256: sha256:a8513ad5d72cb332ddcf0e51e4f9c41e0f139bc957bfc79a143bfb34e0a8c5f2
+  normalized_sha256: sha256:a8513ad5d72cb332ddcf0e51e4f9c41e0f139bc957bfc79a143bfb34e0a8c5f2
+cas_ref: sha256:a8513ad5d72cb332ddcf0e51e4f9c41e0f139bc957bfc79a143bfb34e0a8c5f2
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

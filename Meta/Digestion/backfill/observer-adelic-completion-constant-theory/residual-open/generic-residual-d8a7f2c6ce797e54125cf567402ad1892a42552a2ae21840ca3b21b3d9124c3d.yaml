@@ -1,0 +1,14 @@
+ast_path: section/第七百零三部-成对观察者与二阶记忆不变量
+fingerprints:
+  raw_sha256: sha256:d8a7f2c6ce797e54125cf567402ad1892a42552a2ae21840ca3b21b3d9124c3d
+  normalized_sha256: sha256:d8a7f2c6ce797e54125cf567402ad1892a42552a2ae21840ca3b21b3d9124c3d
+cas_ref: sha256:d8a7f2c6ce797e54125cf567402ad1892a42552a2ae21840ca3b21b3d9124c3d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-34c41f5ffbeb5f42942967d1b6b670ad4a9a749469f1431793f62627e12b365d-60fbc840cca92a59b797f198123189f86d53aaef9d28c9fd89bf4f8f53df5c64
+    - generic-residual-6106446884045520594a47959d2c24e80bb2451a7d7e7545c7940a478bd676d4-fabe6a901a1f14cc5af1df526b0ab02e87f9b5350e4d2d2982c0948b81f89140
+    - generic-residual-e6f616f460ba8710175044edb8da681989d64cc1653df0b0d8386195b1d35ce1-1d50d29f7e3d3984858810bda84be946334f4fa21b29f23a1663a6ad637e544b

@@ -1,0 +1,24 @@
+## 936.2 重要限制
+
+黄金子移位不是 full binary shift。
+
+它的语言只包含 Fibonacci/Sturmian admissible words。
+
+因此不能说它自动枚举全部任意控制程序。
+
+真正需要构造的是：
+
+$$
+\boxed{
+\text{Chebyshev/Packet 控制器}
+\longrightarrow
+\text{黄金 admissible return-word 编译器}.
+}
+$$
+
+如果该编译器只需要两种递归操作，并与 Fibonacci substitution 相容，黄金最小轨道就足以承担一个单轨普适搜索器。
+
+如果需要任意自由二进制词，则黄金语言容量不足。
+
+---
+

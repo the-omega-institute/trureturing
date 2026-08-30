@@ -1,0 +1,40 @@
+## 定理 847.1（Critical observer sign-change）
+
+对每个非零 observer mode shift \(\tau\)：
+
+$$
+\boxed{
+\Delta_\tau a(t)
+\text{ 在 }t\text{ 轴上必然发生符号变化。}
+}
+\tag{847.3}
+$$
+
+这是一个重要 no-go：
+
+$$
+\boxed{
+\text{实半轴上的 observer Casimir 完全单调性，}
+}
+$$
+
+不能直接延伸成：
+
+$$
+\boxed{
+\text{临界线 multiplier 的逐点正性。}
+}
+$$
+
+从绝对收敛区走向 RH 区域，真正出现的新困难正是：
+
+$$
+\boxed{
+\text{Laplace 正核}
+\longrightarrow
+\text{oscillatory cosine transform}.
+}
+$$
+
+---
+

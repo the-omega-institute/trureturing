@@ -1,0 +1,86 @@
+# 第七百九十五部　建议形式化顺序
+
+```text
+D5/S3/GoldenObserver/Busemann/
+  GoldenNullCoefficient.lean
+  GoldenBusemannCoordinate.lean
+  GoldenBusemannCocycle.lean
+  FibonacciSquareBusemannShift.lean
+  GoldenBoundaryDoesNotDetermineOrigin.lean
+
+D5/S3/GoldenObserver/RegulatorGroup/
+  GoldenObserverUniversalGroup.lean
+  GoldenRegulatorCircle.lean
+  GoldenRegulatorOrthogonalGroup.lean
+  GoldenUnitDihedralSubgroup.lean
+  GoldenObserverRepresentationMode.lean
+
+D5/S3/GoldenObserver/HeckeMode/
+  GoldenLogEmbeddingDifference.lean
+  GoldenUnitPeriodCharacter.lean
+  GoldenRegulatorIdealCharacter.lean
+  GoldenHeckeModeEulerProduct.lean
+  GoldenModeZeroIsDedekind.lean
+  GoldenModeConjugation.lean
+
+D5/S3/GoldenObserver/PrimeAngle/
+  GoldenSplitPrimeAngle.lean
+  GoldenPrimeAngleWellDefined.lean
+  GoldenConjugatePrimeAngle.lean
+  GoldenSplitLocalHeckeFactor.lean
+  GoldenInertModeIndependence.lean
+  GoldenRamifiedModeIndependence.lean
+
+D5/S3/GoldenObserver/ModeTomography/
+  GoldenModeLogEulerExpansion.lean
+  GoldenSplitAngleMeasure.lean
+  GoldenModeFourierMoment.lean
+  GoldenAllModesDetermineAngleMeasure.lean
+
+D5/S3/GoldenObserver/Casimir/
+  GoldenObserverCasimir.lean
+  GoldenCasimirSquaredPhase.lean
+  GoldenCasimirNonnegative.lean
+  GoldenCasimirCompletelyMonotone.lean
+  GoldenCasimirPrimeMeasure.lean
+
+D5/S3/PrimeObserver/FreeSymmetric/
+  PrimeOneStepTransfer.lean
+  OrderedPrimeWordPartition.lean
+  SymmetricPrimeOccupationPartition.lean
+  ScalarOrderedPartition.lean
+  ScalarSymmetricPartitionEqualsZeta.lean
+  SymmetrizationForgetsOrder.lean
+
+D5/S3/PrimeObserver/HolonomyZeta/
+  DihedralUnitaryRepresentation.lean
+  PrimeWordHolonomyTrace.lean
+  ObserverRuelleFormalSeries.lean
+  HolonomyWindingCasimir.lean
+  OrientationReversingTrace.lean
+
+D5/S3/GoldenObserver/RepresentationSelection/
+  GoldenNontrivialModeNoLinearInvariant.lean
+  GoldenModeSymmetricSquare.lean
+  GoldenModeExteriorSquare.lean
+  GoldenScalarQuadraticSelection.lean
+
+D5/S3/Analytic/Zeta/ObserverCollision/
+  ObserverCasimirCompletedFamily.lean
+  SimpleCriticalZeroPersists.lean
+  CriticalDoubleZero.lean
+  ObserverZeroCollisionNormalForm.lean
+  OffLinePairBirthCriterion.lean
+
+D5/S3/GoldenObserver/WeilCasimir/
+  GoldenCompletedModeRatio.lean
+  GoldenPrimeCasimirSource.lean
+  GoldenArchimedeanModeDifference.lean
+  GoldenCasimirWeilForm.lean
+  GoldenCasimirPositivityTarget.lean
+```
+
+其中 `GoldenRegulatorIdealCharacter` 需要数域理想／Hecke character 接口；其余 Busemann、局部因子、Casimir 完全单调性与表示选择律均可直接在项目内部独立证明。
+
+---
+

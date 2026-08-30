@@ -1,0 +1,10 @@
+ast_path: row/prime-space-golden-cone
+fingerprints:
+  raw_sha256: sha256:81f9dbe695813e5802533152a02d07d76024cd45608555bbe6f68ffac67642c3
+  normalized_sha256: sha256:81f9dbe695813e5802533152a02d07d76024cd45608555bbe6f68ffac67642c3
+cas_ref: sha256:81f9dbe695813e5802533152a02d07d76024cd45608555bbe6f68ffac67642c3
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,37 @@
+## 784.2 无序 occupation 配分函数
+
+对称 Fock／Euler 完成给出：
+
+$$
+\boxed{
+Z_{\mathrm{sym}}(s)
+=
+\prod_p
+\det
+\left(
+I-p^{-s}A_p
+\right)^{-1}.
+}
+\tag{784.3}
+$$
+
+其对数为：
+
+$$
+\boxed{
+\log Z_{\mathrm{sym}}
+=
+\sum_p
+\sum_{m\ge1}
+\frac{
+p^{-ms}
+}{m}
+\operatorname{Tr}(A_p^m).
+}
+\tag{784.4}
+$$
+
+这里没有不同素数之间的有序混合词。
+
+---
+

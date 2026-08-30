@@ -1,0 +1,96 @@
+# 第七百七十一部　黄金 Weil 源
+
+对 \(L(s,\chi_5)\) 可以建立与 Riemann \(\zeta\) 平行的 prime–Archimedean 源。
+
+形式上定义：
+
+$$
+\boxed{
+\mathfrak W_5
+=
+\mathfrak A_5
+-
+\sum_{n\ge1}
+\frac{
+\Lambda(n)\chi_5(n)
+}{
+\sqrt n
+}
+\left(
+\delta_{\log n}
++
+\delta_{-\log n}
+\right),
+}
+\tag{771.1}
+$$
+
+其中 \(\mathfrak A_5\) 由：
+
+$$
+\left(
+\frac5\pi
+\right)^{s/2}
+\Gamma(s/2)
+$$
+
+的完成因子确定。
+
+对应 Hermitian form：
+
+$$
+\boxed{
+\mathcal Q_5(f)
+=
+\left\langle
+\mathfrak W_5,
+f*\widetilde f
+\right\rangle.
+}
+\tag{771.2}
+$$
+
+那么黄金观察器真正的谱完成问题应是：
+
+$$
+\boxed{
+\mathcal Q_5(f)\ge0
+\quad
+\forall f.
+}
+\tag{771.3}
+$$
+
+这对应 \(L(s,\chi_5)\) 的广义 Riemann 假设，而不是 ordinary RH 的改名。
+
+完整黄金数域则对应：
+
+$$
+\boxed{
+\mathfrak W_K
+=
+\mathfrak W_\zeta
++
+\mathfrak W_5.
+}
+\tag{771.4}
+$$
+
+因此项目下一步应同时研究：
+
+$$
+\boxed{
+\text{trivial Weil source}
+}
+$$
+
+与：
+
+$$
+\boxed{
+\text{golden sign Weil source}.
+}
+$$
+
+---
+

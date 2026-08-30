@@ -1,0 +1,48 @@
+## 703.1 与离线零点的对应结构
+
+离线反射对：
+
+$$
+\frac12\pm\delta+i\gamma
+$$
+
+同样满足：
+
+$$
+\text{一阶均值}=0,
+$$
+
+但：
+
+$$
+\text{二阶方差}=\delta^2.
+$$
+
+因此 GPMO 给出一个非常精确的结构类比：
+
+$$
+\boxed{
+\begin{aligned}
+\text{observer origin sign}
+&\leftrightarrow
+A_{\mathrm{odd}};\\
+\text{completed observer variance}
+&\leftrightarrow
+A_{\mathrm{odd}}^2;\\
+\text{off-line orbit width}
+&\leftrightarrow
+\delta^2.
+\end{aligned}
+}
+$$
+
+但这仍只是一个可能的 coupling channel，不是已经证明：
+
+$$
+\delta^2
+=
+c\,A_{\mathrm{odd}}^2.
+$$
+
+---
+

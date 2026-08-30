@@ -1,0 +1,10 @@
+ast_path: section/第七百五十部-理论深度审计
+fingerprints:
+  raw_sha256: sha256:8133f13eac94ac9bdecbcfec94051d4fc43a372a165f333fc6064e2ab35a8ac3
+  normalized_sha256: sha256:8133f13eac94ac9bdecbcfec94051d4fc43a372a165f333fc6064e2ab35a8ac3
+cas_ref: sha256:8133f13eac94ac9bdecbcfec94051d4fc43a372a165f333fc6064e2ab35a8ac3
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

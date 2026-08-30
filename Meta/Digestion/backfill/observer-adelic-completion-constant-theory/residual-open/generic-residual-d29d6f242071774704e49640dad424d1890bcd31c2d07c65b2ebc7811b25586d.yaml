@@ -1,0 +1,10 @@
+ast_path: row/L-n-的-Fourier-层析
+fingerprints:
+  raw_sha256: sha256:d29d6f242071774704e49640dad424d1890bcd31c2d07c65b2ebc7811b25586d
+  normalized_sha256: sha256:d29d6f242071774704e49640dad424d1890bcd31c2d07c65b2ebc7811b25586d
+cas_ref: sha256:d29d6f242071774704e49640dad424d1890bcd31c2d07c65b2ebc7811b25586d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

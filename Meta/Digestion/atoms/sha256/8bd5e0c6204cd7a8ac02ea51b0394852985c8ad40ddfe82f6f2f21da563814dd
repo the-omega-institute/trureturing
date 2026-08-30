@@ -1,0 +1,31 @@
+# 第七百五十五部　黄金局部分支算子
+
+定义每个素数的观察分支算子：
+
+$$
+\boxed{
+\mathsf F_p
+=
+P_{\mathrm{ev}}
++
+\chi_5(p)P_{\mathrm{odd}}.
+}
+\tag{755.1}
+$$
+
+它在 even/odd 基中为：
+
+$$
+\boxed{
+\mathsf F_p
+=
+\begin{pmatrix}
+1&0\\
+0&\chi_5(p)
+\end{pmatrix}.
+}
+\tag{755.2}
+$$
+
+因此：
+

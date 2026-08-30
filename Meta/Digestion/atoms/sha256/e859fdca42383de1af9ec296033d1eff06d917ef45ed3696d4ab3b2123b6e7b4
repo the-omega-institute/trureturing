@@ -1,0 +1,66 @@
+# 第七百六十二部　黄金观察者的二面体结构群
+
+定义 proper boost：
+
+$$
+\boxed{
+U
+=
+\begin{pmatrix}
+\varphi^2&0\\
+0&\varphi^{-2}
+\end{pmatrix}
+}
+\tag{762.1}
+$$
+
+于两个 null 分支上。
+
+定义反射：
+
+$$
+\boxed{
+J
+=
+\begin{pmatrix}
+0&1\\
+1&0
+\end{pmatrix}.
+}
+\tag{762.2}
+$$
+
+则：
+
+$$
+\boxed{
+J^2=I,
+}
+\tag{762.3}
+$$
+
+$$
+\boxed{
+JUJ=U^{-1}.
+}
+\tag{762.4}
+$$
+
+因此 \(U,J\) 生成无限二面体群：
+
+$$
+\boxed{
+D_\infty
+=
+\langle U,J
+\mid
+J^2=1,\,
+JUJ=U^{-1}
+\rangle.
+}
+\tag{762.5}
+$$
+
+其中：
+
+* \(U\)：黄金 regulator boost；
