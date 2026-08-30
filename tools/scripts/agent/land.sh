@@ -2,7 +2,8 @@
 # 统一两阶段落地器(铸器,替代 sed 克隆链;器律③)
 # 用法: land.sh LANE BRANCH MSGFILE [--wait-pr N] [--cover ATOM GID]... [--phase2-branch B2 --phase2-msg M2]
 # 语义: [等待 PR N 合入] → cd LANE → checkout/建 BRANCH(自 origin/dev,已存在则合 dev)
-#       → 逐对 make cover → preflight(locale 熔断)→ push → pr-open → 等 MERGED
+#       → make lean-report(合 dev 可能带进新 D5 模块)→ 逐对 make cover
+#       → preflight(locale 熔断)→ push → pr-open → 等 MERGED
 #       → 若给 phase2: 从新 dev 建 B2 重复 cover/落地。零 cover 对 = 纯 deposit 分支照落。
 set -x
 L="${LAND_LOG_DIR:-${TMPDIR:-/tmp}/land-logs}"; mkdir -p "$L/flights"
@@ -41,6 +42,14 @@ else
 fi
 export LC_ALL=C LANG=C
 BASE=$(git rev-parse origin/dev)
+# 合 dev 若带进新 D5 模块,上一轮的 raw Lean 报告就缺它们;而门内 engineering-test
+# 先于 lean-reports,故 preflight/admission 会读陈旧报告并判
+#   INFRASTRUCTURE_FAILURE Raw Lean report is missing modules: <新模块>
+# 实测(2026-08-30)该缺口让一条 lane 白烧一轮 CI(engineering 17m2s + admission 3m32s)。
+# 缓存命中时这步是秒级;未命中才重编,那正是它该做的事。
+make lean-report > "$L/flights/$TAG-leanreport.log" 2>&1; R=$?
+echo "LEANREPORT_EXIT=$R"
+[ "$R" -eq 0 ] || { echo HALT_LEAN_REPORT; exit 97; }
 for pair in "${COVERS[@]}"; do
   A=${pair%%	*}; G=${pair##*	}
   make cover BASE=$BASE ATOM_ID=$A GID=$G > "$L/flights/$TAG-cover-${A:17:8}.log" 2>&1; C=$?
