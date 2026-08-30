@@ -234,7 +234,7 @@ theorem phase_flattened_critical_line_mirror_reciprocal
     phase_flattened_zero_mode_eq_radial]
   unfold radialZeroMode
   rw [critical_displacement_critical_line_mirror, ← Complex.exp_add]
-  congr 1
+  convert Complex.exp_zero using 1
   push_cast
   ring
 
