@@ -330,9 +330,6 @@ internal static class DigestStatusCommand
             recorded_formalizations = projections
                 .Where(static item => item.RecordedFormalization is not null)
                 .Select(static item => item.RecordedFormalization!),
-            quarantined = projections
-                .Where(static item => item.Quarantined is not null)
-                .Select(static item => item.Quarantined!),
             withheld = projections
                 .Where(static item => item.Withheld is not null)
                 .Select(static item => item.Withheld!),
@@ -364,29 +361,11 @@ internal static class DigestStatusCommand
             return null;
         }
 
-        if (entry.Receipts.Quarantine is { } quarantine)
-        {
-            return new FormalizeProjection(
-                entry.SourceId,
-                entry.AtomId,
-                null,
-                null,
-                new QuarantinedFormalizeCandidate(
-                    entry.SourceId,
-                    entry.AtomId,
-                    entry.AstPath,
-                    quarantine.Justification,
-                    quarantine.ReentryCondition,
-                    quarantine.BlockerClass),
-                null);
-        }
-
         if (dispositionSelection == DigestionCoverDispositionSelection.Withheld)
         {
             return new FormalizeProjection(
                 entry.SourceId,
                 entry.AtomId,
-                null,
                 null,
                 null,
                 new WithheldFormalizeCandidate(
@@ -405,7 +384,6 @@ internal static class DigestStatusCommand
                 entry.AtomId,
                 null,
                 recordedFormalization,
-                null,
                 null);
         }
 
@@ -436,7 +414,6 @@ internal static class DigestStatusCommand
                 entry.AtomId,
                 null,
                 null,
-                null,
                 new WithheldFormalizeCandidate(
                     entry.AtomId,
                     "malformed-status-marker",
@@ -453,7 +430,6 @@ internal static class DigestStatusCommand
             return new FormalizeProjection(
                 entry.SourceId,
                 entry.AtomId,
-                null,
                 null,
                 null,
                 new WithheldFormalizeCandidate(
@@ -473,7 +449,6 @@ internal static class DigestStatusCommand
                 entry.CasRef,
                 entry.Fingerprints.RawSha256,
                 atomText),
-            null,
             null,
             null);
     }
@@ -589,20 +564,11 @@ internal static class DigestStatusCommand
         string WithholdReason,
         string? StatusQualifier);
 
-    private sealed record QuarantinedFormalizeCandidate(
-        string SourceId,
-        string AtomId,
-        string AstPath,
-        string Justification,
-        string ReentryCondition,
-        string? BlockerClass);
-
     private sealed record FormalizeProjection(
         string SourceId,
         string AtomId,
         FormalizeCandidate? Candidate,
         RecordedFormalization? RecordedFormalization,
-        QuarantinedFormalizeCandidate? Quarantined,
         WithheldFormalizeCandidate? Withheld);
 
     private sealed record RecordedFormalization(

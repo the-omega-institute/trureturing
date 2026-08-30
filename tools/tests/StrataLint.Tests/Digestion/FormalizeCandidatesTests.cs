@@ -21,54 +21,6 @@ public sealed partial class FormalizeCandidatesTests
     private const string SpacedClosedMarker = "  〔closed〕";
 
     [Fact]
-    public void FormalizeCandidatesProjectsQuarantineInsteadOfOfferingTheAtom()
-    {
-        var entry = Entry("source", "quarantined", "定理", "1.0");
-        var ledger = Ledger([entry]);
-        var source = Assert.Single(ledger.RequireDigestionSources());
-        var stored = Assert.Single(source.Entries);
-        ledger = ledger.WithDigestionSources(
-        [
-            source with
-            {
-                Entries =
-                [
-                    stored with
-                    {
-                        Receipts = stored.Receipts with
-                        {
-                            Quarantine = new DigestionQuarantine(
-                                "missing spectral owner",
-                                "public spectral owner exists",
-                                "missing-prerequisite"),
-                        },
-                    },
-                ],
-            },
-        ]);
-
-        var result = Run([entry], ledger: ledger);
-
-        Assert.True(result.Success, result.Error);
-        using var json = JsonDocument.Parse(result.Output);
-        Assert.Empty(json.RootElement.GetProperty("candidates").EnumerateArray());
-        var quarantined = Assert.Single(
-            json.RootElement.GetProperty("quarantined").EnumerateArray());
-        Assert.Equal("source", quarantined.GetProperty("source_id").GetString());
-        Assert.Equal("quarantined", quarantined.GetProperty("atom_id").GetString());
-        Assert.Equal("theorem/1.0", quarantined.GetProperty("ast_path").GetString());
-        Assert.Equal(
-            "missing-prerequisite",
-            quarantined.GetProperty("blocker_class").GetString());
-        Assert.Equal(
-            "missing spectral owner",
-            quarantined.GetProperty("justification").GetString());
-        Assert.Equal(
-            "public spectral owner exists",
-            quarantined.GetProperty("reentry_condition").GetString());
-    }
-
-    [Fact]
     public void StatusMarkerParserDoesNotScanLaterBodyBrackets()
     {
         var bytes = Encoding.UTF8.GetBytes(
