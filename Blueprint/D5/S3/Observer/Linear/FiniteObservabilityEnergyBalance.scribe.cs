@@ -22,17 +22,17 @@ internal sealed class FiniteObservabilityEnergyBalanceDocument
             AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text(
-                    "The update A and readout C act on finite-dimensional inner-product "
-                        + "spaces over a real or complex scalar field. The conservation law "
-                        + "A* A + C* C = I is the source premise.")),
+                    "The bounded update A and readout C act on complete inner-product spaces "
+                        + "over a real or complex scalar field. The conservation law A* A + "
+                        + "C* C = I is the source premise.")),
                 Paragraph(Text(
                     "The finite Gramian is the explicit sum of the adjoint readout terms "
                         + "for k below N. The first public clause telescopes this sum against "
                         + "the N-step state operator.")),
                 Paragraph(Text(
-                    "The second clause states positive semidefiniteness as nonnegativity of "
-                        + "every quadratic form. The third clause gives the corresponding "
-                        + "finite state norm-energy balance.")),
+                    "The second clause states operator positivity, including symmetry and "
+                        + "nonnegativity of every quadratic form. The third clause gives the "
+                        + "corresponding finite state norm-energy balance.")),
                 Paragraph(Text(
                     "Repository and pinned-library searches found no packaged theorem with "
                         + "all three clauses. The proof applies the adjoint-power law, finite "
@@ -51,8 +51,8 @@ internal sealed class FiniteObservabilityEnergyBalanceDocument
         Formula index = F.Id("k");
         Formula type = Seq(Operatorname, Grp(F.Id("Type")));
         Formula natural = Seq(Mathbb, Grp(F.Id("N")));
-        Formula updateType = Call("LinearMap", scalar, state, state);
-        Formula readoutType = Call("LinearMap", scalar, state, output);
+        Formula updateType = Call("ContinuousLinearMap", scalar, state, state);
+        Formula readoutType = Call("ContinuousLinearMap", scalar, state, output);
         Formula updatePower = Seq(update, Caret, Grp(horizon));
         Formula updatePowerAdjoint = Seq(Call("adjoint", updatePower));
         Formula stepPower = Seq(update, Caret, Grp(index));
@@ -74,11 +74,7 @@ internal sealed class FiniteObservabilityEnergyBalanceDocument
             Open, readoutAdjoint, Sp, Circ, Sp, readout, Close, Sp,
             Eq, Sp, Call("id"));
         Formula identity = Seq(lhs, Sp, Eq, Sp, gramian);
-        Formula positivity = Seq(
-            Forall, Sp, Typed(point, state), Comma, Sp,
-            D(0), Sp, Le, Sp,
-            Re, Open, Langle, Sp, point, Comma, Sp,
-            Seq(gramian, Open, point, Close), Sp, Rangle, Close);
+        Formula positivity = Call("IsPositive", gramian);
         Formula energy = Seq(
             new Formula.Norm(point), Caret, Grp(D(2)), Sp, Minus, Sp,
             new Formula.Norm(Seq(Open, updatePower, Sp, point, Close)), Caret, Grp(D(2)),
@@ -93,10 +89,10 @@ internal sealed class FiniteObservabilityEnergyBalanceDocument
             Seq(Grp(), Typeclass("RCLike", scalar), Sp, Land, Sp,
                 Typeclass("NormedAddCommGroup", state), Sp, Land, Sp,
                 Typeclass("InnerProductSpace", scalar, state), Sp, Land, Sp,
-                Typeclass("FiniteDimensional", scalar, state), Sp, Land),
+                Typeclass("CompleteSpace", state), Sp, Land),
             Seq(Grp(), Typeclass("NormedAddCommGroup", output), Sp, Land, Sp,
                 Typeclass("InnerProductSpace", scalar, output), Sp, Land, Sp,
-                Typeclass("FiniteDimensional", scalar, output), Sp, Land),
+                Typeclass("CompleteSpace", output), Sp, Land),
             Seq(Forall, Sp, Typed(update, updateType), Comma, Sp,
                 Typed(readout, readoutType), Comma, Sp,
                 Typed(horizon, natural), Comma, Sp, conservation,
