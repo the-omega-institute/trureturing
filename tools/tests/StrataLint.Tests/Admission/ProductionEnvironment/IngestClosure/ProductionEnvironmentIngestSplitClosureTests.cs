@@ -8,7 +8,7 @@ namespace StrataLint.Tests;
 public sealed partial class ProductionEnvironmentTests
 {
     [Fact]
-    public void IngestReportFreeAcceptsPlannerClauseChainForNewUncoveredClaim()
+    public void IngestReportFreeAcceptsPlannerClauseChainAtItsAlignedFixedPoint()
     {
         const string oldText = "# PZG\n\n**定理 1.1(A)**。old claim。\n";
         const string currentText = oldText
@@ -46,6 +46,27 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Equal(3, parent.Receipts.ChainAtoms.Length);
         Assert.All(parent.Receipts.ChainAtoms, childId =>
             Assert.Contains(entries, entry => entry.AtomId == childId));
+
+        var generated = DirectoryLedgerTestSupport.OverlayRepositoryFiles(
+            temporary,
+            fixture.Files);
+        var fixedPointReportSource = new FakeLeanReportSource(report: null);
+        var fixedPointScribeVerifier = new FakeScribeEmissionVerifier(verification: null);
+        var fixedPointEnvironment = new ProductionCliEnvironment(
+            temporary.Path,
+            new FakeRepositoryGateway(
+                RawChangeSet.Create([RuleFixture.FixtureDigestionSourcePath]),
+                Snapshot(generated),
+                Snapshot(fixture.Baseline)),
+            fixedPointReportSource,
+            fixedPointScribeVerifier);
+
+        var fixedPointResult = fixedPointEnvironment.Ingest(ReportInputUnchangedArguments);
+
+        Assert.True(fixedPointResult.Success, fixedPointResult.Error);
+        Assert.Contains("ledger_changed=false", fixedPointResult.Output, StringComparison.Ordinal);
+        Assert.Equal(0, fixedPointReportSource.CallCount);
+        Assert.Equal(0, fixedPointScribeVerifier.CallCount);
     }
 
     [Fact]
@@ -308,6 +329,50 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
+    public void ClassifyCurrentAcceptsChainAtomReceiptsOnResidualOpenNewEntry()
+    {
+        var entry = StatusAuthorityClosureEntry() with
+        {
+            CoverageGids = [],
+            Receipts = new DigestionReceipts([], [], [], ["chain-child"], null),
+        };
+
+        var classification = ClassifyCurrentOnlyNewEntry(entry);
+
+        Assert.True(classification.IsUncoveredOnly);
+        Assert.Null(classification.Witness);
+    }
+
+    [Fact]
+    public void ClassifyCurrentRejectsCoverageBearingNewEntry()
+    {
+        var classification = ClassifyCurrentOnlyNewEntry(StatusAuthorityClosureEntry());
+
+        Assert.False(classification.IsUncoveredOnly);
+        Assert.Equal("new entry closure-entry is coverage-bearing", classification.Witness);
+    }
+
+    [Fact]
+    public void ClassifyCurrentRejectsNonResidualOpenNewEntry()
+    {
+        var entry = StatusAuthorityClosureEntry() with
+        {
+            CoverageGids = [],
+            Receipts = new DigestionReceipts([], [], [], [], null),
+            ProjectedStatus = new DigestionStatus(
+                DigestionMigrationState.Partial,
+                DigestionTruthState.Open),
+        };
+
+        var classification = ClassifyCurrentOnlyNewEntry(entry);
+
+        Assert.False(classification.IsUncoveredOnly);
+        Assert.Equal(
+            "new entry closure-entry projected status is not residual-open",
+            classification.Witness);
+    }
+
+    [Fact]
     public void IngestReportFreeRejectsPureAdditionWhenCoveredEntryIsNoLongerSeen()
     {
         const string coverageGid = "D5/S0/Carrier/Ring.goldenRing";
@@ -523,5 +588,24 @@ public sealed partial class ProductionEnvironmentTests
                     "sha256:" + new string('d', 64))),
             sourceId: "fixture-source",
             sourcePath: RuleFixture.FixtureDigestionSourcePath);
+    }
+
+    private static IngestTruthAlignmentClassification ClassifyCurrentOnlyNewEntry(
+        DigestionLedgerEntry entry)
+    {
+        var current = DigestionTestSupport.Document(
+            entry.Atomizer,
+            [entry],
+            sourceId: entry.SourceId,
+            sourcePath: entry.SourcePath);
+        var baseline = DigestionTestSupport.Document(
+            entry.Atomizer,
+            [],
+            sourceId: entry.SourceId,
+            sourcePath: entry.SourcePath);
+        return IngestTruthAlignmentClassifier.ClassifyCurrent(
+            LeanReportInputState.Unchanged,
+            current,
+            baseline);
     }
 }

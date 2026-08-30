@@ -44,7 +44,7 @@ internal static class IngestTruthAlignmentClassifier
             var entry = item.Entry;
             if (!baselineEntries.TryGetValue(entry.AtomId, out var baselineItem))
             {
-                if (ValidateNewEntry(entry) is { } witness)
+                if (ValidateNewEntry(NormalizeNewEntryForValidation(entry)) is { } witness)
                 {
                     return IngestTruthAlignmentClassification.TruthAlignmentRequired(witness);
                 }
@@ -125,10 +125,7 @@ internal static class IngestTruthAlignmentClassifier
                 continue;
             }
 
-            if (ValidateNewEntry(entry with
-                {
-                    Receipts = entry.Receipts with { ChainAtoms = [] },
-                }) is { } witness)
+            if (ValidateNewEntry(NormalizeNewEntryForValidation(entry)) is { } witness)
             {
                 return IngestTruthAlignmentClassification.TruthAlignmentRequired(witness);
             }
@@ -165,6 +162,13 @@ internal static class IngestTruthAlignmentClassifier
             .AsSpan()
             .SequenceEqual(
                 BackfillInventoryWriter.WriteStatusAuthorityIdentity(right.Source, right.Entry).AsSpan());
+
+    private static DigestionLedgerEntry NormalizeNewEntryForValidation(
+        DigestionLedgerEntry entry) =>
+        entry with
+        {
+            Receipts = entry.Receipts with { ChainAtoms = [] },
+        };
 
     private static string? ValidateNewEntry(DigestionLedgerEntry entry)
     {

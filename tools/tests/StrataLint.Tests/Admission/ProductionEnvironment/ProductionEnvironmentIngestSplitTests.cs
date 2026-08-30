@@ -350,11 +350,10 @@ public sealed partial class ProductionEnvironmentTests
     [InlineData("coverage")]
     [InlineData("scribe")]
     [InlineData("unresolved")]
-    [InlineData("chain")]
     [InlineData("tail")]
     [InlineData("quarantine")]
     [InlineData("cover-disposition")]
-    public void IngestRejectsEveryReceiptKindOnCurrentOnlyNewEntryBeforeTruthOrWrites(
+    public void IngestRejectsNonChainReceiptKindsOnCurrentOnlyNewEntryBeforeTruthOrWrites(
         string receiptKind)
     {
         const string gid = "D5/S0/Carrier/Ring.goldenRing";
@@ -393,7 +392,6 @@ public sealed partial class ProductionEnvironmentTests
                         "sha256:" + new string('c', 64))],
                 },
                 "unresolved" => entry.Receipts with { UnresolvedSubitems = ["open clause"] },
-                "chain" => entry.Receipts with { ChainAtoms = ["old-receipt"] },
                 "tail" => entry.Receipts with
                 {
                     TailAuthorization = new DigestionExternalReceipt(
