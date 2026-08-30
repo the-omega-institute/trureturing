@@ -437,26 +437,12 @@ public sealed class LeanCachePublishTests
     /// 而不是被别的检查顺带拦下。
     /// </summary>
     [Theory]
-    // 【2026-08-30 退役 7 条:身份类 provenance 已按 τ=0 裁决从 lean-cache-publish.sh 删除】
-    //
-    // owner 原话:「我觉得不需要验证, 直接删了就行, 只要是 cache 匹配就可以.」
-    // 被删的机制与随之退役的钉子一一对应,逐条记账(第 20 条:退役检测不得静默):
-    //
-    //   wrong-author    release author == github-actions[bot]
-    //   wrong-uploader  每个 asset 的 uploader 同判据
-    //   wrong-workflow  发布器 workflow id 归属(按路径解析并比对)
-    //   wrong-event     run.event == schedule
-    //   wrong-branch    run.head_branch == dev
-    //   wrong-head-sha  run.head_sha == producer commit
-    //   failed-run      run.conclusion == success
-    //
-    // 【失去了什么,如实写】此后 fetch 不再能分辨「这份 archive 出自那条流水线」
-    // 与「有人手工传了一个同名同结构的包」。剩下的判据只证明【内容与结构自洽】,
-    // 不证明【产地】。发布者位于 admission 下方(#2729 三席评审确立),故这是一次
-    // 检测面的收缩,不是等价替换。
-    //
-    // 【保留的 5 条仍在下方,它们守的是内容与结构】
-
+    // 【2026-08-30 退役 7 条身份类 provenance 钉子】owner τ=0 裁决:
+    // 「不需要验证作者,直接删了就行,只要 cache 匹配就可以」(见 lean-cache-publish.sh 文件头)。
+    // 退役:wrong-author / wrong-uploader / wrong-workflow / wrong-event /
+    //       wrong-branch / wrong-head-sha / failed-run —— 对应机制已删,钉子失去被守对象。
+    // 失去的是「分辨 archive 出自流水线还是手工上传」的能力;保留的 5 条只证内容与结构自洽,
+    // 不证产地。发布者位于 admission 下方(#2729),故这是检测面收缩,非等价替换。
     [InlineData("no-producer", "manifest carries no producer commit")]
     [InlineData("no-run-id", "manifest carries no workflow run id")]
     [InlineData("wrong-target", "does not match the declared producer commit")]
