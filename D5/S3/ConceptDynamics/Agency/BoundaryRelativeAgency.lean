@@ -25,39 +25,42 @@ namespace D5.S3.ConceptDynamics.Agency.BoundaryRelativeAgency
 open D5.S3.ConceptDynamics.MoralLuck.MoralLuckDescent
 
 /-- Let one decision variable be constructed by updating a recorded past
-choice, and suppose that variable determines action. If the observer interface
-recovers the decision variable, it also recovers action, so the variable can be
-an internal reason. Conversely, a pair hidden by the observer but separated by
-both the decision and action witnesses an inaccessible decision variable and
-precludes action control from descending to that observer boundary. -/
+choice, and let an explicit control map determine action from that variable.
+If the observer interface recovers the decision variable, composition recovers
+action. Independently, if the observer hides two distinct decision values and
+the control map is injective, action cannot factor through that interface. -/
 theorem boundary_relative_agency
     {History ObserverState PastChoice Decision Action : Type*}
     (observer : History -> ObserverState)
     (pastChoice : History -> PastChoice)
     (update : PastChoice -> Decision)
     (action : History -> Action)
+    (actionFromDecision : Decision -> Action)
     (decisionControlsAction :
-      ControlPrinciple (update ∘ pastChoice) action) :
+      action = actionFromDecision ∘ (update ∘ pastChoice)) :
     (ControlPrinciple observer (update ∘ pastChoice) ->
         ControlPrinciple observer action) /\
-      forall left right : History,
-        observer left = observer right ->
-          update (pastChoice left) ≠ update (pastChoice right) ->
-          action left ≠ action right ->
-          MoralLuckWitness observer (update ∘ pastChoice) /\
-            Not (ControlPrinciple observer action) := by
-  rcases decisionControlsAction with ⟨actionFromDecision, actionFactors⟩
+      (MoralLuckWitness observer (update ∘ pastChoice) ->
+        Function.Injective actionFromDecision ->
+          Not (ControlPrinciple observer action)) := by
+  fail_if_success
+    ((try intros); simp only [ControlPrinciple, MoralLuckWitness]; assumption)
   constructor
-  · rintro ⟨decisionFromObserver, decisionFactors⟩
+  · fail_if_success rfl
+    rintro ⟨decisionFromObserver, decisionFactors⟩
     refine ⟨actionFromDecision ∘ decisionFromObserver, ?_⟩
-    rw [actionFactors, decisionFactors]
+    rw [decisionControlsAction, decisionFactors]
     exact (Function.comp_assoc actionFromDecision decisionFromObserver observer).symm
-  · intro left right sameObserver differentDecision differentAction
-    refine ⟨⟨left, right, sameObserver, differentDecision⟩, ?_⟩
+  · fail_if_success rfl
+    rintro ⟨left, right, sameObserver, differentDecision⟩
+    intro actionRelevant
     rintro ⟨actionFromObserver, actionFactors⟩
-    apply differentAction
-    rw [actionFactors]
-    simp only [Function.comp_apply, sameObserver]
+    apply differentDecision
+    apply actionRelevant
+    have sameAction : action left = action right := by
+      rw [actionFactors]
+      simp only [Function.comp_apply, sameObserver]
+    simpa only [decisionControlsAction, Function.comp_apply] using sameAction
 
 #print axioms boundary_relative_agency
 

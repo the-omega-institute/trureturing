@@ -10,7 +10,7 @@ internal sealed class BoundaryRelativeAgencyDocument : IScribeDocumentDefinition
         "D5/S3/ConceptDynamics/Agency/BoundaryRelativeAgency.boundary_relative_agency";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A past-choice-updated decision variable is internal or external relative to observer access.",
+        "Observer access and faithful decision control determine which side of the boundary carries action.",
         H("Boundary-Relative Agency"),
         Blocks(Describe.Lean(
             DescribeId.Create("boundary-relative-agency"),
@@ -21,16 +21,18 @@ internal sealed class BoundaryRelativeAgencyDocument : IScribeDocumentDefinition
             Blocks(
                 Paragraph(Text(
                     "The decision process is constructed by applying the update map to the "
-                        + "recorded past choice. The displayed control premise says that this "
-                        + "same decision process determines action.")),
+                        + "recorded past choice. The displayed equality makes the map from "
+                        + "decision values to actions explicit.")),
                 Paragraph(Text(
                     "When the observer interface recovers the decision process, composition "
                         + "recovers action from the observer interface as well. This is the "
                         + "internal-reason side of the boundary.")),
                 Paragraph(Text(
-                    "On the external side, one shared pair has equal observer readouts but "
-                        + "different decision and action values. It witnesses observer "
-                        + "inaccessibility and rules out descent of action to that boundary."))),
+                    "The external implication has its own premises: the observer hides two "
+                        + "distinct decision values, and the decision-to-action map is "
+                        + "injective. Observer-based action recovery would equate their "
+                        + "controlled outputs, so injectivity would contradict the hidden "
+                        + "decision witness."))),
             DescribeRole.Theorem))));
 
     private static Formula TypeUniverse() =>
@@ -42,17 +44,11 @@ internal sealed class BoundaryRelativeAgencyDocument : IScribeDocumentDefinition
     private static Formula Arrow(Formula domain, Formula codomain) =>
         new Formula.TypeArrow(domain, codomain);
 
-    private static Formula Apply(Formula function, params Formula[] arguments) =>
-        new Formula.Apply(function, [.. arguments]);
-
     private static Formula Compose(Formula outer, Formula inner) =>
         Seq(outer, Sp, Circ, Sp, inner);
 
     private static Formula Equal(Formula left, Formula right) =>
         new Formula.Relation(left, FormulaRelationOperator.Equal, right);
-
-    private static Formula NotEqual(Formula left, Formula right) =>
-        new Formula.Relation(left, FormulaRelationOperator.NotEqual, right);
 
     private static Formula Implies(Formula premise, Formula conclusion) =>
         new Formula.Logic(premise, FormulaLogicOperator.Implies, conclusion);
@@ -71,29 +67,18 @@ internal sealed class BoundaryRelativeAgencyDocument : IScribeDocumentDefinition
         Formula pastChoice = F.Id("c");
         Formula update = F.Id("u");
         Formula action = F.Id("a");
+        Formula actionFromDecision = F.Id("k");
         Formula decision = Compose(update, pastChoice);
-        Formula control = Call("ControlPrinciple", decision, action);
+        Formula control = Equal(action, Compose(actionFromDecision, decision));
         Formula internalClause = Implies(
             Call("ControlPrinciple", observer, decision),
             Call("ControlPrinciple", observer, action));
 
-        Formula left = F.Id("x");
-        Formula right = F.Id("y");
-        Formula externalConclusion = And(
+        Formula externalClause = Implies(
             Call("MoralLuckWitness", observer, decision),
-            Seq(Neg, Sp, Call("ControlPrinciple", observer, action)));
-        Formula externalClause = new Formula.BindMany(
-            FormulaQuantifier.ForAll,
-            [Bound("x", history), Bound("y", history)],
             Implies(
-                Equal(Apply(observer, left), Apply(observer, right)),
-                Implies(
-                    NotEqual(
-                        Apply(update, Apply(pastChoice, left)),
-                        Apply(update, Apply(pastChoice, right))),
-                    Implies(
-                        NotEqual(Apply(action, left), Apply(action, right)),
-                        externalConclusion))));
+                Call("Injective", actionFromDecision),
+                Seq(Neg, Sp, Call("ControlPrinciple", observer, action))));
 
         Formula body = Implies(control, And(internalClause, externalClause));
         return Disp(new Formula.BindMany(
@@ -108,6 +93,7 @@ internal sealed class BoundaryRelativeAgencyDocument : IScribeDocumentDefinition
                 Bound("c", Arrow(history, pastChoiceType)),
                 Bound("u", Arrow(pastChoiceType, decisionType)),
                 Bound("a", Arrow(history, actionType)),
+                Bound("k", Arrow(decisionType, actionType)),
             ],
             body));
     }
