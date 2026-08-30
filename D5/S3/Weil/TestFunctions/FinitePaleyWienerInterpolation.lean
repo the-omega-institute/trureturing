@@ -39,19 +39,16 @@ namespace D5.S3.Weil.TestFunctions.FinitePaleyWienerInterpolation
 local notation "FL[" g "](" z ")" =>
   (∫ x : Real, Complex.exp (-Complex.I * z * (x : Complex)) * g x)
 
-private theorem hasCompactSupport_iterate_deriv
-    (q : Nat) {g : Real -> Complex} (hg : HasCompactSupport g) :
-    HasCompactSupport ((deriv^[q]) g) := by
-  induction q with
-  | zero => simpa
-  | succ q ih =>
-      rw [Function.iterate_succ_apply']
-      exact ih.deriv
-
 private theorem fourier_laplace_iterate_deriv
     (q : Nat) (g : Real -> Complex) (hgSmooth : ContDiff Real ∞ g)
     (hgCompact : HasCompactSupport g) (z : Complex) :
     FL[((deriv^[q]) g)](z) = (Complex.I * z) ^ q * FL[g](z) := by
+  have hcompact (n : Nat) : HasCompactSupport ((deriv^[n]) g) := by
+    induction n with
+    | zero => simpa
+    | succ n ih =>
+        rw [Function.iterate_succ_apply']
+        exact ih.deriv
   induction q with
   | zero => simp
   | succ q ih =>
@@ -63,8 +60,8 @@ private theorem fourier_laplace_iterate_deriv
         (-Complex.I * z) * Complex.exp (-Complex.I * z * (x : Complex))
       have hvSmooth : ContDiff Real ∞ v :=
         ContDiff.iterate_deriv q hgSmooth
-      have hvCompact : HasCompactSupport v :=
-        hasCompactSupport_iterate_deriv q hgCompact
+      have hvCompact : HasCompactSupport v := by
+        simpa only [v] using hcompact q
       have hv'Compact : HasCompactSupport v' := by
         simpa only [v, v', Function.iterate_succ_apply'] using hvCompact.deriv
       have huDeriv (x : Real) : HasDerivAt u (u' x) x := by
@@ -242,8 +239,14 @@ private theorem polynomial_differential_properties
     have hk := ContDiff.iterate_deriv k hpsiSmooth
     fun_prop
   have htermCompact (k : Nat) : HasCompactSupport (fun x : Real =>
-      P.coeff k * (-Complex.I) ^ k * ((deriv^[k]) psi) x) :=
-    (hasCompactSupport_iterate_deriv k hpsiCompact).mul_left
+      P.coeff k * (-Complex.I) ^ k * ((deriv^[k]) psi) x) := by
+    have hiterated : HasCompactSupport ((deriv^[k]) psi) := by
+      induction k with
+      | zero => simpa
+      | succ k ih =>
+          rw [Function.iterate_succ_apply']
+          exact ih.deriv
+    exact hiterated.mul_left
   refine ⟨ContDiff.sum fun k _ => htermSmooth k,
     ?_, ?_⟩
   · rw [show (fun x : Real => ∑ k ∈ P.support,
