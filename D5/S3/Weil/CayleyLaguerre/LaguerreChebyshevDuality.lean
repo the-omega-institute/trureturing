@@ -6,6 +6,8 @@
    digest: Laguerre time tomography equals the Chebyshev derivative jet. -/
 
 import D5.S3.Weil.CayleyLaguerre.CayleyMomentTransport
+import D5.S3.Analytic.LiCausalTrichotomy
+import D5.S3.Weil.Budget.PositiveCayleyScaleTransport
 import D5.S3.Weil.TestFunctions.CayleyLaguerreMomentTomography
 
 /- Library-search audit trail (2026-08-30):
@@ -39,28 +41,24 @@ theorem laguerre_chebyshev_duality
     (budgetIntegrable :
       Integrable (fun xi : Real => 1 / (xi ^ 2 + u)) nu) :
     let scale := Real.sqrt u
-    let laguerreOne : Nat -> Real -> Real := fun m x =>
-      Finset.sum (Finset.range (m + 1)) (fun j =>
-        (-1 : Real) ^ j * Nat.choose (m + 1) (j + 1) / j.factorial * x ^ j)
-    let weighted := nu.withDensity (fun xi : Real =>
-      ENNReal.ofReal ((xi ^ 2 + scale ^ 2)⁻¹))
-    let correlation : Real -> Complex := fun t =>
-      integral weighted (fun xi : Real => Complex.exp (Complex.I * t * xi))
     let budget : Real -> Real := fun v =>
       integral nu (fun xi : Real => 1 / (xi ^ 2 + v))
     (budget u : Complex) - (2 * scale : Real) *
         integral (volume.restrict (Ioi 0)) (fun t : Real =>
           ((Real.exp (-scale * t) *
-            laguerreOne (n - 1) (2 * scale * t) : Real) : Complex) *
-            correlation t) =
+            D5.S3.Analytic.LiCausalTrichotomy.laguerreOne
+              (n - 1) (2 * scale * t) : Real) : Complex) *
+            D5.S3.Weil.TestFunctions.CayleyLaguerreMomentTomography.resolventCorrelation
+              (D5.S3.Weil.Budget.PositiveCayleyScaleTransport.resolventWeightedMeasure
+                nu scale) t) =
       Complex.ofReal (Finset.univ.sum (fun k : Fin (n + 1) =>
         p k * u ^ (k : Nat) *
           ((-1 : Real) ^ (k : Nat) / ((k : Nat).factorial : Real)) *
             iteratedDeriv (k : Nat) budget u)) := by
   dsimp only
   let scale : Real := Real.sqrt u
-  let weighted : Measure Real := nu.withDensity (fun xi : Real =>
-    ENNReal.ofReal ((xi ^ 2 + scale ^ 2)⁻¹))
+  let weighted : Measure Real :=
+    D5.S3.Weil.Budget.PositiveCayleyScaleTransport.resolventWeightedMeasure nu scale
   have scalePositive : 0 < scale := Real.sqrt_pos.2 uPositive
   have scaleSquare : scale ^ 2 = u := by
     exact Real.sq_sqrt uPositive.le
@@ -68,7 +66,8 @@ theorem laguerre_chebyshev_duality
       Integrable (fun xi : Real => (xi ^ 2 + scale ^ 2)⁻¹) nu := by
     simpa only [one_div, scaleSquare] using budgetIntegrable
   letI : IsFiniteMeasure weighted := by
-    dsimp only [weighted]
+    dsimp only [weighted,
+      D5.S3.Weil.Budget.PositiveCayleyScaleTransport.resolventWeightedMeasure]
     exact isFiniteMeasure_withDensity_ofReal weightedIntegrable.hasFiniteIntegral
   have mapWithDensityEq
       (mu : Measure Real) (f : Real -> Real) (g : Real -> ENNReal)
@@ -90,7 +89,8 @@ theorem laguerre_chebyshev_duality
       simp only [density, Function.comp_apply, neg_sq]
     have mappedDensity := mapWithDensityEq nu (fun xi : Real => -xi) density
       measurable_neg densityMeasurable
-    dsimp only [weighted]
+    dsimp only [weighted,
+      D5.S3.Weil.Budget.PositiveCayleyScaleTransport.resolventWeightedMeasure]
     change Measure.map (fun xi : Real => -xi) (nu.withDensity density) =
       nu.withDensity density
     calc
@@ -112,7 +112,8 @@ theorem laguerre_chebyshev_duality
         simp only [integral_const, Measure.real, smul_eq_mul, mul_one]
       _ = integral nu (fun xi : Real =>
           (ENNReal.ofReal ((xi ^ 2 + scale ^ 2)⁻¹)).toReal • (1 : Real)) := by
-        dsimp only [weighted]
+        dsimp only [weighted,
+          D5.S3.Weil.Budget.PositiveCayleyScaleTransport.resolventWeightedMeasure]
         exact integral_withDensity_eq_integral_toReal_smul densityMeasurable
           (Filter.Eventually.of_forall densityFinite) _
       _ = integral nu (fun xi : Real => 1 / (xi ^ 2 + u)) := by
@@ -126,7 +127,8 @@ theorem laguerre_chebyshev_duality
       integral nu (fun xi : Real =>
         (((xi : Complex) + Complex.I * scale) /
           ((xi : Complex) - Complex.I * scale)) ^ n / (xi ^ 2 + u)) := by
-    dsimp only [weighted]
+    dsimp only [weighted,
+      D5.S3.Weil.Budget.PositiveCayleyScaleTransport.resolventWeightedMeasure]
     rw [integral_withDensity_eq_integral_toReal_smul densityMeasurable
       (Filter.Eventually.of_forall densityFinite)]
     apply integral_congr_ae
@@ -149,11 +151,10 @@ theorem laguerre_chebyshev_duality
         (2 * scale : Real) * integral (volume.restrict (Ioi 0))
           (fun t : Real =>
             ((Real.exp (-scale * t) *
-              Finset.sum (Finset.range (n - 1 + 1)) (fun j =>
-                (-1 : Real) ^ j * Nat.choose (n - 1 + 1) (j + 1) /
-                  j.factorial * (2 * scale * t) ^ j) : Real) : Complex) *
-              integral weighted (fun xi : Real =>
-                Complex.exp (Complex.I * t * xi))) =
+              D5.S3.Analytic.LiCausalTrichotomy.laguerreOne
+                (n - 1) (2 * scale * t) : Real) : Complex) *
+              D5.S3.Weil.TestFunctions.CayleyLaguerreMomentTomography.resolventCorrelation
+                weighted t) =
         integral weighted (fun xi : Real =>
           (((xi : Complex) + Complex.I * scale) /
             ((xi : Complex) - Complex.I * scale)) ^ n) := by
@@ -161,8 +162,6 @@ theorem laguerre_chebyshev_duality
         D5.S3.Weil.TestFunctions.CayleyLaguerreMomentTomography.cayleyMoment,
         D5.S3.Weil.TestFunctions.CayleyLaguerreMomentTomography.cayleyCharacter,
         D5.S3.Weil.TestFunctions.CayleyLaguerreMomentTomography.spectralMass,
-        D5.S3.Analytic.LiCausalTrichotomy.laguerreOne,
-        D5.S3.Weil.TestFunctions.CayleyLaguerreMomentTomography.resolventCorrelation,
         Nat.sub_add_cancel hn, massIdentity] using timeTomography.symm
     _ = integral nu (fun xi : Real =>
         (((xi : Complex) + Complex.I * scale) /
