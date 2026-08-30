@@ -8,3 +8,7 @@ receipts:
   coverage: []
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: No frozen D5 or pinned Mathlib declaration supplies the classical Schur-function realization theorem that constructs a unitary colligation with the stated transfer formula, kernel identity, and energy interpretation. The source itself classifies this positive-kernel/transfer realization equivalence as an external mature-theory dependency and later labels construction of the arithmetic conservative realization for every positive shift as the unique load-bearing open bridge. The RH side also depends on the absent concrete shifted-xi inner criterion recorded for theorem 209.1. Defining a realization predicate merely to mean Schur innerness would be a forbidden definitional restatement rather than constructing the source system.
+    reentry_condition: Frozen canonical system primitives and a realization theorem construct a unitary colligation from a Schur function with the public transfer and energy-kernel identities, and the concrete shifted-xi inner iff RH criterion is available for every positive shift.
+    blocker_class: missing-prerequisite

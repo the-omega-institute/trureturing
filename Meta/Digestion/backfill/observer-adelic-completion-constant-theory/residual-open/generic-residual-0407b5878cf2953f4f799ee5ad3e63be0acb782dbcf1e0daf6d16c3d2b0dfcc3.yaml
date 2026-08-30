@@ -8,3 +8,7 @@ receipts:
   coverage: []
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: The elementary Cayley algebra is available, and frozen D5/S3/Weil/ZetaCore/OffLinePickWitness constructs the canonical shiftedWeyl observer and proves its negative one-point value at a suitably separated off-line xi zero. However, no frozen D5 or pinned Mathlib theorem proves the required positive-direction prerequisite that the concrete shifted-xi quotient is meromorphic inner exactly on the corresponding zero-free half-plane. The closest frozen owner, ToroidalInnerThresholdIdentity, takes that Suzuki equivalence as an explicit hypothesis rather than proving it. Without this analytic prerequisite, neither the fixed-scale Herglotz equivalence on the actual source functions nor the whole RH equivalence can be deposited honestly.
+    reentry_condition: A frozen theorem proves the shifted-xi zero-free-half-plane iff meromorphic-inner criterion for the canonical quotient, including the upper-half-plane analytic and real-boundary unit-modulus facts needed to identify Schur with inner; it can then be combined with shiftedWeyl and the Cayley disk-to-half-plane identity.
+    blocker_class: missing-prerequisite
