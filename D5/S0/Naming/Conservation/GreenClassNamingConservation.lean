@@ -51,17 +51,25 @@ theorem green_class_naming_conservation
   have singletonZero (x : Nat -> O) : stringMeasure O {x} = 0 := by
     have diameterBound := stringMeasure_le_ediam_rpow (O := O) ({x} : Set (Nat -> O))
     simpa [ENNReal.zero_rpow_of_pos namingDimensionPositive] using diameterBound
-  letI : NoAtoms (stringMeasure O) := ⟨singletonZero⟩
+  let volumeNoAtoms : NullSingletonClass (volume : Measure (Nat -> O)) :=
+    ⟨singletonZero⟩
+  letI : NullSingletonClass (volume : Measure (Nat -> O)) := volumeNoAtoms
   letI : IsProbabilityMeasure (stringMeasure O) := by
     rw [stringMeasure]
     infer_instance
   letI : Uncountable (Nat -> O) := ⟨by
     intro countableCarrier
     letI : Countable (Nat -> O) := countableCarrier
-    have univZero := Set.countable_univ.measure_zero (stringMeasure O)
+    have univZero :=
+      Set.countable_univ.measure_zero (volume : Measure (Nat -> O))
     rw [measure_univ] at univZero
     exact one_ne_zero univZero⟩
-  have towerResult := countable_tower_anonymous_full_measure (X := Nat -> O) systems
+  have towerResult :=
+    @countable_tower_anonymous_full_measure (Nat -> O) _ _ volumeNoAtoms _ J
+      countableJ systems
+  have volumeEqualsStringMeasure :
+      (volume : Measure (Nat -> O)) = stringMeasure O := rfl
+  rw [volumeEqualsStringMeasure] at towerResult
   refine ⟨greenClass_measure S t, greenClass_measure_pos S t,
     towerResult.1, towerResult.2.1, ?_, ?_⟩
   · simpa using towerResult.2.2
