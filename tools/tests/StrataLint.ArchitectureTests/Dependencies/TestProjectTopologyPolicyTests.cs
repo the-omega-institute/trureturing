@@ -174,7 +174,7 @@ public sealed class TestProjectTopologyPolicyTests
     [Fact]
     public void OnlyExactCanonicalArchitectureHarnessPathIsExcluded()
     {
-        var protectedBase = Snapshot(Project(
+        var protectedBase = Snapshot(ProjectWithDefaultProperties(
             CanonicalHarnessPath,
             "StrataLint.ArchitectureTests",
             xunit: true));
@@ -204,7 +204,7 @@ public sealed class TestProjectTopologyPolicyTests
     {
         var current = Snapshot(
             Production("StrataLint.Engine", "StrataLint.Engine"),
-            Project(
+            ProjectWithDefaultProperties(
                 "tools/tests/CompileFailProof/CompileFailProof.csproj",
                 "StrataLint.CompileFailProof",
                 xunit: false,
@@ -311,12 +311,12 @@ public sealed class TestProjectTopologyPolicyTests
     public void ProdRefsContainOnlyDirectProjectReferencesNotTransitiveOnes()
     {
         var current = Snapshot(
-            Project(
+            ProjectWithDefaultProperties(
                 "tools/Alpha/Alpha.csproj",
                 "Alpha",
                 xunit: false,
                 references: ["../Beta/Beta.csproj"]),
-            Project(
+            ProjectWithDefaultProperties(
                 "tools/Beta/Beta.csproj",
                 "Beta",
                 xunit: false,
@@ -485,7 +485,7 @@ public sealed class TestProjectTopologyPolicyTests
         string directory,
         string assembly,
         string? projectStem = null,
-        string extraProperty = "") => Project(
+        string extraProperty = "") => ProjectWithExtraProperty(
         $"tools/{directory}/{projectStem ?? directory}.csproj",
         assembly,
         xunit: false,
@@ -494,24 +494,24 @@ public sealed class TestProjectTopologyPolicyTests
     private static TestProjectTopologyProject OwnedTest(
         string directory,
         string assembly,
-        params string[] references) => Project(
+        params string[] references) => ProjectWithDefaultProperties(
         $"tools/tests/{directory}/{directory}.csproj",
         assembly,
         xunit: true,
         references: references);
 
-    private static TestProjectTopologyProject Project(
+    private static TestProjectTopologyProject ProjectWithDefaultProperties(
         string path,
         string assembly,
         bool xunit,
-        params string[] references) => Project(
+        params string[] references) => ProjectWithExtraProperty(
         path,
         assembly,
         xunit,
         extraProperty: string.Empty,
         references);
 
-    private static TestProjectTopologyProject Project(
+    private static TestProjectTopologyProject ProjectWithExtraProperty(
         string path,
         string assembly,
         bool xunit,
