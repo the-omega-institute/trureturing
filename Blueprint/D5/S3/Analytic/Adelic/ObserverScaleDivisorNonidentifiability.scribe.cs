@@ -12,8 +12,8 @@ internal sealed class ObserverScaleDivisorNonidentifiabilityDocument
             + "observer_scale_not_recoverable_from_spectral_divisor";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Distinct positive observer parameters and distinct scale ratios can produce "
-            + "spectral zeta functions with the same zero-pole divisor.",
+        "Every positive observer pair has the same spectral zero-pole divisor, so no "
+            + "function of that divisor can recover the observer's scale ratio.",
         H("Observer Scale Divisor Nonidentifiability"),
         Blocks(Describe.Lean(
             DescribeId.Create("observer-scale-divisor-nonidentifiability"),
@@ -26,26 +26,29 @@ internal sealed class ObserverScaleDivisorNonidentifiabilityDocument
                     "Each observer reading is constructed from its positive circumference P, "
                         + "positive propagation coefficient c, and the Riemann zeta function.")),
                 Paragraph(Text(
-                    "The two witnesses have different P, different c, and different P over c. "
-                        + "At every complex point, both readings have the same meromorphic order "
-                        + "as the Riemann zeta function.")),
+                    "For every two positive observer pairs and every complex point, the two "
+                        + "readings have equal meromorphic order. Thus all observers share the "
+                        + "same divisor observation, not merely one selected pair.")),
                 Paragraph(Text(
-                    "The proof applies the analytic nonzero-factor order theorem to the explicit "
-                        + "exponential scale factor, so equality records zeros and poles with "
-                        + "multiplicity rather than only equality of zero sets."))),
+                    "The second public conjunct rules out every function from a divisor reading "
+                        + "to a real scale ratio that purports to recover P over c for all positive "
+                        + "observers. The proof combines universal order equality with two internal "
+                        + "positive choices having unequal ratios."))),
             DescribeRole.Theorem))));
 
     private static Formula TheoremFormula()
     {
         Formula real = Seq(Mathbb, Grp(F.Id("R")));
         Formula complex = Seq(Mathbb, Grp(F.Id("C")));
+        Formula integer = Seq(Mathbb, Grp(F.Id("Z")));
         Formula positiveReal = Call("Ioi", D(0), real);
         Formula p1 = F.Id("P1");
         Formula c1 = F.Id("c1");
         Formula p2 = F.Id("P2");
         Formula c2 = F.Id("c2");
+        Formula p = F.Id("P");
+        Formula c = F.Id("c");
         Formula s = F.Id("s");
-        Formula zetaOrder = Call("meromorphicOrderAt", F.Id("riemannZeta"), s);
         Formula firstOrder = Call(
             "meromorphicOrderAt",
             Call("observerSpectralZeta", p1, c1),
@@ -56,25 +59,42 @@ internal sealed class ObserverScaleDivisorNonidentifiabilityDocument
             s);
         Formula commonDivisor = new Formula.BindMany(
             FormulaQuantifier.ForAll,
-            [Bound("s", complex)],
-            And(EqualTo(firstOrder, zetaOrder), EqualTo(secondOrder, zetaOrder)));
-        Formula conclusions = And(
-            NotEqualTo(p1, p2),
-            And(
-                NotEqualTo(c1, c2),
-                And(
-                    NotEqualTo(new Formula.Fraction(p1, c1), new Formula.Fraction(p2, c2)),
-                    commonDivisor)));
-
-        return Disp(new Formula.BindMany(
-            FormulaQuantifier.Exists,
             [
                 Bound("P1", positiveReal),
                 Bound("c1", positiveReal),
                 Bound("P2", positiveReal),
                 Bound("c2", positiveReal),
+                Bound("s", complex),
             ],
-            conclusions));
+            EqualTo(firstOrder, secondOrder));
+        Formula observationType = new Formula.TypeArrow(
+            complex,
+            Call("WithTop", integer));
+        Formula recover = F.Id("recover");
+        Formula observation = Seq(
+            Open,
+            s,
+            Colon,
+            Sp,
+            complex,
+            Sp,
+            Mapsto,
+            Sp,
+            Call("meromorphicOrderAt", Call("observerSpectralZeta", p, c), s),
+            Close);
+        Formula recoversEveryRatio = new Formula.BindMany(
+            FormulaQuantifier.ForAll,
+            [Bound("P", positiveReal), Bound("c", positiveReal)],
+            EqualTo(
+                new Formula.Apply(recover, [observation]),
+                new Formula.Fraction(p, c)));
+        Formula noRecovery = new Formula.Not(new Formula.Bind(
+            FormulaQuantifier.Exists,
+            FormulaIdentifier.Create("recover"),
+            new Formula.TypeArrow(observationType, real),
+            recoversEveryRatio));
+
+        return Disp(And(commonDivisor, noRecovery));
     }
 
     private static Formula.BoundVariable Bound(string name, Formula domain) =>
@@ -82,9 +102,6 @@ internal sealed class ObserverScaleDivisorNonidentifiabilityDocument
 
     private static Formula EqualTo(Formula left, Formula right) =>
         new Formula.Relation(left, FormulaRelationOperator.Equal, right);
-
-    private static Formula NotEqualTo(Formula left, Formula right) =>
-        new Formula.Relation(left, FormulaRelationOperator.NotEqual, right);
 
     private static Formula And(Formula left, Formula right) =>
         new Formula.Logic(left, FormulaLogicOperator.And, right);

@@ -51,30 +51,49 @@ private theorem observer_spectral_zeta_order_eq
   rw [factorization]
   exact meromorphicOrderAt_mul_of_ne_zero factorAnalytic factorNonzero
 
-/-- Spectral zeros and poles cannot recover the observer scale: two observers
-can have different positive `P`, different positive `c`, and different `P / c`,
-while both spectral zeta functions have exactly the Riemann-zeta divisor. -/
+/-- Every pair of positive observers has the same spectral zero-pole divisor,
+and no function of that divisor observation can recover `P / c` for every
+observer. -/
 theorem observer_scale_not_recoverable_from_spectral_divisor :
-    ∃ P1 c1 P2 c2 : Set.Ioi (0 : Real),
-      (P1 : Real) ≠ (P2 : Real) ∧
-      (c1 : Real) ≠ (c2 : Real) ∧
-      (P1 : Real) / (c1 : Real) ≠ (P2 : Real) / (c2 : Real) ∧
-      ∀ s : Complex,
+    (∀ P1 c1 P2 c2 : Set.Ioi (0 : Real), ∀ s : Complex,
+      meromorphicOrderAt (observerSpectralZeta P1 c1) s =
+        meromorphicOrderAt (observerSpectralZeta P2 c2) s) ∧
+    ¬ ∃ recover : (Complex → WithTop Int) → Real,
+      ∀ P c : Set.Ioi (0 : Real),
+        recover (fun s => meromorphicOrderAt (observerSpectralZeta P c) s) =
+          (P : Real) / (c : Real) := by
+  have allObservers :
+      ∀ P1 c1 P2 c2 : Set.Ioi (0 : Real), ∀ s : Complex,
         meromorphicOrderAt (observerSpectralZeta P1 c1) s =
-            meromorphicOrderAt riemannZeta s ∧
-          meromorphicOrderAt (observerSpectralZeta P2 c2) s =
-            meromorphicOrderAt riemannZeta s := by
+          meromorphicOrderAt (observerSpectralZeta P2 c2) s := by
+    intro P1 c1 P2 c2 s
+    calc
+      meromorphicOrderAt (observerSpectralZeta P1 c1) s =
+          meromorphicOrderAt riemannZeta s :=
+        observer_spectral_zeta_order_eq P1 c1 s
+      _ = meromorphicOrderAt (observerSpectralZeta P2 c2) s :=
+        (observer_spectral_zeta_order_eq P2 c2 s).symm
+  refine ⟨allObservers, ?_⟩
+  rintro ⟨recover, recoversRatio⟩
   let P1 : Set.Ioi (0 : Real) := ⟨1, by norm_num⟩
   let c1 : Set.Ioi (0 : Real) := ⟨1, by norm_num⟩
-  let P2 : Set.Ioi (0 : Real) := ⟨4, by norm_num⟩
-  let c2 : Set.Ioi (0 : Real) := ⟨2, by norm_num⟩
-  refine ⟨P1, c1, P2, c2, ?_, ?_, ?_, ?_⟩
-  · norm_num [P1, P2]
-  · norm_num [c1, c2]
-  · norm_num [P1, c1, P2, c2]
-  · intro s
-    exact ⟨observer_spectral_zeta_order_eq P1 c1 s,
-      observer_spectral_zeta_order_eq P2 c2 s⟩
+  let P2 : Set.Ioi (0 : Real) := ⟨2, by norm_num⟩
+  let c2 : Set.Ioi (0 : Real) := ⟨1, by norm_num⟩
+  have sameObservation :
+      (fun s => meromorphicOrderAt (observerSpectralZeta P1 c1) s) =
+        fun s => meromorphicOrderAt (observerSpectralZeta P2 c2) s := by
+    funext s
+    exact allObservers P1 c1 P2 c2 s
+  have ratioEquality :
+      (P1 : Real) / (c1 : Real) = (P2 : Real) / (c2 : Real) := by
+    calc
+      (P1 : Real) / (c1 : Real) =
+          recover (fun s => meromorphicOrderAt (observerSpectralZeta P1 c1) s) :=
+        (recoversRatio P1 c1).symm
+      _ = recover (fun s => meromorphicOrderAt (observerSpectralZeta P2 c2) s) :=
+        congrArg recover sameObservation
+      _ = (P2 : Real) / (c2 : Real) := recoversRatio P2 c2
+  norm_num [P1, c1, P2, c2] at ratioEquality
 
 #print axioms observer_scale_not_recoverable_from_spectral_divisor
 
