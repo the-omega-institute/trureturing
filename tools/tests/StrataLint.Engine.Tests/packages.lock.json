@@ -8,16 +8,6 @@
         "resolved": "5.6.0",
         "contentHash": "Kcobt3pnOdO0A+6CKiMHZdTEluJpsfxiV20axtZdmfBQnDmiWTKPJADlgAfdTuKNAnVarrkJa0UEGwuOo91muw=="
       },
-      "Microsoft.CodeAnalysis.CSharp": {
-        "type": "Direct",
-        "requested": "[5.0.0, )",
-        "resolved": "5.0.0",
-        "contentHash": "5DSyJ9bk+ATuDy7fp2Zt0mJStDVKbBoiz1DyfAwSa+k4H4IwykAUcV3URelw5b8/iVbfSaOwkwmPUZH6opZKCw==",
-        "dependencies": {
-          "Microsoft.CodeAnalysis.Analyzers": "3.11.0",
-          "Microsoft.CodeAnalysis.Common": "[5.0.0]"
-        }
-      },
       "Microsoft.NET.Test.Sdk": {
         "type": "Direct",
         "requested": "[18.0.1, )",
@@ -27,12 +17,6 @@
           "Microsoft.CodeCoverage": "18.0.1",
           "Microsoft.TestPlatform.TestHost": "18.0.1"
         }
-      },
-      "Tomlyn": {
-        "type": "Direct",
-        "requested": "[2.10.1, )",
-        "resolved": "2.10.1",
-        "contentHash": "ykjOY3IpYmC4SpPcAZRTl/w2jTmhPMDydHq8xcV7tTBAQ22nKBsOkPqauIrZlMjHm03cmKfV23UOPscKp+J4Og=="
       },
       "xunit": {
         "type": "Direct",
@@ -50,17 +34,6 @@
         "requested": "[3.1.4, )",
         "resolved": "3.1.4",
         "contentHash": "5mj99LvCqrq3CNi06xYdyIAXOEh+5b33F2nErCzI5zWiDdLHXiPXEWFSUAF8zlIv0ZWqjZNCwHTQeAPYbF3pCg=="
-      },
-      "YamlDotNet": {
-        "type": "Direct",
-        "requested": "[16.3.0, )",
-        "resolved": "16.3.0",
-        "contentHash": "SgMOdxbz8X65z8hraIs6hOEdnkH6hESTAIUa7viEngHOYaH+6q5XJmwr1+yb9vJpNQ19hCQY69xbFsLtXpobQA=="
-      },
-      "Acornima": {
-        "type": "Transitive",
-        "resolved": "1.2.0",
-        "contentHash": "pT3kn/WrVzz4NmrzN5zOAVDOK2VuQFJ7VivKviKmKbbzppMVEToEvnAaVhxerXclptvjpBUudhOwUtDsRjrMYQ=="
       },
       "Microsoft.CodeAnalysis.Analyzers": {
         "type": "Transitive",
@@ -98,11 +71,6 @@
         "type": "Transitive",
         "resolved": "13.0.3",
         "contentHash": "HrC5BXdl00IP9zeV+0Z848QWPAoCr9P3bDEZguI+gkLcBKAOxix/tLEAAHC+UvDNPv4a2d18lOReHMOagPa+zQ=="
-      },
-      "Validation": {
-        "type": "Transitive",
-        "resolved": "2.6.68",
-        "contentHash": "5mZ+aXsYQnr3Wxz5O2tmbgPaa5kn9R+ZlfnPyGBogXI2sh4uTiHtvU++N4bURtn9vmDYIu2Zu323K9hFz9poXQ=="
       },
       "xunit.abstractions": {
         "type": "Transitive",
@@ -144,15 +112,6 @@
           "xunit.extensibility.core": "[2.9.3]"
         }
       },
-      "StrataLint": {
-        "type": "Project",
-        "dependencies": {
-          "StrataLint.Engine": "[1.0.0, )",
-          "StrataLint.Scribe": "[1.0.0, )",
-          "Tomlyn": "[2.10.1, )",
-          "YamlDotNet": "[16.3.0, )"
-        }
-      },
       "stratalint.engine": {
         "type": "Project",
         "dependencies": {
@@ -161,48 +120,6 @@
           "Microsoft.CodeAnalysis.CSharp": "[5.0.0, )",
           "Pidgin": "[3.5.1, )",
           "Trureturing.Truth": "[0.1.0, )"
-        }
-      },
-      "stratalint.engineeringscope": {
-        "type": "Project",
-        "dependencies": {
-          "StrataLint.Engine": "[1.0.0, )"
-        }
-      },
-      "stratalint.engineeringscope.tests": {
-        "type": "Project",
-        "dependencies": {
-          "Microsoft.NET.Test.Sdk": "[18.0.1, )",
-          "StrataLint.EngineeringScope": "[1.0.0, )",
-          "xunit": "[2.9.3, )"
-        }
-      },
-      "stratalint.scribe": {
-        "type": "Project",
-        "dependencies": {
-          "Jint": "[4.4.2, )",
-          "QuestPDF": "[2026.7.1, 2026.7.1]",
-          "StrataLint.Engine": "[1.0.0, )",
-          "Tomlyn": "[2.10.1, )",
-          "Trureturing.Truth": "[0.1.0, )"
-        }
-      },
-      "stratalint.scribe.tests": {
-        "type": "Project",
-        "dependencies": {
-          "Microsoft.NET.Test.Sdk": "[18.0.1, )",
-          "StrataLint.Scribe": "[1.0.0, )",
-          "xunit": "[2.9.3, )"
-        }
-      },
-      "stratalint.tests": {
-        "type": "Project",
-        "dependencies": {
-          "Microsoft.NET.Test.Sdk": "[18.0.1, )",
-          "StrataLint": "[1.0.0, )",
-          "StrataLint.Engine": "[1.0.0, )",
-          "Xunit.SkippableFact": "[1.5.85, )",
-          "xunit": "[2.9.3, )"
         }
       },
       "trureturing.truth": {
@@ -214,42 +131,27 @@
         "resolved": "1.16.2",
         "contentHash": "R4PEZo50RK76wRW1kq4xiQqX/hnrx8Gn+8T1XIEYuigyjVh3Guhtt3+b4GG2j3h+E3VadLINtbV+Id79nsFy/Q=="
       },
-      "Jint": {
-        "type": "CentralTransitive",
-        "requested": "[4.4.2, )",
-        "resolved": "4.4.2",
-        "contentHash": "+2G0SkWWYiHjvCWFYgWgLUDVvemMxjgmlnT3X4p8cllSt1SX3jgO7PSqxenTW4yDE4dOQ8BLRmbuiC8ANp1trw==",
-        "dependencies": {
-          "Acornima": "1.2.0"
-        }
-      },
       "Markdig": {
         "type": "CentralTransitive",
         "requested": "[1.3.2, )",
         "resolved": "1.3.2",
         "contentHash": "fZgOC/3CswUrndjDTac70aQpYdtxbW5+5bRumR7vzvI2HJbkmgKisB1c9oT+GA6v0jB/JDR9BLa9FiPzQmaK6A=="
       },
+      "Microsoft.CodeAnalysis.CSharp": {
+        "type": "CentralTransitive",
+        "requested": "[5.0.0, )",
+        "resolved": "5.0.0",
+        "contentHash": "5DSyJ9bk+ATuDy7fp2Zt0mJStDVKbBoiz1DyfAwSa+k4H4IwykAUcV3URelw5b8/iVbfSaOwkwmPUZH6opZKCw==",
+        "dependencies": {
+          "Microsoft.CodeAnalysis.Analyzers": "3.11.0",
+          "Microsoft.CodeAnalysis.Common": "[5.0.0]"
+        }
+      },
       "Pidgin": {
         "type": "CentralTransitive",
         "requested": "[3.5.1, )",
         "resolved": "3.5.1",
         "contentHash": "zU7tkXlF3D6d2GLTjJDomAL3nnl4AwfZvSgSz8D4b+Ry21/clqedYlxBnEAkAU/bkGfEv6uRR7QCdWZUpKrB/g=="
-      },
-      "QuestPDF": {
-        "type": "CentralTransitive",
-        "requested": "[2026.7.1, 2026.7.1]",
-        "resolved": "2026.7.1",
-        "contentHash": "GsBxQb48dFAGmvI1eP3SHyz0Pua4uH6aUHX7f0ywTin6hordAviZRAiTiIQiKMLwq6hN1FmgS+qLjfh2v7vhOg=="
-      },
-      "Xunit.SkippableFact": {
-        "type": "CentralTransitive",
-        "requested": "[1.5.85, )",
-        "resolved": "1.5.85",
-        "contentHash": "zI3QsePulfENNjZC+POQYtqt/9HkUfe6qq+waSJ1xGVMU9v8LyWbr695IRAgg+UYDkPUgGnBjyULIVQ9Qdpgsg==",
-        "dependencies": {
-          "Validation": "2.6.68",
-          "xunit.extensibility.execution": "2.4.0"
-        }
       }
     }
   }
