@@ -4,7 +4,7 @@ using System.Text;
 using Trureturing.Truth;
 using Xunit;
 
-namespace StrataLint.Tests;
+namespace Trureturing.Truth.Tests;
 
 public sealed class Sha256SumsTests
 {
