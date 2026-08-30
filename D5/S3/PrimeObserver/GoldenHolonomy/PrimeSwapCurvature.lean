@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/PrimeObserver/GoldenHolonomy/PrimeSwapCurvature
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Stable prime-memory swap curvature is gauge invariant and detects observer-origin mismatch. -/
+   digest: Stable prime-memory swap curvature is gauge invariant. -/
 
 import Mathlib.Tactic
 
@@ -118,7 +118,6 @@ theorem prime_swap_curvature_spec
             observerOrigin a localFactorQ bQ) := by
     unfold primeSwapCurvature observerOrigin
     field_simp [hP, hQ]
-    <;> ring
   have hZeroCriterion :
       primeSwapCurvature a bP localFactorP bQ localFactorQ = 0 ↔
         observerOrigin a localFactorP bP =
