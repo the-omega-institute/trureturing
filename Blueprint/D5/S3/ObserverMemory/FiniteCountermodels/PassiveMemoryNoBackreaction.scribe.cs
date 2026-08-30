@@ -5,9 +5,13 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ObserverMemory.FiniteCountermodels;
 
 internal sealed class PassiveMemoryNoBackreactionDocument : IScribeDocumentDefinition
 {
-    private const string MainHandle =
+    private const string HolonomyHandle =
         "D5/S3/ObserverMemory/FiniteCountermodels/PassiveMemoryNoBackreaction."
-            + "passive_memory_no_backreaction";
+            + "memory_holonomy_formula";
+
+    private const string CharpolyHandle =
+        "D5/S3/ObserverMemory/FiniteCountermodels/PassiveMemoryNoBackreaction."
+            + "passive_memory_charpoly_invariant";
 
     private const string WitnessHandle =
         "D5/S3/ObserverMemory/FiniteCountermodels/PassiveMemoryNoBackreaction."
@@ -15,25 +19,31 @@ internal sealed class PassiveMemoryNoBackreactionDocument : IScribeDocumentDefin
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Passive upper-triangular memory can retain observer order in an off-diagonal "
-            + "holonomy while leaving scalar spectral invariants unchanged.",
+            + "holonomy while leaving scalar spectral roots unchanged.",
         H("Passive Memory No-Backreaction"),
         Blocks(
             Describe.Lean(
-                DescribeId.Create("passive-memory-no-backreaction"),
-                DeclarationHandle.Create(MainHandle),
-                H("Passive memory has no scalar backreaction"),
+                DescribeId.Create("passive-memory-holonomy-formula"),
+                DeclarationHandle.Create(HolonomyHandle),
+                H("Adjacent-swap holonomy is purely off-diagonal"),
                 StatementSource.FromLean(),
                 AssessedProvenance.FromRepo(),
-                Blocks(
-                    Paragraph(Text(
-                        "Reversing two memory steps produces an explicit nilpotent "
-                            + "off-diagonal defect. The defect records order while its trace "
-                            + "and determinant vanish.")),
-                    Paragraph(Text(
-                        "Changing the memory injection at fixed diagonal data leaves trace, "
-                            + "determinant, and characteristic polynomial unchanged. The "
-                            + "passive triangular lift therefore cannot move scalar spectral "
-                            + "roots without a feedback channel."))),
+                Blocks(Paragraph(Text(
+                    "For the canonical injection (L - 1)v, reversing two memory steps "
+                        + "changes only the off-diagonal memory entry. The associated trace "
+                        + "and determinant vanish by direct corollaries in the Lean module."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("passive-memory-characteristic-polynomial-invariant"),
+                DeclarationHandle.Create(CharpolyHandle),
+                H("Passive memory leaves the characteristic polynomial unchanged"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "At fixed diagonal data, replacing one memory injection by another "
+                        + "does not change the characteristic polynomial. The passive "
+                        + "triangular lift therefore cannot move scalar spectral roots "
+                        + "without a feedback channel."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("passive-memory-order-witness"),

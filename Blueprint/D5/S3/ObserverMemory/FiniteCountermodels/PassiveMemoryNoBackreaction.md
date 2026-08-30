@@ -2,9 +2,9 @@
 
 ## Abstract
 
-Passive upper-triangular memory can retain observer order in an off-diagonal holonomy while leaving scalar spectral invariants unchanged.
+Passive upper-triangular memory can retain observer order in an off-diagonal holonomy while leaving scalar spectral roots unchanged.
 
-**Theorem 1.1 (Passive memory has no scalar backreaction).**
+**Theorem 1.1 (Adjacent-swap holonomy is purely off-diagonal).**
 
 For
 
@@ -34,19 +34,33 @@ U_pU_q-U_qU_p=
 \end{pmatrix}.
 $$
 
-The swap defect has zero trace and determinant. For fixed diagonal data $F,L_p$, replacing one memory injection $B_1$ by another $B_2$ leaves the trace, determinant, and characteristic polynomial unchanged.
-
-*Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/FiniteCountermodels/PassiveMemoryNoBackreaction.passive_memory_no_backreaction` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/FiniteCountermodels/PassiveMemoryNoBackreaction.memory_holonomy_formula` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-Reversing two memory steps produces an explicit nilpotent off-diagonal defect. The defect records order while its trace and determinant vanish.
+For the canonical injection $(L-1)v$, reversing two memory steps changes only the off-diagonal memory entry. The associated trace and determinant vanish by direct corollaries in the Lean module.
 
-Changing the memory injection at fixed diagonal data leaves trace, determinant, and characteristic polynomial unchanged. The passive triangular lift therefore cannot move scalar spectral roots without a feedback channel.
+**Theorem 1.2 (Passive memory leaves the characteristic polynomial unchanged).**
 
-**Theorem 1.2 (Passive memory can still retain order).**
+For arbitrary $F,L,B_1,B_2\in\mathbb C$,
+
+$$
+\operatorname{charpoly}U(B_1,L)
+=
+\operatorname{charpoly}U(B_2,L).
+$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/FiniteCountermodels/PassiveMemoryNoBackreaction.passive_memory_charpoly_invariant` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+At fixed diagonal data, replacing one memory injection by another does not change the characteristic polynomial. The passive triangular lift therefore cannot move scalar spectral roots without a feedback channel.
+
+**Theorem 1.3 (Passive memory can still retain order).**
 
 The matrices
 
@@ -80,5 +94,6 @@ This theorem formalizes a negative boundary for the current golden-prime memory 
 
 ## References
 
-- Truth anchor: `D5/S3/ObserverMemory/FiniteCountermodels/PassiveMemoryNoBackreaction.passive_memory_no_backreaction`
+- Truth anchor: `D5/S3/ObserverMemory/FiniteCountermodels/PassiveMemoryNoBackreaction.memory_holonomy_formula`
+- Truth anchor: `D5/S3/ObserverMemory/FiniteCountermodels/PassiveMemoryNoBackreaction.passive_memory_charpoly_invariant`
 - Truth anchor: `D5/S3/ObserverMemory/FiniteCountermodels/PassiveMemoryNoBackreaction.passive_memory_order_witness`

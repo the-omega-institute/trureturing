@@ -12,12 +12,12 @@ import Mathlib.Tactic
 # Passive memory has no scalar backreaction
 
 The upper-triangular two-channel observer used by the golden-prime memory route
-can retain ordering information in its off-diagonal entry.  This module isolates
+can retain ordering information in its off-diagonal entry. This module isolates
 the exact finite algebraic boundary of that construction.
 
 For a common memory update `F`, local scalar readouts `Lp`, `Lq`, and memory
 injections `(L - 1) * v`, reversing two observer steps creates an explicit
-nilpotent off-diagonal defect.  At the same time, changing an arbitrary memory
+nilpotent off-diagonal defect. At the same time, changing an arbitrary memory
 injection leaves trace, determinant, and characteristic polynomial unchanged.
 Thus the passive triangular lift can archive order, but it cannot move the
 scalar spectral roots without an additional feedback channel.
@@ -45,53 +45,83 @@ namespace D5.S3.ObserverMemory.FiniteCountermodels.PassiveMemoryNoBackreaction
 
 abbrev MemoryMatrix := Matrix (Fin 2) (Fin 2) ℂ
 
-/-- Reversing two passive memory steps can change only the off-diagonal memory
-entry.  Arbitrary changes of that entry leave the scalar trace, determinant,
-and characteristic polynomial unchanged. -/
-theorem passive_memory_no_backreaction
-    (F v Lp Lq B1 B2 : ℂ) :
-    let U := fun B L : ℂ => (!![F, B; 0, L] : MemoryMatrix)
-    let Up := U ((Lp - 1) * v) Lp
-    let Uq := U ((Lq - 1) * v) Lq
-    let holonomy := Up * Uq - Uq * Up
-    holonomy = !![0, (Lq - Lp) * (F - 1) * v; 0, 0] ∧
-      Matrix.trace holonomy = 0 ∧
-      Matrix.det holonomy = 0 ∧
-      Matrix.trace (U B1 Lp) = Matrix.trace (U B2 Lp) ∧
-      Matrix.det (U B1 Lp) = Matrix.det (U B2 Lp) ∧
-      (U B1 Lp).charpoly = (U B2 Lp).charpoly := by
-  dsimp only
-  have hHolonomy :
-      (!![F, (Lp - 1) * v; 0, Lp] : MemoryMatrix) *
-            !![F, (Lq - 1) * v; 0, Lq] -
-          !![F, (Lq - 1) * v; 0, Lq] *
-            !![F, (Lp - 1) * v; 0, Lp] =
-        !![0, (Lq - Lp) * (F - 1) * v; 0, 0] := by
-    ext i j
-    fin_cases i <;> fin_cases j <;>
-      simp [Matrix.mul_apply, Fin.sum_univ_two] <;> ring
-  refine ⟨hHolonomy, ?_, ?_, ?_, ?_, ?_⟩
-  · rw [hHolonomy, Matrix.trace_fin_two]
-    norm_num
-  · rw [hHolonomy, Matrix.det_fin_two]
-    ring
-  · simp [Matrix.trace_fin_two]
-  · simp [Matrix.det_fin_two]
-  · simp [Matrix.charpoly_fin_two, Matrix.trace_fin_two, Matrix.det_fin_two]
+/-- The passive two-channel memory lift with memory update `F`, injection `B`,
+and scalar readout `L`. -/
+def passiveMemoryMatrix (F B L : ℂ) : MemoryMatrix :=
+  !![F, B; 0, L]
 
-#print axioms passive_memory_no_backreaction
+/-- The local prime-memory lift whose injection is `(L - 1) * v`. -/
+def primeMemoryMatrix (F v L : ℂ) : MemoryMatrix :=
+  passiveMemoryMatrix F ((L - 1) * v) L
 
-/-- A concrete pair of passive memory matrices has the same diagonal update
-shape but does not commute, so the off-diagonal order channel is genuinely
-nontrivial. -/
+/-- The adjacent-swap defect of two local prime-memory lifts. -/
+def memoryHolonomy (F v Lp Lq : ℂ) : MemoryMatrix :=
+  primeMemoryMatrix F v Lp * primeMemoryMatrix F v Lq -
+    primeMemoryMatrix F v Lq * primeMemoryMatrix F v Lp
+
+/-- Reversing two passive memory steps changes only the off-diagonal memory
+entry. -/
+theorem memory_holonomy_formula (F v Lp Lq : ℂ) :
+    memoryHolonomy F v Lp Lq =
+      !![0, (Lq - Lp) * (F - 1) * v; 0, 0] := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [memoryHolonomy, primeMemoryMatrix, passiveMemoryMatrix,
+      Matrix.mul_apply, Fin.sum_univ_two] <;> ring
+
+#print axioms memory_holonomy_formula
+
+/-- The passive adjacent-swap defect has zero trace. -/
+theorem memory_holonomy_trace_zero (F v Lp Lq : ℂ) :
+    Matrix.trace (memoryHolonomy F v Lp Lq) = 0 := by
+  rw [memory_holonomy_formula, Matrix.trace_fin_two]
+  norm_num
+
+#print axioms memory_holonomy_trace_zero
+
+/-- The passive adjacent-swap defect has zero determinant. -/
+theorem memory_holonomy_det_zero (F v Lp Lq : ℂ) :
+    Matrix.det (memoryHolonomy F v Lp Lq) = 0 := by
+  rw [memory_holonomy_formula, Matrix.det_fin_two]
+  ring
+
+#print axioms memory_holonomy_det_zero
+
+/-- Changing only the passive memory injection leaves the trace unchanged. -/
+theorem passive_memory_trace_invariant (F L B1 B2 : ℂ) :
+    Matrix.trace (passiveMemoryMatrix F B1 L) =
+      Matrix.trace (passiveMemoryMatrix F B2 L) := by
+  simp [passiveMemoryMatrix, Matrix.trace_fin_two]
+
+#print axioms passive_memory_trace_invariant
+
+/-- Changing only the passive memory injection leaves the determinant unchanged. -/
+theorem passive_memory_det_invariant (F L B1 B2 : ℂ) :
+    Matrix.det (passiveMemoryMatrix F B1 L) =
+      Matrix.det (passiveMemoryMatrix F B2 L) := by
+  simp [passiveMemoryMatrix, Matrix.det_fin_two]
+
+#print axioms passive_memory_det_invariant
+
+/-- Changing only the passive memory injection leaves the characteristic
+polynomial unchanged. Hence the passive memory channel cannot move scalar
+spectral roots. -/
+theorem passive_memory_charpoly_invariant (F L B1 B2 : ℂ) :
+    (passiveMemoryMatrix F B1 L).charpoly =
+      (passiveMemoryMatrix F B2 L).charpoly := by
+  simp [Matrix.charpoly_fin_two, passiveMemoryMatrix,
+    Matrix.trace_fin_two, Matrix.det_fin_two]
+
+#print axioms passive_memory_charpoly_invariant
+
+/-- A concrete pair of passive memory matrices does not commute, so the
+order-memory channel is genuinely nontrivial. -/
 theorem passive_memory_order_witness :
-    let Up : MemoryMatrix := !![(2 : ℂ), 1; 0, 2]
-    let Uq : MemoryMatrix := !![(2 : ℂ), 2; 0, 3]
-    Up * Uq ≠ Uq * Up := by
-  dsimp only
+    passiveMemoryMatrix 2 1 2 * passiveMemoryMatrix 2 2 3 ≠
+      passiveMemoryMatrix 2 2 3 * passiveMemoryMatrix 2 1 2 := by
   intro h
   have h01 := congrArg (fun M : MemoryMatrix => M 0 1) h
-  norm_num [Matrix.mul_apply, Fin.sum_univ_two] at h01
+  norm_num [passiveMemoryMatrix, Matrix.mul_apply, Fin.sum_univ_two] at h01
 
 #print axioms passive_memory_order_witness
 
