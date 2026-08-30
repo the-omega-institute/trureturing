@@ -73,28 +73,36 @@ internal static class ReviewEnvelopeCommand
         var headReceipts = ReceiptPaths(headSnapshot);
         var baseQuarantined = QuarantinedAtoms(baseSnapshot);
         var headEntries = BackfillInventoryLoader.Load(headSnapshot).RequireDigestionEntries();
-        var ledgerAtoms = headEntries.Select(static entry => entry.AtomId).ToImmutableHashSet(StringComparer.Ordinal);
+        var ledgerByAtom = headEntries.ToImmutableDictionary(static entry => entry.AtomId, StringComparer.Ordinal);
 
-        var deposited = headReceipts
-            .Where(path => !baseReceipts.Contains(path))
+        // 每一份 head 收据都验(不只本次新增的):路径 ↔ atom_id 绑定、账本成员、指纹与 cas_ref 与账本条目一致。
+        // 一份被改写过的既有收据同样会让 head 失真;失真的 head 不产信封。
+        var validated = headReceipts
             .Order(StringComparer.Ordinal)
             .Select(path =>
             {
                 var receipt = DigestionFormalizationReceipt.Load(headSnapshot, path);
-                // 身份绑定:收据的 atom_id 必须与其路径一致(账本 loader 的互斥检查按 PathForAtom 探测,
-                // 一份路径错位但 schema 合法的收据会绕过它),且该原子必须存在于 head 账本。
                 if (DigestionFormalizationReceipt.PathForAtom(receipt.AtomId) != path)
                 {
                     throw new FormatException(
                         $"receipt path/atom mismatch: {path} carries atom_id {receipt.AtomId}");
                 }
-                if (!ledgerAtoms.Contains(receipt.AtomId))
+                if (!ledgerByAtom.TryGetValue(receipt.AtomId, out var entry))
                 {
                     throw new FormatException(
                         $"receipt for an atom absent from the head ledger: {receipt.AtomId}");
                 }
-                return new Deposited(receipt.AtomId, receipt.PrimaryGid, path);
+                if (receipt.RawSha256 != entry.Fingerprints.RawSha256 || receipt.CasRef != entry.CasRef)
+                {
+                    throw new FormatException(
+                        $"stale receipt: {receipt.AtomId} fingerprint/cas_ref do not match the head ledger entry");
+                }
+                return (Path: path, Receipt: receipt);
             })
+            .ToImmutableArray();
+        var deposited = validated
+            .Where(item => !baseReceipts.Contains(item.Path))
+            .Select(item => new Deposited(item.Receipt.AtomId, item.Receipt.PrimaryGid, item.Path))
             .ToImmutableArray();
 
         var headQuarantined = headEntries

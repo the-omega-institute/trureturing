@@ -158,6 +158,72 @@ public sealed partial class FormalizeCandidatesTests
     }
 
     [Fact]
+    public void ReviewEnvelopeRejectsAStaleReceiptWhoseFingerprintDoesNotMatchTheLedgerEntry()
+    {
+        var atom = Entry("source", "stale", "theorem", "1.0", atomizer: AtomizerRegistry.GenericId);
+        var other = Entry("source", "other", "theorem", "2.0", atomizer: AtomizerRegistry.GenericId);
+        var baseSnapshot = ReviewSnapshot([atom, other], quarantined: [], receipted: []);
+        var headFiles = ReviewSnapshot([atom, other], quarantined: [], receipted: []).Entries.ToList();
+        // 收据名义上属于 stale,指纹却是 other 的:账本条目与收据不一致。
+        var stale = DigestionFormalizationReceipt.Write(new DigestionFormalizationReceipt(
+            atom.AtomId,
+            "D5/S0/Synthetic/Receipt.stale",
+            new DigestionFormalizationSignature("stale", "theorem", "statement-v1"),
+            other.Atom.Fingerprints.RawSha256,
+            other.Atom.Fingerprints.RawSha256)).ToArray();
+        headFiles.Add(new RawRepositoryEntry(
+            DigestionFormalizationReceipt.PathForAtom(atom.AtomId), ImmutableArray.CreateRange(stale)));
+
+        var exception = Assert.Throws<FormatException>(
+            () => ReviewEnvelopeCommand.Derive(baseSnapshot, RawRepositorySnapshot.Create(headFiles)));
+
+        Assert.Contains("stale receipt", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ReviewEnvelopeValidatesReceiptsThatAlreadyExistedInBase()
+    {
+        // 既有收据在 head 里被改坏(路径不变、atom_id 改成别的):不是本次新增,仍须拒绝。
+        var real = Entry("source", "real", "theorem", "1.0", atomizer: AtomizerRegistry.GenericId);
+        var other = Entry("source", "other", "theorem", "2.0", atomizer: AtomizerRegistry.GenericId);
+        var baseSnapshot = ReviewSnapshot([real, other], quarantined: [], receipted: [real]);
+        var headFiles = ReviewSnapshot([real, other], quarantined: [], receipted: []).Entries.ToList();
+        headFiles.Add(new RawRepositoryEntry(
+            DigestionFormalizationReceipt.PathForAtom(real.AtomId), ImmutableArray.CreateRange(ValidReceipt(other))));
+        headFiles.Add(new RawRepositoryEntry(
+            DigestionFormalizationReceipt.PathForAtom(other.AtomId), ImmutableArray.CreateRange(ValidReceipt(other))));
+
+        var exception = Assert.Throws<FormatException>(
+            () => ReviewEnvelopeCommand.Derive(baseSnapshot, RawRepositorySnapshot.Create(headFiles)));
+
+        Assert.Contains("path/atom mismatch", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ProductionEnvironmentRoutesReviewEnvelopeToTheCommand()
+    {
+        var entry = Entry("source", "prod-routed", "theorem", "1.0", atomizer: AtomizerRegistry.GenericId);
+        var baseSnapshot = ReviewSnapshot([entry], quarantined: [], receipted: []);
+        var headSnapshot = ReviewSnapshot([entry], quarantined: [], receipted: [entry]);
+        var environment = new ProductionCliEnvironment(
+            "/repo",
+            new RevisionKeyedGateway(new Dictionary<string, RawRepositorySnapshot>(StringComparer.Ordinal)
+            {
+                ["b"] = baseSnapshot,
+                ["h"] = headSnapshot,
+            }),
+            new FakeLeanReportSource(CurrentLeanReport([entry])),
+            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
+
+        var result = environment.ReviewEnvelope(["--base", "b", "--head", "h"]);
+
+        Assert.True(result.Success, result.Error);
+        using var json = JsonDocument.Parse(result.Output);
+        Assert.Equal(ReviewEnvelopeCommand.Schema, json.RootElement.GetProperty("schema").GetString());
+        Assert.Equal("prod-routed", Assert.Single(json.RootElement.GetProperty("deposited").EnumerateArray()).GetProperty("atom_id").GetString());
+    }
+
+    [Fact]
     public void ReviewEnvelopeVerbIsRegistered()
     {
         Assert.Contains("review-envelope", CliApplication.ImplementedCommands);
