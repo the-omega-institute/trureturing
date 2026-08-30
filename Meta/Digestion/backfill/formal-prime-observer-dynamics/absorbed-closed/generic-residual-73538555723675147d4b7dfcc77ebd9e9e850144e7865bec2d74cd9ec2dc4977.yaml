@@ -1,0 +1,17 @@
+ast_path: 定理/286.2
+fingerprints:
+  raw_sha256: sha256:73538555723675147d4b7dfcc77ebd9e9e850144e7865bec2d74cd9ec2dc4977
+  normalized_sha256: sha256:73538555723675147d4b7dfcc77ebd9e9e850144e7865bec2d74cd9ec2dc4977
+cas_ref: sha256:73538555723675147d4b7dfcc77ebd9e9e850144e7865bec2d74cd9ec2dc4977
+coverage_gids:
+  - D5/S3/ConceptDynamics/Interventions/InterventionCounterfactualSeparation.intervention_strictly_weaker_than_counterfactual
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Interventions/InterventionCounterfactualSeparation.intervention_strictly_weaker_than_counterfactual
+      source_sha256: sha256:73538555723675147d4b7dfcc77ebd9e9e850144e7865bec2d74cd9ec2dc4977
+      target_statement_id: sha256:dce9bd1984c14aada975ffc082b36b521aaaa1914ee8d94db44d2f51daed3ac6
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Interventions/InterventionCounterfactualSeparation.intervention_strictly_weaker_than_counterfactual
+      definition_sha256: sha256:8e4460ca31e4a933b2d53d2f0a83b4d12199a352218727d54d6a174857c35b77
+      emission_sha256: sha256:b4c72e65b4948559f4c5d4eb9ff91bde5ae0cf400675984525985c1178aab337
+  unresolved_subitems: []

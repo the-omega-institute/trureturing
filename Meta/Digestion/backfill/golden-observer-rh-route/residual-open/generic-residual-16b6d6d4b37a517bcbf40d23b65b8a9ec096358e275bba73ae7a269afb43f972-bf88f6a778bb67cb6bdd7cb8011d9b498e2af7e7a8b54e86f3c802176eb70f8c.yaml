@@ -1,0 +1,10 @@
+ast_path: section/3-全-O-5-不是-仅仅-RH/clause/2
+fingerprints:
+  raw_sha256: sha256:16b6d6d4b37a517bcbf40d23b65b8a9ec096358e275bba73ae7a269afb43f972
+  normalized_sha256: sha256:16b6d6d4b37a517bcbf40d23b65b8a9ec096358e275bba73ae7a269afb43f972
+cas_ref: sha256:16b6d6d4b37a517bcbf40d23b65b8a9ec096358e275bba73ae7a269afb43f972
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

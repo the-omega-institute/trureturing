@@ -1,0 +1,60 @@
+## 998.2 Fibonacci 下标不构成证据
+
+若人为选择：
+
+$$
+n=F_k,
+$$
+
+则对任何满足：
+
+$$
+\theta_n\asymp\frac{\log n}{n}
+$$
+
+的序列，都有：
+
+$$
+\frac{\theta_{F_{k+1}}}{\theta_{F_k}}
+\longrightarrow
+\varphi^{-1}.
+$$
+
+选择偶下标：
+
+$$
+F_{2k}
+$$
+
+则自然得到：
+
+$$
+\varphi^{-2}.
+$$
+
+这只是因为：
+
+$$
+F_{k+1}/F_k\to\varphi.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{先用 Fibonacci 下标分块，再发现黄金倍率，是循环论证。}
+}
+$$
+
+真正有效的证据必须满足：
+
+$$
+\boxed{
+\text{block 边界由 Li/Schur/prime 数据自身选出，}
+}
+$$
+
+而不能由研究者预先指定为 Fibonacci 长度。
+
+---
+

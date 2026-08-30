@@ -1,0 +1,10 @@
+### 6. 稳定倍率
+
+将 orbit 投影到 candidate stable direction，检查：
+
+$$
+\frac{\|d_{k+1}\|}{\|d_k\|}
+\stackrel{?}{\longrightarrow}
+\varphi^{-2}.
+$$
+

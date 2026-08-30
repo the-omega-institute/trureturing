@@ -1,0 +1,10 @@
+ast_path: row/contact-terminal-Schur-reflection
+fingerprints:
+  raw_sha256: sha256:82d53120d122ee7f82744d124bdfe41335aae7f08a2d5e3c9e2fe02180a39ddf
+  normalized_sha256: sha256:82d53120d122ee7f82744d124bdfe41335aae7f08a2d5e3c9e2fe02180a39ddf
+cas_ref: sha256:82d53120d122ee7f82744d124bdfe41335aae7f08a2d5e3c9e2fe02180a39ddf
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

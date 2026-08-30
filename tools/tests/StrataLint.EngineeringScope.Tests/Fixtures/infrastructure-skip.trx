@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TestRun xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Results>
+    <UnitTestResult testId="test-id" testName="Synthetic.Hung" outcome="NotExecuted">
+      <Output><ErrorInfo><Message>infrastructure-hang-guard expired for synthetic-command</Message></ErrorInfo></Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest storage="Synthetic.dll" id="test-id">
+      <TestMethod className="Synthetic.Tests" name="Hung" />
+    </UnitTest>
+  </TestDefinitions>
+  <ResultSummary><Counters executed="0" /></ResultSummary>
+</TestRun>

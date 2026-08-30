@@ -1,0 +1,91 @@
+# 第九百九十五部　Schur 边界反射的双曲快速量
+
+定义：
+
+$$
+\boxed{
+\rho_n
+=
+\sqrt{1-\alpha_n^2}.
+}
+\tag{995.1}
+$$
+
+RH 下：
+
+$$
+\rho_n\to0.
+$$
+
+进一步定义 signed rapidity：
+
+$$
+\boxed{
+q_n
+=
+\operatorname{artanh}\alpha_n.
+}
+\tag{995.2}
+$$
+
+于是：
+
+$$
+\alpha_n=\tanh q_n,
+\qquad
+\rho_n=\operatorname{sech}q_n.
+$$
+
+在完成边界点 \(z=1\) 上，规范 Szegő transfer 为：
+
+$$
+\boxed{
+A_n(1)
+=
+\frac1{\rho_n}
+\begin{pmatrix}
+1&-\alpha_n\\
+-\alpha_n&1
+\end{pmatrix}.
+}
+\tag{995.3}
+$$
+
+令 Hadamard 基变换：
+
+$$
+H
+=
+\frac1{\sqrt2}
+\begin{pmatrix}
+1&1\\
+1&-1
+\end{pmatrix}.
+$$
+
+则：
+
+$$
+\boxed{
+H^{\mathsf T}A_n(1)H
+=
+\begin{pmatrix}
+e^{-q_n}&0\\
+0&e^{q_n}
+\end{pmatrix}.
+}
+\tag{995.4}
+$$
+
+所以每一个 Schur step 都是一个精确的 Lorentz boost。
+
+RH 下：
+
+$$
+|q_n|\to\infty,
+$$
+
+并且 boost 方向交替。
+
+---
+

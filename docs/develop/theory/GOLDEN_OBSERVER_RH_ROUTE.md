@@ -1315,3 +1315,38 @@ L_{\max}^{\rm cert},B_T,\delta_{\rm PSD},A_{\rm external})$
 - 全局 O-6 反向、O-5 全延拓和 RH 本身继续明确标记 open；
 - 每轮投入必须以 theorem 状态变化为边际收益，否则依 DECT 冻结并换 $\Gamma$；
 - 所有新 statement、地址和外部依赖依 GFPT 前视固定，失败不得通过改写旧真来消除。
+
+---
+
+# 追加部一　定义侦察四构思(orchestrator 亲研,2026-08-30)
+
+> 产地:claude 主循环在五遍扫描全部 RH 冻结面(Weil 核心、环面-曲率族、零点几何族、O-5 心脏、OACTC 165–173 部)后的自研综合;每条按 DECT 纪律给可证伪预测,suspected-novel 自标。本部为预登记:先写判据与预测,后开证。
+
+## 一(A)　预算过滤的 RH 与零点观察成本
+
+依 OACTC 173 的加权集合覆盖与 `finite_toroidal_spectral_tomography`,对紧窗口内零点 $\rho$ 定义**观察成本** $c(\rho)=\inf\{\sum_{D\in\mathcal D}c(D):\mathcal D\ \text{有限},\ \rho\ \text{的重数被}\ \mathcal D\ \text{层析认证}\}$(层析定理保证有限)。定义谓词族 $\mathrm{RH}_B$:预算 $\le B$ 可认证窗口内零点全临界。则 $\mathrm{RH}=\varinjlim_B \mathrm{RH}_B$。**价值**:DECT 预算包络从元纪律变为定理对象——「边际认证窗口/边际预算」曲线可形式化,平台期即盲核的分析版。〔suspected-novel(作为形式化对象);有限窗口验证思想 literature-attested〕
+**可证伪预测**:若定义得当,认证窗对 $B$ 单调且黄金通道($c=\ell_5=4\log\varphi$,OACTC 172)出现在小预算最优覆盖中;若连单调性都须附加条件,则成本定义选错切面。
+
+## 二(B)　曲率–账本对偶桥
+
+`unitarity_line_iff`(临界线=尺度账本半密度归一后的酉轨迹)与 `interior_curvature_criterion`(RH ⟺ Riesz 曲率测度恒零)是两条互不 import 的等价刻画。**猜想(桥)**:内部曲率测度等于账本非酉亏损的二阶变分;`off_line_curvature_dipole` 的偶极矩即单零点的账本失衡荷。〔suspected-novel(仓内两真源之间的恒等桥)〕
+**可证伪预测**:在共同玩具载体(有限零点集+显式账本)上,两侧可各自实算并逐点比对;若连玩具上都对不上,桥假,弃之(预算上限:两席位轮)。
+
+## 三(C)　O-5 重释:最廉观察者的深度迭代 vs 全体观察者的宽度覆盖
+
+实算(初等):$\beta(v)=\lfloor(v+1)\varphi\rfloor-1-v\psi=\sqrt5\,v+r(v)$,其中 $r(v)=(\varphi-1)-\operatorname{frac}((v+1)\varphi)\in(\varphi-2,\varphi-1]$ **有界**。故 eulerGerm 的指数格是 $\sqrt5$-准等差 Beatty 调制格,而 $\sqrt5=\sqrt{D_5}$、$\ell_5=4\log\varphi$——**germ 的 Witt 级联形如同一条黄金测地线在全部重整化深度的迭代观察**。O-5 由此重述:**深度迭代最廉通道,能否替代宽度覆盖全体判别式**(OACTC 172 已证 P₅ 单独不完备,但那是深度 1)。〔重释 suspected-novel;$\beta$ 的算术是可即刻 kernel 化的事实〕
+**可证伪预测**:W-C1(下)必须一次过;若 Beatty 余项无界,则整个重释的地基错。
+
+## 四(D)　F-RH 框架:RH 型命题 = 观察者族逃逸残差的 tempered 性
+
+OACTC 165.3 的 $\mathcal A_{\mathrm{tor}}=\bigcap_T\ker\mathcal P_T$ 是 DECT 逃逸残差的字面实例。公理化:观察者族 $F$ 之 $\mathrm{Escape}(F)$;**$F$-RH** := $\mathrm{Escape}(F)$ 全 tempered。素观察者与环面观察者的残差可在有限窗口机器比较;DECT 对角定理暗示可数族残差恒非空——**RH 型命题从来不是「无逃逸」而是「逃逸受控」**。〔框架 suspected-novel〕
+**可证伪预测**:细化单调性 W-D1 必须无条件成立,否则 Escape 的定义切面错。
+
+## 义务清单(预登记,elementary 优先)
+
+- **W-C1(β 格,首发)**:$\forall v,\ \beta(v)=\sqrt5\,v+r(v)\ \wedge\ r(v)\in(\varphi-2,\varphi-1]$;推论:格点间距 $\beta(v{+}1)-\beta(v)\in\{\sqrt5+\varphi-2,\sqrt5+\varphi-1\}$ 二值(Beatty 二距性)。
+- **W-D1(Escape 反单调)**:$F\subseteq F'\Rightarrow \mathrm{Escape}(F')\subseteq\mathrm{Escape}(F)$;及与 165.3 实例的一致性。
+- **W-A1(认证窗单调)**:玩具成本模型上认证窗对预算的单调性与并集封闭。
+- **W-B1(桥之玩具)**:有限零点集上账本亏损二阶变分与曲率测度的显式比对载体构造。
+
+后续增订继续严格追加于本节之后。

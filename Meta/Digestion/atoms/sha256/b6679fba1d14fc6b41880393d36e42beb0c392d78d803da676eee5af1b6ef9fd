@@ -1,0 +1,79 @@
+# 第一千一百一十部　离线零点为何仍可能“整体看起来完成”
+
+反射伙伴为：
+
+$$
+\rho^\vee
+=
+1-\overline\rho
+=
+\frac12-\delta+i\gamma.
+$$
+
+两个 Mellin 模式为：
+
+$$
+e^{\delta x}e^{i\gamma x},
+\qquad
+e^{-\delta x}e^{i\gamma x}.
+$$
+
+它们的乘积：
+
+$$
+\boxed{
+e^{2i\gamma x}
+}
+$$
+
+完全丢失 \(\delta\)。
+
+它们的平均：
+
+$$
+\boxed{
+e^{i\gamma x}\cosh(\delta x)
+}
+$$
+
+只在二阶开始显示横向破缺：
+
+$$
+\cosh(\delta x)
+=
+1+\frac{\delta^2x^2}{2}
++O(\delta^4).
+$$
+
+因此：
+
+$$
+\boxed{
+\text{determinant 完成可以完全看不见横向破缺；}
+}
+$$
+
+$$
+\boxed{
+\text{trace／energy 完成最早只能看到 }\delta^2.
+}
+$$
+
+这正是为什么函数方程允许：
+
+$$
+\text{整个零点集合保持反射完成},
+$$
+
+却在逻辑上仍不能仅凭反射对称排除离线成对零点。
+
+离线零点是：
+
+$$
+\boxed{
+\text{全局 orbit 完成、逐分支 unitary 失败}.
+}
+$$
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/1001-5-内生-block-extraction/clause/3
+fingerprints:
+  raw_sha256: sha256:53139a185d7c143482759ec8e64bec5b327cff87187f7fc591a6d2f8133f003f
+  normalized_sha256: sha256:53139a185d7c143482759ec8e64bec5b327cff87187f7fc591a6d2f8133f003f
+cas_ref: sha256:53139a185d7c143482759ec8e64bec5b327cff87187f7fc591a6d2f8133f003f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

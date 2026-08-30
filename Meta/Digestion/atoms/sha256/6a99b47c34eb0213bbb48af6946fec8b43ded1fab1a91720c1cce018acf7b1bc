@@ -1,0 +1,28 @@
+## 1008.1 Christoffel evaluation cost
+
+对于候选点 \(w\) 和次数 \(N\)，定义：
+
+$$
+\boxed{
+\lambda_N^{\mu_a}(w)
+=
+\inf
+\left\{
+\int|p(z)|^2\,d\mu_a(z):
+\begin{array}{l}
+\deg p\le N,\\
+p(w)=1
+\end{array}
+\right\}.
+}
+\tag{1008.3}
+$$
+
+它表示：
+
+> 强迫一个次数不超过 \(N\) 的观察多项式在 \(w\) 处取值 \(1\)，同时让它在真实谱上尽量小，最少需要支付多少谱能量？
+
+Christoffel 函数和 Christoffel–Darboux kernel 本来就是从 moment data 中探测 support 与 outlier 的标准工具。([arXiv][3])
+
+---
+

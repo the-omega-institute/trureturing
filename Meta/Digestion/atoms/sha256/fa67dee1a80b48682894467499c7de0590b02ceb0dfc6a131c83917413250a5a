@@ -1,0 +1,36 @@
+## 定理 967.2（Determinant-level non-cloning）
+
+$$
+\boxed{
+\text{完成体积、预测误差和 Haar-floor 数据，
+均不足以克隆完整观察者谱。}
+}
+\tag{967.3}
+$$
+
+观察者区别位于：
+
+$$
+\boxed{
+\text{Schur phase}
++
+\text{ordered transfer product}
++
+\text{holonomy}.
+}
+$$
+
+这不是量子无克隆定理，而是一个精确的商不可逆性：
+
+$$
+\boxed{
+\{\alpha_n\}
+\longmapsto
+\{|\alpha_n|\}
+}
+$$
+
+不是单射。
+
+---
+

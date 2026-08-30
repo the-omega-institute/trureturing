@@ -1,0 +1,12 @@
+## 二、GFPT：治理不动点接口
+
+[repo-derived | path: `docs/develop/theory/GOVERNANCE_FIXED_POINT_THEORY.md` | GID: not present]
+
+GFPT 是 Governance Fixed-Point Theory，v1.0，2026-08-29。其 G-A—G-H 当前均为 open，不能把理论卷中的 theorem skeleton 冒充 kernel 事实。
+
+对本线最重要的三条纪律是：
+
+1. 当前状态是派生输出坐标，不得成为自身派生输入；
+2. 地址漂移是表示事件，不是旧真值的重新裁决；
+3. 规则合取封死合法修复时，增加窄、类型化通道，不改写旧规则的放行集。
+

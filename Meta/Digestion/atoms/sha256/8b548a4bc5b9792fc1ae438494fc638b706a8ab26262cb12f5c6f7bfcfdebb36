@@ -1,0 +1,51 @@
+## 998.1 与黄金几何层级的冲突
+
+若圆周支撑点本身构成几何黄金层级：
+
+$$
+\theta_k\asymp C\varphi^{-2k},
+$$
+
+则：
+
+$$
+\#\{\theta_k\ge\varepsilon\}
+\asymp
+\frac{
+\log(C/\varepsilon)
+}{
+2\log\varphi
+}.
+$$
+
+这只有：
+
+$$
+O(\log\varepsilon^{-1})
+$$
+
+个点。
+
+而真实 Li–Clark 支撑拥有：
+
+$$
+O\left(
+\varepsilon^{-1}\log\varepsilon^{-1}
+\right)
+$$
+
+个点。
+
+二者的数量级完全不同。
+
+所以：
+
+$$
+\boxed{
+\text{Riemann 零点不能逐个对应黄金完成层。}
+}
+$$
+
+黄金结构若存在，必须发生在：
+
+* 大量零点的 block coarse-graining；

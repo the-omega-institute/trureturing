@@ -1,0 +1,10 @@
+ast_path: section/第一千零四十三部-不可克隆与非生成滤过/clause/3
+fingerprints:
+  raw_sha256: sha256:22c3214ac53b50736670a295882cf1e6a83110b7de331860251534f83dc02221
+  normalized_sha256: sha256:22c3214ac53b50736670a295882cf1e6a83110b7de331860251534f83dc02221
+cas_ref: sha256:22c3214ac53b50736670a295882cf1e6a83110b7de331860251534f83dc02221
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

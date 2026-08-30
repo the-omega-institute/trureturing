@@ -1,0 +1,12 @@
+### 1. 新模块落点
+
+不应把依赖 `D5/X_Frontier/Hearts` 的 theorem 回写到冻结的 `D5/S3/Weil` 下，否则会倒置层级。拟议落点：
+
+`D5/X_Frontier/GoldenObserver/`
+
+定义统一放在：
+
+`D5/X_Frontier/GoldenObserver/Core.lean`
+
+R-A—R-F 每条恰有一个 public theorem、一个模块、一个稳定 GID。可使用同模块 private lemma，但不得另导出平行 API。
+

@@ -1,0 +1,15 @@
+### 4. Fibonacci block residual
+
+计算：
+
+$$
+\varepsilon_k^{(a)}
+=
+\left\|
+M_{F_{k+1}}^{(a)}
+-
+M_{F_{k-1}}^{(a)}
+M_{F_k}^{(a)}
+\right\|.
+$$
+

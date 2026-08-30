@@ -1,0 +1,10 @@
+ast_path: row/trace-orbit-boundedness-等价-RH
+fingerprints:
+  raw_sha256: sha256:a54ca9a895eb7438078367ec0de7a6d61689f24f692a290fe122a4bcd81040c5
+  normalized_sha256: sha256:a54ca9a895eb7438078367ec0de7a6d61689f24f692a290fe122a4bcd81040c5
+cas_ref: sha256:a54ca9a895eb7438078367ec0de7a6d61689f24f692a290fe122a4bcd81040c5
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

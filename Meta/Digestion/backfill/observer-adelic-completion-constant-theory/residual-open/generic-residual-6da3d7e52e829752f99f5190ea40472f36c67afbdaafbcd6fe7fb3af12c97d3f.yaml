@@ -1,0 +1,10 @@
+ast_path: section/1011-1-黄金双时间重整化
+fingerprints:
+  raw_sha256: sha256:6da3d7e52e829752f99f5190ea40472f36c67afbdaafbcd6fe7fb3af12c97d3f
+  normalized_sha256: sha256:6da3d7e52e829752f99f5190ea40472f36c67afbdaafbcd6fe7fb3af12c97d3f
+cas_ref: sha256:6da3d7e52e829752f99f5190ea40472f36c67afbdaafbcd6fe7fb3af12c97d3f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

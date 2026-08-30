@@ -1,0 +1,10 @@
+ast_path: section/1068-6-黄金径向-RG
+fingerprints:
+  raw_sha256: sha256:6ac8204b430945caef14ddf621bdc236c370b6a0167f1841c37a77466cd25a9d
+  normalized_sha256: sha256:6ac8204b430945caef14ddf621bdc236c370b6a0167f1841c37a77466cd25a9d
+cas_ref: sha256:6ac8204b430945caef14ddf621bdc236c370b6a0167f1841c37a77466cd25a9d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

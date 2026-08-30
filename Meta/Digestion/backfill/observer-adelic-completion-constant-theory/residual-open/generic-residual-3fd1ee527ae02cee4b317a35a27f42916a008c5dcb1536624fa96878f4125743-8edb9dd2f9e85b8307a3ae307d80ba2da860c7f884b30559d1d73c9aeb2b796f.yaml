@@ -1,0 +1,10 @@
+ast_path: section/第一千零十六部-第一次观察-大爆炸与不可克隆/clause/4
+fingerprints:
+  raw_sha256: sha256:3fd1ee527ae02cee4b317a35a27f42916a008c5dcb1536624fa96878f4125743
+  normalized_sha256: sha256:3fd1ee527ae02cee4b317a35a27f42916a008c5dcb1536624fa96878f4125743
+cas_ref: sha256:3fd1ee527ae02cee4b317a35a27f42916a008c5dcb1536624fa96878f4125743
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

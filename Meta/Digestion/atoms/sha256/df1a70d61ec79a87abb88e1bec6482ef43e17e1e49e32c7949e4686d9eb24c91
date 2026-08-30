@@ -1,0 +1,54 @@
+# 第九百四十四部　黄金观察者 Hamiltonian
+
+取黄金双边子移位：
+
+$$
+X_\varphi\subset\{A,B\}^{\mathbb Z},
+$$
+
+令：
+
+$$
+S:X_\varphi\to X_\varphi
+$$
+
+为左移。
+
+对每个观察者相位：
+
+$$
+\omega\in X_\varphi,
+$$
+
+定义二值势：
+
+$$
+\boxed{
+V_\omega(n)
+=
+\lambda\,\mathbf 1_{\{\omega_n=A\}}.
+}
+\tag{944.1}
+$$
+
+定义自伴算子：
+
+$$
+\boxed{
+[H_{\lambda,\omega}u](n)
+=
+u(n+1)+u(n-1)+V_\omega(n)u(n),
+}
+\tag{944.2}
+$$
+
+作用于：
+
+$$
+\ell^2(\mathbb Z).
+$$
+
+这正是标准 Fibonacci Hamiltonian 的符号动力版本；经典模型也可写成以逆黄金比例旋转生成的相位族。其谱独立于相位，并且该公共谱可由 Fibonacci trace map 描述。([arXiv][1])
+
+---
+

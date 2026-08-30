@@ -1,0 +1,21 @@
+## 耗散证书
+
+存在有理探针：
+
+$$
+\boxed{
+q\in\mathbb Q+i\mathbb Q,
+\qquad
+\Re q>0,
+}
+$$
+
+满足：
+
+$$
+\boxed{
+\Re\mathcal Z_\xi(q)<0.
+}
+\tag{1037.2}
+$$
+

@@ -1,0 +1,10 @@
+ast_path: section/1059-1-黄金单极子紧化空间/clause/3
+fingerprints:
+  raw_sha256: sha256:65125410623a5a31040a1c717939899a81636c735868ec4d815a72fc7419101f
+  normalized_sha256: sha256:65125410623a5a31040a1c717939899a81636c735868ec4d815a72fc7419101f
+cas_ref: sha256:65125410623a5a31040a1c717939899a81636c735868ec4d815a72fc7419101f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
