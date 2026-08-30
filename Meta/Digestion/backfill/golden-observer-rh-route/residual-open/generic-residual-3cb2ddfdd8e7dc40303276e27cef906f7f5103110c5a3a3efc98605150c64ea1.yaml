@@ -1,0 +1,16 @@
+ast_path: section/追加部二-平行侦察席报告-nyxid-gpt-pro-盲于追加部一
+fingerprints:
+  raw_sha256: sha256:3cb2ddfdd8e7dc40303276e27cef906f7f5103110c5a3a3efc98605150c64ea1
+  normalized_sha256: sha256:3cb2ddfdd8e7dc40303276e27cef906f7f5103110c5a3a3efc98605150c64ea1
+cas_ref: sha256:3cb2ddfdd8e7dc40303276e27cef906f7f5103110c5a3a3efc98605150c64ea1
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-aa828c7bccb1d3f8d20baa0595175a5486ec22b12072de852c8d70af093dc09c-51f0562e0d401ae2bbfc0a76edbc8dfe876ab39e27b88c7688fa07ac03b07be6
+    - generic-residual-923d773026be9546a79b15ad299b4d27f494823545a82b508f6295edf4c41c53-1576becaddd3dfa884a4d7ae2ab3a7f7e827b6be86083ddf36c7cdfba2efe389
+    - generic-residual-8991dd3d662d23d1e927e96b11e85d52422643d054f3f0228b6ba74799621743-43e2341b2e79e55fe505b531d2c0dce4af3b34f29285ff8c2f7cee04735f713a
+    - generic-residual-717fcefe35c10e4313e8cc811a3e364e8fbcbb3192bd7ddec656fbc167515bc2-f0becabdf1497df40d4027485c51661f1951d53c14b500d4f64dc07fba624800
+    - generic-residual-f4b0f7e0d7dd2c46a31a66ca9382f91978651b9bfe28abfb834a893ac82b2666-70142b9896787e75e55b4503b3780b62da54d566a9fc7fe0745d862b3b5a6abd
