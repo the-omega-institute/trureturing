@@ -1,0 +1,5 @@
+## 一(A)　预算过滤的 RH 与零点观察成本
+
+依 OACTC 173 的加权集合覆盖与 `finite_toroidal_spectral_tomography`,对紧窗口内零点 $\rho$ 定义**观察成本** $c(\rho)=\inf\{\sum_{D\in\mathcal D}c(D):\mathcal D\ \text{有限},\ \rho\ \text{的重数被}\ \mathcal D\ \text{层析认证}\}$(层析定理保证有限)。定义谓词族 $\mathrm{RH}_B$:预算 $\le B$ 可认证窗口内零点全临界。则 $\mathrm{RH}=\varinjlim_B \mathrm{RH}_B$。**价值**:DECT 预算包络从元纪律变为定理对象——「边际认证窗口/边际预算」曲线可形式化,平台期即盲核的分析版。〔suspected-novel(作为形式化对象);有限窗口验证思想 literature-attested〕
+**可证伪预测**:若定义得当,认证窗对 $B$ 单调且黄金通道($c=\ell_5=4\log\varphi$,OACTC 172)出现在小预算最优覆盖中;若连单调性都须附加条件,则成本定义选错切面。
+

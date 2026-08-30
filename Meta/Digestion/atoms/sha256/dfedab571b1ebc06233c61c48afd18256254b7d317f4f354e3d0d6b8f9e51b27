@@ -1,0 +1,5 @@
+## 三(C)　O-5 重释:最廉观察者的深度迭代 vs 全体观察者的宽度覆盖
+
+实算(初等):$\beta(v)=\lfloor(v+1)\varphi\rfloor-1-v\psi=\sqrt5\,v+r(v)$,其中 $r(v)=(\varphi-1)-\operatorname{frac}((v+1)\varphi)\in(\varphi-2,\varphi-1]$ **有界**。故 eulerGerm 的指数格是 $\sqrt5$-准等差 Beatty 调制格,而 $\sqrt5=\sqrt{D_5}$、$\ell_5=4\log\varphi$——**germ 的 Witt 级联形如同一条黄金测地线在全部重整化深度的迭代观察**。O-5 由此重述:**深度迭代最廉通道,能否替代宽度覆盖全体判别式**(OACTC 172 已证 P₅ 单独不完备,但那是深度 1)。〔重释 suspected-novel;$\beta$ 的算术是可即刻 kernel 化的事实〕
+**可证伪预测**:W-C1(下)必须一次过;若 Beatty 余项无界,则整个重释的地基错。
+
