@@ -129,10 +129,9 @@ public sealed class PlaybookWorkflowScriptTests
             var root = TestRepositoryLayout.FindRoot();
             callsPath = Path.Combine(temporary.Path, "calls");
             binPath = Path.Combine(temporary.Path, "bin");
-            Directory.CreateDirectory(binPath);
+            ScriptHarnessScratch.EnsureDirectory(binPath);
             var scriptTarget = Path.Combine(temporary.Path, ScriptPath);
-            Directory.CreateDirectory(Path.GetDirectoryName(scriptTarget)!);
-            File.Copy(Path.Combine(root, ScriptPath), scriptTarget);
+            ScriptHarnessScratch.CopyScriptInto(Path.Combine(root, ScriptPath), scriptTarget);
             WriteExecutable("make", "printf 'make:%s\\n' \"$*\" >> \"$PLAYBOOK_TEST_CALLS\"");
             WriteExecutable(
                 "git",
@@ -194,18 +193,12 @@ public sealed class PlaybookWorkflowScriptTests
                 BoundedProcessRunner.HangDetectionBudget,
                 64 * 1024);
 
-        internal string[] Calls() => File.Exists(callsPath)
-            ? File.ReadAllLines(callsPath)
-            : [];
+        internal string[] Calls() => ScriptHarnessScratch.ReadRecordedCalls(callsPath);
 
         private void WriteExecutable(string name, string body)
         {
-            var path = Path.Combine(binPath, name);
-            File.WriteAllText(path, "#!/usr/bin/env bash\nset -euo pipefail\n" + body + "\n", Encoding.UTF8);
             if (OperatingSystem.IsWindows()) return;
-            File.SetUnixFileMode(
-                path,
-                UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+            ScriptHarnessScratch.WriteExecutableStub(Path.Combine(binPath, name), body);
         }
 
         public void Dispose() => temporary.Dispose();
