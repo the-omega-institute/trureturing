@@ -1,0 +1,5 @@
+**定义 1.3(捕获层级)**。每个事件带捕获标签 $\lambda(e)\in\{\mathrm{wall},\mathrm{gate},\mathrm{author}\}$:撞墙后发现(事后诊断)/被既有 fail-fast 拦截(损失有界)/写下时自查抓住(零损失)。三级构成全序 $\mathrm{wall}<\mathrm{gate}<\mathrm{author}$。
+*判例锚*:msgfile 缺失类三次出现的层级序列恰为 wall(la25,08-29)→ gate(la48b,BAD_MSG 断言)→ author(la50 等待链,发射后一分钟自查补文件,08-30)。
+
+---
+

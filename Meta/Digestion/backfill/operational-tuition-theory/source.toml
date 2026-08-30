@@ -1,0 +1,5 @@
+source_id = "operational-tuition-theory"
+path = "docs/develop/theory/OPERATIONAL_TUITION_THEORY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []
