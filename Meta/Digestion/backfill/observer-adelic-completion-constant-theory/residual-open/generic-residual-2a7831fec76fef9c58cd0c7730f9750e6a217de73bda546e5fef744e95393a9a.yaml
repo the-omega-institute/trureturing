@@ -1,0 +1,10 @@
+ast_path: row/所有零点满足-Theta-xi-w-rho-1
+fingerprints:
+  raw_sha256: sha256:2a7831fec76fef9c58cd0c7730f9750e6a217de73bda546e5fef744e95393a9a
+  normalized_sha256: sha256:2a7831fec76fef9c58cd0c7730f9750e6a217de73bda546e5fef744e95393a9a
+cas_ref: sha256:2a7831fec76fef9c58cd0c7730f9750e6a217de73bda546e5fef744e95393a9a
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

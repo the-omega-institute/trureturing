@@ -1,0 +1,10 @@
+ast_path: section/第一千零三十七部-离线零点的三种有限证书
+fingerprints:
+  raw_sha256: sha256:b8aba08d8b918673962b5047329c2a9718d16d3570dd30f86abfbfb5df86fb08
+  normalized_sha256: sha256:b8aba08d8b918673962b5047329c2a9718d16d3570dd30f86abfbfb5df86fb08
+cas_ref: sha256:b8aba08d8b918673962b5047329c2a9718d16d3570dd30f86abfbfb5df86fb08
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

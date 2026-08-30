@@ -1,0 +1,16 @@
+## 第五步：Schur/Levinson recursion
+
+从：
+
+$$
+\widehat c_1,\ldots,\widehat c_N
+$$
+
+递归求：
+
+$$
+\widehat\alpha_0,\ldots,\widehat\alpha_{N-1}.
+$$
+
+---
+

@@ -1,0 +1,20 @@
+- 该工作自述有 Lean 4 形式化。公开仓库 `anthropics/zeta-23-lean` 的 README 宣称对应最终结果已经形式化；但本次取阅到的顶层 `Zeta23/Unconditional.lean` 可见导出面仍显示较早的“三分之二在线、二分之一简单、四分之三不同”常数。故在本仓消费前，必须固定具体 commit、成功构建并定位最终导出 theorem，不能仅凭 README 写“完整强度已进入内核”。
+
+### 2. RH 的公共状态没有改变
+
+[literature-attested]
+
+Clay Mathematics Institute 在 2026 年仍将 RH 列为 Millennium Prize Problem。有限高度核验、比例定理、随机矩阵拟合、有限算子谱和形式化的条件结论都没有构成 Clay 意义下的全局证明。
+
+出处：Clay Mathematics Institute, “Riemann Hypothesis,” 2026 年仍在官方 Millennium Prize Problems 名录中；无 arXiv 号。
+
+## 二、Weil／Li 正性方向的新进展
+
+### 1. 经典基准线
+
+[literature-attested]
+
+Weil 路线把 RH 转写为显式公式所定义的二次型在适当测试函数代数上的非负性。Li 路线把 RH 转写为全部 Li 系数 $\lambda_n$ 的非负性。两者不是“数值上经常正”即足够，而是需要对完整测试类或全部 $n$ 作一致断言。
+
+经典出处：
+

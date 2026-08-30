@@ -1,0 +1,61 @@
+## 离线零点
+
+$$
+\rho=\frac12+\delta+i\gamma
+$$
+
+对应：
+
+$$
+\boxed{
+n^{-1/2+\delta}e^{i\gamma\log n}
+}
+$$
+
+及其反射伙伴：
+
+$$
+\boxed{
+n^{-1/2-\delta}e^{i\gamma\log n}.
+}
+$$
+
+一支沿正 log-time 放大，一支衰减。
+
+完成后的 even channel 是：
+
+$$
+\boxed{
+n^{-1/2}
+\cosh(\delta\log n)
+e^{i\gamma\log n}.
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{离线零点是 prime-log 世界中的 hyperbolic resonance。}
+}
+$$
+
+它的等价对偶包括：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{单位圆外的 reciprocal atom pair};\\
+&\text{临界线上的 Poisson 影子};\\
+&\text{Schur recursion 的有限越界};\\
+&\text{transfer cocycle 的 hyperbolic escape};\\
+&\text{Weil quadratic form 的负方向};\\
+&\text{Toeplitz/localizing matrix 的负特征值}.
+\end{aligned}
+}
+$$
+
+这些不是六个不同对象，而是同一个横向破缺在六张图表中的表现。
+
+---
+

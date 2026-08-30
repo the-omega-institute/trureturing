@@ -1,0 +1,67 @@
+## 定理 971.1（Radial derivative–boundary phase identity）
+
+$$
+\boxed{
+\left.
+\partial_\delta
+\log|w_a(\gamma,\delta)|
+\right|_{\delta=0}
+=
+\partial_\gamma
+\arg w_a(\gamma,0).
+}
+\tag{971.3}
+$$
+
+若定义上半平面 Poisson kernel：
+
+$$
+P_a(\gamma)
+=
+\frac1\pi
+\frac a{\gamma^2+a^2},
+$$
+
+则：
+
+$$
+\boxed{
+\left.
+\partial_\delta r_a
+\right|_0
+=
+\partial_\gamma\theta_a
+=
+-2\pi P_a(\gamma).
+}
+\tag{971.4}
+$$
+
+这是一个精确的 Cauchy–Riemann 关系。
+
+其意义是：
+
+$$
+\boxed{
+\text{轴外径向位移本身不在单位圆上，}
+}
+$$
+
+但：
+
+$$
+\boxed{
+\text{它的一阶法向导数，
+等于单位圆边界相位的切向导数。}
+}
+$$
+
+这正是：
+
+> 点在完成轴上看不见，
+> 但导数可以读取它。
+
+在这里，“导数”不是比喻，而是 Poisson kernel。
+
+---
+

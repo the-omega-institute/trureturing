@@ -1,0 +1,10 @@
+ast_path: row/有理矩形整数通量判据
+fingerprints:
+  raw_sha256: sha256:8ba703e89d0beb1b43aca156dae302ab8e87028b74daee52705987d93e4431a3
+  normalized_sha256: sha256:8ba703e89d0beb1b43aca156dae302ab8e87028b74daee52705987d93e4431a3
+cas_ref: sha256:8ba703e89d0beb1b43aca156dae302ab8e87028b74daee52705987d93e4431a3
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

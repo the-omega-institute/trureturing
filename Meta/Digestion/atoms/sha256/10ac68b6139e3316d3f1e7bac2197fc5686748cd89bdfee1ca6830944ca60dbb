@@ -1,0 +1,64 @@
+# 第一千零四十九部　建议形式化顺序
+
+```text
+D5/S3/Analytic/Zeta/BulkZeroCharge/
+  CenteredXiPotential.lean
+  LogNormHarmonicAwayFromZeros.lean
+  ZeroDistributionalLaplacian.lean
+  RHImpliesNoBulkCharge.lean
+  NoBulkChargeImpliesRH.lean
+
+D5/S3/Analytic/Zeta/RationalFlux/
+  RationalRightHalfPlaneRectangle.lean
+  XiRectangleFlux.lean
+  FluxEqualsZeroMultiplicity.lean
+  RHRationalFluxCriterion.lean
+  OffLineZeroRationalRectangle.lean
+  IntervalWindingCertificate.lean
+
+D5/S3/Analytic/Zeta/PoissonCompletion/
+  RiemannBoundaryZeroMeasure.lean
+  RiemannDissipationPoissonIntegral.lean
+  PoissonCompletionSemigroup.lean
+  BulkSourceSemigroupDefect.lean
+  RHPoissonSourceFreeCriterion.lean
+
+D5/S3/Observer/ZetaTranscript/
+  RationalRectangleEnumeration.lean
+  ZeroFluxTranscript.lean
+  OffLineStoppingTime.lean
+  RHTranscriptAllZero.lean
+  OffLineTranscriptFiniteHit.lean
+
+D5/S3/Observer/ZetaPosterior/
+  RHOffLineTranscriptLaws.lean
+  RHOffLineMutuallySingular.lean
+  GeneratingFluxFiltration.lean
+  ZetaPosteriorCollapse.lean
+  CoarseFiltrationCannotSeparate.lean
+
+D5/S3/GoldenObserver/PoissonMicroscope/
+  GoldenPoissonDepth.lean
+  GoldenFrequencyHorizon.lean
+  GoldenDepthResolutionInvariant.lean
+  GoldenOffLineDiscoveryLayer.lean
+  GoldenScheduleNotLogicallyNecessary.lean
+
+D5/S3/Analytic/Zeta/PassivityHierarchy/
+  BulkChargeToNegativeDissipation.lean
+  NegativeDissipationToPickFailure.lean
+  PickFailureToCaratheodoryFailure.lean
+  CaratheodoryFailureToToeplitzFailure.lean
+  ToeplitzFailureToSchurEscape.lean
+
+D5/S3/Weil/PrimePassivity/
+  XiLogDerivativePrimeFormula.lean
+  PoleArchimedeanPrimeBalance.lean
+  WindowedPassivityMargin.lean
+  PrimePassivityToWeilPositivityTarget.lean
+```
+
+其中 `SingularPosteriorCollapse` 已经提供“互异律 + 生成滤过 \(\Rightarrow\) 后验分别趋向 \(1/0\)”以及“不生成滤过可能永远无法完成”的机器底座，可以直接用于 `ZetaPosteriorCollapse`。
+
+---
+

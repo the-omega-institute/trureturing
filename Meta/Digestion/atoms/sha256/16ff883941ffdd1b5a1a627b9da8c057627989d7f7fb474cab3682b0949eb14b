@@ -1,0 +1,22 @@
+# 第一千零三十九部　正时间、负时间与观察分辨率
+
+Poisson 半群在 Fourier 侧满足：
+
+$$
+\boxed{
+\widehat{P_xf}(k)
+=
+e^{-x|k|}\widehat f(k).
+}
+\tag{1039.1}
+$$
+
+因此：
+
+$$
+x\uparrow
+$$
+
+表示：
+
+* 高频衰减；

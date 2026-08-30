@@ -1,0 +1,10 @@
+ast_path: section/第九百五十三部-Chebyshev-是真实的-transfer-discriminant
+fingerprints:
+  raw_sha256: sha256:d02350a25bedd037f75239d779734de2c85d8d5248aa9577f600d3c03f5c5b7e
+  normalized_sha256: sha256:d02350a25bedd037f75239d779734de2c85d8d5248aa9577f600d3c03f5c5b7e
+cas_ref: sha256:d02350a25bedd037f75239d779734de2c85d8d5248aa9577f600d3c03f5c5b7e
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

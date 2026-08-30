@@ -1,0 +1,10 @@
+ast_path: section/1-新模块落点
+fingerprints:
+  raw_sha256: sha256:b299b0ad5625c5c10bd8db01dcf8cb522240f14306a6723844a4bf59cdfcf72f
+  normalized_sha256: sha256:b299b0ad5625c5c10bd8db01dcf8cb522240f14306a6723844a4bf59cdfcf72f
+cas_ref: sha256:b299b0ad5625c5c10bd8db01dcf8cb522240f14306a6723844a4bf59cdfcf72f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

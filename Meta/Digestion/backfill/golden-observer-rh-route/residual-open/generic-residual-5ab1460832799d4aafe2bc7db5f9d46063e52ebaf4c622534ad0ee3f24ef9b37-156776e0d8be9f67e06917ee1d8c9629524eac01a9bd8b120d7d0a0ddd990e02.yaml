@@ -1,0 +1,10 @@
+ast_path: section/3-地址漂移/clause/5
+fingerprints:
+  raw_sha256: sha256:5ab1460832799d4aafe2bc7db5f9d46063e52ebaf4c622534ad0ee3f24ef9b37
+  normalized_sha256: sha256:5ab1460832799d4aafe2bc7db5f9d46063e52ebaf4c622534ad0ee3f24ef9b37
+cas_ref: sha256:5ab1460832799d4aafe2bc7db5f9d46063e52ebaf4c622534ad0ee3f24ef9b37
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,10 @@
+ast_path: section/1-路线注册表/clause/5
+fingerprints:
+  raw_sha256: sha256:504909974d7dca0f7e74a96fef641056c7d6a795fe3e59acf4933a559294c69e
+  normalized_sha256: sha256:504909974d7dca0f7e74a96fef641056c7d6a795fe3e59acf4933a559294c69e
+cas_ref: sha256:504909974d7dca0f7e74a96fef641056c7d6a795fe3e59acf4933a559294c69e
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

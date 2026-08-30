@@ -1,0 +1,33 @@
+## 1017.1 不再以零点密度为主指标
+
+研究：
+
+$$
+N_{\mathrm{off}}(T,\epsilon)
+$$
+
+但不把零密度视为不存在。
+
+同时记录：
+
+$$
+\boxed{
+\mathcal V_{\mathrm{off}}(T)
+=
+\sum_{0<\Im\rho\le T}
+m_\rho
+\left(
+\Re\rho-\frac12
+\right)^2.
+}
+\tag{1017.1}
+$$
+
+只要有一个离线零点，某个有限 \(T\) 就有：
+
+$$
+\mathcal V_{\mathrm{off}}(T)>0.
+$$
+
+---
+

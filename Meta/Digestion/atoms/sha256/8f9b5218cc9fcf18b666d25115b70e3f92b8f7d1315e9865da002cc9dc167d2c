@@ -1,0 +1,51 @@
+## 950.2 奇层与偶层
+
+一次 trace-map 更新：
+
+$$
+\det DT_p=-1
+$$
+
+翻转方向。
+
+两次更新：
+
+$$
+\det(DT_p^2)=1
+$$
+
+恢复方向。
+
+其特征值变为：
+
+$$
+\boxed{
+\varphi^4,\quad
+\varphi^{-4},\quad
+1.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+\text{一步}
+&=\text{方向破缺};\\
+\text{两步}
+&=\text{proper Lorentz completion}.
+\end{aligned}
+}
+$$
+
+仓库机器证明的二通道最小 unimodular 扩张率恰好也是：
+
+$$
+\varphi,\quad\varphi^2.
+$$
+
+因此 trace-map 光锥并不是对黄金最小破缺定理的重新命名，而是一个独立谱模型中的同一倍率再现。
+
+---
+

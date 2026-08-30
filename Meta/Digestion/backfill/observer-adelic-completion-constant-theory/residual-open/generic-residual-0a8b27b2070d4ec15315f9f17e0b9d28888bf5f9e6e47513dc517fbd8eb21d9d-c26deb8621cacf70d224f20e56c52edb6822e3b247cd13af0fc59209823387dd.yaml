@@ -1,0 +1,10 @@
+ast_path: section/1057-1-高重数零点/clause/2
+fingerprints:
+  raw_sha256: sha256:0a8b27b2070d4ec15315f9f17e0b9d28888bf5f9e6e47513dc517fbd8eb21d9d
+  normalized_sha256: sha256:0a8b27b2070d4ec15315f9f17e0b9d28888bf5f9e6e47513dc517fbd8eb21d9d
+cas_ref: sha256:0a8b27b2070d4ec15315f9f17e0b9d28888bf5f9e6e47513dc517fbd8eb21d9d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

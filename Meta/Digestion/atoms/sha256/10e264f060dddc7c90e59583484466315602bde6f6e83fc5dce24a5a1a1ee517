@@ -1,0 +1,16 @@
+### 2. determinant identity audit
+
+验证：
+
+$$
+1-|\alpha_N|^2
+=
+\frac{
+D_{N+1}D_{N-1}
+}{
+D_N^2
+}
+$$
+
+的高精度一致性。
+
