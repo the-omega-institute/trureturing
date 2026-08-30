@@ -32,7 +32,7 @@ Library-search audit trail (2026-08-30):
   adjacent-swap memory defect.
 * `CanonicalPathBranchNoncommutation` supplies a finite path/branch
   noncommutation boundary, but has no matrix spectral-invariant statement.
-* Pinned Mathlib supplies `Matrix.trace_fin_two`, `Matrix.det_fin_two`, and
+* Pinned Mathlib supplies `Matrix.trace_fin_two_of`, `Matrix.det_fin_two`, and
   `Matrix.charpoly_fin_two`; no packaged passive-memory theorem was found.
 -/
 
@@ -74,7 +74,7 @@ theorem memory_holonomy_formula (F v Lp Lq : ℂ) :
 /-- The passive adjacent-swap defect has zero trace. -/
 theorem memory_holonomy_trace_zero (F v Lp Lq : ℂ) :
     Matrix.trace (memoryHolonomy F v Lp Lq) = 0 := by
-  rw [memory_holonomy_formula, Matrix.trace_fin_two]
+  rw [memory_holonomy_formula, Matrix.trace_fin_two_of]
   norm_num
 
 #print axioms memory_holonomy_trace_zero
@@ -91,7 +91,7 @@ theorem memory_holonomy_det_zero (F v Lp Lq : ℂ) :
 theorem passive_memory_trace_invariant (F L B1 B2 : ℂ) :
     Matrix.trace (passiveMemoryMatrix F B1 L) =
       Matrix.trace (passiveMemoryMatrix F B2 L) := by
-  simp [passiveMemoryMatrix, Matrix.trace_fin_two]
+  simp [passiveMemoryMatrix, Matrix.trace_fin_two_of]
 
 #print axioms passive_memory_trace_invariant
 
@@ -110,7 +110,7 @@ theorem passive_memory_charpoly_invariant (F L B1 B2 : ℂ) :
     (passiveMemoryMatrix F B1 L).charpoly =
       (passiveMemoryMatrix F B2 L).charpoly := by
   simp [Matrix.charpoly_fin_two, passiveMemoryMatrix,
-    Matrix.trace_fin_two, Matrix.det_fin_two]
+    Matrix.trace, Matrix.det_fin_two]
 
 #print axioms passive_memory_charpoly_invariant
 
