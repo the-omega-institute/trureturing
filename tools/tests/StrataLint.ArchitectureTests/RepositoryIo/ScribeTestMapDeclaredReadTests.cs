@@ -5,8 +5,7 @@ namespace StrataLint.ArchitectureTests;
 ///
 /// **为什么单独一个文件**:这三条与 <c>ScribeTestMapDeriverTests</c> 同族,
 /// 但那个文件在 dev 上已 767 行,加进去会到 830 —— **越过 SL-003 的 800 行硬线**
-/// (`CapacityPolicyTests.RepositoryHasNoOversizeArtifactOrOverfullDirectory` 会红,
-///  本次实测:257 通过 / 1 失败)。目录当前 10 个文件,加这一个到 11,仍在 12 的限内。
+/// 因此 fixture 独立成文件。该历史读数只解释拆分,不承担现行目录阈值。
 ///
 /// **三条的分工**(缺任一条,新认可形都会把 fail-closed 放掉):
 /// ① 正例 —— 前缀是字面量、读的是该枚举结果 ⟹ known,且前缀进 Paths;

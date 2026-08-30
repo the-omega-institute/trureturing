@@ -154,11 +154,15 @@ internal sealed class StubCliEnvironment(
     AdmissionOutcome outcome,
     ExplicitCommandResult? echoVerify = null,
     ExplicitCommandResult? fileMapConform = null,
-    CommandResult? cleanLanes = null) : ICliEnvironment
+    CommandResult? cleanLanes = null,
+    ExplicitCommandResult? capacityAudit = null) : ICliEnvironment
 {
     internal IReadOnlyList<string> CleanLanesArguments { get; private set; } = [];
 
     public AdmissionOutcome Check(IReadOnlyList<string> arguments) => outcome;
+
+    public ExplicitCommandResult CapacityAudit(IReadOnlyList<string> arguments) =>
+        capacityAudit ?? new(2, string.Empty, "capacity audit is not configured in this fixture");
 
     public AdmissionTopologyOutcome Topology(IReadOnlyList<string> arguments) =>
         new AdmissionTopologyOutcome.InfrastructureFailure("topology is not configured in this fixture");
