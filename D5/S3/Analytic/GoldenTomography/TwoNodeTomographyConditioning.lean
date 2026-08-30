@@ -5,6 +5,15 @@
    anchors: []
    digest: Two distinct nodes admit exact amplitude recovery, with error
      controlled by inverse node separation. -/
+/- Library-search audit trail (2026-08-31):
+   * Repository searches for two-node tomography recovery and inverse node-gap
+     bounds found no equivalent owner.
+   * Pinned Mathlib supplies field algebra, the complex norm, and triangle
+     inequalities; this module adds only the problem-specific recovery map.
+   * The exact formulas have a direct consumer in finite-precision shell
+     tomography, where the node gap is the stability denominator.
+   * The theorem deliberately stops at two nodes. General Vandermonde
+     conditioning needs singular-value or inverse-matrix estimates. -/
 
 import Mathlib
 
