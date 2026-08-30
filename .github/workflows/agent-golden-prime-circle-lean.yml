@@ -34,6 +34,7 @@ jobs:
           failed=0
           modules=(
             D5.S3.Analytic.Zeta.GoldenSpectrum.GoldenCriticalCoordinate
+            D5.S3.Analytic.Zeta.GoldenSpectrum.GoldenCriticalSupportCriterion
             D5.S3.PrimeObserver.ChargeTomography.GoldenC2ChargeTomography
             D5.S3.Analytic.Zeta.GoldenEuler.GoldenLocalEulerFactorTrichotomy
             D5.S3.PrimeObserver.GoldenScale.GoldenLogScaleCharacter
