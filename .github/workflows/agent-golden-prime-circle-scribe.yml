@@ -1,0 +1,51 @@
+name: agent-golden-prime-circle-scribe
+
+on:
+  push:
+    branches:
+      - agent/prover/golden-prime-circle-critical-spectrum
+
+permissions:
+  contents: write
+
+jobs:
+  validate-and-emit:
+    if: contains(github.event.head_commit.message, '[golden-prime-circle-scribe]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/prover/golden-prime-circle-critical-spectrum
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+      - name: Install pinned Lean toolchain
+        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - name: Restore Lean dependencies
+        run: lake update
+      - name: Build Scribe toolchain with warnings as errors
+        run: make -C tools dotnet
+      - name: Produce canonical Lean report
+        run: make lean-report
+      - name: Emit canonical Scribe projections
+        run: make emit
+      - name: Commit generated projections
+        shell: bash
+        run: |
+          git config user.name "Lexa"
+          git config user.email "50111876+AlyciaBHZ@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No generated projection changes"
+          else
+            git commit -m "scribe: emit golden prime-circle projections"
+            git push origin HEAD:agent/prover/golden-prime-circle-critical-spectrum
+          fi
+      - name: Show resulting tree
+        if: always()
+        run: |
+          git status --short
+          git log -2 --oneline
