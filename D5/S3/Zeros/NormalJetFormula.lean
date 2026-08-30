@@ -1,5 +1,5 @@
 /- GID: D5/S3/Zeros/NormalJetFormula
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Zeros/NormalJetFormula
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
