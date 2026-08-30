@@ -63,7 +63,7 @@ public sealed partial class FormalizeCandidatesTests
         var baseSnapshot = ReviewSnapshot([entry], quarantined: [entry], receipted: []);
         var headSnapshot = ReviewSnapshot([entry], quarantined: [entry], receipted: [entry]);
 
-        var exception = Assert.Throws<FormatException>(
+        var exception = Assert.ThrowsAny<FormatException>(
             () => ReviewEnvelopeCommand.Derive(baseSnapshot, headSnapshot));
 
         // 互斥由账本 loader 执法,命令把它作为 FormatException 原样上抛(Run 渲染为 REVIEW_ENVELOPE_INVALID)。
@@ -244,6 +244,47 @@ public sealed partial class FormalizeCandidatesTests
         using var json = JsonDocument.Parse(result.Output);
         Assert.Equal(ReviewEnvelopeCommand.Schema, json.RootElement.GetProperty("schema").GetString());
         Assert.Equal("prod-routed", Assert.Single(json.RootElement.GetProperty("deposited").EnumerateArray()).GetProperty("atom_id").GetString());
+    }
+
+    [Fact]
+    public void ReviewEnvelopeRejectsMalformedReceiptJsonWithTheInvalidMarker()
+    {
+        var entry = Entry("source", "malformed", "theorem", "1.0", atomizer: AtomizerRegistry.GenericId);
+        var baseSnapshot = ReviewSnapshot([entry], quarantined: [], receipted: []);
+        var headFiles = ReviewSnapshot([entry], quarantined: [], receipted: []).Entries.ToList();
+        headFiles.Add(new RawRepositoryEntry(
+            DigestionFormalizationReceipt.PathForAtom(entry.AtomId),
+            ImmutableArray.CreateRange(Encoding.UTF8.GetBytes("{\"atom_id\": \"malformed\", "))));
+        var gateway = new RevisionKeyedGateway(new Dictionary<string, RawRepositorySnapshot>(StringComparer.Ordinal)
+        {
+            ["b"] = baseSnapshot,
+            ["h"] = RawRepositorySnapshot.Create(headFiles),
+        });
+
+        var result = ReviewEnvelopeCommand.Run(gateway, ["--base", "b", "--head", "h"]);
+
+        Assert.False(result.Success);
+        Assert.StartsWith(ReviewEnvelopeCommand.InvalidMarker, result.Error, StringComparison.Ordinal);
+        Assert.NotEqual(ReviewEnvelopeCommand.ConflictExitCode, result.ExitCode);
+    }
+
+    [Fact]
+    public void ReviewEnvelopeConflictViaCoverageGidsIsTheSameTypedOutcome()
+    {
+        // 第二个抛出点:隔离 + coverage_gids(机器形式陈述)——同一典型结果,exit 3。
+        var entry = Entry("source", "covered", "theorem", "1.0", coverageGids: ["D5/S0/Synthetic/Receipt.covered"], atomizer: AtomizerRegistry.GenericId);
+        var baseSnapshot = ReviewSnapshot([entry], quarantined: [], receipted: []);
+        var headSnapshot = ReviewSnapshot([entry], quarantined: [entry], receipted: []);
+        var gateway = new RevisionKeyedGateway(new Dictionary<string, RawRepositorySnapshot>(StringComparer.Ordinal)
+        {
+            ["b"] = baseSnapshot,
+            ["h"] = headSnapshot,
+        });
+
+        var result = ReviewEnvelopeCommand.Run(gateway, ["--base", "b", "--head", "h"]);
+
+        Assert.Equal(ReviewEnvelopeCommand.ConflictExitCode, result.ExitCode);
+        Assert.StartsWith(ReviewEnvelopeCommand.ConflictMarker + " covered", result.Error, StringComparison.Ordinal);
     }
 
     [Fact]

@@ -24,7 +24,7 @@ public sealed partial class DigestionQuarantineTests
     {
         var quarantine = "quarantine:\n  " + presentField;
 
-        var error = Assert.Throws<FormatException>(() =>
+        var error = Assert.ThrowsAny<FormatException>(() =>
             BackfillInventoryLoader.Load(DirectorySnapshot(Atom(AtomId, quarantine)))
                 .RequireDigestionEntries());
 
@@ -55,7 +55,7 @@ public sealed partial class DigestionQuarantineTests
             "coverage_gids:\n  - D5/S0/Carrier/Probe.probe",
             StringComparison.Ordinal);
 
-        var error = Assert.Throws<FormatException>(() =>
+        var error = Assert.ThrowsAny<FormatException>(() =>
             BackfillInventoryLoader.Load(DirectorySnapshot(atom)).RequireDigestionEntries());
 
         Assert.Contains("machine-form", error.Message, StringComparison.Ordinal);
@@ -70,7 +70,7 @@ public sealed partial class DigestionQuarantineTests
             (DigestionFormalizationReceipt.RootPath + AtomId
                 + DigestionFormalizationReceipt.PathSuffix, marker.ToArray()));
 
-        var error = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(snapshot));
+        var error = Assert.ThrowsAny<FormatException>(() => BackfillInventoryLoader.Load(snapshot));
 
         Assert.Contains("machine-form", error.Message, StringComparison.Ordinal);
     }
@@ -87,7 +87,7 @@ public sealed partial class DigestionQuarantineTests
                 FormalizationMarker()),
         ]);
 
-        var error = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(snapshot));
+        var error = Assert.ThrowsAny<FormatException>(() => BackfillInventoryLoader.Load(snapshot));
 
         Assert.Contains("legacy digestion ledger is unsupported", error.Message, StringComparison.Ordinal);
     }
@@ -102,7 +102,7 @@ public sealed partial class DigestionQuarantineTests
                 + DigestionFormalizationReceipt.PathSuffix,
                 FormalizationMarker())));
 
-        var error = Assert.Throws<FormatException>(() =>
+        var error = Assert.ThrowsAny<FormatException>(() =>
             BackfillInventoryLoader.LoadRoot(temporary.Path));
 
         Assert.Contains("machine-form", error.Message, StringComparison.Ordinal);

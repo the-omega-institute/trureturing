@@ -74,7 +74,7 @@ def main(argv):
     except json.JSONDecodeError as error:
         sys.stderr.write(f"COMPOSE_VERB_SCHEMA_MISMATCH (not JSON: {error})\n")
         sys.exit(70)
-    if truth.get("schema") != "stratalint-review-envelope-v1" or not all(k in truth for k in ("base", "head", "deposited", "ejected")):
+    if not isinstance(truth, dict) or truth.get("schema") != "stratalint-review-envelope-v1" or not all(k in truth for k in ("base", "head", "deposited", "ejected")):
         sys.stderr.write(f"COMPOSE_VERB_SCHEMA_MISMATCH {truth.get('schema')}\n")
         sys.exit(70)
     if truth["base"] != base or truth["head"] != head:
