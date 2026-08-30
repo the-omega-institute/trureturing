@@ -113,7 +113,7 @@ theorem off_line_orbit_parity_decomposition
     rw [Complex.mul_re]
     norm_num
     rw [channel_energy_difference]
-    simp only [map_re, map_im]
+    rw [Complex.mul_re, Complex.conj_re, Complex.conj_im]
     ring
   have hDecomposition :
       (∑ k ∈ ({n, Z.reflection n, Z.conjugation n,
