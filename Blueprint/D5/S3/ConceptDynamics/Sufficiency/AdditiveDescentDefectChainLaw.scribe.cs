@@ -24,9 +24,9 @@ internal sealed class AdditiveDescentDefectChainLawDocument
         Formula targetReadout = new Formula.Subscript(readout, F.Id("E"));
         Formula firstMacro = Seq(Overline, Grp(firstProcess));
         Formula secondMacro = Seq(Overline, Grp(secondProcess));
-        Formula epsilon = F.Id("epsilon");
-        Formula firstDefectName = new Formula.Subscript(epsilon, firstProcess);
-        Formula secondDefectName = new Formula.Subscript(epsilon, secondProcess);
+        Formula epsilon = Varepsilon;
+        Formula firstDefectName = new Formula.Subscript(epsilon, Seq(firstProcess));
+        Formula secondDefectName = new Formula.Subscript(epsilon, Seq(secondProcess));
         Formula compositeDefectName = new Formula.Subscript(
             epsilon,
             Seq(secondProcess, firstProcess));
