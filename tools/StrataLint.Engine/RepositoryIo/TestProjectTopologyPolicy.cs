@@ -47,7 +47,8 @@ internal static partial class RepositoryRules
         ImmutableHashSet.Create(
             StringComparer.Ordinal,
             "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
-            "tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj");
+            "tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj",
+            "tools/tests/StrataLint.TestSupport/StrataLint.TestSupport.csproj");
 
     private static readonly Uri RepositoryUri = new("https://repository.invalid/");
 

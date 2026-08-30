@@ -8,16 +8,6 @@
         "resolved": "5.6.0",
         "contentHash": "Kcobt3pnOdO0A+6CKiMHZdTEluJpsfxiV20axtZdmfBQnDmiWTKPJADlgAfdTuKNAnVarrkJa0UEGwuOo91muw=="
       },
-      "Microsoft.NET.Test.Sdk": {
-        "type": "Direct",
-        "requested": "[18.0.1, )",
-        "resolved": "18.0.1",
-        "contentHash": "WNpu6vI2rA0pXY4r7NKxCN16XRWl5uHu6qjuyVLoDo6oYEggIQefrMjkRuibQHm/NslIUNCcKftvoWAN80MSAg==",
-        "dependencies": {
-          "Microsoft.CodeCoverage": "18.0.1",
-          "Microsoft.TestPlatform.TestHost": "18.0.1"
-        }
-      },
       "xunit": {
         "type": "Direct",
         "requested": "[2.9.3, )",
@@ -29,12 +19,6 @@
           "xunit.core": "[2.9.3]"
         }
       },
-      "xunit.runner.visualstudio": {
-        "type": "Direct",
-        "requested": "[3.1.4, )",
-        "resolved": "3.1.4",
-        "contentHash": "5mj99LvCqrq3CNi06xYdyIAXOEh+5b33F2nErCzI5zWiDdLHXiPXEWFSUAF8zlIv0ZWqjZNCwHTQeAPYbF3pCg=="
-      },
       "Xunit.SkippableFact": {
         "type": "Direct",
         "requested": "[1.5.85, )",
@@ -44,11 +28,6 @@
           "Validation": "2.6.68",
           "xunit.extensibility.execution": "2.4.0"
         }
-      },
-      "Acornima": {
-        "type": "Transitive",
-        "resolved": "1.2.0",
-        "contentHash": "pT3kn/WrVzz4NmrzN5zOAVDOK2VuQFJ7VivKviKmKbbzppMVEToEvnAaVhxerXclptvjpBUudhOwUtDsRjrMYQ=="
       },
       "Microsoft.CodeAnalysis.Analyzers": {
         "type": "Transitive",
@@ -62,30 +41,6 @@
         "dependencies": {
           "Microsoft.CodeAnalysis.Analyzers": "3.11.0"
         }
-      },
-      "Microsoft.CodeCoverage": {
-        "type": "Transitive",
-        "resolved": "18.0.1",
-        "contentHash": "O+utSr97NAJowIQT/OVp3Lh9QgW/wALVTP4RG1m2AfFP4IyJmJz0ZBmFJUsRQiAPgq6IRC0t8AAzsiPIsaUDEA=="
-      },
-      "Microsoft.TestPlatform.ObjectModel": {
-        "type": "Transitive",
-        "resolved": "18.0.1",
-        "contentHash": "qT/mwMcLF9BieRkzOBPL2qCopl8hQu6A1P7JWAoj/FMu5i9vds/7cjbJ/LLtaiwWevWLAeD5v5wjQJ/l6jvhWQ=="
-      },
-      "Microsoft.TestPlatform.TestHost": {
-        "type": "Transitive",
-        "resolved": "18.0.1",
-        "contentHash": "uDJKAEjFTaa2wHdWlfo6ektyoh+WD4/Eesrwb4FpBFKsLGehhACVnwwTI4qD3FrIlIEPlxdXg3SyrYRIcO+RRQ==",
-        "dependencies": {
-          "Microsoft.TestPlatform.ObjectModel": "18.0.1",
-          "Newtonsoft.Json": "13.0.3"
-        }
-      },
-      "Newtonsoft.Json": {
-        "type": "Transitive",
-        "resolved": "13.0.3",
-        "contentHash": "HrC5BXdl00IP9zeV+0Z848QWPAoCr9P3bDEZguI+gkLcBKAOxix/tLEAAHC+UvDNPv4a2d18lOReHMOagPa+zQ=="
       },
       "Validation": {
         "type": "Transitive",
@@ -132,15 +87,6 @@
           "xunit.extensibility.core": "[2.9.3]"
         }
       },
-      "StrataLint": {
-        "type": "Project",
-        "dependencies": {
-          "StrataLint.Engine": "[1.0.0, )",
-          "StrataLint.Scribe": "[1.0.0, )",
-          "Tomlyn": "[2.10.1, )",
-          "YamlDotNet": "[16.3.0, )"
-        }
-      },
       "stratalint.engine": {
         "type": "Project",
         "dependencies": {
@@ -151,24 +97,6 @@
           "Trureturing.Truth": "[0.1.0, )"
         }
       },
-      "stratalint.scribe": {
-        "type": "Project",
-        "dependencies": {
-          "Jint": "[4.4.2, )",
-          "QuestPDF": "[2026.7.1, 2026.7.1]",
-          "StrataLint.Engine": "[1.0.0, )",
-          "Tomlyn": "[2.10.1, )",
-          "Trureturing.Truth": "[0.1.0, )"
-        }
-      },
-      "stratalint.testsupport": {
-        "type": "Project",
-        "dependencies": {
-          "StrataLint.Engine": "[1.0.0, )",
-          "Xunit.SkippableFact": "[1.5.85, )",
-          "xunit": "[2.9.3, )"
-        }
-      },
       "trureturing.truth": {
         "type": "Project"
       },
@@ -177,15 +105,6 @@
         "requested": "[1.16.2, )",
         "resolved": "1.16.2",
         "contentHash": "R4PEZo50RK76wRW1kq4xiQqX/hnrx8Gn+8T1XIEYuigyjVh3Guhtt3+b4GG2j3h+E3VadLINtbV+Id79nsFy/Q=="
-      },
-      "Jint": {
-        "type": "CentralTransitive",
-        "requested": "[4.4.2, )",
-        "resolved": "4.4.2",
-        "contentHash": "+2G0SkWWYiHjvCWFYgWgLUDVvemMxjgmlnT3X4p8cllSt1SX3jgO7PSqxenTW4yDE4dOQ8BLRmbuiC8ANp1trw==",
-        "dependencies": {
-          "Acornima": "1.2.0"
-        }
       },
       "Markdig": {
         "type": "CentralTransitive",
@@ -208,24 +127,6 @@
         "requested": "[3.5.1, )",
         "resolved": "3.5.1",
         "contentHash": "zU7tkXlF3D6d2GLTjJDomAL3nnl4AwfZvSgSz8D4b+Ry21/clqedYlxBnEAkAU/bkGfEv6uRR7QCdWZUpKrB/g=="
-      },
-      "QuestPDF": {
-        "type": "CentralTransitive",
-        "requested": "[2026.7.1, 2026.7.1]",
-        "resolved": "2026.7.1",
-        "contentHash": "GsBxQb48dFAGmvI1eP3SHyz0Pua4uH6aUHX7f0ywTin6hordAviZRAiTiIQiKMLwq6hN1FmgS+qLjfh2v7vhOg=="
-      },
-      "Tomlyn": {
-        "type": "CentralTransitive",
-        "requested": "[2.10.1, )",
-        "resolved": "2.10.1",
-        "contentHash": "ykjOY3IpYmC4SpPcAZRTl/w2jTmhPMDydHq8xcV7tTBAQ22nKBsOkPqauIrZlMjHm03cmKfV23UOPscKp+J4Og=="
-      },
-      "YamlDotNet": {
-        "type": "CentralTransitive",
-        "requested": "[16.3.0, )",
-        "resolved": "16.3.0",
-        "contentHash": "SgMOdxbz8X65z8hraIs6hOEdnkH6hESTAIUa7viEngHOYaH+6q5XJmwr1+yb9vJpNQ19hCQY69xbFsLtXpobQA=="
       }
     }
   }
