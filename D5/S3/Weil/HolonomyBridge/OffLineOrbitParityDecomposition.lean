@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Weil/HolonomyBridge/OffLineOrbitParityDecomposition
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Every off-line zero orbit is an even spectral energy minus a nonnegative odd correction. -/
+   digest: Off-line zero orbits split into even energy minus odd energy. -/
 
 import D5.S3.Weil.ZetaBridge.ConvolutionSquareOrbitBounds
 import Mathlib.Tactic
@@ -113,6 +113,8 @@ theorem off_line_orbit_parity_decomposition
     rw [Complex.mul_re]
     norm_num
     rw [channel_energy_difference]
+    simp only [map_re, map_im]
+    ring
   have hDecomposition :
       (∑ k ∈ ({n, Z.reflection n, Z.conjugation n,
         Z.conjugation (Z.reflection n)} : Finset ℕ),
