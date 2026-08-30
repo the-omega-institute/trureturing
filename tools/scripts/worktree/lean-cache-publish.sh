@@ -257,7 +257,39 @@ case "$VERB" in
     # 归档的 .olean 会被 Lake 当构建输入复用、canonical 报告从那个环境读声明，故
     # 发布者位于 admission 下方。三席一致：**任一 provenance 检查不过即判 miss，
     # 不消费其 olean**。
-    fail_provenance() {
+    # 【2026-08-30 τ=0 裁决:去掉产地的【身份】校验,只留【内容】校验】
+#
+# owner 原话:「我觉得不需要验证, 直接删了就行, 只要是 cache 匹配就可以.
+#              这样本地都可以 release cache, 只要你有权限传到 github release 即可.」
+#
+# 删掉的四项(全是身份类):
+#   release author == github-actions[bot]
+#   每个 asset 的 uploader == github-actions[bot]
+#   发布器 workflow id 归属(按路径解析 lean-cache-publish.yml 的 id 并比对)
+#   run 的 event=schedule / head_branch=dev / head_sha / conclusion=success
+#
+# 保留的(全是内容与结构类):
+#   producer_commit_sha 与 workflow_run_id 的**形状**
+#   release target_commitish == 声明的 producer commit
+#   asset 恰好两份、名字恰好是 lean-build.tgz 与 manifest.txt
+#   GitHub 自己记录的 asset digest == 实际下载字节的 sha256(独立第二侧)
+#   以及取回后按 sources_sha256 的内容比对
+#
+# 【orchestrator 提过的顾虑,如实留档,不是反对】
+# 内容寻址绑的是**输入**(toolchain + lake-manifest + lakefile + sources);
+# 没有任何一侧验证 archive 里的 `.olean` 是**那些输入的正确构建输出** ——
+# 重建它就等于放弃缓存。故在删掉身份校验后,
+# 「这堆 olean 是不是 lake build 的真实产物」不再有任何机器保证。
+# 而 consumer 复用的 olean 会进 Lean 报告、报告喂 admission,
+# 即发布者位于 admission 下方(该结论由 #2729 三席评审确立)。
+#
+# 【同时暴露的一处既存空洞,一并记】
+# `workflow_run_id` 只被验形状(纯数字),从不被验指向真实 run —— 本次发布
+# 即以时间戳填入并通过。故它在删改前就已是形同虚设的溯源字段。
+#
+# owner 已知悉上述并作此裁决。改这段回去同样是 τ=0 动作。
+
+fail_provenance() {
       printf 'LEAN_CACHE_FETCH {"status":"rejected","tag":"%s","resolved":"%s","stage":"provenance","reason":"%s"}\n' \
         "$tag" "$resolved" "$1"
       exit 1
@@ -277,8 +309,6 @@ case "$VERB" in
       || fail_provenance "release metadata is unreadable"
     release_author="$(printf '%s' "$release_json" | jq -r '.author.login // ""')"
     release_target="$(printf '%s' "$release_json" | jq -r '.target_commitish // ""')"
-    [[ "$release_author" == "github-actions[bot]" ]] \
-      || fail_provenance "release author is ${release_author:-<absent>}, not the CI publisher"
     [[ "$release_target" == "$producer_commit_sha" ]] \
       || fail_provenance "release target ${release_target:-<absent>} does not match the declared producer commit"
 
@@ -293,16 +323,6 @@ case "$VERB" in
     [[ "$total_assets" == "2" ]] \
       || fail_provenance "release carries ${total_assets:-<absent>} assets, expected exactly 2"
     # 进程替换里的失败不会被 `set -e` 捕获，故先把结果取进变量并查状态：解析失败
-    # 与「没有 uploader」是两回事，前者必须 fail-closed，不能当成空列表走过去。
-    uploaders="$(printf '%s' "$release_json" | jq -r '[.assets[]?.uploader.login // ""] | .[]')" \
-      || fail_provenance "release asset metadata could not be parsed"
-    uploader_count="$(printf '%s\n' "$uploaders" | grep -c . || true)"
-    [[ "$uploader_count" == "2" ]] \
-      || fail_provenance "release declares ${uploader_count} asset uploaders, expected 2"
-    while IFS= read -r uploader; do
-      [[ "$uploader" == "github-actions[bot]" ]] \
-        || fail_provenance "an asset was uploaded by ${uploader:-<absent>}, not the CI publisher"
-    done <<< "$uploaders"
 
     # 把**手里的字节**绑到**被验产地的那个资产**上。此前只比 manifest 声明的摘要，而
     # manifest 与 payload 同处一个发布面；GitHub 自己记的 asset digest 是独立的第二侧。
@@ -311,33 +331,6 @@ case "$VERB" in
     [[ "$github_digest" == "sha256:${actual}" ]] \
       || fail_provenance "archive bytes do not match the digest GitHub recorded for ${asset} (${github_digest:-<absent>})"
 
-    # 发布器的 workflow id **由路径解析**，不写死：写死即第二真源，且换仓或重建
-    # workflow 后失效。两侧都必须先验形状 —— 若两侧同为空串，`==` 会恒真，
-    # 那就是一个空比较冒充判据。
-    publisher_id="$(gh api "repos/${REPO}/actions/workflows/lean-cache-publish.yml" --jq '.id' 2>/dev/null)" \
-      || fail_provenance "publisher workflow is unreadable"
-    [[ "$publisher_id" =~ ^[0-9]+$ ]] \
-      || fail_provenance "publisher workflow id is ${publisher_id:-<absent>}, not numeric"
-    run_json="$(gh api "repos/${REPO}/actions/runs/${archive_run_id}" 2>/dev/null)" \
-      || fail_provenance "declared workflow run ${archive_run_id} is unreadable"
-    run_workflow_id="$(printf '%s' "$run_json" | jq -r '.workflow_id // ""')"
-    [[ "$run_workflow_id" =~ ^[0-9]+$ ]] \
-      || fail_provenance "run ${archive_run_id} declares workflow id ${run_workflow_id:-<absent>}, not numeric"
-    [[ "$run_workflow_id" == "$publisher_id" ]] \
-      || fail_provenance "run ${archive_run_id} workflow_id is ${run_workflow_id}, expected ${publisher_id}"
-    for pair in \
-      "event:schedule" \
-      "head_branch:dev" \
-      "head_sha:${producer_commit_sha}" \
-      "conclusion:success"
-    do
-      field="${pair%%:*}"; want="${pair#*:}"
-      got="$(printf '%s' "$run_json" | jq -r ".${field} // \"\"")"
-      [[ -n "$got" ]] \
-        || fail_provenance "run ${archive_run_id} declares no ${field}"
-      [[ "$got" == "$want" ]] \
-        || fail_provenance "run ${archive_run_id} ${field} is ${got}, expected ${want}"
-    done
     # `head_branch=dev` + `event=schedule` + 该 run 成功，合起来说明该 commit 当时
     # 就是默认分支的 tip。**残余**：dev 若被 force-push，历史上的 tip 可能已不在
     # 当前历史里。此处不另做祖先查询——那要么依赖本机 fetch 状态（会随上次 fetch

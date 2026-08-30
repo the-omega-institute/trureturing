@@ -3,7 +3,7 @@ using System.Text;
 using System.Text.Json;
 using StrataLint.Engine;
 
-namespace StrataLint.Tests;
+namespace StrataLint.Engine.Tests;
 
 public sealed class CoverageWriterTests
 {
