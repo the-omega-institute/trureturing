@@ -259,7 +259,10 @@ internal static class EngineeringTestPlanPolicy
     internal static string WithMetadataReceipt(string reason, ScribeTestMap map) =>
         map.MetadataDegradations.Count == 0
             ? reason
-            : reason + "; " + string.Join("; ", map.MetadataDegradations.Select(static degradation =>
+            : reason + "; " + string.Join("; ", map.MetadataDegradations
+                .OrderBy(static degradation => degradation.ProjectPath, StringComparer.Ordinal)
+                .ThenBy(static degradation => degradation.Reason, StringComparer.Ordinal)
+                .Select(static degradation =>
                 $"metadata degraded for {degradation.ProjectPath}: {degradation.Reason}"));
 
     private static IEnumerable<ScribeTestMethod> RunnableMethods(ScribeTestMap map) =>

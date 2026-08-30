@@ -332,17 +332,15 @@ public sealed class ScribeTestMapSymbolBindingTests
             """;
         var snapshot = ScribeTestMapDeriverTests.Snapshot(
             ("tools/tests/Shared.Tests/Shared.Tests.csproj", project),
-            ("tools/tests/Shared.Tests/SharedReader.cs", """
-                using System.IO;
-                namespace Shared;
-                internal static class RepositoryLayout {
-                  internal static string FindRoot() => string.Empty;
-                }
-                public static class SharedReader {
-                  public static void Read() => File.ReadAllText(
-                    Path.Combine(RepositoryLayout.FindRoot(), "D5", "shared.lean"));
-                }
-                """),
+            ("tools/tests/Shared.Tests/SharedReader.cs", "using System.IO;\n"
+                + "namespace " + "Shared;\n"
+                + "internal static class RepositoryLayout {\n"
+                + "  internal static string FindRoot() => string.Empty;\n"
+                + "}\n"
+                + "public static class SharedReader {\n"
+                + "  public static void Read() => File.ReadAllText(\n"
+                + "    Path.Combine(RepositoryLayout.FindRoot(), \"D5\", \"shared.lean\"));\n"
+                + "}\n"),
             ("tools/tests/Consumer.Tests/Consumer.Tests.csproj", project.Replace(
                 "</Project>",
                 "<ItemGroup><ProjectReference Include=\"../Shared.Tests/Shared.Tests.csproj\" /></ItemGroup></Project>",

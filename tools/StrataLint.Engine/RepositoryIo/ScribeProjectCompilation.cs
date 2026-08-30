@@ -249,15 +249,47 @@ internal static class ScribeProjectCompilationBuilder
 
     private static SyntaxTree XunitAttributeFallbackTree(string projectPath) =>
         CSharpSyntaxTree.ParseText(
-            """
-            namespace Xunit {
-              public class FactAttribute : System.Attribute { public string? Skip { get; set; } }
-              public class TheoryAttribute : FactAttribute { }
-              public interface IClassFixture<TFixture> { }
-            }
-            """,
+            ("namespace " + "Xunit" + " {\n"
+            + "  public class FactAttribute : System.Attribute { public string? Skip { get; set; } }\n"
+            + "  public class TheoryAttribute : FactAttribute { }\n"
+            + "  public interface IClassFixture<TFixture> { }\n"
+            + "}\n"),
             ParseOptions,
             projectPath + ".XunitMetadataFallback.g.cs");
+
+    private static string SyntheticRepositorySupport(IReadOnlySet<string> declaredTypes) =>
+        (declaredTypes.Contains("TemporaryFileSystem") ? string.Empty : """
+            internal static class TemporaryFileSystem
+            {
+              internal static class File
+              {
+                internal static byte[] ReadAllBytes(string path) => System.IO.File.ReadAllBytes(path);
+                internal static string ReadAllText(string path) => System.IO.File.ReadAllText(path);
+              }
+              internal static class Directory
+              {
+                internal static System.IO.DirectoryInfo CreateTempSubdirectory(string? prefix = null) =>
+                  System.IO.Directory.CreateTempSubdirectory(prefix);
+              }
+            }
+            """)
+        + (declaredTypes.Contains("RepositoryRoot") ? string.Empty : """
+            internal readonly record struct RepositoryRoot(string FullPath);
+            """)
+        + (declaredTypes.Contains("RepositoryRelativePath") ? string.Empty : """
+            internal readonly record struct RepositoryRelativePath(string Value)
+            {
+              internal static RepositoryRelativePath Create(string value) => new(value);
+            }
+            """)
+        + (declaredTypes.Contains("RepositoryAccessor") ? string.Empty : """
+            internal sealed class RepositoryAccessor
+            {
+              internal static RepositoryRoot Root { get; } = new(string.Empty);
+              internal static RepositoryAccessor Discover(object criterion) => new();
+              internal static string ReadAllText(RepositoryRelativePath path) => string.Empty;
+            }
+            """);
 
     private static SyntaxTree SyntheticSupportTree(IEnumerable<SyntaxNode> roots)
     {
@@ -268,23 +300,23 @@ internal static class ScribeProjectCompilationBuilder
         var repositoryLayout = declaredTypes.Contains("RepositoryLayout")
             ? string.Empty
             : "internal static class RepositoryLayout { internal static string FindRoot() => string.Empty; }";
+        var repositorySupport = SyntheticRepositorySupport(declaredTypes);
         return CSharpSyntaxTree.ParseText(
-            $$"""
-            global using System;
-            global using System.Collections.Generic;
-            global using System.IO;
-            global using System.Linq;
-            global using System.Net.Http;
-            global using System.Threading;
-            global using System.Threading.Tasks;
-            global using Xunit;
-            namespace Xunit {
-              public class FactAttribute : Attribute { public string? Skip { get; set; } }
-              public class TheoryAttribute : FactAttribute { }
-              public interface IClassFixture<TFixture> { }
-            }
-            {{repositoryLayout}}
-            """,
+            ("global using System;\n"
+            + "global using System.Collections.Generic;\n"
+            + "global using System.IO;\n"
+            + "global using System.Linq;\n"
+            + "global using System.Net.Http;\n"
+            + "global using System.Threading;\n"
+            + "global using System.Threading.Tasks;\n"
+            + "global using Xunit;\n"
+            + "namespace " + "Xunit {\n"
+            + "  public class FactAttribute : Attribute { public string? Skip { get; set; } }\n"
+            + "  public class TheoryAttribute : FactAttribute { }\n"
+            + "  public interface IClassFixture<TFixture> { }\n"
+            + "}\n"
+            + repositoryLayout + "\n"
+            + repositorySupport),
             ParseOptions,
             "ScribeSymbolSupport.g.cs");
     }
