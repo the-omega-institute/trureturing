@@ -1,0 +1,28 @@
+name: agent-export-dev-source
+
+on:
+  push:
+    branches:
+      - agent/scratch/export-dev-20260830-1045
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/scratch/export-dev-20260830-1045
+          fetch-depth: 0
+      - name: Package source tree
+        run: |
+          tar --exclude=.git --exclude=dev-source.tar.gz -czf dev-source.tar.gz .
+      - uses: actions/upload-artifact@v4
+        with:
+          name: trureturing-dev-33954025-source
+          path: dev-source.tar.gz
+          if-no-files-found: error
+          retention-days: 1
