@@ -1,19 +1,36 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if [[ "$#" -ne 3 || -z "$1" || -z "$2" || -z "$3" ]]; then
+if [[ ("$#" -ne 3 && "$#" -ne 4) || -z "$1" || -z "$2" || -z "$3" ]]; then
   printf '%s\n' \
-    'usage: engineering-test-plan-validator.sh <plan-file|-> <expected-head> <expected-base>' >&2
+    'usage: engineering-test-plan-validator.sh <plan-file|-> <expected-head> <expected-base> [--artifact-fallback]' >&2
   exit 2
 fi
 
 plan_file="$1"
 expected_head="$2"
 expected_base="$3"
+artifact_fallback=false
+if [[ "$#" -eq 4 ]]; then
+  if [[ "$4" != "--artifact-fallback" ]]; then
+    printf '%s\n' \
+      'usage: engineering-test-plan-validator.sh <plan-file|-> <expected-head> <expected-base> [--artifact-fallback]' >&2
+    exit 2
+  fi
+  artifact_fallback=true
+fi
+
+invalid_plan() {
+  printf 'ENGINEERING_TEST_PLAN_INVALID %s\n' "$1" >&2
+  if [[ "$artifact_fallback" == "true" ]]; then
+    printf 'invalid\t-1\t0\n'
+    exit 0
+  fi
+  exit 1
+}
 
 if [[ "$plan_file" != "-" && ! -f "$plan_file" ]]; then
-  printf 'ENGINEERING_TEST_PLAN_INVALID artifact is not a readable file: %s\n' "$plan_file" >&2
-  exit 1
+  invalid_plan "artifact is not a readable file: $plan_file"
 fi
 
 jq_path="$(command -v jq || true)"
@@ -62,9 +79,7 @@ case "$validation_status" in
     printf '%s\n' "$summary"
     ;;
   1|2|4|5)
-    printf 'ENGINEERING_TEST_PLAN_INVALID schema validation failed (jq exit=%s)\n' \
-      "$validation_status" >&2
-    exit 1
+    invalid_plan "schema validation failed (jq exit=$validation_status)"
     ;;
   *)
     printf 'ENGINEERING_TEST_PLAN_VALIDATOR_FAILURE jq execution failed (exit=%s)\n' \

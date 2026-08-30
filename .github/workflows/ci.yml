@@ -123,27 +123,12 @@ jobs:
           if [[ "$GITHUB_EVENT_NAME" == "pull_request_target" ]]; then
             validator_ref="$base_sha"
           fi
-          plan_validator="$RUNNER_TEMP/engineering-test-plan-validator.sh"
-          git -C candidate show \
-            "${validator_ref}:tools/scripts/workflow/engineering-test-plan-validator.sh" \
-            > "$plan_validator"
-          validation_status=0
           plan_summary="$(
-            /bin/bash "$plan_validator" "$plan_file" "$head_sha" "$base_sha"
-          )" || validation_status=$?
-          case "$validation_status" in
-            0)
-              IFS=$'\t' read -r state artifact_changed_count selected_count <<< "$plan_summary"
-              ;;
-            1)
-              artifact_changed_count=-1
-              ;;
-            *)
-              printf 'ENGINEERING_TEST_PLAN_VALIDATOR_FAILURE validator exit=%s\n' \
-                "$validation_status" >&2
-              exit "$validation_status"
-              ;;
-          esac
+            git -C candidate show \
+              "${validator_ref}:tools/scripts/workflow/engineering-test-plan-validator.sh" |
+              /bin/bash -s -- "$plan_file" "$head_sha" "$base_sha" --artifact-fallback
+          )"
+          IFS=$'\t' read -r state artifact_changed_count selected_count <<< "$plan_summary"
           if [[ "$artifact_changed_count" -ne "$changed_count"
               || ("$base_full_required" == "true" && "$state" != "full") ]]; then
             printf '%s\n' 'ENGINEERING_TEST_PLAN_FALLBACK artifact unreadable or schema-invalid' >&2

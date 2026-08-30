@@ -36,11 +36,28 @@ public sealed class EngineeringTestPlanValidatorScriptTests
     }
 
     [Fact]
+    public void WorkflowFallbackModeConvertsSchemaMismatchToFallbackSummary()
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        var result = Run(
+            ValidPlan.Replace("\"version\": 2", "\"version\": 1", StringComparison.Ordinal),
+            artifactFallback: true);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal("invalid\t-1\t0\n", Encoding.UTF8.GetString(result.StandardOutput));
+        Assert.Contains(
+            "ENGINEERING_TEST_PLAN_INVALID",
+            Encoding.UTF8.GetString(result.StandardError),
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void MissingJqReturnsHarnessFailureInsteadOfArtifactFallback()
     {
         if (OperatingSystem.IsWindows()) return;
 
-        var result = Run(ValidPlan, exposeJq: false);
+        var result = Run(ValidPlan, exposeJq: false, artifactFallback: true);
 
         Assert.Equal(70, result.ExitCode);
         Assert.Empty(result.StandardOutput);
@@ -49,7 +66,10 @@ public sealed class EngineeringTestPlanValidatorScriptTests
         Assert.DoesNotContain("ENGINEERING_TEST_PLAN_INVALID", error, StringComparison.Ordinal);
     }
 
-    private static ProcessOutput Run(string artifact, bool exposeJq = true)
+    private static ProcessOutput Run(
+        string artifact,
+        bool exposeJq = true,
+        bool artifactFallback = false)
     {
         var root = TestRepositoryLayout.FindRoot();
         var script = Path.Combine(
@@ -58,18 +78,18 @@ public sealed class EngineeringTestPlanValidatorScriptTests
             "scripts",
             "workflow",
             "engineering-test-plan-validator.sh");
+        var scriptArguments = new List<string> { script, "-", ExpectedHead, ExpectedBase };
+        if (artifactFallback) scriptArguments.Add("--artifact-fallback");
         var arguments = exposeJq
-            ? new[] { script, "-", ExpectedHead, ExpectedBase }
+            ? scriptArguments.ToArray()
             : new[]
-            {
-                "-c",
-                "PATH=/path-without-jq exec /bin/bash \"$1\" \"$2\" \"$3\" \"$4\"",
-                "engineering-test-plan-validator-test",
-                script,
-                "-",
-                ExpectedHead,
-                ExpectedBase,
-            };
+                {
+                    "-c",
+                    "PATH=/path-without-jq exec /bin/bash \"$@\"",
+                    "engineering-test-plan-validator-test",
+                }
+                .Concat(scriptArguments)
+                .ToArray();
 
         return TestProcessRunner.Run(
             "/bin/bash",
