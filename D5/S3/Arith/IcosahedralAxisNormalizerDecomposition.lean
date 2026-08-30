@@ -11,8 +11,9 @@
      `D5.S3.Arith.IcosahedralAxisDecomposition` and are reused below.
    * Pinned Mathlib searches found generic orbit-stabilizer and Sylow normalizer
      results, but no theorem about these concrete projective classes or axes.
-   * No new object is introduced: the public theorem uses the frozen family's
-     projective classes, cyclic axes, normalizer, centralizer, and equivalences. -/
+   * The projective classes, cyclic axes, normalizer, and centralizer come from
+     that frozen family. The structural maps below add the missing incidence
+     identification induced by the five-coordinate permutation module. -/
 
 import D5.S3.Arith.IcosahedralAxisDecomposition
 
