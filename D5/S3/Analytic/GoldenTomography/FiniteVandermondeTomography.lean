@@ -5,6 +5,17 @@
    anchors: []
    digest: Distinct finite phase nodes make the Vandermonde moment readout
      injective. -/
+/- Library-search audit trail (2026-08-31):
+   * Repository searches for this theorem name and finite moment tomography
+     found no existing owner.
+   * Pinned Mathlib already owns `Matrix.vandermonde`,
+     `Matrix.det_vandermonde_eq_zero_iff`, and
+     `Matrix.eq_zero_of_mulVec_eq_zero`; this node consumes them.
+   * No second determinant formula or matrix inverse is introduced.
+   * The new interface is the finite observer statement that distinct nodes
+     make the moment readout injective.
+   * A uniform singular-value or condition-number bound remains outside this
+     theorem and is represented by the two-node conditioning consumer. -/
 
 import Mathlib.LinearAlgebra.Vandermonde
 
