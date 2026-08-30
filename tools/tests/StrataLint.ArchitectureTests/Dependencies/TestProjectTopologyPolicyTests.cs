@@ -460,6 +460,23 @@ public sealed class TestProjectTopologyPolicyTests
         AssertHasDebtFreePair(candidate, result.CandidateDebt);
     }
 
+    [Fact]
+    public void CanonicalSolutionIncludesTruthOwnedTestProjectExactlyOnce()
+    {
+        var solutionLines = File.ReadAllLines(Path.Combine(
+            RepositoryLayout.FindRoot(),
+            "tools",
+            "StrataLint.sln"));
+        var matchingProjects = solutionLines.Where(static line => line.StartsWith(
+                "Project(",
+                StringComparison.Ordinal)
+            && line.Contains(
+                "\"Trureturing.Truth.Tests\", \"tests\\Trureturing.Truth.Tests\\Trureturing.Truth.Tests.csproj\",",
+                StringComparison.Ordinal));
+
+        Assert.Single(matchingProjects);
+    }
+
     private static (TestProjectTopologySnapshot ProtectedBase, TestProjectTopologySnapshot Candidate)
         EqualSizedDebtSwap()
     {
