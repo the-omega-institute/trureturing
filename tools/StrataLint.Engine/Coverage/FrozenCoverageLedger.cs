@@ -22,15 +22,25 @@ public static class FrozenCoverageLedger
 
         try
         {
-            if (events.Any(static item => item.EventType != "Freeze"))
+            if (events.Any(static item => item.EventType is not ("Freeze" or "Reanchor")))
             {
-                throw new FormatException("frozen ledger v5 contains a non-Freeze event");
+                throw new FormatException("frozen ledger v5 contains an unknown event");
             }
 
-            var paths = events.Select(static item => item.DescriptorPath).ToImmutableArray();
+            var paths = events
+                .Where(static item => item.EventType == "Freeze")
+                .Select(static item => item.DescriptorPath)
+                .ToImmutableArray();
             if (paths.Distinct().Count() != paths.Length)
             {
-                throw new FormatException("frozen ledger v5 contains a duplicate descriptor_selector");
+                throw new FormatException("frozen ledger v5 contains a duplicate Freeze descriptor_selector");
+            }
+
+            var frozenPaths = paths.ToImmutableHashSet();
+            if (events.Any(item => item.EventType == "Reanchor"
+                && !frozenPaths.Contains(item.DescriptorPath)))
+            {
+                throw new FormatException("frozen ledger v5 contains a Reanchor without a Freeze");
             }
 
             return new FrozenCoverageLoadOutcome.Loaded(

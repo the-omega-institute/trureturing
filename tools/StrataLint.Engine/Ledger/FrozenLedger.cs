@@ -75,7 +75,8 @@ public sealed class FrozenLedgerConsistent
 internal sealed record FrozenActiveEntry(
     FrozenNodeMaterial Material,
     FrozenFreezePayload Payload,
-    string EventHash);
+    string EventHash,
+    string EventType = "Freeze");
 
 [Union(EnableImplicitConversions = false)]
 public partial record FrozenLedgerValidationOutcome

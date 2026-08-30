@@ -12,6 +12,7 @@ internal sealed record TrustedFrozenLedgerEvent(
     JsonElement Payload,
     int SchemaVersion,
     FrozenFreezePayload? FreezePayload,
+    string? PreviousEventHash,
     ImmutableArray<byte> RawBytes = default,
     JsonElement Root = default);
 
@@ -96,6 +97,12 @@ internal static class FrozenLedgerBaseViewReader
         "prerequisite_frozen_node_ids", "statement_id",
     ];
 
+    private static readonly string[] ReanchorV5Fields =
+    [
+        "declaration_statement_ids", "descriptor_selector",
+        "prerequisite_frozen_node_ids", "previous_event_hash", "statement_id",
+    ];
+
 
 
     internal static FrozenLedgerBaseView Read(RepositorySnapshot protectedBase)
@@ -107,7 +114,7 @@ internal static class FrozenLedgerBaseViewReader
             .Select(static item => ReadEvent(item.Value))
             .ToImmutableArray();
         var entries = events
-            .Where(static item => item.FreezePayload is not null)
+            .Where(static item => item.EventType == "Freeze")
             .Select(ReadFreeze)
             .ToImmutableArray();
 
@@ -115,17 +122,23 @@ internal static class FrozenLedgerBaseViewReader
         RequireUnique(entries.Select(static entry => entry.Material.FrozenNodeId.Value), "frozen node identity");
         RequireUnique(events.Select(static item => item.EventHash), "event_hash");
 
-        var activeByCase = entries.ToImmutableDictionary(
+        var activeByCase = entries.ToDictionary(
             static entry => FrozenLedgerCanonicalWriter.CaseId(
                 entry.Material.RepoPath,
                 entry.Material.StatementId),
             StringComparer.Ordinal);
+        ApplyReanchors(
+            activeByCase,
+            events.Where(static item => item.EventType == "Reanchor").ToImmutableArray());
+        RequireUnique(
+            activeByCase.Values.Select(static entry => entry.Material.FrozenNodeId.Value),
+            "active frozen node identity");
         return new FrozenLedgerBaseView(
             events,
-            activeByCase,
+            activeByCase.ToImmutableDictionary(StringComparer.Ordinal),
             events.Select(static item => item.EventHash).ToImmutableHashSet(StringComparer.Ordinal),
             events.Select(static item => item.Identity)
-                .Concat(entries.Select(static entry => entry.Material.FrozenNodeId.Value))
+                .Concat(events.Select(ReadFreeze).Select(static entry => entry.Material.FrozenNodeId.Value))
                 .ToImmutableHashSet(StringComparer.Ordinal));
     }
 
@@ -142,7 +155,11 @@ internal static class FrozenLedgerBaseViewReader
             throw new FormatException("trusted frozen ledger payload is not an object");
         }
 
-        var freezePayload = ValidateTrustedPayload(eventType, schemaVersion, payload);
+        var freezePayload = ValidateTrustedPayload(
+            eventType,
+            schemaVersion,
+            payload,
+            out var previousEventHash);
         if (!FrozenHashSyntax.IsSha256(eventHash))
         {
             throw new FormatException("trusted frozen ledger event_hash is malformed");
@@ -156,29 +173,41 @@ internal static class FrozenLedgerBaseViewReader
             payload.Clone(),
             schemaVersion,
             freezePayload,
+            previousEventHash,
             file.RawBytes,
             root.Clone());
     }
 
-    internal static FrozenFreezePayload? ValidateTrustedPayload(
+    internal static FrozenFreezePayload ValidateTrustedPayload(
         string eventType,
         int schemaVersion,
-        JsonElement payload)
+        JsonElement payload,
+        out string? previousEventHash)
     {
-        if (eventType != "Freeze")
+        if (schemaVersion != FrozenLedgerCanonicalWriter.CurrentDagSchemaVersion)
         {
             throw new FormatException(
                 $"trusted history has no decoder for {eventType} schema_version {schemaVersion}");
         }
 
-        switch (schemaVersion)
+        switch (eventType)
         {
-            case FrozenLedgerCanonicalWriter.CurrentDagSchemaVersion:
+            case "Freeze":
                 RequireExactFields(payload, "trusted Freeze v5 payload", FreezeV5Fields);
+                previousEventHash = null;
+                break;
+            case "Reanchor":
+                RequireExactFields(payload, "trusted Reanchor v5 payload", ReanchorV5Fields);
+                previousEventHash = FrozenLedgerAttestationChain.RequiredString(
+                    payload,
+                    "previous_event_hash");
+                if (!FrozenHashSyntax.IsSha256(previousEventHash))
+                {
+                    throw new FormatException("trusted Reanchor previous_event_hash is malformed");
+                }
                 break;
             default:
-                throw new FormatException(
-                    $"trusted history has no decoder for {eventType} schema_version {schemaVersion}");
+                throw new FormatException($"trusted history has no decoder for {eventType} schema_version {schemaVersion}");
         }
 
         return DecodeFreezePayload(payload, schemaVersion);
@@ -234,7 +263,39 @@ internal static class FrozenLedgerBaseViewReader
         return new FrozenActiveEntry(
             material,
             freeze,
-            item.EventHash);
+            item.EventHash,
+            item.EventType);
+    }
+
+    private static void ApplyReanchors(
+        Dictionary<string, FrozenActiveEntry> active,
+        ImmutableArray<TrustedFrozenLedgerEvent> reanchors)
+    {
+        var remaining = reanchors.OrderBy(static item => item.EventHash, StringComparer.Ordinal).ToList();
+        while (remaining.Count > 0)
+        {
+            var index = remaining.FindIndex(item =>
+            {
+                var payload = item.FreezePayload!;
+                return active.TryGetValue(payload.CaseId, out var current)
+                    && string.Equals(current.EventHash, item.PreviousEventHash, StringComparison.Ordinal);
+            });
+            if (index < 0)
+            {
+                throw new FormatException(
+                    "trusted Reanchor chain does not extend the uniquely current active event");
+            }
+
+            var item = remaining[index];
+            var reanchor = item.FreezePayload!;
+            var current = active[reanchor.CaseId];
+            FrozenLedger.ValidateReanchorTransition(
+                current,
+                reanchor,
+                item.PreviousEventHash!);
+            active[reanchor.CaseId] = ReadFreeze(item);
+            remaining.RemoveAt(index);
+        }
     }
 
 

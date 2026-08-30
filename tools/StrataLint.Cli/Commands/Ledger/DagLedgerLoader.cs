@@ -18,13 +18,14 @@ public static class DagLedgerLoader
     {
         var byIdentity = events.ToDictionary(static item => item.Identity, StringComparer.Ordinal);
         var remaining = events.OrderBy(static item => item.Identity, StringComparer.Ordinal).ToList();
+        var supersededEventHashes = SupersededEventHashes(events);
         var result = ImmutableArray.CreateBuilder<DagLedgerFileEvent>(events.Length);
         var placedIdentities = new HashSet<string>(StringComparer.Ordinal);
         var placedHashes = new HashSet<string>(StringComparer.Ordinal);
         foreach (var identity in preferredIdentityPrefix)
         {
             if (!byIdentity.TryGetValue(identity, out var item)
-                || !CanPlace(item, placedIdentities))
+                || !CanPlace(item, placedIdentities, supersededEventHashes))
             {
                 ordered = ImmutableArray<DagLedgerFileEvent>.Empty;
                 return false;
@@ -36,7 +37,7 @@ public static class DagLedgerLoader
         while (remaining.Count > 0)
         {
             var index = remaining.FindIndex(item =>
-                CanPlace(item, placedIdentities));
+                CanPlace(item, placedIdentities, supersededEventHashes));
             if (index < 0)
             {
                 ordered = ImmutableArray<DagLedgerFileEvent>.Empty;
@@ -57,13 +58,44 @@ public static class DagLedgerLoader
         out ImmutableArray<DagLedgerFileEvent> ordered)
     {
         var remaining = events.OrderBy(static item => item.Identity, StringComparer.Ordinal).ToList();
+        var supersededEventHashes = SupersededEventHashes(events);
         var result = ImmutableArray.CreateBuilder<DagLedgerFileEvent>(events.Length);
         var placedIdentities = knownIdentities.ToHashSet(StringComparer.Ordinal);
         var placedHashes = knownHashes.ToHashSet(StringComparer.Ordinal);
         while (remaining.Count > 0)
         {
             var index = remaining.FindIndex(item =>
-                CanPlace(item, placedIdentities));
+                CanPlace(item, placedIdentities, supersededEventHashes));
+            if (index < 0)
+            {
+                ordered = ImmutableArray<DagLedgerFileEvent>.Empty;
+                return false;
+            }
+
+            Place(remaining[index], remaining, result, placedIdentities, placedHashes);
+        }
+
+        ordered = result.MoveToImmutable();
+        return true;
+    }
+
+    internal static bool TryOrderTrustedHistory(
+        ImmutableArray<DagLedgerFileEvent> events,
+        out ImmutableArray<DagLedgerFileEvent> ordered)
+    {
+        var remaining = events.OrderBy(static item => item.Identity, StringComparer.Ordinal).ToList();
+        var result = ImmutableArray.CreateBuilder<DagLedgerFileEvent>(events.Length);
+        var placedIdentities = new HashSet<string>(StringComparer.Ordinal);
+        var placedHashes = new HashSet<string>(StringComparer.Ordinal);
+        while (remaining.Count > 0)
+        {
+            var index = remaining.FindIndex(item => item.EventType switch
+            {
+                "Freeze" => true,
+                "Reanchor" => item.PreviousEventHash is not null
+                    && placedIdentities.Contains(item.PreviousEventHash),
+                _ => false,
+            });
             if (index < 0)
             {
                 ordered = ImmutableArray<DagLedgerFileEvent>.Empty;
@@ -79,9 +111,26 @@ public static class DagLedgerLoader
 
     private static bool CanPlace(
         DagLedgerFileEvent item,
-        HashSet<string> placedIdentities) =>
-        item.EventType == "Freeze"
-            && DependenciesPlaced(item, placedIdentities);
+        HashSet<string> placedIdentities,
+        HashSet<string> supersededEventHashes)
+    {
+        var causalPredecessorPlaced = item.EventType switch
+        {
+            "Freeze" => true,
+            "Reanchor" => item.PreviousEventHash is not null
+                && placedIdentities.Contains(item.PreviousEventHash),
+            _ => false,
+        };
+        return causalPredecessorPlaced
+            && (supersededEventHashes.Contains(item.EventHash)
+                || DependenciesPlaced(item, placedIdentities));
+    }
+
+    private static HashSet<string> SupersededEventHashes(
+        ImmutableArray<DagLedgerFileEvent> events) =>
+        events.Where(static item => item.EventType == "Reanchor")
+            .Select(static item => item.PreviousEventHash!)
+            .ToHashSet(StringComparer.Ordinal);
 
     private static void Place(
         DagLedgerFileEvent item,

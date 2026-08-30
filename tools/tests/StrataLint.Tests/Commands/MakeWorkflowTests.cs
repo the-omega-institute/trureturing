@@ -58,6 +58,7 @@ public sealed partial class MakeWorkflowTests
         "echo-residual-summary",
         "show-atom",
         "truth-export",
+        "ledger-append",
         "deliver-check",
         "receipts-stage",
         "deposit",

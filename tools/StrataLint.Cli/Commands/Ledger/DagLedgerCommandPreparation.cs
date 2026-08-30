@@ -117,9 +117,8 @@ internal static class DagLedgerCommandPreparation
     /// Prepare that any DAG consumer needs, without the frozen-ledger work. Callers that only want
     /// the graph (the DAG projection command) share this assembly line rather than growing a
     /// second, drifting copy of it.
-    /// Builds material only for candidate-affected Closed paths. The DAG still carries the complete
-    /// candidate Closed path set so writers can detect additions and removals without recomputing
-    /// identities already trusted from the base ledger.
+    /// Builds complete current material for the canonical writer. Coordinate-only drift is itself
+    /// writer input, so ledger-append cannot restrict this catalog to source-affected paths.
     internal static FrozenMaterialCatalog BuildWriterCatalog(
         RepositorySnapshot snapshot,
         AcceptedLeanClosure lean,
@@ -127,36 +126,18 @@ internal static class DagLedgerCommandPreparation
         RawChangeSet changes,
         FrozenRevisionIdentity currentIdentity)
     {
+        _ = baseView;
+        _ = changes;
         _ = currentIdentity;
         var states = LeanTruthStates.Resolve(snapshot, lean);
         var adjacency = LeanImportAdjacency.Build(snapshot, lean);
-        var closedPaths = states
-            .Where(static item => item.Value is TruthState.Closed)
-            .Select(static item => item.Key)
-            .ToImmutableArray();
-        var changedPaths = changes.Paths.ToImmutableHashSet();
-        var selectedPaths = closedPaths
-            .Where(path => !baseView.ActiveByPath.TryGetValue(path, out var entry)
-                || changedPaths.Contains(path))
-            .ToHashSet();
-        foreach (var path in LeanImportAdjacency.DependenciesFirst(closedPaths, adjacency)
-            .Where(path => states.TryGetValue(path, out var state) && state is TruthState.Closed))
+        return FrozenContentAddress.Build(snapshot, lean, states, adjacency) switch
         {
-            if (adjacency[path].Any(selectedPaths.Contains))
-            {
-                selectedPaths.Add(path);
-            }
-        }
-
-        return FrozenContentAddress.BuildAdmissionCatalog(
-            snapshot,
-            lean,
-            states,
-            adjacency,
-            selectedPaths,
-            baseView.ActiveByPath.ToDictionary(
-                static item => item.Key,
-                static item => item.Value.Material));
+            FrozenMaterialOutcome.Accepted accepted => accepted.Capability,
+            FrozenMaterialOutcome.Rejected rejected => throw new InvalidOperationException(
+                "writer frozen catalog build failed: " + rejected.Message),
+            _ => throw new InvalidOperationException("unknown frozen material outcome"),
+        };
     }
 
     internal static FrozenMaterialCatalog BuildAdmissionCatalog(
@@ -337,10 +318,13 @@ internal static class DagLedgerCommandPreparation
                 label + " syntax is invalid: " + invalid.Message),
             _ => throw new InvalidOperationException("unknown ledger files load outcome"),
         };
-        if (!DagLedgerLoader.TryOrderClosedDag(
+        var orderedSuccessfully = trustRecordedHashes
+            ? DagLedgerLoader.TryOrderTrustedHistory(events, out var ordered)
+            : DagLedgerLoader.TryOrderClosedDag(
                 events,
                 ImmutableArray<string>.Empty,
-                out var ordered))
+                out ordered);
+        if (!orderedSuccessfully)
         {
             throw new InvalidOperationException(label + " does not form a closed dependency DAG");
         }
