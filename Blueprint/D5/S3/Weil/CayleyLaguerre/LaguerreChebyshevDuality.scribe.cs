@@ -19,9 +19,9 @@ internal sealed class LaguerreChebyshevDualityDocument : IScribeDocumentDefiniti
             StatementSource.FromAuthor(DualityFormula()),
             AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(
-                "The positive square scale constructs the canonical resolvent-weighted measure. "
-                    + "The imported time tomography and scale-jet identities then identify "
-                    + "the displayed Laguerre observation and Chebyshev derivative sum."))),
+                "The positive square scale constructs the resolvent-weighted measure. "
+                    + "Finite-sum Laplace integration proves the time observation directly, "
+                    + "and the scale-jet identity identifies its Cayley moment with the derivative sum."))),
             DescribeRole.Theorem))));
 
     private static Formula DualityFormula()
@@ -30,8 +30,10 @@ internal sealed class LaguerreChebyshevDualityDocument : IScribeDocumentDefiniti
         Formula natural = Call("Nat"), integer = Call("Int");
         Formula nu = F.Id("nu"), n = F.Id("n"), u = F.Id("u"), p = F.Id("p");
         Formula x = F.Id("x"), xi = F.Id("xi"), t = F.Id("t");
-        Formula v = F.Id("v"), k = F.Id("k");
-        Formula scale = F.Id("scale"), weighted = F.Id("weighted"), budget = F.Id("budget");
+        Formula v = F.Id("v"), k = F.Id("k"), m = F.Id("m"), j = F.Id("j");
+        Formula scale = F.Id("scale"), laguerreOne = F.Id("laguerreOne");
+        Formula weighted = F.Id("weighted"), correlation = F.Id("correlation");
+        Formula budget = F.Id("budget");
         Formula index = Call("Fin", Add(n, D(1)));
         Formula measure = Call("Measure", real);
         Formula coefficients = Arrow(index, real);
@@ -40,6 +42,24 @@ internal sealed class LaguerreChebyshevDualityDocument : IScribeDocumentDefiniti
             "integral",
             nu,
             Lambda(xi, Divide(D(1), Add(Pow(xi, D(2)), argument))));
+        Formula LaguerreOne(Formula order, Formula argument) => Call(
+            "sum",
+            Call("range", Add(order, D(1))),
+            Lambda(j, Mul(
+                Divide(
+                    Mul(
+                        Pow(Neg(D(1)), j),
+                        Call("choose", Add(order, D(1)), Add(j, D(1)))),
+                    Call("factorial", j)),
+                Pow(argument, j))));
+        Formula density = Lambda(xi, Call(
+            "ofReal",
+            Call("inv", Add(Pow(xi, D(2)), Pow(scale, D(2))))));
+        Formula Correlation(Formula argument) => Integral(
+            xi,
+            real,
+            Call("exp", Mul(Mul(Call("I"), argument), xi)),
+            weighted);
         Formula coefficientExpansion = new Formula.BindMany(
             FormulaQuantifier.ForAll,
             [Bound("x", real)],
@@ -57,10 +77,10 @@ internal sealed class LaguerreChebyshevDualityDocument : IScribeDocumentDefiniti
             t,
             real,
             Mul(
-                Call("complex", Mul(
-                    Call("exp", Neg(Mul(scale, t))),
-                    Call("laguerreOne", Sub(n, D(1)), Mul(Mul(D(2), scale), t)))),
-                Call("resolventCorrelation", weighted, t)),
+                    Call("complex", Mul(
+                        Call("exp", Neg(Mul(scale, t))),
+                        Apply(laguerreOne, Sub(n, D(1)), Mul(Mul(D(2), scale), t)))),
+                Apply(correlation, t)),
             Call("restrict", Call("volume"), Call("Ioi", D(0))));
         Formula timeObservation = Sub(
             Call("complex", Apply(budget, u)),
@@ -74,8 +94,12 @@ internal sealed class LaguerreChebyshevDualityDocument : IScribeDocumentDefiniti
                 derivative))));
         Formula definitions = Seq(
             F.Id("let"), Sp, Typed(scale, real), Sp, Eq, Sp, Call("sqrt", u), Semi, Sp,
+            F.Id("let"), Sp, Typed(laguerreOne, Arrow(natural, Arrow(real, real))), Sp, Eq, Sp,
+            Lambda(m, Lambda(x, LaguerreOne(m, x))), Semi, Sp,
             F.Id("let"), Sp, Typed(weighted, measure), Sp, Eq, Sp,
-            Call("resolventWeightedMeasure", nu, scale), Semi, Sp,
+            Call("withDensity", nu, density), Semi, Sp,
+            F.Id("let"), Sp, Typed(correlation, Arrow(real, complex)), Sp, Eq, Sp,
+            Lambda(t, Correlation(t)), Semi, Sp,
             F.Id("let"), Sp, Typed(budget, Arrow(real, real)), Sp, Eq, Sp,
             Lambda(v, Budget(v)), Semi, Sp,
             Equal(timeObservation, jet));
