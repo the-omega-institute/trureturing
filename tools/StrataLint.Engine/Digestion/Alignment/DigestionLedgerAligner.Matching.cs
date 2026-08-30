@@ -89,6 +89,46 @@ internal static partial class DigestionLedgerAligner
                 entry)))
             .ToHashSet(StringComparer.Ordinal);
 
+    private static bool ContentWideIdentityEqual(
+        DigestionLedgerEntry candidate,
+        DigestionLedgerEntry baseline) =>
+        candidate.SourceId == baseline.SourceId
+        && candidate.AtomId == baseline.AtomId
+        && candidate.Fingerprints == baseline.Fingerprints
+        && candidate.CasRef == baseline.CasRef;
+
+    private static DigestionLedgerEntry[] ContentWideReplacementObligations(
+        DigestionLedgerSource baseline,
+        DigestionLedgerSource? candidate,
+        RepositorySnapshot snapshot)
+    {
+        if (!snapshot.TryGetFile(baseline.SourcePath, out var sourceFile))
+        {
+            return [];
+        }
+
+        var contentWide = DigestionFingerprint.ComputeOpaque(sourceFile.RawBytes.AsSpan());
+        return baseline.Entries.Where(entry =>
+            entry.AtomId == contentWide.RawSha256["sha256:".Length..]
+            && entry.Fingerprints == contentWide
+            && entry.CasRef == contentWide.RawSha256
+            && (candidate is null
+                || !candidate.Entries.Any(candidateEntry =>
+                    ContentWideIdentityEqual(candidateEntry, entry))
+                || baseline.AcknowledgedStale.Contains(entry.AtomId, StringComparer.Ordinal)
+                || baseline.Atomizer != candidate.Atomizer
+                || HasContentWideReplacementReceipt(candidate, entry)
+                || candidate.AcknowledgedStale.Contains(entry.AtomId, StringComparer.Ordinal)))
+            .ToArray();
+    }
+
+    private static bool HasContentWideReplacementReceipt(
+        DigestionLedgerSource source,
+        DigestionLedgerEntry contentWideEntry) =>
+        AtomizerRegistry.IsRegistered(source.Atomizer)
+        && source.Entries.Any(entry =>
+            entry.Fingerprints.RawSha256 != contentWideEntry.Fingerprints.RawSha256);
+
     internal static bool FingerprintsMatch(DigestionFingerprints left, DigestionFingerprints right) =>
         left.RawSha256 == right.RawSha256
         || left.NormalizedSha256 == right.NormalizedSha256;

@@ -175,7 +175,7 @@ public sealed partial class DigestionAlignmentTests
         Assert.Empty(result.Findings);
         Assert.Empty(result.Residual);
         Assert.Equal(
-            DigestionReceiptAlignment.Rejected,
+            DigestionReceiptAlignment.Stale,
             result.AlignmentFor(AtomId(migration.Coarse)));
         Assert.Equal(
             DigestionReceiptAlignment.Seen,
@@ -450,8 +450,11 @@ public sealed partial class DigestionAlignmentTests
             }
         }
 
+        IReadOnlyList<string> acknowledgedStale = candidateAtomized is null
+            ? []
+            : [AtomId(coarse)];
         var candidate = WithAtomizer(
-            Ledger([], entries.ToArray()),
+            Ledger(acknowledgedStale, entries.ToArray()),
             AtomizerRegistry.ConeId);
         if (candidateAtomized is not null)
         {
