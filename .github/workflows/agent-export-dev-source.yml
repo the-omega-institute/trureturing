@@ -11,18 +11,20 @@ permissions:
 jobs:
   export:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
         with:
           ref: agent/scratch/export-dev-20260830-1045
           fetch-depth: 0
-      - name: Package source tree
+      - name: Package repository checkout
         run: |
-          tar --exclude=.git --exclude=dev-source.tar.gz -czf dev-source.tar.gz .
+          archive="$RUNNER_TEMP/trureturing-dev-repository.tar.gz"
+          tar -czf "$archive" .
+          test -s "$archive"
       - uses: actions/upload-artifact@v4
         with:
-          name: trureturing-dev-33954025-source
-          path: dev-source.tar.gz
+          name: trureturing-dev-33954025-repository
+          path: ${{ runner.temp }}/trureturing-dev-repository.tar.gz
           if-no-files-found: error
           retention-days: 1
