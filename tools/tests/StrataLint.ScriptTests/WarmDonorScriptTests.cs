@@ -42,7 +42,7 @@ public sealed class WarmDonorScriptTests
 
         Assert.Equal(expectedExit, run.Process.ExitCode);
         AssertReceipt(run.Process, "failed", phase, reason);
-        var calls = File.ReadAllLines(run.Calls);
+        var calls = ScriptHarnessScratch.ReadScratchLines(run.Calls);
         Assert.Equal("git pull --ff-only origin dev", calls[2]);
         Assert.Equal(phase == "pull" ? 3 : 4, calls.Length);
     }
@@ -56,7 +56,7 @@ public sealed class WarmDonorScriptTests
 
         Assert.Equal(0, run.Process.ExitCode);
         AssertReceipt(run.Process, "warmed", "complete", null);
-        var calls = File.ReadAllLines(run.Calls);
+        var calls = ScriptHarnessScratch.ReadScratchLines(run.Calls);
         Assert.Equal("git pull --ff-only origin dev", calls[2]);
         Assert.EndsWith(" lean", calls[3], StringComparison.Ordinal);
     }
@@ -69,9 +69,10 @@ public sealed class WarmDonorScriptTests
         var script = Path.Combine(repository, "tools", "scripts", "worktree", "warm-donor.sh");
         var bin = Path.Combine(fixture.Path, "bin");
         var calls = Path.Combine(fixture.Path, "calls");
-        Directory.CreateDirectory(Path.GetDirectoryName(script)!);
-        Directory.CreateDirectory(bin);
-        File.Copy(Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/worktree/warm-donor.sh"), script);
+        ScriptHarnessScratch.EnsureDirectory(bin);
+        ScriptHarnessScratch.CopyScriptInto(
+            Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/worktree/warm-donor.sh"),
+            script);
         WriteExecutable(
             Path.Combine(bin, "git"),
             "printf 'git %s\\n' \"$*\" >> \"$WARM_CALLS\"\n"
@@ -116,10 +117,7 @@ public sealed class WarmDonorScriptTests
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
     private static void WriteExecutable(string path, string content)
     {
-        File.WriteAllText(path, "#!/usr/bin/env bash\n" + content + "\n");
-        File.SetUnixFileMode(
-            path,
-            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+        ScriptHarnessScratch.WriteExecutableStub(path, content);
     }
 
     private sealed record ScriptRun(
@@ -127,9 +125,9 @@ public sealed class WarmDonorScriptTests
         string Calls,
         ProcessOutput Process) : IDisposable
     {
-        internal string[] CallLines => File.ReadAllLines(Calls);
+        internal string[] CallLines => ScriptHarnessScratch.ReadScratchLines(Calls);
 
-        internal string CallsText => File.ReadAllText(Calls);
+        internal string CallsText => ScriptHarnessScratch.ReadScratchText(Calls);
 
         public void Dispose() => Fixture.Dispose();
     }

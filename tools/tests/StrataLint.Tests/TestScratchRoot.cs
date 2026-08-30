@@ -356,4 +356,10 @@ internal static class ScriptHarnessScratch
     /// <summary>读假命令留下的调用记录;文件不存在时返回空。</summary>
     internal static string[] ReadRecordedCalls(string path) =>
         File.Exists(path) ? File.ReadAllLines(path) : [];
+
+    /// <summary>读 scratch 树里的文本行(文件须存在;缺失即测试前提已破,应当抛)。</summary>
+    internal static string[] ReadScratchLines(string path) => File.ReadAllLines(path);
+
+    /// <summary>读 scratch 树里的全文(同上,缺失即抛)。</summary>
+    internal static string ReadScratchText(string path) => File.ReadAllText(path);
 }
