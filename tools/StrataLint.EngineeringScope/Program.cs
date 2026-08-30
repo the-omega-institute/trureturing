@@ -165,7 +165,7 @@ internal static class Program
 
             try
             {
-                var executed = VerifyTestEvidence(resultsDirectory);
+                var executed = VerifyTestEvidence(resultsDirectory, invocation.ExpectedTests);
                 Console.WriteLine(
                     $"ENGINEERING_TEST_EXECUTED target={JsonSerializer.Serialize(invocation.Target)} "
                     + $"filter={JsonSerializer.Serialize(invocation.Filter)} evidence=trx executed={executed}");
@@ -183,8 +183,15 @@ internal static class Program
         }
     }
 
-    private static int VerifyTestEvidence(string resultsDirectory) =>
-        TestResultEvidence.Load(resultsDirectory).Executed;
+    private static int VerifyTestEvidence(
+        string resultsDirectory,
+        IReadOnlyList<EngineeringSelectedTest> expectedTests)
+    {
+        var evidence = TestResultEvidence.Load(resultsDirectory);
+        evidence.EnsureExpectedTestsExecuted(
+            expectedTests.Select(static test => (test.Assembly, test.Id)));
+        return evidence.Executed;
+    }
 
     private static int ListTestOwnerAssemblies(
         IReadOnlyList<string> arguments,
