@@ -7,6 +7,40 @@ namespace StrataLint.Tests;
 public sealed partial class FrozenLedgerTests
 {
     [Fact]
+    public void MathlibReanchorAcceptsByteIdenticalSourceWithAnonymousLocalInstance()
+    {
+        const string source =
+            "local instance (p : Prop) : Decidable p := Classical.propDecidable p\n"
+            + "theorem a : True := by trivial\n";
+
+        var result = ValidateMathlibReanchor(
+            baseModules:
+            [
+                ModuleWithReport(
+                    "A",
+                    source,
+                    statementMaterial: "old elaborated True",
+                    declarations: ["a", "instDecidable_d5"]),
+                Module("B"),
+            ],
+            candidateModules:
+            [
+                ModuleWithReport(
+                    "A",
+                    source,
+                    statementMaterial: "new elaborated True",
+                    declarations: ["a", "instDecidable_d5"]),
+                Module("B"),
+            ],
+            replacedModules: ["A"],
+            environment: ReanchorEnvironment.PinUpgrade);
+
+        Assert.NotNull(result.Recognition);
+        Assert.True(result.Authorized);
+        Assert.Null(result.Failure);
+    }
+
+    [Fact]
     public void MathlibReanchorAcceptsIndentedLocalNamedConstant()
     {
         // `constant` 在 Lean 4 不是声明关键字 —— 4.31 与 4.33 实测
