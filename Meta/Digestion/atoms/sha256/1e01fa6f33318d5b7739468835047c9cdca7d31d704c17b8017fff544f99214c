@@ -1,0 +1,15 @@
+## 第四步：Toeplitz matrix
+
+归一化后构造：
+
+$$
+\boxed{
+\widehat T_N^{(a,L)}
+=
+[\widehat c_{j-k,L}^{(a)}]_{j,k=0}^{N}.
+}
+\tag{978.3}
+$$
+
+---
+

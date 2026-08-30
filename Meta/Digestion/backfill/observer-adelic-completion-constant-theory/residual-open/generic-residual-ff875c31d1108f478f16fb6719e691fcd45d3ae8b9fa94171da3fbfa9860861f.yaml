@@ -1,0 +1,10 @@
+ast_path: section/第九百八十三部-理论深度审计
+fingerprints:
+  raw_sha256: sha256:ff875c31d1108f478f16fb6719e691fcd45d3ae8b9fa94171da3fbfa9860861f
+  normalized_sha256: sha256:ff875c31d1108f478f16fb6719e691fcd45d3ae8b9fa94171da3fbfa9860861f
+cas_ref: sha256:ff875c31d1108f478f16fb6719e691fcd45d3ae8b9fa94171da3fbfa9860861f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

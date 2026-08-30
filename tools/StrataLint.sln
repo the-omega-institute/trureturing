@@ -19,6 +19,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.EngineeringScope
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trureturing.Truth", "Trureturing.Truth\Trureturing.Truth.csproj", "{3A34CCAD-D87C-433D-98BE-93925312928E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.Engine.Tests", "tests\StrataLint.Engine.Tests\StrataLint.Engine.Tests.csproj", "{BE5C02FE-FA46-4E42-B5DD-7536099DE90F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.EngineeringScope.Tests", "tests\StrataLint.EngineeringScope.Tests\StrataLint.EngineeringScope.Tests.csproj", "{CBFEB510-BA69-4689-BDE7-915D4A19DAC0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -125,6 +129,30 @@ Global
 		{3A34CCAD-D87C-433D-98BE-93925312928E}.Release|x64.Build.0 = Release|Any CPU
 		{3A34CCAD-D87C-433D-98BE-93925312928E}.Release|x86.ActiveCfg = Release|Any CPU
 		{3A34CCAD-D87C-433D-98BE-93925312928E}.Release|x86.Build.0 = Release|Any CPU
+		{BE5C02FE-FA46-4E42-B5DD-7536099DE90F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE5C02FE-FA46-4E42-B5DD-7536099DE90F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE5C02FE-FA46-4E42-B5DD-7536099DE90F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BE5C02FE-FA46-4E42-B5DD-7536099DE90F}.Debug|x64.Build.0 = Debug|Any CPU
+		{BE5C02FE-FA46-4E42-B5DD-7536099DE90F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BE5C02FE-FA46-4E42-B5DD-7536099DE90F}.Debug|x86.Build.0 = Debug|Any CPU
+		{BE5C02FE-FA46-4E42-B5DD-7536099DE90F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE5C02FE-FA46-4E42-B5DD-7536099DE90F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE5C02FE-FA46-4E42-B5DD-7536099DE90F}.Release|x64.ActiveCfg = Release|Any CPU
+		{BE5C02FE-FA46-4E42-B5DD-7536099DE90F}.Release|x64.Build.0 = Release|Any CPU
+		{BE5C02FE-FA46-4E42-B5DD-7536099DE90F}.Release|x86.ActiveCfg = Release|Any CPU
+		{BE5C02FE-FA46-4E42-B5DD-7536099DE90F}.Release|x86.Build.0 = Release|Any CPU
+		{CBFEB510-BA69-4689-BDE7-915D4A19DAC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBFEB510-BA69-4689-BDE7-915D4A19DAC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBFEB510-BA69-4689-BDE7-915D4A19DAC0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{CBFEB510-BA69-4689-BDE7-915D4A19DAC0}.Debug|x64.Build.0 = Debug|Any CPU
+		{CBFEB510-BA69-4689-BDE7-915D4A19DAC0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CBFEB510-BA69-4689-BDE7-915D4A19DAC0}.Debug|x86.Build.0 = Debug|Any CPU
+		{CBFEB510-BA69-4689-BDE7-915D4A19DAC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBFEB510-BA69-4689-BDE7-915D4A19DAC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBFEB510-BA69-4689-BDE7-915D4A19DAC0}.Release|x64.ActiveCfg = Release|Any CPU
+		{CBFEB510-BA69-4689-BDE7-915D4A19DAC0}.Release|x64.Build.0 = Release|Any CPU
+		{CBFEB510-BA69-4689-BDE7-915D4A19DAC0}.Release|x86.ActiveCfg = Release|Any CPU
+		{CBFEB510-BA69-4689-BDE7-915D4A19DAC0}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,95 @@
+# 第一千零五十一部　零点首先是二维涡旋，而不是三维单极子
+
+定义中心化完成函数：
+
+$$
+\boxed{
+F(z)
+=
+\xi\left(\frac12+z\right),
+\qquad
+z=x+iy.
+}
+\tag{1051.1}
+$$
+
+在零点之外定义相位映射：
+
+$$
+\boxed{
+u_F(z)
+=
+\frac{F(z)}{|F(z)|}
+\in U(1).
+}
+\tag{1051.2}
+$$
+
+定义相位联络：
+
+$$
+\boxed{
+A_F
+=
+-i\,u_F^{-1}du_F
+=
+d\arg F
+=
+\operatorname{Im}\frac{dF}{F}.
+}
+\tag{1051.3}
+$$
+
+局部上：
+
+$$
+dA_F=0.
+$$
+
+但是若闭曲线 \(C\) 包围若干零点，则：
+
+$$
+\boxed{
+\frac1{2\pi}
+\oint_C A_F
+=
+\frac1{2\pi i}
+\oint_C\frac{F'(z)}{F(z)}\,dz
+=
+\sum_{z_\rho\in\operatorname{int}C}m_\rho.
+}
+\tag{1051.4}
+$$
+
+因此在分布意义下：
+
+$$
+\boxed{
+dA_F
+=
+2\pi
+\sum_\rho
+m_\rho\,
+\delta_{z_\rho}^{(2)}
+\,dx\wedge dy.
+}
+\tag{1051.5}
+$$
+
+等价地：
+
+$$
+\boxed{
+\Delta\log|F|
+=
+2\pi
+\sum_\rho
+m_\rho\delta_{z_\rho}^{(2)}.
+}
+\tag{1051.6}
+$$
+
+这正是复维一中的 Poincaré–Lelong 结构：全纯截面的零点以整数重数形成 Chern／除子电流。([arXiv][2])
+
+---
+

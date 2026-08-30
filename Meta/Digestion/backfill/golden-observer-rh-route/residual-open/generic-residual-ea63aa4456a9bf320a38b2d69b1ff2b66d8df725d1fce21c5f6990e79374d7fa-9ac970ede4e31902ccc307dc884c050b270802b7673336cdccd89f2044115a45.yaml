@@ -1,0 +1,10 @@
+ast_path: section/1-已有冻结基建/clause/2
+fingerprints:
+  raw_sha256: sha256:ea63aa4456a9bf320a38b2d69b1ff2b66d8df725d1fce21c5f6990e79374d7fa
+  normalized_sha256: sha256:ea63aa4456a9bf320a38b2d69b1ff2b66d8df725d1fce21c5f6990e79374d7fa
+cas_ref: sha256:ea63aa4456a9bf320a38b2d69b1ff2b66d8df725d1fce21c5f6990e79374d7fa
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

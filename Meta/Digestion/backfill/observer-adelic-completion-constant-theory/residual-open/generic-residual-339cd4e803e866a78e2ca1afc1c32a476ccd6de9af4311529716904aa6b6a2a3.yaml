@@ -1,0 +1,10 @@
+ast_path: row/完成偶通道
+fingerprints:
+  raw_sha256: sha256:339cd4e803e866a78e2ca1afc1c32a476ccd6de9af4311529716904aa6b6a2a3
+  normalized_sha256: sha256:339cd4e803e866a78e2ca1afc1c32a476ccd6de9af4311529716904aa6b6a2a3
+cas_ref: sha256:339cd4e803e866a78e2ca1afc1c32a476ccd6de9af4311529716904aa6b6a2a3
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

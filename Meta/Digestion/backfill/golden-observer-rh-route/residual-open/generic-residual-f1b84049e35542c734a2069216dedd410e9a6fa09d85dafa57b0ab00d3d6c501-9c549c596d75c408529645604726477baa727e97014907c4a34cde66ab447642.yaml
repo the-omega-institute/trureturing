@@ -1,0 +1,10 @@
+ast_path: section/暂不接受的说法/clause/6
+fingerprints:
+  raw_sha256: sha256:f1b84049e35542c734a2069216dedd410e9a6fa09d85dafa57b0ab00d3d6c501
+  normalized_sha256: sha256:f1b84049e35542c734a2069216dedd410e9a6fa09d85dafa57b0ab00d3d6c501
+cas_ref: sha256:f1b84049e35542c734a2069216dedd410e9a6fa09d85dafa57b0ab00d3d6c501
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

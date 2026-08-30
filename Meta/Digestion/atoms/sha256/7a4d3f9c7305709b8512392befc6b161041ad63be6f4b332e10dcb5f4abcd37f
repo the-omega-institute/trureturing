@@ -1,0 +1,52 @@
+- 连续改进小数位可能有工程价值，但若没有新的定理级机制，就不构成通往 RH 的可证明边际进展。
+
+## 四、随机矩阵与算术量子混沌
+
+### 1. Pair correlation 的无条件进展
+
+[literature-attested]
+
+Siegfred Alan C. Baluyot、Daniel Alan Goldston、Ade Irma Suriajaya 与 Caroline L. Turnage-Butterbaugh 给出无条件 Montgomery 型 pair-correlation 定理。论文还说明，在额外薄盒或强零密度假设下，可取得至少约 $61.7\%$ 的简单零点比例，但该机制本身不把这些简单零点定位到临界线。
+
+出处：Siegfred Alan C. Baluyot, Daniel Alan Goldston, Ade Irma Suriajaya, Caroline L. Turnage-Butterbaugh, “An unconditional Montgomery Theorem for Pair Correlation of Zeros of the Riemann Zeta Function,” 2023/2024, arXiv:2306.04799, Acta Arithmetica 214 (2024)。
+
+Daniel Alan Goldston、Junghun Lee、Jordan Schettler 与 Ade Irma Suriajaya 在不预设 RH 的形式下研究 pair-correlation conjecture，并证明适当的完整 PCC 将推出渐近 $100\%$ 的零点既简单又在临界线。
+
+出处：Daniel Alan Goldston, Junghun Lee, Jordan Schettler, Ade Irma Suriajaya, “Pair Correlation Conjecture for the Zeros of the Riemann Zeta-Function I: Simple and Critical Zeros,” 2025，2026 年修订，arXiv:2503.15449v4。
+
+逻辑边界：密度 $100\%$ 仍允许密度零但无限的离线异常集，所以它仍弱于 RH。
+
+### 2. CUE 矩与 zeta 矩的匹配
+
+[literature-attested]
+
+Alexander Grover、Francesco Mezzadri 与 Nick Simm 研究 CUE 特征多项式高阶导数矩，并与 zeta 导数矩对应；部分低阶结果无条件成立，更一般的移动矩在 Lindelöf 型条件下取得。
+
+出处：Alexander Grover, Francesco Mezzadri, Nick Simm, “Higher order derivative moments of CUE characteristic polynomials and the Riemann zeta function,” 2026, arXiv:2604.03051。
+
+这类结果强化 GUE/CUE 字典和算术量子混沌的统计可信度，但没有生成一个其自伴性能够强迫所有 zeta 零点实部为 $1/2$ 的算子。
+
+### 3. 当前诚实定位
+
+随机矩阵／量子混沌目前提供三种东西：
+
+1. 局部间距、相关函数和矩的高精度预测；
+2. 有限矩阵或有限压缩中天然实谱的模型；
+3. 寻找 Hilbert–Pólya 算子的设计原则。
+
+它目前没有提供：
+
+1. completed zeta 与某个自伴算子的严格谱行列式同一；
+2. 有限矩阵逼近向无界自伴算子的强 resolvent 收敛；
+3. 排除极稀疏离线零点的全局机制。
+
+因此本仓若消费此方向，应把目标写成“有限谱恒等式、收敛模式、误差界、行列式极限”，不能把数值谱吻合命名为 RH 证明。
+
+## 五、形式化侧：Lean／mathlib 与外部项目
+
+### 1. mathlib 的 zeta 基建
+
+[literature-attested | official formal library]
+
+当前 mathlib 的 `Mathlib.NumberTheory.LSeries.RiemannZeta` 已包括：
+

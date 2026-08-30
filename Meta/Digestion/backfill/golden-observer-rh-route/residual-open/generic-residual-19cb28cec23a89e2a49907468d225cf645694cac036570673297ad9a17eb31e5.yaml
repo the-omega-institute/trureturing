@@ -1,0 +1,10 @@
+ast_path: section/二-GFPT-治理不动点接口
+fingerprints:
+  raw_sha256: sha256:19cb28cec23a89e2a49907468d225cf645694cac036570673297ad9a17eb31e5
+  normalized_sha256: sha256:19cb28cec23a89e2a49907468d225cf645694cac036570673297ad9a17eb31e5
+cas_ref: sha256:19cb28cec23a89e2a49907468d225cf645694cac036570673297ad9a17eb31e5
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

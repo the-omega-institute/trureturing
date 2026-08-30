@@ -1,0 +1,76 @@
+# 第九百五十一部　\(\lambda^2/4\) 是完成光锥的质量平方
+
+自由完成态位于：
+
+$$
+G=0.
+$$
+
+引入非零 coupling 后：
+
+$$
+\boxed{
+G=\frac{\lambda^2}{4}.
+}
+$$
+
+在 \(p\) 附近：
+
+$$
+G(p+v)
+=
+Q(v)+O(\|v\|^3).
+$$
+
+所以：
+
+$$
+\boxed{
+Q(v)
+\approx
+\frac{\lambda^2}{4}.
+}
+\tag{951.1}
+$$
+
+在严格的数学类比中：
+
+$$
+\boxed{
+\begin{aligned}
+G=0
+&:\quad\text{massless tangent cone};\\
+G=\lambda^2/4
+&:\quad\text{mass shell};\\
+\lambda^2
+&:\quad\text{commutator holonomy mass-square}.
+\end{aligned}
+}
+$$
+
+这里的 “mass” 只是 Lorentz 二次型层面的谱术语，不是物理粒子断言。
+
+但结构非常清楚：
+
+$$
+\boxed{
+\text{无观察差异}
+\Longrightarrow
+\text{commutator}=I
+\Longrightarrow
+G=0;
+}
+$$
+
+$$
+\boxed{
+\text{观察通道不交换}
+\Longrightarrow
+\operatorname{tr}[A,B]-2=\lambda^2
+\Longrightarrow
+G>0.
+}
+$$
+
+---
+

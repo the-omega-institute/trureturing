@@ -1,0 +1,68 @@
+## 973.3 平衡尺度恢复 \(L|\delta|\) 定律
+
+选择：
+
+$$
+a\asymp|\gamma|.
+$$
+
+则：
+
+$$
+|r_a|
+\asymp
+\frac{|\delta|}{|\gamma|},
+$$
+
+故：
+
+$$
+n_{\mathrm{rad}}
+\asymp
+\frac{|\gamma|}{|\delta|}.
+$$
+
+前文 Laguerre turning-scale 分析表明，长度为 \(L\) 的相关窗口能稳定读取的 moment depth 约满足：
+
+$$
+n\lesssim aL.
+$$
+
+代入：
+
+$$
+a\asymp|\gamma|
+$$
+
+得到：
+
+$$
+\boxed{
+L\gtrsim\frac1{|\delta|}.
+}
+\tag{973.6}
+$$
+
+高度 \(\gamma\) 消失了。
+
+这与 Power-Packet、Paley–Wiener 和 Chebyshev 路线独立得到的：
+
+$$
+\boxed{
+L|\delta|\asymp1
+}
+$$
+
+完全一致。
+
+所以：
+
+$$
+\boxed{
+L|\delta|
+}
+$$
+
+不是某一个构造的偶然参数，而是跨：
+
+* Cayley；

@@ -1,0 +1,10 @@
+ast_path: section/2-状态盲派生/clause/3
+fingerprints:
+  raw_sha256: sha256:10776dd4de3f3ec3bf782136c1cca2e47d6b86715c1d9547aafd1f45056d9a94
+  normalized_sha256: sha256:10776dd4de3f3ec3bf782136c1cca2e47d6b86715c1d9547aafd1f45056d9a94
+cas_ref: sha256:10776dd4de3f3ec3bf782136c1cca2e47d6b86715c1d9547aafd1f45056d9a94
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

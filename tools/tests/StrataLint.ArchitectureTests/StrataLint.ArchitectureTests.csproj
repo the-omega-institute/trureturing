@@ -10,6 +10,7 @@
     <ProjectReference Include="../../StrataLint.Cli/StrataLint.Cli.csproj" />
     <ProjectReference Include="../../StrataLint.Scribe/StrataLint.Scribe.csproj" />
     <ProjectReference Include="../StrataLint.Tests/StrataLint.Tests.csproj" />
+    <ProjectReference Include="../StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj" />
     <ProjectReference Include="../StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj" />
     <!-- The official analyzer is admitted because compiler diagnostics enforce source
          calls before binaries exist. Reflection is sufficient for assembly and type

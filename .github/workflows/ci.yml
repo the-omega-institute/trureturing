@@ -254,6 +254,11 @@ jobs:
         shell: bash
         run: make -C candidate/tools selftest
 
+      - name: Audit repository capacity after merge
+        if: github.event_name == 'push' && !cancelled()
+        shell: bash
+        run: make -C candidate/tools capacity-audit REPOSITORY="$GITHUB_WORKSPACE/candidate"
+
       - name: Prove missing capability does not compile
         if: steps.scope.outputs.run_required == 'true'
         shell: bash

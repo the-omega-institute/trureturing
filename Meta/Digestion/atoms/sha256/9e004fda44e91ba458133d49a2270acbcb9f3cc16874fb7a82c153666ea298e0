@@ -1,0 +1,25 @@
+* 它是 multi-Weyl 型高荷节点。
+
+所以零点简单性问题可以重写为：
+
+$$
+\boxed{
+\text{所有 \(\xi\)-单极子是否都是基本单位荷 Weyl 节点？}
+}
+$$
+
+RH 与零点简单性是两件不同的事：
+
+$$
+\boxed{
+\begin{aligned}
+\mathrm{RH}
+&:\quad\text{节点是否都在边界};\\
+\text{simplicity}
+&:\quad\text{节点电荷是否都等于 }1.
+\end{aligned}
+}
+$$
+
+---
+

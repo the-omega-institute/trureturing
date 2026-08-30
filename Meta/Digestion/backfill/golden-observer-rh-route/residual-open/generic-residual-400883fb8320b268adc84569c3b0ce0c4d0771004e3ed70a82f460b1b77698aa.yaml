@@ -1,0 +1,14 @@
+ast_path: section/R-C-黄金谱参数的实谱等价
+fingerprints:
+  raw_sha256: sha256:400883fb8320b268adc84569c3b0ce0c4d0771004e3ed70a82f460b1b77698aa
+  normalized_sha256: sha256:400883fb8320b268adc84569c3b0ce0c4d0771004e3ed70a82f460b1b77698aa
+cas_ref: sha256:400883fb8320b268adc84569c3b0ce0c4d0771004e3ed70a82f460b1b77698aa
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-7f04f360e699f0bcef0e07afbcd1c2c05ba77ddc0868b53abda4157c784359d9-7d3549bf6fd3f0d22770b7f3ec77b61788116d36644f53f445e7a68e0d49a853
+    - generic-residual-0532339ef6cb5649a72e9f6bd6e028ffa348eddf0c8ec9ff8b51823d1cfa57e7-de320346132fee3f7893683a880f6632f98be1550bae4048b581cfa33823527b
+    - generic-residual-5cc1100e4fbe23ba00e142e13f370c7625ab75e7f985eedfa424f2d3e8cdc01e-2a2c257ddf0ba977d1ee552ed44b94c7717913b9748ccebd68043f2dd159e421

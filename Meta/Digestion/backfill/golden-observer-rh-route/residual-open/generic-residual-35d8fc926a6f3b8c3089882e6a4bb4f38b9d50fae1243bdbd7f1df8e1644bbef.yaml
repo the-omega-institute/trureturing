@@ -1,0 +1,13 @@
+ast_path: section/2-理论卷层答案-零点定位部分被设计成-RH-等价形
+fingerprints:
+  raw_sha256: sha256:35d8fc926a6f3b8c3089882e6a4bb4f38b9d50fae1243bdbd7f1df8e1644bbef
+  normalized_sha256: sha256:35d8fc926a6f3b8c3089882e6a4bb4f38b9d50fae1243bdbd7f1df8e1644bbef
+cas_ref: sha256:35d8fc926a6f3b8c3089882e6a4bb4f38b9d50fae1243bdbd7f1df8e1644bbef
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-b7b9bcbc44e0900d5921fe9759cd595a8d7cfa3db6b754ea80db541ffae4658b-99ccdb812ffada88a96a68f997f702c5e6c9ebfb4f25a9142e4f149e744eebbb
+    - generic-residual-7abc5d6e785d17907bd3a0c022a2b27c947de34cd83f089e9be79c056c9b5efc-c6c473c1acfbd18b2e55f1ea8372907abebae68acd46c8f8f4bde18deae857c3

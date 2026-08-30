@@ -1,0 +1,10 @@
+ast_path: section/948-2-解释
+fingerprints:
+  raw_sha256: sha256:4288c6ec6105ac6f8159e6f966edea64c081a068849f87ee9d75294b715bde06
+  normalized_sha256: sha256:4288c6ec6105ac6f8159e6f966edea64c081a068849f87ee9d75294b715bde06
+cas_ref: sha256:4288c6ec6105ac6f8159e6f966edea64c081a068849f87ee9d75294b715bde06
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

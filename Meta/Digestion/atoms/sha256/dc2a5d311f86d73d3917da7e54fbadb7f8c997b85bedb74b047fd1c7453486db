@@ -1,0 +1,30 @@
+# 第九百五十五部　完整世界为什么相同，局部起点为什么不同
+
+现在可以写出完整的信息遗忘链：
+
+$$
+\boxed{
+\begin{aligned}
+\omega
+&\longmapsto
+\{A_{\omega_n}(E)\}_{n\in\mathbb Z}
+\\
+&\longmapsto
+M_E(n,\omega)
+\\
+&\longmapsto
+\operatorname{tr}M_E(n,\omega)
+\\
+&\longmapsto
+G=\lambda^2/4
+\\
+&\longmapsto
+\Sigma_\lambda.
+\end{aligned}
+}
+\tag{955.1}
+$$
+
+其中：
+
+* \(\omega\)：完整观察者起点；

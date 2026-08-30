@@ -1,0 +1,10 @@
+ast_path: section/第九百九十五部-Schur-边界反射的双曲快速量
+fingerprints:
+  raw_sha256: sha256:e92ddacda1c218b817ad198eee649d055c86dac7b29ebf890e5dcff3ac6427c0
+  normalized_sha256: sha256:e92ddacda1c218b817ad198eee649d055c86dac7b29ebf890e5dcff3ac6427c0
+cas_ref: sha256:e92ddacda1c218b817ad198eee649d055c86dac7b29ebf890e5dcff3ac6427c0
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

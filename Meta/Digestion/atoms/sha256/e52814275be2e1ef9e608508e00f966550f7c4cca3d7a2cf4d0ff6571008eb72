@@ -1,0 +1,45 @@
+## 合法隐藏自由
+
+给定可见相位 \(\theta\)，存在多个：
+
+$$
+\Theta_1,\Theta_2\in\Sigma_\varphi
+$$
+
+满足：
+
+$$
+\pi_\varphi(\Theta_1)
+=
+\pi_\varphi(\Theta_2)
+=
+\theta,
+$$
+
+但：
+
+$$
+\Theta_1\neq\Theta_2.
+$$
+
+它们之差属于：
+
+$$
+K_\varphi=\ker\pi_\varphi.
+$$
+
+因此：
+
+$$
+\boxed{
+\text{Solenoid 隐藏纤维}
+=
+\text{同一可见世界的多种合法全局实现。}
+}
+\tag{1105.1}
+$$
+
+项目已经机器证明兼容同余数据恰好构成可见投影的核，并且投影满射，所以这里的隐藏不是缺失或非法，而是完整空间中真实存在的 lift 非唯一性。
+
+---
+

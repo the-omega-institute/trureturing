@@ -1,0 +1,12 @@
+### 3. 地址漂移
+
+外部仓库的 `main`、`dev` 或浮动 tag 不是稳定 theorem 地址。消费外部形式化必须记录：
+
+- commit；
+- 模块；
+- theorem 名；
+- theorem type；
+- source digest。
+
+外部项目升级导致地址变化，只能追加新的 import receipt；不能据此改写旧 theorem 曾经是否通过。
+

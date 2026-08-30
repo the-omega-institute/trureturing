@@ -1,0 +1,13 @@
+ast_path: section/第一千零十三部-离线零点的边界-Poisson-对偶
+fingerprints:
+  raw_sha256: sha256:f767ccb8e0b534c2939995cbb73b50c30dc2bae1afc128cfe6b6ba9576b3aa62
+  normalized_sha256: sha256:f767ccb8e0b534c2939995cbb73b50c30dc2bae1afc128cfe6b6ba9576b3aa62
+cas_ref: sha256:f767ccb8e0b534c2939995cbb73b50c30dc2bae1afc128cfe6b6ba9576b3aa62
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-c9fea8c5bdcb43094c2546ba31c63c75819036ac7ad77e505f6bff39c7fd1891-16079c08e6ae96c10731e6a1feba347df8c46b33a91ef2751747fc4605eda6ae
+    - generic-residual-3cf07d2b70ee6c0079aebee3400946674ae85fafc69863663bdd15265fa6e4f2-09f032e548157410288e2d07e02e8a4aea68075edc7f84c9387842272edaa7d4

@@ -1,0 +1,10 @@
+ast_path: section/主线
+fingerprints:
+  raw_sha256: sha256:7833697526ace3b9766a11867e2613ba38592cdb49ed3c80e3bc0a1ea4cc9f90
+  normalized_sha256: sha256:7833697526ace3b9766a11867e2613ba38592cdb49ed3c80e3bc0a1ea4cc9f90
+cas_ref: sha256:7833697526ace3b9766a11867e2613ba38592cdb49ed3c80e3bc0a1ea4cc9f90
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

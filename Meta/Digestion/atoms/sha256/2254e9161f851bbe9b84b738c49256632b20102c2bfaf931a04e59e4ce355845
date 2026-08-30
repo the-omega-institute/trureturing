@@ -1,0 +1,19 @@
+## 1068.4 RH bulk-confinement
+
+证明：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\operatorname{Deg}
+(\mathsf H_\xi)
+\cap
+\{x>0\}
+=
+\varnothing.
+}
+$$
+
+---
+

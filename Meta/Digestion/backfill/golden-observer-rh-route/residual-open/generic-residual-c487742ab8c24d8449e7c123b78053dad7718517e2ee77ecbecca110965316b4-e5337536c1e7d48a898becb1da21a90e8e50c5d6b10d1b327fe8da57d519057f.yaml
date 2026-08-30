@@ -1,0 +1,10 @@
+ast_path: section/最终研究命题/clause/2
+fingerprints:
+  raw_sha256: sha256:c487742ab8c24d8449e7c123b78053dad7718517e2ee77ecbecca110965316b4
+  normalized_sha256: sha256:c487742ab8c24d8449e7c123b78053dad7718517e2ee77ecbecca110965316b4
+cas_ref: sha256:c487742ab8c24d8449e7c123b78053dad7718517e2ee77ecbecca110965316b4
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

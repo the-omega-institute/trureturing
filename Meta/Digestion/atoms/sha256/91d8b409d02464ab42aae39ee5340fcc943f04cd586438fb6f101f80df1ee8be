@@ -1,0 +1,47 @@
+## 1057.1 高重数零点
+
+若重数为 \(m\)，则：
+
+$$
+\boxed{
+E_\pm^2
+\sim
+|c|^2
+\left(
+\Delta x^2+\Delta y^2
+\right)^m
++
+\mu^2.
+}
+\tag{1057.3}
+$$
+
+此时：
+
+* Chern 荷绝对值为 \(m\)；
+* 横向色散不再线性；
+* 它是 multi-Weyl 型高荷节点。
+
+所以零点简单性问题可以重写为：
+
+$$
+\boxed{
+\text{所有 \(\xi\)-单极子是否都是基本单位荷 Weyl 节点？}
+}
+$$
+
+RH 与零点简单性是两件不同的事：
+
+$$
+\boxed{
+\begin{aligned}
+\mathrm{RH}
+&:\quad\text{节点是否都在边界};\\
+\text{simplicity}
+&:\quad\text{节点电荷是否都等于 }1.
+\end{aligned}
+}
+$$
+
+---
+

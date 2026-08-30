@@ -1,0 +1,10 @@
+ast_path: section/第九百九十七部-黄金残差的正确可证伪命题
+fingerprints:
+  raw_sha256: sha256:f28b78440e6439e3d12fca8eb778c428ff9d4290dcf7ba8fbe5d8fe9558cc49f
+  normalized_sha256: sha256:f28b78440e6439e3d12fca8eb778c428ff9d4290dcf7ba8fbe5d8fe9558cc49f
+cas_ref: sha256:f28b78440e6439e3d12fca8eb778c428ff9d4290dcf7ba8fbe5d8fe9558cc49f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

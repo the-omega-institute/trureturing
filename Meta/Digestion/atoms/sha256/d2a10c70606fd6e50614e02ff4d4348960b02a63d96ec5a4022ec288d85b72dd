@@ -1,0 +1,59 @@
+## 定理 994.1（Li–Clark Verblunsky 二周期极限）
+
+RH 下：
+
+$$
+\boxed{
+-\overline{\alpha_n}\alpha_{n-1}
+\longrightarrow1.
+}
+\tag{994.2}
+$$
+
+因此：
+
+$$
+\boxed{
+|\alpha_n|\longrightarrow1.
+}
+\tag{994.3}
+$$
+
+### 证明
+
+标准 CMV 五对角表示的对角元在 \(n\ge1\) 时为：
+
+$$
+(\mathcal C_{\mathrm{CMV}})_{nn}
+=
+-\overline{\alpha_n}\alpha_{n-1}.
+$$
+
+紧算子 \(K=\mathcal C_{\mathrm{CMV}}-I\) 对标准正交基满足：
+
+$$
+\langle e_n,Ke_n\rangle\to0.
+$$
+
+因此：
+
+$$
+-\overline{\alpha_n}\alpha_{n-1}-1\to0.
+$$
+
+取模即得：
+
+$$
+|\alpha_n||\alpha_{n-1}|\to1.
+$$
+
+而每个 \(|\alpha_n|\le1\)，故：
+
+$$
+|\alpha_n|\to1.
+$$
+
+∎
+
+---
+

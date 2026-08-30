@@ -1,0 +1,87 @@
+* 但没有指定哪一条是“我”“正”“未来”。
+
+观察发生以后：
+
+$$
+\mathfrak D_\varphi
+\overset{\operatorname{Pol}_+}{\longrightarrow}
+L_+
+\overset{\text{slope}}{\longrightarrow}
+\varphi.
+$$
+
+因此：
+
+$$
+\boxed{
+\text{道}
+=
+\text{产生对偶的未极化关系};
+}
+$$
+
+$$
+\boxed{
+\text{有}
+=
+\text{关系经观察极化以后形成的正射影像}.
+}
+$$
+
+所以“道”不是 \(\varphi\) 的相反数。
+
+在相同层次上，\(\varphi\) 的代数对偶是：
+
+$$
+\varphi'
+=
+-\varphi^{-1}.
+$$
+
+在动力层，其对偶是：
+
+$$
+\varphi^2
+\leftrightarrow
+\varphi^{-2}.
+$$
+
+在对数时间层，其对偶是：
+
+$$
++\log\varphi
+\leftrightarrow
+-\log\varphi.
+$$
+
+在 Lorentz 极性下，黄金 null ray 又满足：
+
+$$
+L_+^\perp=L_+,
+$$
+
+所以它还是一条自极化边界。
+
+但“道”属于更高层：
+
+$$
+\boxed{
+\text{变换本身}
+\quad\longrightarrow\quad
+\text{固定点及其显像}.
+}
+$$
+
+可以把它压缩为：
+
+$$
+\boxed{
+\text{道不是 }\varphi^\vee;
+\qquad
+\text{道是产生 }\varphi\text{ 与 }\varphi^\vee\text{ 的规则。}
+}
+\tag{1107.1}
+$$
+
+---
+
