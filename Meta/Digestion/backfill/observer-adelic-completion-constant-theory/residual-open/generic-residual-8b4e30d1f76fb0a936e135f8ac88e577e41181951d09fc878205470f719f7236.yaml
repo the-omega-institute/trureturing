@@ -1,0 +1,10 @@
+ast_path: section/第九百七十八部-Prime-Weil-到-SL-2-的规范编译器
+fingerprints:
+  raw_sha256: sha256:8b4e30d1f76fb0a936e135f8ac88e577e41181951d09fc878205470f719f7236
+  normalized_sha256: sha256:8b4e30d1f76fb0a936e135f8ac88e577e41181951d09fc878205470f719f7236
+cas_ref: sha256:8b4e30d1f76fb0a936e135f8ac88e577e41181951d09fc878205470f719f7236
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

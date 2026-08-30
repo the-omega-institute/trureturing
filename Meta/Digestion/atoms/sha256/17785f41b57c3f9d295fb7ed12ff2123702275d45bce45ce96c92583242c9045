@@ -1,0 +1,64 @@
+# 第一千零十八部　建议形式化顺序
+
+```text
+D5/S3/Analytic/Zeta/Rarity/
+  ZeroRarityProfile.lean
+  OffLineCountingFunction.lean
+  OffLineTransverseEnergy.lean
+  MeasureRarityVsCertificateRarity.lean
+
+D5/S3/Analytic/Approximation/DualVisibility/
+  RationalFiniteRelationDepth.lean
+  IrrationalNoFiniteTermination.lean
+  RationalApproximationResidual.lean
+  GoldenHurwitzExtremalInterface.lean
+
+D5/S3/Analytic/Zeta/ZeroCayleyMeasure/
+  SummablePositiveZeroWeights.lean
+  ZeroCayleyPositiveMeasure.lean
+  RHCayleySupportOnCircle.lean
+  OffLineCayleyReciprocalAtom.lean
+
+D5/S3/Weil/ChristoffelDetector/
+  PolynomialEvaluationCost.lean
+  CircleSupportEvaluationDecay.lean
+  AtomicEvaluationFloor.lean
+  ChristoffelAnnulusProfile.lean
+  ChristoffelAnnulusRHCriterion.lean
+
+D5/S3/Weil/MomentConeDual/
+  CriticalMomentCone.lean
+  ToeplitzConeSeparation.lean
+  LocalizingPolynomialWitness.lean
+  OffCircleAtomFiniteSeparation.lean
+  MomentConeDualRHCriterion.lean
+
+D5/S3/Analytic/Zeta/MellinLightCone/
+  ZeroQuartetMellinMode.lean
+  OffLineCoshPrimeWave.lean
+  CriticalUnitaryPrimeWave.lean
+  EvenNormalDerivativePrimeMoment.lean
+  GoldenDefectResolutionInvariant.lean
+
+D5/S3/Analytic/Zeta/PoissonShadow/
+  LogDerivativeZeroPole.lean
+  OffLineZeroPoissonBoundary.lean
+  ReflectionPairedCurvature.lean
+  NoPositiveWidthPoissonComponentTarget.lean
+
+D5/S3/Observer/GoldenDualTime/
+  GoldenStableUnstableScale.lean
+  GoldenDefectResolutionAction.lean
+  GoldenDualityReflection.lean
+  GoldenLightConeInvariant.lean
+  GoldenUniversalityConditional.lean
+
+D5/S3/Weil/RareCertificateEnumerator/
+  RationalParameterizedTestFamily.lean
+  IntervalMatrixCertificate.lean
+  NegativeCertificateSemidecision.lean
+  UniformPositivityProofTarget.lean
+```
+
+---
+

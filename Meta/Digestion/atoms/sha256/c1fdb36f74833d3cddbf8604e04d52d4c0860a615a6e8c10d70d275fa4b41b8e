@@ -1,0 +1,35 @@
+## GSR-2：渐近 Fibonacci recursion
+
+存在 error matrices：
+
+$$
+E_k^{(a)}(z)
+$$
+
+使：
+
+$$
+\boxed{
+M_{k+1}^{(a)}
+=
+M_{k-1}^{(a)}M_k^{(a)}
++
+E_k^{(a)},
+}
+\tag{977.1}
+$$
+
+且在目标谱域：
+
+$$
+\boxed{
+\sum_k
+\|E_k^{(a)}\|
+<
+\infty.
+}
+\tag{977.2}
+$$
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/N-6-Weil-研究进度向量
+fingerprints:
+  raw_sha256: sha256:c1ffa7b9f08a2bd0de32454aced4a6ea632dc440ebdf838b3150e6f732df8e8f
+  normalized_sha256: sha256:c1ffa7b9f08a2bd0de32454aced4a6ea632dc440ebdf838b3150e6f732df8e8f
+cas_ref: sha256:c1ffa7b9f08a2bd0de32454aced4a6ea632dc440ebdf838b3150e6f732df8e8f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,58 @@
+# 第一千零六部　离线零点可能具有“超稀疏”形态
+
+定义：
+
+$$
+\boxed{
+N_{\mathrm{off}}(T,\epsilon)
+=
+\#\left\{
+\rho:
+\begin{array}{l}
+0<\Im\rho\le T,\\
+|\Re\rho-\frac12|\ge\epsilon
+\end{array}
+\right\}.
+}
+\tag{1006.1}
+$$
+
+即使 RH 为假，也可能出现以下不同情形：
+
+$$
+\boxed{
+\begin{aligned}
+&N_{\mathrm{off}}(T,\epsilon)\text{ 有限};\\
+&N_{\mathrm{off}}(T,\epsilon)\to\infty
+\text{，但相对密度为 }0;\\
+&\text{只在极高高度偶发};\\
+&\text{存在一条极靠近临界线的稀疏序列}.
+\end{aligned}
+}
+$$
+
+所以平均零点统计、随机矩阵统计或大量数值验证即使完全正确，也未必能排除一个零密度异常集。
+
+这与有理数的情况相似：
+
+* Lebesgue 随机采样几乎永远看不到有理数；
+* 但枚举整数对可以完整看见所有有理数。
+
+因此离线零点的研究应从：
+
+$$
+\boxed{
+\text{零点采样}
+}
+$$
+
+切换到：
+
+$$
+\boxed{
+\text{异常证书枚举}.
+}
+$$
+
+---
+

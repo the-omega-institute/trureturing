@@ -1,0 +1,1 @@
+- 本仓 `D5/S3/Weil/ZetaBridge/ClassicExplicitFormula.lean` 已导入 `Zeta23`，说明本仓已在消费相邻外部形式化，但该依赖的来源 commit、导出 API 与 axioms 应进入固定账。

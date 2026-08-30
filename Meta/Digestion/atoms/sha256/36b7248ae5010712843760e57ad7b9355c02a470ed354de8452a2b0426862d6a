@@ -1,0 +1,7 @@
+### 1. 纯 kernel 层答案：当前没有等价定理
+
+[repo-derived]
+
+当前 Lean DAG 中：
+
+- 没有 `o5_independence → RiemannHypothesis`；

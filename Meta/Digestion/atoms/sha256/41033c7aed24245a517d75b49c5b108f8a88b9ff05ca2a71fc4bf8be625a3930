@@ -1,0 +1,12 @@
+### M6　有限 Li 正性层
+
+先做有限对象：
+
+- completed $\xi$ 的导数／Taylor API；
+- $\lambda_n$ 的有限定义；
+- 前 $N$ 个 Li 系数的 exact arithmetic 或 interval certificate；
+- Li 核与有限 Weil Gram matrix 的恒等式；
+- 明确 theorem 名称含 `upTo N`，禁止省略有限性。
+
+全体 $n$ 的正性继续标记 RH-level open。
+

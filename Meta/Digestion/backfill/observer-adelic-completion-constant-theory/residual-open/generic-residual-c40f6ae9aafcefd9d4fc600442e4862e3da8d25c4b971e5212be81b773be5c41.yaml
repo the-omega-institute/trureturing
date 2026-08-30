@@ -1,0 +1,10 @@
+ast_path: row/Prime-Weil-到-SL-2-cocycle
+fingerprints:
+  raw_sha256: sha256:c40f6ae9aafcefd9d4fc600442e4862e3da8d25c4b971e5212be81b773be5c41
+  normalized_sha256: sha256:c40f6ae9aafcefd9d4fc600442e4862e3da8d25c4b971e5212be81b773be5c41
+cas_ref: sha256:c40f6ae9aafcefd9d4fc600442e4862e3da8d25c4b971e5212be81b773be5c41
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,38 @@
+## v6.3（续）：Li–Clark 的 Schur 化、CMV–\(SL_2\) 规范桥、径向 Poisson 导数与黄金重整化检验
+
+续接前文**第九百六十七部**。
+
+上一部分已经得到：
+
+$$
+D_N
+=
+\prod_{j=0}^{N-1}
+\left(1-|\alpha_j|^2\right)^{N-j},
+$$
+
+因此 Toeplitz determinant、prediction error 与 scalar completion entropy 只能读取：
+
+$$
+|\alpha_j|,
+$$
+
+不能读取：
+
+$$
+\arg\alpha_j.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{标量完成只读取观察者反射强度，
+不读取观察者反射方向。}
+}
+$$
+
+这与项目刚刚形式化的观察语言层级完全一致：prime-support 严格粗于 valuation，prime-diagonal 严格粗于完整 operator；同样地，Toeplitz determinant 语言严格粗于完整 Verblunsky/CMV 语言。
+
+---
+

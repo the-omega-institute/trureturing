@@ -1,0 +1,10 @@
+ast_path: section/R-C-黄金谱参数的实谱等价/clause/3
+fingerprints:
+  raw_sha256: sha256:5cc1100e4fbe23ba00e142e13f370c7625ab75e7f985eedfa424f2d3e8cdc01e
+  normalized_sha256: sha256:5cc1100e4fbe23ba00e142e13f370c7625ab75e7f985eedfa424f2d3e8cdc01e
+cas_ref: sha256:5cc1100e4fbe23ba00e142e13f370c7625ab75e7f985eedfa424f2d3e8cdc01e
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

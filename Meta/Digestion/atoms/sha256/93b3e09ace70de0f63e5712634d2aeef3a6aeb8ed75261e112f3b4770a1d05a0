@@ -1,0 +1,88 @@
+# 第一千零五十七部　简单零点同时是单极子与 Weyl 光锥顶点
+
+设 \(z_0\) 是简单零点：
+
+$$
+F(z_0)=0,
+\qquad
+F'(z_0)\neq0.
+$$
+
+令：
+
+$$
+z=z_0+\Delta x+i\Delta y.
+$$
+
+则：
+
+$$
+F(z)
+=
+F'(z_0)
+(\Delta x+i\Delta y)
++
+O(|\Delta z|^2).
+$$
+
+所以局部能谱满足：
+
+$$
+\boxed{
+E_\pm^2
+=
+|F'(z_0)|^2
+\left(
+\Delta x^2+\Delta y^2
+\right)
++
+\mu^2
++
+O(|\Delta|^3).
+}
+\tag{1057.1}
+$$
+
+经过线性坐标重标定：
+
+$$
+q_x+iq_y
+=
+F'(z_0)
+(\Delta x+i\Delta y),
+$$
+
+得到：
+
+$$
+\boxed{
+E_\pm
+=
+\pm
+\sqrt{
+q_x^2+q_y^2+\mu^2
+}
++
+\text{高阶项}.
+}
+\tag{1057.2}
+$$
+
+这正是一个局部 Weyl cone。
+
+因此：
+
+$$
+\boxed{
+\text{简单 \(\xi\) 零点}
+=
+\text{单位 Chern 荷单极子}
++
+\text{线性无质量锥顶}.
+}
+$$
+
+Weyl 节点被视为参数或动量空间中的 Berry 曲率单极子，正是这一标准结构。([APS Journals][4])
+
+---
+

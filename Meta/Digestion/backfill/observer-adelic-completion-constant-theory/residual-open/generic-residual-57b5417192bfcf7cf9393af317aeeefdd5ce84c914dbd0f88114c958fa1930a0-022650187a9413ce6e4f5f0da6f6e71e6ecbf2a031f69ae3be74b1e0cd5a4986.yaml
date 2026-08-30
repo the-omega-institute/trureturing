@@ -1,0 +1,10 @@
+ast_path: section/第一千零五十六部-这与观察者不可克隆的真正联系/clause/1
+fingerprints:
+  raw_sha256: sha256:57b5417192bfcf7cf9393af317aeeefdd5ce84c914dbd0f88114c958fa1930a0
+  normalized_sha256: sha256:57b5417192bfcf7cf9393af317aeeefdd5ce84c914dbd0f88114c958fa1930a0
+cas_ref: sha256:57b5417192bfcf7cf9393af317aeeefdd5ce84c914dbd0f88114c958fa1930a0
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

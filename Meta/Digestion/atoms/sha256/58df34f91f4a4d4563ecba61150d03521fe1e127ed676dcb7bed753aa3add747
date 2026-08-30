@@ -1,0 +1,106 @@
+# 第九百九十二部（续）　黄金比例在对数吹胀坐标中成为平移
+
+定义完成尖点坐标：
+
+$$
+\boxed{
+R
+=
+\log\frac{s}{2\pi}
+=
+\log\frac1{2\pi(1-z)}.
+}
+\tag{992.1}
+$$
+
+前文已经得到：
+
+$$
+\boxed{
+\Theta_\xi(z)
+=
+1-\frac{4\lambda_1}{R}
++
+O(R^{-2}).
+}
+\tag{992.2}
+$$
+
+在这一坐标中，乘法尺度变换：
+
+$$
+s\longmapsto \varphi^2s
+$$
+
+不再表现为乘法，而表现为平移：
+
+$$
+\boxed{
+R\longmapsto R+2\log\varphi.
+}
+\tag{992.3}
+$$
+
+因此，黄金比例若进入 canonical completion cusp，最自然的角色不是：
+
+$$
+\Theta_\xi'(1)=\varphi^{-2},
+$$
+
+而是：
+
+$$
+\boxed{
+\text{对数吹胀坐标上的离散平移长度 }2\log\varphi.
+}
+$$
+
+项目已经机器证明，黄金单位格点 \(\zeta\) 的各向异性参数同时满足：
+
+$$
+\eta\longmapsto-\eta
+$$
+
+的反射，以及：
+
+$$
+\eta\longmapsto\eta+2\log\varphi
+$$
+
+的周期。
+
+所以两条此前看似独立的结构现在可以精确区分：
+
+$$
+\boxed{
+\begin{aligned}
+\Theta_\xi\text{ 的原始边界动力}
+&=\text{对数尖点，角导数无穷};\\
+\text{黄金单位观察动力}
+&=\text{尖点吹胀坐标中的离散平移}.
+\end{aligned}
+}
+$$
+
+这意味着：
+
+$$
+\boxed{
+\varphi
+\text{ 可以属于观察者对完成深度的刻度，}
+}
+$$
+
+但目前不能说：
+
+$$
+\boxed{
+\varphi
+\text{ 是 }\xi\text{ 自身边界固定点的线性倍率。}
+}
+$$
+
+这是本轮第一条硬性科学边界。
+
+---
+

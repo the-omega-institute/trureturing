@@ -1,0 +1,11 @@
+### N-6　Weil 研究进度向量
+
+[suspected-novel]
+
+采用
+
+$(N_{\rm closed},V_{\rm ZeroData},C_{\rm conv},
+L_{\max}^{\rm cert},B_T,\delta_{\rm PSD},A_{\rm external})$
+
+度量定理进展，禁止用 CPU 时间、矩阵阶数或输出小数位代替逻辑进展。
+

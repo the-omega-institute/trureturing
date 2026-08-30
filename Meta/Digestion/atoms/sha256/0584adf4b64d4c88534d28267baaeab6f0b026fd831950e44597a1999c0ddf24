@@ -1,0 +1,11 @@
+### M2　枚举不变性与卷积平方收敛
+
+需要证明：
+
+- 任意两个 `ZeroData` 对同一内在零点多重集给出相同有限 cutoff 和；
+- `zeroSum` 与枚举选择无关；
+- 每个 admissible `convolutionSquare g` 都有 canonical `SymmetricConvergent`；
+- 零点和与 `weil_explicit_formula` 使用相同截断规范。
+
+完成后，O-6 中的 `hZero` 才能从“调用者任选前件”逐步移至可派生事实。
+

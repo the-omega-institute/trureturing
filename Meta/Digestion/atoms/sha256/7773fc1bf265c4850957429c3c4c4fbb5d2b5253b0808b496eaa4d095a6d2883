@@ -1,0 +1,12 @@
+### 2. O-6 的实际 Lean 陈述
+
+[repo-derived | GID: `D5/X_Frontier/Hearts`]
+
+`o6WeilPositivityStatement` 目前是一个 `def : Prop`，而不是已证 theorem：
+
+$ \forall Z\,g\,h_{\rm conv},\quad
+   \Re\operatorname{zeroSum}(Z,g*\widetilde g,h_{\rm conv})\ge0.$
+
+其中：
+
+- $Z:\texttt{ZeroData}$；

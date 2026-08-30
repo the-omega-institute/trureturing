@@ -1,0 +1,10 @@
+ast_path: section/第一千零十八部-建议形式化顺序
+fingerprints:
+  raw_sha256: sha256:17785f41b57c3f9d295fb7ed12ff2123702275d45bce45ce96c92583242c9045
+  normalized_sha256: sha256:17785f41b57c3f9d295fb7ed12ff2123702275d45bce45ce96c92583242c9045
+cas_ref: sha256:17785f41b57c3f9d295fb7ed12ff2123702275d45bce45ce96c92583242c9045
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

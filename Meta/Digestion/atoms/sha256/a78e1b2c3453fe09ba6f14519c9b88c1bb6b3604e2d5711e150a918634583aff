@@ -1,0 +1,67 @@
+# 第九百六十七部（续）　行列式层的关系性不可克隆
+
+固定任意序列：
+
+$$
+0<r_n<1.
+$$
+
+对每个相位序列：
+
+$$
+\vartheta=(\vartheta_0,\vartheta_1,\ldots)
+\in
+(\mathbb R/2\pi\mathbb Z)^{\mathbb N},
+$$
+
+定义：
+
+$$
+\alpha_n^{(\vartheta)}
+=
+r_ne^{i\vartheta_n}.
+$$
+
+Verblunsky theorem 保证每一条单位圆盘内的系数序列都唯一对应一个非平凡圆周概率测度。
+
+因此，不同的：
+
+$$
+\vartheta\neq\vartheta'
+$$
+
+给出不同 measures：
+
+$$
+\mu_\vartheta\neq\mu_{\vartheta'},
+$$
+
+但它们的 determinant ladder 完全相同：
+
+$$
+\boxed{
+D_N(\mu_\vartheta)
+=
+D_N(\mu_{\vartheta'})
+\qquad
+\forall N.
+}
+\tag{967.2}
+$$
+
+甚至在共轭对称的实分支中，只需选择：
+
+$$
+\alpha_n=\pm r_n,
+$$
+
+就能得到不可数多条不同的 sign histories，却具有相同的：
+
+$$
+D_N,\qquad
+\rho_N,\qquad
+\mathcal E_N.
+$$
+
+因此：
+

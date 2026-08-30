@@ -1,0 +1,14 @@
+ast_path: section/2-O-6-的实际-Lean-陈述
+fingerprints:
+  raw_sha256: sha256:25bf9b9ebb3e6026497c25bb6b6de65643b4370e0ef6082b087a85b2c5a1de1b
+  normalized_sha256: sha256:25bf9b9ebb3e6026497c25bb6b6de65643b4370e0ef6082b087a85b2c5a1de1b
+cas_ref: sha256:25bf9b9ebb3e6026497c25bb6b6de65643b4370e0ef6082b087a85b2c5a1de1b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-7773fc1bf265c4850957429c3c4c4fbb5d2b5253b0808b496eaa4d095a6d2883-f0221b56c4f7f26a040d1e9acd2f32f894bc94276215d43ecf32aa548e92e85a
+    - generic-residual-7bcf65d37b21ff27c51c1650d536c2d44ca23008da2fc710277b58fcbbf61722-4e050bfd18a410853209a0bede24d0a62f5a9e552b3f571477bbf0cf718e21c4
+    - generic-residual-1d4a16a8d5d971a8f7a5d11b4746591e5706b3af2db786fd1f521084c44e3eda-353a8a33903b97213208f86fe52d21e666791ff2fa1b86b40625eab3e871b967

@@ -1,0 +1,10 @@
+ast_path: section/第九百七十五部-RH-真与假对应两种完全不同的边界机制
+fingerprints:
+  raw_sha256: sha256:7f1760be8845e2c8647e3fc13aff99efb6f87e310ee5e931b0b9f5f070a99f75
+  normalized_sha256: sha256:7f1760be8845e2c8647e3fc13aff99efb6f87e310ee5e931b0b9f5f070a99f75
+cas_ref: sha256:7f1760be8845e2c8647e3fc13aff99efb6f87e310ee5e931b0b9f5f070a99f75
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

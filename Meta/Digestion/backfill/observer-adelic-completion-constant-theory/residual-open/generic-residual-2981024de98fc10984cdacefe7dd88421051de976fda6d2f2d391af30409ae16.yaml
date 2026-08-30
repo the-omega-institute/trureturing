@@ -1,0 +1,15 @@
+ast_path: section/第一千零四十四部-通量证书的数值鲁棒性
+fingerprints:
+  raw_sha256: sha256:2981024de98fc10984cdacefe7dd88421051de976fda6d2f2d391af30409ae16
+  normalized_sha256: sha256:2981024de98fc10984cdacefe7dd88421051de976fda6d2f2d391af30409ae16
+cas_ref: sha256:2981024de98fc10984cdacefe7dd88421051de976fda6d2f2d391af30409ae16
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-024ecc5c11561c4456f8447f577a7ff12813483c8bc08071f645e075281d3852-074a34ad04d673c0d60120649ed4551674ee8d766f48d64597ef29cb613dd633
+    - generic-residual-21e34b027d70fd27b1278c1f9b7eb0fc4c78287f600db1ed98f6f7a0f9be8b36-6d378c98234149f248a20d42206bd6b39f3c3d1dae52fc03020888612bf3609c
+    - generic-residual-c35dc9bac00025252b8b13de2659ceae3d6bcbd843fb14246c2ac5ec79d6d79a-263497b7c97df284af23b00208997ce9e133dbbc0e6bfae4cc1f6ee97351e490
+    - generic-residual-7b1f6eb6b2e253fe2e46a7e18fa5b6b34c623c643a88a2bdacbd858b32eae5f8-c3163f3d5e4346b48514026975530e2b44284187717cfccfc05d638c4304db29

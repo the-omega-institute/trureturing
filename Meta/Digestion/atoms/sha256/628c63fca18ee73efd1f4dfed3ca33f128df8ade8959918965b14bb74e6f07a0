@@ -1,0 +1,34 @@
+### 3. 初始预算包络
+
+[suspected-novel]
+
+义务波 E0：
+
+- 至多 1 个 definitions-only Core 文件；
+- 恰好 6 个 public theorem 模块 R-A—R-F；
+- 0 个新 axiom；
+- 0 个测度依赖；
+- 0 次外部依赖升级；
+- 0 次修改 `Hearts.lean`；
+- 失败输出必须是缺失 API、反例或 statement 修订建议，不得留 `sorry`。
+
+义务波 E1：
+
+- 目标只限 canonical `ZeroData`、非空洞性和枚举不变性；
+- 若局部有限性需要本仓尚无的全局零点计数 theorem，则停止 E1，把缺口移至中期 analytic 账；
+- 不把前若干已计算零点包装成全体 `ZeroData`。
+
+有限窗口波 F：
+
+- 在计算前冻结 $(L,N,T)$、基、规范和容许误差；
+- 只接受 exact rational 或 outward-rounded interval certificate；
+- 数值失败后不得缩小窗口并仍称原目标成功；
+- 每次扩大 $L$ 必须同时报告 $\delta_{\rm PSD}$ 与 $B_T$。
+
+黄金桥波 G：
+
+- 第一门是 factorization；
+- 第二门是 divisor order；
+- 第三门才是 RH 等价定位；
+- 若有限 Euler 系数在预注册阶数内不匹配，立即冻结反例并停止，不以重定义 `eulerGerm` 消除差异。
+

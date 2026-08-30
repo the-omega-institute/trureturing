@@ -1,0 +1,14 @@
+ast_path: section/1057-1-高重数零点
+fingerprints:
+  raw_sha256: sha256:91d8b409d02464ab42aae39ee5340fcc943f04cd586438fb6f101f80df1ee8be
+  normalized_sha256: sha256:91d8b409d02464ab42aae39ee5340fcc943f04cd586438fb6f101f80df1ee8be
+cas_ref: sha256:91d8b409d02464ab42aae39ee5340fcc943f04cd586438fb6f101f80df1ee8be
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-6818505aca66042bcab6d0f0f6c4b71823af841255aa3a5e1cbddc8ea505164c-a17731eecf4a2bc6d5111d7c2315b3378d6bfdb7f27d5304c8b1d093d009af58
+    - generic-residual-0a8b27b2070d4ec15315f9f17e0b9d28888bf5f9e6e47513dc517fbd8eb21d9d-c26deb8621cacf70d224f20e56c52edb6822e3b247cd13af0fc59209823387dd
+    - generic-residual-9e004fda44e91ba458133d49a2270acbcb9f3cc16874fb7a82c153666ea298e0-c2aacc49d34ac194ca67089dd3f83d729e6f79b6e3b30139e1d657b7c6c528f0

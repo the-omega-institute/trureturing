@@ -1,0 +1,21 @@
+# 第一千零七部　项目已经具备的对偶证书底座
+
+项目当前已经机器证明：
+
+1. prime-support 语言严格粗于完整 valuation 语言；
+2. prime-diagonal 语言严格粗于完整 operator 语言。
+
+即仅知道“哪些素数出现”不能恢复其指数，仅知道对角读数不能恢复相对相位。
+
+这说明：
+
+$$
+\boxed{
+\text{不可见不等于不存在；
+它可能只是落在更细语言的纤维中。}
+}
+$$
+
+在 Weil/Toeplitz 侧，项目已经机器闭合：
+
+* 正半定截断 Hermitian Toeplitz moments 存在有限单位圆表示；

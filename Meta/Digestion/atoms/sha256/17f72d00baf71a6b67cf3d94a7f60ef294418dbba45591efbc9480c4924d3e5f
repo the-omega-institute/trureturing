@@ -1,0 +1,96 @@
+# 第一千零六十三部　Prime–Archimedean 单极子荷
+
+赤道 winding 与 Chern 荷均等于：
+
+$$
+\boxed{
+m
+=
+\frac1{2\pi i}
+\oint_C
+\frac{F'(z)}{F(z)}
+\,dz.
+}
+\tag{1063.1}
+$$
+
+回到原始坐标：
+
+$$
+s=\frac12+z,
+$$
+
+得到：
+
+$$
+\boxed{
+m
+=
+\frac1{2\pi i}
+\oint_{\frac12+C}
+\frac{\xi'(s)}{\xi(s)}
+\,ds.
+}
+\tag{1063.2}
+$$
+
+而：
+
+$$
+\boxed{
+\begin{aligned}
+\frac{\xi'}{\xi}(s)
+={}&
+\frac1s
++
+\frac1{s-1}
+-\frac12\log\pi
++\frac12\psi\left(\frac s2\right)
++
+\frac{\zeta'}{\zeta}(s).
+\end{aligned}
+}
+\tag{1063.3}
+$$
+
+在：
+
+$$
+\Re s>1
+$$
+
+中：
+
+$$
+\boxed{
+-\frac{\zeta'}{\zeta}(s)
+=
+\sum_{n\ge1}
+\frac{\Lambda(n)}{n^s}.
+}
+\tag{1063.4}
+$$
+
+因此单极子荷具有形式分解：
+
+$$
+\boxed{
+Q_{\mathrm{mono}}
+=
+Q_{\mathrm{pole}}
++
+Q_\infty
++
+Q_{\mathrm{prime}}.
+}
+\tag{1063.5}
+$$
+
+这里：
+
+* \(Q_{\mathrm{pole}}\) 来自 \(s(s-1)\)；
+* \(Q_\infty\) 来自 Gamma 完成；
+* \(Q_{\mathrm{prime}}\) 来自素数幂。
+
+---
+

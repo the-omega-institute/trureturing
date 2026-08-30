@@ -1,0 +1,10 @@
+ast_path: section/第一千零五十五部-Dirac-string-就是-log-xi-的分支切口
+fingerprints:
+  raw_sha256: sha256:8f1f7c50ccbe46f4607cf8597faee1d428dcaa61e733ab2a250f0de39caea2df
+  normalized_sha256: sha256:8f1f7c50ccbe46f4607cf8597faee1d428dcaa61e733ab2a250f0de39caea2df
+cas_ref: sha256:8f1f7c50ccbe46f4607cf8597faee1d428dcaa61e733ab2a250f0de39caea2df
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,12 @@
+- `canonicalWeilExplicitFormulaStatus`
+
+标成 `.missing`。
+
+与此同时，本仓后续模块已经有特定接口下的 `weil_explicit_formula`。这不应草率写成自相矛盾；更可能表示 `Convention` 账本所指的是更强、规范唯一的 canonical theorem。开工前应审计该状态字段究竟是否过期，还是刻意区分“特定桥接定理”与“规范公式”。
+
+### 3. PrimeNumberTheoremAnd 的完成度
+
+[literature-attested | public Lean repository]
+
+`AlexKontorovich/PrimeNumberTheoremAnd` 的当前 `main` 中：
+

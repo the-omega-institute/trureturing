@@ -1,0 +1,13 @@
+## Poisson 半群一致性
+
+证明：
+
+$$
+\boxed{
+D_{x+h}=P_h*D_x
+\quad
+\forall x,h>0.
+}
+\tag{1047.3}
+$$
+

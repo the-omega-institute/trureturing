@@ -1,0 +1,42 @@
+# 第九百七十三部　多尺度 Cayley 显微镜
+
+对小 \(\delta\)：
+
+$$
+\boxed{
+r_a(\gamma,\delta)
+=
+-\frac{
+2a\delta
+}{
+\gamma^2+a^2
+}
++
+O(\delta^3).
+}
+\tag{973.1}
+$$
+
+要使第 \(n\) 阶 even moment 看到 \(O(1)\) 的径向缺陷，需要：
+
+$$
+n|r_a|\gtrsim1.
+$$
+
+因此所需 moment depth 约为：
+
+$$
+\boxed{
+n_{\mathrm{rad}}(a)
+\asymp
+\frac{
+\gamma^2+a^2
+}{
+2a|\delta|
+}.
+}
+\tag{973.2}
+$$
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/1001-1-Toeplitz-floor
+fingerprints:
+  raw_sha256: sha256:83029b9b26d6a796d6bae05652b4789aa0c66a4c0bab92a02843329aca639bfe
+  normalized_sha256: sha256:83029b9b26d6a796d6bae05652b4789aa0c66a4c0bab92a02843329aca639bfe
+cas_ref: sha256:83029b9b26d6a796d6bae05652b4789aa0c66a4c0bab92a02843329aca639bfe
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

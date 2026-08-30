@@ -1,0 +1,17 @@
+## Transfer hyperbolicity depth
+
+$$
+\boxed{
+d_H
+=
+\min
+\left\{
+N:
+\left|
+\operatorname{tr}M_N(z)
+\right|>2
+\right\}.
+}
+\tag{981.3}
+$$
+
