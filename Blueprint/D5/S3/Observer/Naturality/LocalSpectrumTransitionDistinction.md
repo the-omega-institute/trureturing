@@ -21,5 +21,4 @@ The declaration exposes distinct axes with equal local spectra together with the
 ## References
 
 - Truth anchor: `D5/S3/Observer/Naturality/LocalSpectrumTransitionDistinction.local_spectrum_transition_distinction`
-- Dependency: [D5/S3/Observer/Naturality/InvariantOriginRecoveryObstruction](InvariantOriginRecoveryObstruction.md)
 - Dependency: [D5/S3/Observer/Naturality/ObserverWorldCovariance](ObserverWorldCovariance.md)
