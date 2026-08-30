@@ -1,0 +1,3 @@
+## 四(D)　F-RH 框架:RH 型命题 = 观察者族逃逸残差的 tempered 性
+
+OACTC 165.3 的 $\mathcal A_{\mathrm{tor}}=\bigcap_T\ker\mathcal P_T$ 是 DECT 逃逸残差的字面实例。公理化:观察者族 $F$ 之 $\mathrm{Escape}(F)$;**$F$-RH** := $\mathrm{Escape}(F)$ 全 tempered。素观察者与环面观察者的残差可在有限窗口机器比较;DECT 对角定理暗示可数族残差恒非空——**RH 型命题从来不是「无逃逸」而是「逃逸受控」**。〔框架 suspected-novel〕
