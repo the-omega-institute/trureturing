@@ -87,7 +87,10 @@ public sealed class ReportSupervisorLeanSlotTests
     {
         var source = File.ReadAllText(SupervisorScriptPath());
         var wait = DefaultOf(source, "STRATALINT_LOCK_TIMEOUT_SECONDS");
-        var hold = DefaultOf(source, "STRATALINT_BUILD_TIMEOUT_SECONDS");
+        // 持有预算按角色取值(#4122):等待者必须熬得过**任一**合法持槽者,故取两者之大。
+        var hold = Math.Max(
+            LiteralAssignment(source, "LEAN_PRODUCER_BUILD_TIMEOUT_SECONDS"),
+            LiteralAssignment(source, "CONSUMER_BUILD_TIMEOUT_SECONDS"));
 
         Assert.True(
             wait >= hold,
@@ -95,34 +98,53 @@ public sealed class ReportSupervisorLeanSlotTests
             + "one legitimate long build would then red every concurrent waiter");
     }
 
-    // 嵌套 deadline 取最小:`make lean-report` 的 worker(`tools/lean-inspector/inspect.sh`)外层由本脚本的
-    // BUILD_TIMEOUT 兜住,内层是每条 Lake 命令各自的 `LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds`
-    // (policy-override,#2535→#4120)。inspect.sh 顺序跑最多三条各自预算的 Lake 阶段(build、delta 子集
-    // inspect、全量回退 inspect),故外层必须 ≥ 阶段数 × 内层,否则后面的阶段只剩余量
-    // (2026-08-30 #4122 architecture 席两轮实测指出:先是外层 7200 < 内层 21600,再是「相等」仍不够)。
+    // 嵌套 deadline 取最小:`make lean-report` 的 worker(`tools/lean-inspector/inspect.sh`,role=lean-producer)
+    // 外层由本脚本的 BUILD_TIMEOUT 兜住;内层是每条 Lake 阶段前的 ensure 前导(最多 ArchiveFetchBudgetSeconds,
+    // 超时降级)+ Lake 命令自身的 DefaultProvisionBudgetSeconds;阶段之间还有非 Lake 工作(模块枚举、delta
+    // 规划、材料压缩、序列化),由 SupervisorNonLakeReserveSeconds 具名保留。外层 = 阶段数 × (前导 + Lake)
+    // + 保留 = LeanCacheBudgetPolicy.InspectorSupervisorBudgetSeconds,脚本里的字面量由本条钉住相等
+    // (#4122 三轮评审:7200 < 21600 → 「相等」不够 → 「3 × 内层」漏掉前导与非 Lake 工作)。
     // 路径以 FindRoot + 字面量内联而不走 SupervisorScriptPath():那是 ScribeTestMapDeriver 认得的
     // declared-input 形状(#4122 pass 2 admission 实测:经 helper 读文件被记为 unknown,SL-003 对
     // fork 点之后新增的 unknown 方法 fail-closed),且把脚本登记为本测试的输入——改脚本即选中本测试。
     [Fact]
-    public void HolderBudgetCoversTheInspectorsSequentialLakePhases()
+    public void LeanProducerHoldBudgetEqualsTheInspectorComposite()
     {
         var source = File.ReadAllText(Path.Combine(
             TestRepositoryLayout.FindRoot(),
             "tools", "scripts", "report", "report-supervisor.sh"));
-        var hold = DefaultOf(source, "STRATALINT_BUILD_TIMEOUT_SECONDS");
-        var composite = StrataLint.Cli.LeanCacheBudgetPolicy.InspectorSequentialLakePhasesWorstCase
-            * StrataLint.Cli.LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds;
+        var producerHold = LiteralAssignment(source, "LEAN_PRODUCER_BUILD_TIMEOUT_SECONDS");
 
+        Assert.Equal(
+            StrataLint.Cli.LeanCacheBudgetPolicy.InspectorSupervisorBudgetSeconds,
+            producerHold);
         Assert.True(
-            hold >= composite,
-            $"supervisor BUILD_TIMEOUT default {hold}s < {StrataLint.Cli.LeanCacheBudgetPolicy.InspectorSequentialLakePhasesWorstCase}"
-            + $" sequential Lake phases × {StrataLint.Cli.LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds}s = {composite}s;"
-            + " nested deadlines take the minimum, so later phases would run on the residual of the outer budget only");
+            producerHold
+                >= StrataLint.Cli.LeanCacheBudgetPolicy.InspectorSequentialLakePhasesWorstCase
+                    * (StrataLint.Cli.LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds
+                        + StrataLint.Cli.LeanCacheBudgetPolicy.ArchiveFetchBudgetSeconds)
+                    + StrataLint.Cli.LeanCacheBudgetPolicy.SupervisorNonLakeReserveSeconds,
+            "the composite must enclose every phase's preamble, Lake budget and the non-Lake reserve");
     }
 
-    // 阶段数不是拍的:从 inspect.sh 本身数出来 —— `"$CACHE_RUN" "$LAKE"` 的调用点 2 处(build / inspect),
-    // 其中 inspect 住在 invoke_inspector() 里,该函数有 2 个调用点(delta 子集、全量回退),
-    // 最坏顺序执行 = 1 + 2 = 3。本条把政策常数钉在脚本的实际结构上;脚本多一条 Lake 阶段即红。
+    // 消费者角色(scribe-consumer / digestion-alignment-consumer)不跑 Lake,#403 的挂死上限 7200 对它们
+    // 原样保留——producer 的复合预算不得顺带放宽无关工作负载的挂死检测(#4122 pass 3 architecture 席)。
+    // 7200 在此以独立字面量第二次写下(与复审线常数同一手法),防「改脚本让另一条测试绿」。
+    [Fact]
+    public void ConsumerHangBoundIsUnchangedByTheProducerComposite()
+    {
+        var source = File.ReadAllText(Path.Combine(
+            TestRepositoryLayout.FindRoot(),
+            "tools", "scripts", "report", "report-supervisor.sh"));
+
+        Assert.Equal(7200, LiteralAssignment(source, "CONSUMER_BUILD_TIMEOUT_SECONDS"));
+        Assert.Contains("if [[ \"$ROLE\" == \"lean-producer\" ]]", source, StringComparison.Ordinal);
+    }
+
+    // 阶段数不是拍的:从 inspect.sh 本身数出来,并证明**乘数**——`"$CACHE_RUN" "$LAKE"` 恰有 2 个调用点,
+    // 其中 1 个在 invoke_inspector() 函数体之外(build)、1 个在体内(inspect);invoke_inspector 在定义之外
+    // 恰有 2 个调用点(delta 子集、全量回退);最坏顺序执行 = 体外 1 + 体内 1 × 调用 2 = 3。
+    // 脚本多一条 Lake 阶段、或多一处 invoke_inspector 调用,本条即红。
     [Fact]
     public void InspectorSequentialLakePhaseCountMatchesTheScript()
     {
@@ -130,16 +152,37 @@ public sealed class ReportSupervisorLeanSlotTests
             TestRepositoryLayout.FindRoot(),
             "tools", "lean-inspector", "inspect.sh"));
         var lines = inspector.Split('\n');
-        var lakeSites = lines.Count(static line => line.Contains("\"$CACHE_RUN\" \"$LAKE\"", StringComparison.Ordinal));
-        var inspectorCalls = lines.Count(static line =>
-            line.TrimStart().StartsWith("invoke_inspector ", StringComparison.Ordinal)
-            || line.Contains("! invoke_inspector ", StringComparison.Ordinal));
+        var bodyStart = Array.FindIndex(lines, static line => line.StartsWith("invoke_inspector() {", StringComparison.Ordinal));
+        Assert.True(bodyStart >= 0, "invoke_inspector() is not defined in inspect.sh");
+        var bodyEnd = Array.FindIndex(lines, bodyStart, static line => line == "}");
+        Assert.True(bodyEnd > bodyStart, "invoke_inspector() body is not closed by a bare `}`");
 
-        Assert.Equal(2, lakeSites);
+        static bool IsLakeSite(string line) => line.Contains("\"$CACHE_RUN\" \"$LAKE\"", StringComparison.Ordinal);
+        var lakeSitesInside = lines.Skip(bodyStart).Take(bodyEnd - bodyStart + 1).Count(IsLakeSite);
+        var lakeSitesOutside = lines.Take(bodyStart).Count(IsLakeSite) + lines.Skip(bodyEnd + 1).Count(IsLakeSite);
+        var inspectorCalls = lines.Where((line, index) => index < bodyStart || index > bodyEnd)
+            .Count(static line =>
+                line.TrimStart().StartsWith("invoke_inspector ", StringComparison.Ordinal)
+                || line.Contains("! invoke_inspector ", StringComparison.Ordinal));
+
+        Assert.Equal(1, lakeSitesOutside);
+        Assert.Equal(1, lakeSitesInside);
         Assert.Equal(2, inspectorCalls);
         Assert.Equal(
             StrataLint.Cli.LeanCacheBudgetPolicy.InspectorSequentialLakePhasesWorstCase,
-            1 + inspectorCalls);
+            lakeSitesOutside + lakeSitesInside * inspectorCalls);
+    }
+
+    private static int LiteralAssignment(string source, string name)
+    {
+        var match = System.Text.RegularExpressions.Regex.Match(
+            source,
+            "^" + System.Text.RegularExpressions.Regex.Escape(name) + @"=(?<value>[0-9]+)\s*(#.*)?$",
+            System.Text.RegularExpressions.RegexOptions.Multiline);
+        Assert.True(match.Success, $"{name} has no literal assignment in the supervisor script");
+        return int.Parse(
+            match.Groups["value"].Value,
+            System.Globalization.CultureInfo.InvariantCulture);
     }
 
     private static int DefaultOf(string source, string name)

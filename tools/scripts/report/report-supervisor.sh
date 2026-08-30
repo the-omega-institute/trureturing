@@ -59,28 +59,39 @@ MAX_CONCURRENCY="${STRATALINT_LEAN_MAX_CONCURRENCY:-5}"
 # 多 worktree 并行是本仓常态(第16条),这不是罕见路径。不变量「等待预算 ≥ 持有预算」由
 # WaiterBudgetOutlastsALegitimateHolder 机器守卫。
 #
-# 现值(2026-08-30,#4120/#4122):两个默认值 = 64800s(18 小时)。理由是嵌套 deadline 取最小:
-# worker(`tools/lean-inspector/inspect.sh`)最坏顺序跑 3 条各自受
-# `LeanCacheBudgetPolicy.DefaultProvisionBudgetSeconds`(21600s)约束的 Lake 阶段(build /
-# delta 子集 inspect / 全量回退 inspect),外层若小于 3 × 内层,后面的阶段就只剩外层的余量,
-# 内层那份「清过当前规模冷建」的论证被外层静默作废(#4122 两轮评审实测:先是 7200 < 21600,
-# 再是「相等」仍不够)。关系 BUILD_TIMEOUT ≥ 3 × 21600 由 HolderBudgetCoversTheInspectorsSequentialLakePhases
-# 钉住,阶段数由 InspectorSequentialLakePhaseCountMatchesTheScript 从 inspect.sh 文本重数。
+# 现值(2026-08-30,#4120/#4122,三轮评审收口):持有预算**按角色**取值。
+#   role=lean-producer(`tools/lean-inspector/inspect.sh`)最坏顺序跑 3 条 Lake 阶段(build / delta 子集
+#   inspect / 全量回退 inspect),每条之前有 ensure 前导(project-cold 路径最多 2580s 归档取回后降级),
+#   阶段之间还有模块枚举、delta 规划、材料压缩、序列化等非 Lake 工作;嵌套 deadline 取最小,外层若小于
+#   这些之和,内层「清过当前规模冷建」的论证被外层静默作废。故
+#     LEAN_PRODUCER_BUILD_TIMEOUT_SECONDS = 3 × (21600 + 2580) + 3600 = 76140
+#   = `LeanCacheBudgetPolicy.InspectorSupervisorBudgetSeconds`(四个已分类量的派生,非新选定值),
+#   由 LeanProducerHoldBudgetEqualsTheInspectorComposite 钉住相等,阶段数由
+#   InspectorSequentialLakePhaseCountMatchesTheScript 从 inspect.sh 文本重数。
+#   其它角色(scribe-consumer / digestion-alignment-consumer)不跑 Lake,#403 的挂死上限 7200 原样保留
+#   (ConsumerHangBoundIsUnchangedByTheProducerComposite 钉住)——producer 的复合预算不放宽无关负载的挂死检测。
+# 等待预算取两者之大:等待者必须熬得过任一合法持槽者(WaiterBudgetOutlastsALegitimateHolder)。
 #
-# 代价(如实记):**活着但挂死**的持槽者暴露时间由 2 小时变为 18 小时;死掉的持槽者仍由
-# reclaim_stale_lock 立即回收,不受此影响。剩下的饥饿(mkdir 抢占自旋而非 FIFO,先到者可被
-# 后到者反复抢先)是 #1910 的另一半,本改动不假装修了它。
-LOCK_TIMEOUT_SECONDS="${STRATALINT_LOCK_TIMEOUT_SECONDS:-64800}"
+# 代价(如实记):lean-producer **活着但挂死**时的暴露时间由 2 小时变为 21 小时 9 分;消费者不变;
+# 死掉的持槽者仍由 reclaim_stale_lock 立即回收。剩下的饥饿(mkdir 抢占自旋而非 FIFO)是 #1910 的
+# 另一半,本改动不假装修了它。
+LEAN_PRODUCER_BUILD_TIMEOUT_SECONDS=76140
+CONSUMER_BUILD_TIMEOUT_SECONDS=7200
+if [[ "$ROLE" == "lean-producer" ]]; then
+  DEFAULT_BUILD_TIMEOUT_SECONDS="$LEAN_PRODUCER_BUILD_TIMEOUT_SECONDS"
+else
+  DEFAULT_BUILD_TIMEOUT_SECONDS="$CONSUMER_BUILD_TIMEOUT_SECONDS"
+fi
+LOCK_TIMEOUT_SECONDS="${STRATALINT_LOCK_TIMEOUT_SECONDS:-76140}"
 [[ "$LOCK_TIMEOUT_SECONDS" =~ ^[1-9][0-9]*$ && "$LOCK_TIMEOUT_SECONDS" -le 86400 ]] \
   || { echo "report-supervisor: STRATALINT_LOCK_TIMEOUT_SECONDS must be 1..86400" >&2; exit 2; }
 # Wall-clock budget for the worker build itself (#403): a build that hangs while
 # holding the lean slot would otherwise loop the monitor below forever, never
 # reaching finish() (which releases the slot), starving every subsequent lean
-# build. 0 disables the bound (legacy unbounded behavior). The default is the
-# composite of the worker's sequential per-command budgets (see the note above
-# LOCK_TIMEOUT_SECONDS): finite so a hang self-releases, and never smaller than
-# the phases it encloses.
-BUILD_TIMEOUT_SECONDS="${STRATALINT_BUILD_TIMEOUT_SECONDS:-64800}"
+# build. 0 disables the bound (legacy unbounded behavior). The default is chosen
+# by role above: the lean producer gets the composite of its sequential phases,
+# every other role keeps the original 7200s hang bound.
+BUILD_TIMEOUT_SECONDS="${STRATALINT_BUILD_TIMEOUT_SECONDS:-$DEFAULT_BUILD_TIMEOUT_SECONDS}"
 [[ "$BUILD_TIMEOUT_SECONDS" =~ ^[0-9]+$ && "$BUILD_TIMEOUT_SECONDS" -le 86400 ]] \
   || { echo "report-supervisor: STRATALINT_BUILD_TIMEOUT_SECONDS must be 0..86400" >&2; exit 2; }
 LOCK_INITIALIZATION_GRACE_SECONDS=5
