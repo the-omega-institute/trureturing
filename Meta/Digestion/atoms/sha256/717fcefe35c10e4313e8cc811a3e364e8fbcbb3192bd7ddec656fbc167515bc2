@@ -1,0 +1,1 @@
+- q_budget^cert：固定有限层的可行/PSD/区间证书及“slack∈[0,1]”；不把隐藏 completion 或全部矩写入地址。

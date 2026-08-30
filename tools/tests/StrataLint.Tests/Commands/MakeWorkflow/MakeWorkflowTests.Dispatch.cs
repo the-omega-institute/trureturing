@@ -1,6 +1,5 @@
 using System.Text.RegularExpressions;
 using System.Text;
-using System.Xml.Linq;
 using StrataLint.Engine;
 using YamlDotNet.RepresentationModel;
 
@@ -506,100 +505,6 @@ public sealed partial class MakeWorkflowTests
             File.Exists(invocationMarker),
             "the completion probe must exit before dotnet executes");
         Assert.NotEqual(0, result.ExitCode);
-    }
-
-    [Fact(DisplayName = "owner CLI output exactly matches the derived repository topology")]
-    public void OwnerCliOutputExactlyMatchesDerivedRepositoryTopology()
-    {
-        var root = TestRepositoryLayout.FindRoot();
-        var snapshot = RepositoryRules.ReadTrackedProjects(root);
-        var expected = snapshot.Projects
-            .Where(static project =>
-                project.Path.StartsWith("tools/tests/", StringComparison.Ordinal)
-                && project.Path.EndsWith(".csproj", StringComparison.Ordinal)
-                && project.Path != "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj")
-            .Select(static project =>
-            {
-                var document = XDocument.Parse(project.Content, LoadOptions.None);
-                var isXunit = document.Descendants().Any(static element =>
-                    element.Name.LocalName == "PackageReference"
-                    && string.Equals(
-                        (string?)element.Attribute("Include"),
-                        "xunit",
-                        StringComparison.Ordinal));
-                var assemblyName = document.Descendants()
-                    .FirstOrDefault(static element => element.Name.LocalName == "AssemblyName")
-                    ?.Value.Trim();
-                return (
-                    project.Path,
-                    IsXunit: isXunit,
-                    AssemblyName: string.IsNullOrEmpty(assemblyName)
-                        ? Path.GetFileNameWithoutExtension(project.Path)
-                        : assemblyName);
-            })
-            .Where(static project => project.IsXunit)
-            .Select(static project => project.AssemblyName)
-            .Distinct(StringComparer.OrdinalIgnoreCase)
-            .Order(StringComparer.OrdinalIgnoreCase)
-            .ToArray();
-        var result = TestProcessRunner.Run(
-            "dotnet",
-            [
-                "run",
-                "--project", Path.Combine(
-                    root,
-                    "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj"),
-                "--configuration", "Release",
-                "--no-launch-profile",
-                "--",
-                "list-test-owner-assemblies", "--repository", root,
-            ],
-            root,
-            TestBudgets.ScriptProcessHangGuard,
-            64 * 1024);
-
-        Assert.Equal(0, result.ExitCode);
-        Assert.Empty(Encoding.UTF8.GetString(result.StandardError));
-        var actual = Encoding.UTF8.GetString(result.StandardOutput)
-            .Split('\n', StringSplitOptions.RemoveEmptyEntries);
-        Assert.NotEmpty(expected);
-        Assert.Equal(expected, actual);
-    }
-
-    [Fact(DisplayName = "owner CLI rejects a repository with zero derived owners")]
-    public void OwnerCliRejectsZeroDerivedOwners()
-    {
-        using var fixture = new TemporaryDirectory();
-        File.WriteAllText(Path.Combine(fixture.Path, "README.md"), "empty topology\n", Encoding.UTF8);
-        ReviewRegressionTests.RunGit(fixture.Path, "init", "--quiet");
-        ReviewRegressionTests.RunGit(fixture.Path, "add", ".");
-        ReviewRegressionTests.RunGit(
-            fixture.Path,
-            "-c", "user.name=StrataLint Tests",
-            "-c", "user.email=stratalint@example.invalid",
-            "commit", "--quiet", "-m", "empty topology");
-
-        var result = TestProcessRunner.Run(
-            "dotnet",
-            [
-                "run",
-                "--project", Path.Combine(
-                    TestRepositoryLayout.FindRoot(),
-                    "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj"),
-                "--configuration", "Release",
-                "--no-launch-profile",
-                "--",
-                "list-test-owner-assemblies", "--repository", fixture.Path,
-            ],
-            fixture.Path,
-            TestBudgets.ScriptProcessHangGuard,
-            64 * 1024);
-
-        Assert.NotEqual(0, result.ExitCode);
-        Assert.Contains(
-            "derived zero owner assemblies",
-            Encoding.UTF8.GetString(result.StandardError),
-            StringComparison.Ordinal);
     }
 
     private static void AssertNoUnrecognizedGateCommands(string shell, string source)

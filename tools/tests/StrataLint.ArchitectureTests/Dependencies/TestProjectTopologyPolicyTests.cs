@@ -225,6 +225,38 @@ public sealed class TestProjectTopologyPolicyTests
             result.IntroducedDebt.ToArray());
     }
 
+    /// <summary>
+    /// 脚本测试 harness 与 architecture harness 同类:横跨生产项目、不拥有其中任何一个,
+    /// 故不参与 `X` ↔ `X.Tests` 的拥有关系。它按**精确路径**具名排除,与既有 architecture
+    /// harness 同一纪律 —— 不改成「凡不叫 X.Tests 者皆横跨」的命名规则,因为那会削弱
+    /// `OnlyExactCanonicalArchitectureHarnessPathIsExcluded` 有意钉住的守卫:
+    /// 任何**未具名**的第三个横跨项目仍须判 orphan 债务。
+    /// </summary>
+    [Fact]
+    public void CanonicalScriptHarnessPathIsExcludedButAnUnnamedScriptProjectIsNot()
+    {
+        var protectedBase = Snapshot(ProjectWithDefaultProperties(
+            "tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj",
+            "StrataLint.ScriptTests",
+            xunit: true));
+        var unchanged = TestProjectTopologyPolicy.Evaluate(protectedBase, protectedBase);
+
+        Assert.True(unchanged.IsAccepted, unchanged.Message);
+        Assert.Empty(unchanged.BaseDebt);
+
+        var unnamedSecondScriptProject = Snapshot(
+            protectedBase.Projects[0],
+            OwnedTest("Second.ScriptTests", "Second.ScriptTests"));
+        var result = TestProjectTopologyPolicy.Evaluate(
+            protectedBase,
+            unnamedSecondScriptProject);
+
+        Assert.False(result.IsAccepted);
+        Assert.Equal(
+            [Debt("orphan-owned-project", "Second.ScriptTests", string.Empty)],
+            result.IntroducedDebt.ToArray());
+    }
+
     [Fact]
     public void NonXunitCompileFailProofDoesNotBecomeAnOwnedTestProject()
     {
@@ -526,7 +558,15 @@ public sealed class TestProjectTopologyPolicyTests
         var result = TestProjectTopologyPolicy.EvaluateSnapshots(protectedBase, candidate);
 
         Assert.True(result.IsAccepted, result.Message);
-        Assert.NotEmpty(result.BaseDebt);
+
+        // 此处曾是 `Assert.NotEmpty(result.BaseDebt)`,假定 base 上总有存量债。
+        // 该假定与棘轮本身矛盾:棘轮要求债只减不增,故「还清」是它的目标状态,
+        // 而那条断言把目标状态判成失败 —— 债从 5 还到 0 后它必红。
+        // 保留的是真正承重的部分:债的种类必须都是已知类别,且债务集单调不增;
+        // base 债为空时该包含式即强制候选债也为空(棘轮的全树判词)。
+        Assert.All(
+            result.CandidateDebt,
+            debt => Assert.Contains(debt, result.BaseDebt));
         Assert.All(
             result.BaseDebt.Concat(result.CandidateDebt),
             static debt => Assert.Contains(
@@ -542,6 +582,23 @@ public sealed class TestProjectTopologyPolicyTests
                 }));
         AssertHasDebtFreePair(protectedBase, result.BaseDebt);
         AssertHasDebtFreePair(candidate, result.CandidateDebt);
+    }
+
+    [Fact]
+    public void CanonicalSolutionIncludesTruthOwnedTestProjectExactlyOnce()
+    {
+        var solutionLines = File.ReadAllLines(Path.Combine(
+            RepositoryLayout.FindRoot(),
+            "tools",
+            "StrataLint.sln"));
+        var matchingProjects = solutionLines.Where(static line => line.StartsWith(
+                "Project(",
+                StringComparison.Ordinal)
+            && line.Contains(
+                "\"Trureturing.Truth.Tests\", \"tests\\Trureturing.Truth.Tests\\Trureturing.Truth.Tests.csproj\",",
+                StringComparison.Ordinal));
+
+        Assert.Single(matchingProjects);
     }
 
     private static (TestProjectTopologySnapshot ProtectedBase, TestProjectTopologySnapshot Candidate)

@@ -1,0 +1,14 @@
+ast_path: section/第二部-学费单调律
+fingerprints:
+  raw_sha256: sha256:0d84adbb80bba856f5f18effbbd2609b2851c846a448e6989e562a4548acc165
+  normalized_sha256: sha256:0d84adbb80bba856f5f18effbbd2609b2851c846a448e6989e562a4548acc165
+cas_ref: sha256:0d84adbb80bba856f5f18effbbd2609b2851c846a448e6989e562a4548acc165
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-78c1b5e7eaca318c0afbe5e4e3cfc032e5e8d2bf0c0729a3284d8ea9dd7b63d7-75085bba0a3c0f5c3c800592b5203ccc2eb5230febe31a69e745ab9ed238ec57
+    - generic-residual-89b9ba797a060fcdcd3ef9286626fb04d50dbbe3f87b2f41e5c9a5aa8746d09b-b02d36eb1030e42c46b74893ed84e3e1aa0b787d127a0c76f174bc7657ffa310
+    - generic-residual-33baa6ca0296d2350884257a34432b59297a25ac6f2b6e5b4666935cf1a3e549-a58f9041eaf149c1394d2b7b76c64c211862dc89f62c765972862f76e1cfa0f0
