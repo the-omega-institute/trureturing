@@ -25,16 +25,35 @@ jobs:
         run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
       - name: Restore Lean dependencies
         run: lake update
-      - name: Build golden critical coordinate
+      - name: Build golden prime-circle modules
         shell: bash
         run: |
           set +e
           mkdir -p diagnostics
-          module='D5.S3.Analytic.Zeta.GoldenSpectrum.GoldenCriticalCoordinate'
-          lake build "$module" > diagnostics/build.log 2>&1
-          status=$?
-          cat diagnostics/build.log
-          printf '%s\n' "$status" > diagnostics/status
+          : > diagnostics/summary.tsv
+          failed=0
+          modules=(
+            D5.S3.Analytic.Zeta.GoldenSpectrum.GoldenCriticalCoordinate
+            D5.S3.PrimeObserver.ChargeTomography.GoldenC2ChargeTomography
+            D5.S3.Analytic.Zeta.GoldenEuler.GoldenLocalEulerFactorTrichotomy
+            D5.S3.PrimeObserver.GoldenScale.GoldenLogScaleCharacter
+            D5.S3.Analytic.Zeta.GoldenSpectrum.ReflectionPairTransfer
+            D5.S3.PrimeObserver.ChargeTomography.SharedChargeDifferentShells
+            D5.S3.Observer.Bridges.InvolutionIntertwinerParity
+          )
+          for module in "${modules[@]}"; do
+            safe="${module//./_}"
+            log="diagnostics/${safe}.log"
+            echo "===== $module ====="
+            lake build "$module" > "$log" 2>&1
+            status=$?
+            cat "$log"
+            printf '%s\t%s\n' "$module" "$status" >> diagnostics/summary.tsv
+            if [ "$status" -ne 0 ]; then
+              failed=1
+            fi
+          done
+          printf '%s\n' "$failed" > diagnostics/failed
           exit 0
       - name: Upload diagnostics
         if: always()
@@ -44,5 +63,8 @@ jobs:
           path: diagnostics
           if-no-files-found: error
           retention-days: 3
-      - name: Enforce successful module build
-        run: test "$(cat diagnostics/status)" = "0"
+      - name: Enforce successful module builds
+        shell: bash
+        run: |
+          cat diagnostics/summary.tsv
+          test "$(cat diagnostics/failed)" = "0"
