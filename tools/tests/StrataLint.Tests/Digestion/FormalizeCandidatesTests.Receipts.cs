@@ -142,7 +142,7 @@ public sealed partial class FormalizeCandidatesTests
 
         Assert.True(result.Success, result.Error);
         using var json = JsonDocument.Parse(result.Output);
-        Assert.Equal("stratalint-formalize-candidates-v3", json.RootElement.GetProperty("schema").GetString());
+        Assert.Equal("stratalint-formalize-candidates-v4", json.RootElement.GetProperty("schema").GetString());
         Assert.Empty(json.RootElement.GetProperty("candidates").EnumerateArray());
         Assert.Empty(json.RootElement.GetProperty("withheld").EnumerateArray());
         var recorded = Assert.Single(
