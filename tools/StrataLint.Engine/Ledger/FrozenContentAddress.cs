@@ -130,13 +130,6 @@ public static class FrozenContentAddress
         var declarations = CanonicalStatementWriter.DeclarationStatementIds(
             dependencyPath,
             dependencyReport);
-        if (declarations.IsEmpty)
-        {
-            throw new FormatException(
-                $"Selected Closed module {selectedPath.Value} dependency-not-ready: "
-                + $"imported module {dependencyPath.Value} has no declarations to resolve.");
-        }
-
         var activeDeclarationKeys = activeEntry.Payload.DeclarationStatementIds
             .Select(static declaration => declaration.DeclarationNameKey)
             .ToHashSet(StringComparer.Ordinal);
