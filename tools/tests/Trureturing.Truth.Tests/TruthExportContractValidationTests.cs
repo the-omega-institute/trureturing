@@ -32,8 +32,7 @@ public sealed class TruthExportContractValidationTests
     [Fact]
     public void WriterRejectsInvalidModelPassedDirectlyWithoutCreate()
     {
-        var invalid = Model(
-            Node("A.lean", 'a'),
+        var invalid = ModelOf(Node("A.lean", 'a'),
             Node("B.lean", 'a'));
 
         Assert.Throws<FormatException>(() => TruthExportJsonWriter.Write(invalid));
@@ -42,7 +41,7 @@ public sealed class TruthExportContractValidationTests
     [Fact]
     public void WriterRejectsUnsupportedRootIdentityFields()
     {
-        var model = Model();
+        var model = ModelOf();
 
         Assert.Throws<FormatException>(() => TruthExportJsonWriter.Write(model with { Schema = "wrong" }));
         Assert.Throws<FormatException>(() => TruthExportJsonWriter.Write(model with { SchemaVersion = 2 }));
@@ -58,7 +57,7 @@ public sealed class TruthExportContractValidationTests
             NodeAxiomClosure = ImmutableArray.CreateRange(new string[] { null! }),
         };
 
-        Assert.Throws<FormatException>(() => TruthExportJsonWriter.Write(Model(node)));
+        Assert.Throws<FormatException>(() => TruthExportJsonWriter.Write(ModelOf(node)));
     }
 
     [Fact]
@@ -69,7 +68,7 @@ public sealed class TruthExportContractValidationTests
             Declarations = ImmutableArray.Create(new TruthExportDeclaration(null!, "theorem", Id('1'))),
         };
 
-        Assert.Throws<FormatException>(() => TruthExportJsonWriter.Write(Model(node)));
+        Assert.Throws<FormatException>(() => TruthExportJsonWriter.Write(ModelOf(node)));
     }
 
     [Fact]
@@ -142,46 +141,44 @@ public sealed class TruthExportContractValidationTests
     [InlineData("A.txt")]
     [InlineData("")]
     public void ReaderRejectsInvalidRepoPaths(string repoPath) =>
-        Reject(Model(Node(repoPath, 'a')));
+        Reject(ModelOf(Node(repoPath, 'a')));
 
     [Fact]
     public void ReaderRejectsControlCharactersInRepoPaths() =>
-        Reject(Model(Node("A/\u001f/B.lean", 'a')));
+        Reject(ModelOf(Node("A/\u001f/B.lean", 'a')));
 
     [Fact]
     public void ReaderRejectsMalformedFrozenAndStatementIds()
     {
-        Reject(Model(Node("A.lean", 'g')));
-        Reject(Model(Node("A.lean", 'a', statementId: "sha256:" + new string('A', 64))));
-        Reject(Model(Node("A.lean", 'a', statementId: "sha256:" + new string('1', 63))));
+        Reject(ModelOf(Node("A.lean", 'g')));
+        Reject(ModelOf(Node("A.lean", 'a', statementId: "sha256:" + new string('A', 64))));
+        Reject(ModelOf(Node("A.lean", 'a', statementId: "sha256:" + new string('1', 63))));
     }
 
     [Theory]
     [InlineData("lemma")]
     [InlineData("Theorem")]
     public void ReaderRejectsUnknownOrWrongCaseKinds(string kind) =>
-        Reject(Model(Node("A.lean", 'a', kind: kind)));
+        Reject(ModelOf(Node("A.lean", 'a', kind: kind)));
 
     [Fact]
     public void ReaderRejectsDuplicateRepoPathsEvenWhenFrozenIdsDiffer()
     {
-        Reject(Model(
-            Node("A.lean", 'a'),
+        Reject(ModelOf(Node("A.lean", 'a'),
             Node("A.lean", 'b')));
     }
 
     [Fact]
     public void ReaderRejectsDuplicateFrozenIdsEvenWhenRepoPathsDiffer()
     {
-        Reject(Model(
-            Node("A.lean", 'a'),
+        Reject(ModelOf(Node("A.lean", 'a'),
             Node("B.lean", 'a')));
     }
 
     [Fact]
     public void ReaderRejectsMissingPrerequisiteField()
     {
-        var json = Encoding.UTF8.GetString(TruthExportJsonWriter.Write(Model(Node("A.lean", 'a'))).AsSpan());
+        var json = Encoding.UTF8.GetString(TruthExportJsonWriter.Write(ModelOf(Node("A.lean", 'a'))).AsSpan());
         var withoutRequiredField = json.Replace(
             ", \"prerequisite_frozen_node_ids\": []",
             string.Empty,
@@ -194,47 +191,42 @@ public sealed class TruthExportContractValidationTests
 
     [Fact]
     public void ReaderRejectsInvalidPrerequisiteId() =>
-        Reject(Model(Node("A.lean", 'a', prerequisites: new[] { "sha256:" + new string('g', 64) })));
+        Reject(ModelOf(Node("A.lean", 'a', prerequisites: new[] { "sha256:" + new string('g', 64) })));
 
     [Fact]
     public void ReaderRejectsUnsortedPrerequisites() =>
-        Reject(Model(
-            Node("A.lean", 'a'),
+        Reject(ModelOf(Node("A.lean", 'a'),
             Node("B.lean", 'b'),
             Node("C.lean", 'c', prerequisites: new[] { Id('b'), Id('a') })));
 
     [Fact]
     public void ReaderRejectsDuplicatePrerequisites() =>
-        Reject(Model(
-            Node("A.lean", 'a'),
+        Reject(ModelOf(Node("A.lean", 'a'),
             Node("B.lean", 'b', prerequisites: new[] { Id('a'), Id('a') })));
 
     [Fact]
     public void ReaderRejectsDanglingPrerequisiteEndpoint() =>
-        Reject(Model(Node("A.lean", 'a', prerequisites: new[] { Id('b') })));
+        Reject(ModelOf(Node("A.lean", 'a', prerequisites: new[] { Id('b') })));
 
     [Fact]
     public void ReaderRejectsSelfLoop() =>
-        Reject(Model(Node("A.lean", 'a', prerequisites: new[] { Id('a') })));
+        Reject(ModelOf(Node("A.lean", 'a', prerequisites: new[] { Id('a') })));
 
     [Fact]
     public void ReaderRejectsTwoNodeCycle() =>
-        Reject(Model(
-            Node("A.lean", 'a', prerequisites: new[] { Id('b') }),
+        Reject(ModelOf(Node("A.lean", 'a', prerequisites: new[] { Id('b') }),
             Node("B.lean", 'b', prerequisites: new[] { Id('a') })));
 
     [Fact]
     public void ReaderRejectsLongerCycle() =>
-        Reject(Model(
-            Node("A.lean", 'a', prerequisites: new[] { Id('c') }),
+        Reject(ModelOf(Node("A.lean", 'a', prerequisites: new[] { Id('c') }),
             Node("B.lean", 'b', prerequisites: new[] { Id('a') }),
             Node("C.lean", 'c', prerequisites: new[] { Id('b') })));
 
     [Fact]
     public void ReaderAcceptsValidMultiLevelDag()
     {
-        var model = Model(
-            Node("A.lean", 'a'),
+        var model = ModelOf(Node("A.lean", 'a'),
             Node("B.lean", 'b', prerequisites: new[] { Id('a') }),
             Node("C.lean", 'c', prerequisites: new[] { Id('a'), Id('b') }),
             Node("D.lean", 'd', prerequisites: new[] { Id('c') }));
@@ -272,7 +264,10 @@ public sealed class TruthExportContractValidationTests
             Tree40));
     }
 
-    private static TruthExportModel Model(
+    // 独立名而非重载:ScribeTestMapDeriver 按 (TypeName, name) 解析本地调用,
+    // 同名多目标即把每个调用者记为 unknown(SL-003 conservative unknown test method)。
+    // 搬迁到本项目使这些方法成为新身份,故重载必须解开,否则 23 个方法全被 Block。
+    private static TruthExportModel ModelOf(
         params TruthExportNode[] nodes) =>
         Model(nodes.ToImmutableArray());
 
