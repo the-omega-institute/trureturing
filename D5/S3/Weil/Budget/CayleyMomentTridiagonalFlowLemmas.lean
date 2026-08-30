@@ -7,16 +7,6 @@
 
 import D5.S3.Weil.Budget.LinearCayleyScaleFlow
 
-/- Library-search audit trail (2026-08-31):
-   * D5 body-shape searches found the canonical `cayleyCoordinate`,
-     `resolventWeightedMeasure`, and `cayleySpectralMeasure` primitives, but
-     no moment-scale derivative or tridiagonal recurrence owner.
-   * Pinned Mathlib supplies dominated differentiation under an integral and
-     integration against an ENNReal density, but no exact Cayley moment flow.
-   * The source's evenness and positive-scale resolvent integrability are
-     explicit hypotheses; the moment and budget are constructed from the
-     canonical scale-dependent spectral measure and source measure. -/
-
 open MeasureTheory
 
 set_option autoImplicit false
@@ -45,7 +35,6 @@ theorem coordinate_hasDerivAt (xi a : Real) (ha : 0 < a) :
   simp only [Pi.add_apply, Pi.sub_apply, zero_add, zero_sub]
   field_simp [hdenNe, ha.ne']
   ring
-
 theorem density_flow_identity (xi a : Real) (ha : 0 < a) :
     (a : Complex) * (-2 * (a : Complex) /
         (((xi : Complex) ^ 2 + (a : Complex) ^ 2) ^ 2)) =
@@ -71,7 +60,6 @@ theorem density_flow_identity (xi a : Real) (ha : 0 < a) :
   field_simp [hden']
   simp only [Complex.I_sq]
   ring
-
 theorem density_integrand_hasDerivAt (xi a : Real) (ha : 0 < a) :
     HasDerivAt
       (fun scale : Real => 1 /
@@ -104,7 +92,6 @@ theorem density_integrand_hasDerivAt (xi a : Real) (ha : 0 < a) :
             push_cast
             field_simp [ha.ne']
     _ = _ := by rw [hflow]
-
 theorem successor_integrand_hasDerivAt (xi a : Real) (n : Nat) (ha : 0 < a) :
     HasDerivAt
       (fun scale : Real =>
@@ -158,7 +145,6 @@ theorem successor_integrand_hasDerivAt (xi a : Real) (n : Nat) (ha : 0 < a) :
   change cayleyCoordinate scale xi ^ (n + 1) /
       ((xi : Complex) ^ 2 + (scale : Complex) ^ 2) = _
   exact div_eq_mul_inv _ _
-
 theorem successor_derivative_norm_le
     (xi scale a : Real) (n : Nat) (ha : 0 < a) (hscale : a / 2 < scale) :
     ‖((1 / scale : Real) *
@@ -250,7 +236,6 @@ theorem successor_derivative_norm_le
       exact mul_le_mul hscaleInv hdenInv (by positivity) (by positivity)
     _ = (2 * ((n + 2 : Nat) : Real) / a) *
         (1 / (xi ^ 2 + (a / 2) ^ 2)) := by ring
-
 theorem density_derivative_norm_le
     (xi scale a : Real) (ha : 0 < a) (hscale : a / 2 < scale) :
     ‖((1 / scale : Real) *
@@ -313,7 +298,6 @@ theorem density_derivative_norm_le
         nlinarith [sq_nonneg xi]
       exact mul_le_mul hscaleInv hdenInv (by positivity) (by positivity)
     _ = (4 / a) * (1 / (xi ^ 2 + (a / 2) ^ 2)) := by ring
-
 theorem density_integral_hasDerivAt
     (source : Measure Real)
     (hIntegrable : ∀ scale : Real, 0 < scale →
@@ -383,7 +367,6 @@ theorem density_integral_hasDerivAt
       dsimp only [F, F']
       exact density_integrand_hasDerivAt xi scale hspos)
   simpa only [F, F'] using hresult.2
-
 theorem canonical_nat_moment_eq_source
     (source : Measure Real) (scale : Real) (hscale : 0 < scale) (n : Nat) :
     (∫ z : Complex, z ^ n ∂cayleySpectralMeasure source scale) =
@@ -411,7 +394,6 @@ theorem canonical_nat_moment_eq_source
   rw [Complex.real_smul]
   push_cast
   field_simp [hdenNe, hdenpos.ne']
-
 theorem canonical_inverse_moment_eq_source
     (source : Measure Real) (scale : Real) (hscale : 0 < scale) :
     (∫ z : Complex, z⁻¹ ∂cayleySpectralMeasure source scale) =
@@ -439,7 +421,6 @@ theorem canonical_inverse_moment_eq_source
   rw [Complex.real_smul]
   push_cast
   field_simp [hdenNe, hdenpos.ne']
-
 theorem source_inverse_first_eq_first
     (source : Measure Real)
     (hEven : Measure.map (fun xi : Real => -xi) source = source)
@@ -497,7 +478,6 @@ theorem source_inverse_first_eq_first
     _ = ∫ xi : Real, f xi ∂source := hmap.symm
     _ = ∫ xi : Real, cayleyCoordinate scale xi /
         ((xi : Complex) ^ 2 + (scale : Complex) ^ 2) ∂source := rfl
-
 theorem canonical_zero_moment_eq_budget
     (source : Measure Real) (scale : Real) (hscale : 0 < scale) :
     (∫ z : Complex, z ^ (0 : Nat) ∂cayleySpectralMeasure source scale).re =
@@ -519,7 +499,6 @@ theorem canonical_zero_moment_eq_budget
           field_simp [hdenpos.ne']
       _ = _ := integral_ofReal]
   simp
-
 theorem successor_integral_hasDerivAt
     (source : Measure Real)
     (hIntegrable : ∀ scale : Real, 0 < scale →
