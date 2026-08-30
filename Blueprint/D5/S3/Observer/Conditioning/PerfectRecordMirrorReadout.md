@@ -2,11 +2,11 @@
 
 ## Abstract
 
-A perfect unread record erases every mirror observable with no record-diagonal block.
+Discarding a perfect two-address record erases the fixed mirror-swap expectation.
 
 **Theorem 1.1 (Perfect recording forces zero mirror expectation).**
 
-$$\begin{gathered}\forall n, K, \operatorname{Fintype}\left(n\right), \operatorname{DecidableEq}\left(n\right), \operatorname{Fintype}\left(K\right)\\{}P: K \to M_{n}(\mathbb{C}),\\{}\operatorname{IsRecordMeasurement}\left(P\right) \Rightarrow\\{}\forall rho: M_{n}(\mathbb{C}), \forall J: M_{n}(\mathbb{C}), (\forall k: K, P_{k} J P_{k} = 0) \Rightarrow \operatorname{Tr}\left(E_{P}(rho)J\right) = 0 \land \operatorname{Tr}\left(E_{P}(rho)\right) = \operatorname{Tr}\left(rho\right).\end{gathered}$$
+$$\begin{gathered}\forall rho: M_{\operatorname{Fin}\left(2\right)}(\mathbb{C}), \operatorname{Tr}\left(\operatorname{unreadState}\left(addressProjection, rho\right) \cdot qubitX\right) = 0.\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/Conditioning/PerfectRecordMirrorReadout.perfect_record_mirror_readout_zero` (`✓ std3`). ∎
 
@@ -14,13 +14,14 @@ $$\begin{gathered}\forall n, K, \operatorname{Fintype}\left(n\right), \operatorn
 
 *Commentary.*
 
-For a finite complete family of pairwise orthogonal self-adjoint complex matrix projections, the unread map is the sum of the diagonal compressions P_k rho P_k.
+The state rho is an arbitrary complex matrix on the canonical two-address carrier. The standard address projectors define the unread map, and qubitX is the fixed observable that exchanges the two addresses.
 
-If an observable has zero diagonal block P_k J P_k for every record value, cyclicity of the matrix trace makes its pairing with the unread state vanish. The same statement also records that the unread map preserves the trace of rho.
+Each address compression has zero pairing with the off-diagonal swap. Cyclicity and linearity of the matrix trace therefore make the pairing with unreadState addressProjection rho vanish.
 
-The companion incompatibility corollary states that a nonzero unread readout must retain a nonzero record-diagonal block; qualitative observer-ontology alternatives in the source are not additional mathematical clauses.
+This declaration owns only the displayed zero-expectation clause. The ledger atom remains guarded because its later classical-label, five-way-alternative, and observer-ontology clauses have no current public carrier.
 
 ## References
 
 - Truth anchor: `D5/S3/Observer/Conditioning/PerfectRecordMirrorReadout.perfect_record_mirror_readout_zero`
 - Dependency: [D5/S3/Observer/Conditioning](../Conditioning.md)
+- Dependency: [D5/S3/Observer/MeasurementMarginal](../MeasurementMarginal.md)

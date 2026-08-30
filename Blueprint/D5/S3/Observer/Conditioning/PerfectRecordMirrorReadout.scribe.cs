@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.Conditioning;
 internal sealed class PerfectRecordMirrorReadoutDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A perfect unread record erases every mirror observable with no record-diagonal block.",
+        "Discarding a perfect two-address record erases the fixed mirror-swap expectation.",
         H("Perfect Record Mirror Readout"),
         Blocks(
             Describe.Lean(
@@ -20,64 +20,36 @@ internal sealed class PerfectRecordMirrorReadoutDocument : IScribeDocumentDefini
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "For a finite complete family of pairwise orthogonal self-adjoint "
-                            + "complex matrix projections, the unread map is the sum of the "
-                            + "diagonal compressions P_k rho P_k.")),
+                        "The state rho is an arbitrary complex matrix on the canonical two-address "
+                            + "carrier. The standard address projectors define the unread map, and "
+                            + "qubitX is the fixed observable that exchanges the two addresses.")),
                     Paragraph(Text(
-                        "If an observable has zero diagonal block P_k J P_k for every record "
-                            + "value, cyclicity of the matrix trace makes its pairing with the "
-                            + "unread state vanish. The same statement also records that the "
-                            + "unread map preserves the trace of rho.")),
+                        "Each address compression has zero pairing with the off-diagonal swap. "
+                            + "Cyclicity and linearity of the matrix trace therefore make the "
+                            + "pairing with unreadState addressProjection rho vanish.")),
                     Paragraph(Text(
-                        "The companion incompatibility corollary states that a nonzero unread "
-                            + "readout must retain a nonzero record-diagonal block; qualitative "
-                            + "observer-ontology alternatives in the source are not additional "
-                            + "mathematical clauses."))),
+                        "This declaration owns only the displayed zero-expectation clause. The "
+                            + "ledger atom remains guarded because its later classical-label, "
+                            + "five-way-alternative, and observer-ontology clauses have no current "
+                            + "public carrier."))),
                 DescribeRole.Theorem))));
 
     private static Formula TheoremFormula()
     {
-        Formula n = F.Id("n");
-        Formula labels = F.Id("K");
-        Formula projectionFamily = F.Id("P");
         Formula rho = F.Id("rho");
-        Formula observable = F.Id("J");
-        Formula index = F.Id("k");
-        Formula matrix = MatrixType(n);
-        Formula channel = Seq(F.Id("E"), Underscore, Grp(projectionFamily));
-        Formula unread = Apply(channel, rho);
-        Formula diagonalCondition = Seq(
-            Open, Forall, Sp, index, Colon, Sp, labels, Comma, Sp,
-            Subscript(projectionFamily, index), Sp, observable, Sp,
-            Subscript(projectionFamily, index), Sp, Eq, Sp, D(0), Close);
-        Formula conclusion = Seq(
-            Call("Tr", Seq(unread, observable)), Sp, Eq, Sp, D(0), Sp,
-            Land, Sp,
-            Call("Tr", unread), Sp, Eq, Sp, Call("Tr", rho));
+        Formula twoAddresses = Call("Fin", D(2));
+        Formula matrix = MatrixType(twoAddresses);
+        Formula unread = Call("unreadState", F.Id("addressProjection"), rho);
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
-            Forall, Sp, n, Comma, Sp, labels, Comma, Sp,
-            Call("Fintype", n), Comma, Sp, Call("DecidableEq", n), Comma, Sp,
-            Call("Fintype", labels),
-            RowBreak, Grp(),
-            projectionFamily, Colon, Sp, labels, Sp, To, Sp, matrix, Comma,
-            RowBreak, Grp(),
-            Call("IsRecordMeasurement", projectionFamily), Sp, Rightarrow,
-            RowBreak, Grp(),
             Forall, Sp, rho, Colon, Sp, matrix, Comma, Sp,
-            Forall, Sp, observable, Colon, Sp, matrix, Comma, Sp,
-            diagonalCondition, Sp, Rightarrow, Sp,
-            conclusion, Dot,
+            Call("Tr", Seq(unread, Sp, Cdot, Sp, F.Id("qubitX"))),
+            Sp, Eq, Sp, D(0), Dot,
             End, Grp(F.Id("gathered"))));
     }
 
     private static Formula MatrixType(Formula n) => Seq(
         F.Id("M"), Underscore, Grp(n), Open, Mathbb, Grp(F.Id("C")), Close);
 
-    private static Formula Subscript(Formula value, Formula index) =>
-        Seq(value, Underscore, Grp(index));
-
-    private static Formula Apply(Formula function, Formula argument) =>
-        Seq(function, Open, argument, Close);
 }
