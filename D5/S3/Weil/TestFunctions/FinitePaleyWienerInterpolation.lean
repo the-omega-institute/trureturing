@@ -8,6 +8,8 @@
 import D5.S3.Fourier.FourierLaplaceEntire
 import Mathlib.Analysis.Calculus.BumpFunction.Normed
 import Mathlib.Analysis.Calculus.Deriv.Support
+import Mathlib.Analysis.Calculus.Deriv.Star
+import Mathlib.Analysis.Calculus.IteratedDeriv.Lemmas
 import Mathlib.LinearAlgebra.Lagrange
 import Mathlib.MeasureTheory.Integral.IntegralEqImproper
 
@@ -119,12 +121,60 @@ private theorem fourier_laplace_scale
     rw [Complex.ofReal_mul]
     ring
 
+private theorem fourier_laplace_reflect_conj (g : Real → Complex) (z : Complex) :
+    FL[(fun x : Real => conj (g (-x)))](z) = conj (FL[g](conj z)) := by
+  rw [← integral_conj]
+  rw [← integral_neg_eq_self
+    (fun x : Real =>
+      Complex.exp (-Complex.I * z * (x : Complex)) * conj (g (-x))) volume]
+  apply integral_congr_ae
+  filter_upwards with x
+  simp only [neg_neg, map_mul]
+  rw [← Complex.exp_conj]
+  congr 2
+  simp
+
+private theorem eval_map_conj (P : Complex[X]) (z : Complex) :
+    (P.map (starRingEnd Complex)).eval z = conj (P.eval (conj z)) := by
+  simpa using
+    (Polynomial.eval_map_apply (p := P) (starRingEnd Complex) (conj z))
+
+private theorem iteratedDeriv_conj (k : Nat) (g : Real → Complex) :
+    iteratedDeriv k (fun x => conj (g x)) = fun x => conj (iteratedDeriv k g x) := by
+  induction k with
+  | zero => simp only [iteratedDeriv_zero]
+  | succ k ih =>
+      rw [iteratedDeriv_succ, iteratedDeriv_succ, ih]
+      exact deriv.star'
+
+private theorem iterate_deriv_reflection
+    (k : Nat) (g : Real → Complex)
+    (hgHermitian : ∀ x, g (-x) = conj (g x)) (x : Real) :
+    ((deriv^[k]) g) (-x) =
+      ((-1 : Real) ^ k) • conj (((deriv^[k]) g) x) := by
+  rw [← iteratedDeriv_eq_iterate]
+  have hfun : (fun y : Real => g (-y)) = fun y => conj (g y) :=
+    funext hgHermitian
+  have heq := congrArg (fun h : Real → Complex => iteratedDeriv k h x) hfun
+  rw [iteratedDeriv_comp_neg, iteratedDeriv_conj] at heq
+  calc
+    iteratedDeriv k g (-x) =
+        (((-1 : Real) ^ k) * ((-1 : Real) ^ k)) • iteratedDeriv k g (-x) := by
+      rw [← mul_pow]
+      norm_num
+    _ = ((-1 : Real) ^ k) •
+        (((-1 : Real) ^ k) • iteratedDeriv k g (-x)) := by
+      rw [smul_smul]
+    _ = ((-1 : Real) ^ k) • conj (iteratedDeriv k g x) := by
+      rw [heq]
+
 set_option maxHeartbeats 2000000 in
 -- Normalizing the canonical smooth bump expands several bundled support proofs.
 private theorem exists_common_nonvanishing_seed {M : Nat} (z : Fin M -> Complex) :
     exists psi : Real -> Complex,
       ContDiff Real ∞ psi /\
       HasCompactSupport psi /\
+      (forall x, psi (-x) = conj (psi x)) /\
       (forall j, FL[psi](z j) ≠ 0) := by
   let psi0 : WeilTestFunction :=
     { toFun := fun x => (standardBump.normed volume x : Complex)
@@ -180,7 +230,13 @@ private theorem exists_common_nonvanishing_seed {M : Nat} (z : Fin M -> Complex)
     have himage := hball (haz j)
     rw [mem_preimage, mem_ball, hvanish, dist_zero_left, norm_one] at himage
     exact lt_irrefl (1 : Real) himage
-  exact ⟨psi, hpsiSmooth, hpsiCompact, hpsiNonzero⟩
+  have hpsiHermitian (x : Real) : psi (-x) = conj (psi x) := by
+    dsimp only [psi]
+    change psi0.toFun (-x / a) = conj (psi0.toFun (x / a))
+    dsimp only [psi0]
+    rw [show -x / a = -(x / a) by ring, standardBump.normed_neg]
+    exact (Complex.conj_ofReal _).symm
+  exact ⟨psi, hpsiSmooth, hpsiCompact, hpsiHermitian, hpsiNonzero⟩
 
 private theorem polynomial_differential_properties
     (P : Complex[X]) (psi : Real -> Complex)
@@ -261,80 +317,43 @@ private theorem polynomial_differential_properties
       rw [hpow]
       ring
 
-private theorem hermitian_symmetrization_properties
-    (raw : Real -> Complex) (hrawSmooth : ContDiff Real ∞ raw)
-    (hrawCompact : HasCompactSupport raw) :
-    let f : Real -> Complex := fun x => (raw x + conj (raw (-x))) / 2
-    ContDiff Real ∞ f /\
-      HasCompactSupport f /\
-      (forall x, f (-x) = conj (f x)) /\
-      forall z, FL[f](z) = (FL[raw](z) + conj (FL[raw](conj z))) / 2 := by
+private theorem polynomial_differential_hermitian
+    (P : Complex[X]) (psi : Real -> Complex)
+    (hpsiHermitian : forall x, psi (-x) = conj (psi x))
+    (hPcoeff : forall k, P.coeff k = conj (P.coeff k)) :
+    let f : Real -> Complex := fun x =>
+      ∑ k ∈ P.support,
+        P.coeff k * (-Complex.I) ^ k * ((deriv^[k]) psi) x
+    forall x, f (-x) = conj (f x) := by
   dsimp only
-  have hreflectedCompact : HasCompactSupport (fun x : Real => raw (-x)) := by
-    simpa [Function.comp_def, Homeomorph.neg] using
-      hrawCompact.comp_homeomorph (Homeomorph.neg Real)
-  have hconjCompact : HasCompactSupport (fun x : Real => conj (raw (-x))) :=
-    hreflectedCompact.comp_left (by simp)
-  have hnegSmooth : ContDiff Real ∞ (fun x : Real => raw (-x)) :=
-    hrawSmooth.comp contDiff_neg
-  have hconjSmooth : ContDiff Real ∞ (fun x : Real => conj (raw (-x))) := by
-    change ContDiff Real ∞ (Complex.conjCLE ∘ fun x : Real => raw (-x))
-    exact Complex.conjCLE.contDiff.comp hnegSmooth
-  have hfSmooth : ContDiff Real ∞
-      (fun x : Real => (raw x + conj (raw (-x))) / 2) :=
-    (hrawSmooth.add hconjSmooth).div_const 2
-  have hfCompact : HasCompactSupport
-      (fun x : Real => (raw x + conj (raw (-x))) / 2) := by
-    have hmul : HasCompactSupport
-        ((fun _ : Real => (2 : Complex)⁻¹) *
-          (raw + fun x : Real => conj (raw (-x)))) :=
-      (hrawCompact.add hconjCompact).mul_left
-    convert hmul using 1
-    funext x
-    simp only [Pi.mul_apply, Pi.add_apply, div_eq_mul_inv]
+  intro x
+  rw [map_sum]
+  apply Finset.sum_congr rfl
+  intro k _
+  rw [iterate_deriv_reflection k psi hpsiHermitian]
+  simp only [Complex.real_smul, map_mul, map_pow, map_neg,
+    Complex.conj_I, neg_neg]
+  rw [← hPcoeff k]
+  have hpower :
+      (-Complex.I) ^ k * ((((-1 : Real) ^ k : Real) : Complex)) = Complex.I ^ k := by
+    rw [Complex.ofReal_pow, Complex.ofReal_neg, Complex.ofReal_one, ← mul_pow]
     ring
-  refine ⟨hfSmooth, hfCompact, ?_, ?_⟩
-  · intro x
-    simp only [neg_neg]
-    have hstarTwo : (starRingEnd Complex) 2 = 2 := by
-      rw [starRingEnd_apply, star_ofNat]
-    rw [map_div₀, map_add, hstarTwo]
-    simp
-    ring
-  · intro z
-    have hinvolution : FL[(fun x : Real => conj (raw (-x)))](z) =
-        conj (FL[raw](conj z)) := by
-      rw [← integral_conj]
-      rw [← integral_neg_eq_self
-        (fun x : Real =>
-          Complex.exp (-Complex.I * z * (x : Complex)) * conj (raw (-x))) volume]
-      apply integral_congr_ae
-      filter_upwards with x
-      simp only [neg_neg, map_mul]
-      rw [← Complex.exp_conj]
-      congr 2
-      simp
-    rw [show (fun x : Real =>
-        Complex.exp (-Complex.I * z * (x : Complex)) *
-          ((raw x + conj (raw (-x))) / 2)) =
-        fun x : Real => (Complex.exp (-Complex.I * z * (x : Complex)) * raw x +
-          Complex.exp (-Complex.I * z * (x : Complex)) * conj (raw (-x))) / 2 by
-      funext x
-      ring]
-    rw [integral_div, integral_add]
-    · rw [hinvolution]
-    · exact (by fun_prop : Continuous (fun x : Real =>
-          Complex.exp (-Complex.I * z * (x : Complex)) * raw x)).integrable_of_hasCompactSupport
-        hrawCompact.mul_left
-    · exact (by fun_prop : Continuous (fun x : Real =>
-          Complex.exp (-Complex.I * z * (x : Complex)) *
-            conj (raw (-x)))).integrable_of_hasCompactSupport hconjCompact.mul_left
+  calc
+    P.coeff k * (-Complex.I) ^ k *
+        ((((-1 : Real) ^ k : Real) : Complex) * conj (((deriv^[k]) psi) x)) =
+        P.coeff k * (((-Complex.I) ^ k *
+          (((-1 : Real) ^ k : Real) : Complex)) * conj (((deriv^[k]) psi) x)) := by
+      ring
+    _ = P.coeff k * (Complex.I ^ k * conj (((deriv^[k]) psi) x)) := by
+      rw [hpower]
+    _ = P.coeff k * Complex.I ^ k * conj (((deriv^[k]) psi) x) := by
+      ring
 
 /-- Finite distinct complex nodes with conjugation-compatible values admit an
 exact compactly supported smooth Hermitian Fourier-Laplace interpolant. The
 public witnesses record the nonvanishing seed, Lagrange polynomial,
-polynomial differential construction, transform factorization, unchanged
-support window, and final Hermitian symmetrization. Under the source's frozen
+conjugation-symmetric polynomial differential construction, transform
+factorization, unchanged support window, and Hermitian structure. Under the source's frozen
 exp(-i z x) convention, integration by parts sends partial_x to i z, so its
 printed P(i partial_x) psi yields P(-z); the public witness uses
 P(-i partial_x) to realize the stated P(z) factorization. -/
@@ -344,55 +363,74 @@ theorem finite_exact_paley_wiener_interpolation
     (hzConj : forall j, z (conjIndex j) = conj (z j))
     (hrConj : forall j, r (conjIndex j) = conj (r j)) :
     exists (L : Real) (psi : Real -> Complex) (P : Complex[X])
-      (raw f : Real -> Complex),
+      (f : Real -> Complex),
       0 < L /\
       ContDiff Real ∞ psi /\
       HasCompactSupport psi /\
       tsupport psi <= Ioo (-L) L /\
       (forall j, FL[psi](z j) ≠ 0) /\
       (forall j, P.eval (z j) = r j / FL[psi](z j)) /\
-      raw = (fun x => ∑ k ∈ P.support,
+      f = (fun x => ∑ k ∈ P.support,
         P.coeff k * (-Complex.I) ^ k * ((deriv^[k]) psi) x) /\
-      ContDiff Real ∞ raw /\
-      HasCompactSupport raw /\
-      tsupport raw <= Ioo (-L) L /\
-      (forall w, FL[raw](w) = P.eval w * FL[psi](w)) /\
-      f = (fun x => (raw x + conj (raw (-x))) / 2) /\
       ContDiff Real ∞ f /\
       HasCompactSupport f /\
       tsupport f <= Ioo (-L) L /\
       (forall x, f (-x) = conj (f x)) /\
+      (forall w, FL[f](w) = P.eval w * FL[psi](w)) /\
       forall j, FL[f](z j) = r j := by
-  obtain ⟨psi, hpsiSmooth, hpsiCompact, hpsiNonzero⟩ :=
+  obtain ⟨psi, hpsiSmooth, hpsiCompact, hpsiHermitian, hpsiNonzero⟩ :=
     exists_common_nonvanishing_seed z
+  have hpsiTransformConj (w : Complex) :
+      FL[psi](conj w) = conj (FL[psi](w)) := by
+    have hreflect : (fun x : Real => conj (psi (-x))) = psi := by
+      funext x
+      rw [hpsiHermitian]
+      simp
+    have htransform := fourier_laplace_reflect_conj psi (conj w)
+    rw [hreflect] at htransform
+    simpa using htransform
   let target : Fin M -> Complex := fun j => r j / FL[psi](z j)
-  let P : Complex[X] := Lagrange.interpolate Finset.univ z target
-  have hP (j : Fin M) : P.eval (z j) = target j := by
+  have htargetConj (j : Fin M) :
+      target (conjIndex j) = conj (target j) := by
+    dsimp only [target]
+    rw [hrConj, hzConj, hpsiTransformConj]
+    rw [div_eq_mul_inv, div_eq_mul_inv, map_mul, map_inv₀]
+  let Q : Complex[X] := Lagrange.interpolate Finset.univ z target
+  have hQ (j : Fin M) : Q.eval (z j) = target j := by
     exact Lagrange.eval_interpolate_at_node target hz.injOn (Finset.mem_univ j)
-  let raw : Real -> Complex := fun x => ∑ k ∈ P.support,
+  let P : Complex[X] := (2 : Complex)⁻¹ •
+    (Q + Q.map (starRingEnd Complex))
+  have hP (j : Fin M) : P.eval (z j) = target j := by
+    dsimp only [P]
+    rw [Polynomial.eval_smul, Polynomial.eval_add, hQ,
+      eval_map_conj, ← hzConj j, hQ, htargetConj]
+    change (2 : Complex)⁻¹ • (target j + conj (conj (target j))) = target j
+    rw [starRingEnd_self_apply]
+    ring
+  have hPcoeff (k : Nat) : P.coeff k = conj (P.coeff k) := by
+    dsimp only [P]
+    simp only [Polynomial.coeff_smul, Polynomial.coeff_add,
+      Polynomial.coeff_map, smul_eq_mul, starRingEnd_apply, map_mul, map_inv₀,
+      map_ofNat, map_add]
+    rw [star_star]
+    ring
+  let f : Real -> Complex := fun x => ∑ k ∈ P.support,
     P.coeff k * (-Complex.I) ^ k * ((deriv^[k]) psi) x
-  obtain ⟨hrawSmooth, hrawCompact, hrawTransform⟩ :=
+  obtain ⟨hfSmooth, hfCompact, hfTransform⟩ :=
     polynomial_differential_properties P psi hpsiSmooth hpsiCompact
-  let f : Real -> Complex := fun x => (raw x + conj (raw (-x))) / 2
-  obtain ⟨hfSmooth, hfCompact, hfHermitian, hfTransform⟩ :=
-    hermitian_symmetrization_properties raw hrawSmooth hrawCompact
-  have hrawInterpolation (j : Fin M) : FL[raw](z j) = r j := by
-    rw [hrawTransform, hP]
+  have hfHermitian : forall x, f (-x) = conj (f x) :=
+    polynomial_differential_hermitian P psi hpsiHermitian hPcoeff
+  have hfInterpolation (j : Fin M) : FL[f](z j) = r j := by
+    rw [hfTransform, hP]
     dsimp only [target]
     exact div_mul_cancel₀ (r j) (hpsiNonzero j)
-  have hfInterpolation (j : Fin M) : FL[f](z j) = r j := by
-    rw [hfTransform, hrawInterpolation]
-    have hconjRaw : FL[raw](conj (z j)) = conj (r j) := by
-      rw [← hzConj j, hrawInterpolation, hrConj]
-    rw [hconjRaw]
-    simp
-  have hallCompact : IsCompact (tsupport psi ∪ tsupport raw ∪ tsupport f) :=
-    (hpsiCompact.isCompact.union hrawCompact.isCompact).union hfCompact.isCompact
+  have hallCompact : IsCompact (tsupport psi ∪ tsupport f) :=
+    hpsiCompact.isCompact.union hfCompact.isCompact
   obtain ⟨R, hR⟩ :=
     (Metric.isBounded_iff_subset_closedBall (0 : Real)).mp hallCompact.isBounded
   let L : Real := abs R + 1
   have hL : 0 < L := by dsimp only [L]; positivity
-  have hwindow : tsupport psi ∪ tsupport raw ∪ tsupport f <= Ioo (-L) L := by
+  have hwindow : tsupport psi ∪ tsupport f <= Ioo (-L) L := by
     intro x hx
     have hxR : abs x <= R := by
       simpa using hR hx
@@ -401,13 +439,12 @@ theorem finite_exact_paley_wiener_interpolation
       dsimp only [L]
       linarith [le_abs_self R])
     exact (abs_lt.mp hxAbs)
-  refine ⟨L, psi, P, raw, f, hL, hpsiSmooth, hpsiCompact,
-    ?_, hpsiNonzero, ?_, rfl, hrawSmooth, hrawCompact, ?_, hrawTransform,
-    rfl, hfSmooth, hfCompact, ?_, hfHermitian, hfInterpolation⟩
-  · exact fun x hx => hwindow (Or.inl (Or.inl hx))
+  refine ⟨L, psi, P, f, hL, hpsiSmooth, hpsiCompact,
+    ?_, hpsiNonzero, ?_, rfl, hfSmooth, hfCompact, ?_, hfHermitian,
+    hfTransform, hfInterpolation⟩
+  · exact fun x hx => hwindow (Or.inl hx)
   · intro j
     simpa only [target] using hP j
-  · exact fun x hx => hwindow (Or.inl (Or.inr hx))
   · exact fun x hx => hwindow (Or.inr hx)
 
 #print axioms finite_exact_paley_wiener_interpolation

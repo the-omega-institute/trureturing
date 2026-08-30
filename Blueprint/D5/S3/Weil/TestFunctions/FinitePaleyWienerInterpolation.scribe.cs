@@ -29,10 +29,11 @@ internal sealed class FinitePaleyWienerInterpolationDocument : IScribeDocumentDe
                     + "the public witness uses P(-i partial_x) to realize the stated P(z) "
                     + "factorization.")),
                 Paragraph(Text(
-                    "Conjugate reflection of the raw test preserves the common compact "
-                    + "support window and supplies the Hermitian real structure. The "
-                    + "compatibility of the node values makes the symmetrized transform "
-                    + "retain every prescribed value."))),
+                    "Conjugation-compatible nodes and values make the coefficientwise "
+                    + "conjugation average of the Lagrange polynomial coefficient-real. "
+                    + "Applied to the Hermitian seed, its polynomial differential "
+                    + "construction is itself Hermitian, so the same final test function "
+                    + "has the differential definition and global transform factorization."))),
             DescribeRole.Theorem))));
 
     private static Formula TheoremFormula()
@@ -43,7 +44,7 @@ internal sealed class FinitePaleyWienerInterpolationDocument : IScribeDocumentDe
         Formula conjugateIndex = F.Id("conjIndex");
         Formula j = F.Id("j"), k = F.Id("k"), x = F.Id("x"), w = F.Id("w");
         Formula length = F.Id("L"), seed = F.Id("psi"), polynomial = F.Id("P");
-        Formula raw = F.Id("raw"), test = F.Id("f");
+        Formula test = F.Id("f");
 
         Formula finiteIndex = Call("Fin", m);
         Formula nodeFamily = new Formula.TypeArrow(finiteIndex, complex);
@@ -83,30 +84,22 @@ internal sealed class FinitePaleyWienerInterpolationDocument : IScribeDocumentDe
                 Div(Value(j), Transform(seed, Node(j)))));
         Formula iteratedDerivative =
             Call("iterate", F.Id("deriv"), k, seed);
-        Formula rawTerm = Mul(
+        Formula differentialTerm = Mul(
             Mul(
                 Call("coeff", polynomial, k),
                 Pow(new Formula.Negate(imaginaryUnit), k)),
             At(iteratedDerivative, x));
-        Formula rawDefinition = Equal(
-            raw,
-            Lambda(
-                x,
-                real,
-                Call("sum", k, Call("support", polynomial), rawTerm)));
-        Formula rawFactorization = ForAll(
-            [Bound("w", complex)],
-            Equal(
-                Transform(raw, w),
-                Mul(Call("eval", polynomial, w), Transform(seed, w))));
-        Formula symmetrizedDefinition = Equal(
+        Formula differentialDefinition = Equal(
             test,
             Lambda(
                 x,
                 real,
-                Div(
-                    Add(At(raw, x), Conjugate(At(raw, new Formula.Negate(x)))),
-                    D(2))));
+                Call("sum", k, Call("support", polynomial), differentialTerm)));
+        Formula factorization = ForAll(
+            [Bound("w", complex)],
+            Equal(
+                Transform(test, w),
+                Mul(Call("eval", polynomial, w), Transform(seed, w))));
         Formula hermitian = ForAll(
             [Bound("x", real)],
             Equal(At(test, new Formula.Negate(x)), Conjugate(At(test, x))));
@@ -119,7 +112,6 @@ internal sealed class FinitePaleyWienerInterpolationDocument : IScribeDocumentDe
                 Bound("L", real),
                 Bound("psi", functionType),
                 Bound("P", polynomialType),
-                Bound("raw", functionType),
                 Bound("f", functionType),
             ],
             All(
@@ -129,16 +121,12 @@ internal sealed class FinitePaleyWienerInterpolationDocument : IScribeDocumentDe
                 InWindow(seed),
                 seedNonzero,
                 interpolationPolynomial,
-                rawDefinition,
-                Smooth(raw),
-                Compact(raw),
-                InWindow(raw),
-                rawFactorization,
-                symmetrizedDefinition,
+                differentialDefinition,
                 Smooth(test),
                 Compact(test),
                 InWindow(test),
                 hermitian,
+                factorization,
                 exactInterpolation));
 
         return Disp(ForAll(
@@ -162,9 +150,6 @@ internal sealed class FinitePaleyWienerInterpolationDocument : IScribeDocumentDe
 
     private static Formula Pow(Formula value, Formula exponent) =>
         Call("pow", value, exponent);
-
-    private static Formula Add(Formula left, Formula right) =>
-        new Formula.Binary(left, FormulaBinaryOperator.Add, right);
 
     private static Formula Mul(Formula left, Formula right) =>
         new Formula.Binary(left, FormulaBinaryOperator.Multiply, right);
