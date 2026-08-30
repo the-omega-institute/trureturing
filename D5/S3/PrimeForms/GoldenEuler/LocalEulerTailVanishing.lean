@@ -45,8 +45,8 @@ theorem local_euler_partial_residual (x : ℂ) (N : ℕ) :
 theorem local_euler_residual_tendsto_zero
     {x : ℂ} (hx : ‖x‖ < 1) :
     Tendsto (localEulerResidual x) atTop (𝓝 0) := by
-  simpa [localEulerResidual] using
-    (tendsto_pow_atTop_nhds_zero_of_norm_lt_one hx)
+  change Tendsto (fun N : ℕ => x ^ N) atTop (𝓝 0)
+  exact tendsto_pow_atTop_nhds_zero_of_norm_lt_one hx
 
 /-- Consequently the normalized finite local Euler factor converges to one. -/
 theorem normalized_local_euler_partial_tendsto_one
@@ -73,7 +73,7 @@ theorem local_euler_partial_tendsto_inv
     exact lt_irrefl 1 hx
   have hNormalized := normalized_local_euler_partial_tendsto_one hx
   have hScaled := hNormalized.const_mul ((1 - x)⁻¹)
-  convert hScaled using 1 <;> simp [mul_assoc, hOneSub]
+  convert hScaled using 1 <;> simp [hOneSub]
 
 /-- The unit-disk hypothesis is inhabited. -/
 example :
