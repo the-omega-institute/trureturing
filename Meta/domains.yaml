@@ -23,6 +23,9 @@ domains:
   CertificateHistory:
     stratum: S0
     definition: Finite event-history certificates and the finite sets of generating events they reference.
+  CompletionDynamics:
+    stratum: S3
+    definition: Dynamical structures of observer completion - golden Mobius fixed points, projective jets and first-break orders, and real-completion thread fibers with blow-up coordinates.
   Computability:
     stratum: S0
     definition: Partial recursive codes with universal evaluation and the recursion-theoretic fixed points of computable code transformations.
@@ -107,6 +110,9 @@ domains:
   PrimeForms:
     stratum: S3
     definition: Representations of prime numbers by integral quadratic forms.
+  PrimeObserver:
+    stratum: S3
+    definition: Prime-indexed observer memory structures with projective golden-mode multipliers.
   Quad:
     stratum: S1
     definition: Parameterized quadratic presentation rings and actual orders carrying the digit-gas root-unit criteria.
