@@ -93,7 +93,12 @@ theorem golden_log_scale_prime_step {p x : ℝ}
 
 /-- A concrete inhabited scale law. -/
 example : goldenLogScale (Real.goldenRatio ^ 4) = 2 := by
-  simpa [pow_mul] using (golden_log_scale_golden_cycle_pow 2)
+  calc
+    goldenLogScale (Real.goldenRatio ^ 4) =
+        goldenLogScale ((Real.goldenRatio ^ 2) ^ 2) := by
+          congr 1
+          ring
+    _ = 2 := golden_log_scale_golden_cycle_pow 2
 
 #print axioms golden_log_scale_mul
 #print axioms golden_log_scale_golden_ratio
