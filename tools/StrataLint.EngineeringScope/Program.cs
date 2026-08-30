@@ -34,6 +34,11 @@ internal static class Program
                 }
             }
 
+            if (arguments.FirstOrDefault() == "list-test-owner-assemblies")
+            {
+                return ListTestOwnerAssemblies(arguments.Skip(1).ToArray());
+            }
+
             var options = Options.Parse(arguments);
             var head = GitText(options.RepositoryRoot, "rev-parse", "HEAD");
             var @base = GitText(options.RepositoryRoot, "rev-parse", "HEAD^1");
@@ -171,18 +176,43 @@ internal static class Program
     private static int VerifyTestEvidence(string resultsDirectory) =>
         TestResultEvidence.Load(resultsDirectory).Executed;
 
+    private static int ListTestOwnerAssemblies(IReadOnlyList<string> arguments)
+    {
+        if (arguments.Count != 2
+            || arguments[0] != "--repository"
+            || string.IsNullOrWhiteSpace(arguments[1]))
+        {
+            throw new ArgumentException(
+                "list-test-owner-assemblies requires exactly --repository value");
+        }
+
+        var snapshot = RepositoryRules.ReadTrackedProjects(Path.GetFullPath(arguments[1]));
+        foreach (var assembly in RepositoryRules.CalculateOwnerAssemblies(snapshot))
+        {
+            Console.WriteLine(assembly);
+        }
+
+        return 0;
+    }
+
     private static int VerifyTrx(VerifyTrxOptions options)
     {
         var evidence = TestResultEvidence.Load(options.ResultsDirectory);
-        if (options.RequiredAssembly is not null)
+        if (options.RequiredAssemblies.Length != 0)
         {
-            var assemblyExecuted = evidence.CountAssembly(options.RequiredAssembly);
-            if (assemblyExecuted == 0)
-                throw new InvalidDataException(
-                    $"TRX has no executed identity from required assembly {options.RequiredAssembly}");
-            Console.WriteLine(
-                $"ENGINEERING_BASE_FLOOR_EXECUTED assembly={options.RequiredAssembly} "
-                + $"evidence=trx executed={assemblyExecuted}");
+            foreach (var requiredAssembly in options.RequiredAssemblies)
+            {
+                var assemblyExecuted = evidence.CountAssembly(requiredAssembly);
+                if (assemblyExecuted == 0)
+                {
+                    throw new InvalidDataException(
+                        $"TRX has no executed identity from required assembly {requiredAssembly}");
+                }
+
+                Console.WriteLine(
+                    $"ENGINEERING_BASE_FLOOR_EXECUTED assembly={requiredAssembly} "
+                    + $"evidence=trx executed={assemblyExecuted}");
+            }
         }
         else
         {
@@ -301,15 +331,25 @@ internal static class Program
                 : throw new ArgumentException($"{name} is required");
     }
 
-    private sealed record VerifyTrxOptions(string ResultsDirectory, string? RequiredAssembly)
+    private sealed record VerifyTrxOptions(
+        string ResultsDirectory,
+        string[] RequiredAssemblies)
     {
         internal static VerifyTrxOptions Parse(IReadOnlyList<string> arguments)
         {
             var values = new Dictionary<string, string>(StringComparer.Ordinal);
+            var requiredAssemblies = new List<string>();
             for (var index = 0; index < arguments.Count; index += 2)
             {
                 if (index + 1 >= arguments.Count || !arguments[index].StartsWith("--", StringComparison.Ordinal))
                     throw new ArgumentException("verify-trx options must be --name value pairs");
+                if (arguments[index] == "--required-assembly")
+                {
+                    if (string.IsNullOrWhiteSpace(arguments[index + 1]))
+                        throw new ArgumentException("--required-assembly must not be empty");
+                    requiredAssemblies.Add(arguments[index + 1]);
+                    continue;
+                }
                 if (!values.TryAdd(arguments[index], arguments[index + 1]))
                     throw new ArgumentException($"duplicate option: {arguments[index]}");
             }
@@ -320,8 +360,9 @@ internal static class Program
                 throw new ArgumentException("--results-directory is required");
             }
 
-            values.TryGetValue("--required-assembly", out var requiredAssembly);
-            return new VerifyTrxOptions(Path.GetFullPath(resultsDirectory), requiredAssembly);
+            return new VerifyTrxOptions(
+                Path.GetFullPath(resultsDirectory),
+                requiredAssemblies.ToArray());
         }
     }
 }

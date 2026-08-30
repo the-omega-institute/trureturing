@@ -40,15 +40,9 @@ internal static partial class RepositoryRules
 
     private static readonly Uri RepositoryUri = new("https://repository.invalid/");
 
-    // Boundary: this is a pure csproj topology gate. It does not verify that any owned test
-    // project contains a runnable test; an empty xUnit project with zero tests can pass. This is
-    // a known, intentional gap. Static runnable identity would reimplement C# attribute semantics,
-    // MSBuild Compile evaluation, and preprocessor-symbol evaluation. Three review rounds found
-    // both false-open and false-closed behavior in that approximation, which also duplicated the
-    // ScribeTestMapDeriver source of truth. The correct criterion is runtime evidence from
-    // TestResultEvidence.CountAssembly (TestResultEvidence.cs:73) together with
-    // verify-trx --required-assembly (Program.cs:177-188). Its sole caller,
-    // tools/scripts/dotnet-test.sh:20, does not currently pass that option; wiring it is later work.
+    // Boundary: runnable identity stays a runtime concern. Static detection would reimplement C#
+    // attributes, MSBuild Compile evaluation, and preprocessor symbols. Full-suite TRX verification
+    // consumes the owner assemblies derived here and requires nonzero executed identity for each.
     internal static TestProjectTopologySnapshot ReadTrackedProjects(string repositoryRoot)
     {
         ArgumentNullException.ThrowIfNull(repositoryRoot);
@@ -140,6 +134,17 @@ internal static partial class RepositoryRules
     {
         ArgumentNullException.ThrowIfNull(snapshot);
         return BuildDebtGraph(snapshot).Debt;
+    }
+
+    internal static ImmutableArray<string> CalculateOwnerAssemblies(
+        TestProjectTopologySnapshot snapshot)
+    {
+        ArgumentNullException.ThrowIfNull(snapshot);
+        return BuildDebtGraph(snapshot).OwnedTestProjects
+            .Select(static project => project.AssemblyName)
+            .Distinct(StringComparer.Ordinal)
+            .Order(StringComparer.Ordinal)
+            .ToImmutableArray();
     }
 
     private static DebtGraph BuildDebtGraph(TestProjectTopologySnapshot snapshot)

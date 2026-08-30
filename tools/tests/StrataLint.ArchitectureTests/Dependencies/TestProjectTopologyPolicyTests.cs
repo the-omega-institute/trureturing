@@ -434,6 +434,25 @@ public sealed class TestProjectTopologyPolicyTests
     }
 
     [Fact]
+    public void OwnerAssembliesAreDerivedFromOwnedXunitProjectTopology()
+    {
+        var assemblies = TestProjectTopologyPolicy.CalculateOwnerAssemblies(Snapshot(
+            OwnedTest("Zulu.Tests", "Zulu.Tests"),
+            OwnedTest("Alpha.Tests", "Alpha.Tests"),
+            OwnedTest("ZuluDuplicate.Tests", "Zulu.Tests"),
+            ProjectWithDefaultProperties(
+                CanonicalHarnessPath,
+                "StrataLint.ArchitectureTests",
+                xunit: true),
+            ProjectWithDefaultProperties(
+                "tools/tests/CompileFailProof/CompileFailProof.csproj",
+                "CompileFailProof",
+                xunit: false)));
+
+        Assert.Equal(["Alpha.Tests", "Zulu.Tests"], assemblies.ToArray());
+    }
+
+    [Fact]
     public void CurrentRepositoryCandidateDeltaIsAcceptedByTheSameRatchet()
     {
         var root = RepositoryLayout.FindRoot();

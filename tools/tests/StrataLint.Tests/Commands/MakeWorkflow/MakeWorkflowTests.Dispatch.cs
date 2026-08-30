@@ -240,7 +240,18 @@ public sealed partial class MakeWorkflowTests
         Assert.DoesNotContain("--filter", testRecipe, StringComparison.Ordinal);
         var dotnetTest = File.ReadAllText(Path.Combine(root, "tools", "scripts", "dotnet-test.sh"));
         Assert.Contains("dotnet test \"$@\"", dotnetTest, StringComparison.Ordinal);
-        Assert.Contains("verify-trx --results-directory \"$RESULTS_DIRECTORY\"", dotnetTest, StringComparison.Ordinal);
+        Assert.Contains(
+            "list-test-owner-assemblies --repository \"$ROOT\"",
+            dotnetTest,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "OWNER_ASSEMBLY_ARGS+=(--required-assembly \"$owner_assembly\")",
+            dotnetTest,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "verify-trx --results-directory \"$RESULTS_DIRECTORY\" \"${OWNER_ASSEMBLY_ARGS[@]}\"",
+            dotnetTest,
+            StringComparison.Ordinal);
         var engineeringTestsRecipe = Recipe(makefile, "engineering-tests");
         Assert.Contains(
             "StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
