@@ -46,15 +46,16 @@ internal static class LeanCacheBudgetPolicy
     /// 该树在 ARM 上的冷建 **≥ 8640s**(第二、三轮之和;若首轮 12 分钟的产物计入则 ≥ 9360s)且仍未完成。
     /// 且 `lean-inspect` job 自身 `timeout-minutes: 45`,故本预算在 CI 上从不承重,
     /// 只约束本机 `with-cache-writer` 包裹的 Lake 命令。
-    /// ⑥(2026-08-30,#4122 architecture/quality 席三轮)**嵌套 deadline 取最小**:本机 `make lean-report`
-    /// 的 worker `tools/lean-inspector/inspect.sh`(role=lean-producer)最坏顺序跑
-    /// <see cref="InspectorSequentialLakePhasesWorstCase"/> = 3 条 Lake 阶段,每条之前有 ensure 前导
-    /// (最多 <see cref="ArchiveFetchBudgetSeconds"/>),阶段之间有非 Lake 工作
-    /// (<see cref="SupervisorNonLakeReserveSeconds"/>);外层是 `report-supervisor.sh` 的 `BUILD_TIMEOUT_SECONDS`
-    /// (#403),有效上限 = min(本值, 外层 − 已耗)。外层留在 7200、与本值「相等」、或只取 3 × 本值,
-    /// 都使后面的阶段只剩余量。故 lean-producer 的外层 = <see cref="InspectorSupervisorBudgetSeconds"/>
-    /// = 3 × (21600 + 2580) + 3600 = 76140,由 `LeanProducerHoldBudgetEqualsTheInspectorComposite` 钉住相等;
-    /// 消费者角色保留 7200(`ConsumerHangBoundIsUnchangedByTheProducerComposite`)。
+    /// ⑥(2026-08-30,#4122 四轮评审;**披露,非解决**)**嵌套 deadline 取最小**:本机 `make lean-report`
+    /// 的 worker `tools/lean-inspector/inspect.sh` 最坏顺序跑 3 条 Lake 阶段,每条之前的 ensure 前导可进入
+    /// provisioning(`cp -R` / `lake exe cache get` / 归档取回,各有自己的预算),阶段之间还有非 Lake 工作;
+    /// 外层是 `report-supervisor.sh` 的 `BUILD_TIMEOUT_SECONDS`(#403 挂死上限,默认 7200,**本次不动**)。
+    /// 有效上限 = min(本值, 外层 − 已耗):**外层小于本值时,真正杀进程的是外层**,本值在该路径上不承重。
+    /// #4122 第 2–4 轮曾试图把外层写成内层之和(21600 → 64800 → 76140),每轮都被指出少算一段,
+    /// 而全部内层挂死上限相加 ≈ 3 × (3 × 21600 + 2580) + 3600 ≈ 202,000s > 脚本自身 86400 上限——
+    /// **挂死上限之和不是排程**,该关系在当前词汇表里无解(第 5″ 条预算包络),建模另立
+    /// https://github.com/the-omega-institute/trureturing/issues/4127 承接。本值的域因此如实收窄为
+    /// 「本机 `with-cache-writer` 包裹的单条 Lake 命令,且以外层 supervisor 允许的范围为限」。
     ///
     /// **永久案号**:https://github.com/the-omega-institute/trureturing/issues/2535(首次收口)
     ///   → https://github.com/the-omega-institute/trureturing/issues/4120(2026-08-30 修订)
@@ -69,7 +70,12 @@ internal static class LeanCacheBudgetPolicy
     ///      的种子 workflow `.github/workflows/lean-cache-seed-manual.yml` 已实际存在并跑过
     ///      (负读数⑤),#3029 「新 config 的首个 PR 结构上必无种子」这一前提因此改变;
     ///      门的**消费侧**仍未建,由 #4120 的后续单承接,本次不建(16′ 剥洋葱)。〕
-    ///   ② D5 内容层模块数达到 <see cref="ColdBuildBudgetReviewModuleCount"/>(2026-08-30 重算)。
+    ///   ② D5 内容层模块数达到 <see cref="ColdBuildBudgetReviewModuleCount"/>(2026-08-30 重算)——
+    ///      #3029 复审条件的**先行指标**分支,可机器判且有观察者。
+    ///   ②′ #3029 复审条件的**直接观测**分支(2026-08-30 第 4 轮评审勘正:首版修订漏掉了它):任一次走到
+    ///      project-cold 的全量构建,其墙钟耗时 ≥ 0.8 × 本值(= 17280s)即触发重新收口;它不依赖 s/模块锚点,
+    ///      故换机器或换 Lean 版本使锚点失真时仍有效。**现状如实记:无机器消费者**——ensure 收据与
+    ///      supervisor 日志都是 run-local,没有任何测试读它们;这一分支目前靠人读日志,记 `open`。
     ///      **② 可机器判且有观察者**(见该常数的声明),这是「非永久」的实际兑现处。
     ///
     /// **非永久**:上一条即其非永久性。
@@ -100,8 +106,8 @@ internal static class LeanCacheBudgetPolicy
     /// **`ceil(0.8 × DefaultProvisionBudgetSeconds / 2.156588)` = ceil(8012.66) = 8013,单阶段向上取整**。
     /// 锚点沿用 #3029 的本机上界侧读数,**未重测**:重测需要一次全量冷建,而那正是本值要避免的事;
     /// 负读数⑤ 的 CI 固定树下界(≥ 8640s @ 2649 模块,ARM)高于本机投影,说明本机锚点对 CI 不是上界——
-    /// 但本值的域是本机(见 域 与 负读数⑤),复审线按本机锚点算。lean-producer 的外层 supervisor
-    /// 预算为本值的复合(负读数⑥)且由测试钉住,故本线对真正杀进程的那层不迟到。本文件登记它,
+    /// 但本值的域是本机(见 域 与 负读数⑤),复审线按本机锚点算。**它对 supervisor 外层不承诺任何事**
+    /// (负读数⑥:外层 7200 归 #403 域,建模见 #4127);本线只守本值自己的取值依据。本文件登记它,
     /// 由 `ColdBuildBudgetReviewLineTests.ColdBuildBudgetReviewLineHasNotBeenCrossed` 盯住。
     ///
     /// **为什么需要这一条**:2026-08-26 实测 `grep -rnw 2672` 全仓 **0 命中**
@@ -130,51 +136,6 @@ internal static class LeanCacheBudgetPolicy
     internal const int ColdBuildBudgetReviewModuleCount = 8013;
 
     /// <summary>
-    /// `tools/lean-inspector/inspect.sh` 最坏情况下**顺序**执行的、各自受
-    /// <see cref="DefaultProvisionBudgetSeconds"/> 约束的 Lake 阶段数:`lake build`(:130)+
-    /// delta 子集 inspect + 全量回退 inspect(`invoke_inspector` 的两个调用点 :306/:326)= **3**。
-    /// 不是选定值,是脚本结构的计数,由 `InspectorSequentialLakePhaseCountMatchesTheScript` 从脚本文本
-    /// 重数并钉住;脚本多一条 Lake 阶段即红。它的唯一消费者是嵌套 deadline 关系:supervisor 的外层
-    /// `BUILD_TIMEOUT` 必须 ≥ 本数 × 内层预算(`HolderBudgetCoversTheInspectorsSequentialLakePhases`)。
-    /// </summary>
-    internal const int InspectorSequentialLakePhasesWorstCase = 3;
-
-    /// <summary>
-    /// 每条 Lake 阶段之前的 ensure 前导在 project-cold 路径上最多花在归档取回上的时间:
-    /// `LeanCacheEnsureCommand:671-674` 用的同一式 `(LeanInspectJobBudgetMinutes − PostArchiveReserveMinutes) × 60`
-    /// = 2580s;超时被捕获并降级为源编译(`LeanCacheEnsureCommand:287`),故它是加在 Lake 预算之前的一段,
-    /// 不与之重叠。**投影,不是独立选择**。
-    /// </summary>
-    internal const int ArchiveFetchBudgetSeconds =
-        (LeanInspectJobBudgetMinutes - PostArchiveReserveMinutes) * 60;
-
-    /// <summary>
-    /// lean-producer 外层预算中 Lake 阶段**之外**的工作的具名保留:模块枚举、delta 规划、材料压缩
-    /// (`materials.py compact`)、合并与序列化、进程启动。
-    ///
-    /// **分类:`policy-override`。** 「这不是派生值。」**日期**:2026-08-30。**域**:仅 `report-supervisor.sh`
-    /// 对 role=lean-producer 的复合外层预算(`InspectorSupervisorBudgetSeconds` 的加项),不作用于任何
-    /// Lake 命令。**正读数**:CI 热态整份 lean-report 生产 12m46s = 766s(2026-08-25,含 Lake no-op build
-    /// 与 inspect,非 Lake 部分是其真子集)。**负读数**:无——非 Lake 部分从未被单独计时,记 `open`。
-    /// **取值 3600 的依据**:≥ 4.7 × 766s,取整小时;选定值。**永久案号**:同主声明的链
-    /// #2535 → #4120(#4122 第三轮 architecture/quality 席:复合预算须含非 Lake 保留)。**owner**:仓库 τ=0 owner。
-    /// **退出条件 / 复审触发**:与主声明相同(门①落地,或复审线②);另加:非 Lake 部分一旦被单独计时,
-    /// 本值须按该读数重新收口。**非永久**:上一条即其非永久性。
-    /// </summary>
-    internal const int SupervisorNonLakeReserveSeconds = 3600;
-
-    /// <summary>
-    /// role=lean-producer 的 supervisor 外层预算 = 阶段数 × (前导 + Lake) + 非 Lake 保留
-    /// = 3 × (21600 + 2580) + 3600 = **76140**。派生自本文件的四个已分类量,不是新的选定值;
-    /// `report-supervisor.sh` 的 `LEAN_PRODUCER_BUILD_TIMEOUT_SECONDS` 字面量由
-    /// `LeanProducerHoldBudgetEqualsTheInspectorComposite` 钉住相等。消费者角色不用它(它们不跑 Lake,
-    /// #403 的 7200 原样保留,由 `ConsumerHangBoundIsUnchangedByTheProducerComposite` 钉住)。
-    /// </summary>
-    internal const int InspectorSupervisorBudgetSeconds =
-        InspectorSequentialLakePhasesWorstCase * (DefaultProvisionBudgetSeconds + ArchiveFetchBudgetSeconds)
-        + SupervisorNonLakeReserveSeconds;
-
-    /// <summary>
     /// 旋钮的下界。低于此值会把正常路径(见上「正读数」)误杀;它只在调用方显式设置
     /// `STRATALINT_LEAN_CACHE_TIMEOUT_SECONDS` 时生效,默认路径不经过它。
     /// 同属上述 `policy-override` 的域,共用同一案号与退出条件。
@@ -183,8 +144,10 @@ internal static class LeanCacheBudgetPolicy
 
     /// <summary>
     /// 归档取回所在 job 的预算上限。取自 `.github/workflows/ci.yml` 的 `lean-inspect`
-    /// job：`timeout-minutes: 45`。**这是那个值的投影，不是一个独立的选择** ——
-    /// `LeanInspectJobBudgetMatchesTheWorkflow` 钉住二者相等，workflow 改了这里就红。
+    /// job：`timeout-minutes: 45`。**这是那个值的投影，不是一个独立的选择**。
+    /// 〔2026-08-30 勘注(#4122 第 4 轮 architecture 席):此处曾称由 `LeanInspectJobBudgetMatchesTheWorkflow`
+    /// 钉住相等——该测试已随 `350ab86be`(器律⑦′ 禁 workflow 测试)删除;现为**手工复制值,无机器钉子**,
+    /// workflow 改了这里不会红。今日实测 ci.yml 仍为 45。〕
     /// </summary>
     internal const int LeanInspectJobBudgetMinutes = 45;
 
