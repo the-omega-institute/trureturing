@@ -46,9 +46,6 @@ internal sealed class PrimeObserverCasimirCompleteMonotonicityDocument
     private static Formula EqualTo(Formula left, Formula right) =>
         new Formula.Relation(left, FormulaRelationOperator.Equal, right);
 
-    private static Formula IffFormula(Formula left, Formula right) =>
-        new Formula.Logic(left, FormulaLogicOperator.Iff, right);
-
     private static Formula Implies(Formula left, Formula right) =>
         new Formula.Logic(left, FormulaLogicOperator.Implies, right);
 
@@ -64,44 +61,8 @@ internal sealed class PrimeObserverCasimirCompleteMonotonicityDocument
         Formula k = F.Id("k");
         Formula m = F.Id("m");
         Formula sigma = F.Id("sigma");
-        Formula coefficient = Call("primeObserverCasimirCoefficient", phase);
         Formula casimir = Call("goldenObserverCasimir", phase);
         Formula phaseAtP = Apply(phase, p);
-        Formula splitAtP = Call("IsGoldenSplitPrime", p);
-        Formula primeAtP = Call("Prime", p);
-        Formula primePower = Call("pow", p, k);
-        Formula cosine = Call("cos", Seq(k, Sp, Times, Sp, phaseAtP));
-        Formula primePowerValue = Call(
-            "ofReal",
-            new Formula.Fraction(
-                Seq(D(2), Sp, Times, Sp, Open, D(1), Sp, Minus, Sp, cosine, Close),
-                k));
-        Formula coefficientClause = new Formula.BindMany(
-            FormulaQuantifier.ForAll,
-            [Bound("p", natural), Bound("k", natural)],
-            Implies(
-                And(primeAtP, And(LessThan(D(0), k), splitAtP)),
-                EqualTo(Apply(coefficient, primePower), primePowerValue)));
-        Formula residueClause = new Formula.BindMany(
-            FormulaQuantifier.ForAll,
-            [Bound("p", natural)],
-            Implies(
-                primeAtP,
-                IffFormula(
-                    splitAtP,
-                    new Formula.Logic(
-                        EqualTo(Call("mod", p, D(5)), D(1)),
-                        FormulaLogicOperator.Or,
-                        EqualTo(Call("mod", p, D(5)), D(4))))));
-        Formula casimirValue = Apply(casimir, sigma);
-        Formula zeroModeReading = Call("splitRegulatorModeLog", phase, D(0), sigma);
-        Formula firstModeReading = Call("splitRegulatorModeLog", phase, D(1), sigma);
-        Formula casimirClause = new Formula.BindMany(
-            FormulaQuantifier.ForAll,
-            [Bound("sigma", real)],
-            EqualTo(
-                casimirValue,
-                Seq(zeroModeReading, Sp, Minus, Sp, firstModeReading)));
         Formula sign = Call("pow", Seq(Open, Minus, D(1), Close), m);
         Formula signedDerivative = Seq(
             sign, Sp, Times, Sp, Call("iteratedDeriv", m, casimir, sigma));
@@ -142,30 +103,14 @@ internal sealed class PrimeObserverCasimirCompleteMonotonicityDocument
             Implies(
                 LessThan(D(1), sigma),
                 EqualTo(signedDerivative, differentiatedSeries)));
-        Formula termwisePhaseDistance = Seq(
-            D(1), Sp, Minus, Sp, Call("cos", Seq(k, Sp, Times, Sp, phaseAtP)));
-        Formula termwiseCoefficientWeight = new Formula.Fraction(
-            Seq(D(2), Sp, Times, Sp, Open, termwisePhaseDistance, Close),
-            k);
-        Formula termwiseLogarithmicWeight = new Formula.Power(
-            Seq(Open, k, Sp, Times, Sp, Call("log", p), Close),
-            m);
-        Formula termwiseDecayWeight = new Formula.Power(
-            p,
-            Grp(Seq(Minus, Open, k, Sp, Times, Sp, sigma, Close)));
-        Formula termwiseSummand = Seq(
-            termwiseCoefficientWeight, Sp, Times, Sp,
-            termwiseLogarithmicWeight, Sp, Times, Sp, termwiseDecayWeight);
         Formula termwiseNonnegativeClause = new Formula.BindMany(
             FormulaQuantifier.ForAll,
-            [Bound("m", natural), Bound("p", natural), Bound("k", natural),
-                Bound("sigma", real)],
+            [Bound("m", natural), Bound("sigma", real), Bound("p", Call("NatPrimes")),
+                Bound("k", natural)],
             Implies(
-                And(
-                    splitAtP,
-                    And(LessThan(D(0), k), LessThan(D(1), sigma))),
+                LessThan(D(1), sigma),
                 new Formula.Relation(
-                    D(0), FormulaRelationOperator.LessThanOrEqual, termwiseSummand)));
+                    D(0), FormulaRelationOperator.LessThanOrEqual, summand)));
         Formula nonnegativeClause = new Formula.BindMany(
             FormulaQuantifier.ForAll,
             [Bound("m", natural), Bound("sigma", real)],
@@ -174,14 +119,8 @@ internal sealed class PrimeObserverCasimirCompleteMonotonicityDocument
                 new Formula.Relation(
                     D(0), FormulaRelationOperator.LessThanOrEqual, signedDerivative)));
         Formula conclusions = And(
-            coefficientClause,
-            And(
-                residueClause,
-                And(
-                    casimirClause,
-                    And(
-                        derivativeClause,
-                        And(termwiseNonnegativeClause, nonnegativeClause)))));
+            derivativeClause,
+            And(termwiseNonnegativeClause, nonnegativeClause));
 
         return Disp(new Formula.BindMany(
             FormulaQuantifier.ForAll,

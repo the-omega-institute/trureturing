@@ -373,21 +373,11 @@ private theorem signed_casimir_summand_nonnegative
     (mul_nonneg (div_nonneg (mul_nonneg (by norm_num) hcos) hkNonneg) hlogWeight)
     hdecay
 
-/-- The prime-power formula constructs the split observer coefficients from the
-golden splitting predicate and regulator phases. The Casimir is publicly tied to
-the zero-minus-first mode difference, and each signed derivative is the source's
-explicit double sum over split primes and positive exponents. Every displayed
-summand is publicly nonnegative, hence so is every signed derivative. -/
+/-- The source's three clauses: termwise differentiation gives the displayed
+split-prime double sum, every displayed summand is nonnegative, and therefore every
+signed derivative of the constructed observer Casimir is nonnegative. -/
 theorem prime_observer_casimir_complete_monotonicity
     (phase : ℕ → ℝ) :
-    (∀ p k : ℕ, p.Prime → 0 < k → IsGoldenSplitPrime p →
-      primeObserverCasimirCoefficient phase (p ^ k) =
-        (((2 * (1 - Real.cos ((k : ℝ) * phase p))) / (k : ℝ) : ℝ) : ℂ)) ∧
-    (∀ p : ℕ, p.Prime →
-      (IsGoldenSplitPrime p ↔ p % 5 = 1 ∨ p % 5 = 4)) ∧
-    (∀ sigma : ℝ,
-      goldenObserverCasimir phase sigma =
-        splitRegulatorModeLog phase 0 sigma - splitRegulatorModeLog phase 1 sigma) ∧
     (∀ m : ℕ, ∀ sigma : ℝ, 1 < sigma →
       (-1 : ℝ) ^ m * iteratedDeriv m (goldenObserverCasimir phase) sigma =
         ∑' (p : Nat.Primes) (k : ℕ),
@@ -398,22 +388,25 @@ theorem prime_observer_casimir_complete_monotonicity
               ((p : ℝ) ^ (-(((k + 1 : ℕ) : ℝ) * sigma)))
           else
             0) ∧
-    (∀ m p k : ℕ, ∀ sigma : ℝ,
-      IsGoldenSplitPrime p → 0 < k → 1 < sigma →
-      0 ≤ 2 * (1 - Real.cos ((k : ℝ) * phase p)) / (k : ℝ) *
-        (((k : ℝ) * Real.log p) ^ m) *
-        ((p : ℝ) ^ (-((k : ℝ) * sigma)))) ∧
+    (∀ m : ℕ, ∀ sigma : ℝ, ∀ p : Nat.Primes, ∀ k : ℕ, 1 < sigma →
+      0 ≤ if (p : ℕ) % 5 = 1 ∨ (p : ℕ) % 5 = 4 then
+        2 * (1 - Real.cos (((k + 1 : ℕ) : ℝ) * phase p)) /
+            ((k + 1 : ℕ) : ℝ) *
+          ((((k + 1 : ℕ) : ℝ) * Real.log (p : ℕ)) ^ m) *
+          ((p : ℝ) ^ (-(((k + 1 : ℕ) : ℝ) * sigma)))
+        else
+          0) ∧
     (∀ m : ℕ, ∀ sigma : ℝ, 1 < sigma →
       0 ≤ (-1 : ℝ) ^ m *
         iteratedDeriv m (goldenObserverCasimir phase) sigma) := by
-  refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩
-  · exact fun p k hp hk hsplit =>
-      casimir_coefficient_prime_power phase p k hp hk hsplit
-  · exact fun p hp => golden_split_prime_iff_mod_five hp
-  · exact fun sigma => rfl
+  refine ⟨?_, ?_, ?_⟩
   · exact fun m sigma hsigma => signed_casimir_derivative_double_sum phase m hsigma
-  · exact fun m p k sigma hsplit hk hsigma =>
-      signed_casimir_summand_nonnegative phase m p k sigma hsplit hk hsigma
+  · intro m sigma p k hsigma
+    by_cases hsplitMod : (p : ℕ) % 5 = 1 ∨ (p : ℕ) % 5 = 4
+    · rw [if_pos hsplitMod]
+      exact signed_casimir_summand_nonnegative phase m p (k + 1) sigma
+        ((golden_split_prime_iff_mod_five p.prop).2 hsplitMod) (Nat.succ_pos k) hsigma
+    · rw [if_neg hsplitMod]
   · intro m sigma hsigma
     have hconv :
         abscissaOfAbsConv (primeObserverCasimirCoefficient phase) < (sigma : EReal) :=
