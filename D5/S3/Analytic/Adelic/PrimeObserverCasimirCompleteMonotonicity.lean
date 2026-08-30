@@ -10,6 +10,7 @@ import Mathlib.Analysis.Calculus.IteratedDeriv.Lemmas
 import Mathlib.Analysis.Complex.RealDeriv
 import Mathlib.NumberTheory.LSeries.Linearity
 import Mathlib.NumberTheory.LSeries.Positivity
+import Mathlib.NumberTheory.LSeries.PrimesInAP
 import Mathlib.Tactic
 
 /- Library-search audit trail (2026-08-30):
@@ -22,9 +23,12 @@ import Mathlib.Tactic
    * `LSeries.abscissaOfAbsConv_le_of_le_const`, `LSeries_sub`,
      `LSeries.LSeries_iteratedDeriv`, and `LSeries.iteratedDeriv_alternating`
      are exact pinned-Mathlib component hits and are applied directly.
+   * `tsum_eq_tsum_primes_of_support_subset_prime_powers` is the exact
+     pinned-Mathlib support reindexer and is applied to make the source's
+     split-prime double sum public.
    * Searches for `IsPrimePow` with `minFac` and cosine-weighted coefficients,
-     and for real restrictions of mode L-series, found no public D5 primitive
-     with the bodies introduced below. -/
+     iterates of `LSeries.logMul` at prime powers, and real restrictions of mode
+     L-series found no public D5 primitive with the bodies introduced below. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -65,6 +69,12 @@ noncomputable def primeObserverCasimirCoefficient
     (phase : ℕ → ℝ) (n : ℕ) : ℂ :=
   splitRegulatorModeCoefficient phase 0 n -
     splitRegulatorModeCoefficient phase 1 n
+
+/-- The observer coefficient has no support away from prime powers. -/
+theorem primeObserverCasimirCoefficient_eq_zero_of_not_prime_power
+    (phase : ℕ → ℝ) {n : ℕ} (hn : ¬IsPrimePow n) :
+    primeObserverCasimirCoefficient phase n = 0 := by
+  simp [primeObserverCasimirCoefficient, splitRegulatorModeCoefficient, hn]
 
 /-- The observer Casimir, constructed as the zero-mode logarithm minus the
 first-mode logarithm. -/
@@ -236,10 +246,117 @@ private theorem signed_casimir_derivative_formula
     (primeObserverCasimirCoefficient phase) (casimir_abscissa_le_one phase) m hsigma]
   simp only [← mul_assoc, ← pow_add, Even.neg_one_pow ⟨m, rfl⟩, one_mul]
 
+private theorem logMul_iterate_apply
+    (a : ℕ → ℂ) (m n : ℕ) :
+    (logMul^[m]) a n = (Complex.log n) ^ m * a n := by
+  induction m with
+  | zero => simp
+  | succ m ih =>
+      rw [Function.iterate_succ_apply']
+      simp only [logMul, ih, pow_succ']
+      ring
+
+private theorem signed_casimir_term_prime_power
+    (phase : ℕ → ℝ) (m : ℕ) (sigma : ℝ)
+    (p : Nat.Primes) (k : ℕ) :
+    (LSeries.term ((logMul^[m]) (primeObserverCasimirCoefficient phase)) sigma
+        ((p : ℕ) ^ (k + 1))).re =
+      if (p : ℕ) % 5 = 1 ∨ (p : ℕ) % 5 = 4 then
+        2 * (1 - Real.cos (((k + 1 : ℕ) : ℝ) * phase p)) /
+            ((k + 1 : ℕ) : ℝ) *
+          ((((k + 1 : ℕ) : ℝ) * Real.log (p : ℕ)) ^ m) *
+          ((p : ℝ) ^ (-(((k + 1 : ℕ) : ℝ) * sigma)))
+      else
+        0 := by
+  by_cases hsplitMod : (p : ℕ) % 5 = 1 ∨ (p : ℕ) % 5 = 4
+  · have hsplit : IsGoldenSplitPrime p :=
+      (golden_split_prime_iff_mod_five p.prop).2 hsplitMod
+    let pn : ℕ := p
+    have hlog : Complex.log (((pn ^ (k + 1) : ℕ) : ℂ)) =
+        (((((k + 1 : ℕ) : ℝ) * Real.log pn) : ℝ) : ℂ) := by
+      rw [← Complex.natCast_log]
+      norm_cast
+      rw [Nat.cast_pow, Real.log_pow]
+    have hdecay : ((((pn ^ (k + 1) : ℕ) : ℂ) ^ (sigma : ℂ))⁻¹) =
+        ((((pn : ℝ) ^ (-(((k + 1 : ℕ) : ℝ) * sigma))) : ℝ) : ℂ) := by
+      rw [Nat.cast_pow, ← Complex.natCast_cpow_natCast_mul,
+        ← Complex.cpow_neg]
+      convert (Complex.ofReal_cpow (show (0 : ℝ) ≤ (pn : ℝ) by positivity)
+        (-(((k + 1 : ℕ) : ℝ) * sigma))).symm using 1 <;> push_cast <;> ring
+    rw [if_pos hsplitMod,
+      LSeries.term_of_ne_zero (pow_ne_zero _ p.prop.ne_zero),
+      logMul_iterate_apply,
+      casimir_coefficient_prime_power phase p (k + 1) p.prop (Nat.succ_pos k) hsplit,
+      div_eq_mul_inv]
+    change (Complex.log (((pn ^ (k + 1) : ℕ) : ℂ)) ^ m *
+        (((2 * (1 - Real.cos (((k + 1 : ℕ) : ℝ) * phase p))) /
+          ((k + 1 : ℕ) : ℝ) : ℝ) : ℂ) *
+        ((((pn ^ (k + 1) : ℕ) : ℂ) ^ (sigma : ℂ))⁻¹)).re = _
+    rw [hlog, hdecay]
+    simp only [← Complex.ofReal_pow, ← Complex.ofReal_mul, Complex.ofReal_re]
+    ring
+  · have hnotSplit : ¬IsGoldenSplitPrime p := by
+      intro hsplit
+      exact hsplitMod ((golden_split_prime_iff_mod_five p.prop).1 hsplit)
+    have hcoeff : primeObserverCasimirCoefficient phase ((p : ℕ) ^ (k + 1)) = 0 := by
+      rw [primeObserverCasimirCoefficient, splitRegulatorModeCoefficient,
+        splitRegulatorModeCoefficient]
+      simp [p.prop.isPrimePow.pow (Nat.succ_ne_zero k), p.prop.pow_minFac,
+        hnotSplit]
+    rw [if_neg hsplitMod,
+      LSeries.term_of_ne_zero (pow_ne_zero _ p.prop.ne_zero),
+      logMul_iterate_apply, hcoeff]
+    simp
+
+private theorem signed_casimir_derivative_double_sum
+    (phase : ℕ → ℝ) (m : ℕ) {sigma : ℝ} (hsigma : 1 < sigma) :
+    (-1 : ℝ) ^ m * iteratedDeriv m (goldenObserverCasimir phase) sigma =
+      ∑' (p : Nat.Primes) (k : ℕ),
+        if (p : ℕ) % 5 = 1 ∨ (p : ℕ) % 5 = 4 then
+          2 * (1 - Real.cos (((k + 1 : ℕ) : ℝ) * phase p)) /
+              ((k + 1 : ℕ) : ℝ) *
+            ((((k + 1 : ℕ) : ℝ) * Real.log (p : ℕ)) ^ m) *
+            ((p : ℝ) ^ (-(((k + 1 : ℕ) : ℝ) * sigma)))
+        else
+          0 := by
+  rw [signed_casimir_derivative_formula phase m hsigma]
+  have hconv :
+      abscissaOfAbsConv ((logMul^[m]) (primeObserverCasimirCoefficient phase)) <
+        (sigma : ℂ).re := by
+    rw [LSeries.absicssaOfAbsConv_logPowMul]
+    exact abscissa_lt_of_one_lt (casimir_abscissa_le_one phase) hsigma
+  have hsum :
+      Summable (LSeries.term ((logMul^[m]) (primeObserverCasimirCoefficient phase)) sigma) :=
+    LSeriesSummable_of_abscissaOfAbsConv_lt_re hconv
+  have hsumRe : Summable (fun n =>
+      (LSeries.term ((logMul^[m]) (primeObserverCasimirCoefficient phase)) sigma n).re) :=
+    Complex.reCLM.summable hsum
+  have hsupport : Function.support (fun n =>
+      (LSeries.term ((logMul^[m]) (primeObserverCasimirCoefficient phase)) sigma n).re) ⊆
+        {n : ℕ | IsPrimePow n} := by
+    intro n hn
+    by_contra hprime
+    have hterm :
+        LSeries.term ((logMul^[m]) (primeObserverCasimirCoefficient phase)) sigma n = 0 := by
+      by_cases hn0 : n = 0
+      · subst n
+        exact LSeries.term_zero _ _
+      · rw [LSeries.term_of_ne_zero hn0, logMul_iterate_apply,
+          primeObserverCasimirCoefficient_eq_zero_of_not_prime_power phase hprime]
+        simp
+    exact hn (by simpa only [hterm, Complex.zero_re])
+  rw [LSeries, Complex.re_tsum hsum,
+    tsum_eq_tsum_primes_of_support_subset_prime_powers hsumRe hsupport]
+  apply tsum_congr
+  intro p
+  apply tsum_congr
+  intro k
+  exact signed_casimir_term_prime_power phase m sigma p k
+
 /-- The prime-power formula constructs the split observer coefficients from the
 golden splitting predicate and regulator phases. The Casimir is publicly tied to
-the zero-minus-first mode difference, its signed derivatives have the explicit
-log-weighted L-series expansion, and every such derivative is nonnegative. -/
+the zero-minus-first mode difference, and each signed derivative is the source's
+explicit double sum over split primes and positive exponents, hence nonnegative. -/
 theorem prime_observer_casimir_complete_monotonicity
     (phase : ℕ → ℝ) :
     (∀ p k : ℕ, p.Prime → 0 < k → IsGoldenSplitPrime p →
@@ -252,7 +369,14 @@ theorem prime_observer_casimir_complete_monotonicity
         (LSeries (primeObserverCasimirCoefficient phase) sigma).re) ∧
     (∀ m : ℕ, ∀ sigma : ℝ, 1 < sigma →
       (-1 : ℝ) ^ m * iteratedDeriv m (goldenObserverCasimir phase) sigma =
-        (LSeries ((logMul^[m]) (primeObserverCasimirCoefficient phase)) sigma).re) ∧
+        ∑' (p : Nat.Primes) (k : ℕ),
+          if (p : ℕ) % 5 = 1 ∨ (p : ℕ) % 5 = 4 then
+            2 * (1 - Real.cos (((k + 1 : ℕ) : ℝ) * phase p)) /
+                ((k + 1 : ℕ) : ℝ) *
+              ((((k + 1 : ℕ) : ℝ) * Real.log (p : ℕ)) ^ m) *
+              ((p : ℝ) ^ (-(((k + 1 : ℕ) : ℝ) * sigma)))
+          else
+            0) ∧
     (∀ m : ℕ, ∀ sigma : ℝ, 1 < sigma →
       0 ≤ (-1 : ℝ) ^ m *
         iteratedDeriv m (goldenObserverCasimir phase) sigma) := by
@@ -261,7 +385,7 @@ theorem prime_observer_casimir_complete_monotonicity
       casimir_coefficient_prime_power phase p k hp hk hsplit
   · exact fun p hp => golden_split_prime_iff_mod_five hp
   · exact fun sigma hsigma => casimir_eq_lseries phase hsigma
-  · exact fun m sigma hsigma => signed_casimir_derivative_formula phase m hsigma
+  · exact fun m sigma hsigma => signed_casimir_derivative_double_sum phase m hsigma
   · intro m sigma hsigma
     have hconv :
         abscissaOfAbsConv (primeObserverCasimirCoefficient phase) < (sigma : EReal) :=

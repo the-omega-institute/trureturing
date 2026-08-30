@@ -31,8 +31,10 @@ internal sealed class PrimeObserverCasimirCompleteMonotonicityDocument
                         + "minus the first-mode reading.")),
                 Paragraph(Text(
                     "The prime-power coefficient is a nonnegative squared phase distance. "
-                        + "Termwise logarithmic differentiation gives the displayed signed "
-                        + "derivative series throughout the half-plane sigma greater than one."))),
+                        + "Termwise logarithmic differentiation and prime-power support "
+                        + "reindexing give the displayed signed double series throughout the "
+                        + "half-plane sigma greater than one. The index k + 1 records the "
+                        + "source's positive prime-power exponent."))),
             DescribeRole.Theorem))));
 
     private static Formula.BoundVariable Bound(string name, Formula domain) =>
@@ -100,9 +102,37 @@ internal sealed class PrimeObserverCasimirCompleteMonotonicityDocument
         Formula sign = Call("pow", Seq(Open, Minus, D(1), Close), m);
         Formula signedDerivative = Seq(
             sign, Sp, Times, Sp, Call("iteratedDeriv", m, casimir, sigma));
-        Formula differentiatedSeries = Call(
-            "re",
-            Call("LSeries", Call("logMulIterate", m, coefficient), sigma));
+        Formula positiveExponent = Seq(Open, k, Sp, Plus, Sp, D(1), Close);
+        Formula splitResidue = new Formula.Logic(
+            EqualTo(Call("mod", p, D(5)), D(1)),
+            FormulaLogicOperator.Or,
+            EqualTo(Call("mod", p, D(5)), D(4)));
+        Formula phaseDistance = Seq(
+            D(1), Sp, Minus, Sp,
+            Call("cos", Seq(positiveExponent, Sp, Times, Sp, phaseAtP)));
+        Formula coefficientWeight = new Formula.Fraction(
+            Seq(D(2), Sp, Times, Sp, Open, phaseDistance, Close),
+            positiveExponent);
+        Formula logarithmicWeight = new Formula.Power(
+            Seq(Open, positiveExponent, Sp, Times, Sp, Call("log", p), Close),
+            m);
+        Formula decayWeight = new Formula.Power(
+            p,
+            Seq(Minus, Open, positiveExponent, Sp, Times, Sp, sigma, Close));
+        Formula splitSummand = Seq(
+            coefficientWeight, Sp, Times, Sp,
+            logarithmicWeight, Sp, Times, Sp, decayWeight);
+        Formula summand = Seq(
+            Begin, Grp(F.Id("cases")),
+            splitSummand, Comma, Amp, splitResidue, RowBreak,
+            D(0), Comma, Amp, F.Text, Grp(F.Id("otherwise")),
+            End, Grp(F.Id("cases")));
+        Formula differentiatedSeries = Seq(
+            Sum, Underscore,
+            Grp(p, Sp, InMacro, Sp, F.Id("NatPrimes")), Sp,
+            Sum, Underscore,
+            Grp(k, Sp, InMacro, Sp, Seq(Mathbb, Grp(F.Id("N")))), Sp,
+            summand);
         Formula derivativeClause = new Formula.BindMany(
             FormulaQuantifier.ForAll,
             [Bound("m", natural), Bound("sigma", real)],
