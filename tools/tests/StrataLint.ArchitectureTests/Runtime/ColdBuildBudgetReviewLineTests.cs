@@ -10,11 +10,12 @@ namespace StrataLint.ArchitectureTests;
 public sealed class ColdBuildBudgetReviewLineTests
 {
     /// <summary>
-    /// 复审触发线由 #3029 裁定为 **2672**。本测试把它钉死。
+    /// 复审触发线由 #3029 裁定为 2672;2026-08-30 该线被跨过(dev `9b629c376` 恰 2672 模块),
+    /// 经 #4120 重新收口为 **8013**(`ceil(0.8 × 21600 / 2.156588)`,单阶段向上取整)。本测试把它钉死。
     ///
     /// **为什么用字面量而不是引用那个常量**:本测试要防的正是「有人改那个常量让另一条测试变绿」,
     /// 若这里也引用它,两边一起变,断言恒真(本仓已记的「夹具里的值别名」)。
-    /// 故这里的 `2672` 必须是独立写下的第二个来源。
+    /// 故这里的 `8013` 必须是独立写下的第二个来源。
     ///
     /// **红了怎么办**:若 #3029 的裁定被正式修订,改这里并在 PR 里引用那次修订;
     /// 若只是想让另一条测试变绿,**那正是本测试要拦的事**。
@@ -22,7 +23,7 @@ public sealed class ColdBuildBudgetReviewLineTests
     [Fact]
     public void ColdBuildBudgetReviewLineIsPinnedToTheAdjudicatedValue()
     {
-        Assert.Equal(2672, StrataLint.Cli.LeanCacheBudgetPolicy.ColdBuildBudgetReviewModuleCount);
+        Assert.Equal(8013, StrataLint.Cli.LeanCacheBudgetPolicy.ColdBuildBudgetReviewModuleCount);
     }
 
     /// <summary>
