@@ -10,6 +10,31 @@ namespace StrataLint.Tests;
 public sealed partial class FrozenLedgerTests
 {
     [Fact]
+    public void AdmissionCatalogUsesProtectedIdentityForSelectedActiveDependency()
+    {
+        var modules = new[]
+        {
+            Module("A"),
+            Module("B", imports: ["A"]),
+        };
+        var baseCatalog = BuildCatalog(modules);
+        var historicalOwner = baseCatalog.ByPath[RepoPathFor("B")] with
+        {
+            FrozenNodeId = FrozenNodeId.Create(Sha256("historical active B")),
+        };
+        var trusted = baseCatalog.ByPath.SetItem(RepoPathFor("B"), historicalOwner);
+
+        var candidate = BuildAdmissionCatalog(
+            ["A", "B", "C"],
+            trusted,
+            modules.Append(Module("C", imports: ["B"])).ToArray());
+
+        Assert.Equal(
+            historicalOwner.FrozenNodeId,
+            Assert.Single(candidate.ByPath[RepoPathFor("C")].PrerequisiteFrozenNodeIds));
+    }
+
+    [Fact]
     public void ProofBodyOnlyChangeDoesNotReportStatementIdentityChanged()
     {
         var recordedCatalog = BuildCatalog(Module(
