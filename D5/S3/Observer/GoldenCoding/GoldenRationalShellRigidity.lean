@@ -3,18 +3,19 @@
    mirror-B: D5/B/S3/Observer/GoldenCoding/GoldenRationalShellRigidity
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: No nonzero rational scale can move through a positive golden shell and remain rational unless the shell depth is zero. -/
+   digest: Positive golden-shell powers cannot carry one nonzero rational scale
+     to another unless the shell depth is zero. -/
 
 import D5.S3.Observer.GoldenCoding.PrimeGoldenScaleCoordinate
 
 /-!
 The golden scale circle identifies logarithmic coordinates modulo the period
-`2 * log phi`.  Before introducing the quotient, this module proves its key
+`2 * log phi`. Before introducing the quotient, this module proves its key
 arithmetic rigidity statement on the universal cover: a nontrivial positive
 power of `phi^2` is irrational, so it cannot carry one nonzero rational scale
 to another rational scale.
 
-This is an exact algebraic statement.  It does not claim a quantitative lower
+This is an exact algebraic statement. It does not claim a quantitative lower
 bound for near-collisions of phases at finite precision.
 -/
 
@@ -30,13 +31,15 @@ open scoped goldenRatio
 /-- Every strictly positive natural power of the golden ratio is irrational. -/
 theorem golden_ratio_positive_power_irrational (n : ℕ) :
     Irrational (Real.goldenRatio ^ (n + 1)) := by
-  have hFibPos : 0 < Nat.fib (n + 1) := Nat.fib_pos.mpr (Nat.succ_pos n)
+  have hFibPos : 0 < Nat.fib (n + 1) :=
+    Nat.fib_pos.mpr (Nat.succ_pos n)
   have hFibIrr :
       Irrational
         (Real.goldenRatio * (Nat.fib (n + 1) : ℝ) +
           (Nat.fib n : ℝ)) := by
     exact
-      (Real.goldenRatio_irrational.mul_natCast (ne_of_gt hFibPos)).add_natCast
+      (Real.goldenRatio_irrational.mul_natCast
+          (ne_of_gt hFibPos)).add_natCast
         (Nat.fib n)
   rw [Real.goldenRatio_mul_fib_succ_add_fib n] at hFibIrr
   exact hFibIrr
@@ -50,10 +53,10 @@ theorem golden_square_positive_power_irrational (n : ℕ) :
         Real.goldenRatio ^ ((2 * n + 1) + 1) := by
     calc
       (Real.goldenRatio ^ 2) ^ (n + 1) =
-          Real.goldenRatio ^ (2 * (n + 1)) := (pow_mul _ _ _).symm
+          Real.goldenRatio ^ (2 * (n + 1)) :=
+        (pow_mul _ _ _).symm
       _ = Real.goldenRatio ^ ((2 * n + 1) + 1) := by
         congr 1
-        omega
   rw [hPower]
   exact golden_ratio_positive_power_irrational (2 * n + 1)
 
@@ -69,11 +72,13 @@ theorem rational_shell_collision_implies_zero
   have hq₂Real : (q₂ : ℝ) ≠ 0 := by
     exact_mod_cast hq₂
   have hPowerRat :
-      (Real.goldenRatio ^ 2) ^ (m + 1) = ((q₁ / q₂ : ℚ) : ℝ) := by
+      (Real.goldenRatio ^ 2) ^ (m + 1) =
+        ((q₁ / q₂ : ℚ) : ℝ) := by
     rw [Rat.cast_div]
     exact (eq_div_iff hq₂Real).2 hCollision.symm
   exact
-    (golden_square_positive_power_irrational m).ne_rat (q₁ / q₂) hPowerRat
+    (golden_square_positive_power_irrational m).ne_rat
+      (q₁ / q₂) hPowerRat
 
 /-- The only positive golden-shell collision between nonzero rationals is the
 zero-depth identity collision. -/
