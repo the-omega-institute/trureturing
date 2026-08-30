@@ -169,16 +169,17 @@ jobs:
       # save 实测 0.71GB 约 0.4 分钟,6 次开销约 2.4 分钟,相对 72 分钟构建可忽略。
       - name: Build the pinned Lean content (checkpoint 1/6)
         id: build1
+        continue-on-error: true
         shell: bash
         working-directory: candidate
         run: |
+          set +e
           set -uo pipefail
           export PATH="$HOME/.elan/bin:$PATH"
           timeout --kill-after=60s 12m make lean
           rc=$?
-          if [ "$rc" -eq 0 ]; then done=yes; else done=no; fi
-          printf 'SEED_BUILD checkpoint=1 exit=%s done=%s\n' "$rc" "$done"
-          echo "done=$done" >> "$GITHUB_OUTPUT"
+          printf 'SEED_BUILD checkpoint=1 exit=%s timeboxed=%s\n' "$rc" "$([ "$rc" -eq 124 ] && echo true || echo false)"
+          if [ "$rc" -eq 0 ]; then echo "done=yes" >> "$GITHUB_OUTPUT"; else echo "done=no" >> "$GITHUB_OUTPUT"; fi
 
       - name: Save the progress snapshot (1/6)
         if: always() && steps.build1.outputs.done != 'yes' && steps.lake-build-cache.outputs.cache-hit != 'true'
@@ -190,17 +191,19 @@ jobs:
           key: ${{ runner.os }}-${{ runner.arch }}-seed-progress-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-${{ github.run_id }}-01
 
       - name: Build the pinned Lean content (checkpoint 2/6)
+        if: steps.build1.outputs.done != 'yes'
         id: build2
+        continue-on-error: true
         shell: bash
         working-directory: candidate
         run: |
+          set +e
           set -uo pipefail
           export PATH="$HOME/.elan/bin:$PATH"
           timeout --kill-after=60s 12m make lean
           rc=$?
-          if [ "$rc" -eq 0 ]; then done=yes; else done=no; fi
-          printf 'SEED_BUILD checkpoint=2 exit=%s done=%s\n' "$rc" "$done"
-          echo "done=$done" >> "$GITHUB_OUTPUT"
+          printf 'SEED_BUILD checkpoint=2 exit=%s timeboxed=%s\n' "$rc" "$([ "$rc" -eq 124 ] && echo true || echo false)"
+          if [ "$rc" -eq 0 ]; then echo "done=yes" >> "$GITHUB_OUTPUT"; else echo "done=no" >> "$GITHUB_OUTPUT"; fi
 
       - name: Save the progress snapshot (2/6)
         if: always() && steps.build2.outputs.done != 'yes' && steps.lake-build-cache.outputs.cache-hit != 'true'
@@ -212,17 +215,19 @@ jobs:
           key: ${{ runner.os }}-${{ runner.arch }}-seed-progress-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-${{ github.run_id }}-02
 
       - name: Build the pinned Lean content (checkpoint 3/6)
+        if: steps.build2.outputs.done != 'yes'
         id: build3
+        continue-on-error: true
         shell: bash
         working-directory: candidate
         run: |
+          set +e
           set -uo pipefail
           export PATH="$HOME/.elan/bin:$PATH"
           timeout --kill-after=60s 12m make lean
           rc=$?
-          if [ "$rc" -eq 0 ]; then done=yes; else done=no; fi
-          printf 'SEED_BUILD checkpoint=3 exit=%s done=%s\n' "$rc" "$done"
-          echo "done=$done" >> "$GITHUB_OUTPUT"
+          printf 'SEED_BUILD checkpoint=3 exit=%s timeboxed=%s\n' "$rc" "$([ "$rc" -eq 124 ] && echo true || echo false)"
+          if [ "$rc" -eq 0 ]; then echo "done=yes" >> "$GITHUB_OUTPUT"; else echo "done=no" >> "$GITHUB_OUTPUT"; fi
 
       - name: Save the progress snapshot (3/6)
         if: always() && steps.build3.outputs.done != 'yes' && steps.lake-build-cache.outputs.cache-hit != 'true'
@@ -234,17 +239,19 @@ jobs:
           key: ${{ runner.os }}-${{ runner.arch }}-seed-progress-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-${{ github.run_id }}-03
 
       - name: Build the pinned Lean content (checkpoint 4/6)
+        if: steps.build3.outputs.done != 'yes'
         id: build4
+        continue-on-error: true
         shell: bash
         working-directory: candidate
         run: |
+          set +e
           set -uo pipefail
           export PATH="$HOME/.elan/bin:$PATH"
           timeout --kill-after=60s 12m make lean
           rc=$?
-          if [ "$rc" -eq 0 ]; then done=yes; else done=no; fi
-          printf 'SEED_BUILD checkpoint=4 exit=%s done=%s\n' "$rc" "$done"
-          echo "done=$done" >> "$GITHUB_OUTPUT"
+          printf 'SEED_BUILD checkpoint=4 exit=%s timeboxed=%s\n' "$rc" "$([ "$rc" -eq 124 ] && echo true || echo false)"
+          if [ "$rc" -eq 0 ]; then echo "done=yes" >> "$GITHUB_OUTPUT"; else echo "done=no" >> "$GITHUB_OUTPUT"; fi
 
       - name: Save the progress snapshot (4/6)
         if: always() && steps.build4.outputs.done != 'yes' && steps.lake-build-cache.outputs.cache-hit != 'true'
@@ -256,17 +263,19 @@ jobs:
           key: ${{ runner.os }}-${{ runner.arch }}-seed-progress-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-${{ github.run_id }}-04
 
       - name: Build the pinned Lean content (checkpoint 5/6)
+        if: steps.build4.outputs.done != 'yes'
         id: build5
+        continue-on-error: true
         shell: bash
         working-directory: candidate
         run: |
+          set +e
           set -uo pipefail
           export PATH="$HOME/.elan/bin:$PATH"
           timeout --kill-after=60s 12m make lean
           rc=$?
-          if [ "$rc" -eq 0 ]; then done=yes; else done=no; fi
-          printf 'SEED_BUILD checkpoint=5 exit=%s done=%s\n' "$rc" "$done"
-          echo "done=$done" >> "$GITHUB_OUTPUT"
+          printf 'SEED_BUILD checkpoint=5 exit=%s timeboxed=%s\n' "$rc" "$([ "$rc" -eq 124 ] && echo true || echo false)"
+          if [ "$rc" -eq 0 ]; then echo "done=yes" >> "$GITHUB_OUTPUT"; else echo "done=no" >> "$GITHUB_OUTPUT"; fi
 
       - name: Save the progress snapshot (5/6)
         if: always() && steps.build5.outputs.done != 'yes' && steps.lake-build-cache.outputs.cache-hit != 'true'
@@ -278,17 +287,19 @@ jobs:
           key: ${{ runner.os }}-${{ runner.arch }}-seed-progress-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-${{ github.run_id }}-05
 
       - name: Build the pinned Lean content (checkpoint 6/6)
+        if: steps.build5.outputs.done != 'yes'
         id: build6
+        continue-on-error: true
         shell: bash
         working-directory: candidate
         run: |
+          set +e
           set -uo pipefail
           export PATH="$HOME/.elan/bin:$PATH"
           timeout --kill-after=60s 12m make lean
           rc=$?
-          if [ "$rc" -eq 0 ]; then done=yes; else done=no; fi
-          printf 'SEED_BUILD checkpoint=6 exit=%s done=%s\n' "$rc" "$done"
-          echo "done=$done" >> "$GITHUB_OUTPUT"
+          printf 'SEED_BUILD checkpoint=6 exit=%s timeboxed=%s\n' "$rc" "$([ "$rc" -eq 124 ] && echo true || echo false)"
+          if [ "$rc" -eq 0 ]; then echo "done=yes" >> "$GITHUB_OUTPUT"; else echo "done=no" >> "$GITHUB_OUTPUT"; fi
 
       - name: Save the progress snapshot (6/6)
         if: always() && steps.build6.outputs.done != 'yes' && steps.lake-build-cache.outputs.cache-hit != 'true'
