@@ -1,0 +1,26 @@
+# 第七百九十八部　Archimedean Casimir 也是正的
+
+Archimedean 部分为
+
+$$
+\boxed{
+\begin{aligned}
+\mathscr C_n^\infty(\sigma)
+={}&
+2\log\Gamma(\sigma/2)
+\\
+&-
+\log\Gamma\left(
+\frac{\sigma+i\tau_n}{2}
+\right)
+-
+\log\Gamma\left(
+\frac{\sigma-i\tau_n}{2}
+\right).
+\end{aligned}
+}
+\tag{798.1}
+$$
+
+Gamma 函数的经典无限乘积立即给出：
+

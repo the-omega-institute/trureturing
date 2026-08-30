@@ -1,0 +1,10 @@
+ast_path: section/6-Gödel-边界/clause/3
+fingerprints:
+  raw_sha256: sha256:fdbdab02b19d910434545cf1a3b2e978c0a1d6777c5f82f621bf26484da71021
+  normalized_sha256: sha256:fdbdab02b19d910434545cf1a3b2e978c0a1d6777c5f82f621bf26484da71021
+cas_ref: sha256:fdbdab02b19d910434545cf1a3b2e978c0a1d6777c5f82f621bf26484da71021
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

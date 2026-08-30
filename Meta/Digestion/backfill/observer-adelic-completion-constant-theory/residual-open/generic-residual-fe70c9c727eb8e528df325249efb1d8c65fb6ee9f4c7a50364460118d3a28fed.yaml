@@ -1,0 +1,10 @@
+ast_path: row/RH-Leftrightarrow-mathcal-C-xi-为-Carathéodory
+fingerprints:
+  raw_sha256: sha256:fe70c9c727eb8e528df325249efb1d8c65fb6ee9f4c7a50364460118d3a28fed
+  normalized_sha256: sha256:fe70c9c727eb8e528df325249efb1d8c65fb6ee9f4c7a50364460118d3a28fed
+cas_ref: sha256:fe70c9c727eb8e528df325249efb1d8c65fb6ee9f4c7a50364460118d3a28fed
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

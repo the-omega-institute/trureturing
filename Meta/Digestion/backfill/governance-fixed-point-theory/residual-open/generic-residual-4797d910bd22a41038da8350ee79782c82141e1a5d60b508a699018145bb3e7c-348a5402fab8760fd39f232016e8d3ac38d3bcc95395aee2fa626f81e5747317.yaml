@@ -1,0 +1,10 @@
+ast_path: section/4-5-为什么通道不是豁免/clause/1
+fingerprints:
+  raw_sha256: sha256:4797d910bd22a41038da8350ee79782c82141e1a5d60b508a699018145bb3e7c
+  normalized_sha256: sha256:4797d910bd22a41038da8350ee79782c82141e1a5d60b508a699018145bb3e7c
+cas_ref: sha256:4797d910bd22a41038da8350ee79782c82141e1a5d60b508a699018145bb3e7c
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

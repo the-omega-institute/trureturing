@@ -1,0 +1,10 @@
+ast_path: section/5-8-G-G-双律死锁的交空判据/clause/2
+fingerprints:
+  raw_sha256: sha256:0c451f5bd9d0f1dc5500719d25341159224c0ce28c06f69b8b86b32c5ab6c392
+  normalized_sha256: sha256:0c451f5bd9d0f1dc5500719d25341159224c0ce28c06f69b8b86b32c5ab6c392
+cas_ref: sha256:0c451f5bd9d0f1dc5500719d25341159224c0ce28c06f69b8b86b32c5ab6c392
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

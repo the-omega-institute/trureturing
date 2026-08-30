@@ -1,0 +1,14 @@
+ast_path: section/910-1-可数化
+fingerprints:
+  raw_sha256: sha256:495fd6132dc6ba14efafa1c194014ea7a3bf8a7cc60cbf10b76d78d1a065006d
+  normalized_sha256: sha256:495fd6132dc6ba14efafa1c194014ea7a3bf8a7cc60cbf10b76d78d1a065006d
+cas_ref: sha256:495fd6132dc6ba14efafa1c194014ea7a3bf8a7cc60cbf10b76d78d1a065006d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-a60e510d404ac743c1c01d74ecfed077bb3ce7fee7d2df6f83f761b92d0317b7-94c9736ff6952ee067d2370553d7156dda037b5158e31fc703a62ab47c336684
+    - generic-residual-b5208234607e8024a949a7d7a3137dde2dd9ddb8a8338b0c30fd25860f6df06b-37a4e981f19fecc331dce6c7cb32c4047da88489b4d8226132ca52c783d4dd46
+    - generic-residual-32019ca6a43903e0dd309e76697025bef3ca0d888956dd10147d6906c5169eb3-53a76ac0eaa9315d662e87c146aa08f44cb17394d15eedbf9439df7247a4db05

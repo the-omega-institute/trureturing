@@ -1,0 +1,51 @@
+# 第七百九十九部　完成 Casimir 是完全单调函数
+
+定义正测度
+
+$$
+\boxed{
+d\mu_n^{\mathrm{fin}}(x)
+=
+\sum_{\mathfrak p}
+\sum_{k\ge1}
+\frac{
+1-\cos(nk\theta_{\mathfrak p})
+}{k}
+\,
+\delta_{k\log N\mathfrak p}(dx),
+}
+\tag{799.1}
+$$
+
+以及连续 Archimedean 测度
+
+$$
+\boxed{
+d\mu_n^\infty(x)
+=
+2
+\frac{
+1-\cos(\tau_nx)
+}{
+x(1-e^{-2x})
+}
+\,dx.
+}
+\tag{799.2}
+$$
+
+令
+
+$$
+\boxed{
+\mu_n
+=
+\mu_n^{\mathrm{fin}}
++
+\mu_n^\infty.
+}
+\tag{799.3}
+$$
+
+于是：
+

@@ -1,0 +1,32 @@
+## 猜想 809.1（Relative observer Pick continuation）
+
+经适当极点正规化后，
+
+$$
+\mathscr H_n
+$$
+
+能够延拓为临界右半平面上的 positive-real／Pick 函数。
+
+若该猜想成立，并且 \(\Lambda_0,\Lambda_{\pm n}\) 不发生隐藏零极抵消，则相对 determinant 的零点与极点必须位于临界边界。
+
+这会把：
+
+$$
+\boxed{
+\text{prime–Archimedean completed observer positivity}
+}
+$$
+
+提升为：
+
+$$
+\boxed{
+\text{零模态与非零 Hecke 模态的联合 GRH 约束}.
+}
+$$
+
+当前只证明了绝对收敛半平面上的完全单调性；跨越 \(\Re s=1\) 仍是实质性开放桥。
+
+---
+

@@ -1,0 +1,10 @@
+ast_path: section/1-5-本卷的证明范围/clause/12
+fingerprints:
+  raw_sha256: sha256:d5b097b9b12ea61b62e00887133726e425f76b3a6173dc3a662222a6e1a098f9
+  normalized_sha256: sha256:d5b097b9b12ea61b62e00887133726e425f76b3a6173dc3a662222a6e1a098f9
+cas_ref: sha256:d5b097b9b12ea61b62e00887133726e425f76b3a6173dc3a662222a6e1a098f9
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

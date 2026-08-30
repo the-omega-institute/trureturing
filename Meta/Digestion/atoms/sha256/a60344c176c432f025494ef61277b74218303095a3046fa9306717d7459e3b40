@@ -1,0 +1,14 @@
+## 第三层：完成不变量
+
+$$
+\boxed{
+\operatorname{tr}\mathbf F=1,
+\qquad
+\det\mathbf F=-1,
+\qquad
+\operatorname{disc}=5,
+\qquad
+2\log\varphi.
+}
+$$
+

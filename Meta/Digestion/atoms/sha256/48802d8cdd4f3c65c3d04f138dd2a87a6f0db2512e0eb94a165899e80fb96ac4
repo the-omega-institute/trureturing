@@ -1,0 +1,10 @@
+- 因此，诚实状态是“MediumPNT 文件已闭合；原来的 classical strong-error 目标在该仓主线中未完成”，而不是给出一个没有语义的完成百分比。
+
+项目出处：Alex Kontorovich et al., `PrimeNumberTheoremAnd`, GitHub public repository；论文／统一 arXiv 号检索未证实。
+
+另有独立仓库 `math-inc/strongpnt` 自述包含约 25,000 行、约 1,100 个 lemma、无 `sorry` 的 AI 生成 strong-PNT 形式化。它不是 `PrimeNumberTheoremAnd/main` 的完成证据；在独立构建、依赖固定和 `#print axioms` 审计前，只能写“项目自述已完成”。
+
+### 4. RH 及相邻结果的形式化尝试
+
+[literature-attested]
+

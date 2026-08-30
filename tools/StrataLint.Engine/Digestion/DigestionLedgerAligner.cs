@@ -86,7 +86,8 @@ internal static partial class DigestionLedgerAligner
         Func<string, TheoryAtomizer>? atomizerResolver = null,
         RepositorySnapshot? baselineSnapshot = null,
         DigestionCasEvaluation? casEvaluation = null,
-        RawChangeSet? changes = null)
+        RawChangeSet? changes = null,
+        RawChangeSet? casChanges = null)
     {
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(snapshot);
@@ -159,14 +160,15 @@ internal static partial class DigestionLedgerAligner
             snapshot,
             sources.SelectMany(static source => source.Entries)
                 .Select(static entry => entry.AtomId));
-        if (casEvaluation is not null && !casEvaluation.Matches(changes))
+        casChanges ??= changes;
+        if (casEvaluation is not null && !casEvaluation.Matches(casChanges))
         {
             throw new ArgumentException(
                 "CAS evaluation scope does not match the alignment change set.",
                 nameof(casEvaluation));
         }
 
-        var cas = casEvaluation ?? DigestionCasStore.Evaluate(document, snapshot, changes);
+        var cas = casEvaluation ?? DigestionCasStore.Evaluate(document, snapshot, casChanges);
         findings.AddRange(cas.Findings);
         var inheritedEntries = InheritedEntries(baselineDocument);
         foreach (var (source, entry) in sources.SelectMany(source =>
@@ -586,7 +588,6 @@ internal static partial class DigestionLedgerAligner
                 AlignNestedChildren(
                     source,
                     atomized.ClausePlans,
-                    claims,
                     cas.ValidAtomIds,
                     snapshot,
                     alignments,

@@ -559,10 +559,28 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
+pattern = "tools/tests/StrataLint.*/**/*.trx"
+kind = "program"
+produced_by = "none"
+consumed_by = ["dotnet"]
+verified_by = ["dotnet-test"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
 pattern = "tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml"
 kind = "data"
 produced_by = "none"
 consumed_by = ["TestRegistry"]
 verified_by = ["TestRegistry"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+pattern = "tools/tests/Trureturing.Truth.Tests/**"
+kind = "program"
+produced_by = "none"
+consumed_by = ["dotnet"]
+verified_by = ["dotnet-test"]
 artifact_id = "none"
 runtime_disposition = "committed-source"

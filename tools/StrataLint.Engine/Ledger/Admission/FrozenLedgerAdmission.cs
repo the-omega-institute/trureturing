@@ -230,10 +230,20 @@ public static partial class FrozenLedger
             var activePathCases = active.Values.ToDictionary(
                 static entry => entry.Material.RepoPath,
                 static entry => entry.Payload.CaseId);
+            var baseMaxSchemaVersion = preparation.BaseView.Events
+                .Select(static item => item.SchemaVersion)
+                .DefaultIfEmpty(0)
+                .Max();
             foreach (var item in preparation.DeltaEvents)
             {
                 try
                 {
+                    if (item.SchemaVersion < baseMaxSchemaVersion)
+                    {
+                        throw new FormatException(
+                            $"Accepted event schema downgrade is forbidden: delta schema_version {item.SchemaVersion} is lower than protected-base maximum {baseMaxSchemaVersion}.");
+                    }
+
                     if (item.SchemaVersion != FrozenLedgerCanonicalWriter.CurrentDagSchemaVersion)
                     {
                         throw new FormatException(

@@ -1,0 +1,10 @@
+ast_path: section/6-6-PrefixExtension-不与-append-only-冻结族竞争/clause/1
+fingerprints:
+  raw_sha256: sha256:38fc0498847b2fd69f13722af6459184f807caf105f5d6147115bead8664cc4a
+  normalized_sha256: sha256:38fc0498847b2fd69f13722af6459184f807caf105f5d6147115bead8664cc4a
+cas_ref: sha256:38fc0498847b2fd69f13722af6459184f807caf105f5d6147115bead8664cc4a
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

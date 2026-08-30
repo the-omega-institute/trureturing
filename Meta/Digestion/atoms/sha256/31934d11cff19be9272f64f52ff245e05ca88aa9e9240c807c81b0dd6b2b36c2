@@ -1,0 +1,28 @@
+## 1.1 治理系统
+
+固定：
+
+- 条目类型 $E$；
+- 状态类型 $\Sigma$；
+- 状态以外的治理上下文类型 $C$；
+- 当前手写状态 $h:E\to\Sigma$；
+- 完整状态派生流水线 $D:C\to(E\to\Sigma)\to(E\to\Sigma)$。
+
+这里的“完整流水线”包括加载、规范化、依赖收集、coverage 计算、收据解释、路径解码和最终状态归约。不能只证明最后一个局部函数不读取状态，却允许前置 loader 从状态目录、状态字段或状态编码路径中把同一信息重新送入。
+
+定义等号门：
+
+$\operatorname{Gate}(h,d)\Longleftrightarrow\forall e:E,\ h(e)=d(e)$。
+
+一般自读系统在上下文 $c:C$ 上的通过条件为：
+
+$\operatorname{Pass}_D(c,h)\Longleftrightarrow\operatorname{Gate}(h,D(c,h))$。
+
+一个 GFPT 治理系统记为：
+
+$\mathfrak G=(E,\Sigma,C,h,D,\operatorname{Gate})$。
+
+门只判一致性，不负责创造事实。派生函数负责从规范输入给出候选状态；手写状态是待核对的表示；门负责确认二者相同。
+
+若具体系统使用自定义门 $G$，则必须证明它与上述逐条等号门外延等价。仅仅“在当前夹具上给出相同布尔值”不足以成为第二个门定义。
+

@@ -169,6 +169,14 @@
           "StrataLint.Engine": "[1.0.0, )"
         }
       },
+      "stratalint.engineeringscope.tests": {
+        "type": "Project",
+        "dependencies": {
+          "Microsoft.NET.Test.Sdk": "[18.0.1, )",
+          "StrataLint.EngineeringScope": "[1.0.0, )",
+          "xunit": "[2.9.3, )"
+        }
+      },
       "stratalint.scribe": {
         "type": "Project",
         "dependencies": {
@@ -193,7 +201,15 @@
           "Microsoft.NET.Test.Sdk": "[18.0.1, )",
           "StrataLint": "[1.0.0, )",
           "StrataLint.Engine": "[1.0.0, )",
-          "StrataLint.EngineeringScope": "[1.0.0, )",
+          "StrataLint.TestSupport": "[1.0.0, )",
+          "Xunit.SkippableFact": "[1.5.85, )",
+          "xunit": "[2.9.3, )"
+        }
+      },
+      "stratalint.testsupport": {
+        "type": "Project",
+        "dependencies": {
+          "StrataLint.Engine": "[1.0.0, )",
           "Xunit.SkippableFact": "[1.5.85, )",
           "xunit": "[2.9.3, )"
         }

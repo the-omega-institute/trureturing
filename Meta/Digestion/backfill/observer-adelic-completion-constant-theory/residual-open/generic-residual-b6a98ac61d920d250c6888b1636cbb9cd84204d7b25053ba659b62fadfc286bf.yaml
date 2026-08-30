@@ -1,0 +1,10 @@
+ast_path: section/第八百九十八部-离线零点是负平方距离模态
+fingerprints:
+  raw_sha256: sha256:b6a98ac61d920d250c6888b1636cbb9cd84204d7b25053ba659b62fadfc286bf
+  normalized_sha256: sha256:b6a98ac61d920d250c6888b1636cbb9cd84204d7b25053ba659b62fadfc286bf
+cas_ref: sha256:b6a98ac61d920d250c6888b1636cbb9cd84204d7b25053ba659b62fadfc286bf
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,54 @@
+# 第八百零二部　完成 observer Laplacian
+
+定义总二次型：
+
+$$
+\boxed{
+\mathcal E_\sigma
+=
+\mathcal E_\sigma^{\mathrm{fin}}
++
+\mathcal E_\sigma^\infty.
+}
+\tag{802.1}
+$$
+
+对应的自伴生成元记为
+
+$$
+\boxed{
+\mathcal L_\sigma^{\mathrm{obs}}.
+}
+\tag{802.2}
+$$
+
+其 Fourier 谱为
+
+$$
+\boxed{
+\mathcal L_\sigma^{\mathrm{obs}}e_n
+=
+\mathscr C_n(\sigma)e_n.
+}
+\tag{802.3}
+$$
+
+零模态满足
+
+$$
+\mathscr C_0=0.
+$$
+
+非零模态满足：
+
+$$
+\boxed{
+\mathscr C_n(\sigma)
+\ge
+g_\varphi(\sigma)>0.
+}
+\tag{802.4}
+$$
+
+所以：
+

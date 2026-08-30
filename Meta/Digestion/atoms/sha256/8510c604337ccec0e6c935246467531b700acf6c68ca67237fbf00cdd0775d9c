@@ -1,0 +1,52 @@
+## 1000.1 为什么全局 mode 还不够
+
+权重：
+
+$$
+|\rho|^{-2}
+$$
+
+使低零点占据很大比例。
+
+因此即使：
+
+$$
+\widehat\nu_\varphi(k)\neq0,
+$$
+
+也不能直接说明高层零点具有黄金离散尺度不变性。
+
+正确对象是 tail-normalized mode：
+
+$$
+\boxed{
+\widehat\nu_{\varphi,k}[T,U]
+=
+\frac{
+\displaystyle
+\sum_{T<|\gamma|\le U}
+m_\rho|\rho|^{-2-i\tau_k}
+}{
+\displaystyle
+\sum_{T<|\gamma|\le U}
+m_\rho|\rho|^{-2}
+}.
+}
+\tag{1000.3}
+$$
+
+应在黄金窗口：
+
+$$
+U=\varphi^{2m}T
+$$
+
+中研究：
+
+$$
+T\to\infty.
+$$
+
+只有当某个非零 \(k\) 的 mode 在：
+
+* 不同起点 \(T\)；

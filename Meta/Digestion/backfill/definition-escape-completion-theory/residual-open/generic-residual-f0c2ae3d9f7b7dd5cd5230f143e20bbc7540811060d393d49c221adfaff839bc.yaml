@@ -1,0 +1,10 @@
+ast_path: 义务/6
+fingerprints:
+  raw_sha256: sha256:f0c2ae3d9f7b7dd5cd5230f143e20bbc7540811060d393d49c221adfaff839bc
+  normalized_sha256: sha256:f0c2ae3d9f7b7dd5cd5230f143e20bbc7540811060d393d49c221adfaff839bc
+cas_ref: sha256:f0c2ae3d9f7b7dd5cd5230f143e20bbc7540811060d393d49c221adfaff839bc
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

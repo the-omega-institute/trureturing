@@ -1,0 +1,15 @@
+ast_path: section/第一千零七部-项目已经具备的对偶证书底座
+fingerprints:
+  raw_sha256: sha256:c153d3f424207082bbce0d31315f50dd0d8e79a2db773e166a3541dd95bf5bd1
+  normalized_sha256: sha256:c153d3f424207082bbce0d31315f50dd0d8e79a2db773e166a3541dd95bf5bd1
+cas_ref: sha256:c153d3f424207082bbce0d31315f50dd0d8e79a2db773e166a3541dd95bf5bd1
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-43ab2c073eb9ccbbbf4ff292cbc57468777b97a10c2435ec1d2dcb8f87732e3c-c91c27904e7cf0b7bec1aa5ab9969f5f0eea0bbc570117009a0ca29d1e5d8247
+    - generic-residual-f2e4b93bb451bf5dbbca4f8b2059d7e395d11944389a1a6fc81acc452ad68ae2-e24e1d592a1ea476f3f40bbd30c8083715481d05fcf7d77019e897b879031ad4
+    - generic-residual-53680608c11ef53de5c82fa66bc76abf63e5fed2aa591aa6dcc18054e0a6a243-61f1198fd03d59bbbe1073a04a35954fedeeb912a1d4173199854ce950638eab
+    - generic-residual-13189680c44ae44c9cb5eb04a566a42ef4e52961f887768ae421271edf50e0d0-c55fc734d24ee5213fd78f1f902452710f20ee461c353effd4bd46f56d117c7d

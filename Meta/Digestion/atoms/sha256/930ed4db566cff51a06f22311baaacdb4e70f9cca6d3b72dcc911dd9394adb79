@@ -1,0 +1,53 @@
+## 定理 944.1（Minimal-hull common spectrum）
+
+存在闭集：
+
+$$
+\boxed{
+\Sigma_\lambda\subset\mathbb R
+}
+$$
+
+使：
+
+$$
+\boxed{
+\sigma(H_{\lambda,\omega})
+=
+\Sigma_\lambda
+\qquad
+\forall\omega\in X_\varphi.
+}
+\tag{944.4}
+$$
+
+### 证明结构
+
+若：
+
+$$
+E\in\sigma(H_{\lambda,\omega}),
+$$
+
+由 Weyl 判据可选取有限支撑单位向量 \(u\)，使：
+
+$$
+\|(H_{\lambda,\omega}-E)u\|<\varepsilon.
+$$
+
+该误差只依赖于 \(\omega\) 在一个有限窗口中的词。
+
+黄金最小性保证这一有限词在任意另一个观察者 \(\omega'\) 中出现。把 \(u\) 平移到该出现位置，便在 \(H_{\lambda,\omega'}\) 中得到相同的近似 Weyl 向量。
+
+所以：
+
+$$
+E\in\sigma(H_{\lambda,\omega'}).
+$$
+
+交换 \(\omega,\omega'\) 即得公共谱。∎
+
+这与经典 Fibonacci Hamiltonian 中“谱独立于相位”的结论完全一致。([arXiv][1])
+
+---
+

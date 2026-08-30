@@ -1,0 +1,10 @@
+ast_path: row/transfer-分类
+fingerprints:
+  raw_sha256: sha256:c578d47b3428e7858c09521cc5c3bc27b8d91c7f5f4725b261b6400e8f757baf
+  normalized_sha256: sha256:c578d47b3428e7858c09521cc5c3bc27b8d91c7f5f4725b261b6400e8f757baf
+cas_ref: sha256:c578d47b3428e7858c09521cc5c3bc27b8d91c7f5f4725b261b6400e8f757baf
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

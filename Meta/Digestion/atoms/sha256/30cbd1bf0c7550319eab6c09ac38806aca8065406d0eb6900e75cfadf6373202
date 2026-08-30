@@ -1,0 +1,38 @@
+## 定理 764.1（Golden scalar is dihedrally blind）
+
+对任意：
+
+$$
+g\in D_\infty,
+$$
+
+有：
+
+$$
+\boxed{
+Z_{\mathrm{unit}}(s,g\cdot\eta)
+=
+Z_{\mathrm{unit}}(s,\eta).
+}
+\tag{764.1}
+$$
+
+因此任何素数词 \(w\) 产生的：
+
+$$
+\mathcal H(w)
+$$
+
+都不能由完成后的标量 \(Z_{\mathrm{unit}}\) 恢复。
+
+这给观察者不可克隆一个项目内部的精确模型：
+
+$$
+\boxed{
+\text{所有 holonomy 不同的观察者
+可以拥有完全相同的完成标量世界。}
+}
+$$
+
+---
+

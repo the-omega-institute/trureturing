@@ -1,0 +1,10 @@
+ast_path: section/第九百一十五部-幂包是离线方向的-大偏差探针/clause/5
+fingerprints:
+  raw_sha256: sha256:98ae192dd9a0a78e4f13395b7cd7281ab122fb07d6f652bedce899ed07b81dbb
+  normalized_sha256: sha256:98ae192dd9a0a78e4f13395b7cd7281ab122fb07d6f652bedce899ed07b81dbb
+cas_ref: sha256:98ae192dd9a0a78e4f13395b7cd7281ab122fb07d6f652bedce899ed07b81dbb
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

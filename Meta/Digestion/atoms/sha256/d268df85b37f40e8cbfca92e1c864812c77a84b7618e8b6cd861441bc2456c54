@@ -1,0 +1,27 @@
+### R-D　O-6 空类型诊断
+
+[repo-audit proposition | proposed GID: `D5/X_Frontier/GoldenObserver/ZeroDataVacuityAudit`]
+
+    import D5.X_Frontier.Hearts
+
+    namespace D5.X_Frontier.GoldenObserver
+
+    open D5.X_Frontier.Hearts
+    open D5.S3.Weil.ZeroSum
+
+    theorem o6_vacuous_if_zeroData_empty
+        (h : ¬ Nonempty ZeroData) :
+        o6WeilPositivityStatement
+
+    end D5.X_Frontier.GoldenObserver
+
+精确证明只有命题逻辑：
+
+- 展开 O-6；
+- 对任意 $Z$，由 $h\langle Z\rangle$ 导出矛盾；
+- 从矛盾消去。
+
+它不证明 `ZeroData` 为空，也不反驳 O-6。它只把当前编码的空洞风险变成 kernel-visible 事实。
+
+消费者：O-6 nonvacuity CI gate。若没有机器门要求后续同时导入 `canonicalZeroData_nonempty`，该 wrapper 没有可达消费者，不应进入冻结层。
+

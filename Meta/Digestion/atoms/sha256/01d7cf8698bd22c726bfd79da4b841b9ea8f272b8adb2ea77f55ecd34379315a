@@ -1,0 +1,72 @@
+# 第九百五十九部　建议形式化顺序
+
+```text
+D5/S3/Observer/GoldenHamiltonian/
+  GoldenTwoSidedHull.lean
+  FibonacciPotential.lean
+  FibonacciSchrodingerOperator.lean
+  ShiftCovariance.lean
+  CommonSpectrumFromMinimality.lean
+  PhaseSpectrumNonreconstruction.lean
+
+D5/S3/Observer/GoldenHamiltonian/ResolventJet/
+  DiagonalGreenFunction.lean
+  ResolventNeumannJet.lean
+  GreenJetReadsOriginSymbol.lean
+  GreenFourthCoefficient.lean
+  OrientedHalfLineWeylPair.lean
+
+D5/S3/Observer/FibonacciTransfer/
+  LocalSL2Transfer.lean
+  FibonacciWordTransfer.lean
+  FibonacciMatrixRecurrence.lean
+  FibonacciHalfTraceRecurrence.lean
+  FibonacciTraceMap.lean
+
+D5/S3/Observer/FrickeHolonomy/
+  FrickeVogtInvariant.lean
+  FrickeCommutatorIdentity.lean
+  FibonacciLocalCommutatorTrace.lean
+  CouplingSquareInvariant.lean
+  ObserverOddAmplitudeEvenCasimir.lean
+
+D5/S3/Observer/TraceMapCone/
+  CayleyCubicCompletionPoint.lean
+  CayleyCubicTangentQuadratic.lean
+  TangentLorentzSignature.lean
+  TraceMapJacobianAtCompletion.lean
+  TraceMapPreservesTangentCone.lean
+  GoldenNullEigenvectors.lean
+  TraceMapOddEvenOrientation.lean
+
+D5/S3/Observer/TraceMapScaling/
+  FibonacciBlockLength.lean
+  StableTraceModeDecay.lean
+  StableModeInverseSquareBlockLaw.lean
+  EvenFibonacciCertificateCompensator.lean
+
+D5/S3/Observer/ChebyshevTransfer/
+  FreeSL2Transfer.lean
+  TransferPowerHalfTrace.lean
+  ChebyshevTransferDiscriminant.lean
+  EllipticParabolicHyperbolicClassification.lean
+  HyperbolicRapidityAmplification.lean
+
+D5/S3/Observer/GoldenGapCode/
+  GoldenUniqueInvariantMeasureInterface.lean
+  GoldenSymbolFrequencies.lean
+  FibonacciDensityOfStatesInterface.lean
+  GoldenGapLabelGroupInterface.lean
+  GoldenGapCodeNotPointCoordinate.lean
+
+D5/S3/Weil/FibonacciTraceBridge/
+  PrimeWeilBinaryChannelTarget.lean
+  PrimeWeilSL2NormalizationTarget.lean
+  FibonacciWeilCocycleTarget.lean
+  WeilFrickeInvariantTarget.lean
+  ChebyshevEscapeEqualsWeilNegativeTarget.lean
+  RiemannTraceOrbitBoundednessTarget.lean
+```
+
+---
+

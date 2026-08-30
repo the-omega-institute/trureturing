@@ -1,0 +1,52 @@
+- 明确写出“有限 $N$ 不蕴含 RH”。
+
+结论：2024–2026 的真正进步重心主要在有限 Weil 压缩、谱／算子重述、尾项控制和比例定理，而不是已解决的 Li 全正性。
+
+## 三、de Bruijn–Newman 常数
+
+### 1. 已建立的区间
+
+[literature-attested]
+
+Brad Rodgers 与 Terence Tao 已证明
+
+$\Lambda\ge0$。
+
+出处：Brad Rodgers, Terence Tao, “The de Bruijn–Newman constant is non-negative,” 2018/2020, arXiv:1801.05914, Forum of Mathematics, Pi 8 (2020)。
+
+D.H.J. Polymath 给出无条件上界
+
+$\Lambda\le0.22$。
+
+出处：D.H.J. Polymath, “Effective approximation of heat flow evolution of the Riemann $\xi$ function, and a new upper bound for the de Bruijn–Newman constant,” 2019, arXiv:1904.12438。
+
+Dave Platt 与 Tim Trudgian 严格核验 RH 至高度 $3\cdot10^{12}$，并结合上述有效框架得到
+
+$\Lambda\le0.2$。
+
+出处：Dave Platt, Tim Trudgian, “The Riemann hypothesis is true up to $3\cdot10^{12}$,” 2020/2021, arXiv:2004.09765, Bulletin of the London Mathematical Society 53 (2021)。
+
+因此截至 2026-08-30，保守、已建立的公开区间仍是
+
+$0\le\Lambda\le0.2$。
+
+由于 RH 等价于 $\Lambda\le0$，再结合 $\Lambda\ge0$，当前可写成：
+
+$\mathrm{RH}\Longleftrightarrow\Lambda=0$。
+
+### 2. 2026 年的候选改进
+
+[literature-attested | public non-archival candidate]
+
+Jude Gomila 在 2026-08-19 发布技术说明，声称通过计算机辅助证书把上界改进为
+
+$\Lambda\le0.1787854$。
+
+出处：Jude Gomila, “$\Lambda\le0.1787854$ — a new bound for the de Bruijn–Newman constant, explained,” 2026；arXiv 号检索未证实，期刊发表检索未证实。
+
+裁决：该候选应进入“待复核外部证书”账，不应在开题卷中替换公认的 $0.2$。至少需要稳定论文版本、代码与证书哈希、独立复算、误差模型审计及同行评审状态。
+
+### 3. 对黄金观察者线路的意义
+
+de Bruijn–Newman 热流提供另一种“全局极限参数”。它警告本线：
+

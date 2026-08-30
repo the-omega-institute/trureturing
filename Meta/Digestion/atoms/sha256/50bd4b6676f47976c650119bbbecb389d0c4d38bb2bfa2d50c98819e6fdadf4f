@@ -1,0 +1,44 @@
+# 第七百部　重整化记忆塔
+
+令：
+
+$$
+a_{r,p}(s)
+=
+L_p^{\langle r\rangle}(s)-1.
+$$
+
+对紧集：
+
+$$
+K\Subset
+\left\{
+\Re s>\varphi^{-(r+2)}
+\right\},
+$$
+
+定义 residual envelope：
+
+$$
+\boxed{
+\mathfrak A_r(K)
+=
+\sum_p
+\sup_{s\in K}
+|a_{r,p}(s)|.
+}
+\tag{700.1}
+$$
+
+仓库已有结果意味着，在对应的收敛区域内：
+
+$$
+\boxed{
+\mathfrak A_r(K)<\infty
+}
+$$
+
+至少对 \(r=0,1,2\) 成立。
+
+---
+

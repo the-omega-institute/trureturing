@@ -1,0 +1,10 @@
+ast_path: section/708-5-Probe-行为实验/clause/1
+fingerprints:
+  raw_sha256: sha256:91562075bf476a4bfd136eef3eee4fa75d5aa216f3106390811f01697aecce80
+  normalized_sha256: sha256:91562075bf476a4bfd136eef3eee4fa75d5aa216f3106390811f01697aecce80
+cas_ref: sha256:91562075bf476a4bfd136eef3eee4fa75d5aa216f3106390811f01697aecce80
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

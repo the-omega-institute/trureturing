@@ -1,0 +1,40 @@
+* 在实方向具有足够多的衰减。
+
+设竞争轨道代表为：
+
+$$
+z_1,\ldots,z_m,
+$$
+
+目标轨道代表为 \(z_0\)。
+
+定义竞争 profile space：
+
+$$
+\boxed{
+W
+=
+\operatorname{span}_{\mathbb R}
+\left\{
+\Phi(z_1),\ldots,\Phi(z_m)
+\right\}.
+}
+\tag{925.2}
+$$
+
+定义目标选择 margin：
+
+$$
+\boxed{
+\Delta
+=
+\operatorname{dist}
+\left(
+\Phi(z_0),W
+\right).
+}
+\tag{925.3}
+$$
+
+---
+

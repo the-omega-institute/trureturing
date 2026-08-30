@@ -1,0 +1,34 @@
+## 786.1 观察者 Ruelle 型生成函数
+
+形式上，对 primitive cyclic words 定义：
+
+$$
+\boxed{
+\begin{aligned}
+\log\mathcal R_{\mathrm{obs}}(s,\theta)
+=
+\sum_{[w]_{\mathrm{prim}}}
+\sum_{m\ge1}
+\frac{
+W_s(w)^m
+}{m}
+\operatorname{Tr}
+\rho_\theta
+\left(
+H(w)^m
+\right),
+\end{aligned}
+}
+\tag{786.4}
+$$
+
+其中：
+
+$$
+W_s(w)=\prod_{p\in w}p^{-s}.
+$$
+
+这是一个有序闭轨道对象，而不是普通 Euler product。
+
+---
+

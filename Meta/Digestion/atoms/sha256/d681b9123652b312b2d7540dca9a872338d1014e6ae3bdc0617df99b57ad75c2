@@ -1,0 +1,24 @@
+## 806.1 重要 No-Go
+
+prime-only 联合 Hessian 是正半定的。
+
+因此它自然产生的是 Euclidean covariance cone，而不是 split-signature Lorentz cone。
+
+所以：
+
+$$
+\boxed{
+\text{黄金 Lorentz null cone
+不能仅从 prime jump covariance 自动推出。}
+}
+$$
+
+若希望得到
+
+$$
+x^2-xy-y^2=0
+$$
+
+这样的黄金 null condition，必须额外使用：
+
+* pole 的边界通道；

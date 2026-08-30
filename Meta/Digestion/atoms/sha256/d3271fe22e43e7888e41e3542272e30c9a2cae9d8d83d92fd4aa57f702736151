@@ -1,0 +1,37 @@
+## 808.1 热核观察距离
+
+定义：
+
+$$
+\boxed{
+d_\beta(\theta,0)^2
+=
+\sum_{n\neq0}
+e^{-\beta\tau_n^2}
+|1-e^{in\theta}|^2.
+}
+\tag{808.4}
+$$
+
+则 prime 部分可写为：
+
+$$
+\boxed{
+\begin{aligned}
+\mathscr C_{\beta,\mathrm{fin}}^{\mathrm{all}}(\sigma)
+=
+\frac12
+\sum_{\mathfrak p,k}
+\frac{
+d_\beta(k\theta_{\mathfrak p},0)^2
+}{
+k(N\mathfrak p)^{k\sigma}
+}.
+\end{aligned}
+}
+\tag{808.5}
+$$
+
+因此 \(\beta\) 是 observer resolution：
+
+* 大 \(\beta\)：只看最浅低频区别；

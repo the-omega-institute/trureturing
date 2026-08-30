@@ -1,0 +1,6 @@
+* support 半径精确为 \(Na\)。
+
+仓库已经把 Prime–Archimedean form 和安全补空间正 gap 机器化，因此该族一旦出现负值，负性必被压缩到有限 sticky block。
+
+---
+

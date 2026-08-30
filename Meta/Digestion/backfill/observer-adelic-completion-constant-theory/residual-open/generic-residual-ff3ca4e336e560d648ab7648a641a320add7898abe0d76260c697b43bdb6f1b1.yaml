@@ -1,0 +1,14 @@
+ast_path: section/第七百九十六部-黄金-regulator-模态的完成接口
+fingerprints:
+  raw_sha256: sha256:ff3ca4e336e560d648ab7648a641a320add7898abe0d76260c697b43bdb6f1b1
+  normalized_sha256: sha256:ff3ca4e336e560d648ab7648a641a320add7898abe0d76260c697b43bdb6f1b1
+cas_ref: sha256:ff3ca4e336e560d648ab7648a641a320add7898abe0d76260c697b43bdb6f1b1
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-8a339a08c02fd168d0534d4c1f353caabf9f77fd5dcb139e58616b221323115b-eb5334f1ece58baea0062e8c7e329bfa9598e75900b02da660f41484e6391aa3
+    - generic-residual-56a654b4d3768081caa7d8c54cebd4a574e834cc06d254b8cdf4978793d73650-d8aeda85f755aa61805bae780595d40ba08326565d799213396db7d0cb8516a0
+    - generic-residual-f5962a5f93f466a6fbde2558ca2c4628c82f4ec7e3e0898ffadd248b48551593-e6cca5f4ead8b5746db262e2f0f41442569d7be69542feb44d173d0e7eb3f661

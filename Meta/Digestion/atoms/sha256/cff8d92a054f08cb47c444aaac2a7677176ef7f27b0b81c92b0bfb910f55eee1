@@ -1,0 +1,37 @@
+## 定理 910.1（受限显式测试族的完备性）
+
+在标准 Weil 零点和收敛规范下：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathfrak Q_{\mathcal Z}[\widehat f]\ge0
+\quad
+\forall f\in\mathscr P_\psi.
+}
+\tag{910.2}
+$$
+
+### 正向
+
+RH 下所有中心零点频率均为实数，且：
+
+$$
+\widehat f(\gamma)\in\mathbb R,
+$$
+
+故每项平方非负。
+
+### 反向
+
+RH 若为假，定理 908.1 从任意离线轨道构造出某个：
+
+$$
+f\in\mathscr P_\psi
+$$
+
+使零点和严格为负。
+
+---
+

@@ -1,0 +1,22 @@
+### 无固定重整化
+
+\(G_n\) 持续振荡或没有极限。
+
+则不存在单一的 pair-renormalization constant。
+
+目前仓库没有证明三者中的任何一种。
+
+项目只证明：**一旦**一个二通道、非负整数、primitive、unimodular 更新被内生地抽取出来，其最小非平凡扩张率才被强迫为 \(\varphi\) 或 \(\varphi^2\)。
+
+所以：
+
+$$
+\boxed{
+\text{必须先从 Li--Clark 数据中导出该二元整数结构，}
+}
+$$
+
+而不能先放入 Fibonacci blocks，再把所得 \(\varphi\) 当作发现。
+
+---
+

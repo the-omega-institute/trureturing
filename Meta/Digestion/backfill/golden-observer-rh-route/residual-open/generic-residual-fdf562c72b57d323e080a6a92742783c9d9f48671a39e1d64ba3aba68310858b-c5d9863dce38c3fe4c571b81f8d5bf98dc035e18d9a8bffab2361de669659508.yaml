@@ -1,0 +1,10 @@
+ast_path: section/5-不修改开放心脏/clause/3
+fingerprints:
+  raw_sha256: sha256:fdf562c72b57d323e080a6a92742783c9d9f48671a39e1d64ba3aba68310858b
+  normalized_sha256: sha256:fdf562c72b57d323e080a6a92742783c9d9f48671a39e1d64ba3aba68310858b
+cas_ref: sha256:fdf562c72b57d323e080a6a92742783c9d9f48671a39e1d64ba3aba68310858b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

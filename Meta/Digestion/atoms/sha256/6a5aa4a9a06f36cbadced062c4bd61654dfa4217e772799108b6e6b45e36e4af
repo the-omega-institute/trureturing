@@ -1,0 +1,108 @@
+# 第七百五十三部　黄金两分支观察空间
+
+令：
+
+$$
+K=\mathbb Q(\sqrt5).
+$$
+
+它有两个实嵌入：
+
+$$
+\sigma_+(\varphi)=\varphi,
+\qquad
+\sigma_-(\varphi)=\varphi'
+=
+-\varphi^{-1}.
+$$
+
+定义两分支观察空间：
+
+$$
+\boxed{
+V_{\mathrm{br}}
+=
+\mathbb C e_+
+\oplus
+\mathbb C e_-.
+}
+\tag{753.1}
+$$
+
+Galois 共轭作用为：
+
+$$
+\boxed{
+J e_+=e_-,
+\qquad
+J e_-=e_+.
+}
+\tag{753.2}
+$$
+
+定义偶、奇投影：
+
+$$
+\boxed{
+P_{\mathrm{ev}}
+=
+\frac{I+J}{2},
+}
+\tag{753.3}
+$$
+
+$$
+\boxed{
+P_{\mathrm{odd}}
+=
+\frac{I-J}{2}.
+}
+\tag{753.4}
+$$
+
+于是：
+
+$$
+V_{\mathrm{br}}
+=
+V_{\mathrm{ev}}
+\oplus
+V_{\mathrm{odd}},
+$$
+
+其中：
+
+$$
+V_{\mathrm{ev}}
+=
+\mathbb C(e_++e_-),
+$$
+
+$$
+V_{\mathrm{odd}}
+=
+\mathbb C(e_+-e_-).
+$$
+
+Galois 共轭在两个通道上的特征值分别为：
+
+$$
+\boxed{
++1,
+\qquad
+-1.
+}
+$$
+
+所以黄金观察者最小完成不是一个裸 \(\varphi\)，而是：
+
+$$
+\boxed{
+\text{平凡表示}
+\oplus
+\text{符号表示}.
+}
+$$
+
+---
+

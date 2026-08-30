@@ -1,0 +1,85 @@
+## v4.9：黄金素数记忆观察器、半直积 Holonomy、行为完成与二阶谱 Forcing
+
+以下完成前述构造，并从**第六百九十七部**继续。
+
+前文已经定义第 \(r\) 层黄金素数记忆观察器：
+
+$$
+\mathrm{GPMO}^{\langle r\rangle},
+\qquad r=0,1,2,
+$$
+
+其状态为：
+
+$$
+(m,z)\in\mathbb C^2\oplus\mathbb C,
+$$
+
+素数 \(p\) 的更新为：
+
+$$
+\boxed{
+U_{r,p}(m,z)
+=
+\left(
+\mathbf Fm+zB_{r,p},
+\;
+L_p^{\langle r\rangle}z
+\right),
+}
+$$
+
+其中：
+
+$$
+\mathbf F=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix},
+$$
+
+$$
+B_{r,p}
+=
+\left(
+L_p^{\langle r\rangle}-1
+\right)v_p.
+$$
+
+仓库中的黄金指数、黄金局部因子、模五 split/inert/ramified 分类，以及前三层 Euler 因子抽取，分别为该模型提供真实算术输入。
+
+其中：
+
+$$
+L_p^{\langle0\rangle}=L_p^\varphi,
+$$
+
+$$
+L_p^{\langle1\rangle}
+=
+(1-p^{-\varphi^2s})L_p^\varphi,
+$$
+
+$$
+L_p^{\langle2\rangle}
+=
+\frac{1-p^{-\varphi^3s}}
+{1+p^{-\varphi^2s}}
+L_p^\varphi.
+$$
+
+这些 residual local factors 分别对应仓库已经建立的：
+
+$$
+\Re s>\varphi^{-2},
+\qquad
+\Re s>\varphi^{-3},
+\qquad
+\Re s>\varphi^{-4}
+$$
+
+三层收敛／因子抽取区域。
+
+---
+

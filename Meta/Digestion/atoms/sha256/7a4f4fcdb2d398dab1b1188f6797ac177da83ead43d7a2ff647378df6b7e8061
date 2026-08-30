@@ -1,0 +1,20 @@
+## 901.2 Bose–Fermi 双塔不是物理统计证明
+
+$$
+\zeta
+=
+\text{Sym-Fock partition},
+$$
+
+$$
+\mathfrak N_t
+=
+\text{exterior Fredholm determinant}
+$$
+
+是精确组合结构。
+
+它不自动产生一个物理 supersymmetry 或 prime-zero unitary map。
+
+---
+

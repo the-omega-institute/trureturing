@@ -1,0 +1,342 @@
+# 集成分支 Lean 构建缓存的【手动长跑】播种器。
+#
+# 【为什么住 dev 而不是集成分支 —— 实测,非选择】
+# GitHub 只从【默认分支】收录带 workflow_dispatch 的 workflow。
+# 把本文件放在集成分支上时,`gh workflow run --ref integration-…` 得
+# `HTTP 404: workflow ... not found on the default branch`,
+# 且 /actions/workflows API 里查不到它 —— 即等于不存在。
+# `--ref` 只决定执行时用哪个分支的文本,不改变「按名字查找」的作用域。
+# 这与 schedule 是同一约束的两种表现:两者都只认默认分支。
+# 故本文件住 dev,由 dev 的文本执行,再显式检出集成分支。
+#
+# 【与集成分支的 lean-cache-seed.yml 是什么关系】
+# 那份是 push 触发的,只存在于集成分支上;本份是 workflow_dispatch 触发的,
+# 住 dev。两份的构建段【完全相同】(6×12 分钟检查点,逐字复用),
+# 差别只在触发方式:那份等推送,本份可人工连续补跑。
+#
+# 【为什么不是"一次跑到底"—— 已被实测证伪,记在案】
+# 本文件的首版就是那么写的(timeout 350,单步 make lean 不切片),
+# 合入 dev 后首个真跑 run 33272480200 即证伪:
+#   Build the pinned Lean content in one long run
+#     cancelled  20:04→21:25 = 81 分钟
+#   Save the completed build layer / Save the dependency layer   全部 skipped
+# ⟹ 81 分钟构建【一字节没存下】,比切片版更差。
+# 原因正是 lean-cache-seed.yml:159-160 早就写过的:
+# continue-on-error 只吸收 step 失败,不吸收 job 被取消。
+#
+# 【为什么不加更多检查点】
+# 6×12 + 6 次 save ≈ 74.4 分钟,与实测成功时长 77/76/75 分钟吻合;
+# 回收发生在 81/88 分钟,余量仅 2–14 分钟。第 7 个检查点(12 分钟)必然超出
+# 并被砍,其 save 同样 skipped ⟹ 净收益为零。
+#
+# 【触发是 workflow_dispatch,且这不碰发布信任面】
+# permissions 是 contents: read,它【只写 actions/cache,不碰 Releases】。
+# lean-cache-publish.yml 当初移除 workflow_dispatch 是因为那份有 contents: write
+# 且发布物位于 admission 下方;本份没有那个能力,故不适用同一约束。
+#
+# 【超时拉满】
+# GitHub 上限 360 分钟,这里取 350(与 lean-cache-seed.yml 一致)。
+# 注:lean-cache-seed.yml:137-140 记「runner 约 76 分钟处被回收」——
+# 该读数【已被后续样本推翻】:run 33079370140 实际跑了 132 分钟(13:55→16:07)才终止。
+# 本份正是要实测「一次能跑多久」,结论回填到那段注释。
+#
+# 【成品键与自动那份共用】
+# 编完(EXIT=0)才写 lake-build-v1-<config>-<sources>,与 lean-cache-seed.yml 同键;
+# 半成品一律不写正式键,只有那份的 seed-progress 才存中间态。
+name: Seed the integration branch Lean cache (manual, long run)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  seed:
+    name: Seed the integration branch Lean cache (manual)
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 350
+    steps:
+      - name: Check out the integration branch
+        id: checkout-pushed
+        uses: actions/checkout@v4
+        with:
+          ref: integration-mathlib-upgarde-to-433
+          fetch-depth: 0
+          persist-credentials: false
+          path: candidate
+
+      - name: Strip checkout remote state
+        if: steps.checkout-pushed.outcome == 'success'
+        shell: bash
+        env:
+          CHECKOUT_PATH: candidate
+        run: |
+          set -euo pipefail
+          git -C "$CHECKOUT_PATH" remote remove origin
+          git -C "$CHECKOUT_PATH" for-each-ref --format='delete %(refname)' refs/remotes/ |
+            git -C "$CHECKOUT_PATH" update-ref --stdin
+          remote_count="$(git -C "$CHECKOUT_PATH" remote | wc -l)"
+          remote_ref_count="$(git -C "$CHECKOUT_PATH" for-each-ref --format='%(refname)' refs/remotes/ | wc -l)"
+          if [[ "$remote_count" -ne 0 || "$remote_ref_count" -ne 0 ]]; then
+            printf '%s\n' "checkout still exposes remotes or remote-tracking refs" >&2
+            exit 1
+          fi
+          head_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD)"
+          base_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD^1)"
+          test -n "$head_sha"
+          test -n "$base_sha"
+
+      - name: Install pinned Lean toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -x "$GITHUB_WORKSPACE/candidate/tools/scripts/workflow/install-lean-toolchain.sh"
+          "$GITHUB_WORKSPACE/candidate/tools/scripts/workflow/install-lean-toolchain.sh" candidate/lean-toolchain
+
+      # `make lean` 实际是 `dotnet run ... worktree with-cache-writer -- lake build`
+      # (tools/scripts/worktree/lean-cache-run.sh),故这里必须装 .NET SDK,
+      # 且要用与 ci.yml 同一份 global.json 钉版。
+      - name: Install pinned SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: candidate/global.json
+
+      - name: Resolve the canonical Lean report input address
+        id: lean-report-input
+        shell: bash
+        run: |
+          set -euo pipefail
+          helper="$GITHUB_WORKSPACE/candidate/tools/scripts/report/lean-report-input.sh"
+          test -x "$helper"
+          # 只消费后两项;前两项按 shell 惯例以 `_` 前缀标记为有意不用。
+          read -r _address _producer_sha256 sources_sha256 config_sha256 \
+            <<< "$("$helper" address --repository "$GITHUB_WORKSPACE/candidate")"
+          [[ "$sources_sha256" =~ ^[0-9a-f]{64}$ ]]
+          [[ "$config_sha256" =~ ^[0-9a-f]{64}$ ]]
+          echo "sources_sha256=$sources_sha256" >> "$GITHUB_OUTPUT"
+          echo "config_sha256=$config_sha256" >> "$GITHUB_OUTPUT"
+
+      - name: Restore any existing dependency layer
+        id: lake-deps-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            candidate/.lake/packages
+            candidate/.lake/config
+            candidate/.lake/.stratalint-lean-cache-stamp.json
+            ~/.cache/mathlib
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-deps-v1-${{ steps.lean-report-input.outputs.config_sha256 }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-lake-deps-v1-${{ steps.lean-report-input.outputs.config_sha256 }}
+
+      - name: Restore any existing project layer
+        id: lake-build-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: candidate/.lake/build
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-${{ steps.lean-report-input.outputs.sources_sha256 }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-
+
+      # 【增量续编】实测:本 runner(`ubuntu-24.04-arm`)在约 76 分钟处砍掉正在跑的步骤,
+      # job 级 `timeout-minutes` 无效 —— 两个独立样本 run 32493250519(76m44s)与
+      # 32962231614(76m11s),误差 33 秒。而内容层冷编本机 28 核尚需 24.7 分钟,
+      # CI 单核编不完,所以**一轮编不完是常态,不是故障**。
+      #
+      # 故这里保存"进度快照":上一轮编到哪算哪,下一轮 restore 后由 lake 增量续编。
+      # 正式 key 只在真正编完(EXIT=0)时才写,避免把半成品当成完整缓存喂给消费侧。
+      - name: Restore the newest progress snapshot
+        if: steps.lake-build-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/restore@v4
+        with:
+          path: candidate/.lake/build
+          key: ${{ runner.os }}-${{ runner.arch }}-seed-progress-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-${{ github.run_id }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-seed-progress-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-
+
+      # 【为什么是检查点序列,不是单个 timebox】2026-08-28 实测五个样本:
+      # runner 分别在 76.2 / 76.7 / 79.0 / 87.3 / **32.4** 分钟处被回收
+      # (`##[error]The runner has received a shutdown signal.`)。
+      # 前四个样本曾让我把下界定为 76m 并设 55m timebox —— **第五个样本 32.4m 证伪了它**:
+      # 回收不是稳定截止,更像负载相关抢占,任何单一 timebox 都会在某次被跨过。
+      #
+      # 又因 `continue-on-error` 只吸收 step 失败、不吸收 job 被取消,
+      # 被砍时紧随的 `if: always()` 保存步骤会被**跳过**(实测三轮皆然),整轮进度全丢。
+      #
+      # 故改为 6 个 12 分钟检查点,每个后面紧跟一次 save:
+      # 任一时刻被砍,最多丢一个区间(12 分钟),已存的检查点由下一轮 restore-keys 前缀命中。
+      # save 实测 0.71GB 约 0.4 分钟,6 次开销约 2.4 分钟,相对 72 分钟构建可忽略。
+      - name: Build the pinned Lean content (checkpoint 1/6)
+        id: build1
+        continue-on-error: true
+        shell: bash
+        working-directory: candidate
+        run: |
+          set +e
+          set -uo pipefail
+          export PATH="$HOME/.elan/bin:$PATH"
+          timeout --kill-after=60s 12m make lean
+          rc=$?
+          printf 'SEED_BUILD checkpoint=1 exit=%s timeboxed=%s\n' "$rc" "$([ "$rc" -eq 124 ] && echo true || echo false)"
+          if [ "$rc" -eq 0 ]; then echo "done=yes" >> "$GITHUB_OUTPUT"; else echo "done=no" >> "$GITHUB_OUTPUT"; fi
+
+      - name: Save the progress snapshot (1/6)
+        if: always() && steps.build1.outputs.done != 'yes' && steps.lake-build-cache.outputs.cache-hit != 'true'
+        continue-on-error: true
+        timeout-minutes: 12
+        uses: actions/cache/save@v4
+        with:
+          path: candidate/.lake/build
+          key: ${{ runner.os }}-${{ runner.arch }}-seed-progress-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-${{ github.run_id }}-01
+
+      - name: Build the pinned Lean content (checkpoint 2/6)
+        if: steps.build1.outputs.done != 'yes'
+        id: build2
+        continue-on-error: true
+        shell: bash
+        working-directory: candidate
+        run: |
+          set +e
+          set -uo pipefail
+          export PATH="$HOME/.elan/bin:$PATH"
+          timeout --kill-after=60s 12m make lean
+          rc=$?
+          printf 'SEED_BUILD checkpoint=2 exit=%s timeboxed=%s\n' "$rc" "$([ "$rc" -eq 124 ] && echo true || echo false)"
+          if [ "$rc" -eq 0 ]; then echo "done=yes" >> "$GITHUB_OUTPUT"; else echo "done=no" >> "$GITHUB_OUTPUT"; fi
+
+      - name: Save the progress snapshot (2/6)
+        if: always() && steps.build2.outputs.done != 'yes' && steps.lake-build-cache.outputs.cache-hit != 'true'
+        continue-on-error: true
+        timeout-minutes: 12
+        uses: actions/cache/save@v4
+        with:
+          path: candidate/.lake/build
+          key: ${{ runner.os }}-${{ runner.arch }}-seed-progress-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-${{ github.run_id }}-02
+
+      - name: Build the pinned Lean content (checkpoint 3/6)
+        if: steps.build2.outputs.done != 'yes'
+        id: build3
+        continue-on-error: true
+        shell: bash
+        working-directory: candidate
+        run: |
+          set +e
+          set -uo pipefail
+          export PATH="$HOME/.elan/bin:$PATH"
+          timeout --kill-after=60s 12m make lean
+          rc=$?
+          printf 'SEED_BUILD checkpoint=3 exit=%s timeboxed=%s\n' "$rc" "$([ "$rc" -eq 124 ] && echo true || echo false)"
+          if [ "$rc" -eq 0 ]; then echo "done=yes" >> "$GITHUB_OUTPUT"; else echo "done=no" >> "$GITHUB_OUTPUT"; fi
+
+      - name: Save the progress snapshot (3/6)
+        if: always() && steps.build3.outputs.done != 'yes' && steps.lake-build-cache.outputs.cache-hit != 'true'
+        continue-on-error: true
+        timeout-minutes: 12
+        uses: actions/cache/save@v4
+        with:
+          path: candidate/.lake/build
+          key: ${{ runner.os }}-${{ runner.arch }}-seed-progress-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-${{ github.run_id }}-03
+
+      - name: Build the pinned Lean content (checkpoint 4/6)
+        if: steps.build3.outputs.done != 'yes'
+        id: build4
+        continue-on-error: true
+        shell: bash
+        working-directory: candidate
+        run: |
+          set +e
+          set -uo pipefail
+          export PATH="$HOME/.elan/bin:$PATH"
+          timeout --kill-after=60s 12m make lean
+          rc=$?
+          printf 'SEED_BUILD checkpoint=4 exit=%s timeboxed=%s\n' "$rc" "$([ "$rc" -eq 124 ] && echo true || echo false)"
+          if [ "$rc" -eq 0 ]; then echo "done=yes" >> "$GITHUB_OUTPUT"; else echo "done=no" >> "$GITHUB_OUTPUT"; fi
+
+      - name: Save the progress snapshot (4/6)
+        if: always() && steps.build4.outputs.done != 'yes' && steps.lake-build-cache.outputs.cache-hit != 'true'
+        continue-on-error: true
+        timeout-minutes: 12
+        uses: actions/cache/save@v4
+        with:
+          path: candidate/.lake/build
+          key: ${{ runner.os }}-${{ runner.arch }}-seed-progress-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-${{ github.run_id }}-04
+
+      - name: Build the pinned Lean content (checkpoint 5/6)
+        if: steps.build4.outputs.done != 'yes'
+        id: build5
+        continue-on-error: true
+        shell: bash
+        working-directory: candidate
+        run: |
+          set +e
+          set -uo pipefail
+          export PATH="$HOME/.elan/bin:$PATH"
+          timeout --kill-after=60s 12m make lean
+          rc=$?
+          printf 'SEED_BUILD checkpoint=5 exit=%s timeboxed=%s\n' "$rc" "$([ "$rc" -eq 124 ] && echo true || echo false)"
+          if [ "$rc" -eq 0 ]; then echo "done=yes" >> "$GITHUB_OUTPUT"; else echo "done=no" >> "$GITHUB_OUTPUT"; fi
+
+      - name: Save the progress snapshot (5/6)
+        if: always() && steps.build5.outputs.done != 'yes' && steps.lake-build-cache.outputs.cache-hit != 'true'
+        continue-on-error: true
+        timeout-minutes: 12
+        uses: actions/cache/save@v4
+        with:
+          path: candidate/.lake/build
+          key: ${{ runner.os }}-${{ runner.arch }}-seed-progress-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-${{ github.run_id }}-05
+
+      - name: Build the pinned Lean content (checkpoint 6/6)
+        if: steps.build5.outputs.done != 'yes'
+        id: build6
+        continue-on-error: true
+        shell: bash
+        working-directory: candidate
+        run: |
+          set +e
+          set -uo pipefail
+          export PATH="$HOME/.elan/bin:$PATH"
+          timeout --kill-after=60s 12m make lean
+          rc=$?
+          printf 'SEED_BUILD checkpoint=6 exit=%s timeboxed=%s\n' "$rc" "$([ "$rc" -eq 124 ] && echo true || echo false)"
+          if [ "$rc" -eq 0 ]; then echo "done=yes" >> "$GITHUB_OUTPUT"; else echo "done=no" >> "$GITHUB_OUTPUT"; fi
+
+      - name: Save the progress snapshot (6/6)
+        if: always() && steps.build6.outputs.done != 'yes' && steps.lake-build-cache.outputs.cache-hit != 'true'
+        continue-on-error: true
+        timeout-minutes: 12
+        uses: actions/cache/save@v4
+        with:
+          path: candidate/.lake/build
+          key: ${{ runner.os }}-${{ runner.arch }}-seed-progress-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-${{ github.run_id }}-06
+
+      - name: Report whether this round finished the build
+        if: always()
+        shell: bash
+        run: |
+          printf 'SEED_ROUND build_outcome=%s\n' "${{ steps.build6.outcome }}"
+          if [ "${{ steps.build6.outcome }}" != "success" ]; then
+            printf '%s\n' "this round did not finish; a progress snapshot was saved, push again to continue"
+          fi
+
+      - name: Save the dependency layer
+        if: steps.build6.outputs.done == 'yes' && steps.lake-deps-cache.outputs.cache-hit != 'true'
+        continue-on-error: true
+        timeout-minutes: 12
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            candidate/.lake/packages
+            candidate/.lake/config
+            candidate/.lake/.stratalint-lean-cache-stamp.json
+            ~/.cache/mathlib
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-deps-v1-${{ steps.lean-report-input.outputs.config_sha256 }}
+
+      - name: Save the project layer
+        if: steps.build6.outputs.done == 'yes' && steps.lake-build-cache.outputs.cache-hit != 'true'
+        continue-on-error: true
+        timeout-minutes: 12
+        uses: actions/cache/save@v4
+        with:
+          path: candidate/.lake/build
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-${{ steps.lean-report-input.outputs.sources_sha256 }}

@@ -1,0 +1,10 @@
+ast_path: section/831-1-Riemann-参数的真实高频展开
+fingerprints:
+  raw_sha256: sha256:534b66a99674cb5c4ab700a3ceb3cf785360f87d0e1bd97730eae2542999a323
+  normalized_sha256: sha256:534b66a99674cb5c4ab700a3ceb3cf785360f87d0e1bd97730eae2542999a323
+cas_ref: sha256:534b66a99674cb5c4ab700a3ceb3cf785360f87d0e1bd97730eae2542999a323
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

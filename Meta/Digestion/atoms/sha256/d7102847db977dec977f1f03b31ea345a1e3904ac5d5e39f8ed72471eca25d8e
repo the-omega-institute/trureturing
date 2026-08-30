@@ -1,0 +1,78 @@
+## 817.1 Wick 旋转后的 half-wave
+
+令：
+
+$$
+y=ic_\infty T.
+$$
+
+则形式上：
+
+$$
+e^{-y|D|}
+\longmapsto
+e^{-ic_\infty T|D|}.
+$$
+
+对应方程为：
+
+$$
+\boxed{
+i\partial_T\psi
+=
+c_\infty|D_\eta|\psi.
+}
+\tag{817.5}
+$$
+
+它是 massless half-wave equation。
+
+再次求导：
+
+$$
+\boxed{
+\partial_T^2\psi
+-
+c_\infty^2\partial_\eta^2\psi
+=
+0.
+}
+\tag{817.6}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{Poisson completion}
+}
+$$
+
+是：
+
+$$
+\boxed{
+\text{massless wave propagation 的欧氏／虚时影子}.
+}
+$$
+
+但 Poisson 半群本身是非局部耗散过程，其核具有长尾，并不服从物理意义下的有限传播区域。
+
+因此准确说法是：
+
+$$
+\boxed{
+\text{它具有光的色散与 Wick-旋转结构，}
+}
+$$
+
+而不是：
+
+$$
+\boxed{
+\text{它本身就是 Lorentzian 光传播。}
+}
+$$
+
+---
+

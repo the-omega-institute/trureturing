@@ -1,0 +1,17 @@
+## 定理 803.1（Uniform observer completion）
+
+令 \(P_0\) 为投影到常数函数的算子，则
+
+$$
+\boxed{
+\|P_{\sigma,t}-P_0\|_{L^2\to L^2}
+\le
+e^{-t g_\varphi(\sigma)}.
+}
+\tag{803.3}
+$$
+
+所以全部 observer origins 以统一指数速度趋向 Haar／零模态。
+
+---
+

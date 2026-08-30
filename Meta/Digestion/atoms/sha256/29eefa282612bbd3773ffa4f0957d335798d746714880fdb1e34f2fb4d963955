@@ -1,0 +1,17 @@
+### 黄金切向残差
+
+$$
+\mathcal K^{\mathrm{odd}}\to0,
+$$
+
+但：
+
+$$
+(-\varphi^2)^r
+\mathcal K^{\mathrm{odd}}
+\to
+K_*\neq0.
+$$
+
+静态完成看不见，blow-up 导数可见。
+

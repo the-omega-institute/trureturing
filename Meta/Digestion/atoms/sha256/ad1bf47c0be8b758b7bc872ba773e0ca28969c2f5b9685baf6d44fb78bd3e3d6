@@ -1,0 +1,38 @@
+# 第一千零六十七部　一个新的严格 RH 判据族
+
+定义正能带投影：
+
+$$
+\boxed{
+P_+(x,y,\mu)
+=
+\frac12
+\left(
+I+
+\frac{
+\mathsf H_\xi(x,y,\mu)
+}{
+\sqrt{|F(x+iy)|^2+\mu^2}
+}
+\right).
+}
+\tag{1067.1}
+$$
+
+在无简并区域定义 Berry–Chern 二形式：
+
+$$
+\boxed{
+\Omega_\xi
+=
+i\,
+\operatorname{Tr}
+\left(
+P_+\,dP_+\wedge dP_+
+\right).
+}
+\tag{1067.2}
+$$
+
+则：
+

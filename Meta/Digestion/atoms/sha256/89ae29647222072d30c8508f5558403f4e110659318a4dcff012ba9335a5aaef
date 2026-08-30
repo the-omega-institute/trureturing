@@ -1,0 +1,65 @@
+## 801.1 为什么它是 Poisson／Cauchy 型，而非普通热型
+
+当 \(x\downarrow0\) 时，
+
+$$
+\frac{
+2
+}{
+x(1-e^{-2x})
+}
+\sim
+\frac1{x^2}.
+$$
+
+所以 Archimedean jump measure 在小尺度具有
+
+$$
+x^{-2}dx
+$$
+
+奇性。
+
+这对应圆周上的一阶分数算子 \(|D|\)，而不是二阶 Laplacian。
+
+利用 Gamma 函数的标准大虚部渐近式可得：
+
+$$
+\boxed{
+\mathscr C_n^\infty(\sigma)
+=
+\frac{\pi^2}{2\log\varphi}|n|
+-
+(\sigma-1)\log|n|
++
+O_\sigma(1).
+}
+\tag{801.5}
+$$
+
+Gamma 函数的大虚部模长渐近为
+\(|\Gamma(x+iy)|\sim \sqrt{2\pi}|y|^{x-1/2}e^{-\pi|y|/2}\)。([DLMF][2])
+
+所以高 observer modes 的主色散为：
+
+$$
+\boxed{
+\mathscr C_n^\infty
+\sim
+\frac{\pi^2}{2\log\varphi}|n|.
+}
+$$
+
+这是一条**质量为零的相对论型／Poisson 型色散关系**。
+
+因此你的“黄金比例是双曲光锥第一像”的直觉，在完成算子层出现了一个新的精确影子：
+
+$$
+\boxed{
+\Gamma_\infty
+\text{ 在黄金 regulator 圆上生成 }|D|\text{ 型传播。}
+}
+$$
+
+---
+

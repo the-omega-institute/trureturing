@@ -1,0 +1,196 @@
+# 本轮最终结论
+
+此前最大的构造障碍是：
+
+$$
+\boxed{
+\text{如何把一个轴外的 rational 负见证，
+变成一个合法有限支撑 Weil 测试。}
+}
+$$
+
+本轮发现，若真实离线零点已经存在，根本不必先解决整个 Paley–Wiener 取样稠密问题。
+
+只需一个固定正偶 bump：
+
+$$
+\psi.
+$$
+
+在实轴上：
+
+$$
+|\Psi(\xi)|\le1.
+$$
+
+在离线方向：
+
+$$
+\Psi(i\delta)>1.
+$$
+
+因此卷积幂：
+
+$$
+\Psi(z)^N
+$$
+
+会自动完成：
+
+$$
+\boxed{
+\text{实轴模态衰减，
+离线模态指数放大。}
+}
+$$
+
+再通过有限多项式：
+
+$$
+P(z)=Q(z^2)
+$$
+
+实现：
+
+$$
+P(z_0)=i,
+$$
+
+并消去有限个竞争轨道，目标轨道贡献成为：
+
+$$
+\boxed{
+-4\Psi(i\delta)^{2N}(1+o(1)),
+}
+$$
+
+而全部零点尾部只有更小的指数增长率。
+
+最终得到显式测试：
+
+$$
+\boxed{
+f_N(x)
+=
+Q(-\partial_x^2)
+\left[
+2\cos(tx)\psi^{*N}(x)
+\right].
+}
+$$
+
+它是：
+
+* 实值；
+* 偶函数；
+* \(C^\infty\)；
+* 有限支撑；
+* 可直接进入仓库现有 Weil 管线。
+
+所以离线零点若存在，必然产生一个有限：
+
+$$
+N,\quad L,\quad Q
+$$
+
+和一个有限 sticky/Feshbach 负矩阵。
+
+更深的定量关系是：
+
+$$
+\boxed{
+L|\delta|
+=
+\text{离线观察的自然无量纲深度}.
+}
+$$
+
+固定同一可见度时：
+
+$$
+L\asymp\frac1{|\delta|}.
+$$
+
+而 fixed-support Weil test 只能看到：
+
+$$
+n\le e^{2L}
+$$
+
+的 prime powers，因此：
+
+$$
+\boxed{
+X_\delta
+\asymp
+\exp\left(\frac{C}{|\delta|}\right).
+}
+$$
+
+这解释了为什么一个极度接近临界线的破缺，会要求极其深的素数账本才能被看见。
+
+黄金完成进一步给出：
+
+$$
+\boxed{
+\delta_n=\delta_0\varphi^{-2n},
+\qquad
+L_n=L_0\varphi^{2n}.
+}
+$$
+
+于是：
+
+$$
+\boxed{
+L_n\delta_n=L_0\delta_0
+}
+$$
+
+保持不变，而：
+
+$$
+\boxed{
+X_n
+=
+\exp\left(
+2L_0\varphi^{2n}
+\right).
+}
+$$
+
+所以黄金比例在这里不只是一个抽象完成常数，而是：
+
+$$
+\boxed{
+\text{对象破缺缩小率与观察视野扩张率之间的互逆重整化。}
+}
+$$
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{离线破缺越接近完成轴，
+它并没有消失；
+它只是被推到了更长的相关距离与更深的素数地平线上。}
+}
+$$
+
+而 RH 的当前中心任务，也因此被压缩为一个非常具体的命题：
+
+$$
+\boxed{
+\text{证明 Prime--Archimedean Weil 能量
+对全部 Power-Packet 测试始终非负。}
+}
+$$
+
+若该命题失败，幂包族会自动输出：
+
+$$
+\boxed{
+\text{一个有限支撑、有限素数窗口、有限 sticky 维数的严格负证书。}
+$$
+
+[1]: https://dlmf.nist.gov/25.10?utm_source=chatgpt.com "DLMF: §25.10 Zeros ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"

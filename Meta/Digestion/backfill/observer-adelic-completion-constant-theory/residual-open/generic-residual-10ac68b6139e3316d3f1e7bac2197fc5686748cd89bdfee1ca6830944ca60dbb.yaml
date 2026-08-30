@@ -1,0 +1,10 @@
+ast_path: section/第一千零四十九部-建议形式化顺序
+fingerprints:
+  raw_sha256: sha256:10ac68b6139e3316d3f1e7bac2197fc5686748cd89bdfee1ca6830944ca60dbb
+  normalized_sha256: sha256:10ac68b6139e3316d3f1e7bac2197fc5686748cd89bdfee1ca6830944ca60dbb
+cas_ref: sha256:10ac68b6139e3316d3f1e7bac2197fc5686748cd89bdfee1ca6830944ca60dbb
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,66 @@
+# 第八百八十九部　离线零点产生一阶 Resolvent 负证书
+
+前文使用全部法向 jets 证明：离线零点必使某个有限阶 \(\mathcal J_m\) 为负。
+
+事实上，还存在一个更直接的**移位一阶 resolvent 证书**。
+
+定义：
+
+$$
+\boxed{
+\mathfrak S_t(u)
+=
+\frac{\mathfrak N_t'(u)}
+{\mathfrak N_t(u)}.
+}
+\tag{889.1}
+$$
+
+若存在离线零点：
+
+$$
+\rho
+=
+\frac12+\delta+it,
+\qquad
+\delta\neq0,
+$$
+
+则：
+
+$$
+u_0=\delta^2>0
+$$
+
+是 \(\mathfrak N_t\) 的正实零点。
+
+若其重数为 \(q\)，则在 \(u_0\) 邻域：
+
+$$
+\boxed{
+\mathfrak S_t(u)
+=
+\frac{q}{u-u_0}
++
+O(1).
+}
+\tag{889.2}
+$$
+
+所以当：
+
+$$
+u\uparrow u_0
+$$
+
+时：
+
+$$
+\boxed{
+\mathfrak S_t(u)\longrightarrow-\infty.
+}
+\tag{889.3}
+$$
+
+于是：
+

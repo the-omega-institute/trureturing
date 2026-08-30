@@ -1,0 +1,10 @@
+ast_path: section/第零层-拓扑存在
+fingerprints:
+  raw_sha256: sha256:24437e4744fb3f666617408fb6722b1026a1f26eb37ca5f403535cda25382e2a
+  normalized_sha256: sha256:24437e4744fb3f666617408fb6722b1026a1f26eb37ca5f403535cda25382e2a
+cas_ref: sha256:24437e4744fb3f666617408fb6722b1026a1f26eb37ca5f403535cda25382e2a
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,42 @@
+## 1012.2 黄金 RG 保持离线素数波不变
+
+在变换：
+
+$$
+\delta\mapsto\varphi^{-2}\delta,
+\qquad
+x\mapsto\varphi^2x
+$$
+
+下：
+
+$$
+\boxed{
+\delta x
+\mapsto
+\delta x.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\cosh(\delta x)
+}
+$$
+
+严格不变。
+
+这给黄金正负时间对偶一个非常直接的意义：
+
+$$
+\boxed{
+\text{对象的横向破缺缩小，
+观察者的 log-prime 时间窗口扩大，
+其可观测双曲波保持相同。}
+}
+$$
+
+---
+

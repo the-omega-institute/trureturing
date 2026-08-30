@@ -1,0 +1,53 @@
+## 定理 786.1（Holonomy Casimir）
+
+对 orientation-preserving 轨道：
+
+$$
+H(w)=U^{k(w)},
+$$
+
+有：
+
+$$
+\boxed{
+-
+\left.
+\partial_\theta^2
+\operatorname{Tr}
+\rho_\theta
+\left(
+H(w)^m
+\right)
+\right|_{\theta=0}
+=
+2m^2k(w)^2.
+}
+\tag{786.5}
+$$
+
+所以：
+
+$$
+\boxed{
+-
+\left.
+\partial_\theta^2
+\log
+\mathcal R_{\mathrm{obs}}(s,\theta)
+\right|_{\theta=0}
+}
+$$
+
+在正权区域中读取全部闭合素数历史的平方 winding。
+
+这就是非交换观察者起点在完成标量中最自然的二阶影子：
+
+$$
+\boxed{
+\text{线性 rapidity 被平均消掉，
+rapidity}^{\,2}\text{ 作为 Casimir 存活。}
+}
+$$
+
+---
+

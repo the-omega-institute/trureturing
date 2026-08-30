@@ -1,0 +1,146 @@
+# mathlib 4.33 集成分支的 Lean 构建缓存发布。
+#
+# 【临时件 —— 退出条件写在这里,不是待办】
+# 本文件只为 `integration-mathlib-upgarde-to-433` 存在。该分支一旦合入 dev
+# 或关闭,**本文件连同 RepositoryPathPolicy 里的登记一并删除**。分支名硬编码
+# 是有意的:一个临时件不值得为它建注册表(第 8 条:不预建空壳)。
+#
+# 【为什么是独立文件而不是 lean-cache-publish.yml 里的第二个 job】
+# 那个 workflow 的每一步都以 `candidate/` 与 `github.sha` 为轴;塞第二份会让
+# 两条流水线共享 cache key、构建目录与 timeout 预算。独立文件各算各的。
+#
+# 【为什么 schedule 而不是 push】
+# `schedule` 只在默认分支的 workflow 上触发,故本文件必须住在 dev 上、由 dev 的
+# 文本执行,再去检出集成分支。这正是它不碰信任面的原因:workflow 文本永远来自
+# base,非默认分支改不动它。`workflow_dispatch` 不加 —— 它是该信任面上唯一一条
+# 未过 dev push 门的 writer 路径,当初是被【故意移除】的(见 lean-cache-publish.yml 头部)。
+#
+# 【本文件无法在合并前真跑】
+# 器律⑦ 要求改 CI 先在集成测试分支上跑到绿,但 `schedule` 结构上不在非默认分支
+# 触发,而 `workflow_dispatch` 按上一段不得加。故唯一的验证是合入后观察首个真跑;
+# 红则回滚,并把 run 链接补记入 PR。
+#
+# 【错开 cron】
+# 与 lean-cache-publish.yml 的 '0 */6 * * *' 错开 3 小时,避免两份全量构建同时
+# 抢 runner 额度。
+name: Lean build cache publication (integration 4.33)
+
+on:
+  schedule:
+    - cron: '0 3,9,15,21 * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    name: Publish the integration branch Lean build cache
+    if: github.ref == 'refs/heads/dev'
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 120
+    steps:
+      - name: Check out the integration branch that was published
+        id: checkout-publish
+        uses: actions/checkout@v4
+        with:
+          path: candidate
+          ref: integration-mathlib-upgarde-to-433
+          fetch-depth: 2
+      - name: Strip checkout remote state
+        if: steps.checkout-publish.outcome == 'success'
+        shell: bash
+        env:
+          CHECKOUT_PATH: candidate
+        run: |
+          set -euo pipefail
+          git -C "$CHECKOUT_PATH" remote remove origin
+          git -C "$CHECKOUT_PATH" for-each-ref --format='delete %(refname)' refs/remotes/ |
+            git -C "$CHECKOUT_PATH" update-ref --stdin
+          remote_count="$(git -C "$CHECKOUT_PATH" remote | wc -l)"
+          remote_ref_count="$(git -C "$CHECKOUT_PATH" for-each-ref --format='%(refname)' refs/remotes/ | wc -l)"
+          if [[ "$remote_count" -ne 0 || "$remote_ref_count" -ne 0 ]]; then
+            printf '%s\n' "checkout still exposes remotes or remote-tracking refs" >&2
+            exit 1
+          fi
+          head_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD)"
+          base_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD^1)"
+          test -n "$head_sha"
+          test -n "$base_sha"
+          echo "head_sha=$head_sha" >> "$GITHUB_OUTPUT"
+        id: strip
+      - name: Install the pinned Lean toolchain
+        shell: bash
+        env:
+          TOOLCHAIN_FILE: ${{ github.workspace }}/candidate/lean-toolchain
+        run: |
+          set -euo pipefail
+          "$GITHUB_WORKSPACE/candidate/tools/scripts/workflow/install-lean-toolchain.sh" \
+            "${TOOLCHAIN_FILE}" --github-path "$GITHUB_PATH"
+      - name: Resolve this commit's Lean input addresses
+        id: addr
+        shell: bash
+        run: |
+          set -euo pipefail
+          helper="$GITHUB_WORKSPACE/candidate/tools/scripts/report/lean-report-input.sh"
+          test -x "${helper}"
+          read -r address producer_sha256 sources_sha256 config_sha256 \
+            < <("${helper}" address --repository "$GITHUB_WORKSPACE/candidate")
+          echo "config_sha256=${config_sha256}" >> "$GITHUB_OUTPUT"
+          echo "sources_sha256=${sources_sha256}" >> "$GITHUB_OUTPUT"
+      - name: Restore the Lean dependency layer
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            candidate/.lake/packages
+            candidate/.lake/config
+            candidate/.lake/.stratalint-lean-cache-stamp.json
+            ~/.cache/mathlib
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-deps-v1-${{ steps.addr.outputs.config_sha256 }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-lake-deps-v1-${{ steps.addr.outputs.config_sha256 }}
+      - name: Restore the Lean build layer
+        id: build
+        uses: actions/cache/restore@v4
+        with:
+          path: candidate/.lake/build
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.addr.outputs.config_sha256 }}-${{ steps.addr.outputs.sources_sha256 }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.addr.outputs.config_sha256 }}-
+      - name: Build when no cache layer was available
+        id: selfbuild
+        if: steps.build.outputs.cache-hit != 'true' && steps.build.outputs.cache-matched-key == ''
+        shell: bash
+        working-directory: candidate
+        run: |
+          set -euo pipefail
+          lake exe cache get || printf '%s\n' "mathlib cache get returned nonzero; lake build will fill the gaps"
+          lake build
+          printf 'olean=%s\n' "$(find .lake/build -name '*.olean' | wc -l | tr -d ' ')"
+          echo "built=true" >> "$GITHUB_OUTPUT"
+      - name: Verify the restored build matches this commit
+        id: verify
+        if: steps.build.outputs.cache-hit == 'true' || steps.build.outputs.cache-matched-key != ''
+        shell: bash
+        env:
+          BUILD_LOG: ${{ runner.temp }}/verify-build.txt
+        working-directory: candidate
+        run: |
+          set -euo pipefail
+          lake build 2>&1 | tee "${BUILD_LOG}"
+          compiled="$(grep -cE '(Built|Building|Compiling) ' "${BUILD_LOG}" || true)"
+          printf 'compiled_targets=%s\n' "${compiled}"
+          echo "matches=true" >> "$GITHUB_OUTPUT"
+      - name: Publish the build cache under its content address
+        if: steps.verify.outputs.matches == 'true' || steps.selfbuild.outputs.built == 'true'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PUBLISH_LOG: ${{ runner.temp }}/publish.txt
+          GITHUB_SHA: ${{ steps.strip.outputs.head_sha }}
+        run: |
+          set -euo pipefail
+          publisher="$GITHUB_WORKSPACE/candidate/tools/scripts/worktree/lean-cache-publish.sh"
+          test -x "${publisher}"
+          date -u '+publish_started_at=%Y-%m-%dT%H:%M:%SZ' | tee "${PUBLISH_LOG}"
+          "${publisher}" publish --repository "$GITHUB_WORKSPACE/candidate" | tee -a "${PUBLISH_LOG}"
+          date -u '+publish_finished_at=%Y-%m-%dT%H:%M:%SZ' | tee -a "${PUBLISH_LOG}"

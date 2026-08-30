@@ -1,0 +1,10 @@
+ast_path: section/901-1-Fredholm-表示不等于自然-Hilbert-Pólya-算子/clause/1
+fingerprints:
+  raw_sha256: sha256:03ad8aa6260bf46dc0de4c00a5f662d26fe422ac0876eab007fe8cf2b5fd45e0
+  normalized_sha256: sha256:03ad8aa6260bf46dc0de4c00a5f662d26fe422ac0876eab007fe8cf2b5fd45e0
+cas_ref: sha256:03ad8aa6260bf46dc0de4c00a5f662d26fe422ac0876eab007fe8cf2b5fd45e0
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

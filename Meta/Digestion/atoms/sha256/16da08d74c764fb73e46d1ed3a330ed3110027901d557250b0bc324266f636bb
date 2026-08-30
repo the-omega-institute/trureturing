@@ -1,0 +1,52 @@
+- 大窗口下的谱隙可以快得惊人地塌缩，点值包络会遭遇双指数频率障碍。
+
+出处：Marcus Chuk, “Weil positivity in compact windows: certified two-sided bounds and a Landau–Widom decay law,” 2026, arXiv:2608.24827。
+
+批判性含义：这不是“窗口增大后越来越接近证明 RH”的单调成功故事。有限窗口正性可能长期成立，而最小特征值迅速逼近零；用更多位小数重复认证同一 $L$，其边际数学信息可能趋近于零。这正是第四部 DECT 停止规则必须捕捉的情形。
+
+### 3. 有限 Guinand–Weil 字典与尾项预算
+
+[literature-attested | 2026 preprint]
+
+Akiva Groskin 给出从有限 Galerkin 向量到带限 Guinand–Weil 测试函数的精确字典，使有限零点和等于有限矩阵二次型；被截去的 archimedean 尾项表现为正的 Cauchy–Stieltjes 增量，并有显式数量级
+
+$B_T\sim\frac{(2N+1)\rho\log T}{\pi^2T}$。
+
+出处：Akiva Groskin, “A finite Guinand–Weil dictionary and archimedean tail order for the truncated Weil quadratic form,” 2026, arXiv:2607.02828v3。
+
+该工作的价值不是“有限矩阵代替了无限问题”，而是把以下三件事分开：
+
+1. 有限矩阵恒等式；
+2. 截断误差的符号与上界；
+3. 从固定 $(N,T)$ 到全测试类极限所需的一致性。
+
+本仓的 `Budget`、`ZetaExplicit`、`ZeroSum` 与 `TestFunctions` 子族正好可以消费这种分层。
+
+### 4. Screw function、模型空间和谱算子重述
+
+[literature-attested]
+
+Masatoshi Suzuki 在 2026 年把 Weil 二次型、screw function、de Branges／模型空间及若干 Connes 型构造放在统一框架中，并提出其自伴算子极限应以 zeta 零点纵坐标为谱的猜想。框架中的许多恒等式无条件成立，但最终谱识别仍是猜想，而不是 RH 证明。
+
+出处：Masatoshi Suzuki, “Weil’s quadratic form via the screw function,” 2026, arXiv:2606.09096v2。
+
+Alain Connes 与 Walter D. van Suijlekom 研究下有界自伴卷积算子的最低简单偶基态，并在明确前件下证明其 Fourier 变换只有实零点；同时分析有限 Toeplitz 压缩和 spectral-action 型回声。
+
+出处：Alain Connes, Walter D. van Suijlekom, “Quadratic Forms, Real Zeros and Echoes of the Spectral Action,” 2025, arXiv:2511.23257。
+
+Alain Connes、Caterina Consani 与 Henri Moscovici 构造有限秩自伴扰动，其数值谱可逼近低位 zeta 零点。决定性缺口仍是有限对象向极限对象的严格收敛，以及相应行列式／谱函数与 completed zeta 或 $\Xi$ 的精确同一。
+
+出处：Alain Connes, Caterina Consani, Henri Moscovici, “Zeta Spectral Triples,” 2025, arXiv:2511.22755。
+
+综述出处：Alain Connes, “The Riemann Hypothesis: Past, Present and a Letter Through Time,” 2026, arXiv:2602.04022。
+
+### 5. Li 系数的 2024–2026 状态
+
+[literature-attested]
+
+本次检索未找到一个获得广泛承认、并在 2024–2026 年改变 RH 证明状态的 Li 系数正性突破。近期最清楚的结构性前件仍包括 Suzuki 把 Li 系数表示成模型空间中具体函数范数的等价刻画：
+
+出处：Masatoshi Suzuki, “Li coefficients as norms of functions in a model space,” 2023, arXiv:2301.05779。
+
+2024 年有 Keiper–Li 系数的大规模数值计算与渐近调查，但有限个正系数不可能推出全部正性。对本仓更诚实的路线是先形式化：
+

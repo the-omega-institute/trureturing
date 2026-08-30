@@ -1,0 +1,58 @@
+## 定理 704.1（Simple-zero memory shift）
+
+若：
+
+$$
+F(\rho)=0,
+\qquad
+F'(\rho)\neq0,
+$$
+
+且 \(A_{\mathrm{odd}}\) 在 \(\rho\) 附近解析，则对充分小的 \(\kappa\)，存在唯一邻近零点：
+
+$$
+\rho(\kappa),
+$$
+
+满足：
+
+$$
+\boxed{
+\rho(\kappa)
+=
+\rho
++
+\kappa
+\frac{
+A_{\mathrm{odd}}(\rho)^2
+}{
+F'(\rho)
+}
++
+O(\kappa^2).
+}
+\tag{704.3}
+$$
+
+这是隐藏记忆产生 observer-specific spectral displacement 的最小模型。
+
+必须称其为：
+
+$$
+\boxed{
+\textbf{观察者伪零点}
+}
+$$
+
+或：
+
+$$
+\boxed{
+\textbf{closed-loop resonance},
+}
+$$
+
+不能直接称为 Riemann \(\zeta\) 的真实零点。
+
+---
+

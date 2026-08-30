@@ -1,0 +1,61 @@
+## 842.1 函数方程把第一 Jet 送到全局 Regulator
+
+\(\chi_5\) 是 primitive、even、real character，其 completed \(L\)-函数满足标准函数方程。([DLMF][3])
+
+在 \(s=0\)：
+
+$$
+L(s,\chi_5)
+=
+s\log\varphi+O(s^2).
+$$
+
+完成 Gamma 因子：
+
+$$
+\Gamma(s/2)\sim\frac2s
+$$
+
+消去该零点，得到有限值：
+
+$$
+2\log\varphi.
+$$
+
+函数方程把它映射到 \(s=1\)，于是：
+
+$$
+\boxed{
+L(1,\chi_5)
+=
+\frac{2\log\varphi}{\sqrt5}.
+}
+\tag{842.5}
+$$
+
+等价地：
+
+$$
+\boxed{
+L(1,\chi_5)
+=
+\frac{
+2
+}{
+\Delta_1\Delta_2
+}
+\log
+\frac{\Delta_2}{\Delta_1}.
+}
+\tag{842.6}
+$$
+
+所以解析类数公式中的：
+
+* regulator \(\log\varphi\)；
+* discriminant \(\sqrt5\)；
+
+都已经存在于两个无质量 holonomy 扇区的谱行列式中。
+
+---
+

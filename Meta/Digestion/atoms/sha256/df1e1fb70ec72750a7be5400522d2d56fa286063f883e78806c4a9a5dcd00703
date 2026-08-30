@@ -1,0 +1,63 @@
+# 第九百九十六部　商去二周期后的 Pair Rapidity
+
+定义相邻两步完成：
+
+$$
+\boxed{
+B_n
+=
+A_{n+1}(1)A_n(1).
+}
+\tag{996.1}
+$$
+
+因为这些矩阵在 \(z=1\) 共用同一特征基：
+
+$$
+\boxed{
+H^{\mathsf T}B_nH
+=
+\begin{pmatrix}
+e^{-b_n}&0\\
+0&e^{b_n}
+\end{pmatrix},
+}
+\tag{996.2}
+$$
+
+其中：
+
+$$
+\boxed{
+b_n=q_n+q_{n+1}.
+}
+\tag{996.3}
+$$
+
+所以：
+
+$$
+\boxed{
+\frac12\operatorname{tr}B_n
+=
+\cosh b_n.
+}
+\tag{996.4}
+$$
+
+\(q_n\) 本身发散；
+
+但 \(b_n\) 测量两个相反无穷 boost 抵消以后剩下的有限 holonomy。
+
+因此：
+
+$$
+\boxed{
+b_n
+}
+$$
+
+才是剥除 universal period-two 后的第一个候选观察者残差。
+
+---
+

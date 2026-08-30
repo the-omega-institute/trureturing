@@ -1,0 +1,23 @@
+## 猜想 729.1（Golden projective observer law）
+
+对项目黄金素数记忆观察器的规范项目化横向坐标 \(\theta_r\)，存在区域使：
+
+$$
+\boxed{
+\theta_{r+1}
+=
+-\varphi^{-2}\theta_r
++
+\varepsilon_r,
+}
+\tag{729.1}
+$$
+
+且在每个紧解析区域：
+
+$$
+\varepsilon_r\to0.
+$$
+
+---
+

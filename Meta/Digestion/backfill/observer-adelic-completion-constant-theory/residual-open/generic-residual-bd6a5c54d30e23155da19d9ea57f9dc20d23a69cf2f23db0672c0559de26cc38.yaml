@@ -1,0 +1,10 @@
+ast_path: section/888-1-有限插值并未闭合全零点和
+fingerprints:
+  raw_sha256: sha256:bd6a5c54d30e23155da19d9ea57f9dc20d23a69cf2f23db0672c0559de26cc38
+  normalized_sha256: sha256:bd6a5c54d30e23155da19d9ea57f9dc20d23a69cf2f23db0672c0559de26cc38
+cas_ref: sha256:bd6a5c54d30e23155da19d9ea57f9dc20d23a69cf2f23db0672c0559de26cc38
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,33 @@
+# 第九百一十部　Power-Packet Weil 判据
+
+固定一个满足上述条件的 bump \(\psi\)。
+
+定义幂包测试族：
+
+$$
+\boxed{
+\mathscr P_\psi
+=
+\left\{
+Q(-\partial_x^2)
+\left[
+2\cos(tx)\psi_a^{*N}(x)
+\right]:
+\begin{array}{l}
+N\ge1,\ a>0,\\
+t\in\mathbb R,\\
+Q\in\mathbb R[w]
+\end{array}
+\right\},
+}
+\tag{910.1}
+$$
+
+其中：
+
+$$
+\psi_a(x)=a^{-1}\psi(x/a).
+$$
+
+---
+

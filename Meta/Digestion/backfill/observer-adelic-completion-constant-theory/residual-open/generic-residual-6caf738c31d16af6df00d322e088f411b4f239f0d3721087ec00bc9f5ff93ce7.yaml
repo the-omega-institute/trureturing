@@ -1,0 +1,10 @@
+ast_path: row/稳定不可反演
+fingerprints:
+  raw_sha256: sha256:6caf738c31d16af6df00d322e088f411b4f239f0d3721087ec00bc9f5ff93ce7
+  normalized_sha256: sha256:6caf738c31d16af6df00d322e088f411b4f239f0d3721087ec00bc9f5ff93ce7
+cas_ref: sha256:6caf738c31d16af6df00d322e088f411b4f239f0d3721087ec00bc9f5ff93ce7
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

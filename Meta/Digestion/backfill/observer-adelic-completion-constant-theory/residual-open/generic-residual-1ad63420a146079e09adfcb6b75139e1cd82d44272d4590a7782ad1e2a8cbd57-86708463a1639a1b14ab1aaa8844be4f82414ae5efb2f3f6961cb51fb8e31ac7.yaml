@@ -1,0 +1,10 @@
+ast_path: section/708-6-谱实验/clause/3
+fingerprints:
+  raw_sha256: sha256:1ad63420a146079e09adfcb6b75139e1cd82d44272d4590a7782ad1e2a8cbd57
+  normalized_sha256: sha256:1ad63420a146079e09adfcb6b75139e1cd82d44272d4590a7782ad1e2a8cbd57
+cas_ref: sha256:1ad63420a146079e09adfcb6b75139e1cd82d44272d4590a7782ad1e2a8cbd57
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

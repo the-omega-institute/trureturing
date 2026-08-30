@@ -1,0 +1,74 @@
+# 第七百三十三部　黄金比例是 null cone 的射影坐标
+
+黄金 null cone 为：
+
+$$
+\boxed{
+\mathcal C_\varphi
+=
+\left\{
+(x,y):Q_\varphi(x,y)=0
+\right\}.
+}
+\tag{733.1}
+$$
+
+由式 (732.3)：
+
+$$
+\boxed{
+\mathcal C_\varphi
+=
+L_+\cup L_-,
+}
+$$
+
+其中：
+
+$$
+\boxed{
+L_+
+=
+\mathbb R(\varphi,1),
+}
+\tag{733.2}
+$$
+
+$$
+\boxed{
+L_-
+=
+\mathbb R(\varphi',1).
+}
+\tag{733.3}
+$$
+
+在仿射图：
+
+$$
+y=1
+$$
+
+中，这两个 null 方向的坐标分别是：
+
+$$
+\boxed{
+x=\varphi,
+\qquad
+x=\varphi'.
+}
+$$
+
+所以裸的黄金比例可以严格解释为：
+
+$$
+\boxed{
+\varphi
+=
+\text{正 null 射线 }L_+
+\text{ 在 Fibonacci 算术坐标中的斜率}.
+}
+$$
+
+---
+

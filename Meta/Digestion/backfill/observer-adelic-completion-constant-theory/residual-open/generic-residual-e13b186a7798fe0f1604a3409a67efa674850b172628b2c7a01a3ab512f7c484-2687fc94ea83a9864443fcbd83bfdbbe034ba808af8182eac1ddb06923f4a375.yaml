@@ -1,0 +1,10 @@
+ast_path: section/835-1-为什么黄金比例不出现在零点中/clause/3
+fingerprints:
+  raw_sha256: sha256:e13b186a7798fe0f1604a3409a67efa674850b172628b2c7a01a3ab512f7c484
+  normalized_sha256: sha256:e13b186a7798fe0f1604a3409a67efa674850b172628b2c7a01a3ab512f7c484
+cas_ref: sha256:e13b186a7798fe0f1604a3409a67efa674850b172628b2c7a01a3ab512f7c484
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

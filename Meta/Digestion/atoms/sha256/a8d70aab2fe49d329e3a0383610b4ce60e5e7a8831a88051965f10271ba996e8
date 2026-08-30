@@ -1,0 +1,45 @@
+# 第七百九十二部　真正连接 ordinary \(\xi\) 的候选不是 \(L_n\)，而是模态 Casimir
+
+单个：
+
+$$
+L_n
+$$
+
+属于非平凡观察通道，不能线性进入 ordinary \(\xi\)。
+
+最自然的 trivial-representation 组合是：
+
+$$
+\boxed{
+\mathfrak R_n(s)
+=
+\frac{
+\Lambda_0(s)^2
+}{
+\Lambda_n(s)\Lambda_{-n}(s)
+}.
+}
+\tag{792.1}
+$$
+
+由于：
+
+$$
+\Lambda_n=\Lambda_{-n}
+$$
+
+在配对图表中：
+
+$$
+\mathfrak R_n
+=
+\left(
+\frac{\Lambda_0}{\Lambda_n}
+\right)^2.
+$$
+
+其 prime-side 对数在 \(\Re s>1\) 中为非负 observer-distance 总和；其 Archimedean 部分则由不同 infinity types 的 gamma factors给出。
+
+---
+

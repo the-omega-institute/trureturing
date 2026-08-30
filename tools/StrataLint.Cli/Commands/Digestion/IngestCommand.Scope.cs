@@ -5,6 +5,9 @@ namespace StrataLint.Cli;
 
 internal static partial class IngestCommand
 {
+    private const string ImplementationPath =
+        "tools/StrataLint.Cli/Commands/Digestion/IngestCommand.cs";
+
     private static RawChangeSet IngestChanges(
         RawChangeSet repositoryChanges,
         RawRepositorySnapshot current,

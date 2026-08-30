@@ -1,0 +1,38 @@
+## 定理 801.1（Golden Archimedean gap）
+
+$$
+\boxed{
+\mathscr C_n^\infty(\sigma)
+\ge
+g_\varphi(\sigma)
+>0
+\qquad
+(n\neq0),
+}
+\tag{801.3}
+$$
+
+其中
+
+$$
+\boxed{
+g_\varphi(\sigma)
+=
+\sum_{m=0}^\infty
+\log
+\left[
+1+
+\frac{
+\pi^2
+}{
+(\log\varphi)^2(\sigma+2m)^2
+}
+\right].
+}
+\tag{801.4}
+$$
+
+这就是统一 observer gap。
+
+---
+

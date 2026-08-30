@@ -1,0 +1,27 @@
+## 722.1 导数仍能恢复起源
+
+定义 completion scale：
+
+$$
+h_n=(-\varphi^{-2})^n.
+$$
+
+则：
+
+$$
+\boxed{
+\lim_{n\to\infty}
+\frac{\delta_n}{h_n}
+=
+c.
+}
+\tag{722.3}
+$$
+
+所以在完成点上：
+
+* 静态极限只看到：
+
+  $$
+  \delta_\infty=0;
+  $$

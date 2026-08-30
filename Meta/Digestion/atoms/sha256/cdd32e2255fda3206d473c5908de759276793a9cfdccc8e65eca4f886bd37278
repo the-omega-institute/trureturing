@@ -1,0 +1,19 @@
+## 2.3 非盲派生没有统一保证
+
+状态不盲并不逻辑蕴含“必无不动点”。非盲函数可能有零个、一个或多个不动点。GFPT 的结论是：
+
+- 盲性给出对所有上下文的统一存在唯一保证；
+- 放弃盲性后，该统一保证失效；
+- 两元素翻转给出最小非退化失败见证。
+
+取 `Bool`，定义：
+
+$\operatorname{flip}(\mathsf{false})=\mathsf{true}$，  
+$\operatorname{flip}(\mathsf{true})=\mathsf{false}$。
+
+则：
+
+$\neg\exists s:\operatorname{Bool},\ s=\operatorname{flip}(s)$。
+
+在单元素非空状态类型上，每个自映射都固定唯一元素；因此 `Bool` 是最小的非单点状态域反例。空状态类型因根本没有可写状态而属于退化治理接口，不作为这里的状态系统。
+

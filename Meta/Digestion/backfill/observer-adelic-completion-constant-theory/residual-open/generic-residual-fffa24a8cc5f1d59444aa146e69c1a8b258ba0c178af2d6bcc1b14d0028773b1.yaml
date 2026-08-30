@@ -1,0 +1,10 @@
+ast_path: row/observer-Casimir-进入-ordinary-xi
+fingerprints:
+  raw_sha256: sha256:fffa24a8cc5f1d59444aa146e69c1a8b258ba0c178af2d6bcc1b14d0028773b1
+  normalized_sha256: sha256:fffa24a8cc5f1d59444aa146e69c1a8b258ba0c178af2d6bcc1b14d0028773b1
+cas_ref: sha256:fffa24a8cc5f1d59444aa146e69c1a8b258ba0c178af2d6bcc1b14d0028773b1
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

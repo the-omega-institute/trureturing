@@ -1,0 +1,10 @@
+ast_path: section/1051-1-这一层更像什么
+fingerprints:
+  raw_sha256: sha256:bfc836fad2165e52421c4e7d3c2d9f5f104e2435f7fa718b806c8e540dca7019
+  normalized_sha256: sha256:bfc836fad2165e52421c4e7d3c2d9f5f104e2435f7fa718b806c8e540dca7019
+cas_ref: sha256:bfc836fad2165e52421c4e7d3c2d9f5f104e2435f7fa718b806c8e540dca7019
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

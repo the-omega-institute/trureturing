@@ -1,0 +1,30 @@
+## 六、离线零点的对偶究竟是什么？
+
+它同时是：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{临界线上的 Poisson 影子};\\
+&\text{单位圆外的 reciprocal atom};\\
+&\text{Christoffel cost 的非零 floor};\\
+&\text{Schur recursion 的有限越界};\\
+&\text{transfer cocycle 的 hyperbolic escape};\\
+&\text{Weil form 的有限负方向}.
+\end{aligned}
+}
+$$
+
+其中最直接的边界像是：
+
+$$
+\boxed{
+\frac{\delta}
+{(t-\gamma)^2+\delta^2}.
+}
+$$
+
+点虽然不在临界线上，它的调和影子却在临界线上。
+
+---
+

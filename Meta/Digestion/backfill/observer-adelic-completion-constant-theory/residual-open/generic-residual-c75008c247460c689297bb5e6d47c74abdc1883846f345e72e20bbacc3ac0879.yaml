@@ -1,0 +1,10 @@
+ast_path: section/第八百二十三部-两个手性分支
+fingerprints:
+  raw_sha256: sha256:c75008c247460c689297bb5e6d47c74abdc1883846f345e72e20bbacc3ac0879
+  normalized_sha256: sha256:c75008c247460c689297bb5e6d47c74abdc1883846f345e72e20bbacc3ac0879
+cas_ref: sha256:c75008c247460c689297bb5e6d47c74abdc1883846f345e72e20bbacc3ac0879
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

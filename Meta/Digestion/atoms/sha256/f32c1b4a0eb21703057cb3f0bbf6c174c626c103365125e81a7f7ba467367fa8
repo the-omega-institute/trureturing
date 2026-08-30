@@ -1,0 +1,62 @@
+# 第八百零七部　Completed observer distance
+
+定义 mode 距离：
+
+$$
+\boxed{
+d_\sigma(n,m)^2
+=
+\mathscr C_{n-m}(\sigma).
+}
+\tag{807.1}
+$$
+
+因为 \(\mathscr C\) 条件负定，它来自一个 Hilbert 空间嵌入：
+
+$$
+\boxed{
+d_\sigma(n,m)
+=
+\|\Phi_\sigma(n)-\Phi_\sigma(m)\|.
+}
+\tag{807.2}
+$$
+
+而 Archimedean gap 保证：
+
+$$
+\boxed{
+d_\sigma(n,m)^2
+\ge
+g_\varphi(\sigma)
+}
+\tag{807.3}
+$$
+
+对任意 \(n\neq m\) 成立。
+
+所以完成后的不同 observer modes 有严格最小距离。
+
+但该距离在高模态上满足：
+
+$$
+d_\sigma(n,0)^2
+\sim
+\frac{\pi^2}{2\log\varphi}|n|.
+$$
+
+因此：
+
+$$
+\boxed{
+d_\sigma(n,0)
+\asymp
+\sqrt{|n|}.
+}
+\tag{807.4}
+$$
+
+这说明 regulator 模态空间的完成几何，不是普通线性距离，而具有 Cauchy／平方根型观察距离。
+
+---
+

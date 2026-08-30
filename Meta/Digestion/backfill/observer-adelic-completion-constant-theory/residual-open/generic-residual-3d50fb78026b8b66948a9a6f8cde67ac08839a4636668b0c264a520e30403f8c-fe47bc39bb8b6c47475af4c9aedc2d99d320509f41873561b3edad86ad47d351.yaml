@@ -1,0 +1,10 @@
+ast_path: section/1066-2-单极子结构本身不能证明-RH/clause/2
+fingerprints:
+  raw_sha256: sha256:3d50fb78026b8b66948a9a6f8cde67ac08839a4636668b0c264a520e30403f8c
+  normalized_sha256: sha256:3d50fb78026b8b66948a9a6f8cde67ac08839a4636668b0c264a520e30403f8c
+cas_ref: sha256:3d50fb78026b8b66948a9a6f8cde67ac08839a4636668b0c264a520e30403f8c
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

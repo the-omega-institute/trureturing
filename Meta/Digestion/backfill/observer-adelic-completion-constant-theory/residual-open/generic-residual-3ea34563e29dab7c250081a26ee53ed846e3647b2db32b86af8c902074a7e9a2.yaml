@@ -1,0 +1,15 @@
+ast_path: section/第七百七十二部-GPMO-的规范阿贝尔商
+fingerprints:
+  raw_sha256: sha256:3ea34563e29dab7c250081a26ee53ed846e3647b2db32b86af8c902074a7e9a2
+  normalized_sha256: sha256:3ea34563e29dab7c250081a26ee53ed846e3647b2db32b86af8c902074a7e9a2
+cas_ref: sha256:3ea34563e29dab7c250081a26ee53ed846e3647b2db32b86af8c902074a7e9a2
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-77dc3619f3083335ace2f72faa0a4753179dd0248a1bd16b88ffba8d1e0d6b00-5d1dd3926c42531048881419861d728f55fe4f9bd11fa11f78eb7e89090a0003
+    - generic-residual-a6f101a8ce7b8b71cd26bb583bfff2ce751860cd05a3ad1957f30c6979687857-442bdae602a37ec373d7404d8802e00f26ca92ccca295ff283302e67bb6b6ac8
+    - generic-residual-8af9aa1ad04d517b277351ec18cac39cea5845cab76ce87076df609964b1928e-8aab5f9a2364929a770c55969d1df2d64d86a59464bf5659c811d2493c93e31b
+    - generic-residual-fe69dd08bf88732e6ff2b805fc1e7122be0cb50ec08607ede20124f8168fa0c2-4bea2e0f7f3b0393ec0b1c4f4575d5bb2092e57175153cd8d67ce4d97dc61082

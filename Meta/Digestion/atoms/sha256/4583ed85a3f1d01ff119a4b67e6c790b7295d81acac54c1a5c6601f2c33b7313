@@ -1,0 +1,88 @@
+# 第九百零九部　进入项目 fixed-scale Weil 管线
+
+由 \(f_N\) 构造：
+
+$$
+g_N=f_N*\widetilde f_N.
+$$
+
+它仍是项目合法的 `WeilTestFunction`，并且：
+
+$$
+\operatorname{supp}g_N
+\subseteq[-2L_N,2L_N],
+\qquad
+L_N=Na.
+$$
+
+项目当前已经机器证明：
+
+$$
+\widehat g_N(\xi)
+=
+|\widehat f_N(\xi)|^2
+\ge0
+$$
+
+于实频轴成立。
+
+Weil 显式公式随后把负零点和精确变成：
+
+$$
+\boxed{
+\begin{aligned}
+&2\left|
+\int_{\mathbb R}e^{x/2}f_N(x)\,dx
+\right|^2\\
+&\quad+
+\text{Archimedean jump energy}\\
+&\quad+
+\text{finite prime-power jump energy}\\
+&\quad-
+\text{coherent mass threshold}
+<0.
+\end{aligned}
+}
+\tag{909.1}
+$$
+
+该 Prime–Archimedean 能量恒等式已经进入仓库真源。
+
+同一 fixed-support form 又已被写为 renormalized multiplier：
+
+$$
+\boxed{
+\mathfrak Q_L[f]
+=
+\frac1{2\pi}
+\int_{\mathbb R}
+m_L(\xi)|\widehat f(\xi)|^2\,d\xi.
+}
+\tag{909.2}
+$$
+
+仓库还证明安全补空间具有严格正 gap，并且任何有限维负子空间都必须注入保留的有限危险块。
+
+所以得到：
+
+$$
+\boxed{
+\begin{aligned}
+\text{离线零点}
+&\longrightarrow
+\text{幂包负测试}\\
+&\longrightarrow
+\text{fixed-scale multiplier 负方向}\\
+&\longrightarrow
+\text{有限 sticky block}\\
+&\longrightarrow
+\text{有限 Feshbach matrix 负特征值}.
+\end{aligned}
+}
+\tag{909.3}
+$$
+
+以前真正缺少的“离线零点到有限支撑测试”的存在桥，在这一构造中被直接绕过了。
+
+---
+

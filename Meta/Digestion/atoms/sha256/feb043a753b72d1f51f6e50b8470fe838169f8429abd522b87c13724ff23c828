@@ -1,0 +1,12 @@
+### 6. 反向方向：O-6 推 RH，是经典难核
+
+若有离线零点，`ConvolutionSquareOffLineOrbits` 目前只告诉我们四点轨道总贡献为实数，不告诉我们它必为负。要从离线轨道制造 O-6 反例，需要：
+
+1. 构造紧支撑平滑 $g$；
+2. 使 $g*\widetilde g$ 在目标离线轨道上产生可控负方向；
+3. 同时控制所有其他零点、极点、素数项和 archimedean 项；
+4. 证明本仓受限测试类对该方向足够稠密；
+5. 通过无限零点和的收敛／截断极限。
+
+这就是 Weil 等价的 hard separator theorem。它不是“再加几个 positivity lemma”即可完成的工程尾项。
+

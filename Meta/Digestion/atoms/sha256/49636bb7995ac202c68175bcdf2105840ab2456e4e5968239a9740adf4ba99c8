@@ -1,0 +1,24 @@
+## 正证书
+
+若：
+
+$$
+\boxed{
+\lambda_{\min}
+(\widehat T_N)
+>
+\varepsilon_{N,L},
+}
+\tag{979.2}
+$$
+
+则：
+
+$$
+T_N\succ0.
+$$
+
+因此前 \(N\) 个 Schur steps 全部位于单位圆盘内。
+
+---
+

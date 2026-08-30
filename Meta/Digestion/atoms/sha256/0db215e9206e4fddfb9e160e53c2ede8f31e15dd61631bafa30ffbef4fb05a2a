@@ -1,0 +1,21 @@
+## 定理 1038.1（Source-free completion semigroup）
+
+RH 下：
+
+$$
+\boxed{
+D_{x+h}
+=
+P_h*D_x
+\qquad
+\forall x,h>0.
+}
+\tag{1038.4}
+$$
+
+即任意更深完成层，都可以仅由较浅层继续 Poisson 平滑得到。
+
+不需要在体内注入新信息。
+
+---
+

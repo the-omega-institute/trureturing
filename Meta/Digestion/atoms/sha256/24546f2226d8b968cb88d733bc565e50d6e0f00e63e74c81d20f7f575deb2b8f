@@ -1,0 +1,59 @@
+## 定理 703.1（Completed scalar has no linear odd coupling）
+
+设完成标量读出：
+
+$$
+\mathcal C(A_{\mathrm{odd}})
+$$
+
+在 \(A_{\mathrm{odd}}=0\) 附近解析，并且对观察者交换不变：
+
+$$
+\mathcal C(u)=\mathcal C(-u).
+$$
+
+则：
+
+$$
+\boxed{
+D\mathcal C(0)=0.
+}
+\tag{703.3}
+$$
+
+其展开只能含偶次项：
+
+$$
+\boxed{
+\mathcal C(u)
+=
+\mathcal C(0)
++
+Q_2(u)
++
+Q_4(u)
++\cdots.
+}
+\tag{703.4}
+$$
+
+因此，完成后的标量世界不能线性读取观察者起点的符号。
+
+它最早只能读取：
+
+$$
+\boxed{
+A_{\mathrm{odd}}^2
+}
+$$
+
+或在实／Hilbert 图表中的：
+
+$$
+\boxed{
+\|A_{\mathrm{odd}}\|^2.
+}
+$$
+
+---
+

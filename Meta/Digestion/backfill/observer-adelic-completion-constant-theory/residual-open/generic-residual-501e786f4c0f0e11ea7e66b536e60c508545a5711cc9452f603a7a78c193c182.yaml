@@ -1,0 +1,10 @@
+ast_path: section/第七百六十五部-标量-导数与连接读取不同层次
+fingerprints:
+  raw_sha256: sha256:501e786f4c0f0e11ea7e66b536e60c508545a5711cc9452f603a7a78c193c182
+  normalized_sha256: sha256:501e786f4c0f0e11ea7e66b536e60c508545a5711cc9452f603a7a78c193c182
+cas_ref: sha256:501e786f4c0f0e11ea7e66b536e60c508545a5711cc9452f603a7a78c193c182
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

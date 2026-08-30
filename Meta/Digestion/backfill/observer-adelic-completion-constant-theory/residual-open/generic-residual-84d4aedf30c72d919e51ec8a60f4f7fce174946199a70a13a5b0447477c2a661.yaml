@@ -1,0 +1,10 @@
+ast_path: row/Mellin-时间
+fingerprints:
+  raw_sha256: sha256:84d4aedf30c72d919e51ec8a60f4f7fce174946199a70a13a5b0447477c2a661
+  normalized_sha256: sha256:84d4aedf30c72d919e51ec8a60f4f7fce174946199a70a13a5b0447477c2a661
+cas_ref: sha256:84d4aedf30c72d919e51ec8a60f4f7fce174946199a70a13a5b0447477c2a661
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

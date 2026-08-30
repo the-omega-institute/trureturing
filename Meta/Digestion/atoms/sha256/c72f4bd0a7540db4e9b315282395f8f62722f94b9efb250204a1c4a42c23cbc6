@@ -1,0 +1,24 @@
+## 4.1 修复类与放行集
+
+固定修复动作类型 $M$。
+
+令：
+
+- $F\subseteq M$ 为待处理的精确修复类；
+- $A\subseteq M$ 为规则一的放行集；
+- $B\subseteq M$ 为规则二的放行集。
+
+旧门的联合放行集为：
+
+$L:=A\cap B$。
+
+称修复类可达，当：
+
+$\operatorname{Reachable}(F,A,B)\Longleftrightarrow\exists r\in F,\ r\in A\cap B$。
+
+称修复类死锁，当：
+
+$\operatorname{Deadlocked}(F,A,B)\Longleftrightarrow\neg\operatorname{Reachable}(F,A,B)$。
+
+局部规则是否合理与修复类是否可达是两个问题。即使 $A$、$B$ 各自非空，各自排除了真实坏操作，它们仍可能在 $F$ 上没有共同放行元素。
+

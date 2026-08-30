@@ -1,0 +1,32 @@
+## Jet 深度
+
+$$
+\boxed{
+d_{\mathrm{jet}}
+=
+\min
+\left\{
+m:
+\exists t,\ \mathcal J_m(t)<0
+\right\}.
+}
+\tag{900.1}
+$$
+
+或者使用更接近线性零点测度的 Hankel 深度：
+
+$$
+\boxed{
+d_{\mathrm{Hankel}}
+=
+\min
+\left\{
+N+r:
+H_N^{(r)}(t)\not\succeq0
+\right\}.
+}
+\tag{900.2}
+$$
+
+---
+

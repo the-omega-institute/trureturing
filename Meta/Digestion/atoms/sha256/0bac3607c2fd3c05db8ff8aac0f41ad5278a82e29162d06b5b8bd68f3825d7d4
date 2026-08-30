@@ -1,0 +1,46 @@
+## 定理 846.1（Observer-mode critical kernel）
+
+$$
+\boxed{
+\Delta_\tau a(t)
+=
+2
+\int_0^\infty
+\kappa_\infty(x)
+\cos(tx)
+\left(
+1-\cos(\tau x)
+\right)dx.
+}
+\tag{846.3}
+$$
+
+这条公式非常关键。
+
+在：
+
+$$
+t=0
+$$
+
+时：
+
+$$
+\boxed{
+\Delta_\tau a(0)>0
+\qquad
+(\tau\neq0).
+}
+\tag{846.4}
+$$
+
+但当 \(t\neq0\) 时，多出：
+
+$$
+\cos(tx),
+$$
+
+因此不再是显然的正积分。
+
+---
+

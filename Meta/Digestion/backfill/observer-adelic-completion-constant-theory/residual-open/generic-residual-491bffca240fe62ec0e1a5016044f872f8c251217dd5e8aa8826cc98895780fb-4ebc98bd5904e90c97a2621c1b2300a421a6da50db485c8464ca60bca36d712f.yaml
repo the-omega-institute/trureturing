@@ -1,0 +1,10 @@
+ast_path: section/922-1-为什么-a-1-4-是关键/clause/3
+fingerprints:
+  raw_sha256: sha256:491bffca240fe62ec0e1a5016044f872f8c251217dd5e8aa8826cc98895780fb
+  normalized_sha256: sha256:491bffca240fe62ec0e1a5016044f872f8c251217dd5e8aa8826cc98895780fb
+cas_ref: sha256:491bffca240fe62ec0e1a5016044f872f8c251217dd5e8aa8826cc98895780fb
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

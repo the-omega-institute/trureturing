@@ -1,0 +1,44 @@
+## 782.1 Casimir 测度
+
+定义：
+
+$$
+\boxed{
+d\nu_{\mathrm{Cas}}
+=
+2
+\sum_{\substack{p\text{ split}\\k\ge1}}
+\frac{
+1-\cos(k\theta_p)
+}{
+k
+}
+\delta_{k\log p}.
+}
+\tag{782.6}
+$$
+
+则：
+
+$$
+\boxed{
+\mathscr C_\varphi(\sigma)
+=
+\int_0^\infty
+e^{-\sigma x}\,
+d\nu_{\mathrm{Cas}}(x).
+}
+\tag{782.7}
+$$
+
+这给出本轮最具体的新对象：
+
+$$
+\boxed{
+\text{黄金观察者被零模态遗忘的信息，
+构成一个正的 prime-side Casimir 测度。}
+}
+$$
+
+---
+

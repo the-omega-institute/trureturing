@@ -1,0 +1,14 @@
+ast_path: section/928-1-平滑化与有限支撑化
+fingerprints:
+  raw_sha256: sha256:50a220115172f3d1dfc48e942db948a58c700afbff9aeeb4ebc8e0aadae50356
+  normalized_sha256: sha256:50a220115172f3d1dfc48e942db948a58c700afbff9aeeb4ebc8e0aadae50356
+cas_ref: sha256:50a220115172f3d1dfc48e942db948a58c700afbff9aeeb4ebc8e0aadae50356
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-c41164736de02a5fba55ea5484c43e2f9996de610f9f8bd653334dea857da0a6-97c502f8d56c7b33ba527c877de7653af465069fd9220e7e2ab8d0dbc0ee4fe3
+    - generic-residual-c51ec0e129c9a9858851fee65753e15b56d922e3116c1db3536bfaf97f698c77-fec893c91125057d6b9578561c9bb7700d7c281d0942ec5a92a775ee75d53a42
+    - generic-residual-4d0c541ecac3a38b21f6daf878ac1a52098224e50e5bbfa056acc89fecb1e736-1c54f3ff32271f3a1ace7bc69221a22c727cbd53633c6f1ce8d9833710332972

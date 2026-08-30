@@ -1,0 +1,166 @@
+/- GID: D5/S3/Analytic/Adelic/JetResolventSemisimplification
+   generality: G
+   mirror-B: D5/B/S3/Analytic/Adelic/JetResolventSemisimplification
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   digest: Nilpotent jet trace and log derivative reduce to one weighted pole. -/
+
+import Mathlib.Analysis.SpecialFunctions.Complex.LogDeriv
+import Mathlib.Analysis.Meromorphic.Order
+import Mathlib.LinearAlgebra.Matrix.Block
+import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+
+/- Library-search audit trail (2026-08-30):
+   * Exact-name and statement-shape searches for jet resolvents, nilpotent
+     pencils, trace resolvents, and logarithmic determinant derivatives found
+     no frozen D5 theorem with either boxed identity.
+   * Body-shape searches for a lower shift with entry test
+     `i.val = j.val + 1` and for `(s - rho) • 1 - N` found no canonical D5
+     definitions. The two source objects are therefore constructed below.
+   * `ToroidalJetDepth` concerns the first nonzero derivative layer of a
+     twisted xi reading; it supplies no matrix-jet carrier or pencil primitive.
+   * Pinned Mathlib supplies `Matrix.det_of_lowerTriangular`, preservation of
+     block triangularity by inverse, `Matrix.mul_nonsing_inv`, and
+     `logDeriv_fun_pow`. Its `meromorphicOrderAt` definition expresses a
+     simple pole by order `-1`. These are applied directly. -/
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+
+namespace D5.S3.Analytic.Adelic.JetResolventSemisimplification
+
+open Filter
+open scoped BigOperators Matrix Topology
+
+/-- The source lower nilpotent shift on a finite jet. -/
+def nilpotentJetShift (m : ℕ) : Matrix (Fin m) (Fin m) ℂ :=
+  Matrix.of fun i j => if i.1 = j.1 + 1 then 1 else 0
+
+/-- The affine spectral pencil of the lower nilpotent jet shift. -/
+def jetPencil (m : ℕ) (rho s : ℂ) : Matrix (Fin m) (Fin m) ℂ :=
+  (s - rho) • (1 : Matrix (Fin m) (Fin m) ℂ) - nilpotentJetShift m
+
+private theorem jetPencil_lowerTriangular (m : ℕ) (rho s : ℂ) :
+    (jetPencil m rho s).BlockTriangular
+      (OrderDual.toDual : Fin m → OrderDual (Fin m)) := by
+  intro i j hji
+  have hij : i < j := by simpa using hji
+  simp [jetPencil, nilpotentJetShift, Matrix.smul_apply, hij.ne]
+  omega
+
+private theorem jetPencil_diagonal (m : ℕ) (rho s : ℂ) (i : Fin m) :
+    jetPencil m rho s i i = s - rho := by
+  simp [jetPencil, nilpotentJetShift, Matrix.smul_apply]
+
+private theorem jetPencil_det (m : ℕ) (rho s : ℂ) :
+    (jetPencil m rho s).det = (s - rho) ^ m := by
+  rw [Matrix.det_of_lowerTriangular (jetPencil m rho s)
+    (jetPencil_lowerTriangular m rho s)]
+  simp [jetPencil_diagonal]
+
+private theorem lowerTriangular_nonsing_inv_diagonal
+    {m : ℕ} (M : Matrix (Fin m) (Fin m) ℂ)
+    (hM : M.BlockTriangular (OrderDual.toDual : Fin m → OrderDual (Fin m)))
+    (hdet : IsUnit M.det) (i : Fin m) :
+    M⁻¹ i i = (M i i)⁻¹ := by
+  letI : Invertible M := M.invertibleOfIsUnitDet hdet
+  have hInv : M⁻¹.BlockTriangular
+      (OrderDual.toDual : Fin m → OrderDual (Fin m)) :=
+    Matrix.blockTriangular_inv_of_blockTriangular hM
+  have hproduct := congrArg (fun A : Matrix (Fin m) (Fin m) ℂ => A i i)
+    (M.mul_nonsing_inv hdet)
+  simp only [Matrix.mul_apply, Matrix.one_apply, if_pos] at hproduct
+  rw [Finset.sum_eq_single i] at hproduct
+  · exact eq_inv_of_mul_eq_one_right hproduct
+  · intro j _ hji
+    rcases lt_or_gt_of_ne hji with hji | hij
+    · rw [hInv (by simpa using hji), mul_zero]
+    · rw [hM (by simpa using hij), zero_mul]
+  · simp
+
+private theorem jetPencil_nonsing_inv_diagonal (m : ℕ) (rho s : ℂ)
+    (hs : s ≠ rho) (i : Fin m) :
+    (jetPencil m rho s)⁻¹ i i = (s - rho)⁻¹ := by
+  have hunit : IsUnit (jetPencil m rho s).det := by
+    rw [jetPencil_det]
+    exact isUnit_iff_ne_zero.mpr (pow_ne_zero m (sub_ne_zero.mpr hs))
+  rw [lowerTriangular_nonsing_inv_diagonal (jetPencil m rho s)
+    (jetPencil_lowerTriangular m rho s) hunit i, jetPencil_diagonal]
+
+private theorem jetPencil_trace_nonsing_inv (m : ℕ) (rho s : ℂ)
+    (hs : s ≠ rho) :
+    Matrix.trace (jetPencil m rho s)⁻¹ = (m : ℂ) / (s - rho) := by
+  change (∑ i, (jetPencil m rho s)⁻¹ i i) = _
+  simp_rw [jetPencil_nonsing_inv_diagonal m rho s hs]
+  rw [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
+  simp [div_eq_mul_inv]
+
+private theorem jetPencil_logDeriv_det (m : ℕ) (rho s : ℂ) :
+    logDeriv (fun z => (jetPencil m rho z).det) s = (m : ℂ) / (s - rho) := by
+  have hdet : (fun z => (jetPencil m rho z).det) = fun z => (z - rho) ^ m := by
+    funext z
+    exact jetPencil_det m rho z
+  rw [hdet, logDeriv_fun_pow (by fun_prop)]
+  simp [logDeriv_apply, div_eq_mul_inv]
+
+private theorem jetPencil_trace_punctured (m : ℕ) (rho : ℂ) :
+    ∀ᶠ z in 𝓝[≠] rho,
+      Matrix.trace (jetPencil m rho z)⁻¹ =
+        (z - rho) ^ (-1 : ℤ) • (m : ℂ) := by
+  filter_upwards [self_mem_nhdsWithin] with z hz
+  rw [jetPencil_trace_nonsing_inv m rho z (by simpa using hz)]
+  simp [zpow_neg, zpow_one, div_eq_mul_inv, mul_comm]
+
+private theorem jetPencil_trace_meromorphic (m : ℕ) (rho : ℂ) :
+    MeromorphicAt (fun z => Matrix.trace (jetPencil m rho z)⁻¹) rho :=
+  MeromorphicAt.iff_eventuallyEq_zpow_smul_analyticAt.mpr
+    ⟨(-1 : ℤ), fun _ => (m : ℂ), analyticAt_const,
+      jetPencil_trace_punctured m rho⟩
+
+private theorem jetPencil_trace_simple_pole (m : ℕ) (hm : 0 < m) (rho : ℂ) :
+    meromorphicOrderAt (fun z => Matrix.trace (jetPencil m rho z)⁻¹) rho =
+      (-1 : ℤ) := by
+  have hm_complex : (m : ℂ) ≠ 0 := by
+    exact_mod_cast Nat.ne_of_gt hm
+  exact (meromorphicOrderAt_eq_int_iff (jetPencil_trace_meromorphic m rho)).mpr
+    ⟨fun _ => (m : ℂ), analyticAt_const, hm_complex,
+      jetPencil_trace_punctured m rho⟩
+
+private theorem jetPencil_trace_residue (m : ℕ) (rho : ℂ) :
+    Tendsto
+      (fun z => (z - rho) * Matrix.trace (jetPencil m rho z)⁻¹)
+      (𝓝[≠] rho) (𝓝 (m : ℂ)) := by
+  apply tendsto_const_nhds.congr'
+  filter_upwards [self_mem_nhdsWithin] with z hz
+  rw [jetPencil_trace_nonsing_inv m rho z (by simpa using hz)]
+  exact (mul_div_cancel₀ (m : ℂ) (sub_ne_zero.mpr (by simpa using hz))).symm
+
+/--
+For a length-`m` nilpotent jet, the trace resolvent equals `m / (s - rho)`
+off the eigenvalue, while the logarithmic determinant derivative has the same
+identity everywhere. The trace resolvent is meromorphic there and has residue
+`m`; when the jet is nonempty, its exact order is `-1`.
+
+The positivity hypothesis is necessary for the simple-pole clause: at `m = 0`
+the pencil has determinant one and trace resolvent zero, hence no pole.
+-/
+theorem jet_resolvent_semisimplification
+    (m : ℕ) (rho : ℂ) :
+    (∀ s, s ≠ rho →
+      Matrix.trace (jetPencil m rho s)⁻¹ = (m : ℂ) / (s - rho)) ∧
+      (∀ s,
+        logDeriv (fun z => (jetPencil m rho z).det) s = (m : ℂ) / (s - rho)) ∧
+      MeromorphicAt (fun z => Matrix.trace (jetPencil m rho z)⁻¹) rho ∧
+      (0 < m →
+        meromorphicOrderAt (fun z => Matrix.trace (jetPencil m rho z)⁻¹) rho =
+          (-1 : ℤ)) ∧
+      Tendsto
+        (fun z => (z - rho) * Matrix.trace (jetPencil m rho z)⁻¹)
+        (𝓝[≠] rho) (𝓝 (m : ℂ)) := by
+  exact ⟨jetPencil_trace_nonsing_inv m rho, jetPencil_logDeriv_det m rho,
+    jetPencil_trace_meromorphic m rho, fun hm => jetPencil_trace_simple_pole m hm rho,
+    jetPencil_trace_residue m rho⟩
+
+#print axioms jet_resolvent_semisimplification
+
+end D5.S3.Analytic.Adelic.JetResolventSemisimplification

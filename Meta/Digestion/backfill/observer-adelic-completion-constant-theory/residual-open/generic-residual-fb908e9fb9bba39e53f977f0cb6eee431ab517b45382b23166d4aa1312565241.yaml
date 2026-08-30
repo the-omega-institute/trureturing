@@ -1,0 +1,10 @@
+ast_path: section/708-3-交换曲率校验
+fingerprints:
+  raw_sha256: sha256:fb908e9fb9bba39e53f977f0cb6eee431ab517b45382b23166d4aa1312565241
+  normalized_sha256: sha256:fb908e9fb9bba39e53f977f0cb6eee431ab517b45382b23166d4aa1312565241
+cas_ref: sha256:fb908e9fb9bba39e53f977f0cb6eee431ab517b45382b23166d4aa1312565241
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,10 @@
+ast_path: row/普通导数不能读取常值投影纤维
+fingerprints:
+  raw_sha256: sha256:dea2ff6f0fed43185d5f8c3fbdb14b50c03898422afafd59cfa1c623d36d818c
+  normalized_sha256: sha256:dea2ff6f0fed43185d5f8c3fbdb14b50c03898422afafd59cfa1c623d36d818c
+cas_ref: sha256:dea2ff6f0fed43185d5f8c3fbdb14b50c03898422afafd59cfa1c623d36d818c
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

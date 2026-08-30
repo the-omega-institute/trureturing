@@ -1,0 +1,21 @@
+## 930.1 径向逃逸深度
+
+定义：
+
+$$
+\boxed{
+d_{\mathrm{rad}}(z_0)
+=
+\min
+\left\{
+N+d:
+\exists\,t,a,\Phi,\
+M_{t,a,N,\Phi}\not\succeq0
+\right\}.
+}
+\tag{930.1}
+$$
+
+这与此前的：
+
+* Jet 深度；

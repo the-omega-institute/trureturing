@@ -154,6 +154,10 @@ internal static partial class RepositoryRules
                 DuplicateStatementAdvisory.Evaluate,
                 DuplicateStatementAdvisory.IsAffectedBy),
             AdmissionEffect.Observe),
+        Register(
+            29,
+            "Theory volume append only",
+            new RepositoryRule(TheoryVolumeScoped, TheoryAppendOnly, TheoryVolumeAffected)),
     ];
 
     private static RuleRegistration Register(

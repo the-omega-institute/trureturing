@@ -1,0 +1,10 @@
+ast_path: section/868-1-深层破缺为何极难观察/clause/1
+fingerprints:
+  raw_sha256: sha256:de037862ab58b659f4bdecaba50e2d5d1cd71020c139f0163f7cd4d9d392f33f
+  normalized_sha256: sha256:de037862ab58b659f4bdecaba50e2d5d1cd71020c139f0163f7cd4d9d392f33f
+cas_ref: sha256:de037862ab58b659f4bdecaba50e2d5d1cd71020c139f0163f7cd4d9d392f33f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

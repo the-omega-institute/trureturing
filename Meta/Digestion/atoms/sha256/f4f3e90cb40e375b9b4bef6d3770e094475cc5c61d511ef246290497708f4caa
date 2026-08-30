@@ -1,0 +1,22 @@
+## 猜想 828.1（Archimedean tower-to-light formalization）
+
+项目的 gamma completion multiplier 可以精确形式化为：
+
+$$
+\Phi_\sigma(-\partial_\eta^2),
+$$
+
+并证明：
+
+$$
+\varepsilon
+\Phi_\sigma
+\left(
+-\varepsilon^{-2}\partial_\eta^2
+\right)
+\to
+\frac{\pi}{2}|D_\eta|.
+$$
+
+---
+

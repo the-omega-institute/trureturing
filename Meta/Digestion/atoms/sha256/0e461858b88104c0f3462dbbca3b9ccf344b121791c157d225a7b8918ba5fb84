@@ -1,0 +1,29 @@
+# 第七百九十部　de Bruijn–Newman 流是零点动力学的成熟先例
+
+经典 de Bruijn–Newman 变形构造了一族整函数 \(H_t\)，存在常数 \(\Lambda\)，使 \(H_t\) 的零点全部为实当且仅当 \(t\ge\Lambda\)；RH 等价于 \(\Lambda\le0\)。Rodgers 与 Tao 证明了 \(\Lambda\ge0\)，所以如果 RH 成立，它在该热流意义下是临界的。该理论正是通过分析零点随变形参数的运动、相互作用与临界平衡来研究 RH。([arXiv][2])
+
+这一成熟先例支持以下方法论：
+
+$$
+\boxed{
+\text{不要只寻找静态离线零点，
+还应寻找使临界零点发生碰撞的规范完成参数。}
+}
+$$
+
+但它并不证明黄金 observer Casimir 就是 de Bruijn–Newman 时间，也不证明二者之间已有函数等式。
+
+正确研究任务是寻找一个项目内生映射：
+
+$$
+\boxed{
+\lambda_{\mathrm{obs}}
+\longmapsto
+t_{\mathrm{heat}}
+}
+$$
+
+或证明它们属于不同的完成流。
+
+---
+

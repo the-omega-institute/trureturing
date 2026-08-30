@@ -1,0 +1,10 @@
+ast_path: section/891-1-朴素截断为什么失败
+fingerprints:
+  raw_sha256: sha256:b914d1a265b4a83d8be5933aca800dfd48f0637a7aeb3581113edcd0cbfc4c7e
+  normalized_sha256: sha256:b914d1a265b4a83d8be5933aca800dfd48f0637a7aeb3581113edcd0cbfc4c7e
+cas_ref: sha256:b914d1a265b4a83d8be5933aca800dfd48f0637a7aeb3581113edcd0cbfc4c7e
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

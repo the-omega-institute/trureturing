@@ -1,0 +1,34 @@
+## 864.2 正 kernel 尚不等于点态正性
+
+因为：
+
+$$
+C_m(u)\ge0,
+$$
+
+所以 \(\mathcal J_m\) 是正定函数。
+
+但正定并不意味着：
+
+$$
+\mathcal J_m(t)\ge0
+\qquad
+\forall t.
+$$
+
+Fourier 变换中的振荡仍可能使它变负。
+
+因此当前最深的 gap 是：
+
+$$
+\boxed{
+\text{相关 kernel 正}
+\not\Rightarrow
+\text{其频率读数逐点正}.
+}
+$$
+
+RH 所要求的正是对这一 gap 的全部阶控制。
+
+---
+

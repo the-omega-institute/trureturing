@@ -1,0 +1,47 @@
+## 定理 732.1（黄金 anti-Lorentz 更新）
+
+$$
+\boxed{
+Q_\varphi(\mathbf Fv)
+=
+-Q_\varphi(v).
+}
+\tag{732.4}
+$$
+
+### 证明
+
+因为：
+
+$$
+\mathbf F(x,y)=(x+y,x),
+$$
+
+所以：
+
+$$
+\begin{aligned}
+Q_\varphi(x+y,x)
+&=
+(x+y)^2-(x+y)x-x^2\\
+&=
+-x^2+xy+y^2\\
+&=
+-Q_\varphi(x,y).
+\end{aligned}
+$$
+
+∎
+
+因此：
+
+$$
+\boxed{
+Q_\varphi(\mathbf F^2v)=Q_\varphi(v).
+}
+\tag{732.5}
+$$
+
+也就是说：
+
+* 一次 Fibonacci 更新翻转 Lorentz 扇区；

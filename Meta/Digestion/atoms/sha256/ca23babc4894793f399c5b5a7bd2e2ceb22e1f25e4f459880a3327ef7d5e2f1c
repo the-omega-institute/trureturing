@@ -1,0 +1,99 @@
+# 第一千零五十八部　黄金比例不是磁荷，而是径向观察步长
+
+磁单极子的拓扑荷是：
+
+$$
+\boxed{
+m\in\mathbb Z.
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\varphi
+}
+$$
+
+不可能直接成为 Dirac／Chern 磁荷。
+
+整数荷来自：
+
+$$
+\pi_1(U(1))\cong\mathbb Z.
+$$
+
+黄金比例更自然地进入**观察几何**。
+
+在单极子局部坐标：
+
+$$
+\mathbf q=(q_x,q_y,\mu)
+$$
+
+中，定义半径：
+
+$$
+r=|\mathbf q|.
+$$
+
+选择黄金观察壳层：
+
+$$
+\boxed{
+r_n
+=
+r_0\varphi^{-2n}.
+}
+\tag{1058.1}
+$$
+
+定义对数径向深度：
+
+$$
+\boxed{
+\eta
+=
+-\log\frac r{r_0}.
+}
+\tag{1058.2}
+$$
+
+则：
+
+$$
+\boxed{
+r\mapsto\varphi^{-2}r
+\iff
+\eta\mapsto\eta+2\log\varphi.
+}
+\tag{1058.3}
+$$
+
+项目已经机器证明黄金单位格点 \(\zeta\) 的各向异性参数具有：
+
+$$
+\eta\mapsto-\eta
+$$
+
+反射和：
+
+$$
+\eta\mapsto\eta+2\log\varphi
+$$
+
+周期。
+
+因此，单极子径向壳层与项目黄金 regulator 具有相同的二面体运动学：
+
+$$
+\boxed{
+\text{反射}
++
+\text{长度 }2\log\varphi\text{ 的对数平移}.
+}
+$$
+
+---
+

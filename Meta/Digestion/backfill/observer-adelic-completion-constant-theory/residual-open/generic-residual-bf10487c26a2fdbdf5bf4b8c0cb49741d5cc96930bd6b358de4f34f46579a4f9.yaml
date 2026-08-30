@@ -1,0 +1,10 @@
+ast_path: section/黄金表示克隆
+fingerprints:
+  raw_sha256: sha256:bf10487c26a2fdbdf5bf4b8c0cb49741d5cc96930bd6b358de4f34f46579a4f9
+  normalized_sha256: sha256:bf10487c26a2fdbdf5bf4b8c0cb49741d5cc96930bd6b358de4f34f46579a4f9
+cas_ref: sha256:bf10487c26a2fdbdf5bf4b8c0cb49741d5cc96930bd6b358de4f34f46579a4f9
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

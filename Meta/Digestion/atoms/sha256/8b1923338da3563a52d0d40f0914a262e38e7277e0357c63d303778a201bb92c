@@ -1,0 +1,19 @@
+## 支撑深度
+
+$$
+\boxed{
+L_*
+=
+\inf
+\left\{
+L:
+\exists f,\ 
+\operatorname{supp}f\subset(-L,L),\
+Q(f)<0
+\right\}.
+}
+\tag{900.3}
+$$
+
+---
+

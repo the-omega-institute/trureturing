@@ -1,0 +1,10 @@
+ast_path: row/有序-transfer-determinant
+fingerprints:
+  raw_sha256: sha256:e5714e5a6479e45a4bb8c78f541886bdfac638af1fcdc12816509727d013598b
+  normalized_sha256: sha256:e5714e5a6479e45a4bb8c78f541886bdfac638af1fcdc12816509727d013598b
+cas_ref: sha256:e5714e5a6479e45a4bb8c78f541886bdfac638af1fcdc12816509727d013598b
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

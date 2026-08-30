@@ -1,0 +1,47 @@
+## 973.1 同时存在的切向分辨率
+
+设相邻两个临界 ordinate 相差：
+
+$$
+\Delta\gamma.
+$$
+
+Cayley angle 差为：
+
+$$
+\boxed{
+\Delta\theta_a
+\approx
+-\frac{
+2a
+}{
+\gamma^2+a^2
+}
+\Delta\gamma.
+}
+\tag{973.3}
+$$
+
+于是：
+
+$$
+\boxed{
+\frac{
+|r_a|
+}{
+|\Delta\theta_a|
+}
+\approx
+\frac{
+|\delta|
+}{
+|\Delta\gamma|
+}.
+}
+\tag{973.4}
+$$
+
+右边与 \(a\) 无关。
+
+因此：
+

@@ -1,0 +1,37 @@
+## 5.7 G-F：合法重键必保守
+
+建议模块：
+
+`D5/S3/ConceptDynamics/GovernanceFixedPoint/TailRekeyConservative.lean`
+
+精确陈述：
+
+```lean
+theorem legal_tail_rekey_is_conservative
+    {Id : Type u} {Byte : Type v} [DecidableEq Id]
+    (tailEligible : Id → Prop)
+    (oldDocument newDocument : List Byte)
+    (start : Nat)
+    (oldEntry : LedgerEntry Id Byte)
+    (active : ActiveIndex Id Byte)
+    (settlement : Settlement Id)
+    (result : RekeyResult Id Byte)
+    (hlegal :
+      LegalTailRekey tailEligible
+        oldDocument newDocument start
+        oldEntry active settlement result) :
+    ConservativeRekey active settlement oldEntry result
+```
+
+闭合路线只用合法性字段及 `Function.update` 的同点、异点律。
+
+该单命题必须同时通过 `ConservativeRekey` 的有名谓词表达：
+
+- 谱系指向旧键；
+- 逻辑 ID 不变；
+- 整个结算视图不变；
+- 目标逻辑 ID 只有一个活动键；
+- 其他逻辑 ID 的活动键不变。
+
+不得把“旧 admit 不翻”弱化成只检查一个示例状态。
+

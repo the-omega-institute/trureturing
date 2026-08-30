@@ -1,0 +1,10 @@
+ast_path: row/mod-5-determinant-ratio-varphi
+fingerprints:
+  raw_sha256: sha256:f4a08057fedafcec4c2062913f3b9dbffb7e953feb711827840b8a2dbd301c84
+  normalized_sha256: sha256:f4a08057fedafcec4c2062913f3b9dbffb7e953feb711827840b8a2dbd301c84
+cas_ref: sha256:f4a08057fedafcec4c2062913f3b9dbffb7e953feb711827840b8a2dbd301c84
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

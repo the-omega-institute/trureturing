@@ -1,0 +1,25 @@
+## 933.1 外部矩规范只是 gauge
+
+仓库还证明：给定窗口内部的紧支撑 discrepancy，可在窗口外构造一个光滑偶修正，消去任意有限个偶矩。
+
+所以有限 moment normalization：
+
+* 可以在局部 pairing 不变的情况下重新选择；
+* 不是局部负证书的本体原因；
+* 属于外部 completion gauge。
+
+于是局部理论分成：
+
+$$
+\boxed{
+\begin{aligned}
+\text{interior sign}
+&=\text{真实可观测证书};\\
+\text{exterior moments}
+&=\text{可重规范的完成坐标}.
+\end{aligned}
+}
+$$
+
+---
+

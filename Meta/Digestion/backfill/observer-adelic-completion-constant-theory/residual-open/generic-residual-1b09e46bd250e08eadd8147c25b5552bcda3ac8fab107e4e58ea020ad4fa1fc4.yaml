@@ -1,0 +1,10 @@
+ast_path: row/临界支撑不可逆相变
+fingerprints:
+  raw_sha256: sha256:1b09e46bd250e08eadd8147c25b5552bcda3ac8fab107e4e58ea020ad4fa1fc4
+  normalized_sha256: sha256:1b09e46bd250e08eadd8147c25b5552bcda3ac8fab107e4e58ea020ad4fa1fc4
+cas_ref: sha256:1b09e46bd250e08eadd8147c25b5552bcda3ac8fab107e4e58ea020ad4fa1fc4
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
