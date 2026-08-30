@@ -118,6 +118,39 @@ public sealed partial class FormalizeCandidatesTests
         Assert.Empty(readiness.GetProperty("ordered_blockers").EnumerateArray());
     }
 
+    // 第三轮 quality 席实测:删掉 RenderReadiness 匿名对象里的 unknown_predicates 后,
+    // 定向 81/81 全绿、零具名红,而真实 CLI 的 unknown_property_entries 从 15424 掉到 0 ——
+    // 即那条「cover-now 不等于 make cover 一定成功」的诚实边界可以整个从输出消失而无人发现。
+    // cover-now 必须携带 CoverAtomCommand 私有判据对应的 unknown 谓词,不得静默省略。
+    [Fact]
+    public void ReadinessCoverNowCarriesUnknownPredicatesInRenderedOutput()
+    {
+        var entry = Entry(
+            "source",
+            "readiness-unknown-predicates",
+            "theorem",
+            "16.31",
+            atomizer: AtomizerRegistry.GenericId);
+
+        var result = Run(
+            [entry],
+            formalizationReceipt: ValidReceipt(entry),
+            scribeEmissions: ReadyScribe(entry),
+            atomizer: AtomizerRegistry.GenericId,
+            arguments: ["--readiness"]);
+
+        Assert.True(result.Success, result.Error);
+        using var json = JsonDocument.Parse(result.Output);
+        var readiness = Assert.Single(json.RootElement.GetProperty("entries").EnumerateArray());
+        Assert.Equal("cover-now", readiness.GetProperty("action").GetString());
+        var unknown = readiness.GetProperty("unknown_predicates")
+            .EnumerateArray()
+            .Select(static item => item.GetString())
+            .ToArray();
+        Assert.Contains("cover-atom:frozen-statement-resolution", unknown);
+        Assert.Contains("cover-atom:baseline-precommitment-ownership", unknown);
+    }
+
     [Fact]
     public void ReadinessFeedsAcknowledgedStaleLedgerIntoClassifier()
     {

@@ -9,6 +9,8 @@ public sealed class DigestionReadinessQueryTests
 {
     private const string ReadyGid = "D5/S0/Synthetic/Readiness.ready";
 
+    private const string UnreadyGid = "D5/S0/Synthetic/Readiness.unready";
+
     [Fact]
     public void CurrentReceiptAndScribeLeafSelectsCoverNow()
     {
@@ -320,6 +322,111 @@ public sealed class DigestionReadinessQueryTests
 
         Assert.Equal("quarantined", result[0].Action);
         Assert.Equal("withheld", result[1].Action);
+    }
+
+    // 第三轮评审(architecture/quality/tests 三席独立)实测:只改 ActionPriorities 中的一个常数
+    // (如 cover-now 6->9)即可让 972 条可直接 cover 的工作排到 repair-scribe/deposit 之后,
+    // 而定向 81/81 全绿、零具名红 —— 即整张 action 优先级表当时无任何测试守着。
+    // 故断言**完整序列**而非相邻两项:任何单常数退化都必须红。
+    [Fact]
+    public void ActionPriorityOrderIsTheFullApprovedSequence()
+    {
+        var stale = Entry("s", "a-stale", "theorem/1");
+        var coverNow = Entry("s", "b-cover", "theorem/2");
+        var repairScribe = Entry("s", "c-repair", "theorem/3");
+        var deposit = Entry("s", "d-deposit", "theorem/4");
+        var child = Entry("s", "e-child", "lemma/5");
+        var closeChain = Entry(
+            "s",
+            "f-chain",
+            "theorem/6",
+            chainAtoms: [child.Entry.AtomId],
+            gaps: [new DigestionGap("chain-migration-incomplete", child.Entry.AtomId, DigestionGapSeverity.NonFatal)]);
+        var needsRouting = Entry("s", "g-routing", "definition/7");
+        var notFormalizable = Entry("s", "h-terminal", "row/8");
+        var quarantined = Entry(
+            "s",
+            "i-quarantine",
+            "theorem/9",
+            quarantine: new DigestionQuarantine("blocked", "re-enter", "missing-prerequisite"));
+        var withheld = Entry(
+            "s",
+            "j-withheld",
+            "theorem/10",
+            coverDisposition: new DigestionCoverDisposition(
+                new DigestionStatus(DigestionMigrationState.Partial, DigestionTruthState.Closed),
+                [ReadyGid],
+                [new DigestionDispositionGap("unresolved-subitem", "remaining")],
+                new DateTimeOffset(2026, 8, 30, 0, 0, 0, TestBudgets.ZeroDuration)));
+
+        var result = Classify(
+            [deposit, coverNow, repairScribe, stale, closeChain, child, needsRouting, notFormalizable, quarantined, withheld],
+            receipts: [Receipt(stale), Receipt(coverNow), Receipt(repairScribe, UnreadyGid)],
+            acknowledgedStale: [stale.Entry.AtomId]);
+
+        Assert.Equal(
+            [
+                "quarantined",
+                "withheld",
+                "refresh-stale",
+                "not-formalizable",
+                "needs-routing",
+                "close-chain",
+                "cover-now",
+                "repair-scribe",
+                "deposit",
+            ],
+            result.Select(static item => item.Action).Distinct());
+    }
+
+    // 第三轮 architecture 席实测:移除 `gap.Detail == atomId` 后定向 81/81 全绿。
+    // 单 child 的夹具无判别力 —— 已闭与未闭的 child 必须同时在场,才能证明只列未闭者。
+    [Fact]
+    public void CloseChainBlockersNameOnlyTheUnfinishedChildren()
+    {
+        var openChild = Entry("source", "open-child", "lemma/20");
+        var closedChild = Entry("source", "closed-child", "lemma/21");
+        var parent = Entry(
+            "source",
+            "parent",
+            "theorem/20",
+            chainAtoms: [closedChild.Entry.AtomId, openChild.Entry.AtomId],
+            gaps:
+            [
+                new DigestionGap(
+                    "chain-migration-incomplete",
+                    openChild.Entry.AtomId,
+                    DigestionGapSeverity.NonFatal),
+            ]);
+
+        var record = Assert.Single(
+            Classify([parent, openChild, closedChild]),
+            item => item.AtomId == "parent");
+
+        Assert.Equal("close-chain", record.Action);
+        Assert.Equal(["open-child"], record.OrderedBlockers.ToArray());
+    }
+
+    // 第三轮 architecture/tests 两席实测:把 receipt.RegisteredGids 改为 .Take(1) 后定向 81/81 全绿,
+    // 即 hosted extension 的 Scribe 就绪从未被检查。RegisteredGids = [PrimaryGid, ..HostedExtensions]。
+    [Fact]
+    public void HostedExtensionScribeReadinessIsNotSkipped()
+    {
+        var entry = Entry("source", "multi-gid", "theorem/30");
+        var receipt = new DigestionFormalizationReceipt(
+            entry.Entry.AtomId,
+            ReadyGid,
+            new DigestionFormalizationSignature("ready", "theorem", "True"),
+            entry.Entry.CasRef,
+            entry.Entry.Fingerprints.RawSha256,
+            [new DigestionFormalizationExtension(UnreadyGid, new DigestionFormalizationSignature("unready", "theorem", "True"))]);
+
+        var record = Assert.Single(Classify([entry], receipts: [receipt]));
+
+        Assert.Equal("repair-scribe", record.Action);
+        Assert.Contains(
+            record.OrderedBlockers,
+            blocker => blocker.Contains(UnreadyGid, StringComparison.Ordinal));
     }
 
     private static ImmutableArray<DigestionReadinessRecord> Classify(
