@@ -10,6 +10,45 @@ namespace StrataLint.Tests;
 public sealed partial class FrozenLedgerTests
 {
     [Fact]
+    public void AdmissionCatalogUsesActiveV5LedgerIdentityForSelectedImportedDeclaration()
+    {
+        var modules = new[]
+        {
+            Module("A"),
+            Module("B", imports: ["A"]),
+        };
+        var baseCatalog = BuildCatalog(modules);
+        var activePrerequisite = FrozenNodeId.Create(Sha256("active v5 prerequisite"));
+        var activeLedgerOwner = baseCatalog.ByPath[RepoPathFor("A")] with
+        {
+            PrerequisiteFrozenNodeIds = [activePrerequisite],
+            FrozenNodeId = FrozenContentAddress.ComputeFrozenNodeId(
+                RepoPathFor("A"),
+                baseCatalog.ByPath[RepoPathFor("A")].StatementId,
+                [activePrerequisite]),
+        };
+        var acceptedLedgerEvent = EventFile(
+            "Freeze",
+            FrozenLedgerCanonicalWriter.FreezeElement(
+                FrozenLedgerCanonicalWriter.FreezePayload(activeLedgerOwner)));
+        var acceptedView = FrozenLedgerBaseViewReader.Read(RepositorySnapshot.Create(
+            ImmutableDictionary<RepoPath, RepositoryFile>.Empty.Add(
+                acceptedLedgerEvent.Path,
+                acceptedLedgerEvent)));
+
+        var candidate = BuildAdmissionCatalog(
+            ["A", "B"],
+            acceptedView.ActiveByPath.ToDictionary(
+                static item => item.Key,
+                static item => item.Value.Material),
+            modules);
+
+        Assert.Equal(
+            acceptedView.ActiveByPath[RepoPathFor("A")].Material.FrozenNodeId,
+            Assert.Single(candidate.ByPath[RepoPathFor("B")].PrerequisiteFrozenNodeIds));
+    }
+
+    [Fact]
     public void ProofBodyOnlyChangeDoesNotReportStatementIdentityChanged()
     {
         var recordedCatalog = BuildCatalog(Module(

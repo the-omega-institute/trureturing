@@ -90,10 +90,10 @@ public static class FrozenContentAddress
                     lean,
                     adjacency,
                     path,
-                    dependencyPath => materialByPath.TryGetValue(dependencyPath, out var selectedDependency)
-                        ? selectedDependency.FrozenNodeId
-                        : trustedBaseMaterials.TryGetValue(dependencyPath, out var trustedDependency)
+                    dependencyPath => trustedBaseMaterials.TryGetValue(dependencyPath, out var trustedDependency)
                             ? trustedDependency.FrozenNodeId
+                        : materialByPath.TryGetValue(dependencyPath, out var selectedDependency)
+                            ? selectedDependency.FrozenNodeId
                             : throw new FormatException(
                                 $"Selected Closed module {path.Value} depends on unrecorded {dependencyPath.Value}.")));
         }
