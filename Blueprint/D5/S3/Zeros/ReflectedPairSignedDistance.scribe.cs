@@ -70,7 +70,7 @@ internal sealed class ReflectedPairSignedDistanceDocument
             pairAmplitude, Sp, Eq, Sp,
             rSquared, Sp, Minus, Sp, deltaSquared,
             Sp, Land, RowBreak, Grp(),
-            pairAmplitude, Caret, Grp(D(2)), Sp, Eq, Sp,
+            Open, pairAmplitude, Close, Caret, Grp(D(2)), Sp, Eq, Sp,
             centerIntensityAtR,
             Sp, Land, RowBreak, Grp(),
             derivativeAtU, Sp, Slash, Sp, centerIntensityAtU,
