@@ -94,7 +94,7 @@ theorem li_curvature_fourier_representation
         ‖∑ i ∈ Finset.range k, (z : Complex) ^ i‖ ≤
             ∑ i ∈ Finset.range k, ‖(z : Complex) ^ i‖ :=
           norm_sum_le _ _
-        _ = k := by simp [norm_pow]
+        _ = k := by simp [norm_pow, Circle.norm_coe]
     calc
       ‖(((z ^ k : Circle) : Complex) - 1)‖ =
           ‖(∑ i ∈ Finset.range k, (z : Complex) ^ i) *
@@ -220,14 +220,14 @@ theorem li_curvature_fourier_representation
     apply (integrable_const (μ := rho) (1 : Real)).mono'
     · exact (circlePowerContinuous.comp phaseContinuous).aestronglyMeasurable
     · filter_upwards with xi
-      simp [circlePower]
+      simp [circlePower, Circle.norm_coe]
   have reflectedPowerIntegrable :
       Integrable (fun xi => circlePower (reflectedPhase xi)) rho := by
     apply (integrable_const (μ := rho) (1 : Real)).mono'
     · exact
         (circlePowerContinuous.comp reflectedPhaseContinuous).aestronglyMeasurable
     · filter_upwards with xi
-      simp [circlePower]
+      simp [circlePower, Circle.norm_coe]
   have phaseMapPowerIntegrable :
       Integrable circlePower (Measure.map phase rho) :=
     (integrable_map_measure circlePowerContinuous.aestronglyMeasurable
