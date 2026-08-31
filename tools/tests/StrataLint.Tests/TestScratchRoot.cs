@@ -351,4 +351,14 @@ internal static class ScriptHarnessScratch
     internal static string[] ReadScratchLines(string path) => File.ReadAllLines(path);
 
     internal static string ReadScratchText(string path) => File.ReadAllText(path);
+
+    internal static byte[] ReadScratchBytes(string path) => File.ReadAllBytes(path);
+
+    internal static void WriteScratchText(string path, string content) =>
+        File.WriteAllText(path, content, new System.Text.UTF8Encoding(false, true));
+
+    internal static void AppendScratchText(string path, string content) =>
+        File.AppendAllText(path, content, new System.Text.UTF8Encoding(false, true));
+
+    internal static void DeleteScratchFile(string path) => File.Delete(path);
 }

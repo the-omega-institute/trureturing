@@ -6,6 +6,7 @@
     <AssemblyName>StrataLint.ScriptTests</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="../../StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" />
     <ProjectReference Include="../../StrataLint.Engine/StrataLint.Engine.csproj" />
     <!-- 脚手架(TemporaryDirectory / TestProcessRunner / ScriptHarnessScratch 等)单一归属于
          StrataLint.Tests。ScriptTests 已具名进 CrossCuttingHarnessPaths,不在 ownedTestProjects
