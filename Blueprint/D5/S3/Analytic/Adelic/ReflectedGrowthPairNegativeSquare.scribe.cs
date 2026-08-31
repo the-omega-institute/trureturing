@@ -11,8 +11,8 @@ internal sealed class ReflectedGrowthPairNegativeSquareDocument
         "D5/S3/Analytic/Adelic/ReflectedGrowthPairNegativeSquare.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A reflected exponential pair exchanges under time reversal, remains reciprocal, "
-            + "and leaves a negative-square signed determinant after first-order cancellation.",
+        "A reflected exponential pair exchanges under time reversal and has "
+            + "negative-square signed determinant.",
         H("Reflected Growth Pair and Negative-Square Signed Determinant"),
         Blocks(
             Describe.Lean(
