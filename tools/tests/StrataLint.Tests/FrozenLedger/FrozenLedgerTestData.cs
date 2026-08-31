@@ -28,6 +28,44 @@ internal static class FrozenLedgerTestData
     {
         _ = originCommitOid;
         _ = originTreeOid;
+        var (snapshot, closure, states, adjacency) = BuildTruthGraph(
+            toolchain,
+            lakefile,
+            manifest,
+            modules);
+        return Assert.IsType<FrozenMaterialOutcome.Accepted>(
+            FrozenContentAddress.Build(snapshot, closure, states, adjacency)).Capability;
+    }
+
+    internal static FrozenMaterialCatalog BuildAdmissionCatalog(
+        IEnumerable<string> selectedModules,
+        IReadOnlyDictionary<RepoPath, FrozenActiveEntry> trustedBaseEntries,
+        params ModuleSpec[] modules)
+    {
+        var (snapshot, closure, states, adjacency) = BuildTruthGraph(
+            "leanprover/lean4:v4.24.0\n",
+            "[package]\nname = \"fixture\"\n",
+            "{}\n",
+            modules);
+        return FrozenContentAddress.BuildAdmissionCatalog(
+            snapshot,
+            closure,
+            states,
+            adjacency,
+            selectedModules.Select(RepoPathFor).ToHashSet(),
+            trustedBaseEntries);
+    }
+
+    private static (
+        RepositorySnapshot Snapshot,
+        AcceptedLeanClosure Closure,
+        ImmutableDictionary<RepoPath, TruthState> States,
+        ImmutableDictionary<RepoPath, ImmutableArray<RepoPath>> Adjacency) BuildTruthGraph(
+        string toolchain,
+        string lakefile,
+        string manifest,
+        params ModuleSpec[] modules)
+    {
         var files = new Dictionary<string, string>(StringComparer.Ordinal)
         {
             ["lean-toolchain"] = toolchain,
@@ -67,8 +105,7 @@ internal static class FrozenLedgerTestData
             LeanClosureValidator.Validate(snapshot, LeanAxiomReport.Create(reports))).Capability;
         var states = LeanTruthStates.Resolve(snapshot, closure);
         var adjacency = LeanImportAdjacency.Build(snapshot, closure);
-        return Assert.IsType<FrozenMaterialOutcome.Accepted>(
-            FrozenContentAddress.Build(snapshot, closure, states, adjacency)).Capability;
+        return (snapshot, closure, states, adjacency);
     }
 
     internal static FrozenMaterialOutcome BuildCatalogOutcome(

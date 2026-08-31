@@ -3,7 +3,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Xml.Linq;
 
-namespace StrataLint.Engine;
+namespace StrataLint.ArchitectureTests;
 
 internal sealed record RepositoryIoAccessFinding(string Path, string Api, string Message);
 internal sealed record RepositoryIoTestProject(string Project, string Prefix, bool IsExempt);

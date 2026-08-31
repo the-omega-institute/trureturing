@@ -536,8 +536,8 @@ public sealed class RuleEngineCapacityTests
         var root = $"tools/tests/{partition}";
         files[$"{root}/{partition}.csproj"] =
             "<Project Sdk=\"Microsoft.NET.Sdk\"><ItemGroup>"
-            + "<PackageReference Include=\"xunit\" /></ItemGroup></Project>\n";
-        files[$"{root}/DebtTests.cs"] = "class DebtTests\n{\n"
+            + "<PackageReference Include=\"xunit\" Version=\"2.9.3\" /></ItemGroup></Project>\n";
+        files[$"{root}/DebtTests.cs"] = "using Xunit;\nclass DebtTests\n{\n"
             + string.Join('\n', methods.Select(static method =>
                 $"[Fact] public void {method}() {{ var path = GetPath(); File.ReadAllText(path); }}"))
             + "\n}\n";

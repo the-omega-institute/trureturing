@@ -70,10 +70,14 @@ internal static class ScribeUnknownDebtPolicy
     {
         var current = ScribeUnknownDebtBaselineV1.Create(currentMap);
         var forkPoint = ScribeUnknownDebtBaselineV1.Create(forkPointMap);
+        var forkPointIdentities = forkPointMap.Methods
+            .Select(static method => (method.PartitionKey, method.SourcePath, method.Id))
+            .ToHashSet();
         var findings = ImmutableArray.CreateBuilder<ScribeUnknownDebtFinding>();
         AddManagedTestLayoutFindings(currentMap, findings);
         var introduced = current.UnknownMethods()
-            .Where(method => !forkPoint.Contains(method))
+            .Where(method => !forkPointIdentities.Contains(
+                (method.PartitionKey, method.SourcePath, method.Id)))
             .OrderBy(static method => method.PartitionKey, StringComparer.Ordinal)
             .ThenBy(static method => method.SourcePath, StringComparer.Ordinal)
             .ThenBy(static method => method.Id, StringComparer.Ordinal)
