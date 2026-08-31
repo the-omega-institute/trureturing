@@ -7,3 +7,7 @@ receipts:
   coverage: []
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Retrieval preceded quarantine. D5 searches `Stieltjes transform|meromorphic Stieltjes|square fold|F'/F|positive measure` found only unrelated real Stieltjes-function cdf APIs, finite moment/Loewner constituents, and no canonical square-folded Xi or meromorphic transform predicate. Pinned Mathlib search in `.lake/packages/mathlib/Mathlib` for `Stieltjes.*transform|meromorphic.*measure|Herglotz|Nevanlinna` found real `StieltjesFunction` distribution functions and generic meromorphic/logDeriv tools, but no complex positive-measure Stieltjes representation or pole-location theorem. The third-party de Branges/Suzuki representation route is unavailable as a pinned Lean dependency and is recorded as wait-for-capability. The local proof attempt cannot construct the source `mathscr F`, define its exact meromorphic Stieltjes transform without a tautological target predicate, or derive RH from pole support; abstractly assuming that representation would restate the theorem's conclusion."
+    reentry_condition: "Freeze a canonical square-folded `mathscr F` and `mathscr S = mathscr F'/mathscr F`, define the positive-measure meromorphic Stieltjes property on the source carrier, and supply public forward representation and converse pole/residue theorems linking poles to the zero set."
+    blocker_class: missing-prerequisite

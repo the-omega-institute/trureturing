@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:6946f10e74935ec99bb780325358ece8b73026cf997ecfea8809a5dd54e590e2
+  normalized_sha256: sha256:6946f10e74935ec99bb780325358ece8b73026cf997ecfea8809a5dd54e590e2
+cas_ref: sha256:6946f10e74935ec99bb780325358ece8b73026cf997ecfea8809a5dd54e590e2
+coverage_gids:
+  - D5/S3/ConceptDynamics/GovernanceFixedPoint/BlindGateUnique.status_blind_gate_has_unique_solution
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/GovernanceFixedPoint/BlindGateUnique.status_blind_gate_has_unique_solution
+      source_sha256: sha256:6946f10e74935ec99bb780325358ece8b73026cf997ecfea8809a5dd54e590e2
+      target_statement_id: sha256:ce11204b1f27537f8c3ddac41ae5e55fd34bf51d4c4cf947c6345af0b136a3ef
+  scribe:
+    - gid: D5/S3/ConceptDynamics/GovernanceFixedPoint/BlindGateUnique.status_blind_gate_has_unique_solution
+      definition_sha256: sha256:8d8aa35b005ac01c2d40c79f7aa42fee27e7c19b1dfd79e127863d1e9ab36f44
+      emission_sha256: sha256:4e40947b1e0da6dab4c258643080a2f99c4aa81da8a08653477e6dcb579f3e96
+  unresolved_subitems: []
