@@ -73,6 +73,26 @@ internal sealed record TestResultEvidence(
     internal int CountAssembly(string expectedAssembly) =>
         ExecutedTests.Count(test =>
             StringComparer.OrdinalIgnoreCase.Equals(test.Assembly, expectedAssembly));
+
+    internal void EnsureExpectedTestsExecuted(
+        IEnumerable<(string Assembly, string Id)> expectedTests)
+    {
+        var actual = ExecutedTests.ToHashSet(EngineeringTestIdentityComparer.Instance);
+        var missing = expectedTests
+            .Distinct(EngineeringTestIdentityComparer.Instance)
+            .Where(test => !actual.Contains(test))
+            .OrderBy(static test => test.Assembly, StringComparer.OrdinalIgnoreCase)
+            .ThenBy(static test => test.Id, StringComparer.Ordinal)
+            .ToArray();
+        if (missing.Length == 0)
+        {
+            return;
+        }
+
+        throw new InvalidDataException(
+            $"TRX is missing protected-base planned test identities count={missing.Length} tests="
+            + string.Join(" | ", missing.Select(static test => $"{test.Assembly}::{test.Id}")));
+    }
 }
 
 internal sealed class InfrastructureUnresolvedException(IReadOnlyList<string> tests)
