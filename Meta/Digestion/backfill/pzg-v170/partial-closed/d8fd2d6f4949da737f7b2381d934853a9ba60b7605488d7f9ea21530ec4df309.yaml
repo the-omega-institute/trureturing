@@ -14,9 +14,9 @@ receipts:
       definition_sha256: sha256:67de1be388e78bdfa74ed54c5e67f94587de944e5a0dc2edc667911f47c96d94
       emission_sha256: sha256:3e226d946a792b8440dec47bc411ad5ff7bd1eb381645798116b8be54993092f
   unresolved_subitems:
-    - quasicrystal-midline-as-structural-zero-locus
-    - quasicrystal-midline-as-critical-zero-transport-line
-    - quasicrystal-midline-as-denominator-safety-line
-    - one-over-two-phi-squared-factorization
     - conjugation-and-galois-two-factor-interpretation
     - multiplicity-two-structural-station-interpretation
+    - one-over-two-phi-squared-factorization
+    - quasicrystal-midline-as-critical-zero-transport-line
+    - quasicrystal-midline-as-denominator-safety-line
+    - quasicrystal-midline-as-structural-zero-locus

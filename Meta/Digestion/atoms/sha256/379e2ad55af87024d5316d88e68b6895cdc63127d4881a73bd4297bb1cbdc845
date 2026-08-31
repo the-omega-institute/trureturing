@@ -1,0 +1,31 @@
+## 1259.1 离线零点的真正“对偶事件”
+
+因此，离线零点的对偶不能只写成：
+
+$$
+\rho
+\leftrightarrow
+1-\overline\rho.
+$$
+
+更深的 bulk–boundary 对偶是：
+
+$$
+\boxed{
+\text{bulk 中一个 \(m\) 荷零点}
+\quad\longleftrightarrow\quad
+\text{边界上一次 \(m\) 阶负指标跳跃}.
+}
+\tag{1259.3}
+$$
+
+左端是一个稀缺点。
+
+右端是一个整数谱流事件。
+
+点的位置可以难以逼近；
+
+整数跳跃不能被连续扰动抹掉。
+
+---
+

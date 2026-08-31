@@ -1,0 +1,44 @@
+## 1485.1 离线零点怎样打开修复区间
+
+若存在离线零点，则反射轨道名字把两个 causal profile 不同的状态称为同一个。
+
+于是预测修复必须把它们分开：
+
+$$
+\boxed{
+I_{F_{\mathrm{shift}}}(R_J)
+\subsetneq
+R_J.
+}
+\tag{1485.4}
+$$
+
+而根据共同固定点定理，\(R_J\) 也不可能同时是 closure 的固定点：
+
+$$
+\boxed{
+R_J
+\subsetneq
+C_{F_{\mathrm{shift}}}(R_J)
+}
+\tag{1485.5}
+$$
+
+或至少有 \(C(R_J)\neq R_J\)，具体严格包含方向取决于全局状态模型。
+
+因此离线零点使：
+
+$$
+\boxed{
+\mathfrak H_{F_{\mathrm{shift}}}(R_J)
+=
+[I(R_J),C(R_J)]
+}
+$$
+
+具有非零宽度。
+
+它就是 completed spectral name 与 causal name 之间的命名视界。
+
+---
+

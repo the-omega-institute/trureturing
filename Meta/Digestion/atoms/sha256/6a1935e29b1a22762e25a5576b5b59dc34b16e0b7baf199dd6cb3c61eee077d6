@@ -1,0 +1,72 @@
+# 第一千三百二十二部　建议形式化顺序
+
+```text
+D5/S3/Analytic/Zeta/TransverseDefectZeta/
+  OffLineDepthTailIndex.lean
+  OffLineDepthMoment.lean
+  TailIndexMellinIdentity.lean
+  HankelRankTransverseZeta.lean
+  BodeAreaIntegratedHankelRank.lean
+
+D5/S3/Analytic/Zeta/RankOneHankelParallax/
+  VerticalShiftedPoleZeroPair.lean
+  RankOneBlaschkeQuotient.lean
+  RankOneHankelSingularValue.lean
+  ShiftedZeroHankelRatio.lean
+  HankelSingularValueEqualsPseudohyperbolicDistance.lean
+  HyperbolicDistanceShiftedPair.lean
+
+D5/S3/GoldenObserver/FirstCrossing/
+  GoldenShiftSchedule.lean
+  GoldenFirstCrossingIndex.lean
+  GoldenFirstCrossingRatioBound.lean
+  GoldenFirstCrossingSingularValueBound.lean
+  GoldenFirstCrossingEnergyBound.lean
+
+D5/S3/Analytic/Zeta/DefectEnergyFlow/
+  RankOneLeakageEnergy.lean
+  LeakageEnergyMomentFormula.lean
+  ZeroBaselineEnergyCollapse.lean
+  RescaledDefectJet.lean
+  DefectRankNormNonuniformLimit.lean
+
+D5/S3/Weil/Scattering/MinimalCascade/
+  ScatteringCellDivisor.lean
+  CascadeDivisorTelescoping.lean
+  InternalDivisorCancellation.lean
+  ScatteringCascadeKalmanQuotient.lean
+  EndpointAntiCausalDegree.lean
+  MinimalCascadeHankelRank.lean
+
+D5/S3/Weil/Scattering/ResonanceCellGeometry/
+  ScatteringResonancePoint.lean
+  ScatteringAntiresonancePoint.lean
+  ResonanceAntiresonanceMidpoint.lean
+  OffLineCellCompression.lean
+  ReflectedCellExpansion.lean
+  CellVarianceTransverseSquare.lean
+
+D5/S3/Weil/Scattering/FundamentalPolarizationCell/
+  ShiftZeroBaselineCollapse.lean
+  HalfShiftDenominatorSafe.lean
+  OffLineDepthInsideHalfCell.lean
+  FundamentalCellDenominatorCriterion.lean
+  FundamentalCellHardyCriterion.lean
+
+D5/S3/Weil/Scattering/ContinuousGenerator/
+  ShiftedScatteringLogGenerator.lean
+  PrimeLogDerivativePositiveTimeSupport.lean
+  ConsecutivePrimeCellPositiveTimeSupport.lean
+  ArchimedeanGeneratorSupportTarget.lean
+  AnalyticContinuationAntiCausalResidue.lean
+
+D5/S3/Weil/PrimeMinimumPhase/
+  PrimeArchimedeanMinimalRealization.lean
+  PrimeScatteringCoprimeFactorization.lean
+  PrimeScatteringStorageOperatorTarget.lean
+  PrimeScatteringKYPTarget.lean
+  PrimeHardyMinimumPhaseContinuationTarget.lean
+```
+
+---
+

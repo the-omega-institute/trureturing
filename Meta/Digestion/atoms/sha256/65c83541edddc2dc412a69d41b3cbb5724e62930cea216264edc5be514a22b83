@@ -1,0 +1,75 @@
+# 第一千三百四十三部　离线零点更像白洞残差，而不是普通霍金量子
+
+正常霍金辐射发生于因果的黑洞坍缩背景：过去真空与未来粒子概念不同，产生热 Bogoliubov 混合；黑洞温度为：
+
+$$
+T_H=\frac{\kappa}{2\pi}
+$$
+
+（自然单位），其中 \(\kappa\) 是表面引力。([数值对象标识符][2])
+
+但当前离线零点通过：
+
+$$
+b_p^{-1}
+$$
+
+进入 shifted scattering，其非平凡 Fourier 尾部位于：
+
+$$
+x<0.
+$$
+
+因此它本身更准确地对应：
+
+$$
+\boxed{
+\text{advanced／white-hole 型输入};
+}
+$$
+
+而它在正时间边界上诱导出的：
+
+$$
+\mathfrak H_\omega^*\mathfrak H_\omega,
+\qquad
+J_\omega(t),
+\qquad
+\mathcal N_\omega
+$$
+
+才对应：
+
+$$
+\boxed{
+\text{Hawking-like 外部读数}.
+}
+$$
+
+所以正确链条是：
+
+$$
+\boxed{
+\text{离线零点}
+\longrightarrow
+\text{反因果伙伴}
+\longrightarrow
+\text{Bogoliubov 混合}
+\longrightarrow
+\text{边界占据／辐射}.
+}
+\tag{1343.1}
+$$
+
+而不是：
+
+$$
+\boxed{
+\text{离线零点}=\text{霍金辐射}.
+}
+$$
+
+从复频率角色看，离线零点更接近黑洞的**准正常共振或错误半平面共振**；准正常模本身是 Green 函数解析延拓的复极点，而霍金辐射是这些场模式在特定真空与视界结构下产生的量子占据。([arXiv][3])
+
+---
+

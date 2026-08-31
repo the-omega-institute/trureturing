@@ -1,0 +1,95 @@
+# 第一千三百二十七部　单个离线零点的“霍金式占据数”
+
+前文对简单离线零点：
+
+$$
+\rho
+=
+\frac12+\delta+i\gamma,
+\qquad
+0<\omega<\delta
+$$
+
+已经得到局部 Hankel 奇异值：
+
+$$
+\boxed{
+\sigma_\rho(\omega)=\frac{\omega}{\delta}.
+}
+\tag{1327.1}
+$$
+
+于是挤压参数为：
+
+$$
+\boxed{
+r_\rho(\omega)
+=
+\operatorname{artanh}
+\frac{\omega}{\delta}
+=
+\frac12
+\log
+\frac{\delta+\omega}{\delta-\omega}.
+}
+\tag{1327.2}
+$$
+
+相应的 Hawking 型占据数为：
+
+$$
+\boxed{
+N_\rho(\omega)
+=
+\frac{\omega^2}
+{\delta^2-\omega^2}.
+}
+\tag{1327.3}
+$$
+
+这给观察深度分成三个区域：
+
+$$
+\boxed{
+\begin{array}{c|c|c}
+\omega>\delta
+&
+\text{安全外部}
+&
+\mathfrak H_{\rho,\omega}=0
+\\[1mm]
+\omega=\delta
+&
+\text{缺陷视界}
+&
+r_\rho\to+\infty
+\\[1mm]
+0<\omega<\delta
+&
+\text{反因果内部}
+&
+N_\rho(\omega)>0
+\end{array}
+}
+\tag{1327.4}
+$$
+
+所以：
+
+$$
+\boxed{
+\omega=\delta
+}
+$$
+
+在这一观察几何中确实具有“视界”的数学作用：
+
+* denominator zero 抵达 Hardy 边界；
+* 正负时间分解变得奇异；
+* 双曲挤压参数发散；
+* 模式由安全区进入反因果区。
+
+但这里的发散是理想局部模型与观察坐标的视界奇性，不能直接解释为物理黑洞具有无限霍金通量。
+
+---
+

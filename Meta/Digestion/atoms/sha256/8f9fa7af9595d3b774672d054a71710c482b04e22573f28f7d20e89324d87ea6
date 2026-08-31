@@ -1,0 +1,47 @@
+## 1227.1 对偶与正性的严格分工
+
+两个函数：
+
+$$
+E_\omega,
+\qquad
+E_\omega^\#
+$$
+
+已经提供了形式对偶。
+
+但只有差：
+
+$$
+|E_\omega|^2-|E_\omega^\#|^2
+$$
+
+保持正性时，这一对偶才能生成 Hilbert 空间。
+
+因此：
+
+$$
+\boxed{
+\begin{aligned}
+\#\text{-反射}
+&=\text{形式对偶};\\
+\mathcal K_\omega\succeq0
+&=\text{正实现};\\
+\Theta_\omega\text{ inner}
+&=\text{两者兼容}.
+\end{aligned}
+}
+$$
+
+这再次表明：
+
+$$
+\boxed{
+\text{对偶闭合}
+\not\Rightarrow
+\text{正性闭合}.
+}
+$$
+
+---
+

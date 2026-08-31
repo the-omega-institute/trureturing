@@ -1,0 +1,52 @@
+* 正 storage operator。
+
+理想情况下应存在交换方块：
+
+$$
+\boxed{
+\begin{array}{ccc}
+\text{local arithmetic data}
+&
+\xrightarrow{\mathsf C_{\mathrm{spec}}}
+&
+\xi
+\\
+\downarrow{\scriptstyle\mathsf C_{\mathrm{causal}}}
+&&
+\downarrow
+\\
+\text{positive causal system}
+&
+\xrightarrow{\det}
+&
+\text{spectral determinant}.
+\end{array}
+}
+\tag{1471.1}
+$$
+
+若方块交换，则 \(\xi\) 的每一个谱模式都有合法的正因果 lift。
+
+离线零点意味着：
+
+$$
+\boxed{
+\text{标量谱模式存在，
+但它没有相容的正因果 lift。}
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{离线零点不是道中的错误；
+它是某一命名系统的两种完成方式不交换。}
+}
+\tag{1471.2}
+$$
+
+这一表述比“离线零点是宇宙中的负能量”更谨慎，也更可证明。
+
+---
+

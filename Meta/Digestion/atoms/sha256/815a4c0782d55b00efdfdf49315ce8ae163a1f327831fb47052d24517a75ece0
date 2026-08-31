@@ -1,0 +1,40 @@
+## 1207.1 本体对偶
+
+若：
+
+$$
+\rho
+=
+\frac12+\delta+i\gamma,
+$$
+
+其函数方程反射伙伴为：
+
+$$
+\boxed{
+\rho^\vee
+=
+\frac12-\delta+i\gamma.
+}
+\tag{1207.1}
+$$
+
+对应动力模式：
+
+$$
+e^{\delta t}e^{i\gamma t}
+\quad\longleftrightarrow\quad
+e^{-\delta t}e^{i\gamma t}.
+$$
+
+它们分别是：
+
+* 正时间增长、负时间衰减；
+* 正时间衰减、负时间增长。
+
+这是离线零点的**本体反射对偶**。
+
+但该对偶不能排除离线零点，因为它们本来就成对存在。
+
+---
+

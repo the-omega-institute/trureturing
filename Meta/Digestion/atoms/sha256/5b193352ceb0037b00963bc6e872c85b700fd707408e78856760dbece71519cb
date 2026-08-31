@@ -1,0 +1,47 @@
+# 第一千二百八十二部　完整二维缺陷场
+
+定义修复相位场：
+
+$$
+\boxed{
+J(\omega,t)
+=
+2\pi
+\sum_{\delta_j>\omega}
+m_j
+P_{\delta_j-\omega}(t+\gamma_j).
+}
+\tag{1282.1}
+$$
+
+则：
+
+$$
+\boxed{
+\frac1{2\pi}
+\int_{\mathbb R}
+J(\omega,t)\,dt
+=
+N(\omega).
+}
+\tag{1282.2}
+$$
+
+所以：
+
+$$
+\boxed{
+\mathcal A(\omega,y)
+=
+\frac1{2\pi}
+\int_\omega^{\omega+y}
+\int_{\mathbb R}
+J(u,t)\,dt\,du.
+}
+\tag{1282.3}
+$$
+
+即垂直衰减是 boundary phase flux 在观察深度条带上的积分。
+
+---
+

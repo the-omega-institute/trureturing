@@ -1,0 +1,32 @@
+## 1258.1 零点重数的三张整数图表
+
+由此，一个 \(m\) 重离线零点同时给出：
+
+$$
+\boxed{
+\begin{aligned}
+m
+&=
+\operatorname{ord}_\rho\xi;
+\\
+m
+&=
+\text{局部 Berry–Chern 荷};
+\\
+m
+&=
+\text{局部 reproducing-kernel 负 Jet 维数}.
+\end{aligned}
+}
+\tag{1258.5}
+$$
+
+而负值的穿越阶数为：
+
+$$
+2m-1.
+$$
+
+所以：
+
+* \(m\) 测量缺陷携带多少个独立负方向；

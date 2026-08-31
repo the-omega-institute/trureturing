@@ -1,0 +1,33 @@
+## 离线零点
+
+局部散射、边界 all-pass 和反射轨道都可定义。
+
+失败的是同时满足：
+
+* 标量谱完成；
+* retarded Hardy 极化；
+* 正 Gram realization；
+
+的全局 causal name。
+
+障碍由：
+
+* inverse-inner denominator；
+* Hankel 泄漏；
+* 负 kernel；
+* repair interval；
+
+记录。
+
+所以它们的相似性并不要求先定义一个“道”并宣布三者都是它的复制。
+
+更克制、更有力的解释是：
+
+$$
+\boxed{
+\text{它们都属于“局部名字无法下降为指定全局名字”的同一结构类。}
+}
+$$
+
+---
+

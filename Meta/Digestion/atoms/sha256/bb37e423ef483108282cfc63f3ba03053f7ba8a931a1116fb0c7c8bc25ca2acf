@@ -1,0 +1,18 @@
+## 黄金概念极分解猜想
+
+每个不可约概念动力，在去除坐标冗余后，都存在分解：
+
+$$
+\boxed{
+\mathfrak C
+=
+K_{\mathfrak C}
+A_{\mathfrak C}
+N_{\mathfrak C},
+}
+\tag{1177.1}
+$$
+
+其中：
+
+* \(K_{\mathfrak C}\)：关系、相位、可逆循环；

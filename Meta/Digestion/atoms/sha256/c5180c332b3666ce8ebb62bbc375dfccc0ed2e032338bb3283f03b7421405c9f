@@ -1,0 +1,29 @@
+# 第一千四百一十七部　黄金二代 Gram 矩阵
+
+对任意正收缩算子 \(\mathsf D\)，定义：
+
+$$
+\boxed{
+\mathbb G_\varphi(\mathsf D)
+=
+\begin{pmatrix}
+I-\mathsf D&\mathsf D\\
+\mathsf D&I
+\end{pmatrix}.
+}
+\tag{1417.1}
+$$
+
+由于右下块为 \(I\)，Schur 补给出：
+
+$$
+\boxed{
+\mathbb G_\varphi(\mathsf D)\succeq0
+\iff
+I-\mathsf D-\mathsf D^2\succeq0.
+}
+\tag{1417.2}
+$$
+
+由谱定理：
+

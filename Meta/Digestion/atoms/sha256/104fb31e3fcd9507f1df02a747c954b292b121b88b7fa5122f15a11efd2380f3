@@ -1,0 +1,65 @@
+# 第一千二百三十部　离线距离就是负平方的出生时间
+
+对固定离线零点：
+
+$$
+\rho=\frac12+\delta+i\gamma,
+$$
+
+它在第 \(\omega\) 层对应的位置为：
+
+$$
+\boxed{
+z_{\rho,\omega}
+=
+-\gamma+i(\delta-\omega).
+}
+\tag{1230.1}
+$$
+
+于是：
+
+$$
+\boxed{
+\Im z_{\rho,\omega}
+=
+\delta-\omega.
+}
+$$
+
+当观察深度从大向小变化：
+
+$$
+\omega\downarrow0,
+$$
+
+该点沿竖直方向移动：
+
+$$
+\begin{array}{c|c}
+\omega>\delta & z_{\rho,\omega}\in\mathbb C^-\\
+\omega=\delta & z_{\rho,\omega}\in\mathbb R\\
+\omega<\delta & z_{\rho,\omega}\in\mathbb C^+
+\end{array}
+$$
+
+所以：
+
+$$
+\boxed{
+\delta
+}
+$$
+
+不是一个抽象的横向坐标。
+
+它是：
+
+$$
+\boxed{
+\text{该离线模式进入正观察半平面的准确出生深度。}
+}
+$$
+
+---
+

@@ -1,0 +1,46 @@
+# 第一千四百八十三部　离线零点携带一个被完成抹去的方向位
+
+对 \(J\)-轨道定义纤维信息：
+
+$$
+\boxed{
+h_J(\mathcal O)
+=
+\log_2|\mathcal O|.
+}
+\tag{1483.1}
+$$
+
+则：
+
+$$
+\boxed{
+h_J(\rho)
+=
+\begin{cases}
+0,&\Re\rho=\frac12,\\
+1,&\Re\rho\neq\frac12.
+\end{cases}
+}
+\tag{1483.2}
+$$
+
+所以每一个离线反射对相对于临界零点多出：
+
+$$
+\boxed{
+1\text{ bit}
+}
+$$
+
+的法向方向信息：
+
+$$
+\delta
+\quad\text{还是}\quad
+-\delta.
+$$
+
+若再加入复共轭对称：
+
+* 一般临界零点的完整对称轨道有两个点；

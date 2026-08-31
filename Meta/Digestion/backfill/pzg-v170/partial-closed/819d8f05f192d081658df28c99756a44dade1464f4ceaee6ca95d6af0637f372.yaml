@@ -3,8 +3,8 @@ fingerprints:
   normalized_sha256: sha256:819d8f05f192d081658df28c99756a44dade1464f4ceaee6ca95d6af0637f372
 cas_ref: sha256:819d8f05f192d081658df28c99756a44dade1464f4ceaee6ca95d6af0637f372
 coverage_gids:
-  - D5/S3/Constants/PentagonCosines.pentagon_golden_cosines
   - D5/S0/Carrier/GoldenDiscriminant.golden_discriminant_spec
+  - D5/S3/Constants/PentagonCosines.pentagon_golden_cosines
 receipts:
   coverage:
     - gid: D5/S0/Carrier/GoldenDiscriminant.golden_discriminant_spec
@@ -12,8 +12,8 @@ receipts:
       target_statement_id: sha256:db5991e14436b2929628f6c5f4279df71531e26a810ab6d8696d8780f93b3f93
   scribe: []
   unresolved_subitems:
-    - maximal-real-subfield-of-q-zeta-five-equals-q-sqrt-five
     - definition-and-evaluation-of-lagrange-number-of-phi-as-sqrt-nine-minus-four
     - markov-discriminant-law
+    - maximal-real-subfield-of-q-zeta-five-equals-q-sqrt-five
     - number-field-discriminant-of-q-sqrt-five-is-five-not-the-polynomial-discriminant
     - sqrt-five-landlord-identity-verdict

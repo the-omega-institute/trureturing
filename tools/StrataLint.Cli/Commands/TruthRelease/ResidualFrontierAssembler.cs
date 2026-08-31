@@ -27,6 +27,7 @@ internal static class ResidualFrontierAssembler
             snapshot,
             lean,
             verifiedScribeEmissions,
+            baselineDocument: document,
             truthStates: truthStates);
         if (evaluation.HasReceiptIntegrityFailure)
         {

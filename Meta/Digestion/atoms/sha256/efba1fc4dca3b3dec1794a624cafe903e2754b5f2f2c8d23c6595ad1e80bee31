@@ -1,0 +1,27 @@
+## 1385.1 三个区域
+
+$$
+\boxed{
+\begin{array}{c|c|c}
+\omega<\delta & uv>0 & \text{inverse-inner 缺陷可见}\\
+\omega=\delta & uv=0 & \text{Hardy 视界}\\
+\omega>\delta & uv<0 & \text{denominator 像已越过边界}
+\end{array}
+}
+\tag{1385.8}
+$$
+
+因此：
+
+$$
+\boxed{
+\omega=\delta
+}
+$$
+
+不是人为选出的 horizon。
+
+它是 shifted numerator/denominator 双层的 Minkowski norm 首次退化为零的位置。
+
+---
+

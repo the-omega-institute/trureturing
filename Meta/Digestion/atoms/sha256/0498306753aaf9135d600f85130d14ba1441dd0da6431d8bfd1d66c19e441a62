@@ -1,0 +1,59 @@
+## 定理 1233.1（Countable golden modulus criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+D_n(t,y)\ge0
+}
+$$
+
+对所有：
+
+$$
+n\in\mathbb N,
+\qquad
+t\in\mathbb Q,
+\qquad
+y\in\mathbb Q_{>0}
+$$
+
+成立。
+
+### 反向证明的关键
+
+若 RH 为假，存在：
+
+$$
+\rho=\frac12+\delta+i\gamma.
+$$
+
+选择适当 \(n\)，在实点：
+
+$$
+(t,y)
+=
+(\gamma,\delta-\omega_n)
+$$
+
+有：
+
+$$
+D_n(t,y)
+=
+-
+|\xi(\rho-2\omega_n)|^2<0.
+$$
+
+由于 \(D_n\) 连续，其负区域为开集。
+
+所以其中必含：
+
+$$
+\mathbb Q\times\mathbb Q_{>0}
+$$
+
+中的点。
+
+---
+

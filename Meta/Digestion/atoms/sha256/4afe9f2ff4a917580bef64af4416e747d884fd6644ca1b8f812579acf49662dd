@@ -1,0 +1,50 @@
+# 第一千四百一十三部　黄金影算子的算子版本
+
+令：
+
+$$
+\mathsf H:\mathcal H_+\to\mathcal H_-
+$$
+
+为反因果 Hankel 块，并定义缺陷算子：
+
+$$
+\boxed{
+\mathsf D
+=
+\mathsf H^*\mathsf H.
+}
+\tag{1413.1}
+$$
+
+由于完整边界散射为酉，正时间保留算子为：
+
+$$
+\boxed{
+\mathsf V
+=
+I-\mathsf D.
+}
+\tag{1413.2}
+$$
+
+把第二影条件提升为算子方程：
+
+$$
+\boxed{
+\mathsf V=\mathsf D^2.
+}
+\tag{1413.3}
+$$
+
+即：
+
+$$
+\boxed{
+I=\mathsf D+\mathsf D^2.
+}
+\tag{1413.4}
+$$
+
+---
+

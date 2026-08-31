@@ -1,0 +1,53 @@
+## 1260.1 核的精确正负分解
+
+对任意标量函数 \(f\)，定义 Schur 核：
+
+$$
+\boxed{
+k_f(w,z)
+=
+\frac{
+1-\overline{f(w)}f(z)
+}{
+2\pi i(\bar w-z)
+}.
+}
+\tag{1260.4}
+$$
+
+若：
+
+$$
+\Theta=\frac{S}{B},
+$$
+
+则直接代数计算得到：
+
+$$
+\boxed{
+B(z)\overline{B(w)}
+k_\Theta(w,z)
+=
+k_S(w,z)-k_B(w,z).
+}
+\tag{1260.5}
+$$
+
+因此：
+
+$$
+\boxed{
+k_\Theta
+=
+M_{1/B}
+\left(
+k_S-k_B
+\right)
+M_{1/B}^*.
+}
+\tag{1260.6}
+$$
+
+这里：
+
+* \(k_S\) 是修复后的正 Schur 通道；

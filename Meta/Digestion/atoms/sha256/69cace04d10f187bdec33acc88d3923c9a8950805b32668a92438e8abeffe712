@@ -1,0 +1,12 @@
+### 内部望远镜状态
+
+它们在相邻 scattering cells 中精确消去。
+
+在最小 realization 中对应：
+
+$$
+\sigma_{\mathrm{Hankel}}=0.
+$$
+
+这类状态是合法的内部历史冗余。
+

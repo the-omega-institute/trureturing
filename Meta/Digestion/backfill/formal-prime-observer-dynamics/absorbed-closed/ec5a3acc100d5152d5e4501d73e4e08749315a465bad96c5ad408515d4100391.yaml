@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:ec5a3acc100d5152d5e4501d73e4e08749315a465bad96c5ad408515d4100391
+  normalized_sha256: sha256:ec5a3acc100d5152d5e4501d73e4e08749315a465bad96c5ad408515d4100391
+cas_ref: sha256:ec5a3acc100d5152d5e4501d73e4e08749315a465bad96c5ad408515d4100391
+coverage_gids:
+  - D5/S0/Observation/PowerTraceCharacteristicPolynomialSaturation.power_trace_characteristic_polynomial_saturation
+receipts:
+  coverage:
+    - gid: D5/S0/Observation/PowerTraceCharacteristicPolynomialSaturation.power_trace_characteristic_polynomial_saturation
+      source_sha256: sha256:ec5a3acc100d5152d5e4501d73e4e08749315a465bad96c5ad408515d4100391
+      target_statement_id: sha256:f33fe91c31974b42e14ddabd5b06e762848e1246102562fbf8ecf0147052e58a
+  scribe:
+    - gid: D5/S0/Observation/PowerTraceCharacteristicPolynomialSaturation.power_trace_characteristic_polynomial_saturation
+      definition_sha256: sha256:882e54b8557e69ca1b22bfe25f90e1695183aba59ba9070839c105bb9c184bb2
+      emission_sha256: sha256:0e66210b3dbf7392094d28ea4d266e14a42d37115ea334cb0e0faf980cdbc6da
+  unresolved_subitems: []

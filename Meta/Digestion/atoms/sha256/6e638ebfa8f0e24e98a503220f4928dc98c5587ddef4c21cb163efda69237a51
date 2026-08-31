@@ -1,0 +1,57 @@
+# 第一千二百五十八部　重数 \(m\) 产生一个 \(m\) 维负 Jet 空间
+
+上一轮只由核的对角值证明：
+
+$$
+m\text{ 重零点}
+\Longrightarrow
+\mathcal K_\omega(z,z)
+\sim
+-C(\delta-\omega)^{2m-1}.
+$$
+
+现在可以进一步证明：重数不仅改变负值的接触阶，还精确产生 \(m\) 个局部负方向。
+
+设：
+
+$$
+z_0=z_\rho(\omega)
+\in\mathbb C^+,
+\qquad
+\omega<\delta,
+$$
+
+且：
+
+$$
+E_\omega
+$$
+
+在 \(z_0\) 有 \(m\) 重零点。
+
+假设：
+
+$$
+E_\omega^\#(z_0)\neq0.
+$$
+
+定义 confluent jet Gram 矩阵：
+
+$$
+\boxed{
+G^{(m)}_{rs}
+=
+\frac1{r!s!}
+\left.
+\partial_z^r
+\partial_{\bar w}^s
+\mathcal K_\omega(w,z)
+\right|_{w=z=z_0},
+\qquad
+0\le r,s<m.
+}
+\tag{1258.1}
+$$
+
+---
+

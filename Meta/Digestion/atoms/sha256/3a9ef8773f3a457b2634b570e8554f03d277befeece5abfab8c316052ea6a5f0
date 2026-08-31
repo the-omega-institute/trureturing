@@ -1,0 +1,78 @@
+## 定理 1167.1（正度量选择定理）
+
+对式 (1164.1) 的模式，以下条件等价：
+
+$$
+\boxed{
+\begin{aligned}
+&(1)\quad \delta=0;\\
+&(2)\quad M_{\delta,\gamma}(P)\text{ 的全部特征值模长为 }1;\\
+&(3)\quad
+\exists H=H^*>0:
+M_{\delta,\gamma}(P)^*
+H
+M_{\delta,\gamma}(P)=H.
+\end{aligned}
+}
+\tag{1167.1}
+$$
+
+### 证明
+
+若存在 \(H>0\)，且：
+
+$$
+Mv=\lambda v,
+$$
+
+则：
+
+$$
+\langle Mv,HMv\rangle
+=
+\langle v,Hv\rangle.
+$$
+
+左边为：
+
+$$
+|\lambda|^2
+\langle v,Hv\rangle.
+$$
+
+由于：
+
+$$
+\langle v,Hv\rangle>0,
+$$
+
+必有：
+
+$$
+|\lambda|=1.
+$$
+
+而当前两个特征值的模分别为：
+
+$$
+e^{\delta P},
+\qquad
+e^{-\delta P}.
+$$
+
+所以只能有：
+
+$$
+\delta=0.
+$$
+
+反之，若 \(\delta=0\)，则 \(M\) 本身为酉矩阵，取：
+
+$$
+H=I
+$$
+
+即可。∎
+
+---
+

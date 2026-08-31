@@ -1,0 +1,42 @@
+## 定理 1187.1（离线零点的 OS 对偶）
+
+在标准 Weil admissibility 条件下：
+
+$$
+\boxed{
+\begin{aligned}
+\text{全部零点位于临界线}
+&\Longleftrightarrow
+Q_\xi\ge0;\\
+\text{存在离线零点}
+&\Longrightarrow
+\exists f:\ Q_\xi(f)<0.
+\end{aligned}
+}
+\tag{1187.4}
+$$
+
+所以离线零点最直接的**证明对偶**不是另一个零点，而是：
+
+$$
+\boxed{
+\text{一个负 OS 范数向量。}
+}
+$$
+
+这正是你希望找到的“可以传导到可证明对象的一对”：
+
+$$
+\boxed{
+\text{离线零点}
+\quad\longleftrightarrow\quad
+\text{反射正性失败}.
+}
+$$
+
+前者是复杂平面中的几何对象；
+
+后者是一个有限或可逼近的负二次型证书。
+
+---
+

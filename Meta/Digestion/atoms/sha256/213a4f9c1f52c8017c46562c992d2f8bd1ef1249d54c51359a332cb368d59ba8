@@ -1,0 +1,24 @@
+## 第二步：定义完整互动轮廓
+
+$$
+\boxed{
+\Gamma_\xi:
+H_\xi
+\to
+\left(
+I_\xi\to\operatorname{PMF}(O_\xi)
+\right).
+}
+$$
+
+干预可以包括：
+
+* shifted 深度；
+* 边界位置；
+* kernel feature；
+* prime window；
+* Hardy 输入；
+* Poisson 尺度。
+
+---
+

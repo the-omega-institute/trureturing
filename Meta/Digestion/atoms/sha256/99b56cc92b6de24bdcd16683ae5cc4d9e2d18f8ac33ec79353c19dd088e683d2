@@ -1,0 +1,91 @@
+# 6. 这条路线为什么可能与 RH 有关
+
+RH 讨论的是非平凡零点
+
+\[
+\rho=\frac12+\delta+i\gamma
+\]
+
+是否全部满足 \(\delta=0\)。函数方程将离线零点组织成反射轨道。\(\delta\ne0\) 会产生关于临界线的成对位移，并在仓库现有的 off-line curvature dipole、odd orbit decomposition 和 Chebyshev slack 中形成可检测的奇部分或离线能量。
+
+素数侧与零点侧的关联来自 Euler product、对数导数和显式公式。波动语言中，素数提供频率 \(\log p\)，零点提供全局共振谱。要让本轮有限能量真正承担 RH 证明，需要建立如下类型的忠实支配：
+
+\[
+\boxed{
+\mathcal E^{\mathrm{odd}}_{\mathrm{off}}(N,L)
+\le
+A_{N,L}\mathcal E^{\mathrm{hol}}_{r,L}
++
+R_{r,N,L}.
+}
+\]
+
+其中：
+
+\[
+\mathcal E^{\mathrm{odd}}_{\mathrm{off}}
+\]
+
+必须对每个离线零点轨道给出严格正贡献；
+
+\[
+\mathcal E^{\mathrm{hol}}_{r,L}
+\]
+
+是本轮开始构造的 prime-side 交换缺陷能量；
+
+\[
+R_{r,N,L}\to0
+\]
+
+负责有限素数窗口、有限深度和测试函数逼近误差。
+
+若未来同时证明
+
+\[
+\varepsilon_{r,L}\to0,
+\]
+
+本轮机器上界给出
+
+\[
+\mathcal E^{\mathrm{hol}}_{r,L}\to0.
+\]
+
+再由忠实 prime-zero 支配得到
+
+\[
+\mathcal E^{\mathrm{odd}}_{\mathrm{off}}=0.
+\]
+
+若零点侧能量对所有 \(\delta\ne0\) 严格正，就能排除离线零点，从而把全部非平凡零点压到 \(\Re s=1/2\)。
+
+因此当前严谨链条是
+
+\[
+\boxed{
+\begin{aligned}
+&\text{all-order residual envelope decay}
+\\
+&\Longrightarrow
+\text{pairwise prime curvature decay}
+\\
+&\Longrightarrow
+\text{finite holonomy defect energy decay}
+\\
+&\Longrightarrow
+\boxed{\text{prime-zero faithful domination}}
+\\
+&\Longrightarrow
+\text{off-line odd energy vanishes}
+\\
+&\Longrightarrow
+\text{every nontrivial zero lies on the critical line}.
+\end{aligned}
+}
+\]
+
+方框中的 prime-zero faithful domination 仍是整条路线的核心缺口。圆结构、相位同步和有限能量压平为这条桥提供候选几何语言，它们单独不产生 RH 结论。
+
+---
+

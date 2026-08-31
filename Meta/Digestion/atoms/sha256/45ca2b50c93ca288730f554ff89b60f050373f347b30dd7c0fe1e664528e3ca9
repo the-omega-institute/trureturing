@@ -1,0 +1,57 @@
+# 第一千二百六十四部　黄金壳层级数近似全部横向缺陷矩
+
+定义第 \(s\) 阶横向缺陷矩：
+
+$$
+\boxed{
+\mathcal V_s(T)
+=
+\sum_{\substack{
+\delta_\rho>0\\
+|\gamma_\rho|\le T
+}}
+m_\rho\,
+\delta_\rho^s,
+\qquad
+s>0.
+}
+\tag{1264.1}
+$$
+
+定义黄金壳层级数：
+
+$$
+\boxed{
+\mathcal G_s^\varphi(T)
+=
+\sum_{n\ge0}
+q_n(T)\,
+\omega_n^s.
+}
+\tag{1264.2}
+$$
+
+若：
+
+$$
+\omega_{n+1}
+<
+\delta_\rho
+\le
+\omega_n,
+$$
+
+则：
+
+$$
+\varphi^{-2s}\omega_n^s
+=
+\omega_{n+1}^s
+<
+\delta_\rho^s
+\le
+\omega_n^s.
+$$
+
+求和得到：
+

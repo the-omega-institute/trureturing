@@ -1,0 +1,81 @@
+# 第一千二百三十九部　新的形式化顺序
+
+```text
+D5/S3/Analytic/Zeta/ShiftedXiPair/
+  RotatedXi.lean
+  ShiftedXiOuter.lean
+  ShiftedXiSharp.lean
+  ShiftedXiSharpIdentity.lean
+  ShiftedXiTransitionRatio.lean
+
+D5/S3/Analytic/Zeta/DeBrangesKernel/
+  ShiftedXiKernel.lean
+  ShiftedXiKernelHermitian.lean
+  ShiftedXiKernelDiagonal.lean
+  HermiteBiehlerImpliesKernelPSD.lean
+  KernelPSDImpliesNoUpperZero.lean
+
+D5/S3/Analytic/Zeta/OffLineKernelWitness/
+  OffLineZeroShiftedLocation.lean
+  ShiftedOuterVanishes.lean
+  ShiftedSharpValue.lean
+  OffLineZeroNegativeKernelDiagonal.lean
+  OffLineZeroRationalNegativeWitness.lean
+
+D5/S3/Analytic/Zeta/NegativeSquares/
+  HermitianKernelNegativeSquares.lean
+  UpperHalfPlaneCauchyGramPositive.lean
+  MultipleOffLineZerosNegativeDefinite.lean
+  OffLineCountLowerBoundsNegativeIndex.lean
+  ConfluentKernelMultiplicityTarget.lean
+
+D5/S3/Analytic/Zeta/NegativeSquareFlow/
+  ShiftedZeroVerticalTrajectory.lean
+  TransverseCrossingDepth.lean
+  TruncatedOffLineCount.lean
+  NegativeIndexBirthMeasure.lean
+  OffLineMultiplicityIndexJumpTarget.lean
+
+D5/S3/GoldenObserver/DeBrangesSchedule/
+  GoldenShiftDepth.lean
+  GoldenShiftTendsToZero.lean
+  GoldenCofinalKernelCriterion.lean
+  GoldenOffLineDiscoveryDepth.lean
+  GoldenShiftNotLogicallyNecessary.lean
+
+D5/S3/Analytic/Zeta/CountableModulusCriterion/
+  ShiftedModulusDifference.lean
+  KernelDiagonalEqualsModulusDifference.lean
+  RHImpliesRationalModulusNonnegative.lean
+  OffLineImpliesRationalModulusNegative.lean
+  CountableGoldenModulusRHCriterion.lean
+
+D5/S3/Analytic/Zeta/RadialPotential/
+  XiRadialPotential.lean
+  XiRadialEvenness.lean
+  RHRadialLogDerivativePositive.lean
+  RHRadialModulusMonotone.lean
+  OffLineZeroBreaksRadialMonotonicity.lean
+
+D5/S3/Analytic/Zeta/MonopoleNegativeIndex/
+  ShiftedZeroPoleOrder.lean
+  LocalBlaschkeDenominator.lean
+  ZeroMultiplicityNegativeSquareJump.lean
+  ChernChargeNegativeIndexBridge.lean
+
+D5/S3/Weil/ShiftedKernelBridge/
+  ShiftedKernelFeatureMapTarget.lean
+  ShiftedKernelPositiveMeasureTarget.lean
+  ShiftedKernelFiniteFeaturePSD.lean
+  ShiftedKernelToWeilFormTarget.lean
+  GoldenKernelPositivityImpliesRHTarget.lean
+
+D5/S3/Weil/TwoParameterPhase/
+  ShiftDepthSupportWindow.lean
+  OffLineVisibilityWedge.lean
+  FiniteWindowShiftedFloor.lean
+  PositiveFiniteCriticalGlobalPhase.lean
+```
+
+---
+

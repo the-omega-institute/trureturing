@@ -1,0 +1,47 @@
+## 定理 1279.1（单因子垂直衰减）
+
+$$
+\boxed{
+-\frac1{4\pi}
+\int_{\mathbb R}
+\log|b_p(x+iy)|^2\,dx
+=
+\min(y,h).
+}
+\tag{1279.1}
+$$
+
+因此对有限缺陷积：
+
+$$
+B(z)=\prod_j b_{p_j}(z)^{m_j},
+$$
+
+定义：
+
+$$
+\boxed{
+\mathcal A_B(y)
+=
+-\frac1{4\pi}
+\int_{\mathbb R}
+\log|B(x+iy)|^2\,dx.
+}
+\tag{1279.2}
+$$
+
+便有：
+
+$$
+\boxed{
+\mathcal A_B(y)
+=
+\sum_jm_j\min(y,h_j).
+}
+\tag{1279.3}
+$$
+
+仓库中的 `VerticalAttenuation` 已经把这一有限 Blaschke 对数剖面抽象并机器证明为各单因子 \(\min(y,h_j)\) 的总和。
+
+---
+

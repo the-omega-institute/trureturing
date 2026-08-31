@@ -1,0 +1,47 @@
+## 1397.1 临界线成为理想边界
+
+沿固定 \(\gamma\) 从 \(\delta_0\) 走向 \(\varepsilon\) 的 Fisher 长度为：
+
+$$
+\int_\varepsilon^{\delta_0}
+\frac{d\delta}{\sqrt2\,\delta}
+=
+\frac1{\sqrt2}
+\log\frac{\delta_0}{\varepsilon}.
+$$
+
+当：
+
+$$
+\varepsilon\downarrow0,
+$$
+
+该距离趋于无穷。
+
+所以：
+
+$$
+\boxed{
+\delta=0
+}
+$$
+
+不是信息流形中的普通内部点，而是其理想边界。
+
+由此：
+
+$$
+\boxed{
+\begin{aligned}
+\text{临界零点}
+&=\text{双曲信息空间的边界原子};\\
+\text{离线零点}
+&=\text{双曲信息空间的内部点}.
+\end{aligned}
+}
+$$
+
+这给此前“离线零点是 bulk defect”一个不依赖物理类比的严格解释。
+
+---
+

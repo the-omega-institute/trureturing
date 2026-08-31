@@ -1,0 +1,66 @@
+# 第一千三百三十四部　反因果缺陷更像白洞分量，而非普通霍金发射
+
+还需要一条重要修正。
+
+物理霍金辐射通常由因果坍缩几何中的 Bogoliubov 混合产生；完整演化仍按 retarded 边界条件组织。Unruh 的工作可用过去视界边界条件保留坍缩的关键特征，而不是引入任意 advanced 响应。([APS Journals][5])
+
+当前离线缺陷却以：
+
+$$
+\boxed{
+b_p^{-1}
+}
+$$
+
+出现，其 Fourier 尾部位于：
+
+$$
+x<0.
+$$
+
+所以从 scattering 解析方向看，它更像：
+
+$$
+\boxed{
+\text{advanced／white-hole 型污染}
+}
+$$
+
+而不是普通 retarded black-hole Hawking emission。
+
+因此更精确的三分法是：
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{结构}&\text{当前对应}\\
+\hline
+\text{黑洞 retarded horizon}&
+\text{合法 causal inner factor}\\
+\text{白洞／advanced 分量}&
+\text{inverse-inner negative-time factor}\\
+\text{霍金辐射}&
+\text{正负频率混合后外部可见的 }\beta^\dagger\beta
+\end{array}
+}
+\tag{1334.1}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{离线零点本体更接近 white-hole／advanced partner；}
+}
+$$
+
+而：
+
+$$
+\boxed{
+\text{由它产生的边界泄漏才是 Hawking-like signal。}
+}
+$$
+
+---
+

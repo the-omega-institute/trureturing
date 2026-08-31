@@ -3,4 +3,3 @@ path = "docs/develop/theory/INTERFACE_PAPER.md"
 atomizer = "pzg-v1"
 genre_registry_check = "collected"
 unregistered_genres = []
-acknowledged_stale = ["46dff93537eed229fec8ad7754c2824298b11edd322bc7273681722dc7075053", "d83ea144a8ed0fc13492de5d92fa62e528e5c48aa814643734ea12ea844de265", "dba77477c6196adedcb70192c3a9bc3398f0bab574f7b27cf8dbd4e47ad391f9"]
