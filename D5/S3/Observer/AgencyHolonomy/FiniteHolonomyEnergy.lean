@@ -116,7 +116,7 @@ theorem finite_stable_holonomy_energy_bound
           (sq_le_sq₀ (norm_nonneg _) hPairBoundNonnegative).2
             (hPairBound p q)
       _ = (Fintype.card ι : ℝ) ^ 2 * pairBound ^ 2 := by
-        simp [pow_two] <;> ring
+        simp [pow_two]; ring
   have hZeroCriterion :
       stableResidualHolonomyEnergy stable residual channel = 0 ↔
         ∀ p q,
