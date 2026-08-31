@@ -95,19 +95,8 @@ jobs:
         run: |
           set -euo pipefail
           base_sha="$(git -C candidate rev-parse HEAD^1)"
-          base_harness_root="$RUNNER_TEMP/protected-base-engineering-planning-harness"
-          test ! -e "$base_harness_root"
-          cleanup_on_error() {
-            status=$?
-            if [[ "$status" -ne 0 && -e "$base_harness_root" ]]; then
-              git -C candidate worktree remove --force "$base_harness_root" || true
-            fi
-            return "$status"
-          }
-          trap cleanup_on_error EXIT
-          git -C candidate worktree add --detach "$base_harness_root" "$base_sha"
-          printf 'root=%s\n' "$base_harness_root" >> "$GITHUB_OUTPUT"
-          trap - EXIT
+          git -C candidate show "${base_sha}:tools/scripts/workflow/engineering-test-planning-harness.sh" |
+            /bin/bash -s -- materialize candidate "$base_sha" "$RUNNER_TEMP/protected-base-engineering-planning-harness" "$GITHUB_OUTPUT"
 
       - name: Install base-pinned SDK for test planning
         uses: actions/setup-dotnet@v4
@@ -128,58 +117,10 @@ jobs:
           BASE_HARNESS_ROOT: ${{ steps.base-harness.outputs.root }}
         run: |
           set -euo pipefail
-          head_sha="$(git -C candidate rev-parse HEAD)"
           base_sha="$(git -C candidate rev-parse HEAD^1)"
-          plan_file="$RUNNER_TEMP/engineering-test-plan.json"
-          base_full_required=false
-          changed_count=0
-          path=""
-          while IFS= read -r -d '' path; do
-            changed_count="$(expr "$changed_count" + 1)"
-            case "$path" in
-              tools|tools/*|.github/workflows/ci.yml) base_full_required=true ;;
-              */*) ;;
-              *) base_full_required=true ;;
-            esac
-          done < <(git -C candidate diff --name-only -z --no-renames --diff-filter=ACDMRTUXB "$base_sha" "$head_sha" --)
-          if [[ "$base_full_required" == "true" ]]; then
-            base_full_required=true
-            FULL=1 make -C "$BASE_HARNESS_ROOT/tools" engineering-tests-base-cwd REPOSITORY="$GITHUB_WORKSPACE/candidate" MODE=plan HEAD="$head_sha" BASE="$base_sha" PLAN_FILE="$plan_file"
-          else
-            make -C "$BASE_HARNESS_ROOT/tools" engineering-tests-base-cwd REPOSITORY="$GITHUB_WORKSPACE/candidate" MODE=plan HEAD="$head_sha" BASE="$base_sha" PLAN_FILE="$plan_file"
-          fi
-          fallback_count=0
-          plan_summary=""
-          plan_summary="$(
-            /bin/bash "$BASE_HARNESS_ROOT/tools/scripts/workflow/engineering-test-plan-validator.sh" \
-              "$plan_file" "$head_sha" "$base_sha" --artifact-fallback
-          )"
-          IFS=$'\t' read -r state artifact_changed_count selected_count <<< "$plan_summary"
-          if [[ "$artifact_changed_count" -ne "$changed_count"
-              || ("$base_full_required" == "true" && "$state" != "full") ]]; then
-            printf '%s\n' 'ENGINEERING_TEST_PLAN_FALLBACK artifact unreadable or schema-invalid' >&2
-            rm -f -- "$plan_file"
-            state=full
-            selected_count=0
-            fallback_count=1
-          fi
-          execution_full_required="$base_full_required"
-          if [[ "$fallback_count" -ne 0 ]]; then
-            execution_full_required=true
-          fi
-          run_required=false
-          if [[ "$state" != "none" || "$base_full_required" == "true" ]]; then
-            run_required=true
-          fi
-          echo "state=$state" >> "$GITHUB_OUTPUT"
-          echo "execution_full_required=$execution_full_required" >> "$GITHUB_OUTPUT"
-          echo "run_required=$run_required" >> "$GITHUB_OUTPUT"
-          echo "event=$GITHUB_EVENT_NAME" >> "$GITHUB_OUTPUT"
-          echo "head_sha=$head_sha" >> "$GITHUB_OUTPUT"
-          echo "base_sha=$base_sha" >> "$GITHUB_OUTPUT"
-          echo "changed_count=$changed_count" >> "$GITHUB_OUTPUT"
-          echo "selected_count=$selected_count" >> "$GITHUB_OUTPUT"
-          echo "fallback_count=$fallback_count" >> "$GITHUB_OUTPUT"
+          git -C candidate show "${base_sha}:tools/scripts/workflow/engineering-test-planning-harness.sh" |
+            /bin/bash -s -- plan candidate "$BASE_HARNESS_ROOT" "$RUNNER_TEMP/engineering-test-plan.json" \
+              "$GITHUB_WORKSPACE/candidate" "$GITHUB_OUTPUT" "$GITHUB_EVENT_NAME"
 
       - name: Remove protected-base engineering planning harness
         if: always() && steps.base-harness.outcome == 'success'
@@ -188,10 +129,9 @@ jobs:
           BASE_HARNESS_ROOT: ${{ steps.base-harness.outputs.root }}
         run: |
           set -euo pipefail
-          if [[ -d "$BASE_HARNESS_ROOT" && -d candidate ]]; then
-            git -C candidate worktree remove --force "$BASE_HARNESS_ROOT"
-          fi
-          test ! -e "$BASE_HARNESS_ROOT"
+          base_sha="$(git -C candidate rev-parse HEAD^1)"
+          git -C candidate show "${base_sha}:tools/scripts/workflow/engineering-test-planning-harness.sh" |
+            /bin/bash -s -- remove candidate "$BASE_HARNESS_ROOT"
 
       - name: Install candidate-pinned SDK for candidate build and tests
         uses: actions/setup-dotnet@v4
