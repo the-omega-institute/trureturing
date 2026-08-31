@@ -1,6 +1,6 @@
-/- GID: D5/S3/Observer/Agency/Throat/PublicRecoveryCriterion
+/- GID: D5/S3/Observer/Agency/PublicRecoveryCriterion
    generality: G
-   mirror-B: D5/B/S3/Observer/Agency/Throat/PublicRecoveryCriterion
+   mirror-B: D5/B/S3/Observer/Agency/PublicRecoveryCriterion
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Public recovery is equivalent to kernel containment and a zero covert throat. -/
@@ -25,7 +25,7 @@ set_option relaxedAutoImplicit false
 
 noncomputable section
 
-namespace D5.S3.Observer.Agency.Throat.PublicRecoveryCriterion
+namespace D5.S3.Observer.Agency.PublicRecoveryCriterion
 
 /-- For additive-group transports, a hidden quantity is recoverable from the
 public image exactly when every publicly silent control is hidden-silent,
@@ -79,4 +79,4 @@ theorem public_recovery_criterion
 
 #print axioms public_recovery_criterion
 
-end D5.S3.Observer.Agency.Throat.PublicRecoveryCriterion
+end D5.S3.Observer.Agency.PublicRecoveryCriterion
