@@ -1,0 +1,17 @@
+ast_path: section/55-2-1-开放问题-OP1-签名充分性
+fingerprints:
+  raw_sha256: sha256:511074d93f745050df2d8c9e2380a70c89703a5471e2ae80b2999a660bc61433
+  normalized_sha256: sha256:511074d93f745050df2d8c9e2380a70c89703a5471e2ae80b2999a660bc61433
+cas_ref: sha256:511074d93f745050df2d8c9e2380a70c89703a5471e2ae80b2999a660bc61433
+coverage_gids:
+  - D5/S3/ConceptDynamics/DefinitionEscapeSignatures/AdjudicationSignatureSufficiency.target_laundering_signature_counterexample
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/DefinitionEscapeSignatures/AdjudicationSignatureSufficiency.target_laundering_signature_counterexample
+      source_sha256: sha256:511074d93f745050df2d8c9e2380a70c89703a5471e2ae80b2999a660bc61433
+      target_statement_id: sha256:206db1c67a4d9eeffeb6794e4bf09f38300dc184be7f6148567b14359f9eb447
+  scribe:
+    - gid: D5/S3/ConceptDynamics/DefinitionEscapeSignatures/AdjudicationSignatureSufficiency.target_laundering_signature_counterexample
+      definition_sha256: sha256:e9373d9d77b30dee9eebea321e3187d79282b2b66066f60d7129fdf6085b6b2e
+      emission_sha256: sha256:50fd3e0f802b62fcd7e14975b379818781607aa2dea6d8c74a440a37bd341c77
+  unresolved_subitems: []
