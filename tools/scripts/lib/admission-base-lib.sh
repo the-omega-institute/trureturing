@@ -56,3 +56,6 @@ admission_resolve_base() {
     return 1
   fi
 }
+
+# ci payload: touches tools/ so base_full_required=true, exercising the protected-base FULL path
+# on the integration base for issue #4399. Delete with the integration branch.
