@@ -1,0 +1,17 @@
+ast_path: section/5-3-G-B-两元素翻转无不动点
+fingerprints:
+  raw_sha256: sha256:c33fea95b1669948eda7dc2532148652a9c496971c8a4fc9bccf6fc4ff027393
+  normalized_sha256: sha256:c33fea95b1669948eda7dc2532148652a9c496971c8a4fc9bccf6fc4ff027393
+cas_ref: sha256:c33fea95b1669948eda7dc2532148652a9c496971c8a4fc9bccf6fc4ff027393
+coverage_gids:
+  - D5/S3/ConceptDynamics/GovernanceFixedPoint/BooleanFlipNoFixedPoint.bool_flip_has_no_fixed_point
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/GovernanceFixedPoint/BooleanFlipNoFixedPoint.bool_flip_has_no_fixed_point
+      source_sha256: sha256:c33fea95b1669948eda7dc2532148652a9c496971c8a4fc9bccf6fc4ff027393
+      target_statement_id: sha256:91396d25faf4e48fea10d7cd7697e5ecab1e065f431254c5a8b34f1926b213cc
+  scribe:
+    - gid: D5/S3/ConceptDynamics/GovernanceFixedPoint/BooleanFlipNoFixedPoint.bool_flip_has_no_fixed_point
+      definition_sha256: sha256:dde8d05c81084b7dd673ea44abd0a6231c9b399bfd375a507674c5adb5d81e4d
+      emission_sha256: sha256:11054f67a59cbc5c863607265536c2caf02ff36064508e30c8be042d0f23b133
+  unresolved_subitems: []
