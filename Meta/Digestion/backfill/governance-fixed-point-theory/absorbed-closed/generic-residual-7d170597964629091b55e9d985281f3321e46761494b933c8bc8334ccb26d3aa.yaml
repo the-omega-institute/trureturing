@@ -3,10 +3,17 @@ fingerprints:
   raw_sha256: sha256:7d170597964629091b55e9d985281f3321e46761494b933c8bc8334ccb26d3aa
   normalized_sha256: sha256:7d170597964629091b55e9d985281f3321e46761494b933c8bc8334ccb26d3aa
 cas_ref: sha256:7d170597964629091b55e9d985281f3321e46761494b933c8bc8334ccb26d3aa
-coverage_gids: []
+coverage_gids:
+  - D5/S3/ConceptDynamics/GovernanceFixedPoint/TailRekeyUniqueness.legal_tail_rekey_unique
 receipts:
-  coverage: []
-  scribe: []
+  coverage:
+    - gid: D5/S3/ConceptDynamics/GovernanceFixedPoint/TailRekeyUniqueness.legal_tail_rekey_unique
+      source_sha256: sha256:7d170597964629091b55e9d985281f3321e46761494b933c8bc8334ccb26d3aa
+      target_statement_id: sha256:546f8928931004a19a0d2b96652c965c91ebf283a93b06a3e3a4bc577bcd28a3
+  scribe:
+    - gid: D5/S3/ConceptDynamics/GovernanceFixedPoint/TailRekeyUniqueness.legal_tail_rekey_unique
+      definition_sha256: sha256:e5d7d30fe22a429efa872fce454c6014d07d48e820cdc945f43840173cca1030
+      emission_sha256: sha256:5afec2312e78db76ee4215f283bd8b6ccaa8547b7fe932cf20d6f100c2b4bcd2
   unresolved_subitems: []
   chain_atoms:
     - generic-residual-7c0ee8de1c7de3b085d93cb368a71a355c604dfbd541a54f27c7f8ec426a153c-d08e169b7641348ab9f8bbfccd0631cb2a2764abdacf9c5160bac504374a8b78
