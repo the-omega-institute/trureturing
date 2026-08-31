@@ -142,13 +142,11 @@ public sealed class DocumentDiscoveryTests
     {
         var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound);
         var repositoryRoot = repository.Root.FullPath;
-        var rawLeanReport = RepositoryRelativePath.Create(
-            ".lake/build/stratalint/raw-lean-report.json");
-        var rawLeanReportMaterials = RepositoryRelativePath.Create(
-            ".lake/build/stratalint/raw-lean-report.json.materials.zip");
         var requireLiveReport = Environment.GetEnvironmentVariable("STRATALINT_REQUIRE_LIVE_REPORT") == "1";
-        var hasLiveReport = repository.FileExists(rawLeanReport)
-            && repository.FileExists(rawLeanReportMaterials);
+        var hasLiveReport = repository.FileExists(RepositoryRelativePath.Create(
+                ".lake/build/stratalint/raw-lean-report.json"))
+            && repository.FileExists(RepositoryRelativePath.Create(
+                ".lake/build/stratalint/raw-lean-report.json.materials.zip"));
         Assert.True(
             !requireLiveReport || hasLiveReport,
             "STRATALINT_REQUIRE_LIVE_REPORT=1 requires .lake/build/stratalint/raw-lean-report.json");

@@ -521,15 +521,12 @@ public sealed class StatementProjectionPilotTests
 
     private static LeanAxiomReport? InspectLiveReportWhenAvailable(string repositoryRoot)
     {
-        var reportPath = Path.Combine(
-            repositoryRoot,
-            ".lake",
-            "build",
-            "stratalint",
-            "raw-lean-report.json");
-        var materialsPath = reportPath + ".materials.zip";
+        var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.LakefileInvalidOperation);
         var requireLiveReport = Environment.GetEnvironmentVariable("STRATALINT_REQUIRE_LIVE_REPORT") == "1";
-        if (!File.Exists(reportPath) || !File.Exists(materialsPath))
+        if (!repository.FileExists(RepositoryRelativePath.Create(
+                ".lake/build/stratalint/raw-lean-report.json"))
+            || !repository.FileExists(RepositoryRelativePath.Create(
+                ".lake/build/stratalint/raw-lean-report.json.materials.zip")))
         {
             Assert.False(
                 requireLiveReport,
