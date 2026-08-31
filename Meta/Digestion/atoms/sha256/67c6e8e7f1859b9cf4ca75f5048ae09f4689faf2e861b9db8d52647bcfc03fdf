@@ -1,0 +1,77 @@
+# 第一千二百九十二部　负平方与正反因果能量是同一个缺陷
+
+在 de Branges／Pontryagin 图表中，离线零点表现为：
+
+$$
+\mathcal K_\omega
+$$
+
+的负方向。
+
+在 Hardy 图表中，同一缺陷表现为：
+
+$$
+\mathfrak H_{\Theta_\omega}^*
+\mathfrak H_{\Theta_\omega}
+\succeq0
+$$
+
+的正能量。
+
+这不是矛盾，而是一次符号转换：
+
+$$
+\boxed{
+\text{错误地放进正时间空间}
+\Longrightarrow
+\text{负平方};
+}
+$$
+
+$$
+\boxed{
+\text{正确地投影到负时间空间}
+\Longrightarrow
+\text{正的反因果能量}.
+}
+$$
+
+对任意边界全通符号：
+
+$$
+|\theta|=1,
+$$
+
+式 (1288.7) 给出：
+
+$$
+\boxed{
+\langle f,
+(I-T_\theta^*T_\theta)f
+\rangle
+=
+\|\mathfrak H_\theta f\|^2.
+}
+\tag{1292.1}
+$$
+
+所以离线缺陷拥有两种证明证书：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{Pontryagin 图表：负 kernel vector};\\
+&\text{Hardy 图表：正 anti-causal leakage energy}.
+\end{aligned}
+}
+\tag{1292.2}
+$$
+
+前者证明“不能形成纯 Hilbert 世界”；
+
+后者证明“缺失的信息确实流向负时间”。
+
+项目已经机器证明，有限维过去输入—未来输出 Hankel 算子的奇异值，等于相应 controllability–observability Gramian product 特征值的正平方根；因此反因果 Hankel 块一旦构造，其奇异谱立即获得状态—效应和记忆强度的解释。
+
+---
+

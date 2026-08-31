@@ -1,0 +1,29 @@
+## 定理 1291.1（Blaschke–Hankel rank theorem）
+
+$$
+\boxed{
+\operatorname{rank}
+\mathfrak H_{B^{-1}}
+=
+\dim K_B
+=
+\deg B
+=
+m.
+}
+\tag{1291.1}
+$$
+
+并且其非零奇异值全部等于 \(1\)：
+
+$$
+\boxed{
+\|\mathfrak H_{B^{-1}}\|_{\mathrm{HS}}^2=m.
+}
+\tag{1291.2}
+$$
+
+因此一个 \(m\) 重 inverse-inner 缺陷精确产生 \(m\) 个反因果记忆通道。
+
+---
+

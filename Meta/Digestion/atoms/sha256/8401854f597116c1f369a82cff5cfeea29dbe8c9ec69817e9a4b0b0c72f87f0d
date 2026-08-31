@@ -1,0 +1,37 @@
+## 假设
+
+对每个：
+
+$$
+0<\omega<\frac12,
+$$
+
+存在：
+
+1. 完整算术散射代数 \(M_\omega\)；
+2. Hardy／外部观察者子代数
+
+   $$
+   N_\omega\subset M_\omega;
+   $$
+3. 状态保持条件期望
+
+   $$
+   E_\omega:M_\omega\to N_\omega;
+   $$
+4. 一个有限常数 \(\Lambda\)，使该观察包含的信息指数满足
+
+   $$
+   [M_\omega:N_\omega]\le\Lambda;
+   $$
+5. shifted Hankel 有效指数受真实包含指数控制：
+
+   $$
+   \operatorname{Ind}_{\mathrm{hor}}
+   (\mathfrak H_\omega)
+   \le
+   [M_\omega:N_\omega].
+   $$
+
+---
+

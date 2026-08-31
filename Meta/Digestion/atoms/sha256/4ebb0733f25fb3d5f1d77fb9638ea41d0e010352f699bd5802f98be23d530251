@@ -1,0 +1,12 @@
+# 1. 本轮机器对象
+
+Lean 定义傅立叶相位
+
+\[
+\boxed{
+\chi_\omega(t)=e^{-it\omega}.
+}
+\]
+
+这里 \(t,\omega\in\mathbb R\)，值位于复数单位圆。对自然数地址 \(n\)，进一步定义
+

@@ -1,0 +1,69 @@
+## 1398.1 与双曲距离的关系
+
+在标准曲率 \(-1\) 的上半平面中，同中心、尺度为 \(u,v\) 的两点距离为：
+
+$$
+\boxed{
+d_{\mathbb H}
+=
+\left|
+\log\frac vu
+\right|
+=
+\log
+\frac{\delta+\omega}
+{\delta-\omega}.
+}
+\tag{1398.7}
+$$
+
+令：
+
+$$
+r
+=
+\frac12d_{\mathbb H}
+=
+\operatorname{artanh}
+\frac{\omega}{\delta}.
+$$
+
+则：
+
+$$
+\sigma=\tanh r,
+$$
+
+并且：
+
+$$
+\boxed{
+D_\rho
+=
+2\log\cosh r
+=
+2\log\cosh
+\frac{d_{\mathbb H}}2.
+}
+\tag{1398.8}
+$$
+
+因此此前三个看似不同的量完全统一：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Rindler rapidity}
+&=r;\\
+\text{Hankel visibility}
+&=\tanh r;\\
+\text{Poisson distinguishability}
+&=2\log\cosh r.
+\end{aligned}
+}
+$$
+
+需要区分：\((\delta,\omega)\) 中的 Rindler 几何是 Lorentz 型；\((\gamma,\delta)\) 中的 Fisher 几何是正定双曲型。但 shifted 双像把二者精确连接起来。
+
+---
+

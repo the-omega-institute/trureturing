@@ -1,0 +1,33 @@
+## completed \(\zeta\) 侧
+
+$$
+\text{scale variable}
+\longrightarrow
+\text{Mellin transform}
+\longrightarrow
+\Gamma(s/2)
+\longrightarrow
+\text{Archimedean completion}.
+$$
+
+这并不说明：
+
+$$
+\Gamma(s/2)
+$$
+
+就是霍金辐射。
+
+但它说明：
+
+$$
+\boxed{
+\text{若 completed \(\zeta\) 中存在真正的 horizon/KMS 结构，
+最自然的承载位置是 Archimedean Gamma 通道。}
+}
+$$
+
+于是可提出一张新的研究分工表：
+
+| \(\xi\) 结构     | 黑洞散射类比                           | 数学任务                        |
+| -------------- | -------------------------------- | --------------------------- |

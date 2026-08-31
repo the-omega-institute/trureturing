@@ -1,0 +1,219 @@
+# 本轮最终结论
+
+这一轮最重要的推进，是发现 shifted-\(\xi\) 双层本身已经带有完整的 Rindler 几何。
+
+对离线深度 \(\delta\) 和观察基线 \(\omega\)，两个观察像到边界的距离为：
+
+$$
+\boxed{
+u=\delta-\omega,
+\qquad
+v=\delta+\omega.
+}
+$$
+
+它们就是 null coordinates。
+
+由此：
+
+$$
+\boxed{
+uv=\delta^2-\omega^2.
+}
+$$
+
+Hankel mixing 为：
+
+$$
+\boxed{
+\sigma=\frac{\omega}{\delta}.
+}
+$$
+
+rapidity 为：
+
+$$
+\boxed{
+r
+=
+\frac12\log\frac vu.
+}
+$$
+
+Bogoliubov 系数为：
+
+$$
+\boxed{
+\alpha=\cosh r,
+\qquad
+\beta=\sinh r.
+}
+$$
+
+所以此前的“黑洞”“霍金”“负时间”并非完全外加的语言。
+
+它们共享一个真实的二层解析几何：
+
+$$
+\boxed{
+\text{shifted numerator/denominator}
+\longrightarrow
+\text{null distances}
+\longrightarrow
+\text{rapidity}
+\longrightarrow
+\text{Hankel mixing}.
+}
+$$
+
+视界：
+
+$$
+\omega=\delta
+$$
+
+就是：
+
+$$
+uv=0.
+$$
+
+外部 rapidity 在这里发散，但 \(u,v\) 保持正则。
+
+这说明真正的 Kruskal 化不是寻找另一个神秘常数，而是保存 numerator 与 denominator 的两个独立距离，避免过早取比值。
+
+---
+
+黄金比例也因此获得了更精确的双重身份。
+
+固定对象 \(\delta\)、逐层缩小 \(\omega\) 时：
+
+$$
+\boxed{
+\varepsilon_{n+1}-\varepsilon_n
+=
+4\log\varphi.
+}
+$$
+
+所以黄金比例给出 modular spectrum 的等间距扫描。
+
+若同时缩放对象与观察者：
+
+$$
+(\delta,\omega)
+\mapsto
+(\varphi^{-2}\delta,\varphi^{-2}\omega),
+$$
+
+则：
+
+$$
+\frac{\omega}{\delta},
+\quad
+r,
+\quad
+N,
+\quad
+S
+$$
+
+全部不变。
+
+所以黄金共同 RG 是 Rindler 缺陷几何的共形自相似，而不是温度变化。
+
+---
+
+Archimedean Gamma 通道又显示出一个新的双层热结构：
+
+$$
+\boxed{
+\left|
+\Gamma\left(\frac14+\frac{it}{2}\right)
+\Gamma\left(\frac34+\frac{it}{2}\right)
+\right|^2
+=
+\frac{2\pi^2}{\cosh(\pi t)}.
+}
+$$
+
+因此 \(1/4\) 与 \(3/4\) 两条 scattering 线并非仅是仿射重标记。
+
+它们经过 duplication 后形成一个严格的热包络。
+
+但该包络是 Fermi-like，而 Poisson Euclidean winding 是 Bose-like。
+
+这说明 completed \(\xi\) 的 Archimedean 热结构比“一个霍金温度”更丰富；不能把所有双曲函数压成同一种统计。
+
+---
+
+最后，Poisson 边界通道还产生了一个新的关系性 hair：
+
+$$
+\boxed{
+E_{ij}
+=
+\frac{
+(\gamma_i-\gamma_j)^2
+}{
+\pi(\delta_i+\delta_j)
+\left[
+(\delta_i+\delta_j)^2+
+(\gamma_i-\gamma_j)^2
+\right]
+}.
+}
+$$
+
+它不读取绝对高度，只读取不同缺陷之间的相对相位位置。
+
+所以：
+
+$$
+\boxed{
+\text{零模无毛}
+}
+$$
+
+并不意味着：
+
+$$
+\boxed{
+\text{关系 Holonomy 无毛}.
+}
+$$
+
+仓库最新形式化的有限 Holonomy 能量已经提供了忠实非负聚合框架；剩余任务是把上述 Poisson phase curvature 接入现有 `stableResidualSwapCurvature`。
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{磁单极子记录缺陷的整数荷；
+Rindler 双层记录缺陷的视界几何；
+Hankel/Bogoliubov 记录缺陷的可见强度；
+Gamma 四分之一双层提供 Archimedean 热包络；
+黄金比例规定观察与对象怎样在这些结构中自相似缩放。}
+$$
+
+而 RH 的真正证明目标仍然非常朴素：
+
+$$
+\boxed{
+\text{为每个 shifted 层构造一个最小、保守、正 storage 的
+Prime–Gamma scattering realization，}
+}
+$$
+
+从而证明：
+
+$$
+\boxed{
+\Theta_\omega
+\text{ 没有 inverse-inner endpoint denominator}.
+}
+$$
+
+一旦这条桥闭合，所有离线零点的：
+
+* bulk monopole；

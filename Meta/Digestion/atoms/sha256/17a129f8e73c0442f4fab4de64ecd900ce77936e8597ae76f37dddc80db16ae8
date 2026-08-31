@@ -1,0 +1,92 @@
+# 第一千三百九十四部　建议形式化顺序
+
+```text
+D5/S3/Analytic/Zeta/ShiftedRindler/
+  ShiftedNullDistances.lean
+  ShiftedMinkowskiCoordinates.lean
+  ShiftedMinkowskiNorm.lean
+  HankelRatioAsRindlerVelocity.lean
+  ShiftedRapidityFormula.lean
+  BogoliubovCoefficientsFromNullDistances.lean
+
+D5/S3/Analytic/Zeta/HorizonDeterminant/
+  RankOneHorizonDeterminant.lean
+  HorizonDeterminantEqualsNormalizedMinkowskiNorm.lean
+  HorizonFreeEnergy.lean
+  NullCoordinateRegularity.lean
+  RapidityChartSingularity.lean
+
+D5/S3/Analytic/Zeta/KruskalFactorization/
+  ShiftedInverseInnerChart.lean
+  CrossingBlaschkeRegularization.lean
+  RegularFactorAcrossCrossing.lean
+  HorizonIndexJump.lean
+  CoordinateDivergenceVsIndexInvariant.lean
+
+D5/S3/GoldenObserver/RindlerRG/
+  GoldenObservationScan.lean
+  GoldenJointDefectObserverScaling.lean
+  GoldenJointScalingPreservesRapidity.lean
+  GoldenModularGapLadder.lean
+  GoldenRGConformalMinkowskiScale.lean
+
+D5/S3/Observer/DefectModularFirstLaw/
+  RankOneThermalOccupation.lean
+  RankOneThermalEntropy.lean
+  DefectModularGap.lean
+  EntropyDerivativeEqualsModularGap.lean
+  GoldenModularFirstLaw.lean
+
+D5/S3/Analytic/Zeta/ArchimedeanQuarterPair/
+  QuarterGammaChannel.lean
+  ThreeQuarterGammaChannel.lean
+  QuarterPairDuplication.lean
+  QuarterPairThermalEnvelope.lean
+  QuarterPairHasNoZero.lean
+  QuarterPairNotAutomaticallyKMS.lean
+
+D5/S3/Analytic/Zeta/PoissonPhaseHolonomy/
+  PoissonPhaseCharacter.lean
+  PairwisePoissonSwapCurvature.lean
+  PairwisePoissonSwapCurvatureFormula.lean
+  PairwisePoissonHolonomyEnergy.lean
+  CommonHeightShiftInvariant.lean
+  VanishingIffEqualHeight.lean
+
+D5/S3/Observer/AgencyHolonomy/ZeroChannelBridge/
+  ZeroPoissonChannel.lean
+  ZeroPoissonResidual.lean
+  PoissonSwapToStableResidualTarget.lean
+  FiniteZeroHolonomyEnergyTarget.lean
+  ZeroHolonomyEnergyVsSpectralDefectTarget.lean
+
+D5/S3/Weil/Scattering/ArchimedeanColligation/
+  GammaQuarterConservativeChannel.lean
+  GammaQuarterStorageOperator.lean
+  GammaQuarterHorizonRegularity.lean
+  GammaQuarterTransfer.lean
+
+D5/S3/Weil/Scattering/PrimeRetardedColligation/
+  PrimePoissonConservativeChannel.lean
+  PrimePositiveLogTimePolarization.lean
+  PrimeRetardedTransfer.lean
+  PrimeLocalStorageOperator.lean
+
+D5/S3/Weil/Scattering/GlobalMinimalCascade/
+  PoleGammaPrimeStarProduct.lean
+  GlobalCascadeInternalCancellation.lean
+  GlobalCascadeControllableQuotient.lean
+  GlobalCascadeObservableQuotient.lean
+  GlobalCascadeMinimalTransfer.lean
+  MinimalTransferEqualsShiftedXiTarget.lean
+
+D5/S3/Weil/Scattering/ArithmeticStorage/
+  ShiftedXiStorageOperatorTarget.lean
+  ShiftedXiBoundedRealIdentityTarget.lean
+  ShiftedXiSchurFromStorageTarget.lean
+  ArithmeticHorizonVacuumTarget.lean
+  InnerThresholdZeroFromStorageTarget.lean
+```
+
+---
+

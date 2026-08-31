@@ -1,0 +1,26 @@
+## 1330.1 Golden Hawking Matching Conjecture
+
+若黄金周期不仅是采样标定，而且是真实热平衡周期，那么应该满足：
+
+$$
+\boxed{
+\sigma_j^2
+=
+\varphi^{-2E_j}.
+}
+\tag{1330.5}
+$$
+
+或等价地：
+
+$$
+\boxed{
+-\log\sigma_j^2
+=
+2E_j\log\varphi.
+}
+\tag{1330.6}
+$$
+
+这可以称为：
+

@@ -1,0 +1,11 @@
+### 3. 负平方 Laplace resolvent
+
+在明确条件 `u>delta^2` 下形式化
+
+$$
+\int_0^\infty e^{-(u-delta^2)t}\,dt
+=\frac1{u-delta^2}.
+$$
+
+这会把负谱值连接到稳定化债务和 resolvent 极点。
+

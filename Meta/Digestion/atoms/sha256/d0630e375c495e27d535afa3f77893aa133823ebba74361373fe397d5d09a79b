@@ -1,0 +1,35 @@
+## 1282.1 Fourier 层析
+
+取 Fourier convention：
+
+$$
+\widehat f(k)
+=
+\int_{\mathbb R}
+f(t)e^{-ikt}\,dt.
+$$
+
+由于：
+
+$$
+\widehat{P_h}(k)=e^{-h|k|},
+$$
+
+得到：
+
+$$
+\boxed{
+\widehat J(\omega,k)
+=
+2\pi
+\sum_{\delta_j>\omega}
+m_j
+e^{-(\delta_j-\omega)|k|}
+e^{ik\gamma_j}.
+}
+\tag{1282.4}
+$$
+
+因此：
+
+* \(k=0\) 读取深度尾计数；

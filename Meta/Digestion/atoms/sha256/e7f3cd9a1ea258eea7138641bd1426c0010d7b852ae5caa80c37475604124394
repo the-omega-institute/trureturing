@@ -1,0 +1,74 @@
+# 第一千四百一十四部　黄金影塔自动产生 Fibonacci 递归
+
+定义第 \(n\) 层仍未被观察到的隐藏算子：
+
+$$
+\boxed{
+\mathsf S_n=\mathsf D^n.
+}
+\tag{1414.1}
+$$
+
+由：
+
+$$
+I=\mathsf D+\mathsf D^2
+$$
+
+两边左乘 \(\mathsf D^n\)，得到：
+
+$$
+\boxed{
+\mathsf S_n
+=
+\mathsf S_{n+1}
++
+\mathsf S_{n+2}.
+}
+\tag{1414.2}
+$$
+
+所以隐藏历史自身满足 Fibonacci 型递归。
+
+第 \(n\) 层新显现的影像为：
+
+$$
+\begin{aligned}
+\mathsf R_n
+&=
+\mathsf S_n-\mathsf S_{n+1}\\
+&=
+\mathsf D^n(I-\mathsf D).
+\end{aligned}
+$$
+
+利用：
+
+$$
+I-\mathsf D=\mathsf D^2,
+$$
+
+得到：
+
+$$
+\boxed{
+\mathsf R_n
+=
+\mathsf S_{n+2}.
+}
+\tag{1414.3}
+$$
+
+即：
+
+$$
+\boxed{
+\text{第 \(n\) 层刚刚显现的内容，
+恰好等于第 \(n+2\) 层仍然隐藏的内容。}
+}
+$$
+
+这可能是“像是影子的影子”最精确的动力学表达。
+
+---
+

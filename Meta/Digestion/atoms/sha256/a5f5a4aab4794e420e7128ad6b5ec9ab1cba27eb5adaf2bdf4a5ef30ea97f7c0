@@ -1,0 +1,61 @@
+## 定理 1293.1（Hardy-polarized criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathfrak H_\omega=0
+\quad
+\forall\omega>0.
+}
+\tag{1293.2}
+$$
+
+### RH 推出零 Hankel 块
+
+若 RH 成立，则 \(\Theta_\omega\) 在上半平面解析且为 inner function。
+
+因此：
+
+$$
+\Theta_\omega H_+^2
+\subseteq H_+^2,
+$$
+
+从而：
+
+$$
+P_-M_{\Theta_\omega}P_+=0.
+$$
+
+### 非 RH 推出非零 Hankel 块
+
+若存在：
+
+$$
+\rho=\frac12+\delta+i\gamma,
+\qquad
+\delta>0,
+$$
+
+取：
+
+$$
+0<\omega<\delta.
+$$
+
+则 \(\Theta_\omega\) 在上半平面具有 inverse-inner denominator，因而其 boundary impulse 含负时间尾部：
+
+$$
+e^{i\gamma x}e^{(\delta-\omega)x}
+\mathbf1_{\{x<0\}}.
+$$
+
+所以：
+
+$$
+\mathfrak H_\omega\neq0.
+$$
+
+---
+

@@ -1,0 +1,22 @@
+# 5. 统一 residual envelope
+
+若存在 \(\varepsilon\ge0\) 使
+
+\[
+\|a_p\|\le\varepsilon,
+\qquad
+\|a_q\|\le\varepsilon,
+\]
+
+Lean 进一步证明
+
+\[
+\boxed{
+\|C^{\mathrm{st}}\|
+\le
+2\|s-1\|\varepsilon+2\varepsilon^2.
+}
+\]
+
+这是后续完成深度论证应使用的统一货币。它把所有局部分析压缩成一个 residual envelope：
+
