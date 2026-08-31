@@ -1,0 +1,44 @@
+## 1397.2 主动半圆就是双曲测地线
+
+前文得到离线反射对的负耗散区域：
+
+$$
+x^2+(t-\gamma)^2<\delta^2,
+\qquad x>0.
+$$
+
+其边界：
+
+$$
+\boxed{
+x^2+(t-\gamma)^2=\delta^2
+}
+\tag{1397.6}
+$$
+
+是与实边界正交的半圆，正是 Poincaré 上半平面中的测地线。
+
+端点为：
+
+$$
+\gamma-\delta,
+\qquad
+\gamma+\delta,
+$$
+
+而 bulk 零点 \((\gamma,\delta)\) 是该半圆的顶点。
+
+所以同一个离线零点严格等价于：
+
+$$
+\boxed{
+\text{一个 bulk 点}
+\longleftrightarrow
+\text{一条 boundary geodesic}
+\longleftrightarrow
+\text{一个 boundary interval}.
+}
+$$
+
+---
+

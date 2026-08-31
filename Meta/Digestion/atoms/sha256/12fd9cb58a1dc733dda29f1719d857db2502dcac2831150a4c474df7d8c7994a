@@ -1,0 +1,38 @@
+# 第一千四百零六部　信息设计：不再随机搜索零点
+
+对有限协议集合 \(S\)，令每个观察协议 \(p\) 提供 PSD 信息贡献：
+
+$$
+G_p\succeq0.
+$$
+
+定义正则化信息算子：
+
+$$
+\boxed{
+\mathcal I(S)
+=
+\lambda I+
+\sum_{p\in S}G_p,
+\qquad
+\lambda>0,
+}
+\tag{1406.1}
+$$
+
+及 log-volume 信息：
+
+$$
+\boxed{
+\mathfrak L(S)
+=
+\log\det\mathcal I(S)
+-
+\log\det(\lambda I).
+}
+\tag{1406.2}
+$$
+
+项目已经机器证明，在这些条件下：
+
+* \(\mathfrak L(S)\) 随协议集合扩大单调不减；

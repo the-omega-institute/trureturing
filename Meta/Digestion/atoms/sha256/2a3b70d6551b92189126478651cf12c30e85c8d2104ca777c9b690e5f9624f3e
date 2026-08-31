@@ -1,0 +1,76 @@
+# 第一千三百一十一部（续）　Bode 面积是反因果秩的 Mellin 矩
+
+对有限离线族或满足适当可和条件的离线族，定义：
+
+$$
+\kappa(\omega)
+=
+\sum_j
+m_j\mathbf 1_{\{\delta_j>\omega\}}.
+\tag{1311.4}
+$$
+
+在最小互素 shifted-scattering 因子化中：
+
+$$
+\boxed{
+\kappa(\omega)
+=
+\deg B_\omega
+=
+\operatorname{rank}\mathfrak H_\omega.
+}
+\tag{1311.5}
+$$
+
+于是：
+
+$$
+\zeta_\perp(s)
+=
+\sum_jm_j\delta_j^s
+=
+s\int_0^{1/2}
+\omega^{s-1}\kappa(\omega)\,d\omega.
+\tag{1311.6}
+$$
+
+特别地：
+
+$$
+\boxed{
+\zeta_\perp(2)
+=
+2
+\int_0^{1/2}
+\omega\,
+\operatorname{rank}\mathfrak H_\omega
+\,d\omega
+=
+\sum_jm_j\delta_j^2.
+}
+\tag{1311.7}
+$$
+
+仓库的 `BodeWidthCriterion` 已机器证明，在有限函数方程镜像族中，width 面积、镜像位移平方和与阻尼缺陷的二阶曲率精确相等，并且它们为零等价于全部横向距离为零。
+
+因此得到新的解释：
+
+$$
+\boxed{
+\text{Bode 横向面积}
+=
+\text{反因果 Hankel 秩沿观察深度的加权积分}.
+}
+$$
+
+也就是说：
+
+* Chern 荷读取零点的整数重数；
+* Hankel rank 读取当前观察层中尚存的反因果状态数；
+* Bode area 对这些整数状态的出生深度作二次加权。
+
+三者不是松散类比，而是同一横向除子的不同矩。
+
+---
+

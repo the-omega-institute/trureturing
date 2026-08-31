@@ -1,0 +1,4 @@
+### P0：`OrientedTimeRecoverySymmetricTimeLoss`
+
+机器证明有向 pair flow 的群律、负时间逆元、$\delta\ne0$ 时的单射性，以及对称读出的 $t/-t$ 碰撞。该节点把“负时间是 completion fiber”写成最小可复用观察者定理。
+

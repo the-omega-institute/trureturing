@@ -1,0 +1,15 @@
+## 1444.2 Riemann \(\zeta\) 在这张图中的位置
+
+Riemann \(\zeta\) 的局部原语是素数：
+
+$$
+\zeta(s)
+=
+\prod_p(1-p^{-s})^{-1}
+$$
+
+在收敛区成立。
+
+它将：
+
+* primitive prime；

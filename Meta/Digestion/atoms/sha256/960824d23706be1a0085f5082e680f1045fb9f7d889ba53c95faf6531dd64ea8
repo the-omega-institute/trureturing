@@ -1,0 +1,45 @@
+## 1444.1 复杂维数正是完成共振
+
+在等比例模型中，若有 \(M\) 个分支，每个收缩率为：
+
+$$
+r=\varphi^{-k},
+$$
+
+则完成奇点满足 Moran 方程：
+
+$$
+Mr^s=1.
+$$
+
+解为：
+
+$$
+\boxed{
+s_n
+=
+\frac{\log M}{k\log\varphi}
++
+\frac{2\pi in}{k\log\varphi}.
+}
+\tag{1444.4}
+$$
+
+项目已经机器证明这一整列复维数都满足复化 Moran 方程。
+
+所以：
+
+$$
+\boxed{
+\text{自相似生成律}
+\longrightarrow
+\text{复尺度共振}
+\longrightarrow
+\text{zeta 型完成对象}
+}
+$$
+
+本身就是成熟数学结构。
+
+---
+

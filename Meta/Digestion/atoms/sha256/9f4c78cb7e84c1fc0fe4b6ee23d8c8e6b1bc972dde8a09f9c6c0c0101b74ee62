@@ -1,0 +1,154 @@
+# 第一千二百八十八部　双向酉性与单向因果性不是同一条件
+
+固定 Fourier 约定：
+
+$$
+\boxed{
+\mathcal F^{-1}g(x)
+=
+\frac1{2\pi}
+\int_{\mathbb R}
+g(t)e^{-itx}\,dt.
+}
+\tag{1288.1}
+$$
+
+定义：
+
+$$
+H_+^2
+=
+\left\{
+f\in L^2(\mathbb R):
+\operatorname{supp}\mathcal F^{-1}f
+\subseteq[0,\infty)
+\right\},
+$$
+
+$$
+H_-^2
+=
+\left\{
+f\in L^2(\mathbb R):
+\operatorname{supp}\mathcal F^{-1}f
+\subseteq(-\infty,0]
+\right\}.
+$$
+
+于是：
+
+$$
+\boxed{
+L^2(\mathbb R)
+=
+H_+^2\oplus H_-^2.
+}
+\tag{1288.2}
+$$
+
+记对应正交投影为：
+
+$$
+P_+,\qquad P_-.
+$$
+
+若边界函数 \(\theta\) 满足：
+
+$$
+|\theta(t)|=1
+\quad\text{a.e.},
+$$
+
+则乘法算子：
+
+$$
+\boxed{
+M_\theta f=\theta f
+}
+\tag{1288.3}
+$$
+
+在完整 \(L^2\) 世界中始终是酉算子：
+
+$$
+M_\theta^*M_\theta=I.
+$$
+
+但相对于正负时间分解，它具有块形式：
+
+$$
+\boxed{
+M_\theta
+=
+\begin{pmatrix}
+T_\theta&H_\theta^{+-}\\
+H_\theta^{-+}&T_\theta^{--}
+\end{pmatrix}.
+}
+\tag{1288.4}
+$$
+
+其中最重要的块是：
+
+$$
+\boxed{
+\mathfrak H_\theta
+=
+P_-M_\theta P_+
+:
+H_+^2\longrightarrow H_-^2.
+}
+\tag{1288.5}
+$$
+
+它测量：
+
+> 一个只准备了正时间历史的状态，经过散射以后，有多少信息被送入负时间。
+
+对 \(f\in H_+^2\)，酉性给出：
+
+$$
+\boxed{
+\|f\|^2
+=
+\|P_+M_\theta f\|^2
++
+\|P_-M_\theta f\|^2.
+}
+\tag{1288.6}
+$$
+
+即：
+
+$$
+\boxed{
+I-T_\theta^*T_\theta
+=
+\mathfrak H_\theta^*\mathfrak H_\theta.
+}
+\tag{1288.7}
+$$
+
+因此：
+
+$$
+\boxed{
+\mathfrak H_\theta=0
+\iff
+T_\theta^*T_\theta=I.
+}
+\tag{1288.8}
+$$
+
+所以完整双向酉性只说明总能量守恒；正时间合法性还要求：
+
+$$
+\boxed{
+\text{没有能量泄漏到负时间。}
+}
+$$
+
+仓库已经机器证明 prime-power 的双向平移历史可以重求和成由一对酉 resolvent 组成的 Poisson 算子；这正好属于完整双向 \(L^2\) 层，但它本身尚未选择 Hardy 时间方向。
+
+---
+

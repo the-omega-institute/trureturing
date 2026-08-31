@@ -1,0 +1,73 @@
+## 1386.1 Kruskal 坐标已经存在
+
+外部 rapidity：
+
+$$
+r_\rho
+=
+\frac12\log(v/u)
+$$
+
+在：
+
+$$
+u\to0
+$$
+
+时发散。
+
+但：
+
+$$
+u=\delta-\omega,
+\qquad
+v=\delta+\omega
+$$
+
+本身保持有限且光滑。
+
+所以 \(u,v\) 正是当前系统的 Kruskal-like 坐标：
+
+$$
+\boxed{
+\text{rapidity 图表在视界处奇异；
+null-distance 图表保持正则。}
+}
+$$
+
+局部 factorization：
+
+$$
+\Theta_{\rho,\omega}
+=
+b_{p_\omega}^{-1}
+b_{q_\omega}
+$$
+
+也具有同样结构。
+
+乘以 crossing factor：
+
+$$
+\boxed{
+b_{p_\omega}
+\Theta_{\rho,\omega}
+=
+b_{q_\omega}
+}
+\tag{1386.4}
+$$
+
+以后，外部 inverse-inner 奇点被移除。
+
+因此：
+
+$$
+\boxed{
+\text{Hawking-like occupation 的发散属于外部 Hardy 图表；
+真正不变量是穿越时的 index jump}.
+}
+$$
+
+---
+

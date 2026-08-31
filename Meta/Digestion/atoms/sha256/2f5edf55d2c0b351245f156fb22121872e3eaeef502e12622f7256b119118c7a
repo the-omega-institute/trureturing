@@ -1,0 +1,67 @@
+* 可控—可观状态向量。
+
+因此“道”若要有数学载体，更接近：
+
+$$
+\boxed{
+\text{self-similar transfer category}
++
+\text{inverse-limit history}
++
+\text{positive observer completion}.
+}
+$$
+
+\(\xi\) 只是其 determinant shadow。
+
+---
+
+离线零点则获得一个最终统一定义：
+
+$$
+\boxed{
+\textbf{离线零点是谱完成中真实存在，
+却无法与正因果观察完成相容的局部形态。}
+}
+$$
+
+它在空间函子中成为单极子；
+
+在时间函子中成为视界穿越；
+
+在边界函子中成为 Poisson/Hawking 光影；
+
+在算子函子中成为 inverse-inner/Hankel 缺陷；
+
+在信息函子中成为双曲 bulk 状态；
+
+在正性函子中成为有限 Gram 障碍。
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{“道”是生成并连接所有形态的规则；
+万物是这一规则的表示分形；
+zeta 是这些表示被行列式化后的完成影子；
+离线零点则是不同完成方式无法交换时留下的局部异常。}
+}
+$$
+
+真正承重的下一步因此不是再寻找更多相似物，而是构造同一个缺陷在各表示之间的**缺陷忠实函子**：
+
+$$
+\boxed{
+\operatorname{Div}(\xi)
+\longrightarrow
+\text{Chern}
+\longrightarrow
+\text{spectral flow}
+\longrightarrow
+\text{Hankel}
+\longrightarrow
+\text{Gram}.
+}
+$$
+
+一旦证明这条链与 prime–Gamma 完成严格交换，就可以把最难的零点几何，传导到最容易认证的正性命题上。

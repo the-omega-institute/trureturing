@@ -1,0 +1,24 @@
+## 1345.3 黄金热分叉
+
+两种解释给出：
+
+$$
+\boxed{
+\beta_{\mathrm{circ}}
+=
+2\log\varphi,
+}
+$$
+
+$$
+\boxed{
+\beta_{\mathrm{red}}
+=
+\frac{\pi}{\log\varphi}.
+}
+$$
+
+它们不是同一个数。
+
+因此：
+

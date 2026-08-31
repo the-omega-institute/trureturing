@@ -1,0 +1,52 @@
+## 1444.2 Riemann \(\zeta\) 在这张图中的位置
+
+Riemann \(\zeta\) 的局部原语是素数：
+
+$$
+\zeta(s)
+=
+\prod_p(1-p^{-s})^{-1}
+$$
+
+在收敛区成立。
+
+它将：
+
+* primitive prime；
+* prime-power history；
+* multiplicative scale；
+
+压缩成一个标量函数。
+
+completed \(\xi\) 又加入：
+
+* 极点修正；
+* Archimedean Gamma 通道；
+* 反射：
+
+  $$
+  s\leftrightarrow1-s.
+  $$
+
+所以更准确地说：
+
+$$
+\boxed{
+\zeta
+=
+\text{算术局部—全局完成};
+}
+$$
+
+$$
+\boxed{
+\xi
+=
+\text{再加入反射与无穷位的对称完成}.
+}
+$$
+
+它们都是“道”的某个表示的完成影像，而不是“道”本身。
+
+---
+

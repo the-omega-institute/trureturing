@@ -1,0 +1,71 @@
+# 第一千三百三十部　黄金比例作为模逆温度
+
+项目中的黄金观察周期为：
+
+$$
+\boxed{
+P_\varphi=2\log\varphi.
+}
+\tag{1330.1}
+$$
+
+如果将这一周期解释为一个模时间的逆温度：
+
+$$
+\boxed{
+\beta_\varphi=2\log\varphi,
+}
+\tag{1330.2}
+$$
+
+则相应的“表面引力尺度”为：
+
+$$
+\boxed{
+\kappa_\varphi
+=
+\frac{2\pi}{\beta_\varphi}
+=
+\frac{\pi}{\log\varphi}.
+}
+\tag{1330.3}
+$$
+
+这恰好等于前文黄金 regulator 圆的基本角频率。
+
+对横向能量 \(h\)，Boltzmann 因子为：
+
+$$
+\boxed{
+e^{-\beta_\varphi h}
+=
+e^{-2h\log\varphi}
+=
+\varphi^{-2h}.
+}
+\tag{1330.4}
+$$
+
+这正是此前黄金负时间采样中出现的单位盘半径：
+
+$$
+|q_j|
+=
+\varphi^{-2h_j}.
+$$
+
+所以黄金比例确实提供了一种极其自然的“模温度”读法：
+
+$$
+\boxed{
+\varphi^{-2h}
+=
+\text{逆温度 }2\log\varphi
+\text{ 下的 Boltzmann 权重}.
+}
+$$
+
+但这仍然只是一个规范观察刻度。
+
+---
+

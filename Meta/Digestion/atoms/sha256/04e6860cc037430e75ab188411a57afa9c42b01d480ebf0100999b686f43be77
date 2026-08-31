@@ -1,0 +1,101 @@
+# 第一千三百九十六部　离线零点的边界影像是一个概率状态
+
+令右侧离线零点写成：
+
+$$
+\rho=\frac12+\delta+i\gamma,
+\qquad
+\delta>0.
+$$
+
+它在临界边界留下的标准 Poisson 影像为：
+
+$$
+\boxed{
+p_{\gamma,\delta}(t)
+=
+\frac1\pi
+\frac{\delta}
+{(t-\gamma)^2+\delta^2}.
+}
+\tag{1396.1}
+$$
+
+并且：
+
+$$
+\int_{\mathbb R}p_{\gamma,\delta}(t)\,dt=1.
+$$
+
+所以 \(p_{\gamma,\delta}\) 不仅是一条响应曲线，还是一个标准 Cauchy 概率密度：
+
+$$
+\boxed{
+p_{\gamma,\delta}
+=
+\operatorname{Cauchy}(\gamma,\delta).
+}
+$$
+
+其 Fourier 变换为：
+
+$$
+\boxed{
+\widehat p_{\gamma,\delta}(k)
+=
+e^{-\delta|k|}
+e^{-ik\gamma}.
+}
+\tag{1396.2}
+$$
+
+因此：
+
+* \(\gamma\) 编码相位／纵向高度；
+* \(\delta\) 编码指数衰减率／横向深度；
+* \(\delta\downarrow0\) 时，
+
+  $$
+  p_{\gamma,\delta}\rightharpoonup\delta_\gamma.
+  $$
+
+临界零点是边界 Dirac 原子；离线零点是内部点投射出的平滑边界状态。
+
+仓库已经机器证明，离线反射对的法向曲率为：
+
+$$
+\boxed{
+\mathscr C_{\gamma,\delta}(t)
+=
+2\frac{(t-\gamma)^2-\delta^2}
+{\bigl((t-\gamma)^2+\delta^2\bigr)^2},
+}
+\tag{1396.3}
+$$
+
+它在中心为负，在 \(\gamma\pm\delta\) 处过零，在外翼为正，而且总积分为零；仓库还证明它正是 Poisson 核关于尺度的导数：
+
+$$
+\boxed{
+\mathscr C_{\gamma,\delta}
+=
+2\pi\,\partial_\delta p_{\gamma,\delta}.
+}
+\tag{1396.4}
+$$
+
+所以离线零点的边界信息存在两个层次：
+
+$$
+\boxed{
+\begin{aligned}
+p_{\gamma,\delta}
+&=\text{正的边界光影};\\
+\partial_\delta p_{\gamma,\delta}
+&=\text{零总质量的曲率偶极}.
+\end{aligned}
+}
+$$
+
+---
+

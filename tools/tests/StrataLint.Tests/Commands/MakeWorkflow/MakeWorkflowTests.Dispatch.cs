@@ -258,12 +258,24 @@ public sealed partial class MakeWorkflowTests
             dotnetTest,
             StringComparison.Ordinal);
         var engineeringTestsRecipe = Recipe(makefile, "engineering-tests");
-        Assert.Contains(
-            "StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
-            engineeringTestsRecipe,
-            StringComparison.Ordinal);
         Assert.Contains("REPOSITORY ?= $(HERE)/..", makefile, StringComparison.Ordinal);
-        Assert.Contains("--repository \"$(REPOSITORY)\"", engineeringTestsRecipe, StringComparison.Ordinal);
+        Assert.Contains("ENGINEERING_TESTS_CWD := $(REPOSITORY)", makefile, StringComparison.Ordinal);
+        Assert.Contains(
+            "engineering-tests-base-cwd: ENGINEERING_TESTS_CWD := $(HERE)/..",
+            makefile,
+            StringComparison.Ordinal);
+        Assert.Contains("engineering-tests-base-cwd: engineering-tests", makefile, StringComparison.Ordinal);
+        Assert.Equal(0, RecipeCount(makefile, "engineering-tests-base-cwd"));
+        Assert.Equal(
+            "\t@cd \"$(ENGINEERING_TESTS_CWD)\" && dotnet run --project \"$(HERE)/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj\" --configuration Release --no-launch-profile -- --mode \"$(MODE)\" --repository \"$(REPOSITORY)\" --head \"$(HEAD)\" --base \"$(BASE)\" --plan-file \"$(PLAN_FILE)\"",
+            engineeringTestsRecipe);
+        Assert.Single(
+            Regex.Matches(
+                    makefile,
+                    Regex.Escape(
+                        "dotnet run --project \"$(HERE)/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj\""),
+                    RegexOptions.CultureInvariant)
+                .Cast<Match>());
         Assert.Contains("$(HERE)/scripts/stratalint-selftest.sh", Recipe(makefile, "selftest"), StringComparison.Ordinal);
         Assert.Contains(
             "$(HERE)/scripts/update-renderer-contract.sh",

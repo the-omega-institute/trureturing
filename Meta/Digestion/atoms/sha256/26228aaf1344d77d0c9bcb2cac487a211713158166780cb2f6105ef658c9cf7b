@@ -1,0 +1,54 @@
+# 6. pairwise 曲率界在时间上统一
+
+若
+
+\[
+\|v_p\|\le1,
+\qquad
+\|v_q\|\le1,
+\]
+
+Lean 证明
+
+\[
+\boxed{
+\|\widetilde C_{p,q}(t)\|
+\le
+\|a-1\|
+\bigl(\|r_p\|+\|r_q\|\bigr)
++
+2\|r_p\|\|r_q\|
+}
+\]
+
+对每个 \(t\in\mathbb R\) 成立。
+
+若
+
+\[
+\|r_p\|,\|r_q\|\le\varepsilon,
+\]
+
+则
+
+\[
+\boxed{
+\|\widetilde C_{p,q}(t)\|
+\le
+2\|a-1\|\varepsilon
++2\varepsilon^2.
+}
+\]
+
+右侧不含 \(t\)。因此 residual envelope 一旦收敛，就可以得到对整个谱时间轴统一的 pairwise 曲率控制，前提是通道向量的单位界本身统一成立。
+
+这是本轮最重要的定量结果：
+
+\[
+\boxed{
+\text{unitary spectral-time twisting does not consume residual control.}
+}
+\]
+
+---
+

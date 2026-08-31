@@ -1,0 +1,29 @@
+## 第三步：全 cascade 最小化
+
+构造：
+
+$$
+\boxed{
+\mathbb U_{\omega}
+=
+\mathbb U_{\mathrm{pole}}
+\star
+\mathbb U_{\Gamma,\omega}
+\star
+\prod_p
+\mathbb U_{p,\omega}.
+}
+\tag{1393.1}
+$$
+
+然后：
+
+1. 先完成串联；
+2. 消去 telescope 内部因子；
+3. 商去不可控状态；
+4. 商去不可观状态；
+5. 取最小 realization；
+6. 证明其 transfer 恰为 \(\Theta_\omega\)。
+
+---
+

@@ -79,6 +79,7 @@ public sealed partial class MakeWorkflowTests
         "check-fast",
         "test",
         "engineering-tests",
+        "engineering-tests-base-cwd",
         "selftest",
         "capacity-audit",
         "update-renderer-contract",

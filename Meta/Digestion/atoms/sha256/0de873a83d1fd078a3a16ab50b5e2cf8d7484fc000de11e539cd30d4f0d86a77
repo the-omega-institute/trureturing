@@ -1,0 +1,31 @@
+## 三、Thermal/KMS compatibility
+
+若背景确实具有 Hawking型热性，其 Bogoliubov 奇异值还应满足统一指数详细平衡：
+
+$$
+\boxed{
+\sigma_j^2=e^{-\beta E_j}.
+}
+\tag{1338.2}
+$$
+
+但需要强调：
+
+$$
+\boxed{
+\text{KMS 热性不能替代因果性。}
+}
+$$
+
+一个含 inverse-inner denominator 的 all-pass 系统，也可能在部分标量读数上伪装出热谱。
+
+必须先证明：
+
+$$
+B_\omega=1,
+$$
+
+再研究剩余正 inner 部分是否具有黄金 KMS 周期。
+
+---
+

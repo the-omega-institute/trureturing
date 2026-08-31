@@ -1,0 +1,82 @@
+## 1282.1 Fourier 层析
+
+取 Fourier convention：
+
+$$
+\widehat f(k)
+=
+\int_{\mathbb R}
+f(t)e^{-ikt}\,dt.
+$$
+
+由于：
+
+$$
+\widehat{P_h}(k)=e^{-h|k|},
+$$
+
+得到：
+
+$$
+\boxed{
+\widehat J(\omega,k)
+=
+2\pi
+\sum_{\delta_j>\omega}
+m_j
+e^{-(\delta_j-\omega)|k|}
+e^{ik\gamma_j}.
+}
+\tag{1282.4}
+$$
+
+因此：
+
+* \(k=0\) 读取深度尾计数；
+* 非零 \(k\) 读取零点高度分布；
+* \(|k|\) 衰减率读取横向深度；
+* 相位 \(e^{ik\gamma_j}\) 读取纵向位置。
+
+在分布意义下：
+
+$$
+\boxed{
+\left(
+|D_t|-\partial_\omega
+\right)
+J
+=
+2\pi
+\sum_j
+m_j
+\delta(\omega-\delta_j)
+\delta(t+\gamma_j).
+}
+\tag{1282.5}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{完整离线零点除子}
+}
+$$
+
+正是：
+
+$$
+\boxed{
+\text{boundary Poisson 光场的量子化源。}
+}
+$$
+
+仓库当前已分别冻结：
+
+* RH 条件下，零点相位密度等于实零点计数测度的 Poisson 平滑；
+* Poisson 核满足完成深度上的卷积半群输运。
+
+式 (1282.5) 给出了两者在存在 bulk defect 时应加入的源项。
+
+---
+

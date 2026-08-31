@@ -1,0 +1,36 @@
+## 4.2 谱忠实支配
+
+寻找有限常数和误差预算，使
+
+\[
+\boxed{
+P_{L,N}\mathcal O_{L,T}^{\mathrm{off}}P_{L,N}
+\preceq
+C_{L,N,T}\mathcal V_{r,L,N}^{\mathrm{hol}}
++
+\varepsilon_{r,L,N,T}I.
+}
+\]
+
+要求在固定 \(L,N,T\) 下
+
+\[
+\varepsilon_{r,L,N,T}\to0.
+\]
+
+随后依次完成
+
+\[
+r\to\infty,
+\qquad
+T\to\infty,
+\qquad
+N\to\infty,
+\qquad
+L\to\infty.
+\]
+
+若支配和抽取平坦化均成立，则离线奇能量必须消失。若有限测试塔能够分离每个离线轨道，内部曲率随之为零。仓库已有 `InteriorCurvatureCriterion` 可将内部曲率消失运输到 RH。
+
+---
+
