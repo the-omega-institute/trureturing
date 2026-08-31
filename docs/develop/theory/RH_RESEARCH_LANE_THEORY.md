@@ -6,8 +6,6 @@ modules that carry its formal content. Reference input only: the Lean
 modules are the sole truth source, and section numbering here is
 narrative, not load-bearing.
 
-> **统一理论卷规则。** 从本卷建立以后，RH research lane 的新理论推理统一追加到本文件。后续形式化节点继续拥有各自的 Lean GID、Scribe 源和 Blueprint 镜像，但不再为每个节点新建独立 theory 文档。
-
 
 
 ---
@@ -3370,6 +3368,8 @@ SecondOrderRadialSpectrum       EvenOddModeObserver
 ---
 
 ## [PR #4373] RH_RESEARCH_LANE_LEDGER — Time-Ordered Prime Memory Cocycle
+
+> **统一理论卷规则(本节起生效)。** RH research lane 的新理论推理统一追加到本卷。后续形式化节点继续拥有各自的 Lean GID、Scribe 源和 Blueprint 镜像，但不再为每个节点新建独立 theory 文档。本卷 append-only：勘误以新追加的正文发表，不改动既有字节。
 
 # RH Research Lane Theory
 ## 累积研究真源、约束账本与下一桥梁
