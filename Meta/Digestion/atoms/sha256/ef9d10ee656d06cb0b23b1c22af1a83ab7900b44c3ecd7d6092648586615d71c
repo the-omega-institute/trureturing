@@ -1,0 +1,35 @@
+## 1237.1 RH 真时的相图
+
+若 RH 成立：
+
+$$
+\mathcal K_\omega\succeq0
+\qquad
+\forall\omega>0.
+$$
+
+每个有限 \(L\) 的局部 floor 可以严格为正，但在：
+
+$$
+\omega\downarrow0,
+\qquad
+L\uparrow\infty
+$$
+
+的全局角点趋向零。
+
+项目已机器证明一种完全相容的抽象结构：每个有限窗口具有严格正 frame floor，而当窗口增大时，全局 floor 可以趋向 \(0\)。
+
+所以 RH 真更像：
+
+$$
+\boxed{
+\text{所有有限层位于正锥内部，
+完整极限落在正锥边界。}
+}
+$$
+
+而不是存在统一远离零的全局 gap。
+
+---
+

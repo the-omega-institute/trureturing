@@ -1,0 +1,33 @@
+## 1229.1 负平方的定义
+
+称 Hermitian 核 \(K\) 有 \(\kappa\) 个负平方，是指：
+
+1. 任意有限点集产生的 Gram 矩阵至多有 \(\kappa\) 个负特征值；
+2. 存在某个有限点集，恰好产生 \(\kappa\) 个负特征值。
+
+普通 Schur／de Branges 情形对应：
+
+$$
+\kappa=0.
+$$
+
+广义 Schur 函数则自然作用于 Pontryagin 空间；Kreĭn–Langer 分解将有限负指标与有限 Blaschke 分母联系起来。相关系统理论也把 generalized-Schur transfer function 的指标与 Pontryagin 状态空间的负指标连接起来。([arXiv][2])
+
+对当前 \(\xi\) 家族，严谨而安全的结论是：
+
+$$
+\boxed{
+\operatorname{ind}_{-}\mathcal K_\omega
+\ge
+\#\left\{
+\rho:
+\Re\rho>\frac12+\omega
+\right\}
+}
+$$
+
+在任意有限高度截断、无抵消条件下成立。
+
+“全局负指标恰好等于全部离线零点数”还需要处理：
+
+* 重数；

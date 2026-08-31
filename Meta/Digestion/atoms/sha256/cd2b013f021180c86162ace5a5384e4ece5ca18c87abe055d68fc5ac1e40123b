@@ -1,0 +1,20 @@
+## 1216.2 临界完成相
+
+$$
+\boxed{
+\lambda(L)>0
+\quad
+\forall L<\infty,
+}
+$$
+
+但：
+
+$$
+\boxed{
+\lambda(L)\longrightarrow0.
+}
+$$
+
+每个有限观察层都合法，完整极限位于正锥边界。
+

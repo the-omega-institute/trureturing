@@ -1,0 +1,30 @@
+## 本文已给出纸面证明
+
+本轮直接证明了：
+
+$$
+\mathcal B_n^*\simeq\mathcal E_n,
+$$
+
+$$
+(K_0/K_\infty)^*
+\simeq
+E_\infty/E_0,
+$$
+
+dual Gram 非零谱一致，
+
+$$
+\frac{W_{+,N}}{W_{-,N}}
+=
+e^{2\delta PN},
+$$
+
+Gram realizability 等价于 PSD，
+
+以及 golden cofinal positivity 与 golden positivity induction。
+
+这些尚不声称已有同名 Lean proof term。
+
+---
+

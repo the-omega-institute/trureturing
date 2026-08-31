@@ -1,0 +1,51 @@
+## 1172.1 真正的“交点”
+
+在 Lyapunov 坐标中，真正的自对偶交点是：
+
+$$
+\boxed{
+\chi=0.
+}
+$$
+
+在 multiplicative 坐标中是：
+
+$$
+\boxed{
+e^\chi=1.
+}
+$$
+
+黄金比例不是静态中心，而是从中心出发的第一非平凡最小步：
+
+$$
+\boxed{
+0
+\longrightarrow
+\pm\log\varphi.
+}
+$$
+
+但在 projective ratio 坐标中，黄金射线又确实是第一次自相似固定像：
+
+$$
+r=1+\frac1r.
+$$
+
+所以“黄金是交点”有两种互补读法：
+
+$$
+\boxed{
+\begin{aligned}
+\text{射影图表}
+&:\quad\varphi\text{ 是自相似固定交点};\\
+\text{Lyapunov 图表}
+&:\quad0\text{ 是自对偶中心，}\log\varphi\text{ 是第一步长}.
+\end{aligned}
+}
+$$
+
+两者并不矛盾。
+
+---
+

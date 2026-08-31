@@ -1,0 +1,18 @@
+## 已有 Lean 锚点
+
+项目当前已经机器闭合：
+
+* 无自然有限选点；
+* status-blind 自读取的唯一解；
+* Boolean flip 无固定点；
+* eventual kernel 是当前 kernel 的最大动力不变核，memory quotient 精确删除它；
+* dual Gram 的 kernel 与 visible range；
+* 同源消息重复无法解析 source-blind target；
+* 有限 winning region 之外不存在有限保证策略；
+* 有限共轭相容数据的精确紧支撑 Paley–Wiener 插值；
+* 正测度有限 chart 必然 PSD；
+* 危险频带浓缩阈值推出显式正 gap；
+* 有限窗口 floor 可全部为正，而全局 floor 趋于零。
+
+---
+

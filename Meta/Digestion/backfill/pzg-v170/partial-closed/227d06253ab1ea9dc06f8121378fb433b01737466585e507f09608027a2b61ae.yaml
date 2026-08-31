@@ -3,8 +3,8 @@ fingerprints:
   normalized_sha256: sha256:227d06253ab1ea9dc06f8121378fb433b01737466585e507f09608027a2b61ae
 cas_ref: sha256:227d06253ab1ea9dc06f8121378fb433b01737466585e507f09608027a2b61ae
 coverage_gids:
-  - D5/S1/Deficit/DeficitThreeValued.deficit_three_valued
   - D5/S1/Deficit/DeficitInteger.deficit_integer
+  - D5/S1/Deficit/DeficitThreeValued.deficit_three_valued
 receipts:
   coverage:
     - gid: D5/S1/Deficit/DeficitInteger.deficit_integer
@@ -15,5 +15,5 @@ receipts:
       definition_sha256: sha256:97052fc405f600b8cc09509006996e7dd82a2279b7ebafa0fccb526f34ca00e6
       emission_sha256: sha256:498e45b024b1afa335349569e009007bf71d209fb67fda4ce7974d2fa631494e
   unresolved_subitems:
-    - triangular-window-45150-pair-scan-certificate
     - exact-deficit-value-distribution
+    - triangular-window-45150-pair-scan-certificate

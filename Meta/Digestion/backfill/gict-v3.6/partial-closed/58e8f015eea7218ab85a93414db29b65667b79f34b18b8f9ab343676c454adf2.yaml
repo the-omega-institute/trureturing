@@ -3,8 +3,8 @@ fingerprints:
   normalized_sha256: sha256:58e8f015eea7218ab85a93414db29b65667b79f34b18b8f9ab343676c454adf2
 cas_ref: sha256:58e8f015eea7218ab85a93414db29b65667b79f34b18b8f9ab343676c454adf2
 coverage_gids:
-  - D5/S0/Carrier/Ring.b_add
   - D5/S0/Carrier/Ring.a_add
+  - D5/S0/Carrier/Ring.b_add
   - D5/S1/Scale/CarrierFoundations.golden_carrier_foundations
 receipts:
   coverage:

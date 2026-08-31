@@ -137,7 +137,7 @@ internal static partial class DigestionLedgerAligner
             .SelectMany(static source => source.Entries)
             .Select(static entry => entry.AtomId)
             .ToHashSet(StringComparer.Ordinal);
-        var candidateEntriesById = sources
+        var globalEntriesById = sources
             .SelectMany(static source => source.Entries)
             .GroupBy(static entry => entry.AtomId, StringComparer.Ordinal)
             .Where(static group => group.Count() == 1)
@@ -478,10 +478,8 @@ internal static partial class DigestionLedgerAligner
             AlignNestedChildren(
                 source,
                 atomized.ClausePlans,
-                mode,
                 cas.ValidAtomIds,
-                inheritedEntries,
-                candidateEntriesById,
+                globalEntriesById,
                 snapshot,
                 alignments,
                 matchedAtoms,

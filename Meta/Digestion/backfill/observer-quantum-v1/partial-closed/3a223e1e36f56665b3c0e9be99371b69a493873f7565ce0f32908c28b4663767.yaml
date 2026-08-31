@@ -3,19 +3,17 @@ fingerprints:
   normalized_sha256: sha256:3a223e1e36f56665b3c0e9be99371b69a493873f7565ce0f32908c28b4663767
 cas_ref: sha256:3a223e1e36f56665b3c0e9be99371b69a493873f7565ce0f32908c28b4663767
 coverage_gids:
-  - D5/S3/Observer/Conditioning.recordWeight_sum
-  - D5/S3/Observer/Conditioning.unreadState_trace
-  - D5/S3/Observer/Conditioning.unreadState_idempotent
-  - D5/S3/Observer/Conditioning.unreadState_fixed_iff
   - D5/S3/Observer/Conditioning.conditionalState_isState
+  - D5/S3/Observer/Conditioning.recordWeight_sum
+  - D5/S3/Observer/Conditioning.unreadState_fixed_iff
+  - D5/S3/Observer/Conditioning.unreadState_idempotent
+  - D5/S3/Observer/Conditioning.unreadState_trace
   - D5/S3/Observer/Conditioning.unread_eq_weighted_ensemble
   - D5/S3/Observer/ConditioningCertificate.certificate_identity_zero_tolerance
 receipts:
   coverage: []
   scribe: []
   unresolved_subitems:
-    - no-third-collapse-dynamics-interpretive-premise
     - global-system-record-unitarity-premise
+    - no-third-collapse-dynamics-interpretive-premise
     - objective-collapse-model-demarcation
-  chain_atoms: []
-  tail_authorization: null

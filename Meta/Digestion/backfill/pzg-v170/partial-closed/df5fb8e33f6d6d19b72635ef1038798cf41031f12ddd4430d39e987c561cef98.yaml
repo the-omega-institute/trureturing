@@ -3,9 +3,9 @@ fingerprints:
   normalized_sha256: sha256:df5fb8e33f6d6d19b72635ef1038798cf41031f12ddd4430d39e987c561cef98
 cas_ref: sha256:df5fb8e33f6d6d19b72635ef1038798cf41031f12ddd4430d39e987c561cef98
 coverage_gids:
+  - D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec
   - D5/S3/Zeros/ToySpectrum/QuadraticCollisionModel.off_line_zeros_born_in_pairs_not_created
   - D5/S3/Zeros/ToySpectrum/QuadraticCollisionModel.quadratic_collision_model_certificate
-  - D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec
 receipts:
   coverage:
     - gid: D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec
@@ -17,12 +17,12 @@ receipts:
       emission_sha256: sha256:780fb2bf4ea155ef65e33ba9430d282941b7866cdb0b7dbff6c2a46c9c0380ee
   unresolved_subitems:
     - argument-principle-zero-count-is-horizontal-coordinate-blind
-    - online-offline-toy-spectra-have-equal-contour-count-certificate
-    - gamma-factor-supplies-smooth-zero-count-main-term
-    - zero-count-at-height-one-hundred-numerical-certificate
-    - prime-interference-s-of-t-supplies-height-correction
-    - positivity-or-selfadjointness-required-for-real-coordinate
-    - de-bruijn-newman-heat-flow-conserves-moving-zero-count
-    - online-zero-collision-produces-off-line-conjugate-pair
-    - rh-as-no-zero-collision-in-heat-flow
     - de-bruijn-newman-constant-zero-criticality-claim
+    - de-bruijn-newman-heat-flow-conserves-moving-zero-count
+    - gamma-factor-supplies-smooth-zero-count-main-term
+    - online-offline-toy-spectra-have-equal-contour-count-certificate
+    - online-zero-collision-produces-off-line-conjugate-pair
+    - positivity-or-selfadjointness-required-for-real-coordinate
+    - prime-interference-s-of-t-supplies-height-correction
+    - rh-as-no-zero-collision-in-heat-flow
+    - zero-count-at-height-one-hundred-numerical-certificate

@@ -1,0 +1,39 @@
+## 1262.1 最深的 bulk–boundary 解释
+
+这条方程说明：
+
+$$
+\boxed{
+\text{离线零点是 bulk hyperbolic source；
+其对偶是 boundary massless Poisson field。}
+}
+$$
+
+这使此前两条理论第一次真正汇合：
+
+$$
+\boxed{
+\begin{aligned}
+\text{质量为零的 Poisson 色散}
+&=\text{边界传播算子 }|D_t|;
+\\
+\text{离线零点}
+&=\text{该边界传播的量子化点源}.
+\end{aligned}
+}
+$$
+
+所以“Poisson 型色散听起来像光”与“离线零点像体内单极子”并不是两个无关类比。
+
+它们组成一条精确的源—场关系：
+
+$$
+\boxed{
+\text{bulk monopole／zero}
+\longrightarrow
+\text{boundary Poisson light}.
+}
+$$
+
+---
+

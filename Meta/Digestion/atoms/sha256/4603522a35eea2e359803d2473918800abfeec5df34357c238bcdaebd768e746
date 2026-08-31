@@ -1,0 +1,16 @@
+## Krein／Lorentz 完成
+
+只要求存在不定型 \(Q\)：
+
+$$
+M^{\mathsf T}QM=Q.
+$$
+
+这允许：
+
+* elliptic；
+* parabolic；
+* hyperbolic。
+
+离线零点完全可以生活在这一层。
+

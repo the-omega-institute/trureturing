@@ -1,0 +1,99 @@
+# 第一千一百七十六部　最适合真正证明的那一对
+
+你的策略是：
+
+> 对偶全部连接；
+> 将困难一路传导到一对能够证明的概念即可。
+
+这一策略是正确的，但终点不应是：
+
+$$
+\varphi.
+$$
+
+因为黄金标量本身会遗忘观察者纤维。
+
+最合适的终点是：
+
+$$
+\boxed{
+\text{Prime--Archimedean 正性}
+\leftrightarrow
+\text{positive-real response}.
+}
+$$
+
+具体地，需要证明：
+
+$$
+\boxed{
+\mathcal Z_\xi(z)
+=
+\frac{
+\xi'(\frac12+z)
+}{
+\xi(\frac12+z)
+}
+}
+$$
+
+在：
+
+$$
+\Re z>0
+$$
+
+中具有正测度表示：
+
+$$
+\boxed{
+\mathcal Z_\xi(z)
+=
+\int_{\mathbb R}
+\frac{d\nu(t)}{z-it},
+\qquad
+\nu\ge0.
+}
+\tag{1176.1}
+$$
+
+一旦成立：
+
+$$
+\Re\mathcal Z_\xi(z)>0,
+$$
+
+Pick kernel 自动为正，所有右半平面极点被排除，因而 RH 成立。
+
+动态对偶版本则是构造一个正定 \(H\)，使相应 monodromy 满足：
+
+$$
+\boxed{
+M^*HM=H.
+}
+\tag{1176.2}
+$$
+
+所以最终有两种完全等价的研究语言：
+
+$$
+\boxed{
+\begin{aligned}
+\text{时间语言}
+&:\quad\text{构造双向 unitary natural extension};\\
+\text{响应语言}
+&:\quad\text{证明 log-derivative positive-real}.
+\end{aligned}
+}
+$$
+
+它们的共同核心都是：
+
+$$
+\boxed{
+\text{构造一个被 Prime--Archimedean 动力保持的正锥。}
+}
+$$
+
+---
+

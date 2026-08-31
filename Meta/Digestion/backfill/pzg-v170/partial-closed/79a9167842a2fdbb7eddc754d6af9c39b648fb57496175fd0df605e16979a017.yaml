@@ -14,8 +14,8 @@ receipts:
       definition_sha256: sha256:a7ace774c3d716d0dc13cf0d9ec25bef26c0ed49cb7e7df6bba141c24bf3d9b7
       emission_sha256: sha256:e967d3670fee2460d089cdc6ab950fbe9273c96e4e5b6dcaae0c488b091de3f3
   unresolved_subitems:
-    - value-layer-free-lattice-bloch-wave-and-brillouin-torus
-    - value-layer-dense-zeta-line
-    - lambda-embeddings-as-physical-and-internal-spaces
     - D5-T0011--noncongruence-equivalent-to-bloch-breakdown
+    - lambda-embeddings-as-physical-and-internal-spaces
     - no-periodic-character-classifies-code-observables
+    - value-layer-dense-zeta-line
+    - value-layer-free-lattice-bloch-wave-and-brillouin-torus
