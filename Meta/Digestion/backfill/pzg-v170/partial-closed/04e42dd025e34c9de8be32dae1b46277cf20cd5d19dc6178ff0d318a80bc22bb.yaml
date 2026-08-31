@@ -42,11 +42,11 @@ receipts:
       definition_sha256: sha256:5aa1fadbee8f0dbc14e698be5bcc80b8c320592a2769510b2a59b484c06f0ce5
       emission_sha256: sha256:d40e597cedc8852c8846da5122abe486cc2dd97f1c7805dc4a6a712cd592925a
   unresolved_subitems:
-    - bhk-continued-fraction-theorem
     - bhk-1755-enumeration-certificate
+    - bhk-continued-fraction-theorem
+    - dedekind-orientation-canonical-ledger-clause
+    - full-vote-enforcement-clause
+    - orientation-branch-clause
+    - three-walk-identification
     - w3-440-enumeration-certificate
     - w3-sign-reversal-postmortem
-    - full-vote-enforcement-clause
-    - three-walk-identification
-    - orientation-branch-clause
-    - dedekind-orientation-canonical-ledger-clause

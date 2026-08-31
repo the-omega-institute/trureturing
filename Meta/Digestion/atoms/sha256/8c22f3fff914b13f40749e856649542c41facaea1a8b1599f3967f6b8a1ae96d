@@ -1,0 +1,79 @@
+# 第一千二百零九部　“道”作为两个完成反射器的组合
+
+由此，“道”不必被定义为某个终极对象。
+
+更准确的定义是两个完成操作。
+
+第一种是**行为完成**：
+
+$$
+\boxed{
+\mathsf C:
+q\longmapsto C_F(q),
+}
+$$
+
+它加入使当前世界对动力稳定所需的全部未来信息。
+
+第二种是**正性完成**：
+
+$$
+\boxed{
+\mathsf G:
+Q\longmapsto
+\overline{V/\ker Q},
+}
+$$
+
+它要求 \(Q\succeq0\)，商去零范数并完成为 Hilbert 空间。
+
+所以完整现实的构造需要方块：
+
+$$
+\boxed{
+\begin{array}{ccc}
+\text{raw interface}
+&\xrightarrow{\ \mathsf C\ }&
+\text{behavior-complete interface}
+\\[1mm]
+\downarrow{\scriptstyle\mathsf G}
+&&
+\downarrow{\scriptstyle\mathsf G}
+\\[1mm]
+\text{positive realization}
+&\xrightarrow{\ \overline{\mathsf C}\ }&
+\text{positive stable realization}.
+\end{array}
+}
+\tag{1209.1}
+$$
+
+对于普通观察系统，该方块由：
+
+$$
+W_N=\mathcal O_N^*\mathcal O_N
+$$
+
+自然闭合。
+
+而对离线零点情形，问题不是行为完成不存在，而是：
+
+$$
+\boxed{
+\mathsf G
+}
+$$
+
+这一正性边无法构造。
+
+所以离线零点可以进一步命名为：
+
+$$
+\boxed{
+\textbf{行为完成与正性完成之间的交换障碍。}
+}
+\tag{1209.2}
+$$
+
+---
+

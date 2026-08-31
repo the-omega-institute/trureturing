@@ -1,0 +1,87 @@
+# 第一千二百六十一部　离线点的边界对偶是一束 Poisson 相位光
+
+对实数 \(t\)，有：
+
+$$
+\begin{aligned}
+\frac{d}{dt}\arg b_p(t)
+&=
+\operatorname{Im}
+\left[
+\frac1{t-p}
+-
+\frac1{t-\overline p}
+\right]
+\\
+&=
+\frac{2h}{(t-x)^2+h^2}.
+\end{aligned}
+\tag{1261.1}
+$$
+
+令标准 Poisson 核为：
+
+$$
+\boxed{
+P_h(t)
+=
+\frac1\pi
+\frac{h}{t^2+h^2}.
+}
+\tag{1261.2}
+$$
+
+则：
+
+$$
+\boxed{
+\frac{d}{dt}\arg b_p(t)
+=
+2\pi P_h(t-x).
+}
+\tag{1261.3}
+$$
+
+对：
+
+$$
+p_{\rho,\omega}
+=
+-\gamma+i(\delta-\omega),
+$$
+
+得到：
+
+$$
+\boxed{
+\frac{d}{dt}
+\arg b_{p_{\rho,\omega}}(t)
+=
+2\pi
+P_{\delta-\omega}(t+\gamma).
+}
+\tag{1261.4}
+$$
+
+因此缺陷 Blaschke 因子的总边界相位流为：
+
+$$
+\boxed{
+J_{\omega,T}(t)
+=
+\frac{d}{dt}
+\arg B_{\omega,T}(t)
+=
+2\pi
+\sum_{\substack{
+\delta_\rho>\omega\\
+|\gamma_\rho|\le T
+}}
+m_\rho
+P_{\delta_\rho-\omega}(t+\gamma_\rho).
+}
+\tag{1261.5}
+$$
+
+---
+

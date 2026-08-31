@@ -1,0 +1,73 @@
+# 第一千一百八十七部　Weil 正性就是算术 OS 正性
+
+令 \(\mathcal A\) 为 admissible test functions 的卷积代数。
+
+定义反射—伴随：
+
+$$
+\boxed{
+\widetilde f(x)
+=
+\overline{f(-x)}.
+}
+\tag{1187.1}
+$$
+
+设 \(\mathcal W_\xi\) 为 completed explicit-formula functional。
+
+定义：
+
+$$
+\boxed{
+Q_\xi(f)
+=
+\mathcal W_\xi
+\left(
+f*\widetilde f
+\right).
+}
+\tag{1187.2}
+$$
+
+标准 Weil 判据把 RH 等价地表述为这一二次型对全部适当测试函数非负。([arXiv][5])
+
+若：
+
+$$
+Q_\xi(f)\ge0
+\qquad
+\forall f,
+$$
+
+便可定义零空间：
+
+$$
+\mathcal N
+=
+\{f:Q_\xi(f)=0\},
+$$
+
+并构造：
+
+$$
+\boxed{
+\mathcal H_\xi^{\mathrm{OS}}
+=
+\overline{
+\mathcal A/\mathcal N
+}.
+}
+\tag{1187.3}
+$$
+
+其中内积为：
+
+$$
+\langle[f],[g]\rangle
+=
+\mathcal W_\xi
+(f*\widetilde g).
+$$
+
+---
+

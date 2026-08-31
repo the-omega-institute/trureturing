@@ -3,21 +3,21 @@ fingerprints:
   normalized_sha256: sha256:df6ef4735bab962b12e7708d6bdb4eb9715378cda58a6423a3f5d88647e5ba2d
 cas_ref: sha256:df6ef4735bab962b12e7708d6bdb4eb9715378cda58a6423a3f5d88647e5ba2d
 coverage_gids:
-  - D5/S0/Tower/Champions/RadixTable.radix_champion_table
   - D5/S0/Tower/ChampionExtremality.odd_half_arm
+  - D5/S0/Tower/Champions/RadixTable.radix_champion_table
 receipts:
   coverage:
-    - gid: D5/S0/Tower/Champions/RadixTable.radix_champion_table
-      source_sha256: sha256:df6ef4735bab962b12e7708d6bdb4eb9715378cda58a6423a3f5d88647e5ba2d
-      target_statement_id: sha256:dd749cba80303728dea4d1012345ab977146f857a23b0610d6ff9db1430c74bf
     - gid: D5/S0/Tower/ChampionExtremality.odd_half_arm
       source_sha256: sha256:df6ef4735bab962b12e7708d6bdb4eb9715378cda58a6423a3f5d88647e5ba2d
-      target_statement_id: sha256:9655988cde06d926962119c3bac7573e6010df8388ad2b083615ad708ad47094
-  scribe:
+      target_statement_id: sha256:e9e049f826868fc8e5f6c9d611123ca0f44c05a932e96db08b1ffafce7d48717
     - gid: D5/S0/Tower/Champions/RadixTable.radix_champion_table
-      definition_sha256: sha256:f7431db61ab5b4893e061991b1843ba4200c18eefa76f4555956ad4320467a59
-      emission_sha256: sha256:1837bcd6c67a659d1d2b6e2dff35a3741d66f9e7eda35debec193a3d09fe260f
+      source_sha256: sha256:df6ef4735bab962b12e7708d6bdb4eb9715378cda58a6423a3f5d88647e5ba2d
+      target_statement_id: sha256:beb9d0e3e6745fdf5b9459545712a70ff28699f24210ea7acd09d2fe3b3e2043
+  scribe:
     - gid: D5/S0/Tower/ChampionExtremality.odd_half_arm
       definition_sha256: sha256:e799802fbff8914ca1ffefd92503dc5c62add18277eda044327bb22bfe336201
       emission_sha256: sha256:1af112c736a0a72ae4e2f31ed29c01411d39ed93a54d0454b49b9b5a6c837893
+    - gid: D5/S0/Tower/Champions/RadixTable.radix_champion_table
+      definition_sha256: sha256:f7431db61ab5b4893e061991b1843ba4200c18eefa76f4555956ad4320467a59
+      emission_sha256: sha256:1837bcd6c67a659d1d2b6e2dff35a3741d66f9e7eda35debec193a3d09fe260f
   unresolved_subitems: []

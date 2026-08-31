@@ -3,4 +3,3 @@ path = "docs/develop/theory/GENETIC_LATENCY_COMPLETION_THEORY.md"
 atomizer = "generic-v1"
 genre_registry_check = "no-registry"
 unregistered_genres = []
-acknowledged_stale = ["c7e9c68650abffc86f12dfc26821155fe007a2a2a2b33f219780bdd3569134ec", "ca9ca7d3bd3b18de73595c59594cfb3175db88bb6f50b20fa6ed6b98c5a91cb9"]

@@ -1,0 +1,44 @@
+## 1120.3 Fourier–Mellin 桥
+
+Tate–Iwasawa 的 adelic zeta integral 正是：
+
+* 在加法 adeles 上使用 Fourier 变换；
+* 在乘法 ideles 上使用 Mellin character；
+* 由 Poisson summation 导出 \(L\)-函数的函数方程。([论文库][5])
+
+所以最深的母结构不是：
+
+$$
+\text{Solenoid}
+\leftrightarrow
+\text{光锥},
+$$
+
+而是：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{加法 Adele quotient}
+\overset{\text{Fourier}}{\longleftrightarrow}
+\text{离散 character};\\
+&\text{乘法 Idele quotient}
+\overset{\text{Mellin}}{\longleftrightarrow}
+\text{尺度频率};\\
+&\text{Poisson summation}
+\Longrightarrow
+\text{函数方程}.
+\end{aligned}
+}
+$$
+
+换言之：
+
+$$
+\boxed{
+\text{Solenoid 与双曲锥是同一 Adele 本体的加法面和乘法面。}
+}
+$$
+
+---
+

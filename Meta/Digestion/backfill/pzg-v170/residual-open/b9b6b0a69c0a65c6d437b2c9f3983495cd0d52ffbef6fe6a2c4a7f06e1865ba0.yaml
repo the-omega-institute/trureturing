@@ -7,5 +7,5 @@ receipts:
   coverage: []
   scribe: []
   unresolved_subitems:
-    - tribonacci-deficit-nonintegrality-and-scan-certificate
     - cubic-field-conjugate-trace-explanation
+    - tribonacci-deficit-nonintegrality-and-scan-certificate

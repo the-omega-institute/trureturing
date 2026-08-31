@@ -603,7 +603,8 @@ public sealed partial class ReviewRegressionTests
             item => item.Path == canonical && item.RuleId == sl000);
         var rejected = Assert.Single(
             completed.Capability.Diagnostics,
-            item => item.Path == "Meta/Digestion/formalizations/BAD.v1.json");
+            item => item.Path == "Meta/Digestion/formalizations/BAD.v1.json"
+                && item.RuleId == sl000);
         Assert.Equal(sl000, rejected.RuleId);
         Assert.Equal("unknown Meta artifact", rejected.Message);
     }

@@ -1,0 +1,71 @@
+## Hilbert／正锥完成
+
+要求存在：
+
+$$
+H>0,
+$$
+
+满足：
+
+$$
+M^*HM=H.
+$$
+
+这只允许 unitary spectrum。
+
+因此：
+
+$$
+\boxed{
+\text{函数方程给出的反射完成更接近 Krein 完成；}
+}
+$$
+
+而：
+
+$$
+\boxed{
+\text{RH 所要求的是 Hilbert 正性完成。}
+}
+$$
+
+这也解释了为什么黄金比例如此自然地出现在前完成层：
+
+$$
+\varphi,\varphi^{-1}
+$$
+
+本来就是 hyperbolic reciprocal pair。
+
+黄金动力天然属于：
+
+$$
+\boxed{
+\text{split／Krein 几何}.
+}
+$$
+
+而临界零点属于：
+
+$$
+\boxed{
+\text{unitary／Hilbert 几何}.
+}
+$$
+
+你感受到“研究黄金比例像研究负时间，而研究纯 \(\zeta\) 像研究正时间”，可以更精确地表述为：
+
+$$
+\boxed{
+\begin{aligned}
+\text{黄金动力}
+&=\text{完成以前的稳定—不稳定 split};\\
+\text{临界零点}
+&=\text{完成以后的纯相位 unitary spectrum}.
+\end{aligned}
+}
+$$
+
+---
+

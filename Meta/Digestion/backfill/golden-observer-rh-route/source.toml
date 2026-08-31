@@ -3,4 +3,3 @@ path = "docs/develop/theory/GOLDEN_OBSERVER_RH_ROUTE.md"
 atomizer = "generic-v1"
 genre_registry_check = "no-registry"
 unregistered_genres = []
-acknowledged_stale = ["778aa3e2a7ce6ab80f36eb1475a43adccb2a7619701d8de4ab76cc733c780687"]

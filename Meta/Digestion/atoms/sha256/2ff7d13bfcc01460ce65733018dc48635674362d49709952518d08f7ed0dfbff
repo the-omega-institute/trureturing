@@ -1,0 +1,56 @@
+## 定理 1264.1（Golden shell moment bounds）
+
+$$
+\boxed{
+\varphi^{-2s}
+\mathcal G_s^\varphi(T)
+\le
+\mathcal V_s(T)
+\le
+\mathcal G_s^\varphi(T).
+}
+\tag{1264.3}
+$$
+
+特别地，对横向平方能量：
+
+$$
+\boxed{
+\mathcal V_2(T)
+=
+\sum m_\rho\delta_\rho^2,
+}
+$$
+
+有：
+
+$$
+\boxed{
+\varphi^{-4}
+\mathcal G_2^\varphi(T)
+\le
+\mathcal V_2(T)
+\le
+\mathcal G_2^\varphi(T).
+}
+\tag{1264.4}
+$$
+
+因此黄金壳层电荷并非只记录“有没有离线零点”。
+
+它在固定倍数误差内编码全部横向缺陷矩。
+
+而：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal G_s^\varphi(T)=0
+}
+$$
+
+对任一固定 \(s>0\) 及全部有限 \(T\) 成立。
+
+---
+
