@@ -7,3 +7,11 @@ receipts:
   coverage: []
   scribe: []
   unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    recorded_at_utc: 2026-08-31T18:14:09.1419290+00:00
+    gids:
+      - D5/S3/Observer/MeasureSeparation/ZeroBayesResidualCriterion.statistical_residual_eq_zero_iff_mutually_singular
+    gaps:
+      - code: structural-alignment-rejected
+        detail: 058109071fee07f39788bd6d60ae1ddc02ed106ac77acacf18030e1ea1ddb6b7
