@@ -52,6 +52,8 @@ structure FiniteTransportModel where
   truthTable : Bool → Fin 3 → Bool
 deriving DecidableEq
 
+-- Lean 4.33's stricter type check breaks mathlib's `Fintype` deriving handler.
+set_option backward.isDefEq.respectTransparency.types false in
 /-- The five top-level coordinates of the canonical transport-certificate
 validity predicate, in their DECT 54.3 order. -/
 inductive TransportCertificateClause

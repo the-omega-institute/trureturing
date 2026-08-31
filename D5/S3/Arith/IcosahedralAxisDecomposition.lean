@@ -92,6 +92,7 @@ private theorem toProjectivization_injective : Function.Injective toProjectiviza
       norm_num [projectiveVector] at h0
       simp [projectiveVector, h0] at h1 h2
       simp [h1, h2]
+      rfl
     · rcases rest' with z' | u
       · have h0 := congrFun ha 0
         norm_num [projectiveVector] at h0
@@ -109,6 +110,7 @@ private theorem toProjectivization_injective : Function.Injective toProjectiviza
           norm_num [projectiveVector] at h1
           simp [projectiveVector, h1] at h2
           simp [h2]
+          rfl
         · have h1 := congrFun ha 1
           norm_num [projectiveVector] at h1
     · rcases q with yz' | rest'
@@ -121,7 +123,9 @@ private theorem toProjectivization_injective : Function.Injective toProjectiviza
           have h2 := congrFun ha 2
           norm_num [projectiveVector] at h1
           simp [projectiveVector, h1] at h2
-        · simp
+        · rcases u with ⟨⟩
+          rcases u' with ⟨⟩
+          rfl
 
 private theorem toProjectivization_surjective : Function.Surjective toProjectivization := by
   intro p
@@ -135,18 +139,21 @@ private theorem toProjectivization_surjective : Function.Surjective toProjectivi
             funext i
             fin_cases i <;> simp [h0, h1, h2]
           refine ⟨.inr (.inr ()), ?_⟩
-          rw [toProjectivization, Projectivization.mk_eq_mk_iff']
+          unfold toProjectivization
+          rw [Projectivization.mk_eq_mk_iff']
           refine ⟨(v 2)⁻¹, ?_⟩
           funext i
           fin_cases i <;> simp [projectiveVector, h0, h1, h2]
         · refine ⟨.inr (.inl (v 2 / v 1)), ?_⟩
-          rw [toProjectivization, Projectivization.mk_eq_mk_iff']
+          unfold toProjectivization
+          rw [Projectivization.mk_eq_mk_iff']
           refine ⟨(v 1)⁻¹, ?_⟩
           funext i
           fin_cases i <;>
             simp [projectiveVector, h0, h1, div_eq_mul_inv, mul_comm]
       · refine ⟨.inl (v 1 / v 0, v 2 / v 0), ?_⟩
-        rw [toProjectivization, Projectivization.mk_eq_mk_iff']
+        unfold toProjectivization
+        rw [Projectivization.mk_eq_mk_iff']
         refine ⟨(v 0)⁻¹, ?_⟩
         funext i
         fin_cases i <;> simp [projectiveVector, h0, div_eq_mul_inv, mul_comm]
