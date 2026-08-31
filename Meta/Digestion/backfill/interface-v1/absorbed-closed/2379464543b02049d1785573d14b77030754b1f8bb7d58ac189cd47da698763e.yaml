@@ -9,14 +9,10 @@ receipts:
   coverage:
     - gid: D5/S0/Asymptotics/EscapeProbability/EscapeRegimeCorollary.escape_probability_realizable_regimes
       source_sha256: sha256:2379464543b02049d1785573d14b77030754b1f8bb7d58ac189cd47da698763e
-<<<<<<< HEAD:Meta/Digestion/backfill/interface-v1/absorbed-closed/pzg-residual-2379464543b02049d1785573d14b77030754b1f8bb7d58ac189cd47da698763e-9b93ad7785515e384b902ebbf16c52b87d64eac77a37b8db322ac47182a5dc5b.yaml
-      target_statement_id: sha256:4c30c77033560f784c61f44bf6bd2f9fb46ebb497dbbceed52d522961f0d1d6b
-=======
       target_statement_id: sha256:079c2ddd449928273e57d9a5c58611be48ebe9fbcda45e593b882d0e4f9eb5ce
     - gid: D5/S0/Asymptotics/PoissonWeightDecay.poisson_weight_tendsto_zero
       source_sha256: sha256:2379464543b02049d1785573d14b77030754b1f8bb7d58ac189cd47da698763e
       target_statement_id: sha256:096040e0533bf41ce1b2d359b8cba6b6ce881c5c5340d5f2fc7b3fac003fd1ea
->>>>>>> origin/dev:Meta/Digestion/backfill/interface-v1/absorbed-closed/2379464543b02049d1785573d14b77030754b1f8bb7d58ac189cd47da698763e.yaml
   scribe:
     - gid: D5/S0/Asymptotics/EscapeProbability/EscapeRegimeCorollary.escape_probability_realizable_regimes
       definition_sha256: sha256:0e6cc0781b69dd5ba4ae8eacb41db61899d67f5e01d69d09f709ac93d6d1a85f
