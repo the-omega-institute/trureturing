@@ -75,6 +75,16 @@ internal static class EngineeringTestPlanDeriver
             assemblyByProject: assemblies);
     }
 
+    internal static ImmutableArray<(string Assembly, string Id)> DeriveSourceIdentities(
+        RepositorySnapshot snapshot)
+    {
+        var map = ScribeTestMapDeriver.DeriveSnapshot(snapshot);
+        EnsureClosedMap(map);
+        return EngineeringTestPlanPolicy.SourceIdentities(
+            map,
+            AssemblyByProject(snapshot, map));
+    }
+
     private static void EnsureClosedMap(ScribeTestMap map)
     {
         var failures = map.UnclassifiedManagedProjectPaths
@@ -264,6 +274,20 @@ internal static class EngineeringTestPlanPolicy
                 .ThenBy(static degradation => degradation.Reason, StringComparer.Ordinal)
                 .Select(static degradation =>
                 $"metadata degraded for {degradation.ProjectPath}: {degradation.Reason}"));
+    internal static ImmutableArray<(string Assembly, string Id)> SourceIdentities(
+        ScribeTestMap map,
+        IReadOnlyDictionary<string, string> assemblyByProject) => map.Methods
+        .Select(method =>
+        {
+            if (!map.CompileProjectBySourcePath.TryGetValue(method.SourcePath, out var project))
+                throw new InvalidOperationException($"project attribution failed for {method.Identity}");
+            if (!assemblyByProject.TryGetValue(project, out var assembly))
+                throw new InvalidOperationException($"assembly attribution failed for {project}");
+            return (Assembly: assembly, method.Id);
+        })
+        .OrderBy(static test => test.Assembly, StringComparer.OrdinalIgnoreCase)
+        .ThenBy(static test => test.Id, StringComparer.Ordinal)
+        .ToImmutableArray();
 
     private static IEnumerable<ScribeTestMethod> RunnableMethods(ScribeTestMap map) =>
         map.Methods.Where(static method => !method.IsStaticallySkipped);

@@ -26,6 +26,135 @@ public sealed class TestResultEvidenceTests
     }
 
     [Fact]
+    public void RejectsWhenAProtectedBasePlannedIdentityWasNotExecuted()
+    {
+        var evidence = new TestResultEvidence(
+            1,
+            new HashSet<(string Assembly, string Id)>
+            {
+                ("First.Owner.Tests", "PlannedTests.Executed"),
+            });
+        (string Assembly, string Id)[] expected =
+        [
+            ("First.Owner.Tests", "PlannedTests.Executed"),
+            ("Second.Owner.Tests", "OtherTests.Missing"),
+            ("First.Owner.Tests", "PlannedTests.AlsoMissing"),
+        ];
+
+        var failure = Assert.Throws<InvalidDataException>(
+            () => VerifyExpected(evidence, expected, expected));
+
+        Assert.Equal(
+            "TRX is missing protected-base planned test identities count=2 tests="
+            + "First.Owner.Tests::PlannedTests.AlsoMissing | Second.Owner.Tests::OtherTests.Missing",
+            failure.Message);
+    }
+
+    [Fact]
+    public void AcceptsWhenEveryPlannedIdentityExecutedAlongsideAdditionalIdentities()
+    {
+        var evidence = new TestResultEvidence(
+            4,
+            new HashSet<(string Assembly, string Id)>
+            {
+                ("first.owner.tests", "TheoryTests.Parameterized"),
+                ("Second.Owner.Tests", "FactTests.Required"),
+                ("Candidate.New.Tests", "NewTests.Additional"),
+            });
+        (string Assembly, string Id)[] expected =
+        [
+            ("First.Owner.Tests", "TheoryTests.Parameterized"),
+            ("Second.Owner.Tests", "FactTests.Required"),
+        ];
+
+        VerifyExpected(evidence, expected, expected);
+    }
+
+    [Fact]
+    public void RejectsSkippedProtectedBaseIdentityThatStillExistsInCandidateSource()
+    {
+        var evidence = new TestResultEvidence(
+            1,
+            new HashSet<(string Assembly, string Id)>
+            {
+                ("First.Owner.Tests", "OtherTests.Executed"),
+            });
+        (string Assembly, string Id)[] expected =
+        [
+            ("First.Owner.Tests", "PlannedTests.Skipped"),
+        ];
+
+        var failure = Assert.Throws<InvalidDataException>(
+            () => VerifyExpected(evidence, expected, expected));
+
+        Assert.Equal(
+            "TRX is missing protected-base planned test identities count=1 tests="
+            + "First.Owner.Tests::PlannedTests.Skipped",
+            failure.Message);
+    }
+
+    [Fact]
+    public void AcceptsDeletedProtectedBaseIdentityAndRecordsExemption()
+    {
+        var evidence = new TestResultEvidence(
+            1,
+            new HashSet<(string Assembly, string Id)>
+            {
+                ("First.Owner.Tests", "OtherTests.Executed"),
+            });
+        (string Assembly, string Id)[] expected =
+        [
+            ("Deleted.Owner.Tests", "DeletedTests.RemovedFact"),
+        ];
+        using var output = new StringWriter { NewLine = "\n" };
+
+        var executed = Program.VerifyExpectedTestEvidence(evidence, expected, [], output);
+
+        Assert.Equal(1, executed);
+        Assert.Equal(
+            "ENGINEERING_TEST_IDENTITY_EXEMPTED assembly=\"Deleted.Owner.Tests\" "
+            + "id=\"DeletedTests.RemovedFact\" reason=candidate_source_absent\n",
+            output.ToString());
+    }
+
+    [Fact]
+    public void RecordsDeletedIdentityBeforeRejectingIdentityStillInCandidateSource()
+    {
+        var evidence = new TestResultEvidence(
+            1,
+            new HashSet<(string Assembly, string Id)>
+            {
+                ("First.Owner.Tests", "OtherTests.Executed"),
+            });
+        (string Assembly, string Id)[] expected =
+        [
+            ("Deleted.Owner.Tests", "DeletedTests.RemovedFact"),
+            ("First.Owner.Tests", "PlannedTests.Skipped"),
+        ];
+        (string Assembly, string Id)[] candidateSource =
+        [
+            ("First.Owner.Tests", "PlannedTests.Skipped"),
+        ];
+        using var output = new StringWriter { NewLine = "\n" };
+
+        var failure = Assert.Throws<InvalidDataException>(
+            () => Program.VerifyExpectedTestEvidence(
+                evidence,
+                expected,
+                candidateSource,
+                output));
+
+        Assert.Equal(
+            "TRX is missing protected-base planned test identities count=1 tests="
+            + "First.Owner.Tests::PlannedTests.Skipped",
+            failure.Message);
+        Assert.Equal(
+            "ENGINEERING_TEST_IDENTITY_EXEMPTED assembly=\"Deleted.Owner.Tests\" "
+            + "id=\"DeletedTests.RemovedFact\" reason=candidate_source_absent\n",
+            output.ToString());
+    }
+
+    [Fact]
     public void RejectsRequiredAssemblyWithoutExecutedIdentity()
     {
         var evidence = new TestResultEvidence(
@@ -133,5 +262,14 @@ public sealed class TestResultEvidenceTests
             output,
             error);
         return (exitCode, output.ToString(), error.ToString());
+    }
+
+    private static int VerifyExpected(
+        TestResultEvidence evidence,
+        IEnumerable<(string Assembly, string Id)> expected,
+        IEnumerable<(string Assembly, string Id)> candidateSource)
+    {
+        using var output = new StringWriter { NewLine = "\n" };
+        return Program.VerifyExpectedTestEvidence(evidence, expected, candidateSource, output);
     }
 }
