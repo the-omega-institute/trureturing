@@ -71,7 +71,7 @@ theorem finite_observability_energy_balance
       (fun k : ℕ => (A ^ k)† ∘L (A ^ k)) N
     rw [htel]
     ext x
-    simp
+    simp [ContinuousLinearMap.adjoint_one]
   constructor
   · apply ContinuousLinearMap.isPositive_sum
     intro k hk
