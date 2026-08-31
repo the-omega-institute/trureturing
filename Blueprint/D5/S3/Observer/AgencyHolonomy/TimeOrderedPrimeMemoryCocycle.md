@@ -42,9 +42,9 @@ The event list acts from left to right. The list head acts first, so list order 
 
 **Theorem 1.4 (Fourier time translation of an injection).**
 
-Lean statement: `D5/S3/Observer/AgencyHolonomy/TimeOrderedPrimeMemoryCocycle.timed_injection_shift`
+$$\forall e, s: \mathbb{R}, \operatorname{timedInjection}(\operatorname{shiftTimedEvent}(s, e)) = \operatorname{timedInjection}(e) \cdot \operatorname{fourierPhase}(\operatorname{frequency}(e), s).$$
 
-*Formalization.* `D5/S3/Observer/AgencyHolonomy/TimeOrderedPrimeMemoryCocycle.timed_injection_shift` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/AgencyHolonomy/TimeOrderedPrimeMemoryCocycle.timed_injection_shift` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -54,9 +54,9 @@ Shifting the event time multiplies its effective injection by the Fourier charac
 
 **Theorem 1.5 (Exact affine word action).**
 
-Lean statement: `D5/S3/Observer/AgencyHolonomy/TimeOrderedPrimeMemoryCocycle.time_ordered_evolution_affine`
+$$\forall s: \mathbb{C}, L, x, \operatorname{timeOrderedEvolution}(s, L, x) = (s^{\lvert L \rvert} \cdot \operatorname{fst}(x) + \operatorname{timeOrderedMemoryCocycle}(s, L) \cdot \operatorname{snd}(x), \operatorname{timeOrderedScalarCocycle}(L) \cdot \operatorname{snd}(x)).$$
 
-*Formalization.* `D5/S3/Observer/AgencyHolonomy/TimeOrderedPrimeMemoryCocycle.time_ordered_evolution_affine` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/AgencyHolonomy/TimeOrderedPrimeMemoryCocycle.time_ordered_evolution_affine` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -66,9 +66,9 @@ Every finite chronological word acts by a stable power on initial memory, the ti
 
 **Theorem 1.6 (Twisted cocycle law under concatenation).**
 
-Lean statement: `D5/S3/Observer/AgencyHolonomy/TimeOrderedPrimeMemoryCocycle.time_ordered_cocycle_append_laws`
+$$\begin{gathered}\forall s: \mathbb{C}, P, S:\\{}\operatorname{timeOrderedScalarCocycle}(\operatorname{append}(P, S)) = \operatorname{timeOrderedScalarCocycle}(P) \cdot \operatorname{timeOrderedScalarCocycle}(S) \land\\{}\operatorname{timeOrderedMemoryCocycle}(s, \operatorname{append}(P, S)) = s^{\lvert S \rvert} \cdot \operatorname{timeOrderedMemoryCocycle}(s, P) + \operatorname{timeOrderedMemoryCocycle}(s, S) \cdot \operatorname{timeOrderedScalarCocycle}(P) \land\\{}\forall x, \operatorname{timeOrderedEvolution}(s, \operatorname{append}(P, S), x) = \operatorname{timeOrderedEvolution}(s, S, \operatorname{timeOrderedEvolution}(s, P, x)).\end{gathered}$$
 
-*Formalization.* `D5/S3/Observer/AgencyHolonomy/TimeOrderedPrimeMemoryCocycle.time_ordered_cocycle_append_laws` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/AgencyHolonomy/TimeOrderedPrimeMemoryCocycle.time_ordered_cocycle_append_laws` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -80,9 +80,9 @@ The full affine evolution of a concatenated list is the composition of the prefi
 
 **Theorem 1.7 (Two-event chronology defect).**
 
-Lean statement: `D5/S3/Observer/AgencyHolonomy/TimeOrderedPrimeMemoryCocycle.time_ordered_two_event_swap_curvature`
+$$\begin{gathered}\forall s: \mathbb{C}, P, Q, x:\\{}\operatorname{fst}(\operatorname{timeOrderedEvolution}(s, [P, Q], x)) - \operatorname{fst}(\operatorname{timeOrderedEvolution}(s, [Q, P], x)) = \operatorname{primeSwapCurvature}(s, \operatorname{timedInjection}(P), \operatorname{localFactor}(P), \operatorname{timedInjection}(Q), \operatorname{localFactor}(Q)) \cdot \operatorname{snd}(x) \land\\{}\operatorname{snd}(\operatorname{timeOrderedEvolution}(s, [P, Q], x)) = \operatorname{snd}(\operatorname{timeOrderedEvolution}(s, [Q, P], x)) \land\\{}\operatorname{timeOrderedMemoryCocycle}(s, [P, Q]) - \operatorname{timeOrderedMemoryCocycle}(s, [Q, P]) = \operatorname{primeSwapCurvature}(s, \operatorname{timedInjection}(P), \operatorname{localFactor}(P), \operatorname{timedInjection}(Q), \operatorname{localFactor}(Q)).\end{gathered}$$
 
-*Formalization.* `D5/S3/Observer/AgencyHolonomy/TimeOrderedPrimeMemoryCocycle.time_ordered_two_event_swap_curvature` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/AgencyHolonomy/TimeOrderedPrimeMemoryCocycle.time_ordered_two_event_swap_curvature` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -92,9 +92,9 @@ Reversing two timed events leaves the scalar coordinate unchanged. The memory-co
 
 **Theorem 1.8 (Residual chronology with independent event times).**
 
-Lean statement: `D5/S3/Observer/AgencyHolonomy/TimeOrderedPrimeMemoryCocycle.timed_residual_two_event_swap`
+$$\begin{gathered}\operatorname{timeOrderedMemoryCocycle}(s, [\operatorname{residualTimedEvent}(r_{p}, v_{p}, f_{p}, t_{p}), \operatorname{residualTimedEvent}(r_{q}, v_{q}, f_{q}, t_{q})]) - \operatorname{timeOrderedMemoryCocycle}(s, [\operatorname{residualTimedEvent}(r_{q}, v_{q}, f_{q}, t_{q}), \operatorname{residualTimedEvent}(r_{p}, v_{p}, f_{p}, t_{p})])\\{}= \operatorname{stableResidualSwapCurvature}(s, r_{p}, r_{q}, \operatorname{phaseTwistedChannel}(f_{p}, t_{p}, v_{p}), \operatorname{phaseTwistedChannel}(f_{q}, t_{q}, v_{q})).\end{gathered}$$
 
-*Formalization.* `D5/S3/Observer/AgencyHolonomy/TimeOrderedPrimeMemoryCocycle.timed_residual_two_event_swap` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/AgencyHolonomy/TimeOrderedPrimeMemoryCocycle.timed_residual_two_event_swap` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -104,9 +104,9 @@ For residual local factors at possibly different Fourier times, the chronology d
 
 **Theorem 1.9 (Recovery of the common-time phase-twisted curvature).**
 
-Lean statement: `D5/S3/Observer/AgencyHolonomy/TimeOrderedPrimeMemoryCocycle.common_time_residual_swap_recovers_phase_twisted_curvature`
+$$\begin{gathered}\operatorname{timeOrderedMemoryCocycle}(s, [\operatorname{residualTimedEvent}(r_{p}, v_{p}, f_{p}, t), \operatorname{residualTimedEvent}(r_{q}, v_{q}, f_{q}, t)]) - \operatorname{timeOrderedMemoryCocycle}(s, [\operatorname{residualTimedEvent}(r_{q}, v_{q}, f_{q}, t), \operatorname{residualTimedEvent}(r_{p}, v_{p}, f_{p}, t)])\\{}= \operatorname{phaseTwistedStableSwapCurvature}(s, r_{p}, r_{q}, v_{p}, v_{q}, f_{p}, f_{q}, t).\end{gathered}$$
 
-*Formalization.* `D5/S3/Observer/AgencyHolonomy/TimeOrderedPrimeMemoryCocycle.common_time_residual_swap_recovers_phase_twisted_curvature` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/AgencyHolonomy/TimeOrderedPrimeMemoryCocycle.common_time_residual_swap_recovers_phase_twisted_curvature` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -117,14 +117,14 @@ When the two event times coincide, the list-level chronology defect specializes 
 ## References
 
 - Truth anchor: `D5/S3/Observer/AgencyHolonomy/TimeOrderedPrimeMemoryCocycle.TimedPrimeMemoryEvent`
-- Truth anchor: `D5/S3/Observer/AgencyHolonomy/TimeOrderedPrimeMemoryCocycle.timeOrderedMemoryCocycle`
-- Truth anchor: `D5/S3/Observer/AgencyHolonomy/TimeOrderedPrimeMemoryCocycle.timeOrderedEvolution`
-- Truth anchor: `D5/S3/Observer/AgencyHolonomy/TimeOrderedPrimeMemoryCocycle.timed_injection_shift`
-- Truth anchor: `D5/S3/Observer/AgencyHolonomy/TimeOrderedPrimeMemoryCocycle.time_ordered_evolution_affine`
-- Truth anchor: `D5/S3/Observer/AgencyHolonomy/TimeOrderedPrimeMemoryCocycle.time_ordered_cocycle_append_laws`
-- Truth anchor: `D5/S3/Observer/AgencyHolonomy/TimeOrderedPrimeMemoryCocycle.time_ordered_two_event_swap_curvature`
-- Truth anchor: `D5/S3/Observer/AgencyHolonomy/TimeOrderedPrimeMemoryCocycle.timed_residual_two_event_swap`
 - Truth anchor: `D5/S3/Observer/AgencyHolonomy/TimeOrderedPrimeMemoryCocycle.common_time_residual_swap_recovers_phase_twisted_curvature`
+- Truth anchor: `D5/S3/Observer/AgencyHolonomy/TimeOrderedPrimeMemoryCocycle.timeOrderedEvolution`
+- Truth anchor: `D5/S3/Observer/AgencyHolonomy/TimeOrderedPrimeMemoryCocycle.timeOrderedMemoryCocycle`
+- Truth anchor: `D5/S3/Observer/AgencyHolonomy/TimeOrderedPrimeMemoryCocycle.time_ordered_cocycle_append_laws`
+- Truth anchor: `D5/S3/Observer/AgencyHolonomy/TimeOrderedPrimeMemoryCocycle.time_ordered_evolution_affine`
+- Truth anchor: `D5/S3/Observer/AgencyHolonomy/TimeOrderedPrimeMemoryCocycle.time_ordered_two_event_swap_curvature`
+- Truth anchor: `D5/S3/Observer/AgencyHolonomy/TimeOrderedPrimeMemoryCocycle.timed_injection_shift`
+- Truth anchor: `D5/S3/Observer/AgencyHolonomy/TimeOrderedPrimeMemoryCocycle.timed_residual_two_event_swap`
+- Dependency: [D5/S3/Observer/AgencyHolonomy/PhaseTwistedStableSwapCurvature](PhaseTwistedStableSwapCurvature.md)
 - Dependency: [D5/S3/Observer/AgencyHolonomy/PrimeFrequencyPhaseFlow](PrimeFrequencyPhaseFlow.md)
 - Dependency: [D5/S3/Observer/AgencyHolonomy/PrimeSwapCurvature](PrimeSwapCurvature.md)
-- Dependency: [D5/S3/Observer/AgencyHolonomy/PhaseTwistedStableSwapCurvature](PhaseTwistedStableSwapCurvature.md)
