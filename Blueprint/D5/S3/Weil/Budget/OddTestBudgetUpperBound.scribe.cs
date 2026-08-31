@@ -69,6 +69,9 @@ internal sealed class OddTestBudgetUpperBoundDocument : IScribeDocumentDefinitio
             quotient, Sp, Eq, Sp, rayleigh);
         Formula quotientSet = new Formula.SetBuilder(
             quotientPredicate, quotient, real);
+        Formula admissibleFamilyNonempty = Seq(
+            Exists, Sp, test, Colon, Sp, vector, Comma, Sp,
+            boundaryPairing, Sp, Neq, Sp, D(0));
         Formula universalPencil = Seq(
             Forall, Sp, test, Colon, Sp, vector, Comma, Sp,
             boundaryPairing, Sp, Neq, Sp, D(0), Sp, Rightarrow, Sp,
@@ -85,12 +88,11 @@ internal sealed class OddTestBudgetUpperBoundDocument : IScribeDocumentDefinitio
             RowBreak, Grp(),
             reference, Comma, Sp, budget, Colon, Sp, real, Comma,
             RowBreak, Grp(),
-            Exists, Sp, test, Colon, Sp, vector, Comma, Sp,
-            boundaryPairing, Sp, Neq, Sp, D(0), Sp, Land,
+            Open, Open, admissibleFamilyNonempty, Close, Sp, Land,
             RowBreak, Grp(),
             Call("BddBelow", quotientSet), Sp, Land,
             RowBreak, Grp(),
-            universalPencil, Sp, Rightarrow,
+            Open, universalPencil, Close, Close, Sp, Rightarrow,
             RowBreak, Grp(),
             budget, Sp, Le, Sp, upper, Dot,
             End, Grp(F.Id("gathered"))));
