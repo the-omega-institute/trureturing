@@ -206,14 +206,17 @@ public sealed partial class ReviewRegressionTests
         fixture.Files[RuleFixture.FixtureBackfillAtomPath] = fixture.Files[
                 RuleFixture.FixtureBackfillAtomPath]
             .Replace(
-            fingerprint,
-            replacement,
-            StringComparison.Ordinal);
+                fingerprint,
+                replacement,
+                StringComparison.Ordinal);
 
-        var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build());
+        var evaluation = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(16),
+            fixture.Build());
 
         Assert.Contains(evaluation.Diagnostics, diagnostic =>
-            diagnostic.Message.Contains("fingerprint", StringComparison.OrdinalIgnoreCase));
+            diagnostic.Message.Contains("CAS blob is missing", StringComparison.Ordinal)
+            && diagnostic.Message.Contains(replacement["sha256:".Length..], StringComparison.Ordinal));
     }
 
     [Fact]
@@ -333,20 +336,19 @@ public sealed partial class ReviewRegressionTests
     }
 
     [Theory]
-    [InlineData("Meta/Digestion/backfill/interface-v1/residual-open/atom.yaml", "ast_path: failure")]
-    [InlineData("Meta/Digestion/backfill/interface-v1/residual-open/atom.yaml", "ast_path: anomaly")]
-    [InlineData("Meta/Digestion/backfill/interface-v1/residual-open/atom.yaml", "ast_path: unresolved tension")]
-    [InlineData("Meta/Digestion/backfill/interface-v1/residual-open/atom.yaml", "ast_path: row//failure")]
+    [InlineData("Meta/Digestion/backfill/interface-v1/residual-open/atom.yaml", "subject: failure")]
+    [InlineData("Meta/Digestion/backfill/interface-v1/residual-open/atom.yaml", "subject: anomaly")]
+    [InlineData("Meta/Digestion/backfill/interface-v1/residual-open/atom.yaml", "subject: unresolved tension")]
+    [InlineData("Meta/Digestion/backfill/interface-v1/residual-open/atom.yaml", "subject: row//failure")]
     [InlineData("Meta/Digestion/backfill/interface-v1/residual-open/atom.yaml", "status: failure")]
     [InlineData("Meta/Digestion/backfill/interface-v1/residual-open/atom.yaml", "payload: tension")]
     [InlineData("Meta/Digestion/backfill/interface-v1/residual-open/atom.yaml", "payload: failure/report")]
-    [InlineData("Meta/Digestion/backfill/interface-v1/residual-open/atom.yaml", "x.ast_path: failure/report")]
-    [InlineData("Meta/Digestion/backfill/interface-v1/residual-open/atom.yaml", "outer:\n  ast_path: failure/report")]
-    [InlineData("Meta/Digestion/backfill/interface-v1/residual-open/atom.yaml", "boundary.ast_path: failure/report")]
-    [InlineData("Meta/Digestion/backfill/interface-v1/not-a-state/rogue.yaml", "ast_path: failure/report")]
-    [InlineData("Meta/Digestion/backfill/interface-v1/residual-open/deep/rogue.yaml", "ast_path: anomaly/v1")]
-    [InlineData("Meta/Digestion/backfill/interface-v1/residual-open/rogue.yml", "ast_path: failure/open")]
-    [InlineData("Evidence/D5/S0/Carrier/Field.run.json", "{\"ast_path\":\"failure/report\"}")]
+    [InlineData("Meta/Digestion/backfill/interface-v1/residual-open/atom.yaml", "x.subject: failure/report")]
+    [InlineData("Meta/Digestion/backfill/interface-v1/residual-open/atom.yaml", "outer:\n  subject: failure/report")]
+    [InlineData("Meta/Digestion/backfill/interface-v1/not-a-state/rogue.yaml", "subject: failure/report")]
+    [InlineData("Meta/Digestion/backfill/interface-v1/residual-open/deep/rogue.yaml", "subject: anomaly/v1")]
+    [InlineData("Meta/Digestion/backfill/interface-v1/residual-open/rogue.yml", "subject: failure/open")]
+    [InlineData("Evidence/D5/S0/Carrier/Field.run.json", "{\"subject\":\"failure/report\"}")]
     [InlineData("Evidence/D5/S0/Carrier/Field.run.json", "{\"status\":\"failure/open\"}")]
     [InlineData("Evidence/D5/S0/Carrier/Field.run.json", "{\"note\":\"anomaly/v1\"}")]
     public void Sl019ReportsEveryResidueOutsideADeclaredDigestionAddress(
@@ -374,8 +376,7 @@ public sealed partial class ReviewRegressionTests
         const string gid =
             "D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/RetrospectiveLookupFailure"
             + ".lookup_copy_zero_loss_and_nonanticipating_failure";
-        fixture.Files[path] = "ast_path: row/probe\n"
-            + "cas_ref: sha256:00\n"
+        fixture.Files[path] = "cas_ref: sha256:00\n"
             + "coverage_gids:\n  - " + gid + "\n"
             + "receipts:\n"
             + "  coverage:\n"
@@ -406,7 +407,7 @@ public sealed partial class ReviewRegressionTests
     {
         var fixture = new RuleFixture();
         const string path = "Meta/Digestion/backfill/interface-v1/absorbed-closed/rogue.yaml";
-        fixture.Files[path] = "ast_path: row/probe\ncas_ref: sha256:00\n" + body;
+        fixture.Files[path] = "cas_ref: sha256:00\n" + body;
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(19),
@@ -436,38 +437,12 @@ public sealed partial class ReviewRegressionTests
                 "anomaly-bearing", StringComparison.Ordinal));
     }
 
-    [Theory]
-    [InlineData("ast_path")]
-    [InlineData("boundary")]
-    public void Sl019AcceptsADigestionAddressWhoseSubjectIsNamedAfterAFailure(string layout)
-    {
-        var fixture = new RuleFixture();
-        const string path =
-            "Meta/Digestion/backfill/interface-v1/partial-closed/probe.yaml";
-        var boundary = layout == "boundary"
-            ? "boundary:\n  ast_path: row/adaptive-submodularity-failure-witness\n"
-                + "  start_byte: 0\n  end_byte: 1\n"
-            : "ast_path: row/adaptive-submodularity-failure-witness\n";
-        fixture.Files[path] = boundary
-            + "cas_ref: sha256:00\n"
-            + "coverage_gids:\n  - D5/S0/Tower/ConstantArms.binary_arm\n";
-
-        var evaluation = RuleCatalog.Default.EvaluateSingle(
-            RuleId.CreateKnown(19),
-            fixture.Build(RawChangeSet.Create([path])));
-
-        Assert.DoesNotContain(
-            evaluation.Diagnostics,
-            item => item.Path == path && item.Message.Contains(
-                "anomaly-bearing", StringComparison.Ordinal));
-    }
-
     [Fact]
     public void Sl019StillReportsADigestionAddressWhoseResidueCarriesASerializedRecordKey()
     {
         var fixture = new RuleFixture();
         const string path = "Meta/Digestion/backfill/interface-v1/residual-open/record.yaml";
-        fixture.Files[path] = "ast_path: 'row/failure\"kind\":x'\n";
+        fixture.Files[path] = "subject: 'row/failure\"kind\":x'\n";
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(19),
@@ -476,7 +451,7 @@ public sealed partial class ReviewRegressionTests
         Assert.Contains(
             evaluation.Diagnostics,
             item => item.Path == path && item.Message.Contains(
-                "unknown anomaly-bearing schema at $.ast_path", StringComparison.Ordinal));
+                "unknown anomaly-bearing schema at $.subject", StringComparison.Ordinal));
     }
 
     [Theory]
@@ -488,8 +463,8 @@ public sealed partial class ReviewRegressionTests
         bool expectsDiagnostic)
     {
         var fixture = new RuleFixture();
-        const string path = "Evidence/D5/S0/Carrier/Locator.run.json";
-        fixture.Files[path] = "{\"ast_path\":\"" + value + "\"}\n";
+        const string path = "Evidence/D5/S0/Carrier/Signal.run.json";
+        fixture.Files[path] = "{\"subject\":\"" + value + "\"}\n";
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(19),

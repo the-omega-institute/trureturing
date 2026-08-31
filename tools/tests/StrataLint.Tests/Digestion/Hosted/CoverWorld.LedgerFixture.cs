@@ -7,25 +7,25 @@ internal static partial class CoverWorld
 {
     private static void MaterializeOtherAtomFormalizationReceipt(
         CoverSpec spec,
-        DigestionAtom atom,
+        DigestionAtom? atom,
         IDictionary<string, string> files)
     {
-        if (spec.OtherAtomBinding is not { } other)
+        if (spec.OtherAtomGid is not { } gid || atom is null)
         {
             return;
         }
 
-        var separator = other.Gid.LastIndexOf('.');
+        var separator = gid.LastIndexOf('.');
         var receipt = new DigestionFormalizationReceipt(
-            other.AtomId,
-            other.Gid,
+            CoverWorld.OtherAtomId,
+            gid,
             new DigestionFormalizationSignature(
-                other.Gid[(separator + 1)..],
+                gid[(separator + 1)..],
                 spec.ReportKind,
                 spec.ReportType),
             atom.Fingerprints.RawSha256,
             atom.Fingerprints.RawSha256);
-        files[DigestionFormalizationReceipt.PathForAtom(other.AtomId)] =
+        files[DigestionFormalizationReceipt.PathForAtom(CoverWorld.OtherAtomId)] =
             System.Text.Encoding.UTF8.GetString(
                 DigestionFormalizationReceipt.Write(receipt).AsSpan());
     }
@@ -38,6 +38,8 @@ internal static partial class CoverWorld
         string? tailAuthPath,
         string? tailAuthSha,
         Func<string, string>? coverageStatementId = null,
+        DigestionAtom? otherAtom = null,
+        string? otherSourcePath = null,
         DigestionAtom? unrelatedAtom = null,
         string? unrelatedSourcePath = null,
         bool useUnrelatedBaselineCoverage = false)
@@ -48,7 +50,6 @@ internal static partial class CoverWorld
             "fixture-source",
             RuleFixture.FixtureDigestionSourcePath,
             spec.AtomId,
-            atom.AstPath,
             atom.Fingerprints,
             coverage,
             spec.Migration,
@@ -59,25 +60,6 @@ internal static partial class CoverWorld
             spec.InitialDefinitionSha256,
             spec.InitialEmissionSha256,
             spec.InitialUnresolvedSubitems));
-        if (includeOtherAtom && spec.OtherAtomBinding is { } other)
-        {
-            entries.Add(Entry(
-                "fixture-source",
-                RuleFixture.FixtureDigestionSourcePath,
-                other.AtomId,
-                "theorem/sibling",
-                atom.Fingerprints,
-                [other.Gid],
-                "partial",
-                "closed",
-                null,
-                null,
-                coverageStatementId?.Invoke(other.Gid),
-                spec.InitialDefinitionSha256,
-                spec.InitialEmissionSha256,
-                []));
-        }
-
         sources.Add(new DigestionLedgerSource(
             "fixture-source",
             RuleFixture.FixtureDigestionSourcePath,
@@ -85,6 +67,35 @@ internal static partial class CoverWorld
             [],
             GenreRegistryProjection.Available(GenreRegistryCheck.Collected([])),
             entries.ToImmutable()));
+
+        if (includeOtherAtom
+            && spec.OtherAtomGid is { } otherGid
+            && otherAtom is not null
+            && otherSourcePath is not null)
+        {
+            sources.Add(new DigestionLedgerSource(
+                "fixture-sibling-source",
+                otherSourcePath,
+                SyntheticNumberedAtomizer.Id,
+                [],
+                GenreRegistryProjection.Available(GenreRegistryCheck.Collected([])),
+                [
+                    Entry(
+                        "fixture-sibling-source",
+                        otherSourcePath,
+                        CoverWorld.OtherAtomId,
+                        otherAtom.Fingerprints,
+                        [otherGid],
+                        spec.OtherMigration,
+                        spec.OtherTruth,
+                        null,
+                        null,
+                        coverageStatementId?.Invoke(otherGid),
+                        spec.InitialDefinitionSha256,
+                        spec.InitialEmissionSha256,
+                        []),
+                ]));
+        }
 
         if (spec.UnrelatedSibling is { } sibling
             && unrelatedAtom is not null
@@ -103,8 +114,7 @@ internal static partial class CoverWorld
                     Entry(
                         "fixture-unrelated-source",
                         unrelatedSourcePath,
-                        sibling.AtomId,
-                        unrelatedAtom.AstPath,
+                        CoverWorld.UnrelatedAtomId,
                         unrelatedAtom.Fingerprints,
                         siblingCoverage,
                         "partial",
@@ -125,7 +135,6 @@ internal static partial class CoverWorld
         string sourceId,
         string sourcePath,
         string atomId,
-        string astPath,
         DigestionFingerprints fingerprints,
         ImmutableArray<string> coverage,
         string migration,
@@ -159,8 +168,6 @@ internal static partial class CoverWorld
             sourcePath,
             SyntheticNumberedAtomizer.Id,
             atomId,
-            astPath,
-            null,
             fingerprints,
             coverage,
             new DigestionReceipts(

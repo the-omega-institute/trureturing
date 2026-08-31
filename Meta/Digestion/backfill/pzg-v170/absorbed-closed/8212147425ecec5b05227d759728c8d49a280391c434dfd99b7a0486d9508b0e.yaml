@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:8212147425ecec5b05227d759728c8d49a280391c434dfd99b7a0486d9508b0e
+  normalized_sha256: sha256:8212147425ecec5b05227d759728c8d49a280391c434dfd99b7a0486d9508b0e
+cas_ref: sha256:8212147425ecec5b05227d759728c8d49a280391c434dfd99b7a0486d9508b0e
+coverage_gids:
+  - D5/S3/Analytic/TailCertificate.finite_tail_certificates_sum_and_enclose
+receipts:
+  coverage:
+    - gid: D5/S3/Analytic/TailCertificate.finite_tail_certificates_sum_and_enclose
+      source_sha256: sha256:8212147425ecec5b05227d759728c8d49a280391c434dfd99b7a0486d9508b0e
+      target_statement_id: sha256:95fc54a40aedc23ec68b9c579a45240776cf7775030f8cc312a348000e2d2730
+  scribe:
+    - gid: D5/S3/Analytic/TailCertificate.finite_tail_certificates_sum_and_enclose
+      definition_sha256: sha256:ca052dc76f3be481ce14f9782fa9cf1461228ac74b3477024e6e8e55614f75bf
+      emission_sha256: sha256:2876354fd98d12850743e304012f285b46fa71f8fda87650edd1de2fcde4df92
+  unresolved_subitems: []

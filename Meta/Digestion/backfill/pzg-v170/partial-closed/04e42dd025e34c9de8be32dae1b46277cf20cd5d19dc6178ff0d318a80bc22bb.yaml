@@ -1,0 +1,52 @@
+fingerprints:
+  raw_sha256: sha256:04e42dd025e34c9de8be32dae1b46277cf20cd5d19dc6178ff0d318a80bc22bb
+  normalized_sha256: sha256:04e42dd025e34c9de8be32dae1b46277cf20cd5d19dc6178ff0d318a80bc22bb
+cas_ref: sha256:04e42dd025e34c9de8be32dae1b46277cf20cd5d19dc6178ff0d318a80bc22bb
+coverage_gids:
+  - D5/S1/Phase/SeatTowerArithmetic.bhk_implies_w3_walk
+  - D5/S1/Phase/WalkFormula.alternating_walk_append
+  - D5/S1/Phase/WalkFormula.alternating_walk_reverse
+  - D5/S1/Phase/WalkFormula.endpoint_correction_is_integer
+  - D5/S1/Phase/WalkFormula.w3_walk_endpoint_translation
+receipts:
+  coverage:
+    - gid: D5/S1/Phase/SeatTowerArithmetic.bhk_implies_w3_walk
+      source_sha256: sha256:04e42dd025e34c9de8be32dae1b46277cf20cd5d19dc6178ff0d318a80bc22bb
+      target_statement_id: sha256:44c5588871738b8d6f1dc91ada55913b521ebcce0310883991fcc71e4434bdd7
+    - gid: D5/S1/Phase/WalkFormula.alternating_walk_append
+      source_sha256: sha256:04e42dd025e34c9de8be32dae1b46277cf20cd5d19dc6178ff0d318a80bc22bb
+      target_statement_id: sha256:13ceab1fadfd26184076ed925afbf27cce6e6b7fe59ec454217ea8560f4862fd
+    - gid: D5/S1/Phase/WalkFormula.alternating_walk_reverse
+      source_sha256: sha256:04e42dd025e34c9de8be32dae1b46277cf20cd5d19dc6178ff0d318a80bc22bb
+      target_statement_id: sha256:921ce110a2f304627497ed47a1813d715e7b23b778199d5468df2f76203d41db
+    - gid: D5/S1/Phase/WalkFormula.endpoint_correction_is_integer
+      source_sha256: sha256:04e42dd025e34c9de8be32dae1b46277cf20cd5d19dc6178ff0d318a80bc22bb
+      target_statement_id: sha256:35b9add727aae2a3681fdb6d6f2fd8fb5689ba827a65d6ae899a07d7f48df3f7
+    - gid: D5/S1/Phase/WalkFormula.w3_walk_endpoint_translation
+      source_sha256: sha256:04e42dd025e34c9de8be32dae1b46277cf20cd5d19dc6178ff0d318a80bc22bb
+      target_statement_id: sha256:31fd07ff22f89282732e9b00963fd6ca2f66b010c67e6daae35d41844b8b3f6a
+  scribe:
+    - gid: D5/S1/Phase/SeatTowerArithmetic.bhk_implies_w3_walk
+      definition_sha256: sha256:74dc7747edb474cc66d3a095a487051ea7594d474a79c177acf1cfb3d912a936
+      emission_sha256: sha256:0d784e8bdd3fb85260d8efa4a4c512dc4ebb73341e99072f422955a663c7f517
+    - gid: D5/S1/Phase/WalkFormula.alternating_walk_append
+      definition_sha256: sha256:5aa1fadbee8f0dbc14e698be5bcc80b8c320592a2769510b2a59b484c06f0ce5
+      emission_sha256: sha256:d40e597cedc8852c8846da5122abe486cc2dd97f1c7805dc4a6a712cd592925a
+    - gid: D5/S1/Phase/WalkFormula.alternating_walk_reverse
+      definition_sha256: sha256:5aa1fadbee8f0dbc14e698be5bcc80b8c320592a2769510b2a59b484c06f0ce5
+      emission_sha256: sha256:d40e597cedc8852c8846da5122abe486cc2dd97f1c7805dc4a6a712cd592925a
+    - gid: D5/S1/Phase/WalkFormula.endpoint_correction_is_integer
+      definition_sha256: sha256:5aa1fadbee8f0dbc14e698be5bcc80b8c320592a2769510b2a59b484c06f0ce5
+      emission_sha256: sha256:d40e597cedc8852c8846da5122abe486cc2dd97f1c7805dc4a6a712cd592925a
+    - gid: D5/S1/Phase/WalkFormula.w3_walk_endpoint_translation
+      definition_sha256: sha256:5aa1fadbee8f0dbc14e698be5bcc80b8c320592a2769510b2a59b484c06f0ce5
+      emission_sha256: sha256:d40e597cedc8852c8846da5122abe486cc2dd97f1c7805dc4a6a712cd592925a
+  unresolved_subitems:
+    - bhk-continued-fraction-theorem
+    - bhk-1755-enumeration-certificate
+    - w3-440-enumeration-certificate
+    - w3-sign-reversal-postmortem
+    - full-vote-enforcement-clause
+    - three-walk-identification
+    - orientation-branch-clause
+    - dedekind-orientation-canonical-ledger-clause

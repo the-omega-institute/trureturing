@@ -1,0 +1,26 @@
+fingerprints:
+  raw_sha256: sha256:7de29f3405ccdbc2c1589a2c5c920f082cb315e5a04d741b93ff716018191994
+  normalized_sha256: sha256:7de29f3405ccdbc2c1589a2c5c920f082cb315e5a04d741b93ff716018191994
+cas_ref: sha256:7de29f3405ccdbc2c1589a2c5c920f082cb315e5a04d741b93ff716018191994
+coverage_gids:
+  - D5/S3/Zeros/CompletedZeta.xi_reading_reflection
+  - D5/S3/Zeros/CompletedZeta.zero_quartet_scaling_spec
+receipts:
+  coverage:
+    - gid: D5/S3/Zeros/CompletedZeta.zero_quartet_scaling_spec
+      source_sha256: sha256:7de29f3405ccdbc2c1589a2c5c920f082cb315e5a04d741b93ff716018191994
+      target_statement_id: sha256:54194a5ed453f9739fa911583246728277b4fa9d97b031a0c37dbfb7e7d82e0d
+  scribe:
+    - gid: D5/S3/Zeros/CompletedZeta.zero_quartet_scaling_spec
+      definition_sha256: sha256:7adc01d7166094417b25c9f92fa6ca76769854941c96daab523be09d629b3fa2
+      emission_sha256: sha256:fbf5a8bede17691bfd26b0095a98ae4353665ee67311ceb008e16ec2c410da09
+  unresolved_subitems:
+    - zero-data-symmetry-fields-assume-source-conclusion
+    - arbitrary-completed-reading-to-zero-data-domain-bridge
+    - zero-data-inhabitance-not-proved
+    - real-coefficient-conjugation-symmetry-via-analytic-continuation
+    - reflection-functional-equation-symmetry-derivation
+    - pairwise-distinct-off-line-zero-quartet
+    - scaling-ledger-alone-does-not-exclude-off-line-zeros
+    - nonmultiplicative-periodic-dirichlet-reading-instrument
+    - off-line-zero-window-values-and-residual-certificate

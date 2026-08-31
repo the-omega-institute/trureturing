@@ -3,4 +3,4 @@ path = "docs/develop/theory/ENTROPY-INFO-PRIMES-O5.md"
 atomizer = "generic-v1"
 genre_registry_check = "no-registry"
 unregistered_genres = []
-acknowledged_stale = ["generic-residual-3703b9b1f384e0db32b6ae7a10d8cf8878ca3913eb5ef73d025a651d1b25f29e", "generic-residual-5f9ec268720dd5be114380eb35368932066c7fb424009bb942cad5cf28d0e309", "generic-residual-96aec70d813cab6f6e83db0ae3d09165a127c08f3e0448f9d07c0bf2120db813", "generic-residual-ae768c3407961ca2bdb9fb8fe0427b8617301a68a8c0d0c6c1ac13a971887f79", "generic-residual-f736aceed1b4ad6cfddccf4b6f73632d66ad1af09041a389940fae2bcee82d1b"]
+acknowledged_stale = ["3703b9b1f384e0db32b6ae7a10d8cf8878ca3913eb5ef73d025a651d1b25f29e", "5f9ec268720dd5be114380eb35368932066c7fb424009bb942cad5cf28d0e309", "96aec70d813cab6f6e83db0ae3d09165a127c08f3e0448f9d07c0bf2120db813", "ae768c3407961ca2bdb9fb8fe0427b8617301a68a8c0d0c6c1ac13a971887f79", "f736aceed1b4ad6cfddccf4b6f73632d66ad1af09041a389940fae2bcee82d1b"]

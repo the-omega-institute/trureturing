@@ -8,6 +8,15 @@ namespace StrataLint.Tests;
 // 按 CLAUDE.md 第 8 条「桶满则裂、只裂不迁」,新条目入新桶,既有条目原地不动。
 public sealed class Sl016WakeupTests
 {
+    private const string AtomPath =
+        "Meta/Digestion/backfill/delta-v0.1/partial-closed/"
+        + RuleFixture.FixtureAtomId
+        + ".yaml";
+    private const string SecondAtomId =
+        "16367aacb67a4a017c8da8ab95682ccb390863780f7114dda0a0e0c55644c7c4";
+    private const string SecondCasReference = "sha256:" + SecondAtomId;
+    private const string SecondCasPath = "Meta/Digestion/atoms/sha256/" + SecondAtomId;
+
     // 理论卷改按路径规则治理后,GovernanceDocuments 里已无理论路径。若 IsAffectedBy
     // 仍只靠那张清单,只改理论卷的候选就**整条规则不触发**(RuleCatalog 对未命中的
     // 规则整条跳过),消化账本检测随之失效——实测见 #2462:追加一条可原子化命题、
@@ -85,12 +94,10 @@ public sealed class Sl016WakeupTests
     [Fact]
     public void EdgeFileInDeltaStillWakesAndJudgesSl016()
     {
-        const string atomPath =
-            "Meta/Digestion/backfill/delta-v0.1/partial-closed/delta-atom.yaml";
         var fixture = CoverageReceiptFixture(
             "D5/S0/Carrier/BackfillTarget",
             FrozenStatementReceiptTestData.Id('0'));
-        var context = fixture.Build(RawChangeSet.Create([atomPath]));
+        var context = fixture.Build(RawChangeSet.Create([AtomPath]));
 
         Assert.True(BackfillInventoryRule.IsAffectedBy(context));
         Assert.Contains(
@@ -161,11 +168,9 @@ public sealed class Sl016WakeupTests
     {
         var fixture = new RuleFixture();
         fixture.UseValidDirectoryBackfill();
-        const string atomPath =
-            "Meta/Digestion/backfill/delta-v0.1/partial-closed/delta-atom.yaml";
         foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
         {
-            files[atomPath] = files[atomPath].Replace(
+            files[AtomPath] = files[AtomPath].Replace(
                 "coverage_gids:\n  - D5/S0/Carrier/BackfillTarget",
                 "coverage_gids:\n  - D5/S0/Carrier/BackfillTarget\n  - D5/S0/Carrier/BackfillTarget",
                 StringComparison.Ordinal);
@@ -184,15 +189,13 @@ public sealed class Sl016WakeupTests
     {
         var fixture = new RuleFixture();
         fixture.UseValidDirectoryBackfill();
-        const string atomPath =
-            "Meta/Digestion/backfill/delta-v0.1/partial-closed/delta-atom.yaml";
-        fixture.Files[atomPath] = fixture.Files[atomPath].Replace(
+        fixture.Files[AtomPath] = fixture.Files[AtomPath].Replace(
             "coverage_gids:\n  - D5/S0/Carrier/BackfillTarget",
             "coverage_gids:\n  - D5/S0/Carrier/BackfillTarget\n  - D5/S0/Carrier/BackfillTarget",
             StringComparison.Ordinal);
 
         var findings = BackfillInventoryRule.EvaluateCandidateDelta(
-            fixture.Build(RawChangeSet.Create([atomPath])));
+            fixture.Build(RawChangeSet.Create([AtomPath])));
 
         Assert.Contains(findings, finding => finding.Message.Contains(
             "duplicate coverage GIDs",
@@ -236,20 +239,18 @@ public sealed class Sl016WakeupTests
     [Fact]
     public void CandidateBackfillPairWithoutBaselineFormalizationPrecommitIsBlocked()
     {
-        const string atomPath =
-            "Meta/Digestion/backfill/delta-v0.1/partial-closed/delta-atom.yaml";
         const string gid = "D5/S0/Carrier/BackfillTarget.protectedTargetFixture";
         var (fixture, verifiedScribeEmissions, receiptProjection) =
             PreparedDeclarationPairFixture(gid);
-        fixture.Files[atomPath] = AddCoverageAndReceipts(
-            fixture.Files[atomPath],
+        fixture.Files[AtomPath] = AddCoverageAndReceipts(
+            fixture.Files[AtomPath],
             gid,
             receiptProjection);
 
         var evaluation = EvaluateSl016(
             fixture,
             verifiedScribeEmissions,
-            [atomPath]);
+            [AtomPath]);
 
         Assert.Contains(evaluation.Diagnostics, finding =>
             finding.AdmissionEffect == AdmissionEffect.Block
@@ -262,26 +263,25 @@ public sealed class Sl016WakeupTests
     [Fact]
     public void CandidateCannotReuseGidOnSecondAtomWithoutThatAtomsPrecommitment()
     {
-        const string firstAtomPath =
-            "Meta/Digestion/backfill/delta-v0.1/partial-closed/delta-atom.yaml";
         const string secondAtomPath =
-            "Meta/Digestion/backfill/delta-v0.1/partial-closed/second-atom.yaml";
+            "Meta/Digestion/backfill/delta-v0.1/partial-closed/" + SecondAtomId + ".yaml";
         const string gid = "D5/S0/Carrier/BackfillTarget.protectedTargetFixture";
         var (fixture, verifiedScribeEmissions, receiptProjection) =
             PreparedDeclarationPairFixture(gid);
         foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
         {
-            files[firstAtomPath] = AddCoverageAndReceipts(
-                files[firstAtomPath],
+            files[AtomPath] = AddCoverageAndReceipts(
+                files[AtomPath],
                 gid,
                 receiptProjection);
         }
 
-        AddFormalizationPrecommitment(fixture, "delta-atom", gid);
-        fixture.Files[secondAtomPath] = fixture.Files[firstAtomPath].Replace(
-            "ast_path: manual/fixture",
-            "ast_path: manual/second-fixture",
+        AddFormalizationPrecommitment(fixture, RuleFixture.FixtureAtomId, gid);
+        fixture.Files[secondAtomPath] = fixture.Files[AtomPath].Replace(
+            RuleFixture.FixtureCasReference,
+            SecondCasReference,
             StringComparison.Ordinal);
+        fixture.Files[SecondCasPath] = "second";
 
         var evaluation = EvaluateSl016(
             fixture,
@@ -290,7 +290,7 @@ public sealed class Sl016WakeupTests
 
         Assert.Contains(evaluation.Diagnostics, finding =>
             finding.AdmissionEffect == AdmissionEffect.Block
-            && finding.Message.Contains("second-atom", StringComparison.Ordinal)
+            && finding.Message.Contains(SecondAtomId, StringComparison.Ordinal)
             && finding.Message.Contains(gid, StringComparison.Ordinal)
             && finding.Message.Contains(
                 "base-owned formalization precommitment",
@@ -300,21 +300,19 @@ public sealed class Sl016WakeupTests
     [Fact]
     public void ExistingCoveragePairReboundToNewRawFingerprintRequiresNewPrecommitment()
     {
-        const string atomPath =
-            "Meta/Digestion/backfill/delta-v0.1/partial-closed/delta-atom.yaml";
         const string gid = "D5/S0/Carrier/BackfillTarget.protectedTargetFixture";
         var (fixture, _, receiptProjection) = PreparedDeclarationPairFixture(gid);
         foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
         {
-            files[atomPath] = AddCoverageAndReceipts(files[atomPath], gid, receiptProjection);
+            files[AtomPath] = AddCoverageAndReceipts(files[AtomPath], gid, receiptProjection);
         }
-        AddFormalizationPrecommitment(fixture, "delta-atom", gid);
+        AddFormalizationPrecommitment(fixture, RuleFixture.FixtureAtomId, gid);
         var reboundFingerprint = "sha256:" + new string('9', 64);
-        fixture.Files[atomPath] = fixture.Files[atomPath].Replace(
+        fixture.Files[AtomPath] = fixture.Files[AtomPath].Replace(
             RuleFixture.FixtureCasReference,
             reboundFingerprint,
             StringComparison.Ordinal);
-        var context = fixture.Build(RawChangeSet.Create([atomPath]));
+        var context = fixture.Build(RawChangeSet.Create([AtomPath]));
 
         var findings = DigestionFormalizationPrecommitmentValidator.ValidateNewEdges(
             BackfillInventoryLoader.LoadBaseline(context.Baseline),
@@ -330,21 +328,19 @@ public sealed class Sl016WakeupTests
     [Fact]
     public void ExistingCoveragePairReceiptRebindingCannotReuseEntryFingerprintExemption()
     {
-        const string atomPath =
-            "Meta/Digestion/backfill/delta-v0.1/partial-closed/delta-atom.yaml";
         const string gid = "D5/S0/Carrier/BackfillTarget.protectedTargetFixture";
         var (fixture, _, receiptProjection) = PreparedDeclarationPairFixture(gid);
         foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
         {
-            files[atomPath] = AddCoverageAndReceipts(files[atomPath], gid, receiptProjection);
+            files[AtomPath] = AddCoverageAndReceipts(files[AtomPath], gid, receiptProjection);
         }
 
         var reboundFingerprint = "sha256:" + new string('9', 64);
-        fixture.Files[atomPath] = fixture.Files[atomPath].Replace(
+        fixture.Files[AtomPath] = fixture.Files[AtomPath].Replace(
             $"source_sha256: {RuleFixture.FixtureCasReference}",
             $"source_sha256: {reboundFingerprint}",
             StringComparison.Ordinal);
-        var context = fixture.Build(RawChangeSet.Create([atomPath]));
+        var context = fixture.Build(RawChangeSet.Create([AtomPath]));
 
         var findings = DigestionFormalizationPrecommitmentValidator.ValidateNewEdges(
             BackfillInventoryLoader.LoadBaseline(context.Baseline),
@@ -360,15 +356,13 @@ public sealed class Sl016WakeupTests
     [Fact]
     public void ExistingCoveragePairWithSameRawFingerprintKeepsItsExemption()
     {
-        const string atomPath =
-            "Meta/Digestion/backfill/delta-v0.1/partial-closed/delta-atom.yaml";
         const string gid = "D5/S0/Carrier/BackfillTarget.protectedTargetFixture";
         var (fixture, _, receiptProjection) = PreparedDeclarationPairFixture(gid);
         foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
         {
-            files[atomPath] = AddCoverageAndReceipts(files[atomPath], gid, receiptProjection);
+            files[AtomPath] = AddCoverageAndReceipts(files[AtomPath], gid, receiptProjection);
         }
-        var context = fixture.Build(RawChangeSet.Create([atomPath]));
+        var context = fixture.Build(RawChangeSet.Create([AtomPath]));
 
         var findings = DigestionFormalizationPrecommitmentValidator.ValidateNewEdges(
             BackfillInventoryLoader.LoadBaseline(context.Baseline),
@@ -479,8 +473,6 @@ public sealed class Sl016WakeupTests
             bool candidateScribeInputsChanged = false,
             bool candidateScribeEmissionOnly = false)
     {
-        const string atomPath =
-            "Meta/Digestion/backfill/delta-v0.1/partial-closed/delta-atom.yaml";
         const string coverageGid = "D5/S0/Carrier/BackfillTarget";
         const string targetPath = coverageGid + ".lean";
         const string baselineDefinition = "fixture Scribe definition\n";
@@ -527,11 +519,11 @@ public sealed class Sl016WakeupTests
             + $"    - gid: {coverageGid}\n"
             + $"      definition_sha256: {(mismatchCode == "scribe-definition-mismatch" ? mismatchSha256 : baselineDefinitionSha256)}\n"
             + $"      emission_sha256: {(mismatchCode == "scribe-emission-mismatch" ? mismatchSha256 : baselineEmissionSha256)}";
-        fixture.Files[atomPath] = AddReceipts(fixture.Files[atomPath], receiptProjection);
+        fixture.Files[AtomPath] = AddReceipts(fixture.Files[AtomPath], receiptProjection);
         if (gapExistsInBaseline || candidateScribeInputsChanged)
         {
-            fixture.Baseline[atomPath] = AddReceipts(fixture.Baseline[atomPath], receiptProjection);
-            fixture.ForkPoint[atomPath] = AddReceipts(fixture.ForkPoint[atomPath], receiptProjection);
+            fixture.Baseline[AtomPath] = AddReceipts(fixture.Baseline[AtomPath], receiptProjection);
+            fixture.ForkPoint[AtomPath] = AddReceipts(fixture.ForkPoint[AtomPath], receiptProjection);
         }
 
         var verifiedScribeEmissions = VerifiedScribeEmissions.Create(
@@ -561,7 +553,7 @@ public sealed class Sl016WakeupTests
             : new[]
             {
                 "tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryRule.cs",
-                atomPath,
+                AtomPath,
             };
         var context = fixture.Build(
             RawChangeSet.Create(changedPaths),
@@ -695,8 +687,6 @@ public sealed class Sl016WakeupTests
 
     private static RuleFixture CoverageReceiptFixture(string targetGid, string targetStatementId)
     {
-        const string atomPath =
-            "Meta/Digestion/backfill/delta-v0.1/partial-closed/delta-atom.yaml";
         var fixture = PreparedCoverageFixture();
         var receipt = "coverage:\n"
             + $"    - gid: {targetGid}\n"
@@ -705,7 +695,7 @@ public sealed class Sl016WakeupTests
             + "  scribe: []";
         foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
         {
-            files[atomPath] = files[atomPath].Replace(
+            files[AtomPath] = files[AtomPath].Replace(
                 "coverage: []\n  scribe: []",
                 receipt,
                 StringComparison.Ordinal);

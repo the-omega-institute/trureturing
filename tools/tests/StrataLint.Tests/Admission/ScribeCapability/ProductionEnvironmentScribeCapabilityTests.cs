@@ -259,7 +259,9 @@ public sealed partial class ProductionEnvironmentTests
     {
         using var temporary = new TemporaryDirectory();
         const string atomPath =
-            "Meta/Digestion/backfill/delta-v0.1/partial-closed/delta-atom.yaml";
+            "Meta/Digestion/backfill/delta-v0.1/partial-closed/"
+            + RuleFixture.FixtureAtomId
+            + ".yaml";
         const string documentGid = "D5/S0/Carrier/BackfillTarget";
         const string coverageGid = documentGid + ".protectedTargetFixture";
         const string targetPath = documentGid + ".lean";

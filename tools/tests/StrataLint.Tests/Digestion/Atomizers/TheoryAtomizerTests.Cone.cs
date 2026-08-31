@@ -97,9 +97,7 @@ public sealed partial class TheoryAtomizerTests
             bytes,
             ConeRules);
 
-        Assert.Equal(
-            "unregistered/%E7%8C%9C%E6%83%B3/3.6",
-            Assert.Single(document.Claims).AstPath);
+        AssertContentIdentity(Assert.Single(document.Claims));
         Assert.Equal(["猜想"], document.UnregisteredGenres.ToArray());
     }
 
@@ -129,11 +127,11 @@ public sealed partial class TheoryAtomizerTests
         var error = Assert.Throws<TheorySourceFormatException>(() =>
             AtomizerRegistry.Atomize(AtomizerRegistry.ConeId, bytes, ConeRules));
 
-        Assert.Contains("cone claim chapter mismatch", error.Message, StringComparison.Ordinal);
+        Assert.Contains("has chapter mismatch", error.Message, StringComparison.Ordinal);
     }
 
     [Fact]
-    public void ConeV1RejectsADuplicateClaimLocator()
+    public void ConeV1KeepsContentDistinctRepeatedClaimLeads()
     {
         var bytes = Encoding.UTF8.GetBytes(
             "# 正锥纲领:形式化定理与证明\n\n"
@@ -141,10 +139,9 @@ public sealed partial class TheoryAtomizerTests
             + "**引理 3.6(反演恒等式)[证]。**first。\n\n"
             + "**引理 3.6(反演恒等式)[证]。**second。\n");
 
-        var error = Assert.Throws<TheorySourceFormatException>(() =>
-            AtomizerRegistry.Atomize(AtomizerRegistry.ConeId, bytes, ConeRules));
+        var document = AtomizerRegistry.Atomize(AtomizerRegistry.ConeId, bytes, ConeRules);
 
-        Assert.Contains("duplicate cone claim locator", error.Message, StringComparison.Ordinal);
+        AssertContentIdentities(document, 2);
     }
 
     [Fact]
@@ -160,7 +157,7 @@ public sealed partial class TheoryAtomizerTests
             bytes,
             ConeRules).Claims);
 
-        Assert.Equal("theorem-form/4.6", atom.AstPath);
+        AssertContentIdentity(atom);
     }
 
 }

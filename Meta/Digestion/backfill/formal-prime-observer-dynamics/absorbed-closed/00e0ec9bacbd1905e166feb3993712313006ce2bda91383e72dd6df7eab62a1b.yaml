@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:00e0ec9bacbd1905e166feb3993712313006ce2bda91383e72dd6df7eab62a1b
+  normalized_sha256: sha256:00e0ec9bacbd1905e166feb3993712313006ce2bda91383e72dd6df7eab62a1b
+cas_ref: sha256:00e0ec9bacbd1905e166feb3993712313006ce2bda91383e72dd6df7eab62a1b
+coverage_gids:
+  - D5/S3/PrimeForms/PellFamilies/LocalPellPeriodicity.pell_unit_and_unimodular_recurrences_are_locally_periodic
+receipts:
+  coverage:
+    - gid: D5/S3/PrimeForms/PellFamilies/LocalPellPeriodicity.pell_unit_and_unimodular_recurrences_are_locally_periodic
+      source_sha256: sha256:00e0ec9bacbd1905e166feb3993712313006ce2bda91383e72dd6df7eab62a1b
+      target_statement_id: sha256:ab9084b030b1e7a6ecf175353823e79f797bed35b71799be54859c29363a10ea
+  scribe:
+    - gid: D5/S3/PrimeForms/PellFamilies/LocalPellPeriodicity.pell_unit_and_unimodular_recurrences_are_locally_periodic
+      definition_sha256: sha256:6131b4f889581a266f74b87262a860bd6695bd98f5d290d2026625a3993d05c6
+      emission_sha256: sha256:00ecccd27b7e6b457c9833f56f0f537814d19c0cb7f2f708038e326e51b65898
+  unresolved_subitems: []

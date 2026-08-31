@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:194b851cb41f7e61e4d2fad73ac570a7d8d43874318d41819259b5e023a1bf67
+  normalized_sha256: sha256:194b851cb41f7e61e4d2fad73ac570a7d8d43874318d41819259b5e023a1bf67
+cas_ref: sha256:194b851cb41f7e61e4d2fad73ac570a7d8d43874318d41819259b5e023a1bf67
+coverage_gids:
+  - D5/S0/Diagonal/PigeonholeFiber.finite_reading_has_fiber
+receipts:
+  coverage:
+    - gid: D5/S0/Diagonal/PigeonholeFiber.finite_reading_has_fiber
+      source_sha256: sha256:194b851cb41f7e61e4d2fad73ac570a7d8d43874318d41819259b5e023a1bf67
+      target_statement_id: sha256:7055ad403a73e564741999ceb43535300eeb0a5af556401ff847379f29eb8e9e
+  scribe:
+    - gid: D5/S0/Diagonal/PigeonholeFiber.finite_reading_has_fiber
+      definition_sha256: sha256:90f8882a309ed0f5cfaaaa4601ec944ac8158cef8a616998f1c494b233745c10
+      emission_sha256: sha256:7d3b083e1dbddc82667ca0ee081ecabd2c813979f50c1411c899284e8c41966b
+  unresolved_subitems: []

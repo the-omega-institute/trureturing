@@ -176,10 +176,10 @@ public sealed partial class DigestionAlignmentTests
         Assert.Empty(result.Residual);
         Assert.Equal(
             DigestionReceiptAlignment.Stale,
-            result.AlignmentFor("coarse-receipt"));
+            result.AlignmentFor(AtomId(migration.Coarse)));
         Assert.Equal(
             DigestionReceiptAlignment.Seen,
-            result.AlignmentFor("fine-receipt-0"));
+            result.AlignmentFor(AtomId(atomized.Claims[0])));
     }
 
     [Fact]
@@ -308,7 +308,6 @@ public sealed partial class DigestionAlignmentTests
         var baselineBytes = Encoding.UTF8.GetBytes("old");
         var candidateBytes = ImmutableArray.Create((byte)'a');
         var corrupt = new DigestionAtom(
-            "theorem/1.1",
             0,
             1,
             candidateBytes,
@@ -331,25 +330,23 @@ public sealed partial class DigestionAlignmentTests
             migration.BaselineSnapshot);
 
         Assert.Equal(
-            ["source source atomizer integrity failed: claim theorem/1.1 fingerprint does not match its raw bytes"],
+            ["source source atomizer integrity failed: claim at byte 0 fingerprint does not match its raw bytes"],
             result.Findings.ToArray());
     }
 
     [Fact]
-    public void AdmissionGenreProbeDefersToDuplicateAstPathFinding()
+    public void AdmissionGenreProbeAllowsDistinctContentWithoutPathDisambiguation()
     {
         var baselineBytes = Encoding.UTF8.GetBytes("old");
         var firstBytes = ImmutableArray.Create((byte)'a');
         var secondBytes = ImmutableArray.Create((byte)'b');
         var first = new DigestionAtom(
-            "theorem/duplicate",
             0,
             1,
             firstBytes,
             DigestionFingerprint.Compute(firstBytes.AsSpan()),
             []);
         var second = new DigestionAtom(
-            "theorem/duplicate",
             1,
             2,
             secondBytes,
@@ -360,18 +357,23 @@ public sealed partial class DigestionAlignmentTests
             [new DigestionSlice(true, firstBytes), new DigestionSlice(true, secondBytes)],
             GenreRegistryCheck.Collected([]));
         var migration = CoarseMigration(baselineBytes, [(byte)'a', (byte)'b']);
+        var candidate = WithGenreCheck(migration.Candidate, atomized.GenreRegistryCheck);
 
         var result = DigestionLedgerAligner.Evaluate(
-            migration.Candidate,
+            candidate,
             migration.CandidateSnapshot,
             migration.Baseline,
             DigestionAlignmentMode.Admission,
             _ => (_, _) => atomized,
             migration.BaselineSnapshot);
 
+        Assert.Empty(result.Findings);
         Assert.Equal(
-            ["source source duplicate atomized ast_path: theorem/duplicate"],
-            result.Findings.ToArray());
+            [
+                first.Fingerprints.RawSha256["sha256:".Length..],
+                second.Fingerprints.RawSha256["sha256:".Length..],
+            ],
+            result.Residual.Select(static item => item.SuggestedAtomId));
     }
 
     [Fact]
@@ -423,7 +425,6 @@ public sealed partial class DigestionAlignmentTests
     {
         var coarseBytes = ImmutableArray.CreateRange(baselineBytes);
         var coarse = new DigestionAtom(
-            "coarse/source",
             0,
             baselineBytes.Length,
             coarseBytes,
@@ -449,8 +450,11 @@ public sealed partial class DigestionAlignmentTests
             }
         }
 
+        IReadOnlyList<string> acknowledgedStale = candidateAtomized is null
+            ? []
+            : [AtomId(coarse)];
         var candidate = WithAtomizer(
-            Ledger(["coarse-receipt"], entries.ToArray()),
+            Ledger(acknowledgedStale, entries.ToArray()),
             AtomizerRegistry.ConeId);
         if (candidateAtomized is not null)
         {
@@ -460,7 +464,8 @@ public sealed partial class DigestionAlignmentTests
             baseline,
             candidate,
             Snapshot(baselineBytes, [coarseCapture]),
-            Snapshot(candidateBytes, captures));
+            Snapshot(candidateBytes, captures),
+            coarse);
     }
 
     private static BackfillInventoryDocument WithGenreCheck(
@@ -477,5 +482,6 @@ public sealed partial class DigestionAlignmentTests
         BackfillInventoryDocument Baseline,
         BackfillInventoryDocument Candidate,
         RepositorySnapshot BaselineSnapshot,
-        RepositorySnapshot CandidateSnapshot);
+        RepositorySnapshot CandidateSnapshot,
+        DigestionAtom Coarse);
 }

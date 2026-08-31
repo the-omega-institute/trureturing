@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:73dee3a1fb51e104ceb9a066fd208cf23cc45a6f3bccc320df6e80732827f1b0
+  normalized_sha256: sha256:73dee3a1fb51e104ceb9a066fd208cf23cc45a6f3bccc320df6e80732827f1b0
+cas_ref: sha256:73dee3a1fb51e104ceb9a066fd208cf23cc45a6f3bccc320df6e80732827f1b0
+coverage_gids:
+  - D5/S3/QuantumChannels/BoundaryArtanhDivergence.logarithmic_tax_diverges_at_boundary
+receipts:
+  coverage:
+    - gid: D5/S3/QuantumChannels/BoundaryArtanhDivergence.logarithmic_tax_diverges_at_boundary
+      source_sha256: sha256:73dee3a1fb51e104ceb9a066fd208cf23cc45a6f3bccc320df6e80732827f1b0
+      target_statement_id: sha256:5651aa6136583bcd1b181e3842cd7f16a162755a52b4c07b5fb91028f8e1ed22
+  scribe:
+    - gid: D5/S3/QuantumChannels/BoundaryArtanhDivergence.logarithmic_tax_diverges_at_boundary
+      definition_sha256: sha256:e0080dc9a00b1ab414a3429dfd32509ad867d072d2a4dbe432bfe2297f11f31c
+      emission_sha256: sha256:4866d1cbb643cf2d1b4071e8013e7cbc357fdf303a9bd7db366dc441dc7921e5
+  unresolved_subitems: []

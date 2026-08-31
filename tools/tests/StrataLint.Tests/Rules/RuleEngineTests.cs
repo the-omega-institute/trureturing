@@ -96,7 +96,7 @@ public sealed class RuleEngineTests
         Assert.Equal(RuleFixture.FixtureDigestionSourcePath, source.SourcePath);
         Assert.Equal(AtomizerRegistry.NoAtomizerId, source.Atomizer);
         Assert.Equal(RuleFixture.FixtureAtomId, entry.AtomId);
-        Assert.Equal("manual/fixture", entry.AstPath);
+        Assert.Equal(RuleFixture.FixtureCasReference, entry.Fingerprints.RawSha256);
         Assert.Equal(RuleFixture.FixtureCasReference, entry.CasRef);
         Assert.Equal(DigestionMigrationState.Partial, entry.ProjectedStatus.Migration);
         Assert.Equal(DigestionTruthState.Closed, entry.ProjectedStatus.Truth);

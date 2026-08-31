@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:78da1165fa4c9baa50ccb080ebe1854309d4f1e7318fd79b82e8ff90ebd433c6
+  normalized_sha256: sha256:78da1165fa4c9baa50ccb080ebe1854309d4f1e7318fd79b82e8ff90ebd433c6
+cas_ref: sha256:78da1165fa4c9baa50ccb080ebe1854309d4f1e7318fd79b82e8ff90ebd433c6
+coverage_gids:
+  - D5/S3/Quantum/PureState/UnitGramIndistinguishability.unit_gram_overlap_characterization
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/PureState/UnitGramIndistinguishability.unit_gram_overlap_characterization
+      source_sha256: sha256:78da1165fa4c9baa50ccb080ebe1854309d4f1e7318fd79b82e8ff90ebd433c6
+      target_statement_id: sha256:7205bc522e67c05ea77e5f12c50f45a5dfb16aa0aa41aae0540365373b409442
+  scribe:
+    - gid: D5/S3/Quantum/PureState/UnitGramIndistinguishability.unit_gram_overlap_characterization
+      definition_sha256: sha256:b42cb5656fcf721758072c8b36f4bb047ceb3c872928ff0d7802d99fdcd62f2d
+      emission_sha256: sha256:49a0a235f1928083da2746921f68aaf0abee887bd58ab6a3984d40ff5b54e01b
+  unresolved_subitems: []

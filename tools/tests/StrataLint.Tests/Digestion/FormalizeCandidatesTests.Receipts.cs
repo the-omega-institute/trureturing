@@ -11,7 +11,7 @@ public sealed partial class FormalizeCandidatesTests
     {
         var entry = Entry(
             "pzg-v170",
-            "pzg-residual-c2b458c0ec6e7494ffe7b15cc71ca9aa7afd5559254301851904c9c91c88d13f",
+            "c2b458c0ec6e7494ffe7b15cc71ca9aa7afd5559254301851904c9c91c88d13f",
             "定理",
             "19.5",
             coverDisposition: new DigestionCoverDisposition(
@@ -38,7 +38,7 @@ public sealed partial class FormalizeCandidatesTests
     {
         var entry = Entry(
             "pzg-v170",
-            "pzg-residual-c2b458c0ec6e7494ffe7b15cc71ca9aa7afd5559254301851904c9c91c88d13f",
+            "c2b458c0ec6e7494ffe7b15cc71ca9aa7afd5559254301851904c9c91c88d13f",
             "定理",
             "19.5",
             coverDisposition: new DigestionCoverDisposition(
@@ -66,7 +66,7 @@ public sealed partial class FormalizeCandidatesTests
     public void CoverDispositionDoesNotChangeAdmissionProjection()
     {
         const string atomId =
-            "pzg-residual-c2b458c0ec6e7494ffe7b15cc71ca9aa7afd5559254301851904c9c91c88d13f";
+            "c2b458c0ec6e7494ffe7b15cc71ca9aa7afd5559254301851904c9c91c88d13f";
         var plain = Entry("pzg-v170", atomId, "定理", "19.5");
         var dispositioned = Entry(
             "pzg-v170",
@@ -93,7 +93,7 @@ public sealed partial class FormalizeCandidatesTests
     public void RetryDispositionsRequiresFormalizeCandidates()
     {
         var result = Run(
-            [Entry("pzg-v170", "candidate", "定理", "19.5")],
+            [Entry("pzg-v170", new string('c', 64), "定理", "19.5")],
             arguments: ["--retry-dispositions"]);
 
         Assert.False(result.Success);
@@ -105,7 +105,7 @@ public sealed partial class FormalizeCandidatesTests
     {
         var entry = Entry(
             "pzg-v170",
-            "pzg-residual-c2b458c0ec6e7494ffe7b15cc71ca9aa7afd5559254301851904c9c91c88d13f",
+            "c2b458c0ec6e7494ffe7b15cc71ca9aa7afd5559254301851904c9c91c88d13f",
             "定理",
             "19.5");
         var primaryGid = "D5/S0/Synthetic/Receipt." + entry.AtomId.Replace('-', '_');

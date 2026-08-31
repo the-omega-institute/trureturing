@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:eb61ff54dffedc8b62047c5f785d87fc41996eb799f4db88449683d2a2ac674f
+  normalized_sha256: sha256:eb61ff54dffedc8b62047c5f785d87fc41996eb799f4db88449683d2a2ac674f
+cas_ref: sha256:eb61ff54dffedc8b62047c5f785d87fc41996eb799f4db88449683d2a2ac674f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  quarantine:
+    justification: "Missing canonical Li-series prerequisite. D5 search `Li.?Carath|LiCoeff|liCoefficient|lambda_1|xiReading|logDeriv` hit canonical `xiReading` and `first_li_coefficient_normalization`, but `FixedDepthLiClarkRecovery` and `LaguerreLiBridge` still take `liCoefficient : Nat -> Real` as external data and the body-shape search for a canonical sequence definition missed. Pinned Mathlib search `Li coefficient|Li.?Carath|Riemann.*xi|logDeriv.*power series` missed (only unrelated Vitali-Caratheodory text). GitHub Lean ecosystem searches for `Li coefficient`, `Li coefficients`, `LiCoefficient`, and `Riemann xi` missed (only unrelated Pauli-coefficient hits). Local Lean probe `/private/tmp/w72a22-mobius-probe.lean` proves `norm z < 1 -> 1/2 < re (1/(1-z))` with exit 0, but the named public identity cannot be attempted before constructing the canonical Li coefficients and proving their generating-series expansion; defining the Caratheodory function as the target logarithmic derivative would be a forbidden definitional restatement."
+    reentry_condition: "Define the canonical Li coefficients of `xiReading` and prove the standard convergent generating-series expansion near the unit disk, then derive the curvature-series identity independently of the target logarithmic derivative."
+    blocker_class: missing-prerequisite

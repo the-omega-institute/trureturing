@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:34e9d35bf66b5e34880b2a93a6fa430ad6e4c9edb14d70a8f2e3deeb8d555eb5
+  normalized_sha256: sha256:34e9d35bf66b5e34880b2a93a6fa430ad6e4c9edb14d70a8f2e3deeb8d555eb5
+cas_ref: sha256:34e9d35bf66b5e34880b2a93a6fa430ad6e4c9edb14d70a8f2e3deeb8d555eb5
+coverage_gids:
+  - D5/S3/ConceptDynamics/Refinement/SemanticResourceSeparation.semantic_sufficiency_can_exceed_finite_resources
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Refinement/SemanticResourceSeparation.semantic_sufficiency_can_exceed_finite_resources
+      source_sha256: sha256:34e9d35bf66b5e34880b2a93a6fa430ad6e4c9edb14d70a8f2e3deeb8d555eb5
+      target_statement_id: sha256:b81d41e47f78b24b43b1966066729daa199675d45d5c70344196e941bfefa073
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Refinement/SemanticResourceSeparation.semantic_sufficiency_can_exceed_finite_resources
+      definition_sha256: sha256:86fa40c3cd0c44cf713291c86cfbbf43859a954a0f8c9f1a64d35519d67c2676
+      emission_sha256: sha256:887421d6624273003563ef898fa38ce51f7f60e5e0b5b43fb9a9dc7726bad467
+  unresolved_subitems: []

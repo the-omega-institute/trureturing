@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:401f90a85d758dd9e019782f34bab9f68e863fb14d17ea22df27ba0e0f0c77be
+  normalized_sha256: sha256:401f90a85d758dd9e019782f34bab9f68e863fb14d17ea22df27ba0e0f0c77be
+cas_ref: sha256:401f90a85d758dd9e019782f34bab9f68e863fb14d17ea22df27ba0e0f0c77be
+coverage_gids:
+  - D5/S3/Zeros/CompletionLedger.completion_factors_are_explicit_ledger
+receipts:
+  coverage:
+    - gid: D5/S3/Zeros/CompletionLedger.completion_factors_are_explicit_ledger
+      source_sha256: sha256:401f90a85d758dd9e019782f34bab9f68e863fb14d17ea22df27ba0e0f0c77be
+      target_statement_id: sha256:0e8c5035e2f7a38c06bf41db252d626481cfce0e116a0e0e788c29503ce1ecc2
+  scribe: []
+  unresolved_subitems: []

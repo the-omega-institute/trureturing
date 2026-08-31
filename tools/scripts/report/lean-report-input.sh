@@ -394,7 +394,7 @@ elif scope == "scribe-content":
 else:
     raise SystemExit(f"lean-report-input: unknown producer scope: {scope}")
 reference_pattern = re.compile(
-    r"(?P<path>(?:\$[A-Z_][A-Z0-9_]*|\$\{[A-Z_][A-Z0-9_]*\}|[A-Za-z0-9_.-]+)"
+    r"(?P<path>(?:\$[A-Za-z_][A-Za-z0-9_]*|\$\{[A-Za-z_][A-Za-z0-9_]*\}|[A-Za-z0-9_.-]+)"
     r"(?:/[A-Za-z0-9_.$@{}+-]+)+\.sh)(?![A-Za-z0-9_.])"
 )
 

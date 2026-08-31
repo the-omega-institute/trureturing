@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:6e62b84ca59d6f152c26f2df6168818db95208882bf4c7d3ecfcbca7f4cc4002
+  normalized_sha256: sha256:6e62b84ca59d6f152c26f2df6168818db95208882bf4c7d3ecfcbca7f4cc4002
+cas_ref: sha256:6e62b84ca59d6f152c26f2df6168818db95208882bf4c7d3ecfcbca7f4cc4002
+coverage_gids:
+  - D5/S3/ConceptDynamics/EpistemicOperators/BudgetKnowledgeFiberStability.budget_knowledge_fiber_stability
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/EpistemicOperators/BudgetKnowledgeFiberStability.budget_knowledge_fiber_stability
+      source_sha256: sha256:6e62b84ca59d6f152c26f2df6168818db95208882bf4c7d3ecfcbca7f4cc4002
+      target_statement_id: sha256:3f5bd15f95cd5505234cfb6cca162a0bc3638487ea860affbe10e105f9bfee2a
+  scribe:
+    - gid: D5/S3/ConceptDynamics/EpistemicOperators/BudgetKnowledgeFiberStability.budget_knowledge_fiber_stability
+      definition_sha256: sha256:fcd8dd10290ebf27bd03b15f16e1211a1c7614d59a35455e55b48b4555803baf
+      emission_sha256: sha256:441851890fed09b4aa46daf2fef6b5deb1ab569a1efd926650fe939cfeaadbe3
+  unresolved_subitems: []

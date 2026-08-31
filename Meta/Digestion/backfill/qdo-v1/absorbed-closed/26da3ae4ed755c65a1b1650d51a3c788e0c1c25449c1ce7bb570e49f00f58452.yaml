@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:26da3ae4ed755c65a1b1650d51a3c788e0c1c25449c1ce7bb570e49f00f58452
+  normalized_sha256: sha256:26da3ae4ed755c65a1b1650d51a3c788e0c1c25449c1ce7bb570e49f00f58452
+cas_ref: sha256:26da3ae4ed755c65a1b1650d51a3c788e0c1c25449c1ce7bb570e49f00f58452
+coverage_gids:
+  - D5/S3/Observer/Separation/FiniteFutureCongruence.finite_future_maximal_congruence
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/Separation/FiniteFutureCongruence.finite_future_maximal_congruence
+      source_sha256: sha256:26da3ae4ed755c65a1b1650d51a3c788e0c1c25449c1ce7bb570e49f00f58452
+      target_statement_id: sha256:d18d6bf98a88a1bff31feb70db55a9deeb1e748fb4f98c568fab7f00a0af8881
+  scribe:
+    - gid: D5/S3/Observer/Separation/FiniteFutureCongruence.finite_future_maximal_congruence
+      definition_sha256: sha256:39bed6755985250c22a0da00d7c1047260000ef5d8e71797c425f6dc21bb4d7d
+      emission_sha256: sha256:96c284b821342f8c70cbd124955fa0a658c36d40b812e0fb6021a974d8610a93
+  unresolved_subitems: []

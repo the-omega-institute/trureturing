@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:80dca2254e09b1f7ed0ef34a6c809f6316d869d7f57331b29d03c6b2ae85ca20
+  normalized_sha256: sha256:80dca2254e09b1f7ed0ef34a6c809f6316d869d7f57331b29d03c6b2ae85ca20
+cas_ref: sha256:80dca2254e09b1f7ed0ef34a6c809f6316d869d7f57331b29d03c6b2ae85ca20
+coverage_gids:
+  - D5/S3/ConceptDynamics/InstitutionalCapture/ByzantineRecoveryImpossibility.deterministic_recovery_impossible
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/InstitutionalCapture/ByzantineRecoveryImpossibility.deterministic_recovery_impossible
+      source_sha256: sha256:80dca2254e09b1f7ed0ef34a6c809f6316d869d7f57331b29d03c6b2ae85ca20
+      target_statement_id: sha256:c218100433b18bfa259e218e595f6b60ceccd9f60bf7c9d918dbc1fd9810d6a5
+  scribe:
+    - gid: D5/S3/ConceptDynamics/InstitutionalCapture/ByzantineRecoveryImpossibility.deterministic_recovery_impossible
+      definition_sha256: sha256:90ac93819a40a0b684183bf78b5dddcf8e09f6f30cb0b137b44d08c2e9347017
+      emission_sha256: sha256:4ee8763c9336965b849c1b32be9bfa4035f4db8aedccbdc537e5c39eba27158d
+  unresolved_subitems: []
