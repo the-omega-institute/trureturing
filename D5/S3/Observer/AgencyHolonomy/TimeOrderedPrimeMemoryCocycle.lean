@@ -20,8 +20,8 @@ A list records operational chronology.  Iterating the associated affine
 updates gives an exact scalar word and an exact memory cocycle.  Concatenation
 of event lists obeys the twisted law
 
-`M(prefix ++ suffix) = stable ^ suffix.length * M(prefix)
-  + M(suffix) * Lambda(prefix)`.
+`M(earlierWord ++ laterWord) = stable ^ laterWord.length * M(earlierWord)
+  + M(laterWord) * Lambda(earlierWord)`.
 
 Thus Fourier time and list chronology are distinct coordinates.  Fourier time
 rotates each local injection; list order determines how later stable powers
@@ -185,26 +185,27 @@ theorem time_ordered_evolution_affine
         ring
 
 private theorem time_ordered_scalar_cocycle_append
-    (prefix suffix : List TimedPrimeMemoryEvent) :
-    timeOrderedScalarCocycle (prefix ++ suffix) =
-      timeOrderedScalarCocycle prefix *
-        timeOrderedScalarCocycle suffix := by
-  induction prefix with
+    (earlierWord laterWord : List TimedPrimeMemoryEvent) :
+    timeOrderedScalarCocycle (earlierWord ++ laterWord) =
+      timeOrderedScalarCocycle earlierWord *
+        timeOrderedScalarCocycle laterWord := by
+  induction earlierWord with
   | nil => simp [timeOrderedScalarCocycle]
-  | cons event prefix ih =>
+  | cons event earlierWord ih =>
       simp [timeOrderedScalarCocycle, ih, mul_assoc]
 
 private theorem time_ordered_memory_cocycle_append
     (stable : ℂ)
-    (prefix suffix : List TimedPrimeMemoryEvent) :
-    timeOrderedMemoryCocycle stable (prefix ++ suffix) =
-      stable ^ suffix.length * timeOrderedMemoryCocycle stable prefix +
-        timeOrderedMemoryCocycle stable suffix *
-          timeOrderedScalarCocycle prefix := by
-  induction prefix with
+    (earlierWord laterWord : List TimedPrimeMemoryEvent) :
+    timeOrderedMemoryCocycle stable (earlierWord ++ laterWord) =
+      stable ^ laterWord.length *
+          timeOrderedMemoryCocycle stable earlierWord +
+        timeOrderedMemoryCocycle stable laterWord *
+          timeOrderedScalarCocycle earlierWord := by
+  induction earlierWord with
   | nil =>
       simp [timeOrderedMemoryCocycle, timeOrderedScalarCocycle]
-  | cons event prefix ih =>
+  | cons event earlierWord ih =>
       simp only [List.cons_append, timeOrderedMemoryCocycle,
         timeOrderedScalarCocycle, List.length_append]
       rw [ih, pow_add]
@@ -212,19 +213,19 @@ private theorem time_ordered_memory_cocycle_append
 
 private theorem time_ordered_evolution_append
     (stable : ℂ)
-    (prefix suffix : List TimedPrimeMemoryEvent)
+    (earlierWord laterWord : List TimedPrimeMemoryEvent)
     (state : ℂ × ℂ) :
-    timeOrderedEvolution stable (prefix ++ suffix) state =
-      timeOrderedEvolution stable suffix
-        (timeOrderedEvolution stable prefix state) := by
-  induction prefix generalizing state with
+    timeOrderedEvolution stable (earlierWord ++ laterWord) state =
+      timeOrderedEvolution stable laterWord
+        (timeOrderedEvolution stable earlierWord state) := by
+  induction earlierWord generalizing state with
   | nil => rfl
-  | cons event prefix ih =>
+  | cons event earlierWord ih =>
       change
-        timeOrderedEvolution stable (prefix ++ suffix)
+        timeOrderedEvolution stable (earlierWord ++ laterWord)
             (timedPrimeUpdate stable event state) =
-          timeOrderedEvolution stable suffix
-            (timeOrderedEvolution stable prefix
+          timeOrderedEvolution stable laterWord
+            (timeOrderedEvolution stable earlierWord
               (timedPrimeUpdate stable event state))
       exact ih (timedPrimeUpdate stable event state)
 
@@ -235,22 +236,24 @@ is the twisted cocycle law for chronology.
 -/
 theorem time_ordered_cocycle_append_laws
     (stable : ℂ)
-    (prefix suffix : List TimedPrimeMemoryEvent) :
-    timeOrderedScalarCocycle (prefix ++ suffix) =
-        timeOrderedScalarCocycle prefix *
-          timeOrderedScalarCocycle suffix ∧
-    timeOrderedMemoryCocycle stable (prefix ++ suffix) =
-        stable ^ suffix.length * timeOrderedMemoryCocycle stable prefix +
-          timeOrderedMemoryCocycle stable suffix *
-            timeOrderedScalarCocycle prefix ∧
+    (earlierWord laterWord : List TimedPrimeMemoryEvent) :
+    timeOrderedScalarCocycle (earlierWord ++ laterWord) =
+        timeOrderedScalarCocycle earlierWord *
+          timeOrderedScalarCocycle laterWord ∧
+    timeOrderedMemoryCocycle stable (earlierWord ++ laterWord) =
+        stable ^ laterWord.length *
+            timeOrderedMemoryCocycle stable earlierWord +
+          timeOrderedMemoryCocycle stable laterWord *
+            timeOrderedScalarCocycle earlierWord ∧
     ∀ state : ℂ × ℂ,
-      timeOrderedEvolution stable (prefix ++ suffix) state =
-        timeOrderedEvolution stable suffix
-          (timeOrderedEvolution stable prefix state) := by
-  refine ⟨time_ordered_scalar_cocycle_append prefix suffix, ?_, ?_⟩
-  · exact time_ordered_memory_cocycle_append stable prefix suffix
+      timeOrderedEvolution stable (earlierWord ++ laterWord) state =
+        timeOrderedEvolution stable laterWord
+          (timeOrderedEvolution stable earlierWord state) := by
+  refine
+    ⟨time_ordered_scalar_cocycle_append earlierWord laterWord, ?_, ?_⟩
+  · exact time_ordered_memory_cocycle_append stable earlierWord laterWord
   · intro state
-    exact time_ordered_evolution_append stable prefix suffix state
+    exact time_ordered_evolution_append stable earlierWord laterWord state
 
 /--
 Reversing two timed events preserves the scalar output.  The memory difference

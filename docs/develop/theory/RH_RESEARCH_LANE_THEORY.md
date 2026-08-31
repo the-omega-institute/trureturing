@@ -1054,3 +1054,273 @@ K_{p,q}(t_1,t_2)[A_p,A_q].
 \text{Fourier 对偶给出谱时间，事件列表给出操作 chronology，记忆 cocycle 将二者耦合并保存顺序。}
 }
 \]
+
+---
+
+# 10. Append 002. Second-Magnus Swap Curvature
+
+**候选 GID：**
+
+`D5/S3/Observer/AgencyHolonomy/SecondMagnusSwapCurvature`
+
+本增补建立在修复后的 `TimeOrderedPrimeMemoryCocycle` 上。原文件中的 Lean 变量 `prefix`、`suffix` 分别统一改为 `earlierWord`、`laterWord`。该改名只修复 source-bound 解析，不改变 cocycle 的定义、定理陈述或依赖图。两个节点在 PR admission 完成以前都仍是 candidate truth。
+
+## 10.1 二阶核是时间槽与频率槽的交替行列式
+
+继续使用：
+
+\[
+\chi_\omega(t)=e^{-it\omega}.
+\]
+
+定义：
+
+\[
+\boxed{
+K_{p,q}(t_1,t_2)
+=
+\chi_{\omega_p}(t_1)\chi_{\omega_q}(t_2)
+-
+\chi_{\omega_q}(t_1)\chi_{\omega_p}(t_2).
+}
+\]
+
+它是两个 evaluation vectors 的二阶外积系数，也可写为一个 \(2\times2\) 行列式。因此机器节点证明：
+
+\[
+\boxed{K_{q,p}=-K_{p,q}},
+\qquad
+\boxed{K_{p,q}(t_2,t_1)=-K_{p,q}(t_1,t_2)},
+\]
+
+\[
+\boxed{t_1=t_2\Longrightarrow K_{p,q}=0},
+\qquad
+\boxed{\omega_p=\omega_q\Longrightarrow K_{p,q}=0},
+\]
+
+以及：
+
+\[
+\boxed{|K_{p,q}|\le2}.
+\]
+
+频率标签与时间槽同时交换时，两个负号抵消。由此，\(K\) 保存的是二维 orientation，不是单个相位的大小。
+
+## 10.2 中心变量与相对变量完全分离
+
+令：
+
+\[
+\bar\omega=\frac{\omega_p+\omega_q}{2},
+\qquad
+\delta\omega=\frac{\omega_p-\omega_q}{2}.
+\]
+
+节点证明中心分解：
+
+\[
+\boxed{
+K_{p,q}
+=
+\chi_{\bar\omega}(t_1+t_2)
+\left[
+\chi_{\delta\omega}(t_1-t_2)
+-
+\chi_{-\delta\omega}(t_1-t_2)
+\right].
+}
+\]
+
+其正弦形式为：
+
+\[
+\boxed{
+K_{p,q}
+=
+-2i e^{-i(t_1+t_2)(\omega_p+\omega_q)/2}
+\sin\left(
+\frac{(t_1-t_2)(\omega_p-\omega_q)}2
+\right).
+}
+\]
+
+共同中心相位模长恒为一。全部可观测二阶强度只依赖 time-frequency area：
+
+\[
+\mathfrak a_{p,q}
+=(t_1-t_2)(\omega_p-\omega_q).
+\]
+
+所以二阶破缺需要时间分离与频率分离同时存在。即使两者都非零，仍有共振消零：
+
+\[
+\boxed{
+\mathfrak a_{p,q}\in2\pi\mathbb Z
+\Longrightarrow K_{p,q}=0.
+}
+\]
+
+这说明点态二阶核不是 holonomy 的 faithful 探针。
+
+## 10.3 有限二阶 Magnus 能量
+
+对有限通道集 \(P\) 与已有交换曲率 \(C_{p,q}\)，定义：
+
+\[
+\boxed{
+\mathcal E^{(2)}_{P}(t_1,t_2)
+=
+\sum_{p,q\in P}
+\left|K_{p,q}(t_1,t_2)C_{p,q}\right|^2.
+}
+\]
+
+机器节点证明：
+
+\[
+\boxed{
+0\le\mathcal E^{(2)}_{P}(t_1,t_2)
+\le4\mathcal E^{\mathrm{hol}}_{P}.
+}
+\]
+
+再与已冻结的 stable residual holonomy bound 组合，得到：
+
+\[
+\mathcal E^{(2)}_{P}(t_1,t_2)
+\le
+4|P|^2
+\left(
+2\lVert a-1\rVert\varepsilon+2\varepsilon^2
+\right)^2,
+\]
+
+并证明 \(\varepsilon=0\) 时二阶能量为零。因此新增严格链为：
+
+\[
+\boxed{
+\text{residual envelope decay}
+\Longrightarrow
+\text{finite holonomy energy decay}
+\Longrightarrow
+\text{finite second-Magnus energy decay}.
+}
+\]
+
+该链严格单向。共振格可以使 \(K_{p,q}C_{p,q}=0\)，同时允许 \(C_{p,q}\ne0\)。因此当前节点不能从二阶能量小反推出 holonomy 小。
+
+## 10.4 为什么它对应真正的二阶 Magnus 系数
+
+令有限生成元为：
+
+\[
+H(t)=\sum_{p\in P}\chi_{\omega_p}(t)A_p.
+\]
+
+则交换子展开为：
+
+\[
+[H(t_1),H(t_2)]
+=
+\sum_{p,q\in P}
+K_{p,q}(t_1,t_2)[A_p,A_q].
+\]
+
+所以 \(K_{p,q}\) 是连续 time-ordering 的纯 Fourier slot coefficient，\(C_{p,q}\) 是离散记忆更新的非交换系数。二者乘积把两种破缺分层记账：
+
+\[
+\boxed{
+K_{p,q}:\text{time-frequency orientation defect},
+\qquad
+C_{p,q}:\text{memory-channel holonomy defect}.
+}
+\]
+
+本节点只形式化有限代数核及其能量支配，尚未形式化 ordered-simplex integral、Magnus series 收敛或无限 prime 极限。
+
+## 10.5 黄金、素数频率、色散与拓扑的精确关系
+
+当前路线里有两个已冻结但尚未同一化的黄金位置。
+
+第一，黄金记忆稳定特征值：
+
+\[
+a=-\varphi^{-1}.
+\]
+
+它进入 \(C_{p,q}\)，控制历史注入的收缩和运输。
+
+第二，黄金尺度圆的基本频率：
+
+\[
+\Omega_\varphi=\frac{\pi}{\log\varphi},
+\qquad
+\omega_k=k\Omega_\varphi.
+\]
+
+将黄金 Fourier modes 代入新核可得：
+
+\[
+K_{k,\ell}(t_1,t_2)
+=
+-2i e^{-i(t_1+t_2)(k+\ell)\Omega_\varphi/2}
+\sin\left(
+\frac{(t_1-t_2)(k-\ell)\pi}{2\log\varphi}
+\right).
+\]
+
+而 zeta 的 prime frequencies 是：
+
+\[
+\omega_p=\log p.
+\]
+
+仓库当前没有证明 \(\log p\in\Omega_\varphi\mathbb Z\)，该关系通常也不成立。黄金 Fourier lattice 与 prime log-frequency set 是两套坐标。后续需要明确的 sampling、projection、aliasing 或 Poisson 型运输定理，才能把它们接入同一 RH 桥梁。
+
+拓扑层面，定义：
+
+\[
+v_{p,q}(t)=
+\bigl(\chi_{\omega_p}(t),\chi_{\omega_q}(t)\bigr)\in\mathbb C^2.
+\]
+
+则：
+
+\[
+K_{p,q}(t_1,t_2)
+=
+v_{p,q}(t_1)\wedge v_{p,q}(t_2)
+\in\Lambda^2\mathbb C^2.
+\]
+
+\(K=0\) 是 evaluation map 的 rank-drop locus，\(K\ne0\) 表示两个时间切片张成有向二维单元。当前只获得 exterior-algebra 与 rank-locus 结构。尚未构造 coboundary、cohomology class、Chern class 或全局 bundle invariant。
+
+## 10.6 对 RH 路线的下一步校准
+
+点态上界只能证明 residual 衰减足以压低二阶能量。要把二阶能量变成可识别的 holonomy 探针，下一真源应消除孤立共振零点。对 \(\Delta\omega\ne0\)，有序时间单纯形平均的纸面候选为：
+
+\[
+\mathcal A_T(\Delta\omega)
+=
+\int_{0<t_2<t_1<T}|K_{p,q}(t_1,t_2)|^2\,dt_2dt_1
+=
+T^2-
+\frac{2\bigl(1-\cos(T\Delta\omega)\bigr)}{(\Delta\omega)^2}.
+\]
+
+对固定非零 \(\Delta\omega\)，其归一化满足：
+
+\[
+\frac{\mathcal A_T(\Delta\omega)}{T^2}\longrightarrow1.
+\]
+
+有限 prime cutoff 下，若最小 log-frequency gap 为正，便可寻求统一 frame lower bound。建议下一 GID 为：
+
+`D5/S3/Observer/AgencyHolonomy/OrderedTimeSimplexSecondMagnusAverage`
+
+它应先证明积分恒等式、非负性、非零频率差下的正性，以及依赖 finite gap 的加权下界。完成后，路线才可能从单向 domination 升级为 resonance-controlled observability。
+
+## 10.7 严格非主张
+
+本增补不主张：黄金 Fourier modes 已与 prime log frequencies 同一化；点态二阶能量 faithfully 恢复 holonomy；有序时间积分已经形式化；Magnus series 已收敛；二阶核已给出全局拓扑不变量；prime-side 能量已支配 zero-side odd energy；离线零点已排除；RH 已证明。
