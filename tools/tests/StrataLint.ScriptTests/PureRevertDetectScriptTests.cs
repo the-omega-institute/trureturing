@@ -58,6 +58,75 @@ public sealed class PureRevertDetectScriptTests
     }
 
     [Fact]
+    public void ExactInverseOfSingleParentFirstParentCommitIsRejected()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new GitFixture();
+        fixture.CommitFiles("seed target", new FileMutation("tools/target.txt", "before\n"));
+        fixture.CommitFiles("ordinary target", new FileMutation("tools/target.txt", "after\n"));
+        fixture.CommitCandidateAndMerge(
+            "exact inverse of ordinary commit",
+            new FileMutation("tools/target.txt", "before\n"));
+
+        AssertRejected(Run([fixture.Repository]), "PURE_REVERT_TARGET_NOT_A_MERGE");
+    }
+
+    [Fact]
+    public void ExactWorkflowMergeInverseIsAccepted()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new GitFixture();
+        var workflowPath = ".github/" + "work" + "flows/" + "build.yml";
+        fixture.CommitFiles(
+            "seed workflow",
+            new FileMutation(workflowPath, "before\n"));
+        var feature = fixture.CommitOnBranch(
+            "feature",
+            "workflow feature",
+            new FileMutation(workflowPath, "after\n"));
+        var target = fixture.MergeIntoMain(feature, "merge workflow");
+        fixture.CommitCandidateAndMerge(
+            "exact workflow inverse",
+            new FileMutation(workflowPath, "before\n"));
+
+        var result = Run([fixture.Repository]);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Empty(result.StandardError);
+        Assert.Contains(
+            $"target_merge_sha={target}",
+            Encoding.UTF8.GetString(result.StandardOutput),
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ExactExecutableMergeInverseIsAccepted()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new GitFixture();
+        fixture.CommitFiles(
+            "seed executable",
+            new FileMutation("tools/run.sh", "before\n", Executable: true));
+        var feature = fixture.CommitOnBranch(
+            "feature",
+            "executable feature",
+            new FileMutation("tools/run.sh", "after\n", Executable: true));
+        var target = fixture.MergeIntoMain(feature, "merge executable");
+        fixture.CommitCandidateAndMerge(
+            "exact executable inverse",
+            new FileMutation("tools/run.sh", "before\n", Executable: true));
+
+        var result = Run([fixture.Repository]);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Empty(result.StandardError);
+        Assert.Contains(
+            $"target_merge_sha={target}",
+            Encoding.UTF8.GetString(result.StandardOutput),
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void NoOpMergeResultIsRejected()
     {
         if (OperatingSystem.IsWindows()) return;
@@ -183,6 +252,20 @@ public sealed class PureRevertDetectScriptTests
     }
 
     [Fact]
+    public void AdditionalProtectedPolicyPrefixIsNotImplicitlyReversible()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new GitFixture();
+        fixture.CommitFiles("seed other", new FileMutation("other/target.txt", "before\n"));
+        fixture.CommitFiles("other target", new FileMutation("other/target.txt", "after\n"));
+        fixture.CommitCandidateAndMerge(
+            "other inverse",
+            new FileMutation("other/target.txt", "before\n"));
+
+        AssertRejected(Run([fixture.Repository]), "PURE_REVERT_PATH_OUTSIDE_ALLOWLIST");
+    }
+
+    [Fact]
     public void BlobRestorationWithoutModeRestorationIsRejected()
     {
         if (OperatingSystem.IsWindows()) return;
@@ -230,7 +313,7 @@ public sealed class PureRevertDetectScriptTests
     }
 
     [Fact]
-    public void MultipleExactFirstParentTargetsFailClosedAsAmbiguous()
+    public void MultipleExactSingleParentTargetsFailClosedAsNotMerges()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new GitFixture();
@@ -242,7 +325,7 @@ public sealed class PureRevertDetectScriptTests
             "inverse with two witnesses",
             new FileMutation("tools/target.txt", "before\n"));
 
-        AssertRejected(Run([fixture.Repository]), "PURE_REVERT_AMBIGUOUS_TARGET");
+        AssertRejected(Run([fixture.Repository]), "PURE_REVERT_TARGET_NOT_A_MERGE");
     }
 
     [Fact]
@@ -396,6 +479,7 @@ public sealed class PureRevertDetectScriptTests
                 {
                     Atom("tools", ProtectionMatchKind.Prefix, "tools/"),
                     Atom("workflows", ProtectionMatchKind.Prefix, "{workflow-prefix}"),
+                    Atom("other", ProtectionMatchKind.Prefix, "other/"),
                 };
             }
             """.Replace(

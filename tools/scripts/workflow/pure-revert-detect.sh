@@ -10,6 +10,7 @@ readonly ambiguous_target_code=7
 readonly second_parent_code=8
 readonly classifier_modified_code=9
 readonly git_failure_code=10
+readonly target_not_merge_code=11
 
 fail() {
   local reason="$1" code="$2"
@@ -83,6 +84,10 @@ workflows_prefix="$(policy_prefix workflows)" \
 if [[ "$tools_prefix" == "$workflows_prefix" ]]; then
   fail PURE_REVERT_HISTORY_UNAVAILABLE "$history_unavailable_code"
 fi
+
+# The reversible domain is intentionally shell-owned: exactly the tools and
+# workflows atoms declared above. The policy supplies only their prefix bytes;
+# any additional protected prefix atom is not implicitly reversible.
 
 scratch="$(mktemp -d "${TMPDIR:-/tmp}/pure-revert-detect.XXXXXX")" \
   || fail PURE_REVERT_GIT_FAILURE "$git_failure_code"
@@ -217,6 +222,8 @@ while IFS= read -r commit; do
   exact_inverse_of "$commit" "$first_parent"
   inverse_status=$?
   if (( inverse_status == 0 )); then
+    [[ -n "${_other_parents:-}" ]] \
+      || fail PURE_REVERT_TARGET_NOT_A_MERGE "$target_not_merge_code"
     matching_targets+=("$commit")
   elif (( inverse_status == 2 )); then
     fail PURE_REVERT_GIT_FAILURE "$git_failure_code"
