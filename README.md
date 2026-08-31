@@ -1,43 +1,71 @@
 trureturing — the last line of the ledger is always the first line of the next round.
 
-The `Blueprint/` Markdown content of this repository is published as a browsable, searchable
-mdBook site at **<https://the-omega-institute.github.io/trureturing-mdbook/>**. That site is a
-derived projection, rebuilt daily from this repository by
-[the-omega-institute/trureturing-mdbook](https://github.com/the-omega-institute/trureturing-mdbook);
-it is not a source of truth and holds no authority over anything here.
+# trureturing
 
-GitHub required-check configuration is a human gate and has not been verified by this repository.
+This repository is a formal-mathematics repository built as an irreversible truth DAG:
+Lean carries its statements and proofs, a C# harness judges admission, and each accepted node
+is frozen into an append-only ledger instead of being rewritten.
 
-Developer commands have one top-level entry point:
+## Truth flow
 
 ```text
-make help
+docs/develop/theory/ (reference input only) --ingest--> D5/
+                                                     (Lean; sole mathematical source of truth)
+tools/ (C# judge; no mathematical content) --judges--> D5/
+tools/ --freezes accepted D5 nodes--> Golden/Frozen/accepted/ (frozen ledger)
+D5/ --projects--> Blueprint/ (derived; no authority)
+D5/ --projects--> mdBook (derived; no authority)
 ```
 
-Harness programs live under `tools/`, harness tests under `tools/tests/`, and
-canonical helper scripts under `tools/scripts/`. `Meta/` contains only FILEMAP,
-registry/domain data, and the digestion ledger. The Makefile contains routing only.
+## The ledger, measured
 
-StrataLint commands:
+### measured 2026-08-31 at dev d343b970ac7450641e3697fb310e99e397083eab
 
-```text
-tools/lean-inspector/inspect.sh --repository ROOT --output REPORT
-dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- check [--protected-base REV] --candidate-lean-report FILE
-dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- coverage [--json]
-dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- route MANIFEST|-
-dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- selftest
-dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- topology
-dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- worktree --branch NAME --path DIR [--base REV] [--skip-restore]
-```
+| Proof-state evidence | Reading | Exact rerunnable command |
+| --- | --- | --- |
+| Frozen nodes in the append-only ledger | 2,788, all of `event_type: "Freeze"` (zero `Revoke`, zero `Reattest`), `schema_version: 5` | `ls Golden/Frozen/accepted \| wc -l; python3 -c 'import glob,json; x=[json.load(open(f)) for f in glob.glob("Golden/Frozen/accepted/*.json")]; print(*(sum(y["event_type"]==e for y in x) for e in ("Freeze","Revoke","Reattest")), sorted(set(y["schema_version"] for y in x)))'` |
+| Content-addressed prerequisite edges between them | 2,737 (855 roots; max 48 prerequisites on one node) | `python3 -c 'import glob,json; x=[json.load(open(f))["payload"]["prerequisite_frozen_node_ids"] for f in glob.glob("Golden/Frozen/accepted/*.json")]; print(sum(map(len,x)),sum(not y for y in x),max(map(len,x)))'` |
+| Declarations carried by those frozen nodes | 26,801 distinct declaration names — **14,461 of kind `theorem`**, 11,238 `def`, 490 `constructor`, 317 `inductive`, 317 `recursor`, 1 `opaque` | `python3 -c 'import collections,glob,json; d=[y for f in glob.glob("Golden/Frozen/accepted/*.json") for y in json.load(open(f))["payload"]["declaration_statement_ids"]]; c=collections.Counter(y["kind"] for y in d); print(len({y["declaration_name_key"] for y in d}),*(c[k] for k in ("theorem","def","constructor","inductive","recursor","opaque")))'` |
+| Unproved bodies in `D5/` | exactly **1** `sorry`, at `D5/X_Frontier/Hearts.lean:76` | `grep -rn '^[[:space:]]*sorry[[:space:]]*$' D5 --include='*.lean'` |
+| Pinned environment | Lean `v4.31.0`; mathlib `inputRev v4.31.0` | `cat lean-toolchain; jq -r '.packages[] \| select(.name == "mathlib") \| .inputRev' lake-manifest.json` |
 
-Lean inspection and .NET admission are separate programs. The inspector runs in
-the pinned Lean environment and emits source-bound canonical JSON plus a SHA-256
-sidecar; `check` consumes the candidate report without invoking Lean. Baseline and fork-point
-state remain Git object snapshots used by repository rules.
+The truth DAG is not a metaphor — its nodes and its edges are the committed bytes, and both
+are countable.
 
-`worktree` fetches a remote base and creates the worktree with no `.lake` directory.
-The canonical Lean wrapper materializes a private cache on demand, using an APFS
-`clonefile(2)` donor copy on macOS when possible and `lake exe cache get` otherwise;
-`make lean-cache-ensure` is an explicit, optional prewarm target. The cache is never
-shared through a symlink, and worktree creation restores locked .NET dependencies
-unless `--skip-restore` is explicit.
+## The open frontier
+
+[D5/X_Frontier/Hearts.lean](D5/X_Frontier/Hearts.lean) holds exactly two open-heart objects,
+and their syntactic asymmetry is the boundary.
+
+- `o5_independence` is a `theorem` whose body is that single `sorry`: it states zero
+  localization for the canonical golden Euler germ on the structural line.
+- `o6WeilPositivityStatement` is a `def … : Prop`: it names Weil positivity, classically
+  equivalent to the Riemann Hypothesis, and asserts no proof, no theorem, and no axiom; a
+  `sorry` count cannot see it.
+
+The `sorry` count is 1, while the open hearts are 2; the module's docstring owns the remaining
+context.
+
+## Build and verify
+
+`make help` is the single live command entrance and owns the command vocabulary. Of the targets
+it names, `make test` is the mathematical gate, while `make preflight` locally pre-verifies the
+three checks; preflight is a local preview, not GitHub authority.
+
+This repository defines `engineering`, `lean-inspect`, and `admission` checks. It does not
+verify GitHub's required-check or branch-protection configuration, so it makes no claim that
+those checks are enforced on every merge.
+
+## Read and navigate
+
+- [`CLAUDE.md`](CLAUDE.md) is the governing constitution in Chinese and is authoritative.
+- [`agents/CONTEXT.md`](agents/CONTEXT.md) is authoritative for the compact repository map and
+  the Route → Edit → Check workflow.
+- [`docs/develop/spec/golden-ledger-repo-spec.md`](docs/develop/spec/golden-ledger-repo-spec.md)
+  is the sole normative specification.
+- [`D5/`](D5/) is the authoritative Lean source; [`Blueprint/`](Blueprint/) and the
+  [mdBook](https://the-omega-institute.github.io/trureturing-mdbook/) are derived reading
+  projections rebuilt from this repository and hold no authority over anything here.
+- [`docs/develop/theory/`](docs/develop/theory/) contains reference inputs only and is not
+  authoritative.
+- [`Problems/`](Problems/) is authoritative for open problems posted for outside attack.
