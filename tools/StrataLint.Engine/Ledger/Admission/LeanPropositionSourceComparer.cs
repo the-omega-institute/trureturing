@@ -30,14 +30,6 @@ internal static class LeanPropositionSourceComparer
                     return false;
                 }
 
-                // Identical source bytes determine identical proposition source.
-                if (protectedBase.Files.TryGetValue(path, out var baseFile)
-                    && candidate.Files.TryGetValue(path, out var candidateFile)
-                    && baseFile.RawBytes.AsSpan().SequenceEqual(candidateFile.RawBytes.AsSpan()))
-                {
-                    continue;
-                }
-
                 var baseFingerprint = baseSources.ExtractPropositionSource(
                     path,
                     recorded.Material.DeclarationStatementIds);
