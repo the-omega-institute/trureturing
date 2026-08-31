@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/Resource/SubmodularGreedyApproximation
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Cardinality-greedy maximization of a monotone submodular function
-     attains one minus one over e. -/
+   digest: Cardinality-greedy maximization of a monotone submodular function attains one minus one over e. -/
 
 import Mathlib.Analysis.Complex.Exponential
 import Mathlib.Data.Finset.Max
