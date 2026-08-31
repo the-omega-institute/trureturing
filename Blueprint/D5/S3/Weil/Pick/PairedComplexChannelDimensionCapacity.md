@@ -2,7 +2,7 @@
 
 ## Abstract
 
-A finite family of paired complex scalar channels has two complex dimensions of observation capacity per sensor.
+Paired complex channels have two complex dimensions of capacity per finite sensor.
 
 **Definition 1.1 (Paired-channel capacity).**
 
@@ -18,7 +18,7 @@ The capacity is the finite sensor cardinality multiplied by two, one complex coo
 
 **Theorem 1.2 (Dimension excess forces a blind direction).**
 
-$$\begin{gathered}(\operatorname{Injective}(O) \Rightarrow \operatorname{finrank}(\mathbb{C}, V) \le \operatorname{pairedComplexChannelCapacity}(I)) \land\\{}(\operatorname{finrank}(\mathbb{C}, V) - \operatorname{pairedComplexChannelCapacity}(I) \le \operatorname{finrank}(\mathbb{C}, \operatorname{ker}(O))) \land\\{}(\operatorname{pairedComplexChannelCapacity}(I) < \operatorname{finrank}(\mathbb{C}, V) \Rightarrow \exists x: V, x \neq 0 \land \operatorname{O}(x) = 0).\end{gathered}$$
+$$\begin{gathered}\forall O \in \operatorname{Hom}_{\mathbb{C}}(V, {I \to \mathbb{C} \times \mathbb{C}}):\\{}(\operatorname{Injective}(O) \Rightarrow \operatorname{finrank}(\mathbb{C}, V) \le \operatorname{pairedComplexChannelCapacity}(I)) \land\\{}(\operatorname{finrank}(\mathbb{C}, V) - \operatorname{pairedComplexChannelCapacity}(I) \le \operatorname{finrank}(\mathbb{C}, \operatorname{ker}(O))) \land\\{}(\operatorname{pairedComplexChannelCapacity}(I) < \operatorname{finrank}(\mathbb{C}, V) \Rightarrow \exists x: V, x \neq 0 \land \operatorname{O}(x) = 0).\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/Pick/PairedComplexChannelDimensionCapacity.paired_complex_channel_dimension_capacity` (`✓ std3`). ∎
 
