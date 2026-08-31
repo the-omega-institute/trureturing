@@ -23,10 +23,6 @@ internal static class DagLedgerMathlibReanchorWriter
                 .Where(static file =>
                     FrozenLedgerChangeClassifier.IsAcceptedEventPath(file.Path.Value))
                 .ToImmutableArray();
-            DagLedgerAppendWriter.RequireUnchangedBaseline(
-                LedgerPath(repositoryRoot),
-                protectedLedgerFiles,
-                "ledger-reanchor-mathlib");
 
             var baseView = FrozenLedgerBaseViewReader.Read(protectedBase);
             var states = LeanTruthStates.Resolve(truth.Snapshot, truth.Lean);
@@ -74,7 +70,7 @@ internal static class DagLedgerMathlibReanchorWriter
                 driftPaths);
             var replacementFiles = BuildReplacementFiles(
                 baseView,
-                currentLedgerFiles,
+                protectedLedgerFiles,
                 driftPaths,
                 newEventFiles);
             var prospective = ReplaceLedgerSnapshot(truth.Snapshot, replacementFiles);

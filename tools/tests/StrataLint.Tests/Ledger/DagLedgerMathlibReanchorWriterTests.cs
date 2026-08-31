@@ -45,6 +45,30 @@ public sealed class DagLedgerMathlibReanchorWriterTests
     }
 
     [Fact]
+    public void CanonicalProducerConvergesWhenPriorReanchorIsPresentBesideProtectedBase()
+    {
+        using var fixture = CreateFixture(
+            ModuleASource,
+            ModuleASource,
+            candidateAStatement: "compiler-reanchored True",
+            includePriorCandidateAEvent: true);
+
+        var result = DagLedgerMathlibReanchorWriter.Reanchor(
+            fixture.RepositoryRoot,
+            fixture.Repository,
+            fixture.ReportSource,
+            ["--base", BaseRevision]);
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("MATHLIB_REANCHOR replacement_modules=1", result.Output, StringComparison.Ordinal);
+        var persisted = DagLedgerCommandPreparation.ReadLedgerDirectoryFiles(fixture.LedgerPath);
+        Assert.Equal(2, persisted.Length);
+        Assert.Contains(persisted, file => file.Path == EventFor(fixture.CandidateEvents, "A").Path);
+        Assert.Contains(persisted, file => file.Path == EventFor(fixture.BaseEvents, "B").Path);
+        Assert.DoesNotContain(persisted, file => file.Path == EventFor(fixture.BaseEvents, "A").Path);
+    }
+
+    [Fact]
     public void PropositionSourceFailureIsReportedWithoutChangingReplacementSet()
     {
         const string changedSource =
@@ -110,7 +134,8 @@ public sealed class DagLedgerMathlibReanchorWriterTests
         string candidateAStatement,
         string candidateBStatement = "True",
         bool aImportsB = false,
-        bool includeStableC = false)
+        bool includeStableC = false,
+        bool includePriorCandidateAEvent = false)
     {
         var baseManifest = Manifest('a');
         var candidateManifest = Manifest('b');
@@ -150,8 +175,11 @@ public sealed class DagLedgerMathlibReanchorWriterTests
             candidateModules);
         var baseEvents = EventFiles(baseCatalog);
         var candidateEvents = EventFiles(candidateCatalog);
+        var currentEvents = includePriorCandidateAEvent
+            ? baseEvents.Add(EventFor(candidateEvents, "A"))
+            : baseEvents;
         var baseline = Snapshot(BaseToolchain, baseManifest, baseModules, baseEvents);
-        var current = Snapshot(CandidateToolchain, candidateManifest, candidateModules, baseEvents);
+        var current = Snapshot(CandidateToolchain, candidateManifest, candidateModules, currentEvents);
         var changedPaths = new List<(string Path, RawChangeKind Kind)>
         {
             ("lean-toolchain", RawChangeKind.Modified),
@@ -175,7 +203,7 @@ public sealed class DagLedgerMathlibReanchorWriterTests
             FrozenLedgerChangeClassifier.AcceptedRoot.Replace(
                 '/',
                 Path.DirectorySeparatorChar));
-        WriteLedgerDirectory(ledgerPath, baseEvents);
+        WriteLedgerDirectory(ledgerPath, currentEvents);
         return new ReanchorFixture(
             temporary,
             ledgerPath,
