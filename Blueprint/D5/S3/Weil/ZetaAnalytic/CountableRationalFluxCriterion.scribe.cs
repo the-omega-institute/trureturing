@@ -23,7 +23,8 @@ internal sealed class CountableRationalFluxCriterionDocument : IScribeDocumentDe
                     + "Density of the rationals supplies four rational sides strictly between "
                     + "that zero and the isolating sides. The canonical rectangle boundary then "
                     + "contains no zero, while the selected zero lies in its interior. The public "
-                    + "flux law converts this enclosure into a nonzero flux certificate."))),
+                    + "argument-principle law identifies this flux exactly with the positive "
+                    + "analytic order of xi at the isolated zero."))),
             DescribeRole.Theorem))));
 
     private static Formula.BoundVariable Bound(string name, Formula domain) =>
@@ -56,6 +57,9 @@ internal sealed class CountableRationalFluxCriterionDocument : IScribeDocumentDe
     private static Formula Greater(Formula left, Formula right) =>
         new Formula.Relation(left, FormulaRelationOperator.GreaterThan, right);
 
+    private static Formula LessOrEqual(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.LessThanOrEqual, right);
+
     private static Formula Not(Formula proposition) => new Formula.Not(proposition);
 
     private static Formula ForAll(Formula.BoundVariable[] variables, Formula body) =>
@@ -75,7 +79,7 @@ internal sealed class CountableRationalFluxCriterionDocument : IScribeDocumentDe
     private static Formula TheoremFormula()
     {
         Formula real = Call("Real"), rational = Call("Rat"), natural = Call("Nat");
-        Formula complex = Call("Complex"), zeros = F.Id("zeros"), flux = F.Id("flux");
+        Formula complex = Call("Complex"), xi = F.Id("xiReading"), flux = F.Id("flux");
         Formula z = F.Id("z"), w = F.Id("w");
         Formula x0 = F.Id("x0"), x1 = F.Id("x1");
         Formula y0 = F.Id("y0"), y1 = F.Id("y1");
@@ -88,6 +92,7 @@ internal sealed class CountableRationalFluxCriterionDocument : IScribeDocumentDe
         Formula Border(Formula left, Formula right) => Call("RectangleBorder", left, right);
         Formula Mem(Formula value, Formula set) => Call("mem", value, set);
         Formula NotMem(Formula value, Formula set) => Not(Mem(value, set));
+        Formula XiZero(Formula value) => Equal(Apply(xi, value), D(0));
         Formula FluxAt() => Apply(flux, a, b, c, d);
 
         Formula outerRectangle = Rectangle(Corner(x0, y0), Corner(x1, y1));
@@ -101,12 +106,12 @@ internal sealed class CountableRationalFluxCriterionDocument : IScribeDocumentDe
         Formula uniqueInOuter = ForAll(
             [Bound("w", complex)],
             Implies(
-                And(Mem(w, zeros), Mem(w, outerRectangle)),
+                And(XiZero(w), Mem(w, outerRectangle)),
                 Equal(w, z)));
         Formula axisIsolation = ForAll(
             [Bound("z", complex)],
             Implies(
-                And(Mem(z, zeros), Greater(Re(z), D(0))),
+                And(XiZero(z), Greater(Re(z), D(0))),
                 Exists(
                     [Bound("x0", real), Bound("x1", real),
                         Bound("y0", real), Bound("y1", real)],
@@ -122,10 +127,10 @@ internal sealed class CountableRationalFluxCriterionDocument : IScribeDocumentDe
             Greater(a, D(0)), Less(a, b), Less(c, d));
         Formula boundaryFree = ForAll(
             [Bound("z", complex)],
-            Implies(Mem(z, rationalBorder), NotMem(z, zeros)));
+            Implies(Mem(z, rationalBorder), Not(XiZero(z))));
         Formula rectangleZeroFree = ForAll(
             [Bound("z", complex)],
-            Implies(Mem(z, zeros), NotMem(z, rationalRectangle)));
+            Implies(XiZero(z), NotMem(z, rationalRectangle)));
         Formula localFluxLaw = ForAll(
             [Bound("a", rational), Bound("b", rational),
                 Bound("c", rational), Bound("d", rational)],
@@ -133,9 +138,29 @@ internal sealed class CountableRationalFluxCriterionDocument : IScribeDocumentDe
                 And(rationalSideConditions, boundaryFree),
                 Iff(Equal(FluxAt(), D(0)), rectangleZeroFree)));
 
+        Formula isolatedInRationalRectangle = ForAll(
+            [Bound("w", complex)],
+            Implies(
+                And(XiZero(w), Mem(w, rationalRectangle)),
+                Equal(w, z)));
+        Formula zeroOrder = Call("analyticOrderNatAt", xi, z);
+        Formula isolatedFluxCount = ForAll(
+            [Bound("z", complex), Bound("a", rational), Bound("b", rational),
+                Bound("c", rational), Bound("d", rational)],
+            Implies(
+                All(
+                    XiZero(z),
+                    rationalSideConditions,
+                    Mem(z, rationalRectangle),
+                    isolatedInRationalRectangle,
+                    boundaryFree),
+                And(
+                    Equal(FluxAt(), zeroOrder),
+                    LessOrEqual(D(1), zeroOrder))));
+
         Formula noRightHalfPlaneZero = ForAll(
             [Bound("z", complex)],
-            Implies(Mem(z, zeros), Not(Greater(Re(z), D(0)))));
+            Implies(XiZero(z), Not(Greater(Re(z), D(0)))));
         Formula everyBoundaryFreeFluxVanishes = ForAll(
             [Bound("a", rational), Bound("b", rational),
                 Bound("c", rational), Bound("d", rational)],
@@ -147,7 +172,7 @@ internal sealed class CountableRationalFluxCriterionDocument : IScribeDocumentDe
         Formula fluxType = Arrow(rational,
             Arrow(rational, Arrow(rational, Arrow(rational, natural))));
         return F.Disp(ForAll(
-            [Bound("zeros", Call("Set", complex)), Bound("flux", fluxType)],
-            Implies(And(axisIsolation, localFluxLaw), conclusion)));
+            [Bound("flux", fluxType)],
+            Implies(All(axisIsolation, localFluxLaw, isolatedFluxCount), conclusion)));
     }
 }
