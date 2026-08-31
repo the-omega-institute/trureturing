@@ -163,12 +163,16 @@ jobs:
             selected_count=0
             fallback_count=1
           fi
+          execution_full_required="$base_full_required"
+          if [[ "$fallback_count" -ne 0 ]]; then
+            execution_full_required=true
+          fi
           run_required=false
           if [[ "$state" != "none" || "$base_full_required" == "true" ]]; then
             run_required=true
           fi
           echo "state=$state" >> "$GITHUB_OUTPUT"
-          echo "base_full_required=$base_full_required" >> "$GITHUB_OUTPUT"
+          echo "execution_full_required=$execution_full_required" >> "$GITHUB_OUTPUT"
           echo "run_required=$run_required" >> "$GITHUB_OUTPUT"
           echo "event=$GITHUB_EVENT_NAME" >> "$GITHUB_OUTPUT"
           echo "head_sha=$head_sha" >> "$GITHUB_OUTPUT"
@@ -258,7 +262,7 @@ jobs:
         env:
           ENGINEERING_HEAD: ${{ steps.scope.outputs.head_sha }}
           ENGINEERING_BASE: ${{ steps.scope.outputs.base_sha }}
-          ENGINEERING_FULL_REQUIRED: ${{ steps.scope.outputs.base_full_required }}
+          ENGINEERING_EXECUTION_FULL_REQUIRED: ${{ steps.scope.outputs.execution_full_required }}
         run: |
           set -euo pipefail
           plan_file="$RUNNER_TEMP/engineering-test-plan.json"
@@ -276,7 +280,7 @@ jobs:
             cd "$base_harness_root"
             dotnet restore tools/StrataLint.sln --locked-mode
           )
-          if [[ "$ENGINEERING_FULL_REQUIRED" == "true" ]]; then
+          if [[ "$ENGINEERING_EXECUTION_FULL_REQUIRED" == "true" ]]; then
             FULL=1 make -C "$base_harness_root/tools" engineering-tests-base-cwd REPOSITORY="$GITHUB_WORKSPACE/candidate" MODE=plan HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$plan_file"
           else
             make -C "$base_harness_root/tools" engineering-tests-base-cwd REPOSITORY="$GITHUB_WORKSPACE/candidate" MODE=plan HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$plan_file"
