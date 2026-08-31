@@ -55,7 +55,14 @@ internal static class BoundedProcessRunner
                     standardInput,
                     cancellation.Token);
             process.WaitForExitAsync(cancellation.Token).GetAwaiter().GetResult();
-            stdin.GetAwaiter().GetResult();
+            try
+            {
+                stdin.GetAwaiter().GetResult();
+            }
+            catch (IOException) when (process.HasExited)
+            {
+                // The child owns whether it consumes stdin; preserve its completed verdict.
+            }
             return new ProcessOutput(
                 process.ExitCode,
                 stdout.GetAwaiter().GetResult(),
