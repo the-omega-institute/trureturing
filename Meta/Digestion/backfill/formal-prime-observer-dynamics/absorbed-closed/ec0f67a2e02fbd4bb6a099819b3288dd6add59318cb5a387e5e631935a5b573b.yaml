@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:ec0f67a2e02fbd4bb6a099819b3288dd6add59318cb5a387e5e631935a5b573b
+  normalized_sha256: sha256:ec0f67a2e02fbd4bb6a099819b3288dd6add59318cb5a387e5e631935a5b573b
+cas_ref: sha256:ec0f67a2e02fbd4bb6a099819b3288dd6add59318cb5a387e5e631935a5b573b
+coverage_gids:
+  - D5/S3/Analytic/Boundary/ZetaPrimeProductCommonBoundary.zeta_prime_product_common_boundary
+receipts:
+  coverage:
+    - gid: D5/S3/Analytic/Boundary/ZetaPrimeProductCommonBoundary.zeta_prime_product_common_boundary
+      source_sha256: sha256:ec0f67a2e02fbd4bb6a099819b3288dd6add59318cb5a387e5e631935a5b573b
+      target_statement_id: sha256:d99143c3dd82fc7d4ce1b3c0ff2d5c74196f9f0df1ad91bb8f81cbdc5b2515ca
+  scribe:
+    - gid: D5/S3/Analytic/Boundary/ZetaPrimeProductCommonBoundary.zeta_prime_product_common_boundary
+      definition_sha256: sha256:bc4b85cc954e0fb29349ab487874298e519298dbfb93e203ec940f6e745090b8
+      emission_sha256: sha256:7cba07107119073ef7f0fd8afc9bcd12e85bfc7e1ae188382afbc6fddba9a3cd
+  unresolved_subitems: []
