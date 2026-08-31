@@ -114,6 +114,7 @@ internal static partial class DigestionLedgerAligner
         IDictionary<string, DigestionAtom> matchedAtoms,
         ISet<string> clausePlanChainParents,
         ISet<string> verifiedClausePlanParents,
+        ISet<string> verifiedClausePlanMembers,
         ICollection<string> findings)
     {
         var byId = source.Entries.ToDictionary(static entry => entry.AtomId, StringComparer.Ordinal);
@@ -121,7 +122,8 @@ internal static partial class DigestionLedgerAligner
             source,
             currentClausePlans,
             alignments,
-            matchedAtoms);
+            matchedAtoms,
+            verifiedClausePlanMembers);
 
         foreach (var parent in source.Entries.Where(static entry => entry.Receipts.ChainAtoms.Length > 0))
         {
@@ -182,7 +184,7 @@ internal static partial class DigestionLedgerAligner
                 if (!byId.TryGetValue(childId, out var child)
                     && !candidateEntriesById.TryGetValue(childId, out child))
                 {
-                    rejectionReason = $"listed child {childId} is absent from source {source.SourceId}";
+                    rejectionReason = $"listed child {childId} is absent from every source (globally missing)";
                     break;
                 }
 
@@ -224,6 +226,7 @@ internal static partial class DigestionLedgerAligner
 
             foreach (var child in accepted)
             {
+                verifiedClausePlanMembers.Add(child.AtomId);
                 alignments[child.AtomId] = DigestionReceiptAlignment.Seen;
                 matchedAtoms[child.AtomId] = DigestionAtom.FromFrozenCas(child.Blob.RawBytes);
             }
@@ -236,14 +239,17 @@ internal static partial class DigestionLedgerAligner
         DigestionLedgerSource source,
         ImmutableArray<DigestionClausePlan> currentClausePlans,
         IDictionary<string, DigestionReceiptAlignment> alignments,
-        IDictionary<string, DigestionAtom> matchedAtoms)
+        IDictionary<string, DigestionAtom> matchedAtoms,
+        ISet<string> verifiedClausePlanMembers)
     {
         var plannedChildIds = currentClausePlans
             .SelectMany(static plan => plan.Children)
             .Select(static child => child.Fingerprints.RawSha256["sha256:".Length..])
             .ToHashSet(StringComparer.Ordinal);
+        // A verified parent-CAS chain claim is stronger than a current-frontier rejection.
         foreach (var plannedEntry in source.Entries.Where(entry =>
-                     plannedChildIds.Contains(entry.AtomId)))
+                     plannedChildIds.Contains(entry.AtomId)
+                     && !verifiedClausePlanMembers.Contains(entry.AtomId)))
         {
             alignments[plannedEntry.AtomId] = DigestionReceiptAlignment.Rejected;
             matchedAtoms.Remove(plannedEntry.AtomId);

@@ -87,6 +87,71 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
+    public void CrossSourceChainAlignmentIsIndependentOfSourceOrder()
+    {
+        var fixture = SelfContainedClauseChain();
+        var originalSource = Assert.Single(fixture.Ledger.RequireDigestionSources());
+        var externalChild = fixture.Children[0] with
+        {
+            SourceId = "child-owner",
+            SourcePath = "docs/child-owner.md",
+        };
+        var localChild = fixture.Children[1] with
+        {
+            SourceId = "chain-owner",
+            SourcePath = "docs/chain-owner.md",
+        };
+        var parent = fixture.Parent with
+        {
+            SourceId = "chain-owner",
+            SourcePath = "docs/chain-owner.md",
+        };
+        var childOwner = originalSource with
+        {
+            SourceId = "child-owner",
+            SourcePath = "docs/child-owner.md",
+            Entries = [externalChild],
+        };
+        var chainOwner = originalSource with
+        {
+            SourceId = "chain-owner",
+            SourcePath = "docs/chain-owner.md",
+            Entries = [parent, localChild],
+        };
+        var childOwnerSourceBytes = Encoding.UTF8.GetBytes(
+            "# PZG\n\n" + Encoding.UTF8.GetString(fixture.ParentCapture.Bytes.AsSpan()));
+        var snapshot = Snapshot(
+            childOwnerSourceBytes,
+            fixture.ChildCaptures.Prepend(fixture.ParentCapture),
+            sourcePath: childOwner.SourcePath,
+            extraEntries:
+            [
+                new RawRepositoryEntry(
+                    chainOwner.SourcePath,
+                    ImmutableArray.CreateRange(fixture.CurrentSourceBytes)),
+            ]);
+
+        DigestionLedgerAlignment Evaluate(params DigestionLedgerSource[] sources) =>
+            DigestionLedgerAligner.Evaluate(
+                fixture.Ledger.WithDigestionSources([.. sources]),
+                snapshot,
+                baselineDocument: null,
+                mode: DigestionAlignmentMode.Ingest);
+
+        var childOwnerFirst = Evaluate(childOwner, chainOwner);
+        var chainOwnerFirst = Evaluate(chainOwner, childOwner);
+
+        Assert.Equal(
+            DigestionReceiptAlignment.Seen,
+            childOwnerFirst.AlignmentFor(externalChild.AtomId));
+        Assert.Equal(
+            childOwnerFirst.AlignmentFor(externalChild.AtomId),
+            chainOwnerFirst.AlignmentFor(externalChild.AtomId));
+        Assert.NotNull(childOwnerFirst.AtomFor(externalChild.AtomId));
+        Assert.NotNull(chainOwnerFirst.AtomFor(externalChild.AtomId));
+    }
+
+    [Fact]
     public void AdmissionRevalidatesInheritedChainAcrossContentDeduplicationSourceMove()
     {
         var fixture = SelfContainedClauseChain();
@@ -265,6 +330,8 @@ public sealed partial class DigestionAlignmentTests
     [Fact]
     public void AdmissionRejectsInheritedParentWhenCrossSourceChildIsDeleted()
     {
+        // Policy lock from #4362: deleting only an inherited cross-source child receipt is a
+        // detection-gap repair. Retaining its CAS blob must not preserve the historical false admit.
         var fixture = SelfContainedClauseChain();
         var originalSource = Assert.Single(fixture.Ledger.RequireDigestionSources());
         var externalChild = fixture.Children[0] with
@@ -325,7 +392,7 @@ public sealed partial class DigestionAlignmentTests
 
         Assert.Contains(
             $"entry {parent.AtomId} malformed clause chain: listed child "
-            + $"{externalChild.AtomId} is absent from source chain-owner",
+            + $"{externalChild.AtomId} is absent from every source (globally missing)",
             result.Findings);
     }
 
@@ -405,7 +472,7 @@ public sealed partial class DigestionAlignmentTests
 
         Assert.Contains(
             $"entry {fixture.Parent.AtomId} malformed clause chain: listed child "
-            + $"{fixture.Children[0].AtomId} is absent from source source",
+            + $"{fixture.Children[0].AtomId} is absent from every source (globally missing)",
             result.Findings);
     }
 
