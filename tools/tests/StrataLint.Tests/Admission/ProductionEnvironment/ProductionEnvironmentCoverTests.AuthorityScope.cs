@@ -48,7 +48,7 @@ public sealed partial class ProductionEnvironmentTests
             + "\0"
             + Convert.ToBase64String(Encoding.UTF8.GetBytes(backlogAtom.Value))
             + "\n",
-            DirectoryLedgerTestSupport.Image(temporary.Path),
+            DirectoryLedgerTestSupport.RepositoryImage(temporary),
             StringComparison.Ordinal);
     }
 
@@ -70,14 +70,14 @@ public sealed partial class ProductionEnvironmentTests
             byteIdenticalBaseline: true));
         using var temporary = new TemporaryDirectory();
         DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
-        var before = DirectoryLedgerTestSupport.Image(temporary.Path);
+        var before = DirectoryLedgerTestSupport.RepositoryImage(temporary);
         var environment = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files);
 
         var result = environment.CoverAtom(CoverArgs(inputs));
 
         Assert.True(result.Success, result.Error);
         Assert.Contains("ledger_changed=true", result.Output, StringComparison.Ordinal);
-        Assert.NotEqual(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+        Assert.NotEqual(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
     }
 
     private static (CoverInputs Inputs, string EventPath) WithUnrelatedFrozenAcceptedEvent(
