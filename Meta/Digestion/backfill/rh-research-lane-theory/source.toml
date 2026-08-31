@@ -1,0 +1,5 @@
+source_id = "rh-research-lane-theory"
+path = "docs/develop/theory/RH_RESEARCH_LANE_THEORY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

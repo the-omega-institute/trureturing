@@ -1,0 +1,70 @@
+# 第一千二百八十六部　新的形式化顺序
+
+```text
+D5/S3/Analytic/Zeta/ShiftedScatteringDoublet/
+  ShiftedOuterZero.lean
+  ShiftedSharpZero.lean
+  ShiftedZeroMidpoint.lean
+  ShiftedZeroLayerSeparation.lean
+  OffLinePolarizationFailure.lean
+
+D5/S3/Analytic/Zeta/BoundaryIntervalDuality/
+  OffLineBoundaryEndpoints.lean
+  BoundaryIntervalToBulkPoint.lean
+  ReflectionSwapsIntervalEndpoints.lean
+  CriticalZeroDegenerateInterval.lean
+  GoldenIntervalContraction.lean
+
+D5/S3/Analytic/Zeta/PassivityBubble/
+  ReflectedPairLogDerivative.lean
+  ReflectedPairRealPartFormula.lean
+  OffLinePairNegativeSemidisk.lean
+  OffLinePairOrthogonalGeodesic.lean
+  OffLineZeroNegativePositiveRealWitness.lean
+
+D5/S3/Weil/Scattering/BlaschkeOrientation/
+  UpperHalfPlaneBlaschke.lean
+  BlaschkeBoundaryNormOne.lean
+  BlaschkePositivePhaseDerivative.lean
+  InverseBlaschkeNegativePhaseDerivative.lean
+  BlaschkeWindingDegree.lean
+  InnerNumeratorVsInnerDenominator.lean
+
+D5/S3/Weil/Scattering/BlaschkeAttenuationTomography/
+  OneFactorVerticalAttenuation.lean
+  FiniteProductVerticalAttenuation.lean
+  AttenuationTailDerivative.lean
+  AttenuationCurvatureMeasure.lean
+  AttenuationDeterminesDepthMultiset.lean
+
+D5/S3/Analytic/Zeta/TransverseStopLoss/
+  OffLineTailCount.lean
+  OffLineStopLoss.lean
+  ShiftedAttenuationStrip.lean
+  AttenuationStripIntegralIdentity.lean
+  StopLossSecondDerivativeDivisor.lean
+
+D5/S3/Analytic/Zeta/TransverseMoments/
+  OffLineTransverseMoment.lean
+  TailIntegralMomentFormula.lean
+  StopLossMellinMomentFormula.lean
+  DampingMomentGeneratingFunction.lean
+  CompactMomentDeterminacy.lean
+
+D5/S3/Analytic/Zeta/DefectPhaseField/
+  DefectRepairPhaseField.lean
+  DefectPhaseFourierTransform.lean
+  DefectPhaseFluxTailCount.lean
+  DefectPoissonSourceEquation.lean
+  FullOffLineDivisorTomography.lean
+
+D5/S3/Weil/Scattering/DenominatorFreeTarget/
+  ShiftedScatteringBoundaryAllPass.lean
+  BoundaryAllPassDoesNotImplySchur.lean
+  ShiftedScatteringMinimalBlaschkeDenominator.lean
+  DenominatorFreeIffNoOffLineDepth.lean
+  PrimePoissonDenominatorFreeTarget.lean
+```
+
+---
+

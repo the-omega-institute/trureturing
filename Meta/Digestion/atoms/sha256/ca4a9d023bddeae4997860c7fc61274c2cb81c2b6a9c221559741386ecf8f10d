@@ -1,0 +1,32 @@
+\[
+S_a(x)=1-u_a(x)^2
+=
+\frac{4ax}{(x+a)^2}.
+\]
+
+于是
+
+\[
+\boxed{u_a(x)^2+S_a(x)=1.}
+\]
+
+取非负振幅 \(\sqrt{S_a(x)}\) 后，
+
+\[
+\bigl(u_a(x),\sqrt{S_a(x)}\bigr)
+\]
+
+落在单位圆上。倒数变换 \(y=a^2/x\) 满足
+
+\[
+u_a(y)=-u_a(x),
+\qquad
+S_a(y)=S_a(x).
+\]
+
+它把同一强度的两个点放在圆上的相反相位。这正对应最新 RH 理论源中预登记的 `CurvatureSlackPhaseBridge`。该恒等式属于零点局部几何，尚未建立 prime holonomy energy 到 zero-side 圆能量的支配。
+
+所以“回归圆”可以精确表述为相位归一化或 Cayley-slack 守恒。它不应被写成能量在物理空间中自动收缩成一个圆。
+
+---
+

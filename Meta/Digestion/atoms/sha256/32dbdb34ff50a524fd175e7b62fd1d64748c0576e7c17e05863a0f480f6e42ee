@@ -1,0 +1,39 @@
+## 1345.1 Euclidean-circle 解释
+
+若直接把项目中的黄金 regulator 周期：
+
+$$
+P_\varphi=2\log\varphi
+$$
+
+解释为 Euclidean KMS 周期，则：
+
+$$
+\boxed{
+\beta_{\mathrm{circ}}
+=
+2\log\varphi,
+}
+$$
+
+$$
+\boxed{
+\kappa_{\mathrm{circ}}
+=
+\frac{2\pi}{\beta_{\mathrm{circ}}}
+=
+\frac{\pi}{\log\varphi}.
+}
+\tag{1345.1}
+$$
+
+Boltzmann 因子为：
+
+$$
+e^{-\beta_{\mathrm{circ}}E}
+=
+\varphi^{-2E}.
+$$
+
+---
+

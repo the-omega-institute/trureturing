@@ -1,0 +1,44 @@
+# Prime–Gamma 第二影支配命题
+
+$$
+\boxed{
+T_\omega^*T_\omega
+\succeq
+\left(
+\mathfrak H_\omega^*
+\mathfrak H_\omega
+\right)^2.
+}
+\tag{1418.3}
+$$
+
+因为完整酉分块满足：
+
+$$
+T_\omega^*T_\omega
+=
+I-\mathfrak H_\omega^*
+\mathfrak H_\omega.
+$$
+
+该目标明显弱于精确 Hardy 三角性：
+
+$$
+\mathfrak H_\omega=0.
+$$
+
+因此它可能比直接构造完整 minimum-phase realization更易证明。
+
+需要保留的未闭合桥是：
+
+$$
+\boxed{
+\text{局部 inverse-Blaschke 通道是否作为压缩块，
+忠实地保留在全局 }\mathfrak H_\omega\text{ 中。}
+}
+$$
+
+在这条桥形式化以前，式 (1418.1) 是强有力的充分目标，而不是已经完成的 RH 证明。
+
+---
+

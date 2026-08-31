@@ -1,0 +1,33 @@
+# 第一千二百八十三部　Prime–Poisson 酉性为何仍不足以证明 RH
+
+仓库已经机器证明：
+
+$$
+\boxed{
+\text{prime-power 双向平移历史}
+}
+$$
+
+可以精确重求和为由一对 unitary resolvents 构成的 Poisson operator。
+
+仓库还证明 shifted normalized scattering readings 的 telescoping product 在：
+
+$$
+\Re z>1
+$$
+
+中重建 Riemann \(\zeta(z)\)。
+
+这两项非常重要，但仍然没有排除 Blaschke 分母。
+
+原因是：
+
+$$
+\boxed{
+|b_p(t)|=|b_p(t)^{-1}|=1.
+}
+$$
+
+所以 unitary boundary data 无法区分：
+
+* 合法 inner factor；

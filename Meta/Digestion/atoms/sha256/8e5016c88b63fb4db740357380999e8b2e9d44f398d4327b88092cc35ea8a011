@@ -1,0 +1,78 @@
+# 第一千三百一十五部　Hankel 奇异值就是解析视差
+
+对两个 shifted 像：
+
+$$
+p_\omega
+=
+-\gamma+i(\delta-\omega),
+$$
+
+$$
+q_\omega
+=
+-\gamma+i(\delta+\omega),
+$$
+
+上半平面的伪双曲距离为：
+
+$$
+\varrho_{\mathbb H}(p_\omega,q_\omega)
+=
+\left|
+\frac{p_\omega-q_\omega}
+{p_\omega-\overline{q_\omega}}
+\right|.
+$$
+
+直接计算：
+
+$$
+\boxed{
+\varrho_{\mathbb H}(p_\omega,q_\omega)
+=
+\frac{\omega}{\delta}.
+}
+\tag{1315.1}
+$$
+
+而单缺陷 Hankel 奇异值正是：
+
+$$
+\boxed{
+\sigma_\rho(\omega)
+=
+\varrho_{\mathbb H}(p_\omega,q_\omega).
+}
+\tag{1315.2}
+$$
+
+对应双曲距离为：
+
+$$
+\boxed{
+d_{\mathbb H}(p_\omega,q_\omega)
+=
+\log
+\frac{\delta+\omega}
+{\delta-\omega}.
+}
+\tag{1315.3}
+$$
+
+并满足：
+
+$$
+\boxed{
+\sigma_\rho(\omega)
+=
+\tanh
+\frac{
+d_{\mathbb H}(p_\omega,q_\omega)
+}{2}.
+}
+\tag{1315.4}
+$$
+
+---
+

@@ -1,0 +1,54 @@
+# 第一千四百一十六部　每一个离线零点都有一个黄金拉伸视界
+
+对简单、局部互素的离线零点：
+
+$$
+\rho
+=
+\frac12+\delta+i\gamma,
+$$
+
+其 shifted Hankel 缺陷为：
+
+$$
+\boxed{
+\mathsf D_\rho(\omega)
+=
+\sigma_\rho(\omega)^2
+=
+\frac{\omega^2}{\delta^2},
+\qquad
+0<\omega<\delta.
+}
+\tag{1416.1}
+$$
+
+黄金第二影条件要求：
+
+$$
+1-\mathsf D_\rho
+=
+\mathsf D_\rho^2.
+$$
+
+因此：
+
+$$
+\frac{\omega^2}{\delta^2}
+=
+\varphi^{-1}.
+$$
+
+得到唯一深度：
+
+$$
+\boxed{
+\omega_\varphi(\rho)
+=
+\frac{\delta}{\sqrt\varphi}.
+}
+\tag{1416.2}
+$$
+
+这可以称为该离线零点的：
+

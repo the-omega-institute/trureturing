@@ -1,0 +1,24 @@
+\[
+\varepsilon_{r,L}
+=
+\max_{p\in\mathcal P_L}|a_{r,p}|.
+\]
+
+对固定有限活动窗口 \(\mathcal P_L\)，只要未来证明
+
+\[
+\varepsilon_{r,L}\longrightarrow0,
+\]
+
+纸面上立即得到
+
+\[
+\max_{p,q\in\mathcal P_L}
+\|C^{\mathrm{st}}_{r;p,q}\|
+\longrightarrow0.
+\]
+
+最后这一极限运输尚未包含在本轮 Lean 声明中。它应作为独立节点接收一个已形式化的 residual-envelope 收敛前提。
+
+---
+

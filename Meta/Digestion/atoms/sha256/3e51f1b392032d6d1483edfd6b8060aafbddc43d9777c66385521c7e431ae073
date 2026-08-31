@@ -1,0 +1,24 @@
+# 5. 为什么会出现圆
+
+圆有两条独立来源。
+
+第一条来自相位群：
+
+\[
+e^{-it\log p}\in U(1).
+\]
+
+每个 prime-frequency channel 在单位圆上旋转。多个素数共同形成环面 \(U(1)^P\)。相干表示这些圆周相位在加权和中朝向共同方向。
+
+第二条来自 zero-side 的 Cayley 紧化。令
+
+\[
+x=(t-\gamma)^2,
+\qquad
+a=\delta^2,
+\qquad
+u_a(x)=\frac{x-a}{x+a}.
+\]
+
+对一阶 Chebyshev slack，
+

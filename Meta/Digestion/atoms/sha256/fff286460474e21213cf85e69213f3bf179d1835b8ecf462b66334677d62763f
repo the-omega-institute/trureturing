@@ -1,0 +1,28 @@
+## 第四步：构造正 storage operator
+
+寻找：
+
+$$
+P_\omega>0
+$$
+
+使系统满足 lossless/bounded-real 恒等式。
+
+这将推出：
+
+$$
+\Theta_\omega
+$$
+
+属于 Schur 类，并结合实边界上的单位模得到 innerness。
+
+于是：
+
+$$
+\boxed{
+B_\omega=1.
+}
+$$
+
+---
+

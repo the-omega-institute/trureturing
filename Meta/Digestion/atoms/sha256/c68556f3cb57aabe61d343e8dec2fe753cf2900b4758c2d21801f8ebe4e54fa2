@@ -1,0 +1,35 @@
+# 第一千二百七十九部　Blaschke 垂直衰减完整层析
+
+考虑单个 Blaschke 因子：
+
+$$
+p=a+ih,
+\qquad h>0.
+$$
+
+在 \(z=x+iy\) 处：
+
+$$
+-\log|b_p(z)|^2
+=
+\log
+\frac{
+(x-a)^2+(y+h)^2
+}{
+(x-a)^2+(y-h)^2
+}.
+$$
+
+利用：
+
+$$
+\int_{\mathbb R}
+\log
+\frac{x^2+A^2}{x^2+B^2}
+\,dx
+=
+2\pi(A-B),
+$$
+
+得到：
+

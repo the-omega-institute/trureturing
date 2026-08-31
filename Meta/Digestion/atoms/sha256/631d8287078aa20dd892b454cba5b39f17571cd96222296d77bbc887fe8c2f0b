@@ -1,0 +1,14 @@
+## 4.1 抽取平坦化
+
+需要证明，对每个固定 \(L,N\)，
+
+\[
+\boxed{
+\|\mathcal V_{r,L,N}^{\mathrm{hol}}\|_{\mathrm{op}}
+\longrightarrow0
+\quad(r\to\infty).
+}
+\]
+
+观察起源因子分解显示，局部注入趋零本身不足以承担该结论。还需要控制共振条件数
+

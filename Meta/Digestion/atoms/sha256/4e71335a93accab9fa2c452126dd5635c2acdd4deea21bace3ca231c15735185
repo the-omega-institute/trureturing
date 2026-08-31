@@ -1,0 +1,9 @@
+\[
+\boxed{
+e^{-it(\log p-\log q)}e^{-it\log q}
+=
+e^{-it\log p}.}
+\]
+
+若另外假设地址为正，则纸面上可以写成
+

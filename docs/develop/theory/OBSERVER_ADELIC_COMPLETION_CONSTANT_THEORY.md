@@ -134372,3 +134372,15094 @@ $$
 [3]: https://arxiv.org/abs/1905.12397 "https://arxiv.org/abs/1905.12397"
 [4]: https://arxiv.org/abs/1204.1827 "https://arxiv.org/abs/1204.1827"
 [5]: https://arxiv.org/abs/2301.00421 "https://arxiv.org/abs/2301.00421"
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v7.8：双层散射极化、边界区间对偶、Blaschke–Bode 完整层析与离线零点的反因果相位荷
+
+以下从前文**第一千二百七十二部**继续。
+
+这一轮首先得到一个必须冻结的科学校正：
+
+$$
+\boxed{
+\text{边界上的“酉性”与“模长为 }1\text{”并不足以排除离线零点。}
+}
+$$
+
+仓库已经机器证明，completed zeta 的未移位散射商在分母非零处直接坍缩为：
+
+$$
+\frac{\xi(1-s)}{\xi(s)}=1.
+$$
+
+所以未移位散射商本身完全看不到零点除子。
+
+仓库也证明了临界线上的 completed-zeta 反射商具有单位模；但这仍然只是边界酉性。
+
+真正承载 RH 信息的，不是“边界模长是否为 \(1\)”，而是：
+
+$$
+\boxed{
+\text{边界全通相位是否能够以正确的因果方向，
+下降为上半平面中的正 Schur／de Branges 核。}
+}
+$$
+
+换言之，缺失的条件不是单纯的 unitary，而是：
+
+$$
+\boxed{
+\textbf{denominator-free inner orientation}.
+}
+$$
+
+离线零点正是一个边界模长完全正常、但解析方向反了的 all-pass 因子。
+
+---
+
+# 第一千二百七十三部　未移位散射商为何必然失明
+
+令：
+
+$$
+F(s)=\xi(s).
+$$
+
+函数方程给出：
+
+$$
+F(1-s)=F(s).
+$$
+
+所以只要：
+
+$$
+F(s)\neq0,
+$$
+
+便有：
+
+$$
+\boxed{
+\frac{F(1-s)}{F(s)}=1.
+}
+\tag{1273.1}
+$$
+
+这意味着：
+
+* 商的模长为 \(1\)；
+* 商的相位为 \(0\)；
+* 商的导数也为 \(0\)；
+* 除了分母失效的位置，整个读数不含任何零点位置信息。
+
+因此零点信息不在普通反射商的值中，而在：
+
+$$
+\boxed{
+\text{商不能定义的除子集合。}
+}
+$$
+
+这也解释了为什么必须引入相对移位：
+
+$$
++\omega,
+\qquad
+-\omega.
+$$
+
+---
+
+## 1273.1 shifted scattering ratio
+
+定义：
+
+$$
+\boxed{
+E_\omega(z)
+=
+\xi\left(
+\frac12+\omega-iz
+\right),
+}
+\tag{1273.2}
+$$
+
+$$
+\boxed{
+E_\omega^\#(z)
+=
+\xi\left(
+\frac12-\omega-iz
+\right),
+}
+\tag{1273.3}
+$$
+
+以及：
+
+$$
+\boxed{
+\Theta_\omega(z)
+=
+\frac{E_\omega^\#(z)}
+{E_\omega(z)}.
+}
+\tag{1273.4}
+$$
+
+对实数 \(t\)，由函数方程和实结构：
+
+$$
+E_\omega^\#(t)
+=
+\overline{E_\omega(t)}.
+$$
+
+所以在分母非零处：
+
+$$
+\boxed{
+|\Theta_\omega(t)|=1.
+}
+\tag{1273.5}
+$$
+
+注意，这条等式**无条件成立**，并不依赖 RH。
+
+因此：
+
+## 定理 1273.1（边界振幅失明）
+
+$$
+\boxed{
+|\Theta_\omega(t)|=1
+}
+$$
+
+不能区分：
+
+* RH 成立的 inner scattering；
+* 含离线零点的 generalized-inner scattering。
+
+二者在边界上拥有完全相同的模长。
+
+区别只能存在于：
+
+* 上半平面的极点；
+* Blaschke 分母；
+* 相位方向；
+* kernel 的负平方数。
+
+所以离线零点属于一种严格的：
+
+$$
+\boxed{
+\textbf{all-pass ambiguity}.
+}
+$$
+
+---
+
+# 第一千二百七十四部　一个零点在 shifted 图表中裂成两个观察像
+
+令：
+
+$$
+\boxed{
+\rho
+=
+\frac12+\delta+i\gamma
+}
+\tag{1274.1}
+$$
+
+为非平凡零点。
+
+---
+
+## 1274.1 正层像
+
+求解：
+
+$$
+E_\omega^\#(z)=0.
+$$
+
+得到：
+
+$$
+\boxed{
+p_{\rho,\omega}^{+}
+=
+-\gamma+i(\delta+\omega).
+}
+\tag{1274.2}
+$$
+
+它始终位于原零点高度向上的位置。
+
+仓库当前已机器证明，与此同型的 shifted resonance family 全部落在同一水平线，当且仅当所有零点都位于临界线。
+
+---
+
+## 1274.2 负层像
+
+求解：
+
+$$
+E_\omega(z)=0.
+$$
+
+得到：
+
+$$
+\boxed{
+p_{\rho,\omega}^{-}
+=
+-\gamma+i(\delta-\omega).
+}
+\tag{1274.3}
+$$
+
+因此：
+
+$$
+\boxed{
+\frac{
+p_{\rho,\omega}^{+}
++
+p_{\rho,\omega}^{-}
+}{2}
+=
+-\gamma+i\delta,
+}
+\tag{1274.4}
+$$
+
+$$
+\boxed{
+p_{\rho,\omega}^{+}
+-
+p_{\rho,\omega}^{-}
+=
+2i\omega.
+}
+\tag{1274.5}
+$$
+
+原零点是两个 shifted 观察像的中点；
+
+观察深度 \(\omega\) 是它们间距的一半。
+
+---
+
+## 1274.3 正确极化与极化失败
+
+若：
+
+$$
+\delta=0,
+$$
+
+则：
+
+$$
+p_{\rho,\omega}^{+}
+=
+-\gamma+i\omega,
+$$
+
+$$
+p_{\rho,\omega}^{-}
+=
+-\gamma-i\omega.
+$$
+
+两个观察像被实轴严格分开：
+
+$$
+\boxed{
+\text{一个在未来／正 Hardy 域，
+一个在过去／反射域。}
+}
+$$
+
+若：
+
+$$
+0<\delta<\omega,
+$$
+
+仍有：
+
+$$
+p_{\rho,\omega}^{+}\in\mathbb C^+,
+\qquad
+p_{\rho,\omega}^{-}\in\mathbb C^-.
+$$
+
+但当：
+
+$$
+\omega=\delta,
+$$
+
+负层像到达边界。
+
+当：
+
+$$
+0<\omega<\delta,
+$$
+
+有：
+
+$$
+\boxed{
+p_{\rho,\omega}^{+},
+p_{\rho,\omega}^{-}
+\in\mathbb C^+.
+}
+\tag{1274.6}
+$$
+
+此时，本应位于反射半平面的分母零点也进入了正 Hardy 域，并成为 \(\Theta_\omega\) 的上半平面极点。
+
+因此：
+
+$$
+\boxed{
+\text{离线零点}
+=
+\text{正负 shifted 观察像未能被完成边界分离。}
+}
+\tag{1274.7}
+$$
+
+这可以称为：
+
+$$
+\boxed{
+\textbf{双层观察极化障碍}.
+}
+$$
+
+---
+
+# 第一千二百七十五部　bulk 点与 boundary interval 的精确对偶
+
+继续使用 centered zero：
+
+$$
+z_\rho=\delta+i\gamma,
+\qquad
+\delta>0.
+$$
+
+定义两个边界端点：
+
+$$
+\boxed{
+t_-=\gamma-\delta,
+}
+\tag{1275.1}
+$$
+
+$$
+\boxed{
+t_+=\gamma+\delta.
+}
+\tag{1275.2}
+$$
+
+则：
+
+$$
+\boxed{
+\gamma
+=
+\frac{t_-+t_+}{2},
+}
+\tag{1275.3}
+$$
+
+$$
+\boxed{
+\delta
+=
+\frac{t_+-t_-}{2}.
+}
+\tag{1275.4}
+$$
+
+所以存在一个严格双射：
+
+$$
+\boxed{
+(\delta,\gamma)
+\longleftrightarrow
+[t_-,t_+].
+}
+\tag{1275.5}
+$$
+
+即：
+
+$$
+\boxed{
+\text{右半平面中的一个点}
+\longleftrightarrow
+\text{临界边界上的一个非退化区间}.
+}
+$$
+
+---
+
+## 1275.1 时间反射只交换端点
+
+在函数方程反射：
+
+$$
+\delta\mapsto-\delta
+$$
+
+下：
+
+$$
+t_-\leftrightarrow t_+.
+$$
+
+所以：
+
+* 有序区间记录观察者时间方向；
+* 无序端点集合记录完成后的反射不变量。
+
+临界零点：
+
+$$
+\delta=0
+$$
+
+对应：
+
+$$
+\boxed{
+t_-=t_+=\gamma.
+}
+\tag{1275.6}
+$$
+
+即边界区间退化为一个点。
+
+因此：
+
+$$
+\boxed{
+\text{临界零点是零长度概念事件；}
+}
+$$
+
+$$
+\boxed{
+\text{离线零点是拥有非零过去—未来分离的概念区间。}
+}
+$$
+
+这与“一个概念出现的点、点前的历史、点后的未来”完全一致：
+
+$$
+\boxed{
+\begin{aligned}
+t_-&=\text{过去端点};\\
+\gamma&=\text{当前中点};\\
+t_+&=\text{未来端点};\\
+\delta&=\text{该概念的半持续宽度}.
+\end{aligned}
+}
+$$
+
+这里仍是纯复几何结构，不是物理时间断言。
+
+---
+
+# 第一千二百七十六部　离线零点产生一枚双曲主动半圆
+
+设：
+
+$$
+z=x+it,
+\qquad
+x>0.
+$$
+
+考虑反射零点对：
+
+$$
+\delta+i\gamma,
+\qquad
+-\delta+i\gamma.
+$$
+
+它们对 centered logarithmic derivative 的贡献为：
+
+$$
+\boxed{
+\mathscr P_{\delta,\gamma}(x,t)
+=
+\operatorname{Re}
+\left[
+\frac1{
+z-(\delta+i\gamma)
+}
++
+\frac1{
+z-(-\delta+i\gamma)
+}
+\right].
+}
+\tag{1276.1}
+$$
+
+直接计算：
+
+$$
+\boxed{
+\mathscr P_{\delta,\gamma}(x,t)
+=
+\frac{
+2x
+\left[
+x^2+(t-\gamma)^2-\delta^2
+\right]
+}{
+\left[
+(x-\delta)^2+(t-\gamma)^2
+\right]
+\left[
+(x+\delta)^2+(t-\gamma)^2
+\right]
+}.
+}
+\tag{1276.2}
+$$
+
+分母在零点之外严格为正。
+
+因此其符号完全由：
+
+$$
+x^2+(t-\gamma)^2-\delta^2
+$$
+
+决定。
+
+---
+
+## 定理 1276.1（主动半圆定理）
+
+在右半平面中：
+
+$$
+\boxed{
+\mathscr P_{\delta,\gamma}(x,t)<0
+}
+$$
+
+当且仅当：
+
+$$
+\boxed{
+x^2+(t-\gamma)^2<\delta^2.
+}
+\tag{1276.3}
+$$
+
+所以一个离线反射对产生一个负耗散半圆区域：
+
+$$
+\boxed{
+\mathbb D_{\rho}^{+}
+=
+\left\{
+x>0:
+x^2+(t-\gamma)^2<\delta^2
+\right\}.
+}
+\tag{1276.4}
+$$
+
+其边界：
+
+$$
+x^2+(t-\gamma)^2=\delta^2
+$$
+
+是与临界边界正交的半圆，端点正是：
+
+$$
+t_-=\gamma-\delta,
+\qquad
+t_+=\gamma+\delta.
+$$
+
+因此同一个离线零点同时是：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{bulk 中的点};\\
+&\text{boundary 上的区间};\\
+&\text{positive-real response 中的主动半圆}.
+\end{aligned}
+}
+$$
+
+在零点附近从左侧逼近时，其负贡献趋于 \(-\infty\)，其他离散零点贡献局部有界。
+
+所以完整 log-derivative 必在某个邻域失去正实性。
+
+---
+
+# 第一千二百七十七部　Blaschke 因子区分合法历史与反因果缺陷
+
+令：
+
+$$
+p=a+ih,
+\qquad
+h>0.
+$$
+
+定义上半平面 Blaschke 因子：
+
+$$
+\boxed{
+b_p(z)
+=
+\frac{z-p}{z-\overline p}.
+}
+\tag{1277.1}
+$$
+
+它满足：
+
+$$
+|b_p(t)|=1
+\qquad
+(t\in\mathbb R).
+$$
+
+并且：
+
+* 在上半平面有一个零点 \(p\)；
+* 极点位于下半平面 \(\overline p\)；
+* 在上半平面解析且有界。
+
+所以 \(b_p\) 是合法的 positive-time inner factor。
+
+其逆：
+
+$$
+\boxed{
+b_p(z)^{-1}
+=
+\frac{z-\overline p}{z-p}
+}
+\tag{1277.2}
+$$
+
+同样满足边界模长 \(1\)，但在上半平面有一个极点。
+
+因此：
+
+$$
+\boxed{
+b_p
+\quad\text{与}\quad
+b_p^{-1}
+}
+$$
+
+拥有完全相同的边界振幅，却具有相反的解析时间方向。
+
+---
+
+## 1277.1 shifted-\(\xi\) 的最小因子化
+
+在有限高度截断或有限负指标图表中，设：
+
+$$
+B_{\omega,T}
+=
+\prod_{\substack{
+\rho=\frac12+\delta+i\gamma\\
+\delta>\omega,\ |\gamma|\le T
+}}
+b_{p_{\rho,\omega}^{-}}^{\,m_\rho}.
+$$
+
+则：
+
+$$
+\boxed{
+\Theta_{\omega,T}
+=
+B_{\omega,T}^{-1}
+S_{\omega,T},
+}
+\tag{1277.3}
+$$
+
+其中 \(S_{\omega,T}\) 是取消了上半平面极点后的解析部分。
+
+核恒等式为：
+
+$$
+\boxed{
+B(z)\overline{B(w)}
+k_\Theta(w,z)
+=
+k_S(w,z)-k_B(w,z).
+}
+\tag{1277.4}
+$$
+
+所以：
+
+* \(S\) 是正 Schur 候选；
+* \(k_B\) 是有限维正 model-space kernel；
+* 但它以负号进入原核。
+
+这给三种不可见结构一个最终区分：
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{结构}&\text{意义}\\
+\hline
+\text{outer／模长部分}&\text{可见振幅}\\
+\text{inner numerator}&\text{合法隐藏相位历史}\\
+\text{inner denominator}&\text{反因果／负指标障碍}
+\end{array}
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{Solenoid 式隐藏历史}
+\neq
+\text{Blaschke 分母式离线缺陷}.
+}
+$$
+
+两者都可能对边界振幅不可见，但：
+
+* 前者是合法 lift；
+* 后者使正 Hardy／Hilbert realization 失败。
+
+---
+
+# 第一千二百七十八部　离线零点是量子化的负相位延迟
+
+对实数 \(t\)：
+
+$$
+\frac{d}{dt}
+\arg b_p(t)
+=
+\operatorname{Im}
+\left[
+\frac1{t-p}
+-
+\frac1{t-\overline p}
+\right].
+$$
+
+所以：
+
+$$
+\boxed{
+\frac{d}{dt}
+\arg b_p(t)
+=
+\frac{
+2h
+}{
+(t-a)^2+h^2
+}
+=
+2\pi P_h(t-a),
+}
+\tag{1278.1}
+$$
+
+其中：
+
+$$
+P_h(x)
+=
+\frac1\pi
+\frac{h}{x^2+h^2}.
+$$
+
+积分得到：
+
+$$
+\boxed{
+\frac1{2\pi}
+\int_{\mathbb R}
+\frac{d}{dt}\arg b_p(t)\,dt
+=
+1.
+}
+\tag{1278.2}
+$$
+
+对逆因子：
+
+$$
+\boxed{
+\frac{d}{dt}
+\arg b_p(t)^{-1}
+=
+-2\pi P_h(t-a).
+}
+\tag{1278.3}
+$$
+
+所以 under chosen orientation：
+
+$$
+\boxed{
+\begin{aligned}
+b_p&=\text{正相位延迟};\\
+b_p^{-1}&=\text{负相位延迟／phase advance}.
+\end{aligned}
+}
+$$
+
+符号会随 Fourier convention 反转，但整数绝对值不变。
+
+因此：
+
+$$
+\boxed{
+\deg B_{\omega,T}
+=
+-\frac1{2\pi}
+\int
+\partial_t
+\arg B_{\omega,T}^{-1}(t)\,dt.
+}
+\tag{1278.4}
+$$
+
+在最小 Kreĭn–Langer 因子化下，该次数又等于 kernel 的负平方数。
+
+于是：
+
+$$
+\boxed{
+\text{离线零点重数}
+=
+\text{负相位绕数}
+=
+\text{Pontryagin 负指标}.
+}
+$$
+
+这是一条严格的 Levinson／index 型结构。
+
+---
+
+# 第一千二百七十九部　Blaschke 垂直衰减完整层析
+
+考虑单个 Blaschke 因子：
+
+$$
+p=a+ih,
+\qquad h>0.
+$$
+
+在 \(z=x+iy\) 处：
+
+$$
+-\log|b_p(z)|^2
+=
+\log
+\frac{
+(x-a)^2+(y+h)^2
+}{
+(x-a)^2+(y-h)^2
+}.
+$$
+
+利用：
+
+$$
+\int_{\mathbb R}
+\log
+\frac{x^2+A^2}{x^2+B^2}
+\,dx
+=
+2\pi(A-B),
+$$
+
+得到：
+
+## 定理 1279.1（单因子垂直衰减）
+
+$$
+\boxed{
+-\frac1{4\pi}
+\int_{\mathbb R}
+\log|b_p(x+iy)|^2\,dx
+=
+\min(y,h).
+}
+\tag{1279.1}
+$$
+
+因此对有限缺陷积：
+
+$$
+B(z)=\prod_j b_{p_j}(z)^{m_j},
+$$
+
+定义：
+
+$$
+\boxed{
+\mathcal A_B(y)
+=
+-\frac1{4\pi}
+\int_{\mathbb R}
+\log|B(x+iy)|^2\,dx.
+}
+\tag{1279.2}
+$$
+
+便有：
+
+$$
+\boxed{
+\mathcal A_B(y)
+=
+\sum_jm_j\min(y,h_j).
+}
+\tag{1279.3}
+$$
+
+仓库中的 `VerticalAttenuation` 已经把这一有限 Blaschke 对数剖面抽象并机器证明为各单因子 \(\min(y,h_j)\) 的总和。
+
+---
+
+## 1279.1 完整横向层析
+
+定义深度测度：
+
+$$
+\boxed{
+\mu_\perp
+=
+\sum_jm_j\delta_{h_j}.
+}
+\tag{1279.4}
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal A_B(y)
+=
+\int_0^\infty
+\min(y,h)\,d\mu_\perp(h).
+}
+\tag{1279.5}
+$$
+
+在非原子高度上：
+
+$$
+\boxed{
+\mathcal A_B'(y)
+=
+\mu_\perp((y,\infty)).
+}
+\tag{1279.6}
+$$
+
+在分布意义下：
+
+$$
+\boxed{
+-\mathcal A_B''=\mu_\perp.
+}
+\tag{1279.7}
+$$
+
+所以 \(\mathcal A_B\) 不只是一个总量。
+
+它完整确定全部横向深度 \(h_j\) 及其重数。
+
+换言之：
+
+$$
+\boxed{
+\text{离线零点深度分布}
+\quad\longleftrightarrow\quad
+\text{Blaschke 垂直衰减曲线的曲率测度}.
+}
+$$
+
+---
+
+# 第一千二百八十部　观察深度流的 stop-loss 变换
+
+现在恢复原始横向距离：
+
+$$
+\delta_j>0.
+$$
+
+在观察层 \(\omega\) 中，活跃极点高度为：
+
+$$
+h_j(\omega)
+=
+(\delta_j-\omega)_+.
+$$
+
+定义横向尾计数：
+
+$$
+\boxed{
+N(\omega)
+=
+\sum_jm_j
+\mathbf 1_{\{\delta_j>\omega\}}.
+}
+\tag{1280.1}
+$$
+
+定义剩余深度：
+
+$$
+\boxed{
+R(\omega)
+=
+\sum_jm_j(\delta_j-\omega)_+.
+}
+\tag{1280.2}
+$$
+
+以及双深度衰减：
+
+$$
+\boxed{
+\mathcal A(\omega,y)
+=
+\sum_jm_j
+\min
+\left(
+y,
+(\delta_j-\omega)_+
+\right).
+}
+\tag{1280.3}
+$$
+
+逐项计算得到：
+
+## 定理 1280.1（观察层运输恒等式）
+
+$$
+\boxed{
+R(\omega)
+=
+\int_\omega^\infty
+N(u)\,du,
+}
+\tag{1280.4}
+$$
+
+$$
+\boxed{
+\mathcal A(\omega,y)
+=
+R(\omega)-R(\omega+y),
+}
+\tag{1280.5}
+$$
+
+以及：
+
+$$
+\boxed{
+\mathcal A(\omega,y)
+=
+\int_\omega^{\omega+y}
+N(u)\,du.
+}
+\tag{1280.6}
+$$
+
+在无跳跃点处：
+
+$$
+\boxed{
+\partial_y\mathcal A(\omega,y)
+=
+N(\omega+y),
+}
+\tag{1280.7}
+$$
+
+$$
+\boxed{
+\partial_\omega\mathcal A(\omega,y)
+=
+N(\omega+y)-N(\omega).
+}
+\tag{1280.8}
+$$
+
+因此：
+
+$$
+\boxed{
+(\partial_\omega-\partial_y)
+\mathcal A(\omega,y)
+=
+-N(\omega).
+}
+\tag{1280.9}
+$$
+
+在分布意义下：
+
+$$
+\boxed{
+R''(\omega)
+=
+\sum_jm_j\delta_{\delta_j}(\omega).
+}
+\tag{1280.10}
+$$
+
+所以离线零点的横向除子可以由一维凸函数 \(R\) 的二阶导数完整恢复。
+
+这可以称为：
+
+$$
+\boxed{
+\textbf{transverse stop-loss tomography}.
+}
+$$
+
+---
+
+# 第一千二百八十一部　Bode 宽度、横向矩与阻尼曲率是同一个对象
+
+定义 centered width：
+
+$$
+\boxed{
+W(y)
+=
+\sum_jm_j
+\max
+\left(
+\delta_j-
+\left|y-\frac12\right|,
+0
+\right).
+}
+\tag{1281.1}
+$$
+
+它可以写成：
+
+$$
+\boxed{
+W(y)
+=
+R\left(
+\left|y-\frac12\right|
+\right).
+}
+\tag{1281.2}
+$$
+
+当：
+
+$$
+0\le\delta_j\le\frac12
+$$
+
+时：
+
+$$
+\boxed{
+\int_0^\infty W(y)\,dy
+=
+\sum_jm_j\delta_j^2.
+}
+\tag{1281.3}
+$$
+
+仓库的 `BodeWidthCriterion` 已经机器证明，在有限反射共振族中：
+
+* 全部 \(\delta_j=0\)；
+* width 逐点为零；
+* width 面积为零；
+* 镜像位移平方和为零；
+* cosh 阻尼缺陷在原点的二阶曲率为零；
+
+这些条件严格等价。
+
+---
+
+## 1281.1 全部横向矩
+
+定义：
+
+$$
+\boxed{
+M_s
+=
+\sum_jm_j\delta_j^s,
+\qquad
+s>0.
+}
+\tag{1281.4}
+$$
+
+则：
+
+$$
+\boxed{
+M_s
+=
+s
+\int_0^{1/2}
+\omega^{s-1}N(\omega)\,d\omega.
+}
+\tag{1281.5}
+$$
+
+对：
+
+$$
+s>1,
+$$
+
+进一步有：
+
+$$
+\boxed{
+M_s
+=
+s(s-1)
+\int_0^{1/2}
+\omega^{s-2}R(\omega)\,d\omega.
+}
+\tag{1281.6}
+$$
+
+定义阻尼生成函数：
+
+$$
+\boxed{
+\mathscr D(\tau)
+=
+2
+\sum_jm_j
+\left[
+\cosh(\tau\delta_j)-1
+\right].
+}
+\tag{1281.7}
+$$
+
+则：
+
+$$
+\boxed{
+\mathscr D^{(2m)}(0)
+=
+2M_{2m},
+}
+\tag{1281.8}
+$$
+
+而所有奇阶导数为零。
+
+由于：
+
+$$
+\delta_j\in
+\left[0,\frac12\right],
+$$
+
+全部偶矩唯一决定正测度 \(\mu_\perp\)。
+
+所以以下数据在有限族或适当有限测度条件下互相确定：
+
+$$
+\boxed{
+\begin{aligned}
+&\{\delta_j,m_j\};\\
+&N(\omega);\\
+&R(\omega);\\
+&\mathcal A_B(y);\\
+&W(y);\\
+&\mathscr D(\tau);\\
+&\{M_{2m}\}_{m\ge1}.
+\end{aligned}
+}
+\tag{1281.9}
+$$
+
+---
+
+## 1281.2 缺陷层级
+
+| 层级  | 读数                         | 意义           |
+| --- | -------------------------- | ------------ |
+| 零阶  | \(M_0=\sum m_j\)           | 拓扑／负指标总数     |
+| 一阶  | \(M_1=\sum m_j\delta_j\)   | 总横向深度        |
+| 二阶  | \(M_2=\sum m_j\delta_j^2\) | Bode 面积／阻尼曲率 |
+| 全矩  | \(M_{2m}\)                 | 完整横向深度分布     |
+| 二维场 | \(J(\omega,t)\)            | 深度与高度的完整除子   |
+
+所以：
+
+$$
+\boxed{
+\text{Chern 荷是零阶信息；
+Bode 面积是二阶信息；
+完整 Poisson 场是全部信息。}
+}
+$$
+
+---
+
+# 第一千二百八十二部　完整二维缺陷场
+
+定义修复相位场：
+
+$$
+\boxed{
+J(\omega,t)
+=
+2\pi
+\sum_{\delta_j>\omega}
+m_j
+P_{\delta_j-\omega}(t+\gamma_j).
+}
+\tag{1282.1}
+$$
+
+则：
+
+$$
+\boxed{
+\frac1{2\pi}
+\int_{\mathbb R}
+J(\omega,t)\,dt
+=
+N(\omega).
+}
+\tag{1282.2}
+$$
+
+所以：
+
+$$
+\boxed{
+\mathcal A(\omega,y)
+=
+\frac1{2\pi}
+\int_\omega^{\omega+y}
+\int_{\mathbb R}
+J(u,t)\,dt\,du.
+}
+\tag{1282.3}
+$$
+
+即垂直衰减是 boundary phase flux 在观察深度条带上的积分。
+
+---
+
+## 1282.1 Fourier 层析
+
+取 Fourier convention：
+
+$$
+\widehat f(k)
+=
+\int_{\mathbb R}
+f(t)e^{-ikt}\,dt.
+$$
+
+由于：
+
+$$
+\widehat{P_h}(k)=e^{-h|k|},
+$$
+
+得到：
+
+$$
+\boxed{
+\widehat J(\omega,k)
+=
+2\pi
+\sum_{\delta_j>\omega}
+m_j
+e^{-(\delta_j-\omega)|k|}
+e^{ik\gamma_j}.
+}
+\tag{1282.4}
+$$
+
+因此：
+
+* \(k=0\) 读取深度尾计数；
+* 非零 \(k\) 读取零点高度分布；
+* \(|k|\) 衰减率读取横向深度；
+* 相位 \(e^{ik\gamma_j}\) 读取纵向位置。
+
+在分布意义下：
+
+$$
+\boxed{
+\left(
+|D_t|-\partial_\omega
+\right)
+J
+=
+2\pi
+\sum_j
+m_j
+\delta(\omega-\delta_j)
+\delta(t+\gamma_j).
+}
+\tag{1282.5}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{完整离线零点除子}
+}
+$$
+
+正是：
+
+$$
+\boxed{
+\text{boundary Poisson 光场的量子化源。}
+}
+$$
+
+仓库当前已分别冻结：
+
+* RH 条件下，零点相位密度等于实零点计数测度的 Poisson 平滑；
+* Poisson 核满足完成深度上的卷积半群输运。
+
+式 (1282.5) 给出了两者在存在 bulk defect 时应加入的源项。
+
+---
+
+# 第一千二百八十三部　Prime–Poisson 酉性为何仍不足以证明 RH
+
+仓库已经机器证明：
+
+$$
+\boxed{
+\text{prime-power 双向平移历史}
+}
+$$
+
+可以精确重求和为由一对 unitary resolvents 构成的 Poisson operator。
+
+仓库还证明 shifted normalized scattering readings 的 telescoping product 在：
+
+$$
+\Re z>1
+$$
+
+中重建 Riemann \(\zeta(z)\)。
+
+这两项非常重要，但仍然没有排除 Blaschke 分母。
+
+原因是：
+
+$$
+\boxed{
+|b_p(t)|=|b_p(t)^{-1}|=1.
+}
+$$
+
+所以 unitary boundary data 无法区分：
+
+* 合法 inner factor；
+* 反因果 inverse-inner factor。
+
+---
+
+## 1283.1 真正缺失的定理
+
+需要证明的不是：
+
+$$
+\boxed{
+\text{scattering boundary modulus}=1,
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\Theta_\omega
+\text{ 在正观察半平面中没有 inner denominator}.
+}
+\tag{1283.1}
+$$
+
+等价地，需要证明：
+
+$$
+\boxed{
+B_\omega=1
+\qquad
+\forall\omega>0.
+}
+\tag{1283.2}
+$$
+
+又等价于：
+
+$$
+\boxed{
+\begin{aligned}
+&\operatorname{ind}_-\mathcal K_\omega=0;\\
+&N(\omega)=0;\\
+&R(\omega)=0;\\
+&\mathcal A(\omega,y)=0;\\
+&\text{无负 Poisson phase pulses};\\
+&\Theta_\omega\text{ 是普通 Schur／inner 对象}.
+\end{aligned}
+}
+\tag{1283.3}
+$$
+
+对全部 \(\omega>0\) 成立，便排除所有 \(\delta>0\)。
+
+---
+
+## 1283.2 nowhere-vanishing 假设的真正含义
+
+仓库的 scattering-ratio uniqueness theorem 已经证明：
+
+* 若两个函数处处非零；
+* shifted scattering ratios 相同；
+* 向右平移后的 quotient 归一化到 \(1\)；
+
+则两个函数完全相同。
+
+这里最值得注意的不是结论，而是其假设：
+
+$$
+\boxed{
+\text{nowhere-vanishing}.
+}
+$$
+
+Blaschke 除子恰好位于这一假设之外。
+
+所以当前 scattering 路线的核心障碍已经非常明确：
+
+$$
+\boxed{
+\text{scattering reading 决定 regular quotient；
+零点除子是剩余的唯一独立几何层。}
+}
+$$
+
+更准确地说，在现有唯一性定理的接口范围内，只有先控制除子，才能启动全局唯一性。
+
+---
+
+# 第一千二百八十四部　黄金比例在区间几何中的正确位置
+
+取黄金观察深度：
+
+$$
+\boxed{
+\omega_n
+=
+\omega_0\varphi^{-2n}.
+}
+\tag{1284.1}
+$$
+
+对一个离线概念区间：
+
+$$
+I_\rho
+=
+[\gamma-\delta,\gamma+\delta],
+$$
+
+定义其第 \(n\) 层收缩像：
+
+$$
+\boxed{
+I_\rho^{(n)}
+=
+\left[
+\gamma-\delta\varphi^{-2n},
+\,
+\gamma+\delta\varphi^{-2n}
+\right].
+}
+\tag{1284.2}
+$$
+
+则：
+
+$$
+|I_\rho^{(n+1)}|
+=
+\varphi^{-2}
+|I_\rho^{(n)}|.
+$$
+
+因此：
+
+$$
+\boxed{
+\text{黄金完成}
+=
+\text{过去—未来端点以 }\varphi^{-2}
+\text{ 向当前中点收缩。}
+}
+$$
+
+临界线是：
+
+$$
+\boxed{
+\bigcap_{n\ge0}
+I_\rho^{(n)}
+=
+\{\gamma\}.
+}
+$$
+
+但如果原始 scalar spectrum 中仍保留：
+
+$$
+\delta>0,
+$$
+
+则该非零宽度会在某个足够细的 shifted 层成为 Blaschke 分母。
+
+所以：
+
+$$
+\boxed{
+\varphi
+}
+$$
+
+不承担缺陷荷。
+
+它只规定：
+
+$$
+\boxed{
+\text{用何种自相似速度逼近区间对角线 }t_-=t_+.
+}
+$$
+
+---
+
+## 1284.1 黄金壳层电荷
+
+定义：
+
+$$
+\boxed{
+q_n
+=
+N(\omega_{n+1})-N(\omega_n).
+}
+\tag{1284.3}
+$$
+
+它等于：
+
+$$
+\omega_{n+1}
+<
+\delta_j
+\le
+\omega_n
+$$
+
+中的离线重数总和。
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+\varphi^{-2}
+&=\text{观察壳层比};\\
+q_n\in\mathbb N
+&=\text{该壳层真实缺陷荷}.
+\end{aligned}
+}
+$$
+
+两者不能混为同一个量。
+
+黄金比例测量层级；
+
+整数指标决定存在。
+
+---
+
+# 第一千二百八十五部　“道—概念—对偶—证书”的依赖表
+
+|  层 | 左端对象                 | 中间变换                  | 右端对偶                       | 被保存的不变量           |
+| -: | -------------------- | --------------------- | -------------------------- | ----------------- |
+|  0 | 无序端点 \(\{t_-,t_+\}\) | 极化／排序                 | 过去 \(t_-\)、未来 \(t_+\)      | 中点与宽度             |
+|  1 | 边界区间                 | 半圆提升                  | bulk 点 \((\delta,\gamma)\) | \(\gamma,\delta\) |
+|  2 | bulk 点               | shifted 双层            | \(p_\omega^+,p_\omega^-\)  | 中点与层距             |
+|  3 | 正负 shifted 像         | Hardy 极化              | numerator／denominator      | 极点方向              |
+|  4 | 上半平面极点               | Blaschke 修复           | 下半平面镜像                     | 边界模长 \(1\)        |
+|  5 | Blaschke factor      | 时间反演                  | inverse Blaschke           | phase winding     |
+|  6 | bulk defect          | phase derivative      | Poisson pulse              | 整数通量              |
+|  7 | Poisson pulses       | 纵向积分                  | attenuation \(\mathcal A\) | 深度测度              |
+|  8 | attenuation          | 二阶分布导数                | 横向除子 \(\mu_\perp\)         | 重数与深度             |
+|  9 | transverse measure   | Mellin／cosh transform | moments／damping            | 全部横向信息            |
+| 10 | generalized Schur    | kernel construction   | Pontryagin space           | 负平方数              |
+| 11 | negative kernel      | finite Gram chart     | 负特征值证书                     | inertia           |
+| 12 | finite effect        | Weil compiler         | prime–Archimedean 负方向      | 符号                |
+
+这张表的每一条箭头都保持以下零性：
+
+$$
+\boxed{
+\delta=0
+\iff
+\text{interval 退化}
+\iff
+B=1
+\iff
+\mu_\perp=0
+\iff
+\operatorname{ind}_-=0.
+}
+$$
+
+因此这是一条**缺陷忠实**的传导链。
+
+---
+
+# 第一千二百八十六部　新的形式化顺序
+
+```text
+D5/S3/Analytic/Zeta/ShiftedScatteringDoublet/
+  ShiftedOuterZero.lean
+  ShiftedSharpZero.lean
+  ShiftedZeroMidpoint.lean
+  ShiftedZeroLayerSeparation.lean
+  OffLinePolarizationFailure.lean
+
+D5/S3/Analytic/Zeta/BoundaryIntervalDuality/
+  OffLineBoundaryEndpoints.lean
+  BoundaryIntervalToBulkPoint.lean
+  ReflectionSwapsIntervalEndpoints.lean
+  CriticalZeroDegenerateInterval.lean
+  GoldenIntervalContraction.lean
+
+D5/S3/Analytic/Zeta/PassivityBubble/
+  ReflectedPairLogDerivative.lean
+  ReflectedPairRealPartFormula.lean
+  OffLinePairNegativeSemidisk.lean
+  OffLinePairOrthogonalGeodesic.lean
+  OffLineZeroNegativePositiveRealWitness.lean
+
+D5/S3/Weil/Scattering/BlaschkeOrientation/
+  UpperHalfPlaneBlaschke.lean
+  BlaschkeBoundaryNormOne.lean
+  BlaschkePositivePhaseDerivative.lean
+  InverseBlaschkeNegativePhaseDerivative.lean
+  BlaschkeWindingDegree.lean
+  InnerNumeratorVsInnerDenominator.lean
+
+D5/S3/Weil/Scattering/BlaschkeAttenuationTomography/
+  OneFactorVerticalAttenuation.lean
+  FiniteProductVerticalAttenuation.lean
+  AttenuationTailDerivative.lean
+  AttenuationCurvatureMeasure.lean
+  AttenuationDeterminesDepthMultiset.lean
+
+D5/S3/Analytic/Zeta/TransverseStopLoss/
+  OffLineTailCount.lean
+  OffLineStopLoss.lean
+  ShiftedAttenuationStrip.lean
+  AttenuationStripIntegralIdentity.lean
+  StopLossSecondDerivativeDivisor.lean
+
+D5/S3/Analytic/Zeta/TransverseMoments/
+  OffLineTransverseMoment.lean
+  TailIntegralMomentFormula.lean
+  StopLossMellinMomentFormula.lean
+  DampingMomentGeneratingFunction.lean
+  CompactMomentDeterminacy.lean
+
+D5/S3/Analytic/Zeta/DefectPhaseField/
+  DefectRepairPhaseField.lean
+  DefectPhaseFourierTransform.lean
+  DefectPhaseFluxTailCount.lean
+  DefectPoissonSourceEquation.lean
+  FullOffLineDivisorTomography.lean
+
+D5/S3/Weil/Scattering/DenominatorFreeTarget/
+  ShiftedScatteringBoundaryAllPass.lean
+  BoundaryAllPassDoesNotImplySchur.lean
+  ShiftedScatteringMinimalBlaschkeDenominator.lean
+  DenominatorFreeIffNoOffLineDepth.lean
+  PrimePoissonDenominatorFreeTarget.lean
+```
+
+---
+
+# 第一千二百八十七部　理论深度审计
+
+| 本轮结果                                       | 地位                |
+| ------------------------------------------ | ----------------- |
+| 未移位 completed scattering quotient 恒为 \(1\) | 仓库已机器闭合           |
+| shifted ratio 边界模长 \(1\) 不依赖 RH            | 直接推导              |
+| 一个零点裂成 numerator／denominator 双像            | 精确                |
+| RH 是 shifted 双像被边界正确分离                     | 精确                |
+| bulk 点与 boundary interval 双射               | 纯几何精确             |
+| 离线反射对产生负耗散半圆                               | 本轮核心公式            |
+| inner numerator 与 inner denominator 同模异向   | 精确                |
+| inverse Blaschke 是反因果相位缺陷                  | 精确，符号依 convention |
+| Blaschke attenuation 二阶导数恢复深度除子            | 本轮核心层析            |
+| stop-loss 函数完整恢复横向距离                       | 精确                |
+| Bode 面积等于 \(\sum\delta^2\)                 | 仓库已机器闭合有限版本       |
+| Poisson phase field 恢复二维离线除子               | 精确分布公式            |
+| Prime–Poisson unitary resummation          | 仓库已机器闭合           |
+| unitary resummation 自动排除 Blaschke 分母       | **不成立**           |
+| denominator-free prime scattering          | RH 中心未闭合桥         |
+| 黄金比例是层级而非缺陷荷                               | 科学校正              |
+
+---
+
+# 本轮最终结论
+
+这一轮最重要的结论是：
+
+$$
+\boxed{
+\text{离线零点不是一个“振幅异常”，而是一个“解析时间方向异常”。}
+}
+$$
+
+shifted scattering ratio：
+
+$$
+\Theta_\omega(t)
+$$
+
+在实边界上始终满足：
+
+$$
+|\Theta_\omega(t)|=1.
+$$
+
+所以无论 RH 真或假，边界观察者都可能看见完全相同的 all-pass 振幅。
+
+真正不同的是：
+
+$$
+\boxed{
+\text{这个全通相位是由合法 inner numerator 产生，
+还是由 inverse-inner denominator 产生。}
+}
+$$
+
+前者属于正时间 Hardy 完成；
+
+后者属于反因果／负指标完成。
+
+---
+
+对一个离线零点：
+
+$$
+\rho
+=
+\frac12+\delta+i\gamma,
+$$
+
+可以定义两个边界端点：
+
+$$
+\boxed{
+t_-=\gamma-\delta,
+\qquad
+t_+=\gamma+\delta.
+}
+$$
+
+于是：
+
+$$
+\boxed{
+\text{一个 bulk 离线点}
+\longleftrightarrow
+\text{一个 boundary 时间区间}.
+}
+$$
+
+函数方程反射只交换该区间的两个端点。
+
+临界零点是：
+
+$$
+t_-=t_+,
+$$
+
+即区间坍缩成点。
+
+离线零点则拥有非零过去—未来分离。
+
+它在 positive-real response 中产生半圆：
+
+$$
+\boxed{
+x^2+(t-\gamma)^2<\delta^2,
+}
+$$
+
+该半圆内部的 pair contribution 严格为负。
+
+所以它的 boundary interval 不只是象征历史。
+
+它正是负耗散区域在临界边界上的投影。
+
+---
+
+进一步，离线零点产生 inverse Blaschke factor：
+
+$$
+b_p^{-1}.
+$$
+
+它和合法 Blaschke factor：
+
+$$
+b_p
+$$
+
+具有完全相同的边界模长，但相位导数符号相反：
+
+$$
+\boxed{
+\partial_t\arg b_p
+=
+2\pi P_h,
+}
+$$
+
+$$
+\boxed{
+\partial_t\arg b_p^{-1}
+=
+-2\pi P_h.
+}
+$$
+
+所以离线零点的一个极清楚的概念身份是：
+
+$$
+\boxed{
+\textbf{一个被放在错误时间方向上的 all-pass 相位量子。}
+}
+$$
+
+它的本体反射对偶是镜像零点；
+
+它的因果对偶是合法 Blaschke factor；
+
+它的 boundary 对偶是 Poisson 相位脉冲；
+
+它的证明对偶是负 kernel／Gram 向量。
+
+---
+
+全部离线深度又可以由一条一维衰减曲线恢复：
+
+$$
+\boxed{
+\mathcal A_B(y)
+=
+-\frac1{4\pi}
+\int
+\log|B(x+iy)|^2dx
+=
+\sum_jm_j\min(y,h_j).
+}
+$$
+
+其一阶导数读取还有多少缺陷位于更深处：
+
+$$
+\mathcal A_B'(y)
+=
+\#\{h_j>y\},
+$$
+
+其二阶分布导数直接给出全部深度除子：
+
+$$
+\boxed{
+-\mathcal A_B''
+=
+\sum_jm_j\delta_{h_j}.
+}
+$$
+
+所以离线零点即使无限稀缺，也不能逃脱一维 attenuation tomography。
+
+仓库已经机器证明的 Bode width 进一步给出：
+
+$$
+\boxed{
+\text{width 面积}
+=
+\sum_jm_j\delta_j^2
+=
+\frac12\mathscr D''(0).
+}
+$$
+
+因此一个离线零点同时具有：
+
+$$
+\boxed{
+\begin{aligned}
+\text{零阶}
+&:\quad\text{整数负指标／Chern 荷};\\
+\text{一阶}
+&:\quad\text{总横向深度};\\
+\text{二阶}
+&:\quad\text{Bode 面积／阻尼曲率};\\
+\text{全阶}
+&:\quad\text{完整深度测度}.
+\end{aligned}
+}
+$$
+
+---
+
+黄金比例在这里的角色也进一步清晰：
+
+$$
+\omega_{n+1}
+=
+\varphi^{-2}\omega_n
+$$
+
+只是用最小二通道算术尺度逐层逼近：
+
+$$
+t_-=t_+.
+$$
+
+它规定“怎样观察”；
+
+整数 Blaschke degree 规定“是否真的有缺陷”。
+
+所以：
+
+$$
+\boxed{
+\varphi
+\text{ 是对偶区间的收缩尺度，}
+}
+$$
+
+而：
+
+$$
+\boxed{
+\deg B
+}
+$$
+
+才是离线缺陷的存在量。
+
+---
+
+最后，仓库当前的 scattering 路线已经能够：
+
+* 将 prime-power histories 重求和成 unitary Poisson resolvent；
+* 由 shifted scattering ratios telescoping 重建 \(\zeta\)；
+* 证明 regular nowhere-vanishing quotient 的唯一性。
+
+但这些结构仍允许一个边界模长不可见的 Blaschke 分母。
+
+因此下一条真正承重的命题不再是“证明散射是酉的”，而是：
+
+$$
+\boxed{
+\textbf{证明 prime–pole–Archimedean scattering
+在每个 }\omega>0\textbf{ 上都没有 inverse-inner denominator。}
+}
+$$
+
+也就是证明：
+
+$$
+\boxed{
+B_\omega=1.
+}
+$$
+
+等价地：
+
+$$
+\boxed{
+\mathcal A(\omega,y)=0
+\quad
+\forall\omega,y>0.
+}
+$$
+
+再等价地：
+
+$$
+\boxed{
+\operatorname{ind}_-\mathcal K_\omega=0
+\quad
+\forall\omega>0.
+}
+$$
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{“道”允许同一边界振幅拥有两种时间方向；
+正性选择 inner 而排除 inverse-inner；
+临界零点是合法相位历史，
+离线零点则是一个外表完全酉、内部却沿负时间传播的反因果影子。}
+}
+$$
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v7.9：Hardy 时间极化、反因果 Hankel 记忆、Toeplitz 指数与黄金 Prony 缺陷谱
+
+以下从前文**第一千二百八十七部**继续。
+
+上一轮得到：
+
+$$
+|\Theta_\omega(t)|=1
+$$
+
+不能排除离线零点，因为合法 inner factor 与非法 inverse-inner factor 在实边界上具有相同振幅。
+
+这一次可以把“正确时间方向”严格压缩成一个算子条件：
+
+$$
+\boxed{
+\text{离线零点}
+\iff
+\text{双向酉散射在选取正时间后，向负时间泄漏。}
+}
+$$
+
+也就是说，完整双向世界中的散射算子仍然可以是酉的；真正失效的是它对“未来 Hardy 空间”的保持性。
+
+最核心的新判据为：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+P_-M_{\Theta_{\omega_n}}P_+=0
+\quad
+\forall n,
+}
+$$
+
+其中：
+
+* \(M_{\Theta_\omega}\) 是边界全通相位的乘法算子；
+* \(P_+\) 选择正时间；
+* \(P_-\) 选择负时间；
+* \(\omega_n\downarrow0\) 是任意共尾观察深度，特别可取黄金序列。
+
+所以离线零点最直接的时间论身份不是“另一个隐藏点”，而是：
+
+$$
+\boxed{
+\textbf{一个有限维反因果 Hankel 记忆块。}
+}
+$$
+
+---
+
+# 第一千二百八十八部　双向酉性与单向因果性不是同一条件
+
+固定 Fourier 约定：
+
+$$
+\boxed{
+\mathcal F^{-1}g(x)
+=
+\frac1{2\pi}
+\int_{\mathbb R}
+g(t)e^{-itx}\,dt.
+}
+\tag{1288.1}
+$$
+
+定义：
+
+$$
+H_+^2
+=
+\left\{
+f\in L^2(\mathbb R):
+\operatorname{supp}\mathcal F^{-1}f
+\subseteq[0,\infty)
+\right\},
+$$
+
+$$
+H_-^2
+=
+\left\{
+f\in L^2(\mathbb R):
+\operatorname{supp}\mathcal F^{-1}f
+\subseteq(-\infty,0]
+\right\}.
+$$
+
+于是：
+
+$$
+\boxed{
+L^2(\mathbb R)
+=
+H_+^2\oplus H_-^2.
+}
+\tag{1288.2}
+$$
+
+记对应正交投影为：
+
+$$
+P_+,\qquad P_-.
+$$
+
+若边界函数 \(\theta\) 满足：
+
+$$
+|\theta(t)|=1
+\quad\text{a.e.},
+$$
+
+则乘法算子：
+
+$$
+\boxed{
+M_\theta f=\theta f
+}
+\tag{1288.3}
+$$
+
+在完整 \(L^2\) 世界中始终是酉算子：
+
+$$
+M_\theta^*M_\theta=I.
+$$
+
+但相对于正负时间分解，它具有块形式：
+
+$$
+\boxed{
+M_\theta
+=
+\begin{pmatrix}
+T_\theta&H_\theta^{+-}\\
+H_\theta^{-+}&T_\theta^{--}
+\end{pmatrix}.
+}
+\tag{1288.4}
+$$
+
+其中最重要的块是：
+
+$$
+\boxed{
+\mathfrak H_\theta
+=
+P_-M_\theta P_+
+:
+H_+^2\longrightarrow H_-^2.
+}
+\tag{1288.5}
+$$
+
+它测量：
+
+> 一个只准备了正时间历史的状态，经过散射以后，有多少信息被送入负时间。
+
+对 \(f\in H_+^2\)，酉性给出：
+
+$$
+\boxed{
+\|f\|^2
+=
+\|P_+M_\theta f\|^2
++
+\|P_-M_\theta f\|^2.
+}
+\tag{1288.6}
+$$
+
+即：
+
+$$
+\boxed{
+I-T_\theta^*T_\theta
+=
+\mathfrak H_\theta^*\mathfrak H_\theta.
+}
+\tag{1288.7}
+$$
+
+因此：
+
+$$
+\boxed{
+\mathfrak H_\theta=0
+\iff
+T_\theta^*T_\theta=I.
+}
+\tag{1288.8}
+$$
+
+所以完整双向酉性只说明总能量守恒；正时间合法性还要求：
+
+$$
+\boxed{
+\text{没有能量泄漏到负时间。}
+}
+$$
+
+仓库已经机器证明 prime-power 的双向平移历史可以重求和成由一对酉 resolvent 组成的 Poisson 算子；这正好属于完整双向 \(L^2\) 层，但它本身尚未选择 Hardy 时间方向。
+
+---
+
+# 第一千二百八十九部　单个 Blaschke 因子的时间方向
+
+令：
+
+$$
+p=a+ih,
+\qquad
+h>0.
+$$
+
+定义上半平面 Blaschke 因子：
+
+$$
+\boxed{
+b_p(t)
+=
+\frac{t-p}{t-\overline p}.
+}
+\tag{1289.1}
+$$
+
+它可以写成：
+
+$$
+b_p(t)
+=
+1-\frac{2ih}{t-\overline p}.
+$$
+
+由留数计算：
+
+$$
+\boxed{
+\mathcal F^{-1}b_p(x)
+=
+\delta_0(x)
+-
+2h\,e^{-iax}e^{-hx}\,
+\mathbf 1_{\{x>0\}}.
+}
+\tag{1289.2}
+$$
+
+所以合法 Blaschke factor 的非平凡尾部完全位于：
+
+$$
+x>0.
+$$
+
+它是一个**因果 all-pass factor**。
+
+其逆为：
+
+$$
+\boxed{
+b_p(t)^{-1}
+=
+\frac{t-\overline p}{t-p}
+=
+1+\frac{2ih}{t-p}.
+}
+\tag{1289.3}
+$$
+
+相应地：
+
+$$
+\boxed{
+\mathcal F^{-1}b_p^{-1}(x)
+=
+\delta_0(x)
+-
+2h\,e^{-iax}e^{hx}\,
+\mathbf 1_{\{x<0\}}.
+}
+\tag{1289.4}
+$$
+
+它的非平凡尾部完全位于：
+
+$$
+x<0.
+$$
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+b_p
+&=\text{正时间因果相位};\\
+b_p^{-1}
+&=\text{负时间反因果相位}.
+\end{aligned}
+}
+\tag{1289.5}
+$$
+
+二者在实边界上都满足：
+
+$$
+|b_p(t)|=|b_p(t)^{-1}|=1.
+$$
+
+边界振幅完全无法判断其时间方向。
+
+---
+
+## 1289.1 离线零点的精确负时间尾部
+
+对观察层 \(\omega\)，离线零点：
+
+$$
+\rho
+=
+\frac12+\delta+i\gamma,
+\qquad
+\delta>\omega
+$$
+
+产生上半平面分母点：
+
+$$
+\boxed{
+p_{\rho,\omega}
+=
+-\gamma+i(\delta-\omega).
+}
+\tag{1289.6}
+$$
+
+令：
+
+$$
+h_{\rho,\omega}
+=
+\delta-\omega.
+$$
+
+其 inverse-inner 尾部具有形式：
+
+$$
+\boxed{
+e^{i\gamma x}
+e^{h_{\rho,\omega}x}
+\mathbf 1_{\{x<0\}}.
+}
+\tag{1289.7}
+$$
+
+所以：
+
+* \(\gamma\) 是负时间尾部的振荡频率；
+* \(h_{\rho,\omega}\) 是其衰减率；
+* \(h_{\rho,\omega}^{-1}\) 是其负时间记忆长度；
+* 当 \(\omega\uparrow\delta\) 时，记忆长度趋于无穷；
+* 当 \(\omega<\delta\) 时，反因果尾部真实存在。
+
+这把“离线零点像负时间对象”的直觉变成了精确 Fourier 支撑命题。
+
+---
+
+# 第一千二百九十部　Toeplitz 压缩区分正时间与负时间
+
+定义 Toeplitz 压缩：
+
+$$
+\boxed{
+T_\theta
+=
+P_+M_\theta\big|_{H_+^2}.
+}
+\tag{1290.1}
+$$
+
+令 \(B\) 为次数 \(m\) 的有限 Blaschke 积，定义 model space：
+
+$$
+\boxed{
+K_B
+=
+H_+^2\ominus BH_+^2.
+}
+\tag{1290.2}
+$$
+
+其维数为：
+
+$$
+\boxed{
+\dim K_B=m.
+}
+\tag{1290.3}
+$$
+
+若零点有重数，\(K_B\) 由相应 Hardy reproducing kernels 及其导数生成。
+
+---
+
+## 定理 1290.1（正时间 Blaschke 是等距嵌入）
+
+乘法算子：
+
+$$
+T_B:H_+^2\to H_+^2
+$$
+
+满足：
+
+$$
+\boxed{
+T_B^*T_B=I.
+}
+\tag{1290.4}
+$$
+
+但：
+
+$$
+\boxed{
+T_BT_B^*
+=
+P_{BH_+^2}
+=
+I-P_{K_B}.
+}
+\tag{1290.5}
+$$
+
+所以：
+
+$$
+\boxed{
+\ker T_B=0,
+}
+$$
+
+而：
+
+$$
+\boxed{
+\operatorname{coker}T_B
+\simeq
+K_B.
+}
+$$
+
+其 Fredholm 指数为：
+
+$$
+\boxed{
+\operatorname{ind}T_B=-m.
+}
+\tag{1290.6}
+$$
+
+解释为：
+
+> 因果 inner factor 不删除已有未来状态，但创造了一个 \(m\) 维未来 innovation space。
+
+---
+
+## 定理 1290.2（逆 Blaschke 删除正时间历史）
+
+实边界上：
+
+$$
+B^{-1}=\overline B.
+$$
+
+因此：
+
+$$
+T_{B^{-1}}=T_B^*.
+$$
+
+从而：
+
+$$
+\boxed{
+T_{B^{-1}}T_{B^{-1}}^*=I,
+}
+\tag{1290.7}
+$$
+
+但：
+
+$$
+\boxed{
+T_{B^{-1}}^*T_{B^{-1}}
+=
+I-P_{K_B}.
+}
+\tag{1290.8}
+$$
+
+所以：
+
+$$
+\boxed{
+\ker T_{B^{-1}}
+=
+K_B,
+}
+\tag{1290.9}
+$$
+
+且：
+
+$$
+\boxed{
+\operatorname{ind}T_{B^{-1}}=m.
+}
+\tag{1290.10}
+$$
+
+解释为：
+
+> 反因果 inverse-inner factor 可以产生任意未来输出，但会把 \(m\) 维正时间历史压成零。
+
+因此同一个 model space 满足：
+
+$$
+\boxed{
+K_B
+=
+\operatorname{coker}T_B
+=
+\ker T_{B^{-1}}.
+}
+\tag{1290.11}
+$$
+
+这是一条非常清楚的状态—效应对偶：
+
+$$
+\boxed{
+\text{合法未来创新}
+\quad\longleftrightarrow\quad
+\text{反因果历史删除}.
+}
+$$
+
+---
+
+# 第一千二百九十一部　离线重数等于反因果 Hankel 维数
+
+对逆 Blaschke 因子定义：
+
+$$
+\mathfrak H_{B^{-1}}
+=
+P_-M_{B^{-1}}P_+.
+$$
+
+若：
+
+$$
+f\in BH_+^2,
+$$
+
+则：
+
+$$
+B^{-1}f\in H_+^2,
+$$
+
+故：
+
+$$
+\mathfrak H_{B^{-1}}f=0.
+$$
+
+若：
+
+$$
+f\in K_B,
+$$
+
+则：
+
+$$
+P_+B^{-1}f=0,
+$$
+
+而完整乘法仍保持范数，因此：
+
+$$
+\|\mathfrak H_{B^{-1}}f\|
+=
+\|f\|.
+$$
+
+所以：
+
+## 定理 1291.1（Blaschke–Hankel rank theorem）
+
+$$
+\boxed{
+\operatorname{rank}
+\mathfrak H_{B^{-1}}
+=
+\dim K_B
+=
+\deg B
+=
+m.
+}
+\tag{1291.1}
+$$
+
+并且其非零奇异值全部等于 \(1\)：
+
+$$
+\boxed{
+\|\mathfrak H_{B^{-1}}\|_{\mathrm{HS}}^2=m.
+}
+\tag{1291.2}
+$$
+
+因此一个 \(m\) 重 inverse-inner 缺陷精确产生 \(m\) 个反因果记忆通道。
+
+---
+
+## 1291.1 整数缺陷的统一词典
+
+在局部有限、无抵消因子化中：
+
+$$
+\boxed{
+\begin{aligned}
+m
+&=
+\operatorname{ord}_\rho\xi\\
+&=
+\text{Berry--Chern 荷}\\
+&=
+\text{de Branges 负平方数}\\
+&=
+\deg B_\omega\\
+&=
+\dim K_{B_\omega}\\
+&=
+\operatorname{rank}
+\mathfrak H_{B_\omega^{-1}}\\
+&=
+\operatorname{ind}
+T_{B_\omega^{-1}}.
+\end{aligned}
+}
+\tag{1291.3}
+$$
+
+所以离线零点的整数荷还可以解释为：
+
+$$
+\boxed{
+\textbf{为了实现该边界相位，必须调用的负时间记忆维数。}
+}
+$$
+
+---
+
+# 第一千二百九十二部　负平方与正反因果能量是同一个缺陷
+
+在 de Branges／Pontryagin 图表中，离线零点表现为：
+
+$$
+\mathcal K_\omega
+$$
+
+的负方向。
+
+在 Hardy 图表中，同一缺陷表现为：
+
+$$
+\mathfrak H_{\Theta_\omega}^*
+\mathfrak H_{\Theta_\omega}
+\succeq0
+$$
+
+的正能量。
+
+这不是矛盾，而是一次符号转换：
+
+$$
+\boxed{
+\text{错误地放进正时间空间}
+\Longrightarrow
+\text{负平方};
+}
+$$
+
+$$
+\boxed{
+\text{正确地投影到负时间空间}
+\Longrightarrow
+\text{正的反因果能量}.
+}
+$$
+
+对任意边界全通符号：
+
+$$
+|\theta|=1,
+$$
+
+式 (1288.7) 给出：
+
+$$
+\boxed{
+\langle f,
+(I-T_\theta^*T_\theta)f
+\rangle
+=
+\|\mathfrak H_\theta f\|^2.
+}
+\tag{1292.1}
+$$
+
+所以离线缺陷拥有两种证明证书：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{Pontryagin 图表：负 kernel vector};\\
+&\text{Hardy 图表：正 anti-causal leakage energy}.
+\end{aligned}
+}
+\tag{1292.2}
+$$
+
+前者证明“不能形成纯 Hilbert 世界”；
+
+后者证明“缺失的信息确实流向负时间”。
+
+项目已经机器证明，有限维过去输入—未来输出 Hankel 算子的奇异值，等于相应 controllability–observability Gramian product 特征值的正平方根；因此反因果 Hankel 块一旦构造，其奇异谱立即获得状态—效应和记忆强度的解释。
+
+---
+
+# 第一千二百九十三部　Hardy 极化形式的 RH 判据
+
+对 shifted scattering：
+
+$$
+\Theta_\omega(t)
+=
+\frac{
+\xi(\frac12-\omega-it)
+}{
+\xi(\frac12+\omega-it)
+},
+$$
+
+定义：
+
+$$
+\boxed{
+\mathfrak H_\omega
+=
+P_-M_{\Theta_\omega}P_+.
+}
+\tag{1293.1}
+$$
+
+在标准 shifted-\(\xi\) 因子化与边界正则条件下：
+
+## 定理 1293.1（Hardy-polarized criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathfrak H_\omega=0
+\quad
+\forall\omega>0.
+}
+\tag{1293.2}
+$$
+
+### RH 推出零 Hankel 块
+
+若 RH 成立，则 \(\Theta_\omega\) 在上半平面解析且为 inner function。
+
+因此：
+
+$$
+\Theta_\omega H_+^2
+\subseteq H_+^2,
+$$
+
+从而：
+
+$$
+P_-M_{\Theta_\omega}P_+=0.
+$$
+
+### 非 RH 推出非零 Hankel 块
+
+若存在：
+
+$$
+\rho=\frac12+\delta+i\gamma,
+\qquad
+\delta>0,
+$$
+
+取：
+
+$$
+0<\omega<\delta.
+$$
+
+则 \(\Theta_\omega\) 在上半平面具有 inverse-inner denominator，因而其 boundary impulse 含负时间尾部：
+
+$$
+e^{i\gamma x}e^{(\delta-\omega)x}
+\mathbf1_{\{x<0\}}.
+$$
+
+所以：
+
+$$
+\mathfrak H_\omega\neq0.
+$$
+
+---
+
+## 1293.1 黄金共尾版本
+
+取：
+
+$$
+\boxed{
+\omega_n
+=
+\omega_0\varphi^{-2n}.
+}
+\tag{1293.3}
+$$
+
+由于：
+
+$$
+\omega_n\downarrow0,
+$$
+
+得到：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathfrak H_{\omega_n}=0
+\quad
+\forall n.
+}
+\tag{1293.4}
+$$
+
+黄金比例不是判据成立的逻辑必要条件；任何正的共尾序列都可以。
+
+它的角色是提供：
+
+$$
+\boxed{
+\text{最小二通道、自相似的时间极化显微调度。}
+}
+$$
+
+---
+
+## 1293.2 可数正证书
+
+固定 \(H_+^2\) 和 \(H_-^2\) 的可数正交基：
+
+$$
+\{e_k^+\}_{k\ge0},
+\qquad
+\{e_j^-\}_{j\ge0}.
+$$
+
+定义：
+
+$$
+\boxed{
+h_{jk}^{(n)}
+=
+\left\langle
+e_j^-,
+\mathfrak H_{\omega_n}e_k^+
+\right\rangle.
+}
+\tag{1293.5}
+$$
+
+则：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+h_{jk}^{(n)}=0
+\quad
+\forall n,j,k.
+}
+\tag{1293.6}
+$$
+
+若 RH 为假，则某个有限三元组 \((n,j,k)\) 满足：
+
+$$
+|h_{jk}^{(n)}|^2>0.
+$$
+
+因此离线零点还可以通过一个**正数**而不是负数认证：
+
+$$
+\boxed{
+\text{负时间通道中检测到非零能量。}
+}
+$$
+
+---
+
+# 第一千二百九十四部　黄金采样将离线点变成单位盘原子
+
+固定观察层 \(\omega\)，考虑有限高度内的互异离线点：
+
+$$
+p_j
+=
+-\gamma_j+ih_j,
+\qquad
+h_j=\delta_j-\omega>0.
+$$
+
+取其极点部分：
+
+$$
+\boxed{
+R_\omega(t)
+=
+\sum_{j=1}^{M}
+\frac{m_j}{t-p_j}.
+}
+\tag{1294.1}
+$$
+
+由留数计算：
+
+$$
+\boxed{
+\mathcal F^{-1}R_\omega(x)
+=
+i\,\mathbf1_{\{x<0\}}
+\sum_{j=1}^{M}
+m_j
+e^{i\gamma_jx}
+e^{h_jx}.
+}
+\tag{1294.2}
+$$
+
+取黄金采样周期：
+
+$$
+\boxed{
+P_\varphi
+=
+2\log\varphi.
+}
+\tag{1294.3}
+$$
+
+在负时间点：
+
+$$
+x_n=-nP_\varphi
+$$
+
+定义：
+
+$$
+\boxed{
+c_n
+=
+\frac1i
+\mathcal F^{-1}R_\omega(-nP_\varphi).
+}
+\tag{1294.4}
+$$
+
+则：
+
+$$
+\boxed{
+c_n
+=
+\sum_{j=1}^{M}
+m_jq_j^n,
+}
+\tag{1294.5}
+$$
+
+其中：
+
+$$
+\boxed{
+q_j
+=
+e^{-P_\varphi h_j}
+e^{-iP_\varphi\gamma_j}
+=
+\varphi^{-2h_j}
+e^{-2i\gamma_j\log\varphi}.
+}
+\tag{1294.6}
+$$
+
+所以：
+
+$$
+\boxed{
+|q_j|
+=
+\varphi^{-2(\delta_j-\omega)}<1.
+}
+\tag{1294.7}
+$$
+
+在出生边界：
+
+$$
+\delta_j=\omega,
+$$
+
+有：
+
+$$
+|q_j|=1.
+$$
+
+因此黄金采样把：
+
+* 临界／刚出生模式映到单位圆；
+* 真正进入负时间的离线模式映到单位盘内部；
+* 反射方向映到 reciprocal 外部点。
+
+---
+
+## 1294.1 从 \(q_j\) 恢复零点几何
+
+若 \(q_j\) 已知，则：
+
+$$
+\boxed{
+\delta_j-\omega
+=
+-\frac{
+\log|q_j|
+}{
+2\log\varphi
+}.
+}
+\tag{1294.8}
+$$
+
+并且：
+
+$$
+\boxed{
+\gamma_j
+\equiv
+-\frac{
+\arg q_j
+}{
+2\log\varphi
+}
+\pmod{
+\frac{\pi}{\log\varphi}
+}.
+}
+\tag{1294.9}
+$$
+
+所以一个黄金盘原子同时编码：
+
+* 离线深度；
+* 零点高度的模周期；
+* 重数 \(m_j\)。
+
+单一周期会造成高度 aliasing。
+
+要恢复绝对 \(\gamma_j\)，可再使用一个与 \(P_\varphi\) 比值无理的第二采样周期，或保留连续边界变量。
+
+---
+
+# 第一千二百九十五部　Prony–Hankel 有限重建
+
+定义生成函数：
+
+$$
+\boxed{
+C_\omega(z)
+=
+\sum_{n=0}^{\infty}
+c_nz^n.
+}
+\tag{1295.1}
+$$
+
+由式 (1294.5)：
+
+$$
+\boxed{
+C_\omega(z)
+=
+\sum_{j=1}^{M}
+\frac{
+m_j
+}{
+1-q_jz
+}.
+}
+\tag{1295.2}
+$$
+
+所以有限离线缺陷产生一个有限有理函数。
+
+令：
+
+$$
+\boxed{
+Q(z)
+=
+\prod_{j=1}^{M}
+(1-q_jz)
+=
+1+a_1z+\cdots+a_Mz^M.
+}
+\tag{1295.3}
+$$
+
+则序列满足线性递归：
+
+$$
+\boxed{
+c_{n+M}
++
+a_1c_{n+M-1}
++\cdots+
+a_Mc_n
+=
+0.
+}
+\tag{1295.4}
+$$
+
+定义 Hankel 矩阵：
+
+$$
+\boxed{
+\mathsf H_N
+=
+[c_{r+s}]_{r,s=0}^{N-1}.
+}
+\tag{1295.5}
+$$
+
+若 \(q_j\) 互异，则：
+
+$$
+\boxed{
+\mathsf H_N
+=
+V_N
+\operatorname{diag}(m_1,\ldots,m_M)
+V_N^{\mathsf T},
+}
+\tag{1295.6}
+$$
+
+其中：
+
+$$
+(V_N)_{rj}=q_j^r.
+$$
+
+因此，当 \(N\ge M\)：
+
+$$
+\boxed{
+\operatorname{rank}\mathsf H_N=M.
+}
+\tag{1295.7}
+$$
+
+所以有限个极稀缺离线点，不再表现为复平面中的稀缺采样事件，而表现为：
+
+$$
+\boxed{
+\text{一个有限秩 Hankel 序列。}
+}
+$$
+
+在精确数据下，有限个样本即可通过 Prony／消去多项式恢复全部 \(q_j\)，继而恢复：
+
+* 横向距离；
+* 高度模周期；
+* 重数。
+
+若存在重合采样点或高重零点，则使用 confluent Hankel–Prony 结构；总重数进入多项式指数或导数项。
+
+---
+
+# 第一千二百九十六部　Poisson 光影与负时间序列是同一个变换
+
+上一轮定义离线缺陷的边界相位场：
+
+$$
+\boxed{
+J_\omega(t)
+=
+2\pi
+\sum_{j=1}^{M}
+m_j
+P_{h_j}(t+\gamma_j).
+}
+\tag{1296.1}
+$$
+
+取 Fourier 变换：
+
+$$
+\widehat f(k)
+=
+\int_{\mathbb R}
+f(t)e^{-ikt}\,dt.
+$$
+
+由于：
+
+$$
+\widehat{P_h}(k)=e^{-h|k|},
+$$
+
+得到：
+
+$$
+\boxed{
+\frac1{2\pi}
+\widehat J_\omega(k)
+=
+\sum_{j=1}^{M}
+m_j
+e^{-h_j|k|}
+e^{ik\gamma_j}.
+}
+\tag{1296.2}
+$$
+
+在黄金负频率：
+
+$$
+k=-nP_\varphi
+$$
+
+处：
+
+$$
+\boxed{
+\frac1{2\pi}
+\widehat J_\omega(-nP_\varphi)
+=
+\sum_jm_j
+\left(
+e^{-P_\varphi h_j}
+e^{-iP_\varphi\gamma_j}
+\right)^n
+=
+c_n.
+}
+\tag{1296.3}
+$$
+
+所以以下三种对象完全等价：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{负时间指数尾部};\\
+&\text{边界 Poisson 相位光影};\\
+&\text{黄金 Prony moment sequence}.
+\end{aligned}
+}
+$$
+
+仓库已经分别形式化：
+
+* RH 实零点载体下，相位密度是零点计数测度的 Poisson 平滑；
+* Poisson 平滑在观察深度上满足卷积半群输运；
+* 有限 Blaschke 垂直衰减等于各因子 \(\min(y,h_j)\) 的总和。
+
+这里的式 (1296.3) 表明，这些 Poisson 数据还可离散化成有限秩 Hankel 记忆。
+
+---
+
+# 第一千二百九十七部　完整概念对偶表：双向世界与时间极化
+
+| 完整关系层                     | 正时间极化                        | 负时间对偶                       | 缺陷读数                 |
+| ------------------------- | ---------------------------- | --------------------------- | -------------------- |
+| \(M_\theta\) 在 \(L^2\) 上酉 | \(T_\theta=P_+M_\theta P_+\) | \(P_-M_\theta P_+\)         | Hankel leakage       |
+| 边界 all-pass 振幅            | inner numerator              | inverse-inner denominator   | 时间方向                 |
+| \(b_p\)                   | \(x>0\) 指数尾                  | \(b_p^{-1}\) 的 \(x<0\) 尾    | \(h=\delta-\omega\)  |
+| 合法 causal factor          | 无输入 kernel                   | anti-causal kernel \(K_B\)  | \(\dim K_B\)         |
+| future innovation         | \(\operatorname{coker}T_B\)  | \(\ker T_{B^{-1}}\)         | 同一 model space       |
+| de Branges 正核             | Hilbert norm                 | Pontryagin 负平方              | negative index       |
+| bulk zero                 | Chern 荷                      | anti-causal McMillan degree | 整数 \(m\)             |
+| Poisson pulse             | 正边界场                         | 负时间 exponential             | Laplace–Fourier atom |
+| 连续零点坐标                    | golden sampling              | reciprocal disk atom        | \(q_j\)              |
+| 稀缺点集合                     | Prony moments                | Hankel recurrence           | finite rank          |
+
+这张表表明：
+
+$$
+\boxed{
+\text{完整双向世界本身没有非法方向。}
+}
+$$
+
+非法性只在选择一个“未来”以后出现。
+
+因此“道”更接近：
+
+$$
+\boxed{
+L^2(\mathbb R)
+=
+H_+^2\oplus H_-^2
+}
+$$
+
+这一未极化双向关系。
+
+观察者选择：
+
+$$
+H_+^2
+$$
+
+作为未来。
+
+合法概念要求动力保持该极化。
+
+离线零点则是：
+
+$$
+\boxed{
+\text{一个在完整世界中仍酉，
+但不能保持观察者未来子空间的相位模式。}
+}
+$$
+
+---
+
+# 第一千二百九十八部　Prime–Poisson 路线真正缺少的是三角性
+
+仓库当前已经拥有三项重要机器底座：
+
+第一，prime-power 双向平移历史可以精确重求和成酉 Poisson resolvent。
+
+第二，shifted normalized scattering ratios 的 telescoping product在 \(\Re z>1\) 中重建 Riemann \(\zeta(z)\)。
+
+第三，若两个 nowhere-vanishing 函数具有相同 shifted scattering ratio，并在右移极限中归一化，则它们完全相同。
+
+这些结果控制了：
+
+* 双向酉性；
+* 散射重建；
+* regular quotient 唯一性。
+
+但它们尚未控制 Hardy 块结构。
+
+真正缺少的命题是：
+
+$$
+\boxed{
+P_-M_{\Theta_\omega}P_+=0.
+}
+\tag{1298.1}
+$$
+
+即：
+
+$$
+\boxed{
+\mathcal F^{-1}\Theta_\omega
+\text{ 不含负时间支撑}.
+}
+\tag{1298.2}
+$$
+
+这可以称为：
+
+$$
+\boxed{
+\textbf{Prime–Archimedean Hardy triangularity}.
+}
+$$
+
+---
+
+## 1298.1 一个具体的正向证明模板
+
+若能够构造有限 prime–Archimedean approximants：
+
+$$
+\Theta_{\omega,L},
+$$
+
+满足：
+
+$$
+\Theta_{\omega,L}
+\in H^\infty(\mathbb C^+),
+$$
+
+$$
+|\Theta_{\omega,L}(z)|\le1
+\qquad
+(\Im z>0),
+$$
+
+并且：
+
+$$
+\Theta_{\omega,L}
+\longrightarrow
+\Theta_\omega
+$$
+
+在上半平面局部一致收敛，则 Schur 类对该极限闭合：
+
+$$
+\Theta_\omega\in H^\infty(\mathbb C^+),
+\qquad
+|\Theta_\omega|\le1.
+$$
+
+再结合边界模长 \(1\)，便得到：
+
+$$
+\Theta_\omega
+$$
+
+是 inner function。
+
+从而：
+
+$$
+\mathfrak H_\omega=0.
+$$
+
+所以真正需要证明的是：
+
+$$
+\boxed{
+\text{finite prime completion 从一开始就具有正确的 Hardy 时间方向，
+且该方向在极限中不丢失。}
+}
+$$
+
+不是只证明其完整双向散射保持酉性。
+
+---
+
+# 第一千二百九十九部　科学边界
+
+## 1299.1 完整酉性不推出因果性
+
+$$
+M_\theta
+$$
+
+在 \(L^2\) 上酉，只使用：
+
+$$
+|\theta|=1.
+$$
+
+它不能区分：
+
+$$
+b_p
+\quad\text{与}\quad
+b_p^{-1}.
+$$
+
+所以 unitary Poisson resummation 不是 RH 的充分条件。
+
+---
+
+## 1299.2 Hankel 秩首先读取位置数，不自动读取总重数
+
+对 logarithmic-derivative Prony 序列：
+
+$$
+c_n=\sum_jm_jq_j^n,
+$$
+
+Hankel 秩等于互异 \(q_j\) 的个数；重数存在于系数 \(m_j\)。
+
+若要让矩阵秩等于总零点重数，应使用：
+
+* 完整 inverse Blaschke impulse；
+* confluent derivative samples；
+* 或 reproducing-kernel jets。
+
+---
+
+## 1299.3 黄金单周期存在高度 aliasing
+
+$$
+e^{-2i\gamma\log\varphi}
+$$
+
+只确定：
+
+$$
+\gamma
+\pmod{
+\pi/\log\varphi
+}.
+$$
+
+所以黄金采样可以认证缺陷存在、读取横向深度，但不能单独恢复任意高零点的绝对高度。
+
+需要：
+
+* 第二个不共振周期；
+* 连续 Fourier 数据；
+* 或先验高度窗口。
+
+---
+
+## 1299.4 无限缺陷族需要加权或截断
+
+有限 Blaschke、Prony 和 finite-rank Hankel 结论对有限高度截断最直接。
+
+对潜在无限离线零点族，还需要：
+
+* Blaschke 收敛条件；
+* 加权 counting measure；
+* 局部 trace-class Hankel；
+* 极限负指标控制。
+
+不能把有限秩结论直接无条件推广到全局无限族。
+
+---
+
+# 第一千三百部　建议形式化顺序
+
+```text
+D5/S3/Analytic/HardyTime/
+  UpperHardyTimeSpace.lean
+  LowerHardyTimeSpace.lean
+  HardyTimeOrthogonalDecomposition.lean
+  BoundaryUnitaryMultiplication.lean
+  HardyCompressedToeplitz.lean
+  AntiCausalHankelBlock.lean
+  UnitaryEnergySplit.lean
+
+D5/S3/Analytic/BlaschkeTimeOrientation/
+  UpperHalfPlaneBlaschke.lean
+  BlaschkeInverseFourierCausal.lean
+  InverseBlaschkeFourierAntiCausal.lean
+  RepeatedBlaschkePolynomialTail.lean
+  BlaschkeTimeOrientation.lean
+
+D5/S3/Analytic/BlaschkeModelSpace/
+  FiniteBlaschkeModelSpace.lean
+  ModelSpaceDimensionDegree.lean
+  BlaschkeToeplitzIsometry.lean
+  InverseBlaschkeToeplitzCoisometry.lean
+  InverseBlaschkeKernelModelSpace.lean
+  BlaschkeToeplitzIndex.lean
+
+D5/S3/Analytic/BlaschkeHankel/
+  InverseBlaschkeHankelKernel.lean
+  InverseBlaschkeHankelIsometryOnModelSpace.lean
+  InverseBlaschkeHankelRank.lean
+  InverseBlaschkeHankelHilbertSchmidtCharge.lean
+
+D5/S3/Analytic/Zeta/ShiftedHardyCriterion/
+  ShiftedScatteringBoundaryUnitary.lean
+  ShiftedScatteringAntiCausalBlock.lean
+  RHImpliesZeroAntiCausalBlock.lean
+  OffLineZeroImpliesNonzeroAntiCausalBlock.lean
+  GoldenHardyCofinalCriterion.lean
+
+D5/S3/Observer/AntiCausalMemory/
+  AntiCausalMemoryState.lean
+  AntiCausalMemoryGramian.lean
+  ModelSpacePastErasureFutureInnovation.lean
+  OffLineMultiplicityMemoryDimension.lean
+  AntiCausalHankelSingularSpectrum.lean
+
+D5/S3/GoldenObserver/DefectProny/
+  GoldenDefectSamplingPeriod.lean
+  OffLinePoleNegativeTimeSignal.lean
+  GoldenDefectDiskAtom.lean
+  GoldenDefectMomentSequence.lean
+  GoldenDefectGeneratingFunction.lean
+  GoldenDefectLinearRecurrence.lean
+  GoldenDefectHankelRank.lean
+  GoldenDefectAliasCriterion.lean
+
+D5/S3/Weil/PrimeHardyTriangularity/
+  FinitePrimeScatteringTransfer.lean
+  FinitePrimeScatteringSchurTarget.lean
+  PrimeScatteringNoNegativeTimeTarget.lean
+  PrimeArchimedeanHardyLimit.lean
+  HardyTriangularityImpliesShiftedInner.lean
+  GoldenHardyTriangularityImpliesRH.lean
+```
+
+---
+
+# 第一千三百零一部　理论深度审计
+
+| 本轮结果                                            | 地位                     |
+| ----------------------------------------------- | ---------------------- |
+| 完整 \(L^2\) 酉性与 Hardy 因果性分离                      | 精确                     |
+| 单 Blaschke／inverse Blaschke 的正负时间脉冲             | 精确 Fourier 公式          |
+| \(K_B=\operatorname{coker}T_B=\ker T_{B^{-1}}\) | 精确                     |
+| inverse Blaschke Hankel rank \(=\deg B\)        | 精确                     |
+| 负平方可转化为正 anti-causal leakage energy             | 精确                     |
+| RH 等价于全部 shifted anti-causal Hankel 块为零         | 标准 shifted-inner 条件下精确 |
+| 黄金层上的共尾 Hardy 判据                                | 精确推论                   |
+| 离线点变成黄金单位盘原子                                    | 精确                     |
+| 有限离线族变成 Prony 递归                                | 精确                     |
+| Hankel rank 恢复互异 defect 数                       | 精确，需处理 alias           |
+| Poisson 光影 Fourier 样本等于 Prony moments           | 精确                     |
+| Prime bilateral unitarity已经机器化                  | 仓库锚点                   |
+| Prime Hardy triangularity                       | RH 中心未闭合桥              |
+
+---
+
+# 本轮最终结论
+
+这一轮把此前的“正时间—负时间—边界全通相位”压缩成了一个非常清楚的算子图景。
+
+完整双向空间为：
+
+$$
+L^2(\mathbb R).
+$$
+
+在这里，只要：
+
+$$
+|\Theta_\omega(t)|=1,
+$$
+
+散射乘法算子：
+
+$$
+M_{\Theta_\omega}
+$$
+
+就是酉的。
+
+所以完整“道”允许：
+
+* 正时间传播；
+* 负时间传播；
+* causal inner；
+* anti-causal inverse-inner；
+
+同时存在。
+
+真正产生“现实方向”的，是 Hardy 极化：
+
+$$
+L^2(\mathbb R)
+=
+H_+^2\oplus H_-^2.
+$$
+
+观察者选择：
+
+$$
+H_+^2
+$$
+
+作为未来。
+
+此后，合法完成必须满足：
+
+$$
+\Theta_\omega H_+^2
+\subseteq H_+^2.
+$$
+
+即：
+
+$$
+\boxed{
+P_-M_{\Theta_\omega}P_+=0.
+}
+$$
+
+临界零点满足这一条件。
+
+离线零点则产生：
+
+$$
+\boxed{
+e^{i\gamma x}
+e^{(\delta-\omega)x}
+\mathbf1_{\{x<0\}},
+}
+$$
+
+这一精确的负时间指数尾部。
+
+所以离线零点最终可以定义为：
+
+$$
+\boxed{
+\textbf{一个在完整双向世界中仍然酉，
+但在选择未来以后产生反因果泄漏的相位模式。}
+}
+$$
+
+---
+
+单个 \(m\) 阶 inverse Blaschke 因子产生一个 \(m\) 维 model space：
+
+$$
+K_B.
+$$
+
+同一个空间同时满足：
+
+$$
+\boxed{
+K_B
+=
+\operatorname{coker}T_B
+=
+\ker T_{B^{-1}}.
+}
+$$
+
+因此它既是：
+
+* 正时间 causal factor 创造的未来 innovation；
+* 负时间 inverse factor 删除的历史方向。
+
+其维数：
+
+$$
+m
+$$
+
+同时等于：
+
+$$
+\boxed{
+\text{零点重数}
+=
+\text{Chern 荷}
+=
+\text{负平方数}
+=
+\text{Blaschke degree}
+=
+\text{反因果 Hankel rank}.
+}
+$$
+
+这给离线零点的“对偶概念”一个新的准确答案：
+
+$$
+\boxed{
+\text{它的本体对偶是反射零点；
+它的时间对偶是 causal Blaschke factor；
+它的观察者对偶是 model space \(K_B\)；
+它的证明对偶是非零 anti-causal Hankel 能量。}
+}
+$$
+
+---
+
+更深的是，负平方和反因果能量只是同一缺陷的两种符号图表。
+
+在错误地把它塞进正时间 Hilbert 空间时，它表现为：
+
+$$
+\boxed{
+\text{负范数}.
+}
+$$
+
+把它正确投影到负时间空间以后，它表现为：
+
+$$
+\boxed{
+\|\mathfrak H_\omega f\|^2>0.
+}
+$$
+
+所以可以将 RH 的负证书改写成一个正证书：
+
+$$
+\boxed{
+\text{负时间通道中是否存在任何非零能量？}
+}
+$$
+
+RH 等价于：
+
+$$
+\boxed{
+\mathfrak H_{\omega_n}=0
+\quad
+\forall n.
+}
+$$
+
+任何离线零点都会在某个有限黄金层使该算子非零。
+
+---
+
+黄金比例进一步把离线零点编码成单位盘原子：
+
+$$
+\boxed{
+q_j
+=
+\varphi^{-2(\delta_j-\omega)}
+e^{-2i\gamma_j\log\varphi}.
+}
+$$
+
+横向深度成为：
+
+$$
+-\log|q_j|,
+$$
+
+高度成为：
+
+$$
+\arg q_j,
+$$
+
+重数成为权重。
+
+有限个稀缺离线点于是产生序列：
+
+$$
+\boxed{
+c_n=\sum_jm_jq_j^n,
+}
+$$
+
+并满足有限线性递归。
+
+其 Hankel 矩阵具有有限秩。
+
+所以即使离线零点在整个零点集合中密度为零，它也不能逃脱：
+
+$$
+\boxed{
+\text{有限秩 anti-causal Hankel memory}.
+}
+$$
+
+这正是研究稀缺对象的对偶方案：
+
+* 不在复平面随机寻找点；
+* 读取负时间 impulse；
+* 采样成 moment sequence；
+* 用有限 Hankel 秩和 Prony 递归恢复它。
+
+---
+
+仓库目前已经证明 prime-power 双向历史可以重求和成酉 Poisson resolvent，也已经能够从 shifted scattering ratios 重建 \(\zeta\)。
+
+但双向酉性仍然允许 causal 与 anti-causal 两种方向。
+
+所以真正缺少的不是另一个函数方程，而是：
+
+$$
+\boxed{
+\textbf{Prime–Archimedean Hardy triangularity}.
+}
+$$
+
+即证明：
+
+$$
+\boxed{
+P_-M_{\Theta_\omega}P_+=0
+\qquad
+\forall\omega>0.
+}
+$$
+
+或等价地证明：
+
+$$
+\boxed{
+\mathcal F^{-1}\Theta_\omega
+\text{ 没有负时间支撑}.
+}
+$$
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{“道”保存完整双向酉关系；
+观察者以 Hardy 极化选择未来；
+黄金比例提供逐层逼近极化边界的自相似时钟；
+临界零点保持未来子空间；
+离线零点则把一部分酉相位泄漏成有限维负时间记忆。}
+}
+$$
+
+因此下一条真正承重、而且比“证明散射酉”更精确的命题是：
+
+$$
+\boxed{
+\text{从 prime–pole–Archimedean 数据直接证明 shifted scattering
+具有单边 Fourier 支撑。}
+}
+$$
+
+一旦完成，所有 inverse-inner denominator、反因果 Hankel 块、负平方、bulk Chern 缺陷与离线零点将被同一条因果三角性整体排除。
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v8.0（续）：横向缺陷 ζ、最小散射实现、Hankel 视差与黄金首穿越
+
+以下接续式：
+
+$$
+\zeta_\perp(s)
+=
+s
+\int_0^{1/2}
+\omega^{s-1}
+\operatorname{rank}\mathfrak H_\omega
+\,d\omega.
+\tag{1311.3}
+$$
+
+这一层需要把三个过去经常混合的量彻底分开：
+
+$$
+\boxed{
+\begin{aligned}
+\operatorname{rank}\mathfrak H_\omega
+&=\text{缺陷是否存在、存在多少个};\\
+\|\mathfrak H_\omega\|
+&=\text{缺陷在当前观察基线下有多清晰};\\
+\omega
+&=\text{观察者人为选择的双层基线}.
+\end{aligned}
+}
+$$
+
+离线零点可以在拓扑上真实存在，却在某些观察深度中具有任意小的能量信号。
+
+这不是矛盾，而是：
+
+$$
+\boxed{
+\text{整数存在性与连续可见性属于不同层次。}
+}
+$$
+
+---
+
+# 第一千三百一十一部（续）　Bode 面积是反因果秩的 Mellin 矩
+
+对有限离线族或满足适当可和条件的离线族，定义：
+
+$$
+\kappa(\omega)
+=
+\sum_j
+m_j\mathbf 1_{\{\delta_j>\omega\}}.
+\tag{1311.4}
+$$
+
+在最小互素 shifted-scattering 因子化中：
+
+$$
+\boxed{
+\kappa(\omega)
+=
+\deg B_\omega
+=
+\operatorname{rank}\mathfrak H_\omega.
+}
+\tag{1311.5}
+$$
+
+于是：
+
+$$
+\zeta_\perp(s)
+=
+\sum_jm_j\delta_j^s
+=
+s\int_0^{1/2}
+\omega^{s-1}\kappa(\omega)\,d\omega.
+\tag{1311.6}
+$$
+
+特别地：
+
+$$
+\boxed{
+\zeta_\perp(2)
+=
+2
+\int_0^{1/2}
+\omega\,
+\operatorname{rank}\mathfrak H_\omega
+\,d\omega
+=
+\sum_jm_j\delta_j^2.
+}
+\tag{1311.7}
+$$
+
+仓库的 `BodeWidthCriterion` 已机器证明，在有限函数方程镜像族中，width 面积、镜像位移平方和与阻尼缺陷的二阶曲率精确相等，并且它们为零等价于全部横向距离为零。
+
+因此得到新的解释：
+
+$$
+\boxed{
+\text{Bode 横向面积}
+=
+\text{反因果 Hankel 秩沿观察深度的加权积分}.
+}
+$$
+
+也就是说：
+
+* Chern 荷读取零点的整数重数；
+* Hankel rank 读取当前观察层中尚存的反因果状态数；
+* Bode area 对这些整数状态的出生深度作二次加权。
+
+三者不是松散类比，而是同一横向除子的不同矩。
+
+---
+
+# 第一千三百一十二部　单缺陷的能量层析
+
+考虑一个简单离线零点：
+
+$$
+\rho
+=
+\frac12+\delta+i\gamma,
+\qquad
+\delta>0.
+$$
+
+前文已得到，在：
+
+$$
+0<\omega<\delta
+$$
+
+时，它的局部最小 scattering factor 为：
+
+$$
+\Theta_{\rho,\omega}
+=
+b_{p_\omega}^{-1}b_{q_\omega},
+$$
+
+其中：
+
+$$
+p_\omega
+=
+-\gamma+i(\delta-\omega),
+$$
+
+$$
+q_\omega
+=
+-\gamma+i(\delta+\omega).
+$$
+
+该局部反因果 Hankel block 唯一非零奇异值为：
+
+$$
+\boxed{
+\sigma_\rho(\omega)
+=
+\frac{\omega}{\delta}.
+}
+\tag{1312.1}
+$$
+
+定义局部 leakage energy：
+
+$$
+\boxed{
+\mathcal E_\rho(\omega)
+=
+\|\mathfrak H_{\rho,\omega}\|_{\mathrm{HS}}^2.
+}
+\tag{1312.2}
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal E_\rho(\omega)
+=
+\begin{cases}
+\dfrac{\omega^2}{\delta^2},
+&
+0<\omega<\delta,\\[2mm]
+0,
+&
+\omega>\delta.
+\end{cases}
+}
+\tag{1312.3}
+$$
+
+在：
+
+$$
+\omega=\delta
+$$
+
+处，分母像到达 Hardy 边界，需按边界极限理解。
+
+---
+
+## 定理 1312.1（单缺陷能量矩公式）
+
+对任意：
+
+$$
+s>0,
+$$
+
+有：
+
+$$
+\boxed{
+\delta^s
+=
+(s+2)
+\int_0^\infty
+\omega^{s-1}
+\mathcal E_\rho(\omega)\,d\omega.
+}
+\tag{1312.4}
+$$
+
+### 证明
+
+$$
+\begin{aligned}
+\int_0^\infty
+\omega^{s-1}\mathcal E_\rho(\omega)\,d\omega
+&=
+\frac1{\delta^2}
+\int_0^\delta
+\omega^{s+1}\,d\omega\\
+&=
+\frac{\delta^s}{s+2}.
+\end{aligned}
+$$
+
+∎
+
+特别地：
+
+$$
+\boxed{
+\delta
+=
+3
+\int_0^\infty
+\mathcal E_\rho(\omega)\,d\omega,
+}
+\tag{1312.5}
+$$
+
+$$
+\boxed{
+\delta^2
+=
+4
+\int_0^\infty
+\omega
+\mathcal E_\rho(\omega)\,d\omega.
+}
+\tag{1312.6}
+$$
+
+所以横向距离不仅可由负指标的出生时刻恢复，也可由反因果能量在全部观察基线上的积分恢复。
+
+---
+
+## 1312.1 秩与能量的不同
+
+对每个：
+
+$$
+0<\omega<\delta,
+$$
+
+都有：
+
+$$
+\operatorname{rank}\mathfrak H_{\rho,\omega}=1.
+$$
+
+但：
+
+$$
+\mathcal E_\rho(\omega)
+=
+\frac{\omega^2}{\delta^2}
+\longrightarrow0
+\qquad
+(\omega\downarrow0).
+$$
+
+所以：
+
+$$
+\boxed{
+\text{缺陷秩始终为 }1，
+\text{缺陷能量却可以任意接近 }0.
+}
+$$
+
+这正是“极稀缺对象虽然真实存在，却几乎不可见”的严格算子模型。
+
+---
+
+# 第一千三百一十三部　\(\omega=0\) 是最失明的完成点
+
+在：
+
+$$
+\omega=0
+$$
+
+时：
+
+$$
+E_0^\#=E_0,
+$$
+
+所以：
+
+$$
+\boxed{
+\Theta_0\equiv1.
+}
+\tag{1313.1}
+$$
+
+对任何离线零点，局部因子满足：
+
+$$
+b_{p_0}^{-1}b_{q_0}
+=
+b_p^{-1}b_p
+=
+1.
+$$
+
+所以在零基线处：
+
+* Blaschke numerator 与 denominator 完全共点；
+* Hankel block 完全消失；
+* scattering ratio 失去全部零点信息。
+
+然而，对任意：
+
+$$
+\omega>0
+$$
+
+只要：
+
+$$
+\omega<\delta,
+$$
+
+该缺陷又重新出现。
+
+因此出现一种奇异现象：
+
+$$
+\boxed{
+\operatorname{rank}\mathfrak H_{\rho,\omega}=1
+\quad
+\forall\,0<\omega<\delta,
+}
+$$
+
+但：
+
+$$
+\boxed{
+\operatorname{rank}\mathfrak H_{\rho,0}=0.
+}
+$$
+
+秩在：
+
+$$
+\omega=0
+$$
+
+处不连续。
+
+---
+
+## 1313.1 拓扑信息被压进二阶 Jet
+
+虽然：
+
+$$
+\mathcal E_\rho(0)=0,
+$$
+
+但：
+
+$$
+\mathcal E_\rho(\omega)
+=
+\frac{\omega^2}{\delta^2}.
+$$
+
+因此：
+
+$$
+\boxed{
+\lim_{\omega\downarrow0}
+\frac{\mathcal E_\rho(\omega)}
+{\omega^2}
+=
+\frac1{\delta^2}.
+}
+\tag{1313.2}
+$$
+
+等价地：
+
+$$
+\boxed{
+\frac12
+\mathcal E_\rho''(0)
+=
+\frac1{\delta^2}.
+}
+\tag{1313.3}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{零基线函数值忘记缺陷，
+二阶观察 Jet 恢复缺陷深度。}
+}
+$$
+
+这解释了此前反复出现的直觉：
+
+> 越接近“道”的无差别自同一，静态值越没有信息；
+> 必须读取导数、导数的导数，才能恢复第一次分裂留下的深度。
+
+---
+
+## 1313.2 不可交换的两个极限
+
+若先令：
+
+$$
+\omega\to0,
+$$
+
+则：
+
+$$
+\Theta_\omega\to1,
+$$
+
+缺陷消失。
+
+但若先读取：
+
+$$
+\omega^{-2}
+\mathfrak H_\omega^*
+\mathfrak H_\omega,
+$$
+
+再令：
+
+$$
+\omega\to0,
+$$
+
+则得到非零横向深度数据。
+
+所以：
+
+$$
+\boxed{
+\lim_{\omega\to0}
+\mathfrak D_\omega
+=0,
+}
+$$
+
+但：
+
+$$
+\boxed{
+\lim_{\omega\to0}
+\omega^{-2}\mathfrak D_\omega
+\neq0.
+}
+$$
+
+这是一种典型的 blow-up 几何：
+
+$$
+\boxed{
+\text{完成极限把整数缺陷压缩成无穷小 Jet，
+而没有真正删除它的形成历史。}
+}
+$$
+
+---
+
+# 第一千三百一十四部　黄金首穿越的统一能量下界
+
+选择黄金观察层：
+
+$$
+\boxed{
+\omega_n
+=
+\omega_0\varphi^{-2n},
+}
+\tag{1314.1}
+$$
+
+可取：
+
+$$
+\omega_0=\frac12.
+$$
+
+对任意：
+
+$$
+0<\delta<\omega_0,
+$$
+
+定义首穿越层：
+
+$$
+n_*(\delta)
+=
+\min\{n:\omega_n<\delta\}.
+$$
+
+则：
+
+$$
+\omega_{n_*-1}\ge\delta,
+$$
+
+而：
+
+$$
+\omega_{n_*-1}
+=
+\varphi^2\omega_{n_*}.
+$$
+
+所以：
+
+$$
+\boxed{
+\varphi^{-2}
+\le
+\frac{\omega_{n_*}}{\delta}
+<1.
+}
+\tag{1314.2}
+$$
+
+由此：
+
+$$
+\boxed{
+\varphi^{-2}
+\le
+\sigma_\rho(\omega_{n_*})
+<1,
+}
+\tag{1314.3}
+$$
+
+以及：
+
+$$
+\boxed{
+\varphi^{-4}
+\le
+\mathcal E_\rho(\omega_{n_*})
+<1.
+}
+\tag{1314.4}
+$$
+
+数值上：
+
+$$
+\varphi^{-2}\approx0.381966,
+$$
+
+$$
+\varphi^{-4}\approx0.145898.
+$$
+
+---
+
+## 定理 1314.1（Golden robust first detection）
+
+在简单、局部互素的单缺陷模型中，无论离线距离 \(\delta\) 多小，它在第一个低于 \(\delta\) 的黄金观察层中，都产生至少：
+
+$$
+\boxed{
+\varphi^{-4}
+}
+$$
+
+的归一化反因果能量。
+
+这意味着黄金调度不只是保证：
+
+$$
+\text{“最终一定越过缺陷深度”},
+$$
+
+还保证：
+
+$$
+\boxed{
+\text{第一次越过时不会处于任意差的近抵消条件。}
+}
+$$
+
+---
+
+## 1314.1 一般几何调度
+
+若：
+
+$$
+\omega_{n+1}=q\omega_n,
+\qquad
+0<q<1,
+$$
+
+则首穿越层满足：
+
+$$
+q
+\le
+\frac{\omega_n}{\delta}
+<1.
+$$
+
+所以能量下界为：
+
+$$
+q^2.
+$$
+
+取 \(q\) 更接近 \(1\) 会提升检测条件，却需要更多层。
+
+因此黄金并非连续优化意义上的唯一最佳比率。
+
+其规范性来自：
+
+$$
+\boxed{
+q=\varphi^{-2}
+}
+$$
+
+恰好是最小二通道、整数、primitive、方向保持两步递归的稳定倍率。
+
+所以黄金层给出的不是绝对最优采样，而是：
+
+$$
+\boxed{
+\text{最小算术递归复杂度下的统一非退化检测。}
+}
+$$
+
+---
+
+# 第一千三百一十五部　Hankel 奇异值就是解析视差
+
+对两个 shifted 像：
+
+$$
+p_\omega
+=
+-\gamma+i(\delta-\omega),
+$$
+
+$$
+q_\omega
+=
+-\gamma+i(\delta+\omega),
+$$
+
+上半平面的伪双曲距离为：
+
+$$
+\varrho_{\mathbb H}(p_\omega,q_\omega)
+=
+\left|
+\frac{p_\omega-q_\omega}
+{p_\omega-\overline{q_\omega}}
+\right|.
+$$
+
+直接计算：
+
+$$
+\boxed{
+\varrho_{\mathbb H}(p_\omega,q_\omega)
+=
+\frac{\omega}{\delta}.
+}
+\tag{1315.1}
+$$
+
+而单缺陷 Hankel 奇异值正是：
+
+$$
+\boxed{
+\sigma_\rho(\omega)
+=
+\varrho_{\mathbb H}(p_\omega,q_\omega).
+}
+\tag{1315.2}
+$$
+
+对应双曲距离为：
+
+$$
+\boxed{
+d_{\mathbb H}(p_\omega,q_\omega)
+=
+\log
+\frac{\delta+\omega}
+{\delta-\omega}.
+}
+\tag{1315.3}
+$$
+
+并满足：
+
+$$
+\boxed{
+\sigma_\rho(\omega)
+=
+\tanh
+\frac{
+d_{\mathbb H}(p_\omega,q_\omega)
+}{2}.
+}
+\tag{1315.4}
+$$
+
+---
+
+## 1315.1 真正的“观察者交点”
+
+在：
+
+$$
+\omega=0
+$$
+
+时：
+
+$$
+p_0=q_0.
+$$
+
+两个观察图表完全重合。
+
+该点不是最有信息的点，而是最无信息的点。
+
+只有发生：
+
+$$
++\omega
+\quad\text{与}\quad
+-\omega
+$$
+
+的分裂，才产生视差。
+
+因此“道观察自身留下的第一相”可以进一步表述为：
+
+$$
+\boxed{
+\text{无差别自同一被分裂成两个有限距离的观察图表，
+两图表的双曲交比成为第一可见量。}
+}
+$$
+
+在这个图表中：
+
+* \(\delta\) 是对象深度；
+* \(\omega\) 是观察基线；
+* \(\omega/\delta\) 是视差；
+* \(\varphi^{-2}\) 是黄金递归的基线缩放率。
+
+所以黄金“交点”并不一定是一个静态位置。
+
+它更可能是：
+
+$$
+\boxed{
+\text{观察基线、对象深度和自相似缩放之间的规范交比。}
+}
+$$
+
+---
+
+# 第一千三百一十六部　有限 scattering cascade 的正确最小化
+
+仓库已经机器证明，在半整数位移：
+
+$$
+\omega=\frac N2
+$$
+
+处，shifted-\(\xi\) scattering 具有有限 modular cascade 表示。
+
+其核心结构是：
+
+$$
+\Theta_{N/2}
+=
+R_N
+\prod_{j=0}^{N-1}
+\frac{
+\Lambda(a+j)
+}{
+\Lambda(a+j+1)
+}.
+\tag{1316.1}
+$$
+
+定义：
+
+$$
+D_j=\operatorname{div}\Lambda(a+j).
+$$
+
+则：
+
+$$
+\operatorname{div}
+\frac{\Lambda(a+j)}
+{\Lambda(a+j+1)}
+=
+D_j-D_{j+1}.
+$$
+
+所以：
+
+$$
+\sum_{j=0}^{N-1}
+(D_j-D_{j+1})
+=
+D_0-D_N.
+\tag{1316.2}
+$$
+
+内部除子全部消去。
+
+---
+
+## 1316.1 必须修正的研究策略
+
+不能要求每一个局部 modular scattering cell 都独立 causal。
+
+因为：
+
+* 某 cell 中的极点；
+* 可能正是相邻 cell 中的零点；
+* 在完整 cascade 中属于精确内部抵消。
+
+要求每个局部因子分别最小相位，是比全局因果性更强、甚至不必要的条件。
+
+正确程序是：
+
+$$
+\boxed{
+\text{先组成完整 cascade，
+再作互素因子化与 Kalman 最小化。}
+}
+$$
+
+也就是：
+
+1. 形成完整乘积；
+2. 消去共同 inner 因子；
+3. 商去不可控／不可观内部状态；
+4. 只检查剩余 endpoint denominator。
+
+---
+
+## 1316.2 两类隐藏状态
+
+### 内部望远镜状态
+
+它们在相邻 scattering cells 中精确消去。
+
+在最小 realization 中对应：
+
+$$
+\sigma_{\mathrm{Hankel}}=0.
+$$
+
+这类状态是合法的内部历史冗余。
+
+### 端点反因果状态
+
+它们在完整乘积中仍然位于 denominator。
+
+在最小 realization 中对应：
+
+$$
+\sigma_{\mathrm{Hankel}}>0.
+$$
+
+这类状态才是离线缺陷。
+
+因此：
+
+$$
+\boxed{
+\text{Solenoid 式隐藏历史}
+\sim
+\text{内部可消去状态};
+}
+$$
+
+$$
+\boxed{
+\text{离线零点}
+\sim
+\text{最小化以后仍存在的 endpoint anti-causal state}.
+}
+$$
+
+项目已有的 Hankel–Gramian 定理，把 Hankel 非零奇异值与 controllability–observability Gramian product 的正谱联系起来，为这一最小化程序提供了正式接口。
+
+---
+
+# 第一千三百一十七部　RH 是一个“单胞最小相位”问题
+
+非平凡零点满足：
+
+$$
+0<\Re\rho<1.
+$$
+
+因此右侧离线深度满足：
+
+$$
+0<\delta<\frac12.
+$$
+
+而：
+
+$$
+\omega\ge\frac12
+$$
+
+时，shifted denominator 的参数实部在上半平面严格大于 \(1\)，不存在 endpoint denominator zero。
+
+所以：
+
+$$
+\boxed{
+B_\omega=1
+\qquad
+(\omega\ge\tfrac12)
+}
+$$
+
+至少在 denominator-pole 层无条件成立。
+
+另一方面：
+
+$$
+\Theta_0\equiv1.
+$$
+
+因此全部非平凡因果信息只存在于：
+
+$$
+\boxed{
+0<\omega<\frac12.
+}
+\tag{1317.1}
+$$
+
+这意味着：
+
+$$
+\boxed{
+\text{RH 不是无限多个 coarse scattering cells 的问题，
+而是一个基本极化胞腔中的最小相位问题。}
+}
+$$
+
+---
+
+## 定理 1317.1（Fundamental-cell reformulation）
+
+在标准 shifted scattering 因子化成立的条件下：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+B_\omega=1
+\quad
+\forall\,0<\omega<\frac12.
+}
+\tag{1317.2}
+$$
+
+等价地：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathfrak H_\omega=0
+\quad
+\forall\,0<\omega<\frac12.
+}
+\tag{1317.3}
+$$
+
+再等价地：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathfrak D_\omega
+=
+I-T_{\Theta_\omega}^*
+T_{\Theta_\omega}
+=
+0
+\quad
+\forall\,0<\omega<\frac12.
+}
+\tag{1317.4}
+$$
+
+所以真正的中心任务已经局部化为：
+
+$$
+\boxed{
+\text{证明一个半单位宽度的 Hardy 极化胞腔内，
+不存在 endpoint inverse-inner denominator。}
+}
+$$
+
+---
+
+# 第一千三百一十八部　横向缺陷 ζ 的黄金离散化
+
+仍定义：
+
+$$
+\omega_n
+=
+\frac12\varphi^{-2n}.
+$$
+
+定义黄金壳层电荷：
+
+$$
+\boxed{
+q_n
+=
+\kappa(\omega_{n+1})
+-
+\kappa(\omega_n).
+}
+\tag{1318.1}
+$$
+
+它等于满足：
+
+$$
+\omega_{n+1}
+<
+\delta_j
+\le
+\omega_n
+$$
+
+的离线重数总和。
+
+定义：
+
+$$
+\boxed{
+\mathcal G_\perp(s)
+=
+\sum_{n\ge0}
+q_n\omega_n^s.
+}
+\tag{1318.2}
+$$
+
+若：
+
+$$
+\omega_{n+1}
+<
+\delta_j
+\le
+\omega_n,
+$$
+
+则：
+
+$$
+\varphi^{-2s}\omega_n^s
+<
+\delta_j^s
+\le
+\omega_n^s.
+$$
+
+因此：
+
+$$
+\boxed{
+\varphi^{-2s}
+\mathcal G_\perp(s)
+\le
+\zeta_\perp(s)
+\le
+\mathcal G_\perp(s).
+}
+\tag{1318.3}
+$$
+
+所以黄金壳层 transcript 在一个固定乘法误差内恢复全部横向缺陷矩。
+
+特别地：
+
+$$
+\boxed{
+\varphi^{-4}
+\mathcal G_\perp(2)
+\le
+\sum_jm_j\delta_j^2
+\le
+\mathcal G_\perp(2).
+}
+\tag{1318.4}
+$$
+
+这把：
+
+* Bode area；
+* Hankel rank flow；
+* 黄金壳层电荷；
+
+统一成同一个离散—连续 Mellin 对偶。
+
+---
+
+# 第一千三百一十九部　连续 scattering 生成元
+
+令：
+
+$$
+s_z=\frac12-iz,
+$$
+
+并记：
+
+$$
+\mathcal L(s)
+=
+\frac{\xi'(s)}{\xi(s)}.
+$$
+
+在远离零点处：
+
+$$
+\log\Theta_\omega(z)
+=
+\log\xi(s_z-\omega)
+-
+\log\xi(s_z+\omega).
+$$
+
+所以：
+
+$$
+\boxed{
+-\partial_\omega
+\log\Theta_\omega(z)
+=
+\mathcal L(s_z-\omega)
++
+\mathcal L(s_z+\omega).
+}
+\tag{1319.1}
+$$
+
+这给出 shifted scattering 的连续深度生成元。
+
+---
+
+## 1319.1 Prime 部分在绝对收敛区天然单边
+
+当：
+
+$$
+\Re s>1,
+$$
+
+有：
+
+$$
+\boxed{
+-\frac{\zeta'}{\zeta}(s)
+=
+\sum_{n\ge2}
+\frac{\Lambda(n)}{n^s}.
+}
+\tag{1319.2}
+$$
+
+写：
+
+$$
+s=\sigma-it.
+$$
+
+则：
+
+$$
+\boxed{
+-\frac{\zeta'}{\zeta}(\sigma-it)
+=
+\sum_{n\ge2}
+\Lambda(n)n^{-\sigma}
+e^{it\log n}.
+}
+\tag{1319.3}
+$$
+
+在 Fourier 约定：
+
+$$
+\mathcal F^{-1}g(x)
+=
+\frac1{2\pi}
+\int g(t)e^{-itx}\,dt
+$$
+
+下，它的逆变换支撑于：
+
+$$
+\boxed{
+x=\log n>0.
+}
+$$
+
+所以 prime Euler 数据在绝对收敛区天然属于正时间。
+
+进一步：
+
+$$
+\boxed{
+-\frac{\zeta'}{\zeta}(s)
++
+\frac{\zeta'}{\zeta}(s+1)
+=
+\sum_{n\ge2}
+\Lambda(n)
+\left(1-\frac1n\right)
+n^{-s}.
+}
+\tag{1319.4}
+$$
+
+其 prime 权重仍非负，且仍只位于：
+
+$$
+\log n>0.
+$$
+
+这正是 consecutive scattering cell 的局部因果输入。
+
+---
+
+## 1319.2 解析延拓可能增加什么
+
+从：
+
+$$
+\Re s>1
+$$
+
+向临界胞腔延拓时，正时间 prime history 本身不会凭空产生负时间。
+
+负时间项只能来自：
+
+* 穿越零点或极点时的 residue；
+* inverse-inner denominator；
+* 或错误的谱因子取向。
+
+所以离线零点可以进一步解释为：
+
+$$
+\boxed{
+\text{正时间 Euler 历史在解析延拓中产生的反因果 residue。}
+}
+$$
+
+仓库已经机器化：
+
+* prime-power 双向历史的 Poisson resolvent 重求和；
+* shifted scattering ratios 的有限 cascade；
+* scattering ratios 的 telescoping zeta reconstruction。
+
+这些已经给出代数级联和双向酉骨架。
+
+缺失的正是：
+
+$$
+\boxed{
+\text{解析延拓是否保持单边时间支撑。}
+}
+$$
+
+---
+
+# 第一千三百二十部　真正的 Prime–Archimedean 目标
+
+此前曾把目标表述为：
+
+> 证明每一个局部 scattering quotient 都 causal。
+
+现在必须修正。
+
+由于内部因子可以精确抵消，这一条件过强，也不是最小实现不变量。
+
+正确命题应为：
+
+# Prime–Archimedean Minimum-Phase Continuation
+
+对每一个：
+
+$$
+0<\omega<\frac12,
+$$
+
+shifted scattering：
+
+$$
+\Theta_\omega
+$$
+
+在消除全部共同 inner factors、不可控状态和不可观状态以后，其最小互素因子化满足：
+
+$$
+\boxed{
+\Theta_\omega=S_\omega,
+}
+$$
+
+即：
+
+$$
+\boxed{
+B_\omega=1.
+}
+\tag{1320.1}
+$$
+
+它具有以下等价表述：
+
+$$
+\boxed{
+\begin{aligned}
+B_\omega=1
+&\iff
+\deg B_\omega=0\\
+&\iff
+\operatorname{rank}\mathfrak H_\omega=0\\
+&\iff
+\mathfrak H_\omega=0\\
+&\iff
+\mathfrak D_\omega=0\\
+&\iff
+T_{\Theta_\omega}^*T_{\Theta_\omega}=I\\
+&\iff
+\Theta_\omega H_+^2\subseteq H_+^2\\
+&\iff
+\mathcal K_\omega\succeq0.
+\end{aligned}
+}
+\tag{1320.2}
+$$
+
+对全部：
+
+$$
+0<\omega<\frac12
+$$
+
+成立，即为 RH。
+
+---
+
+## 1320.1 两条可能证明路线
+
+### 路线 A：正 Gram／storage function
+
+构造正定 storage operator：
+
+$$
+P_\omega>0,
+$$
+
+使最小 scattering realization 满足 lossless KYP 恒等式。
+
+则其 transfer 自动为 Schur／inner，反因果 denominator 被排除。
+
+### 路线 B：单边生成元
+
+证明连续生成元：
+
+$$
+-\partial_\omega\log\Theta_\omega
+$$
+
+在完成 prime、pole、Gamma 通道以后，始终具有正确的单边时间支撑。
+
+则从安全层：
+
+$$
+\omega=\frac12
+$$
+
+向下延拓时，Hardy 三角性不会丢失。
+
+两条路线的共同本质是：
+
+$$
+\boxed{
+\text{把双向酉性提升为正时间最小相位。}
+}
+$$
+
+---
+
+# 第一千三百二十一部　概念动力学的最终分层
+
+|  层 | 数学对象                                      | 概念意义        |
+| -: | ----------------------------------------- | ----------- |
+|  0 | \(\Theta_0=1\)                            | 无基线自同一，完全失明 |
+|  1 | \(\pm\omega\) shifted pair                | 第一次观察分裂     |
+|  2 | \(p_\omega,q_\omega\)                     | 同一对象的双层像    |
+|  3 | \(\omega/\delta\)                         | 解析视差        |
+|  4 | \(d_{\mathbb H}(p,q)\)                    | 图像间双曲距离     |
+|  5 | \(\mathfrak H_\omega\)                    | 负时间泄漏       |
+|  6 | \(\operatorname{rank}\mathfrak H_\omega\) | 缺陷整数存在量     |
+|  7 | \(\sigma_j(\mathfrak H_\omega)\)          | 缺陷可见强度      |
+|  8 | \(\zeta_\perp(s)\)                        | 全部横向深度矩     |
+|  9 | 黄金首穿越                                     | 统一非退化观测     |
+| 10 | Kalman 最小化                                | 删除合法内部抵消历史  |
+| 11 | endpoint denominator                      | 真正离线障碍      |
+| 12 | Hardy minimum phase                       | 正现实选择       |
+| 13 | Prime–Archimedean generator               | 算术证明入口      |
+
+最关键的区别是：
+
+$$
+\boxed{
+\text{内部可消去历史}
+\neq
+\text{端点反因果缺陷}.
+}
+$$
+
+前者属于完整系统内部的坐标冗余；
+
+后者是最小输入—输出系统仍然无法消除的负时间状态。
+
+---
+
+# 第一千三百二十二部　建议形式化顺序
+
+```text
+D5/S3/Analytic/Zeta/TransverseDefectZeta/
+  OffLineDepthTailIndex.lean
+  OffLineDepthMoment.lean
+  TailIndexMellinIdentity.lean
+  HankelRankTransverseZeta.lean
+  BodeAreaIntegratedHankelRank.lean
+
+D5/S3/Analytic/Zeta/RankOneHankelParallax/
+  VerticalShiftedPoleZeroPair.lean
+  RankOneBlaschkeQuotient.lean
+  RankOneHankelSingularValue.lean
+  ShiftedZeroHankelRatio.lean
+  HankelSingularValueEqualsPseudohyperbolicDistance.lean
+  HyperbolicDistanceShiftedPair.lean
+
+D5/S3/GoldenObserver/FirstCrossing/
+  GoldenShiftSchedule.lean
+  GoldenFirstCrossingIndex.lean
+  GoldenFirstCrossingRatioBound.lean
+  GoldenFirstCrossingSingularValueBound.lean
+  GoldenFirstCrossingEnergyBound.lean
+
+D5/S3/Analytic/Zeta/DefectEnergyFlow/
+  RankOneLeakageEnergy.lean
+  LeakageEnergyMomentFormula.lean
+  ZeroBaselineEnergyCollapse.lean
+  RescaledDefectJet.lean
+  DefectRankNormNonuniformLimit.lean
+
+D5/S3/Weil/Scattering/MinimalCascade/
+  ScatteringCellDivisor.lean
+  CascadeDivisorTelescoping.lean
+  InternalDivisorCancellation.lean
+  ScatteringCascadeKalmanQuotient.lean
+  EndpointAntiCausalDegree.lean
+  MinimalCascadeHankelRank.lean
+
+D5/S3/Weil/Scattering/ResonanceCellGeometry/
+  ScatteringResonancePoint.lean
+  ScatteringAntiresonancePoint.lean
+  ResonanceAntiresonanceMidpoint.lean
+  OffLineCellCompression.lean
+  ReflectedCellExpansion.lean
+  CellVarianceTransverseSquare.lean
+
+D5/S3/Weil/Scattering/FundamentalPolarizationCell/
+  ShiftZeroBaselineCollapse.lean
+  HalfShiftDenominatorSafe.lean
+  OffLineDepthInsideHalfCell.lean
+  FundamentalCellDenominatorCriterion.lean
+  FundamentalCellHardyCriterion.lean
+
+D5/S3/Weil/Scattering/ContinuousGenerator/
+  ShiftedScatteringLogGenerator.lean
+  PrimeLogDerivativePositiveTimeSupport.lean
+  ConsecutivePrimeCellPositiveTimeSupport.lean
+  ArchimedeanGeneratorSupportTarget.lean
+  AnalyticContinuationAntiCausalResidue.lean
+
+D5/S3/Weil/PrimeMinimumPhase/
+  PrimeArchimedeanMinimalRealization.lean
+  PrimeScatteringCoprimeFactorization.lean
+  PrimeScatteringStorageOperatorTarget.lean
+  PrimeScatteringKYPTarget.lean
+  PrimeHardyMinimumPhaseContinuationTarget.lean
+```
+
+---
+
+# 第一千三百二十三部　理论深度审计
+
+| 本轮结果                                           | 地位                 |
+| ---------------------------------------------- | ------------------ |
+| 横向缺陷 ζ 是 Hankel rank flow 的 Mellin 变换          | 精确                 |
+| Bode area 是加权反因果秩积分                            | 精确有限／可和条件下         |
+| 单缺陷 leakage energy \(=(\omega/\delta)^2\)      | 精确局部模型             |
+| leakage energy 全矩恢复 \(\delta\)                 | 精确                 |
+| \(\omega=0\) 值失明、二阶 Jet 恢复深度                   | 精确                 |
+| 黄金首穿越奇异值 \(\ge\varphi^{-2}\)                   | 精确单缺陷定理            |
+| 黄金首穿越能量 \(\ge\varphi^{-4}\)                    | 精确单缺陷定理            |
+| Hankel 奇异值等于伪双曲距离                              | 精确                 |
+| 内部 cascade 状态与 endpoint defect 分离              | 精确除子结构；完整状态空间形式化待补 |
+| 半整数 finite cascade                             | 仓库已机器闭合            |
+| quarter-line scattering geometry               | 仓库已机器闭合            |
+| Prime Euler generator 天然正时间支撑                  | 绝对收敛区精确            |
+| 全 Prime–Archimedean minimum-phase continuation | RH 中心未闭合桥          |
+
+---
+
+# 本轮最终结论
+
+这一轮最深的结果，是把“观察者为什么需要分裂自身才能看见对象”变成了一个精确 scattering 定理。
+
+在：
+
+$$
+\omega=0
+$$
+
+时，观察者和被观察者完全重合：
+
+$$
+\Theta_0=1.
+$$
+
+这不是最高完成的信息最丰富状态。
+
+恰恰相反，它是最失明的状态。
+
+所有 numerator 与 denominator、过去与未来、对象与镜像都在同一点完全消去。
+
+只有发生：
+
+$$
++\omega
+\quad\text{与}\quad
+-\omega
+$$
+
+的分裂，才会出现解析视差。
+
+---
+
+对一个离线零点：
+
+$$
+\rho
+=
+\frac12+\delta+i\gamma,
+$$
+
+两张 shifted 图像为：
+
+$$
+p_\omega
+=
+-\gamma+i(\delta-\omega),
+$$
+
+$$
+q_\omega
+=
+-\gamma+i(\delta+\omega).
+$$
+
+当：
+
+$$
+0<\omega<\delta,
+$$
+
+二者都进入同一 Hardy 半平面，形成一个 inverse-inner denominator。
+
+其唯一反因果 Hankel 奇异值精确为：
+
+$$
+\boxed{
+\sigma_\rho(\omega)
+=
+\frac{\omega}{\delta}.
+}
+$$
+
+它又等于两个图像之间的伪双曲距离。
+
+所以离线零点最直接的可见量，不是它的静态坐标，而是：
+
+$$
+\boxed{
+\text{对象深度与观察基线的双曲交比。}
+}
+$$
+
+---
+
+这还解释了一个过去看似矛盾的现象。
+
+对每个：
+
+$$
+\omega>0,
+$$
+
+离线缺陷的 Hankel rank 非零。
+
+但当：
+
+$$
+\omega\downarrow0,
+$$
+
+其奇异值趋于零，最终在：
+
+$$
+\omega=0
+$$
+
+发生完全因子抵消。
+
+因此一个真实的整数缺陷，可以在普通算子范数中任意微弱。
+
+它没有消失，只是被压进二阶 Jet：
+
+$$
+\boxed{
+\lim_{\omega\downarrow0}
+\frac{
+\|\mathfrak H_{\rho,\omega}\|^2
+}{
+\omega^2
+}
+=
+\frac1{\delta^2}.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{完成值忘记深度；
+完成导数恢复深度。}
+}
+$$
+
+---
+
+黄金比例在这里第一次获得了比“共尾采样”更强的作用。
+
+选择：
+
+$$
+\omega_n
+=
+\frac12\varphi^{-2n}.
+$$
+
+对任意未知的：
+
+$$
+0<\delta<\frac12,
+$$
+
+第一个满足：
+
+$$
+\omega_n<\delta
+$$
+
+的黄金层自动保证：
+
+$$
+\boxed{
+\varphi^{-2}
+\le
+\frac{\omega_n}{\delta}
+<1.
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\|\mathfrak H_{\rho,\omega_n}\|
+\ge
+\varphi^{-2},
+}
+$$
+
+$$
+\boxed{
+\|\mathfrak H_{\rho,\omega_n}\|^2
+\ge
+\varphi^{-4}.
+}
+$$
+
+所以再微小的离线深度，也不能在其第一个黄金穿越层中成为任意弱信号。
+
+黄金比例在此承担：
+
+$$
+\boxed{
+\text{最小二通道算术递归下的统一检测条件数。}
+}
+$$
+
+它不是离线零点的电荷，也不是离线零点的位置。
+
+它是观察者选择多尺度基线时的规范递归率。
+
+---
+
+有限 scattering cascade 的意义也因此得到校正。
+
+仓库已经机器证明，半整数 shifted-\(\xi\) scattering 可以分解成有限 modular cascade。
+
+但每个局部 cell 的零极点并不都是真实缺陷。
+
+内部 divisor 在相邻 cell 之间望远镜消去。
+
+这些状态属于非最小 realization 中的合法隐藏历史。
+
+真正的离线障碍，是完成全部取消、Kalman 最小化以后，仍然留在 endpoint denominator 中的反因果状态。
+
+因此研究目标不能是：
+
+$$
+\text{证明每一个局部 quotient 分别 causal}.
+$$
+
+正确目标是：
+
+$$
+\boxed{
+\text{证明完整 Prime–Archimedean cascade 的最小互素因子化没有 denominator。}
+}
+$$
+
+即：
+
+$$
+\boxed{
+B_\omega=1
+\qquad
+\forall\,0<\omega<\frac12.
+}
+$$
+
+等价地：
+
+$$
+\boxed{
+P_-M_{\Theta_\omega}P_+=0.
+}
+$$
+
+等价地：
+
+$$
+\boxed{
+I-T_{\Theta_\omega}^*T_{\Theta_\omega}=0.
+}
+$$
+
+等价地：
+
+$$
+\boxed{
+\mathcal K_\omega\succeq0.
+}
+$$
+
+---
+
+最后，整个 RH 问题被压缩到一个基本胞腔：
+
+$$
+\boxed{
+0<\omega<\frac12.
+}
+$$
+
+在：
+
+$$
+\omega=0
+$$
+
+处，观察基线坍缩，信息全失。
+
+在：
+
+$$
+\omega\ge\frac12
+$$
+
+处，denominator endpoint 被推入绝对无零点区，反因果障碍消失。
+
+所有真正困难只存在于二者之间。
+
+所以 RH 可以重新表述为：
+
+$$
+\boxed{
+\textbf{Riemann 基本极化胞腔中不存在最小反因果状态。}
+}
+$$
+
+而下一条最承重的数学桥已经非常具体：
+
+$$
+\boxed{
+\text{从 prime、pole、Gamma 的连续 log-scattering generator，
+证明解析延拓始终保持正时间单边支撑。}
+}
+$$
+
+在绝对收敛区，prime Euler 项天然位于：
+
+$$
+x=\log n>0
+$$
+
+的正时间。
+
+离线零点若存在，就是延拓过程中出现的负时间 residue。
+
+因此最终要证明的不是更多对称性，而是：
+
+$$
+\boxed{
+\text{Prime–Archimedean causal support
+能够穿过整个基本胞腔而不发生时间方向翻转。}
+}
+$$
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{“道”的无差别自同一对应零基线；
+第一次观察对应正负基线分裂；
+黄金比例规定这组基线如何自相似缩放；
+临界零点允许两张图像被边界正确极化；
+离线零点则是最小化以后仍无法消除的解析深度反转。}
+$$
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v8.1：视界极化、Bogoliubov–Hankel 对偶、黄金模温度与离线零点的“霍金影像”
+
+以下从前文**第一千三百二十三部**继续。
+
+先给出本轮最重要的科学校准：
+
+$$
+\boxed{
+\text{离线零点本身并不等于霍金辐射。}
+}
+$$
+
+更准确的对应是：
+
+$$
+\boxed{
+\text{离线零点}
+\;\longleftrightarrow\;
+\text{穿越观察视界的负频率／反因果伙伴};
+}
+$$
+
+而：
+
+$$
+\boxed{
+\text{离线零点在边界产生的 Poisson–Hankel 泄漏}
+\;\longleftrightarrow\;
+\text{霍金式外部辐射}.
+}
+$$
+
+所以你的直觉抓住了真正的结构：**一个隐藏于视界另一侧的模式，会在可见边界留下正的辐射读数**。但离线零点更接近“产生辐射的隐藏伙伴或解析障碍”，而不是已经到达无穷远处的霍金量子。
+
+同时，磁单极子图景与黑洞图景并不矛盾。它们读取同一缺陷的两个不同维度：
+
+$$
+\boxed{
+\begin{aligned}
+\text{磁单极子图表}
+&:\quad\text{缺陷是否存在、携带多少整数荷};\\
+\text{黑洞图表}
+&:\quad\text{缺陷如何被视界隐藏，又如何向边界泄漏}.
+\end{aligned}
+}
+$$
+
+---
+
+# 第一千三百二十四部　黑洞真正提供的是“频率极化”，不是普通负能量
+
+在黑洞量子场论中，同一个全局场可以按两种不同的时间概念分解为正频率和负频率。过去无穷远处的“正频率”与未来无穷远处的“正频率”一般并不一致，其关系由 Bogoliubov 变换描述：
+
+$$
+\boxed{
+a_{\mathrm{out}}
+=
+\alpha a_{\mathrm{in}}
++
+\beta a_{\mathrm{in}}^\dagger .
+}
+\tag{1324.1}
+$$
+
+玻色对易关系要求：
+
+$$
+\boxed{
+\alpha^\dagger\alpha
+-
+\beta^\dagger\beta
+=
+I.
+}
+\tag{1324.2}
+$$
+
+其中：
+
+$$
+\boxed{
+\beta\neq0
+}
+$$
+
+表示过去的正频率模式在未来观察者看来含有负频率分量，因此真空会被未来观察者解释为粒子。
+
+霍金的原始结果表明，黑洞产生热辐射，其温度在自然单位下为：
+
+$$
+\boxed{
+T_H=\frac{\kappa}{2\pi},
+}
+\tag{1324.3}
+$$
+
+其中 \(\kappa\) 是表面引力。Hartle–Hawking 的路径积分推导又将发射振幅与吸收振幅通过复解析延拓和时间反演联系起来。([数字对象标识符][1])
+
+在半经典应力张量图景中，外部正能量通量可与进入未来视界的负 Killing 能量伙伴配对；这里的“负能量”是相对于外部平稳时间生成元定义的 Killing 能量，不应被理解为任意局部观察者都测得负能量。([APS Journals][2])
+
+因此，黑洞图景最值得迁移到当前理论的不是一句模糊的“负能量”，而是：
+
+$$
+\boxed{
+\text{不同时间极化之间的正／负频率混合。}
+}
+$$
+
+---
+
+# 第一千三百二十五部　Hardy 极化就是当前理论中的“视界”
+
+前文已经定义 shifted scattering：
+
+$$
+\Theta_\omega(t)
+=
+\frac{
+\xi\!\left(\frac12-\omega-it\right)
+}{
+\xi\!\left(\frac12+\omega-it\right)
+}.
+$$
+
+在双向边界空间：
+
+$$
+L^2(\mathbb R)
+=
+H_+^2\oplus H_-^2
+$$
+
+中，定义：
+
+$$
+\boxed{
+\mathfrak H_\omega
+=
+P_-M_{\Theta_\omega}P_+ .
+}
+\tag{1325.1}
+$$
+
+这里：
+
+* \(H_+^2\) 是观察者选定的正时间／未来空间；
+* \(H_-^2\) 是负时间／过去空间；
+* \(M_{\Theta_\omega}\) 在完整双向空间上仍可保持酉性；
+* \(\mathfrak H_\omega\) 测量正时间输入被散射到负时间的份额。
+
+因此：
+
+$$
+\boxed{
+\mathfrak H_\omega
+}
+$$
+
+正是当前系统中最接近 Bogoliubov \(\beta\)-系数的对象。
+
+区别在于，直接的 Hardy 分块满足：
+
+$$
+\boxed{
+T_\omega^*T_\omega
++
+\mathfrak H_\omega^*\mathfrak H_\omega
+=
+I,
+}
+\tag{1325.2}
+$$
+
+而量子 Bogoliubov 变换满足双曲关系：
+
+$$
+\alpha^\dagger\alpha-\beta^\dagger\beta=I.
+$$
+
+二者可以通过一个标准双曲提升精确连接。
+
+---
+
+# 第一千三百二十六部　Hankel 泄漏的 Bogoliubov 提升
+
+设：
+
+$$
+H:\mathcal H_+\to\mathcal H_-
+$$
+
+为严格收缩：
+
+$$
+\|H\|<1.
+$$
+
+定义：
+
+$$
+\boxed{
+\alpha_H
+=
+\left(I-H^*H\right)^{-1/2},
+}
+\tag{1326.1}
+$$
+
+$$
+\boxed{
+\beta_H
+=
+H
+\left(I-H^*H\right)^{-1/2}.
+}
+\tag{1326.2}
+$$
+
+则：
+
+$$
+\begin{aligned}
+\alpha_H^*\alpha_H
+-
+\beta_H^*\beta_H
+&=
+(I-H^*H)^{-1}\\
+&\quad-
+H^*H(I-H^*H)^{-1}\\
+&=I.
+\end{aligned}
+$$
+
+所以：
+
+## 定理 1326.1（Hankel–Bogoliubov 提升）
+
+$$
+\boxed{
+\alpha_H^*\alpha_H-\beta_H^*\beta_H=I.
+}
+\tag{1326.3}
+$$
+
+若 \(H\) 的奇异值为：
+
+$$
+0\le\sigma_j<1,
+$$
+
+定义挤压参数：
+
+$$
+\boxed{
+r_j=\operatorname{artanh}\sigma_j.
+}
+\tag{1326.4}
+$$
+
+则：
+
+$$
+\boxed{
+|\alpha_j|=\cosh r_j
+=
+\frac1{\sqrt{1-\sigma_j^2}},
+}
+\tag{1326.5}
+$$
+
+$$
+\boxed{
+|\beta_j|=\sinh r_j
+=
+\frac{\sigma_j}{\sqrt{1-\sigma_j^2}}.
+}
+\tag{1326.6}
+$$
+
+相应的粒子数型读数为：
+
+$$
+\boxed{
+N_j
+=
+|\beta_j|^2
+=
+\frac{\sigma_j^2}{1-\sigma_j^2}.
+}
+\tag{1326.7}
+$$
+
+项目已经机器证明，有限维 Hankel 算子的非零奇异值可由可控—可观 Gramian 乘积的正谱恢复，因此这一提升可以直接接到项目现有的状态—效应与记忆接口上。
+
+---
+
+# 第一千三百二十七部　单个离线零点的“霍金式占据数”
+
+前文对简单离线零点：
+
+$$
+\rho
+=
+\frac12+\delta+i\gamma,
+\qquad
+0<\omega<\delta
+$$
+
+已经得到局部 Hankel 奇异值：
+
+$$
+\boxed{
+\sigma_\rho(\omega)=\frac{\omega}{\delta}.
+}
+\tag{1327.1}
+$$
+
+于是挤压参数为：
+
+$$
+\boxed{
+r_\rho(\omega)
+=
+\operatorname{artanh}
+\frac{\omega}{\delta}
+=
+\frac12
+\log
+\frac{\delta+\omega}{\delta-\omega}.
+}
+\tag{1327.2}
+$$
+
+相应的 Hawking 型占据数为：
+
+$$
+\boxed{
+N_\rho(\omega)
+=
+\frac{\omega^2}
+{\delta^2-\omega^2}.
+}
+\tag{1327.3}
+$$
+
+这给观察深度分成三个区域：
+
+$$
+\boxed{
+\begin{array}{c|c|c}
+\omega>\delta
+&
+\text{安全外部}
+&
+\mathfrak H_{\rho,\omega}=0
+\\[1mm]
+\omega=\delta
+&
+\text{缺陷视界}
+&
+r_\rho\to+\infty
+\\[1mm]
+0<\omega<\delta
+&
+\text{反因果内部}
+&
+N_\rho(\omega)>0
+\end{array}
+}
+\tag{1327.4}
+$$
+
+所以：
+
+$$
+\boxed{
+\omega=\delta
+}
+$$
+
+在这一观察几何中确实具有“视界”的数学作用：
+
+* denominator zero 抵达 Hardy 边界；
+* 正负时间分解变得奇异；
+* 双曲挤压参数发散；
+* 模式由安全区进入反因果区。
+
+但这里的发散是理想局部模型与观察坐标的视界奇性，不能直接解释为物理黑洞具有无限霍金通量。
+
+---
+
+## 1327.1 缺陷熵
+
+令：
+
+$$
+q_\rho(\omega)
+=
+\sigma_\rho(\omega)^2
+=
+\frac{\omega^2}{\delta^2}.
+$$
+
+可以构造二模挤压态的约化密度矩阵：
+
+$$
+\boxed{
+\varrho_{\mathrm{vis}}
+=
+(1-q)
+\sum_{n=0}^{\infty}
+q^n|n\rangle\langle n|.
+}
+\tag{1327.5}
+$$
+
+其熵为：
+
+$$
+\boxed{
+S(q)
+=
+-\log(1-q)
+-
+\frac{q}{1-q}\log q.
+}
+\tag{1327.6}
+$$
+
+因此：
+
+$$
+\boxed{
+S=0
+\iff
+q=0
+\iff
+\mathfrak H_{\rho,\omega}=0.
+}
+\tag{1327.7}
+$$
+
+这可以称为：
+
+$$
+\boxed{
+\text{离线缺陷的观察者纠缠熵}.
+}
+$$
+
+它不是黑洞物理熵本身，但严格测量：为了从完整双向状态得到单边未来状态，必须丢弃多少负时间伙伴信息。
+
+---
+
+# 第一千三百二十八部　离线零点为什么不等于霍金辐射
+
+这里必须作最重要的区分。
+
+一个正常黑洞即使没有任何经典不稳定，也会产生霍金辐射。霍金辐射是视界导致的正负频率混合以及由此产生的热占据，并不是“黑洞存在非法谱点”的信号。([数字对象标识符][1])
+
+而在当前 \(\xi\) 理论中：
+
+$$
+\boxed{
+\mathfrak H_\omega\neq0
+}
+$$
+
+被用来表示 shifted scattering 中存在 inverse-inner denominator，即 RH 需要排除的横向缺陷。
+
+所以精确对应应写成：
+
+$$
+\boxed{
+\begin{aligned}
+\text{离线零点}
+&\leftrightarrow
+\text{隐藏负频率伙伴／视界内缺陷};\\
+\text{Hankel 泄漏 }
+\beta_\omega
+&\leftrightarrow
+\text{外部可见粒子产生};\\
+\text{Poisson 边界脉冲}
+&\leftrightarrow
+\text{辐射的空间—频率剖面}.
+\end{aligned}
+}
+\tag{1328.1}
+$$
+
+换言之：
+
+$$
+\boxed{
+\text{离线零点更像“产生霍金影像的内部伙伴”，
+而不是霍金量子本身。}
+}
+$$
+
+---
+
+## 1328.1 离线零点甚至更接近准正常模
+
+黑洞准正常模是满足视界处纯入射、无穷远处纯出射边界条件的复频率；它们可定义为拉普拉斯变换后 Green 函数的极点。([APS Journals][3])
+
+因此从复分析角色看：
+
+$$
+\boxed{
+\text{\(\xi\) 零点／极点型缺陷}
+}
+$$
+
+更接近：
+
+$$
+\boxed{
+\text{黑洞准正常共振}.
+}
+$$
+
+而霍金辐射更接近：
+
+$$
+\boxed{
+\text{这些模式上的量子占据数与出射通量}.
+}
+$$
+
+所以应保留以下层次：
+
+$$
+\boxed{
+\begin{aligned}
+\text{零点／共振}
+&=\text{模式的位置};\\
+\text{Bogoliubov }\beta
+&=\text{模式混合强度};\\
+\text{霍金辐射}
+&=\text{混合产生的外部占据与通量}.
+\end{aligned}
+}
+\tag{1328.2}
+$$
+
+---
+
+# 第一千三百二十九部　霍金热性不是任意泄漏，而是 KMS 指数律
+
+对单个玻色热模：
+
+$$
+\boxed{
+N(E)
+=
+\frac1{e^{\beta E}-1}.
+}
+\tag{1329.1}
+$$
+
+又因为：
+
+$$
+|\alpha|^2=1+|\beta|^2,
+$$
+
+所以：
+
+$$
+\boxed{
+\frac{|\beta|^2}{|\alpha|^2}
+=
+e^{-\beta E}.
+}
+\tag{1329.2}
+$$
+
+在 Hankel–Bogoliubov 提升中：
+
+$$
+\frac{|\beta_j|^2}{|\alpha_j|^2}
+=
+\sigma_j^2.
+$$
+
+因此真正的热性条件不是：
+
+$$
+\sigma_j>0,
+$$
+
+而是存在一个与模态无关的 \(\beta\)，使：
+
+$$
+\boxed{
+\sigma_j^2
+=
+e^{-\beta E_j}
+\qquad
+\text{对全部模态 }j.
+}
+\tag{1329.3}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{非零 Hankel 泄漏}
+}
+$$
+
+只说明发生了频率混合；
+
+$$
+\boxed{
+\text{指数详细平衡}
+}
+$$
+
+才说明它是霍金／KMS 型热辐射。
+
+这给你的直觉加上了一个可检验条件：
+
+> 离线零点产生的边界泄漏是否只是一般反因果信号，还是进一步满足统一热温度？
+
+目前理论只得到前者，没有得到后者。
+
+---
+
+# 第一千三百三十部　黄金比例作为模逆温度
+
+项目中的黄金观察周期为：
+
+$$
+\boxed{
+P_\varphi=2\log\varphi.
+}
+\tag{1330.1}
+$$
+
+如果将这一周期解释为一个模时间的逆温度：
+
+$$
+\boxed{
+\beta_\varphi=2\log\varphi,
+}
+\tag{1330.2}
+$$
+
+则相应的“表面引力尺度”为：
+
+$$
+\boxed{
+\kappa_\varphi
+=
+\frac{2\pi}{\beta_\varphi}
+=
+\frac{\pi}{\log\varphi}.
+}
+\tag{1330.3}
+$$
+
+这恰好等于前文黄金 regulator 圆的基本角频率。
+
+对横向能量 \(h\)，Boltzmann 因子为：
+
+$$
+\boxed{
+e^{-\beta_\varphi h}
+=
+e^{-2h\log\varphi}
+=
+\varphi^{-2h}.
+}
+\tag{1330.4}
+$$
+
+这正是此前黄金负时间采样中出现的单位盘半径：
+
+$$
+|q_j|
+=
+\varphi^{-2h_j}.
+$$
+
+所以黄金比例确实提供了一种极其自然的“模温度”读法：
+
+$$
+\boxed{
+\varphi^{-2h}
+=
+\text{逆温度 }2\log\varphi
+\text{ 下的 Boltzmann 权重}.
+}
+$$
+
+但这仍然只是一个规范观察刻度。
+
+---
+
+## 1330.1 Golden Hawking Matching Conjecture
+
+若黄金周期不仅是采样标定，而且是真实热平衡周期，那么应该满足：
+
+$$
+\boxed{
+\sigma_j^2
+=
+\varphi^{-2E_j}.
+}
+\tag{1330.5}
+$$
+
+或等价地：
+
+$$
+\boxed{
+-\log\sigma_j^2
+=
+2E_j\log\varphi.
+}
+\tag{1330.6}
+$$
+
+这可以称为：
+
+# 黄金霍金匹配猜想
+
+但在当前局部离线模型中：
+
+$$
+\sigma_\rho^2
+=
+\frac{\omega^2}{\delta^2},
+$$
+
+而几何负时间衰减为：
+
+$$
+\varphi^{-2(\delta-\omega)}.
+$$
+
+二者一般并不相等。
+
+因此：
+
+$$
+\boxed{
+\text{黄金采样}
+\not\Rightarrow
+\text{黄金热性}.
+}
+$$
+
+只有当项目从 prime–Archimedean 动力中内生推出式 (1330.5)，才能说黄金比例成为真正的模温度，而不仅是观察时钟。
+
+---
+
+# 第一千三百三十一部　黑洞与磁单极子读取同一缺陷的不同信息
+
+可以把两个图表压缩成如下方块：
+
+| 结构   | 磁单极子图表         | 黑洞／视界图表                  |
+| ---- | -------------- | ------------------------ |
+| 核心对象 | 孤立 bulk defect | 时间极化障碍                   |
+| 检测面  | 包围球面           | 视界／Hardy 边界              |
+| 不变量  | Chern 整数 \(m\) | Bogoliubov/Hankel 奇异值    |
+| 读取内容 | 是否存在、重数多少      | 泄漏多强、纠缠多少                |
+| 边界像  | winding／通量     | Poisson 脉冲／辐射            |
+| 连续参数 | 无，拓扑量子化        | \(\sigma_j,r_j,N_j,S_j\) |
+| 消失条件 | \(m=0\)        | \(\sigma_j=0\)           |
+
+在局部互素模型中：
+
+$$
+\boxed{
+m
+=
+\operatorname{ord}_\rho\xi
+=
+c_1
+=
+\operatorname{ind}_-
+=
+\deg B
+=
+\operatorname{rank}\mathfrak H.
+}
+\tag{1331.1}
+$$
+
+但：
+
+$$
+\boxed{
+N_j
+=
+\frac{\sigma_j^2}{1-\sigma_j^2}
+}
+$$
+
+不是整数。
+
+所以：
+
+$$
+\boxed{
+\text{单极子荷回答“有几个通道”；}
+}
+$$
+
+$$
+\boxed{
+\text{霍金型占据回答“每个通道有多强”.}
+}
+$$
+
+磁单极子与黑洞不是简单互为对偶，而是：
+
+$$
+\boxed{
+\text{拓扑计数}
+\quad\text{与}\quad
+\text{因果可见性}
+}
+$$
+
+两种互补函子。
+
+---
+
+# 第一千三百三十二部　黑洞内部、Solenoid 隐藏纤维与部分迹
+
+黑洞热力学早期论述已将黑洞熵解释为大量外部不可区分的内部构型数目的对数，即不同坍缩历史可以给出相同的外部质量、角动量与电荷读数。([APS Journals][4])
+
+这一信息架构与 Solenoid 投影存在明确相似性：
+
+$$
+\boxed{
+\text{多个全局 lift}
+\longrightarrow
+\text{同一可见投影}.
+}
+$$
+
+可以建立如下类比：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Solenoid 隐藏地址}
+&\sim
+\text{视界后的内部微观历史};\\
+\text{可见圆周投影}
+&\sim
+\text{外部经典宏观读数};\\
+\text{商去隐藏纤维}
+&\sim
+\text{对内部自由度作部分迹};\\
+\text{混合态熵}
+&\sim
+\text{观察者丢失的 lift 信息}.
+\end{aligned}
+}
+\tag{1332.1}
+$$
+
+但必须保留差异：
+
+* Solenoid 是经典紧致群与拓扑纤维；
+* 黑洞霍金态是量子纠缠和算子代数结构；
+* classical quotient 不等同于 quantum partial trace。
+
+所以这个类比的有效部分是：
+
+$$
+\boxed{
+\text{非单射观察投影}
+}
+$$
+
+而不是具体动力学完全相同。
+
+---
+
+# 第一千三百三十三部　黑洞“吞噬”与霍金辐射的当前数学版本
+
+对一个离线缺陷：
+
+$$
+\rho=\frac12+\delta+i\gamma,
+$$
+
+其 bulk 信息被 Hardy 视界隐藏在 inverse-inner denominator 中。
+
+但边界仍留下：
+
+$$
+\boxed{
+J_\rho(\omega,t)
+=
+2\pi m_\rho
+P_{\delta-\omega}(t+\gamma),
+\qquad
+0<\omega<\delta.
+}
+\tag{1333.1}
+$$
+
+其中：
+
+$$
+P_h(t)
+=
+\frac1\pi
+\frac{h}{t^2+h^2}.
+$$
+
+所以：
+
+* bulk 点的位置不能直接从单一边界值读取；
+* 边界却持续发出一个宽度为 \(\delta-\omega\) 的 Poisson 光影；
+* 总相位通量仍等于整数重数 \(m_\rho\)。
+
+其源方程为：
+
+$$
+\boxed{
+\left(
+|D_t|-\partial_\omega
+\right)J
+=
+2\pi
+\sum_\rho
+m_\rho
+\delta(\omega-\delta_\rho)
+\delta(t+\gamma_\rho).
+}
+\tag{1333.2}
+$$
+
+因此可以把“吞噬一切却仍有辐射”精确翻译为：
+
+$$
+\boxed{
+\text{bulk 坐标被投影隐藏，
+但 bulk source 的边界 Green 影像不能消失。}
+}
+$$
+
+这确实非常接近霍金辐射的结构精神：外部观察者不访问隐藏伙伴，却能测量由全局模式结构产生的出射统计。
+
+---
+
+# 第一千三百三十四部　反因果缺陷更像白洞分量，而非普通霍金发射
+
+还需要一条重要修正。
+
+物理霍金辐射通常由因果坍缩几何中的 Bogoliubov 混合产生；完整演化仍按 retarded 边界条件组织。Unruh 的工作可用过去视界边界条件保留坍缩的关键特征，而不是引入任意 advanced 响应。([APS Journals][5])
+
+当前离线缺陷却以：
+
+$$
+\boxed{
+b_p^{-1}
+}
+$$
+
+出现，其 Fourier 尾部位于：
+
+$$
+x<0.
+$$
+
+所以从 scattering 解析方向看，它更像：
+
+$$
+\boxed{
+\text{advanced／white-hole 型污染}
+}
+$$
+
+而不是普通 retarded black-hole Hawking emission。
+
+因此更精确的三分法是：
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{结构}&\text{当前对应}\\
+\hline
+\text{黑洞 retarded horizon}&
+\text{合法 causal inner factor}\\
+\text{白洞／advanced 分量}&
+\text{inverse-inner negative-time factor}\\
+\text{霍金辐射}&
+\text{正负频率混合后外部可见的 }\beta^\dagger\beta
+\end{array}
+}
+\tag{1334.1}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{离线零点本体更接近 white-hole／advanced partner；}
+}
+$$
+
+而：
+
+$$
+\boxed{
+\text{由它产生的边界泄漏才是 Hawking-like signal。}
+}
+$$
+
+---
+
+# 第一千三百三十五部　Hawking–Hankel 缺陷泛函
+
+对每个观察深度 \(\omega\)，设：
+
+$$
+\|\mathfrak H_\omega\|<1
+$$
+
+且相关算子为迹类。
+
+定义：
+
+$$
+\boxed{
+\mathcal N_\omega
+=
+\operatorname{Tr}
+\left[
+\mathfrak H_\omega^*
+\mathfrak H_\omega
+\left(
+I-
+\mathfrak H_\omega^*
+\mathfrak H_\omega
+\right)^{-1}
+\right].
+}
+\tag{1335.1}
+$$
+
+若奇异值为 \(\sigma_j(\omega)\)，则：
+
+$$
+\boxed{
+\mathcal N_\omega
+=
+\sum_j
+\frac{\sigma_j(\omega)^2}
+{1-\sigma_j(\omega)^2}.
+}
+\tag{1335.2}
+$$
+
+定义缺陷熵：
+
+$$
+\boxed{
+\mathcal S_\omega
+=
+\sum_j
+\left[
+(N_j+1)\log(N_j+1)
+-
+N_j\log N_j
+\right].
+}
+\tag{1335.3}
+$$
+
+以及拓扑通道数：
+
+$$
+\boxed{
+\mathcal Q_\omega
+=
+\operatorname{rank}\mathfrak H_\omega.
+}
+\tag{1335.4}
+$$
+
+于是：
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal Q_\omega
+&=\text{缺陷通道数};\\
+\mathcal N_\omega
+&=\text{Hawking-like 占据数};\\
+\mathcal S_\omega
+&=\text{隐藏伙伴导致的观察熵}.
+\end{aligned}
+}
+$$
+
+在有限秩、无边界极点的标准条件下：
+
+$$
+\boxed{
+\mathfrak H_\omega=0
+\iff
+\mathcal Q_\omega=0
+\iff
+\mathcal N_\omega=0
+\iff
+\mathcal S_\omega=0.
+}
+\tag{1335.5}
+$$
+
+所以取任意共尾序列：
+
+$$
+\omega_n\downarrow0,
+$$
+
+包括黄金序列，有：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal N_{\omega_n}=0
+\quad
+\forall n.
+}
+\tag{1335.6}
+$$
+
+这给“霍金辐射直觉”一个真正可证明的算子版本。
+
+---
+
+# 第一千三百三十六部　黄金首穿越的最小辐射强度
+
+前文证明，对简单单缺陷，首个满足：
+
+$$
+\omega_n<\delta
+$$
+
+的黄金层具有：
+
+$$
+\varphi^{-2}
+\le
+\sigma_\rho(\omega_n)
+<1.
+$$
+
+所以对应占据数满足：
+
+$$
+\boxed{
+N_\rho(\omega_n)
+\ge
+\frac{\varphi^{-4}}
+{1-\varphi^{-4}}
+=
+\frac1{\varphi^4-1}.
+}
+\tag{1336.1}
+$$
+
+数值约为：
+
+$$
+\boxed{
+N_\rho(\omega_n)\gtrsim0.17082.
+}
+$$
+
+这说明，无论 \(\delta\) 多小，在首次黄金穿越层上，经过 Bogoliubov 提升后的归一化占据数都有一个与 \(\delta\) 无关的正下界。
+
+因此黄金调度可以解释为：
+
+$$
+\boxed{
+\text{在固定算术递归复杂度下，
+避免霍金式缺陷信号任意弱化的多尺度视界扫描。}
+}
+$$
+
+这仍然只是局部规范模型中的下界，不是物理粒子数预测。
+
+---
+
+# 第一千三百三十七部　项目当前已经拥有的“黑洞骨架”
+
+项目现有机器结果已经覆盖三块关键骨架。
+
+第一，单个素数的加权双向平移历史可精确重求和为以实平移为酉算子的 Poisson resolvent。这给出了完整双向传播的酉背景。
+
+第二，半整数 shifted-\(\xi\) scattering 可被写成有限的 completed-zeta modular scattering cascade；这给出了视界散射的离散多层结构。
+
+第三，Hankel 奇异值与可控—可观 Gramian 乘积谱的关系已经机器闭合；这使“辐射占据—隐藏状态—观察强度”可以进入有限维算子接口。
+
+所以项目现在已经有：
+
+$$
+\boxed{
+\text{unitary background}
++
+\text{finite scattering cascade}
++
+\text{Hankel memory spectrum}.
+}
+$$
+
+真正缺少的是：
+
+$$
+\boxed{
+\text{horizon-regular positive-frequency orientation}.
+}
+$$
+
+即证明最小 realization 中：
+
+$$
+\boxed{
+P_-M_{\Theta_\omega}P_+=0.
+}
+$$
+
+---
+
+# 第一千三百三十八部　黑洞类比真正指出的新证明路线
+
+黑洞类比带来的最有价值启示，不是再给离线零点换一个名字，而是指出应同时检验三种条件。
+
+## 一、Retarded causality
+
+$$
+\boxed{
+\mathcal F^{-1}\Theta_\omega(x)=0
+\qquad
+(x<0).
+}
+\tag{1338.1}
+$$
+
+排除 white-hole／advanced 成分。
+
+## 二、Horizon regularity
+
+shifted scattering 应能跨越：
+
+$$
+0<\omega<\frac12
+$$
+
+而不在 Hardy 边界产生无法控制的 endpoint denominator。
+
+## 三、Thermal/KMS compatibility
+
+若背景确实具有 Hawking型热性，其 Bogoliubov 奇异值还应满足统一指数详细平衡：
+
+$$
+\boxed{
+\sigma_j^2=e^{-\beta E_j}.
+}
+\tag{1338.2}
+$$
+
+但需要强调：
+
+$$
+\boxed{
+\text{KMS 热性不能替代因果性。}
+}
+$$
+
+一个含 inverse-inner denominator 的 all-pass 系统，也可能在部分标量读数上伪装出热谱。
+
+必须先证明：
+
+$$
+B_\omega=1,
+$$
+
+再研究剩余正 inner 部分是否具有黄金 KMS 周期。
+
+---
+
+# 第一千三百三十九部　“霍金辐射”直觉的最终概念表
+
+| 当前概念                 | 黑洞语言                   | \(\xi\)-scattering 语言        |
+| -------------------- | ---------------------- | ---------------------------- |
+| 完整双向场                | Kruskal 全局场            | \(L^2=H_+^2\oplus H_-^2\)    |
+| 外部观察者                | 无穷远静止观察者               | Hardy 正时间极化                  |
+| 视界                   | 正负频率分解奇异面              | \(\omega=\delta\)            |
+| 内部伙伴                 | 负 Killing 频率模式         | inverse-inner denominator    |
+| Bogoliubov \(\beta\) | 粒子产生幅度                 | anti-causal Hankel block     |
+| 霍金粒子数                | \(\beta^\dagger\beta\) | \(\mathcal N_\omega\)        |
+| 热熵                   | 约化态熵                   | \(\mathcal S_\omega\)        |
+| 灰体因子                 | 外部势垒传输                 | 正 outer／prime–Gamma transfer |
+| 准正常模                 | Green 函数复极点            | zero/resonance location      |
+| 磁单极子荷                | 拓扑简并荷                  | 零点重数／负指标                     |
+| 霍金温度                 | \(2\pi/\kappa\) 周期     | 候选模周期 \(2\log\varphi\)       |
+| 白洞分量                 | advanced 边界条件          | inverse-inner 负时间支撑          |
+
+这张表中最关键的一行是：
+
+$$
+\boxed{
+\text{离线零点}
+\neq
+\text{霍金粒子};
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{离线零点}
+\longrightarrow
+\text{Bogoliubov/Hankel 混合}
+\longrightarrow
+\text{Hawking-like 边界读数}.
+}
+$$
+
+---
+
+# 第一千三百四十部　建议形式化顺序
+
+```text
+D5/S3/Observer/BogoliubovHankel/
+  StrictHankelContraction.lean
+  HankelBogoliubovAlpha.lean
+  HankelBogoliubovBeta.lean
+  HankelBogoliubovCCR.lean
+  HankelSqueezeParameter.lean
+  HankelParticleNumber.lean
+
+D5/S3/Observer/HorizonEntropy/
+  ModeThermalDensity.lean
+  ModeOccupationEntropy.lean
+  HankelDefectEntropy.lean
+  ZeroEntropyIffZeroHankel.lean
+  FiniteRankDefectEntropy.lean
+
+D5/S3/Analytic/Zeta/DefectHorizon/
+  OffLineObservationHorizon.lean
+  SafeExteriorShift.lean
+  HorizonBoundaryPole.lean
+  AntiCausalInteriorShift.lean
+  RankOneDefectOccupation.lean
+  RankOneDefectEntropy.lean
+
+D5/S3/GoldenObserver/HawkingCalibration/
+  GoldenModularInverseTemperature.lean
+  GoldenSurfaceGravityScale.lean
+  GoldenBoltzmannFactor.lean
+  GoldenFirstCrossingOccupationBound.lean
+  GoldenHawkingMatchingConjecture.lean
+
+D5/S3/Analytic/Zeta/MonopoleHorizonSquare/
+  ZeroMultiplicityTopologicalCharge.lean
+  ZeroMultiplicityHankelRank.lean
+  HankelSingularValueVisibility.lean
+  TopologicalChargeVsRadiationStrength.lean
+
+D5/S3/Analytic/Zeta/HawkingDefectSpectrum/
+  ShiftedHankelOccupationTrace.lean
+  ShiftedHankelEntropyTrace.lean
+  GoldenCofinalOccupationCriterion.lean
+  GoldenCofinalEntropyCriterion.lean
+
+D5/S3/Weil/PrimeHorizonRegularity/
+  PrimeScatteringRetardedSupport.lean
+  ArchimedeanRetardedSupportTarget.lean
+  MinimalCascadeHorizonRegularity.lean
+  NoAdvancedEndpointDenominatorTarget.lean
+  PrimeArchimedeanHardyTriangularity.lean
+
+D5/S3/Weil/GoldenKMS/
+  ObserverModularFlow.lean
+  GoldenKMSPeriod.lean
+  HankelDetailedBalance.lean
+  GoldenThermalSpectrumTarget.lean
+  KMSDoesNotImplyMinimumPhase.lean
+```
+
+---
+
+# 本轮最终结论
+
+“离线零点像霍金辐射”的直觉确实有数学价值，但必须作一次精确位移：
+
+$$
+\boxed{
+\text{离线零点不是辐射，
+而是辐射背后的隐藏负频率伙伴。}
+}
+$$
+
+在 shifted scattering 中，它产生：
+
+$$
+\boxed{
+\mathfrak H_\omega
+=
+P_-M_{\Theta_\omega}P_+,
+}
+$$
+
+这一反因果 Hankel 块。
+
+把该块作 Bogoliubov 提升以后，其奇异值：
+
+$$
+\sigma_j
+$$
+
+变成挤压参数：
+
+$$
+r_j=\operatorname{artanh}\sigma_j,
+$$
+
+并产生粒子数型读数：
+
+$$
+\boxed{
+N_j
+=
+\frac{\sigma_j^2}{1-\sigma_j^2}.
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{Hankel 泄漏能量}
+}
+$$
+
+就是当前理论中最精确的“霍金辐射影像”。
+
+---
+
+磁单极子与黑洞也由此形成互补关系。
+
+磁单极子图表告诉我们：
+
+$$
+\boxed{
+\text{缺陷存在多少个整数通道。}
+}
+$$
+
+黑洞图表告诉我们：
+
+$$
+\boxed{
+\text{这些通道被视界隐藏后，向边界泄漏多强。}
+}
+$$
+
+同一个零点重数 \(m\) 同时成为：
+
+$$
+\boxed{
+\text{Chern 荷}
+=
+\text{负平方数}
+=
+\text{Blaschke degree}
+=
+\text{Hankel rank}.
+}
+$$
+
+而连续的 \(\sigma_j,N_j,S_j\) 则测量该通道的可见强度和隐藏信息量。
+
+---
+
+黑洞“吞噬一切但仍有霍金辐射”的当前严格对应是：
+
+$$
+\boxed{
+\text{bulk 状态被观察投影隐藏，
+但其边界 Green／Poisson／Hankel 影像仍然存在。}
+}
+$$
+
+离线零点在 bulk 中是单极子／共振；
+
+它在边界上变成 Poisson 脉冲；
+
+在时间极化中变成负频率伙伴；
+
+在可见外部中变成正的 Bogoliubov 占据。
+
+---
+
+但普通霍金辐射与离线缺陷仍有一个决定性差别。
+
+霍金辐射发生在因果的 retarded 黑洞演化中。
+
+而离线缺陷以 inverse-inner negative-time factor 出现，因此从解析方向看，它更接近：
+
+$$
+\boxed{
+\text{white-hole／advanced 污染}.
+}
+$$
+
+所以最准确的一句话是：
+
+$$
+\boxed{
+\text{离线零点是一个视界后的反因果伙伴；
+它在可见边界上的 Poisson–Hankel 泄漏，
+才呈现霍金式辐射形态。}
+}
+$$
+
+---
+
+黄金比例则提供一个可能的模温度：
+
+$$
+\boxed{
+\beta_\varphi=2\log\varphi,
+}
+$$
+
+其 Boltzmann 权重为：
+
+$$
+\boxed{
+e^{-\beta_\varphi E}
+=
+\varphi^{-2E}.
+}
+$$
+
+但要让黄金比例真正成为霍金温度，而不是采样刻度，必须从项目动力中证明：
+
+$$
+\boxed{
+\sigma_j^2
+=
+\varphi^{-2E_j}.
+}
+$$
+
+当前并没有这一结论。
+
+因此真正可证伪的黄金—黑洞桥是：
+
+$$
+\boxed{
+\text{Hankel 奇异谱是否满足统一的黄金 KMS 详细平衡？}
+}
+$$
+
+---
+
+最后，黑洞直觉把项目的下一条核心桥进一步说清了。
+
+仓库已经有：
+
+$$
+\boxed{
+\text{双向酉 Poisson 背景}
++
+\text{有限 scattering cascade}
++
+\text{Hankel 记忆谱}.
+}
+$$
+
+现在缺少的不是再证明散射守恒，而是：
+
+$$
+\boxed{
+\textbf{证明视界正则性与 retarded Hardy 三角性。}
+}
+$$
+
+即：
+
+$$
+\boxed{
+P_-M_{\Theta_\omega}P_+=0
+\qquad
+\forall\,0<\omega<\frac12.
+}
+$$
+
+一旦成立：
+
+* inverse-inner denominator 消失；
+* 反因果伙伴消失；
+* Hawking-defect occupation 消失；
+* 负平方消失；
+* bulk 离线单极子消失；
+* 所有非平凡零点被迫停留在临界边界。
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{磁单极子描述缺陷的整数存在；
+黑洞描述缺陷的因果隐藏；
+霍金辐射描述隐藏伙伴在边界留下的正占据；
+离线零点则是本应不存在的反因果伙伴本身。}
+$$
+
+[1]: https://doi.org/10.1007/BF02345020 "https://doi.org/10.1007/BF02345020"
+[2]: https://journals.aps.org/prd/abstract/10.1103/PhysRevD.13.2720 "https://journals.aps.org/prd/abstract/10.1103/PhysRevD.13.2720"
+[3]: https://journals.aps.org/prd/abstract/10.1103/PhysRevD.45.2617 "https://journals.aps.org/prd/abstract/10.1103/PhysRevD.45.2617"
+[4]: https://journals.aps.org/prd/abstract/10.1103/PhysRevD.13.191 "https://journals.aps.org/prd/abstract/10.1103/PhysRevD.13.191"
+[5]: https://journals.aps.org/prd/abstract/10.1103/PhysRevD.14.870 "https://journals.aps.org/prd/abstract/10.1103/PhysRevD.14.870"
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v8.2：模视界、黄金红移、Mellin–Gamma 热化与离线零点的白洞残差
+
+以下从前文**第一千三百四十部**继续。
+
+这一轮首先要修正此前一个过强判断：
+
+$$
+\boxed{
+\text{非零的负频率／Hankel 混合，并不自动意味着整个系统无法正定实现。}
+}
+$$
+
+在黑洞量子场论中，霍金辐射恰恰来自非零 Bogoliubov 混合；全局量子场仍可具有正 Hilbert 空间和酉演化。对于玻色 Bogoliubov 变换，普通 Fock 空间上的酉可实现性由 Shale–Stinespring 型 Hilbert–Schmidt 条件控制，而不是由混合系数必须严格为零来控制。([arXiv][1])
+
+所以必须重新表述：
+
+$$
+\boxed{
+\text{离线零点并非“任何正实现都不存在”，}
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{相对于算术所选定的 retarded Hardy 极化，
+纯正时间实现不存在。}
+}
+$$
+
+换言之，一个含离线零点的扩大双向系统，仍可能拥有正定的“过去 \(\oplus\) 未来”实现；它失败的是：
+
+$$
+\boxed{
+\text{未来子空间是否自治、是否 minimum-phase、是否无白洞输入。}
+}
+$$
+
+这正是黑洞直觉带来的最重要科学推进。
+
+---
+
+# 第一千三百四十一部　磁单极子与黑洞不是互相替代，而是 bulk–boundary 对偶
+
+现在可以严格区分三个对象。
+
+| 层           | 数学对象                           | 回答的问题         |
+| ----------- | ------------------------------ | ------------- |
+| bulk 拓扑     | Chern 荷、零点重数                   | 缺陷是否存在？有几个通道？ |
+| horizon 动力  | spectral flow、Hardy 极化穿越       | 缺陷何时进入可见边界？   |
+| boundary 辐射 | Poisson 场、Hankel/Bogoliubov 泄漏 | 外部观察者看见多强的信号？ |
+
+所以：
+
+$$
+\boxed{
+\text{磁单极子图景测量“荷”；}
+}
+$$
+
+$$
+\boxed{
+\text{黑洞图景测量“隐藏与释放”；}
+}
+$$
+
+$$
+\boxed{
+\text{霍金图景测量“释放后的占据与熵”。}
+}
+$$
+
+真正连接磁单极子与黑洞视界的，不是模糊的物理类比，而是：
+
+$$
+\boxed{
+\text{bulk Chern number}
+=
+\text{boundary spectral flow}.
+}
+$$
+
+在当前局部模型中：
+
+$$
+\boxed{
+\operatorname{ord}_{\rho}\xi
+=
+c_1
+=
+\Delta\operatorname{ind}_{-}\mathcal K_\omega
+=
+\operatorname{rank}\mathfrak H_\omega
+}
+$$
+
+在孤立、互素、无抵消条件下由同一零点除子产生。
+
+因此：
+
+$$
+\boxed{
+\text{离线零点的“单极子”与“黑洞”形象，
+分别是同一缺陷的空间图像与时间图像。}
+}
+$$
+
+---
+
+# 第一千三百四十二部　黑洞类比暴露出一个关键逻辑缺口
+
+前文曾把：
+
+$$
+\mathfrak H_\omega\neq0
+$$
+
+理解为“没有正 Hilbert 实现”。
+
+这需要改成：
+
+$$
+\boxed{
+\mathfrak H_\omega\neq0
+\Longrightarrow
+\text{没有保持所选 Hardy 未来子空间的纯因果实现。}
+}
+$$
+
+但可以把未来与过去同时保留，构造 Bogoliubov 扩张。
+
+令：
+
+$$
+H=\mathfrak H_\omega,
+\qquad
+\|H\|<1.
+$$
+
+定义：
+
+$$
+\alpha_H=(I-H^*H)^{-1/2},
+$$
+
+$$
+\beta_H=H(I-H^*H)^{-1/2}.
+$$
+
+则：
+
+$$
+\boxed{
+\alpha_H^*\alpha_H-\beta_H^*\beta_H=I.
+}
+\tag{1342.1}
+$$
+
+这正是双曲 Bogoliubov 关系。
+
+若 \(H\) 为有限秩，则 \(\beta_H\) 为 Hilbert–Schmidt，因此该有限缺陷的双向量子提升在普通 Fock 空间中仍可酉实现。若存在无限缺陷，能否在同一 Fock 表示中实现，则取决于：
+
+$$
+\boxed{
+\operatorname{Tr}
+\left[
+H^*H(I-H^*H)^{-1}
+\right]
+<\infty.
+}
+\tag{1342.2}
+$$
+
+因此出现三种严格不同的相。
+
+## RH 相
+
+$$
+\boxed{
+H=0.
+}
+$$
+
+算术未来完全自治，无粒子混合。
+
+## 有限 squeezed 相
+
+$$
+\boxed{
+0<
+\operatorname{Tr}\beta^*\beta
+<\infty.
+}
+$$
+
+存在离线缺陷，但双向扩大系统仍可由一个有限粒子数 squeezed state 实现。
+
+## 热力学／不等价表示相
+
+$$
+\boxed{
+\operatorname{Tr}\beta^*\beta=\infty.
+}
+$$
+
+过去与未来极化产生彼此不酉等价的 Fock 表示。
+
+所以：
+
+$$
+\boxed{
+\mathrm{RH}
+}
+$$
+
+不是普通的“全局酉性命题”。
+
+它是更强的：
+
+$$
+\boxed{
+\text{算术首选真空与算术首选未来极化之间完全没有 Bogoliubov 混合。}
+}
+$$
+
+---
+
+# 第一千三百四十三部　离线零点更像白洞残差，而不是普通霍金量子
+
+正常霍金辐射发生于因果的黑洞坍缩背景：过去真空与未来粒子概念不同，产生热 Bogoliubov 混合；黑洞温度为：
+
+$$
+T_H=\frac{\kappa}{2\pi}
+$$
+
+（自然单位），其中 \(\kappa\) 是表面引力。([数值对象标识符][2])
+
+但当前离线零点通过：
+
+$$
+b_p^{-1}
+$$
+
+进入 shifted scattering，其非平凡 Fourier 尾部位于：
+
+$$
+x<0.
+$$
+
+因此它本身更准确地对应：
+
+$$
+\boxed{
+\text{advanced／white-hole 型输入};
+}
+$$
+
+而它在正时间边界上诱导出的：
+
+$$
+\mathfrak H_\omega^*\mathfrak H_\omega,
+\qquad
+J_\omega(t),
+\qquad
+\mathcal N_\omega
+$$
+
+才对应：
+
+$$
+\boxed{
+\text{Hawking-like 外部读数}.
+}
+$$
+
+所以正确链条是：
+
+$$
+\boxed{
+\text{离线零点}
+\longrightarrow
+\text{反因果伙伴}
+\longrightarrow
+\text{Bogoliubov 混合}
+\longrightarrow
+\text{边界占据／辐射}.
+}
+\tag{1343.1}
+$$
+
+而不是：
+
+$$
+\boxed{
+\text{离线零点}=\text{霍金辐射}.
+}
+$$
+
+从复频率角色看，离线零点更接近黑洞的**准正常共振或错误半平面共振**；准正常模本身是 Green 函数解析延拓的复极点，而霍金辐射是这些场模式在特定真空与视界结构下产生的量子占据。([arXiv][3])
+
+---
+
+# 第一千三百四十四部　黄金模标准对
+
+黄金第一相可以进一步组织成一个有限维 Tomita 型标准对。
+
+令：
+
+$$
+F=
+\begin{pmatrix}
+0&1\\
+1&1
+\end{pmatrix},
+$$
+
+并定义正算子：
+
+$$
+\boxed{
+\Delta_\varphi=F^2
+=
+\begin{pmatrix}
+1&1\\
+1&2
+\end{pmatrix}.
+}
+\tag{1344.1}
+$$
+
+其谱为：
+
+$$
+\boxed{
+\operatorname{Spec}\Delta_\varphi
+=
+\{\varphi^2,\varphi^{-2}\}.
+}
+\tag{1344.2}
+$$
+
+在特征基中令 \(J\) 为交换两个特征方向并复共轭的反线性等距映射，则：
+
+$$
+\boxed{
+J\Delta_\varphi J
+=
+\Delta_\varphi^{-1}.
+}
+\tag{1344.3}
+$$
+
+定义：
+
+$$
+\boxed{
+S_\varphi
+=
+J\Delta_\varphi^{1/2}.
+}
+\tag{1344.4}
+$$
+
+则：
+
+$$
+S_\varphi^2=I.
+$$
+
+定义固定实子空间：
+
+$$
+\boxed{
+\mathcal H_{\varphi,\mathbb R}
+=
+\{\psi:S_\varphi\psi=\psi\}.
+}
+\tag{1344.5}
+$$
+
+模 Hamiltonian 为：
+
+$$
+\boxed{
+K_\varphi=\log\Delta_\varphi,
+}
+$$
+
+其谱为：
+
+$$
+\boxed{
+\operatorname{Spec}K_\varphi
+=
+\{2\log\varphi,-2\log\varphi\}.
+}
+\tag{1344.6}
+$$
+
+所以黄金第一相不只是：
+
+$$
+\varphi
+$$
+
+这个标量，而是：
+
+$$
+\boxed{
+(J,\Delta_\varphi,\mathcal H_{\varphi,\mathbb R}).
+}
+$$
+
+它同时产生：
+
+* 内／外交换 \(J\)；
+* 正／负模时间；
+* 稳定／不稳定倍率；
+* 一个正定 Hilbert 载体。
+
+Tomita–Takesaki 模理论中，模共轭将代数映到其交换子，模群给出内禀一参数动力；在楔区量子场论中，Bisognano–Wichmann 性质把模流与保持楔区的 Lorentz boost 联系起来。([arXiv][4])
+
+这使“道自观察自身”获得一个更成熟的模型：
+
+$$
+\boxed{
+\text{状态—代数对}
+\longrightarrow
+(J,\Delta)
+\longrightarrow
+\text{内／外对偶与内禀时间}.
+}
+$$
+
+---
+
+# 第一千三百四十五部　黄金比例本身不能唯一决定霍金温度
+
+这一点必须作严格校正。
+
+模算子只决定：
+
+$$
+\boxed{
+\beta H=-\log\Delta
+}
+$$
+
+这一乘积。
+
+将物理 Hamiltonian 重标定为：
+
+$$
+H_c=cH
+$$
+
+时，逆温度必须相应变为：
+
+$$
+\beta_c=\frac{\beta}{c}.
+$$
+
+因此：
+
+$$
+\boxed{
+\Delta
+}
+$$
+
+本身不能分别确定“能量单位”和“温度单位”。
+
+对于黄金模算子：
+
+$$
+\log\Delta_\varphi
+$$
+
+的谱间距是：
+
+$$
+4\log\varphi.
+$$
+
+但这并不能单独推出一个唯一温度。
+
+目前至少存在两种不同的黄金热解释。
+
+---
+
+## 1345.1 Euclidean-circle 解释
+
+若直接把项目中的黄金 regulator 周期：
+
+$$
+P_\varphi=2\log\varphi
+$$
+
+解释为 Euclidean KMS 周期，则：
+
+$$
+\boxed{
+\beta_{\mathrm{circ}}
+=
+2\log\varphi,
+}
+$$
+
+$$
+\boxed{
+\kappa_{\mathrm{circ}}
+=
+\frac{2\pi}{\beta_{\mathrm{circ}}}
+=
+\frac{\pi}{\log\varphi}.
+}
+\tag{1345.1}
+$$
+
+Boltzmann 因子为：
+
+$$
+e^{-\beta_{\mathrm{circ}}E}
+=
+\varphi^{-2E}.
+$$
+
+---
+
+## 1345.2 Exponential-redshift 解释
+
+黄金层满足：
+
+$$
+\omega_n
+=
+\omega_0\varphi^{-2n}
+=
+\omega_0e^{-\chi_\varphi n},
+$$
+
+其中：
+
+$$
+\boxed{
+\chi_\varphi=2\log\varphi.
+}
+\tag{1345.2}
+$$
+
+若把层指标 \(n\) 解释为外部 Killing 时间，把 \(\omega\) 解释为视界 affine 坐标，则 \(\chi_\varphi\) 扮演表面引力。
+
+此时 Hawking 逆温度为：
+
+$$
+\boxed{
+\beta_{\mathrm{red}}
+=
+\frac{2\pi}{\chi_\varphi}
+=
+\frac{\pi}{\log\varphi}.
+}
+\tag{1345.3}
+$$
+
+---
+
+## 1345.3 黄金热分叉
+
+两种解释给出：
+
+$$
+\boxed{
+\beta_{\mathrm{circ}}
+=
+2\log\varphi,
+}
+$$
+
+$$
+\boxed{
+\beta_{\mathrm{red}}
+=
+\frac{\pi}{\log\varphi}.
+}
+$$
+
+它们不是同一个数。
+
+因此：
+
+## 定理 1345.1（温度归一化不足）
+
+黄金缩放率和黄金 regulator 周期本身不足以唯一决定霍金温度。
+
+必须额外指定：
+
+$$
+\boxed{
+\text{哪一个变量是 affine 坐标，
+哪一个变量是物理 Killing 时间。}
+}
+$$
+
+这是一条重要科学剪枝。
+
+不能同时无条件宣称：
+
+* \(2\log\varphi\) 是 Euclidean 热周期；
+* \(2\log\varphi\) 又是表面引力。
+
+除非再引入一个独立的时间换算常数。
+
+---
+
+# 第一千三百四十六部　指数红移如何严格产生 Gamma 与热谱
+
+黑洞热性真正依赖的不是一般视界，而是视界附近的指数坐标关系。
+
+设 affine null 坐标与外部时间满足：
+
+$$
+\boxed{
+U=-U_0e^{-\kappa u}.
+}
+\tag{1346.1}
+$$
+
+考虑 affine 正频率模式：
+
+$$
+e^{-i\Omega U}
+=
+e^{i\Omega U_0e^{-\kappa u}}.
+$$
+
+将其按外部时间 \(u\) 作 Fourier 分解。
+
+积分具有形式：
+
+$$
+\int_{-\infty}^{\infty}
+e^{iEu}
+e^{i\Omega U_0e^{-\kappa u}}\,du.
+$$
+
+令：
+
+$$
+x=\Omega U_0e^{-\kappa u},
+$$
+
+便得到 Mellin–Gamma 积分：
+
+$$
+\boxed{
+\frac1\kappa
+(\Omega U_0)^{iE/\kappa}
+\int_0^\infty
+x^{-1-iE/\kappa}e^{ix}\,dx.
+}
+\tag{1346.2}
+$$
+
+解析延拓给出正、负频率系数之比：
+
+$$
+\boxed{
+\frac{|\beta_E|^2}{|\alpha_E|^2}
+=
+e^{-2\pi E/\kappa}.
+}
+\tag{1346.3}
+$$
+
+从而：
+
+$$
+\boxed{
+N(E)
+=
+\frac1{e^{2\pi E/\kappa}-1}.
+}
+\tag{1346.4}
+$$
+
+黑洞热谱的指数红移和温度 \(\kappa/2\pi\) 正是这一结构的核心；相关工作也强调指数尺度变换是热辐射出现的关键机制。([数值对象标识符][2])
+
+---
+
+## 1346.1 黄金红移的条件性热律
+
+若采用：
+
+$$
+\kappa=\chi_\varphi=2\log\varphi,
+$$
+
+则：
+
+$$
+\boxed{
+\frac{|\beta_E|^2}{|\alpha_E|^2}
+=
+\exp\left(
+-\frac{\pi E}{\log\varphi}
+\right),
+}
+\tag{1346.5}
+$$
+
+并有候选 Planck 分布：
+
+$$
+\boxed{
+N_\varphi(E)
+=
+\frac1{
+\exp\left(
+\pi E/\log\varphi
+\right)-1
+}.
+}
+\tag{1346.6}
+$$
+
+这是一条由**黄金指数坐标映射**推出的严格热律。
+
+但它不是由 \(\zeta\) 或 RH 自动推出的。
+
+必须先证明：
+
+$$
+\boxed{
+\text{项目的黄金层指标确实是外部时间，
+而 }\omega\text{ 确实是 affine horizon coordinate}.
+}
+$$
+
+---
+
+# 第一千三百四十七部　Mellin–Gamma 机制是黑洞直觉真正可能帮助 RH 的地方
+
+现在出现一个非常值得研究的统一结构。
+
+## 黑洞侧
+
+$$
+\text{affine scale}
+\longrightarrow
+\log\text{-time}
+\longrightarrow
+\text{Mellin transform}
+\longrightarrow
+\Gamma
+\longrightarrow
+\text{thermal ratio}.
+$$
+
+## completed \(\zeta\) 侧
+
+$$
+\text{scale variable}
+\longrightarrow
+\text{Mellin transform}
+\longrightarrow
+\Gamma(s/2)
+\longrightarrow
+\text{Archimedean completion}.
+$$
+
+这并不说明：
+
+$$
+\Gamma(s/2)
+$$
+
+就是霍金辐射。
+
+但它说明：
+
+$$
+\boxed{
+\text{若 completed \(\zeta\) 中存在真正的 horizon/KMS 结构，
+最自然的承载位置是 Archimedean Gamma 通道。}
+}
+$$
+
+于是可提出一张新的研究分工表：
+
+| \(\xi\) 结构     | 黑洞散射类比                           | 数学任务                        |
+| -------------- | -------------------------------- | --------------------------- |
+| Gamma 因子       | universal near-horizon transform | 证明 KMS/retarded analyticity |
+| prime Euler 因子 | 离散散射中心／greybody geometry         | 构造保守局部 colligation          |
+| 函数方程           | 两侧最大解析延拓                         | 建立内外反射                      |
+| 零点             | 复共振／准正常模                         | 定位谱简并                       |
+| 离线零点（1347）           | advanced resonance               | 排除错误半平面极点                   |
+| Weil 正性        | exterior passivity               | 构造正 storage function        |
+
+仓库目前已经把单素数的双向 translation history 精确重求和为酉 Poisson resolvent，说明 prime channel 确实已经拥有一个成熟的保守散射骨架。
+
+---
+
+# 第一千三百四十八部　一个诱人的 Loewner 证明路线实际上过强
+
+定义：
+
+$$
+L_\xi(s)=\frac{\xi'(s)}{\xi(s)}.
+$$
+
+由：
+
+$$
+\Theta_\omega(z)
+=
+\frac{
+\xi(\frac12-\omega-iz)
+}{
+\xi(\frac12+\omega-iz)
+},
+$$
+
+有：
+
+$$
+\boxed{
+G_\omega(z)
+:=
+-\partial_\omega\log\Theta_\omega(z)
+=
+L_\xi\left(
+\frac12-\omega-iz
+\right)
++
+L_\xi\left(
+\frac12+\omega-iz
+\right).
+}
+\tag{1348.1}
+$$
+
+并且：
+
+$$
+\boxed{
+\Theta_\omega(z)
+=
+\exp\left(
+-\int_0^\omega
+G_u(z)\,du
+\right).
+}
+\tag{1348.2}
+$$
+
+一种很诱人的想法是证明：
+
+$$
+\Re G_\omega(z)\ge0
+$$
+
+从而把 \(\Theta_\omega\) 看成 Herglotz–Loewner 收缩流。
+
+但这个条件比 RH 强，而且一般是错误的。
+
+考虑单个理想临界零点对对应的因子：
+
+$$
+\boxed{
+\Theta_{\gamma,\omega}(z)
+=
+\frac{
+(\omega+iz)^2+\gamma^2
+}{
+(\omega-iz)^2+\gamma^2
+}.
+}
+\tag{1348.3}
+$$
+
+取：
+
+$$
+\gamma=3,
+\qquad
+z=2+i,
+\qquad
+\omega=2.
+$$
+
+则：
+
+$$
+\left|
+\Theta_{\gamma,\omega}(z)
+\right|
+<1,
+$$
+
+所以该因子仍位于 Schur 区域。
+
+但：
+
+$$
+\boxed{
+-\partial_\omega
+\log\Theta_{\gamma,\omega}(z)
+=
+-\frac{166}{1105}
+-
+i\frac{288}{1105},
+}
+\tag{1348.4}
+$$
+
+其真实部严格为负。
+
+因此：
+
+## 定理 1348.1（逐层 Loewner 单调性不足）
+
+即使全部零点都位于临界线，\(\Theta_\omega\) 也未必关于 \(\omega\) 构成点态单调的 Herglotz–Loewner 链。
+
+所以不应把 RH 证明目标设为：
+
+$$
+\Re G_\omega\ge0
+\quad
+\forall\omega,z.
+$$
+
+正确目标应是：
+
+$$
+\boxed{
+\text{对每个固定 }\omega，
+\Theta_\omega\text{ 分别拥有一个正的因果实现。}
+}
+$$
+
+这是一条重要的研究剪枝。
+
+---
+
+# 第一千三百四十九部　Lax–Phillips／Livšic 路线比 Loewner 路线更自然
+
+Lax–Phillips 散射理论本来就以 incoming/outgoing translation subspaces、inner scattering matrix 和共振半群为核心；其共振对应散射矩阵解析延拓的奇点。([arXiv][5])
+
+Livšic 特征函数与保守 operator colligation 则把 maximal dissipative operator、Schur 特征函数和保守系统 transfer function联系起来。([arXiv][6])
+
+因此最具体的新目标应是：
+
+## Arithmetic Conservative Colligation Conjecture
+
+对每个：
+
+$$
+0<\omega<\frac12,
+$$
+
+构造一个最小保守 colligation：
+
+$$
+\boxed{
+\mathbb U_\omega
+=
+\begin{pmatrix}
+A_\omega&B_\omega\\
+C_\omega&D_\omega
+\end{pmatrix}
+}
+\tag{1349.1}
+$$
+
+作用于：
+
+$$
+\mathcal X_\omega\oplus\mathcal E,
+$$
+
+满足：
+
+$$
+\mathbb U_\omega^*\mathbb U_\omega=I,
+$$
+
+且其 transfer function 在 Cayley 变换后恰为：
+
+$$
+\boxed{
+\Theta_\omega.
+}
+\tag{1349.2}
+$$
+
+若这样的最小保守实现存在，并且内部生成元 \(A_\omega\) 位于正确耗散半平面，则：
+
+$$
+\Theta_\omega
+$$
+
+自动属于 Schur 类；结合边界模长 \(1\)，便成为 inner。
+
+于是：
+
+$$
+\boxed{
+B_\omega=1,
+\qquad
+\mathfrak H_\omega=0.
+}
+$$
+
+---
+
+## 1349.1 黑洞语言中的 colligation
+
+| colligation 数据     | 黑洞语言          |
+| ------------------ | ------------- |
+| \(A_\omega\)       | 视界内部动力        |
+| \(B_\omega\)       | 入射耦合          |
+| \(C_\omega\)       | 出射耦合          |
+| \(D_\omega\)       | 直接散射          |
+| storage operator   | 正能量           |
+| dissipativity      | 无白洞增益         |
+| minimality         | 删除不可控／不可观内部历史 |
+| transfer innerness | 视界正则、总散射守恒    |
+
+离线零点对应：
+
+$$
+\boxed{
+\text{最小化以后仍存在的错误半平面内部极点。}
+}
+$$
+
+这比“直接证明所有频率上的不等式”更接近系统结构。
+
+---
+
+# 第一千三百五十部　仓库现有结果已经接近这条 colligation 路线
+
+项目现在已有三块直接可用的机器底座。
+
+第一，单个素数的加权双向平移历史被精确重求和为以平移酉算子为基础的 Poisson resolvent，提供局部保守通道。
+
+第二，半整数 shifted-\(\xi\) scattering 已被机器证明等于有限 completed-zeta scattering cascade，提供局部通道的串联结构。
+
+第三，过去输入—未来输出 Hankel 算子的奇异值已经被机器识别为 controllability–observability Gramian product 谱的平方根，提供最小 realization 与隐藏状态强度的正式接口。
+
+因此下一步不应继续只计算标量 scattering quotient。
+
+而应构造：
+
+$$
+\boxed{
+\text{prime local colligation}
+\star
+\text{Gamma continuous colligation}
+\star
+\text{pole channel},
+}
+$$
+
+其中 \(\star\) 表示保守系统的串联／Redheffer 型组合。
+
+随后执行：
+
+1. 消去望远镜内部状态；
+2. 作 controllability–observability 最小化；
+3. 构造正 storage operator；
+4. 证明 endpoint denominator 不存在；
+5. 识别最小 transfer 为 \(\Theta_\omega\)。
+
+这条路线一旦闭合，Hardy 三角性将不再是外加公理，而是保守被动 realization 的结果。
+
+---
+
+# 第一千三百五十一部　单缺陷的视界自由能与普适发散
+
+对简单离线零点，仍有：
+
+$$
+\sigma(\omega)=\frac{\omega}{\delta}.
+$$
+
+定义 horizon determinant：
+
+$$
+\boxed{
+\mathscr D_\rho(\omega)
+=
+1-\sigma(\omega)^2
+=
+\frac{\delta^2-\omega^2}{\delta^2}.
+}
+\tag{1351.1}
+$$
+
+定义自由能型缺陷：
+
+$$
+\boxed{
+\mathscr F_\rho(\omega)
+=
+-\log\mathscr D_\rho(\omega).
+}
+\tag{1351.2}
+$$
+
+定义挤压参数和占据数：
+
+$$
+r_\rho
+=
+\operatorname{artanh}\frac{\omega}{\delta},
+$$
+
+$$
+N_\rho
+=
+\frac{\omega^2}{\delta^2-\omega^2}.
+$$
+
+则：
+
+$$
+\boxed{
+\mathscr F_\rho
+=
+2\log\cosh r_\rho
+=
+\log(1+N_\rho).
+}
+\tag{1351.3}
+$$
+
+令：
+
+$$
+\varepsilon=\delta-\omega\downarrow0.
+$$
+
+有：
+
+$$
+\boxed{
+r_\rho(\omega)
+=
+\frac12
+\log\frac{2\delta}{\varepsilon}
++
+O(\varepsilon),
+}
+\tag{1351.4}
+$$
+
+$$
+\boxed{
+N_\rho(\omega)
+=
+\frac{\delta}{2\varepsilon}
++
+O(1),
+}
+\tag{1351.5}
+$$
+
+$$
+\boxed{
+\mathscr F_\rho(\omega)
+=
+\log\frac{\delta}{2\varepsilon}
++
+O(\varepsilon).
+}
+\tag{1351.6}
+$$
+
+所以缺陷视界具有一个普适对数发散。
+
+这是真正有数学用途的“黑洞视界”特征：
+
+$$
+\boxed{
+\text{当 shifted pole 接近 Hardy 边界，
+最小因果因子化的条件数发生普适发散。}
+}
+$$
+
+它解释了为何接近离线出生深度时：
+
+* 数值重建病态；
+* Schur 参数靠近单位圆；
+* Hankel 占据发散；
+* 微小误差被极度放大。
+
+---
+
+# 第一千三百五十二部　黑洞类比带来的最终三条科学边界
+
+## 1352.1 非零辐射不等于逻辑矛盾
+
+黑洞霍金辐射本身是正 Hilbert 量子理论中的正常现象。
+
+所以：
+
+$$
+\boxed{
+\mathfrak H_\omega\neq0
+}
+$$
+
+不能仅凭“存在混合”被宣布不可能。
+
+必须证明算术所选的状态是一个**无 incoming white-hole component 的 retarded ground state**。
+
+---
+
+## 1352.2 热性不等于因果性
+
+一个 inverse-inner all-pass factor 也可能在部分统计量中产生类似热分布。
+
+所以必须先证明：
+
+$$
+B_\omega=1,
+$$
+
+再讨论 KMS 或黄金温度。
+
+顺序不能反过来。
+
+---
+
+## 1352.3 黄金比例不自动给温度
+
+$$
+2\log\varphi
+$$
+
+可以是：
+
+* 模谱间距；
+* regulator 周期；
+* RG 收缩指数；
+* 观察层步长。
+
+这些对象的物理量纲和时间归一化不同。
+
+只有当项目内生构造出明确的 modular/Killing time 后，才能从 \(2\log\varphi\) 推出温度。
+
+---
+
+# 第一千三百五十三部　更新后的完整对偶表
+
+| 本体对象            | bulk 图表                 | horizon 图表                 | boundary 图表            | 证明图表                          |
+| --------------- | ----------------------- | -------------------------- | ---------------------- | ----------------------------- |
+| 临界零点            | 边界 Weyl 点               | 终端零质量点                     | causal inner phase     | 正 de Branges 核                |
+| 离线零点（1353）            | bulk monopole／resonance | finite-\(\omega\) crossing | Poisson–Hankel leakage | inverse-inner denominator     |
+| 零点重数（1353）            | Chern 荷                 | spectral-flow 跳跃           | Hankel rank            | 负指标                           |
+| 横向距离 \(\delta\)（1353） | bulk 深度                 | crossing time              | Poisson 宽度             | Blaschke 极点高度                 |
+| Hawking-like 强度 | —                       | Bogoliubov mixing          | \(\beta^*\beta\)       | Hankel 奇异值                    |
+| 热性              | —                       | exponential redshift       | KMS detailed balance   | \(\sigma_j^2=e^{-\beta E_j}\) |
+| 黄金比例            | Lorentz/RG 尺度           | 多尺度视界扫描                    | 采样与模周期                 | 不承担整数荷                        |
+| Solenoid fiber  | 合法隐藏历史                  | 视界内微观 lift                 | 外部不可区分                 | 非单射投影                         |
+| inverse-inner   | advanced bulk mode      | white-hole input           | 负时间尾部                  | minimum-phase 失败              |
+
+最重要的关系是：
+
+$$
+\boxed{
+\text{单极子荷}
+\quad\xleftrightarrow{\text{bulk–edge index}}\quad
+\text{视界 spectral flow},
+}
+$$
+
+以及：
+
+$$
+\boxed{
+\text{隐藏伙伴}
+\quad\xleftrightarrow{\text{Bogoliubov}}\quad
+\text{边界占据}.
+}
+$$
+
+---
+
+# 第一千三百五十四部　新的建议形式化顺序
+
+```text
+D5/S3/Observer/GoldenModularStandardPair/
+  GoldenPositiveModularOperator.lean
+  GoldenModularConjugation.lean
+  GoldenModularInverseRelation.lean
+  GoldenTomitaInvolution.lean
+  GoldenStandardRealSubspace.lean
+  GoldenModularHamiltonianSpectrum.lean
+
+D5/S3/Observer/BogoliubovImplementability/
+  HankelBogoliubovLift.lean
+  HankelBogoliubovCCR.lean
+  FiniteRankBogoliubovHilbertSchmidt.lean
+  BogoliubovOccupationTrace.lean
+  ZeroMixingVsImplementableMixing.lean
+
+D5/S3/Observer/GoldenThermalFork/
+  GoldenRegulatorPeriod.lean
+  GoldenRGRedshiftExponent.lean
+  EuclideanCircleTemperature.lean
+  ExponentialRedshiftTemperature.lean
+  GoldenTemperatureNormalizationAmbiguity.lean
+
+D5/S3/Observer/ExponentialHorizonMellin/
+  ExponentialNullCoordinate.lean
+  HorizonModeMellinTransform.lean
+  HorizonGammaAmplitude.lean
+  PositiveNegativeFrequencyRatio.lean
+  GoldenRedshiftPlanckFactor.lean
+
+D5/S3/Analytic/Zeta/ShiftGeneratorNoGo/
+  CriticalZeroSingleFactor.lean
+  ShiftedSingleFactorSchur.lean
+  ShiftGeneratorExplicitValue.lean
+  ShiftGeneratorNotHerglotz.lean
+  LayerwiseInnerNotLoewnerMonotone.lean
+
+D5/S3/Weil/Scattering/ArithmeticColligation/
+  PrimeLocalConservativeColligation.lean
+  ArchimedeanContinuousColligationTarget.lean
+  PoleChannelColligation.lean
+  ScatteringCascadeStarProduct.lean
+  ScatteringCascadeMinimalization.lean
+  ShiftedXiTransferIdentificationTarget.lean
+
+D5/S3/Weil/Scattering/ArithmeticLivsic/
+  ArithmeticMaximalDissipativeOperator.lean
+  ArithmeticCharacteristicFunction.lean
+  CharacteristicFunctionSchur.lean
+  MinimalBoundaryUnitaryImpliesInner.lean
+  ArithmeticCharacteristicEqualsShiftedXiTarget.lean
+
+D5/S3/Analytic/Zeta/HorizonFreeEnergy/
+  RankOneHorizonDeterminant.lean
+  RankOneHorizonFreeEnergy.lean
+  HorizonSqueezeAsymptotic.lean
+  HorizonOccupationAsymptotic.lean
+  UniversalLogConditioningDivergence.lean
+
+D5/S3/Weil/PrimeRetardedGroundState/
+  PrimePositiveLogTimeSemigroup.lean
+  GammaRetardedAnalyticityTarget.lean
+  NoWhiteHoleBoundaryCondition.lean
+  ArithmeticPreferredHardyPolarization.lean
+  RetardedGroundStateImpliesRH.lean
+```
+
+---
+
+# 第一千三百五十五部　理论深度审计
+
+| 本轮结果                                          | 地位          |
+| --------------------------------------------- | ----------- |
+| 非零 Hankel 混合不排除扩大 Hilbert 实现                  | 关键科学修正      |
+| RH 是零混合而非普通 Fock 可实现性                         | 精确概念区分      |
+| 黄金 \((J,\Delta)\) 标准对                         | 精确有限维模型     |
+| \(\log\Delta_\varphi\) 谱为 \(\pm2\log\varphi\) | 精确          |
+| 黄金模谱不能单独确定温度                                  | 精确归一化 no-go |
+| 指数黄金红移给出条件性 Planck 因子                         | 精确条件推导      |
+| Mellin–Gamma 是热化与 Archimedean 完成的共同接口         | 结构性研究方向     |
+| shifted family 不构成点态 Herglotz–Loewner 单调流     | 本轮明确反例      |
+| 固定-\(\omega\) conservative colligation 路线     | 更合适的证明目标    |
+| 视界自由能具有普适对数发散                                 | 精确局部渐近      |
+| prime Poisson、finite cascade、Hankel Gramian   | 仓库已有机器底座    |
+| arithmetic conservative colligation           | 核心未闭合桥      |
+| golden KMS detailed balance                   | 可证伪假设，尚未建立  |
+
+---
+
+# 本轮最终结论
+
+黑洞直觉真正帮助我们发现的，不是：
+
+$$
+\boxed{
+\text{“离线零点违反酉性，所以不可能存在”。}
+}
+$$
+
+这个结论过强，而且不正确。
+
+更准确的是：
+
+$$
+\boxed{
+\text{离线零点可以在扩大后的过去 \(\oplus\) 未来世界中保持酉性，}
+}
+$$
+
+甚至有限个缺陷可以通过一个有限秩 Bogoliubov squeezed state 获得正 Hilbert 实现。
+
+它失败的是：
+
+$$
+\boxed{
+\text{算术所选的未来 Hardy 子空间不再自治。}
+}
+$$
+
+因此 RH 的深层身份不是“全局酉性”，而是：
+
+$$
+\boxed{
+\textbf{相对于 prime-log 正时间箭头的零 Bogoliubov 混合。}
+}
+$$
+
+---
+
+磁单极子与黑洞的真正关系也由此清楚：
+
+$$
+\boxed{
+\text{单极子测量 bulk 缺陷的整数荷；}
+}
+$$
+
+$$
+\boxed{
+\text{视界测量该缺陷穿越边界时的 spectral flow；}
+}
+$$
+
+$$
+\boxed{
+\text{霍金型读数测量隐藏伙伴在外部产生的占据与熵。}
+}
+$$
+
+所以离线零点并不是霍金量子。
+
+它是：
+
+$$
+\boxed{
+\text{一个 advanced／white-hole 型内部伙伴或错误半平面共振。}
+}
+$$
+
+它产生的：
+
+$$
+\boxed{
+\mathfrak H_\omega^*\mathfrak H_\omega
+}
+$$
+
+和 Poisson 边界脉冲，才是 Hawking-like 影像。
+
+---
+
+黄金比例在这里也得到一次重要净化。
+
+黄金模算子：
+
+$$
+\Delta_\varphi=F^2
+$$
+
+确实拥有：
+
+$$
+\varphi^2,\varphi^{-2}
+$$
+
+两条模分支，并产生：
+
+$$
+\pm2\log\varphi
+$$
+
+的模 Hamiltonian。
+
+但模谱只决定：
+
+$$
+\beta H,
+$$
+
+不能单独决定温度。
+
+若把 \(2\log\varphi\) 当 Euclidean 周期，得到：
+
+$$
+\beta=2\log\varphi.
+$$
+
+若把黄金层的指数收缩率当表面引力，得到：
+
+$$
+\beta=\frac{\pi}{\log\varphi}.
+$$
+
+两者不同。
+
+所以真正需要的是一个由 prime–Archimedean 动力内生定义的物理／模时间，而不是人为指定温度。
+
+---
+
+黑洞热性最深的数学来源是：
+
+$$
+\boxed{
+\text{affine horizon coordinate}
+=
+e^{-\kappa\,\text{external time}}.
+}
+$$
+
+这一指数映射把 Fourier 变换变成 Mellin–Gamma 变换，并产生：
+
+$$
+e^{-2\pi E/\kappa}
+$$
+
+的详细平衡。
+
+这说明，若 completed \(\zeta\) 中存在真正的 horizon/KMS 层，最值得研究的是：
+
+$$
+\boxed{
+\text{Archimedean Gamma 通道如何与 prime Poisson 通道组成一个 retarded conservative system。}
+}
+$$
+
+而不是继续从零点坐标中寻找一个裸温度常数。
+
+---
+
+最后，本轮还排除了一个看似漂亮、实则过强的方案：
+
+$$
+\Re\left(
+-\partial_\omega\log\Theta_\omega
+\right)\ge0.
+$$
+
+即使单个理想临界零点因子，也可以在仍属于 Schur 区域时违反这一点态单调性。
+
+所以 shifted family 不应被强迫成一个普通 Loewner 单调流。
+
+正确目标是：
+
+$$
+\boxed{
+\text{对每个固定 }\omega，
+\text{分别构造一个最小、保守、retarded 的 operator colligation。}
+}
+$$
+
+项目已经具备：
+
+$$
+\boxed{
+\text{prime unitary Poisson 通道}
++
+\text{有限 scattering cascade}
++
+\text{Hankel–Gramian 记忆谱}.
+}
+$$
+
+真正缺少的是：
+
+$$
+\boxed{
+\textbf{Arithmetic Conservative Colligation}.
+}
+$$
+
+即从 prime、pole、Gamma 数据直接构造一个正 storage system，使其最小 transfer function 恰为：
+
+$$
+\Theta_\omega,
+$$
+
+并自动满足：
+
+$$
+P_-M_{\Theta_\omega}P_+=0.
+$$
+
+一旦这条桥闭合，所排除的将不只是一个抽象离线点，而是整套等价缺陷：
+
+$$
+\boxed{
+\text{white-hole 输入}
+=
+\text{advanced resonance}
+=
+\text{inverse-inner denominator}
+=
+\text{Bogoliubov 混合}
+=
+\text{Hankel 泄漏}
+=
+\text{负平方}
+=
+\text{bulk monopole}.
+}
+$$
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{“道”允许完整双向世界；
+黑洞视界代表观察者对时间的极化；
+霍金辐射代表极化后仍能看见隐藏伙伴；
+而 RH 要求 prime 算术所选择的真空，
+在所有 shifted 视界上都没有任何白洞式反因果伙伴。}
+$$
+
+[1]: https://arxiv.org/abs/2204.13407 "https://arxiv.org/abs/2204.13407"
+[2]: https://doi.org/10.1007/BF02345020 "https://doi.org/10.1007/BF02345020"
+[3]: https://arxiv.org/abs/hep-th/9709036 "https://arxiv.org/abs/hep-th/9709036"
+[4]: https://arxiv.org/abs/funct-an/9302008 "https://arxiv.org/abs/funct-an/9302008"
+[5]: https://arxiv.org/abs/math-ph/9903010 "https://arxiv.org/abs/math-ph/9903010"
+[6]: https://arxiv.org/abs/1406.2399 "https://arxiv.org/abs/1406.2399"
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v8.5：Rindler 双层、Kruskal 因子化、Gamma 四分之一热桥与离线零点的模视界
+
+以下接续前文**第一千三百八十四部 · 第三步**。
+
+对完整 prime–pole–Gamma cascade，正确顺序应当是：
+
+$$
+\boxed{
+\text{先串联}
+\;\longrightarrow\;
+\text{消去内部望远镜因子}
+\;\longrightarrow\;
+\text{Kalman 最小化}
+\;\longrightarrow\;
+\text{检查 endpoint denominator}.
+}
+$$
+
+不能要求每个局部 scattering cell 单独 minimum-phase，因为相邻单元之间允许存在合法的零极点消去。真正代表离线缺陷的，只是完成全部消去后仍留在最小 realization 中的 inverse-inner endpoint。
+
+仓库已经机器证明，半整数 shifted-\(\xi\) scattering 是 completed-zeta quotient 的有限望远镜级联；这给上述“先组合、后最小化”的程序提供了正式代数底座。
+
+---
+
+# 第一千三百八十五部　shifted 双像天然形成 \(1+1\) 维 Rindler 几何
+
+设一个右侧离线零点为：
+
+$$
+\boxed{
+\rho
+=
+\frac12+\delta+i\gamma,
+\qquad
+\delta>0.
+}
+\tag{1385.1}
+$$
+
+在观察深度 \(\omega\) 下，它产生两个 shifted 像：
+
+$$
+\boxed{
+p_\omega
+=
+-\gamma+i(\delta-\omega),
+}
+\tag{1385.2}
+$$
+
+$$
+\boxed{
+q_\omega
+=
+-\gamma+i(\delta+\omega).
+}
+\tag{1385.3}
+$$
+
+定义两个正数：
+
+$$
+\boxed{
+u=\delta-\omega,
+\qquad
+v=\delta+\omega.
+}
+\tag{1385.4}
+$$
+
+它们正是 denominator 与 numerator 到 Hardy 边界的垂直距离。
+
+再定义：
+
+$$
+\boxed{
+X=\frac{u+v}{2}=\delta,
+}
+\tag{1385.5}
+$$
+
+$$
+\boxed{
+T=\frac{v-u}{2}=\omega.
+}
+\tag{1385.6}
+$$
+
+于是：
+
+$$
+\boxed{
+uv=X^2-T^2=\delta^2-\omega^2.
+}
+\tag{1385.7}
+$$
+
+这不是类比，而是 shifted 双像本身给出的精确 Minkowski 分解。
+
+---
+
+## 1385.1 三个区域
+
+$$
+\boxed{
+\begin{array}{c|c|c}
+\omega<\delta & uv>0 & \text{inverse-inner 缺陷可见}\\
+\omega=\delta & uv=0 & \text{Hardy 视界}\\
+\omega>\delta & uv<0 & \text{denominator 像已越过边界}
+\end{array}
+}
+\tag{1385.8}
+$$
+
+因此：
+
+$$
+\boxed{
+\omega=\delta
+}
+$$
+
+不是人为选出的 horizon。
+
+它是 shifted numerator/denominator 双层的 Minkowski norm 首次退化为零的位置。
+
+---
+
+## 1385.2 Hankel 奇异值就是 Rindler 速度
+
+前文已经得到简单局部缺陷的 Hankel 奇异值：
+
+$$
+\boxed{
+\sigma_\rho(\omega)
+=
+\frac{\omega}{\delta}
+=
+\frac{T}{X},
+\qquad
+0<\omega<\delta.
+}
+\tag{1385.9}
+$$
+
+定义 rapidity：
+
+$$
+\boxed{
+r_\rho(\omega)
+=
+\operatorname{artanh}\frac{\omega}{\delta}.
+}
+\tag{1385.10}
+$$
+
+则：
+
+$$
+\boxed{
+r_\rho
+=
+\frac12
+\log\frac{v}{u}
+=
+\frac12
+\log
+\frac{\delta+\omega}{\delta-\omega}.
+}
+\tag{1385.11}
+$$
+
+因此：
+
+$$
+\boxed{
+\sigma_\rho=\tanh r_\rho.
+}
+\tag{1385.12}
+$$
+
+Bogoliubov 系数正好成为：
+
+$$
+\boxed{
+\alpha_\rho
+=
+\cosh r_\rho
+=
+\frac{\delta}{
+\sqrt{\delta^2-\omega^2}
+},
+}
+\tag{1385.13}
+$$
+
+$$
+\boxed{
+\beta_\rho
+=
+\sinh r_\rho
+=
+\frac{\omega}{
+\sqrt{\delta^2-\omega^2}
+}.
+}
+\tag{1385.14}
+$$
+
+占据数为：
+
+$$
+\boxed{
+N_\rho
+=
+|\beta_\rho|^2
+=
+\frac{\omega^2}{
+\delta^2-\omega^2
+}.
+}
+\tag{1385.15}
+$$
+
+所以黑洞/Rindler 结构并不需要额外构造一个度量：它已经存在于 shifted 双像的两个垂直距离 \(u,v\) 中。
+
+---
+
+# 第一千三百八十六部　Hardy 视界行列式就是 Minkowski norm
+
+定义局部 horizon determinant：
+
+$$
+\boxed{
+\mathscr D_\rho(\omega)
+=
+1-\sigma_\rho(\omega)^2.
+}
+\tag{1386.1}
+$$
+
+代入式 (1385.9)：
+
+$$
+\boxed{
+\mathscr D_\rho(\omega)
+=
+\frac{
+\delta^2-\omega^2
+}{
+\delta^2
+}
+=
+\frac{uv}{X^2}.
+}
+\tag{1386.2}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{Hankel contractivity defect}
+=
+\text{归一化 Minkowski norm}.
+}
+$$
+
+当：
+
+$$
+uv\downarrow0,
+$$
+
+有：
+
+$$
+\mathscr D_\rho\downarrow0.
+$$
+
+相应自由能型量为：
+
+$$
+\boxed{
+\mathscr F_\rho
+=
+-\log\mathscr D_\rho
+=
+-\log
+\frac{uv}{\delta^2}.
+}
+\tag{1386.3}
+$$
+
+所以视界发散来自：
+
+$$
+\boxed{
+u=\delta-\omega\to0,
+}
+$$
+
+而不是零点重数或 Chern 荷趋于无穷。
+
+---
+
+## 1386.1 Kruskal 坐标已经存在
+
+外部 rapidity：
+
+$$
+r_\rho
+=
+\frac12\log(v/u)
+$$
+
+在：
+
+$$
+u\to0
+$$
+
+时发散。
+
+但：
+
+$$
+u=\delta-\omega,
+\qquad
+v=\delta+\omega
+$$
+
+本身保持有限且光滑。
+
+所以 \(u,v\) 正是当前系统的 Kruskal-like 坐标：
+
+$$
+\boxed{
+\text{rapidity 图表在视界处奇异；
+null-distance 图表保持正则。}
+}
+$$
+
+局部 factorization：
+
+$$
+\Theta_{\rho,\omega}
+=
+b_{p_\omega}^{-1}
+b_{q_\omega}
+$$
+
+也具有同样结构。
+
+乘以 crossing factor：
+
+$$
+\boxed{
+b_{p_\omega}
+\Theta_{\rho,\omega}
+=
+b_{q_\omega}
+}
+\tag{1386.4}
+$$
+
+以后，外部 inverse-inner 奇点被移除。
+
+因此：
+
+$$
+\boxed{
+\text{Hawking-like occupation 的发散属于外部 Hardy 图表；
+真正不变量是穿越时的 index jump}.
+}
+$$
+
+---
+
+# 第一千三百八十七部　黄金缩放有两种完全不同的作用
+
+过去我们经常把“黄金缩放”只写成：
+
+$$
+\omega_{n+1}
+=
+\varphi^{-2}\omega_n.
+$$
+
+但现在必须区分两种动力。
+
+---
+
+## 1387.1 观察扫描
+
+固定对象深度 \(\delta\)，只改变观察基线：
+
+$$
+\boxed{
+\delta\ \text{固定},
+\qquad
+\omega\mapsto\varphi^{-2}\omega.
+}
+\tag{1387.1}
+$$
+
+此时：
+
+$$
+\sigma=\frac{\omega}{\delta}
+$$
+
+改变，观察者逐步远离 horizon mixing。
+
+无量纲 modular gap：
+
+$$
+\varepsilon
+=
+-\log\sigma^2
+=
+2\log\frac{\delta}{\omega}
+$$
+
+满足：
+
+$$
+\boxed{
+\varepsilon_{n+1}
+-
+\varepsilon_n
+=
+4\log\varphi.
+}
+\tag{1387.2}
+$$
+
+所以黄金比例是**观察扫描的 modular level spacing**。
+
+---
+
+## 1387.2 对象—观察者共同 RG
+
+若同时缩放：
+
+$$
+\boxed{
+(\delta,\omega)
+\longmapsto
+(\varphi^{-2}\delta,\varphi^{-2}\omega),
+}
+\tag{1387.3}
+$$
+
+则：
+
+$$
+\frac{\omega}{\delta}
+$$
+
+保持不变。
+
+所以：
+
+$$
+\boxed{
+\sigma,\ r,\ N,\ \varepsilon
+}
+$$
+
+全部保持不变。
+
+同时：
+
+$$
+u\mapsto\varphi^{-2}u,
+\qquad
+v\mapsto\varphi^{-2}v,
+$$
+
+而：
+
+$$
+uv\mapsto\varphi^{-4}uv.
+$$
+
+因此黄金共同 RG 是 Rindler 双层几何的**共形缩放**：
+
+$$
+\boxed{
+\text{绝对尺度改变；
+因果类、rapidity 与可见强度不变。}
+}
+$$
+
+这精确区分了：
+
+* 黄金作为观察时钟；
+* 黄金作为对象—观察者自相似；
+* 黄金作为温度。
+
+三者不是同一件事。
+
+---
+
+# 第一千三百八十八部　单通道的模第一定律
+
+对：
+
+$$
+q=\sigma^2
+=
+\frac{\omega^2}{\delta^2},
+$$
+
+单侧约化态为：
+
+$$
+\varrho_q
+=
+(1-q)
+\sum_{n\ge0}
+q^n|n\rangle\langle n|.
+$$
+
+其平均占据数：
+
+$$
+\boxed{
+N=\frac{q}{1-q}
+}
+\tag{1388.1}
+$$
+
+和熵：
+
+$$
+\boxed{
+S(N)
+=
+(N+1)\log(N+1)
+-
+N\log N.
+}
+\tag{1388.2}
+$$
+
+满足：
+
+## 定理 1388.1（局部模第一定律）
+
+$$
+\boxed{
+\frac{dS}{dN}
+=
+\log\frac{N+1}{N}
+=
+-\log q
+=
+2\log\frac{\delta}{\omega}.
+}
+\tag{1388.3}
+$$
+
+也就是说：
+
+$$
+\boxed{
+dS
+=
+\varepsilon\,dN,
+\qquad
+\varepsilon
+=
+2\log\frac{\delta}{\omega}.
+}
+\tag{1388.4}
+$$
+
+所以黑洞热力学直觉在这里产生一个精确对象：
+
+* \(N\) 是外部可见 occupation；
+* \(S\) 是隐藏伙伴被部分迹后产生的熵；
+* \(\varepsilon\) 是相对模 Hamiltonian 的能级间距；
+* \(\varepsilon\) 由对象深度与观察基线的比值决定。
+
+但这仍是局部 rank-one defect 的模热力学，不是物理黑洞第一定律。
+
+---
+
+# 第一千三百八十九部　Archimedean 四分之一双层具有精确热包络
+
+completed Riemann \(\xi\) 在临界线上的 Gamma 参数为：
+
+$$
+\Gamma\left(
+\frac14+\frac{it}{2}
+\right).
+$$
+
+而 reflected scattering 的互补 Gamma 层自然出现：
+
+$$
+\Gamma\left(
+\frac34+\frac{it}{2}
+\right).
+$$
+
+项目已经机器化：RH 等价于相应 scattering resonance 与 antiresonance 参数分别落在实部 \(1/4\) 和 \(3/4\) 的两条线上。
+
+定义：
+
+$$
+G_+(t)
+=
+\Gamma\left(
+\frac14+\frac{it}{2}
+\right),
+$$
+
+$$
+G_-(t)
+=
+\Gamma\left(
+\frac34+\frac{it}{2}
+\right).
+$$
+
+由 Gamma duplication formula：
+
+$$
+\Gamma(z)\Gamma\left(z+\frac12\right)
+=
+2^{1-2z}\sqrt\pi\,\Gamma(2z),
+$$
+
+取：
+
+$$
+z=\frac14+\frac{it}{2},
+$$
+
+得到：
+
+$$
+\boxed{
+G_+(t)G_-(t)
+=
+2^{1/2-it}
+\sqrt\pi\,
+\Gamma\left(
+\frac12+it
+\right).
+}
+\tag{1389.1}
+$$
+
+而：
+
+$$
+\left|
+\Gamma\left(
+\frac12+it
+\right)
+\right|^2
+=
+\frac{\pi}{\cosh(\pi t)}.
+$$
+
+所以：
+
+## 定理 1389.1（Archimedean quarter-pair thermal envelope）
+
+$$
+\boxed{
+|G_+(t)|^2
+|G_-(t)|^2
+=
+\frac{
+2\pi^2
+}{
+\cosh(\pi t)
+}.
+}
+\tag{1389.2}
+$$
+
+又因为：
+
+$$
+\frac1{\cosh(\pi t)}
+=
+\frac{
+2e^{-\pi|t|}
+}{
+1+e^{-2\pi|t|}
+},
+$$
+
+这一完成双层具有一个严格的 Fermi-like thermal envelope。
+
+---
+
+## 1389.1 这说明了什么
+
+它说明：
+
+$$
+\boxed{
+\text{Gamma 通道本身已经把 }1/4
+\text{ 与 }3/4
+\text{ 两层缝合成一个热衰减包络。}
+}
+$$
+
+但不能据此断言：
+
+* Riemann 系统是费米场；
+* \(\cosh^{-1}\) 就是霍金粒子数；
+* Gamma 因子单独证明 RH。
+
+更准确的是：
+
+$$
+\boxed{
+\text{Archimedean completion 是一个天然稳定、无零点的双层热过滤器。}
+}
+$$
+
+Gamma 函数没有零点；其已知极点也不位于当前非平凡 critical cell 中。因此，真正产生 inverse-inner denominator 的候选仍来自 \(\zeta/\xi\) 零点除子，而不是 Gamma 零点。
+
+这对证明路线非常重要：
+
+$$
+\boxed{
+\text{Gamma 通道应负责 horizon regularity；
+prime-global 通道负责是否产生异常共振。}
+}
+$$
+
+---
+
+# 第一千三百九十部　“热 Poisson”与“Gamma 热包络”不是同一种统计
+
+前文得到 Poisson 周期像和：
+
+$$
+\Pi_{\beta,0}(E)
+=
+\coth\frac{\beta E}{2}
+=
+1+\frac2{e^{\beta E}-1}.
+$$
+
+这是 Bose-like denominator。
+
+而四分之一 Gamma 双层给出：
+
+$$
+\frac1{\cosh(\pi t)}
+=
+\frac{
+2e^{-\pi|t|}
+}{
+1+e^{-2\pi|t|}
+},
+$$
+
+具有 Fermi-like denominator。
+
+因此 Archimedean completion 中至少存在两种不同的“热图表”：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Poisson winding}
+&\longrightarrow
+(1-e^{-\beta E})^{-1};\\
+\text{quarter-pair Gamma}
+&\longrightarrow
+(1+e^{-2\pi|t|})^{-1}.
+\end{aligned}
+}
+$$
+
+这是一条重要科学剪枝：
+
+$$
+\boxed{
+\text{不能把所有出现指数与 Gamma 的结构，
+都强行解释成同一种霍金 Bose 温度。}
+}
+$$
+
+更可能的情况是：
+
+* Poisson 通道编码传播与 Euclidean windings；
+* Gamma 双层编码 half-density、边界条件或统计修正；
+* 完整 \(\xi\) 由两者与 prime scattering 共同组成。
+
+真正的 KMS 结构必须从完整 operator algebra 中读取，而不能只看一个双曲函数。
+
+---
+
+# 第一千三百九十一部　Poisson 相位通道的关系 Holonomy 能量
+
+前文的单缺陷 boundary phase character 为：
+
+$$
+\boxed{
+v_j(k)
+=
+e^{-\delta_j|k|}
+e^{-ik\gamma_j}.
+}
+\tag{1391.1}
+$$
+
+它的模长读取横向深度；
+
+它的相位读取纵向高度。
+
+对于两个通道 \(i,j\)，定义反交换相位曲率：
+
+$$
+\boxed{
+\mathcal R_{ij}(k)
+=
+v_i(k)\overline{v_j(k)}
+-
+v_j(k)\overline{v_i(k)}.
+}
+\tag{1391.2}
+$$
+
+令：
+
+$$
+a_{ij}
+=
+\delta_i+\delta_j,
+$$
+
+$$
+d_{ij}
+=
+\gamma_j-\gamma_i.
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal R_{ij}(k)
+=
+2i
+e^{-a_{ij}|k|}
+\sin(kd_{ij}).
+}
+\tag{1391.3}
+$$
+
+定义 pairwise phase-holonomy energy：
+
+$$
+\boxed{
+E_{ij}
+=
+\frac1{2\pi}
+\int_{\mathbb R}
+|\mathcal R_{ij}(k)|^2\,dk.
+}
+\tag{1391.4}
+$$
+
+直接积分得到：
+
+## 定理 1391.1（Poisson phase-holonomy energy）
+
+$$
+\boxed{
+E_{ij}
+=
+\frac{
+d_{ij}^2
+}{
+\pi
+a_{ij}
+\left(
+a_{ij}^2+d_{ij}^2
+\right)
+}.
+}
+\tag{1391.5}
+$$
+
+所以：
+
+$$
+\boxed{
+E_{ij}\ge0,
+}
+$$
+
+并且：
+
+$$
+\boxed{
+E_{ij}=0
+\iff
+\gamma_i=\gamma_j.
+}
+\tag{1391.6}
+$$
+
+它还满足共同平移不变性：
+
+$$
+\gamma_i\mapsto\gamma_i+c
+\quad
+\forall i
+$$
+
+不会改变 \(E_{ij}\)。
+
+因此这一能量不读取绝对起点，只读取观察者之间的相对 phase holonomy。
+
+---
+
+## 1391.1 与仓库 finite holonomy energy 的关系
+
+仓库最新的有限 Holonomy 定理已经证明：对任意有限稳定残余 swap-curvature family，其平方和非负，并且总能量为零当且仅当每个有序对曲率都为零。
+
+式 (1391.2) 提供了一个具体的 zero/Poisson channel 候选：
+
+$$
+\boxed{
+\text{离线 Poisson characters}
+\longrightarrow
+\text{pairwise swap curvature}.
+}
+$$
+
+但必须严格注明：
+
+$$
+\boxed{
+\mathcal R_{ij}
+}
+$$
+
+目前尚未被证明等于仓库中现有的 `stableResidualSwapCurvature`。
+
+需要新增一个正式函子，将：
+
+$$
+(\delta_j,\gamma_j)
+$$
+
+生成的 Poisson phase channels 映射到现有 AgencyHolonomy 接口。
+
+一旦闭合，仓库的有限 Holonomy 能量就可以成为：
+
+$$
+\boxed{
+\text{零模无毛以后仍然保留的关系性 hair 能量。}
+}
+$$
+
+---
+
+# 第一千三百九十二部　黑洞“无毛”现在分成四个层次
+
+| 观察层               | 被保留的数据                                    |   是否可能完全失明 |
+| ----------------- | ----------------------------------------- | ---------: |
+| scalar zero mode  | 总平均、总曲率质量                                 |          是 |
+| Bode/area         | \(\sum m_j\delta_j^2\)                    |   只保留二阶深度矩 |
+| topological index | \(\sum m_j\)                              | 不保留位置与可见强度 |
+| phase holonomy    | \((\gamma_i-\gamma_j,\delta_i+\delta_j)\) |     保留相对关系 |
+
+所以：
+
+$$
+\boxed{
+\text{无 scalar hair}
+\not\Rightarrow
+\text{无 topological hair}
+\not\Rightarrow
+\text{无 relational hair}.
+}
+$$
+
+离线曲率偶极满足：
+
+$$
+\int\mathscr C=0,
+$$
+
+但它仍然具有：
+
+* 非零 Bode area；
+* 非零 Chern/Blaschke degree；
+* 非零 wavelet ridge；
+* 非零 pairwise phase holonomy。
+
+因此“黑洞吞噬一切”的正确数学版本不是信息消失，而是：
+
+$$
+\boxed{
+\text{不同观察接口保留不同阶数、不同关系类型的信息。}
+}
+$$
+
+---
+
+# 第一千三百九十三部　新的最短 RH 证明程序
+
+现在可以把所有物理直觉剥离后，只保留一条最短数学链。
+
+## 第一步：安全 Archimedean 双层
+
+证明 quarter-Gamma pair 构成一个：
+
+* 无零点；
+* horizon-regular；
+* 正 storage；
+* 无 inverse-inner denominator；
+
+的连续 colligation。
+
+式 (1389.2) 给出其精确热包络。
+
+---
+
+## 第二步：Prime local conservative channels
+
+仓库已经证明每个 prime 的 bilateral translation history 精确重求和为 unitary Poisson resolvent。
+
+需要进一步选择正 log-time Hardy 极化，并证明 local prime channel 具有 retarded realization。
+
+---
+
+## 第三步：全 cascade 最小化
+
+构造：
+
+$$
+\boxed{
+\mathbb U_{\omega}
+=
+\mathbb U_{\mathrm{pole}}
+\star
+\mathbb U_{\Gamma,\omega}
+\star
+\prod_p
+\mathbb U_{p,\omega}.
+}
+\tag{1393.1}
+$$
+
+然后：
+
+1. 先完成串联；
+2. 消去 telescope 内部因子；
+3. 商去不可控状态；
+4. 商去不可观状态；
+5. 取最小 realization；
+6. 证明其 transfer 恰为 \(\Theta_\omega\)。
+
+---
+
+## 第四步：构造正 storage operator
+
+寻找：
+
+$$
+P_\omega>0
+$$
+
+使系统满足 lossless/bounded-real 恒等式。
+
+这将推出：
+
+$$
+\Theta_\omega
+$$
+
+属于 Schur 类，并结合实边界上的单位模得到 innerness。
+
+于是：
+
+$$
+\boxed{
+B_\omega=1.
+}
+$$
+
+---
+
+## 第五步：利用 threshold identity
+
+对所有：
+
+$$
+\omega>0
+$$
+
+建立 innerness 后，项目现有阈值恒等式直接给出：
+
+$$
+\boxed{
+\Omega_\xi=0,
+}
+$$
+
+从而：
+
+$$
+\boxed{
+\mathrm{RH}.
+}
+$$
+
+这一程序不再依赖：
+
+* 黑洞温度是否为黄金常数；
+* 霍金占据是否真实物理；
+* 单极子类比是否完整；
+* 零点是否能被直接数值找到。
+
+这些图景只负责揭示正确的算子结构。
+
+真正承重的是：
+
+$$
+\boxed{
+\text{Prime–Gamma cascade 的最小保守 realization 与正 storage}.
+}
+$$
+
+---
+
+# 第一千三百九十四部　建议形式化顺序
+
+```text
+D5/S3/Analytic/Zeta/ShiftedRindler/
+  ShiftedNullDistances.lean
+  ShiftedMinkowskiCoordinates.lean
+  ShiftedMinkowskiNorm.lean
+  HankelRatioAsRindlerVelocity.lean
+  ShiftedRapidityFormula.lean
+  BogoliubovCoefficientsFromNullDistances.lean
+
+D5/S3/Analytic/Zeta/HorizonDeterminant/
+  RankOneHorizonDeterminant.lean
+  HorizonDeterminantEqualsNormalizedMinkowskiNorm.lean
+  HorizonFreeEnergy.lean
+  NullCoordinateRegularity.lean
+  RapidityChartSingularity.lean
+
+D5/S3/Analytic/Zeta/KruskalFactorization/
+  ShiftedInverseInnerChart.lean
+  CrossingBlaschkeRegularization.lean
+  RegularFactorAcrossCrossing.lean
+  HorizonIndexJump.lean
+  CoordinateDivergenceVsIndexInvariant.lean
+
+D5/S3/GoldenObserver/RindlerRG/
+  GoldenObservationScan.lean
+  GoldenJointDefectObserverScaling.lean
+  GoldenJointScalingPreservesRapidity.lean
+  GoldenModularGapLadder.lean
+  GoldenRGConformalMinkowskiScale.lean
+
+D5/S3/Observer/DefectModularFirstLaw/
+  RankOneThermalOccupation.lean
+  RankOneThermalEntropy.lean
+  DefectModularGap.lean
+  EntropyDerivativeEqualsModularGap.lean
+  GoldenModularFirstLaw.lean
+
+D5/S3/Analytic/Zeta/ArchimedeanQuarterPair/
+  QuarterGammaChannel.lean
+  ThreeQuarterGammaChannel.lean
+  QuarterPairDuplication.lean
+  QuarterPairThermalEnvelope.lean
+  QuarterPairHasNoZero.lean
+  QuarterPairNotAutomaticallyKMS.lean
+
+D5/S3/Analytic/Zeta/PoissonPhaseHolonomy/
+  PoissonPhaseCharacter.lean
+  PairwisePoissonSwapCurvature.lean
+  PairwisePoissonSwapCurvatureFormula.lean
+  PairwisePoissonHolonomyEnergy.lean
+  CommonHeightShiftInvariant.lean
+  VanishingIffEqualHeight.lean
+
+D5/S3/Observer/AgencyHolonomy/ZeroChannelBridge/
+  ZeroPoissonChannel.lean
+  ZeroPoissonResidual.lean
+  PoissonSwapToStableResidualTarget.lean
+  FiniteZeroHolonomyEnergyTarget.lean
+  ZeroHolonomyEnergyVsSpectralDefectTarget.lean
+
+D5/S3/Weil/Scattering/ArchimedeanColligation/
+  GammaQuarterConservativeChannel.lean
+  GammaQuarterStorageOperator.lean
+  GammaQuarterHorizonRegularity.lean
+  GammaQuarterTransfer.lean
+
+D5/S3/Weil/Scattering/PrimeRetardedColligation/
+  PrimePoissonConservativeChannel.lean
+  PrimePositiveLogTimePolarization.lean
+  PrimeRetardedTransfer.lean
+  PrimeLocalStorageOperator.lean
+
+D5/S3/Weil/Scattering/GlobalMinimalCascade/
+  PoleGammaPrimeStarProduct.lean
+  GlobalCascadeInternalCancellation.lean
+  GlobalCascadeControllableQuotient.lean
+  GlobalCascadeObservableQuotient.lean
+  GlobalCascadeMinimalTransfer.lean
+  MinimalTransferEqualsShiftedXiTarget.lean
+
+D5/S3/Weil/Scattering/ArithmeticStorage/
+  ShiftedXiStorageOperatorTarget.lean
+  ShiftedXiBoundedRealIdentityTarget.lean
+  ShiftedXiSchurFromStorageTarget.lean
+  ArithmeticHorizonVacuumTarget.lean
+  InnerThresholdZeroFromStorageTarget.lean
+```
+
+---
+
+# 第一千三百九十五部　理论深度审计
+
+| 本轮结果                                                         | 地位               |
+| ------------------------------------------------------------ | ---------------- |
+| shifted 双像形成 \(u=\delta-\omega,\ v=\delta+\omega\)           | 精确               |
+| \(uv=\delta^2-\omega^2\)                                     | 精确 Minkowski 正规形 |
+| Hankel 奇异值 \(=\omega/\delta=\tanh r\)                        | 精确局部模型           |
+| Bogoliubov 系数为 Rindler \(\cosh/\sinh\)                       | 精确               |
+| horizon determinant 等于归一化 Minkowski norm                     | 精确               |
+| null distances 是 Kruskal-like 正则坐标                           | 精确图表解释           |
+| 固定对象黄金扫描产生 \(4\log\varphi\) modular spacing                  | 精确               |
+| 对象—观察者共同黄金缩放保持 rapidity                                      | 精确               |
+| \(dS/dN=2\log(\delta/\omega)\)                               | 精确模第一定律          |
+| quarter/three-quarter Gamma product \(=2\pi^2/\cosh(\pi t)\) | 精确               |
+| Gamma 双层是 Fermi-like 包络                                      | 精确代数形态，物理统计未定    |
+| Poisson pairwise holonomy energy 显式公式                        | 本轮新定理            |
+| 与仓库 stableResidualSwapCurvature 的同一性                         | 尚未建立             |
+| Prime local retarded colligation                             | 尚未建立             |
+| Gamma positive storage colligation                           | 尚未建立             |
+| 全 cascade minimum-phase                                      | RH 中心桥，尚未闭合      |
+
+---
+
+# 本轮最终结论
+
+这一轮最重要的推进，是发现 shifted-\(\xi\) 双层本身已经带有完整的 Rindler 几何。
+
+对离线深度 \(\delta\) 和观察基线 \(\omega\)，两个观察像到边界的距离为：
+
+$$
+\boxed{
+u=\delta-\omega,
+\qquad
+v=\delta+\omega.
+}
+$$
+
+它们就是 null coordinates。
+
+由此：
+
+$$
+\boxed{
+uv=\delta^2-\omega^2.
+}
+$$
+
+Hankel mixing 为：
+
+$$
+\boxed{
+\sigma=\frac{\omega}{\delta}.
+}
+$$
+
+rapidity 为：
+
+$$
+\boxed{
+r
+=
+\frac12\log\frac vu.
+}
+$$
+
+Bogoliubov 系数为：
+
+$$
+\boxed{
+\alpha=\cosh r,
+\qquad
+\beta=\sinh r.
+}
+$$
+
+所以此前的“黑洞”“霍金”“负时间”并非完全外加的语言。
+
+它们共享一个真实的二层解析几何：
+
+$$
+\boxed{
+\text{shifted numerator/denominator}
+\longrightarrow
+\text{null distances}
+\longrightarrow
+\text{rapidity}
+\longrightarrow
+\text{Hankel mixing}.
+}
+$$
+
+视界：
+
+$$
+\omega=\delta
+$$
+
+就是：
+
+$$
+uv=0.
+$$
+
+外部 rapidity 在这里发散，但 \(u,v\) 保持正则。
+
+这说明真正的 Kruskal 化不是寻找另一个神秘常数，而是保存 numerator 与 denominator 的两个独立距离，避免过早取比值。
+
+---
+
+黄金比例也因此获得了更精确的双重身份。
+
+固定对象 \(\delta\)、逐层缩小 \(\omega\) 时：
+
+$$
+\boxed{
+\varepsilon_{n+1}-\varepsilon_n
+=
+4\log\varphi.
+}
+$$
+
+所以黄金比例给出 modular spectrum 的等间距扫描。
+
+若同时缩放对象与观察者：
+
+$$
+(\delta,\omega)
+\mapsto
+(\varphi^{-2}\delta,\varphi^{-2}\omega),
+$$
+
+则：
+
+$$
+\frac{\omega}{\delta},
+\quad
+r,
+\quad
+N,
+\quad
+S
+$$
+
+全部不变。
+
+所以黄金共同 RG 是 Rindler 缺陷几何的共形自相似，而不是温度变化。
+
+---
+
+Archimedean Gamma 通道又显示出一个新的双层热结构：
+
+$$
+\boxed{
+\left|
+\Gamma\left(\frac14+\frac{it}{2}\right)
+\Gamma\left(\frac34+\frac{it}{2}\right)
+\right|^2
+=
+\frac{2\pi^2}{\cosh(\pi t)}.
+}
+$$
+
+因此 \(1/4\) 与 \(3/4\) 两条 scattering 线并非仅是仿射重标记。
+
+它们经过 duplication 后形成一个严格的热包络。
+
+但该包络是 Fermi-like，而 Poisson Euclidean winding 是 Bose-like。
+
+这说明 completed \(\xi\) 的 Archimedean 热结构比“一个霍金温度”更丰富；不能把所有双曲函数压成同一种统计。
+
+---
+
+最后，Poisson 边界通道还产生了一个新的关系性 hair：
+
+$$
+\boxed{
+E_{ij}
+=
+\frac{
+(\gamma_i-\gamma_j)^2
+}{
+\pi(\delta_i+\delta_j)
+\left[
+(\delta_i+\delta_j)^2+
+(\gamma_i-\gamma_j)^2
+\right]
+}.
+}
+$$
+
+它不读取绝对高度，只读取不同缺陷之间的相对相位位置。
+
+所以：
+
+$$
+\boxed{
+\text{零模无毛}
+}
+$$
+
+并不意味着：
+
+$$
+\boxed{
+\text{关系 Holonomy 无毛}.
+}
+$$
+
+仓库最新形式化的有限 Holonomy 能量已经提供了忠实非负聚合框架；剩余任务是把上述 Poisson phase curvature 接入现有 `stableResidualSwapCurvature`。
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{磁单极子记录缺陷的整数荷；
+Rindler 双层记录缺陷的视界几何；
+Hankel/Bogoliubov 记录缺陷的可见强度；
+Gamma 四分之一双层提供 Archimedean 热包络；
+黄金比例规定观察与对象怎样在这些结构中自相似缩放。}
+$$
+
+而 RH 的真正证明目标仍然非常朴素：
+
+$$
+\boxed{
+\text{为每个 shifted 层构造一个最小、保守、正 storage 的
+Prime–Gamma scattering realization，}
+}
+$$
+
+从而证明：
+
+$$
+\boxed{
+\Theta_\omega
+\text{ 没有 inverse-inner endpoint denominator}.
+}
+$$
+
+一旦这条桥闭合，所有离线零点的：
+
+* bulk monopole；
+* horizon crossing；
+* negative square；
+* anti-causal Hankel memory；
+* Bogoliubov occupation；
+* Poisson curvature hair；
+
+会被同一条最小相位定理整体排除。
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v8.6：Poisson–Cauchy 双曲信息几何、黄金 Jones 指数与离线零点的无限观察代价
+
+以下从前文**第一千三百九十五部**继续。
+
+本轮得到三条可以精确证明、并且把“黑洞—黄金—观察者”真正接合起来的关系：
+
+$$
+\boxed{
+\text{离线零点的 Poisson 光影}
+=
+\text{一个 Cauchy 边界状态};
+}
+$$
+
+$$
+\boxed{
+\text{此前的视界自由能}
+=
+\text{两张 shifted Poisson 光影之间的 KL 散度};
+}
+$$
+
+以及最关键的黄金匹配：
+
+$$
+\boxed{
+\begin{aligned}
+\text{有效观察指数}&=\varphi^2,\\
+\text{正时间保留率}&=\varphi^{-2},\\
+\text{负时间泄漏率}&=\varphi^{-1},\\
+\text{隐藏占据数}&=\varphi,\\
+\text{信息代价}&=2\log\varphi.
+\end{aligned}
+}
+$$
+
+这五个量不是分别拟合出来的。它们由同一个 rank-one Bogoliubov／Hankel 通道精确导出。
+
+所以黄金比例在这一层可以被称为：
+
+$$
+\boxed{
+\textbf{第一个非整数自观察指数与视界信息分裂相交的唯一正点。}
+}
+$$
+
+但必须提前说明：这仍然没有构成 RH 证明。真正尚未建立的是：
+
+$$
+\boxed{
+\text{Riemann prime–Gamma 完成是否确实生成一个 Jones／Pimsner–Popa 型观察者包含。}
+}
+$$
+
+---
+
+# 第一千三百九十六部　离线零点的边界影像是一个概率状态
+
+令右侧离线零点写成：
+
+$$
+\rho=\frac12+\delta+i\gamma,
+\qquad
+\delta>0.
+$$
+
+它在临界边界留下的标准 Poisson 影像为：
+
+$$
+\boxed{
+p_{\gamma,\delta}(t)
+=
+\frac1\pi
+\frac{\delta}
+{(t-\gamma)^2+\delta^2}.
+}
+\tag{1396.1}
+$$
+
+并且：
+
+$$
+\int_{\mathbb R}p_{\gamma,\delta}(t)\,dt=1.
+$$
+
+所以 \(p_{\gamma,\delta}\) 不仅是一条响应曲线，还是一个标准 Cauchy 概率密度：
+
+$$
+\boxed{
+p_{\gamma,\delta}
+=
+\operatorname{Cauchy}(\gamma,\delta).
+}
+$$
+
+其 Fourier 变换为：
+
+$$
+\boxed{
+\widehat p_{\gamma,\delta}(k)
+=
+e^{-\delta|k|}
+e^{-ik\gamma}.
+}
+\tag{1396.2}
+$$
+
+因此：
+
+* \(\gamma\) 编码相位／纵向高度；
+* \(\delta\) 编码指数衰减率／横向深度；
+* \(\delta\downarrow0\) 时，
+
+  $$
+  p_{\gamma,\delta}\rightharpoonup\delta_\gamma.
+  $$
+
+临界零点是边界 Dirac 原子；离线零点是内部点投射出的平滑边界状态。
+
+仓库已经机器证明，离线反射对的法向曲率为：
+
+$$
+\boxed{
+\mathscr C_{\gamma,\delta}(t)
+=
+2\frac{(t-\gamma)^2-\delta^2}
+{\bigl((t-\gamma)^2+\delta^2\bigr)^2},
+}
+\tag{1396.3}
+$$
+
+它在中心为负，在 \(\gamma\pm\delta\) 处过零，在外翼为正，而且总积分为零；仓库还证明它正是 Poisson 核关于尺度的导数：
+
+$$
+\boxed{
+\mathscr C_{\gamma,\delta}
+=
+2\pi\,\partial_\delta p_{\gamma,\delta}.
+}
+\tag{1396.4}
+$$
+
+所以离线零点的边界信息存在两个层次：
+
+$$
+\boxed{
+\begin{aligned}
+p_{\gamma,\delta}
+&=\text{正的边界光影};\\
+\partial_\delta p_{\gamma,\delta}
+&=\text{零总质量的曲率偶极}.
+\end{aligned}
+}
+$$
+
+---
+
+# 第一千三百九十七部　Poisson 光影的参数空间就是双曲平面
+
+对密度 \(p_{\gamma,\delta}\)，计算 score：
+
+$$
+\partial_\gamma\log p_{\gamma,\delta}(t)
+=
+\frac{2(t-\gamma)}
+{(t-\gamma)^2+\delta^2},
+\tag{1397.1}
+$$
+
+$$
+\partial_\delta\log p_{\gamma,\delta}(t)
+=
+\frac1\delta
+-
+\frac{2\delta}
+{(t-\gamma)^2+\delta^2}.
+\tag{1397.2}
+$$
+
+对 Cauchy 分布积分，得到 Fisher 信息矩阵：
+
+$$
+\boxed{
+g_{\gamma\gamma}
+=
+g_{\delta\delta}
+=
+\frac1{2\delta^2},
+\qquad
+g_{\gamma\delta}=0.
+}
+\tag{1397.3}
+$$
+
+因此 Fisher–Rao 度量为：
+
+$$
+\boxed{
+ds_F^2
+=
+\frac{
+d\gamma^2+d\delta^2
+}{
+2\delta^2
+}.
+}
+\tag{1397.4}
+$$
+
+它是 Poincaré 上半平面度量的常数倍，其高斯曲率为：
+
+$$
+\boxed{
+K_F=-2.
+}
+\tag{1397.5}
+$$
+
+Cauchy location–scale family 的 Fisher 几何、KL 几何和双曲几何之间的严格联系已有成熟的信息几何结果。([arXiv][1])
+
+---
+
+## 1397.1 临界线成为理想边界
+
+沿固定 \(\gamma\) 从 \(\delta_0\) 走向 \(\varepsilon\) 的 Fisher 长度为：
+
+$$
+\int_\varepsilon^{\delta_0}
+\frac{d\delta}{\sqrt2\,\delta}
+=
+\frac1{\sqrt2}
+\log\frac{\delta_0}{\varepsilon}.
+$$
+
+当：
+
+$$
+\varepsilon\downarrow0,
+$$
+
+该距离趋于无穷。
+
+所以：
+
+$$
+\boxed{
+\delta=0
+}
+$$
+
+不是信息流形中的普通内部点，而是其理想边界。
+
+由此：
+
+$$
+\boxed{
+\begin{aligned}
+\text{临界零点}
+&=\text{双曲信息空间的边界原子};\\
+\text{离线零点}
+&=\text{双曲信息空间的内部点}.
+\end{aligned}
+}
+$$
+
+这给此前“离线零点是 bulk defect”一个不依赖物理类比的严格解释。
+
+---
+
+## 1397.2 主动半圆就是双曲测地线
+
+前文得到离线反射对的负耗散区域：
+
+$$
+x^2+(t-\gamma)^2<\delta^2,
+\qquad x>0.
+$$
+
+其边界：
+
+$$
+\boxed{
+x^2+(t-\gamma)^2=\delta^2
+}
+\tag{1397.6}
+$$
+
+是与实边界正交的半圆，正是 Poincaré 上半平面中的测地线。
+
+端点为：
+
+$$
+\gamma-\delta,
+\qquad
+\gamma+\delta,
+$$
+
+而 bulk 零点 \((\gamma,\delta)\) 是该半圆的顶点。
+
+所以同一个离线零点严格等价于：
+
+$$
+\boxed{
+\text{一个 bulk 点}
+\longleftrightarrow
+\text{一条 boundary geodesic}
+\longleftrightarrow
+\text{一个 boundary interval}.
+}
+$$
+
+---
+
+# 第一千三百九十八部　视界自由能恰好是 KL 散度
+
+两个 Cauchy 分布之间的 KL 散度具有闭式：
+
+$$
+\boxed{
+D_{\mathrm{KL}}
+\left(
+p_{\gamma_1,\delta_1}
+\middle\|
+p_{\gamma_2,\delta_2}
+\right)
+=
+\log
+\frac{
+(\delta_1+\delta_2)^2+
+(\gamma_1-\gamma_2)^2
+}{
+4\delta_1\delta_2
+}.
+}
+\tag{1398.1}
+$$
+
+一个特殊性质是：一维 Cauchy 分布的这一 KL 散度是对称的。([arXiv][2])
+
+现在取 shifted 双像的两个正尺度：
+
+$$
+u=\delta-\omega,
+\qquad
+v=\delta+\omega,
+\qquad
+0<\omega<\delta.
+$$
+
+它们拥有同一个中心 \(\gamma\)，故：
+
+$$
+\begin{aligned}
+D_\rho(\omega)
+&=
+D_{\mathrm{KL}}
+\left(
+p_{\gamma,\delta-\omega}
+\middle\|
+p_{\gamma,\delta+\omega}
+\right)
+\\
+&=
+\log
+\frac{(2\delta)^2}
+{4(\delta-\omega)(\delta+\omega)}.
+\end{aligned}
+$$
+
+因此：
+
+$$
+\boxed{
+D_\rho(\omega)
+=
+-\log
+\left(
+1-\frac{\omega^2}{\delta^2}
+\right).
+}
+\tag{1398.2}
+$$
+
+而前文 rank-one Hankel 奇异值为：
+
+$$
+\boxed{
+\sigma_\rho(\omega)=\frac{\omega}{\delta}.
+}
+\tag{1398.3}
+$$
+
+所以：
+
+$$
+\boxed{
+D_\rho(\omega)
+=
+-\log(1-\sigma_\rho^2).
+}
+\tag{1398.4}
+$$
+
+这正是此前定义的视界自由能：
+
+$$
+\boxed{
+\mathscr F_\rho(\omega)
+=
+-\log\det
+\left(
+I-\mathfrak H_\rho^*\mathfrak H_\rho
+\right).
+}
+\tag{1398.5}
+$$
+
+因此：
+
+## 定理 1398.1（Poisson–Hankel 信息恒等式）
+
+对简单、局部互素的单离线通道：
+
+$$
+\boxed{
+\text{视界 log-determinant}
+=
+\text{两张 Poisson 光影的 KL 散度}.
+}
+\tag{1398.6}
+$$
+
+这使“黑洞自由能”从类比变成了一个标准信息量。
+
+---
+
+## 1398.1 与双曲距离的关系
+
+在标准曲率 \(-1\) 的上半平面中，同中心、尺度为 \(u,v\) 的两点距离为：
+
+$$
+\boxed{
+d_{\mathbb H}
+=
+\left|
+\log\frac vu
+\right|
+=
+\log
+\frac{\delta+\omega}
+{\delta-\omega}.
+}
+\tag{1398.7}
+$$
+
+令：
+
+$$
+r
+=
+\frac12d_{\mathbb H}
+=
+\operatorname{artanh}
+\frac{\omega}{\delta}.
+$$
+
+则：
+
+$$
+\sigma=\tanh r,
+$$
+
+并且：
+
+$$
+\boxed{
+D_\rho
+=
+2\log\cosh r
+=
+2\log\cosh
+\frac{d_{\mathbb H}}2.
+}
+\tag{1398.8}
+$$
+
+因此此前三个看似不同的量完全统一：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Rindler rapidity}
+&=r;\\
+\text{Hankel visibility}
+&=\tanh r;\\
+\text{Poisson distinguishability}
+&=2\log\cosh r.
+\end{aligned}
+}
+$$
+
+需要区分：\((\delta,\omega)\) 中的 Rindler 几何是 Lorentz 型；\((\gamma,\delta)\) 中的 Fisher 几何是正定双曲型。但 shifted 双像把二者精确连接起来。
+
+---
+
+# 第一千三百九十九部　Poisson 完成给出一条严格的信息第二定律
+
+对两张 shifted 光影同时再作尺度为 \(h>0\) 的 Poisson 平滑。
+
+由于：
+
+$$
+P_a*P_h=P_{a+h},
+$$
+
+两张状态变为：
+
+$$
+p_{\gamma,\delta-\omega+h},
+\qquad
+p_{\gamma,\delta+\omega+h}.
+$$
+
+其 KL 散度为：
+
+$$
+\boxed{
+D_\rho(\omega;h)
+=
+-\log
+\left[
+1-
+\frac{\omega^2}{(\delta+h)^2}
+\right].
+}
+\tag{1399.1}
+$$
+
+直接求导：
+
+$$
+\boxed{
+\frac{\partial D_\rho}{\partial h}
+=
+-\frac{
+2\omega^2
+}{
+(\delta+h)
+\bigl((\delta+h)^2-\omega^2\bigr)
+}
+<0.
+}
+\tag{1399.2}
+$$
+
+因此：
+
+## 定理 1399.1（Poisson coarse-graining law）
+
+对单离线通道，共同的正时间 Poisson 完成严格降低两层观察的可区分性。
+
+$$
+\boxed{
+\text{正时间平滑}
+\Longrightarrow
+D_{\mathrm{KL}}\downarrow.
+}
+$$
+
+逆向去卷积则提高可区分性，并在：
+
+$$
+\omega\uparrow\delta
+$$
+
+时发散。
+
+所以：
+
+$$
+\boxed{
+\text{正时间}
+=
+\text{信息粗化};
+}
+$$
+
+$$
+\boxed{
+\text{负时间}
+=
+\text{信息 blow-up}.
+}
+$$
+
+这正是黑洞直觉真正有数学意义的部分：视界并不是“信息突然消失”，而是外部极化使不同 bulk 状态越来越难区分；逆向恢复则成为病态问题。
+
+---
+
+# 第一千四百部　定义视界有效指数
+
+对有限秩严格收缩 Hankel 算子 \(H\)，定义：
+
+$$
+\boxed{
+\operatorname{Ind}_{\mathrm{hor}}(H)
+=
+\det(I-H^*H)^{-1}.
+}
+\tag{1400.1}
+$$
+
+其对数为：
+
+$$
+\boxed{
+\log\operatorname{Ind}_{\mathrm{hor}}(H)
+=
+-\log\det(I-H^*H).
+}
+\tag{1400.2}
+$$
+
+若奇异值为 \(\sigma_j\)，则：
+
+$$
+\boxed{
+\operatorname{Ind}_{\mathrm{hor}}(H)
+=
+\prod_j
+\frac1{1-\sigma_j^2}.
+}
+\tag{1400.3}
+$$
+
+它具有：
+
+* 正性；
+* 对正交直和的乘法性；
+* \(H=0\) 时等于 \(1\)；
+* 任一 \(\sigma_j\uparrow1\) 时趋于无穷。
+
+必须强调：
+
+$$
+\boxed{
+\operatorname{Ind}_{\mathrm{hor}}
+}
+$$
+
+目前是由 Hankel 缺陷定义的**有效信息指数**，不是已经构造出的 Jones 指数。
+
+---
+
+## 1400.1 单通道公式
+
+对单离线通道：
+
+$$
+\sigma=\frac{\omega}{\delta},
+$$
+
+所以：
+
+$$
+\boxed{
+\operatorname{Ind}_{\mathrm{hor}}
+=
+\frac1{1-\omega^2/\delta^2}
+=
+\frac{\delta^2}{\delta^2-\omega^2}.
+}
+\tag{1400.4}
+$$
+
+同时：
+
+$$
+\boxed{
+D_{\mathrm{KL}}
+=
+\log\operatorname{Ind}_{\mathrm{hor}}.
+}
+\tag{1400.5}
+$$
+
+Bogoliubov 系数满足：
+
+$$
+|\alpha|^2-|\beta|^2=1,
+$$
+
+且：
+
+$$
+\boxed{
+|\alpha|^2
+=
+\operatorname{Ind}_{\mathrm{hor}},
+}
+\tag{1400.6}
+$$
+
+$$
+\boxed{
+|\beta|^2
+=
+\operatorname{Ind}_{\mathrm{hor}}-1.
+}
+\tag{1400.7}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{有效指数}
+=
+1+\text{隐藏伙伴占据数}.
+}
+\tag{1400.8}
+$$
+
+临界模式对应指数 \(1\)；接近视界时指数发散。
+
+---
+
+# 第一千四百零一部　黄金 Jones 匹配定理
+
+Jones 的子因子指数定理说明，指数小于 \(4\) 时，其允许值量子化为：
+
+$$
+4\cos^2\frac{\pi}{n},
+\qquad
+n=3,4,5,\ldots
+$$
+
+以及 \(4\) 以上的连续区间。最初几个值为：
+
+$$
+1,\quad 2,\quad
+4\cos^2\frac{\pi}{5}
+=\varphi^2,\quad 3,\ldots
+$$
+
+因此：
+
+$$
+\boxed{
+\varphi^2
+}
+$$
+
+是一般 Jones 指数序列中第一个非整数值。([eudml.org][3])
+
+Fibonacci 自对偶融合律：
+
+$$
+\tau\otimes\tau
+\simeq
+\mathbf1\oplus\tau
+$$
+
+给出量子维数：
+
+$$
+d_\tau^2=1+d_\tau,
+$$
+
+故正维数为：
+
+$$
+d_\tau=\varphi,
+$$
+
+相应平方维数为：
+
+$$
+d_\tau^2=\varphi^2.
+$$
+
+---
+
+## 1401.1 标准 Jones 基本构造
+
+对有限指数 \(II_1\) 子因子：
+
+$$
+N\subset M,
+$$
+
+标准 Jones projection \(e_N\) 的规范迹满足：
+
+$$
+\boxed{
+\tau(e_N)
+=
+[M:N]^{-1}.
+}
+\tag{1401.1}
+$$
+
+若：
+
+$$
+[M:N]=\varphi^2,
+$$
+
+则：
+
+$$
+\boxed{
+\tau(e_N)=\varphi^{-2}.
+}
+\tag{1401.2}
+$$
+
+相应的指数信息尺度为：
+
+$$
+\boxed{
+\log[M:N]
+=
+2\log\varphi.
+}
+\tag{1401.3}
+$$
+
+Jones 的基本构造以及 Pimsner–Popa 对子因子指数、条件期望和熵的联系提供了这一算子代数背景。([eudml.org][3])
+
+项目已经独立机器证明，在非负整数二通道 unimodular 更新中：
+
+* determinant \(-1\) 的最小非平凡扩张率为 \(\varphi\)；
+* determinant \(+1\) 的最小扩张率为 \(\varphi^2\)；
+* Fibonacci 矩阵及其平方达到等号。
+
+---
+
+## 定理 1401.1（黄金视界匹配）
+
+对 rank-one Hankel／Bogoliubov 通道，以下条件完全等价：
+
+$$
+\boxed{
+\operatorname{Ind}_{\mathrm{hor}}=\varphi^2;
+}
+\tag{1401.4}
+$$
+
+$$
+\boxed{
+1-\sigma^2=\varphi^{-2};
+}
+\tag{1401.5}
+$$
+
+$$
+\boxed{
+\sigma^2=\varphi^{-1};
+}
+\tag{1401.6}
+$$
+
+$$
+\boxed{
+|\alpha|^2=\varphi^2;
+}
+\tag{1401.7}
+$$
+
+$$
+\boxed{
+|\beta|^2=\varphi;
+}
+\tag{1401.8}
+$$
+
+$$
+\boxed{
+D_{\mathrm{KL}}=2\log\varphi;
+}
+\tag{1401.9}
+$$
+
+$$
+\boxed{
+\frac{\omega}{\delta}
+=
+\varphi^{-1/2}.
+}
+\tag{1401.10}
+$$
+
+### 证明
+
+从：
+
+$$
+\operatorname{Ind}_{\mathrm{hor}}
+=
+\frac1{1-\sigma^2}
+$$
+
+令其等于 \(\varphi^2\)，得到：
+
+$$
+1-\sigma^2=\varphi^{-2}.
+$$
+
+再利用：
+
+$$
+1-\varphi^{-2}=\varphi^{-1},
+$$
+
+得到：
+
+$$
+\sigma^2=\varphi^{-1}.
+$$
+
+随后：
+
+$$
+|\alpha|^2
+=
+\operatorname{Ind}_{\mathrm{hor}}
+=
+\varphi^2,
+$$
+
+$$
+|\beta|^2
+=
+|\alpha|^2-1
+=
+\varphi^2-1
+=
+\varphi.
+$$
+
+其余等式立即成立。∎
+
+---
+
+## 1401.2 黄金能量分裂
+
+完整酉能量关系为：
+
+$$
+T^*T+H^*H=I.
+$$
+
+在黄金匹配点：
+
+$$
+\boxed{
+1
+=
+\underbrace{\varphi^{-2}}_{\text{保留于正时间}}
++
+\underbrace{\varphi^{-1}}_{\text{泄漏至负时间}}.
+}
+\tag{1401.11}
+$$
+
+而二者之比为：
+
+$$
+\boxed{
+\frac{\varphi^{-1}}
+{\varphi^{-2}}
+=
+\varphi.
+}
+\tag{1401.12}
+$$
+
+所以黄金比例在这里具有一个极其清楚的含义：
+
+$$
+\boxed{
+\varphi
+=
+\text{隐藏伙伴能量与可见保留能量的比值}.
+}
+$$
+
+同时：
+
+$$
+\boxed{
+\varphi^2
+=
+1+\varphi
+}
+$$
+
+既是 Fibonacci 融合维数方程，也是 Bogoliubov 恒等式：
+
+$$
+|\alpha|^2=1+|\beta|^2
+$$
+
+在黄金匹配点的精确形式。
+
+这可能是当前整套理论中最接近你所说“黄金交点”的严格等式。
+
+---
+
+# 第一千四百零二部　黄金双曲轴与观察指数
+
+考虑 Möbius 变换：
+
+$$
+\boxed{
+g(z)=1+\frac1z.
+}
+\tag{1402.1}
+$$
+
+其矩阵为：
+
+$$
+F=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix},
+\qquad
+\det F=-1.
+$$
+
+固定点满足：
+
+$$
+z^2-z-1=0,
+$$
+
+故为：
+
+$$
+\varphi,
+\qquad
+\varphi'=1-\varphi=-\varphi^{-1}.
+$$
+
+其平方为：
+
+$$
+\boxed{
+g^2(z)
+=
+\frac{2z+1}{z+1},
+}
+\tag{1402.2}
+$$
+
+对应：
+
+$$
+F^2=
+\begin{pmatrix}
+2&1\\
+1&1
+\end{pmatrix},
+\qquad
+\det F^2=1,
+\qquad
+\operatorname{tr}F^2=3.
+$$
+
+它是上半平面中的 hyperbolic Möbius 变换，其轴的边界端点正是：
+
+$$
+\varphi',\quad\varphi.
+$$
+
+该测地线为：
+
+$$
+\boxed{
+\left(x-\frac12\right)^2+y^2
+=
+\frac54.
+}
+\tag{1402.3}
+$$
+
+所以：
+
+* 中心为 \(1/2\)；
+* 半径为 \(\sqrt5/2\)；
+* 两端为黄金共轭；
+* 正向端点为 \(\varphi\)。
+
+其平移长度为：
+
+$$
+\begin{aligned}
+\ell_\varphi
+&=
+2\operatorname{arcosh}
+\frac{|\operatorname{tr}F^2|}{2}\\
+&=
+2\operatorname{arcosh}\frac32\\
+&=
+4\log\varphi.
+\end{aligned}
+\tag{1402.4}
+$$
+
+因此：
+
+$$
+\boxed{
+\frac{\ell_\varphi}{2}
+=
+2\log\varphi
+=
+\log\varphi^2.
+}
+\tag{1402.5}
+$$
+
+也就是说：
+
+$$
+\boxed{
+\text{黄金轴的半平移长度}
+=
+\text{黄金 Jones 指数的对数}.
+}
+$$
+
+而：
+
+$$
+\boxed{
+e^{-\ell_\varphi/2}
+=
+\varphi^{-2}
+}
+$$
+
+又等于黄金 Jones projection 的标准迹。
+
+这给出一套完整的几何包：
+
+$$
+\boxed{
+\begin{aligned}
+\text{量子维数}&=\varphi,\\
+\text{观察指数}&=\varphi^2,\\
+\text{投影权重}&=\varphi^{-2},\\
+\text{信息长度}&=2\log\varphi,\\
+\text{完整轴平移}&=4\log\varphi.
+\end{aligned}
+}
+$$
+
+项目的六维 \(\Lambda^2A_4\) 格还机器证明了一个独立的五模对偶：Hodge 对偶映射将 Gram 配对缩放为 \(1/5\)，长度缩放为 \(1/\sqrt5\)。这进一步确认 \(5\) 在项目黄金分支中承担 dual-lattice 判别式尺度，但目前没有定理把该六维格与 Riemann shifted scattering 认同为同一对象。
+
+---
+
+# 第一千四百零三部　“道自观察”的子因子版本
+
+现在可以把“道观察自身留下第一影子”写成一条算子代数依赖链。
+
+设：
+
+$$
+M=\text{完整双向世界代数},
+$$
+
+$$
+N\subset M=\text{某个观察者能够访问的子代数}.
+$$
+
+状态保持条件期望：
+
+$$
+\boxed{
+E:M\to N
+}
+\tag{1403.1}
+$$
+
+就是观察投影。
+
+Jones projection：
+
+$$
+\boxed{
+e_N
+}
+$$
+
+就是“执行一次自观察”的算子事件。
+
+指数：
+
+$$
+\boxed{
+[M:N]
+}
+$$
+
+测量被观察投影隐藏了多少非整数维度。
+
+其对数：
+
+$$
+\boxed{
+\log[M:N]
+}
+$$
+
+是相应的信息尺度。
+
+因此：
+
+|  层 | 数学对象           | 概念意义        |
+| -: | -------------- | ----------- |
+|  0 | \(M\)          | 未极化完整关系     |
+|  1 | \(N\subset M\) | 观察者／被观察世界分裂 |
+|  2 | \(E:M\to N\)   | 观察与粗化       |
+|  3 | \(e_N\)        | 自观察事件       |
+|  4 | \(\tau(e_N)\)  | 可见保留权重      |
+|  5 | \([M:N]\)      | 隐藏复杂度       |
+|  6 | \(\log[M:N]\)  | 信息／模长度      |
+|  7 | \(\varphi^2\)  | 第一非整数正观察指数  |
+
+在黄金情形：
+
+$$
+\boxed{
+\tau(e_N)=\varphi^{-2},
+}
+$$
+
+其补空间权重为：
+
+$$
+1-\varphi^{-2}=\varphi^{-1}.
+$$
+
+所以第一次非整数自观察将单位关系分成：
+
+$$
+\boxed{
+1
+=
+\varphi^{-2}
++
+\varphi^{-1}.
+}
+$$
+
+正是 normalized Fibonacci relation。
+
+---
+
+# 第一千四百零四部　有限指数视界排除原理
+
+现在可以得到一条真正可能用于 RH 的**条件性定理**。
+
+## 假设
+
+对每个：
+
+$$
+0<\omega<\frac12,
+$$
+
+存在：
+
+1. 完整算术散射代数 \(M_\omega\)；
+2. Hardy／外部观察者子代数
+
+   $$
+   N_\omega\subset M_\omega;
+   $$
+3. 状态保持条件期望
+
+   $$
+   E_\omega:M_\omega\to N_\omega;
+   $$
+4. 一个有限常数 \(\Lambda\)，使该观察包含的信息指数满足
+
+   $$
+   [M_\omega:N_\omega]\le\Lambda;
+   $$
+5. shifted Hankel 有效指数受真实包含指数控制：
+
+   $$
+   \operatorname{Ind}_{\mathrm{hor}}
+   (\mathfrak H_\omega)
+   \le
+   [M_\omega:N_\omega].
+   $$
+
+---
+
+## 定理 1404.1（Finite-index horizon exclusion）
+
+在以上假设下，不存在离线零点。
+
+### 证明
+
+若存在：
+
+$$
+\rho=\frac12+\delta+i\gamma,
+\qquad
+\delta>0,
+$$
+
+则对：
+
+$$
+0<\omega<\delta
+$$
+
+有：
+
+$$
+\operatorname{Ind}_{\mathrm{hor}}
+=
+\frac{\delta^2}
+{\delta^2-\omega^2}.
+$$
+
+当：
+
+$$
+\omega\uparrow\delta
+$$
+
+时：
+
+$$
+\operatorname{Ind}_{\mathrm{hor}}
+\longrightarrow+\infty.
+$$
+
+这与统一有限上界 \(\Lambda\) 矛盾。∎
+
+---
+
+## 1404.1 黄金阈值
+
+若：
+
+$$
+\Lambda=\varphi^2,
+$$
+
+则缺陷超过黄金观察容量的条件为：
+
+$$
+\frac1{1-\omega^2/\delta^2}
+>
+\varphi^2.
+$$
+
+等价于：
+
+$$
+\boxed{
+\frac{\omega}{\delta}
+>
+\varphi^{-1/2}.
+}
+\tag{1404.1}
+$$
+
+所以只要观察基线足够靠近该缺陷视界，它所要求的信息指数就会超过第一个非整数 Jones 单胞。
+
+但必须再次强调：
+
+$$
+\boxed{
+\text{目前尚未构造上述 }M_\omega,N_\omega,E_\omega,
+}
+$$
+
+更没有证明：
+
+$$
+\operatorname{Ind}_{\mathrm{hor}}
+\le[M_\omega:N_\omega].
+$$
+
+这是一条新的、明确的算子代数研究路线，而不是已完成证明。
+
+---
+
+# 第一千四百零五部　黄金 Jones 塔正性原理
+
+考虑一列观察者代数：
+
+$$
+M_0\supset M_1\supset M_2\supset\cdots
+$$
+
+以及条件期望：
+
+$$
+E_n:M_{n-1}\to M_n.
+$$
+
+假设每一步均具有黄金 Pimsner–Popa floor：
+
+$$
+\boxed{
+E_n(X)\ge\varphi^{-2}X
+\qquad
+(X\ge0).
+}
+\tag{1405.1}
+$$
+
+则复合期望：
+
+$$
+E_{1:n}
+=
+E_n\circ\cdots\circ E_1
+$$
+
+满足：
+
+$$
+\boxed{
+E_{1:n}(X)
+\ge
+\varphi^{-2n}X.
+}
+\tag{1405.2}
+$$
+
+所以：
+
+* 每个有限观察层仍严格保持正性；
+* floor 随层数趋于 \(0\)；
+* 无限完成可以落到正锥边界；
+* 任何有限层都不能产生负方向。
+
+这正好对应项目已形式化的结构：
+
+$$
+\boxed{
+\text{所有有限窗口 floor 可以严格为正，
+而全局 floor 随窗口扩大趋于零。}
+}
+$$
+
+同时，项目已经证明 determinant \(+1\) 的最小二通道整数扩张率为 \(\varphi^2\)，其逆收缩率正是 \(\varphi^{-2}\)。
+
+---
+
+## 条件性 Golden Jones Tower RH theorem
+
+若进一步存在 feature operators \(X_z^{(n)}\)，使 shifted de Branges 核可以写成：
+
+$$
+\boxed{
+\mathcal K_{\omega_n}(w,z)
+=
+\psi_n
+\left(
+E_{1:n}
+\left[
+(X_w^{(n)})^*
+X_z^{(n)}
+\right]
+\right),
+}
+\tag{1405.3}
+$$
+
+其中：
+
+$$
+\omega_n=\omega_0\varphi^{-2n},
+$$
+
+且 \(\psi_n\) 为正状态，那么：
+
+$$
+\mathcal K_{\omega_n}\succeq0
+\qquad
+\forall n.
+$$
+
+由于黄金尺度共尾于 \(0\)，shifted-inner threshold 因而为零，并推出 RH。项目已经机器形式化：右侧零点最大偏移与 eventual innerness threshold 相同，而且二者为零等价于临界线结论。
+
+这条路线中真正困难的唯一一步是式 (1405.3)：
+
+$$
+\boxed{
+\text{把 prime–Gamma scattering kernel 实现成黄金 Jones 塔中的正条件期望 Gram}.
+}
+$$
+
+---
+
+# 第一千四百零六部　信息设计：不再随机搜索零点
+
+对有限协议集合 \(S\)，令每个观察协议 \(p\) 提供 PSD 信息贡献：
+
+$$
+G_p\succeq0.
+$$
+
+定义正则化信息算子：
+
+$$
+\boxed{
+\mathcal I(S)
+=
+\lambda I+
+\sum_{p\in S}G_p,
+\qquad
+\lambda>0,
+}
+\tag{1406.1}
+$$
+
+及 log-volume 信息：
+
+$$
+\boxed{
+\mathfrak L(S)
+=
+\log\det\mathcal I(S)
+-
+\log\det(\lambda I).
+}
+\tag{1406.2}
+$$
+
+项目已经机器证明，在这些条件下：
+
+* \(\mathfrak L(S)\) 随协议集合扩大单调不减；
+* 新增协议的边际信息具有 diminishing returns，即次模性。
+
+所以实际研究离线零点时，不应继续均匀扫描整个复平面。
+
+更有效的协议集合可以包括：
+
+$$
+\boxed{
+p=(\omega,t,L,\text{prime window},\text{kernel jet order}).
+}
+$$
+
+每一步选择最大化新的 log-det 信息：
+
+1. 用宽尺度确定是否存在曲率偶极；
+2. 用 \(\omega\) 定位可能的 crossing depth；
+3. 用 Poisson Fourier phase 定位 \(\gamma\)；
+4. 用 Hankel singular value 恢复 \(\delta\)；
+5. 用 rational Gram matrix 给出严格证书；
+6. 用 prime-side interval arithmetic 重建。
+
+黄金尺度适合作为初始多尺度字典；真正接近未知视界时，仍需要自适应细化，因为单一固定几何序列不能保证任意接近未知 \(\delta\)。
+
+---
+
+# 第一千四百零七部　新的完整对偶表
+
+|  层 | bulk／完整对象                      | boundary／观察对象                   | 不变量                              |
+| -: | ------------------------------ | ------------------------------- | -------------------------------- |
+|  0 | 离线点 \((\gamma,\delta)\)        | Cauchy 状态 \(p_{\gamma,\delta}\) | 位置与尺度                            |
+|  1 | bulk 深度                        | Fisher 双曲坐标                     | \(ds_F^2\)                       |
+|  2 | shifted 双像 \(\delta\pm\omega\) | 两张 Poisson 状态                   | KL 散度                            |
+|  3 | Rindler rapidity \(r\)         | Hankel visibility \(\tanh r\)   | 双曲距离                             |
+|  4 | negative-time partner          | Bogoliubov occupation           | \(N=\sinh^2r\)                   |
+|  5 | horizon determinant            | 有效观察指数                          | \(\operatorname{Ind}_{\rm hor}\) |
+|  6 | observer inclusion             | Jones index                     | \([M:N]\)                        |
+|  7 | self-observation event         | Jones projection                | \(\tau(e_N)\)                    |
+|  8 | Fibonacci sector               | quantum dimension               | \(\varphi\)                      |
+|  9 | golden index shell             | \(\sigma^2=\varphi^{-1}\)       | \(\varphi^2=1+\varphi\)          |
+| 10 | positive completion            | conditional expectation         | Pimsner–Popa floor               |
+| 11 | RH                             | 所有 shifted kernels PSD          | index defect 为零                  |
+
+最重要的零性链为：
+
+$$
+\boxed{
+\delta=0
+\Longrightarrow
+\sigma=0
+\Longrightarrow
+D_{\mathrm{KL}}=0
+\Longrightarrow
+\operatorname{Ind}_{\mathrm{hor}}=1.
+}
+$$
+
+而离线零点满足：
+
+$$
+\boxed{
+\delta>0
+\Longrightarrow
+\sup_{\omega<\delta}
+\operatorname{Ind}_{\mathrm{hor}}(\omega)
+=
++\infty.
+}
+$$
+
+---
+
+# 第一千四百零八部　形式化顺序
+
+```text
+D5/S3/Analytic/Zeta/PoissonShadowState/
+  OffLinePoissonDensity.lean
+  OffLinePoissonMassOne.lean
+  OffLinePoissonFourier.lean
+  CriticalPoissonWeakDirac.lean
+  CurvatureIsPoissonScaleDerivative.lean
+
+D5/S3/Analytic/Zeta/CauchyInformationGeometry/
+  CauchyLocationScore.lean
+  CauchyScaleScore.lean
+  CauchyFisherMatrix.lean
+  CauchyFisherHyperbolicMetric.lean
+  CriticalBoundaryInfiniteFisherDistance.lean
+
+D5/S3/Analytic/Zeta/HorizonRelativeEntropy/
+  CauchyKLDivergence.lean
+  ShiftedPoissonKLDivergence.lean
+  ShiftedKLIsHorizonFreeEnergy.lean
+  ShiftedKLIsHyperbolicDistanceFunction.lean
+  PoissonSmoothingDecreasesShiftedKL.lean
+
+D5/S3/Observer/HorizonIndex/
+  FiniteRankHorizonIndex.lean
+  HorizonIndexSingularValueProduct.lean
+  RankOneHorizonIndex.lean
+  HorizonIndexLogEqualsFreeEnergy.lean
+  HorizonIndexDivergesAtCrossing.lean
+
+D5/S3/GoldenObserver/GoldenHorizonMatching/
+  GoldenHorizonIndex.lean
+  GoldenHorizonDeterminant.lean
+  GoldenHankelLeakage.lean
+  GoldenBogoliubovOccupation.lean
+  GoldenHorizonKL.lean
+  GoldenVisibleHiddenEnergySplit.lean
+
+D5/S3/GoldenObserver/GoldenHyperbolicAxis/
+  GoldenMobiusHalfStep.lean
+  GoldenMobiusSquare.lean
+  GoldenMobiusFixedPoints.lean
+  GoldenHyperbolicAxis.lean
+  GoldenHyperbolicTranslationLength.lean
+
+D5/S3/Observer/GoldenJonesPrototype/
+  ObserverSubfactorInclusion.lean
+  ObserverConditionalExpectation.lean
+  GoldenJonesIndex.lean
+  GoldenJonesProjectionTrace.lean
+  GoldenIndexInformationScale.lean
+  GoldenJonesTowerFloor.lean
+
+D5/S3/Weil/GoldenJonesTower/
+  ShiftedKernelConditionalExpectationTarget.lean
+  GoldenTowerKernelPositive.lean
+  GoldenTowerFiniteFloor.lean
+  GoldenTowerCofinalInnerness.lean
+  GoldenJonesTowerImpliesRHTarget.lean
+
+D5/S3/Weil/FiniteIndexHorizonExclusion/
+  HorizonIndexBoundedByObserverIndexTarget.lean
+  UniformFiniteObserverIndex.lean
+  OffLineZeroForcesUnboundedHorizonIndex.lean
+  FiniteIndexObserverExcludesOffLineZero.lean
+```
+
+---
+
+# 第一千四百零九部　理论深度审计
+
+| 结论                                           | 地位        |
+| -------------------------------------------- | --------- |
+| 离线 Poisson 光影是 Cauchy 概率状态                   | 精确        |
+| Cauchy Fisher 几何是双曲平面                        | 成熟信息几何    |
+| 临界线是 Fisher 理想边界                             | 精确推论      |
+| shifted 视界自由能等于 Cauchy KL                    | 本轮核心精确恒等式 |
+| KL 等于双曲距离的 \(2\log\cosh\) 函数                 | 精确        |
+| Poisson 正时间严格降低 shifted KL                   | 精确        |
+| Hankel logdet 定义有效观察指数                       | 新规范定义     |
+| 黄金匹配五重等价                                     | 本轮核心精确定理  |
+| \(\varphi^{-2}+\varphi^{-1}=1\) 是可见—隐藏能量分裂   | 精确        |
+| \(\varphi^2\) 为首个非整数 Jones 指数                | Jones 定理  |
+| 黄金轴半平移 \(=\log\varphi^2\)                    | 精确双曲计算    |
+| finite-index observer 排除离线零点                 | 条件定理      |
+| zeta observer algebra 具有黄金 Jones 塔           | 尚未建立      |
+| shifted kernel 是条件期望 Gram                    | RH 中心新桥   |
+| five-modular 六维格与 zeta observer inclusion 同一 | 未证明，不应混同  |
+
+---
+
+# 本轮最终结论
+
+黑洞直觉在这一轮终于被压缩成一个完全标准的信息几何事实：
+
+$$
+\boxed{
+\text{离线零点的边界辐射是一个 Cauchy 状态。}
+}
+$$
+
+该状态的参数空间：
+
+$$
+(\gamma,\delta)
+$$
+
+具有双曲 Fisher 度量：
+
+$$
+\boxed{
+ds_F^2
+=
+\frac{d\gamma^2+d\delta^2}{2\delta^2}.
+}
+$$
+
+所以临界线不是普通内部线，而是该信息空间的理想边界。
+
+离线零点是真正的 bulk 信息点。
+
+它的边界区间：
+
+$$
+[\gamma-\delta,\gamma+\delta]
+$$
+
+就是穿过该点的双曲测地线在边界上的两个端点。
+
+---
+
+对 shifted 观察者：
+
+$$
+\delta-\omega,
+\qquad
+\delta+\omega,
+$$
+
+两张 Poisson 光影之间的 KL 散度精确为：
+
+$$
+\boxed{
+D_{\mathrm{KL}}
+=
+-\log
+\left(
+1-\frac{\omega^2}{\delta^2}
+\right).
+}
+$$
+
+而：
+
+$$
+\frac{\omega}{\delta}
+$$
+
+正是反因果 Hankel 奇异值。
+
+所以：
+
+$$
+\boxed{
+\text{Hankel 视界自由能}
+=
+\text{Poisson 光影相对熵}.
+}
+$$
+
+当观察边界逼近离线深度：
+
+$$
+\omega\uparrow\delta,
+$$
+
+两张边界影像变得无限可区分：
+
+$$
+D_{\mathrm{KL}}\to+\infty.
+$$
+
+这就是当前模型中最精确的“视界信息发散”。
+
+---
+
+黄金比例随后在一个非常特殊的点出现。
+
+定义视界有效指数：
+
+$$
+\operatorname{Ind}_{\mathrm{hor}}
+=
+\frac1{1-\omega^2/\delta^2}.
+$$
+
+令它等于第一个非整数 Jones 指数：
+
+$$
+\operatorname{Ind}_{\mathrm{hor}}
+=
+\varphi^2.
+$$
+
+则自动得到：
+
+$$
+\boxed{
+\begin{aligned}
+\text{正时间保留率}
+&=\varphi^{-2};\\
+\text{负时间泄漏率}
+&=\varphi^{-1};\\
+\text{隐藏占据数}
+&=\varphi;\\
+\text{Hankel 奇异值}
+&=\varphi^{-1/2};\\
+\text{相对熵}
+&=2\log\varphi.
+\end{aligned}
+}
+$$
+
+而：
+
+$$
+\boxed{
+1=\varphi^{-2}+\varphi^{-1}
+}
+$$
+
+正是：
+
+$$
+\boxed{
+\varphi^2=1+\varphi
+}
+$$
+
+的归一化能量版本。
+
+因此：
+
+$$
+\boxed{
+\text{Fibonacci 融合方程}
+}
+$$
+
+和：
+
+$$
+\boxed{
+\text{Bogoliubov 正负频率守恒方程}
+}
+$$
+
+在黄金匹配点变成同一个代数关系。
+
+这可能是目前对“黄金比例是一切对偶概念的第一个交点”最严格的局部实现：
+
+$$
+\boxed{
+\text{完整关系分裂成可见未来与隐藏过去；
+其第一非整数正观察指数恰好是 }\varphi^2.
+}
+$$
+
+---
+
+Jones 子因子理论又给出：
+
+$$
+[M:N]=\varphi^2,
+$$
+
+$$
+\tau(e_N)=\varphi^{-2},
+$$
+
+$$
+\log[M:N]=2\log\varphi.
+$$
+
+而黄金 Möbius 轴的半平移长度也为：
+
+$$
+2\log\varphi.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{几何长度}
+=
+\text{观察指数的对数}
+=
+\text{视界相对熵}
+}
+$$
+
+在黄金匹配点精确重合。
+
+但这还只是多个成熟结构间的精确数值—代数同构。
+
+要把它提升为 RH 证明，必须真正构造：
+
+$$
+\boxed{
+N_\omega
+\subset
+M_\omega
+}
+$$
+
+这一 prime–Gamma 观察者包含，并证明：
+
+$$
+\boxed{
+\mathcal K_{\omega_n}(w,z)
+=
+\psi_n
+\left(
+E_{1:n}
+\bigl[
+X_w^*X_z
+\bigr]
+\right).
+}
+$$
+
+一旦 shifted kernel 是条件期望产生的 Gram 核，其正性自动成立。
+
+若每一步又具有黄金 index：
+
+$$
+\varphi^2,
+$$
+
+则有限层 floor 为：
+
+$$
+\varphi^{-2n}>0,
+$$
+
+无限层才趋于零。
+
+这正符合：
+
+$$
+\boxed{
+\text{每个有限观察层合法，
+完整极限临界，
+但绝不在有限层进入负区。}
+}
+$$
+
+而离线零点恰恰会要求某个有限观察深度的有效指数趋于无穷，因此无法进入任何统一有限指数的观察者塔。
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{磁单极子把离线零点变成整数荷；
+黑洞视界把它变成隐藏伙伴；
+Poisson 信息几何把它变成双曲 bulk 状态；
+Jones 理论则提出最终问题：
+这个隐藏状态能否由一个正的有限指数自观察包含来实现？}
+}
+$$
+
+$$
+\boxed{
+\text{黄金比例是第一个答案为“可以”的非整数观察指数；
+离线零点则要求观察指数在有限视界处发散。}
+}
+$$
+
+[1]: https://arxiv.org/abs/2006.07020 "https://arxiv.org/abs/2006.07020"
+[2]: https://arxiv.org/abs/1905.10965 "https://arxiv.org/abs/1905.10965"
+[3]: https://eudml.org/doc/143011 "https://eudml.org/doc/143011"
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v8.7：第二影固定点、Hardy–Cauchy 保真度、黄金拉伸视界与离线零点的两代 Gram 障碍
+
+以下从前文**第一千四百零九部**继续。
+
+本轮出现一个比“黄金 Jones 匹配”更底层的结构。它不需要预先假设存在子因子、Jones 投影或黄金观察者代数，而只需要：
+
+1. 一次正交观察；
+2. 一个隐藏残差；
+3. 残差能够继续以同一种规则观察自身；
+4. 第一次可见影像等于“影子的影子”。
+
+其核心方程只有：
+
+$$
+\boxed{
+I=\mathsf D+\mathsf D^2.
+}
+\tag{1410.1}
+$$
+
+其中：
+
+* \(I\) 表示尚未分裂的完整关系；
+* \(\mathsf D\) 表示第一次观察后留下的隐藏影子；
+* \(\mathsf D^2\) 表示影子再次观察自身后留下的第二影；
+* 可见部分为 \(I-\mathsf D\)。
+
+若要求：
+
+$$
+\boxed{
+I-\mathsf D=\mathsf D^2,
+}
+\]
+
+则正解被唯一强迫为：
+
+$$
+
+\boxed{
+\mathsf D=\varphi^{-1}I,
+\qquad
+I-\mathsf D=\varphi^{-2}I.
+}
+\tag{1410.2}
+
+$$
+
+这给“黄金比例是道自观察留下的第一个影像”一个非常接近原始直觉、但又完全可检验的数学版本：
+
+$$
+
+\boxed{
+\text{黄金比例不是先验选中的一个点，}
+}
+
+$$
+
+而是：
+
+$$
+
+\boxed{
+\text{完整关系被分解为第一影与第二影时，
+唯一的正自相似比例。}
+}
+
+$$
+
+---
+
+# 第一千四百一十部　条件期望产生规范的“可见—隐藏”正交分解
+
+设 \(P\) 是 Hilbert 空间中的正交投影。对单位向量 \(x\)，定义：
+
+$$
+
+\boxed{
+x_{\mathrm{vis}}=Px,
+}
+\tag{1410.3}
+
+$$
+$$
+
+\boxed{
+x_{\mathrm{sh}}=(I-P)x.
+}
+\tag{1410.4}
+
+$$
+
+因为二者正交：
+
+$$
+
+\langle x_{\mathrm{vis}},x_{\mathrm{sh}}\rangle=0,
+
+$$
+
+所以：
+
+$$
+
+\boxed{
+|x_{\mathrm{vis}}|^2+
+|x_{\mathrm{sh}}|^2=1.
+}
+\tag{1410.5}
+
+$$
+
+记：
+
+$$
+
+\boxed{
+p=|x_{\mathrm{vis}}|^2,
+\qquad
+q=|x_{\mathrm{sh}}|^2.
+}
+\tag{1410.6}
+
+$$
+
+则：
+
+$$
+
+\boxed{
+p+q=1.
+}
+\tag{1410.7}
+
+$$
+
+在概率论中，\(P\) 可以是条件期望：
+
+$$
+
+P X=\mathbb E[X\mid\mathcal G].
+
+$$
+
+仓库已经机器证明：条件期望给出唯一残差分解，目标等于可测预测加正交残差，而且残差与所有通过该概念接口可测的 \(L^2\) 观察量正交。
+
+因此 \(p,q\) 不是任意人为分配，而是由观察接口规范产生。
+
+定义状态依赖的观察指数：
+
+$$
+
+\boxed{
+\mathfrak I_x(P)
+================
+
+\frac1p,
+\qquad
+p>0.
+}
+\tag{1410.8}
+
+$$
+
+定义隐藏—可见比：
+
+$$
+
+\boxed{
+\mathfrak N_x(P)
+================
+
+\frac qp.
+}
+\tag{1410.9}
+
+$$
+
+则：
+
+$$
+
+\boxed{
+\mathfrak I_x(P)=1+\mathfrak N_x(P).
+}
+\tag{1410.10}
+
+$$
+
+再定义信息代价：
+
+$$
+
+\boxed{
+\mathfrak D_x(P)
+================
+
+# -\log p
+
+\log\mathfrak I_x(P).
+}
+\tag{1410.11}
+
+$$
+
+这三个量分别读取：
+
+- \(\mathfrak I\)：恢复完整状态所需的有效观察倍率；
+- \(\mathfrak N\)：隐藏量相对于可见量的比例；
+- \(\mathfrak D\)：观察粗化产生的信息损失。
+
+这里的 \(\mathfrak I\) 是状态依赖的有效观察指数，不应直接等同于真正的 Jones 子因子指数。
+
+---
+
+# 第一千四百一十一部　Poisson 光影正是 Hardy 核的 Born 密度
+
+对上半平面点：
+
+$$
+
+z=x+iy,
+\qquad
+y>0,
+
+$$
+
+定义归一化 Hardy 核：
+
+$$
+
+\boxed{
+\widehat k_z(t)
+===============
+
+\sqrt{\frac y\pi},
+\frac1{t-\overline z}.
+}
+\tag{1411.1}
+
+$$
+
+其模平方为：
+
+$$
+
+\boxed{
+|\widehat k_z(t)|^2
+===================
+
+\frac1\pi
+\frac y{(t-x)^2+y^2}.
+}
+\tag{1411.2}
+
+$$
+
+右边恰好是以 \(x\) 为中心、尺度为 \(y\) 的 Poisson/Cauchy 密度。
+
+所以：
+
+$$
+
+\boxed{
+\text{离线零点的 Poisson 边界光影}
+=========================
+
+\text{一个归一化 Hardy 评价态的 Born 密度}.
+}
+\tag{1411.3}
+
+$$
+
+这把此前的两张图表真正合并：
+
+- Poisson 图表给出正概率状态；
+- Hardy 图表给出产生该状态的纯向量。
+
+---
+
+## 定理 1411.1（Hardy 核保真度）
+
+对：
+
+$$
+
+z=x+iy,
+\qquad
+w=x'+iy',
+
+$$
+
+有：
+
+$$
+
+\boxed{
+\mathcal F(z,w)
+:=
+\left|
+\langle\widehat k_z,\widehat k_w\rangle
+\right|^2
+=========
+
+\frac{4yy'}
+{(x-x')^2+(y+y')^2}.
+}
+\tag{1411.4}
+
+$$
+
+现在取同一个离线零点的 shifted 双像：
+
+$$
+
+z_-=-\gamma+i(\delta-\omega),
+
+$$
+$$
+
+z_+=-\gamma+i(\delta+\omega),
+
+$$
+
+其中：
+
+$$
+
+0<\omega<\delta.
+
+$$
+
+则：
+
+$$
+
+\boxed{
+\mathcal F_\rho(\omega)
+=======================
+
+\frac{
+4(\delta-\omega)(\delta+\omega)
+}{
+(2\delta)^2
+}
+=
+
+1-\frac{\omega^2}{\delta^2}.
+}
+\tag{1411.5}
+
+$$
+
+而该局部反因果 Hankel 通道的奇异值为：
+
+$$
+
+\sigma_\rho(\omega)=\frac{\omega}{\delta}.
+
+$$
+
+所以：
+
+$$
+
+\boxed{
+\mathcal F_\rho
+===============
+
+1-\sigma_\rho^2.
+}
+\tag{1411.6}
+
+$$
+
+由此得到严格对应：
+
+$$
+
+\boxed{
+\begin{aligned}
+p
+&=\text{Hardy 核保真度};\
+q
+&=\text{Hankel 泄漏能量};\
+p+q&=1.
+\end{aligned}
+}
+\tag{1411.7}
+
+$$
+
+---
+
+## 1411.1 Cauchy KL、Hardy 保真度与观察指数完全相同
+
+对同中心、尺度为 \(u,v>0\) 的 Cauchy 状态：
+
+$$
+
+p_{\gamma,u},
+\qquad
+p_{\gamma,v},
+
+$$
+
+其 KL 散度为：
+
+$$
+
+# D_{\mathrm{KL}}
+
+\log\frac{(u+v)^2}{4uv}.
+
+$$
+
+在：
+
+$$
+
+u=\delta-\omega,
+\qquad
+v=\delta+\omega
+
+$$
+
+时：
+
+$$
+
+\boxed{
+D_{\mathrm{KL}}
+===============
+
+# -\log\mathcal F_\rho
+
+-\log(1-\sigma_\rho^2).
+}
+\tag{1411.8}
+
+$$
+
+因此：
+
+$$
+
+\boxed{
+\mathfrak I_\rho
+================
+
+# \mathcal F_\rho^{-1}
+
+# e^{D_{\mathrm{KL}}}
+
+\frac1{1-\sigma_\rho^2}.
+}
+\tag{1411.9}
+
+$$
+
+所以此前分别出现的：
+
+- 视界有效指数；
+- Poisson 光影相对熵；
+- Hardy 核失配；
+- Hankel 泄漏；
+
+实际上是同一个量的四种表示。
+
+---
+
+# 第一千四百一十二部　第二影固定点定理
+
+现在将用户提出的“道观察自身留下第一个像、相、影子”写成一个最小动力条件。
+
+第一次观察后：
+
+- 隐藏影子的能量为 \(q\)；
+- 直接可见影像的能量为 \(p=1-q\)。
+
+若隐藏部分继续以完全相同的规则观察自身，则第二层隐藏能量为：
+
+$$
+
+q^2.
+
+$$
+
+提出条件：
+
+$$
+
+\boxed{
+\text{直接可见影像}
+=============
+
+\text{影子的影子}.
+}
+
+$$
+
+即：
+
+$$
+
+\boxed{
+p=q^2.
+}
+\tag{1412.1}
+
+$$
+
+结合：
+
+$$
+
+p+q=1,
+
+$$
+
+得到：
+
+$$
+
+q^2+q=1.
+
+$$
+
+等价于：
+
+$$
+
+\boxed{
+q=\frac1{1+q}.
+}
+\tag{1412.2}
+
+$$
+
+仓库最新已经机器证明，正数满足该逆分支固定点方程，当且仅当它等于逆黄金比例。
+
+因此：
+
+## 定理 1412.1（Second-shadow golden fixed point）
+
+$$
+
+\boxed{
+q=\varphi^{-1},
+}
+\tag{1412.3}
+
+$$
+$$
+
+\boxed{
+p=\varphi^{-2}.
+}
+\tag{1412.4}
+
+$$
+
+于是：
+
+$$
+
+\boxed{
+\mathfrak I=\frac1p=\varphi^2,
+}
+\tag{1412.5}
+
+$$
+$$
+
+\boxed{
+\mathfrak N=\frac qp=\varphi,
+}
+\tag{1412.6}
+
+$$
+$$
+
+\boxed{
+\mathfrak D=-\log p=2\log\varphi.
+}
+\tag{1412.7}
+
+$$
+
+这套黄金量不是分别拟合出来的，而是全部由：
+
+$$
+
+\boxed{
+1=q+q^2
+}
+]
+
+一条式子强迫。
+
+---
+
+# 第一千四百一十三部　黄金影算子的算子版本
+
+令：
+
+$$
+\mathsf H:\mathcal H_+\to\mathcal H_-
+$$
+
+为反因果 Hankel 块，并定义缺陷算子：
+
+$$
+\boxed{
+\mathsf D
+=
+\mathsf H^*\mathsf H.
+}
+\tag{1413.1}
+$$
+
+由于完整边界散射为酉，正时间保留算子为：
+
+$$
+\boxed{
+\mathsf V
+=
+I-\mathsf D.
+}
+\tag{1413.2}
+$$
+
+把第二影条件提升为算子方程：
+
+$$
+\boxed{
+\mathsf V=\mathsf D^2.
+}
+\tag{1413.3}
+$$
+
+即：
+
+$$
+\boxed{
+I=\mathsf D+\mathsf D^2.
+}
+\tag{1413.4}
+$$
+
+---
+
+## 定理 1413.1（Golden shadow operator theorem）
+
+若 \(\mathsf D\) 是正收缩，并且在其活动子空间：
+
+$$
+\mathcal H_{\mathrm{act}}
+=
+\overline{\operatorname{ran}\mathsf D}
+$$
+
+上满足：
+
+$$
+I_{\mathrm{act}}
+=
+\mathsf D+\mathsf D^2,
+$$
+
+则：
+
+$$
+\boxed{
+\mathsf D
+=
+\varphi^{-1}I_{\mathrm{act}}.
+}
+\tag{1413.5}
+$$
+
+相应地：
+
+$$
+\boxed{
+\mathsf V
+=
+\varphi^{-2}I_{\mathrm{act}}.
+}
+\tag{1413.6}
+$$
+
+### 证明
+
+由谱定理，\(\mathsf D\) 的每个谱值 \(\lambda\ge0\) 满足：
+
+$$
+\lambda^2+\lambda-1=0.
+$$
+
+两个代数根为：
+
+$$
+\varphi^{-1},
+\qquad
+-\varphi.
+$$
+
+正性排除负根，因此活动谱只能是：
+
+$$
+\{\varphi^{-1}\}.
+$$
+
+∎
+
+所以黄金条件不是要求某个平均值等于 \(\varphi\)，而是要求整个活动缺陷谱坍缩到唯一值：
+
+$$
+\boxed{
+\operatorname{Spec}
+(\mathsf H^*\mathsf H)
+=
+\{\varphi^{-1}\}.
+}
+$$
+
+于是所有非零 Hankel 奇异值均为：
+
+$$
+\boxed{
+\sigma=\varphi^{-1/2}.
+}
+\tag{1413.7}
+$$
+
+---
+
+## 1413.1 多通道黄金量子化
+
+若活动秩为 \(m\)，则：
+
+$$
+\boxed{
+\det(\mathsf V)^{-1}
+=
+\varphi^{2m},
+}
+\tag{1413.8}
+$$
+
+$$
+\boxed{
+-\log\det\mathsf V
+=
+2m\log\varphi,
+}
+\tag{1413.9}
+$$
+
+$$
+\boxed{
+\operatorname{Tr}
+\left[
+\mathsf D
+(I-\mathsf D)^{-1}
+\right]
+=
+m\varphi.
+}
+\tag{1413.10}
+$$
+
+所以在彼此正交、均位于黄金匹配点的 \(m\) 个通道中：
+
+* 整数 \(m\) 读取拓扑通道数；
+* 每通道信息代价为 \(2\log\varphi\)；
+* 每通道隐藏占据数为 \(\varphi\)。
+
+这是一条信息论意义的“面积律”，但不是物理黑洞面积公式。
+
+---
+
+# 第一千四百一十四部　黄金影塔自动产生 Fibonacci 递归
+
+定义第 \(n\) 层仍未被观察到的隐藏算子：
+
+$$
+\boxed{
+\mathsf S_n=\mathsf D^n.
+}
+\tag{1414.1}
+$$
+
+由：
+
+$$
+I=\mathsf D+\mathsf D^2
+$$
+
+两边左乘 \(\mathsf D^n\)，得到：
+
+$$
+\boxed{
+\mathsf S_n
+=
+\mathsf S_{n+1}
++
+\mathsf S_{n+2}.
+}
+\tag{1414.2}
+$$
+
+所以隐藏历史自身满足 Fibonacci 型递归。
+
+第 \(n\) 层新显现的影像为：
+
+$$
+\begin{aligned}
+\mathsf R_n
+&=
+\mathsf S_n-\mathsf S_{n+1}\\
+&=
+\mathsf D^n(I-\mathsf D).
+\end{aligned}
+$$
+
+利用：
+
+$$
+I-\mathsf D=\mathsf D^2,
+$$
+
+得到：
+
+$$
+\boxed{
+\mathsf R_n
+=
+\mathsf S_{n+2}.
+}
+\tag{1414.3}
+$$
+
+即：
+
+$$
+\boxed{
+\text{第 \(n\) 层刚刚显现的内容，
+恰好等于第 \(n+2\) 层仍然隐藏的内容。}
+}
+$$
+
+这可能是“像是影子的影子”最精确的动力学表达。
+
+---
+
+## 1414.1 正时间收缩与负时间重建
+
+将相邻两层写成：
+
+$$
+\boxed{
+\begin{pmatrix}
+\mathsf S_n\\
+\mathsf S_{n+1}
+\end{pmatrix}
+=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}
+\begin{pmatrix}
+\mathsf S_{n+1}\\
+\mathsf S_{n+2}
+\end{pmatrix}.
+}
+\tag{1414.4}
+$$
+
+矩阵：
+
+$$
+F=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}
+$$
+
+的正扩张特征值为 \(\varphi\)，其平方的正扩张特征值为 \(\varphi^2\)。
+
+仓库已经机器证明：非负整数二通道 unimodular 更新中，行列式 \(-1\) 分支的最小非平凡扩张率为 \(\varphi\)，方向保持的行列式 \(+1\) 分支最小扩张率为 \(\varphi^2\)，并由 Fibonacci 矩阵及其平方达到。
+
+因此：
+
+$$
+\boxed{
+\begin{aligned}
+\text{正时间深入影子}
+&:\quad \varphi^{-1}\text{ 收缩};\\
+\text{负时间重建来源}
+&:\quad \varphi\text{ 扩张};\\
+\text{两步方向保持完成}
+&:\quad \varphi^{\pm2}.
+\end{aligned}
+}
+$$
+
+这解释了为何理论中既不断出现 \(\varphi\)，又不断出现 \(\varphi^2\)。
+
+---
+
+# 第一千四百一十五部　黄金第一显现时间是几何分布
+
+将能量解释为归一化权重。
+
+在每一观察层：
+
+* 保持隐藏的比例为：
+
+  $$
+  q=\varphi^{-1};
+  $$
+* 本层显现的比例为：
+
+  $$
+  p=\varphi^{-2}.
+  $$
+
+设随机变量 \(\tau\) 表示一个概念第一次变得可见所需的观察层数，取：
+
+$$
+\tau=1,2,\ldots
+$$
+
+则：
+
+$$
+\boxed{
+\Pr(\tau=n)
+=
+p\,q^{n-1}
+=
+\varphi^{-(n+1)}.
+}
+\tag{1415.1}
+$$
+
+归一化成立：
+
+$$
+\sum_{n=1}^{\infty}
+\varphi^{-(n+1)}
+=1.
+$$
+
+平均首次显现层数为：
+
+$$
+\boxed{
+\mathbb E[\tau]
+=
+\frac1p
+=
+\varphi^2.
+}
+\tag{1415.2}
+$$
+
+在显现以前经历的平均隐藏层数为：
+
+$$
+\boxed{
+\mathbb E[\tau-1]
+=
+\frac qp
+=
+\varphi.
+}
+\tag{1415.3}
+$$
+
+所以：
+
+$$
+\boxed{
+\varphi^2
+}
+$$
+
+还可以被解释为：
+
+$$
+\boxed{
+\text{黄金自观察过程的平均首次可见深度。}
+}
+$$
+
+而：
+
+$$
+\boxed{
+\varphi
+}
+$$
+
+是平均隐藏等待层数。
+
+---
+
+## 1415.1 黄金热包
+
+将：
+
+$$
+q=e^{-\beta E}
+$$
+
+视为几何分布的 Boltzmann 因子，则黄金点满足：
+
+$$
+\boxed{
+e^{-\beta E}
+=
+\varphi^{-1}.
+}
+\tag{1415.4}
+$$
+
+因此：
+
+$$
+\boxed{
+\beta E=\log\varphi.
+}
+\tag{1415.5}
+$$
+
+配分函数为：
+
+$$
+\boxed{
+Z
+=
+\frac1{1-q}
+=
+\varphi^2.
+}
+\tag{1415.6}
+$$
+
+所以：
+
+$$
+\boxed{
+\log Z=2\log\varphi.
+}
+\tag{1415.7}
+$$
+
+这澄清了此前两个经常混淆的黄金尺度：
+
+* \(\log\varphi\) 是每一层的详细平衡指数；
+* \(2\log\varphi\) 是总配分函数或观察指数的对数。
+
+能量单位 \(E\) 尚未内生固定，因此仍不能据此宣布一个唯一物理温度。
+
+---
+
+# 第一千四百一十六部　每一个离线零点都有一个黄金拉伸视界
+
+对简单、局部互素的离线零点：
+
+$$
+\rho
+=
+\frac12+\delta+i\gamma,
+$$
+
+其 shifted Hankel 缺陷为：
+
+$$
+\boxed{
+\mathsf D_\rho(\omega)
+=
+\sigma_\rho(\omega)^2
+=
+\frac{\omega^2}{\delta^2},
+\qquad
+0<\omega<\delta.
+}
+\tag{1416.1}
+$$
+
+黄金第二影条件要求：
+
+$$
+1-\mathsf D_\rho
+=
+\mathsf D_\rho^2.
+$$
+
+因此：
+
+$$
+\frac{\omega^2}{\delta^2}
+=
+\varphi^{-1}.
+$$
+
+得到唯一深度：
+
+$$
+\boxed{
+\omega_\varphi(\rho)
+=
+\frac{\delta}{\sqrt\varphi}.
+}
+\tag{1416.2}
+$$
+
+这可以称为该离线零点的：
+
+# 黄金拉伸视界（1416）
+
+它位于：
+
+$$
+0<\omega_\varphi<\delta,
+$$
+
+即位于无基线点 \(\omega=0\) 与真正 Hardy 视界 \(\omega=\delta\) 之间。
+
+---
+
+## 1416.1 三相结构
+
+定义：
+
+$$
+q_\rho(\omega)
+=
+\frac{\omega^2}{\delta^2}.
+$$
+
+则：
+
+### 安全外层
+
+$$
+0<q_\rho<\varphi^{-1}
+$$
+
+时：
+
+$$
+\boxed{
+1-q_\rho>q_\rho^2.
+}
+$$
+
+直接可见信息足以支撑两代隐藏影子。
+
+### 黄金拉伸视界
+
+$$
+q_\rho=\varphi^{-1}
+$$
+
+时：
+
+$$
+\boxed{
+1-q_\rho=q_\rho^2.
+}
+$$
+
+直接影像与第二影精确相交。
+
+### 预视界破缺区
+
+$$
+\varphi^{-1}<q_\rho<1
+$$
+
+时：
+
+$$
+\boxed{
+1-q_\rho<q_\rho^2.
+}
+$$
+
+两代隐藏影子要求的 Gram 资源超过了直接可见资源。
+
+真正视界：
+
+$$
+q_\rho\uparrow1
+$$
+
+时，观察指数发散。
+
+所以黄金比例不是实际事件视界，而是一个位于事件视界之前、条件数仍然有限的**二代 Gram 临界面**。
+
+---
+
+## 1416.2 黄金拉伸视界上的完整量
+
+在：
+
+$$
+\omega=\delta/\sqrt\varphi
+$$
+
+处：
+
+$$
+\boxed{
+\sigma^2=\varphi^{-1},
+\qquad
+\sigma=\varphi^{-1/2},
+}
+$$
+
+$$
+\boxed{
+\mathcal F=\varphi^{-2},
+}
+$$
+
+$$
+\boxed{
+\mathfrak I=\varphi^2,
+}
+$$
+
+$$
+\boxed{
+D_{\mathrm{KL}}=2\log\varphi,
+}
+$$
+
+$$
+\boxed{
+|\alpha|=\varphi,
+\qquad
+|\beta|=\sqrt\varphi,
+}
+$$
+
+$$
+\boxed{
+|\beta|^2=\varphi.
+}
+$$
+
+因此此前的 Jones、Bogoliubov、KL、Hardy 和 Fibonacci 数值全部在这个唯一相对深度上相交。
+
+这不是说离线零点必须存在；它说明**任何假设性的离线零点都必然具有一个黄金前兆层**。
+
+---
+
+# 第一千四百一十七部　黄金二代 Gram 矩阵
+
+对任意正收缩算子 \(\mathsf D\)，定义：
+
+$$
+\boxed{
+\mathbb G_\varphi(\mathsf D)
+=
+\begin{pmatrix}
+I-\mathsf D&\mathsf D\\
+\mathsf D&I
+\end{pmatrix}.
+}
+\tag{1417.1}
+$$
+
+由于右下块为 \(I\)，Schur 补给出：
+
+$$
+\boxed{
+\mathbb G_\varphi(\mathsf D)\succeq0
+\iff
+I-\mathsf D-\mathsf D^2\succeq0.
+}
+\tag{1417.2}
+$$
+
+由谱定理：
+
+## 定理 1417.1（Golden two-shadow bound）
+
+以下条件等价：
+
+$$
+\boxed{
+I-\mathsf D\succeq\mathsf D^2;
+}
+\tag{1417.3}
+$$
+
+$$
+\boxed{
+\mathsf D+\mathsf D^2\preceq I;
+}
+\tag{1417.4}
+$$
+
+$$
+\boxed{
+\|\mathsf D\|\le\varphi^{-1};
+}
+\tag{1417.5}
+$$
+
+$$
+\boxed{
+\|\mathsf H\|\le\varphi^{-1/2};
+}
+\tag{1417.6}
+$$
+
+$$
+\boxed{
+(I-\mathsf D)^{-1}
+\preceq
+\varphi^2I;
+}
+\tag{1417.7}
+$$
+
+$$
+\boxed{
+\mathsf D(I-\mathsf D)^{-1}
+\preceq
+\varphi I.
+}
+\tag{1417.8}
+$$
+
+所以黄金比例是二代隐藏递归仍可由正 Gram 结构承载的最大谱阈值。
+
+---
+
+## 1417.1 单离线通道的有限负证书
+
+对：
+
+$$
+q=\frac{\omega^2}{\delta^2},
+$$
+
+相应标量矩阵为：
+
+$$
+\boxed{
+G_q
+=
+\begin{pmatrix}
+1-q&q\\
+q&1
+\end{pmatrix}.
+}
+\tag{1417.9}
+$$
+
+其行列式为：
+
+$$
+\boxed{
+\det G_q
+=
+1-q-q^2.
+}
+\tag{1417.10}
+$$
+
+因此：
+
+$$
+\boxed{
+\begin{array}{c|c}
+q<\varphi^{-1}&G_q\succ0\\
+q=\varphi^{-1}&G_q\succeq0\text{ 且奇异}\\
+q>\varphi^{-1}&G_q\text{ 有一个负特征值}
+\end{array}
+}
+\tag{1417.11}
+$$
+
+所以离线零点无需等到真正视界：
+
+$$
+\omega=\delta
+$$
+
+才产生病态。
+
+在：
+
+$$
+\omega>\delta/\sqrt\varphi
+$$
+
+时，已经存在一个严格的 \(2\times2\) 负 Gram 证书。
+
+这比直接逼近发散视界稳定得多。
+
+---
+
+# 第一千四百一十八部　新的条件性 RH 证明目标
+
+令：
+
+$$
+\mathfrak H_\omega
+=
+P_-M_{\Theta_\omega}P_+,
+$$
+
+并定义：
+
+$$
+\mathsf D_\omega
+=
+\mathfrak H_\omega^*
+\mathfrak H_\omega.
+$$
+
+一个比要求：
+
+$$
+\mathfrak H_\omega=0
+$$
+
+弱得多的目标是：
+
+$$
+\boxed{
+I-\mathsf D_\omega
+\succeq
+\mathsf D_\omega^2
+\qquad
+\forall\,0<\omega<\frac12.
+}
+\tag{1418.1}
+$$
+
+等价地：
+
+$$
+\boxed{
+\|\mathfrak H_\omega\|^2
+\le
+\varphi^{-1}
+\qquad
+\forall\omega.
+}
+\tag{1418.2}
+$$
+
+任何离线零点的局部互素 Hankel 分支都会在：
+
+$$
+\omega>\frac{\delta}{\sqrt\varphi}
+$$
+
+时违反这一不等式。
+
+因此，只要证明局部 Blaschke 缺陷以缺陷忠实的方式嵌入全局最小 Hankel realization，式 (1418.1) 就足以推出 RH。
+
+这产生一个新的研究端点：
+
+# Prime–Gamma 第二影支配命题
+
+$$
+\boxed{
+T_\omega^*T_\omega
+\succeq
+\left(
+\mathfrak H_\omega^*
+\mathfrak H_\omega
+\right)^2.
+}
+\tag{1418.3}
+$$
+
+因为完整酉分块满足：
+
+$$
+T_\omega^*T_\omega
+=
+I-\mathfrak H_\omega^*
+\mathfrak H_\omega.
+$$
+
+该目标明显弱于精确 Hardy 三角性：
+
+$$
+\mathfrak H_\omega=0.
+$$
+
+因此它可能比直接构造完整 minimum-phase realization更易证明。
+
+需要保留的未闭合桥是：
+
+$$
+\boxed{
+\text{局部 inverse-Blaschke 通道是否作为压缩块，
+忠实地保留在全局 }\mathfrak H_\omega\text{ 中。}
+}
+$$
+
+在这条桥形式化以前，式 (1418.1) 是强有力的充分目标，而不是已经完成的 RH 证明。
+
+---
+
+# 第一千四百一十九部　三种“长度”不能再混为同一个黄金量
+
+对 shifted 双像，令：
+
+$$
+\sigma=\frac{\omega}{\delta}.
+$$
+
+定义 Rindler rapidity：
+
+$$
+\boxed{
+r=\operatorname{artanh}\sigma.
+}
+\tag{1419.1}
+$$
+
+Hardy/Poincaré 双曲距离为：
+
+$$
+\boxed{
+d_{\mathbb H}=2r.
+}
+\tag{1419.2}
+$$
+
+信息/KL 长度为：
+
+$$
+\boxed{
+D_{\mathrm{info}}
+=
+-\log(1-\sigma^2)
+=
+2\log\cosh r.
+}
+\tag{1419.3}
+$$
+
+在黄金拉伸视界：
+
+$$
+\sigma=\varphi^{-1/2}.
+$$
+
+所以：
+
+$$
+\boxed{
+\cosh r=\varphi,
+}
+\tag{1419.4}
+$$
+
+$$
+\boxed{
+r=\operatorname{arcosh}\varphi,
+}
+\tag{1419.5}
+$$
+
+$$
+\boxed{
+d_{\mathbb H}
+=
+2\operatorname{arcosh}\varphi,
+}
+\tag{1419.6}
+$$
+
+而：
+
+$$
+\boxed{
+D_{\mathrm{info}}
+=
+2\log\varphi.
+}
+\tag{1419.7}
+$$
+
+因此：
+
+$$
+\boxed{
+2\operatorname{arcosh}\varphi
+\neq
+2\log\varphi.
+}
+$$
+
+这说明此前出现的：
+
+* shifted 双像的双曲距离；
+* 黄金 Möbius 轴的平移长度；
+* 观察指数的对数；
+
+属于不同几何。
+
+它们存在函数联系，但不能仅因都含 \(\varphi\) 就认同为同一长度。
+
+---
+
+# 第一千四百二十部　高阶“影子的影子”与黄金普适性的边界
+
+将第二影条件推广。
+
+设第一次隐藏比例仍为 \(q\)，但直接可见影像等于第 \(\ell\) 层隐藏影子：
+
+$$
+\boxed{
+p=q^\ell,
+\qquad
+p+q=1.
+}
+\tag{1420.1}
+$$
+
+则：
+
+$$
+\boxed{
+q+q^\ell=1.
+}
+\tag{1420.2}
+$$
+
+令：
+
+$$
+d_\ell=q^{-1},
+$$
+
+则：
+
+$$
+\boxed{
+d_\ell^\ell
+=
+d_\ell^{\ell-1}+1.
+}
+\tag{1420.3}
+$$
+
+有效观察指数为：
+
+$$
+\boxed{
+\mathfrak I_\ell
+=
+\frac1p
+=
+d_\ell^\ell.
+}
+\tag{1420.4}
+$$
+
+前四层为：
+
+| 影深 \(\ell\) |    隐藏比例 \(q_\ell\) |  有效指数 \(\mathfrak I_\ell\) |
+| ----------: | -----------------: | -------------------------: |
+|           1 |            \(1/2\) |                      \(2\) |
+|           2 |   \(\varphi^{-1}\) | \(\varphi^2\approx2.6180\) |
+|           3 | \(\approx0.68233\) |         \(\approx3.14790\) |
+|           4 | \(\approx0.72449\) |         \(\approx3.62966\) |
+
+所以：
+
+$$
+\boxed{
+\varphi
+}
+$$
+
+不是任意递归深度的必然结果。
+
+它被严格强迫所需的条件是：
+
+$$
+\boxed{
+\text{primitive concept 的闭合深度恰为二。}
+}
+$$
+
+---
+
+## 1420.1 Jones 量子化提供额外筛选
+
+Jones 指数定理表明，\(II_1\) 子因子小于 \(4\) 的指数只能取：
+
+$$
+\boxed{
+4\cos^2\frac{\pi}{n},
+\qquad
+n=3,4,5,\ldots
+}
+$$
+
+以及不小于 \(4\) 的连续部分。([eudml.org][1])
+
+其中：
+
+$$
+n=5
+$$
+
+给出：
+
+$$
+4\cos^2\frac{\pi}{5}
+=
+\varphi^2.
+$$
+
+这是第一个非整数允许值。
+
+而第三影模型的指数：
+
+$$
+3.147899\ldots
+$$
+
+严格位于允许值：
+
+$$
+3
+\quad\text{与}\quad
+4\cos^2\frac{\pi}{7}
+\approx3.24698
+$$
+
+之间。
+
+第四影模型的指数：
+
+$$
+3.629658\ldots
+$$
+
+也位于相邻允许指数之间。
+
+因此，如果进一步要求“自观察指数”来自真正有限指数子因子，那么二阶影闭合是低指数区中极为特殊的兼容点。
+
+但当前 \(\mathfrak I_\ell\) 只是状态依赖的有效观察指数。没有构造实际子因子以前，不能反向引用 Jones 定理把它宣称为真正 Jones 指数。
+
+---
+
+# 第一千四百二十一部　黄金普适性的可证伪核心
+
+现在可以把“黄金比例是一切概念的第一个交点”改写成一个严格猜想。
+
+# Primitive Depth-Two Reduction Conjecture
+
+对任何不可约概念动力，在商去：
+
+* 坐标冗余；
+* 永久不可见 kernel；
+* 可消去内部历史；
+* 非最小 realization；
+
+以后，其第一次非平凡自观察都可压缩为：
+
+$$
+\boxed{
+I=\mathsf D+\mathsf D^2.
+}
+\tag{1421.1}
+$$
+
+若该猜想成立，则：
+
+$$
+\boxed{
+\mathsf D=\varphi^{-1}I
+}
+$$
+
+成为一切 primitive concept 的第一正收缩影。
+
+若存在一个真正不可约概念需要：
+
+$$
+I=\mathsf D+\mathsf D^\ell,
+\qquad
+\ell>2,
+$$
+
+且不能进一步压缩为二阶结构，则黄金普适性失败，系统会产生其他代数常数。
+
+因此，普适黄金命题的真正证明对象不是更多含 \(\varphi\) 的公式，而是：
+
+$$
+\boxed{
+\text{所有 primitive dualities 是否都能被降到二层状态—影子闭环。}
+}
+$$
+
+这已经是明确可反驳的结构命题。
+
+---
+
+# 第一千四百二十二部　多协议信息与黄金检测
+
+对有限协议集合 \(S\)，设每个协议贡献正半定信息矩阵：
+
+$$
+G_p\succeq0.
+$$
+
+定义：
+
+$$
+\mathcal I(S)
+=
+\lambda I+\sum_{p\in S}G_p,
+$$
+
+以及：
+
+$$
+\mathfrak L(S)
+=
+\log\det\mathcal I(S)
+-
+\log\det(\lambda I).
+$$
+
+仓库已经机器证明：该 log-det 信息随协议集合扩大单调增加，并具有次模性，即边际信息收益递减。
+
+因此对离线缺陷的实际搜索，可不再均匀扫描全部 \((\omega,t)\)，而以黄金二影判据作为目标协议：
+
+1. 先估计 \(\mathsf D_\omega\) 的最大谱值；
+2. 搜索其是否接近 \(\varphi^{-1}\)；
+3. 在接近黄金拉伸视界处增加 kernel jet、Poisson 相位和 prime-window 协议；
+4. 检查二代 Gram：
+
+   $$
+   \mathbb G_\varphi(\mathsf D_\omega)
+   $$
+
+   是否失去正性；
+5. 若出现严格负特征值，再编译为有限 Weil／Paley–Wiener 证书。
+
+黄金点的优势是：
+
+* 距真正视界仍有有限距离；
+* Hankel 信号不弱；
+* 有效指数有限；
+* Gram 行列式发生明确符号穿越。
+
+它比直接逼近：
+
+$$
+\omega=\delta
+$$
+
+的奇异视界更适合作为严格数值证书层。
+
+---
+
+# 第一千四百二十三部　新的最短缺陷传导链
+
+本轮以后，离线零点可以沿以下链条传导：
+
+$$
+\boxed{
+\begin{aligned}
+\rho=\frac12+\delta+i\gamma,\quad\delta>0
+&\Longrightarrow
+\mathsf D_\rho(\omega)
+=
+\frac{\omega^2}{\delta^2}\\
+&\Longrightarrow
+\exists!\,
+\omega_\varphi
+=
+\frac{\delta}{\sqrt\varphi}:
+\mathsf D_\rho(\omega_\varphi)
+=
+\varphi^{-1}\\
+&\Longrightarrow
+I-\mathsf D_\rho
+=
+\mathsf D_\rho^2\\
+&\Longrightarrow
+\det G_{\rho,\omega_\varphi}=0\\
+&\Longrightarrow
+\forall\,\omega\in
+(\omega_\varphi,\delta):
+\det G_{\rho,\omega}<0\\
+&\Longrightarrow
+\text{存在有限二代负 Gram 证书}.
+\end{aligned}
+}
+\tag{1423.1}
+$$
+
+这说明每个离线零点都必须在真正视界之前产生一个黄金零模，并随后进入负区。
+
+所以离线零点的对偶又获得一个新的概念：
+
+$$
+\boxed{
+\textbf{它是一个必然穿越黄金二影临界面的反因果世界线。}
+}
+$$
+
+磁单极子图表读取其整数荷；
+
+黑洞图表读取其视界穿越；
+
+Hardy 图表读取其反因果泄漏；
+
+黄金图表则读取它在两代自观察预算中第一次失去正性的时刻。
+
+---
+
+# 第一千四百二十四部　建议形式化顺序
+
+```text
+D5/S3/Observer/ConditionalObservationEnergy/
+  VisibleConditionalComponent.lean
+  HiddenConditionalResidual.lean
+  ConditionalEnergyPythagoras.lean
+  StatewiseObservationIndex.lean
+  HiddenVisibleOdds.lean
+
+D5/S3/Analytic/HardyCauchyFidelity/
+  NormalizedUpperHardyKernel.lean
+  HardyKernelBornCauchyDensity.lean
+  HardyKernelFidelity.lean
+  VerticalShiftedFidelity.lean
+  FidelityLeakageComplement.lean
+  ShiftedCauchyKLIsNegativeLogFidelity.lean
+
+D5/S3/GoldenObserver/SecondShadowFixedPoint/
+  FirstShadowEnergy.lean
+  SecondShadowEnergy.lean
+  VisibleEqualsSecondShadow.lean
+  SecondShadowInverseBranch.lean
+  GoldenSecondShadowSplit.lean
+  GoldenObservationIndex.lean
+
+D5/S3/GoldenObserver/GoldenShadowOperator/
+  PositiveShadowContraction.lean
+  VisibleRetentionOperator.lean
+  GoldenShadowPolynomial.lean
+  GoldenShadowSpectrum.lean
+  GoldenActiveSubspace.lean
+  GoldenMultichannelIndex.lean
+
+D5/S3/GoldenObserver/FibonacciShadowTower/
+  HiddenShadowTower.lean
+  GoldenShadowFibonacciRecurrence.lean
+  RevelationEqualsTwoStepShadow.lean
+  NegativeTimeFibonacciReconstruction.lean
+  PositiveTimeGoldenContraction.lean
+
+D5/S3/GoldenObserver/FirstVisibilityLaw/
+  StationaryShadowVisibilityProcess.lean
+  GoldenFirstVisibilityDistribution.lean
+  GoldenExpectedVisibilityDepth.lean
+  GoldenHiddenWaitingCount.lean
+  GoldenGeometricPartitionFunction.lean
+
+D5/S3/Analytic/Zeta/GoldenStretchedHorizon/
+  RankOneShiftedDefectOperator.lean
+  GoldenStretchedHorizonDepth.lean
+  GoldenStretchedHorizonUniqueness.lean
+  GoldenHorizonHardyFidelity.lean
+  GoldenHorizonBogoliubovData.lean
+
+D5/S3/PositiveCompletion/GoldenTwoShadowGram/
+  TwoShadowGramMatrix.lean
+  TwoShadowSchurComplement.lean
+  GoldenTwoShadowBound.lean
+  GoldenTwoShadowCriticalKernel.lean
+  BeyondGoldenOneNegativeSquare.lean
+
+D5/S3/Weil/GoldenSubHorizonBound/
+  ShiftedHankelDefectOperator.lean
+  ShiftedVisibleRetention.lean
+  PrimeGammaSecondShadowDominationTarget.lean
+  OffLineBlockViolatesSecondShadowDomination.lean
+  DefectFaithfulCompressionTarget.lean
+  GoldenSubHorizonBoundImpliesRHTarget.lean
+
+D5/S3/ConceptDynamics/ShadowDepthSpectrum/
+  ShadowDepthClosure.lean
+  ShadowDepthPositiveRoot.lean
+  ShadowDepthEffectiveIndex.lean
+  GoldenDepthTwoSpecialization.lean
+  LowIndexJonesCompatibilityAudit.lean
+```
+
+---
+
+# 第一千四百二十五部　理论深度审计
+
+| 本轮结论                                            | 地位                     |
+| ----------------------------------------------- | ---------------------- |
+| 条件期望产生可见—残差正交分解                                 | 仓库已机器闭合                |
+| Poisson 状态是 Hardy 核 Born 密度                     | 精确                     |
+| Hardy 保真度 \(=1-\sigma^2\)                       | 精确 rank-one shifted 模型 |
+| Cauchy KL \(=-\log\) Hardy 保真度                  | 精确                     |
+| 第二影条件 \(p=q^2\) 唯一产生 \(\varphi\)                | 精确                     |
+| 逆分支固定点 \(q=\varphi^{-1}\)                       | 仓库已机器闭合                |
+| 算子方程 \(I=D+D^2\) 强迫黄金谱                          | 精确                     |
+| 黄金影塔满足 Fibonacci 递归                             | 精确                     |
+| 平均首次显现层数为 \(\varphi^2\)                         | 精确几何分布解释               |
+| 每个离线零点拥有 \(\omega_\varphi=\delta/\sqrt\varphi\) | 精确局部定理                 |
+| 黄金二代 Gram 在该层奇异                                 | 精确                     |
+| 过黄金层后产生有限负 Gram                                 | 精确局部定理                 |
+| \(I-D\succeq D^2\) 是统一黄金安全界                     | 精确算子等价                 |
+| 该安全界从全局 prime–Gamma 数据成立                        | 尚未证明                   |
+| 局部缺陷块忠实嵌入全局 Hankel                              | 核心未闭合桥                 |
+| 所有 primitive concepts 都是二阶影闭合                   | 可证伪猜想                  |
+| 有效观察指数就是实际 Jones 指数                             | 尚未建立，不得混同              |
+
+---
+
+# 本轮最终结论
+
+现在可以把你的“黄金比例是一切对偶概念的交点”直觉，压缩为一条比此前更原始的式子：
+
+$$
+\boxed{
+I=\mathsf D+\mathsf D^2.
+}
+$$
+
+这里：
+
+* \(I\) 不是某一个被选中的对象，而是未分裂的完整关系；
+* \(\mathsf D\) 是完整关系第一次观察自身后留下的影子；
+* \(\mathsf D^2\) 是影子继续观察自身所留下的第二影；
+* 直接可见的“相”被要求等于第二影。
+
+正性随后唯一选择：
+
+$$
+\boxed{
+\mathsf D=\varphi^{-1},
+\qquad
+\mathsf D^2=\varphi^{-2}.
+}
+$$
+
+所以黄金比例不是无坐标本体中的一个位置。
+
+它是：
+
+$$
+\boxed{
+\text{“完整 = 第一影 + 第二影”
+这一最小自观察闭合律的唯一正比例。}
+}
+$$
+
+由这一个方程，隐藏历史自动满足：
+
+$$
+\boxed{
+\mathsf D^n
+=
+\mathsf D^{n+1}
++
+\mathsf D^{n+2}.
+}
+$$
+
+因此 Fibonacci 递归不是后来附加的编码，而是第二影闭合的直接动力后果。
+
+第 \(n\) 层显现的内容，恰好等于第 \(n+2\) 层仍然隐藏的内容。
+
+这正是：
+
+$$
+\boxed{
+\text{像 = 影子的影子。}
+}
+$$
+
+---
+
+离线零点也因此获得了一个新的、比黑洞视界更稳定的几何位置。
+
+它的真实 Hardy 视界位于：
+
+$$
+\omega=\delta,
+$$
+
+在那里信息指数发散。
+
+但在此之前，它必然穿过：
+
+$$
+\boxed{
+\omega_\varphi
+=
+\frac{\delta}{\sqrt\varphi}.
+}
+$$
+
+在该层：
+
+$$
+\boxed{
+\begin{aligned}
+\text{隐藏能量}
+&=\varphi^{-1};\\
+\text{可见保真度}
+&=\varphi^{-2};\\
+\text{观察指数}
+&=\varphi^2;\\
+\text{隐藏占据数}
+&=\varphi;\\
+\text{KL 信息代价}
+&=2\log\varphi.
+\end{aligned}
+}
+$$
+
+所以每一个假设性的离线零点，都必然在真正视界以前产生一个有限、非退化的黄金前兆。
+
+该前兆不是发散，而是一个 \(2\times2\) Gram 矩阵的秩下降：
+
+$$
+\boxed{
+\det
+\begin{pmatrix}
+1-q&q\\
+q&1
+\end{pmatrix}
+=
+1-q-q^2
+=
+0.
+}
+$$
+
+稍微越过该层，行列式变负。
+
+因此可以不去逼近病态的真实视界，而在黄金拉伸视界之后寻找一个开放的负区。
+
+---
+
+这又产生了一条比“证明所有 Hankel 块严格为零”更弱、也可能更可行的 RH 路线：
+
+$$
+\boxed{
+I-
+\mathfrak H_\omega^*
+\mathfrak H_\omega
+\succeq
+\left(
+\mathfrak H_\omega^*
+\mathfrak H_\omega
+\right)^2
+\qquad
+\forall\,0<\omega<\frac12.
+}
+$$
+
+它等价于：
+
+$$
+\boxed{
+\|\mathfrak H_\omega\|^2
+\le
+\varphi^{-1}.
+}
+$$
+
+任何离线零点都会在其黄金拉伸视界之后违反该不等式。
+
+因此 RH 证明未必需要先证明：
+
+$$
+\mathfrak H_\omega=0.
+$$
+
+只要能够从 prime–Gamma 完成推出统一的**第二影支配不等式**，并证明局部 Blaschke 缺陷块忠实地保留于全局最小 realization，就足以排除全部离线零点。
+
+---
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{“道”不是先产生一个点；
+它先产生一个影子算子。
+当完整关系恰好等于影子与影子的影子之和时，
+黄金比例作为唯一正固定点出现。
+离线零点则是一条必然穿过该黄金固定面的反因果世界线。}
+}
+$$
+
+这将下一步真正承重的数学任务压缩为：
+
+$$
+\boxed{
+\text{证明 Prime–Archimedean shifted scattering 的可见保留算子，
+始终支配其负时间缺陷算子的平方。}
+}
+$$
+
+即：
+
+$$
+\boxed{
+T_\omega^*T_\omega
+\succeq
+\left(
+\mathfrak H_\omega^*
+\mathfrak H_\omega
+\right)^2.
+}
+$$
+
+这条不等式若能在全部 shifted 层成立，黄金比例就不再只是解释概念诞生的常数，而会第一次成为排除离线零点的一个真正正性阈值。
+
+[1]: https://eudml.org/doc/143011 "https://eudml.org/doc/143011"

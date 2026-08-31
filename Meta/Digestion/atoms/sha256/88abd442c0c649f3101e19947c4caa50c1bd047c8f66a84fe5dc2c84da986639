@@ -1,0 +1,38 @@
+## 1345.2 Exponential-redshift 解释
+
+黄金层满足：
+
+$$
+\omega_n
+=
+\omega_0\varphi^{-2n}
+=
+\omega_0e^{-\chi_\varphi n},
+$$
+
+其中：
+
+$$
+\boxed{
+\chi_\varphi=2\log\varphi.
+}
+\tag{1345.2}
+$$
+
+若把层指标 \(n\) 解释为外部 Killing 时间，把 \(\omega\) 解释为视界 affine 坐标，则 \(\chi_\varphi\) 扮演表面引力。
+
+此时 Hawking 逆温度为：
+
+$$
+\boxed{
+\beta_{\mathrm{red}}
+=
+\frac{2\pi}{\chi_\varphi}
+=
+\frac{\pi}{\log\varphi}.
+}
+\tag{1345.3}
+$$
+
+---
+
