@@ -3,7 +3,10 @@ name: admission
 
 on:
   push:
-    branches: [dev]
+    # integration-ci-log-noise-tests 只为在 push 侧真跑本分支的 workflow 改动而临时加入:
+    # pull_request_target 的 workflow 文本取自默认分支,故集成分支上的 PR 侧改动不生效,
+    # 而 push 事件的 workflow 取自被推的那个分支。此行随集成分支一起删除,不提议给 dev。
+    branches: [dev, integration-ci-log-noise-tests]
   pull_request_target:
     branches: [dev, 'integration-**']
     types: [opened, synchronize, reopened]
@@ -38,6 +41,8 @@ jobs:
   candidate-engineering:
     name: Candidate harness engineering checks
     runs-on: ubuntu-latest
+    env:
+      ENGINEERING_REPORT_SCHEMA: '{"kind":"failure-report","state":"resolved","resolution":{"evidence_diagnostic_prefix":"ENGINEERING_TEST_EVIDENCE_FAILED ","plan_diagnostic_prefix":"ENGINEERING_TEST_PLAN_FAILED ","tail_field":"failure_tail"}}'
     # 20 分钟对本 job 已结构性不足:凡改动命中 tools/** 者,EngineeringScope 的测试选择器
     # 选中 0 个、回退 full,跑满全部测试套件,实测 20–21 分钟(#3940)。
     # 证据:PR #3943(生产 +4/-4、新增测试实测 221ms)连续五次 CANCELLED
@@ -250,15 +255,21 @@ jobs:
           execute_status="${pipeline_status[0]}"
           tee_status="${pipeline_status[1]}"
           if [[ "$tee_status" -ne 0 ]]; then
-            printf 'engineering test execution log capture failed exit=%s\n' "$tee_status" >&2
+            printf 'engineering test execution log capture returned nonzero exit=%s\n' "$tee_status" >&2
             exit "$tee_status"
           fi
+          plan_diagnostic_prefix="$(jq -r '.resolution.plan_diagnostic_prefix' <<< "$ENGINEERING_REPORT_SCHEMA")"
+          evidence_diagnostic_prefix="$(jq -r '.resolution.evidence_diagnostic_prefix' <<< "$ENGINEERING_REPORT_SCHEMA")"
+          tail_field="$(jq -r '.resolution.tail_field' <<< "$ENGINEERING_REPORT_SCHEMA")"
           jq -Rsc \
             --arg repository "$GITHUB_REPOSITORY" \
             --arg run_id "$GITHUB_RUN_ID" \
             --arg head "$ENGINEERING_HEAD" \
             --arg base "$ENGINEERING_BASE" \
             --argjson execute_exit "$execute_status" \
+            --arg plan_diagnostic_prefix "$plan_diagnostic_prefix" \
+            --arg evidence_diagnostic_prefix "$evidence_diagnostic_prefix" \
+            --arg tail_field "$tail_field" \
             '
               split("\n") | map(select(length > 0)) as $lines
               | ([$lines[] | select(startswith("ENGINEERING_TEST_PLAN_FALLBACK "))]) as $fallback
@@ -278,14 +289,14 @@ jobs:
                     $lines[]
                     | select(
                         startswith("ENGINEERING_TEST_PLAN_FALLBACK ")
-                        or startswith("ENGINEERING_TEST_PLAN_FAILED ")
-                        or startswith("ENGINEERING_TEST_EVIDENCE_FAILED "))
+                        or startswith($plan_diagnostic_prefix)
+                        or startswith($evidence_diagnostic_prefix))
                   ],
                   plan: {
                     summary: ([$lines[] | select(startswith("ENGINEERING_TEST_PLAN "))][0] // null),
                     tests: [$lines[] | select(startswith("ENGINEERING_TEST_SELECTED "))]
                   },
-                  failure_tail: (if $execute_exit == 0 then [] else $lines[-40:] end)
+                  ($tail_field): (if $execute_exit == 0 then [] else $lines[-40:] end)
                 }
             ' "$execution_log" > "$execution_record.tmp"
           mv "$execution_record.tmp" "$execution_record"
@@ -395,7 +406,8 @@ jobs:
           fallback_count="$SCOPE_FALLBACK_COUNT"
           [[ -n "$fallback_count" ]] || fallback_count=0
           detail_dir="engineering-test-plan-$GITHUB_RUN_ID"
-          detail_command="gh run download $GITHUB_RUN_ID --repo $GITHUB_REPOSITORY --name engineering-test-plan --dir $detail_dir && jq '{execute_exit, plan_verdict, diagnostics, plan, failure_tail}' $detail_dir/engineering-test-plan.json"
+          tail_field="$(jq -r '.resolution.tail_field' <<< "$ENGINEERING_REPORT_SCHEMA")"
+          detail_command="gh run download $GITHUB_RUN_ID --repo $GITHUB_REPOSITORY --name engineering-test-plan --dir $detail_dir && jq '{execute_exit, plan_verdict, diagnostics, plan, ${tail_field}}' $detail_dir/engineering-test-plan.json"
           {
             printf '%s\n' '## Candidate engineering scope'
             printf '\n'
