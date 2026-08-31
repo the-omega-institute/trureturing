@@ -3,10 +3,17 @@ fingerprints:
   raw_sha256: sha256:7edcc0b2aa47b3800968758d20105ce477359441f53c7c62faf3861195ba8079
   normalized_sha256: sha256:7edcc0b2aa47b3800968758d20105ce477359441f53c7c62faf3861195ba8079
 cas_ref: sha256:7edcc0b2aa47b3800968758d20105ce477359441f53c7c62faf3861195ba8079
-coverage_gids: []
+coverage_gids:
+  - D5/S3/ConceptDynamics/GovernanceFixedPoint/DualRuleDeadlockCriterion.deadlocked_iff_empty_joint_allowance
 receipts:
-  coverage: []
-  scribe: []
+  coverage:
+    - gid: D5/S3/ConceptDynamics/GovernanceFixedPoint/DualRuleDeadlockCriterion.deadlocked_iff_empty_joint_allowance
+      source_sha256: sha256:7edcc0b2aa47b3800968758d20105ce477359441f53c7c62faf3861195ba8079
+      target_statement_id: sha256:84af505569e32d76c8bf6e823db0d61c3b80249eec88231a6b596b52b4217e11
+  scribe:
+    - gid: D5/S3/ConceptDynamics/GovernanceFixedPoint/DualRuleDeadlockCriterion.deadlocked_iff_empty_joint_allowance
+      definition_sha256: sha256:843fea64e93e0b58711409ab70dd5cc0e5de35a9c5b4e3e03ed23e0f9498e16f
+      emission_sha256: sha256:efca5fa2089d06a85d5230facac17f3d56bf2cfcec08551eccf115c05327f536
   unresolved_subitems: []
   chain_atoms:
     - generic-residual-7c1f75f2c7f9bea61f8a6a196284d8aba0b1a1dfa57f7b7b318477aef69b3453-749dd8d20d6eea64aade540a1891205b2d5605f17b60d2dc6c88b4bc797658d3
