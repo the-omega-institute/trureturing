@@ -352,8 +352,8 @@ public sealed partial class ProductionEnvironmentTests
         Assert.True(DigestionStatusEvaluator.StatusAuthorityClosureChanged(
             entry,
             DigestionReceiptAlignment.Seen,
-            DigestionMigrationState.Residual,
-            RawChangeSet.Create([changedPath]),
+            baselineEntryPresent: true,
+            changes: RawChangeSet.Create([changedPath]),
             isBaseFactAffected: null));
     }
 
@@ -374,8 +374,8 @@ public sealed partial class ProductionEnvironmentTests
         Assert.True(DigestionStatusEvaluator.StatusAuthorityClosureChanged(
             entry,
             alignment,
-            DigestionMigrationState.Residual,
-            RawChangeSet.Create([entry.SourcePath]),
+            baselineEntryPresent: true,
+            changes: RawChangeSet.Create([entry.SourcePath]),
             isBaseFactAffected: null));
     }
 
@@ -416,7 +416,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.True(DigestionStatusEvaluator.StatusAuthorityClosureChanged(
             StatusAuthorityClosureEntry(),
             DigestionReceiptAlignment.Seen,
-            DigestionMigrationState.Residual,
+            baselineEntryPresent: true,
             changes: null,
             isBaseFactAffected: null));
     }

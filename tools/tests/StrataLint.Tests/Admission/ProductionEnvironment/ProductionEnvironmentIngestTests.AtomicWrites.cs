@@ -265,6 +265,8 @@ public sealed partial class ProductionEnvironmentTests
         var inputs = DirectoryInputs(WithSiblingReceiptMismatch(
             materialized,
             "coverage-receipt-mismatch"));
+        var withFrozenEvent = WithUnrelatedFrozenAcceptedEvent(inputs);
+        inputs = withFrozenEvent.Inputs;
         var files = new Dictionary<string, string>(inputs.Files, StringComparer.Ordinal)
         {
             [newSourcePath] = newSourceText,
@@ -279,7 +281,7 @@ public sealed partial class ProductionEnvironmentTests
             temporary.Path,
             inputs,
             inputs.Files,
-            RawChangeSet.Create([newSourcePath]));
+            RawChangeSet.Create([newSourcePath, withFrozenEvent.EventPath]));
 
         var result = environment.AlignDigestionStatus(["--base", "baseline"]);
 

@@ -12,7 +12,8 @@ internal sealed record BackfillInventoryValidationContext(
     RawChangeSet? Changes = null,
     Func<string, bool>? IsBaseFactAffected = null,
     RawChangeSet? RepositoryChanges = null,
-    RawChangeSet? CasChanges = null);
+    RawChangeSet? CasChanges = null,
+    RawChangeSet? ProjectedStatusChanges = null);
 
 internal static class BackfillInventoryRule
 {
@@ -75,6 +76,7 @@ internal static class BackfillInventoryRule
     {
         BackfillInventoryDocument document;
         RawChangeSet? evaluationChanges = changes;
+        RawChangeSet? receiptVerificationChanges = changes;
         Func<string, bool>? isBaseFactAffected = null;
         try
         {
@@ -92,6 +94,7 @@ internal static class BackfillInventoryRule
                     document,
                     changes);
                 evaluationChanges = impact.EvaluationChanges;
+                receiptVerificationChanges = impact.ReceiptVerificationChanges;
                 var affectedPaths = evaluationChanges.Paths
                     .Select(static path => path.Value)
                     .ToHashSet(StringComparer.Ordinal);
@@ -114,9 +117,10 @@ internal static class BackfillInventoryRule
                 context.Policy,
                 context.Lean,
                 context.VerifiedScribeEmissions,
-                evaluationChanges,
+                receiptVerificationChanges,
                 isBaseFactAffected,
-                changes),
+                RepositoryChanges: changes,
+                ProjectedStatusChanges: evaluationChanges),
             document);
     }
 
@@ -449,7 +453,8 @@ internal static class BackfillInventoryRule
                 casEvaluation: casEvaluation,
                 changes: context.Changes,
                 casChanges: context.CasChanges,
-                isBaseFactAffected: context.IsBaseFactAffected);
+                isBaseFactAffected: context.IsBaseFactAffected,
+                projectedStatusChanges: context.ProjectedStatusChanges ?? context.Changes);
             foreach (var finding in evaluation.Findings)
             {
                 findings.Add(new RuleFinding(BackfillPath, finding));
