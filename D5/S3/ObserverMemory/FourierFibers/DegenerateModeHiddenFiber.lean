@@ -6,7 +6,7 @@
    digest: Equal modal multipliers leave a nonzero antisymmetric amplitude invisible at every observation time. -/
 
 import D5.S3.ObserverMemory.FourierFibers.FiniteCrystalTimeFrequencyBridge
-import Mathlib.Data.Matrix.Notation
+import Mathlib
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -18,12 +18,14 @@ namespace D5.S3.ObserverMemory.FourierFibers.DegenerateModeHiddenFiber
 open D5.S3.ObserverMemory.FourierFibers.FiniteCrystalTimeFrequencyBridge
 
 /-- A two-mode system with an exact spectral degeneracy. -/
-def degenerateModes (z : ℂ) : Fin 2 → ℂ :=
-  ![z, z]
+def degenerateModes (z : ℂ) : Fin 2 → ℂ
+  | ⟨0, _⟩ => z
+  | ⟨1, _⟩ => z
 
 /-- Antisymmetric amplitude hidden by an equal-mode scalar readout. -/
-def antisymmetricAmplitude : Fin 2 → ℂ :=
-  ![1, -1]
+def antisymmetricAmplitude : Fin 2 → ℂ
+  | ⟨0, _⟩ => 1
+  | ⟨1, _⟩ => -1
 
 /-- Exact degeneracy keeps the antisymmetric branch invisible at every time. -/
 theorem antisymmetric_amplitude_invisible_all_times (z : ℂ) (time : ℕ) :
