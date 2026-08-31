@@ -263,7 +263,19 @@ public sealed partial class MakeWorkflowTests
             engineeringTestsRecipe,
             StringComparison.Ordinal);
         Assert.Contains("REPOSITORY ?= $(HERE)/..", makefile, StringComparison.Ordinal);
+        Assert.Contains("cd \"$(REPOSITORY)\"", engineeringTestsRecipe, StringComparison.Ordinal);
         Assert.Contains("--repository \"$(REPOSITORY)\"", engineeringTestsRecipe, StringComparison.Ordinal);
+        var baseCwdEngineeringTestsRecipe = Recipe(makefile, "engineering-tests-base-cwd");
+        Assert.Contains("cd \"$(HERE)/..\"", baseCwdEngineeringTestsRecipe, StringComparison.Ordinal);
+        Assert.DoesNotContain("cd \"$(REPOSITORY)\"", baseCwdEngineeringTestsRecipe, StringComparison.Ordinal);
+        Assert.Contains(
+            "StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+            baseCwdEngineeringTestsRecipe,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            "--repository \"$(REPOSITORY)\"",
+            baseCwdEngineeringTestsRecipe,
+            StringComparison.Ordinal);
         Assert.Contains("$(HERE)/scripts/stratalint-selftest.sh", Recipe(makefile, "selftest"), StringComparison.Ordinal);
         Assert.Contains(
             "$(HERE)/scripts/update-renderer-contract.sh",
