@@ -264,7 +264,7 @@ internal static class ScribeProjectCompilationBuilder
     private static SyntaxTree XunitAttributeFallbackTree(string projectPath) =>
         CSharpSyntaxTree.ParseText(
             ("namespace " + "Xunit" + " {\n"
-            + "  public class FactAttribute : System.Attribute { public string? Skip { get; set; } }\n"
+            + "  public class FactAttribute : System.Attribute { public virtual string? Skip { get; set; } }\n"
             + "  public class TheoryAttribute : FactAttribute { }\n"
             + "  public interface IClassFixture<TFixture> { }\n"
             + "}\n"),
@@ -328,7 +328,7 @@ internal static class ScribeProjectCompilationBuilder
             + "global using Xunit;\n"
             + (includeXunitFallback
                 ? "namespace " + "Xunit {\n"
-                    + "  public class FactAttribute : Attribute { public string? Skip { get; set; } }\n"
+                    + "  public class FactAttribute : Attribute { public virtual string? Skip { get; set; } }\n"
                     + "  public class TheoryAttribute : FactAttribute { }\n"
                     + "  public interface IClassFixture<TFixture> { }\n"
                     + "}\n"

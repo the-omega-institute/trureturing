@@ -145,6 +145,38 @@ public sealed class ScribeTestMapDeriverTests
     }
 
     [Fact]
+    public void DerivedFactAttributeHiddenSkipPropertyRemainsInBasePlan()
+    {
+        const string source = "tools/tests/Synthetic.Tests/HiddenSkipTests.cs";
+        const string project = "tools/tests/Synthetic.Tests/Synthetic.Tests.csproj";
+        var map = ScribeTestMapDeriver.DeriveSources(
+            [new TestMapSource(source, """
+                public sealed class HiddenSkipFactAttribute : FactAttribute
+                {
+                    public new string? Skip { get; set; }
+
+                    public HiddenSkipFactAttribute()
+                    {
+                        Skip = "this property does not control xUnit skipping";
+                    }
+                }
+
+                public sealed class HiddenSkipTests
+                {
+                    [HiddenSkipFact]
+                    public void StillRuns() { }
+                }
+                """, "Synthetic.Tests")],
+            [],
+            compileProjectBySourcePath:
+                new Dictionary<string, string>(StringComparer.Ordinal) { [source] = project });
+
+        Assert.False(Assert.Single(map.Methods).IsStaticallySkipped);
+        var planned = Assert.Single(EngineeringTestPlanPolicy.BaseTests(map, null));
+        Assert.Equal("HiddenSkipTests.StillRuns", planned.Id);
+    }
+
+    [Fact]
     public void DerivedFactAttributeSkipPropertyInitializerIsExcludedFromBasePlan()
     {
         const string source = "tools/tests/Synthetic.Tests/PropertyInitializerTests.cs";
@@ -153,7 +185,8 @@ public sealed class ScribeTestMapDeriverTests
             [new TestMapSource(source, """
                 public sealed class InitializedFactAttribute : FactAttribute
                 {
-                    public new string? Skip { get; } = "runtime prerequisite is absent";
+                    public override string? Skip { get; set; } =
+                        "runtime prerequisite is absent";
                 }
 
                 public sealed class PropertyInitializerTests

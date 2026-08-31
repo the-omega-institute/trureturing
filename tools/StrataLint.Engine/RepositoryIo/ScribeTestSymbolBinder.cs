@@ -464,7 +464,7 @@ internal static class ScribeTestSymbolBinder
             argument.NameEquals is not null
             && IsSkipMember(
                 model.GetSymbolInfo(argument.NameEquals.Name).Symbol,
-                concreteAttributeType)
+                model.Compilation)
             && !IsNullConstant(argument.Expression, model)) == true;
 
     private static bool AttributeConstructorMayAssignSkip(
@@ -543,7 +543,7 @@ internal static class ScribeTestSymbolBinder
                 switch (member)
                 {
                     case PropertyDeclarationSyntax { Initializer: not null } property:
-                        if (IsSkipMember(model.GetDeclaredSymbol(property), concreteAttributeType)
+                        if (IsSkipMember(model.GetDeclaredSymbol(property), model.Compilation)
                             && !IsNullConstant(property.Initializer.Value, model))
                         {
                             return true;
@@ -561,7 +561,7 @@ internal static class ScribeTestSymbolBinder
                         foreach (var variable in field.Declaration.Variables
                                      .Where(static variable => variable.Initializer is not null))
                         {
-                            if (IsSkipMember(model.GetDeclaredSymbol(variable), concreteAttributeType)
+                            if (IsSkipMember(model.GetDeclaredSymbol(variable), model.Compilation)
                                 && !IsNullConstant(variable.Initializer!.Value, model))
                             {
                                 return true;
@@ -593,7 +593,7 @@ internal static class ScribeTestSymbolBinder
         {
             if (node is AssignmentExpressionSyntax assignment
                 && model.GetOperation(assignment) is IAssignmentOperation operation
-                && IsCurrentInstanceSkipTarget(operation.Target, concreteAttributeType)
+                && IsCurrentInstanceSkipTarget(operation.Target, model.Compilation)
                 && !(operation.Value.ConstantValue.HasValue
                     && operation.Value.ConstantValue.Value is null))
             {
@@ -661,14 +661,14 @@ internal static class ScribeTestSymbolBinder
 
     private static bool IsCurrentInstanceSkipTarget(
         IOperation target,
-        INamedTypeSymbol concreteAttributeType) => target switch
+        Compilation compilation) => target switch
         {
             IPropertyReferenceOperation property =>
                 IsCurrentInstance(property.Instance)
-                && IsSkipMember(property.Property, concreteAttributeType),
+                && IsSkipMember(property.Property, compilation),
             IFieldReferenceOperation field =>
                 IsCurrentInstance(field.Instance)
-                && IsSkipMember(field.Field, concreteAttributeType),
+                && IsSkipMember(field.Field, compilation),
             _ => false,
         };
 
@@ -689,14 +689,26 @@ internal static class ScribeTestSymbolBinder
 
     private static bool IsSkipMember(
         ISymbol? member,
-        INamedTypeSymbol concreteAttributeType)
+        Compilation compilation)
     {
-        if (member is IPropertySymbol { IsStatic: false } property && property.Name == "Skip"
-            || member is IFieldSymbol { IsStatic: false } field && field.Name == "Skip")
+        if (member is not IPropertySymbol { IsStatic: false } property)
         {
-            return IsMemberOfAttributeHierarchy(member.ContainingType, concreteAttributeType);
+            return false;
         }
-        return false;
+
+        while (property.OverriddenProperty is { } overridden)
+        {
+            property = overridden;
+        }
+
+        var factSkip = compilation.GetTypeByMetadataName("Xunit.FactAttribute")?
+            .GetMembers("Skip")
+            .OfType<IPropertySymbol>()
+            .SingleOrDefault(static candidate => !candidate.IsStatic);
+        return factSkip is not null
+            && SymbolEqualityComparer.Default.Equals(
+                property.OriginalDefinition,
+                factSkip.OriginalDefinition);
     }
 
     private static bool IsMemberOfAttributeHierarchy(
