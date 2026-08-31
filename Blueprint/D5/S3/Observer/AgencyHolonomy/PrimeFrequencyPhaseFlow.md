@@ -2,105 +2,53 @@
 
 ## Abstract
 
-Fourier characters supply unitary log-frequency time flow while scalar phase products erase sequence order.
+Fourier characters create unitary log-frequency time flow while scalar products forget order.
 
-**Definition 1.1 (Fourier phase character).**
+**Theorem 1.1 (Time-frequency character laws).**
 
-Lean statement: `D5/S3/Observer/AgencyHolonomy/PrimeFrequencyPhaseFlow.fourierPhase`
+$$\forall frequency \in \mathbb{R}, other \in \mathbb{R}, time \in \mathbb{R}, shift \in \mathbb{R},\; (\operatorname{fourierPhase}\left(frequency, 0\right) = 1 \land\\{}\operatorname{fourierPhase}\left(frequency, time + shift\right) = \operatorname{fourierPhase}\left(frequency, time\right) \cdot \operatorname{fourierPhase}\left(frequency, shift\right) \land\\{}\operatorname{fourierPhase}\left(frequency + other, time\right) = \operatorname{fourierPhase}\left(frequency, time\right) \cdot \operatorname{fourierPhase}\left(other, time\right) \land\\{}\left\lVert \operatorname{fourierPhase}\left(frequency, time\right) \right\rVert = 1 \land\\{}\operatorname{fourierPhase}\left(frequency, time\right) = \operatorname{fourierPhase}\left(time, frequency\right))$$
 
-*Formalization.* `D5/S3/Observer/AgencyHolonomy/PrimeFrequencyPhaseFlow.fourierPhase` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Evaluate the complex character exp(-i times time times frequency). This is the unit-circle kernel underlying finite Fourier synthesis.
-
-**Definition 1.2 (Logarithmic address phase).**
-
-Lean statement: `D5/S3/Observer/AgencyHolonomy/PrimeFrequencyPhaseFlow.logAddressPhase`
-
-*Formalization.* `D5/S3/Observer/AgencyHolonomy/PrimeFrequencyPhaseFlow.logAddressPhase` (`✓ std3`).
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/AgencyHolonomy/PrimeFrequencyPhaseFlow.fourier_phase_character_laws` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-Specialize the frequency to the real logarithm of a natural-number address. Prime addresses recover the oscillatory phase in a local Euler channel.
+For real frequency, comparison frequency, time, and shift, the phase at zero time is one, addition in either real argument becomes multiplication, and the phase has norm one.
 
-**Definition 1.3 (Finite Fourier synthesis).**
+The final equality records symmetry of the numerical bilinear pairing between time and frequency. It does not identify their semantic roles or assert a preferred time direction.
 
-Lean statement: `D5/S3/Observer/AgencyHolonomy/PrimeFrequencyPhaseFlow.finiteFourierSynthesis`
+**Theorem 1.2 (Scalar phase products forget order).**
 
-*Formalization.* `D5/S3/Observer/AgencyHolonomy/PrimeFrequencyPhaseFlow.finiteFourierSynthesis` (`✓ std3`).
+$$\forall frequencies \in \operatorname{List}\left(\mathbb{R}\right), time \in \mathbb{R},\; \operatorname{orderedPhaseProduct}\left(frequencies, time\right) = \operatorname{fourierPhase}\left(\operatorname{sum}\left(frequencies\right), time\right)$$
 
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Sum finitely many complex amplitudes multiplied by their Fourier phase characters at a common time parameter.
-
-**Definition 1.4 (Listed scalar phase product).**
-
-Lean statement: `D5/S3/Observer/AgencyHolonomy/PrimeFrequencyPhaseFlow.orderedPhaseProduct`
-
-*Formalization.* `D5/S3/Observer/AgencyHolonomy/PrimeFrequencyPhaseFlow.orderedPhaseProduct` (`✓ std3`).
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/AgencyHolonomy/PrimeFrequencyPhaseFlow.ordered_phase_product_collapse` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-Multiply the scalar phase characters attached to a listed sequence of frequencies.
+For every finite list of real frequencies and every real time, the listed scalar phase product is the single phase at the sum of those frequencies.
 
-**Theorem 1.5 (Time-frequency character laws).**
+Consequently, lists with the same sum are indistinguishable at this commutative scalar-product layer. This is a countermodel to recovering list order from that product alone, not a claim that all Fourier or memory-bearing observer models erase chronology.
 
-Lean statement: `D5/S3/Observer/AgencyHolonomy/PrimeFrequencyPhaseFlow.fourier_phase_character_laws`
+**Theorem 1.3 (Finite synthesis shift and norm laws).**
 
-*Formalization.* `D5/S3/Observer/AgencyHolonomy/PrimeFrequencyPhaseFlow.fourier_phase_character_laws` (`✓ std3`).
+$$\forall iota \in \operatorname{Type}, fintypeWitness \in \operatorname{Fintype}\left(iota\right), amplitude \in iota \to \mathbb{C}, frequency \in iota \to \mathbb{R}, time \in \mathbb{R}, shift \in \mathbb{R},\; (\operatorname{finiteFourierSynthesis}\left(amplitude, frequency, time + shift\right) = \sum_{p: iota} amplitude\left(p\right) \cdot \operatorname{fourierPhase}\left(frequency\left(p\right), time\right) \cdot \operatorname{fourierPhase}\left(frequency\left(p\right), shift\right) \land\\{}\left\lVert \operatorname{finiteFourierSynthesis}\left(amplitude, frequency, time\right) \right\rVert \le \sum_{p: iota} \left\lVert amplitude\left(p\right) \right\rVert)$$
 
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The phase at zero time is one. Addition in time and addition in frequency both become multiplication of phases, and every phase has unit norm.
-
-The kernel is symmetric in the numerical time-frequency pairing. This does not identify their semantic roles in an observer model.
-
-**Theorem 1.6 (Scalar phase products forget order).**
-
-Lean statement: `D5/S3/Observer/AgencyHolonomy/PrimeFrequencyPhaseFlow.ordered_phase_product_collapse`
-
-*Formalization.* `D5/S3/Observer/AgencyHolonomy/PrimeFrequencyPhaseFlow.ordered_phase_product_collapse` (`✓ std3`).
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/AgencyHolonomy/PrimeFrequencyPhaseFlow.finite_fourier_synthesis_laws` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-The product along a listed frequency sequence equals the single phase whose frequency is the list sum. The scalar phase layer therefore retains total frequency and discards sequence order.
+For a finite index type, complex amplitudes, real frequencies, and real time and shift, translating time distributes the shift phase through every term of the finite synthesis.
 
-Observable chronology requires an additional memory-bearing or noncommutative lift, such as the holonomy updates developed by the preceding truth sources.
-
-**Theorem 1.7 (Finite synthesis shift and norm laws).**
-
-Lean statement: `D5/S3/Observer/AgencyHolonomy/PrimeFrequencyPhaseFlow.finite_fourier_synthesis_laws`
-
-*Formalization.* `D5/S3/Observer/AgencyHolonomy/PrimeFrequencyPhaseFlow.finite_fourier_synthesis_laws` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-A time shift multiplies each spectral channel by its shift phase. The norm of the synthesized signal is at most the sum of its amplitude norms because all phase factors are unitary.
-
-No inversion theorem, Plancherel identity, time orientation, irreversibility, prime-zero domination, or zero-location theorem is asserted.
+At the original time, the synthesis norm is at most the sum of the amplitude norms because each phase has norm one. The theorem does not assert equality, inversion, Plancherel, irreversibility, or any statement about zero locations.
 
 ## References
 
-- Truth anchor: `D5/S3/Observer/AgencyHolonomy/PrimeFrequencyPhaseFlow.fourierPhase`
-- Truth anchor: `D5/S3/Observer/AgencyHolonomy/PrimeFrequencyPhaseFlow.logAddressPhase`
-- Truth anchor: `D5/S3/Observer/AgencyHolonomy/PrimeFrequencyPhaseFlow.finiteFourierSynthesis`
-- Truth anchor: `D5/S3/Observer/AgencyHolonomy/PrimeFrequencyPhaseFlow.orderedPhaseProduct`
+- Truth anchor: `D5/S3/Observer/AgencyHolonomy/PrimeFrequencyPhaseFlow.finite_fourier_synthesis_laws`
 - Truth anchor: `D5/S3/Observer/AgencyHolonomy/PrimeFrequencyPhaseFlow.fourier_phase_character_laws`
 - Truth anchor: `D5/S3/Observer/AgencyHolonomy/PrimeFrequencyPhaseFlow.ordered_phase_product_collapse`
-- Truth anchor: `D5/S3/Observer/AgencyHolonomy/PrimeFrequencyPhaseFlow.finite_fourier_synthesis_laws`
 - Dependency: [D5/S3/Observer/AgencyHolonomy/FiniteHolonomyEnergy](FiniteHolonomyEnergy.md)

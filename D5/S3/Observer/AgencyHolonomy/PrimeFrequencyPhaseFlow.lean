@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/Observer/AgencyHolonomy/PrimeFrequencyPhaseFlow
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Fourier characters create unitary log-frequency time flow while
-     scalar products forget order. -/
+   digest: Fourier characters create unitary log-frequency time flow while scalar products forget order. -/
 
 import D5.S3.Observer.AgencyHolonomy.FiniteHolonomyEnergy
 import Mathlib.Analysis.Complex.Exponential
