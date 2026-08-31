@@ -772,7 +772,7 @@ public sealed partial class FrozenLedgerTests
                     {
                         NameKey = module.OpaqueNameKeys
                             ? NameKeyFor(name)
-                            : $"ns(n0,{name.Length}:{name})",
+                            : $"ns(n0,{Encoding.UTF8.GetByteCount(name)}:{name})",
                         IncludeInStatement = module.Excluded.IsDefaultOrEmpty
                             || !module.Excluded.Contains(name),
                     })
