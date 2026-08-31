@@ -5,11 +5,10 @@
    anchors: []
    digest: Pairwise distinct finite phase nodes make the first matching number of moments a faithful readout. -/
 
-import Mathlib.LinearAlgebra.Vandermonde
-import Mathlib.LinearAlgebra.Matrix.Nonsingular
+import Mathlib
 
 /-!
-This owner closes exact finite tomography.  It says nothing about numerical
+This owner closes exact finite tomography. It says nothing about numerical
 conditioning or an infinite family of nodes.
 -/
 
