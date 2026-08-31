@@ -1,3 +1,3376 @@
+# RH research-lane theory notes (consolidated)
+
+One volume accumulating the theory notes stripped from the research-lane
+formalization PRs; each section names its source branch and the Lean
+modules that carry its formal content. Reference input only: the Lean
+modules are the sole truth source, and section numbering here is
+narrative, not load-bearing.
+
+> **统一理论卷规则。** 从本卷建立以后，RH research lane 的新理论推理统一追加到本文件。后续形式化节点继续拥有各自的 Lean GID、Scribe 源和 Blueprint 镜像，但不再为每个节点新建独立 theory 文档。
+
+
+
+---
+
+## [PR #4158] GOLDEN_HOLONOMY_WEIL_BRIDGE
+
+# 黄金 Holonomy 与 Weil 奇校正桥
+## 素数顺序曲率、观察起源规范与离线零点奇偶能量
+
+**文档地位。** 本文说明同一增量中的两个 Lean 真源，并登记后续开放桥。数学结论以对应 GID 和 Lean 声明为准。
+
+本轮不证明 RH，也不声称全部 ζ 因子抽取已经构造完成。机器层完成两件事：
+
+\[
+\boxed{
+\text{prime-side 顺序缺陷的规范不变量和零曲率判据}
+}
+\]
+
+以及
+
+\[
+\boxed{
+\text{zero-side 离线轨道的偶能量减奇能量分解}.
+}
+\]
+
+---
+
+# 1. Prime-side 真源
+
+Lean GID：
+
+`D5/S3/Observer/AgencyHolonomy/PrimeSwapCurvature`
+
+主声明：
+
+`D5.S3.Observer.AgencyHolonomy.PrimeSwapCurvature.prime_swap_curvature_spec`
+
+将 Fibonacci 记忆投影到稳定通道。记稳定乘子、局部标量因子和局部记忆注入为
+
+\[
+a=-\varphi^{-1},
+\qquad
+\lambda_p=L_p^{\langle r\rangle}(s),
+\qquad
+b_p=b_{r,p}^{-}(s).
+\]
+
+抽象局部更新为
+
+\[
+U_p(x,z)=(ax+b_pz,\lambda_pz).
+\]
+
+两个更新顺序的标量坐标相同。记忆坐标之差为
+
+\[
+\boxed{
+C_{p,q}z,
+}
+\]
+
+其中
+
+\[
+\boxed{
+C_{p,q}
+=(a-\lambda_q)b_p-(a-\lambda_p)b_q.
+}
+\]
+
+Lean 证明
+
+\[
+C_{q,p}=-C_{p,q}.
+\]
+
+改变共同记忆原点 \(c\) 时，局部注入按
+
+\[
+b_p\mapsto b_p+(a-\lambda_p)c
+\]
+
+变化，而 \(C_{p,q}\) 保持不变。因此单个 \(b_p\) 依赖观察坐标，交换曲率是规范不变量。
+
+在非共振条件
+
+\[
+a-\lambda_p\ne0,
+\qquad
+a-\lambda_q\ne0
+\]
+
+下，定义局部观察起源估计
+
+\[
+c_p=\frac{b_p}{a-\lambda_p}.
+\]
+
+Lean 证明精确因子分解
+
+\[
+\boxed{
+C_{p,q}
+=(a-\lambda_p)(a-\lambda_q)(c_p-c_q),
+}
+\]
+
+以及
+
+\[
+\boxed{
+C_{p,q}=0
+\iff
+c_p=c_q.
+}
+\]
+
+所以共同 archive 可以保留。若全部局部注入来自同一个 coboundary 原点
+
+\[
+b_p=(a-\lambda_p)c,
+\]
+
+则顺序 holonomy 已经消失。
+
+---
+
+# 2. Zero-side 真源
+
+Lean GID：
+
+`D5/S3/Weil/HolonomyBridge/OffLineOrbitParityDecomposition`
+
+主声明：
+
+`D5.S3.Weil.HolonomyBridge.OffLineOrbitParityDecomposition.off_line_orbit_parity_decomposition`
+
+对 `ZeroData` 中一个非实、离线的零点索引 \(n\)，令
+
+\[
+z=\gamma_n,
+\qquad
+A=\widehat g(z),
+\qquad
+B=\widehat g(\overline z).
+\]
+
+定义偶、奇谱通道
+
+\[
+A_{\mathrm{even}}=\frac{A+B}{2},
+\qquad
+A_{\mathrm{odd}}=\frac{A-B}{2}.
+\]
+
+仓库已有复频率卷积平方因子分解和离线四点轨道实值公式。本轮 Lean 节点证明
+
+\[
+\operatorname{Re}(A\overline B)
+=
+|A_{\mathrm{even}}|^2-|A_{\mathrm{odd}}|^2.
+\]
+
+由此得到
+
+\[
+\boxed{
+Q_{\operatorname{orb}(\rho)}(g)
+=E_{\rho}^{\mathrm{even}}(g)
+-E_{\rho}^{\mathrm{odd}}(g),
+}
+\]
+
+其中
+
+\[
+E_{\rho}^{\mathrm{even}}(g)
+=4m_\rho|A_{\mathrm{even}}|^2\ge0,
+\]
+
+\[
+E_{\rho}^{\mathrm{odd}}(g)
+=4m_\rho|A_{\mathrm{odd}}|^2\ge0.
+\]
+
+因此
+
+\[
+\boxed{
+Q_{\operatorname{orb}(\rho)}(g)
++E_{\rho}^{\mathrm{odd}}(g)
+=E_{\rho}^{\mathrm{even}}(g)
+\ge0.
+}
+\]
+
+离线轨道的符号风险被精确隔离在奇谱通道。该正校正由反对称复频率评价独立构造，没有通过目标正性倒推定义。
+
+---
+
+# 3. 两端的共同二阶对象
+
+Prime side 的奇量是
+
+\[
+C_{p,q}
+=(a-\lambda_p)(a-\lambda_q)(c_p-c_q).
+\]
+
+Zero side 的奇量是
+
+\[
+A_{\mathrm{odd}}
+=
+\frac{\widehat g(z)-\widehat g(\overline z)}{2}.
+\]
+
+二者在交换相应端点时变号。标量完成不能以一阶不变量读取该符号。第一个规范非负对象是 Hermitian 平方。
+
+固定空间窗口 \(L\) 和有限测试深度 \(N\)，后续应构造有限正算子
+
+\[
+\boxed{
+\mathcal V_{r,L,N}^{\mathrm{hol}}
+=
+\frac{1}{2W_{r,L}}
+\sum_{p,q}
+C_{r;p,q}^{*}\Gamma_\varphi C_{r;p,q}
+}
+\]
+
+和有限离线奇算子
+
+\[
+\boxed{
+\mathcal O_{L,N,T}^{\mathrm{off}}
+=
+\sum_{\rho\ \mathrm{off-line},\,|\gamma_\rho|\le T}
+4m_\rho
+|A_{\mathrm{odd},\rho}\rangle
+\langle A_{\mathrm{odd},\rho}|.
+}
+\]
+
+黄金稳定通道的自然 Lyapunov 权为
+
+\[
+\Gamma_\varphi
+=
+\sum_{j\ge0}\varphi^{-2j}
+=
+\varphi.
+\]
+
+这些有限算子尚未在本轮定义。上式登记其预期结构和归一化来源。
+
+---
+
+# 4. 中心开放桥
+
+## 4.1 抽取平坦化
+
+需要证明，对每个固定 \(L,N\)，
+
+\[
+\boxed{
+\|\mathcal V_{r,L,N}^{\mathrm{hol}}\|_{\mathrm{op}}
+\longrightarrow0
+\quad(r\to\infty).
+}
+\]
+
+观察起源因子分解显示，局部注入趋零本身不足以承担该结论。还需要控制共振条件数
+
+\[
+\chi_{r,L}
+=
+\max_{p\in\mathcal P_L}|a-\lambda_{r,p}|^{-1}.
+\]
+
+一个可操作的充分条件是
+
+\[
+\boxed{
+\chi_{r,L}
+\max_{p,q\in\mathcal P_L}|C_{r;p,q}|
+\longrightarrow0.
+}
+\]
+
+## 4.2 谱忠实支配
+
+寻找有限常数和误差预算，使
+
+\[
+\boxed{
+P_{L,N}\mathcal O_{L,T}^{\mathrm{off}}P_{L,N}
+\preceq
+C_{L,N,T}\mathcal V_{r,L,N}^{\mathrm{hol}}
++
+\varepsilon_{r,L,N,T}I.
+}
+\]
+
+要求在固定 \(L,N,T\) 下
+
+\[
+\varepsilon_{r,L,N,T}\to0.
+\]
+
+随后依次完成
+
+\[
+r\to\infty,
+\qquad
+T\to\infty,
+\qquad
+N\to\infty,
+\qquad
+L\to\infty.
+\]
+
+若支配和抽取平坦化均成立，则离线奇能量必须消失。若有限测试塔能够分离每个离线轨道，内部曲率随之为零。仓库已有 `InteriorCurvatureCriterion` 可将内部曲率消失运输到 RH。
+
+---
+
+# 5. 后续形式化顺序
+
+1. `GoldenPrimeMemoryInstantiation`：把 \(a=-\varphi^{-1}\)、\(b_{r,p}^{-}\) 与 \(L_p^{\langle r\rangle}\) 接入当前抽象曲率；
+2. `FiniteHolonomyEnergy`：在固定活动素数幂窗口上构造有限 holonomy Gram 算子；
+3. `ExtractionCurvatureBound`：把 residual local-factor 上界运输到交换曲率；
+4. `ResonanceConditionedFlattening`：加入统一非共振控制；
+5. `FiniteOffLineOddEnergy`：对有限对称零点截断求和逐轨道奇校正；
+6. `PrimeArchimedeanHolonomyDomination`：建立有限 Galerkin 支配；
+7. `HolonomySqueezeToInteriorCurvature`：组合全部极限和误差预算。
+
+第 6 项是当前新的 hard heart。前五项都应附带有限失败证书。
+
+---
+
+# 6. 严格边界
+
+本轮不主张：
+
+- 已经构造全部局部因子抽取塔；
+- 交换曲率随抽取深度趋零；
+- prime holonomy 已经支配离线奇能量；
+- 当前偶测试类已经对全部离线轨道完备；
+- canonical `ZeroData` inhabitant 已经构造；
+- RH 已经证明。
+
+本轮之后可以无条件使用两条机器事实：
+
+\[
+\boxed{
+\text{共同 archive 是 coboundary；顺序曲率只检测观察起源不一致。}
+}
+\]
+
+\[
+\boxed{
+\text{一个离线四点轨道的全部符号风险集中在非负奇谱能量。}
+}
+\]
+
+因此未来桥需要比较的对象已经固定为
+
+\[
+\boxed{
+\text{prime-side 规范约化交换曲率平方}
+\quad\longleftrightarrow\quad
+\text{zero-side 离线奇谱能量}.
+}
+
+---
+
+## [PR #4192] STABLE_RESIDUAL_SWAP_CURVATURE_BOUND
+
+# 稳定通道 residual 交换曲率界
+## 从局部因子余项到 holonomy 小量的第一条定量桥
+
+**文档地位。** 本文解释 Lean 节点
+
+`D5/S3/Observer/AgencyHolonomy/StableResidualSwapCurvatureBound`
+
+及其主声明
+
+`D5.S3.Observer.AgencyHolonomy.StableResidualSwapCurvatureBound.stable_residual_swap_curvature_bound`。
+
+机器结论以 Lean 声明为准。本文区分已经证明的有限代数事实、可以由该事实直接推出的纸面推论，以及仍需独立形式化的全局桥。
+
+---
+
+# 1. 来源问题
+
+黄金记忆路线将一个 residual local factor 写成
+
+\[
+L_p^{\langle r\rangle}=1+a_{r,p},
+\]
+
+并将稳定记忆通道中的局部注入写成
+
+\[
+b_{r,p}=a_{r,p}v_p.
+\]
+
+此前的稳定通道相邻交换曲率具有形式
+
+\[
+C_{p,q}
+=(s-\lambda_q)b_p-(s-\lambda_p)b_q,
+\]
+
+其中 \(s\) 是固定的稳定记忆乘子。代入
+
+\[
+\lambda_p=1+a_p,
+\qquad
+b_p=a_pv_p
+\]
+
+以后，问题变成：局部 residual \(a_p,a_q\) 小，是否足以强制交换曲率小。
+
+本轮只处理一个稳定特征通道。矩阵或一般 Banach 空间上的完整算子提升仍是后续节点。
+
+---
+
+# 2. 机器定义
+
+Lean 在任意 normed field \(K\) 上定义
+
+\[
+\boxed{
+C^{\mathrm{st}}(s,a_p,a_q,v_p,v_q)
+=
+\bigl(s-(1+a_q)\bigr)a_pv_p
+-
+\bigl(s-(1+a_p)\bigr)a_qv_q.
+}
+\]
+
+这个定义不包含极限、素数求和、零点数据或 RH 前提。它是两个 residual 局部更新在一维稳定记忆通道上的有限相邻交换缺陷。
+
+---
+
+# 3. 精确线性加二次分解
+
+Lean 证明
+
+\[
+\boxed{
+\begin{aligned}
+C^{\mathrm{st}}
+={}&
+(s-1)(a_pv_p-a_qv_q)
+\\
+&+a_pa_q(v_q-v_p).
+\end{aligned}
+}
+\]
+
+第一项是一阶 residual 失配。第二项是两个 residual 同时存在时产生的双线性修正。
+
+该恒等式说明曲率的首阶尺度由 \(s-1\) 控制。局部因子完成到 \(1\) 时，稳定记忆乘子与标量完成点之间的间隙决定 residual 被放大的常数。
+
+---
+
+# 4. 一般范数界
+
+在
+
+\[
+\|v_p\|\le1,
+\qquad
+\|v_q\|\le1
+\]
+
+下，Lean 证明
+
+\[
+\boxed{
+\begin{aligned}
+\|C^{\mathrm{st}}\|
+\le{}&
+\|s-1\|
+\bigl(\|a_p\|+\|a_q\|\bigr)
+\\
+&+2\|a_p\|\|a_q\|.
+\end{aligned}
+}
+\]
+
+证明只使用三角不等式、乘法范数和
+
+\[
+\|v_q-v_p\|\le\|v_q\|+\|v_p\|\le2.
+\]
+
+因此该界不依赖任何零点位置，也不依赖观察起源坐标中的除法。
+
+---
+
+# 5. 统一 residual envelope
+
+若存在 \(\varepsilon\ge0\) 使
+
+\[
+\|a_p\|\le\varepsilon,
+\qquad
+\|a_q\|\le\varepsilon,
+\]
+
+Lean 进一步证明
+
+\[
+\boxed{
+\|C^{\mathrm{st}}\|
+\le
+2\|s-1\|\varepsilon+2\varepsilon^2.
+}
+\]
+
+这是后续完成深度论证应使用的统一货币。它把所有局部分析压缩成一个 residual envelope：
+
+\[
+\varepsilon_{r,L}
+=
+\max_{p\in\mathcal P_L}|a_{r,p}|.
+\]
+
+对固定有限活动窗口 \(\mathcal P_L\)，只要未来证明
+
+\[
+\varepsilon_{r,L}\longrightarrow0,
+\]
+
+纸面上立即得到
+
+\[
+\max_{p,q\in\mathcal P_L}
+\|C^{\mathrm{st}}_{r;p,q}\|
+\longrightarrow0.
+\]
+
+最后这一极限运输尚未包含在本轮 Lean 声明中。它应作为独立节点接收一个已形式化的 residual-envelope 收敛前提。
+
+---
+
+# 6. 对共振问题的修正
+
+观察起源坐标写成
+
+\[
+c_p=\frac{b_p}{s-\lambda_p}.
+\]
+
+该坐标在 \(s=\lambda_p\) 附近带有条件数
+
+\[
+|s-\lambda_p|^{-1}.
+\]
+
+本轮机器界直接控制原始规范不变量 \(C_{p,q}\)，没有引入该分母。因此需要区分两个目标：
+
+1. 若目标是证明局部观察起源 \(c_p\) 本身收敛，则必须控制共振分母。
+2. 若目标是证明规范交换曲率趋零，则 residual envelope 界已经给出一条不经过观察起源除法的路径。
+
+所以此前登记的 resonance-conditioned flattening 不是原始曲率消失的必要中间步骤。它只在需要恢复或比较观察起源坐标时承担作用。
+
+对黄金稳定通道
+
+\[
+s=-\varphi^{-1},
+\]
+
+完成点是 \(1\)。纸面恒等式
+
+\[
+1+\varphi^{-1}=\varphi
+\]
+
+给出
+
+\[
+|s-1|=\varphi.
+\]
+
+于是预期的黄金特化界为
+
+\[
+\boxed{
+\|C^{\mathrm{st}}_{r;p,q}\|
+\le
+2\varphi\varepsilon_{r,L}
++2\varepsilon_{r,L}^2.
+}
+\]
+
+该黄金常数特化尚未在本轮 Lean 节点中连接。它可以由仓库已有的 golden-ratio 恒等式形成一个很薄的后续实例节点。
+
+---
+
+# 7. 当前允许的真源推理
+
+本轮以后可以无条件使用：
+
+\[
+\boxed{
+\text{稳定通道交换曲率对 residual 是一阶加二阶小量。}
+}
+\]
+
+更精确地说，局部 residual 同时趋零时，不需要先证明观察起源收敛，也不需要排除观察起源坐标中的表观共振，原始交换曲率已经被统一压到零。
+
+这改变了 prime-side 路线的任务排序。当前最短链条是
+
+\[
+\boxed{
+\text{residual envelope decay}
+\Longrightarrow
+\text{pairwise curvature decay}
+\Longrightarrow
+\text{finite holonomy energy decay}.
+}
+\]
+
+第三箭头仍需把逐对界聚合为有限正 Gram 能量界。
+
+---
+
+# 8. 下一真源
+
+自然的下一节点应为 `FiniteStableHolonomyEnergyBound`。固定有限活动索引集 \(P\)，定义
+
+\[
+\mathcal V^{\mathrm{st}}_{r,P}
+=
+\frac{1}{2W_{r,P}}
+\sum_{p,q\in P}
+\|C^{\mathrm{st}}_{r;p,q}\|^2.
+\]
+
+需要机器证明：
+
+\[
+0\le\mathcal V^{\mathrm{st}}_{r,P},
+\]
+
+以及由本轮 envelope 界导出的有限聚合估计。若 \(|P|=M\)，未归一化版本应满足
+
+\[
+\sum_{p,q\in P}
+\|C^{\mathrm{st}}_{r;p,q}\|^2
+\le
+M^2
+\left(
+2\|s-1\|\varepsilon+2\varepsilon^2
+\right)^2.
+\]
+
+归一化版本还需要先固定 \(W_{r,P}\) 的定义和正性条件，避免把归一化选择隐藏在证明中。
+
+完成该有限能量节点以后，prime-side 的剩余困难将集中到两处：
+
+- 从实际 all-order local-factor extraction 得到统一 residual envelope decay；
+- 将 finite holonomy energy 与 zero-side 离线奇谱能量建立忠实支配。
+
+第二项仍是整条 RH 路线的 hard heart。
+
+---
+
+# 9. 严格非主张
+
+本轮不主张：
+
+- 已构造 all-order residual extraction；
+- residual envelope 已随深度趋零；
+- 已定义或控制无限素数 holonomy 能量；
+- prime-side 曲率已经支配离线零点奇能量；
+- 已得到任何零点位置结论；
+- 已证明 RH。
+
+本轮机器层只冻结有限、可复用且不含目标等价前提的定量桥：
+
+\[
+\boxed{
+\text{residual local factors}
+\longrightarrow
+\text{stable adjacent-swap curvature bound}.
+\]
+
+---
+
+## [PR #4199] FINITE_HOLONOMY_ENERGY_AND_PHASE_COHERENCE
+
+# 有限 holonomy 能量、色散与相位相干
+## 从波动直觉到 RH 路线中的可证明链条
+
+**文档地位。** 本文解释 Lean 节点
+
+`D5/S3/Observer/AgencyHolonomy/FiniteHolonomyEnergy`
+
+及其主声明
+
+`D5.S3.Observer.AgencyHolonomy.FiniteHolonomyEnergy.finite_stable_holonomy_energy_bound`。
+
+机器事实以 Lean 声明为准。波、白光、色散、共振和圆在本文中承担结构类比。只有写成公式并接入 prime-zero 桥的部分才能成为 RH 论证。
+
+---
+
+# 1. 本轮冻结的有限能量
+
+固定有限通道类型 \(P\)，对每一有序对 \((p,q)\) 给出稳定交换曲率
+
+\[
+C^{\mathrm{st}}_{p,q}.
+\]
+
+Lean 定义未归一化能量
+
+\[
+\boxed{
+\mathcal E^{\mathrm{hol}}_P
+=
+\sum_{p\in P}\sum_{q\in P}
+\left\|C^{\mathrm{st}}_{p,q}\right\|^2.
+}
+\]
+
+它是一个有限正标量，具有四个机器性质。
+
+第一，非负性：
+
+\[
+\boxed{0\le \mathcal E^{\mathrm{hol}}_P.}
+\]
+
+第二，若 \(|P|=M\)，所有 residual 满足 \(\|r_p\|\le\varepsilon\)，所有通道满足 \(\|v_p\|\le1\)，则
+
+\[
+\boxed{
+\mathcal E^{\mathrm{hol}}_P
+\le
+M^2
+\left(
+2\|a-1\|\varepsilon+2\varepsilon^2
+\right)^2.
+}
+\]
+
+第三，能量的消失忠实记录逐对压平：
+
+\[
+\boxed{
+\mathcal E^{\mathrm{hol}}_P=0
+\iff
+\forall p,q\in P,
+\ C^{\mathrm{st}}_{p,q}=0.
+}
+\]
+
+第四，\(\varepsilon=0\) 强制 \(\mathcal E^{\mathrm{hol}}_P=0\)。
+
+这里使用有序对，所以粗略计数因子是 \(M^2\)。后续引入反对称性、去掉对角线或除以二以后，可以改成无序对计数。当前版本保留最少结构和最透明的上界。
+
+---
+
+# 2. 共振中存在两种不同能量
+
+波动直觉中的“能量聚合”需要分成两个量。
+
+## 2.1 缺陷能量
+
+本轮 Lean 控制的是
+
+\[
+\mathcal E_{\mathrm{defect}}
+=
+\sum_{p,q}\|C_{p,q}\|^2.
+\]
+
+它衡量通道之间的相位、起源或更新次序失配。系统趋向共同模态时，这个量应当趋向零。
+
+## 2.2 相干能量
+
+若 \(z_p\in U(1)\) 是单位相位，\(w_p\ge0\) 是权重，令
+
+\[
+W=\sum_pw_p,
+\qquad
+A=\sum_pw_pz_p.
+\]
+
+\(|A|^2\) 衡量各相位相干叠加以后落在共同模态中的能量。完全同相时 \(|A|=W\)，相干能量达到最大。
+
+波论中的精确守恒式是
+
+\[
+\boxed{
+\sum_{p,q}w_pw_q|z_p-z_q|^2
+=
+2W^2-2\left|\sum_pw_pz_p\right|^2.
+}
+\]
+
+左侧是色散或不同步能量，右侧是总可用能量减去共同模态能量。因此“共振聚合”可以严格翻译为：
+
+\[
+\boxed{
+\text{缺陷能量下降}
+\quad\Longleftrightarrow\quad
+\text{共同模态相干能量上升}.
+}
+\]
+
+这条相位守恒式尚未包含在本轮 Lean 文件中。它适合形成独立节点 `FinitePhaseCoherenceIdentity`，并在复相位或二维实内积空间上证明。
+
+---
+
+# 3. 白光与色散的数学翻译
+
+“白光”可以理解为尚未分辨内部频率的整体标量读数。zeta 的 Euler 乘积在收敛半平面写成
+
+\[
+\zeta(s)=\prod_p(1-p^{-s})^{-1}.
+\]
+
+沿 \(s=\sigma+it\) 展开一个素数通道：
+
+\[
+\boxed{
+p^{-s}=p^{-\sigma}e^{-it\log p}.}
+\]
+
+因此每个素数携带：
+
+\[
+\text{衰减幅度 }p^{-\sigma},
+\qquad
+\text{角频率 }\log p,
+\qquad
+\text{圆周相位 }e^{-it\log p}\in U(1).
+\]
+
+有限素数窗口的相位空间自然落在
+
+\[
+U(1)^P,
+\]
+
+也就是有限维环面。这里的“颜色”对应不同的 \(\log p\) 频率通道。拓扑来自圆群及其乘积空间，群结构来自相位乘法。
+
+标量 Euler 因子彼此交换，所以只看最终乘积时，通道顺序被遗忘。记忆提升将每个局部因子放进上三角更新或半直积结构以后，通道顺序可以留下可观测痕迹。相邻交换曲率 \(C_{p,q}\) 正是这一顺序依赖的局部测量。
+
+因此色散与破缺的对应关系可以写成：
+
+\[
+\boxed{
+\text{整体读数被分解为 prime-frequency channels}
+\longrightarrow
+\text{通道差异显现}
+\longrightarrow
+\text{提升后的交换对称性可能破缺}.
+}
+\]
+
+曲率为零表示局部交换闭合。曲率非零表示经过 \(p\) 再经过 \(q\) 与反向顺序留下不同记忆。
+
+---
+
+# 4. 观察起源、色散与共振条件
+
+对局部标量因子 \(\lambda_p\) 和记忆注入 \(b_p\)，观察起源坐标为
+
+\[
+\boxed{
+c_p=\frac{b_p}{a-\lambda_p}.}
+\]
+
+远离共振时，prime swap curvature 满足
+
+\[
+\boxed{
+C_{p,q}
+=(a-\lambda_p)(a-\lambda_q)(c_p-c_q).
+}
+\]
+
+这条恒等式给出非常直接的色散解释：不同素数通道推断出不同观察起源时，\(c_p-c_q\) 形成起源色散；交换曲率是该色散经过两个共振间隙加权后的规范量。
+
+若存在统一非共振下界
+
+\[
+|a-\lambda_p|\ge\eta>0,
+\]
+
+则纸面上有
+
+\[
+|c_p-c_q|^2
+\le
+\eta^{-4}|C_{p,q}|^2,
+\]
+
+进而
+
+\[
+\boxed{
+\sum_{p,q}|c_p-c_q|^2
+\le
+\eta^{-4}\mathcal E^{\mathrm{hol}}_P.
+}
+\]
+
+这才是严格意义上的“曲率能量压平推出观察起源共振到共同值”。本轮机器节点聚合了 \(C_{p,q}\) 的能量。上面的非共振运输应成为下一条 `ResonanceConditionedOriginDispersion` 真源。
+
+当 \(a\) 接近某个 \(\lambda_p\) 时，权重 \((a-\lambda_p)(a-\lambda_q)\) 可以很小。原始曲率此时可能掩盖较大的起源差异。因此共振附近需要单独处理条件数、重标度或直接使用无除法的曲率变量。
+
+---
+
+# 5. 为什么会出现圆
+
+圆有两条独立来源。
+
+第一条来自相位群：
+
+\[
+e^{-it\log p}\in U(1).
+\]
+
+每个 prime-frequency channel 在单位圆上旋转。多个素数共同形成环面 \(U(1)^P\)。相干表示这些圆周相位在加权和中朝向共同方向。
+
+第二条来自 zero-side 的 Cayley 紧化。令
+
+\[
+x=(t-\gamma)^2,
+\qquad
+a=\delta^2,
+\qquad
+u_a(x)=\frac{x-a}{x+a}.
+\]
+
+对一阶 Chebyshev slack，
+
+\[
+S_a(x)=1-u_a(x)^2
+=
+\frac{4ax}{(x+a)^2}.
+\]
+
+于是
+
+\[
+\boxed{u_a(x)^2+S_a(x)=1.}
+\]
+
+取非负振幅 \(\sqrt{S_a(x)}\) 后，
+
+\[
+\bigl(u_a(x),\sqrt{S_a(x)}\bigr)
+\]
+
+落在单位圆上。倒数变换 \(y=a^2/x\) 满足
+
+\[
+u_a(y)=-u_a(x),
+\qquad
+S_a(y)=S_a(x).
+\]
+
+它把同一强度的两个点放在圆上的相反相位。这正对应最新 RH 理论源中预登记的 `CurvatureSlackPhaseBridge`。该恒等式属于零点局部几何，尚未建立 prime holonomy energy 到 zero-side 圆能量的支配。
+
+所以“回归圆”可以精确表述为相位归一化或 Cayley-slack 守恒。它不应被写成能量在物理空间中自动收缩成一个圆。
+
+---
+
+# 6. 这条路线为什么可能与 RH 有关
+
+RH 讨论的是非平凡零点
+
+\[
+\rho=\frac12+\delta+i\gamma
+\]
+
+是否全部满足 \(\delta=0\)。函数方程将离线零点组织成反射轨道。\(\delta\ne0\) 会产生关于临界线的成对位移，并在仓库现有的 off-line curvature dipole、odd orbit decomposition 和 Chebyshev slack 中形成可检测的奇部分或离线能量。
+
+素数侧与零点侧的关联来自 Euler product、对数导数和显式公式。波动语言中，素数提供频率 \(\log p\)，零点提供全局共振谱。要让本轮有限能量真正承担 RH 证明，需要建立如下类型的忠实支配：
+
+\[
+\boxed{
+\mathcal E^{\mathrm{odd}}_{\mathrm{off}}(N,L)
+\le
+A_{N,L}\mathcal E^{\mathrm{hol}}_{r,L}
++
+R_{r,N,L}.
+}
+\]
+
+其中：
+
+\[
+\mathcal E^{\mathrm{odd}}_{\mathrm{off}}
+\]
+
+必须对每个离线零点轨道给出严格正贡献；
+
+\[
+\mathcal E^{\mathrm{hol}}_{r,L}
+\]
+
+是本轮开始构造的 prime-side 交换缺陷能量；
+
+\[
+R_{r,N,L}\to0
+\]
+
+负责有限素数窗口、有限深度和测试函数逼近误差。
+
+若未来同时证明
+
+\[
+\varepsilon_{r,L}\to0,
+\]
+
+本轮机器上界给出
+
+\[
+\mathcal E^{\mathrm{hol}}_{r,L}\to0.
+\]
+
+再由忠实 prime-zero 支配得到
+
+\[
+\mathcal E^{\mathrm{odd}}_{\mathrm{off}}=0.
+\]
+
+若零点侧能量对所有 \(\delta\ne0\) 严格正，就能排除离线零点，从而把全部非平凡零点压到 \(\Re s=1/2\)。
+
+因此当前严谨链条是
+
+\[
+\boxed{
+\begin{aligned}
+&\text{all-order residual envelope decay}
+\\
+&\Longrightarrow
+\text{pairwise prime curvature decay}
+\\
+&\Longrightarrow
+\text{finite holonomy defect energy decay}
+\\
+&\Longrightarrow
+\boxed{\text{prime-zero faithful domination}}
+\\
+&\Longrightarrow
+\text{off-line odd energy vanishes}
+\\
+&\Longrightarrow
+\text{every nontrivial zero lies on the critical line}.
+\end{aligned}
+}
+\]
+
+方框中的 prime-zero faithful domination 仍是整条路线的核心缺口。圆结构、相位同步和有限能量压平为这条桥提供候选几何语言，它们单独不产生 RH 结论。
+
+---
+
+# 7. 对白光直觉的最终校准
+
+可以保留下面这幅图景：
+
+\[
+\boxed{
+\begin{aligned}
+\text{白光}
+&\sim \text{未分辨的整体 Euler 输出},
+\\
+\text{色散}
+&\sim \text{分解为频率 }\log p\text{ 的素数通道},
+\\
+\text{颜色间的破缺}
+&\sim \text{提升更新的非交换曲率},
+\\
+\text{缺陷能量}
+&\sim \sum_{p,q}\|C_{p,q}\|^2,
+\\
+\text{共振聚合}
+&\sim \text{缺陷能量归零且共同模态能量最大},
+\\
+\text{圆}
+&\sim U(1)\text{ 相位或 Cayley-slack 单位圆},
+\\
+\text{RH 桥}
+&\sim \text{prime-side 压平忠实支配 zero-side 离线奇能量}.
+\end{aligned}
+}
+\]
+
+这套语言已经足够指导定义新节点。每一箭头仍需单独的类型、假设和误差账本。
+
+---
+
+# 8. 下一真源排序
+
+本轮以后，最自然的相邻节点是：
+
+1. `ResonanceConditionedOriginDispersion`。在统一间隙 \(\eta>0\) 下，把 holonomy energy 运输为观察起源的 pairwise dispersion energy。
+2. `FinitePhaseCoherenceIdentity`。形式化单位相位的色散能量与共同模态能量守恒式。
+3. `ResidualEnvelopeFiniteWindowConvergence`。从实际 extraction tower 得到 \(\varepsilon_{r,L}\to0\)。
+4. `FiniteOffLineOddEnergy`。把每个反射零点轨道的奇部分平方聚合成忠实非负量。
+5. `PrimeArchimedeanHolonomyDomination`。证明 prime-side 能量控制 zero-side 离线能量及全部截断误差。
+
+第五条依然是 hard heart。第一和第二条可以先把“共振压平”和“波的能量聚合”完全变成机器可读的数学。
+
+---
+
+# 9. 严格非主张
+
+本轮不主张：
+
+- residual envelope 已经收敛；
+- 无限素数能量已经定义；
+- 共振分母已经统一受控；
+- prime phases 已经同步；
+- finite holonomy energy 已经支配零点能量；
+- 圆恒等式已经推出临界线；
+- RH 已经证明。
+
+本轮冻结的机器真源是
+
+\[
+\boxed{
+\text{pairwise stable residual curvature bounds}
+\longrightarrow
+\text{faithful finite nonnegative holonomy energy bound}.
+\]
+
+---
+
+## [PR #4212] FORMAL_GOLDEN_PRIME_CIRCLE_CRITICAL_SPECTRUM
+
+# 黄金素数圆、二元电荷层析与临界谱完成
+
+**Formal Golden Prime Circle, Binary Charge Tomography, and Critical-Spectrum Completion**
+
+**版本：v0.1，2026-08-30**
+
+## 0. 文档地位
+
+本文把黄金比例、素数分裂、观察者压缩、尺度圆与 Riemann 型临界反射组织成一条严格分层的理论链。Lean 文件是机器真源。本文负责解释对象、桥梁、适用范围和仍然开放的解析义务。
+
+本文不宣称已经证明 RH、GRH、显式公式的新版本或 `L(1, chi_5)` 的解析特殊值。临界线到单位圆的变换是精确坐标重写。它的研究价值来自与黄金尺度、二元分裂电荷和 observer completion 的兼容性。
+
+---
+
+## 1. 三种压缩必须分开
+
+### 1.1 阿贝尔化
+
+素数是正有理数乘法群的自由生成元：
+
+\[
+\mathbb Q_{>0}^{\times}\cong\bigoplus_p\mathbb Z[p].
+\]
+
+从有序素数观察词进入该群会删除顺序，只保留素因子指数。
+
+### 1.2 字符投影
+
+普通 zeta 对应平凡字符通道。对黄金二次域，非平凡字符 `chi_5` 读取 split/inert 电荷。联合通道
+
+\[
+(\mathbf 1,\chi_5)
+\]
+
+是群 `C_2` 上的完整 Fourier 坐标。
+
+### 1.3 反射偶化
+
+completed reflection
+
+\[
+\mathcal R(s)=1-\overline{s}
+\]
+
+把法向偏差 `delta` 变为 `-delta`。对称标量观察会消去奇通道，同时保留乘积、平方和曲率等偶不变量。
+
+---
+
+## 2. 黄金尺度圆
+
+定义黄金正定向周期
+
+\[
+L_\varphi=2\log\varphi.
+\]
+
+对正尺度 `x`，定义未取商坐标
+
+\[
+\eta_\varphi(x)=\frac{\log x}{L_\varphi}.
+\]
+
+机器定理证明
+
+\[
+\eta_\varphi(xy)=\eta_\varphi(x)+\eta_\varphi(y)
+\]
+
+以及
+
+\[
+\eta_\varphi(\varphi^2x)=\eta_\varphi(x)+1.
+\]
+
+因此取模 `Z` 后得到黄金尺度圆。当前 Lean owner 保留未取商实坐标，以避免把 circle quotient 的拓扑接口与本批代数定理混在一起。
+
+其 Fourier 基频为
+
+\[
+\omega_\varphi=\frac{2\pi}{L_\varphi}=\frac{\pi}{\log\varphi}.
+\]
+
+机器闭合的精确桥为
+
+\[
+2\pi k\,\eta_\varphi(x)
+=
+(k\omega_\varphi)\log x.
+\]
+
+这解释了黄金圆的 Fourier 模式为什么对应 Mellin 变量的垂直平移。
+
+---
+
+## 3. 相同电荷与不同观察者
+
+设壳层读出为
+
+\[
+q_r:X\to Y_r,
+\]
+
+并存在电荷投影
+
+\[
+c_r:Y_r\to C
+\]
+
+满足
+
+\[
+c_r\circ q_r=\chi.
+\]
+
+所有壳层读取同一个电荷 `chi`。它们仍可保留不同残余信息，因此 kernel 不必相同。机器反模型使用一个只读取 Boolean charge 的粗壳和一个同时保留 residual bit 的细壳，证明共同电荷不推出观察者相同。
+
+---
+
+## 4. 黄金 `C_2` 电荷层析
+
+令 split 与 inert 信号为 `(S,I)`。定义
+
+\[
+N=S+I,
+\qquad
+C=S-I.
+\]
+
+反演为
+
+\[
+S=\frac{N+C}{2},
+\qquad
+I=\frac{N-C}{2}.
+\]
+
+这里 `N` 是中性通道，`C` 是二次电荷通道。该反演已经机器证明。
+
+对单个未分歧素数，`chi_5(p)=+1` 给 split 指示器，`chi_5(p)=-1` 给 inert 指示器。`p=5` 是分歧通道，需要单独保留。
+
+---
+
+## 5. 黄金局部 Euler 三分律
+
+令形式局部变量为 `X`，定义
+
+\[
+D_\chi(X)=(1-X)(1-\chi X).
+\]
+
+机器证明
+
+\[
+\begin{aligned}
+D_{+1}(X)&=(1-X)^2,\\
+D_{-1}(X)&=1-X^2,\\
+D_0(X)&=1-X.
+\end{aligned}
+\]
+
+它们分别对应 split、inert、ramified 三种黄金局部类型。仓库已有 prime classification 证明素数的黄金分裂类型由 `p mod 5` 决定。本批新增 residue-to-charge-to-Euler-denominator 的桥接 owner。
+
+---
+
+## 6. 黄金临界半径
+
+对复变量 `s` 定义
+
+\[
+b(s)=\Re(s)-\frac12
+\]
+
+和黄金临界半径
+
+\[
+R_\varphi(s)=\exp(L_\varphi b(s)).
+\]
+
+机器证明
+
+\[
+R_\varphi(s)=1
+\iff
+\Re(s)=\frac12.
+\]
+
+临界反射满足
+
+\[
+b(\mathcal R s)=-b(s)
+\]
+
+以及
+
+\[
+R_\varphi(\mathcal R s)=R_\varphi(s)^{-1}.
+\]
+
+因此每一对反射伙伴都满足
+
+\[
+R_\varphi(s)R_\varphi(\mathcal R s)=1.
+\]
+
+这只是成对平衡。逐点中性要求
+
+\[
+R_\varphi(s)=1.
+\]
+
+所以函数方程型对称提供 pairwise balance，Riemann 型临界线命题要求 pointwise neutrality。Lean 中已经给出显式反例，说明乘积为一不能推出每个因子为一。
+
+---
+
+## 7. 与 RH 和 GRH 的精确边界
+
+对任意候选零点集 `Z`，机器定理证明
+
+\[
+\forall s\in Z,\ \Re(s)=\frac12
+\iff
+\forall s\in Z,\ R_\varphi(s)=1.
+\]
+
+当 `Z` 被实例化为 completed zeta 或某个 completed `L`-函数的非平凡零点集时，这成为对应 RH 或 GRH 的等价坐标表达。该实例化本身需要仓库中严格定义的 completed function、zero predicate 和 trivial-zero exclusion。
+
+本批不把坐标等价冒充为零点位置证明。
+
+---
+
+## 8. 后续解析桥
+
+下列内容保留为后续形式化目标：
+
+1. 在绝对收敛半平面中建立有限或无限黄金壳测度的 Fourier 系数与 `-L'/L` 垂直采样之间的定理；
+2. 形式化 `L(1,chi_5)=2 log(phi)/sqrt(5)`，并连接黄金 Möbius Lyapunov 指数；
+3. 将 explicit formula 实现为 prime-shell test space 与 zero-spectrum distribution 之间的连续线性泛函恒等式；
+4. 构造足够完备的 golden Weil frame，并证明其正性是否等价于完整 Weil criterion；
+5. 证明任何新增传递算子的酉性或自伴随性，不能从 determinant 的成对平衡直接推出。
+
+---
+
+## 9. 机器 owner
+
+```text
+D5/S3/Observer/GoldenPrimeCircle/
+  GoldenScaleCircle.lean
+  GoldenVerticalSampling.lean
+  SharedChargeDifferentShells.lean
+
+D5/S3/PrimeForms/GoldenEuler/
+  GoldenChargeTomography.lean
+  GoldenLocalEulerTrichotomy.lean
+  GoldenResidueChargeBridge.lean
+
+D5/S3/Weil/GoldenCriticalSpectrum/
+  GoldenCriticalRadius.lean
+  GoldenReflectionTransfer.lean
+```
+
+---
+
+## [PR #4221] PRIME_FREQUENCY_PHASE_FLOW_AND_OBSERVER_TIME
+
+# 素数频率相位流、傅立叶对偶与观察者时间
+## 色散给出频率分解，记忆次序给出可观察的历时
+
+**文档地位。** 本文解释 Lean 节点
+
+`D5/S3/Observer/AgencyHolonomy/PrimeFrequencyPhaseFlow`
+
+及其三个主定理：
+
+- `fourier_phase_character_laws`；
+- `ordered_phase_product_collapse`；
+- `finite_fourier_synthesis_laws`。
+
+机器事实以 Lean 声明为准。本文将“色散以后是不是通过傅立叶变换出现时间”拆成可证明的傅立叶角色、标量次序遗忘和记忆提升三个部分。
+
+---
+
+# 1. 本轮机器对象
+
+Lean 定义傅立叶相位
+
+\[
+\boxed{
+\chi_\omega(t)=e^{-it\omega}.
+}
+\]
+
+这里 \(t,\omega\in\mathbb R\)，值位于复数单位圆。对自然数地址 \(n\)，进一步定义
+
+\[
+\boxed{
+\chi_n^{\log}(t)
+=
+\chi_{\log n}(t)
+=
+e^{-it\log n}.
+}
+\]
+
+当地址是素数 \(p\) 时，这正是
+
+\[
+p^{-\sigma-it}
+=
+p^{-\sigma}e^{-it\log p}
+\]
+
+中的振荡部分。
+
+对有限通道类型 \(P\)，振幅 \(a_p\in\mathbb C\) 和频率 \(\omega_p\in\mathbb R\)，Lean 定义有限傅立叶合成
+
+\[
+\boxed{
+S(t)=\sum_{p\in P}a_p e^{-it\omega_p}.
+}
+\]
+
+这是一条有限谱线信号。本文未定义一般 \(L^1\) 或 \(L^2\) 傅立叶变换，也未使用傅立叶反演或 Plancherel 定理。
+
+---
+
+# 2. 时间作为频率的对偶参数
+
+Lean 证明
+
+\[
+\boxed{
+\chi_\omega(0)=1,
+}
+\]
+
+以及
+
+\[
+\boxed{
+\chi_\omega(t+u)
+=
+\chi_\omega(t)\chi_\omega(u).
+}
+\]
+
+因此固定 \(\omega\) 后，映射
+
+\[
+t\longmapsto\chi_\omega(t)
+\]
+
+是加法群 \((\mathbb R,+)\) 到单位圆乘法群的角色。这里的 \(t\) 就是傅立叶对偶中的原变量。频率 \(\omega\) 标记该原变量上的角色。
+
+同一个核也满足
+
+\[
+\boxed{
+\chi_{\omega+\nu}(t)
+=
+\chi_\omega(t)\chi_\nu(t).
+}
+\]
+
+所以固定 \(t\) 后，它对频率变量同样是加法角色。Lean 还证明
+
+\[
+\boxed{
+\chi_\omega(t)=\chi_t(\omega),
+}
+\]
+
+因为数值上只出现双线性配对 \(t\omega\)。这个对称性表示傅立叶核中的数值互易，不表示时间和频率在模型中具有相同语义。
+
+因此最准确的回答是：
+
+\[
+\boxed{
+\text{色散识别频率通道，傅立叶配对使这些通道随参数 }t\text{ 形成相位流。}
+}
+\]
+
+时间不是由“把颜色排了一个顺序”自动制造出来。它来自一个已经存在的加法参数群及其傅立叶角色。如果只给出无序频率集合 \(\{\omega_p\}\)，还没有时间原点、时间方向或因果箭头。
+
+---
+
+# 3. 单位圆与环面
+
+Lean 证明
+
+\[
+\boxed{
+|\chi_\omega(t)|=1.
+}
+\]
+
+所以单个通道沿 \(U(1)\) 运动。有限通道族
+
+\[
+\bigl(\chi_{\omega_p}(t)\bigr)_{p\in P}
+\]
+
+沿环面
+
+\[
+\boxed{U(1)^P}
+\]
+
+形成一参数轨道。
+
+这给“白光色散为多种颜色”一个精确版本：整体信号被分解为多个频率角色，每个角色在自己的圆相位上旋转，联合状态位于相位环面。
+
+当 \(\omega_p=\log p\) 时，轨道是
+
+\[
+\boxed{
+t\longmapsto
+\left(e^{-it\log p}\right)_{p\in P}.}
+\]
+
+其中 \(t\) 是 zeta 竖直方向的虚部坐标，也可以称为谱时间。它不是未经额外解释即可认定的物理时间。
+
+---
+
+# 4. 色散次序本身会不会产生时间
+
+本轮最关键的边界定理考虑一个频率列表
+
+\[
+\Omega=[\omega_1,\ldots,\omega_m]
+\]
+
+和按列表书写的标量相位乘积
+
+\[
+\Pi_\Omega(t)
+=
+\prod_{j=1}^m e^{-it\omega_j}.
+\]
+
+Lean 证明
+
+\[
+\boxed{
+\Pi_\Omega(t)
+=
+e^{-it\sum_j\omega_j}.
+}
+\]
+
+右侧只依赖频率总和。因此在标量复数层：
+
+\[
+\boxed{
+\text{先 }\omega_p\text{ 后 }\omega_q
+=
+\text{先 }\omega_q\text{ 后 }\omega_p.
+}
+\]
+
+标量傅立叶相位能够表示时间演化，却无法记录通道经过的先后次序。换句话说：
+
+\[
+\boxed{
+\text{傅立叶时间}
+\neq
+\text{序列历史}.
+}
+\]
+
+这恰好解释了为什么前面的记忆提升是必要的。若更新仍在复数乘法中，所有局部相位交换，路径历史被压缩成频率总和。把局部因子提升为上三角更新、半直积或其他非交换作用以后，才可能出现
+
+\[
+U_qU_p-U_pU_q
+\]
+
+以及对应的 swap curvature。
+
+所以存在两种“次序”：
+
+1. **谱次序。** 按大小排列 \(\log p\) 或按索引列出频率。这是一种表示选择，标量傅立叶核不保存该排列。
+2. **作用次序。** 观察器先接受通道 \(p\)，随后接受通道 \(q\)。若记忆更新不交换，该次序形成可观察的历时。
+
+第二种次序才与 chronology、路径和 holonomy 直接有关。
+
+---
+
+# 5. 有限傅立叶合成中的时间平移
+
+Lean 对
+
+\[
+S(t)=\sum_pa_p\chi_{\omega_p}(t)
+\]
+
+证明精确平移律
+
+\[
+\boxed{
+S(t+u)
+=
+\sum_p
+\bigl(a_p\chi_{\omega_p}(t)\bigr)
+\chi_{\omega_p}(u).
+}
+\]
+
+每个频率通道在时间平移 \(u\) 下乘以自己的相位因子。频率不同意味着平移以后积累的相位不同。这就是通常意义上的相位色散。
+
+Lean 同时证明
+
+\[
+\boxed{
+|S(t)|
+\le
+\sum_p|a_p|.
+}
+\]
+
+因为所有相位因子模长为一，时间流只旋转每个通道，不改变单通道振幅。整体振幅的变化来自通道之间的相长和相消干涉。
+
+---
+
+# 6. 时间、历时与时间箭头
+
+当前真源允许区分三层。
+
+## 6.1 参数时间
+
+\[
+t\in\mathbb R
+\]
+
+给出一参数群。正负时间均存在，演化可逆。傅立叶角色属于这一层。
+
+## 6.2 观察历时
+
+一串更新
+
+\[
+U_{p_m}\cdots U_{p_2}U_{p_1}
+\]
+
+记录观察器依次吸收通道的历史。更新不交换时，改变顺序会改变最终记忆状态。这一层由 holonomy 和曲率测量。
+
+## 6.3 时间箭头
+
+时间箭头需要更强结构，例如：
+
+- 只有正时间的半群；
+- 不可逆压缩；
+- 熵或缺陷能量的单调性；
+- 信息丢失；
+- 边界条件选择。
+
+傅立叶角色和非交换次序本身都不自动证明时间箭头。它们分别提供可逆时间参数和可观察历时。
+
+因此你的直觉可以校准为
+
+\[
+\boxed{
+\text{色散}
+\longrightarrow
+\text{频率角色}
+\longrightarrow
+\text{可逆谱时间},
+}
+\]
+
+以及
+
+\[
+\boxed{
+\text{记忆提升}
++
+\text{非交换作用次序}
+\longrightarrow
+\text{可观察历时}.
+}
+\]
+
+将二者组合并再加入耗散或单调性，才可能形成时间箭头。
+
+---
+
+# 7. 与前两条 holonomy 真源的连接
+
+上一条真源给出有限交换缺陷能量
+
+\[
+\mathcal E^{\mathrm{hol}}
+=
+\sum_{p,q}\|C_{p,q}\|^2.
+\]
+
+本轮给每个通道加入时间相位
+
+\[
+z_p(t)=e^{-it\omega_p}.
+\]
+
+下一条自然定义是相位扭曲的局部更新
+
+\[
+\boxed{
+\widetilde U_p(t)
+=
+U_p\cdot z_p(t)
+}
+\]
+
+或在记忆注入中写成
+
+\[
+\boxed{
+b_p(t)=z_p(t)b_p.}
+\]
+
+随后定义时间依赖曲率
+
+\[
+\boxed{
+C_{p,q}(t)
+=
+(a-\lambda_q)b_p(t)
+-
+(a-\lambda_p)b_q(t).
+}
+\]
+
+它会同时测量：
+
+- residual 幅度失配；
+- prime-frequency 相位失配；
+- 观察器更新次序失配。
+
+由于 \(|z_p(t)|=1\)，单通道范数不变；曲率能量随 \(t\) 的变化来自通道之间的相对相位。相对频率是
+
+\[
+\omega_p-\omega_q.
+\]
+
+在素数特化下，它成为
+
+\[
+\boxed{
+\log p-\log q
+=
+\log\frac pq.
+}
+\]
+
+因此 pairwise holonomy 的时间振荡自然由素数比值的对数频率控制。
+
+该相位扭曲曲率尚未在本轮 Lean 文件中定义。它应形成下一节点 `PhaseTwistedStableSwapCurvature`。
+
+---
+
+# 8. 与 RH 的关系
+
+在 zeta 的 Euler 侧，素数通道携带频率 \(\log p\)。在显式公式和傅立叶分析中，测试函数在这些频率上取值，零点则出现在对应的全局谱表达中。
+
+本轮冻结了最底层的动力结构：
+
+\[
+\boxed{
+\log p
+\longleftrightarrow
+e^{-it\log p}.
+}
+\]
+
+它解释了为什么虚部坐标 \(t\) 可以被视为 prime-frequency flow 的谱时间，也说明仅靠标量 Euler 相位无法留下素数通道次序。为了让次序参与 RH 路线，必须通过记忆提升将通道作用非交换化，再证明时间依赖 holonomy 能量与零点侧离线奇能量之间的忠实桥。
+
+预期链条变成
+
+\[
+\boxed{
+\begin{aligned}
+&\text{prime log-frequency characters}
+\\
+&\Longrightarrow
+\text{phase-twisted memory updates}
+\\
+&\Longrightarrow
+\text{time-dependent holonomy energy}
+\\
+&\Longrightarrow
+\boxed{\text{explicit-formula faithful domination}}
+\\
+&\Longrightarrow
+\text{off-line odd zero energy}.
+\end{aligned}
+}
+\]
+
+其中方框仍是核心缺口。傅立叶角色本身不定位零点，也不把 \(t\) 自动解释为物理时间。
+
+---
+
+# 9. 下一真源排序
+
+当前最自然的推进顺序是：
+
+1. `PhaseTwistedStableSwapCurvature`。把 \(e^{-it\omega_p}\) 写入稳定 residual 注入，推导精确相位扭曲曲率分解和范数界。
+2. `FinitePhaseCoherenceIdentity`。证明 pairwise 相位色散能量与共同模态相干能量的守恒恒等式。
+3. `FourierPhaseGenerator`。形式化
+   \[
+   \frac{d}{dt}e^{-it\omega}=-i\omega e^{-it\omega},
+   \]
+   把频率识别为时间流生成元。
+4. `ResonanceConditionedOriginDispersion`。将 holonomy 能量运输到观察起源色散。
+5. `PrimeArchimedeanHolonomyDomination`。通过显式公式连接 prime-side 时间曲率与 zero-side 离线奇能量。
+
+第一条把用户提出的“色散、次序、时间”直接接回已有 holonomy 路线。第三条会给出频率作为时间生成元的机器版本。
+
+---
+
+# 10. 严格非主张
+
+本轮不主张：
+
+- 已定义完整连续傅立叶变换；
+- 已证明傅立叶反演或 Plancherel；
+- 频率排列本身产生时间；
+- 已得到时间方向或不可逆性；
+- zeta 虚部已经等同于物理时间；
+- 相位扭曲 holonomy 已经支配零点能量；
+- 已定位任何 zeta 零点；
+- 已证明 RH。
+
+本轮机器真源是
+
+\[
+\boxed{
+\text{Fourier character time flow}
++
+\text{scalar order collapse}
++
+\text{finite synthesis laws}.
+}
+
+---
+
+## [PR #4222] PHASE_TWISTED_HOLONOMY_AND_RELATIVE_PRIME_TIME
+
+# 相位扭曲 holonomy 与相对素数时间
+## 把傅立叶谱时间写入记忆通道后的第一条定量真源
+
+**文档地位。** 本文解释 Lean 节点
+
+`D5/S3/Observer/AgencyHolonomy/PhaseTwistedStableSwapCurvature`
+
+及其主要声明：
+
+- `phase_twisted_channel_norm`；
+- `relative_phase_reconstruction`；
+- `relative_log_address_phase_reconstruction`；
+- `phase_twisted_curvature_zero_time`；
+- `phase_twisted_stable_swap_curvature_bound`；
+- `phase_twisted_finite_holonomy_energy_bound`。
+
+机器事实以 Lean 声明为准。本文说明傅立叶参数时间如何进入非交换观察历时，并区分已经证明的统一能量界与尚未证明的同步、耗散和 prime-zero 桥。
+
+---
+
+# 1. 从频率角色到时间依赖记忆注入
+
+前一节点定义
+
+\[
+\chi_\omega(t)=e^{-it\omega}.
+\]
+
+现在给每个通道 \(p\) 配置频率 \(\omega_p\) 和记忆向量 \(v_p\)，定义相位扭曲通道
+
+\[
+\boxed{
+\widetilde v_p(t)
+=
+\chi_{\omega_p}(t)v_p
+=
+e^{-it\omega_p}v_p.
+}
+\]
+
+若 residual 为 \(r_p\)，相应记忆注入变成
+
+\[
+\boxed{
+\widetilde b_p(t)
+=
+r_p\widetilde v_p(t)
+=
+r_pe^{-it\omega_p}v_p.
+}
+\]
+
+稳定通道 swap curvature 因此成为
+
+\[
+\boxed{
+\widetilde C_{p,q}(t)
+=
+\bigl(a-(1+r_q)\bigr)r_p e^{-it\omega_p}v_p
+-
+\bigl(a-(1+r_p)\bigr)r_q e^{-it\omega_q}v_q.
+}
+\]
+
+这里的 \(t\) 是傅立叶角色的一参数群坐标。通道经过观察器的先后顺序仍由记忆更新的乘法次序表达。两个结构在该定义中第一次同时出现：
+
+\[
+\boxed{
+\text{spectral time phase}
++
+\text{memory-order curvature}.
+}
+\]
+
+---
+
+# 2. 单位相位不会放大局部通道
+
+Lean 证明
+
+\[
+\boxed{
+\|\widetilde v_p(t)\|
+=
+\|v_p\|.
+}
+\]
+
+原因是
+
+\[
+|e^{-it\omega_p}|=1.
+\]
+
+所以傅立叶时间流在每个单通道上是酉旋转。它改变相位，不改变通道振幅。
+
+这一点很重要。任何随时间发生的总能量变化只能来自：
+
+- 通道之间的相对相位；
+- 不同残差和通道向量的组合；
+- 记忆更新的非交换结构；
+- 后续另行加入的耗散或增益。
+
+单个傅立叶相位自身不产生耗散。
+
+---
+
+# 3. 真正可观察的是相对频率
+
+Lean 证明
+
+\[
+\boxed{
+\chi_{\omega_p-\omega_q}(t)
+\chi_{\omega_q}(t)
+=
+\chi_{\omega_p}(t).
+}
+\]
+
+因此两通道之间的相对相位由
+
+\[
+\boxed{
+\Delta\omega_{p,q}
+=
+\omega_p-\omega_q
+}
+\]
+
+生成。
+
+对自然数地址使用
+
+\[
+\omega_n=\log n,
+\]
+
+Lean 证明无除法版本
+
+\[
+\boxed{
+e^{-it(\log p-\log q)}e^{-it\log q}
+=
+e^{-it\log p}.}
+\]
+
+若另外假设地址为正，则纸面上可以写成
+
+\[
+\log p-\log q
+=
+\log\frac pq.
+\]
+
+所以 prime pair 的相对频率是
+
+\[
+\boxed{
+\Delta\omega_{p,q}
+=
+\log p-\log q.
+}
+\]
+
+这比单独的 \(\log p\) 更接近 swap curvature 的自然变量，因为曲率本来就是一个两通道量。
+
+因此“色散产生时间”的更精确版本是：
+
+\[
+\boxed{
+\text{频率差异}
+\Longrightarrow
+\text{相对相位随 }t\text{ 累积}
+\Longrightarrow
+\text{两通道干涉随 }t\text{ 改变}.
+}
+\]
+
+---
+
+# 4. 零时间切片恢复原始观察器
+
+Lean 证明
+
+\[
+\boxed{
+\widetilde C_{p,q}(0)
+=
+C_{p,q}.
+}
+\]
+
+因为所有通道在 \(t=0\) 时满足
+
+\[
+\chi_{\omega_p}(0)=1.
+\]
+
+这把原来的静态 holonomy 真源识别为时间依赖系统的零时间切片。静态曲率并未被抛弃，它现在成为一参数曲率族的基点。
+
+---
+
+# 5. 精确相位扭曲 residual 分解
+
+Lean 证明
+
+\[
+\boxed{
+\begin{aligned}
+\widetilde C_{p,q}(t)
+={}&
+(a-1)
+\left(
+r_p\widetilde v_p(t)
+-r_q\widetilde v_q(t)
+\right)
+\\
+&+
+r_pr_q
+\left(
+\widetilde v_q(t)
+-
+\widetilde v_p(t)
+\right).
+\end{aligned}
+}
+\]
+
+第一项是一阶 residual 注入失配。第二项是双 residual 修正。时间只通过两个旋转通道进入。
+
+这给后续分析两个分解方向：
+
+1. 固定 residual 深度，研究 \(t\) 上的相位干涉；
+2. 固定谱时间，研究 extraction 深度上 residual envelope 的衰减。
+
+最终需要处理一个双参数极限或统一界：
+
+\[
+(r,t)
+\longmapsto
+\widetilde C^{\langle r\rangle}_{p,q}(t).
+\]
+
+---
+
+# 6. pairwise 曲率界在时间上统一
+
+若
+
+\[
+\|v_p\|\le1,
+\qquad
+\|v_q\|\le1,
+\]
+
+Lean 证明
+
+\[
+\boxed{
+\|\widetilde C_{p,q}(t)\|
+\le
+\|a-1\|
+\bigl(\|r_p\|+\|r_q\|\bigr)
++
+2\|r_p\|\|r_q\|
+}
+\]
+
+对每个 \(t\in\mathbb R\) 成立。
+
+若
+
+\[
+\|r_p\|,\|r_q\|\le\varepsilon,
+\]
+
+则
+
+\[
+\boxed{
+\|\widetilde C_{p,q}(t)\|
+\le
+2\|a-1\|\varepsilon
++2\varepsilon^2.
+}
+\]
+
+右侧不含 \(t\)。因此 residual envelope 一旦收敛，就可以得到对整个谱时间轴统一的 pairwise 曲率控制，前提是通道向量的单位界本身统一成立。
+
+这是本轮最重要的定量结果：
+
+\[
+\boxed{
+\text{unitary spectral-time twisting does not consume residual control.}
+}
+\]
+
+---
+
+# 7. 有限 holonomy 能量的统一时间界
+
+对有限通道集 \(P\)，Lean 定义
+
+\[
+\boxed{
+\widetilde{\mathcal E}^{\mathrm{hol}}_P(t)
+=
+\sum_{p,q\in P}
+\|\widetilde C_{p,q}(t)\|^2.
+}
+\]
+
+若 \(|P|=M\)，所有通道单位有界，所有 residual 由同一 \(\varepsilon\ge0\) 控制，Lean 证明
+
+\[
+\boxed{
+0
+\le
+\widetilde{\mathcal E}^{\mathrm{hol}}_P(t)
+\le
+M^2
+\left(
+2\|a-1\|\varepsilon
++2\varepsilon^2
+\right)^2
+}
+\]
+
+对所有谱时间成立。
+
+同时：
+
+\[
+\boxed{
+\widetilde{\mathcal E}^{\mathrm{hol}}_P(t)=0
+\iff
+\forall p,q\in P,
+\widetilde C_{p,q}(t)=0.
+}
+\]
+
+所以该能量在每个时间切片上仍然是忠实的非负缺陷量。
+
+需要注意，统一上界不表示能量对时间恒定。各项内部存在不同相位，\(\widetilde C_{p,q}(t)\) 的范数可以随时间变化。机器结论只说明它始终被同一个 residual envelope 控制。
+
+---
+
+# 8. 现在出现了哪一种时间
+
+当前系统已有两个严格结构。
+
+## 8.1 可逆谱时间
+
+\[
+t\mapsto e^{-it\omega_p}
+\]
+
+是加法群的一参数酉作用。它允许正时间和负时间，天然可逆。
+
+## 8.2 可观察的作用历时
+
+\[
+U_q(t)U_p(t)
+\quad\text{与}\quad
+U_p(t)U_q(t)
+\]
+
+在记忆提升以后可以不同。swap curvature 记录这种路径差异。
+
+二者结合得到“随谱时间演化的观察历时”。这里仍没有时间箭头，因为没有证明
+
+\[
+\frac{d}{dt}
+\widetilde{\mathcal E}^{\mathrm{hol}}_P(t)
+\le0
+\]
+
+或任何不可逆半群性质。
+
+时间箭头需要再加入耗散、粗粒化、单调 Lyapunov 量、只允许正时间的边界条件，或其他选择机制。
+
+---
+
+# 9. 与共振压平的关系
+
+相位扭曲以后，通道同步意味着相对相位
+
+\[
+e^{-it(\omega_p-\omega_q)}
+\]
+
+在有效观察窗口内接近一，同时 residual 注入和通道起源也需要兼容。
+
+仅出现某个时刻的相位重合不足以给出全局压平。更强目标可能是：
+
+\[
+\boxed{
+\int_I
+\widetilde{\mathcal E}^{\mathrm{hol}}_P(t)w(t)\,dt
+\longrightarrow0
+}
+\]
+
+或
+
+\[
+\boxed{
+\sup_{t\in I}
+\widetilde{\mathcal E}^{\mathrm{hol}}_P(t)
+\longrightarrow0.
+}
+\]
+
+本轮统一 residual 界支持第二种路线，因为右侧与 \(t\) 无关。实际结论仍依赖 residual envelope decay。
+
+下一条 `FinitePhaseCoherenceIdentity` 应负责把 pairwise 相位差能量与共同相干模态能量连接起来。随后可以研究该相干能量在时间平均、测试函数加权和显式公式下如何投影到零点侧。
+
+---
+
+# 10. 与 RH 路线的更新连接
+
+当前 prime-side 链条已经变成
+
+\[
+\boxed{
+\begin{aligned}
+&\log p\text{ frequency channels}
+\\
+&\Longrightarrow
+e^{-it\log p}\text{ spectral-time phases}
+\\
+&\Longrightarrow
+\widetilde C_{p,q}(t)\text{ phase-twisted swap curvature}
+\\
+&\Longrightarrow
+\widetilde{\mathcal E}^{\mathrm{hol}}_P(t)
+\text{ finite defect energy}
+\\
+&\Longrightarrow
+\boxed{\text{explicit-formula faithful domination}}
+\\
+&\Longrightarrow
+\text{off-line odd zero energy}.
+\end{aligned}
+}
+\]
+
+方框仍是核心缺口。当前新内容提供一个适合被测试函数积分的时间依赖 prime-side 能量候选。它尚未证明该积分等于、支配或逼近任何 zero-side 量。
+
+一个关键新观察是：显式公式中的测试函数本来就在对 \(t\) 或其傅立叶对偶进行加权。现在 holonomy 也成为 \(t\) 的函数，因此可以第一次提出类型正确的桥：
+
+\[
+\boxed{
+\mathcal E_{\mathrm{off}}^{\mathrm{odd}}(g)
+\le
+A_g
+\int_{\mathbb R}
+\widetilde{\mathcal E}^{\mathrm{hol}}_P(t)
+\,d\mu_g(t)
++R_{P,g}.
+}
+\]
+
+其中 \(\mu_g\) 必须由允许的测试函数类产生，\(R_{P,g}\) 必须显式记账并可控。该不等式目前只是下一阶段的目标类型。
+
+---
+
+# 11. 下一真源
+
+当前最自然的下一节点是：
+
+1. `FinitePhaseCoherenceIdentity`。把
+   \[
+   \sum_{p,q}w_pw_q|z_p-z_q|^2
+   \]
+   写成最大总能量减共同模态能量。
+2. `FourierPhaseGenerator`。证明频率是谱时间流的生成元。
+3. `TimeAveragedPhaseHolonomyEnergy`。定义测试函数加权的时间积分能量并证明非负性和 residual 上界。
+4. `ResonanceConditionedOriginDispersion`。把时间依赖曲率运输到观察起源色散。
+5. `PrimeArchimedeanHolonomyDomination`。尝试建立显式公式忠实桥。
+
+第三条会把当前有限点态界变为适合进入 explicit formula 的积分对象。
+
+---
+
+# 12. 严格非主张
+
+本轮不主张：
+
+- 相位已经同步；
+- holonomy 能量随时间单调；
+- 已构造时间箭头；
+- residual envelope 已经衰减；
+- 时间积分能量已经定义；
+- prime-side 能量已经等于或支配 zero-side 能量；
+- 已定位任何 zeta 零点；
+- 已证明 RH。
+
+本轮机器真源是
+
+\[
+\boxed{
+\text{unitary prime-frequency phase twist}
+\Longrightarrow
+\text{time-dependent stable curvature}
+\Longrightarrow
+\text{time-uniform finite residual-energy bound}.
+\]
+
+## [PR #4233] NEGATIVITY_REFLECTION_TIME_THEORY
+
+# 负性、负平方与负时间理论
+## 反射分裂、观察锥与时间定向研究卷；不是 RH 证明声明
+
+仓库取阅基线：`the-omega-institute/trureturing` 的 `dev` 提交 `23747a66fdb518fd82dbccc6ca5fca0126d6d33c`。本卷与同一 PR 中的 Lean 真源共同提交。
+
+本卷把“负性”“负平方”“负时间”拆成可独立审计的数学角色。核心原则是：负号不自带统一含义。它总是相对于一个正锥、允许支撑、时间定向、谱稳定域或二次型而出现。
+
+文中使用三种标签：
+
+- `[formalized-here]`：由同一 PR 的 Lean 真源机器证明。
+- `[repo-derived]`：由现有 `dev` 真源支持。
+- `[research-target]`：由已闭合事实导出的下一条定义或定理目标，尚未冒充内核结论。
+
+## 一、负性是相对于正锥的越界
+
+设对象空间为 $X$，允许对象形成正锥 $C\subseteq X$。若存在对偶观察器 $\ell$ 满足
+
+$$
+\ell(c)\ge 0\qquad(c\in C),
+$$
+
+但对某个对象 $x$ 有
+
+$$
+\ell(x)<0,
+$$
+
+则 $\ell$ 是 $x$ 离开正锥的负性证书：
+
+$$
+\operatorname{NegativeWitness}_{C}(x)
+\;:\Longleftrightarrow\;
+\exists\ell\in C^{\vee},\ \ell(x)<0.
+$$
+
+以下对象必须保持强类型区分：
+
+1. 负标量：$a<0$。
+2. 负支撑：正质量位于禁止区域，例如 $x<0$。
+3. 负质量：测度系数本身为负。
+4. 负方向：存在 $v\ne0$ 使二次型 $Q(v)<0$。
+5. 负指数：最大负定子空间的维数。
+6. 负时间：相对于选定正向时间锥的反向参数或逆向完成。
+7. 负频率：Fourier 相位的反向绕行，它不等于过去时间。
+
+这些概念之间可以建立运输定理，不能直接互相替换。
+
+## 二、负平方不是实数平方小于零
+
+对实数 $\delta$，算术平方始终满足
+
+$$
+\delta^2\ge0.
+$$
+
+本路线所说的“负平方”是
+
+$$
+-\delta^2,
+$$
+
+即先形成反射不变量 $\delta^2$，再用负号记录该量进入了一个带符号的结构位置。
+
+在 RH 的法向坐标中，令
+
+$$
+\delta=\Re\rho-\frac12.
+$$
+
+函数方程反射交换 $\delta$ 与 $-\delta$。反射商空间无法保留左右标签，只能保留偏移大小 $\delta^2$。若还需要记录轨道位于临界线外，则候选有符号法向坐标为
+
+$$
+\boxed{x_{\perp}=-\delta^2.}
+$$
+
+负号表达“离线扇区”或“禁止支撑扇区”，并不表示平方运算产生负数。
+
+## 三、术语校正：负平方是行列式，不是标准多项式判别式
+
+考虑反射生成率对
+
+$$
++\delta,\qquad-\delta.
+$$
+
+一阶和完全抵消：
+
+$$
+\delta+(-\delta)=0.
+$$
+
+二阶乘积留下：
+
+$$
+\delta(-\delta)=-\delta^2.
+$$
+
+若把生成元写成
+
+$$
+A_{\delta}=\begin{pmatrix}\delta&0\\0&-\delta\end{pmatrix},
+$$
+
+则
+
+$$
+\operatorname{tr}A_{\delta}=0,
+\qquad
+\det A_{\delta}=-\delta^2,
+\qquad
+A_{\delta}^2=\delta^2I.
+$$
+
+对形式谱变量 $r$：
+
+$$
+(r-\delta)(r+\delta)=r^2-\delta^2.
+$$
+
+因此负量 $-\delta^2$ 是反射生成元的有符号行列式，也是特征多项式的常数项。本卷把它定义为
+
+$$
+\boxed{
+\operatorname{ReflectionPairSignedDeterminant}(\delta)
+=-\delta^2.
+}
+$$
+
+标准二次多项式判别式必须单独计算。对
+
+$$
+r^2-\delta^2,
+$$
+
+其标准判别式为
+
+$$
+\boxed{
+\Delta_{\mathrm{poly}}
+=0^2-4\cdot1\cdot(-\delta^2)
+=4\delta^2.
+}
+$$
+
+[formalized-here] 同一 Lean 节点同时证明 $-\delta^2$ 的有符号行列式身份和 $4\delta^2$ 的标准判别式身份，防止术语混同。
+
+## 四、增长与衰减是负平方的有向时间实现
+
+定义一对指数分支
+
+$$
+g_{+}(t)=e^{\delta t},
+\qquad
+g_{-}(t)=e^{-\delta t}.
+$$
+
+[formalized-here] 它们满足
+
+$$
+g_{+}(-t)=g_{-}(t),
+\qquad
+g_{-}(-t)=g_{+}(t),
+$$
+
+以及
+
+$$
+g_{+}(t)g_{-}(t)=1.
+$$
+
+因此时间反演不会删除分裂。它交换扩张与收缩分支。
+
+[formalized-here] 当 $\delta>0$ 且 $t>0$ 时：
+
+$$
+g_{+}(t)>1,
+\qquad
+g_{-}(t)<1.
+$$
+
+在负时间方向，两个角色交换。反射对整体没有预先选定唯一稳定箭头。稳定性依赖观察者声明的正向时间锥。
+
+## 五、反射增长对位于正双曲线上
+
+由乘积守恒：
+
+$$
+g_{+}(t)g_{-}(t)=1,
+$$
+
+反射增长对落在正双曲线
+
+$$
+xy=1,
+\qquad x>0,\ y>0
+$$
+
+上。
+
+定义偶、奇坐标
+
+$$
+E_{\delta}(t)
+=\frac{g_{+}(t)+g_{-}(t)}{2},
+$$
+
+$$
+O_{\delta}(t)
+=\frac{g_{+}(t)-g_{-}(t)}{2}.
+$$
+
+则预期有
+
+$$
+E_{\delta}(t)=\cosh(\delta t),
+\qquad
+O_{\delta}(t)=\sinh(\delta t),
+$$
+
+以及
+
+$$
+\boxed{
+E_{\delta}(t)^2-O_{\delta}(t)^2=1.
+}
+$$
+
+时间反演保持偶坐标并翻转奇坐标：
+
+$$
+E_{\delta}(-t)=E_{\delta}(t),
+$$
+
+$$
+O_{\delta}(-t)=-O_{\delta}(t).
+$$
+
+[research-target] 这组等式应形成 `ReflectedGrowthPairEvenOddDecomposition`。它将把“时间方向信息”精确定位到奇通道，而把“反射不变量”定位到偶通道和负平方行列式。
+
+## 六、对称观察商丢失时间箭头
+
+定义分支遗忘读出
+
+$$
+S_{\delta}(t)=g_{+}(t)+g_{-}(t).
+$$
+
+[formalized-here] 有
+
+$$
+S_{\delta}(-t)=S_{\delta}(t).
+$$
+
+因此该观察器无法区分 $t$ 与 $-t$。有向二分支状态仍保留时间方向，对称商只保留时间反演轨道
+
+$$
+\{t,-t\}.
+$$
+
+[research-target] 应进一步机器证明：当 $\delta\ne0$ 时，有向映射
+
+$$
+t\longmapsto(g_{+}(t),g_{-}(t))
+$$
+
+是单射，而对称读出在任意 $t\ne0$ 处都发生
+
+$$
+S_{\delta}(t)=S_{\delta}(-t),
+\qquad
+t\ne-t.
+$$
+
+这会给出一个最小的 observer theorem：
+
+$$
+\boxed{
+\text{有向完成保留负时间，分支遗忘商丢失时间方向。}
+}
+$$
+
+加入奇通道 $O_{\delta}$ 后，可以恢复方向。对 $\delta>0$，其符号预期与 $t$ 的符号一致。
+
+## 七、负时间的五种角色
+
+必须区分：
+
+1. $t<0$：坐标位于选定原点之前。
+2. $t\mapsto-t$：时间反演 involution。
+3. $U(-t)=U(t)^{-1}$：可逆动力学的逆向演化。
+4. $\omega<0$：负频率或反向相位绕行。
+5. 度量中的 $-dt^2$：时间方向在不定二次型中的符号。
+
+只有第三项要求演化构成群。耗散、投影、测量与粗粒化通常只给出 $t\ge0$ 的半群。此时负时间是过去完成问题。
+
+若前向观察为
+
+$$
+q:X\to Y,
+$$
+
+则给定当前读数 $y$ 的全部可能过去为
+
+$$
+\operatorname{PastFiber}(y)=\{x\in X:q(x)=y\}.
+$$
+
+当 $q$ 非单射时，逆向时间是集合值 completion fiber。加入足够记忆后，提升映射
+
+$$
+\widetilde q:X\to Y\times M
+$$
+
+可能恢复单射，从而在完成后的状态空间中恢复双向时间。
+
+[research-target] 对当前反射增长对，应定义逐坐标乘法并证明
+
+$$
+G_{\delta}(s+t)=G_{\delta}(s)\odot G_{\delta}(t),
+$$
+
+$$
+G_{\delta}(0)=(1,1),
+$$
+
+$$
+G_{\delta}(-t)=G_{\delta}(t)^{-1}.
+$$
+
+这会把负时间从直觉上的“另一侧”升级为有向完成群中的真实逆元。
+
+## 八、负支撑、负方向与 negative square
+
+对测度
+
+$$
+\nu=\sum_jm_j\delta_{x_j},
+$$
+
+“负质量”指 $m_j<0$。“负支撑”指 $m_j>0$ 但 $x_j<0$。当前 RH normal-resolvent 路线更自然地把异常放在支撑位置：
+
+$$
+m_{\rho}>0,
+\qquad
+x_{\rho}=-\delta^2<0.
+$$
+
+若测试函数 $p$ 在允许支撑 $[0,\infty)$ 上非负，而在 $-\delta^2$ 处为负，则
+
+$$
+\int p(x)\,d\nu(x)<0.
+$$
+
+这把负支撑运输成负矩，再运输成 Toeplitz、Pick 或 Weil 二次型的负方向。
+
+对于 Hermitian 核 $K$，有限采样矩阵
+
+$$
+G_{jk}=K(z_j,z_k)
+$$
+
+若存在 $c\ne0$ 使
+
+$$
+c^{*}Gc<0,
+$$
+
+则出现一个 negative square。负平方指数是最大独立负子空间的维数。它记录系统拥有多少个彼此独立的向下方向。
+
+## 九、负平方是二阶算子的负谱值
+
+令
+
+$$
+L=-\frac{d^2}{dt^2}.
+$$
+
+对增长分支 $g_{\pm}(t)=e^{\pm\delta t}$，预期有
+
+$$
+\frac{d^2}{dt^2}g_{\pm}(t)
+=\delta^2g_{\pm}(t),
+$$
+
+因此
+
+$$
+\boxed{
+Lg_{\pm}=-\delta^2g_{\pm}.
+}
+$$
+
+这给出负平方的谱解释：$-\delta^2$ 是前向增长和衰减模式在算子 $-d^2/dt^2$ 下的共同负谱值。
+
+对振荡模式 $e^{\pm i\gamma t}$，同一算子产生正谱值 $+\gamma^2$。由此出现一个候选三分法：
+
+$$
+\begin{array}{c|c|c}
+\text{生成元类型}&\text{有符号行列式}&\text{动力学}\
+\hline
+\text{双曲}&-\delta^2&\text{增长/衰减}\
+\text{中性}&0&\text{无分裂}\
+\text{椭圆}&+\gamma^2&\text{单位模振荡}
+\end{array}
+$$
+
+[research-target] 先形式化 `ReflectedGrowthPairSecondOrderSpectrum`，再建立 `EllipticHyperbolicReflectionTrichotomy`。第二条需要复指数或实二维旋转生成元，不能由本轮标量定理直接宣称。
+
+## 十、负平方与 Laplace 时间的桥
+
+对适当的 $u$，有
+
+$$
+\frac1{u+x}=\int_0^{\infty}e^{-ut}e^{-xt}\,dt.
+$$
+
+若 $x>0$，则 $e^{-xt}$ 在正时间衰减。若 $x=-\delta^2<0$，则
+
+$$
+e^{-xt}=e^{\delta^2t}
+$$
+
+在正时间增长。总核只有在外加阻尼超过增长率时收敛：
+
+$$
+\boxed{
+u>\delta^2.}
+$$
+
+在该区域：
+
+$$
+\boxed{
+\int_0^{\infty}e^{-(u-\delta^2)t}\,dt
+=\frac1{u-\delta^2}.
+}
+$$
+
+由此可定义稳定化债务
+
+$$
+\boxed{
+\operatorname{StabilizationDebt}(-\delta^2)=\delta^2.
+}
+$$
+
+它是压过负支撑增长所需的最小附加阻尼阈值。
+
+[research-target] `NegativeSquareLaplaceResolvent` 应证明积分值、可积条件和阈值处的极点。比只证明积分公式更重要的是完整刻画：
+
+$$
+\operatorname{Integrable}
+\left(e^{-(u-\delta^2)t};\ t>0\right)
+\quad\Longleftrightarrow\quad
+u>\delta^2.
+$$
+
+## 十一、与离线零点曲率 dipole 的关系
+
+[repo-derived] 对离线反射对，仓库已有曲率真源
+
+$$
+K_{\delta,\gamma}(t)
+=2\frac{(t-\gamma)^2-\delta^2}
+{((t-\gamma)^2+\delta^2)^2}.
+$$
+
+分子
+
+$$
+(t-\gamma)^2-\delta^2
+$$
+
+是一个不定二次型。区域 $|t-\gamma|<|\delta|$ 为负核心，外部为正翼，总质量为零。故离线缺陷是一种局部重分配。零频率或只读取总积分的观察器无法检测它。
+
+将
+
+$$
+\tau=t-\gamma
+$$
+
+代入后，符号边界
+
+$$
+\tau^2-\delta^2=0
+$$
+
+形成两条特征线 $\tau=\pm\delta$。这与反射生成元的特征因子
+
+$$
+(r-\delta)(r+\delta)=r^2-\delta^2
+$$
+
+具有同一代数骨架。
+
+[research-target] 应建立一个明确的 observer agreement：曲率 dipole 的负核心宽度、反射增长对的双曲率和 signed normal atom 的位置都由同一个参数 $\delta^2$ 控制。只有获得精确等式或带误差运输，这一结构相似性才能承担 RH 路径。
+
+## 十二、本轮形式化边界
+
+同一 PR 的 Lean 真源只冻结以下无条件事实：
+
+1. 交换两个指数分支等于时间反演。
+2. 两个分支的乘积恒为一。
+3. 反射生成率对的迹为零。
+4. 反射对有符号行列式精确等于 $-\delta^2$。
+5. 标准二次多项式判别式精确等于 $4\delta^2$。
+6. 特征因子为 $r^2-\delta^2$。
+7. 在 $\delta>0,t>0$ 时，一支严格扩张，另一支严格收缩。
+8. 对称分支和是时间偶函数。
+
+本轮不声明：
+
+- zeta ordinate 是物理时间；
+- completed zeta 已经拥有该指数 realization；
+- 任意离线零点已经被有限观察器隔离；
+- 全局 signed normal spectral measure 已构造；
+- 上述一般结构推出 RH。
+
+## 十三、后续 theorem DAG
+
+```text
+ReflectedGrowthPairNegativeSquare
+        |
+        +--> ReflectedGrowthPairTimeGroup
+        |          |
+        |          v
+        |    OrientedTimeRecoverySymmetricTimeLoss
+        |
+        +--> ReflectedGrowthPairEvenOddDecomposition
+        |          |
+        |          v
+        |    EvenObserverFirstOrderBlindness
+        |
+        +--> ReflectedGrowthPairSecondOrderSpectrum
+        |          |
+        |          v
+        |    EllipticHyperbolicReflectionTrichotomy
+        |
+        v
+NegativeSquareLaplaceResolvent
+        |
+        v
+SignedNormalSpectralAtom
+        |
+        v
+ChebyshevNegativeSupportSeparator
+        |
+        v
+FiniteMomentNegativeWitness
+        |
+        v
+Toeplitz/Pick/Weil Negative Direction
+```
+
+## 十四、下一步优先级
+
+### P0：`ReflectedGrowthPairSecondOrderSpectrum`
+
+机器证明
+
+$$
+g_{\pm}''=\delta^2g_{\pm},
+\qquad
+- g_{\pm}''=-\delta^2g_{\pm},
+$$
+
+以及
+
+$$
+S_{\delta}'(0)=0,
+\qquad
+S_{\delta}''(0)=2\delta^2.
+$$
+
+该节点直接把有符号行列式接成真实负谱值，并证明对称观察器的一阶盲性与二阶可见性。
+
+### P0：`OrientedTimeRecoverySymmetricTimeLoss`
+
+机器证明有向 pair flow 的群律、负时间逆元、$\delta\ne0$ 时的单射性，以及对称读出的 $t/-t$ 碰撞。该节点把“负时间是 completion fiber”写成最小可复用观察者定理。
+
+### P1：`NegativeSquareLaplaceResolvent`
+
+证明稳定化阈值 $u>\delta^2$、积分 resolvent 和阈值极点。该节点把时间增长接入 signed support、Stieltjes 和 positive-real completion。
+
+### P1：`EllipticHyperbolicReflectionTrichotomy`
+
+引入振荡对与实二维旋转生成元，严格区分正行列式的椭圆振荡、零行列式的中性模式和负行列式的双曲增长/衰减。该节点将为临界线振子与离线径向分裂提供共同分类语言。
+
+## [PR #4243] REFLECTED_ZERO_MODE_PHASE_FLATTENING_THEORY
+
+# 反射零点模式与相位压平理论
+## 从临界位移、频率与辅助时间中分离三个反向操作
+
+仓库基线：`the-omega-institute/trureturing` 的 `dev` 分支，分支创建时提交为 `2deefdd8b7de08ef84311b00fed4f60516194fba`。
+
+本卷承接负性、负平方与负时间理论。前一层指出，反射增长率对 `delta` 与 `-delta` 的一阶和为零，有符号行列式为 `-delta^2`。本层进一步把这一通用双曲结构接到仓库已经冻结的 zeta 零点生成元坐标，并严格区分函数方程反射、复共轭和辅助模式时间反演。
+
+本卷不是 RH 证明声明。这里的 `time` 是指数模式参数，不被解释为物理时间。所有关于 completed zeta、Weil 正性和全局谱完成的结论仍需额外桥梁。
+
+## 一、归一化零点生成元
+
+对任意复点
+
+$$
+rho=sigma+i gamma,
+$$
+
+定义相对临界线的有符号横向位移
+
+$$
+delta(rho)=\operatorname{Re}rho-\frac12.
+$$
+
+仓库现有 `CriticalDampingGenerator` 在消去统一阻尼平移后留下的标量生成元为
+
+$$
+\boxed{
+g(rho)=-delta(rho)+i\operatorname{Im}rho.
+}
+$$
+
+于是定义辅助指数模式
+
+$$
+\boxed{
+M_rho(t)=\exp(g(rho)t).
+}
+$$
+
+生成元实部控制幅度变化，虚部控制相位旋转：
+
+$$
+\operatorname{Re}g(rho)=-delta(rho),
+\qquad
+\operatorname{Im}g(rho)=\operatorname{Im}rho.
+$$
+
+因此
+
+$$
+\overline{g(rho)}=-g(rho)
+$$
+
+当且仅当
+
+$$
+\operatorname{Re}rho=\frac12.
+$$
+
+这与现有零点族级别的 skew-adjoint 判据相容。本层把它提升为任意单点的明确坐标恒等式。
+
+## 二、径向通道与相位通道
+
+定义径向通道
+
+$$
+R_rho(t)=\exp(-delta(rho)t),
+$$
+
+以及公共相位通道
+
+$$
+P_rho(t)=\exp(i\operatorname{Im}(rho)t).
+$$
+
+则
+
+$$
+\boxed{
+M_rho(t)=R_rho(t)P_rho(t).
+}
+$$
+
+相位通道满足
+
+$$
+|P_rho(t)|=1.
+$$
+
+所以模式的模长完全由横向位移控制：
+
+$$
+|M_rho(t)|=\exp(-delta(rho)t).
+$$
+
+定义相位压平观察
+
+$$
+\operatorname{Flat}(rho,t)
+=M_rho(t)\exp(-i\operatorname{Im}(rho)t).
+$$
+
+则精确得到
+
+$$
+\boxed{
+\operatorname{Flat}(rho,t)=R_rho(t).
+}
+$$
+
+相位压平没有近似误差，也不需要选择对数分支。它只利用整个函数 `exp` 的乘法恒等式。
+
+## 三、三个容易混淆的反向操作
+
+### 1. 函数方程反射
+
+定义
+
+$$
+F(rho)=1-rho.
+$$
+
+若 `rho` 的坐标为 `(delta,gamma)`，则
+
+$$
+F:(delta,gamma)\mapsto(-delta,-gamma).
+$$
+
+生成元满足
+
+$$
+g(F(rho))=-g(rho).
+$$
+
+因此
+
+$$
+\boxed{
+M_{F(rho)}(t)=M_rho(-t).
+}
+$$
+
+函数方程反射在辅助模式层等同于完整生成元的时间反演。它同时翻转径向速率和频率。
+
+### 2. 复共轭
+
+定义
+
+$$
+C(rho)=\overline{rho}.
+$$
+
+其坐标作用为
+
+$$
+C:(delta,gamma)\mapsto(delta,-gamma).
+$$
+
+生成元满足
+
+$$
+g(C(rho))=\overline{g(rho)}.
+$$
+
+模式满足
+
+$$
+\boxed{
+M_{C(rho)}(t)=\overline{M_rho(t)}.
+}
+$$
+
+复共轭保留径向增长率，只反转相位绕行方向。它对应负频率，不等同于负时间。
+
+### 3. 同高度临界线镜像
+
+定义
+
+$$
+H(rho)=1-\overline{rho}.
+$$
+
+其坐标作用为
+
+$$
+H:(delta,gamma)\mapsto(-delta,gamma).
+$$
+
+它可以写成
+
+$$
+H=F\circ C=C\circ F.
+$$
+
+生成元满足
+
+$$
+g(H(rho))=-\overline{g(rho)}.
+$$
+
+相位压平后，`rho` 与 `H(rho)` 的两个径向模式互为倒数：
+
+$$
+\boxed{
+\operatorname{Flat}(rho,t)\operatorname{Flat}(H(rho),t)=1.
+}
+$$
+
+这正是离线反射对的增长和衰减双支结构。
+
+## 四、对称方形
+
+三个非平凡变换与恒等变换组成一个 Klein 四群：
+
+$$
+\{I,F,C,H\},
+\qquad
+F^2=C^2=H^2=I,
+\qquad
+FC=CF=H.
+$$
+
+其坐标表为：
+
+| 变换 | 位移 `delta` | 频率 `gamma` | 模式作用 |
+| --- | ---: | ---: | --- |
+| `I` | `delta` | `gamma` | 原模式 |
+| `F` | `-delta` | `-gamma` | 辅助时间反演 |
+| `C` | `delta` | `-gamma` | 复共轭 |
+| `H` | `-delta` | `gamma` | 同相位的径向互反 |
+
+仓库的 `ZeroData` 已经分别保存 `reflection` 和 `conjugation` 两个零点索引置换。由于零点枚举无重复，两个复平面复合都落到同一个同高度镜像点，从而两个索引置换交换：
+
+$$
+\boxed{
+R(C(n))=C(R(n)).
+}
+$$
+
+这里的交换不是额外假设。它由两个零点图像相等和枚举单射性推出。
+
+## 五、临界线的模式含义
+
+当
+
+$$
+delta(rho)=0,
+$$
+
+径向通道退化为常数一：
+
+$$
+R_rho(t)=1.
+$$
+
+归一化模式成为纯单位模旋转：
+
+$$
+M_rho(t)=\exp(i\gamma t).
+$$
+
+因此临界线可以解释为归一化生成元没有径向增长或衰减。离线点则产生一对同相位的互反径向分支。
+
+这个解释与负平方真源相连。若同高度镜像位移为 `delta` 和 `-delta`，对应径向生成率为 `-delta` 和 `delta`，则它们的有符号行列式为
+
+$$
+-delta^2.
+$$
+
+本层没有重复形式化该行列式，因为相应真源仍在独立 PR 中。本层只冻结从实际零点坐标到径向互反对的精确表示桥。
+
+## 六、形式化边界
+
+同一 PR 的 Lean 真源只建立以下无条件事实：
+
+1. 仓库现有阻尼平移表达式精确化简为 `g(rho)`。
+2. `g(rho)` 为 skew 当且仅当 `rho` 位于临界线。
+3. `M_rho` 精确分解为径向通道与单位相位通道。
+4. 相位压平精确恢复径向通道。
+5. 函数方程反射在模式层等于辅助时间反演。
+6. 共轭只反转相位频率。
+7. 同高度临界线镜像在相位压平后给出互为倒数的径向分支。
+8. `ZeroData` 的反射与共轭置换交换。
+
+本层不声明：
+
+- 指数模式参数等于物理时间；
+- 所有 `ZeroData` 的构造已经无条件存在；
+- completed zeta 是某个有限维动力系统的特征行列式；
+- 相位压平本身产生 Weil 或 Pick 负证书；
+- 任意离线零点已经被有限测试函数隔离；
+- 上述表示桥推出 RH。
+
+## 七、基于形式化真理的下一研究义务
+
+### 1. 二阶谱节点
+
+对径向模式应形式化
+
+$$
+\frac{d^2}{dt^2}R_rho(t)=delta(rho)^2R_rho(t),
+$$
+
+从而
+
+$$
+-\frac{d^2}{dt^2}R_rho(t)=-delta(rho)^2R_rho(t).
+$$
+
+这会把有符号行列式 `-delta^2` 升级为实际二阶算子的负谱值，并连接 normal jet。
+
+### 2. 偶奇观察节点
+
+定义
+
+$$
+E(t)=\frac{R(t)+R(-t)}2,
+\qquad
+O(t)=\frac{R(t)-R(-t)}2.
+$$
+
+应证明偶通道保存位移平方而丢失方向，奇通道在非零位移下恢复时间定向。
+
+### 3. 负平方 Laplace resolvent
+
+在明确条件 `u>delta^2` 下形式化
+
+$$
+\int_0^\infty e^{-(u-delta^2)t}\,dt
+=\frac1{u-delta^2}.
+$$
+
+这会把负谱值连接到稳定化债务和 resolvent 极点。
+
+### 4. 曲率互作用节点
+
+需要把相位压平后的径向互反对与已有 `OffLineCurvatureDipole` 的法向二阶对数曲率精确连接。目标不是结构类比，而是一个可运输误差和符号的等式。
+
+## 八、更新后的 theorem DAG
+
+```text
+CriticalDampingGenerator
+        |
+        v
+ReflectedZeroModePhaseFlattening
+        |
+        +-----------------------------+
+        |                             |
+        v                             v
+SecondOrderRadialSpectrum       EvenOddModeObserver
+        |                             |
+        +--------------+--------------+
+                       |
+                       v
+          NegativeSquareLaplaceResolvent
+                       |
+                       v
+          OffLineCurvatureModeIntertwiner
+                       |
+                       v
+             SignedNormalSpectralAtom
+                       |
+                       v
+       Chebyshev / Toeplitz / Pick / Weil witness
+```
+
+下一真源的最高优先级是 `ReflectedZeroModeSecondOrderSpectrum`。它将第一次把本层的表示分解变成一个真正的负谱陈述。
+
+---
+
+## [PR #4373] RH_RESEARCH_LANE_LEDGER — Time-Ordered Prime Memory Cocycle
+
 # RH Research Lane Theory
 ## 累积研究真源、约束账本与下一桥梁
 
