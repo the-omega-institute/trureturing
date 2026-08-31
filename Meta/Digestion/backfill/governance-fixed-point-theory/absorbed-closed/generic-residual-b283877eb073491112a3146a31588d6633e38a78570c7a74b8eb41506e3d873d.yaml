@@ -1,0 +1,17 @@
+ast_path: section/5-9-G-H-保守通道存在
+fingerprints:
+  raw_sha256: sha256:b283877eb073491112a3146a31588d6633e38a78570c7a74b8eb41506e3d873d
+  normalized_sha256: sha256:b283877eb073491112a3146a31588d6633e38a78570c7a74b8eb41506e3d873d
+cas_ref: sha256:b283877eb073491112a3146a31588d6633e38a78570c7a74b8eb41506e3d873d
+coverage_gids:
+  - D5/S3/ConceptDynamics/GovernanceFixedPoint/ConservativeChannelAddition.conservative_channel_exists
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/GovernanceFixedPoint/ConservativeChannelAddition.conservative_channel_exists
+      source_sha256: sha256:b283877eb073491112a3146a31588d6633e38a78570c7a74b8eb41506e3d873d
+      target_statement_id: sha256:9e84be0379f8979780baf874fac7517e0da49e465781473e8a966c301bc48d61
+  scribe:
+    - gid: D5/S3/ConceptDynamics/GovernanceFixedPoint/ConservativeChannelAddition.conservative_channel_exists
+      definition_sha256: sha256:68c036f95a32473cf0020766140f6238707baf99bab17ddcfec43bd54671fa18
+      emission_sha256: sha256:b13a8542ba3a0983cee28c87924b0ea025cdb7442a5f2263fa845ba0bd9be9a2
+  unresolved_subitems: []

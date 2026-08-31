@@ -154,9 +154,7 @@ internal static class DagLedgerCommandPreparation
             states,
             adjacency,
             selectedPaths,
-            baseView.ActiveByPath.ToDictionary(
-                static item => item.Key,
-                static item => item.Value.Material));
+            baseView.ActiveByPath);
     }
 
     internal static FrozenMaterialCatalog BuildAdmissionCatalog(
@@ -175,9 +173,7 @@ internal static class DagLedgerCommandPreparation
             states,
             adjacency,
             scope.Paths,
-            baseView.ActiveByPath.ToDictionary(
-                static item => item.Key,
-                static item => item.Value.Material));
+            baseView.ActiveByPath);
     }
 
     /// Builds material for every Closed module. Strict read-model consumers need the complete
