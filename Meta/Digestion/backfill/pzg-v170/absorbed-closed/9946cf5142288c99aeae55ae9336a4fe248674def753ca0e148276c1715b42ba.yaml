@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S1/Recurrence/CassiniFricke.cassini_fricke
       source_sha256: sha256:9946cf5142288c99aeae55ae9336a4fe248674def753ca0e148276c1715b42ba
       target_statement_id: sha256:f05570cff54f73232c864699f78cc21ad43c1cf7b7783bf104bd92b40e7ced87
+      statement_id_history:
+        - statement_id: sha256:97cd2933011fe88f1166f1238f0179f13a8515e6f49f065b8c6851479ef3298a
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S1/Recurrence/CassiniFricke.cassini_fricke
       definition_sha256: sha256:e636a31c63f9e9842aeb244646a7cfd827d058cb8ba07838c69abec96b415ae8

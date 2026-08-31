@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S1/Recurrence/Invariants/CassiniFrickeSpecializations.cassini_fricke_absolute_conservation
       source_sha256: sha256:541f30910d5b031b5733436daf0d3ac4e366db16b4bd8c293744a5445da97183
       target_statement_id: sha256:e51ca561e1e4f92b54883d704fb04cbee1e29ccd6dcbf4feebca591dbd75672c
+      statement_id_history:
+        - statement_id: sha256:a74b828f1d24c46fe68a09bab888fa5cc4f0b86bc6c792732f3fe062c89824d3
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S1/Recurrence/Invariants/CassiniFrickeSpecializations.cassini_fricke_absolute_conservation
       definition_sha256: sha256:a581f8ac56cc529d71ce99d19aa71dec0d1d2b4bcadde5c5bbe4b8311c468116

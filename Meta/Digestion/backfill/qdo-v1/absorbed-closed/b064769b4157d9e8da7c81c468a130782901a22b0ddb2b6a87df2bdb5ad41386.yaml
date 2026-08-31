@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Quantum/Algebra/DoubleOrthogonalClosure.double_orthogonal_complement_eq_closure
       source_sha256: sha256:b064769b4157d9e8da7c81c468a130782901a22b0ddb2b6a87df2bdb5ad41386
       target_statement_id: sha256:01461b8f3320d2c33bd39ab8a9107dea3be5dfd979910dbff8af49c5ff5ca31f
+      statement_id_history:
+        - statement_id: sha256:eeec0f1a8e0c36d289902ca66e581c555f166f66c45194ce5a629b2c6a3362f5
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Quantum/Algebra/DoubleOrthogonalClosure.double_orthogonal_complement_eq_closure
       definition_sha256: sha256:a2a114663052540ea77c30077aa0f4e9762c841058293a8df0e23d1a9e4eb7bb

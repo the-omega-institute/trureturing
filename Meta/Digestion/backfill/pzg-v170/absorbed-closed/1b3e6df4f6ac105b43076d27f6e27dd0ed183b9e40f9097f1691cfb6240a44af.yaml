@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S0/Carrier/Powers/GoldenCriticalBandScaling.golden_critical_band_scaling
       source_sha256: sha256:1b3e6df4f6ac105b43076d27f6e27dd0ed183b9e40f9097f1691cfb6240a44af
       target_statement_id: sha256:abb4d3b09b16f35bfd81a2236ac97997e7c7cacfc6d8386235610b8ccbf7e4b2
+      statement_id_history:
+        - statement_id: sha256:c259263fdd1f40070da1279fba775a1f91af77f4a2fd4056383fccb9ee0d89d3
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S0/Carrier/Powers/GoldenCriticalBandScaling.golden_critical_band_scaling
       definition_sha256: sha256:e8d964630b9bd00fc4e04f69ae723121241ca7b91f66c7a8fd2d3fad7a96ed45

@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/AnalyticClosure/CofinalTailDiscipline.cofinal_windows_and_vanishing_budget_close
       source_sha256: sha256:0ef34fa177de3dc443912d8b9221b0c28ca7e92be21d7cbda2afa5bbf759548e
       target_statement_id: sha256:db2552e4fcb42150dfad24911616078638b16b098aa530388aeeff58c605f41b
+      statement_id_history:
+        - statement_id: sha256:b662808a15f3631ec905e960a3a1b03dca86dcb082f28f780fc0d098fc08b128
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/AnalyticClosure/CofinalTailDiscipline.cofinal_windows_and_vanishing_budget_close
       definition_sha256: sha256:c706a2c4a4c9795d4812cfe8aec7fce1304883f92108e431c5b8698aa7e5b0cf

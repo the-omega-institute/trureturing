@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S0/Diagonal/EquivariantEscape.equivariant_escaped_card
       source_sha256: sha256:0fc2fbafca1ca2eadda19220eb981830b2762bc0799edb3acabf8fc4d7a1fcb4
       target_statement_id: sha256:e0179048d40ee4f4b1de6bf24f635e76866b791f40d9594dc428bf656363aa47
+      statement_id_history:
+        - statement_id: sha256:c432da877669a4dce4397da2009565c794462f8428db9cedb538435620b038df
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S0/Diagonal/EquivariantEscape.equivariant_escaped_card
       definition_sha256: sha256:0c975e40e8f1a2a6ab36c9c321f1181dd64aa604d6ff57d08d98a39a8f93299f

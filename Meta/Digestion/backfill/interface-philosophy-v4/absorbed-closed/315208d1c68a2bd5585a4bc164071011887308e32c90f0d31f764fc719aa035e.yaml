@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S0/Computability/DescriptionComplexity/LevinUpperBound.levin_upper_bound
       source_sha256: sha256:315208d1c68a2bd5585a4bc164071011887308e32c90f0d31f764fc719aa035e
       target_statement_id: sha256:615c60facff2af4f16d797d87e448f500c61097ccbf899d222ea28eafbbbc907
+      statement_id_history:
+        - statement_id: sha256:4f555dfa9d11d2025c287016c5884e49c212501132f3603f838ad452aab5a350
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S0/Computability/DescriptionComplexity/LevinUpperBound.levin_upper_bound
       definition_sha256: sha256:97485bcaa9c39bce720e1cccd24658713dd13d4058e7cd6c6a6777f80ddac217

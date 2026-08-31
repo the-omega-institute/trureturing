@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S0/Tower/NonPisotVerdict/SubstitutionTowerClause.substitution_tower_clause
       source_sha256: sha256:3869ae73114b259f48df63a0a7f9a22865a0c47f3248299643a5b7e5eb328969
       target_statement_id: sha256:36d504c4cee4de616c632026e20a188c25bc4723596f1300412ca2c5f43ffd81
+      statement_id_history:
+        - statement_id: sha256:9bb59a63ad50c0108dbe1ab4479d8c54724dd787c913852e7c1075ebc6aa0b35
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S0/Tower/NonPisotVerdict/SubstitutionTowerClause.substitution_tower_clause
       definition_sha256: sha256:bf0b258fc5050fd633b021d3f11aa9a544a116b9984b9600bffa9f0fb1d75a72

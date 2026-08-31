@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/ConceptDynamics/DefinitionEscape/ResidualJoinLaw.residual_join_law
       source_sha256: sha256:22a87d2f675ddb30610d329af3818246913189048626cad4c0dddb8790965dd6
       target_statement_id: sha256:51902b111223cfeba92b996bd17b15ed9ea8f9eede96eceb6d8826e46ec69d7b
+      statement_id_history:
+        - statement_id: sha256:0b17d31e47c6590f0b8a023ca385d6bf0f378d81b9ea897065b91ddd4b1653c3
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ConceptDynamics/DefinitionEscape/ResidualJoinLaw.residual_join_law
       definition_sha256: sha256:2696e67a0ac93a268684761e8752f8bd69779483b43a1b4c4805e7eaef6d95b4

@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S1/Scale/FibonacciEigen.fibonacci_substitution_spec
       source_sha256: sha256:f275041c200ac16d357515d4669dd0a5c558d789e926d5b5f258e934e8ecac28
       target_statement_id: sha256:787c937535e04c5b9e84d01c2044c03e028a5a8671428190823f4dd11bf92dbe
+      statement_id_history:
+        - statement_id: sha256:c7d5fd186b5c8b31e75959706bc27c05de31f10028f8a1e9d77a39c28d16d56c
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S1/Scale/FibonacciEigen.fibonacci_substitution_spec
       definition_sha256: sha256:d2f6ea7406159693482ea89a16028a2550e11da5dc095a3d1d13e5aec363bccd

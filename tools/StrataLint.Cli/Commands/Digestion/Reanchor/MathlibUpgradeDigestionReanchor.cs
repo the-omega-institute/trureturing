@@ -40,6 +40,13 @@ internal static class MathlibUpgradeDigestionReanchor
         ArgumentNullException.ThrowIfNull(protectedBase);
         ArgumentNullException.ThrowIfNull(candidate);
         ArgumentNullException.ThrowIfNull(reanchoredPaths);
+        if (!EffectiveLeanPins.TryRead(protectedBase, out var basePins)
+            || !EffectiveLeanPins.TryRead(candidate, out var candidatePins)
+            || basePins == candidatePins)
+        {
+            return document;
+        }
+
         var baselineStatements = FrozenStatementIndex.Load(protectedBase);
         var candidateStatements = FrozenStatementIndex.Load(candidate);
         var changed = false;
@@ -55,7 +62,9 @@ internal static class MathlibUpgradeDigestionReanchor
                             receipt,
                             reanchoredPaths,
                             baselineStatements,
-                            candidateStatements);
+                            candidateStatements,
+                            basePins!,
+                            candidatePins!);
                         changed |= replacement != receipt;
                         return replacement;
                     }).ToImmutableArray();
@@ -129,7 +138,9 @@ internal static class MathlibUpgradeDigestionReanchor
         DigestionCoverageReceipt receipt,
         ImmutableHashSet<RepoPath> reanchoredPaths,
         FrozenStatementIndex baselineStatements,
-        FrozenStatementIndex candidateStatements)
+        FrozenStatementIndex candidateStatements,
+        EffectiveLeanPins basePins,
+        EffectiveLeanPins candidatePins)
     {
         if (receipt.SourceSha256 != entry.Fingerprints.RawSha256
             || entry.CoverageGids.Count(gid => gid == receipt.Gid) != 1
@@ -137,14 +148,33 @@ internal static class MathlibUpgradeDigestionReanchor
             || !Gid.TryParse(receipt.Gid, out var gid)
             || !reanchoredPaths.Contains(gid.Path)
             || !baselineStatements.TryResolve(gid, out var baselineStatement, out _)
-            || receipt.TargetStatementId != baselineStatement!.Value
             || !candidateStatements.TryResolve(gid, out var candidateStatement, out _)
-            || candidateStatement == baselineStatement)
+            || candidateStatement == baselineStatement
+            || receipt.TargetStatementId != baselineStatement!.Value
+                && receipt.TargetStatementId != candidateStatement!.Value)
         {
             return receipt;
         }
 
-        return receipt with { TargetStatementId = candidateStatement!.Value };
+        var transition = new DigestionStatementIdHistoryEntry(
+            baselineStatement.Value,
+            basePins,
+            candidatePins);
+        var history = receipt.StatementIdHistory.IsDefault
+            ? ImmutableArray<DigestionStatementIdHistoryEntry>.Empty
+            : receipt.StatementIdHistory;
+        if (!history.IsEmpty && history[^1] == transition)
+        {
+            return receipt.TargetStatementId == candidateStatement!.Value
+                ? receipt
+                : receipt with { TargetStatementId = candidateStatement.Value };
+        }
+
+        return receipt with
+        {
+            TargetStatementId = candidateStatement!.Value,
+            StatementIdHistory = history.Add(transition),
+        };
     }
 }
 

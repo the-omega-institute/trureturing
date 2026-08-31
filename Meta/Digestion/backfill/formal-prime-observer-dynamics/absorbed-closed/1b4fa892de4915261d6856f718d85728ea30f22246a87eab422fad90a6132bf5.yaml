@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/PrimeForms/CrossingPeriodicity/PhaseObserverMinimalPeriod.phase_period_eq
       source_sha256: sha256:1b4fa892de4915261d6856f718d85728ea30f22246a87eab422fad90a6132bf5
       target_statement_id: sha256:70e4269df18f655a15fe1317ed482a3cb0d8c989d4bcd89edacdfdaa1d0eef89
+      statement_id_history:
+        - statement_id: sha256:0ea67e2974c931adee40f7356152fcbc52115b158ce0e03e24b43859cb24e3c0
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/PrimeForms/CrossingPeriodicity/PhaseObserverMinimalPeriod.phase_period_eq
       definition_sha256: sha256:6379ee43ebf3cf93eeff28b306623a75f8b72937b4756bf745b0e3d75dac87e5

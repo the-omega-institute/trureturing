@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Quantum/Algebra/OrthogonalDeMorgan.orthogonal_de_morgan
       source_sha256: sha256:8df97413446a2863f9d98d91b47937b25f37d5370ddf450a75dd9dc4f9f02468
       target_statement_id: sha256:7c52bf1672b597185f526897503f657cc3f919d9375d01212763da7c991d0149
+      statement_id_history:
+        - statement_id: sha256:0d60f401247d6d4d556a2c390488315adb371c564f173996f111d2315eefd39d
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Quantum/Algebra/OrthogonalDeMorgan.orthogonal_de_morgan
       definition_sha256: sha256:11d9b1255160d5b1d734f30231d3c39d4b86a76494402453d946254ef4a96034

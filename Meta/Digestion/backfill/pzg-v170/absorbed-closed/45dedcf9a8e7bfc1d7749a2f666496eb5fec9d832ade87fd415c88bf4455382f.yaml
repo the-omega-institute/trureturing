@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/PrimeForms/SumTwoSquares.prime_eq_sq_add_sq_of_mod_four_eq_one
       source_sha256: sha256:45dedcf9a8e7bfc1d7749a2f666496eb5fec9d832ade87fd415c88bf4455382f
       target_statement_id: sha256:338211703ba519240a7be080666aa64463ff96d659d3790b3367d3bd7150d735
+      statement_id_history:
+        - statement_id: sha256:e537f586b6ff647865988df7c55cb094fb626128802129da97e5dd610ae4c69a
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/PrimeForms/SumTwoSquares.prime_eq_sq_add_sq_of_mod_four_eq_one
       definition_sha256: sha256:ee571a24e783bedaa1e2c1296dc029b1bbbafb1fce18f06b0c61d3eb791b514b

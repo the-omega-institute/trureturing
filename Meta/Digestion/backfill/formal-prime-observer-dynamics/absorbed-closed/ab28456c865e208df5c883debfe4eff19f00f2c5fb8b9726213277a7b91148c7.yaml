@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Arith/Congruence/PadicObservationDistance.observation_distance_eq_padic_valuation
       source_sha256: sha256:ab28456c865e208df5c883debfe4eff19f00f2c5fb8b9726213277a7b91148c7
       target_statement_id: sha256:2c0dccd54db233b396eaecdd46022c895720c24d0ee6e1f73297a9d344645ae0
+      statement_id_history:
+        - statement_id: sha256:8ce50895ec6a862d3f59a98f7a82ca1feedbef850fb7859d0a3cd3379ecc7580
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Arith/Congruence/PadicObservationDistance.observation_distance_eq_padic_valuation
       definition_sha256: sha256:ab262612bc81b15a65bdbd7f30300749a7e30dfcc6973a3ecc4d45aa01b26248

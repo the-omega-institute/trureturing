@@ -9,5 +9,13 @@ receipts:
     - gid: D5/S1/Solenoid/HiddenFiberCompact.hiddenFiber_closed_compact_seqCompact
       source_sha256: sha256:5042d69d7e8955430eec456255e798de7da091fadd8f9f1d9bcd946a52c5b22f
       target_statement_id: sha256:2977913914fec0a1ccb1a141618adc6587c649f92cc3e5007f286d2110d6e609
+      statement_id_history:
+        - statement_id: sha256:bdc914776648c771d8052d4e157cf2a45df5765a389a9867a17b79d063f21e1b
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe: []
   unresolved_subitems: []

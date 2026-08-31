@@ -10,6 +10,14 @@ receipts:
     - gid: D5/S0/Carrier/GoldenDiscriminant.golden_discriminant_spec
       source_sha256: sha256:819d8f05f192d081658df28c99756a44dade1464f4ceaee6ca95d6af0637f372
       target_statement_id: sha256:a8c1d4b4fd4a736ee3621b566a644622e74ce5ba84ae06ff8ffa02b48fe82c66
+      statement_id_history:
+        - statement_id: sha256:db5991e14436b2929628f6c5f4279df71531e26a810ab6d8696d8780f93b3f93
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe: []
   unresolved_subitems:
     - definition-and-evaluation-of-lagrange-number-of-phi-as-sqrt-nine-minus-four

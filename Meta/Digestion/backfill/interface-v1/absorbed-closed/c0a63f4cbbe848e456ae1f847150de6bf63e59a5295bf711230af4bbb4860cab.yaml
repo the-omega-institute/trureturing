@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S0/Diagonal/EscapeCount.escaped_listing_card
       source_sha256: sha256:c0a63f4cbbe848e456ae1f847150de6bf63e59a5295bf711230af4bbb4860cab
       target_statement_id: sha256:23d423d7bdcd1cd179c77d60719a27944de6c8638ec4542329a2da65b96fdfca
+      statement_id_history:
+        - statement_id: sha256:b4d548046ce3a6763e385219696fcbcb37e891ce73554894d89e387f04a527ca
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S0/Diagonal/EscapeCount.escaped_listing_card
       definition_sha256: sha256:64bdf339da61fa22cfad20a745fe5e8c9e7852f17d51545b073a413c2941784b

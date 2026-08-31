@@ -35,6 +35,14 @@ receipts:
     - gid: D5/S3/Quantum/QubitWitnesses.equal_superposition_phase_damping_certificate
       source_sha256: sha256:39801f81b23d4fe1d4823f4470f961be3f2fc21445bfec13de1574cb9fd368bc
       target_statement_id: sha256:30e2dba93a1346d15e1ec2b2d54424c09f3f7f09876197609f2c4c81c17a8022
+      statement_id_history:
+        - statement_id: sha256:c8327bd4d719d03c216741b02421949a14b7f4c95bd352a557b422a648da4dd5
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe: []
   unresolved_subitems:
     - bookkeeping-is-decoherence-identification

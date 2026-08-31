@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/ObserverMemory/Dynamics/ObservableKrylovGrowthBound.observable_krylov_strict_growth_bound
       source_sha256: sha256:04d5133a34f775d2b520a7cee813fb4794ce7fbe49b9bce5fab1e7d49c0da180
       target_statement_id: sha256:1e155ebf2a37dc6f4dcdaa7f0b47a269af24d5732416de580ef61c97a7201b96
+      statement_id_history:
+        - statement_id: sha256:234639aa94dafdf57e1aa0e975cb8097ff20331df86da6c46101e3000100029d
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ObserverMemory/Dynamics/ObservableKrylovGrowthBound.observable_krylov_strict_growth_bound
       definition_sha256: sha256:c488778dc92efe24bbaa6f9e759b3f2c8ef622313ee7e59b12b617a4cfb6236c

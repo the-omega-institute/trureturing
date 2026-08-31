@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/ConceptDynamics/Decision/SamePredictionOppositeOptima.same_prediction_opposite_unique_optima
       source_sha256: sha256:f52a4f50d4d6418627cec5a0cbd3a44557bd24ffc0735603bd4e2497e9467bff
       target_statement_id: sha256:61f16b9bca962807b209d87f9ee9132136af3d5586fa649df0421aa3d2bcf2b7
+      statement_id_history:
+        - statement_id: sha256:62a80dbfabcb1359c13b84a379b844d3f75ada9d4ff7ed260cdc6ff4d68b04fa
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ConceptDynamics/Decision/SamePredictionOppositeOptima.same_prediction_opposite_unique_optima
       definition_sha256: sha256:2f36f729abbc5db1e17dcad308a862afd750bce0a8c86b0acbf8995292d503d0

@@ -10,9 +10,25 @@ receipts:
     - gid: D5/S3/ObserverMemory/InverseLimits/FunctionGraphLinearSimilarity.transition_matrices_linearly_similar
       source_sha256: sha256:7ca7808434085a7c690d4eac2b4401207403f92e89e1f53bac136a101294e2be
       target_statement_id: sha256:fbf73c05be5ca77060b16e7d723446ef0af21c9cb8bc96b19c6027565cf50aa2
+      statement_id_history:
+        - statement_id: sha256:63162002fb0f34dbcdc59172c373cd71c24b125de42c5790c517d8550a479c8b
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
     - gid: D5/S3/ObserverMemory/InverseLimits/FunctionGraphSpectrumCollision.same_trace_rank_spectra_not_function_graph_conjugate
       source_sha256: sha256:7ca7808434085a7c690d4eac2b4401207403f92e89e1f53bac136a101294e2be
       target_statement_id: sha256:50fb6cb4fe93170c7b7315063b8dfeba0bb3ae8804f094663783c3acea6170b9
+      statement_id_history:
+        - statement_id: sha256:67ed7448512dda9b96cfe3f37d8576ee96009003d7275c6fdbd14fe5068344da
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ObserverMemory/InverseLimits/FunctionGraphLinearSimilarity.transition_matrices_linearly_similar
       definition_sha256: sha256:9b80736881039d420feb40e0ada3dfbc53581fe6ffd9f7e597f8983f91bc6d8c

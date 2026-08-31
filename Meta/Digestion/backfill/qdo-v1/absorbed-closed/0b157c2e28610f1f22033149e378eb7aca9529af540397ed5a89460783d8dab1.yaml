@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Quantum/Algebra/FutureWordOrthogonalResidual.future_word_orthogonal_residual
       source_sha256: sha256:0b157c2e28610f1f22033149e378eb7aca9529af540397ed5a89460783d8dab1
       target_statement_id: sha256:59650774dc77241bcaff4fae192aa50ed2d0079f83a81d1e41e23a8c761f780d
+      statement_id_history:
+        - statement_id: sha256:61a04641e1e768332bc523867c6d5d0d5e334f85269afd39c9c9ca5cedf5c806
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Quantum/Algebra/FutureWordOrthogonalResidual.future_word_orthogonal_residual
       definition_sha256: sha256:37c29b6ee9cf46fc7de2d9f1d60fa7c97ac20ab0608a2ef86253b9bdbb683cc2

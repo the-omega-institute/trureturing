@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/ConceptDynamics/Refinement/ConceptKernelOrderDuality.concept_kernel_order_duality
       source_sha256: sha256:17f4d0ec99b15da3818d8d36066ed5d7b98ddadebb1217c0ae3242c6d02110b3
       target_statement_id: sha256:8645e015207205861a1419f9da648078569535f427c9d89a58b711c01e69f4f5
+      statement_id_history:
+        - statement_id: sha256:e72219ae864ebeec92673ad85ff992fa292d18ac32ba2a590f52b5fc582d731e
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ConceptDynamics/Refinement/ConceptKernelOrderDuality.concept_kernel_order_duality
       definition_sha256: sha256:b8f167fc0a04708d79a0f0030c85523e4ebe05a49af5016914f8ddf6952f364d

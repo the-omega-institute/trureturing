@@ -4,6 +4,18 @@ namespace StrataLint.Engine;
 
 internal static partial class BackfillInventoryLoader
 {
+    internal static BackfillInventoryDocument LoadStatementIdHistoryBaseline(
+        RepositorySnapshot snapshot) =>
+        LoadSnapshot(snapshot, LoadStatementIdHistoryBaselineDirectorySnapshot);
+
+    private static BackfillInventoryDocument LoadStatementIdHistoryBaselineDirectorySnapshot(
+        RepositorySnapshot snapshot) =>
+        LoadDirectorySnapshot(
+            snapshot,
+            ParseBaselineSourceMetadata,
+            projectBaselineCoverage: false,
+            allowUnknownEntryFields: true);
+
     private static ImmutableArray<DigestionLedgerSource> ProjectBaselineReferences(
         ImmutableArray<DigestionLedgerSource> sources,
         IReadOnlyDictionary<string, string> atomIds) =>

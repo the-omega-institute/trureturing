@@ -9,5 +9,13 @@ receipts:
     - gid: D5/S0/Carrier/GoldenRatio.golden_ratio_spec
       source_sha256: sha256:02138663fc4949940459013eabfd32eab9f0200bcaf9bbd660556c55960b9d3b
       target_statement_id: sha256:27ade5b921f83f26ced1225caa7020b05bb0313023ebb4852d27c5b9eb541e1b
+      statement_id_history:
+        - statement_id: sha256:9d46f7f93cee8f6182537c062d37f2911f765eacc459d98b3c1831d5a601e8a7
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe: []
   unresolved_subitems: []

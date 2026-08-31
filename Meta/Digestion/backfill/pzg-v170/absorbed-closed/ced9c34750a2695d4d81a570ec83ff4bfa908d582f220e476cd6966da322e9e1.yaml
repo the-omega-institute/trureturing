@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Zeros/Repulsion/RepulsionMaximum.repulsion_profile_has_exact_maximum
       source_sha256: sha256:ced9c34750a2695d4d81a570ec83ff4bfa908d582f220e476cd6966da322e9e1
       target_statement_id: sha256:5c0fc4a01d8190cbfdbfa7e4bd4ee1d7b14cdb5bf60558fd1f1ac3cb5cb1e134
+      statement_id_history:
+        - statement_id: sha256:cebd607f640f4a0f9df2f1009ff840c17af81589ed47ec633a0f6d49529e423c
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Zeros/Repulsion/RepulsionMaximum.repulsion_profile_has_exact_maximum
       definition_sha256: sha256:7bb099b1cd8372de46cccf9b99bdffa565b4e9d365b5de6fd4e2390e6231101a

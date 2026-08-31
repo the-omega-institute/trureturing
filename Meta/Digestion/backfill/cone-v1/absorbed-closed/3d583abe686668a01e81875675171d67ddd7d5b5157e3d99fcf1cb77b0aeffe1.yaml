@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Quantum/DoubleArtanhBounds.double_artanh_bounds
       source_sha256: sha256:3d583abe686668a01e81875675171d67ddd7d5b5157e3d99fcf1cb77b0aeffe1
       target_statement_id: sha256:f85d76a246d00741ff6d28197b7a5d7fd21d643b0ce39147e541ebcfa55a5f57
+      statement_id_history:
+        - statement_id: sha256:0a990625ba3b3b504dd232417eabd2852011cf84e9c76641b91fedef10cbcf36
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Quantum/DoubleArtanhBounds.double_artanh_bounds
       definition_sha256: sha256:6e8f7b95dfa462ce80e2ee1052d1ffad8544e9c0631bb687a7dbee9d2c30b04c

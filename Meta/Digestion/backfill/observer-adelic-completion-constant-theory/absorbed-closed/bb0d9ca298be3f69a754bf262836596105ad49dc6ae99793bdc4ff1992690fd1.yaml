@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Analytic/Asymptotics/LinearDensityHeatTrace.linear_density_heat_trace
       source_sha256: sha256:bb0d9ca298be3f69a754bf262836596105ad49dc6ae99793bdc4ff1992690fd1
       target_statement_id: sha256:1d0295cccc7a19451933224f485a35421c8402b630f655ecd1e6ffc2620dc127
+      statement_id_history:
+        - statement_id: sha256:88f86f115082431b211e28e7c89d95ac18ab7a944a2701593b64b8643c4eb6c4
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Analytic/Asymptotics/LinearDensityHeatTrace.linear_density_heat_trace
       definition_sha256: sha256:76c8a60c6e75884cb633c3e80a3fe8e7a3e65ddd655443299483ed92f68a8957

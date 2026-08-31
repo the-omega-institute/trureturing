@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/ObserverMemory/Prediction/ConditionalEntropyStability.prediction_stability_depth_eq_conditional_entropy_zero
       source_sha256: sha256:cf5abdce8bbf309762cd4ffa4e9f1cf6628bdd1ab4b5368dab789d5ee9b0c784
       target_statement_id: sha256:b8ac933e4969a010faa77bcb3d14839c6664e0d9f929a09e9c4ae8196bd3fae8
+      statement_id_history:
+        - statement_id: sha256:95dc75766e2c31e9d8e88c3b5d3af7ca616b9b71710eba5feea858ffc28d9f7b
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ObserverMemory/Prediction/ConditionalEntropyStability.prediction_stability_depth_eq_conditional_entropy_zero
       definition_sha256: sha256:56ba59439b2eee6e65a5d16535e1a1e9250f94d43ca96aed1611836cf4491a92

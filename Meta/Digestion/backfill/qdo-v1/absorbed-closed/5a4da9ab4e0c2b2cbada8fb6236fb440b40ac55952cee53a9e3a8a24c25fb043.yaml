@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Quantum/Algebra/UnitaryNaturalSelector.no_unitary_natural_orthogonal_selector
       source_sha256: sha256:5a4da9ab4e0c2b2cbada8fb6236fb440b40ac55952cee53a9e3a8a24c25fb043
       target_statement_id: sha256:84c41108a0505538d8edddbc944f512ac2af0cbe242754ccb4859eed265f5eae
+      statement_id_history:
+        - statement_id: sha256:46424f9ac83079411944b111a10bc5138d8fd4979bfb33cffad8e0b0edb2af16
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Quantum/Algebra/UnitaryNaturalSelector.no_unitary_natural_orthogonal_selector
       definition_sha256: sha256:e8380cf3ea8c67ae038e5bfb84cd17c00b42c9f07625f372ab9f7d95c0eaa8c6

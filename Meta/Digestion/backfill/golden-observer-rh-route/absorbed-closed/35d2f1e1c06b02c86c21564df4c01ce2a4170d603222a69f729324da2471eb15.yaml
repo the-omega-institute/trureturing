@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S1/Deficit/Beatty/GoldenObserverRoute.golden_observer_route_w_c1
       source_sha256: sha256:35d2f1e1c06b02c86c21564df4c01ce2a4170d603222a69f729324da2471eb15
       target_statement_id: sha256:8e97ab8ed163a9a4065e7f6c672f81da97540bc2fa39edd7a1a1130cc02f787f
+      statement_id_history:
+        - statement_id: sha256:a68a75d7de5fbb7beddc6411f59087bfafc7bf308808afa57419438fc101fc63
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S1/Deficit/Beatty/GoldenObserverRoute.golden_observer_route_w_c1
       definition_sha256: sha256:49e01d73512daa4d726d410b24d31158b8d7734d24adfcba49d816020b13e08b

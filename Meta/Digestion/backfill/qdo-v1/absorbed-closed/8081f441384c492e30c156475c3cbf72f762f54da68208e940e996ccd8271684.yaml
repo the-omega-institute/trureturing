@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Observer/MetricGeometryLaws/TailResidualCrossLayerBound.tail_residual_cross_layer_defect_bound
       source_sha256: sha256:8081f441384c492e30c156475c3cbf72f762f54da68208e940e996ccd8271684
       target_statement_id: sha256:35e30c24aa65307677e32145a6975497bb94e72cda4e2da3bd1f706d1fc1c9d8
+      statement_id_history:
+        - statement_id: sha256:8aa9484f08de1ef7fb2cc7159ac4841b073b7de6cba0ecc2183a252254b81955
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Observer/MetricGeometryLaws/TailResidualCrossLayerBound.tail_residual_cross_layer_defect_bound
       definition_sha256: sha256:37f81829616916990f8a5ad71fa60c9f316f2b10d1d32e541fba363ed4c275f8

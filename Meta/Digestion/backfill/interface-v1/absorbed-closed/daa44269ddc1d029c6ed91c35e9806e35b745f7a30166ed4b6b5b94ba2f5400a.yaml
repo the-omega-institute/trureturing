@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S0/Tower/Champions/PhaseAudit.golden_phase_audit
       source_sha256: sha256:daa44269ddc1d029c6ed91c35e9806e35b745f7a30166ed4b6b5b94ba2f5400a
       target_statement_id: sha256:ee251b001468a7c5a1aa7bdd08a773a36cee8ceb114618aa951faa345181f34c
+      statement_id_history:
+        - statement_id: sha256:5954335c3d168255f7898973ff9335ccd17ba92d0e0b9d4109d332cb17c78c65
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S0/Tower/Champions/PhaseAudit.golden_phase_audit
       definition_sha256: sha256:7e0782bfc9af5d8a75a30de6236c4c21e831ead2f27586a231dbed116a8b7f6e

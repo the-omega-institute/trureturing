@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Analytic/ZetaEntropyPlane/LocalEvidenceOrderThreshold.quadraticStatisticalEnergy
       source_sha256: sha256:37e158454201f23886a20fa66dc01de9fd3b53a443cf8f327df8415ce830aee3
       target_statement_id: sha256:1173d647aec60b471569b74fffb12856f2d22ec293ea091cae17b30083e5f8ad
+      statement_id_history:
+        - statement_id: sha256:4ab1a0ad3704c21174982e12d6e0d1ac6aea65ea81c67cce88f9c6e1efe5ba98
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Analytic/ZetaEntropyPlane/LocalEvidenceOrderThreshold.quadraticStatisticalEnergy
       definition_sha256: sha256:1af7497764c368504d0ee8d7bf30048f264eca09dae9fa441694b492582146fc

@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Analytic/Isolation/MeromorphicContinuationUniqueness.meromorphic_continuation_unique
       source_sha256: sha256:18b8449db38d3360ccd87832443868181e46019a8fe1441f6003837e4c06e81b
       target_statement_id: sha256:02162bb4b666beca5a369c05397549f5e3561b542b0670b4204386385c730959
+      statement_id_history:
+        - statement_id: sha256:7dafc7637eb12bc405e88520bd3cd0abd810db01c2ff6bf60ccd9d006303eff2
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Analytic/Isolation/MeromorphicContinuationUniqueness.meromorphic_continuation_unique
       definition_sha256: sha256:b16a772f06ff6d6fd8e4eb39e5331a6aec65ab41ea1144ff39490776e4725721

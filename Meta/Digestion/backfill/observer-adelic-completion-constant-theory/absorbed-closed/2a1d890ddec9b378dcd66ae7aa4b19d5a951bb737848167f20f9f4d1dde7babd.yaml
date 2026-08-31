@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Fourier/CompletionConstants/GaussianSelfDualPi.gaussian_self_dual_iff
       source_sha256: sha256:2a1d890ddec9b378dcd66ae7aa4b19d5a951bb737848167f20f9f4d1dde7babd
       target_statement_id: sha256:39803df53ade6b74f2d12c2072e437834c126f2a5fc46b409e57d5d5a1acb6a7
+      statement_id_history:
+        - statement_id: sha256:05e0289dee7392ea4aabed36354b5ab3ef2cffb8d538b47bfbfd47a50d21f4a9
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Fourier/CompletionConstants/GaussianSelfDualPi.gaussian_self_dual_iff
       definition_sha256: sha256:1f63a7d7d7eea34c3b0c3127b4a6ac1e76ec84338e336ec292a3843860f078b6

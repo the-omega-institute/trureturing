@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Analytic/Asymptotics/FiniteCountertermMellinContinuation.finite_counterterm_mellin_continuation
       source_sha256: sha256:96d4b0aea4ce28b52e77d41de24cb2dbd088466a5c1aa6b1e7caeac5eab9a8e7
       target_statement_id: sha256:0b75bd264e32a3daead93a734e7a517adeb50181e06d0d10a21344aae70e4ca8
+      statement_id_history:
+        - statement_id: sha256:adff8a07e71397459c2dd230aa2e681540c889e6740aa7e3b94a2262711eb3da
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Analytic/Asymptotics/FiniteCountertermMellinContinuation.finite_counterterm_mellin_continuation
       definition_sha256: sha256:1c4fc732ddaeb4d1b37b48f69c515341e78f25d591c49e855f85cb4e13e0880e

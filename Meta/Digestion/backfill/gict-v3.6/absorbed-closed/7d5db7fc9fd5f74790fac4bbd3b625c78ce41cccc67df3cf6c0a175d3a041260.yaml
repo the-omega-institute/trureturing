@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S1/Eigenstructure/UnitJordanDrift.unit_jordan_iterate_eq_linear_drift
       source_sha256: sha256:7d5db7fc9fd5f74790fac4bbd3b625c78ce41cccc67df3cf6c0a175d3a041260
       target_statement_id: sha256:0e1aaaab32a46054593ea0f7603b11592c50beb45c8c90b4badc9493da63f2c7
+      statement_id_history:
+        - statement_id: sha256:4d47d1dc5e3966f76fe968cb2b680d3079d7999d05f51856454aaba52718c91d
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S1/Eigenstructure/UnitJordanDrift.unit_jordan_iterate_eq_linear_drift
       definition_sha256: sha256:cbb7d827054168d012bbdfc4f387c88959bd8cea03c1a2685fd191c8bdf4788f

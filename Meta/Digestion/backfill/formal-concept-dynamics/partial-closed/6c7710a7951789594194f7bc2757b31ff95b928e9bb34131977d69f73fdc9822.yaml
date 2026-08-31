@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/ConceptDynamics/Epistemic/TopologicalKnowledgeOperator.topological_knowledge_operator_laws
       source_sha256: sha256:6c7710a7951789594194f7bc2757b31ff95b928e9bb34131977d69f73fdc9822
       target_statement_id: sha256:6f7a679f5be79acb545f5fe94992dc0260c7512a78ccd5ff049807061b0d0bc9
+      statement_id_history:
+        - statement_id: sha256:75fe62b3e9a51170aad2f772edb9b79f532602d1fada319a21f30fcf6c58b838
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ConceptDynamics/Epistemic/TopologicalKnowledgeOperator.topological_knowledge_operator_laws
       definition_sha256: sha256:ec151693f3d35f009adbc2f978197057c87251b61b1b93716c1ea2767f60e377

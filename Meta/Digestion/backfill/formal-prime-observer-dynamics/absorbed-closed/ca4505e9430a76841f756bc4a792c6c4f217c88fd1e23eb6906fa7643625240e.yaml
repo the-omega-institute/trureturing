@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Arith/Congruence/PadicBallFiberCorrespondence.congruenceFiber_eq_closedBall_inter_range
       source_sha256: sha256:ca4505e9430a76841f756bc4a792c6c4f217c88fd1e23eb6906fa7643625240e
       target_statement_id: sha256:608938e551ef45b23879fefb3812c09d69bf1cb88a56ccc749b073f9e5cc17e7
+      statement_id_history:
+        - statement_id: sha256:89e47ef3299fa8f72ee1822ea54508a431c255293966ff126f750fecfbe032ed
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Arith/Congruence/PadicBallFiberCorrespondence.congruenceFiber_eq_closedBall_inter_range
       definition_sha256: sha256:110f5aeaaab534939db6aa1c650778f2619f305c90c8e6fa2842fac1ca908480

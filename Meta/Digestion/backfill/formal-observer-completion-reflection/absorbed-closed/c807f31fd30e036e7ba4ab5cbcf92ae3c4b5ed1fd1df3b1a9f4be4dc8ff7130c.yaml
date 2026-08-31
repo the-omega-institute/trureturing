@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/ObserverMemory/Dynamics/MaximalUnobservableSubspace.future_kernel_is_maximal_invariant
       source_sha256: sha256:c807f31fd30e036e7ba4ab5cbcf92ae3c4b5ed1fd1df3b1a9f4be4dc8ff7130c
       target_statement_id: sha256:380faecabea88866b1197a53ea636a2d805650c89b0d3df126705509dad68765
+      statement_id_history:
+        - statement_id: sha256:57ccea6279501b26a4c1412eee8afee792ad05ae26c2a2feda0982a845da4271
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ObserverMemory/Dynamics/MaximalUnobservableSubspace.future_kernel_is_maximal_invariant
       definition_sha256: sha256:ba718a0ce8e0d60c173e03c7ad53523f29953c61e00d520612618ec64fe8b974

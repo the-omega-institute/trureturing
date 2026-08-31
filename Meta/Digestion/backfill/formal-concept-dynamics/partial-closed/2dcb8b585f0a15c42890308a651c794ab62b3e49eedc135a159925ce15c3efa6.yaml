@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/ConceptDynamics/Sufficiency/PermissionIntersectionLeast.sufficient_intersection_is_unique_least
       source_sha256: sha256:2dcb8b585f0a15c42890308a651c794ab62b3e49eedc135a159925ce15c3efa6
       target_statement_id: sha256:19c2ff8feaaedee77a57bfc4542eba6efe5d02bb69bcae437948ea6217760467
+      statement_id_history:
+        - statement_id: sha256:60973b1ed083336e3cd08acd418560280f96fd8608f84b4aba418e15518126e4
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ConceptDynamics/Sufficiency/PermissionIntersectionLeast.sufficient_intersection_is_unique_least
       definition_sha256: sha256:5d0da53bfb48689c24a58fb7c629160b1a5993ef4103aefcc2f5dca85a664bfb

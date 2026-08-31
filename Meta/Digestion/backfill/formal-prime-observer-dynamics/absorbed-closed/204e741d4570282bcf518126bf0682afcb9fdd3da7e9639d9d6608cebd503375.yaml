@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Analytic/PrimeProducts/FiniteMarginalGlobalSupportContrast.finite_marginals_and_global_support_contrast
       source_sha256: sha256:204e741d4570282bcf518126bf0682afcb9fdd3da7e9639d9d6608cebd503375
       target_statement_id: sha256:6a2bddc3a2f9a0bac9b19a2c018b5400274ffada85babaf2b2ee3ecd202d27eb
+      statement_id_history:
+        - statement_id: sha256:13bce1a1c6f110ba2ace70e9cda19e5d00eac56a70ad3cbeeda10711ea633ac8
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Analytic/PrimeProducts/FiniteMarginalGlobalSupportContrast.finite_marginals_and_global_support_contrast
       definition_sha256: sha256:6f62c3d160a30146540354bbb1e75be285575ef5044a65fdeb767e9a2a447bbd

@@ -14,9 +14,11 @@ public sealed class DigestionMathlibReanchorTests
     private const string ModuleBGid = "D5/S0/Carrier/B";
 
     [Fact]
-    public void PinUpgradeWithEquivalentPropositionAndStandardAxiomsReanchorsReceipt()
+    public void PinUpgradeRecordsPriorStatementAndBothEffectivePins()
     {
         var fixture = CreateAuthorizedDigestionReanchorFixture();
+        var priorStatementId = Assert.Single(
+            Assert.Single(fixture.Document.RequireDigestionEntries()).Receipts.Coverage).TargetStatementId;
 
         var reanchored = MathlibUpgradeDigestionReanchor.Apply(
             fixture.Document,
@@ -27,9 +29,196 @@ public sealed class DigestionMathlibReanchorTests
 
         var receipt = Assert.Single(Assert.Single(reanchored.RequireDigestionEntries()).Receipts.Coverage);
         Assert.Equal(fixture.CandidateAStatementId, receipt.TargetStatementId);
+        var atomYaml = Encoding.UTF8.GetString(BackfillInventoryWriter.WriteAtom(
+            Assert.Single(reanchored.RequireDigestionEntries())).AsSpan());
+        Assert.Contains(
+            $"""
+                      statement_id_history:
+                        - statement_id: {priorStatementId}
+                          environment_pin:
+                            toolchain: leanprover/lean4:v4.24.0
+                            mathlib_revision: {new string('a', 40)}
+                          superseded_by_pin:
+                            toolchain: leanprover/lean4:v4.25.0
+                            mathlib_revision: {new string('b', 40)}
+                """,
+            atomYaml,
+            StringComparison.Ordinal);
         Assert.DoesNotContain(
             EvaluateDigestionReanchorFixture(fixture, reanchored).Entries.Single().Gaps,
             static gap => gap.Code == "coverage-receipt-mismatch");
+    }
+
+    [Fact]
+    public void AlreadyReanchoredTargetStillRecordsMissingTransitionFromProtectedBase()
+    {
+        var fixture = CreateAuthorizedDigestionReanchorFixture();
+        var alreadyReanchored = MapCoverageReceipt(
+            fixture.Document,
+            receipt => receipt with { TargetStatementId = fixture.CandidateAStatementId });
+
+        var repaired = MathlibUpgradeDigestionReanchor.Apply(
+            alreadyReanchored,
+            fixture.ProtectedBase,
+            fixture.Candidate,
+            fixture.Changes,
+            fixture.Lean);
+
+        var receipt = Assert.Single(Assert.Single(repaired.RequireDigestionEntries()).Receipts.Coverage);
+        var transition = Assert.Single(receipt.StatementIdHistory);
+        Assert.Equal(
+            Assert.Single(Assert.Single(fixture.Document.RequireDigestionEntries()).Receipts.Coverage)
+                .TargetStatementId,
+            transition.StatementId);
+        Assert.Equal(new EffectiveLeanPins(
+            "leanprover/lean4:v4.24.0",
+            new string('a', 40)), transition.EnvironmentPin);
+        Assert.Equal(new EffectiveLeanPins(
+            "leanprover/lean4:v4.25.0",
+            new string('b', 40)), transition.SupersededByPin);
+    }
+
+    [Fact]
+    public void ReplayingSamePinTransitionIsByteIdentical()
+    {
+        var fixture = CreateAuthorizedDigestionReanchorFixture();
+        var once = MathlibUpgradeDigestionReanchor.Apply(
+            fixture.Document,
+            fixture.ProtectedBase,
+            fixture.Candidate,
+            fixture.Changes,
+            fixture.Lean);
+
+        var twice = MathlibUpgradeDigestionReanchor.Apply(
+            once,
+            fixture.ProtectedBase,
+            fixture.Candidate,
+            fixture.Changes,
+            fixture.Lean);
+
+        Assert.Equal(
+            BackfillInventoryWriter.WriteAtom(Assert.Single(once.RequireDigestionEntries())).ToArray(),
+            BackfillInventoryWriter.WriteAtom(Assert.Single(twice.RequireDigestionEntries())).ToArray());
+    }
+
+    [Fact]
+    public void StatementHistoryRoundTripsThroughStrictLoaderAndCanonicalWriter()
+    {
+        var fixture = CreateAuthorizedDigestionReanchorFixture();
+        var reanchored = MathlibUpgradeDigestionReanchor.Apply(
+            fixture.Document,
+            fixture.ProtectedBase,
+            fixture.Candidate,
+            fixture.Changes,
+            fixture.Lean);
+        var files = DigestionReanchorTextDictionary(fixture.Candidate);
+        DirectoryLedgerTestSupport.ReplaceWithProjection(files, reanchored);
+        var decoded = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+            SnapshotDecoder.Decode(DigestionReanchorRawSnapshot(files))).Snapshot;
+
+        var loaded = BackfillInventoryLoader.Load(decoded);
+        var loadedReceipt = Assert.Single(
+            Assert.Single(loaded.RequireDigestionEntries()).Receipts.Coverage);
+
+        Assert.Equal(
+            Assert.Single(Assert.Single(reanchored.RequireDigestionEntries()).Receipts.Coverage)
+                .StatementIdHistory.ToArray(),
+            loadedReceipt.StatementIdHistory.ToArray());
+        Assert.Equal(
+            BackfillInventoryWriter.WriteAtom(Assert.Single(reanchored.RequireDigestionEntries())).ToArray(),
+            BackfillInventoryWriter.WriteAtom(Assert.Single(loaded.RequireDigestionEntries())).ToArray());
+    }
+
+    [Fact]
+    public void StatementHistoryDoesNotChangeDerivedDigestionState()
+    {
+        var fixture = CreateAuthorizedDigestionReanchorFixture();
+        var withHistory = MathlibUpgradeDigestionReanchor.Apply(
+            fixture.Document,
+            fixture.ProtectedBase,
+            fixture.Candidate,
+            fixture.Changes,
+            fixture.Lean);
+        var withoutHistory = MapCoverageReceipt(
+            withHistory,
+            receipt => receipt with { StatementIdHistory = [] });
+
+        var withEvaluation = EvaluateDigestionReanchorFixture(fixture, withHistory).Entries.Single();
+        var withoutEvaluation = EvaluateDigestionReanchorFixture(fixture, withoutHistory).Entries.Single();
+
+        Assert.Equal(withoutEvaluation.Alignment, withEvaluation.Alignment);
+        Assert.Equal(withoutEvaluation.DerivedStatus, withEvaluation.DerivedStatus);
+        Assert.Equal(withoutEvaluation.Deletable, withEvaluation.Deletable);
+        Assert.Equal(withoutEvaluation.Gaps.ToArray(), withEvaluation.Gaps.ToArray());
+    }
+
+    [Fact]
+    public void Sl016HistoryConsumerRejectsSyntacticallyValidOldStatementNotActiveInProtectedBase()
+    {
+        var fixture = CreateAuthorizedDigestionReanchorFixture();
+        var invalidOldStatement = FrozenStatementReceiptTestData.Id('f');
+        var dishonestBase = MapCoverageReceipt(
+            fixture.Document,
+            receipt => receipt with { TargetStatementId = invalidOldStatement });
+        var reanchored = MathlibUpgradeDigestionReanchor.Apply(
+            fixture.Document,
+            fixture.ProtectedBase,
+            fixture.Candidate,
+            fixture.Changes,
+            fixture.Lean);
+        var dishonestCandidate = MapCoverageReceipt(
+            reanchored,
+            receipt => receipt with
+            {
+                StatementIdHistory =
+                [receipt.StatementIdHistory.Single() with { StatementId = invalidOldStatement }],
+            });
+
+        var finding = Assert.Single(DigestionStatementIdHistoryValidator.Validate(
+            dishonestBase,
+            dishonestCandidate,
+            fixture.ProtectedBase,
+            fixture.Candidate,
+            HistoryChangeSet(dishonestCandidate)));
+
+        Assert.Contains("not active in the protected-base frozen ledger", finding, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void Sl016HistoryConsumerRejectsTargetDriftWithoutHistoryAppend()
+    {
+        var fixture = CreateAuthorizedDigestionReanchorFixture();
+        var candidate = MapCoverageReceipt(
+            fixture.Document,
+            receipt => receipt with { TargetStatementId = fixture.CandidateAStatementId });
+
+        var finding = Assert.Single(DigestionStatementIdHistoryValidator.Validate(
+            fixture.Document,
+            candidate,
+            fixture.ProtectedBase,
+            fixture.Candidate,
+            HistoryChangeSet(candidate)));
+
+        Assert.Contains("requires exactly one history append", finding, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void Sl016HistoryConsumerAcceptsCanonicalPinTransition()
+    {
+        var fixture = CreateAuthorizedDigestionReanchorFixture();
+        var candidate = MathlibUpgradeDigestionReanchor.Apply(
+            fixture.Document,
+            fixture.ProtectedBase,
+            fixture.Candidate,
+            fixture.Changes,
+            fixture.Lean);
+
+        Assert.Empty(DigestionStatementIdHistoryValidator.Validate(
+            fixture.Document,
+            candidate,
+            fixture.ProtectedBase,
+            fixture.Candidate,
+            HistoryChangeSet(candidate)));
     }
 
     [Fact]
@@ -353,6 +542,33 @@ public sealed class DigestionMathlibReanchorTests
             fixture.Lean,
             baselineDocument: fixture.Document,
             changes: fixture.Changes);
+
+    private static BackfillInventoryDocument MapCoverageReceipt(
+        BackfillInventoryDocument document,
+        Func<DigestionCoverageReceipt, DigestionCoverageReceipt> map) =>
+        document.WithDigestionSources(document.RequireDigestionSources()
+            .Select(source => source with
+            {
+                Entries = source.Entries.Select(entry => entry with
+                {
+                    Receipts = entry.Receipts with
+                    {
+                        Coverage = entry.Receipts.Coverage.Select(map).ToImmutableArray(),
+                    },
+                }).ToImmutableArray(),
+            }).ToImmutableArray());
+
+    private static RawChangeSet HistoryChangeSet(BackfillInventoryDocument document)
+    {
+        var entry = Assert.Single(document.RequireDigestionEntries());
+        return RawChangeSet.Create(
+        [
+            $"{BackfillInventoryLoader.RootPath}{entry.SourceId}/"
+            + $"{DigestionStatusNames.Migration(entry.ProjectedStatus.Migration)}-"
+            + $"{DigestionStatusNames.Truth(entry.ProjectedStatus.Truth)}/"
+            + $"{entry.AtomId}.yaml",
+        ]);
+    }
 
     private static void AssertRejectedDigestionReanchorRemainsFatal(
         DigestionReanchorFixture fixture)

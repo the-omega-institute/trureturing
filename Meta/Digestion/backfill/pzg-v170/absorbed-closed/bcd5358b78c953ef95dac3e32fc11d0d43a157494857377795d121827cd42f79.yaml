@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Zeros/ToySpectrum/TwoBodyHeatSeparation.two_body_heat_real_root_separation
       source_sha256: sha256:bcd5358b78c953ef95dac3e32fc11d0d43a157494857377795d121827cd42f79
       target_statement_id: sha256:b5284a37a041871b21f1d09e23b8d89549824db4de3952db2fc31a045019c628
+      statement_id_history:
+        - statement_id: sha256:904fc5f0fed6b98a913512d86c5e1d595b6853e2bf42d3ebe3108d23918c7a13
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Zeros/ToySpectrum/TwoBodyHeatSeparation.two_body_heat_real_root_separation
       definition_sha256: sha256:29aef44ae090a101e7857b515ed8ff955e4408e9edf9a1dd12078c7666bf1906

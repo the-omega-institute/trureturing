@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Analytic/PrimeProducts/DistinctPrimeFactorCountBound.distinct_prime_factor_count_bound
       source_sha256: sha256:4fccce4d946b3e2df523afe7dcd99526dfa7b2479a8e3911aef46db97665eed6
       target_statement_id: sha256:54910541fa3ba546530e061db8e1b036b6ce09dc64bc51b0e977ef3347de3361
+      statement_id_history:
+        - statement_id: sha256:665e416c5f7dd1363ed3e787c563f647647a8ad86255c43a4d585e867f921a73
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Analytic/PrimeProducts/DistinctPrimeFactorCountBound.distinct_prime_factor_count_bound
       definition_sha256: sha256:3c351f65940cf9679e77062d93d2dff342324450eedccb67b7d63ad1c59cbb61

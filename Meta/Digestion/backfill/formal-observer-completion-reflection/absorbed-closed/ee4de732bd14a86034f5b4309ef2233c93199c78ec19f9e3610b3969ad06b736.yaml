@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/ObserverMemory/Dynamics/InfiniteObservabilityOrthogonalDuality.infinite_unobservable_eq_observable_orthogonal
       source_sha256: sha256:ee4de732bd14a86034f5b4309ef2233c93199c78ec19f9e3610b3969ad06b736
       target_statement_id: sha256:e58b37128985b67ea9e50828c73982184165e31e921d74d4896e8344490cf288
+      statement_id_history:
+        - statement_id: sha256:ca7203e3e1e4739f67e0452a617281fe413c42f83cffe7489c5148d2ff29d819
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ObserverMemory/Dynamics/InfiniteObservabilityOrthogonalDuality.infinite_unobservable_eq_observable_orthogonal
       definition_sha256: sha256:0818374f342ccfd3814a7ee9e2a522a5dc65fb45f42bb5777f6b8d1174877185

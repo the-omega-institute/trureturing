@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/ObserverMemory/Knowledge/RelationalPreconditionAdjunction.relational_adjunction_and_may_not_guarantee
       source_sha256: sha256:24605c954875eec228cd6006c734e9c06adce66c6bdbeccd60aef067fdd96ebf
       target_statement_id: sha256:ee13be7cf48663f8c2928c245c938f8229a37199c89de392a1cf7ce902f9fd09
+      statement_id_history:
+        - statement_id: sha256:694a8223b93a9e5cc0d5f08cf119658efade5a8726ed02f63e5beb519c1fb332
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ObserverMemory/Knowledge/RelationalPreconditionAdjunction.relational_adjunction_and_may_not_guarantee
       definition_sha256: sha256:dee4c683a3edf9ef9d351ab5e38d36b677a357f1b5465960d3bad3464348aaa4

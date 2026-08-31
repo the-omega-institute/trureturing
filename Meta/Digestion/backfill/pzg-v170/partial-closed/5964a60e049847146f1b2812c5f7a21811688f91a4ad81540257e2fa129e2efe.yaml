@@ -9,5 +9,13 @@ receipts:
     - gid: D5/S3/PrimeForms/QuadraticResidues.square_residues_and_sum_obstruction
       source_sha256: sha256:5964a60e049847146f1b2812c5f7a21811688f91a4ad81540257e2fa129e2efe
       target_statement_id: sha256:ce1572c66deca801680c4cb142dd867a4b98ec95aaa3b88ddf6017c9c3164b5b
+      statement_id_history:
+        - statement_id: sha256:42ca3de3d3e40942b86f158c7940c324c4e3b2c3280a38b07f50915cb9ddf676
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe: []
   unresolved_subitems: []

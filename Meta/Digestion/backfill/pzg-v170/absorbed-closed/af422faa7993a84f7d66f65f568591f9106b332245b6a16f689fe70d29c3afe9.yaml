@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/ArithUnits/FermatLittle.fermat_little_theorem
       source_sha256: sha256:af422faa7993a84f7d66f65f568591f9106b332245b6a16f689fe70d29c3afe9
       target_statement_id: sha256:221f26edc5da67f207e28d9a03450eab0b60666b2abeabcaf88aca6ecb197fba
+      statement_id_history:
+        - statement_id: sha256:d928480aa47e865501af0973bd4c41e30571e18e97e8238604fdd9de27f7e17e
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ArithUnits/FermatLittle.fermat_little_theorem
       definition_sha256: sha256:cd78594b0e0e6d0d0ec44c3f45bce895a11c6c8b0e5c7fb9c3bbe700438bd8d1

@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Factorization/PrimePowers/PrimeExponentLanguageComplete.prime_exponent_language_complete
       source_sha256: sha256:9cfc18a558e1c6c35075935782a4f4aac3cfd387b06b42b353f491409ce4e2ac
       target_statement_id: sha256:8102369cd1bde6ea08ba929deef874f5b4e7698f337a971e2c31d89e6511edc7
+      statement_id_history:
+        - statement_id: sha256:123dcf146bdbf21920c57d37ca9dd74cc3a14a170b97bdf2f14f64a33d551347
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Factorization/PrimePowers/PrimeExponentLanguageComplete.prime_exponent_language_complete
       definition_sha256: sha256:45a4f8a37166ee287b054d8b36dddcd0f55277402f5723277bc25543b808c48c

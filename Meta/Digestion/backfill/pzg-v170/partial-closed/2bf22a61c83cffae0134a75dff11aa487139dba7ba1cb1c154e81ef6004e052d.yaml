@@ -9,5 +9,13 @@ receipts:
     - gid: D5/S1/Dynamics/JumpCocycle.jump_cocycle
       source_sha256: sha256:2bf22a61c83cffae0134a75dff11aa487139dba7ba1cb1c154e81ef6004e052d
       target_statement_id: sha256:35612a103dd0bda47aea448eead5ecb7d270a1fc00ae5eb70b5c2c0d06f9f148
+      statement_id_history:
+        - statement_id: sha256:dfc28f16917d8ddf1038ab8bb916ce21492dcd409e5385c76e50d0a59cdc804c
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe: []
   unresolved_subitems: []

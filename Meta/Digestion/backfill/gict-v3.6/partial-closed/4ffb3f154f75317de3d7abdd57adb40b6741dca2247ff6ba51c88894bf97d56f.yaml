@@ -13,6 +13,14 @@ receipts:
     - gid: D5/S1/Phase/SeatTowerArithmetic.pythagorean_gate_iff_eisenstein_norm
       source_sha256: sha256:4ffb3f154f75317de3d7abdd57adb40b6741dca2247ff6ba51c88894bf97d56f
       target_statement_id: sha256:2ba97c312fec73dc76bd861a3412922bf821a1715b6f33b59ad3b432b09a55a1
+      statement_id_history:
+        - statement_id: sha256:072b2d6f462d064898b0495a22c46a66c0111666a8276174cb5ca63b71095c30
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
     - gid: D5/S1/Phase/SeatTowerConsequences.cosecant_peak_identity
       source_sha256: sha256:4ffb3f154f75317de3d7abdd57adb40b6741dca2247ff6ba51c88894bf97d56f
       target_statement_id: sha256:ffff29775ac90deb5feb58180878e5041cffcd17e50eac5595116ff5aac8d92c

@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S1/Depth/ContinuedFractions/GaussInfiniteFiber.gauss_map_interior_fiber_infinite
       source_sha256: sha256:03682508f70cb8bd4b556025433cbc480080e6afdd794d278153ab6cc2295c77
       target_statement_id: sha256:d9d99c51ffde9c99155f66d0acb959c067d3b3b2106f2d120589e07624b0bba8
+      statement_id_history:
+        - statement_id: sha256:facc4003ff0f7909deffb1337bca904fb136838f59145eb762765536fd1bcba1
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S1/Depth/ContinuedFractions/GaussInfiniteFiber.gauss_map_interior_fiber_infinite
       definition_sha256: sha256:87909cd660bf8fae7e74e20b86e9eb8fb3a7c22ca5f65d0bc3009b75cf6dc400

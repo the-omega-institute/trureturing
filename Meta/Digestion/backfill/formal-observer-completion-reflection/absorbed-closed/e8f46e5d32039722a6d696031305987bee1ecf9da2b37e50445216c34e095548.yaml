@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Observer/HiddenFlow/DiscreteRigidity.nonzero_integer_action_has_no_continuous_real_extension
       source_sha256: sha256:e8f46e5d32039722a6d696031305987bee1ecf9da2b37e50445216c34e095548
       target_statement_id: sha256:0374bf633c17698d82d9d6e4c82e023d37a9ad865a3f2a88fec6c8471813d342
+      statement_id_history:
+        - statement_id: sha256:67195556386b91abb5b471e5f57a5bcbae3f09f4caeeffece6c03e21c8959b1a
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Observer/HiddenFlow/DiscreteRigidity.nonzero_integer_action_has_no_continuous_real_extension
       definition_sha256: sha256:75d81c622a0dde069bafd564bdb0e100d7ee3ecd93c20b451a4ae3020dc0e00a

@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S0/Rewriting/Newman.newman_unique_normal_form
       source_sha256: sha256:367d64c5ebd06db989c39cfcc38db6ebdf493cfd34a6b402d9accf75eaf0abc6
       target_statement_id: sha256:b4dfdbeff508358d4b8de5d9b2ad7887627325b7b7486525ddbc898f9df2d459
+      statement_id_history:
+        - statement_id: sha256:1f1a54e2e08541385ddf383402c9c43fe07d2584f1327241520e4b1ec6a8f196
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S0/Rewriting/Newman.newman_unique_normal_form
       definition_sha256: sha256:1e1313263f57049dbe7d12e34bcc9138f8125f55ba12be4fcfb793b1f933a303

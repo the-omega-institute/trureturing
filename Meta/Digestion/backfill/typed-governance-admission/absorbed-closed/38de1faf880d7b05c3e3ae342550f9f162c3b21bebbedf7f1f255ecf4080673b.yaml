@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/ConceptDynamics/Governance/TwoStateLocalityIncrementalPreservation.two_state_locality_yields_incremental_preservation
       source_sha256: sha256:38de1faf880d7b05c3e3ae342550f9f162c3b21bebbedf7f1f255ecf4080673b
       target_statement_id: sha256:0bf4b5dc734899e20f12b599683b93cf798b05d4372cd005ebd14f5bc964041f
+      statement_id_history:
+        - statement_id: sha256:f6933386e118c51a5dd49c6dfee9179015d9f94d0ddb96656bad32fbf42f5fc2
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ConceptDynamics/Governance/TwoStateLocalityIncrementalPreservation.two_state_locality_yields_incremental_preservation
       definition_sha256: sha256:b684864a0e9bc5e2cdc94e689c2d696bc851067b703916e2ba42cc109e836067

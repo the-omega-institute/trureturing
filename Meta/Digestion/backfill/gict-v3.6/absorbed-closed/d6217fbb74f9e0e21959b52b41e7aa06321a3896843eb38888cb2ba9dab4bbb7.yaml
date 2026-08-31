@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/QuantumContext/ParallelogramNormLaw.inner_product_norm_parallelogram_law
       source_sha256: sha256:d6217fbb74f9e0e21959b52b41e7aa06321a3896843eb38888cb2ba9dab4bbb7
       target_statement_id: sha256:4508bd84ed50b7dd80dc2cd9f542f963e46cc495daf65798cd7e03b32ffc8e28
+      statement_id_history:
+        - statement_id: sha256:e8084dc997c4185ec501fe44968826a09cd86b12d8786371ea15972dfcfaa12b
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/QuantumContext/ParallelogramNormLaw.inner_product_norm_parallelogram_law
       definition_sha256: sha256:4b80cae3b9c69403a7473996a217141f45a7304196ef9b16e4de44302ff08cc6

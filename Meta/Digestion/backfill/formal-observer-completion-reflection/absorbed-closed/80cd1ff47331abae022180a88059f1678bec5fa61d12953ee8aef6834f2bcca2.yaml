@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/ObserverMemory/Dynamics/FutureReadoutQuotient.future_readout_quotient_is_coarsest_with_unique_dynamics
       source_sha256: sha256:80cd1ff47331abae022180a88059f1678bec5fa61d12953ee8aef6834f2bcca2
       target_statement_id: sha256:1889583114e43cb9af441b3ecd41cda9e5f9529c14268fbd4e1322a4b9bd4586
+      statement_id_history:
+        - statement_id: sha256:aaa6f62edf3b1260bfc52e0fc79820ab9fd1610b76aefd17674410c59e842f89
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ObserverMemory/Dynamics/FutureReadoutQuotient.future_readout_quotient_is_coarsest_with_unique_dynamics
       definition_sha256: sha256:9ec147c3c463659bd6072a2e6b5082987d4352f82730516c9674e012e1ff9bb4

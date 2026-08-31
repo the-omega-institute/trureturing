@@ -10,9 +10,25 @@ receipts:
     - gid: D5/S1/Deficit/Carry/GoldenCarryDeficitBridge.golden_carry_deficit_bridge
       source_sha256: sha256:e8641d385f2d86b1cb8a89ec435a71e211d69270dc891591c66006cea3e5b2c7
       target_statement_id: sha256:014917f9b79af1de2c8c5a842daad520c253baa83fb77b0e8bda164b4440ca5d
+      statement_id_history:
+        - statement_id: sha256:5abe655396e4b8e8cba9ddec0eba0e8d34aa1d3721e8de471c4e95187ff16116
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
     - gid: D5/S1/Deficit/GoldenCarryLedger.carry_rewrite_face_invariant
       source_sha256: sha256:e8641d385f2d86b1cb8a89ec435a71e211d69270dc891591c66006cea3e5b2c7
       target_statement_id: sha256:92b0558ee47abbff549b96b7bb324233e572c71f9f2b3f9bf4d14e51c439a87b
+      statement_id_history:
+        - statement_id: sha256:881d5c2bfc91ec97df60190c8f7199751e95ac4c702c4ad7596c55ced0d4efbf
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S1/Deficit/Carry/GoldenCarryDeficitBridge.golden_carry_deficit_bridge
       definition_sha256: sha256:60035fca409aee7351dbb3c77b9772a341c0e6b7a51c4b5b7b1676e545bf1940

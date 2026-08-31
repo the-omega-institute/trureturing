@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Observer/Tomography/InnovationEnergyRecurrence.innovation_energy_recurrence
       source_sha256: sha256:bd62c3b0bbf703f2a511ffceb27587dc1f68c4041318acac517fb33585d8c611
       target_statement_id: sha256:2181937a5f6d7a81570ef5514cb0342185ce26b35456db2af40fa8dcc94be822
+      statement_id_history:
+        - statement_id: sha256:b83d729c3f284f8c27167ee5776ddfb5c24e3edd7f8cf1c3a62442019341b51a
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Observer/Tomography/InnovationEnergyRecurrence.innovation_energy_recurrence
       definition_sha256: sha256:869137c85c72699fe596498743a8fbcdb338515c4085d7317591e940ec0c26bc

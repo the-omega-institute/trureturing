@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S0/Naming/TranslationComposition.translation_composition
       source_sha256: sha256:28eb48df44ffffd604e0570bc4185c2259059002b76c54e351f13ceb726571a4
       target_statement_id: sha256:291be4663b97e01fcd96b69e35559f92e42c7b3448fab1828bdfd4403408fcea
+      statement_id_history:
+        - statement_id: sha256:39100380c12232ff74182ea041e2c7675bc224eaa1dbf45c0a2338506594824a
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S0/Naming/TranslationComposition.translation_composition
       definition_sha256: sha256:ab1bb01ac75fb3b261c681d4a9b5dcc505a8da4af3260a1ad8c1c6e7cb3b2644

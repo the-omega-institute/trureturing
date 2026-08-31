@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/QuantumContext/TwoTorsionPhaseIndices.nonzero_two_torsion_phase_indices
       source_sha256: sha256:f13fd3b834fdee9099b60fe6d6540ffe96c8a7d961fcbe2abf103c7416a220f1
       target_statement_id: sha256:f58c9e2c0e582bbe72561850cf44ed884a08058243c334184b2d457da73fd7bb
+      statement_id_history:
+        - statement_id: sha256:387fd5efc4b018efaf774573d4b8bdb2b7017f826c11d7b4945af7f65eb3e453
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/QuantumContext/TwoTorsionPhaseIndices.nonzero_two_torsion_phase_indices
       definition_sha256: sha256:8285ed9c26c2e0ba858bf73a424bd045f1eee34a514105ee66b5d2e38a422f0c

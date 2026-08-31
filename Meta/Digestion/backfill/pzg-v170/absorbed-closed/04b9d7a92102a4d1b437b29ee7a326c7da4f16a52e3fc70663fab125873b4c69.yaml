@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/PrimeForms/ThreeModFourDescent.prime_dvd_dvd_of_dvd_sq_add_sq
       source_sha256: sha256:04b9d7a92102a4d1b437b29ee7a326c7da4f16a52e3fc70663fab125873b4c69
       target_statement_id: sha256:2bb4361b4e6d1219a77fb8f7397c47f68f122d63920df96134d85914bfcac354
+      statement_id_history:
+        - statement_id: sha256:a2a68719d0324258e64f8cf2ea715b22cdaf2e48ff60c46cc3de33b2f67ff02e
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/PrimeForms/ThreeModFourDescent.prime_dvd_dvd_of_dvd_sq_add_sq
       definition_sha256: sha256:ebb2ce58c621f85f0f5411fdef3793620f63bf1283a9aef9eb190ac8cd40ad57

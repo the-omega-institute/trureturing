@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Analytic/PoleLayerSelection.pole_layer_coefficient
       source_sha256: sha256:57f51ea9df1e31fdab94679f09bf42e2e0d48b26ec8076c6f0ee0afe0245f702
       target_statement_id: sha256:a7e6c14588396666ec65d8f19d7a9654e5e86a437500ab96317104cc3ebbd676
+      statement_id_history:
+        - statement_id: sha256:b51201c78a0d0bb0fc60bba1c81bec1b0d45df23cd3a3639c4d5823f628dabf3
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Analytic/PoleLayerSelection.pole_layer_coefficient
       definition_sha256: sha256:f6e4296b9243112cff4ffcd05afc2e4bf28b323735b312c2fa81e602e9fccc18

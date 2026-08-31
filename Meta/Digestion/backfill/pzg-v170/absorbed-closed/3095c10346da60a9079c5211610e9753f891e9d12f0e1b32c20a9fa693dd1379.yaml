@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S1/FixedPoints/ThreeCycleFixedPoint.three_cycle_action_has_fixed_point
       source_sha256: sha256:3095c10346da60a9079c5211610e9753f891e9d12f0e1b32c20a9fa693dd1379
       target_statement_id: sha256:f86c39390fed60bfb9f5e355236f49722412e877014ed820338601a50a73267e
+      statement_id_history:
+        - statement_id: sha256:b01558bc5e59e25abb1ecf1bdc58adb6e3e5ff1725e62b98075df9e33ad10419
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S1/FixedPoints/ThreeCycleFixedPoint.three_cycle_action_has_fixed_point
       definition_sha256: sha256:1a39de4781a9d4a7d345d23a5d0d29c2d7b42441bfb3747648344066cff94f6d

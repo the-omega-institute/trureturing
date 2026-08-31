@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Quantum/Algebra/FiniteLayerProjectionEscape.finite_layer_projection_escape
       source_sha256: sha256:0815154b98192bee7195cdf3e78d637f01cd135ba4c9fd3bafcee16c478d54af
       target_statement_id: sha256:5324c8f898e4e3d2b29b298333f0f3936f3fafc9781b8d6fbcba0910b9596758
+      statement_id_history:
+        - statement_id: sha256:e2453da25c3c094b2f3d27c89d9f846f871ec67bd951309b51e5d3619658d108
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Quantum/Algebra/FiniteLayerProjectionEscape.finite_layer_projection_escape
       definition_sha256: sha256:0a1092adddd6f26db416b2f007d933f50925e6af792ea201e7b1b0ce21f1b954

@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Observer/HyperbolicTransport/GoldenHyperbolicInflation.golden_visible_hidden_hyperbolic_transport
       source_sha256: sha256:93e4ba8f4abf39c6da56ade083f78f7b2cd43028c02feec9ab6b84eeb070fcdd
       target_statement_id: sha256:e51e6a46135c5e0bf1c0398e752887f4dc3d3c3a134aa460d04ac8997e5576d7
+      statement_id_history:
+        - statement_id: sha256:ccfd60e69734fc1ece2b0092a65e07a3a23c87e5ed2e058fb02582c726a53388
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Observer/HyperbolicTransport/GoldenHyperbolicInflation.golden_visible_hidden_hyperbolic_transport
       definition_sha256: sha256:41dfdee50cafb685507a1cd7e51fad32dcc4534d6b62da1b59ef4c19fa0c93c9

@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Quantum/PureState/RecordCoherenceComplementarity.pure_record_distinguishability_coherence_complementarity
       source_sha256: sha256:05b39d939447fc2d936c7d9143cd8f8704025dcce8a5948020c61389697e4722
       target_statement_id: sha256:0eab651ba3ea7f5328d675833304befa5d60e1d307118fe36893027865f5e28f
+      statement_id_history:
+        - statement_id: sha256:8c8ea42bdd60faedde8fd7aef9ff195cee9830d723b7944f0db9c1ae3ac67860
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Quantum/PureState/RecordCoherenceComplementarity.pure_record_distinguishability_coherence_complementarity
       definition_sha256: sha256:06c721412c4e0414353f627787e22e162139eb78355339e54776339fbba0d624

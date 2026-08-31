@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Analytic/DiagonalCollapse.diagonal_partition_collapse
       source_sha256: sha256:8d6aa9d78df21f25b45a924deb225febd6e63d71088fc7a5d01276ef817bf23c
       target_statement_id: sha256:408a743bc22f74c400a87658cae181d33b30a7eab0a528f6a056252a9513e676
+      statement_id_history:
+        - statement_id: sha256:1ef02c0a2ca969336c973818267da8600a340221473f5c2a1d4dba2bf6228046
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Analytic/DiagonalCollapse.diagonal_partition_collapse
       definition_sha256: sha256:ea90bc22adaa45d733e9c17a060e0db2c50cc7b8e0e11a66f893b4449d3bfd52

@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/QuantumBounds/ReferenceFrame/ComplexReferenceFrameTaxExactSpan.complex_reference_frame_tax_exact_span
       source_sha256: sha256:1013db8f686811f4043dadb9867335e028412bfb1aca2ef31229e238fd2db820
       target_statement_id: sha256:2f0ed5a7f956e3450dbfcf33080573dd527c290ead17eaf578b35cf0580590a2
+      statement_id_history:
+        - statement_id: sha256:2c65efe83d720be9ebef9c02ca363b5ab1aab22d144683657e425e06deafe543
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/QuantumBounds/ReferenceFrame/ComplexReferenceFrameTaxExactSpan.complex_reference_frame_tax_exact_span
       definition_sha256: sha256:723f64c6fd07eaab0845f34f9f57d5d89258e6b7df539abf3de70db72d3cf998

@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S0/Tower/GoldenClauseTwo/ErrataPackage.golden_clause_two_errata_package
       source_sha256: sha256:7b7ed5a483aa69713b01a04742ec3b46b4c27f133e7a79d836e32f42624904ad
       target_statement_id: sha256:b6de95b778f368e80f476378436d5e85f3ba5c8a1ed0265e27114c0ab5e7dc2f
+      statement_id_history:
+        - statement_id: sha256:c72cbbf6e42a109e25b1966d0465a01f65a1e9cd6f449c3918deca520bcde6f8
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S0/Tower/GoldenClauseTwo/ErrataPackage.golden_clause_two_errata_package
       definition_sha256: sha256:895735039be69677ad0fbcbcf1b8d571cac6ed28b61abf8f1228d3d4b2de9921

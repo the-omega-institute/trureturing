@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/ConceptDynamics/Interventions/AttackSurfaceMonotonicity.reach_monotone_in_permissions
       source_sha256: sha256:fd54832b80953ef77912a4be0ff8b9c9850eb72f2e52586f904832dd8a6977c1
       target_statement_id: sha256:9717296eddd4b36329754337ee24e04e4be85f3d8aafbffe733de25f42753793
+      statement_id_history:
+        - statement_id: sha256:127554f694bcd45db334cbc530f6364b89bf985304157abf3296459107028451
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ConceptDynamics/Interventions/AttackSurfaceMonotonicity.reach_monotone_in_permissions
       definition_sha256: sha256:bd410b9b975ea02255cbfa4890eb33209ef528338f18191e76c5a79865e7bd43

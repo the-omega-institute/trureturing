@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Analytic/Dilation/GoldenUnitZetaPeriodicity.golden_unit_zeta_periodicity
       source_sha256: sha256:2354669dfc2dae1100a0583d8c66b6afc85136661da91487791afdcec4f114b3
       target_statement_id: sha256:9f79e8c1e63392cdeedb5a3a104f4ee10456c2a90948b68555998a66128548e1
+      statement_id_history:
+        - statement_id: sha256:8484a494b14416dbfea9b5fcb0fa4b6441032653c18cc8660b69902fd2d23fad
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Analytic/Dilation/GoldenUnitZetaPeriodicity.golden_unit_zeta_periodicity
       definition_sha256: sha256:bbba842538a911d6f160ff06c08b8e8917e699d419bbf8a1059787c3c07961c8

@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S0/Conventions/SingleEyeInvariant.IsSingleEyed
       source_sha256: sha256:7dda77231ebb0b32471f9da90e0a3709067cc8395bf9c6b08abb2ff738fbee03
       target_statement_id: sha256:876dc7e7260851c4ec65d5d0b587082422349cbe34ce96d0346f11be32ad66a9
+      statement_id_history:
+        - statement_id: sha256:7ba6725c5a245ff60fb549e0841636f1aadff76cacaa70b750413bf034dae470
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S0/Conventions/SingleEyeInvariant.IsSingleEyed
       definition_sha256: sha256:74ea9acefa2200bca08ee885459ca4be34732dec641ad69cf1ff9bca8e5ac7df

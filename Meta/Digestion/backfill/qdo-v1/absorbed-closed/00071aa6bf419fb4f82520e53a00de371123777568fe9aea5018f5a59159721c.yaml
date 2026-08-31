@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Quantum/Algebra/OrthogonalProjectionComplement.orthogonal_complement_projection_identities
       source_sha256: sha256:00071aa6bf419fb4f82520e53a00de371123777568fe9aea5018f5a59159721c
       target_statement_id: sha256:4a6847f56f9eff409cd240a6f608f8a5eb58138197f9fc328a2cd7f77451c29a
+      statement_id_history:
+        - statement_id: sha256:b3103ac37be0ec41bf2f5c4a16bae30825a37d019fc0d05ecfcfc90adad225f1
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Quantum/Algebra/OrthogonalProjectionComplement.orthogonal_complement_projection_identities
       definition_sha256: sha256:d44be02742f425fdf1c0ba62b1f36035b9f8f532df342d6cbe174f2005459159

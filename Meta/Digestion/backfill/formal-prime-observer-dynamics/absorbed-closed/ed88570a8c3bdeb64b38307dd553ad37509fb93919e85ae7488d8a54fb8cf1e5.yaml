@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Analytic/PrimeProducts/PrimePrecisionEntropyContraction.prime_precision_entropy_contraction
       source_sha256: sha256:ed88570a8c3bdeb64b38307dd553ad37509fb93919e85ae7488d8a54fb8cf1e5
       target_statement_id: sha256:1ba8a35c0ba2faee666b33ea59cafbdc0cb0c119fc35e91186b0a99ce18cb009
+      statement_id_history:
+        - statement_id: sha256:dc03127e0b846bb86b4bb1857e7a1748f645548d73d580d96f32f7a5fb8591e2
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Analytic/PrimeProducts/PrimePrecisionEntropyContraction.prime_precision_entropy_contraction
       definition_sha256: sha256:e7441f2860d4b5e36f0f754cc003e7b347b5c2bf458fd2c771990c9081b93f34

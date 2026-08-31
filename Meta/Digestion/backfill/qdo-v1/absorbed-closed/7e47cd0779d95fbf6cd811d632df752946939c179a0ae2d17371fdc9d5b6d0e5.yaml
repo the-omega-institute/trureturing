@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/ObserverMemory/Dynamics/ResidualKernelInvariance.residual_kernel_invariant
       source_sha256: sha256:7e47cd0779d95fbf6cd811d632df752946939c179a0ae2d17371fdc9d5b6d0e5
       target_statement_id: sha256:815932b0eae28518106e6358b421712250da5a16177a743b3a5a05d009096707
+      statement_id_history:
+        - statement_id: sha256:2ece8fe4bf6ad92ab7f56f2b4fb849b73f77f977f7081e9a4ff66bf3315a1e4f
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ObserverMemory/Dynamics/ResidualKernelInvariance.residual_kernel_invariant
       definition_sha256: sha256:82221cb5c2cd46d3477faba817fed768cbf5dbdca29fd1e33e1321f74bd825f0

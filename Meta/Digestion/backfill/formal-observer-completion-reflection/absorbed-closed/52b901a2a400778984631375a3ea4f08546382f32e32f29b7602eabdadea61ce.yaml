@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Quantum/Fibers/FutureStatisticsEquivalence.future_statistics_iff_annihilates_infinite_system
       source_sha256: sha256:52b901a2a400778984631375a3ea4f08546382f32e32f29b7602eabdadea61ce
       target_statement_id: sha256:abedbdf1f88984a1f21f1fbbbfda2eb402dd4c26c0025cff6fc96aacf93677f1
+      statement_id_history:
+        - statement_id: sha256:fc3899b67d13f4d15fd34689b7dbfe7901a801d08b915a9815b0a364534011ed
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Quantum/Fibers/FutureStatisticsEquivalence.future_statistics_iff_annihilates_infinite_system
       definition_sha256: sha256:60febd278b8a2c11df8bfe1cb92f0b4130e583dd60e7bf22c6fc6186fbffadde

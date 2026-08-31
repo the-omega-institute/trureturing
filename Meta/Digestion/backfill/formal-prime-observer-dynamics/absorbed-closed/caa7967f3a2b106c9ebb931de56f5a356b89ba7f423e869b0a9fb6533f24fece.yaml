@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Analytic/ZetaObservation/PrimeSupportBernoulliIndependence.prime_support_bits_independent_bernoulli
       source_sha256: sha256:caa7967f3a2b106c9ebb931de56f5a356b89ba7f423e869b0a9fb6533f24fece
       target_statement_id: sha256:c0b7dc85575034dd6917a69e4ada1d25a9dca9a0b04914b59dc861c5605f2242
+      statement_id_history:
+        - statement_id: sha256:5abc92b29cc35ee896fe34e73b827eb4e29458ca584c8b02f91ad77a706552a4
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Analytic/ZetaObservation/PrimeSupportBernoulliIndependence.prime_support_bits_independent_bernoulli
       definition_sha256: sha256:66d7fc95b92a9de5b22b9b3f30f922a25db85cd154a74a9d4d90e119b1794df1

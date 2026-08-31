@@ -9,5 +9,13 @@ receipts:
     - gid: D5/S1/Scale/MinkowskiModelSet
       source_sha256: sha256:ce62293408bcc7bade514ffad7775161dfa35dc57c51863d6c08bde80e88091b
       target_statement_id: sha256:072706fdc38d68c71dd04ac461b5f728248c44a55179226a3925e895ae875a22
+      statement_id_history:
+        - statement_id: sha256:956f084020737b86ed8576d155ad8fa856e0ed560c764aeaee887ad80f44eff9
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe: []
   unresolved_subitems: []

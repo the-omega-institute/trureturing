@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S0/Computability/KraftInequality.finite_binary_kraft_inequality
       source_sha256: sha256:cad2a732f6a3ebc6f48c2c1ca33c48fec392566d80a975c7f37eb7bcb1406cdf
       target_statement_id: sha256:2a9e7d599a7c78e3f61f09f7dc4e3a721224ccaac86e7bfe1bdf2779b7f4338f
+      statement_id_history:
+        - statement_id: sha256:334b98be0e2baed6243f1b528f428625ef96e146a28a28b0fdc5ad5c1d7bb80c
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S0/Computability/KraftInequality.finite_binary_kraft_inequality
       definition_sha256: sha256:1f30f9fbfc882eadd34bd74f47c08a6ec79b9ddd132a67fa157fa602fd998563

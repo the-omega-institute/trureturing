@@ -5,7 +5,7 @@ using Trureturing.Truth;
 
 namespace StrataLint.Engine;
 
-internal sealed class BackfillInventoryDocument
+internal sealed partial class BackfillInventoryDocument
 {
     internal static IReadOnlyList<string> EntryFieldUniverse { get; } =
     [
@@ -182,6 +182,7 @@ internal sealed class BackfillInventoryDocument
             ExactKeys(
                 item,
                 ["gid", "source_sha256", "target_statement_id"],
+                ["statement_id_history"],
                 $"entry {atomId} coverage receipt");
             coverage.Add(new DigestionCoverageReceipt(
                 Scalar(item, "gid", $"entry {atomId} coverage gid"),
@@ -189,7 +190,8 @@ internal sealed class BackfillInventoryDocument
                 Scalar(
                     item,
                     "target_statement_id",
-                    $"entry {atomId} coverage target_statement_id")));
+                    $"entry {atomId} coverage target_statement_id"),
+                ParseStatementIdHistory(atomId, item)));
         }
 
         var scribe = ImmutableArray.CreateBuilder<DigestionScribeReceipt>();

@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/PrimeForms/PropagationLegs.propagation_identity
       source_sha256: sha256:a2bcd15e73585bd47c28a5f9fa51acbaa5cc30079710fd574614f3d43341bb17
       target_statement_id: sha256:5a1f48d195af493729112cc38d5293dd07c6493910617208b43d01bdf0fab77b
+      statement_id_history:
+        - statement_id: sha256:d0cdcbf9babffaff5c8fefe66dc51d850082ae6ae547c54e96263f4b9e742aca
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/PrimeForms/PropagationLegs.propagation_identity
       definition_sha256: sha256:3da4e8957361ec00ba5f041288026a3d1a9f6da8b45a4ad06a0438f4dedf0a59

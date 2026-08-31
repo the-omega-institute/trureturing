@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/ConceptDynamics/Rights/ConflictRepairHittingSet.repair_hits_every_conflict_core
       source_sha256: sha256:6352c6898f961fe1f58761b0615e035bae555c90f0418c7637cf5c6982f26f89
       target_statement_id: sha256:5830dea9c50055c066bc8006189cc61efbd3e8317f3a651c1ddabac84aeb2570
+      statement_id_history:
+        - statement_id: sha256:00b01df5dfda38ee3b47a531ef41d4257368780bd1301ca22ecd528cb7e9d880
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ConceptDynamics/Rights/ConflictRepairHittingSet.repair_hits_every_conflict_core
       definition_sha256: sha256:fab1d0745d965451d76f6a4a2f80d7038e97b8421b56415ef5497b04e2d7e7ed

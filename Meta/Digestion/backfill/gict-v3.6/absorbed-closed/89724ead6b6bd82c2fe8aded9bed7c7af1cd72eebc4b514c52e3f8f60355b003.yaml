@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/PrimeForms/AlignmentClifford.generalized_flow
       source_sha256: sha256:89724ead6b6bd82c2fe8aded9bed7c7af1cd72eebc4b514c52e3f8f60355b003
       target_statement_id: sha256:fac754ca80d120e8ab076aba5ae82ea2e53a6451b7abedd93c54e0cc0efe882b
+      statement_id_history:
+        - statement_id: sha256:f89edee2d27e7fe82c7832e526dbe9c8fd054a4dbd41d3f8112a7ba10cae9f9b
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/PrimeForms/AlignmentClifford.generalized_flow
       definition_sha256: sha256:eff007be0a9e9cb5e60ce87315a712750d603ad8d04d1c230ce766426820f4e1

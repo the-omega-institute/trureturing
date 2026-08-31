@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/PrimeForms/Crossing/CrossingNormalForm.crossing_normal_form_unique_minimum
       source_sha256: sha256:deef05be773d18b3bfa962dd1250d607fb7a4f4c3089f934094c289af6d979f1
       target_statement_id: sha256:14f5a0bb44bb281698b55052d3a959093ff6f364ffdc4dfd85614eb728660a14
+      statement_id_history:
+        - statement_id: sha256:ba329ea37c0324e1f646cf9b45e84e2ef2f813c5e0d76fad107035482ddebecf
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/PrimeForms/Crossing/CrossingNormalForm.crossing_normal_form_unique_minimum
       definition_sha256: sha256:426bd5ca7cd51c77f4b8ccaf934d344eb1cbde8ee5dce113683e1ebc9634ceda

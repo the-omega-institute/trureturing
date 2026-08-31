@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/ConceptDynamics/Prediction/ConditionalExpectationOptimality.conditional_expectation_minimizes_mean_square_error
       source_sha256: sha256:d9dd00c3d60eb4790214378948001677967b41c6ef863fce340d546575b7d57a
       target_statement_id: sha256:246ebd6f7bb58377888e2a1f9fafba4f3cae8afc02110dce910bb7d9b3a1e4d4
+      statement_id_history:
+        - statement_id: sha256:fbf4fdc11a246038778da6b919bc95abe81f8c9bb937c7af8473e4a9d5174506
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ConceptDynamics/Prediction/ConditionalExpectationOptimality.conditional_expectation_minimizes_mean_square_error
       definition_sha256: sha256:bc46ea137f03195e5534c2d350b3e591566b1c8a836afbe4fec951fa32f0680e

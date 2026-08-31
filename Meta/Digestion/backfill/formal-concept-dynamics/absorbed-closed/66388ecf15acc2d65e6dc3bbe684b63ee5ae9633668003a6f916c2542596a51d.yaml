@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/ConceptDynamics/DecisionValue/ContributionIncentiveThreshold.contribution_incentive_threshold
       source_sha256: sha256:66388ecf15acc2d65e6dc3bbe684b63ee5ae9633668003a6f916c2542596a51d
       target_statement_id: sha256:e68707bdbc716877158f9332756978bd26a5dcdafa67a277f5110dac67b66d86
+      statement_id_history:
+        - statement_id: sha256:cf2171fa2d488bd85f46e3362d1de73202835e868158350f2874ed34eca4a04d
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ConceptDynamics/DecisionValue/ContributionIncentiveThreshold.contribution_incentive_threshold
       definition_sha256: sha256:92a146a3bc1fb799c99a83c4ac842610a4ed97780240e3d484ae187acda6eefa

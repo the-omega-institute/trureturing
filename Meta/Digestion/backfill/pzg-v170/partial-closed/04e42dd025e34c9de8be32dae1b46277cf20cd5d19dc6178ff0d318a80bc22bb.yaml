@@ -16,9 +16,25 @@ receipts:
     - gid: D5/S1/Phase/WalkFormula.alternating_walk_append
       source_sha256: sha256:04e42dd025e34c9de8be32dae1b46277cf20cd5d19dc6178ff0d318a80bc22bb
       target_statement_id: sha256:820c080cf28c2019fe7b3143eab0d40256d7725a2cf41ca24281b80e2109ff88
+      statement_id_history:
+        - statement_id: sha256:13ceab1fadfd26184076ed925afbf27cce6e6b7fe59ec454217ea8560f4862fd
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
     - gid: D5/S1/Phase/WalkFormula.alternating_walk_reverse
       source_sha256: sha256:04e42dd025e34c9de8be32dae1b46277cf20cd5d19dc6178ff0d318a80bc22bb
       target_statement_id: sha256:2d9f2c9b1cb3fe8832cc78dce8d2188dc6ea91696b6ef08b8178bcb9ef505131
+      statement_id_history:
+        - statement_id: sha256:921ce110a2f304627497ed47a1813d715e7b23b778199d5468df2f76203d41db
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
     - gid: D5/S1/Phase/WalkFormula.endpoint_correction_is_integer
       source_sha256: sha256:04e42dd025e34c9de8be32dae1b46277cf20cd5d19dc6178ff0d318a80bc22bb
       target_statement_id: sha256:35b9add727aae2a3681fdb6d6f2fd8fb5689ba827a65d6ae899a07d7f48df3f7

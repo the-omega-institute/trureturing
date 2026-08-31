@@ -7,7 +7,24 @@ internal sealed record BackfillTicketReference(string CaseId, string Gid);
 internal sealed record DigestionCoverageReceipt(
     string Gid,
     string SourceSha256,
-    string TargetStatementId);
+    string TargetStatementId,
+    ImmutableArray<DigestionStatementIdHistoryEntry> StatementIdHistory = default)
+{
+    internal void Deconstruct(
+        out string gid,
+        out string sourceSha256,
+        out string targetStatementId)
+    {
+        gid = Gid;
+        sourceSha256 = SourceSha256;
+        targetStatementId = TargetStatementId;
+    }
+}
+
+internal sealed record DigestionStatementIdHistoryEntry(
+    string StatementId,
+    EffectiveLeanPins EnvironmentPin,
+    EffectiveLeanPins SupersededByPin);
 
 internal sealed record DigestionScribeReceipt(
     string Gid,

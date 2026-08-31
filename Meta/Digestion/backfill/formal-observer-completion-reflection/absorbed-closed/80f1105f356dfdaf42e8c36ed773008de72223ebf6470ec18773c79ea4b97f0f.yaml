@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Observer/MetricGeometryLaws/ClosedConvexDistanceWitnessDuality.closed_convex_distance_witness_duality
       source_sha256: sha256:80f1105f356dfdaf42e8c36ed773008de72223ebf6470ec18773c79ea4b97f0f
       target_statement_id: sha256:ff21998a227cc718893b3bd3154d6218d48ea29222b5dc970a6a98061099707c
+      statement_id_history:
+        - statement_id: sha256:56b921bcbe1b3b5935c7d60df1bcf5ae9cad78e774ac4d0fd295ebd625de16a9
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Observer/MetricGeometryLaws/ClosedConvexDistanceWitnessDuality.closed_convex_distance_witness_duality
       definition_sha256: sha256:55c4fce74070e8372688481da4823c3c7c57f32c1105cf5af83ae733b4f83517

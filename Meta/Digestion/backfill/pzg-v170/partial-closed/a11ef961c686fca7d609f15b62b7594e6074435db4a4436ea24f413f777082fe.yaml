@@ -9,5 +9,13 @@ receipts:
     - gid: D5/S3/Weil/SpectralHilbert.labeled_zeta_norm_sq
       source_sha256: sha256:a11ef961c686fca7d609f15b62b7594e6074435db4a4436ea24f413f777082fe
       target_statement_id: sha256:bdf8eeacfce126ce351b2036f26c2fee106c8bbf5a053cdd4b14ea2a7551c6bc
+      statement_id_history:
+        - statement_id: sha256:c8a4b67988b2a6bc051d2882fe2f59538685455fcc497d7411786d20749bf6d5
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe: []
   unresolved_subitems: []

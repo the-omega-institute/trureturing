@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/ConceptDynamics/LinearSufficiency/BinaryRoleMinimumCardinality.binary_role_minimum_cardinality
       source_sha256: sha256:09ae85610d2f7409f2a560804f67e18eb1e38cc914510dfb459fd578472a2874
       target_statement_id: sha256:eebee30d2114af9e724426d7cb8d88e067482559936025914c8aaf3ca012690e
+      statement_id_history:
+        - statement_id: sha256:07c47ea399e139990da80884a791a9a3db5b61f984bea75a177f27aff97a8f79
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ConceptDynamics/LinearSufficiency/BinaryRoleMinimumCardinality.binary_role_minimum_cardinality
       definition_sha256: sha256:c934acfe0b38a421d1a0c42a89ff24ea19bf77e0f29de996476d12162f4e9082

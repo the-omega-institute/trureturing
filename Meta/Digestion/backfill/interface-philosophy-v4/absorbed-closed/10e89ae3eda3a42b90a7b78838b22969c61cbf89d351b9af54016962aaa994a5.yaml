@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S0/Diagonal/RecordExtensionCount.restricted_extension_card_le
       source_sha256: sha256:10e89ae3eda3a42b90a7b78838b22969c61cbf89d351b9af54016962aaa994a5
       target_statement_id: sha256:c3c0c7f04c29880b62a7a89c9df2051b634d0f47faabd4f58981fda4b85fd13f
+      statement_id_history:
+        - statement_id: sha256:0a362812e830ae25fa6d81b8a5bd13cde2851587262567b5a0e32de590e7d5b5
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S0/Diagonal/RecordExtensionCount.restricted_extension_card_le
       definition_sha256: sha256:b657b0413ba86adcee211117e90a53ef577423999fc2fc1be257f75f937c73a4

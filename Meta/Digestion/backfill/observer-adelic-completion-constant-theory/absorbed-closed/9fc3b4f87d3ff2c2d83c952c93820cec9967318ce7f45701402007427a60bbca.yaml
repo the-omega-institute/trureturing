@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Arith/Lattices/FiveModularLatticeSimilarity.five_modular_lattice_similarity
       source_sha256: sha256:9fc3b4f87d3ff2c2d83c952c93820cec9967318ce7f45701402007427a60bbca
       target_statement_id: sha256:2356984cc2616e24b3900b7890d68b8d45fae36edde70b261d02b2e9dde9487a
+      statement_id_history:
+        - statement_id: sha256:6e80dbfe0b93a88f40c38aea70d40683f96c3644fb3f0465abe28ff3efb783e8
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Arith/Lattices/FiveModularLatticeSimilarity.five_modular_lattice_similarity
       definition_sha256: sha256:5b1d470f5eeae117110559a6c383228aec2c5bbae54b5e82fa3b41ddb50a5eb0

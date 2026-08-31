@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S0/Naming/CoordinateDependence.dependencySet
       source_sha256: sha256:ed8a6694c8d18467fbf10b624fb20ace136242802d8e4863b150896b8533287a
       target_statement_id: sha256:da1f2f0856de0c7e3f620d4ed7b214867d9daafc3b424a43216aec99982bb471
+      statement_id_history:
+        - statement_id: sha256:fa24142a0c720b1b74a6a7e45ad4eace67e0af85018b3e3432b21be3b0bd83bf
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S0/Naming/CoordinateDependence.dependencySet
       definition_sha256: sha256:c6bc0058c71e48fdd696374f0942bac320929d8209a8df0b6feeb58ad3397015

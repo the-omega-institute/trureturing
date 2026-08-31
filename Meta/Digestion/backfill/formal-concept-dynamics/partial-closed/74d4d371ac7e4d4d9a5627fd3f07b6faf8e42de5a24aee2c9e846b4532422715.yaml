@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/ConceptDynamics/OperationalOntology/ActionExpansionIndistinguishability.action_expansion_shrinks_indistinguishability
       source_sha256: sha256:74d4d371ac7e4d4d9a5627fd3f07b6faf8e42de5a24aee2c9e846b4532422715
       target_statement_id: sha256:8ce6908712d754518e23523d4fc07cf4a676db1b7522fe5ab3653f392a7b5563
+      statement_id_history:
+        - statement_id: sha256:630e462c797cf31ab91e945236a83b10e0042e9191a646cd5c25f611033a6f3f
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ConceptDynamics/OperationalOntology/ActionExpansionIndistinguishability.action_expansion_shrinks_indistinguishability
       definition_sha256: sha256:b505deed5b231624dff69fbfcec8298e1412b202dfbb5bbde77d4e27e2d395b0

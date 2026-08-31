@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/DependencyClosureAdmissionAntitone.dependency_closure_admission_antitone
       source_sha256: sha256:661d307df0f3cf908d1089852a0092a99bdea5a95b4148987313a2d4df5e016b
       target_statement_id: sha256:7286842c48ba08ad1ce733be3aa1988df9d7cc70a6ba66c7f16c668a8903607c
+      statement_id_history:
+        - statement_id: sha256:81b8e65076919833f7c40d83b0415aff335fe14334356760a588064bf67f2410
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/DependencyClosureAdmissionAntitone.dependency_closure_admission_antitone
       definition_sha256: sha256:27ef1cc7bd1f3b4c44e864ad048fa132212f777c26a58bf7e24528fba37a1dd0

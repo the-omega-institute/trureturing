@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S1/Eigenstructure/GoldenFiberCoordinates.golden_fiber_coordinates
       source_sha256: sha256:5ff4d90456be214056a614ff968aab0fc578cd9e9f15d0388a0bdfe1499a525c
       target_statement_id: sha256:0ddb145be87b9b19bce4972490ecdcea8b3832e52643b69a65fa5fab6aa6ea12
+      statement_id_history:
+        - statement_id: sha256:5d628a427ef9e064a5322498cfaec4d568a091a5eab7d779d8f99bc7144b6b00
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S1/Eigenstructure/GoldenFiberCoordinates.golden_fiber_coordinates
       definition_sha256: sha256:3fdae4a9910740a25fda3d7a9687f2605ff62a93d59eb1706ebc020e8f8f0bd5

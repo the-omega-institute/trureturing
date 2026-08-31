@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/PrimeForms/BronzeLadderLeg.bronze_leg
       source_sha256: sha256:2bea1b88bb2edd33956260cadc84396c27345d06b9b71bd6b8f2495720a58598
       target_statement_id: sha256:8796369e1904e47cabf68e214da0dbaaec9e9251467ccfb25f49855efd3e5c99
+      statement_id_history:
+        - statement_id: sha256:90783abad8cd17a0fb84f8e541ecd444efc5613b3cfefdc5eb3e61024260c9aa
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/PrimeForms/BronzeLadderLeg.bronze_leg
       definition_sha256: sha256:46281792913930034203d090dde965843d59e70bdba947d3329fedd0ef56709e

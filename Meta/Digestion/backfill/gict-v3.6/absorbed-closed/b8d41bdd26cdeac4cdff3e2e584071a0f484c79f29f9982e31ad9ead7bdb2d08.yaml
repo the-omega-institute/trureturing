@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S0/Diagonal/SelfApplicationFates.self_application_four_fates
       source_sha256: sha256:b8d41bdd26cdeac4cdff3e2e584071a0f484c79f29f9982e31ad9ead7bdb2d08
       target_statement_id: sha256:dfd4dba931937063f00ca001626bb857f2a5e6fd76d069e605901f047a7e6daf
+      statement_id_history:
+        - statement_id: sha256:11dfa8e1bf50d6c32809bdc047e3baee053d2b5d27fc2ed9b627268892eb6c27
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S0/Diagonal/SelfApplicationFates.self_application_four_fates
       definition_sha256: sha256:283985793d553d0460de129b577fb0578c83e7bb5cb62ecbac98194307a82f2e

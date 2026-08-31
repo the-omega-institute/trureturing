@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Constants/Transcription/C2Certificate.c2_transcription_certificate
       source_sha256: sha256:df321b72159429254325f8fd2e39cbd0419ed95923de553202900c783880afa2
       target_statement_id: sha256:c9656d91ef629a025a035e0d5c2de10c7339f1fcfa4f6dce38ea7789d607d5e0
+      statement_id_history:
+        - statement_id: sha256:324e28a6e459610915f68e2dd724ff5517cb57d22f8299b46f3947110837900d
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Constants/Transcription/C2Certificate.c2_transcription_certificate
       definition_sha256: sha256:e7b40f5fad87223a5ebad3e62bd530847453a3a1125c90886eb753a6fcb3cab8

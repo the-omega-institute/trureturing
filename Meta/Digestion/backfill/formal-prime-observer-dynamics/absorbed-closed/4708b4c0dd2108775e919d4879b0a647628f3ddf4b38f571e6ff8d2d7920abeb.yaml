@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S0/Observation/PowerTraceSimilarityCountermodel.power_traces_do_not_determine_similarity
       source_sha256: sha256:4708b4c0dd2108775e919d4879b0a647628f3ddf4b38f571e6ff8d2d7920abeb
       target_statement_id: sha256:4517650b2617e5309ef96f882c07fc0659b4002476fa2b88a97f094bdd18cd79
+      statement_id_history:
+        - statement_id: sha256:e8dde26a8c207bc53897889ad3816cb08c132c482291619f037164e0da1cc88e
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S0/Observation/PowerTraceSimilarityCountermodel.power_traces_do_not_determine_similarity
       definition_sha256: sha256:77efcb92bd4290651edb7afdb52290560c73044e5c6db128f9f83574e8c4afc6

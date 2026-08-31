@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S1/Recurrence/Witt/WittRowLaws.witt_row_closed_laws
       source_sha256: sha256:aff4da1e934c3b9e59b77fe47ef0551d6385f87c2bdeb58cf72721e86d532a2e
       target_statement_id: sha256:322c30d7b8eec9e682b58b8efab477b9f92a0caacccc29518cab6d264ff5882e
+      statement_id_history:
+        - statement_id: sha256:9e3af72cbc9ed957716568191c182af307072730c2244afa7d9434b00d760084
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S1/Recurrence/Witt/WittRowLaws.witt_row_closed_laws
       definition_sha256: sha256:99233e24347db7f4773bc73a634266d0b95e93227d049efcabc2f5807a9c0c4d

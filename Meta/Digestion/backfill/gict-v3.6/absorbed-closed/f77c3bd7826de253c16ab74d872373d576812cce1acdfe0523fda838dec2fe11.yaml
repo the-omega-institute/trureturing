@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S1/Depth/GoldenHurwitzBound.golden_hurwitz_bound
       source_sha256: sha256:f77c3bd7826de253c16ab74d872373d576812cce1acdfe0523fda838dec2fe11
       target_statement_id: sha256:a982663a06856268f59db877cde7130b5e4c1680c150e2a63098e4e9c9d4a8e7
+      statement_id_history:
+        - statement_id: sha256:f617648e18748931d18b4da1f0f10b50e64a237c3e4717d263acbfe92cdb59d7
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S1/Depth/GoldenHurwitzBound.golden_hurwitz_bound
       definition_sha256: sha256:00205d7a3236aa28935a239f6d2689840fc88c2986ee248eb1175ca398776d4b

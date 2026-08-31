@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/ConceptDynamics/OperationalTuition/InstitutionalMappingAndCaptureFiltration.institution_domain_monotone_and_defect_decidable
       source_sha256: sha256:78c1b5e7eaca318c0afbe5e4e3cfc032e5e8d2bf0c0729a3284d8ea9dd7b63d7
       target_statement_id: sha256:66ef46278594d9d4fbe9c29d90a77919334183d7a354e726cca68f4fb5db969c
+      statement_id_history:
+        - statement_id: sha256:510b787bb3dbc09074a314b83b13f701458e8f325447932eb106a1be74df839a
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ConceptDynamics/OperationalTuition/InstitutionalMappingAndCaptureFiltration.institution_domain_monotone_and_defect_decidable
       definition_sha256: sha256:31c1943e829a496f9bfe7e4661fb7974db600a2e605ab625a76731835cd2ebbc

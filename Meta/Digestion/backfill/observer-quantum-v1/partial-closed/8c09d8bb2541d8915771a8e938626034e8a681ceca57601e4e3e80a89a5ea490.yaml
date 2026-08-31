@@ -18,8 +18,24 @@ receipts:
     - gid: D5/S3/Quantum/FiniteDimensional.qubit_weyl_star
       source_sha256: sha256:8c09d8bb2541d8915771a8e938626034e8a681ceca57601e4e3e80a89a5ea490
       target_statement_id: sha256:be07b0533dfdb8741136a43d8272fd7a664770fb9b4a851805c5db573532362d
+      statement_id_history:
+        - statement_id: sha256:931be2d295596973acc624a50f21c2aea1041140be79b0538eed55285f8ad2c5
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
     - gid: D5/S3/Quantum/QubitWitnesses.pauli_observables_have_no_common_eigenvector
       source_sha256: sha256:8c09d8bb2541d8915771a8e938626034e8a681ceca57601e4e3e80a89a5ea490
       target_statement_id: sha256:6e6fcfc94702f4ebb38861156063b503c837f95b840869c6ac74082e079ee19c
+      statement_id_history:
+        - statement_id: sha256:b1a1da6d492c36f898a4531971380a05d06ab0621252bc1d74732f2fe07f82ad
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe: []
   unresolved_subitems: []

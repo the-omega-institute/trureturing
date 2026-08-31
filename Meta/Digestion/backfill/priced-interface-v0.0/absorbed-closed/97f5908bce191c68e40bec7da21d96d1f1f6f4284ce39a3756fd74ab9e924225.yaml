@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S0/Diagonal/Probability/DifferentialTestingEscape.directory_escape_probability_exact
       source_sha256: sha256:97f5908bce191c68e40bec7da21d96d1f1f6f4284ce39a3756fd74ab9e924225
       target_statement_id: sha256:84958b90f57bb2be08301cb570f7e9c95376c611377b4470122bb126e62f3416
+      statement_id_history:
+        - statement_id: sha256:51b91f7ad6dbb48787c07fb1de57723a8f3041c113bf01733fb5c831419b22af
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S0/Diagonal/Probability/DifferentialTestingEscape.directory_escape_probability_exact
       definition_sha256: sha256:6242562aef49bd54f97d59f555540de4d3161107c48e0df0bde8ef24caf4915e

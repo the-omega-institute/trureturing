@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Observer/Approximation/IntertwiningDefectPropagation.intertwining_defect_telescope
       source_sha256: sha256:7ca02cf6848537ded147a6520a3aeb07cbea7862b11de29d055612971e3630c0
       target_statement_id: sha256:abc2fe55c8e3fac5d72fad53517104158e7d14467f4c55b3db4f924468443083
+      statement_id_history:
+        - statement_id: sha256:12e5f5de1b99a31c124613e0f368d7d82011c018d667cedc827c4c169f8dad9b
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Observer/Approximation/IntertwiningDefectPropagation.intertwining_defect_telescope
       definition_sha256: sha256:d4a1b208b778015406401557e4820046fa98ec419479d18d84e73871da472012

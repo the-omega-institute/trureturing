@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/ArithUnits/NegativePellSquare.negative_pell_square_unit
       source_sha256: sha256:096122dfb063756156379089154cd6276a09b190b7afd0e8fe53a0954f49b1e7
       target_statement_id: sha256:4f67f9ae60c957c4a977d0ccb605d4507d647c9a9b5735c15ed4230404cd2c1b
+      statement_id_history:
+        - statement_id: sha256:9e953ba2caef1fc4e2bd522be868c4860b2d03de962a0070fb1758bc0447165a
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ArithUnits/NegativePellSquare.negative_pell_square_unit
       definition_sha256: sha256:187dbb47d238c9674758a65cdf12b2083af6caa60cddfff64ec1edefb6e894e4

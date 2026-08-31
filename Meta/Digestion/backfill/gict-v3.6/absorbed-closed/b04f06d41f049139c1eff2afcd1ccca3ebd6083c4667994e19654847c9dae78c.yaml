@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/PrimeForms/Crossing/NegativeDeterminantTraceSquare.trace_square_of_det_neg_one
       source_sha256: sha256:b04f06d41f049139c1eff2afcd1ccca3ebd6083c4667994e19654847c9dae78c
       target_statement_id: sha256:8a67976648f98795c66d7ee2044dac8409f7c8dd88ac0ce3e9c93dbf5c7c96e5
+      statement_id_history:
+        - statement_id: sha256:e6d7ae459cc71bf8a6c2bac8d87afe2653df40bc753a28cf80aa8668f47836a8
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/PrimeForms/Crossing/NegativeDeterminantTraceSquare.trace_square_of_det_neg_one
       definition_sha256: sha256:b6151ecb43afa21a162e28bd6bad4f990dd87978ea22d759656992c65cae65bf

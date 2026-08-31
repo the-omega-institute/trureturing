@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S0/Asymptotics/OddCycleDrift.odd_cycle_drift_eq_zero
       source_sha256: sha256:d8508b3a5183147705495b27f16baea95794ce0c3e62649924fde4b6864b569e
       target_statement_id: sha256:76ab2077110c8a07ded310be3a6358ffccd288be18eea856fbe190b86632e032
+      statement_id_history:
+        - statement_id: sha256:45f57ec9f0ac5787f562f105de41357376c8a9d1f36fd7872ffb2a90c4419327
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S0/Asymptotics/OddCycleDrift.odd_cycle_drift_eq_zero
       definition_sha256: sha256:e118e5982d9cf6a6b548f38cb53a46ee9c1d0204753e2e844b7789536a99ff0b

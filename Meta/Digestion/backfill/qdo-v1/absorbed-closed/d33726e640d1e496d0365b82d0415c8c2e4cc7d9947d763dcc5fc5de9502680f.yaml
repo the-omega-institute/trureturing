@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Observer/MetricGeometry/FiniteWordDistanceThreshold.finite_word_equivalent_iff_prediction_distance_le
       source_sha256: sha256:d33726e640d1e496d0365b82d0415c8c2e4cc7d9947d763dcc5fc5de9502680f
       target_statement_id: sha256:f3aeb3d474fc4996f593879de592f2324735cc79201400176a9d0678775f86fe
+      statement_id_history:
+        - statement_id: sha256:9d1f6c1a0b893d5871b00e5aaa4a68fb1f7ca82a1caf9e1a608d87f1257ddc3f
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Observer/MetricGeometry/FiniteWordDistanceThreshold.finite_word_equivalent_iff_prediction_distance_le
       definition_sha256: sha256:8f6353c81144ccda22eb302f423f2a4d2ab325a9eb2e871aa21a6e6d766ac55b

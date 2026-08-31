@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Fourier/BinaryCharacterBasisMinimality.binary_character_basis_minimality
       source_sha256: sha256:05d61fe5a0ef42c308e3d19f42983f01830bb821714f0700a1b0b170ca60813a
       target_statement_id: sha256:28c8a7fdbe0445b97c24b5de804982ef8996437826a3810145959c0b57aa67c8
+      statement_id_history:
+        - statement_id: sha256:36510eed8d4d939f83a5a5e36c30417e5587bda5d00d510ddce7d1f1ed16a055
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Fourier/BinaryCharacterBasisMinimality.binary_character_basis_minimality
       definition_sha256: sha256:fadab17fdadc751294f04fb433200746d670403207c3c2443d2ad48c231e3bc8

@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S1/FixedPoints/FiniteRepairTermination.finite_repair_termination_and_infinite_tower
       source_sha256: sha256:558a2e66ea96065cde41d61b1a2d507ebc6663ccfaeff42cd9e023bcbcdf22e5
       target_statement_id: sha256:845db6bb2f1a0e332427735ea2c6294ce3cd99b9501cad3bbbf751e3ce705023
+      statement_id_history:
+        - statement_id: sha256:27e1c5f95c691d6b13fd3dc4cb55c5572385592797cc8fb6d2a46618cb3202ce
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S1/FixedPoints/FiniteRepairTermination.finite_repair_termination_and_infinite_tower
       definition_sha256: sha256:d07c8cf2df3d59854021c7dbbb6fa179042850154d5dfac1416d572a34170684

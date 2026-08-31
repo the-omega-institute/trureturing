@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Observer/MetricGeometry/FinitePredictionTruncation.finite_prediction_truncation_formula_and_error
       source_sha256: sha256:f922a28fe2880ce7df6753245161d77546913ebd83150d34f665fee6044e1542
       target_statement_id: sha256:c7a1e5bd69444454850c6af715cb076e12c58d0f63afb6d39a00e826eb8ff7e7
+      statement_id_history:
+        - statement_id: sha256:3782078fb0d415c40d5e6333ce78c97e51f4c2de805e0912ff96b812e906cac9
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Observer/MetricGeometry/FinitePredictionTruncation.finite_prediction_truncation_formula_and_error
       definition_sha256: sha256:517c73ad12498c901d8fc8d8089bc8cb0e20c7a14dd47c411aa2dc7297536693

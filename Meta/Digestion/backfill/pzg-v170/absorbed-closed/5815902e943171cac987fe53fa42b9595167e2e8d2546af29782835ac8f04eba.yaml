@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S1/Digit/Admissibility/OddIndexFreedom.odd_index_subsets_are_admissible_and_counted
       source_sha256: sha256:5815902e943171cac987fe53fa42b9595167e2e8d2546af29782835ac8f04eba
       target_statement_id: sha256:bfe3cd0c430380090b23ca5e3098afc27dcf62664241ed430558faa0b14fe67f
+      statement_id_history:
+        - statement_id: sha256:57cf01bd9c89095ab1cd8755cc0b68126064332a81d68e1ac8e35b86f16ab07e
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S1/Digit/Admissibility/OddIndexFreedom.odd_index_subsets_are_admissible_and_counted
       definition_sha256: sha256:243926dab6b11cb5aab8d0f99d5b456b6b954b649045daa981f5121e61f1ba89

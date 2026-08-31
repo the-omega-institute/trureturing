@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/ConceptDynamics/EscapeSpectrum/BlindResidualChargeDecomposition.blind_residual_charge_decomposition
       source_sha256: sha256:b9acdacf0a74192371794cd19a874d025e3e118398b8ac94798f5a19c13f59fd
       target_statement_id: sha256:01ec7cdaad6675b113c612a6c1d09f60e0d5bb400f9850b9dc3bbfcb3fba0cca
+      statement_id_history:
+        - statement_id: sha256:bd423bca02d72283c0116517598148a8018833c418f08553e17167ebe154a4a8
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ConceptDynamics/EscapeSpectrum/BlindResidualChargeDecomposition.blind_residual_charge_decomposition
       definition_sha256: sha256:9a66670698a65199e78882c33fa5a13e3267c2d24f4906ae39a5a4fe32a4d018

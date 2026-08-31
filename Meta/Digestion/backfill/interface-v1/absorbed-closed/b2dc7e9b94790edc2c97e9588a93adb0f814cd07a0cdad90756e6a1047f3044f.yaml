@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S0/Tower/GoldenChampionPoint.golden_champion_point_identity
       source_sha256: sha256:b2dc7e9b94790edc2c97e9588a93adb0f814cd07a0cdad90756e6a1047f3044f
       target_statement_id: sha256:c49ae9d27c4b79213eb1b6d743c73cfc2c7da6faf6b1f7f838302a63acfe0bb5
+      statement_id_history:
+        - statement_id: sha256:f42b985769eb818cad5dc59343421b1988f4f641ae4f4c87ba337d4f07c53852
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S0/Tower/GoldenChampionPoint.golden_champion_point_identity
       definition_sha256: sha256:42d7aebcded52bcee6a28303ba55c83a47c0ea19bbb421fc0d46f71eb21205c8

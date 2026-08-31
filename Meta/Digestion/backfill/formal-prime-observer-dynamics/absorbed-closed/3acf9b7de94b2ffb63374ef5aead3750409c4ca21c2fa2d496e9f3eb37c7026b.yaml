@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Entropy/Submodularity/SelectedObservationInformationMonotonicityCanonical.selected_observation_information_monotone_canonical
       source_sha256: sha256:3acf9b7de94b2ffb63374ef5aead3750409c4ca21c2fa2d496e9f3eb37c7026b
       target_statement_id: sha256:8b702ad57c140218ac12a71c3029c5fd73f464e2c9ceb68fb0bb53ea4118264a
+      statement_id_history:
+        - statement_id: sha256:142bc7ab032299afa39fa526694178708d81f9629427d8563c594d9550cd8553
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Entropy/Submodularity/SelectedObservationInformationMonotonicityCanonical.selected_observation_information_monotone_canonical
       definition_sha256: sha256:efc8610e821318610e4ca78e5a0dc515cdd7bd6774efba317477476fc43a751b

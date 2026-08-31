@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Quantum/PureState/UnitGramIndistinguishability.unit_gram_overlap_characterization
       source_sha256: sha256:78da1165fa4c9baa50ccb080ebe1854309d4f1e7318fd79b82e8ff90ebd433c6
       target_statement_id: sha256:6a6392456e95ea2384d3f8b180bef40c08565480f1abcc8c2dfa6fcac01d0030
+      statement_id_history:
+        - statement_id: sha256:7205bc522e67c05ea77e5f12c50f45a5dfb16aa0aa41aae0540365373b409442
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Quantum/PureState/UnitGramIndistinguishability.unit_gram_overlap_characterization
       definition_sha256: sha256:b42cb5656fcf721758072c8b36f4bb047ceb3c872928ff0d7802d99fdcd62f2d

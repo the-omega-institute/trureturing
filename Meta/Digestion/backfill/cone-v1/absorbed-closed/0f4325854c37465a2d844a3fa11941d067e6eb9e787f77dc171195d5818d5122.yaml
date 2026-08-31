@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Resource/CompositeCones/StrictChain.strict_composite_cone_chain_and_block_criterion
       source_sha256: sha256:0f4325854c37465a2d844a3fa11941d067e6eb9e787f77dc171195d5818d5122
       target_statement_id: sha256:e5b84f10cccadc68e043a285d07cc958abd3596b2566397f94ed194850894eba
+      statement_id_history:
+        - statement_id: sha256:1412b0136ced7d1e8eb4820abe0159188365fddfaf322303944ecb7a2d6efb68
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Resource/CompositeCones/StrictChain.strict_composite_cone_chain_and_block_criterion
       definition_sha256: sha256:31d92007b629755c5b9a15fa4340a4be87e7c3325daeb0d88f185de916d4d4a9

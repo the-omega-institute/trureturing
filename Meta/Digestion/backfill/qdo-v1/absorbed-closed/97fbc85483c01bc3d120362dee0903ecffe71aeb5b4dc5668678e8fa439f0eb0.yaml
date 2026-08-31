@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/ResourceOrder/OneStepHedgingGain.one_step_hedging_gain
       source_sha256: sha256:97fbc85483c01bc3d120362dee0903ecffe71aeb5b4dc5668678e8fa439f0eb0
       target_statement_id: sha256:caef9e3cea252f81bfd4c35ed8adda10901ea8c44fa5c3681387477362cd4f0e
+      statement_id_history:
+        - statement_id: sha256:5781f82074e1f8b8bfbef145a9e146276beb07ef98a079ab520bf36592157005
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ResourceOrder/OneStepHedgingGain.one_step_hedging_gain
       definition_sha256: sha256:46d488458d30a0227b1e60ace7d20e48e740beb009e17cf6f5b51daa7dbb541e

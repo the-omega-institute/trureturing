@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Resource/LogDet/PathSpectralClassical.log_det_path_spectral_classical
       source_sha256: sha256:7a2d0fc7339dd13df63a994dd709a602528359d77fccc67746a4d212291497f1
       target_statement_id: sha256:5d5a18136186d4b8de0df2f944cf9ab6dff00af10c900582d0633385b076ecd4
+      statement_id_history:
+        - statement_id: sha256:8ec35d237d687ad78dd05226a9ee7ef309f90d6c2d3a794539fe7f2d8218f826
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Resource/LogDet/PathSpectralClassical.log_det_path_spectral_classical
       definition_sha256: sha256:59ac4e2f110f7ebb5bff38fec6f8a803f0b143c8e6d24eff7b74ca43c59ce504

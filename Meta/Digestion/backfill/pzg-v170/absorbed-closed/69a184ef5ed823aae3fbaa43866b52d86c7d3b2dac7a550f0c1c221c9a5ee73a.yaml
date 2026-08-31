@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Constants/Moments/GoldenWindowMoment.golden_window_moment
       source_sha256: sha256:69a184ef5ed823aae3fbaa43866b52d86c7d3b2dac7a550f0c1c221c9a5ee73a
       target_statement_id: sha256:f0e1f63f6af7f1ec4d96a1d8c333be55b37a6c5774023f87282889749668eda1
+      statement_id_history:
+        - statement_id: sha256:d8e2dd29a5d2d7c3d0c6029ea07cce955ea611fa390b7e34bcc7c8f3dcbc5012
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Constants/Moments/GoldenWindowMoment.golden_window_moment
       definition_sha256: sha256:be93218bd78a4dd0ca6dab75853db4209ca7a8deadab7efe5ad1e6459d806e21

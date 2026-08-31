@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/ConceptDynamics/Decision/SafeActionRefinementMonotonicity.safe_action_refinement_monotonicity
       source_sha256: sha256:1a78547cfef8034a64cf1eb2df39af43920153cbdee2ab52a184bb6558068923
       target_statement_id: sha256:f53ef75c7e855eb6973a9e2e62ed70684d3b3f5204495cfe8e4d7e5725b6ccb2
+      statement_id_history:
+        - statement_id: sha256:8d350108a433bbe3ef3c832892fd8de4d51b57d4cdde4ac02a211be3422e49f1
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ConceptDynamics/Decision/SafeActionRefinementMonotonicity.safe_action_refinement_monotonicity
       definition_sha256: sha256:877c3847bff5f7cc20e8ebe3e5944d4e3596cbfdb1001e65f1e9888064548239

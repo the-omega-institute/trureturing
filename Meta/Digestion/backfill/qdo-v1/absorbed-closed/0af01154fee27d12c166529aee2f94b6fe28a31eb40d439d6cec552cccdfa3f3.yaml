@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Observer/MetricGeometry/DiscountedSensorFusion.discounted_sensor_fusion_distance_eq_max
       source_sha256: sha256:0af01154fee27d12c166529aee2f94b6fe28a31eb40d439d6cec552cccdfa3f3
       target_statement_id: sha256:6982b9e9807f2a686e3c0e759f56fa69e6bb689248ef59408a7f6fe98df6f9d2
+      statement_id_history:
+        - statement_id: sha256:57ad4200bc8157846633566c843fc70df56820f38f23c1238bd1c51e6e9b2f09
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Observer/MetricGeometry/DiscountedSensorFusion.discounted_sensor_fusion_distance_eq_max
       definition_sha256: sha256:ee391a5c36874d18ffe90e7e5f032cdbf285d36d50dbe6c448cc3108895b28dc

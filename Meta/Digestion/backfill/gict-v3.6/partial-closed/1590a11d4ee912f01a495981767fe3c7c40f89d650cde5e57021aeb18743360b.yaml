@@ -9,5 +9,13 @@ receipts:
     - gid: D5/S0/Carrier/AlgebraicModel.golden_algebraic_model_spec
       source_sha256: sha256:1590a11d4ee912f01a495981767fe3c7c40f89d650cde5e57021aeb18743360b
       target_statement_id: sha256:0e81205eafa3a4d98a159d801495a10ac105bdb297ec80b4d21fbe31f0c625ae
+      statement_id_history:
+        - statement_id: sha256:bae734af1cb3b1a650afb1633b6375c67d805480297d5398dd8608c8c07e9784
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe: []
   unresolved_subitems: []

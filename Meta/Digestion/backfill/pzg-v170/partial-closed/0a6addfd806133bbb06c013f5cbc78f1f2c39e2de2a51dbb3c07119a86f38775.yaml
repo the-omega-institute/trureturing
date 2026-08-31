@@ -11,6 +11,14 @@ receipts:
     - gid: D5/S0/Carrier/Units.norm_phi_pow
       source_sha256: sha256:0a6addfd806133bbb06c013f5cbc78f1f2c39e2de2a51dbb3c07119a86f38775
       target_statement_id: sha256:68042ed4babee5ef77b2801c4dce97c1929d862ecd9e857d1547aacf638a6a0f
+      statement_id_history:
+        - statement_id: sha256:641e4448f9368dd15a82928c485e506168e9ef3f71b7504a7bf547446f165ebf
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe: []
   unresolved_subitems:
     - even-conclusion-selected-by-the-cone

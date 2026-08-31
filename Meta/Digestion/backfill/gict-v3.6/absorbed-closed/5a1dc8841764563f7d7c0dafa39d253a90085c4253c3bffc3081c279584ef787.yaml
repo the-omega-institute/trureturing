@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/PrimeForms/Crossing/ThirdOrderReciprocity.k_reversal_iff
       source_sha256: sha256:5a1dc8841764563f7d7c0dafa39d253a90085c4253c3bffc3081c279584ef787
       target_statement_id: sha256:b28750439a4a96aea245ac3332b776a1c5fcb2384ed4ac0c9459487733ccb78d
+      statement_id_history:
+        - statement_id: sha256:a0310b83aa26de13cadc6273d302e643af5437ca920e99895c62c61c847af5d6
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/PrimeForms/Crossing/ThirdOrderReciprocity.k_reversal_iff
       definition_sha256: sha256:87e965deee8c3e56e21195622c3e3898115b83faa1b671f8055632540070ed69

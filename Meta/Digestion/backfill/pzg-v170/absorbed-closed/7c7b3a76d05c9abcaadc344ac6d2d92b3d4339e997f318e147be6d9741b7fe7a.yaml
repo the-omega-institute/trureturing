@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Axis/AxisTraceDefinitions.axis_trace_definitions
       source_sha256: sha256:7c7b3a76d05c9abcaadc344ac6d2d92b3d4339e997f318e147be6d9741b7fe7a
       target_statement_id: sha256:50f4f1faccad3bfecd2ef153756734e8968cce9141d86951262297bbe638b68a
+      statement_id_history:
+        - statement_id: sha256:178f8d441e77c3405f3b02b846a2dc7d58b9ea13553550f95688eec09b67190c
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Axis/AxisTraceDefinitions.axis_trace_definitions
       definition_sha256: sha256:f243c8bae6590b32428bb7b14d02e8b233830e30f774547d315bee0df6ff9ab4

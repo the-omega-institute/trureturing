@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Observer/LinearMemory/HankelGramianSingularValues.hankel_gramian_singular_values
       source_sha256: sha256:ab5bdfb93efb563863a7f11c52a06ab31fafa20844c6ccd3d6416a36bb02acf6
       target_statement_id: sha256:4a4f07c03f6fae714755a2008826777427b8bfb082fd5f58fd2d360b2cc70a4e
+      statement_id_history:
+        - statement_id: sha256:f9b9fbc7253269fb0d020f402626ae03eb4ac244fa8eb2386c4c988efb0823a1
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Observer/LinearMemory/HankelGramianSingularValues.hankel_gramian_singular_values
       definition_sha256: sha256:c986cadf51941db5bd71fdfaae1ce1c76f428cd2b30cf8c7ea11e74027a7edfb

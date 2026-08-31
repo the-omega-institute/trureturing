@@ -10,6 +10,14 @@ receipts:
     - gid: D5/S3/Weil/EulerProduct.single_address_reading_spec
       source_sha256: sha256:376b418a41fdff9bfee58298b6ba89a101f8ea94bf6fc3ae504e9170daad3bc0
       target_statement_id: sha256:6589e0de81a2c3cfcef35b4625c008946ddaaf5ba61c45544dd41ac64ea93a10
+      statement_id_history:
+        - statement_id: sha256:039e6f8b761f23176670473b27cbf36ea4b43854a6cc5ce1313981db0619c4a6
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Weil/EulerProduct.single_address_reading_spec
       definition_sha256: sha256:7c42f364cffc731328d1c66c59da12ca61ccf5d6797838678b81eda30edf196f

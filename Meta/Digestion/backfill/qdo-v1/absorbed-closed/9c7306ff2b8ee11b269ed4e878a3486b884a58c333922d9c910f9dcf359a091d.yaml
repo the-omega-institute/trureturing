@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Observer/Separation/ConeResidualWitness.cone_residual_observer_duality
       source_sha256: sha256:9c7306ff2b8ee11b269ed4e878a3486b884a58c333922d9c910f9dcf359a091d
       target_statement_id: sha256:cf9e2727afc9f4d7834f694ffe6b4c4da78aeb5b83e22137805b35a787214c6f
+      statement_id_history:
+        - statement_id: sha256:c7462848a775dede8ac4ace211f9877ba3e24e8a5e7a12e494fb901982220761
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Observer/Separation/ConeResidualWitness.cone_residual_observer_duality
       definition_sha256: sha256:1cbb8df318d6614f610dd539781dcdb6c1262d4ef1bc35223bb6773f153a5c4c

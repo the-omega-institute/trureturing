@@ -152,6 +152,7 @@ internal static class BackfillInventoryWriter
             Line(builder, $"            - gid: {Scalar(receipt.Gid)}");
             Line(builder, $"              source_sha256: {Scalar(receipt.SourceSha256)}");
             Line(builder, $"              target_statement_id: {Scalar(receipt.TargetStatementId)}");
+            StatementIdHistory(builder, receipt.StatementIdHistory, "              ");
         }
     }
 
@@ -190,7 +191,38 @@ internal static class BackfillInventoryWriter
             Line(builder, $"    - gid: {Scalar(receipt.Gid)}");
             Line(builder, $"      source_sha256: {Scalar(receipt.SourceSha256)}");
             Line(builder, $"      target_statement_id: {Scalar(receipt.TargetStatementId)}");
+            StatementIdHistory(builder, receipt.StatementIdHistory, "      ");
         }
+    }
+
+    private static void StatementIdHistory(
+        StringBuilder builder,
+        ImmutableArray<DigestionStatementIdHistoryEntry> history,
+        string indent)
+    {
+        if (history.IsDefaultOrEmpty)
+        {
+            return;
+        }
+
+        Line(builder, indent + "statement_id_history:");
+        foreach (var item in history)
+        {
+            Line(builder, indent + "  - statement_id: " + Scalar(item.StatementId));
+            EffectiveLeanPins(builder, "environment_pin", item.EnvironmentPin, indent + "    ");
+            EffectiveLeanPins(builder, "superseded_by_pin", item.SupersededByPin, indent + "    ");
+        }
+    }
+
+    private static void EffectiveLeanPins(
+        StringBuilder builder,
+        string key,
+        EffectiveLeanPins pins,
+        string indent)
+    {
+        Line(builder, indent + key + ":");
+        Line(builder, indent + "  toolchain: " + Scalar(pins.Toolchain));
+        Line(builder, indent + "  mathlib_revision: " + Scalar(pins.MathlibRevision));
     }
 
     private static void AtomScribeReceipts(

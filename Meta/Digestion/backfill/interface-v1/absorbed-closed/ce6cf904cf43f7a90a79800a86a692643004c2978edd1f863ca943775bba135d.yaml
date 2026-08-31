@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S0/Tower/ConstantArms.binary_arm
       source_sha256: sha256:ce6cf904cf43f7a90a79800a86a692643004c2978edd1f863ca943775bba135d
       target_statement_id: sha256:93a9bcc350a47280a2b199798cdaa785257a14834c4d1d70e3f6fe62300b5281
+      statement_id_history:
+        - statement_id: sha256:e1a7986a867132ae51b68fe5ecd2528f1a54cdd608c1028e88e5778658207546
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S0/Tower/ConstantArms.binary_arm
       definition_sha256: sha256:e06d9b91be56fd27c6df6831376e1a50345bf4aaaaed25acc31a9b7b7483b2ed

@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/PrimeForms/PellFamilies/CrossingPellFamily.crossing_pell_invariant
       source_sha256: sha256:b00766467d1118d89ec09d3983a39726f446b3f0b40e54dc9dd3e49a50df381e
       target_statement_id: sha256:7f84e8b4c8f8c3964d5459dbe31ede9e4ae85801bfcd0a2b183782912a02fc19
+      statement_id_history:
+        - statement_id: sha256:de2788e95e54216e78a912a51b2ad1354c6d217684044ef90efa133c80d86056
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/PrimeForms/PellFamilies/CrossingPellFamily.crossing_pell_invariant
       definition_sha256: sha256:d5fd2587fedbe578a709c8411d244da544bee4b04b1c5dad0bb9cf0480f8ca6c

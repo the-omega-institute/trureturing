@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/ArithUnits/HalfFactorial.half_factorial_mod_prime
       source_sha256: sha256:fe1799f3eeffa957753be33a35278649c3bfdc282e8b97678f2e28a0851f0efe
       target_statement_id: sha256:e9998b455e4b1ab360e579618731f4ffcc1249756bc2ae08f9fde010d6875ecf
+      statement_id_history:
+        - statement_id: sha256:88e54863b71bcf199ff243e685679a880c6e86abf653a84b3d515a392567cfb4
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ArithUnits/HalfFactorial.half_factorial_mod_prime
       definition_sha256: sha256:29e1817aa7424f00abd5152f93a05678da9dbe3e373c4595c5a4359fa209ce53

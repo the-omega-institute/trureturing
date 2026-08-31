@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Quantum/Sharpness/SpectralPairingCapacity.spectral_pairing_capacity_monotone_of_doubly_stochastic
       source_sha256: sha256:fd5b9316936b31ee36ddba9f28a43997ad393cb3af862e55cc6efed4e9c0533d
       target_statement_id: sha256:7de25e4223beda37dd425f7e99e221590d158183685ce0883b2ae22efa1bbfbb
+      statement_id_history:
+        - statement_id: sha256:c3912a36b2b4ffbb11280490cc2b087e78011e2e5e74f16a80efec47310c2bc0
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Quantum/Sharpness/SpectralPairingCapacity.spectral_pairing_capacity_monotone_of_doubly_stochastic
       definition_sha256: sha256:fb0b5cdc94a0e44537bbc72cd778016315e1a668814cdb6c0d8c80adb10e830c

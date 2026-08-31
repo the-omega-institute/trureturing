@@ -11,11 +11,35 @@ receipts:
     - gid: D5/S3/Weil/SpectralDynamics.horizontal_evolution_contraction_semigroup
       source_sha256: sha256:996e0cc8c3a73c3d02fa5c8ca5b8a68d65c55c3a4d235a42b5d940db42ab4bd2
       target_statement_id: sha256:39c388055bb022bb8c526fcc58e2d5d9b0a3814f241238852c52b4e3a9218ce5
+      statement_id_history:
+        - statement_id: sha256:df0bab4e200a322d0b85ce2d99fc30dc3606c01dceecbe1aae393efcdf3a8a8f
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
     - gid: D5/S3/Weil/SpectralDynamics.labeled_zeta_evolution_spec
       source_sha256: sha256:996e0cc8c3a73c3d02fa5c8ca5b8a68d65c55c3a4d235a42b5d940db42ab4bd2
       target_statement_id: sha256:034cc8b82927b3e25bf3e77daf9a15624cf85f7f584c0cef1308208e52e946ea
+      statement_id_history:
+        - statement_id: sha256:e41b132dac58d55d40a7eaba3f29563e1d47330652f757123357b78be67ef8ad
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
     - gid: D5/S3/Weil/SpectralDynamics.vertical_evolution_unitary_group
       source_sha256: sha256:996e0cc8c3a73c3d02fa5c8ca5b8a68d65c55c3a4d235a42b5d940db42ab4bd2
       target_statement_id: sha256:80199c4d6f53e9c36264f68f3e17021e14e66f21334cd43179f4660642e6055e
+      statement_id_history:
+        - statement_id: sha256:83374fd53ed5f14a282489dcf8c6f715a6fffee8e01909e75a00255cd6c510b6
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe: []
   unresolved_subitems: []

@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/ConceptDynamics/Refinement/SemanticResourceSeparation.semantic_sufficiency_can_exceed_finite_resources
       source_sha256: sha256:4c2b714cb3985bd4de5c58bf02d1c1c78bb6cfe342f2143ce0b84383c00d59f2
       target_statement_id: sha256:5d51406cd3da78aaa1710830801f5763b5f49b17fc101d95f2faaed7c8b8c77b
+      statement_id_history:
+        - statement_id: sha256:b81d41e47f78b24b43b1966066729daa199675d45d5c70344196e941bfefa073
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ConceptDynamics/Refinement/SemanticResourceSeparation.semantic_sufficiency_can_exceed_finite_resources
       definition_sha256: sha256:86fa40c3cd0c44cf713291c86cfbbf43859a954a0f8c9f1a64d35519d67c2676

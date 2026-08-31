@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/PrimeForms/Crossing/NegativePellSquareRoot.negative_pell_square_root
       source_sha256: sha256:bed3ed12eb830ec1a86fe2a8b20a96feb4a786728478eeba1d88a2fb1e7a8563
       target_statement_id: sha256:891f7bc8848dcf16a43d88b7935d694bc7324ad0f40bdfe52b4b84578a7e0881
+      statement_id_history:
+        - statement_id: sha256:8d0f7cc89f8cc2e171df5ec9d6388087e83bfb25f00d297a053f1210c7e40235
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/PrimeForms/Crossing/NegativePellSquareRoot.negative_pell_square_root
       definition_sha256: sha256:85692fb03e285101673a9463830ad489bbcac9c0a2e31a9cf2755c2c503620b5

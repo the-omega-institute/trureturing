@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/ConceptDynamics/DefinitionEscape/BlindKernelReductionMeasure.blind_kernel_reduction_measure
       source_sha256: sha256:3ea01c1697fe3358c37b97c1ea4dcad7aed568a49f9ce0b494d7cc5a4414db53
       target_statement_id: sha256:35a52c48cf8f7daec204e1dec768b4f894c20b93ad0525fde2b4ff8d94b82391
+      statement_id_history:
+        - statement_id: sha256:cc369cfb31ba44643eb67636bbaca146deda64e899a96fcb00a3754f341a90aa
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ConceptDynamics/DefinitionEscape/BlindKernelReductionMeasure.blind_kernel_reduction_measure
       definition_sha256: sha256:baf85a82a1e9caf9ad16bac58d338d6031783a275009fc45f6737b020b3b82d0

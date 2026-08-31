@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/PrimeForms/LowSpectrumLegIdentity.low_spectrum_leg_identity
       source_sha256: sha256:5b81623d5d29b130eeee48c63e5d25e59fa420f15a6e50e51499127cb606425c
       target_statement_id: sha256:37ae5f64a28de5d2c1ab863d5a69151d60d82d26c4f8f8bcf877211366364362
+      statement_id_history:
+        - statement_id: sha256:b6ab38f5b70ea755336d6a4e148230c676f4834074ad21a2523a6ebd5af69afd
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/PrimeForms/LowSpectrumLegIdentity.low_spectrum_leg_identity
       definition_sha256: sha256:8d10f9299e3375c28f606becbed47ee21e9a8c1544b09c1bfa0f9ef57e1bfab3

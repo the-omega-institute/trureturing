@@ -21,6 +21,14 @@ receipts:
     - gid: D5/S3/Quantum/FiniteDimensional.qubit_matrix_algebra_has_no_character
       source_sha256: sha256:101df483e71f9e23ee1ec13626abf3037d9a32e6f992d6b5b9485bf6c7976c77
       target_statement_id: sha256:a64a7db140cf1b62437069ce3e400c326debb1675456048955a50730edd170ef
+      statement_id_history:
+        - statement_id: sha256:dc5c3f103d0e67f17a64f1ed85c361cc4e5496ba2bd4aa43444d74ecb8f19d9a
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
     - gid: D5/S3/Quantum/QubitWitnesses.bell_coefficients_are_not_product
       source_sha256: sha256:101df483e71f9e23ee1ec13626abf3037d9a32e6f992d6b5b9485bf6c7976c77
       target_statement_id: sha256:0d54c32903e14d268173a993a963a82faee352eeb70f0ca1a56573c397a5eeb0

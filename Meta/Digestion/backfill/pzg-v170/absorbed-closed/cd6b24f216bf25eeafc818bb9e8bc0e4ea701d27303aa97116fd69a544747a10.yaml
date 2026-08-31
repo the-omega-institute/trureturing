@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Factorization/Cyclotomic/GeometricSpectrumFactorization.geometric_sum_eq_cyclotomic_product
       source_sha256: sha256:cd6b24f216bf25eeafc818bb9e8bc0e4ea701d27303aa97116fd69a544747a10
       target_statement_id: sha256:8e81345db3cc9cf64745f519410a868c879f422c9e83d4eea7588cfc63fde4c7
+      statement_id_history:
+        - statement_id: sha256:74eacb01c7972e3dcca195e32a76b5c9b7be8c06845d3a9bbe3a7e45e924644e
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Factorization/Cyclotomic/GeometricSpectrumFactorization.geometric_sum_eq_cyclotomic_product
       definition_sha256: sha256:dc58906b74f4dd3af47b3adeac93979d6ec49378229f6b109ad7d692fd75f5a8

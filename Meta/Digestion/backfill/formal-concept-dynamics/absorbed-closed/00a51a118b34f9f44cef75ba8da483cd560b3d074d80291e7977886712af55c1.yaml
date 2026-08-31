@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S1/FixedPoints/FiniteContractingStability.finite_contracting_updates_stabilize
       source_sha256: sha256:00a51a118b34f9f44cef75ba8da483cd560b3d074d80291e7977886712af55c1
       target_statement_id: sha256:5b20f5ded515e22520d0cddbf6861d3ccf6d89c70a471c7dcb878d79b531a06b
+      statement_id_history:
+        - statement_id: sha256:0682715cef264d20ddf65160ae6d138bc0ce902c91f2f83e3f0a964b2e96dc06
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S1/FixedPoints/FiniteContractingStability.finite_contracting_updates_stabilize
       definition_sha256: sha256:1f792a851f0515d2177d2a587d6d4b15ed1c26af46274edf01c3fa40e4530c20

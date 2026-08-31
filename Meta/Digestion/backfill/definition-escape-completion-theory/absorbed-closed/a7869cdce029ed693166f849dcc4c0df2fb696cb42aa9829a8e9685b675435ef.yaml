@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/ConceptDynamics/DefinitionEscapeLaws/DirectlyProvableLaws.directly_provable_laws
       source_sha256: sha256:a7869cdce029ed693166f849dcc4c0df2fb696cb42aa9829a8e9685b675435ef
       target_statement_id: sha256:d7aa624bddb34050aed861cd803b79feebaabd131f1af5df9054a6c271ba9481
+      statement_id_history:
+        - statement_id: sha256:68f398072893392a1ae35afa74d8d64bea5dadb2cf81ff307a790258ab1f844e
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ConceptDynamics/DefinitionEscapeLaws/DirectlyProvableLaws.directly_provable_laws
       definition_sha256: sha256:fd0e9a98f703ca5ee1eed9bbc46003608a30ecc13e0fc55c0057f38274ab83ad

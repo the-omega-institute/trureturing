@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Observer/Dynamics/MinimalSuspensionContinuum.minimal_suspension_compact_connected
       source_sha256: sha256:cc76c4481320c6ccfc5d712d2904d56519bc7e715a7715615618c151909bd04e
       target_statement_id: sha256:9bc68c8c4d3fc2b4e2beff42892d409f19c98a7e34980865f389063895ed2baa
+      statement_id_history:
+        - statement_id: sha256:fb7ea460c9c0694f26b42f479d344b3b8992ec472954cf6f332cb3ddbc3363e9
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Observer/Dynamics/MinimalSuspensionContinuum.minimal_suspension_compact_connected
       definition_sha256: sha256:33e2b39b3c45751b8ac382e4c81ba0fc46321cdadec17f920f558c3dc91efa2a

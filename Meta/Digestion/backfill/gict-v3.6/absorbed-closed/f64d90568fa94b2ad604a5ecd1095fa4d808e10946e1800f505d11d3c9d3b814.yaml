@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Factorization/MarkovEquationMutation.markov_equation_mutation
       source_sha256: sha256:f64d90568fa94b2ad604a5ecd1095fa4d808e10946e1800f505d11d3c9d3b814
       target_statement_id: sha256:186570f9f6350dad09e43b147057586bf5e0ea26cd4536265608a0e0c4cbabec
+      statement_id_history:
+        - statement_id: sha256:7dca9c99b008d8f64d50823a27787cf8494f7bd85c324d8e831f8b91281161db
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Factorization/MarkovEquationMutation.markov_equation_mutation
       definition_sha256: sha256:7a538c487876f273bd57cdd55609f5025910979b3b8013878c6a7ffcfbab464d

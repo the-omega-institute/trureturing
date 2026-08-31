@@ -9,6 +9,14 @@ receipts:
     - gid: D5/S3/Factorization/SquarefreeSquareDecomposition.bcs_square_squarefree_unique
       source_sha256: sha256:b6ffd056c2af52b0ea33c0831fdccba06fe332827a0f3b6b2a4a53f449aeae30
       target_statement_id: sha256:e513fcfff1af94d22aa257a893fe6e24f7fc5e562a14b2407842cb481fa9ad65
+      statement_id_history:
+        - statement_id: sha256:95d1090d76d8b7835745d5c7950947b432dfb46d42a97938c8d12bb6dd726a56
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Factorization/SquarefreeSquareDecomposition.bcs_square_squarefree_unique
       definition_sha256: sha256:0585ec7c1274099a3d1b5743ebb25c58fd9ab231c819a833089817f7b44315f5
