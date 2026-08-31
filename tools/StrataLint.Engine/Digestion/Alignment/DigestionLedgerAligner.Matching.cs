@@ -81,15 +81,17 @@ internal static partial class DigestionLedgerAligner
         return result;
     }
 
-    private static HashSet<string> InheritedEntries(
-        BackfillInventoryDocument? baselineDocument,
-        IReadOnlySet<string> statusIndependentAtomIds) =>
+    private static HashSet<string> InheritedEntries(BackfillInventoryDocument? baselineDocument) =>
         (baselineDocument?.RequireDigestionSources() ?? [])
-            .SelectMany(source => source.Entries.Select(entry => CanonicalEntry(
-                source,
-                entry,
-                statusIndependentAtomIds)))
+            .SelectMany(static source => source.Entries.Select(CanonicalEntry))
             .ToHashSet(StringComparer.Ordinal);
+
+    private static HashSet<(string Entry, DigestionStatus Status)> InheritedIngestStatusAuthorities(
+        BackfillInventoryDocument? baselineDocument) =>
+        (baselineDocument?.RequireDigestionSources() ?? [])
+            .SelectMany(static source => source.Entries.Select(entry =>
+                (CanonicalEntry(entry), entry.ProjectedStatus)))
+            .ToHashSet();
 
     private static bool ContentWideIdentityEqual(
         DigestionLedgerEntry candidate,

@@ -437,6 +437,112 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
+    public void ChangedStatusWithCanonicalDirectoryMoveCannotInheritBaselineReceipt()
+    {
+        var oldBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。old。\n");
+        var newBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。rewritten。\n");
+        var oldAtom = Assert.Single(GictAtomizer.Atomize(oldBytes, DigestionTestSupport.Rules).Claims);
+        var oldCapture = DigestionCasStore.Capture(oldAtom.RawBytes.AsSpan());
+        var entry = Entry("old-receipt", oldAtom);
+        var baseline = Ledger([], entry with
+        {
+            ProjectedStatus = new DigestionStatus(
+                DigestionMigrationState.Absorbed,
+                DigestionTruthState.Open),
+        });
+        var candidateEntry = entry with
+        {
+            ProjectedStatus = new DigestionStatus(
+                DigestionMigrationState.Partial,
+                DigestionTruthState.Open),
+        };
+        var candidate = Ledger([], candidateEntry);
+
+        var result = DigestionLedgerAligner.Evaluate(
+            candidate,
+            Snapshot(
+                newBytes,
+                [oldCapture],
+                extraEntries:
+                [
+                    new RawRepositoryEntry(
+                        $"Meta/Digestion/backfill/source/partial-open/{AtomId(oldAtom)}.yaml",
+                        BackfillInventoryWriter.WriteAtom(candidateEntry)),
+                ]),
+            baseline,
+            DigestionAlignmentMode.Ingest);
+
+        Assert.Empty(result.Findings);
+        Assert.Equal(DigestionReceiptAlignment.Rejected, result.AlignmentFor(AtomId(oldAtom)));
+        Assert.Single(result.Residual);
+    }
+
+    [Fact]
+    public void CanonicalStatusDirectoryMoveWithoutReceiptFailsClosedInAdmission()
+    {
+        var sourceBytes = Encoding.UTF8.GetBytes("opaque status move source\n");
+        var atomBytes = Encoding.UTF8.GetBytes("settled atom\n");
+        var atom = new DigestionAtom(
+            0,
+            atomBytes.Length,
+            ImmutableArray.CreateRange(atomBytes),
+            DigestionFingerprint.Compute(atomBytes.AsSpan()),
+            []);
+        var capture = DigestionCasStore.Capture(atom.RawBytes.AsSpan());
+        var atomId = AtomId(atom);
+        var baselineEntry = Entry("baseline", atom) with
+        {
+            ProjectedStatus = new DigestionStatus(
+                DigestionMigrationState.Absorbed,
+                DigestionTruthState.Open),
+        };
+        var candidateEntry = baselineEntry with
+        {
+            ProjectedStatus = new DigestionStatus(
+                DigestionMigrationState.Partial,
+                DigestionTruthState.Open),
+        };
+        var baseline = WithAtomizer(
+            Ledger([], baselineEntry),
+            AtomizerRegistry.NoAtomizerId);
+        var candidate = WithAtomizer(
+            Ledger([], candidateEntry),
+            AtomizerRegistry.NoAtomizerId);
+        var baselinePath = $"Meta/Digestion/backfill/source/absorbed-open/{atomId}.yaml";
+        var candidatePath = $"Meta/Digestion/backfill/source/partial-open/{atomId}.yaml";
+        var changes = RawChangeSet.CreateWithKinds(
+        [
+            (baselinePath, RawChangeKind.Deleted),
+            (candidatePath, RawChangeKind.Added),
+        ]);
+
+        var evaluation = DigestionStatusEvaluator.Evaluate(
+            DigestionEvaluationScope.ChangedSet,
+            candidate,
+            Snapshot(
+                sourceBytes,
+                [capture],
+                extraEntries:
+                [
+                    new RawRepositoryEntry(
+                        candidatePath,
+                        BackfillInventoryWriter.WriteAtom(candidateEntry)),
+                ]),
+            DigestionTestSupport.AcceptedLean(Array.Empty<string>()),
+            baselineDocument: baseline,
+            changes: changes);
+        var evaluated = Assert.Single(evaluation.Entries);
+
+        Assert.Equal(DigestionReceiptAlignment.Seen, evaluated.Alignment);
+        Assert.Equal(
+            new DigestionStatus(DigestionMigrationState.Residual, DigestionTruthState.Open),
+            evaluated.DerivedStatus);
+        Assert.Contains(
+            $"entry {atomId} handwritten status partial-open differs from derived residual-open",
+            evaluation.Findings);
+    }
+
+    [Fact]
     public void SettledReceiptSurvivesAcknowledgedStaleSourceViewSplit()
     {
         var sourceBytes = Encoding.UTF8.GetBytes("opaque settled source\n");

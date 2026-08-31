@@ -154,18 +154,16 @@ internal static partial class DigestionLedgerAligner
 
         var cas = casEvaluation ?? DigestionCasStore.Evaluate(document, snapshot, casChanges);
         findings.AddRange(cas.Findings);
-        var statusIndependentAtomIds = StatusIndependentAtomIds(
-            snapshot,
-            sources,
-            baselineDocument);
-        var inheritedEntries = InheritedEntries(baselineDocument, statusIndependentAtomIds);
+        var inheritedEntries = InheritedEntries(baselineDocument);
+        var inheritedIngestStatusAuthorities = InheritedIngestStatusAuthorities(baselineDocument);
         foreach (var (source, entry) in sources.SelectMany(source =>
                      source.Entries.Select(entry => (Source: source, Entry: entry))))
         {
-            var inherited = inheritedEntries.Contains(CanonicalEntry(
-                source,
-                entry,
-                statusIndependentAtomIds));
+            var canonicalEntry = CanonicalEntry(entry);
+            var inherited = inheritedEntries.Contains(canonicalEntry)
+                // Ingest status authority is checked separately from canonical structural identity.
+                && (mode != DigestionAlignmentMode.Ingest
+                    || inheritedIngestStatusAuthorities.Contains((canonicalEntry, entry.ProjectedStatus)));
             alignments[entry.AtomId] = cas.ValidAtomIds.Contains(entry.AtomId) && inherited
                 ? DigestionReceiptAlignment.Seen
                 : DigestionReceiptAlignment.Rejected;
@@ -278,10 +276,7 @@ internal static partial class DigestionLedgerAligner
                 && !source.Entries.IsEmpty
                 && source.Entries.All(entry =>
                     cas.ValidAtomIds.Contains(entry.AtomId)
-                    && inheritedEntries.Contains(CanonicalEntry(
-                        source,
-                        entry,
-                        statusIndependentAtomIds)))
+                    && inheritedEntries.Contains(CanonicalEntry(entry)))
                 && contentWideReplacementObligations.Length == 0
                 && !InheritedClauseChainRequiresReplay(source, changes))
             {

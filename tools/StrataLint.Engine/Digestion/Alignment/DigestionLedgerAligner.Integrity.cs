@@ -147,21 +147,11 @@ internal static partial class DigestionLedgerAligner
         && baselineSnapshot.TryGetFile(baselinePath, out var baseline)
         && candidate.RawBytes.AsSpan().SequenceEqual(baseline.RawBytes.AsSpan());
 
-    private static string CanonicalEntry(
-        DigestionLedgerSource source,
-        DigestionLedgerEntry entry,
-        IReadOnlySet<string>? statusIndependentAtomIds = null)
+    private static string CanonicalEntry(DigestionLedgerEntry entry)
     {
         var admissionEntry = entry with
         {
-            // Projected status is derived output once stale has been settled or the candidate
-            // has materialized the corresponding canonical status-directory path. Without one
-            // of those proofs, retain status in the identity so arbitrary status edits cannot
-            // inherit a baseline receipt.
-            ProjectedStatus = source.AcknowledgedStale.Contains(entry.AtomId, StringComparer.Ordinal)
-                || statusIndependentAtomIds?.Contains(entry.AtomId) == true
-                ? StructuralIdentityStatus
-                : entry.ProjectedStatus,
+            ProjectedStatus = StructuralIdentityStatus,
             Receipts = entry.Receipts with
             {
                 Coverage = [],
@@ -170,43 +160,6 @@ internal static partial class DigestionLedgerAligner
             },
         };
         return Convert.ToBase64String(BackfillInventoryWriter.WriteEntry(admissionEntry).AsSpan());
-    }
-
-    private static HashSet<string> StatusIndependentAtomIds(
-        RepositorySnapshot candidateSnapshot,
-        ImmutableArray<DigestionLedgerSource> candidateSources,
-        BackfillInventoryDocument? baselineDocument)
-    {
-        var result = candidateSources
-            .SelectMany(static source => source.AcknowledgedStale)
-            .Concat(baselineDocument?.RequireDigestionSources()
-                .SelectMany(static source => source.AcknowledgedStale)
-                ?? [])
-            .ToHashSet(StringComparer.Ordinal);
-        foreach (var source in candidateSources)
-        {
-            foreach (var entry in source.Entries)
-            {
-                if (HasCanonicalStatusPath(candidateSnapshot, source, entry))
-                {
-                    result.Add(entry.AtomId);
-                }
-            }
-        }
-
-        return result;
-    }
-
-    private static bool HasCanonicalStatusPath(
-        RepositorySnapshot snapshot,
-        DigestionLedgerSource source,
-        DigestionLedgerEntry entry)
-    {
-        var status = DigestionStatusNames.Migration(entry.ProjectedStatus.Migration)
-            + "-"
-            + DigestionStatusNames.Truth(entry.ProjectedStatus.Truth);
-        var path = $"{BackfillInventoryLoader.RootPath}{source.SourceId}/{status}/{entry.AtomId}.yaml";
-        return snapshot.TryGetFile(path, out _);
     }
 
     private static string? AtomizerIntegrityFailure(
