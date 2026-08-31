@@ -2,7 +2,7 @@
 
 ## Abstract
 
-The negative-square signed determinant of a reflected exponential pair is its negative-second-derivative eigenvalue, while the symmetric observer is first-order blind and second-order sensitive.
+Identify the reflected-pair signed determinant with the negative second-derivative eigenvalue.
 
 **Definition 1.1 (The positive-rate branch).**
 
@@ -80,7 +80,7 @@ The second derivative at the reflection center equals two delta squared. Thus th
 
 **Theorem 1.7 (Every nonzero split has a strictly positive second-order reading).**
 
-$$\forall delta: \mathbb{R}, delta \ne 0 \Rightarrow 0 < \operatorname{iteratedDeriv}(2, \operatorname{reflectedGrowthSum}(delta), 0).$$
+$$\forall delta: \mathbb{R}, delta \neq 0 \Rightarrow 0 < \operatorname{iteratedDeriv}(2, \operatorname{reflectedGrowthSum}(delta), 0).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Adelic/ReflectedGrowthPairSecondOrderSpectrum.reflected_growth_sum_second_order_visible_of_ne_zero` (`✓ std3`). ∎
 
