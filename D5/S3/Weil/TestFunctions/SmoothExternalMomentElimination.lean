@@ -14,15 +14,6 @@ import Mathlib.MeasureTheory.Integral.IntegralEqImproper
 import Mathlib.MeasureTheory.VectorMeasure.Decomposition.Jordan
 import Mathlib.MeasureTheory.VectorMeasure.Integral
 
-namespace MeasureTheory.SignedMeasure
-
-private protected abbrev Integrable {X E G : Type*} [MeasurableSpace X]
-    [NormedAddCommGroup E] [NormedSpace ℝ E] [NormedAddCommGroup G] [NormedSpace ℝ G]
-    (μ : SignedMeasure X) (f : X → E) (B : E →L[ℝ] ℝ →L[ℝ] G) : Prop :=
-  MeasureTheory.Integrable f (μ.transpose B).variation
-
-end MeasureTheory.SignedMeasure
-
 namespace D5.S3.Weil.TestFunctions.SmoothExternalMomentElimination
 
 open Function MeasureTheory Matrix Metric Set
@@ -132,7 +123,8 @@ private theorem signed_measure_integrable_of_jordan_restrict_eq
     (hneg : epsilon.toJordanDecomposition.negPart.restrict s =
       epsilon.toJordanDecomposition.negPart)
     {g : ℝ → ℝ} (hg : ContinuousOn g s) :
-    epsilon.Integrable g (ContinuousLinearMap.lsmul ℝ ℝ).flip := by
+    MeasureTheory.Integrable g
+      (epsilon.transpose (ContinuousLinearMap.lsmul ℝ ℝ (E := ℝ)).flip).variation := by
   have hposInt : Integrable g epsilon.toJordanDecomposition.posPart := by
     rw [← hpos]
     exact hg.integrableOn_compact hsCompact
@@ -146,7 +138,7 @@ private theorem signed_measure_integrable_of_jordan_restrict_eq
       epsilon.toJordanDecomposition.negPart.toSignedMeasure g := by
     simpa only [VectorMeasure.Integrable, Measure.variation_toSignedMeasure] using hnegInt
   change MeasureTheory.Integrable g
-    (epsilon.transpose (ContinuousLinearMap.lsmul ℝ ℝ).flip).variation
+    (epsilon.transpose (ContinuousLinearMap.lsmul ℝ ℝ (E := ℝ)).flip).variation
   rw [VectorMeasure.variation_transpose_lsmul_flip]
   rw [← epsilon.toSignedMeasure_toJordanDecomposition, JordanDecomposition.toSignedMeasure]
   exact hposSigned.sub_vectorMeasure hnegSigned
