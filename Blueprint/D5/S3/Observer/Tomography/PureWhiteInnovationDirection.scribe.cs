@@ -74,9 +74,7 @@ internal sealed class PureWhiteInnovationDirectionDocument : IScribeDocumentDefi
         Formula kernel = Call("ker", analysis);
         Formula eigenspace = Call("eigenspace", toeplitz, omega);
         Formula kernelBridge = Seq(
-            Open, Forall, Sp, Typed(x, vectorType), Comma, Sp,
-            x, Sp, InMacro, Sp, kernel, Sp, Rightarrow, Sp,
-            x, Sp, InMacro, Sp, eigenspace, Close);
+            kernel, Sp, Eq, Sp, eigenspace);
         Formula nonzeroKernel = Seq(
             Exists, Sp, Typed(x, vectorType), Comma, Sp,
             x, Sp, Neq, Sp, D(0), Sp, Land, Sp,

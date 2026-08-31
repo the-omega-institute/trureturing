@@ -33,8 +33,8 @@ theorem pure_white_innovation_direction
       (omega : Complex) •
           (1 : Matrix (Fin (N + 1)) (Fin (N + 1)) Complex) +
         analysis.conjTranspose * analysis
-    (∀ x, x ∈ analysis.mulVecLin.ker →
-        x ∈ Module.End.eigenspace toeplitz.mulVecLin (omega : Complex)) ∧
+    analysis.mulVecLin.ker =
+        Module.End.eigenspace toeplitz.mulVecLin (omega : Complex) ∧
       ∃ x, x ≠ 0 ∧ x ∈ analysis.mulVecLin.ker := by
   dsimp only
   let analysis : Matrix (Fin M) (Fin (N + 1)) Complex := fun r j =>
@@ -45,12 +45,9 @@ theorem pure_white_innovation_direction
         (1 : Matrix (Fin (N + 1)) (Fin (N + 1)) Complex) +
       analysis.conjTranspose * analysis
   change
-    (∀ x, x ∈ analysis.mulVecLin.ker →
-        x ∈ Module.End.eigenspace toeplitz.mulVecLin (omega : Complex)) ∧
+    analysis.mulVecLin.ker =
+        Module.End.eigenspace toeplitz.mulVecLin (omega : Complex) ∧
       ∃ x, x ≠ 0 ∧ x ∈ analysis.mulVecLin.ker
-  have residualPositive :
-      (analysis.conjTranspose * analysis).PosSemidef :=
-    Matrix.posSemidef_conjTranspose_mul_self analysis
   have rangeBound :
       Module.finrank Complex analysis.mulVecLin.range <= M := by
     calc
@@ -77,11 +74,28 @@ theorem pure_white_innovation_direction
         hx, Matrix.mulVec_zero]
     simp [toeplitz, Matrix.add_mulVec, Matrix.smul_mulVec,
       Matrix.one_mulVec, residualZero]
+  have eigenspaceLeKernel :
+      Module.End.eigenspace toeplitz.mulVecLin (omega : Complex) <=
+        analysis.mulVecLin.ker := by
+    intro x hx
+    rw [Module.End.mem_eigenspace_iff] at hx
+    change toeplitz *ᵥ x = (omega : Complex) • x at hx
+    have residualZero :
+        (analysis.conjTranspose * analysis) *ᵥ x = 0 := by
+      change (((omega : Complex) •
+          (1 : Matrix (Fin (N + 1)) (Fin (N + 1)) Complex) +
+        analysis.conjTranspose * analysis) *ᵥ x) =
+          (omega : Complex) • x at hx
+      rw [Matrix.add_mulVec, Matrix.smul_mulVec, Matrix.one_mulVec] at hx
+      exact add_eq_left.mp hx
+    change analysis *ᵥ x = 0
+    exact
+      (Matrix.conjTranspose_mul_self_mulVec_eq_zero analysis x).mp residualZero
   have kernelPositive :
       0 < Module.finrank Complex analysis.mulVecLin.ker := by
     omega
   constructor
-  · exact kernelLeEigenspace
+  · exact le_antisymm kernelLeEigenspace eigenspaceLeKernel
   · obtain ⟨x, x_ne_zero⟩ :=
       Module.finrank_pos_iff_exists_ne_zero.mp kernelPositive
     refine ⟨x.1, ?_, x.2⟩
