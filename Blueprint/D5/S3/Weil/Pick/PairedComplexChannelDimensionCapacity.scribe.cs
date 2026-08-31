@@ -11,8 +11,8 @@ internal sealed class PairedComplexChannelDimensionCapacityDocument
         "D5/S3/Weil/Pick/PairedComplexChannelDimensionCapacity.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A finite family of paired complex scalar channels has two complex "
-            + "dimensions of observation capacity per sensor.",
+        "Paired complex channels have two complex dimensions of capacity per "
+            + "finite sensor.",
         H("Paired Complex-Channel Dimension Capacity"),
         Blocks(
             Describe.Lean(
@@ -68,8 +68,20 @@ internal sealed class PairedComplexChannelDimensionCapacityDocument
             blind, Sp, Neq, Sp, D(0), Sp, Land, Sp,
             Call("O", blind), Sp, Eq, Sp, D(0));
 
+        Formula pairedCodomain = Grp(Seq(
+            index, Sp, To, Sp, ComplexNumbers(), Sp, Times, Sp,
+            ComplexNumbers()));
+        Formula homSpace = Seq(
+            new Formula.Subscript(
+                Seq(Operatorname, Grp(F.Id("Hom"))), ComplexNumbers()),
+            Open, state, Comma, Sp, pairedCodomain, Close);
+        Formula observationBinder = Seq(
+            Forall, Sp, observation, Sp, InMacro, Sp, homSpace, Colon);
+
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
+            observationBinder,
+            RowBreak, Grp(),
             Open, injectiveBound, Close, Sp, Land,
             RowBreak, Grp(),
             Open, nullityBound, Close, Sp, Land,
