@@ -67,7 +67,7 @@ public sealed class DigestionMathlibReanchorTests
     }
 
     [Fact]
-    public void ChangedPropositionRejectsReanchorAndKeepsReceiptMismatchFatal()
+    public void RecognizedReplacementReanchorsReceiptBeforePropositionAuthorization()
     {
         var fixture = CreateDigestionReanchorFixture(
             candidateASource: "theorem a : False := by contradiction\n",
@@ -76,7 +76,7 @@ public sealed class DigestionMathlibReanchorTests
             candidateAAxioms: ["propext"],
             receiptGid: ModuleAGid);
 
-        AssertRejectedDigestionReanchorRemainsFatal(fixture);
+        AssertRecognizedDigestionReanchorAlignsReceipt(fixture);
     }
 
     [Fact]
@@ -93,7 +93,7 @@ public sealed class DigestionMathlibReanchorTests
     }
 
     [Fact]
-    public void NonstandardAxiomRejectsReanchorAndKeepsReceiptMismatchFatal()
+    public void RecognizedReplacementReanchorsReceiptBeforeAxiomAuthorization()
     {
         var fixture = CreateDigestionReanchorFixture(
             candidateASource: "theorem a : True := by trivial\n",
@@ -102,7 +102,7 @@ public sealed class DigestionMathlibReanchorTests
             candidateAAxioms: ["Nonstandard.axiom"],
             receiptGid: ModuleAGid);
 
-        AssertRejectedDigestionReanchorRemainsFatal(fixture);
+        AssertRecognizedDigestionReanchorAlignsReceipt(fixture);
     }
 
     [Fact]
@@ -374,6 +374,24 @@ public sealed class DigestionMathlibReanchorTests
             BackfillInventoryWriter.WriteAtom(
                 Assert.Single(reanchored.RequireDigestionEntries())).ToArray());
         AssertCoverageReceiptMismatchIsFatal(fixture, reanchored);
+    }
+
+    private static void AssertRecognizedDigestionReanchorAlignsReceipt(
+        DigestionReanchorFixture fixture)
+    {
+        var reanchored = MathlibUpgradeDigestionReanchor.Apply(
+            fixture.Document,
+            fixture.ProtectedBase,
+            fixture.Candidate,
+            fixture.Changes,
+            fixture.Lean);
+
+        var receipt = Assert.Single(
+            Assert.Single(reanchored.RequireDigestionEntries()).Receipts.Coverage);
+        Assert.Equal(fixture.CandidateAStatementId, receipt.TargetStatementId);
+        Assert.DoesNotContain(
+            EvaluateDigestionReanchorFixture(fixture, reanchored).Entries.Single().Gaps,
+            static gap => gap.Code == "coverage-receipt-mismatch");
     }
 
     private static void AssertCoverageReceiptMismatchIsFatal(

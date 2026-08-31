@@ -9,6 +9,6 @@ receipts:
   coverage:
     - gid: D5/S0/Carrier/GoldenRatio.golden_ratio_spec
       source_sha256: sha256:02138663fc4949940459013eabfd32eab9f0200bcaf9bbd660556c55960b9d3b
-      target_statement_id: sha256:9d46f7f93cee8f6182537c062d37f2911f765eacc459d98b3c1831d5a601e8a7
+      target_statement_id: sha256:27ade5b921f83f26ced1225caa7020b05bb0313023ebb4852d27c5b9eb541e1b
   scribe: []
   unresolved_subitems: []

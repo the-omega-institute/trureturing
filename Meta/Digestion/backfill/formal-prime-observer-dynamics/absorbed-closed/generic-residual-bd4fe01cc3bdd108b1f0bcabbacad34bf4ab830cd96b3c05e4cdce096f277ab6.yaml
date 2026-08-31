@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Gluing/HasseDefectCompletenessCriterion.hasse_complete_iff_positive_negative_defects_empty
       source_sha256: sha256:bd4fe01cc3bdd108b1f0bcabbacad34bf4ab830cd96b3c05e4cdce096f277ab6
-      target_statement_id: sha256:99a4468b70cff5c2f6353467200e36107c4055492027b1523587c32ce322f528
+      target_statement_id: sha256:44c2b00b681b863cffc6c1a3138ae5406435057bd772f090de403c0b2c7c2dd2
   scribe:
     - gid: D5/S3/ConceptDynamics/Gluing/HasseDefectCompletenessCriterion.hasse_complete_iff_positive_negative_defects_empty
       definition_sha256: sha256:7821305e36757e1d6583bd33c140c6a01583c54d092ed0e69edfdb678776d933

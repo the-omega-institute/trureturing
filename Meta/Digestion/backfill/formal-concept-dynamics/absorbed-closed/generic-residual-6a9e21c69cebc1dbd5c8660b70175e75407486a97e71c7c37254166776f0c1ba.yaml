@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Experiments/ExperimentRefinementGainMonotone.experiment_refinement_gain_monotone
       source_sha256: sha256:6a9e21c69cebc1dbd5c8660b70175e75407486a97e71c7c37254166776f0c1ba
-      target_statement_id: sha256:93e456d49f9ac955063903d692574d8a478a12f6570f3c1368bf62430d7f96c2
+      target_statement_id: sha256:106fdcc7b39286c4c0c01b47ac7436eda521d0c57bcea7a9636efde605f9fa6b
   scribe:
     - gid: D5/S3/ConceptDynamics/Experiments/ExperimentRefinementGainMonotone.experiment_refinement_gain_monotone
       definition_sha256: sha256:3e601e41504fddabe36736d271ef86bbb83cf0d7be7b4ef9133f3e3f4de2f2f7

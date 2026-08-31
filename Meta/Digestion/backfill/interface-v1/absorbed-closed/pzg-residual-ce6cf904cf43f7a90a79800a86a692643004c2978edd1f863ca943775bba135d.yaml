@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/Tower/ConstantArms.binary_arm
       source_sha256: sha256:ce6cf904cf43f7a90a79800a86a692643004c2978edd1f863ca943775bba135d
-      target_statement_id: sha256:e1a7986a867132ae51b68fe5ecd2528f1a54cdd608c1028e88e5778658207546
+      target_statement_id: sha256:93a9bcc350a47280a2b199798cdaa785257a14834c4d1d70e3f6fe62300b5281
   scribe:
     - gid: D5/S0/Tower/ConstantArms.binary_arm
       definition_sha256: sha256:e06d9b91be56fd27c6df6831376e1a50345bf4aaaaed25acc31a9b7b7483b2ed

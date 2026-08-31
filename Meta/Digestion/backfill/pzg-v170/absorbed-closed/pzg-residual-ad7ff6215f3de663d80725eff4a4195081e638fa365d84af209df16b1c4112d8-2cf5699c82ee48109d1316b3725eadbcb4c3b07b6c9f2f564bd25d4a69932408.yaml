@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/QuantumContext/ZaunerSymplecticMatrix.zauner_symplectic_matrix_certificate
       source_sha256: sha256:ad7ff6215f3de663d80725eff4a4195081e638fa365d84af209df16b1c4112d8
-      target_statement_id: sha256:bd0eacbb8366d87ba11189213387ec723593a8b4d7c974ef432a6a03dcbd02fd
+      target_statement_id: sha256:1489709dcc3c70b2338cf89f026d7202f74b871063591a41dff589f2d55029ac
   scribe:
     - gid: D5/S3/QuantumContext/ZaunerSymplecticMatrix.zauner_symplectic_matrix_certificate
       definition_sha256: sha256:f70e6f209d08e172443aaacd9b84c1c3291d4d37979c35ff5002e2816df3dd56

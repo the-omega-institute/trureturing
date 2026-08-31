@@ -55,6 +55,7 @@ public sealed partial class MakeWorkflowTests
         "emit",
         "ingest",
         "align-digestion-status",
+        "mathlib-reanchor",
         "echo-residual-summary",
         "digestion-readiness",
         "show-atom",
@@ -249,7 +250,16 @@ public sealed partial class MakeWorkflowTests
             "--role digestion-alignment-consumer --report \"$REPORT\"",
             script,
             StringComparison.Ordinal);
-        Assert.Single(Regex.Matches(script, Regex.Escape("exec \"$CONSUMER\"")).Cast<Match>());
+        Assert.Contains("mathlib-reanchor)", script, StringComparison.Ordinal);
+        Assert.Contains("make -C \"$ROOT\" lean-report", script, StringComparison.Ordinal);
+        Assert.Contains("git -C \"$ROOT\" merge-base HEAD \"$BASE\"", script, StringComparison.Ordinal);
+        Assert.Contains(
+            "ledger-reanchor-mathlib --base \"$base_sha\"",
+            script,
+            StringComparison.Ordinal);
+        Assert.Equal(
+            2,
+            Regex.Matches(script, Regex.Escape("exec \"$CONSUMER\"")).Count);
     }
 
     [Fact]

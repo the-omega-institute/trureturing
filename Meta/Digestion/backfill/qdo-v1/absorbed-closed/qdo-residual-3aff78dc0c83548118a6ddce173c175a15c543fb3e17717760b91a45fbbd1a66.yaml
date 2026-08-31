@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Quantum/Algebra/QuotientOrthogonalComplement.quotient_orthogonal_complement_isometry
       source_sha256: sha256:3aff78dc0c83548118a6ddce173c175a15c543fb3e17717760b91a45fbbd1a66
-      target_statement_id: sha256:215e136c63f5ad25c444d17b16d8458b3c8c79364600124c1847a22f6844fcef
+      target_statement_id: sha256:ec3b6b6b9530ab8c0e33c7ff3c88b1cbd55a8e384b7216f4fc7e7fe0756dfb8e
   scribe:
     - gid: D5/S3/Quantum/Algebra/QuotientOrthogonalComplement.quotient_orthogonal_complement_isometry
       definition_sha256: sha256:4e321f991ea07e8f0a9ec6084cb79443bbe05e424f4f188f9363975c27861f22

@@ -16,10 +16,10 @@ receipts:
       target_statement_id: sha256:44c5588871738b8d6f1dc91ada55913b521ebcce0310883991fcc71e4434bdd7
     - gid: D5/S1/Phase/WalkFormula.alternating_walk_append
       source_sha256: sha256:04e42dd025e34c9de8be32dae1b46277cf20cd5d19dc6178ff0d318a80bc22bb
-      target_statement_id: sha256:13ceab1fadfd26184076ed925afbf27cce6e6b7fe59ec454217ea8560f4862fd
+      target_statement_id: sha256:820c080cf28c2019fe7b3143eab0d40256d7725a2cf41ca24281b80e2109ff88
     - gid: D5/S1/Phase/WalkFormula.alternating_walk_reverse
       source_sha256: sha256:04e42dd025e34c9de8be32dae1b46277cf20cd5d19dc6178ff0d318a80bc22bb
-      target_statement_id: sha256:921ce110a2f304627497ed47a1813d715e7b23b778199d5468df2f76203d41db
+      target_statement_id: sha256:2d9f2c9b1cb3fe8832cc78dce8d2188dc6ea91696b6ef08b8178bcb9ef505131
     - gid: D5/S1/Phase/WalkFormula.endpoint_correction_is_integer
       source_sha256: sha256:04e42dd025e34c9de8be32dae1b46277cf20cd5d19dc6178ff0d318a80bc22bb
       target_statement_id: sha256:35b9add727aae2a3681fdb6d6f2fd8fb5689ba827a65d6ae899a07d7f48df3f7

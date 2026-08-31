@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/FixedPoints/ThreeCycleFixedPoint.three_cycle_action_has_fixed_point
       source_sha256: sha256:3095c10346da60a9079c5211610e9753f891e9d12f0e1b32c20a9fa693dd1379
-      target_statement_id: sha256:b01558bc5e59e25abb1ecf1bdc58adb6e3e5ff1725e62b98075df9e33ad10419
+      target_statement_id: sha256:f86c39390fed60bfb9f5e355236f49722412e877014ed820338601a50a73267e
   scribe:
     - gid: D5/S1/FixedPoints/ThreeCycleFixedPoint.three_cycle_action_has_fixed_point
       definition_sha256: sha256:1a39de4781a9d4a7d345d23a5d0d29c2d7b42441bfb3747648344066cff94f6d

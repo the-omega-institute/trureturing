@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Estimation/ErrorExponents/FiniteSuiteExtendedBudgetSqueeze.finite_suite_error_squeeze_extended
       source_sha256: sha256:e265a26a059fe07a89c59f9b1214c0278e38a58387f23538e327d2b647b14af2
-      target_statement_id: sha256:b0f9be89738f2d1c81f6ca58fd8e61bba6aa6dc50f89842925dbf5509bdec9ce
+      target_statement_id: sha256:afc5950810e94a1b77a2bc5953b92ece9cd88ca56eb4e3125c7dd626e09a4241
   scribe:
     - gid: D5/S3/Estimation/ErrorExponents/FiniteSuiteExtendedBudgetSqueeze.finite_suite_error_squeeze_extended
       definition_sha256: sha256:838dd8bc42361520aff70bacc2da4c2fab1fe39adbb80749b4b4f8d8e5d4b3de

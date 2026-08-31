@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/PrimeForms/SumTwoSquaresClassification.eq_sq_add_sq_iff_even_factorization
       source_sha256: sha256:02ddc9bd6b8831b0b3b7dfca7fc1d9c3dcf7c0dfebf83ae186dda40128cb8b11
-      target_statement_id: sha256:df6bef35c970f135cff06067e220e2c30f508b5da605d621e81f5cfb227342cc
+      target_statement_id: sha256:13b01eff3dcde1700be0bf4b224961f749ca63275982ea7d68f1fe1658a32de6
   scribe:
     - gid: D5/S3/PrimeForms/SumTwoSquaresClassification.eq_sq_add_sq_iff_even_factorization
       definition_sha256: sha256:e35349a36b308eee99a6621d77b0b2a5382ea5c0d9f4e9f8c5a1ca7b4be8a895

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S1/Eigenstructure/GoldenPowerLog.golden_power_logb_nat
       source_sha256: sha256:6706f5aca56b416822592bfdf174870340ad95de2896373968b828ba4a49f0c4
-      target_statement_id: sha256:6aed23f0744b8413d65331dd22e0a3b22c297eee6428d381a18e0ca9ed04c8e3
+      target_statement_id: sha256:a0b41dff1fb3d1c2459ca5b08b4fc4a42843d4c7a6a9f46ac55b81afbb28dbb0
   scribe:
     - gid: D5/S1/Eigenstructure/GoldenPowerLog.golden_power_logb_nat
       definition_sha256: sha256:3deda35db59ec71ebc23a13b2e543cbd3055b59c764774f11de3c81ed1258d9e

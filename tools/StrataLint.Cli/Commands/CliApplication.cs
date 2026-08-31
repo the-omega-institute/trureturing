@@ -53,6 +53,8 @@ internal interface ICliEnvironment
 
     CommandResult RevokeLedger(IReadOnlyList<string> arguments);
 
+    CommandResult ReanchorMathlibLedger(IReadOnlyList<string> arguments);
+
     ExplicitCommandResult TruthExport(IReadOnlyList<string> arguments);
 
     ExplicitCommandResult TruthRelease(IReadOnlyList<string> arguments);
@@ -121,6 +123,8 @@ internal static class CliApplication
                 RenderCommand(environment.AppendLedger(tail), console),
             ["ledger-revoke"] = static (environment, tail, console) =>
                 RenderCommand(environment.RevokeLedger(tail), console),
+            ["ledger-reanchor-mathlib"] = static (environment, tail, console) =>
+                RenderCommand(environment.ReanchorMathlibLedger(tail), console),
             ["route"] = static (environment, tail, console) =>
                 RenderCommand(environment.Route(tail), console),
             ["selftest"] = static (environment, tail, console) =>

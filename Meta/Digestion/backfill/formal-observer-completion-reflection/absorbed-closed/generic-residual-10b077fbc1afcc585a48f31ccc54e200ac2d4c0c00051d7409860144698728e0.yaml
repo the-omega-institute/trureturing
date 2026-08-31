@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Observer/Linear/DiscountedObservabilityGramianPositivity.discounted_observability_gramian_nonnegative
       source_sha256: sha256:10b077fbc1afcc585a48f31ccc54e200ac2d4c0c00051d7409860144698728e0
-      target_statement_id: sha256:3766c2fb88b7054ada13151d70839abffa678cfc2d08a9f46b8f9e5d01fb5c47
+      target_statement_id: sha256:fbfeec21a1b1c968f58599c41aa63417a04246506d445f5f647bd339d339c1e7
   scribe:
     - gid: D5/S3/Observer/Linear/DiscountedObservabilityGramianPositivity.discounted_observability_gramian_nonnegative
       definition_sha256: sha256:f93998975183e9fcba7194b77635971c0070b76bd85ac60ec61cc3c93041ea00

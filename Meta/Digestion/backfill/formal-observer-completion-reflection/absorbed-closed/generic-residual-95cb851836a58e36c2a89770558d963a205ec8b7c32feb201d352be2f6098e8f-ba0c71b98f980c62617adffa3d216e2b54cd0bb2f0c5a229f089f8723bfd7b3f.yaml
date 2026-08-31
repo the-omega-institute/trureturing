@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Observer/LinearMemory/DualGramKernels.dual_gram_kernels
       source_sha256: sha256:95cb851836a58e36c2a89770558d963a205ec8b7c32feb201d352be2f6098e8f
-      target_statement_id: sha256:41592e8f4181d04ce76df3e65fdd77ac4eb31aaefc49628940e571874aa5cf4e
+      target_statement_id: sha256:677ed18e98b739e1ebabdf5c231aa975071d70228b838b7b1624e66b72545c70
   scribe:
     - gid: D5/S3/Observer/LinearMemory/DualGramKernels.dual_gram_kernels
       definition_sha256: sha256:e706a19f51f23f218b77a9312db9b35e7d287697c2ea584c3eace46344c7ea84

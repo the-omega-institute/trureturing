@@ -1,4 +1,4 @@
-ast_path: row/Solenoid
+ast_path: row/Solenoid/occurrence/1
 fingerprints:
   raw_sha256: sha256:9ad52457cdcf10159f2b2e35ddb113febe62bc0ed707c532dc3dce60885ea91f
   normalized_sha256: sha256:9ad52457cdcf10159f2b2e35ddb113febe62bc0ed707c532dc3dce60885ea91f

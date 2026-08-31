@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Factorization/PrimePowers/SamePrimeScaleRedundancy.adjacent_joint_same_fiber
       source_sha256: sha256:d5a6908a00eb306077bce0cbc61e6c859138a5397c7f8529941a31d9226fddcf
-      target_statement_id: sha256:425e59d62bf6d87b8975a246c71b143479a56be78e52bfa03e53529db247a641
+      target_statement_id: sha256:b15d0ac719970f9059517638a3717de65975227b9291746a19c50360ad8bfb6b
   scribe:
     - gid: D5/S3/Factorization/PrimePowers/SamePrimeScaleRedundancy.adjacent_joint_same_fiber
       definition_sha256: sha256:8998b7ef23f4d5ef6935727e0c8e50503f2048de8180b2039cc3a5da79b06196

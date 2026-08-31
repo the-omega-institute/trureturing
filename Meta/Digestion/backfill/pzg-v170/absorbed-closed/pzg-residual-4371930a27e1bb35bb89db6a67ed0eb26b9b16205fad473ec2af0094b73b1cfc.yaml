@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Constants/Limits/GoldenFibonacciSeries.golden_fibonacci_series_has_sum
       source_sha256: sha256:4371930a27e1bb35bb89db6a67ed0eb26b9b16205fad473ec2af0094b73b1cfc
-      target_statement_id: sha256:99f93a4c343a53707ecaa82a55f42e44316e57fa472c8af99ff894453c701b72
+      target_statement_id: sha256:dc24632b4e5b4f2402dad8642b04aeb6ba931d3bc46a0aae799a258eabea09d0
   scribe:
     - gid: D5/S3/Constants/Limits/GoldenFibonacciSeries.golden_fibonacci_series_has_sum
       definition_sha256: sha256:3ecbc249262bbf6675e35c8842e64c68010e99774155b14b7b1d74a0a911d9c8

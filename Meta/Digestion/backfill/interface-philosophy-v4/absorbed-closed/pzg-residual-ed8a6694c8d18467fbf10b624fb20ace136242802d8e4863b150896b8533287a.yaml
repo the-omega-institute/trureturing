@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/Naming/CoordinateDependence.dependencySet
       source_sha256: sha256:ed8a6694c8d18467fbf10b624fb20ace136242802d8e4863b150896b8533287a
-      target_statement_id: sha256:fa24142a0c720b1b74a6a7e45ad4eace67e0af85018b3e3432b21be3b0bd83bf
+      target_statement_id: sha256:da1f2f0856de0c7e3f620d4ed7b214867d9daafc3b424a43216aec99982bb471
   scribe:
     - gid: D5/S0/Naming/CoordinateDependence.dependencySet
       definition_sha256: sha256:c6bc0058c71e48fdd696374f0942bac320929d8209a8df0b6feeb58ad3397015

@@ -10,10 +10,10 @@ receipts:
   coverage:
     - gid: D5/S1/Deficit/GoldenCarryLedger.carry_rewrite_face_invariant
       source_sha256: sha256:e8641d385f2d86b1cb8a89ec435a71e211d69270dc891591c66006cea3e5b2c7
-      target_statement_id: sha256:881d5c2bfc91ec97df60190c8f7199751e95ac4c702c4ad7596c55ced0d4efbf
+      target_statement_id: sha256:92b0558ee47abbff549b96b7bb324233e572c71f9f2b3f9bf4d14e51c439a87b
     - gid: D5/S1/Deficit/Carry/GoldenCarryDeficitBridge.golden_carry_deficit_bridge
       source_sha256: sha256:e8641d385f2d86b1cb8a89ec435a71e211d69270dc891591c66006cea3e5b2c7
-      target_statement_id: sha256:5abe655396e4b8e8cba9ddec0eba0e8d34aa1d3721e8de471c4e95187ff16116
+      target_statement_id: sha256:014917f9b79af1de2c8c5a842daad520c253baa83fb77b0e8bda164b4440ca5d
   scribe:
     - gid: D5/S1/Deficit/GoldenCarryLedger.carry_rewrite_face_invariant
       definition_sha256: sha256:bbb0b7659c74e64b1e9eac91390b71ff9f7428adfa576dd17f758b41d227f9fe

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/QuantumStates/GNSStateCone.state_cone_sections
       source_sha256: sha256:1dcbcde643244dd8b35354f4e81b1999a40c2faa24a0b359129889ec65184695
-      target_statement_id: sha256:fa42083368041a94443a16acbb056715f534f2d5bad18f96abdf433efa8ae117
+      target_statement_id: sha256:c5dda327473686650dc4c623b6f1970c56bd2adc21a0b8451fa85d5007eccadf
   scribe:
     - gid: D5/S3/QuantumStates/GNSStateCone.state_cone_sections
       definition_sha256: sha256:b421cfd2427194239fe2cd52303ad02ecf9215571063108a69b8585fe6ba1a3d

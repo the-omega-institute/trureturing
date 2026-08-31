@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Arith/Congruence/PadicPrecisionBlindSpot.first_distinguishing_precision
       source_sha256: sha256:df0a10a2c59cef0a8c442d7c7ea6a9a5d64329169d6754462e60eea02142688e
-      target_statement_id: sha256:9ce46600ca9b6354f616d89c60070487911da1de98c579dc0aa8b95a918b6b09
+      target_statement_id: sha256:e1d21da0d6019a2e82b8fb377c71c618007622e8a4d4881dc629f5924c3c391e
   scribe:
     - gid: D5/S3/Arith/Congruence/PadicPrecisionBlindSpot.first_distinguishing_precision
       definition_sha256: sha256:f74edfb93c5c49ea0b5d4c2ff3fd297f4a9579b0c0978fee311a5dbe9256807f

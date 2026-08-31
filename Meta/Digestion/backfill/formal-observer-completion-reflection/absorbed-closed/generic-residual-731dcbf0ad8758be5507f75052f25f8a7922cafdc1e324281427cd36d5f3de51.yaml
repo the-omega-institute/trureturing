@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Observer/Budget/FiniteInternalProtocolNoGo.finite_internal_protocol_no_go
       source_sha256: sha256:731dcbf0ad8758be5507f75052f25f8a7922cafdc1e324281427cd36d5f3de51
-      target_statement_id: sha256:42b0826cb78ba22fa4ba2c0190a1f8728c63e06c521466d94526d68979b65a48
+      target_statement_id: sha256:4d766f7fb9c600d895527ff35d19c309f1e7984a482f2fc4d555c61686b518f8
   scribe:
     - gid: D5/S3/Observer/Budget/FiniteInternalProtocolNoGo.finite_internal_protocol_no_go
       definition_sha256: sha256:8288f28ef68729e589545c45122b4ef025e906b30631a30ee37ee32838597f37

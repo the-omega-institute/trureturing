@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Analytic/Dilation/GoldenUnitZetaPeriodicity.golden_unit_zeta_periodicity
       source_sha256: sha256:2354669dfc2dae1100a0583d8c66b6afc85136661da91487791afdcec4f114b3
-      target_statement_id: sha256:8484a494b14416dbfea9b5fcb0fa4b6441032653c18cc8660b69902fd2d23fad
+      target_statement_id: sha256:9f79e8c1e63392cdeedb5a3a104f4ee10456c2a90948b68555998a66128548e1
   scribe:
     - gid: D5/S3/Analytic/Dilation/GoldenUnitZetaPeriodicity.golden_unit_zeta_periodicity
       definition_sha256: sha256:bbba842538a911d6f160ff06c08b8e8917e699d419bbf8a1059787c3c07961c8

@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/Agency/SelfConstraintMonotonicity.appended_record_shrinks_consistent_actions
       source_sha256: sha256:2387722de0c533f00662bd865976bef92345b744eb48a09f46cf3bd5ac168b2e
-      target_statement_id: sha256:350db5c18cb80746c9e165340a5c2fd2ce4881ecf81532f17cffa5df9f9b9468
+      target_statement_id: sha256:34b9cf518df708bd5c1b7e476334ea57ec5ec6cf579850c52286e02babc684a4
   scribe:
     - gid: D5/S3/ConceptDynamics/Agency/SelfConstraintMonotonicity.appended_record_shrinks_consistent_actions
       definition_sha256: sha256:4befac6360191b3f10b83d1b140b8c52ce380ab1470f4b60e908e03ede97b765

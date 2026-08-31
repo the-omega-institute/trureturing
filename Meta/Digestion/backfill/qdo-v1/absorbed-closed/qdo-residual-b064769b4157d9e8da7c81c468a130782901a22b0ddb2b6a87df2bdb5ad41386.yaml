@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Quantum/Algebra/DoubleOrthogonalClosure.double_orthogonal_complement_eq_closure
       source_sha256: sha256:b064769b4157d9e8da7c81c468a130782901a22b0ddb2b6a87df2bdb5ad41386
-      target_statement_id: sha256:eeec0f1a8e0c36d289902ca66e581c555f166f66c45194ce5a629b2c6a3362f5
+      target_statement_id: sha256:01461b8f3320d2c33bd39ab8a9107dea3be5dfd979910dbff8af49c5ff5ca31f
   scribe:
     - gid: D5/S3/Quantum/Algebra/DoubleOrthogonalClosure.double_orthogonal_complement_eq_closure
       definition_sha256: sha256:a2a114663052540ea77c30077aa0f4e9762c841058293a8df0e23d1a9e4eb7bb

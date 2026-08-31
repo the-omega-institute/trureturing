@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/OperationalOntology/ActionExpansionIndistinguishability.action_expansion_shrinks_indistinguishability
       source_sha256: sha256:74d4d371ac7e4d4d9a5627fd3f07b6faf8e42de5a24aee2c9e846b4532422715
-      target_statement_id: sha256:630e462c797cf31ab91e945236a83b10e0042e9191a646cd5c25f611033a6f3f
+      target_statement_id: sha256:8ce6908712d754518e23523d4fc07cf4a676db1b7522fe5ab3653f392a7b5563
   scribe:
     - gid: D5/S3/ConceptDynamics/OperationalOntology/ActionExpansionIndistinguishability.action_expansion_shrinks_indistinguishability
       definition_sha256: sha256:b505deed5b231624dff69fbfcec8298e1412b202dfbb5bbde77d4e27e2d395b0

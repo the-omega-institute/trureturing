@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/Diagonal/CaptureIntersectionCardinality.capture_intersection_cardinality
       source_sha256: sha256:0ad32f2c7ce4a2a5cad5b4e99ed16faeec08d1dadb27a2eb20c9c8861028d4b2
-      target_statement_id: sha256:e3ffcee80c8243699bf20b453c3a9a5a481d49492b10fc5c655ad45d3b928d07
+      target_statement_id: sha256:83cc9ba5cfdc0ca33adb169d9437c5efb5517df833109ba9878cbd690ed30c88
   scribe:
     - gid: D5/S0/Diagonal/CaptureIntersectionCardinality.capture_intersection_cardinality
       definition_sha256: sha256:127d36e830486522eeffd3b60875bfbb0392266d23617244f4ceaf370935a631

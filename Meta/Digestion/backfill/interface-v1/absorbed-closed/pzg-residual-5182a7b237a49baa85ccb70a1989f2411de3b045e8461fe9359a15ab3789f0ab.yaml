@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S0/Diagonal/CaptureCount.capture_independent
       source_sha256: sha256:5182a7b237a49baa85ccb70a1989f2411de3b045e8461fe9359a15ab3789f0ab
-      target_statement_id: sha256:4e46a53bdac37cb1cd12ea5378fc922b726034fee9b6bbfd28162671cdfd51b8
+      target_statement_id: sha256:fb40b8f4371062fdf12b6877a9c627cb5aea498db8cedb0adcd34f15ba859013
   scribe:
     - gid: D5/S0/Diagonal/CaptureCount.capture_independent
       definition_sha256: sha256:e31ff87abd356547a8bda2d79052f07b16f2b9627009f08a25f527ed34856dce

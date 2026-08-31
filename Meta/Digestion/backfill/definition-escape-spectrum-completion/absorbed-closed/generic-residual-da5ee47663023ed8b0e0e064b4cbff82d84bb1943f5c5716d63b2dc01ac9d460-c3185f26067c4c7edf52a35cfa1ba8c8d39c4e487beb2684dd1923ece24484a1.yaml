@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/ConceptDynamics/EscapeSpectrum/CompactResidualFiniteCompletion.compact_residual_finite_completion
       source_sha256: sha256:da5ee47663023ed8b0e0e064b4cbff82d84bb1943f5c5716d63b2dc01ac9d460
-      target_statement_id: sha256:45b700da78186027525488b3ead7d592b947f6a76a5c23eded4146b62911c388
+      target_statement_id: sha256:1c8b03c1b66e4ad7bfb6d6dc3c70544977ac07f3988ea639610593caf48f2d5a
   scribe:
     - gid: D5/S3/ConceptDynamics/EscapeSpectrum/CompactResidualFiniteCompletion.compact_residual_finite_completion
       definition_sha256: sha256:96c1d7c7526fd7259d43ad205a03391962694e7322c2762565f6432cdfc39ee2

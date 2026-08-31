@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Observer/DynamicProgramming/ReverseBfsDistance.reverse_bfs_correct_and_quadratic
       source_sha256: sha256:e15544e8a30e74d7f0c96027facc2346949186c6cd8681ec347c23605a7bc041
-      target_statement_id: sha256:d84fa44825aa8f3792cb39dcad5b96e07f9ab81eccef5508d316f145007226e2
+      target_statement_id: sha256:d0915a34078166884f1cd26342c57dede7b8819ae4193ce949c9cdb501ac92b6
   scribe:
     - gid: D5/S3/Observer/DynamicProgramming/ReverseBfsDistance.reverse_bfs_correct_and_quadratic
       definition_sha256: sha256:2baf1664a219ffe5fc73e6520eff9cfd5067042022bac677b3e54ef43cf694dd

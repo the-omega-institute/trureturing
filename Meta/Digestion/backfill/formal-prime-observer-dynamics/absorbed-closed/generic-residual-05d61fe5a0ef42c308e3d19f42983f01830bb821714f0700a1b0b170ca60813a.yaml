@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Fourier/BinaryCharacterBasisMinimality.binary_character_basis_minimality
       source_sha256: sha256:05d61fe5a0ef42c308e3d19f42983f01830bb821714f0700a1b0b170ca60813a
-      target_statement_id: sha256:36510eed8d4d939f83a5a5e36c30417e5587bda5d00d510ddce7d1f1ed16a055
+      target_statement_id: sha256:28c8a7fdbe0445b97c24b5de804982ef8996437826a3810145959c0b57aa67c8
   scribe:
     - gid: D5/S3/Fourier/BinaryCharacterBasisMinimality.binary_character_basis_minimality
       definition_sha256: sha256:fadab17fdadc751294f04fb433200746d670403207c3c2443d2ad48c231e3bc8

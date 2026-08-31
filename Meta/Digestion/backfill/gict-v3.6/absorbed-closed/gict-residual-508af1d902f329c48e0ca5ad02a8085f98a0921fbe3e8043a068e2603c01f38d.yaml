@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/PrimeForms/FixedFormDiscriminant.det_neg_one_fixed_form_disc
       source_sha256: sha256:508af1d902f329c48e0ca5ad02a8085f98a0921fbe3e8043a068e2603c01f38d
-      target_statement_id: sha256:05fbee998396095a904458ddb91f13f45f1e9db16e8aa25581950d9e7a56846c
+      target_statement_id: sha256:7038ba3d5af889c766a443d0aa318bb66cc154127fd1851011a6d774f45cd222
   scribe:
     - gid: D5/S3/PrimeForms/FixedFormDiscriminant.det_neg_one_fixed_form_disc
       definition_sha256: sha256:c69609f5a43319d098c9584fb4afe5956ea93116ae676b48e9f26c7a4a8490b4

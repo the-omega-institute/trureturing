@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/PrimeForms/PropagationLegs.propagation_identity
       source_sha256: sha256:a2bcd15e73585bd47c28a5f9fa51acbaa5cc30079710fd574614f3d43341bb17
-      target_statement_id: sha256:d0cdcbf9babffaff5c8fefe66dc51d850082ae6ae547c54e96263f4b9e742aca
+      target_statement_id: sha256:5a1f48d195af493729112cc38d5293dd07c6493910617208b43d01bdf0fab77b
   scribe:
     - gid: D5/S3/PrimeForms/PropagationLegs.propagation_identity
       definition_sha256: sha256:3da4e8957361ec00ba5f041288026a3d1a9f6da8b45a4ad06a0438f4dedf0a59

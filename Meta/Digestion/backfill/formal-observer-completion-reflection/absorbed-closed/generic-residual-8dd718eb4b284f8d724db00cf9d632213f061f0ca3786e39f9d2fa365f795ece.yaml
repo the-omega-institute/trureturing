@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Observer/LinearMemory/ObservationRankEquality.observation_rank_equality
       source_sha256: sha256:8dd718eb4b284f8d724db00cf9d632213f061f0ca3786e39f9d2fa365f795ece
-      target_statement_id: sha256:73e5745cf6a081299a99aed2633f9852d8f73ac2da539975799fc66c4073effc
+      target_statement_id: sha256:45240a3746e39aa427421e9b9a95bb93a27fb20e7229c3434160e53a91322fea
   scribe:
     - gid: D5/S3/Observer/LinearMemory/ObservationRankEquality.observation_rank_equality
       definition_sha256: sha256:1f40f1f64e1f12963e125319560e3e496d4020e01afb32e60c5efa2ae99d00b4

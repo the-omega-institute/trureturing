@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Quantum/Divergence/VonNeumannEntropyPinching.von_neumann_entropy_pinching
       source_sha256: sha256:1a9a591ce3d06ee4591c9ecdd85d4ca40186e2f6f870a6148d228a9d6b1d7cc0
-      target_statement_id: sha256:0201ba14b80009488813ac65b78ab493982195d08bde6cc62a35e345c7569932
+      target_statement_id: sha256:8e84eeb195a0a48fd940e570ff3ead4de7bc9fdd8e3a624111977db8264d8088
   scribe:
     - gid: D5/S3/Quantum/Divergence/VonNeumannEntropyPinching.von_neumann_entropy_pinching
       definition_sha256: sha256:59abb3981de9fcba55010f7b7ba221622c49a76d5696cf2cf872f141cd7559b6

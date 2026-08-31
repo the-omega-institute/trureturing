@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Observer/MetricGeometry/OutputTrajectoryError.output_trajectory_error
       source_sha256: sha256:12e5c5ae2a8cf6ce7e9f44bc49f184ee62f6fb29f21a1081f491b4dedffe0ca5
-      target_statement_id: sha256:154d2e27e07cd8be236cb777031374cd7f8484ac23e653555d9f063cd853ca6e
+      target_statement_id: sha256:002ee4468f4b4472a0e1bed0dbf4ec457fff1381bae1380512089f53f7bc57e0
   scribe:
     - gid: D5/S3/Observer/MetricGeometry/OutputTrajectoryError.output_trajectory_error
       definition_sha256: sha256:118d2ad890452c35aab742dd39bfdcac97f1308e20afc08059b86f8c4fdce604

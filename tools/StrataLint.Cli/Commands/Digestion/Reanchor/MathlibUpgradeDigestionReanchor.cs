@@ -17,7 +17,7 @@ internal static class MathlibUpgradeDigestionReanchor
         ArgumentNullException.ThrowIfNull(candidate);
         ArgumentNullException.ThrowIfNull(changes);
         ArgumentNullException.ThrowIfNull(lean);
-        var reanchoredPaths = AuthorizedPaths(protectedBase, candidate, changes, lean);
+        var reanchoredPaths = ReceiptReanchorPaths(protectedBase, candidate, changes, lean);
         if (reanchoredPaths is null)
         {
             return document;
@@ -52,7 +52,7 @@ internal static class MathlibUpgradeDigestionReanchor
         return changed ? document.WithDigestionSources(sources) : document;
     }
 
-    private static ImmutableHashSet<RepoPath>? AuthorizedPaths(
+    private static ImmutableHashSet<RepoPath>? ReceiptReanchorPaths(
         RepositorySnapshot protectedBase,
         RepositorySnapshot candidate,
         RawChangeSet changes,
@@ -70,13 +70,14 @@ internal static class MathlibUpgradeDigestionReanchor
                 .Where(static item => item.Value is TruthState.Closed)
                 .Select(static item => item.Key)
                 .ToImmutableHashSet();
+            var candidateView = FrozenLedgerBaseViewReader.Read(candidate);
             var catalog = FrozenContentAddress.BuildAdmissionCatalog(
                 candidate,
                 lean,
                 states,
                 adjacency,
                 selectedPaths,
-                preparation.BaseView.ActiveByPath);
+                candidateView.ActiveByPath);
             var recognition = FrozenLedgerIncrementalReplacementRecognition.Recognize(
                 preparation.BaseView,
                 candidate,
@@ -88,31 +89,14 @@ internal static class MathlibUpgradeDigestionReanchor
                 return null;
             }
 
-            var authorization = new MathlibUpgradeFrozenLedgerReplacementAuthorization(
-                protectedBase,
-                candidate);
-            var context = new FrozenLedgerReplacementAuthorizationContext(
-                recognition,
-                preparation.BaseView,
-                catalog);
-            if (!authorization.IsAuthorized(context))
+            if (!EffectiveLeanPins.TryRead(protectedBase, out var basePins)
+                || !EffectiveLeanPins.TryRead(candidate, out var candidatePins)
+                || basePins == candidatePins)
             {
                 return null;
             }
 
-            preparation = preparation with { Replacement = recognition };
-            var scope = FrozenLedgerAdmissionScope.Create(
-                changes,
-                preparation,
-                states,
-                adjacency);
-            return FrozenLedger.ValidateAdmissionDelta(
-                    preparation,
-                    scope,
-                    catalog,
-                    authorization) is null
-                ? recognition.ReanchoredModulePaths
-                : null;
+            return recognition.ReanchoredModulePaths;
         }
         catch (Exception exception) when (exception is ArgumentException
             or FormatException
@@ -145,4 +129,53 @@ internal static class MathlibUpgradeDigestionReanchor
 
         return receipt with { TargetStatementId = candidateStatement!.Value };
     }
+}
+
+internal static class MathlibUpgradePropositionSourceDiagnostics
+{
+    internal static ImmutableArray<RepoPath> FindFailures(
+        RepositorySnapshot protectedBase,
+        RepositorySnapshot candidate,
+        ImmutableHashSet<RepoPath> reanchoredPaths,
+        FrozenLedgerBaseView baseView,
+        FrozenMaterialCatalog candidateCatalog)
+    {
+        var failures = ImmutableArray.CreateBuilder<RepoPath>();
+        var baseSources = LeanSourceCatalog.Parse(protectedBase);
+        var candidateSources = LeanSourceCatalog.Parse(candidate);
+        foreach (var path in reanchoredPaths.OrderBy(
+            static path => path.Value,
+            StringComparer.Ordinal))
+        {
+            try
+            {
+                if (!baseView.ActiveByPath.TryGetValue(path, out var recorded)
+                    || !candidateCatalog.ByPath.TryGetValue(path, out var current)
+                    || !SourceBytesMatch(protectedBase, candidate, path)
+                        && !baseSources.ExtractPropositionSource(
+                                path,
+                                recorded.Material.DeclarationStatementIds)
+                            .AsSpan().SequenceEqual(candidateSources.ExtractPropositionSource(
+                                path,
+                                current.DeclarationStatementIds).AsSpan()))
+                {
+                    failures.Add(path);
+                }
+            }
+            catch (LeanSourceExtractionException)
+            {
+                failures.Add(path);
+            }
+        }
+
+        return failures.ToImmutable();
+    }
+
+    private static bool SourceBytesMatch(
+        RepositorySnapshot protectedBase,
+        RepositorySnapshot candidate,
+        RepoPath path) =>
+        protectedBase.Files.TryGetValue(path, out var baseFile)
+        && candidate.Files.TryGetValue(path, out var candidateFile)
+        && baseFile.RawBytes.AsSpan().SequenceEqual(candidateFile.RawBytes.AsSpan());
 }

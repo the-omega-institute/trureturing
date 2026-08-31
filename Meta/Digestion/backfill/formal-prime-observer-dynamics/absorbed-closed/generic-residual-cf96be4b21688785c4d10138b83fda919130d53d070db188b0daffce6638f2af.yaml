@@ -9,7 +9,7 @@ receipts:
   coverage:
     - gid: D5/S3/Factorization/PrimePowers/FiniteCrtJoin.finite_crt_join
       source_sha256: sha256:cf96be4b21688785c4d10138b83fda919130d53d070db188b0daffce6638f2af
-      target_statement_id: sha256:819c9df6de0f7923b7935bd9b60f3cfa51b60fd01f7e67149e536af22bf306a3
+      target_statement_id: sha256:54051c2576596a2b1c01a249167daa874d5c97fcee1a2c68344f3f6a73ae12f8
   scribe:
     - gid: D5/S3/Factorization/PrimePowers/FiniteCrtJoin.finite_crt_join
       definition_sha256: sha256:2417e2ff80555947739e382c1ba8fa47c58a6af6132da76dc6cc71b31c50316c

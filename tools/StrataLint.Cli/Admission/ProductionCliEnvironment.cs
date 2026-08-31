@@ -661,6 +661,13 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
     public CommandResult RevokeLedger(IReadOnlyList<string> arguments) =>
         DagLedgerRevokeWriter.Revoke(repositoryRoot, repository, arguments);
 
+    public CommandResult ReanchorMathlibLedger(IReadOnlyList<string> arguments) =>
+        DagLedgerMathlibReanchorWriter.Reanchor(
+            repositoryRoot,
+            repository,
+            leanReportSource,
+            arguments);
+
     public ExplicitCommandResult TruthRelease(IReadOnlyList<string> arguments) =>
         TruthReleaseCommand.Run(repository, scribeEmissionVerifier, arguments);
 
