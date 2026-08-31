@@ -91,7 +91,6 @@ internal sealed class ReflectedZeroModePhaseFlatteningDocument
         [
             DocumentEdge.Dependency.Create(GidRef.Create(
                 "D5/S3/Weil/ZetaLinear/CriticalDampingGenerator")),
-            DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Weil/ZeroSum")),
         ]));
 
     private static DocumentBlock.Describe DefinitionNode(
