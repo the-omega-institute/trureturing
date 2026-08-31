@@ -61,9 +61,11 @@ public sealed partial class SelfLockProbeScriptTests
         {
             CandidateRepository = Path.Combine(temporary.Path, "candidate");
             ScriptHarnessScratch.EnsureDirectory(CandidateRepository);
-            GitAt(CandidateRepository, "init", "-b", "main");
-            GitAt(CandidateRepository, "config", "user.name", "Self Lock Test");
-            GitAt(CandidateRepository, "config", "user.email", "self-lock@example.invalid");
+            GitAt(CandidateRepository, "init", "--template=", "-b", "main");
+            ConfigureSyntheticRepository(
+                CandidateRepository,
+                "Self Lock Test",
+                "self-lock@example.invalid");
             var before = revertedPath == ProtectionPolicyPath
                 ? ProtectionPolicy
                 : "before\n";
@@ -153,6 +155,10 @@ public sealed partial class SelfLockProbeScriptTests
         {
             var path = Path.Combine(temporary.Path, name);
             GitAt(temporary.Path, "clone", CandidateRepository, path);
+            ConfigureSyntheticRepository(
+                path,
+                "Self Lock Test",
+                "self-lock@example.invalid");
             return path;
         }
 
@@ -355,8 +361,8 @@ public sealed partial class SelfLockProbeScriptTests
     private static void GitAt(string repository, params string[] arguments)
     {
         var result = TestProcessRunner.Run(
-            "/usr/bin/git",
-            arguments,
+            "/usr/bin/env",
+            IsolatedGitArguments(arguments),
             repository,
             TestBudgets.ScriptProcessHangGuard,
             64 * 1024);
@@ -366,8 +372,8 @@ public sealed partial class SelfLockProbeScriptTests
     private static string GitTextAt(string repository, params string[] arguments)
     {
         var result = TestProcessRunner.Run(
-            "/usr/bin/git",
-            arguments,
+            "/usr/bin/env",
+            IsolatedGitArguments(arguments),
             repository,
             TestBudgets.ScriptProcessHangGuard,
             64 * 1024);
@@ -381,8 +387,8 @@ public sealed partial class SelfLockProbeScriptTests
         params string[] arguments)
     {
         var result = TestProcessRunner.Run(
-            "/usr/bin/git",
-            arguments,
+            "/usr/bin/env",
+            IsolatedGitArguments(arguments),
             repository,
             TestBudgets.ScriptProcessHangGuard,
             64 * 1024,
@@ -390,6 +396,39 @@ public sealed partial class SelfLockProbeScriptTests
         Assert.True(result.ExitCode == 0, Diagnostics(result));
         return Encoding.UTF8.GetString(result.StandardOutput).Trim();
     }
+
+    private static void ConfigureSyntheticRepository(
+        string repository,
+        string userName,
+        string userEmail)
+    {
+        GitAt(repository, "config", "--local", "user.name", userName);
+        GitAt(repository, "config", "--local", "user.email", userEmail);
+        GitAt(repository, "config", "--local", "commit.gpgsign", "false");
+        GitAt(repository, "config", "--local", "tag.gpgsign", "false");
+        GitAt(repository, "config", "--local", "core.autocrlf", "false");
+        GitAt(repository, "config", "--local", "core.safecrlf", "false");
+        GitAt(repository, "config", "--local", "core.hooksPath", "/dev/null");
+        GitAt(repository, "config", "--local", "gc.auto", "0");
+        GitAt(repository, "config", "--local", "maintenance.auto", "false");
+    }
+
+    private static string[] IsolatedGitArguments(IEnumerable<string> arguments) =>
+    [
+        "-u", "GIT_AUTHOR_NAME",
+        "-u", "GIT_AUTHOR_EMAIL",
+        "-u", "GIT_COMMITTER_NAME",
+        "-u", "GIT_COMMITTER_EMAIL",
+        "-u", "GIT_CONFIG",
+        "-u", "GIT_CONFIG_PARAMETERS",
+        "-u", "GIT_TEMPLATE_DIR",
+        "GIT_CONFIG_GLOBAL=/dev/null",
+        "GIT_CONFIG_SYSTEM=/dev/null",
+        "GIT_CONFIG_NOSYSTEM=1",
+        "GIT_CONFIG_COUNT=0",
+        "/usr/bin/git",
+        .. arguments,
+    ];
 
     private static string Diagnostics(ProcessOutput result) =>
         "stdout:\n" + Encoding.UTF8.GetString(result.StandardOutput)

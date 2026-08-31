@@ -11,9 +11,11 @@ public sealed partial class SelfLockProbeScriptTests
         using var temporary = new TemporaryDirectory();
         var controller = Path.Combine(temporary.Path, "controller");
         ScriptHarnessScratch.EnsureDirectory(controller);
-        GitAt(controller, "init", "-b", "main");
-        GitAt(controller, "config", "user.name", "Evaluator Closure Test");
-        GitAt(controller, "config", "user.email", "evaluator-closure@example.invalid");
+        GitAt(controller, "init", "--template=", "-b", "main");
+        ConfigureSyntheticRepository(
+            controller,
+            "Evaluator Closure Test",
+            "evaluator-closure@example.invalid");
         foreach (var file in new Dictionary<string, string>(StringComparer.Ordinal)
         {
             ["Directory.Build.props"] = "<Project />\n",
