@@ -1,0 +1,17 @@
+ast_path: section/55-2-6-开放问题-OP6-前瞻改善不蕴含泛化
+fingerprints:
+  raw_sha256: sha256:607eceddc512be0ccbcbded38bcc2ca6f00d0e4b753ac50e14eae295bad6d22e
+  normalized_sha256: sha256:607eceddc512be0ccbcbded38bcc2ca6f00d0e4b753ac50e14eae295bad6d22e
+cas_ref: sha256:607eceddc512be0ccbcbded38bcc2ca6f00d0e4b753ac50e14eae295bad6d22e
+coverage_gids:
+  - D5/S3/ConceptDynamics/DefinitionEscapeLaws/ScientificGainGeneralizationReversal.scientific_gain_generalization_sign_reversal
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/DefinitionEscapeLaws/ScientificGainGeneralizationReversal.scientific_gain_generalization_sign_reversal
+      source_sha256: sha256:607eceddc512be0ccbcbded38bcc2ca6f00d0e4b753ac50e14eae295bad6d22e
+      target_statement_id: sha256:07dc3b9984fe6e9c8eb2d0e232364c8b844b69b0c049b0a678202519b85edb1c
+  scribe:
+    - gid: D5/S3/ConceptDynamics/DefinitionEscapeLaws/ScientificGainGeneralizationReversal.scientific_gain_generalization_sign_reversal
+      definition_sha256: sha256:3cc4ec58e58e6d264d5fe85d8931c5bfa1897b80da1a65399ddb9a99d4f784a2
+      emission_sha256: sha256:cc1fb08d6e764d3e8bb3725d0b76b8814f51bb056b12c169350b90a1decffb72
+  unresolved_subitems: []
