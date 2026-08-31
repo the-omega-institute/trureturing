@@ -1,0 +1,38 @@
+## 八、负支撑、负方向与 negative square
+
+对测度
+
+$$
+\nu=\sum_jm_j\delta_{x_j},
+$$
+
+“负质量”指 $m_j<0$。“负支撑”指 $m_j>0$ 但 $x_j<0$。当前 RH normal-resolvent 路线更自然地把异常放在支撑位置：
+
+$$
+m_{\rho}>0,
+\qquad
+x_{\rho}=-\delta^2<0.
+$$
+
+若测试函数 $p$ 在允许支撑 $[0,\infty)$ 上非负，而在 $-\delta^2$ 处为负，则
+
+$$
+\int p(x)\,d\nu(x)<0.
+$$
+
+这把负支撑运输成负矩，再运输成 Toeplitz、Pick 或 Weil 二次型的负方向。
+
+对于 Hermitian 核 $K$，有限采样矩阵
+
+$$
+G_{jk}=K(z_j,z_k)
+$$
+
+若存在 $c\ne0$ 使
+
+$$
+c^{*}Gc<0,
+$$
+
+则出现一个 negative square。负平方指数是最大独立负子空间的维数。它记录系统拥有多少个彼此独立的向下方向。
+

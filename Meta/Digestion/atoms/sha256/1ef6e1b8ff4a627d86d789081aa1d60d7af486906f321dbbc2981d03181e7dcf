@@ -1,0 +1,48 @@
+## 1387.1 观察扫描
+
+固定对象深度 \(\delta\)，只改变观察基线：
+
+$$
+\boxed{
+\delta\ \text{固定},
+\qquad
+\omega\mapsto\varphi^{-2}\omega.
+}
+\tag{1387.1}
+$$
+
+此时：
+
+$$
+\sigma=\frac{\omega}{\delta}
+$$
+
+改变，观察者逐步远离 horizon mixing。
+
+无量纲 modular gap：
+
+$$
+\varepsilon
+=
+-\log\sigma^2
+=
+2\log\frac{\delta}{\omega}
+$$
+
+满足：
+
+$$
+\boxed{
+\varepsilon_{n+1}
+-
+\varepsilon_n
+=
+4\log\varphi.
+}
+\tag{1387.2}
+$$
+
+所以黄金比例是**观察扫描的 modular level spacing**。
+
+---
+

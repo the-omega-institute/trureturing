@@ -1,0 +1,23 @@
+* Gamma 因子单独证明 RH。
+
+更准确的是：
+
+$$
+\boxed{
+\text{Archimedean completion 是一个天然稳定、无零点的双层热过滤器。}
+}
+$$
+
+Gamma 函数没有零点；其已知极点也不位于当前非平凡 critical cell 中。因此，真正产生 inverse-inner denominator 的候选仍来自 \(\zeta/\xi\) 零点除子，而不是 Gamma 零点。
+
+这对证明路线非常重要：
+
+$$
+\boxed{
+\text{Gamma 通道应负责 horizon regularity；
+prime-global 通道负责是否产生异常共振。}
+}
+$$
+
+---
+

@@ -1,0 +1,78 @@
+# 第一千三百八十六部　Hardy 视界行列式就是 Minkowski norm
+
+定义局部 horizon determinant：
+
+$$
+\boxed{
+\mathscr D_\rho(\omega)
+=
+1-\sigma_\rho(\omega)^2.
+}
+\tag{1386.1}
+$$
+
+代入式 (1385.9)：
+
+$$
+\boxed{
+\mathscr D_\rho(\omega)
+=
+\frac{
+\delta^2-\omega^2
+}{
+\delta^2
+}
+=
+\frac{uv}{X^2}.
+}
+\tag{1386.2}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{Hankel contractivity defect}
+=
+\text{归一化 Minkowski norm}.
+}
+$$
+
+当：
+
+$$
+uv\downarrow0,
+$$
+
+有：
+
+$$
+\mathscr D_\rho\downarrow0.
+$$
+
+相应自由能型量为：
+
+$$
+\boxed{
+\mathscr F_\rho
+=
+-\log\mathscr D_\rho
+=
+-\log
+\frac{uv}{\delta^2}.
+}
+\tag{1386.3}
+$$
+
+所以视界发散来自：
+
+$$
+\boxed{
+u=\delta-\omega\to0,
+}
+$$
+
+而不是零点重数或 Chern 荷趋于无穷。
+
+---
+

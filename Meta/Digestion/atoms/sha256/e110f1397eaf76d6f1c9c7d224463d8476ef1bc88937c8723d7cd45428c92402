@@ -1,0 +1,52 @@
+# 第一千三百九十九部　Poisson 完成给出一条严格的信息第二定律
+
+对两张 shifted 光影同时再作尺度为 \(h>0\) 的 Poisson 平滑。
+
+由于：
+
+$$
+P_a*P_h=P_{a+h},
+$$
+
+两张状态变为：
+
+$$
+p_{\gamma,\delta-\omega+h},
+\qquad
+p_{\gamma,\delta+\omega+h}.
+$$
+
+其 KL 散度为：
+
+$$
+\boxed{
+D_\rho(\omega;h)
+=
+-\log
+\left[
+1-
+\frac{\omega^2}{(\delta+h)^2}
+\right].
+}
+\tag{1399.1}
+$$
+
+直接求导：
+
+$$
+\boxed{
+\frac{\partial D_\rho}{\partial h}
+=
+-\frac{
+2\omega^2
+}{
+(\delta+h)
+\bigl((\delta+h)^2-\omega^2\bigr)
+}
+<0.
+}
+\tag{1399.2}
+$$
+
+因此：
+

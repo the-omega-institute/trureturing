@@ -1,0 +1,35 @@
+* \(\mathfrak H_\omega\) 测量正时间输入被散射到负时间的份额。
+
+因此：
+
+$$
+\boxed{
+\mathfrak H_\omega
+}
+$$
+
+正是当前系统中最接近 Bogoliubov \(\beta\)-系数的对象。
+
+区别在于，直接的 Hardy 分块满足：
+
+$$
+\boxed{
+T_\omega^*T_\omega
++
+\mathfrak H_\omega^*\mathfrak H_\omega
+=
+I,
+}
+\tag{1325.2}
+$$
+
+而量子 Bogoliubov 变换满足双曲关系：
+
+$$
+\alpha^\dagger\alpha-\beta^\dagger\beta=I.
+$$
+
+二者可以通过一个标准双曲提升精确连接。
+
+---
+

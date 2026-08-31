@@ -1,0 +1,73 @@
+# 第一千三百九十一部　Poisson 相位通道的关系 Holonomy 能量
+
+前文的单缺陷 boundary phase character 为：
+
+$$
+\boxed{
+v_j(k)
+=
+e^{-\delta_j|k|}
+e^{-ik\gamma_j}.
+}
+\tag{1391.1}
+$$
+
+它的模长读取横向深度；
+
+它的相位读取纵向高度。
+
+对于两个通道 \(i,j\)，定义反交换相位曲率：
+
+$$
+\boxed{
+\mathcal R_{ij}(k)
+=
+v_i(k)\overline{v_j(k)}
+-
+v_j(k)\overline{v_i(k)}.
+}
+\tag{1391.2}
+$$
+
+令：
+
+$$
+a_{ij}
+=
+\delta_i+\delta_j,
+$$
+
+$$
+d_{ij}
+=
+\gamma_j-\gamma_i.
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal R_{ij}(k)
+=
+2i
+e^{-a_{ij}|k|}
+\sin(kd_{ij}).
+}
+\tag{1391.3}
+$$
+
+定义 pairwise phase-holonomy energy：
+
+$$
+\boxed{
+E_{ij}
+=
+\frac1{2\pi}
+\int_{\mathbb R}
+|\mathcal R_{ij}(k)|^2\,dk.
+}
+\tag{1391.4}
+$$
+
+直接积分得到：
+

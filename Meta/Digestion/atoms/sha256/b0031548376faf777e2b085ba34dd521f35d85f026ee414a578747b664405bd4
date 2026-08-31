@@ -1,0 +1,27 @@
+# 第一千二百九十三部　Hardy 极化形式的 RH 判据
+
+对 shifted scattering：
+
+$$
+\Theta_\omega(t)
+=
+\frac{
+\xi(\frac12-\omega-it)
+}{
+\xi(\frac12+\omega-it)
+},
+$$
+
+定义：
+
+$$
+\boxed{
+\mathfrak H_\omega
+=
+P_-M_{\Theta_\omega}P_+.
+}
+\tag{1293.1}
+$$
+
+在标准 shifted-\(\xi\) 因子化与边界正则条件下：
+

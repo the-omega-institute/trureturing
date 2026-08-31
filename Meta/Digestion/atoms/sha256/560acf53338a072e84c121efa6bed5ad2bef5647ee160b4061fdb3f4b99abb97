@@ -1,0 +1,66 @@
+# 第一千三百四十二部　黑洞类比暴露出一个关键逻辑缺口
+
+前文曾把：
+
+$$
+\mathfrak H_\omega\neq0
+$$
+
+理解为“没有正 Hilbert 实现”。
+
+这需要改成：
+
+$$
+\boxed{
+\mathfrak H_\omega\neq0
+\Longrightarrow
+\text{没有保持所选 Hardy 未来子空间的纯因果实现。}
+}
+$$
+
+但可以把未来与过去同时保留，构造 Bogoliubov 扩张。
+
+令：
+
+$$
+H=\mathfrak H_\omega,
+\qquad
+\|H\|<1.
+$$
+
+定义：
+
+$$
+\alpha_H=(I-H^*H)^{-1/2},
+$$
+
+$$
+\beta_H=H(I-H^*H)^{-1/2}.
+$$
+
+则：
+
+$$
+\boxed{
+\alpha_H^*\alpha_H-\beta_H^*\beta_H=I.
+}
+\tag{1342.1}
+$$
+
+这正是双曲 Bogoliubov 关系。
+
+若 \(H\) 为有限秩，则 \(\beta_H\) 为 Hilbert–Schmidt，因此该有限缺陷的双向量子提升在普通 Fock 空间中仍可酉实现。若存在无限缺陷，能否在同一 Fock 表示中实现，则取决于：
+
+$$
+\boxed{
+\operatorname{Tr}
+\left[
+H^*H(I-H^*H)^{-1}
+\right]
+<\infty.
+}
+\tag{1342.2}
+$$
+
+因此出现三种严格不同的相。
+

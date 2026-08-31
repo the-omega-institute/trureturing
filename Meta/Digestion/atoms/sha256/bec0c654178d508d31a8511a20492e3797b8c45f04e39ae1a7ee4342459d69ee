@@ -1,0 +1,44 @@
+# 第一千三百一十九部　连续 scattering 生成元
+
+令：
+
+$$
+s_z=\frac12-iz,
+$$
+
+并记：
+
+$$
+\mathcal L(s)
+=
+\frac{\xi'(s)}{\xi(s)}.
+$$
+
+在远离零点处：
+
+$$
+\log\Theta_\omega(z)
+=
+\log\xi(s_z-\omega)
+-
+\log\xi(s_z+\omega).
+$$
+
+所以：
+
+$$
+\boxed{
+-\partial_\omega
+\log\Theta_\omega(z)
+=
+\mathcal L(s_z-\omega)
++
+\mathcal L(s_z+\omega).
+}
+\tag{1319.1}
+$$
+
+这给出 shifted scattering 的连续深度生成元。
+
+---
+

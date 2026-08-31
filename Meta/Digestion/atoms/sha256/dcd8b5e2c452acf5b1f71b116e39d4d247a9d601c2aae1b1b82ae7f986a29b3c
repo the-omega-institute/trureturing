@@ -1,0 +1,64 @@
+## 1387.2 对象—观察者共同 RG
+
+若同时缩放：
+
+$$
+\boxed{
+(\delta,\omega)
+\longmapsto
+(\varphi^{-2}\delta,\varphi^{-2}\omega),
+}
+\tag{1387.3}
+$$
+
+则：
+
+$$
+\frac{\omega}{\delta}
+$$
+
+保持不变。
+
+所以：
+
+$$
+\boxed{
+\sigma,\ r,\ N,\ \varepsilon
+}
+$$
+
+全部保持不变。
+
+同时：
+
+$$
+u\mapsto\varphi^{-2}u,
+\qquad
+v\mapsto\varphi^{-2}v,
+$$
+
+而：
+
+$$
+uv\mapsto\varphi^{-4}uv.
+$$
+
+因此黄金共同 RG 是 Rindler 双层几何的**共形缩放**：
+
+$$
+\boxed{
+\text{绝对尺度改变；
+因果类、rapidity 与可见强度不变。}
+}
+$$
+
+这精确区分了：
+
+* 黄金作为观察时钟；
+* 黄金作为对象—观察者自相似；
+* 黄金作为温度。
+
+三者不是同一件事。
+
+---
+

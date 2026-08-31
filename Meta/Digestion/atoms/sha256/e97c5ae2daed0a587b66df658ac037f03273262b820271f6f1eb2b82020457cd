@@ -1,0 +1,47 @@
+\[
+\boxed{
+\mathcal E^{\mathrm{hol}}_P
+=
+\sum_{p\in P}\sum_{q\in P}
+\left\|C^{\mathrm{st}}_{p,q}\right\|^2.
+}
+\]
+
+它是一个有限正标量，具有四个机器性质。
+
+第一，非负性：
+
+\[
+\boxed{0\le \mathcal E^{\mathrm{hol}}_P.}
+\]
+
+第二，若 \(|P|=M\)，所有 residual 满足 \(\|r_p\|\le\varepsilon\)，所有通道满足 \(\|v_p\|\le1\)，则
+
+\[
+\boxed{
+\mathcal E^{\mathrm{hol}}_P
+\le
+M^2
+\left(
+2\|a-1\|\varepsilon+2\varepsilon^2
+\right)^2.
+}
+\]
+
+第三，能量的消失忠实记录逐对压平：
+
+\[
+\boxed{
+\mathcal E^{\mathrm{hol}}_P=0
+\iff
+\forall p,q\in P,
+\ C^{\mathrm{st}}_{p,q}=0.
+}
+\]
+
+第四，\(\varepsilon=0\) 强制 \(\mathcal E^{\mathrm{hol}}_P=0\)。
+
+这里使用有序对，所以粗略计数因子是 \(M^2\)。后续引入反对称性、去掉对角线或除以二以后，可以改成无序对计数。当前版本保留最少结构和最透明的上界。
+
+---
+
