@@ -3,4 +3,4 @@ path = "docs/develop/theory/TYPED_GOVERNANCE_ADMISSION.md"
 atomizer = "generic-v1"
 genre_registry_check = "no-registry"
 unregistered_genres = []
-acknowledged_stale = ["generic-residual-6929eafacd0ab95ddbb768918916644c5952b705c5819da1eee9582f09608105"]
+acknowledged_stale = ["6929eafacd0ab95ddbb768918916644c5952b705c5819da1eee9582f09608105"]

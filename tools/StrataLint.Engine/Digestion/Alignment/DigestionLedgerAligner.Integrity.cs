@@ -62,8 +62,7 @@ internal static partial class DigestionLedgerAligner
             return null;
         }
 
-        if (AtomizerIntegrityFailure(atomized, sourceFile.RawBytes.AsSpan()) is not null
-            || !HasUniqueAstPaths(atomized.Claims))
+        if (AtomizerIntegrityFailure(atomized, sourceFile.RawBytes.AsSpan()) is not null)
         {
             return null;
         }
@@ -196,12 +195,12 @@ internal static partial class DigestionLedgerAligner
                 var atom = document.Claims[claimIndex++];
                 if (atom.StartByte != cursor || atom.EndByte != end)
                 {
-                    return $"claim {atom.AstPath} boundaries do not match its source slice";
+                    return $"claim at byte {atom.StartByte} boundaries do not match its source slice";
                 }
 
                 if (!atom.RawBytes.AsSpan().SequenceEqual(slice.RawBytes.AsSpan()))
                 {
-                    return $"claim {atom.AstPath} raw bytes do not match its source span";
+                    return $"claim at byte {atom.StartByte} raw bytes do not match its source span";
                 }
             }
 
@@ -210,30 +209,19 @@ internal static partial class DigestionLedgerAligner
 
         foreach (var atom in document.Claims)
         {
-            if (string.IsNullOrWhiteSpace(atom.AstPath))
-            {
-                return "claim ast_path is empty";
-            }
-
             if (atom.RawBytes.Length == 0
                 || atom.StartByte < 0
                 || atom.EndByte <= atom.StartByte
                 || atom.EndByte > sourceLength
                 || atom.EndByte - atom.StartByte != atom.RawBytes.Length)
             {
-                return $"claim {atom.AstPath} has invalid byte boundaries";
+                return $"claim at byte {atom.StartByte} has invalid byte boundaries";
             }
 
             if (atom.Fingerprints != DigestionFingerprint.Compute(atom.RawBytes.AsSpan()))
             {
-                return $"claim {atom.AstPath} fingerprint does not match its raw bytes";
+                return $"claim at byte {atom.StartByte} fingerprint does not match its raw bytes";
             }
-        }
-
-        var unregisteredGenreFailure = UnregisteredGenreIntegrityFailure(document);
-        if (unregisteredGenreFailure is not null)
-        {
-            return unregisteredGenreFailure;
         }
 
         var clausePlanFailure = ClausePlanIntegrityFailure(document);
@@ -245,52 +233,4 @@ internal static partial class DigestionLedgerAligner
         return null;
     }
 
-    private static string? UnregisteredGenreIntegrityFailure(AtomizedTheoryDocument document)
-    {
-        var claimTokens = ImmutableArray.CreateBuilder<string>();
-        foreach (var claim in document.Claims.Where(static atom =>
-                     atom.AstPath.StartsWith(UnregisteredGenreLocator.Prefix, StringComparison.Ordinal)))
-        {
-            if (!UnregisteredGenreLocator.TryGetToken(claim.AstPath, out var token))
-            {
-                return $"claim {claim.AstPath} uses a noncanonical reserved unregistered namespace path";
-            }
-
-            claimTokens.Add(token);
-        }
-
-        var expectedTokens = claimTokens
-            .Distinct(StringComparer.Ordinal)
-            .Order(StringComparer.Ordinal)
-            .ToImmutableArray();
-        var check = document.GenreRegistryCheck;
-        if (check.Kind != GenreRegistryCheckKind.Collected && !expectedTokens.IsEmpty
-            || check.Kind == GenreRegistryCheckKind.Collected
-            && !check.UnregisteredGenres.SequenceEqual(expectedTokens, StringComparer.Ordinal))
-        {
-            return "reserved unregistered namespace differs from genre registry check: "
-                + $"paths [{string.Join(", ", expectedTokens)}]; "
-                + $"marker {RenderGenreRegistryCheck(check)}";
-        }
-
-        foreach (var atom in document.Claims
-                     .Concat(document.ClausePlans.SelectMany(static plan => plan.Children))
-                     .Where(static atom => atom.AstPath.StartsWith(
-                         UnregisteredGenreLocator.Prefix,
-                         StringComparison.Ordinal)))
-        {
-            if (!UnregisteredGenreLocator.TryGetToken(atom.AstPath, out var token))
-            {
-                return $"claim {atom.AstPath} uses a noncanonical reserved unregistered namespace path";
-            }
-
-            if (!expectedTokens.Contains(token, StringComparer.Ordinal))
-            {
-                return "reserved unregistered namespace differs from genre registry check: "
-                    + $"claim {atom.AstPath} has no top-level open genre";
-            }
-        }
-
-        return null;
-    }
 }

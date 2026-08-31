@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:9f92118027a9f11747053931ee56ac8badd298ce7b7171bed1d76d4c80f19322
+  normalized_sha256: sha256:9f92118027a9f11747053931ee56ac8badd298ce7b7171bed1d76d4c80f19322
+cas_ref: sha256:9f92118027a9f11747053931ee56ac8badd298ce7b7171bed1d76d4c80f19322
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems:
+    - zeta-simple-pole-and-residue-one-identity
+    - mertens-three-scale-product-growth-certificate
+    - residue-one-1e-9-certificate
+    - noncompactness-versus-off-line-zero-causal-claim

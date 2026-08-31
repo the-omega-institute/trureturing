@@ -1,7 +1,6 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System.Xml.Linq;
 
 namespace StrataLint.Engine;
 
@@ -10,6 +9,7 @@ internal enum TestMapUnknownReason
     VariablePath,
     DirectoryEnumeration,
     IndirectViaProductionLoader,
+    MetadataUnavailable,
     RepositoryRootMarker,
     Other,
 }
@@ -25,7 +25,8 @@ internal sealed record ScribeTestMethod(
     string Id,
     IReadOnlyList<string> Paths,
     IReadOnlyList<TestMapUnknownReason> UnknownReasons,
-    bool IsStaticallySkipped = false)
+    bool IsStaticallySkipped = false,
+    bool IsDiscoveryConditional = false)
 {
     internal bool IsUnknown => UnknownReasons.Count != 0;
 
@@ -40,7 +41,10 @@ internal sealed record ScribeTestMap(
     IReadOnlyList<string> OrphanManagedSourcePaths,
     IReadOnlyList<string> DanglingCompileFailProofProjectExemptionPaths,
     IReadOnlyDictionary<string, string> CompileProjectBySourcePath,
-    IReadOnlyList<MsBuildCompileFinding> CompileQueryFindings);
+    IReadOnlyList<MsBuildCompileFinding> CompileQueryFindings)
+{
+    internal IReadOnlyList<ScribeMetadataDegradation> MetadataDegradations { get; init; } = [];
+}
 
 internal sealed record ScribeTestProjectPartition(string Key, string ProjectPath);
 
@@ -67,10 +71,12 @@ internal static class ScribeTestMapDeriver
         // 消化退出 CI 后,ci.yml 是仓内唯一的 workflow;守卫「无 workflow 代跑消化」
         // 与 lake 缓存契约都声明式读它(此前二者读的是已删除的 theory-ingest.yml)。
         ".github/workflows/ci.yml",
+        ".lake/build/stratalint",
         "Blueprint",
         "CLAUDE.md",
         "D5",
         "D5/X_Frontier/ValuesProducer.lean",
+        "Evidence",
         "Generated",
         "Golden",
         "Golden/Projection",
@@ -82,6 +88,7 @@ internal static class ScribeTestMapDeriver
         "global.json",
         "lakefile.toml",
         "lean-toolchain",
+        "docs/develop/theory",
         // Skill packages are read by architecture tests that pin each skill's structural
         // contract; the directory is declared rather than each file so that adding a skill
         // test does not require editing this deriver.
@@ -107,7 +114,8 @@ internal static class ScribeTestMapDeriver
         var files = GitIndexRepositoryFiles.Enumerate(repositoryRoot);
         var tracked = files
             .Where(static file => file.RelativePath.EndsWith(".cs", StringComparison.Ordinal)
-                || file.RelativePath.EndsWith(".csproj", StringComparison.Ordinal))
+                || file.RelativePath.EndsWith(".csproj", StringComparison.Ordinal)
+                || file.RelativePath.EndsWith("packages.lock.json", StringComparison.Ordinal))
             .Select(file => new ScribeTrackedSource(
                 file.RelativePath,
                 File.ReadAllText(file.FullPath)))
@@ -124,7 +132,8 @@ internal static class ScribeTestMapDeriver
     {
         var tracked = snapshot.Files.Values
             .Where(static file => file.Path.Value.EndsWith(".cs", StringComparison.Ordinal)
-                || file.Path.Value.EndsWith(".csproj", StringComparison.Ordinal))
+                || file.Path.Value.EndsWith(".csproj", StringComparison.Ordinal)
+                || file.Path.Value.EndsWith("packages.lock.json", StringComparison.Ordinal))
             .Select(static file => new ScribeTrackedSource(file.Path.Value, file.Text))
             .ToArray();
         var projects = tracked
@@ -156,7 +165,7 @@ internal static class ScribeTestMapDeriver
 
     internal static IReadOnlyList<ScribeTestProjectPartition> DeriveProjectPartitions(
         IEnumerable<(string Path, string Content)> projectFiles) => projectFiles
-        .Where(static project => IsXunitProject(project.Content))
+        .Where(static project => ScribeProjectCompilationContext.IsXunitProject(project.Content))
         .Select(static project => new ScribeTestProjectPartition(
             ProjectDirectory(project.Path),
             project.Path))
@@ -166,7 +175,7 @@ internal static class ScribeTestMapDeriver
     internal static IReadOnlyList<string> FindUnclassifiedManagedProjects(
         IEnumerable<(string Path, string Content)> projectFiles) => projectFiles
         .Where(static project => project.Path.StartsWith(ManagedTestProjectPrefix, StringComparison.Ordinal))
-        .Where(project => !IsXunitProject(project.Content)
+        .Where(project => !ScribeProjectCompilationContext.IsXunitProject(project.Content)
             && !CompileFailProofProjectExemptions.Contains(project.Path))
         .Select(static project => project.Path)
         .Order(StringComparer.Ordinal)
@@ -289,7 +298,7 @@ internal static class ScribeTestMapDeriver
     private static string ProjectDirectory(string projectPath) =>
         projectPath.LastIndexOf('/') is var slash && slash >= 0 ? projectPath[..slash] : ".";
 
-    private static ScribeTestMap DeriveTracked(
+    internal static ScribeTestMap DeriveTracked(
         IReadOnlyList<ScribeTrackedSource> tracked,
         MsBuildCompileMap compileMap)
     {
@@ -310,19 +319,13 @@ internal static class ScribeTestMapDeriver
                 source.Content,
                 testProjects[compileMap.ProjectBySourcePath[source.Path]].Key))
             .ToArray();
-        var productionSources = sources
-            .Where(source => compileMap.ProjectBySourcePath.TryGetValue(source.Path, out var project)
-                && !testProjects.ContainsKey(project))
-            .Select(source => new RepositoryReadSource(
-                Path.GetFileNameWithoutExtension(compileMap.ProjectBySourcePath[source.Path]),
-                source.Path,
-                source.Content))
-            .ToArray();
-        var indirectSites = ProductionRepositoryReadDeriver.InspectTests(productionSources, testSources)
-            .Select(static site => (site.Path, site.Line));
+        var compilationContext = ScribeProjectCompilationContext.Create(
+            tracked,
+            compileMap.ProjectBySourcePath,
+            testProjects.Keys.ToHashSet(StringComparer.Ordinal));
         return DeriveSources(
             testSources,
-            indirectSites,
+            [],
             FindUnclassifiedManagedProjects(projectFiles),
             compileMap.Findings.Count == 0
                 ? FindOrphanManagedSources(
@@ -332,7 +335,9 @@ internal static class ScribeTestMapDeriver
             FindDanglingCompileFailProofProjectExemptions(
                 projectFiles.Select(static project => project.Path)),
             compileMap.ProjectBySourcePath,
-            compileMap.Findings);
+            compileMap.Findings,
+            compilationContext.ProductionAssemblies,
+            compilationContext);
     }
 
     internal static ScribeTestMap DeriveSources(
@@ -342,14 +347,17 @@ internal static class ScribeTestMapDeriver
         IReadOnlyList<string>? orphanManagedSourcePaths = null,
         IReadOnlyList<string>? danglingCompileFailProofProjectExemptionPaths = null,
         IReadOnlyDictionary<string, string>? compileProjectBySourcePath = null,
-        IReadOnlyList<MsBuildCompileFinding>? compileQueryFindings = null)
+        IReadOnlyList<MsBuildCompileFinding>? compileQueryFindings = null,
+        IReadOnlySet<string>? productionAssemblies = null,
+        ScribeProjectCompilationContext? compilationContext = null)
     {
-        var parsed = sourceFiles.Select(Parse).ToArray();
+        var parsed = ScribeTestSymbolBinder.Bind(
+            sourceFiles,
+            out var metadataDegradations,
+            productionAssemblies,
+            compilationContext).ToArray();
         var discoveryPaths = ExtractDiscoveryPaths(parsed);
-        var methods = parsed.SelectMany(static source => source.Methods).ToArray();
-        var methodsByTypeAndName = methods
-            .GroupBy(static method => (method.TypeName, method.Name))
-            .ToDictionary(static group => group.Key, static group => group.ToArray());
+        var methods = parsed.SelectMany(static source => source.Callables).ToArray();
         var indirect = indirectProductionSites.ToArray();
         var results = new List<ScribeTestMethod>();
 
@@ -357,8 +365,8 @@ internal static class ScribeTestMapDeriver
         {
             var paths = new HashSet<string>(StringComparer.Ordinal);
             var reasons = new HashSet<TestMapUnknownReason>();
-            var pending = new Stack<ParsedMethod>();
-            var visited = new HashSet<ParsedMethod>();
+            var pending = new Stack<ScribeBoundCallable>();
+            var visited = new HashSet<ScribeBoundCallable>();
             pending.Push(test);
             while (pending.TryPop(out var method))
             {
@@ -368,23 +376,16 @@ internal static class ScribeTestMapDeriver
                 }
 
                 InspectMethod(method, discoveryPaths, paths, reasons);
+                reasons.UnionWith(method.BindingUnknownReasons);
                 if (indirect.Any(site => site.Path == method.Path
-                    && site.Line >= method.StartLine && site.Line <= method.EndLine))
+                    && method.ContainsLine(site.Line)))
                 {
                     reasons.Add(TestMapUnknownReason.IndirectViaProductionLoader);
                 }
 
-                foreach (var call in LocalCalls(method.Syntax))
+                foreach (var target in method.Targets)
                 {
-                    if (methodsByTypeAndName.TryGetValue((method.TypeName, call), out var targets)
-                        && targets.Length == 1)
-                    {
-                        pending.Push(targets[0]);
-                    }
-                    else if (targets is { Length: > 1 })
-                    {
-                        reasons.Add(TestMapUnknownReason.Other);
-                    }
+                    pending.Push(target);
                 }
             }
 
@@ -394,7 +395,8 @@ internal static class ScribeTestMapDeriver
                 $"{test.TypeName}.{test.Name}",
                 paths.Order(StringComparer.Ordinal).ToArray(),
                 reasons.Order().ToArray(),
-                test.IsStaticallySkipped));
+                test.IsStaticallySkipped,
+                test.IsDiscoveryConditional));
         }
 
         return new ScribeTestMap(
@@ -407,29 +409,22 @@ internal static class ScribeTestMapDeriver
             orphanManagedSourcePaths ?? [],
             danglingCompileFailProofProjectExemptionPaths ?? [],
             compileProjectBySourcePath ?? new Dictionary<string, string>(StringComparer.Ordinal),
-            compileQueryFindings ?? []);
-    }
-
-    private static bool IsXunitProject(string content)
-    {
-        var document = XDocument.Parse(content, LoadOptions.None);
-        return document.Descendants().Any(static element =>
-            element.Name.LocalName == "PackageReference"
-            && string.Equals(
-                (string?)element.Attribute("Include"),
-                "xunit",
-                StringComparison.OrdinalIgnoreCase));
+            compileQueryFindings ?? [])
+        {
+            MetadataDegradations = metadataDegradations,
+        };
     }
 
     private static void InspectMethod(
-        ParsedMethod method,
+        ScribeBoundCallable method,
         IReadOnlyDictionary<string, IReadOnlyList<string>?> discoveryPaths,
         HashSet<string> paths,
         HashSet<TestMapUnknownReason> reasons)
     {
-        foreach (var invocation in method.Syntax.DescendantNodes().OfType<InvocationExpressionSyntax>())
+        var model = method.SemanticModel;
+        foreach (var invocation in method.InspectionNodes.OfType<InvocationExpressionSyntax>())
         {
-            if (IsAccessorCall(invocation, "Discover"))
+            if (IsAccessorCall(invocation, model, "Discover"))
             {
                 AddDiscoveryPaths(invocation, discoveryPaths, paths, reasons);
             }
@@ -441,32 +436,63 @@ internal static class ScribeTestMapDeriver
             // 一个观察者对它要观察的那类变更盲,等于没有。
             // 该缺口正是一次评审用「临时克隆只加一条 D5 .lean → planner 输出
             // cold_build_observer=[]」实测出来的。
-            if (IsAccessorCall(invocation, "EnumerateDeclared"))
+            if (IsAccessorCall(invocation, model, "EnumerateDeclared"))
             {
                 AddDeclaredPrefix(invocation, paths, reasons);
                 continue;
             }
 
-            if (IsAccessorCall(invocation, "EnumerateFiles"))
+            if (IsAccessorCall(invocation, model, "EnumerateFiles"))
             {
+                var enumerationArgument = invocation.ArgumentList.Arguments.FirstOrDefault()?.Expression;
+                if (enumerationArgument is not null
+                    && ScribePathProvenance.IsNonRepository(
+                        enumerationArgument,
+                        model,
+                        method.SemanticModels))
+                {
+                    continue;
+                }
                 reasons.Add(TestMapUnknownReason.DirectoryEnumeration);
-                AddLiteralCreatePath(invocation.ArgumentList.Arguments.FirstOrDefault()?.Expression, paths, reasons);
+                AddLiteralCreatePath(
+                    enumerationArgument,
+                    model,
+                    paths,
+                    reasons);
                 continue;
             }
 
-            if (!IsAccessorCall(invocation, "ReadAllText", "ReadAllBytes", "FileExists", "CopyTo"))
+            if (!IsAccessorCall(
+                    invocation,
+                    model,
+                    "ReadAllText",
+                    "ReadAllBytes",
+                    "FileExists",
+                    "CopyTo"))
             {
                 continue;
             }
 
-            if (IsAccessorCall(invocation, "ReadAllText", "ReadAllBytes")
+            if (IsAccessorCall(invocation, model, "ReadAllText", "ReadAllBytes")
                 && IsDeclaredEnumerationFullPath(
-                    invocation.ArgumentList.Arguments.FirstOrDefault()?.Expression))
+                    invocation.ArgumentList.Arguments.FirstOrDefault()?.Expression,
+                    model))
             {
                 continue;
             }
 
-            AddLiteralCreatePath(invocation.ArgumentList.Arguments.FirstOrDefault()?.Expression, paths, reasons);
+            var argument = invocation.ArgumentList.Arguments.FirstOrDefault()?.Expression;
+            if (argument is not null
+                && ScribePathProvenance.IsNonRepository(argument, model, method.SemanticModels))
+            {
+                continue;
+            }
+
+            AddLiteralCreatePath(
+                argument,
+                model,
+                paths,
+                reasons);
         }
     }
 
@@ -502,7 +528,9 @@ internal static class ScribeTestMapDeriver
         return false;
     }
 
-    private static bool IsDeclaredEnumerationFullPath(ExpressionSyntax? argument)
+    private static bool IsDeclaredEnumerationFullPath(
+        ExpressionSyntax? argument,
+        SemanticModel model)
     {
         if (argument is not MemberAccessExpressionSyntax
             {
@@ -538,7 +566,7 @@ internal static class ScribeTestMapDeriver
 
         while (source is InvocationExpressionSyntax invocation)
         {
-            if (IsAccessorCall(invocation, "EnumerateDeclared"))
+            if (IsAccessorCall(invocation, model, "EnumerateDeclared"))
             {
                 return TryGetDeclaredPrefix(invocation, out _);
             }
@@ -556,6 +584,7 @@ internal static class ScribeTestMapDeriver
 
     private static void AddLiteralCreatePath(
         ExpressionSyntax? argument,
+        SemanticModel model,
         HashSet<string> paths,
         HashSet<TestMapUnknownReason> reasons)
     {
@@ -568,40 +597,69 @@ internal static class ScribeTestMapDeriver
                 Name.Identifier.ValueText: "Create",
             });
         var expression = create?.ArgumentList.Arguments.SingleOrDefault()?.Expression;
-        if (expression is LiteralExpressionSyntax literal
-            && literal.IsKind(SyntaxKind.StringLiteralExpression))
+        if (TryGetConstantString(expression, model, out var relativePath))
         {
-            paths.Add(literal.Token.ValueText.Replace('\\', '/'));
+            paths.Add(relativePath.Replace('\\', '/'));
             return;
         }
 
-        if (argument is InvocationExpressionSyntax
-            {
-                Expression: MemberAccessExpressionSyntax
-                {
-                    Expression: IdentifierNameSyntax { Identifier.ValueText: "Path" },
-                    Name.Identifier.ValueText: "Combine",
-                },
-            } combine
-            && combine.ArgumentList.Arguments is { Count: >= 2 } arguments
-            && arguments[0].Expression is InvocationExpressionSyntax
-            {
-                Expression: MemberAccessExpressionSyntax
-                {
-                    Name.Identifier.ValueText: "FindRoot",
-                } findRoot,
-            }
-            && findRoot.Expression.ToString().EndsWith("RepositoryLayout", StringComparison.Ordinal)
-            && arguments.Skip(1).All(static item => item.Expression is LiteralExpressionSyntax
-                { RawKind: (int)SyntaxKind.StringLiteralExpression }))
+        if (TryGetCombinedRepositoryPath(argument, model, out relativePath))
         {
-            paths.Add(string.Join(
-                '/',
-                arguments.Skip(1).Select(static item => ((LiteralExpressionSyntax)item.Expression).Token.ValueText)));
+            paths.Add(relativePath);
             return;
         }
 
         reasons.Add(TestMapUnknownReason.VariablePath);
+    }
+
+    private static bool TryGetCombinedRepositoryPath(
+        ExpressionSyntax? expression,
+        SemanticModel model,
+        out string path)
+    {
+        if (expression is InvocationExpressionSyntax combine
+            && model.GetSymbolInfo(combine).Symbol is IMethodSymbol
+            {
+                Name: "Combine",
+                ContainingType: { } pathType,
+            }
+            && pathType.ToDisplayString() == "System.IO.Path"
+            && combine.ArgumentList.Arguments is { Count: >= 2 } arguments
+            && ScribeTestSymbolBinder.IsRepositoryRootExpression(arguments[0].Expression, model))
+        {
+            var segments = new List<string>();
+            foreach (var argument in arguments.Skip(1))
+            {
+                if (!TryGetConstantString(argument.Expression, model, out var segment))
+                {
+                    path = string.Empty;
+                    return false;
+                }
+                segments.Add(segment);
+            }
+
+            path = string.Join('/', segments).Replace('\\', '/');
+            return true;
+        }
+
+        path = string.Empty;
+        return false;
+    }
+
+    private static bool TryGetConstantString(
+        ExpressionSyntax? expression,
+        SemanticModel model,
+        out string value)
+    {
+        if (expression is not null
+            && model.GetConstantValue(expression) is { HasValue: true, Value: string constant })
+        {
+            value = constant;
+            return true;
+        }
+
+        value = string.Empty;
+        return false;
     }
 
     private static void AddDiscoveryPaths(
@@ -624,7 +682,7 @@ internal static class ScribeTestMapDeriver
     }
 
     private static IReadOnlyDictionary<string, IReadOnlyList<string>?> ExtractDiscoveryPaths(
-        IEnumerable<ParsedSource> sources)
+        IEnumerable<ScribeParsedSource> sources)
     {
         var result = new Dictionary<string, IReadOnlyList<string>?>(StringComparer.Ordinal);
         var matches = sources.SelectMany(static source => source.Root.DescendantNodes()
@@ -694,74 +752,43 @@ internal static class ScribeTestMapDeriver
         return paths.Count == 0 ? null : paths.Distinct(StringComparer.Ordinal).ToArray();
     }
 
-    private static bool IsAccessorCall(InvocationExpressionSyntax invocation, params string[] names) =>
-        invocation.Expression is MemberAccessExpressionSyntax member
-        && names.Contains(member.Name.Identifier.ValueText, StringComparer.Ordinal)
-        && !IsTemporaryFileSystemRoot(member.Expression)
-        && (member.Expression.ToString().Contains("RepositoryAccessor", StringComparison.Ordinal)
-            || member.Expression is IdentifierNameSyntax
-            || member.Expression is MemberAccessExpressionSyntax
-            || member.Expression is InvocationExpressionSyntax);
-
-    private static bool IsTemporaryFileSystemRoot(ExpressionSyntax receiver)
+    private static bool IsAccessorCall(
+        InvocationExpressionSyntax invocation,
+        SemanticModel model,
+        params string[] names)
     {
-        while (receiver is MemberAccessExpressionSyntax member)
+        if (model.GetSymbolInfo(invocation).Symbol is not IMethodSymbol method
+            || !names.Contains(method.Name, StringComparer.Ordinal))
         {
-            receiver = member.Expression;
+            return false;
         }
 
-        return receiver is IdentifierNameSyntax { Identifier.ValueText: "TemporaryFileSystem" };
-    }
-
-    private static IEnumerable<string> LocalCalls(MethodDeclarationSyntax method) =>
-        method.DescendantNodes().OfType<InvocationExpressionSyntax>()
-            .Select(static invocation => invocation.Expression switch
-            {
-                IdentifierNameSyntax identifier => identifier.Identifier.ValueText,
-                MemberAccessExpressionSyntax { Expression: ThisExpressionSyntax, Name: var name } => name.Identifier.ValueText,
-                _ => string.Empty,
-            })
-            .Where(static name => name.Length != 0);
-
-    private static ParsedSource Parse(TestMapSource source)
-    {
-        var root = CSharpSyntaxTree.ParseText(source.Content).GetRoot();
-        var methods = root.DescendantNodes().OfType<MethodDeclarationSyntax>().Select(method =>
+        if (!method.Locations.Any(static location => location.IsInSource))
         {
-            var type = method.Ancestors().OfType<TypeDeclarationSyntax>().First();
-            var span = method.GetLocation().GetLineSpan();
-            return new ParsedMethod(
-                source.Path,
-                source.PartitionKey,
-                type.Identifier.ValueText,
-                method.Identifier.ValueText,
-                method.AttributeLists.SelectMany(static list => list.Attributes).Any(IsTestAttribute),
-                method.AttributeLists.SelectMany(static list => list.Attributes).Any(IsStaticallySkippedTestAttribute),
-                span.StartLinePosition.Line + 1,
-                span.EndLinePosition.Line + 1,
-                method);
-        }).ToArray();
-        return new ParsedSource(root, methods);
+            var owner = method.ContainingType.ToDisplayString();
+            return owner == "System.IO.File"
+                || owner == "System.IO.Directory" && method.Name == "EnumerateFiles";
+        }
+
+        if (method.Name == "EnumerateDeclared"
+            && method.Parameters.Length >= 2
+            && method.Parameters[0].Type.SpecialType == SpecialType.System_String
+            && method.Parameters[1].Type.SpecialType == SpecialType.System_String)
+        {
+            return true;
+        }
+
+        return IsRepositoryAccessorContract(method.ContainingType);
     }
 
-    private static bool IsTestAttribute(AttributeSyntax attribute) =>
-        attribute.Name.ToString() is "Fact" or "FactAttribute" or "Theory" or "TheoryAttribute";
+    private static bool IsRepositoryAccessorContract(INamedTypeSymbol type) =>
+        type.GetMembers().OfType<IPropertySymbol>().Any(static property =>
+            property.Type.GetMembers().OfType<IPropertySymbol>().Any(static nested =>
+                nested.Type.SpecialType == SpecialType.System_String
+                && nested.Name == "FullPath"))
+        && type.GetMembers().OfType<IMethodSymbol>().Any(method =>
+            method.IsStatic
+            && method.Name == "Discover"
+            && SymbolEqualityComparer.Default.Equals(method.ReturnType, type));
 
-    private static bool IsStaticallySkippedTestAttribute(AttributeSyntax attribute) =>
-        IsTestAttribute(attribute)
-        && attribute.ArgumentList?.Arguments.Any(static argument =>
-            argument.NameEquals?.Name.Identifier.ValueText == "Skip"
-            && !argument.Expression.IsKind(SyntaxKind.NullLiteralExpression)) == true;
-
-    private sealed record ParsedSource(SyntaxNode Root, IReadOnlyList<ParsedMethod> Methods);
-    private sealed record ParsedMethod(
-        string Path,
-        string PartitionKey,
-        string TypeName,
-        string Name,
-        bool IsTest,
-        bool IsStaticallySkipped,
-        int StartLine,
-        int EndLine,
-        MethodDeclarationSyntax Syntax);
 }

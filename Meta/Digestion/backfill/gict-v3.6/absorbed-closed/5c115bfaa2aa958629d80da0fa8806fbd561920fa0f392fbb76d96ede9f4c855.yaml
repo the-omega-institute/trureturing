@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:5c115bfaa2aa958629d80da0fa8806fbd561920fa0f392fbb76d96ede9f4c855
+  normalized_sha256: sha256:5c115bfaa2aa958629d80da0fa8806fbd561920fa0f392fbb76d96ede9f4c855
+cas_ref: sha256:5c115bfaa2aa958629d80da0fa8806fbd561920fa0f392fbb76d96ede9f4c855
+coverage_gids:
+  - D5/S3/Quantum/Divergence/PinchingIncreasesEntropy.pinching_increases_entropy
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/Divergence/PinchingIncreasesEntropy.pinching_increases_entropy
+      source_sha256: sha256:5c115bfaa2aa958629d80da0fa8806fbd561920fa0f392fbb76d96ede9f4c855
+      target_statement_id: sha256:d00eb6c45a84d70211885a2039ef9d542a05ef9a58bea54187c99d28c86c557f
+  scribe:
+    - gid: D5/S3/Quantum/Divergence/PinchingIncreasesEntropy.pinching_increases_entropy
+      definition_sha256: sha256:179f6dc666e99a78b3c8a4fddd7a9e651550c7551d6b98801a5654d120d143ba
+      emission_sha256: sha256:b3ee236f6f21b0b7b72790c392cdf590b9995e8dba7fb2f72fffb649f36abc74
+  unresolved_subitems: []

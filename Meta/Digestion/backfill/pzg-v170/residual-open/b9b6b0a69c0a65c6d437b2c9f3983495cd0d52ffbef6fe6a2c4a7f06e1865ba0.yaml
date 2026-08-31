@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b9b6b0a69c0a65c6d437b2c9f3983495cd0d52ffbef6fe6a2c4a7f06e1865ba0
+  normalized_sha256: sha256:b9b6b0a69c0a65c6d437b2c9f3983495cd0d52ffbef6fe6a2c4a7f06e1865ba0
+cas_ref: sha256:b9b6b0a69c0a65c6d437b2c9f3983495cd0d52ffbef6fe6a2c4a7f06e1865ba0
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems:
+    - tribonacci-deficit-nonintegrality-and-scan-certificate
+    - cubic-field-conjugate-trace-explanation

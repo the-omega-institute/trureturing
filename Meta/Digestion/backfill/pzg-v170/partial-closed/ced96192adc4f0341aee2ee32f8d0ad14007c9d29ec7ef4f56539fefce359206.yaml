@@ -1,0 +1,25 @@
+fingerprints:
+  raw_sha256: sha256:ced96192adc4f0341aee2ee32f8d0ad14007c9d29ec7ef4f56539fefce359206
+  normalized_sha256: sha256:ced96192adc4f0341aee2ee32f8d0ad14007c9d29ec7ef4f56539fefce359206
+cas_ref: sha256:ced96192adc4f0341aee2ee32f8d0ad14007c9d29ec7ef4f56539fefce359206
+coverage_gids:
+  - D5/S3/Analytic/Dilation/MellinDilationFlow.mellin_eq_fourier_on_dilation_flow
+  - D5/S3/Weil/CriticalLine.unitarity_line_iff
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/CriticalLine.unitarity_line_iff
+      source_sha256: sha256:ced96192adc4f0341aee2ee32f8d0ad14007c9d29ec7ef4f56539fefce359206
+      target_statement_id: sha256:0915061fdce78dc64a2a0c1db7dc5ec24ddb614cfd7dece77507d444d05f7b6f
+  scribe:
+    - gid: D5/S3/Weil/CriticalLine.unitarity_line_iff
+      definition_sha256: sha256:268a66fbf2c27762c3b2f461b61e5eed199b91174f0caa6af19e27380105ca3e
+      emission_sha256: sha256:4605fafacf96674d7085bcd33068eea6c707419a45a1d0549e920818620c522e
+  unresolved_subitems:
+    - every-zeta-value-as-compressed-history
+    - zeros-as-global-cancellation-at-frequency-and-weight
+    - eta-cesaro-cancellation-and-nearby-endpoint-certificates
+    - rh-as-cancellation-only-at-unitary-half-density-weight
+    - connes-zeros-as-absorption-spectrum
+    - berry-keating-xp-as-dilation-generator
+    - abel-window-block-as-three-flattening-protocols
+    - golden-protocol-discrepancy-certificate-to-ten-minus-ten

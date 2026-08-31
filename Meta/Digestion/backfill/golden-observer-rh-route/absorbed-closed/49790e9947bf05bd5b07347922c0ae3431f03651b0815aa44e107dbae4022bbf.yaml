@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:49790e9947bf05bd5b07347922c0ae3431f03651b0815aa44e107dbae4022bbf
+  normalized_sha256: sha256:49790e9947bf05bd5b07347922c0ae3431f03651b0815aa44e107dbae4022bbf
+cas_ref: sha256:49790e9947bf05bd5b07347922c0ae3431f03651b0815aa44e107dbae4022bbf
+coverage_gids:
+  - D5/S1/Deficit/Beatty/GoldenObserverRoute.golden_observer_route_w_c1
+receipts:
+  coverage:
+    - gid: D5/S1/Deficit/Beatty/GoldenObserverRoute.golden_observer_route_w_c1
+      source_sha256: sha256:49790e9947bf05bd5b07347922c0ae3431f03651b0815aa44e107dbae4022bbf
+      target_statement_id: sha256:a68a75d7de5fbb7beddc6411f59087bfafc7bf308808afa57419438fc101fc63
+  scribe:
+    - gid: D5/S1/Deficit/Beatty/GoldenObserverRoute.golden_observer_route_w_c1
+      definition_sha256: sha256:49e01d73512daa4d726d410b24d31158b8d7734d24adfcba49d816020b13e08b
+      emission_sha256: sha256:2632afe902a48640c5236fc27ab35b7a8aeb5442e199f1299cb9c1591c4c7cfe
+  unresolved_subitems: []

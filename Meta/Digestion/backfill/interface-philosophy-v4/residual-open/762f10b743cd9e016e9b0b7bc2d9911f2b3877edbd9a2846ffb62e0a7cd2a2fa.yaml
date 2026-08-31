@@ -1,0 +1,22 @@
+fingerprints:
+  raw_sha256: sha256:762f10b743cd9e016e9b0b7bc2d9911f2b3877edbd9a2846ffb62e0a7cd2a2fa
+  normalized_sha256: sha256:762f10b743cd9e016e9b0b7bc2d9911f2b3877edbd9a2846ffb62e0a7cd2a2fa
+cas_ref: sha256:762f10b743cd9e016e9b0b7bc2d9911f2b3877edbd9a2846ffb62e0a7cd2a2fa
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    recorded_at_utc: 2026-08-26T12:04:03.4024350+00:00
+    gids:
+      - D5/S0/Computability/LedgerGovernance/TerminalLedgerPartition.terminal_ledger_three_way_partition
+    gaps:
+      - code: chain-migration-incomplete
+        detail: pzg-residual-750cfd1505b2a84754ea31d8eb1e400d8d0e302e7e0b984a5005065c5939ff4a-723ce95acbf3657320cfa2dc604c3adbfdc5ad6275a5310281518ed6e940d8b4
+      - code: chain-migration-incomplete
+        detail: pzg-residual-88670a52cad930e32f4a081e9875528860033b4f7ed13c9bf1bd56d5a625b116-d75908918db5e59aac4f1f09415beccbcd5d7b3f8ad2cc0c1ee4777d4d6a1173
+  chain_atoms:
+    - 88670a52cad930e32f4a081e9875528860033b4f7ed13c9bf1bd56d5a625b116
+    - 750cfd1505b2a84754ea31d8eb1e400d8d0e302e7e0b984a5005065c5939ff4a

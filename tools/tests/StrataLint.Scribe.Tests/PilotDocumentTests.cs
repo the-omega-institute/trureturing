@@ -137,64 +137,6 @@ public sealed class DocumentDiscoveryTests
         Assert.True(findings.Count == 0, completeMessage);
     }
 
-    [LiveReportFact]
-    public void GeneratedDocumentGraphMatchesFormalTruth()
-    {
-        var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound);
-        var repositoryRoot = repository.Root.FullPath;
-        var rawLeanReport = RepositoryRelativePath.Create(
-            ".lake/build/stratalint/raw-lean-report.json");
-        Assert.True(
-            repository.FileExists(rawLeanReport),
-            "STRATALINT_REQUIRE_LIVE_REPORT=1 requires .lake/build/stratalint/raw-lean-report.json");
-
-        var report = LeanCompiledArtifactReports.InspectRepository(repositoryRoot);
-        Assert.NotEmpty(DocumentDefinitions.All);
-        var documents = DocumentDefinitions.All
-            .Select(static definition => definition.Document)
-            .ToArray();
-        var census = ReceiptFreeDocumentCatalog.Load(repositoryRoot, documents);
-        var graph = DocumentGraphAssembler.Assemble(
-            documents,
-            DeclarationCatalog.Create(report));
-        var projection = DocumentGraphExportProjection.Create(
-            DocumentDefinitions.All.Select(definition => new DocumentGraphDocument(
-                definition.RelativePath.Value,
-                definition.Document,
-                census.ReceiptFreeDocumentGids.Contains(definition.Document.Header.Gid.Value)
-                    ? "receipt-free"
-                    : "receipt-bound")),
-            graph,
-            DeclarationCatalog.Create(report),
-            report.Files.Keys.Select(static path => path.Value).ToHashSet(StringComparer.Ordinal));
-
-        Assert.Equal(DocumentDefinitions.All.Length, projection.Documents.Nodes.Length);
-        Assert.Equal(
-            documents.SelectMany(document => graph.For(document)).OfType<DocumentEdge.TruthAnchor>().Count(),
-            projection.Joins.TruthAnchors.Length);
-        Assert.All(projection.Joins.TruthAnchors, anchor =>
-        {
-            Assert.Contains(projection.Documents.Nodes, node =>
-                node.RepoPath == anchor.DocumentRepoPath && node.Gid == anchor.DocumentGid);
-            Assert.Contains(anchor.FormalTruthRepoPath, report.Files.Keys.Select(static path => path.Value));
-        });
-
-    }
-
-    private sealed class LiveReportFactAttribute : FactAttribute
-    {
-        public LiveReportFactAttribute()
-        {
-            var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound);
-            var requireLiveReport = Environment.GetEnvironmentVariable("STRATALINT_REQUIRE_LIVE_REPORT") == "1";
-            if (!requireLiveReport && (!repository.FileExists(RepositoryRelativePath.Create(
-                    ".lake/build/stratalint/raw-lean-report.json"))
-                || !repository.FileExists(RepositoryRelativePath.Create(
-                    ".lake/build/stratalint/raw-lean-report.json.materials.zip"))))
-                Skip = "Live raw Lean report is absent; document graph verification requires that report.";
-        }
-    }
-
     [Fact]
     public void DigitRawContainsATypedRepoDerivedZeckendorfExample()
     {

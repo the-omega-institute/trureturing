@@ -1,0 +1,20 @@
+fingerprints:
+  raw_sha256: sha256:46955d11360d56b1b1377439bbbc89c2c9dd00cc2d8db157de7a99e933dee201
+  normalized_sha256: sha256:46955d11360d56b1b1377439bbbc89c2c9dd00cc2d8db157de7a99e933dee201
+cas_ref: sha256:46955d11360d56b1b1377439bbbc89c2c9dd00cc2d8db157de7a99e933dee201
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  quarantine:
+    justification: "Retrieval preceded quarantine. D5 exact adjacent hit `D5/S3/Observer/Budget/MinimumCompleteSetCover.lean:237` (`zero_observer_singleton_budget_incomplete_on_nat`) proves only that the constant-zero Nat observer is noninjective; it encodes neither the source observer nor its function equation, positive coefficients, or high modular symmetry, so it is not a witness for the boxed feature-qualified clause. D5 partial hit `D5/S3/Analytic/Adelic/PrimeObserverCasimirCompleteMonotonicity.lean:63` defines `splitRegulatorModeLog`, line 81 constructs `goldenObserverCasimir` as the zero-minus-first regulator-mode readout, and public theorem `prime_observer_casimir_complete_monotonicity` at line 379 proves its complete-monotonicity clauses. This provides regulator-mode observer semantics on base, but no refinement relation connects that construction to the source observer or completed xi, or proves that it refines observer completeness; the regulator-mode clause remains blocked exactly by the missing refinement relation. D5 and pinned Mathlib queries `observer.?complete|function.?equation|positive.?coeff|modular.?symmetr|primitive.?positivity|twisted.?L|operator.?valued` found no common source carrier or meanings for high modular symmetry, primitive positivity, or the other five proposed refinement channels; reachable GitHub Lean searches `primitive positivity language:Lean`, `operator-valued completion language:Lean`, `twined Weil language:Lean`, and `modular symmetry observer language:Lean` returned no exact result or A17 port candidate. Durable local probe content: import `D5.S3.Observer.Budget.MinimumCompleteSetCover`; query `zero_observer_singleton_budget_incomplete_on_nat`, `HasPositiveCoefficients`, `HasHighModularSymmetry`, `DisplaysPrimitivePositivity`, `TwistedLFunctionObserver`, `VectorValuedExplicitFormulaObserver`, `TwinedWeilObserver`, and `OperatorValuedCompletionObserver`; the bare noninjectivity theorem elaborates and exit 1 reports exact diagnostic `error(lean.unknownIdentifier): Unknown identifier` for each of the latter seven names. Whole-atom coverage is therefore guarded: the boxed clause is missing its exact shared carrier and three feature predicates; the completed-xi carrier itself exists on base (completedZetaReading and xiReading at D5/S3/Zeros/CompletedZeta.lean:26-32, with the completed-zeta identity, differentiability and reflection at :34-52) but its primitive-positivity predicate and the refinement/comparison relation are absent, so the completed-xi primitive-positivity comparison and five other refinement channels remain inexpressible; and the regulator-mode partial carrier lacks the required refinement relation."
+    reentry_condition: "D5 or pinned Mathlib provides source-faithful predicates and carriers for the three scalar features and completed-xi primitive positivity, carriers for the five absent refinement channels, and a public refinement relation connecting the regulator-mode construction and the other named channels to the source observer, or the atomizer splits the formalizable observer-incompleteness assertion from the inexpressible qualitative comparison and refinement clauses."
+    blocker_class: multi-clause-guard
+  chain_atoms:
+    - be6dd100705fe5eb8e3178a3073739328e51cad90cadf67a3045b1cb896f6d7e
+    - 1ebf6c2517b03d65f99daf4603a50b4c65382507b6c648aee04b7f616e5ca253
+    - 66058e45470928085ae2f3f0b379cc8718a67a6c96dffc1ef372601a792fe2db
+    - 0fc868845abc51f88ed44362579b9998de6e3e3e52619f3250728c76265b459c
+    - 182f8d2d90671a584ec25c02bd5346283017ae3de77f16f89936b9ba90aa9ef3
+    - b484ff6b8c25c7f2310d935f793c4aae06b5b8ef57bed8fa45dafd5c9deea4bb

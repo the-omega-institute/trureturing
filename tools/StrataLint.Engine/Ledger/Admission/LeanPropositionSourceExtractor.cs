@@ -1,5 +1,4 @@
 using System.Collections.Immutable;
-using System.Globalization;
 using System.Text;
 
 namespace StrataLint.Engine;
@@ -16,7 +15,7 @@ internal sealed record LeanSourceDeclaration(
 
 internal sealed record LeanSourceScope(string? NamespaceName);
 
-internal sealed class LeanSourceCatalog
+internal sealed partial class LeanSourceCatalog
 {
     private static readonly ImmutableHashSet<string> DeclarationKinds =
         ImmutableHashSet.Create(
@@ -145,7 +144,9 @@ internal sealed class LeanSourceCatalog
         }
 
         var output = new StringBuilder();
-        foreach (var root in roots.OrderBy(
+        foreach (var root in roots
+            .Where(static root => !IsGeneratorClosure(root.Source))
+            .OrderBy(
             static root => root.Recorded.DeclarationNameKey,
             StringComparer.Ordinal))
         {
@@ -154,6 +155,17 @@ internal sealed class LeanSourceCatalog
             AppendField(output, "root-name", root.Source.FullName);
             AppendTokens(output, root.Source.AmbientTokens);
             AppendTokens(output, root.Source.SemanticTokens);
+        }
+
+        var generatorRoot = roots
+            .Select(static root => root.Source)
+            .FirstOrDefault(IsGeneratorClosure);
+        if (generatorRoot is not null)
+        {
+            AppendField(output, "root-kind", "compiler-generated-source-closure");
+            AppendField(output, "root-name", generatorRoot.FullName);
+            AppendTokens(output, generatorRoot.AmbientTokens);
+            AppendTokens(output, generatorRoot.SemanticTokens);
         }
 
         foreach (var dependency in dependencies.Values.OrderBy(
@@ -187,6 +199,11 @@ internal sealed class LeanSourceCatalog
             .ToImmutableArray();
         if (matches.IsEmpty)
         {
+            if (IsCompilerGeneratedName(recordedSegments))
+            {
+                return CreateGeneratorClosure(moduleDeclarations, recorded.Kind);
+            }
+
             throw new LeanSourceExtractionException(
                 $"Lean declaration source cannot be resolved: {recorded.DeclarationNameKey}.");
         }
@@ -201,7 +218,7 @@ internal sealed class LeanSourceCatalog
         }
 
         var selected = best[0];
-        if (!string.Equals(selected.Kind, recorded.Kind, StringComparison.Ordinal)
+        if (!RecordedKindMatchesSource(recorded.Kind, selected.Kind)
             && FullNameSegments(selected.FullName).Length == recordedSegments.Length)
         {
             throw new LeanSourceExtractionException(
@@ -211,31 +228,49 @@ internal sealed class LeanSourceCatalog
         return selected;
     }
 
+    private static bool RecordedKindMatchesSource(string recordedKind, string sourceKind) =>
+        string.Equals(recordedKind, sourceKind, StringComparison.Ordinal)
+        || sourceKind switch
+        {
+            "structure" => recordedKind == "inductive",
+            "abbrev" => recordedKind == "def",
+            "instance" => recordedKind is "def" or "theorem",
+            _ => false,
+        };
+
     private IEnumerable<LeanSourceDeclaration> ResolveDependencies(
         LeanSourceDeclaration declaration)
     {
+        if (IsGeneratorClosure(declaration))
+        {
+            foreach (var source in declarations.Where(source => source.Path == declaration.Path))
+            {
+                foreach (var dependency in ResolveDependencies(source))
+                {
+                    yield return dependency;
+                }
+            }
+
+            yield break;
+        }
+
         var bound = BoundIdentifiers(declaration.SemanticTokens);
         foreach (var name in QualifiedIdentifiers(declaration.SemanticTokens)
-            .Where(name => !bound.Contains(name) && !ReservedIdentifiers.Contains(name))
+            .Where(name => !IsBoundIdentifier(name, bound) && !ReservedIdentifiers.Contains(name))
             .Distinct(StringComparer.Ordinal))
         {
             var candidates = ResolveDependencyCandidates(declaration, name);
-            if (candidates.Length == 1)
+            if (candidates.Length > 0)
             {
-                if (candidates[0].Path != declaration.Path
-                    && !IsImported(declaration, candidates[0]))
+                foreach (var candidate in candidates)
                 {
-                    throw new LeanSourceExtractionException(
-                        $"Repository Lean dependency {name} is not imported by {declaration.FullName}.");
+                    yield return candidate;
                 }
 
-                yield return candidates[0];
                 continue;
             }
 
-            if (candidates.Length > 1
-                || name.StartsWith("D5.", StringComparison.Ordinal)
-                || byLeafName.ContainsKey(LeafName(name)))
+            if (name.StartsWith("D5.", StringComparison.Ordinal))
             {
                 throw new LeanSourceExtractionException(
                     $"Repository Lean dependency {name} is unresolved for {declaration.FullName}.");
@@ -248,26 +283,29 @@ internal sealed class LeanSourceCatalog
         string name)
     {
         var result = new Dictionary<string, LeanSourceDeclaration>(StringComparer.Ordinal);
-        AddExact(name);
-        var ownerNamespace = NamespaceName(owner.FullName);
-        while (ownerNamespace.Length > 0)
+        foreach (var lookupName in DependencyLookupNames(name))
         {
-            AddExact(ownerNamespace + "." + name);
-            ownerNamespace = NamespaceName(ownerNamespace);
-        }
-
-        foreach (var local in declarations.Where(declaration =>
-            declaration.Path == owner.Path
-            && LeafName(declaration.FullName) == LeafName(name)))
-        {
-            result.TryAdd(local.Path.Value + "\0" + local.FullName, local);
-        }
-
-        if (byLeafName.TryGetValue(LeafName(name), out var leafMatches))
-        {
-            foreach (var match in leafMatches.Where(declaration => IsImported(owner, declaration)))
+            AddExact(lookupName);
+            var ownerNamespace = NamespaceName(owner.FullName);
+            while (ownerNamespace.Length > 0)
             {
-                result.TryAdd(match.Path.Value + "\0" + match.FullName, match);
+                AddExact(ownerNamespace + "." + lookupName);
+                ownerNamespace = NamespaceName(ownerNamespace);
+            }
+
+            foreach (var local in declarations.Where(declaration =>
+                declaration.Path == owner.Path
+                && LeafName(declaration.FullName) == LeafName(lookupName)))
+            {
+                result.TryAdd(local.Path.Value + "\0" + local.FullName, local);
+            }
+
+            if (byLeafName.TryGetValue(LeafName(lookupName), out var leafMatches))
+            {
+                foreach (var match in leafMatches.Where(declaration => IsImported(owner, declaration)))
+                {
+                    result.TryAdd(match.Path.Value + "\0" + match.FullName, match);
+                }
             }
         }
 
@@ -280,10 +318,20 @@ internal sealed class LeanSourceCatalog
                 return;
             }
 
-            foreach (var match in matches)
+            foreach (var match in matches.Where(declaration =>
+                declaration.Path == owner.Path || IsImported(owner, declaration)))
             {
                 result.TryAdd(match.Path.Value + "\0" + match.FullName, match);
             }
+        }
+    }
+
+    private static IEnumerable<string> DependencyLookupNames(string name)
+    {
+        yield return name;
+        if (name.EndsWith('ˣ'))
+        {
+            yield return name[..^1];
         }
     }
 
@@ -325,6 +373,16 @@ internal sealed class LeanSourceCatalog
 
     private void RejectCustomSyntaxDependency(LeanSourceDeclaration declaration)
     {
+        if (IsGeneratorClosure(declaration))
+        {
+            foreach (var source in declarations.Where(source => source.Path == declaration.Path))
+            {
+                RejectCustomSyntaxDependency(source);
+            }
+
+            return;
+        }
+
         var semantic = declaration.SemanticTokens
             .Select(static token => LeanCustomSyntaxCatalog.NormalizeLiteral(token.Text))
             .ToImmutableHashSet(StringComparer.Ordinal);
@@ -345,7 +403,14 @@ internal sealed class LeanSourceCatalog
         var commandStarts = FindCommandStarts(tokens);
         RejectIndentedDeclarations(tokens, commandStarts, file.Path);
         imports = ParseImports(tokens, commandStarts);
-        customSyntax = LeanCustomSyntaxCatalog.ParseLiterals(tokens, commandStarts);
+        customSyntax = LeanCustomSyntaxCatalog.ParseLiterals(
+            tokens,
+            commandStarts,
+            includeLocal: false);
+        var moduleCustomSyntax = LeanCustomSyntaxCatalog.ParseLiterals(
+            tokens,
+            commandStarts,
+            includeLocal: false);
         var ambientTokens = ParseAmbientTokens(tokens, commandStarts);
         var scopeStack = new List<LeanSourceScope>();
         var result = ImmutableArray.CreateBuilder<LeanSourceDeclaration>();
@@ -429,7 +494,7 @@ internal sealed class LeanSourceCatalog
                 tokens[kindIndex..semanticEnd],
                 ambientTokens,
                 imports,
-                customSyntax));
+                moduleCustomSyntax));
         }
 
         return result.ToImmutable();
@@ -451,7 +516,7 @@ internal sealed class LeanSourceCatalog
                 && (text is "@" or "import" or "namespace" or "end" or "section" or "mutual"
                 or "macro" or "macro_rules" or "syntax" or "notation" or "local" or "scoped"
                 or "elab" or "elab_rules" or "open" or "variable" or "include" or "omit"
-                or "universe" or "set_option" or "attribute" or "export"
+                or "universe" or "set_option" or "attribute" or "export" or "example"
                 || DeclarationKinds.Contains(text)
                 || text is "private" or "protected" or "noncomputable" or "partial" or "unsafe"))
             {
@@ -471,39 +536,6 @@ internal sealed class LeanSourceCatalog
         return result.ToImmutable();
     }
 
-    private static void RejectIndentedDeclarations(
-        ImmutableArray<LeanSourceToken> tokens,
-        ImmutableArray<int> commandStarts,
-        RepoPath path)
-    {
-        var recognized = commandStarts.ToImmutableHashSet();
-        for (var index = 0; index < tokens.Length; index++)
-        {
-            var token = tokens[index];
-            if (token.Column == 0
-                || recognized.Contains(index)
-                || index > 0 && tokens[index - 1].Line == token.Line)
-            {
-                continue;
-            }
-
-            if (token.Text == "@"
-                && tokens[index..Math.Min(tokens.Length, index + 32)].Any(candidate =>
-                    candidate.Line == token.Line && DeclarationKinds.Contains(candidate.Text))
-                || DeclarationKinds.Contains(token.Text) && token.Text != "constant"
-                || token.Text == "constant"
-                    && tokens[index..Math.Min(tokens.Length, index + 32)].Any(candidate =>
-                        candidate.Line == token.Line && candidate.Text == ":")
-                || token.Text is "private" or "protected" or "noncomputable" or "partial" or "unsafe"
-                    && tokens[index..Math.Min(tokens.Length, index + 32)].Any(candidate =>
-                        candidate.Line == token.Line && DeclarationKinds.Contains(candidate.Text)))
-            {
-                throw new LeanSourceExtractionException(
-                    $"Indented Lean declaration is unsupported in {path.Value}.");
-            }
-        }
-    }
-
     private static ImmutableArray<LeanSourceToken> ParseAmbientTokens(
         ImmutableArray<LeanSourceToken> tokens,
         ImmutableArray<int> commandStarts)
@@ -513,7 +545,8 @@ internal sealed class LeanSourceCatalog
         {
             var start = commandStarts[index];
             var end = index + 1 < commandStarts.Length ? commandStarts[index + 1] : tokens.Length;
-            if (FindDeclarationKind(tokens, start, end) < 0 && tokens[start].Text != "@")
+            if (FindDeclarationKind(tokens, start, end) < 0
+                && tokens[start].Text is not ("@" or "example"))
             {
                 result.AddRange(tokens[start..end]);
             }
@@ -645,53 +678,6 @@ internal sealed class LeanSourceCatalog
         int end) =>
         start < end && IsIdentifier(tokens[start].Text) ? tokens[start].Text : string.Empty;
 
-    private static ImmutableHashSet<string> BoundIdentifiers(
-        ImmutableArray<LeanSourceToken> tokens)
-    {
-        var result = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
-        var signatureEnd = tokens.Length;
-        var depth = 0;
-        for (var index = 0; index < tokens.Length; index++)
-        {
-            depth += tokens[index].Text switch
-            {
-                "(" or "[" or "{" => 1,
-                ")" or "]" or "}" => -1,
-                _ => 0,
-            };
-            if (depth == 0 && tokens[index].Text == ":")
-            {
-                signatureEnd = index;
-                break;
-            }
-        }
-
-        for (var index = 0; index < signatureEnd; index++)
-        {
-            if (tokens[index].Text is not ("(" or "{" or "["))
-            {
-                continue;
-            }
-
-            var close = tokens[index].Text switch { "(" => ")", "{" => "}", _ => "]" };
-            for (var cursor = index + 1; cursor < tokens.Length && tokens[cursor].Text != close; cursor++)
-            {
-                if (tokens[cursor].Text == ":")
-                {
-                    break;
-                }
-
-                if (IsIdentifier(tokens[cursor].Text)
-                    && !ReservedIdentifiers.Contains(tokens[cursor].Text))
-                {
-                    result.Add(tokens[cursor].Text);
-                }
-            }
-        }
-
-        return result.ToImmutable();
-    }
-
     private static IEnumerable<string> QualifiedIdentifiers(
         ImmutableArray<LeanSourceToken> tokens)
     {
@@ -704,42 +690,6 @@ internal sealed class LeanSourceCatalog
 
             yield return tokens[index].Text;
         }
-    }
-
-    private static ImmutableArray<string> DecodeNameKey(string key)
-    {
-        var result = ImmutableArray.CreateBuilder<string>();
-        for (var colon = 0; colon < key.Length; colon++)
-        {
-            if (key[colon] != ':')
-            {
-                continue;
-            }
-
-            var digitStart = colon - 1;
-            while (digitStart >= 0 && char.IsAsciiDigit(key[digitStart]))
-            {
-                digitStart--;
-            }
-
-            digitStart++;
-            if (digitStart == colon
-                || !int.TryParse(
-                    key.AsSpan(digitStart, colon - digitStart),
-                    NumberStyles.None,
-                    CultureInfo.InvariantCulture,
-                    out var length)
-                || length < 0
-                || colon + 1 + length > key.Length)
-            {
-                throw new LeanSourceExtractionException("Lean declaration name key is malformed.");
-            }
-
-            result.Add(key.Substring(colon + 1, length));
-            colon += length;
-        }
-
-        return result.ToImmutable();
     }
 
     private static bool NameKeyCanReferTo(

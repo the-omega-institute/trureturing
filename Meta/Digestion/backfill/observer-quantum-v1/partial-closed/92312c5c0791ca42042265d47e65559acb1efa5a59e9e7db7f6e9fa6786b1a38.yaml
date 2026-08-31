@@ -1,0 +1,21 @@
+fingerprints:
+  raw_sha256: sha256:92312c5c0791ca42042265d47e65559acb1efa5a59e9e7db7f6e9fa6786b1a38
+  normalized_sha256: sha256:92312c5c0791ca42042265d47e65559acb1efa5a59e9e7db7f6e9fa6786b1a38
+cas_ref: sha256:92312c5c0791ca42042265d47e65559acb1efa5a59e9e7db7f6e9fa6786b1a38
+coverage_gids:
+  - D5/S3/ContinuousObservables/CentralWinding.central_winding_certificate
+  - D5/S3/ObserverMemory/PrimePowerTensorTower.prime_power_tensor_factor_decomposition
+  - D5/S3/QuantumBounds/RobertsonSchrodinger.robertson_schrodinger
+  - D5/S3/Observer/MatrixUnitCertificate.matrix_unit_mul
+  - D5/S3/Observer/WindowRegister.windowRoot_isPrimitiveRoot
+  - D5/S3/Observer/WindowRegister.window_weyl
+  - D5/S3/Observer/WindowRegister.shiftMatrix_pow_card
+  - D5/S3/Observer/WindowRegister.clockMatrix_pow_card
+  - D5/S3/Observer/WindowRegister.window_unitary
+  - D5/S3/Observer/WindowRegister.window_commutant_eq_scalars
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems:
+    - universal-c-star-crossed-product-identification
+    - noncommutative-algebra-bundle-over-torus

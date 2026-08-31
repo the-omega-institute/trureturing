@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:77814e4c696b6b3770b8a4ccfe52bb20c3061104b573537b077a6ec91d83f158
+  normalized_sha256: sha256:77814e4c696b6b3770b8a4ccfe52bb20c3061104b573537b077a6ec91d83f158
+cas_ref: sha256:77814e4c696b6b3770b8a4ccfe52bb20c3061104b573537b077a6ec91d83f158
+coverage_gids:
+  - D5/S3/ObserverMemory/Prediction/EventualCycleAverage.eventual_cycle_average
+receipts:
+  coverage:
+    - gid: D5/S3/ObserverMemory/Prediction/EventualCycleAverage.eventual_cycle_average
+      source_sha256: sha256:77814e4c696b6b3770b8a4ccfe52bb20c3061104b573537b077a6ec91d83f158
+      target_statement_id: sha256:2e3154d85f7181f0927cc78bd2487ecbbef22bbb3b139cd74a7bb868b5c281be
+  scribe:
+    - gid: D5/S3/ObserverMemory/Prediction/EventualCycleAverage.eventual_cycle_average
+      definition_sha256: sha256:cb467e421c1833e9550210f4c9b108e4b2282290afe646ddefc42f0d36235b8f
+      emission_sha256: sha256:835454d39b3e77f813c09ea248cecd7d5ecb19675882d1e8f3b007eff87ec02e
+  unresolved_subitems: []

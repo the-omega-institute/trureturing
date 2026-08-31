@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:3aff78dc0c83548118a6ddce173c175a15c543fb3e17717760b91a45fbbd1a66
+  normalized_sha256: sha256:3aff78dc0c83548118a6ddce173c175a15c543fb3e17717760b91a45fbbd1a66
+cas_ref: sha256:3aff78dc0c83548118a6ddce173c175a15c543fb3e17717760b91a45fbbd1a66
+coverage_gids:
+  - D5/S3/Quantum/Algebra/QuotientOrthogonalComplement.quotient_orthogonal_complement_isometry
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/Algebra/QuotientOrthogonalComplement.quotient_orthogonal_complement_isometry
+      source_sha256: sha256:3aff78dc0c83548118a6ddce173c175a15c543fb3e17717760b91a45fbbd1a66
+      target_statement_id: sha256:215e136c63f5ad25c444d17b16d8458b3c8c79364600124c1847a22f6844fcef
+  scribe:
+    - gid: D5/S3/Quantum/Algebra/QuotientOrthogonalComplement.quotient_orthogonal_complement_isometry
+      definition_sha256: sha256:4e321f991ea07e8f0a9ec6084cb79443bbe05e424f4f188f9363975c27861f22
+      emission_sha256: sha256:7dca2e332e47cbbbd3f639209efb787d5d076f3c44ff5ecac19a0f9f388714c9
+  unresolved_subitems: []

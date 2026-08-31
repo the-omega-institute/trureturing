@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:4f569da66804d560bc53e6c1ac7d74ce201d944db708780a8f72b39b930112b8
+  normalized_sha256: sha256:4f569da66804d560bc53e6c1ac7d74ce201d944db708780a8f72b39b930112b8
+cas_ref: sha256:4f569da66804d560bc53e6c1ac7d74ce201d944db708780a8f72b39b930112b8
+coverage_gids:
+  - D5/S3/PrimeForms/QuadraticResidueCounterexample.two_refutes_unqualified_quadratic_residue_equivalence
+  - D5/S3/PrimeForms/GoldenPrimeClassification.five_is_square_mod_prime_iff_mod_five_eq_one_or_four
+  - D5/S3/PrimeForms/GoldenPrimeClassification.golden_not_prime_iff_mod_five_eq_one_or_four
+  - D5/S3/PrimeForms/GoldenPrimeClassification.golden_prime_iff_mod_five_eq_two_or_three
+  - D5/S3/PrimeForms/GoldenPrimeClassification.golden_five_eq_ramified_square
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:4e967ea0d78017e6157c341d6ede14c89878844a55a7d977c1b9e1fb3b5e1e86
+  normalized_sha256: sha256:4e967ea0d78017e6157c341d6ede14c89878844a55a7d977c1b9e1fb3b5e1e86
+cas_ref: sha256:4e967ea0d78017e6157c341d6ede14c89878844a55a7d977c1b9e1fb3b5e1e86
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    recorded_at_utc: 2026-08-28T00:33:18.0191420+00:00
+    gids:
+      - D5/S3/ConceptDynamics/RefinementFactorization/IndexedReadoutMonotonicity.indexed_readout_monotonicity
+    gaps:
+      - code: structural-alignment-rejected
+        detail: 定理/6.2

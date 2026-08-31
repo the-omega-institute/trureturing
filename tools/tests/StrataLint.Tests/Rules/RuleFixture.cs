@@ -10,7 +10,8 @@ internal sealed partial class RuleFixture
 {
     internal const string FixtureDigestionSourcePath = "docs/GOVERNANCE.md";
     internal const string FixtureDigestionSource = "x";
-    internal const string FixtureAtomId = "fixture-atom";
+    internal const string FixtureAtomId =
+        "2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881";
     internal const string FixtureCasReference =
         "sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881";
     internal const string FixtureCasPath =
@@ -18,7 +19,9 @@ internal sealed partial class RuleFixture
     internal const string FixtureBackfillSourcePath =
         "Meta/Digestion/backfill/fixture-source/source.toml";
     internal const string FixtureBackfillAtomPath =
-        "Meta/Digestion/backfill/fixture-source/partial-closed/fixture-atom.yaml";
+        "Meta/Digestion/backfill/fixture-source/partial-closed/"
+        + FixtureAtomId
+        + ".yaml";
     internal const string FixtureBackfill = """
         schema_version: 3
         ledger: theory-digestion-v1
@@ -27,11 +30,7 @@ internal sealed partial class RuleFixture
             path: docs/GOVERNANCE.md
             atomizer: none
             entries:
-              - atom_id: fixture-atom
-                boundary:
-                  ast_path: manual/fixture
-                  start_byte: 0
-                  end_byte: 1
+              - atom_id: 2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881
                 fingerprints:
                   raw_sha256: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881
                   normalized_sha256: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881
@@ -56,10 +55,6 @@ internal sealed partial class RuleFixture
         unregistered_genres = []
         """ + "\n";
     internal const string FixtureBackfillAtom = """
-        boundary:
-          ast_path: manual/fixture
-          start_byte: 0
-          end_byte: 1
         fingerprints:
           raw_sha256: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881
           normalized_sha256: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881
@@ -190,11 +185,8 @@ internal sealed partial class RuleFixture
         Files[$"{BackfillInventoryLoader.RootPath}delta-v0.1/source.toml"] =
             $"source_id = \"delta-v0.1\"\npath = \"{FixtureDigestionSourcePath}\"\natomizer = \"none\"\n"
             + "genre_registry_check = \"no-registry\"\nunregistered_genres = []\n";
-        Files[$"{BackfillInventoryLoader.RootPath}delta-v0.1/residual-open/delta-atom.yaml"] = """
-            boundary:
-              ast_path: manual/delta
-              start_byte: 0
-              end_byte: 1
+        Files[$"{BackfillInventoryLoader.RootPath}delta-v0.1/residual-open/"
+            + "0000000000000000000000000000000000000000000000000000000000000000.yaml"] = """
             fingerprints:
               raw_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
               normalized_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
@@ -212,14 +204,11 @@ internal sealed partial class RuleFixture
     internal void UseValidDirectoryBackfill()
     {
         const string sourcePath = "delta-v0.1/source.toml";
-        const string atomPath = "delta-v0.1/partial-closed/delta-atom.yaml";
+        const string atomPath = "delta-v0.1/partial-closed/"
+            + "2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881.yaml";
         var source = $"source_id = \"delta-v0.1\"\npath = \"{FixtureDigestionSourcePath}\"\natomizer = \"none\"\n"
             + "genre_registry_check = \"no-registry\"\nunregistered_genres = []\n";
         var atom = $"""
-            boundary:
-              ast_path: manual/fixture
-              start_byte: 0
-              end_byte: 1
             fingerprints:
               raw_sha256: {FixtureCasReference}
               normalized_sha256: {FixtureCasReference}

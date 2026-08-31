@@ -1,0 +1,22 @@
+fingerprints:
+  raw_sha256: sha256:d117b7f10eb9a9d88cefeb7441e67c250bffc12a4815266575812aa1d7b309b4
+  normalized_sha256: sha256:d117b7f10eb9a9d88cefeb7441e67c250bffc12a4815266575812aa1d7b309b4
+cas_ref: sha256:d117b7f10eb9a9d88cefeb7441e67c250bffc12a4815266575812aa1d7b309b4
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    recorded_at_utc: 2026-08-28T02:56:01.6541450+00:00
+    gids:
+      - D5/S3/Quantum/Decoherence/StaticLossVersusReturnFlow.static_loss_and_return_flow_are_logically_independent
+    gaps:
+      - code: chain-migration-incomplete
+        detail: generic-residual-4b544f1aa96895c296f4986ea823cc65cd5855738a6e38018fea2557c6621f20-388cd3852b560ee8a2a33c5b9c0c5a8fbaaca9ef9da3bcb621bad8620995088e
+      - code: chain-migration-incomplete
+        detail: generic-residual-fc091f9b2d7e9af1335c70ad287b08c6dc5abd6a8a9da836d190b576c8ac3d47-8e61c4f54e27eeb0e6e7a6a9f18f1760c8de7ea117acf7ce35525bf632e34a9e
+  chain_atoms:
+    - 4b544f1aa96895c296f4986ea823cc65cd5855738a6e38018fea2557c6621f20
+    - fc091f9b2d7e9af1335c70ad287b08c6dc5abd6a8a9da836d190b576c8ac3d47

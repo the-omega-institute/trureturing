@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:8ca7838bbd865102d43991a1227f668f55cf077b11787f0a61d9571bc09be170
+  normalized_sha256: sha256:8ca7838bbd865102d43991a1227f668f55cf077b11787f0a61d9571bc09be170
+cas_ref: sha256:8ca7838bbd865102d43991a1227f668f55cf077b11787f0a61d9571bc09be170
+coverage_gids:
+  - D5/S3/ConceptDynamics/Disclosure/ExactTargetForcedLeak.exact_target_forced_leak
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Disclosure/ExactTargetForcedLeak.exact_target_forced_leak
+      source_sha256: sha256:8ca7838bbd865102d43991a1227f668f55cf077b11787f0a61d9571bc09be170
+      target_statement_id: sha256:784bf36cc81bdc51defd9d31d76f86287880d73a9656455de5e1e8c36f6172a1
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Disclosure/ExactTargetForcedLeak.exact_target_forced_leak
+      definition_sha256: sha256:22f1a05f4216bc18afb8f118a740c30a3c901e6708fb7e15ae6b3cb545be046f
+      emission_sha256: sha256:6b013d8c14a835f6bfc67effb1879f31c9f659a6d98999b43846edbe5379f021
+  unresolved_subitems: []

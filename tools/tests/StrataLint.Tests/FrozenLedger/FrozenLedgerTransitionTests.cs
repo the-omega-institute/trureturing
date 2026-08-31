@@ -10,6 +10,145 @@ namespace StrataLint.Tests;
 public sealed partial class FrozenLedgerTests
 {
     [Fact]
+    public void AdmissionCatalogUsesActiveV5LedgerIdentityForSelectedImportedDeclaration()
+    {
+        var modules = new[]
+        {
+            Module("A"),
+            Module("B", imports: ["A"]),
+        };
+        var baseCatalog = BuildCatalog(modules);
+        var activePrerequisite = FrozenNodeId.Create(Sha256("active v5 prerequisite"));
+        var activeLedgerOwner = baseCatalog.ByPath[RepoPathFor("A")] with
+        {
+            PrerequisiteFrozenNodeIds = [activePrerequisite],
+            FrozenNodeId = FrozenContentAddress.ComputeFrozenNodeId(
+                RepoPathFor("A"),
+                baseCatalog.ByPath[RepoPathFor("A")].StatementId,
+                [activePrerequisite]),
+        };
+        var acceptedLedgerEvent = EventFile(
+            "Freeze",
+            FrozenLedgerCanonicalWriter.FreezeElement(
+                FrozenLedgerCanonicalWriter.FreezePayload(activeLedgerOwner)));
+        var acceptedView = FrozenLedgerBaseViewReader.Read(RepositorySnapshot.Create(
+            ImmutableDictionary<RepoPath, RepositoryFile>.Empty.Add(
+                acceptedLedgerEvent.Path,
+                acceptedLedgerEvent)));
+
+        var candidate = BuildAdmissionCatalog(
+            ["B"],
+            acceptedView.ActiveByPath,
+            modules);
+
+        Assert.Equal(
+            FrozenNodeId.Create(acceptedView.ActiveByPath[RepoPathFor("A")].EventHash),
+            Assert.Single(candidate.ByPath[RepoPathFor("B")].PrerequisiteFrozenNodeIds));
+    }
+
+    [Fact]
+    public void AdmissionCatalogRejectsImportedDeclarationMissingFromActiveV5Ledger()
+    {
+        var modules = new[]
+        {
+            Module("A"),
+            Module("B", imports: ["A"]),
+        };
+        var baseCatalog = BuildCatalog(modules);
+        var activeLedgerOwner = baseCatalog.ByPath[RepoPathFor("A")] with
+        {
+            DeclarationStatementIds =
+            [
+                new FrozenDeclarationStatement(
+                    "ns(n0,8:recorded)",
+                    "theorem",
+                    StatementId.Create(Sha256("recorded declaration"))),
+            ],
+        };
+        var acceptedLedgerEvent = EventFile(
+            "Freeze",
+            FrozenLedgerCanonicalWriter.FreezeElement(
+                FrozenLedgerCanonicalWriter.FreezePayload(activeLedgerOwner)));
+        var acceptedView = FrozenLedgerBaseViewReader.Read(RepositorySnapshot.Create(
+            ImmutableDictionary<RepoPath, RepositoryFile>.Empty.Add(
+                acceptedLedgerEvent.Path,
+                acceptedLedgerEvent)));
+
+        var exception = Assert.Throws<FormatException>(() => BuildAdmissionCatalog(
+            ["B"],
+            acceptedView.ActiveByPath,
+            modules));
+
+        Assert.Contains("dependency-not-ready", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void AdmissionCatalogScopesDeclarationLookupToTheImportedActiveV5Module()
+    {
+        var modules = new[]
+        {
+            Module("A"),
+            Module("B", imports: ["A"]),
+            Module("C"),
+        };
+        var baseCatalog = BuildCatalog(modules);
+        var moduleA = baseCatalog.ByPath[RepoPathFor("A")];
+        var moduleC = baseCatalog.ByPath[RepoPathFor("C")] with
+        {
+            DeclarationStatementIds = moduleA.DeclarationStatementIds,
+        };
+        var eventA = EventFile(
+            "Freeze",
+            FrozenLedgerCanonicalWriter.FreezeElement(
+                FrozenLedgerCanonicalWriter.FreezePayload(moduleA)));
+        var eventC = EventFile(
+            "Freeze",
+            FrozenLedgerCanonicalWriter.FreezeElement(
+                FrozenLedgerCanonicalWriter.FreezePayload(moduleC)));
+        var acceptedView = FrozenLedgerBaseViewReader.Read(RepositorySnapshot.Create(
+            ImmutableDictionary<RepoPath, RepositoryFile>.Empty
+                .Add(eventA.Path, eventA)
+                .Add(eventC.Path, eventC)));
+
+        var candidate = BuildAdmissionCatalog(
+            ["B"],
+            acceptedView.ActiveByPath,
+            modules);
+
+        Assert.Equal(
+            FrozenNodeId.Create(acceptedView.ActiveByPath[RepoPathFor("A")].EventHash),
+            Assert.Single(candidate.ByPath[RepoPathFor("B")].PrerequisiteFrozenNodeIds));
+    }
+
+    [Fact]
+    public void AdmissionCatalogPreservesActiveV5LedgerIdentityForImportedModuleWithoutDeclarations()
+    {
+        var modules = new[]
+        {
+            Module("A", declarations: ["a"], excluded: ["a"]),
+            Module("B", imports: ["A"]),
+        };
+        var baseCatalog = BuildCatalog(modules);
+        var moduleA = baseCatalog.ByPath[RepoPathFor("A")];
+        Assert.Empty(moduleA.DeclarationStatementIds);
+        var eventA = EventFile(
+            "Freeze",
+            FrozenLedgerCanonicalWriter.FreezeElement(
+                FrozenLedgerCanonicalWriter.FreezePayload(moduleA)));
+        var acceptedView = FrozenLedgerBaseViewReader.Read(RepositorySnapshot.Create(
+            ImmutableDictionary<RepoPath, RepositoryFile>.Empty.Add(eventA.Path, eventA)));
+
+        var candidate = BuildAdmissionCatalog(
+            ["B"],
+            acceptedView.ActiveByPath,
+            modules);
+
+        Assert.Equal(
+            FrozenNodeId.Create(acceptedView.ActiveByPath[RepoPathFor("A")].EventHash),
+            Assert.Single(candidate.ByPath[RepoPathFor("B")].PrerequisiteFrozenNodeIds));
+    }
+
+    [Fact]
     public void ProofBodyOnlyChangeDoesNotReportStatementIdentityChanged()
     {
         var recordedCatalog = BuildCatalog(Module(

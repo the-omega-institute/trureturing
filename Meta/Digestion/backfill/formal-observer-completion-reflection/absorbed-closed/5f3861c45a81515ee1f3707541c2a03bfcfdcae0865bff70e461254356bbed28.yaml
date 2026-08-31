@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:5f3861c45a81515ee1f3707541c2a03bfcfdcae0865bff70e461254356bbed28
+  normalized_sha256: sha256:5f3861c45a81515ee1f3707541c2a03bfcfdcae0865bff70e461254356bbed28
+cas_ref: sha256:5f3861c45a81515ee1f3707541c2a03bfcfdcae0865bff70e461254356bbed28
+coverage_gids:
+  - D5/S3/Observer/MetricGeometryLaws/HiddenTranslationComponentCharge.hidden_translation_component_charge
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/MetricGeometryLaws/HiddenTranslationComponentCharge.hidden_translation_component_charge
+      source_sha256: sha256:5f3861c45a81515ee1f3707541c2a03bfcfdcae0865bff70e461254356bbed28
+      target_statement_id: sha256:ff90f3c7e7417ae7043247986878fcbed28fceb2baa2aeceb4949bda2c8596a2
+  scribe:
+    - gid: D5/S3/Observer/MetricGeometryLaws/HiddenTranslationComponentCharge.hidden_translation_component_charge
+      definition_sha256: sha256:f92f0faa53354bb027f85c05cc2dd13bb1c394bb5463f68a586d2cce49cd607d
+      emission_sha256: sha256:a0adf05da30147e8875242e58872a309a2dca1bfe037f54542ee7d58e9b4e369
+  unresolved_subitems: []

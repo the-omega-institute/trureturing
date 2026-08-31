@@ -1,0 +1,24 @@
+fingerprints:
+  raw_sha256: sha256:5759adf2885bfe7b84af3f1d4fb3611057d1beca4802e1062d334f2ba86dec52
+  normalized_sha256: sha256:5759adf2885bfe7b84af3f1d4fb3611057d1beca4802e1062d334f2ba86dec52
+cas_ref: sha256:5759adf2885bfe7b84af3f1d4fb3611057d1beca4802e1062d334f2ba86dec52
+coverage_gids:
+  - D5/S3/Zeros/ToySpectrum/OffLineToySpectrum.toy_spectrum_satisfies_formal_polynomial_symmetries
+  - D5/S3/Zeros/ToySpectrum/OffLineToySpectrum.li_positivity_distinguishes_the_off_line_toy_spectrum
+  - D5/S3/Zeros/ToySpectrum/OffLineToySpectrum.explicit_off_line_j_invariant_four_point_counterexample
+  - D5/S3/Weil/ReflectionLedger.mirror_fixed_re_eq
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/ReflectionLedger.mirror_fixed_re_eq
+      source_sha256: sha256:5759adf2885bfe7b84af3f1d4fb3611057d1beca4802e1062d334f2ba86dec52
+      target_statement_id: sha256:02ecf1bed0e0cd7691383378fae5dd2baa46854d06a01ef3cdb6376ca936f29f
+  scribe:
+    - gid: D5/S3/Weil/ReflectionLedger.mirror_fixed_re_eq
+      definition_sha256: sha256:67de1be388e78bdfa74ed54c5e67f94587de944e5a0dc2edc667911f47c96d94
+      emission_sha256: sha256:3e226d946a792b8440dec47bc411ad5ff7bd1eb381645798116b8be54993092f
+  unresolved_subitems:
+    - toy-spectrum-satisfies-five-symmetries-certificate
+    - symmetry-chain-cannot-distinguish-rh-worlds
+    - antiunitary-symmetry-present-selfadjoint-hamiltonian-absent
+    - wigner-classification-does-not-produce-hamiltonian
+    - rh-fixed-locus-formulation-as-conceptual-not-mathematical-advance

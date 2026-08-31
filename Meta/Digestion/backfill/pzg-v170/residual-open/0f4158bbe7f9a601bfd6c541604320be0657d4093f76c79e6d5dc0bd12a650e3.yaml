@@ -1,0 +1,22 @@
+fingerprints:
+  raw_sha256: sha256:0f4158bbe7f9a601bfd6c541604320be0657d4093f76c79e6d5dc0bd12a650e3
+  normalized_sha256: sha256:0f4158bbe7f9a601bfd6c541604320be0657d4093f76c79e6d5dc0bd12a650e3
+cas_ref: sha256:0f4158bbe7f9a601bfd6c541604320be0657d4093f76c79e6d5dc0bd12a650e3
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    recorded_at_utc: 2026-08-29T02:35:35.8455370+00:00
+    gids:
+      - D5/S3/Analytic/Boundary/ConditionalNaturalBoundary.conditional_natural_boundary_and_gate
+    gaps:
+      - code: chain-migration-incomplete
+        detail: pzg-residual-69296fe2c4665b8b14f945386cda45fdc9313c42e2526ec95167709f0d9a9b13-8046cacda26b4636e11c9901923fb26ce91a85bfa5d41d83ebc1ef1579b9662c
+      - code: chain-migration-incomplete
+        detail: pzg-residual-ba49672cf00f681ea5fca99d9353675be7e5185ecb63aae078c17c20191e02b5-1712ec6a24bf97488a0412dc1e89530be90123deb6d90b112b99ef5ceb74eef6
+  chain_atoms:
+    - ba49672cf00f681ea5fca99d9353675be7e5185ecb63aae078c17c20191e02b5
+    - 69296fe2c4665b8b14f945386cda45fdc9313c42e2526ec95167709f0d9a9b13

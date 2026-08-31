@@ -318,3 +318,37 @@ internal sealed class TemporaryDirectory : IDisposable
         TestDirectoryCleanup.DeleteRecursively(Path);
     }
 }
+
+/// <summary>
+/// Script tests build fake executable environments under the test scratch root.
+/// Keep their filesystem operations behind the exempt harness assembly boundary.
+/// </summary>
+internal static class ScriptHarnessScratch
+{
+    internal static void EnsureDirectory(string path) => Directory.CreateDirectory(path);
+
+    internal static void CopyScriptInto(string sourcePath, string targetPath)
+    {
+        Directory.CreateDirectory(Path.GetDirectoryName(targetPath)!);
+        File.Copy(sourcePath, targetPath);
+    }
+
+    [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
+    internal static void WriteExecutableStub(string path, string body)
+    {
+        File.WriteAllText(
+            path,
+            "#!/usr/bin/env bash\nset -euo pipefail\n" + body + "\n",
+            System.Text.Encoding.UTF8);
+        File.SetUnixFileMode(
+            path,
+            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+    }
+
+    internal static string[] ReadRecordedCalls(string path) =>
+        File.Exists(path) ? File.ReadAllLines(path) : [];
+
+    internal static string[] ReadScratchLines(string path) => File.ReadAllLines(path);
+
+    internal static string ReadScratchText(string path) => File.ReadAllText(path);
+}
