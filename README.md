@@ -13,59 +13,86 @@ docs/develop/theory/ (reference input only) --ingest--> D5/
                                                      (Lean; sole mathematical source of truth)
 tools/ (C# judge; no mathematical content) --judges--> D5/
 tools/ --freezes accepted D5 nodes--> Golden/Frozen/accepted/ (frozen ledger)
-D5/ --projects--> Blueprint/ (derived; no authority)
-D5/ --projects--> mdBook (derived; no authority)
+
+Blueprint/**/*.scribe.cs (source; mirrors D5 addresses) --> ScribeEmitter
+Library/*/*.md (source) ---------------------------------> ScribeEmitter
+ScribeEmitter -------------------------------------------> Blueprint/**/*.md (generated)
 ```
 
 ## The ledger, measured
 
-### measured 2026-08-31 at dev d343b970ac7450641e3697fb310e99e397083eab
+All readings in this file were measured on 2026-08-31 at commit `d343b970ac7450641e3697fb310e99e397083eab` and reproduce from a checkout of that commit.
 
-| Proof-state evidence | Reading | Exact rerunnable command |
-| --- | --- | --- |
-| Frozen nodes in the append-only ledger | 2,788, all of `event_type: "Freeze"` (zero `Revoke`, zero `Reattest`), `schema_version: 5` | `ls Golden/Frozen/accepted \| wc -l; python3 -c 'import glob,json; x=[json.load(open(f)) for f in glob.glob("Golden/Frozen/accepted/*.json")]; print(*(sum(y["event_type"]==e for y in x) for e in ("Freeze","Revoke","Reattest")), sorted(set(y["schema_version"] for y in x)))'` |
-| Content-addressed prerequisite edges between them | 2,737 (855 roots; max 48 prerequisites on one node) | `python3 -c 'import glob,json; x=[json.load(open(f))["payload"]["prerequisite_frozen_node_ids"] for f in glob.glob("Golden/Frozen/accepted/*.json")]; print(sum(map(len,x)),sum(not y for y in x),max(map(len,x)))'` |
-| Declarations carried by those frozen nodes | 26,801 distinct declaration names — **14,461 of kind `theorem`**, 11,238 `def`, 490 `constructor`, 317 `inductive`, 317 `recursor`, 1 `opaque` | `python3 -c 'import collections,glob,json; d=[y for f in glob.glob("Golden/Frozen/accepted/*.json") for y in json.load(open(f))["payload"]["declaration_statement_ids"]]; c=collections.Counter(y["kind"] for y in d); print(len({y["declaration_name_key"] for y in d}),*(c[k] for k in ("theorem","def","constructor","inductive","recursor","opaque")))'` |
-| Unproved bodies in `D5/` | exactly **1** `sorry`, at `D5/X_Frontier/Hearts.lean:76` | `grep -rn '^[[:space:]]*sorry[[:space:]]*$' D5 --include='*.lean'` |
-| Pinned environment | Lean `v4.31.0`; mathlib `inputRev v4.31.0` | `cat lean-toolchain; jq -r '.packages[] \| select(.name == "mathlib") \| .inputRev' lake-manifest.json` |
+| Reading | Value |
+| --- | --- |
+| Ledger file, event, and distinct-node counts | 2,788 JSON files; 2,788 events: 2,788 `Freeze`, 0 `Revoke`, 0 `Reattest`, all schema 5; 2,788 distinct `payload.statement_id` values |
+| Content-addressed prerequisite edges | 2,737 edges; 855 roots; maximum 48 prerequisites on one node |
+| Declarations carried by frozen nodes | 26,824 declaration records spanning 26,801 distinct names; by record kind: 14,461 `theorem`, 11,238 `def`, 490 `constructor`, 317 `inductive`, 317 `recursor`, 1 `opaque` |
+| Lexical `sorry` hits in `D5/**/*.lean` | 3 hits: 1 proof body and 2 prose hits inside comments |
+| Named frontier declarations in `Hearts.lean` | 2: `o5_independence` and `o6WeilPositivityStatement` |
+| Pinned environment | Lean `v4.31.0`; mathlib `inputRev v4.31.0` |
 
-The truth DAG is not a metaphor — its nodes and its edges are the committed bytes, and both
-are countable.
+The declaration figures count ledger declaration records; they make no claim of independence, importance, or novelty. The broad search reports 3 lexical hits: 1 proof body at
+`D5/X_Frontier/Hearts.lean:76`, and 2 prose hits inside comments at `D5/S1/Phase/ThreeGap/Foundations.lean:48` and `D5/S1/Phase/ThreeGap/Main.lean:66`.
+
+From the stamped checkout, one paste reproduces the table in order:
+
+```bash
+files=(Golden/Frozen/accepted/*.json)
+python3 - "${files[@]}" <<'PY'
+import collections, json, sys
+events = [json.load(open(path)) for path in sys.argv[1:]]
+prereqs = [event["payload"]["prerequisite_frozen_node_ids"] for event in events]; decls = [decl for event in events for decl in event["payload"]["declaration_statement_ids"]]
+event_types = collections.Counter(event["event_type"] for event in events); kinds = collections.Counter(decl["kind"] for decl in decls)
+print("ledger", f"files={len(sys.argv) - 1}", f"events={len(events)}", *(f"{kind}={event_types[kind]}" for kind in ("Freeze", "Revoke", "Reattest")), "schema=" + ",".join(map(str, sorted({event["schema_version"] for event in events}))), f"nodes={len({event['payload']['statement_id'] for event in events})}")
+print("edges", sum(map(len, prereqs)), f"roots={sum(not ids for ids in prereqs)}", f"max={max(map(len, prereqs))}")
+print("declarations", f"records={len(decls)}", f"names={len({decl['declaration_name_key'] for decl in decls})}", *(f"{kind}={kinds[kind]}" for kind in ("theorem", "def", "constructor", "inductive", "recursor", "opaque")))
+PY
+sorry_hits=$(grep -rn '\bsorry\b' D5 --include='*.lean')
+sorry_total=$(printf '%s\n' "$sorry_hits" | wc -l | tr -d ' ')
+sorry_proof=$(printf '%s\n' "$sorry_hits" | grep -cE ':[[:space:]]*sorry[[:space:]]*$')
+printf 'sorry hits=%s proof=%s prose=%s %s\n' "$sorry_total" "$sorry_proof" "$((sorry_total - sorry_proof))" "$(printf '%s\n' "$sorry_hits" | paste -sd '|' -)"
+printf 'hearts '; grep -Ec '^(theorem o5_independence|def o6WeilPositivityStatement) ' D5/X_Frontier/Hearts.lean
+printf 'environment lean=%s mathlib=%s\n' "$(sed 's/.*://' lean-toolchain)" "$(jq -r '.packages[] | select(.name == "mathlib") | .inputRev' lake-manifest.json)"
+```
 
 ## The open frontier
 
-[D5/X_Frontier/Hearts.lean](D5/X_Frontier/Hearts.lean) holds exactly two open-heart objects,
-and their syntactic asymmetry is the boundary.
+At the stamped revision, [D5/X_Frontier/Hearts.lean](D5/X_Frontier/Hearts.lean) contains the two frontier declarations printed here:
 
-- `o5_independence` is a `theorem` whose body is that single `sorry`: it states zero
-  localization for the canonical golden Euler germ on the structural line.
-- `o6WeilPositivityStatement` is a `def … : Prop`: it names Weil positivity, classically
-  equivalent to the Riemann Hypothesis, and asserts no proof, no theorem, and no axiom; a
-  `sorry` count cannot see it.
+```lean
+theorem o5_independence :
+    ∃ Zqc : ℂ → ℂ,
+      MeromorphicOn Zqc {s | 0 < s.re} ∧
+      (∀ s : ℂ, 1 / phi ^ 2 < s.re → Zqc s = eulerGerm s) ∧
+      ∀ s : ℂ,
+        1 / (2 * phi ^ 3) < s.re →
+        s.re < 1 / phi ^ 2 →
+        AnalyticAt ℂ Zqc s →
+        Zqc s = 0 →
+        s.re = structuralZero := by
+  sorry
 
-The `sorry` count is 1, while the open hearts are 2; the module's docstring owns the remaining
-context.
+def o6WeilPositivityStatement : Prop :=
+```
+
+The first is a theorem with the single proof-body `sorry`; the second defines a `Prop` and
+supplies no proof. The module's docstring owns the remaining context.
 
 ## Build and verify
 
-`make help` is the single live command entrance and owns the command vocabulary. Of the targets
-it names, `make test` is the mathematical gate, while `make preflight` locally pre-verifies the
-three checks; preflight is a local preview, not GitHub authority.
+`make help` is the single live command entrance and owns the command vocabulary.
 
-This repository defines `engineering`, `lean-inspect`, and `admission` checks. It does not
-verify GitHub's required-check or branch-protection configuration, so it makes no claim that
-those checks are enforced on every merge.
+This repository defines its own admission checks and runs them in CI. It does not verify GitHub's required-check or branch-protection configuration, so it makes no claim that those checks are enforced on every merge.
 
 ## Read and navigate
 
-- [`CLAUDE.md`](CLAUDE.md) is the governing constitution in Chinese and is authoritative.
-- [`agents/CONTEXT.md`](agents/CONTEXT.md) is authoritative for the compact repository map and
-  the Route → Edit → Check workflow.
-- [`docs/develop/spec/golden-ledger-repo-spec.md`](docs/develop/spec/golden-ledger-repo-spec.md)
-  is the sole normative specification.
-- [`D5/`](D5/) is the authoritative Lean source; [`Blueprint/`](Blueprint/) and the
-  [mdBook](https://the-omega-institute.github.io/trureturing-mdbook/) are derived reading
-  projections rebuilt from this repository and hold no authority over anything here.
-- [`docs/develop/theory/`](docs/develop/theory/) contains reference inputs only and is not
-  authoritative.
-- [`Problems/`](Problems/) is authoritative for open problems posted for outside attack.
+Machine ownership is declared in [`Meta/FILEMAP.toml`](Meta/FILEMAP.toml); this list only routes readers to what they will find.
+
+- [`CLAUDE.md`](CLAUDE.md) contains the repository constitution in Chinese.
+- [`agents/CONTEXT.md`](agents/CONTEXT.md) contains the compact repository map and workflow.
+- [`docs/develop/spec/golden-ledger-repo-spec.md`](docs/develop/spec/golden-ledger-repo-spec.md) contains the repository specification.
+- [`D5/`](D5/) contains the Lean formalization.
+- [`Blueprint/`](Blueprint/) contains hand-written `.scribe.cs` sources and emitted Markdown. The [mdBook](https://the-omega-institute.github.io/trureturing-mdbook/) is externally built over `Blueprint/**/*.md`; this repository does not verify the hosted deployment's freshness.
+- [`docs/develop/theory/`](docs/develop/theory/) contains reference inputs.
+- [`Problems/`](Problems/) contains open problems posted for outside attack.
