@@ -87,14 +87,33 @@ public sealed partial class SelfLockProbeScriptTests
     }
 
     [Fact]
+    public void J1BlockerWithoutBaseEquivalentIsTrueRed()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new ProbeFixture();
+        fixture.J0Bundle.Supervisor["blockers"] = new System.Text.Json.Nodes.JsonArray(
+            EvidenceBundle.Blocker("Engineering.Tests.BaseOnlyIdentity"));
+        fixture.J0Bundle.Supervisor["required_identities"] = new System.Text.Json.Nodes.JsonArray(
+            EvidenceBundle.Identity("Engineering.Tests.BaseOnlyIdentity"),
+            EvidenceBundle.Identity(PresentTest));
+        fixture.J0Bundle.Publish();
+
+        AssertDecision(
+            RunProbe(fixture, ["engineering"], ["engineering"]),
+            "TRUE_RED_CONFIRMED",
+            allowExactRevert: false,
+            exitCode: 1);
+    }
+
+    [Fact]
     public void IncompleteCoverageIsTrueRed()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new ProbeFixture();
+        fixture.J0Bundle.TrxText = CompleteTrx(
+            [PresentTest, "Engineering.Tests.ExtraObservedIdentity"]);
         fixture.J0Bundle.Supervisor["required_identities"]!.AsArray().Add(
-            EvidenceBundle.Identity("Engineering.Tests.ExtraRequiredIdentity"));
-        fixture.J0Bundle.Supervisor["blockers"]!.AsArray().Add(
-            EvidenceBundle.Blocker("Engineering.Tests.ExtraRequiredIdentity"));
+            EvidenceBundle.Identity("Engineering.Tests.ExtraObservedIdentity"));
         fixture.J0Bundle.Publish();
 
         AssertDecision(

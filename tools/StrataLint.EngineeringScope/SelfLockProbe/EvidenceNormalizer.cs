@@ -14,11 +14,18 @@ internal static class EvidenceNormalizer
         SubjectKind expectedKind,
         string repository,
         string bundle,
-        string evaluatorDigest)
+        string evaluatorDigest,
+        string controllerRoot)
     {
         try
         {
-            return NormalizeCore(label, expectedKind, repository, bundle, evaluatorDigest);
+            return NormalizeCore(
+                label,
+                expectedKind,
+                repository,
+                bundle,
+                evaluatorDigest,
+                controllerRoot);
         }
         catch (Exception exception) when (exception is
             IOException or UnauthorizedAccessException or InvalidDataException
@@ -36,7 +43,8 @@ internal static class EvidenceNormalizer
         SubjectKind expectedKind,
         string repository,
         string bundle,
-        string evaluatorDigest)
+        string evaluatorDigest,
+        string controllerRoot)
     {
         var physicalRepository = ProcessTools.RequireRepositoryRoot(repository);
         var physicalBundle = Path.GetFullPath(bundle);
@@ -46,8 +54,9 @@ internal static class EvidenceNormalizer
             throw new InvalidDataException("evidence bundle is absent or candidate-owned");
         }
 
-        var supervisorPath = Path.Combine(physicalBundle, "supervisor-result.json");
-        var sentinelPath = Path.Combine(physicalBundle, "finalization.sentinel");
+        var payload = AuthorizedPayload(controllerRoot, physicalBundle);
+        var supervisorPath = Path.Combine(payload, "supervisor-result.json");
+        var sentinelPath = Path.Combine(payload, "finalization.sentinel");
         var sentinel = StrictArtifacts.ReadJson<FinalizationSentinelContract>(sentinelPath);
         if (sentinel.SchemaVersion != 1)
         {
@@ -65,7 +74,7 @@ internal static class EvidenceNormalizer
         ValidateSupervisor(supervisor, expectedKind, evaluatorDigest);
         ValidateSubject(physicalRepository, supervisor.Subject, expectedKind);
         var observed = ReadTrx(
-            physicalBundle,
+            payload,
             supervisor.TrxArtifacts,
             sentinel.TrxArtifacts);
         var required = CanonicalIdentities(supervisor.RequiredIdentities, "required identities");
@@ -75,13 +84,19 @@ internal static class EvidenceNormalizer
             .Select(static blocker => new IdentityContract(blocker.Assembly, blocker.TestId))
             .ToArray();
         var coverageComplete = missing.SequenceEqual(blockerIdentities);
-        var coverage = new CoverageContract(true, required, observed);
+        var coverage = new CoverageContract(coverageComplete, required, observed);
 
         if (supervisor.Termination.Kind != TerminationKind.Exited
             || supervisor.Termination.ExitCode is null
             || supervisor.Termination.Signal is not null)
         {
-            return Infrastructure(supervisor, label, coverage, "child_not_normally_terminated");
+            return Infrastructure(
+                supervisor,
+                label,
+                coverage,
+                IsObservedRunnerShutdown(supervisor, blockers, missing)
+                    ? "runner_shutdown_observed"
+                    : "child_not_normally_terminated");
         }
         if (!supervisor.DiagnosticsComplete)
         {
@@ -110,13 +125,85 @@ internal static class EvidenceNormalizer
             : Infrastructure(supervisor, label, coverage, "unregistered_or_incomplete_policy_failure");
     }
 
+    private static bool IsObservedRunnerShutdown(
+        SupervisorFinalContract supervisor,
+        IReadOnlyList<BlockerContract> blockers,
+        IReadOnlyList<IdentityContract> missing)
+    {
+        if (!supervisor.DiagnosticsComplete
+            || supervisor.FailureKeys.Count != 0
+            || blockers.Count != 0
+            || missing.Count != 0
+            || supervisor.StepFailures.Count != 0
+            || supervisor.Diagnostics.Count != 1
+            || supervisor.Termination.ExitCode is not null)
+        {
+            return false;
+        }
+        var diagnostic = supervisor.Diagnostics[0];
+        return supervisor.Termination is { Kind: TerminationKind.Signal, Signal: "SIGTERM" }
+                && diagnostic == "MSBUILD : error MSB4166: Child node \"N\" exited prematurely. Shutting down.\nmake: *** [Makefile:23: engineering-tests] Error 143"
+            || supervisor.Termination is { Kind: TerminationKind.Cancellation, Signal: null }
+                && diagnostic is "##[error]The runner has received a shutdown signal."
+                    or "##[error]The operation was canceled.";
+    }
+
+    private static string AuthorizedPayload(string controllerRoot, string bundle)
+    {
+        var pointer = StrictArtifacts.ReadJson<PublicationPointerContract>(
+            Path.Combine(bundle, "publication.json"));
+        if (pointer.SchemaVersion != 1
+            || pointer.PublicationId.Length != 64
+            || pointer.PublicationId.Any(static character =>
+                character is not (>= '0' and <= '9') and not (>= 'a' and <= 'f'))
+            || pointer.PayloadDirectory != "payloads/" + pointer.PublicationId)
+        {
+            throw new InvalidDataException("publication pointer is invalid");
+        }
+        StrictArtifacts.EnsureDigest(pointer.SentinelSha256, "publication sentinel_sha256");
+        var payload = Path.GetFullPath(Path.Combine(bundle, pointer.PayloadDirectory));
+        if (!Directory.Exists(payload)
+            || !IsWithin(payload, bundle)
+            || (File.GetAttributes(payload) & FileAttributes.ReparsePoint) != 0)
+        {
+            throw new InvalidDataException("publication payload is absent or linked");
+        }
+        var sentinelPath = Path.Combine(payload, "finalization.sentinel");
+        if (StrictArtifacts.DigestFile(sentinelPath) != pointer.SentinelSha256)
+            throw new InvalidDataException("publication pointer does not bind its sentinel");
+
+        var receipt = StrictArtifacts.ReadJson<AuthorityReceiptContract>(
+            StrictArtifacts.AuthorityReceiptPath(controllerRoot, bundle));
+        var closure = ControllerClosure.Derive(controllerRoot);
+        var producerDigest = StrictArtifacts.ProducerDigest(controllerRoot);
+        var supervisorDigest = StrictArtifacts.DigestFile(
+            Path.Combine(payload, "supervisor-result.json"));
+        var sentinel = StrictArtifacts.ReadJson<FinalizationSentinelContract>(sentinelPath);
+        if (receipt.SchemaVersion != 1
+            || receipt.ControllerCommit != closure.Commit
+            || receipt.ProducerPath != ControllerClosure.ProducerPath
+            || receipt.ProducerSha256 != producerDigest
+            || receipt.BundlePath != bundle
+            || receipt.PublicationId != pointer.PublicationId
+            || receipt.PayloadDirectory != pointer.PayloadDirectory
+            || receipt.SentinelSha256 != pointer.SentinelSha256
+            || receipt.SupervisorResultSha256 != supervisorDigest
+            || receipt.TrxArtifacts is null
+            || sentinel.TrxArtifacts is null
+            || !receipt.TrxArtifacts.SequenceEqual(sentinel.TrxArtifacts))
+        {
+            throw new InvalidDataException("publication authority receipt is invalid");
+        }
+        return payload;
+    }
+
     private static void ValidateSupervisor(
         SupervisorFinalContract supervisor,
         SubjectKind expectedKind,
         string evaluatorDigest)
     {
         if (supervisor.SchemaVersion != 1
-            || supervisor.Publication != PublicationKind.Atomic
+            || supervisor.Publication != "atomic"
             || supervisor.Gate != GateKind.Engineering
             || supervisor.Subject is null
             || supervisor.Subject.Kind != expectedKind)

@@ -22,6 +22,11 @@ case "$command" in
     (( $# == 0 )) || { printf '%s\n' 'SELF_LOCK_PROBE_BAD_ARGUMENT' >&2; exit 2; }
     exec dotnet "$assembly" self-lock-probe evaluator-digest --controller-root "$controller_root"
     ;;
+  publish)
+    exec dotnet "$assembly" self-lock-probe publish \
+      --controller-root "$controller_root" \
+      "$@"
+    ;;
   evaluate)
     exec dotnet "$assembly" self-lock-probe evaluate \
       --controller-root "$controller_root" \

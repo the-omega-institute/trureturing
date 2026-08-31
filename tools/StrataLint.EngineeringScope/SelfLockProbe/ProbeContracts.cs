@@ -3,7 +3,6 @@ using System.Text.Json.Serialization;
 
 namespace StrataLint.EngineeringScope.SelfLockProbe;
 
-internal enum PublicationKind { Atomic }
 internal enum GateKind { Engineering, Lean, Admission }
 internal enum SubjectKind { Merge, SyntheticNoop }
 internal enum TerminationKind { Exited, Signal, Cancellation, Timeout, Aborted }
@@ -36,7 +35,7 @@ internal sealed record TrxArtifactContract(
 
 internal sealed record SupervisorFinalContract(
     int SchemaVersion,
-    PublicationKind Publication,
+    string Publication,
     GateKind Gate,
     SubjectContract Subject,
     string EvaluatorDigest,
@@ -55,6 +54,28 @@ internal sealed record FinalizationSentinelContract(
     int SchemaVersion,
     string SupervisorResultSha256,
     IReadOnlyList<SentinelTrxContract> TrxArtifacts);
+
+internal sealed record PublicationPointerContract(
+    int SchemaVersion,
+    string PublicationId,
+    string PayloadDirectory,
+    string SentinelSha256);
+
+internal sealed record AuthorityReceiptContract(
+    int SchemaVersion,
+    string ControllerCommit,
+    string ProducerPath,
+    string ProducerSha256,
+    string BundlePath,
+    string PublicationId,
+    string PayloadDirectory,
+    string SentinelSha256,
+    string SupervisorResultSha256,
+    IReadOnlyList<SentinelTrxContract> TrxArtifacts);
+
+internal sealed record PublishedEvidenceContract(
+    string AuthorityReceiptPath,
+    string PayloadPath);
 
 internal static class JudgmentOutcome
 {

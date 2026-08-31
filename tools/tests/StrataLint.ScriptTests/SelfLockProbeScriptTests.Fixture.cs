@@ -16,76 +16,6 @@ public sealed partial class SelfLockProbeScriptTests
         PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
     };
 
-    private static ProcessOutput RunProbe(
-        ProbeFixture fixture,
-        IReadOnlyList<string> requiredGates,
-        IReadOnlyList<string> redGates)
-    {
-        var root = TestRepositoryLayout.FindRoot();
-        var script = Path.Combine(root, "tools", "scripts", "workflow", "self-lock-probe.sh");
-        var arguments = new List<string>
-        {
-            script,
-            "evaluate",
-            "--candidate-repository", fixture.CandidateRepository,
-            "--j1-repository", fixture.J1Repository,
-            "--j1-bundle", fixture.J1Bundle.Path,
-            "--j0-repository", fixture.J0Repository,
-            "--j0-bundle", fixture.J0Bundle.Path,
-        };
-        foreach (var gate in requiredGates)
-        {
-            arguments.Add("--required-gate");
-            arguments.Add(gate);
-        }
-        foreach (var gate in redGates)
-        {
-            arguments.Add("--red-gate");
-            arguments.Add(gate);
-        }
-
-        return TestProcessRunner.Run(
-            "/bin/bash",
-            arguments,
-            root,
-            TestBudgets.ScriptProcessHangGuard,
-            256 * 1024);
-    }
-
-    private static ProcessOutput RunControllerWithClassifier(
-        ProbeFixture fixture,
-        string classifier)
-    {
-        var root = TestRepositoryLayout.FindRoot();
-        var assembly = Path.Combine(
-            root,
-            "tools",
-            "StrataLint.EngineeringScope",
-            "bin",
-            "Release",
-            "net10.0",
-            "StrataLint.EngineeringScope.dll");
-        return TestProcessRunner.Run(
-            "dotnet",
-            [
-                assembly,
-                "self-lock-probe",
-                "evaluate",
-                "--controller-root", root,
-                "--pure-revert-script", classifier,
-                "--candidate-repository", fixture.CandidateRepository,
-                "--j1-repository", fixture.J1Repository,
-                "--j1-bundle", fixture.J1Bundle.Path,
-                "--j0-repository", fixture.J0Repository,
-                "--j0-bundle", fixture.J0Bundle.Path,
-                "--required-gate", "engineering",
-                "--red-gate", "engineering",
-            ],
-            root,
-            TestBudgets.ScriptProcessHangGuard,
-            256 * 1024);
-    }
-
     private static ProbeResult ParseResult(ProcessOutput output)
     {
         Assert.NotEmpty(output.StandardOutput);
@@ -121,6 +51,8 @@ public sealed partial class SelfLockProbeScriptTests
                 };
             }
             """.Replace("{workflow-prefix}", ".github/" + "work" + "flows/", StringComparison.Ordinal);
+        private const string ProtectionPolicyPath =
+            "tools/StrataLint.Engine/Admission/BootstrapProtectionPolicy.cs";
         private readonly TemporaryDirectory temporary = new();
 
         internal ProbeFixture(
@@ -132,12 +64,21 @@ public sealed partial class SelfLockProbeScriptTests
             GitAt(CandidateRepository, "init", "-b", "main");
             GitAt(CandidateRepository, "config", "user.name", "Self Lock Test");
             GitAt(CandidateRepository, "config", "user.email", "self-lock@example.invalid");
-            CommitFile(CandidateRepository, "canonical policy", "tools/StrataLint.Engine/Admission/BootstrapProtectionPolicy.cs", ProtectionPolicy);
-            CommitFile(CandidateRepository, "seed", revertedPath, "before\n");
+            var before = revertedPath == ProtectionPolicyPath
+                ? ProtectionPolicy
+                : "before\n";
+            var after = revertedPath == ProtectionPolicyPath
+                ? ProtectionPolicy + "\n// changed by target merge\n"
+                : "after\n";
+            if (revertedPath != ProtectionPolicyPath)
+            {
+                CommitFile(CandidateRepository, "canonical policy", ProtectionPolicyPath, ProtectionPolicy);
+            }
+            CommitFile(CandidateRepository, "seed", revertedPath, before);
             TargetBaseSha = GitTextAt(CandidateRepository, "rev-parse", "HEAD");
 
             GitAt(CandidateRepository, "checkout", "-b", "feature");
-            CommitFile(CandidateRepository, "gate change", revertedPath, "after\n");
+            CommitFile(CandidateRepository, "gate change", revertedPath, after);
             var feature = GitTextAt(CandidateRepository, "rev-parse", "HEAD");
             GitAt(CandidateRepository, "checkout", "main");
             TargetMergeSha = CommitTree(
@@ -148,7 +89,7 @@ public sealed partial class SelfLockProbeScriptTests
             UpdateMain(CandidateRepository, TargetMergeSha, TargetBaseSha);
 
             GitAt(CandidateRepository, "checkout", "-b", "candidate");
-            CommitFile(CandidateRepository, "exact inverse", revertedPath, "before\n");
+            CommitFile(CandidateRepository, "exact inverse", revertedPath, before);
             var candidate = GitTextAt(CandidateRepository, "rev-parse", "HEAD");
             GitAt(CandidateRepository, "checkout", "main");
             var candidateMerge = CommitTree(
@@ -215,21 +156,6 @@ public sealed partial class SelfLockProbeScriptTests
             return path;
         }
 
-        private string ReadControllerDigest()
-        {
-            var root = TestRepositoryLayout.FindRoot();
-            var script = Path.Combine(root, "tools", "scripts", "workflow", "self-lock-probe.sh");
-            var result = TestProcessRunner.Run(
-                "/bin/bash",
-                [script, "evaluator-digest"],
-                root,
-                TestBudgets.ScriptProcessHangGuard,
-                64 * 1024);
-            Assert.True(result.ExitCode == 0, Diagnostics(result));
-            Assert.Empty(result.StandardError);
-            return Encoding.UTF8.GetString(result.StandardOutput).Trim();
-        }
-
         private static void CommitFile(
             string repository,
             string message,
@@ -269,7 +195,12 @@ public sealed partial class SelfLockProbeScriptTests
             GitAt(repository, "reset", "--hard", commit);
         }
 
-        public void Dispose() => temporary.Dispose();
+        public void Dispose()
+        {
+            J1Bundle.DeleteAuthorityReceipt();
+            J0Bundle.DeleteAuthorityReceipt();
+            temporary.Dispose();
+        }
     }
 
     private sealed class EvidenceBundle
@@ -284,19 +215,22 @@ public sealed partial class SelfLockProbeScriptTests
         {
             Path = path;
             this.repository = repository;
-            ScriptHarnessScratch.EnsureDirectory(System.IO.Path.Combine(path, "trx"));
             TrxText = CompleteTrx([PresentTest]);
             Supervisor = CreateSupervisor(subjectKind, evaluatorDigest);
             Publish();
         }
 
-        internal string Path { get; }
+        internal string AuthorityReceiptPath { get; private set; } = string.Empty;
+        private string currentPayloadPath = string.Empty;
+        internal string Path { get; private set; }
         internal JsonObject Supervisor { get; set; }
         internal string TrxText { get; set; }
 
         internal void Publish()
         {
-            var trxPath = System.IO.Path.Combine(Path, "trx", "engineering.trx");
+            var staging = System.IO.Path.Combine(Path, ".staging");
+            ScriptHarnessScratch.EnsureDirectory(System.IO.Path.Combine(staging, "trx"));
+            var trxPath = System.IO.Path.Combine(staging, "trx", "engineering.trx");
             ScriptHarnessScratch.WriteScratchText(trxPath, TrxText);
             var trxDigest = DigestFile(trxPath);
             Supervisor["trx_artifacts"] = new JsonArray(new JsonObject
@@ -305,57 +239,72 @@ public sealed partial class SelfLockProbeScriptTests
                 ["assembly"] = ExpectedAssembly,
                 ["sha256"] = trxDigest,
             });
-            var supervisorPath = System.IO.Path.Combine(Path, "supervisor-result.json");
+            var supervisorPath = System.IO.Path.Combine(staging, "supervisor-result.json");
             ScriptHarnessScratch.WriteScratchText(
                 supervisorPath,
                 Supervisor.ToJsonString(JsonOptions));
-            var sentinel = new JsonObject
-            {
-                ["schema_version"] = 1,
-                ["supervisor_result_sha256"] = DigestFile(supervisorPath),
-                ["trx_artifacts"] = new JsonArray(new JsonObject
-                {
-                    ["file_name"] = "engineering.trx",
-                    ["sha256"] = trxDigest,
-                }),
-            };
-            ScriptHarnessScratch.WriteScratchText(
-                System.IO.Path.Combine(Path, "finalization.sentinel"),
-                sentinel.ToJsonString(JsonOptions));
+            var publication = PublishBundle(Path, staging);
+            AuthorityReceiptPath = publication.AuthorityReceiptPath;
+            currentPayloadPath = publication.PayloadPath;
         }
 
         internal void WriteRawSupervisorAndBind(string json)
         {
-            var supervisorPath = System.IO.Path.Combine(Path, "supervisor-result.json");
+            var staging = System.IO.Path.Combine(Path, ".staging");
+            ScriptHarnessScratch.EnsureDirectory(System.IO.Path.Combine(staging, "trx"));
+            var supervisorPath = System.IO.Path.Combine(staging, "supervisor-result.json");
             ScriptHarnessScratch.WriteScratchText(supervisorPath, json);
-            var trxPath = System.IO.Path.Combine(Path, "trx", "engineering.trx");
-            var sentinel = new JsonObject
-            {
-                ["schema_version"] = 1,
-                ["supervisor_result_sha256"] = DigestFile(supervisorPath),
-                ["trx_artifacts"] = new JsonArray(new JsonObject
-                {
-                    ["file_name"] = "engineering.trx",
-                    ["sha256"] = DigestFile(trxPath),
-                }),
-            };
-            ScriptHarnessScratch.WriteScratchText(
-                System.IO.Path.Combine(Path, "finalization.sentinel"),
-                sentinel.ToJsonString(JsonOptions));
+            var trxPath = System.IO.Path.Combine(staging, "trx", "engineering.trx");
+            ScriptHarnessScratch.WriteScratchText(trxPath, TrxText);
+            var publication = PublishBundle(Path, staging);
+            AuthorityReceiptPath = publication.AuthorityReceiptPath;
+            currentPayloadPath = publication.PayloadPath;
         }
 
         internal void RemoveFinalizationSentinel() =>
             ScriptHarnessScratch.DeleteScratchFile(
-                System.IO.Path.Combine(Path, "finalization.sentinel"));
+                System.IO.Path.Combine(CurrentPayloadPath(), "finalization.sentinel"));
 
         internal void RemoveTrxFile() =>
             ScriptHarnessScratch.DeleteScratchFile(
-                System.IO.Path.Combine(Path, "trx", "engineering.trx"));
+                System.IO.Path.Combine(CurrentPayloadPath(), "trx", "engineering.trx"));
 
         internal void CorruptTrxWithoutRebinding() =>
             ScriptHarnessScratch.AppendScratchText(
-                System.IO.Path.Combine(Path, "trx", "engineering.trx"),
+                System.IO.Path.Combine(CurrentPayloadPath(), "trx", "engineering.trx"),
                 "<!-- stale cache -->");
+
+        internal void CopyToUnreceiptedPath(string copiedPath)
+        {
+            var result = TestProcessRunner.Run(
+                "/bin/cp",
+                ["-R", Path, copiedPath],
+                System.IO.Path.GetDirectoryName(Path)!,
+                TestBudgets.ScriptProcessHangGuard,
+                64 * 1024);
+            Assert.True(result.ExitCode == 0, Diagnostics(result));
+            Path = copiedPath;
+        }
+
+        internal void TamperAuthorityProducerDigest()
+        {
+            TamperReceiptProducer(AuthorityReceiptPath);
+        }
+
+        internal void TamperPublicationSentinelDigest()
+        {
+            TamperPointerSentinel(System.IO.Path.Combine(Path, "publication.json"));
+        }
+
+        internal void DeleteAuthorityReceipt()
+        {
+            if (AuthorityReceiptPath.Length != 0)
+            {
+                ScriptHarnessScratch.DeleteScratchFile(AuthorityReceiptPath);
+            }
+        }
+
+        private string CurrentPayloadPath() => currentPayloadPath;
 
         private JsonObject CreateSupervisor(string subjectKind, string evaluatorDigest) => new()
         {

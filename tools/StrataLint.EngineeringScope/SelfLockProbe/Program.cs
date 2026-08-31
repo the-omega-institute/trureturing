@@ -6,6 +6,26 @@ internal static class Program
 {
     internal static int Run(string[] arguments)
     {
+        if (arguments.FirstOrDefault() == "publish")
+        {
+            try
+            {
+                var options = PublishOptions.Parse(arguments.Skip(1).ToArray());
+                Console.Out.WriteLine(JsonSerializer.Serialize(
+                    EvidencePublisher.Publish(
+                        options.ControllerRoot,
+                        options.BundleRoot,
+                        options.StagingBundle),
+                    ContractJson.Options));
+                return 0;
+            }
+            catch (Exception exception)
+            {
+                Console.Error.WriteLine("SELF_LOCK_PROBE_PUBLISH_FAILED " + exception.GetType().Name);
+                return 2;
+            }
+        }
+
         if (arguments.FirstOrDefault() == "evaluator-digest")
         {
             try
@@ -16,7 +36,27 @@ internal static class Program
             }
             catch (Exception exception)
             {
-                Console.Error.WriteLine("SELF_LOCK_PROBE_DIGEST_FAILED " + exception.GetType().Name);
+                Console.Error.WriteLine(
+                    "SELF_LOCK_PROBE_DIGEST_FAILED "
+                    + exception.GetType().Name
+                    + " "
+                    + exception.Message);
+                return 2;
+            }
+        }
+
+        if (arguments.FirstOrDefault() == "artifact-digest")
+        {
+            try
+            {
+                Console.Out.WriteLine(StrictArtifacts.DigestFile(
+                    SingleOption(arguments.Skip(1).ToArray(), "--path")));
+                return 0;
+            }
+            catch (Exception exception)
+            {
+                Console.Error.WriteLine(
+                    "SELF_LOCK_PROBE_ARTIFACT_DIGEST_FAILED " + exception.GetType().Name);
                 return 2;
             }
         }
@@ -52,6 +92,33 @@ internal static class Program
             throw new ArgumentException("invalid evaluator-digest arguments");
         }
         return Path.GetFullPath(arguments[1]);
+    }
+}
+
+internal sealed record PublishOptions(
+    string ControllerRoot,
+    string BundleRoot,
+    string StagingBundle)
+{
+    internal static PublishOptions Parse(IReadOnlyList<string> arguments)
+    {
+        var values = new Dictionary<string, string>(StringComparer.Ordinal);
+        for (var index = 0; index < arguments.Count; index += 2)
+        {
+            if (index + 1 >= arguments.Count
+                || arguments[index] is not ("--controller-root" or "--bundle-root" or "--staging-bundle")
+                || string.IsNullOrWhiteSpace(arguments[index + 1])
+                || !values.TryAdd(arguments[index], arguments[index + 1]))
+            {
+                throw new ArgumentException("invalid publish options");
+            }
+        }
+        if (values.Count != 3)
+            throw new ArgumentException("publish options are incomplete");
+        return new PublishOptions(
+            Path.GetFullPath(values["--controller-root"]),
+            Path.GetFullPath(values["--bundle-root"]),
+            Path.GetFullPath(values["--staging-bundle"]));
     }
 }
 

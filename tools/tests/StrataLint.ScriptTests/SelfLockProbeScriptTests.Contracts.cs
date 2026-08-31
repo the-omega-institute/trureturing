@@ -15,7 +15,15 @@ public sealed partial class SelfLockProbeScriptTests
         bool RerunRequiredAfterDevPush,
         string[] ConfirmedRedGates);
 
-    private sealed record ProbeJudgment(string Gate, string Subject, string Outcome);
+    private sealed record ProbeJudgment(
+        string Gate,
+        string Subject,
+        string Outcome,
+        string[] ReasonCodes);
+
+    private sealed record PublishedBundle(
+        string AuthorityReceiptPath,
+        string PayloadPath);
 
     private static string CompleteTrx(IReadOnlyList<string> tests)
     {
@@ -31,9 +39,5 @@ public sealed partial class SelfLockProbeScriptTests
             """;
     }
 
-    private static string DigestFile(string path) =>
-        "sha256:" + Convert.ToHexString(
-            System.Security.Cryptography.SHA256.HashData(
-                ScriptHarnessScratch.ReadScratchBytes(path)))
-            .ToLowerInvariant();
+    private static string DigestFile(string path) => DigestScratchFile(path);
 }

@@ -4,28 +4,41 @@ namespace StrataLint.Tests;
 
 public sealed partial class SelfLockProbeScriptTests
 {
-    private const string ShutdownDiagnostic = """
-        MSBUILD : error MSB4166: Child node "N" exited prematurely. Shutting down.
-        make: *** [Makefile:23: engineering-tests] Error 143
-        ##[error]The runner has received a shutdown signal.
-        ##[error]The operation was canceled.
-        """;
-
     [Theory]
-    [InlineData("shutdown-1")]
-    [InlineData("shutdown-2")]
-    [InlineData("shutdown-3")]
-    public void RunnerShutdownIsInfrastructureAndIndeterminate(string signal)
+    [InlineData(
+        "99427570874",
+        "signal",
+        "SIGTERM",
+        "MSBUILD : error MSB4166: Child node \"N\" exited prematurely. Shutting down.\nmake: *** [Makefile:23: engineering-tests] Error 143")]
+    [InlineData(
+        "99486480172",
+        "cancellation",
+        null,
+        "##[error]The runner has received a shutdown signal.")]
+    [InlineData(
+        "99500908728",
+        "cancellation",
+        null,
+        "##[error]The operation was canceled.")]
+    public void RunnerShutdownIsInfrastructureAndIndeterminate(
+        string job,
+        string kind,
+        string? signal,
+        string diagnostic)
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new ProbeFixture();
         fixture.J1Bundle.Supervisor["termination"] = new JsonObject
         {
-            ["kind"] = "signal",
+            ["kind"] = kind,
             ["exit_code"] = null,
             ["signal"] = signal,
         };
-        fixture.J1Bundle.Supervisor["diagnostics"] = new JsonArray(ShutdownDiagnostic);
+        fixture.J1Bundle.Supervisor["failure_keys"] = new JsonArray();
+        fixture.J1Bundle.Supervisor["required_identities"] = new JsonArray(
+            EvidenceBundle.Identity(PresentTest));
+        fixture.J1Bundle.Supervisor["blockers"] = new JsonArray();
+        fixture.J1Bundle.Supervisor["diagnostics"] = new JsonArray(diagnostic);
         fixture.J1Bundle.Supervisor["step_failures"] = new JsonArray();
         fixture.J1Bundle.Publish();
 
@@ -36,9 +49,50 @@ public sealed partial class SelfLockProbeScriptTests
             "PROBE_INDETERMINATE",
             allowExactRevert: false,
             exitCode: 2);
-        Assert.Contains(
+        var judgment = Assert.Single(
             ParseResult(output).Judgments,
             judgment => judgment.Subject == "j1" && judgment.Outcome == "infrastructure_failure");
+        Assert.Contains("runner_shutdown_observed", judgment.ReasonCodes);
+        Assert.NotEmpty(job);
+    }
+
+    [Theory]
+    [InlineData("signal", "SIGTERM", "unrelated signal diagnostic")]
+    [InlineData("cancellation", null, "unrelated runner diagnostic")]
+    [InlineData("cancellation", null, "unrelated cancellation diagnostic")]
+    public void OtherShutdownDiagnosticsAreNotClassifiedAsObservedRunnerShutdown(
+        string kind,
+        string? signal,
+        string diagnostic)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new ProbeFixture();
+        fixture.J1Bundle.Supervisor["termination"] = new JsonObject
+        {
+            ["kind"] = kind,
+            ["exit_code"] = null,
+            ["signal"] = signal,
+        };
+        fixture.J1Bundle.Supervisor["failure_keys"] = new JsonArray();
+        fixture.J1Bundle.Supervisor["required_identities"] = new JsonArray(
+            EvidenceBundle.Identity(PresentTest));
+        fixture.J1Bundle.Supervisor["blockers"] = new JsonArray();
+        fixture.J1Bundle.Supervisor["diagnostics"] = new JsonArray(diagnostic);
+        fixture.J1Bundle.Supervisor["step_failures"] = new JsonArray();
+        fixture.J1Bundle.Publish();
+
+        var output = RunProbe(fixture, ["engineering"], ["engineering"]);
+
+        AssertDecision(
+            output,
+            "PROBE_INDETERMINATE",
+            allowExactRevert: false,
+            exitCode: 2);
+        var judgment = Assert.Single(
+            ParseResult(output).Judgments,
+            judgment => judgment.Subject == "j1" && judgment.Outcome == "infrastructure_failure");
+        Assert.Contains("child_not_normally_terminated", judgment.ReasonCodes);
+        Assert.DoesNotContain("runner_shutdown_observed", judgment.ReasonCodes);
     }
 
     [Theory]
@@ -78,8 +132,7 @@ public sealed partial class SelfLockProbeScriptTests
     [Theory]
     [InlineData("missing")]
     [InlineData("partial")]
-    [InlineData("zero")]
-    public void MissingPartialOrZeroExecutionTrxIsIndeterminate(string shape)
+    public void MissingOrPartialTrxIsIndeterminate(string shape)
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new ProbeFixture();
@@ -95,11 +148,29 @@ public sealed partial class SelfLockProbeScriptTests
                 StringComparison.Ordinal);
             fixture.J0Bundle.Publish();
         }
-        else
+        AssertDecision(
+            RunProbe(fixture, ["engineering"], ["engineering"]),
+            "PROBE_INDETERMINATE",
+            allowExactRevert: false,
+            exitCode: 2);
+    }
+
+    [Fact]
+    public void ZeroExecutionTrxIsIndeterminate()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new ProbeFixture();
+        fixture.J1Bundle.Supervisor["termination"] = new JsonObject
         {
-            fixture.J0Bundle.TrxText = CompleteTrx([]);
-            fixture.J0Bundle.Publish();
-        }
+            ["kind"] = "exited",
+            ["exit_code"] = 0,
+            ["signal"] = null,
+        };
+        fixture.J1Bundle.Supervisor["failure_keys"] = new JsonArray();
+        fixture.J1Bundle.Supervisor["required_identities"] = new JsonArray();
+        fixture.J1Bundle.Supervisor["blockers"] = new JsonArray();
+        fixture.J1Bundle.TrxText = CompleteTrx([]);
+        fixture.J1Bundle.Publish();
 
         AssertDecision(
             RunProbe(fixture, ["engineering"], ["engineering"]),

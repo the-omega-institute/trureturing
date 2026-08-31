@@ -9,6 +9,7 @@ public sealed partial class SelfLockProbeScriptTests
     [InlineData("tools/scripts/workflow/self-lock-probe.sh")]
     [InlineData("tools/StrataLint.EngineeringScope/SelfLockProbe/ProbeReducer.cs")]
     [InlineData("tools/StrataLint.EngineeringScope/TestResultEvidence.cs")]
+    [InlineData("tools/StrataLint.Engine/Admission/BootstrapProtectionPolicy.cs")]
     [InlineData("tools/scripts/report/report-supervisor.sh")]
     [InlineData("tools/tests/StrataLint.ScriptTests/SelfLockProbeScriptTests.Decisions.cs")]
     [InlineData("tools/self-lock-probe-result.json")]

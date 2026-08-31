@@ -45,7 +45,7 @@ internal static partial class ProbeReducer
                 [],
                 1);
         }
-        if (!OwnerClosureUnchanged(candidate, out var ownerReason))
+        if (!OwnerClosureUnchanged(options.ControllerRoot, candidate, out var ownerReason))
         {
             return Decision(
                 "TRUE_RED_CONFIRMED",
@@ -86,13 +86,15 @@ internal static partial class ProbeReducer
             SubjectKind.Merge,
             options.J1Repository,
             options.J1Bundle,
-            evaluatorDigest);
+            evaluatorDigest,
+            options.ControllerRoot);
         var j0 = EvidenceNormalizer.Normalize(
             "j0",
             SubjectKind.SyntheticNoop,
             options.J0Repository,
             options.J0Bundle,
-            evaluatorDigest);
+            evaluatorDigest,
+            options.ControllerRoot);
         var judgments = new[] { j1, j0 };
         if (judgments.Any(static judgment =>
                 judgment.Outcome is JudgmentOutcome.InfrastructureFailure or JudgmentOutcome.Unsupported))
@@ -208,8 +210,12 @@ internal static partial class ProbeReducer
         return Indeterminate("pure_revert_conclusion_parse_failed");
     }
 
-    private static bool OwnerClosureUnchanged(string candidate, out string reason)
+    private static bool OwnerClosureUnchanged(
+        string controllerRoot,
+        string candidate,
+        out string reason)
     {
+        var ownerPaths = ControllerClosure.Derive(controllerRoot).OwnerPaths;
         var output = ProcessTools.Run(
             "/usr/bin/git",
             ["-C", candidate, "diff-tree", "-r", "--no-commit-id", "--name-only", "-z", "HEAD^1", "HEAD"],
@@ -230,7 +236,7 @@ internal static partial class ProbeReducer
                 reason = "candidate_path_invalid";
                 return false;
             }
-            if (!IsCanonicalPath(path) || IsOwnerPath(path))
+            if (!IsCanonicalPath(path) || ownerPaths.Contains(path))
             {
                 reason = IsCanonicalPath(path)
                     ? "probe_owner_closure_changed"
@@ -258,7 +264,7 @@ internal static partial class ProbeReducer
         NormalizedJudgment j0) =>
         j1.Coverage is { Complete: true } j1Coverage
         && j0.Coverage is { Complete: true } j0Coverage
-        && j1Coverage.RequiredIdentities.SequenceEqual(j0Coverage.RequiredIdentities);
+        && j1Coverage.ObservedIdentities.SequenceEqual(j0Coverage.ObservedIdentities);
 
     private static bool J1BlockersOwnedByBase(
         NormalizedJudgment j1,
@@ -319,18 +325,6 @@ internal static partial class ProbeReducer
         && !path.Contains('\\', StringComparison.Ordinal)
         && !path.Any(static character => char.IsControl(character) || char.IsSurrogate(character))
         && path.Split('/').All(static segment => segment.Length != 0 && segment is not "." and not "..");
-
-    private static bool IsOwnerPath(string path) =>
-        path is "Directory.Build.props" or "Directory.Packages.props"
-        or "tools/scripts/workflow/pure-revert-detect.sh"
-        or "tools/scripts/workflow/self-lock-probe.sh"
-        or "tools/scripts/report/report-supervisor.sh"
-        or "tools/self-lock-probe-result.json"
-        or ".github/workflows/ci.yml"
-        || path.StartsWith("tools/StrataLint.EngineeringScope/", StringComparison.Ordinal)
-        || path.StartsWith(
-            "tools/tests/StrataLint.ScriptTests/SelfLockProbeScriptTests.",
-            StringComparison.Ordinal);
 
     [GeneratedRegex(
         "\\APURE_REVERT_TRUE base_sha=(?<base>[0-9a-f]{40}|[0-9a-f]{64}) head_sha=(?<head>[0-9a-f]{40}|[0-9a-f]{64}) target_merge_sha=(?<target>[0-9a-f]{40}|[0-9a-f]{64}) changed_path_count=[1-9][0-9]*\\n\\z",
