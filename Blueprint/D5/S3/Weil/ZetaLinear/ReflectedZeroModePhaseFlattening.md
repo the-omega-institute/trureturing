@@ -2,7 +2,7 @@
 
 ## Abstract
 
-A normalized complex zero mode splits into a real radial channel and a unit phase channel, while functional reflection, conjugation, and same-height mirror remain distinct involutions.
+Separate normalized zero modes into radial and phase channels.
 
 **Definition 1.1 (Signed displacement from the critical line).**
 
@@ -54,7 +54,7 @@ Multiplication by the inverse ordinate phase removes the common unit-modulus rot
 
 **Theorem 1.5 (Skewness is exactly critical-line location).**
 
-$$\operatorname{conj}(\operatorname{normalizedZeroGenerator}(rho)) = -\operatorname{normalizedZeroGenerator}(rho) \Longleftrightarrow \operatorname{Re}(rho) = criticalAbscissa.$$
+$$\operatorname{conj}(\operatorname{normalizedZeroGenerator}(rho)) = -\operatorname{normalizedZeroGenerator}(rho) \iff \operatorname{Re}(rho) = criticalAbscissa.$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/ZetaLinear/ReflectedZeroModePhaseFlattening.normalized_zero_generator_skew_iff_critical_line` (`✓ std3`). ∎
 
@@ -149,3 +149,4 @@ Duplicate-free zero enumeration turns equality of the two same-height mirror ima
 - Truth anchor: `D5/S3/Weil/ZetaLinear/ReflectedZeroModePhaseFlattening.zeroData_reflection_conjugation_commute`
 - Truth anchor: `D5/S3/Weil/ZetaLinear/ReflectedZeroModePhaseFlattening.zero_mode_conjugation`
 - Truth anchor: `D5/S3/Weil/ZetaLinear/ReflectedZeroModePhaseFlattening.zero_mode_functional_reflection_time_reversal`
+- Dependency: [D5/S3/Weil/ZetaLinear/CriticalDampingGenerator](CriticalDampingGenerator.md)
