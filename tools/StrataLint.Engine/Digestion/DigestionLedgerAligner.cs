@@ -272,7 +272,12 @@ internal static partial class DigestionLedgerAligner
                     cas.ValidAtomIds.Contains(entry.AtomId)
                     && inheritedEntries.Contains(CanonicalEntry(source, entry)))
                 && contentWideReplacementObligations.Length == 0
-                && !InheritedClauseChainRequiresReplay(source, changes))
+                && !InheritedClauseChainRequiresReplay(
+                    source,
+                    candidateSources,
+                    candidateEntriesById,
+                    inheritedEntries,
+                    changes))
             {
                 continue;
             }
@@ -478,9 +483,7 @@ internal static partial class DigestionLedgerAligner
             AlignNestedChildren(
                 source,
                 atomized.ClausePlans,
-                mode,
                 cas.ValidAtomIds,
-                inheritedEntries,
                 candidateEntriesById,
                 snapshot,
                 alignments,
@@ -520,20 +523,50 @@ internal static partial class DigestionLedgerAligner
 
     private static bool InheritedClauseChainRequiresReplay(
         DigestionLedgerSource source,
+        IReadOnlyDictionary<string, DigestionLedgerSource> candidateSourcesById,
+        IReadOnlyDictionary<string, DigestionLedgerEntry> candidateEntriesById,
+        IReadOnlySet<string> inheritedEntries,
         RawChangeSet? changes)
     {
-        if (changes is null
-            || !source.Entries.Any(static entry => !entry.Receipts.ChainAtoms.IsEmpty))
+        if (!source.Entries.Any(static entry => !entry.Receipts.ChainAtoms.IsEmpty))
         {
             return false;
         }
 
-        if (source.Entries.Any(entry => DigestionCasStore.EntryChanged(entry, changes)))
+        var relevantEntries = source.Entries.ToList();
+        var relevantAtomIds = source.Entries
+            .Select(static entry => entry.AtomId)
+            .ToHashSet(StringComparer.Ordinal);
+        foreach (var childId in source.Entries.SelectMany(static entry => entry.Receipts.ChainAtoms))
+        {
+            if (!candidateEntriesById.TryGetValue(childId, out var child))
+            {
+                return true;
+            }
+
+            if (!candidateSourcesById.TryGetValue(child.SourceId, out var childSource)
+                || !inheritedEntries.Contains(CanonicalEntry(childSource, child)))
+            {
+                return true;
+            }
+
+            if (relevantAtomIds.Add(childId))
+            {
+                relevantEntries.Add(child);
+            }
+        }
+
+        if (changes is null)
+        {
+            return false;
+        }
+
+        if (relevantEntries.Any(entry => DigestionCasStore.EntryChanged(entry, changes)))
         {
             return true;
         }
 
-        var casPaths = source.Entries
+        var casPaths = relevantEntries
             .Select(static entry => DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..])
             .ToHashSet(StringComparer.Ordinal);
         return changes.Paths.Any(path =>

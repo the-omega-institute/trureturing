@@ -107,9 +107,7 @@ internal static partial class DigestionLedgerAligner
     private static void AlignNestedChildren(
         DigestionLedgerSource source,
         ImmutableArray<DigestionClausePlan> currentClausePlans,
-        DigestionAlignmentMode mode,
         IReadOnlySet<string> validAtomIds,
-        IReadOnlySet<string> inheritedEntries,
         IReadOnlyDictionary<string, DigestionLedgerEntry> candidateEntriesById,
         RepositorySnapshot snapshot,
         IDictionary<string, DigestionReceiptAlignment> alignments,
@@ -127,9 +125,6 @@ internal static partial class DigestionLedgerAligner
 
         foreach (var parent in source.Entries.Where(static entry => entry.Receipts.ChainAtoms.Length > 0))
         {
-            var inheritedParent = mode == DigestionAlignmentMode.Admission
-                && inheritedEntries.Contains(CanonicalEntry(source, parent));
-
             if (!validAtomIds.Contains(parent.AtomId))
             {
                 ClaimClausePlanChain(
@@ -185,8 +180,7 @@ internal static partial class DigestionLedgerAligner
             {
                 var childId = parent.Receipts.ChainAtoms[index];
                 if (!byId.TryGetValue(childId, out var child)
-                    && (!inheritedParent
-                        || !candidateEntriesById.TryGetValue(childId, out child)))
+                    && !candidateEntriesById.TryGetValue(childId, out child))
                 {
                     rejectionReason = $"listed child {childId} is absent from source {source.SourceId}";
                     break;
