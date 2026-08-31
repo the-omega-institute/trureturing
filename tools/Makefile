@@ -4,6 +4,7 @@ SHELL := /bin/bash
 HERE := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
 BASE ?= origin/dev
 REPOSITORY ?= $(HERE)/..
+ENGINEERING_TESTS_CWD := $(REPOSITORY)
 CHECK_FAST_FILTER := FullyQualifiedName~StrataLint.Tests.CapacityAuditCommandTests|FullyQualifiedName~StrataLint.ArchitectureTests.RepositoryIoAccessPolicyTests|FullyQualifiedName~StrataLint.ArchitectureTests.BannedApiCoverageTests|FullyQualifiedName=StrataLint.Tests.MakeWorkflowTests.CheckFastFilterIsNonEmptyAndPinsRequiredRepositoryChecks
 .PHONY: help dotnet check-fast test engineering-tests engineering-tests-base-cwd selftest capacity-audit update-renderer-contract clean-lanes
 
@@ -20,10 +21,10 @@ test:
 	@/bin/bash $(HERE)/scripts/dotnet-test.sh $(HERE)/StrataLint.sln
 
 engineering-tests:
-	@cd "$(REPOSITORY)" && dotnet run --project "$(HERE)/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" --configuration Release --no-launch-profile -- --mode "$(MODE)" --repository "$(REPOSITORY)" --head "$(HEAD)" --base "$(BASE)" --plan-file "$(PLAN_FILE)"
+	@cd "$(ENGINEERING_TESTS_CWD)" && dotnet run --project "$(HERE)/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" --configuration Release --no-launch-profile -- --mode "$(MODE)" --repository "$(REPOSITORY)" --head "$(HEAD)" --base "$(BASE)" --plan-file "$(PLAN_FILE)"
 
-engineering-tests-base-cwd:
-	@cd "$(HERE)/.." && dotnet run --project "$(HERE)/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" --configuration Release --no-launch-profile -- --mode "$(MODE)" --repository "$(REPOSITORY)" --head "$(HEAD)" --base "$(BASE)" --plan-file "$(PLAN_FILE)"
+engineering-tests-base-cwd: ENGINEERING_TESTS_CWD := $(HERE)/..
+engineering-tests-base-cwd: engineering-tests
 
 selftest:
 	@/bin/bash $(HERE)/scripts/stratalint-selftest.sh
