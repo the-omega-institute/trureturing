@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Strictly positive paired complex-channel energies have the common channel kernel and are definite exactly when the joint observation is injective.
+Positive paired complex-channel energies have exactly the common channel kernel and are definite exactly under joint separation.
 
 **Theorem 1.1 (Positive paired channels preserve the common kernel).**
 
