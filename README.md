@@ -4,7 +4,7 @@ trureturing — the last line of the ledger is always the first line of the next
 
 # trureturing
 
-### **14,517 theorems, frozen.  One `sorry` — and it is not in the ledger.**
+### **14,494 theorems, frozen.  One `sorry` — and it is not in the ledger.**
 
 **A formal-mathematics repository that governs itself.**
 Lean proves. A machine judges. Accepted truth is frozen, and never rewritten.
@@ -24,16 +24,17 @@ Lean proves. A machine judges. Accepted truth is frozen, and never rewritten.
 Every natural number is written in Fibonacci weights `1, 2, 3, 5, 8, …`; no two adjacent weights
 may be occupied; and those canonical digits decode back to exactly one natural number. From that
 single constraint the repository develops combinatorics, arithmetic, dynamics, spectra, and
-analysis, and it carries each consequence all the way to a Lean proof.
+analysis. What it accepts, it accepts as Lean proof; what it has not proved, it says so.
 
-The classical landmarks are closed, not cited. The **Three-Gap theorem** — that the first *N*
-points of an irrational rotation cut the circle into arcs of at most three distinct lengths —
-is proved in [`D5/S1/Phase/ThreeGap/`](D5/S1/Phase/ThreeGap/Main.lean) and sits in the frozen
-ledger, with no `sorry`.
+Classical landmarks are carried into the ledger rather than referenced from outside it. The
+**Three-Gap theorem** — that the first *N* points of an irrational rotation cut the circle into
+arcs of at most three distinct lengths — lives in
+[`D5/S1/Phase/ThreeGap/`](D5/S1/Phase/ThreeGap/Main.lean) with no `sorry`, ported from Dirk
+Kunert's MIT-licensed formalization and frozen here under his copyright.
 
 ## Two hearts
 
-The frontier is exactly two objects, and they are stated with deliberate asymmetry.
+Two designated hearts stand at the head of the open frontier, stated with deliberate asymmetry.
 
 **O-5** is [`o5_independence`](D5/X_Frontier/Hearts.lean) — a `theorem` whose body is the single
 `sorry` in this repository. It claims that the canonical golden Euler germ continues
@@ -45,23 +46,24 @@ A `sorry` count cannot see it. That is the point: the statement is fully bound �
 involution, convolution square, multiplicity-aware zero sum — so the summit has coordinates even
 though no one has stood on it.
 
-Weil's criterion runs both ways. If a zero lies off the line, some test function in that class
-breaks positivity. Whichever way the Riemann Hypothesis falls, work against this statement
-produces truth. That is why it was authorized.
+No theorem here proves the bridge to the Riemann Hypothesis; the module's own docstring records
+the classical fact that Weil's criterion is bidirectional, so a zero off the line would break
+positivity for some test function in that class. Whichever way the Riemann Hypothesis falls, work
+against this statement produces truth. That is the reason it was authorized.
 
 ## The ledger
 
 Every module that passes admission is appended to `Golden/Frozen/accepted/`, and its address is a
 Merkle hash over its module path, its statement, and the addresses of its prerequisites —
-**change an ancestor and every descendant is readdressed.** The ledger only grows. Nothing is
-revoked, nothing is re-attested, nothing is rewritten.
+**change an ancestor and every descendant is readdressed.** Admission only appends: at this
+commit all 2,796 accepted events are `Freeze`, with no `Revoke` and no re-attestation among them.
 
 <table>
 <tr><td><b>2,796</b></td><td>frozen modules, every event a <code>Freeze</code></td></tr>
-<tr><td><b>14,517</b></td><td>theorems among <b>26,881</b> frozen declarations</td></tr>
+<tr><td><b>14,494</b></td><td>distinct theorems among <b>26,881</b> distinct frozen declarations</td></tr>
 <tr><td><b>407,857</b></td><td>lines of Lean under <code>D5/</code>, in 2,804 files</td></tr>
 <tr><td><b>1</b></td><td><code>sorry</code> in the tree — outside the ledger, at the frontier</td></tr>
-<tr><td><b>52</b></td><td>days from the first commit to this reading, across 17,915 commits</td></tr>
+<tr><td><b>52</b></td><td>days from the first commit to this reading</td></tr>
 </table>
 
 *Measured 2026-09-01 on `dev`. The ledger advances by roughly two modules an hour, so these are a
@@ -72,8 +74,9 @@ dated snapshot, not a live counter.*
 There is no human review gate anywhere in this repository, and that is a rule rather than an
 accident: the constitution in [`CLAUDE.md`](CLAUDE.md) declares that **any gate producing
 "requires human review" is by definition a harness bug.** Correctness is decided by the Lean
-kernel and by three machine checks: `engineering`, `lean-inspect`, `admission`. Where a statement
-is formally undecidable, the system marks it `open` and says so, rather than pretending. The two hearts are exactly that.
+kernel and by three machine checks: `engineering`, `lean-inspect`, `admission`. What has not been
+proved is marked `open` and left visible, rather than quietly assumed. The two hearts are open in
+exactly that sense — unproved and stated, not shown to be unprovable.
 
 Enforcement on every GitHub merge is unverified; this repository checks its own gates, not
 GitHub's configuration.
@@ -86,7 +89,7 @@ docs/develop/theory/            reference input, never authority
         │
         │  judged by tools/ — a C# harness holding no mathematics of its own
         ▼
-Golden/Frozen/accepted/         append-only; Merkle-addressed; never thawed
+Golden/Frozen/accepted/         append-only; Merkle-addressed
         │
         ▼
 Blueprint/**/*.md  ─►  mdBook   derived projections, no authority
