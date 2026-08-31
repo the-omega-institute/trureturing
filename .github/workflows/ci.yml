@@ -197,6 +197,7 @@ jobs:
           HEAD_REF: ${{ github.event.pull_request.head.ref }}
         run: "set +e\nvalidation_output=\"$(dotnet run --project candidate/tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release --no-build --no-launch-profile -- worktree validate-branch --branch \"$HEAD_REF\")\"\nvalidation_exit=$?\nset -e\nhead_ref=\"$HEAD_REF\"\nprintf '%s\\n' \"$validation_output\"\ncase \"$validation_exit\" in\n  0)\n    expected_status=canonical\n    ;;\n  1)\n    expected_status=BRANCH_GRAMMAR_NONCONFORMING\n    ;;\n  *)\n    printf 'BRANCH_GRAMMAR_SIGNAL detector_status=failed exit=%s\\n' \"$validation_exit\" >&2\n    exit \"$validation_exit\"\n    ;;\nesac\nif ! jq -e -s --arg expected_status \"$expected_status\" --arg head_ref \"$HEAD_REF\" 'length == 1 and .[0].event == \"branch_validation\" and .[0].status == $expected_status and .[0].branch == $head_ref and (.[0].canonical == ($expected_status == \"canonical\"))' <<< \"$validation_output\" >/dev/null; then\n  printf 'BRANCH_GRAMMAR_SIGNAL detector_status=invalid_output exit=%s\\n' \"$validation_exit\" >&2\n  exit 1\nfi\nsummary_format='PR head branch \"%s\" has canonical branch grammar status \"%s\". Nonconforming names are advisory; detector faults fail closed.\\n'\nif [[ \"$validation_exit\" -eq 1 ]]; then\n  printf '%s' '::warning title=PR head branch grammar::'\n  printf \"$summary_format\" \"$HEAD_REF\" \"$expected_status\"\nfi\nprintf 'BRANCH_GRAMMAR_SIGNAL status=%s head_ref=%s\\n' \"$expected_status\" \"$HEAD_REF\"\nprintf \"$summary_format\" \"$HEAD_REF\" \"$expected_status\" >> \"$GITHUB_STEP_SUMMARY\"\n"
       - name: Replan and run engineering tests with protected-base harness
+        id: execute-engineering-tests
         if: steps.scope.outputs.run_required == 'true'
         shell: bash
         env:
@@ -211,7 +212,20 @@ jobs:
           rm -f -- "$RUNNER_TEMP/engineering-test-plan.json"
           git -C candidate worktree add --detach "$base_harness_root" "$ENGINEERING_BASE"
           cleanup_base_harness() {
+            status=$?
+            trap - EXIT
+            set +e
             git -C candidate worktree remove --force "$base_harness_root"
+            cleanup_status=$?
+            if [[ -e "$base_harness_root" ]]; then
+              printf 'protected-base engineering harness still exists: %s\n' "$base_harness_root" >&2
+              cleanup_status=1
+            fi
+            set -e
+            if [[ "$status" -ne 0 ]]; then
+              exit "$status"
+            fi
+            exit "$cleanup_status"
           }
           trap cleanup_base_harness EXIT
           test "$(git -C "$base_harness_root" rev-parse HEAD)" = "$ENGINEERING_BASE"
@@ -225,7 +239,66 @@ jobs:
           else
             make -C "$base_harness_root/tools" engineering-tests-base-cwd REPOSITORY="$GITHUB_WORKSPACE/candidate" MODE=plan HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$plan_file"
           fi
-          make -C "$base_harness_root/tools" engineering-tests-base-cwd REPOSITORY="$GITHUB_WORKSPACE/candidate" MODE=execute HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$plan_file"
+          artifact_root="$RUNNER_TEMP/engineering-test-plan-artifact"
+          execution_log="$artifact_root/engineering-test-execution.log"
+          execution_record="$artifact_root/engineering-test-plan.json"
+          mkdir -p "$artifact_root"
+          set +e
+          make -C "$base_harness_root/tools" engineering-tests-base-cwd REPOSITORY="$GITHUB_WORKSPACE/candidate" MODE=execute HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$plan_file" 2>&1 | tee "$execution_log"
+          pipeline_status=("${PIPESTATUS[@]}")
+          set -e
+          execute_status="${pipeline_status[0]}"
+          tee_status="${pipeline_status[1]}"
+          if [[ "$tee_status" -ne 0 ]]; then
+            printf 'engineering test execution log capture failed exit=%s\n' "$tee_status" >&2
+            exit "$tee_status"
+          fi
+          jq -Rsc \
+            --arg repository "$GITHUB_REPOSITORY" \
+            --arg run_id "$GITHUB_RUN_ID" \
+            --arg head "$ENGINEERING_HEAD" \
+            --arg base "$ENGINEERING_BASE" \
+            --argjson execute_exit "$execute_status" \
+            '
+              split("\n") | map(select(length > 0)) as $lines
+              | ([$lines[] | select(startswith("ENGINEERING_TEST_PLAN_FALLBACK "))]) as $fallback
+              | {
+                  version: 1,
+                  repository: $repository,
+                  run_id: $run_id,
+                  head: $head,
+                  base: $base,
+                  execute_exit: $execute_exit,
+                  plan_verdict: (
+                    if ($fallback | length) > 0 then "fallback"
+                    elif any($lines[]; startswith("ENGINEERING_TEST_PLAN ")) then "accepted"
+                    else "unavailable"
+                    end),
+                  diagnostics: [
+                    $lines[]
+                    | select(
+                        startswith("ENGINEERING_TEST_PLAN_FALLBACK ")
+                        or startswith("ENGINEERING_TEST_PLAN_FAILED ")
+                        or startswith("ENGINEERING_TEST_EVIDENCE_FAILED "))
+                  ],
+                  plan: {
+                    summary: ([$lines[] | select(startswith("ENGINEERING_TEST_PLAN "))][0] // null),
+                    tests: [$lines[] | select(startswith("ENGINEERING_TEST_SELECTED "))]
+                  },
+                  failure_tail: (if $execute_exit == 0 then [] else $lines[-40:] end)
+                }
+            ' "$execution_log" > "$execution_record.tmp"
+          mv "$execution_record.tmp" "$execution_record"
+          exit "$execute_status"
+
+      - name: Upload executed engineering test plan
+        id: upload-engineering-test-plan
+        if: always() && steps.scope.outputs.run_required == 'true' && steps.execute-engineering-tests.outcome != 'skipped'
+        uses: actions/upload-artifact@v4
+        with:
+          name: engineering-test-plan
+          path: ${{ runner.temp }}/engineering-test-plan-artifact
+          if-no-files-found: error
 
       - name: Run candidate selftest twice and compare bytes
         if: steps.scope.outputs.run_required == 'true'
@@ -312,6 +385,7 @@ jobs:
           SCOPE_CHANGED_COUNT: ${{ steps.scope.outputs.changed_count }}
           SCOPE_SELECTED_COUNT: ${{ steps.scope.outputs.selected_count }}
           SCOPE_FALLBACK_COUNT: ${{ steps.scope.outputs.fallback_count }}
+          PLAN_ARTIFACT_OUTCOME: ${{ steps.upload-engineering-test-plan.outcome }}
         run: |
           set -euo pipefail
           result="$SCOPE_STATE"
@@ -320,6 +394,8 @@ jobs:
           fi
           fallback_count="$SCOPE_FALLBACK_COUNT"
           [[ -n "$fallback_count" ]] || fallback_count=0
+          detail_dir="engineering-test-plan-$GITHUB_RUN_ID"
+          detail_command="gh run download $GITHUB_RUN_ID --repo $GITHUB_REPOSITORY --name engineering-test-plan --dir $detail_dir && jq '{execute_exit, plan_verdict, diagnostics, plan, failure_tail}' $detail_dir/engineering-test-plan.json"
           {
             printf '%s\n' '## Candidate engineering scope'
             printf '\n'
@@ -329,7 +405,8 @@ jobs:
             printf -- '- Changed paths: %s\n' "$SCOPE_CHANGED_COUNT"
             printf -- '- Selected tests: %s\n' "$SCOPE_SELECTED_COUNT"
             printf -- '- Planner fallback count: %s\n' "$fallback_count"
-            printf -- '%s\n' '- Detail: see the ENGINEERING_TEST_PLAN and ENGINEERING_TEST_SELECTED log lines of the planning step.'
+            printf -- '- Plan artifact upload: %s\n' "$PLAN_ARTIFACT_OUTCOME"
+            printf -- '- Detail: `%s`.\n' "$detail_command"
           } >> "$GITHUB_STEP_SUMMARY"
 
   lean-inspect:
