@@ -10,8 +10,7 @@ internal sealed class CriticalLineOscillatorGramDocument : IScribeDocumentDefini
         "D5/S3/Weil/Pick/CriticalLineOscillatorGram.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A reflected critical-line pole pair generates a finite positive Pick Gram matrix "
-            + "with a two-row factor.",
+        "Critical-line oscillator resolvents generate a two-row positive Pick Gram matrix.",
         H("Critical-Line Oscillator Gram Matrix"),
         Blocks(
             Describe.Lean(
