@@ -566,7 +566,7 @@ public sealed partial class FrozenLedgerTests
             ],
             candidateModules:
             [
-                ModuleWithReport("A", source, statementMaterial: "new elaborated missing p"),
+                ModuleWithReport("A", source + "\n", statementMaterial: "new elaborated missing p"),
                 Module("B"),
             ],
             replacedModules: ["A"],
@@ -772,7 +772,7 @@ public sealed partial class FrozenLedgerTests
                     {
                         NameKey = module.OpaqueNameKeys
                             ? NameKeyFor(name)
-                            : $"ns(n0,{name.Length}:{name})",
+                            : $"ns(n0,{Encoding.UTF8.GetByteCount(name)}:{name})",
                         IncludeInStatement = module.Excluded.IsDefaultOrEmpty
                             || !module.Excluded.Contains(name),
                     })
