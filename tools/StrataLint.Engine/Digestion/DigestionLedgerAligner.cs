@@ -142,6 +142,10 @@ internal static partial class DigestionLedgerAligner
             .GroupBy(static entry => entry.AtomId, StringComparer.Ordinal)
             .Where(static group => group.Count() == 1)
             .ToDictionary(static group => group.Key, static group => group.Single(), StringComparer.Ordinal);
+        var clauseChainChildIds = sources
+            .SelectMany(static source => source.Entries)
+            .SelectMany(static entry => entry.Receipts.ChainAtoms)
+            .ToHashSet(StringComparer.Ordinal);
 
         casChanges ??= changes;
         if (casEvaluation is not null && !casEvaluation.Matches(casChanges))
@@ -154,10 +158,17 @@ internal static partial class DigestionLedgerAligner
         var cas = casEvaluation ?? DigestionCasStore.Evaluate(document, snapshot, casChanges);
         findings.AddRange(cas.Findings);
         var inheritedEntries = InheritedEntries(baselineDocument);
+        var previouslyInheritedEntries = PreviouslyInheritedEntries(baselineDocument);
+        var replayConfirmationRequired = new HashSet<string>(StringComparer.Ordinal);
         foreach (var (source, entry) in sources.SelectMany(source =>
                      source.Entries.Select(entry => (Source: source, Entry: entry))))
         {
-            var inherited = inheritedEntries.Contains(CanonicalEntry(source, entry));
+            var inherited = inheritedEntries.Contains(CanonicalEntry(entry));
+            if (inherited
+                && !previouslyInheritedEntries.Contains(PriorCanonicalEntry(source, entry)))
+            {
+                replayConfirmationRequired.Add(entry.AtomId);
+            }
             alignments[entry.AtomId] = cas.ValidAtomIds.Contains(entry.AtomId) && inherited
                 ? DigestionReceiptAlignment.Seen
                 : DigestionReceiptAlignment.Rejected;
@@ -270,7 +281,7 @@ internal static partial class DigestionLedgerAligner
                 && !source.Entries.IsEmpty
                 && source.Entries.All(entry =>
                     cas.ValidAtomIds.Contains(entry.AtomId)
-                    && inheritedEntries.Contains(CanonicalEntry(source, entry)))
+                    && inheritedEntries.Contains(CanonicalEntry(entry)))
                 && contentWideReplacementObligations.Length == 0
                 && !InheritedClauseChainRequiresReplay(source, changes))
             {
@@ -395,9 +406,31 @@ internal static partial class DigestionLedgerAligner
                 .GroupBy(static atom => atom.Fingerprints.RawSha256, StringComparer.Ordinal)
                 .Select(static group => group.First())
                 .ToArray();
+            var replayedAtoms = claims
+                .Concat(atomized.ClausePlans.SelectMany(static plan => plan.Children))
+                .ToArray();
             producedAtomIds[source.SourceId] = claims
                 .Select(static atom => atom.Fingerprints.RawSha256["sha256:".Length..])
                 .ToImmutableHashSet(StringComparer.Ordinal);
+
+            if (mode == DigestionAlignmentMode.Ingest)
+            {
+                var contentWideEntry = ContentWideEntry(
+                    source,
+                    sourceFile.RawBytes.AsSpan(),
+                    cas.ValidAtomIds);
+                foreach (var entry in source.Entries.Where(entry =>
+                             cas.ValidAtomIds.Contains(entry.AtomId)
+                             && alignments[entry.AtomId] == DigestionReceiptAlignment.Seen
+                             && replayConfirmationRequired.Contains(entry.AtomId)
+                             && entry.AtomId != contentWideEntry?.AtomId
+                             && !clauseChainChildIds.Contains(entry.AtomId)
+                             && !replayedAtoms.Any(atom =>
+                                 FingerprintsMatch(entry.Fingerprints, atom.Fingerprints))))
+                {
+                    alignments[entry.AtomId] = DigestionReceiptAlignment.Rejected;
+                }
+            }
 
             var sourceStale = new List<string>();
             foreach (var baselineEntry in contentWideReplacementObligations.Where(entry =>

@@ -147,28 +147,36 @@ internal static partial class DigestionLedgerAligner
         && baselineSnapshot.TryGetFile(baselinePath, out var baseline)
         && candidate.RawBytes.AsSpan().SequenceEqual(baseline.RawBytes.AsSpan());
 
-    private static string CanonicalEntry(
-        DigestionLedgerSource source,
-        DigestionLedgerEntry entry)
-    {
-        var admissionEntry = entry with
+    private static string CanonicalEntry(DigestionLedgerEntry entry) =>
+        WriteReceiptIdentity(entry with
         {
-            // Once stale has been acknowledged, projected status is derived output. Including it
-            // here makes alignment invalidate its own settled receipt on a status-directory move.
+            // Projected status is derived output, not part of structural receipt identity.
+            ProjectedStatus = StructuralIdentityStatus,
+        });
+
+    // This prior key only bounds P2 to receipts that P1 newly admits.
+    private static string PriorCanonicalEntry(
+        DigestionLedgerSource source,
+        DigestionLedgerEntry entry) =>
+        WriteReceiptIdentity(entry with
+        {
             ProjectedStatus = source.AcknowledgedStale.Contains(
                 entry.AtomId,
                 StringComparer.Ordinal)
                 ? StructuralIdentityStatus
                 : entry.ProjectedStatus,
+        });
+
+    private static string WriteReceiptIdentity(DigestionLedgerEntry entry) =>
+        Convert.ToBase64String(BackfillInventoryWriter.WriteEntry(entry with
+        {
             Receipts = entry.Receipts with
             {
                 Coverage = [],
                 Scribe = [],
                 CoverDisposition = null,
             },
-        };
-        return Convert.ToBase64String(BackfillInventoryWriter.WriteEntry(admissionEntry).AsSpan());
-    }
+        }).AsSpan());
 
     private static string? AtomizerIntegrityFailure(
         AtomizedTheoryDocument document,
