@@ -61,7 +61,7 @@ revoked, nothing is re-attested, nothing is rewritten.
 <tr><td><b>14,517</b></td><td>theorems among <b>26,881</b> frozen declarations</td></tr>
 <tr><td><b>407,857</b></td><td>lines of Lean under <code>D5/</code>, in 2,804 files</td></tr>
 <tr><td><b>1</b></td><td><code>sorry</code> in the tree — outside the ledger, at the frontier</td></tr>
-<tr><td><b>52</b></td><td>days from the first commit to this reading, across 17915 commits</td></tr>
+<tr><td><b>52</b></td><td>days from the first commit to this reading, across 17,915 commits</td></tr>
 </table>
 
 *Measured 2026-09-01 on `dev`. The ledger advances by roughly two modules an hour, so these are a
