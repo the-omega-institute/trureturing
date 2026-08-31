@@ -1,0 +1,21 @@
+ast_path: 定义/3.2
+fingerprints:
+  raw_sha256: sha256:6e86c59bbf1d022683dc0bf5eba54ab19a11cad3ceed7929b31a2d88a8c8888a
+  normalized_sha256: sha256:6e86c59bbf1d022683dc0bf5eba54ab19a11cad3ceed7929b31a2d88a8c8888a
+cas_ref: sha256:6e86c59bbf1d022683dc0bf5eba54ab19a11cad3ceed7929b31a2d88a8c8888a
+coverage_gids:
+  - D5/S3/ConceptDynamics/OperationalTuition/InstitutionalMappingAndCaptureFiltration.capture_ladder_filtration_and_t1_nondecreasing
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/OperationalTuition/InstitutionalMappingAndCaptureFiltration.capture_ladder_filtration_and_t1_nondecreasing
+      source_sha256: sha256:6e86c59bbf1d022683dc0bf5eba54ab19a11cad3ceed7929b31a2d88a8c8888a
+      target_statement_id: sha256:8509b8539e519354d75209a580c0e8f060473acc29d40bc2cf1af723c0863219
+  scribe:
+    - gid: D5/S3/ConceptDynamics/OperationalTuition/InstitutionalMappingAndCaptureFiltration.capture_ladder_filtration_and_t1_nondecreasing
+      definition_sha256: sha256:31c1943e829a496f9bfe7e4661fb7974db600a2e605ab625a76731835cd2ebbc
+      emission_sha256: sha256:afb6b9adb492b321e787a859e2ae1b035e5be1ff7690da43d7a1fa4308325078
+  unresolved_subitems: []
+  chain_atoms:
+    - generic-residual-ce25ae77ea3f13edfb8c14632660d10857a3cfb35ec4114fbfd34d75a9e439a3-0018a02da248048434674f6c00125a6e35c901cd7691a8269267515b14f6c393
+    - generic-residual-3e75319eb83dab478020046d0cee5332358804a629cd64d36eb77aec94003d6a-c63646d84de022fa2bcca0b0753aee7f0f2e870c53fa76304b1a4c8a6eeb695c
+    - generic-residual-4b2fa41f5b8545765f09f94867cdfe087902a3f755c9f588327747e951264adb-31e30e98e5f450f057f4956db0eb5a086ce750adcaf45bc7db182f6dc558a8da
