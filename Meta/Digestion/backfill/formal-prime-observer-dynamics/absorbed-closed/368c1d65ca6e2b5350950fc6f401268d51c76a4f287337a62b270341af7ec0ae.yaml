@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:368c1d65ca6e2b5350950fc6f401268d51c76a4f287337a62b270341af7ec0ae
+  normalized_sha256: sha256:368c1d65ca6e2b5350950fc6f401268d51c76a4f287337a62b270341af7ec0ae
+cas_ref: sha256:368c1d65ca6e2b5350950fc6f401268d51c76a4f287337a62b270341af7ec0ae
+coverage_gids:
+  - D5/S0/Observation/BoundedPowerTraceCRTRecovery.power_trace_unique_of_crt_image
+receipts:
+  coverage:
+    - gid: D5/S0/Observation/BoundedPowerTraceCRTRecovery.power_trace_unique_of_crt_image
+      source_sha256: sha256:368c1d65ca6e2b5350950fc6f401268d51c76a4f287337a62b270341af7ec0ae
+      target_statement_id: sha256:5723d4cb17d41cc548797c4037aed266a0b62535478be7345f3659c6d41e8d00
+  scribe:
+    - gid: D5/S0/Observation/BoundedPowerTraceCRTRecovery.power_trace_unique_of_crt_image
+      definition_sha256: sha256:ea323cbe8332850209ca292cab06ebf26f700449bbb50bc4c7b1ec759e1534cf
+      emission_sha256: sha256:95ceca243878460af5aba965fa912dc3df85c4d7c2ec2f893eb209b3e3e06ad9
+  unresolved_subitems: []
