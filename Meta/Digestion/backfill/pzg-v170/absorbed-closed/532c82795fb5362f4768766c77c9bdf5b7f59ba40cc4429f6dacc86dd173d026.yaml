@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:532c82795fb5362f4768766c77c9bdf5b7f59ba40cc4429f6dacc86dd173d026
+  normalized_sha256: sha256:532c82795fb5362f4768766c77c9bdf5b7f59ba40cc4429f6dacc86dd173d026
+cas_ref: sha256:532c82795fb5362f4768766c77c9bdf5b7f59ba40cc4429f6dacc86dd173d026
+coverage_gids:
+  - D5/S1/Depth/ContinuedFractions/PeriodicThreeComplement.periodic_three_continued_fraction_complement
+receipts:
+  coverage:
+    - gid: D5/S1/Depth/ContinuedFractions/PeriodicThreeComplement.periodic_three_continued_fraction_complement
+      source_sha256: sha256:532c82795fb5362f4768766c77c9bdf5b7f59ba40cc4429f6dacc86dd173d026
+      target_statement_id: sha256:30888dae7c155a220d7427e611da47e3a1fa7d91f06105d7a34947226717f815
+  scribe:
+    - gid: D5/S1/Depth/ContinuedFractions/PeriodicThreeComplement.periodic_three_continued_fraction_complement
+      definition_sha256: sha256:85746603154713cd83b7ab85d0aa52462725017615680103804b7ad6f2106e13
+      emission_sha256: sha256:6145bd0429ba36ac06e77c632a46a75672bea1fd59bb338b523b1eae5cbcf5f3
+  unresolved_subitems: []

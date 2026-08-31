@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:bc4e244f7a2260c9fc9d2f07a00d03e52f8a0f797ebf9a71febcb1aad9518a48
+  normalized_sha256: sha256:bc4e244f7a2260c9fc9d2f07a00d03e52f8a0f797ebf9a71febcb1aad9518a48
+cas_ref: sha256:bc4e244f7a2260c9fc9d2f07a00d03e52f8a0f797ebf9a71febcb1aad9518a48
+coverage_gids:
+  - D5/S3/Factorization/ObserverTypes/AlternatingFiveObserverTypeIrreplaceability.alternating_five_observer_type_irreplaceability
+receipts:
+  coverage:
+    - gid: D5/S3/Factorization/ObserverTypes/AlternatingFiveObserverTypeIrreplaceability.alternating_five_observer_type_irreplaceability
+      source_sha256: sha256:bc4e244f7a2260c9fc9d2f07a00d03e52f8a0f797ebf9a71febcb1aad9518a48
+      target_statement_id: sha256:29f1214b38d6646afa08f77afc7e7c7ad39849e53a417050df2b2c2e97d535d9
+  scribe:
+    - gid: D5/S3/Factorization/ObserverTypes/AlternatingFiveObserverTypeIrreplaceability.alternating_five_observer_type_irreplaceability
+      definition_sha256: sha256:ad8dbd20d2d7d399b1213eef371f298305a0d6301aff75e1ad4e875f220f7476
+      emission_sha256: sha256:0bdd49b15b8957930a736b511f11b224fc90a6fc590f3292c43ed32e513bd217
+  unresolved_subitems: []

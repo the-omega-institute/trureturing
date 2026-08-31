@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:169f409524d2079955119c8357e86262198e5875614f4fdc5f3f05c8074659c5
+  normalized_sha256: sha256:169f409524d2079955119c8357e86262198e5875614f4fdc5f3f05c8074659c5
+cas_ref: sha256:169f409524d2079955119c8357e86262198e5875614f4fdc5f3f05c8074659c5
+coverage_gids:
+  - D5/S1/Solenoid/Connectivity/CharacterCompletionDuality.character_completion_duality
+receipts:
+  coverage:
+    - gid: D5/S1/Solenoid/Connectivity/CharacterCompletionDuality.character_completion_duality
+      source_sha256: sha256:169f409524d2079955119c8357e86262198e5875614f4fdc5f3f05c8074659c5
+      target_statement_id: sha256:5bd5f1ab1bd0084f411a6dfc05e210e7bdfb18a15b7038289dd18f3e82c6217f
+  scribe:
+    - gid: D5/S1/Solenoid/Connectivity/CharacterCompletionDuality.character_completion_duality
+      definition_sha256: sha256:0a8c4b1abe55141f0b7c6112a2adc78e27f864813ca6c1cff25cd480256c0472
+      emission_sha256: sha256:e9f84044d5a3acffdc1d1b5fdc82055717d7b54941ff2e691559331dfecdec61
+  unresolved_subitems: []

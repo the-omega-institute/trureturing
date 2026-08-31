@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:62d4cc7a35ad74961b6c09e11015288a8c56a7be1a1c39518f69d2d12fc0feca
+  normalized_sha256: sha256:62d4cc7a35ad74961b6c09e11015288a8c56a7be1a1c39518f69d2d12fc0feca
+cas_ref: sha256:62d4cc7a35ad74961b6c09e11015288a8c56a7be1a1c39518f69d2d12fc0feca
+coverage_gids:
+  - D5/S3/ConceptDynamics/OperationalTuition/FirstClaimProtocolNonduplication.t4_atomic_visibility_nonduplication_and_collision_rate_monotone
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/OperationalTuition/FirstClaimProtocolNonduplication.t4_atomic_visibility_nonduplication_and_collision_rate_monotone
+      source_sha256: sha256:62d4cc7a35ad74961b6c09e11015288a8c56a7be1a1c39518f69d2d12fc0feca
+      target_statement_id: sha256:8f90461f7a58f3f1faca552a69ead9f589ac499224680c175dea99c8089e442a
+  scribe:
+    - gid: D5/S3/ConceptDynamics/OperationalTuition/FirstClaimProtocolNonduplication.t4_atomic_visibility_nonduplication_and_collision_rate_monotone
+      definition_sha256: sha256:58e6462a39ad7b92f3df224b938ae8dee07d274cc128b0369c15e68693844ba7
+      emission_sha256: sha256:8097e888a3111b349f4836f670434ca4c9dde4c33fb74a07cd4726d02f25c5da
+  unresolved_subitems: []

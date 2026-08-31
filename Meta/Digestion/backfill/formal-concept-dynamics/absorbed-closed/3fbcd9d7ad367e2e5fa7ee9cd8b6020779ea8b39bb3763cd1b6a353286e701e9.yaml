@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:3fbcd9d7ad367e2e5fa7ee9cd8b6020779ea8b39bb3763cd1b6a353286e701e9
+  normalized_sha256: sha256:3fbcd9d7ad367e2e5fa7ee9cd8b6020779ea8b39bb3763cd1b6a353286e701e9
+cas_ref: sha256:3fbcd9d7ad367e2e5fa7ee9cd8b6020779ea8b39bb3763cd1b6a353286e701e9
+coverage_gids:
+  - D5/S3/ConceptDynamics/Aggregation/MajorityCycleNotScalarOrder.majority_cycle_not_scalar_order
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Aggregation/MajorityCycleNotScalarOrder.majority_cycle_not_scalar_order
+      source_sha256: sha256:3fbcd9d7ad367e2e5fa7ee9cd8b6020779ea8b39bb3763cd1b6a353286e701e9
+      target_statement_id: sha256:715ea485a1ce9782405ca362f733bf38f95ce7e1f869228d42255681b88b24cf
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Aggregation/MajorityCycleNotScalarOrder.majority_cycle_not_scalar_order
+      definition_sha256: sha256:2f72518b4edfc6c67905a1a4ea5c21ebd04b50622ba8d8e768e97f51c2ec0406
+      emission_sha256: sha256:8928eb3698650a2cd41db28c8c65b7fefc9be1835e93384767f6b9c696b4881e
+  unresolved_subitems: []

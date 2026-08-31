@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:673545881af498e3d19f7bda07b89826f516e4b7e0eae91e469d5aaac268b1d3
+  normalized_sha256: sha256:673545881af498e3d19f7bda07b89826f516e4b7e0eae91e469d5aaac268b1d3
+cas_ref: sha256:673545881af498e3d19f7bda07b89826f516e4b7e0eae91e469d5aaac268b1d3
+coverage_gids:
+  - D5/S3/ConceptDynamics/Interventions/RedundantAppealDefectPersistence.redundant_appeal_cannot_repair_structural_defect
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Interventions/RedundantAppealDefectPersistence.redundant_appeal_cannot_repair_structural_defect
+      source_sha256: sha256:673545881af498e3d19f7bda07b89826f516e4b7e0eae91e469d5aaac268b1d3
+      target_statement_id: sha256:05dca09f40cae23df10edafffc9868b6db1a379a3c2613082b2006f90b7be53b
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Interventions/RedundantAppealDefectPersistence.redundant_appeal_cannot_repair_structural_defect
+      definition_sha256: sha256:099b05e3afda67d97d2dc84b90d8ad3578b8d09781bab3792de949516fb18047
+      emission_sha256: sha256:2ff281204bf751ea934a10e0753c1fe345d84116ee7edd2b3d1806de1d359a69
+  unresolved_subitems: []

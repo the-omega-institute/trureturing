@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:f6122cc86d33364ef5f1a80a105ea78c34dc9e76ef960b380ad94bb3180de939
+  normalized_sha256: sha256:f6122cc86d33364ef5f1a80a105ea78c34dc9e76ef960b380ad94bb3180de939
+cas_ref: sha256:f6122cc86d33364ef5f1a80a105ea78c34dc9e76ef960b380ad94bb3180de939
+coverage_gids:
+  - D5/S3/Weil/ReflectionLedger.mirror_reversal_spec
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/ReflectionLedger.mirror_reversal_spec
+      source_sha256: sha256:f6122cc86d33364ef5f1a80a105ea78c34dc9e76ef960b380ad94bb3180de939
+      target_statement_id: sha256:260a95bcca3f1b09a54fbb51bf365134cf33b27a35312b81694a6d476633ca87
+  scribe: []
+  unresolved_subitems: []

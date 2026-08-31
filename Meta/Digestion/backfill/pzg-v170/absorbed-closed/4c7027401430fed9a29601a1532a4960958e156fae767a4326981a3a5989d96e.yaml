@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:4c7027401430fed9a29601a1532a4960958e156fae767a4326981a3a5989d96e
+  normalized_sha256: sha256:4c7027401430fed9a29601a1532a4960958e156fae767a4326981a3a5989d96e
+cas_ref: sha256:4c7027401430fed9a29601a1532a4960958e156fae767a4326981a3a5989d96e
+coverage_gids:
+  - D5/S3/AnalyticClosure/PositiveSeriesTail.finite_partial_sum_lt_tsum_of_pos_outside
+receipts:
+  coverage:
+    - gid: D5/S3/AnalyticClosure/PositiveSeriesTail.finite_partial_sum_lt_tsum_of_pos_outside
+      source_sha256: sha256:4c7027401430fed9a29601a1532a4960958e156fae767a4326981a3a5989d96e
+      target_statement_id: sha256:b6d3dad97087722b4c67547e9a94f84e2319ba105179444519b686ee551b208a
+  scribe:
+    - gid: D5/S3/AnalyticClosure/PositiveSeriesTail.finite_partial_sum_lt_tsum_of_pos_outside
+      definition_sha256: sha256:f70edf454c734bc530112cda9def3c9f16957d323f6552198c78a5e100e70aef
+      emission_sha256: sha256:4756725adca279b620ee3caf679a073fa8f3cdcd327eac01f31641f9f09d7058
+  unresolved_subitems: []

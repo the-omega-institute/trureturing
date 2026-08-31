@@ -6,9 +6,16 @@ namespace StrataLint.Tests;
 
 public sealed partial class ShowAtomTests
 {
-    private const string SelfAtomId = "self-atom";
-    private const string NoncanonicalSelfAtomId = "Noncanonical-self";
-    private const string DirectParentId = "direct-parent";
+    private static readonly string BoundaryAtomId = LabeledAtomId("boundary");
+    private static readonly string SelfAtomId = LabeledAtomId("self");
+    private static readonly string DirectParentId = LabeledAtomId("direct-parent");
+    private static readonly string AParentId = LabeledAtomId("a-parent");
+    private static readonly string GrandparentId = LabeledAtomId("grandparent");
+    private static readonly string InvalidParentId = LabeledAtomId("invalid-parent");
+    private static readonly string MismatchParentId = LabeledAtomId("mismatch-parent");
+    private static readonly string MissingParentId = LabeledAtomId("missing-parent");
+    private static readonly string UnrelatedContainerId = LabeledAtomId("unrelated-container");
+    private static readonly string ZParentId = LabeledAtomId("z-parent");
     private const string ZeroSha256 =
         "sha256:0000000000000000000000000000000000000000000000000000000000000000";
     private const string OneSha256 =
@@ -138,7 +145,7 @@ public sealed partial class ShowAtomTests
             SelfAtomId,
             receipts => receipts.Files[SelfAtomId] = ReceiptFile(
                 receipts.Entries[SelfAtomId],
-                atomId: "different-atom"));
+                atomId: LabeledAtomId("different-atom")));
 
         AssertSelfReceiptUnavailable(output);
     }
@@ -168,19 +175,6 @@ public sealed partial class ShowAtomTests
     }
 
     [Fact]
-    public void ShowAtomTreatsNoncanonicalSelfReceiptPathAsUnavailableWithoutBlockingAuthoritativeText()
-    {
-        var output = RunFormalizationPointers(NoncanonicalSelfAtomId);
-
-        Assert.Contains(
-            $"SELF_FORMALIZATION_POINTER status=self-receipt-unavailable "
-                + $"receipt_path={ReceiptPath(NoncanonicalSelfAtomId)}",
-            output,
-            StringComparison.Ordinal);
-        Assert.DoesNotContain(PrimaryGid(NoncanonicalSelfAtomId), output, StringComparison.Ordinal);
-    }
-
-    [Fact]
     public void ShowAtomIncludesBoundReceiptPointerForDirectChainParent()
     {
         var output = RunFormalizationPointers(BoundaryAtomId);
@@ -207,13 +201,13 @@ public sealed partial class ShowAtomTests
             "parent-receipt-unavailable");
         AssertSinglePointerStatus(
             output,
-            "PARENT_FORMALIZATION_POINTER parent_atom_id=missing-parent ",
+            $"PARENT_FORMALIZATION_POINTER parent_atom_id={MissingParentId} ",
             "parent-without-receipt",
             "available",
             "parent-receipt-unavailable");
         AssertSinglePointerStatus(
             output,
-            "PARENT_FORMALIZATION_POINTER parent_atom_id=invalid-parent ",
+            $"PARENT_FORMALIZATION_POINTER parent_atom_id={InvalidParentId} ",
             "parent-receipt-unavailable",
             "available",
             "parent-without-receipt");
@@ -223,7 +217,7 @@ public sealed partial class ShowAtomTests
     public void ShowAtomDoesNotPropagateGrandparentReceipt()
     {
         Assert.DoesNotContain(
-            "PARENT_FORMALIZATION_POINTER parent_atom_id=grandparent ",
+            $"PARENT_FORMALIZATION_POINTER parent_atom_id={GrandparentId} ",
             RunFormalizationPointers(BoundaryAtomId),
             StringComparison.Ordinal);
     }
@@ -232,7 +226,7 @@ public sealed partial class ShowAtomTests
     public void ShowAtomDoesNotIncludeUnrelatedReceiptContainer()
     {
         Assert.DoesNotContain(
-            "PARENT_FORMALIZATION_POINTER parent_atom_id=unrelated-container ",
+            $"PARENT_FORMALIZATION_POINTER parent_atom_id={UnrelatedContainerId} ",
             RunFormalizationPointers(BoundaryAtomId),
             StringComparison.Ordinal);
     }
@@ -248,7 +242,15 @@ public sealed partial class ShowAtomTests
             .Select(static line => line.Split(' ')[1]["parent_atom_id=".Length..]);
 
         Assert.Equal(
-            ["a-parent", DirectParentId, "invalid-parent", "mismatch-parent", "missing-parent", "z-parent"],
+            new[]
+            {
+                AParentId,
+                DirectParentId,
+                InvalidParentId,
+                MismatchParentId,
+                MissingParentId,
+                ZParentId,
+            }.Order(StringComparer.Ordinal),
             parentIds);
     }
 
@@ -258,7 +260,7 @@ public sealed partial class ShowAtomTests
         var output = RunFormalizationPointers(BoundaryAtomId);
 
         Assert.Contains(
-            "PARENT_FORMALIZATION_POINTER parent_atom_id=missing-parent "
+            $"PARENT_FORMALIZATION_POINTER parent_atom_id={MissingParentId} "
                 + "status=parent-without-receipt",
             output,
             StringComparison.Ordinal);
@@ -271,16 +273,16 @@ public sealed partial class ShowAtomTests
         var output = RunFormalizationPointers(BoundaryAtomId);
 
         Assert.Contains(
-            "PARENT_FORMALIZATION_POINTER parent_atom_id=invalid-parent "
+            $"PARENT_FORMALIZATION_POINTER parent_atom_id={InvalidParentId} "
                 + "status=parent-receipt-unavailable",
             output,
             StringComparison.Ordinal);
         Assert.Contains(
-            "PARENT_FORMALIZATION_POINTER parent_atom_id=mismatch-parent "
+            $"PARENT_FORMALIZATION_POINTER parent_atom_id={MismatchParentId} "
                 + "status=parent-receipt-unavailable",
             output,
             StringComparison.Ordinal);
-        Assert.DoesNotContain(PrimaryGid("mismatch-parent"), output, StringComparison.Ordinal);
+        Assert.DoesNotContain(PrimaryGid(MismatchParentId), output, StringComparison.Ordinal);
     }
 
     private static void AssertSelfReceiptUnavailable(string output)
@@ -314,31 +316,36 @@ public sealed partial class ShowAtomTests
         Action<ReceiptFixture>? configure = null)
     {
         const string sourcePath = "fixtures/show-atom/formalization-pointers.md";
-        const string rawText = "authoritative atom text\n";
-        var fingerprints = DigestionFingerprint.Compute(Encoding.UTF8.GetBytes(rawText));
-        DigestionLedgerEntry WithChain(string id, string path, string[] chain) => Entry(
-            "formalization-source",
-            sourcePath,
-            AtomizerRegistry.NoAtomizerId,
-            id,
-            path,
-            fingerprints) with
+        var rawTextById = new Dictionary<string, string>(StringComparer.Ordinal);
+        DigestionLedgerEntry WithChain(string label, string[] chain)
         {
-            Receipts = new DigestionReceipts([], [], [], [.. chain], null),
-        };
+            var rawText = LabeledAtomText(label);
+            var fingerprints = DigestionFingerprint.Compute(Encoding.UTF8.GetBytes(rawText));
+            var id = BareAtomId(fingerprints.RawSha256);
+            rawTextById.Add(id, rawText);
+            return Entry(
+                "formalization-source",
+                sourcePath,
+                AtomizerRegistry.NoAtomizerId,
+                id,
+                fingerprints) with
+            {
+                Receipts = new DigestionReceipts([], [], [], [.. chain], null),
+            };
+        }
+
         var entries = new[]
         {
-            WithChain("z-parent", "theorem/z", [BoundaryAtomId]),
-            WithChain("missing-parent", "theorem/missing", [BoundaryAtomId]),
-            WithChain(DirectParentId, "theorem/direct", [BoundaryAtomId]),
-            WithChain("unrelated-container", "theorem/unrelated", ["different-child"]),
-            WithChain(BoundaryAtomId, "theorem/child", []),
-            WithChain("mismatch-parent", "theorem/mismatch", [BoundaryAtomId]),
-            WithChain("grandparent", "theorem/grandparent", [DirectParentId]),
-            WithChain(SelfAtomId, "theorem/self", []),
-            WithChain(NoncanonicalSelfAtomId, "theorem/noncanonical-self", []),
-            WithChain("invalid-parent", "theorem/invalid", [BoundaryAtomId]),
-            WithChain("a-parent", "theorem/a", [BoundaryAtomId]) with
+            WithChain("z-parent", [BoundaryAtomId]),
+            WithChain("missing-parent", [BoundaryAtomId]),
+            WithChain("direct-parent", [BoundaryAtomId]),
+            WithChain("unrelated-container", [LabeledAtomId("different-child")]),
+            WithChain("boundary", []),
+            WithChain("mismatch-parent", [BoundaryAtomId]),
+            WithChain("grandparent", [DirectParentId]),
+            WithChain("self", []),
+            WithChain("invalid-parent", [BoundaryAtomId]),
+            WithChain("a-parent", [BoundaryAtomId]) with
             {
                 ProjectedStatus = new(
                     DigestionMigrationState.Residual,
@@ -348,24 +355,23 @@ public sealed partial class ShowAtomTests
         var byId = entries.ToDictionary(static entry => entry.AtomId, StringComparer.Ordinal);
         string[] receiptIds =
         [
-            "a-parent",
+            AParentId,
             DirectParentId,
-            "grandparent",
-            "mismatch-parent",
-            NoncanonicalSelfAtomId,
+            GrandparentId,
+            MismatchParentId,
             SelfAtomId,
-            "unrelated-container",
-            "z-parent",
+            UnrelatedContainerId,
+            ZParentId,
         ];
         var receiptFiles = receiptIds.ToDictionary(
             static id => id,
             id => ReceiptFile(byId[id]),
             StringComparer.Ordinal);
-        receiptFiles["invalid-parent"] = RawRepositoryEntry.FromText(
-            ReceiptPath("invalid-parent"),
+        receiptFiles[InvalidParentId] = RawRepositoryEntry.FromText(
+            ReceiptPath(InvalidParentId),
             "{}\n");
-        receiptFiles["mismatch-parent"] = ReceiptFile(
-            byId["mismatch-parent"],
+        receiptFiles[MismatchParentId] = ReceiptFile(
+            byId[MismatchParentId],
             casRef: ZeroSha256);
         var fixture = new ReceiptFixture(byId, receiptFiles);
         configure?.Invoke(fixture);
@@ -377,10 +383,10 @@ public sealed partial class ShowAtomTests
         var snapshot = SnapshotWithLedger(
             ledger,
             [
-                RawRepositoryEntry.FromText(sourcePath, rawText),
-                RawRepositoryEntry.FromText(
-                    DigestionCasStore.RootPath + fingerprints.RawSha256["sha256:".Length..],
-                    rawText),
+                RawRepositoryEntry.FromText(sourcePath, rawTextById[atomId]),
+                .. rawTextById.Select(static item => RawRepositoryEntry.FromText(
+                    DigestionCasStore.RootPath + item.Key,
+                    item.Value)),
                 .. fixture.Files.Values,
             ]);
 
@@ -389,7 +395,7 @@ public sealed partial class ShowAtomTests
         Assert.True(result.Success, result.Error);
         Assert.Equal(string.Empty, result.Error);
         Assert.Contains(
-            $"BEGIN_RAW_TEXT\n{rawText}END_RAW_TEXT\n",
+            $"BEGIN_RAW_TEXT\n{rawTextById[atomId]}END_RAW_TEXT\n",
             result.Output,
             StringComparison.Ordinal);
         return result.Output;
@@ -411,17 +417,22 @@ public sealed partial class ShowAtomTests
                 hostedExtensions)));
 
     private static string PrimaryGid(string atomId) =>
-        "D5/S0/Synthetic/Receipt."
-        + atomId.Replace("-", "_", StringComparison.Ordinal);
+        "D5/S0/Synthetic/Receipt.atom_" + atomId;
 
     private static string SecondaryGid(string atomId) =>
-        "D5/S0/Synthetic/Receipt.secondary_"
-        + atomId.Replace("-", "_", StringComparison.Ordinal);
+        "D5/S0/Synthetic/Receipt.secondary_" + atomId;
 
     private static string ReceiptPath(string atomId) =>
         DigestionFormalizationReceipt.RootPath
         + atomId
         + DigestionFormalizationReceipt.PathSuffix;
+
+    private static string LabeledAtomId(string label) =>
+        BareAtomId(DigestionFingerprint.Compute(
+            Encoding.UTF8.GetBytes(LabeledAtomText(label))).RawSha256);
+
+    private static string LabeledAtomText(string label) =>
+        $"authoritative atom text: {label}\n";
 
     private sealed record ReceiptFixture(
         IReadOnlyDictionary<string, DigestionLedgerEntry> Entries,

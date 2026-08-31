@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:395d5b8c28bba1a10a65be0503a4e6c540f017649333ebbf3fb0e5e0cc504547
+  normalized_sha256: sha256:395d5b8c28bba1a10a65be0503a4e6c540f017649333ebbf3fb0e5e0cc504547
+cas_ref: sha256:395d5b8c28bba1a10a65be0503a4e6c540f017649333ebbf3fb0e5e0cc504547
+coverage_gids:
+  - D5/S1/Phase/SelfReference/GoldenShellRecurrence.golden_shell_recurrence
+receipts:
+  coverage:
+    - gid: D5/S1/Phase/SelfReference/GoldenShellRecurrence.golden_shell_recurrence
+      source_sha256: sha256:395d5b8c28bba1a10a65be0503a4e6c540f017649333ebbf3fb0e5e0cc504547
+      target_statement_id: sha256:91c021350aa39e5db444b7b72fcb1bfa830ea92dc3b66347f07c1d546c95c726
+  scribe:
+    - gid: D5/S1/Phase/SelfReference/GoldenShellRecurrence.golden_shell_recurrence
+      definition_sha256: sha256:0e5f7dddd3d74bd576241d057d32f810ded228862aa92f21f65f7b38c7981add
+      emission_sha256: sha256:5513f97f4eade6fe6fac739cb417412b3b49d57fb8f51e48c6ba29af51d734d5
+  unresolved_subitems: []

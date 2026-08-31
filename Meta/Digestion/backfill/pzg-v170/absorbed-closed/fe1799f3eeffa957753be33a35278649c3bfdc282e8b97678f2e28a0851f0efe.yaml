@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:fe1799f3eeffa957753be33a35278649c3bfdc282e8b97678f2e28a0851f0efe
+  normalized_sha256: sha256:fe1799f3eeffa957753be33a35278649c3bfdc282e8b97678f2e28a0851f0efe
+cas_ref: sha256:fe1799f3eeffa957753be33a35278649c3bfdc282e8b97678f2e28a0851f0efe
+coverage_gids:
+  - D5/S3/ArithUnits/HalfFactorial.half_factorial_mod_prime
+receipts:
+  coverage:
+    - gid: D5/S3/ArithUnits/HalfFactorial.half_factorial_mod_prime
+      source_sha256: sha256:fe1799f3eeffa957753be33a35278649c3bfdc282e8b97678f2e28a0851f0efe
+      target_statement_id: sha256:88e54863b71bcf199ff243e685679a880c6e86abf653a84b3d515a392567cfb4
+  scribe:
+    - gid: D5/S3/ArithUnits/HalfFactorial.half_factorial_mod_prime
+      definition_sha256: sha256:29e1817aa7424f00abd5152f93a05678da9dbe3e373c4595c5a4359fa209ce53
+      emission_sha256: sha256:5d3a58dd0fe7d76bf2d8051aeba34e392e6c7afe7973d73ce4059ee83898b6df
+  unresolved_subitems: []

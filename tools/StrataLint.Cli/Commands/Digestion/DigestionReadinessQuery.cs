@@ -6,7 +6,6 @@ namespace StrataLint.Cli;
 internal sealed record DigestionReadinessRecord(
     string SourceId,
     string AtomId,
-    string AstPath,
     string Action,
     ImmutableArray<string> OrderedBlockers,
     ImmutableArray<string> UnknownPredicates);
@@ -36,12 +35,14 @@ internal static class DigestionReadinessQuery
     internal static ImmutableArray<DigestionReadinessRecord> Classify(
         BackfillInventoryDocument ledger,
         DigestionLedgerEvaluation evaluation,
+        IReadOnlyDictionary<string, string> contentKinds,
         IReadOnlyDictionary<string, DigestionFormalizationReceipt> currentReceipts,
         IReadOnlySet<string> presentReceiptAtomIds,
         VerifiedScribeEmissions scribeEmissions)
     {
         ArgumentNullException.ThrowIfNull(ledger);
         ArgumentNullException.ThrowIfNull(evaluation);
+        ArgumentNullException.ThrowIfNull(contentKinds);
         ArgumentNullException.ThrowIfNull(currentReceipts);
         ArgumentNullException.ThrowIfNull(presentReceiptAtomIds);
         ArgumentNullException.ThrowIfNull(scribeEmissions);
@@ -56,6 +57,7 @@ internal static class DigestionReadinessQuery
             .Select(item => ClassifyEntry(
                 item,
                 staleAtomIds,
+                contentKinds,
                 currentReceipts,
                 presentReceiptAtomIds,
                 scribeEmissions))
@@ -68,6 +70,7 @@ internal static class DigestionReadinessQuery
     private static DigestionReadinessRecord ClassifyEntry(
         DigestionEntryEvaluation evaluation,
         IReadOnlySet<string> staleAtomIds,
+        IReadOnlyDictionary<string, string> contentKinds,
         IReadOnlyDictionary<string, DigestionFormalizationReceipt> currentReceipts,
         IReadOnlySet<string> presentReceiptAtomIds,
         VerifiedScribeEmissions scribeEmissions)
@@ -94,15 +97,16 @@ internal static class DigestionReadinessQuery
             return Record(entry, "refresh-stale", ["acknowledged-stale"]);
         }
 
-        if (DigestionAstKindPolicy.TryGetNotFormalizableKind(entry.AstPath, out var terminalKind))
+        if (contentKinds.TryGetValue(entry.AtomId, out var contentKind)
+            && DigestionContentKindPolicy.IsNotFormalizable(contentKind))
         {
             return Record(
                 entry,
                 "not-formalizable",
-                ["non-assertion-ast-kind:" + terminalKind]);
+                ["non-assertion-ast-kind:" + contentKind]);
         }
 
-        if (!DigestionAstKindPolicy.TryGetFormalizableKind(entry.AstPath, out _))
+        if (contentKind is null || !DigestionContentKindPolicy.IsFormalizable(contentKind))
         {
             return Record(entry, "needs-routing", ["unsupported-ast-kind"]);
         }
@@ -164,7 +168,6 @@ internal static class DigestionReadinessQuery
         ImmutableArray<string> unknownPredicates = default) => new(
             entry.SourceId,
             entry.AtomId,
-            entry.AstPath,
             action,
             orderedBlockers,
             unknownPredicates.IsDefault ? [] : unknownPredicates);
