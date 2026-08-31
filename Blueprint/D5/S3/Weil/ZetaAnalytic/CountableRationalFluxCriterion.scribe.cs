@@ -10,7 +10,7 @@ internal sealed class CountableRationalFluxCriterionDocument : IScribeDocumentDe
         "D5/S3/Weil/ZetaAnalytic/CountableRationalFluxCriterion.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Rational rectangles detect every isolated zero in the open right half-plane.",
+        "Rational rectangles detect every isolated zero in the centered open right half-plane.",
         H("Countable Rational Flux Criterion"),
         Blocks(Describe.Lean(
             DescribeId.Create("countable-rational-flux-criterion"),
@@ -24,7 +24,8 @@ internal sealed class CountableRationalFluxCriterionDocument : IScribeDocumentDe
                     + "that zero and the isolating sides. The canonical rectangle boundary then "
                     + "contains no zero, while the selected zero lies in its interior. The public "
                     + "argument-principle law identifies this flux exactly with the positive "
-                    + "analytic order of xi at the isolated zero."))),
+                    + "analytic order of the centered reading F(z) = xi(1/2 + z) at the "
+                    + "isolated zero."))),
             DescribeRole.Theorem))));
 
     private static Formula.BoundVariable Bound(string name, Formula domain) =>
@@ -79,7 +80,7 @@ internal sealed class CountableRationalFluxCriterionDocument : IScribeDocumentDe
     private static Formula TheoremFormula()
     {
         Formula real = Call("Real"), rational = Call("Rat"), natural = Call("Nat");
-        Formula complex = Call("Complex"), xi = F.Id("xiReading"), flux = F.Id("flux");
+        Formula complex = Call("Complex"), xi = F.Id("centeredXi"), flux = F.Id("flux");
         Formula z = F.Id("z"), w = F.Id("w");
         Formula x0 = F.Id("x0"), x1 = F.Id("x1");
         Formula y0 = F.Id("y0"), y1 = F.Id("y1");
@@ -135,8 +136,8 @@ internal sealed class CountableRationalFluxCriterionDocument : IScribeDocumentDe
             [Bound("a", rational), Bound("b", rational),
                 Bound("c", rational), Bound("d", rational)],
             Implies(
-                And(rationalSideConditions, boundaryFree),
-                Iff(Equal(FluxAt(), D(0)), rectangleZeroFree)));
+                All(rationalSideConditions, boundaryFree, rectangleZeroFree),
+                Equal(FluxAt(), D(0))));
 
         Formula isolatedInRationalRectangle = ForAll(
             [Bound("w", complex)],

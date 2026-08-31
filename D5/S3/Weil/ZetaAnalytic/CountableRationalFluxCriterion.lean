@@ -31,55 +31,60 @@ open D5.S3.Zeros.CompletedZeta
 
 namespace D5.S3.Weil.ZetaAnalytic.CountableRationalFluxCriterion
 
-/-- For an axis-isolated complex zero set, a flux that vanishes exactly on
-zero-free rational rectangles detects whether the open right half-plane is
-zero-free. The boundary condition is public, as is the argument-principle law
-that the flux of a rational rectangle isolating `z` is the positive analytic
-order of `xi` at `z`. -/
+/-- The centered entire xi reading `F(z) = xi(1/2 + z)`. -/
+noncomputable def centeredXi (z : Complex) : Complex :=
+  xiReading ((1 / 2 : Complex) + z)
+
+/-- For an axis-isolated complex zero set, a flux that vanishes on zero-free
+rational rectangles and positively counts an isolated zero detects whether the
+open right half-plane is zero-free. The criterion is stated through the centered reading
+`F(z) = xi(1/2 + z)`, as in the source. The boundary condition is public, as is
+the argument-principle law that the flux of a rational rectangle isolating `z`
+is the positive analytic order of `F` at `z`. -/
 theorem countable_rational_flux_criterion
     (flux : Rat -> Rat -> Rat -> Rat -> Nat)
-    (axisIsolated : forall z, xiReading z = 0 -> 0 < z.re ->
+    (axisIsolated : forall z, centeredXi z = 0 -> 0 < z.re ->
       exists x0 x1 y0 y1 : Real,
         0 < x0 /\ x0 < z.re /\ z.re < x1 /\
         y0 < z.im /\ z.im < y1 /\
-        forall w, xiReading w = 0 ->
+        forall w, centeredXi w = 0 ->
           w ∈ Rectangle (Complex.mk x0 y0) (Complex.mk x1 y1) -> w = z)
     (fluxZeroIff : forall (a b c d : Rat),
       0 < a -> a < b -> c < d ->
       (forall z, z ∈ RectangleBorder
         (Complex.mk (a : Real) (c : Real))
-        (Complex.mk (b : Real) (d : Real)) -> xiReading z ≠ 0) ->
-      (flux a b c d = 0 <->
-        forall z, xiReading z = 0 -> z ∉ Rectangle
-          (Complex.mk (a : Real) (c : Real))
-          (Complex.mk (b : Real) (d : Real))))
+        (Complex.mk (b : Real) (d : Real)) -> centeredXi z ≠ 0) ->
+      (forall z, centeredXi z = 0 -> z ∉ Rectangle
+        (Complex.mk (a : Real) (c : Real))
+        (Complex.mk (b : Real) (d : Real))) ->
+      flux a b c d = 0)
     (isolatedFluxCount : forall (z : Complex) (a b c d : Rat),
-      xiReading z = 0 -> 0 < a -> a < b -> c < d ->
+      centeredXi z = 0 -> 0 < a -> a < b -> c < d ->
       z ∈ Rectangle
         (Complex.mk (a : Real) (c : Real))
         (Complex.mk (b : Real) (d : Real)) ->
-      (forall w, xiReading w = 0 ->
+      (forall w, centeredXi w = 0 ->
         w ∈ Rectangle
           (Complex.mk (a : Real) (c : Real))
           (Complex.mk (b : Real) (d : Real)) -> w = z) ->
       (forall w, w ∈ RectangleBorder
         (Complex.mk (a : Real) (c : Real))
-        (Complex.mk (b : Real) (d : Real)) -> xiReading w ≠ 0) ->
-      flux a b c d = analyticOrderNatAt xiReading z /\
-        1 ≤ analyticOrderNatAt xiReading z) :
-    (forall z, xiReading z = 0 -> ¬ (0 < z.re)) <->
+        (Complex.mk (b : Real) (d : Real)) -> centeredXi w ≠ 0) ->
+      flux a b c d = analyticOrderNatAt centeredXi z /\
+        1 ≤ analyticOrderNatAt centeredXi z) :
+    (forall z, centeredXi z = 0 -> ¬ (0 < z.re)) <->
       forall (a b c d : Rat),
         0 < a -> a < b -> c < d ->
         (forall z, z ∈ RectangleBorder
           (Complex.mk (a : Real) (c : Real))
-          (Complex.mk (b : Real) (d : Real)) -> xiReading z ≠ 0) ->
+          (Complex.mk (b : Real) (d : Real)) -> centeredXi z ≠ 0) ->
         flux a b c d = 0 := by
   fail_if_success rfl
   fail_if_success ((try intros); assumption)
   constructor
   · intro noRightZero a b c d ha hab hcd boundaryFree
     fail_if_success rfl
-    apply (fluxZeroIff a b c d ha hab hcd boundaryFree).2
+    apply fluxZeroIff a b c d ha hab hcd boundaryFree
     intro z hz hrect
     have hcoords :=
       (mem_Rect (Rat.cast_le.2 hab.le) (Rat.cast_le.2 hcd.le) z).1 hrect
@@ -95,7 +100,7 @@ theorem countable_rational_flux_criterion
     have ha : 0 < a := Rat.cast_pos.1 (hx0.trans hx0a)
     have hab : a < b := Rat.cast_lt.1 (haz.trans hzb)
     have hcd : c < d := Rat.cast_lt.1 (hcz.trans hzd)
-    have rationalIsolated : forall w, xiReading w = 0 ->
+    have rationalIsolated : forall w, centeredXi w = 0 ->
         w ∈ Rectangle
           (Complex.mk (a : Real) (c : Real))
           (Complex.mk (b : Real) (d : Real)) -> w = z := by
@@ -110,7 +115,7 @@ theorem countable_rational_flux_criterion
         hwcoords.2.2.2.trans hdy1.le⟩
     have boundaryFree : forall w, w ∈ RectangleBorder
         (Complex.mk (a : Real) (c : Real))
-        (Complex.mk (b : Real) (d : Real)) -> xiReading w ≠ 0 := by
+        (Complex.mk (b : Real) (d : Real)) -> centeredXi w ≠ 0 := by
       intro w hw hwz
       have hwinner := rectangleBorder_subset_rectangle _ _ hw
       have hwEq : w = z := rationalIsolated w hwz hwinner
