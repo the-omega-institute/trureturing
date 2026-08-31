@@ -76,7 +76,7 @@ theorem golden_scale_coordinate_phi_even_pow_mul
   induction n with
   | zero => simp [goldenScaleCoordinate]
   | succ n ih =>
-      rw [pow_succ, mul_assoc,
+      rw [pow_succ', mul_assoc,
         golden_scale_coordinate_phi_sq_mul
           (mul_pos (pow_pos (sq_pos_of_pos Real.goldenRatio_pos) n) hx),
         ih]

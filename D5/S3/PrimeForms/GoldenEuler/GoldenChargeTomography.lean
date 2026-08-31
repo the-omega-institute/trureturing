@@ -16,6 +16,8 @@ statements about Dirichlet L-functions and their zeros are separate.
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
+noncomputable section
+
 namespace D5.S3.PrimeForms.GoldenEuler.GoldenChargeTomography
 
 /-- Neutral channel of a split/inert pair. -/

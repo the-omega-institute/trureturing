@@ -6,7 +6,6 @@
    digest: Golden exponential radial coordinates send the critical line to the unit radius and completed reflection to reciprocal radius. -/
 
 import D5.S3.Observer.GoldenPrimeCircle.GoldenScaleCircle
-import Mathlib.Data.Complex.Exponential
 
 /-!
 This is an exact change of radial coordinate on the complex plane. Applying it
@@ -25,7 +24,7 @@ open D5.S3.Observer.GoldenPrimeCircle.GoldenScaleCircle
 
 /-- Reflection across the critical line. -/
 def criticalReflection (s : ℂ) : ℂ :=
-  1 - Complex.conj s
+  1 - (starRingEnd ℂ) s
 
 /-- Signed normal displacement from the critical line. -/
 def criticalOffset (s : ℂ) : ℝ :=

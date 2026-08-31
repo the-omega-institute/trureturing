@@ -16,6 +16,8 @@ charge values `1`, `-1`, and `0` encode split, inert, and ramified local types.
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
+noncomputable section
+
 namespace D5.S3.PrimeForms.GoldenEuler.GoldenLocalEulerTrichotomy
 
 /-- Product of the neutral denominator and one quadratic charge denominator. -/

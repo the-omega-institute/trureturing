@@ -68,7 +68,8 @@ theorem reflected_pair_pointwise_neutral_iff (delta : ℝ) :
 
 /-- Paired balance alone cannot force pointwise neutrality. -/
 theorem paired_balance_strictly_weaker :
-    reflected_transfer_product_one 1 ∧ goldenTransferGain 1 ≠ 1 := by
+    (goldenTransferGain 1 * goldenTransferGain (-1) = 1) ∧
+      goldenTransferGain 1 ≠ 1 := by
   constructor
   · exact reflected_transfer_product_one 1
   · exact (golden_transfer_gain_eq_one_iff 1).not.mpr (by norm_num)

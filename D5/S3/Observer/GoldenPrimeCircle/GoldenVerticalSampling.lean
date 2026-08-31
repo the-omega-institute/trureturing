@@ -43,7 +43,6 @@ theorem golden_phase_vertical_frequency_identity
   have hLog : Real.log Real.goldenRatio ≠ 0 :=
     ne_of_gt (Real.log_pos Real.one_lt_goldenRatio)
   field_simp [hLog]
-  ring
 
 /-- Adjacent Fourier modes are separated by one fundamental golden frequency. -/
 theorem golden_vertical_mode_spacing (k : ℤ) :
