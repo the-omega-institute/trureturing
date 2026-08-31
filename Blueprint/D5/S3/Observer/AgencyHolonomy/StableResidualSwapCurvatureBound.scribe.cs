@@ -11,7 +11,7 @@ internal sealed class StableResidualSwapCurvatureBoundDocument
         "D5/S3/Observer/AgencyHolonomy/StableResidualSwapCurvatureBound.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Stable swap curvature is controlled linearly and quadratically by residual local factors.",
+        "Stable swap curvature is linear-quadratic in residual local factors.",
         H("Stable Residual Swap Curvature Bound"),
         Blocks(
             Describe.Lean(
