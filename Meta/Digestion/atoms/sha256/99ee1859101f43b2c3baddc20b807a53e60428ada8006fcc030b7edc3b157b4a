@@ -1,0 +1,53 @@
+## 1120.2 乘法面
+
+$$
+\boxed{
+C_K
+=
+\mathbb A_K^\times/K^\times.
+}
+$$
+
+存在全局 norm：
+
+$$
+\boxed{
+|\cdot|:
+C_K\to\mathbb R_{>0}.
+}
+\tag{1120.1}
+$$
+
+其核：
+
+$$
+\boxed{
+C_K^1
+=
+\ker|\cdot|
+}
+\tag{1120.2}
+$$
+
+是紧致群。([Kiran S. Kedlaya][4])
+
+所以：
+
+$$
+\boxed{
+1
+\longrightarrow
+C_K^1
+\longrightarrow
+C_K
+\overset{|\cdot|}{\longrightarrow}
+\mathbb R_{>0}
+\longrightarrow
+1.
+}
+\tag{1120.3}
+$$
+
+这里：
+
+* \(C_K^1\) 是紧致的内部方向；

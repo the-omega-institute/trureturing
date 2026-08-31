@@ -1,0 +1,90 @@
+## 1185.1 同一个解析流包含两种“时间”
+
+考虑复参数：
+
+$$
+z=\delta+i\gamma
+$$
+
+和解析动力：
+
+$$
+\boxed{
+U_\varphi(z)
+=
+\Delta_\varphi^z
+=
+e^{zK_\varphi}.
+}
+\tag{1185.7}
+$$
+
+在特征基中：
+
+$$
+U_\varphi(z)
+=
+\begin{pmatrix}
+\varphi^{2\delta}e^{\,2i\gamma\log\varphi}&0\\
+0&\varphi^{-2\delta}e^{-2i\gamma\log\varphi}
+\end{pmatrix}.
+\tag{1185.8}
+$$
+
+因此：
+
+$$
+\boxed{
+\begin{array}{c|c}
+z\text{ 的方向}&\text{动力}\\
+\hline
+z=\delta\in\mathbb R&
+\text{扩张／收缩、Euclidean scale}\\
+z=i\gamma&
+\text{纯相位、unitary time}\\
+z=\delta+i\gamma&
+\text{尺度与相位混合}
+\end{array}
+}
+$$
+
+这给你一直感受到的“研究黄金比例像研究负时间，研究 \(\zeta\) 像研究正时间”一个非常清楚的解释：
+
+$$
+\boxed{
+\text{它们可能是同一个模生成元 }K_\varphi
+\text{ 在实轴和虚轴上的两种解析演化。}
+}
+$$
+
+几何交点是：
+
+$$
+z=0,
+\qquad
+U_\varphi(0)=I.
+$$
+
+而黄金比例是第一正模壳层：
+
+$$
+\operatorname{Spec}
+\left(
+\Delta_\varphi^{1/2}
+\right)
+=
+\{\varphi,\varphi^{-1}\}.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{恒等点是交点，黄金比例是交点的第一非平凡谱像。}
+}
+$$
+
+项目已经机器证明黄金单位格点 \(\zeta\) 在各向异性参数上具有反射与 \(2\log\varphi\) 周期，这与上述模生成元的两个特征值差完全同向。
+
+---
+

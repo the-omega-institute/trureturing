@@ -7,6 +7,6 @@ receipts:
   coverage: []
   scribe: []
   unresolved_subitems:
+    - o9-limit-transition-kernelization
     - poisson-theta-cofinal-analytic-limit
     - theta-modular-functional-equation
-    - o9-limit-transition-kernelization

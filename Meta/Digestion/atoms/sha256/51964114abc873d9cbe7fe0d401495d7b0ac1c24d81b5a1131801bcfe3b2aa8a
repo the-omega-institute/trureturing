@@ -1,0 +1,54 @@
+## v7.7：零点空世界线、Blaschke 最小修复、Chern–负指标守恒与黄金壳层缺陷谱
+
+以下从前文**第一千二百五十四部**继续。
+
+先补全上一轮末尾未展开的式子。黄金比例若真正进入证明结构，而不只是作为一组共尾观察尺度，应当存在某种正核递归：
+
+$$
+\boxed{
+\mathcal K_{\omega_{n+1}}
+=
+A_n^*\mathcal K_{\omega_n}A_n
++
+B_n^*\mathcal K_{\omega_{n-1}}B_n
++
+R_n,
+\qquad
+R_n\succeq0.
+}
+\tag{1255.1}
+$$
+
+然而继续向下分析后，可以对研究顺序作一条更严格的校正：
+
+$$
+\boxed{
+\text{在寻找 Fibonacci 两层递归以前，
+应先抽取 shifted-\(\xi\) 核中唯一的负性因子。}
+}
+$$
+
+这个负性因子不是任意残差，也不是隐藏 Solenoid 纤维，而是一个由离线零点确定的 **Blaschke 分母**。
+
+它将此前分散的对象统一为：
+
+$$
+\boxed{
+\begin{aligned}
+\text{离线零点除子}
+&=
+\text{Blaschke 修复次数}\\
+&=
+\text{Pontryagin 负平方数}\\
+&=
+\text{局部 Chern 荷}\\
+&=
+\text{观察深度中的谱流跳跃}.
+\end{aligned}
+}
+$$
+
+黄金比例只负责把这条整数缺陷流划分成自相似壳层；它不是缺陷电荷本身。
+
+---
+

@@ -1,0 +1,58 @@
+# 第一千一百七十五部　缺陷传导现在可以压缩为一条正锥链
+
+对某个离线模式：
+
+$$
+\delta\neq0,
+$$
+
+有以下链条：
+
+$$
+\boxed{
+\begin{aligned}
+\delta\neq0
+&\Longleftrightarrow
+R_{\mathrm{bi}}<1\\
+&\Longleftrightarrow
+\text{双时间 Gramian 在 }\beta<1\text{ 内提前发散}\\
+&\Longleftrightarrow
+\text{不存在正定不变度量 }H\\
+&\Longleftrightarrow
+\text{模式不能成为 unitary 双向谱}\\
+&\Longrightarrow
+F(z)=\xi\!\left(\frac12+z\right)
+\text{ 在右半平面有零点}\\
+&\Longleftrightarrow
+\frac{F'}F\text{ 有内部极点}\\
+&\Longleftrightarrow
+\exists q\in\mathbb Q+i\mathbb Q:
+\Re\frac{F'(q)}{F(q)}<0\\
+&\Longleftrightarrow
+\exists q:
+K_\xi(q,q)<0.
+\end{aligned}
+}
+\tag{1175.1}
+$$
+
+其中最后一项只是一个：
+
+$$
+\boxed{
+1\times1
+}
+$$
+
+的 Pick 负证书。
+
+这条链每一步都保留缺陷，没有经过会把：
+
+$$
+\delta,-\delta
+$$
+
+平均为零的粗标量商。
+
+---
+

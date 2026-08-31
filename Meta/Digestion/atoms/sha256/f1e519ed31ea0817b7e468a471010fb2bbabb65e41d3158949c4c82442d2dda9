@@ -1,0 +1,92 @@
+## 1117.3 黄金场的可见—隐藏正合列
+
+写：
+
+$$
+K_\infty
+=
+\mathbb R\times\mathbb R,
+\qquad
+\widehat{\mathcal O_K}
+=
+\prod_{\mathfrak p}\mathcal O_{K,\mathfrak p}.
+$$
+
+有标准表示：
+
+$$
+\boxed{
+\Sigma_K
+\simeq
+\left(
+K_\infty
+\times
+\widehat{\mathcal O_K}
+\right)
+/\mathcal O_K.
+}
+\tag{1117.3}
+$$
+
+并得到：
+
+$$
+\boxed{
+0
+\longrightarrow
+\widehat{\mathcal O_K}
+\longrightarrow
+\Sigma_K
+\longrightarrow
+K_\infty/\mathcal O_K
+\longrightarrow
+0.
+}
+\tag{1117.4}
+$$
+
+在迹配对下对偶化：
+
+$$
+\boxed{
+0
+\longrightarrow
+\mathcal O_K^\vee
+\longrightarrow
+K
+\longrightarrow
+K/\mathcal O_K^\vee
+\longrightarrow
+0.
+}
+\tag{1117.5}
+$$
+
+其中：
+
+$$
+\mathcal O_K^\vee
+=
+\frac1{\sqrt5}\mathcal O_K.
+$$
+
+所以黄金场中：
+
+$$
+\boxed{
+\sqrt5
+}
+$$
+
+正好位于：
+
+* 可见 Archimedean torus；
+* 隐藏 profinite fiber；
+* 完整 frequency field；
+
+三者的正合缝合处。
+
+这就是 Solenoid 与黄金双曲几何真正相遇的位置。
+
+---
+
