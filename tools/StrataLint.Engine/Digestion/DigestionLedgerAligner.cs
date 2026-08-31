@@ -137,6 +137,11 @@ internal static partial class DigestionLedgerAligner
             .SelectMany(static source => source.Entries)
             .Select(static entry => entry.AtomId)
             .ToHashSet(StringComparer.Ordinal);
+        var candidateEntriesById = sources
+            .SelectMany(static source => source.Entries)
+            .GroupBy(static entry => entry.AtomId, StringComparer.Ordinal)
+            .Where(static group => group.Count() == 1)
+            .ToDictionary(static group => group.Key, static group => group.Single(), StringComparer.Ordinal);
 
         casChanges ??= changes;
         if (casEvaluation is not null && !casEvaluation.Matches(casChanges))
@@ -473,7 +478,10 @@ internal static partial class DigestionLedgerAligner
             AlignNestedChildren(
                 source,
                 atomized.ClausePlans,
+                mode,
                 cas.ValidAtomIds,
+                inheritedEntries,
+                candidateEntriesById,
                 snapshot,
                 alignments,
                 matchedAtoms,

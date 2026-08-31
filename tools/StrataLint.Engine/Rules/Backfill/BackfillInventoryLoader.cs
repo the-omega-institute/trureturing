@@ -82,13 +82,19 @@ internal sealed class BackfillInventoryDocument
         string sourcePath,
         string atomizer,
         object? rawEntry,
-        bool projectBaselineCoverage = false)
+        bool projectBaselineCoverage = false,
+        bool allowUnknownFields = false)
     {
         var entry = Mapping(rawEntry, $"source {sourceId} entries must be mappings");
-        ExactKeys(
-            entry,
-            EntryFieldUniverse,
-            $"source {sourceId} entry");
+        if (allowUnknownFields)
+        {
+            RequiredKeys(entry, EntryFieldUniverse, $"source {sourceId} entry");
+        }
+        else
+        {
+            ExactKeys(entry, EntryFieldUniverse, $"source {sourceId} entry");
+        }
+
         var atomId = Scalar(entry, "atom_id", $"source {sourceId} atom_id");
 
         var fingerprints = Mapping(
@@ -98,6 +104,10 @@ internal sealed class BackfillInventoryDocument
         var parsedFingerprints = new DigestionFingerprints(
             Scalar(fingerprints, "raw_sha256", $"entry {atomId} raw_sha256"),
             Scalar(fingerprints, "normalized_sha256", $"entry {atomId} normalized_sha256"));
+        if (projectBaselineCoverage && DigestionFingerprint.IsCanonicalSha256(parsedFingerprints.RawSha256))
+        {
+            atomId = parsedFingerprints.RawSha256["sha256:".Length..];
+        }
 
         var coverageGids = Strings(
             List(entry, "coverage_gids", $"entry {atomId} coverage_gids must be a list"),
@@ -413,6 +423,17 @@ internal sealed class BackfillInventoryDocument
         }
     }
 
+    private static void RequiredKeys(
+        IReadOnlyDictionary<string, object?> mapping,
+        IReadOnlyCollection<string> required,
+        string context)
+    {
+        if (!mapping.Keys.ToHashSet(StringComparer.Ordinal).IsSupersetOf(required))
+        {
+            throw new FormatException($"{context} keys are not canonical");
+        }
+    }
+
     // 必需键必须全在;可选键可有可无,但除此以外一个多余键都不许有。
     private static void ExactKeys(
         IReadOnlyDictionary<string, object?> mapping,
@@ -496,11 +517,13 @@ internal static partial class BackfillInventoryLoader
         }
 
         // Candidate-side parsing is authoritative only for the declared delta. For every
-        // unchanged backfill record, feed the trusted baseline bytes to the strict loader.
+        // unchanged backfill record still present in the candidate, feed the trusted baseline
+        // bytes to the strict loader. Candidate deletions are absent from the candidate ledger.
         // This keeps historical projection quirks out of the candidate comparison while
         // retaining the current tree for all query inputs (Lean, targets, and source files).
         foreach (var (path, file) in baseline.Files
                      .Where(static pair => IsCanonicalPath(pair.Key.Value))
+                     .Where(pair => candidate.TryGetFile(pair.Key.Value, out _))
                      .Where(pair => !changed.Contains(pair.Key.Value)))
         {
             entries[path.Value] = new RawRepositoryEntry(
@@ -621,12 +644,14 @@ internal static partial class BackfillInventoryLoader
         LoadDirectorySnapshot(
             snapshot,
             ParseBaselineSourceMetadata,
-            projectBaselineCoverage: true);
+            projectBaselineCoverage: true,
+            allowUnknownEntryFields: true);
 
     private static BackfillInventoryDocument LoadDirectorySnapshot(
         RepositorySnapshot snapshot,
         Func<string, string, ParsedSourceMetadata> parseSourceMetadata,
-        bool projectBaselineCoverage = false)
+        bool projectBaselineCoverage = false,
+        bool allowUnknownEntryFields = false)
     {
         var metadata = snapshot.Files
             .Where(static pair => pair.Key.Value.StartsWith(RootPath, StringComparison.Ordinal)
@@ -639,6 +664,7 @@ internal static partial class BackfillInventoryLoader
         }
 
         var sources = ImmutableArray.CreateBuilder<DigestionLedgerSource>();
+        var baselineAtomIds = new Dictionary<string, string>(StringComparer.Ordinal);
         foreach (var (metadataPath, metadataFile) in metadata)
         {
             var sourceRoot = metadataPath.Value[..^"source.toml".Length];
@@ -681,7 +707,13 @@ internal static partial class BackfillInventoryLoader
                     fields["path"].Single(),
                     fields["atomizer"].Single(),
                     entry,
-                    projectBaselineCoverage);
+                    projectBaselineCoverage,
+                    allowUnknownEntryFields);
+                if (projectBaselineCoverage)
+                {
+                    baselineAtomIds.Add(atomId, parsedEntry.AtomId);
+                }
+
                 entries.Add(parsedEntry);
             }
 
@@ -709,7 +741,12 @@ internal static partial class BackfillInventoryLoader
             }
         }
 
-        return BackfillInventoryDocument.Create(sources.ToImmutable(), DeriveTickets(snapshot));
+        var loadedSources = sources.ToImmutable();
+        return BackfillInventoryDocument.Create(
+            projectBaselineCoverage
+                ? ProjectBaselineReferences(loadedSources, baselineAtomIds)
+                : loadedSources,
+            DeriveTickets(snapshot));
     }
 
     internal static ImmutableArray<BackfillTicketReference> DeriveTickets(

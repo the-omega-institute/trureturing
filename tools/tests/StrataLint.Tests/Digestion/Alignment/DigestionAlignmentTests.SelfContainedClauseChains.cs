@@ -24,6 +24,75 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
+    public void AdmissionRevalidatesInheritedChainAcrossContentDeduplicationSourceMove()
+    {
+        var fixture = SelfContainedClauseChain();
+        var baselineSource = Assert.Single(fixture.Ledger.RequireDigestionSources());
+        var movedSource = baselineSource with
+        {
+            SourceId = "content-owner",
+            SourcePath = "docs/content-owner.md",
+            Entries = fixture.Children.Skip(1).Select(child => child with
+            {
+                SourceId = "content-owner",
+                SourcePath = "docs/content-owner.md",
+            }).ToImmutableArray(),
+        };
+        var candidate = fixture.Ledger.WithDigestionSources(
+        [
+            baselineSource with { Entries = [fixture.Parent, fixture.Children[0]] },
+            movedSource,
+        ]);
+
+        var result = DigestionLedgerAligner.Evaluate(
+            candidate,
+            Snapshot(
+                fixture.CurrentSourceBytes,
+                fixture.ChildCaptures.Prepend(fixture.ParentCapture)),
+            fixture.Ledger,
+            DigestionAlignmentMode.Admission,
+            changes: RawChangeSet.Create([baselineSource.SourcePath]));
+
+        Assert.DoesNotContain(result.Findings, finding => finding.Contains(
+            "malformed clause chain",
+            StringComparison.Ordinal));
+        Assert.Contains(fixture.Parent.AtomId, result.VerifiedClausePlanParents);
+        Assert.Equal(
+            DigestionReceiptAlignment.Seen,
+            result.AlignmentFor(fixture.Children[0].AtomId));
+        Assert.Equal(
+            DigestionReceiptAlignment.Seen,
+            result.AlignmentFor(fixture.Children[1].AtomId));
+    }
+
+    [Fact]
+    public void AdmissionRevalidatesChangedChainEvenWhenParentContentIsSeen()
+    {
+        var fixture = SelfContainedClauseChain();
+        var changedParent = fixture.Parent with
+        {
+            Receipts = fixture.Parent.Receipts with
+            {
+                ChainAtoms = [fixture.Children[0].AtomId],
+            },
+        };
+        var candidate = ChainLedger(fixture, changedParent, fixture.Children);
+        var sourceBytes = Encoding.UTF8.GetBytes(
+            "# PZG\n\n" + Encoding.UTF8.GetString(fixture.ParentCapture.Bytes.AsSpan()));
+
+        var result = DigestionLedgerAligner.Evaluate(
+            candidate,
+            Snapshot(
+                sourceBytes,
+                fixture.ChildCaptures.Prepend(fixture.ParentCapture)),
+            fixture.Ledger,
+            DigestionAlignmentMode.Admission);
+
+        AssertMalformedClauseChain(result, fixture.Parent.AtomId, "chain cardinality");
+        Assert.DoesNotContain(fixture.Parent.AtomId, result.VerifiedClausePlanParents);
+    }
+
+    [Fact]
     public void SelfContainedClauseChain_RejectsCardinalityMismatch()
     {
         var fixture = SelfContainedClauseChain();

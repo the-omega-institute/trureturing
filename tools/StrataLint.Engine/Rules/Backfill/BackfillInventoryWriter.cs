@@ -312,12 +312,9 @@ internal static class BackfillInventoryWriter
         if (RequiresStringQuotes(value)
             || value.Contains(": ", StringComparison.Ordinal))
         {
-            if (value.Contains('\'', StringComparison.Ordinal))
-            {
-                throw new FormatException($"BACKFILL quoted scalar cannot contain a single quote: {value}");
-            }
-
-            return "'" + value + "'";
+            return value.Contains('\'', StringComparison.Ordinal)
+                ? TomlGenreToken(value)
+                : "'" + value + "'";
         }
 
         if (string.IsNullOrWhiteSpace(value)
