@@ -25,7 +25,8 @@ internal sealed record ScribeTestMethod(
     string Id,
     IReadOnlyList<string> Paths,
     IReadOnlyList<TestMapUnknownReason> UnknownReasons,
-    bool IsStaticallySkipped = false)
+    bool IsStaticallySkipped = false,
+    bool IsDiscoveryConditional = false)
 {
     internal bool IsUnknown => UnknownReasons.Count != 0;
 
@@ -394,7 +395,8 @@ internal static class ScribeTestMapDeriver
                 $"{test.TypeName}.{test.Name}",
                 paths.Order(StringComparer.Ordinal).ToArray(),
                 reasons.Order().ToArray(),
-                test.IsStaticallySkipped));
+                test.IsStaticallySkipped,
+                test.IsDiscoveryConditional));
         }
 
         return new ScribeTestMap(
