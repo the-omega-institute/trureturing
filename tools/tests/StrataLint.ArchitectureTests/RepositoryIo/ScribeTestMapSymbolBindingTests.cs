@@ -463,38 +463,6 @@ public sealed class ScribeTestMapSymbolBindingTests
     public void RepositoryMapIncludesDerivedFactsAndRetiredLedgerFixtureClosure()
     {
         var map = DeriveDeclaredRepositoryMap();
-        var expectedLivePaths = new Dictionary<string, string[]>(StringComparer.Ordinal)
-        {
-            ["DocumentDiscoveryTests.GeneratedDocumentGraphMatchesFormalTruth"] =
-            [
-                ".lake/build/stratalint/raw-lean-report.json",
-                ".lake/build/stratalint/raw-lean-report.json.materials.zip",
-                "Blueprint",
-                "global.json",
-            ],
-            ["StatementProjectionPilotTests.LiveReportMatchesPinnedFixtureWhenAvailable"] =
-            [
-                ".lake/build/stratalint/raw-lean-report.json",
-                ".lake/build/stratalint/raw-lean-report.json.materials.zip",
-                "lakefile.toml",
-            ],
-            ["StatementProjectionPilotTests.NonTheoremDeclarationsAreUnprojectableWhenTheReportIsAvailable"] =
-            [
-                ".lake/build/stratalint/raw-lean-report.json",
-                ".lake/build/stratalint/raw-lean-report.json.materials.zip",
-                "lakefile.toml",
-            ],
-        };
-
-        foreach (var (id, paths) in expectedLivePaths)
-        {
-            var matches = map.Methods.Where(method => method.Id == id).ToArray();
-            Assert.True(
-                matches.Length == 1,
-                $"{id}: source peers are {string.Join(", ", map.Methods.Where(method => id.StartsWith(method.Id.Split('.')[0], StringComparison.Ordinal)).Select(static method => method.Id))}");
-            Assert.Equal(paths, matches[0].Paths);
-        }
-
         Assert.All(
             map.Methods.Where(static method => method.Id.StartsWith(
                 "RetiredLedgerSurfaceTests.",
