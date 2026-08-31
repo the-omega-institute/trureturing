@@ -157,4 +157,59 @@ theorem greedy_step_gap_le_budget_mul_gain
 
 #print axioms greedy_step_gap_le_budget_mul_gain
 
+/-- After any number of steps up to a positive budget, the remaining gap is
+bounded by the corresponding power of the greedy contraction factor. -/
+theorem greedy_gap_le_geometric
+    {Ground : Type*} [DecidableEq Ground]
+    (value : Finset Ground -> Real) (normalized : value ∅ = 0)
+    (monotone : IsMonotone value) (submodular : IsSubmodular value)
+    (pick : Nat -> Ground) (budget : Nat) (budget_pos : 0 < budget)
+    (greedy : IsGreedySelection value pick budget)
+    (optimal : Finset Ground) (optimal_card : optimal.card <= budget)
+    (step : Nat) (step_le : step <= budget) :
+    value optimal - value (greedySelection pick step) <=
+      (1 - 1 / (budget : Real)) ^ step * value optimal := by
+  have budget_real_pos : (0 : Real) < budget := by
+    exact_mod_cast budget_pos
+  have one_le_budget_real : (1 : Real) <= budget := by
+    exact_mod_cast budget_pos
+  have contraction_nonneg : (0 : Real) <= 1 - 1 / budget :=
+    sub_nonneg.mpr
+      (div_le_one_of_le₀ one_le_budget_real budget_real_pos.le)
+  induction step with
+  | zero => simp [normalized]
+  | succ step inductionHypothesis =>
+      have step_lt : step < budget := Nat.lt_of_succ_le step_le
+      have previous_step_le : step <= budget := Nat.le_of_lt step_lt
+      have previous_bound := inductionHypothesis previous_step_le
+      have gap_bound :=
+        greedy_step_gap_le_budget_mul_gain value monotone submodular pick
+          budget greedy optimal optimal_card step_lt
+      have gain_lower :
+          (value optimal - value (greedySelection pick step)) / budget <=
+            value (greedySelection pick (step + 1)) -
+              value (greedySelection pick step) := by
+        rw [div_le_iff₀ budget_real_pos]
+        simpa only [mul_comm] using gap_bound
+      calc
+        value optimal - value (greedySelection pick (step + 1)) =
+            (value optimal - value (greedySelection pick step)) -
+              (value (greedySelection pick (step + 1)) -
+                value (greedySelection pick step)) := by
+          ring
+        _ <= (value optimal - value (greedySelection pick step)) -
+            (value optimal - value (greedySelection pick step)) / budget :=
+          sub_le_sub_left gain_lower _
+        _ = (1 - 1 / (budget : Real)) *
+            (value optimal - value (greedySelection pick step)) := by
+          ring
+        _ <= (1 - 1 / (budget : Real)) *
+            ((1 - 1 / (budget : Real)) ^ step * value optimal) :=
+          mul_le_mul_of_nonneg_left previous_bound contraction_nonneg
+        _ = (1 - 1 / (budget : Real)) ^ (step + 1) * value optimal := by
+          rw [pow_succ]
+          ring
+
+#print axioms greedy_gap_le_geometric
+
 end D5.S3.Resource.SubmodularGreedyApproximation
