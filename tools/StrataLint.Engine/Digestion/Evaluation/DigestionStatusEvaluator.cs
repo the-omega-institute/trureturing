@@ -43,6 +43,12 @@ internal static partial class DigestionStatusEvaluator
                 static source => source.GenreRegistryCheck,
                 StringComparer.Ordinal);
         var frozenStatements = new Lazy<FrozenStatementIndex>(() => FrozenStatementIndex.Load(snapshot));
+        var statusAuthorityChangedAtomIds = ResolveStatusAuthorityChangedAtomIds(
+            entries,
+            baselineAtomIds: ImmutableHashSet<string>.Empty,
+            changes,
+            alignment,
+            isBaseFactAffected: null);
         var work = entries
             .Where(static entry => entry.CoverageGids.Length == 0)
             .Select(entry => Inspect(
@@ -58,8 +64,7 @@ internal static partial class DigestionStatusEvaluator
                 frozenStatements,
                 genreChecks[entry.SourceId],
                 changes,
-                isBaseFactAffected: null,
-                projectedStatusChanges: changes,
+                statusAuthorityChangedAtomIds.Contains(entry.AtomId),
                 findings))
             .ToArray();
         DeriveMigration(work);
@@ -135,6 +140,12 @@ internal static partial class DigestionStatusEvaluator
                 static source => source.GenreRegistryCheck,
                 StringComparer.Ordinal);
         var frozenStatements = new Lazy<FrozenStatementIndex>(() => FrozenStatementIndex.Load(snapshot));
+        var statusAuthorityChangedAtomIds = ResolveStatusAuthorityChangedAtomIds(
+            entries,
+            baselineEntries.Keys.ToHashSet(StringComparer.Ordinal),
+            projectedStatusChanges ?? changes,
+            alignment,
+            isBaseFactAffected);
         var work = entries.Select(entry =>
         {
             var baselineMigration = baselineEntries.TryGetValue(entry.AtomId, out var baselineEntry)
@@ -153,12 +164,10 @@ internal static partial class DigestionStatusEvaluator
                 frozenStatements,
                 genreChecks[entry.SourceId],
                 changes,
-                isBaseFactAffected,
-                projectedStatusChanges ?? changes,
+                statusAuthorityChangedAtomIds.Contains(entry.AtomId),
                 findings);
         }).ToArray();
         DeriveMigration(work);
-        PropagateStatusAuthorityChanges(work);
         RequireDecompositionBeforeNewAbsorption(
             work,
             baselineEntries,
@@ -275,17 +284,10 @@ internal static partial class DigestionStatusEvaluator
         Lazy<FrozenStatementIndex> frozenStatements,
         GenreRegistryCheck genreRegistryCheck,
         RawChangeSet? changes,
-        Func<string, bool>? isBaseFactAffected,
-        RawChangeSet? projectedStatusChanges,
+        bool authorityChanged,
         ImmutableArray<string>.Builder findings)
     {
         var gaps = new List<DigestionGap>();
-        var authorityChanged = StatusAuthorityClosureChanged(
-            entry,
-            alignment,
-            baselineEntryPresent,
-            projectedStatusChanges,
-            isBaseFactAffected);
         // Scribe retains its existing baseline-only full check. Coverage can trust a committed
         // receipt outside a nonempty, authoritative git delta even when the
         // query omitted --base; an empty delta retains the explicit whole-tree diagnostic.
@@ -459,29 +461,33 @@ internal static partial class DigestionStatusEvaluator
         var entries = document.RequireDigestionEntries();
         var baselineEntries = baselineDocument.RequireDigestionEntries()
             .ToDictionary(static entry => entry.AtomId, StringComparer.Ordinal);
+        return ResolveStatusAuthorityChangedAtomIds(
+            entries,
+            baselineEntries.Keys.ToHashSet(StringComparer.Ordinal),
+            changes,
+            alignment,
+            isBaseFactAffected: null);
+    }
+
+    private static ImmutableHashSet<string> ResolveStatusAuthorityChangedAtomIds(
+        IEnumerable<DigestionLedgerEntry> sourceEntries,
+        IReadOnlySet<string> baselineAtomIds,
+        RawChangeSet? changes,
+        DigestionLedgerAlignment alignment,
+        Func<string, bool>? isBaseFactAffected)
+    {
+        var entries = sourceEntries.ToArray();
         var directlyChanged = entries
             .Where(entry => StatusAuthorityClosureChanged(
                 entry,
                 alignment.EntryAlignments.GetValueOrDefault(
                     entry.AtomId,
                     DigestionReceiptAlignment.Rejected),
-                baselineEntries.ContainsKey(entry.AtomId),
+                baselineAtomIds.Contains(entry.AtomId),
                 changes,
-                isBaseFactAffected: null))
+                isBaseFactAffected))
             .Select(static entry => entry.AtomId);
         return ExpandStatusAuthorityChanges(entries, directlyChanged);
-    }
-
-    private static void PropagateStatusAuthorityChanges(IReadOnlyList<EntryWork> work)
-    {
-        var changedAtomIds = ExpandStatusAuthorityChanges(
-            work.Select(static item => item.Entry),
-            work.Where(static item => item.StatusAuthorityChanged)
-                .Select(static item => item.Entry.AtomId));
-        foreach (var item in work)
-        {
-            item.StatusAuthorityChanged = changedAtomIds.Contains(item.Entry.AtomId);
-        }
     }
 
     private static ImmutableHashSet<string> ExpandStatusAuthorityChanges(
@@ -694,7 +700,7 @@ internal static partial class DigestionStatusEvaluator
 
         internal bool HasProgress { get; } = hasProgress;
 
-        internal bool StatusAuthorityChanged { get; set; } = statusAuthorityChanged;
+        internal bool StatusAuthorityChanged { get; } = statusAuthorityChanged;
 
         internal DigestionMigrationState Migration { get; set; }
     }

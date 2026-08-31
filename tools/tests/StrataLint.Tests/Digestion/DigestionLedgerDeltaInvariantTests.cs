@@ -21,6 +21,111 @@ public sealed partial class DigestionLedgerTests
     }
 
     [Fact]
+    public void ChildOnlyAbsorptionReleasesCoveredParentPartialLatch()
+    {
+        const string gid = "D5/S0/Carrier/Probe";
+        const string targetPath = "D5/S0/Carrier/Probe.lean";
+        var parentAtom = CompleteWitnessAtom();
+        var childAtom = CompleteWitnessAtom("manual child specification receipt\n");
+        var parentId = parentAtom.Fingerprints.RawSha256["sha256:".Length..];
+        var childId = childAtom.Fingerprints.RawSha256["sha256:".Length..];
+        var definition = Encoding.UTF8.GetBytes("scribe definition\n");
+        var emission = Encoding.UTF8.GetBytes("# emitted narrative\n");
+        var definitionHash = DigestionFingerprint.Compute(definition).RawSha256;
+        var emissionHash = DigestionFingerprint.Compute(emission).RawSha256;
+        var parentReceipts = CompleteWitnessReceipts(
+            parentAtom,
+            gid,
+            definitionHash,
+            emissionHash) with
+        {
+            ChainAtoms = [childId],
+        };
+        var childReceipts = CompleteWitnessReceipts(
+            childAtom,
+            gid,
+            definitionHash,
+            emissionHash);
+        var baseline = DigestionTestSupport.Document(
+            AtomizerRegistry.NoAtomizerId,
+            [
+                DigestionTestSupport.Entry(
+                    parentAtom,
+                    parentId,
+                    AtomizerRegistry.NoAtomizerId,
+                    DigestionMigrationState.Partial,
+                    DigestionTruthState.Closed,
+                    [gid],
+                    parentReceipts,
+                    sourceId: AtomizerRegistry.GictId),
+                DigestionTestSupport.Entry(
+                    childAtom,
+                    childId,
+                    AtomizerRegistry.NoAtomizerId,
+                    DigestionMigrationState.Partial,
+                    DigestionTruthState.Closed,
+                    [gid],
+                    childReceipts,
+                    sourceId: AtomizerRegistry.GictId),
+            ],
+            sourceId: AtomizerRegistry.GictId);
+        var candidateSource = Assert.Single(baseline.RequireDigestionSources());
+        var candidate = baseline.WithDigestionSources(
+        [
+            candidateSource with
+            {
+                Entries = candidateSource.Entries.Select(entry =>
+                    entry.AtomId == childId
+                        ? entry with
+                        {
+                            ProjectedStatus = new DigestionStatus(
+                                DigestionMigrationState.Absorbed,
+                                DigestionTruthState.Closed),
+                        }
+                        : entry).ToImmutableArray(),
+            },
+        ]);
+        var target = Encoding.UTF8.GetBytes(Lean(gid));
+        var snapshot = Snapshot([
+            ("docs/source.md", Encoding.UTF8.GetBytes("manual specification receipu\n")),
+            CasFile(parentAtom),
+            CasFile(childAtom),
+            (targetPath, target),
+            (ScribeEmissionAttestation.DefinitionPath(gid), definition),
+            (ScribeEmissionAttestation.EmissionPath(gid), emission),
+            .. FrozenLedgerFiles(targetPath),
+        ]);
+        var verifiedEmissions = VerifiedScribeEmissions.Create(
+        [
+            new ScribeEmissionRecord(
+                gid,
+                ScribeEmissionAttestation.DefinitionPath(gid),
+                definitionHash,
+                ScribeEmissionAttestation.EmissionPath(gid),
+                emissionHash),
+        ]);
+
+        var evaluation = DigestionStatusEvaluator.Evaluate(
+            DigestionEvaluationScope.ChangedSet,
+            candidate,
+            snapshot,
+            AcceptedLean(targetPath),
+            verifiedEmissions,
+            baselineDocument: baseline,
+            baselineSnapshot: snapshot,
+            changes: StatusMoveChanges(childId));
+
+        Assert.Equal(
+            DigestionMigrationState.Absorbed,
+            Assert.Single(evaluation.Entries, entry => entry.Entry.AtomId == childId)
+                .DerivedStatus.Migration);
+        Assert.Equal(
+            DigestionMigrationState.Absorbed,
+            Assert.Single(evaluation.Entries, entry => entry.Entry.AtomId == parentId)
+                .DerivedStatus.Migration);
+    }
+
+    [Fact]
     public void ByteIdenticalStatusMoveChangesEntryByStableIdentity()
     {
         var atom = CompleteWitnessAtom();
@@ -165,9 +270,10 @@ public sealed partial class DigestionLedgerTests
             changes: changes);
     }
 
-    private static DigestionAtom CompleteWitnessAtom()
+    private static DigestionAtom CompleteWitnessAtom(
+        string receiptText = "manual specification receipt\n")
     {
-        var receiptSource = Encoding.UTF8.GetBytes("manual specification receipt\n");
+        var receiptSource = Encoding.UTF8.GetBytes(receiptText);
         return new DigestionAtom(
             0,
             receiptSource.Length,
@@ -176,19 +282,33 @@ public sealed partial class DigestionLedgerTests
             ImmutableArray<DigestionContext>.Empty);
     }
 
-    private static RawChangeSet StatusMoveChanges() => RawChangeSet.CreateWithKinds(
+    private static DigestionReceipts CompleteWitnessReceipts(
+        DigestionAtom atom,
+        string gid,
+        string definitionHash,
+        string emissionHash) => new(
+        [new DigestionCoverageReceipt(gid, atom.Fingerprints.RawSha256, TestModuleStatementId)],
+        [new DigestionScribeReceipt(gid, definitionHash, emissionHash)],
+        [],
+        [],
+        null);
+
+    private static RawChangeSet StatusMoveChanges(string? atomId = null) =>
+        RawChangeSet.CreateWithKinds(
     [
-        (EntryPath(DigestionMigrationState.Partial), RawChangeKind.Deleted),
-        (EntryPath(DigestionMigrationState.Absorbed), RawChangeKind.Added),
+        (EntryPath(DigestionMigrationState.Partial, atomId), RawChangeKind.Deleted),
+        (EntryPath(DigestionMigrationState.Absorbed, atomId), RawChangeKind.Added),
     ]);
 
-    private static string EntryPath(DigestionMigrationState migration) =>
+    private static string EntryPath(
+        DigestionMigrationState migration,
+        string? atomId = null) =>
         BackfillInventoryLoader.RootPath
         + AtomizerRegistry.GictId
         + "/"
         + DigestionStatusNames.Migration(migration)
         + "-closed/"
-        + CompleteWitnessAtomId
+        + (atomId ?? CompleteWitnessAtomId)
         + ".yaml";
 
     private static readonly string CompleteWitnessAtomId = DigestionFingerprint.Compute(
