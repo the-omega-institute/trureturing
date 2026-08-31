@@ -2,7 +2,7 @@
 
 ## Abstract
 
-A reflected exponential pair exchanges under time reversal, remains reciprocal, and leaves a negative-square signed determinant after first-order cancellation.
+A reflected exponential pair exchanges under time reversal and has negative-square signed determinant.
 
 **Definition 1.1 (The reflected exponential pair).**
 
@@ -66,7 +66,7 @@ The symmetric readout adds the expanding and contracting branches. It forgets wh
 
 **Theorem 1.6 (Reflection leaves a negative-square invariant).**
 
-$$\forall delta: \mathbb{R}, t: \mathbb{R}, r: \mathbb{R}, \operatorname{swapPair}(\operatorname{reflectedGrowthPair}(delta, t)) = \operatorname{reflectedGrowthPair}(delta, -t) \land \operatorname{fst}(\operatorname{reflectedGrowthPair}(delta, t)) \cdot \operatorname{snd}(\operatorname{reflectedGrowthPair}(delta, t)) = 1 \land \operatorname{pairTrace}(\operatorname{reflectedGenerator}(delta)) = 0 \land \operatorname{reflectionPairSignedDeterminant}(delta) = -delta^{2} \land (r - delta)(r + delta) = r^{2} - delta^{2}.$$
+$$\forall delta: \mathbb{R}, t: \mathbb{R}, r: \mathbb{R}, \operatorname{swapPair}(\operatorname{reflectedGrowthPair}(delta, t)) = \operatorname{reflectedGrowthPair}(delta, -t) \land \operatorname{fst}(\operatorname{reflectedGrowthPair}(delta, t)) \cdot \operatorname{snd}(\operatorname{reflectedGrowthPair}(delta, t)) = 1 \land \operatorname{pairTrace}(\operatorname{reflectedGenerator}(delta)) = 0 \land \operatorname{reflectionPairSignedDeterminant}(delta) = -delta^{2} \land {r - delta}{r + delta} = r^{2} - delta^{2}.$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Adelic/ReflectedGrowthPairNegativeSquare.reflected_growth_pair_negative_square` (`✓ std3`). ∎
 
@@ -80,7 +80,7 @@ The same invariant appears as the constant term of the characteristic factorizat
 
 **Theorem 1.7 (The standard polynomial discriminant is positive).**
 
-$$\forall delta: \mathbb{R}, 0^{2} - 4 \cdot 1 \cdot (-delta^{2}) = 4 \cdot delta^{2}.$$
+$$\forall delta: \mathbb{R}, 0^{2} - 4 \cdot 1 \cdot {-delta^{2}} = 4 \cdot delta^{2}.$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Adelic/ReflectedGrowthPairNegativeSquare.reflection_pair_polynomial_discriminant` (`✓ std3`). ∎
 
@@ -122,6 +122,6 @@ Adding the two branches removes their orientation label. The resulting readout h
 - Truth anchor: `D5/S3/Analytic/Adelic/ReflectedGrowthPairNegativeSquare.reflected_growth_pair_forward_orientation`
 - Truth anchor: `D5/S3/Analytic/Adelic/ReflectedGrowthPairNegativeSquare.reflected_growth_pair_negative_square`
 - Truth anchor: `D5/S3/Analytic/Adelic/ReflectedGrowthPairNegativeSquare.reflected_growth_sum_even`
-- Truth anchor: `D5/S3/Analytic/Adelic/ReflectedGrowthPairNegativeSquare.reflection_pair_polynomial_discriminant`
 - Truth anchor: `D5/S3/Analytic/Adelic/ReflectedGrowthPairNegativeSquare.reflectionPairSignedDeterminant`
+- Truth anchor: `D5/S3/Analytic/Adelic/ReflectedGrowthPairNegativeSquare.reflection_pair_polynomial_discriminant`
 - Truth anchor: `D5/S3/Analytic/Adelic/ReflectedGrowthPairNegativeSquare.swapPair`
