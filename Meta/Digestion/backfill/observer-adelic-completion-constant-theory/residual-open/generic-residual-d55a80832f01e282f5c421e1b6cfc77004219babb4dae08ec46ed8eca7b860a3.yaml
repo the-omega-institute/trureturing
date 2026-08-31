@@ -8,3 +8,7 @@ receipts:
   coverage: []
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Retrieval preceded quarantine. D5 searches `Hankel|Stieltjes moment|moment sequence|mu_n|positive semidefinite` found generic Hankel/Jacobi and Loewner positivity modules but no source `mu_n`/`nu` definitions, no square-folded Xi moment bridge, and no Stieltjes moment theorem. Pinned Mathlib search for `Stieltjes moment|Hankel moment|moment problem|representing measure` found finite matrix positivity and real Stieltjes cdf infrastructure only; it has no theorem producing a representing positive measure with the required analytic-continuation/pole support conclusion. The cited de Branges/Stieltjes ecosystem is not available as a pinned Lean library, so third-party retrieval is wait-for-capability. The local proof route can prove elementary quadratic-form positivity for an assumed measure, but cannot construct that measure from both Hankel families or identify the resulting transform with the source `mathscr S`; assuming those bridges would make the RH conclusion a premise."
+    reentry_condition: "Freeze the source moment definitions and a Stieltjes moment theorem for both Hankel families, together with compact-support/analytic-continuation and transform-identification lemmas that force all `mathscr F` zeros onto the negative real axis."
+    blocker_class: missing-prerequisite

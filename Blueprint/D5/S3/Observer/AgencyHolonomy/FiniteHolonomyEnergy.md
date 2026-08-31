@@ -4,49 +4,21 @@
 
 Finite stable swap curvature aggregates into a faithful nonnegative energy.
 
-**Definition 1.1 (Finite ordered-pair holonomy energy).**
+**Theorem 1.1 (Finite Stable Holonomy Energy Bound).**
 
-Lean statement: `D5/S3/Observer/AgencyHolonomy/FiniteHolonomyEnergy.finiteHolonomyEnergy`
+$$\begin{gathered}\forall K: \operatorname{Type}, \iota: \operatorname{Type}, [\operatorname{NormedField}(K)], [\operatorname{Fintype}(\iota)],\\{}a: K, r: \iota \to K, v: \iota \to K, \varepsilon: \mathbb{R},\\{}(0 \leq \varepsilon \land (\forall p: \iota, \left\lVert v(p) \right\rVert \leq 1) \land (\forall p: \iota, \left\lVert r(p) \right\rVert \leq \varepsilon)) \Rightarrow\\{}\operatorname{let} E := \operatorname{stableResidualHolonomyEnergy}(a, r, v),\\{}(0 \leq E \land\\{}E \leq \operatorname{card}_{\mathbb{R}}(\iota)^{2} \times (2 \times \left\lVert (a - 1) \right\rVert \times \varepsilon + 2 \times \varepsilon^{2})^{2} \land\\{}(E = 0 \iff \forall p, q: \iota, \operatorname{stableResidualSwapCurvature}(a, r(p), r(q), v(p), v(q)) = 0) \land\\{}(\varepsilon = 0 \Rightarrow E = 0)).\end{gathered}$$
 
-*Formalization.* `D5/S3/Observer/AgencyHolonomy/FiniteHolonomyEnergy.finiteHolonomyEnergy` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For a finite carrier, sum the squared norm of a supplied curvature over all ordered pairs. This is the unnormalized positive scalar energy.
-
-**Definition 1.2 (Stable residual holonomy energy).**
-
-Lean statement: `D5/S3/Observer/AgencyHolonomy/FiniteHolonomyEnergy.stableResidualHolonomyEnergy`
-
-*Formalization.* `D5/S3/Observer/AgencyHolonomy/FiniteHolonomyEnergy.stableResidualHolonomyEnergy` (`✓ std3`).
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/AgencyHolonomy/FiniteHolonomyEnergy.finite_stable_holonomy_energy_bound` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-Specialize the finite energy to the stable residual swap curvature of the preceding truth source.
+For a finite carrier, assume every channel has norm at most one and every residual norm is bounded by a common nonnegative envelope. The stable residual holonomy energy is nonnegative and is at most the square of the carrier cardinality times the squared pairwise residual bound.
 
-**Theorem 1.3 (Residual envelopes control finite holonomy energy).**
-
-Lean statement: `D5/S3/Observer/AgencyHolonomy/FiniteHolonomyEnergy.finite_stable_holonomy_energy_bound`
-
-*Formalization.* `D5/S3/Observer/AgencyHolonomy/FiniteHolonomyEnergy.finite_stable_holonomy_energy_bound` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Unit-bounded channels and a common nonnegative residual envelope give a nonnegative energy bounded by the square of the carrier cardinality times the square of the pairwise residual bound.
-
-Because every summand is a squared norm, the total vanishes exactly when every pairwise curvature vanishes. A zero residual envelope therefore forces zero finite energy.
-
-The theorem is finite and unnormalized. It does not assert residual decay, observer-origin recovery near resonance, an infinite prime limit, or domination of zero-side spectral energy.
+The energy is zero exactly when every ordered-pair stable residual swap curvature is zero, and a zero envelope forces zero energy. These claims concern only the finite unnormalized sum; they assert no residual decay, infinite-prime limit, or spectral-energy comparison.
 
 ## References
 
-- Truth anchor: `D5/S3/Observer/AgencyHolonomy/FiniteHolonomyEnergy.finiteHolonomyEnergy`
-- Truth anchor: `D5/S3/Observer/AgencyHolonomy/FiniteHolonomyEnergy.stableResidualHolonomyEnergy`
 - Truth anchor: `D5/S3/Observer/AgencyHolonomy/FiniteHolonomyEnergy.finite_stable_holonomy_energy_bound`
 - Dependency: [D5/S3/Observer/AgencyHolonomy/StableResidualSwapCurvatureBound](StableResidualSwapCurvatureBound.md)

@@ -1,13 +1,11 @@
 using System.Collections.Immutable;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
 namespace StrataLint.Engine;
 
 internal enum EngineeringTestPlanKind { Full, Selected, None }
 
-internal enum EngineeringSelectedTestReason { BaseBaseline, UnknownInput, DeclaredInput, CompiledInput }
+internal enum EngineeringSelectedTestReason { BaseBaseline, UnknownInput, DeclaredInput }
 
 internal sealed record EngineeringSelectedTest(
     string ProjectPath,
@@ -34,11 +32,7 @@ internal static class EngineeringTestPlanDeriver
         IReadOnlyList<string> changedPaths)
     {
         var map = ScribeTestMapDeriver.DeriveRepository(repositoryRoot);
-        var compiled = EngineeringCompileInputDeriver.FindAffectedTestProjects(
-            repositoryRoot,
-            changedPaths,
-            out var failure);
-        return EngineeringTestPlanPolicy.Evaluate(changedPaths, map, compiled, failure);
+        return EngineeringTestPlanPolicy.Evaluate(changedPaths, map);
     }
 
     internal static EngineeringTestPlan DeriveSnapshot(
@@ -53,24 +47,26 @@ internal static class EngineeringTestPlanDeriver
         {
             return EngineeringTestPlanPolicy.Full(
                 changedPaths,
-                "FULL=1 requests the diagnostic full plan",
+                EngineeringTestPlanPolicy.WithMetadataReceipt(
+                    "FULL=1 requests the diagnostic full plan",
+                    map),
                 EngineeringTestPlanPolicy.BaseTests(map, assemblies));
-        }
-
-        var compiled = EngineeringCompileInputDeriver.FindAffectedTestProjects(
-            snapshot,
-            changedPaths,
-            out var failure);
-        if (failure is not null)
-        {
-            throw new InvalidOperationException($"project attribution failed: {failure}");
         }
 
         return EngineeringTestPlanPolicy.Evaluate(
             changedPaths,
             map,
-            compiled,
             assemblyByProject: assemblies);
+    }
+
+    internal static ImmutableArray<(string Assembly, string Id)> DeriveSourceIdentities(
+        RepositorySnapshot snapshot)
+    {
+        var map = ScribeTestMapDeriver.DeriveSnapshot(snapshot);
+        EnsureClosedMap(map);
+        return EngineeringTestPlanPolicy.SourceIdentities(
+            map,
+            AssemblyByProject(snapshot, map));
     }
 
     private static void EnsureClosedMap(ScribeTestMap map)
@@ -126,8 +122,6 @@ internal static class EngineeringTestPlanPolicy
     internal static EngineeringTestPlan Evaluate(
         IReadOnlyList<string> changedPaths,
         ScribeTestMap map,
-        IReadOnlySet<string> compileAffectedTestProjects,
-        string? attributionFailure = null,
         IReadOnlyDictionary<string, string>? assemblyByProject = null)
     {
         var changed = changedPaths.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal).ToImmutableArray();
@@ -135,7 +129,9 @@ internal static class EngineeringTestPlanPolicy
         {
             return Full(
                 changed,
-                "candidate delta changes the engineering implementation or a repository-root build input",
+                WithMetadataReceipt(
+                    "candidate delta changes the engineering implementation or a repository-root build input",
+                    map),
                 BaseTests(map, assemblyByProject));
         }
 
@@ -144,14 +140,32 @@ internal static class EngineeringTestPlanPolicy
             .Concat(map.DanglingCompileFailProofProjectExemptionPaths)
             .Concat(map.CompileQueryFindings.Select(static finding => finding.Path))
             .ToArray();
-        if (attributionFailure is not null || failures.Length != 0)
+        if (failures.Length != 0)
         {
-            var detail = attributionFailure ?? string.Join(", ", failures.Order(StringComparer.Ordinal));
-            return Full(changed, $"project attribution failed: {detail}");
+            var detail = string.Join(", ", failures.Order(StringComparer.Ordinal));
+            return Full(changed, WithMetadataReceipt($"project attribution failed: {detail}", map));
         }
 
+        var runnableMethods = RunnableMethods(map).ToArray();
+        var emptyDegradations = map.MetadataDegradations.Where(degradation =>
+            !runnableMethods.Any(method =>
+                map.CompileProjectBySourcePath.TryGetValue(method.SourcePath, out var project)
+                && project == degradation.ProjectPath)).ToArray();
+        if (emptyDegradations.Length != 0)
+        {
+            return Full(
+                changed,
+                WithMetadataReceipt(
+                    "metadata degradation left a test project with no recognized identities; running the full suite",
+                    map),
+                BaseTests(map, assemblyByProject));
+        }
+
+        var degradationByProject = map.MetadataDegradations.ToDictionary(
+            static degradation => degradation.ProjectPath,
+            StringComparer.Ordinal);
         var tests = new List<EngineeringSelectedTest>();
-        foreach (var method in RunnableMethods(map))
+        foreach (var method in runnableMethods)
         {
             if (!map.CompileProjectBySourcePath.TryGetValue(method.SourcePath, out var project))
             {
@@ -160,24 +174,19 @@ internal static class EngineeringTestPlanPolicy
 
             EngineeringSelectedTestReason? reason = null;
             string? detail = null;
-            if (compileAffectedTestProjects.Contains(project))
+            var matched = changed.FirstOrDefault(path => method.Paths.Any(input => Covers(input, path)));
+            if (matched is not null)
             {
-                reason = EngineeringSelectedTestReason.CompiledInput;
-                detail = "a changed path is a transitive compiled input of the test project";
+                reason = EngineeringSelectedTestReason.DeclaredInput;
+                detail = $"changed path {matched} intersects a declared repository input";
             }
-            else
+            else if (method.IsUnknown)
             {
-                var matched = changed.FirstOrDefault(path => method.Paths.Any(input => Covers(input, path)));
-                if (matched is not null)
-                {
-                    reason = EngineeringSelectedTestReason.DeclaredInput;
-                    detail = $"changed path {matched} intersects a declared repository input";
-                }
-                else if (method.IsUnknown)
-                {
-                    reason = EngineeringSelectedTestReason.UnknownInput;
-                    detail = "target has repository inputs that are not statically closed";
-                }
+                reason = EngineeringSelectedTestReason.UnknownInput;
+                detail = degradationByProject.TryGetValue(project, out var degradation)
+                    ? $"metadata unavailable for {project}; every test in the project is "
+                        + $"conservatively unknown: {degradation.Reason}"
+                    : "target has repository inputs that are not statically closed";
             }
 
             if (reason is not null)
@@ -206,7 +215,9 @@ internal static class EngineeringTestPlanPolicy
                 EngineeringTestPlanKind.Selected,
                 changed,
                 selected,
-                $"selected {selected.Length} affected or locally conservative test targets");
+                WithMetadataReceipt(
+                    $"selected {selected.Length} affected or locally conservative test targets",
+                    map));
     }
 
     internal static ImmutableArray<EngineeringSelectedTest> BaseTests(
@@ -217,7 +228,11 @@ internal static class EngineeringTestPlanPolicy
                 project,
                 method.Id,
                 EngineeringSelectedTestReason.BaseBaseline,
-                "identity is owned by the protected base",
+                map.MetadataDegradations.FirstOrDefault(degradation =>
+                    degradation.ProjectPath == project) is { } degradation
+                    ? $"metadata unavailable for {project}; every test in the project is "
+                        + $"conservatively unknown: {degradation.Reason}"
+                    : "identity is owned by the protected base",
                 Assembly(project, assemblyByProject))
             : throw new InvalidOperationException($"project attribution failed for {method.Identity}"))
         .DistinctBy(static test => (test.Assembly, test.Id))
@@ -225,8 +240,32 @@ internal static class EngineeringTestPlanPolicy
         .ThenBy(static test => test.Id, StringComparer.Ordinal)
         .ToImmutableArray();
 
+    internal static string WithMetadataReceipt(string reason, ScribeTestMap map) =>
+        map.MetadataDegradations.Count == 0
+            ? reason
+            : reason + "; " + string.Join("; ", map.MetadataDegradations
+                .OrderBy(static degradation => degradation.ProjectPath, StringComparer.Ordinal)
+                .ThenBy(static degradation => degradation.Reason, StringComparer.Ordinal)
+                .Select(static degradation =>
+                $"metadata degraded for {degradation.ProjectPath}: {degradation.Reason}"));
+    internal static ImmutableArray<(string Assembly, string Id)> SourceIdentities(
+        ScribeTestMap map,
+        IReadOnlyDictionary<string, string> assemblyByProject) => map.Methods
+        .Select(method =>
+        {
+            if (!map.CompileProjectBySourcePath.TryGetValue(method.SourcePath, out var project))
+                throw new InvalidOperationException($"project attribution failed for {method.Identity}");
+            if (!assemblyByProject.TryGetValue(project, out var assembly))
+                throw new InvalidOperationException($"assembly attribution failed for {project}");
+            return (Assembly: assembly, method.Id);
+        })
+        .OrderBy(static test => test.Assembly, StringComparer.OrdinalIgnoreCase)
+        .ThenBy(static test => test.Id, StringComparer.Ordinal)
+        .ToImmutableArray();
+
     private static IEnumerable<ScribeTestMethod> RunnableMethods(ScribeTestMap map) =>
-        map.Methods.Where(static method => !method.IsStaticallySkipped);
+        map.Methods.Where(static method =>
+            !method.IsStaticallySkipped && !method.IsDiscoveryConditional);
 
     internal static EngineeringTestPlan Full(
         IReadOnlyList<string> changedPaths,
@@ -288,204 +327,5 @@ internal static class EngineeringTestExecutor
         }
         catch (Exception) { }
         return run(new EngineeringTestInvocation("tools/StrataLint.sln", null, plan.Tests));
-    }
-}
-
-internal static class EngineeringCompileInputDeriver
-{
-    private static readonly ImmutableHashSet<string> InputItemTypes =
-        ImmutableHashSet.Create(StringComparer.Ordinal, "AdditionalFiles", "Compile", "Content", "EmbeddedResource", "None");
-
-    internal static IReadOnlySet<string> FindAffectedTestProjects(
-        string repositoryRoot,
-        IReadOnlyList<string> changedPaths,
-        out string? failure)
-    {
-        try
-        {
-            return FindAffectedTestProjects(
-                GitIndexRepositoryFiles.Enumerate(repositoryRoot)
-                .Where(static file => file.RelativePath.EndsWith(".csproj", StringComparison.Ordinal))
-                .Select(file => (file.RelativePath, Content: File.ReadAllText(file.FullPath))),
-                changedPaths,
-                out failure);
-        }
-        catch (Exception exception) when (exception is FormatException or System.Xml.XmlException or IOException)
-        {
-            failure = exception.Message;
-            return new HashSet<string>(StringComparer.Ordinal);
-        }
-    }
-
-    internal static IReadOnlySet<string> FindAffectedTestProjects(
-        RepositorySnapshot snapshot,
-        IReadOnlyList<string> changedPaths,
-        out string? failure)
-    {
-        try
-        {
-            return FindAffectedTestProjects(
-                snapshot.Files.Values
-                    .Where(static file => file.Path.Value.EndsWith(".csproj", StringComparison.Ordinal))
-                    .Select(static file => (file.Path.Value, Content: file.Text)),
-                changedPaths,
-                out failure);
-        }
-        catch (Exception exception) when (exception is FormatException or System.Xml.XmlException or IOException)
-        {
-            failure = exception.Message;
-            return new HashSet<string>(StringComparer.Ordinal);
-        }
-    }
-
-    private static IReadOnlySet<string> FindAffectedTestProjects(
-        IEnumerable<(string Path, string Content)> projectFiles,
-        IReadOnlyList<string> changedPaths,
-        out string? failure)
-    {
-        try
-        {
-            var projects = projectFiles
-                .Select(static file => ParseProject(file.Path, file.Content))
-                .ToDictionary(static project => project.Path, StringComparer.Ordinal);
-            var affected = projects.Values
-                .Where(project => project.InputPatterns.Any(pattern => changedPaths.Any(path => EngineeringInputGlob.IsMatch(pattern, path))))
-                .Select(static project => project.Path)
-                .ToHashSet(StringComparer.Ordinal);
-            var testProjects = projects.Values
-                .Where(static project => project.IsTest)
-                .Where(project => DependsOnAffected(project.Path, projects, affected, []))
-                .Select(static project => project.Path)
-                .ToHashSet(StringComparer.Ordinal);
-            failure = null;
-            return testProjects;
-        }
-        catch (Exception exception) when (exception is FormatException or System.Xml.XmlException or IOException)
-        {
-            failure = exception.Message;
-            return new HashSet<string>(StringComparer.Ordinal);
-        }
-    }
-
-    private static EngineeringProject ParseProject(string path, string content)
-    {
-        var document = XDocument.Parse(content, LoadOptions.None);
-        var references = new List<string>();
-        var inputs = new List<string>();
-        foreach (var item in document.Descendants().Where(static element => element.Attribute("Include") is not null))
-        {
-            var include = (string)item.Attribute("Include")!;
-            foreach (var value in include.Split(';', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries))
-            {
-                if (value.Contains("$(", StringComparison.Ordinal))
-                {
-                    throw new FormatException($"{path} has an unevaluated input: {value}");
-                }
-
-                var resolved = Resolve(path, value);
-                if (item.Name.LocalName == "ProjectReference")
-                {
-                    references.Add(resolved);
-                }
-                else if (InputItemTypes.Contains(item.Name.LocalName) && !resolved.StartsWith("tools/", StringComparison.Ordinal))
-                {
-                    EngineeringInputGlob.Validate(resolved);
-                    inputs.Add(resolved);
-                }
-            }
-        }
-
-        return new EngineeringProject(
-            path,
-            document.Descendants().Any(static element =>
-                element.Name.LocalName == "PackageReference"
-                && string.Equals((string?)element.Attribute("Include"), "xunit", StringComparison.OrdinalIgnoreCase)),
-            references,
-            inputs);
-    }
-
-    private static bool DependsOnAffected(
-        string path,
-        IReadOnlyDictionary<string, EngineeringProject> projects,
-        IReadOnlySet<string> affected,
-        HashSet<string> visited)
-    {
-        if (!visited.Add(path)) return false;
-        if (affected.Contains(path)) return true;
-        return projects.TryGetValue(path, out var project)
-            && project.References.Any(reference => DependsOnAffected(reference, projects, affected, visited));
-    }
-
-    private static string Resolve(string projectPath, string include)
-    {
-        var segments = new List<string>();
-        foreach (var segment in projectPath.Split('/').SkipLast(1).Concat(include.Replace('\\', '/').Split('/')))
-        {
-            if (segment is "" or ".") continue;
-            if (segment == "..")
-            {
-                if (segments.Count == 0) throw new FormatException($"{projectPath} has an input outside the repository: {include}");
-                segments.RemoveAt(segments.Count - 1);
-            }
-            else
-            {
-                segments.Add(segment);
-            }
-        }
-
-        return string.Join('/', segments);
-    }
-
-    private sealed record EngineeringProject(
-        string Path,
-        bool IsTest,
-        IReadOnlyList<string> References,
-        IReadOnlyList<string> InputPatterns);
-}
-
-internal static class EngineeringInputGlob
-{
-    internal static void Validate(string pattern) => _ = CreateRegex(pattern);
-
-    internal static bool IsMatch(string pattern, string path) => CreateRegex(pattern).IsMatch(path);
-
-    private static Regex CreateRegex(string pattern)
-    {
-        if (string.IsNullOrWhiteSpace(pattern)
-            || pattern[0] == '/'
-            || pattern.Contains('\\', StringComparison.Ordinal)
-            || pattern.Split('/').Any(static segment => segment is "" or "." or ".."))
-        {
-            throw new FormatException($"unsafe engineering input pattern: {pattern}");
-        }
-
-        var expression = new StringBuilder("\\A");
-        for (var index = 0; index < pattern.Length; index++)
-        {
-            if (pattern[index] == '*' && index + 1 < pattern.Length && pattern[index + 1] == '*')
-            {
-                if (index + 2 < pattern.Length && pattern[index + 2] == '/')
-                {
-                    expression.Append("(?:.*/)?");
-                    index++;
-                }
-                else
-                {
-                    expression.Append(".*");
-                }
-                index++;
-            }
-            else
-            {
-                expression.Append(pattern[index] switch
-                {
-                    '*' => "[^/]*",
-                    '?' => "[^/]",
-                    _ => Regex.Escape(pattern[index].ToString()),
-                });
-            }
-        }
-
-        return new Regex(expression.Append("\\z").ToString(), RegexOptions.CultureInvariant | RegexOptions.NonBacktracking);
     }
 }

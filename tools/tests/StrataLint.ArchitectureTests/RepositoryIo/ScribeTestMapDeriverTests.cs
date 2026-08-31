@@ -194,7 +194,7 @@ public sealed class ScribeTestMapDeriverTests
     public void UnknownDebtPartitionsAreDerivedFromXunitProjectInputs()
     {
         const string xunitProject =
-            "<Project Sdk=\"Microsoft.NET.Sdk\"><ItemGroup><PackageReference Include=\"xunit\" /></ItemGroup></Project>";
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><ItemGroup><PackageReference Include=\"xunit\" Version=\"2.9.3\" /></ItemGroup></Project>";
         const string compileProof = "<Project Sdk=\"Microsoft.NET.Sdk\" />";
 
         var partitions = ScribeTestMapDeriver.DeriveProjectPartitions(
@@ -350,10 +350,10 @@ public sealed class ScribeTestMapDeriverTests
     public void DeriveSnapshotDiscoversXunitProjectsAcrossTheWholeRepository()
     {
         const string xunitProject =
-            "<Project Sdk=\"Microsoft.NET.Sdk\"><ItemGroup><PackageReference Include=\"xunit\" /></ItemGroup></Project>";
+            "<Project Sdk=\"Microsoft.NET.Sdk\"><ItemGroup><PackageReference Include=\"xunit\" Version=\"2.9.3\" /></ItemGroup></Project>";
         var snapshot = Snapshot(
             ("experiments/External.Tests/External.Tests.csproj", xunitProject),
-            ("experiments/External.Tests/ExternalTests.cs", "class ExternalTests { [Fact] public void Runs() { } }"));
+            ("experiments/External.Tests/ExternalTests.cs", "using Xunit; class ExternalTests { [Fact] public void Runs() { } }"));
 
         var method = Assert.Single(ScribeTestMapDeriver.DeriveSnapshot(snapshot).Methods);
 
@@ -625,7 +625,7 @@ public sealed class ScribeTestMapDeriverTests
         Assert.Contains(displayIdentity, finding.Message, StringComparison.Ordinal);
     }
 
-    private static RepositorySnapshot Snapshot(params (string Path, string Content)[] files)
+    internal static RepositorySnapshot Snapshot(params (string Path, string Content)[] files)
     {
         var raw = RawRepositorySnapshot.Create(files.Select(static file =>
             RawRepositoryEntry.FromText(file.Path, file.Content)));
@@ -687,17 +687,13 @@ public sealed class ScribeTestMapDeriverTests
               [Fact] public void Discovers() => RepositoryAccessor.Discover(RepositoryRootCriterion.ClaudeDirectoryNotFound);
             }
             """;
-        var accessorSource = $$"""
-            class RepositoryAccessor {
-              private static bool Matches(string root, RepositoryRootCriterion criterion) => criterion switch {
-                RepositoryRootCriterion.ClaudeDirectoryNotFound => {{markerExpression}},
-                _ => false,
-              };
-            }
-            """;
-
         return ScribeTestMapDeriver.DeriveSources(
-            [new("DiscoveryTests.cs", testSource), new("Support/RepositoryAccessor.cs", accessorSource)],
+            [
+                new("DiscoveryTests.cs", testSource),
+                new(
+                    "Support/RepositoryAccessor.cs",
+                    ScribeTestMapTestFixture.RepositorySupport(markerExpression)),
+            ],
             []);
     }
 
@@ -708,21 +704,12 @@ public sealed class ScribeTestMapDeriverTests
     ///  实测 `CapacityPolicyTests` 257 通过 / 1 失败。)
     /// </summary>
     internal static ScribeTestMap DeriveSources(IEnumerable<TestMapSource> sources)
-    {
-        const string accessorSource = """
-            class RepositoryAccessor {
-              private static bool Matches(string root, RepositoryRootCriterion criterion) => criterion switch {
-                RepositoryRootCriterion.ClaudeDirectoryNotFound => File.Exists(Path.Combine(root, "CLAUDE.md")),
-                RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound =>
-                  File.Exists(Path.Combine(root, "global.json")) && Directory.Exists(Path.Combine(root, "Blueprint")),
-                _ => false,
-              };
-            }
-            """;
-        return ScribeTestMapDeriver.DeriveSources(
-            sources.Append(new("Support/RepositoryAccessor.cs", accessorSource)),
+        => ScribeTestMapDeriver.DeriveSources(
+            sources.Append(new(
+                "Support/RepositoryAccessor.cs",
+                ScribeTestMapTestFixture.RepositorySupport(
+                    "File.Exists(Path.Combine(root, \"CLAUDE.md\"))"))),
             []);
-    }
 
     /// <summary>
     /// `EnumerateDeclared(root, "<字面量>")` 必须把该前缀登记为 declared input。

@@ -76,9 +76,7 @@ internal static class MathlibUpgradeDigestionReanchor
                 states,
                 adjacency,
                 selectedPaths,
-                preparation.BaseView.ActiveByPath.ToDictionary(
-                    static item => item.Key,
-                    static item => item.Value.Material));
+                preparation.BaseView.ActiveByPath);
             var recognition = FrozenLedgerIncrementalReplacementRecognition.Recognize(
                 preparation.BaseView,
                 candidate,
