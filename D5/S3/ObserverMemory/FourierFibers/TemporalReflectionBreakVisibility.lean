@@ -6,7 +6,7 @@
    digest: A static scalar readout identifies reflected modal branches, while one nondegenerate time step separates them. -/
 
 import D5.S3.ObserverMemory.FourierFibers.FiniteCrystalTimeFrequencyBridge
-import Mathlib.Data.Matrix.Notation
+import Mathlib
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -18,16 +18,19 @@ namespace D5.S3.ObserverMemory.FourierFibers.TemporalReflectionBreakVisibility
 open D5.S3.ObserverMemory.FourierFibers.FiniteCrystalTimeFrequencyBridge
 
 /-- A reflected pair of modal multipliers. -/
-def reflectedModes (z : ℂ) : Fin 2 → ℂ :=
-  ![z, z⁻¹]
+def reflectedModes (z : ℂ) : Fin 2 → ℂ
+  | ⟨0, _⟩ => z
+  | ⟨1, _⟩ => z⁻¹
 
 /-- Unit amplitude concentrated in the first reflected branch. -/
-def firstBranch : Fin 2 → ℂ :=
-  ![1, 0]
+def firstBranch : Fin 2 → ℂ
+  | ⟨0, _⟩ => 1
+  | ⟨1, _⟩ => 0
 
 /-- Unit amplitude concentrated in the second reflected branch. -/
-def secondBranch : Fin 2 → ℂ :=
-  ![0, 1]
+def secondBranch : Fin 2 → ℂ
+  | ⟨0, _⟩ => 0
+  | ⟨1, _⟩ => 1
 
 /-- At time zero, a scalar readout cannot distinguish which reflected branch
 carries the unit amplitude. -/
@@ -51,7 +54,7 @@ theorem firstBranch_ne_secondBranch : firstBranch ≠ secondBranch := by
   have hAtZero := congrFun h (0 : Fin 2)
   norm_num [firstBranch, secondBranch] at hAtZero
 
-/-- The time-zero observer is therefore noninjective on the two branch states. -/
+/-- The time-zero observer is noninjective on the two branch states. -/
 theorem static_reflection_readout_not_injective (z : ℂ) :
     ¬ Function.Injective
       (fun amplitudes : Fin 2 → ℂ =>
