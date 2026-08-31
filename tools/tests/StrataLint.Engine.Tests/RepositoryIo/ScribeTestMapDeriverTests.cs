@@ -49,4 +49,34 @@ public sealed class ScribeTestMapDeriverTests
         Assert.Equal(["Golden/input.txt"], method.Paths);
         Assert.Empty(method.UnknownReasons);
     }
+
+    [Fact]
+    public void CandidateSourceIdentitySetIncludesStaticallySkippedFacts()
+    {
+        const string source = "tools/tests/Synthetic.Tests/SkippedTests.cs";
+        const string project = "tools/tests/Synthetic.Tests/Synthetic.Tests.csproj";
+        var map = ScribeTestMapDeriver.DeriveSources(
+            [new TestMapSource(source, """
+                public sealed class SkippedTests
+                {
+                    [Fact(Skip = "candidate disabled a protected-base planned test")]
+                    public void ProtectedBasePlanned() { }
+                }
+                """, "Synthetic.Tests")],
+            [],
+            compileProjectBySourcePath:
+                new Dictionary<string, string>(StringComparer.Ordinal) { [source] = project });
+        Assert.True(Assert.Single(map.Methods).IsStaticallySkipped);
+
+        var identities = EngineeringTestPlanPolicy.SourceIdentities(
+            map,
+            new Dictionary<string, string>(StringComparer.Ordinal)
+            {
+                [project] = "Synthetic.Custom.Tests",
+            });
+
+        var identity = Assert.Single(identities);
+        Assert.Equal("Synthetic.Custom.Tests", identity.Assembly);
+        Assert.Equal("SkippedTests.ProtectedBasePlanned", identity.Id);
+    }
 }
