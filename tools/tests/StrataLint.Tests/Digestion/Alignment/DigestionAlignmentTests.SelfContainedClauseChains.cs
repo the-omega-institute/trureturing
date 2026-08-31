@@ -7,7 +7,7 @@ namespace StrataLint.Tests;
 public sealed partial class DigestionAlignmentTests
 {
     [Fact]
-    public void SelfContainedClauseChain_VerifiesHistoricalParentAfterSourceRewrite()
+    public void SelfContainedClauseChain_VerifiesHistoricalParentAfterSameLocatorSourceRewrite()
     {
         var fixture = SelfContainedClauseChain(sameCurrentNumber: true);
 
@@ -39,6 +39,27 @@ public sealed partial class DigestionAlignmentTests
         var result = EvaluateSelfContainedClauseChain(fixture, ledger);
 
         AssertMalformedClauseChain(result, fixture.Parent.AtomId, "chain cardinality");
+    }
+
+    [Fact]
+    public void SelfContainedClauseChain_RejectsDuplicateChild()
+    {
+        var fixture = SelfContainedClauseChain();
+        var parent = fixture.Parent with
+        {
+            Receipts = fixture.Parent.Receipts with
+            {
+                ChainAtoms = [fixture.Children[0].AtomId, fixture.Children[0].AtomId],
+            },
+        };
+        var ledger = ChainLedger(fixture, parent, fixture.Children);
+
+        var result = EvaluateSelfContainedClauseChain(fixture, ledger);
+
+        AssertMalformedClauseChain(
+            result,
+            fixture.Parent.AtomId,
+            "bytes differ from parent CAS plan member");
     }
 
     [Fact]

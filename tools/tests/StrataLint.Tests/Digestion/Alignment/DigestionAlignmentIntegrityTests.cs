@@ -344,7 +344,7 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
-    public void AdmissionPreservesInheritedRegisteredAtomNotClaimedByAPlan()
+    public void AdmissionPreservesInheritedRegisteredClauseLocatorNotClaimedByAPlan()
     {
         var bytes = Encoding.UTF8.GetBytes("registered atom");
         var atom = Atom("theorem/clause/fixture", bytes);

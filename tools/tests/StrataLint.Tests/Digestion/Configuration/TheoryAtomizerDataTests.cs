@@ -227,7 +227,7 @@ public sealed class TheoryAtomizerDataTests
     }
 
     [Fact]
-    public void GenreKindAlphabetIsClosedInProgram()
+    public void LocatorKindAlphabetIsClosedInProgram()
     {
         Assert.Equal(
             new[] { "algorithm", "axiom", "consequence", "contract", "corollary", "criterion", "definition", "entry", "example", "extension-table", "frontier-note", "ledger", "lemma", "note", "observation", "principle", "proposition", "remark", "route", "specification", "survey", "theorem", "theorem-form" },

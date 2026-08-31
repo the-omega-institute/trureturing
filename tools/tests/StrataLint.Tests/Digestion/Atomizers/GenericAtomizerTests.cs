@@ -104,7 +104,7 @@ public sealed class GenericAtomizerTests
     /// Content identity keeps re-ingest from rewriting untouched receipts.
     /// </summary>
     [Fact]
-    public void InsertingASectionDoesNotChangeTheSectionsAroundIt()
+    public void InsertingASectionDoesNotMoveTheLocatorsOfTheSectionsAroundIt()
     {
         var before = Atomize("# 卷首\n\n## §1 甲\n\n一。\n\n## §3 丙\n\n三。\n");
         var after = Atomize("# 卷首\n\n## §1 甲\n\n一。\n\n## §2 乙\n\n二。\n\n## §3 丙\n\n三。\n");
@@ -128,7 +128,7 @@ public sealed class GenericAtomizerTests
     }
 
     [Fact]
-    public void RepeatedHeadingTextProducesContentDistinctAtoms()
+    public void RepeatedHeadingTextIsDisambiguatedByOccurrence()
     {
         var document = Atomize("# 卷首\n\n## 边界\n\n一。\n\n## 边界\n\n二。\n");
 
@@ -300,7 +300,7 @@ public sealed class GenericAtomizerTests
     /// not an input, so editing another volume's dialect cannot churn this volume's ledger.
     /// </summary>
     [Fact]
-    public void TheFingerprintDoesNotDependOnAnyLoadedVocabulary()
+    public void TheLocatorDoesNotDependOnAnyLoadedVocabulary()
     {
         var markdown = "# 卷首\n\n## 定理 1.1\n\n证。\n";
         var bytes = Encoding.UTF8.GetBytes(markdown);

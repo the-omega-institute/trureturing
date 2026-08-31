@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Security.Cryptography;
 using System.Text;
 using StrataLint.Engine;
 
@@ -295,7 +296,7 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
-    public void CasBackedHistoricalAndCurrentReceiptsAreBothSeen()
+    public void CasBackedBoundaryAndStructuralReceiptsAreBothSeen()
     {
         var bytes = Encoding.UTF8.GetBytes(
             "# GICT\n\n**定理 1.1(A)**。legacy。\n\n**定理 1.2(B)**。structural。\n");
@@ -372,6 +373,38 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
+    public void ChangedAstPathCannotInheritCasIdentity()
+    {
+        var oldBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。old。\n");
+        var currentBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。rewritten。\n");
+        var oldAtom = Assert.Single(GictAtomizer.Atomize(
+            oldBytes,
+            DigestionTestSupport.Rules).Claims);
+        var currentAtom = Assert.Single(GictAtomizer.Atomize(
+            currentBytes,
+            DigestionTestSupport.Rules).Claims);
+        var oldId = Convert.ToHexStringLower(SHA256.HashData(oldAtom.RawBytes.AsSpan()));
+        var currentId = Convert.ToHexStringLower(SHA256.HashData(currentAtom.RawBytes.AsSpan()));
+        var oldCapture = DigestionCasStore.Capture(oldAtom.RawBytes.AsSpan());
+        var baseline = Ledger([], Entry("old-receipt", oldAtom));
+
+        var plan = DigestionIngestor.Plan(
+            baseline,
+            Snapshot(currentBytes, [oldCapture]),
+            baseline);
+        var entries = plan.Document.RequireDigestionEntries();
+
+        Assert.NotEqual(oldId, currentId);
+        Assert.Equal(
+            new[] { oldId, currentId }.Order(StringComparer.Ordinal),
+            entries.Select(static entry => entry.AtomId).Order(StringComparer.Ordinal).ToArray());
+        Assert.All(entries, entry => Assert.Equal("sha256:" + entry.AtomId, entry.CasRef));
+        Assert.Contains(
+            plan.CasObjects,
+            item => item.Reference == "sha256:" + currentId);
+    }
+
+    [Fact]
     public void ChangedStatusCannotInheritBaselineReceipt()
     {
         var oldBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。old。\n");
@@ -408,7 +441,7 @@ public sealed partial class DigestionAlignmentTests
 
 
     [Fact]
-    public void FingerprintTamperingCannotInheritBaselineContentIdentity()
+    public void FingerprintTamperingCannotInheritBoundaryBaselineIdentity()
     {
         var oldBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。old。\n");
         var currentBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。rewritten。\n");
@@ -558,7 +591,33 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
-    public void IngestPreservesCasBackedHistoricalAtomAgainstNewVolumeAndIsByteIdempotent()
+    public void IngestDropsObsoleteAcknowledgmentWithoutCreatingANewOne()
+    {
+        var sourceBytes = Encoding.UTF8.GetBytes(
+            "# GICT\n\n**定理 1.1(A)**。unchanged。\n");
+        var atom = Assert.Single(GictAtomizer.Atomize(
+            sourceBytes,
+            DigestionTestSupport.Rules).Claims);
+        var atomId = AtomId(atom);
+        var captured = DigestionCasStore.Capture(atom.RawBytes.AsSpan());
+        var baseline = Ledger([], CasEntry("baseline", atom, captured.Reference));
+        var candidate = Ledger([atomId], CasEntry("candidate", atom, captured.Reference));
+
+        var plan = DigestionIngestor.Plan(
+            candidate,
+            Snapshot(sourceBytes, [captured]),
+            baseline);
+        var source = Assert.Single(plan.Document.RequireDigestionSources());
+
+        Assert.Equal(DigestionReceiptAlignment.Seen, plan.Alignment.AlignmentFor(atomId));
+        Assert.Empty(source.AcknowledgedStale);
+        Assert.Equal(0, plan.StaleAcknowledged);
+        Assert.Equal(0, plan.ResidualOpenAdded);
+        Assert.Empty(plan.CasObjects);
+    }
+
+    [Fact]
+    public void IngestMigratesCasBackedBoundariesAgainstNewVolumeAndIsByteIdempotent()
     {
         var oldBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。old。\n");
         var currentBytes = Encoding.UTF8.GetBytes(

@@ -179,7 +179,7 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
-    public void IngestTreatsRegisteredFineReceiptAsAdapterReplacementIntent()
+    public void IngestTreatsRegisteredLegacyFineReceiptAsAdapterReplacementIntent()
     {
         var (sourceBytes, coarseCapture, fineCapture, ledger) = MissedCoarseReplacement();
         var coarseId = coarseCapture.Reference["sha256:".Length..];
@@ -199,6 +199,22 @@ public sealed partial class DigestionAlignmentTests
         Assert.Equal(coarseBefore.SourceId, coarseAfter.SourceId);
         Assert.Equal(coarseBefore.Fingerprints, coarseAfter.Fingerprints);
         Assert.Equal(coarseBefore.CasRef, coarseAfter.CasRef);
+    }
+
+    [Fact]
+    public void AlignmentTreatsRegisteredLegacyFineReceiptAsAdapterReplacementIntent()
+    {
+        var (sourceBytes, coarseCapture, fineCapture, ledger) = MissedCoarseReplacement();
+        var coarseId = coarseCapture.Reference["sha256:".Length..];
+
+        var result = DigestionLedgerAligner.Evaluate(
+            ledger,
+            Snapshot(sourceBytes, [coarseCapture, fineCapture]),
+            ledger,
+            DigestionAlignmentMode.Ingest);
+
+        Assert.Equal([coarseId], result.ActualStale.ToArray());
+        Assert.Equal(DigestionReceiptAlignment.Stale, result.AlignmentFor(coarseId));
     }
 
     [Fact]
@@ -268,7 +284,7 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
-    public void RepairedCoarseRetirementIsIdempotentAcrossConsecutiveIngests()
+    public void IngestPreservesFineGenerationRetirementAcknowledgment()
     {
         var (sourceBytes, coarseCapture, fineCapture, ledger) = MissedCoarseReplacement();
         var snapshot = Snapshot(sourceBytes, [coarseCapture, fineCapture]);
@@ -286,6 +302,152 @@ public sealed partial class DigestionAlignmentTests
         Assert.Equal(0, second.StaleAcknowledged);
         Assert.Equal(0, second.ResidualOpenAdded);
         Assert.Equal(firstBytes, secondBytes);
+    }
+
+    [Fact]
+    public void DispositionDoesNotChangeSourceRevisionAdmissionOrRetirement()
+    {
+        var (sourceBytes, captured, plan, settled) = SettledCoarseReplacement();
+        var coarseId = captured.Reference["sha256:".Length..];
+        var source = Assert.Single(settled.RequireDigestionSources());
+        var dispositioned = settled.WithDigestionSources(
+        [
+            source with
+            {
+                Entries = source.Entries.Select(entry => entry.AtomId == coarseId
+                    ? entry with
+                    {
+                        Receipts = entry.Receipts with
+                        {
+                            CoverDisposition = new DigestionCoverDisposition(
+                                new DigestionStatus(
+                                    DigestionMigrationState.Partial,
+                                    DigestionTruthState.Closed),
+                                ["D5/S0/Synthetic/Receipt.coarse_generation"],
+                                [new DigestionDispositionGap(
+                                    "unresolved-subitem",
+                                    "remaining coarse clause")],
+                                new DateTimeOffset(
+                                    2026,
+                                    8,
+                                    25,
+                                    4,
+                                    3,
+                                    2,
+                                    TestBudgets.ZeroDuration)),
+                        },
+                    }
+                    : entry).ToImmutableArray(),
+            },
+        ]);
+        var snapshot = Snapshot(sourceBytes, new[] { captured }.Concat(plan.CasObjects));
+
+        var admitted = DigestionLedgerAligner.Evaluate(
+            dispositioned,
+            snapshot,
+            settled,
+            DigestionAlignmentMode.Admission);
+        var replay = DigestionIngestor.Plan(dispositioned, snapshot, settled);
+
+        Assert.Empty(admitted.Findings);
+        Assert.Equal(DigestionReceiptAlignment.Stale, admitted.AlignmentFor(coarseId));
+        Assert.Equal([coarseId], Assert.Single(replay.Document.RequireDigestionSources())
+            .AcknowledgedStale.ToArray());
+        Assert.Equal(0, replay.StaleAcknowledged);
+        Assert.Equal(0, replay.ResidualOpenAdded);
+    }
+
+    [Fact]
+    public void ProjectedStatusKeepsSettledStaleReceiptIdentityAndAlignmentByteIdempotent()
+    {
+        var (sourceBytes, captured, plan, settled) = SettledCoarseReplacement();
+        var coarseId = captured.Reference["sha256:".Length..];
+        var snapshot = Snapshot(sourceBytes, new[] { captured }.Concat(plan.CasObjects));
+        var source = Assert.Single(settled.RequireDigestionSources());
+        var projected = settled.WithDigestionSources(
+        [
+            source with
+            {
+                Entries = source.Entries.Select(entry => entry.AtomId == coarseId
+                    ? entry with
+                    {
+                        ProjectedStatus = new DigestionStatus(
+                            DigestionMigrationState.Partial,
+                            DigestionTruthState.Closed),
+                    }
+                    : entry).ToImmutableArray(),
+            },
+        ]);
+
+        var projectedAlignment = DigestionLedgerAligner.Evaluate(
+            projected,
+            snapshot,
+            settled,
+            DigestionAlignmentMode.Admission);
+        var replay = DigestionIngestor.Plan(projected, snapshot, settled);
+        var replayBytes = DirectoryLedgerTestSupport.Image(replay.Document);
+        var secondReplay = DigestionIngestor.Plan(replay.Document, snapshot, settled);
+
+        Assert.Empty(projectedAlignment.Findings);
+        Assert.Equal(
+            DigestionReceiptAlignment.Stale,
+            projectedAlignment.AlignmentFor(coarseId));
+        Assert.Empty(replay.Alignment.Findings);
+        Assert.Equal(
+            DigestionReceiptAlignment.Stale,
+            replay.Alignment.AlignmentFor(coarseId));
+        Assert.Equal(replayBytes, DirectoryLedgerTestSupport.Image(secondReplay.Document));
+    }
+
+    [Fact]
+    public void IngestRetiresReplacedHistoricalCasAndRegistersEveryResidualOpenClaim()
+    {
+        var sourceBytes = Encoding.UTF8.GetBytes(
+            "# Observer\n\n"
+            + "**定理(观察者代数的唯一形态)。** first。\n\n"
+            + "**定理(观察者代数的唯一形态)。** second。\n");
+        var coarseBytes = ImmutableArray.CreateRange(sourceBytes);
+        var coarse = new DigestionAtom(
+            0,
+            sourceBytes.Length,
+            coarseBytes,
+            DigestionFingerprint.ComputeOpaque(coarseBytes.AsSpan()),
+            []);
+        var coarseCapture = DigestionCasStore.Capture(coarseBytes.AsSpan());
+        var baseline = Ledger([], CasEntry("coarse", coarse, coarseCapture.Reference));
+        var candidate = WithAtomizer(
+            Ledger([], CasEntry("coarse", coarse, coarseCapture.Reference)),
+            AtomizerRegistry.ObserverId);
+        var fineAtoms = AtomizerRegistry.Atomize(
+            AtomizerRegistry.ObserverId,
+            sourceBytes,
+            DigestionTestSupport.Rules).Claims;
+
+        var plan = DigestionIngestor.Plan(
+            candidate,
+            Snapshot(sourceBytes, [coarseCapture]),
+            baseline);
+        var source = Assert.Single(plan.Document.RequireDigestionSources());
+        var coarseId = AtomId(coarse);
+        var added = source.Entries.Where(entry => entry.AtomId != coarseId).ToArray();
+
+        Assert.Equal([coarseId], source.AcknowledgedStale.ToArray());
+        Assert.Equal(DigestionReceiptAlignment.Stale, plan.Alignment.AlignmentFor(coarseId));
+        Assert.Equal(fineAtoms.Length, plan.ResidualOpenAdded);
+        Assert.Equal(fineAtoms.Length, added.Length);
+        Assert.All(added, entry =>
+        {
+            Assert.Equal(entry.Fingerprints.RawSha256["sha256:".Length..], entry.AtomId);
+            Assert.Equal(entry.Fingerprints.RawSha256, entry.CasRef);
+            Assert.Equal(
+                new DigestionStatus(
+                    DigestionMigrationState.Residual,
+                    DigestionTruthState.Open),
+                entry.ProjectedStatus);
+        });
+        Assert.Equal(
+            fineAtoms.Select(AtomId).Order(StringComparer.Ordinal),
+            added.Select(static entry => entry.AtomId).Order(StringComparer.Ordinal));
     }
 
     [Fact]

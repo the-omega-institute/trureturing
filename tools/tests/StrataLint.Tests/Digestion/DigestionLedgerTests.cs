@@ -8,7 +8,7 @@ namespace StrataLint.Tests;
 public sealed partial class DigestionLedgerTests
 {
     [Fact]
-    public void CasBackedEntryDoesNotContributeSourceReplayGaps()
+    public void CasBackedLegacyBoundaryDoesNotContributeSourceOrBoundaryGaps()
     {
         var source = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n");
         var atom = Assert.Single(GictAtomizer.Atomize(source, DigestionTestSupport.Rules).Claims);
@@ -60,6 +60,30 @@ public sealed partial class DigestionLedgerTests
     }
 
     [Fact]
+    public void IngestRejectsACasBackedNoAtomizerBoundaryWithoutItsCasBlob()
+    {
+        var sourceBytes = Encoding.UTF8.GetBytes("manual specification receipt\n");
+        var atom = new DigestionAtom(
+            0,
+            sourceBytes.Length,
+            ImmutableArray.CreateRange(sourceBytes),
+            DigestionFingerprint.Compute(sourceBytes),
+            ImmutableArray<DigestionContext>.Empty);
+        var ledger = Ledger(
+            atom,
+            DigestionMigrationState.Partial,
+            DigestionTruthState.Open,
+            atomizer: AtomizerRegistry.NoAtomizerId);
+
+        var exception = Assert.Throws<FormatException>(() => DigestionIngestor.Plan(
+            ledger,
+            Snapshot(("docs/source.md", sourceBytes)),
+            ledger));
+
+        Assert.Contains("CAS blob is missing", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void IngestKeepsCasBackedNoAtomizerEntryByteIdempotent()
     {
         var sourceBytes = Encoding.UTF8.GetBytes("manual specification receipt\n");
@@ -96,6 +120,64 @@ public sealed partial class DigestionLedgerTests
 
         Assert.Empty(second.CasObjects);
         Assert.Equal(firstBytes, secondBytes);
+    }
+
+    [Fact]
+    public void IngestDoesNotReclassifyAnOpenGenreWhenRawShaDiffers()
+    {
+        var originalBytes = Encoding.UTF8.GetBytes(
+            "## 未登记体 40.2\n\nopen。\n");
+        var changedBytes = Encoding.UTF8.GetBytes(
+            "## 定理 40.2\n\nchanged。\n");
+        var originalAtom = Assert.Single(AtomizerRegistry.Atomize(
+            AtomizerRegistry.GenericId,
+            originalBytes,
+            TheoryAtomizerRules.None).Claims);
+        var changedAtom = Assert.Single(AtomizerRegistry.Atomize(
+            AtomizerRegistry.GenericId,
+            changedBytes,
+            TheoryAtomizerRules.None).Claims);
+        var originalId = originalAtom.Fingerprints.RawSha256["sha256:".Length..];
+        var changedId = changedAtom.Fingerprints.RawSha256["sha256:".Length..];
+        var originalEntry = Entry(
+            originalAtom,
+            originalId,
+            AtomizerRegistry.GenericId);
+        var baseline = Document(AtomizerRegistry.GenericId, [originalEntry]);
+        var originalCapture = DigestionCasStore.Capture(originalAtom.RawBytes.AsSpan());
+
+        var plan = DigestionIngestor.Plan(
+            baseline,
+            Snapshot(
+                ("docs/source.md", changedBytes),
+                (originalCapture.RelativePath, originalCapture.Bytes.ToArray())),
+            baseline);
+        var entries = Assert.Single(plan.Document.RequireDigestionSources()).Entries;
+        var currentKinds = AtomizerRegistry.ResolveContentKinds(
+            AtomizerRegistry.GenericId,
+            changedBytes,
+            TheoryAtomizerRules.None);
+
+        Assert.NotEqual(originalId, changedId);
+        var preserved = Assert.Single(entries, entry => entry.AtomId == originalId);
+        Assert.Equal(originalEntry.SourceId, preserved.SourceId);
+        Assert.Equal(originalEntry.SourcePath, preserved.SourcePath);
+        Assert.Equal(originalEntry.Atomizer, preserved.Atomizer);
+        Assert.Equal(originalEntry.Fingerprints, preserved.Fingerprints);
+        Assert.Equal(originalEntry.ProjectedStatus, preserved.ProjectedStatus);
+        Assert.Equal(originalEntry.CasRef, preserved.CasRef);
+        Assert.Empty(preserved.CoverageGids);
+        Assert.Empty(preserved.Receipts.Coverage);
+        Assert.Empty(preserved.Receipts.Scribe);
+        Assert.Empty(preserved.Receipts.UnresolvedSubitems);
+        Assert.Empty(preserved.Receipts.ChainAtoms);
+        Assert.Null(preserved.Receipts.TailAuthorization);
+        Assert.Null(preserved.Receipts.Quarantine);
+        Assert.Null(preserved.Receipts.CoverDisposition);
+        Assert.Contains(entries, entry => entry.AtomId == changedId);
+        Assert.False(currentKinds.ContainsKey(originalAtom.Fingerprints.RawSha256));
+        Assert.Equal("定理", currentKinds[changedAtom.Fingerprints.RawSha256]);
+        Assert.Equal(1, plan.ResidualOpenAdded);
     }
 
     [Fact]
@@ -444,7 +526,7 @@ public sealed partial class DigestionLedgerTests
     }
 
     [Fact]
-    public void StructuralRawSeenNeedsNoSourceReplayPrerequisite()
+    public void StructuralRawSeenReplacesTheBoundaryPrerequisite()
     {
         var source = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n");
         var atom = Assert.Single(GictAtomizer.Atomize(source, DigestionTestSupport.Rules).Claims);

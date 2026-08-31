@@ -10,7 +10,7 @@ public sealed partial class ShowAtomTests
     private const string AdapterAtomizerId = AtomizerRegistry.PeriodicTreeId;
 
     [Fact]
-    public void ContentAtomPrintsItsCommittedTextAndRecordedHashesWithoutWriting()
+    public void BoundaryAtomPrintsItsByteExactParagraphNormalizedTextAndRecordedHashesWithoutWriting()
     {
         const string sourcePath = "fixtures/show-atom/boundary.md";
         const string prefix = "preface\r\n";
@@ -209,7 +209,7 @@ public sealed partial class ShowAtomTests
     }
 
     [Fact]
-    public void ChangedSourceReadsTheRequestedContentAtomsCommittedCas()
+    public void ReusedAstPathReadsTheRequestedAtomsCommittedCas()
     {
         const string sourcePath = "fixtures/show-atom/adapter.md";
         var oldBytes = Encoding.UTF8.GetBytes(
@@ -290,7 +290,7 @@ public sealed partial class ShowAtomTests
     }
 
     [Fact]
-    public void HistoricalContentAtomIsNotMarkedStaleWithoutAcknowledgment()
+    public void SameAstPathGenerationIsNotMarkedStaleWithoutAcknowledgment()
     {
         const string sourcePath = "fixtures/show-atom/adapter.md";
         var oldBytes = Encoding.UTF8.GetBytes(

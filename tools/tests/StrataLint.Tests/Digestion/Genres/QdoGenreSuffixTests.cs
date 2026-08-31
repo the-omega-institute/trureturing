@@ -103,7 +103,7 @@ public sealed class QdoGenreSuffixTests
     }
 
     [Fact]
-    public void MigrationPreservesEveryPreviouslyAcceptedGenreAndUntouchedTable()
+    public void MigrationPreservesEveryPreviouslyAcceptedLocatorAndUntouchedTable()
     {
         var migrated = LoadRules(CanonicalData);
 

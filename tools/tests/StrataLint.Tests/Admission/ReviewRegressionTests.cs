@@ -196,6 +196,30 @@ public sealed partial class ReviewRegressionTests
     }
 
     [Fact]
+    public void Sl016RejectsFormattedFingerprintThatDisagreesWithSourceSpan()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        var document = BackfillInventoryLoader.Load(fixture.Build().Current);
+        var fingerprint = document.RequireDigestionEntries()[0].Fingerprints.RawSha256;
+        var replacement = fingerprint[..^1] + (fingerprint[^1] == '0' ? '1' : '0');
+        fixture.Files[RuleFixture.FixtureBackfillAtomPath] = fixture.Files[
+                RuleFixture.FixtureBackfillAtomPath]
+            .Replace(
+                fingerprint,
+                replacement,
+                StringComparison.Ordinal);
+
+        var evaluation = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(16),
+            fixture.Build());
+
+        Assert.Contains(evaluation.Diagnostics, diagnostic =>
+            diagnostic.Message.Contains("CAS blob is missing", StringComparison.Ordinal)
+            && diagnostic.Message.Contains(replacement["sha256:".Length..], StringComparison.Ordinal));
+    }
+
+    [Fact]
     public void Sl016RejectsSourceIdThatDoesNotMatchItsDirectory()
     {
         var fixture = new RuleFixture();
@@ -434,7 +458,7 @@ public sealed partial class ReviewRegressionTests
     [InlineData("extension-table/6.38\u2032", false)]
     [InlineData("row/adaptive-submodularity-failure-witness", true)]
     [InlineData("unresolved tension", true)]
-    public void Sl019DistinguishesExtensionLabelFromTensionSignal(
+    public void Sl019DistinguishesExtensionLocatorFromTensionSignal(
         string value,
         bool expectsDiagnostic)
     {

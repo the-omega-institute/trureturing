@@ -8,7 +8,7 @@ namespace StrataLint.Tests;
 public sealed partial class DigestionLedgerTests
 {
     [Fact]
-    public void TouchedPartialEntryRecomputesWhileUntouchedEntryKeepsBaselineMigration()
+    public void DerivedMigrationIsIndependentOfEntryMembershipInCandidateDelta()
     {
         var receiptSource = Encoding.UTF8.GetBytes("manual specification receipt\n");
         var currentSource = Encoding.UTF8.GetBytes("manual specification receipu\n");

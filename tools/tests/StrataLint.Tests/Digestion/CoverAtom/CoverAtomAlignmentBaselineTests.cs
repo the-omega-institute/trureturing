@@ -28,7 +28,7 @@ public sealed partial class CoverAtomTests
     }
 
     [Fact]
-    public void AlignScribeReceiptPreservesInheritedAtomContentIdentity()
+    public void AlignScribeReceiptRefreshesInheritedHistoricalAtom()
     {
         var inputs = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec());
         inputs = WithHistoricalAbsorbedEntry(

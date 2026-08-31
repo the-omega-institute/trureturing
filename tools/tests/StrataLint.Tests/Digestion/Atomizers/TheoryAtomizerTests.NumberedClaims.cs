@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Text;
 using StrataLint.Cli;
 using StrataLint.Engine;
@@ -181,14 +182,25 @@ public sealed partial class TheoryAtomizerTests
     }
 
     [Fact]
-    public void PzgClausePlanChildrenArePartOfTheDocumentPlan()
+    public void PzgClausePlanChildrenResolveThroughTheCanonicalClaimResolver()
     {
+        const string secondClause = "**第二条**。第二条。\n";
         var bytes = Encoding.UTF8.GetBytes(
-            "# PZG\n\n**定理 9.10**。第一条。\n\n**第二条**。第二条。\n");
+            "# PZG\n\n**定理 9.10**。第一条。\n\n" + secondClause);
         var document = PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
-        var child = Assert.Single(document.ClausePlans).Children[1];
+        var parent = Assert.Single(document.Claims);
+        var plan = Assert.Single(document.ClausePlans);
+        Assert.Equal(2, plan.Children.Length);
+        var child = plan.Children[1];
+        var expectedBytes = Encoding.UTF8.GetBytes(secondClause);
+        var expectedFingerprint = "sha256:"
+            + Convert.ToHexStringLower(SHA256.HashData(expectedBytes));
 
-        Assert.Contains(child, Assert.Single(document.ClausePlans).Children);
+        Assert.Equal(parent.Fingerprints.RawSha256, plan.Parent.Fingerprints.RawSha256);
+        Assert.Equal(expectedBytes, child.RawBytes.ToArray());
+        Assert.Equal(expectedFingerprint, child.Fingerprints.RawSha256);
+        Assert.InRange(child.StartByte, parent.StartByte, parent.EndByte - 1);
+        Assert.InRange(child.EndByte, child.StartByte + 1, parent.EndByte);
     }
 
     [Fact]

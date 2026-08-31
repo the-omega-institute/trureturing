@@ -8,7 +8,7 @@ namespace StrataLint.Tests;
 public sealed partial class ProductionEnvironmentTests
 {
     [Fact]
-    public void IngestReportFreeAcceptsPlannerClauseChainAtItsAlignedFixedPoint()
+    public void IngestReportFreeAcceptsPlannerClauseChainForNewUncoveredClaim()
     {
         const string oldText = "# PZG\n\n**定理 1.1(A)**。old claim。\n";
         const string currentText = oldText

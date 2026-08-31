@@ -508,7 +508,7 @@ public sealed partial class TheoryAtomizerTests
         return segments;
     }
     [Fact]
-    public void InterfacePaperDialectPreservesDuplicateBlocksWithEqualContentIdentity()
+    public void InterfacePaperDialectPreservesDuplicateBlocksAsDistinctOccurrences()
     {
         var root = TestRepositoryLayout.FindRoot();
         var bytes = File.ReadAllBytes(Path.Combine(root, FourthProductionSource));
