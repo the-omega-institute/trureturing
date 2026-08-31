@@ -212,4 +212,44 @@ theorem greedy_gap_le_geometric
 
 #print axioms greedy_gap_le_geometric
 
+/-- The classical cardinality-greedy guarantee: after `budget` choices, greedy
+attains at least a `1 - 1/e` fraction of every feasible set's value. -/
+theorem cardinality_greedy_one_sub_inv_exp_guarantee
+    {Ground : Type*} [DecidableEq Ground]
+    (value : Finset Ground -> Real) (normalized : value ∅ = 0)
+    (monotone : IsMonotone value) (submodular : IsSubmodular value)
+    (pick : Nat -> Ground) (budget : Nat)
+    (greedy : IsGreedySelection value pick budget)
+    (optimal : Finset Ground) (optimal_card : optimal.card <= budget) :
+    (1 - 1 / Real.exp 1) * value optimal <=
+      value (greedySelection pick budget) := by
+  by_cases budget_zero : budget = 0
+  · subst budget
+    have optimal_empty : optimal = ∅ :=
+      Finset.card_eq_zero.mp (Nat.eq_zero_of_le_zero optimal_card)
+    simp [optimal_empty, normalized]
+  · have budget_pos : 0 < budget := Nat.pos_of_ne_zero budget_zero
+    have optimal_nonneg : 0 <= value optimal := by
+      rw [← normalized]
+      exact monotone (Finset.empty_subset optimal)
+    have gap_bound :=
+      greedy_gap_le_geometric value normalized monotone submodular pick budget
+        budget_pos greedy optimal optimal_card budget (le_refl budget)
+    have one_le_budget_real : (1 : Real) <= budget := by
+      exact_mod_cast budget_pos
+    have power_bound :
+        (1 - 1 / (budget : Real)) ^ budget <= Real.exp (-1) :=
+      Real.one_sub_div_pow_le_exp_neg one_le_budget_real
+    have gap_le_exp :
+        value optimal - value (greedySelection pick budget) <=
+          Real.exp (-1) * value optimal :=
+      gap_bound.trans
+        (mul_le_mul_of_nonneg_right power_bound optimal_nonneg)
+    have exp_neg_one : Real.exp (-1) = 1 / Real.exp 1 := by
+      simp only [Real.exp_neg, one_div]
+    rw [← exp_neg_one]
+    linarith
+
+#print axioms cardinality_greedy_one_sub_inv_exp_guarantee
+
 end D5.S3.Resource.SubmodularGreedyApproximation
