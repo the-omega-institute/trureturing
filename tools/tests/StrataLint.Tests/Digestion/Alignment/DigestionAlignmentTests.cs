@@ -405,7 +405,7 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
-    public void ChangedStatusCannotInheritBaselineReceipt()
+    public void CanonicalEntryIsNeutralToProjectedStatus()
     {
         var oldBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。old。\n");
         var newBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。rewritten。\n");
@@ -432,7 +432,7 @@ public sealed partial class DigestionAlignmentTests
             DigestionAlignmentMode.Ingest);
 
         Assert.Empty(result.Findings);
-        Assert.Equal(DigestionReceiptAlignment.Rejected, result.AlignmentFor(AtomId(oldAtom)));
+        Assert.Equal(DigestionReceiptAlignment.Seen, result.AlignmentFor(AtomId(oldAtom)));
         Assert.Single(result.Residual);
     }
 
