@@ -1,0 +1,58 @@
+# 第一千一百六十五部　概念动力的 \(K\!A\!N\) 分解
+
+一个动力概念的最小完整数据，不只是“正／负”两个分支。
+
+更自然的是三重分解：
+
+$$
+\boxed{
+\text{相位}
++
+\text{尺度}
++
+\text{记忆}.
+}
+$$
+
+在一维复模式中，这是精确的极分解：
+
+$$
+\boxed{
+\mathbb C^\times
+\simeq
+U(1)\times\mathbb R_{>0}.
+}
+\tag{1165.1}
+$$
+
+在二通道非交换系统中，它提升为 \(SL_2\) 的 Iwasawa／Cartan 型分解：
+
+$$
+\boxed{
+G=KAN.
+}
+\tag{1165.2}
+$$
+
+其中：
+
+$$
+K
+=
+\text{compact phase},
+$$
+
+$$
+A
+=
+\text{split expansion/contraction},
+$$
+
+$$
+N
+=
+\text{ordered memory/shear}.
+$$
+
+---
+

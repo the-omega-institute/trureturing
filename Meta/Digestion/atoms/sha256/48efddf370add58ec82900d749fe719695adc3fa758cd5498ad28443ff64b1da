@@ -1,0 +1,11 @@
+## Krein／Lorentz 完成
+
+只要求存在不定型 \(Q\)：
+
+$$
+M^{\mathsf T}QM=Q.
+$$
+
+这允许：
+
+* elliptic；

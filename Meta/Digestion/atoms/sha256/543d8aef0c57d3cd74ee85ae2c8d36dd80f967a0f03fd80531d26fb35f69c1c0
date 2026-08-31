@@ -1,0 +1,61 @@
+## 1208.2 行为完成与正完成何时分离
+
+对普通 Hilbert 读出 \(C\)，行为完成自动产生：
+
+$$
+W_N=\mathcal O_N^*\mathcal O_N\succeq0.
+$$
+
+但在 \(\zeta\) 问题中，我们首先得到的是一个由：
+
+* prime；
+* pole；
+* Archimedean completion；
+* explicit formula；
+
+组合出的 Hermitian 形式：
+
+$$
+Q_\xi.
+$$
+
+真正缺失的是证明存在一个观察映射：
+
+$$
+\boxed{
+\mathcal O_\xi
+}
+$$
+
+使：
+
+$$
+\boxed{
+Q_\xi
+=
+\mathcal O_\xi^*\mathcal O_\xi.
+}
+\tag{1208.7}
+$$
+
+所以 RH 路线可以被重新表达为：
+
+$$
+\boxed{
+\text{证明 arithmetic behavior form 是一个真正的 Gram form。}
+}
+$$
+
+离线零点则意味着：
+
+$$
+\boxed{
+\text{代数行为关系仍可写出，
+但正 Gram 实现不存在。}
+}
+$$
+
+这正是“对偶已经闭合，正性没有闭合”的最精确版本。
+
+---
+

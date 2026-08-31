@@ -1,0 +1,42 @@
+* \(\theta\) 是时间反射。
+
+定义反射形式：
+
+$$
+\boxed{
+\langle u,v\rangle_\theta
+=
+\langle\theta u,v\rangle_{\mathcal E}.
+}
+\tag{1186.1}
+$$
+
+要求：
+
+$$
+\boxed{
+\langle u,u\rangle_\theta\ge0
+\qquad
+\forall u\in\mathcal E_+.
+}
+\tag{1186.2}
+$$
+
+再模去零范数向量并完备化，就得到物理 Hilbert 空间：
+
+$$
+\widehat{\mathcal E}.
+$$
+
+当双向 unitary 流满足时间反射协变时，正时间部分在 OS 商上变成 Hermitian contraction semigroup。([arXiv][4])
+
+这给“一个点之前的历史和之后的未来如何成为同一个概念”一个严格答案：
+
+$$
+\boxed{
+\text{不是靠反射等式本身，而是靠反射后的内积仍然非负。}
+}
+$$
+
+---
+

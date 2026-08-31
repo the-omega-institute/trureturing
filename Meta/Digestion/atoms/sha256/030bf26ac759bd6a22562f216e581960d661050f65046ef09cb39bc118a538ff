@@ -1,0 +1,89 @@
+# 第一千二百二十七部　真正的第一相是 de Branges 核
+
+定义 Hermitian 核：
+
+$$
+\boxed{
+\mathcal K_\omega(w,z)
+=
+\frac{
+\overline{E_\omega(w)}E_\omega(z)
+-
+\overline{E_\omega^\#(w)}E_\omega^\#(z)
+}{
+2\pi i(\bar w-z)
+}.
+}
+\tag{1227.1}
+$$
+
+在对角线上，若：
+
+$$
+z=x+iy,
+\qquad
+y>0,
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal K_\omega(z,z)
+=
+\frac{
+|E_\omega(z)|^2
+-
+|E_\omega^\#(z)|^2
+}{
+4\pi y
+}.
+}
+\tag{1227.2}
+$$
+
+Hermite–Biehler 条件是：
+
+$$
+\boxed{
+|E_\omega(z)|
+>
+|E_\omega^\#(z)|
+\qquad
+(\Im z>0).
+}
+\tag{1227.3}
+$$
+
+在该条件下：
+
+$$
+\mathcal K_\omega\succeq0,
+$$
+
+并产生一个 de Branges／model Hilbert 空间。
+
+Suzuki 所使用的 model-space 核正是：
+
+$$
+\frac{
+1-\overline{\Theta_\omega(w)}
+\Theta_\omega(z)
+}{
+2\pi i(\bar w-z)
+},
+$$
+
+而乘上 \(E_\omega(z)\overline{E_\omega(w)}\) 后便得到式 (1227.1)。([arXiv][1])
+
+所以：
+
+$$
+\boxed{
+\text{\(\xi\) 在深度 \(\omega\) 的“概念空间”，
+不是零点集合本身，而是核 \(\mathcal K_\omega\) 所生成的空间。}
+}
+$$
+
+---
+

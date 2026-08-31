@@ -1,0 +1,61 @@
+# 第一千一百八十一部　最小自对偶概念定理
+
+考虑只有两个不可约对象的最小融合系统：
+
+$$
+\{\mathbf 1,X\}.
+$$
+
+假设：
+
+1. \(X\) 非可逆；
+2. \(X^\vee\simeq X\)；
+3. \(X\otimes X\) 必须包含单位对象；
+4. 融合系数为非负整数。
+
+最一般的秩二融合律为：
+
+$$
+\boxed{
+X\otimes X
+\simeq
+\mathbf 1\oplus nX,
+\qquad
+n\in\mathbb N.
+}
+\tag{1181.1}
+$$
+
+乘以 \(X\) 的融合矩阵为：
+
+$$
+\boxed{
+N_X
+=
+\begin{pmatrix}
+0&1\\
+1&n
+\end{pmatrix}.
+}
+\tag{1181.2}
+$$
+
+其特征多项式为：
+
+$$
+\lambda^2-n\lambda-1.
+$$
+
+正 Perron 根为：
+
+$$
+\boxed{
+d_n
+=
+\frac{n+\sqrt{n^2+4}}2.
+}
+\tag{1181.3}
+$$
+
+---
+

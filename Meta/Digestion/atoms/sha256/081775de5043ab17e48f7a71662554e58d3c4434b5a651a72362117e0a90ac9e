@@ -1,0 +1,85 @@
+## v7.0：反射商、黄金第一分支、Pontryagin–Minkowski 缝合与离线零点的非酉下降障碍
+
+以下从前文**第一千一百一十三部**继续。
+
+这一次可以把整套几何压缩得更清楚。
+
+最关键的校准是：
+
+$$
+\boxed{
+\text{Solenoid 与黄金双曲锥不是彼此直接的 Pontryagin 对偶。}
+}
+$$
+
+更准确的依赖链是：
+
+$$
+\boxed{
+\text{Solenoid}
+\;\xleftrightarrow{\text{Pontryagin}}\;
+\text{离散算术频率}
+\;\xrightarrow{\text{Minkowski 嵌入}}\;
+\text{黄金 Lorentz 锥}.
+}
+$$
+
+也就是说：
+
+* Solenoid 位于紧致的“相位—隐藏地址”一侧；
+* 黄金锥位于其角色群经过实嵌入后的“扩张—收缩”一侧；
+* 二者中间真正的变换是：
+
+  $$
+  \text{Pontryagin duality}+\text{Minkowski embedding}.
+  $$
+
+同时，与 \(\xi\) 直接相关的第一个几何对象不是 \(\varphi\)，而是反射商：
+
+$$
+\boxed{
+c(s)=s(s-1).
+}
+$$
+
+它满足：
+
+$$
+c(1-s)=c(s).
+$$
+
+而黄金比例恰好是：
+
+$$
+\boxed{
+c^{-1}(1)=\{\varphi,\varphi'\}.
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\varphi
+}
+$$
+
+不是所有对偶的字面交点，而是：
+
+$$
+\boxed{
+\text{Riemann 反射商的第一个非平凡整数层，
+在选取正分支后出现的第一个无理像。}
+}
+$$
+
+真正的反射中心仍然是：
+
+$$
+\boxed{
+s=\frac12.
+}
+$$
+
+---
+

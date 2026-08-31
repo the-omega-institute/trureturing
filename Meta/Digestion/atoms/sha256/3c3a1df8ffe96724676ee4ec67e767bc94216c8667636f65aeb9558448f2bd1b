@@ -1,0 +1,42 @@
+# 第一千一百一十五部　\(\sqrt5\) 是黄金分支的 Jacobian，也是 Solenoid 缝合的 different
+
+令：
+
+$$
+f(s)=c(s)-1=s^2-s-1.
+$$
+
+在两个黄金分支上：
+
+$$
+\boxed{
+f'(\varphi)
+=
+2\varphi-1
+=
+\sqrt5,
+}
+\tag{1115.1}
+$$
+
+$$
+\boxed{
+f'(\varphi')
+=
+-\sqrt5.
+}
+\tag{1115.2}
+$$
+
+同时：
+
+$$
+\boxed{
+\varphi-\varphi'=\sqrt5.
+}
+\tag{1115.3}
+$$
+
+所以 \(\sqrt5\) 同时是：
+
+* 两个分支的距离；

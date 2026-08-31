@@ -1,0 +1,95 @@
+# 第一千二百二十九部　多个离线零点产生多个负平方
+
+设固定 \(\omega>0\)，并且有互异的离线零点：
+
+$$
+\rho_j
+=
+\frac12+\delta_j+i\gamma_j,
+\qquad
+\delta_j>\omega,
+$$
+
+对应：
+
+$$
+z_j=-\gamma_j+i(\delta_j-\omega)
+\in\mathbb C^+.
+$$
+
+假设：
+
+$$
+E_\omega^\#(z_j)\neq0.
+$$
+
+由于：
+
+$$
+E_\omega(z_j)=0,
+$$
+
+在这些点上：
+
+$$
+\boxed{
+\mathcal K_\omega(z_j,z_k)
+=
+-
+\frac{
+\overline{E_\omega^\#(z_j)}
+E_\omega^\#(z_k)
+}{
+2\pi i(\bar z_j-z_k)
+}.
+}
+\tag{1229.1}
+$$
+
+令：
+
+$$
+H_{jk}
+=
+\frac1{
+2\pi i(\bar z_j-z_k)
+}.
+$$
+
+\(H\) 是上半平面 Hardy 空间的 Cauchy Gram 矩阵，因此对于互异 \(z_j\) 严格正定。
+
+设：
+
+$$
+D=
+\operatorname{diag}
+\left(
+E_\omega^\#(z_1),\ldots,
+E_\omega^\#(z_m)
+\right).
+$$
+
+则：
+
+$$
+\boxed{
+[\mathcal K_\omega(z_j,z_k)]
+=
+-
+D^*HD.
+}
+\tag{1229.2}
+$$
+
+因为 \(D\) 可逆、\(H\succ0\)，所以：
+
+$$
+\boxed{
+[\mathcal K_\omega(z_j,z_k)]
+\prec0.
+}
+\tag{1229.3}
+$$
+
+---
+

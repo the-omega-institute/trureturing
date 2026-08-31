@@ -7,5 +7,5 @@ receipts:
   coverage: []
   scribe: []
   unresolved_subitems:
-    - operation-family-trigger-has-no-stage-residual-bridge
     - definition-language-trigger-has-no-stage-residual-bridge
+    - operation-family-trigger-has-no-stage-residual-bridge

@@ -1,0 +1,95 @@
+# 第一千二百六十三部　黄金壳层是 Poisson 源的离散 Gauss 面
+
+定义：
+
+$$
+\boxed{
+\omega_n
+=
+\frac12\varphi^{-2n}.
+}
+\tag{1263.1}
+$$
+
+以及黄金壳层：
+
+$$
+\boxed{
+\mathcal S_n
+=
+\left\{
+\rho:
+\omega_{n+1}
+<
+\delta_\rho
+\le
+\omega_n
+\right\}.
+}
+\tag{1263.2}
+$$
+
+壳层电荷：
+
+$$
+\boxed{
+q_n(T)
+=
+\sum_{\substack{
+\rho\in\mathcal S_n\\
+|\gamma_\rho|\le T
+}}
+m_\rho.
+}
+\tag{1263.3}
+$$
+
+由 Blaschke 次数：
+
+$$
+\boxed{
+q_n(T)
+=
+\deg B_{\omega_{n+1},T}
+-
+\deg B_{\omega_n,T}.
+}
+\tag{1263.4}
+$$
+
+由边界相位通量：
+
+$$
+\boxed{
+q_n(T)
+=
+\frac1{2\pi}
+\int_{\mathbb R}
+\left[
+J_{\omega_{n+1},T}(t)
+-
+J_{\omega_n,T}(t)
+\right]
+dt.
+}
+\tag{1263.5}
+$$
+
+若全局最小 Kreĭn–Langer 因子化成立，则进一步有：
+
+$$
+\boxed{
+q_n(T)
+=
+\operatorname{ind}_-
+\mathcal K_{\omega_{n+1},T}
+-
+\operatorname{ind}_-
+\mathcal K_{\omega_n,T}.
+}
+\tag{1263.6}
+$$
+
+所以黄金壳层同时是：
+
+* bulk 零点壳层；

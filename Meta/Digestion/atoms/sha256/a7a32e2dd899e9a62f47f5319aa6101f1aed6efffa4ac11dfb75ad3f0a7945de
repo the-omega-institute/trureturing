@@ -1,0 +1,30 @@
+## 范畴概念对偶
+
+离线零点对应：
+
+$$
+\boxed{
+\text{一个形式上具有完整 duality，
+却不能获得 positive dagger realization 的对象。}
+}
+$$
+
+它与 Fibonacci／Yang–Lee 的关系不是数值同一，而是结构同型：
+
+$$
+\boxed{
+\text{融合／函数方程仍成立，
+unitary positivity 失败。}
+}
+$$
+
+所以它可以被称为：
+
+$$
+\boxed{
+\textbf{Riemann 完成中的 Galois-like non-unitary shadow}.
+}
+$$
+
+---
+

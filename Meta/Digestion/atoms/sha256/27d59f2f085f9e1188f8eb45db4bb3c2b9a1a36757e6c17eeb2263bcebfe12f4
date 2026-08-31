@@ -1,0 +1,45 @@
+## 1238.1 项目现有机器结果如何接入
+
+项目的 `PositivityChartCollapse` 说明：一旦能将：
+
+$$
+\mathcal K_{\omega_n}(z_j,z_k)
+$$
+
+表示为同一正测度上的特征 Gram：
+
+$$
+\int
+\Phi_{n,z_j}(\lambda)
+\overline{
+\Phi_{n,z_k}(\lambda)
+}
+\,d\nu_n(\lambda),
+$$
+
+所有有限矩阵的正性便自动成立。
+
+`DualGramKernels` 与 `DualGramVisibleRanges` 又说明，Gram 算子的 kernel 和 range 精确对应实际观察映射的盲方向与可见方向。
+
+所以负平方不能被解释成普通隐藏 kernel：
+
+$$
+\boxed{
+\text{kernel 是零可见度；
+negative square 是不可能的平方可见度。}
+}
+$$
+
+项目的 spectral-concentration 定理则给出一个可计算的充分条件：只要有限支撑测试在危险频带中的最大能量浓缩低于显式阈值，整个 multiplier 二次型就具有严格正 gap。
+
+因此最终的 prime-side 任务可以写成：
+
+$$
+\boxed{
+\text{证明每个黄金层 }\omega_n
+\text{ 的负核候选区无法承载足够的谱浓缩。}
+}
+$$
+
+---
+
