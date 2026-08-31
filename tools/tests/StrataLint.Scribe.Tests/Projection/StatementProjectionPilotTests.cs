@@ -309,14 +309,23 @@ public sealed class StatementProjectionPilotTests
             $"projection-derived statements regressed to {projected}, below the floor of 7");
     }
 
-    [LiveReportFact]
+    [Fact]
     public void LiveReportMatchesPinnedFixtureWhenAvailable()
     {
         var repositoryRoot = RepositoryAccessor
             .Discover(RepositoryRootCriterion.LakefileInvalidOperation).Root.FullPath;
+        var liveReport = InspectLiveReportWhenAvailable(repositoryRoot);
+        if (liveReport is null)
+        {
+            using var fixture = TemporaryRepository.WithReport(
+                type: "statement-v1(uparams=[],type=es(l0))");
+            StatementProjectionReconciliation.Verify(fixture.Path, fixture.Catalog());
+            return;
+        }
+
         StatementProjectionReconciliation.Verify(
             repositoryRoot,
-            DeclarationCatalog.Create(LeanCompiledArtifactReports.InspectRepository(repositoryRoot)));
+            DeclarationCatalog.Create(liveReport));
     }
 
     [Fact]
@@ -447,19 +456,34 @@ public sealed class StatementProjectionPilotTests
         }
     }
 
-    [LiveReportFact]
+    [Fact]
     public void NonTheoremDeclarationsAreUnprojectableWhenTheReportIsAvailable()
     {
         var repositoryRoot = RepositoryAccessor
             .Discover(RepositoryRootCriterion.LakefileInvalidOperation).Root.FullPath;
+        var liveReport = InspectLiveReportWhenAvailable(repositoryRoot);
 
         // hellingerSq is a def: its type is the signature (ι → ℝ) → (ι → ℝ) → ℝ, and its defining
         // body never reaches the projector. Projecting it would render the arrows as nested
         // quantifiers and present that as the definition.
-        var outcome = StatementProjectionFixtureLoader.WithRepositoryRoot(
-            repositoryRoot,
-            () => StatementProjectionFixtureLoader.Project(
-                LeanDeclarationRef.Create("D5/S3/TotalVariation/Hellinger.hellingerSq")));
+        ProjectionOutcome outcome;
+        if (liveReport is null)
+        {
+            using var fixture = TemporaryRepository.WithReport(
+                type: "statement-v1(uparams=[],type=es(l0))",
+                kind: "def");
+            outcome = StatementProjectionFixtureLoader.WithRepositoryRoot(
+                fixture.Path,
+                () => StatementProjectionFixtureLoader.Project(
+                    LeanDeclarationRef.Create("D5/S0/Test/Missing.declaration")));
+        }
+        else
+        {
+            outcome = StatementProjectionFixtureLoader.WithRepositoryRoot(
+                repositoryRoot,
+                () => StatementProjectionFixtureLoader.Project(
+                    LeanDeclarationRef.Create("D5/S3/TotalVariation/Hellinger.hellingerSq")));
+        }
 
         var failed = Assert.IsType<ProjectionOutcome.Unprojectable>(outcome);
         Assert.Equal("non-propositional-declaration", failed.Reason.Split(':', 2)[0]);
@@ -495,42 +519,43 @@ public sealed class StatementProjectionPilotTests
             .ToDictionary(item => item.GetProperty("name").GetString()!, StringComparer.Ordinal);
     }
 
-    private sealed class LiveReportFactAttribute : FactAttribute
+    private static LeanAxiomReport? InspectLiveReportWhenAvailable(string repositoryRoot)
     {
-        public LiveReportFactAttribute()
+        var reportPath = Path.Combine(
+            repositoryRoot,
+            ".lake",
+            "build",
+            "stratalint",
+            "raw-lean-report.json");
+        var materialsPath = reportPath + ".materials.zip";
+        var requireLiveReport = Environment.GetEnvironmentVariable("STRATALINT_REQUIRE_LIVE_REPORT") == "1";
+        if (!File.Exists(reportPath) || !File.Exists(materialsPath))
         {
-            var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.LakefileInvalidOperation);
-            var requireLiveReport = Environment.GetEnvironmentVariable("STRATALINT_REQUIRE_LIVE_REPORT") == "1";
-            if (!requireLiveReport && (!repository.FileExists(RepositoryRelativePath.Create(
-                    ".lake/build/stratalint/raw-lean-report.json"))
-                || !repository.FileExists(RepositoryRelativePath.Create(
-                    ".lake/build/stratalint/raw-lean-report.json.materials.zip"))))
-            {
-                Skip = "Live raw Lean report is absent; pinned statement-v1 fixture remains the self-contained verifier asset.";
-                return;
-            }
-            if (!requireLiveReport)
-            {
-                try
-                {
-                    _ = LeanCompiledArtifactReports.InspectRepository(repository.Root.FullPath);
-                }
-                catch (Exception exception) when (exception is FormatException or InvalidDataException)
-                {
-                    Skip = "Live raw Lean report is stale; pinned statement-v1 fixture remains the self-contained verifier asset.";
-                }
-            }
+            Assert.False(
+                requireLiveReport,
+                "STRATALINT_REQUIRE_LIVE_REPORT=1 requires .lake/build/stratalint/raw-lean-report.json");
+            return null;
+        }
+
+        try
+        {
+            return LeanCompiledArtifactReports.InspectRepository(repositoryRoot);
+        }
+        catch (Exception exception) when (!requireLiveReport
+            && exception is FormatException or InvalidDataException)
+        {
+            return null;
         }
     }
 
     private sealed class TemporaryRepository : IDisposable
     {
         private readonly DirectoryInfo root = TemporaryFileSystem.Directory.CreateTempSubdirectory("stratalint-statement-reconciliation-");
-        private readonly List<(string Name, string Type)> pinnedDeclarations = [];
+        private readonly List<(string Name, string Type, string Kind)> pinnedDeclarations = [];
 
         public string Path => root.FullName;
 
-        public static TemporaryRepository WithReport(string type)
+        public static TemporaryRepository WithReport(string type, string kind = "theorem")
         {
             var repository = new TemporaryRepository();
             TemporaryFileSystem.Directory.CreateDirectory(System.IO.Path.Combine(repository.Path, "Golden", "Projection"));
@@ -543,17 +568,17 @@ public sealed class StatementProjectionPilotTests
             TemporaryFileSystem.File.WriteAllText(
                 System.IO.Path.Combine(repository.Path, ".lake", "build", "stratalint", "raw-lean-report.json"),
                 """{"modules":[{"declarations":[{"name":"D5.Test.declaration","type":"statement-v1(uparams=[],type=es(l0))"}]}]}""");
-            repository.AddPinnedDeclaration("D5.Test.declaration", type);
+            repository.AddPinnedDeclaration("D5.Test.declaration", type, kind);
             return repository;
         }
 
-        public void AddPinnedDeclaration(string name, string type)
+        public void AddPinnedDeclaration(string name, string type, string kind = "theorem")
         {
-            pinnedDeclarations.Add((name, type));
+            pinnedDeclarations.Add((name, type, kind));
             var declarations = string.Join(
                 ",",
                 pinnedDeclarations.Select(static item =>
-                    $$"""{"name":{{JsonSerializer.Serialize(item.Name)}},"type":{{JsonSerializer.Serialize(item.Type)}}}"""));
+                    $$"""{"name":{{JsonSerializer.Serialize(item.Name)}},"type":{{JsonSerializer.Serialize(item.Type)}},"kind":{{JsonSerializer.Serialize(item.Kind)}}}"""));
             TemporaryFileSystem.File.WriteAllText(
                 System.IO.Path.Combine(Path, "Golden", "Projection", "statement-projection-pilot-v1.json"),
                 $$"""{"schema":"statement-projection-pilot-fixture-v1","declarations":[{{declarations}}]}""");
