@@ -72,6 +72,8 @@ public sealed class ScribeTestMapDeclaredReadTests
                 var entry = Pick();
                 File.ReadAllText(entry.FullPath);
               }
+              private static Entry Pick() => new("D5/file.lean");
+              private sealed record Entry(string FullPath);
             }
             """;
 
