@@ -84,7 +84,7 @@ internal static class Program
         }
 
         var plan = EngineeringTestPlanDeriver.DeriveSnapshot(
-            BaseSnapshot(options.RepositoryRoot, @base),
+            RevisionSnapshot(options.RepositoryRoot, @base, "protected base"),
             changedPaths,
             full == "1");
         WriteArtifact(options.PlanFile, new EngineeringTestPlanArtifact(2, head, @base, plan));
@@ -102,7 +102,7 @@ internal static class Program
                 JsonOptions) ?? throw new InvalidDataException("plan artifact is empty");
             ValidateArtifact(artifact, head, @base);
             var changedPaths = GitPaths(options.RepositoryRoot, @base, head);
-            var baseSnapshot = BaseSnapshot(options.RepositoryRoot, @base);
+            var baseSnapshot = RevisionSnapshot(options.RepositoryRoot, @base, "protected base");
             var expected = EngineeringTestPlanDeriver.DeriveSnapshot(baseSnapshot, changedPaths);
             var forcedFull = artifact.Plan!.Kind == EngineeringTestPlanKind.Full
                 ? EngineeringTestPlanDeriver.DeriveSnapshot(baseSnapshot, changedPaths, full: true)
@@ -119,22 +119,32 @@ internal static class Program
         catch (Exception exception)
         {
             plan = EngineeringTestPlanDeriver.DeriveSnapshot(
-                BaseSnapshot(options.RepositoryRoot, @base),
+                RevisionSnapshot(options.RepositoryRoot, @base, "protected base"),
                 GitPaths(options.RepositoryRoot, @base, head),
                 full: true);
             Console.Error.WriteLine($"ENGINEERING_TEST_PLAN_FALLBACK {exception.Message}");
         }
 
         WritePlan(plan);
+        IReadOnlyList<(string Assembly, string Id)> candidateSourceIdentities =
+            plan.Kind == EngineeringTestPlanKind.None
+                ? []
+                : EngineeringTestPlanDeriver.DeriveSourceIdentities(
+                    RevisionSnapshot(options.RepositoryRoot, head, "candidate"));
         return EngineeringTestExecutor.Execute(
             plan,
-            invocation => RunTests(options.RepositoryRoot, plan.ChangedPaths, invocation));
+            invocation => RunTests(
+                options.RepositoryRoot,
+                plan.ChangedPaths,
+                invocation,
+                candidateSourceIdentities));
     }
 
     private static int RunTests(
         string repositoryRoot,
         IReadOnlyList<string> changedPaths,
-        EngineeringTestInvocation invocation)
+        EngineeringTestInvocation invocation,
+        IReadOnlyList<(string Assembly, string Id)> candidateSourceIdentities)
     {
         var resultsDirectory = Directory.CreateTempSubdirectory("stratalint-engineering-tests-").FullName;
         var startInfo = new ProcessStartInfo
@@ -165,7 +175,10 @@ internal static class Program
 
             try
             {
-                var executed = VerifyTestEvidence(resultsDirectory);
+                var executed = VerifyTestEvidence(
+                    resultsDirectory,
+                    invocation.ExpectedTests,
+                    candidateSourceIdentities);
                 Console.WriteLine(
                     $"ENGINEERING_TEST_EXECUTED target={JsonSerializer.Serialize(invocation.Target)} "
                     + $"filter={JsonSerializer.Serialize(invocation.Filter)} evidence=trx executed={executed}");
@@ -183,8 +196,41 @@ internal static class Program
         }
     }
 
-    private static int VerifyTestEvidence(string resultsDirectory) =>
-        TestResultEvidence.Load(resultsDirectory).Executed;
+    private static int VerifyTestEvidence(
+        string resultsDirectory,
+        IReadOnlyList<EngineeringSelectedTest> expectedTests,
+        IReadOnlyList<(string Assembly, string Id)> candidateSourceIdentities) =>
+        VerifyExpectedTestEvidence(
+            TestResultEvidence.Load(resultsDirectory),
+            expectedTests.Select(static test => (test.Assembly, test.Id)),
+            candidateSourceIdentities,
+            Console.Out);
+
+    internal static int VerifyExpectedTestEvidence(
+        TestResultEvidence evidence,
+        IEnumerable<(string Assembly, string Id)> expectedTests,
+        IEnumerable<(string Assembly, string Id)> candidateSourceTests,
+        TextWriter standardOutput)
+    {
+        var comparison = evidence.CompareExpectedTests(expectedTests, candidateSourceTests);
+        foreach (var exemption in comparison.Exemptions)
+        {
+            standardOutput.WriteLine(
+                $"ENGINEERING_TEST_IDENTITY_EXEMPTED assembly={JsonSerializer.Serialize(exemption.Assembly)} "
+                + $"id={JsonSerializer.Serialize(exemption.Id)} reason=candidate_source_absent");
+        }
+
+        if (comparison.Blocking.Count != 0)
+        {
+            throw new InvalidDataException(
+                $"TRX is missing protected-base planned test identities count={comparison.Blocking.Count} tests="
+                + string.Join(
+                    " | ",
+                    comparison.Blocking.Select(static test => $"{test.Assembly}::{test.Id}")));
+        }
+
+        return evidence.Executed;
+    }
 
     private static int ListTestOwnerAssemblies(
         IReadOnlyList<string> arguments,
@@ -311,13 +357,16 @@ internal static class Program
             .Split('\0', StringSplitOptions.RemoveEmptyEntries);
     }
 
-    private static RepositorySnapshot BaseSnapshot(string repositoryRoot, string @base) =>
-        SnapshotDecoder.Decode(GitRepositorySnapshotReader.ReadRevision(repositoryRoot, @base)) switch
+    private static RepositorySnapshot RevisionSnapshot(
+        string repositoryRoot,
+        string revision,
+        string description) =>
+        SnapshotDecoder.Decode(GitRepositorySnapshotReader.ReadRevision(repositoryRoot, revision)) switch
         {
             SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,
             SnapshotDecodeOutcome.InfrastructureFailure failure =>
-                throw new InvalidDataException($"protected base snapshot is invalid: {failure.Message}"),
-            _ => throw new InvalidDataException("protected base snapshot decode returned an unknown outcome"),
+                throw new InvalidDataException($"{description} snapshot is invalid: {failure.Message}"),
+            _ => throw new InvalidDataException($"{description} snapshot decode returned an unknown outcome"),
         };
 
     private sealed record EngineeringTestPlanArtifact(

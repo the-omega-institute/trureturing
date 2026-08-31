@@ -56,6 +56,7 @@ public sealed partial class MakeWorkflowTests
         "ingest",
         "align-digestion-status",
         "echo-residual-summary",
+        "digestion-readiness",
         "show-atom",
         "truth-export",
         "deliver-check",
