@@ -7,29 +7,35 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.Budget;
 internal sealed class OddTestBudgetUpperBoundDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A feasible finite odd test bounds the budget of a negative rank-one pencil from above.",
-        H("Odd-Test Budget Upper Bound"),
+        "The admissible finite odd-test family bounds a negative rank-one pencil's budget "
+            + "by its Rayleigh-infimum endpoint.",
+        H("Odd-Test Family Budget Upper Bound"),
         Blocks(
             Describe.Lean(
                 DescribeId.Create("odd-test-budget-at-most-upper"),
                 DeclarationHandle.Create(
                     "D5/S3/Weil/Budget/OddTestBudgetUpperBound."
                         + "odd_test_budget_at_most_upper"),
-                H("One odd test requires a bounded budget"),
+                H("The odd-test family bounds the budget by its infimum endpoint"),
                 StatementSource.FromAuthor(TheoremFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "The finite complex matrix, boundary vector, and selected odd test "
-                            + "construct the negative rank-one pencil inequality directly.")),
+                        "The public odd-test quotient set contains the Rayleigh quotient of "
+                            + "every finite complex test with nonzero boundary pairing. Its "
+                            + "upper endpoint is the reference budget plus the real infimum of "
+                            + "that entire set.")),
                     Paragraph(Text(
-                        "A nonzero boundary pairing makes its norm square positive. Dividing "
-                            + "the pencil inequality by that quantity gives the displayed "
-                            + "test-specific Rayleigh upper bound.")),
+                        "The family is explicitly nonempty and bounded below. Nonnegativity of "
+                            + "the negative rank-one pencil is assumed for every admissible test; "
+                            + "each nonzero boundary pairing has positive norm square, so division "
+                            + "makes the shifted budget a lower bound of every quotient. The "
+                            + "conditional infimum property then gives the endpoint bound.")),
                     Paragraph(Text(
-                        "Repository, pinned-library, and public Lean searches found no exact "
-                            + "budget theorem; the proof applies the pinned norm-square and "
-                            + "positive-division lemmas."))),
+                        "The repository contains a generic parity endpoint construction, but no "
+                            + "finite-matrix theorem exposing this negative rank-one pencil. The "
+                            + "proof reuses the pinned norm-square, positive-division, and real "
+                            + "infimum lemmas."))),
                 DescribeRole.Theorem))));
 
     private static Formula TheoremFormula()
@@ -41,6 +47,7 @@ internal sealed class OddTestBudgetUpperBoundDocument : IScribeDocumentDefinitio
         Formula baseMatrix = F.Id("B");
         Formula boundary = F.Id("s");
         Formula test = F.Id("o");
+        Formula quotient = F.Id("q");
         Formula reference = F.Id("R0");
         Formula budget = F.Id("R");
         Formula finCount = Call("Fin", count);
@@ -55,9 +62,18 @@ internal sealed class OddTestBudgetUpperBoundDocument : IScribeDocumentDefinitio
             Sp, Cdot, Sp, boundarySquare);
         Formula pencilValue = Seq(
             quadratic, Sp, Minus, Sp, shiftedBudget);
-        Formula upper = Seq(
-            reference, Sp, Plus, Sp,
-            new Formula.Fraction(quadratic, boundarySquare));
+        Formula rayleigh = new Formula.Fraction(quadratic, boundarySquare);
+        Formula quotientPredicate = Seq(
+            Exists, Sp, test, Colon, Sp, vector, Comma, Sp,
+            boundaryPairing, Sp, Neq, Sp, D(0), Sp, Land, Sp,
+            quotient, Sp, Eq, Sp, rayleigh);
+        Formula quotientSet = new Formula.SetBuilder(
+            quotientPredicate, quotient, real);
+        Formula universalPencil = Seq(
+            Forall, Sp, test, Colon, Sp, vector, Comma, Sp,
+            boundaryPairing, Sp, Neq, Sp, D(0), Sp, Rightarrow, Sp,
+            D(0), Sp, Le, Sp, pencilValue);
+        Formula upper = Seq(reference, Sp, Plus, Sp, Call("sInf", quotientSet));
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
@@ -65,13 +81,16 @@ internal sealed class OddTestBudgetUpperBoundDocument : IScribeDocumentDefinitio
             RowBreak, Grp(),
             baseMatrix, Colon, Sp, matrix, Comma,
             RowBreak, Grp(),
-            boundary, Comma, Sp, test, Colon, Sp, vector, Comma,
+            boundary, Colon, Sp, vector, Comma,
             RowBreak, Grp(),
             reference, Comma, Sp, budget, Colon, Sp, real, Comma,
             RowBreak, Grp(),
+            Exists, Sp, test, Colon, Sp, vector, Comma, Sp,
             boundaryPairing, Sp, Neq, Sp, D(0), Sp, Land,
             RowBreak, Grp(),
-            D(0), Sp, Le, Sp, pencilValue, Sp, Rightarrow,
+            Call("BddBelow", quotientSet), Sp, Land,
+            RowBreak, Grp(),
+            universalPencil, Sp, Rightarrow,
             RowBreak, Grp(),
             budget, Sp, Le, Sp, upper, Dot,
             End, Grp(F.Id("gathered"))));
