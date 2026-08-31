@@ -436,9 +436,95 @@ public sealed partial class DigestionAlignmentTests
         Assert.Single(result.Residual);
     }
 
+    [Fact]
+    public void SettledReceiptSurvivesAcknowledgedStaleSourceViewSplit()
+    {
+        var sourceBytes = Encoding.UTF8.GetBytes("opaque settled source\n");
+        var atomBytes = Encoding.UTF8.GetBytes("settled atom\n");
+        var atom = new DigestionAtom(
+            0,
+            atomBytes.Length,
+            ImmutableArray.CreateRange(atomBytes),
+            DigestionFingerprint.Compute(atomBytes.AsSpan()),
+            []);
+        var capture = DigestionCasStore.Capture(atom.RawBytes.AsSpan());
+        var atomId = AtomId(atom);
+        var baselineEntry = Entry("baseline", atom) with
+        {
+            ProjectedStatus = new DigestionStatus(
+                DigestionMigrationState.Absorbed,
+                DigestionTruthState.Closed),
+        };
+        var candidateEntry = baselineEntry with
+        {
+            ProjectedStatus = new DigestionStatus(
+                DigestionMigrationState.Partial,
+                DigestionTruthState.Closed),
+        };
+        var baseline = WithAtomizer(
+            Ledger([atomId], baselineEntry),
+            AtomizerRegistry.NoAtomizerId);
+        var candidate = WithAtomizer(
+            Ledger([], candidateEntry),
+            AtomizerRegistry.NoAtomizerId);
 
+        var result = DigestionLedgerAligner.Evaluate(
+            candidate,
+            Snapshot(sourceBytes, [capture]),
+            baseline,
+            DigestionAlignmentMode.Admission);
 
+        Assert.Equal(DigestionReceiptAlignment.Seen, result.AlignmentFor(atomId));
+    }
 
+    [Fact]
+    public void ProjectedStatusDirectoryMoveSurvivesBaselineIdentity()
+    {
+        var sourceBytes = Encoding.UTF8.GetBytes("status directory move source\n");
+        var atomBytes = Encoding.UTF8.GetBytes("settled atom\n");
+        var atom = new DigestionAtom(
+            0,
+            atomBytes.Length,
+            ImmutableArray.CreateRange(atomBytes),
+            DigestionFingerprint.Compute(atomBytes.AsSpan()),
+            []);
+        var capture = DigestionCasStore.Capture(atom.RawBytes.AsSpan());
+        var baselineEntry = Entry("baseline", atom) with
+        {
+            ProjectedStatus = new DigestionStatus(
+                DigestionMigrationState.Partial,
+                DigestionTruthState.Closed),
+        };
+        var candidateEntry = baselineEntry with
+        {
+            ProjectedStatus = new DigestionStatus(
+                DigestionMigrationState.Absorbed,
+                DigestionTruthState.Closed),
+        };
+        var baseline = WithAtomizer(
+            Ledger([], baselineEntry),
+            AtomizerRegistry.NoAtomizerId);
+        var candidate = WithAtomizer(
+            Ledger([], candidateEntry),
+            AtomizerRegistry.NoAtomizerId);
+
+        var result = DigestionLedgerAligner.Evaluate(
+            candidate,
+            Snapshot(
+                sourceBytes,
+                [capture],
+                extraEntries:
+                [
+                    new RawRepositoryEntry(
+                        $"Meta/Digestion/backfill/source/absorbed-closed/{AtomId(atom)}.yaml",
+                        BackfillInventoryWriter.WriteAtom(candidateEntry)),
+                ]),
+            baseline,
+            DigestionAlignmentMode.Admission);
+
+        Assert.Empty(result.Findings);
+        Assert.Equal(DigestionReceiptAlignment.Seen, result.AlignmentFor(AtomId(atom)));
+    }
 
     [Fact]
     public void FingerprintTamperingCannotInheritBoundaryBaselineIdentity()
