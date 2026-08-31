@@ -2,7 +2,7 @@
 
 ## Abstract
 
-A reflected critical-line pole pair generates a finite positive Pick Gram matrix with a two-row factor.
+Critical-line oscillator resolvents generate a two-row positive Pick Gram matrix.
 
 **Definition 1.1 (Reflected oscillator feature matrix).**
 
@@ -30,7 +30,7 @@ The Pick atom is defined as the conjugate-transpose Gram product of the two refl
 
 **Theorem 1.3 (The oscillator Pick matrix is positive semidefinite).**
 
-$$\forall I: \operatorname{Type}, \gamma \in \mathbb{R}, nodes: I \mapsto \mathbb{C},\\{}\operatorname{Fintype}(I) \Rightarrow\\{}\operatorname{PosSemidef}(\operatorname{criticalLineOscillatorPickMatrix}(\gamma, nodes)).$$
+$$\forall I: \operatorname{Type}, gamma \in \mathbb{R}, nodes: I \mapsto \mathbb{C},\\{}\operatorname{Fintype}(I) \Rightarrow\\{}\operatorname{PosSemidef}(\operatorname{criticalLineOscillatorPickMatrix}(gamma, nodes)).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/Pick/CriticalLineOscillatorGram.critical_line_oscillator_pick_gram` (`✓ std3`). ∎
 
