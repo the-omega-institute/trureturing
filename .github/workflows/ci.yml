@@ -88,13 +88,44 @@ jobs:
           fi
           exit 1
 
-      - name: Install pinned SDK for test planning
+      - name: Materialize protected-base engineering planning harness
+        id: base-harness
+        if: steps.checkout-merge.outcome == 'success'
+        shell: bash
+        run: |
+          set -euo pipefail
+          base_sha="$(git -C candidate rev-parse HEAD^1)"
+          base_harness_root="$RUNNER_TEMP/protected-base-engineering-planning-harness"
+          test ! -e "$base_harness_root"
+          cleanup_on_error() {
+            status=$?
+            if [[ "$status" -ne 0 && -e "$base_harness_root" ]]; then
+              git -C candidate worktree remove --force "$base_harness_root" || true
+            fi
+            return "$status"
+          }
+          trap cleanup_on_error EXIT
+          git -C candidate worktree add --detach "$base_harness_root" "$base_sha"
+          printf 'root=%s\n' "$base_harness_root" >> "$GITHUB_OUTPUT"
+          trap - EXIT
+
+      - name: Install base-pinned SDK for test planning
         uses: actions/setup-dotnet@v4
         with:
-          global-json-file: candidate/global.json
+          global-json-file: ${{ steps.base-harness.outputs.root }}/global.json
+      - name: Restore protected-base locked dependencies for test planning
+        shell: bash
+        env:
+          BASE_HARNESS_ROOT: ${{ steps.base-harness.outputs.root }}
+        run: |
+          set -euo pipefail
+          cd "$BASE_HARNESS_ROOT"
+          dotnet restore tools/StrataLint.sln --locked-mode
       - name: Plan base-owned engineering tests
         id: scope
         shell: bash
+        env:
+          BASE_HARNESS_ROOT: ${{ steps.base-harness.outputs.root }}
         run: |
           set -euo pipefail
           head_sha="$(git -C candidate rev-parse HEAD)"
@@ -111,22 +142,17 @@ jobs:
               *) base_full_required=true ;;
             esac
           done < <(git -C candidate diff --name-only -z --no-renames --diff-filter=ACDMRTUXB "$base_sha" "$head_sha" --)
-          if [[ "$GITHUB_EVENT_NAME" == "push" || "$base_full_required" == "true" ]]; then
+          if [[ "$base_full_required" == "true" ]]; then
             base_full_required=true
-            FULL=1 make -C candidate/tools engineering-tests MODE=plan HEAD="$head_sha" BASE="$base_sha" PLAN_FILE="$plan_file"
+            FULL=1 make -C "$BASE_HARNESS_ROOT/tools" engineering-tests-base-cwd REPOSITORY="$GITHUB_WORKSPACE/candidate" MODE=plan HEAD="$head_sha" BASE="$base_sha" PLAN_FILE="$plan_file"
           else
-            make -C candidate/tools engineering-tests MODE=plan HEAD="$head_sha" BASE="$base_sha" PLAN_FILE="$plan_file"
+            make -C "$BASE_HARNESS_ROOT/tools" engineering-tests-base-cwd REPOSITORY="$GITHUB_WORKSPACE/candidate" MODE=plan HEAD="$head_sha" BASE="$base_sha" PLAN_FILE="$plan_file"
           fi
           fallback_count=0
           plan_summary=""
-          validator_ref="$head_sha"
-          if [[ "$GITHUB_EVENT_NAME" == "pull_request_target" ]]; then
-            validator_ref="$base_sha"
-          fi
           plan_summary="$(
-            git -C candidate show \
-              "${validator_ref}:tools/scripts/workflow/engineering-test-plan-validator.sh" |
-              /bin/bash -s -- "$plan_file" "$head_sha" "$base_sha" --artifact-fallback
+            /bin/bash "$BASE_HARNESS_ROOT/tools/scripts/workflow/engineering-test-plan-validator.sh" \
+              "$plan_file" "$head_sha" "$base_sha" --artifact-fallback
           )"
           IFS=$'\t' read -r state artifact_changed_count selected_count <<< "$plan_summary"
           if [[ "$artifact_changed_count" -ne "$changed_count"
@@ -150,6 +176,23 @@ jobs:
           echo "changed_count=$changed_count" >> "$GITHUB_OUTPUT"
           echo "selected_count=$selected_count" >> "$GITHUB_OUTPUT"
           echo "fallback_count=$fallback_count" >> "$GITHUB_OUTPUT"
+
+      - name: Remove protected-base engineering planning harness
+        if: always() && steps.base-harness.outcome == 'success'
+        shell: bash
+        env:
+          BASE_HARNESS_ROOT: ${{ steps.base-harness.outputs.root }}
+        run: |
+          set -euo pipefail
+          if [[ -d "$BASE_HARNESS_ROOT" && -d candidate ]]; then
+            git -C candidate worktree remove --force "$BASE_HARNESS_ROOT"
+          fi
+          test ! -e "$BASE_HARNESS_ROOT"
+
+      - name: Install candidate-pinned SDK for candidate build and tests
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: candidate/global.json
       - name: Resolve judge binary content address before build outputs exist
         id: judge-address
         if: steps.scope.outputs.run_required == 'true'
@@ -219,7 +262,7 @@ jobs:
         run: |
           set -euo pipefail
           plan_file="$RUNNER_TEMP/engineering-test-plan.json"
-          base_harness_root="$RUNNER_TEMP/protected-base-engineering-harness"
+          base_harness_root="$RUNNER_TEMP/protected-base-engineering-execution-harness"
           test ! -e "$base_harness_root"
           rm -f -- "$RUNNER_TEMP/engineering-test-plan.json"
           git -C candidate worktree add --detach "$base_harness_root" "$ENGINEERING_BASE"
@@ -227,12 +270,18 @@ jobs:
             git -C candidate worktree remove --force "$base_harness_root"
           }
           trap cleanup_base_harness EXIT
+          test "$(git -C "$base_harness_root" rev-parse HEAD)" = "$ENGINEERING_BASE"
+          test -z "$(git -C "$base_harness_root" status --short --untracked-files=no)"
+          (
+            cd "$base_harness_root"
+            dotnet restore tools/StrataLint.sln --locked-mode
+          )
           if [[ "$ENGINEERING_FULL_REQUIRED" == "true" ]]; then
-            FULL=1 make -C "$base_harness_root/tools" engineering-tests REPOSITORY="$GITHUB_WORKSPACE/candidate" MODE=plan HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$plan_file"
+            FULL=1 make -C "$base_harness_root/tools" engineering-tests-base-cwd REPOSITORY="$GITHUB_WORKSPACE/candidate" MODE=plan HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$plan_file"
           else
-            make -C "$base_harness_root/tools" engineering-tests REPOSITORY="$GITHUB_WORKSPACE/candidate" MODE=plan HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$plan_file"
+            make -C "$base_harness_root/tools" engineering-tests-base-cwd REPOSITORY="$GITHUB_WORKSPACE/candidate" MODE=plan HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$plan_file"
           fi
-          make -C "$base_harness_root/tools" engineering-tests REPOSITORY="$GITHUB_WORKSPACE/candidate" MODE=execute HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$plan_file"
+          make -C "$base_harness_root/tools" engineering-tests-base-cwd REPOSITORY="$GITHUB_WORKSPACE/candidate" MODE=execute HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$plan_file"
 
       - name: Run candidate selftest twice and compare bytes
         if: steps.scope.outputs.run_required == 'true'
