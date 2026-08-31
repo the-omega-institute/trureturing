@@ -18,7 +18,9 @@ internal static class Program
     };
 
     public static int Main(string[] arguments) =>
-        Run(arguments, TestResultEvidence.Load, Console.Out, Console.Error);
+        arguments.FirstOrDefault() == "self-lock-probe"
+            ? SelfLockProbeProgram.Run(arguments.Skip(1).ToArray())
+            : Run(arguments, TestResultEvidence.Load, Console.Out, Console.Error);
 
     internal static int Run(
         IReadOnlyList<string> arguments,
