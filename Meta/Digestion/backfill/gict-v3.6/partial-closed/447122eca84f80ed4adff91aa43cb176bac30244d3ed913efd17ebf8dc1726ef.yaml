@@ -21,10 +21,10 @@ receipts:
       target_statement_id: sha256:0caaa569dfd4278ea7784790034d37682e28d6ac703ff5a7ca9a8fbbfbf5743b
     - gid: D5/S1/Phase/ZeroOrbitCongruence.eisenstein_norm_mod_three
       source_sha256: sha256:447122eca84f80ed4adff91aa43cb176bac30244d3ed913efd17ebf8dc1726ef
-      target_statement_id: sha256:d7c5ae0ee5a33adab783955c84377089ae0de554d368db1cccd217989e983786
+      target_statement_id: sha256:efb152f8f30f84be2c708eca28d84ac35b632e1200999b661ea6804ab717f500
     - gid: D5/S1/Phase/ZeroOrbitCongruence.thirty_six_dvd_of_local_candidates_and_eisenstein_norm
       source_sha256: sha256:447122eca84f80ed4adff91aa43cb176bac30244d3ed913efd17ebf8dc1726ef
-      target_statement_id: sha256:ed53bf4af84cef6493391ed9ff73bf32c945bec346957267208fd47f3d7853e9
+      target_statement_id: sha256:ec8bbbca86dab601ef48d6bc724273760fbcea897ae9f226fc19877c9b21c1ad
   scribe:
     - gid: D5/S1/Phase/SeatTowerCombinatorics.even_offset_skeleton_count
       definition_sha256: sha256:466422dc735d4dc550e46a2cb24f7f1cacd0880c37ff6e8bf96af19a36db1939

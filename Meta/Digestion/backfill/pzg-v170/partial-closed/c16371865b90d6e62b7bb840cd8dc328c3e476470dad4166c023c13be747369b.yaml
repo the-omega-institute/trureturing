@@ -52,7 +52,7 @@ receipts:
       target_statement_id: sha256:579f4c5973935047cafc6b410474d0a896e2a1e1754f4abe8d816d4f179d5725
     - gid: D5/S1/Depth/StationingCombinatorics.stationing_count
       source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
-      target_statement_id: sha256:4586693c09d7166b022400c075b0d979304951d81d298b3803e22013ed86e3a5
+      target_statement_id: sha256:2bdb69cbdc1b5e601c1844163625e6f57d0fcaa83be353914fc1691f378cb440
     - gid: D5/S1/Depth/TwelveScaleReduction.normalized_magnitude_eq_twelve_scale_iff
       source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
       target_statement_id: sha256:5b74c2340ecc8d5b75e77f89faffb5a052be49f0fef0f9d5129e801138b81dee
@@ -73,7 +73,7 @@ receipts:
       target_statement_id: sha256:c9a43ce5ebfecedfe6d7d43cdee006df51abe63fbd607018d7bea4a1ca1028f6
     - gid: D5/S1/Phase/SeatTowerCombinatorics.mirror_representative_count
       source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
-      target_statement_id: sha256:ef9304844411ad34b28870f5a5ad171d131ca0371e31c9a4aafd880bdb27f5ba
+      target_statement_id: sha256:9ded20ed1bfc88c79db1913c5b3045af0e64d21ccb8dc79ddd4a19bbbb130dba
     - gid: D5/S1/Phase/SeatTowerConsequences.singleton_stationing_choice_count
       source_sha256: sha256:c16371865b90d6e62b7bb840cd8dc328c3e476470dad4166c023c13be747369b
       target_statement_id: sha256:6666b90019b26c32797254ba1de6431b2ee0d16647f8893e68cc37aeee45ae00

@@ -8,7 +8,7 @@ receipts:
   coverage:
     - gid: D5/S3/Analytic/PrimeProducts/FiniteMarginalGlobalSupportContrast.finite_marginals_and_global_support_contrast
       source_sha256: sha256:204e741d4570282bcf518126bf0682afcb9fdd3da7e9639d9d6608cebd503375
-      target_statement_id: sha256:13bce1a1c6f110ba2ace70e9cda19e5d00eac56a70ad3cbeeda10711ea633ac8
+      target_statement_id: sha256:6a2bddc3a2f9a0bac9b19a2c018b5400274ffada85babaf2b2ee3ecd202d27eb
   scribe:
     - gid: D5/S3/Analytic/PrimeProducts/FiniteMarginalGlobalSupportContrast.finite_marginals_and_global_support_contrast
       definition_sha256: sha256:6f62c3d160a30146540354bbb1e75be285575ef5044a65fdeb767e9a2a447bbd

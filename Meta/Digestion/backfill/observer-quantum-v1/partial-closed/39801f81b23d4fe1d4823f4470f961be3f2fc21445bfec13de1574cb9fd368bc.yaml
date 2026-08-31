@@ -34,7 +34,7 @@ receipts:
       target_statement_id: sha256:ef9894d27e409099ecdfdaf45f9052b405cd7f87c2cab817b66736d97ad806b7
     - gid: D5/S3/Quantum/QubitWitnesses.equal_superposition_phase_damping_certificate
       source_sha256: sha256:39801f81b23d4fe1d4823f4470f961be3f2fc21445bfec13de1574cb9fd368bc
-      target_statement_id: sha256:c8327bd4d719d03c216741b02421949a14b7f4c95bd352a557b422a648da4dd5
+      target_statement_id: sha256:30e2dba93a1346d15e1ec2b2d54424c09f3f7f09876197609f2c4c81c17a8022
   scribe: []
   unresolved_subitems:
     - bookkeeping-is-decoherence-identification
