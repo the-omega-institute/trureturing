@@ -11,9 +11,8 @@ internal sealed class ReflectedGrowthPairSecondOrderSpectrumDocument
         "D5/S3/Analytic/Adelic/ReflectedGrowthPairSecondOrderSpectrum.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The negative-square signed determinant of a reflected exponential pair is its "
-            + "negative-second-derivative eigenvalue, while the symmetric observer is "
-            + "first-order blind and second-order sensitive.",
+        "Identify the reflected-pair signed determinant with the negative "
+            + "second-derivative eigenvalue.",
         H("Reflected Growth Pair and the Second-Order Negative Spectrum"),
         Blocks(
             Describe.Lean(
