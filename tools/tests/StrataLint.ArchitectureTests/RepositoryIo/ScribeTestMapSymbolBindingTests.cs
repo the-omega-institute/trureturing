@@ -386,7 +386,6 @@ public sealed class ScribeTestMapSymbolBindingTests
         var plan = EngineeringTestPlanPolicy.Evaluate(
             ["D5/metadata-unavailable.lean"],
             map,
-            new HashSet<string>(StringComparer.Ordinal),
             assemblyByProject: new Dictionary<string, string>(StringComparer.Ordinal)
             {
                 [projectPath] = "MissingMetadata.Tests",
