@@ -23,18 +23,6 @@ internal static class BackfillInventoryWriter
     {
         ArgumentNullException.ThrowIfNull(entry);
         var builder = new StringBuilder();
-        if (entry.Boundary is { } boundary)
-        {
-            Line(builder, "boundary:");
-            Line(builder, $"  ast_path: {Scalar(boundary.AstPath)}");
-            Line(builder, $"  start_byte: {boundary.StartByte}");
-            Line(builder, $"  end_byte: {boundary.EndByte}");
-        }
-        else
-        {
-            Line(builder, $"ast_path: {Scalar(entry.AstPath)}");
-        }
-
         Line(builder, "fingerprints:");
         Line(builder, $"  raw_sha256: {Scalar(entry.Fingerprints.RawSha256)}");
         Line(builder, $"  normalized_sha256: {Scalar(entry.Fingerprints.NormalizedSha256)}");
@@ -117,18 +105,6 @@ internal static class BackfillInventoryWriter
     private static void Entry(StringBuilder builder, DigestionLedgerEntry entry)
     {
         Line(builder, $"      - atom_id: {Scalar(entry.AtomId)}");
-        if (entry.Boundary is { } boundary)
-        {
-            Line(builder, "        boundary:");
-            Line(builder, $"          ast_path: {Scalar(boundary.AstPath)}");
-            Line(builder, $"          start_byte: {boundary.StartByte}");
-            Line(builder, $"          end_byte: {boundary.EndByte}");
-        }
-        else
-        {
-            Line(builder, $"        ast_path: {Scalar(entry.AstPath)}");
-        }
-
         Line(builder, "        fingerprints:");
         Line(builder, $"          raw_sha256: {Scalar(entry.Fingerprints.RawSha256)}");
         Line(builder, $"          normalized_sha256: {Scalar(entry.Fingerprints.NormalizedSha256)}");
@@ -333,9 +309,12 @@ internal static class BackfillInventoryWriter
 
     private static string Scalar(string value)
     {
-        if (RequiresStringQuotes(value))
+        if (RequiresStringQuotes(value)
+            || value.Contains(": ", StringComparison.Ordinal))
         {
-            return "'" + value + "'";
+            return value.Contains('\'', StringComparison.Ordinal)
+                ? TomlGenreToken(value)
+                : "'" + value + "'";
         }
 
         if (string.IsNullOrWhiteSpace(value)

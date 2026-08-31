@@ -73,7 +73,28 @@ internal sealed record TestResultEvidence(
     internal int CountAssembly(string expectedAssembly) =>
         ExecutedTests.Count(test =>
             StringComparer.OrdinalIgnoreCase.Equals(test.Assembly, expectedAssembly));
+
+    internal ExpectedTestEvidence CompareExpectedTests(
+        IEnumerable<(string Assembly, string Id)> expectedTests,
+        IEnumerable<(string Assembly, string Id)> candidateSourceTests)
+    {
+        var actual = ExecutedTests.ToHashSet(EngineeringTestIdentityComparer.Instance);
+        var candidate = candidateSourceTests.ToHashSet(EngineeringTestIdentityComparer.Instance);
+        var missing = expectedTests
+            .Distinct(EngineeringTestIdentityComparer.Instance)
+            .Where(test => !actual.Contains(test))
+            .OrderBy(static test => test.Assembly, StringComparer.OrdinalIgnoreCase)
+            .ThenBy(static test => test.Id, StringComparer.Ordinal)
+            .ToArray();
+        return new ExpectedTestEvidence(
+            missing.Where(candidate.Contains).ToArray(),
+            missing.Where(test => !candidate.Contains(test)).ToArray());
+    }
 }
+
+internal sealed record ExpectedTestEvidence(
+    IReadOnlyList<(string Assembly, string Id)> Blocking,
+    IReadOnlyList<(string Assembly, string Id)> Exemptions);
 
 internal sealed class InfrastructureUnresolvedException(IReadOnlyList<string> tests)
     : Exception(

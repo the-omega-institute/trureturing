@@ -1,0 +1,31 @@
+fingerprints:
+  raw_sha256: sha256:8ed66d6b839f82427bfca74e4dcd8e5684c06a56deaf0d7ec8e1b284f89adfec
+  normalized_sha256: sha256:8ed66d6b839f82427bfca74e4dcd8e5684c06a56deaf0d7ec8e1b284f89adfec
+cas_ref: sha256:8ed66d6b839f82427bfca74e4dcd8e5684c06a56deaf0d7ec8e1b284f89adfec
+coverage_gids:
+  - D5/S3/Zeros/Endpoints/XiEndpointValues.xi_reading_endpoint_values
+  - D5/S3/Zeros/CompletedZeta.xi_reading_differentiable
+  - D5/S3/Zeros/CompletedZeta.xi_reading_eq_completed_zeta
+  - D5/S3/Weil/SpectralDynamics.critical_line_characterizations
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/SpectralDynamics.critical_line_characterizations
+      source_sha256: sha256:8ed66d6b839f82427bfca74e4dcd8e5684c06a56deaf0d7ec8e1b284f89adfec
+      target_statement_id: sha256:dc256aba0acd189a0637ceaffa25da20302027b1666cf98bb9db774029ce4bc8
+  scribe:
+    - gid: D5/S3/Weil/SpectralDynamics.critical_line_characterizations
+      definition_sha256: sha256:bde4ed75cb707872d65ee1d8275ee4883ea7cd4a9fe14d00b44b6f218b59be0f
+      emission_sha256: sha256:780fb2bf4ea155ef65e33ba9430d282941b7866cdb0b7dbff6c2a46c9c0380ee
+  unresolved_subitems:
+    - off-line-zeros-preserve-listed-functional-identities
+    - off-line-zeros-violate-li-weil-qn-and-fluctuation-inequalities
+    - bohr-landau-measure-zero-interpretation
+    - integral-equalities-versus-pointwise-inequalities-dichotomy
+    - off-line-zero-as-virtual-vacuum-excitation
+    - rh-as-zero-vacuum-with-no-real-excitations
+    - bridge-conditional-variance-t-times-one-minus-t
+    - bridge-variance-five-point-numerical-certificate
+    - time-motion-as-product-of-distances-from-knowledge-endpoints
+    - completed-xi-as-pure-mid-interval-fluctuation-ledger
+    - phase-time-versus-irreversible-ledger-time
+    - finite-observer-motion-as-source-of-time-flow

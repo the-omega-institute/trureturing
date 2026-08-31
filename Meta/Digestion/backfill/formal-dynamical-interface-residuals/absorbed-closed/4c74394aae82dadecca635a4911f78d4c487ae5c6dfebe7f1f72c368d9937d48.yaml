@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:4c74394aae82dadecca635a4911f78d4c487ae5c6dfebe7f1f72c368d9937d48
+  normalized_sha256: sha256:4c74394aae82dadecca635a4911f78d4c487ae5c6dfebe7f1f72c368d9937d48
+cas_ref: sha256:4c74394aae82dadecca635a4911f78d4c487ae5c6dfebe7f1f72c368d9937d48
+coverage_gids:
+  - D5/S3/Quantum/Completion/DenseTowerStrongCompletion.dense_tower_strong_completion
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/Completion/DenseTowerStrongCompletion.dense_tower_strong_completion
+      source_sha256: sha256:4c74394aae82dadecca635a4911f78d4c487ae5c6dfebe7f1f72c368d9937d48
+      target_statement_id: sha256:c41defed9f6ebffcc359db88c75c4c8db822c49606ad7e5099a7c5b5d6a6eaeb
+  scribe:
+    - gid: D5/S3/Quantum/Completion/DenseTowerStrongCompletion.dense_tower_strong_completion
+      definition_sha256: sha256:3ea637017197802fdbf895c323387c8bcbe6cdbfd374ad04277af839be662524
+      emission_sha256: sha256:8db3c462812990fda43a5813618c153efd5e13a4b02b0b81f0713b13b7c681b2
+  unresolved_subitems: []

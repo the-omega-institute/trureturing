@@ -144,8 +144,6 @@ public sealed class DigestionCasStoreTests
                         "docs/source.md",
                         AtomizerRegistry.NoAtomizerId,
                         "synthetic-atom",
-                        "theorem/1.1",
-                        null,
                         new DigestionFingerprints(rawSha256 ?? casRef, casRef),
                         [],
                         new DigestionReceipts([], [], [], [], null),

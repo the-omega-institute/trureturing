@@ -73,7 +73,7 @@ public sealed partial class ProductionEnvironmentTests
     public void IngestDeltaRejectsCasOrphanedByDeletedLastReferenceWithoutRecheckingHistoricalOrphan()
     {
         var fixture = UncoveredOnlyIngestFixture(addNewAtom: false);
-        var atomPath = DirectoryAtomPath("old-receipt", "residual-open");
+        var atomPath = DirectoryAtomPath(ExistingAtomId(fixture), "residual-open");
         var newlyOrphanedCasPath = Assert.Single(
             fixture.Files.Keys,
             DigestionCasStore.IsCanonicalPath);

@@ -87,6 +87,15 @@ public sealed class GenericDialectTests
             DigestionTestSupport.Snapshot(
                 (TheoryAtomizerDataLoader.DataPath, Encoding.UTF8.GetBytes(data))));
 
+    private static void AssertContentIdentities(IEnumerable<DigestionAtom> atoms, int expectedCount)
+    {
+        var materialized = atoms.ToArray();
+        Assert.Equal(expectedCount, materialized.Length);
+        Assert.All(materialized, static atom => Assert.Equal(
+            DigestionFingerprint.Compute(atom.RawBytes.AsSpan()).RawSha256,
+            atom.Fingerprints.RawSha256));
+    }
+
     private static DigestionLedgerAlignment Align(string atomizerId, byte[] bytes, string data)
     {
         var ledger = DigestionTestSupport.EmptyDocument(atomizerId);
@@ -108,9 +117,7 @@ public sealed class GenericDialectTests
 
         var document = AtomizerRegistry.Atomize($"dialect:{DialectId}", bytes, rules);
 
-        Assert.Equal(
-            ["theorem/1.1", "observation/2.3.4"],
-            document.Claims.Select(static claim => claim.AstPath).ToArray());
+        AssertContentIdentities(document.Claims, 2);
         Assert.Equal(bytes, document.Reassemble().ToArray());
     }
 
@@ -122,9 +129,7 @@ public sealed class GenericDialectTests
         var alignment = Align($"dialect:{DialectId}", bytes, RulesWith(ProbeDialect));
 
         Assert.Empty(alignment.Findings);
-        Assert.Equal(
-            "unregistered/%E6%9C%AA%E7%99%BB%E8%AE%B0%E4%BD%93/1.1",
-            Assert.Single(alignment.Residual).Atom.AstPath);
+        AssertContentIdentities(alignment.Residual.Select(static item => item.Atom), 1);
         Assert.Empty(alignment.Fallbacks);
         Assert.Equal(
             ["未登记体"],
@@ -182,9 +187,7 @@ public sealed class GenericDialectTests
 
         var document = AtomizerRegistry.Atomize($"dialect:{HeadingDialectId}", bytes, rules);
 
-        Assert.Equal(
-            ["theorem/1.1"],
-            document.Claims.Select(static claim => claim.AstPath).ToArray());
+        AssertContentIdentities(document.Claims, 1);
         Assert.Equal(bytes, document.Reassemble().ToArray());
     }
 
@@ -199,9 +202,7 @@ public sealed class GenericDialectTests
             RulesWith(HeadingProbeDialect));
 
         Assert.Empty(alignment.Findings);
-        Assert.Equal(
-            "unregistered/%E6%9C%AA%E7%99%BB%E8%AE%B0%E4%BD%93/1.1",
-            Assert.Single(alignment.Residual).Atom.AstPath);
+        AssertContentIdentities(alignment.Residual.Select(static item => item.Atom), 1);
         Assert.Empty(alignment.Fallbacks);
         Assert.Equal(
             ["未登记体"],

@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:50bd2a2f5863556e64694e1746c5b94e432a27ea5ba5ddebb5f2f22c4a87d82d
+  normalized_sha256: sha256:50bd2a2f5863556e64694e1746c5b94e432a27ea5ba5ddebb5f2f22c4a87d82d
+cas_ref: sha256:50bd2a2f5863556e64694e1746c5b94e432a27ea5ba5ddebb5f2f22c4a87d82d
+coverage_gids:
+  - D5/S3/ConceptDynamics/InstitutionalCapture/PublicUnlinkabilityAccountabilityIncompatibility.public_unlinkability_accountability_incompatible
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/InstitutionalCapture/PublicUnlinkabilityAccountabilityIncompatibility.public_unlinkability_accountability_incompatible
+      source_sha256: sha256:50bd2a2f5863556e64694e1746c5b94e432a27ea5ba5ddebb5f2f22c4a87d82d
+      target_statement_id: sha256:41def0e5497caf6d67f1a917e6eb9f22b8a1c62657e97cdcf10416e96506d4ce
+  scribe:
+    - gid: D5/S3/ConceptDynamics/InstitutionalCapture/PublicUnlinkabilityAccountabilityIncompatibility.public_unlinkability_accountability_incompatible
+      definition_sha256: sha256:98bf2eae5dfe3740e3f8e0a49ee08dde5a5353e1e86a298a46d127505c08d573
+      emission_sha256: sha256:9b69e1aa811c44c4b154b5102192b5e16047755bc826aff99925df0f319c97bd
+  unresolved_subitems: []

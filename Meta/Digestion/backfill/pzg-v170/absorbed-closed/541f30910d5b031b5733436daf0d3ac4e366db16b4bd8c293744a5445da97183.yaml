@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:541f30910d5b031b5733436daf0d3ac4e366db16b4bd8c293744a5445da97183
+  normalized_sha256: sha256:541f30910d5b031b5733436daf0d3ac4e366db16b4bd8c293744a5445da97183
+cas_ref: sha256:541f30910d5b031b5733436daf0d3ac4e366db16b4bd8c293744a5445da97183
+coverage_gids:
+  - D5/S1/Recurrence/Invariants/CassiniFrickeSpecializations.cassini_fricke_absolute_conservation
+receipts:
+  coverage:
+    - gid: D5/S1/Recurrence/Invariants/CassiniFrickeSpecializations.cassini_fricke_absolute_conservation
+      source_sha256: sha256:541f30910d5b031b5733436daf0d3ac4e366db16b4bd8c293744a5445da97183
+      target_statement_id: sha256:a74b828f1d24c46fe68a09bab888fa5cc4f0b86bc6c792732f3fe062c89824d3
+  scribe:
+    - gid: D5/S1/Recurrence/Invariants/CassiniFrickeSpecializations.cassini_fricke_absolute_conservation
+      definition_sha256: sha256:a581f8ac56cc529d71ce99d19aa71dec0d1d2b4bcadde5c5bbe4b8311c468116
+      emission_sha256: sha256:86e44b3c325385df1b6c9447f6e85818d6093bcd0bb5665aeff1b03d3ad22688
+  unresolved_subitems: []

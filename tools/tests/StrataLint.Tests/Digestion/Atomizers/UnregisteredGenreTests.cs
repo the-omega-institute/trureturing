@@ -17,8 +17,14 @@ namespace StrataLint.Tests;
 /// </summary>
 public sealed class UnregisteredGenreTests
 {
-    private static string[] Paths(AtomizedTheoryDocument document) =>
-        document.Claims.Select(static claim => claim.AstPath).ToArray();
+    private static void AssertContentIdentities(IEnumerable<DigestionAtom> atoms, int expectedCount)
+    {
+        var materialized = atoms.ToArray();
+        Assert.Equal(expectedCount, materialized.Length);
+        Assert.All(materialized, static atom => Assert.Equal(
+            DigestionFingerprint.Compute(atom.RawBytes.AsSpan()).RawSha256,
+            atom.Fingerprints.RawSha256));
+    }
 
     [Fact]
     public void PzgAddressesAnUnregisteredNumberedGenreInTheReservedNamespace()
@@ -28,7 +34,7 @@ public sealed class UnregisteredGenreTests
 
         var document = PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
 
-        Assert.Equal(["theorem/1.1", "unregistered/%E6%9C%AA%E7%99%BB%E8%AE%B0%E4%BD%93/2.3"], Paths(document));
+        AssertContentIdentities(document.Claims, 2);
         Assert.Equal(bytes, document.Reassemble().ToArray());
     }
 
@@ -40,7 +46,7 @@ public sealed class UnregisteredGenreTests
 
         var document = GictAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
 
-        Assert.Equal(["theorem/1.1", "unregistered/%E6%9C%AA%E7%99%BB%E8%AE%B0%E4%BD%93/2.3"], Paths(document));
+        AssertContentIdentities(document.Claims, 2);
         Assert.Equal(bytes, document.Reassemble().ToArray());
     }
 
@@ -51,9 +57,7 @@ public sealed class UnregisteredGenreTests
 
         var document = AtomizerRegistry.Atomize("dialect:qdo", bytes, DigestionTestSupport.Rules);
 
-        Assert.Equal(
-            ["theorem/22.2", "unregistered/%E6%9C%AA%E7%99%BB%E8%AE%B0%E4%BD%93/3.4"],
-            Paths(document));
+        AssertContentIdentities(document.Claims, 2);
         Assert.Equal(bytes, document.Reassemble().ToArray());
     }
 
@@ -68,8 +72,10 @@ public sealed class UnregisteredGenreTests
         Assert.Empty(alignment.Findings);
         Assert.Empty(alignment.Fallbacks);
         Assert.Equal(2, alignment.Residual.Length);
-        Assert.Contains(alignment.Residual, item =>
-            item.Atom.AstPath == "unregistered/%2A%2A%E6%96%B0%E5%88%A4%E8%AF%8D%E3%80%82%2A%2A");
+        AssertContentIdentities(alignment.Residual.Select(static item => item.Atom), 2);
+        Assert.Contains(alignment.Residual, static item =>
+            Encoding.UTF8.GetString(item.Atom.RawBytes.AsSpan())
+                .Contains("**新判词。**", StringComparison.Ordinal));
         Assert.Equal(
             ["**新判词。**"],
             alignment.GenreRegistryChecks["source"].UnregisteredGenres.ToArray());
@@ -82,13 +88,11 @@ public sealed class UnregisteredGenreTests
 
         var document = ObserverAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
 
-        Assert.Equal(
-            "unregistered/%2A%2A%E6%96%B0%E5%88%A4%E8%AF%8D%E3%80%82%2A%2A",
-            Assert.Single(document.Claims).AstPath);
+        AssertContentIdentities(document.Claims, 1);
     }
 
     [Fact]
-    public void ObserverDuplicateClaimLocatorStillTakesTheCoarsePath()
+    public void ObserverRepeatedClaimLeadProducesDistinctContentAtoms()
     {
         var bytes = Encoding.UTF8.GetBytes(
             "# Observer\n\n"
@@ -98,11 +102,12 @@ public sealed class UnregisteredGenreTests
         var alignment = Align(AtomizerRegistry.ObserverId, bytes);
 
         Assert.Empty(alignment.Findings);
-        Assert.Contains(
-            "duplicate observer claim locator",
-            Assert.Single(alignment.Fallbacks).Reason,
-            StringComparison.Ordinal);
-        Assert.Equal("coarse/source", Assert.Single(alignment.Residual).Atom.AstPath);
+        Assert.Empty(alignment.Fallbacks);
+        AssertContentIdentities(alignment.Residual.Select(static item => item.Atom), 2);
+        Assert.Equal(
+            2,
+            alignment.Residual.Select(static item => item.Atom.Fingerprints.RawSha256)
+                .Distinct(StringComparer.Ordinal).Count());
     }
 
     [Fact]
@@ -119,8 +124,10 @@ public sealed class UnregisteredGenreTests
         Assert.Empty(alignment.Findings);
         Assert.Empty(alignment.Fallbacks);
         Assert.Equal(2, alignment.Residual.Length);
-        Assert.Contains(alignment.Residual, item =>
-            item.Atom.AstPath == "unregistered/%E7%8C%9C%E6%83%B3/3.6");
+        AssertContentIdentities(alignment.Residual.Select(static item => item.Atom), 2);
+        Assert.Contains(alignment.Residual, static item =>
+            Encoding.UTF8.GetString(item.Atom.RawBytes.AsSpan())
+                .Contains("**猜想 3.6", StringComparison.Ordinal));
         Assert.Equal(
             ["猜想"],
             alignment.GenreRegistryChecks["source"].UnregisteredGenres.ToArray());
@@ -136,9 +143,7 @@ public sealed class UnregisteredGenreTests
 
         var document = ConeAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
 
-        Assert.Equal(
-            "unregistered/%E7%8C%9C%E6%83%B3/3.6",
-            Assert.Single(document.Claims).AstPath);
+        AssertContentIdentities(document.Claims, 1);
     }
 
     [Fact]
@@ -156,7 +161,7 @@ public sealed class UnregisteredGenreTests
             "unknown cone numbered claim title",
             Assert.Single(alignment.Fallbacks).Reason,
             StringComparison.Ordinal);
-        Assert.Equal("coarse/source", Assert.Single(alignment.Residual).Atom.AstPath);
+        AssertContentIdentities(alignment.Residual.Select(static item => item.Atom), 1);
     }
 
     /// <summary>The cost this moves off the volume: its other claims survive the unknown word.</summary>
@@ -166,9 +171,7 @@ public sealed class UnregisteredGenreTests
         var bytes = Encoding.UTF8.GetBytes(
             "# PZG\n\n**定理 1.1**。一。\n\n**未登记体 2.1**。二。\n\n**引理 3.1**。三。\n");
 
-        Assert.Equal(
-            ["theorem/1.1", "unregistered/%E6%9C%AA%E7%99%BB%E8%AE%B0%E4%BD%93/2.1", "lemma/3.1"],
-            Paths(PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules)));
+        AssertContentIdentities(PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules).Claims, 3);
     }
 
     [Fact]
@@ -176,7 +179,7 @@ public sealed class UnregisteredGenreTests
     {
         var bytes = Encoding.UTF8.GetBytes("# PZG\n\n**引理 3.1**。三。\n");
 
-        Assert.Equal(["lemma/3.1"], Paths(PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules)));
+        AssertContentIdentities(PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules).Claims, 1);
     }
 
     /// <summary>Named once each and deduplicated, which is what the throw path used to give.</summary>

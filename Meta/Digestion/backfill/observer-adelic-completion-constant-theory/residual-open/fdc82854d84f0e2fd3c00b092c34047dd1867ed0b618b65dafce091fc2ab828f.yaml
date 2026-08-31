@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:fdc82854d84f0e2fd3c00b092c34047dd1867ed0b618b65dafce091fc2ab828f
+  normalized_sha256: sha256:fdc82854d84f0e2fd3c00b092c34047dd1867ed0b618b65dafce091fc2ab828f
+cas_ref: sha256:fdc82854d84f0e2fd3c00b092c34047dd1867ed0b618b65dafce091fc2ab828f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  quarantine:
+    justification: "Retrieval preceded quarantine. Fresh D5 queries `Monster|root ledger|root multiplic|primitive.*heat|Mobius.*heat` and `laplace.*uniqu|uniqu.*laplace|heat.*determin|collision.*free|Injective.*exp` found exact partial owners `D5/S3/Analytic/Dilation/MonsterPrimitiveMobiusRecovery.monster_primitive_mobius_recovery` for formal bivariate Mobius recovery and `D5/S1/Depth/ContinuedFractions/IrrationalSlopeFaithfulness.irrational_slope_faithfulness` for collision-free golden energy, but no theorem constructing the convergent one-variable Monster product and proving infinite discrete-Laplace spectral uniqueness. The parent `定理/132.1` quarantine records pinned Mathlib searches `laplace.*inject|inject.*laplace|laplace.*unique|unique.*laplace|linearIndependent.*exp|dirichlet.*unique|fourier.*inject|measure.*integral_exp` as misses beyond the partial hits `ArithmeticFunction.sum_eq_iff_sum_mul_moebius_eq` and `Real.goldenRatio_irrational`; reachable third-party searches found only physlib's transform definition/analyticity at immutable head `686d93d28dedc7ecb238ea7b3568b812fd7065c6`, with incompatible Lean/mathlib pins and no uniqueness theorem. Its durable local probe imported both D5 prerequisites and failed with unknown identifiers for `discreteLaplaceSpectrum_unique`, `laplaceTransform_injective`, `MeasureTheory.Measure.ext_of_laplaceTransform_eq`, and `monster_golden_tomography`. A finite-spectrum replacement is a forbidden special case, while hypothesizing the missing uniqueness bridge would make the public reconstruction conclusion assumption-driven."
+    reentry_condition: "Provide on the source carrier a convergent one-variable Monster product/logarithmic-history construction and a theorem that equality of its complete positive-time Laplace family for locally finite golden-energy spectra uniquely determines every weight; then combine it with the frozen Mobius-recovery and golden-energy injectivity owners."
+    blocker_class: missing-prerequisite

@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:991527240362cfd45f1bad031eafde6cab012bf0534963a0666d3e56ce4bbc5e
+  normalized_sha256: sha256:991527240362cfd45f1bad031eafde6cab012bf0534963a0666d3e56ce4bbc5e
+cas_ref: sha256:991527240362cfd45f1bad031eafde6cab012bf0534963a0666d3e56ce4bbc5e
+coverage_gids:
+  - D5/S3/Constants/MidslopeDoubleDual.arithmetic_geometric_double_dual
+receipts:
+  coverage:
+    - gid: D5/S3/Constants/MidslopeDoubleDual.arithmetic_geometric_double_dual
+      source_sha256: sha256:991527240362cfd45f1bad031eafde6cab012bf0534963a0666d3e56ce4bbc5e
+      target_statement_id: sha256:ff505c89ec062e77026818f043cdaafafa087977b19013872c39fca04827dedf
+  scribe:
+    - gid: D5/S3/Constants/MidslopeDoubleDual.arithmetic_geometric_double_dual
+      definition_sha256: sha256:05a1bef51989a4a7cef25ef25eff9ec023aee5f4774cf3e47d31657cabbc5930
+      emission_sha256: sha256:f0a83c6fb6f104b5ef56406be624110ab2fb533b4942d786f492c63b18873636
+  unresolved_subitems: []

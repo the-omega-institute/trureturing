@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:18a12b09c5e901f1df86ba136d7ef48402e6fbabd170dd510c85c64d00c8a9f8
+  normalized_sha256: sha256:18a12b09c5e901f1df86ba136d7ef48402e6fbabd170dd510c85c64d00c8a9f8
+cas_ref: sha256:18a12b09c5e901f1df86ba136d7ef48402e6fbabd170dd510c85c64d00c8a9f8
+coverage_gids:
+  - D5/S3/ConceptDynamics/DefinitionEscapeRegrade/SemanticTargetLaunderingDecision.target_laundering_decision_nonempty
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/DefinitionEscapeRegrade/SemanticTargetLaunderingDecision.target_laundering_decision_nonempty
+      source_sha256: sha256:18a12b09c5e901f1df86ba136d7ef48402e6fbabd170dd510c85c64d00c8a9f8
+      target_statement_id: sha256:e54507890cffebac5448576af21147d64a0dcd910e3c963abc224603b66964c0
+  scribe:
+    - gid: D5/S3/ConceptDynamics/DefinitionEscapeRegrade/SemanticTargetLaunderingDecision.target_laundering_decision_nonempty
+      definition_sha256: sha256:ebdf15194dac788ad228bc8f6b532f2b43342109a73c63d6f663a1e5377295bd
+      emission_sha256: sha256:15d597b1911a06ba3107ad738f0f9f1ed12972786c87246298599c7074bd1c40
+  unresolved_subitems: []

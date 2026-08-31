@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:9d4bdbe7a52d2ff40ada9297eb0fb2ade1973cd9a47b98a4731d6a3ea7f2699c
+  normalized_sha256: sha256:9d4bdbe7a52d2ff40ada9297eb0fb2ade1973cd9a47b98a4731d6a3ea7f2699c
+cas_ref: sha256:9d4bdbe7a52d2ff40ada9297eb0fb2ade1973cd9a47b98a4731d6a3ea7f2699c
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  chain_atoms:
+    - eb61ff54dffedc8b62047c5f785d87fc41996eb799f4db88449683d2a2ac674f
+    - 72505cb708aa173033b8f17610ebcc0f579b829171093c34177a17b0fbb877b1
+    - 0b90e600e07a02e054f560e728ce748340b3fc77a0e93bd046a9d8fdbaf34527
+  quarantine:
+    justification: D5 has the canonical entire xi reading but no canonical Li coefficient sequence or proof of the standard Li generating-series expansion. Existing Li modules accept the coefficients as external parameters. Pinned Mathlib supplies generic power-series differentiation but no Li expansion. Consequently the Li-Caratheodory function cannot be constructed from the source coefficients and identified with the canonical xi logarithmic derivative; treating it as an arbitrary function satisfying the immediately preceding target-equivalent identity would violate the construction and whole-clause rules.
+    reentry_condition: Define the canonical Li coefficients of xi and prove their convergent generating-series expansion on the unit disk, including termwise differentiation, the Mobius half-plane map, the excess-connection identification, and normalization at zero.
+    blocker_class: missing-prerequisite

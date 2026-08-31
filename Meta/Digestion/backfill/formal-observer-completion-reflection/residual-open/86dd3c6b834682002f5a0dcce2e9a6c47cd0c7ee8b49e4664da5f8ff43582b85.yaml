@@ -1,0 +1,20 @@
+fingerprints:
+  raw_sha256: sha256:86dd3c6b834682002f5a0dcce2e9a6c47cd0c7ee8b49e4664da5f8ff43582b85
+  normalized_sha256: sha256:86dd3c6b834682002f5a0dcce2e9a6c47cd0c7ee8b49e4664da5f8ff43582b85
+cas_ref: sha256:86dd3c6b834682002f5a0dcce2e9a6c47cd0c7ee8b49e4664da5f8ff43582b85
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    recorded_at_utc: 2026-08-28T02:46:13.7625580+00:00
+    gids:
+      - D5/S3/Observer/ProbabilisticClosure/TransitiveInvariantDistribution.transitive_invariant_distribution_unique_uniform
+    gaps:
+      - code: chain-migration-incomplete
+        detail: generic-residual-74c30b26f895541fa219cd528afeec174a5b69a679c12854cf6bccd137e56930-a6006dff5d39a6c9d8f08584d1718a16aa50102e18a59fe31f5806c151144eb8
+  chain_atoms:
+    - 2e5d9803683cc7f33cf4aa5783ab42207867ebb6f89c01750eb5d87850baa477
+    - 74c30b26f895541fa219cd528afeec174a5b69a679c12854cf6bccd137e56930

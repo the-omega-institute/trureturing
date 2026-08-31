@@ -1,0 +1,22 @@
+fingerprints:
+  raw_sha256: sha256:b2dd3d2b2261d86b6e8b20f45ca56ef7b3da87d833f50e38279f562c2a1a66c9
+  normalized_sha256: sha256:b2dd3d2b2261d86b6e8b20f45ca56ef7b3da87d833f50e38279f562c2a1a66c9
+cas_ref: sha256:b2dd3d2b2261d86b6e8b20f45ca56ef7b3da87d833f50e38279f562c2a1a66c9
+coverage_gids:
+  - D5/S3/Entropy/Forgetting/CapacityMonotone.deterministic_forgetting_entropy_capacity_monotone
+  - D5/S3/ObserverMemory/TwoTimeKnowledge.knows_of_later_readout_factors_through_earlier
+  - D5/S3/ObserverMemory/TwoTimeKnowledge.finite_certificate_instantiates_forgot
+  - D5/S3/ObserverMemory/MultiCopyErasure.multi_copy_erasure_quantifier
+  - D5/S3/ObserverMemory/FiniteForgettingCertificate.finite_history_certificate
+  - D5/S3/DivergenceSupport/ZeroSupportDefect.dpi_defect_nonneg_zero_support
+  - D5/S3/Observer/MeasurementMarginal.copied_record_partial_trace_eq_address_blocks
+  - D5/S3/Observer/MeasurementMarginal.copied_record_partial_trace_offDiagonal_eq_zero
+  - D5/S3/Divergence/DpiDefect.dpi_defect_nonneg
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems:
+    - v2-entropy-monotone-capacity-decrease
+    - v3-revival-spectrum-diophantine-grading
+  chain_atoms: []
+  tail_authorization: null

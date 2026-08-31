@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:f1b84218c13b6db1fea5c48e50f071dc15176cc0c514363a71cb4b6c10258128
+  normalized_sha256: sha256:f1b84218c13b6db1fea5c48e50f071dc15176cc0c514363a71cb4b6c10258128
+cas_ref: sha256:f1b84218c13b6db1fea5c48e50f071dc15176cc0c514363a71cb4b6c10258128
+coverage_gids:
+  - D5/S3/ConceptDynamics/GovernanceFixedPoint/TailSpanPrefixExtension.tail_span_prefix_extension
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/GovernanceFixedPoint/TailSpanPrefixExtension.tail_span_prefix_extension
+      source_sha256: sha256:f1b84218c13b6db1fea5c48e50f071dc15176cc0c514363a71cb4b6c10258128
+      target_statement_id: sha256:df3004595c02e95ba8273593d617d45b6eb10108a39c0585089ec383572f54df
+  scribe:
+    - gid: D5/S3/ConceptDynamics/GovernanceFixedPoint/TailSpanPrefixExtension.tail_span_prefix_extension
+      definition_sha256: sha256:fe70d9d0b5a9454245da8824ff2a1118197192299bba7f223475f488496546c9
+      emission_sha256: sha256:995e7d1c1782450777a936b6f4f1e9eacb8b11ed16f8f897932385c385ea9c9e
+  unresolved_subitems: []

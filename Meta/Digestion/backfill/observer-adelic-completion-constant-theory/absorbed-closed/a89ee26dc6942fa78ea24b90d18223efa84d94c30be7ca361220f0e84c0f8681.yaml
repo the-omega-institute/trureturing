@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:a89ee26dc6942fa78ea24b90d18223efa84d94c30be7ca361220f0e84c0f8681
+  normalized_sha256: sha256:a89ee26dc6942fa78ea24b90d18223efa84d94c30be7ca361220f0e84c0f8681
+cas_ref: sha256:a89ee26dc6942fa78ea24b90d18223efa84d94c30be7ca361220f0e84c0f8681
+coverage_gids:
+  - D5/S3/Observer/Completion/StructuralCompletionSignature.completion_vocabulary
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/Completion/StructuralCompletionSignature.completion_vocabulary
+      source_sha256: sha256:a89ee26dc6942fa78ea24b90d18223efa84d94c30be7ca361220f0e84c0f8681
+      target_statement_id: sha256:6bb24328a736531c9cba3b46c7541debb32bcd68be8a93a391234b938c964655
+  scribe:
+    - gid: D5/S3/Observer/Completion/StructuralCompletionSignature.completion_vocabulary
+      definition_sha256: sha256:e5f105589b71d3cb5c5857c4db7f6e2dddc6777d46f75c39a4b745e9b49efcac
+      emission_sha256: sha256:b95950fed2781f4e20a0990adf17a799cc3a79ecf2fc95b3d97d0c64107fceb1
+  unresolved_subitems: []

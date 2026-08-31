@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:d8508b3a5183147705495b27f16baea95794ce0c3e62649924fde4b6864b569e
+  normalized_sha256: sha256:d8508b3a5183147705495b27f16baea95794ce0c3e62649924fde4b6864b569e
+cas_ref: sha256:d8508b3a5183147705495b27f16baea95794ce0c3e62649924fde4b6864b569e
+coverage_gids:
+  - D5/S0/Asymptotics/OddCycleDrift.odd_cycle_drift_eq_zero
+receipts:
+  coverage:
+    - gid: D5/S0/Asymptotics/OddCycleDrift.odd_cycle_drift_eq_zero
+      source_sha256: sha256:d8508b3a5183147705495b27f16baea95794ce0c3e62649924fde4b6864b569e
+      target_statement_id: sha256:45f57ec9f0ac5787f562f105de41357376c8a9d1f36fd7872ffb2a90c4419327
+  scribe:
+    - gid: D5/S0/Asymptotics/OddCycleDrift.odd_cycle_drift_eq_zero
+      definition_sha256: sha256:e118e5982d9cf6a6b548f38cb53a46ee9c1d0204753e2e844b7789536a99ff0b
+      emission_sha256: sha256:7ab6436a5297cf748610998fafd3181a95a656beb9c21bdd8c9451eca5956dd4
+  unresolved_subitems: []

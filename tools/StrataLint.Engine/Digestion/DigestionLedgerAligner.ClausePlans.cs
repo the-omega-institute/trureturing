@@ -4,102 +4,60 @@ namespace StrataLint.Engine;
 
 internal static partial class DigestionLedgerAligner
 {
-    private static bool ClausePlanInputsChanged(
-        DigestionLedgerSource source,
-        RawChangeSet? changes)
-    {
-        if (changes is null)
-        {
-            return true;
-        }
-
-        if (changes.Paths.Any(path =>
-                path.Value == source.SourcePath
-                || path.Value == TheoryAtomizerDataLoader.DataPath
-                || IsAtomizerImplementationPath(path.Value)
-                || path.Value == BackfillInventoryLoader.RelativePath
-                || path.Value == $"{BackfillInventoryLoader.RootPath}{source.SourceId}/source.toml"))
-        {
-            return true;
-        }
-
-        foreach (var entry in source.Entries)
-        {
-            if (DigestionCasStore.EntryChanged(entry, changes)
-                || DigestionFingerprint.IsCanonicalSha256(entry.CasRef)
-                    && changes.Paths.Any(path => path.Value ==
-                        DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..]))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     private static string? ClausePlanIntegrityFailure(AtomizedTheoryDocument document)
     {
-        var parentPaths = new HashSet<string>(StringComparer.Ordinal);
+        var parents = new HashSet<(int Start, int End, string Hash)>();
         foreach (var plan in document.ClausePlans)
         {
-            if (!parentPaths.Add(plan.ParentAstPath))
+            var parentKey = (plan.Parent.StartByte, plan.Parent.EndByte, plan.Parent.Fingerprints.RawSha256);
+            if (!parents.Add(parentKey))
             {
-                return $"duplicate clause plan parent {plan.ParentAstPath}";
+                return $"duplicate clause plan parent at byte {plan.Parent.StartByte}";
             }
 
-            var parents = document.Claims
-                .Where(atom => atom.AstPath == plan.ParentAstPath)
-                .ToArray();
-            if (parents.Length != 1)
+            if (!document.Claims.Contains(plan.Parent))
             {
-                return $"clause plan parent {plan.ParentAstPath} resolves to {parents.Length} claims";
+                return $"clause plan parent at byte {plan.Parent.StartByte} is not a top-level atom";
             }
 
             if (plan.Children.Length < 2)
             {
-                return $"clause plan parent {plan.ParentAstPath} has fewer than two children";
+                return $"clause plan parent at byte {plan.Parent.StartByte} has fewer than two children";
             }
 
-            var parent = parents[0];
-            var childPaths = new HashSet<string>(StringComparer.Ordinal);
+            var parent = plan.Parent;
             var previousEnd = parent.StartByte;
             foreach (var child in plan.Children)
             {
-                if (!childPaths.Add(child.AstPath)
-                    || !child.AstPath.StartsWith(parent.AstPath + "/clause/", StringComparison.Ordinal))
-                {
-                    return $"clause plan parent {plan.ParentAstPath} has an invalid child ast_path";
-                }
-
                 if (child.StartByte < parent.StartByte
                     || child.EndByte > parent.EndByte
                     || child.EndByte <= child.StartByte
                     || child.RawBytes.Length >= parent.RawBytes.Length
                     || child.EndByte - child.StartByte != child.RawBytes.Length)
                 {
-                    return $"clause plan child {child.AstPath} is outside its parent";
+                    return $"clause plan child at byte {child.StartByte} is outside its parent";
                 }
 
                 if (child.StartByte != previousEnd)
                 {
-                    return $"clause plan children do not tile parent {plan.ParentAstPath} at {child.AstPath}";
+                    return $"clause plan children do not tile parent at byte {child.StartByte}";
                 }
 
                 var relativeStart = child.StartByte - parent.StartByte;
                 if (!parent.RawBytes.AsSpan()[relativeStart..(relativeStart + child.RawBytes.Length)]
                         .SequenceEqual(child.RawBytes.AsSpan()))
                 {
-                    return $"clause plan child {child.AstPath} differs from its parent span";
+                    return $"clause plan child at byte {child.StartByte} differs from its parent span";
                 }
 
                 if (UniqueSubspanStart(parent.RawBytes.AsSpan(), child.RawBytes.AsSpan()) != relativeStart)
                 {
-                    return $"clause plan child {child.AstPath} is not a unique parent sub-span";
+                    return $"clause plan child at byte {child.StartByte} is not a unique parent sub-span";
                 }
 
                 if (child.Fingerprints != DigestionFingerprint.Compute(child.RawBytes.AsSpan()))
                 {
-                    return $"clause plan child {child.AstPath} fingerprint does not match its raw bytes";
+                    return $"clause plan child at byte {child.StartByte} fingerprint does not match its raw bytes";
                 }
 
                 previousEnd = child.EndByte;
@@ -107,7 +65,7 @@ internal static partial class DigestionLedgerAligner
 
             if (previousEnd != parent.EndByte)
             {
-                return $"clause plan children do not tile parent {plan.ParentAstPath} at its end";
+                return $"clause plan children do not tile parent at byte {parent.StartByte} at its end";
             }
         }
 
@@ -121,8 +79,7 @@ internal static partial class DigestionLedgerAligner
         RepositorySnapshot snapshot)
     {
         var ledgerParents = source.Entries.Where(entry =>
-                entry.AstPath == plannedParent.AstPath
-                && FingerprintsMatch(entry.Fingerprints, plannedParent.Fingerprints))
+                FingerprintsMatch(entry.Fingerprints, plannedParent.Fingerprints))
             .ToArray();
         if (ledgerParents.Length != 1)
         {
@@ -144,13 +101,16 @@ internal static partial class DigestionLedgerAligner
         return parentBlob.RawBytes.AsSpan().SequenceEqual(plannedParent.RawBytes.AsSpan())
             ? null
             : $"entry {ledgerParent.AtomId} clause plan parent CAS bytes differ from "
-                + $"recomputed source span {plannedParent.AstPath}";
+                + $"recomputed source span at byte {plannedParent.StartByte}";
     }
 
     private static void AlignNestedChildren(
         DigestionLedgerSource source,
         ImmutableArray<DigestionClausePlan> currentClausePlans,
+        DigestionAlignmentMode mode,
         IReadOnlySet<string> validAtomIds,
+        IReadOnlySet<string> inheritedEntries,
+        IReadOnlyDictionary<string, DigestionLedgerEntry> candidateEntriesById,
         RepositorySnapshot snapshot,
         IDictionary<string, DigestionReceiptAlignment> alignments,
         IDictionary<string, DigestionAtom> matchedAtoms,
@@ -167,6 +127,9 @@ internal static partial class DigestionLedgerAligner
 
         foreach (var parent in source.Entries.Where(static entry => entry.Receipts.ChainAtoms.Length > 0))
         {
+            var inheritedParent = mode == DigestionAlignmentMode.Admission
+                && inheritedEntries.Contains(CanonicalEntry(source, parent));
+
             if (!validAtomIds.Contains(parent.AtomId))
             {
                 ClaimClausePlanChain(
@@ -192,7 +155,7 @@ internal static partial class DigestionLedgerAligner
                 continue;
             }
 
-            var frozenParent = DigestionAtom.FromFrozenCas(parent.AstPath, parentBlob.RawBytes);
+            var frozenParent = DigestionAtom.FromFrozenCas(parentBlob.RawBytes);
             var plan = PzgAtomizer.PlanClauses(frozenParent);
             ClaimClausePlanChain(
                 parent,
@@ -216,19 +179,14 @@ internal static partial class DigestionLedgerAligner
                 continue;
             }
 
-            if (parent.Receipts.ChainAtoms.Distinct(StringComparer.Ordinal).Count()
-                != parent.Receipts.ChainAtoms.Length)
-            {
-                RejectClauseChain(parent, "chain contains duplicate child atom_ids", findings);
-                continue;
-            }
-
             var accepted = new List<(string AtomId, DigestionLedgerEntry Entry, RepositoryFile Blob)>();
             string? rejectionReason = null;
             for (var index = 0; index < parent.Receipts.ChainAtoms.Length; index++)
             {
                 var childId = parent.Receipts.ChainAtoms[index];
-                if (!byId.TryGetValue(childId, out var child))
+                if (!byId.TryGetValue(childId, out var child)
+                    && (!inheritedParent
+                        || !candidateEntriesById.TryGetValue(childId, out child)))
                 {
                     rejectionReason = $"listed child {childId} is absent from source {source.SourceId}";
                     break;
@@ -241,13 +199,6 @@ internal static partial class DigestionLedgerAligner
                 }
 
                 var plannedChild = plan.Children[index];
-                if (child.AstPath != plannedChild.AstPath)
-                {
-                    rejectionReason = $"listed child {childId} chain order differs from parent CAS plan "
-                        + $"at position {index + 1}: ast_path {child.AstPath}, expected {plannedChild.AstPath}";
-                    break;
-                }
-
                 var childPath = DigestionCasStore.RootPath + child.CasRef["sha256:".Length..];
                 if (!snapshot.TryGetFile(childPath, out var childBlob))
                 {
@@ -264,7 +215,7 @@ internal static partial class DigestionLedgerAligner
                 if (!childBlob.RawBytes.AsSpan().SequenceEqual(plannedChild.RawBytes.AsSpan()))
                 {
                     rejectionReason = $"listed child {childId} bytes differ from parent CAS plan member "
-                        + plannedChild.AstPath;
+                        + $"at position {index + 1}";
                     break;
                 }
 
@@ -280,9 +231,7 @@ internal static partial class DigestionLedgerAligner
             foreach (var child in accepted)
             {
                 alignments[child.AtomId] = DigestionReceiptAlignment.Seen;
-                matchedAtoms[child.AtomId] = DigestionAtom.FromFrozenCas(
-                    child.Entry.AstPath,
-                    child.Blob.RawBytes);
+                matchedAtoms[child.AtomId] = DigestionAtom.FromFrozenCas(child.Blob.RawBytes);
             }
 
             verifiedClausePlanParents.Add(parent.AtomId);
@@ -295,12 +244,12 @@ internal static partial class DigestionLedgerAligner
         IDictionary<string, DigestionReceiptAlignment> alignments,
         IDictionary<string, DigestionAtom> matchedAtoms)
     {
-        var plannedChildPaths = currentClausePlans
+        var plannedChildIds = currentClausePlans
             .SelectMany(static plan => plan.Children)
-            .Select(static child => child.AstPath)
+            .Select(static child => child.Fingerprints.RawSha256["sha256:".Length..])
             .ToHashSet(StringComparer.Ordinal);
         foreach (var plannedEntry in source.Entries.Where(entry =>
-                     plannedChildPaths.Contains(entry.AstPath)))
+                     plannedChildIds.Contains(entry.AtomId)))
         {
             alignments[plannedEntry.AtomId] = DigestionReceiptAlignment.Rejected;
             matchedAtoms.Remove(plannedEntry.AtomId);

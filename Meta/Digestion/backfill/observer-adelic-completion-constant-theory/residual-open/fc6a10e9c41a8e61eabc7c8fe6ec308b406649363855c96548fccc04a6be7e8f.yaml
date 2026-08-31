@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:fc6a10e9c41a8e61eabc7c8fe6ec308b406649363855c96548fccc04a6be7e8f
+  normalized_sha256: sha256:fc6a10e9c41a8e61eabc7c8fe6ec308b406649363855c96548fccc04a6be7e8f
+cas_ref: sha256:fc6a10e9c41a8e61eabc7c8fe6ec308b406649363855c96548fccc04a6be7e8f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  quarantine:
+    justification: "Retrieval preceded quarantine for the inherited claim that the level-5 modular curve is placed on the same twelve-state set. D5 search `Gamma.?5|modular curve|cusp|icosahed|twelve state|twelve vertex|PSL.?2|ProjectiveLine|primitive pair` found `D5/S3/Arith/Lattices/RamifiedFiveDissection.lean`, which supplies a six-state boundary readout but no twelve-state orbit or modular-curve bridge, and `D5/S3/Arith/IcosahedralAxisDecomposition.lean:402-405`, whose own statement expressly disclaims a geometric or equivariant icosahedron identification; no exact Gamma(5)-cusp bridge hit. Pinned Mathlib search `Gamma.?5|icosahed|twelve vertex|isotropic orbit|primitive pair|ProjectiveLine.*ZMod|ZMod.*ProjectiveLine` found only generic `CongruenceSubgroup.Gamma` and `CuspOrbits`, with no Gamma(5) cusp classification, twelve-count, primitive-pairs-mod-sign equivalence, or equivalence to the selected nonzero isotropic orbit and icosahedron vertices. Reachable GitHub Lean searches `Gamma(5) cusp`, `primitive pairs`, `icosahedron vertices`, `ProjectiveLine ZMod 5`, `Gamma 5 CuspOrbits`, and `ZMod 5 icosahedral` returned no exact result or A17 port candidate; the only non-Mathlib projective-line hits were generic PGL2 finite-subgroup code. Local Lean probe imported pinned cusps and congruence subgroups: `CongruenceSubgroup.Gamma` and `CuspOrbits` elaborate, while exit 1 reports `lean.unknownIdentifier` for `gammaFiveCuspsEquivPrimitivePairsModSign`, `gammaFiveCuspCount`, `icosahedronVertexAction`, `modFiveIsotropicBoundaryOrbit`, `modFiveCuspIsotropicVertexEquiv`, and `ramanujanLevelFiveTwelveStateAction`."
+    reentry_condition: "D5, pinned Mathlib, or a vetted A17 port provides the Gamma(5) cusp classification by primitive pairs modulo sign, its twelve-element count, and the public equivariant equivalence identifying that cusp set with the selected nonzero isotropic boundary orbit and the twelve icosahedron vertices."
+    blocker_class: missing-prerequisite
