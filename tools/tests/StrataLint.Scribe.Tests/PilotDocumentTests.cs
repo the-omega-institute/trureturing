@@ -137,27 +137,22 @@ public sealed class DocumentDiscoveryTests
         Assert.True(findings.Count == 0, completeMessage);
     }
 
-    [Fact]
+    [LiveReportFact]
     public void GeneratedDocumentGraphMatchesFormalTruth()
     {
         var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound);
         var repositoryRoot = repository.Root.FullPath;
-        var requireLiveReport = Environment.GetEnvironmentVariable("STRATALINT_REQUIRE_LIVE_REPORT") == "1";
-        var hasLiveReport = repository.FileExists(RepositoryRelativePath.Create(
-                ".lake/build/stratalint/raw-lean-report.json"))
-            && repository.FileExists(RepositoryRelativePath.Create(
-                ".lake/build/stratalint/raw-lean-report.json.materials.zip"));
+        var rawLeanReport = RepositoryRelativePath.Create(
+            ".lake/build/stratalint/raw-lean-report.json");
         Assert.True(
-            !requireLiveReport || hasLiveReport,
+            repository.FileExists(rawLeanReport),
             "STRATALINT_REQUIRE_LIVE_REPORT=1 requires .lake/build/stratalint/raw-lean-report.json");
 
+        var report = LeanCompiledArtifactReports.InspectRepository(repositoryRoot);
         Assert.NotEmpty(DocumentDefinitions.All);
         var documents = DocumentDefinitions.All
             .Select(static definition => definition.Document)
             .ToArray();
-        var report = hasLiveReport
-            ? LeanCompiledArtifactReports.InspectRepository(repositoryRoot)
-            : LeanReportFixture.ForDocuments(documents);
         var census = ReceiptFreeDocumentCatalog.Load(repositoryRoot, documents);
         var graph = DocumentGraphAssembler.Assemble(
             documents,
@@ -185,6 +180,21 @@ public sealed class DocumentDiscoveryTests
         });
 
     }
+
+    private sealed class LiveReportFactAttribute : FactAttribute
+    {
+        public LiveReportFactAttribute()
+        {
+            var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound);
+            var requireLiveReport = Environment.GetEnvironmentVariable("STRATALINT_REQUIRE_LIVE_REPORT") == "1";
+            if (!requireLiveReport && (!repository.FileExists(RepositoryRelativePath.Create(
+                    ".lake/build/stratalint/raw-lean-report.json"))
+                || !repository.FileExists(RepositoryRelativePath.Create(
+                    ".lake/build/stratalint/raw-lean-report.json.materials.zip"))))
+                Skip = "Live raw Lean report is absent; document graph verification requires that report.";
+        }
+    }
+
     [Fact]
     public void DigitRawContainsATypedRepoDerivedZeckendorfExample()
     {
