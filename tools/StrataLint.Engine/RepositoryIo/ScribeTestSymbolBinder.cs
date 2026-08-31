@@ -62,10 +62,14 @@ internal static class ScribeTestSymbolBinder
         IEnumerable<TestMapSource> sourceFiles,
         out IReadOnlyList<ScribeMetadataDegradation> metadataDegradations,
         IReadOnlySet<string>? productionAssemblies = null,
-        ScribeProjectCompilationContext? compilationContext = null)
+        ScribeProjectCompilationContext? compilationContext = null,
+        IReadOnlyList<MetadataReference>? syntheticXunitMetadataReferences = null)
     {
         var sources = sourceFiles.ToArray();
-        var compilations = ScribeProjectCompilationBuilder.Build(sources, compilationContext);
+        var compilations = ScribeProjectCompilationBuilder.Build(
+            sources,
+            compilationContext,
+            syntheticXunitMetadataReferences);
         metadataDegradations = compilations
             .Select(static project => project.MetadataDegradation)
             .Where(static degradation => degradation is not null)
@@ -448,46 +452,130 @@ internal static class ScribeTestSymbolBinder
         ScribeSemanticModelProvider semanticModels) =>
         method.AttributeLists.SelectMany(static list => list.Attributes)
             .Where(attribute => IsTestAttribute(attribute, model))
-            .Any(attribute => HasExplicitSkip(attribute)
-                || AttributeTypeMayAssignSkip(attribute, model, semanticModels));
+            .Any(attribute => Symbols(model.GetSymbolInfo(attribute)).OfType<IMethodSymbol>()
+                .Any(constructor => HasExplicitSkip(attribute, constructor.ContainingType, model)
+                    || AttributeConstructorMayAssignSkip(constructor, model, semanticModels)));
 
-    private static bool HasExplicitSkip(AttributeSyntax attribute) =>
-        attribute.ArgumentList?.Arguments.Any(static argument =>
-            argument.NameEquals?.Name.Identifier.ValueText == "Skip"
-            && !argument.Expression.IsKind(SyntaxKind.NullLiteralExpression)) == true;
-
-    private static bool AttributeTypeMayAssignSkip(
+    private static bool HasExplicitSkip(
         AttributeSyntax attribute,
-        SemanticModel model,
-        ScribeSemanticModelProvider semanticModels) =>
-        Symbols(model.GetSymbolInfo(attribute)).OfType<IMethodSymbol>()
-            .Any(constructor => AttributeTypeMayAssignSkip(
-                constructor.ContainingType,
-                model,
-                semanticModels));
+        INamedTypeSymbol concreteAttributeType,
+        SemanticModel model) =>
+        attribute.ArgumentList?.Arguments.Any(argument =>
+            argument.NameEquals is not null
+            && IsSkipMember(
+                model.GetSymbolInfo(argument.NameEquals.Name).Symbol,
+                concreteAttributeType)
+            && !IsNullConstant(argument.Expression, model)) == true;
 
-    private static bool AttributeTypeMayAssignSkip(
-        INamedTypeSymbol attributeType,
+    private static bool AttributeConstructorMayAssignSkip(
+        IMethodSymbol constructor,
         SemanticModel model,
         ScribeSemanticModelProvider semanticModels)
     {
-        for (var current = attributeType; current is not null; current = current.BaseType)
-        {
-            if (IsXunitTestAttributeBase(current)) return false;
+        var concreteAttributeType = constructor.ContainingType;
+        var pending = new Stack<IMethodSymbol>();
+        var visited = new HashSet<IMethodSymbol>(SymbolEqualityComparer.Default);
+        var initializedTypes = new HashSet<INamedTypeSymbol>(SymbolEqualityComparer.Default);
+        pending.Push(constructor);
 
-            if (current.DeclaringSyntaxReferences.Length == 0) return false;
-            foreach (var reference in current.DeclaringSyntaxReferences)
+        while (pending.TryPop(out var method))
+        {
+            if (!visited.Add(method)
+                || !IsMemberOfAttributeHierarchy(method.ContainingType, concreteAttributeType))
             {
-                var declaration = reference.GetSyntax();
+                continue;
+            }
+
+            if (method.MethodKind == MethodKind.Constructor
+                && initializedTypes.Add(method.ContainingType)
+                && TypeInitializersAssignSkip(
+                    method.ContainingType,
+                    concreteAttributeType,
+                    model,
+                    semanticModels,
+                    pending))
+            {
+                return true;
+            }
+
+            var declarations = method.DeclaringSyntaxReferences
+                .Select(static reference => reference.GetSyntax())
+                .ToArray();
+            foreach (var declaration in declarations)
+            {
                 var declarationModel = semanticModels.ModelFor(declaration, model);
-                if (declarationModel is null) return false;
-                if (DeclarationAssignsSkip(
-                        declaration,
+                if (declarationModel is not null && ReachableSyntaxAssignsSkip(
+                        ConstructionInspectionNodes(declaration),
                         declarationModel,
-                        current,
-                        attributeType))
+                        concreteAttributeType,
+                        pending))
                 {
                     return true;
+                }
+            }
+
+            if (method.MethodKind == MethodKind.Constructor)
+            {
+                EnqueueConstructorInitializer(method, declarations, model, semanticModels, pending);
+            }
+        }
+
+        return false;
+    }
+
+    private static bool TypeInitializersAssignSkip(
+        INamedTypeSymbol type,
+        INamedTypeSymbol concreteAttributeType,
+        SemanticModel fallbackModel,
+        ScribeSemanticModelProvider semanticModels,
+        Stack<IMethodSymbol> pending)
+    {
+        foreach (var reference in type.DeclaringSyntaxReferences)
+        {
+            if (reference.GetSyntax() is not TypeDeclarationSyntax declaration
+                || semanticModels.ModelFor(declaration, fallbackModel) is not { } model)
+            {
+                continue;
+            }
+
+            foreach (var member in declaration.Members)
+            {
+                switch (member)
+                {
+                    case PropertyDeclarationSyntax { Initializer: not null } property:
+                        if (IsSkipMember(model.GetDeclaredSymbol(property), concreteAttributeType)
+                            && !IsNullConstant(property.Initializer.Value, model))
+                        {
+                            return true;
+                        }
+                        if (ReachableSyntaxAssignsSkip(
+                                ConstructionInspectionNodes(property.Initializer.Value),
+                                model,
+                                concreteAttributeType,
+                                pending))
+                        {
+                            return true;
+                        }
+                        break;
+                    case FieldDeclarationSyntax field:
+                        foreach (var variable in field.Declaration.Variables
+                                     .Where(static variable => variable.Initializer is not null))
+                        {
+                            if (IsSkipMember(model.GetDeclaredSymbol(variable), concreteAttributeType)
+                                && !IsNullConstant(variable.Initializer!.Value, model))
+                            {
+                                return true;
+                            }
+                            if (ReachableSyntaxAssignsSkip(
+                                    ConstructionInspectionNodes(variable.Initializer!.Value),
+                                    model,
+                                    concreteAttributeType,
+                                    pending))
+                            {
+                                return true;
+                            }
+                        }
+                        break;
                 }
             }
         }
@@ -495,47 +583,129 @@ internal static class ScribeTestSymbolBinder
         return false;
     }
 
-    private static bool DeclarationAssignsSkip(
-        SyntaxNode declaration,
+    private static bool ReachableSyntaxAssignsSkip(
+        IEnumerable<SyntaxNode> nodes,
         SemanticModel model,
-        INamedTypeSymbol attributeType,
-        INamedTypeSymbol concreteAttributeType) => declaration
-        .DescendantNodesAndSelf(node => ReferenceEquals(node, declaration)
-            || node is not TypeDeclarationSyntax)
-        .Any(node => node switch
+        INamedTypeSymbol concreteAttributeType,
+        Stack<IMethodSymbol> pending)
+    {
+        foreach (var node in nodes)
         {
-            AssignmentExpressionSyntax assignment => IsSkipMember(
-                model.GetSymbolInfo(assignment.Left).Symbol,
-                attributeType,
-                concreteAttributeType),
-            PropertyDeclarationSyntax { Initializer: not null } property => IsSkipMember(
-                model.GetDeclaredSymbol(property),
-                attributeType,
-                concreteAttributeType),
-            VariableDeclaratorSyntax { Initializer: not null } variable => IsSkipMember(
-                model.GetDeclaredSymbol(variable),
-                attributeType,
-                concreteAttributeType),
+            if (node is AssignmentExpressionSyntax assignment
+                && model.GetOperation(assignment) is IAssignmentOperation operation
+                && IsCurrentInstanceSkipTarget(operation.Target, concreteAttributeType)
+                && !(operation.Value.ConstantValue.HasValue
+                    && operation.Value.ConstantValue.Value is null))
+            {
+                return true;
+            }
+
+            switch (model.GetOperation(node))
+            {
+                case IInvocationOperation invocation
+                    when invocation.TargetMethod.MethodKind == MethodKind.LocalFunction
+                        || IsCurrentInstance(invocation.Instance)
+                        && IsMemberOfAttributeHierarchy(
+                            invocation.TargetMethod.ContainingType,
+                            concreteAttributeType):
+                    pending.Push(invocation.TargetMethod);
+                    break;
+                case IPropertyReferenceOperation property
+                    when IsCurrentInstance(property.Instance)
+                        && IsMemberOfAttributeHierarchy(
+                            property.Property.ContainingType,
+                            concreteAttributeType):
+                    var accessor = property.Parent is IAssignmentOperation assignmentOperation
+                        && ReferenceEquals(assignmentOperation.Target, property)
+                            ? property.Property.SetMethod
+                            : property.Property.GetMethod;
+                    if (accessor is not null) pending.Push(accessor);
+                    break;
+            }
+        }
+
+        return false;
+    }
+
+    private static void EnqueueConstructorInitializer(
+        IMethodSymbol constructor,
+        IEnumerable<SyntaxNode> declarations,
+        SemanticModel fallbackModel,
+        ScribeSemanticModelProvider semanticModels,
+        Stack<IMethodSymbol> pending)
+    {
+        foreach (var initializer in declarations.OfType<ConstructorDeclarationSyntax>()
+                     .Select(static declaration => declaration.Initializer)
+                     .Where(static initializer => initializer is not null))
+        {
+            var model = semanticModels.ModelFor(initializer!, fallbackModel);
+            if (model?.GetSymbolInfo(initializer!).Symbol is IMethodSymbol target)
+            {
+                pending.Push(target);
+                return;
+            }
+        }
+
+        var implicitBase = constructor.ContainingType.BaseType?.InstanceConstructors
+            .SingleOrDefault(static candidate => candidate.Parameters.Length == 0);
+        if (implicitBase is not null) pending.Push(implicitBase);
+    }
+
+    private static IReadOnlyList<SyntaxNode> ConstructionInspectionNodes(SyntaxNode declaration) =>
+        declaration is TypeDeclarationSyntax
+            ? []
+            : declaration.DescendantNodesAndSelf(node => ReferenceEquals(node, declaration)
+                || node is not LocalFunctionStatementSyntax
+                    and not AnonymousFunctionExpressionSyntax
+                    and not TypeDeclarationSyntax).ToArray();
+
+    private static bool IsCurrentInstanceSkipTarget(
+        IOperation target,
+        INamedTypeSymbol concreteAttributeType) => target switch
+        {
+            IPropertyReferenceOperation property =>
+                IsCurrentInstance(property.Instance)
+                && IsSkipMember(property.Property, concreteAttributeType),
+            IFieldReferenceOperation field =>
+                IsCurrentInstance(field.Instance)
+                && IsSkipMember(field.Field, concreteAttributeType),
             _ => false,
-        });
+        };
+
+    private static bool IsCurrentInstance(IOperation? instance) => instance switch
+    {
+        IInstanceReferenceOperation reference =>
+            reference.ReferenceKind == InstanceReferenceKind.ContainingTypeInstance,
+        IConversionOperation conversion => IsCurrentInstance(conversion.Operand),
+        IParenthesizedOperation parenthesized => IsCurrentInstance(parenthesized.Operand),
+        _ => false,
+    };
+
+    private static bool IsNullConstant(ExpressionSyntax expression, SemanticModel model)
+    {
+        var constant = model.GetConstantValue(expression);
+        return constant.HasValue && constant.Value is null;
+    }
 
     private static bool IsSkipMember(
         ISymbol? member,
-        INamedTypeSymbol attributeType,
         INamedTypeSymbol concreteAttributeType)
     {
-        if (member is not IPropertySymbol and not IFieldSymbol || member.Name != "Skip") return false;
-        if (IsXunitTestAttributeBase(member.ContainingType)
-            || SymbolEqualityComparer.Default.Equals(member.ContainingType, attributeType))
+        if (member is IPropertySymbol { IsStatic: false } property && property.Name == "Skip"
+            || member is IFieldSymbol { IsStatic: false } field && field.Name == "Skip")
         {
-            return true;
+            return IsMemberOfAttributeHierarchy(member.ContainingType, concreteAttributeType);
         }
+        return false;
+    }
 
-        for (var current = concreteAttributeType.BaseType;
-             current is not null && !IsXunitTestAttributeBase(current);
-             current = current.BaseType)
+    private static bool IsMemberOfAttributeHierarchy(
+        INamedTypeSymbol? containingType,
+        INamedTypeSymbol concreteAttributeType)
+    {
+        for (var current = concreteAttributeType; current is not null; current = current.BaseType)
         {
-            if (SymbolEqualityComparer.Default.Equals(member.ContainingType, current)) return true;
+            if (SymbolEqualityComparer.Default.Equals(containingType, current)) return true;
         }
         return false;
     }

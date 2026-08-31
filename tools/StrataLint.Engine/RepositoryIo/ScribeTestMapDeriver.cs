@@ -348,13 +348,15 @@ internal static class ScribeTestMapDeriver
         IReadOnlyDictionary<string, string>? compileProjectBySourcePath = null,
         IReadOnlyList<MsBuildCompileFinding>? compileQueryFindings = null,
         IReadOnlySet<string>? productionAssemblies = null,
-        ScribeProjectCompilationContext? compilationContext = null)
+        ScribeProjectCompilationContext? compilationContext = null,
+        IReadOnlyList<MetadataReference>? syntheticXunitMetadataReferences = null)
     {
         var parsed = ScribeTestSymbolBinder.Bind(
             sourceFiles,
             out var metadataDegradations,
             productionAssemblies,
-            compilationContext).ToArray();
+            compilationContext,
+            syntheticXunitMetadataReferences).ToArray();
         var discoveryPaths = ExtractDiscoveryPaths(parsed);
         var methods = parsed.SelectMany(static source => source.Callables).ToArray();
         var indirect = indirectProductionSites.ToArray();

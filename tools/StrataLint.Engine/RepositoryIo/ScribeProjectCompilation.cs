@@ -125,9 +125,19 @@ internal static class ScribeProjectCompilationBuilder
 
     internal static IReadOnlyList<ScribeProjectCompilation> Build(
         IReadOnlyList<TestMapSource> governedSources,
-        ScribeProjectCompilationContext? context)
+        ScribeProjectCompilationContext? context,
+        IReadOnlyList<MetadataReference>? syntheticXunitMetadataReferences = null)
     {
-        if (context is null) return BuildSynthetic(governedSources);
+        if (context is null)
+        {
+            return BuildSynthetic(governedSources, syntheticXunitMetadataReferences);
+        }
+        if (syntheticXunitMetadataReferences is not null)
+        {
+            throw new ArgumentException(
+                "synthetic xUnit metadata references cannot be combined with a project compilation context",
+                nameof(syntheticXunitMetadataReferences));
+        }
 
         var governedByPath = governedSources.ToDictionary(static source => source.Path, StringComparer.Ordinal);
         var projectsByPath = context.Projects.ToDictionary(static project => project.Path, StringComparer.Ordinal);
@@ -194,7 +204,8 @@ internal static class ScribeProjectCompilationBuilder
     }
 
     private static IReadOnlyList<ScribeProjectCompilation> BuildSynthetic(
-        IReadOnlyList<TestMapSource> sources) => sources
+        IReadOnlyList<TestMapSource> sources,
+        IReadOnlyList<MetadataReference>? xunitMetadataReferences) => sources
         .GroupBy(static source => source.PartitionKey, StringComparer.Ordinal)
         .OrderBy(static group => group.Key, StringComparer.Ordinal)
         .Select(group =>
@@ -202,11 +213,14 @@ internal static class ScribeProjectCompilationBuilder
             var parsed = group.Select(source => (
                 Source: source,
                 Tree: CSharpSyntaxTree.ParseText(source.Content, ParseOptions, source.Path))).ToArray();
-            var support = SyntheticSupportTree(parsed.Select(static item => item.Tree.GetRoot()));
+            var support = SyntheticSupportTree(
+                parsed.Select(static item => item.Tree.GetRoot()),
+                includeXunitFallback: xunitMetadataReferences is null);
             var compilation = CSharpCompilation.Create(
                 AssemblyName(group.Key),
                 parsed.Select(static item => item.Tree).Append(support),
-                ScribeMetadataReferenceResolver.PlatformReferences(),
+                ScribeMetadataReferenceResolver.PlatformReferences()
+                    .Concat(xunitMetadataReferences ?? []),
                 CompilationOptions());
             return new ScribeProjectCompilation(
                 group.Key,
@@ -291,7 +305,9 @@ internal static class ScribeProjectCompilationBuilder
             }
             """);
 
-    private static SyntaxTree SyntheticSupportTree(IEnumerable<SyntaxNode> roots)
+    private static SyntaxTree SyntheticSupportTree(
+        IEnumerable<SyntaxNode> roots,
+        bool includeXunitFallback)
     {
         var declaredTypes = roots.SelectMany(static root => root.DescendantNodes()
                 .OfType<Microsoft.CodeAnalysis.CSharp.Syntax.TypeDeclarationSyntax>())
@@ -310,11 +326,13 @@ internal static class ScribeProjectCompilationBuilder
             + "global using System.Threading;\n"
             + "global using System.Threading.Tasks;\n"
             + "global using Xunit;\n"
-            + "namespace " + "Xunit {\n"
-            + "  public class FactAttribute : Attribute { public string? Skip { get; set; } }\n"
-            + "  public class TheoryAttribute : FactAttribute { }\n"
-            + "  public interface IClassFixture<TFixture> { }\n"
-            + "}\n"
+            + (includeXunitFallback
+                ? "namespace " + "Xunit {\n"
+                    + "  public class FactAttribute : Attribute { public string? Skip { get; set; } }\n"
+                    + "  public class TheoryAttribute : FactAttribute { }\n"
+                    + "  public interface IClassFixture<TFixture> { }\n"
+                    + "}\n"
+                : string.Empty)
             + repositoryLayout + "\n"
             + repositorySupport),
             ParseOptions,
