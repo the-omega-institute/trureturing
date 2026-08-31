@@ -1,0 +1,24 @@
+## 1299.1 完整酉性不推出因果性
+
+$$
+M_\theta
+$$
+
+在 \(L^2\) 上酉，只使用：
+
+$$
+|\theta|=1.
+$$
+
+它不能区分：
+
+$$
+b_p
+\quad\text{与}\quad
+b_p^{-1}.
+$$
+
+所以 unitary Poisson resummation 不是 RH 的充分条件。
+
+---
+

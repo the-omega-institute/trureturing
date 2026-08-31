@@ -3,13 +3,13 @@ fingerprints:
   normalized_sha256: sha256:c1660053bf4eed40aa8ee227978d08c73eae4640c67df916fd6d166438d82332
 cas_ref: sha256:c1660053bf4eed40aa8ee227978d08c73eae4640c67df916fd6d166438d82332
 coverage_gids:
-  - D5/S3/Weil/Convention
-  - D5/S3/Weil/TestFunctions
-  - D5/S3/Weil/FourierLaplace
   - D5/S3/Fourier/FourierLaplaceEntire
+  - D5/S3/Weil/Convention
+  - D5/S3/Weil/FourierLaplace
   - D5/S3/Weil/PrimePoleTerms
-  - D5/S3/Weil/ZeroSum
+  - D5/S3/Weil/TestFunctions
   - D5/S3/Weil/WeilIdentity
+  - D5/S3/Weil/ZeroSum
   - D5/X_Frontier/Hearts
 receipts:
   coverage: []

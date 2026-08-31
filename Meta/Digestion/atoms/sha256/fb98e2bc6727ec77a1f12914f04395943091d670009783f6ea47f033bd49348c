@@ -1,0 +1,22 @@
+# 3. 精确线性加二次分解
+
+Lean 证明
+
+\[
+\boxed{
+\begin{aligned}
+C^{\mathrm{st}}
+={}&
+(s-1)(a_pv_p-a_qv_q)
+\\
+&+a_pa_q(v_q-v_p).
+\end{aligned}
+}
+\]
+
+第一项是一阶 residual 失配。第二项是两个 residual 同时存在时产生的双线性修正。
+
+该恒等式说明曲率的首阶尺度由 \(s-1\) 控制。局部因子完成到 \(1\) 时，稳定记忆乘子与标量完成点之间的间隙决定 residual 被放大的常数。
+
+---
+

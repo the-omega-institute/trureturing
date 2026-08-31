@@ -20,6 +20,13 @@ internal static partial class RepositoryRules
     private static bool TheoryVolumeScoped(RepositoryFile artifact, RuleApplicabilityContext context) =>
         IsTheoryVolumePath(artifact.Path.Value);
 
+    private static bool FormalizationReceiptScoped(
+        RepositoryFile artifact,
+        RuleApplicabilityContext context) =>
+        artifact.Path.Value.StartsWith(
+            DigestionFormalizationReceipt.RootPath,
+            StringComparison.Ordinal);
+
     private static bool StatusScoped(RepositoryFile artifact, RuleApplicabilityContext context) =>
         IsStatusScope(artifact.Path.Value);
 

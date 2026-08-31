@@ -1,0 +1,43 @@
+# 第一千一百九十三部　对 \(\zeta\) 真正可执行的传导链
+
+由此，通向 RH 的路线可以写成：
+
+$$
+\boxed{
+\begin{aligned}
+\text{prime-local objects}
+&\longrightarrow
+\text{arithmetic convolution }*\text{-algebra}\\
+&\longrightarrow
+\text{time reflection }\theta\\
+&\longrightarrow
+\text{Prime--Archimedean Weil functional }\omega_\xi\\
+&\longrightarrow
+\omega_\xi(\theta(a)^*a)\ge0\\
+&\longrightarrow
+\text{OS/GNS Hilbert space}\\
+&\longrightarrow
+\text{self-adjoint time generator}\\
+&\longrightarrow
+\text{real spectral parameters}\\
+&\longrightarrow
+\Re\rho=\frac12.
+\end{aligned}
+}
+\tag{1193.1}
+$$
+
+这里最难、也唯一真正承重的一步是：
+
+$$
+\boxed{
+\omega_\xi(\theta(a)^*a)\ge0
+\qquad
+\forall a.
+}
+\tag{1193.2}
+$$
+
+黄金结构可以解释：
+
+* 为什么第一次区别是自对偶的；

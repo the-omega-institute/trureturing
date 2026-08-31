@@ -3,9 +3,9 @@ fingerprints:
   normalized_sha256: sha256:9b7a3ffc25dbae19ef334f68bbfdc9182d64e32492f99436316099057780b1da
 cas_ref: sha256:9b7a3ffc25dbae19ef334f68bbfdc9182d64e32492f99436316099057780b1da
 coverage_gids:
-  - D5/S1/Dynamics/RecursiveDefinition.unique_fixed_point_implies_lfp_eq_gfp
   - D5/S1/Dynamics/RecursiveDefinition.extremal_selection_distinguishes_fixed_points
   - D5/S1/Dynamics/RecursiveDefinition.is_recursive_definition_iff_fixed_point
+  - D5/S1/Dynamics/RecursiveDefinition.unique_fixed_point_implies_lfp_eq_gfp
 receipts:
   coverage:
     - gid: D5/S1/Dynamics/RecursiveDefinition.is_recursive_definition_iff_fixed_point

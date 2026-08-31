@@ -1,0 +1,80 @@
+* anti-causal inverse-inner；
+
+同时存在。
+
+真正产生“现实方向”的，是 Hardy 极化：
+
+$$
+L^2(\mathbb R)
+=
+H_+^2\oplus H_-^2.
+$$
+
+观察者选择：
+
+$$
+H_+^2
+$$
+
+作为未来。
+
+此后，合法完成必须满足：
+
+$$
+\Theta_\omega H_+^2
+\subseteq H_+^2.
+$$
+
+即：
+
+$$
+\boxed{
+P_-M_{\Theta_\omega}P_+=0.
+}
+$$
+
+临界零点满足这一条件。
+
+离线零点则产生：
+
+$$
+\boxed{
+e^{i\gamma x}
+e^{(\delta-\omega)x}
+\mathbf1_{\{x<0\}},
+}
+$$
+
+这一精确的负时间指数尾部。
+
+所以离线零点最终可以定义为：
+
+$$
+\boxed{
+\textbf{一个在完整双向世界中仍然酉，
+但在选择未来以后产生反因果泄漏的相位模式。}
+}
+$$
+
+---
+
+单个 \(m\) 阶 inverse Blaschke 因子产生一个 \(m\) 维 model space：
+
+$$
+K_B.
+$$
+
+同一个空间同时满足：
+
+$$
+\boxed{
+K_B
+=
+\operatorname{coker}T_B
+=
+\ker T_{B^{-1}}.
+}
+$$
+
+因此它既是：
+

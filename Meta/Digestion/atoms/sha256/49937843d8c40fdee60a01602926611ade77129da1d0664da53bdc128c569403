@@ -1,0 +1,63 @@
+## 1313.2 不可交换的两个极限
+
+若先令：
+
+$$
+\omega\to0,
+$$
+
+则：
+
+$$
+\Theta_\omega\to1,
+$$
+
+缺陷消失。
+
+但若先读取：
+
+$$
+\omega^{-2}
+\mathfrak H_\omega^*
+\mathfrak H_\omega,
+$$
+
+再令：
+
+$$
+\omega\to0,
+$$
+
+则得到非零横向深度数据。
+
+所以：
+
+$$
+\boxed{
+\lim_{\omega\to0}
+\mathfrak D_\omega
+=0,
+}
+$$
+
+但：
+
+$$
+\boxed{
+\lim_{\omega\to0}
+\omega^{-2}\mathfrak D_\omega
+\neq0.
+}
+$$
+
+这是一种典型的 blow-up 几何：
+
+$$
+\boxed{
+\text{完成极限把整数缺陷压缩成无穷小 Jet，
+而没有真正删除它的形成历史。}
+}
+$$
+
+---
+

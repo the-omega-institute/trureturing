@@ -1,0 +1,17 @@
+* 但它在 \(k_\Theta\) 中带负号。
+
+若 \(B\) 与 \(S\) 的因子化为最小且无共同因子，则：
+
+$$
+\boxed{
+\operatorname{ind}_-k_\Theta
+=
+\deg B.
+}
+\tag{1260.7}
+$$
+
+这正是 Kreĭn–Langer 型因子化的核心结构：有限负平方的 generalized Schur 函数，可以用有限 Blaschke 分母乘以普通 Schur 函数表示；最小分母次数对应 Pontryagin 负指标。([arXiv][3])
+
+---
+

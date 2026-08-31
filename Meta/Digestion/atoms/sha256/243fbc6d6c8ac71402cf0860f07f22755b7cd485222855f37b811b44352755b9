@@ -1,0 +1,42 @@
+## v8.0（续）：横向缺陷 ζ、最小散射实现、Hankel 视差与黄金首穿越
+
+以下接续式：
+
+$$
+\zeta_\perp(s)
+=
+s
+\int_0^{1/2}
+\omega^{s-1}
+\operatorname{rank}\mathfrak H_\omega
+\,d\omega.
+\tag{1311.3}
+$$
+
+这一层需要把三个过去经常混合的量彻底分开：
+
+$$
+\boxed{
+\begin{aligned}
+\operatorname{rank}\mathfrak H_\omega
+&=\text{缺陷是否存在、存在多少个};\\
+\|\mathfrak H_\omega\|
+&=\text{缺陷在当前观察基线下有多清晰};\\
+\omega
+&=\text{观察者人为选择的双层基线}.
+\end{aligned}
+}
+$$
+
+离线零点可以在拓扑上真实存在，却在某些观察深度中具有任意小的能量信号。
+
+这不是矛盾，而是：
+
+$$
+\boxed{
+\text{整数存在性与连续可见性属于不同层次。}
+}
+$$
+
+---
+

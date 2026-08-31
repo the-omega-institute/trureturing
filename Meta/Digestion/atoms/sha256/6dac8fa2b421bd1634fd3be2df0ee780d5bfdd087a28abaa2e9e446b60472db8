@@ -1,0 +1,39 @@
+## v7.9：Hardy 时间极化、反因果 Hankel 记忆、Toeplitz 指数与黄金 Prony 缺陷谱
+
+以下从前文**第一千二百八十七部**继续。
+
+上一轮得到：
+
+$$
+|\Theta_\omega(t)|=1
+$$
+
+不能排除离线零点，因为合法 inner factor 与非法 inverse-inner factor 在实边界上具有相同振幅。
+
+这一次可以把“正确时间方向”严格压缩成一个算子条件：
+
+$$
+\boxed{
+\text{离线零点}
+\iff
+\text{双向酉散射在选取正时间后，向负时间泄漏。}
+}
+$$
+
+也就是说，完整双向世界中的散射算子仍然可以是酉的；真正失效的是它对“未来 Hardy 空间”的保持性。
+
+最核心的新判据为：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+P_-M_{\Theta_{\omega_n}}P_+=0
+\quad
+\forall n,
+}
+$$
+
+其中：
+
+* \(M_{\Theta_\omega}\) 是边界全通相位的乘法算子；

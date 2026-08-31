@@ -1,0 +1,73 @@
+## 1165.1 对 Riemann 模式的精确 \(K A\) 分解
+
+式 (1164.1) 可以写成：
+
+$$
+\boxed{
+M_{\delta,\gamma}(P)
+=
+K_\gamma(P)\,
+A_\delta(P),
+}
+\tag{1165.3}
+$$
+
+其中：
+
+$$
+\boxed{
+K_\gamma(P)
+=
+\begin{pmatrix}
+e^{i\gamma P}&0\\
+0&e^{-i\gamma P}
+\end{pmatrix},
+}
+\tag{1165.4}
+$$
+
+$$
+\boxed{
+A_\delta(P)
+=
+\begin{pmatrix}
+e^{\delta P}&0\\
+0&e^{-\delta P}
+\end{pmatrix}.
+}
+\tag{1165.5}
+$$
+
+于是：
+
+$$
+\boxed{
+\begin{aligned}
+\gamma
+&=\text{compact phase frequency};\\
+\delta
+&=\text{noncompact amplitude rapidity}.
+\end{aligned}
+}
+$$
+
+临界线条件正是：
+
+$$
+\boxed{
+A_\delta(P)=I.
+}
+\tag{1165.6}
+$$
+
+离线零点正是：
+
+$$
+\boxed{
+A_\delta(P)\neq I.
+}
+\tag{1165.7}
+$$
+
+---
+

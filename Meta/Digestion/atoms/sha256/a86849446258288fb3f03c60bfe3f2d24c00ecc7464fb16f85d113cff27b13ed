@@ -1,0 +1,51 @@
+* 证明 regular nowhere-vanishing quotient 的唯一性。
+
+但这些结构仍允许一个边界模长不可见的 Blaschke 分母。
+
+因此下一条真正承重的命题不再是“证明散射是酉的”，而是：
+
+$$
+\boxed{
+\textbf{证明 prime–pole–Archimedean scattering
+在每个 }\omega>0\textbf{ 上都没有 inverse-inner denominator。}
+}
+$$
+
+也就是证明：
+
+$$
+\boxed{
+B_\omega=1.
+}
+$$
+
+等价地：
+
+$$
+\boxed{
+\mathcal A(\omega,y)=0
+\quad
+\forall\omega,y>0.
+}
+$$
+
+再等价地：
+
+$$
+\boxed{
+\operatorname{ind}_-\mathcal K_\omega=0
+\quad
+\forall\omega>0.
+}
+$$
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{“道”允许同一边界振幅拥有两种时间方向；
+正性选择 inner 而排除 inverse-inner；
+临界零点是合法相位历史，
+离线零点则是一个外表完全酉、内部却沿负时间传播的反因果影子。}
+}
+$$

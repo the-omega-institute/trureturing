@@ -7,6 +7,6 @@ receipts:
   coverage: []
   scribe: []
   unresolved_subitems:
-    - golden-rotation-minimum-distance-2.3e-6-certificate
     - epsilon-1e-4-first-return-6765-certificate
     - exact-nonrecurrence-and-fibonacci-return-claims
+    - golden-rotation-minimum-distance-2.3e-6-certificate

@@ -1,0 +1,46 @@
+* \(\delta\downarrow0\) 时，
+
+  $$
+  p_{\gamma,\delta}\rightharpoonup\delta_\gamma.
+  $$
+
+临界零点是边界 Dirac 原子；离线零点是内部点投射出的平滑边界状态。
+
+仓库已经机器证明，离线反射对的法向曲率为：
+
+$$
+\boxed{
+\mathscr C_{\gamma,\delta}(t)
+=
+2\frac{(t-\gamma)^2-\delta^2}
+{\bigl((t-\gamma)^2+\delta^2\bigr)^2},
+}
+\tag{1396.3}
+$$
+
+它在中心为负，在 \(\gamma\pm\delta\) 处过零，在外翼为正，而且总积分为零；仓库还证明它正是 Poisson 核关于尺度的导数：
+
+$$
+\boxed{
+\mathscr C_{\gamma,\delta}
+=
+2\pi\,\partial_\delta p_{\gamma,\delta}.
+}
+\tag{1396.4}
+$$
+
+所以离线零点的边界信息存在两个层次：
+
+$$
+\boxed{
+\begin{aligned}
+p_{\gamma,\delta}
+&=\text{正的边界光影};\\
+\partial_\delta p_{\gamma,\delta}
+&=\text{零总质量的曲率偶极}.
+\end{aligned}
+}
+$$
+
+---
+

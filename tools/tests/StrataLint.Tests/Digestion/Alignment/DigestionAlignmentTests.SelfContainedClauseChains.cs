@@ -66,6 +66,69 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
+    public void IngestAcceptsClauseChainChildOwnedByAnotherSource()
+    {
+        var fixture = SelfContainedClauseChain();
+        var parentSource = Assert.Single(fixture.Ledger.RequireDigestionSources());
+        var contentOwner = parentSource with
+        {
+            SourceId = "content-owner",
+            SourcePath = "docs/content-owner.md",
+            Entries = fixture.Children.Skip(1).Select(child => child with
+            {
+                SourceId = "content-owner",
+                SourcePath = "docs/content-owner.md",
+            }).ToImmutableArray(),
+        };
+        var ledger = fixture.Ledger.WithDigestionSources(
+        [
+            parentSource with { Entries = [fixture.Parent, fixture.Children[0]] },
+            contentOwner,
+        ]);
+
+        var result = DigestionLedgerAligner.Evaluate(
+            ledger,
+            Snapshot(
+                fixture.CurrentSourceBytes,
+                fixture.ChildCaptures.Prepend(fixture.ParentCapture),
+                extraEntries:
+                [
+                    new RawRepositoryEntry(
+                        contentOwner.SourcePath,
+                        ImmutableArray.CreateRange(fixture.CurrentSourceBytes)),
+                ]),
+            ledger,
+            DigestionAlignmentMode.Ingest);
+
+        Assert.DoesNotContain(result.Findings, finding => finding.Contains(
+            "malformed clause chain",
+            StringComparison.Ordinal));
+        Assert.Contains(fixture.Parent.AtomId, result.VerifiedClausePlanParents);
+        Assert.All(fixture.Children, child => Assert.Equal(
+            DigestionReceiptAlignment.Seen,
+            result.AlignmentFor(child.AtomId)));
+    }
+
+    [Fact]
+    public void IngestRejectsClauseChainChildAbsentFromGlobalInventory()
+    {
+        var fixture = SelfContainedClauseChain();
+        var missingChild = fixture.Children[1];
+        var ledger = ChainLedger(
+            fixture,
+            fixture.Parent,
+            fixture.Children.Take(1));
+
+        var result = EvaluateSelfContainedClauseChain(fixture, ledger);
+
+        AssertMalformedClauseChain(
+            result,
+            fixture.Parent.AtomId,
+            $"listed child {missingChild.AtomId} is absent from the global inventory");
+        Assert.DoesNotContain(fixture.Parent.AtomId, result.VerifiedClausePlanParents);
+    }
+
+    [Fact]
     public void AdmissionRevalidatesChangedChainEvenWhenParentContentIsSeen()
     {
         var fixture = SelfContainedClauseChain();

@@ -1,0 +1,113 @@
+# 第一千二百七十八部　离线零点是量子化的负相位延迟
+
+对实数 \(t\)：
+
+$$
+\frac{d}{dt}
+\arg b_p(t)
+=
+\operatorname{Im}
+\left[
+\frac1{t-p}
+-
+\frac1{t-\overline p}
+\right].
+$$
+
+所以：
+
+$$
+\boxed{
+\frac{d}{dt}
+\arg b_p(t)
+=
+\frac{
+2h
+}{
+(t-a)^2+h^2
+}
+=
+2\pi P_h(t-a),
+}
+\tag{1278.1}
+$$
+
+其中：
+
+$$
+P_h(x)
+=
+\frac1\pi
+\frac{h}{x^2+h^2}.
+$$
+
+积分得到：
+
+$$
+\boxed{
+\frac1{2\pi}
+\int_{\mathbb R}
+\frac{d}{dt}\arg b_p(t)\,dt
+=
+1.
+}
+\tag{1278.2}
+$$
+
+对逆因子：
+
+$$
+\boxed{
+\frac{d}{dt}
+\arg b_p(t)^{-1}
+=
+-2\pi P_h(t-a).
+}
+\tag{1278.3}
+$$
+
+所以 under chosen orientation：
+
+$$
+\boxed{
+\begin{aligned}
+b_p&=\text{正相位延迟};\\
+b_p^{-1}&=\text{负相位延迟／phase advance}.
+\end{aligned}
+}
+$$
+
+符号会随 Fourier convention 反转，但整数绝对值不变。
+
+因此：
+
+$$
+\boxed{
+\deg B_{\omega,T}
+=
+-\frac1{2\pi}
+\int
+\partial_t
+\arg B_{\omega,T}^{-1}(t)\,dt.
+}
+\tag{1278.4}
+$$
+
+在最小 Kreĭn–Langer 因子化下，该次数又等于 kernel 的负平方数。
+
+于是：
+
+$$
+\boxed{
+\text{离线零点重数}
+=
+\text{负相位绕数}
+=
+\text{Pontryagin 负指标}.
+}
+$$
+
+这是一条严格的 Levinson／index 型结构。
+
+---
+

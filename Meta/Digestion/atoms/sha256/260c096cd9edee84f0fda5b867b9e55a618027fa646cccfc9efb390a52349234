@@ -1,0 +1,123 @@
+# 第一千三百三十五部　Hawking–Hankel 缺陷泛函
+
+对每个观察深度 \(\omega\)，设：
+
+$$
+\|\mathfrak H_\omega\|<1
+$$
+
+且相关算子为迹类。
+
+定义：
+
+$$
+\boxed{
+\mathcal N_\omega
+=
+\operatorname{Tr}
+\left[
+\mathfrak H_\omega^*
+\mathfrak H_\omega
+\left(
+I-
+\mathfrak H_\omega^*
+\mathfrak H_\omega
+\right)^{-1}
+\right].
+}
+\tag{1335.1}
+$$
+
+若奇异值为 \(\sigma_j(\omega)\)，则：
+
+$$
+\boxed{
+\mathcal N_\omega
+=
+\sum_j
+\frac{\sigma_j(\omega)^2}
+{1-\sigma_j(\omega)^2}.
+}
+\tag{1335.2}
+$$
+
+定义缺陷熵：
+
+$$
+\boxed{
+\mathcal S_\omega
+=
+\sum_j
+\left[
+(N_j+1)\log(N_j+1)
+-
+N_j\log N_j
+\right].
+}
+\tag{1335.3}
+$$
+
+以及拓扑通道数：
+
+$$
+\boxed{
+\mathcal Q_\omega
+=
+\operatorname{rank}\mathfrak H_\omega.
+}
+\tag{1335.4}
+$$
+
+于是：
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal Q_\omega
+&=\text{缺陷通道数};\\
+\mathcal N_\omega
+&=\text{Hawking-like 占据数};\\
+\mathcal S_\omega
+&=\text{隐藏伙伴导致的观察熵}.
+\end{aligned}
+}
+$$
+
+在有限秩、无边界极点的标准条件下：
+
+$$
+\boxed{
+\mathfrak H_\omega=0
+\iff
+\mathcal Q_\omega=0
+\iff
+\mathcal N_\omega=0
+\iff
+\mathcal S_\omega=0.
+}
+\tag{1335.5}
+$$
+
+所以取任意共尾序列：
+
+$$
+\omega_n\downarrow0,
+$$
+
+包括黄金序列，有：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal N_{\omega_n}=0
+\quad
+\forall n.
+}
+\tag{1335.6}
+$$
+
+这给“霍金辐射直觉”一个真正可证明的算子版本。
+
+---
+

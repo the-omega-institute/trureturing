@@ -1,0 +1,42 @@
+## 1319.2 解析延拓可能增加什么
+
+从：
+
+$$
+\Re s>1
+$$
+
+向临界胞腔延拓时，正时间 prime history 本身不会凭空产生负时间。
+
+负时间项只能来自：
+
+* 穿越零点或极点时的 residue；
+* inverse-inner denominator；
+* 或错误的谱因子取向。
+
+所以离线零点可以进一步解释为：
+
+$$
+\boxed{
+\text{正时间 Euler 历史在解析延拓中产生的反因果 residue。}
+}
+$$
+
+仓库已经机器化：
+
+* prime-power 双向历史的 Poisson resolvent 重求和；
+* shifted scattering ratios 的有限 cascade；
+* scattering ratios 的 telescoping zeta reconstruction。
+
+这些已经给出代数级联和双向酉骨架。
+
+缺失的正是：
+
+$$
+\boxed{
+\text{解析延拓是否保持单边时间支撑。}
+}
+$$
+
+---
+

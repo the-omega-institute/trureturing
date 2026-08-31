@@ -8,7 +8,7 @@ receipts:
   coverage: []
   scribe: []
   unresolved_subitems:
-    - unique-trace-pricing-double-tower-minimal-projection
-    - golden-branch-born-type-pricing-unconditionally-unique
     - comparison-claim-stronger-than-cyclic-branch-gleason-conditions
+    - golden-branch-born-type-pricing-unconditionally-unique
     - golden-window-price-table-has-no-free-parameters
+    - unique-trace-pricing-double-tower-minimal-projection

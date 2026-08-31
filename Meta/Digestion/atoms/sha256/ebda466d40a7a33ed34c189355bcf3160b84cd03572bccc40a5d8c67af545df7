@@ -1,0 +1,57 @@
+## 五、反射增长对位于正双曲线上
+
+由乘积守恒：
+
+$$
+g_{+}(t)g_{-}(t)=1,
+$$
+
+反射增长对落在正双曲线
+
+$$
+xy=1,
+\qquad x>0,\ y>0
+$$
+
+上。
+
+定义偶、奇坐标
+
+$$
+E_{\delta}(t)
+=\frac{g_{+}(t)+g_{-}(t)}{2},
+$$
+
+$$
+O_{\delta}(t)
+=\frac{g_{+}(t)-g_{-}(t)}{2}.
+$$
+
+则预期有
+
+$$
+E_{\delta}(t)=\cosh(\delta t),
+\qquad
+O_{\delta}(t)=\sinh(\delta t),
+$$
+
+以及
+
+$$
+\boxed{
+E_{\delta}(t)^2-O_{\delta}(t)^2=1.
+}
+$$
+
+时间反演保持偶坐标并翻转奇坐标：
+
+$$
+E_{\delta}(-t)=E_{\delta}(t),
+$$
+
+$$
+O_{\delta}(-t)=-O_{\delta}(t).
+$$
+
+[research-target] 这组等式应形成 `ReflectedGrowthPairEvenOddDecomposition`。它将把“时间方向信息”精确定位到奇通道，而把“反射不变量”定位到偶通道和负平方行列式。
+

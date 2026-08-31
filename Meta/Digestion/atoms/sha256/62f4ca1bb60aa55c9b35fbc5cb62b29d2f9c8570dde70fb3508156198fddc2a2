@@ -1,0 +1,89 @@
+# 第一千二百三十五部　单极子荷与负平方出生是同一个重数的两张图
+
+前文已经得到：
+
+$$
+\boxed{
+\operatorname{ord}_\rho\xi
+=
+\text{局部 winding}
+=
+\text{Berry--Chern 荷}.
+}
+$$
+
+现在再加入 shifted kernel。
+
+若 \(\rho\) 为 \(m\) 重离线零点，则：
+
+$$
+E_\omega(z)
+$$
+
+在：
+
+$$
+z_{\rho,\omega}
+$$
+
+处也有 \(m\) 重零点。
+
+在：
+
+$$
+\omega<\delta
+$$
+
+时，该点进入上半平面，使：
+
+$$
+\Theta_\omega
+=
+\frac{E_\omega^\#}{E_\omega}
+$$
+
+获得一个 \(m\) 阶上半平面极点，除非发生同阶抵消。
+
+在标准 Kreĭn–Langer 局部因子化下，这一极点产生 \(m\) 个负平方。
+
+因此局部上得到：
+
+$$
+\boxed{
+\begin{aligned}
+m
+&=
+\text{零点重数}\\
+&=
+\text{Chern 单极子荷}\\
+&=
+\text{shifted kernel 负指标跳跃}\\
+&=
+\text{Pontryagin 负维数出生数}.
+\end{aligned}
+}
+\tag{1235.1}
+$$
+
+精确的全局等号仍需排除共同因子和控制无限零点；但孤立局部模型中，这四个整数由同一除子重数产生。
+
+所以：
+
+$$
+\boxed{
+\text{磁单极子图表测量拓扑荷；
+de Branges 图表测量负平方荷。}
+}
+$$
+
+它们不是两个不同缺陷。
+
+它们是同一离线除子在：
+
+* 拓扑；
+* 正核；
+
+两个函子下的像。
+
+---
+

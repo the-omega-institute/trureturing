@@ -1,0 +1,102 @@
+# 第一千一百二十二部　为什么纯 \(\zeta\) 看不到黄金比例
+
+Riemann \(\zeta\) 的 Mellin 参数：
+
+$$
+s-\frac12
+=
+\delta+i\gamma
+$$
+
+主要与整体尺度时间：
+
+$$
+\nu
+$$
+
+共轭。
+
+相应模式为：
+
+$$
+\boxed{
+e^{(\delta+i\gamma)\nu}.
+}
+\tag{1122.1}
+$$
+
+而黄金 regulator Fourier modes 与内部观察者坐标：
+
+$$
+\eta
+$$
+
+共轭，其离散频率为：
+
+$$
+\boxed{
+\kappa_n
+=
+\frac{\pi n}{\log\varphi}.
+}
+\tag{1122.2}
+$$
+
+因此完整的二维观察变换应具有形式：
+
+$$
+\boxed{
+\mathcal Z_n(s)
+=
+\int
+f(\nu,\eta)\,
+e^{-(s-\frac12)\nu}
+e^{-i\kappa_n\eta}
+\,d\nu\,d\eta.
+}
+\tag{1122.3}
+$$
+
+其中：
+
+* \(s\) 读取 global scale；
+* \(n\) 读取 golden observer phase。
+
+普通标量 \(\zeta\) 对应的是：
+
+$$
+\boxed{
+n=0
+}
+$$
+
+的 observer 零模态。
+
+所以：
+
+$$
+\boxed{
+\text{纯 }\zeta
+\text{ 看不见 }\varphi，
+}
+$$
+
+不是因为 \(\varphi\) 不存在，而是因为：
+
+$$
+\boxed{
+\zeta
+\text{ 沿黄金观察者方向做了零模态平均。}
+}
+$$
+
+在 \(K=\mathbb Q(\sqrt5)\) 中，\(n=0\) 的对象应首先是 Dedekind \(\zeta_K\)，再分解成：
+
+$$
+\zeta(s)L(s,\chi_5).
+$$
+
+因此从黄金观察者回到纯 Riemann \(\zeta\)，还需要再投影到平凡 Galois 表示。
+
+---
+

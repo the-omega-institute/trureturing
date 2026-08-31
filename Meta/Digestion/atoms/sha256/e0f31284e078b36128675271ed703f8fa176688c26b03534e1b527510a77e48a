@@ -1,0 +1,29 @@
+## 定理 1228.1（单点负核见证）
+
+每一个离线零点都在某个正观察深度 \(\omega\) 上产生一个：
+
+$$
+\boxed{
+1\times1
+}
+$$
+
+的严格负 de Branges Gram 矩阵。
+
+它不需要先构造复杂的大矩阵。
+
+也不需要先找到一组测试函数。
+
+离线零点本身已经把某个 reproducing-kernel vector 的“平方范数”变成负数。
+
+所以：
+
+$$
+\boxed{
+\text{离线零点的最小证明对偶，
+是一个负 reproducing-kernel state。}
+}
+$$
+
+---
+

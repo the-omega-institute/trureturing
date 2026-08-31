@@ -1,0 +1,22 @@
+# 9. 严格非主张
+
+本轮不主张：
+
+- 已构造 all-order residual extraction；
+- residual envelope 已随深度趋零；
+- 已定义或控制无限素数 holonomy 能量；
+- prime-side 曲率已经支配离线零点奇能量；
+- 已得到任何零点位置结论；
+- 已证明 RH。
+
+本轮机器层只冻结有限、可复用且不含目标等价前提的定量桥：
+
+\[
+\boxed{
+\text{residual local factors}
+\longrightarrow
+\text{stable adjacent-swap curvature bound}.
+\]
+
+---
+

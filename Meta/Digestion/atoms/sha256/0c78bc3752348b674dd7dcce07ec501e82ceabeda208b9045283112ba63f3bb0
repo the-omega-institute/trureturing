@@ -1,0 +1,57 @@
+# 第一千二百八十部　观察深度流的 stop-loss 变换
+
+现在恢复原始横向距离：
+
+$$
+\delta_j>0.
+$$
+
+在观察层 \(\omega\) 中，活跃极点高度为：
+
+$$
+h_j(\omega)
+=
+(\delta_j-\omega)_+.
+$$
+
+定义横向尾计数：
+
+$$
+\boxed{
+N(\omega)
+=
+\sum_jm_j
+\mathbf 1_{\{\delta_j>\omega\}}.
+}
+\tag{1280.1}
+$$
+
+定义剩余深度：
+
+$$
+\boxed{
+R(\omega)
+=
+\sum_jm_j(\delta_j-\omega)_+.
+}
+\tag{1280.2}
+$$
+
+以及双深度衰减：
+
+$$
+\boxed{
+\mathcal A(\omega,y)
+=
+\sum_jm_j
+\min
+\left(
+y,
+(\delta_j-\omega)_+
+\right).
+}
+\tag{1280.3}
+$$
+
+逐项计算得到：
+

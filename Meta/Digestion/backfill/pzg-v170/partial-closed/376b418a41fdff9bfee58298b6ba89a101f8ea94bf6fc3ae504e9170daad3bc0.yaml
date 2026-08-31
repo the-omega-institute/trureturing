@@ -15,14 +15,14 @@ receipts:
       definition_sha256: sha256:7c42f364cffc731328d1c66c59da12ca61ccf5d6797838678b81eda30edf196f
       emission_sha256: sha256:58246a826a1958e8f0839acfd952a24e91ba52d5babac98f92e567a76417226c
   unresolved_subitems:
+    - completed-zeta-parameter-as-history-sampling-bias
     - dirichlet-series-time-foliation-versus-euler-product-space-foliation
     - euler-product-as-journal-ledger-trial-balance
-    - theta-as-heat-kernel-trace
-    - theta-small-time-and-large-time-asymptotics
-    - theta-asymptotic-numerical-certificates
-    - theta-time-inversion-genesis-heat-death-reading
-    - theta-fixed-time-one-corresponds-to-critical-half-line
-    - completed-zeta-parameter-as-history-sampling-bias
     - folded-slit-mass-ratio-values-and-half-weight-certificate
-    - zeta-pole-at-one-as-genesis-divergence
     - pole-subtraction-required-before-functional-symmetry
+    - theta-as-heat-kernel-trace
+    - theta-asymptotic-numerical-certificates
+    - theta-fixed-time-one-corresponds-to-critical-half-line
+    - theta-small-time-and-large-time-asymptotics
+    - theta-time-inversion-genesis-heat-death-reading
+    - zeta-pole-at-one-as-genesis-divergence

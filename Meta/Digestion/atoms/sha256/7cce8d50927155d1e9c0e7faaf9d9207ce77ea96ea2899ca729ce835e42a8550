@@ -1,0 +1,68 @@
+# 第一千三百部　建议形式化顺序
+
+```text
+D5/S3/Analytic/HardyTime/
+  UpperHardyTimeSpace.lean
+  LowerHardyTimeSpace.lean
+  HardyTimeOrthogonalDecomposition.lean
+  BoundaryUnitaryMultiplication.lean
+  HardyCompressedToeplitz.lean
+  AntiCausalHankelBlock.lean
+  UnitaryEnergySplit.lean
+
+D5/S3/Analytic/BlaschkeTimeOrientation/
+  UpperHalfPlaneBlaschke.lean
+  BlaschkeInverseFourierCausal.lean
+  InverseBlaschkeFourierAntiCausal.lean
+  RepeatedBlaschkePolynomialTail.lean
+  BlaschkeTimeOrientation.lean
+
+D5/S3/Analytic/BlaschkeModelSpace/
+  FiniteBlaschkeModelSpace.lean
+  ModelSpaceDimensionDegree.lean
+  BlaschkeToeplitzIsometry.lean
+  InverseBlaschkeToeplitzCoisometry.lean
+  InverseBlaschkeKernelModelSpace.lean
+  BlaschkeToeplitzIndex.lean
+
+D5/S3/Analytic/BlaschkeHankel/
+  InverseBlaschkeHankelKernel.lean
+  InverseBlaschkeHankelIsometryOnModelSpace.lean
+  InverseBlaschkeHankelRank.lean
+  InverseBlaschkeHankelHilbertSchmidtCharge.lean
+
+D5/S3/Analytic/Zeta/ShiftedHardyCriterion/
+  ShiftedScatteringBoundaryUnitary.lean
+  ShiftedScatteringAntiCausalBlock.lean
+  RHImpliesZeroAntiCausalBlock.lean
+  OffLineZeroImpliesNonzeroAntiCausalBlock.lean
+  GoldenHardyCofinalCriterion.lean
+
+D5/S3/Observer/AntiCausalMemory/
+  AntiCausalMemoryState.lean
+  AntiCausalMemoryGramian.lean
+  ModelSpacePastErasureFutureInnovation.lean
+  OffLineMultiplicityMemoryDimension.lean
+  AntiCausalHankelSingularSpectrum.lean
+
+D5/S3/GoldenObserver/DefectProny/
+  GoldenDefectSamplingPeriod.lean
+  OffLinePoleNegativeTimeSignal.lean
+  GoldenDefectDiskAtom.lean
+  GoldenDefectMomentSequence.lean
+  GoldenDefectGeneratingFunction.lean
+  GoldenDefectLinearRecurrence.lean
+  GoldenDefectHankelRank.lean
+  GoldenDefectAliasCriterion.lean
+
+D5/S3/Weil/PrimeHardyTriangularity/
+  FinitePrimeScatteringTransfer.lean
+  FinitePrimeScatteringSchurTarget.lean
+  PrimeScatteringNoNegativeTimeTarget.lean
+  PrimeArchimedeanHardyLimit.lean
+  HardyTriangularityImpliesShiftedInner.lean
+  GoldenHardyTriangularityImpliesRH.lean
+```
+
+---
+

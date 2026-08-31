@@ -1,0 +1,90 @@
+# 第一千三百一十二部　单缺陷的能量层析
+
+考虑一个简单离线零点：
+
+$$
+\rho
+=
+\frac12+\delta+i\gamma,
+\qquad
+\delta>0.
+$$
+
+前文已得到，在：
+
+$$
+0<\omega<\delta
+$$
+
+时，它的局部最小 scattering factor 为：
+
+$$
+\Theta_{\rho,\omega}
+=
+b_{p_\omega}^{-1}b_{q_\omega},
+$$
+
+其中：
+
+$$
+p_\omega
+=
+-\gamma+i(\delta-\omega),
+$$
+
+$$
+q_\omega
+=
+-\gamma+i(\delta+\omega).
+$$
+
+该局部反因果 Hankel block 唯一非零奇异值为：
+
+$$
+\boxed{
+\sigma_\rho(\omega)
+=
+\frac{\omega}{\delta}.
+}
+\tag{1312.1}
+$$
+
+定义局部 leakage energy：
+
+$$
+\boxed{
+\mathcal E_\rho(\omega)
+=
+\|\mathfrak H_{\rho,\omega}\|_{\mathrm{HS}}^2.
+}
+\tag{1312.2}
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal E_\rho(\omega)
+=
+\begin{cases}
+\dfrac{\omega^2}{\delta^2},
+&
+0<\omega<\delta,\\[2mm]
+0,
+&
+\omega>\delta.
+\end{cases}
+}
+\tag{1312.3}
+$$
+
+在：
+
+$$
+\omega=\delta
+$$
+
+处，分母像到达 Hardy 边界，需按边界极限理解。
+
+---
+

@@ -1,0 +1,43 @@
+## 第五步：利用 threshold identity
+
+对所有：
+
+$$
+\omega>0
+$$
+
+建立 innerness 后，项目现有阈值恒等式直接给出：
+
+$$
+\boxed{
+\Omega_\xi=0,
+}
+$$
+
+从而：
+
+$$
+\boxed{
+\mathrm{RH}.
+}
+$$
+
+这一程序不再依赖：
+
+* 黑洞温度是否为黄金常数；
+* 霍金占据是否真实物理；
+* 单极子类比是否完整；
+* 零点是否能被直接数值找到。
+
+这些图景只负责揭示正确的算子结构。
+
+真正承重的是：
+
+$$
+\boxed{
+\text{Prime–Gamma cascade 的最小保守 realization 与正 storage}.
+}
+$$
+
+---
+

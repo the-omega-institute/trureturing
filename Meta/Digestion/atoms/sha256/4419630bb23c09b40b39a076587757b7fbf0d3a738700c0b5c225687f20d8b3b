@@ -1,0 +1,47 @@
+# 第一千四百零五部　黄金 Jones 塔正性原理
+
+考虑一列观察者代数：
+
+$$
+M_0\supset M_1\supset M_2\supset\cdots
+$$
+
+以及条件期望：
+
+$$
+E_n:M_{n-1}\to M_n.
+$$
+
+假设每一步均具有黄金 Pimsner–Popa floor：
+
+$$
+\boxed{
+E_n(X)\ge\varphi^{-2}X
+\qquad
+(X\ge0).
+}
+\tag{1405.1}
+$$
+
+则复合期望：
+
+$$
+E_{1:n}
+=
+E_n\circ\cdots\circ E_1
+$$
+
+满足：
+
+$$
+\boxed{
+E_{1:n}(X)
+\ge
+\varphi^{-2n}X.
+}
+\tag{1405.2}
+$$
+
+所以：
+
+* 每个有限观察层仍严格保持正性；

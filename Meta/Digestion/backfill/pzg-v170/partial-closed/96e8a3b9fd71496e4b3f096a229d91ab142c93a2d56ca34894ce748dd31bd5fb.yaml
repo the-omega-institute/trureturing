@@ -3,8 +3,8 @@ fingerprints:
   normalized_sha256: sha256:96e8a3b9fd71496e4b3f096a229d91ab142c93a2d56ca34894ce748dd31bd5fb
 cas_ref: sha256:96e8a3b9fd71496e4b3f096a229d91ab142c93a2d56ca34894ce748dd31bd5fb
 coverage_gids:
-  - D5/S1/Phase/PythagoreanInputValidator.accepts_iff
   - D5/S1/Phase/Interference/DominantPartialQuotientGap.dominant_partial_quotient_gap
+  - D5/S1/Phase/PythagoreanInputValidator.accepts_iff
   - D5/S1/Phase/SeatTowerConsequences.cosecant_peak_identity
   - D5/S1/Phase/SeatTowerConsequences.dominant_term_gap_bound
 receipts:
@@ -17,12 +17,12 @@ receipts:
       target_statement_id: sha256:b969234b2c95a486e0f6869810c37f2027feafa3cfc5c4f176b30701c181d425
   scribe: []
   unresolved_subitems:
-    - pin-angle-formula
-    - numerical-double-check-certificate
-    - fabricated-input-rejection-certificate
     - cosecant-peak-equation-from-pin-data
-    - zero-family-pin-ledger
-    - station-flip-angle-jump
-    - hecke-angle-literature-program
     - dominant-partial-quotient-identification
+    - fabricated-input-rejection-certificate
+    - hecke-angle-literature-program
+    - numerical-double-check-certificate
+    - pin-angle-formula
     - sixty-six-case-certificate
+    - station-flip-angle-jump
+    - zero-family-pin-ledger

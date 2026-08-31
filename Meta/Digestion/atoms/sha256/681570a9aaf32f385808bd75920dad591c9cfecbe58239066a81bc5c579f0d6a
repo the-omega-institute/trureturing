@@ -1,0 +1,34 @@
+* 哪些区别已经成为负方向。
+
+当 \(K\) 为正定核时，它可以写成：
+
+$$
+K(x,y)
+=
+\langle \Phi(x),\Phi(y)\rangle_{\mathcal H}.
+$$
+
+于是观察者不是先验选出的一个点，而是由同一张 Gram 几何中的向量表示。
+
+项目当前的 `PositivityChartCollapse` 已经机器证明了这一有限版本：同一正测度上的任意有限特征族，必然生成正半定积分 Gram 矩阵。
+
+因此更准确的本体顺序是：
+
+$$
+\boxed{
+\text{无坐标关系}
+\longrightarrow
+\text{二元核}
+\longrightarrow
+\text{正 Hilbert 空间}
+\longrightarrow
+\text{观察者向量}
+\longrightarrow
+\text{标量影子}.
+}
+$$
+
+黄金比例若属于第一相，也更可能是这张核的最小递归谱半径，而不是无坐标状态中被自然选出的一个位置。
+
+---
+

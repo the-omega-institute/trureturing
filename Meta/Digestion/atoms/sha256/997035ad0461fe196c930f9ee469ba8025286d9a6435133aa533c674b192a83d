@@ -1,0 +1,124 @@
+* 负时间 inverse factor 删除的历史方向。
+
+其维数：
+
+$$
+m
+$$
+
+同时等于：
+
+$$
+\boxed{
+\text{零点重数}
+=
+\text{Chern 荷}
+=
+\text{负平方数}
+=
+\text{Blaschke degree}
+=
+\text{反因果 Hankel rank}.
+}
+$$
+
+这给离线零点的“对偶概念”一个新的准确答案：
+
+$$
+\boxed{
+\text{它的本体对偶是反射零点；
+它的时间对偶是 causal Blaschke factor；
+它的观察者对偶是 model space \(K_B\)；
+它的证明对偶是非零 anti-causal Hankel 能量。}
+}
+$$
+
+---
+
+更深的是，负平方和反因果能量只是同一缺陷的两种符号图表。
+
+在错误地把它塞进正时间 Hilbert 空间时，它表现为：
+
+$$
+\boxed{
+\text{负范数}.
+}
+$$
+
+把它正确投影到负时间空间以后，它表现为：
+
+$$
+\boxed{
+\|\mathfrak H_\omega f\|^2>0.
+}
+$$
+
+所以可以将 RH 的负证书改写成一个正证书：
+
+$$
+\boxed{
+\text{负时间通道中是否存在任何非零能量？}
+}
+$$
+
+RH 等价于：
+
+$$
+\boxed{
+\mathfrak H_{\omega_n}=0
+\quad
+\forall n.
+}
+$$
+
+任何离线零点都会在某个有限黄金层使该算子非零。
+
+---
+
+黄金比例进一步把离线零点编码成单位盘原子：
+
+$$
+\boxed{
+q_j
+=
+\varphi^{-2(\delta_j-\omega)}
+e^{-2i\gamma_j\log\varphi}.
+}
+$$
+
+横向深度成为：
+
+$$
+-\log|q_j|,
+$$
+
+高度成为：
+
+$$
+\arg q_j,
+$$
+
+重数成为权重。
+
+有限个稀缺离线点于是产生序列：
+
+$$
+\boxed{
+c_n=\sum_jm_jq_j^n,
+}
+$$
+
+并满足有限线性递归。
+
+其 Hankel 矩阵具有有限秩。
+
+所以即使离线零点在整个零点集合中密度为零，它也不能逃脱：
+
+$$
+\boxed{
+\text{有限秩 anti-causal Hankel memory}.
+}
+$$
+
+这正是研究稀缺对象的对偶方案：
+

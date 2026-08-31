@@ -1,0 +1,46 @@
+# 第一千二百三十八部　当前最短的缺陷忠实传导链
+
+现在可以把整个理论压缩成一条每一步都不会遗忘离线缺陷的链：
+
+$$
+\boxed{
+\begin{aligned}
+\rho=\frac12+\delta+i\gamma,\quad\delta>0
+&\Longrightarrow
+E_\omega(z_{\rho,\omega})=0
+\quad(\omega<\delta)\\
+&\Longrightarrow
+\mathcal K_\omega
+(z_{\rho,\omega},z_{\rho,\omega})<0\\
+&\Longrightarrow
+\operatorname{ind}_-\mathcal K_\omega\ge1\\
+&\Longrightarrow
+\Theta_\omega
+\text{ 不是正 Schur／inner realization}\\
+&\Longrightarrow
+\text{对应 canonical Hamiltonian 不能处处 PSD}\\
+&\Longrightarrow
+\text{不存在纯 Hilbert de Branges 完成}\\
+&\Longrightarrow
+\text{Weil／OS 正性必须在某处失败}.
+\end{aligned}
+}
+\tag{1238.1}
+$$
+
+反向证明目标则是：
+
+$$
+\boxed{
+\text{从 prime--pole--Archimedean 数据直接证明 }
+\mathcal K_{\omega_n}\succeq0
+\quad
+\forall n.
+}
+\tag{1238.2}
+$$
+
+因为黄金序列共尾，这已经足以推出 RH。
+
+---
+

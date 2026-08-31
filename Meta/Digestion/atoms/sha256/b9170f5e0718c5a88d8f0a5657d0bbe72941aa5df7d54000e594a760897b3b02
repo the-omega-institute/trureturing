@@ -1,0 +1,20 @@
+### P0：`ReflectedGrowthPairSecondOrderSpectrum`
+
+机器证明
+
+$$
+g_{\pm}''=\delta^2g_{\pm},
+\qquad
+- g_{\pm}''=-\delta^2g_{\pm},
+$$
+
+以及
+
+$$
+S_{\delta}'(0)=0,
+\qquad
+S_{\delta}''(0)=2\delta^2.
+$$
+
+该节点直接把有符号行列式接成真实负谱值，并证明对称观察器的一阶盲性与二阶可见性。
+
