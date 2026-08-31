@@ -7,8 +7,7 @@ public sealed class EngineeringPathFilterTests
     {
         var plan = EngineeringTestPlanPolicy.Evaluate(
             ["tools/StrataLint.Engine/RepositoryIo/EngineeringTestPlanPolicy.cs"],
-            EmptyMap(),
-            compileAffectedTestProjects: EmptyProjects());
+            EmptyMap());
         var calls = new List<EngineeringTestInvocation>();
 
         var exitCode = EngineeringTestExecutor.Execute(plan, invocation =>
@@ -23,9 +22,16 @@ public sealed class EngineeringPathFilterTests
     }
 
     [Fact]
-    public void DisjointContentExecutesUnknownTargetButNotSyntheticRuleEngineTarget()
+    public void ScribeChangeExecutesDeclaredAndUnknownTargetsButNotUnrelatedTarget()
     {
+        const string changedPath = "Blueprint/D5/S3/QuantumBounds/ReferenceFrame/ReferenceFrameTaxExact.scribe.cs";
         var map = Map(
+            new ScribeTestMethod(
+                "tools/tests/StrataLint.Scribe.Tests",
+                "tools/tests/StrataLint.Scribe.Tests/EmissionTests.cs",
+                "EmissionTests.Related",
+                [changedPath],
+                []),
             new ScribeTestMethod(
                 "tools/tests/StrataLint.Tests",
                 "tools/tests/StrataLint.Tests/ProductionEnvironmentTests.cs",
@@ -33,15 +39,12 @@ public sealed class EngineeringPathFilterTests
                 [],
                 [TestMapUnknownReason.VariablePath]),
             new ScribeTestMethod(
-                "tools/tests/StrataLint.Tests",
-                "tools/tests/StrataLint.Tests/Rules/RuleEngineTests.cs",
-                "RuleEngineTests.UsesSyntheticFixture",
+                "tools/tests/StrataLint.Scribe.Tests",
+                "tools/tests/StrataLint.Scribe.Tests/UnrelatedTests.cs",
+                "UnrelatedTests.UsesSyntheticFixture",
                 [],
                 []));
-        var plan = EngineeringTestPlanPolicy.Evaluate(
-            ["docs/develop/selector-negative.md"],
-            map,
-            compileAffectedTestProjects: EmptyProjects());
+        var plan = EngineeringTestPlanPolicy.Evaluate([changedPath], map);
         var calls = new List<EngineeringTestInvocation>();
 
         var exitCode = EngineeringTestExecutor.Execute(plan, invocation =>
@@ -51,13 +54,16 @@ public sealed class EngineeringPathFilterTests
         });
 
         Assert.Equal(EngineeringTestPlanKind.Selected, plan.Kind);
+        Assert.Contains(plan.Tests, static test =>
+            test is { Id: "EmissionTests.Related", Reason: EngineeringSelectedTestReason.DeclaredInput });
         Assert.Contains(plan.Tests, test => test.Id.Contains("ProductionEnvironmentTests", StringComparison.Ordinal));
-        Assert.DoesNotContain(plan.Tests, test => test.Id.Contains("RuleEngineTests", StringComparison.Ordinal));
+        Assert.DoesNotContain(plan.Tests, test => test.Id.Contains("UnrelatedTests", StringComparison.Ordinal));
         Assert.Equal(0, exitCode);
         var call = Assert.Single(calls);
         Assert.Equal("tools/StrataLint.sln", call.Target);
+        Assert.Contains("EmissionTests.Related", call.Filter, StringComparison.Ordinal);
         Assert.Contains("ProductionEnvironmentTests.ReadsRepository", call.Filter, StringComparison.Ordinal);
-        Assert.DoesNotContain("RuleEngineTests", call.Filter, StringComparison.Ordinal);
+        Assert.DoesNotContain("UnrelatedTests", call.Filter, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -71,8 +77,7 @@ public sealed class EngineeringPathFilterTests
             []));
         var plan = EngineeringTestPlanPolicy.Evaluate(
             ["docs/develop/selector-negative.md"],
-            map,
-            compileAffectedTestProjects: EmptyProjects());
+            map);
         var calls = new List<EngineeringTestInvocation>();
 
         var exitCode = EngineeringTestExecutor.Execute(plan, invocation =>
@@ -96,8 +101,7 @@ public sealed class EngineeringPathFilterTests
 
         var plan = EngineeringTestPlanPolicy.Evaluate(
             ["Meta/Digestion/example.json"],
-            map,
-            compileAffectedTestProjects: EmptyProjects());
+            map);
 
         Assert.Equal(EngineeringTestPlanKind.Full, plan.Kind);
         Assert.Contains("project attribution", plan.Reason, StringComparison.Ordinal);
@@ -116,8 +120,7 @@ public sealed class EngineeringPathFilterTests
             [TestMapUnknownReason.VariablePath]));
         var plan = EngineeringTestPlanPolicy.Evaluate(
             ["Meta/Digestion/example.json"],
-            map,
-            compileAffectedTestProjects: EmptyProjects());
+            map);
         var calls = new List<EngineeringTestInvocation>();
 
         var exitCode = EngineeringTestExecutor.Execute(plan, invocation =>
@@ -158,12 +161,12 @@ public sealed class EngineeringPathFilterTests
 
         Assert.Equal(EngineeringTestPlanKind.Selected, plan.Kind);
         Assert.Contains(plan.Tests, static test =>
-            test.Reason == EngineeringSelectedTestReason.CompiledInput
+            test.Reason == EngineeringSelectedTestReason.DeclaredInput
             && test.ProjectPath.EndsWith("StrataLint.Scribe.Tests.csproj", StringComparison.Ordinal));
         Assert.Equal(0, exitCode);
         var call = Assert.Single(calls);
         var consumer = plan.Tests.First(static test =>
-            test.Reason == EngineeringSelectedTestReason.CompiledInput
+            test.Reason == EngineeringSelectedTestReason.DeclaredInput
             && test.ProjectPath.EndsWith("StrataLint.Scribe.Tests.csproj", StringComparison.Ordinal));
         Assert.Equal("tools/StrataLint.sln", call.Target);
         Assert.Contains(consumer.Id, call.Filter, StringComparison.Ordinal);
@@ -189,8 +192,7 @@ public sealed class EngineeringPathFilterTests
         {
             var plan = EngineeringTestPlanPolicy.Evaluate(
                 [document],
-                map,
-                compileAffectedTestProjects: EmptyProjects());
+                map);
 
             Assert.Equal(EngineeringTestPlanKind.Selected, plan.Kind);
         }
@@ -217,15 +219,12 @@ public sealed class EngineeringPathFilterTests
     {
         var plan = EngineeringTestPlanPolicy.Evaluate(
             [path],
-            EmptyMap(),
-            compileAffectedTestProjects: EmptyProjects());
+            EmptyMap());
 
         Assert.Equal(EngineeringTestPlanKind.Full, plan.Kind);
     }
 
     private static ScribeTestMap EmptyMap() => Map();
-
-    private static IReadOnlySet<string> EmptyProjects() => new HashSet<string>(StringComparer.Ordinal);
 
     private static ScribeTestMap Map(params ScribeTestMethod[] methods) => new(
         methods,
