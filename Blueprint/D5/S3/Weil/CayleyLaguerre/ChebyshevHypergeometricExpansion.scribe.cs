@@ -77,7 +77,7 @@ internal sealed class ChebyshevHypergeometricExpansionDocument
         new Formula.Binary(left, FormulaBinaryOperator.Multiply, right);
 
     private static Formula Power(Formula value, Formula exponent) =>
-        new Formula.Power(value, Seq(exponent));
+        new Formula.Power(value, exponent);
 
     private static Formula Equal(Formula left, Formula right) =>
         new Formula.Relation(left, FormulaRelationOperator.Equal, right);
