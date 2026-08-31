@@ -11,9 +11,7 @@ internal sealed class ReflectedZeroModePhaseFlatteningDocument
         "D5/S3/Weil/ZetaLinear/ReflectedZeroModePhaseFlattening.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A normalized complex zero mode splits into a real radial channel and a unit phase "
-            + "channel, while functional reflection, conjugation, and same-height mirror "
-            + "remain distinct involutions.",
+        "Separate normalized zero modes into radial and phase channels.",
         H("Reflected Zero Modes and Phase Flattening"),
         Blocks(
             DefinitionNode(
