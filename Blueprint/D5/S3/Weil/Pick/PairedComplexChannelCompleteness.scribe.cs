@@ -8,8 +8,7 @@ internal sealed class PairedComplexChannelCompletenessDocument
     : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Strictly positive paired complex-channel energies have the common channel kernel "
-            + "and are definite exactly when the joint observation is injective.",
+        "Positive paired complex-channel energies have exactly the common channel kernel and are definite exactly under joint separation.",
         H("Paired Complex-Channel Completeness"),
         Blocks(
             Describe.Lean(
