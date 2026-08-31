@@ -1,8 +1,8 @@
 using System.Text.Json;
 
-namespace StrataLint.EngineeringScope.SelfLockProbe;
+namespace StrataLint.EngineeringScope;
 
-internal static class Program
+internal static class SelfLockProbeProgram
 {
     internal static int Run(string[] arguments)
     {

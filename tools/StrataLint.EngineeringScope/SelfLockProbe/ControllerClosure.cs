@@ -3,7 +3,7 @@ using System.Formats.Tar;
 using System.Text;
 using System.Xml.Linq;
 
-namespace StrataLint.EngineeringScope.SelfLockProbe;
+namespace StrataLint.EngineeringScope;
 
 internal sealed record ControllerClosureSnapshot(
     string Commit,

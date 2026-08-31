@@ -19,7 +19,7 @@ internal static class Program
 
     public static int Main(string[] arguments) =>
         arguments.FirstOrDefault() == "self-lock-probe"
-            ? SelfLockProbe.Program.Run(arguments.Skip(1).ToArray())
+            ? SelfLockProbeProgram.Run(arguments.Skip(1).ToArray())
             : Run(arguments, TestResultEvidence.Load, Console.Out, Console.Error);
 
     internal static int Run(

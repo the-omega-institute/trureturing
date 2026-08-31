@@ -1,7 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace StrataLint.EngineeringScope.SelfLockProbe;
+namespace StrataLint.EngineeringScope;
 
 internal enum GateKind { Engineering, Lean, Admission }
 internal enum SubjectKind { Merge, SyntheticNoop }

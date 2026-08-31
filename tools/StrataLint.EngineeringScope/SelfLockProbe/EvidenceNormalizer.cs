@@ -3,7 +3,7 @@ using System.Text.Json;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace StrataLint.EngineeringScope.SelfLockProbe;
+namespace StrataLint.EngineeringScope;
 
 internal static class EvidenceNormalizer
 {

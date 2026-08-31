@@ -1,7 +1,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace StrataLint.EngineeringScope.SelfLockProbe;
+namespace StrataLint.EngineeringScope;
 
 internal sealed record PureRevertConclusion(
     string State,

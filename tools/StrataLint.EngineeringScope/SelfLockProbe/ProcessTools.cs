@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using System.Text;
 
-namespace StrataLint.EngineeringScope.SelfLockProbe;
+namespace StrataLint.EngineeringScope;
 
 internal sealed record CommandOutput(int ExitCode, byte[] StandardOutput, byte[] StandardError);
 
