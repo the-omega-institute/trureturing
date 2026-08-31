@@ -166,7 +166,7 @@ internal static partial class DigestionStatusEvaluator
         var observations = alignment.Residual
             .Select(static item =>
                 $"source {item.SourceId} has unregistered residual-open atom "
-                + $"{item.Atom.AstPath} ({item.SuggestedAtomId}); run make ingest to close it")
+                + $"{item.SuggestedAtomId}; run make ingest to close it")
             .Order(StringComparer.Ordinal)
             .ToImmutableArray();
         return CompleteEvaluation(
@@ -277,8 +277,8 @@ internal static partial class DigestionStatusEvaluator
         ImmutableArray<string>.Builder findings)
     {
         var gaps = new List<DigestionGap>();
-        // Boundary and Scribe retain their existing baseline-only full check. Coverage can
-        // trust a committed receipt outside a nonempty, authoritative git delta even when the
+        // Scribe retains its existing baseline-only full check. Coverage can trust a committed
+        // receipt outside a nonempty, authoritative git delta even when the
         // query omitted --base; an empty delta retains the explicit whole-tree diagnostic.
         var verificationChanges = baselineMigration is null ? null : changes;
         var canReuseCoverageWithoutBaseline = changes is not null
@@ -288,10 +288,7 @@ internal static partial class DigestionStatusEvaluator
             && canReuseCoverageWithoutBaseline
                 ? changes
                 : verificationChanges;
-        var boundary = entry.Atomizer == AtomizerRegistry.NoAtomizerId
-            && entry.Boundary is not null
-                ? VerifyBoundary(entry, snapshot, verificationChanges, gaps, findings)
-                : VerifyStructuredAlignment(entry, alignment, gaps, findings);
+        var structured = VerifyStructuredAlignment(entry, alignment, gaps, findings);
         var targetStates = new List<(string Gid, TruthState State)>();
         var existingTargets = new Dictionary<string, RepositoryFile>(StringComparer.Ordinal);
         foreach (var gidText in entry.CoverageGids.Distinct(StringComparer.Ordinal))
@@ -350,8 +347,7 @@ internal static partial class DigestionStatusEvaluator
             }
         }
 
-        foreach (var token in genreRegistryCheck.UnregisteredGenres.Where(token =>
-                     UnregisteredGenreLocator.MatchesToken(entry.AstPath, token)))
+        foreach (var token in genreRegistryCheck.UnregisteredGenres)
         {
             gaps.Add(new DigestionGap(
                 "unregistered-genre",
@@ -368,7 +364,7 @@ internal static partial class DigestionStatusEvaluator
             && !DigestionCasStore.EntryChanged(entry, changes)
             && isBaseFactAffected?.Invoke(entry.SourcePath) != true;
         var localComplete = !baselineKeepsLocalIncomplete
-            && boundary
+            && structured
             && existingTargets.Count == entry.CoverageGids.Distinct(StringComparer.Ordinal).Count()
             && entry.CoverageGids.Length > 0
             && coverage

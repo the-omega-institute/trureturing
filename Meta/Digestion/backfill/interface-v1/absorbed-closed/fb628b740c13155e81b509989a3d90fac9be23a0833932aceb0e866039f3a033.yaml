@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:fb628b740c13155e81b509989a3d90fac9be23a0833932aceb0e866039f3a033
+  normalized_sha256: sha256:fb628b740c13155e81b509989a3d90fac9be23a0833932aceb0e866039f3a033
+cas_ref: sha256:fb628b740c13155e81b509989a3d90fac9be23a0833932aceb0e866039f3a033
+coverage_gids:
+  - D5/S0/Diagonal/Probability/EquivariantEscape.transitive_equivariant_escape_probability
+receipts:
+  coverage:
+    - gid: D5/S0/Diagonal/Probability/EquivariantEscape.transitive_equivariant_escape_probability
+      source_sha256: sha256:fb628b740c13155e81b509989a3d90fac9be23a0833932aceb0e866039f3a033
+      target_statement_id: sha256:ce2221a13b052897b202aeba9dc8f88823f570f769eade7ac1b6a998335fcde9
+  scribe:
+    - gid: D5/S0/Diagonal/Probability/EquivariantEscape.transitive_equivariant_escape_probability
+      definition_sha256: sha256:935e75a477616d7b374fe3139eeba255e61513ac6401549e6a3a689189863ce8
+      emission_sha256: sha256:ec7092c498849e6bf10f28ffe7797be79fde39be92cb5cee184a242c9539a32a
+  unresolved_subitems: []

@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:0af01154fee27d12c166529aee2f94b6fe28a31eb40d439d6cec552cccdfa3f3
+  normalized_sha256: sha256:0af01154fee27d12c166529aee2f94b6fe28a31eb40d439d6cec552cccdfa3f3
+cas_ref: sha256:0af01154fee27d12c166529aee2f94b6fe28a31eb40d439d6cec552cccdfa3f3
+coverage_gids:
+  - D5/S3/Observer/MetricGeometry/DiscountedSensorFusion.discounted_sensor_fusion_distance_eq_max
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/MetricGeometry/DiscountedSensorFusion.discounted_sensor_fusion_distance_eq_max
+      source_sha256: sha256:0af01154fee27d12c166529aee2f94b6fe28a31eb40d439d6cec552cccdfa3f3
+      target_statement_id: sha256:6982b9e9807f2a686e3c0e759f56fa69e6bb689248ef59408a7f6fe98df6f9d2
+  scribe:
+    - gid: D5/S3/Observer/MetricGeometry/DiscountedSensorFusion.discounted_sensor_fusion_distance_eq_max
+      definition_sha256: sha256:ee391a5c36874d18ffe90e7e5f032cdbf285d36d50dbe6c448cc3108895b28dc
+      emission_sha256: sha256:5012a83f44d01a86fc2f50a2a1ec908932b5a192f312bed25294e12417f6c077
+  unresolved_subitems: []

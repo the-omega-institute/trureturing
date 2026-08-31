@@ -1,0 +1,19 @@
+fingerprints:
+  raw_sha256: sha256:0e4c1864295a8fa2d7347817f3fa806a80a7669ce7a406684aa5cc3ccdaf1e8a
+  normalized_sha256: sha256:0e4c1864295a8fa2d7347817f3fa806a80a7669ce7a406684aa5cc3ccdaf1e8a
+cas_ref: sha256:0e4c1864295a8fa2d7347817f3fa806a80a7669ce7a406684aa5cc3ccdaf1e8a
+coverage_gids:
+  - D5/S3/Midline/ZetaHeatTraceBridge.coefficient_eq
+  - D5/S3/Weil/SpectralDynamics.vertical_evolution_unitary_group
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/SpectralDynamics.vertical_evolution_unitary_group
+      source_sha256: sha256:0e4c1864295a8fa2d7347817f3fa806a80a7669ce7a406684aa5cc3ccdaf1e8a
+      target_statement_id: sha256:80199c4d6f53e9c36264f68f3e17021e14e66f21334cd43179f4660642e6055e
+  scribe:
+    - gid: D5/S3/Weil/SpectralDynamics.vertical_evolution_unitary_group
+      definition_sha256: sha256:bde4ed75cb707872d65ee1d8275ee4883ea7cd4a9fe14d00b44b6f218b59be0f
+      emission_sha256: sha256:780fb2bf4ea155ef65e33ba9430d282941b7866cdb0b7dbff6c2a46c9c0380ee
+  unresolved_subitems:
+    - diagonal-length-operator-spectrum-equals-log-natural-numbers
+    - known-channel-from-length-spectrum-to-zero-spectrum

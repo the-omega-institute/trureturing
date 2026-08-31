@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:05e36064ee70d49a776a11e23b98e6b77a5f6f1e88b1ed0cd627778fe8d2de8c
+  normalized_sha256: sha256:05e36064ee70d49a776a11e23b98e6b77a5f6f1e88b1ed0cd627778fe8d2de8c
+cas_ref: sha256:05e36064ee70d49a776a11e23b98e6b77a5f6f1e88b1ed0cd627778fe8d2de8c
+coverage_gids:
+  - D5/S0/Rewriting/Safety/InvariantSafety.invariant_safety
+receipts:
+  coverage:
+    - gid: D5/S0/Rewriting/Safety/InvariantSafety.invariant_safety
+      source_sha256: sha256:05e36064ee70d49a776a11e23b98e6b77a5f6f1e88b1ed0cd627778fe8d2de8c
+      target_statement_id: sha256:a9fddace63d1c743d48fb9146ec5355bb9d8853c700c17a2c99b271a3d0dd2da
+  scribe:
+    - gid: D5/S0/Rewriting/Safety/InvariantSafety.invariant_safety
+      definition_sha256: sha256:c2111dfaf000d95be9900daa6d90da4d6fcc412f5ec03b97e22fdacb5d1cf325
+      emission_sha256: sha256:e2ad29f5cf67de6dcc53198293d7e3e63fad090e2e1a178763d21f67df81856d
+  unresolved_subitems: []

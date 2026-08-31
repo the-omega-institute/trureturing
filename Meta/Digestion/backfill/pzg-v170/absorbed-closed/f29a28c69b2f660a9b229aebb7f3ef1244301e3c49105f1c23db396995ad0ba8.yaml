@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:f29a28c69b2f660a9b229aebb7f3ef1244301e3c49105f1c23db396995ad0ba8
+  normalized_sha256: sha256:f29a28c69b2f660a9b229aebb7f3ef1244301e3c49105f1c23db396995ad0ba8
+cas_ref: sha256:f29a28c69b2f660a9b229aebb7f3ef1244301e3c49105f1c23db396995ad0ba8
+coverage_gids:
+  - D5/S1/Depth/ContinuedFractions/GaussInverseStep.gauss_inverse_step_recovers_quotient
+receipts:
+  coverage:
+    - gid: D5/S1/Depth/ContinuedFractions/GaussInverseStep.gauss_inverse_step_recovers_quotient
+      source_sha256: sha256:f29a28c69b2f660a9b229aebb7f3ef1244301e3c49105f1c23db396995ad0ba8
+      target_statement_id: sha256:3533cb44b63f0e6ad863e123ecc4d30c4069a3a95e4280f86ca7db24233293da
+  scribe:
+    - gid: D5/S1/Depth/ContinuedFractions/GaussInverseStep.gauss_inverse_step_recovers_quotient
+      definition_sha256: sha256:ba55eef76fcc9b33b7eaaca551e34aa44bc46e9065748efcb4fbb6526c664211
+      emission_sha256: sha256:ea12125f2c18d7ed660c1b3276603309e8f0bd612dc05b6e98d5db8071868666
+  unresolved_subitems: []

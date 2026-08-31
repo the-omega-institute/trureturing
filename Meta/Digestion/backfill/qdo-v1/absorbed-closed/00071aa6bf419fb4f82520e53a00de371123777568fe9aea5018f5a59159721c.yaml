@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:00071aa6bf419fb4f82520e53a00de371123777568fe9aea5018f5a59159721c
+  normalized_sha256: sha256:00071aa6bf419fb4f82520e53a00de371123777568fe9aea5018f5a59159721c
+cas_ref: sha256:00071aa6bf419fb4f82520e53a00de371123777568fe9aea5018f5a59159721c
+coverage_gids:
+  - D5/S3/Quantum/Algebra/OrthogonalProjectionComplement.orthogonal_complement_projection_identities
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/Algebra/OrthogonalProjectionComplement.orthogonal_complement_projection_identities
+      source_sha256: sha256:00071aa6bf419fb4f82520e53a00de371123777568fe9aea5018f5a59159721c
+      target_statement_id: sha256:4a6847f56f9eff409cd240a6f608f8a5eb58138197f9fc328a2cd7f77451c29a
+  scribe:
+    - gid: D5/S3/Quantum/Algebra/OrthogonalProjectionComplement.orthogonal_complement_projection_identities
+      definition_sha256: sha256:d44be02742f425fdf1c0ba62b1f36035b9f8f532df342d6cbe174f2005459159
+      emission_sha256: sha256:5c5220e977090ce3c332cef9f4cdef9ac9693a9aa5566d0d0345f330f444f60c
+  unresolved_subitems: []

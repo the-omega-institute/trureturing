@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:cf5abdce8bbf309762cd4ffa4e9f1cf6628bdd1ab4b5368dab789d5ee9b0c784
+  normalized_sha256: sha256:cf5abdce8bbf309762cd4ffa4e9f1cf6628bdd1ab4b5368dab789d5ee9b0c784
+cas_ref: sha256:cf5abdce8bbf309762cd4ffa4e9f1cf6628bdd1ab4b5368dab789d5ee9b0c784
+coverage_gids:
+  - D5/S3/ObserverMemory/Prediction/ConditionalEntropyStability.prediction_stability_depth_eq_conditional_entropy_zero
+receipts:
+  coverage:
+    - gid: D5/S3/ObserverMemory/Prediction/ConditionalEntropyStability.prediction_stability_depth_eq_conditional_entropy_zero
+      source_sha256: sha256:cf5abdce8bbf309762cd4ffa4e9f1cf6628bdd1ab4b5368dab789d5ee9b0c784
+      target_statement_id: sha256:b8ac933e4969a010faa77bcb3d14839c6664e0d9f929a09e9c4ae8196bd3fae8
+  scribe:
+    - gid: D5/S3/ObserverMemory/Prediction/ConditionalEntropyStability.prediction_stability_depth_eq_conditional_entropy_zero
+      definition_sha256: sha256:56ba59439b2eee6e65a5d16535e1a1e9250f94d43ca96aed1611836cf4491a92
+      emission_sha256: sha256:f3b4315d015cfde23f770d00e4437c39356b37b1c69df6dd7b098cdbd5deb742
+  unresolved_subitems: []

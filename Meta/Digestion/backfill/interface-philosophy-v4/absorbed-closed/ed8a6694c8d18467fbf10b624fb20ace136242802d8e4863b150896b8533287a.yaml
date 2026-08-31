@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:ed8a6694c8d18467fbf10b624fb20ace136242802d8e4863b150896b8533287a
+  normalized_sha256: sha256:ed8a6694c8d18467fbf10b624fb20ace136242802d8e4863b150896b8533287a
+cas_ref: sha256:ed8a6694c8d18467fbf10b624fb20ace136242802d8e4863b150896b8533287a
+coverage_gids:
+  - D5/S0/Naming/CoordinateDependence.dependencySet
+receipts:
+  coverage:
+    - gid: D5/S0/Naming/CoordinateDependence.dependencySet
+      source_sha256: sha256:ed8a6694c8d18467fbf10b624fb20ace136242802d8e4863b150896b8533287a
+      target_statement_id: sha256:da1f2f0856de0c7e3f620d4ed7b214867d9daafc3b424a43216aec99982bb471
+  scribe:
+    - gid: D5/S0/Naming/CoordinateDependence.dependencySet
+      definition_sha256: sha256:c6bc0058c71e48fdd696374f0942bac320929d8209a8df0b6feeb58ad3397015
+      emission_sha256: sha256:f69e70d2fe6c2f665137195f6bffb655f7d8698077eb7df096bb36891e203089
+  unresolved_subitems: []

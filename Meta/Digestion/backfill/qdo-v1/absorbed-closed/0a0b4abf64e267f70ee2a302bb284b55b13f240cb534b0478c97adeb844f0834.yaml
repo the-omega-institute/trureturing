@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:0a0b4abf64e267f70ee2a302bb284b55b13f240cb534b0478c97adeb844f0834
+  normalized_sha256: sha256:0a0b4abf64e267f70ee2a302bb284b55b13f240cb534b0478c97adeb844f0834
+cas_ref: sha256:0a0b4abf64e267f70ee2a302bb284b55b13f240cb534b0478c97adeb844f0834
+coverage_gids:
+  - D5/S3/ConceptDynamics/Algebra/DualNumberMultiplicativityCriterion.dual_number_lift_preserves_mul_iff_product_rule
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Algebra/DualNumberMultiplicativityCriterion.dual_number_lift_preserves_mul_iff_product_rule
+      source_sha256: sha256:0a0b4abf64e267f70ee2a302bb284b55b13f240cb534b0478c97adeb844f0834
+      target_statement_id: sha256:99defde0278b7df1ddc20560036302a2241678d00d98efc9fc5c044c1d8a9505
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Algebra/DualNumberMultiplicativityCriterion.dual_number_lift_preserves_mul_iff_product_rule
+      definition_sha256: sha256:6f25dcc7a450e08ddd099b45ea89945c374e694e72a81f10adbce1bb4a818e10
+      emission_sha256: sha256:3568010120aa8344311e764d6ac887f257aab9eeb612f17d038d27ae14192288
+  unresolved_subitems: []

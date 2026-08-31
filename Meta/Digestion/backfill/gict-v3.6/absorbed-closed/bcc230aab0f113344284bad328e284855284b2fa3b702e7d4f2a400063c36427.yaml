@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:bcc230aab0f113344284bad328e284855284b2fa3b702e7d4f2a400063c36427
+  normalized_sha256: sha256:bcc230aab0f113344284bad328e284855284b2fa3b702e7d4f2a400063c36427
+cas_ref: sha256:bcc230aab0f113344284bad328e284855284b2fa3b702e7d4f2a400063c36427
+coverage_gids:
+  - D5/S3/PrimeForms/Crossing/ThirdOrderIntegrality.k_conjugate_integral_iff
+receipts:
+  coverage:
+    - gid: D5/S3/PrimeForms/Crossing/ThirdOrderIntegrality.k_conjugate_integral_iff
+      source_sha256: sha256:bcc230aab0f113344284bad328e284855284b2fa3b702e7d4f2a400063c36427
+      target_statement_id: sha256:38f67310f0d636341e2c1037ee059103df66a78ee3589af4c0b287679bb20394
+  scribe:
+    - gid: D5/S3/PrimeForms/Crossing/ThirdOrderIntegrality.k_conjugate_integral_iff
+      definition_sha256: sha256:d13c61124a1c32ace859092bab6e550713b43263efed1f6cb8c1faa46fac916e
+      emission_sha256: sha256:314e7b177b06eb738a1d7c9bac80862d2b927503778d627ad4965cdf4cc06992
+  unresolved_subitems: []

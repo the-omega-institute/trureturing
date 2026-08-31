@@ -1,0 +1,33 @@
+fingerprints:
+  raw_sha256: sha256:4ffb3f154f75317de3d7abdd57adb40b6741dca2247ff6ba51c88894bf97d56f
+  normalized_sha256: sha256:4ffb3f154f75317de3d7abdd57adb40b6741dca2247ff6ba51c88894bf97d56f
+cas_ref: sha256:4ffb3f154f75317de3d7abdd57adb40b6741dca2247ff6ba51c88894bf97d56f
+coverage_gids:
+  - D5/S1/Phase/PythagoreanInputValidator.accepts_iff
+  - D5/S1/Phase/Interference/DominantPartialQuotientGap.dominant_partial_quotient_gap
+  - D5/S1/Phase/SeatTowerArithmetic.pythagorean_gate_iff_eisenstein_norm
+  - D5/S1/Phase/SeatTowerConsequences.cosecant_peak_identity
+  - D5/S1/Phase/SeatTowerConsequences.dominant_term_gap_bound
+receipts:
+  coverage:
+    - gid: D5/S1/Phase/SeatTowerArithmetic.pythagorean_gate_iff_eisenstein_norm
+      source_sha256: sha256:4ffb3f154f75317de3d7abdd57adb40b6741dca2247ff6ba51c88894bf97d56f
+      target_statement_id: sha256:2ba97c312fec73dc76bd861a3412922bf821a1715b6f33b59ad3b432b09a55a1
+    - gid: D5/S1/Phase/SeatTowerConsequences.cosecant_peak_identity
+      source_sha256: sha256:4ffb3f154f75317de3d7abdd57adb40b6741dca2247ff6ba51c88894bf97d56f
+      target_statement_id: sha256:ffff29775ac90deb5feb58180878e5041cffcd17e50eac5595116ff5aac8d92c
+    - gid: D5/S1/Phase/SeatTowerConsequences.dominant_term_gap_bound
+      source_sha256: sha256:4ffb3f154f75317de3d7abdd57adb40b6741dca2247ff6ba51c88894bf97d56f
+      target_statement_id: sha256:b969234b2c95a486e0f6869810c37f2027feafa3cfc5c4f176b30701c181d425
+  scribe: []
+  unresolved_subitems:
+    - pythagorean-closure-for-orbit-parameters
+    - pin-angle-formula
+    - numerical-double-check-certificate
+    - fabricated-input-rejection-certificate
+    - cosecant-peak-equation-from-pin-data
+    - zero-family-pin-ledger
+    - station-flip-angle-jump
+    - hecke-angle-literature-program
+    - dominant-partial-quotient-identification
+    - sixty-six-case-certificate

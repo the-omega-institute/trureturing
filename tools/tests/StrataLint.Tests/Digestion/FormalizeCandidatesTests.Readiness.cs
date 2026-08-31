@@ -27,11 +27,9 @@ public sealed partial class FormalizeCandidatesTests
         Assert.Equal(
             "stratalint-digestion-readiness-v1",
             json.RootElement.GetProperty("schema").GetString());
-        Assert.Equal(
-            entry.AtomId,
-            Assert.Single(json.RootElement.GetProperty("entries").EnumerateArray())
-                .GetProperty("atom_id")
-                .GetString());
+        var readiness = Assert.Single(json.RootElement.GetProperty("entries").EnumerateArray());
+        Assert.Equal(entry.AtomId, readiness.GetProperty("atom_id").GetString());
+        Assert.False(readiness.TryGetProperty("ast_path", out _));
     }
 
     [Fact]

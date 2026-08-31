@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:ed02120c3aa24cde295a671a536eea4feebf4fd9e98eb4db2af7f86415fecbfd
+  normalized_sha256: sha256:ed02120c3aa24cde295a671a536eea4feebf4fd9e98eb4db2af7f86415fecbfd
+cas_ref: sha256:ed02120c3aa24cde295a671a536eea4feebf4fd9e98eb4db2af7f86415fecbfd
+coverage_gids:
+  - D5/S3/ConceptDynamics/EscapeSpectrum/CompactResidualFiniteCompletion.compact_residual_finite_completion
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/EscapeSpectrum/CompactResidualFiniteCompletion.compact_residual_finite_completion
+      source_sha256: sha256:ed02120c3aa24cde295a671a536eea4feebf4fd9e98eb4db2af7f86415fecbfd
+      target_statement_id: sha256:1c8b03c1b66e4ad7bfb6d6dc3c70544977ac07f3988ea639610593caf48f2d5a
+  scribe:
+    - gid: D5/S3/ConceptDynamics/EscapeSpectrum/CompactResidualFiniteCompletion.compact_residual_finite_completion
+      definition_sha256: sha256:96c1d7c7526fd7259d43ad205a03391962694e7322c2762565f6432cdfc39ee2
+      emission_sha256: sha256:6f1f7ce89ba1cbf481fa534806f5d276ce66c1727735cfab6952cde25a278129
+  unresolved_subitems: []

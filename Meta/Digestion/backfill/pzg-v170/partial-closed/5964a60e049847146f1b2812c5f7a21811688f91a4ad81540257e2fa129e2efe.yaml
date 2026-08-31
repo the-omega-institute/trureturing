@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:5964a60e049847146f1b2812c5f7a21811688f91a4ad81540257e2fa129e2efe
+  normalized_sha256: sha256:5964a60e049847146f1b2812c5f7a21811688f91a4ad81540257e2fa129e2efe
+cas_ref: sha256:5964a60e049847146f1b2812c5f7a21811688f91a4ad81540257e2fa129e2efe
+coverage_gids:
+  - D5/S3/PrimeForms/QuadraticResidues.square_residues_and_sum_obstruction
+receipts:
+  coverage:
+    - gid: D5/S3/PrimeForms/QuadraticResidues.square_residues_and_sum_obstruction
+      source_sha256: sha256:5964a60e049847146f1b2812c5f7a21811688f91a4ad81540257e2fa129e2efe
+      target_statement_id: sha256:ce1572c66deca801680c4cb142dd867a4b98ec95aaa3b88ddf6017c9c3164b5b
+  scribe: []
+  unresolved_subitems: []

@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:af5ee5af2aa6e8863c96b5ebec30fd801bd65d74726a232ff545195b84b6eadc
+  normalized_sha256: sha256:af5ee5af2aa6e8863c96b5ebec30fd801bd65d74726a232ff545195b84b6eadc
+cas_ref: sha256:af5ee5af2aa6e8863c96b5ebec30fd801bd65d74726a232ff545195b84b6eadc
+coverage_gids:
+  - D5/S3/ConceptDynamics/ZeroVulnerabilityRadius.zero_vulnerability_radius
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/ZeroVulnerabilityRadius.zero_vulnerability_radius
+      source_sha256: sha256:af5ee5af2aa6e8863c96b5ebec30fd801bd65d74726a232ff545195b84b6eadc
+      target_statement_id: sha256:578d41a37cacef5feefecfc2bbad97211ed39e8062ed1b3f1dbb0d29a553944b
+  scribe:
+    - gid: D5/S3/ConceptDynamics/ZeroVulnerabilityRadius.zero_vulnerability_radius
+      definition_sha256: sha256:78b498d14084c446263cf5608771fe4e8649cfe1b51546b1ee30dda733d31668
+      emission_sha256: sha256:e5c33edc4a5bb2f1490c109ca4bc46fe3aff98e2c23af14bca1bf2dbc55a11dc
+  unresolved_subitems: []

@@ -126,7 +126,8 @@ public sealed partial class ProductionEnvironmentTests
     {
         const string coverageGid = "D5/S0/Carrier/Ring.goldenRing";
         var fixture = UncoveredOnlyIngestFixture(addNewAtom: false);
-        var atomPath = DirectoryAtomPath("old-receipt", "residual-open");
+        var existingAtomId = ExistingAtomId(fixture);
+        var atomPath = DirectoryAtomPath(existingAtomId, "residual-open");
         fixture.Files[atomPath] = fixture.Files[atomPath].Replace(
             "coverage_gids: []",
             $"coverage_gids:\n  - {coverageGid}",
@@ -149,7 +150,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.False(result.Success);
         Assert.Contains("INGEST_TRUTH_ALIGNMENT_REQUIRED", result.Error, StringComparison.Ordinal);
         Assert.Contains(
-            "existing entry old-receipt changed status-authority inputs",
+            $"existing entry {existingAtomId} changed status-authority inputs",
             result.Error,
             StringComparison.Ordinal);
         Assert.Equal(0, reportSource.CallCount);
@@ -161,7 +162,8 @@ public sealed partial class ProductionEnvironmentTests
     {
         const string coverageGid = "D5/S0/Carrier/Ring.goldenRing";
         var fixture = UncoveredOnlyIngestFixture(addNewAtom: false);
-        var atomPath = DirectoryAtomPath("old-receipt", "residual-open");
+        var existingAtomId = ExistingAtomId(fixture);
+        var atomPath = DirectoryAtomPath(existingAtomId, "residual-open");
         fixture.Baseline[atomPath] = fixture.Baseline[atomPath]
             .Replace(
                 "coverage_gids: []",
@@ -178,7 +180,7 @@ public sealed partial class ProductionEnvironmentTests
         AssertReportFreeTruthAlignmentRequiredWithoutTruthOrWrites(
             fixture,
             RawChangeSet.Create([atomPath, casPath]),
-            "existing entry old-receipt removed");
+            $"existing entry {existingAtomId} removed");
     }
 
     [Fact]
@@ -186,6 +188,7 @@ public sealed partial class ProductionEnvironmentTests
     {
         const string alternateSourcePath = "docs/GOVERNANCE-copy.md";
         var fixture = UncoveredOnlyIngestFixture(addNewAtom: false);
+        var existingAtomId = ExistingAtomId(fixture);
         fixture.Files[alternateSourcePath] = fixture.Files[RuleFixture.FixtureDigestionSourcePath];
         fixture.Files[DirectorySourceMetadataPath()] = fixture.Files[DirectorySourceMetadataPath()]
             .Replace(
@@ -196,13 +199,14 @@ public sealed partial class ProductionEnvironmentTests
         AssertReportFreeTruthAlignmentRequiredWithoutTruthOrWrites(
             fixture,
             RawChangeSet.Create([alternateSourcePath, DirectorySourceMetadataPath()]),
-            "existing entry old-receipt changed status-authority inputs");
+            $"existing entry {existingAtomId} changed status-authority inputs");
     }
 
     [Fact]
     public void IngestRejectsExistingAtomizerAuthorityDeltaBeforeLoadingTruthOrWriting()
     {
         var fixture = UncoveredOnlyIngestFixture(addNewAtom: false);
+        var existingAtomId = ExistingAtomId(fixture);
         fixture.Files[DirectorySourceMetadataPath()] = fixture.Files[DirectorySourceMetadataPath()]
             .Replace(
                 $"atomizer = \"{AtomizerRegistry.GictId}\"",
@@ -212,13 +216,14 @@ public sealed partial class ProductionEnvironmentTests
         AssertReportFreeTruthAlignmentRequiredWithoutTruthOrWrites(
             fixture,
             RawChangeSet.Create([DirectorySourceMetadataPath()]),
-            "existing entry old-receipt changed status-authority inputs");
+            $"existing entry {existingAtomId} changed status-authority inputs");
     }
 
     [Fact]
     public void IngestRejectsExistingGenreAuthorityDeltaBeforeLoadingTruthOrWriting()
     {
         var fixture = UncoveredOnlyIngestFixture(addNewAtom: false);
+        var existingAtomId = ExistingAtomId(fixture);
         fixture.Files[DirectorySourceMetadataPath()] = fixture.Files[DirectorySourceMetadataPath()]
             .Replace(
                 "unregistered_genres = []",
@@ -228,7 +233,7 @@ public sealed partial class ProductionEnvironmentTests
         AssertReportFreeTruthAlignmentRequiredWithoutTruthOrWrites(
             fixture,
             RawChangeSet.Create([DirectorySourceMetadataPath()]),
-            "existing entry old-receipt changed status-authority inputs");
+            $"existing entry {existingAtomId} changed status-authority inputs");
     }
 
     [Fact]
@@ -236,7 +241,7 @@ public sealed partial class ProductionEnvironmentTests
     {
         const string coverageGid = "D5/S0/Carrier/Ring.goldenRing";
         var fixture = UncoveredOnlyIngestFixture(addNewAtom: false);
-        var oldPath = DirectoryAtomPath("old-receipt", "residual-open");
+        var oldPath = DirectoryAtomPath(ExistingAtomId(fixture), "residual-open");
         foreach (var files in new[] { fixture.Files, fixture.Baseline })
         {
             files[oldPath] = files[oldPath].Replace(
@@ -259,7 +264,7 @@ public sealed partial class ProductionEnvironmentTests
     {
         const string coverageGid = "D5/S0/Carrier/Ring.goldenRing";
         var fixture = UncoveredOnlyIngestFixture(addNewAtom: false);
-        var oldPath = DirectoryAtomPath("old-receipt", "residual-open");
+        var oldPath = DirectoryAtomPath(ExistingAtomId(fixture), "residual-open");
         foreach (var files in new[] { fixture.Files, fixture.Baseline })
         {
             files[oldPath] = files[oldPath].Replace(
@@ -275,7 +280,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void IngestRejectsCoverageBearingPlannedEntryBeforeLoadingLeanOrWriting()
+    public void IngestDoesNotTransferCoverageToRewrittenContent()
     {
         const string coverageGid = "D5/S0/Carrier/Ring.goldenRing";
         var fixture = UncoveredOnlyIngestFixture(rewriteExistingAtom: true);
@@ -284,8 +289,7 @@ public sealed partial class ProductionEnvironmentTests
             SyntheticNumberedAtomizer.Id,
             currentBytes,
             DigestionTestSupport.Rules).Claims);
-        var currentAtomId = "gict-residual-"
-            + currentAtom.Fingerprints.RawSha256["sha256:".Length..];
+        var currentAtomId = AtomId(currentAtom);
         var receipt = new DigestionFormalizationReceipt(
             currentAtomId,
             coverageGid,
@@ -296,7 +300,7 @@ public sealed partial class ProductionEnvironmentTests
         var receiptText = Encoding.UTF8.GetString(DigestionFormalizationReceipt.Write(receipt).AsSpan());
         fixture.Files[receiptPath] = receiptText;
         fixture.Baseline[receiptPath] = receiptText;
-        var oldPath = DirectoryAtomPath("old-receipt", "residual-open");
+        var oldPath = DirectoryAtomPath(ExistingAtomId(fixture), "residual-open");
         foreach (var files in new[] { fixture.Files, fixture.Baseline })
         {
             files[oldPath] = files[oldPath].Replace(
@@ -307,7 +311,6 @@ public sealed partial class ProductionEnvironmentTests
 
         using var temporary = new TemporaryDirectory();
         WriteDirectoryLedger(temporary.Path, fixture.Files);
-        var before = GeneratedIngestImage(temporary);
         var reportSource = new FakeLeanReportSource(report: null);
         var environment = new ProductionCliEnvironment(
             temporary.Path,
@@ -320,18 +323,22 @@ public sealed partial class ProductionEnvironmentTests
 
         var result = environment.Ingest(ReportInputUnchangedArguments);
 
-        Assert.False(result.Success);
-        Assert.Contains("INGEST_TRUTH_ALIGNMENT_REQUIRED", result.Error, StringComparison.Ordinal);
-        Assert.Contains("coverage-bearing", result.Error, StringComparison.Ordinal);
+        Assert.True(result.Success, result.Error);
         Assert.Equal(0, reportSource.CallCount);
-        Assert.Equal(before, GeneratedIngestImage(temporary));
+        var entries = BackfillInventoryLoader.LoadRoot(temporary.Path).RequireDigestionEntries();
+        Assert.Equal([coverageGid], Assert.Single(
+            entries,
+            entry => entry.AtomId == ExistingAtomId(fixture)).CoverageGids.ToArray());
+        Assert.Empty(Assert.Single(
+            entries,
+            entry => entry.AtomId == currentAtomId).CoverageGids);
     }
 
     [Fact]
-    public void IngestRejectsReceiptBearingNewEntryBeforeLoadingTruthOrWriting()
+    public void IngestDoesNotTransferUnresolvedReceiptsToRewrittenContent()
     {
         var fixture = UncoveredOnlyIngestFixture(rewriteExistingAtom: true);
-        var oldPath = DirectoryAtomPath("old-receipt", "residual-open");
+        var oldPath = DirectoryAtomPath(ExistingAtomId(fixture), "residual-open");
         foreach (var files in new[] { fixture.Files, fixture.Baseline })
         {
             files[oldPath] = files[oldPath].Replace(
@@ -340,21 +347,37 @@ public sealed partial class ProductionEnvironmentTests
                 StringComparison.Ordinal);
         }
 
-        AssertReportFreeTruthAlignmentRequiredWithoutTruthOrWrites(
-            fixture,
-            RawChangeSet.Create([RuleFixture.FixtureDigestionSourcePath]),
-            "carries receipts");
+        using var temporary = new TemporaryDirectory();
+        WriteDirectoryLedger(temporary.Path, fixture.Files);
+        var environment = new ProductionCliEnvironment(
+            temporary.Path,
+            new FakeRepositoryGateway(
+                RawChangeSet.Create([RuleFixture.FixtureDigestionSourcePath]),
+                Snapshot(fixture.Files),
+                Snapshot(fixture.Baseline)),
+            new FakeLeanReportSource(report: null),
+            new FakeScribeEmissionVerifier(verification: null));
+
+        var result = environment.Ingest(ReportInputUnchangedArguments);
+
+        Assert.True(result.Success, result.Error);
+        var entries = BackfillInventoryLoader.LoadRoot(temporary.Path).RequireDigestionEntries();
+        Assert.Equal(["inherited-open-clause"], Assert.Single(
+            entries,
+            entry => entry.AtomId == ExistingAtomId(fixture)).Receipts.UnresolvedSubitems.ToArray());
+        Assert.Empty(Assert.Single(
+            entries,
+            entry => entry.AtomId != ExistingAtomId(fixture)).Receipts.UnresolvedSubitems);
     }
 
     [Theory]
     [InlineData("coverage")]
     [InlineData("scribe")]
     [InlineData("unresolved")]
-    [InlineData("chain")]
     [InlineData("tail")]
     [InlineData("quarantine")]
     [InlineData("cover-disposition")]
-    public void IngestRejectsEveryReceiptKindOnCurrentOnlyNewEntryBeforeTruthOrWrites(
+    public void IngestRejectsNonChainReceiptKindsOnCurrentOnlyNewEntryBeforeTruthOrWrites(
         string receiptKind)
     {
         const string gid = "D5/S0/Carrier/Ring.goldenRing";
@@ -370,7 +393,7 @@ public sealed partial class ProductionEnvironmentTests
         var newAtom = atoms[1];
         var entry = DigestionTestSupport.Entry(
             newAtom,
-            "gict-residual-" + newAtom.Fingerprints.RawSha256["sha256:".Length..],
+            AtomId(newAtom),
             atomizerId,
             sourceId: "fixture-source",
             sourcePath: RuleFixture.FixtureDigestionSourcePath);
@@ -393,7 +416,6 @@ public sealed partial class ProductionEnvironmentTests
                         "sha256:" + new string('c', 64))],
                 },
                 "unresolved" => entry.Receipts with { UnresolvedSubitems = ["open clause"] },
-                "chain" => entry.Receipts with { ChainAtoms = ["old-receipt"] },
                 "tail" => entry.Receipts with
                 {
                     TailAuthorization = new DigestionExternalReceipt(
@@ -452,7 +474,7 @@ public sealed partial class ProductionEnvironmentTests
         var newAtom = atoms[1];
         var newEntry = DigestionTestSupport.Entry(
             newAtom,
-            "gict-residual-" + newAtom.Fingerprints.RawSha256["sha256:".Length..],
+            AtomId(newAtom),
             atomizerId,
             migration: DigestionMigrationState.Partial,
             truth: DigestionTruthState.Open,
@@ -584,7 +606,7 @@ public sealed partial class ProductionEnvironmentTests
         var newAtom = atoms[1];
         var entry = DigestionTestSupport.Entry(
             newAtom,
-            "gict-residual-" + newAtom.Fingerprints.RawSha256["sha256:".Length..],
+            AtomId(newAtom),
             atomizerId,
             sourceId: "fixture-source",
             sourcePath: RuleFixture.FixtureDigestionSourcePath);
@@ -668,6 +690,17 @@ public sealed partial class ProductionEnvironmentTests
         fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = oldText;
         InstallProjectedLedger(fixture, IngestLedger(atomizerId, oldAtom), oldAtom);
         return fixture;
+    }
+
+    private static string ExistingAtomId(RuleFixture fixture)
+    {
+        var baselineBytes = Encoding.UTF8.GetBytes(
+            fixture.Baseline[RuleFixture.FixtureDigestionSourcePath]);
+        var atom = Assert.Single(AtomizerRegistry.Atomize(
+            SyntheticNumberedAtomizer.Id,
+            baselineBytes,
+            DigestionTestSupport.Rules).Claims);
+        return AtomId(atom);
     }
 
     private static void AssertReportFreeTruthAlignmentRequiredWithoutTruthOrWrites(

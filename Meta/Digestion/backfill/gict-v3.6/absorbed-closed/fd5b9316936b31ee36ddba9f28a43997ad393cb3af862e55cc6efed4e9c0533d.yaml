@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:fd5b9316936b31ee36ddba9f28a43997ad393cb3af862e55cc6efed4e9c0533d
+  normalized_sha256: sha256:fd5b9316936b31ee36ddba9f28a43997ad393cb3af862e55cc6efed4e9c0533d
+cas_ref: sha256:fd5b9316936b31ee36ddba9f28a43997ad393cb3af862e55cc6efed4e9c0533d
+coverage_gids:
+  - D5/S3/Quantum/Sharpness/SpectralPairingCapacity.spectral_pairing_capacity_monotone_of_doubly_stochastic
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/Sharpness/SpectralPairingCapacity.spectral_pairing_capacity_monotone_of_doubly_stochastic
+      source_sha256: sha256:fd5b9316936b31ee36ddba9f28a43997ad393cb3af862e55cc6efed4e9c0533d
+      target_statement_id: sha256:7de25e4223beda37dd425f7e99e221590d158183685ce0883b2ae22efa1bbfbb
+  scribe:
+    - gid: D5/S3/Quantum/Sharpness/SpectralPairingCapacity.spectral_pairing_capacity_monotone_of_doubly_stochastic
+      definition_sha256: sha256:fb0b5cdc94a0e44537bbc72cd778016315e1a668814cdb6c0d8c80adb10e830c
+      emission_sha256: sha256:4dea9d65824be5ba1adf3b788f4ed7b7301a8e298a0274cf31724796d2f1bab6
+  unresolved_subitems: []

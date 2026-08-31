@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:ac6620786d310b68b85de3d0b329ec54e7a565e3aabba2004fc317015f32b2b9
+  normalized_sha256: sha256:ac6620786d310b68b85de3d0b329ec54e7a565e3aabba2004fc317015f32b2b9
+cas_ref: sha256:ac6620786d310b68b85de3d0b329ec54e7a565e3aabba2004fc317015f32b2b9
+coverage_gids:
+  - D5/S3/ConceptDynamics/GovernanceFixedPoint/TailRekeyConservative.legal_tail_rekey_is_conservative
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/GovernanceFixedPoint/TailRekeyConservative.legal_tail_rekey_is_conservative
+      source_sha256: sha256:ac6620786d310b68b85de3d0b329ec54e7a565e3aabba2004fc317015f32b2b9
+      target_statement_id: sha256:3d0d8e3f04c195d99c4bd2ddcfda66b3c28c02af808b376d159eadcf521da03b
+  scribe:
+    - gid: D5/S3/ConceptDynamics/GovernanceFixedPoint/TailRekeyConservative.legal_tail_rekey_is_conservative
+      definition_sha256: sha256:ed01c1fe637c2de30ccc5294612e1d5141cc5c9f031ca1ecb62848ae41f36185
+      emission_sha256: sha256:483a1346b0e81abd1736d274ccdb68e6436c2214e7f282031bed3c386cc74224
+  unresolved_subitems: []

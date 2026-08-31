@@ -56,8 +56,8 @@ public sealed partial class ProductionEnvironmentTests
             DigestionTestSupport.Rules).Claims;
         Assert.Equal(
             atom.Fingerprints,
-            Assert.Single(changedAtoms, candidate => candidate.AstPath == atom.AstPath).Fingerprints);
-        var observedAtom = Assert.Single(changedAtoms, candidate => candidate.AstPath != atom.AstPath);
+            Assert.Single(changedAtoms, candidate => candidate.Fingerprints.RawSha256 == atom.Fingerprints.RawSha256).Fingerprints);
+        var observedAtom = Assert.Single(changedAtoms, candidate => candidate.Fingerprints.RawSha256 != atom.Fingerprints.RawSha256);
         fixture.Files[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(sourceBytes);
         fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(sourceBytes);
         InstallDirectoryLedger(fixture, atomizerId, atom);
@@ -117,7 +117,7 @@ public sealed partial class ProductionEnvironmentTests
             line.StartsWith("OBSERVED ", StringComparison.Ordinal));
         Assert.Contains(
             "OBSERVED SL-016 Meta/BACKFILL.yaml: source fixture-source "
-            + $"has unregistered residual-open atom {observedAtom.AstPath}",
+            + $"has unregistered residual-open atom {AtomId(observedAtom)}",
             console.Output,
             StringComparison.Ordinal);
         Assert.Contains("run make ingest to close it", console.Output, StringComparison.Ordinal);

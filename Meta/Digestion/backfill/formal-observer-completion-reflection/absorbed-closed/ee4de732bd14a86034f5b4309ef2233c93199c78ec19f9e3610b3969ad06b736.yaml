@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:ee4de732bd14a86034f5b4309ef2233c93199c78ec19f9e3610b3969ad06b736
+  normalized_sha256: sha256:ee4de732bd14a86034f5b4309ef2233c93199c78ec19f9e3610b3969ad06b736
+cas_ref: sha256:ee4de732bd14a86034f5b4309ef2233c93199c78ec19f9e3610b3969ad06b736
+coverage_gids:
+  - D5/S3/ObserverMemory/Dynamics/InfiniteObservabilityOrthogonalDuality.infinite_unobservable_eq_observable_orthogonal
+receipts:
+  coverage:
+    - gid: D5/S3/ObserverMemory/Dynamics/InfiniteObservabilityOrthogonalDuality.infinite_unobservable_eq_observable_orthogonal
+      source_sha256: sha256:ee4de732bd14a86034f5b4309ef2233c93199c78ec19f9e3610b3969ad06b736
+      target_statement_id: sha256:e58b37128985b67ea9e50828c73982184165e31e921d74d4896e8344490cf288
+  scribe:
+    - gid: D5/S3/ObserverMemory/Dynamics/InfiniteObservabilityOrthogonalDuality.infinite_unobservable_eq_observable_orthogonal
+      definition_sha256: sha256:0818374f342ccfd3814a7ee9e2a522a5dc65fb45f42bb5777f6b8d1174877185
+      emission_sha256: sha256:13bab4290a19da2bfb2c4a329a8a0b211196fb809b10306fc22f841e0f091823
+  unresolved_subitems: []

@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:c3a872d239986ac45db496c2eecb559f9cd2a024e5e06f17f974bfd41fb6728b
+  normalized_sha256: sha256:c3a872d239986ac45db496c2eecb559f9cd2a024e5e06f17f974bfd41fb6728b
+cas_ref: sha256:c3a872d239986ac45db496c2eecb559f9cd2a024e5e06f17f974bfd41fb6728b
+coverage_gids:
+  - D5/S3/Axis/PrimeAddressTrichotomy.prime_address_mod_four_trichotomy
+receipts:
+  coverage:
+    - gid: D5/S3/Axis/PrimeAddressTrichotomy.prime_address_mod_four_trichotomy
+      source_sha256: sha256:c3a872d239986ac45db496c2eecb559f9cd2a024e5e06f17f974bfd41fb6728b
+      target_statement_id: sha256:5bbca7a90a51cb9894141c6c60cd56f9db508fd9def5a67f3f12a696e93de2f4
+  scribe:
+    - gid: D5/S3/Axis/PrimeAddressTrichotomy.prime_address_mod_four_trichotomy
+      definition_sha256: sha256:2eb9bffa2caec73f3764c48545eea26e96272b10fadece2521a97f0a9b58c33d
+      emission_sha256: sha256:87d181d6a20d345343d659f0cbf3559f3ea33d5ff917484b2c304aac3fe0f4bb
+  unresolved_subitems: []

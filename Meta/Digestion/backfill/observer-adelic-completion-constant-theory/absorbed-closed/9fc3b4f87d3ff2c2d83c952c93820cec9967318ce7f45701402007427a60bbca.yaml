@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:9fc3b4f87d3ff2c2d83c952c93820cec9967318ce7f45701402007427a60bbca
+  normalized_sha256: sha256:9fc3b4f87d3ff2c2d83c952c93820cec9967318ce7f45701402007427a60bbca
+cas_ref: sha256:9fc3b4f87d3ff2c2d83c952c93820cec9967318ce7f45701402007427a60bbca
+coverage_gids:
+  - D5/S3/Arith/Lattices/FiveModularLatticeSimilarity.five_modular_lattice_similarity
+receipts:
+  coverage:
+    - gid: D5/S3/Arith/Lattices/FiveModularLatticeSimilarity.five_modular_lattice_similarity
+      source_sha256: sha256:9fc3b4f87d3ff2c2d83c952c93820cec9967318ce7f45701402007427a60bbca
+      target_statement_id: sha256:2356984cc2616e24b3900b7890d68b8d45fae36edde70b261d02b2e9dde9487a
+  scribe:
+    - gid: D5/S3/Arith/Lattices/FiveModularLatticeSimilarity.five_modular_lattice_similarity
+      definition_sha256: sha256:5b1d470f5eeae117110559a6c383228aec2c5bbae54b5e82fa3b41ddb50a5eb0
+      emission_sha256: sha256:a6b1774e0650ed8cc9fde1766d936d433ef9d7a997d936e1fd22e237ab4e9715
+  unresolved_subitems: []

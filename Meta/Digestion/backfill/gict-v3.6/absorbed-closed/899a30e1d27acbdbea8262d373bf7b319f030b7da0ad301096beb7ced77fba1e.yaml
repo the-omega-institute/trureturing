@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:899a30e1d27acbdbea8262d373bf7b319f030b7da0ad301096beb7ced77fba1e
+  normalized_sha256: sha256:899a30e1d27acbdbea8262d373bf7b319f030b7da0ad301096beb7ced77fba1e
+cas_ref: sha256:899a30e1d27acbdbea8262d373bf7b319f030b7da0ad301096beb7ced77fba1e
+coverage_gids:
+  - D5/S3/PrimeForms/Crossing/OddCoreParameterCriterion.odd_core_parameter_criterion
+receipts:
+  coverage:
+    - gid: D5/S3/PrimeForms/Crossing/OddCoreParameterCriterion.odd_core_parameter_criterion
+      source_sha256: sha256:899a30e1d27acbdbea8262d373bf7b319f030b7da0ad301096beb7ced77fba1e
+      target_statement_id: sha256:acdb71493d88171ebd59d1bda2519878dbd8bdfe5f4c4dd1b2b95b18c56dfccd
+  scribe:
+    - gid: D5/S3/PrimeForms/Crossing/OddCoreParameterCriterion.odd_core_parameter_criterion
+      definition_sha256: sha256:b3ba73d8997c89f6f062e36b2fada72e5fd072de2fdb18dbd0750d15c664488c
+      emission_sha256: sha256:22db142c1674b50ad103b766a4fafc122271e41ab288054acb8fb82f1406ab6b
+  unresolved_subitems: []

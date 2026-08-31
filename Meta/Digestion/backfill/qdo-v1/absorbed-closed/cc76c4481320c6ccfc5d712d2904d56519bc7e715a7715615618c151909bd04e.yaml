@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:cc76c4481320c6ccfc5d712d2904d56519bc7e715a7715615618c151909bd04e
+  normalized_sha256: sha256:cc76c4481320c6ccfc5d712d2904d56519bc7e715a7715615618c151909bd04e
+cas_ref: sha256:cc76c4481320c6ccfc5d712d2904d56519bc7e715a7715615618c151909bd04e
+coverage_gids:
+  - D5/S3/Observer/Dynamics/MinimalSuspensionContinuum.minimal_suspension_compact_connected
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/Dynamics/MinimalSuspensionContinuum.minimal_suspension_compact_connected
+      source_sha256: sha256:cc76c4481320c6ccfc5d712d2904d56519bc7e715a7715615618c151909bd04e
+      target_statement_id: sha256:9bc68c8c4d3fc2b4e2beff42892d409f19c98a7e34980865f389063895ed2baa
+  scribe:
+    - gid: D5/S3/Observer/Dynamics/MinimalSuspensionContinuum.minimal_suspension_compact_connected
+      definition_sha256: sha256:33e2b39b3c45751b8ac382e4c81ba0fc46321cdadec17f920f558c3dc91efa2a
+      emission_sha256: sha256:f13ac88745041baec9d4fa7230922be13eac83f532fc4fb1b4b23bdcd4c44cb1
+  unresolved_subitems: []

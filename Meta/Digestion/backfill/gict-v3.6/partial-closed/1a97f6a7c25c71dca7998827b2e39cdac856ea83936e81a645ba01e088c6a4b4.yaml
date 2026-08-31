@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:1a97f6a7c25c71dca7998827b2e39cdac856ea83936e81a645ba01e088c6a4b4
+  normalized_sha256: sha256:1a97f6a7c25c71dca7998827b2e39cdac856ea83936e81a645ba01e088c6a4b4
+cas_ref: sha256:1a97f6a7c25c71dca7998827b2e39cdac856ea83936e81a645ba01e088c6a4b4
+coverage_gids:
+  - D5/S1/Recurrence/GoldenPartition.fibonacci_golden_partition
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems:
+    - unique-trace-pricing-double-tower-minimal-projection
+    - golden-branch-born-type-pricing-unconditionally-unique
+    - comparison-claim-stronger-than-cyclic-branch-gleason-conditions
+    - golden-window-price-table-has-no-free-parameters

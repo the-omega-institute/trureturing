@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:8017ec5e106271032a0aab504dfddc41914a15dd5dcd65bf59b8c57ace3871d1
+  normalized_sha256: sha256:8017ec5e106271032a0aab504dfddc41914a15dd5dcd65bf59b8c57ace3871d1
+cas_ref: sha256:8017ec5e106271032a0aab504dfddc41914a15dd5dcd65bf59b8c57ace3871d1
+coverage_gids:
+  - D5/S3/Observer/WindowAlgebra/FinitePartitionAlgebraOrderReversal.finite_partition_algebra_order_reversal
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/WindowAlgebra/FinitePartitionAlgebraOrderReversal.finite_partition_algebra_order_reversal
+      source_sha256: sha256:8017ec5e106271032a0aab504dfddc41914a15dd5dcd65bf59b8c57ace3871d1
+      target_statement_id: sha256:0914e4feb88e0599f4cd3f9738650c9cfe5dd1da6705416b97bcc2eadad05b0d
+  scribe:
+    - gid: D5/S3/Observer/WindowAlgebra/FinitePartitionAlgebraOrderReversal.finite_partition_algebra_order_reversal
+      definition_sha256: sha256:0ed671a72982452fa8ebd06a2d13fae76d807b03737eb615c9051fee3e33fcb6
+      emission_sha256: sha256:327d8aba28678fd9e7ac4f0cb654aab4d268fc49f6825d9ba42ac6dda9effc61
+  unresolved_subitems: []

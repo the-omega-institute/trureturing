@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:2a1d890ddec9b378dcd66ae7aa4b19d5a951bb737848167f20f9f4d1dde7babd
+  normalized_sha256: sha256:2a1d890ddec9b378dcd66ae7aa4b19d5a951bb737848167f20f9f4d1dde7babd
+cas_ref: sha256:2a1d890ddec9b378dcd66ae7aa4b19d5a951bb737848167f20f9f4d1dde7babd
+coverage_gids:
+  - D5/S3/Fourier/CompletionConstants/GaussianSelfDualPi.gaussian_self_dual_iff
+receipts:
+  coverage:
+    - gid: D5/S3/Fourier/CompletionConstants/GaussianSelfDualPi.gaussian_self_dual_iff
+      source_sha256: sha256:2a1d890ddec9b378dcd66ae7aa4b19d5a951bb737848167f20f9f4d1dde7babd
+      target_statement_id: sha256:39803df53ade6b74f2d12c2072e437834c126f2a5fc46b409e57d5d5a1acb6a7
+  scribe:
+    - gid: D5/S3/Fourier/CompletionConstants/GaussianSelfDualPi.gaussian_self_dual_iff
+      definition_sha256: sha256:1f63a7d7d7eea34c3b0c3127b4a6ac1e76ec84338e336ec292a3843860f078b6
+      emission_sha256: sha256:416390c0bcc39d4c8a3e9dc182ca2867a974bd9d7fccc7252770c0f93a967005
+  unresolved_subitems: []

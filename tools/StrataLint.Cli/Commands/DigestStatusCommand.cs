@@ -89,6 +89,7 @@ internal static class DigestStatusCommand
                         formalizeEvaluation,
                         snapshot,
                         formalizeDocument,
+                        DigestionContentKindResolver.Resolve(snapshot, formalizeDocument),
                         formalizeLeanReport,
                         options.FormalizeAtomId,
                         options.RetryDispositions),
@@ -162,6 +163,7 @@ internal static class DigestStatusCommand
                     RenderReadiness(DigestionReadinessQuery.Classify(
                         document,
                         evaluation,
+                        DigestionContentKindResolver.Resolve(snapshot, document),
                         currentReceipts,
                         presentReceiptAtomIds,
                         verifiedScribeEmissions)),
@@ -327,7 +329,6 @@ internal static class DigestStatusCommand
                 {
                     source_id = item.Entry.SourceId,
                     atom_id = item.Entry.AtomId,
-                    ast_path = item.Entry.AstPath,
                     alignment = DigestionReceiptAlignmentNames.Render(item.Alignment),
                     migration = DigestionStatusNames.Migration(item.DerivedStatus.Migration),
                     truth = DigestionStatusNames.Truth(item.DerivedStatus.Truth),
@@ -352,7 +353,6 @@ internal static class DigestStatusCommand
             {
                 source_id = item.SourceId,
                 atom_id = item.AtomId,
-                ast_path = item.AstPath,
                 action = item.Action,
                 ordered_blockers = item.OrderedBlockers,
                 unknown_predicates = item.UnknownPredicates,
@@ -365,6 +365,7 @@ internal static class DigestStatusCommand
         DigestionLedgerEvaluation evaluation,
         RepositorySnapshot snapshot,
         BackfillInventoryDocument ledger,
+        IReadOnlyDictionary<string, string> contentKinds,
         LeanAxiomReport leanReport,
         string? selectedAtomId,
         bool retryDispositions)
@@ -377,7 +378,12 @@ internal static class DigestStatusCommand
                     : item.DerivedStatus.Migration == DigestionMigrationState.Residual
                         && item.DerivedStatus.Truth == DigestionTruthState.Open
                         && item.Entry.CoverageGids.Length == 0))
-            .Select(item => Projection(item, snapshot, leanReport, retryDispositions))
+            .Select(item => Projection(
+                item,
+                snapshot,
+                contentKinds,
+                leanReport,
+                retryDispositions))
             .Where(static item => item is not null)
             .OrderBy(static item => item!.SourceId, StringComparer.Ordinal)
             .ThenBy(static item => item!.AtomId, StringComparer.Ordinal)
@@ -408,18 +414,20 @@ internal static class DigestStatusCommand
     private static FormalizeProjection? Projection(
         DigestionEntryEvaluation evaluation,
         RepositorySnapshot snapshot,
+        IReadOnlyDictionary<string, string> contentKinds,
         LeanAxiomReport leanReport,
         bool retryDispositions)
     {
         var entry = evaluation.Entry;
-        var dispositionSelection = DigestionCoverDispositionSelector.Classify(
-            entry,
-            retryDispositions);
-        if (!DigestionAstKindPolicy.TryGetFormalizableKind(entry.AstPath, out var kind))
+        if (!contentKinds.TryGetValue(entry.AtomId, out var contentKind)
+            || !DigestionContentKindPolicy.IsFormalizable(contentKind))
         {
             return null;
         }
 
+        var dispositionSelection = DigestionCoverDispositionSelector.Classify(
+            entry,
+            retryDispositions);
         if (entry.Receipts.Quarantine is { } quarantine)
         {
             return new FormalizeProjection(
@@ -430,7 +438,6 @@ internal static class DigestStatusCommand
                 new QuarantinedFormalizeCandidate(
                     entry.SourceId,
                     entry.AtomId,
-                    entry.AstPath,
                     quarantine.Justification,
                     quarantine.ReentryCondition,
                     quarantine.BlockerClass),
@@ -524,8 +531,7 @@ internal static class DigestStatusCommand
             new FormalizeCandidate(
                 entry.SourceId,
                 entry.AtomId,
-                entry.AstPath,
-                kind,
+                contentKind,
                 entry.CasRef,
                 entry.Fingerprints.RawSha256,
                 atomText),
@@ -646,7 +652,6 @@ internal static class DigestStatusCommand
     private sealed record FormalizeCandidate(
         string SourceId,
         string AtomId,
-        string AstPath,
         string Kind,
         string CasRef,
         string RawSha256,
@@ -660,7 +665,6 @@ internal static class DigestStatusCommand
     private sealed record QuarantinedFormalizeCandidate(
         string SourceId,
         string AtomId,
-        string AstPath,
         string Justification,
         string ReentryCondition,
         string? BlockerClass);

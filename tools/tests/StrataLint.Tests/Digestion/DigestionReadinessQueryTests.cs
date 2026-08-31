@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Text;
 using System.Text.Json;
 using StrataLint.Cli;
 using StrataLint.Engine;
@@ -166,7 +167,7 @@ public sealed class DigestionReadinessQueryTests
     {
         Assert.Equal(
             ["row", "v", "research-queue", "metadata", "negative-register", "M"],
-            DigestionAstKindPolicy.NotFormalizableKinds.ToArray());
+            DigestionContentKindPolicy.NotFormalizableKinds.ToArray());
     }
 
     [Fact]
@@ -235,6 +236,7 @@ public sealed class DigestionReadinessQueryTests
         var result = DigestionReadinessQuery.Classify(
             Document([entry]),
             Evaluation([entry]),
+            Kinds([entry]),
             new Dictionary<string, DigestionFormalizationReceipt>(StringComparer.Ordinal),
             ImmutableHashSet.Create(StringComparer.Ordinal, entry.Entry.AtomId),
             ReadyScribe());
@@ -259,12 +261,14 @@ public sealed class DigestionReadinessQueryTests
         var first = DigestionReadinessQuery.Classify(
             document,
             evaluation,
+            Kinds([deposit, routing, quarantine]),
             new Dictionary<string, DigestionFormalizationReceipt>(StringComparer.Ordinal),
             ImmutableHashSet<string>.Empty,
             ReadyScribe());
         var second = DigestionReadinessQuery.Classify(
             document,
             evaluation,
+            Kinds([deposit, routing, quarantine]),
             new Dictionary<string, DigestionFormalizationReceipt>(StringComparer.Ordinal),
             ImmutableHashSet<string>.Empty,
             ReadyScribe());
@@ -440,6 +444,7 @@ public sealed class DigestionReadinessQueryTests
         return DigestionReadinessQuery.Classify(
             Document(entries, acknowledgedStale),
             Evaluation(entries),
+            Kinds(entries),
             receiptMap,
             receiptMap.Keys.ToImmutableHashSet(StringComparer.Ordinal),
             scribeEmissions ?? ReadyScribe());
@@ -447,6 +452,14 @@ public sealed class DigestionReadinessQueryTests
 
     private static DigestionLedgerEvaluation Evaluation(
         ImmutableArray<DigestionEntryEvaluation> entries) => new(entries, []);
+
+    private static IReadOnlyDictionary<string, string> Kinds(
+        ImmutableArray<DigestionEntryEvaluation> entries) =>
+        entries.GroupBy(static item => item.Entry.AtomId, StringComparer.Ordinal)
+            .ToDictionary(
+                static group => group.Key,
+                static group => Assert.Single(group.First().Atom!.Context).Text,
+                StringComparer.Ordinal);
 
     private static BackfillInventoryDocument Document(
         ImmutableArray<DigestionEntryEvaluation> entries,
@@ -470,7 +483,7 @@ public sealed class DigestionReadinessQueryTests
     private static DigestionEntryEvaluation Entry(
         string sourceId,
         string atomId,
-        string astPath,
+        string contentLocatorFixture,
         DigestionMigrationState migration = DigestionMigrationState.Residual,
         DigestionTruthState truth = DigestionTruthState.Open,
         ImmutableArray<string> coverageGids = default,
@@ -482,13 +495,16 @@ public sealed class DigestionReadinessQueryTests
         var fingerprints = new DigestionFingerprints(
             "sha256:" + new string('a', 64),
             "sha256:" + new string('b', 64));
+        var separator = contentLocatorFixture.IndexOf('/', StringComparison.Ordinal);
+        var contentKind = separator < 0
+            ? contentLocatorFixture
+            : contentLocatorFixture[..separator];
+        var rawBytes = ImmutableArray.CreateRange(Encoding.UTF8.GetBytes(contentLocatorFixture));
         var entry = new DigestionLedgerEntry(
             sourceId,
             "synthetic/" + sourceId + ".md",
             AtomizerRegistry.GenericId,
             atomId,
-            astPath,
-            null,
             fingerprints,
             coverageGids.IsDefault ? [] : coverageGids,
             new DigestionReceipts(
@@ -504,6 +520,12 @@ public sealed class DigestionReadinessQueryTests
         return new DigestionEntryEvaluation(
             entry,
             DigestionReceiptAlignment.Seen,
+            new DigestionAtom(
+                0,
+                rawBytes.Length,
+                rawBytes,
+                fingerprints,
+                [new DigestionContext(0, contentKind)]),
             new DigestionStatus(migration, truth),
             false,
             gaps.IsDefault ? [] : gaps);

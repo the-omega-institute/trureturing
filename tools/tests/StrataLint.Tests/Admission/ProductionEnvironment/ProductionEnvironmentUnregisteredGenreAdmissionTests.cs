@@ -42,7 +42,6 @@ public sealed partial class ProductionEnvironmentTests
             "# Synthetic\n\n**定理 1.1(A)**。old。\n\n**未登记体 2.1(B)**。new。\n");
         var rawBytes = ImmutableArray.CreateRange(candidateBytes);
         var coarse = new DigestionAtom(
-            "coarse/source",
             0,
             candidateBytes.Length,
             rawBytes,

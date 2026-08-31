@@ -1,0 +1,22 @@
+fingerprints:
+  raw_sha256: sha256:0a6addfd806133bbb06c013f5cbc78f1f2c39e2de2a51dbb3c07119a86f38775
+  normalized_sha256: sha256:0a6addfd806133bbb06c013f5cbc78f1f2c39e2de2a51dbb3c07119a86f38775
+cas_ref: sha256:0a6addfd806133bbb06c013f5cbc78f1f2c39e2de2a51dbb3c07119a86f38775
+coverage_gids:
+  - D5/S0/Carrier/Powers/IntegerPowerNorm.norm_phiUnit_zpow
+  - D5/S0/Conventions/UnitIntervalReflection.unit_interval_reflection_involutive
+  - D5/S0/Carrier/Units.norm_phi_pow
+receipts:
+  coverage:
+    - gid: D5/S0/Carrier/Units.norm_phi_pow
+      source_sha256: sha256:0a6addfd806133bbb06c013f5cbc78f1f2c39e2de2a51dbb3c07119a86f38775
+      target_statement_id: sha256:68042ed4babee5ef77b2801c4dce97c1929d862ecd9e857d1547aacf638a6a0f
+  scribe: []
+  unresolved_subitems:
+    - even-weight-integral-as-jeffreys-symmetric-divergence
+    - odd-weight-one-minus-two-s-integral-as-directional-difference
+    - time-reversal-decomposition
+    - vanishing-odd-part-in-tracial-states
+    - kms-odd-part-as-arrow-of-time
+    - symmetry-breaking-law-as-fluctuation-theorem
+    - even-conclusion-selected-by-the-cone

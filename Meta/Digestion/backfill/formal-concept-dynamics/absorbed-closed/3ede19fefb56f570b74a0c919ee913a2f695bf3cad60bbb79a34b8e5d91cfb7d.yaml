@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:3ede19fefb56f570b74a0c919ee913a2f695bf3cad60bbb79a34b8e5d91cfb7d
+  normalized_sha256: sha256:3ede19fefb56f570b74a0c919ee913a2f695bf3cad60bbb79a34b8e5d91cfb7d
+cas_ref: sha256:3ede19fefb56f570b74a0c919ee913a2f695bf3cad60bbb79a34b8e5d91cfb7d
+coverage_gids:
+  - D5/S3/ConceptDynamics/Adjunction/ProcessConceptAdjunction.process_concept_adjunction
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Adjunction/ProcessConceptAdjunction.process_concept_adjunction
+      source_sha256: sha256:3ede19fefb56f570b74a0c919ee913a2f695bf3cad60bbb79a34b8e5d91cfb7d
+      target_statement_id: sha256:ca1c0aff402800e7e79a87cfac1c6a46e4cca3798d26c43cd459200b1ff6b32c
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Adjunction/ProcessConceptAdjunction.process_concept_adjunction
+      definition_sha256: sha256:6f704ae92c0d64d3a554cd6147cbbd577ad0439c6ed7806108044fbdda90c542
+      emission_sha256: sha256:d52adf205b24493c7208b4a0edeb691864262c17a8e2e173cdf55cab2e14ef67
+  unresolved_subitems: []

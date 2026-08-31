@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:bbb725d8a4db9c003eb7c58fcb7663e6cfcdda080b30c0d3290042dd7fbb15f6
+  normalized_sha256: sha256:bbb725d8a4db9c003eb7c58fcb7663e6cfcdda080b30c0d3290042dd7fbb15f6
+cas_ref: sha256:bbb725d8a4db9c003eb7c58fcb7663e6cfcdda080b30c0d3290042dd7fbb15f6
+coverage_gids:
+  - D5/S3/ConceptDynamics/RefinementFactorization/IndexedTargetDefectMonotonicity.larger_observation_budget_shrinks_target_defect
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/RefinementFactorization/IndexedTargetDefectMonotonicity.larger_observation_budget_shrinks_target_defect
+      source_sha256: sha256:bbb725d8a4db9c003eb7c58fcb7663e6cfcdda080b30c0d3290042dd7fbb15f6
+      target_statement_id: sha256:ec7a01b8a31a703aab70f081ff628c240a2ee389be1bcbba3bf1174bb9f94acf
+  scribe:
+    - gid: D5/S3/ConceptDynamics/RefinementFactorization/IndexedTargetDefectMonotonicity.larger_observation_budget_shrinks_target_defect
+      definition_sha256: sha256:4ecc2c48b7f110ac18a3405574d2db96597c9f1c603442c1b623965d61d05b74
+      emission_sha256: sha256:402666a04edbf25612ed05e50c2b82fd867bf137bd7e07ae9d2639277b84a98d
+  unresolved_subitems: []

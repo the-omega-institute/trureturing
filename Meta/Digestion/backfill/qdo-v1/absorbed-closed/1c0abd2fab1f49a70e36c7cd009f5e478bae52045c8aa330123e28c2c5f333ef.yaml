@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:1c0abd2fab1f49a70e36c7cd009f5e478bae52045c8aa330123e28c2c5f333ef
+  normalized_sha256: sha256:1c0abd2fab1f49a70e36c7cd009f5e478bae52045c8aa330123e28c2c5f333ef
+cas_ref: sha256:1c0abd2fab1f49a70e36c7cd009f5e478bae52045c8aa330123e28c2c5f333ef
+coverage_gids:
+  - D5/S3/ObserverMemory/ContextUpdates/SuffixMergeCriterion.context_update_eq_iff
+receipts:
+  coverage:
+    - gid: D5/S3/ObserverMemory/ContextUpdates/SuffixMergeCriterion.context_update_eq_iff
+      source_sha256: sha256:1c0abd2fab1f49a70e36c7cd009f5e478bae52045c8aa330123e28c2c5f333ef
+      target_statement_id: sha256:54ade1919d88c5fd39129d30e19cb888a304a10e6d7601ba1d4152c2825825bb
+  scribe:
+    - gid: D5/S3/ObserverMemory/ContextUpdates/SuffixMergeCriterion.context_update_eq_iff
+      definition_sha256: sha256:73b89bafd07e3f53b1af7b2b9cdb94cc9cb6cc0667a7e56841ddbdcf68f04927
+      emission_sha256: sha256:d0e353238c004748bd451b4bcf61eb526bbaf08399220d4966e37c98272fa6f4
+  unresolved_subitems: []

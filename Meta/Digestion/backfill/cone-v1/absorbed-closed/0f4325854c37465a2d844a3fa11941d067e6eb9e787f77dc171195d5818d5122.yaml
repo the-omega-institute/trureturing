@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:0f4325854c37465a2d844a3fa11941d067e6eb9e787f77dc171195d5818d5122
+  normalized_sha256: sha256:0f4325854c37465a2d844a3fa11941d067e6eb9e787f77dc171195d5818d5122
+cas_ref: sha256:0f4325854c37465a2d844a3fa11941d067e6eb9e787f77dc171195d5818d5122
+coverage_gids:
+  - D5/S3/Resource/CompositeCones/StrictChain.strict_composite_cone_chain_and_block_criterion
+receipts:
+  coverage:
+    - gid: D5/S3/Resource/CompositeCones/StrictChain.strict_composite_cone_chain_and_block_criterion
+      source_sha256: sha256:0f4325854c37465a2d844a3fa11941d067e6eb9e787f77dc171195d5818d5122
+      target_statement_id: sha256:e5b84f10cccadc68e043a285d07cc958abd3596b2566397f94ed194850894eba
+  scribe:
+    - gid: D5/S3/Resource/CompositeCones/StrictChain.strict_composite_cone_chain_and_block_criterion
+      definition_sha256: sha256:31d92007b629755c5b9a15fa4340a4be87e7c3325daeb0d88f185de916d4d4a9
+      emission_sha256: sha256:a97884d3985ed497c57084d9e0ebd23f4cf601166c5d804ebaf8f4202fc1287d
+  unresolved_subitems: []

@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:0815154b98192bee7195cdf3e78d637f01cd135ba4c9fd3bafcee16c478d54af
+  normalized_sha256: sha256:0815154b98192bee7195cdf3e78d637f01cd135ba4c9fd3bafcee16c478d54af
+cas_ref: sha256:0815154b98192bee7195cdf3e78d637f01cd135ba4c9fd3bafcee16c478d54af
+coverage_gids:
+  - D5/S3/Quantum/Algebra/FiniteLayerProjectionEscape.finite_layer_projection_escape
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/Algebra/FiniteLayerProjectionEscape.finite_layer_projection_escape
+      source_sha256: sha256:0815154b98192bee7195cdf3e78d637f01cd135ba4c9fd3bafcee16c478d54af
+      target_statement_id: sha256:5324c8f898e4e3d2b29b298333f0f3936f3fafc9781b8d6fbcba0910b9596758
+  scribe:
+    - gid: D5/S3/Quantum/Algebra/FiniteLayerProjectionEscape.finite_layer_projection_escape
+      definition_sha256: sha256:0a1092adddd6f26db416b2f007d933f50925e6af792ea201e7b1b0ce21f1b954
+      emission_sha256: sha256:b2dd1b6a092f0f1a99c5b4c25f2cfff5696e81fc42b914a3e31bd18fdbacafc3
+  unresolved_subitems: []

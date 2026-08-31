@@ -21,12 +21,10 @@ public sealed partial class TheoryAtomizerTests
 
         var evolved = AtomizerRegistry.Atomize(AtomizerRegistry.WmId, source, DigestionTestSupport.Rules);
 
-        Assert.Equal(
-            baseline.Claims.Select(static atom => atom.AstPath)
-                .Append("version/v0.3")
-                .Append("audit/v0.3")
-                .Order(StringComparer.Ordinal),
-            evolved.Claims.Select(static atom => atom.AstPath).Order(StringComparer.Ordinal));
+        Assert.Equal(2, evolved.Claims
+            .Select(static atom => atom.Fingerprints.RawSha256)
+            .Except(baseline.Claims.Select(static atom => atom.Fingerprints.RawSha256), StringComparer.Ordinal)
+            .Count());
         AssertOldAtomsUnchanged(baseline, evolved);
         Assert.All(evolved.Slices, static slice => Assert.True(slice.IsClaim));
         Assert.Equal(source.Length, evolved.Slices.Sum(static slice => slice.RawBytes.Length));
@@ -45,12 +43,10 @@ public sealed partial class TheoryAtomizerTests
 
         var evolved = AtomizerRegistry.Atomize(AtomizerRegistry.WmId, source, DigestionTestSupport.Rules);
 
-        Assert.Equal(
-            baseline.Claims.Select(static atom => atom.AstPath)
-                .Append("version/v0.4")
-                .Append("audit/v0.4")
-                .Order(StringComparer.Ordinal),
-            evolved.Claims.Select(static atom => atom.AstPath).Order(StringComparer.Ordinal));
+        Assert.Equal(2, evolved.Claims
+            .Select(static atom => atom.Fingerprints.RawSha256)
+            .Except(baseline.Claims.Select(static atom => atom.Fingerprints.RawSha256), StringComparer.Ordinal)
+            .Count());
         AssertOldAtomsUnchanged(baseline, evolved);
         Assert.Equal(source, evolved.Reassemble().ToArray());
         AssertSplitIdempotent(AtomizerRegistry.WmId, evolved);
@@ -82,7 +78,9 @@ public sealed partial class TheoryAtomizerTests
             DigestionAlignmentTests.Ledger(
                 [],
                 baseline.Claims
-                    .Select((atom, index) => DigestionAlignmentTests.Entry($"wm-v02-{index}", atom))
+                    .Select(atom => DigestionAlignmentTests.Entry(
+                        atom.Fingerprints.RawSha256["sha256:".Length..],
+                        atom))
                     .ToArray()),
             AtomizerRegistry.WmId);
         var sourceBytes = Encoding.UTF8.GetBytes(CanonicalWmV03Fixture());
@@ -106,9 +104,10 @@ public sealed partial class TheoryAtomizerTests
         var residual = plan.Document.RequireDigestionEntries()
             .Where(entry => !baselineAtomIds.Contains(entry.AtomId))
             .ToArray();
-        Assert.Equal(
-            ["audit/v0.3", "version/v0.3"],
-            residual.Select(static entry => entry.AstPath).Order(StringComparer.Ordinal));
+        Assert.Equal(2, residual.Length);
+        Assert.All(residual, static entry => Assert.Matches(
+            "^sha256:[0-9a-f]{64}$",
+            entry.Fingerprints.RawSha256));
         Assert.All(residual, static entry =>
         {
             Assert.Equal(DigestionMigrationState.Residual, entry.ProjectedStatus.Migration);
@@ -287,7 +286,7 @@ public sealed partial class TheoryAtomizerTests
         {
             var unchanged = Assert.Single(
                 evolved.Claims,
-                candidate => candidate.AstPath == atom.AstPath);
+                candidate => candidate.Fingerprints.RawSha256 == atom.Fingerprints.RawSha256);
             Assert.Equal(atom.RawBytes.ToArray(), unchanged.RawBytes.ToArray());
             Assert.Equal(atom.Fingerprints, unchanged.Fingerprints);
         }

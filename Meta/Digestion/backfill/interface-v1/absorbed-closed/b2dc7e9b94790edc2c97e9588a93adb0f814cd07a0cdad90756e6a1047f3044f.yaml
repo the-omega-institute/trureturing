@@ -1,0 +1,21 @@
+fingerprints:
+  raw_sha256: sha256:b2dc7e9b94790edc2c97e9588a93adb0f814cd07a0cdad90756e6a1047f3044f
+  normalized_sha256: sha256:b2dc7e9b94790edc2c97e9588a93adb0f814cd07a0cdad90756e6a1047f3044f
+cas_ref: sha256:b2dc7e9b94790edc2c97e9588a93adb0f814cd07a0cdad90756e6a1047f3044f
+coverage_gids:
+  - D5/S0/Tower/GoldenChampionPoint.golden_champion_point_identity
+receipts:
+  coverage:
+    - gid: D5/S0/Tower/GoldenChampionPoint.golden_champion_point_identity
+      source_sha256: sha256:b2dc7e9b94790edc2c97e9588a93adb0f814cd07a0cdad90756e6a1047f3044f
+      target_statement_id: sha256:c49ae9d27c4b79213eb1b6d743c73cfc2c7da6faf6b1f7f838302a63acfe0bb5
+  scribe:
+    - gid: D5/S0/Tower/GoldenChampionPoint.golden_champion_point_identity
+      definition_sha256: sha256:42d7aebcded52bcee6a28303ba55c83a47c0ea19bbb421fc0d46f71eb21205c8
+      emission_sha256: sha256:dd2e46f7a972c9cbfa90c4b445e20537b649e0673793df735ab8763047ae09c2
+  unresolved_subitems: []
+  chain_atoms:
+    - df6ef4735bab962b12e7708d6bdb4eb9715378cda58a6423a3f5d88647e5ba2d
+    - 7b7ed5a483aa69713b01a04742ec3b46b4c27f133e7a79d836e32f42624904ad
+    - 3869ae73114b259f48df63a0a7f9a22865a0c47f3248299643a5b7e5eb328969
+    - daa44269ddc1d029c6ed91c35e9806e35b745f7a30166ed4b6b5b94ba2f5400a

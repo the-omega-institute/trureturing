@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:5b81623d5d29b130eeee48c63e5d25e59fa420f15a6e50e51499127cb606425c
+  normalized_sha256: sha256:5b81623d5d29b130eeee48c63e5d25e59fa420f15a6e50e51499127cb606425c
+cas_ref: sha256:5b81623d5d29b130eeee48c63e5d25e59fa420f15a6e50e51499127cb606425c
+coverage_gids:
+  - D5/S3/PrimeForms/LowSpectrumLegIdentity.low_spectrum_leg_identity
+receipts:
+  coverage:
+    - gid: D5/S3/PrimeForms/LowSpectrumLegIdentity.low_spectrum_leg_identity
+      source_sha256: sha256:5b81623d5d29b130eeee48c63e5d25e59fa420f15a6e50e51499127cb606425c
+      target_statement_id: sha256:37ae5f64a28de5d2c1ab863d5a69151d60d82d26c4f8f8bcf877211366364362
+  scribe:
+    - gid: D5/S3/PrimeForms/LowSpectrumLegIdentity.low_spectrum_leg_identity
+      definition_sha256: sha256:8d10f9299e3375c28f606becbed47ee21e9a8c1544b09c1bfa0f9ef57e1bfab3
+      emission_sha256: sha256:2f3d1f122c0382e19832e66e7ba7dc5e0343ee4a9206e21cfb995c8844caee5e
+  unresolved_subitems: []

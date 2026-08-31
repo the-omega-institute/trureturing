@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:80cd1ff47331abae022180a88059f1678bec5fa61d12953ee8aef6834f2bcca2
+  normalized_sha256: sha256:80cd1ff47331abae022180a88059f1678bec5fa61d12953ee8aef6834f2bcca2
+cas_ref: sha256:80cd1ff47331abae022180a88059f1678bec5fa61d12953ee8aef6834f2bcca2
+coverage_gids:
+  - D5/S3/ObserverMemory/Dynamics/FutureReadoutQuotient.future_readout_quotient_is_coarsest_with_unique_dynamics
+receipts:
+  coverage:
+    - gid: D5/S3/ObserverMemory/Dynamics/FutureReadoutQuotient.future_readout_quotient_is_coarsest_with_unique_dynamics
+      source_sha256: sha256:80cd1ff47331abae022180a88059f1678bec5fa61d12953ee8aef6834f2bcca2
+      target_statement_id: sha256:1889583114e43cb9af441b3ecd41cda9e5f9529c14268fbd4e1322a4b9bd4586
+  scribe:
+    - gid: D5/S3/ObserverMemory/Dynamics/FutureReadoutQuotient.future_readout_quotient_is_coarsest_with_unique_dynamics
+      definition_sha256: sha256:9ec147c3c463659bd6072a2e6b5082987d4352f82730516c9674e012e1ff9bb4
+      emission_sha256: sha256:affd2060b1d2ed1986e00cef4e8b0050e338f50712d534553d74d119aa430acc
+  unresolved_subitems: []

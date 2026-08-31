@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:caa7967f3a2b106c9ebb931de56f5a356b89ba7f423e869b0a9fb6533f24fece
+  normalized_sha256: sha256:caa7967f3a2b106c9ebb931de56f5a356b89ba7f423e869b0a9fb6533f24fece
+cas_ref: sha256:caa7967f3a2b106c9ebb931de56f5a356b89ba7f423e869b0a9fb6533f24fece
+coverage_gids:
+  - D5/S3/Analytic/ZetaObservation/PrimeSupportBernoulliIndependence.prime_support_bits_independent_bernoulli
+receipts:
+  coverage:
+    - gid: D5/S3/Analytic/ZetaObservation/PrimeSupportBernoulliIndependence.prime_support_bits_independent_bernoulli
+      source_sha256: sha256:caa7967f3a2b106c9ebb931de56f5a356b89ba7f423e869b0a9fb6533f24fece
+      target_statement_id: sha256:c0b7dc85575034dd6917a69e4ada1d25a9dca9a0b04914b59dc861c5605f2242
+  scribe:
+    - gid: D5/S3/Analytic/ZetaObservation/PrimeSupportBernoulliIndependence.prime_support_bits_independent_bernoulli
+      definition_sha256: sha256:66d7fc95b92a9de5b22b9b3f30f922a25db85cd154a74a9d4d90e119b1794df1
+      emission_sha256: sha256:edf91237ec12fb2679c5c78c608625fee554fd6c0f5f0ce309ac14dfea6a5395
+  unresolved_subitems: []

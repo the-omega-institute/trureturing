@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:8081f441384c492e30c156475c3cbf72f762f54da68208e940e996ccd8271684
+  normalized_sha256: sha256:8081f441384c492e30c156475c3cbf72f762f54da68208e940e996ccd8271684
+cas_ref: sha256:8081f441384c492e30c156475c3cbf72f762f54da68208e940e996ccd8271684
+coverage_gids:
+  - D5/S3/Observer/MetricGeometryLaws/TailResidualCrossLayerBound.tail_residual_cross_layer_defect_bound
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/MetricGeometryLaws/TailResidualCrossLayerBound.tail_residual_cross_layer_defect_bound
+      source_sha256: sha256:8081f441384c492e30c156475c3cbf72f762f54da68208e940e996ccd8271684
+      target_statement_id: sha256:35e30c24aa65307677e32145a6975497bb94e72cda4e2da3bd1f706d1fc1c9d8
+  scribe:
+    - gid: D5/S3/Observer/MetricGeometryLaws/TailResidualCrossLayerBound.tail_residual_cross_layer_defect_bound
+      definition_sha256: sha256:37f81829616916990f8a5ad71fa60c9f316f2b10d1d32e541fba363ed4c275f8
+      emission_sha256: sha256:6373a730ee86313da2aa1034671b1c8be9023a7262db26d476e242ffd0cabf06
+  unresolved_subitems: []

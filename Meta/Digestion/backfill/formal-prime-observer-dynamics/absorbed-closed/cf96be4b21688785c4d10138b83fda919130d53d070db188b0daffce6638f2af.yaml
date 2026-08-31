@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:cf96be4b21688785c4d10138b83fda919130d53d070db188b0daffce6638f2af
+  normalized_sha256: sha256:cf96be4b21688785c4d10138b83fda919130d53d070db188b0daffce6638f2af
+cas_ref: sha256:cf96be4b21688785c4d10138b83fda919130d53d070db188b0daffce6638f2af
+coverage_gids:
+  - D5/S3/Factorization/PrimePowers/FiniteCrtJoin.finite_crt_join
+receipts:
+  coverage:
+    - gid: D5/S3/Factorization/PrimePowers/FiniteCrtJoin.finite_crt_join
+      source_sha256: sha256:cf96be4b21688785c4d10138b83fda919130d53d070db188b0daffce6638f2af
+      target_statement_id: sha256:54051c2576596a2b1c01a249167daa874d5c97fcee1a2c68344f3f6a73ae12f8
+  scribe:
+    - gid: D5/S3/Factorization/PrimePowers/FiniteCrtJoin.finite_crt_join
+      definition_sha256: sha256:2417e2ff80555947739e382c1ba8fa47c58a6af6132da76dc6cc71b31c50316c
+      emission_sha256: sha256:faf3e9dcf17778666b3500eb61c54f3d6abdc214d85b1b3d4aebfa839b9b1b20
+  unresolved_subitems: []

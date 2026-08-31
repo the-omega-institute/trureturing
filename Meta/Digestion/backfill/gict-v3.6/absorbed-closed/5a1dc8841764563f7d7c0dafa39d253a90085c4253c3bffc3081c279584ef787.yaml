@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:5a1dc8841764563f7d7c0dafa39d253a90085c4253c3bffc3081c279584ef787
+  normalized_sha256: sha256:5a1dc8841764563f7d7c0dafa39d253a90085c4253c3bffc3081c279584ef787
+cas_ref: sha256:5a1dc8841764563f7d7c0dafa39d253a90085c4253c3bffc3081c279584ef787
+coverage_gids:
+  - D5/S3/PrimeForms/Crossing/ThirdOrderReciprocity.k_reversal_iff
+receipts:
+  coverage:
+    - gid: D5/S3/PrimeForms/Crossing/ThirdOrderReciprocity.k_reversal_iff
+      source_sha256: sha256:5a1dc8841764563f7d7c0dafa39d253a90085c4253c3bffc3081c279584ef787
+      target_statement_id: sha256:b28750439a4a96aea245ac3332b776a1c5fcb2384ed4ac0c9459487733ccb78d
+  scribe:
+    - gid: D5/S3/PrimeForms/Crossing/ThirdOrderReciprocity.k_reversal_iff
+      definition_sha256: sha256:87e965deee8c3e56e21195622c3e3898115b83faa1b671f8055632540070ed69
+      emission_sha256: sha256:8a15aabac20094646b069b9ea127345cab1163c493792d01b63b3c2f6912c78e
+  unresolved_subitems: []

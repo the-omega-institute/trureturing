@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:d12d1a17493b10c4ede64a43b99fc3f471a6626ae5adbcf038d44d703cd35297
+  normalized_sha256: sha256:d12d1a17493b10c4ede64a43b99fc3f471a6626ae5adbcf038d44d703cd35297
+cas_ref: sha256:d12d1a17493b10c4ede64a43b99fc3f471a6626ae5adbcf038d44d703cd35297
+coverage_gids:
+  - D5/S3/Quantum/Fibers/PhysicalFiber.finite_dimensional_physical_fiber
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/Fibers/PhysicalFiber.finite_dimensional_physical_fiber
+      source_sha256: sha256:d12d1a17493b10c4ede64a43b99fc3f471a6626ae5adbcf038d44d703cd35297
+      target_statement_id: sha256:20c3cc4b8eb976ba90fe5823cc1a6fb4ef0812d411aa5a82926a53aa578aa013
+  scribe:
+    - gid: D5/S3/Quantum/Fibers/PhysicalFiber.finite_dimensional_physical_fiber
+      definition_sha256: sha256:5ad59f7f34f5c80d789c72ad617d4242d826460b3d19ac152efd764bb0f282f0
+      emission_sha256: sha256:ea117086697be3e1cceec987508e5059a0cad5848bf51141757b58ee2a23be7f
+  unresolved_subitems: []

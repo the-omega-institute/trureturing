@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:ed694a60184e4d6d5952a28d8627980f50683506e629e49898e452b200440c90
+  normalized_sha256: sha256:ed694a60184e4d6d5952a28d8627980f50683506e629e49898e452b200440c90
+cas_ref: sha256:ed694a60184e4d6d5952a28d8627980f50683506e629e49898e452b200440c90
+coverage_gids:
+  - D5/S3/ConceptDynamics/ControlledCompletion/LeastStableRefinement.controlled_completion_is_least_stable_refinement
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/ControlledCompletion/LeastStableRefinement.controlled_completion_is_least_stable_refinement
+      source_sha256: sha256:ed694a60184e4d6d5952a28d8627980f50683506e629e49898e452b200440c90
+      target_statement_id: sha256:7c7184e3de2920481e0118ffc505b0ed064e6bf77d6236fb3e9594d7f57d2475
+  scribe:
+    - gid: D5/S3/ConceptDynamics/ControlledCompletion/LeastStableRefinement.controlled_completion_is_least_stable_refinement
+      definition_sha256: sha256:443728d0518ec8ffdab4df3fb90452bcf0673909e4d94423fa18c3c3c4925493
+      emission_sha256: sha256:6e9d25f13ab6a960171863d4c4bbe225e209171653442ff868a5b2c2a2434840
+  unresolved_subitems: []

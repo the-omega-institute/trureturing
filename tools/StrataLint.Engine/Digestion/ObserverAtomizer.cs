@@ -2,7 +2,18 @@ namespace StrataLint.Engine;
 
 internal static class ObserverAtomizer
 {
-    internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes, TheoryAtomizerRules rules)
+    internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes, TheoryAtomizerRules rules) =>
+        Atomize(bytes, rules, contentKinds: null);
+
+    internal static System.Collections.Immutable.ImmutableDictionary<string, string> ResolveContentKinds(
+        ReadOnlyMemory<byte> bytes,
+        TheoryAtomizerRules rules) =>
+        AtomizerRegistry.CaptureContentKinds(kinds => Atomize(bytes.Span, rules, kinds));
+
+    private static AtomizedTheoryDocument Atomize(
+        ReadOnlySpan<byte> bytes,
+        TheoryAtomizerRules rules,
+        IDictionary<string, string>? contentKinds)
     {
         ArgumentNullException.ThrowIfNull(rules);
         var unregistered = new SortedSet<string>(StringComparer.Ordinal);
@@ -10,13 +21,8 @@ internal static class ObserverAtomizer
             bytes,
             paragraph => Identify(paragraph, rules, unregistered),
             () => GenreRegistryCheck.Collected([.. unregistered]),
-            identifyFirstTableCellSource: paragraph => Identify(paragraph, rules, unregistered));
-        if (document.Claims.Any(atom =>
-                atom.AstPath.Contains("/occurrence/", StringComparison.Ordinal)))
-        {
-            throw new TheorySourceFormatException("duplicate observer claim locator");
-        }
-
+            identifyFirstTableCellSource: paragraph => Identify(paragraph, rules, unregistered),
+            contentKinds: contentKinds);
         return document;
     }
 
@@ -37,7 +43,7 @@ internal static class ObserverAtomizer
         {
             var token = TheorySourceFormatException.ClaimLead(paragraph);
             unregistered.Add(token);
-            return UnregisteredGenreLocator.ForToken(token);
+            return token;
         }
         return null;
     }

@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:00a51a118b34f9f44cef75ba8da483cd560b3d074d80291e7977886712af55c1
+  normalized_sha256: sha256:00a51a118b34f9f44cef75ba8da483cd560b3d074d80291e7977886712af55c1
+cas_ref: sha256:00a51a118b34f9f44cef75ba8da483cd560b3d074d80291e7977886712af55c1
+coverage_gids:
+  - D5/S1/FixedPoints/FiniteContractingStability.finite_contracting_updates_stabilize
+receipts:
+  coverage:
+    - gid: D5/S1/FixedPoints/FiniteContractingStability.finite_contracting_updates_stabilize
+      source_sha256: sha256:00a51a118b34f9f44cef75ba8da483cd560b3d074d80291e7977886712af55c1
+      target_statement_id: sha256:5b20f5ded515e22520d0cddbf6861d3ccf6d89c70a471c7dcb878d79b531a06b
+  scribe:
+    - gid: D5/S1/FixedPoints/FiniteContractingStability.finite_contracting_updates_stabilize
+      definition_sha256: sha256:1f792a851f0515d2177d2a587d6d4b15ed1c26af46274edf01c3fa40e4530c20
+      emission_sha256: sha256:af0e5d7ea8cd13ff08d23d45000adff22a2054e9282e33cf119db6c687668f74
+  unresolved_subitems: []

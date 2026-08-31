@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:472de553e2503655e5f2400f7bec26010856b696b46eb8ff5c516859d1d5f371
+  normalized_sha256: sha256:472de553e2503655e5f2400f7bec26010856b696b46eb8ff5c516859d1d5f371
+cas_ref: sha256:472de553e2503655e5f2400f7bec26010856b696b46eb8ff5c516859d1d5f371
+coverage_gids:
+  - D5/S3/PrimeForms/Crossing/NoIntegralAffineLine.crossing_surface_has_no_nonconstant_integral_affine_line
+receipts:
+  coverage:
+    - gid: D5/S3/PrimeForms/Crossing/NoIntegralAffineLine.crossing_surface_has_no_nonconstant_integral_affine_line
+      source_sha256: sha256:472de553e2503655e5f2400f7bec26010856b696b46eb8ff5c516859d1d5f371
+      target_statement_id: sha256:f1095a82ea146d9ab186cfe196a35a68f43818665d11bf683ec529184b1512d2
+  scribe:
+    - gid: D5/S3/PrimeForms/Crossing/NoIntegralAffineLine.crossing_surface_has_no_nonconstant_integral_affine_line
+      definition_sha256: sha256:c46377836d432a076a5bca0c0ff011fb1591503529fea6ab577877d280d1d7fa
+      emission_sha256: sha256:71d7d8230c95dc1c43de9fed38441e458a7481135edc0dbfb898740f6fee66bd
+  unresolved_subitems: []

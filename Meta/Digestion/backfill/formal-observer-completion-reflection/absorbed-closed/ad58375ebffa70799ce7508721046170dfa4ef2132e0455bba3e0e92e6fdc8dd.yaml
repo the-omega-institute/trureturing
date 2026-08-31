@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:ad58375ebffa70799ce7508721046170dfa4ef2132e0455bba3e0e92e6fdc8dd
+  normalized_sha256: sha256:ad58375ebffa70799ce7508721046170dfa4ef2132e0455bba3e0e92e6fdc8dd
+cas_ref: sha256:ad58375ebffa70799ce7508721046170dfa4ef2132e0455bba3e0e92e6fdc8dd
+coverage_gids:
+  - D5/S3/ConceptDynamics/Attribution/NoNaturalFiniteChoice.no_natural_finite_choice
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Attribution/NoNaturalFiniteChoice.no_natural_finite_choice
+      source_sha256: sha256:ad58375ebffa70799ce7508721046170dfa4ef2132e0455bba3e0e92e6fdc8dd
+      target_statement_id: sha256:1eba33ffa8ef6fdce9b49ba2bb46c1d4f671e58d173ec15b26f5333606afa9a5
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Attribution/NoNaturalFiniteChoice.no_natural_finite_choice
+      definition_sha256: sha256:b2a2e0a851ee08f87ece4052fbbf2786507a59a0193ebcb53cac7e7a07fa9b4d
+      emission_sha256: sha256:422ac0184a8707e3fcd2d8ba734f1db9797d5d66e77a38bec6c5746f46ddda61
+  unresolved_subitems: []

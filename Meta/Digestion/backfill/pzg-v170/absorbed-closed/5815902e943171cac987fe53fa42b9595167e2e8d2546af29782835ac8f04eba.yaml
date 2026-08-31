@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:5815902e943171cac987fe53fa42b9595167e2e8d2546af29782835ac8f04eba
+  normalized_sha256: sha256:5815902e943171cac987fe53fa42b9595167e2e8d2546af29782835ac8f04eba
+cas_ref: sha256:5815902e943171cac987fe53fa42b9595167e2e8d2546af29782835ac8f04eba
+coverage_gids:
+  - D5/S1/Digit/Admissibility/OddIndexFreedom.odd_index_subsets_are_admissible_and_counted
+receipts:
+  coverage:
+    - gid: D5/S1/Digit/Admissibility/OddIndexFreedom.odd_index_subsets_are_admissible_and_counted
+      source_sha256: sha256:5815902e943171cac987fe53fa42b9595167e2e8d2546af29782835ac8f04eba
+      target_statement_id: sha256:bfe3cd0c430380090b23ca5e3098afc27dcf62664241ed430558faa0b14fe67f
+  scribe:
+    - gid: D5/S1/Digit/Admissibility/OddIndexFreedom.odd_index_subsets_are_admissible_and_counted
+      definition_sha256: sha256:243926dab6b11cb5aab8d0f99d5b456b6b954b649045daa981f5121e61f1ba89
+      emission_sha256: sha256:569d4e9a8c573ca141f3c585ca71293df349b64db6eb17906bd35227139ab797
+  unresolved_subitems: []

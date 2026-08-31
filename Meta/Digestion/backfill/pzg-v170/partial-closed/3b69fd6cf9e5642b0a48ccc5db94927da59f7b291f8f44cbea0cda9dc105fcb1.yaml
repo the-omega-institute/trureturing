@@ -1,0 +1,25 @@
+fingerprints:
+  raw_sha256: sha256:3b69fd6cf9e5642b0a48ccc5db94927da59f7b291f8f44cbea0cda9dc105fcb1
+  normalized_sha256: sha256:3b69fd6cf9e5642b0a48ccc5db94927da59f7b291f8f44cbea0cda9dc105fcb1
+cas_ref: sha256:3b69fd6cf9e5642b0a48ccc5db94927da59f7b291f8f44cbea0cda9dc105fcb1
+coverage_gids:
+  - D5/S3/Analytic/PrimeCashflowCost.cashflow_cost_strict_at_event
+  - D5/S3/Weil/SpectralHilbert.labeled_zeta_mem_iff
+  - D5/S3/Weil/SpectralDynamics.critical_line_characterizations
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/SpectralDynamics.critical_line_characterizations
+      source_sha256: sha256:3b69fd6cf9e5642b0a48ccc5db94927da59f7b291f8f44cbea0cda9dc105fcb1
+      target_statement_id: sha256:dc256aba0acd189a0637ceaffa25da20302027b1666cf98bb9db774029ce4bc8
+  scribe:
+    - gid: D5/S3/Weil/SpectralDynamics.critical_line_characterizations
+      definition_sha256: sha256:bde4ed75cb707872d65ee1d8275ee4883ea7cd4a9fe14d00b44b6f218b59be0f
+      emission_sha256: sha256:780fb2bf4ea155ef65e33ba9430d282941b7866cdb0b7dbff6c2a46c9c0380ee
+  unresolved_subitems:
+    - labeled-zeta-normalization-and-horizontal-dissipative-compression
+    - left-half-plane-mirror-phase-with-continuation-only
+    - xi-functional-equation-intertranslates-the-two-phases
+    - critical-line-as-phase-transition-via-lee-yang-and-t-duality
+    - irreversible-ledger-time-from-strictly-monotone-cost
+    - zeros-as-phase-time-cancellation-events
+    - rh-as-all-cancellations-on-one-unitary-time-line

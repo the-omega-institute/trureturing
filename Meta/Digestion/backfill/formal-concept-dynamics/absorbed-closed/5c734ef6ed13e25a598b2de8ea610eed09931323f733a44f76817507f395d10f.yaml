@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:5c734ef6ed13e25a598b2de8ea610eed09931323f733a44f76817507f395d10f
+  normalized_sha256: sha256:5c734ef6ed13e25a598b2de8ea610eed09931323f733a44f76817507f395d10f
+cas_ref: sha256:5c734ef6ed13e25a598b2de8ea610eed09931323f733a44f76817507f395d10f
+coverage_gids:
+  - D5/S3/ConceptDynamics/Epistemic/EpistemicChangeTrichotomy.changed_conclusion_exposes_epistemic_component
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Epistemic/EpistemicChangeTrichotomy.changed_conclusion_exposes_epistemic_component
+      source_sha256: sha256:5c734ef6ed13e25a598b2de8ea610eed09931323f733a44f76817507f395d10f
+      target_statement_id: sha256:9ee262485477a4a313def31e8daaac14ca4715862a3cf0e154c540c3a3c4c938
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Epistemic/EpistemicChangeTrichotomy.changed_conclusion_exposes_epistemic_component
+      definition_sha256: sha256:365a221555538830759f83d1ec5fc268832014e69f91b9fbe3da0489a0400e7f
+      emission_sha256: sha256:dd159030459240c3736c97278edae10c181d67d86700e71f80bc1aefce7cefef
+  unresolved_subitems: []

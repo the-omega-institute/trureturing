@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:3acf9b7de94b2ffb63374ef5aead3750409c4ca21c2fa2d496e9f3eb37c7026b
+  normalized_sha256: sha256:3acf9b7de94b2ffb63374ef5aead3750409c4ca21c2fa2d496e9f3eb37c7026b
+cas_ref: sha256:3acf9b7de94b2ffb63374ef5aead3750409c4ca21c2fa2d496e9f3eb37c7026b
+coverage_gids:
+  - D5/S3/Entropy/Submodularity/SelectedObservationInformationMonotonicityCanonical.selected_observation_information_monotone_canonical
+receipts:
+  coverage:
+    - gid: D5/S3/Entropy/Submodularity/SelectedObservationInformationMonotonicityCanonical.selected_observation_information_monotone_canonical
+      source_sha256: sha256:3acf9b7de94b2ffb63374ef5aead3750409c4ca21c2fa2d496e9f3eb37c7026b
+      target_statement_id: sha256:8b702ad57c140218ac12a71c3029c5fd73f464e2c9ceb68fb0bb53ea4118264a
+  scribe:
+    - gid: D5/S3/Entropy/Submodularity/SelectedObservationInformationMonotonicityCanonical.selected_observation_information_monotone_canonical
+      definition_sha256: sha256:efc8610e821318610e4ca78e5a0dc515cdd7bd6774efba317477476fc43a751b
+      emission_sha256: sha256:0d224fc12c85ad37ac7c6c1b3d0d042d7bd512de5958d36ca218749babf7221a
+  unresolved_subitems: []

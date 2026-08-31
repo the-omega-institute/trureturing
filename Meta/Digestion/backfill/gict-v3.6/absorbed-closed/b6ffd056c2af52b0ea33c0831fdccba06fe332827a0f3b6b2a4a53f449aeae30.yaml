@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:b6ffd056c2af52b0ea33c0831fdccba06fe332827a0f3b6b2a4a53f449aeae30
+  normalized_sha256: sha256:b6ffd056c2af52b0ea33c0831fdccba06fe332827a0f3b6b2a4a53f449aeae30
+cas_ref: sha256:b6ffd056c2af52b0ea33c0831fdccba06fe332827a0f3b6b2a4a53f449aeae30
+coverage_gids:
+  - D5/S3/Factorization/SquarefreeSquareDecomposition.bcs_square_squarefree_unique
+receipts:
+  coverage:
+    - gid: D5/S3/Factorization/SquarefreeSquareDecomposition.bcs_square_squarefree_unique
+      source_sha256: sha256:b6ffd056c2af52b0ea33c0831fdccba06fe332827a0f3b6b2a4a53f449aeae30
+      target_statement_id: sha256:e513fcfff1af94d22aa257a893fe6e24f7fc5e562a14b2407842cb481fa9ad65
+  scribe:
+    - gid: D5/S3/Factorization/SquarefreeSquareDecomposition.bcs_square_squarefree_unique
+      definition_sha256: sha256:0585ec7c1274099a3d1b5743ebb25c58fd9ab231c819a833089817f7b44315f5
+      emission_sha256: sha256:85683d9ecd8a209a41099309397e3ea14caafd4a0d335d0302ba4ca3d92a15b9
+  unresolved_subitems: []

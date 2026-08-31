@@ -9,7 +9,7 @@ public sealed partial class DigestionAlignmentTests
     [Fact]
     public void SelfContainedClauseChain_VerifiesHistoricalParentAfterSameLocatorSourceRewrite()
     {
-        var fixture = SelfContainedClauseChain(sameCurrentLocator: true);
+        var fixture = SelfContainedClauseChain(sameCurrentNumber: true);
 
         var result = EvaluateSelfContainedClauseChain(fixture);
 
@@ -21,6 +21,75 @@ public sealed partial class DigestionAlignmentTests
         Assert.All(fixture.Children, child => Assert.Equal(
             DigestionReceiptAlignment.Seen,
             result.AlignmentFor(child.AtomId)));
+    }
+
+    [Fact]
+    public void AdmissionRevalidatesInheritedChainAcrossContentDeduplicationSourceMove()
+    {
+        var fixture = SelfContainedClauseChain();
+        var baselineSource = Assert.Single(fixture.Ledger.RequireDigestionSources());
+        var movedSource = baselineSource with
+        {
+            SourceId = "content-owner",
+            SourcePath = "docs/content-owner.md",
+            Entries = fixture.Children.Skip(1).Select(child => child with
+            {
+                SourceId = "content-owner",
+                SourcePath = "docs/content-owner.md",
+            }).ToImmutableArray(),
+        };
+        var candidate = fixture.Ledger.WithDigestionSources(
+        [
+            baselineSource with { Entries = [fixture.Parent, fixture.Children[0]] },
+            movedSource,
+        ]);
+
+        var result = DigestionLedgerAligner.Evaluate(
+            candidate,
+            Snapshot(
+                fixture.CurrentSourceBytes,
+                fixture.ChildCaptures.Prepend(fixture.ParentCapture)),
+            fixture.Ledger,
+            DigestionAlignmentMode.Admission,
+            changes: RawChangeSet.Create([baselineSource.SourcePath]));
+
+        Assert.DoesNotContain(result.Findings, finding => finding.Contains(
+            "malformed clause chain",
+            StringComparison.Ordinal));
+        Assert.Contains(fixture.Parent.AtomId, result.VerifiedClausePlanParents);
+        Assert.Equal(
+            DigestionReceiptAlignment.Seen,
+            result.AlignmentFor(fixture.Children[0].AtomId));
+        Assert.Equal(
+            DigestionReceiptAlignment.Seen,
+            result.AlignmentFor(fixture.Children[1].AtomId));
+    }
+
+    [Fact]
+    public void AdmissionRevalidatesChangedChainEvenWhenParentContentIsSeen()
+    {
+        var fixture = SelfContainedClauseChain();
+        var changedParent = fixture.Parent with
+        {
+            Receipts = fixture.Parent.Receipts with
+            {
+                ChainAtoms = [fixture.Children[0].AtomId],
+            },
+        };
+        var candidate = ChainLedger(fixture, changedParent, fixture.Children);
+        var sourceBytes = Encoding.UTF8.GetBytes(
+            "# PZG\n\n" + Encoding.UTF8.GetString(fixture.ParentCapture.Bytes.AsSpan()));
+
+        var result = DigestionLedgerAligner.Evaluate(
+            candidate,
+            Snapshot(
+                sourceBytes,
+                fixture.ChildCaptures.Prepend(fixture.ParentCapture)),
+            fixture.Ledger,
+            DigestionAlignmentMode.Admission);
+
+        AssertMalformedClauseChain(result, fixture.Parent.AtomId, "chain cardinality");
+        Assert.DoesNotContain(fixture.Parent.AtomId, result.VerifiedClausePlanParents);
     }
 
     [Fact]
@@ -56,7 +125,10 @@ public sealed partial class DigestionAlignmentTests
 
         var result = EvaluateSelfContainedClauseChain(fixture, ledger);
 
-        AssertMalformedClauseChain(result, fixture.Parent.AtomId, "duplicate child atom_ids");
+        AssertMalformedClauseChain(
+            result,
+            fixture.Parent.AtomId,
+            "bytes differ from parent CAS plan member");
     }
 
     [Fact]
@@ -102,7 +174,7 @@ public sealed partial class DigestionAlignmentTests
         var fixture = SelfContainedClauseChain();
         var invalidBytes = Encoding.UTF8.GetBytes("rewritten first child\n");
         var invalidCapture = DigestionCasStore.Capture(invalidBytes);
-        const string invalidId = "pzg-residual-rewritten-child";
+        var invalidId = invalidCapture.Reference["sha256:".Length..];
         var invalidChild = fixture.Children[0] with
         {
             AtomId = invalidId,
@@ -143,7 +215,10 @@ public sealed partial class DigestionAlignmentTests
 
         var result = EvaluateSelfContainedClauseChain(fixture, ledger);
 
-        AssertMalformedClauseChain(result, fixture.Parent.AtomId, "chain order differs from parent CAS plan");
+        AssertMalformedClauseChain(
+            result,
+            fixture.Parent.AtomId,
+            "bytes differ from parent CAS plan member");
     }
 
     [Fact]
@@ -193,11 +268,12 @@ public sealed partial class DigestionAlignmentTests
             Ledger([], CasEntry("parent", parent, parentCapture.Reference)),
             AtomizerRegistry.PzgId);
         var source = Assert.Single(baseline.RequireDigestionSources());
+        var childId = childCapture.Reference["sha256:".Length..];
         var parentEntry = Assert.Single(source.Entries) with
         {
-            Receipts = Assert.Single(source.Entries).Receipts with { ChainAtoms = ["child"] },
+            Receipts = Assert.Single(source.Entries).Receipts with { ChainAtoms = [childId] },
         };
-        var childEntry = ChildEntry(parentEntry, "child", child, childCapture.Reference);
+        var childEntry = ChildEntry(parentEntry, childId, child, childCapture.Reference);
         var ledger = baseline.WithDigestionSources(
         [
             source with { Entries = [parentEntry, childEntry] },
@@ -224,23 +300,24 @@ public sealed partial class DigestionAlignmentTests
             sourceBytes,
             DigestionTestSupport.Rules).Claims);
         var childBytes = Encoding.UTF8.GetBytes("historical observer child\n");
-        var child = Atom(parent.AstPath + "/historical-child", childBytes);
+        var child = Atom(parent.Fingerprints.RawSha256 + "/historical-child", childBytes);
         var parentCapture = DigestionCasStore.Capture(parent.RawBytes.AsSpan());
         var childCapture = DigestionCasStore.Capture(childBytes);
         var baseline = WithAtomizer(
             Ledger([], CasEntry("observer-parent", parent, parentCapture.Reference)),
             AtomizerRegistry.ObserverId);
         var source = Assert.Single(baseline.RequireDigestionSources());
+        var childId = childCapture.Reference["sha256:".Length..];
         var parentEntry = Assert.Single(source.Entries) with
         {
             Receipts = Assert.Single(source.Entries).Receipts with
             {
-                ChainAtoms = ["observer-child"],
+                ChainAtoms = [childId],
             },
         };
         var childEntry = ChildEntry(
             parentEntry,
-            "observer-child",
+            childId,
             child,
             childCapture.Reference);
         var ledger = baseline.WithDigestionSources(
@@ -271,7 +348,7 @@ public sealed partial class DigestionAlignmentTests
     }
 
     private static SelfContainedClauseChainFixture SelfContainedClauseChain(
-        bool sameCurrentLocator = false)
+        bool sameCurrentNumber = false)
     {
         const string historicalClaim = """
             **定理 18.7(Historical)**. first historical clause.
@@ -293,8 +370,7 @@ public sealed partial class DigestionAlignmentTests
         var source = Assert.Single(baseline.RequireDigestionSources());
         var baselineParent = Assert.Single(source.Entries);
         var childIds = childCaptures
-            .Select((capture, index) =>
-                $"pzg-residual-{capture.Reference["sha256:".Length..]}-{index + 1}")
+            .Select(static capture => capture.Reference["sha256:".Length..])
             .ToImmutableArray();
         var parentEntry = baselineParent with
         {
@@ -311,7 +387,7 @@ public sealed partial class DigestionAlignmentTests
         [
             source with { Entries = [parentEntry, .. childEntries] },
         ]);
-        var currentClaim = sameCurrentLocator
+        var currentClaim = sameCurrentNumber
             ? """
                 **定理 18.7(Current)**. rewritten current first clause.
 

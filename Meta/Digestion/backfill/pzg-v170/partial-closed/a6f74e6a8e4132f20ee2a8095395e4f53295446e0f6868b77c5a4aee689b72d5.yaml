@@ -1,0 +1,19 @@
+fingerprints:
+  raw_sha256: sha256:a6f74e6a8e4132f20ee2a8095395e4f53295446e0f6868b77c5a4aee689b72d5
+  normalized_sha256: sha256:a6f74e6a8e4132f20ee2a8095395e4f53295446e0f6868b77c5a4aee689b72d5
+cas_ref: sha256:a6f74e6a8e4132f20ee2a8095395e4f53295446e0f6868b77c5a4aee689b72d5
+coverage_gids:
+  - D5/S3/Weil/SpectralHilbert.labeled_zeta_mem_iff
+  - D5/S3/Weil/SpectralHilbert.labeled_zeta_inner
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/SpectralHilbert.labeled_zeta_inner
+      source_sha256: sha256:a6f74e6a8e4132f20ee2a8095395e4f53295446e0f6868b77c5a4aee689b72d5
+      target_statement_id: sha256:d1271f0d4f4e3394f8d165dc88a36ad3097ec54b31d142c558f87460c3b000d5
+  scribe:
+    - gid: D5/S3/Weil/SpectralHilbert.labeled_zeta_inner
+      definition_sha256: sha256:61461dc14bbd4ff3954fedf0aca29d469f932f407b2f71f93f4308f77fdeb94d
+      emission_sha256: sha256:a5ba6a9bd178e1b592ed4a2420212db7a3e15f4366fd777026962f0482d54769
+  unresolved_subitems:
+    - source-theorems-25-2-through-25-5-as-all-one-vector-restatements
+    - source-threefold-characterization-unification-claim
