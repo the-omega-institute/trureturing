@@ -86,6 +86,15 @@ def main(argv):
         sys.stderr.write(f"COMPOSE_VERB_REVISION_MISMATCH verb={truth['base'][:9]}..{truth['head'][:9]} requested={base[:9]}..{head[:9]}\n")
         sys.exit(70)
 
+    truth_ids = [a["atom_id"] for a in truth["deposited"] + truth["extended"] + truth["ejected"]]
+    single_id = truth_ids[0] if len(truth["deposited"]) + len(truth["extended"]) == 1 else None
+
+    def canonical(key):
+        for tid in truth_ids:
+            if tid == key or tid.endswith(key) or key.endswith(tid):
+                return tid
+        return key
+
     worker, per_atom = {}, {}
     for path in opts["worker"]:
         with open(path, encoding="utf-8") as fh:
@@ -93,26 +102,36 @@ def main(argv):
         loaded = loaded.get("conclusion", loaded)
         for key, value in loaded.items():          # earlier results win; later ones only fill gaps
             worker.setdefault(key, value)
+        # A fix-flight result usually carries its (fresh) attestations at conclusion level; with a single
+        # deposited/extended atom those ARE that atom's record and must take precedence over any stale
+        # per-atom record from a LATER (older) result (#4207 pass-2 finding). Field-level first-wins.
+        if single_id is not None:
+            fresh = per_atom.setdefault(single_id, {})
+            for key, value in loaded.items():
+                if key in WHITELIST:
+                    fresh.setdefault(key, value)
+        # Record-level first-wins: an atom's record comes from the FIRST result that has one; a later (older)
+        # result may not back-fill attestation fields into it (a stale clause_matrix for an atom whose outcome
+        # changed is worse than none — #4204 pass-2 finding). Non-attestation keys still fill gaps.
         for record in list(loaded.get("atoms", []) or []) + list(loaded.get("quarantined_atoms", []) or []):
             if isinstance(record, dict) and record.get("atom_id"):
-                merged = per_atom.setdefault(record["atom_id"], {})
+                atom_id = canonical(record["atom_id"])
+                if atom_id in per_atom and per_atom[atom_id].get("_owner") not in (None, path):
+                    for key, value in record.items():
+                        if key not in WHITELIST:
+                            per_atom[atom_id].setdefault(key, value)
+                    continue
+                merged = per_atom.setdefault(atom_id, {})
+                merged.setdefault("_owner", path)
                 for key, value in record.items():
                     merged.setdefault(key, value)
+    for record in per_atom.values():
+        record.pop("_owner", None)
 
     # Single-deposit fix-flight envelopes carry the per-atom attestations at conclusion level; with exactly
     # one deposited atom and no per-atom record for it, that level IS the per-atom record (unambiguous).
     # With two or more deposited atoms, conclusion-level fields are never attributed (round-1 finding).
-    # worker records may key atoms by the bare 64-hex fingerprint; the ledger id is the file stem (<prefix>-residual-<hex>).
-    # Normalize every worker key onto the truth id that ends with it, so attestations attach to the right atom and
-    # nothing is double-counted as a phantom "worker-only" ejection (#4186 pass 2/3 finding).
-    truth_ids = [a["atom_id"] for a in truth["deposited"] + truth["extended"] + truth["ejected"]]
-    def canonical(key):
-        for tid in truth_ids:
-            if tid == key or tid.endswith(key) or key.endswith(tid):
-                return tid
-        return key
-    per_atom = {canonical(k): v for k, v in per_atom.items()}
-    single = len(truth["deposited"]) + len(truth["extended"]) == 1
+    single = single_id is not None
     conclusion_level = {k: v for k, v in worker.items() if k in WHITELIST} if single else {}
 
     atoms = []

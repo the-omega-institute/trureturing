@@ -119,29 +119,16 @@ jobs:
           fi
           fallback_count=0
           plan_summary=""
-          if plan_summary="$(PLAN_EXPECTED_HEAD="$head_sha" PLAN_EXPECTED_BASE="$base_sha" jq -er '
-            select(
-                (type == "object" and (keys | sort) == ["base", "head", "plan", "version"])
-                and .version == 2 and .head == env.PLAN_EXPECTED_HEAD and .base == env.PLAN_EXPECTED_BASE
-                and (.plan | type == "object" and (keys | sort) == ["changed_paths", "kind", "reason", "tests"])
-                and (.plan.kind == "full" or .plan.kind == "selected" or .plan.kind == "none")
-                and (.plan.changed_paths | type == "array" and all(.[]; type == "string"))
-                and (.plan.tests | type == "array" and all(.[];
-                  type == "object" and (keys | sort) == ["assembly", "detail", "id", "project_path", "reason"]
-                  and (.assembly | type == "string" and test("\\S"))
-                  and (.project_path | type == "string" and test("\\S"))
-                  and (.id | type == "string" and test("\\S"))
-                  and (.detail | type == "string" and test("\\S"))
-                  and (.reason == "base_baseline" or .reason == "unknown_input" or .reason == "declared_input" or .reason == "compiled_input")))
-                and (.plan.reason | type == "string" and test("\\S"))
-                and (.plan.kind != "selected" or (.plan.tests | length) != 0)
-                and (.plan.kind != "none" or (.plan.tests | length) == 0)
-            | [.plan.kind, (.plan.changed_paths | length), (.plan.tests | length)] | @tsv
-          ' "$plan_file" 2>/dev/null)"; then
-            IFS=$'\t' read -r state artifact_changed_count selected_count <<< "$plan_summary"
-          else
-            artifact_changed_count=-1
+          validator_ref="$head_sha"
+          if [[ "$GITHUB_EVENT_NAME" == "pull_request_target" ]]; then
+            validator_ref="$base_sha"
           fi
+          plan_summary="$(
+            git -C candidate show \
+              "${validator_ref}:tools/scripts/workflow/engineering-test-plan-validator.sh" |
+              /bin/bash -s -- "$plan_file" "$head_sha" "$base_sha" --artifact-fallback
+          )"
+          IFS=$'\t' read -r state artifact_changed_count selected_count <<< "$plan_summary"
           if [[ "$artifact_changed_count" -ne "$changed_count"
               || ("$base_full_required" == "true" && "$state" != "full") ]]; then
             printf '%s\n' 'ENGINEERING_TEST_PLAN_FALLBACK artifact unreadable or schema-invalid' >&2
@@ -455,10 +442,8 @@ jobs:
           # project/build/lock/global 输入 + inspector)、Lean 源(Trureturing.lean +
           # D5/**/*.lean)与 config(toolchain/lake-manifest/lakefile)三者的清单哈希。
 
-      # 精确 key 命中仍直接复用;prefix restore 只提供陈旧 delta 基线,不算 cache hit。
-      # adapter 与现行 delta 机器重验报告、provenance、materials 与 producer logs;
-      # 任一项不可信就不给 cache root,沿原路径全量生产。下游仍逐模块核对
-      # source_sha256,故陈旧报告不能被静默接受。
+      # 精确 key 命中仍直接复用;prefix restore 只提供陈旧 delta 基线,不算 cache hit。adapter 与现行 delta 机器重验报告、provenance、materials 与 producer logs;
+      # 任一项不可信就不给 cache root,沿原路径全量生产。下游仍逐模块核对 source_sha256,故陈旧报告不能被静默接受。
       - name: Restore canonical Lean report by input address
         id: report-cache
         uses: actions/cache/restore@v4
@@ -548,6 +533,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-
 
+      - name: Fetch required Lean release cache on dual miss
+        if: steps.report-reuse.outcome != 'success' && steps.lake-deps-cache.outputs.cache-hit != 'true' && steps.lake-build-cache.outputs.cache-hit != 'true'
+        env: { GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf '%s\n' '集成分支要求使用 release cache;取回失败即失败,不回落编译'
+          PATH="$HOME/.elan/bin:$PATH" candidate/tools/scripts/worktree/lean-cache-publish.sh fetch --repository "$GITHUB_WORKSPACE/candidate"
+
       - name: Produce source-bound canonical Lean reports
         if: steps.report-reuse.outcome != 'success'
         env: { GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
@@ -604,13 +598,8 @@ jobs:
             --repository "$GITHUB_WORKSPACE/candidate" \
             --report "$target"
 
-      # pull_request_target runs get a token without cache-write scope, so this save
-      # can only ever fail there: run 31389667812 logged "cache write denied: token has
-      # no writable scopes". The two saves below already carry this exact guard; this
-      # one was missing it, so every PR attempted a write it could not perform. dev-push
-      # runs do write it successfully (run 31389340892).
-      # 命中报告缓存时 elan/lake 目录未被恢复也未被填充,回存会写入空态并污染下一轮;
-      # 分层 lake cache exact hit 时对应 key 也已存在。四个 save 只在真正跑过生产路径时执行。
+      # pull_request_target runs get a token without cache-write scope, so this save can only ever fail there: run 31389667812 logged "cache write denied: token has no writable scopes". The two saves below already carry this exact guard; this one was missing it, so every PR attempted a write it could not perform. dev-push runs do write it successfully (run 31389340892).
+      # 命中报告缓存时 elan/lake 目录未被恢复也未被填充,回存会写入空态并污染下一轮;分层 lake cache exact hit 时对应 key 也已存在。四个 save 只在真正跑过生产路径时执行。
       - name: Save candidate canonical Lean report (dev push only)
         if: success() && steps.report-reuse.outcome != 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
         uses: actions/cache/save@v4
@@ -627,8 +616,7 @@ jobs:
           if-no-files-found: warn
           retention-days: 7
 
-      # 命中报告缓存时 elan/lake 目录未被恢复也未被填充,回存会写入空态并污染下一轮;
-      # 分层 lake cache exact hit 时对应 key 也已存在。四个 save 只在真正跑过生产路径时执行。
+      # 命中报告缓存时 elan/lake 目录未被恢复也未被填充,回存会写入空态并污染下一轮;分层 lake cache exact hit 时对应 key 也已存在。四个 save 只在真正跑过生产路径时执行。
       - name: Save elan toolchains (dev push only)
         # 不挂在 success() 上:elan 装成功就该存。否则一次下载失败会让 job 红、缓存不写、
         # 下次继续 miss,故障自我延续。
@@ -638,8 +626,7 @@ jobs:
           path: ~/.elan
           key: ${{ runner.os }}-${{ runner.arch }}-elan-${{ hashFiles('candidate/lean-toolchain') }}
 
-      # 命中报告缓存时 elan/lake 目录未被恢复也未被填充,回存会写入空态并污染下一轮;
-      # 分层 lake cache exact hit 时对应 key 也已存在。四个 save 只在真正跑过生产路径时执行。
+      # 命中报告缓存时 elan/lake 目录未被恢复也未被填充,回存会写入空态并污染下一轮;分层 lake cache exact hit 时对应 key 也已存在。四个 save 只在真正跑过生产路径时执行。
       - name: Save Lean dependency artifacts (dev push only)
         if: success() && steps.report-reuse.outcome != 'success' && steps.lake-deps-cache.outputs.cache-hit != 'true' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
         continue-on-error: true

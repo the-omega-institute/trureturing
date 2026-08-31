@@ -6,47 +6,56 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace StrataLint.ArchitectureTests;
 
+// A semantic source index for the two remaining retired-ledger assertions. It deliberately
+// does not build a transitive executable reachability graph.
 internal sealed class ProductionSourceGraph
 {
+    private const string HistoricalFreezeMatcherName = "HistoricalActiveFreezeMatches";
+    private const string ScribeSourceSuffix = ".scribe.cs";
+
     private readonly CSharpCompilation compilation;
     private readonly IReadOnlyDictionary<SyntaxTree, string> paths;
     private readonly Dictionary<IMethodSymbol, SyntaxNode> declarations;
-    private readonly Dictionary<IFieldSymbol, SyntaxNode> fieldInitializers;
-    private readonly Dictionary<IPropertySymbol, SyntaxNode> propertyInitializers;
-    private readonly ImmutableArray<IMethodSymbol> sourceMethods;
-    private readonly ImmutableArray<(string Description, IMethodSymbol Method)> executableMethodRoots;
-    private readonly ImmutableArray<(string Description, SyntaxNode Statement)> executableTopLevelRoots;
+    private readonly ImmutableArray<string> executableEntryPointDescriptions;
 
     private ProductionSourceGraph(
         CSharpCompilation compilation,
         IReadOnlyDictionary<SyntaxTree, string> paths,
         Dictionary<IMethodSymbol, SyntaxNode> declarations,
-        Dictionary<IFieldSymbol, SyntaxNode> fieldInitializers,
-        Dictionary<IPropertySymbol, SyntaxNode> propertyInitializers,
-        ImmutableArray<(string Description, IMethodSymbol Method)> executableMethodRoots,
-        ImmutableArray<(string Description, SyntaxNode Statement)> executableTopLevelRoots)
+        ImmutableArray<string> executableEntryPointDescriptions)
     {
         this.compilation = compilation;
         this.paths = paths;
         this.declarations = declarations;
-        this.fieldInitializers = fieldInitializers;
-        this.propertyInitializers = propertyInitializers;
-        this.executableMethodRoots = executableMethodRoots;
-        this.executableTopLevelRoots = executableTopLevelRoots;
-        sourceMethods = declarations.Keys.ToImmutableArray();
+        this.executableEntryPointDescriptions = executableEntryPointDescriptions;
     }
 
     internal static ProductionSourceGraph Create(string repositoryRoot)
     {
         var repositoryFiles = GitIndexRepositoryFiles.Enumerate(repositoryRoot);
         var projects = LoadProductionProjects(repositoryFiles);
-        var sources = repositoryFiles
-            .Where(file => projects.Any(project => project.Includes(file.RelativePath))
-                && file.RelativePath.EndsWith(".cs", StringComparison.Ordinal))
+        var files = repositoryFiles
+            .Where(file => file.RelativePath.EndsWith(".cs", StringComparison.Ordinal)
+                && projects.Any(project => project.Includes(file.RelativePath)))
+            .Select(file => new SourceFile(
+                file.RelativePath,
+                File.ReadAllText(file.FullPath)))
+            .ToArray();
+
+        // Parse every ordinary production C# source so escaped identifiers and non-textual
+        // formatting cannot hide an Engine definition or invocation. Blueprint/**/*.scribe.cs
+        // is a separate assembly/namespace: screen those 2508 files lexically and parse only a
+        // file mentioning the target, then let Roslyn distinguish a Scribe method from the
+        // Engine symbol. Executable sources are already part of the ordinary set.
+        var selectedFiles = files
+            .Where(file => !IsScribeSource(file.RelativePath)
+                || file.Text.Contains(HistoricalFreezeMatcherName, StringComparison.Ordinal))
+            .ToArray();
+        var sources = selectedFiles
             .Select(file => (
                 file.RelativePath,
                 Tree: CSharpSyntaxTree.ParseText(
-                    File.ReadAllText(file.FullPath),
+                    file.Text,
                     CSharpParseOptions.Default.WithLanguageVersion(LanguageVersion.Preview),
                     file.RelativePath)))
             .ToArray();
@@ -59,8 +68,6 @@ internal sealed class ProductionSourceGraph
             static source => (SyntaxTree)source.Tree,
             static source => source.RelativePath);
         var declarations = new Dictionary<IMethodSymbol, SyntaxNode>(SymbolEqualityComparer.Default);
-        var fieldInitializers = new Dictionary<IFieldSymbol, SyntaxNode>(SymbolEqualityComparer.Default);
-        var propertyInitializers = new Dictionary<IPropertySymbol, SyntaxNode>(SymbolEqualityComparer.Default);
 
         foreach (var source in sources)
         {
@@ -87,26 +94,9 @@ internal sealed class ProductionSourceGraph
                     declarations[Normalize(method)] = declaration;
                 }
             }
-            foreach (var variable in root.DescendantNodes().OfType<VariableDeclaratorSyntax>()
-                .Where(static variable => variable.Initializer is not null))
-            {
-                if (model.GetDeclaredSymbol(variable) is IFieldSymbol field)
-                {
-                    fieldInitializers[field.OriginalDefinition] = variable.Initializer!.Value;
-                }
-            }
-            foreach (var property in root.DescendantNodes().OfType<PropertyDeclarationSyntax>()
-                .Where(static property => property.Initializer is not null))
-            {
-                if (model.GetDeclaredSymbol(property) is IPropertySymbol symbol)
-                {
-                    propertyInitializers[symbol.OriginalDefinition] = property.Initializer!.Value;
-                }
-            }
         }
 
-        var executableMethodRoots = ImmutableArray.CreateBuilder<(string, IMethodSymbol)>();
-        var executableTopLevelRoots = ImmutableArray.CreateBuilder<(string, SyntaxNode)>();
+        var entryPoints = ImmutableArray.CreateBuilder<string>();
         foreach (var project in projects.Where(static project => project.IsExecutable))
         {
             var projectMethods = declarations
@@ -131,13 +121,11 @@ internal sealed class ProductionSourceGraph
 
             foreach (var item in projectMethods)
             {
-                executableMethodRoots.Add(($"{project.RelativePath}::{Display(item.Key)}", item.Key));
+                entryPoints.Add($"{project.RelativePath}::{Display(item.Key)}");
             }
             foreach (var item in projectTopLevel)
             {
-                executableTopLevelRoots.Add((
-                    $"{project.RelativePath}::top-level:{item.RelativePath}",
-                    item.Statement));
+                entryPoints.Add($"{project.RelativePath}::top-level:{item.RelativePath}");
             }
         }
 
@@ -145,71 +133,18 @@ internal sealed class ProductionSourceGraph
             compilation,
             paths,
             declarations,
-            fieldInitializers,
-            propertyInitializers,
-            executableMethodRoots.ToImmutable(),
-            executableTopLevelRoots.ToImmutable());
+            entryPoints
+                .Distinct(StringComparer.Ordinal)
+                .Order(StringComparer.Ordinal)
+                .ToImmutableArray());
     }
 
-    internal IReadOnlyList<string> ExecutableEntryPointDescriptions => executableMethodRoots
-        .Select(static root => root.Description)
-        .Concat(executableTopLevelRoots.Select(static root => root.Description))
-        .Distinct(StringComparer.Ordinal)
-        .Order(StringComparer.Ordinal)
-        .ToArray();
+    internal IReadOnlyList<string> ExecutableEntryPointDescriptions => executableEntryPointDescriptions;
 
-    internal IReadOnlyList<string> ReachableFromExecutableEntryPoints()
-    {
-        var pending = new Queue<ISymbol>();
-        var visited = new HashSet<ISymbol>(SymbolEqualityComparer.Default);
-        foreach (var root in executableMethodRoots) pending.Enqueue(root.Method);
-        foreach (var root in executableTopLevelRoots) AddDependencies(root.Statement, pending);
-        while (pending.TryDequeue(out var symbol))
-        {
-            symbol = Normalize(symbol);
-            if (!visited.Add(symbol))
-            {
-                continue;
-            }
-
-            switch (symbol)
-            {
-                case IMethodSymbol method:
-                    AddDispatchTargets(method, pending);
-                    if (declarations.TryGetValue(method, out var declaration))
-                    {
-                        AddDependencies(declaration, pending);
-                    }
-                    break;
-                case IFieldSymbol field when fieldInitializers.TryGetValue(field, out var initializer):
-                    AddDependencies(initializer, pending);
-                    break;
-                case IPropertySymbol property:
-                    if (property.GetMethod is not null) pending.Enqueue(property.GetMethod);
-                    if (property.SetMethod is not null) pending.Enqueue(property.SetMethod);
-                    if (propertyInitializers.TryGetValue(property, out var propertyInitializer))
-                    {
-                        AddDependencies(propertyInitializer, pending);
-                    }
-                    break;
-            }
-        }
-
-        return visited
-            .SelectMany(static symbol => symbol switch
-            {
-                IMethodSymbol method => new[] { Display(method), Display(method.ContainingType) },
-                INamedTypeSymbol type => new[] { Display(type) },
-                _ => Array.Empty<string>(),
-            })
-            .Distinct(StringComparer.Ordinal)
-            .Order(StringComparer.Ordinal)
-            .ToArray();
-    }
-
-    internal IReadOnlyList<string> MethodDefinitionsNamed(string name) => declarations.Keys
-        .Where(method => string.Equals(method.Name, name, StringComparison.Ordinal))
-        .Select(Display)
+    internal IReadOnlyList<string> MethodDefinitionsNamed(string name) => declarations
+        .Where(item => string.Equals(item.Key.Name, name, StringComparison.Ordinal)
+            && !IsScribeSource(paths[item.Value.SyntaxTree]))
+        .Select(static item => Display(item.Key))
         .Order(StringComparer.Ordinal)
         .ToArray();
 
@@ -232,73 +167,6 @@ internal sealed class ProductionSourceGraph
         return result.Order(StringComparer.Ordinal).ToArray();
     }
 
-    private void AddDependencies(SyntaxNode node, Queue<ISymbol> pending)
-    {
-        var model = compilation.GetSemanticModel(node.SyntaxTree);
-        foreach (var invocation in node.DescendantNodesAndSelf().OfType<InvocationExpressionSyntax>())
-        {
-            foreach (var method in BoundMethods(model, invocation)) pending.Enqueue(method);
-        }
-        foreach (var creation in node.DescendantNodesAndSelf().OfType<ObjectCreationExpressionSyntax>())
-        {
-            foreach (var method in BoundMethods(model, creation)) pending.Enqueue(method);
-        }
-        foreach (var name in node.DescendantNodesAndSelf().OfType<SimpleNameSyntax>())
-        {
-            var info = model.GetSymbolInfo(name);
-            foreach (var symbol in Symbols(info))
-            {
-                switch (symbol)
-                {
-                    case IFieldSymbol field:
-                        pending.Enqueue(field.OriginalDefinition);
-                        break;
-                    case IPropertySymbol property:
-                        pending.Enqueue(property.OriginalDefinition);
-                        break;
-                    case IMethodSymbol method when model.GetTypeInfo(name).ConvertedType?.TypeKind == TypeKind.Delegate:
-                        pending.Enqueue(method);
-                        break;
-                }
-            }
-        }
-    }
-
-    private void AddDispatchTargets(IMethodSymbol target, Queue<ISymbol> pending)
-    {
-        if (target.ContainingType.TypeKind == TypeKind.Interface)
-        {
-            foreach (var method in sourceMethods.Where(method => method.ContainingType.AllInterfaces.Any(
-                @interface => SymbolEqualityComparer.Default.Equals(
-                    @interface.OriginalDefinition,
-                    target.ContainingType.OriginalDefinition))))
-            {
-                var implementation = method.ContainingType.FindImplementationForInterfaceMember(target);
-                if (implementation is IMethodSymbol implemented
-                    && SymbolEqualityComparer.Default.Equals(Normalize(implemented), method))
-                {
-                    pending.Enqueue(method);
-                }
-            }
-        }
-        if (target.IsVirtual || target.IsAbstract || target.IsOverride)
-        {
-            foreach (var method in sourceMethods.Where(method => Overrides(method, target)))
-            {
-                pending.Enqueue(method);
-            }
-        }
-    }
-
-    private static bool Overrides(IMethodSymbol method, IMethodSymbol target)
-    {
-        for (var current = method.OverriddenMethod; current is not null; current = current.OverriddenMethod)
-        {
-            if (SymbolEqualityComparer.Default.Equals(Normalize(current), Normalize(target))) return true;
-        }
-        return false;
-    }
-
     private static IEnumerable<IMethodSymbol> BoundMethods(SemanticModel model, SyntaxNode node) =>
         Symbols(model.GetSymbolInfo(node)).OfType<IMethodSymbol>();
 
@@ -308,20 +176,14 @@ internal sealed class ProductionSourceGraph
         foreach (var candidate in info.CandidateSymbols) yield return candidate;
     }
 
-    private static ISymbol Normalize(ISymbol symbol) => symbol switch
-    {
-        IMethodSymbol method => Normalize(method),
-        IFieldSymbol field => field.OriginalDefinition,
-        IPropertySymbol property => property.OriginalDefinition,
-        INamedTypeSymbol type => type.OriginalDefinition,
-        _ => symbol,
-    };
-
     private static IMethodSymbol Normalize(IMethodSymbol method) =>
         (method.ReducedFrom ?? method).OriginalDefinition;
 
     private static string Display(ISymbol symbol) =>
         symbol.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat);
+
+    private static bool IsScribeSource(string path) =>
+        path.EndsWith(ScribeSourceSuffix, StringComparison.Ordinal);
 
     private static ImmutableArray<ProductionProject> LoadProductionProjects(
         IReadOnlyList<(string RelativePath, string FullPath)> repositoryFiles) => repositoryFiles
@@ -448,4 +310,6 @@ internal sealed class ProductionSourceGraph
         """,
         CSharpParseOptions.Default.WithLanguageVersion(LanguageVersion.Preview),
         "ImplicitUsings.g.cs");
+
+    private sealed record SourceFile(string RelativePath, string Text);
 }
