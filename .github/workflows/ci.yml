@@ -95,7 +95,8 @@ jobs:
         run: |
           set -euo pipefail
           base_sha="$(git -C candidate rev-parse HEAD^1)"
-          git -C candidate show "${base_sha}:tools/scripts/workflow/engineering-test-planning-harness.sh" |
+          harness_ref="$(git -C candidate rev-parse "${{ github.event_name == 'pull_request_target' && 'HEAD^1' || 'HEAD' }}")"
+          git -C candidate show "${harness_ref}:tools/scripts/workflow/engineering-test-planning-harness.sh" |
             /bin/bash -s -- materialize candidate "$base_sha" "$RUNNER_TEMP/protected-base-engineering-planning-harness" "$GITHUB_OUTPUT"
 
       - name: Install base-pinned SDK for test planning
@@ -117,8 +118,8 @@ jobs:
           BASE_HARNESS_ROOT: ${{ steps.base-harness.outputs.root }}
         run: |
           set -euo pipefail
-          base_sha="$(git -C candidate rev-parse HEAD^1)"
-          git -C candidate show "${base_sha}:tools/scripts/workflow/engineering-test-planning-harness.sh" |
+          harness_ref="$(git -C candidate rev-parse "${{ github.event_name == 'pull_request_target' && 'HEAD^1' || 'HEAD' }}")"
+          git -C candidate show "${harness_ref}:tools/scripts/workflow/engineering-test-planning-harness.sh" |
             /bin/bash -s -- plan candidate "$BASE_HARNESS_ROOT" "$RUNNER_TEMP/engineering-test-plan.json" \
               "$GITHUB_WORKSPACE/candidate" "$GITHUB_OUTPUT" "$GITHUB_EVENT_NAME"
 
@@ -129,8 +130,8 @@ jobs:
           BASE_HARNESS_ROOT: ${{ steps.base-harness.outputs.root }}
         run: |
           set -euo pipefail
-          base_sha="$(git -C candidate rev-parse HEAD^1)"
-          git -C candidate show "${base_sha}:tools/scripts/workflow/engineering-test-planning-harness.sh" |
+          harness_ref="$(git -C candidate rev-parse "${{ github.event_name == 'pull_request_target' && 'HEAD^1' || 'HEAD' }}")"
+          git -C candidate show "${harness_ref}:tools/scripts/workflow/engineering-test-planning-harness.sh" |
             /bin/bash -s -- remove candidate "$BASE_HARNESS_ROOT"
 
       - name: Install candidate-pinned SDK for candidate build and tests
