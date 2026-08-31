@@ -53,7 +53,9 @@ internal static class EngineeringTestPlanDeriver
         {
             return EngineeringTestPlanPolicy.Full(
                 changedPaths,
-                "FULL=1 requests the diagnostic full plan",
+                EngineeringTestPlanPolicy.WithMetadataReceipt(
+                    "FULL=1 requests the diagnostic full plan",
+                    map),
                 EngineeringTestPlanPolicy.BaseTests(map, assemblies));
         }
 
@@ -71,6 +73,16 @@ internal static class EngineeringTestPlanDeriver
             map,
             compiled,
             assemblyByProject: assemblies);
+    }
+
+    internal static ImmutableArray<(string Assembly, string Id)> DeriveSourceIdentities(
+        RepositorySnapshot snapshot)
+    {
+        var map = ScribeTestMapDeriver.DeriveSnapshot(snapshot);
+        EnsureClosedMap(map);
+        return EngineeringTestPlanPolicy.SourceIdentities(
+            map,
+            AssemblyByProject(snapshot, map));
     }
 
     private static void EnsureClosedMap(ScribeTestMap map)
@@ -135,7 +147,9 @@ internal static class EngineeringTestPlanPolicy
         {
             return Full(
                 changed,
-                "candidate delta changes the engineering implementation or a repository-root build input",
+                WithMetadataReceipt(
+                    "candidate delta changes the engineering implementation or a repository-root build input",
+                    map),
                 BaseTests(map, assemblyByProject));
         }
 
@@ -147,11 +161,29 @@ internal static class EngineeringTestPlanPolicy
         if (attributionFailure is not null || failures.Length != 0)
         {
             var detail = attributionFailure ?? string.Join(", ", failures.Order(StringComparer.Ordinal));
-            return Full(changed, $"project attribution failed: {detail}");
+            return Full(changed, WithMetadataReceipt($"project attribution failed: {detail}", map));
         }
 
+        var runnableMethods = RunnableMethods(map).ToArray();
+        var emptyDegradations = map.MetadataDegradations.Where(degradation =>
+            !runnableMethods.Any(method =>
+                map.CompileProjectBySourcePath.TryGetValue(method.SourcePath, out var project)
+                && project == degradation.ProjectPath)).ToArray();
+        if (emptyDegradations.Length != 0)
+        {
+            return Full(
+                changed,
+                WithMetadataReceipt(
+                    "metadata degradation left a test project with no recognized identities; running the full suite",
+                    map),
+                BaseTests(map, assemblyByProject));
+        }
+
+        var degradationByProject = map.MetadataDegradations.ToDictionary(
+            static degradation => degradation.ProjectPath,
+            StringComparer.Ordinal);
         var tests = new List<EngineeringSelectedTest>();
-        foreach (var method in RunnableMethods(map))
+        foreach (var method in runnableMethods)
         {
             if (!map.CompileProjectBySourcePath.TryGetValue(method.SourcePath, out var project))
             {
@@ -176,7 +208,10 @@ internal static class EngineeringTestPlanPolicy
                 else if (method.IsUnknown)
                 {
                     reason = EngineeringSelectedTestReason.UnknownInput;
-                    detail = "target has repository inputs that are not statically closed";
+                    detail = degradationByProject.TryGetValue(project, out var degradation)
+                        ? $"metadata unavailable for {project}; every test in the project is "
+                            + $"conservatively unknown: {degradation.Reason}"
+                        : "target has repository inputs that are not statically closed";
                 }
             }
 
@@ -206,7 +241,9 @@ internal static class EngineeringTestPlanPolicy
                 EngineeringTestPlanKind.Selected,
                 changed,
                 selected,
-                $"selected {selected.Length} affected or locally conservative test targets");
+                WithMetadataReceipt(
+                    $"selected {selected.Length} affected or locally conservative test targets",
+                    map));
     }
 
     internal static ImmutableArray<EngineeringSelectedTest> BaseTests(
@@ -217,7 +254,11 @@ internal static class EngineeringTestPlanPolicy
                 project,
                 method.Id,
                 EngineeringSelectedTestReason.BaseBaseline,
-                "identity is owned by the protected base",
+                map.MetadataDegradations.FirstOrDefault(degradation =>
+                    degradation.ProjectPath == project) is { } degradation
+                    ? $"metadata unavailable for {project}; every test in the project is "
+                        + $"conservatively unknown: {degradation.Reason}"
+                    : "identity is owned by the protected base",
                 Assembly(project, assemblyByProject))
             : throw new InvalidOperationException($"project attribution failed for {method.Identity}"))
         .DistinctBy(static test => (test.Assembly, test.Id))
@@ -225,8 +266,32 @@ internal static class EngineeringTestPlanPolicy
         .ThenBy(static test => test.Id, StringComparer.Ordinal)
         .ToImmutableArray();
 
+    internal static string WithMetadataReceipt(string reason, ScribeTestMap map) =>
+        map.MetadataDegradations.Count == 0
+            ? reason
+            : reason + "; " + string.Join("; ", map.MetadataDegradations
+                .OrderBy(static degradation => degradation.ProjectPath, StringComparer.Ordinal)
+                .ThenBy(static degradation => degradation.Reason, StringComparer.Ordinal)
+                .Select(static degradation =>
+                $"metadata degraded for {degradation.ProjectPath}: {degradation.Reason}"));
+    internal static ImmutableArray<(string Assembly, string Id)> SourceIdentities(
+        ScribeTestMap map,
+        IReadOnlyDictionary<string, string> assemblyByProject) => map.Methods
+        .Select(method =>
+        {
+            if (!map.CompileProjectBySourcePath.TryGetValue(method.SourcePath, out var project))
+                throw new InvalidOperationException($"project attribution failed for {method.Identity}");
+            if (!assemblyByProject.TryGetValue(project, out var assembly))
+                throw new InvalidOperationException($"assembly attribution failed for {project}");
+            return (Assembly: assembly, method.Id);
+        })
+        .OrderBy(static test => test.Assembly, StringComparer.OrdinalIgnoreCase)
+        .ThenBy(static test => test.Id, StringComparer.Ordinal)
+        .ToImmutableArray();
+
     private static IEnumerable<ScribeTestMethod> RunnableMethods(ScribeTestMap map) =>
-        map.Methods.Where(static method => !method.IsStaticallySkipped);
+        map.Methods.Where(static method =>
+            !method.IsStaticallySkipped && !method.IsDiscoveryConditional);
 
     internal static EngineeringTestPlan Full(
         IReadOnlyList<string> changedPaths,

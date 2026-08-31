@@ -49,4 +49,82 @@ public sealed class ScribeTestMapDeriverTests
         Assert.Equal(["Golden/input.txt"], method.Paths);
         Assert.Empty(method.UnknownReasons);
     }
+
+    [Fact]
+    public void CandidateSourceIdentitySetIncludesStaticallySkippedFacts()
+    {
+        const string source = "tools/tests/Synthetic.Tests/SkippedTests.cs";
+        const string project = "tools/tests/Synthetic.Tests/Synthetic.Tests.csproj";
+        var map = ScribeTestMapDeriver.DeriveSources(
+            [new TestMapSource(source, """
+                public sealed class SkippedTests
+                {
+                    [Fact(Skip = "candidate disabled a protected-base planned test")]
+                    public void ProtectedBasePlanned() { }
+                }
+                """, "Synthetic.Tests")],
+            [],
+            compileProjectBySourcePath:
+                new Dictionary<string, string>(StringComparer.Ordinal) { [source] = project });
+        Assert.True(Assert.Single(map.Methods).IsStaticallySkipped);
+
+        var identities = EngineeringTestPlanPolicy.SourceIdentities(
+            map,
+            new Dictionary<string, string>(StringComparer.Ordinal)
+            {
+                [project] = "Synthetic.Custom.Tests",
+            });
+
+        var identity = Assert.Single(identities);
+        Assert.Equal("Synthetic.Custom.Tests", identity.Assembly);
+        Assert.Equal("SkippedTests.ProtectedBasePlanned", identity.Id);
+    }
+
+    [Fact]
+    public void EnvironmentConditionalFactIsNotAProtectedBaseBlockingExpectation()
+    {
+        const string source = "tools/tests/Synthetic.Tests/ConditionalTests.cs";
+        const string project = "tools/tests/Synthetic.Tests/Synthetic.Tests.csproj";
+        var map = ScribeTestMapDeriver.DeriveSources(
+            [new TestMapSource(source, """
+                public sealed class ConditionalTests
+                {
+                    [LiveReportFact]
+                    public void RequiresLiveReport() { }
+
+                    [AlwaysFact]
+                    public void AlwaysRuns() { }
+
+                    private sealed class LiveReportFactAttribute : FactAttribute
+                    {
+                        public LiveReportFactAttribute()
+                        {
+                            if (Environment.GetEnvironmentVariable("LIVE_REPORT") is null)
+                                Skip = "Live report is absent.";
+                        }
+                    }
+
+                    private sealed class AlwaysFactAttribute : FactAttribute { }
+                }
+                """, "Synthetic.Tests")],
+            [],
+            compileProjectBySourcePath:
+                new Dictionary<string, string>(StringComparer.Ordinal) { [source] = project });
+        var assemblies = new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            [project] = "Synthetic.Custom.Tests",
+        };
+
+        var planned = EngineeringTestPlanPolicy.BaseTests(map, assemblies);
+        var sourceIdentities = EngineeringTestPlanPolicy.SourceIdentities(map, assemblies);
+
+        Assert.True(map.Methods.Single(static method =>
+            method.Id == "ConditionalTests.RequiresLiveReport").IsDiscoveryConditional);
+        Assert.False(map.Methods.Single(static method =>
+            method.Id == "ConditionalTests.AlwaysRuns").IsDiscoveryConditional);
+        Assert.Equal(["ConditionalTests.AlwaysRuns"], planned.Select(static test => test.Id));
+        Assert.Contains(
+            sourceIdentities,
+            static test => test.Id == "ConditionalTests.RequiresLiveReport");
+    }
 }

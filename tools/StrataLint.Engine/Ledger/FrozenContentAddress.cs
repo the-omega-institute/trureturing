@@ -70,14 +70,14 @@ public static class FrozenContentAddress
         ImmutableDictionary<RepoPath, TruthState> states,
         ImmutableDictionary<RepoPath, ImmutableArray<RepoPath>> adjacency,
         IReadOnlySet<RepoPath> selectedPaths,
-        IReadOnlyDictionary<RepoPath, FrozenNodeMaterial> trustedBaseMaterials)
+        IReadOnlyDictionary<RepoPath, FrozenActiveEntry> trustedBaseEntries)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(lean);
         ArgumentNullException.ThrowIfNull(states);
         ArgumentNullException.ThrowIfNull(adjacency);
         ArgumentNullException.ThrowIfNull(selectedPaths);
-        ArgumentNullException.ThrowIfNull(trustedBaseMaterials);
+        ArgumentNullException.ThrowIfNull(trustedBaseEntries);
         var materialByPath = new Dictionary<RepoPath, FrozenNodeMaterial>();
         foreach (var path in LeanImportAdjacency.DependenciesFirst(selectedPaths, adjacency)
             .Where(path => states.TryGetValue(path, out var state)
@@ -90,12 +90,11 @@ public static class FrozenContentAddress
                     lean,
                     adjacency,
                     path,
-                    dependencyPath => materialByPath.TryGetValue(dependencyPath, out var selectedDependency)
-                        ? selectedDependency.FrozenNodeId
-                        : trustedBaseMaterials.TryGetValue(dependencyPath, out var trustedDependency)
-                            ? trustedDependency.FrozenNodeId
-                            : throw new FormatException(
-                                $"Selected Closed module {path.Value} depends on unrecorded {dependencyPath.Value}.")));
+                    dependencyPath => ResolveActiveDependencyIdentity(
+                        lean,
+                        path,
+                        dependencyPath,
+                        trustedBaseEntries)));
         }
 
         return FrozenMaterialCatalog.Create(
@@ -106,6 +105,46 @@ public static class FrozenContentAddress
             ImmutableDictionary<RepoPath, ImmutableArray<CaseId>>.Empty,
             ImmutableDictionary<RepoPath, ImmutableArray<string>>.Empty,
             adjacency);
+    }
+
+    private static FrozenNodeId ResolveActiveDependencyIdentity(
+        AcceptedLeanClosure lean,
+        RepoPath selectedPath,
+        RepoPath dependencyPath,
+        IReadOnlyDictionary<RepoPath, FrozenActiveEntry> trustedBaseEntries)
+    {
+        if (!trustedBaseEntries.TryGetValue(dependencyPath, out var activeEntry))
+        {
+            throw new FormatException(
+                $"Selected Closed module {selectedPath.Value} dependency-not-ready: "
+                + $"imported module {dependencyPath.Value} has no active accepted Freeze.");
+        }
+
+        if (!lean.Report.Files.TryGetValue(dependencyPath, out var dependencyReport))
+        {
+            throw new FormatException(
+                $"Selected Closed module {selectedPath.Value} dependency-not-ready: "
+                + $"imported module {dependencyPath.Value} has no Lean report material.");
+        }
+
+        var declarations = CanonicalStatementWriter.DeclarationStatementIds(
+            dependencyPath,
+            dependencyReport);
+        var activeDeclarationKeys = activeEntry.Payload.DeclarationStatementIds
+            .Select(static declaration => declaration.DeclarationNameKey)
+            .ToHashSet(StringComparer.Ordinal);
+        foreach (var declaration in declarations)
+        {
+            if (!activeDeclarationKeys.Contains(declaration.DeclarationNameKey))
+            {
+                throw new FormatException(
+                    $"Selected Closed module {selectedPath.Value} dependency-not-ready: "
+                    + $"imported declaration {declaration.DeclarationNameKey} is not active in the accepted ledger.");
+            }
+        }
+
+        // Ledger v5 persists the event hash as its identity; FrozenNodeId is only a legacy-derived view.
+        return FrozenNodeId.Create(activeEntry.EventHash);
     }
 
     private static FrozenNodeMaterial BuildNodeMaterial(
