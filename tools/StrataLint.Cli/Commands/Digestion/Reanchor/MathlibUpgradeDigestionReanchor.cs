@@ -23,6 +23,23 @@ internal static class MathlibUpgradeDigestionReanchor
             return document;
         }
 
+        return ApplyRecognizedReplacement(
+            document,
+            protectedBase,
+            candidate,
+            reanchoredPaths);
+    }
+
+    internal static BackfillInventoryDocument ApplyRecognizedReplacement(
+        BackfillInventoryDocument document,
+        RepositorySnapshot protectedBase,
+        RepositorySnapshot candidate,
+        ImmutableHashSet<RepoPath> reanchoredPaths)
+    {
+        ArgumentNullException.ThrowIfNull(document);
+        ArgumentNullException.ThrowIfNull(protectedBase);
+        ArgumentNullException.ThrowIfNull(candidate);
+        ArgumentNullException.ThrowIfNull(reanchoredPaths);
         var baselineStatements = FrozenStatementIndex.Load(protectedBase);
         var candidateStatements = FrozenStatementIndex.Load(candidate);
         var changed = false;

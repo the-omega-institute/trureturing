@@ -129,10 +129,34 @@ internal static class DagLedgerMathlibReanchorWriter
                     "authorization diagnostics disagree with the canonical authorization result");
             }
 
+            var currentRaw = ToRawSnapshot(truth.Snapshot);
+            var receiptUpdates = ImmutableArray<IngestCommand.LedgerUpdate>.Empty;
+            if (truth.Snapshot.Files.Keys.Any(static path =>
+                    BackfillInventoryLoader.IsCanonicalPath(path.Value)))
+            {
+                var currentDocument = BackfillInventoryLoader.Load(truth.Snapshot);
+                var reanchoredDocument = pinChanged
+                    ? MathlibUpgradeDigestionReanchor.ApplyRecognizedReplacement(
+                        currentDocument,
+                        protectedBase,
+                        prospective,
+                        recognition.ReanchoredModulePaths)
+                    : currentDocument;
+                var reanchoredRaw = IngestCommand.ReplaceLedger(
+                    currentRaw,
+                    currentDocument,
+                    reanchoredDocument);
+                receiptUpdates = IngestCommand.LedgerUpdates(currentRaw, reanchoredRaw);
+            }
+
             DagLedgerAppendWriter.ReplaceEventFiles(
                 LedgerPath(repositoryRoot),
                 replacementFiles,
                 currentLedgerFiles);
+            IngestCommand.ApplyLedgerUpdatesAtomically(
+                repositoryRoot,
+                currentRaw,
+                receiptUpdates);
             return new CommandResult(
                 true,
                 RenderResult(
@@ -140,7 +164,8 @@ internal static class DagLedgerMathlibReanchorWriter
                     pinChanged,
                     propositionFailures,
                     axiomFailures,
-                    authorized),
+                    authorized,
+                    receiptUpdates.Length),
                 string.Empty);
         }
         catch (Exception exception) when (
@@ -279,9 +304,11 @@ internal static class DagLedgerMathlibReanchorWriter
         bool pinChanged,
         ImmutableArray<RepoPath> propositionFailures,
         ImmutableArray<RepoPath> axiomFailures,
-        bool authorized)
+        bool authorized,
+        int coverageReceiptFiles)
     {
         var output = "MATHLIB_REANCHOR replacement_modules=" + driftPaths.Length + "\n"
+            + $"MATHLIB_REANCHOR coverage_receipt_files={coverageReceiptFiles}\n"
             + "AUTHORIZATION incremental_replacement=pass\n"
             + $"AUTHORIZATION effective_lean_pins_changed={PassFail(pinChanged)}\n"
             + "AUTHORIZATION proposition_source_equivalent="
@@ -300,6 +327,10 @@ internal static class DagLedgerMathlibReanchorWriter
 
     private static ImmutableArray<RepositoryFile> ReadCurrentLedgerFiles(string repositoryRoot) =>
         DagLedgerCommandPreparation.ReadLedgerDirectoryFiles(LedgerPath(repositoryRoot));
+
+    private static RawRepositorySnapshot ToRawSnapshot(RepositorySnapshot snapshot) =>
+        RawRepositorySnapshot.Create(snapshot.Files.Values.Select(static file =>
+            new RawRepositoryEntry(file.Path.Value, file.RawBytes)));
 
     private static string LedgerPath(string repositoryRoot) =>
         Path.Combine(

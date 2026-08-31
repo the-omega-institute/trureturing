@@ -2,6 +2,7 @@ using System.Collections.Immutable;
 using System.Text;
 using StrataLint.Cli;
 using StrataLint.Engine;
+using static StrataLint.Tests.DigestionTestSupport;
 using static StrataLint.Tests.FrozenLedgerTestData;
 
 namespace StrataLint.Tests;
@@ -42,6 +43,38 @@ public sealed class DagLedgerMathlibReanchorWriterTests
         var retainedB = EventFor(fixture.BaseEvents, "B");
         var persistedB = Assert.Single(persisted, file => file.Path == retainedB.Path);
         Assert.True(retainedB.RawBytes.AsSpan().SequenceEqual(persistedB.RawBytes.AsSpan()));
+    }
+
+    [Fact]
+    public void CanonicalProducerReanchorsCoverageReceiptsWithTheFrozenReplacement()
+    {
+        using var fixture = CreateFixture(
+            ModuleASource,
+            ModuleASource,
+            candidateAStatement: "compiler-reanchored True",
+            includeCoverageReceipt: true);
+
+        var result = DagLedgerMathlibReanchorWriter.Reanchor(
+            fixture.RepositoryRoot,
+            fixture.Repository,
+            fixture.ReportSource,
+            ["--base", BaseRevision]);
+
+        Assert.True(result.Success, result.Error);
+        var receipt = Assert.Single(Assert.Single(
+            BackfillInventoryLoader.LoadRoot(fixture.RepositoryRoot)
+                .RequireDigestionEntries()).Receipts.Coverage);
+        Assert.Equal(
+            BuildCatalogWithEnvironment(
+                CandidateToolchain,
+                "[package]\nname = \"fixture\"\n",
+                Manifest('b'),
+                GitOid('e'),
+                GitOid('f'),
+                [ModuleWithReport("A", ModuleASource, "compiler-reanchored True"),
+                    ModuleWithReport("B", ModuleBSource, "True")])
+                .ByPath[RepoPathFor("A")].StatementId.Value,
+            receipt.TargetStatementId);
     }
 
     [Fact]
@@ -135,7 +168,8 @@ public sealed class DagLedgerMathlibReanchorWriterTests
         string candidateBStatement = "True",
         bool aImportsB = false,
         bool includeStableC = false,
-        bool includePriorCandidateAEvent = false)
+        bool includePriorCandidateAEvent = false,
+        bool includeCoverageReceipt = false)
     {
         var baseManifest = Manifest('a');
         var candidateManifest = Manifest('b');
@@ -178,8 +212,21 @@ public sealed class DagLedgerMathlibReanchorWriterTests
         var currentEvents = includePriorCandidateAEvent
             ? baseEvents.Add(EventFor(candidateEvents, "A"))
             : baseEvents;
-        var baseline = Snapshot(BaseToolchain, baseManifest, baseModules, baseEvents);
-        var current = Snapshot(CandidateToolchain, candidateManifest, candidateModules, currentEvents);
+        var coverageDocument = includeCoverageReceipt
+            ? CoverageDocument(baseCatalog.ByPath[RepoPathFor("A")].StatementId.Value)
+            : null;
+        var baseline = Snapshot(
+            BaseToolchain,
+            baseManifest,
+            baseModules,
+            baseEvents,
+            coverageDocument);
+        var current = Snapshot(
+            CandidateToolchain,
+            candidateManifest,
+            candidateModules,
+            currentEvents,
+            coverageDocument);
         var changedPaths = new List<(string Path, RawChangeKind Kind)>
         {
             ("lean-toolchain", RawChangeKind.Modified),
@@ -204,6 +251,12 @@ public sealed class DagLedgerMathlibReanchorWriterTests
                 '/',
                 Path.DirectorySeparatorChar));
         WriteLedgerDirectory(ledgerPath, currentEvents);
+        if (coverageDocument is not null)
+        {
+            var files = new Dictionary<string, string>(StringComparer.Ordinal);
+            DirectoryLedgerTestSupport.ReplaceWithProjection(files, coverageDocument);
+            DirectoryLedgerTestSupport.Write(temporary.Path, files);
+        }
         return new ReanchorFixture(
             temporary,
             ledgerPath,
@@ -217,7 +270,8 @@ public sealed class DagLedgerMathlibReanchorWriterTests
         string toolchain,
         string manifest,
         IReadOnlyList<ModuleSpec> modules,
-        IEnumerable<RepositoryFile> events)
+        IEnumerable<RepositoryFile> events,
+        BackfillInventoryDocument? coverageDocument)
     {
         var entries = new List<RawRepositoryEntry>
         {
@@ -228,7 +282,48 @@ public sealed class DagLedgerMathlibReanchorWriterTests
         entries.AddRange(modules.Select(module =>
             RawRepositoryEntry.FromText(PathFor(module.Name), module.Source)));
         entries.AddRange(events.Select(file => new RawRepositoryEntry(file.Path.Value, file.RawBytes)));
+        if (coverageDocument is not null)
+        {
+            foreach (var source in coverageDocument.RequireDigestionSources())
+            {
+                entries.Add(new RawRepositoryEntry(
+                    $"{BackfillInventoryLoader.RootPath}{source.SourceId}/source.toml",
+                    BackfillInventoryWriter.WriteSourceMetadata(source)));
+                foreach (var entry in source.Entries)
+                {
+                    entries.Add(new RawRepositoryEntry(
+                        $"{BackfillInventoryLoader.RootPath}{source.SourceId}/absorbed-closed/"
+                            + $"{entry.AtomId}.yaml",
+                        BackfillInventoryWriter.WriteAtom(entry)));
+                }
+            }
+        }
         return RawRepositorySnapshot.Create(entries);
+    }
+
+    private static BackfillInventoryDocument CoverageDocument(string targetStatementId)
+    {
+        var bytes = Encoding.UTF8.GetBytes("receipt source\n");
+        var atom = new DigestionAtom(
+            0,
+            bytes.Length,
+            ImmutableArray.CreateRange(bytes),
+            DigestionFingerprint.Compute(bytes),
+            []);
+        var gid = "D5/S0/Carrier/A";
+        var receipt = new DigestionCoverageReceipt(
+            gid,
+            atom.Fingerprints.RawSha256,
+            targetStatementId);
+        var entry = Entry(
+            atom,
+            atom.Fingerprints.RawSha256["sha256:".Length..],
+            AtomizerRegistry.NoAtomizerId,
+            DigestionMigrationState.Absorbed,
+            DigestionTruthState.Closed,
+            [gid],
+            new DigestionReceipts([receipt], [], [], [], null));
+        return Document(AtomizerRegistry.NoAtomizerId, [entry]);
     }
 
     private static LeanAxiomReport Report(IEnumerable<ModuleSpec> modules) =>
