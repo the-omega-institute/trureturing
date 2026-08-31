@@ -6,7 +6,7 @@ A reflected pair becomes a negative signed distance in the squared normal coordi
 
 **Theorem 1.1 (A reflected pair gives a negative signed-distance resolvent).**
 
-$$\forall \delta, r, u: \mathbb{R},\\{}(0 < \delta) \land (u \neq \delta^{2}) \Rightarrow\\{}(-\delta^{2} < 0 \land\\{}(r - \delta)(r + \delta) = r^{2} - \delta^{2} \land\\{}(r - \delta)(r + \delta)^{2} = (r^{2} - \delta^{2})^{2} \land\\{}\operatorname{deriv}(v \mapsto (v - \delta^{2})^{2})(u) / (u - \delta^{2})^{2} = 2 / (u - \delta^{2})).$$
+$$\forall \delta, r, u: \mathbb{R},\\{}(0 < \delta) \land (u \neq \delta^{2}) \Rightarrow\\{}(-\delta^{2} < 0 \land\\{}(r - \delta)(r + \delta) = r^{2} - \delta^{2} \land\\{}((r - \delta)(r + \delta))^{2} = (r^{2} - \delta^{2})^{2} \land\\{}\operatorname{deriv}(v \mapsto (v - \delta^{2})^{2})(u) / (u - \delta^{2})^{2} = 2 / (u - \delta^{2})).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Zeros/ReflectedPairSignedDistance.reflected_pair_signed_distance_resolvent` (`✓ std3`). ∎
 
