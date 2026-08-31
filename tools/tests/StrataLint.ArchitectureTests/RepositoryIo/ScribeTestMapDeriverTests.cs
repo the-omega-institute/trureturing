@@ -43,6 +43,24 @@ public sealed class ScribeTestMapDeriverTests
     }
 
     [Fact]
+    public void ExternalSkippableFactAttributeIdentityRemainsInBasePlan()
+    {
+        const string source = "tools/tests/StrataLint.Tests/Coverage/RuleApplicabilityTests.cs";
+        const string project = "tools/tests/StrataLint.Tests/StrataLint.Tests.csproj";
+        const string id =
+            "RuleApplicabilityTests.CatalogQueriesTheRuleObjectsOwnApplicabilityPredicate";
+        var map = ScribeTestMapDeriver.DeriveRepository(RepositoryLayout.FindRoot());
+
+        var method = Assert.Single(map.Methods, candidate =>
+            candidate.SourcePath == source && candidate.Id == id);
+
+        Assert.False(method.IsStaticallySkipped);
+        Assert.Contains(
+            EngineeringTestPlanPolicy.BaseTests(map, null),
+            candidate => candidate.ProjectPath == project && candidate.Id == id);
+    }
+
+    [Fact]
     public void BlueprintScribeDefinitionsAreAttributedToStrataLintScribeByMsBuildCompileItems()
     {
         var repositoryRoot = RepositoryLayout.FindRoot();

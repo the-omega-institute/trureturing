@@ -187,7 +187,10 @@ internal static class ScribeTestSymbolBinder
             symbol.ContainingType?.Name ?? "<global>",
             symbol.Name,
             isTest,
-            isTest && IsStaticallySkipped((MethodDeclarationSyntax)declaration, model),
+            isTest && IsStaticallySkipped(
+                (MethodDeclarationSyntax)declaration,
+                model,
+                semanticModels),
             declaration,
             model,
             semanticModels,
@@ -431,18 +434,111 @@ internal static class ScribeTestSymbolBinder
     {
         for (var current = type; current is not null; current = current.BaseType)
         {
-            var display = current.ToDisplayString();
-            if (display is "Xunit.FactAttribute" or "Xunit.TheoryAttribute") return true;
+            if (IsXunitTestAttributeBase(current)) return true;
         }
         return false;
     }
 
-    private static bool IsStaticallySkipped(MethodDeclarationSyntax method, SemanticModel model) =>
+    private static bool IsXunitTestAttributeBase(INamedTypeSymbol type) =>
+        type.ToDisplayString() is "Xunit.FactAttribute" or "Xunit.TheoryAttribute";
+
+    private static bool IsStaticallySkipped(
+        MethodDeclarationSyntax method,
+        SemanticModel model,
+        ScribeSemanticModelProvider semanticModels) =>
         method.AttributeLists.SelectMany(static list => list.Attributes)
             .Where(attribute => IsTestAttribute(attribute, model))
-            .Any(static attribute => attribute.ArgumentList?.Arguments.Any(static argument =>
-                argument.NameEquals?.Name.Identifier.ValueText == "Skip"
-                && !argument.Expression.IsKind(SyntaxKind.NullLiteralExpression)) == true);
+            .Any(attribute => HasExplicitSkip(attribute)
+                || AttributeTypeMayAssignSkip(attribute, model, semanticModels));
+
+    private static bool HasExplicitSkip(AttributeSyntax attribute) =>
+        attribute.ArgumentList?.Arguments.Any(static argument =>
+            argument.NameEquals?.Name.Identifier.ValueText == "Skip"
+            && !argument.Expression.IsKind(SyntaxKind.NullLiteralExpression)) == true;
+
+    private static bool AttributeTypeMayAssignSkip(
+        AttributeSyntax attribute,
+        SemanticModel model,
+        ScribeSemanticModelProvider semanticModels) =>
+        Symbols(model.GetSymbolInfo(attribute)).OfType<IMethodSymbol>()
+            .Any(constructor => AttributeTypeMayAssignSkip(
+                constructor.ContainingType,
+                model,
+                semanticModels));
+
+    private static bool AttributeTypeMayAssignSkip(
+        INamedTypeSymbol attributeType,
+        SemanticModel model,
+        ScribeSemanticModelProvider semanticModels)
+    {
+        for (var current = attributeType; current is not null; current = current.BaseType)
+        {
+            if (IsXunitTestAttributeBase(current)) return false;
+
+            if (current.DeclaringSyntaxReferences.Length == 0) return false;
+            foreach (var reference in current.DeclaringSyntaxReferences)
+            {
+                var declaration = reference.GetSyntax();
+                var declarationModel = semanticModels.ModelFor(declaration, model);
+                if (declarationModel is null) return false;
+                if (DeclarationAssignsSkip(
+                        declaration,
+                        declarationModel,
+                        current,
+                        attributeType))
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private static bool DeclarationAssignsSkip(
+        SyntaxNode declaration,
+        SemanticModel model,
+        INamedTypeSymbol attributeType,
+        INamedTypeSymbol concreteAttributeType) => declaration
+        .DescendantNodesAndSelf(node => ReferenceEquals(node, declaration)
+            || node is not TypeDeclarationSyntax)
+        .Any(node => node switch
+        {
+            AssignmentExpressionSyntax assignment => IsSkipMember(
+                model.GetSymbolInfo(assignment.Left).Symbol,
+                attributeType,
+                concreteAttributeType),
+            PropertyDeclarationSyntax { Initializer: not null } property => IsSkipMember(
+                model.GetDeclaredSymbol(property),
+                attributeType,
+                concreteAttributeType),
+            VariableDeclaratorSyntax { Initializer: not null } variable => IsSkipMember(
+                model.GetDeclaredSymbol(variable),
+                attributeType,
+                concreteAttributeType),
+            _ => false,
+        });
+
+    private static bool IsSkipMember(
+        ISymbol? member,
+        INamedTypeSymbol attributeType,
+        INamedTypeSymbol concreteAttributeType)
+    {
+        if (member is not IPropertySymbol and not IFieldSymbol || member.Name != "Skip") return false;
+        if (IsXunitTestAttributeBase(member.ContainingType)
+            || SymbolEqualityComparer.Default.Equals(member.ContainingType, attributeType))
+        {
+            return true;
+        }
+
+        for (var current = concreteAttributeType.BaseType;
+             current is not null && !IsXunitTestAttributeBase(current);
+             current = current.BaseType)
+        {
+            if (SymbolEqualityComparer.Default.Equals(member.ContainingType, current)) return true;
+        }
+        return false;
+    }
 
     private static bool IsInsideNameof(SyntaxNode node, SemanticModel model) => node.Ancestors()
         .OfType<InvocationExpressionSyntax>()
