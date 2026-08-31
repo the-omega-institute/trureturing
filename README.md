@@ -4,10 +4,12 @@ trureturing — the last line of the ledger is always the first line of the next
 
 # trureturing
 
-### **14,494 theorems, frozen.  One `sorry` — and it is not in the ledger.**
+### **14,517 frozen theorem declarations.  One `sorry` — outside the ledger.**
 
 **A formal-mathematics repository that governs itself.**
-Lean proves. A machine judges. Accepted truth is frozen, and never rewritten.
+Lean proves. A machine judges. Accepted truth is frozen and appended, never rewritten.
+
+[Enter `D5/`](D5/) · [Read the frozen Three-Gap theorem](D5/S1/Phase/ThreeGap/Main.lean) · [The two hearts](D5/X_Frontier/Hearts.lean)
 
 [![admission](https://github.com/the-omega-institute/trureturing/actions/workflows/ci.yml/badge.svg?branch=dev)](https://github.com/the-omega-institute/trureturing/actions/workflows/ci.yml)
 [![Lean](https://img.shields.io/badge/Lean-v4.31.0-2b2b2b)](lean-toolchain)
@@ -32,9 +34,9 @@ arcs of at most three distinct lengths — lives in
 [`D5/S1/Phase/ThreeGap/`](D5/S1/Phase/ThreeGap/Main.lean) with no `sorry`, ported from Dirk
 Kunert's MIT-licensed formalization and frozen here under his copyright.
 
-## Two hearts
+## Two protected hearts
 
-Two designated hearts stand at the head of the open frontier, stated with deliberate asymmetry.
+The repository designates two protected open hearts, stated with deliberate asymmetry.
 
 **O-5** is [`o5_independence`](D5/X_Frontier/Hearts.lean) — a `theorem` whose body is the single
 `sorry` in this repository. It claims that the canonical golden Euler germ continues
@@ -46,10 +48,11 @@ A `sorry` count cannot see it. That is the point: the statement is fully bound �
 involution, convolution square, multiplicity-aware zero sum — so the summit has coordinates even
 though no one has stood on it.
 
-No theorem here proves the bridge to the Riemann Hypothesis; the module's own docstring records
-the classical fact that Weil's criterion is bidirectional, so a zero off the line would break
-positivity for some test function in that class. Whichever way the Riemann Hypothesis falls, work
-against this statement produces truth. That is the reason it was authorized.
+The repository does not prove `RiemannHypothesis ↔ o6WeilPositivityStatement`, and does not prove
+the off-line-zero direction either. O-6 is a precise coordinate for that classical program, not a
+formalized equivalence. The module's own docstring records why it was authorized anyway: Weil's
+criterion runs both ways, so whichever way the Riemann Hypothesis falls, work against this
+statement produces truth.
 
 ## The ledger
 
@@ -60,14 +63,15 @@ commit all 2,796 accepted events are `Freeze`, with no `Revoke` and no re-attest
 
 <table>
 <tr><td><b>2,796</b></td><td>frozen modules, every event a <code>Freeze</code></td></tr>
-<tr><td><b>14,494</b></td><td>distinct theorems among <b>26,881</b> distinct frozen declarations</td></tr>
+<tr><td><b>14,517</b></td><td>frozen theorem declarations</td></tr>
+<tr><td><b>26,904</b></td><td>frozen declarations in total, across <b>26,881</b> distinct names</td></tr>
 <tr><td><b>407,857</b></td><td>lines of Lean under <code>D5/</code>, in 2,804 files</td></tr>
 <tr><td><b>1</b></td><td><code>sorry</code> in the tree — outside the ledger, at the frontier</td></tr>
-<tr><td><b>52</b></td><td>days from the first commit to this reading</td></tr>
+<tr><td><b>52</b></td><td>days from the first commit to this snapshot</td></tr>
 </table>
 
-*Measured 2026-09-01 on `dev`. The ledger advances by roughly two modules an hour, so these are a
-dated snapshot, not a live counter.*
+*Measured 2026-09-01 at commit `53469d0d3`, where every figure above reproduces exactly. The ledger
+advances by roughly two modules an hour: this is a snapshot, not a live counter.*
 
 ## It admits its own work
 
