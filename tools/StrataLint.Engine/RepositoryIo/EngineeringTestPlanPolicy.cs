@@ -14,7 +14,17 @@ internal sealed record EngineeringSelectedTest(
     string Id,
     EngineeringSelectedTestReason Reason,
     string Detail,
-    string Assembly = "");
+    string Assembly = "")
+{
+    internal IReadOnlyList<string> RuntimeConditionalSkipReasons { get; init; } = [];
+    internal IReadOnlyList<string> RuntimeConditionalSkipContracts { get; init; } = [];
+}
+
+internal sealed record EngineeringTestSourceIdentity(
+    string Assembly,
+    string Id,
+    IReadOnlyList<string> RuntimeConditionalSkipReasons,
+    IReadOnlyList<string> RuntimeConditionalSkipContracts);
 
 internal sealed record EngineeringTestPlan(
     EngineeringTestPlanKind Kind,
@@ -75,7 +85,7 @@ internal static class EngineeringTestPlanDeriver
             assemblyByProject: assemblies);
     }
 
-    internal static ImmutableArray<(string Assembly, string Id)> DeriveSourceIdentities(
+    internal static ImmutableArray<EngineeringTestSourceIdentity> DeriveSourceIdentities(
         RepositorySnapshot snapshot)
     {
         var map = ScribeTestMapDeriver.DeriveSnapshot(snapshot);
@@ -222,7 +232,11 @@ internal static class EngineeringTestPlanPolicy
                     method.Id,
                     reason.Value,
                     detail!,
-                    Assembly(project, assemblyByProject)));
+                    Assembly(project, assemblyByProject))
+                {
+                    RuntimeConditionalSkipReasons = method.RuntimeConditionalSkipReasons,
+                    RuntimeConditionalSkipContracts = method.RuntimeConditionalSkipContracts,
+                });
             }
         }
 
@@ -260,6 +274,10 @@ internal static class EngineeringTestPlanPolicy
                         + $"conservatively unknown: {degradation.Reason}"
                     : "identity is owned by the protected base",
                 Assembly(project, assemblyByProject))
+            {
+                RuntimeConditionalSkipReasons = method.RuntimeConditionalSkipReasons,
+                RuntimeConditionalSkipContracts = method.RuntimeConditionalSkipContracts,
+            }
             : throw new InvalidOperationException($"project attribution failed for {method.Identity}"))
         .DistinctBy(static test => (test.Assembly, test.Id))
         .OrderBy(static test => test.Assembly, StringComparer.Ordinal)
@@ -274,7 +292,7 @@ internal static class EngineeringTestPlanPolicy
                 .ThenBy(static degradation => degradation.Reason, StringComparer.Ordinal)
                 .Select(static degradation =>
                 $"metadata degraded for {degradation.ProjectPath}: {degradation.Reason}"));
-    internal static ImmutableArray<(string Assembly, string Id)> SourceIdentities(
+    internal static ImmutableArray<EngineeringTestSourceIdentity> SourceIdentities(
         ScribeTestMap map,
         IReadOnlyDictionary<string, string> assemblyByProject) => map.Methods
         .Select(method =>
@@ -283,7 +301,11 @@ internal static class EngineeringTestPlanPolicy
                 throw new InvalidOperationException($"project attribution failed for {method.Identity}");
             if (!assemblyByProject.TryGetValue(project, out var assembly))
                 throw new InvalidOperationException($"assembly attribution failed for {project}");
-            return (Assembly: assembly, method.Id);
+            return new EngineeringTestSourceIdentity(
+                assembly,
+                method.Id,
+                method.RuntimeConditionalSkipReasons,
+                method.RuntimeConditionalSkipContracts);
         })
         .OrderBy(static test => test.Assembly, StringComparer.OrdinalIgnoreCase)
         .ThenBy(static test => test.Id, StringComparer.Ordinal)

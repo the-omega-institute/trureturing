@@ -71,21 +71,24 @@ public sealed class TestResultEvidenceTests
     }
 
     [Fact]
-    public void RejectsSkippedProtectedBaseIdentityThatStillExistsInCandidateSource()
+    public void RejectsStaticSkipProtectedBaseIdentityThatStillExistsInCandidateSource()
     {
+        const string skipReason = "candidate disabled a protected-base planned test";
         var evidence = new TestResultEvidence(
             1,
             new HashSet<(string Assembly, string Id)>
             {
                 ("First.Owner.Tests", "OtherTests.Executed"),
+            },
+            new Dictionary<(string Assembly, string Id), string>
+            {
+                [("First.Owner.Tests", "PlannedTests.Skipped")] = skipReason,
             });
-        (string Assembly, string Id)[] expected =
-        [
-            ("First.Owner.Tests", "PlannedTests.Skipped"),
-        ];
+        var expected = Planned("First.Owner.Tests", "PlannedTests.Skipped");
+        var candidateSource = Candidate("First.Owner.Tests", "PlannedTests.Skipped");
 
         var failure = Assert.Throws<InvalidDataException>(
-            () => VerifyExpected(evidence, expected, expected));
+            () => VerifyExpected(evidence, [expected], [candidateSource]));
 
         Assert.Equal(
             "TRX is missing protected-base planned test identities count=1 tests="
@@ -102,19 +105,102 @@ public sealed class TestResultEvidenceTests
             {
                 ("First.Owner.Tests", "OtherTests.Executed"),
             });
-        (string Assembly, string Id)[] expected =
-        [
-            ("Deleted.Owner.Tests", "DeletedTests.RemovedFact"),
-        ];
+        var expected = Planned("Deleted.Owner.Tests", "DeletedTests.RemovedFact");
         using var output = new StringWriter { NewLine = "\n" };
 
-        var executed = Program.VerifyExpectedTestEvidence(evidence, expected, [], output);
+        var executed = Program.VerifyExpectedTestEvidence(evidence, [expected], [], output);
 
         Assert.Equal(1, executed);
         Assert.Equal(
             "ENGINEERING_TEST_IDENTITY_EXEMPTED assembly=\"Deleted.Owner.Tests\" "
             + "id=\"DeletedTests.RemovedFact\" reason=candidate_source_absent\n",
             output.ToString());
+    }
+
+    [Fact]
+    public void AcceptsRuntimeConditionalSkipAndRecordsDistinctExemption()
+    {
+        const string skipReason = "Live raw Lean report is absent; document graph verification requires that report.";
+        var evidence = new TestResultEvidence(
+            1,
+            new HashSet<(string Assembly, string Id)>
+            {
+                ("First.Owner.Tests", "OtherTests.Executed"),
+            },
+            new Dictionary<(string Assembly, string Id), string>
+            {
+                [("StrataLint.Scribe.Tests", "DocumentDiscoveryTests.GeneratedDocumentGraphMatchesFormalTruth")] = skipReason,
+            });
+        var expected = Planned(
+            "StrataLint.Scribe.Tests",
+            "DocumentDiscoveryTests.GeneratedDocumentGraphMatchesFormalTruth",
+            skipReason);
+        var candidateSource = Candidate(
+            "StrataLint.Scribe.Tests",
+            "DocumentDiscoveryTests.GeneratedDocumentGraphMatchesFormalTruth",
+            skipReason);
+        using var output = new StringWriter { NewLine = "\n" };
+
+        var executed = Program.VerifyExpectedTestEvidence(
+            evidence,
+            [expected],
+            [candidateSource],
+            output);
+
+        Assert.Equal(1, executed);
+        Assert.Equal(
+            "ENGINEERING_TEST_IDENTITY_EXEMPTED assembly=\"StrataLint.Scribe.Tests\" "
+            + "id=\"DocumentDiscoveryTests.GeneratedDocumentGraphMatchesFormalTruth\" "
+            + "reason=runtime_conditional_skip\n",
+            output.ToString());
+    }
+
+    [Fact]
+    public void RejectsStaticSkipEvenWhenItCopiesTheRuntimeConditionalMessage()
+    {
+        const string skipReason = "Live raw Lean report is absent; document graph verification requires that report.";
+        var identity = (Assembly: "StrataLint.Scribe.Tests", Id: "DocumentDiscoveryTests.GeneratedDocumentGraphMatchesFormalTruth");
+        var evidence = new TestResultEvidence(
+            1,
+            new HashSet<(string Assembly, string Id)>
+            {
+                ("First.Owner.Tests", "OtherTests.Executed"),
+            },
+            new Dictionary<(string Assembly, string Id), string>
+            {
+                [identity] = skipReason,
+            });
+        var expected = Planned(identity.Assembly, identity.Id, skipReason);
+        var candidateStaticSkip = Candidate(identity.Assembly, identity.Id);
+
+        var failure = Assert.Throws<InvalidDataException>(
+            () => VerifyExpected(evidence, [expected], [candidateStaticSkip]));
+
+        Assert.Equal(
+            "TRX is missing protected-base planned test identities count=1 tests="
+            + "StrataLint.Scribe.Tests::DocumentDiscoveryTests.GeneratedDocumentGraphMatchesFormalTruth",
+            failure.Message);
+    }
+
+    [Fact]
+    public void RejectsRuntimeConditionalSkipWhenCandidateConditionContractChanged()
+    {
+        const string skipReason = "Live raw Lean report is absent; document graph verification requires that report.";
+        var identity = (Assembly: "StrataLint.Scribe.Tests", Id: "DocumentDiscoveryTests.GeneratedDocumentGraphMatchesFormalTruth");
+        var evidence = new TestResultEvidence(
+            1,
+            new HashSet<(string Assembly, string Id)> { ("First.Owner.Tests", "OtherTests.Executed") },
+            new Dictionary<(string Assembly, string Id), string> { [identity] = skipReason });
+        var expected = new ExpectedTestIdentity(identity.Assembly, identity.Id, [skipReason], ["base-contract"]);
+        var candidate = new CandidateTestIdentity(identity.Assembly, identity.Id, [skipReason], ["changed-contract"]);
+
+        var failure = Assert.Throws<InvalidDataException>(
+            () => VerifyExpected(evidence, [expected], [candidate]));
+
+        Assert.Equal(
+            "TRX is missing protected-base planned test identities count=1 tests="
+            + "StrataLint.Scribe.Tests::DocumentDiscoveryTests.GeneratedDocumentGraphMatchesFormalTruth",
+            failure.Message);
     }
 
     [Fact]
@@ -272,4 +358,31 @@ public sealed class TestResultEvidenceTests
         using var output = new StringWriter { NewLine = "\n" };
         return Program.VerifyExpectedTestEvidence(evidence, expected, candidateSource, output);
     }
+
+    private static int VerifyExpected(
+        TestResultEvidence evidence,
+        IEnumerable<ExpectedTestIdentity> expected,
+        IEnumerable<CandidateTestIdentity> candidateSource)
+    {
+        using var output = new StringWriter { NewLine = "\n" };
+        return Program.VerifyExpectedTestEvidence(evidence, expected, candidateSource, output);
+    }
+
+    private static ExpectedTestIdentity Planned(
+        string assembly,
+        string id,
+        params string[] runtimeConditionalSkipReasons) => new(
+            assembly,
+            id,
+            runtimeConditionalSkipReasons,
+            runtimeConditionalSkipReasons.Length == 0 ? [] : ["protected-runtime-contract"]);
+
+    private static CandidateTestIdentity Candidate(
+        string assembly,
+        string id,
+        params string[] runtimeConditionalSkipReasons) => new(
+            assembly,
+            id,
+            [.. runtimeConditionalSkipReasons],
+            runtimeConditionalSkipReasons.Length == 0 ? [] : ["protected-runtime-contract"]);
 }

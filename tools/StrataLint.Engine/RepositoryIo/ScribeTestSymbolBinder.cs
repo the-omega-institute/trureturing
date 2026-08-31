@@ -9,6 +9,11 @@ internal sealed record ScribeParsedSource(
     SyntaxNode Root,
     IReadOnlyList<ScribeBoundCallable> Callables);
 
+internal sealed record ScribeRuntimeConditionalSkipRoot(
+    string Reason,
+    IMethodSymbol Constructor,
+    string AttributeSyntax);
+
 internal sealed class ScribeBoundCallable
 {
     internal ScribeBoundCallable(
@@ -18,6 +23,7 @@ internal sealed class ScribeBoundCallable
         string name,
         bool isTest,
         bool isStaticallySkipped,
+        IReadOnlyList<ScribeRuntimeConditionalSkipRoot> runtimeConditionalSkipRoots,
         SyntaxNode syntax,
         SemanticModel semanticModel,
         ScribeSemanticModelProvider semanticModels,
@@ -29,6 +35,12 @@ internal sealed class ScribeBoundCallable
         Name = name;
         IsTest = isTest;
         IsStaticallySkipped = isStaticallySkipped;
+        RuntimeConditionalSkipRoots = runtimeConditionalSkipRoots;
+        RuntimeConditionalSkipReasons = runtimeConditionalSkipRoots
+            .Select(static skip => skip.Reason)
+            .Distinct(StringComparer.Ordinal)
+            .Order(StringComparer.Ordinal)
+            .ToArray();
         Syntax = syntax;
         SemanticModel = semanticModel;
         SemanticModels = semanticModels;
@@ -41,6 +53,9 @@ internal sealed class ScribeBoundCallable
     internal string Name { get; }
     internal bool IsTest { get; }
     internal bool IsStaticallySkipped { get; }
+    internal IReadOnlyList<string> RuntimeConditionalSkipReasons { get; }
+    internal IReadOnlyList<string> RuntimeConditionalSkipContracts { get; set; } = [];
+    internal IReadOnlyList<ScribeRuntimeConditionalSkipRoot> RuntimeConditionalSkipRoots { get; }
     internal SyntaxNode Syntax { get; }
     internal SemanticModel SemanticModel { get; }
     internal ScribeSemanticModelProvider SemanticModels { get; }
@@ -165,6 +180,14 @@ internal static class ScribeTestSymbolBinder
                 productionAssemblies);
         }
 
+        foreach (var callable in symbolsByCallable.Keys.Where(static item => item.IsTest))
+        {
+            callable.RuntimeConditionalSkipContracts = BuildRuntimeConditionalSkipContracts(
+                callable,
+                callablesBySymbol,
+                symbolsByCallable);
+        }
+
         return parsed;
     }
 
@@ -181,6 +204,12 @@ internal static class ScribeTestSymbolBinder
         var normalized = ScribeCallableIndex.Normalize(symbol);
         if (callablesBySymbol.Contains(normalized)) return;
         var isTest = declaration is MethodDeclarationSyntax method && IsTestMethod(method, model);
+        var runtimeConditionalSkipRoots = isTest
+            ? FindRuntimeConditionalSkipReasons(
+                (MethodDeclarationSyntax)declaration,
+                model,
+                semanticModels)
+            : [];
         var callable = new ScribeBoundCallable(
             source.Path,
             source.PartitionKey,
@@ -188,6 +217,7 @@ internal static class ScribeTestSymbolBinder
             symbol.Name,
             isTest,
             isTest && IsStaticallySkipped((MethodDeclarationSyntax)declaration, model),
+            runtimeConditionalSkipRoots,
             declaration,
             model,
             semanticModels,
@@ -443,6 +473,124 @@ internal static class ScribeTestSymbolBinder
             .Any(static attribute => attribute.ArgumentList?.Arguments.Any(static argument =>
                 argument.NameEquals?.Name.Identifier.ValueText == "Skip"
                 && !argument.Expression.IsKind(SyntaxKind.NullLiteralExpression)) == true);
+
+    private static IReadOnlyList<ScribeRuntimeConditionalSkipRoot> FindRuntimeConditionalSkipReasons(
+        MethodDeclarationSyntax method,
+        SemanticModel model,
+        ScribeSemanticModelProvider semanticModels)
+    {
+        var roots = new List<ScribeRuntimeConditionalSkipRoot>();
+        foreach (var attribute in method.AttributeLists.SelectMany(static list => list.Attributes))
+        {
+            foreach (var constructor in Symbols(model.GetSymbolInfo(attribute)).OfType<IMethodSymbol>())
+            {
+                if (constructor.ContainingType.ToDisplayString() is "Xunit.FactAttribute" or "Xunit.TheoryAttribute")
+                {
+                    continue;
+                }
+
+                foreach (var reference in constructor.DeclaringSyntaxReferences)
+                {
+                    if (reference.GetSyntax() is not ConstructorDeclarationSyntax declaration
+                        || semanticModels.ModelFor(declaration, model) is not { } constructorModel)
+                    {
+                        continue;
+                    }
+
+                    foreach (var assignment in declaration.DescendantNodes()
+                                 .OfType<AssignmentExpressionSyntax>())
+                    {
+                        if (!IsRuntimeConditional(assignment, declaration, constructorModel)
+                            || constructorModel.GetSymbolInfo(assignment.Left).Symbol is not IPropertySymbol
+                            {
+                                Name: "Skip",
+                            } property
+                            || property.ContainingType.ToDisplayString() != "Xunit.FactAttribute"
+                            || constructorModel.GetConstantValue(assignment.Right) is not
+                            {
+                                HasValue: true,
+                                Value: string reason,
+                            })
+                        {
+                            continue;
+                        }
+
+                        roots.Add(new ScribeRuntimeConditionalSkipRoot(
+                            reason,
+                            constructor,
+                            attribute.ToFullString()));
+                    }
+                }
+            }
+        }
+
+        return roots
+            .OrderBy(static root => root.Reason, StringComparer.Ordinal)
+            .ThenBy(static root => root.Constructor.ContainingType.ToDisplayString(), StringComparer.Ordinal)
+            .ToArray();
+    }
+
+    private static IReadOnlyList<string> BuildRuntimeConditionalSkipContracts(
+        ScribeBoundCallable test,
+        ScribeCallableIndex callablesBySymbol,
+        IReadOnlyDictionary<ScribeBoundCallable, IMethodSymbol> symbolsByCallable)
+    {
+        var contracts = new List<string>();
+        foreach (var root in test.RuntimeConditionalSkipRoots)
+        {
+            if (!callablesBySymbol.TryGetValue(ScribeCallableIndex.Normalize(root.Constructor), out var start))
+                continue;
+            var files = new SortedDictionary<string, string>(StringComparer.Ordinal);
+            var pending = new Stack<ScribeBoundCallable>();
+            var visited = new HashSet<ScribeBoundCallable>();
+            pending.Push(start);
+            while (pending.TryPop(out var callable))
+            {
+                if (!visited.Add(callable)) continue;
+                foreach (var reference in symbolsByCallable[callable].ContainingType.DeclaringSyntaxReferences)
+                {
+                    var syntax = reference.GetSyntax();
+                    files[syntax.SyntaxTree.FilePath] = syntax.SyntaxTree.GetText().ToString();
+                }
+                foreach (var target in callable.Targets) pending.Push(target);
+            }
+
+            var payload = root.Reason + "\n" + root.Constructor.ContainingType.ToDisplayString()
+                + "\n" + root.AttributeSyntax + "\n" + string.Join(
+                    "\n",
+                    files.Select(static file => file.Key + "\n" + file.Value));
+            contracts.Add(Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(
+                System.Text.Encoding.UTF8.GetBytes(payload))).ToLowerInvariant());
+        }
+
+        return contracts.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal).ToArray();
+    }
+
+    private static bool IsRuntimeConditional(
+        AssignmentExpressionSyntax assignment,
+        ConstructorDeclarationSyntax constructor,
+        SemanticModel model)
+    {
+        foreach (var ancestor in assignment.Ancestors().TakeWhile(node => node != constructor))
+        {
+            if (ancestor is CatchClauseSyntax)
+            {
+                return true;
+            }
+
+            if (ancestor is IfStatementSyntax conditional
+                && model.GetConstantValue(conditional.Condition) is not
+                {
+                    HasValue: true,
+                    Value: bool,
+                })
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     private static bool IsInsideNameof(SyntaxNode node, SemanticModel model) => node.Ancestors()
         .OfType<InvocationExpressionSyntax>()

@@ -16,5 +16,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Update="Fixtures/infrastructure-skip.trx" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="Fixtures/runtime-conditional-skip/runtime.trx" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

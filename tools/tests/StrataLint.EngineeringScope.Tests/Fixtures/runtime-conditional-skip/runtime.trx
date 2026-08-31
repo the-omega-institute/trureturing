@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TestRun xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Results>
+    <UnitTestResult testId="skip-id" testName="Synthetic.LiveTests.RuntimeConditional" outcome="NotExecuted">
+      <Output>
+        <ErrorInfo>
+          <Message>Live raw Lean report is absent; document graph verification requires that report.</Message>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult testId="pass-id" testName="Synthetic.LiveTests.Normal" outcome="Passed" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest storage="Synthetic.Tests.dll" id="skip-id">
+      <TestMethod className="Synthetic.LiveTests" name="RuntimeConditional" />
+    </UnitTest>
+    <UnitTest storage="Synthetic.Tests.dll" id="pass-id">
+      <TestMethod className="Synthetic.LiveTests" name="Normal" />
+    </UnitTest>
+  </TestDefinitions>
+  <ResultSummary>
+    <Counters total="2" executed="1" passed="1" failed="0" notExecuted="1" />
+  </ResultSummary>
+</TestRun>

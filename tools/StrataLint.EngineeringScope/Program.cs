@@ -114,7 +114,9 @@ internal static class Program
                     "plan artifact differs from the protected-base identity derivation");
             }
 
-            plan = artifact.Plan!;
+            plan = artifact.Plan!.Kind == EngineeringTestPlanKind.Full
+                ? forcedFull!
+                : expected;
         }
         catch (Exception exception)
         {
@@ -126,11 +128,17 @@ internal static class Program
         }
 
         WritePlan(plan);
-        IReadOnlyList<(string Assembly, string Id)> candidateSourceIdentities =
+        IReadOnlyList<CandidateTestIdentity> candidateSourceIdentities =
             plan.Kind == EngineeringTestPlanKind.None
                 ? []
                 : EngineeringTestPlanDeriver.DeriveSourceIdentities(
-                    RevisionSnapshot(options.RepositoryRoot, head, "candidate"));
+                    RevisionSnapshot(options.RepositoryRoot, head, "candidate"))
+                    .Select(static test => new CandidateTestIdentity(
+                        test.Assembly,
+                        test.Id,
+                        test.RuntimeConditionalSkipReasons,
+                        test.RuntimeConditionalSkipContracts))
+                    .ToArray();
         return EngineeringTestExecutor.Execute(
             plan,
             invocation => RunTests(
@@ -144,7 +152,7 @@ internal static class Program
         string repositoryRoot,
         IReadOnlyList<string> changedPaths,
         EngineeringTestInvocation invocation,
-        IReadOnlyList<(string Assembly, string Id)> candidateSourceIdentities)
+        IReadOnlyList<CandidateTestIdentity> candidateSourceIdentities)
     {
         var resultsDirectory = Directory.CreateTempSubdirectory("stratalint-engineering-tests-").FullName;
         var startInfo = new ProcessStartInfo
@@ -199,10 +207,14 @@ internal static class Program
     private static int VerifyTestEvidence(
         string resultsDirectory,
         IReadOnlyList<EngineeringSelectedTest> expectedTests,
-        IReadOnlyList<(string Assembly, string Id)> candidateSourceIdentities) =>
+        IReadOnlyList<CandidateTestIdentity> candidateSourceIdentities) =>
         VerifyExpectedTestEvidence(
             TestResultEvidence.Load(resultsDirectory),
-            expectedTests.Select(static test => (test.Assembly, test.Id)),
+            expectedTests.Select(static test => new ExpectedTestIdentity(
+                test.Assembly,
+                test.Id,
+                test.RuntimeConditionalSkipReasons,
+                test.RuntimeConditionalSkipContracts)),
             candidateSourceIdentities,
             Console.Out);
 
@@ -210,14 +222,32 @@ internal static class Program
         TestResultEvidence evidence,
         IEnumerable<(string Assembly, string Id)> expectedTests,
         IEnumerable<(string Assembly, string Id)> candidateSourceTests,
+        TextWriter standardOutput) =>
+        VerifyExpectedTestEvidence(
+            evidence,
+            expectedTests.Select(static test => new ExpectedTestIdentity(test.Assembly, test.Id, [], [])),
+            candidateSourceTests.Select(static test => new CandidateTestIdentity(test.Assembly, test.Id, [], [])),
+            standardOutput);
+
+    internal static int VerifyExpectedTestEvidence(
+        TestResultEvidence evidence,
+        IEnumerable<ExpectedTestIdentity> expectedTests,
+        IEnumerable<CandidateTestIdentity> candidateSourceTests,
         TextWriter standardOutput)
     {
         var comparison = evidence.CompareExpectedTests(expectedTests, candidateSourceTests);
-        foreach (var exemption in comparison.Exemptions)
+        foreach (var exemption in comparison.SourceAbsentExemptions)
         {
             standardOutput.WriteLine(
                 $"ENGINEERING_TEST_IDENTITY_EXEMPTED assembly={JsonSerializer.Serialize(exemption.Assembly)} "
                 + $"id={JsonSerializer.Serialize(exemption.Id)} reason=candidate_source_absent");
+        }
+
+        foreach (var exemption in comparison.RuntimeConditionalSkipExemptions)
+        {
+            standardOutput.WriteLine(
+                $"ENGINEERING_TEST_IDENTITY_EXEMPTED assembly={JsonSerializer.Serialize(exemption.Assembly)} "
+                + $"id={JsonSerializer.Serialize(exemption.Id)} reason=runtime_conditional_skip");
         }
 
         if (comparison.Blocking.Count != 0)
@@ -308,7 +338,13 @@ internal static class Program
         left.Kind == right.Kind
         && left.Reason == right.Reason
         && left.ChangedPaths.SequenceEqual(right.ChangedPaths, StringComparer.Ordinal)
-        && left.Tests.SequenceEqual(right.Tests);
+        && left.Tests.Length == right.Tests.Length
+        && left.Tests.Zip(right.Tests).All(static pair =>
+            pair.First.ProjectPath == pair.Second.ProjectPath
+            && pair.First.Id == pair.Second.Id
+            && pair.First.Reason == pair.Second.Reason
+            && pair.First.Detail == pair.Second.Detail
+            && pair.First.Assembly == pair.Second.Assembly);
 
     private static void WritePlan(EngineeringTestPlan plan)
     {

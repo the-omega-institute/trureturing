@@ -208,8 +208,12 @@ public sealed class ScribeTestMapSymbolBindingTests
             class DerivedFactTests {
               [LiveReportFact] public void Reads() { }
               private sealed class LiveReportFactAttribute : FactAttribute {
-                public LiveReportFactAttribute() => File.ReadAllText(
-                  Path.Combine(RepositoryLayout.FindRoot(), "D5", "attribute.lean"));
+                public LiveReportFactAttribute() {
+                  if (Environment.GetEnvironmentVariable("LIVE_REPORT") != "1")
+                    Skip = "live report is absent";
+                  File.ReadAllText(Path.Combine(
+                    RepositoryLayout.FindRoot(), "D5", "attribute.lean"));
+                }
               }
             }
             """;
@@ -218,6 +222,11 @@ public sealed class ScribeTestMapSymbolBindingTests
 
         Assert.Equal("DerivedFactTests.Reads", method.Id);
         Assert.Equal(["D5/attribute.lean"], method.Paths);
+        Assert.Equal(["live report is absent"], method.RuntimeConditionalSkipReasons);
+        var contract = Assert.Single(method.RuntimeConditionalSkipContracts);
+        Assert.Equal(64, contract.Length);
+        var changedCondition = Assert.Single(Derive(source.Replace("!= \"1\"", "== \"1\"", StringComparison.Ordinal)).Methods);
+        Assert.NotEqual(contract, Assert.Single(changedCondition.RuntimeConditionalSkipContracts));
     }
 
     [Fact]
@@ -493,6 +502,12 @@ public sealed class ScribeTestMapSymbolBindingTests
                 matches.Length == 1,
                 $"{id}: source peers are {string.Join(", ", map.Methods.Where(method => id.StartsWith(method.Id.Split('.')[0], StringComparison.Ordinal)).Select(static method => method.Id))}");
             Assert.Equal(paths, matches[0].Paths);
+            Assert.NotEmpty(matches[0].RuntimeConditionalSkipReasons);
+            Assert.All(
+                matches[0].RuntimeConditionalSkipReasons,
+                static reason => Assert.StartsWith("Live raw Lean report is ", reason, StringComparison.Ordinal));
+            Assert.NotEmpty(matches[0].RuntimeConditionalSkipContracts);
+            Assert.All(matches[0].RuntimeConditionalSkipContracts, static contract => Assert.Equal(64, contract.Length));
         }
 
         Assert.All(

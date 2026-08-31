@@ -66,7 +66,10 @@ public sealed class ScribeTestMapDeriverTests
             [],
             compileProjectBySourcePath:
                 new Dictionary<string, string>(StringComparer.Ordinal) { [source] = project });
-        Assert.True(Assert.Single(map.Methods).IsStaticallySkipped);
+        var method = Assert.Single(map.Methods);
+        Assert.True(method.IsStaticallySkipped);
+        Assert.Empty(method.RuntimeConditionalSkipReasons);
+        Assert.Empty(method.RuntimeConditionalSkipContracts);
 
         var identities = EngineeringTestPlanPolicy.SourceIdentities(
             map,
