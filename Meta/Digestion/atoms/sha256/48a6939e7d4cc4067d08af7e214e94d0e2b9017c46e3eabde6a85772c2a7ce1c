@@ -1,0 +1,56 @@
+## 二、生成律分形
+
+不同对象未必长得相似，但都重复同一套操作：
+
+$$
+\boxed{
+\text{分裂}
+\rightarrow
+\text{对偶}
+\rightarrow
+\text{投影}
+\rightarrow
+\text{隐藏残差}
+\rightarrow
+\text{再次分裂}.
+}
+$$
+
+例如：
+
+$$
+I=D+D^2
+$$
+
+产生黄金第二影；
+
+条件期望产生：
+
+$$
+X=\mathbb E[X\mid\mathcal G]+R,
+\qquad
+R\perp L^2(\mathcal G);
+$$
+
+Hardy 极化产生：
+
+$$
+L^2=H_+^2\oplus H_-^2;
+$$
+
+Solenoid 投影产生：
+
+$$
+\text{完整状态}
+\longrightarrow
+\text{可见相位}
+$$
+
+以及隐藏纤维。
+
+这些对象外形完全不同，但其信息结构相同。
+
+项目已经机器证明，条件期望给出唯一预测—正交残差分解，残差与所有通过当前概念接口可测的 \(L^2\) 变量正交。
+
+---
+

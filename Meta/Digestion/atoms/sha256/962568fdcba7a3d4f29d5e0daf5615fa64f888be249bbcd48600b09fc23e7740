@@ -1,0 +1,25 @@
+## 四、完成分形
+
+同一个局部系统可以有不同类型的完成：
+
+$$
+\boxed{
+\begin{aligned}
+\text{几何完成}
+&=\text{IFS 吸引子};\\
+\text{历史完成}
+&=\text{逆极限／Solenoid};\\
+\text{谱完成}
+&=\text{zeta／determinant};\\
+\text{正性完成}
+&=\text{Gram／Hilbert 完成};\\
+\text{因果完成}
+&=\text{Hardy／retarded realization}.
+\end{aligned}
+}
+$$
+
+你的直觉最接近后三种，而不是普通几何图像分形。
+
+---
+

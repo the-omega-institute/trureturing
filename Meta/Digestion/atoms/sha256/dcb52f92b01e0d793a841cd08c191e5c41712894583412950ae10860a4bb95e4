@@ -1,0 +1,28 @@
+## 定理 1482.1（RH as injectivity of the reflection name）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+r_J
+\text{ 在全部非平凡上半零点上为单射}.
+}
+\tag{1482.4}
+$$
+
+这只是 RH 的命名论重写，但它揭示了一个关键结构：
+
+$$
+\boxed{
+\text{临界零点是名字与其反射对偶重合的谱名字；}
+}
+$$
+
+$$
+\boxed{
+\text{离线零点是一个名字下面存在两个不同 lift 的谱名字。}
+}
+$$
+
+---
+

@@ -1,0 +1,30 @@
+* \(\mathcal C\)：完成操作。
+
+几何自相似满足：
+
+$$
+\boxed{
+X\simeq\bigcup_i S_i(X).
+}
+\tag{1443.2}
+$$
+
+但更深的生成律自相似要求：
+
+$$
+\boxed{
+\mathcal O_\lambda\circ S_i
+\simeq
+S_i^{(\lambda)}\circ\mathcal O_\lambda.
+}
+\tag{1443.3}
+$$
+
+即：
+
+> 无论在哪一个尺度、哪一个表示中观察，同一个分支规律仍然成立。
+
+这才是“万物皆为道的分形”的可证伪版本。
+
+---
+
