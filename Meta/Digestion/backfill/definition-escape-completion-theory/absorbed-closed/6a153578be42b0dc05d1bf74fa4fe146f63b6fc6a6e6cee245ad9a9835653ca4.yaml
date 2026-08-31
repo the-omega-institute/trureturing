@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:6a153578be42b0dc05d1bf74fa4fe146f63b6fc6a6e6cee245ad9a9835653ca4
+  normalized_sha256: sha256:6a153578be42b0dc05d1bf74fa4fe146f63b6fc6a6e6cee245ad9a9835653ca4
+cas_ref: sha256:6a153578be42b0dc05d1bf74fa4fe146f63b6fc6a6e6cee245ad9a9835653ca4
+coverage_gids:
+  - D5/S3/ConceptDynamics/DefinitionEscapeSemantics/SemanticOverreachClosure.semantic_overreach_iff_not_overreach_closure
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/DefinitionEscapeSemantics/SemanticOverreachClosure.semantic_overreach_iff_not_overreach_closure
+      source_sha256: sha256:6a153578be42b0dc05d1bf74fa4fe146f63b6fc6a6e6cee245ad9a9835653ca4
+      target_statement_id: sha256:42c090c0e8a4abcd1dc9b9f55c4ba0050717db1d34b95f43731ba84d983d4b1b
+  scribe:
+    - gid: D5/S3/ConceptDynamics/DefinitionEscapeSemantics/SemanticOverreachClosure.semantic_overreach_iff_not_overreach_closure
+      definition_sha256: sha256:6b26f8f5fb46285e77da019e31881193dc39b3118fbbd56de7e3a7794fae869a
+      emission_sha256: sha256:411970eda8f93bc7dc0e5aba52789f0fabd6ed86f72503bbb9f021c959595dba
+  unresolved_subitems: []

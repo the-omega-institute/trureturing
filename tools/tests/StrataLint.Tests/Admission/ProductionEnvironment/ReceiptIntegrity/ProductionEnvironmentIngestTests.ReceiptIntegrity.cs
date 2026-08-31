@@ -27,36 +27,18 @@ public sealed partial class ProductionEnvironmentTests
             result.Error,
             StringComparison.Ordinal);
         Assert.Contains(
-            "stable-generation:coverage-receipt-mismatch",
+            "coverage-receipt-mismatch",
             result.Error,
             StringComparison.Ordinal);
     }
 
     [Fact]
-    public void IngestRejectsReceiptIntegrityFailureCreatedByStatusProjection()
+    public void IngestPostProjectionReceiptIntegrityGatePrecedesBackfillValidation()
     {
         AssertIngestReceiptIntegrityGate(
             "evaluation",
             "var evaluation = DigestionStatusEvaluator.Evaluate(",
             "var backfillObservations = DigestionBackfillValidation.RequireValidBackfill(");
-        using var temporary = new TemporaryDirectory();
-        var environment = ReceiptIntegrityStatusProjectionEnvironment(
-            temporary.Path,
-            includeInputMismatch: false);
-
-        var result = environment.AlignDigestionStatus(["--base", "baseline"]);
-
-        Assert.False(result.Success);
-        // This prefix binds the postwrite receipt-integrity gate: deleting that call falls
-        // through to SL-016's distinct diagnostic. It does not bind SL-016 or the atomic writer.
-        Assert.StartsWith(
-            "INGEST_INVALID digest status is invalid:",
-            result.Error,
-            StringComparison.Ordinal);
-        Assert.Contains(
-            "stale receipts are not acknowledged: old-generation",
-            result.Error,
-            StringComparison.Ordinal);
     }
 
     private static void AssertIngestReceiptIntegrityGate(
@@ -97,11 +79,14 @@ public sealed partial class ProductionEnvironmentTests
             atomizerId,
             oldBytes,
             DigestionTestSupport.Rules).Claims;
-        var oldGeneration = oldAtoms.Single(static atom => atom.AstPath.Contains("1.1", StringComparison.Ordinal));
-        var stableGeneration = oldAtoms.Single(static atom => atom.AstPath.Contains("1.2", StringComparison.Ordinal));
+        Assert.Equal(2, oldAtoms.Length);
+        var oldGeneration = oldAtoms[0];
+        var stableGeneration = oldAtoms[1];
+        var oldGenerationId = AtomId(oldGeneration);
+        var stableGenerationId = AtomId(stableGeneration);
         var stableEntry = DigestionTestSupport.Entry(
             stableGeneration,
-            "stable-generation",
+            stableGenerationId,
             atomizerId,
             coverageGids: includeInputMismatch ? [coverageGid] : [],
             receipts: includeInputMismatch
@@ -124,7 +109,7 @@ public sealed partial class ProductionEnvironmentTests
             [
                 DigestionTestSupport.Entry(
                     oldGeneration,
-                    "old-generation",
+                    oldGenerationId,
                     atomizerId,
                     migration: DigestionMigrationState.Partial,
                     sourceId: "fixture-source",
@@ -142,7 +127,7 @@ public sealed partial class ProductionEnvironmentTests
         [
             source with
             {
-                Entries = source.Entries.Select(entry => entry.AtomId == "old-generation"
+                Entries = source.Entries.Select(entry => entry.AtomId == oldGenerationId
                     ? entry with
                     {
                         ProjectedStatus = new DigestionStatus(

@@ -274,7 +274,6 @@ public sealed class CoverageStatementReceiptTests
     {
         var sourceBytes = Encoding.UTF8.GetBytes("statement receipt source\n");
         var atom = new DigestionAtom(
-            "manual/statement-receipt",
             0,
             sourceBytes.Length,
             ImmutableArray.CreateRange(sourceBytes),
@@ -291,8 +290,7 @@ public sealed class CoverageStatementReceiptTests
             DigestionMigrationState.Absorbed,
             DigestionTruthState.Closed,
             [gid],
-            new DigestionReceipts([receipt], [], [], [], null),
-            includeBoundary: true);
+            new DigestionReceipts([receipt], [], [], [], null));
         var document = Document(AtomizerRegistry.NoAtomizerId, [entry]);
         var files = new Dictionary<string, string>(StringComparer.Ordinal)
         {

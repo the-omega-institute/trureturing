@@ -1,0 +1,22 @@
+fingerprints:
+  raw_sha256: sha256:a4ad3be9f17a8d2f387354e41fd2b7cb2f0236a04486f448eaf5a7c94768ecf5
+  normalized_sha256: sha256:a4ad3be9f17a8d2f387354e41fd2b7cb2f0236a04486f448eaf5a7c94768ecf5
+cas_ref: sha256:a4ad3be9f17a8d2f387354e41fd2b7cb2f0236a04486f448eaf5a7c94768ecf5
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    recorded_at_utc: 2026-08-29T02:42:38.3355280+00:00
+    gids:
+      - D5/S1/Recurrence/BivariateWordSeries.bookkeeping_series_self_functional_equation
+    gaps:
+      - code: chain-migration-incomplete
+        detail: pzg-residual-7adc5d8657041d8f976da24df23afc6f5031791b64bc37e23a6374be71abd756-8469e43a2a1385023dda1ac85c2ceca87d44a5be7a97eda22c8a83998423d34d
+      - code: chain-migration-incomplete
+        detail: pzg-residual-e6bb853b3a0b26302834039841f589e17d37d4b6ed06575d223431ce60a063d1-6e76accaf7bb83701606c14b36c8956a0d187acc2ea2021019e320e1879011f9
+  chain_atoms:
+    - 7adc5d8657041d8f976da24df23afc6f5031791b64bc37e23a6374be71abd756
+    - e6bb853b3a0b26302834039841f589e17d37d4b6ed06575d223431ce60a063d1

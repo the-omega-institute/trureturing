@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:b561c5babea4bb7c86f2db39613d9f6d625ac0756cca834d753d28c26754f02f
+  normalized_sha256: sha256:b561c5babea4bb7c86f2db39613d9f6d625ac0756cca834d753d28c26754f02f
+cas_ref: sha256:b561c5babea4bb7c86f2db39613d9f6d625ac0756cca834d753d28c26754f02f
+coverage_gids:
+  - D5/S3/Zeros/SimpleZeroLogResidue.simple_zero_has_unit_logarithmic_residue
+receipts:
+  coverage:
+    - gid: D5/S3/Zeros/SimpleZeroLogResidue.simple_zero_has_unit_logarithmic_residue
+      source_sha256: sha256:b561c5babea4bb7c86f2db39613d9f6d625ac0756cca834d753d28c26754f02f
+      target_statement_id: sha256:1612019f165f91b62fde521f320a205f6adadb090898e7fca364d713fd73b122
+  scribe:
+    - gid: D5/S3/Zeros/SimpleZeroLogResidue.simple_zero_has_unit_logarithmic_residue
+      definition_sha256: sha256:cefe78ea9b3c3f57ad919171e75f260ef5ca79906bd4a553b1fa19a039c9edd4
+      emission_sha256: sha256:9ebe8b9fced89f79407deb559e30eee113e3e727b71747d9fa5292ccd1c94a3f
+  unresolved_subitems: []

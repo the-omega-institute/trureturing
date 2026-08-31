@@ -10,7 +10,7 @@ internal static class TailAuthorizationArtifact
     private const string Schema = "digestion-tail-authorization-v1";
 
     private static readonly Regex AtomIdPattern = new(
-        "^[A-Za-z0-9]+(?:[.-][A-Za-z0-9]+)*$",
+        "^[0-9a-f]{64}$",
         RegexOptions.CultureInvariant);
 
     private static readonly ImmutableHashSet<string> Fields =

@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:228a7f280bf95887cf17e56aa905271a296652359c181b02cea31fdbc058cc02
+  normalized_sha256: sha256:228a7f280bf95887cf17e56aa905271a296652359c181b02cea31fdbc058cc02
+cas_ref: sha256:228a7f280bf95887cf17e56aa905271a296652359c181b02cea31fdbc058cc02
+coverage_gids:
+  - D5/S3/Constants/SturmianDirichletValue.sturmian_dirichlet_value_eq
+receipts:
+  coverage:
+    - gid: D5/S3/Constants/SturmianDirichletValue.sturmian_dirichlet_value_eq
+      source_sha256: sha256:228a7f280bf95887cf17e56aa905271a296652359c181b02cea31fdbc058cc02
+      target_statement_id: sha256:4554eb173afbd36475deaaf399221c407ea6a36c2188aa4074179ffcca77b3e9
+  scribe:
+    - gid: D5/S3/Constants/SturmianDirichletValue.sturmian_dirichlet_value_eq
+      definition_sha256: sha256:7b06d2843217cf49f55890ba4a35006e52dab6d6f082b3cb4d29ceed8c15a9a4
+      emission_sha256: sha256:aeb6d2842888e40936da85825bcdd4643851263764acfbab748a9112fc2e54d5
+  unresolved_subitems: []

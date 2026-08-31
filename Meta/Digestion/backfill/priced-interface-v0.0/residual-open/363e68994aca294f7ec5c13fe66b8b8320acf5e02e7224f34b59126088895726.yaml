@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:363e68994aca294f7ec5c13fe66b8b8320acf5e02e7224f34b59126088895726
+  normalized_sha256: sha256:363e68994aca294f7ec5c13fe66b8b8320acf5e02e7224f34b59126088895726
+cas_ref: sha256:363e68994aca294f7ec5c13fe66b8b8320acf5e02e7224f34b59126088895726
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  quarantine:
+    justification: "This whole public clause requires one integrated semantics for a nonuniform-secure one-way-function family, uniform-input average inversion success, program description and runtime costs, program-to-polynomial-circuit simulation, and explicit exhaustive and full-table inverse endpoints with their stated costs. Retrieval receipts: D5 search `one.?way function|nonuniform.*circuit|circuit.*family|average.?case.*invert|inversion.*probability|negligible function|polynomial adversary|truth table.*inverse|exhaustive.*search` missed every cryptographic-complexity owner; the parent theorem/5.1 residual is already quarantined on the same prerequisite. Pinned Mathlib search found only the generic superpolynomial-decay/negligibility apparatus and no circuit family, one-way function, average inverter, or program-to-circuit simulation; pinned non-Mathlib packages likewise missed. A17 inspection of SamuelSchlesinger/complexitylib at e9834f354301195e7971b2943e68a1b4ed9373fb found machine-relative Kolmogorov complexity, P/poly circuit families, and deterministic Turing-machine unrolling, but a full source search missed one-way functions, nonuniform adversary security, and average inversion probability, and its Lean 4.30.0 toolchain is incompatible with this repository's pin. The local proof attempt cannot build the security contradiction or either endpoint from repository primitives; postulating negligible success for every jointly polynomial-description polynomial-time inverter would put the forbidden-corner conclusion directly in a hypothesis."
+    reentry_condition: "Add or admit an A17-compatible cryptographic complexity library defining nonuniform-secure one-way-function families and uniform average inversion, connect program description/runtime bounds to a proved polynomial-circuit simulation, and supply canonical exhaustive and full-table inverse constructions with the source's costs."
+    blocker_class: missing-prerequisite

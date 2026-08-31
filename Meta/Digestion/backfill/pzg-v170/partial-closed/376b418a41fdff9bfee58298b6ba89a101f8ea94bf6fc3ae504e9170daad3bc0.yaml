@@ -1,0 +1,28 @@
+fingerprints:
+  raw_sha256: sha256:376b418a41fdff9bfee58298b6ba89a101f8ea94bf6fc3ae504e9170daad3bc0
+  normalized_sha256: sha256:376b418a41fdff9bfee58298b6ba89a101f8ea94bf6fc3ae504e9170daad3bc0
+cas_ref: sha256:376b418a41fdff9bfee58298b6ba89a101f8ea94bf6fc3ae504e9170daad3bc0
+coverage_gids:
+  - D5/S3/Fourier/GaussianThetaTransformation.gaussian_theta_transformation
+  - D5/S3/Weil/EulerProduct.single_address_reading_spec
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/EulerProduct.single_address_reading_spec
+      source_sha256: sha256:376b418a41fdff9bfee58298b6ba89a101f8ea94bf6fc3ae504e9170daad3bc0
+      target_statement_id: sha256:039e6f8b761f23176670473b27cbf36ea4b43854a6cc5ce1313981db0619c4a6
+  scribe:
+    - gid: D5/S3/Weil/EulerProduct.single_address_reading_spec
+      definition_sha256: sha256:7c42f364cffc731328d1c66c59da12ca61ccf5d6797838678b81eda30edf196f
+      emission_sha256: sha256:58246a826a1958e8f0839acfd952a24e91ba52d5babac98f92e567a76417226c
+  unresolved_subitems:
+    - dirichlet-series-time-foliation-versus-euler-product-space-foliation
+    - euler-product-as-journal-ledger-trial-balance
+    - theta-as-heat-kernel-trace
+    - theta-small-time-and-large-time-asymptotics
+    - theta-asymptotic-numerical-certificates
+    - theta-time-inversion-genesis-heat-death-reading
+    - theta-fixed-time-one-corresponds-to-critical-half-line
+    - completed-zeta-parameter-as-history-sampling-bias
+    - folded-slit-mass-ratio-values-and-half-weight-certificate
+    - zeta-pole-at-one-as-genesis-divergence
+    - pole-subtraction-required-before-functional-symmetry

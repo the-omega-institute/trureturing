@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:754c6e650668dbaa9c45d59f71dbfd1751b368bcfb72afdf6f3156619c21e377
+  normalized_sha256: sha256:754c6e650668dbaa9c45d59f71dbfd1751b368bcfb72afdf6f3156619c21e377
+cas_ref: sha256:754c6e650668dbaa9c45d59f71dbfd1751b368bcfb72afdf6f3156619c21e377
+coverage_gids:
+  - D5/S3/Observer/DynamicProgramming/BellmanContraction.bellman_operator_contracting_unique_fixed_point
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/DynamicProgramming/BellmanContraction.bellman_operator_contracting_unique_fixed_point
+      source_sha256: sha256:754c6e650668dbaa9c45d59f71dbfd1751b368bcfb72afdf6f3156619c21e377
+      target_statement_id: sha256:09341dd89f7665b35a48120642ba45b49b5f3d94e0720354c63a8cdc9ad6d690
+  scribe:
+    - gid: D5/S3/Observer/DynamicProgramming/BellmanContraction.bellman_operator_contracting_unique_fixed_point
+      definition_sha256: sha256:567792d5cf888b835712f8f6b54d2f42e91eb9b2e723182222571c85bb36a6e6
+      emission_sha256: sha256:8435c3aa9cea3c0528e08cdc7d124a71b6797c18422cee09afa068bfcdc83a0f
+  unresolved_subitems: []

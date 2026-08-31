@@ -66,7 +66,6 @@ internal static class DigestionTestSupport
         DigestionTruthState truth = DigestionTruthState.Open,
         ImmutableArray<string> coverageGids = default,
         DigestionReceipts? receipts = null,
-        bool includeBoundary = false,
         string sourceId = "source",
         string sourcePath = "docs/source.md",
         string? casRef = null) => new(
@@ -74,10 +73,6 @@ internal static class DigestionTestSupport
             sourcePath,
             atomizerId,
             atomId,
-            atom.AstPath,
-            includeBoundary
-                ? new DigestionBoundary(atom.AstPath, atom.StartByte, atom.EndByte)
-                : null,
             atom.Fingerprints,
             coverageGids.IsDefault ? [] : coverageGids,
             receipts ?? new DigestionReceipts([], [], [], [], null),

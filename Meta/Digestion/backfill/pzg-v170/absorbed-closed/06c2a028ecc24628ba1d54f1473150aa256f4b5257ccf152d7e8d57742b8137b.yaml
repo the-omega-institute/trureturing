@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:06c2a028ecc24628ba1d54f1473150aa256f4b5257ccf152d7e8d57742b8137b
+  normalized_sha256: sha256:06c2a028ecc24628ba1d54f1473150aa256f4b5257ccf152d7e8d57742b8137b
+cas_ref: sha256:06c2a028ecc24628ba1d54f1473150aa256f4b5257ccf152d7e8d57742b8137b
+coverage_gids:
+  - D5/S3/Arith/Rigidity/NaturalSemiringRigidity.natural_semiring_automorphism_is_identity
+receipts:
+  coverage:
+    - gid: D5/S3/Arith/Rigidity/NaturalSemiringRigidity.natural_semiring_automorphism_is_identity
+      source_sha256: sha256:06c2a028ecc24628ba1d54f1473150aa256f4b5257ccf152d7e8d57742b8137b
+      target_statement_id: sha256:c6e3f0510de15af97d6520c78bcbafcb98fefced3f2fd27cf9e3384ea2226776
+  scribe:
+    - gid: D5/S3/Arith/Rigidity/NaturalSemiringRigidity.natural_semiring_automorphism_is_identity
+      definition_sha256: sha256:85e9f6bba19c277f263a43d5a9e4960a075ad36307d1ac0b51037ee1b52d5205
+      emission_sha256: sha256:5f0a45ec8e5cb7032b6d331b228ad3ce404e7536bdb372244c60935f06f714dd
+  unresolved_subitems: []

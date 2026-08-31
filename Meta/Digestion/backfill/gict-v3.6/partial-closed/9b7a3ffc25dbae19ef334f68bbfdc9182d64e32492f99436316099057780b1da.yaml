@@ -1,0 +1,18 @@
+fingerprints:
+  raw_sha256: sha256:9b7a3ffc25dbae19ef334f68bbfdc9182d64e32492f99436316099057780b1da
+  normalized_sha256: sha256:9b7a3ffc25dbae19ef334f68bbfdc9182d64e32492f99436316099057780b1da
+cas_ref: sha256:9b7a3ffc25dbae19ef334f68bbfdc9182d64e32492f99436316099057780b1da
+coverage_gids:
+  - D5/S1/Dynamics/RecursiveDefinition.unique_fixed_point_implies_lfp_eq_gfp
+  - D5/S1/Dynamics/RecursiveDefinition.extremal_selection_distinguishes_fixed_points
+  - D5/S1/Dynamics/RecursiveDefinition.is_recursive_definition_iff_fixed_point
+receipts:
+  coverage:
+    - gid: D5/S1/Dynamics/RecursiveDefinition.is_recursive_definition_iff_fixed_point
+      source_sha256: sha256:9b7a3ffc25dbae19ef334f68bbfdc9182d64e32492f99436316099057780b1da
+      target_statement_id: sha256:b76fb4639ee3b26a5cf742fbd2e1fdb826e6e9ee9ae639ffedd8169e0dd6306c
+  scribe:
+    - gid: D5/S1/Dynamics/RecursiveDefinition.is_recursive_definition_iff_fixed_point
+      definition_sha256: sha256:cda4200d1442ecf3540d4309105921148fa15722b199a7d8b898fe01eda5e5e3
+      emission_sha256: sha256:6e265ce2fec24c0a3a00699b2e3416562c594f9978536c3a3408bd1024d44b7c
+  unresolved_subitems: []

@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:e265a26a059fe07a89c59f9b1214c0278e38a58387f23538e327d2b647b14af2
+  normalized_sha256: sha256:e265a26a059fe07a89c59f9b1214c0278e38a58387f23538e327d2b647b14af2
+cas_ref: sha256:e265a26a059fe07a89c59f9b1214c0278e38a58387f23538e327d2b647b14af2
+coverage_gids:
+  - D5/S3/Estimation/ErrorExponents/FiniteSuiteExtendedBudgetSqueeze.finite_suite_error_squeeze_extended
+receipts:
+  coverage:
+    - gid: D5/S3/Estimation/ErrorExponents/FiniteSuiteExtendedBudgetSqueeze.finite_suite_error_squeeze_extended
+      source_sha256: sha256:e265a26a059fe07a89c59f9b1214c0278e38a58387f23538e327d2b647b14af2
+      target_statement_id: sha256:b0f9be89738f2d1c81f6ca58fd8e61bba6aa6dc50f89842925dbf5509bdec9ce
+  scribe:
+    - gid: D5/S3/Estimation/ErrorExponents/FiniteSuiteExtendedBudgetSqueeze.finite_suite_error_squeeze_extended
+      definition_sha256: sha256:838dd8bc42361520aff70bacc2da4c2fab1fe39adbb80749b4b4f8d8e5d4b3de
+      emission_sha256: sha256:136b2a46d062efedabce7dd2024c7a05fe7555ba4774a43a0bd153af56873114
+  unresolved_subitems: []

@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:6e682fa939f90dd83815f012a402f3bf883bf730152837f6871e951ed2c4a8be
+  normalized_sha256: sha256:6e682fa939f90dd83815f012a402f3bf883bf730152837f6871e951ed2c4a8be
+cas_ref: sha256:6e682fa939f90dd83815f012a402f3bf883bf730152837f6871e951ed2c4a8be
+coverage_gids:
+  - D5/S3/ConceptDynamics/Transport/AdmissionValidityPreservation.validity_preserved_by_admission_map
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Transport/AdmissionValidityPreservation.validity_preserved_by_admission_map
+      source_sha256: sha256:6e682fa939f90dd83815f012a402f3bf883bf730152837f6871e951ed2c4a8be
+      target_statement_id: sha256:b921fe5de5397b82dbc6230f47a7e67cd00aaaf18accf1ba2ede503ae3c5700c
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Transport/AdmissionValidityPreservation.validity_preserved_by_admission_map
+      definition_sha256: sha256:49225a8bc7b140b2ecaa1212d4b11bf7d27284acd40588c4f9adc03f428e52c1
+      emission_sha256: sha256:dd0940b2be8007477f9884be784204f2eb8af7b73ac09f1320924ff2baec4a0a
+  unresolved_subitems: []

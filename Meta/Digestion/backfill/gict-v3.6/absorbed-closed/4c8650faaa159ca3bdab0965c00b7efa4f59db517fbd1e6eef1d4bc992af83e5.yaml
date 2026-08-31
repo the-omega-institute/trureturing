@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:4c8650faaa159ca3bdab0965c00b7efa4f59db517fbd1e6eef1d4bc992af83e5
+  normalized_sha256: sha256:4c8650faaa159ca3bdab0965c00b7efa4f59db517fbd1e6eef1d4bc992af83e5
+cas_ref: sha256:4c8650faaa159ca3bdab0965c00b7efa4f59db517fbd1e6eef1d4bc992af83e5
+coverage_gids:
+  - D5/S3/Arith/Congruence/CyclicTorsionFreeHomRigidity.zmod_hom_to_torsion_free_eq_zero
+receipts:
+  coverage:
+    - gid: D5/S3/Arith/Congruence/CyclicTorsionFreeHomRigidity.zmod_hom_to_torsion_free_eq_zero
+      source_sha256: sha256:4c8650faaa159ca3bdab0965c00b7efa4f59db517fbd1e6eef1d4bc992af83e5
+      target_statement_id: sha256:633690c1e4a6418d04cff6166369a447d811ba2cbdff80620fc444c48bff919b
+  scribe:
+    - gid: D5/S3/Arith/Congruence/CyclicTorsionFreeHomRigidity.zmod_hom_to_torsion_free_eq_zero
+      definition_sha256: sha256:995638abc04adb4e078b2d939c859604e8d64dc3c81144a8bc864b64b5843064
+      emission_sha256: sha256:14ef80507075cb4a601e009656186e46900c6bf82f1f376555e3d300e21033fa
+  unresolved_subitems: []

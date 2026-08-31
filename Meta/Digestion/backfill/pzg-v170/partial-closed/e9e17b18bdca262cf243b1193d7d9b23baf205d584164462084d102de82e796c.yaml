@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:e9e17b18bdca262cf243b1193d7d9b23baf205d584164462084d102de82e796c
+  normalized_sha256: sha256:e9e17b18bdca262cf243b1193d7d9b23baf205d584164462084d102de82e796c
+cas_ref: sha256:e9e17b18bdca262cf243b1193d7d9b23baf205d584164462084d102de82e796c
+coverage_gids:
+  - D5/S3/Midline/AddressableCoefficientFactorization.addressable_coefficient_factorization
+  - D5/S3/Midline/OffLineCoefficientScaling.off_line_coefficient_scaling_spec
+  - D5/S3/Weil/SpectralDynamics.verticalPhase_norm
+  - D5/S3/Zeros/ZeroGeometry.off_line_scaling_entry_spec
+receipts:
+  coverage:
+    - gid: D5/S3/Zeros/ZeroGeometry.off_line_scaling_entry_spec
+      source_sha256: sha256:e9e17b18bdca262cf243b1193d7d9b23baf205d584164462084d102de82e796c
+      target_statement_id: sha256:c7ffb59fb227f2a9f999119e6f1df6eba4167d0d000917bc7f1cf931e508d5da
+  scribe: []
+  unresolved_subitems:
+    - scaling-unbounded-along-me2

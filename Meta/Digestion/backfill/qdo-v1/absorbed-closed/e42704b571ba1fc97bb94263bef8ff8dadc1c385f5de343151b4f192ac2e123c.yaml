@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:e42704b571ba1fc97bb94263bef8ff8dadc1c385f5de343151b4f192ac2e123c
+  normalized_sha256: sha256:e42704b571ba1fc97bb94263bef8ff8dadc1c385f5de343151b4f192ac2e123c
+cas_ref: sha256:e42704b571ba1fc97bb94263bef8ff8dadc1c385f5de343151b4f192ac2e123c
+coverage_gids:
+  - D5/S3/ConceptDynamics/Refinement/RefinementTransitivity.refinement_transitive
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Refinement/RefinementTransitivity.refinement_transitive
+      source_sha256: sha256:e42704b571ba1fc97bb94263bef8ff8dadc1c385f5de343151b4f192ac2e123c
+      target_statement_id: sha256:a851c4cbdc52e06c14902a5202a50cd9519ba53465dedd9fec2c093dfbf6a050
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Refinement/RefinementTransitivity.refinement_transitive
+      definition_sha256: sha256:f5280855a87ae5fa027d3cb14d6ef1919c05d87c929ba2f65477ecda5c5a2b84
+      emission_sha256: sha256:09103a5bb75e312e96975b70c0cdf5303bf921564ca3da76657f9d39ee8cc7f7
+  unresolved_subitems: []

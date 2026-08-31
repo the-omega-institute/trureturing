@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:e500c051425696712ff0bcc91802d06bef7f10a4c56eeed19bb047326784c3d5
+  normalized_sha256: sha256:e500c051425696712ff0bcc91802d06bef7f10a4c56eeed19bb047326784c3d5
+cas_ref: sha256:e500c051425696712ff0bcc91802d06bef7f10a4c56eeed19bb047326784c3d5
+coverage_gids:
+  - D5/S3/ConceptDynamics/InstitutionalCapture/ByzantineMajorityRecovery.strict_majority_recovers
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/InstitutionalCapture/ByzantineMajorityRecovery.strict_majority_recovers
+      source_sha256: sha256:e500c051425696712ff0bcc91802d06bef7f10a4c56eeed19bb047326784c3d5
+      target_statement_id: sha256:02c112da059804efd1f1062123c08af47a927b2ff267da707b68c00abf504cab
+  scribe:
+    - gid: D5/S3/ConceptDynamics/InstitutionalCapture/ByzantineMajorityRecovery.strict_majority_recovers
+      definition_sha256: sha256:29b17ffcc6f08fac19da1fc53ae38400a0386f0d2d45b49c6aabe07dee85eb96
+      emission_sha256: sha256:74af459b0d129676d933ac0d25348cbc0171a2776379742a6da7812ccf8c183e
+  unresolved_subitems: []

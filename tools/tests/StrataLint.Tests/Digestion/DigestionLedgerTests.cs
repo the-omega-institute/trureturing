@@ -27,16 +27,14 @@ public sealed partial class DigestionLedgerTests
             baselineDocument: document).Entries);
 
         Assert.Equal(DigestionReceiptAlignment.Seen, status.Alignment);
-        Assert.DoesNotContain(status.Gaps, static gap =>
-            gap.Code == "source-missing" || gap.Code.Contains("boundary", StringComparison.Ordinal));
+        Assert.DoesNotContain(status.Gaps, static gap => gap.Code == "source-missing");
     }
 
     [Fact]
-    public void CasBackedNoAtomizerBoundaryStillRequiresItsSpecificationSource()
+    public void CasBackedNoAtomizerEntryIsSeenWithoutReplayingItsSpecificationSource()
     {
         var source = Encoding.UTF8.GetBytes("manual specification receipt\n");
         var atom = new DigestionAtom(
-            "manual/receipt",
             0,
             source.Length,
             ImmutableArray.CreateRange(source),
@@ -57,16 +55,39 @@ public sealed partial class DigestionLedgerTests
             AcceptedLean(Array.Empty<string>()),
             baselineDocument: document).Entries);
 
-        Assert.Equal(DigestionReceiptAlignment.LegacyBoundary, status.Alignment);
-        Assert.Contains(status.Gaps, static gap => gap.Code == "source-missing");
+        Assert.Equal(DigestionReceiptAlignment.Seen, status.Alignment);
+        Assert.DoesNotContain(status.Gaps, static gap => gap.Code == "source-missing");
     }
 
     [Fact]
-    public void IngestRebindsCasBackedNoAtomizerBoundaryAndRemainsByteIdempotent()
+    public void IngestRejectsACasBackedNoAtomizerBoundaryWithoutItsCasBlob()
     {
         var sourceBytes = Encoding.UTF8.GetBytes("manual specification receipt\n");
         var atom = new DigestionAtom(
-            "manual/receipt",
+            0,
+            sourceBytes.Length,
+            ImmutableArray.CreateRange(sourceBytes),
+            DigestionFingerprint.Compute(sourceBytes),
+            ImmutableArray<DigestionContext>.Empty);
+        var ledger = Ledger(
+            atom,
+            DigestionMigrationState.Partial,
+            DigestionTruthState.Open,
+            atomizer: AtomizerRegistry.NoAtomizerId);
+
+        var exception = Assert.Throws<FormatException>(() => DigestionIngestor.Plan(
+            ledger,
+            Snapshot(("docs/source.md", sourceBytes)),
+            ledger));
+
+        Assert.Contains("CAS blob is missing", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void IngestKeepsCasBackedNoAtomizerEntryByteIdempotent()
+    {
+        var sourceBytes = Encoding.UTF8.GetBytes("manual specification receipt\n");
+        var atom = new DigestionAtom(
             0,
             sourceBytes.Length,
             ImmutableArray.CreateRange(sourceBytes),
@@ -86,7 +107,6 @@ public sealed partial class DigestionLedgerTests
         var migrated = first.Document;
 
         var migratedEntry = Assert.Single(migrated.RequireDigestionEntries());
-        Assert.NotNull(migratedEntry.Boundary);
         Assert.Equal(atom.Fingerprints.RawSha256, migratedEntry.CasRef);
         Assert.Empty(first.CasObjects);
 
@@ -100,6 +120,64 @@ public sealed partial class DigestionLedgerTests
 
         Assert.Empty(second.CasObjects);
         Assert.Equal(firstBytes, secondBytes);
+    }
+
+    [Fact]
+    public void IngestDoesNotReclassifyAnOpenGenreWhenRawShaDiffers()
+    {
+        var originalBytes = Encoding.UTF8.GetBytes(
+            "## 未登记体 40.2\n\nopen。\n");
+        var changedBytes = Encoding.UTF8.GetBytes(
+            "## 定理 40.2\n\nchanged。\n");
+        var originalAtom = Assert.Single(AtomizerRegistry.Atomize(
+            AtomizerRegistry.GenericId,
+            originalBytes,
+            TheoryAtomizerRules.None).Claims);
+        var changedAtom = Assert.Single(AtomizerRegistry.Atomize(
+            AtomizerRegistry.GenericId,
+            changedBytes,
+            TheoryAtomizerRules.None).Claims);
+        var originalId = originalAtom.Fingerprints.RawSha256["sha256:".Length..];
+        var changedId = changedAtom.Fingerprints.RawSha256["sha256:".Length..];
+        var originalEntry = Entry(
+            originalAtom,
+            originalId,
+            AtomizerRegistry.GenericId);
+        var baseline = Document(AtomizerRegistry.GenericId, [originalEntry]);
+        var originalCapture = DigestionCasStore.Capture(originalAtom.RawBytes.AsSpan());
+
+        var plan = DigestionIngestor.Plan(
+            baseline,
+            Snapshot(
+                ("docs/source.md", changedBytes),
+                (originalCapture.RelativePath, originalCapture.Bytes.ToArray())),
+            baseline);
+        var entries = Assert.Single(plan.Document.RequireDigestionSources()).Entries;
+        var currentKinds = AtomizerRegistry.ResolveContentKinds(
+            AtomizerRegistry.GenericId,
+            changedBytes,
+            TheoryAtomizerRules.None);
+
+        Assert.NotEqual(originalId, changedId);
+        var preserved = Assert.Single(entries, entry => entry.AtomId == originalId);
+        Assert.Equal(originalEntry.SourceId, preserved.SourceId);
+        Assert.Equal(originalEntry.SourcePath, preserved.SourcePath);
+        Assert.Equal(originalEntry.Atomizer, preserved.Atomizer);
+        Assert.Equal(originalEntry.Fingerprints, preserved.Fingerprints);
+        Assert.Equal(originalEntry.ProjectedStatus, preserved.ProjectedStatus);
+        Assert.Equal(originalEntry.CasRef, preserved.CasRef);
+        Assert.Empty(preserved.CoverageGids);
+        Assert.Empty(preserved.Receipts.Coverage);
+        Assert.Empty(preserved.Receipts.Scribe);
+        Assert.Empty(preserved.Receipts.UnresolvedSubitems);
+        Assert.Empty(preserved.Receipts.ChainAtoms);
+        Assert.Null(preserved.Receipts.TailAuthorization);
+        Assert.Null(preserved.Receipts.Quarantine);
+        Assert.Null(preserved.Receipts.CoverDisposition);
+        Assert.Contains(entries, entry => entry.AtomId == changedId);
+        Assert.False(currentKinds.ContainsKey(originalAtom.Fingerprints.RawSha256));
+        Assert.Equal("定理", currentKinds[changedAtom.Fingerprints.RawSha256]);
+        Assert.Equal(1, plan.ResidualOpenAdded);
     }
 
     [Fact]
@@ -125,7 +203,6 @@ public sealed partial class DigestionLedgerTests
         Assert.Empty(first.Fallbacks);
         Assert.All(entries, static entry =>
         {
-            Assert.Null(entry.Boundary);
             Assert.Equal(entry.Fingerprints.RawSha256, entry.CasRef);
             Assert.Empty(entry.CoverageGids);
             Assert.Empty(entry.Receipts.Coverage);
@@ -205,7 +282,6 @@ public sealed partial class DigestionLedgerTests
     {
         var sourceBytes = Encoding.UTF8.GetBytes("manual fixed-point receipt\n");
         var atom = new DigestionAtom(
-            "manual/fixed-point",
             0,
             sourceBytes.Length,
             ImmutableArray.CreateRange(sourceBytes),
@@ -313,7 +389,7 @@ public sealed partial class DigestionLedgerTests
         Assert.Contains("Unicode", fallback.Reason, StringComparison.OrdinalIgnoreCase);
         Assert.Equal(1, first.ResidualOpenAdded);
         var coarse = Assert.Single(first.Document.RequireDigestionEntries());
-        Assert.Equal("coarse/source", coarse.AstPath);
+        Assert.Equal(DigestionFingerprint.ComputeOpaque(sourceBytes), coarse.Fingerprints);
         Assert.Equal(DigestionMigrationState.Residual, coarse.ProjectedStatus.Migration);
         Assert.Equal(DigestionTruthState.Open, coarse.ProjectedStatus.Truth);
         var captured = Assert.Single(first.CasObjects);
@@ -464,7 +540,6 @@ public sealed partial class DigestionLedgerTests
             baselineDocument: document).Entries);
 
         Assert.Equal(DigestionReceiptAlignment.Seen, status.Alignment);
-        Assert.DoesNotContain(status.Gaps, gap => gap.Code.Contains("boundary", StringComparison.Ordinal));
         Assert.DoesNotContain(status.Gaps, gap => gap.Code == "normalized-seen-not-deletable");
     }
 
@@ -615,6 +690,12 @@ public sealed partial class DigestionLedgerTests
             changes: changes).Entries);
     }
 
+    private static string CompleteTailAtomId() =>
+        Assert.Single(GictAtomizer.Atomize(
+            Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n"),
+            DigestionTestSupport.Rules).Claims)
+        .Fingerprints.RawSha256["sha256:".Length..];
+
     private static BackfillInventoryDocument Ledger(
         DigestionAtom atom,
         DigestionMigrationState migration,
@@ -624,7 +705,6 @@ public sealed partial class DigestionLedgerTests
         DigestionScribeReceipt? scribeReceipt = null,
         string atomizer = AtomizerRegistry.GictId,
         bool includeCoverageGid = true,
-        bool includeBoundary = true,
         DigestionExternalReceipt? tailAuthorization = null)
     {
         var receipts = new DigestionReceipts(
@@ -635,13 +715,12 @@ public sealed partial class DigestionLedgerTests
             tailAuthorization);
         var entry = DigestionTestSupport.Entry(
             atom,
-            "gict-1.1",
+            atom.Fingerprints.RawSha256["sha256:".Length..],
             atomizer,
             migration,
             truth,
             includeCoverageGid ? [coverageGid] : [],
             receipts,
-            includeBoundary,
             AtomizerRegistry.GictId);
         return DigestionTestSupport.Document(
             atomizer,
@@ -674,8 +753,7 @@ public sealed partial class DigestionLedgerTests
             atom,
             DigestionMigrationState.Residual,
             DigestionTruthState.Open,
-            includeCoverageGid: false,
-            includeBoundary: false);
+            includeCoverageGid: false);
         var source = Assert.Single(document.RequireDigestionSources());
         return document.WithDigestionSources(
         [
@@ -687,20 +765,4 @@ public sealed partial class DigestionLedgerTests
         ]);
     }
 
-    private static (BackfillInventoryDocument Ledger, DigestionCasObject Captured)
-        CasBackedNoAtomizerLedger(byte[] receiptBytes)
-    {
-        var atom = new DigestionAtom(
-            "manual/receipt",
-            0,
-            receiptBytes.Length,
-            ImmutableArray.CreateRange(receiptBytes),
-            DigestionFingerprint.Compute(receiptBytes),
-            ImmutableArray<DigestionContext>.Empty);
-        return (Ledger(
-            atom,
-            DigestionMigrationState.Partial,
-            DigestionTruthState.Open,
-            atomizer: AtomizerRegistry.NoAtomizerId), DigestionCasStore.Capture(receiptBytes));
-    }
 }

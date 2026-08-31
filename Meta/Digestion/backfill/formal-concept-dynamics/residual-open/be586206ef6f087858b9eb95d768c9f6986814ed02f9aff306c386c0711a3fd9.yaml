@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:be586206ef6f087858b9eb95d768c9f6986814ed02f9aff306c386c0711a3fd9
+  normalized_sha256: sha256:be586206ef6f087858b9eb95d768c9f6986814ed02f9aff306c386c0711a3fd9
+cas_ref: sha256:be586206ef6f087858b9eb95d768c9f6986814ed02f9aff306c386c0711a3fd9
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    recorded_at_utc: 2026-08-27T16:00:34.1856890+00:00
+    gids:
+      - D5/S3/ConceptDynamics/Identity/MultilayerIdentityInsufficiency.CompatibleFamily
+    gaps:
+      - code: scribe-declaration-reference-missing
+        detail: D5/S3/ConceptDynamics/Identity/MultilayerIdentityInsufficiency.CompatibleFamily

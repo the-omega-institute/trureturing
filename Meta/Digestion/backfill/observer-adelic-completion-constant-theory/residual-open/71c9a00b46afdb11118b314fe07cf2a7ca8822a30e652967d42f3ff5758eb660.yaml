@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:71c9a00b46afdb11118b314fe07cf2a7ca8822a30e652967d42f3ff5758eb660
+  normalized_sha256: sha256:71c9a00b46afdb11118b314fe07cf2a7ca8822a30e652967d42f3ff5758eb660
+cas_ref: sha256:71c9a00b46afdb11118b314fe07cf2a7ca8822a30e652967d42f3ff5758eb660
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  quarantine:
+    justification: "Retrieval preceded quarantine. D5 query `completed.*observer.*operator|observer.*semigroup|constant.?mode.*projection|spectral.?gap` found no matching public carrier; pinned Mathlib query `observer|spectral.?gap|constant.?mode|operator.*semigroup|semigroup.*operator` hit only an unrelated Quantale comment and no operator, projection, or gap theorem; reachable GitHub code search query `\"spectral gap\" language:Lean` returned one hit, `AIQ-Kitware/aiq-dkps-formalization` at `ForTauCeti/Analysis/InnerProductSpace/LinearPMap/RayleighRitz.lean`; inspection found it is an unrelated Rayleigh-Ritz result rather than the named observer operator-semigroup theorem, so no A17 exact dependency or port candidate was found; a local proof cannot instantiate the named `P_sigma,t`, `P_0`, completed observer generator, or `g_phi`, and an abstract diagonal-multiplier estimate would be a special-case substitution rather than the atom's operator-semigroup theorem."
+    reentry_condition: D5 contains public theorems defining the completed observer operator and semigroup and proving the matching constant-mode projection and spectral-gap estimate used by this atom.
+    blocker_class: missing-prerequisite

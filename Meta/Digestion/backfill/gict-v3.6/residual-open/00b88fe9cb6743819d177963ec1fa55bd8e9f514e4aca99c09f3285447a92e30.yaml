@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:00b88fe9cb6743819d177963ec1fa55bd8e9f514e4aca99c09f3285447a92e30
+  normalized_sha256: sha256:00b88fe9cb6743819d177963ec1fa55bd8e9f514e4aca99c09f3285447a92e30
+cas_ref: sha256:00b88fe9cb6743819d177963ec1fa55bd8e9f514e4aca99c09f3285447a92e30
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems:
+    - mu-star-definition-and-left-total-variation-bound
+    - quantum-state-spectrum-entropy-identification
+    - forgetting-budget-monotonicity-sharpness-dpi-and-capacity-drop
+    - mixed-end-qubit-saturation-and-fourth-order-expansion
+    - pure-end-rank-bound
+    - random-spectrum-and-high-precision-numerical-certificates

@@ -1,0 +1,20 @@
+fingerprints:
+  raw_sha256: sha256:3ea4f58de7ca7cd6ebf4fed79d9a6468fc133085dd5d7ea4e3ea2a0c6f6098ff
+  normalized_sha256: sha256:3ea4f58de7ca7cd6ebf4fed79d9a6468fc133085dd5d7ea4e3ea2a0c6f6098ff
+cas_ref: sha256:3ea4f58de7ca7cd6ebf4fed79d9a6468fc133085dd5d7ea4e3ea2a0c6f6098ff
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    recorded_at_utc: 2026-08-28T02:38:13.6724720+00:00
+    gids:
+      - D5/S3/ConceptDynamics/Information/MarginalActionEntropyCausalContrast.marginal_action_entropy_causal_contrast
+    gaps:
+      - code: chain-migration-incomplete
+        detail: generic-residual-b2ab1db245dacd15cfd823be9a99089d850948acb80a5a0fcf8cb6903982cfb5-3f468f881ec4f32e14413c400eb6124b185ba3cb29aa15b519998a98fda66a05
+  chain_atoms:
+    - b966cfc0c836544fc09ea01cebe0d42e6d4a4dac9b27d962379211ea1145f939
+    - b2ab1db245dacd15cfd823be9a99089d850948acb80a5a0fcf8cb6903982cfb5

@@ -412,7 +412,6 @@ public sealed partial class ProductionEnvironmentTests
         {
             SecondaryTarget = (siblingModuleGid, "sibling"),
             UnrelatedSibling = new CoverUnrelatedSiblingSpec(
-                "receipt-gap-sibling",
                 [siblingGid],
                 [siblingGid],
                 ["historical-uncovered-clause"]),
@@ -445,7 +444,7 @@ public sealed partial class ProductionEnvironmentTests
     {
         var materialized = CoverWorld.Materialize(new CoverSpec
         {
-            OtherAtomBinding = ("receipt-gap-sibling", "D5/S0/Carrier/Probe.sibling"),
+            OtherAtomGid = "D5/S0/Carrier/Probe.sibling",
             ReportDeclarations = ImmutableArray.Create("probe", "sibling"),
         });
         var inputs = DirectoryInputs(WithReceiptMismatchAtForkPoint(
@@ -473,7 +472,7 @@ public sealed partial class ProductionEnvironmentTests
     {
         var materialized = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec() with
         {
-            OtherAtomBinding = ("receipt-gap-sibling", "D5/S0/Carrier/Probe.probe"),
+            OtherAtomGid = "D5/S0/Carrier/Probe.probe",
         });
         var inputs = DirectoryInputs(WithSiblingReceiptMismatch(materialized, mismatchCode));
         using var temporary = new TemporaryDirectory();
@@ -498,7 +497,7 @@ public sealed partial class ProductionEnvironmentTests
     {
         var materialized = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec() with
         {
-            OtherAtomBinding = ("receipt-gap-sibling", "D5/S0/Carrier/Probe.sibling"),
+            OtherAtomGid = "D5/S0/Carrier/Probe.sibling",
             ReportDeclarations = ImmutableArray.Create("probe", "sibling"),
         });
         var inputs = DirectoryInputs(WithReceiptMismatchAtForkPoint(
@@ -522,7 +521,7 @@ public sealed partial class ProductionEnvironmentTests
     {
         var materialized = CoverWorld.Materialize(new CoverSpec
         {
-            OtherAtomBinding = ("finding-sibling", "D5/S0/Carrier/Probe.probe"),
+            OtherAtomGid = "D5/S0/Carrier/Probe.probe",
         });
         var inputs = DirectoryInputs(WithSiblingDuplicateCoverageReceipt(materialized));
         using var temporary = new TemporaryDirectory();
@@ -581,9 +580,12 @@ public sealed partial class ProductionEnvironmentTests
 
     private static CoverInputs WithSiblingReceiptMismatch(CoverInputs inputs, string mismatchCode)
     {
-        const string siblingAtomId = "receipt-gap-sibling";
+        var entries = inputs.Document.RequireDigestionEntries();
+        var siblingAtomId = entries.Any(entry => entry.AtomId == CoverWorld.OtherAtomId)
+            ? CoverWorld.OtherAtomId
+            : CoverWorld.UnrelatedAtomId;
         var siblingEntry = Assert.Single(
-            inputs.Document.RequireDigestionEntries(),
+            entries,
             entry => entry.AtomId == siblingAtomId);
         var siblingGid = Assert.Single(siblingEntry.CoverageGids);
         var documentGid = ScribeEmissionAttestation.DocumentGid(siblingGid);
@@ -660,7 +662,7 @@ public sealed partial class ProductionEnvironmentTests
 
     private static CoverInputs WithSiblingDuplicateCoverageReceipt(CoverInputs inputs)
     {
-        const string siblingAtomId = "finding-sibling";
+        var siblingAtomId = CoverWorld.OtherAtomId;
         var documentGid = inputs.Gid[..inputs.Gid.LastIndexOf('.')];
         Assert.True(inputs.VerifiedEmissions!.TryGet(documentGid, out var verified));
         var targetStatementId = FrozenStatementReceiptTestData.Resolve(inputs.Files, inputs.Gid);
