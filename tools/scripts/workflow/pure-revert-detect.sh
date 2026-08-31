@@ -211,6 +211,7 @@ if ! git -C "$repository" --literal-pathspecs rev-list --first-parent \
 fi
 
 matching_targets=()
+single_parent_exact_found=0
 while IFS= read -r commit; do
   [[ -n "$commit" ]] || continue
   parent_record="$(git -C "$repository" rev-list --parents -n 1 "$commit" 2>/dev/null)" \
@@ -222,8 +223,10 @@ while IFS= read -r commit; do
   exact_inverse_of "$commit" "$first_parent"
   inverse_status=$?
   if (( inverse_status == 0 )); then
-    [[ -n "${_other_parents:-}" ]] \
-      || fail PURE_REVERT_TARGET_NOT_A_MERGE "$target_not_merge_code"
+    if [[ -z "${_other_parents:-}" ]]; then
+      single_parent_exact_found=1
+      continue
+    fi
     matching_targets+=("$commit")
   elif (( inverse_status == 2 )); then
     fail PURE_REVERT_GIT_FAILURE "$git_failure_code"
@@ -237,6 +240,9 @@ if (( ${#matching_targets[@]} == 1 )); then
   printf 'PURE_REVERT_TRUE base_sha=%s head_sha=%s target_merge_sha=%s changed_path_count=%s\n' \
     "$base_sha" "$head_sha" "${matching_targets[0]}" "$changed_path_count"
   exit 0
+fi
+if (( single_parent_exact_found == 1 )); then
+  fail PURE_REVERT_TARGET_NOT_A_MERGE "$target_not_merge_code"
 fi
 
 # A hint never selects the target. It can only explain an independently rejected

@@ -72,6 +72,37 @@ public sealed class PureRevertDetectScriptTests
     }
 
     [Fact]
+    public void SingleParentExactWitnessDoesNotHideUniqueMergeWitness()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new GitFixture();
+        fixture.CommitFiles("seed target", new FileMutation("tools/target.txt", "before\n"));
+        var feature = fixture.CommitOnBranch(
+            "feature",
+            "merge target transition",
+            new FileMutation("tools/target.txt", "after\n"));
+        var target = fixture.MergeIntoMain(feature, "merge target");
+        fixture.CommitFiles(
+            "restore before ordinary target",
+            new FileMutation("tools/target.txt", "before\n"));
+        fixture.CommitFiles(
+            "ordinary target transition",
+            new FileMutation("tools/target.txt", "after\n"));
+        fixture.CommitCandidateAndMerge(
+            "exact inverse",
+            new FileMutation("tools/target.txt", "before\n"));
+
+        var result = Run([fixture.Repository]);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Empty(result.StandardError);
+        Assert.Contains(
+            $"target_merge_sha={target}",
+            Encoding.UTF8.GetString(result.StandardOutput),
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void ExactWorkflowMergeInverseIsAccepted()
     {
         if (OperatingSystem.IsWindows()) return;
@@ -263,6 +294,45 @@ public sealed class PureRevertDetectScriptTests
             new FileMutation("other/target.txt", "before\n"));
 
         AssertRejected(Run([fixture.Repository]), "PURE_REVERT_PATH_OUTSIDE_ALLOWLIST");
+    }
+
+    [Fact]
+    public void MissingToolsProtectionPolicyAtomFailsClosed()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new GitFixture();
+        fixture.RemoveProtectionPolicyAtom("tools");
+        fixture.CommitFiles("seed target", new FileMutation("tools/target.txt", "before\n"));
+        var feature = fixture.CommitOnBranch(
+            "feature",
+            "target transition",
+            new FileMutation("tools/target.txt", "after\n"));
+        fixture.MergeIntoMain(feature, "merge target");
+        fixture.CommitCandidateAndMerge(
+            "exact inverse",
+            new FileMutation("tools/target.txt", "before\n"));
+
+        AssertRejected(Run([fixture.Repository]), "PURE_REVERT_HISTORY_UNAVAILABLE");
+    }
+
+    [Fact]
+    public void MissingWorkflowsProtectionPolicyAtomFailsClosed()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new GitFixture();
+        var workflowPath = ".github/" + "work" + "flows/target.yml";
+        fixture.RemoveProtectionPolicyAtom("workflows");
+        fixture.CommitFiles("seed workflow", new FileMutation(workflowPath, "before\n"));
+        var feature = fixture.CommitOnBranch(
+            "feature",
+            "workflow transition",
+            new FileMutation(workflowPath, "after\n"));
+        fixture.MergeIntoMain(feature, "merge workflow");
+        fixture.CommitCandidateAndMerge(
+            "exact inverse",
+            new FileMutation(workflowPath, "before\n"));
+
+        AssertRejected(Run([fixture.Repository]), "PURE_REVERT_HISTORY_UNAVAILABLE");
     }
 
     [Fact]
@@ -513,6 +583,23 @@ public sealed class PureRevertDetectScriptTests
         internal string HeadSha => Head();
 
         internal string Head() => GitText("rev-parse", "HEAD");
+
+        internal void RemoveProtectionPolicyAtom(string matcherId)
+        {
+            var marker = $"Atom(\"{matcherId}\",";
+            var atomLine = ProtectionPolicy
+                .Split('\n')
+                .Single(line => line.Contains(marker, StringComparison.Ordinal));
+            var policyWithoutAtom = ProtectionPolicy.Replace(
+                atomLine + "\n",
+                string.Empty,
+                StringComparison.Ordinal);
+            CommitFiles(
+                $"policy without {matcherId} atom",
+                new FileMutation(
+                    "tools/StrataLint.Engine/Admission/BootstrapProtectionPolicy.cs",
+                    policyWithoutAtom));
+        }
 
         internal string CommitFiles(string message, params FileMutation[] mutations)
         {
