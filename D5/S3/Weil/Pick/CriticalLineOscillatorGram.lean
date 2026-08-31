@@ -23,7 +23,7 @@ noncomputable section
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-open scoped Matrix
+open scoped ComplexOrder Matrix
 
 namespace D5.S3.Weil.Pick.CriticalLineOscillatorGram
 
