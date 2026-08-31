@@ -108,4 +108,53 @@ theorem submodular_union_gap_le_sum
 
 #print axioms submodular_union_gap_le_sum
 
+/-- At every greedy step, the remaining value of any set of size at most the
+budget is at most the budget times the gain made at that step. -/
+theorem greedy_step_gap_le_budget_mul_gain
+    {Ground : Type*} [DecidableEq Ground]
+    (value : Finset Ground -> Real) (monotone : IsMonotone value)
+    (submodular : IsSubmodular value) (pick : Nat -> Ground) (budget : Nat)
+    (greedy : IsGreedySelection value pick budget)
+    (optimal : Finset Ground) (optimal_card : optimal.card <= budget)
+    {step : Nat} (step_lt : step < budget) :
+    value optimal - value (greedySelection pick step) <=
+      (budget : Real) *
+        (value (greedySelection pick (step + 1)) -
+          value (greedySelection pick step)) := by
+  let current := greedySelection pick step
+  have optimal_le_union : value optimal <= value (current ∪ optimal) :=
+    monotone Finset.subset_union_right
+  obtain ⟨fresh, greedyMax⟩ := greedy step step_lt
+  have gain_nonneg :
+      0 <= value (insert (pick step) current) - value current :=
+    sub_nonneg.mpr (monotone (Finset.subset_insert (pick step) current))
+  calc
+    value optimal - value current <=
+        value (current ∪ optimal) - value current :=
+      sub_le_sub_right optimal_le_union _
+    _ <= ∑ element ∈ optimal,
+        (value (insert element current) - value current) :=
+      submodular_union_gap_le_sum value submodular current optimal
+    _ <= ∑ _element ∈ optimal,
+        (value (insert (pick step) current) - value current) := by
+      apply Finset.sum_le_sum
+      intro element element_mem
+      by_cases element_current : element ∈ current
+      · rw [Finset.insert_eq_of_mem element_current, sub_self]
+        exact gain_nonneg
+      · exact greedyMax element element_current
+    _ = (optimal.card : Real) *
+        (value (insert (pick step) current) - value current) := by
+      simp [mul_sub]
+    _ <= (budget : Real) *
+        (value (insert (pick step) current) - value current) := by
+      apply mul_le_mul_of_nonneg_right _ gain_nonneg
+      exact_mod_cast optimal_card
+    _ = (budget : Real) *
+        (value (greedySelection pick (step + 1)) -
+          value (greedySelection pick step)) := by
+      rfl
+
+#print axioms greedy_step_gap_le_budget_mul_gain
+
 end D5.S3.Resource.SubmodularGreedyApproximation
