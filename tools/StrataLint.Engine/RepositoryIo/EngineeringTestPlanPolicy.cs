@@ -290,7 +290,8 @@ internal static class EngineeringTestPlanPolicy
         .ToImmutableArray();
 
     private static IEnumerable<ScribeTestMethod> RunnableMethods(ScribeTestMap map) =>
-        map.Methods.Where(static method => !method.IsStaticallySkipped);
+        map.Methods.Where(static method =>
+            !method.IsStaticallySkipped && !method.IsDiscoveryConditional);
 
     internal static EngineeringTestPlan Full(
         IReadOnlyList<string> changedPaths,
