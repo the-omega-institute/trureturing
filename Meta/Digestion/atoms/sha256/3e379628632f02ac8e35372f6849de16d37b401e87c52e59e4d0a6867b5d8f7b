@@ -1,0 +1,56 @@
+# 第一千二百六十八部　真正可证明的正向终点仍是谱浓缩
+
+反例方向现在已经极其清晰：
+
+$$
+\text{离线零点}
+\Longrightarrow
+\text{有限负矩阵}.
+$$
+
+但 RH 的正向证明不能靠不断枚举有限矩阵。
+
+必须一次性建立：
+
+$$
+\boxed{
+\mathcal K_{\omega_n}\succeq0
+\qquad
+\forall n.
+}
+$$
+
+一种足够条件，是构造正测度 Gram 表示：
+
+$$
+\boxed{
+\mathcal K_{\omega_n}(z,w)
+=
+\int
+\Phi_{n,z}(\lambda)
+\overline{\Phi_{n,w}(\lambda)}
+\,d\nu_n(\lambda),
+\qquad
+\nu_n\ge0.
+}
+\tag{1268.1}
+$$
+
+项目的 `PositivityChartCollapse` 已经机器证明：同一正测度上的任意有限特征族必然生成 PSD 积分 Gram 矩阵。
+
+项目的 dual-Gram 结果又证明：
+
+$$
+\mathcal O^*\mathcal O
+$$
+
+与：
+
+$$
+\mathcal O\mathcal O^*
+$$
+
+分别精确暴露状态侧可见范围和协议侧可实现范围。因此，换到 state 或 effect 图表不会改变正性问题的本质。
+
+---
+

@@ -1,0 +1,48 @@
+## Golden Binary Duality Principle
+
+若一个对偶系统能够被正规化为：
+
+1. 二元分支；
+2. 反射 \(z\mapsto-z\)；
+3. 整数或有理 quotient invariant；
+4. primitive 非负整数更新；
+5. unimodular；
+6. 选择最小非平凡扩张；
+
+则：
+
+$$
+\boxed{
+\text{其第一非平凡无理 lift 或最小 hyperbolic multiplier
+将出现 }\varphi,\varphi^{-1}
+\text{ 或 }\varphi^{\pm2}.
+}
+\tag{1132.1}
+$$
+
+反射商：
+
+$$
+c=s(s-1)
+$$
+
+满足前三条。
+
+Fibonacci unit dynamics 满足后三条。
+
+因此黄金比例在这里不是任意插入，而是：
+
+$$
+\boxed{
+\text{二元反射商}
++
+\text{最小整数自相似更新}
+}
+$$
+
+共同选择出的正规形。
+
+但三通道、非 unimodular 或非整数系统一般会产生其他 Perron、Pisot 或 Salem 数。
+
+---
+

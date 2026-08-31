@@ -9,10 +9,10 @@ receipts:
   unresolved_subitems:
     - greedy-argmax-candidate-domain-unresolved-at-dect-lines-558-569
     - greedy-argmax-existence-unresolved-at-dect-lines-558-569
-    - greedy-argmax-tie-behavior-unresolved-at-dect-lines-558-569
-    - greedy-argmax-zero-cost-convention-unresolved-at-dect-lines-558-569
     - greedy-argmax-freshness-unresolved-at-dect-lines-558-569
     - greedy-argmax-stopping-guarantee-unresolved-at-dect-lines-558-569
+    - greedy-argmax-tie-behavior-unresolved-at-dect-lines-558-569
+    - greedy-argmax-zero-cost-convention-unresolved-at-dect-lines-558-569
   cover_disposition:
     outcome: partial-closed
     recorded_at_utc: 2026-08-28T13:13:04.2670520+00:00

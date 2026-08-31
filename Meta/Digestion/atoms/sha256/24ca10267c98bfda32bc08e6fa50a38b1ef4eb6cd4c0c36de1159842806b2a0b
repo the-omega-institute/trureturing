@@ -1,0 +1,45 @@
+# 第一千二百六十六部　有限负核可以编译成真实观察效应
+
+若某个有限矩阵：
+
+$$
+G_{n,N}
+$$
+
+具有负向量 \(c\)，则：
+
+$$
+c^*G_{n,N}c<0.
+$$
+
+这给出有限节点上的目标 effect profile。
+
+项目已经机器证明：对有限个互异复节点及共轭相容的目标值，存在光滑、紧支撑、Hermitian 函数，其 Fourier–Laplace 变换在这些节点上精确取得所需数值。
+
+所以：
+
+$$
+\boxed{
+\text{有限负 kernel vector}
+\longrightarrow
+\text{有限支撑 Fourier--Laplace effect}
+}
+$$
+
+这一局部编译已经闭合。
+
+但必须继续保留全局边界：
+
+$$
+\boxed{
+\text{有限节点插值}
+\not\Rightarrow
+\text{完整零点和自动为负}.
+}
+$$
+
+仍需控制其他无限零点的贡献。
+
+可使用的后续桥包括：
+
+* Blaschke 修复因子的全局最小性；

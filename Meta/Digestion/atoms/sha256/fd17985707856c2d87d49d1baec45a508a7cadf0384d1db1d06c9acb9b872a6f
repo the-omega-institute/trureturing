@@ -1,0 +1,36 @@
+## 1213.1 但有限插值仍不控制无限尾部
+
+这一机器定理解决的是：
+
+$$
+\boxed{
+\text{有限节点的精确可实现性。}
+}
+$$
+
+它没有自动解决：
+
+$$
+\boxed{
+\text{全部无限零点贡献的尾部控制。}
+}
+$$
+
+所以当前严格边界是：
+
+* finite effect synthesis 已闭合；
+* global negative dominance 仍需 Power-Packet、Chebyshev 或加权尾界；
+* global positivity 仍需统一正性定理。
+
+这再次说明：
+
+$$
+\boxed{
+\text{局部可实现}
+\neq
+\text{全局完成}.
+}
+$$
+
+---
+

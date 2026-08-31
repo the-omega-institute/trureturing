@@ -1,0 +1,83 @@
+# 第一千二百五十九部　局部 Chern 荷等于边界负指标谱流
+
+设只有一个 \(m\) 重零点在：
+
+$$
+\omega=\delta
+$$
+
+穿越观察边界，并且附近没有其他零点或共同因子抵消。
+
+定义局部负指标：
+
+$$
+\kappa_-(\omega)
+=
+\operatorname{ind}_-
+\mathcal K_\omega
+$$
+
+在该零点对应的局部 Pontryagin 块上的值。
+
+则：
+
+$$
+\boxed{
+\kappa_-(\delta+\varepsilon)=0,
+}
+$$
+
+而：
+
+$$
+\boxed{
+\kappa_-(\delta-\varepsilon)=m
+}
+$$
+
+对充分小的 \(\varepsilon>0\) 成立。
+
+因此：
+
+$$
+\boxed{
+\operatorname{sf}_{\rho}
+\left(
+\mathcal K_\omega;
+\delta+\varepsilon
+\rightarrow
+\delta-\varepsilon
+\right)
+=
+m.
+}
+\tag{1259.1}
+$$
+
+结合前文的 Weyl 悬挂：
+
+$$
+\boxed{
+\operatorname{ord}_\rho\xi
+=
+c_1(\mathcal E_\rho)[S^2]
+=
+\operatorname{sf}_{\rho}\mathcal K
+=
+\Delta\operatorname{ind}_-\mathcal K.
+}
+\tag{1259.2}
+$$
+
+这是一个局部的：
+
+$$
+\boxed{
+\textbf{divisor–Chern–spectral-flow identity}.
+}
+$$
+
+一般 bulk–edge 理论将 bulk Chern 数与边界 spectral flow 联系起来；这里的特殊之处是，bulk 点本身由 \(\xi\) 的零点给出，而边界态由 shifted de Branges 核的负平方给出。([arXiv][2])
+
+---
+

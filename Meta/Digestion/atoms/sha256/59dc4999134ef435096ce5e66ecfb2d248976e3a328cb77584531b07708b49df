@@ -1,0 +1,69 @@
+# 第一千一百一十九部　黄金正锥的来源
+
+对：
+
+$$
+\alpha=a+b\varphi
+$$
+
+有：
+
+$$
+\boxed{
+N_{K/\mathbb Q}(\alpha)
+=
+a^2+ab-b^2.
+}
+\tag{1119.1}
+$$
+
+令：
+
+$$
+x=a+b,
+\qquad
+y=b.
+$$
+
+则：
+
+$$
+\boxed{
+N_{K/\mathbb Q}(\alpha)
+=
+x^2-xy-y^2.
+}
+\tag{1119.2}
+$$
+
+其实 Lorentz 型零锥为：
+
+$$
+x^2-xy-y^2=0.
+$$
+
+射影斜率满足：
+
+$$
+\left(\frac xy\right)^2
+-
+\frac xy
+-
+1
+=
+0.
+$$
+
+所以：
+
+$$
+\boxed{
+\frac xy=\varphi
+\quad\text{或}\quad
+\frac xy=\varphi'.
+}
+\tag{1119.3}
+$$
+
+---
+

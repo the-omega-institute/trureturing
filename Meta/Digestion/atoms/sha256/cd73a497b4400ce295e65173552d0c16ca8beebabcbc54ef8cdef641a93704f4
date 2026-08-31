@@ -1,0 +1,83 @@
+## 1169.1 单模态精确计算
+
+对模式：
+
+$$
+\psi_\rho(nP)
+=
+e^{(\delta+i\gamma)nP},
+$$
+
+归一化 \(C=1\)，有：
+
+$$
+\boxed{
+W_+(\beta;\rho)
+=
+\sum_{n\ge0}
+\left(
+\beta e^{2\delta P}
+\right)^n
+=
+\frac1{
+1-\beta e^{2\delta P}
+},
+}
+\tag{1169.4}
+$$
+
+其收敛半径为：
+
+$$
+\boxed{
+R_+=e^{-2\delta P}.
+}
+\tag{1169.5}
+$$
+
+负时间 Gramian 为：
+
+$$
+\boxed{
+W_-(\beta;\rho)
+=
+\frac1{
+1-\beta e^{-2\delta P}
+},
+}
+\tag{1169.6}
+$$
+
+收敛半径为：
+
+$$
+\boxed{
+R_-=e^{2\delta P}.
+}
+\tag{1169.7}
+$$
+
+所以：
+
+$$
+\boxed{
+R_+R_-=1.
+}
+\tag{1169.8}
+$$
+
+并且：
+
+$$
+\boxed{
+\delta
+=
+\frac1{4P}
+\log
+\frac{R_-}{R_+}.
+}
+\tag{1169.9}
+$$
+
+---
+

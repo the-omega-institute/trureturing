@@ -1,0 +1,97 @@
+* Poisson 通量。
+
+它只定义观察 Gauss 面：
+
+$$
+\omega_n=\frac12\varphi^{-2n}.
+$$
+
+每个壳层中的整数电荷为：
+
+$$
+\boxed{
+q_n
+=
+\deg B_{\omega_{n+1}}
+-
+\deg B_{\omega_n}.
+}
+$$
+
+并且黄金壳层级数在固定因子范围内恢复全部横向缺陷矩：
+
+$$
+\boxed{
+\varphi^{-2s}
+\mathcal G_s^\varphi
+\le
+\mathcal V_s
+\le
+\mathcal G_s^\varphi.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\varphi
+\text{ 是测量缺陷流的自相似刻度；
+整数负指标才是缺陷的真实存在量。}
+}
+$$
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{“道”的第一动力影像是一族沿观察深度流动的关系核；
+临界零点是只在极限边界出现的零模；
+离线零点是一条 null 世界线在有限深度穿越边界，
+并将 bulk Chern 荷转化为 boundary 负平方与 Poisson 光影。}
+}
+$$
+
+当前真正承重的下一步已经进一步收敛：
+
+$$
+\boxed{
+\text{从 prime--pole--Archimedean 数据直接构造 }
+\Theta_{\omega_n}
+=
+B_{\omega_n}^{-1}S_{\omega_n}
+}
+$$
+
+的最小因子化，并证明：
+
+$$
+\boxed{
+B_{\omega_n}=1
+\qquad
+\forall n.
+}
+$$
+
+等价地，为每个黄金层构造：
+
+$$
+\boxed{
+\mathcal K_{\omega_n}(z,w)
+=
+\int
+\Phi_{n,z}(\lambda)
+\overline{\Phi_{n,w}(\lambda)}
+\,d\nu_n(\lambda),
+\qquad
+\nu_n\ge0.
+}
+$$
+
+一旦该正 Gram 表示建立，所有 finite kernel charts 自动正半定；黄金层的共尾性便排除全部有限出生深度，从而排除所有离线世界线。
+
+[1]: https://arxiv.org/abs/1206.4410 "https://arxiv.org/abs/1206.4410"
+[2]: https://arxiv.org/abs/2112.07748 "https://arxiv.org/abs/2112.07748"
+[3]: https://arxiv.org/abs/1905.12397 "https://arxiv.org/abs/1905.12397"
+[4]: https://arxiv.org/abs/1204.1827 "https://arxiv.org/abs/1204.1827"
+[5]: https://arxiv.org/abs/2301.00421 "https://arxiv.org/abs/2301.00421"

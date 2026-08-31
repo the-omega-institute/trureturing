@@ -1,0 +1,85 @@
+# 第一千二百七十一部　建议形式化顺序
+
+```text
+D5/S3/Analytic/Zeta/ShiftedZeroWorldline/
+  ShiftedZeroLocation.lean
+  ShiftedZeroAffineTrajectory.lean
+  ShiftedZeroUniversalVelocity.lean
+  ShiftedObserverNullCoordinates.lean
+  OffLineCrossingDepth.lean
+  CriticalZeroTerminalCrossing.lean
+
+D5/S3/Analytic/Zeta/BoundaryMassInversion/
+  SimpleZeroBoundaryNormalForm.lean
+  ShiftedZeroDiracMass.lean
+  BoundaryMassSignChange.lean
+  OffLineMassInversion.lean
+
+D5/S3/Analytic/Zeta/ConfluentNegativeJets/
+  KernelJetMatrix.lean
+  VanishingOuterJetBlock.lean
+  HardyConfluentCauchyPositive.lean
+  SharpMultiplicationJetMatrix.lean
+  MultipleZeroNegativeJetBlock.lean
+  MultiplicityLowerBoundsNegativeIndex.lean
+
+D5/S3/Analytic/Zeta/DivisorSpectralFlow/
+  LocalKernelSpectralFlow.lean
+  IsolatedCrossingIndexJump.lean
+  ZeroMultiplicityEqualsIndexJump.lean
+  ChernChargeSpectralFlowBridge.lean
+  OffLineBirthMeasure.lean
+
+D5/S3/Analytic/Zeta/BlaschkeRepair/
+  UpperHalfPlaneZeroBlaschkeFactor.lean
+  ShiftedXiDefectBlaschkeProduct.lean
+  ShiftedXiPoleCancellation.lean
+  SchurBlaschkeKernelIdentity.lean
+  MinimalRepairDegree.lean
+  RepairDegreeNegativeIndexTarget.lean
+
+D5/S3/Analytic/Zeta/PoissonDefectField/
+  BlaschkeBoundaryPhaseDerivative.lean
+  OffLineZeroPoissonPulse.lean
+  DefectBoundaryPhaseField.lean
+  DefectFieldPoissonEvolution.lean
+  OffLineDivisorSourceEquation.lean
+  PhaseFluxEqualsRepairDegree.lean
+
+D5/S3/GoldenObserver/DefectShellIndex/
+  GoldenShiftGaussShell.lean
+  GoldenShellBlaschkeDegree.lean
+  GoldenShellPhaseFlux.lean
+  GoldenShellNegativeIndexJumpTarget.lean
+  GoldenShellChargeRHCriterion.lean
+
+D5/S3/GoldenObserver/TransverseDefectZeta/
+  OffLineTransverseMoment.lean
+  GoldenShellMomentSeries.lean
+  GoldenShellMomentUpperBound.lean
+  GoldenShellMomentLowerBound.lean
+  GoldenTransverseEnergyBounds.lean
+
+D5/S3/Analytic/Zeta/CountableKernelTranscript/
+  RationalUpperHalfPlaneEnumeration.lean
+  GoldenRationalKernelMatrix.lean
+  NegativeKernelDetectedOnRationalGrid.lean
+  CountableFiniteMatrixRHCriterion.lean
+  FirstNegativeTranscriptHit.lean
+
+D5/S3/Weil/BlaschkeKernelBridge/
+  BlaschkeNegativeModelSpace.lean
+  FiniteNegativeProfileToPaleyWiener.lean
+  BlaschkeRepairToWeilDefectTarget.lean
+  ShiftedKernelToWeilIsometryTarget.lean
+
+D5/S3/Weil/GoldenPositivePartRecursion/
+  ShiftedXiPositiveSchurPart.lean
+  DefectPositiveFactorSeparation.lean
+  GoldenPositiveKernelTwoScaleMaps.lean
+  GoldenPositiveKernelResidual.lean
+  GoldenPositiveKernelRecursionTarget.lean
+```
+
+---
+

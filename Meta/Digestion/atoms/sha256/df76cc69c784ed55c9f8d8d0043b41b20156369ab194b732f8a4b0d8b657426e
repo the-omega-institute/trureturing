@@ -1,0 +1,58 @@
+# 第一千二百三十一部　一个精确的横向完成阈值
+
+定义：
+
+$$
+\boxed{
+\Omega_\xi
+=
+\inf
+\left\{
+\omega_0\ge0:
+\Theta_\omega
+\text{ 对每个 }\omega>\omega_0
+\text{ 都是 meromorphic inner}
+\right\}.
+}
+\tag{1231.1}
+$$
+
+Suzuki 的零点区域—innerness 等价说明：
+
+$$
+\boxed{
+\Omega_\xi
+=
+\sup_\rho
+\left(
+\Re\rho-\frac12
+\right)_+.
+}
+\tag{1231.2}
+$$
+
+更准确地说，二者具有同一个零自由边界定义。
+
+因此：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\Omega_\xi=0.
+}
+\tag{1231.3}
+$$
+
+并且：
+
+$$
+\boxed{
+0\le\Omega_\xi\le\frac12.
+}
+$$
+
+\(\omega\ge1/2\) 的 shifted Hermite–Biehler／inner 区域无条件成立；RH 的困难恰好是将其向 \(\omega\downarrow0\) 延伸。([arXiv][1])
+
+---
+
