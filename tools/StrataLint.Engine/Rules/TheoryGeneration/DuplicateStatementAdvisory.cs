@@ -2,19 +2,33 @@ using System.Collections.Immutable;
 
 namespace StrataLint.Engine;
 
-// SL-028. Two drivers once proved the same proposition under different names
-// (ChannelMonotone against DpiDefect) and one formalization round was spent twice.
-// The prior-art search that would have caught it is a prose duty no machine reads,
-// so this reports the collision the elaborated statement already makes visible.
+// SL-028. Exact declaration reuse advisory.
 //
-// Advisory, never blocking: restating a frozen result in a fresh namespace is
-// lawful, and the 2026-08-18 census over the dev report put the honest human
-// collisions at three to five against 4713 authored theorems. Refusing them would
-// cost far more than the duplicate work it would prevent.
+// The original incident was two drivers proving one proposition under different
+// names. The same failure mode also applies to authored value-bearing declarations:
+// a second public def or opaque can reproduce an elaborated type-and-value body
+// under a fresh name while every proof remains valid. The canonical Lean report
+// already exposes both shapes through one declaration material address, so this
+// rule consumes that existing identity instead of introducing another fingerprint.
+//
+// The comparison remains deliberately exact. Theorems compare their elaborated
+// type because proof bodies are absent from statement-v1; defs and opaques compare
+// universe parameters, type, and value because statement-v1 carries the value for
+// those kinds. Definitional equality, algebraic rewrites, symmetry, index shifts,
+// and representation bridges remain outside this rule and require separate Lean
+// evidence before any reuse conclusion is drawn.
+//
+// Advisory, never blocking: exact restatements and exact definition aliases can be
+// lawful public interfaces. The finding exists to make that choice visible before
+// a second owner is accepted, not to decide the owner automatically.
 internal static class DuplicateStatementAdvisory
 {
-    internal const string Code = "duplicate-statement";
+    internal const string StatementCode = "duplicate-statement";
+    internal const string DefinitionCode = "duplicate-definition";
 
+    private const string TheoremKind = "theorem";
+    private const string DefinitionKind = "def";
+    private const string OpaqueKind = "opaque";
     private const string EquationLemma = "eq_def";
     private const string AutoInstancePrefix = "inst";
     private const string EquationIndexPrefix = "eq_";
@@ -29,8 +43,7 @@ internal static class DuplicateStatementAdvisory
     // decide is therefore the changed Lean module, not the changed declaration: a
     // collision class is reported only when this candidate touched the source of at
     // least one of its members. A pair that predates the candidate on both sides
-    // stays silent, which is what keeps the repository's existing collisions from
-    // landing on every unrelated PR.
+    // stays silent, which keeps existing collisions off unrelated pull requests.
     internal static ImmutableArray<RuleFinding> Evaluate(RuleEvaluationContext context)
     {
         ArgumentNullException.ThrowIfNull(context);
@@ -38,40 +51,49 @@ internal static class DuplicateStatementAdvisory
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
         var classes = context.Lean.Report.Files
             .SelectMany(static entry => entry.Value.Declarations
-                .Where(IsAuthoredTheorem)
-                .Select(declaration => new AuthoredStatement(
+                .Where(IsAuthoredDeclaration)
+                .Select(declaration => new AuthoredDeclaration(
                     entry.Key,
                     declaration.NameKey,
                     declaration.Name,
+                    declaration.Kind,
                     CanonicalStatementWriter.StatementTypeAddress(declaration))))
-            .GroupBy(static statement => statement.Address, StringComparer.Ordinal)
-            .OrderBy(static group => group.Key, StringComparer.Ordinal);
+            .GroupBy(static declaration =>
+                new CollisionKey(declaration.Kind, declaration.Address))
+            .OrderBy(static group => group.Key.Kind, StringComparer.Ordinal)
+            .ThenBy(static group => group.Key.Address, StringComparer.Ordinal);
         foreach (var group in classes)
         {
             var members = group
-                .DistinctBy(static statement => (statement.Path.Value, statement.NameKey))
-                .OrderBy(static statement => statement.Path.Value, StringComparer.Ordinal)
-                .ThenBy(static statement => statement.Name, StringComparer.Ordinal)
+                .DistinctBy(static declaration =>
+                    (declaration.Path.Value, declaration.NameKey))
+                .OrderBy(static declaration => declaration.Path.Value, StringComparer.Ordinal)
+                .ThenBy(static declaration => declaration.Name, StringComparer.Ordinal)
                 .ToArray();
             if (members.Length < 2)
             {
                 continue;
             }
 
-            var anchor = Array.FindIndex(members, statement => changed.Contains(statement.Path));
+            var anchor = Array.FindIndex(
+                members,
+                declaration => changed.Contains(declaration.Path));
             if (anchor < 0)
             {
                 continue;
             }
 
+            var selected = members[anchor];
             findings.Add(new RuleFinding(
-                members[anchor].Path.Value,
-                $"{Code}: {members[anchor].Name} repeats the elaborated statement of "
+                selected.Path.Value,
+                $"{CodeFor(selected.Kind)}: {selected.Name} repeats the "
+                    + $"{MaterialDescription(selected.Kind)} of "
                     + string.Join(
                         ", ",
                         members
                             .Where((_, index) => index != anchor)
-                            .Select(static statement => $"{statement.Path.Value}:{statement.Name}")),
+                            .Select(static declaration =>
+                                $"{declaration.Path.Value}:{declaration.Name}")),
                 AdmissionEffect.Observe));
         }
 
@@ -86,14 +108,29 @@ internal static class DuplicateStatementAdvisory
                     && context.Current.TryGetFile(path.Value, out _))
                 .ToHashSet();
 
-    // A module report carries every constant the module declares, and the census
-    // found the colliding ones to be overwhelmingly machine-made: automatic
-    // instances can reach here recorded as theorems (see IsAutoInstance), and the
-    // equation compiler emits the rest. Nobody duplicated proof work writing those.
-    private static bool IsAuthoredTheorem(LeanDeclaration declaration) =>
+    // A module report carries every constant the module declares. The generated-name
+    // vocabulary filters equation-compiler artifacts and automatic instances for all
+    // supported kinds. The kind gate then limits this rule to authored theorems and
+    // value-bearing declarations whose exact material is meaningful for reuse review.
+    private static bool IsAuthoredDeclaration(LeanDeclaration declaration) =>
         declaration.IncludeInStatement
-        && string.Equals(declaration.Kind, "theorem", StringComparison.Ordinal)
+        && IsSupportedKind(declaration.Kind)
         && !declaration.Name.Split('.').Any(IsGeneratedComponent);
+
+    private static bool IsSupportedKind(string kind) =>
+        string.Equals(kind, TheoremKind, StringComparison.Ordinal)
+        || string.Equals(kind, DefinitionKind, StringComparison.Ordinal)
+        || string.Equals(kind, OpaqueKind, StringComparison.Ordinal);
+
+    private static string CodeFor(string kind) =>
+        string.Equals(kind, TheoremKind, StringComparison.Ordinal)
+            ? StatementCode
+            : DefinitionCode;
+
+    private static string MaterialDescription(string kind) =>
+        string.Equals(kind, TheoremKind, StringComparison.Ordinal)
+            ? "elaborated statement"
+            : $"elaborated {kind} type-and-value material";
 
     // Closed marker vocabulary, one clause per generator the census named. Each
     // clause is exact rather than a prefix sweep because the two failure directions
@@ -138,9 +175,12 @@ internal static class DuplicateStatementAdvisory
         return true;
     }
 
-    private sealed record AuthoredStatement(
+    private sealed record CollisionKey(string Kind, string Address);
+
+    private sealed record AuthoredDeclaration(
         RepoPath Path,
         string NameKey,
         string Name,
+        string Kind,
         string Address);
 }
