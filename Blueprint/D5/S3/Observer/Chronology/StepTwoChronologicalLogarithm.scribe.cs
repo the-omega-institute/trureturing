@@ -117,9 +117,6 @@ internal sealed class StepTwoChronologicalLogarithmDocument
     private static Formula Product(Formula left, Formula right) =>
         Seq(left, Sp, Cdot, Sp, right);
 
-    private static Formula Equal(Formula left, Formula right) =>
-        Disp(Seq(left, Sp, Eq, Sp, right, Dot));
-
     private static Formula ForAll2(
         Formula first, Formula second, Formula conclusion) =>
         Disp(Seq(
