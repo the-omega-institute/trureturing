@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:f95d1b884ccfadaf500bfa258d5fd5ede06dd693cbec90a85aec010630104894
+  normalized_sha256: sha256:f95d1b884ccfadaf500bfa258d5fd5ede06dd693cbec90a85aec010630104894
+cas_ref: sha256:f95d1b884ccfadaf500bfa258d5fd5ede06dd693cbec90a85aec010630104894
+coverage_gids:
+  - D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow.projection_probability_flow
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow.projection_probability_flow
+      source_sha256: sha256:f95d1b884ccfadaf500bfa258d5fd5ede06dd693cbec90a85aec010630104894
+      target_statement_id: sha256:b7b22c217f549c3e618c828b4f5a7feef8570609244ee8cea2c6ce1a875c0fda
+  scribe:
+    - gid: D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow.projection_probability_flow
+      definition_sha256: sha256:8346dd6da2d89463e7e86d85158a3c26ecdb1b25e633030272140cccfd3d61e6
+      emission_sha256: sha256:bc542343eff2e6049ee967b06f24a85c3a422933ca1723eb44e38f57848c8907
+  unresolved_subitems: []
