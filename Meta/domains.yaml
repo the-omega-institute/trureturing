@@ -26,6 +26,9 @@ domains:
   CompletionDynamics:
     stratum: S3
     definition: Dynamical structures of observer completion - golden Mobius fixed points, projective jets and first-break orders, and real-completion thread fibers with blow-up coordinates.
+  Combinatorics:
+    stratum: S0
+    definition: Finite cyclic and word combinatorics — rotation-equivalence classes of decorated cycles and the multiset invariants they induce.
   Computability:
     stratum: S0
     definition: Partial recursive codes with universal evaluation and the recursion-theoretic fixed points of computable code transformations.
