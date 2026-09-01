@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Observer/AgencyHolonomy/SecondMagnusKernelNormSquare
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Identify the exact squared strength of the alternating Fourier slot kernel and exhibit a maximal nonresonant sample. -/
+   digest: Identify the exact squared strength of the alternating Fourier slot kernel. -/
 
 import D5.S3.Observer.AgencyHolonomy.SecondMagnusSwapCurvature
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
@@ -50,18 +50,21 @@ theorem second_magnus_swap_kernel_norm_sq
           (-Complex.I * ((time1 + time2 : ℝ) : ℂ) *
             (((frequencyP + frequencyQ) / 2 : ℝ) : ℂ))‖ = 1 := by
     simp [Complex.norm_exp, Complex.mul_re]
-  have hSine :
-      ‖Complex.sin
-          (((secondMagnusHalfArea frequencyP frequencyQ time1 time2 : ℝ) : ℂ))‖ =
-        |Real.sin
-          (secondMagnusHalfArea frequencyP frequencyQ time1 time2)| := by
-    rw [← Complex.ofReal_sin]
-    simp
-  rw [norm_mul, norm_mul, hPhase, hSine]
-  have hCoefficient : ‖(-2 : ℂ) * Complex.I‖ = 2 := by norm_num
-  rw [hCoefficient]
-  rw [sq_abs]
-  ring
+  have hCoefficient : ‖(-2 : ℂ) * Complex.I‖ = 2 := by
+    norm_num
+  have hSineComplex :
+      Complex.sin
+          ((((time1 - time2) *
+            ((frequencyP - frequencyQ) / 2) : ℝ) : ℂ)) =
+        (Real.sin
+          ((time1 - time2) * ((frequencyP - frequencyQ) / 2)) : ℂ) := by
+    exact (Complex.ofReal_sin _).symm
+  rw [norm_mul, norm_mul, hCoefficient, hPhase, hSineComplex,
+    Complex.norm_real, Real.norm_eq_abs]
+  unfold secondMagnusHalfArea
+  rw [mul_one]
+  nlinarith [sq_abs
+    (Real.sin ((time1 - time2) * ((frequencyP - frequencyQ) / 2)))]
 
 /-- Distinct frequencies can be sampled at the explicit half-turn separation
 `pi / (frequencyP - frequencyQ)`, where the kernel response is maximal. -/
