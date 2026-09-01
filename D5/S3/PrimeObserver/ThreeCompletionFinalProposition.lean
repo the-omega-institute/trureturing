@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/PrimeObserver/ThreeCompletionFinalProposition
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Prime exponents, realizability mass, and operator phase form three
-     distinct completions. -/
+   digest: Prime exponents, realizability mass, and operator phase form three distinct completions. -/
 
 import D5.S3.Analytic.PrimeProducts.GlobalPrimeExponentRealizability
 import D5.S3.ConceptDynamics.ObservationOrder.TypedPrimeLanguageHierarchy
