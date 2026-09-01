@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:4c697251e22ce5168ecfb7f63b874215bba3bee2fb5971611bc33e79ec06c9a9
+  normalized_sha256: sha256:4c697251e22ce5168ecfb7f63b874215bba3bee2fb5971611bc33e79ec06c9a9
+cas_ref: sha256:4c697251e22ce5168ecfb7f63b874215bba3bee2fb5971611bc33e79ec06c9a9
+coverage_gids:
+  - D5/S3/ConceptDynamics/Decision/EpistemicCompulsionWitness.epistemic_compulsion_witness
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Decision/EpistemicCompulsionWitness.epistemic_compulsion_witness
+      source_sha256: sha256:4c697251e22ce5168ecfb7f63b874215bba3bee2fb5971611bc33e79ec06c9a9
+      target_statement_id: sha256:69aa52046068dad6e35056315e0a4325961408c5e2cd52a7519066f712311608
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Decision/EpistemicCompulsionWitness.epistemic_compulsion_witness
+      definition_sha256: sha256:57af5a1b56460cb354711ef78ad7de5d9373385a59b4fa092910b2ec554e7d84
+      emission_sha256: sha256:b908edf0520b27559913f75fe3c2ee59eea1cda0f09309467f6669351b1c5fb3
+  unresolved_subitems: []
