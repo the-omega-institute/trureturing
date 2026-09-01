@@ -128,22 +128,16 @@ internal static partial class DigestionLedgerAligner
         DigestionLedgerSource candidateSource,
         DigestionLedgerEntry candidateEntry,
         DigestionLedgerSource baselineSource,
-        DigestionLedgerEntry baselineEntry)
-    {
-        var candidateAcknowledged = candidateSource.AcknowledgedStale.Contains(
-            candidateEntry.AtomId,
-            StringComparer.Ordinal);
-        var baselineAcknowledged = baselineSource.AcknowledgedStale.Contains(
-            baselineEntry.AtomId,
-            StringComparer.Ordinal);
-        return (candidateAcknowledged, baselineAcknowledged) switch
-        {
-            (true, true) => true,
-            (false, false) => candidateEntry.ProjectedStatus == baselineEntry.ProjectedStatus,
-            (true, false) => baselineEntry.ProjectedStatus == StructuralIdentityStatus,
-            (false, true) => candidateEntry.ProjectedStatus == StructuralIdentityStatus,
-        };
-    }
+        DigestionLedgerEntry baselineEntry) =>
+        ReplayConfirmationStatus(candidateSource, candidateEntry)
+        == ReplayConfirmationStatus(baselineSource, baselineEntry);
+
+    private static DigestionStatus ReplayConfirmationStatus(
+        DigestionLedgerSource source,
+        DigestionLedgerEntry entry) =>
+        source.AcknowledgedStale.Contains(entry.AtomId, StringComparer.Ordinal)
+            ? StructuralIdentityStatus
+            : entry.ProjectedStatus;
 
     internal static bool RequiresReplayRejection(
         bool casValid,
@@ -218,8 +212,13 @@ internal static partial class DigestionLedgerAligner
         }
 
         var bodyLength = historical.Length - 1;
-        for (var replayIndex = 2; replayIndex + bodyLength <= replayed.Length; replayIndex++)
+        for (var replayIndex = 1; replayIndex + bodyLength <= replayed.Length; replayIndex++)
         {
+            if (replayed[replayIndex].Type == typeof(MarkdownHeading))
+            {
+                break;
+            }
+
             var matches = true;
             for (var bodyIndex = 0; bodyIndex < bodyLength; bodyIndex++)
             {

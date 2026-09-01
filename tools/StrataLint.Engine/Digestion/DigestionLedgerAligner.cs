@@ -165,7 +165,14 @@ internal static partial class DigestionLedgerAligner
         void ConfirmReplay(
             DigestionLedgerSource source,
             DigestionLedgerEntry? contentWideEntry,
-            IEnumerable<DigestionAtom>? replayedAtoms = null) => ApplyReplayConfirmation(
+            IEnumerable<DigestionAtom>? replayedAtoms = null)
+        {
+            if (mode == DigestionAlignmentMode.Projection)
+            {
+                return;
+            }
+
+            ApplyReplayConfirmation(
                 source,
                 cas.ValidAtomIds,
                 alignments,
@@ -174,6 +181,7 @@ internal static partial class DigestionLedgerAligner
                 contentWideEntry,
                 clauseChainChildIds,
                 replayedAtoms ?? []);
+        }
         foreach (var entry in sources.SelectMany(static source => source.Entries))
         {
             var inherited = inheritedEntries.Contains(CanonicalEntry(entry));
@@ -261,84 +269,99 @@ internal static partial class DigestionLedgerAligner
 
         foreach (var source in sources)
         {
-            if (conflictedSources.Contains(source.SourceId))
-            {
-                continue;
-            }
-
-            var registeredAtomizer = AtomizerRegistry.IsRegistered(source.Atomizer);
-            baselineSources.TryGetValue(source.SourceId, out var baselineSource);
-            var contentWideReplacementObligations =
-                contentWideReplacementObligationsBySource.GetValueOrDefault(source.SourceId) ?? [];
-            var admissionGenreFinding = AdmissionGenreFinding(
-                mode,
-                snapshot,
-                baselineSnapshot,
-                source,
-                baselineSource,
-                registeredAtomizer,
-                atomizerRules,
-                atomizerResolver);
-            if (admissionGenreFinding is not null)
-            {
-                findings.Add(admissionGenreFinding);
-            }
-
-            if (mode == DigestionAlignmentMode.Admission
-                && !source.Entries.IsEmpty
-                && source.Entries.All(entry =>
-                    cas.ValidAtomIds.Contains(entry.AtomId)
-                    && inheritedEntries.Contains(CanonicalEntry(entry)))
-                && contentWideReplacementObligations.Length == 0
-                && !source.Entries.Any(entry => replayConfirmationObligations.Contains(
-                    new DigestionReplayConfirmationObligation(source.SourceId, entry.AtomId)))
-                && !InheritedClauseChainRequiresReplay(source, changes))
-            {
-                continue;
-            }
-
-            if (!registeredAtomizer)
-            {
-                genreRegistryChecks[source.SourceId] = GenreRegistryCheck.NoGenreRegistry;
-                var contentWideEntry = snapshot.TryGetFile(source.SourcePath, out var unregisteredFile)
-                    ? ContentWideEntry(source, unregisteredFile.RawBytes.AsSpan(), cas.ValidAtomIds)
-                    : null;
-                ConfirmReplay(source, contentWideEntry);
-                continue;
-            }
-
-            if (!snapshot.TryGetFile(source.SourcePath, out var sourceFile))
-            {
-                findings.Add($"source path is dangling: {source.SourcePath}");
-                ConfirmReplay(source, null);
-                continue;
-            }
-
-            if (atomizerRules is null)
-            {
-                ConfirmReplay(
-                    source,
-                    ContentWideEntry(source, sourceFile.RawBytes.AsSpan(), cas.ValidAtomIds));
-                continue;
-            }
-
-            AtomizedTheoryDocument atomized;
+            DigestionLedgerEntry? replayContentWideEntry = null;
+            IEnumerable<DigestionAtom> replayedAtoms = [];
             try
             {
-                atomized = atomizerResolver(source.Atomizer)(sourceFile.RawBytes.AsSpan(), atomizerRules);
-            }
-            catch (Exception exception) when (
-                exception is TheorySourceFormatException or DecoderFallbackException)
-            {
-                var contentWideEntry = ContentWideEntry(
-                    source,
-                    sourceFile.RawBytes.AsSpan(),
-                    cas.ValidAtomIds);
-                if (contentWideEntry is not null)
+                if (conflictedSources.Contains(source.SourceId))
                 {
-                    alignments[contentWideEntry.AtomId] = DigestionReceiptAlignment.Seen;
-                    producedAtomIds[source.SourceId] = [contentWideEntry.AtomId];
-                    if (mode == DigestionAlignmentMode.Ingest)
+                    continue;
+                }
+
+                var registeredAtomizer = AtomizerRegistry.IsRegistered(source.Atomizer);
+                baselineSources.TryGetValue(source.SourceId, out var baselineSource);
+                var contentWideReplacementObligations =
+                    contentWideReplacementObligationsBySource.GetValueOrDefault(source.SourceId) ?? [];
+                var admissionGenreFinding = AdmissionGenreFinding(
+                    mode,
+                    snapshot,
+                    baselineSnapshot,
+                    source,
+                    baselineSource,
+                    registeredAtomizer,
+                    atomizerRules,
+                    atomizerResolver);
+                if (admissionGenreFinding is not null)
+                {
+                    findings.Add(admissionGenreFinding);
+                }
+
+                if (mode == DigestionAlignmentMode.Admission
+                    && !source.Entries.IsEmpty
+                    && source.Entries.All(entry =>
+                        cas.ValidAtomIds.Contains(entry.AtomId)
+                        && inheritedEntries.Contains(CanonicalEntry(entry)))
+                    && contentWideReplacementObligations.Length == 0
+                    && !source.Entries.Any(entry => replayConfirmationObligations.Contains(
+                        new DigestionReplayConfirmationObligation(source.SourceId, entry.AtomId)))
+                    && !InheritedClauseChainRequiresReplay(source, changes))
+                {
+                    continue;
+                }
+
+                if (!registeredAtomizer)
+                {
+                    genreRegistryChecks[source.SourceId] = GenreRegistryCheck.NoGenreRegistry;
+                    replayContentWideEntry = snapshot.TryGetFile(source.SourcePath, out var unregisteredFile)
+                        ? ContentWideEntry(source, unregisteredFile.RawBytes.AsSpan(), cas.ValidAtomIds)
+                        : null;
+                    continue;
+                }
+
+                if (!snapshot.TryGetFile(source.SourcePath, out var sourceFile))
+                {
+                    findings.Add($"source path is dangling: {source.SourcePath}");
+                    continue;
+                }
+
+                if (atomizerRules is null)
+                {
+                    replayContentWideEntry = ContentWideEntry(
+                        source,
+                        sourceFile.RawBytes.AsSpan(),
+                        cas.ValidAtomIds);
+                    continue;
+                }
+
+                AtomizedTheoryDocument atomized;
+                try
+                {
+                    atomized = atomizerResolver(source.Atomizer)(sourceFile.RawBytes.AsSpan(), atomizerRules);
+                }
+                catch (Exception exception) when (
+                    exception is TheorySourceFormatException or DecoderFallbackException)
+                {
+                    replayContentWideEntry = ContentWideEntry(
+                        source,
+                        sourceFile.RawBytes.AsSpan(),
+                        cas.ValidAtomIds);
+                    if (replayContentWideEntry is not null)
+                    {
+                        alignments[replayContentWideEntry.AtomId] = DigestionReceiptAlignment.Seen;
+                        producedAtomIds[source.SourceId] = [replayContentWideEntry.AtomId];
+                        if (mode == DigestionAlignmentMode.Ingest)
+                        {
+                            AddCoarseFallback(
+                                source,
+                                sourceFile.RawBytes,
+                                exception.Message,
+                                cas.ValidAtomIds,
+                                suggestedAtomIds,
+                                residual,
+                                fallbacks);
+                        }
+                    }
+                    else if (mode == DigestionAlignmentMode.Ingest && source.Entries.IsEmpty)
                     {
                         AddCoarseFallback(
                             source,
@@ -349,51 +372,50 @@ internal static partial class DigestionLedgerAligner
                             residual,
                             fallbacks);
                     }
+                    else
+                    {
+                        findings.Add($"source {source.SourceId} atomization failed: {exception.Message}");
+                    }
+
+                    continue;
                 }
-                else if (mode == DigestionAlignmentMode.Ingest && source.Entries.IsEmpty)
+
+                var integrityFailure = AtomizerIntegrityFailure(atomized, sourceFile.RawBytes.AsSpan());
+                if (integrityFailure is not null)
                 {
-                    AddCoarseFallback(
+                    findings.Add($"source {source.SourceId} atomizer integrity failed: {integrityFailure}");
+                    replayContentWideEntry = ContentWideEntry(
                         source,
-                        sourceFile.RawBytes,
-                        exception.Message,
-                        cas.ValidAtomIds,
-                        suggestedAtomIds,
-                        residual,
-                        fallbacks);
-                }
-                else
-                {
-                    findings.Add($"source {source.SourceId} atomization failed: {exception.Message}");
+                        sourceFile.RawBytes.AsSpan(),
+                        cas.ValidAtomIds);
+                    continue;
                 }
 
-                ConfirmReplay(source, contentWideEntry);
-
-                continue;
-            }
-
-            var integrityFailure = AtomizerIntegrityFailure(atomized, sourceFile.RawBytes.AsSpan());
-            if (integrityFailure is not null)
-            {
-                findings.Add($"source {source.SourceId} atomizer integrity failed: {integrityFailure}");
-                ConfirmReplay(
-                    source,
-                    ContentWideEntry(source, sourceFile.RawBytes.AsSpan(), cas.ValidAtomIds));
-                continue;
-            }
-
-            genreRegistryChecks[source.SourceId] = atomized.GenreRegistryCheck;
-            if (atomized.Claims.IsEmpty)
-            {
-                const string reason = "atomizer recognition is incomplete or empty";
-                var contentWideEntry = ContentWideEntry(
-                    source,
-                    sourceFile.RawBytes.AsSpan(),
-                    cas.ValidAtomIds);
-                if (contentWideEntry is not null)
+                genreRegistryChecks[source.SourceId] = atomized.GenreRegistryCheck;
+                if (atomized.Claims.IsEmpty)
                 {
-                    alignments[contentWideEntry.AtomId] = DigestionReceiptAlignment.Seen;
-                    producedAtomIds[source.SourceId] = [contentWideEntry.AtomId];
-                    if (mode == DigestionAlignmentMode.Ingest)
+                    const string reason = "atomizer recognition is incomplete or empty";
+                    replayContentWideEntry = ContentWideEntry(
+                        source,
+                        sourceFile.RawBytes.AsSpan(),
+                        cas.ValidAtomIds);
+                    if (replayContentWideEntry is not null)
+                    {
+                        alignments[replayContentWideEntry.AtomId] = DigestionReceiptAlignment.Seen;
+                        producedAtomIds[source.SourceId] = [replayContentWideEntry.AtomId];
+                        if (mode == DigestionAlignmentMode.Ingest)
+                        {
+                            AddCoarseFallback(
+                                source,
+                                sourceFile.RawBytes,
+                                reason,
+                                cas.ValidAtomIds,
+                                suggestedAtomIds,
+                                residual,
+                                fallbacks);
+                        }
+                    }
+                    else if (mode == DigestionAlignmentMode.Ingest && source.Entries.IsEmpty)
                     {
                         AddCoarseFallback(
                             source,
@@ -404,144 +426,135 @@ internal static partial class DigestionLedgerAligner
                             residual,
                             fallbacks);
                     }
-                }
-                else if (mode == DigestionAlignmentMode.Ingest && source.Entries.IsEmpty)
-                {
-                    AddCoarseFallback(
-                        source,
-                        sourceFile.RawBytes,
-                        reason,
-                        cas.ValidAtomIds,
-                        suggestedAtomIds,
-                        residual,
-                        fallbacks);
-                }
-                else
-                {
-                    findings.Add($"source {source.SourceId} {reason}");
+                    else
+                    {
+                        findings.Add($"source {source.SourceId} {reason}");
+                    }
+
+                    continue;
                 }
 
-                ConfirmReplay(source, contentWideEntry);
-
-                continue;
-            }
-
-            var claims = atomized.Claims
-                .GroupBy(static atom => atom.Fingerprints.RawSha256, StringComparer.Ordinal)
-                .Select(static group => group.First())
-                .ToArray();
-            var replayedAtoms = claims
-                .Concat(atomized.ClausePlans.SelectMany(static plan => plan.Children))
-                .ToArray();
-            producedAtomIds[source.SourceId] = claims
-                .Select(static atom => atom.Fingerprints.RawSha256["sha256:".Length..])
-                .ToImmutableHashSet(StringComparer.Ordinal);
-
-            ConfirmReplay(
-                source,
-                ContentWideEntry(source, sourceFile.RawBytes.AsSpan(), cas.ValidAtomIds),
-                replayedAtoms);
-
-            var sourceStale = new List<string>();
-            foreach (var baselineEntry in contentWideReplacementObligations.Where(entry =>
-                         !producedAtomIds[source.SourceId].Contains(entry.AtomId)))
-            {
-                var exact = source.Entries
-                    .Where(entry => ContentWideIdentityEqual(entry, baselineEntry))
+                var claims = atomized.Claims
+                    .GroupBy(static atom => atom.Fingerprints.RawSha256, StringComparer.Ordinal)
+                    .Select(static group => group.First())
                     .ToArray();
-                if (exact.Length != 1)
-                {
-                    findings.Add(
-                        $"source {source.SourceId} content-wide replacement receipt identity "
-                        + $"changed or disappeared: {baselineEntry.AtomId}");
-                    continue;
-                }
+                replayedAtoms = claims
+                    .Concat(atomized.ClausePlans.SelectMany(static plan => plan.Children))
+                    .ToArray();
+                producedAtomIds[source.SourceId] = claims
+                    .Select(static atom => atom.Fingerprints.RawSha256["sha256:".Length..])
+                    .ToImmutableHashSet(StringComparer.Ordinal);
 
-                var entry = exact[0];
-                if (!cas.ValidAtomIds.Contains(entry.AtomId))
-                {
-                    continue;
-                }
-
-                alignments[entry.AtomId] = DigestionReceiptAlignment.Stale;
-                sourceStale.Add(entry.AtomId);
-                actualStale.Add(entry.AtomId);
-            }
-
-            foreach (var plan in atomized.ClausePlans
-                         .GroupBy(static plan => plan.Parent.Fingerprints.RawSha256, StringComparer.Ordinal)
-                         .Select(static group => group.First()))
-            {
-                var authorityFailure = ClausePlanCasAuthorityFailure(
+                replayContentWideEntry = ContentWideEntry(
                     source,
-                    plan.Parent,
+                    sourceFile.RawBytes.AsSpan(),
+                    cas.ValidAtomIds);
+
+                var sourceStale = new List<string>();
+                foreach (var baselineEntry in contentWideReplacementObligations.Where(entry =>
+                             !producedAtomIds[source.SourceId].Contains(entry.AtomId)))
+                {
+                    var exact = source.Entries
+                        .Where(entry => ContentWideIdentityEqual(entry, baselineEntry))
+                        .ToArray();
+                    if (exact.Length != 1)
+                    {
+                        findings.Add(
+                            $"source {source.SourceId} content-wide replacement receipt identity "
+                            + $"changed or disappeared: {baselineEntry.AtomId}");
+                        continue;
+                    }
+
+                    var entry = exact[0];
+                    if (!cas.ValidAtomIds.Contains(entry.AtomId))
+                    {
+                        continue;
+                    }
+
+                    alignments[entry.AtomId] = DigestionReceiptAlignment.Stale;
+                    sourceStale.Add(entry.AtomId);
+                    actualStale.Add(entry.AtomId);
+                }
+
+                foreach (var plan in atomized.ClausePlans
+                             .GroupBy(static plan => plan.Parent.Fingerprints.RawSha256, StringComparer.Ordinal)
+                             .Select(static group => group.First()))
+                {
+                    var authorityFailure = ClausePlanCasAuthorityFailure(
+                        source,
+                        plan.Parent,
+                        cas.ValidAtomIds,
+                        snapshot);
+                    if (authorityFailure is not null)
+                    {
+                        findings.Add(authorityFailure);
+                        continue;
+                    }
+
+                    clausePlans.Add(new DigestionSourceClausePlan(source.SourceId, plan.Parent, plan));
+                }
+
+                foreach (var atom in claims)
+                {
+                    var matchingEntries = source.Entries.Where(entry =>
+                            cas.ValidAtomIds.Contains(entry.AtomId)
+                            && FingerprintsMatch(entry.Fingerprints, atom.Fingerprints))
+                        .ToArray();
+                    foreach (var entry in matchingEntries)
+                    {
+                        matchedAtoms[entry.AtomId] = atom;
+                        alignments[entry.AtomId] = DigestionReceiptAlignment.Seen;
+                    }
+
+                    if (knownContent.Contains(atom.Fingerprints.RawSha256))
+                    {
+                        continue;
+                    }
+
+                    knownContent.Add(atom.Fingerprints.RawSha256);
+                    var atomId = SuggestedAtomId(
+                        atom,
+                        suggestedAtomIds);
+                    residual.Add(new StructuredResidualAdmission(
+                        source.SourceId,
+                        source.SourcePath,
+                        source.Atomizer,
+                        atom,
+                        atomId,
+                        new DigestionStatus(
+                            DigestionMigrationState.Residual,
+                            DigestionTruthState.Open)));
+                }
+
+                AlignNestedChildren(
+                    source,
+                    atomized.ClausePlans,
                     cas.ValidAtomIds,
-                    snapshot);
-                if (authorityFailure is not null)
-                {
-                    findings.Add(authorityFailure);
-                    continue;
-                }
+                    globalEntriesById,
+                    snapshot,
+                    alignments,
+                    matchedAtoms,
+                    clausePlanChainParents,
+                    verifiedClausePlanParents,
+                    findings);
 
-                clausePlans.Add(new DigestionSourceClausePlan(source.SourceId, plan.Parent, plan));
+                if (mode == DigestionAlignmentMode.Admission)
+                {
+                    var unacknowledged = sourceStale
+                        .Except(source.AcknowledgedStale, StringComparer.Ordinal)
+                        .Order(StringComparer.Ordinal)
+                        .ToArray();
+                    if (unacknowledged.Length > 0)
+                    {
+                        findings.Add(
+                            $"source {source.SourceId} stale receipts are not acknowledged: "
+                            + string.Join(", ", unacknowledged));
+                    }
+                }
             }
-
-            foreach (var atom in claims)
+            finally
             {
-                var matchingEntries = source.Entries.Where(entry =>
-                        cas.ValidAtomIds.Contains(entry.AtomId)
-                        && FingerprintsMatch(entry.Fingerprints, atom.Fingerprints))
-                    .ToArray();
-                foreach (var entry in matchingEntries)
-                {
-                    matchedAtoms[entry.AtomId] = atom;
-                    alignments[entry.AtomId] = DigestionReceiptAlignment.Seen;
-                }
-
-                if (knownContent.Contains(atom.Fingerprints.RawSha256))
-                {
-                    continue;
-                }
-
-                knownContent.Add(atom.Fingerprints.RawSha256);
-                var atomId = SuggestedAtomId(
-                    atom,
-                    suggestedAtomIds);
-                residual.Add(new StructuredResidualAdmission(
-                    source.SourceId,
-                    source.SourcePath,
-                    source.Atomizer,
-                    atom,
-                    atomId,
-                    new DigestionStatus(
-                        DigestionMigrationState.Residual,
-                        DigestionTruthState.Open)));
-            }
-
-            AlignNestedChildren(
-                source,
-                atomized.ClausePlans,
-                cas.ValidAtomIds,
-                globalEntriesById,
-                snapshot,
-                alignments,
-                matchedAtoms,
-                clausePlanChainParents,
-                verifiedClausePlanParents,
-                findings);
-
-            if (mode == DigestionAlignmentMode.Admission)
-            {
-                var unacknowledged = sourceStale
-                    .Except(source.AcknowledgedStale, StringComparer.Ordinal)
-                    .Order(StringComparer.Ordinal)
-                    .ToArray();
-                if (unacknowledged.Length > 0)
-                {
-                    findings.Add(
-                        $"source {source.SourceId} stale receipts are not acknowledged: "
-                        + string.Join(", ", unacknowledged));
-                }
+                ConfirmReplay(source, replayContentWideEntry, replayedAtoms);
             }
         }
 
