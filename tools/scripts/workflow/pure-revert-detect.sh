@@ -1,11 +1,87 @@
 #!/usr/bin/env bash
 set -uo pipefail
 
+readonly ci_timeout='30s'
+readonly ci_kill_grace='5s'
+
+# policy-override (2026-09-01): bound one classifier invocation to 30s, then
+# allow 5s for TERM before KILL. Domain=classifier wall clock; the 27-case
+# fixture suite completed in 35s while incident #4498 ran for 30m16s.
+# owner=repository tau=0 owner. Exit when #4498 closes with a static workload
+# and throughput receipt from which this bound can be derived.
+run_ci_mode() {
+  if (( $# != 2 )); then
+    printf '%s\n' 'PURE_REVERT_BAD_ARGUMENT' >&2
+    return 2
+  fi
+
+  local repository="$1" github_output="$2" detector_output detector_status
+  local detector_stderr
+  local marker base_field head_field target_field count_field extra
+  local base_sha head_sha target_merge_sha changed_path_count
+
+  detector_stderr="$(mktemp "${TMPDIR:-/tmp}/pure-revert-ci-stderr.XXXXXX")" \
+    || return 2
+  detector_output="$(
+    timeout --signal=TERM --kill-after="$ci_kill_grace" "$ci_timeout" \
+      /bin/bash "$0" "$repository" 2> "$detector_stderr"
+  )"
+  detector_status=$?
+  if (( detector_status == 0 )) && [[ "$detector_output" != *$'\n'* ]]; then
+    read -r marker base_field head_field target_field count_field extra \
+      <<< "$detector_output"
+    base_sha="${base_field#base_sha=}"
+    head_sha="${head_field#head_sha=}"
+    target_merge_sha="${target_field#target_merge_sha=}"
+    changed_path_count="${count_field#changed_path_count=}"
+    if [[ "$marker" == PURE_REVERT_TRUE \
+      && "$base_field" == base_sha=* \
+      && "$head_field" == head_sha=* \
+      && "$target_field" == target_merge_sha=* \
+      && "$count_field" == changed_path_count=* \
+      && -z "${extra:-}" \
+      && "$base_sha" =~ ^[0-9a-f]+$ \
+      && "$head_sha" =~ ^[0-9a-f]+$ \
+      && "$target_merge_sha" =~ ^[0-9a-f]+$ \
+      && "$changed_path_count" =~ ^[1-9][0-9]*$ ]]; then
+      {
+        printf '%s\n' 'classification=confirmed'
+        printf 'target_merge_sha=%s\n' "$target_merge_sha"
+        printf 'changed_path_count=%s\n' "$changed_path_count"
+        printf '%s\n' 'confirmed=true'
+      } >> "$github_output" || { rm -f -- "$detector_stderr"; return 2; }
+      printf 'PURE_REVERT_GATE confirmed=true target_merge_sha=%s changed_path_count=%s\n' \
+        "$target_merge_sha" "$changed_path_count"
+      rm -f -- "$detector_stderr"
+      return 0
+    fi
+  fi
+
+  {
+    printf '%s\n' 'confirmed=false'
+    printf '%s\n' 'classification=not_applicable'
+  } >> "$github_output" || { rm -f -- "$detector_stderr"; return 2; }
+  if [[ -s "$detector_stderr" ]]; then
+    /bin/cat "$detector_stderr" >&2
+  elif [[ -n "$detector_output" ]]; then
+    printf '%s\n' "$detector_output" >&2
+  fi
+  rm -f -- "$detector_stderr"
+  printf 'PURE_REVERT_GATE confirmed=false classification=not_applicable detector_exit=%s\n' \
+    "$detector_status"
+  return 0
+}
+
+if [[ "${1:-}" == --ci ]]; then
+  shift
+  run_ci_mode "$@"
+  exit $?
+fi
+
 readonly bad_argument_code=2
 readonly history_unavailable_code=3
 readonly no_changes_code=4
 readonly not_inverse_code=5
-readonly path_outside_allowlist_code=6
 readonly ambiguous_target_code=7
 readonly second_parent_code=8
 readonly classifier_modified_code=9
@@ -57,38 +133,6 @@ if [[ -z "${_head_second_parent:-}" || "${_head_first_parent:-}" != "$base_sha" 
   fail PURE_REVERT_BAD_ARGUMENT "$bad_argument_code"
 fi
 
-readonly protection_policy_path='tools/StrataLint.Engine/Admission/BootstrapProtectionPolicy.cs'
-protection_policy="$(
-  git -C "$repository" show "$base_sha:$protection_policy_path" 2>/dev/null
-)" || fail PURE_REVERT_HISTORY_UNAVAILABLE "$history_unavailable_code"
-
-policy_prefix() {
-  local matcher_id="$1" matches count prefix
-  matches="$(
-    printf '%s\n' "$protection_policy" \
-      | sed -nE \
-        "s/.*Atom\(\"${matcher_id}\",[[:space:]]*ProtectionMatchKind\.Prefix,[[:space:]]*\"([^\"]+)\"\).*/\1/p"
-  )" || return 1
-  count="$(printf '%s\n' "$matches" | awk 'NF { count += 1 } END { print count + 0 }')" \
-    || return 1
-  [[ "$count" == 1 ]] || return 1
-  prefix="$matches"
-  [[ "$prefix" == */ && "$prefix" != /* && "$prefix" != *../* ]] || return 1
-  printf '%s' "$prefix"
-}
-
-tools_prefix="$(policy_prefix tools)" \
-  || fail PURE_REVERT_HISTORY_UNAVAILABLE "$history_unavailable_code"
-workflows_prefix="$(policy_prefix workflows)" \
-  || fail PURE_REVERT_HISTORY_UNAVAILABLE "$history_unavailable_code"
-if [[ "$tools_prefix" == "$workflows_prefix" ]]; then
-  fail PURE_REVERT_HISTORY_UNAVAILABLE "$history_unavailable_code"
-fi
-
-# The reversible domain is intentionally shell-owned: exactly the tools and
-# workflows atoms declared above. The policy supplies only their prefix bytes;
-# any additional protected prefix atom is not implicitly reversible.
-
 scratch="$(mktemp -d "${TMPDIR:-/tmp}/pure-revert-detect.XXXXXX")" \
   || fail PURE_REVERT_GIT_FAILURE "$git_failure_code"
 cleanup() {
@@ -135,17 +179,10 @@ if (( changed_path_count == 0 )); then
 fi
 
 readonly classifier_path='tools/scripts/workflow/pure-revert-detect.sh'
-is_allowed_path() {
-  local path="$1"
-  [[ "$path" == "$tools_prefix"* || "$path" == "$workflows_prefix"* ]]
-}
-
 for path in "${candidate_paths[@]}"; do
   if [[ "$path" == "$classifier_path" ]]; then
     fail PURE_REVERT_CLASSIFIER_MODIFIED "$classifier_modified_code"
   fi
-  is_allowed_path "$path" \
-    || fail PURE_REVERT_PATH_OUTSIDE_ALLOWLIST "$path_outside_allowlist_code"
 done
 
 target_raw="$scratch/target.raw"

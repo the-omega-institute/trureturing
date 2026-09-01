@@ -5,6 +5,8 @@ namespace StrataLint.Tests;
 
 public sealed partial class PureRevertDetectScriptTests
 {
+    private const string DefaultExecutablePath = "/usr/bin:/bin:/usr/sbin:/sbin";
+
     private static ProcessOutput Run(
         IReadOnlyList<string> arguments,
         string? executablePath = null)
@@ -16,19 +18,14 @@ public sealed partial class PureRevertDetectScriptTests
             "scripts",
             "workflow",
             "pure-revert-detect.sh");
-        var command = executablePath is null ? "/bin/bash" : "/usr/bin/env";
-        var commandArguments = executablePath is null
-            ? new[] { script }.Concat(arguments).ToArray()
-            : new[]
-                {
-                    $"PATH={executablePath}:/usr/bin:/bin:/usr/sbin:/sbin",
-                    "/bin/bash",
-                    script,
-                }
-                .Concat(arguments)
-                .ToArray();
+        var path = executablePath is null
+            ? DefaultExecutablePath
+            : executablePath + ":" + DefaultExecutablePath;
+        var commandArguments = IsolatedEnvironmentArguments(
+            ["/bin/bash", script, .. arguments],
+            path);
         return TestProcessRunner.Run(
-            command,
+            "/usr/bin/env",
             commandArguments,
             root,
             TestBudgets.ScriptProcessHangGuard,
@@ -47,21 +44,6 @@ public sealed partial class PureRevertDetectScriptTests
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
     private sealed class GitFixture : IDisposable
     {
-        private static readonly string ProtectionPolicy = """
-            internal static class BootstrapProtectionPolicy
-            {
-                internal static object Matchers => new[]
-                {
-                    Atom("tools", ProtectionMatchKind.Prefix, "tools/"),
-                    Atom("workflows", ProtectionMatchKind.Prefix, "{workflow-prefix}"),
-                    Atom("other", ProtectionMatchKind.Prefix, "other/"),
-                };
-            }
-            """.Replace(
-                "{workflow-prefix}",
-                ".github/" + "work" + "flows/",
-                StringComparison.Ordinal);
-
         private readonly TemporaryDirectory temporary = new();
 
         internal GitFixture()
@@ -69,13 +51,10 @@ public sealed partial class PureRevertDetectScriptTests
             Repository = Path.Combine(temporary.Path, "repository");
             ScriptHarnessScratch.EnsureDirectory(Repository);
             Git("init", "-b", "main");
-            Git("config", "user.name", "Pure Revert Test");
-            Git("config", "user.email", "pure-revert@example.invalid");
+            ConfigureRepository();
             CommitFiles(
-                "canonical policy",
-                new FileMutation(
-                    "tools/StrataLint.Engine/Admission/BootstrapProtectionPolicy.cs",
-                    ProtectionPolicy));
+                "fixture root",
+                new FileMutation(".fixture-root", "root\n"));
             RootSha = Head();
         }
 
@@ -88,23 +67,6 @@ public sealed partial class PureRevertDetectScriptTests
         internal string HeadSha => Head();
 
         internal string Head() => GitText("rev-parse", "HEAD");
-
-        internal void RemoveProtectionPolicyAtom(string matcherId)
-        {
-            var marker = $"Atom(\"{matcherId}\",";
-            var atomLine = ProtectionPolicy
-                .Split('\n')
-                .Single(line => line.Contains(marker, StringComparison.Ordinal));
-            var policyWithoutAtom = ProtectionPolicy.Replace(
-                atomLine + "\n",
-                string.Empty,
-                StringComparison.Ordinal);
-            CommitFiles(
-                $"policy without {matcherId} atom",
-                new FileMutation(
-                    "tools/StrataLint.Engine/Admission/BootstrapProtectionPolicy.cs",
-                    policyWithoutAtom));
-        }
 
         internal string CommitFiles(string message, params FileMutation[] mutations)
         {
@@ -214,8 +176,9 @@ public sealed partial class PureRevertDetectScriptTests
         {
             var shallow = Path.Combine(temporary.Path, "shallow");
             var result = TestProcessRunner.Run(
-                "/usr/bin/git",
-                ["clone", "--depth=1", new Uri(Repository).AbsoluteUri, shallow],
+                "/usr/bin/env",
+                IsolatedGitArguments(
+                    ["clone", "--depth=1", new Uri(Repository).AbsoluteUri, shallow]),
                 temporary.Path,
                 TestBudgets.ScriptProcessHangGuard,
                 64 * 1024);
@@ -253,6 +216,35 @@ public sealed partial class PureRevertDetectScriptTests
             return bin;
         }
 
+        internal string CreateTimeoutPath(bool expire)
+        {
+            var bin = Path.Combine(temporary.Path, expire ? "timeout-expire" : "timeout-forward");
+            ScriptHarnessScratch.EnsureDirectory(bin);
+            var body = expire
+                ? "exit 124"
+                : "while (( $# > 0 )); do\n"
+                    + "  case \"$1\" in\n"
+                    + "    --signal=*|--kill-after=*|30s) shift ;;\n"
+                    + "    *) break ;;\n"
+                    + "  esac\n"
+                    + "done\n"
+                    + "exec \"$@\"";
+            var timeout = Path.Combine(bin, "timeout");
+            ScriptHarnessScratch.WriteScratchText(
+                timeout,
+                "#!/usr/bin/env bash\nset -euo pipefail\n" + body + "\n");
+            var chmod = TestProcessRunner.Run(
+                "/bin/chmod",
+                ["700", timeout],
+                Repository,
+                TestBudgets.ScriptProcessHangGuard,
+                64 * 1024);
+            Assert.True(chmod.ExitCode == 0, Diagnostics(chmod));
+            return bin;
+        }
+
+        internal string ScratchPath(string name) => Path.Combine(temporary.Path, name);
+
         private void MergeCandidateTree(string baseline, string candidate, string message)
         {
             var tree = GitText("rev-parse", candidate + "^{tree}");
@@ -272,8 +264,8 @@ public sealed partial class PureRevertDetectScriptTests
         private void Git(params string[] arguments)
         {
             var result = TestProcessRunner.Run(
-                "/usr/bin/git",
-                arguments,
+                "/usr/bin/env",
+                IsolatedGitArguments(arguments),
                 Repository,
                 TestBudgets.ScriptProcessHangGuard,
                 64 * 1024);
@@ -283,8 +275,8 @@ public sealed partial class PureRevertDetectScriptTests
         private string GitText(params string[] arguments)
         {
             var result = TestProcessRunner.Run(
-                "/usr/bin/git",
-                arguments,
+                "/usr/bin/env",
+                IsolatedGitArguments(arguments),
                 Repository,
                 TestBudgets.ScriptProcessHangGuard,
                 64 * 1024);
@@ -295,8 +287,8 @@ public sealed partial class PureRevertDetectScriptTests
         private string GitTextWithInput(string input, params string[] arguments)
         {
             var result = TestProcessRunner.Run(
-                "/usr/bin/git",
-                arguments,
+                "/usr/bin/env",
+                IsolatedGitArguments(arguments),
                 Repository,
                 TestBudgets.ScriptProcessHangGuard,
                 64 * 1024,
@@ -305,10 +297,45 @@ public sealed partial class PureRevertDetectScriptTests
             return Encoding.UTF8.GetString(result.StandardOutput).Trim();
         }
 
+        private void ConfigureRepository()
+        {
+            Git("config", "--local", "user.name", "Pure Revert Test");
+            Git("config", "--local", "user.email", "pure-revert@example.invalid");
+            Git("config", "--local", "commit.gpgsign", "false");
+            Git("config", "--local", "tag.gpgsign", "false");
+            Git("config", "--local", "core.autocrlf", "false");
+            Git("config", "--local", "core.safecrlf", "false");
+            Git("config", "--local", "core.hooksPath", "/dev/null");
+            Git("config", "--local", "gc.auto", "0");
+            Git("config", "--local", "maintenance.auto", "false");
+        }
+
         public void Dispose() => temporary.Dispose();
     }
 
     private static string Diagnostics(ProcessOutput result) =>
         "stdout:\n" + Encoding.UTF8.GetString(result.StandardOutput)
         + "\nstderr:\n" + Encoding.UTF8.GetString(result.StandardError);
+
+    private static string[] IsolatedGitArguments(IEnumerable<string> arguments) =>
+        IsolatedEnvironmentArguments(["/usr/bin/git", .. arguments], DefaultExecutablePath);
+
+    private static string[] IsolatedEnvironmentArguments(
+        IEnumerable<string> command,
+        string path) =>
+    [
+        "-u", "GIT_AUTHOR_NAME",
+        "-u", "GIT_AUTHOR_EMAIL",
+        "-u", "GIT_COMMITTER_NAME",
+        "-u", "GIT_COMMITTER_EMAIL",
+        "-u", "GIT_CONFIG",
+        "-u", "GIT_CONFIG_PARAMETERS",
+        "-u", "GIT_TEMPLATE_DIR",
+        $"PATH={path}",
+        "GIT_CONFIG_GLOBAL=/dev/null",
+        "GIT_CONFIG_SYSTEM=/dev/null",
+        "GIT_CONFIG_NOSYSTEM=1",
+        "GIT_CONFIG_COUNT=0",
+        .. command,
+    ];
 }
