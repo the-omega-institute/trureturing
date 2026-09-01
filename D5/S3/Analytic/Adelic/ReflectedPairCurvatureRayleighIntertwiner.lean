@@ -116,7 +116,9 @@ theorem detuned_reflected_generator_gram
   fin_cases i <;> fin_cases j <;>
     simp [detunedReflectedGenerator, Matrix.mul_apply,
       Fin.sum_univ_two, Matrix.one_apply] <;>
-    ring
+    ring_nf <;>
+    (try simp [Complex.I_sq]) <;>
+    (try ring)
 
 private theorem hermForm_even_channel (A : QubitMatrix) :
     hermForm A evenChannelState = (A 0 0).re := by
@@ -143,7 +145,7 @@ theorem even_channel_energy_readout_formula
       tau ^ 2 + delta ^ 2 := by
   unfold evenChannelEnergyReadout
   rw [detuned_reflected_generator_gram, hermForm_even_channel]
-  simp
+  simp [← Complex.ofReal_pow]
 
 /-- The normalized quadratic readout is exactly the rational curvature-dipole
 profile. -/
@@ -280,7 +282,11 @@ theorem center_curvature_polarity_kernel_eq_one_negative_iff
       delta ≠ 0 := by
   by_cases hdelta : delta = 0
   · subst delta
-    simp [centerCurvaturePolarityKernel, zeroUnitKernel, oneNegativeKernel]
+    simp only [centerCurvaturePolarityKernel, if_pos rfl, zeroUnitKernel,
+      oneNegativeKernel, ne_eq, not_true_eq_false, iff_false]
+    intro h
+    have h0 := congrFun (congrFun (congrArg (fun k => k.value) h) ()) ()
+    norm_num at h0
   · simp [centerCurvaturePolarityKernel, hdelta]
 
 /-- After scale normalization, the exact center readout agrees with the scalar
@@ -294,10 +300,7 @@ theorem normalized_center_readout_eq_polarity_kernel
     simp [centerCurvaturePolarityKernel, zeroUnitKernel,
       normalized_curvature_rayleigh_readout_formula]
   · rw [normalized_curvature_rayleigh_center_value delta hdelta]
-    have hsq : delta ^ 2 ≠ 0 := pow_ne_zero 2 hdelta
     simp [centerCurvaturePolarityKernel, hdelta, oneNegativeKernel]
-    field_simp [hsq]
-    ring
 
 #print axioms detuned_reflected_generator_gram
 #print axioms off_line_curvature_rayleigh_intertwiner
