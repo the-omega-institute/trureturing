@@ -5,21 +5,22 @@
    anchors: []
    digest: Bound simulated approval and fresh-beacon certification. -/
 
-import D5.S3.ConceptDynamics.Interpretation.FreshIndependentCheckpointGuarantee
-import D5.S3.TotalVariation.Metric
+import D5.S3.Estimation.DataProcessing.MeasurablePostprocessingDefectContraction
+import Mathlib.MeasureTheory.Constructions.Pi
+import Mathlib.MeasureTheory.Integral.Prod
 import Mathlib.MeasureTheory.Measure.Prod
+import Mathlib.Probability.ProbabilityMassFunction.Constructions
 
 /- Library-search audit trail (2026-09-02):
-   * D5 name and body-shape searches found the Boolean joint-law separation
-     witnesses, the general fresh-checkpoint guarantee, transcript-law
-     invariance, and the finite event characterization of total variation.
-     None states both halves of the source theorem under one public signature.
-   * `fresh_independent_checkpoint_deployment_guarantee` supplies the exact
-     product-law all-pass mass. `total_variation_eq_sup_event_gap` supplies the
-     perturbation from the ideal suite law to the beacon-induced suite law.
-   * Exact pinned-Mathlib hits `Measure.prod`, `Measure.pi`, `Measure.map_apply`,
-     `measureReal_prod_prod`, `sum_measureReal_singleton`, and
-     `probReal_add_probReal_compl` construct and evaluate the source laws.
+   * D5 name and body-shape searches found the canonical arbitrary-carrier
+     `measurableTotalVariation`, defined as the supremum of measurable-event
+     gaps. The finite-table `totalVariation` is not used here.
+   * The existing fresh-checkpoint owner is restricted to countable PMF
+     carriers, so the `Measure.pi_pi` product calculation is applied directly
+     for the source's general deployment measure.
+   * Exact pinned-Mathlib hits `Measure.prod_apply`, `lintegral_mono`,
+     `Measure.pi_pi`, `Measure.map_apply`, and `probReal_add_probReal_compl`
+     construct and evaluate the source laws.
    * The certificate is a function of the party seed, the co-selected
      implementation passes the same suite, and verifier randomness remains a
      separate product coordinate. No loss, transcript, pushforward, product,
@@ -32,9 +33,7 @@ noncomputable section
 
 namespace D5.S3.ConceptDynamics.Interpretation.PartySimulationFreshBeaconCertification
 
-open D5.S3.ConceptDynamics.Interpretation.FreshIndependentCheckpointGuarantee
-open D5.S3.TotalVariation.Metric
-open D5.S3.TotalVariation.Pinsker
+open D5.S3.Estimation.DataProcessing.MeasurablePostprocessingDefectContraction
 open MeasureTheory Set
 
 /-- A certificate computed only from the parties' sampling seed cannot make a
@@ -44,29 +43,31 @@ input, so reliability bounds approval by `delta`. Since the verifier returns a
 Boolean tier on every run, the trivial tier consequently has mass at least
 `1 - delta`.
 
-For the sufficient direction, the implementation is fixed before the beacon.
-The task and beacon have their actual product law, the ideal suite has the
-finite deployment product law, and the public fixed suite map pushes the beacon
-law forward. A bad implementation's all-pass mass is at most the ideal
-`(1 - epsilon) ^ m` term plus the finite total-variation discrepancy. -/
+For the sufficient direction, each task selects an implementation before the
+independent beacon is revealed. The proof disintegrates the task-beacon product
+law, applies the deployment product bound to every fixed task, and then
+integrates that uniform bound. The public suite map pushes the beacon law
+forward, and measurable total variation transports the ideal bound to it. -/
 theorem party_simulation_and_fresh_beacon_certification
     {Seed VerifierCoin Input Output Certificate Anchor Task : Type*}
     [Finite Seed] [MeasurableSpace Seed] [MeasurableSingletonClass Seed]
     [Finite VerifierCoin] [MeasurableSpace VerifierCoin]
     [MeasurableSingletonClass VerifierCoin]
-    [Fintype Input] [MeasurableSpace Input] [MeasurableSingletonClass Input]
-    [Finite Anchor] [MeasurableSpace Anchor] [MeasurableSingletonClass Anchor]
-    [Finite Task] [MeasurableSpace Task] [MeasurableSingletonClass Task]
-    (deployment : PMF Input) (expected : Input -> Output)
+    [MeasurableSpace Input] [MeasurableSpace Output] [MeasurableEq Output]
+    [MeasurableSpace Anchor] [MeasurableSpace Task]
+    (deployment : Measure Input) [IsProbabilityMeasure deployment]
+    (expected : Input -> Output) (expectedMeasurable : Measurable expected)
     (m : Nat) (epsilon delta : Real)
     (seedLaw : PMF Seed) (verifierCoinLaw : PMF VerifierCoin)
     (partySuite : Seed -> Fin m -> Input)
     (certificate : Seed -> Certificate)
     (verifier : ((Fin m -> Input × Output) × Certificate) -> VerifierCoin -> Bool)
     (coSelected : Seed -> Input -> Output)
-    (taskLaw : PMF Task) (anchorLaw : PMF Anchor)
-    (suiteMap : Anchor -> Fin m -> Input)
-    (implementation : Input -> Output) :
+    (taskLaw : Measure Task) [IsProbabilityMeasure taskLaw]
+    (anchorLaw : Measure Anchor) [IsProbabilityMeasure anchorLaw]
+    (suiteMap : Anchor -> Fin m -> Input) (suiteMapMeasurable : Measurable suiteMap)
+    (implementation : Task -> Input -> Output)
+    (implementationMeasurable : Measurable (Function.uncurry implementation)) :
     ((forall strategy : Seed -> Input -> Output,
         (seedLaw.toMeasure.prod verifierCoinLaw.toMeasure).real
           {omega |
@@ -76,11 +77,11 @@ theorem party_simulation_and_fresh_beacon_certification
                       strategy omega.1 (partySuite omega.1 index))),
                   certificate omega.1)
                 omega.2 = true ∧
-              epsilon < deployment.toMeasure.real
+              epsilon < deployment.real
                 {input | strategy omega.1 input ≠ expected input}} <= delta) ->
       (forall seed index,
         coSelected seed (partySuite seed index) = expected (partySuite seed index)) ->
-      (forall seed, epsilon < deployment.toMeasure.real
+      (forall seed, epsilon < deployment.real
         {input | coSelected seed input ≠ expected input}) ->
       (seedLaw.toMeasure.prod verifierCoinLaw.toMeasure).real
           {omega |
@@ -98,18 +99,16 @@ theorem party_simulation_and_fresh_beacon_certification
                     certificate omega.1)
                   omega.2 = false}) ∧
     (0 <= epsilon -> epsilon <= 1 ->
-      epsilon < deployment.toMeasure.real
-        {input | implementation input ≠ expected input} ->
-      (taskLaw.toMeasure.prod anchorLaw.toMeasure).real
+      (forall task, epsilon < deployment.real
+        {input | implementation task input ≠ expected input}) ->
+      (taskLaw.prod anchorLaw)
           {taskAnchor | forall index,
-            implementation (suiteMap taskAnchor.2 index) =
+            implementation taskAnchor.1 (suiteMap taskAnchor.2 index) =
               expected (suiteMap taskAnchor.2 index)} <=
-        (1 - epsilon) ^ m +
-          totalVariation
-            (fun suite =>
-              (Measure.map suiteMap anchorLaw.toMeasure).real {suite})
-            (fun suite =>
-              (Measure.pi (fun _ : Fin m => deployment.toMeasure)).real {suite})) := by
+        ENNReal.ofReal ((1 - epsilon) ^ m) +
+          measurableTotalVariation
+            (Measure.map suiteMap anchorLaw)
+            (Measure.pi (fun _ : Fin m => deployment))) := by
   classical
   constructor
   · intro reliable coSelectedPasses coSelectedBad
@@ -150,7 +149,7 @@ theorem party_simulation_and_fresh_beacon_certification
                       coSelected omega.1 (partySuite omega.1 index))),
                   certificate omega.1)
                 omega.2 = true ∧
-              epsilon < deployment.toMeasure.real
+              epsilon < deployment.real
                 {input | coSelected omega.1 input ≠ expected input}} := by
       ext omega
       simp only [honestGrant, Set.mem_ofPred_eq]
@@ -171,126 +170,126 @@ theorem party_simulation_and_fresh_beacon_certification
     rw [trivialIsComplement]
     linarith
   · intro epsilonNonnegative epsilonAtMostOne lossAbove
-    let jointLaw : Measure (Task × Anchor) :=
-      taskLaw.toMeasure.prod anchorLaw.toMeasure
+    let jointLaw : Measure (Task × Anchor) := taskLaw.prod anchorLaw
     let inducedSuiteLaw : Measure (Fin m -> Input) :=
-      Measure.map suiteMap anchorLaw.toMeasure
+      Measure.map suiteMap anchorLaw
     let idealSuiteLaw : Measure (Fin m -> Input) :=
-      Measure.pi (fun _ : Fin m => deployment.toMeasure)
-    let allPass : Set (Fin m -> Input) :=
+      Measure.pi (fun _ : Fin m => deployment)
+    let allPass (task : Task) : Set (Fin m -> Input) :=
       {suite | forall index,
-        implementation (suite index) = expected (suite index)}
+        implementation task (suite index) = expected (suite index)}
     let jointPass : Set (Task × Anchor) :=
       {taskAnchor | forall index,
-        implementation (suiteMap taskAnchor.2 index) =
+        implementation taskAnchor.1 (suiteMap taskAnchor.2 index) =
           expected (suiteMap taskAnchor.2 index)}
-    have suiteMapMeasurable : Measurable suiteMap := measurable_of_finite _
-    have allPassMeasurable : MeasurableSet allPass :=
-      allPass.to_countable.measurableSet
-    have jointPassEq :
-        jointPass = Set.univ ×ˢ (suiteMap ⁻¹' allPass) := by
-      ext taskAnchor
-      simp [jointPass, allPass]
-    have actualJointEq : jointLaw.real jointPass = inducedSuiteLaw.real allPass := by
-      rw [jointPassEq]
-      simp only [jointLaw, measureReal_prod_prod]
-      rw [show taskLaw.toMeasure.real Set.univ = 1 by simp [measureReal_def], one_mul]
-      rw [show
-        anchorLaw.toMeasure.real (suiteMap ⁻¹' allPass) =
-            inducedSuiteLaw.real allPass by
-          simp only [inducedSuiteLaw, measureReal_def,
-            Measure.map_apply suiteMapMeasurable allPassMeasurable]]
-    rcases fresh_independent_checkpoint_deployment_guarantee
-        deployment implementation expected m epsilon epsilonNonnegative
-        epsilonAtMostOne lossAbove.le with
-      ⟨idealExact, _idealExponentialBound⟩
-    have idealExact' :
-        idealSuiteLaw.real allPass =
-          (deployment.toMeasure.real
-            {input | implementation input = expected input}) ^ m := by
-      simpa [idealSuiteLaw, allPass] using idealExact
-    let passSet : Set Input :=
-      {input | implementation input = expected input}
-    let failureSet : Set Input :=
-      {input | implementation input ≠ expected input}
-    have failureMeasurable : MeasurableSet failureSet :=
-      failureSet.to_countable.measurableSet
-    have passIsFailureComplement : passSet = failureSetᶜ := by
-      ext input
-      simp [passSet, failureSet]
-    have passFailureMass := probReal_add_probReal_compl
-      (μ := deployment.toMeasure) failureMeasurable
-    have passMassAtMost :
-        deployment.toMeasure.real passSet <= 1 - epsilon := by
-      rw [passIsFailureComplement]
-      linarith
-    have idealBound : idealSuiteLaw.real allPass <= (1 - epsilon) ^ m := by
-      rw [idealExact']
-      change
-        (deployment.toMeasure.real passSet) ^ m <= (1 - epsilon) ^ m
-      exact pow_le_pow_left₀ measureReal_nonneg passMassAtMost m
-    let p : (Fin m -> Input) -> Real := fun suite => inducedSuiteLaw.real {suite}
-    let q : (Fin m -> Input) -> Real := fun suite => idealSuiteLaw.real {suite}
-    have pMass : (∑ suite, p suite) = 1 := by
-      have singletonSum := sum_measureReal_singleton
-        (μ := inducedSuiteLaw) (Finset.univ : Finset (Fin m -> Input))
+    let _ : IsProbabilityMeasure inducedSuiteLaw := by
+      dsimp only [inducedSuiteLaw]
+      exact Measure.isProbabilityMeasure_map suiteMapMeasurable.aemeasurable
+    let _ : IsProbabilityMeasure idealSuiteLaw := by
+      dsimp only [idealSuiteLaw]
+      infer_instance
+    have implementationAtMeasurable (task : Task) :
+        Measurable (implementation task) :=
+      implementationMeasurable.comp (measurable_const.prodMk measurable_id)
+    have allPassMeasurable (task : Task) : MeasurableSet (allPass task) := by
+      exact (Measurable.forall fun index =>
+        ((implementationAtMeasurable task).comp (measurable_pi_apply index)).eq
+          (expectedMeasurable.comp (measurable_pi_apply index))).setOf
+    have jointPassMeasurable : MeasurableSet jointPass := by
+      exact (Measurable.forall fun index =>
+        let sampledInput : Task × Anchor -> Input :=
+          fun taskAnchor => suiteMap taskAnchor.2 index
+        have sampledInputMeasurable : Measurable sampledInput :=
+          (measurable_pi_apply index).comp (suiteMapMeasurable.comp measurable_snd)
+        (implementationMeasurable.comp
+            (measurable_fst.prodMk sampledInputMeasurable)).eq
+          (expectedMeasurable.comp sampledInputMeasurable)).setOf
+    have sectionMass (task : Task) :
+        anchorLaw (Prod.mk task ⁻¹' jointPass) =
+          inducedSuiteLaw (allPass task) := by
+      rw [show Prod.mk task ⁻¹' jointPass = suiteMap ⁻¹' allPass task by
+        ext anchor
+        simp [jointPass, allPass]]
+      exact (Measure.map_apply suiteMapMeasurable (allPassMeasurable task)).symm
+    have idealBound (task : Task) :
+        idealSuiteLaw (allPass task) <= ENNReal.ofReal ((1 - epsilon) ^ m) := by
+      let passSet : Set Input :=
+        {input | implementation task input = expected input}
+      let failureSet : Set Input :=
+        {input | implementation task input ≠ expected input}
+      have passMeasurable : MeasurableSet passSet := by
+        exact measurableSet_eq_fun (implementationAtMeasurable task) expectedMeasurable
+      have failureMeasurable : MeasurableSet failureSet := by
+        rw [show failureSet = passSetᶜ by
+          ext input
+          simp [failureSet, passSet]]
+        exact passMeasurable.compl
+      have allPassRectangle :
+          allPass task = Set.pi Set.univ (fun _ : Fin m => passSet) := by
+        ext suite
+        simp [allPass, passSet]
+      have idealExact :
+          idealSuiteLaw.real (allPass task) = (deployment.real passSet) ^ m := by
+        rw [measureReal_def, allPassRectangle]
+        simp only [idealSuiteLaw, Measure.pi_pi, ENNReal.toReal_prod]
+        simp [measureReal_def]
+      have passIsFailureComplement : passSet = failureSetᶜ := by
+        ext input
+        simp [passSet, failureSet]
+      have passFailureMass :=
+        probReal_add_probReal_compl (μ := deployment) failureMeasurable
+      have passMassAtMost : deployment.real passSet <= 1 - epsilon := by
+        rw [passIsFailureComplement]
+        linarith [lossAbove task]
+      have idealRealBound :
+          idealSuiteLaw.real (allPass task) <= (1 - epsilon) ^ m := by
+        rw [idealExact]
+        exact pow_le_pow_left₀ measureReal_nonneg passMassAtMost m
+      rw [← ENNReal.ofReal_toReal (measure_ne_top idealSuiteLaw (allPass task))]
+      exact ENNReal.ofReal_le_ofReal idealRealBound
+    have eventGap (task : Task) :
+        inducedSuiteLaw (allPass task) - idealSuiteLaw (allPass task) <=
+          measurableTotalVariation inducedSuiteLaw idealSuiteLaw := by
+      unfold measurableTotalVariation
+      exact (le_max_left
+          (inducedSuiteLaw (allPass task) - idealSuiteLaw (allPass task))
+          (idealSuiteLaw (allPass task) - inducedSuiteLaw (allPass task))).trans
+        (le_iSup
+          (fun event : {event : Set (Fin m -> Input) // MeasurableSet event} =>
+            max (inducedSuiteLaw event.1 - idealSuiteLaw event.1)
+              (idealSuiteLaw event.1 - inducedSuiteLaw event.1))
+          ⟨allPass task, allPassMeasurable task⟩)
+    have inducedBound (task : Task) :
+        inducedSuiteLaw (allPass task) <=
+          ENNReal.ofReal ((1 - epsilon) ^ m) +
+            measurableTotalVariation inducedSuiteLaw idealSuiteLaw := by
       calc
-        (∑ suite, p suite) = inducedSuiteLaw.real Set.univ := by
-          simpa only [p, Finset.coe_univ] using singletonSum
-        _ = 1 := by
-          simp [inducedSuiteLaw, measureReal_def,
-            Measure.map_apply suiteMapMeasurable MeasurableSet.univ]
-    have qMass : (∑ suite, q suite) = 1 := by
-      have singletonSum := sum_measureReal_singleton
-        (μ := idealSuiteLaw) (Finset.univ : Finset (Fin m -> Input))
-      calc
-        (∑ suite, q suite) = idealSuiteLaw.real Set.univ := by
-          simpa only [q, Finset.coe_univ] using singletonSum
-        _ = 1 := by simp [idealSuiteLaw, measureReal_def]
-    let passFinset : Finset (Fin m -> Input) :=
-      Finset.univ.filter fun suite => forall index,
-        implementation (suite index) = expected (suite index)
-    have pEvent :
-        (∑ suite ∈ passFinset, p suite) = inducedSuiteLaw.real allPass := by
-      have singletonSum := sum_measureReal_singleton
-        (μ := inducedSuiteLaw) passFinset
-      calc
-        (∑ suite ∈ passFinset, p suite) =
-            inducedSuiteLaw.real (passFinset : Set (Fin m -> Input)) := by
-          simpa only [p] using singletonSum
-        _ = inducedSuiteLaw.real allPass := by
-          congr 1
-          ext suite
-          simp [passFinset, allPass]
-    have qEvent :
-        (∑ suite ∈ passFinset, q suite) = idealSuiteLaw.real allPass := by
-      have singletonSum := sum_measureReal_singleton
-        (μ := idealSuiteLaw) passFinset
-      calc
-        (∑ suite ∈ passFinset, q suite) =
-            idealSuiteLaw.real (passFinset : Set (Fin m -> Input)) := by
-          simpa only [q] using singletonSum
-        _ = idealSuiteLaw.real allPass := by
-          congr 1
-          ext suite
-          simp [passFinset, allPass]
-    have eventGap :
-        |inducedSuiteLaw.real allPass - idealSuiteLaw.real allPass| <=
-          totalVariation p q := by
-      have greatest := total_variation_eq_sup_event_gap p q (pMass.trans qMass.symm)
-      have gap := greatest.2 ⟨passFinset, rfl⟩
-      change
-        |(∑ suite ∈ passFinset, p suite) - (∑ suite ∈ passFinset, q suite)| <=
-          totalVariation p q at gap
-      rwa [pEvent, qEvent] at gap
-    have inducedBound :
-        inducedSuiteLaw.real allPass <=
-          idealSuiteLaw.real allPass + totalVariation p q := by
-      linarith [le_abs_self
-        (inducedSuiteLaw.real allPass - idealSuiteLaw.real allPass)]
-    change jointLaw.real jointPass <= (1 - epsilon) ^ m + totalVariation p q
-    rw [actualJointEq]
-    exact inducedBound.trans (add_le_add idealBound (le_refl _))
+        inducedSuiteLaw (allPass task) <=
+            measurableTotalVariation inducedSuiteLaw idealSuiteLaw +
+              idealSuiteLaw (allPass task) :=
+          tsub_le_iff_right.mp (eventGap task)
+        _ <= measurableTotalVariation inducedSuiteLaw idealSuiteLaw +
+              ENNReal.ofReal ((1 - epsilon) ^ m) :=
+          add_le_add (le_refl _) (idealBound task)
+        _ = ENNReal.ofReal ((1 - epsilon) ^ m) +
+              measurableTotalVariation inducedSuiteLaw idealSuiteLaw := add_comm _ _
+    change jointLaw jointPass <=
+      ENNReal.ofReal ((1 - epsilon) ^ m) +
+        measurableTotalVariation inducedSuiteLaw idealSuiteLaw
+    rw [show jointLaw jointPass =
+        ∫⁻ task, anchorLaw (Prod.mk task ⁻¹' jointPass) ∂taskLaw by
+      exact Measure.prod_apply jointPassMeasurable]
+    calc
+      (∫⁻ task, anchorLaw (Prod.mk task ⁻¹' jointPass) ∂taskLaw) =
+          ∫⁻ task, inducedSuiteLaw (allPass task) ∂taskLaw :=
+        lintegral_congr sectionMass
+      _ <= ∫⁻ _ : Task,
+          ENNReal.ofReal ((1 - epsilon) ^ m) +
+            measurableTotalVariation inducedSuiteLaw idealSuiteLaw ∂taskLaw :=
+        lintegral_mono inducedBound
+      _ = ENNReal.ofReal ((1 - epsilon) ^ m) +
+            measurableTotalVariation inducedSuiteLaw idealSuiteLaw := by
+        simp only [lintegral_const, measure_univ, mul_one]
 
 #print axioms party_simulation_and_fresh_beacon_certification
 

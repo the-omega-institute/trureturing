@@ -32,21 +32,19 @@ internal sealed class PartySimulationFreshBeaconCertificationDocument
                         + "at most delta, and total Boolean output makes the trivial tier its "
                         + "probability complement.")),
                 Paragraph(Text(
-                    "The second implication fixes the implementation before the anchor. Task and "
-                        + "anchor are governed by their product measure, the public suite map "
-                        + "pushes the anchor law forward, and the ideal suite is the finite product "
-                        + "of the deployment law.")),
+                    "The second implication lets each task select its committed implementation "
+                        + "before the anchor. Task and anchor are governed by their product measure, "
+                        + "the public suite map pushes the anchor law forward, and the ideal suite "
+                        + "is the deployment product measure on the unrestricted input carrier.")),
                 Paragraph(Text(
-                    "The exact independent all-pass bound is transported to the induced suite law "
-                        + "through the finite event characterization of total variation. Every "
-                        + "carrier instance, probability law, map, predicate, and threshold premise "
-                        + "is displayed explicitly in the proposition."))),
+                    "For every fixed task, the independent all-pass bound is transported to the "
+                        + "induced suite law through measurable-event total variation, then integrated "
+                        + "over the task law. Every measurability, probability-law, map, predicate, "
+                        + "and threshold premise is displayed explicitly in the proposition."))),
             DescribeRole.Theorem)),
         [
             DocumentEdge.Dependency.Create(GidRef.Create(
-                "D5/S3/ConceptDynamics/Interpretation/FreshIndependentCheckpointGuarantee")),
-            DocumentEdge.Dependency.Create(GidRef.Create(
-                "D5/S3/TotalVariation/Metric")),
+                "D5/S3/Estimation/DataProcessing/MeasurablePostprocessingDefectContraction")),
         ]));
 
     private static Formula Typeclass(string name, Formula argument) =>
@@ -80,9 +78,6 @@ internal sealed class PartySimulationFreshBeaconCertificationDocument
     private static Formula Lambda(Formula variable, Formula body) =>
         Seq(Open, variable, Sp, Mapsto, Sp, body, Close);
 
-    private static Formula Singleton(Formula value) =>
-        Seq(OpenBrace, value, CloseBrace);
-
     private static Formula TheoremFormula()
     {
         Formula type = Seq(Operatorname, Grp(F.Id("Type")));
@@ -102,7 +97,7 @@ internal sealed class PartySimulationFreshBeaconCertificationDocument
         Formula suiteMap = F.Id("suiteMap"), implementation = F.Id("implementation");
         Formula strategy = F.Id("strategy"), omega = F.Id("omega");
         Formula seedValue = F.Id("s"), indexValue = F.Id("i");
-        Formula sample = F.Id("x"), suite = F.Id("u"), taskAnchor = F.Id("z");
+        Formula sample = F.Id("x"), taskAnchor = F.Id("z");
 
         Formula finBudget = Call("Fin", budget);
         Formula suiteType = Arrow(finBudget, input);
@@ -118,7 +113,7 @@ internal sealed class PartySimulationFreshBeaconCertificationDocument
         Formula behavior = F.Id("P");
         Formula lossDefinition = Seq(
             loss, Colon, Sp, Arrow(Seq(Open, behaviorType, Close), reals), Sp, Eq, Sp,
-            Lambda(behavior, Call("real", Call("toMeasure", deployment),
+            Lambda(behavior, Call("real", deployment,
                 new Formula.SetBuilder(
                     Seq(Apply(behavior, sample), Sp, Neq, Sp, Apply(expected, sample)),
                     sample, input))));
@@ -131,7 +126,7 @@ internal sealed class PartySimulationFreshBeaconCertificationDocument
         Formula beaconJoint = F.Id("nuBeacon");
         Formula beaconJointDefinition = Seq(
             beaconJoint, Colon, Sp, Call("Measure", beaconWorld), Sp, Eq, Sp,
-            Call("prod", Call("toMeasure", taskLaw), Call("toMeasure", anchorLaw)));
+            Call("prod", taskLaw, anchorLaw));
 
         Formula partyRecord = F.Id("partyRecord");
         Formula recordAt = Pair(
@@ -153,12 +148,12 @@ internal sealed class PartySimulationFreshBeaconCertificationDocument
         Formula inducedLaw = F.Id("muInduced");
         Formula inducedLawDefinition = Seq(
             inducedLaw, Colon, Sp, Call("Measure", suiteType), Sp, Eq, Sp,
-            Call("map", suiteMap, Call("toMeasure", anchorLaw)));
+            Call("map", suiteMap, anchorLaw));
 
         Formula idealLaw = F.Id("muIdeal");
         Formula idealLawDefinition = Seq(
             idealLaw, Colon, Sp, Call("Measure", suiteType), Sp, Eq, Sp,
-            Call("pi", Lambda(indexValue, Call("toMeasure", deployment))));
+            Call("pi", Lambda(indexValue, deployment)));
 
         Formula omegaSeed = Field(omega, 1), omegaCoin = Field(omega, 2);
         Formula strategyAtSeed = Apply(strategy, omegaSeed);
@@ -205,30 +200,29 @@ internal sealed class PartySimulationFreshBeaconCertificationDocument
             Open, coSelectedBad, Close, Sp, Rightarrow, RowBreak, Grp(),
             necessityConclusion, Close);
 
-        Formula implementationLoss = Apply(loss, implementation);
+        Formula taskValue = F.Id("t");
+        Formula implementationLoss = Apply(loss, Apply(implementation, taskValue));
+        Formula taskAnchorTask = Field(taskAnchor, 1);
         Formula taskAnchorValue = Field(taskAnchor, 2);
         Formula anchoredInput = Apply(suiteMap, taskAnchorValue, indexValue);
         Formula beaconPassEvent = new Formula.SetBuilder(
             Seq(
                 Forall, Sp, indexValue, Colon, Sp, finBudget, Comma, Sp,
-                Apply(implementation, anchoredInput), Sp, Eq, Sp,
+                Apply(implementation, taskAnchorTask, anchoredInput), Sp, Eq, Sp,
                 Apply(expected, anchoredInput)),
             taskAnchor, beaconWorld);
-        Formula inducedMass = Lambda(
-            suite, Call("real", inducedLaw, Singleton(suite)));
-        Formula idealMass = Lambda(
-            suite, Call("real", idealLaw, Singleton(suite)));
         Formula powerBound = new Formula.Power(
             Seq(Open, D(1), Sp, Minus, Sp, epsilon, Close), Seq(budget));
         Formula sufficiencyConclusion = Seq(
-            Call("real", beaconJoint, beaconPassEvent), Sp, Leq, Sp,
-            powerBound, Sp, Plus, Sp,
-            Call("totalVariation", inducedMass, idealMass));
+            Apply(beaconJoint, beaconPassEvent), Sp, Leq, Sp,
+            Call("ofReal", powerBound), Sp, Plus, Sp,
+            Call("measurableTotalVariation", inducedLaw, idealLaw));
         Formula sufficiency = Seq(
             Open,
             D(0), Sp, Leq, Sp, epsilon, Sp, Rightarrow, RowBreak, Grp(),
             epsilon, Sp, Leq, Sp, D(1), Sp, Rightarrow, RowBreak, Grp(),
-            epsilon, Sp, Lt, Sp, implementationLoss, Sp, Rightarrow,
+            Open, Forall, Sp, taskValue, Colon, Sp, task, Comma, Sp,
+            epsilon, Sp, Lt, Sp, implementationLoss, Close, Sp, Rightarrow,
             RowBreak, Grp(), sufficiencyConclusion,
             Close);
 
@@ -244,17 +238,15 @@ internal sealed class PartySimulationFreshBeaconCertificationDocument
             Typeclass("Finite", coin), Comma, Sp,
             Typeclass("MeasurableSpace", coin), Comma, Sp,
             Typeclass("MeasurableSingletonClass", coin), Comma, RowBreak, Grp(),
-            Typeclass("Fintype", input), Comma, Sp,
             Typeclass("MeasurableSpace", input), Comma, Sp,
-            Typeclass("MeasurableSingletonClass", input), Comma, RowBreak, Grp(),
-            Typeclass("Finite", anchor), Comma, Sp,
+            Typeclass("MeasurableSpace", output), Comma, Sp,
+            Typeclass("MeasurableEq", output), Comma, RowBreak, Grp(),
             Typeclass("MeasurableSpace", anchor), Comma, Sp,
-            Typeclass("MeasurableSingletonClass", anchor), Comma, RowBreak, Grp(),
-            Typeclass("Finite", task), Comma, Sp,
             Typeclass("MeasurableSpace", task), Comma, Sp,
-            Typeclass("MeasurableSingletonClass", task), Comma, RowBreak, Grp(),
-            deployment, Colon, Sp, Call("PMF", input), Comma, Sp,
-            expected, Colon, Sp, behaviorType, Comma, RowBreak, Grp(),
+            deployment, Colon, Sp, Call("Measure", input), Comma, Sp,
+            Typeclass("IsProbabilityMeasure", deployment), Comma, RowBreak, Grp(),
+            expected, Colon, Sp, behaviorType, Comma, Sp,
+            Call("Measurable", expected), Comma, RowBreak, Grp(),
             budget, Colon, Sp, naturals, Comma, Sp,
             epsilon, Comma, Sp, delta, Colon, Sp, reals, Comma, RowBreak, Grp(),
             seedLaw, Colon, Sp, Call("PMF", seed), Comma, Sp,
@@ -264,10 +256,14 @@ internal sealed class PartySimulationFreshBeaconCertificationDocument
             RowBreak, Grp(),
             verifier, Colon, Sp, verifierType, Comma, Sp,
             coSelected, Colon, Sp, strategyType, Comma, RowBreak, Grp(),
-            taskLaw, Colon, Sp, Call("PMF", task), Comma, Sp,
-            anchorLaw, Colon, Sp, Call("PMF", anchor), Comma, RowBreak, Grp(),
+            taskLaw, Colon, Sp, Call("Measure", task), Comma, Sp,
+            Typeclass("IsProbabilityMeasure", taskLaw), Comma, RowBreak, Grp(),
+            anchorLaw, Colon, Sp, Call("Measure", anchor), Comma, Sp,
+            Typeclass("IsProbabilityMeasure", anchorLaw), Comma, RowBreak, Grp(),
             suiteMap, Colon, Sp, Arrow(anchor, suiteType), Comma, Sp,
-            implementation, Colon, Sp, behaviorType, Comma, RowBreak, Grp(),
+            Call("Measurable", suiteMap), Comma, RowBreak, Grp(),
+            implementation, Colon, Sp, Arrow(task, behaviorType), Comma, Sp,
+            Call("Measurable", Call("uncurry", implementation)), Comma, RowBreak, Grp(),
             Operatorname, Grp(F.Id("let")), Open,
             lossDefinition, Comma, RowBreak, Grp(),
             partyJointDefinition, Comma, RowBreak, Grp(),
