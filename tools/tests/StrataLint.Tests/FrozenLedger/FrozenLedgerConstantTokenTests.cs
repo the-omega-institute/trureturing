@@ -7,6 +7,46 @@ namespace StrataLint.Tests;
 public sealed partial class FrozenLedgerTests
 {
     [Fact]
+    public void MathlibReanchorRejectsByteIdenticalDependentAfterImportedInstanceAttributeChanges()
+    {
+        const string baselineOwner =
+            "class Choice where\n  carrier : Type\n"
+            + "def natChoice : Choice := ⟨Nat⟩\n"
+            + "def intChoice : Choice := ⟨Int⟩\n"
+            + "attribute [instance] natChoice\n"
+            + "theorem a : True := by trivial\n";
+        var candidateOwner = baselineOwner.Replace(
+            "attribute [instance] natChoice",
+            "attribute [instance] intChoice",
+            StringComparison.Ordinal);
+        const string dependent =
+            "import D5.S0.Carrier.A\n"
+            + "def b (x : (inferInstance : Choice).carrier) : "
+            + "(inferInstance : Choice).carrier := x\n";
+
+        var result = ValidateMathlibReanchor(
+            baseModules:
+            [
+                ModuleWithReport("A", baselineOwner, statementMaterial: "unchanged A"),
+                ModuleWithReport("B", dependent, statementMaterial: "elaborated Nat", kind: "def")
+                    with { Imports = ["A"] },
+            ],
+            candidateModules:
+            [
+                ModuleWithReport("A", candidateOwner, statementMaterial: "unchanged A"),
+                ModuleWithReport("B", dependent, statementMaterial: "elaborated Int", kind: "def")
+                    with { Imports = ["A"] },
+            ],
+            replacedModules: ["B"],
+            environment: ReanchorEnvironment.PinUpgrade);
+
+        Assert.NotNull(result.Recognition);
+        Assert.Equal([RepoPathFor("B")], result.Recognition.ReanchoredModulePaths);
+        Assert.False(result.Authorized);
+        AssertReuseRejected(result.Failure);
+    }
+
+    [Fact]
     public void MathlibReanchorAcceptsByteIdenticalSourceWithAnonymousLocalInstance()
     {
         const string source =

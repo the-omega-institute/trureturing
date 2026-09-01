@@ -537,8 +537,8 @@ jobs:
           key: ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-${{ steps.lean-report-input.outputs.sources_sha256 }}
           restore-keys: |
             ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.lean-report-input.outputs.config_sha256 }}-
-      - name: Fetch required Lean release cache on dual miss
-        if: steps.revert.outputs.confirmed != 'true' && steps.report-reuse.outcome != 'success' && steps.lake-deps-cache.outputs.cache-hit != 'true' && steps.lake-build-cache.outputs.cache-hit != 'true'
+      - name: Fetch required Lean release cache when the project layer is absent
+        if: steps.revert.outputs.confirmed != 'true' && steps.report-reuse.outcome != 'success' && steps.lake-build-cache.outputs.cache-hit != 'true'
         env: { GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
         shell: bash
         run: |
