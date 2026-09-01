@@ -1,7 +1,6 @@
 using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using StrataLint.Engine;
 
 namespace StrataLint.EngineeringScope;
@@ -9,14 +8,6 @@ namespace StrataLint.EngineeringScope;
 internal static class Program
 {
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
-    private static readonly JsonSerializerOptions JsonOptions = new()
-    {
-        PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
-        UnmappedMemberHandling = JsonUnmappedMemberHandling.Disallow,
-        WriteIndented = true,
-        Converters = { new JsonStringEnumConverter(JsonNamingPolicy.SnakeCaseLower, allowIntegerValues: false) },
-    };
-
     public static int Main(string[] arguments) =>
         arguments.FirstOrDefault() == "self-lock-probe"
             ? SelfLockProbeProgram.Run(arguments.Skip(1).ToArray())
@@ -62,12 +53,7 @@ internal static class Program
                     "--head must equal the checked HEAD and --base must equal the checked HEAD^1");
             }
 
-            return options.Mode switch
-            {
-                "plan" => Plan(options, head, @base),
-                "execute" => Execute(options, head, @base),
-                _ => throw new ArgumentException($"unknown mode: {options.Mode}"),
-            };
+            return Execute(options, head, @base);
         }
         catch (Exception exception)
         {
@@ -76,9 +62,8 @@ internal static class Program
         }
     }
 
-    private static int Plan(Options options, string head, string @base)
+    private static int Execute(Options options, string head, string @base)
     {
-        var changedPaths = GitPaths(options.RepositoryRoot, @base, head);
         var full = Environment.GetEnvironmentVariable("FULL");
         if (full is { Length: > 0 } && full != "1")
         {
@@ -86,36 +71,10 @@ internal static class Program
         }
 
         var plan = EngineeringTestPlanPolicy.Evaluate(
-            changedPaths,
+            GitPaths(options.RepositoryRoot, @base, head),
             RepositoryRules.ReadSnapshotProjects(
                 RevisionSnapshot(options.RepositoryRoot, @base, "protected base")),
             full == "1");
-        WriteArtifact(options.PlanFile, new EngineeringTestPlanArtifact(3, head, @base, plan));
-        WritePlan(plan);
-        return 0;
-    }
-
-    private static int Execute(Options options, string head, string @base)
-    {
-        EngineeringTestPlan plan;
-        try
-        {
-            var artifact = JsonSerializer.Deserialize<EngineeringTestPlanArtifact>(
-                File.ReadAllText(options.PlanFile, StrictUtf8),
-                JsonOptions) ?? throw new InvalidDataException("plan artifact is empty");
-            ValidateArtifact(artifact, head, @base);
-            plan = artifact.Plan!;
-        }
-        catch (Exception exception)
-        {
-            plan = EngineeringTestPlanPolicy.Evaluate(
-                GitPaths(options.RepositoryRoot, @base, head),
-                RepositoryRules.ReadSnapshotProjects(
-                    RevisionSnapshot(options.RepositoryRoot, @base, "protected base")),
-                full: true);
-            Console.Error.WriteLine($"ENGINEERING_TEST_PLAN_FALLBACK {exception.Message}");
-        }
-
         WritePlan(plan);
         return EngineeringTestExecutor.Execute(
             plan,
@@ -226,18 +185,6 @@ internal static class Program
         return 0;
     }
 
-    private static void ValidateArtifact(EngineeringTestPlanArtifact artifact, string head, string @base)
-    {
-        if (artifact.Version != 3 || artifact.Head != head || artifact.Base != @base)
-            throw new InvalidDataException("plan artifact does not address the checked head and base");
-        if (artifact.Plan is null || artifact.Plan.ChangedPaths.IsDefault || artifact.Plan.Projects.IsDefault
-            || string.IsNullOrWhiteSpace(artifact.Plan.Reason)
-            || (artifact.Plan.Kind == EngineeringTestPlanKind.None && artifact.Plan.Projects.Length != 0)
-            || (artifact.Plan.Kind != EngineeringTestPlanKind.None && artifact.Plan.Projects.Length == 0)
-            || artifact.Plan.Projects.Any(string.IsNullOrWhiteSpace))
-            throw new InvalidDataException("plan artifact does not conform to schema version 3");
-    }
-
     private static void WritePlan(EngineeringTestPlan plan)
     {
         Console.WriteLine(
@@ -249,13 +196,6 @@ internal static class Program
             Console.WriteLine(
                 $"ENGINEERING_TEST_PROJECT project={JsonSerializer.Serialize(project)}");
         }
-    }
-
-    private static void WriteArtifact(string path, EngineeringTestPlanArtifact artifact)
-    {
-        var temporary = path + ".tmp";
-        File.WriteAllText(temporary, JsonSerializer.Serialize(artifact, JsonOptions) + "\n", StrictUtf8);
-        File.Move(temporary, path, overwrite: true);
     }
 
     private static string GitText(string repositoryRoot, params string[] arguments)
@@ -294,13 +234,7 @@ internal static class Program
             _ => throw new InvalidDataException($"{description} snapshot decode returned an unknown outcome"),
         };
 
-    private sealed record EngineeringTestPlanArtifact(
-        int Version,
-        string Head,
-        string Base,
-        EngineeringTestPlan? Plan);
-
-    private sealed record Options(string Mode, string RepositoryRoot, string Head, string Base, string PlanFile)
+    private sealed record Options(string RepositoryRoot, string Head, string Base)
     {
         internal static Options Parse(IReadOnlyList<string> arguments)
         {
@@ -312,13 +246,16 @@ internal static class Program
                 if (!values.TryAdd(arguments[index], arguments[index + 1]))
                     throw new ArgumentException($"duplicate option: {arguments[index]}");
             }
+            if (values.Count != 3
+                || values.Keys.Any(static name => name is not "--repository" and not "--head" and not "--base"))
+            {
+                throw new ArgumentException("options must be exactly --repository, --head, and --base");
+            }
 
             return new Options(
-                Require(values, "--mode"),
                 Path.GetFullPath(Require(values, "--repository")),
                 Require(values, "--head"),
-                Require(values, "--base"),
-                Path.GetFullPath(Require(values, "--plan-file")));
+                Require(values, "--base"));
         }
 
         private static string Require(IReadOnlyDictionary<string, string> values, string name) =>

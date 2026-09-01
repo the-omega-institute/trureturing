@@ -99,51 +99,6 @@ jobs:
             printf '%s\n' "cannot check out push commit $GITHUB_SHA; admission fails closed" >&2
           fi
           exit 1
-      - name: Materialize protected-base engineering planning harness
-        id: base-harness
-        if: steps.revert.outputs.confirmed != 'true' && steps.checkout-merge.outcome == 'success'
-        shell: bash
-        run: |
-          set -euo pipefail
-          base_sha="$(git -C candidate rev-parse HEAD^1)"
-          git -C candidate show "${base_sha}:tools/scripts/workflow/engineering-test-planning-harness.sh" |
-            /bin/bash -s -- materialize candidate "$base_sha" "$RUNNER_TEMP/protected-base-engineering-planning-harness" "$GITHUB_OUTPUT"
-      - name: Install base-pinned SDK for test planning
-        if: steps.revert.outputs.confirmed != 'true'
-        uses: actions/setup-dotnet@v4
-        with:
-          global-json-file: ${{ steps.base-harness.outputs.root }}/global.json
-      - name: Restore protected-base locked dependencies for test planning
-        if: steps.revert.outputs.confirmed != 'true'
-        shell: bash
-        env:
-          BASE_HARNESS_ROOT: ${{ steps.base-harness.outputs.root }}
-        run: |
-          set -euo pipefail
-          cd "$BASE_HARNESS_ROOT"
-          dotnet restore tools/StrataLint.sln --locked-mode
-      - name: Plan base-owned engineering tests
-        id: scope
-        if: steps.revert.outputs.confirmed != 'true'
-        shell: bash
-        env:
-          BASE_HARNESS_ROOT: ${{ steps.base-harness.outputs.root }}
-        run: |
-          set -euo pipefail
-          base_sha="$(git -C candidate rev-parse HEAD^1)"
-          git -C candidate show "${base_sha}:tools/scripts/workflow/engineering-test-planning-harness.sh" |
-            /bin/bash -s -- plan candidate "$BASE_HARNESS_ROOT" "$RUNNER_TEMP/engineering-test-plan.json" \
-              "$GITHUB_WORKSPACE/candidate" "$GITHUB_OUTPUT" "$GITHUB_EVENT_NAME"
-      - name: Remove protected-base engineering planning harness
-        if: steps.revert.outputs.confirmed != 'true' && always() && steps.base-harness.outcome == 'success'
-        shell: bash
-        env:
-          BASE_HARNESS_ROOT: ${{ steps.base-harness.outputs.root }}
-        run: |
-          set -euo pipefail
-          base_sha="$(git -C candidate rev-parse HEAD^1)"
-          git -C candidate show "${base_sha}:tools/scripts/workflow/engineering-test-planning-harness.sh" |
-            /bin/bash -s -- remove candidate "$BASE_HARNESS_ROOT"
       - name: Install candidate-pinned SDK for candidate build and tests
         if: steps.revert.outputs.confirmed != 'true'
         uses: actions/setup-dotnet@v4
@@ -151,7 +106,7 @@ jobs:
           global-json-file: candidate/global.json
       - name: Resolve judge binary content address before build outputs exist
         id: judge-address
-        if: steps.revert.outputs.confirmed != 'true' && steps.scope.outputs.run_required == 'true'
+        if: steps.revert.outputs.confirmed != 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -159,7 +114,7 @@ jobs:
           candidate/tools/scripts/workflow/judge-content-address.sh "$source_address" >> "$GITHUB_OUTPUT"
       - name: Resolve pinned Lean toolchain
         id: lean
-        if: steps.revert.outputs.confirmed != 'true' && steps.scope.outputs.run_required == 'true'
+        if: steps.revert.outputs.confirmed != 'true'
         shell: bash
         env:
           LEAN_TOOLCHAIN_FILE: candidate/lean-toolchain
@@ -169,7 +124,7 @@ jobs:
           echo "file=$LEAN_TOOLCHAIN_FILE" >> "$GITHUB_OUTPUT"
           echo "hash=$(sha256sum "$LEAN_TOOLCHAIN_FILE" | cut -d ' ' -f 1)" >> "$GITHUB_OUTPUT"
       - name: Restore elan and pinned Lean toolchain
-        if: steps.revert.outputs.confirmed != 'true' && steps.scope.outputs.run_required == 'true'
+        if: steps.revert.outputs.confirmed != 'true'
         uses: actions/cache/restore@v4
         with:
           path: ~/.elan
@@ -179,7 +134,7 @@ jobs:
             ${{ runner.os }}-${{ runner.arch }}-elan-
       - name: Install pinned Lean toolchain for producer integration tests
         id: install-elan
-        if: steps.revert.outputs.confirmed != 'true' && steps.scope.outputs.run_required == 'true'
+        if: steps.revert.outputs.confirmed != 'true'
         shell: bash
         env:
           LEAN_TOOLCHAIN_FILE: ${{ steps.lean.outputs.file }}
@@ -190,7 +145,7 @@ jobs:
           fi
           "$GITHUB_WORKSPACE/candidate/tools/scripts/workflow/install-lean-toolchain.sh" "$LEAN_TOOLCHAIN_FILE" --github-path "$GITHUB_PATH"
       - name: Restore candidate locked dependencies
-        if: steps.revert.outputs.confirmed != 'true' && steps.scope.outputs.run_required == 'true'
+        if: steps.revert.outputs.confirmed != 'true'
         run: |
           dotnet restore candidate/tools/tests/CompileFailProof/CompileFailProof.csproj --locked-mode
           dotnet restore candidate/tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj --locked-mode
@@ -203,19 +158,15 @@ jobs:
         env:
           HEAD_REF: ${{ github.event.pull_request.head.ref }}
         run: "set +e\nvalidation_output=\"$(dotnet run --project candidate/tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release --no-build --no-launch-profile -- worktree validate-branch --branch \"$HEAD_REF\")\"\nvalidation_exit=$?\nset -e\nhead_ref=\"$HEAD_REF\"\nprintf '%s\\n' \"$validation_output\"\ncase \"$validation_exit\" in\n  0)\n    expected_status=canonical\n    ;;\n  1)\n    expected_status=BRANCH_GRAMMAR_NONCONFORMING\n    ;;\n  *)\n    printf 'BRANCH_GRAMMAR_SIGNAL detector_status=failed exit=%s\\n' \"$validation_exit\" >&2\n    exit \"$validation_exit\"\n    ;;\nesac\nif ! jq -e -s --arg expected_status \"$expected_status\" --arg head_ref \"$HEAD_REF\" 'length == 1 and .[0].event == \"branch_validation\" and .[0].status == $expected_status and .[0].branch == $head_ref and (.[0].canonical == ($expected_status == \"canonical\"))' <<< \"$validation_output\" >/dev/null; then\n  printf 'BRANCH_GRAMMAR_SIGNAL detector_status=invalid_output exit=%s\\n' \"$validation_exit\" >&2\n  exit 1\nfi\nsummary_format='PR head branch \"%s\" has canonical branch grammar status \"%s\". Nonconforming names are advisory; detector faults fail closed.\\n'\nif [[ \"$validation_exit\" -eq 1 ]]; then\n  printf '%s' '::warning title=PR head branch grammar::'\n  printf \"$summary_format\" \"$HEAD_REF\" \"$expected_status\"\nfi\nprintf 'BRANCH_GRAMMAR_SIGNAL status=%s head_ref=%s\\n' \"$expected_status\" \"$HEAD_REF\"\nprintf \"$summary_format\" \"$HEAD_REF\" \"$expected_status\" >> \"$GITHUB_STEP_SUMMARY\"\n"
-      - name: Replan and run engineering tests with protected-base harness
-        if: steps.revert.outputs.confirmed != 'true' && steps.scope.outputs.run_required == 'true'
+      - name: Run project-scoped engineering tests with protected-base harness
+        if: steps.revert.outputs.confirmed != 'true'
         shell: bash
-        env:
-          ENGINEERING_HEAD: ${{ steps.scope.outputs.head_sha }}
-          ENGINEERING_BASE: ${{ steps.scope.outputs.base_sha }}
-          ENGINEERING_EXECUTION_FULL_REQUIRED: ${{ steps.scope.outputs.execution_full_required }}
         run: |
           set -euo pipefail
-          plan_file="$RUNNER_TEMP/engineering-test-plan.json"
+          export ENGINEERING_HEAD="$(git -C candidate rev-parse HEAD)"
+          export ENGINEERING_BASE="$(git -C candidate rev-parse HEAD^1)"
           base_harness_root="$RUNNER_TEMP/protected-base-engineering-execution-harness"
           test ! -e "$base_harness_root"
-          rm -f -- "$RUNNER_TEMP/engineering-test-plan.json"
           git -C candidate worktree add --detach "$base_harness_root" "$ENGINEERING_BASE"
           cleanup_base_harness() {
             git -C candidate worktree remove --force "$base_harness_root"
@@ -225,23 +176,13 @@ jobs:
           test -z "$(git -C "$base_harness_root" status --short --untracked-files=no)"
           (
             cd "$base_harness_root"
-            dotnet restore tools/StrataLint.sln --locked-mode
+            dotnet restore tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj --locked-mode
           )
           execution_harness="$base_harness_root/tools/scripts/workflow/engineering-test-execution-harness.sh"
-          if [[ -e "$execution_harness" ]]; then
-            /bin/bash "$execution_harness" "$base_harness_root" "$plan_file"
-          else
-            printf 'RESOURCE_OBSERVATION_LOADER status=UNAVAILABLE reason=execution-harness-missing exit=0 path=%s\n' "$execution_harness"
-            if [[ "$ENGINEERING_EXECUTION_FULL_REQUIRED" == "true" ]]; then
-              FULL=1 make -C "$base_harness_root/tools" engineering-tests-base-cwd REPOSITORY="$GITHUB_WORKSPACE/candidate" MODE=plan HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$plan_file"
-            else
-              make -C "$base_harness_root/tools" engineering-tests-base-cwd REPOSITORY="$GITHUB_WORKSPACE/candidate" MODE=plan HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$plan_file"
-            fi
-            make -C "$base_harness_root/tools" engineering-tests-base-cwd REPOSITORY="$GITHUB_WORKSPACE/candidate" MODE=execute HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$plan_file"
-          fi
+          /bin/bash "$execution_harness" "$base_harness_root"
 
       - name: Run candidate selftest twice and compare bytes
-        if: steps.revert.outputs.confirmed != 'true' && steps.scope.outputs.run_required == 'true'
+        if: steps.revert.outputs.confirmed != 'true'
         shell: bash
         run: make -C candidate/tools selftest
       - name: Audit repository capacity after merge
@@ -249,7 +190,7 @@ jobs:
         shell: bash
         run: make -C candidate/tools capacity-audit REPOSITORY="$GITHUB_WORKSPACE/candidate"
       - name: Prove missing capability does not compile
-        if: steps.revert.outputs.confirmed != 'true' && steps.scope.outputs.run_required == 'true'
+        if: steps.revert.outputs.confirmed != 'true'
         shell: bash
         run: |
           set +e
@@ -261,7 +202,7 @@ jobs:
           grep -F "CS7036" <<<"$output"
           grep -F "MetaClear" <<<"$output"
       - name: Prove banned deterministic APIs do not compile
-        if: steps.revert.outputs.confirmed != 'true' && steps.scope.outputs.run_required == 'true'
+        if: steps.revert.outputs.confirmed != 'true'
         shell: bash
         run: |
           proof="candidate/tools/tests/BannedApiCompileFailProof/BannedApiViolations.cs"
@@ -285,25 +226,25 @@ jobs:
           done
       - name: Stage judge binaries for the shared cache (dev push only)
         id: stage-judge
-        if: steps.revert.outputs.confirmed != 'true' && steps.scope.outputs.run_required == 'true' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+        if: steps.revert.outputs.confirmed != 'true' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p .judge-binaries/cli .judge-binaries/scribe
           dotnet publish candidate/tools/StrataLint.Cli/StrataLint.Cli.csproj \
-            --configuration Release --no-build --output .judge-binaries/cli
+            --configuration Release --output .judge-binaries/cli
           dotnet publish candidate/tools/StrataLint.Scribe/StrataLint.Scribe.csproj \
-            --configuration Release --no-build --output .judge-binaries/scribe
+            --configuration Release --output .judge-binaries/scribe
           test -s .judge-binaries/cli/StrataLint.dll
           test -s .judge-binaries/scribe/StrataLint.Scribe.dll
       - name: Save judge binaries by content address (dev push only)
-        if: steps.revert.outputs.confirmed != 'true' && steps.scope.outputs.run_required == 'true' && steps.stage-judge.outcome == 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+        if: steps.revert.outputs.confirmed != 'true' && steps.stage-judge.outcome == 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
         uses: actions/cache/save@v4
         with:
           path: .judge-binaries
           key: stratalint-judge-binaries-v2-${{ runner.os }}-${{ steps.judge-address.outputs.runtime }}-${{ steps.judge-address.outputs.address }}
       - name: Save elan toolchain for engineering checks (dev push only)
-        if: steps.revert.outputs.confirmed != 'true' && steps.scope.outputs.run_required == 'true' && always() && steps.install-elan.outcome == 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+        if: steps.revert.outputs.confirmed != 'true' && always() && steps.install-elan.outcome == 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
         uses: actions/cache/save@v4
         with:
           path: ~/.elan
@@ -311,31 +252,15 @@ jobs:
       - name: Summarize candidate engineering scope
         if: steps.revert.outputs.confirmed != 'true' && always()
         shell: bash
-        env:
-          SCOPE_EVENT: ${{ steps.scope.outputs.event }}
-          SCOPE_STATE: ${{ steps.scope.outputs.state }}
-          SCOPE_BASE: ${{ steps.scope.outputs.base_sha }}
-          SCOPE_CHANGED_COUNT: ${{ steps.scope.outputs.changed_count }}
-          SCOPE_SELECTED_COUNT: ${{ steps.scope.outputs.selected_count }}
-          SCOPE_FALLBACK_COUNT: ${{ steps.scope.outputs.fallback_count }}
         run: |
           set -euo pipefail
-          result="$SCOPE_STATE"
-          if [[ -z "$result" ]]; then
-            result="unavailable"
-          fi
-          fallback_count="$SCOPE_FALLBACK_COUNT"
-          [[ -n "$fallback_count" ]] || fallback_count=0
+          base_sha="$(git -C candidate rev-parse HEAD^1)"
           {
             printf '%s\n' '## Candidate engineering scope'
             printf '\n'
-            printf -- '- Event: %s\n' "$SCOPE_EVENT"
-            printf -- '- Test plan: %s\n' "$result"
-            printf -- '- Dev parent: %s\n' "$SCOPE_BASE"
-            printf -- '- Changed paths: %s\n' "$SCOPE_CHANGED_COUNT"
-            printf -- '- Selected tests: %s\n' "$SCOPE_SELECTED_COUNT"
-            printf -- '- Planner fallback count: %s\n' "$fallback_count"
-            printf -- '%s\n' '- Detail: see the ENGINEERING_TEST_PLAN and ENGINEERING_TEST_SELECTED log lines of the planning step.'
+            printf -- '- Event: %s\n' "$GITHUB_EVENT_NAME"
+            printf -- '- Protected base: %s\n' "$base_sha"
+            printf -- '%s\n' '- Selected projects: see the ENGINEERING_TEST_PROJECT log lines of the project-scoped engineering test step.'
           } >> "$GITHUB_STEP_SUMMARY"
 
   lean-inspect:
