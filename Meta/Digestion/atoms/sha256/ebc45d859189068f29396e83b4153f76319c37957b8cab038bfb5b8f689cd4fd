@@ -1,0 +1,29 @@
+\[
+\boxed{
+K_{p,q}
+=
+-2i e^{-i(t_1+t_2)(\omega_p+\omega_q)/2}
+\sin\left(
+\frac{(t_1-t_2)(\omega_p-\omega_q)}2
+\right).
+}
+\]
+
+共同中心相位模长恒为一。全部可观测二阶强度只依赖 time-frequency area：
+
+\[
+\mathfrak a_{p,q}
+=(t_1-t_2)(\omega_p-\omega_q).
+\]
+
+所以二阶破缺需要时间分离与频率分离同时存在。即使两者都非零，仍有共振消零：
+
+\[
+\boxed{
+\mathfrak a_{p,q}\in2\pi\mathbb Z
+\Longrightarrow K_{p,q}=0.
+}
+\]
+
+这说明点态二阶核不是 holonomy 的 faithful 探针。
+

@@ -1,0 +1,24 @@
+## 8.3 当前 hard heart
+
+\[
+\boxed{
+\texttt{PrimeArchimedeanHolonomyDomination}
+}
+\]
+
+目标是把 independently constructed prime-side time-ordered holonomy energy 运输到 zero-side off-line odd energy，并明确记录：
+
+\[
+\text{prime cutoff error},
+\quad
+\text{time cutoff error},
+\quad
+\text{Galerkin error},
+\quad
+\text{Archimedean error},
+\quad
+\text{zero-tail error}.
+\]
+
+---
+

@@ -1,0 +1,47 @@
+\[
+\boxed{
+C_{p,q}
+=
+(a-\lambda_q)b_p-(a-\lambda_p)b_q.
+}
+\]
+
+已冻结的 `PrimeSwapCurvature` 证明：
+
+\[
+C_{q,p}=-C_{p,q},
+\]
+
+并证明共同记忆原点变换
+
+\[
+b_p\mapsto b_p+(a-\lambda_p)c
+\]
+
+不改变 \(C_{p,q}\)。因此共同 archive 属于 coboundary，交换曲率只读取不同通道之间无法由同一观察起源解释的部分。
+
+远离共振时，定义：
+
+\[
+c_p=\frac{b_p}{a-\lambda_p}.
+\]
+
+机器结论为：
+
+\[
+\boxed{
+C_{p,q}
+=(a-\lambda_p)(a-\lambda_q)(c_p-c_q),
+}
+\]
+
+以及：
+
+\[
+\boxed{
+C_{p,q}=0
+\iff
+c_p=c_q.
+}
+\]
+

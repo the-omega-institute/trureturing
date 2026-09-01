@@ -1,0 +1,25 @@
+### 4.4 当前命题边界
+
+本节点没有证明：
+
+- 参数 \(t\) 是物理时间；
+- completed zeta 已经实现为上述二分支系统；
+- 任意离线零点已被有限测试函数隔离；
+- 二阶局部信号能够压过其他零点、Gamma 因子或截断尾项；
+- 负二阶谱值已经产生 Weil、Pick 或 Toeplitz 负方向；
+- RH 或其否定。
+
+它关闭的是一个纯表示桥：
+
+\[
+\boxed{
+\text{reflected split}
+\longrightarrow
+\text{signed determinant }-\delta^2
+\longrightarrow
+\text{negative second-order spectral value}.
+}
+\]
+
+---
+

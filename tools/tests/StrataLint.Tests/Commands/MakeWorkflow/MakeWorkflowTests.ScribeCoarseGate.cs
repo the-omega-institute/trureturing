@@ -246,14 +246,10 @@ public sealed partial class MakeWorkflowTests
                 "{}\n",
                 new UTF8Encoding(false));
 
-            RunGit(["init", "--quiet"]);
+            RunGit(["init", "--template=", "-b", "main"]);
+            ConfigureSyntheticRepository();
             RunGit(["add", "."]);
-            RunGit(
-                [
-                    "-c", "user.name=Scribe Test",
-                    "-c", "user.email=scribe@example.invalid",
-                    "commit", "--quiet", "-m", "base",
-                ]);
+            RunGit(["commit", "--quiet", "-m", "base"]);
             baseRevision = RunGit(["rev-parse", "HEAD"]);
         }
 
@@ -273,8 +269,10 @@ public sealed partial class MakeWorkflowTests
         }
 
         internal ProcessOutput Run(string? baseRevisionOverride = null) => TestProcessRunner.Run(
-            "/bin/bash",
+            "/usr/bin/env",
             [
+                .. IsolatedGitEnvironment(),
+                "/bin/bash",
                 "-c",
                 "PATH=\"$1:/usr/bin:/bin\" SCRIBE_LOG=\"$2\" "
                     + "exec /bin/bash \"$3\" \"$4\" \"$5\" \"$6\"",
@@ -294,11 +292,24 @@ public sealed partial class MakeWorkflowTests
 
         public void Dispose() => temporary.Dispose();
 
+        private void ConfigureSyntheticRepository()
+        {
+            RunGit(["config", "--local", "user.name", "Scribe Test"]);
+            RunGit(["config", "--local", "user.email", "scribe@example.invalid"]);
+            RunGit(["config", "--local", "commit.gpgsign", "false"]);
+            RunGit(["config", "--local", "tag.gpgsign", "false"]);
+            RunGit(["config", "--local", "core.autocrlf", "false"]);
+            RunGit(["config", "--local", "core.safecrlf", "false"]);
+            RunGit(["config", "--local", "core.hooksPath", "/dev/null"]);
+            RunGit(["config", "--local", "gc.auto", "0"]);
+            RunGit(["config", "--local", "maintenance.auto", "false"]);
+        }
+
         private string RunGit(IReadOnlyList<string> arguments)
         {
             var result = TestProcessRunner.Run(
-                "git",
-                arguments,
+                "/usr/bin/env",
+                IsolatedGitArguments(arguments),
                 Repository,
                 BoundedProcessRunner.HangDetectionBudget,
                 64 * 1024);

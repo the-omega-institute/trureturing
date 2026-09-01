@@ -1,0 +1,19 @@
+## 9. 当前第一开放边
+
+就负平方与时间方向这一子路线而言，下一条最小且无条件的真源是：
+
+\[
+\boxed{
+\texttt{NegativeSquareLaplaceResolvent}.
+}
+\]
+
+就整个 RH 路线而言，第一承重开放边仍然不是上述表示恒等式，而是：
+
+\[
+\boxed{
+\texttt{PrimeArchimedeanBlindSchurCoercivity}
+}
+\]
+
+或等价的逐层素数侧创新下界。前者负责说明离线缺陷怎样产生有限负证书。后者负责说明真实算术数据为什么不允许该负证书存在。
