@@ -1,0 +1,10 @@
+\[
+\boxed{
+M_a(pq)-M_a(qp)
+=
+C_{p,q}^{\mathrm{time}}.
+}
+\]
+
+所以原有 `PrimeSwapCurvature` 不再只是一个局部代数差。它现在被识别为两个 chronology words 的精确 memory holonomy。
+

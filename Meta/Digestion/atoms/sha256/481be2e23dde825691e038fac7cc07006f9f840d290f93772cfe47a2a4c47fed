@@ -1,0 +1,26 @@
+- RH 已经证明。
+
+本轮候选机器增量精确到：
+
+\[
+\boxed{
+\text{Fourier-timed local events}
+\longrightarrow
+\text{finite affine word action}
+\longrightarrow
+\text{twisted append cocycle}
+\longrightarrow
+\text{two-event prime swap curvature}.
+}
+\]
+
+最凝练的理论结论是：
+
+\[
+\boxed{
+\text{Fourier 对偶给出谱时间，事件列表给出操作 chronology，记忆 cocycle 将二者耦合并保存顺序。}
+}
+\]
+
+---
+

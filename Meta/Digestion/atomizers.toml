@@ -894,6 +894,16 @@ kind = "principle"
 
 [[dialect.genre]]
 dialect = "qdo"
+token = "规则"
+kind = "specification"
+
+[[dialect.genre]]
+dialect = "qdo"
+token = "评注"
+kind = "remark"
+
+[[dialect.genre]]
+dialect = "qdo"
 token = "条件定理"
 kind = "theorem-form"
 
