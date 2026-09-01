@@ -23,23 +23,24 @@ noncomputable section
 
 namespace D5.S3.Observer.MeasureSeparation.GoldenRobustFirstDetection
 
-/-- For a defect below the initial one-half layer, the first golden layer crossing the
-defect is minimal and its local single-defect energy is at least the fourth inverse
-power of the golden ratio. -/
+/-- For the source schedule `ω_n = ω₀ φ^{-2n}`, the first golden layer crossing a
+defect below the positive initial scale is minimal, and its local single-defect energy
+is at least the fourth inverse power of the golden ratio. -/
 theorem golden_robust_first_detection
+    (omega0 : Real) (omega0Positive : 0 < omega0)
     (delta : Real) (deltaPositive : 0 < delta)
-    (deltaBelowInitial : delta < (1 / 2 : Real))
+    (deltaBelowInitial : delta < omega0)
     (energy : Real -> Real)
     (singleDefectEnergy : forall omega, 0 < omega -> omega < delta ->
       energy omega = (omega / delta) ^ 2) :
     let layer := fun n : Nat =>
-      (1 / 2 : Real) * ((Real.goldenRatio⁻¹) ^ 2) ^ n
+      omega0 * ((Real.goldenRatio⁻¹) ^ 2) ^ n
     ∃ first : Nat,
       layer first < delta /\
         (∀ n < first, delta <= layer n) /\
           Real.goldenRatio ^ (-4 : Int) <= energy (layer first) := by
   let q : Real := (Real.goldenRatio⁻¹) ^ 2
-  let layer := fun n : Nat => (1 / 2 : Real) * q ^ n
+  let layer := fun n : Nat => omega0 * q ^ n
   have inversePositive : 0 < Real.goldenRatio⁻¹ :=
     inv_pos.mpr Real.goldenRatio_pos
   have inverseBelowOne : Real.goldenRatio⁻¹ < 1 :=
@@ -51,10 +52,10 @@ theorem golden_robust_first_detection
     nlinarith [mul_pos inversePositive (sub_pos.mpr inverseBelowOne)]
   have crossingExists : exists n : Nat, layer n < delta := by
     obtain ⟨n, hn⟩ := exists_pow_lt_of_lt_one
-      (mul_pos (by norm_num : (0 : Real) < 2) deltaPositive) qBelowOne
+      (div_pos deltaPositive omega0Positive) qBelowOne
     refine ⟨n, ?_⟩
     dsimp [layer]
-    nlinarith
+    simpa [mul_comm] using (lt_div_iff₀ omega0Positive).1 hn
   let first : Nat := Nat.find crossingExists
   have firstCrosses : layer first < delta := Nat.find_spec crossingExists
   have beforeDoesNotCross (n : Nat) (hn : n < first) : delta <= layer n :=
@@ -62,7 +63,7 @@ theorem golden_robust_first_detection
   have firstPositive : 0 < first := by
     apply Nat.pos_of_ne_zero
     intro firstZero
-    have initialCrosses : (1 / 2 : Real) < delta := by
+    have initialCrosses : omega0 < delta := by
       simpa [layer, firstZero] using firstCrosses
     exact (not_lt_of_ge deltaBelowInitial.le) initialCrosses
   have previousBefore : first - 1 < first := Nat.pred_lt firstPositive.ne'
@@ -79,7 +80,7 @@ theorem golden_robust_first_detection
     rw [layerRecurrence]
     exact mul_le_mul_of_nonneg_left previousDoesNotCross qPositive.le
   have layerPositive : 0 < layer first := by
-    exact mul_pos (by norm_num) (pow_pos qPositive first)
+    exact mul_pos omega0Positive (pow_pos qPositive first)
   have ratioBound : q <= layer first / delta :=
     (le_div_iff₀ deltaPositive).2 qDeltaBelowFirst
   have ratioPositive : 0 < layer first / delta :=

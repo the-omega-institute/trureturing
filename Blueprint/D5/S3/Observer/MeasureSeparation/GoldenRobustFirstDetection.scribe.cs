@@ -23,10 +23,10 @@ internal sealed class GoldenRobustFirstDetectionDocument
             AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text(
-                    "For a positive defect depth below one half, the displayed golden "
-                        + "schedule is the literal local layer construction from the Lean "
-                        + "statement. Its least layer below the defect exists and all earlier "
-                        + "layers remain at or above the defect.")),
+                    "For a positive initial scale and a positive defect depth below it, the "
+                        + "displayed golden schedule is the literal local layer construction "
+                        + "from the Lean statement. Its least layer below the defect exists "
+                        + "and all earlier layers remain at or above the defect.")),
                 Paragraph(Text(
                     "The local single-defect law converts the minimal crossing estimate into "
                         + "the fourth inverse golden-ratio lower bound. The statement exposes "
@@ -37,15 +37,16 @@ internal sealed class GoldenRobustFirstDetectionDocument
     {
         Formula real = Seq(Mathbb, Grp(F.Id("R")));
         Formula natural = Seq(Mathbb, Grp(F.Id("N")));
+        Formula omega0 = F.Id("omega0");
         Formula delta = F.Id("delta");
         Formula energy = F.Id("E");
         Formula omega = F.Id("omega");
         Formula first = F.Id("m");
         Formula n = F.Id("n");
-        Formula half = new Formula.Fraction(D(1), D(2));
 
+        Formula omega0Positive = Less(D(0), omega0);
         Formula deltaPositive = Less(D(0), delta);
-        Formula deltaBelowInitial = Less(delta, half);
+        Formula deltaBelowInitial = Less(delta, omega0);
         Formula energyLaw = new Formula.BindMany(
             FormulaQuantifier.ForAll,
             [Bound("omega", real)],
@@ -57,32 +58,38 @@ internal sealed class GoldenRobustFirstDetectionDocument
                         Apply(energy, omega),
                         Pow(new Formula.Fraction(omega, delta), D(2))))));
 
-        Formula firstCrosses = Less(Layer(first, half), delta);
+        Formula firstCrosses = Less(Layer(first, omega0), delta);
         Formula earlierLayers = new Formula.BindMany(
             FormulaQuantifier.ForAll,
             [Bound("n", natural)],
-            Implies(Less(n, first), LessOrEqual(delta, Layer(n, half))));
+            Implies(Less(n, first), LessOrEqual(delta, Layer(n, omega0))));
         Formula energyFloor = LessOrEqual(
             Pow(F.Varphi, Seq(Minus, D(4))),
-            Apply(energy, Layer(first, half)));
+            Apply(energy, Layer(first, omega0)));
         Formula witness = new Formula.BindMany(
             FormulaQuantifier.Exists,
             [Bound("m", natural)],
             And(firstCrosses, And(earlierLayers, energyFloor)));
-        Formula premises = And(deltaPositive, And(deltaBelowInitial, energyLaw));
+        Formula premises = And(
+            omega0Positive,
+            And(deltaPositive, And(deltaBelowInitial, energyLaw)));
         Formula statement = new Formula.BindMany(
             FormulaQuantifier.ForAll,
-            [Bound("delta", real), Bound("E", new Formula.TypeArrow(real, real))],
+            [
+                Bound("omega0", real),
+                Bound("delta", real),
+                Bound("E", new Formula.TypeArrow(real, real)),
+            ],
             Implies(premises, witness));
 
         return Disp(statement);
     }
 
-    private static Formula Layer(Formula index, Formula half)
+    private static Formula Layer(Formula index, Formula initialScale)
     {
         Formula inverseGolden = Pow(F.Varphi, Seq(Minus, D(1)));
         Formula ratio = Pow(Grp(inverseGolden), D(2));
-        return Seq(half, Sp, Times, Sp, Pow(Grp(ratio), index));
+        return Seq(initialScale, Sp, Times, Sp, Pow(Grp(ratio), index));
     }
 
     private static Formula Apply(Formula function, Formula argument) =>
