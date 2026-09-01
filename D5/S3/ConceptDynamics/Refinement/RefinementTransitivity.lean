@@ -30,10 +30,9 @@ theorem refinement_transitive
     Refines q' q'' -> Refines q q' -> Refines q q'' := by
   rintro ⟨r, hr⟩ ⟨p, hp⟩
   refine ⟨p ∘ r, ?_⟩
-  calc
-    q = p ∘ q' := hp
-    _ = p ∘ (r ∘ q'') := by rw [hr]
-    _ = (p ∘ r) ∘ q'' := by rfl
+  rw [hp, hr]
+  unfold Function.comp
+  rfl
 
 #print axioms refinement_transitive
 

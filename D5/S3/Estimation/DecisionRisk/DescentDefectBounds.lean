@@ -223,13 +223,16 @@ theorem postprocessed_descent_defect_le
               totalVariation (K candidate.1) (K candidate.2)
             else 0) :=
         by
-          simpa [hfiber] using
+          have hsup :=
             (Finset.le_sup'
               (fun candidate : X × X =>
                 if q candidate.1 = q candidate.2 then
                   totalVariation (K candidate.1) (K candidate.2)
                 else 0)
               (Finset.mem_univ pair))
+          have hsup' := hsup
+          rw [hfiber] at hsup'
+          simpa only [if_true] using hsup'
   · simp only [hfiber, if_false]
     calc
       (0 : Real) =

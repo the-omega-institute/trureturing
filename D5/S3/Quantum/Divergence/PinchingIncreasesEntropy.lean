@@ -52,9 +52,9 @@ theorem quantum_relative_entropy_nonnegative_unit (rho sigma : DensityState Unit
     obtain rfl : i = () := Subsingleton.elim _ _
     obtain rfl : j = () := Subsingleton.elim _ _
     change tau.1 () () = 1
-    simpa [Matrix.trace] using tau.2.2
+    simpa [Matrix.trace, Matrix.diag] using tau.2.2
   rw [densityState_eq_one rho, densityState_eq_one sigma]
-  simp [quantumRelativeEntropy, Matrix.trace]
+  simp [quantumRelativeEntropy, Matrix.trace, Matrix.diag]
 
 /-- For the pinching data of the preceding module, entropy gain is exactly relative entropy. -/
 theorem pinching_entropy_gain_eq_relative_entropy

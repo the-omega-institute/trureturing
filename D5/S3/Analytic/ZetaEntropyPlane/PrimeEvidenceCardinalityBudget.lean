@@ -140,7 +140,12 @@ theorem equal_cardinality_determines_zero_exponent_prime_budget
 theorem equal_cardinality_hypothesis_is_necessary :
     finiteEvidenceBudget (primeEvidence 0) (∅ : Finset Nat.Primes) ≠
       finiteEvidenceBudget (primeEvidence 0) {⟨2, Nat.prime_two⟩} := by
+  let p2 : Nat.Primes := ⟨2, Nat.prime_two⟩
+  change finiteEvidenceBudget (primeEvidence 0) ∅ ≠
+    finiteEvidenceBudget (primeEvidence 0) {p2}
   rw [zero_exponent_prime_budget_eq_card, zero_exponent_prime_budget_eq_card]
+  rw [show ({p2} : Finset Nat.Primes).card = 1 by
+    exact Finset.card_singleton p2]
   norm_num
 #print axioms equal_cardinality_hypothesis_is_necessary
 

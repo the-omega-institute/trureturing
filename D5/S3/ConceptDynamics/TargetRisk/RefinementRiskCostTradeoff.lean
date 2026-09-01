@@ -66,8 +66,13 @@ theorem refinement_reduces_target_risk_and_raises_cost
     refine ⟨targetInFamily, ⟨pair, ?_, differentTarget⟩⟩
     rw [hfactor]
     exact congrArg factor sameFineCoordinate
-  · simp only [refinementCost, hfactor, Set.range_comp]
-    exact Set.encard_image_le factor (Set.range q_D)
+  · unfold refinementCost
+    calc
+      (Set.range q_C).encard = (Set.range (factor ∘ q_D)).encard :=
+        congrArg (fun readout => (Set.range readout).encard) hfactor
+      _ = (factor '' Set.range q_D).encard :=
+        congrArg Set.encard (Set.range_comp factor q_D)
+      _ ≤ (Set.range q_D).encard := Set.encard_image_le factor (Set.range q_D)
 
 /-- Constant and identity readouts realize a proper coarse-to-fine
 refinement. -/

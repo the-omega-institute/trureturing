@@ -131,7 +131,13 @@ noncomputable def basisPinchingState (rho : DensityState n) : DensityState n := 
       Matrix.posSemidef_diagonal_iff]
     exact fun i => (densityMatrix_posSemidef rho).diag_nonneg
   · change Matrix.trace (projectiveReadout (densityMatrix rho)) = 1
-    simpa [projectiveReadout, Matrix.trace, densityMatrix] using rho.2.2
+    calc
+      Matrix.trace (projectiveReadout (densityMatrix rho)) =
+          Matrix.trace (densityMatrix rho) := by
+        simp only [projectiveReadout, Matrix.trace, Matrix.diag_diagonal]
+      _ = 1 := by
+        change Matrix.trace (CStarMatrix.ofMatrix.symm rho.1) = 1
+        exact rho.2.2
 
 private lemma sum_mul_log_mulVec_le (M : Matrix n n ℝ)
     (hM : M ∈ doublyStochastic ℝ n) (x : n -> ℝ) (hx : ∀ i, 0 ≤ x i) :

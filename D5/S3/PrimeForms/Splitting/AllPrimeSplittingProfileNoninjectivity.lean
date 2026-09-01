@@ -26,12 +26,18 @@ namespace D5.S3.PrimeForms.Splitting.AllPrimeSplittingProfileNoninjectivity
 open D5.S3.PrimeForms.EisensteinDiscriminant
 open D5.S3.PrimeForms.Splitting.EqualDiscriminantSplittingPortrait
 
+-- Lean 4.33's stricter type check breaks mathlib's `Fintype` deriving handler.
+section
+set_option backward.isDefEq.respectTransparency.types false
+
 /-- Finite data returned by the selected splitting interface. -/
 inductive DiscriminantSplittingType where
   | inert
   | ramified
   | split
   deriving DecidableEq, Fintype, Repr
+
+end
 
 /-- The chosen profile reads the Jacobi symbol of the form discriminant.
 

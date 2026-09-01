@@ -35,6 +35,8 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.ConceptDynamics.OperationalTuition.InstitutionalMappingAndCaptureFiltration
 
+-- Lean 4.33's stricter type check breaks mathlib's `Fintype` deriving handler.
+set_option backward.isDefEq.respectTransparency.types false in
 /-- The three capture levels. -/
 inductive CaptureLevel where
   | wall

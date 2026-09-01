@@ -41,8 +41,11 @@ private theorem strict_refinement_card_lt
   have factorSurjective : Function.Surjective factor := by
     intro coordinate
     obtain ⟨state, hstate⟩ := effective_C coordinate
-    exact ⟨q_D state, by
-      simpa only [Function.comp_apply] using (congrFun hfactor state).symm.trans hstate⟩
+    refine ⟨q_D state, ?_⟩
+    have hfactorAt : q_C state = factor (q_D state) := by
+      change q_C state = factor (q_D state)
+      exact congrFun hfactor state
+    exact hfactorAt.symm.trans hstate
   have cardLe : Nat.card C <= Nat.card D :=
     Nat.card_le_card_of_surjective factor factorSurjective
   refine lt_of_le_of_ne cardLe ?_
@@ -58,12 +61,20 @@ private theorem strict_refinement_card_lt
   apply factorBijective.1
   change factor (q_D state) = factor (reverse (q_C state))
   calc
-    factor (q_D state) = q_C state := (congrFun hfactor state).symm
+    factor (q_D state) = q_C state := by
+      have hfactorAt := congrFun hfactor state
+      change q_C state = factor (q_D state) at hfactorAt
+      exact hfactorAt.symm
     _ = q_C (Classical.choose (effective_C (q_C state))) :=
       (Classical.choose_spec (effective_C (q_C state))).symm
     _ = factor (reverse (q_C state)) := by
-      simpa only [reverse, Function.comp_apply] using
+      change q_C (Classical.choose (effective_C (q_C state))) =
+        factor (q_D (Classical.choose (effective_C (q_C state))))
+      have hfactorAt :=
         congrFun hfactor (Classical.choose (effective_C (q_C state)))
+      change q_C (Classical.choose (effective_C (q_C state))) =
+        factor (q_D (Classical.choose (effective_C (q_C state)))) at hfactorAt
+      exact hfactorAt
 
 private theorem strict_fin_sequence_length_bound
     {n : Nat} (rank : Fin (n + 1) -> Nat)

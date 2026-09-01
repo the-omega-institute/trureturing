@@ -1,0 +1,42 @@
+## 13. 当前 claim boundary
+
+本轮机器证明：
+
+- alternating kernel 的精确 squared norm；
+- 非零频差的显式最大响应采样；
+- 有限 Fourier 代数生成元的精确 commutator expansion；
+- pair-adapted clocks 下四倍 holonomy energy 的精确恢复；
+- ordered-time simplex scalar response 的闭式公式；
+- 零频差响应为零；
+- 非负窗口上的响应非负。
+
+本轮没有证明公共固定时刻的全频率可观测性、finite-family ordered-window coercivity、time-ordered exponential、Magnus 级数收敛、holonomy-to-Weil transport、xi-ratio Pick positivity、离线零点数与负平方数的等式、Fredholm 极限、全局 Weil 正性或 RH。
+
+本轮关闭的有限链为：
+
+\[
+\boxed{
+\text{Fourier chronology}
+\longrightarrow
+\text{algebra commutator}
+\longrightarrow
+\text{exact kernel strength}
+\longrightarrow
+\text{pairwise reverse observability}
+\longrightarrow
+\text{ordered-simplex response}.
+}
+\]
+
+中央开放边现在被压缩为：
+
+\[
+\boxed{
+\texttt{FiniteFrequencyOrderedSimplexCoercivity}
+\rightarrow
+\texttt{HolonomyToFixedScaleWeilTransport}
+\rightarrow
+\texttt{XiRatioPickKernel}
+\rightarrow
+\texttt{OfflineZeroPickIndexLowerBound}.
+}

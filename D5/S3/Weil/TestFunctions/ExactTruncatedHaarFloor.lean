@@ -463,17 +463,16 @@ theorem exact_truncated_haar_floor
           toeplitz - (alpha : Complex) •
             (1 : Matrix (Fin (N + 1)) (Fin (N + 1)) Complex) := by
       ext j k
-      simp only [residualMoment, toeplitz, Matrix.sub_apply, Matrix.smul_apply,
-        Matrix.one_apply, smul_eq_mul]
+      simp only [residualMoment, Matrix.sub_apply, Matrix.smul_apply]
       by_cases hjk : j = k
       · subst k
-        simp
+        simp [toeplitz]
       · have hdiff : ((j : Int) - (k : Int)) ≠ 0 := by
           intro h
           apply hjk
           apply Fin.ext
           omega
-        simp [hjk, hdiff]
+        simp [toeplitz, hjk, hdiff]
     rw [residualMatrixEq] at residualPositive
     exact scalar_le_smallest_eigenvalue_of_residual_posSemidef
       toeplitzHermitian (alpha : Real) residualPositive
@@ -503,17 +502,16 @@ theorem exact_truncated_haar_floor
           toeplitz - (lambda : Complex) •
             (1 : Matrix (Fin (N + 1)) (Fin (N + 1)) Complex) := by
       ext j k
-      simp only [residualMoment, toeplitz, Matrix.sub_apply, Matrix.smul_apply,
-        Matrix.one_apply, smul_eq_mul]
+      simp only [residualMoment, Matrix.sub_apply, Matrix.smul_apply]
       by_cases hjk : j = k
       · subst k
-        simp
+        simp [toeplitz]
       · have hdiff : ((j : Int) - (k : Int)) ≠ 0 := by
           intro h
           apply hjk
           apply Fin.ext
           omega
-        simp [hjk, hdiff]
+        simp [toeplitz, hjk, hdiff]
     rw [← residualMatrixEq] at shiftedPositive
     obtain ⟨residual, residualMoments⟩ :=
       truncated_circle_moment_of_posSemidef N residualMoment residualHermitian shiftedPositive
@@ -529,7 +527,7 @@ theorem exact_truncated_haar_floor
         (monomialIntegrable residual k)]
       rw [FiniteMeasure.toMeasure_smul, integral_smul_nnreal_measure,
         normalized_circle_haar_moment, residualMoments k hk]
-      dsimp only [residualMoment, lambdaNN]
+      dsimp only [residualMoment]
       by_cases hzero : k = 0
       · subst k
         rw [if_pos rfl, if_pos rfl]

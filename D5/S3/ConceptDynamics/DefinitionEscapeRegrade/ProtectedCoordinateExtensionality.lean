@@ -30,6 +30,7 @@ namespace D5.S3.ConceptDynamics.DefinitionEscape.Adjudication
 
 open D5.S3.ConceptDynamics.Governance.TargetLaunderingCriterion
 
+set_option backward.isDefEq.respectTransparency false in
 /-- The exhaustive finite labels for the seven protected coordinates. -/
 inductive ProtectedCoordinateTag
   | targetChain

@@ -68,24 +68,27 @@ theorem golden_threshold_point_mem_closed :
 theorem golden_threshold_point_transition :
     D5.S0.Tower.Champions.GoldenSurvivorTubes.goldenTransition goldenThresholdPoint =
       D5.S0.Tower.Champions.GoldenSurvivorTubes.goldenTailPoint := by
-  simp only [D5.S0.Tower.Champions.GoldenSurvivorTubes.goldenTransition,
-    goldenThresholdPoint]
-  rw [if_pos]
-  · congr 1
+  have hbranch :
+      D5.S0.Tower.Champions.GoldenSurvivorTubes.goldenThreshold ≤
+        D5.S0.Tower.Champions.GoldenSurvivorTubes.goldenInverse := by
     rw [D5.S0.Tower.Champions.GoldenSurvivorTubes.golden_threshold_eq]
-    calc
-      Real.goldenRatio *
-          (D5.S0.Tower.Champions.GoldenSurvivorTubes.goldenInverse ^ 2 / 2) =
-          (D5.S0.Tower.Champions.GoldenSurvivorTubes.goldenInverse *
-            Real.goldenRatio) *
-            D5.S0.Tower.Champions.GoldenSurvivorTubes.goldenInverse / 2 := by
-        ring
-      _ = D5.S0.Tower.Champions.GoldenSurvivorTubes.goldenInverse / 2 := by
-        rw [D5.S0.Tower.Champions.GoldenSurvivorTubes.golden_inverse_mul, one_mul]
-  · rw [D5.S0.Tower.Champions.GoldenSurvivorTubes.golden_threshold_eq]
     have hpos := D5.S0.Tower.Champions.GoldenSurvivorTubes.golden_inverse_pos
     have hlt := D5.S0.Tower.Champions.GoldenSurvivorTubes.golden_inverse_lt_one
     nlinarith
+  simp only [D5.S0.Tower.Champions.GoldenSurvivorTubes.goldenTransition,
+    goldenThresholdPoint, hbranch, ↓reduceIte,
+    D5.S0.Tower.Champions.GoldenSurvivorTubes.goldenTailPoint]
+  congr 1
+  rw [D5.S0.Tower.Champions.GoldenSurvivorTubes.golden_threshold_eq]
+  calc
+    Real.goldenRatio *
+        (D5.S0.Tower.Champions.GoldenSurvivorTubes.goldenInverse ^ 2 / 2) =
+        (D5.S0.Tower.Champions.GoldenSurvivorTubes.goldenInverse *
+          Real.goldenRatio) *
+          D5.S0.Tower.Champions.GoldenSurvivorTubes.goldenInverse / 2 := by
+      ring
+    _ = D5.S0.Tower.Champions.GoldenSurvivorTubes.goldenInverse / 2 := by
+      rw [D5.S0.Tower.Champions.GoldenSurvivorTubes.golden_inverse_mul, one_mul]
 
 /-- The large-gap threshold point survives every closed backward depth. -/
 theorem golden_threshold_point_permanent :

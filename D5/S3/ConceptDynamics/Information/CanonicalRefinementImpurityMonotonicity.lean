@@ -261,7 +261,8 @@ private theorem join_fiber_mass_comp
         conceptFiberMass mu (conceptJoin refined target) (d, a)
       else 0 := by
   classical
-  simp only [conceptFiberMass, conceptJoin, Function.comp_apply]
+  simp only [conceptFiberMass, conceptJoin]
+  unfold Function.comp
   have hdistribute :
       (∑' d, if factor d = c then
           (∑' x, {x | (refined x, target x) = (d, a)}.indicator mu x)
@@ -298,7 +299,8 @@ private theorem concept_fiber_mass_comp
     conceptFiberMass mu (factor ∘ refined) c =
       ∑' d, if factor d = c then conceptFiberMass mu refined d else 0 := by
   classical
-  simp only [conceptFiberMass, Function.comp_apply]
+  simp only [conceptFiberMass]
+  unfold Function.comp
   have hdistribute :
       (∑' d, if factor d = c then
           (∑' x, {x | refined x = d}.indicator mu x)

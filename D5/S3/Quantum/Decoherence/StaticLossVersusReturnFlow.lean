@@ -31,10 +31,18 @@ def diagonalProjection : Dynamics where
   toFun X i j := if i = j then X i j else 0
   map_add' X Y := by
     ext i j
-    by_cases hij : i = j <;> simp [hij]
+    change (if i = j then (X + Y) i j else 0) =
+      (if i = j then X i j else 0) + (if i = j then Y i j else 0)
+    by_cases hij : i = j
+    · simp [hij]
+    · simp [hij]
   map_smul' c X := by
     ext i j
-    by_cases hij : i = j <;> simp [hij]
+    change (if i = j then (c • X) i j else 0) =
+      c * (if i = j then X i j else 0)
+    by_cases hij : i = j
+    · simp [hij]
+    · simp [hij]
 
 /-- The discarded part `(I - D)X`. -/
 def discardedPart (D : Dynamics) (X : QubitMatrix) : QubitMatrix :=
@@ -57,10 +65,19 @@ def offDiagonalReturnDynamics : Dynamics where
   toFun X i j := if i = 0 ∧ j = 0 then X 0 1 else 0
   map_add' X Y := by
     ext i j
-    by_cases hij : i = 0 ∧ j = 0 <;> simp [hij]
+    change (if i = 0 ∧ j = 0 then (X + Y) 0 1 else 0) =
+      (if i = 0 ∧ j = 0 then X 0 1 else 0) +
+        (if i = 0 ∧ j = 0 then Y 0 1 else 0)
+    by_cases hij : i = 0 ∧ j = 0
+    · simp [hij]
+    · simp [hij]
   map_smul' c X := by
     ext i j
-    by_cases hij : i = 0 ∧ j = 0 <;> simp [hij]
+    change (if i = 0 ∧ j = 0 then (c • X) 0 1 else 0) =
+      c * (if i = 0 ∧ j = 0 then X 0 1 else 0)
+    by_cases hij : i = 0 ∧ j = 0
+    · simp [hij]
+    · simp [hij]
 
 /- Degenerate-input audit: the carrier has exactly two indices, so empty, singleton, and
 dimension-zero cases are not inputs to these closed witness theorems. -/
@@ -73,20 +90,26 @@ example (dynamics : Dynamics) (C : QubitMatrix)
 
 /- Zero dynamics and identity dynamics both return no discarded entry to the diagonal. -/
 example (X : QubitMatrix) : returnFlowSquared diagonalProjection 0 X = 0 := by
-  simp [returnFlowSquared, hilbertSchmidtSquared]
+  simp [returnFlowSquared, hilbertSchmidtSquared, LinearMap.coe_mk]
 
 example (X : QubitMatrix) :
     returnFlowSquared diagonalProjection LinearMap.id X = 0 := by
-  simp [returnFlowSquared, hilbertSchmidtSquared, discardedPart, diagonalProjection]
+  have hdiag (Y : QubitMatrix) (i j : Fin 2) :
+      diagonalProjection Y i j = if i = j then Y i j else 0 := by
+    rfl
+  simp [returnFlowSquared, hilbertSchmidtSquared, discardedPart, hdiag,
+    Matrix.sub_apply, Fin.sum_univ_two]
 
 example (D dynamics : Dynamics) :
     staticLossSquared D 0 = 0 ∧ returnFlowSquared D dynamics 0 = 0 := by
-  simp [staticLossSquared, returnFlowSquared, hilbertSchmidtSquared, discardedPart]
+  simp [staticLossSquared, returnFlowSquared, hilbertSchmidtSquared, discardedPart,
+    LinearMap.coe_mk]
 
 example (dynamics : Dynamics) (X : QubitMatrix) :
     staticLossSquared LinearMap.id X = 0 ∧
       returnFlowSquared LinearMap.id dynamics X = 0 := by
-  simp [staticLossSquared, returnFlowSquared, hilbertSchmidtSquared, discardedPart]
+  simp [staticLossSquared, returnFlowSquared, hilbertSchmidtSquared, discardedPart,
+    LinearMap.coe_mk]
 
 /-- A single off-diagonal entry of size two has squared static loss four, while zero dynamics
 has exactly zero return flow. Thus large static loss does not force later return. -/
@@ -98,7 +121,10 @@ theorem large_static_loss_with_zero_return :
   let X : QubitMatrix := !![0, 2; 0, 0]
   refine ⟨X, diagonalProjection, 0, rfl, ?_, ?_⟩
   · norm_num [staticLossSquared, hilbertSchmidtSquared, discardedPart,
-      diagonalProjection, X, Matrix.sub_apply, Fin.sum_univ_two]
+      X, Matrix.sub_apply, Fin.sum_univ_two,
+      show ∀ (Y : QubitMatrix) (i j : Fin 2),
+        diagonalProjection Y i j = if i = j then Y i j else 0 from
+        fun Y i j => rfl]
   · simp [returnFlowSquared, hilbertSchmidtSquared]
 
 #print axioms large_static_loss_with_zero_return
@@ -114,12 +140,23 @@ theorem small_static_loss_with_nonzero_return :
   let X : QubitMatrix := !![0, (1 : ℝ) / 2; 0, 0]
   refine ⟨X, diagonalProjection, offDiagonalReturnDynamics, rfl, ?_, ?_, ?_⟩
   · norm_num [staticLossSquared, hilbertSchmidtSquared, discardedPart,
-      diagonalProjection, X, Matrix.sub_apply, Fin.sum_univ_two]
+      X, Matrix.sub_apply, Fin.sum_univ_two,
+      show ∀ (Y : QubitMatrix) (i j : Fin 2),
+        diagonalProjection Y i j = if i = j then Y i j else 0 from
+        fun Y i j => rfl]
   · norm_num [staticLossSquared, hilbertSchmidtSquared, discardedPart,
-      diagonalProjection, X, Matrix.sub_apply, Fin.sum_univ_two]
+      X, Matrix.sub_apply, Fin.sum_univ_two,
+      show ∀ (Y : QubitMatrix) (i j : Fin 2),
+        diagonalProjection Y i j = if i = j then Y i j else 0 from
+        fun Y i j => rfl]
   · norm_num [returnFlowSquared, hilbertSchmidtSquared, discardedPart,
-      diagonalProjection, offDiagonalReturnDynamics, X, Matrix.sub_apply,
-      Fin.sum_univ_two]
+      X, Matrix.sub_apply, Fin.sum_univ_two,
+      show ∀ (Y : QubitMatrix) (i j : Fin 2),
+        diagonalProjection Y i j = if i = j then Y i j else 0 from
+        fun Y i j => rfl,
+      show ∀ (Y : QubitMatrix) (i j : Fin 2),
+        offDiagonalReturnDynamics Y i j = if i = 0 ∧ j = 0 then Y 0 1 else 0 from
+        fun Y i j => rfl]
 
 #print axioms small_static_loss_with_nonzero_return
 

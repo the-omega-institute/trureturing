@@ -42,7 +42,7 @@ theorem goldenSubstStart_constraint_of_left
     1 < s * (goldenSubstStart (v + 1) : ℝ) + w * (v + 1) := by
   cases v with
   | zero =>
-      norm_num [goldenSubstStart] at hleft
+      norm_num [goldenSubstStart, goldenWindowTrueCount] at hleft
   | succ k =>
       let v := k + 1
       have hvNat : 1 ≤ v := by
