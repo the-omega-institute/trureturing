@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:ad86981bfda7f688dc94c64f35310481ea45abb5697792fa93b130a8645bf386
+  normalized_sha256: sha256:ad86981bfda7f688dc94c64f35310481ea45abb5697792fa93b130a8645bf386
+cas_ref: sha256:ad86981bfda7f688dc94c64f35310481ea45abb5697792fa93b130a8645bf386
+coverage_gids:
+  - D5/S3/ConceptDynamics/Dialectics/OneStepReadoutRepair.one_step_readout_repair
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Dialectics/OneStepReadoutRepair.one_step_readout_repair
+      source_sha256: sha256:ad86981bfda7f688dc94c64f35310481ea45abb5697792fa93b130a8645bf386
+      target_statement_id: sha256:30f27a71a4d4cca46e814e73134246df3503f55d0c3ad5568f4aa20d882f853f
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Dialectics/OneStepReadoutRepair.one_step_readout_repair
+      definition_sha256: sha256:f3b579dbd70b4474d150d207d704015386e061d2dbfa789593ad6f8e7bf2ce67
+      emission_sha256: sha256:cabce308f5e11081bae0b98e7e963b19016def4ee80e76749709dcf60ba23fc5
+  unresolved_subitems: []
