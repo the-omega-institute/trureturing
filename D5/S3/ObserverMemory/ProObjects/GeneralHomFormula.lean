@@ -37,14 +37,6 @@ open D5.S3.ObserverMemory.ProObjects.ConceptAnchorHomAsymmetry
 
 universe u v
 
-/-- For a fixed target, source refinement acts contravariantly on maps out of
-the stages, hence covariantly on the filtered index category. -/
-def stageMapsTo
-    {C : Type u} [Category.{v} C]
-    {I : Type v} [SmallCategory I]
-    (X : Iᵒᵖ ⥤ C) (target : C) : I ⥤ Type v :=
-  X.rightOp ⋙ coyoneda.obj (op (op target))
-
 /-- The functor whose value at `target` is canonically the filtered colimit
 of the types `X_i ⟶ target`. Using the Ind inclusion makes functoriality in
 the target part of the construction rather than an additional assertion. -/
@@ -53,16 +45,6 @@ noncomputable def stageColimitFunctor
     {I : Type v} [SmallCategory I] [IsFiltered I]
     (X : Iᵒᵖ ⥤ C) : Cᵒᵖᵒᵖ ⥤ Type v :=
   (Ind.inclusion Cᵒᵖ).obj ((Ind.lim I).obj X.rightOp)
-
-/-- The opposite-category Hom used by the Ind inclusion is the ordinary
-stage-to-target Hom after removing both opposites. -/
-def stageMapsToObjEquiv
-    {C : Type u} [Category.{v} C]
-    {I : Type v} [SmallCategory I]
-    (X : Iᵒᵖ ⥤ C) (target : C) (i : I) :
-    (stageMapsTo X target).obj i ≃ (X.obj (op i) ⟶ target) := by
-  change (op target ⟶ op (X.obj (op i))) ≃ _
-  exact Quiver.Hom.opEquiv.symm
 
 /-- Pointwise, `stageColimitFunctor X` is the stated colimit of ordinary Hom
 types. -/
