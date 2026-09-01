@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.ZetaLinear;
 
@@ -18,7 +20,32 @@ internal sealed class OrbitVarianceRiemannCriterionDocument
             DescribeId.Create("orbit-variance-rh-criterion"),
             DeclarationHandle.Create(Declaration),
             H("Zero orbit variance is equivalent to the critical-line condition"),
-            StatementSource.WithoutFormula(),
+            StatementSource.FromAuthor(Disp(Seq(
+                Forall, Sp, Xi, Colon, Sp,
+                Mathbb, Grp(F.Id("C")), Sp, To, Sp, Mathbb, Grp(F.Id("C")), Comma, Sp,
+                Mu, Colon, Sp,
+                Mathbb, Grp(F.Id("C")), Sp, To, Sp, Mathbb, Grp(F.Id("N")), Comma, Sp,
+                F.Id("W"), Comma, Esc,
+                Open, Forall, Sp, Rho, Comma, Sp,
+                Xi, Open, Rho, Close, Eq, D(0), Sp, Land, Sp,
+                D(0), Lt, Operatorname, Grp(F.Id("Im")), Open, Rho, Close,
+                Sp, Rightarrow, Sp, D(0), Lt, Mu, Open, Rho, Close, Close,
+                Sp, Rightarrow, Esc,
+                Open, Forall, Sp, Rho, Comma, Sp, Xi, Open, Rho, Close, Eq, D(0),
+                Sp, Rightarrow, Sp, Exists, Sp, Sigma, Comma, Sp,
+                Xi, Open, Sigma, Close, Eq, D(0), Sp, Land, Sp,
+                D(0), Lt, Operatorname, Grp(F.Id("Im")), Open, Sigma, Close,
+                Sp, Land, Sp,
+                Operatorname, Grp(F.Id("Re")), Open, Sigma, Close, Eq,
+                Operatorname, Grp(F.Id("Re")), Open, Rho, Close, Close,
+                Sp, Rightarrow, Esc,
+                Open, Operatorname, Grp(F.Id("CLH")), Open, Xi, Close,
+                Sp, Leftrightarrow, Sp,
+                Forall, Sp, F.Id("T"), Comma, Sp, D(0), Lt, F.Id("T"),
+                Sp, Rightarrow, Sp,
+                Operatorname, Grp(F.Id("completionVariance")),
+                Open, F.Id("W"), Open, F.Id("T"), Close, Comma, Sp, Mu, Close,
+                Eq, D(0), Close))),
             AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text(
