@@ -1,0 +1,20 @@
+\[
+p^{-\sigma-it}
+=
+p^{-\sigma}e^{-it\log p}
+\]
+
+中的振荡部分。
+
+对有限通道类型 \(P\)，振幅 \(a_p\in\mathbb C\) 和频率 \(\omega_p\in\mathbb R\)，Lean 定义有限傅立叶合成
+
+\[
+\boxed{
+S(t)=\sum_{p\in P}a_p e^{-it\omega_p}.
+}
+\]
+
+这是一条有限谱线信号。本文未定义一般 \(L^1\) 或 \(L^2\) 傅立叶变换，也未使用傅立叶反演或 Plancherel 定理。
+
+---
+

@@ -1,0 +1,61 @@
+## 1279.1 完整横向层析
+
+定义深度测度：
+
+$$
+\boxed{
+\mu_\perp
+=
+\sum_jm_j\delta_{h_j}.
+}
+\tag{1279.4}
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal A_B(y)
+=
+\int_0^\infty
+\min(y,h)\,d\mu_\perp(h).
+}
+\tag{1279.5}
+$$
+
+在非原子高度上：
+
+$$
+\boxed{
+\mathcal A_B'(y)
+=
+\mu_\perp((y,\infty)).
+}
+\tag{1279.6}
+$$
+
+在分布意义下：
+
+$$
+\boxed{
+-\mathcal A_B''=\mu_\perp.
+}
+\tag{1279.7}
+$$
+
+所以 \(\mathcal A_B\) 不只是一个总量。
+
+它完整确定全部横向深度 \(h_j\) 及其重数。
+
+换言之：
+
+$$
+\boxed{
+\text{离线零点深度分布}
+\quad\longleftrightarrow\quad
+\text{Blaschke 垂直衰减曲线的曲率测度}.
+}
+$$
+
+---
+

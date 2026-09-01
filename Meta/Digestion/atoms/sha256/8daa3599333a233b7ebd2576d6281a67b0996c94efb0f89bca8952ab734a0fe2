@@ -1,0 +1,56 @@
+## 1414.1 正时间收缩与负时间重建
+
+将相邻两层写成：
+
+$$
+\boxed{
+\begin{pmatrix}
+\mathsf S_n\\
+\mathsf S_{n+1}
+\end{pmatrix}
+=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}
+\begin{pmatrix}
+\mathsf S_{n+1}\\
+\mathsf S_{n+2}
+\end{pmatrix}.
+}
+\tag{1414.4}
+$$
+
+矩阵：
+
+$$
+F=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}
+$$
+
+的正扩张特征值为 \(\varphi\)，其平方的正扩张特征值为 \(\varphi^2\)。
+
+仓库已经机器证明：非负整数二通道 unimodular 更新中，行列式 \(-1\) 分支的最小非平凡扩张率为 \(\varphi\)，方向保持的行列式 \(+1\) 分支最小扩张率为 \(\varphi^2\)，并由 Fibonacci 矩阵及其平方达到。
+
+因此：
+
+$$
+\boxed{
+\begin{aligned}
+\text{正时间深入影子}
+&:\quad \varphi^{-1}\text{ 收缩};\\
+\text{负时间重建来源}
+&:\quad \varphi\text{ 扩张};\\
+\text{两步方向保持完成}
+&:\quad \varphi^{\pm2}.
+\end{aligned}
+}
+$$
+
+这解释了为何理论中既不断出现 \(\varphi\)，又不断出现 \(\varphi^2\)。
+
+---
+

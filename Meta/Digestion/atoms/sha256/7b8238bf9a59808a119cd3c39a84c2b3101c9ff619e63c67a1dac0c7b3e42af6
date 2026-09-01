@@ -1,0 +1,64 @@
+## 1298.1 一个具体的正向证明模板
+
+若能够构造有限 prime–Archimedean approximants：
+
+$$
+\Theta_{\omega,L},
+$$
+
+满足：
+
+$$
+\Theta_{\omega,L}
+\in H^\infty(\mathbb C^+),
+$$
+
+$$
+|\Theta_{\omega,L}(z)|\le1
+\qquad
+(\Im z>0),
+$$
+
+并且：
+
+$$
+\Theta_{\omega,L}
+\longrightarrow
+\Theta_\omega
+$$
+
+在上半平面局部一致收敛，则 Schur 类对该极限闭合：
+
+$$
+\Theta_\omega\in H^\infty(\mathbb C^+),
+\qquad
+|\Theta_\omega|\le1.
+$$
+
+再结合边界模长 \(1\)，便得到：
+
+$$
+\Theta_\omega
+$$
+
+是 inner function。
+
+从而：
+
+$$
+\mathfrak H_\omega=0.
+$$
+
+所以真正需要证明的是：
+
+$$
+\boxed{
+\text{finite prime completion 从一开始就具有正确的 Hardy 时间方向，
+且该方向在极限中不丢失。}
+}
+$$
+
+不是只证明其完整双向散射保持酉性。
+
+---
+

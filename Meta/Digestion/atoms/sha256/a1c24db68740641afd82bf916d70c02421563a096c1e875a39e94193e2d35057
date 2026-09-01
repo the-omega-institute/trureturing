@@ -1,0 +1,23 @@
+## 4.3 记忆让次序可观测
+
+标量 phase product 和 scalar Euler product 都遗忘事件排序。时间参数本身也不会自动产生 chronology。
+
+列表提升以后：
+
+\[
+e_1e_2\cdots e_n
+\]
+
+决定 affine update 的操作次序。扭曲 cocycle \(M_a(w)\) 使这个次序可见。
+
+因此最精确的句子是：
+
+\[
+\boxed{
+\text{色散产生频率差，Fourier 对偶产生谱时间，记忆 cocycle 使操作次序可观测。}
+}
+\]
+
+时间不是由排序凭空创造。当前系统中：
+
+- \(t\) 来自 Fourier duality；

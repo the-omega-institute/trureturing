@@ -1,0 +1,42 @@
+# 第一千一百七十部　反射配对后的无符号检测
+
+若不选择 \(\delta\) 的符号，只保留完整反射对，可以定义：
+
+$$
+\boxed{
+W_{\leftrightarrow}(\beta;\rho)
+=
+W_+(\beta;\rho)
++
+W_-(\beta;\rho).
+}
+\tag{1170.1}
+$$
+
+其最先出现的奇点位于：
+
+$$
+\boxed{
+R_{\mathrm{bi}}
+=
+\min(R_+,R_-)
+=
+e^{-2P|\delta|}.
+}
+\tag{1170.2}
+$$
+
+所以：
+
+$$
+\boxed{
+|\delta|
+=
+-\frac1{2P}
+\log R_{\mathrm{bi}}.
+}
+\tag{1170.3}
+$$
+
+并有：
+

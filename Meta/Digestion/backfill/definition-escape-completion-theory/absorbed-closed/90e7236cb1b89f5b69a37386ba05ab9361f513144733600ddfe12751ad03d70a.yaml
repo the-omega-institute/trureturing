@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:90e7236cb1b89f5b69a37386ba05ab9361f513144733600ddfe12751ad03d70a
+  normalized_sha256: sha256:90e7236cb1b89f5b69a37386ba05ab9361f513144733600ddfe12751ad03d70a
+cas_ref: sha256:90e7236cb1b89f5b69a37386ba05ab9361f513144733600ddfe12751ad03d70a
+coverage_gids:
+  - D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/QuotientParetoWeakOrder.quotient_pareto_weak_finite_decidable_partial_order
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/QuotientParetoWeakOrder.quotient_pareto_weak_finite_decidable_partial_order
+      source_sha256: sha256:90e7236cb1b89f5b69a37386ba05ab9361f513144733600ddfe12751ad03d70a
+      target_statement_id: sha256:cbdf32d2cba6ca22fbfd790b046d7cd25809d65bc47249746f15469ac53111c3
+  scribe:
+    - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/QuotientParetoWeakOrder.quotient_pareto_weak_finite_decidable_partial_order
+      definition_sha256: sha256:4d3a48797178a738e2427191f77857ea3ef58b1e2337d18206fb5a7b3b0168ef
+      emission_sha256: sha256:1b41a247dae342c1bad226dd786ad4a759e1484e0f7034a5f9534ce4dd272264
+  unresolved_subitems: []

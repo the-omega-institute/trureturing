@@ -1,0 +1,100 @@
+# 第一千一百三十部　黄金归一化后的离线 monodromy
+
+取仓库已经形式化的黄金 proper period：
+
+$$
+\boxed{
+P_\varphi=2\log\varphi.
+}
+\tag{1130.1}
+$$
+
+对离线反射对：
+
+$$
+\delta+i\gamma,
+\qquad
+-\delta+i\gamma,
+$$
+
+除去共同 phase：
+
+$$
+e^{i\gamma P_\varphi},
+$$
+
+得到 determinant-one monodromy：
+
+$$
+\boxed{
+M_\rho^\varphi
+=
+\begin{pmatrix}
+e^{\delta P_\varphi}&0\\
+0&e^{-\delta P_\varphi}
+\end{pmatrix}
+=
+\begin{pmatrix}
+\varphi^{2\delta}&0\\
+0&\varphi^{-2\delta}
+\end{pmatrix}.
+}
+\tag{1130.2}
+$$
+
+其 trace 为：
+
+$$
+\boxed{
+\operatorname{tr}M_\rho^\varphi
+=
+2\cosh
+\left(
+2\delta\log\varphi
+\right).
+}
+\tag{1130.3}
+$$
+
+其判别式为：
+
+$$
+\boxed{
+\Delta_\varphi(\rho)
+=
+\left(
+\operatorname{tr}M_\rho^\varphi
+\right)^2-4
+=
+4\sinh^2
+\left(
+2\delta\log\varphi
+\right).
+}
+\tag{1130.4}
+$$
+
+因此：
+
+$$
+\boxed{
+\Delta_\varphi(\rho)=0
+\iff
+\delta=0.
+}
+\tag{1130.5}
+$$
+
+这给出一个黄金观察者归一化的横向缺陷：
+
+$$
+\boxed{
+\Delta_\varphi
+=
+\text{off-line hyperbolicity Casimir}.
+}
+$$
+
+需要明确：
+
+* \(\delta\) 是 intrinsic Riemann transverse coordinate；

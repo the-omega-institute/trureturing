@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:4c8eb772793a97436015aca7e03d459622546fcf9c1501006c8d80c49bb715fb
+  normalized_sha256: sha256:4c8eb772793a97436015aca7e03d459622546fcf9c1501006c8d80c49bb715fb
+cas_ref: sha256:4c8eb772793a97436015aca7e03d459622546fcf9c1501006c8d80c49bb715fb
+coverage_gids:
+  - D5/S3/Axis/MultiplicativeDigitInvariant.lambda_minus_is_a_multiplicative_digit_invariant
+receipts:
+  coverage:
+    - gid: D5/S3/Axis/MultiplicativeDigitInvariant.lambda_minus_is_a_multiplicative_digit_invariant
+      source_sha256: sha256:4c8eb772793a97436015aca7e03d459622546fcf9c1501006c8d80c49bb715fb
+      target_statement_id: sha256:a637ac8446174331176ae367d34114c25ccac700e64d9bc7662d9ee6e76e1e9e
+  scribe:
+    - gid: D5/S3/Axis/MultiplicativeDigitInvariant.lambda_minus_is_a_multiplicative_digit_invariant
+      definition_sha256: sha256:a07cde402baabb468ed7d683accba2d2a14d43b453716f7e635888f19203f3de
+      emission_sha256: sha256:a5ad741c10d172e411a415ac7d898da3618c0c602894f5d7532f06f086939fd3
+  unresolved_subitems: []

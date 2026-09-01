@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:1544671a0e7c203ca10f1f64c801625765da9a8868306c7885de0cb30f94c157
+  normalized_sha256: sha256:1544671a0e7c203ca10f1f64c801625765da9a8868306c7885de0cb30f94c157
+cas_ref: sha256:1544671a0e7c203ca10f1f64c801625765da9a8868306c7885de0cb30f94c157
+coverage_gids:
+  - D5/S3/ConceptDynamics/EscapeSpectrum/SpectrumCommitmentSettlement.spectrum_commitment_local_settlement
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/EscapeSpectrum/SpectrumCommitmentSettlement.spectrum_commitment_local_settlement
+      source_sha256: sha256:1544671a0e7c203ca10f1f64c801625765da9a8868306c7885de0cb30f94c157
+      target_statement_id: sha256:f3fe6d01461511a5d6d83c82065dfd3051e113433a79121392c545f6d0bbb0be
+  scribe:
+    - gid: D5/S3/ConceptDynamics/EscapeSpectrum/SpectrumCommitmentSettlement.spectrum_commitment_local_settlement
+      definition_sha256: sha256:f99da557be57aeabc5249eea32d441fcc5b968bbe5fc59c23e53361f5ff1e5bc
+      emission_sha256: sha256:1887c636acf5e0d54cc8bb8f56b9c23e91921244c0637e321902ba36340f4e25
+  unresolved_subitems: []

@@ -495,13 +495,6 @@ internal static class TheoryAtomizerDataLoader
                     + ".");
             }
 
-            if (locator
-                && value.StartsWith(UnregisteredGenreLocator.Prefix, StringComparison.Ordinal))
-            {
-                throw new FormatException(
-                    "Configured locator uses the reserved unregistered namespace.");
-            }
-
             if (!keys.Add(key) || locator && !firstValue && !isAlias || isAlias && firstValue
                 || locator && !LocatorPattern.IsMatch(value))
             {

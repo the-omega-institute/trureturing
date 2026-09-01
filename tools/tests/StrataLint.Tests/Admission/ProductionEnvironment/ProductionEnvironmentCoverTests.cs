@@ -384,6 +384,44 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
+    public void CoverAtomWithReceiptsMovesCleanInheritedResidualOpenAtomToDeletableAbsorbedClosed()
+    {
+        var inputs = DirectoryInputs(CoverWorld.Materialize(new CoverSpec()));
+        const string sourceAfterHistoricalAtom =
+            "# Synthetic\n\n**定理 2.1(A)**。replacement fixture atom body。\n";
+        inputs.Files[RuleFixture.FixtureDigestionSourcePath] = sourceAfterHistoricalAtom;
+        inputs.Baseline[RuleFixture.FixtureDigestionSourcePath] = sourceAfterHistoricalAtom;
+        using var temporary = new TemporaryDirectory();
+        DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
+        var environment = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files);
+
+        var result = environment.CoverAtom(CoverArgs(inputs));
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("deletable=true", result.Output, StringComparison.Ordinal);
+        var entry = Assert.Single(
+            BackfillInventoryLoader.LoadRoot(temporary.Path).RequireDigestionEntries(),
+            candidate => candidate.AtomId == CoverWorld.DefaultAtomId);
+        Assert.Equal([inputs.Gid], entry.CoverageGids.ToArray());
+        Assert.Single(entry.Receipts.Coverage);
+        Assert.Single(entry.Receipts.Scribe);
+        Assert.Equal(DigestionMigrationState.Absorbed, entry.ProjectedStatus.Migration);
+        Assert.Equal(DigestionTruthState.Closed, entry.ProjectedStatus.Truth);
+        var ledgerRoot = Path.Combine(
+            temporary.Path,
+            BackfillInventoryLoader.RootPath.Replace('/', Path.DirectorySeparatorChar),
+            "fixture-source");
+        Assert.False(File.Exists(Path.Combine(
+            ledgerRoot,
+            "residual-open",
+            CoverWorld.DefaultAtomId + ".yaml")));
+        Assert.True(File.Exists(Path.Combine(
+            ledgerRoot,
+            "absorbed-closed",
+            CoverWorld.DefaultAtomId + ".yaml")));
+    }
+
+    [Fact]
     public void CoverAtomLeavesLedgerBytesUnchangedWhenAGateRejects()
     {
         var inputs = CoverWorld.Materialize(new CoverSpec { VerifyScribe = false });
@@ -412,7 +450,6 @@ public sealed partial class ProductionEnvironmentTests
         {
             SecondaryTarget = (siblingModuleGid, "sibling"),
             UnrelatedSibling = new CoverUnrelatedSiblingSpec(
-                "receipt-gap-sibling",
                 [siblingGid],
                 [siblingGid],
                 ["historical-uncovered-clause"]),
@@ -440,40 +477,12 @@ public sealed partial class ProductionEnvironmentTests
     [InlineData("coverage-receipt-mismatch")]
     [InlineData("scribe-definition-mismatch")]
     [InlineData("scribe-emission-mismatch")]
-    public void CoverAtomRejectsUnrelatedCoverWhenReceiptIntegrityBacklogExistsAtForkPoint(
-        string mismatchCode)
-    {
-        var materialized = CoverWorld.Materialize(new CoverSpec
-        {
-            OtherAtomBinding = ("receipt-gap-sibling", "D5/S0/Carrier/Probe.sibling"),
-            ReportDeclarations = ImmutableArray.Create("probe", "sibling"),
-        });
-        var inputs = DirectoryInputs(WithReceiptMismatchAtForkPoint(
-            materialized,
-            mismatchCode,
-            byteIdenticalBaseline: true));
-        using var temporary = new TemporaryDirectory();
-        DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
-        var before = DirectoryLedgerTestSupport.Image(temporary.Path);
-        var environment = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files);
-
-        var result = environment.CoverAtom(CoverArgs(inputs));
-
-        Assert.False(result.Success);
-        Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
-        Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
-    }
-
-    [Theory]
-    [InlineData("coverage-receipt-mismatch")]
-    [InlineData("scribe-definition-mismatch")]
-    [InlineData("scribe-emission-mismatch")]
     public void AlignScribeReceiptRejectsReceiptIntegrityMismatchOnSiblingBeforeWritingLedger(
         string mismatchCode)
     {
         var materialized = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec() with
         {
-            OtherAtomBinding = ("receipt-gap-sibling", "D5/S0/Carrier/Probe.probe"),
+            OtherAtomGid = "D5/S0/Carrier/Probe.probe",
         });
         var inputs = DirectoryInputs(WithSiblingReceiptMismatch(materialized, mismatchCode));
         using var temporary = new TemporaryDirectory();
@@ -498,7 +507,7 @@ public sealed partial class ProductionEnvironmentTests
     {
         var materialized = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec() with
         {
-            OtherAtomBinding = ("receipt-gap-sibling", "D5/S0/Carrier/Probe.sibling"),
+            OtherAtomGid = "D5/S0/Carrier/Probe.sibling",
             ReportDeclarations = ImmutableArray.Create("probe", "sibling"),
         });
         var inputs = DirectoryInputs(WithReceiptMismatchAtForkPoint(
@@ -522,7 +531,7 @@ public sealed partial class ProductionEnvironmentTests
     {
         var materialized = CoverWorld.Materialize(new CoverSpec
         {
-            OtherAtomBinding = ("finding-sibling", "D5/S0/Carrier/Probe.probe"),
+            OtherAtomGid = "D5/S0/Carrier/Probe.probe",
         });
         var inputs = DirectoryInputs(WithSiblingDuplicateCoverageReceipt(materialized));
         using var temporary = new TemporaryDirectory();
@@ -581,9 +590,12 @@ public sealed partial class ProductionEnvironmentTests
 
     private static CoverInputs WithSiblingReceiptMismatch(CoverInputs inputs, string mismatchCode)
     {
-        const string siblingAtomId = "receipt-gap-sibling";
+        var entries = inputs.Document.RequireDigestionEntries();
+        var siblingAtomId = entries.Any(entry => entry.AtomId == CoverWorld.OtherAtomId)
+            ? CoverWorld.OtherAtomId
+            : CoverWorld.UnrelatedAtomId;
         var siblingEntry = Assert.Single(
-            inputs.Document.RequireDigestionEntries(),
+            entries,
             entry => entry.AtomId == siblingAtomId);
         var siblingGid = Assert.Single(siblingEntry.CoverageGids);
         var documentGid = ScribeEmissionAttestation.DocumentGid(siblingGid);
@@ -660,7 +672,7 @@ public sealed partial class ProductionEnvironmentTests
 
     private static CoverInputs WithSiblingDuplicateCoverageReceipt(CoverInputs inputs)
     {
-        const string siblingAtomId = "finding-sibling";
+        var siblingAtomId = CoverWorld.OtherAtomId;
         var documentGid = inputs.Gid[..inputs.Gid.LastIndexOf('.')];
         Assert.True(inputs.VerifiedEmissions!.TryGet(documentGid, out var verified));
         var targetStatementId = FrozenStatementReceiptTestData.Resolve(inputs.Files, inputs.Gid);

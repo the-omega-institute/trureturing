@@ -1,0 +1,45 @@
+## 1289.1 离线零点的精确负时间尾部
+
+对观察层 \(\omega\)，离线零点：
+
+$$
+\rho
+=
+\frac12+\delta+i\gamma,
+\qquad
+\delta>\omega
+$$
+
+产生上半平面分母点：
+
+$$
+\boxed{
+p_{\rho,\omega}
+=
+-\gamma+i(\delta-\omega).
+}
+\tag{1289.6}
+$$
+
+令：
+
+$$
+h_{\rho,\omega}
+=
+\delta-\omega.
+$$
+
+其 inverse-inner 尾部具有形式：
+
+$$
+\boxed{
+e^{i\gamma x}
+e^{h_{\rho,\omega}x}
+\mathbf 1_{\{x<0\}}.
+}
+\tag{1289.7}
+$$
+
+所以：
+
+* \(\gamma\) 是负时间尾部的振荡频率；

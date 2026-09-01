@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:18d6d1d729ebfe2a0e1a60c636f3d9a0f08c9e2cfc616b213675d5f7c2afbccd
+  normalized_sha256: sha256:18d6d1d729ebfe2a0e1a60c636f3d9a0f08c9e2cfc616b213675d5f7c2afbccd
+cas_ref: sha256:18d6d1d729ebfe2a0e1a60c636f3d9a0f08c9e2cfc616b213675d5f7c2afbccd
+coverage_gids:
+  - D5/S3/ConceptDynamics/Causal/ParentOrderedStructuralEvaluationSemantics.parent_ordered_structure_evaluation_semantics
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Causal/ParentOrderedStructuralEvaluationSemantics.parent_ordered_structure_evaluation_semantics
+      source_sha256: sha256:18d6d1d729ebfe2a0e1a60c636f3d9a0f08c9e2cfc616b213675d5f7c2afbccd
+      target_statement_id: sha256:274619ac0bc038923354788ed94aa00f788685b58c65eb0f1080333938bbfe0a
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Causal/ParentOrderedStructuralEvaluationSemantics.parent_ordered_structure_evaluation_semantics
+      definition_sha256: sha256:9ff2cb458762d98ae4dbd3c188ad071decec6be2be953367fe16b6ce3058c463
+      emission_sha256: sha256:ee4ae46eac85eff2baf955f9d4a53c85c21dd69d9fb1e036cd61d7334d960853
+  unresolved_subitems: []

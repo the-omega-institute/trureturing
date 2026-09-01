@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:b567e4eeb6a70dfff0553f7b32857cf0f9d6087fc96b4f3f9649d1e781281757
+  normalized_sha256: sha256:b567e4eeb6a70dfff0553f7b32857cf0f9d6087fc96b4f3f9649d1e781281757
+cas_ref: sha256:b567e4eeb6a70dfff0553f7b32857cf0f9d6087fc96b4f3f9649d1e781281757
+coverage_gids:
+  - D5/S1/Solenoid/ConnectedDiscreteDegeneracy.connected_discrete_has_unique_point
+receipts:
+  coverage:
+    - gid: D5/S1/Solenoid/ConnectedDiscreteDegeneracy.connected_discrete_has_unique_point
+      source_sha256: sha256:b567e4eeb6a70dfff0553f7b32857cf0f9d6087fc96b4f3f9649d1e781281757
+      target_statement_id: sha256:1837741f32e14e8303f4d971d276fc2fad491635e71ab889f490ee9d7abea709
+  scribe:
+    - gid: D5/S1/Solenoid/ConnectedDiscreteDegeneracy.connected_discrete_has_unique_point
+      definition_sha256: sha256:7102f1d6d56c5b5fda51d4687730681ccaf3a9a369bcab5f951d51a3f9c74d1d
+      emission_sha256: sha256:78ad736ab5f7e9d1c4219438a5229a7b089d39f07c3efd91c4273992d51bcde1
+  unresolved_subitems: []

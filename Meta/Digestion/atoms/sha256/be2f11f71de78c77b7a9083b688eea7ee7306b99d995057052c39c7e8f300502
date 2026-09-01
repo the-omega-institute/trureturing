@@ -1,0 +1,80 @@
+# 第一千一百一十六部　Universal Solenoid 的严格对偶序列
+
+仓库定义的 universal solenoid 由所有正整数模数上的兼容圆周坐标组成，并具有可见第一坐标投影及稠密实流。
+
+仓库进一步证明：
+
+* compatible congruence data 精确等于可见投影的核；
+* 该核嵌入单射；
+* 可见圆周投影满射。
+
+因此可写成短正合列：
+
+$$
+\boxed{
+0
+\longrightarrow
+\widehat{\mathbb Z}
+\longrightarrow
+\Sigma_{\mathbb Q}
+\overset{\pi}{\longrightarrow}
+\mathbb T
+\longrightarrow
+0.
+}
+\tag{1116.1}
+$$
+
+这里：
+
+$$
+\widehat{\mathbb Z}
+\simeq
+\prod_p\mathbb Z_p
+$$
+
+是隐藏同余地址空间。
+
+标准 universal one-dimensional solenoid 也可以写成：
+
+$$
+\boxed{
+\Sigma_{\mathbb Q}
+\simeq
+(\mathbb R\times\widehat{\mathbb Z})/\mathbb Z_{\mathrm{diag}},
+}
+\tag{1116.2}
+$$
+
+并且其 Pontryagin dual 是离散加法群：
+
+$$
+\boxed{
+\widehat{\Sigma_{\mathbb Q}}
+\simeq
+\mathbb Q.
+}
+\tag{1116.3}
+$$
+
+([arXiv][2])
+
+对式 (1116.1) 作 Pontryagin 对偶，得到：
+
+$$
+\boxed{
+0
+\longrightarrow
+\mathbb Z
+\longrightarrow
+\mathbb Q
+\longrightarrow
+\mathbb Q/\mathbb Z
+\longrightarrow
+0.
+}
+\tag{1116.4}
+$$
+
+---
+

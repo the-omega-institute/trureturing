@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:d24cf7f7f004c0825d84fdf2c16530a5c59579cd5e550142be49dad0a5e1dc4e
+  normalized_sha256: sha256:d24cf7f7f004c0825d84fdf2c16530a5c59579cd5e550142be49dad0a5e1dc4e
+cas_ref: sha256:d24cf7f7f004c0825d84fdf2c16530a5c59579cd5e550142be49dad0a5e1dc4e
+coverage_gids:
+  - D5/S3/Zeros/ZeroGeometry.mirror_pair_distinct_iff_off_line_and_cancels
+receipts:
+  coverage:
+    - gid: D5/S3/Zeros/ZeroGeometry.mirror_pair_distinct_iff_off_line_and_cancels
+      source_sha256: sha256:d24cf7f7f004c0825d84fdf2c16530a5c59579cd5e550142be49dad0a5e1dc4e
+      target_statement_id: sha256:269d9f52fed5f629c115ae717c4da2a08b5f80667c87db54c02a74acda647ac1
+  scribe: []
+  unresolved_subitems:
+    - off-line-cross-position-pairing-numerical-instrument
+    - theorem-24-3-and-24-5-meta-level-compatibility

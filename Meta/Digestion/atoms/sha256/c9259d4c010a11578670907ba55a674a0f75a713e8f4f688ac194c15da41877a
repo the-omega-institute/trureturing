@@ -1,0 +1,60 @@
+## 定理 1232.1（Golden cofinal kernel criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal K_{\omega_n}\succeq0
+\quad
+\forall n\ge0.
+}
+\tag{1232.2}
+$$
+
+### 正向
+
+RH 成立时，每个：
+
+$$
+E_{\omega_n}
+$$
+
+满足 Hermite–Biehler 条件，所以核正半定。
+
+### 反向
+
+若存在离线零点，取其右侧代表：
+
+$$
+\rho=\frac12+\delta+i\gamma.
+$$
+
+由于：
+
+$$
+\omega_n\to0,
+$$
+
+存在无穷多个 \(n\) 满足：
+
+$$
+\omega_n<\delta.
+$$
+
+其中至少有一个还满足：
+
+$$
+\xi(\rho-2\omega_n)\neq0.
+$$
+
+于是：
+
+$$
+\mathcal K_{\omega_n}
+(z_{\rho,\omega_n},z_{\rho,\omega_n})<0.
+$$
+
+矛盾。
+
+---
+

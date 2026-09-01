@@ -1,0 +1,27 @@
+## 本轮直接推导
+
+本轮得到：
+
+$$
+p_{\gamma,\delta}(t)
+=
+\delta^{-1}
+p_*\left(
+\frac{t-\gamma}{\delta}
+\right),
+$$
+
+即所有简单离线光影属于同一个 affine 母形轨道；
+
+并得到局部奇点的统一切片解释：
+
+$$
+\text{Weyl／monopole}
+\leftrightarrow
+\text{mass crossing／horizon}
+\leftrightarrow
+\text{Poisson–Hankel boundary shadow}.
+$$
+
+---
+

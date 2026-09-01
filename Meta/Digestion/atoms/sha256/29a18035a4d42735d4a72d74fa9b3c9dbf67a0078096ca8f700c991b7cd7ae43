@@ -1,0 +1,45 @@
+## 1268.2 不需要统一正 gap
+
+项目已经机器证明一种与临界完成完全相容的抽象结构：
+
+$$
+\boxed{
+\text{每个有限窗口 floor 严格为正，
+但当窗口趋于无穷时，floor 可以趋于零。}
+}
+$$
+
+因此正确目标不是：
+
+$$
+Q_L\ge cI
+\quad
+\text{且 }c>0\text{ 与 }L\text{ 无关}.
+$$
+
+而是：
+
+$$
+\boxed{
+Q_L\succeq0
+\qquad
+\forall L<\infty.
+}
+$$
+
+RH 真可以处于正锥边界：
+
+$$
+\lambda_{\min}(L)\downarrow0;
+$$
+
+RH 假则要求某个有限尺度真正穿越：
+
+$$
+\lambda_{\min}(L)<0.
+$$
+
+这与 kernel spectral flow 的图景完全一致。
+
+---
+

@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:e1a0713a3894d810a9221ad7b422e95f1f57db2a703a0257fe2c60803b32c0df
+  normalized_sha256: sha256:e1a0713a3894d810a9221ad7b422e95f1f57db2a703a0257fe2c60803b32c0df
+cas_ref: sha256:e1a0713a3894d810a9221ad7b422e95f1f57db2a703a0257fe2c60803b32c0df
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  quarantine:
+    justification: "Missing canonical Hardy-model-space and Clark-basis prerequisites. D5 search `model.?space|Clark.*basis|Clark.*sampling|sampling.*zero|thetaXi|vartheta|de Branges|reproducing.*kernel.*zero` found no analytic model-space, xi inner-function, Clark measure, boundary evaluation, or Riemann-zero sampling owner. The source context was read: under RH it defines distinct zero points `u_rho`, multiplicity weights `w_rho`, the probability-mass identity, the Clark measure, and normalized boundary kernels before asserting both Parseval and reconstruction, norm convergence, compact-local convergence, and basis completeness. Pinned Mathlib search `Hardy|InnerFunction|model.?space|Aleksandrov|Clark measure|de.?Branges|boundary.*kernel` missed this analytic theory, while `HilbertBasis.hasSum_repr` and `HilbertBasis.hasSum_inner_mul_inner` provide only the generic Hilbert consequences after a basis exists. GitHub Lean ecosystem searches for `Clark basis`, `model space` with Hardy, `Aleksandrov Clark`, `de Branges`, `HardySpace InnerFunction`, and `OrthonormalBasis Clark` all returned empty result sets with exit 0. Local Lean probe `/private/tmp/w72a22-sampling-probe.lean` applies the pinned `HilbertBasis` API to prove norm-topology reconstruction and Parseval with exit 0, isolating the blocker at construction of the canonical xi Clark basis and its evaluation/compact-convergence laws rather than the abstract Hilbert expansion."
+    reentry_condition: "Formalize Hardy H2 and the canonical model space of the xi inner function, construct its pure-point Clark measure and normalized Riemann-zero boundary-kernel Hilbert basis with the stated weights, and prove bounded boundary evaluation plus compact-local convergence of the resulting expansion."
+    blocker_class: missing-prerequisite

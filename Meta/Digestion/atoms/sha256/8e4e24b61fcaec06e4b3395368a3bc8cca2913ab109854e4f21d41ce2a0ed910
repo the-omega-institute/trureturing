@@ -1,0 +1,33 @@
+## 1283.2 nowhere-vanishing 假设的真正含义
+
+仓库的 scattering-ratio uniqueness theorem 已经证明：
+
+* 若两个函数处处非零；
+* shifted scattering ratios 相同；
+* 向右平移后的 quotient 归一化到 \(1\)；
+
+则两个函数完全相同。
+
+这里最值得注意的不是结论，而是其假设：
+
+$$
+\boxed{
+\text{nowhere-vanishing}.
+}
+$$
+
+Blaschke 除子恰好位于这一假设之外。
+
+所以当前 scattering 路线的核心障碍已经非常明确：
+
+$$
+\boxed{
+\text{scattering reading 决定 regular quotient；
+零点除子是剩余的唯一独立几何层。}
+}
+$$
+
+更准确地说，在现有唯一性定理的接口范围内，只有先控制除子，才能启动全局唯一性。
+
+---
+

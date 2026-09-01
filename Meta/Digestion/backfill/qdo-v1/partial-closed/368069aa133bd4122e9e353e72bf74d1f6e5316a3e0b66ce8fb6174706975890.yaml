@@ -1,0 +1,10 @@
+fingerprints:
+  raw_sha256: sha256:368069aa133bd4122e9e353e72bf74d1f6e5316a3e0b66ce8fb6174706975890
+  normalized_sha256: sha256:368069aa133bd4122e9e353e72bf74d1f6e5316a3e0b66ce8fb6174706975890
+cas_ref: sha256:368069aa133bd4122e9e353e72bf74d1f6e5316a3e0b66ce8fb6174706975890
+coverage_gids:
+  - D5/S3/DivergenceSupport/ZeroSupportDPI.classical_dpi_identity_zero_support
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

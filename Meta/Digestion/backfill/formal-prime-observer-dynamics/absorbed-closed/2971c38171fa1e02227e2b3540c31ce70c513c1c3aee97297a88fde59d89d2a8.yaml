@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:2971c38171fa1e02227e2b3540c31ce70c513c1c3aee97297a88fde59d89d2a8
+  normalized_sha256: sha256:2971c38171fa1e02227e2b3540c31ce70c513c1c3aee97297a88fde59d89d2a8
+cas_ref: sha256:2971c38171fa1e02227e2b3540c31ce70c513c1c3aee97297a88fde59d89d2a8
+coverage_gids:
+  - D5/S3/Observer/DynamicProgramming/DiscountedBellmanContraction.discounted_bellman_contraction_and_unique_fixed_point
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/DynamicProgramming/DiscountedBellmanContraction.discounted_bellman_contraction_and_unique_fixed_point
+      source_sha256: sha256:2971c38171fa1e02227e2b3540c31ce70c513c1c3aee97297a88fde59d89d2a8
+      target_statement_id: sha256:bdeb0855263ec1de1f534a0f0f9441c9064e73668a001c187550b08cfe4498e5
+  scribe:
+    - gid: D5/S3/Observer/DynamicProgramming/DiscountedBellmanContraction.discounted_bellman_contraction_and_unique_fixed_point
+      definition_sha256: sha256:dd922a0f11e63a0161c98d00268e91d34a95ffd56150af50916d1ca9c98a1f02
+      emission_sha256: sha256:a93763811be554ef5350b032dddfe1e9273d98b690729d4afda6b7c56acba400
+  unresolved_subitems: []

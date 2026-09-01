@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:a11ef961c686fca7d609f15b62b7594e6074435db4a4436ea24f413f777082fe
+  normalized_sha256: sha256:a11ef961c686fca7d609f15b62b7594e6074435db4a4436ea24f413f777082fe
+cas_ref: sha256:a11ef961c686fca7d609f15b62b7594e6074435db4a4436ea24f413f777082fe
+coverage_gids:
+  - D5/S3/Weil/SpectralHilbert.labeled_zeta_norm_sq
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/SpectralHilbert.labeled_zeta_norm_sq
+      source_sha256: sha256:a11ef961c686fca7d609f15b62b7594e6074435db4a4436ea24f413f777082fe
+      target_statement_id: sha256:c8a4b67988b2a6bc051d2882fe2f59538685455fcc497d7411786d20749bf6d5
+  scribe: []
+  unresolved_subitems: []

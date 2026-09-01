@@ -1,0 +1,18 @@
+fingerprints:
+  raw_sha256: sha256:61364dcfb96879a529a59450892412c60c668fa0cb3dc0438a59318cbc29ca71
+  normalized_sha256: sha256:61364dcfb96879a529a59450892412c60c668fa0cb3dc0438a59318cbc29ca71
+cas_ref: sha256:61364dcfb96879a529a59450892412c60c668fa0cb3dc0438a59318cbc29ca71
+coverage_gids:
+  - D5/S3/Zeros/ScalingRegisterRigidity.realized_same_germ_same_total_code_excludes_scaling_register
+receipts:
+  coverage:
+    - gid: D5/S3/Zeros/ScalingRegisterRigidity.realized_same_germ_same_total_code_excludes_scaling_register
+      source_sha256: sha256:61364dcfb96879a529a59450892412c60c668fa0cb3dc0438a59318cbc29ca71
+      target_statement_id: sha256:bd46feeb6c48361934d50c8ac9822f39de9b69f6592f797482dcb43f8e99f53f
+  scribe:
+    - gid: D5/S3/Zeros/ScalingRegisterRigidity.realized_same_germ_same_total_code_excludes_scaling_register
+      definition_sha256: sha256:757fa4bcf85ed3ef267e3798a37206d1a6098d0e8473d16ae98902881a311e4e
+      emission_sha256: sha256:6aa5317dc496328ef86468c94f6212b5ef85c4515df9b6cf0e0a8975d0b82b50
+  unresolved_subitems:
+    - c3b-local-scaling-ledger-zero-qualification
+    - c3b-positive-functional-o6-bridge

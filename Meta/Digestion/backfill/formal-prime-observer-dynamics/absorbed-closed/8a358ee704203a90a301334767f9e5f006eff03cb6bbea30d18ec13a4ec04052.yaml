@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:8a358ee704203a90a301334767f9e5f006eff03cb6bbea30d18ec13a4ec04052
+  normalized_sha256: sha256:8a358ee704203a90a301334767f9e5f006eff03cb6bbea30d18ec13a4ec04052
+cas_ref: sha256:8a358ee704203a90a301334767f9e5f006eff03cb6bbea30d18ec13a4ec04052
+coverage_gids:
+  - D5/S3/Arith/Coding/PrimorialWitnessBound.primorial_witness_bound
+receipts:
+  coverage:
+    - gid: D5/S3/Arith/Coding/PrimorialWitnessBound.primorial_witness_bound
+      source_sha256: sha256:8a358ee704203a90a301334767f9e5f006eff03cb6bbea30d18ec13a4ec04052
+      target_statement_id: sha256:c10168b6cc385ec9fd5f21fae560f2e7490ffeb965f7f241ebb509e816f2eb5c
+  scribe:
+    - gid: D5/S3/Arith/Coding/PrimorialWitnessBound.primorial_witness_bound
+      definition_sha256: sha256:fc5789ad5df0d524e5115434a841d996fdf39bd46b40ac8b36bd2791b27e816a
+      emission_sha256: sha256:f86a4447ee4e8bd168490e4b71a89c8d50e16ae2433a207598df06a9af9eacee
+  unresolved_subitems: []

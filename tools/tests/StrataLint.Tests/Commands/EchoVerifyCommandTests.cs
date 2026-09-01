@@ -85,8 +85,6 @@ public sealed class EchoVerifyCommandTests
             "synthetic.md",
             "synthetic-v1",
             atomId,
-            "synthetic/path",
-            null,
             new DigestionFingerprints("sha256:synthetic", "sha256:synthetic"),
             [],
             new DigestionReceipts([], [], [], [], null),

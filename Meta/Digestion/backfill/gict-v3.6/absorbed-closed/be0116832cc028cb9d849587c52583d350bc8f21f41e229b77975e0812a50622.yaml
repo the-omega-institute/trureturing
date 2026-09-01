@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:be0116832cc028cb9d849587c52583d350bc8f21f41e229b77975e0812a50622
+  normalized_sha256: sha256:be0116832cc028cb9d849587c52583d350bc8f21f41e229b77975e0812a50622
+cas_ref: sha256:be0116832cc028cb9d849587c52583d350bc8f21f41e229b77975e0812a50622
+coverage_gids:
+  - D5/S3/Constants/Irrationality/FibonacciSqrtFiveIrrationality.odd_layer_constant_irrational
+receipts:
+  coverage:
+    - gid: D5/S3/Constants/Irrationality/FibonacciSqrtFiveIrrationality.odd_layer_constant_irrational
+      source_sha256: sha256:be0116832cc028cb9d849587c52583d350bc8f21f41e229b77975e0812a50622
+      target_statement_id: sha256:e55c9cc4a538d03dd74deb03859f2e6066dcf3c498acd10c2ad851e759df6b9d
+  scribe:
+    - gid: D5/S3/Constants/Irrationality/FibonacciSqrtFiveIrrationality.odd_layer_constant_irrational
+      definition_sha256: sha256:7eaae1b970fbebd999dce09f0257804a751e9b41a2826e08c009e7b46bff305f
+      emission_sha256: sha256:6f76c32037473a0a7d3c5dcc90552dfe4900e25cc7e9bd85868f5b95816bb19c
+  unresolved_subitems: []

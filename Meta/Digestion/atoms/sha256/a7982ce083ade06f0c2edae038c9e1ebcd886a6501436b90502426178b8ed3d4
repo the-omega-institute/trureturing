@@ -1,0 +1,27 @@
+## 第五步：利用 threshold identity
+
+对所有：
+
+$$
+\omega>0
+$$
+
+建立 innerness 后，项目现有阈值恒等式直接给出：
+
+$$
+\boxed{
+\Omega_\xi=0,
+}
+$$
+
+从而：
+
+$$
+\boxed{
+\mathrm{RH}.
+}
+$$
+
+这一程序不再依赖：
+
+* 黑洞温度是否为黄金常数；

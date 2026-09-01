@@ -1,0 +1,21 @@
+\[
+\left|K_{x,y}(t_{k_1},t_{k_2})\right|
+=
+2\left|
+\sin\left(
+\frac{(t_{k_1}-t_{k_2})(\log x-\log y)}2
+\right)
+\right|.
+\]
+
+因此反对称破缺的可见性需要：
+
+1. 两个采样模式可区分；
+2. 两个尺度通道可区分；
+3. 对应 time-frequency area 不落在共振零点［
+4. 被调制的曲率系数 \(C_{p,q}\) 本身非零。
+
+本轮的壳层 invariance 说明，同一 quotient class 内的代表元变化不改变上述可见性。
+
+---
+

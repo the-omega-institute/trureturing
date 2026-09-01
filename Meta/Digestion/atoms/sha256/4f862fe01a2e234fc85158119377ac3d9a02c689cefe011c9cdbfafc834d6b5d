@@ -1,0 +1,68 @@
+## 定理 1312.1（单缺陷能量矩公式）
+
+对任意：
+
+$$
+s>0,
+$$
+
+有：
+
+$$
+\boxed{
+\delta^s
+=
+(s+2)
+\int_0^\infty
+\omega^{s-1}
+\mathcal E_\rho(\omega)\,d\omega.
+}
+\tag{1312.4}
+$$
+
+### 证明
+
+$$
+\begin{aligned}
+\int_0^\infty
+\omega^{s-1}\mathcal E_\rho(\omega)\,d\omega
+&=
+\frac1{\delta^2}
+\int_0^\delta
+\omega^{s+1}\,d\omega\\
+&=
+\frac{\delta^s}{s+2}.
+\end{aligned}
+$$
+
+∎
+
+特别地：
+
+$$
+\boxed{
+\delta
+=
+3
+\int_0^\infty
+\mathcal E_\rho(\omega)\,d\omega,
+}
+\tag{1312.5}
+$$
+
+$$
+\boxed{
+\delta^2
+=
+4
+\int_0^\infty
+\omega
+\mathcal E_\rho(\omega)\,d\omega.
+}
+\tag{1312.6}
+$$
+
+所以横向距离不仅可由负指标的出生时刻恢复，也可由反因果能量在全部观察基线上的积分恢复。
+
+---
+

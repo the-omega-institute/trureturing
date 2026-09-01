@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:8e320f1746015dc21418fa38e63a4a1b4b91aa50ccc616d39723c39357ac7a43
+  normalized_sha256: sha256:8e320f1746015dc21418fa38e63a4a1b4b91aa50ccc616d39723c39357ac7a43
+cas_ref: sha256:8e320f1746015dc21418fa38e63a4a1b4b91aa50ccc616d39723c39357ac7a43
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    recorded_at_utc: 2026-08-26T19:33:27.7469330+00:00
+    gids:
+      - D5/S3/Entropy/NamingWindow/FutureWordInformationChain.future_word_information_chain
+    gaps:
+      - code: structural-alignment-rejected
+        detail: 定理/11.1

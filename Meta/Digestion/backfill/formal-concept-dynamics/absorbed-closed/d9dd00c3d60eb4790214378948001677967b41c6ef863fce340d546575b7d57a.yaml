@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:d9dd00c3d60eb4790214378948001677967b41c6ef863fce340d546575b7d57a
+  normalized_sha256: sha256:d9dd00c3d60eb4790214378948001677967b41c6ef863fce340d546575b7d57a
+cas_ref: sha256:d9dd00c3d60eb4790214378948001677967b41c6ef863fce340d546575b7d57a
+coverage_gids:
+  - D5/S3/ConceptDynamics/Prediction/ConditionalExpectationOptimality.conditional_expectation_minimizes_mean_square_error
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Prediction/ConditionalExpectationOptimality.conditional_expectation_minimizes_mean_square_error
+      source_sha256: sha256:d9dd00c3d60eb4790214378948001677967b41c6ef863fce340d546575b7d57a
+      target_statement_id: sha256:fbf4fdc11a246038778da6b919bc95abe81f8c9bb937c7af8473e4a9d5174506
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Prediction/ConditionalExpectationOptimality.conditional_expectation_minimizes_mean_square_error
+      definition_sha256: sha256:bc46ea137f03195e5534c2d350b3e591566b1c8a836afbe4fec951fa32f0680e
+      emission_sha256: sha256:326591e4d19b0acf7493906edc805a6848569bf1ee5ad0bfb8299e8577a204cd
+  unresolved_subitems: []

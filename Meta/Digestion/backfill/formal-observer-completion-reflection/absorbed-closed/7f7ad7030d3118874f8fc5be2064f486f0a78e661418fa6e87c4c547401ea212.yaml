@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:7f7ad7030d3118874f8fc5be2064f486f0a78e661418fa6e87c4c547401ea212
+  normalized_sha256: sha256:7f7ad7030d3118874f8fc5be2064f486f0a78e661418fa6e87c4c547401ea212
+cas_ref: sha256:7f7ad7030d3118874f8fc5be2064f486f0a78e661418fa6e87c4c547401ea212
+coverage_gids:
+  - D5/S3/Entropy/Forgetting/CommitmentInformationUpperBound.commitment_information_le_residual_entropy
+receipts:
+  coverage:
+    - gid: D5/S3/Entropy/Forgetting/CommitmentInformationUpperBound.commitment_information_le_residual_entropy
+      source_sha256: sha256:7f7ad7030d3118874f8fc5be2064f486f0a78e661418fa6e87c4c547401ea212
+      target_statement_id: sha256:7622652392a4d2e0cacfae804a69940f75765103a9cfb0b9608aebe5fc25de20
+  scribe:
+    - gid: D5/S3/Entropy/Forgetting/CommitmentInformationUpperBound.commitment_information_le_residual_entropy
+      definition_sha256: sha256:f8e603a16aed903b9e8c9954fbb0897df17e2a26f11776f0beaaf56d8b6a7c7e
+      emission_sha256: sha256:f5327d042fe653bee0ec4a9581889ffa440a0510b699c3fac6397d03c2ea8d87
+  unresolved_subitems: []

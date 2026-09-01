@@ -51,7 +51,7 @@ public sealed partial class FormalizeCandidatesTests
             json.RootElement.GetProperty("quarantined").EnumerateArray());
         Assert.Equal("source", quarantined.GetProperty("source_id").GetString());
         Assert.Equal("quarantined", quarantined.GetProperty("atom_id").GetString());
-        Assert.Equal("theorem/1.0", quarantined.GetProperty("ast_path").GetString());
+        Assert.False(quarantined.TryGetProperty("ast_path", out _));
         Assert.Equal(
             "missing-prerequisite",
             quarantined.GetProperty("blocker_class").GetString());

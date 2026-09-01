@@ -1,0 +1,53 @@
+## 1186.1 项目目前已有哪一半
+
+项目的 `FORMAL_OBSERVER_COMPLETION_REFLECTION` 已经机器／理论化了信息层：
+
+$$
+C_F(q)(x)
+=
+(q(x),q(Fx),q(F^2x),\ldots),
+$$
+
+并把它刻画为最小稳定精化；它同时给出了状态 kernel 与可观测空间的反序对应，以及折扣可观测 Gramian：
+
+$$
+W_\beta
+=
+\sum_{n\ge0}
+\beta^n(T^*)^nC^*CT^n.
+$$
+
+这已经回答：
+
+$$
+\boxed{
+\text{为了让观察世界自治，至少必须保留哪些未来信息。}
+}
+$$
+
+但它尚未自动回答：
+
+$$
+\boxed{
+\text{这些完成信息是否能够形成正定 Hilbert 世界。}
+}
+$$
+
+换言之，项目已经拥有：
+
+$$
+\boxed{
+\text{observer closure},
+}
+$$
+
+现在缺少的是：
+
+$$
+\boxed{
+\text{observer reflection positivity}.
+}
+$$
+
+---
+

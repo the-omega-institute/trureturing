@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:a377efb5c407213149ae3f8bc939b6b1de31ca80b3ab32f87fcd8ec543de04c4
+  normalized_sha256: sha256:a377efb5c407213149ae3f8bc939b6b1de31ca80b3ab32f87fcd8ec543de04c4
+cas_ref: sha256:a377efb5c407213149ae3f8bc939b6b1de31ca80b3ab32f87fcd8ec543de04c4
+coverage_gids:
+  - D5/S3/ObserverMemory/Prediction/CompletionStateCardinality.completion_state_cardinality_mono
+receipts:
+  coverage:
+    - gid: D5/S3/ObserverMemory/Prediction/CompletionStateCardinality.completion_state_cardinality_mono
+      source_sha256: sha256:a377efb5c407213149ae3f8bc939b6b1de31ca80b3ab32f87fcd8ec543de04c4
+      target_statement_id: sha256:d9c2d6b80d164b71f270a7fc8af12fae56c04e15f9767f7a8702b5e859238f39
+  scribe:
+    - gid: D5/S3/ObserverMemory/Prediction/CompletionStateCardinality.completion_state_cardinality_mono
+      definition_sha256: sha256:29937717f893e6716647863cc11aaecbabfd8b8259614ea081fd54973d382b6b
+      emission_sha256: sha256:a43b959cb851f76ff84f9f746ad3b7fe2d836e458f8f42baead60536855e9b2c
+  unresolved_subitems: []

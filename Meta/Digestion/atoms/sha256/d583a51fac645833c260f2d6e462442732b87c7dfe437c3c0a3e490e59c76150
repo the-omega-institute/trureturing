@@ -1,0 +1,17 @@
+## 离线零点
+
+$$
+\boxed{
+\delta
+\in
+\mathbb C/i\mathbb R
+\simeq
+\mathbb R,
+\qquad
+\delta\neq0.
+}
+$$
+
+它表示：
+
+* unitary character lift 不存在；

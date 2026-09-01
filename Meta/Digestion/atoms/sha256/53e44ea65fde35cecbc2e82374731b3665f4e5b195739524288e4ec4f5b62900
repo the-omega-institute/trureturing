@@ -1,0 +1,86 @@
+## 定理 1413.1（Golden shadow operator theorem）
+
+若 \(\mathsf D\) 是正收缩，并且在其活动子空间：
+
+$$
+\mathcal H_{\mathrm{act}}
+=
+\overline{\operatorname{ran}\mathsf D}
+$$
+
+上满足：
+
+$$
+I_{\mathrm{act}}
+=
+\mathsf D+\mathsf D^2,
+$$
+
+则：
+
+$$
+\boxed{
+\mathsf D
+=
+\varphi^{-1}I_{\mathrm{act}}.
+}
+\tag{1413.5}
+$$
+
+相应地：
+
+$$
+\boxed{
+\mathsf V
+=
+\varphi^{-2}I_{\mathrm{act}}.
+}
+\tag{1413.6}
+$$
+
+### 证明
+
+由谱定理，\(\mathsf D\) 的每个谱值 \(\lambda\ge0\) 满足：
+
+$$
+\lambda^2+\lambda-1=0.
+$$
+
+两个代数根为：
+
+$$
+\varphi^{-1},
+\qquad
+-\varphi.
+$$
+
+正性排除负根，因此活动谱只能是：
+
+$$
+\{\varphi^{-1}\}.
+$$
+
+∎
+
+所以黄金条件不是要求某个平均值等于 \(\varphi\)，而是要求整个活动缺陷谱坍缩到唯一值：
+
+$$
+\boxed{
+\operatorname{Spec}
+(\mathsf H^*\mathsf H)
+=
+\{\varphi^{-1}\}.
+}
+$$
+
+于是所有非零 Hankel 奇异值均为：
+
+$$
+\boxed{
+\sigma=\varphi^{-1/2}.
+}
+\tag{1413.7}
+$$
+
+---
+

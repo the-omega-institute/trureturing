@@ -44,7 +44,7 @@ internal static class IngestTruthAlignmentClassifier
             var entry = item.Entry;
             if (!baselineEntries.TryGetValue(entry.AtomId, out var baselineItem))
             {
-                if (ValidateNewEntry(entry) is { } witness)
+                if (ValidateNewEntry(NormalizeNewEntryForValidation(entry)) is { } witness)
                 {
                     return IngestTruthAlignmentClassification.TruthAlignmentRequired(witness);
                 }
@@ -86,10 +86,6 @@ internal static class IngestTruthAlignmentClassifier
         ArgumentNullException.ThrowIfNull(repositoryChanges);
         var currentEntries = StatusAuthorityEntries(current);
         var plannedEntries = StatusAuthorityEntries(planned);
-        var newPlannedEntriesByLocation = plannedEntries.Values
-            .Where(item => !currentEntries.ContainsKey(item.Entry.AtomId))
-            .ToLookup(item => (item.Entry.SourceId, item.Entry.AstPath));
-
         foreach (var item in currentEntries.Values
                      .Where(static item => !item.Entry.CoverageGids.IsEmpty)
                      .OrderBy(static item => item.Entry.AtomId, StringComparer.Ordinal))
@@ -101,9 +97,7 @@ internal static class IngestTruthAlignmentClassifier
                     $"covered entry {entry.AtomId} disappeared from plan");
             }
 
-            if (plannedItem.Entry.CoverageGids.IsEmpty
-                || newPlannedEntriesByLocation[(entry.SourceId, entry.AstPath)]
-                    .Any(static successor => successor.Entry.CoverageGids.IsEmpty))
+            if (plannedItem.Entry.CoverageGids.IsEmpty)
             {
                 return IngestTruthAlignmentClassification.TruthAlignmentRequired(
                     $"covered entry {entry.AtomId} coverage was cleared in plan");
@@ -125,10 +119,7 @@ internal static class IngestTruthAlignmentClassifier
                 continue;
             }
 
-            if (ValidateNewEntry(entry with
-                {
-                    Receipts = entry.Receipts with { ChainAtoms = [] },
-                }) is { } witness)
+            if (ValidateNewEntry(NormalizeNewEntryForValidation(entry)) is { } witness)
             {
                 return IngestTruthAlignmentClassification.TruthAlignmentRequired(witness);
             }
@@ -165,6 +156,13 @@ internal static class IngestTruthAlignmentClassifier
             .AsSpan()
             .SequenceEqual(
                 BackfillInventoryWriter.WriteStatusAuthorityIdentity(right.Source, right.Entry).AsSpan());
+
+    private static DigestionLedgerEntry NormalizeNewEntryForValidation(
+        DigestionLedgerEntry entry) =>
+        entry with
+        {
+            Receipts = entry.Receipts with { ChainAtoms = [] },
+        };
 
     private static string? ValidateNewEntry(DigestionLedgerEntry entry)
     {

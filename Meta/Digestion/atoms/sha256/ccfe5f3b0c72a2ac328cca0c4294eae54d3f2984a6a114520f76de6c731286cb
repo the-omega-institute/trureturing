@@ -1,0 +1,20 @@
+# D_{\mathrm{KL}}
+
+\log\frac{(u+v)^2}{4uv}.
+
+$$
+
+在：
+
+$$
+
+u=\delta-\omega,
+\qquad
+v=\delta+\omega
+
+$$
+
+时：
+
+$$
+

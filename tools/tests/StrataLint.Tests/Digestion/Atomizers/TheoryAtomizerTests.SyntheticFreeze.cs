@@ -41,7 +41,7 @@ public sealed partial class TheoryAtomizerTests
         foreach (var claim in document.Claims)
         {
             var captured = DigestionCasStore.Capture(claim.RawBytes.AsSpan());
-            var frozen = DigestionAtom.FromFrozenCas(claim.AstPath, captured.Bytes);
+            var frozen = DigestionAtom.FromFrozenCas(captured.Bytes);
 
             Assert.Equal(claim.Fingerprints.RawSha256, captured.Reference);
             Assert.Equal(claim.RawBytes.ToArray(), frozen.RawBytes.ToArray());
@@ -55,7 +55,7 @@ public sealed partial class TheoryAtomizerTests
         var bytes = Encoding.UTF8.GetBytes("synthetic frozen CAS bytes\n");
         var captured = DigestionCasStore.Capture(bytes);
 
-        var atom = DigestionAtom.FromFrozenCas("theorem/synthetic", captured.Bytes);
+        var atom = DigestionAtom.FromFrozenCas(captured.Bytes);
 
         Assert.Equal(
             "sha256:b323429784e6d290c89805f54a458bec3f2aa0d7185c7009e447287e013eb495",

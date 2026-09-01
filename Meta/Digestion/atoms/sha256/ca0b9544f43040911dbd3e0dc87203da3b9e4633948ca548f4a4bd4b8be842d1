@@ -1,0 +1,18 @@
+# 9. 下一真源排序
+
+当前最自然的推进顺序是：
+
+1. `PhaseTwistedStableSwapCurvature`。把 \(e^{-it\omega_p}\) 写入稳定 residual 注入，推导精确相位扭曲曲率分解和范数界。
+2. `FinitePhaseCoherenceIdentity`。证明 pairwise 相位色散能量与共同模态相干能量的守恒恒等式。
+3. `FourierPhaseGenerator`。形式化
+   \[
+   \frac{d}{dt}e^{-it\omega}=-i\omega e^{-it\omega},
+   \]
+   把频率识别为时间流生成元。
+4. `ResonanceConditionedOriginDispersion`。将 holonomy 能量运输到观察起源色散。
+5. `PrimeArchimedeanHolonomyDomination`。通过显式公式连接 prime-side 时间曲率与 zero-side 离线奇能量。
+
+第一条把用户提出的“色散、次序、时间”直接接回已有 holonomy 路线。第三条会给出频率作为时间生成元的机器版本。
+
+---
+

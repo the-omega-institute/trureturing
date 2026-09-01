@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:d0924d8b81a209703b801b47f518b9e526a9612e170c5caffd88fa343c39a9cb
+  normalized_sha256: sha256:d0924d8b81a209703b801b47f518b9e526a9612e170c5caffd88fa343c39a9cb
+cas_ref: sha256:d0924d8b81a209703b801b47f518b9e526a9612e170c5caffd88fa343c39a9cb
+coverage_gids:
+  - D5/S3/ConceptDynamics/OperationalTuition/PreregisteredArtifactAcceptance.missing_envelope_acceptance_iff_preregistered_and_inheritable
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/OperationalTuition/PreregisteredArtifactAcceptance.missing_envelope_acceptance_iff_preregistered_and_inheritable
+      source_sha256: sha256:d0924d8b81a209703b801b47f518b9e526a9612e170c5caffd88fa343c39a9cb
+      target_statement_id: sha256:315f29668278b47c6dc5bccc32c339fc583d5c20c2bd02fa66bb879e71e6a6de
+  scribe:
+    - gid: D5/S3/ConceptDynamics/OperationalTuition/PreregisteredArtifactAcceptance.missing_envelope_acceptance_iff_preregistered_and_inheritable
+      definition_sha256: sha256:9dfcbd6826be9734b32f619428347daa01eeca8863fe02645539d60d5c2cb5ac
+      emission_sha256: sha256:ce6c60881a26187a23d33b6d9d85a771a73c997518b8b9d4ad26c9242ccd5c2c
+  unresolved_subitems: []

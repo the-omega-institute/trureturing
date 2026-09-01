@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:8bca4d28580bdd4121865fd84c24f15acb7bc41086c78534b212887aaef8de80
+  normalized_sha256: sha256:8bca4d28580bdd4121865fd84c24f15acb7bc41086c78534b212887aaef8de80
+cas_ref: sha256:8bca4d28580bdd4121865fd84c24f15acb7bc41086c78534b212887aaef8de80
+coverage_gids:
+  - D5/S3/ConceptDynamics/EscapeSpectrum/BudgetEnvelopeCompletion.budget_envelope_infimum_and_limit
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/EscapeSpectrum/BudgetEnvelopeCompletion.budget_envelope_infimum_and_limit
+      source_sha256: sha256:8bca4d28580bdd4121865fd84c24f15acb7bc41086c78534b212887aaef8de80
+      target_statement_id: sha256:c6e1d59b0fdfade75c30172c1a064b500a19280b9fefb6f66ba4e20a065067e5
+  scribe:
+    - gid: D5/S3/ConceptDynamics/EscapeSpectrum/BudgetEnvelopeCompletion.budget_envelope_infimum_and_limit
+      definition_sha256: sha256:e75b9130b2b9082be0004226f7c3ad103a545bc4befa61ac85b8e172cce38b28
+      emission_sha256: sha256:85e8154509861e6a89041f39058f819ae7c8637524ec028f6e0dc309b12b109e
+  unresolved_subitems: []

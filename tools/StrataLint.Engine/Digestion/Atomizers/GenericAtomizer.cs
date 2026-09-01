@@ -25,8 +25,6 @@ namespace StrataLint.Engine;
 /// </summary>
 internal static class GenericAtomizer
 {
-    internal const string ResidualPrefix = "generic";
-
     /// <summary>
     /// 〈word〉 then 〈number〉: the lead shape every numbered dialect already shares. A genre
     /// is a word, so the token holds letters and digits and nothing else — no dash, no
@@ -56,7 +54,18 @@ internal static class GenericAtomizer
         "[^\\p{L}\\p{N}]+",
         RegexOptions.CultureInvariant);
 
-    internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes, TheoryAtomizerRules _)
+    internal static AtomizedTheoryDocument Atomize(ReadOnlySpan<byte> bytes, TheoryAtomizerRules rules) =>
+        Atomize(bytes, rules, contentKinds: null);
+
+    internal static ImmutableDictionary<string, string> ResolveContentKinds(
+        ReadOnlyMemory<byte> bytes,
+        TheoryAtomizerRules rules) =>
+        AtomizerRegistry.CaptureContentKinds(kinds => Atomize(bytes.Span, rules, kinds));
+
+    private static AtomizedTheoryDocument Atomize(
+        ReadOnlySpan<byte> bytes,
+        TheoryAtomizerRules _,
+        IDictionary<string, string>? contentKinds)
     {
         var document = MarkdownAstAtomizer.Atomize(
             bytes,
@@ -66,17 +75,20 @@ internal static class GenericAtomizer
             parse: MarkdigBlockAst.Parse,
             identifyTableRow: IdentifyTableRow,
             dropEmptyHeadingClaims: true,
-            identifyHeadingClaim: IsHeadingClaim);
+            identifyHeadingClaim: IsHeadingClaim,
+            contentKinds: contentKinds);
         // 分解生产侧与 pzg 同一实现:08-15 的吸收分解门对全部方言执法,
         // generic-v1 的多子句 claim 同样必须能产出 clause plan(#3499)。
+        var clausePlans = document.Claims
+            .Select(PzgAtomizer.PlanClauses)
+            .Where(static plan => plan is not null)
+            .Select(static plan => plan!)
+            .ToImmutableArray();
+        AtomizerRegistry.InheritClauseContentKinds(contentKinds, clausePlans);
         return new AtomizedTheoryDocument(
             document.Claims,
             document.Slices,
-            document.Claims
-                .Select(PzgAtomizer.PlanClauses)
-                .Where(static plan => plan is not null)
-                .Select(static plan => plan!)
-                .ToImmutableArray(),
+            clausePlans,
             document.GenreRegistryCheck);
     }
 

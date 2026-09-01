@@ -1,0 +1,49 @@
+## 定理 1128.1（Compact character modulus theorem）
+
+若 \(G\) 是紧致群，且：
+
+$$
+\chi:G\to\mathbb C^\times
+$$
+
+是连续群同态，则：
+
+$$
+\boxed{
+|\chi(g)|=1
+\qquad
+\forall g\in G.
+}
+\tag{1128.3}
+$$
+
+### 证明
+
+模长像：
+
+$$
+|\chi(G)|
+$$
+
+是 \(\mathbb R_{>0}\) 的紧致子群。
+
+取对数以后得到 \(\mathbb R\) 的紧致加法子群，只能是：
+
+$$
+\{0\}.
+$$
+
+所以模长恒为 \(1\)。∎
+
+因此：
+
+$$
+\boxed{
+\delta\neq0
+}
+$$
+
+的 Mellin 模式不可能成为任何紧致 Solenoid 的 unitary Pontryagin character。
+
+---
+

@@ -1,0 +1,36 @@
+## 2. 黄金尺度圆
+
+定义黄金正定向周期
+
+\[
+L_\varphi=2\log\varphi.
+\]
+
+对正尺度 `x`，定义未取商坐标
+
+\[
+\eta_\varphi(x)=\frac{\log x}{L_\varphi}.
+\]
+
+机器定理证明
+
+\[
+\eta_\varphi(xy)=\eta_\varphi(x)+\eta_\varphi(y)
+\]
+
+以及
+
+\[
+\eta_\varphi(\varphi^2x)=\eta_\varphi(x)+1.
+\]
+
+因此取模 `Z` 后得到黄金尺度圆。当前 Lean owner 保留未取商实坐标，以避免把 circle quotient 的拓扑接口与本批代数定理混在一起。
+
+其 Fourier 基频为
+
+\[
+\omega_\varphi=\frac{2\pi}{L_\varphi}=\frac{\pi}{\log\varphi}.
+\]
+
+机器闭合的精确桥为
+

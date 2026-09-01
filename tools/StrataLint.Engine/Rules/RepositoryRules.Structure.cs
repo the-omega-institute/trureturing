@@ -3,6 +3,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using Trureturing.Truth;
 
 namespace StrataLint.Engine;
 
@@ -308,6 +309,133 @@ internal static partial class RepositoryRules
                 item.Key.Value,
                 "theory volumes are append-only; publish an erratum as newly appended prose"))
             .ToImmutableArray();
+
+    private static ImmutableArray<RuleFinding> FormalizationReceiptIdentity(
+        RuleEvaluationContext context)
+    {
+        var findings = ImmutableArray.CreateBuilder<RuleFinding>();
+        foreach (var (path, file) in context.Current.Files
+                     .Where(static item => item.Key.Value.StartsWith(
+                         DigestionFormalizationReceipt.RootPath,
+                         StringComparison.Ordinal))
+                     .Where(item => context.IsBaseFactAffected(item.Key.Value))
+                     .OrderBy(static item => item.Key.Value, StringComparer.Ordinal))
+        {
+            if (!TryGetFormalizationReceiptFileAtomId(path.Value, out var fileAtomId))
+            {
+                findings.Add(new RuleFinding(
+                    path.Value,
+                    "formalization receipt filename must be <64 lowercase hex>.v1.json"));
+                continue;
+            }
+
+            if (!TryGetFormalizationReceiptAtomId(file, out var receiptAtomId)
+                || !string.Equals(receiptAtomId, fileAtomId, StringComparison.Ordinal))
+            {
+                findings.Add(new RuleFinding(
+                    path.Value,
+                    $"formalization receipt atom_id must match filename atom id {fileAtomId}"));
+            }
+        }
+
+        return findings.ToImmutable();
+    }
+
+    private static bool TryGetFormalizationReceiptFileAtomId(
+        string path,
+        out string atomId)
+    {
+        atomId = string.Empty;
+        var fileName = path[DigestionFormalizationReceipt.RootPath.Length..];
+        if (!fileName.EndsWith(DigestionFormalizationReceipt.PathSuffix, StringComparison.Ordinal))
+        {
+            return false;
+        }
+
+        var stem = fileName[..^DigestionFormalizationReceipt.PathSuffix.Length];
+        if (stem.Length != 64 || stem.AsSpan().IndexOfAnyExcept("0123456789abcdef") >= 0)
+        {
+            return false;
+        }
+
+        atomId = stem;
+        return true;
+    }
+
+    private static bool TryGetFormalizationReceiptAtomId(
+        RepositoryFile file,
+        out string atomId)
+    {
+        atomId = string.Empty;
+        try
+        {
+            using var document = JsonDocument.Parse(file.Text);
+            if (document.RootElement.ValueKind != JsonValueKind.Object
+                || !document.RootElement.TryGetProperty("atom_id", out var atomIdElement)
+                || atomIdElement.ValueKind != JsonValueKind.String)
+            {
+                return false;
+            }
+
+            atomId = atomIdElement.GetString() ?? string.Empty;
+            return true;
+        }
+        catch (JsonException)
+        {
+            return false;
+        }
+    }
+
+    private static ImmutableArray<RuleFinding> DigestionAtomsAppendOnly(
+        RuleEvaluationContext context)
+    {
+        var candidateHashes = DigestionAtomHashFacts(context.Current)
+            .Select(static fact => fact.Hash)
+            .ToHashSet(StringComparer.Ordinal);
+        return DigestionAtomHashFacts(context.ForkPoint)
+            .Where(fact => context.IsBaseFactAffected(fact.Path))
+            .Where(fact => !candidateHashes.Contains(fact.Hash))
+            .Select(static fact => new RuleFinding(
+                fact.Path,
+                $"digestion atoms are append-only; candidate dropped base content hash {fact.Hash}"))
+            .ToImmutableArray();
+    }
+
+    private static ImmutableArray<DigestionAtomHashFact> DigestionAtomHashFacts(
+        RepositorySnapshot snapshot)
+    {
+        var facts = ImmutableArray.CreateBuilder<DigestionAtomHashFact>();
+        foreach (var (path, file) in snapshot.Files
+                     .Where(static pair => IsBackfillAtomEntryPath(pair.Key.Value))
+                     .OrderBy(static pair => pair.Key.Value, StringComparer.Ordinal))
+        {
+            if (YamlSubsetParser.Parse(file.Text) is not Dictionary<string, object?> root
+                || root.GetValueOrDefault("fingerprints") is not Dictionary<string, object?> fingerprints
+                || fingerprints.GetValueOrDefault("raw_sha256") is not string raw
+                || !DigestionFingerprint.IsCanonicalSha256(raw))
+            {
+                throw new FormatException(
+                    $"backfill atom content hash projection is invalid: {path.Value}");
+            }
+
+            facts.Add(new DigestionAtomHashFact(path.Value, raw["sha256:".Length..]));
+        }
+
+        return facts.ToImmutable();
+    }
+
+    private static bool IsBackfillAtomEntryPath(string path)
+    {
+        if (!path.StartsWith(BackfillInventoryLoader.RootPath, StringComparison.Ordinal)
+            || !path.EndsWith(".yaml", StringComparison.Ordinal))
+        {
+            return false;
+        }
+
+        return path[BackfillInventoryLoader.RootPath.Length..].Split('/').Length == 3;
+    }
+
+    private sealed record DigestionAtomHashFact(string Path, string Hash);
 
     private static ImmutableArray<RuleFinding> Badges(RuleEvaluationContext context) =>
         context.Current.Files

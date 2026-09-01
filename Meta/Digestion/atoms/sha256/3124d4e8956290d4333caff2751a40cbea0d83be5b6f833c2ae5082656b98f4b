@@ -1,0 +1,32 @@
+## 定理 1273.1（边界振幅失明）
+
+$$
+\boxed{
+|\Theta_\omega(t)|=1
+}
+$$
+
+不能区分：
+
+* RH 成立的 inner scattering；
+* 含离线零点的 generalized-inner scattering。
+
+二者在边界上拥有完全相同的模长。
+
+区别只能存在于：
+
+* 上半平面的极点；
+* Blaschke 分母；
+* 相位方向；
+* kernel 的负平方数。
+
+所以离线零点属于一种严格的：
+
+$$
+\boxed{
+\textbf{all-pass ambiguity}.
+}
+$$
+
+---
+

@@ -1,0 +1,21 @@
+# 第一千四百八十四部　完整因果轮廓能够区分离线反射伙伴
+
+令：
+
+$$
+\Gamma_{\mathrm{causal}}(\rho)
+$$
+
+表示零点分支在全部 shifted 深度、Hardy 极化、Poisson 边界和测试函数下的完整响应轮廓。
+
+局部模型已经表明，当：
+
+$$
+\rho=\frac12+\delta+i\gamma,
+\qquad
+\delta\neq0,
+$$
+
+两条反射分支具有相反的：
+
+* 增长／衰减方向；

@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:61883e31e2268df9a0ad01e6000873b29030321edea33f8969b7e9e77123167e
+  normalized_sha256: sha256:61883e31e2268df9a0ad01e6000873b29030321edea33f8969b7e9e77123167e
+cas_ref: sha256:61883e31e2268df9a0ad01e6000873b29030321edea33f8969b7e9e77123167e
+coverage_gids:
+  - D5/S3/ConceptDynamics/OperationalTuition/ResponseUpgradeWellFounded.t2_response_upgrade_well_founded
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/OperationalTuition/ResponseUpgradeWellFounded.t2_response_upgrade_well_founded
+      source_sha256: sha256:61883e31e2268df9a0ad01e6000873b29030321edea33f8969b7e9e77123167e
+      target_statement_id: sha256:82c285bbd958a8438f27f6760ba26cf0455a35f8d26d73be910dcf5e644077a6
+  scribe:
+    - gid: D5/S3/ConceptDynamics/OperationalTuition/ResponseUpgradeWellFounded.t2_response_upgrade_well_founded
+      definition_sha256: sha256:3abb7f56db89478c028f4b933953037c3a05b71a8a6929fd53382f5fc9b7f6cc
+      emission_sha256: sha256:d8bab6daacb12a6d4bc88bf200b7f0994571de1934f9a6cede72223e243ae4f6
+  unresolved_subitems: []

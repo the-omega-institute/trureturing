@@ -9,7 +9,7 @@ public sealed partial class DigestionAlignmentTests
     [Fact]
     public void SelfContainedClauseChain_VerifiesHistoricalParentAfterSameLocatorSourceRewrite()
     {
-        var fixture = SelfContainedClauseChain(sameCurrentLocator: true);
+        var fixture = SelfContainedClauseChain(sameCurrentNumber: true);
 
         var result = EvaluateSelfContainedClauseChain(fixture);
 
@@ -21,6 +21,203 @@ public sealed partial class DigestionAlignmentTests
         Assert.All(fixture.Children, child => Assert.Equal(
             DigestionReceiptAlignment.Seen,
             result.AlignmentFor(child.AtomId)));
+    }
+
+    [Fact]
+    public void CrossSourceChainAlignmentIsIndependentOfSourceOrder()
+    {
+        var fixture = SelfContainedClauseChain();
+        var originalSource = Assert.Single(fixture.Ledger.RequireDigestionSources());
+        var externalChild = fixture.Children[0] with
+        {
+            SourceId = "child-owner",
+            SourcePath = "docs/child-owner.md",
+        };
+        var localChild = fixture.Children[1] with
+        {
+            SourceId = "chain-owner",
+            SourcePath = "docs/chain-owner.md",
+        };
+        var parent = fixture.Parent with
+        {
+            SourceId = "chain-owner",
+            SourcePath = "docs/chain-owner.md",
+        };
+        var childOwner = originalSource with
+        {
+            SourceId = "child-owner",
+            SourcePath = "docs/child-owner.md",
+            Entries = [externalChild],
+        };
+        var chainOwner = originalSource with
+        {
+            SourceId = "chain-owner",
+            SourcePath = "docs/chain-owner.md",
+            Entries = [parent, localChild],
+        };
+        var childOwnerSourceBytes = Encoding.UTF8.GetBytes(
+            "# PZG\n\n" + Encoding.UTF8.GetString(fixture.ParentCapture.Bytes.AsSpan()));
+        var snapshot = Snapshot(
+            childOwnerSourceBytes,
+            fixture.ChildCaptures.Prepend(fixture.ParentCapture),
+            sourcePath: childOwner.SourcePath,
+            extraEntries:
+            [
+                new RawRepositoryEntry(
+                    chainOwner.SourcePath,
+                    ImmutableArray.CreateRange(fixture.CurrentSourceBytes)),
+            ]);
+
+        DigestionLedgerAlignment Evaluate(params DigestionLedgerSource[] sources) =>
+            DigestionLedgerAligner.Evaluate(
+                fixture.Ledger.WithDigestionSources([.. sources]),
+                snapshot,
+                baselineDocument: null,
+                mode: DigestionAlignmentMode.Ingest);
+
+        var childOwnerFirst = Evaluate(childOwner, chainOwner);
+        var chainOwnerFirst = Evaluate(chainOwner, childOwner);
+
+        Assert.Equal(
+            DigestionReceiptAlignment.Seen,
+            childOwnerFirst.AlignmentFor(externalChild.AtomId));
+        Assert.Equal(
+            childOwnerFirst.AlignmentFor(externalChild.AtomId),
+            chainOwnerFirst.AlignmentFor(externalChild.AtomId));
+        Assert.NotNull(childOwnerFirst.AtomFor(externalChild.AtomId));
+        Assert.NotNull(chainOwnerFirst.AtomFor(externalChild.AtomId));
+    }
+
+    [Fact]
+    public void AdmissionRevalidatesInheritedChainAcrossContentDeduplicationSourceMove()
+    {
+        var fixture = SelfContainedClauseChain();
+        var baselineSource = Assert.Single(fixture.Ledger.RequireDigestionSources());
+        var movedSource = baselineSource with
+        {
+            SourceId = "content-owner",
+            SourcePath = "docs/content-owner.md",
+            Entries = fixture.Children.Skip(1).Select(child => child with
+            {
+                SourceId = "content-owner",
+                SourcePath = "docs/content-owner.md",
+            }).ToImmutableArray(),
+        };
+        var candidate = fixture.Ledger.WithDigestionSources(
+        [
+            baselineSource with { Entries = [fixture.Parent, fixture.Children[0]] },
+            movedSource,
+        ]);
+
+        var result = DigestionLedgerAligner.Evaluate(
+            candidate,
+            Snapshot(
+                fixture.CurrentSourceBytes,
+                fixture.ChildCaptures.Prepend(fixture.ParentCapture)),
+            fixture.Ledger,
+            DigestionAlignmentMode.Admission,
+            changes: RawChangeSet.Create([baselineSource.SourcePath]));
+
+        Assert.DoesNotContain(result.Findings, finding => finding.Contains(
+            "malformed clause chain",
+            StringComparison.Ordinal));
+        Assert.Contains(fixture.Parent.AtomId, result.VerifiedClausePlanParents);
+        Assert.Equal(
+            DigestionReceiptAlignment.Seen,
+            result.AlignmentFor(fixture.Children[0].AtomId));
+        Assert.Equal(
+            DigestionReceiptAlignment.Seen,
+            result.AlignmentFor(fixture.Children[1].AtomId));
+    }
+
+    [Fact]
+    public void IngestAcceptsClauseChainChildOwnedByAnotherSource()
+    {
+        var fixture = SelfContainedClauseChain();
+        var parentSource = Assert.Single(fixture.Ledger.RequireDigestionSources());
+        var contentOwner = parentSource with
+        {
+            SourceId = "content-owner",
+            SourcePath = "docs/content-owner.md",
+            Entries = fixture.Children.Skip(1).Select(child => child with
+            {
+                SourceId = "content-owner",
+                SourcePath = "docs/content-owner.md",
+            }).ToImmutableArray(),
+        };
+        var ledger = fixture.Ledger.WithDigestionSources(
+        [
+            parentSource with { Entries = [fixture.Parent, fixture.Children[0]] },
+            contentOwner,
+        ]);
+
+        var result = DigestionLedgerAligner.Evaluate(
+            ledger,
+            Snapshot(
+                fixture.CurrentSourceBytes,
+                fixture.ChildCaptures.Prepend(fixture.ParentCapture),
+                extraEntries:
+                [
+                    new RawRepositoryEntry(
+                        contentOwner.SourcePath,
+                        ImmutableArray.CreateRange(fixture.CurrentSourceBytes)),
+                ]),
+            ledger,
+            DigestionAlignmentMode.Ingest);
+
+        Assert.DoesNotContain(result.Findings, finding => finding.Contains(
+            "malformed clause chain",
+            StringComparison.Ordinal));
+        Assert.Contains(fixture.Parent.AtomId, result.VerifiedClausePlanParents);
+        Assert.All(fixture.Children, child => Assert.Equal(
+            DigestionReceiptAlignment.Seen,
+            result.AlignmentFor(child.AtomId)));
+    }
+
+    [Fact]
+    public void IngestRejectsClauseChainChildAbsentFromGlobalInventory()
+    {
+        var fixture = SelfContainedClauseChain();
+        var missingChild = fixture.Children[1];
+        var ledger = ChainLedger(
+            fixture,
+            fixture.Parent,
+            fixture.Children.Take(1));
+
+        var result = EvaluateSelfContainedClauseChain(fixture, ledger);
+
+        AssertMalformedClauseChain(
+            result,
+            fixture.Parent.AtomId,
+            $"listed child {missingChild.AtomId} is absent from the global inventory");
+        Assert.DoesNotContain(fixture.Parent.AtomId, result.VerifiedClausePlanParents);
+    }
+
+    [Fact]
+    public void AdmissionRevalidatesChangedChainEvenWhenParentContentIsSeen()
+    {
+        var fixture = SelfContainedClauseChain();
+        var changedParent = fixture.Parent with
+        {
+            Receipts = fixture.Parent.Receipts with
+            {
+                ChainAtoms = [fixture.Children[0].AtomId],
+            },
+        };
+        var candidate = ChainLedger(fixture, changedParent, fixture.Children);
+        var sourceBytes = Encoding.UTF8.GetBytes(
+            "# PZG\n\n" + Encoding.UTF8.GetString(fixture.ParentCapture.Bytes.AsSpan()));
+
+        var result = DigestionLedgerAligner.Evaluate(
+            candidate,
+            Snapshot(
+                sourceBytes,
+                fixture.ChildCaptures.Prepend(fixture.ParentCapture)),
+            fixture.Ledger,
+            DigestionAlignmentMode.Admission);
+
+        AssertMalformedClauseChain(result, fixture.Parent.AtomId, "chain cardinality");
+        Assert.DoesNotContain(fixture.Parent.AtomId, result.VerifiedClausePlanParents);
     }
 
     [Fact]
@@ -56,7 +253,10 @@ public sealed partial class DigestionAlignmentTests
 
         var result = EvaluateSelfContainedClauseChain(fixture, ledger);
 
-        AssertMalformedClauseChain(result, fixture.Parent.AtomId, "duplicate child atom_ids");
+        AssertMalformedClauseChain(
+            result,
+            fixture.Parent.AtomId,
+            "bytes differ from parent CAS plan member");
     }
 
     [Fact]
@@ -102,7 +302,7 @@ public sealed partial class DigestionAlignmentTests
         var fixture = SelfContainedClauseChain();
         var invalidBytes = Encoding.UTF8.GetBytes("rewritten first child\n");
         var invalidCapture = DigestionCasStore.Capture(invalidBytes);
-        const string invalidId = "pzg-residual-rewritten-child";
+        var invalidId = invalidCapture.Reference["sha256:".Length..];
         var invalidChild = fixture.Children[0] with
         {
             AtomId = invalidId,
@@ -143,7 +343,10 @@ public sealed partial class DigestionAlignmentTests
 
         var result = EvaluateSelfContainedClauseChain(fixture, ledger);
 
-        AssertMalformedClauseChain(result, fixture.Parent.AtomId, "chain order differs from parent CAS plan");
+        AssertMalformedClauseChain(
+            result,
+            fixture.Parent.AtomId,
+            "bytes differ from parent CAS plan member");
     }
 
     [Fact]
@@ -193,11 +396,12 @@ public sealed partial class DigestionAlignmentTests
             Ledger([], CasEntry("parent", parent, parentCapture.Reference)),
             AtomizerRegistry.PzgId);
         var source = Assert.Single(baseline.RequireDigestionSources());
+        var childId = childCapture.Reference["sha256:".Length..];
         var parentEntry = Assert.Single(source.Entries) with
         {
-            Receipts = Assert.Single(source.Entries).Receipts with { ChainAtoms = ["child"] },
+            Receipts = Assert.Single(source.Entries).Receipts with { ChainAtoms = [childId] },
         };
-        var childEntry = ChildEntry(parentEntry, "child", child, childCapture.Reference);
+        var childEntry = ChildEntry(parentEntry, childId, child, childCapture.Reference);
         var ledger = baseline.WithDigestionSources(
         [
             source with { Entries = [parentEntry, childEntry] },
@@ -224,23 +428,24 @@ public sealed partial class DigestionAlignmentTests
             sourceBytes,
             DigestionTestSupport.Rules).Claims);
         var childBytes = Encoding.UTF8.GetBytes("historical observer child\n");
-        var child = Atom(parent.AstPath + "/historical-child", childBytes);
+        var child = Atom(parent.Fingerprints.RawSha256 + "/historical-child", childBytes);
         var parentCapture = DigestionCasStore.Capture(parent.RawBytes.AsSpan());
         var childCapture = DigestionCasStore.Capture(childBytes);
         var baseline = WithAtomizer(
             Ledger([], CasEntry("observer-parent", parent, parentCapture.Reference)),
             AtomizerRegistry.ObserverId);
         var source = Assert.Single(baseline.RequireDigestionSources());
+        var childId = childCapture.Reference["sha256:".Length..];
         var parentEntry = Assert.Single(source.Entries) with
         {
             Receipts = Assert.Single(source.Entries).Receipts with
             {
-                ChainAtoms = ["observer-child"],
+                ChainAtoms = [childId],
             },
         };
         var childEntry = ChildEntry(
             parentEntry,
-            "observer-child",
+            childId,
             child,
             childCapture.Reference);
         var ledger = baseline.WithDigestionSources(
@@ -271,7 +476,7 @@ public sealed partial class DigestionAlignmentTests
     }
 
     private static SelfContainedClauseChainFixture SelfContainedClauseChain(
-        bool sameCurrentLocator = false)
+        bool sameCurrentNumber = false)
     {
         const string historicalClaim = """
             **定理 18.7(Historical)**. first historical clause.
@@ -293,8 +498,7 @@ public sealed partial class DigestionAlignmentTests
         var source = Assert.Single(baseline.RequireDigestionSources());
         var baselineParent = Assert.Single(source.Entries);
         var childIds = childCaptures
-            .Select((capture, index) =>
-                $"pzg-residual-{capture.Reference["sha256:".Length..]}-{index + 1}")
+            .Select(static capture => capture.Reference["sha256:".Length..])
             .ToImmutableArray();
         var parentEntry = baselineParent with
         {
@@ -311,7 +515,7 @@ public sealed partial class DigestionAlignmentTests
         [
             source with { Entries = [parentEntry, .. childEntries] },
         ]);
-        var currentClaim = sameCurrentLocator
+        var currentClaim = sameCurrentNumber
             ? """
                 **定理 18.7(Current)**. rewritten current first clause.
 

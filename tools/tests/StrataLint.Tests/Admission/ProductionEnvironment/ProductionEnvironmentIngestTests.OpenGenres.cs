@@ -38,14 +38,14 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Contains("residual_open_added=2", result.Output, StringComparison.Ordinal);
         Assert.Contains("open_genres=1", result.Output, StringComparison.Ordinal);
         Assert.Contains("INGEST_OPEN_GENRE source=fixture-source token=\"未登记体\"", result.Output, StringComparison.Ordinal);
-        Assert.Contains("code=unregistered-genre detail=\"未登记体\"", result.Output, StringComparison.Ordinal);
         var written = BackfillInventoryLoader.LoadRoot(temporary.Path);
         var source = Assert.Single(written.RequireDigestionSources());
         Assert.Equal(GenreRegistryCheckKind.Collected, source.GenreRegistryCheck.Kind);
         Assert.Equal(["未登记体"], source.GenreRegistryCheck.UnregisteredGenres.ToArray());
-        Assert.Equal(
-            ["theorem/40.1", "unregistered/%E6%9C%AA%E7%99%BB%E8%AE%B0%E4%BD%93/40.2"],
-            source.Entries.Select(static entry => entry.AstPath).Order(StringComparer.Ordinal).ToArray());
+        Assert.Equal(2, source.Entries.Length);
+        Assert.All(source.Entries, static entry => Assert.Matches(
+            "^sha256:[0-9a-f]{64}$",
+            entry.Fingerprints.RawSha256));
         Assert.All(source.Entries, static entry => Assert.Equal(
             new DigestionStatus(DigestionMigrationState.Residual, DigestionTruthState.Open),
             entry.ProjectedStatus));
@@ -84,9 +84,9 @@ public sealed partial class ProductionEnvironmentTests
         var source = Assert.Single(BackfillInventoryLoader.LoadRoot(temporary.Path)
             .RequireDigestionSources());
         Assert.Equal([token], source.GenreRegistryCheck.UnregisteredGenres.ToArray());
-        Assert.Equal(
-            UnregisteredGenreLocator.ForToken(token),
-            Assert.Single(source.Entries).AstPath);
+        Assert.Matches(
+            "^sha256:[0-9a-f]{64}$",
+            Assert.Single(source.Entries).Fingerprints.RawSha256);
         // The loader already requires the committed bytes to equal the writer's canonical
         // output, so asserting the writer proves what the file holds without reading a
         // path the conservative test-map parser cannot resolve.

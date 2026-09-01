@@ -1,0 +1,92 @@
+## 定理 1258.1（Confluent negative jet block）
+
+$$
+\boxed{
+G^{(m)}\prec0.
+}
+\tag{1258.2}
+$$
+
+因此：
+
+$$
+\boxed{
+\operatorname{ind}_-
+\mathcal K_\omega
+\ge m.
+}
+\tag{1258.3}
+$$
+
+### 证明
+
+因为 \(E_\omega\) 在 \(z_0\) 的零点阶为 \(m\)：
+
+$$
+E_\omega^{(r)}(z_0)=0,
+\qquad
+0\le r<m.
+$$
+
+所以在式 (1258.1) 所涉及的全部 jet 上，核分子中的正项：
+
+$$
+\overline{E_\omega(w)}E_\omega(z)
+$$
+
+完全消失。
+
+剩余项为：
+
+$$
+-
+\frac{
+\overline{E_\omega^\#(w)}
+E_\omega^\#(z)
+}{
+2\pi i(\bar w-z)
+}.
+$$
+
+令：
+
+$$
+H^{(m)}
+$$
+
+为上半平面 Hardy Cauchy 核：
+
+$$
+\frac1{2\pi i(\bar w-z)}
+$$
+
+在 \(z_0\) 的前 \(m\) 阶导数评价 Gram 矩阵。
+
+导数评价在 Hardy 空间中线性独立，所以：
+
+$$
+H^{(m)}\succ0.
+$$
+
+由乘法 Leibniz 公式，乘以 \(E_\omega^\#\) 在 jet 基上对应一个下三角矩阵 \(L\)，其对角元均为：
+
+$$
+E_\omega^\#(z_0)\neq0.
+$$
+
+因此 \(L\) 可逆，并且：
+
+$$
+\boxed{
+G^{(m)}
+=
+-L^*H^{(m)}L
+\prec0.
+}
+\tag{1258.4}
+$$
+
+∎
+
+---
+

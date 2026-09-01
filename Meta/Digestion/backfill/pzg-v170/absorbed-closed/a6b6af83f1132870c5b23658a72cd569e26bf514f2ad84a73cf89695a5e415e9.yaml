@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:a6b6af83f1132870c5b23658a72cd569e26bf514f2ad84a73cf89695a5e415e9
+  normalized_sha256: sha256:a6b6af83f1132870c5b23658a72cd569e26bf514f2ad84a73cf89695a5e415e9
+cas_ref: sha256:a6b6af83f1132870c5b23658a72cd569e26bf514f2ad84a73cf89695a5e415e9
+coverage_gids:
+  - D5/S3/Factorization/LogarithmicLength.factorization_log_length_eq_log
+receipts:
+  coverage:
+    - gid: D5/S3/Factorization/LogarithmicLength.factorization_log_length_eq_log
+      source_sha256: sha256:a6b6af83f1132870c5b23658a72cd569e26bf514f2ad84a73cf89695a5e415e9
+      target_statement_id: sha256:98e819e84ea1e30d096ce0cfef41e4b76e313a6960081918f077f17ee28deb37
+  scribe:
+    - gid: D5/S3/Factorization/LogarithmicLength.factorization_log_length_eq_log
+      definition_sha256: sha256:7da8a5b133b8eff951eacb288b4afaa995e47225806d2459a7229e28adb97acb
+      emission_sha256: sha256:a0e90c1ce4bda0cd0d2606728af14e4b3ba0270b279384f2933726ae5d424a05
+  unresolved_subitems: []

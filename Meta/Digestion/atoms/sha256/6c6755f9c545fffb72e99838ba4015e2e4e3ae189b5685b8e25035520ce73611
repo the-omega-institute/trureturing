@@ -1,0 +1,36 @@
+## 十三、后续 theorem DAG
+
+```text
+ReflectedGrowthPairNegativeSquare
+        |
+        +--> ReflectedGrowthPairTimeGroup
+        |          |
+        |          v
+        |    OrientedTimeRecoverySymmetricTimeLoss
+        |
+        +--> ReflectedGrowthPairEvenOddDecomposition
+        |          |
+        |          v
+        |    EvenObserverFirstOrderBlindness
+        |
+        +--> ReflectedGrowthPairSecondOrderSpectrum
+        |          |
+        |          v
+        |    EllipticHyperbolicReflectionTrichotomy
+        |
+        v
+NegativeSquareLaplaceResolvent
+        |
+        v
+SignedNormalSpectralAtom
+        |
+        v
+ChebyshevNegativeSupportSeparator
+        |
+        v
+FiniteMomentNegativeWitness
+        |
+        v
+Toeplitz/Pick/Weil Negative Direction
+```
+

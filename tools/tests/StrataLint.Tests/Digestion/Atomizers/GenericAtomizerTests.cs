@@ -4,8 +4,8 @@ using StrataLint.Engine;
 namespace StrataLint.Tests;
 
 /// <summary>
-/// The default digestion path. Its contract is a rule, not a lexicon: the locator of an
-/// atom is a function of the source bytes alone, no volume needs a registered vocabulary,
+/// The default digestion atomizer is a rule, not a lexicon: atom content is independent
+/// of any registered vocabulary,
 /// and no shape of Markdown makes it throw. These cases are that contract, one per clause.
 /// </summary>
 public sealed class GenericAtomizerTests
@@ -16,15 +16,22 @@ public sealed class GenericAtomizerTests
             Encoding.UTF8.GetBytes(markdown),
             TheoryAtomizerRules.None);
 
-    private static string[] Paths(AtomizedTheoryDocument document) =>
-        document.Claims.Select(static claim => claim.AstPath).ToArray();
+    private static string[] Fingerprints(AtomizedTheoryDocument document) =>
+        document.Claims.Select(static claim => claim.Fingerprints.RawSha256).ToArray();
+
+    private static DigestionAtom ClaimContaining(AtomizedTheoryDocument document, string text) =>
+        Assert.Single(document.Claims, atom =>
+            Encoding.UTF8.GetString(atom.RawBytes.AsSpan()).Contains(text, StringComparison.Ordinal));
 
     [Fact]
     public void EveryHeadingBecomesASectionAtom()
     {
         var document = Atomize("# 卷首\n\n引言。\n\n## §1 主账\n\n一。\n\n## §2 位置\n\n二。\n");
 
-        Assert.Equal(["section/卷首", "section/1-主账", "section/2-位置"], Paths(document));
+        Assert.Equal(3, document.Claims.Length);
+        Assert.All(["# 卷首", "## §1 主账", "## §2 位置"], heading =>
+            Assert.Contains(document.Claims, atom =>
+                Encoding.UTF8.GetString(atom.RawBytes.AsSpan()).Contains(heading, StringComparison.Ordinal)));
     }
 
     [Fact]
@@ -32,11 +39,11 @@ public sealed class GenericAtomizerTests
     {
         var document = Atomize("# 卷首\n\n## 定理 22.2(甲)\n\n证。\n\n## 未登记体 3.4\n\n证。\n");
 
-        Assert.Equal(["定理/22.2", "未登记体/3.4"], Paths(document));
+        Assert.Equal(2, document.Claims.Length);
     }
 
     [Fact]
-    public void GenericGenreCannotOccupyTheReservedUnregisteredNamespace()
+    public void GenericAtomizerHasNoReservedIdentityNamespace()
     {
         var bytes = Encoding.UTF8.GetBytes("# Probe\n\n## unregistered 1.1\n\nclaim。\n");
         var ledger = DigestionTestSupport.EmptyDocument(AtomizerRegistry.GenericId);
@@ -47,10 +54,11 @@ public sealed class GenericAtomizerTests
             ledger,
             DigestionAlignmentMode.Ingest);
 
-        Assert.Contains(alignment.Findings, finding => finding.Contains(
-            "reserved unregistered namespace",
-            StringComparison.Ordinal));
-        Assert.Empty(alignment.Residual);
+        Assert.Empty(alignment.Findings);
+        Assert.NotEmpty(alignment.Residual);
+        Assert.All(alignment.Residual, static item => Assert.Equal(
+            item.Atom.Fingerprints.RawSha256["sha256:".Length..],
+            item.SuggestedAtomId));
     }
 
     [Fact]
@@ -58,7 +66,7 @@ public sealed class GenericAtomizerTests
     {
         var document = Atomize("# 卷首\n\n**定理 1.1(甲)**。一。\n\n**1.2**。二。\n");
 
-        Assert.Equal(["定理/1.1", "item/1.2"], Paths(document));
+        Assert.Equal(2, document.Claims.Length);
     }
 
     /// <summary>The property that makes it a *default*: no input is a format failure.</summary>
@@ -93,8 +101,7 @@ public sealed class GenericAtomizerTests
     }
 
     /// <summary>
-    /// Locator stability is what keeps re-ingest from rewriting untouched receipts: an
-    /// insertion elsewhere must not move an existing atom's address.
+    /// Content identity keeps re-ingest from rewriting untouched receipts.
     /// </summary>
     [Fact]
     public void InsertingASectionDoesNotMoveTheLocatorsOfTheSectionsAroundIt()
@@ -102,8 +109,11 @@ public sealed class GenericAtomizerTests
         var before = Atomize("# 卷首\n\n## §1 甲\n\n一。\n\n## §3 丙\n\n三。\n");
         var after = Atomize("# 卷首\n\n## §1 甲\n\n一。\n\n## §2 乙\n\n二。\n\n## §3 丙\n\n三。\n");
 
-        Assert.Equal(["section/1-甲", "section/3-丙"], Paths(before));
-        Assert.Equal(["section/1-甲", "section/2-乙", "section/3-丙"], Paths(after));
+        Assert.Equal(2, before.Claims.Length);
+        Assert.Equal(3, after.Claims.Length);
+        Assert.Equal(
+            ClaimContaining(before, "## §3 丙").Fingerprints,
+            ClaimContaining(after, "## §3 丙").Fingerprints);
     }
 
     [Fact]
@@ -113,8 +123,8 @@ public sealed class GenericAtomizerTests
         var after = Atomize("# 卷首\n\n## §1 甲\n\n一。\n\n## §2 乙\n\n二。\n\n## §3 丙\n\n三。\n");
 
         Assert.Equal(
-            before.ResolveClaim("section/3-丙").Fingerprints,
-            after.ResolveClaim("section/3-丙").Fingerprints);
+            ClaimContaining(before, "## §3 丙").Fingerprints,
+            ClaimContaining(after, "## §3 丙").Fingerprints);
     }
 
     [Fact]
@@ -122,9 +132,8 @@ public sealed class GenericAtomizerTests
     {
         var document = Atomize("# 卷首\n\n## 边界\n\n一。\n\n## 边界\n\n二。\n");
 
-        Assert.Equal(
-            ["section/边界/occurrence/1", "section/边界/occurrence/2"],
-            Paths(document));
+        Assert.Equal(2, document.Claims.Length);
+        Assert.Equal(2, Fingerprints(document).Distinct(StringComparer.Ordinal).Count());
     }
 
     /// <summary>
@@ -137,11 +146,9 @@ public sealed class GenericAtomizerTests
         var longHeading = new string('章', 200);
         var document = Atomize($"# {longHeading}\n\n一。\n\n## 《·》\n\n二。\n");
 
-        var paths = Paths(document);
-        Assert.Equal(2, paths.Length);
-        Assert.True(paths[0].Length < 80, $"locator is unbounded: {paths[0].Length} characters");
-        Assert.StartsWith("section/", paths[0], StringComparison.Ordinal);
-        Assert.Matches("^section/[0-9a-f]{8}$", paths[1]);
+        Assert.Equal(2, document.Claims.Length);
+        Assert.All(Fingerprints(document), static fingerprint =>
+            Assert.Matches("^sha256:[0-9a-f]{64}$", fingerprint));
     }
 
     /// <summary>Two long headings that share a prefix must not collapse to one locator.</summary>
@@ -151,9 +158,9 @@ public sealed class GenericAtomizerTests
         var prefix = new string('章', 200);
         var document = Atomize($"## {prefix}甲\n\n一。\n\n## {prefix}乙\n\n二。\n");
 
-        var paths = Paths(document);
-        Assert.Equal(2, paths.Length);
-        Assert.NotEqual(paths[0], paths[1]);
+        var fingerprints = Fingerprints(document);
+        Assert.Equal(2, fingerprints.Length);
+        Assert.NotEqual(fingerprints[0], fingerprints[1]);
     }
 
     /// <summary>
@@ -174,9 +181,7 @@ public sealed class GenericAtomizerTests
         // The section keeps an atom of its own because its body is not empty: it holds the
         // title and the column legend, which is what the section itself says. What it no
         // longer holds is the eleven propositions that used to be folded into it.
-        Assert.Equal(
-            ["section/3-词典", "row/Euler-积-独立性", "row/极点-相变", "row/Sarnak-熵分界"],
-            Paths(document));
+        Assert.Equal(4, document.Claims.Length);
     }
 
     /// <summary>
@@ -190,7 +195,9 @@ public sealed class GenericAtomizerTests
     {
         var document = Atomize("# 卷\n\n## §2 甲\n\n**定理 1.1**。证。\n\n## §3 乙\n\n散文。\n");
 
-        Assert.Equal(["定理/1.1", "section/3-乙"], Paths(document));
+        Assert.Equal(2, document.Claims.Length);
+        Assert.DoesNotContain(document.Claims, atom =>
+            Encoding.UTF8.GetString(atom.RawBytes.AsSpan()).Trim() == "## §2 甲");
     }
 
     /// <summary>
@@ -203,16 +210,16 @@ public sealed class GenericAtomizerTests
     {
         var document = Atomize("# ENTROPY-INFO-PRIMES-O5:热层卷宗(审计版 r1)\n\n前言。\n");
 
-        Assert.Equal(["section/ENTROPY-INFO-PRIMES-O5-热层卷宗-审计版-r1"], Paths(document));
+        Assert.Single(document.Claims);
     }
 
     [Theory]
-    [InlineData("## 定理 1.1\n\n证。\n", "定理/1.1")]
-    [InlineData("## 定理1.1\n\n证。\n", "定理/1.1")]
-    [InlineData("## Theorem 2.3\n\n证。\n", "Theorem/2.3")]
-    public void AGenreTokenIsStillReadWithOrWithoutASeparator(string source, string expected)
+    [InlineData("## 定理 1.1\n\n证。\n")]
+    [InlineData("## 定理1.1\n\n证。\n")]
+    [InlineData("## Theorem 2.3\n\n证。\n")]
+    public void AGenreTokenIsStillReadWithOrWithoutASeparator(string source)
     {
-        Assert.Equal([expected], Paths(Atomize(source)));
+        Assert.Single(Atomize(source).Claims);
     }
 
     [Fact]
@@ -235,10 +242,10 @@ public sealed class GenericAtomizerTests
             + "## 引理 1.2（下一条）\n\n"
             + "这是独立的下一条 claim。\n");
 
-        Assert.Equal(["定理/1.1", "引理/1.2"], Paths(document));
+        Assert.Equal(2, document.Claims.Length);
         Assert.Equal(
             firstClaim,
-            Encoding.UTF8.GetString(document.ResolveClaim("定理/1.1").RawBytes.AsSpan()));
+            Encoding.UTF8.GetString(ClaimContaining(document, "定理 1.1").RawBytes.AsSpan()));
     }
 
     [Fact]
@@ -259,10 +266,10 @@ public sealed class GenericAtomizerTests
             + "## 推论 1.4（下一条）\n\n"
             + "这是独立的下一条 claim。\n");
 
-        Assert.Equal(["定理/1.3", "推论/1.4"], Paths(document));
+        Assert.Equal(2, document.Claims.Length);
         Assert.Equal(
             firstClaim,
-            Encoding.UTF8.GetString(document.ResolveClaim("定理/1.3").RawBytes.AsSpan()));
+            Encoding.UTF8.GetString(ClaimContaining(document, "定理 1.3").RawBytes.AsSpan()));
     }
 
     [Fact]
@@ -273,24 +280,23 @@ public sealed class GenericAtomizerTests
 
         var document = Atomize(firstClaim + secondClaim);
 
-        Assert.Equal(["定理/2.1", "引理/2.2"], Paths(document));
+        Assert.Equal(2, document.Claims.Length);
         Assert.Equal(
             firstClaim,
-            Encoding.UTF8.GetString(document.ResolveClaim("定理/2.1").RawBytes.AsSpan()));
+            Encoding.UTF8.GetString(ClaimContaining(document, "定理 2.1").RawBytes.AsSpan()));
         Assert.Equal(
             secondClaim,
-            Encoding.UTF8.GetString(document.ResolveClaim("引理/2.2").RawBytes.AsSpan()));
+            Encoding.UTF8.GetString(ClaimContaining(document, "引理 2.2").RawBytes.AsSpan()));
     }
 
     [Fact]
-    public void TheDefaultAtomizerIsRegisteredAndCarriesItsOwnResidualStem()
+    public void TheDefaultAtomizerIsRegistered()
     {
         Assert.Contains(AtomizerRegistry.GenericId, AtomizerRegistry.RegisteredIds);
-        Assert.Equal("generic", AtomizerRegistry.Require(AtomizerRegistry.GenericId).ResidualPrefix);
     }
 
     /// <summary>
-    /// The locator is a function of the source bytes alone: loaded volume vocabularies are
+    /// The content fingerprint is a function of the source bytes alone: loaded volume vocabularies are
     /// not an input, so editing another volume's dialect cannot churn this volume's ledger.
     /// </summary>
     [Fact]
@@ -299,8 +305,8 @@ public sealed class GenericAtomizerTests
         var markdown = "# 卷首\n\n## 定理 1.1\n\n证。\n";
         var bytes = Encoding.UTF8.GetBytes(markdown);
         Assert.Equal(
-            Paths(AtomizerRegistry.Atomize(AtomizerRegistry.GenericId, bytes, TheoryAtomizerRules.None)),
-            Paths(AtomizerRegistry.Atomize(
+            Fingerprints(AtomizerRegistry.Atomize(AtomizerRegistry.GenericId, bytes, TheoryAtomizerRules.None)),
+            Fingerprints(AtomizerRegistry.Atomize(
                 AtomizerRegistry.GenericId, bytes, DigestionTestSupport.Rules)));
     }
 
@@ -315,17 +321,18 @@ public sealed class GenericAtomizerTests
 
         var claim = Assert.Single(first.Claims);
         var plan = Assert.Single(first.ClausePlans);
-        Assert.Equal(claim.AstPath, plan.ParentAstPath);
-        Assert.Equal(
-            [claim.AstPath + "/clause/1", claim.AstPath + "/clause/2", claim.AstPath + "/clause/3"],
-            plan.Children.Select(static child => child.AstPath).ToArray());
+        Assert.Equal(claim.Fingerprints.RawSha256, plan.Parent.Fingerprints.RawSha256);
+        Assert.Equal(3, plan.Children.Length);
+        Assert.All(plan.Children, child => Assert.Equal(
+            DigestionFingerprint.Compute(child.RawBytes.AsSpan()).RawSha256,
+            child.Fingerprints.RawSha256));
         Assert.Equal(
             claim.RawBytes.ToArray(),
             plan.Children.SelectMany(static child => child.RawBytes.ToArray()).ToArray());
         Assert.Equal(
             Assert.Single(second.ClausePlans).Children
-                .Select(static child => (child.AstPath, child.Fingerprints.RawSha256)),
-            plan.Children.Select(static child => (child.AstPath, child.Fingerprints.RawSha256)));
+                .Select(static child => (child.Fingerprints.RawSha256, child.Fingerprints.RawSha256)),
+            plan.Children.Select(static child => (child.Fingerprints.RawSha256, child.Fingerprints.RawSha256)));
     }
 
     [Fact]

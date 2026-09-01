@@ -95,12 +95,17 @@ public sealed partial class DigestionLedgerTests
         ]);
 
         var status = Assert.Single(DigestionStatusEvaluator.Evaluate(
-            DigestionEvaluationScope.FullScan,
+            DigestionEvaluationScope.ChangedSet,
             ledger,
             snapshot,
-            AcceptedLean("D5/S0/Carrier/Probe.lean")).Entries);
+            AcceptedLean("D5/S0/Carrier/Probe.lean"),
+            baselineDocument: ledger,
+            baselineSnapshot: snapshot,
+            changes: RawChangeSet.Create(["notes/unrelated.txt"])).Entries);
 
         Assert.False(status.Deletable);
+        Assert.Equal(DigestionMigrationState.Partial, status.DerivedStatus.Migration);
+        Assert.NotEqual(DigestionReceiptAlignment.Rejected, status.Alignment);
         Assert.Contains(status.Gaps, gap => gap.Code == "scribe-emission-unverified");
     }
 
@@ -252,7 +257,7 @@ public sealed partial class DigestionLedgerTests
     [Fact]
     public void CanonicalAtomAndGidBoundAuthorizationPermitsAbsorbedTail()
     {
-        const string atomId = "gict-1.1";
+        var atomId = CompleteTailAtomId();
         const string gid = "D5/X_Assumptions/Probe";
         var authorization = TailAuthorizationArtifact.Write(atomId, [gid]).ToArray();
 
@@ -267,9 +272,17 @@ public sealed partial class DigestionLedgerTests
     }
 
     [Fact]
+    public void TailAuthorizationWriterRejectsRetiredPrefixedAtomId()
+    {
+        Assert.Throws<FormatException>(() => TailAuthorizationArtifact.Write(
+            "gict-residual-" + new string('a', 64),
+            ["D5/X_Assumptions/Probe"]));
+    }
+
+    [Fact]
     public void TrustedTailAuthorizationBytesAndRecordedHashAreNotReplayed()
     {
-        const string atomId = "gict-1.1";
+        var atomId = CompleteTailAtomId();
         const string gid = "D5/X_Assumptions/Probe";
         var canonical = TailAuthorizationArtifact.Write(atomId, [gid]);
         var noncanonical = Encoding.UTF8.GetBytes(
@@ -288,7 +301,7 @@ public sealed partial class DigestionLedgerTests
     [Fact]
     public void TailAuthorizationWriteGateRejectsChangedBytesThatMismatchReceiptHash()
     {
-        const string atomId = "gict-1.1";
+        var atomId = CompleteTailAtomId();
         const string gid = "D5/X_Assumptions/Probe";
         var path = TailAuthorizationArtifact.PathFor(atomId);
         var authorization = TailAuthorizationArtifact.Write(atomId, [gid]).ToArray();
@@ -306,7 +319,7 @@ public sealed partial class DigestionLedgerTests
     [Fact]
     public void TailAuthorizationWriteGateRejectsChangedNoncanonicalBytes()
     {
-        const string atomId = "gict-1.1";
+        var atomId = CompleteTailAtomId();
         const string gid = "D5/X_Assumptions/Probe";
         var path = TailAuthorizationArtifact.PathFor(atomId);
         var canonical = TailAuthorizationArtifact.Write(atomId, [gid]);
@@ -326,7 +339,7 @@ public sealed partial class DigestionLedgerTests
     [Fact]
     public void TailAuthorizationSelectionBindingStillRejectsADifferentGid()
     {
-        const string atomId = "gict-1.1";
+        var atomId = CompleteTailAtomId();
         var authorization = TailAuthorizationArtifact.Write(
             atomId,
             ["D5/X_Assumptions/Different"]);
@@ -345,7 +358,6 @@ public sealed partial class DigestionLedgerTests
     {
         var source = Encoding.UTF8.GetBytes("# manual source\n\nclaim\n");
         var syntheticAtom = new DigestionAtom(
-            "manual/claim",
             0,
             source.Length,
             ImmutableArray.CreateRange(source),
@@ -368,7 +380,6 @@ public sealed partial class DigestionLedgerTests
                     ledgerEntry with
                     {
                         Fingerprints = new DigestionFingerprints(falseFingerprint, falseFingerprint),
-                        CasRef = falseFingerprint,
                     },
                 ],
             },

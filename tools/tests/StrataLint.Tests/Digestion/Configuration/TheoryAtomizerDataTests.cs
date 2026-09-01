@@ -10,6 +10,10 @@ public sealed class TheoryAtomizerDataTests
     private static readonly string FirstScheme = string.Concat("gi", "ct");
     private static readonly string SecondScheme = string.Concat("pz", "g");
 
+    private static void AssertContentIdentity(DigestionAtom atom) => Assert.Equal(
+        DigestionFingerprint.Compute(atom.RawBytes.AsSpan()).RawSha256,
+        atom.Fingerprints.RawSha256);
+
     // internal(2026-08-30,#4125):FormalizeCandidatesTests.Quarantine.cs 以它作 hermetic 规则夹具,不再读 canonical 文件。
     internal static string Minimal => """
         schema_version = 1
@@ -103,16 +107,20 @@ public sealed class TheoryAtomizerDataTests
     }
 
     [Fact]
-    public void LoaderRejectsConfiguredLocatorInReservedUnregisteredNamespace()
+    public void ConfiguredClassifierLabelCannotChangeContentIdentity()
     {
-        var data = Minimal.Replace(
+        var changed = Minimal.Replace(
             "locator = \"theorem/known\"",
             "locator = \"unregistered/known\"",
             StringComparison.Ordinal);
+        var bytes = Encoding.UTF8.GetBytes("**Known** body");
 
-        var error = Assert.Throws<FormatException>(() => Load(data));
+        var before = Assert.Single(ObserverAtomizer.Atomize(bytes, Load(Minimal)).Claims);
+        var after = Assert.Single(ObserverAtomizer.Atomize(bytes, Load(changed)).Claims);
 
-        Assert.Contains("reserved unregistered namespace", error.Message, StringComparison.Ordinal);
+        AssertContentIdentity(before);
+        AssertContentIdentity(after);
+        Assert.Equal(before.Fingerprints.RawSha256, after.Fingerprints.RawSha256);
     }
 
     [Fact]
@@ -125,12 +133,17 @@ public sealed class TheoryAtomizerDataTests
             .Replace("locator = \"constant/kappa\"", "locator = \"constant/new-c\"", StringComparison.Ordinal)
             .Replace("prefix = \"判负册\"", "prefix = \"新标题\"", StringComparison.Ordinal));
 
-        Assert.Equal("theorem/known", Assert.Single(ObserverAtomizer.Atomize(Encoding.UTF8.GetBytes("**New observer lead** body"), data).Claims).AstPath);
-        Assert.Equal("theorem/1.1", Assert.Single(AtomizerRegistry.Atomize(FirstScheme + "-v1", Encoding.UTF8.GetBytes("**新体裁 1.1** body"), data).Claims).AstPath);
-        Assert.Equal("theorem/1.1", Assert.Single(AtomizerRegistry.Atomize(SecondScheme + "-v1", Encoding.UTF8.GetBytes("**新体裁 1.1** body"), data).Claims).AstPath);
-        Assert.Equal("constant/new-c", Assert.Single(AtomizerRegistry.Atomize(FirstScheme + "-v1",
-            Encoding.UTF8.GetBytes("| Constant | Value |\n|---|---|\n| NEW_C | value |\n"), data).Claims).AstPath);
-        Assert.Equal("negative-register/batch", Assert.Single(AtomizerRegistry.Atomize(SecondScheme + "-v1", Encoding.UTF8.GetBytes("## 新标题 batch"), data).Claims).AstPath);
+        AssertContentIdentity(Assert.Single(ObserverAtomizer.Atomize(
+            Encoding.UTF8.GetBytes("**New observer lead** body"), data).Claims));
+        AssertContentIdentity(Assert.Single(AtomizerRegistry.Atomize(
+            FirstScheme + "-v1", Encoding.UTF8.GetBytes("**新体裁 1.1** body"), data).Claims));
+        AssertContentIdentity(Assert.Single(AtomizerRegistry.Atomize(
+            SecondScheme + "-v1", Encoding.UTF8.GetBytes("**新体裁 1.1** body"), data).Claims));
+        AssertContentIdentity(Assert.Single(AtomizerRegistry.Atomize(
+            FirstScheme + "-v1",
+            Encoding.UTF8.GetBytes("| Constant | Value |\n|---|---|\n| NEW_C | value |\n"), data).Claims));
+        AssertContentIdentity(Assert.Single(AtomizerRegistry.Atomize(
+            SecondScheme + "-v1", Encoding.UTF8.GetBytes("## 新标题 batch"), data).Claims));
     }
 
     [Fact]
@@ -151,7 +164,7 @@ public sealed class TheoryAtomizerDataTests
             Encoding.UTF8.GetBytes("**定理 1.1** body"),
             data).Claims);
 
-        Assert.Equal("definition/1.1", atom.AstPath);
+        AssertContentIdentity(atom);
     }
 
     [Fact]
@@ -179,7 +192,7 @@ public sealed class TheoryAtomizerDataTests
     {
         var data = Load(Minimal.Replace("token = \"定理\"", "token = \"A+B\"", StringComparison.Ordinal));
         var atom = Assert.Single(AtomizerRegistry.Atomize(SecondScheme + "-v1", Encoding.UTF8.GetBytes("**A+B 1.2** body"), data).Claims);
-        Assert.Equal("theorem/1.2", atom.AstPath);
+        AssertContentIdentity(atom);
     }
 
     [Fact]
@@ -196,9 +209,7 @@ public sealed class TheoryAtomizerDataTests
             DigestionAlignmentMode.Ingest);
 
         Assert.Empty(alignment.Findings);
-        Assert.Equal(
-            "unregistered/%E6%9C%AA%E7%9F%A5%E4%BD%93%E8%A3%81/1.1",
-            Assert.Single(alignment.Residual).Atom.AstPath);
+        AssertContentIdentity(Assert.Single(alignment.Residual).Atom);
         Assert.Equal(
             ["未知体裁"],
             alignment.GenreRegistryChecks["source"].UnregisteredGenres.ToArray());
@@ -231,7 +242,7 @@ public sealed class TheoryAtomizerDataTests
 
         var document = AtomizerRegistry.Atomize("dialect:suffix-probe", bytes, rules);
 
-        Assert.Equal("example/1.1", Assert.Single(document.Claims).AstPath);
+        AssertContentIdentity(Assert.Single(document.Claims));
         Assert.Empty(document.UnregisteredGenres);
     }
 

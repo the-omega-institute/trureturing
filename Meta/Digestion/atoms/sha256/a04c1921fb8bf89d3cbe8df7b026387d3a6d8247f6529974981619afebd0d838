@@ -1,0 +1,52 @@
+## 1116.1 这条序列的纯几何解释
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{Solenoid 一侧}&\text{频率对偶一侧}\\
+\hline
+\mathbb T&\mathbb Z\\
+\Sigma_{\mathbb Q}&\mathbb Q\\
+\widehat{\mathbb Z}&\mathbb Q/\mathbb Z
+\end{array}
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{可见圆周}
+\leftrightarrow
+\text{整数谐波};
+}
+$$
+
+$$
+\boxed{
+\text{完整 Solenoid}
+\leftrightarrow
+\text{全部有理谐波};
+}
+$$
+
+$$
+\boxed{
+\text{隐藏同余地址}
+\leftrightarrow
+\text{分数频率模整数}.
+}
+$$
+
+这说明 Solenoid 的隐藏纤维不是模糊的“不可见信息”。
+
+它的严格 Fourier 对偶就是：
+
+$$
+\boxed{
+\mathbb Q/\mathbb Z.
+}
+$$
+
+---
+

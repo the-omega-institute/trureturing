@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:625bd6c24e6d655fc43c037309f17e81d0dc67c9e7e5f1eb7e7342f31d716b8e
+  normalized_sha256: sha256:625bd6c24e6d655fc43c037309f17e81d0dc67c9e7e5f1eb7e7342f31d716b8e
+cas_ref: sha256:625bd6c24e6d655fc43c037309f17e81d0dc67c9e7e5f1eb7e7342f31d716b8e
+coverage_gids:
+  - D5/S3/ConceptDynamics/ExperimentDesign/MinimumCompleteObserverSetCover.minimum_complete_observer_is_set_cover
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/ExperimentDesign/MinimumCompleteObserverSetCover.minimum_complete_observer_is_set_cover
+      source_sha256: sha256:625bd6c24e6d655fc43c037309f17e81d0dc67c9e7e5f1eb7e7342f31d716b8e
+      target_statement_id: sha256:189c0be21e6ef5ef492183a3a110371d0de1f63e7e4b6e91202b668ade9911aa
+  scribe:
+    - gid: D5/S3/ConceptDynamics/ExperimentDesign/MinimumCompleteObserverSetCover.minimum_complete_observer_is_set_cover
+      definition_sha256: sha256:26dc32cfab8e6c41995350a9b427b6cb7d39613852832c470350ff0d1d4d4f6e
+      emission_sha256: sha256:70fb400a78cca7c3e9704a732df248b389d8857ae1163d8bd23805d8f96b494c
+  unresolved_subitems: []

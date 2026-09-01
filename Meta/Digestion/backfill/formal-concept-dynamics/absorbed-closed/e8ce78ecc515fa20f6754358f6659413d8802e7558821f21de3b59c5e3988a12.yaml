@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:e8ce78ecc515fa20f6754358f6659413d8802e7558821f21de3b59c5e3988a12
+  normalized_sha256: sha256:e8ce78ecc515fa20f6754358f6659413d8802e7558821f21de3b59c5e3988a12
+cas_ref: sha256:e8ce78ecc515fa20f6754358f6659413d8802e7558821f21de3b59c5e3988a12
+coverage_gids:
+  - D5/S3/ConceptDynamics/Restoration/RestorationImpliesCompensation.identity_restoration_implies_value_compensation
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Restoration/RestorationImpliesCompensation.identity_restoration_implies_value_compensation
+      source_sha256: sha256:e8ce78ecc515fa20f6754358f6659413d8802e7558821f21de3b59c5e3988a12
+      target_statement_id: sha256:cd01a36ea2fdc2a573852fd7724b881a28fbe99b6d215bd652578445615c7759
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Restoration/RestorationImpliesCompensation.identity_restoration_implies_value_compensation
+      definition_sha256: sha256:2628184c6ee6e2be83aec6ef52ad9efacb79bc2cf1c0460fc48d6eb070c9e67d
+      emission_sha256: sha256:623dd90005c7fbf2679f7a8f308713f20633192333f92d5e1a4f63005ca3d405
+  unresolved_subitems: []

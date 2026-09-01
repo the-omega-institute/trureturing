@@ -1,0 +1,41 @@
+# 第一千二百一十七部　黄金尺度只需作为共尾观察调度
+
+定义嵌套测试空间：
+
+$$
+\mathcal H_L
+=
+\{f:\operatorname{supp}f\subset[-L,L]\}.
+$$
+
+若：
+
+$$
+L_1\le L_2,
+$$
+
+则：
+
+$$
+\mathcal H_{L_1}\subseteq\mathcal H_{L_2}.
+$$
+
+取黄金方向保持尺度：
+
+$$
+\boxed{
+L_n=L_0\varphi^{2n}.
+}
+\tag{1217.1}
+$$
+
+因为：
+
+$$
+L_n\to\infty,
+$$
+
+任意紧支撑测试最终属于某个 \(\mathcal H_{L_n}\)。
+
+所以：
+

@@ -1,0 +1,45 @@
+\boxed{
+\mathcal F_\rho
+===============
+
+1-\sigma_\rho^2.
+}
+\tag{1411.6}
+
+$$
+
+由此得到严格对应：
+
+$$
+
+\boxed{
+\begin{aligned}
+p
+&=\text{Hardy 核保真度};\
+q
+&=\text{Hankel 泄漏能量};\
+p+q&=1.
+\end{aligned}
+}
+\tag{1411.7}
+
+$$
+
+---
+
+## 1411.1 Cauchy KL、Hardy 保真度与观察指数完全相同
+
+对同中心、尺度为 \(u,v>0\) 的 Cauchy 状态：
+
+$$
+
+p_{\gamma,u},
+\qquad
+p_{\gamma,v},
+
+$$
+
+其 KL 散度为：
+
+$$
+

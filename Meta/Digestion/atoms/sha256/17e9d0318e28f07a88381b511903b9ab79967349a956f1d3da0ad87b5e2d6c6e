@@ -1,0 +1,38 @@
+# 第一千三百五十部　仓库现有结果已经接近这条 colligation 路线
+
+项目现在已有三块直接可用的机器底座。
+
+第一，单个素数的加权双向平移历史被精确重求和为以平移酉算子为基础的 Poisson resolvent，提供局部保守通道。
+
+第二，半整数 shifted-\(\xi\) scattering 已被机器证明等于有限 completed-zeta scattering cascade，提供局部通道的串联结构。
+
+第三，过去输入—未来输出 Hankel 算子的奇异值已经被机器识别为 controllability–observability Gramian product 谱的平方根，提供最小 realization 与隐藏状态强度的正式接口。
+
+因此下一步不应继续只计算标量 scattering quotient。
+
+而应构造：
+
+$$
+\boxed{
+\text{prime local colligation}
+\star
+\text{Gamma continuous colligation}
+\star
+\text{pole channel},
+}
+$$
+
+其中 \(\star\) 表示保守系统的串联／Redheffer 型组合。
+
+随后执行：
+
+1. 消去望远镜内部状态；
+2. 作 controllability–observability 最小化；
+3. 构造正 storage operator；
+4. 证明 endpoint denominator 不存在；
+5. 识别最小 transfer 为 \(\Theta_\omega\)。
+
+这条路线一旦闭合，Hardy 三角性将不再是外加公理，而是保守被动 realization 的结果。
+
+---
+

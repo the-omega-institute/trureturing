@@ -54,6 +54,6 @@ public sealed class DigestionDecompositionPolicyTests
     private static DigestionAtom Atom(string text)
     {
         var bytes = Encoding.UTF8.GetBytes(text).ToImmutableArray();
-        return DigestionAtom.FromFrozenCas("theorem/fixture", bytes);
+        return DigestionAtom.FromFrozenCas(bytes);
     }
 }

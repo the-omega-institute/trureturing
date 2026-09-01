@@ -164,7 +164,6 @@ public sealed partial class ProductionEnvironmentTests
         DigestionLedgerEntry ChildEntry(int index) => parent with
         {
             AtomId = childIds[index],
-            AstPath = children[index].AstPath,
             Fingerprints = children[index].Fingerprints,
             CasRef = children[index].Fingerprints.RawSha256,
             Receipts = new DigestionReceipts([], [], [], [], null),
@@ -228,7 +227,7 @@ public sealed partial class ProductionEnvironmentTests
     {
         var materialized = CoverWorld.Materialize(new CoverSpec
         {
-            OtherAtomBinding = ("receipt-gap-sibling", "D5/S0/Carrier/Probe.probe"),
+            OtherAtomGid = "D5/S0/Carrier/Probe.probe",
         });
         var inputs = DirectoryInputs(WithSiblingReceiptMismatch(materialized, mismatchCode));
         using var temporary = new TemporaryDirectory();
@@ -259,7 +258,6 @@ public sealed partial class ProductionEnvironmentTests
         {
             SecondaryTarget = (siblingModuleGid, "sibling"),
             UnrelatedSibling = new CoverUnrelatedSiblingSpec(
-                "receipt-gap-sibling",
                 [siblingGid],
                 [siblingGid],
                 []),
@@ -267,13 +265,15 @@ public sealed partial class ProductionEnvironmentTests
         var inputs = DirectoryInputs(WithSiblingReceiptMismatch(
             materialized,
             "coverage-receipt-mismatch"));
+        var withFrozenEvent = WithUnrelatedFrozenAcceptedEvent(inputs);
+        inputs = withFrozenEvent.Inputs;
         var files = new Dictionary<string, string>(inputs.Files, StringComparer.Ordinal)
         {
             [newSourcePath] = newSourceText,
         };
         inputs = inputs with { Files = files };
         var backlogAtom = Assert.Single(inputs.Files, pair => pair.Key.EndsWith(
-            "/receipt-gap-sibling.yaml",
+            "/" + CoverWorld.UnrelatedAtomId + ".yaml",
             StringComparison.Ordinal));
         using var temporary = new TemporaryDirectory();
         DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
@@ -281,14 +281,14 @@ public sealed partial class ProductionEnvironmentTests
             temporary.Path,
             inputs,
             inputs.Files,
-            RawChangeSet.Create([newSourcePath]));
+            RawChangeSet.Create([newSourcePath, withFrozenEvent.EventPath]));
 
         var result = environment.AlignDigestionStatus(["--base", "baseline"]);
 
         Assert.True(result.Success, result.Error);
         Assert.Contains("ledger_changed=true", result.Output, StringComparison.Ordinal);
         Assert.DoesNotContain(
-            "receipt-gap-sibling:coverage-receipt-mismatch",
+            CoverWorld.UnrelatedAtomId + ":coverage-receipt-mismatch",
             result.Output,
             StringComparison.Ordinal);
         var written = BackfillInventoryLoader.LoadRoot(temporary.Path);
@@ -314,7 +314,6 @@ public sealed partial class ProductionEnvironmentTests
         {
             SecondaryTarget = (siblingModuleGid, "sibling"),
             UnrelatedSibling = new CoverUnrelatedSiblingSpec(
-                "receipt-gap-sibling",
                 [siblingGid],
                 [siblingGid],
                 []),
@@ -335,7 +334,7 @@ public sealed partial class ProductionEnvironmentTests
 
         Assert.False(result.Success);
         Assert.Contains(
-            $"receipt-gap-sibling:coverage-receipt-mismatch:{siblingGid}",
+            $"{CoverWorld.UnrelatedAtomId}:coverage-receipt-mismatch:{siblingGid}",
             result.Error,
             StringComparison.Ordinal);
         Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));

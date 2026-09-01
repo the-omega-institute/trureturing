@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:74c84f7c61113336aa7c535f0c89fa75be5ce12a83448ef4d3c01939f70af9c8
+  normalized_sha256: sha256:74c84f7c61113336aa7c535f0c89fa75be5ce12a83448ef4d3c01939f70af9c8
+cas_ref: sha256:74c84f7c61113336aa7c535f0c89fa75be5ce12a83448ef4d3c01939f70af9c8
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    recorded_at_utc: 2026-08-31T18:13:49.9444730+00:00
+    gids:
+      - D5/S3/ConceptDynamics/Sufficiency/PredictiveCompletionMonotone.predictive_completion_monotone
+    gaps:
+      - code: structural-alignment-rejected
+        detail: 74c84f7c61113336aa7c535f0c89fa75be5ce12a83448ef4d3c01939f70af9c8

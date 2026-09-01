@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:56c59f5870cc50a4b8e26887a0cb19ef520e8240bb5967550f7fecd85e4b3f03
+  normalized_sha256: sha256:56c59f5870cc50a4b8e26887a0cb19ef520e8240bb5967550f7fecd85e4b3f03
+cas_ref: sha256:56c59f5870cc50a4b8e26887a0cb19ef520e8240bb5967550f7fecd85e4b3f03
+coverage_gids:
+  - D5/S1/Depth/IrrationalContinuedFractionNontermination.irrational_continued_fraction_nontermination
+receipts:
+  coverage:
+    - gid: D5/S1/Depth/IrrationalContinuedFractionNontermination.irrational_continued_fraction_nontermination
+      source_sha256: sha256:56c59f5870cc50a4b8e26887a0cb19ef520e8240bb5967550f7fecd85e4b3f03
+      target_statement_id: sha256:8780492361ca50908420eaee41122e029cff218c4d612b83d6157472a047728a
+  scribe:
+    - gid: D5/S1/Depth/IrrationalContinuedFractionNontermination.irrational_continued_fraction_nontermination
+      definition_sha256: sha256:4f6697d81052a26326c6483625433d26abc9cc417c891eb8b0816a04abc2b09b
+      emission_sha256: sha256:55f662939bdccd5c2cbbd0d787518825258553e34cac10d81687fef700576e25
+  unresolved_subitems: []

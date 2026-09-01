@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:e38742ca0c18ff6ec5b2e9bdcdf99bc700c0ff2c38031b60a79dd17f4a617766
+  normalized_sha256: sha256:e38742ca0c18ff6ec5b2e9bdcdf99bc700c0ff2c38031b60a79dd17f4a617766
+cas_ref: sha256:e38742ca0c18ff6ec5b2e9bdcdf99bc700c0ff2c38031b60a79dd17f4a617766
+coverage_gids:
+  - D5/S1/Depth/JointDepth.joint_depth_spec
+receipts:
+  coverage:
+    - gid: D5/S1/Depth/JointDepth.joint_depth_spec
+      source_sha256: sha256:e38742ca0c18ff6ec5b2e9bdcdf99bc700c0ff2c38031b60a79dd17f4a617766
+      target_statement_id: sha256:1665c45589acad5871fbac5002431f9c254feafedf6df3dc504b636d4439bb5e
+  scribe: []
+  unresolved_subitems: []

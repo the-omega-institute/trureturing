@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:07ec1754544fa3a14a854799bc4de8a819f04d39c4b3c480b7ceaa4711ec8a0a
+  normalized_sha256: sha256:07ec1754544fa3a14a854799bc4de8a819f04d39c4b3c480b7ceaa4711ec8a0a
+cas_ref: sha256:07ec1754544fa3a14a854799bc4de8a819f04d39c4b3c480b7ceaa4711ec8a0a
+coverage_gids:
+  - D5/S0/History/EmptyLedgerConservation.empty_ledger_excludes_detectable_residual
+receipts:
+  coverage:
+    - gid: D5/S0/History/EmptyLedgerConservation.empty_ledger_excludes_detectable_residual
+      source_sha256: sha256:07ec1754544fa3a14a854799bc4de8a819f04d39c4b3c480b7ceaa4711ec8a0a
+      target_statement_id: sha256:851ac30d3058b64fb0d14d38b17e118fae40a349d35cbdc498260d9bae7fa739
+  scribe:
+    - gid: D5/S0/History/EmptyLedgerConservation.empty_ledger_excludes_detectable_residual
+      definition_sha256: sha256:deccb457202bae22ac5e961a7d05b70c72c819048dc5e7615fc361f28d07b622
+      emission_sha256: sha256:c3905f7b3d2366bac1d418b5123fb71dafc8dbf62c595a5dc2d1cf87a6af0e9c
+  unresolved_subitems: []

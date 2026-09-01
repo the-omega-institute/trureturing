@@ -1,0 +1,54 @@
+# 第一千三百九十六部　离线零点的边界影像是一个概率状态
+
+令右侧离线零点写成：
+
+$$
+\rho=\frac12+\delta+i\gamma,
+\qquad
+\delta>0.
+$$
+
+它在临界边界留下的标准 Poisson 影像为：
+
+$$
+\boxed{
+p_{\gamma,\delta}(t)
+=
+\frac1\pi
+\frac{\delta}
+{(t-\gamma)^2+\delta^2}.
+}
+\tag{1396.1}
+$$
+
+并且：
+
+$$
+\int_{\mathbb R}p_{\gamma,\delta}(t)\,dt=1.
+$$
+
+所以 \(p_{\gamma,\delta}\) 不仅是一条响应曲线，还是一个标准 Cauchy 概率密度：
+
+$$
+\boxed{
+p_{\gamma,\delta}
+=
+\operatorname{Cauchy}(\gamma,\delta).
+}
+$$
+
+其 Fourier 变换为：
+
+$$
+\boxed{
+\widehat p_{\gamma,\delta}(k)
+=
+e^{-\delta|k|}
+e^{-ik\gamma}.
+}
+\tag{1396.2}
+$$
+
+因此：
+
+* \(\gamma\) 编码相位／纵向高度；

@@ -1,0 +1,77 @@
+# 第一千二百六十部　Blaschke 因子是离线零点的最小正性修复
+
+对固定：
+
+$$
+\omega>0,
+$$
+
+\(\Theta_\omega\) 在上半平面的极点，正是满足：
+
+$$
+\Re\rho>\frac12+\omega
+$$
+
+的 \(\xi\) 零点所产生的：
+
+$$
+p_{\rho,\omega}
+=
+-\gamma+i(\delta-\omega).
+$$
+
+先截断至：
+
+$$
+|\gamma|\le T.
+$$
+
+对每个上半平面点 \(p=x+ih\)，定义 Blaschke 因子：
+
+$$
+\boxed{
+b_p(z)
+=
+\frac{z-p}{z-\overline p}.
+}
+\tag{1260.1}
+$$
+
+在实轴上：
+
+$$
+|b_p(t)|=1.
+$$
+
+定义有限缺陷 Blaschke 积：
+
+$$
+\boxed{
+B_{\omega,T}(z)
+=
+\prod_{\substack{
+\rho=\frac12+\delta+i\gamma\\
+\delta>\omega,\ |\gamma|\le T
+}}
+b_{p_{\rho,\omega}}(z)^{m_\rho}.
+}
+\tag{1260.2}
+$$
+
+它在每个 \(\Theta_\omega\) 的上半平面极点处提供同阶零点。
+
+因此：
+
+$$
+\boxed{
+S_{\omega,T}
+=
+B_{\omega,T}\Theta_\omega
+}
+\tag{1260.3}
+$$
+
+是移除了这些极点后的修复函数。
+
+---
+

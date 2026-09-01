@@ -1,0 +1,11 @@
+# 3. 两端的共同二阶对象
+
+Prime side 的奇量是
+
+\[
+C_{p,q}
+=(a-\lambda_p)(a-\lambda_q)(c_p-c_q).
+\]
+
+Zero side 的奇量是
+

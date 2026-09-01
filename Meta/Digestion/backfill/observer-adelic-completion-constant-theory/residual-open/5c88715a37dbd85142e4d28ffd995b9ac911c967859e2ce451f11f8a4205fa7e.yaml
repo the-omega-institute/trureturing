@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:5c88715a37dbd85142e4d28ffd995b9ac911c967859e2ce451f11f8a4205fa7e
+  normalized_sha256: sha256:5c88715a37dbd85142e4d28ffd995b9ac911c967859e2ce451f11f8a4205fa7e
+cas_ref: sha256:5c88715a37dbd85142e4d28ffd995b9ac911c967859e2ce451f11f8a4205fa7e
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  quarantine:
+    justification: "Retrieval preceded quarantine. D5 queries `positive completion|completion tower|Riemann hypothesis|Weil criterion|positive measure|inverse Fourier.*measure` found local completion machinery but no whole theorem; `D5/X_Frontier/Hearts.o6WeilPositivityStatement` explicitly records the required full Weil positivity statement as open, while `D5/S3/Weil/ZetaAnalytic/ParityWeylInterval.parity_weyl_interval` proves only a supplied-interface local interval result. Pinned Mathlib searches `RiemannHypothesis|Weil.*criterion|criterion.*Weil|convolution.*nonnegative`, `ext.*fourier|fourier.*ext|characteristic.*function.*ext|measure.*ext.*integral` found `RiemannHypothesis` only as a definition and general measure extensionality, not the bidirectional Weil criterion, positive-definite extension theorem, zero-ordinate spectral-measure construction, or inverse-Fourier uniqueness needed here. Reachable GitHub Lean searches `Weil criterion RiemannHypothesis`, `RiemannHypothesis Weil`, and `charFun_injective` returned no exact hits; `positive definite extension Fourier measure` returned only unrelated files and `Bochner theorem` only Bochner-integral false positives. Local proof inspection therefore stops at the explicitly open heart: hypothesizing these missing bridges would make both the RH equivalence and singleton-intersection clause premise-driven."
+    reentry_condition: "Provide closed source-carrier theorems for the bidirectional Weil criterion, positive-definite extension of every locally positive Weil source, construction of the Riemann zero-ordinate positive spectral measure under RH, and uniqueness of positive measures from inverse-Fourier agreement on all finite intervals."
+    blocker_class: missing-prerequisite

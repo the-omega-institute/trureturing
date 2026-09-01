@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:76a2e0e730c79fec4234e8df7b5a7de24dd3720c40f554b5f43559ceb50252fa
+  normalized_sha256: sha256:76a2e0e730c79fec4234e8df7b5a7de24dd3720c40f554b5f43559ceb50252fa
+cas_ref: sha256:76a2e0e730c79fec4234e8df7b5a7de24dd3720c40f554b5f43559ceb50252fa
+coverage_gids:
+  - D5/S3/ConceptDynamics/DefinitionEscapeSignatures/AdjudicationSignatureNecessity.adjudication_signature_coordinate_necessity
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/DefinitionEscapeSignatures/AdjudicationSignatureNecessity.adjudication_signature_coordinate_necessity
+      source_sha256: sha256:76a2e0e730c79fec4234e8df7b5a7de24dd3720c40f554b5f43559ceb50252fa
+      target_statement_id: sha256:97af24c64cd0e0a682990798219551fdd36e9c6679b65720e5debcd6560ffa7e
+  scribe:
+    - gid: D5/S3/ConceptDynamics/DefinitionEscapeSignatures/AdjudicationSignatureNecessity.adjudication_signature_coordinate_necessity
+      definition_sha256: sha256:edb220ea6ab0a84fcb887030f05991e3d941d6ce03b2779adcd3d6b10d6511ff
+      emission_sha256: sha256:72e44b97102469d9abd4b21a3101b49292e834aaa5c99588ece6714b5ae656f1
+  unresolved_subitems: []

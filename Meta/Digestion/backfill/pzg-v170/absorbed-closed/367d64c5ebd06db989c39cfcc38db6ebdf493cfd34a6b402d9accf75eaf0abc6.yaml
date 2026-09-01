@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:367d64c5ebd06db989c39cfcc38db6ebdf493cfd34a6b402d9accf75eaf0abc6
+  normalized_sha256: sha256:367d64c5ebd06db989c39cfcc38db6ebdf493cfd34a6b402d9accf75eaf0abc6
+cas_ref: sha256:367d64c5ebd06db989c39cfcc38db6ebdf493cfd34a6b402d9accf75eaf0abc6
+coverage_gids:
+  - D5/S0/Rewriting/Newman.newman_unique_normal_form
+receipts:
+  coverage:
+    - gid: D5/S0/Rewriting/Newman.newman_unique_normal_form
+      source_sha256: sha256:367d64c5ebd06db989c39cfcc38db6ebdf493cfd34a6b402d9accf75eaf0abc6
+      target_statement_id: sha256:1f1a54e2e08541385ddf383402c9c43fe07d2584f1327241520e4b1ec6a8f196
+  scribe:
+    - gid: D5/S0/Rewriting/Newman.newman_unique_normal_form
+      definition_sha256: sha256:1e1313263f57049dbe7d12e34bcc9138f8125f55ba12be4fcfb793b1f933a303
+      emission_sha256: sha256:9a4ecec49ee79d0cf5b2de74655277e12e9955777ee43697a48d06514643b2b7
+  unresolved_subitems: []

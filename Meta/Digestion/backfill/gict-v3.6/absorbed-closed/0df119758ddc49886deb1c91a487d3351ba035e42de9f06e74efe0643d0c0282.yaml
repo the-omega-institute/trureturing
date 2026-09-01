@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:0df119758ddc49886deb1c91a487d3351ba035e42de9f06e74efe0643d0c0282
+  normalized_sha256: sha256:0df119758ddc49886deb1c91a487d3351ba035e42de9f06e74efe0643d0c0282
+cas_ref: sha256:0df119758ddc49886deb1c91a487d3351ba035e42de9f06e74efe0643d0c0282
+coverage_gids:
+  - D5/S3/PrimeForms/Symmetry/InversionAntisymmetricSum.inversion_antisymmetric_sum_eq_zero
+receipts:
+  coverage:
+    - gid: D5/S3/PrimeForms/Symmetry/InversionAntisymmetricSum.inversion_antisymmetric_sum_eq_zero
+      source_sha256: sha256:0df119758ddc49886deb1c91a487d3351ba035e42de9f06e74efe0643d0c0282
+      target_statement_id: sha256:dd271608110335237725e050ada883b2b6c2776324a902b4e922420963f83ea8
+  scribe:
+    - gid: D5/S3/PrimeForms/Symmetry/InversionAntisymmetricSum.inversion_antisymmetric_sum_eq_zero
+      definition_sha256: sha256:642f410c8ba351cfd772b3a6601f07e2a0c980bfa78fa1abda3026b1ad4c6d9b
+      emission_sha256: sha256:67c3a95f42018d49196efca4265a4491533f08f5248df9fcd3cd491701d05d0a
+  unresolved_subitems: []

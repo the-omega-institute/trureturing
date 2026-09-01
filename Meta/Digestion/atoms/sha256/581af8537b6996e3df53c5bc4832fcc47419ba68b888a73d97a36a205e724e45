@@ -1,0 +1,32 @@
+* 总相位通量仍等于整数重数 \(m_\rho\)。
+
+其源方程为：
+
+$$
+\boxed{
+\left(
+|D_t|-\partial_\omega
+\right)J
+=
+2\pi
+\sum_\rho
+m_\rho
+\delta(\omega-\delta_\rho)
+\delta(t+\gamma_\rho).
+}
+\tag{1333.2}
+$$
+
+因此可以把“吞噬一切却仍有辐射”精确翻译为：
+
+$$
+\boxed{
+\text{bulk 坐标被投影隐藏，
+但 bulk source 的边界 Green 影像不能消失。}
+}
+$$
+
+这确实非常接近霍金辐射的结构精神：外部观察者不访问隐藏伙伴，却能测量由全局模式结构产生的出射统计。
+
+---
+

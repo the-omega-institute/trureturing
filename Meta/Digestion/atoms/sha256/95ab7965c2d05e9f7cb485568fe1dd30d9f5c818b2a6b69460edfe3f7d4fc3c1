@@ -1,0 +1,28 @@
+## 3.1 两种时间必须分开
+
+一个 timed event 记为：
+
+\[
+e=(\lambda_e,b_e,\omega_e,t_e).
+\]
+
+其中：
+
+- \(t_e\) 是 Fourier phase 的实参数；
+- \(\omega_e\) 是频率，prime specialization 为 \(\log p\)；
+- 事件在列表中的位置是操作次序；
+- 列表次序不由 \(t_e\) 的数值自动决定。
+
+因此当前系统至少具有两个不同坐标：
+
+\[
+\boxed{
+\begin{aligned}
+t &: \text{连续谱时间},\\
+k &: \text{离散操作次序}.
+\end{aligned}
+}
+\]
+
+本轮形式化将二者耦合，但不把它们识别为同一个时间，也不假设事件列表已经按实数时间单调排序。
+

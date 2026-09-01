@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:18b8449db38d3360ccd87832443868181e46019a8fe1441f6003837e4c06e81b
+  normalized_sha256: sha256:18b8449db38d3360ccd87832443868181e46019a8fe1441f6003837e4c06e81b
+cas_ref: sha256:18b8449db38d3360ccd87832443868181e46019a8fe1441f6003837e4c06e81b
+coverage_gids:
+  - D5/S3/Analytic/Isolation/MeromorphicContinuationUniqueness.meromorphic_continuation_unique
+receipts:
+  coverage:
+    - gid: D5/S3/Analytic/Isolation/MeromorphicContinuationUniqueness.meromorphic_continuation_unique
+      source_sha256: sha256:18b8449db38d3360ccd87832443868181e46019a8fe1441f6003837e4c06e81b
+      target_statement_id: sha256:7dafc7637eb12bc405e88520bd3cd0abd810db01c2ff6bf60ccd9d006303eff2
+  scribe:
+    - gid: D5/S3/Analytic/Isolation/MeromorphicContinuationUniqueness.meromorphic_continuation_unique
+      definition_sha256: sha256:b16a772f06ff6d6fd8e4eb39e5331a6aec65ab41ea1144ff39490776e4725721
+      emission_sha256: sha256:3879c9bfa2072084f166084fb192465d65a6681fd03f616216f81301c1c838bb
+  unresolved_subitems: []

@@ -1,0 +1,40 @@
+## 1117.1 运动学黄金校准
+
+保留同一个：
+
+$$
+\Sigma_{\mathbb Q},
+$$
+
+只把实流时间重标定为：
+
+$$
+\eta
+\longmapsto
+\frac{\eta}{2\log\varphi}.
+$$
+
+此时：
+
+$$
+2\log\varphi
+$$
+
+只是可见流的周期单位。
+
+Solenoid 的 Pontryagin dual 仍然是：
+
+$$
+\mathbb Q.
+$$
+
+所以这属于：
+
+$$
+\boxed{
+\text{observer calibration}.
+}
+$$
+
+---
+

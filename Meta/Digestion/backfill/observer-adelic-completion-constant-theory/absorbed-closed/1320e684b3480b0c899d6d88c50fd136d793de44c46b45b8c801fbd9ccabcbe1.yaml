@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:1320e684b3480b0c899d6d88c50fd136d793de44c46b45b8c801fbd9ccabcbe1
+  normalized_sha256: sha256:1320e684b3480b0c899d6d88c50fd136d793de44c46b45b8c801fbd9ccabcbe1
+cas_ref: sha256:1320e684b3480b0c899d6d88c50fd136d793de44c46b45b8c801fbd9ccabcbe1
+coverage_gids:
+  - D5/S3/Analytic/Asymptotics/SpectralZetaContinuation.linear_density_spectral_zeta_continuation
+receipts:
+  coverage:
+    - gid: D5/S3/Analytic/Asymptotics/SpectralZetaContinuation.linear_density_spectral_zeta_continuation
+      source_sha256: sha256:1320e684b3480b0c899d6d88c50fd136d793de44c46b45b8c801fbd9ccabcbe1
+      target_statement_id: sha256:2a8f7e8aefe6d70d92a2b8e355906db69bb7749bd984a7fd1c69c6c6df06d8b4
+  scribe:
+    - gid: D5/S3/Analytic/Asymptotics/SpectralZetaContinuation.linear_density_spectral_zeta_continuation
+      definition_sha256: sha256:1f1cbf74f92c78c790fcca68b51209a5d85354c3cc628c3f83fc587124258d25
+      emission_sha256: sha256:e05bdd7d61bb263b379b8a9c4df8f4092d4448f5997cd590d91328c81bb86573
+  unresolved_subitems: []

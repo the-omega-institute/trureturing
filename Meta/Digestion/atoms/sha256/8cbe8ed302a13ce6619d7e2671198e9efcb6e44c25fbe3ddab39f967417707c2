@@ -1,0 +1,44 @@
+## 1293.1 黄金共尾版本
+
+取：
+
+$$
+\boxed{
+\omega_n
+=
+\omega_0\varphi^{-2n}.
+}
+\tag{1293.3}
+$$
+
+由于：
+
+$$
+\omega_n\downarrow0,
+$$
+
+得到：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathfrak H_{\omega_n}=0
+\quad
+\forall n.
+}
+\tag{1293.4}
+$$
+
+黄金比例不是判据成立的逻辑必要条件；任何正的共尾序列都可以。
+
+它的角色是提供：
+
+$$
+\boxed{
+\text{最小二通道、自相似的时间极化显微调度。}
+}
+$$
+
+---
+

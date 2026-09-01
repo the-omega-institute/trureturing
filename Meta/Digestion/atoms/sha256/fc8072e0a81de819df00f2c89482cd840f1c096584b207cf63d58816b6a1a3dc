@@ -1,0 +1,80 @@
+# 第一千四百二十四部　建议形式化顺序
+
+```text
+D5/S3/Observer/ConditionalObservationEnergy/
+  VisibleConditionalComponent.lean
+  HiddenConditionalResidual.lean
+  ConditionalEnergyPythagoras.lean
+  StatewiseObservationIndex.lean
+  HiddenVisibleOdds.lean
+
+D5/S3/Analytic/HardyCauchyFidelity/
+  NormalizedUpperHardyKernel.lean
+  HardyKernelBornCauchyDensity.lean
+  HardyKernelFidelity.lean
+  VerticalShiftedFidelity.lean
+  FidelityLeakageComplement.lean
+  ShiftedCauchyKLIsNegativeLogFidelity.lean
+
+D5/S3/GoldenObserver/SecondShadowFixedPoint/
+  FirstShadowEnergy.lean
+  SecondShadowEnergy.lean
+  VisibleEqualsSecondShadow.lean
+  SecondShadowInverseBranch.lean
+  GoldenSecondShadowSplit.lean
+  GoldenObservationIndex.lean
+
+D5/S3/GoldenObserver/GoldenShadowOperator/
+  PositiveShadowContraction.lean
+  VisibleRetentionOperator.lean
+  GoldenShadowPolynomial.lean
+  GoldenShadowSpectrum.lean
+  GoldenActiveSubspace.lean
+  GoldenMultichannelIndex.lean
+
+D5/S3/GoldenObserver/FibonacciShadowTower/
+  HiddenShadowTower.lean
+  GoldenShadowFibonacciRecurrence.lean
+  RevelationEqualsTwoStepShadow.lean
+  NegativeTimeFibonacciReconstruction.lean
+  PositiveTimeGoldenContraction.lean
+
+D5/S3/GoldenObserver/FirstVisibilityLaw/
+  StationaryShadowVisibilityProcess.lean
+  GoldenFirstVisibilityDistribution.lean
+  GoldenExpectedVisibilityDepth.lean
+  GoldenHiddenWaitingCount.lean
+  GoldenGeometricPartitionFunction.lean
+
+D5/S3/Analytic/Zeta/GoldenStretchedHorizon/
+  RankOneShiftedDefectOperator.lean
+  GoldenStretchedHorizonDepth.lean
+  GoldenStretchedHorizonUniqueness.lean
+  GoldenHorizonHardyFidelity.lean
+  GoldenHorizonBogoliubovData.lean
+
+D5/S3/PositiveCompletion/GoldenTwoShadowGram/
+  TwoShadowGramMatrix.lean
+  TwoShadowSchurComplement.lean
+  GoldenTwoShadowBound.lean
+  GoldenTwoShadowCriticalKernel.lean
+  BeyondGoldenOneNegativeSquare.lean
+
+D5/S3/Weil/GoldenSubHorizonBound/
+  ShiftedHankelDefectOperator.lean
+  ShiftedVisibleRetention.lean
+  PrimeGammaSecondShadowDominationTarget.lean
+  OffLineBlockViolatesSecondShadowDomination.lean
+  DefectFaithfulCompressionTarget.lean
+  GoldenSubHorizonBoundImpliesRHTarget.lean
+
+D5/S3/ConceptDynamics/ShadowDepthSpectrum/
+  ShadowDepthClosure.lean
+  ShadowDepthPositiveRoot.lean
+  ShadowDepthEffectiveIndex.lean
+  GoldenDepthTwoSpecialization.lean
+  LowIndexJonesCompatibilityAudit.lean
+```
+
+---
+

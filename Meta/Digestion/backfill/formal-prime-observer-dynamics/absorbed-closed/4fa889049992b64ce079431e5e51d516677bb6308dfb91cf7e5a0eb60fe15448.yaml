@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:4fa889049992b64ce079431e5e51d516677bb6308dfb91cf7e5a0eb60fe15448
+  normalized_sha256: sha256:4fa889049992b64ce079431e5e51d516677bb6308dfb91cf7e5a0eb60fe15448
+cas_ref: sha256:4fa889049992b64ce079431e5e51d516677bb6308dfb91cf7e5a0eb60fe15448
+coverage_gids:
+  - D5/S3/ConceptDynamics/Experiment/InfiniteIdentificationFiniteInexactness.infinite_identification_not_finite_exact_tomography
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Experiment/InfiniteIdentificationFiniteInexactness.infinite_identification_not_finite_exact_tomography
+      source_sha256: sha256:4fa889049992b64ce079431e5e51d516677bb6308dfb91cf7e5a0eb60fe15448
+      target_statement_id: sha256:9fcffcb1fe9ebfb0303006f5c775e69c29ba131bccb206ff19c4c29271ffd164
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Experiment/InfiniteIdentificationFiniteInexactness.infinite_identification_not_finite_exact_tomography
+      definition_sha256: sha256:a1649f1b0629035b271ffa8b67948e9072c4f3186b2db33867a7ac203d2faab0
+      emission_sha256: sha256:78f52d7f646d1dace563a7f9df148bd88dceb93e4a284932e95be357357a746a
+  unresolved_subitems: []

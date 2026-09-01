@@ -1,0 +1,17 @@
+**文档地位。** 本文解释 Lean 节点
+
+`D5/S3/Observer/AgencyHolonomy/PhaseTwistedStableSwapCurvature`
+
+及其主要声明：
+
+- `phase_twisted_channel_norm`；
+- `relative_phase_reconstruction`；
+- `relative_log_address_phase_reconstruction`；
+- `phase_twisted_curvature_zero_time`；
+- `phase_twisted_stable_swap_curvature_bound`；
+- `phase_twisted_finite_holonomy_energy_bound`。
+
+机器事实以 Lean 声明为准。本文说明傅立叶参数时间如何进入非交换观察历时，并区分已经证明的统一能量界与尚未证明的同步、耗散和 prime-zero 桥。
+
+---
+

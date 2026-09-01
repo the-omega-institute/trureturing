@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:d903b7356e42f6a8d7c69815822123c6d5cad420dc64f3ee0884b5fb346f68af
+  normalized_sha256: sha256:d903b7356e42f6a8d7c69815822123c6d5cad420dc64f3ee0884b5fb346f68af
+cas_ref: sha256:d903b7356e42f6a8d7c69815822123c6d5cad420dc64f3ee0884b5fb346f68af
+coverage_gids:
+  - D5/S3/ConceptDynamics/RefinementFactorization/RefinementCompositionStructure.refinement_composition_category_and_quotient_preorder
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/RefinementFactorization/RefinementCompositionStructure.refinement_composition_category_and_quotient_preorder
+      source_sha256: sha256:d903b7356e42f6a8d7c69815822123c6d5cad420dc64f3ee0884b5fb346f68af
+      target_statement_id: sha256:184a33147e74c429843e509a990a855adbd7209730618e1ec2bacbb4a938fe81
+  scribe:
+    - gid: D5/S3/ConceptDynamics/RefinementFactorization/RefinementCompositionStructure.refinement_composition_category_and_quotient_preorder
+      definition_sha256: sha256:4168d9fbaddbbb98e42b6ce6ecd5410dd0a2a8aafcdc3affd2a2e81a3e060b9c
+      emission_sha256: sha256:e1d135471ec9d1596b349799d55d01ef80c386e7b281c51694582c5565870735
+  unresolved_subitems: []

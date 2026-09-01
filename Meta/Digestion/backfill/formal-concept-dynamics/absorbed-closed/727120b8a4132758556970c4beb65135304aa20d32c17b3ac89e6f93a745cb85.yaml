@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:727120b8a4132758556970c4beb65135304aa20d32c17b3ac89e6f93a745cb85
+  normalized_sha256: sha256:727120b8a4132758556970c4beb65135304aa20d32c17b3ac89e6f93a745cb85
+cas_ref: sha256:727120b8a4132758556970c4beb65135304aa20d32c17b3ac89e6f93a745cb85
+coverage_gids:
+  - D5/S3/ConceptDynamics/Epistemic/PartitionAndGeneralNegativeIntrospectionContrast.partition_and_general_negative_introspection_contrast
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Epistemic/PartitionAndGeneralNegativeIntrospectionContrast.partition_and_general_negative_introspection_contrast
+      source_sha256: sha256:727120b8a4132758556970c4beb65135304aa20d32c17b3ac89e6f93a745cb85
+      target_statement_id: sha256:3aeede211a5f63507d35ab1ffd609fa05bf94a7b7ea03a26725a0a3927f4345c
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Epistemic/PartitionAndGeneralNegativeIntrospectionContrast.partition_and_general_negative_introspection_contrast
+      definition_sha256: sha256:3862e959cbdec84b8afcbfb9059146b3d5316e5f317705764c07dbdb2a87b9b7
+      emission_sha256: sha256:f37ae54f634c1ee0c8a69bbd5d444a8d78f2ac3645970c4f01c463e0e82a377e
+  unresolved_subitems: []
