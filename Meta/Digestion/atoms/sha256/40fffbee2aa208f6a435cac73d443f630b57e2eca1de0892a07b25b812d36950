@@ -1,0 +1,52 @@
+## 11. 修订后的 theorem DAG
+
+```text
+PrimeFrequencyPhaseFlow                         Frozen
+        |
+        v
+TimeOrderedPrimeMemoryCocycle                   Frozen
+        |
+        v
+SecondMagnusSwapCurvature                       Frozen
+        |
+        +-----------------------------+
+        |                             |
+        v                             v
+SecondMagnusKernelNormSquare       FiniteFourierMagnusCommutator
+        |                             |
+        v                             |
+PairCalibratedSecondMagnusObservability          |
+        |                             |
+        +---------------+-------------+
+                        |
+                        v
+OrderedTimeSimplexSecondMagnusAverage
+                        |
+                        v
+FiniteFrequencyOrderedSimplexCoercivity         Open
+                        |
+                        v
+HolonomyToFixedScaleWeilTransport               Open
+                        |
+                        v
+FixedScaleWeilQuadraticForm                     Frozen
+                        |
+                        v
+XiRatioPickKernel                               Open
+                        |
+                        v
+HermitianKernelNegativeSquares                  Frozen
+                        |
+                        v
+OfflineZeroPickIndexLowerBound                  Open
+                        |
+                        v
+FiniteIndexLimitStability / Fredholm limit      Open
+                        |
+                        v
+Uniform global Weil positivity                  Open
+                        |
+                        v
+RH
+```
+

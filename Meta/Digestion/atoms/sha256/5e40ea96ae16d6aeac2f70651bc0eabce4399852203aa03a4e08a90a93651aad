@@ -1,0 +1,13 @@
+## 1. 修订目标
+
+本轮关闭二阶 Magnus 层内部的四个有限缺口，并校正 RH lane 的中央算术桥：
+
+1. 将 alternating two-slot kernel 的范数上界提升为精确平方公式；
+2. 将该 kernel 识别为有限 Fourier 代数生成元交换子的精确系数；
+3. 给出逐频率对校准时钟下的精确反向可观测性；
+4. 给出 ordered-time simplex 的闭式平均公式；
+5. 直接复用已冻结的 `FixedScaleWeilQuadraticForm`，不再另建平行的有限 Weil 定义；
+6. 将后续中央开放边拆为 holonomy-to-Weil transport、xi-ratio Pick kernel 与 negative-index detection。
+
+本轮仍只维护这一统一理论卷，不创建节点级 theory 文档。
+

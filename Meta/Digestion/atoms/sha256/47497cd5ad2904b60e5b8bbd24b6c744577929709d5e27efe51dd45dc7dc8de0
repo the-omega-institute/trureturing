@@ -1,0 +1,32 @@
+- 非负窗口上的响应非负。
+
+本轮没有证明公共固定时刻的全频率可观测性、finite-family ordered-window coercivity、time-ordered exponential、Magnus 级数收敛、holonomy-to-Weil transport、xi-ratio Pick positivity、离线零点数与负平方数的等式、Fredholm 极限、全局 Weil 正性或 RH。
+
+本轮关闭的有限链为：
+
+\[
+\boxed{
+\text{Fourier chronology}
+\longrightarrow
+\text{algebra commutator}
+\longrightarrow
+\text{exact kernel strength}
+\longrightarrow
+\text{pairwise reverse observability}
+\longrightarrow
+\text{ordered-simplex response}.
+}
+\]
+
+中央开放边现在被压缩为：
+
+\[
+\boxed{
+\texttt{FiniteFrequencyOrderedSimplexCoercivity}
+\rightarrow
+\texttt{HolonomyToFixedScaleWeilTransport}
+\rightarrow
+\texttt{XiRatioPickKernel}
+\rightarrow
+\texttt{OfflineZeroPickIndexLowerBound}.
+}

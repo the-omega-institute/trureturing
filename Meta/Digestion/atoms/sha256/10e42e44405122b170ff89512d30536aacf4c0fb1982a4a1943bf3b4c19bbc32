@@ -1,0 +1,38 @@
+\chi_{\omega_p}(t_1)\chi_{\omega_q}(t_2)
+-
+\chi_{\omega_q}(t_1)\chi_{\omega_p}(t_2),
+\qquad
+\chi_\omega(t)=e^{-it\omega}.
+\]
+
+令：
+
+\[
+A_{p,q}(t_1,t_2)
+=(t_1-t_2)\frac{\omega_p-\omega_q}{2}.
+\]
+
+新真源 `SecondMagnusKernelNormSquare` 机器证明：
+
+\[
+\boxed{
+|K_{p,q}(t_1,t_2)|^2
+=4\sin^2 A_{p,q}(t_1,t_2).
+}
+\]
+
+所以既有界 \(|K_{p,q}|\le2\) 是 sharp bound。若 \(\omega_p\ne\omega_q\)，取：
+
+\[
+t_1=\frac{\pi}{\omega_p-\omega_q},
+\qquad t_2=0,
+\]
+
+则：
+
+\[
+\boxed{|K_{p,q}(t_1,0)|^2=4.}
+\]
+
+这给出 pairwise faithfulness。任意非零频差均存在显式最大响应时刻。它尚未给出所有频率对共享的单一时钟。
+
