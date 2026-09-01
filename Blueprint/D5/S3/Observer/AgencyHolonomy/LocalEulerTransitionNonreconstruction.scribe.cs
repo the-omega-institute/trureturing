@@ -11,7 +11,7 @@ internal sealed class LocalEulerTransitionNonreconstructionDocument
         "D5/S3/Observer/AgencyHolonomy/LocalEulerTransitionNonreconstruction.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Local Euler determinants do not determine cross-address frame transitions.",
+        "Local Euler determinants do not determine cross-prime frame transitions.",
         H("Local Euler Transition Non-Reconstruction"),
         Blocks(Describe.Lean(
             DescribeId.Create("local-euler-transition-non-reconstruction"),
@@ -22,13 +22,13 @@ internal sealed class LocalEulerTransitionNonreconstructionDocument
             AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text(
-                    "The local operator at each of two addresses is the diagonal "
-                        + "two-branch operator with eigenvalues one and chi at that "
-                        + "address.")),
+                    "The local operator at every prime is the diagonal two-branch "
+                        + "operator with eigenvalues one and chi at that prime.")),
                 Paragraph(Text(
                     "Two general-linear frame families produce the same local Euler "
-                        + "determinant for every address and scalar parameter, while "
-                        + "their inverse-frame transition products are unequal."))),
+                        + "determinant for every prime and scalar parameter, while "
+                        + "their inverse-frame transition products from the smallest "
+                        + "prime two to the next prime three are unequal."))),
             DescribeRole.Theorem))));
 
     private static Formula TheoremFormula()
@@ -37,7 +37,10 @@ internal sealed class LocalEulerTransitionNonreconstructionDocument
         Formula finTwo = Call("Fin", D(2));
         Formula matrix = Call("Matrix", finTwo, finTwo, complex);
         Formula generalLinear = Call("GL", finTwo, complex);
+        Formula primes = Seq(F.Id("Nat"), Dot, F.Id("Primes"));
         Formula chi = F.Id("chi");
+        Formula p2 = Seq(F.Id("p"), Underscore, D(2));
+        Formula p3 = Seq(F.Id("p"), Underscore, D(3));
         Formula localOperator = F.Id("localOperator");
         Formula firstFrame = F.Id("firstFrame");
         Formula secondFrame = F.Id("secondFrame");
@@ -47,7 +50,7 @@ internal sealed class LocalEulerTransitionNonreconstructionDocument
 
         Formula localDefinition = Lambda(
             p,
-            finTwo,
+            primes,
             Call(
                 "diagonal",
                 Lambda(
@@ -60,8 +63,8 @@ internal sealed class LocalEulerTransitionNonreconstructionDocument
                         Apply(chi, p)))));
         Formula FrameAt(Formula frame, Formula address) => Apply(frame, address);
         Formula Transition(Formula frame) => Multiply(
-            Call("inverse", FrameAt(frame, D(1))),
-            FrameAt(frame, D(0)));
+            Call("inverse", FrameAt(frame, p3)),
+            FrameAt(frame, p2));
         Formula FramedOperator(Formula frame) => Multiply(
             Multiply(FrameAt(frame, p), Apply(localOperator, p)),
             Call("inverse", FrameAt(frame, p)));
@@ -74,13 +77,13 @@ internal sealed class LocalEulerTransitionNonreconstructionDocument
             Subtract(D(1), x),
             Subtract(D(1), Multiply(x, Apply(chi, p))));
         Formula SameLocalDeterminants(Formula frame) => ForAll(
-            [Bound("p", finTwo), Bound("x", complex)],
+            [Bound("p", primes), Bound("x", complex)],
             Equal(EulerDeterminant(frame), expectedDeterminant));
 
         Formula conclusion = Exists(
             [
-                Bound("firstFrame", Arrow(finTwo, generalLinear)),
-                Bound("secondFrame", Arrow(finTwo, generalLinear)),
+                Bound("firstFrame", Arrow(primes, generalLinear)),
+                Bound("secondFrame", Arrow(primes, generalLinear)),
             ],
             All(
                 SameLocalDeterminants(firstFrame),
@@ -88,11 +91,13 @@ internal sealed class LocalEulerTransitionNonreconstructionDocument
                 NotEqual(Transition(firstFrame), Transition(secondFrame))));
 
         return Disp(ForAll(
-            [Bound("chi", Arrow(finTwo, complex))],
+            [Bound("chi", Arrow(primes, complex))],
             Seq(
+                Let(p2, primes, Call("prime", D(2))),
+                Let(p3, primes, Call("prime", D(3))),
                 Let(
                     localOperator,
-                    Arrow(finTwo, matrix),
+                    Arrow(primes, matrix),
                     localDefinition),
                 conclusion)));
     }
