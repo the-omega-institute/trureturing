@@ -6,9 +6,9 @@ A negative-square mode has an exact damping threshold and Laplace resolvent.
 
 **Definition 1.1 (The stabilization gap).**
 
-Lean statement: `D5/S3/Analytic/Adelic/NegativeSquareLaplaceResolvent.stabilizationGap`
+Lean statement: `D5/S3/Analytic/ReflectedSpectrum/NegativeSquareLaplaceResolvent.stabilizationGap`
 
-*Formalization.* `D5/S3/Analytic/Adelic/NegativeSquareLaplaceResolvent.stabilizationGap` (`✓ std3`).
+*Formalization.* `D5/S3/Analytic/ReflectedSpectrum/NegativeSquareLaplaceResolvent.stabilizationGap` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -18,9 +18,9 @@ The gap adds scalar damping to the frozen signed spectral atom. Because the atom
 
 **Definition 1.2 (The damped forward kernel).**
 
-Lean statement: `D5/S3/Analytic/Adelic/NegativeSquareLaplaceResolvent.dampedNegativeSquareKernel`
+Lean statement: `D5/S3/Analytic/ReflectedSpectrum/NegativeSquareLaplaceResolvent.dampedNegativeSquareKernel`
 
-*Formalization.* `D5/S3/Analytic/Adelic/NegativeSquareLaplaceResolvent.dampedNegativeSquareKernel` (`✓ std3`).
+*Formalization.* `D5/S3/Analytic/ReflectedSpectrum/NegativeSquareLaplaceResolvent.dampedNegativeSquareKernel` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -30,9 +30,9 @@ The forward kernel is the real exponential with rate equal to minus the stabiliz
 
 **Definition 1.3 (The scalar negative-square resolvent).**
 
-Lean statement: `D5/S3/Analytic/Adelic/NegativeSquareLaplaceResolvent.negativeSquareResolvent`
+Lean statement: `D5/S3/Analytic/ReflectedSpectrum/NegativeSquareLaplaceResolvent.negativeSquareResolvent`
 
-*Formalization.* `D5/S3/Analytic/Adelic/NegativeSquareLaplaceResolvent.negativeSquareResolvent` (`✓ std3`).
+*Formalization.* `D5/S3/Analytic/ReflectedSpectrum/NegativeSquareLaplaceResolvent.negativeSquareResolvent` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -44,7 +44,7 @@ The scalar resolvent is the inverse stabilization gap. Its pole occurs when the 
 
 $$\begin{aligned}\forall delta: \mathbb{R}, u: \mathbb{R}, {\operatorname{IntegrableOnIoi}(\operatorname{dampedNegativeSquareKernel}(delta, u), 0) \iff delta^{2} < u} \land\\{delta^{2} < u \Rightarrow \operatorname{IntegralIoi}(\operatorname{dampedNegativeSquareKernel}(delta, u), 0) = \operatorname{negativeSquareResolvent}(delta, u)} \land\\{0 < \operatorname{negativeSquareResolvent}(delta, u) \iff delta^{2} < u} \land\\{\operatorname{stabilizationGap}(delta, u) = 0 \iff u = delta^{2}}.\end{aligned}$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Adelic/NegativeSquareLaplaceResolvent.negative_square_laplace_resolvent` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/ReflectedSpectrum/NegativeSquareLaplaceResolvent.negative_square_laplace_resolvent` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -56,8 +56,8 @@ The same threshold characterizes positivity of the scalar resolvent, while equal
 
 ## References
 
-- Truth anchor: `D5/S3/Analytic/Adelic/NegativeSquareLaplaceResolvent.dampedNegativeSquareKernel`
-- Truth anchor: `D5/S3/Analytic/Adelic/NegativeSquareLaplaceResolvent.negativeSquareResolvent`
-- Truth anchor: `D5/S3/Analytic/Adelic/NegativeSquareLaplaceResolvent.negative_square_laplace_resolvent`
-- Truth anchor: `D5/S3/Analytic/Adelic/NegativeSquareLaplaceResolvent.stabilizationGap`
-- Dependency: [D5/S3/Analytic/Adelic/ReflectedGrowthPairSecondOrderSpectrum](ReflectedGrowthPairSecondOrderSpectrum.md)
+- Truth anchor: `D5/S3/Analytic/ReflectedSpectrum/NegativeSquareLaplaceResolvent.dampedNegativeSquareKernel`
+- Truth anchor: `D5/S3/Analytic/ReflectedSpectrum/NegativeSquareLaplaceResolvent.negativeSquareResolvent`
+- Truth anchor: `D5/S3/Analytic/ReflectedSpectrum/NegativeSquareLaplaceResolvent.negative_square_laplace_resolvent`
+- Truth anchor: `D5/S3/Analytic/ReflectedSpectrum/NegativeSquareLaplaceResolvent.stabilizationGap`
+- Dependency: [D5/S3/Analytic/Adelic/ReflectedGrowthPairSecondOrderSpectrum](../Adelic/ReflectedGrowthPairSecondOrderSpectrum.md)

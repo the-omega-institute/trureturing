@@ -6,9 +6,9 @@ Two-dimensional generators separate hyperbolic, neutral, and elliptic spectral s
 
 **Definition 1.1 (The reflected hyperbolic generator).**
 
-Lean statement: `D5/S3/Analytic/Adelic/EllipticHyperbolicReflectionTrichotomy.hyperbolicGenerator`
+Lean statement: `D5/S3/Analytic/ReflectedSpectrum/EllipticHyperbolicReflectionTrichotomy.hyperbolicGenerator`
 
-*Formalization.* `D5/S3/Analytic/Adelic/EllipticHyperbolicReflectionTrichotomy.hyperbolicGenerator` (`✓ std3`).
+*Formalization.* `D5/S3/Analytic/ReflectedSpectrum/EllipticHyperbolicReflectionTrichotomy.hyperbolicGenerator` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -18,9 +18,9 @@ The diagonal rates delta and minus delta generate reciprocal growth and decay. T
 
 **Definition 1.2 (The elliptic rotation generator).**
 
-Lean statement: `D5/S3/Analytic/Adelic/EllipticHyperbolicReflectionTrichotomy.ellipticGenerator`
+Lean statement: `D5/S3/Analytic/ReflectedSpectrum/EllipticHyperbolicReflectionTrichotomy.ellipticGenerator`
 
-*Formalization.* `D5/S3/Analytic/Adelic/EllipticHyperbolicReflectionTrichotomy.ellipticGenerator` (`✓ std3`).
+*Formalization.* `D5/S3/Analytic/ReflectedSpectrum/EllipticHyperbolicReflectionTrichotomy.ellipticGenerator` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -30,9 +30,9 @@ The skew two-dimensional generator represents rotation at angular rate gamma. It
 
 **Definition 1.3 (The neutral unsplit generator).**
 
-Lean statement: `D5/S3/Analytic/Adelic/EllipticHyperbolicReflectionTrichotomy.neutralGenerator`
+Lean statement: `D5/S3/Analytic/ReflectedSpectrum/EllipticHyperbolicReflectionTrichotomy.neutralGenerator`
 
-*Formalization.* `D5/S3/Analytic/Adelic/EllipticHyperbolicReflectionTrichotomy.neutralGenerator` (`✓ std3`).
+*Formalization.* `D5/S3/Analytic/ReflectedSpectrum/EllipticHyperbolicReflectionTrichotomy.neutralGenerator` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -44,7 +44,7 @@ The zero generator is the boundary between the hyperbolic and elliptic sectors. 
 
 $$\forall delta: \mathbb{R}, \operatorname{det}(\operatorname{hyperbolicGenerator}(delta)) = \operatorname{reflectionPairSignedDeterminant}(delta).$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Adelic/EllipticHyperbolicReflectionTrichotomy.hyperbolic_det_eq_reflection_pair_signed_determinant` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/ReflectedSpectrum/EllipticHyperbolicReflectionTrichotomy.hyperbolic_det_eq_reflection_pair_signed_determinant` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -56,7 +56,7 @@ The matrix chart introduces no second negative-square invariant. Its determinant
 
 $$\begin{aligned}\forall delta: \mathbb{R}, gamma: \mathbb{R}, \operatorname{trace}(\operatorname{hyperbolicGenerator}(delta)) = 0 \land \operatorname{det}(\operatorname{hyperbolicGenerator}(delta)) = -delta^{2} \land\\\operatorname{square}(\operatorname{hyperbolicGenerator}(delta)) = \operatorname{scalarIdentity}(delta^{2}) \land\\\operatorname{trace}(\operatorname{neutralGenerator}()) = 0 \land \operatorname{det}(\operatorname{neutralGenerator}()) = 0 \land \operatorname{square}(\operatorname{neutralGenerator}()) = 0 \land\\\operatorname{trace}(\operatorname{ellipticGenerator}(gamma)) = 0 \land \operatorname{det}(\operatorname{ellipticGenerator}(gamma)) = gamma^{2} \land\\\operatorname{square}(\operatorname{ellipticGenerator}(gamma)) = \operatorname{scalarIdentity}(-gamma^{2}).\end{aligned}$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Adelic/EllipticHyperbolicReflectionTrichotomy.elliptic_hyperbolic_reflection_trichotomy` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/ReflectedSpectrum/EllipticHyperbolicReflectionTrichotomy.elliptic_hyperbolic_reflection_trichotomy` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -68,9 +68,9 @@ The neutral generator lies at determinant zero. This finite algebraic trichotomy
 
 ## References
 
-- Truth anchor: `D5/S3/Analytic/Adelic/EllipticHyperbolicReflectionTrichotomy.ellipticGenerator`
-- Truth anchor: `D5/S3/Analytic/Adelic/EllipticHyperbolicReflectionTrichotomy.elliptic_hyperbolic_reflection_trichotomy`
-- Truth anchor: `D5/S3/Analytic/Adelic/EllipticHyperbolicReflectionTrichotomy.hyperbolicGenerator`
-- Truth anchor: `D5/S3/Analytic/Adelic/EllipticHyperbolicReflectionTrichotomy.hyperbolic_det_eq_reflection_pair_signed_determinant`
-- Truth anchor: `D5/S3/Analytic/Adelic/EllipticHyperbolicReflectionTrichotomy.neutralGenerator`
-- Dependency: [D5/S3/Analytic/Adelic/ReflectedGrowthPairNegativeSquare](ReflectedGrowthPairNegativeSquare.md)
+- Truth anchor: `D5/S3/Analytic/ReflectedSpectrum/EllipticHyperbolicReflectionTrichotomy.ellipticGenerator`
+- Truth anchor: `D5/S3/Analytic/ReflectedSpectrum/EllipticHyperbolicReflectionTrichotomy.elliptic_hyperbolic_reflection_trichotomy`
+- Truth anchor: `D5/S3/Analytic/ReflectedSpectrum/EllipticHyperbolicReflectionTrichotomy.hyperbolicGenerator`
+- Truth anchor: `D5/S3/Analytic/ReflectedSpectrum/EllipticHyperbolicReflectionTrichotomy.hyperbolic_det_eq_reflection_pair_signed_determinant`
+- Truth anchor: `D5/S3/Analytic/ReflectedSpectrum/EllipticHyperbolicReflectionTrichotomy.neutralGenerator`
+- Dependency: [D5/S3/Analytic/Adelic/ReflectedGrowthPairNegativeSquare](../Adelic/ReflectedGrowthPairNegativeSquare.md)

@@ -6,9 +6,9 @@ Even and odd reflected channels separate invariant magnitude from time orientati
 
 **Definition 1.1 (The reflection-invariant even channel).**
 
-Lean statement: `D5/S3/Analytic/Adelic/ReflectedGrowthPairEvenOddDecomposition.evenObservation`
+Lean statement: `D5/S3/Analytic/ReflectedSpectrum/ReflectedGrowthPairEvenOddDecomposition.evenObservation`
 
-*Formalization.* `D5/S3/Analytic/Adelic/ReflectedGrowthPairEvenOddDecomposition.evenObservation` (`✓ std3`).
+*Formalization.* `D5/S3/Analytic/ReflectedSpectrum/ReflectedGrowthPairEvenOddDecomposition.evenObservation` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -18,9 +18,9 @@ The even channel averages the two frozen reflected branches. It forgets which br
 
 **Definition 1.2 (The oriented odd channel).**
 
-Lean statement: `D5/S3/Analytic/Adelic/ReflectedGrowthPairEvenOddDecomposition.oddObservation`
+Lean statement: `D5/S3/Analytic/ReflectedSpectrum/ReflectedGrowthPairEvenOddDecomposition.oddObservation`
 
-*Formalization.* `D5/S3/Analytic/Adelic/ReflectedGrowthPairEvenOddDecomposition.oddObservation` (`✓ std3`).
+*Formalization.* `D5/S3/Analytic/ReflectedSpectrum/ReflectedGrowthPairEvenOddDecomposition.oddObservation` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -32,7 +32,7 @@ The odd channel is half the branch difference. Parameter reversal changes its si
 
 $$\forall delta: \mathbb{R}, t: \mathbb{R}, \operatorname{evenObservation}(delta, -t) = \operatorname{evenObservation}(delta, t) \land \operatorname{oddObservation}(delta, -t) = -\operatorname{oddObservation}(delta, t) \land \operatorname{evenObservation}(delta, t) + \operatorname{oddObservation}(delta, t) = \operatorname{positiveRateBranch}(delta, t) \land \operatorname{evenObservation}(delta, t) - \operatorname{oddObservation}(delta, t) = \operatorname{negativeRateBranch}(delta, t) \land \operatorname{evenObservation}(delta, t)^{2} - \operatorname{oddObservation}(delta, t)^{2} = 1.$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Adelic/ReflectedGrowthPairEvenOddDecomposition.reflected_growth_pair_even_odd_decomposition` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/ReflectedSpectrum/ReflectedGrowthPairEvenOddDecomposition.reflected_growth_pair_even_odd_decomposition` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -46,7 +46,7 @@ The frozen reciprocal product becomes the Lorentzian identity E squared minus O 
 
 $$\forall delta: \mathbb{R}, t: \mathbb{R}, \operatorname{oddObservation}(delta, t) = 0 \iff delta = 0 \lor t = 0.$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Adelic/ReflectedGrowthPairEvenOddDecomposition.odd_observation_eq_zero_iff` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/ReflectedSpectrum/ReflectedGrowthPairEvenOddDecomposition.odd_observation_eq_zero_iff` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -58,7 +58,7 @@ The oriented channel loses all signal exactly when the reflected split is absent
 
 $$\forall delta: \mathbb{R}, t: \mathbb{R}, 0 < delta \land 0 < t \Rightarrow 0 < \operatorname{oddObservation}(delta, t).$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Adelic/ReflectedGrowthPairEvenOddDecomposition.odd_observation_positive_of_forward_orientation` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/ReflectedSpectrum/ReflectedGrowthPairEvenOddDecomposition.odd_observation_positive_of_forward_orientation` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -68,9 +68,9 @@ The frozen forward-orientation theorem orders the expanding branch above the con
 
 ## References
 
-- Truth anchor: `D5/S3/Analytic/Adelic/ReflectedGrowthPairEvenOddDecomposition.evenObservation`
-- Truth anchor: `D5/S3/Analytic/Adelic/ReflectedGrowthPairEvenOddDecomposition.oddObservation`
-- Truth anchor: `D5/S3/Analytic/Adelic/ReflectedGrowthPairEvenOddDecomposition.odd_observation_eq_zero_iff`
-- Truth anchor: `D5/S3/Analytic/Adelic/ReflectedGrowthPairEvenOddDecomposition.odd_observation_positive_of_forward_orientation`
-- Truth anchor: `D5/S3/Analytic/Adelic/ReflectedGrowthPairEvenOddDecomposition.reflected_growth_pair_even_odd_decomposition`
-- Dependency: [D5/S3/Analytic/Adelic/ReflectedGrowthPairSecondOrderSpectrum](ReflectedGrowthPairSecondOrderSpectrum.md)
+- Truth anchor: `D5/S3/Analytic/ReflectedSpectrum/ReflectedGrowthPairEvenOddDecomposition.evenObservation`
+- Truth anchor: `D5/S3/Analytic/ReflectedSpectrum/ReflectedGrowthPairEvenOddDecomposition.oddObservation`
+- Truth anchor: `D5/S3/Analytic/ReflectedSpectrum/ReflectedGrowthPairEvenOddDecomposition.odd_observation_eq_zero_iff`
+- Truth anchor: `D5/S3/Analytic/ReflectedSpectrum/ReflectedGrowthPairEvenOddDecomposition.odd_observation_positive_of_forward_orientation`
+- Truth anchor: `D5/S3/Analytic/ReflectedSpectrum/ReflectedGrowthPairEvenOddDecomposition.reflected_growth_pair_even_odd_decomposition`
+- Dependency: [D5/S3/Analytic/Adelic/ReflectedGrowthPairSecondOrderSpectrum](../Adelic/ReflectedGrowthPairSecondOrderSpectrum.md)
