@@ -123,7 +123,11 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: candidate/.lake/build
-          key: ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.addr.outputs.config_sha256 }}-${{ steps.addr.outputs.sources_sha256 }}
+          # 精确 key 带 run_id ⟹ 每次运行必然不命中 ⟹ 强制走 restore-keys 前缀匹配,
+          # 由 GitHub 取【最近创建】的匹配层。这是进度能跨运行累积的前提:
+          # 若精确 key 可命中,它会永远钉在第一次保存的那一层上,
+          # 后续运行续建出的更完整的层再也不会被取回。
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.addr.outputs.config_sha256 }}-${{ steps.addr.outputs.sources_sha256 }}-${{ github.run_id }}
           restore-keys: |
             ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.addr.outputs.config_sha256 }}-
       - name: Build when no cache layer was available
@@ -166,7 +170,7 @@ jobs:
         uses: actions/cache/save@v4
         with:
           path: candidate/.lake/build
-          key: ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.addr.outputs.config_sha256 }}-${{ steps.addr.outputs.sources_sha256 }}
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.addr.outputs.config_sha256 }}-${{ steps.addr.outputs.sources_sha256 }}-${{ github.run_id }}
       - name: Save the Lean dependency layer
         if: always() && steps.selfbuild.outputs.olean != '' && steps.selfbuild.outputs.olean != '0'
         uses: actions/cache/save@v4
@@ -185,11 +189,35 @@ jobs:
           BUILD_LOG: ${{ runner.temp }}/verify-build.txt
         working-directory: candidate
         run: |
-          set -euo pipefail
-          lake build 2>&1 | tee "${BUILD_LOG}"
+          set -uo pipefail
+          # 首个真跑(run 33485962900)证明 selfbuild 侧的收尾+落袋生效。
+          # 但此后每次运行都会 restore 命中,selfbuild 被其 if 跳过,由本步骤续建 ——
+          # 本步骤此前既无 deadline 也无 save,循环会在这一侧原样重现。
+          set +e
+          timeout --signal=INT "${SELFBUILD_DEADLINE_SECONDS}" lake build 2>&1 | tee "${BUILD_LOG}"
+          build_status="${PIPESTATUS[0]}"
+          set -e
           compiled="$(grep -cE '(Built|Building|Compiling) ' "${BUILD_LOG}" || true)"
+          olean_count="$(find .lake/build -name '*.olean' | wc -l | tr -d ' ')"
           printf 'compiled_targets=%s\n' "${compiled}"
-          echo "matches=true" >> "$GITHUB_OUTPUT"
+          printf 'olean=%s\n' "${olean_count}"
+          echo "olean=${olean_count}" >> "$GITHUB_OUTPUT"
+          if [ "${build_status}" -eq 0 ]; then
+            echo "matches=true" >> "$GITHUB_OUTPUT"
+          elif [ "${build_status}" -eq 124 ] || [ "${build_status}" -eq 130 ]; then
+            echo "matches=false" >> "$GITHUB_OUTPUT"
+            printf '%s\n' "reached the self-imposed deadline during verify; saving the extended build layer"
+          else
+            exit "${build_status}"
+          fi
+      - name: Save the Lean build layer extended by verify
+        # 与 selfbuild 侧同形。key 同样带 run_id:每次保存都是新层,
+        # 由 restore-keys 前缀取最新,从而跨运行单调累积。
+        if: always() && steps.verify.outputs.olean != '' && steps.verify.outputs.olean != '0'
+        uses: actions/cache/save@v4
+        with:
+          path: candidate/.lake/build
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.addr.outputs.config_sha256 }}-${{ steps.addr.outputs.sources_sha256 }}-${{ github.run_id }}
       - name: Publish the build cache under its content address
         if: steps.verify.outputs.matches == 'true' || steps.selfbuild.outputs.built == 'true'
         shell: bash
