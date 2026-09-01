@@ -1,0 +1,6 @@
+## 一　W-A 预登记:曲率–slack 相位桥(`CurvatureSlackPhaseBridge`)
+
+**义务**:对 $a>0$、$x\ge 0$,令 $z=\frac{x-a}{x+a}$(即 `chebyshev_slack_bounds` 的 compactCoordinate),$\kappa=\frac{2(x-a)}{(x+a)^2}$(即 `off_line_curvature_dipole` 第一合取项的曲率公式在 $x=(t-\gamma)^2$、$a=\delta^2$ 下的字面形),$\mathrm{slack}_1=1-T_1(z)^2$。单一公开定理证明:$\bigl(\tfrac{(x+a)\kappa}{2}\bigr)^2+\mathrm{slack}_1=1$ 且 $\tfrac{(x+a)\kappa}{2}=z$;并在 $0<x<a$、$y=a^2/x$ 下于同一结论中证明 $z(y)=-z(x)$、$\mathrm{slack}_1(y)=\mathrm{slack}_1(x)$、$z(x)<0<z(y)$(相位相反)。模块须 `import` 上述两冻结模块,并以具名引理把 $\kappa$ 与 `off_line_curvature_dipole` 的曲率公式在 $x=(t-\gamma)^2$、$a=\delta^2$ 下字面对接;不触及 zeta、零点或 RH。
+**可证伪预测(写在跑之前)**:若正确,该定理以 `field_simp`/`ring`/`nlinarith` 级初等策略在钉版工具链闭合,公理集为标准三条;若任一子句为假,整条 W-A 作废,不得削弱子句以求闭合。
+**边界**:只闭合 A-R4 倒数对「slack 相等、相位相反」这一读数,把 C-2 的 phase bit 挣成定理;不主张其外任何 RH 前件。
+
