@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:259dc1080108db4f180cfd6db90f8ec9b2486b40b7eb850724820e766a9263b6
+  normalized_sha256: sha256:259dc1080108db4f180cfd6db90f8ec9b2486b40b7eb850724820e766a9263b6
+cas_ref: sha256:259dc1080108db4f180cfd6db90f8ec9b2486b40b7eb850724820e766a9263b6
+coverage_gids:
+  - D5/S3/ConceptDynamics/Gluing/LocalFactorOverlapCompatibility.local_factor_overlap_compatibility
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Gluing/LocalFactorOverlapCompatibility.local_factor_overlap_compatibility
+      source_sha256: sha256:259dc1080108db4f180cfd6db90f8ec9b2486b40b7eb850724820e766a9263b6
+      target_statement_id: sha256:562723510d223829c90831b57c253a7ffa55bcc8d62cf92e0e1567e6e5026e74
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Gluing/LocalFactorOverlapCompatibility.local_factor_overlap_compatibility
+      definition_sha256: sha256:c5d5721475516f7bf10560d99da0dd3e3d9e34158cb6b50ea031075f184d843a
+      emission_sha256: sha256:c82cb5649cd256f4f613e12f5d9074f2d71bb2eda7d36d1e2c6076a41f8246c5
+  unresolved_subitems: []
