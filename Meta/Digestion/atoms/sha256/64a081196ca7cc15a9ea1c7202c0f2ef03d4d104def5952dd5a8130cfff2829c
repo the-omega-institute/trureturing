@@ -1,0 +1,6 @@
+## 二　W-C 预登记:多尺度阻尼指纹的追加律(`MultiscaleFingerprintAppend`)
+
+**义务**:复用冻结 `criticalDampingDefect`,定义指纹 $F(\mathrm{realPart},\mathrm{scale}):\mathrm{Fin}\,n\to\mathbb R$,$F_k=\mathrm{criticalDampingDefect}(\mathrm{realPart},\mathrm{scale}_k)$。单一公开定理:对任意有限载体与追加尺度 $\tau'$(`Fin.snoc scale τ'`),(i) 旧指纹是新指纹在 `Fin.castSucc` 上的前缀;(ii) 两个载体(允许不同的有限指标类型)若在 $\tau'$ 处 defect 不等,则扩展后指纹不等。不证明「总存在分离尺度」。
+**可证伪预测(写在跑之前)**:若 C-3 有内容,则 A-R3 的单尺度碰撞在第二尺度被切开:取 X 的中心化偏移多重集 $\{+1,-1\}$、Y 为 $\{+b,+b,-b,-b\}$ 且 $\cosh b=(\cosh 1+1)/2$,则 $D_X(1)=D_Y(1)=2(\cosh 1-1)$ 而 $D_X(2)-D_Y(2)=2(\cosh 1-1)^2>0$;模块须以具名定理在钉版工具链兑现这两式。若两式任一在 kernel 下不成立,则 C-3「早期新尺度产生正 Capture」的预测被证伪,C-3 应退出而非再加尺度。
+**边界**:不主张有限矩层级完备,不引入 measure/transform 语言,不触及 zeta 零点是否存在。
+
