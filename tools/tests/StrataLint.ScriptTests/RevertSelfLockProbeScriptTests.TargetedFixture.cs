@@ -41,9 +41,16 @@ public sealed partial class RevertSelfLockProbeScriptTests
             WriteFakeDotnet();
         }
 
-        internal string Blockers => blockers;
-        internal string NormalizedTrx => Path.Combine(staging, "trx", "engineering-000.trx");
-        internal string SupervisorResult => Path.Combine(staging, "supervisor-result.json");
+        internal string ReadBlockers() =>
+            ScriptHarnessScratch.ReadTemporaryText(temporary, "blockers.json");
+
+        internal string ReadNormalizedTrx() => ScriptHarnessScratch.ReadTemporaryText(
+            temporary,
+            "bundle/.staging/trx/engineering-000.trx");
+
+        internal string ReadSupervisorResult() => ScriptHarnessScratch.ReadTemporaryText(
+            temporary,
+            "bundle/.staging/supervisor-result.json");
 
         internal ProcessOutput ExtractBlockers(string text)
         {

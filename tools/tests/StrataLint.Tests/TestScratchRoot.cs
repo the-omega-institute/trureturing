@@ -354,6 +354,9 @@ internal static class ScriptHarnessScratch
 
     internal static string ReadScratchText(string path) => File.ReadAllText(path);
 
+    internal static string ReadTemporaryText(TemporaryDirectory temporary, string relativePath) =>
+        File.ReadAllText(Path.Combine(temporary.Path, relativePath));
+
     internal static byte[] ReadScratchBytes(string path) => File.ReadAllBytes(path);
 
     internal static void WriteScratchText(string path, string content) =>

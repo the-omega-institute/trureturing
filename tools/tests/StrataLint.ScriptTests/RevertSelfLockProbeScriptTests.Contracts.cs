@@ -15,8 +15,7 @@ public sealed partial class RevertSelfLockProbeScriptTests
 
         Assert.True(result.ExitCode == 0, Diagnostics(result));
         Assert.Empty(result.StandardError);
-        var edge = JsonNode.Parse(
-            ScriptHarnessScratch.ReadScratchText(fixture.Output))!.AsObject();
+        var edge = JsonNode.Parse(fixture.ReadOutput())!.AsObject();
         Assert.Equal(fixture.TargetMergeSha, edge["target_merge_sha"]!.GetValue<string>());
         Assert.Equal(fixture.LastGreenSha, edge["last_green_sha"]!.GetValue<string>());
         Assert.Equal(100, edge["last_green_run_id"]!.GetValue<long>());
@@ -104,6 +103,9 @@ public sealed partial class RevertSelfLockProbeScriptTests
         internal string LastGreenSha { get; }
         internal string Output { get; }
         internal string TargetMergeSha { get; }
+
+        internal string ReadOutput() =>
+            ScriptHarnessScratch.ReadTemporaryText(temporary, "edge.json");
 
         internal ProcessOutput Bind(string redHead, bool duplicateRed)
         {

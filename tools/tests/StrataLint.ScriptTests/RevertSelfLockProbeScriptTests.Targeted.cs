@@ -14,8 +14,7 @@ public sealed partial class RevertSelfLockProbeScriptTests
 
         Assert.True(result.ExitCode == 0, Diagnostics(result));
         Assert.Empty(result.StandardError);
-        var output = JsonNode.Parse(
-            ScriptHarnessScratch.ReadScratchText(fixture.Blockers))!.AsObject();
+        var output = JsonNode.Parse(fixture.ReadBlockers())!.AsObject();
         Assert.Equal(1, output["schema_version"]!.GetValue<int>());
         var blocker = Assert.Single(output["blockers"]!.AsArray())!.AsObject();
         Assert.Equal("Example.Tests", blocker["assembly"]!.GetValue<string>());
@@ -31,8 +30,7 @@ public sealed partial class RevertSelfLockProbeScriptTests
 
         Assert.True(result.ExitCode == 0, Diagnostics(result));
         Assert.Empty(result.StandardError);
-        var supervisor = JsonNode.Parse(
-            ScriptHarnessScratch.ReadScratchText(fixture.SupervisorResult))!.AsObject();
+        var supervisor = JsonNode.Parse(fixture.ReadSupervisorResult())!.AsObject();
         Assert.Equal("synthetic_noop", supervisor["subject"]!["kind"]!.GetValue<string>());
         Assert.Equal(
             "ENGINEERING_TEST_EVIDENCE_FAILED",
@@ -40,7 +38,7 @@ public sealed partial class RevertSelfLockProbeScriptTests
         var blocker = Assert.Single(supervisor["blockers"]!.AsArray())!.AsObject();
         Assert.Equal("missing_identity", blocker["kind"]!.GetValue<string>());
         Assert.Equal("ExampleTests.Missing", blocker["test_id"]!.GetValue<string>());
-        var normalizedTrx = ScriptHarnessScratch.ReadScratchText(fixture.NormalizedTrx);
+        var normalizedTrx = fixture.ReadNormalizedTrx();
         Assert.Contains("ExampleTests.Present", normalizedTrx, StringComparison.Ordinal);
         Assert.DoesNotContain("ExampleTests.Missing", normalizedTrx, StringComparison.Ordinal);
     }
