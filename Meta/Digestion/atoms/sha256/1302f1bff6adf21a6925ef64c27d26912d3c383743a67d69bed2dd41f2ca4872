@@ -1,0 +1,43 @@
+\[
+\boxed{
+\mathcal E^{(2)}_{P}(t_1,t_2)
+=
+\sum_{p,q\in P}
+\left|K_{p,q}(t_1,t_2)C_{p,q}\right|^2.
+}
+\]
+
+机器节点证明：
+
+\[
+\boxed{
+0\le\mathcal E^{(2)}_{P}(t_1,t_2)
+\le4\mathcal E^{\mathrm{hol}}_{P}.
+}
+\]
+
+再与已冻结的 stable residual holonomy bound 组合，得到：
+
+\[
+\mathcal E^{(2)}_{P}(t_1,t_2)
+\le
+4|P|^2
+\left(
+2\lVert a-1\rVert\varepsilon+2\varepsilon^2
+\right)^2,
+\]
+
+并证明 \(\varepsilon=0\) 时二阶能量为零。因此新增严格链为：
+
+\[
+\boxed{
+\text{residual envelope decay}
+\Longrightarrow
+\text{finite holonomy energy decay}
+\Longrightarrow
+\text{finite second-Magnus energy decay}.
+}
+\]
+
+该链严格单向。共振格可以使 \(K_{p,q}C_{p,q}=0\)，同时允许 \(C_{p,q}\ne0\)。因此当前节点不能从二阶能量小反推出 holonomy 小。
+

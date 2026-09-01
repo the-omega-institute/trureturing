@@ -1,0 +1,22 @@
+\chi_p(t_1)\chi_q(t_2)
+-
+\chi_q(t_1)\chi_p(t_2).
+}
+\]
+
+令：
+
+\[
+\bar t=\frac{t_1+t_2}{2},
+\qquad
+\Delta t=t_1-t_2,
+\]
+
+\[
+\bar\omega=\frac{\omega_p+\omega_q}{2},
+\qquad
+\Delta\omega=\omega_p-\omega_q.
+\]
+
+目标精确分解为：
+

@@ -1,0 +1,36 @@
+\[
+\boxed{
+\sum_{p,q}w_pw_q|z_p-z_q|^2
+=
+2W^2-2|A|^2.
+}
+\]
+
+所以：
+
+\[
+\boxed{
+\text{色散缺陷能量下降}
+\iff
+\text{共同模态相干能量上升}.
+}
+\]
+
+time-ordered memory cocycle 增加了另一个层次。即使单时刻相位相干，历史注入仍可能因 local factors 和 chronology 的运输方式不同而产生非零 holonomy。
+
+因此完整压平需要同时处理：
+
+\[
+\boxed{
+\begin{aligned}
+\text{phase dispersion} &\to0,\\
+\text{memory swap curvature} &\to0,\\
+\text{residual envelope} &\to0.
+\end{aligned}
+}
+\]
+
+这三者不能在定义上相互替代。
+
+---
+

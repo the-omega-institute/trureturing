@@ -1,0 +1,22 @@
+\chi_{\log x}(t_1)\chi_{\log y}(t_2)
+-
+\chi_{\log y}(t_1)\chi_{\log x}(t_2).
+\]
+
+在两个黄金采样时间 \(t_{k_1},t_{k_2}\) 上，本轮机器证明：
+
+\[
+\boxed{
+\begin{aligned}
+K_{x,y}(t_{k_1},t_{k_2})
+={}&
+\Theta_{k_1}(x)\Theta_{k_2}(y)
+\\
+&-
+\Theta_{k_1}(y)\Theta_{k_2}(x).
+\end{aligned}
+}
+\]
+
+所以该核是两个黄金 circle characters 的交替行列式：
+
