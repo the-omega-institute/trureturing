@@ -59,9 +59,12 @@ public sealed partial class RevertSelfLockProbeScriptTests
                         + "target=$(cat \"$SELF_LOCK_TEST_TARGET\")\n"
                         + "printf 'PURE_REVERT_TRUE base_sha=%s head_sha=%s target_merge_sha=%s changed_path_count=1\\n' \"$base\" \"$head\" \"$target\""
                     : ClassifierBody));
-            File.WriteAllText(Path.Combine(temporary.Path, "target"), TargetMergeSha + "\n");
-            File.WriteAllText(Path.Combine(temporary.Path, "target-base"), TargetBaseSha + "\n");
-            File.WriteAllText(Path.Combine(temporary.Path, "red-run-head"), RedRunHeadSha + "\n");
+            ScriptHarnessScratch.WriteScratchText(
+                Path.Combine(temporary.Path, "target"), TargetMergeSha + "\n");
+            ScriptHarnessScratch.WriteScratchText(
+                Path.Combine(temporary.Path, "target-base"), TargetBaseSha + "\n");
+            ScriptHarnessScratch.WriteScratchText(
+                Path.Combine(temporary.Path, "red-run-head"), RedRunHeadSha + "\n");
             var root = TestRepositoryLayout.FindRoot();
             var script = Path.Combine(
                 root,

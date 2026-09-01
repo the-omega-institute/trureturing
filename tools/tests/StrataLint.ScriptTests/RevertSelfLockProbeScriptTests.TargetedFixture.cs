@@ -9,6 +9,7 @@ public sealed partial class RevertSelfLockProbeScriptTests
     {
         private const string Digest =
             "sha256:0000000000000000000000000000000000000000000000000000000000000000";
+        private readonly TemporaryDirectory temporary = new();
         private readonly string blockers;
         private string control = string.Empty;
         private readonly string controller;
@@ -19,9 +20,9 @@ public sealed partial class RevertSelfLockProbeScriptTests
         private readonly string targets;
         private readonly string temporaryPath;
 
-        internal TargetedCommandFixture(DirectoryInfo temporary)
+        internal TargetedCommandFixture()
         {
-            temporaryPath = temporary.FullName;
+            temporaryPath = temporary.Path;
             repository = Path.Combine(temporaryPath, "subject");
             blockers = Path.Combine(temporaryPath, "blockers.json");
             controller = Path.Combine(
@@ -39,6 +40,10 @@ public sealed partial class RevertSelfLockProbeScriptTests
             SealControl();
             WriteFakeDotnet();
         }
+
+        internal string Blockers => blockers;
+        internal string NormalizedTrx => Path.Combine(staging, "trx", "engineering-000.trx");
+        internal string SupervisorResult => Path.Combine(staging, "supervisor-result.json");
 
         internal ProcessOutput ExtractBlockers(string text)
         {
@@ -96,7 +101,7 @@ public sealed partial class RevertSelfLockProbeScriptTests
             control = Path.Combine(
                 temporaryPath,
                 Encoding.UTF8.GetString(digest.StandardOutput).Trim()[7..] + ".j0-control.json");
-            File.Move(temporaryControl, control);
+            ScriptHarnessScratch.MoveScratchFile(temporaryControl, control);
         }
 
         private void WriteFakeDotnet() => ScriptHarnessScratch.WriteExecutableStub(
@@ -148,6 +153,6 @@ public sealed partial class RevertSelfLockProbeScriptTests
             Assert.True(result.ExitCode == 0, Diagnostics(result));
         }
 
-        public void Dispose() => TestDirectoryCleanup.DeleteRecursively(temporaryPath);
+        public void Dispose() => temporary.Dispose();
     }
 }

@@ -9,15 +9,14 @@ public sealed partial class RevertSelfLockProbeScriptTests
     [Fact]
     public void RealRunEdgeBinderBindsExactLastGreenToTargetFirstRed()
     {
-        var temporary = Directory.CreateTempSubdirectory();
-        using var fixture = new RunEdgeFixture(temporary);
+        using var fixture = new RunEdgeFixture();
 
         var result = fixture.Bind(fixture.TargetMergeSha, duplicateRed: false);
 
         Assert.True(result.ExitCode == 0, Diagnostics(result));
         Assert.Empty(result.StandardError);
-        var edge = JsonNode.Parse(File.ReadAllText(
-            Path.Combine(temporary.FullName, "edge.json")))!.AsObject();
+        var edge = JsonNode.Parse(
+            ScriptHarnessScratch.ReadScratchText(fixture.Output))!.AsObject();
         Assert.Equal(fixture.TargetMergeSha, edge["target_merge_sha"]!.GetValue<string>());
         Assert.Equal(fixture.LastGreenSha, edge["last_green_sha"]!.GetValue<string>());
         Assert.Equal(100, edge["last_green_run_id"]!.GetValue<long>());
@@ -27,34 +26,31 @@ public sealed partial class RevertSelfLockProbeScriptTests
     [Fact]
     public void RealRunEdgeBinderRejectsDescendantRedRun()
     {
-        var temporary = Directory.CreateTempSubdirectory();
-        using var fixture = new RunEdgeFixture(temporary);
+        using var fixture = new RunEdgeFixture();
 
         var result = fixture.Bind(fixture.DescendantSha, duplicateRed: false);
 
         Assert.Equal(2, result.ExitCode);
         Assert.Contains("SELF_LOCK_RED_EDGE_INVALID", Encoding.UTF8.GetString(result.StandardError));
-        Assert.False(File.Exists(fixture.Output));
+        Assert.False(ScriptHarnessScratch.ScratchFileExists(fixture.Output));
     }
 
     [Fact]
     public void RealRunEdgeBinderRejectsNonUniqueRedSelection()
     {
-        var temporary = Directory.CreateTempSubdirectory();
-        using var fixture = new RunEdgeFixture(temporary);
+        using var fixture = new RunEdgeFixture();
 
         var result = fixture.Bind(fixture.TargetMergeSha, duplicateRed: true);
 
         Assert.Equal(2, result.ExitCode);
         Assert.Contains("SELF_LOCK_RED_EDGE_INVALID", Encoding.UTF8.GetString(result.StandardError));
-        Assert.False(File.Exists(fixture.Output));
+        Assert.False(ScriptHarnessScratch.ScratchFileExists(fixture.Output));
     }
 
     [Fact]
     public void RealTargetedRunnerRejectsJ0HeadChangedAfterSeal()
     {
-        var temporary = Directory.CreateTempSubdirectory();
-        using var fixture = new TargetedCommandFixture(temporary);
+        using var fixture = new TargetedCommandFixture();
         fixture.MoveHeadToBase();
 
         var result = fixture.RunTargeted();
@@ -67,15 +63,16 @@ public sealed partial class RevertSelfLockProbeScriptTests
 
     private sealed class RunEdgeFixture : IDisposable
     {
+        private readonly TemporaryDirectory temporary = new();
         private readonly string controller;
         private readonly string greenRuns;
         private readonly string redRuns;
         private readonly string repository;
         private readonly string temporaryPath;
 
-        internal RunEdgeFixture(DirectoryInfo temporary)
+        internal RunEdgeFixture()
         {
-            temporaryPath = temporary.FullName;
+            temporaryPath = temporary.Path;
             repository = Path.Combine(temporaryPath, "repository");
             greenRuns = Path.Combine(temporaryPath, "green.json");
             redRuns = Path.Combine(temporaryPath, "red.json");
@@ -200,6 +197,6 @@ public sealed partial class RevertSelfLockProbeScriptTests
             .. command,
         ];
 
-        public void Dispose() => TestDirectoryCleanup.DeleteRecursively(temporaryPath);
+        public void Dispose() => temporary.Dispose();
     }
 }

@@ -348,6 +348,8 @@ internal static class ScriptHarnessScratch
     internal static string[] ReadRecordedCalls(string path) =>
         File.Exists(path) ? File.ReadAllLines(path) : [];
 
+    internal static bool ScratchFileExists(string path) => File.Exists(path);
+
     internal static string[] ReadScratchLines(string path) => File.ReadAllLines(path);
 
     internal static string ReadScratchText(string path) => File.ReadAllText(path);
@@ -359,6 +361,9 @@ internal static class ScriptHarnessScratch
 
     internal static void AppendScratchText(string path, string content) =>
         File.AppendAllText(path, content, new System.Text.UTF8Encoding(false, true));
+
+    internal static void MoveScratchFile(string sourcePath, string targetPath) =>
+        File.Move(sourcePath, targetPath);
 
     internal static void DeleteScratchFile(string path) => File.Delete(path);
 }
