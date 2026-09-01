@@ -171,7 +171,7 @@ internal sealed class MultiscaleFingerprintAppendDocument
         Formula commonValue = Multiply(two, Subtract(coshOne, one));
         Formula positiveSquare = Multiply(
             two,
-            new Formula.Power(Subtract(coshOne, one), two));
+            new Formula.Power(Seq(Open, Subtract(coshOne, one), Close), two));
         Formula body = And(
             Equal(firstDefectX, firstDefectY),
             And(
