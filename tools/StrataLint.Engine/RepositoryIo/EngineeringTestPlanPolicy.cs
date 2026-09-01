@@ -180,6 +180,13 @@ internal static class EngineeringTestPlanPolicy
                 reason = EngineeringSelectedTestReason.DeclaredInput;
                 detail = $"changed path {matched} intersects a declared repository input";
             }
+            else if (changed.FirstOrDefault(path =>
+                         method.CompileTimeInputUniverses.Any(universe => universe.Covers(path)))
+                     is { } compileTimeInput)
+            {
+                reason = EngineeringSelectedTestReason.DeclaredInput;
+                detail = $"changed path {compileTimeInput} intersects a compile-time input universe";
+            }
             else if (method.IsUnknown)
             {
                 reason = EngineeringSelectedTestReason.UnknownInput;

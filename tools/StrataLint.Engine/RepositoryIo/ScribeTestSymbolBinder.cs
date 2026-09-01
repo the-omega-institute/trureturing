@@ -49,6 +49,7 @@ internal sealed class ScribeBoundCallable
     internal ScribeSemanticModelProvider SemanticModels { get; }
     internal IReadOnlyList<SyntaxNode> InspectionNodes { get; }
     internal HashSet<ScribeBoundCallable> Targets { get; } = [];
+    internal HashSet<ScribeCompileTimeInputUniverse> CompileTimeInputUniverses { get; } = [];
     internal HashSet<TestMapUnknownReason> BindingUnknownReasons { get; } = [];
 
     internal bool ContainsLine(int line) => InspectionNodes.Any(node =>
@@ -366,6 +367,7 @@ internal static class ScribeTestSymbolBinder
                     caller.Targets.Add(methodTarget);
                 break;
             case IPropertySymbol property:
+                AddCompileTimeInputUniverses(property, caller.CompileTimeInputUniverses);
                 AddAccessor(property.GetMethod, caller.Targets, callablesBySymbol);
                 AddAccessor(property.SetMethod, caller.Targets, callablesBySymbol);
                 break;
@@ -373,6 +375,24 @@ internal static class ScribeTestSymbolBinder
                 AddAccessor(@event.AddMethod, caller.Targets, callablesBySymbol);
                 AddAccessor(@event.RemoveMethod, caller.Targets, callablesBySymbol);
                 break;
+        }
+    }
+
+    private static void AddCompileTimeInputUniverses(
+        IPropertySymbol property,
+        HashSet<ScribeCompileTimeInputUniverse> universes)
+    {
+        foreach (var attribute in property.GetAttributes().Where(static attribute =>
+                     attribute.AttributeClass?.ToDisplayString()
+                         == typeof(CompileTimeInputUniverseAttribute).FullName))
+        {
+            if (attribute.ConstructorArguments is
+                [{ Value: string prefix }, { Value: string suffix }]
+                && prefix.Length != 0
+                && suffix.Length != 0)
+            {
+                universes.Add(new ScribeCompileTimeInputUniverse(prefix, suffix));
+            }
         }
     }
 

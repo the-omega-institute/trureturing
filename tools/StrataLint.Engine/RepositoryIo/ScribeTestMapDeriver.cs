@@ -19,6 +19,13 @@ internal sealed record TestMapSource(
     string Content,
     string PartitionKey = "synthetic");
 
+internal readonly record struct ScribeCompileTimeInputUniverse(string Prefix, string Suffix)
+{
+    internal bool Covers(string path) =>
+        path.StartsWith(Prefix, StringComparison.Ordinal)
+        && path.EndsWith(Suffix, StringComparison.Ordinal);
+}
+
 internal sealed record ScribeTestMethod(
     string PartitionKey,
     string SourcePath,
@@ -28,6 +35,8 @@ internal sealed record ScribeTestMethod(
     bool IsStaticallySkipped = false,
     bool IsDiscoveryConditional = false)
 {
+    internal IReadOnlyList<ScribeCompileTimeInputUniverse> CompileTimeInputUniverses { get; init; } = [];
+
     internal bool IsUnknown => UnknownReasons.Count != 0;
 
     internal string Identity => $"{SourcePath}::{Id}";
@@ -364,6 +373,7 @@ internal static class ScribeTestMapDeriver
         foreach (var test in methods.Where(static method => method.IsTest))
         {
             var paths = new HashSet<string>(StringComparer.Ordinal);
+            var compileTimeInputUniverses = new HashSet<ScribeCompileTimeInputUniverse>();
             var reasons = new HashSet<TestMapUnknownReason>();
             var pending = new Stack<ScribeBoundCallable>();
             var visited = new HashSet<ScribeBoundCallable>();
@@ -376,6 +386,7 @@ internal static class ScribeTestMapDeriver
                 }
 
                 InspectMethod(method, discoveryPaths, paths, reasons);
+                compileTimeInputUniverses.UnionWith(method.CompileTimeInputUniverses);
                 reasons.UnionWith(method.BindingUnknownReasons);
                 if (indirect.Any(site => site.Path == method.Path
                     && method.ContainsLine(site.Line)))
@@ -396,7 +407,13 @@ internal static class ScribeTestMapDeriver
                 paths.Order(StringComparer.Ordinal).ToArray(),
                 reasons.Order().ToArray(),
                 test.IsStaticallySkipped,
-                test.IsDiscoveryConditional));
+                test.IsDiscoveryConditional)
+            {
+                CompileTimeInputUniverses = compileTimeInputUniverses
+                    .OrderBy(static universe => universe.Prefix, StringComparer.Ordinal)
+                    .ThenBy(static universe => universe.Suffix, StringComparer.Ordinal)
+                    .ToArray(),
+            });
         }
 
         return new ScribeTestMap(

@@ -42,6 +42,7 @@ public static class DocumentDefinitions
     private static readonly Lazy<ImmutableArray<DocumentDefinition>> Definitions = new(
         () => Discover(typeof(DocumentDefinitions).Assembly));
 
+    [CompileTimeInputUniverse("Blueprint/", ".scribe.cs")]
     public static ImmutableArray<DocumentDefinition> All => Definitions.Value;
 
     public static ImmutableArray<DocumentDefinition> Discover(Assembly assembly)
