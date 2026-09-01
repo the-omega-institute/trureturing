@@ -84,11 +84,22 @@ def identity [Zero A] : StepTwoSignature A where
   degreeOne := 0
   doubledDegreeTwo := 0
 
-instance [Semiring A] : One (StepTwoSignature A) :=
-  ⟨identity⟩
-
-instance [Semiring A] : Mul (StepTwoSignature A) :=
-  ⟨compose⟩
+/-- Step-two chronological composition is associative and has the empty
+signature as its unit. -/
+instance [Semiring A] : Monoid (StepTwoSignature A) where
+  one := identity
+  mul := compose
+  one_mul signature := by
+    rcases signature with ⟨first, second⟩
+    ext <;> simp [compose, identity]
+  mul_one signature := by
+    rcases signature with ⟨first, second⟩
+    ext <;> simp [compose, identity]
+  mul_assoc left middle right := by
+    rcases left with ⟨leftOne, leftTwo⟩
+    rcases middle with ⟨middleOne, middleTwo⟩
+    rcases right with ⟨rightOne, rightTwo⟩
+    ext <;> simp [compose] <;> noncomm_ring
 
 @[simp]
 theorem degreeOne_one [Semiring A] :
@@ -114,23 +125,6 @@ theorem doubledDegreeTwo_mul [Semiring A]
         2 * (left.degreeOne * right.degreeOne) +
         right.doubledDegreeTwo := by
   rfl
-
-/-- Step-two chronological composition is associative and has the empty
-signature as its unit. -/
-instance [Semiring A] : Monoid (StepTwoSignature A) where
-  one := 1
-  mul := (· * ·)
-  one_mul signature := by
-    rcases signature with ⟨first, second⟩
-    ext <;> simp [compose, identity]
-  mul_one signature := by
-    rcases signature with ⟨first, second⟩
-    ext <;> simp [compose, identity]
-  mul_assoc left middle right := by
-    rcases left with ⟨leftOne, leftTwo⟩
-    rcases middle with ⟨middleOne, middleTwo⟩
-    rcases right with ⟨rightOne, rightTwo⟩
-    ext <;> simp [compose] <;> noncomm_ring
 
 end StepTwoSignature
 
