@@ -9,13 +9,15 @@ public sealed partial class RevertSelfLockProbeScriptTests
     [Fact]
     public void RealRunEdgeBinderBindsExactLastGreenToTargetFirstRed()
     {
-        using var fixture = new RunEdgeFixture();
+        var temporary = Directory.CreateTempSubdirectory();
+        using var fixture = new RunEdgeFixture(temporary);
 
         var result = fixture.Bind(fixture.TargetMergeSha, duplicateRed: false);
 
         Assert.True(result.ExitCode == 0, Diagnostics(result));
         Assert.Empty(result.StandardError);
-        var edge = JsonNode.Parse(fixture.OutputText())!.AsObject();
+        var edge = JsonNode.Parse(File.ReadAllText(
+            Path.Combine(temporary.FullName, "edge.json")))!.AsObject();
         Assert.Equal(fixture.TargetMergeSha, edge["target_merge_sha"]!.GetValue<string>());
         Assert.Equal(fixture.LastGreenSha, edge["last_green_sha"]!.GetValue<string>());
         Assert.Equal(100, edge["last_green_run_id"]!.GetValue<long>());
@@ -25,7 +27,8 @@ public sealed partial class RevertSelfLockProbeScriptTests
     [Fact]
     public void RealRunEdgeBinderRejectsDescendantRedRun()
     {
-        using var fixture = new RunEdgeFixture();
+        var temporary = Directory.CreateTempSubdirectory();
+        using var fixture = new RunEdgeFixture(temporary);
 
         var result = fixture.Bind(fixture.DescendantSha, duplicateRed: false);
 
@@ -37,7 +40,8 @@ public sealed partial class RevertSelfLockProbeScriptTests
     [Fact]
     public void RealRunEdgeBinderRejectsNonUniqueRedSelection()
     {
-        using var fixture = new RunEdgeFixture();
+        var temporary = Directory.CreateTempSubdirectory();
+        using var fixture = new RunEdgeFixture(temporary);
 
         var result = fixture.Bind(fixture.TargetMergeSha, duplicateRed: true);
 
@@ -49,7 +53,8 @@ public sealed partial class RevertSelfLockProbeScriptTests
     [Fact]
     public void RealTargetedRunnerRejectsJ0HeadChangedAfterSeal()
     {
-        using var fixture = new TargetedCommandFixture();
+        var temporary = Directory.CreateTempSubdirectory();
+        using var fixture = new TargetedCommandFixture(temporary);
         fixture.MoveHeadToBase();
 
         var result = fixture.RunTargeted();
@@ -62,18 +67,19 @@ public sealed partial class RevertSelfLockProbeScriptTests
 
     private sealed class RunEdgeFixture : IDisposable
     {
-        private readonly TemporaryDirectory temporary = new();
         private readonly string controller;
         private readonly string greenRuns;
         private readonly string redRuns;
         private readonly string repository;
+        private readonly string temporaryPath;
 
-        internal RunEdgeFixture()
+        internal RunEdgeFixture(DirectoryInfo temporary)
         {
-            repository = Path.Combine(temporary.Path, "repository");
-            greenRuns = Path.Combine(temporary.Path, "green.json");
-            redRuns = Path.Combine(temporary.Path, "red.json");
-            Output = Path.Combine(temporary.Path, "edge.json");
+            temporaryPath = temporary.FullName;
+            repository = Path.Combine(temporaryPath, "repository");
+            greenRuns = Path.Combine(temporaryPath, "green.json");
+            redRuns = Path.Combine(temporaryPath, "red.json");
+            Output = Path.Combine(temporaryPath, "edge.json");
             controller = Path.Combine(
                 TestRepositoryLayout.FindRoot(),
                 "tools", "StrataLint.EngineeringScope", "bin", "Release", "net10.0",
@@ -122,8 +128,6 @@ public sealed partial class RevertSelfLockProbeScriptTests
                 "--output", Output);
         }
 
-        internal string OutputText() => ScriptHarnessScratch.ReadScratchText(Output);
-
         private static string RunsJson(IReadOnlyList<(long Id, string Sha, string Conclusion)> runs)
         {
             var entries = string.Join(",", runs.Select(run =>
@@ -158,7 +162,7 @@ public sealed partial class RevertSelfLockProbeScriptTests
         private ProcessOutput RunController(params string[] arguments) => TestProcessRunner.Run(
             "/usr/bin/env",
             GitEnvironment(["dotnet", controller, "self-lock-probe", .. arguments]),
-            temporary.Path,
+            temporaryPath,
             TestBudgets.ScriptProcessHangGuard,
             512 * 1024);
 
@@ -190,12 +194,12 @@ public sealed partial class RevertSelfLockProbeScriptTests
             "-u", "GIT_AUTHOR_NAME", "-u", "GIT_AUTHOR_EMAIL",
             "-u", "GIT_COMMITTER_NAME", "-u", "GIT_COMMITTER_EMAIL",
             "-u", "GIT_CONFIG", "-u", "GIT_CONFIG_PARAMETERS", "-u", "GIT_TEMPLATE_DIR",
-            $"HOME={Path.Combine(temporary.Path, "home")}",
+            $"HOME={Path.Combine(temporaryPath, "home")}",
             "GIT_CONFIG_GLOBAL=/dev/null", "GIT_CONFIG_SYSTEM=/dev/null",
             "GIT_CONFIG_NOSYSTEM=1", "GIT_CONFIG_COUNT=0",
             .. command,
         ];
 
-        public void Dispose() => temporary.Dispose();
+        public void Dispose() => TestDirectoryCleanup.DeleteRecursively(temporaryPath);
     }
 }

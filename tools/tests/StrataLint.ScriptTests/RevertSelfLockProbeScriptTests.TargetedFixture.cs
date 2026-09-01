@@ -9,7 +9,6 @@ public sealed partial class RevertSelfLockProbeScriptTests
     {
         private const string Digest =
             "sha256:0000000000000000000000000000000000000000000000000000000000000000";
-        private readonly TemporaryDirectory temporary = new();
         private readonly string blockers;
         private string control = string.Empty;
         private readonly string controller;
@@ -18,21 +17,23 @@ public sealed partial class RevertSelfLockProbeScriptTests
         private readonly string repository;
         private readonly string staging;
         private readonly string targets;
+        private readonly string temporaryPath;
 
-        internal TargetedCommandFixture()
+        internal TargetedCommandFixture(DirectoryInfo temporary)
         {
-            repository = Path.Combine(temporary.Path, "subject");
-            blockers = Path.Combine(temporary.Path, "blockers.json");
+            temporaryPath = temporary.FullName;
+            repository = Path.Combine(temporaryPath, "subject");
+            blockers = Path.Combine(temporaryPath, "blockers.json");
             controller = Path.Combine(
                 TestRepositoryLayout.FindRoot(),
                 "tools", "StrataLint.EngineeringScope", "bin", "Release", "net10.0",
                 "StrataLint.EngineeringScope.dll");
-            fakeDotnet = Path.Combine(temporary.Path, "targeted-dotnet");
-            log = Path.Combine(temporary.Path, "failed.log");
-            staging = Path.Combine(temporary.Path, "bundle", ".staging");
-            targets = Path.Combine(temporary.Path, "targets.json");
+            fakeDotnet = Path.Combine(temporaryPath, "targeted-dotnet");
+            log = Path.Combine(temporaryPath, "failed.log");
+            staging = Path.Combine(temporaryPath, "bundle", ".staging");
+            targets = Path.Combine(temporaryPath, "targets.json");
             ScriptHarnessScratch.EnsureDirectory(repository);
-            ScriptHarnessScratch.EnsureDirectory(Path.Combine(temporary.Path, "home"));
+            ScriptHarnessScratch.EnsureDirectory(Path.Combine(temporaryPath, "home"));
             InitializeRepository();
             WriteTargets();
             SealControl();
@@ -58,14 +59,6 @@ public sealed partial class RevertSelfLockProbeScriptTests
 
         internal void MoveHeadToBase() => Git("reset", "--hard", "HEAD^1");
 
-        internal string BlockersText() => ScriptHarnessScratch.ReadScratchText(blockers);
-
-        internal string NormalizedTrxText() => ScriptHarnessScratch.ReadScratchText(
-            Path.Combine(staging, "trx", "engineering-000.trx"));
-
-        internal string SupervisorText() => ScriptHarnessScratch.ReadScratchText(
-            Path.Combine(staging, "supervisor-result.json"));
-
         private void InitializeRepository()
         {
             Git("init", "--template=", "-b", "main");
@@ -90,7 +83,7 @@ public sealed partial class RevertSelfLockProbeScriptTests
 
         private void SealControl()
         {
-            var temporaryControl = Path.Combine(temporary.Path, "j0-control.tmp.json");
+            var temporaryControl = Path.Combine(temporaryPath, "j0-control.tmp.json");
             var seal = RunController(
                 "seal-j0-control",
                 "--repository", repository,
@@ -101,7 +94,7 @@ public sealed partial class RevertSelfLockProbeScriptTests
             var digest = RunController("artifact-digest", "--path", temporaryControl);
             Assert.True(digest.ExitCode == 0, Diagnostics(digest));
             control = Path.Combine(
-                temporary.Path,
+                temporaryPath,
                 Encoding.UTF8.GetString(digest.StandardOutput).Trim()[7..] + ".j0-control.json");
             File.Move(temporaryControl, control);
         }
@@ -127,12 +120,12 @@ public sealed partial class RevertSelfLockProbeScriptTests
                 "-u", "GIT_AUTHOR_NAME", "-u", "GIT_AUTHOR_EMAIL",
                 "-u", "GIT_COMMITTER_NAME", "-u", "GIT_COMMITTER_EMAIL",
                 "-u", "GIT_CONFIG", "-u", "GIT_CONFIG_PARAMETERS", "-u", "GIT_TEMPLATE_DIR",
-                $"HOME={Path.Combine(temporary.Path, "home")}",
+                $"HOME={Path.Combine(temporaryPath, "home")}",
                 "GIT_CONFIG_GLOBAL=/dev/null", "GIT_CONFIG_SYSTEM=/dev/null",
                 "GIT_CONFIG_NOSYSTEM=1", "GIT_CONFIG_COUNT=0",
                 "dotnet", controller, "self-lock-probe", .. arguments,
             ],
-            temporary.Path,
+            temporaryPath,
             TestBudgets.ScriptProcessHangGuard,
             512 * 1024);
 
@@ -144,7 +137,7 @@ public sealed partial class RevertSelfLockProbeScriptTests
                     "-u", "GIT_AUTHOR_NAME", "-u", "GIT_AUTHOR_EMAIL",
                     "-u", "GIT_COMMITTER_NAME", "-u", "GIT_COMMITTER_EMAIL",
                     "-u", "GIT_CONFIG", "-u", "GIT_CONFIG_PARAMETERS", "-u", "GIT_TEMPLATE_DIR",
-                    $"HOME={Path.Combine(temporary.Path, "home")}",
+                    $"HOME={Path.Combine(temporaryPath, "home")}",
                     "GIT_CONFIG_GLOBAL=/dev/null", "GIT_CONFIG_SYSTEM=/dev/null",
                     "GIT_CONFIG_NOSYSTEM=1", "GIT_CONFIG_COUNT=0",
                     "/usr/bin/git", "-C", repository, .. arguments,
@@ -155,6 +148,6 @@ public sealed partial class RevertSelfLockProbeScriptTests
             Assert.True(result.ExitCode == 0, Diagnostics(result));
         }
 
-        public void Dispose() => temporary.Dispose();
+        public void Dispose() => TestDirectoryCleanup.DeleteRecursively(temporaryPath);
     }
 }
