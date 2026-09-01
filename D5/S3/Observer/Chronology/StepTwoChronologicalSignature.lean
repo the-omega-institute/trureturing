@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Observer/Chronology/StepTwoChronologicalSignature
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Chronological words form a step-two signature monoid whose doubled logarithmic coordinate obeys the degree-two BCH law. -/
+   digest: Step-two signatures obey Chen concatenation and the degree-two BCH law. -/
 
 import D5.S3.Observer.HiddenFlow.ProjectionCommutatorIdentity
 import Mathlib.Tactic
@@ -61,6 +61,7 @@ universe u v
 /-- Degree one together with twice degree two of a chronological signature.
 The doubled convention avoids division by two and remains valid over every
 semiring. -/
+@[ext]
 structure StepTwoSignature (A : Type u) where
   degreeOne : A
   doubledDegreeTwo : A
@@ -246,11 +247,7 @@ theorem doubled_magnus_two_events_eq_commutator
     doubledMagnusDegreeTwo
         (chronologicalSignature observe [eventP, eventQ]) =
       commutator (observe eventP) (observe eventQ) := by
-  change
-    doubledMagnusDegreeTwo
-        (eventSignature (observe eventP) *
-          eventSignature (observe eventQ)) =
-      commutator (observe eventP) (observe eventQ)
+  simp only [chronologicalSignature, mul_one]
   rw [doubled_magnus_degree_two_mul]
   simp
 
@@ -265,7 +262,9 @@ theorem doubled_magnus_two_events_swap
         (chronologicalSignature observe [eventP, eventQ]) := by
   rw [doubled_magnus_two_events_eq_commutator,
     doubled_magnus_two_events_eq_commutator]
-  unfold commutator
+  change
+    observe eventQ * observe eventP - observe eventP * observe eventQ =
+      -(observe eventP * observe eventQ - observe eventQ * observe eventP)
   noncomm_ring
 
 /-- A commuting pair has no degree-two chronological defect. -/
