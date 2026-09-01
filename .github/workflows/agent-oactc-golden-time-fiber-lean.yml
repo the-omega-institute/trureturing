@@ -34,11 +34,15 @@ jobs:
           failed=0
           modules=(
             D5.S3.Analytic.GoldenTomography.FiniteVandermondeTomography
+            D5.S3.Observer.GoldenCoding.GoldenRationalShellRigidity
             D5.S3.ObserverMemory.FourierFibers.FiniteCrystalTimeFrequencyBridge
             D5.S3.ObserverMemory.FourierFibers.TimeShiftSpectralFiberTransport
             D5.S3.ObserverMemory.FourierFibers.TemporalFiberObserverUpgrade
             D5.S3.ObserverMemory.FourierFibers.TemporalReflectionBreakVisibility
             D5.S3.ObserverMemory.FourierFibers.DegenerateModeHiddenFiber
+            D5.S3.ObserverMemory.FourierFibers.SymmetryBreakingObservabilityGain
+            D5.S3.ObserverMemory.FourierFibers.FiniteObservabilityKrylovCriterion
+            D5.S3.ObserverMemory.FourierFibers.GoldenScaleCharacterDeckBlindness
           )
           for module in "${modules[@]}"; do
             safe="${module//./_}"
