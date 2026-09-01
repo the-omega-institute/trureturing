@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:c30b4ad77aad2bdbe3743e75553b1a2fd791ba7aee30f93ee50d91024dc2fa5f
+  normalized_sha256: sha256:c30b4ad77aad2bdbe3743e75553b1a2fd791ba7aee30f93ee50d91024dc2fa5f
+cas_ref: sha256:c30b4ad77aad2bdbe3743e75553b1a2fd791ba7aee30f93ee50d91024dc2fa5f
+coverage_gids:
+  - D5/S3/ConceptDynamics/RefinementFactorization/InjectiveInterfaceTargetFactorization.injective_interface_factors_every_target
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/RefinementFactorization/InjectiveInterfaceTargetFactorization.injective_interface_factors_every_target
+      source_sha256: sha256:c30b4ad77aad2bdbe3743e75553b1a2fd791ba7aee30f93ee50d91024dc2fa5f
+      target_statement_id: sha256:26fe25d4a47a5c8ce9ee14bf47db6bb72a3b1fde1f6b73eda75b153e14c5add3
+  scribe:
+    - gid: D5/S3/ConceptDynamics/RefinementFactorization/InjectiveInterfaceTargetFactorization.injective_interface_factors_every_target
+      definition_sha256: sha256:f217b60f6a661b3f435727d812856a7926d976ed5dcc93f5754012b1b4417c07
+      emission_sha256: sha256:39ce802be298e2388e958ff46e7aed58b630e28609f7ff720e0a9942433371d8
+  unresolved_subitems: []
