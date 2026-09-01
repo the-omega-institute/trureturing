@@ -42,9 +42,9 @@ The integral mode character evaluates the visible golden scale coordinate as a u
 
 **Theorem 1.4 (Positive multiplication becomes circle addition).**
 
-Lean statement: `D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.golden_scale_circle_point_mul`
+$$\forall x, y, 0 < x \land 0 < y \Rightarrow \operatorname{goldenScaleCirclePoint}(x \cdot y) = \operatorname{goldenScaleCirclePoint}(x) + \operatorname{goldenScaleCirclePoint}(y).$$
 
-*Formalization.* `D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.golden_scale_circle_point_mul` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.golden_scale_circle_point_mul` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -54,9 +54,9 @@ Multiplication of positive scales adds their unwrapped logarithmic coordinates a
 
 **Theorem 1.5 (Whole golden shells have one visible circle point).**
 
-Lean statement: `D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.golden_scale_circle_point_phi_even_pow_mul`
+$$\forall k, x, 0 < x \Rightarrow \operatorname{goldenScaleCirclePoint}((phi^{2})^{k} \cdot x) = \operatorname{goldenScaleCirclePoint}(x).$$
 
-*Formalization.* `D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.golden_scale_circle_point_phi_even_pow_mul` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.golden_scale_circle_point_phi_even_pow_mul` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -66,9 +66,9 @@ Multiplication by any natural power of phi squared changes the unwrapped coordin
 
 **Theorem 1.6 (Golden circle phase equals sampled log-frequency phase).**
 
-Lean statement: `D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.golden_scale_fourier_phase_eq_log_frequency`
+$$\forall x, m, \operatorname{goldenScaleFourierPhase}(x, m) = \operatorname{fourierPhase}(\log(x), \operatorname{goldenSampleTime}(m)).$$
 
-*Formalization.* `D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.golden_scale_fourier_phase_eq_log_frequency` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.golden_scale_fourier_phase_eq_log_frequency` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -78,9 +78,9 @@ The golden circle character is exactly the existing Fourier character of log sca
 
 **Theorem 1.7 (Golden scale characters have unit norm).**
 
-Lean statement: `D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.golden_scale_fourier_phase_norm`
+$$\forall x, m, \left\lVert \operatorname{goldenScaleFourierPhase}(x, m) \right\rVert = 1.$$
 
-*Formalization.* `D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.golden_scale_fourier_phase_norm` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.golden_scale_fourier_phase_norm` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -90,9 +90,9 @@ The sampled phase lies on the complex unit circle for every real scale and integ
 
 **Theorem 1.8 (Golden scale characters are multiplicative).**
 
-Lean statement: `D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.golden_scale_fourier_phase_mul`
+$$\forall x, y, m, 0 < x \land 0 < y \Rightarrow \operatorname{goldenScaleFourierPhase}(x \cdot y, m) = \operatorname{goldenScaleFourierPhase}(x, m) \cdot \operatorname{goldenScaleFourierPhase}(y, m).$$
 
-*Formalization.* `D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.golden_scale_fourier_phase_mul` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.golden_scale_fourier_phase_mul` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -102,9 +102,9 @@ At one integral mode, the phase of a positive product is the product of the two 
 
 **Theorem 1.9 (Integral modes ignore whole golden shell shifts).**
 
-Lean statement: `D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.golden_scale_fourier_phase_phi_even_pow_mul`
+$$\forall k, x, m, 0 < x \Rightarrow \operatorname{goldenScaleFourierPhase}((phi^{2})^{k} \cdot x, m) = \operatorname{goldenScaleFourierPhase}(x, m).$$
 
-*Formalization.* `D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.golden_scale_fourier_phase_phi_even_pow_mul` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.golden_scale_fourier_phase_phi_even_pow_mul` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -114,9 +114,9 @@ Every natural whole-shell shift contributes an integral multiple of a full circl
 
 **Theorem 1.10 (Golden sampling realizes the second-Magnus alternant).**
 
-Lean statement: `D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.second_magnus_kernel_at_golden_samples`
+$$\begin{gathered}\forall x, y, m_{1}, m_{2}:\\{}\operatorname{secondMagnusSwapKernel}(\log(x), \log(y), \operatorname{goldenSampleTime}(m_{1}), \operatorname{goldenSampleTime}(m_{2})) = \operatorname{goldenScaleFourierPhase}(x, m_{1}) \cdot \operatorname{goldenScaleFourierPhase}(y, m_{2}) - \operatorname{goldenScaleFourierPhase}(y, m_{1}) \cdot \operatorname{goldenScaleFourierPhase}(x, m_{2}).\end{gathered}$$
 
-*Formalization.* `D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.second_magnus_kernel_at_golden_samples` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.second_magnus_kernel_at_golden_samples` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -126,9 +126,9 @@ At two golden Mellin sample times, the existing second-Magnus kernel is the alte
 
 **Theorem 1.11 (The sampled kernel descends through shell orbits).**
 
-Lean statement: `D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.golden_second_magnus_shell_orbit_invariance`
+$$\begin{gathered}\forall k_{x}, k_{y}, x, y, m_{1}, m_{2}, 0 < x \land 0 < y \Rightarrow \\{}\operatorname{secondMagnusSwapKernel}(\log((phi^{2})^{k_{x}} \cdot x), \log((phi^{2})^{k_{y}} \cdot y), \operatorname{goldenSampleTime}(m_{1}), \operatorname{goldenSampleTime}(m_{2})) = \operatorname{secondMagnusSwapKernel}(\log(x), \log(y), \operatorname{goldenSampleTime}(m_{1}), \operatorname{goldenSampleTime}(m_{2})).\end{gathered}$$
 
-*Formalization.* `D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.golden_second_magnus_shell_orbit_invariance` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.golden_second_magnus_shell_orbit_invariance` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -138,9 +138,9 @@ Independent whole-shell shifts of the two positive scale inputs leave the sample
 
 **Theorem 1.12 (Finite sampled energy descends through channelwise shell orbits).**
 
-Lean statement: `D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.finite_second_magnus_energy_golden_shell_invariant`
+$$\begin{gathered}\forall s, k, c, m_{1}, m_{2}, (\forall p, 0 < s_{p}) \Rightarrow\\{}\operatorname{finiteSecondMagnusEnergy}({p \mapsto \log((phi^{2})^{k_{p}} \cdot s_{p})}, c, \operatorname{goldenSampleTime}(m_{1}), \operatorname{goldenSampleTime}(m_{2}))\\{}= \operatorname{finiteSecondMagnusEnergy}({p \mapsto \log(s_{p})}, c, \operatorname{goldenSampleTime}(m_{1}), \operatorname{goldenSampleTime}(m_{2})).\end{gathered}$$
 
-*Formalization.* `D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.finite_second_magnus_energy_golden_shell_invariant` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.finite_second_magnus_energy_golden_shell_invariant` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -150,17 +150,17 @@ Applying an independent natural whole-shell shift to every positive scale channe
 
 ## References
 
+- Truth anchor: `D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.finite_second_magnus_energy_golden_shell_invariant`
 - Truth anchor: `D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.goldenSampleTime`
 - Truth anchor: `D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.goldenScaleCirclePoint`
 - Truth anchor: `D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.goldenScaleFourierPhase`
 - Truth anchor: `D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.golden_scale_circle_point_mul`
 - Truth anchor: `D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.golden_scale_circle_point_phi_even_pow_mul`
 - Truth anchor: `D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.golden_scale_fourier_phase_eq_log_frequency`
-- Truth anchor: `D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.golden_scale_fourier_phase_norm`
 - Truth anchor: `D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.golden_scale_fourier_phase_mul`
+- Truth anchor: `D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.golden_scale_fourier_phase_norm`
 - Truth anchor: `D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.golden_scale_fourier_phase_phi_even_pow_mul`
-- Truth anchor: `D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.second_magnus_kernel_at_golden_samples`
 - Truth anchor: `D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.golden_second_magnus_shell_orbit_invariance`
-- Truth anchor: `D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.finite_second_magnus_energy_golden_shell_invariant`
-- Dependency: [D5/S3/Observer/GoldenPrimeCircle/GoldenVerticalSampling](GoldenVerticalSampling.md)
+- Truth anchor: `D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling.second_magnus_kernel_at_golden_samples`
 - Dependency: [D5/S3/Observer/AgencyHolonomy/SecondMagnusSwapCurvature](../AgencyHolonomy/SecondMagnusSwapCurvature.md)
+- Dependency: [D5/S3/Observer/GoldenPrimeCircle/GoldenVerticalSampling](GoldenVerticalSampling.md)
