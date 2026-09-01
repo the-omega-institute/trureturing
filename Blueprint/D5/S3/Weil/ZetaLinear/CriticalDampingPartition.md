@@ -6,7 +6,7 @@ A finite reflection-symmetric damping spectrum has equivalent diagonal, centered
 
 **Theorem 1.1 (The centered damping partition has a nonnegative critical defect).**
 
-Lean statement: `D5/S3/Weil/ZetaLinear/CriticalDampingPartition.critical_damping_partition_certificate`
+$$\begin{gathered}\forall d, tau: \operatorname{CenteredSpectrumSymmetric}(d, \frac{1}{2}) \land tau \neq 0 \Rightarrow\\{}\operatorname{dampingPartition}(d, tau) = \exp(\frac{tau}{2}) \cdot \operatorname{tr}(\exp, (, (-tau),  , \cdot,  , \operatorname{dampingOperator}(d), )) \land\\{}\operatorname{dampingPartition}(d, tau) = \operatorname{tr}(\exp, (, (-tau),  , \cdot,  , \operatorname{centeredDampingOperator}(d, \frac{1}{2}), )) \land \operatorname{dampingPartition}(d, tau) = \operatorname{tr}(\operatorname{cosh}(tau \cdot \operatorname{centeredDampingOperator}(d, \frac{1}{2}))) \land\\{}0 \leq \operatorname{criticalDampingPartitionDefect}(d, tau) \land ((\forall i, d_{i} = \frac{1}{2}) \iff \operatorname{criticalDampingPartitionDefect}(d, tau) = 0).\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/ZetaLinear/CriticalDampingPartition.critical_damping_partition_certificate` (`✓ std3`). ∎
 
