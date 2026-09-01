@@ -27,7 +27,7 @@ internal sealed class GoldenModularStandardPairDocument : IScribeDocumentDefinit
                     F.Id("Delta"), Caret, Grp(Minus, D(1)), Sp, Land, Sp,
                     F.Id("S"), Eq, F.Id("J"), Sqrt, Grp(F.Id("Delta")), Sp, Land, Sp,
                     F.Id("S"), Caret, Grp(D(2)), Eq, F.Id("I"), Sp, Land, Sp,
-                    F.Id("H"), Underscore, Grp(F.Id("phi,R")), Eq,
+                    F.Id("H"), Underscore, Grp(Seq(F.Id("phi"), Comma, F.Id("R"))), Eq,
                     OpenBrace, F.Id("psi"), Colon, F.Id("S"), F.Id("psi"), Eq,
                     F.Id("psi"), CloseBrace, Sp, Land, Sp,
                     F.Id("K"), Eq, Operatorname, Grp(F.Id("log")), Open,
