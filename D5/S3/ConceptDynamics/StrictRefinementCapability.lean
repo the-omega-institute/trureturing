@@ -59,15 +59,16 @@ theorem strict_refinement_capability
       q_D (Classical.choose (effective_C coordinate))
     refine ⟨factor, ?_⟩
     funext state
-    simp only [Function.comp_apply, factor]
+    unfold Function.comp
+    simp only [factor]
     exact hfiber (Classical.choose_spec (effective_C (q_C state))).symm
   constructor
   · let answer_D : D → Bool := fun coordinate =>
       if coordinate = q_D x then false else true
     let question : X → Bool := answer_D ∘ q_D
     have hquestion : question x ≠ question y := by
-      simpa [question, answer_D, hdifferent, hdifferent.symm] using
-        Bool.false_ne_true
+      unfold question Function.comp
+      simpa [answer_D, hdifferent, hdifferent.symm] using Bool.false_ne_true
     refine ⟨question, ?_, ?_⟩
     · refine ⟨answer_D, rfl, ?_⟩
       intro other hother
@@ -76,7 +77,9 @@ theorem strict_refinement_capability
       calc
         other coordinate = other (q_D state) := congrArg other hstate.symm
         _ = question state := by
-          simpa only [Function.comp_apply] using (congrFun hother state).symm
+          have hpoint := (congrFun hother state).symm
+          unfold Function.comp at hpoint
+          exact hpoint
         _ = answer_D (q_D state) := by
           rfl
         _ = answer_D coordinate := congrArg answer_D hstate
@@ -84,16 +87,21 @@ theorem strict_refinement_capability
       apply hquestion
       calc
         question x = answer_C (q_C x) := by
-          simpa only [Function.comp_apply] using congrFun hanswer_C x
+          have hpoint := congrFun hanswer_C x
+          unfold Function.comp at hpoint
+          exact hpoint
         _ = answer_C (q_C y) := congrArg answer_C hsame
         _ = question y := by
-          simpa only [Function.comp_apply] using (congrFun hanswer_C y).symm
+          have hpoint := (congrFun hanswer_C y).symm
+          unfold Function.comp at hpoint
+          exact hpoint
   · obtain ⟨u₀, u₁, hactions⟩ := distinctActions
     let action_D : D → U := fun coordinate =>
       if coordinate = q_D x then u₀ else u₁
     let policy : X → U := action_D ∘ q_D
     have hpolicy : policy x ≠ policy y := by
-      simpa [policy, action_D, hdifferent, hdifferent.symm] using hactions
+      unfold policy Function.comp
+      simpa [action_D, hdifferent, hdifferent.symm] using hactions
     refine ⟨policy, ?_, ?_⟩
     · refine ⟨action_D, rfl, ?_⟩
       intro other hother
@@ -102,7 +110,9 @@ theorem strict_refinement_capability
       calc
         other coordinate = other (q_D state) := congrArg other hstate.symm
         _ = policy state := by
-          simpa only [Function.comp_apply] using (congrFun hother state).symm
+          have hpoint := (congrFun hother state).symm
+          unfold Function.comp at hpoint
+          exact hpoint
         _ = action_D (q_D state) := by
           rfl
         _ = action_D coordinate := congrArg action_D hstate
@@ -110,10 +120,14 @@ theorem strict_refinement_capability
       apply hpolicy
       calc
         policy x = action_C (q_C x) := by
-          simpa only [Function.comp_apply] using congrFun haction_C x
+          have hpoint := congrFun haction_C x
+          unfold Function.comp at hpoint
+          exact hpoint
         _ = action_C (q_C y) := congrArg action_C hsame
         _ = policy y := by
-          simpa only [Function.comp_apply] using (congrFun haction_C y).symm
+          have hpoint := (congrFun haction_C y).symm
+          unfold Function.comp at hpoint
+          exact hpoint
 
 /-- Constant and identity readouts witness satisfiability of effective strict
 refinement. -/

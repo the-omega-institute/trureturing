@@ -65,11 +65,13 @@ theorem gapLetterLength_substitution (d Q : Nat) (hd : 2 ≤ d)
         (gapLetterLength d (Q + 1))).sum := by
   by_cases hzero : letter.1 = 0
   · have h := D5.S0.Tower.DBonacci.Substitution.gapLength_zero_substitution d Q hd
-    simpa [gapLetterLength, gapLetterSubstitution, hzero, topGapLetter] using h
+    simpa [gapLetterLength, gapLetterSubstitution, hzero, topGapLetter,
+      List.map, List.sum_cons, List.sum_nil] using h
   · obtain ⟨fuel, hfuel⟩ : ∃ fuel, letter.1 = fuel + 1 := by
       exact ⟨letter.1 - 1, by omega⟩
     have h := D5.S0.Tower.DBonacci.Substitution.gapLength_succ_substitution d Q fuel hd
-    simpa [gapLetterLength, gapLetterSubstitution, hzero, topGapLetter, hfuel] using h
+    simpa [gapLetterLength, gapLetterSubstitution, hzero, topGapLetter, hfuel,
+      List.map, List.sum_cons, List.sum_nil] using h
 
 /-- Every coarse gap geometrically realizes its letter substitution inside the interval. -/
 theorem dbonacci_gap_letter_substitution (d Q : Nat) (hd : 2 ≤ d)
@@ -107,8 +109,7 @@ def dbonacciGapLetterThreeEquiv : DBonacciGapLetter 3 ≃
     | .combined => ⟨1, by omega⟩
     | .large => ⟨2, by omega⟩
   left_inv letter := by
-    fin_cases letter <;>
-      norm_num [D5.S0.Tower.DBonacci.Substitution.tribonacciGapLetterOfLabel]
+    fin_cases letter <;> rfl
   right_inv letter := by
     cases letter <;>
       norm_num [D5.S0.Tower.DBonacci.Substitution.tribonacciGapLetterOfLabel]
@@ -122,10 +123,12 @@ theorem dbonacciGapLetterSubstitution_three_eq_tribonacciGapLetterSubstitution :
         (dbonacciGapLetterThreeEquiv letter)) := by
   funext letter
   fin_cases letter <;>
-    norm_num [gapLetterSubstitution, topGapLetter, dbonacciGapLetterThreeEquiv,
+    norm_num [gapLetterSubstitution, List.map, topGapLetter, dbonacciGapLetterThreeEquiv,
       D5.S0.Tower.DBonacci.Substitution.tribonacciGapLetterOfLabel,
       D5.S0.Tower.Tribonacci.Substitution.gapLetterSubstitution]
 
+set_option linter.unreachableTactic false in
+set_option linter.unusedTactic false in
 /-- Order-three letter lengths are exactly the frozen Tribonacci letter lengths. -/
 theorem dbonacciGapLetterLength_three_eq_tribonacciGapLetterLength (Q : Nat) :
     gapLetterLength 3 Q =
@@ -147,7 +150,7 @@ theorem dbonacciGapLetterLength_three_eq_tribonacciGapLetterLength (Q : Nat) :
         D5.S0.Tower.Tribonacci.Values.tribonacciConstant ^ (-1 : Int) +
           D5.S0.Tower.Tribonacci.Values.tribonacciConstant ^ (-2 : Int) := by
     norm_num [Finset.sum_range_succ, zpow_neg]
-    rfl
+    all_goals rfl
   have hThree :
       (∑ x ∈ Finset.range 3,
           (D5.S0.Tower.Tribonacci.Values.tribonacciConstant ^ (x + 1))⁻¹) =
@@ -155,7 +158,7 @@ theorem dbonacciGapLetterLength_three_eq_tribonacciGapLetterLength (Q : Nat) :
           D5.S0.Tower.Tribonacci.Values.tribonacciConstant ^ (-2 : Int) +
             D5.S0.Tower.Tribonacci.Values.tribonacciConstant ^ (-3 : Int) := by
     norm_num [Finset.sum_range_succ, zpow_neg]
-    rfl
+    all_goals rfl
   fin_cases letter
   · norm_num [gapLetterLength, D5.S0.Tower.DBonacci.Gaps.dbonacciGapLength,
       D5.S0.Tower.DBonacci.Gaps.dbonacciBudgetBound,

@@ -45,7 +45,9 @@ theorem partition_knowledge_negative_introspection
   letI : TopologicalSpace B := ⊥
   letI : DiscreteTopology B := ⟨rfl⟩
   constructor
-  · rw [partitionTopology, isOpen_induced_iff]
+  · change @IsOpen X (TopologicalSpace.induced readout (⊥ : TopologicalSpace B))
+      ((fiberKnowledge readout predicate)ᶜ)
+    apply isOpen_induced_iff.mpr
     refine ⟨{b | ∃ y, readout y = b ∧ y ∉ predicate}, isOpen_discrete _, ?_⟩
     ext x
     simp only [fiberKnowledge, Set.mem_compl_iff, Set.mem_setOf_eq,

@@ -65,10 +65,9 @@ theorem resource_refinement_compose
       _ ≤ combine r s := combine_mono hp_cost hq_cost
   have h_composed : ResourceRefines cost (combine r s) q_C q_E := by
     refine ⟨p ∘ q, ?_, h_composed_cost⟩
-    calc
-      q_C = p ∘ q_D := hp
-      _ = p ∘ (q ∘ q_E) := by rw [hq]
-      _ = (p ∘ q) ∘ q_E := by rfl
+    rw [hp, hq]
+    unfold Function.comp
+    rfl
   refine ⟨h_composed, ?_⟩
   intro hadd
   simpa [hadd] using h_composed

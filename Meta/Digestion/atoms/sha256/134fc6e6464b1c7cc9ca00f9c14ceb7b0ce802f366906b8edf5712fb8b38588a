@@ -1,0 +1,4 @@
+### P2. `XiRatioPickKernel`
+
+定义 completed-xi ratio 的具体 half-plane kernel，并证明 Hermitian 与 reflection laws。
+

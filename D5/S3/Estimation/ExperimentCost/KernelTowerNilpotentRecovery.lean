@@ -234,7 +234,8 @@ def unitBlockSize : PositiveBlockSize := ⟨1, by omega⟩
 /-- The profile of the `n`-dimensional zero matrix: `n` blocks of size one. -/
 def zeroMatrixBlockProfile (n : Nat) : NilpotentBlockProfile n :=
   ⟨Multiset.replicate n unitBlockSize, by
-    simp [blockProfileDimension, unitBlockSize]
+    simp only [blockProfileDimension, Multiset.map_replicate,
+      Multiset.sum_replicate, unitBlockSize]
     change n * 1 = n
     omega⟩
 
@@ -257,7 +258,8 @@ theorem zero_matrix_block_profile_audit (n : Nat) :
     simp
   constructor
   · intro k hk
-    simp [zeroMatrixBlockProfile, blockKernelTower, unitBlockSize]
+    simp only [zeroMatrixBlockProfile, blockKernelTower,
+      Multiset.map_replicate, Multiset.sum_replicate, unitBlockSize]
     change n * min k 1 = n
     rw [Nat.min_eq_right hk]
     omega
@@ -344,6 +346,9 @@ theorem positive_index_is_necessary :
       blockCountAtLeast (singleNilpotentBlockProfile unitBlockSize).1 0 := by
   norm_num [kernelIncrement, blockKernelTower, blockCountAtLeast,
     singleNilpotentBlockProfile, unitBlockSize]
+  change 0 ≠ Multiset.card ({unitBlockSize} : BlockMultiset)
+  rw [Multiset.card_singleton]
+  omega
 
 #print axioms positive_index_is_necessary
 

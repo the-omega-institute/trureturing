@@ -53,8 +53,11 @@ theorem strict_policy_power_growth
     if coordinate = q_D x then u₀ else u₁
   let policy : X -> U := action_D ∘ q_D
   have policySeparates : distinguishesAt policy x y := by
-    simpa [distinguishesAt, policy, action_D, differentFine, differentFine.symm]
-      using actionsDifferent
+    change action_D (q_D x) ≠ action_D (q_D y)
+    change (if q_D x = q_D x then u₀ else u₁) ≠
+      (if q_D y = q_D x then u₀ else u₁)
+    rw [if_pos rfl, if_neg differentFine.symm]
+    exact actionsDifferent
   have coarseCannotSeparate :
       ∀ coarsePolicy : X -> U,
         coarsePolicy ∈ policyCapability q_C U →
@@ -63,7 +66,8 @@ theorem strict_policy_power_growth
     obtain ⟨action_C, rfl⟩ := coarseMembership
     intro separates
     apply separates
-    simpa only [Function.comp_apply] using congrArg action_C sameCoarse
+    change action_C (q_C x) = action_C (q_C y)
+    exact congrArg action_C sameCoarse
   refine ⟨⟨policy, ?_, ?_, policySeparates⟩, coarseCannotSeparate⟩
   · exact ⟨action_D, rfl⟩
   · intro coarseMembership

@@ -109,7 +109,9 @@ private theorem crossingIndex_lower
       p.2.1 := by
   let n := crossingIndex T roof roof_continuous roof_positive p
   by_cases hn : n = 0
-  · simpa [n, hn, birkhoffSum_zero] using p.2.2
+  · change birkhoffSum T roof n p.1 ≤ p.2.1
+    rw [hn, birkhoffSum_zero]
+    exact p.2.2
   · have one_le_n : 1 <= n := Nat.one_le_iff_ne_zero.mpr hn
     have predecessor_lt_find : n - 1 < Nat.find
         (crossing_exists T roof roof_continuous roof_positive p) := by

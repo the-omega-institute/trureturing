@@ -1,0 +1,11 @@
+\[
+T_{p,q}
+=
+\begin{cases}
+0,&p=q,\\
+\displaystyle\frac\pi{\omega_p-\omega_q},&p\ne q.
+\end{cases}
+\]
+
+设 \(C_{p,q}\in\mathbb C\) 且 \(C_{p,p}=0\)。定义：
+

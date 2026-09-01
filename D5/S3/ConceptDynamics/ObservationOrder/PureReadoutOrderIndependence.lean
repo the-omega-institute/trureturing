@@ -80,8 +80,8 @@ theorem pure_readout_order_independence
         (reverseJoint observeC observeD updateD)) := by
     rintro ⟨updateCIdentity, updateDIdentity⟩ ⟨state, different⟩
     apply different
-    simp only [forwardJoint, reverseJoint, updateCIdentity, updateDIdentity,
-      Function.comp_id, conceptJoin]
+    rw [updateCIdentity, updateDIdentity]
+    rfl
   refine ⟨pureNoEffect, ?_⟩
   intro application hasEffect
   by_cases updateCIdentity : updateC = id

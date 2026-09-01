@@ -37,12 +37,12 @@ open D5.S3.Quantum.Fibers.OperatorSystemTowerStability
 private theorem cstar_trace_add {d : Type*} [Fintype d]
     (first second : MatrixAlgebra d) :
     Matrix.trace (first + second) = Matrix.trace first + Matrix.trace second := by
-  simp [Matrix.trace, Finset.sum_add_distrib]
+  simp [Matrix.trace, Matrix.diag, Finset.sum_add_distrib]
 
 private theorem cstar_trace_real_smul {d : Type*} [Fintype d]
     (scalar : ℝ) (matrix : MatrixAlgebra d) :
     Matrix.trace (scalar • matrix) = scalar • Matrix.trace matrix := by
-  simp [Matrix.trace, Finset.mul_sum]
+  simp [Matrix.trace, Matrix.diag, Finset.mul_sum]
 
 /-- The quotient by equality of all operator-system trace readouts is
 canonically represented by the realized readout range. The canonical

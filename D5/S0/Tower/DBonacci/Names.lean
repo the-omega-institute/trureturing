@@ -158,8 +158,14 @@ def boundedRunNameSplitEquiv (maxTrue fuel q : Nat) :
       simpa [htrue] using Fin.cons_self_tail name.1
   right_inv := by
     rintro (name | name)
-    · simp
-    · simp
+    · simp <;>
+      apply congrArg Sum.inl <;>
+      apply Subtype.ext <;>
+      rfl
+    · simp <;>
+      apply congrArg Sum.inr <;>
+      apply Subtype.ext <;>
+      rfl
 
 theorem bounded_run_name_card_zero (maxTrue q : Nat) :
     Fintype.card (BoundedRunName maxTrue 0 (q + 1)) =

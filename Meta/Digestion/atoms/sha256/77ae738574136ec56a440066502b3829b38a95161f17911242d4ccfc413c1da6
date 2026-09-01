@@ -1,0 +1,10 @@
+## 3. kernel 已进入真实交换子
+
+设 \(A\) 为复结合代数，有限生成元族为 \(G_p\in A\)，定义：
+
+\[
+H_G(t)=\sum_p\chi_{\omega_p}(t)G_p.
+\]
+
+新真源 `FiniteFourierMagnusCommutator` 机器证明：
+

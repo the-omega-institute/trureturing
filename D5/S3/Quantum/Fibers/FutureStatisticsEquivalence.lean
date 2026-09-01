@@ -56,27 +56,27 @@ def infinitePredictionSystem
 omit [DecidableEq d] in
 private theorem cstar_trace_zero :
     Matrix.trace (0 : MatrixAlgebra d) = 0 := by
-  simp [Matrix.trace]
+  simp [Matrix.trace, Matrix.diag]
 
 omit [DecidableEq d] in
 private theorem cstar_trace_add (first second : MatrixAlgebra d) :
     Matrix.trace (first + second) = Matrix.trace first + Matrix.trace second := by
-  simp [Matrix.trace, Finset.sum_add_distrib]
+  simp [Matrix.trace, Matrix.diag, Finset.sum_add_distrib]
 
 omit [DecidableEq d] in
 private theorem cstar_trace_sub (first second : MatrixAlgebra d) :
     Matrix.trace (first - second) = Matrix.trace first - Matrix.trace second := by
-  simp [Matrix.trace, Finset.sum_sub_distrib]
+  simp [Matrix.trace, Matrix.diag, Finset.sum_sub_distrib]
 
 omit [DecidableEq d] in
 private theorem cstar_trace_smul (scalar : ℂ) (matrix : MatrixAlgebra d) :
     Matrix.trace (scalar • matrix) = scalar • Matrix.trace matrix := by
-  simp [Matrix.trace, Finset.mul_sum]
+  simp [Matrix.trace, Matrix.diag, Finset.mul_sum]
 
 omit [DecidableEq d] in
 private theorem cstar_trace_real_smul (scalar : ℝ) (matrix : MatrixAlgebra d) :
     Matrix.trace (scalar • matrix) = scalar • Matrix.trace matrix := by
-  simp [Matrix.trace, Finset.mul_sum]
+  simp [Matrix.trace, Matrix.diag, Finset.mul_sum]
 
 private theorem evolvedState_succ (channel : QuantumChannel d d) (k : Nat)
     (rho : DensityState d) :

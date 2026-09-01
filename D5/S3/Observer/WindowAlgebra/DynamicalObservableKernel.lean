@@ -53,7 +53,10 @@ theorem dynamical_observable_kernel
       Algebra.subset_adjoin ⟨n, detector, rfl⟩
     have hequal := hagree generator hgenerator
     simp [generator, detector] at hequal
-    exact hne hequal.symm
+    by_cases sameReadout :
+        readout ((update^[n]) y) = readout ((update^[n]) x)
+    · exact hne sameReadout.symm
+    · simp [sameReadout] at hequal
   · intro hitinerary f hf
     change completeItinerary update readout x =
       completeItinerary update readout y at hitinerary

@@ -8,7 +8,15 @@ receipts:
   coverage:
     - gid: D5/S3/Quantum/PredictionDepth/FiniteSequentialWordCertificate.finite_sequential_word_certificate
       source_sha256: sha256:2c4149fcde8ad09ccae768835577806b07c6c6488801cc7bf203690ffedc41c5
-      target_statement_id: sha256:53b3f6bd1842b7f1c6e58513fe4e01fa748366b7e4d3811c47894892a6b74aff
+      target_statement_id: sha256:d46359c570878503e13cd345ccc0cbd81e77b5b0b452654af0501205c63d642d
+      statement_id_history:
+        - statement_id: sha256:53b3f6bd1842b7f1c6e58513fe4e01fa748366b7e4d3811c47894892a6b74aff
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Quantum/PredictionDepth/FiniteSequentialWordCertificate.finite_sequential_word_certificate
       definition_sha256: sha256:a70b48ec8495acf435a8ac83014c10749121b62449fc13ff695a2551e9e96121
