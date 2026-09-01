@@ -7,6 +7,7 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="../../StrataLint.Engine/StrataLint.Engine.csproj" />
+    <ProjectReference Include="../StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj" />
     <!-- 脚手架(TemporaryDirectory / TestProcessRunner / ScriptHarnessScratch 等)单一归属于
          StrataLint.Tests。ScriptTests 已具名进 CrossCuttingHarnessPaths,不在 ownedTestProjects
          里,故 OwnedTestToOwnedTestReference 的 foreach 主语不含它 —— 该引用不记拓扑债。 -->

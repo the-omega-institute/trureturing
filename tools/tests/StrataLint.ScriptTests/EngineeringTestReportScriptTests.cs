@@ -1,6 +1,7 @@
 using System.Text;
 using System.Text.Json;
 using StrataLint.Engine;
+using StrataLint.Scribe.Tests;
 
 namespace StrataLint.Tests;
 
@@ -25,11 +26,12 @@ internal static class EngineeringTestReportScriptTests
             ReportFixture.ExecutionOutput,
             Encoding.UTF8.GetString(result.StandardOutput),
             StringComparison.Ordinal);
-        Assert.False(Directory.Exists(fixture.BaseHarnessRoot));
+        Assert.False(TemporaryFileSystem.Directory.Exists(fixture.BaseHarnessRoot));
 
-        var executionLog = File.ReadAllText(fixture.ExecutionLogPath);
+        var executionLog = TemporaryFileSystem.File.ReadAllText(fixture.ExecutionLogPath);
         Assert.Equal(ReportFixture.ExecutionOutput, executionLog);
-        using var document = JsonDocument.Parse(File.ReadAllText(fixture.ExecutionRecordPath));
+        using var document = JsonDocument.Parse(
+            TemporaryFileSystem.File.ReadAllText(fixture.ExecutionRecordPath));
         var record = document.RootElement;
         Assert.Equal(23, record.GetProperty("execute_exit").GetInt32());
         Assert.Equal("accepted", record.GetProperty("plan_verdict").GetString());
@@ -49,7 +51,8 @@ internal static class EngineeringTestReportScriptTests
         var result = fixture.Run("execute");
 
         Assert.Equal(0, result.ExitCode);
-        using var document = JsonDocument.Parse(File.ReadAllText(fixture.ExecutionRecordPath));
+        using var document = JsonDocument.Parse(
+            TemporaryFileSystem.File.ReadAllText(fixture.ExecutionRecordPath));
         Assert.Empty(document.RootElement.GetProperty("failure_tail").EnumerateArray());
     }
 
@@ -75,7 +78,7 @@ internal static class EngineeringTestReportScriptTests
             - Detail: `gh run download 4399 --repo example/trureturing --name engineering-test-plan --dir engineering-test-plan-4399 && jq '{execute_exit, plan_verdict, diagnostics, plan, failure_tail}' engineering-test-plan-4399/engineering-test-plan.json`.
 
             """,
-            File.ReadAllText(fixture.SummaryPath));
+            TemporaryFileSystem.File.ReadAllText(fixture.SummaryPath));
     }
 
     private sealed class ReportFixture : IDisposable
@@ -106,11 +109,12 @@ internal static class EngineeringTestReportScriptTests
             ScriptHarnessScratch.EnsureDirectory(binPath);
             ScriptHarnessScratch.EnsureDirectory(runnerTemp);
             ScriptHarnessScratch.EnsureDirectory(Path.Combine(workspace, "candidate"));
-            ScriptHarnessScratch.CopyScriptInto(
-                Path.Combine(
-                    TestRepositoryLayout.FindRoot(),
-                    "tools/scripts/workflow/engineering-test-report.sh"),
-                scriptPath);
+            RepositoryAccessor
+                .Discover(RepositoryRootCriterion.ClaudeDirectoryNotFound)
+                .CopyTo(
+                    StrataLint.Scribe.Tests.RepositoryRelativePath.Create(
+                        "tools/scripts/workflow/engineering-test-report.sh"),
+                    scriptPath);
             WriteExecutable(
                 "git",
                 "printf 'git:%s\\n' \"$*\" >> \"$REPORT_CALLS\"\n"

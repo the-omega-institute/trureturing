@@ -161,12 +161,19 @@
           "Trureturing.Truth": "[0.1.0, )"
         }
       },
+      "stratalint.scribe.tests": {
+        "type": "Project",
+        "dependencies": {
+          "Microsoft.NET.Test.Sdk": "[18.0.1, )",
+          "StrataLint.Scribe": "[1.0.0, )",
+          "xunit": "[2.9.3, )"
+        }
+      },
       "stratalint.tests": {
         "type": "Project",
         "dependencies": {
           "Microsoft.NET.Test.Sdk": "[18.0.1, )",
           "StrataLint": "[1.0.0, )",
-          "StrataLint.Engine": "[1.0.0, )",
           "Xunit.SkippableFact": "[1.5.85, )",
           "xunit": "[2.9.3, )"
         }
