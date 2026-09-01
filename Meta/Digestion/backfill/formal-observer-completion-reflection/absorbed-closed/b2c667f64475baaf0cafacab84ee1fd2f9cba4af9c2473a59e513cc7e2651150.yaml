@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:b2c667f64475baaf0cafacab84ee1fd2f9cba4af9c2473a59e513cc7e2651150
+  normalized_sha256: sha256:b2c667f64475baaf0cafacab84ee1fd2f9cba4af9c2473a59e513cc7e2651150
+cas_ref: sha256:b2c667f64475baaf0cafacab84ee1fd2f9cba4af9c2473a59e513cc7e2651150
+coverage_gids:
+  - D5/S3/Quantum/FixedAlgebra/SingletonRecordClassicality.singleton_record_classicality
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/FixedAlgebra/SingletonRecordClassicality.singleton_record_classicality
+      source_sha256: sha256:b2c667f64475baaf0cafacab84ee1fd2f9cba4af9c2473a59e513cc7e2651150
+      target_statement_id: sha256:926460e3a1d9b4395ec94edaa48b6ef4fe75c6f8c23b25d2efb42486e4168b9d
+  scribe:
+    - gid: D5/S3/Quantum/FixedAlgebra/SingletonRecordClassicality.singleton_record_classicality
+      definition_sha256: sha256:3aa4dc2dd77971bee4d3ec8080091697a5149ed94114f0f07f9d3a1b1946fb49
+      emission_sha256: sha256:5d4eb8232cd7191cedaca8d2e17e245e0e38040ec04be4c1833b39c270e146c6
+  unresolved_subitems: []
