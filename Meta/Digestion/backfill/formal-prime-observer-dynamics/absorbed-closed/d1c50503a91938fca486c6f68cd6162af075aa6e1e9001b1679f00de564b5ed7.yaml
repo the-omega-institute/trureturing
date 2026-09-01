@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:d1c50503a91938fca486c6f68cd6162af075aa6e1e9001b1679f00de564b5ed7
+  normalized_sha256: sha256:d1c50503a91938fca486c6f68cd6162af075aa6e1e9001b1679f00de564b5ed7
+cas_ref: sha256:d1c50503a91938fca486c6f68cd6162af075aa6e1e9001b1679f00de564b5ed7
+coverage_gids:
+  - D5/S3/ConceptDynamics/Identifiability/IdentifiabilityEstimabilityComputation.Identifiable
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Identifiability/IdentifiabilityEstimabilityComputation.Identifiable
+      source_sha256: sha256:d1c50503a91938fca486c6f68cd6162af075aa6e1e9001b1679f00de564b5ed7
+      target_statement_id: sha256:a80c7d6322f07158d80b2e30758cea6b61edaf7765cefe45ccfdf418214eb45a
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Identifiability/IdentifiabilityEstimabilityComputation.Identifiable
+      definition_sha256: sha256:871a06a6748c3dfed069b16495c710c6c26f327968a7bdc906cdfb3a0b900818
+      emission_sha256: sha256:4d46fcb83278c84143360644309aaf2f58e79d1cc4961619e93702ad9a02c00b
+  unresolved_subitems: []
