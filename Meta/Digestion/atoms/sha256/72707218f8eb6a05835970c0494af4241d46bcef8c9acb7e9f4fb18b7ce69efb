@@ -1,0 +1,76 @@
+# 第一千四百九十三部　建议形式化顺序
+
+```text
+D5/S3/ConceptDynamics/DiscreteNameLimitNoGo/
+  FiniteDiscreteNamingSystem.lean
+  ProfiniteNamingLimit.lean
+  ProfiniteLimitTotallyDisconnected.lean
+  ConnectedToProfiniteConstant.lean
+  FiniteNamesCannotContinuouslyRecoverContinuum.lean
+
+D5/S3/ConceptDynamics/DenseNamingBoundary/
+  PiecewiseLocallyConstantName.lean
+  NamingBoundary.lean
+  ConnectedOpenNameConstant.lean
+  SeparatingNameFamilyHasDenseBoundaries.lean
+  NamingCutsApproximateContinuum.lean
+
+D5/S3/ConceptDynamics/NamingRepairInterval/
+  RawNamingSetoid.lean
+  PredictiveInterior.lean
+  ForgettingClosure.lean
+  NamingRepairInterval.lean
+  FiniteNamingRepairWidth.lean
+  NamingRepairWidthZeroIffStable.lean
+
+D5/S3/Observer/AgencySelf/InterventionTower/
+  RestrictedInteractionProfile.lean
+  MoreInterventionsRefineAgencyKernel.lean
+  AgencySelfQuotientTower.lean
+  AgencyHistoryFiber.lean
+  AgencyShadowInverseLimit.lean
+
+D5/S3/Observer/AgencySelf/NameSufficiencyWitness/
+  InterfaceSufficient.lean
+  InterfaceConstantOnProfileFibers.lean
+  InsufficientInterfacePairWitness.lean
+  FiniteInterventionOutputWitness.lean
+
+D5/S3/Analytic/Zeta/ReflectionOrbitName/
+  UpperZeroHistory.lean
+  XiAntilinearReflection.lean
+  ReflectionOrbitName.lean
+  ReflectionNameFiberCardinality.lean
+  RHReflectionNameInjective.lean
+  ReflectionOrientationBit.lean
+
+D5/S3/Analytic/Zeta/CausalAgencyProfile/
+  ShiftedCausalInteractionProfile.lean
+  CriticalProfileSelfDual.lean
+  OffLineReflectedProfilesDistinct.lean
+  ReflectionNameSufficientIffRH.lean
+  ReflectionNameAgencySelfFactor.lean
+
+D5/S3/Analytic/Zeta/RiemannNamingStability/
+  ShiftedResponseDynamics.lean
+  ReflectionNamingCongruence.lean
+  ReflectionNamingPredictiveInterior.lean
+  OffLineZeroStrictlyRefinesInterior.lean
+  RiemannNamingRepairFixedPointCriterion.lean
+
+D5/S3/Analytic/Zeta/SpectralCausalRepair/
+  SpectralForgettingClosure.lean
+  CausalPredictiveInterior.lean
+  SpectralCausalRepairInterval.lean
+  OffLineCompletionRepairGap.lean
+  RHRepairGapZero.lean
+
+D5/S3/ConceptDynamics/TraceWithoutNaming/
+  NamingRefinementCategory.lean
+  NamingNaturalInvariant.lean
+  RepresentationFaithfulTrace.lean
+  DaoTraceTerminologyBoundary.lean
+```
+
+---
+

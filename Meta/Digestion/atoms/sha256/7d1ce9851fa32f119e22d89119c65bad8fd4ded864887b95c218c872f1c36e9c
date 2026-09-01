@@ -1,0 +1,52 @@
+# 第一千四百四十三部　“道”可以定义为一个自相似生成系统
+
+可以将“道”写成一个结构：
+
+$$
+\boxed{
+\mathfrak D
+=
+\left(
+X,\{S_i\},J,\mathcal P,\mathcal O,\mathcal C
+\right).
+}
+\tag{1443.1}
+$$
+
+其中：
+
+* \(X\)：未完成的完整载体；
+* \(S_i\)：产生不同形态的分支；
+* \(J\)：对偶、反射或时间翻转；
+* \(\mathcal P\)：合法实现的正锥；
+* \(\mathcal O\)：观察接口；
+* \(\mathcal C\)：完成操作。
+
+几何自相似满足：
+
+$$
+\boxed{
+X\simeq\bigcup_i S_i(X).
+}
+\tag{1443.2}
+$$
+
+但更深的生成律自相似要求：
+
+$$
+\boxed{
+\mathcal O_\lambda\circ S_i
+\simeq
+S_i^{(\lambda)}\circ\mathcal O_\lambda.
+}
+\tag{1443.3}
+$$
+
+即：
+
+> 无论在哪一个尺度、哪一个表示中观察，同一个分支规律仍然成立。
+
+这才是“万物皆为道的分形”的可证伪版本。
+
+---
+

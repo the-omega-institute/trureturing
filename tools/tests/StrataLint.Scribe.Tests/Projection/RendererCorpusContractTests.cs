@@ -9,7 +9,7 @@ namespace StrataLint.Scribe.Tests;
 public sealed partial class FormulaCorpusInventoryTests
 {
     private const string CanonicalRendererSha256 =
-        "f79f527e59e01d4938e86f31ec4a4cc6410c06caef222873adf3cf29635c30a1";
+        "cb2c08c3429ac09ee5394a5e0fb7de8a5ecc982a114a7a52a77802b3ee030ab5";
     private const string UpdateCommand = "make -C tools update-renderer-contract";
 
     [Fact]
@@ -435,6 +435,8 @@ public sealed partial class FormulaCorpusInventoryTests
             new Formula.LatexMacro(FormulaLatexMacro.Phi),
             sequence));
         formulas.Add(new Formula.Subscript(word, digits));
+        // 仓库公式使用 LatexWord 底、二元运算下标(如 word_{x+y}),由覆盖断言点名要求。
+        formulas.Add(new Formula.Subscript(word, additive));
         formulas.Add(new Formula.Subscript(
             word,
             new Formula.LatexMacro(FormulaLatexMacro.Phi)));

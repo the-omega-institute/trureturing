@@ -1,0 +1,50 @@
+# Primitive Depth-Two Reduction Conjecture
+
+对任何不可约概念动力，在商去：
+
+* 坐标冗余；
+* 永久不可见 kernel；
+* 可消去内部历史；
+* 非最小 realization；
+
+以后，其第一次非平凡自观察都可压缩为：
+
+$$
+\boxed{
+I=\mathsf D+\mathsf D^2.
+}
+\tag{1421.1}
+$$
+
+若该猜想成立，则：
+
+$$
+\boxed{
+\mathsf D=\varphi^{-1}I
+}
+$$
+
+成为一切 primitive concept 的第一正收缩影。
+
+若存在一个真正不可约概念需要：
+
+$$
+I=\mathsf D+\mathsf D^\ell,
+\qquad
+\ell>2,
+$$
+
+且不能进一步压缩为二阶结构，则黄金普适性失败，系统会产生其他代数常数。
+
+因此，普适黄金命题的真正证明对象不是更多含 \(\varphi\) 的公式，而是：
+
+$$
+\boxed{
+\text{所有 primitive dualities 是否都能被降到二层状态—影子闭环。}
+}
+$$
+
+这已经是明确可反驳的结构命题。
+
+---
+

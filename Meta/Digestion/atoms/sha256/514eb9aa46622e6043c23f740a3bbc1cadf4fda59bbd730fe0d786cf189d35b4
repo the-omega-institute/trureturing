@@ -1,0 +1,55 @@
+# 第一千三百九十部　“热 Poisson”与“Gamma 热包络”不是同一种统计
+
+前文得到 Poisson 周期像和：
+
+$$
+\Pi_{\beta,0}(E)
+=
+\coth\frac{\beta E}{2}
+=
+1+\frac2{e^{\beta E}-1}.
+$$
+
+这是 Bose-like denominator。
+
+而四分之一 Gamma 双层给出：
+
+$$
+\frac1{\cosh(\pi t)}
+=
+\frac{
+2e^{-\pi|t|}
+}{
+1+e^{-2\pi|t|}
+},
+$$
+
+具有 Fermi-like denominator。
+
+因此 Archimedean completion 中至少存在两种不同的“热图表”：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Poisson winding}
+&\longrightarrow
+(1-e^{-\beta E})^{-1};\\
+\text{quarter-pair Gamma}
+&\longrightarrow
+(1+e^{-2\pi|t|})^{-1}.
+\end{aligned}
+}
+$$
+
+这是一条重要科学剪枝：
+
+$$
+\boxed{
+\text{不能把所有出现指数与 Gamma 的结构，
+都强行解释成同一种霍金 Bose 温度。}
+}
+$$
+
+更可能的情况是：
+
+* Poisson 通道编码传播与 Euclidean windings；

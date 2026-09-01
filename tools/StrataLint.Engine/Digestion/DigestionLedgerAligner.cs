@@ -132,6 +132,7 @@ internal static partial class DigestionLedgerAligner
         var clausePlans = ImmutableArray.CreateBuilder<DigestionSourceClausePlan>();
         var clausePlanChainParents = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
         var verifiedClausePlanParents = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
+        var verifiedClausePlanMembers = new HashSet<string>(StringComparer.Ordinal);
         var fallbacks = ImmutableArray.CreateBuilder<DigestionIngestFallback>();
         var suggestedAtomIds = sources
             .SelectMany(static source => source.Entries)
@@ -485,6 +486,7 @@ internal static partial class DigestionLedgerAligner
                 matchedAtoms,
                 clausePlanChainParents,
                 verifiedClausePlanParents,
+                verifiedClausePlanMembers,
                 findings);
 
             if (mode == DigestionAlignmentMode.Admission)

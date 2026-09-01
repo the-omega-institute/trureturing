@@ -1,0 +1,36 @@
+# 第一千三百二十五部　Hardy 极化就是当前理论中的“视界”
+
+前文已经定义 shifted scattering：
+
+$$
+\Theta_\omega(t)
+=
+\frac{
+\xi\!\left(\frac12-\omega-it\right)
+}{
+\xi\!\left(\frac12+\omega-it\right)
+}.
+$$
+
+在双向边界空间：
+
+$$
+L^2(\mathbb R)
+=
+H_+^2\oplus H_-^2
+$$
+
+中，定义：
+
+$$
+\boxed{
+\mathfrak H_\omega
+=
+P_-M_{\Theta_\omega}P_+ .
+}
+\tag{1325.1}
+$$
+
+这里：
+
+* \(H_+^2\) 是观察者选定的正时间／未来空间；

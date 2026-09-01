@@ -1,0 +1,52 @@
+## 定理 1391.1（Poisson phase-holonomy energy）
+
+$$
+\boxed{
+E_{ij}
+=
+\frac{
+d_{ij}^2
+}{
+\pi
+a_{ij}
+\left(
+a_{ij}^2+d_{ij}^2
+\right)
+}.
+}
+\tag{1391.5}
+$$
+
+所以：
+
+$$
+\boxed{
+E_{ij}\ge0,
+}
+$$
+
+并且：
+
+$$
+\boxed{
+E_{ij}=0
+\iff
+\gamma_i=\gamma_j.
+}
+\tag{1391.6}
+$$
+
+它还满足共同平移不变性：
+
+$$
+\gamma_i\mapsto\gamma_i+c
+\quad
+\forall i
+$$
+
+不会改变 \(E_{ij}\)。
+
+因此这一能量不读取绝对起点，只读取观察者之间的相对 phase holonomy。
+
+---
+

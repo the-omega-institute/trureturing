@@ -1,0 +1,14 @@
+\[
+\Theta_k\bigl((\varphi^2)^n x\bigr)
+=
+\Theta_k(x)e^{-2\pi i kn}.
+\]
+
+因为 \(k\in\mathbb Z\) 且 \(n\in\mathbb N\)：
+
+\[
+e^{-2\pi i kn}=1.
+\]
+
+机器证明：
+

@@ -1,0 +1,14 @@
+# 5. 后续形式化顺序
+
+1. `GoldenPrimeMemoryInstantiation`：把 \(a=-\varphi^{-1}\)、\(b_{r,p}^{-}\) 与 \(L_p^{\langle r\rangle}\) 接入当前抽象曲率；
+2. `FiniteHolonomyEnergy`：在固定活动素数幂窗口上构造有限 holonomy Gram 算子；
+3. `ExtractionCurvatureBound`：把 residual local-factor 上界运输到交换曲率；
+4. `ResonanceConditionedFlattening`：加入统一非共振控制；
+5. `FiniteOffLineOddEnergy`：对有限对称零点截断求和逐轨道奇校正；
+6. `PrimeArchimedeanHolonomyDomination`：建立有限 Galerkin 支配；
+7. `HolonomySqueezeToInteriorCurvature`：组合全部极限和误差预算。
+
+第 6 项是当前新的 hard heart。前五项都应附带有限失败证书。
+
+---
+

@@ -1,0 +1,40 @@
+\boxed{
+\mathcal F(z,w)
+:=
+\left|
+\langle\widehat k_z,\widehat k_w\rangle
+\right|^2
+=========
+
+\frac{4yy'}
+{(x-x')^2+(y+y')^2}.
+}
+\tag{1411.4}
+
+$$
+
+现在取同一个离线零点的 shifted 双像：
+
+$$
+
+z_-=-\gamma+i(\delta-\omega),
+
+$$
+$$
+
+z_+=-\gamma+i(\delta+\omega),
+
+$$
+
+其中：
+
+$$
+
+0<\omega<\delta.
+
+$$
+
+则：
+
+$$
+

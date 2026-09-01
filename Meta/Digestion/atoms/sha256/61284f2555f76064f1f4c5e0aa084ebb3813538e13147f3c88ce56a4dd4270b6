@@ -1,0 +1,48 @@
+# 10. 与 RH 路线的更新连接
+
+当前 prime-side 链条已经变成
+
+\[
+\boxed{
+\begin{aligned}
+&\log p\text{ frequency channels}
+\\
+&\Longrightarrow
+e^{-it\log p}\text{ spectral-time phases}
+\\
+&\Longrightarrow
+\widetilde C_{p,q}(t)\text{ phase-twisted swap curvature}
+\\
+&\Longrightarrow
+\widetilde{\mathcal E}^{\mathrm{hol}}_P(t)
+\text{ finite defect energy}
+\\
+&\Longrightarrow
+\boxed{\text{explicit-formula faithful domination}}
+\\
+&\Longrightarrow
+\text{off-line odd zero energy}.
+\end{aligned}
+}
+\]
+
+方框仍是核心缺口。当前新内容提供一个适合被测试函数积分的时间依赖 prime-side 能量候选。它尚未证明该积分等于、支配或逼近任何 zero-side 量。
+
+一个关键新观察是：显式公式中的测试函数本来就在对 \(t\) 或其傅立叶对偶进行加权。现在 holonomy 也成为 \(t\) 的函数，因此可以第一次提出类型正确的桥：
+
+\[
+\boxed{
+\mathcal E_{\mathrm{off}}^{\mathrm{odd}}(g)
+\le
+A_g
+\int_{\mathbb R}
+\widetilde{\mathcal E}^{\mathrm{hol}}_P(t)
+\,d\mu_g(t)
++R_{P,g}.
+}
+\]
+
+其中 \(\mu_g\) 必须由允许的测试函数类产生，\(R_{P,g}\) 必须显式记账并可控。该不等式目前只是下一阶段的目标类型。
+
+---
+

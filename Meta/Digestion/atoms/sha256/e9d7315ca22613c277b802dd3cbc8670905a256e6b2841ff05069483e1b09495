@@ -1,0 +1,14 @@
+## 从波动直觉到 RH 路线中的可证明链条
+
+**文档地位。** 本文解释 Lean 节点
+
+`D5/S3/Observer/AgencyHolonomy/FiniteHolonomyEnergy`
+
+及其主声明
+
+`D5.S3.Observer.AgencyHolonomy.FiniteHolonomyEnergy.finite_stable_holonomy_energy_bound`。
+
+机器事实以 Lean 声明为准。波、白光、色散、共振和圆在本文中承担结构类比。只有写成公式并接入 prime-zero 桥的部分才能成为 RH 论证。
+
+---
+

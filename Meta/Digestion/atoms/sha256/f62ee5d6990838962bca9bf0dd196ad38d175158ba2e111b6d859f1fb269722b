@@ -1,0 +1,250 @@
+# 本轮最终结论
+
+这一轮最重要的结论是：
+
+$$
+\boxed{
+\text{离线零点不是一个“振幅异常”，而是一个“解析时间方向异常”。}
+}
+$$
+
+shifted scattering ratio：
+
+$$
+\Theta_\omega(t)
+$$
+
+在实边界上始终满足：
+
+$$
+|\Theta_\omega(t)|=1.
+$$
+
+所以无论 RH 真或假，边界观察者都可能看见完全相同的 all-pass 振幅。
+
+真正不同的是：
+
+$$
+\boxed{
+\text{这个全通相位是由合法 inner numerator 产生，
+还是由 inverse-inner denominator 产生。}
+}
+$$
+
+前者属于正时间 Hardy 完成；
+
+后者属于反因果／负指标完成。
+
+---
+
+对一个离线零点：
+
+$$
+\rho
+=
+\frac12+\delta+i\gamma,
+$$
+
+可以定义两个边界端点：
+
+$$
+\boxed{
+t_-=\gamma-\delta,
+\qquad
+t_+=\gamma+\delta.
+}
+$$
+
+于是：
+
+$$
+\boxed{
+\text{一个 bulk 离线点}
+\longleftrightarrow
+\text{一个 boundary 时间区间}.
+}
+$$
+
+函数方程反射只交换该区间的两个端点。
+
+临界零点是：
+
+$$
+t_-=t_+,
+$$
+
+即区间坍缩成点。
+
+离线零点则拥有非零过去—未来分离。
+
+它在 positive-real response 中产生半圆：
+
+$$
+\boxed{
+x^2+(t-\gamma)^2<\delta^2,
+}
+$$
+
+该半圆内部的 pair contribution 严格为负。
+
+所以它的 boundary interval 不只是象征历史。
+
+它正是负耗散区域在临界边界上的投影。
+
+---
+
+进一步，离线零点产生 inverse Blaschke factor：
+
+$$
+b_p^{-1}.
+$$
+
+它和合法 Blaschke factor：
+
+$$
+b_p
+$$
+
+具有完全相同的边界模长，但相位导数符号相反：
+
+$$
+\boxed{
+\partial_t\arg b_p
+=
+2\pi P_h,
+}
+$$
+
+$$
+\boxed{
+\partial_t\arg b_p^{-1}
+=
+-2\pi P_h.
+}
+$$
+
+所以离线零点的一个极清楚的概念身份是：
+
+$$
+\boxed{
+\textbf{一个被放在错误时间方向上的 all-pass 相位量子。}
+}
+$$
+
+它的本体反射对偶是镜像零点；
+
+它的因果对偶是合法 Blaschke factor；
+
+它的 boundary 对偶是 Poisson 相位脉冲；
+
+它的证明对偶是负 kernel／Gram 向量。
+
+---
+
+全部离线深度又可以由一条一维衰减曲线恢复：
+
+$$
+\boxed{
+\mathcal A_B(y)
+=
+-\frac1{4\pi}
+\int
+\log|B(x+iy)|^2dx
+=
+\sum_jm_j\min(y,h_j).
+}
+$$
+
+其一阶导数读取还有多少缺陷位于更深处：
+
+$$
+\mathcal A_B'(y)
+=
+\#\{h_j>y\},
+$$
+
+其二阶分布导数直接给出全部深度除子：
+
+$$
+\boxed{
+-\mathcal A_B''
+=
+\sum_jm_j\delta_{h_j}.
+}
+$$
+
+所以离线零点即使无限稀缺，也不能逃脱一维 attenuation tomography。
+
+仓库已经机器证明的 Bode width 进一步给出：
+
+$$
+\boxed{
+\text{width 面积}
+=
+\sum_jm_j\delta_j^2
+=
+\frac12\mathscr D''(0).
+}
+$$
+
+因此一个离线零点同时具有：
+
+$$
+\boxed{
+\begin{aligned}
+\text{零阶}
+&:\quad\text{整数负指标／Chern 荷};\\
+\text{一阶}
+&:\quad\text{总横向深度};\\
+\text{二阶}
+&:\quad\text{Bode 面积／阻尼曲率};\\
+\text{全阶}
+&:\quad\text{完整深度测度}.
+\end{aligned}
+}
+$$
+
+---
+
+黄金比例在这里的角色也进一步清晰：
+
+$$
+\omega_{n+1}
+=
+\varphi^{-2}\omega_n
+$$
+
+只是用最小二通道算术尺度逐层逼近：
+
+$$
+t_-=t_+.
+$$
+
+它规定“怎样观察”；
+
+整数 Blaschke degree 规定“是否真的有缺陷”。
+
+所以：
+
+$$
+\boxed{
+\varphi
+\text{ 是对偶区间的收缩尺度，}
+}
+$$
+
+而：
+
+$$
+\boxed{
+\deg B
+}
+$$
+
+才是离线缺陷的存在量。
+
+---
+
+最后，仓库当前的 scattering 路线已经能够：
+
+* 将 prime-power histories 重求和成 unitary Poisson resolvent；

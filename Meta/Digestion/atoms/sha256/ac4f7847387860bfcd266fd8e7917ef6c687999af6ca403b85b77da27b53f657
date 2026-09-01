@@ -1,0 +1,56 @@
+## 1416.2 黄金拉伸视界上的完整量
+
+在：
+
+$$
+\omega=\delta/\sqrt\varphi
+$$
+
+处：
+
+$$
+\boxed{
+\sigma^2=\varphi^{-1},
+\qquad
+\sigma=\varphi^{-1/2},
+}
+$$
+
+$$
+\boxed{
+\mathcal F=\varphi^{-2},
+}
+$$
+
+$$
+\boxed{
+\mathfrak I=\varphi^2,
+}
+$$
+
+$$
+\boxed{
+D_{\mathrm{KL}}=2\log\varphi,
+}
+$$
+
+$$
+\boxed{
+|\alpha|=\varphi,
+\qquad
+|\beta|=\sqrt\varphi,
+}
+$$
+
+$$
+\boxed{
+|\beta|^2=\varphi.
+}
+$$
+
+因此此前的 Jones、Bogoliubov、KL、Hardy 和 Fibonacci 数值全部在这个唯一相对深度上相交。
+
+这不是说离线零点必须存在；它说明**任何假设性的离线零点都必然具有一个黄金前兆层**。
+
+---
+

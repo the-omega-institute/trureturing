@@ -1,0 +1,32 @@
+## 八、更新后的 theorem DAG
+
+```text
+CriticalDampingGenerator
+        |
+        v
+ReflectedZeroModePhaseFlattening
+        |
+        +-----------------------------+
+        |                             |
+        v                             v
+SecondOrderRadialSpectrum       EvenOddModeObserver
+        |                             |
+        +--------------+--------------+
+                       |
+                       v
+          NegativeSquareLaplaceResolvent
+                       |
+                       v
+          OffLineCurvatureModeIntertwiner
+                       |
+                       v
+             SignedNormalSpectralAtom
+                       |
+                       v
+       Chebyshev / Toeplitz / Pick / Weil witness
+```
+
+下一真源的最高优先级是 `ReflectedZeroModeSecondOrderSpectrum`。它将第一次把本层的表示分解变成一个真正的负谱陈述。
+
+---
+

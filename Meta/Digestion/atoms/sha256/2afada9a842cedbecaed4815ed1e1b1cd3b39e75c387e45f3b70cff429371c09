@@ -1,0 +1,35 @@
+## 三、证明完成方块交换
+
+最终目标不应再写成“零点为什么恰好在线”，而应写成：
+
+$$
+\boxed{
+\text{Prime–Gamma 谱完成
+是否必然来自一个正、retarded、minimum-phase 的观察完成？}
+}
+$$
+
+任何一个统一的正时间保留界：
+
+$$
+\boxed{
+T_\omega^*T_\omega
+\succeq
+\varepsilon I,
+\qquad
+\varepsilon>0
+}
+$$
+
+都足以排除离线零点。
+
+黄金第二影界：
+
+$$
+\varepsilon=\varphi^{-2}
+$$
+
+是一个规范、强而漂亮的候选，但 RH 的逻辑核心只需要某个严格正 \(\varepsilon\)。
+
+---
+

@@ -1,0 +1,61 @@
+## 定理 1326.1（Hankel–Bogoliubov 提升）
+
+$$
+\boxed{
+\alpha_H^*\alpha_H-\beta_H^*\beta_H=I.
+}
+\tag{1326.3}
+$$
+
+若 \(H\) 的奇异值为：
+
+$$
+0\le\sigma_j<1,
+$$
+
+定义挤压参数：
+
+$$
+\boxed{
+r_j=\operatorname{artanh}\sigma_j.
+}
+\tag{1326.4}
+$$
+
+则：
+
+$$
+\boxed{
+|\alpha_j|=\cosh r_j
+=
+\frac1{\sqrt{1-\sigma_j^2}},
+}
+\tag{1326.5}
+$$
+
+$$
+\boxed{
+|\beta_j|=\sinh r_j
+=
+\frac{\sigma_j}{\sqrt{1-\sigma_j^2}}.
+}
+\tag{1326.6}
+$$
+
+相应的粒子数型读数为：
+
+$$
+\boxed{
+N_j
+=
+|\beta_j|^2
+=
+\frac{\sigma_j^2}{1-\sigma_j^2}.
+}
+\tag{1326.7}
+$$
+
+项目已经机器证明，有限维 Hankel 算子的非零奇异值可由可控—可观 Gramian 乘积的正谱恢复，因此这一提升可以直接接到项目现有的状态—效应与记忆接口上。
+
+---
+

@@ -1,0 +1,118 @@
+# 第一千二百九十五部　Prony–Hankel 有限重建
+
+定义生成函数：
+
+$$
+\boxed{
+C_\omega(z)
+=
+\sum_{n=0}^{\infty}
+c_nz^n.
+}
+\tag{1295.1}
+$$
+
+由式 (1294.5)：
+
+$$
+\boxed{
+C_\omega(z)
+=
+\sum_{j=1}^{M}
+\frac{
+m_j
+}{
+1-q_jz
+}.
+}
+\tag{1295.2}
+$$
+
+所以有限离线缺陷产生一个有限有理函数。
+
+令：
+
+$$
+\boxed{
+Q(z)
+=
+\prod_{j=1}^{M}
+(1-q_jz)
+=
+1+a_1z+\cdots+a_Mz^M.
+}
+\tag{1295.3}
+$$
+
+则序列满足线性递归：
+
+$$
+\boxed{
+c_{n+M}
++
+a_1c_{n+M-1}
++\cdots+
+a_Mc_n
+=
+0.
+}
+\tag{1295.4}
+$$
+
+定义 Hankel 矩阵：
+
+$$
+\boxed{
+\mathsf H_N
+=
+[c_{r+s}]_{r,s=0}^{N-1}.
+}
+\tag{1295.5}
+$$
+
+若 \(q_j\) 互异，则：
+
+$$
+\boxed{
+\mathsf H_N
+=
+V_N
+\operatorname{diag}(m_1,\ldots,m_M)
+V_N^{\mathsf T},
+}
+\tag{1295.6}
+$$
+
+其中：
+
+$$
+(V_N)_{rj}=q_j^r.
+$$
+
+因此，当 \(N\ge M\)：
+
+$$
+\boxed{
+\operatorname{rank}\mathsf H_N=M.
+}
+\tag{1295.7}
+$$
+
+所以有限个极稀缺离线点，不再表现为复平面中的稀缺采样事件，而表现为：
+
+$$
+\boxed{
+\text{一个有限秩 Hankel 序列。}
+}
+$$
+
+在精确数据下，有限个样本即可通过 Prony／消去多项式恢复全部 \(q_j\)，继而恢复：
+
+* 横向距离；
+* 高度模周期；
+* 重数。
+
+若存在重合采样点或高重零点，则使用 confluent Hankel–Prony 结构；总重数进入多项式指数或导数项。
+
+---
+

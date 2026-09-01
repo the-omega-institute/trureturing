@@ -1,0 +1,85 @@
+# 第一千二百九十六部　Poisson 光影与负时间序列是同一个变换
+
+上一轮定义离线缺陷的边界相位场：
+
+$$
+\boxed{
+J_\omega(t)
+=
+2\pi
+\sum_{j=1}^{M}
+m_j
+P_{h_j}(t+\gamma_j).
+}
+\tag{1296.1}
+$$
+
+取 Fourier 变换：
+
+$$
+\widehat f(k)
+=
+\int_{\mathbb R}
+f(t)e^{-ikt}\,dt.
+$$
+
+由于：
+
+$$
+\widehat{P_h}(k)=e^{-h|k|},
+$$
+
+得到：
+
+$$
+\boxed{
+\frac1{2\pi}
+\widehat J_\omega(k)
+=
+\sum_{j=1}^{M}
+m_j
+e^{-h_j|k|}
+e^{ik\gamma_j}.
+}
+\tag{1296.2}
+$$
+
+在黄金负频率：
+
+$$
+k=-nP_\varphi
+$$
+
+处：
+
+$$
+\boxed{
+\frac1{2\pi}
+\widehat J_\omega(-nP_\varphi)
+=
+\sum_jm_j
+\left(
+e^{-P_\varphi h_j}
+e^{-iP_\varphi\gamma_j}
+\right)^n
+=
+c_n.
+}
+\tag{1296.3}
+$$
+
+所以以下三种对象完全等价：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{负时间指数尾部};\\
+&\text{边界 Poisson 相位光影};\\
+&\text{黄金 Prony moment sequence}.
+\end{aligned}
+}
+$$
+
+仓库已经分别形式化：
+
+* RH 实零点载体下，相位密度是零点计数测度的 Poisson 平滑；

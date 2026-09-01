@@ -1,0 +1,32 @@
+# 第一千二百七十七部　Blaschke 因子区分合法历史与反因果缺陷
+
+令：
+
+$$
+p=a+ih,
+\qquad
+h>0.
+$$
+
+定义上半平面 Blaschke 因子：
+
+$$
+\boxed{
+b_p(z)
+=
+\frac{z-p}{z-\overline p}.
+}
+\tag{1277.1}
+$$
+
+它满足：
+
+$$
+|b_p(t)|=1
+\qquad
+(t\in\mathbb R).
+$$
+
+并且：
+
+* 在上半平面有一个零点 \(p\)；

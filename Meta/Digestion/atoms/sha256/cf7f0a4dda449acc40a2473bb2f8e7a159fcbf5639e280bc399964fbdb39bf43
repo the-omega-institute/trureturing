@@ -1,0 +1,12 @@
+# RH research-lane theory notes (consolidated)
+
+One volume accumulating the theory notes stripped from the research-lane
+formalization PRs; each section names its source branch and the Lean
+modules that carry its formal content. Reference input only: the Lean
+modules are the sole truth source, and section numbering here is
+narrative, not load-bearing.
+
+
+
+---
+

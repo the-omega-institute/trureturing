@@ -1,0 +1,36 @@
+### 3. 同高度临界线镜像
+
+定义
+
+$$
+H(rho)=1-\overline{rho}.
+$$
+
+其坐标作用为
+
+$$
+H:(delta,gamma)\mapsto(-delta,gamma).
+$$
+
+它可以写成
+
+$$
+H=F\circ C=C\circ F.
+$$
+
+生成元满足
+
+$$
+g(H(rho))=-\overline{g(rho)}.
+$$
+
+相位压平后，`rho` 与 `H(rho)` 的两个径向模式互为倒数：
+
+$$
+\boxed{
+\operatorname{Flat}(rho,t)\operatorname{Flat}(H(rho),t)=1.
+}
+$$
+
+这正是离线反射对的增长和衰减双支结构。
+

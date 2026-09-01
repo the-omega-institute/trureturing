@@ -1,0 +1,16 @@
+## 第五步：使用 agency-self 最小性
+
+一旦式 (1491.1) 成立，存在唯一：
+
+$$
+\operatorname{range}(r_J)
+\to
+H_\xi/\ker\Gamma_\xi.
+$$
+
+这说明 completed spectral name 已经达到 causal agency-self 所需的最小信息。
+
+项目已机器化这一一般因子化原理。
+
+---
+

@@ -123,6 +123,7 @@ internal static partial class CoverAtomCommand
             {
                 options.EnvelopePath,
             };
+            var authorityEntryPaths = new HashSet<string>(StringComparer.Ordinal);
             var entriesByAtomId = document.RequireDigestionEntries()
                 .GroupBy(static entry => entry.AtomId, StringComparer.Ordinal)
                 .Where(static group => group.Count() == 1)
@@ -141,8 +142,10 @@ internal static partial class CoverAtomCommand
                 var state = DigestionStatusNames.Migration(entry.ProjectedStatus.Migration)
                     + "-"
                     + DigestionStatusNames.Truth(entry.ProjectedStatus.Truth);
-                inputPaths.Add(
-                    $"{BackfillInventoryLoader.RootPath}{entry.SourceId}/{state}/{entry.AtomId}.yaml");
+                var entryPath =
+                    $"{BackfillInventoryLoader.RootPath}{entry.SourceId}/{state}/{entry.AtomId}.yaml";
+                inputPaths.Add(entryPath);
+                authorityEntryPaths.Add(entryPath);
                 inputPaths.Add($"{BackfillInventoryLoader.RootPath}{entry.SourceId}/source.toml");
                 inputPaths.Add(entry.SourcePath);
                 if (DigestionFingerprint.IsCanonicalSha256(entry.CasRef))
@@ -195,13 +198,55 @@ internal static partial class CoverAtomCommand
                             && !repositoryPaths.Contains(path))
                         .Select(static path => (Path: path, Kind: RawChangeKind.Modified)))
                     .OrderBy(static entry => entry.Path, StringComparer.Ordinal));
+            var authorityChanges = RawChangeSet.CreateWithKinds(
+                repositoryChanges.Entries
+                    .Select(static entry => (Path: entry.Path.Value, Kind: entry.Kind))
+                    .Concat(authorityEntryPaths
+                        .Where(path => !repositoryPaths.Contains(path))
+                        .Select(static path => (Path: path, Kind: RawChangeKind.Modified)))
+                    .OrderBy(static entry => entry.Path, StringComparer.Ordinal));
+            var authorityImpact = BackfillDeltaImpactResolver.Resolve(
+                current,
+                baseline,
+                document,
+                authorityChanges);
+            var authorityPaths = authorityChanges.Paths
+                .Select(static path => path.Value)
+                .ToHashSet(StringComparer.Ordinal);
+            var receiptSeedChanges = RawChangeSet.CreateWithKinds(
+                authorityChanges.Entries
+                    .Select(static entry => (Path: entry.Path.Value, Kind: entry.Kind))
+                    .Concat(inputPaths
+                        .Where(path => !authorityPaths.Contains(path) && ValueChanged(path))
+                        .Select(static path => (Path: path, Kind: RawChangeKind.Modified)))
+                    .OrderBy(static entry => entry.Path, StringComparer.Ordinal));
+            var receiptImpact = BackfillDeltaImpactResolver.Resolve(
+                current,
+                baseline,
+                document,
+                receiptSeedChanges);
+            var evaluationChanges = authorityImpact.EvaluationChanges;
+            var receiptVerificationChanges = receiptImpact.ReceiptVerificationChanges;
             var evaluationScope = DigestionEvaluationScopes.ForChanges(
-                coverChanges,
+                authorityChanges,
                 ImplementationPath);
+
+            bool ValueChanged(string path)
+            {
+                var currentExists = current.TryGetFile(path, out var currentFile);
+                var baselineExists = baseline.TryGetFile(path, out var baselineFile);
+                return currentExists != baselineExists
+                    || currentExists
+                    && !currentFile!.RawBytes.AsSpan().SequenceEqual(
+                        baselineFile!.RawBytes.AsSpan());
+            }
             var report = leanReportSource.Load(current);
             var lean = ValidateLean(current, report);
             var truthStates = LeanTruthStates.Resolve(current, lean);
-            var verifiedScribeEmissions = scribeEmissionVerifier.Verify(current, report, coverChanges);
+            var verifiedScribeEmissions = scribeEmissionVerifier.Verify(
+                current,
+                report,
+                receiptVerificationChanges);
             var beforeEvaluation = DigestionStatusEvaluator.Evaluate(
                 evaluationScope,
                 document,
@@ -210,7 +255,8 @@ internal static partial class CoverAtomCommand
                 verifiedScribeEmissions,
                 baselineDocument,
                 baselineSnapshot: baseline,
-                changes: coverChanges,
+                changes: receiptVerificationChanges,
+                projectedStatusChanges: evaluationChanges,
                 truthStates: truthStates);
             IngestCommand.RequireNoReceiptIntegrityFailure(beforeEvaluation);
 
@@ -252,7 +298,8 @@ internal static partial class CoverAtomCommand
                 baselineDocument,
                 validateProjectedStatus: false,
                 baselineSnapshot: baseline,
-                changes: coverChanges,
+                changes: receiptVerificationChanges,
+                projectedStatusChanges: evaluationChanges,
                 truthStates: truthStates);
             IngestCommand.RequireNoReceiptIntegrityFailure(derived);
 
@@ -288,7 +335,8 @@ internal static partial class CoverAtomCommand
                 verifiedScribeEmissions,
                 baselineDocument,
                 baselineSnapshot: baseline,
-                changes: coverChanges,
+                changes: receiptVerificationChanges,
+                projectedStatusChanges: evaluationChanges,
                 truthStates: truthStates);
             IngestCommand.RequireNoReceiptIntegrityFailure(evaluation);
             var backfillObservations = DigestionBackfillValidation.RequireValidBackfill(
@@ -298,7 +346,13 @@ internal static partial class CoverAtomCommand
                 LoadPolicy(finalSnapshot),
                 lean,
                 verifiedScribeEmissions,
-                DigestionEvaluationScopes.ResolveChanges(evaluationScope, coverChanges));
+                DigestionEvaluationScopes.ResolveChanges(
+                    evaluationScope,
+                    receiptVerificationChanges),
+                repositoryChanges: coverChanges,
+                projectedStatusChanges: DigestionEvaluationScopes.ResolveChanges(
+                    evaluationScope,
+                    evaluationChanges));
 
             var finalTarget = EvaluationFor(evaluation, options.AtomId);
             if (target.CoverageGids.Length == 0)

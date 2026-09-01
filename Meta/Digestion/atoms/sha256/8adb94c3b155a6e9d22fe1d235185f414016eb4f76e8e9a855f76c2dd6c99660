@@ -1,0 +1,13 @@
+- 已证明 RH。
+
+本轮机器层只冻结有限、可复用且不含目标等价前提的定量桥：
+
+\[
+\boxed{
+\text{residual local factors}
+\longrightarrow
+\text{stable adjacent-swap curvature bound}.
+\]
+
+---
+

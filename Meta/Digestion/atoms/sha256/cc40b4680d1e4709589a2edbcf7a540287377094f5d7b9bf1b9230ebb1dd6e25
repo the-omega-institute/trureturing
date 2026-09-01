@@ -1,0 +1,57 @@
+## 1313.1 拓扑信息被压进二阶 Jet
+
+虽然：
+
+$$
+\mathcal E_\rho(0)=0,
+$$
+
+但：
+
+$$
+\mathcal E_\rho(\omega)
+=
+\frac{\omega^2}{\delta^2}.
+$$
+
+因此：
+
+$$
+\boxed{
+\lim_{\omega\downarrow0}
+\frac{\mathcal E_\rho(\omega)}
+{\omega^2}
+=
+\frac1{\delta^2}.
+}
+\tag{1313.2}
+$$
+
+等价地：
+
+$$
+\boxed{
+\frac12
+\mathcal E_\rho''(0)
+=
+\frac1{\delta^2}.
+}
+\tag{1313.3}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{零基线函数值忘记缺陷，
+二阶观察 Jet 恢复缺陷深度。}
+}
+$$
+
+这解释了此前反复出现的直觉：
+
+> 越接近“道”的无差别自同一，静态值越没有信息；
+> 必须读取导数、导数的导数，才能恢复第一次分裂留下的深度。
+
+---
+

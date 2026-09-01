@@ -1,0 +1,28 @@
+## 1462.1 所有兼容名字的逆极限仍然只是“影极限”
+
+若有有限名字塔：
+
+$$
+N_0
+\longleftarrow
+N_1
+\longleftarrow
+N_2
+\longleftarrow\cdots,
+$$
+
+可以构造：
+
+$$
+\boxed{
+N_\infty
+=
+\varprojlim N_n.
+}
+$$
+
+它保存一切兼容的命名历史。
+
+Solenoid 正是这种结构的典型：
+
+* 每个有限层是圆周或有限覆盖上的读数；

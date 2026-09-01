@@ -1,0 +1,4 @@
+### P1：`NegativeSquareLaplaceResolvent`
+
+证明稳定化阈值 $u>\delta^2$、积分 resolvent 和阈值极点。该节点把时间增长接入 signed support、Stieltjes 和 positive-real completion。
+

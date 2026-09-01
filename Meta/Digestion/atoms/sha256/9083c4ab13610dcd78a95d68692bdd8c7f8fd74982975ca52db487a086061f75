@@ -1,0 +1,16 @@
+## 色散给出频率分解，记忆次序给出可观察的历时
+
+**文档地位。** 本文解释 Lean 节点
+
+`D5/S3/Observer/AgencyHolonomy/PrimeFrequencyPhaseFlow`
+
+及其三个主定理：
+
+- `fourier_phase_character_laws`；
+- `ordered_phase_product_collapse`；
+- `finite_fourier_synthesis_laws`。
+
+机器事实以 Lean 声明为准。本文将“色散以后是不是通过傅立叶变换出现时间”拆成可证明的傅立叶角色、标量次序遗忘和记忆提升三个部分。
+
+---
+

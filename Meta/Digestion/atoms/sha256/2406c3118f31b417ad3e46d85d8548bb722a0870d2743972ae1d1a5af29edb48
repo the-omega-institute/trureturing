@@ -1,0 +1,56 @@
+# 第一千四百零一部　黄金 Jones 匹配定理
+
+Jones 的子因子指数定理说明，指数小于 \(4\) 时，其允许值量子化为：
+
+$$
+4\cos^2\frac{\pi}{n},
+\qquad
+n=3,4,5,\ldots
+$$
+
+以及 \(4\) 以上的连续区间。最初几个值为：
+
+$$
+1,\quad 2,\quad
+4\cos^2\frac{\pi}{5}
+=\varphi^2,\quad 3,\ldots
+$$
+
+因此：
+
+$$
+\boxed{
+\varphi^2
+}
+$$
+
+是一般 Jones 指数序列中第一个非整数值。([eudml.org][3])
+
+Fibonacci 自对偶融合律：
+
+$$
+\tau\otimes\tau
+\simeq
+\mathbf1\oplus\tau
+$$
+
+给出量子维数：
+
+$$
+d_\tau^2=1+d_\tau,
+$$
+
+故正维数为：
+
+$$
+d_\tau=\varphi,
+$$
+
+相应平方维数为：
+
+$$
+d_\tau^2=\varphi^2.
+$$
+
+---
+

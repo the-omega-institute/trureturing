@@ -1,0 +1,75 @@
+# 第一千三百四十六部　指数红移如何严格产生 Gamma 与热谱
+
+黑洞热性真正依赖的不是一般视界，而是视界附近的指数坐标关系。
+
+设 affine null 坐标与外部时间满足：
+
+$$
+\boxed{
+U=-U_0e^{-\kappa u}.
+}
+\tag{1346.1}
+$$
+
+考虑 affine 正频率模式：
+
+$$
+e^{-i\Omega U}
+=
+e^{i\Omega U_0e^{-\kappa u}}.
+$$
+
+将其按外部时间 \(u\) 作 Fourier 分解。
+
+积分具有形式：
+
+$$
+\int_{-\infty}^{\infty}
+e^{iEu}
+e^{i\Omega U_0e^{-\kappa u}}\,du.
+$$
+
+令：
+
+$$
+x=\Omega U_0e^{-\kappa u},
+$$
+
+便得到 Mellin–Gamma 积分：
+
+$$
+\boxed{
+\frac1\kappa
+(\Omega U_0)^{iE/\kappa}
+\int_0^\infty
+x^{-1-iE/\kappa}e^{ix}\,dx.
+}
+\tag{1346.2}
+$$
+
+解析延拓给出正、负频率系数之比：
+
+$$
+\boxed{
+\frac{|\beta_E|^2}{|\alpha_E|^2}
+=
+e^{-2\pi E/\kappa}.
+}
+\tag{1346.3}
+$$
+
+从而：
+
+$$
+\boxed{
+N(E)
+=
+\frac1{e^{2\pi E/\kappa}-1}.
+}
+\tag{1346.4}
+$$
+
+黑洞热谱的指数红移和温度 \(\kappa/2\pi\) 正是这一结构的核心；相关工作也强调指数尺度变换是热辐射出现的关键机制。([数值对象标识符][2])
+
+---
+

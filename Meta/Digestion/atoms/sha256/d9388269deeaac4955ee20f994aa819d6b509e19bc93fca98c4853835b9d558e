@@ -1,0 +1,12 @@
+## 公理一：生成自相似
+
+存在分支算子 \(S_i\)，使：
+
+$$
+\boxed{
+\mathfrak D\simeq\operatorname{Comp}\{S_i(\mathfrak D)\}.
+}
+$$
+
+---
+

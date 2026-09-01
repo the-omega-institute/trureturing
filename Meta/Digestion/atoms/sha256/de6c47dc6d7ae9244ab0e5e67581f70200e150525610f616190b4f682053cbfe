@@ -1,0 +1,19 @@
+## 第四步：证明反射名字充分
+
+目标是证明存在 decoder：
+
+$$
+\boxed{
+\Gamma_\xi=F_\xi\circ r_J.
+}
+\tag{1491.1}
+$$
+
+若这一点成立，反射轨道中任何两个 lift 都必须拥有相同 causal profile。
+
+但局部 shifted 理论表明，任何真正离线的两个 lift 都具有不同 profile。
+
+因此离线轨道不存在。
+
+---
+

@@ -1,0 +1,18 @@
+\[
+\boxed{
+\Delta\omega_{p,q}
+=
+\omega_p-\omega_q
+}
+\]
+
+生成。
+
+对自然数地址使用
+
+\[
+\omega_n=\log n,
+\]
+
+Lean 证明无除法版本
+

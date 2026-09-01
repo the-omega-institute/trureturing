@@ -1,0 +1,16 @@
+## 7. 与 RH 和 GRH 的精确边界
+
+对任意候选零点集 `Z`，机器定理证明
+
+\[
+\forall s\in Z,\ \Re(s)=\frac12
+\iff
+\forall s\in Z,\ R_\varphi(s)=1.
+\]
+
+当 `Z` 被实例化为 completed zeta 或某个 completed `L`-函数的非平凡零点集时，这成为对应 RH 或 GRH 的等价坐标表达。该实例化本身需要仓库中严格定义的 completed function、zero predicate 和 trivial-zero exclusion。
+
+本批不把坐标等价冒充为零点位置证明。
+
+---
+

@@ -1,0 +1,54 @@
+## 定理 1417.1（Golden two-shadow bound）
+
+以下条件等价：
+
+$$
+\boxed{
+I-\mathsf D\succeq\mathsf D^2;
+}
+\tag{1417.3}
+$$
+
+$$
+\boxed{
+\mathsf D+\mathsf D^2\preceq I;
+}
+\tag{1417.4}
+$$
+
+$$
+\boxed{
+\|\mathsf D\|\le\varphi^{-1};
+}
+\tag{1417.5}
+$$
+
+$$
+\boxed{
+\|\mathsf H\|\le\varphi^{-1/2};
+}
+\tag{1417.6}
+$$
+
+$$
+\boxed{
+(I-\mathsf D)^{-1}
+\preceq
+\varphi^2I;
+}
+\tag{1417.7}
+$$
+
+$$
+\boxed{
+\mathsf D(I-\mathsf D)^{-1}
+\preceq
+\varphi I.
+}
+\tag{1417.8}
+$$
+
+所以黄金比例是二代隐藏递归仍可由正 Gram 结构承载的最大谱阈值。
+
+---
+
