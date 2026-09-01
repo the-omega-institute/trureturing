@@ -1,0 +1,102 @@
+# 第一千二百二十五部　建议形式化顺序
+
+```text
+D5/S3/ConceptDynamics/FirstObservation/
+  UnpolarizedCarrier.lean
+  PolarizationCarrier.lean
+  NoEquivariantPolarizationSelector.lean
+  PolarizationOrbitInvariant.lean
+  CommonImageWithoutCommonObserver.lean
+
+D5/S3/ConceptDynamics/NaturalExtension/
+  BiInfiniteHistory.lean
+  PresentProjection.lean
+  NegativeTimeFiber.lean
+  FutureDeterminedPastNonunique.lean
+  NoNaturalHistorySection.lean
+
+D5/S3/Observer/LinearMemory/BirthFiltration/
+  FiniteBehaviorObservation.lean
+  FiniteBehaviorKernel.lean
+  EffectGeneratedSpace.lean
+  BehaviorKernelOrthogonalEffect.lean
+  ConceptBirthLayer.lean
+  EffectInnovationLayer.lean
+
+D5/S3/Observer/LinearMemory/BirthEffectDuality/
+  BirthLayerPairing.lean
+  BirthLayerPairingWellDefined.lean
+  BirthLayerPairingNondegenerate.lean
+  BirthLayerDualEffectInnovation.lean
+  MemoryResidualFutureEffectDuality.lean
+
+D5/S3/Observer/LinearMemory/ConceptGram/
+  FiniteBehaviorGramian.lean
+  BehaviorGramianKernel.lean
+  BehaviorHilbertQuotient.lean
+  StateEffectCommonNonzeroSpectrum.lean
+  ConceptSingularPair.lean
+  ConceptLoopValue.lean
+
+D5/S3/ConceptDynamics/GoldenConceptLoop/
+  BlindIdentityRegime.lean
+  FlipNoStaticRegime.lean
+  MinimalMemoryRegime.lean
+  GoldenMinimalStateEffectMatrix.lean
+  GoldenCommonSpectralImage.lean
+  ObserverDirectionNotRecoveredFromGoldenValue.lean
+
+D5/S3/Observer/TwoSidedObservation/
+  FutureFiniteGramian.lean
+  PastFiniteGramian.lean
+  RelativeObservationModularOperator.lean
+  ScalarModeGramRatio.lean
+  ReflectedGramInverse.lean
+  BidirectionalGramCasimir.lean
+
+D5/S3/PositiveCompletion/GramRealization/
+  HermitianFormGramRealizable.lean
+  PositiveFormSquareRootFactorization.lean
+  NullDirectionsQuotient.lean
+  NegativeDirectionNoHilbertFactorization.lean
+  HiddenVsNegativeDirection.lean
+
+D5/S3/PositiveCompletion/BehaviorPositiveSquare/
+  BehaviorReflector.lean
+  PositiveCompletion.lean
+  LinearBehaviorPositiveCompatibility.lean
+  BehaviorPositiveCommutationObstruction.lean
+  NonGramDynamicConcept.lean
+
+D5/S3/Weil/ConceptGramBridge/
+  CriticalZeroObservationMap.lean
+  CriticalZeroGramForm.lean
+  OffLineZeroNegativeGramTarget.lean
+  FiniteFeatureNegativeSeparator.lean
+  PaleyWienerEffectCompiler.lean
+
+D5/S3/Weil/GoldenCofinalPositivity/
+  GoldenSupportSchedule.lean
+  GoldenScheduleCofinal.lean
+  GoldenScalePositivitySuffices.lean
+  WindowFloorThreePhases.lean
+  GoldenCriticalExponent.lean
+
+D5/S3/Weil/GoldenPositiveRecursion/
+  FibonacciSupportRecurrence.lean
+  TwoScaleTestDecomposition.lean
+  GoldenResidualForm.lean
+  GoldenResidualNonnegativeTarget.lean
+  GoldenPositivityInduction.lean
+  GoldenRecursionImpliesWeilPositivityTarget.lean
+
+D5/S3/Weil/ConcentrationProofEndpoint/
+  DangerousBandConcentration.lean
+  ScaleDependentMultiplierGap.lean
+  GoldenLayerConcentrationTarget.lean
+  GoldenResidualFromConcentration.lean
+  AllScaleConcentrationImpliesRHPositiveTarget.lean
+```
+
+---
+

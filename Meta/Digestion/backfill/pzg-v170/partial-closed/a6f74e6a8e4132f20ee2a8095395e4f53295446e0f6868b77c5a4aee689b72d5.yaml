@@ -3,8 +3,8 @@ fingerprints:
   normalized_sha256: sha256:a6f74e6a8e4132f20ee2a8095395e4f53295446e0f6868b77c5a4aee689b72d5
 cas_ref: sha256:a6f74e6a8e4132f20ee2a8095395e4f53295446e0f6868b77c5a4aee689b72d5
 coverage_gids:
-  - D5/S3/Weil/SpectralHilbert.labeled_zeta_mem_iff
   - D5/S3/Weil/SpectralHilbert.labeled_zeta_inner
+  - D5/S3/Weil/SpectralHilbert.labeled_zeta_mem_iff
 receipts:
   coverage:
     - gid: D5/S3/Weil/SpectralHilbert.labeled_zeta_inner

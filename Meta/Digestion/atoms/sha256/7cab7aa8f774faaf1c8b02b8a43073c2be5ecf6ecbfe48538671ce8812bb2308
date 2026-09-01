@@ -1,0 +1,226 @@
+# 本轮最终结论
+
+这一轮使“离线零点到底是什么”进一步从静态名词变成了完整动力学对象。
+
+对任意零点：
+
+$$
+\rho
+=
+\frac12+\delta+i\gamma,
+$$
+
+在 shifted-\(\xi\) 观察层中的位置是：
+
+$$
+\boxed{
+z_\rho(\omega)
+=
+-\gamma+i(\delta-\omega).
+}
+$$
+
+所有零点都以同一个速度：
+
+$$
+\boxed{-i}
+$$
+
+随观察深度移动。
+
+在：
+
+$$
+(\omega,\Im z)
+$$
+
+组成的观察时空中，它们全部沿 null line 运行：
+
+$$
+\boxed{
+\omega+\Im z=\delta.
+}
+$$
+
+其中：
+
+$$
+\boxed{
+\delta
+}
+$$
+
+不只是离开临界线的距离。
+
+它是该世界线穿越完成边界的精确时间。
+
+临界零点：
+
+$$
+\delta=0
+$$
+
+只在终端极限 \(\omega=0\) 到达边界。
+
+离线零点：
+
+$$
+\delta>0
+$$
+
+则在有限观察深度：
+
+$$
+\omega=\delta
+$$
+
+穿过边界，并经历：
+
+$$
+\boxed{
+\text{正质量}
+\longrightarrow
+\text{零质量}
+\longrightarrow
+\text{负质量}.
+}
+$$
+
+因此离线零点的第一深层身份是：
+
+$$
+\boxed{
+\text{一个边界质量反演事件。}
+}
+$$
+
+若零点重数为 \(m\)，穿越以后不仅出现一个负数，而出现一个 \(m\) 维负 Jet 空间：
+
+$$
+\boxed{
+\operatorname{ind}_-\ge m.
+}
+$$
+
+同一个整数 \(m\) 同时是：
+
+$$
+\boxed{
+\text{零点重数}
+=
+\text{Chern 荷}
+=
+\text{boundary spectral flow}
+=
+\text{负平方出生数}.
+}
+$$
+
+所以离线零点的真正对偶不是另一个点。
+
+它的 bulk–boundary 对偶是：
+
+$$
+\boxed{
+\text{完成边界上的整数负指标跳跃。}
+}
+$$
+
+---
+
+更进一步，全部离线零点可以组织成一个最小 Blaschke 修复因子：
+
+$$
+B_\omega.
+$$
+
+其次数等于必须从普通 Hilbert 世界中扣除的负平方数。
+
+核满足：
+
+$$
+\boxed{
+B(z)\overline{B(w)}k_\Theta(w,z)
+=
+k_S(w,z)-k_B(w,z).
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{离线缺陷的反 Gram 通道不是任意构造，
+而是 Blaschke model space}.
+}
+$$
+
+RH 的意义由此变成：
+
+$$
+\boxed{
+\text{所有观察深度上的最小 Blaschke 修复均为恒等因子 }1.
+}
+$$
+
+也就是：
+
+$$
+\boxed{
+\text{完整世界从来不需要负指标补丁。}
+}
+$$
+
+---
+
+每一个 Blaschke 因子在实边界留下：
+
+$$
+\boxed{
+2\pi
+P_{\delta-\omega}(t+\gamma)
+}
+$$
+
+这一 Poisson 相位脉冲。
+
+所以离线零点虽然是一个 bulk hyperbolic defect，它的边界对偶却是一个由：
+
+$$
+|D_t|
+$$
+
+传播的 massless Poisson field。
+
+全体缺陷场满足：
+
+$$
+\boxed{
+\left(
+|D_t|-\partial_\omega
+\right)J
+=
+2\pi
+\sum_\rho
+m_\rho
+\delta(\omega-\delta_\rho)
+\delta(t+\gamma_\rho).
+}
+$$
+
+这使此前两条直觉真正合并：
+
+$$
+\boxed{
+\text{离线零点是体内单极子；
+Poisson 无质量结构是它在完成边界上的光影。}
+}
+$$
+
+---
+
+黄金比例在这里的位置也完全明确。
+
+它不决定：
+
+* 零点重数；

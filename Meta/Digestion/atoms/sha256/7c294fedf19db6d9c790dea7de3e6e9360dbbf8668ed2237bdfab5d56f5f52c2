@@ -1,0 +1,64 @@
+# 第一千二百零八部　行为完成本身就是一个 Gram 完成
+
+回到线性系统：
+
+$$
+T:V\to V,
+\qquad
+C:V\to W.
+$$
+
+定义有限深度行为映射：
+
+$$
+\boxed{
+\mathcal O_Nx
+=
+(Cx,CTx,\ldots,CT^Nx).
+}
+\tag{1208.1}
+$$
+
+则对应 Gramian 为：
+
+$$
+\boxed{
+W_N
+=
+\mathcal O_N^*\mathcal O_N
+=
+\sum_{n=0}^{N}
+(T^*)^nC^*CT^n.
+}
+\tag{1208.2}
+$$
+
+对任意 \(x\)：
+
+$$
+\boxed{
+\langle x,W_Nx\rangle
+=
+\sum_{n=0}^{N}
+\|CT^nx\|^2.
+}
+\tag{1208.3}
+$$
+
+因此：
+
+$$
+\boxed{
+\ker W_N
+=
+\bigcap_{n=0}^{N}\ker(CT^n)
+=
+K_N.
+}
+\tag{1208.4}
+$$
+
+这与项目已经机器证明的 dual Gram kernel 结构完全一致：Gram 的 kernel 恰好就是实际观察映射的 kernel。
+
+---
+

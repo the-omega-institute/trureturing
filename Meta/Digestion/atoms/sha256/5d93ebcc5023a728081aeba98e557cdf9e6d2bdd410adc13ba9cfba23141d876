@@ -1,0 +1,8 @@
+# 第一千三百四十九部　Lax–Phillips／Livšic 路线比 Loewner 路线更自然
+
+Lax–Phillips 散射理论本来就以 incoming/outgoing translation subspaces、inner scattering matrix 和共振半群为核心；其共振对应散射矩阵解析延拓的奇点。([arXiv][5])
+
+Livšic 特征函数与保守 operator colligation 则把 maximal dissipative operator、Schur 特征函数和保守系统 transfer function联系起来。([arXiv][6])
+
+因此最具体的新目标应是：
+

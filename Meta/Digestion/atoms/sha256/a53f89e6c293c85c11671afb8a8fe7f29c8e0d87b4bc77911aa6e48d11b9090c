@@ -1,0 +1,18 @@
+\[
+\boxed{
+\beta_e(t_e+u)
+=
+\beta_e(t_e)\chi_{\omega_e}(u).
+}
+\]
+
+这说明 Fourier 时间平移作用于每个局部注入。该作用仍然可逆，不产生时间箭头。
+
+对于自然数地址 \(n\)，构造频率：
+
+\[
+\omega_n=\log n.
+\]
+
+节点证明对应有效注入正好使用已有 `logAddressPhase`。当地址是素数 \(p\) 时，这就是 \(e^{-it\log p}\) 通道。
+

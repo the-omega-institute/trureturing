@@ -1,0 +1,52 @@
+## 一、归一化零点生成元
+
+对任意复点
+
+$$
+rho=sigma+i gamma,
+$$
+
+定义相对临界线的有符号横向位移
+
+$$
+delta(rho)=\operatorname{Re}rho-\frac12.
+$$
+
+仓库现有 `CriticalDampingGenerator` 在消去统一阻尼平移后留下的标量生成元为
+
+$$
+\boxed{
+g(rho)=-delta(rho)+i\operatorname{Im}rho.
+}
+$$
+
+于是定义辅助指数模式
+
+$$
+\boxed{
+M_rho(t)=\exp(g(rho)t).
+}
+$$
+
+生成元实部控制幅度变化，虚部控制相位旋转：
+
+$$
+\operatorname{Re}g(rho)=-delta(rho),
+\qquad
+\operatorname{Im}g(rho)=\operatorname{Im}rho.
+$$
+
+因此
+
+$$
+\overline{g(rho)}=-g(rho)
+$$
+
+当且仅当
+
+$$
+\operatorname{Re}rho=\frac12.
+$$
+
+这与现有零点族级别的 skew-adjoint 判据相容。本层把它提升为任意单点的明确坐标恒等式。
+

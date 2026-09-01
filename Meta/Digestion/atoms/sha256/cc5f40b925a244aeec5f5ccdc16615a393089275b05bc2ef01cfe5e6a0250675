@@ -1,0 +1,8 @@
+## 第二步：Prime local conservative channels
+
+仓库已经证明每个 prime 的 bilateral translation history 精确重求和为 unitary Poisson resolvent。
+
+需要进一步选择正 log-time Hardy 极化，并证明 local prime channel 具有 retarded realization。
+
+---
+

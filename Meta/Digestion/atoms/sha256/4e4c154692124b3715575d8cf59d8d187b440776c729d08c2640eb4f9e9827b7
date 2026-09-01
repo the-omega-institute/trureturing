@@ -1,0 +1,69 @@
+# 第一千一百七十九部　建议形式化顺序
+
+```text
+D5/S3/ConceptDynamics/DualityVsPositivity/
+  ReciprocalDuality.lean
+  SplitBilinearInvariant.lean
+  DualityDoesNotImplyUnitarity.lean
+  PositiveInvariantMetric.lean
+  PositiveMetricForcesUnitCircle.lean
+
+D5/S3/ConceptDynamics/KAN/
+  ConceptPhaseFactor.lean
+  ConceptAmplitudeFactor.lean
+  ConceptMemoryFactor.lean
+  ObserverKANDecomposition.lean
+  GoldenSplitFactor.lean
+
+D5/S3/Analytic/Zeta/ModeMonodromy/
+  CenteredZeroMonodromy.lean
+  ZeroModePhaseAmplitudeFactorization.lean
+  ReflectedModeInverseAmplitude.lean
+  GoldenZeroModeMonodromy.lean
+  OffLineHyperbolicityCasimir.lean
+
+D5/S3/Analytic/Zeta/PositiveMetric/
+  ZeroMonodromyPreservesSplitForm.lean
+  CriticalMonodromyPreservesPositiveMetric.lean
+  OffLineMonodromyNoPositiveMetric.lean
+  PositiveMetricIffCritical.lean
+
+D5/S3/Observer/TwoSidedGramian/
+  FutureDiscountedGramian.lean
+  PastDiscountedGramian.lean
+  ScalarModeFutureRadius.lean
+  ScalarModePastRadius.lean
+  TwoSidedGramianBalance.lean
+  TransverseCoordinateFromGramianRadii.lean
+
+D5/S3/GoldenObserver/GramianMicroscope/
+  GoldenDiscountSchedule.lean
+  GoldenBidirectionalRadius.lean
+  GoldenDetectionLayer.lean
+  GoldenResolutionGrowth.lean
+
+D5/S3/ConceptDynamics/PolarizeForget/
+  UnpolarizedConcept.lean
+  PolarizedConcept.lean
+  PolarizeFunctor.lean
+  ForgetPolarizationFunctor.lean
+  PolarizeForgetAdjunctionTarget.lean
+
+D5/S3/Analytic/Zeta/PassivityMetricBridge/
+  PositiveMetricResolventPositiveReal.lean
+  PositiveRealPickKernel.lean
+  RationalNegativePassivityCriterion.lean
+  PickFailureFromOffLineMode.lean
+  PrimeArchimedeanPositiveMetricTarget.lean
+
+D5/S3/ConceptDynamics/GoldenKANGenerativity/
+  IrreducibleConceptKAN.lean
+  BinaryIntegralSplitFactor.lean
+  MinimalSplitLyapunovGolden.lean
+  GoldenConceptPolarDecompositionConjecture.lean
+```
+
+项目已有的行为完成与折扣 Gramian理论，可作为双时间 Gramian的单向底座；新的实质工作是把它提升到自然延拓上的正负时间对称版本。
+
+---
+

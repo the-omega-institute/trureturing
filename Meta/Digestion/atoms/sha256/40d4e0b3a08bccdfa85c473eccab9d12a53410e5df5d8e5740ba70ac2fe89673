@@ -1,0 +1,64 @@
+# 第一千四百五十一部　离线零点是两个完成函子不交换的障碍
+
+考虑下面的完成方块：
+
+$$
+\boxed{
+\begin{array}{ccc}
+\text{prime–Gamma 局部数据}
+&
+\xrightarrow{\quad\mathsf{Spec}\quad}
+&
+\xi
+\\[2mm]
+\downarrow{\scriptstyle\mathsf{Obs}}
+&&
+\downarrow{\scriptstyle\mathsf{Div}}
+\\[2mm]
+\text{Hardy／Hilbert 观察系统}
+&
+\xrightarrow{\quad\det\quad}
+&
+\text{正谱完成}.
+\end{array}
+}
+\tag{1451.1}
+$$
+
+其中：
+
+* \(\mathsf{Spec}\)：局部数据的谱／行列式完成；
+* \(\mathsf{Obs}\)：构造具有时间极化和正 storage 的观察系统；
+* \(\mathsf{Div}\)：读取完成函数的零点除子；
+* \(\det\)：从正实现恢复谱完成。
+
+如果该方块交换，则：
+
+$$
+\boxed{
+\text{谱完成中的每个模式，
+都来自合法的正时间 Hilbert realization}.
+}
+$$
+
+若存在离线零点，则谱完成仍然存在，但对应模式无法下降为：
+
+* causal inner；
+* positive de Branges kernel；
+* uniform retention gap。
+
+所以：
+
+$$
+\boxed{
+\text{离线零点}
+=
+\text{谱完成与正因果完成不交换的局部障碍}.
+}
+\tag{1451.2}
+$$
+
+这可能是目前最纯粹的概念定义。
+
+---
+

@@ -14,8 +14,8 @@ receipts:
       definition_sha256: sha256:67de1be388e78bdfa74ed54c5e67f94587de944e5a0dc2edc667911f47c96d94
       emission_sha256: sha256:3e226d946a792b8440dec47bc411ad5ff7bd1eb381645798116b8be54993092f
   unresolved_subitems:
-    - rh-implies-quasicrystalline-zero-set-not-converse
-    - quasicrystal-diffraction-and-positivity-as-rh-equivalent-readings
     - equivalent-formulation-cannot-serve-as-mechanism
-    - lee-yang-body-to-boundary-localization-requires-positivity
     - explicit-formula-as-diffraction-duality-channel
+    - lee-yang-body-to-boundary-localization-requires-positivity
+    - quasicrystal-diffraction-and-positivity-as-rh-equivalent-readings
+    - rh-implies-quasicrystalline-zero-set-not-converse

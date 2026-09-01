@@ -1,0 +1,17 @@
+## 公理五：缺陷忠实
+
+若一个局部缺陷非零，则至少存在一个表示函子使其保持非零：
+
+$$
+\boxed{
+\mathfrak a\neq0
+\Longrightarrow
+\exists\mathsf R:
+\mathsf R(\mathfrak a)\neq0.
+}
+$$
+
+否则完成会把真正缺陷完全商掉，理论将不可证伪。
+
+---
+

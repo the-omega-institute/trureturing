@@ -5,16 +5,16 @@ cas_ref: sha256:088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226
 coverage_gids:
   - D5/S1/Phase/Interference/FixedRayNineteenWitness.fixed_ray_nineteen_witness
   - D5/S1/Phase/Interference/FixedRayNineteenWitness.no_fixed_ray_character
-  - D5/S1/Phase/Interference/M468MemberTable.m468_zero_only_iff_successor_prime
-  - D5/S1/Phase/Interference/M468MemberTable.m468_split_prime_characterization
-  - D5/S1/Phase/Interference/M468MemberTable.m468TwentyFourMemberTable
   - D5/S1/Phase/Interference/M1728Countershot.m1728_countershot
+  - D5/S1/Phase/Interference/M468MemberTable.m468TwentyFourMemberTable
+  - D5/S1/Phase/Interference/M468MemberTable.m468_split_prime_characterization
+  - D5/S1/Phase/Interference/M468MemberTable.m468_zero_only_iff_successor_prime
   - D5/S1/Phase/Interference/ZolotarevSelector.zolotarev_selector_congruence
   - D5/S1/Phase/SeatTowerArithmetic.mod_twenty_four_eq_zero_or_twelve
   - D5/S1/Phase/SeatTowerArithmetic.twenty_four_dvd_iff_even_quotient
   - D5/S1/Phase/SeatTowerCombinatorics.full_exponent_stationing_count
-  - D5/S1/Phase/SeatTowerConsequences.mod_ninety_six_refines_twenty_four_and_forty_eight
   - D5/S1/Phase/SeatTowerConsequences.jacobi_factorization_of_selector_numerator
+  - D5/S1/Phase/SeatTowerConsequences.mod_ninety_six_refines_twenty_four_and_forty_eight
   - D5/S1/Phase/SeatTowerConsequences.singleton_stationing_choice_count
   - D5/S1/Phase/SeatTowerConsequences.three_split_primes_have_three_singleton_choices
 receipts:
@@ -28,12 +28,12 @@ receipts:
     - gid: D5/S1/Phase/SeatTowerCombinatorics.full_exponent_stationing_count
       source_sha256: sha256:088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226
       target_statement_id: sha256:380a231706a46fc14777d9f018cf192293e63d988129a7a79849cf52b5d936ac
-    - gid: D5/S1/Phase/SeatTowerConsequences.mod_ninety_six_refines_twenty_four_and_forty_eight
-      source_sha256: sha256:088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226
-      target_statement_id: sha256:3c35c5e3941cc69fb74119307de8909d16c5d31e6eb7f5422c153a513ed715e9
     - gid: D5/S1/Phase/SeatTowerConsequences.jacobi_factorization_of_selector_numerator
       source_sha256: sha256:088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226
       target_statement_id: sha256:f228a3a6442d3e435f1946c719e0463541f3ae817b3114ee72b05f83e269971f
+    - gid: D5/S1/Phase/SeatTowerConsequences.mod_ninety_six_refines_twenty_four_and_forty_eight
+      source_sha256: sha256:088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226
+      target_statement_id: sha256:3c35c5e3941cc69fb74119307de8909d16c5d31e6eb7f5422c153a513ed715e9
     - gid: D5/S1/Phase/SeatTowerConsequences.singleton_stationing_choice_count
       source_sha256: sha256:088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226
       target_statement_id: sha256:6666b90019b26c32797254ba1de6431b2ee0d16647f8893e68cc37aeee45ae00
@@ -45,32 +45,32 @@ receipts:
       definition_sha256: sha256:466422dc735d4dc550e46a2cb24f7f1cacd0880c37ff6e8bf96af19a36db1939
       emission_sha256: sha256:9a28c917c561da19f1a7d8b046c2201da93faf93d1133789e991d3b6efa0c4c2
   unresolved_subitems:
+    - direction-law-counterexamples
+    - full-exponent-encoding-clause
+    - full-exponent-orbit-encoding-bridge
+    - jacobi-no-modular-locality-certificate
+    - jacobi-no-modular-locality-claim
     - jacobi-selector-identification
+    - m-side-prime-observer-clause
+    - m1729-three-orbit-bijection
+    - m468-orbit-table-certificate
+    - m468-twenty-four-member-table
+    - m469-side-selector-equivalence
+    - m4788-opposite-direction-clause
+    - m4788-second-floor-classification
     - mod-24-joint-locality-certificate
     - mod-48-boundary-counterexample
     - mod-96-conflict-enumeration
     - mod-96-conflict-resolution
-    - m468-twenty-four-member-table
-    - m-side-prime-observer-clause
-    - three-prime-orbit-singleton-bijection
-    - three-prime-three-orbit-count
-    - m4788-second-floor-classification
-    - m4788-opposite-direction-clause
-    - twenty-two-city-separation-certificate
-    - direction-law-counterexamples
-    - full-exponent-encoding-clause
-    - prediction-trial-postmortem
-    - prediction-three-trial-certificate
-    - jacobi-no-modular-locality-claim
-    - nonlocal-reciprocity-walk
     - mod24-j-locality-certificate
     - mod48-boundary-counterexample-certificate
     - mod96-j-conflict-absorption-certificate
-    - m468-orbit-table-certificate
-    - m469-side-selector-equivalence
-    - prime-city-zero-only-equivalence
-    - m1729-three-orbit-bijection
-    - full-exponent-orbit-encoding-bridge
+    - nonlocal-reciprocity-walk
     - prediction-record-certificate
-    - jacobi-no-modular-locality-certificate
+    - prediction-three-trial-certificate
+    - prediction-trial-postmortem
+    - prime-city-zero-only-equivalence
     - reciprocity-walk-identification
+    - three-prime-orbit-singleton-bijection
+    - three-prime-three-orbit-count
+    - twenty-two-city-separation-certificate

@@ -1,0 +1,61 @@
+## 1261.1 电荷、位置与宽度
+
+每个离线零点：
+
+$$
+\rho=\frac12+\delta+i\gamma
+$$
+
+在边界上留下：
+
+$$
+\boxed{
+2\pi m_\rho
+P_{\delta-\omega}(t+\gamma).
+}
+$$
+
+其中：
+
+$$
+\boxed{
+\begin{aligned}
+-\gamma
+&=\text{边界脉冲中心};\\
+\delta-\omega
+&=\text{Poisson 脉冲宽度};\\
+m_\rho
+&=\text{总相位通量}.
+\end{aligned}
+}
+$$
+
+而：
+
+$$
+\boxed{
+\frac1{2\pi}
+\int_{\mathbb R}
+J_{\omega,T}(t)\,dt
+=
+\deg B_{\omega,T}
+=
+N_{\mathrm{off}}(\omega,T).
+}
+\tag{1261.6}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{bulk 中的稀缺离线点}
+\quad\longleftrightarrow\quad
+\text{boundary 上的 Poisson 相位脉冲}.
+}
+$$
+
+这正是前文“离线点虽然不在临界线，但导数能看见”的最小相位版本。
+
+---
+

@@ -3,9 +3,9 @@ fingerprints:
   normalized_sha256: sha256:b2ff1592c4c24b12dcc970a03ac6e2d0665a0b789156795ae37275aef122977c
 cas_ref: sha256:b2ff1592c4c24b12dcc970a03ac6e2d0665a0b789156795ae37275aef122977c
 coverage_gids:
-  - D5/S3/Fourier/FinitePoisson.sum_annihilator_character
   - D5/S3/Fourier/FinitePoisson.characterEquiv
   - D5/S3/Fourier/FinitePoisson.finite_poisson_summation
+  - D5/S3/Fourier/FinitePoisson.sum_annihilator_character
 receipts:
   coverage:
     - gid: D5/S3/Fourier/FinitePoisson.finite_poisson_summation

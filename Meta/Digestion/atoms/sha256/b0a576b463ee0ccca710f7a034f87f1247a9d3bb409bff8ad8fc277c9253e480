@@ -1,0 +1,12 @@
+* kernel 的负平方数。
+
+所以离线零点属于一种严格的：
+
+$$
+\boxed{
+\textbf{all-pass ambiguity}.
+}
+$$
+
+---
+

@@ -1,0 +1,57 @@
+## 定理 1317.1（Fundamental-cell reformulation）
+
+在标准 shifted scattering 因子化成立的条件下：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+B_\omega=1
+\quad
+\forall\,0<\omega<\frac12.
+}
+\tag{1317.2}
+$$
+
+等价地：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathfrak H_\omega=0
+\quad
+\forall\,0<\omega<\frac12.
+}
+\tag{1317.3}
+$$
+
+再等价地：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathfrak D_\omega
+=
+I-T_{\Theta_\omega}^*
+T_{\Theta_\omega}
+=
+0
+\quad
+\forall\,0<\omega<\frac12.
+}
+\tag{1317.4}
+$$
+
+所以真正的中心任务已经局部化为：
+
+$$
+\boxed{
+\text{证明一个半单位宽度的 Hardy 极化胞腔内，
+不存在 endpoint inverse-inner denominator。}
+}
+$$
+
+---
+

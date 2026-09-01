@@ -1,0 +1,50 @@
+## 1230.1 负指标流
+
+在有限高度 \(T\) 下定义：
+
+$$
+\boxed{
+N_{\mathrm{off}}(\omega,T)
+=
+\sum_{\substack{
+\rho=\frac12+\delta+i\gamma\\
+\delta>\omega,\ |\gamma|\le T
+}}
+m_\rho.
+}
+\tag{1230.2}
+$$
+
+随着 \(\omega\) 下降，它是单调不减的阶梯函数。
+
+其分布导数满足：
+
+$$
+\boxed{
+-\frac{\partial}{
+\partial\omega
+}
+N_{\mathrm{off}}(\omega,T)
+=
+\sum_{\substack{
+\rho=\frac12+\delta+i\gamma\\
+|\gamma|\le T
+}}
+m_\rho\,
+\delta_{\delta_\rho}(\omega).
+}
+\tag{1230.3}
+$$
+
+右边可以称为：
+
+$$
+\boxed{
+\textbf{横向破缺出生谱}.
+}
+$$
+
+每一个离线零点不再首先表现为复平面中的稀缺位置，而表现为观察尺度流中的一个整数跳跃。
+
+---
+

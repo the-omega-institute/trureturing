@@ -1,0 +1,63 @@
+## 定理 1206.1（Gram realizability）
+
+以下条件等价：
+
+$$
+\boxed{
+\begin{aligned}
+&(1)\quad Q\succeq0;\\
+&(2)\quad
+\exists\text{ Hilbert 空间 }Y,\ 
+\exists\mathcal O:V\to Y,\\
+&\hspace{24mm}
+Q(x,y)=
+\langle\mathcal Ox,\mathcal Oy\rangle_Y;\\
+&(3)\quad
+Q=\mathcal O^*\mathcal O
+\text{ 对某个 }\mathcal O\text{ 成立}.
+\end{aligned}
+}
+\tag{1206.1}
+$$
+
+### 证明
+
+若：
+
+$$
+Q=\mathcal O^*\mathcal O,
+$$
+
+则：
+
+$$
+Q(x,x)
+=
+\|\mathcal Ox\|^2
+\ge0.
+$$
+
+反之，若 \(Q\succeq0\)，取其唯一半正平方根：
+
+$$
+Q^{1/2},
+$$
+
+令：
+
+$$
+\mathcal O=Q^{1/2}:V\to V.
+$$
+
+则：
+
+$$
+\mathcal O^*\mathcal O
+=
+Q.
+$$
+
+∎
+
+---
+

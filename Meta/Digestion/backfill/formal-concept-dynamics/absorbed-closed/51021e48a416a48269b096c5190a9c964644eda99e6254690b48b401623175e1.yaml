@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:51021e48a416a48269b096c5190a9c964644eda99e6254690b48b401623175e1
+  normalized_sha256: sha256:51021e48a416a48269b096c5190a9c964644eda99e6254690b48b401623175e1
+cas_ref: sha256:51021e48a416a48269b096c5190a9c964644eda99e6254690b48b401623175e1
+coverage_gids:
+  - D5/S3/ConceptDynamics/Reversibility/ExactRollbackInjectivityCriterion.exact_rollback_iff_joint_record_injective
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Reversibility/ExactRollbackInjectivityCriterion.exact_rollback_iff_joint_record_injective
+      source_sha256: sha256:51021e48a416a48269b096c5190a9c964644eda99e6254690b48b401623175e1
+      target_statement_id: sha256:bac180b1e192402b8422d2b433fa9d75e31cc3e4eb8788b989569dd3636c0869
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Reversibility/ExactRollbackInjectivityCriterion.exact_rollback_iff_joint_record_injective
+      definition_sha256: sha256:92e20f7a4f963edf66542a32c6fbc9517c2b2a07afcacef52dfe4ca0ecf03f10
+      emission_sha256: sha256:60bf7af453b2f487fd16fb936627e0d6c83e774bba351b399016773e25de503a
+  unresolved_subitems: []

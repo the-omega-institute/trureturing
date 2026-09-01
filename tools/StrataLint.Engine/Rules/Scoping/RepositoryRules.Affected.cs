@@ -34,6 +34,10 @@ internal static partial class RepositoryRules
         Changed(context, static path =>
             path.StartsWith(BackfillInventoryLoader.RootPath, StringComparison.Ordinal));
 
+    private static bool FormalizationReceiptsAffected(RuleEvaluationContext context) =>
+        Changed(context, static path =>
+            path.StartsWith(DigestionFormalizationReceipt.RootPath, StringComparison.Ordinal));
+
     private static bool StatusAffected(RuleEvaluationContext context) =>
         Changed(context, IsStatusScope);
 

@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:27912858a51ab892eca67c8463f51e49567f86dfe40e1f35c72669b084f70026
+  normalized_sha256: sha256:27912858a51ab892eca67c8463f51e49567f86dfe40e1f35c72669b084f70026
+cas_ref: sha256:27912858a51ab892eca67c8463f51e49567f86dfe40e1f35c72669b084f70026
+coverage_gids:
+  - D5/S3/Observer/Prediction/FiniteEquivalenceDescent.finite_equivalence_descent_and_stability_bound
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/Prediction/FiniteEquivalenceDescent.finite_equivalence_descent_and_stability_bound
+      source_sha256: sha256:27912858a51ab892eca67c8463f51e49567f86dfe40e1f35c72669b084f70026
+      target_statement_id: sha256:ac6d0cef7ee9ecdd75aa35dc77ff59ca9b9f11798e02703bc815c097498b0333
+  scribe:
+    - gid: D5/S3/Observer/Prediction/FiniteEquivalenceDescent.finite_equivalence_descent_and_stability_bound
+      definition_sha256: sha256:2f6225bec36cdc526dc77a27e8b55c618718fa679178a9ccd4c5344e4ed674af
+      emission_sha256: sha256:c9b47a52953daa7f9bfd66867defa963c31a8a48e3c7c524608d4a9e739db296
+  unresolved_subitems: []

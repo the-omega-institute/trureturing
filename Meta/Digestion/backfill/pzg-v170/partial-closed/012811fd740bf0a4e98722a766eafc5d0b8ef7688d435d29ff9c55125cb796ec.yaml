@@ -3,11 +3,11 @@ fingerprints:
   normalized_sha256: sha256:012811fd740bf0a4e98722a766eafc5d0b8ef7688d435d29ff9c55125cb796ec
 cas_ref: sha256:012811fd740bf0a4e98722a766eafc5d0b8ef7688d435d29ff9c55125cb796ec
 coverage_gids:
-  - D5/S3/Zeros/Symmetry/ReflectionFixedPointContrast.reflection_mirror_fixed_locus_contrast
+  - D5/S3/Weil/ReflectionLedger.mirror_reversal_spec
   - D5/S3/Zeros/Symmetry/ReflectionFixedPointContrast.reflection_fixed_iff
+  - D5/S3/Zeros/Symmetry/ReflectionFixedPointContrast.reflection_mirror_fixed_locus_contrast
   - D5/S3/Zeros/Symmetry/ZetaConjugationCovariance.completed_riemann_zeta_one_sub_conj
   - D5/S3/Zeros/Symmetry/ZetaConjugationCovariance.riemann_zeta_conj
-  - D5/S3/Weil/ReflectionLedger.mirror_reversal_spec
 receipts:
   coverage:
     - gid: D5/S3/Weil/ReflectionLedger.mirror_reversal_spec
@@ -18,11 +18,11 @@ receipts:
       definition_sha256: sha256:67de1be388e78bdfa74ed54c5e67f94587de944e5a0dc2edc667911f47c96d94
       emission_sha256: sha256:3e226d946a792b8440dec47bc411ad5ff7bd1eb381645798116b8be54993092f
   unresolved_subitems:
-    - pointwise-genesis-terminal-information-increments-plus-minus-one
+    - critical-line-existence-from-information-reversal
     - genesis-plus-terminal-information-equals-total-knowledge
-    - numeric-symmetry-and-information-antisymmetry-coexist
-    - wigner-unitary-or-antiunitary-dichotomy
     - information-flow-reversal-forces-antiunitary-time-reversal
     - lambda-antiunitary-covariance-numerical-certificate
-    - critical-line-existence-from-information-reversal
+    - numeric-symmetry-and-information-antisymmetry-coexist
+    - pointwise-genesis-terminal-information-increments-plus-minus-one
     - rh-as-zero-set-subset-of-antilinear-fixed-line
+    - wigner-unitary-or-antiunitary-dichotomy

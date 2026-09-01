@@ -7,6 +7,22 @@ receipts:
   coverage: []
   scribe: []
   unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    recorded_at_utc: 2026-08-31T13:36:21.2885330+00:00
+    gids:
+      - D5/S3/Analytic/PrimeProducts/FormalFactorTableCounterexamples.absolute_convergence_admission_gives_multipliable
+    gaps:
+      - code: chain-migration-incomplete
+        detail: 1ccea58f28cfc303fea21538d6d4980c7ca6c248f09f1624c780272c18bb6635
+      - code: chain-migration-incomplete
+        detail: 810516b7019b5f7690984137624257f8e888612b947bc62e193c8a77f10c0b40
+      - code: chain-migration-incomplete
+        detail: 8e84ffbefcc67c6398bf4a8d0f4db91df16e68b2600ba70dadc411c68f5e03cf
+      - code: chain-migration-incomplete
+        detail: bb78fe0a96abd02545211796a8bd0b480a6563ade23a93913fb492e61ea9c252
+      - code: chain-migration-incomplete
+        detail: ce294b761bb3675d8bfd1fe248a8d2d0927750378899863e1f7ebb487c88f71d
   chain_atoms:
     - 1ccea58f28cfc303fea21538d6d4980c7ca6c248f09f1624c780272c18bb6635
     - 8e84ffbefcc67c6398bf4a8d0f4db91df16e68b2600ba70dadc411c68f5e03cf

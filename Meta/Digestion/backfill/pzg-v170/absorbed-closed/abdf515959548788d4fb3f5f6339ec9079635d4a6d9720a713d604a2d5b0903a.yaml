@@ -3,21 +3,21 @@ fingerprints:
   normalized_sha256: sha256:abdf515959548788d4fb3f5f6339ec9079635d4a6d9720a713d604a2d5b0903a
 cas_ref: sha256:abdf515959548788d4fb3f5f6339ec9079635d4a6d9720a713d604a2d5b0903a
 coverage_gids:
-  - D5/S0/Conventions/DiagonalSwap.swap_changes_self_diagonal
   - D5/S0/Computability/Diagonalization/BooleanSwapLoad.boolean_swap_carries_diagonal_escape
+  - D5/S0/Conventions/DiagonalSwap.swap_changes_self_diagonal
 receipts:
   coverage:
-    - gid: D5/S0/Conventions/DiagonalSwap.swap_changes_self_diagonal
-      source_sha256: sha256:abdf515959548788d4fb3f5f6339ec9079635d4a6d9720a713d604a2d5b0903a
-      target_statement_id: sha256:fc62f68d3f1dd431994a72e8042eea34ba0bd8fdd43ebcf52aaa1301268adae9
     - gid: D5/S0/Computability/Diagonalization/BooleanSwapLoad.boolean_swap_carries_diagonal_escape
       source_sha256: sha256:abdf515959548788d4fb3f5f6339ec9079635d4a6d9720a713d604a2d5b0903a
       target_statement_id: sha256:29c54ae2c2fb54f060de45e17bb7d5ce4a8a56a969abdccc0b9169392216913e
-  scribe:
     - gid: D5/S0/Conventions/DiagonalSwap.swap_changes_self_diagonal
-      definition_sha256: sha256:b77b10cfbca2eb5f8a2b25b31ccdfe20a3f6958a48d39030e2175006a544912e
-      emission_sha256: sha256:02d7c2d2dcf0eba8d294afda4e9edd6d98b8d6a9ffec06acf06df883ab6550a1
+      source_sha256: sha256:abdf515959548788d4fb3f5f6339ec9079635d4a6d9720a713d604a2d5b0903a
+      target_statement_id: sha256:fc62f68d3f1dd431994a72e8042eea34ba0bd8fdd43ebcf52aaa1301268adae9
+  scribe:
     - gid: D5/S0/Computability/Diagonalization/BooleanSwapLoad.boolean_swap_carries_diagonal_escape
       definition_sha256: sha256:f33be8ee9b5879a39ac1880a3490bc5310cb566d0c81660ece28f005eaca207e
       emission_sha256: sha256:4f0810bb0c420b2d9a7a39a3917113d05bb7b7ea97306924790776aae3b7bd32
+    - gid: D5/S0/Conventions/DiagonalSwap.swap_changes_self_diagonal
+      definition_sha256: sha256:b77b10cfbca2eb5f8a2b25b31ccdfe20a3f6958a48d39030e2175006a544912e
+      emission_sha256: sha256:02d7c2d2dcf0eba8d294afda4e9edd6d98b8d6a9ffec06acf06df883ab6550a1
   unresolved_subitems: []

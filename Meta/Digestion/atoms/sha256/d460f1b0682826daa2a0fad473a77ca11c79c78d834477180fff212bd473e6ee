@@ -1,0 +1,32 @@
+## 证明论对偶
+
+离线零点的真正证明对偶是：
+
+$$
+\boxed{
+\text{负 OS／Weil 范数向量}.
+}
+$$
+
+因为前者存在，当且仅当整体反射正性不能成立。
+
+所以最值得传导的一对不是：
+
+$$
+\text{离线零点}
+\leftrightarrow
+\text{另一个神秘常数},
+$$
+
+而是：
+
+$$
+\boxed{
+\text{离线零点}
+\quad\longleftrightarrow\quad
+\text{正锥的有限分离效应}.
+}
+$$
+
+---
+

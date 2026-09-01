@@ -1,0 +1,69 @@
+# 第一千三百三十三部　黑洞“吞噬”与霍金辐射的当前数学版本
+
+对一个离线缺陷：
+
+$$
+\rho=\frac12+\delta+i\gamma,
+$$
+
+其 bulk 信息被 Hardy 视界隐藏在 inverse-inner denominator 中。
+
+但边界仍留下：
+
+$$
+\boxed{
+J_\rho(\omega,t)
+=
+2\pi m_\rho
+P_{\delta-\omega}(t+\gamma),
+\qquad
+0<\omega<\delta.
+}
+\tag{1333.1}
+$$
+
+其中：
+
+$$
+P_h(t)
+=
+\frac1\pi
+\frac{h}{t^2+h^2}.
+$$
+
+所以：
+
+* bulk 点的位置不能直接从单一边界值读取；
+* 边界却持续发出一个宽度为 \(\delta-\omega\) 的 Poisson 光影；
+* 总相位通量仍等于整数重数 \(m_\rho\)。
+
+其源方程为：
+
+$$
+\boxed{
+\left(
+|D_t|-\partial_\omega
+\right)J
+=
+2\pi
+\sum_\rho
+m_\rho
+\delta(\omega-\delta_\rho)
+\delta(t+\gamma_\rho).
+}
+\tag{1333.2}
+$$
+
+因此可以把“吞噬一切却仍有辐射”精确翻译为：
+
+$$
+\boxed{
+\text{bulk 坐标被投影隐藏，
+但 bulk source 的边界 Green 影像不能消失。}
+}
+$$
+
+这确实非常接近霍金辐射的结构精神：外部观察者不访问隐藏伙伴，却能测量由全局模式结构产生的出射统计。
+
+---
+

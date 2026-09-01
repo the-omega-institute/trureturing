@@ -3,16 +3,16 @@ fingerprints:
   normalized_sha256: sha256:8c09d8bb2541d8915771a8e938626034e8a681ceca57601e4e3e80a89a5ea490
 cas_ref: sha256:8c09d8bb2541d8915771a8e938626034e8a681ceca57601e4e3e80a89a5ea490
 coverage_gids:
+  - D5/S3/Observer/MatrixUnitCertificate.matrix_unit_eq_single
+  - D5/S3/Observer/MatrixUnitCertificate.matrix_unit_mul
+  - D5/S3/Observer/MatrixUnitCertificate.matrix_units_sum_diagonal
   - D5/S3/Observer/WindowAlgebra/WindowGeneration.window_generators_adjoin_top
   - D5/S3/Observer/WindowRegister.window_weyl
   - D5/S3/ObserverMemory/PrimePowerTensorTower.prime_power_tensor_factor_decomposition
   - D5/S3/ObserverMemory/WindowRegisterCRT.window_register_crt_decomposition
-  - D5/S3/Observer/MatrixUnitCertificate.matrix_units_sum_diagonal
-  - D5/S3/Observer/MatrixUnitCertificate.matrix_unit_eq_single
-  - D5/S3/QuantumBounds/RobertsonSchrodinger.robertson_schrodinger
-  - D5/S3/Observer/MatrixUnitCertificate.matrix_unit_mul
   - D5/S3/Quantum/FiniteDimensional.qubit_weyl_star
   - D5/S3/Quantum/QubitWitnesses.pauli_observables_have_no_common_eigenvector
+  - D5/S3/QuantumBounds/RobertsonSchrodinger.robertson_schrodinger
 receipts:
   coverage:
     - gid: D5/S3/Quantum/FiniteDimensional.qubit_weyl_star

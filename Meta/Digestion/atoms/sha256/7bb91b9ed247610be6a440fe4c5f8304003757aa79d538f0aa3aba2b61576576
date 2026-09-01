@@ -1,0 +1,47 @@
+## 1294.1 从 \(q_j\) 恢复零点几何
+
+若 \(q_j\) 已知，则：
+
+$$
+\boxed{
+\delta_j-\omega
+=
+-\frac{
+\log|q_j|
+}{
+2\log\varphi
+}.
+}
+\tag{1294.8}
+$$
+
+并且：
+
+$$
+\boxed{
+\gamma_j
+\equiv
+-\frac{
+\arg q_j
+}{
+2\log\varphi
+}
+\pmod{
+\frac{\pi}{\log\varphi}
+}.
+}
+\tag{1294.9}
+$$
+
+所以一个黄金盘原子同时编码：
+
+* 离线深度；
+* 零点高度的模周期；
+* 重数 \(m_j\)。
+
+单一周期会造成高度 aliasing。
+
+要恢复绝对 \(\gamma_j\)，可再使用一个与 \(P_\varphi\) 比值无理的第二采样周期，或保留连续边界变量。
+
+---
+

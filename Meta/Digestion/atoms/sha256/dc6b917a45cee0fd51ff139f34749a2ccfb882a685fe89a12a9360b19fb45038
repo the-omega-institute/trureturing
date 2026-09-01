@@ -1,0 +1,63 @@
+## Arithmetic Conservative Colligation Conjecture
+
+对每个：
+
+$$
+0<\omega<\frac12,
+$$
+
+构造一个最小保守 colligation：
+
+$$
+\boxed{
+\mathbb U_\omega
+=
+\begin{pmatrix}
+A_\omega&B_\omega\\
+C_\omega&D_\omega
+\end{pmatrix}
+}
+\tag{1349.1}
+$$
+
+作用于：
+
+$$
+\mathcal X_\omega\oplus\mathcal E,
+$$
+
+满足：
+
+$$
+\mathbb U_\omega^*\mathbb U_\omega=I,
+$$
+
+且其 transfer function 在 Cayley 变换后恰为：
+
+$$
+\boxed{
+\Theta_\omega.
+}
+\tag{1349.2}
+$$
+
+若这样的最小保守实现存在，并且内部生成元 \(A_\omega\) 位于正确耗散半平面，则：
+
+$$
+\Theta_\omega
+$$
+
+自动属于 Schur 类；结合边界模长 \(1\)，便成为 inner。
+
+于是：
+
+$$
+\boxed{
+B_\omega=1,
+\qquad
+\mathfrak H_\omega=0.
+}
+$$
+
+---
+

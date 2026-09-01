@@ -3,8 +3,8 @@ fingerprints:
   normalized_sha256: sha256:9d3d07a751adbfaaa89596eab0358448670a45e4cb516b8a590bb178c0aaa0c2
 cas_ref: sha256:9d3d07a751adbfaaa89596eab0358448670a45e4cb516b8a590bb178c0aaa0c2
 coverage_gids:
-  - D5/S3/Factorization/SolenoidProfiniteKernel.universal_solenoid_profinite_exact
   - D5/S1/Solenoid/ThroatTransitionCocycle.three_lift_difference_cocycle
+  - D5/S3/Factorization/SolenoidProfiniteKernel.universal_solenoid_profinite_exact
 receipts:
   coverage:
     - gid: D5/S1/Solenoid/ThroatTransitionCocycle.three_lift_difference_cocycle

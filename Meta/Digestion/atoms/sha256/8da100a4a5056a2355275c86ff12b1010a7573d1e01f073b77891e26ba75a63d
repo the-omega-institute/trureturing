@@ -1,0 +1,46 @@
+## 离线零点
+
+$$
+\boxed{
+\delta
+\in
+\mathbb C/i\mathbb R
+\simeq
+\mathbb R,
+\qquad
+\delta\neq0.
+}
+$$
+
+它表示：
+
+* unitary character lift 不存在；
+* 紧致完成无法吸收该增长率；
+* 问题不是 lift 不唯一；
+* 问题是根本没有合法 unitary lift。
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+\text{hidden fiber}
+&=\text{合法实现的非唯一性};\\
+\text{off-line defect}
+&=\text{合法 unitary 实现的不存在性}.
+\end{aligned}
+}
+\tag{1129.1}
+$$
+
+或者更简洁地：
+
+$$
+\boxed{
+\text{Solenoid 隐藏是 kernel；
+离线零点是 descent obstruction。}
+}
+$$
+
+---
+

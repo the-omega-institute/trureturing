@@ -1,0 +1,39 @@
+## 九、负平方是二阶算子的负谱值
+
+令
+
+$$
+L=-\frac{d^2}{dt^2}.
+$$
+
+对增长分支 $g_{\pm}(t)=e^{\pm\delta t}$，预期有
+
+$$
+\frac{d^2}{dt^2}g_{\pm}(t)
+=\delta^2g_{\pm}(t),
+$$
+
+因此
+
+$$
+\boxed{
+Lg_{\pm}=-\delta^2g_{\pm}.
+}
+$$
+
+这给出负平方的谱解释：$-\delta^2$ 是前向增长和衰减模式在算子 $-d^2/dt^2$ 下的共同负谱值。
+
+对振荡模式 $e^{\pm i\gamma t}$，同一算子产生正谱值 $+\gamma^2$。由此出现一个候选三分法：
+
+$$
+\begin{array}{c|c|c}
+\text{生成元类型}&\text{有符号行列式}&\text{动力学}\
+\hline
+\text{双曲}&-\delta^2&\text{增长/衰减}\
+\text{中性}&0&\text{无分裂}\
+\text{椭圆}&+\gamma^2&\text{单位模振荡}
+\end{array}
+$$
+
+[research-target] 先形式化 `ReflectedGrowthPairSecondOrderSpectrum`，再建立 `EllipticHyperbolicReflectionTrichotomy`。第二条需要复指数或实二维旋转生成元，不能由本轮标量定理直接宣称。
+

@@ -1,0 +1,22 @@
+## 5. 黄金局部 Euler 三分律
+
+令形式局部变量为 `X`，定义
+
+\[
+D_\chi(X)=(1-X)(1-\chi X).
+\]
+
+机器证明
+
+\[
+\begin{aligned}
+D_{+1}(X)&=(1-X)^2,\\
+D_{-1}(X)&=1-X^2,\\
+D_0(X)&=1-X.
+\end{aligned}
+\]
+
+它们分别对应 split、inert、ramified 三种黄金局部类型。仓库已有 prime classification 证明素数的黄金分裂类型由 `p mod 5` 决定。本批新增 residue-to-charge-to-Euler-denominator 的桥接 owner。
+
+---
+

@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:d5496c1a616af7abd15ecb06adee2190435100f3501ce46818244312bdcc6233
+  normalized_sha256: sha256:d5496c1a616af7abd15ecb06adee2190435100f3501ce46818244312bdcc6233
+cas_ref: sha256:d5496c1a616af7abd15ecb06adee2190435100f3501ce46818244312bdcc6233
+coverage_gids:
+  - D5/S3/Quantum/Entanglement/BellPureStateMixedMarginal.bell_pure_state_has_maximally_mixed_marginal
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/Entanglement/BellPureStateMixedMarginal.bell_pure_state_has_maximally_mixed_marginal
+      source_sha256: sha256:d5496c1a616af7abd15ecb06adee2190435100f3501ce46818244312bdcc6233
+      target_statement_id: sha256:292dfcd6befb4533253d72dec708e2b55aa6bcc1deaaa739d6ae017d765a7d1a
+  scribe:
+    - gid: D5/S3/Quantum/Entanglement/BellPureStateMixedMarginal.bell_pure_state_has_maximally_mixed_marginal
+      definition_sha256: sha256:030583f6e14442d4c2bb999f272eb49bdbf68525e5064eb07ba712d18a8ea737
+      emission_sha256: sha256:d59df51d84961d0f57454e735d26906b78e91535d995af2d483a16c624d803b5
+  unresolved_subitems: []

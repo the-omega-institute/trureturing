@@ -1,0 +1,13 @@
+\[
+\boxed{
+\mathcal O_{L,N,T}^{\mathrm{off}}
+=
+\sum_{\rho\ \mathrm{off-line},\,|\gamma_\rho|\le T}
+4m_\rho
+|A_{\mathrm{odd},\rho}\rangle
+\langle A_{\mathrm{odd},\rho}|.
+}
+\]
+
+黄金稳定通道的自然 Lyapunov 权为
+

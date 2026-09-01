@@ -1,0 +1,14 @@
+\[
+\boxed{
+\log p-\log q
+=
+\log\frac pq.
+}
+\]
+
+因此 pairwise holonomy 的时间振荡自然由素数比值的对数频率控制。
+
+该相位扭曲曲率尚未在本轮 Lean 文件中定义。它应形成下一节点 `PhaseTwistedStableSwapCurvature`。
+
+---
+

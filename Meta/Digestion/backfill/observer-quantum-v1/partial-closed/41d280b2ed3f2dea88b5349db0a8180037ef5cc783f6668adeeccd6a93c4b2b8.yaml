@@ -3,16 +3,14 @@ fingerprints:
   normalized_sha256: sha256:41d280b2ed3f2dea88b5349db0a8180037ef5cc783f6668adeeccd6a93c4b2b8
 cas_ref: sha256:41d280b2ed3f2dea88b5349db0a8180037ef5cc783f6668adeeccd6a93c4b2b8
 coverage_gids:
-  - D5/S3/Observer/HiddenFlow/StreamlineExistence.existsUnique_frozen_streamline_decomposition
+  - D5/S1/Dynamics/JumpCocycle.jump_cocycle
   - D5/S1/Solenoid/StreamlineDecomposition.existsUnique_streamline
   - D5/S3/Arith/HiddenFiberRigidity.hidden_fiber_rigidity
-  - D5/S1/Dynamics/JumpCocycle.jump_cocycle
+  - D5/S3/Observer/HiddenFlow/StreamlineExistence.existsUnique_frozen_streamline_decomposition
+  - D5/S3/Observer/StreamlineTheorem.nonconstant_offset_not_continuous
   - D5/S3/Observer/StreamlineTheorem.path_decomposition
   - D5/S3/Observer/StreamlineTheorem.streamline_offset_continuous_iff_constant
-  - D5/S3/Observer/StreamlineTheorem.nonconstant_offset_not_continuous
 receipts:
   coverage: []
   scribe: []
   unresolved_subitems: []
-  chain_atoms: []
-  tail_authorization: null

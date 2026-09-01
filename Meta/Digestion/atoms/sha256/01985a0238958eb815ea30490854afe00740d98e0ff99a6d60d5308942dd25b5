@@ -1,0 +1,12 @@
+## 10.2 中心变量与相对变量完全分离
+
+令：
+
+\[
+\bar\omega=\frac{\omega_p+\omega_q}{2},
+\qquad
+\delta\omega=\frac{\omega_p-\omega_q}{2}.
+\]
+
+节点证明中心分解：
+

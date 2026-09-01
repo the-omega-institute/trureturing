@@ -1,0 +1,44 @@
+## 1117.2 算术黄金 Solenoid
+
+真正让 \(\varphi\) 成为内禀 character，必须把基域扩张为：
+
+$$
+K=\mathbb Q(\sqrt5).
+$$
+
+定义黄金 adelic solenoid：
+
+$$
+\boxed{
+\Sigma_K
+=
+\mathbb A_K/K.
+}
+\tag{1117.1}
+$$
+
+在标准迹加性字符下：
+
+$$
+\boxed{
+\widehat{\Sigma_K}
+\simeq
+K.
+}
+\tag{1117.2}
+$$
+
+Adele class group \(\mathbb A_K/K\) 是紧致加法群，并通过 adelic 自对偶使其 character group由 \(K\) 参数化。([ResearchGate][3])
+
+此时：
+
+$$
+\boxed{
+\varphi\in K
+}
+$$
+
+才成为一个真正的 Pontryagin frequency。
+
+---
+

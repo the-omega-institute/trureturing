@@ -1,0 +1,121 @@
+# 第一千三百五十一部　单缺陷的视界自由能与普适发散
+
+对简单离线零点，仍有：
+
+$$
+\sigma(\omega)=\frac{\omega}{\delta}.
+$$
+
+定义 horizon determinant：
+
+$$
+\boxed{
+\mathscr D_\rho(\omega)
+=
+1-\sigma(\omega)^2
+=
+\frac{\delta^2-\omega^2}{\delta^2}.
+}
+\tag{1351.1}
+$$
+
+定义自由能型缺陷：
+
+$$
+\boxed{
+\mathscr F_\rho(\omega)
+=
+-\log\mathscr D_\rho(\omega).
+}
+\tag{1351.2}
+$$
+
+定义挤压参数和占据数：
+
+$$
+r_\rho
+=
+\operatorname{artanh}\frac{\omega}{\delta},
+$$
+
+$$
+N_\rho
+=
+\frac{\omega^2}{\delta^2-\omega^2}.
+$$
+
+则：
+
+$$
+\boxed{
+\mathscr F_\rho
+=
+2\log\cosh r_\rho
+=
+\log(1+N_\rho).
+}
+\tag{1351.3}
+$$
+
+令：
+
+$$
+\varepsilon=\delta-\omega\downarrow0.
+$$
+
+有：
+
+$$
+\boxed{
+r_\rho(\omega)
+=
+\frac12
+\log\frac{2\delta}{\varepsilon}
++
+O(\varepsilon),
+}
+\tag{1351.4}
+$$
+
+$$
+\boxed{
+N_\rho(\omega)
+=
+\frac{\delta}{2\varepsilon}
++
+O(1),
+}
+\tag{1351.5}
+$$
+
+$$
+\boxed{
+\mathscr F_\rho(\omega)
+=
+\log\frac{\delta}{2\varepsilon}
++
+O(\varepsilon).
+}
+\tag{1351.6}
+$$
+
+所以缺陷视界具有一个普适对数发散。
+
+这是真正有数学用途的“黑洞视界”特征：
+
+$$
+\boxed{
+\text{当 shifted pole 接近 Hardy 边界，
+最小因果因子化的条件数发生普适发散。}
+}
+$$
+
+它解释了为何接近离线出生深度时：
+
+* 数值重建病态；
+* Schur 参数靠近单位圆；
+* Hankel 占据发散；
+* 微小误差被极度放大。
+
+---
+

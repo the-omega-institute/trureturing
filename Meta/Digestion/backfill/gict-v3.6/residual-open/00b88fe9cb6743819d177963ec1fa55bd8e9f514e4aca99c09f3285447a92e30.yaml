@@ -7,9 +7,9 @@ receipts:
   coverage: []
   scribe: []
   unresolved_subitems:
-    - mu-star-definition-and-left-total-variation-bound
-    - quantum-state-spectrum-entropy-identification
     - forgetting-budget-monotonicity-sharpness-dpi-and-capacity-drop
     - mixed-end-qubit-saturation-and-fourth-order-expansion
+    - mu-star-definition-and-left-total-variation-bound
     - pure-end-rank-bound
+    - quantum-state-spectrum-entropy-identification
     - random-spectrum-and-high-precision-numerical-certificates

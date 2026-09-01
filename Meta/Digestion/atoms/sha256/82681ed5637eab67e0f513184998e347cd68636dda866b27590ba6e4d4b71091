@@ -1,0 +1,53 @@
+## 1208.1 有限行为世界的规范 Hilbert 实现
+
+定义商空间：
+
+$$
+\boxed{
+\mathcal H_N^{\mathrm{beh}}
+=
+V/K_N.
+}
+\tag{1208.5}
+$$
+
+令：
+
+$$
+\langle[x],[y]\rangle_N
+=
+\langle x,W_Ny\rangle.
+$$
+
+因为 \(K_N=\ker W_N\)，该内积在商空间上严格正定。
+
+所以：
+
+$$
+\boxed{
+\text{有限行为完成}
+=
+\text{把所有前 }N\text{ 层仍无法区分的状态商去，
+再赋予未来读出的 Gram 度量。}
+}
+$$
+
+当全部未来和收敛时，可定义折扣版本：
+
+$$
+\boxed{
+W_\beta
+=
+\sum_{n\ge0}
+\beta^n
+(T^*)^nC^*CT^n,
+\qquad
+0<\beta<1.
+}
+\tag{1208.6}
+$$
+
+项目的观察者完成理论已经把这一 Gramian 与全部未来读数、不可见 kernel 及 Lyapunov 方程放入同一结构。
+
+---
+

@@ -1,0 +1,46 @@
+## 定理 1404.1（Finite-index horizon exclusion）
+
+在以上假设下，不存在离线零点。
+
+### 证明
+
+若存在：
+
+$$
+\rho=\frac12+\delta+i\gamma,
+\qquad
+\delta>0,
+$$
+
+则对：
+
+$$
+0<\omega<\delta
+$$
+
+有：
+
+$$
+\operatorname{Ind}_{\mathrm{hor}}
+=
+\frac{\delta^2}
+{\delta^2-\omega^2}.
+$$
+
+当：
+
+$$
+\omega\uparrow\delta
+$$
+
+时：
+
+$$
+\operatorname{Ind}_{\mathrm{hor}}
+\longrightarrow+\infty.
+$$
+
+这与统一有限上界 \(\Lambda\) 矛盾。∎
+
+---
+

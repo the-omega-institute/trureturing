@@ -1,0 +1,44 @@
+## 尚未闭合的核心桥
+
+仍然缺少：
+
+$$
+\boxed{
+Q_\xi
+=
+\mathcal O_\xi^*\mathcal O_\xi
+}
+$$
+
+的 Prime–Archimedean 全局构造；
+
+或等价地，缺少对全部尺度成立的：
+
+$$
+\boxed{
+\kappa_L
+<
+\frac{a_L}{a_L+b_L}.
+}
+$$
+
+另一条可能路线是构造：
+
+$$
+\boxed{
+Q_{n+1}
+=
+Q_n\circ A_n
++
+Q_{n-1}\circ B_n
++
+R_n,
+\qquad
+R_n\succeq0.
+}
+$$
+
+在这条桥闭合以前，当前理论仍不是 RH 证明。
+
+---
+

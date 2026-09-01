@@ -1,0 +1,62 @@
+# 第一千三百四十部　建议形式化顺序
+
+```text
+D5/S3/Observer/BogoliubovHankel/
+  StrictHankelContraction.lean
+  HankelBogoliubovAlpha.lean
+  HankelBogoliubovBeta.lean
+  HankelBogoliubovCCR.lean
+  HankelSqueezeParameter.lean
+  HankelParticleNumber.lean
+
+D5/S3/Observer/HorizonEntropy/
+  ModeThermalDensity.lean
+  ModeOccupationEntropy.lean
+  HankelDefectEntropy.lean
+  ZeroEntropyIffZeroHankel.lean
+  FiniteRankDefectEntropy.lean
+
+D5/S3/Analytic/Zeta/DefectHorizon/
+  OffLineObservationHorizon.lean
+  SafeExteriorShift.lean
+  HorizonBoundaryPole.lean
+  AntiCausalInteriorShift.lean
+  RankOneDefectOccupation.lean
+  RankOneDefectEntropy.lean
+
+D5/S3/GoldenObserver/HawkingCalibration/
+  GoldenModularInverseTemperature.lean
+  GoldenSurfaceGravityScale.lean
+  GoldenBoltzmannFactor.lean
+  GoldenFirstCrossingOccupationBound.lean
+  GoldenHawkingMatchingConjecture.lean
+
+D5/S3/Analytic/Zeta/MonopoleHorizonSquare/
+  ZeroMultiplicityTopologicalCharge.lean
+  ZeroMultiplicityHankelRank.lean
+  HankelSingularValueVisibility.lean
+  TopologicalChargeVsRadiationStrength.lean
+
+D5/S3/Analytic/Zeta/HawkingDefectSpectrum/
+  ShiftedHankelOccupationTrace.lean
+  ShiftedHankelEntropyTrace.lean
+  GoldenCofinalOccupationCriterion.lean
+  GoldenCofinalEntropyCriterion.lean
+
+D5/S3/Weil/PrimeHorizonRegularity/
+  PrimeScatteringRetardedSupport.lean
+  ArchimedeanRetardedSupportTarget.lean
+  MinimalCascadeHorizonRegularity.lean
+  NoAdvancedEndpointDenominatorTarget.lean
+  PrimeArchimedeanHardyTriangularity.lean
+
+D5/S3/Weil/GoldenKMS/
+  ObserverModularFlow.lean
+  GoldenKMSPeriod.lean
+  HankelDetailedBalance.lean
+  GoldenThermalSpectrumTarget.lean
+  KMSDoesNotImplyMinimumPhase.lean
+```
+
+---
+

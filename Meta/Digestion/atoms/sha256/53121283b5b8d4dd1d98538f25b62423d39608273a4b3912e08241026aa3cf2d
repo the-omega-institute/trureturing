@@ -1,0 +1,27 @@
+- RH 已经证明。
+
+本轮之后可以无条件使用两条机器事实：
+
+\[
+\boxed{
+\text{共同 archive 是 coboundary；顺序曲率只检测观察起源不一致。}
+}
+\]
+
+\[
+\boxed{
+\text{一个离线四点轨道的全部符号风险集中在非负奇谱能量。}
+}
+\]
+
+因此未来桥需要比较的对象已经固定为
+
+\[
+\boxed{
+\text{prime-side 规范约化交换曲率平方}
+\quad\longleftrightarrow\quad
+\text{zero-side 离线奇谱能量}.
+}
+
+---
+

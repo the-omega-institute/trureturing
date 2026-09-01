@@ -1,0 +1,45 @@
+## Riemann Naming Stability Theorem Target
+
+在完整 shifted-response 模型中：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+I_{F_{\mathrm{shift}}}(R_J)=R_J.
+}
+\tag{1485.1}
+$$
+
+由项目已经形式化的双修复固定点定理，这进一步等价于：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+R_J\text{ 是 forward congruence}
+\iff
+C_{F_{\mathrm{shift}}}(R_J)=R_J.
+}
+\tag{1485.2}
+$$
+
+也即：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+I_{F_{\mathrm{shift}}}(R_J)
+=
+R_J
+=
+C_{F_{\mathrm{shift}}}(R_J).
+}
+\tag{1485.3}
+$$
+
+项目已机器闭合一般等价关系的这一 interior–closure 固定点结构；尚未闭合的是把 shifted-\(\xi\) 响应系统正式实例化进去。
+
+---
+

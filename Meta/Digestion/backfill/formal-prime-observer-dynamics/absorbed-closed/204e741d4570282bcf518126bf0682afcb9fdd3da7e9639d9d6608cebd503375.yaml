@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:204e741d4570282bcf518126bf0682afcb9fdd3da7e9639d9d6608cebd503375
+  normalized_sha256: sha256:204e741d4570282bcf518126bf0682afcb9fdd3da7e9639d9d6608cebd503375
+cas_ref: sha256:204e741d4570282bcf518126bf0682afcb9fdd3da7e9639d9d6608cebd503375
+coverage_gids:
+  - D5/S3/Analytic/PrimeProducts/FiniteMarginalGlobalSupportContrast.finite_marginals_and_global_support_contrast
+receipts:
+  coverage:
+    - gid: D5/S3/Analytic/PrimeProducts/FiniteMarginalGlobalSupportContrast.finite_marginals_and_global_support_contrast
+      source_sha256: sha256:204e741d4570282bcf518126bf0682afcb9fdd3da7e9639d9d6608cebd503375
+      target_statement_id: sha256:13bce1a1c6f110ba2ace70e9cda19e5d00eac56a70ad3cbeeda10711ea633ac8
+  scribe:
+    - gid: D5/S3/Analytic/PrimeProducts/FiniteMarginalGlobalSupportContrast.finite_marginals_and_global_support_contrast
+      definition_sha256: sha256:6f62c3d160a30146540354bbb1e75be285575ef5044a65fdeb767e9a2a447bbd
+      emission_sha256: sha256:7e067e147aa6058e736c98813ee02daf8def1c7c57eb9a9a01b904bfc4bf9433
+  unresolved_subitems: []

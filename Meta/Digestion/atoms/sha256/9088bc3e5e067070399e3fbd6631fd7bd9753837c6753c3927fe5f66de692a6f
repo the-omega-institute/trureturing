@@ -1,0 +1,90 @@
+# 第一千一百八十八部　离线零点是复杂模时间的实部泄漏
+
+令：
+
+$$
+\rho
+=
+\frac12+\delta+i\gamma.
+$$
+
+用黄金模算子归一化，定义：
+
+$$
+\boxed{
+M_\varphi(\rho)
+=
+\Delta_\varphi^{\delta+i\gamma}.
+}
+\tag{1188.1}
+$$
+
+它的 determinant 始终为：
+
+$$
+\det M_\varphi(\rho)=1.
+$$
+
+所以 determinant 完全看不见 \(\delta\)。
+
+但：
+
+$$
+M_\varphi(\rho)^*
+M_\varphi(\rho)
+=
+\begin{pmatrix}
+e^{4\delta\log\varphi}&0\\
+0&e^{-4\delta\log\varphi}
+\end{pmatrix}.
+$$
+
+定义 unitary defect：
+
+$$
+\boxed{
+\mathfrak U_\varphi(\rho)
+=
+\frac12
+\operatorname{tr}
+\left(
+M_\varphi^*M_\varphi
+\right)-1.
+}
+\tag{1188.2}
+$$
+
+则：
+
+$$
+\boxed{
+\mathfrak U_\varphi(\rho)
+=
+\cosh
+\left(
+4\delta\log\varphi
+\right)-1
+=
+2\sinh^2
+\left(
+2\delta\log\varphi
+\right).
+}
+\tag{1188.3}
+$$
+
+因此：
+
+$$
+\boxed{
+\mathfrak U_\varphi(\rho)=0
+\iff
+\delta=0.
+}
+\tag{1188.4}
+$$
+
+这是一种不会被反射配对消掉的正缺陷量。
+
+---
+

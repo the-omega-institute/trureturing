@@ -7,6 +7,14 @@ receipts:
   coverage: []
   scribe: []
   unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    recorded_at_utc: 2026-08-31T13:17:04.1816220+00:00
+    gids:
+      - D5/S3/ConceptDynamics/OperationalTuition/ResponseUpgradeWellFounded.t2_response_upgrade_well_founded
+    gaps:
+      - code: chain-migration-incomplete
+        detail: f39bf635dbd5ec27987297c3322d3777de9f6498e754ec9e500a67b563ea4a97
   chain_atoms:
     - f39bf635dbd5ec27987297c3322d3777de9f6498e754ec9e500a67b563ea4a97
     - 61883e31e2268df9a0ad01e6000873b29030321edea33f8969b7e9e77123167e

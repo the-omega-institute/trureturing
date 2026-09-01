@@ -1,0 +1,18 @@
+## 1299.2 Hankel 秩首先读取位置数，不自动读取总重数
+
+对 logarithmic-derivative Prony 序列：
+
+$$
+c_n=\sum_jm_jq_j^n,
+$$
+
+Hankel 秩等于互异 \(q_j\) 的个数；重数存在于系数 \(m_j\)。
+
+若要让矩阵秩等于总零点重数，应使用：
+
+* 完整 inverse Blaschke impulse；
+* confluent derivative samples；
+* 或 reproducing-kernel jets。
+
+---
+

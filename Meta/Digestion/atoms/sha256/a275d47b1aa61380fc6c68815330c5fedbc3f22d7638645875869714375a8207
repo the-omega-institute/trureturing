@@ -1,0 +1,14 @@
+## 从局部因子余项到 holonomy 小量的第一条定量桥
+
+**文档地位。** 本文解释 Lean 节点
+
+`D5/S3/Observer/AgencyHolonomy/StableResidualSwapCurvatureBound`
+
+及其主声明
+
+`D5.S3.Observer.AgencyHolonomy.StableResidualSwapCurvatureBound.stable_residual_swap_curvature_bound`。
+
+机器结论以 Lean 声明为准。本文区分已经证明的有限代数事实、可以由该事实直接推出的纸面推论，以及仍需独立形式化的全局桥。
+
+---
+

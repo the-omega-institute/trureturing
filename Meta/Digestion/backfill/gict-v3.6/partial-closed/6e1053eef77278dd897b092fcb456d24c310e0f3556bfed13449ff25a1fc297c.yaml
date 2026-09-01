@@ -14,5 +14,5 @@ receipts:
       definition_sha256: sha256:516a3bf8c09c94e88103f8d3b95c68532e5e06e17a3ee961b75c3e6728e0437b
       emission_sha256: sha256:0bc4c3ccd8f1e8648c308f66a3396dedab54045ae9a7b8322bde1fe805cb4670
   unresolved_subitems:
-    - phi-derivative-at-zero-identification
     - ah-exact-value-delta-certificate
+    - phi-derivative-at-zero-identification

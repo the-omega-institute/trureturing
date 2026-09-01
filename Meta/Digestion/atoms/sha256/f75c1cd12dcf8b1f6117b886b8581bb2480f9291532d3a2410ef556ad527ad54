@@ -1,0 +1,51 @@
+## 1283.1 真正缺失的定理
+
+需要证明的不是：
+
+$$
+\boxed{
+\text{scattering boundary modulus}=1,
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\Theta_\omega
+\text{ 在正观察半平面中没有 inner denominator}.
+}
+\tag{1283.1}
+$$
+
+等价地，需要证明：
+
+$$
+\boxed{
+B_\omega=1
+\qquad
+\forall\omega>0.
+}
+\tag{1283.2}
+$$
+
+又等价于：
+
+$$
+\boxed{
+\begin{aligned}
+&\operatorname{ind}_-\mathcal K_\omega=0;\\
+&N(\omega)=0;\\
+&R(\omega)=0;\\
+&\mathcal A(\omega,y)=0;\\
+&\text{无负 Poisson phase pulses};\\
+&\Theta_\omega\text{ 是普通 Schur／inner 对象}.
+\end{aligned}
+}
+\tag{1283.3}
+$$
+
+对全部 \(\omega>0\) 成立，便排除所有 \(\delta>0\)。
+
+---
+

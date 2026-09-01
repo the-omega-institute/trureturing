@@ -1,0 +1,316 @@
+# 追加部二　平行侦察席报告(nyxid gpt-pro,盲于追加部一)
+
+> 产地与独立性:本部为 nyxid gpt-pro 侦察席交付原文(company 池,mode:chat;主池 extraction 故障三败后换池,禁表格后成功)。**其 brief 只含冻结面材料,发出于追加部一写就之前,席位对 orchestrator 的四构思零可见**——故下述收敛为真独立、且跨模型族(GPT vs Claude)。
+> **收敛注记(orchestrator 判)**:追加部一 A↔本部 W-D(认证失速/FiniteCertificateStall)、一 B↔本部 W-A(曲率-松弛相位桥)、一 C↔本部 W-F(黄金环面指标扩张)三对相撞;本部独有增量:provenance bitmask(直接回应 OACTC 172 的 P₅ 不完备性)、多尺度 cosh 指纹、射影 jet 尾历史态。两部义务合并去重后进 W 队列,命名以本部 proposed GID 为准、判据以追加部一的可证伪预测为准。
+
+A. 残差地图
+
+A.0 口径、对象空间与诚实边界
+
+取阅截点为 2026-08-30 的公开 dev。以下把已冻结声明当依赖地址，不重证。唯一例外必须明说：GID D5/X_Frontier/Hearts 中 o5_independence 的 statement 已冻结而 proof body 仍是 sorry；o6WeilPositivityStatement 只是待证 Prop。本文绝不把二者写成已闭合定理。
+
+为避免把“RH 的真假”这个一位目标误当成“零点定位”，取强目标
+T(x) = （来源标签 base/twist/golden，零点位置的有限多重集，解析阶数）。
+RH 只是 T 的“全部 base 零点实部为 1/2”投影。于是某坐标足以判 RH，不代表它足以定位 T。
+
+对象空间 X 取四个有类型的纤维之不交和：单个 divisor atom、反射零点载体、环面因子状态、有限正性 completion。某坐标不适用于某纤维时返回同一个 none；这只是总化类型，不把对象身份塞进 q。
+
+当前操作性概念 q_cert 取现有 theorem 面向消费者的粗商，而不是所有原始函数图：
+- q_tor^0：completedZeta×twist 是否对所选/全部 index 同时为零；暂不含导数塔。
+- q_temp：Re(s-1/2)=0 是否成立。
+- q_curv^cert：临界支撑/flatness 的真假、偶极总质量与符号类别；若显式保留整条曲率函数，则记作更强的 q_curv^raw。
+- q_budget^cert：固定有限层的可行/PSD/区间证书及“slack∈[0,1]”；不把隐藏 completion 或全部矩写入地址。
+- q_gold^0：O-5 的结构实部类别、或单一黄金环面 P5 是否为零；经典 zeta 与 eulerGerm 尚无 kernel bridge 时返回 unbridged。
+
+因此下列每对都注明它属于哪个商。若某个已冻结 raw lift 已能切开，我明确标“已有切刀”，不冒充新盲核。
+
+A-R1 纵向别名：两个不同的临界线零点。
+
+取 x=1/2+14.134725…i，y=1/2+21.022039…i；这是经典前两个经严格计算框架覆盖的 zeta 零点，T(x)≠T(y) 因为高度不同。q_tor^0 对二者都给“全 period 消失”；q_temp 都为 true；q_curv^cert 都给“临界支撑/零 damping defect”；q_budget^cert 若未绑定点级 compact coordinate 则二者同为 none；若只消费 chebyshev_slack_bounds 的区间结论，则二者同为 admissible；q_gold^0 对两者都是 unbridged；即使采用理论级 w=phi^2 s 拉回，其拉回点 x/phi^2、y/phi^2 也只共享结构实部 1/(2 phi^2)，仍无纵向地址。这些坐标都没有纵向地址。
+
+冻结坐标：D5/S3/Analytic/Adelic/ToroidalTemperednessCriterion；D5/S3/Analytic/Adelic/FiniteToroidalSpectralTomography；D5/S3/Analytic/Adelic/RelativeCurvatureSupportCriterion；D5/S3/Zeros/Symmetry/CriticalDampingFlatness；D5/S3/Weil/CayleyLaguerre/ChebyshevSlackPositivity。数值出处：DLMF 25.10；Platt–Trudgian, “The Riemann hypothesis is true up to 3·10^12”, 2021。
+
+裁决：在只含 criterion Boolean/区间状态的 Gamma_cert 中是疑似盲核。简单加入 Im(s) 会成为近乎身份编码；合格换语应是局部 amplitude/phase、计数地址或有限 projective jet。D5/S3/Analytic/Adelic/ToroidalCechCompletion 已说明 raw ratio-atlas 并不盲，故这不是整个仓库语言的绝对盲核。
+
+A-R2 镜像侧别名：同一假想离线轨道的 right 与 left。
+
+令 delta>0，x=1/2+delta+i gamma，y=1/2-delta+i gamma，并条件性假设二者是同一反射零点轨道；这不是断言离线 zeta 零点存在。T 区分左右位置。q_tor^0 对二者都为 invisible；q_temp 都为 false；completionBarycenter、半径 |delta| 与整条“成对偶极”是轨道级相同对象；只读 delta^2 的正预算也相同。
+
+冻结坐标：D5/S3/Zeros/Symmetry/BarycenterDefectDecomposition；D5/S3/Analytic/Adelic/OffLineCurvatureDipole；D5/S3/Analytic/Adelic/ToroidalTemperednessCriterion。
+
+裁决：可去残差，而且已有切刀。antiCoordinate(right)=delta，antiCoordinate(left)=-delta。新定义若只是重命名 antiCoordinate，应以“平凡/冗余”拒绝。
+
+A-R3 单尺度阻尼碰撞：不同离线载体给同一 scalar defect。
+
+在 tau=1，令 X 的实部偏移多重集为 {+1,-1}；令 b=arcosh((cosh(1)+1)/2)，Y 的偏移多重集为 {+b,+b,-b,-b}。则
+D_X=2(cosh(1)-1)=4(cosh(b)-1)=D_Y，
+但 T 的支撑和重数不同。两者的 q_temp 都是“非全临界”，每个反射偶极总曲率质量都为 0，单尺度 q_curv^cert 相同；若把它们作为条件性零载体，q_tor^0 也同为 invisible。
+
+冻结坐标：D5/S3/Zeros/Symmetry/CriticalDampingFlatness；D5/S3/Analytic/Adelic/OffLineCurvatureDipole；D5/S3/Analytic/Adelic/RelativeCurvatureSupportCriterion。
+
+裁决：可去残差。保留 tau↦D(tau) 的整函数会切开，但那成本过高；有限多尺度 fingerprint 是低成本历史提升。单个 tau 的 flatness theorem 只判 D=0，不声称正值可反演载体。
+
+A-R4 Chebyshev 平方相位别名：x 与 a^2/x。
+
+取 a>0、0<x<a，令 y=a^2/x>a，z_a(u)=(u-a)/(u+a)。直接代数给 z_a(y)=-z_a(x)。由 T_N(-z)=(-1)^N T_N(z)，对每个 N 都有
+1-T_N(z_a(x))^2 = 1-T_N(z_a(y))^2。
+若 x=(t-gamma)^2、a=delta^2，则两点分别落在偶极负核与正翼，T 必须区分，纯非负 slack 却永远不区分。
+
+冻结坐标：D5/S3/Weil/CayleyLaguerre/ChebyshevSlackPositivity；D5/S3/Analytic/Adelic/OffLineCurvatureDipole。
+
+裁决：对“平方 slack-only”语言是严格盲核；对 q_curv^raw 的联合语言则可去，因为曲率符号已切开。最小新增量应是一个 phase bit，而不是另造整条曲率函数。
+
+A-R5 黄金单通道的因子来源别名。
+
+固定同一参数 s，比较两个代数因子状态：x=(Lambda(s)=0, Lambda(s,chi_5)≠0)，y=(Lambda(s)≠0, Lambda(s,chi_5)=0)。二者都给 P5(s)=Lambda(s)Lambda(s,chi_5)=0；所有只依赖同一 s 的 tempered/曲率标签也相同，但 T 的 sourceTag 分别是 base 与 twist。这里是单乘积观察者的代数反模型，不断言两种解析状态会在同一真实 s 同时可实现。
+
+冻结/热层坐标：GID D5/S3/Analytic/Adelic/ToroidalTemperednessCriterion 的 nonvanishing 机制；GID D5/S3/Analytic/Adelic/FiniteToroidalSpectralTomography；GID D5/S3/Analytic/Adelic/ToroidalCechCompletion；OACTC 第 166、167、172 部的 P_D=Lambda·Lambda_D 与黄金通道并集结论。
+
+裁决：可去残差。记录 period-zero 与 twist-zero 的有限 provenance bitmask，或加入一个在 s 非零的第二通道，即可切开；只继续计算 P5 的更多小数位没有 DECT 增益。
+
+A-R6 有限矩层级别名：同质量、同均值、不同支撑。
+
+取 0<c<1，mu_0=delta_0，mu_c=(delta_{-c}+delta_c)/2。两者的 0 阶矩均为 1、1 阶矩均为 0，且都为偶正测度；但 T 的支撑不同，2 阶矩分别为 0 与 c^2。任何只到 N=1 的 moment/Toeplitz/预算 feasibility 坐标把二者放在同一纤维。Caratheodory 尺度协变只运输读数，不凭空恢复缺失矩。
+
+冻结坐标：D5/S3/Weil/Budget/AtomicMomentHierarchyConvergence；D5/S3/Weil/Budget/FiniteMomentInfeasibilityCertificate；D5/S3/Weil/Budget/CaratheodoryScaleCovariance；D5/S3/Weil/Budget/MultiscaleLoewnerConstraint。
+
+裁决：可去残差，下一矩已切开。更一般地，有限 N 的碰撞不是 full hierarchy 的盲核；atomic_moment_hierarchy_converges 只在 determining-family、compactness/cluster 与 optimizer 前件下给极限，不给“某个有限 N 已完备”。
+
+A-R7 零值别名：同一点的一重 germ 与二重 germ。
+
+固定 rho，并令 u 在 rho 邻域解析且 u(rho)≠0，取 f1(s)=(s-rho)u(s)，f2(s)=(s-rho)^2u(s)。q_tor^0 都只读“值为零”；q_temp、支撑位置、正 period energy 的局部极小位置也相同；T 的解析阶数分别为 1、2。
+
+冻结坐标：D5/S3/Analytic/Adelic/ToroidalJetDepth；D5/S3/Analytic/Adelic/FiniteToroidalSpectralTomography；OACTC 第 168–170 部导数塔。
+
+裁决：可去残差，而且已有切刀。toroidal_jet_depth_eq_vanishing_order 正好把第一可见导数层等同于 xi 的 vanishing order。若新定义只把这个 Nat 改名，应拒绝。
+
+A-R8 边界盲核证人，不计作非平凡 RH 零点残差。
+
+GID D5/S3/Zeros/PrimeRefinement/LocalNonzeroContinuationZero 在 s=-2 给出：每个 prime Euler factor 与每个有限 Euler window 都非零，而解析延拓后的 riemannZeta 为零。与 s=2 的“同样全部有限局部因子非零、全局 zeta 非零”相比，有限局部 Boolean 语言无法决定全局零性。配合 GID D5/S3/Zeros/PrimeRefinement/FinitePrimeExtractionZeroPersistence（任意有限 prime extraction 保持已有 strip zero），两向信息共同表明有限局部窗口既不能消除全局零，也不能由局部 nonzero 反推全局 nonzero。它不属于 T_nontrivial 的残差，因为 -2 是 trivial zero；但它严格否证“继续加有限素数 nonzero 标签最终会自动得到全局 continuation zero”的方法论。
+
+裁决：这是 Gamma_Euler-local 的语言盲核证人。要换到 analytic continuation、meromorphic divisor 或 Cech gluing 语言；不是再扩一个 prime window。
+
+总分类：A-R2、A-R7 已由冻结定义去除；A-R3、A-R4、A-R5、A-R6 可由低成本定义去除；A-R1 是 Gamma_cert 的疑似盲核但不是 Gamma_raw 的绝对盲核；A-R8 是有限局部 Euler 语言的严格边界证人。
+
+B. 新连接
+
+B-1 黄金 germ 与 toroidal twist：只能做“归一化 cofactor chart”，不能直接把 eulerGerm 塞进 RH 锚。
+
+精确陈述形：设 Omega 是 O-5 窗口，且另有已证明的因子分解
+Zqc(s)=xiReading(phi^2 s)·G(s)，
+其中 G 在 Omega 全纯且处处非零。令 w=phi^2 s，period(golden,w)=Zqc(w/phi^2)，twist(golden,w)=G(w/phi^2)。则在 phi^2 Omega 上 period=xiReading·twist，singleton chart 覆盖该窗口；可直接消费 toroidal_cech_completion，并把 Zqc 的零除子在窗口内无消去地拉回 xi 零除子。
+
+关键否定：当前 O-5 只给“存在 meromorphic Zqc、与 eulerGerm 在右半平面相等、窗口零点落在结构线”，没有给上述 factorization、G 非零或 divisor 无消去。eulerGerm 本身还可能有零/极点，故不是现成的 pointwise-nonvanishing twist；xiReading 与 completedRiemannZeta 之间的端点正规化也必须另有非零 bridge。把 golden index 加到一个已经 pointwise-nonvanishing 的 family 在类型上当然可证，但只增加观察通道，不增加 RH 锚的逻辑强度；若想 singleton 全局实例化 rh_iff_all_toroidal_eisenstein_tempered，还需 G 在全部相关参数非零，这远强于现状。
+
+依赖：D5/X_Frontier/Hearts；D5/S3/Analytic/Adelic/ToroidalTemperednessCriterion；D5/S3/Analytic/Adelic/ToroidalCechCompletion；D5/S3/Analytic/Adelic/FiniteToroidalSpectralTomography；docs/develop/theory/GOLDEN_OBSERVER_RH_ROUTE.md 的 M5。
+
+可证性预判：index 扩张与窗口重参数化高；给定 factorization 后的 gluing 高；上述 product factorization、G 非零、divisor 无消去是中长期解析义务；由当前 O-5 单独推出该连接不可证。
+
+B-2 曲率偶极与 Chebyshev slack 的精确“幅相分解”。
+
+令 x=(t-gamma)^2，a=delta^2，z=(x-a)/(x+a)，kappa=2(x-a)/(x+a)^2。对 N=1，T_1(z)=z，故
+((x+a)kappa/2)^2 + (1-T_1(z)^2)=1，
+sign(kappa)=sign(z)。
+也就是说，slack_1 是归一化曲率的幅度余量，而偶极符号是它丢掉的 phase。再结合 A-R4 的 x↔a^2/x，可得到“所有平方 Chebyshev slack 相同但曲率相位相反”的显式逃逸对。
+
+依赖：D5/S3/Analytic/Adelic/OffLineCurvatureDipole；D5/S3/Weil/CayleyLaguerre/ChebyshevSlackPositivity。
+
+可证性预判：纯 field_simp/ring，极高；不触及 RH。它的研究价值是告诉预算层恰好缺一位符号，而不是宣称 slack 正性会推出临界线刚性。
+
+B-3 DECT 边际捕获与有限正性认证生命周期。
+
+精确有限命题：固定有限候选 completion 宇宙 U、目标审计标签 T、逐层读数 q_N，并令 d_{N+1} 是新增矩/Loewner/PSD 约束。设 R_N=E(q_N;T)。由 DECT 恒等式，
+R_{N+1}=R_N∩ker d_{N+1}，
+因此
+card(R_N)-card(R_{N+1})
+= card{(x,y)∈R_N : d_{N+1}(x)≠d_{N+1}(y)}。
+右侧就是机器可核的 marginal information。它为 0 的准确含义只是“本层没有切开当前冻结 witness universe 中任何 residual pair”，应触发冻结/换候选或换 Gamma；它不等于“RH 已完备”。若给每层登记计算成本 cost、数值不稳定罚项 instability，可用 DECT 价值函数 V(d)=(card(R_N)-card(R_{N+1}))/(1+cost+instability) 排序；分子必须来自冻结 residual witness，而不能用目标标签直接构造 d。
+
+预算层对应：multiscale_loewner_constraint 供应合法增量；finite_moment_infeasibility_certificate 供应有限终止型排除证书；atomic_moment_hierarchy_converges 供应带强前件的极限收敛，但没有有效收敛率，也不允许从一个很小的 frontier gap 推出全局充分性。
+
+依赖：docs/develop/theory/DEFINITION_ESCAPE_COMPLETION_THEORY.md；D5/S3/Weil/Budget/MultiscaleLoewnerConstraint；D5/S3/Weil/Budget/FiniteMomentInfeasibilityCertificate；D5/S3/Weil/Budget/AtomicMomentHierarchyConvergence。
+
+可证性预判：抽象 Finset 定理极高；把每个实际 PSD 层生成 canonical finite witness receipt 为中；连续 completion 空间的完备离散化与有效 tail rate 为难，不应伪装成已解决。
+
+B-4 toroidal jet depth、无分岔与 completion velocity 的历史提升。
+
+精确条件命题形：给反射协变的 C1 family F(tau,s)，令 F(tau0,·)=xiReading。若某个 toroidal family 在 s0 有非零 twist chart，且 toroidal jet depth 为 1，则由 toroidal_jet_depth_eq_vanishing_order 得 xi 在 s0 为一重零；补上 analyticOrderNatAt=1 推出 ds F(tau0,s0)≠0 的桥后，simple_zero_no_bifurcation 给出局部零支留在临界线，zero_completion_velocity 给出
+rho'(tau0)=-partial_tau F/partial_s F，
+并由局部临界线结论得到 Re rho'(tau0)=0。
+
+这把“值为零”提升为 DECT/Yu Deng 式历史态：（首次可见层，completion 导数，spatial 导数，速度）。它不证明任意 zeta 零简单，也不排除多重零处的离线分岔。
+
+依赖：D5/S3/Analytic/Adelic/ToroidalJetDepth；D5/S3/Zeros/Symmetry/SimpleZeroNoBifurcation；D5/S3/Analytic/Adelic/ZeroCompletionVelocity；D5/S3/Zeros/NormalJetFormula。
+
+可证性预判：order-one 到 derivative-nonzero 的 API 桥为中低；组合 theorem 为中；多重零的统一 Weierstrass/branch 版本为难。
+
+C. 新定义候选
+
+C-1 ToroidalVanishingProfile：有限通道的零因子 provenance。
+
+CUT：切 A-R5；也细化 A-R1 的“所有 period 都是 0”粗 Boolean，但不保证单独定位高度。
+
+ADMIT：只读取冻结 selected、period、twist 的点值，不调用 IsNontrivialZero、RH、critical line 或 T；对 index 重命名自然；成本是 2·|selected| 个 bit；比保存全部函数图有严格压缩。
+
+Lean 骨架：
+
+    universe u v w
+
+    structure ToroidalVanishingProfile (Index : Type u)
+        [DecidableEq Index] where
+      selected : Finset Index
+      periodZero : Finset Index
+      twistZero : Finset Index
+
+    def toroidalVanishingProfile
+        {Index : Type u} {Point : Type v} {Scalar : Type w}
+        [DecidableEq Index] [DecidableEq Scalar] [Zero Scalar]
+        (selected : Finset Index)
+        (period twist : Index → Point → Scalar) (s : Point) :
+        ToroidalVanishingProfile Index where
+      selected := selected
+      periodZero := selected.filter fun i => period i s = 0
+      twistZero := selected.filter fun i => twist i s = 0
+
+三病自检：不平凡，因为代数状态 (0,1) 与 (1,0) 的 bitmask 不同；不泄漏，因为定义体没有 base-zero/RH 接口；非身份编码，因为输出有限 bitmask，不含 s、函数图或对象序列化。
+
+状态：[literature-attested ingredients] Hecke–Zagier product periods；Cornelissen–Lorscheid, “Toroidal automorphic forms, Waldspurger periods and double Dirichlet series”, arXiv:0906.5284。[suspected-novel] 把 period-zero/twist-zero 双 bitmask 作为本仓 DECT 定义与证书 API。
+
+可证伪预测 5′：若好，黄金通道的 twist-only false positives 会被一个非零 twist witness 立即分开，且 profile 在 index 等价下保持；若坏，实际 selected family 在目标窗口总给同一 bitmask、或下游仍只消费 conjunction，边际 Capture=0，应删除而非保留装饰性结构。
+
+C-2 PhaseBearingSlack：给平方 slack 补最小相位位。
+
+CUT：精确切 A-R4；在镜像/偶极语境也切 A-R2 的符号投影，但已有 antiCoordinate 时不得重复消费。
+
+ADMIT：由 compact coordinate z 与 Chebyshev 读数直接生成；尊重 z↦-z 对称；成本一实数加一 bit；不保存 x 或完整载体。
+
+Lean 骨架：
+
+    universe u
+
+    structure PhaseBearingSlack (R : Type u) where
+      slack : R
+      nonnegativePhase : Bool
+
+    def phaseBearingSlack {R : Type u} [LinearOrderedField R]
+        (cheb : R → R) (z : R) : PhaseBearingSlack R where
+      slack := 1 - (cheb z) ^ 2
+      nonnegativePhase := decide (0 ≤ z)
+
+三病自检：不平凡，因为 z 与 -z 的 squared slack 相同而 phase bit 通常相反；不泄漏，因为不读零点、RH 或 line label；有压缩，因为输出不含 x、gamma、delta 或曲率整函数。若 downstream 已有 antiCoordinate/curvature sign，定义相对该 q 为冗余，应只在 Budget 层拥有一个消费者。
+
+状态：[literature-attested ingredients] Chebyshev parity 与 phase/magnitude 分离是标准构件；冻结范围定理由 GID D5/S3/Weil/CayleyLaguerre/ChebyshevSlackPositivity 给出。[suspected-novel] 该二元读数及其曲率消费者关系。
+
+可证伪预测 5′：若好，A-R4 的 reciprocal pair 在 N=1 即被稳定切开，且额外成本不随 N 增长；若坏，phase bit 总能由现有 q_curv 计算且没有 Budget-only consumer，则它是冗余包装，应拒绝合入。
+
+C-3 MultiscaleDampingFingerprint：有限尺度的 cosh 历史。
+
+CUT：切 A-R3 的单尺度碰撞；对更高阶有限矩碰撞只减少残差，不宣称完备。
+
+ADMIT：只读 finite carrier 的 realPart 与预先冻结的 scales；对 carrier 置换不变；成本 O(n·|Zero|)；n 个实数远小于保存整条 tau↦D(tau) 或完整零点多重集。
+
+Lean 骨架：
+
+    universe u
+
+    noncomputable def multiscaleDampingFingerprint
+        {Zero : Type u} [Fintype Zero] {n : Nat}
+        (realPart : Zero → ℝ) (scale : Fin n → ℝ) : Fin n → ℝ :=
+      fun k =>
+        D5.S3.Zeros.Symmetry.CriticalDampingFlatness.criticalDampingDefect
+          realPart (scale k)
+
+三病自检：不平凡，因为新增尺度可使原先相等的 exponential sums 分离；不泄漏，因为没有“是否为 zeta zero”或 T；非身份编码，因为固定 n 时只保留有限变换样本。scales 必须前视固定，禁止看见碰撞后逐样本挑点。
+
+状态：[literature-attested ingredients] 双边 Laplace/cosh 变换、有限矩问题与指数和辨识。[suspected-novel] 作为 RH curvature residual 的有限 fingerprint 和 DECT gain 单元。
+
+可证伪预测 5′：若好，在冻结的小型反射载体库中，每个早期新尺度产生正 marginal Capture，随后可测地平台化；若坏，跨大量自然 scale set 仍存在高质量碰撞，或 gain 对 scale 微扰极不稳定，应把该平台解释为 blind-kernel 信号，转向 measure/transform language，而不是无限加尺度。
+
+C-4 FiniteCertificateStep：正性认证的可机读边际步骤。
+
+CUT：对 A-R6，加入二阶矩后 certificateReading 可把 mu_0 与 mu_c 分开；一般用途是显式记录某一预算层究竟删掉了哪些 finite candidates。
+
+ADMIT：before/after 必须由前视冻结、target-free 的约束生成；对 Candidate 等价重命名自然；membership 是一 bit，marginalInformation 是一个 Nat；计算只需有限集合。Candidate 若直接用 T 标签命名，审计应拒绝。
+
+Lean 骨架：
+
+    universe u
+
+    structure FiniteCertificateStep (Candidate : Type u)
+        [DecidableEq Candidate] where
+      before : Finset Candidate
+      after : Finset Candidate
+      monotone : after ⊆ before
+
+    def certificateReading {Candidate : Type u} [DecidableEq Candidate]
+        (step : FiniteCertificateStep Candidate) (x : Candidate) : Bool :=
+      decide (x ∈ step.after)
+
+    def marginalInformation {Candidate : Type u} [DecidableEq Candidate]
+        (step : FiniteCertificateStep Candidate) : Nat :=
+      step.before.card - step.after.card
+
+三病自检：不平凡，因为真正新增约束可令 after 为 proper subset；不泄漏，因为生成器不能访问 T，T 只允许在离线 DECT 评分器中评估 Capture；非身份编码，因为公开读数是 membership/gain，不是 completion 全序列化。若有限候选网格不是问题的 canonical 对象，只能称实验 receipt，不能称数学完备证书。
+
+状态：[literature-attested ingredients] cutting-plane、constraint generation、truncated moment/SDP hierarchy。[suspected-novel] 将其绑定到 DECT residual capture 与本仓 positivity lifecycle。
+
+可证伪预测 5′：若好，重复扩大矩阵但 after 不变时会得到精确 0 gain，CI 能阻止“算得更多即进展”的伪叙事；若坏，结论随任意 discretization 大变，说明 Candidate 宇宙不自然，应改用连续 frontier gap、rank 或正式 infeasibility certificate。
+
+C-5 ProjectiveJetFingerprint：去规范化的有限 toroidal jet。
+
+CUT：确定性切 A-R7 的 multiplicity alias；对 A-R1 提供可检验的纵向分辨力，但不猜测任何固定 r 必然区分全部零点。
+
+ADMIT：输入是某个已选 nonvanishing toroidal chart 的 period 原始导数；用首个非零导数归一化后，对 test-vector 的非零常数缩放不变；成本为 order 加 r 个复数；不输出 s 或完整 Taylor germ。
+
+Lean 骨架：
+
+    universe u
+
+    structure ProjectiveJetFingerprint (K : Type u) (r : Nat) where
+      order : Nat
+      tail : Fin r → K
+
+    noncomputable def projectiveToroidalJet
+        (period : ℂ → ℂ) (s : ℂ) (m r : Nat)
+        (_earlierVanish : ∀ j < m, iteratedDeriv j period s = 0)
+        (_anchorNonzero : iteratedDeriv m period s ≠ 0) :
+        ProjectiveJetFingerprint ℂ r where
+      order := m
+      tail := fun k =>
+        iteratedDeriv (m + k.1 + 1) period s /
+          iteratedDeriv m period s
+
+三病自检：不平凡，因为 order 或 normalized tail 可变；m 必须由 earlierVanish+anchorNonzero 或冻结 toroidal depth 证书产生，禁止调用者任意写入；不泄漏，因为不引用 xi-zero、RH、criticalAbscissa 或 T；非身份编码，因为有限 r 截断且不含点本身。chart 必须由 C-1 的 twist-nonzero provenance 选择，否则在 twist zero 上会把来源污染当成 base jet。
+
+状态：[literature-attested ingredients] analytic/projective jets；Cornelissen–Lorscheid 的 toroidal derivative tower；冻结 GID D5/S3/Analytic/Adelic/ToroidalJetDepth。[suspected-novel] 将首个可见层后的 projective tail 作为 DECT history state。
+
+可证伪预测 5′：若好，低位已认证零点的 fingerprint 会在小 r 下分开，并对 period 乘非零常数严格不变；若坏，结果强依赖 chart、归一化不稳定或长期同值，则它不是地址，应回到 Cech amplitude/zero-counting language。
+
+C 节总 ADMIT 裁决：C-1、C-2、C-3、C-5 是可进入数学 API 的候选；C-4 是治理/证书 API，不能进入 RH 前件。任何候选若没有明确下游 theorem 消费者，按 DECT 平凡病直接淘汰。
+
+D. 义务清单 W-A 至 W-F
+
+W-A：proposed GID D5/X_Frontier/DefinitionEscapeRH/CurvatureSlackPhaseBridge。
+单一 theorem：在 a>0、x≥0 下证明 normalized curvature 与 N=1 slack 的恒等式；再在 0<x<a、y=a^2/x 下同一结论中证明 slack 相等而 phase 相反。只用 field_simp、ring 与 GID OffLineCurvatureDipole、ChebyshevSlackPositivity 的命名约定；不触及 zeta。
+
+W-B：proposed GID D5/X_Frontier/DefinitionEscapeRH/ToroidalProvenanceCut。
+单一 theorem：若 selected 中 i 满足 period i s=base s·twist i s 且 twist i s≠0，则 i∈periodZero ↔ base s=0，并且 i∉twistZero。它是 C-1 切 A-R5 的最小证书；只用 mul_eq_zero。
+
+W-C：proposed GID D5/X_Frontier/DefinitionEscapeRH/MultiscaleFingerprintAppend。
+单一 theorem：向 scales 追加一个尺度后，旧 fingerprint 是新 fingerprint 的前缀；若两载体在新增尺度 defect 不同，则新 fingerprint 不同。有限函数外延即可，不证明“总存在分离尺度”。
+
+W-D：proposed GID D5/X_Frontier/DefinitionEscapeRH/FiniteCertificateStall。
+单一 theorem：对 step.monotone，marginalInformation step=0 ↔ step.after=step.before。它把“边际信息为零”固定成精确有限命题，不外推未来层或连续 completion。
+
+W-E：proposed GID D5/X_Frontier/DefinitionEscapeRH/ProjectiveJetScaleInvariance。
+单一 theorem：c≠0 时，period 与 c·period 在同一点、同一 anchor order 上产生相同 ProjectiveJetFingerprint。消费 iteratedDeriv_const_mul；这是 C-5 自然性的入场门。
+
+W-F：proposed GID D5/X_Frontier/DefinitionEscapeRH/GoldenToroidalIndexExtension。
+单一 theorem：若原 twist family pointwise nonvanishing，则以 Sum/Option 加入任意 golden candidate 后仍 pointwise nonvanishing，且原 RH toroidal criterion 的右侧共同零条件由 restriction 得回。该 theorem 只闭合 index plumbing；结论中必须明写“不证明 eulerGerm 是 nonvanishing twist，也不证明 O-5 factorization”。
+
+执行顺序：W-A、W-B、W-D、W-C、W-E、W-F。每模块一个 public theorem，先固定完整类型与唯一消费者；全部 #print axioms；不得 import 或调用 o5_independence；任何需要新的全局解析前件时立即从 elementary 波退出，而不是加 sorry。
+
+后续增订继续严格追加于本节之后。
+
+---
+

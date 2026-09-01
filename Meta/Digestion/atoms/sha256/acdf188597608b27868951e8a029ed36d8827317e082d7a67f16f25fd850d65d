@@ -1,0 +1,43 @@
+# 第一千二百六十五部　离线缺陷可以完全转写成可数有限矩阵 transcript
+
+取上半平面的一个可数稠密集：
+
+$$
+\boxed{
+\mathcal Q_+
+=
+\mathbb Q+i\mathbb Q_{>0}
+=
+\{q_1,q_2,\ldots\}.
+}
+\tag{1265.1}
+$$
+
+对每个黄金层 \(n\) 与矩阵深度 \(N\)，定义：
+
+$$
+\boxed{
+G_{n,N}
+=
+\left[
+\mathcal K_{\omega_n}(q_j,q_k)
+\right]_{j,k=1}^{N}.
+}
+\tag{1265.2}
+$$
+
+定义 transcript：
+
+$$
+\boxed{
+\mathbf I_\xi
+=
+\left\{
+\operatorname{Inertia}G_{n,N}
+\right\}_{n,N\ge1}.
+}
+\tag{1265.3}
+$$
+
+---
+

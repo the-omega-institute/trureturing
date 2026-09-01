@@ -1,0 +1,28 @@
+* 但它以负号进入原核。
+
+这给三种不可见结构一个最终区分：
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{结构}&\text{意义}\\
+\hline
+\text{outer／模长部分}&\text{可见振幅}\\
+\text{inner numerator}&\text{合法隐藏相位历史}\\
+\text{inner denominator}&\text{反因果／负指标障碍}
+\end{array}
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{Solenoid 式隐藏历史}
+\neq
+\text{Blaschke 分母式离线缺陷}.
+}
+$$
+
+两者都可能对边界振幅不可见，但：
+

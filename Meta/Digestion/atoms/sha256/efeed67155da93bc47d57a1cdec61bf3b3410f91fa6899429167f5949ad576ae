@@ -1,0 +1,29 @@
+# 第一千四百七十五部　即使无限多个有限离散名字，也不能连续恢复一个连续整体
+
+前文已经证明：
+
+$$
+X\text{ 连通},\quad N\text{ 离散}
+\Longrightarrow
+\text{连续 }\nu:X\to N\text{ 必为常映射}.
+$$
+
+现在可以加强。
+
+令：
+
+$$
+N_0\longleftarrow N_1\longleftarrow N_2\longleftarrow\cdots
+$$
+
+为有限离散名字组成的逆系统，定义：
+
+$$
+\boxed{
+N_\infty=\varprojlim_n N_n.
+}
+\tag{1475.1}
+$$
+
+\(N_\infty\) 是一个 profinite 空间，因此完全不连通。
+

@@ -1,0 +1,55 @@
+# 第一千四百部　定义视界有效指数
+
+对有限秩严格收缩 Hankel 算子 \(H\)，定义：
+
+$$
+\boxed{
+\operatorname{Ind}_{\mathrm{hor}}(H)
+=
+\det(I-H^*H)^{-1}.
+}
+\tag{1400.1}
+$$
+
+其对数为：
+
+$$
+\boxed{
+\log\operatorname{Ind}_{\mathrm{hor}}(H)
+=
+-\log\det(I-H^*H).
+}
+\tag{1400.2}
+$$
+
+若奇异值为 \(\sigma_j\)，则：
+
+$$
+\boxed{
+\operatorname{Ind}_{\mathrm{hor}}(H)
+=
+\prod_j
+\frac1{1-\sigma_j^2}.
+}
+\tag{1400.3}
+$$
+
+它具有：
+
+* 正性；
+* 对正交直和的乘法性；
+* \(H=0\) 时等于 \(1\)；
+* 任一 \(\sigma_j\uparrow1\) 时趋于无穷。
+
+必须强调：
+
+$$
+\boxed{
+\operatorname{Ind}_{\mathrm{hor}}
+}
+$$
+
+目前是由 Hankel 缺陷定义的**有效信息指数**，不是已经构造出的 Jones 指数。
+
+---
+

@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:a2d10a2559df904a4d7f8641c68475178ba56c06fe42902f0bb83241fbe128b0
+  normalized_sha256: sha256:a2d10a2559df904a4d7f8641c68475178ba56c06fe42902f0bb83241fbe128b0
+cas_ref: sha256:a2d10a2559df904a4d7f8641c68475178ba56c06fe42902f0bb83241fbe128b0
+coverage_gids:
+  - D5/S3/Weil/CayleyLaguerre/ChebyshevSlackPositivity.chebyshev_slack_bounds
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/CayleyLaguerre/ChebyshevSlackPositivity.chebyshev_slack_bounds
+      source_sha256: sha256:a2d10a2559df904a4d7f8641c68475178ba56c06fe42902f0bb83241fbe128b0
+      target_statement_id: sha256:ae9e9ee8c08fd65ca31ac8e4502ffc2bc8f980f29cfe5e56e266163fd83e5ea7
+  scribe:
+    - gid: D5/S3/Weil/CayleyLaguerre/ChebyshevSlackPositivity.chebyshev_slack_bounds
+      definition_sha256: sha256:e6771808dea6119637e61e6a6f163380ce0f6aad4c9d838f54074c70793794b7
+      emission_sha256: sha256:fa1e6515922dfe28f090e869ace9caf91238abbb55de827d276ac34c92b029ee
+  unresolved_subitems: []

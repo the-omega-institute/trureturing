@@ -7,6 +7,6 @@ receipts:
   coverage: []
   scribe: []
   unresolved_subitems:
+    - critical-half-line-balance-point-interpretation
     - global-dirichlet-series-euler-product-identity
     - theta-modular-identity-1e-12-certificate
-    - critical-half-line-balance-point-interpretation

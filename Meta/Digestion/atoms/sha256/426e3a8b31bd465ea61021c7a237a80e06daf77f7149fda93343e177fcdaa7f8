@@ -1,0 +1,47 @@
+# 第一千二百九十八部　Prime–Poisson 路线真正缺少的是三角性
+
+仓库当前已经拥有三项重要机器底座：
+
+第一，prime-power 双向平移历史可以精确重求和成酉 Poisson resolvent。
+
+第二，shifted normalized scattering ratios 的 telescoping product在 \(\Re z>1\) 中重建 Riemann \(\zeta(z)\)。
+
+第三，若两个 nowhere-vanishing 函数具有相同 shifted scattering ratio，并在右移极限中归一化，则它们完全相同。
+
+这些结果控制了：
+
+* 双向酉性；
+* 散射重建；
+* regular quotient 唯一性。
+
+但它们尚未控制 Hardy 块结构。
+
+真正缺少的命题是：
+
+$$
+\boxed{
+P_-M_{\Theta_\omega}P_+=0.
+}
+\tag{1298.1}
+$$
+
+即：
+
+$$
+\boxed{
+\mathcal F^{-1}\Theta_\omega
+\text{ 不含负时间支撑}.
+}
+\tag{1298.2}
+$$
+
+这可以称为：
+
+$$
+\boxed{
+\textbf{Prime–Archimedean Hardy triangularity}.
+}
+$$
+
+---
+

@@ -3,12 +3,12 @@ fingerprints:
   normalized_sha256: sha256:78d3ec6ff0e52dbab3d825e82d8565844bbc3690644bc96e69e48e5f9a9ccb26
 cas_ref: sha256:78d3ec6ff0e52dbab3d825e82d8565844bbc3690644bc96e69e48e5f9a9ccb26
 coverage_gids:
-  - D5/S1/Phase/Interference/DedekindBhkEuclideanStep.bhk_plus_walk_single_coefficient
-  - D5/S1/Phase/Interference/DedekindBhkEuclideanStep.bhk_minus_walk_counterexample
-  - D5/S1/Phase/Interference/DedekindBhkEuclideanStep.dedekind_reciprocity_cf_step
-  - D5/S1/Phase/Interference/DedekindReciprocity.dedekind_reciprocity
   - D5/S1/Phase/Interference/DedekindBhkCertificates.bhk_four_nine_certificate
   - D5/S1/Phase/Interference/DedekindBhkCertificates.bhk_three_four_certificate
+  - D5/S1/Phase/Interference/DedekindBhkEuclideanStep.bhk_minus_walk_counterexample
+  - D5/S1/Phase/Interference/DedekindBhkEuclideanStep.bhk_plus_walk_single_coefficient
+  - D5/S1/Phase/Interference/DedekindBhkEuclideanStep.dedekind_reciprocity_cf_step
+  - D5/S1/Phase/Interference/DedekindReciprocity.dedekind_reciprocity
   - D5/S1/Phase/SeatTowerArithmetic.bhk_implies_w3_walk
   - D5/S1/Phase/WalkFormula.alternating_walk_append
   - D5/S1/Phase/WalkFormula.alternating_walk_reverse
@@ -48,13 +48,13 @@ receipts:
       definition_sha256: sha256:5aa1fadbee8f0dbc14e698be5bcc80b8c320592a2769510b2a59b484c06f0ce5
       emission_sha256: sha256:d40e597cedc8852c8846da5122abe486cc2dd97f1c7805dc4a6a712cd592925a
   unresolved_subitems:
-    - bhk-continued-fraction-theorem
     - bhk-1755-enumeration-certificate
+    - bhk-continued-fraction-theorem
+    - dedekind-family-split-identity
+    - dedekind-orientation-canonical-ledger-clause
+    - full-vote-enforcement-clause
+    - orientation-branch-clause
+    - three-walk-identification
+    - translation-asymptotic
     - w3-440-enumeration-certificate
     - w3-sign-reversal-postmortem
-    - full-vote-enforcement-clause
-    - three-walk-identification
-    - dedekind-family-split-identity
-    - orientation-branch-clause
-    - dedekind-orientation-canonical-ledger-clause
-    - translation-asymptotic

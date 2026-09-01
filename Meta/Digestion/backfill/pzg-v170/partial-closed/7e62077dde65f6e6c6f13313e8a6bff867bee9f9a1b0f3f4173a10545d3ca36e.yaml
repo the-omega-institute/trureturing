@@ -3,11 +3,11 @@ fingerprints:
   normalized_sha256: sha256:7e62077dde65f6e6c6f13313e8a6bff867bee9f9a1b0f3f4173a10545d3ca36e
 cas_ref: sha256:7e62077dde65f6e6c6f13313e8a6bff867bee9f9a1b0f3f4173a10545d3ca36e
 coverage_gids:
-  - D5/S3/Zeros/Endpoints/XiProductEndpointLimits.xi_product_form_attains_endpoint_values
   - D5/S3/Analytic/CompletedZetaMellinReconstruction.completed_zeta_mellin_reconstruction
   - D5/S3/Zeros/CompletedZeta.completedZetaReading
   - D5/S3/Zeros/CompletedZeta.xiReading
   - D5/S3/Zeros/CompletedZeta.xi_reading_eq_completed_zeta
+  - D5/S3/Zeros/Endpoints/XiProductEndpointLimits.xi_product_form_attains_endpoint_values
 receipts:
   coverage:
     - gid: D5/S3/Zeros/CompletedZeta.completedZetaReading

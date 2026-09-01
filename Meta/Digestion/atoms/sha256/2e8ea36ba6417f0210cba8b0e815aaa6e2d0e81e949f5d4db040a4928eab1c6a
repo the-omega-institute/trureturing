@@ -1,0 +1,14 @@
+* scattering ratios 的 telescoping zeta reconstruction。
+
+这些已经给出代数级联和双向酉骨架。
+
+缺失的正是：
+
+$$
+\boxed{
+\text{解析延拓是否保持单边时间支撑。}
+}
+$$
+
+---
+

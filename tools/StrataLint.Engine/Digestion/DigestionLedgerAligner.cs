@@ -132,12 +132,13 @@ internal static partial class DigestionLedgerAligner
         var clausePlans = ImmutableArray.CreateBuilder<DigestionSourceClausePlan>();
         var clausePlanChainParents = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
         var verifiedClausePlanParents = ImmutableHashSet.CreateBuilder<string>(StringComparer.Ordinal);
+        var verifiedClausePlanMembers = new HashSet<string>(StringComparer.Ordinal);
         var fallbacks = ImmutableArray.CreateBuilder<DigestionIngestFallback>();
         var suggestedAtomIds = sources
             .SelectMany(static source => source.Entries)
             .Select(static entry => entry.AtomId)
             .ToHashSet(StringComparer.Ordinal);
-        var candidateEntriesById = sources
+        var globalEntriesById = sources
             .SelectMany(static source => source.Entries)
             .GroupBy(static entry => entry.AtomId, StringComparer.Ordinal)
             .Where(static group => group.Count() == 1)
@@ -478,15 +479,14 @@ internal static partial class DigestionLedgerAligner
             AlignNestedChildren(
                 source,
                 atomized.ClausePlans,
-                mode,
                 cas.ValidAtomIds,
-                inheritedEntries,
-                candidateEntriesById,
+                globalEntriesById,
                 snapshot,
                 alignments,
                 matchedAtoms,
                 clausePlanChainParents,
                 verifiedClausePlanParents,
+                verifiedClausePlanMembers,
                 findings);
 
             if (mode == DigestionAlignmentMode.Admission)

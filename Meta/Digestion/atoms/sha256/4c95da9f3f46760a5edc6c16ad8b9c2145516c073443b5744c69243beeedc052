@@ -1,0 +1,40 @@
+## 1484.1 Agency-self 的作用
+
+若式 (1484.3) 成立，项目的 agency-self 最小性定理立即给出唯一因子：
+
+$$
+\operatorname{range}(r_J)
+\longrightarrow
+Z_+(\xi)/\ker\Gamma_{\mathrm{causal}}.
+$$
+
+换言之：
+
+$$
+\boxed{
+\text{反射轨道名字若是充分的，
+它必须唯一地决定零点的 agency-self 类。}
+}
+$$
+
+离线零点的存在则意味着：
+
+$$
+\boxed{
+\text{谱完成给出的轨道名字，
+不是一个充分的 causal-self 接口。}
+}
+$$
+
+这比“离线零点具有负能量”更精确。
+
+它是：
+
+$$
+\boxed{
+\textbf{一个命名不充分性。}
+}
+$$
+
+---
+

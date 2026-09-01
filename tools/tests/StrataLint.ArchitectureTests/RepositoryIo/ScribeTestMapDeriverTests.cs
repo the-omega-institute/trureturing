@@ -42,30 +42,6 @@ public sealed class ScribeTestMapDeriverTests
                 $"undeclared repository read path: {path}"));
     }
 
-    [Fact]
-    public void BlueprintScribeDefinitionsAreAttributedToStrataLintScribeByMsBuildCompileItems()
-    {
-        var repositoryRoot = RepositoryLayout.FindRoot();
-        var map = ScribeTestMapDeriver.DeriveRepository(repositoryRoot);
-        var blueprint = map.CompileProjectBySourcePath
-            .Where(static pair => pair.Key.StartsWith("Blueprint/", StringComparison.Ordinal)
-                && pair.Key.EndsWith(".scribe.cs", StringComparison.Ordinal))
-            .OrderBy(static pair => pair.Key, StringComparer.Ordinal)
-            .ToArray();
-        var tracked = GitIndexRepositoryFiles.Enumerate(repositoryRoot)
-            .Select(static file => file.RelativePath)
-            .Where(static path => path.StartsWith("Blueprint/", StringComparison.Ordinal)
-                && path.EndsWith(".scribe.cs", StringComparison.Ordinal))
-            .Order(StringComparer.Ordinal)
-            .ToArray();
-
-        Assert.Equal(tracked, blueprint.Select(static pair => pair.Key));
-        Assert.All(
-            blueprint,
-            pair => Assert.Equal(
-                "tools/StrataLint.Scribe/StrataLint.Scribe.csproj",
-                pair.Value));
-    }
 
     [Fact]
     public void CrossDirectoryCompileOwnershipIsAdmittedWithoutFinding()

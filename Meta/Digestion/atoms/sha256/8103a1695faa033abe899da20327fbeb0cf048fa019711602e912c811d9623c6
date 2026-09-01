@@ -1,0 +1,73 @@
+# 第一千一百二十八部　离线零点的非酉 character 定义
+
+在 log-scale 时间：
+
+$$
+t=\log a
+$$
+
+上，零点参数定义 Mellin 模式：
+
+$$
+\boxed{
+\chi_\rho(t)
+=
+e^{(\rho-\frac12)t}
+=
+e^{\delta t}e^{i\gamma t}.
+}
+\tag{1128.1}
+$$
+
+所有连续复 character 参数形成：
+
+$$
+\operatorname{Hom}_{\mathrm{cont}}
+(\mathbb R,\mathbb C^\times)
+\simeq
+\mathbb C.
+$$
+
+其中 unitary characters 为：
+
+$$
+\operatorname{Hom}_{\mathrm{cont}}
+(\mathbb R,U(1))
+\simeq
+i\mathbb R.
+$$
+
+因此有精确列：
+
+$$
+\boxed{
+0
+\longrightarrow
+i\mathbb R
+\longrightarrow
+\mathbb C
+\overset{\operatorname{Re}}{\longrightarrow}
+\mathbb R
+\longrightarrow
+0.
+}
+\tag{1128.2}
+$$
+
+这里：
+
+$$
+\boxed{
+\delta
+=
+\operatorname{Re}
+\left(
+\rho-\frac12
+\right)
+}
+$$
+
+正是 unitary descent obstruction。
+
+---
+

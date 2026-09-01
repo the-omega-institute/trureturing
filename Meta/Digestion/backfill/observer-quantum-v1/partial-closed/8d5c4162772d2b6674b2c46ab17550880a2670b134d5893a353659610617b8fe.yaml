@@ -3,14 +3,12 @@ fingerprints:
   normalized_sha256: sha256:8d5c4162772d2b6674b2c46ab17550880a2670b134d5893a353659610617b8fe
 cas_ref: sha256:8d5c4162772d2b6674b2c46ab17550880a2670b134d5893a353659610617b8fe
 coverage_gids:
-  - D5/S3/QuantumChannels/NumericCoherenceCertificate.two_hundred_classical_channels_and_hadamard_certificate
-  - D5/S3/QuantumChannels/NumericCoherenceCertificate.biased_diagonal_hadamard_certificate
-  - D5/S3/QuantumChannels/NumericCoherenceCertificate.two_hundred_channel_zero_coherence
   - D5/S3/Observer/StateNotPath.classical_diagonal_iterates_off_diag_eq_zero
   - D5/S3/Observer/StateNotPath.hadamard_basis_zero_off_diag_certificate
+  - D5/S3/QuantumChannels/NumericCoherenceCertificate.biased_diagonal_hadamard_certificate
+  - D5/S3/QuantumChannels/NumericCoherenceCertificate.two_hundred_channel_zero_coherence
+  - D5/S3/QuantumChannels/NumericCoherenceCertificate.two_hundred_classical_channels_and_hadamard_certificate
 receipts:
   coverage: []
   scribe: []
   unresolved_subitems: []
-  chain_atoms: []
-  tail_authorization: null

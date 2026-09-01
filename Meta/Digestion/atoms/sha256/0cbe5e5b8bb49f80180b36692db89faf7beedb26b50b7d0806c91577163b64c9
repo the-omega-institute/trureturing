@@ -1,0 +1,24 @@
+\[
+\boxed{
+\Delta\omega_{p,q}
+=
+\log p-\log q.
+}
+\]
+
+这比单独的 \(\log p\) 更接近 swap curvature 的自然变量，因为曲率本来就是一个两通道量。
+
+因此“色散产生时间”的更精确版本是：
+
+\[
+\boxed{
+\text{频率差异}
+\Longrightarrow
+\text{相对相位随 }t\text{ 累积}
+\Longrightarrow
+\text{两通道干涉随 }t\text{ 改变}.
+}
+\]
+
+---
+

@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:0bc7d8b4232ad1755c797debd1dd426b6e071a831f8675988247950f861d5693
+  normalized_sha256: sha256:0bc7d8b4232ad1755c797debd1dd426b6e071a831f8675988247950f861d5693
+cas_ref: sha256:0bc7d8b4232ad1755c797debd1dd426b6e071a831f8675988247950f861d5693
+coverage_gids:
+  - D5/S3/ConceptDynamics/PublicAnnouncement/OriginalStateAnnouncementReachability.true_public_announcement_is_common_knowledge_on_original_states
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/PublicAnnouncement/OriginalStateAnnouncementReachability.true_public_announcement_is_common_knowledge_on_original_states
+      source_sha256: sha256:0bc7d8b4232ad1755c797debd1dd426b6e071a831f8675988247950f861d5693
+      target_statement_id: sha256:3470f085e4e4d1a6c500fdcccb3b45453222c01e15d0e9e6f42894598b9557a5
+  scribe:
+    - gid: D5/S3/ConceptDynamics/PublicAnnouncement/OriginalStateAnnouncementReachability.true_public_announcement_is_common_knowledge_on_original_states
+      definition_sha256: sha256:aed95ca488941e865dc6677a91a2d88444611211da1c68eb3b004aa9e85cfe6f
+      emission_sha256: sha256:03643d4d3e01cdbdc25cbe8f26d385f74f7f1484ae558645e1c6b21b52f9e649
+  unresolved_subitems: []

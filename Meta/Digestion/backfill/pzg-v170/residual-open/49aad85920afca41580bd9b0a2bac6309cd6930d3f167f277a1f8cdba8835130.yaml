@@ -7,6 +7,6 @@ receipts:
   coverage: []
   scribe: []
   unresolved_subitems:
+    - cascade-chirality-from-window-parity
     - full-window-coverage-and-floor-phi-cubed-capacity
     - witt-even-termination-and-odd-alternation-identity
-    - cascade-chirality-from-window-parity

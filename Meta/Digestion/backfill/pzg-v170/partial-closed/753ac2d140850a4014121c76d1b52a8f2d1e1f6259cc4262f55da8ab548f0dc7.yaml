@@ -16,13 +16,13 @@ receipts:
       definition_sha256: sha256:67de1be388e78bdfa74ed54c5e67f94587de944e5a0dc2edc667911f47c96d94
       emission_sha256: sha256:3e226d946a792b8440dec47bc411ad5ff7bd1eb381645798116b8be54993092f
   unresolved_subitems:
-    - four-way-forward-reverse-combination-classification
-    - even-sum-real-on-critical-line-and-numerical-certificate
-    - zeta-selects-unsigned-even-combination
-    - odd-difference-imaginary-on-critical-line
     - chi4-realizes-odd-signed-combination
+    - completed-lambda-functional-equation-exact-certificate
     - conjugate-product-as-positive-norm-functional
+    - even-sum-real-on-critical-line-and-numerical-certificate
+    - four-way-forward-reverse-combination-classification
     - modular-identity-excludes-asymmetric-combination
+    - odd-difference-imaginary-on-critical-line
     - root-number-phase-does-not-change-critical-line
     - theta-lambda-zero-set-three-level-invariant-chain
-    - completed-lambda-functional-equation-exact-certificate
+    - zeta-selects-unsigned-even-combination

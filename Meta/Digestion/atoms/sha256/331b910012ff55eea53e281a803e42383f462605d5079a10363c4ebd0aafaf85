@@ -1,0 +1,54 @@
+# 第一千三百三十二部　黑洞内部、Solenoid 隐藏纤维与部分迹
+
+黑洞热力学早期论述已将黑洞熵解释为大量外部不可区分的内部构型数目的对数，即不同坍缩历史可以给出相同的外部质量、角动量与电荷读数。([APS Journals][4])
+
+这一信息架构与 Solenoid 投影存在明确相似性：
+
+$$
+\boxed{
+\text{多个全局 lift}
+\longrightarrow
+\text{同一可见投影}.
+}
+$$
+
+可以建立如下类比：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Solenoid 隐藏地址}
+&\sim
+\text{视界后的内部微观历史};\\
+\text{可见圆周投影}
+&\sim
+\text{外部经典宏观读数};\\
+\text{商去隐藏纤维}
+&\sim
+\text{对内部自由度作部分迹};\\
+\text{混合态熵}
+&\sim
+\text{观察者丢失的 lift 信息}.
+\end{aligned}
+}
+\tag{1332.1}
+$$
+
+但必须保留差异：
+
+* Solenoid 是经典紧致群与拓扑纤维；
+* 黑洞霍金态是量子纠缠和算子代数结构；
+* classical quotient 不等同于 quantum partial trace。
+
+所以这个类比的有效部分是：
+
+$$
+\boxed{
+\text{非单射观察投影}
+}
+$$
+
+而不是具体动力学完全相同。
+
+---
+

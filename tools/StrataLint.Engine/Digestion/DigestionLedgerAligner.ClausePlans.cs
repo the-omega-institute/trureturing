@@ -107,34 +107,30 @@ internal static partial class DigestionLedgerAligner
     private static void AlignNestedChildren(
         DigestionLedgerSource source,
         ImmutableArray<DigestionClausePlan> currentClausePlans,
-        DigestionAlignmentMode mode,
         IReadOnlySet<string> validAtomIds,
-        IReadOnlySet<string> inheritedEntries,
-        IReadOnlyDictionary<string, DigestionLedgerEntry> candidateEntriesById,
+        IReadOnlyDictionary<string, DigestionLedgerEntry> globalEntriesById,
         RepositorySnapshot snapshot,
         IDictionary<string, DigestionReceiptAlignment> alignments,
         IDictionary<string, DigestionAtom> matchedAtoms,
         ISet<string> clausePlanChainParents,
         ISet<string> verifiedClausePlanParents,
+        ISet<string> verifiedClausePlanMembers,
         ICollection<string> findings)
     {
-        var byId = source.Entries.ToDictionary(static entry => entry.AtomId, StringComparer.Ordinal);
         RejectCurrentFrontierClausePlanMembers(
             source,
             currentClausePlans,
             alignments,
-            matchedAtoms);
+            matchedAtoms,
+            verifiedClausePlanMembers);
 
         foreach (var parent in source.Entries.Where(static entry => entry.Receipts.ChainAtoms.Length > 0))
         {
-            var inheritedParent = mode == DigestionAlignmentMode.Admission
-                && inheritedEntries.Contains(CanonicalEntry(source, parent));
-
             if (!validAtomIds.Contains(parent.AtomId))
             {
                 ClaimClausePlanChain(
                     parent,
-                    byId,
+                    globalEntriesById,
                     alignments,
                     matchedAtoms,
                     clausePlanChainParents);
@@ -147,7 +143,7 @@ internal static partial class DigestionLedgerAligner
             {
                 ClaimClausePlanChain(
                     parent,
-                    byId,
+                    globalEntriesById,
                     alignments,
                     matchedAtoms,
                     clausePlanChainParents);
@@ -159,7 +155,7 @@ internal static partial class DigestionLedgerAligner
             var plan = PzgAtomizer.PlanClauses(frozenParent);
             ClaimClausePlanChain(
                 parent,
-                byId,
+                globalEntriesById,
                 alignments,
                 matchedAtoms,
                 clausePlanChainParents);
@@ -184,11 +180,9 @@ internal static partial class DigestionLedgerAligner
             for (var index = 0; index < parent.Receipts.ChainAtoms.Length; index++)
             {
                 var childId = parent.Receipts.ChainAtoms[index];
-                if (!byId.TryGetValue(childId, out var child)
-                    && (!inheritedParent
-                        || !candidateEntriesById.TryGetValue(childId, out child)))
+                if (!globalEntriesById.TryGetValue(childId, out var child))
                 {
-                    rejectionReason = $"listed child {childId} is absent from source {source.SourceId}";
+                    rejectionReason = $"listed child {childId} is absent from the global inventory";
                     break;
                 }
 
@@ -230,6 +224,7 @@ internal static partial class DigestionLedgerAligner
 
             foreach (var child in accepted)
             {
+                verifiedClausePlanMembers.Add(child.AtomId);
                 alignments[child.AtomId] = DigestionReceiptAlignment.Seen;
                 matchedAtoms[child.AtomId] = DigestionAtom.FromFrozenCas(child.Blob.RawBytes);
             }
@@ -242,14 +237,16 @@ internal static partial class DigestionLedgerAligner
         DigestionLedgerSource source,
         ImmutableArray<DigestionClausePlan> currentClausePlans,
         IDictionary<string, DigestionReceiptAlignment> alignments,
-        IDictionary<string, DigestionAtom> matchedAtoms)
+        IDictionary<string, DigestionAtom> matchedAtoms,
+        ISet<string> verifiedClausePlanMembers)
     {
         var plannedChildIds = currentClausePlans
             .SelectMany(static plan => plan.Children)
             .Select(static child => child.Fingerprints.RawSha256["sha256:".Length..])
             .ToHashSet(StringComparer.Ordinal);
         foreach (var plannedEntry in source.Entries.Where(entry =>
-                     plannedChildIds.Contains(entry.AtomId)))
+                     plannedChildIds.Contains(entry.AtomId)
+                     && !verifiedClausePlanMembers.Contains(entry.AtomId)))
         {
             alignments[plannedEntry.AtomId] = DigestionReceiptAlignment.Rejected;
             matchedAtoms.Remove(plannedEntry.AtomId);

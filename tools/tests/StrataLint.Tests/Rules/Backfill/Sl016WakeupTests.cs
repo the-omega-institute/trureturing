@@ -164,6 +164,33 @@ public sealed class Sl016WakeupTests
     }
 
     [Fact]
+    public void ReferencedLeanTargetValueChangeEntersAuthorityAndReceiptScopes()
+    {
+        const string targetGid = "D5/S0/Carrier/BackfillTarget";
+        var targetPath = targetGid + ".lean";
+        var fixture = CoverageReceiptFixture(
+            targetGid,
+            FrozenStatementReceiptTestData.Id('a'));
+        fixture.Files[targetPath] += "\n-- candidate value change\n";
+        var context = fixture.Build(RawChangeSet.Create([targetPath]));
+        var document = BackfillInventoryLoader.LoadCandidateDelta(
+            context.Current,
+            context.Baseline,
+            context.Changes);
+        var impact = BackfillDeltaImpactResolver.Resolve(
+            context.Current,
+            context.Baseline,
+            document,
+            context.Changes);
+        var entry = Assert.Single(document.RequireDigestionEntries());
+
+        Assert.True(DigestionCasStore.EntryChanged(entry, impact.EvaluationChanges));
+        Assert.Contains(
+            impact.ReceiptVerificationChanges.Paths,
+            path => path.Value == targetPath);
+    }
+
+    [Fact]
     public void UnchangedBaseEntryDuplicateCoverageIsNotRepublishedForUnrelatedDelta()
     {
         var fixture = new RuleFixture();

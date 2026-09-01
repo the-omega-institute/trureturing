@@ -15,7 +15,7 @@ receipts:
       emission_sha256: sha256:780fb2bf4ea155ef65e33ba9430d282941b7866cdb0b7dbff6c2a46c9c0380ee
   unresolved_subitems:
     - address-delay-as-crt-step-count
-    - phase-delay-as-wigner-phase-accumulation
     - crt-delay-log-prime-spectral-bridge
-    - single-time-generator-shared-by-parallel-flows
     - delay-localizes-to-resonance-and-address-walk
+    - phase-delay-as-wigner-phase-accumulation
+    - single-time-generator-shared-by-parallel-flows

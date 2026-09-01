@@ -1,0 +1,42 @@
+# 8. 与 RH 的关系
+
+在 zeta 的 Euler 侧，素数通道携带频率 \(\log p\)。在显式公式和傅立叶分析中，测试函数在这些频率上取值，零点则出现在对应的全局谱表达中。
+
+本轮冻结了最底层的动力结构：
+
+\[
+\boxed{
+\log p
+\longleftrightarrow
+e^{-it\log p}.
+}
+\]
+
+它解释了为什么虚部坐标 \(t\) 可以被视为 prime-frequency flow 的谱时间，也说明仅靠标量 Euler 相位无法留下素数通道次序。为了让次序参与 RH 路线，必须通过记忆提升将通道作用非交换化，再证明时间依赖 holonomy 能量与零点侧离线奇能量之间的忠实桥。
+
+预期链条变成
+
+\[
+\boxed{
+\begin{aligned}
+&\text{prime log-frequency characters}
+\\
+&\Longrightarrow
+\text{phase-twisted memory updates}
+\\
+&\Longrightarrow
+\text{time-dependent holonomy energy}
+\\
+&\Longrightarrow
+\boxed{\text{explicit-formula faithful domination}}
+\\
+&\Longrightarrow
+\text{off-line odd zero energy}.
+\end{aligned}
+}
+\]
+
+其中方框仍是核心缺口。傅立叶角色本身不定位零点，也不把 \(t\) 自动解释为物理时间。
+
+---
+
