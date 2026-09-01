@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/Weil/Pick/HorizonEffectiveIndex
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Finite strictly contractive Hankel matrices have a positive
-   determinant index with singular-value, sum, normalization, and divergence laws. -/
+   digest: Effective Hankel defect indices obey positivity, product, sum, and boundary laws. -/
 
 import Mathlib.Analysis.Matrix.PosDef
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
