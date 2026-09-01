@@ -1,0 +1,12 @@
+fingerprints:
+  raw_sha256: sha256:0e09132a1f3ec5f44216dd5019605bfe47f975bddbb39c65892dc0e98ba12df2
+  normalized_sha256: sha256:0e09132a1f3ec5f44216dd5019605bfe47f975bddbb39c65892dc0e98ba12df2
+cas_ref: sha256:0e09132a1f3ec5f44216dd5019605bfe47f975bddbb39c65892dc0e98ba12df2
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  quarantine:
+    justification: Semantic-ontological commentary; its assertions (ledger-level identity as ontological property, PZG as standard coordinates) are interpretive stances with no formalizable proposition of their own; the cited theorems 5.6 and 6.1 carry the mathematical content on their own atoms. Case-reviewed via make show-atom on 2026-08-11.
+    reentry_condition: A machine-form statement individuating ledger-level identity (typed semantics separating extensional equality from ledger-level identity) is proposed, or the atomizer re-splits this passage exposing a formalizable clause.

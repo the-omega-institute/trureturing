@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:d0f928702f81b1cf1ec5ba75aa40cff96d02385b57e11a566d2f7c3bda272691
+  normalized_sha256: sha256:d0f928702f81b1cf1ec5ba75aa40cff96d02385b57e11a566d2f7c3bda272691
+cas_ref: sha256:d0f928702f81b1cf1ec5ba75aa40cff96d02385b57e11a566d2f7c3bda272691
+coverage_gids:
+  - D5/S3/ConceptDynamics/Coding/FiberBinaryIdentification.arbitrary_binary_questions_identify_target
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Coding/FiberBinaryIdentification.arbitrary_binary_questions_identify_target
+      source_sha256: sha256:d0f928702f81b1cf1ec5ba75aa40cff96d02385b57e11a566d2f7c3bda272691
+      target_statement_id: sha256:4f6474b879450a7c309582fffd9df0bb65d6bb3ad9c9479b2ea3071d8a98af4f
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Coding/FiberBinaryIdentification.arbitrary_binary_questions_identify_target
+      definition_sha256: sha256:5385a6eeb0f62ee8778033e31a0385cd92fba1aad411c337c605d0bd0bf24374
+      emission_sha256: sha256:2b0993c9ec227c14af077b1984776751eed0f5bba481ca8da3dacf4b17664385
+  unresolved_subitems: []

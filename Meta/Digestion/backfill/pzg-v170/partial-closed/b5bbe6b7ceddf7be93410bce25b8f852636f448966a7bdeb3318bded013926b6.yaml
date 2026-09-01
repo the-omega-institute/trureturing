@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:b5bbe6b7ceddf7be93410bce25b8f852636f448966a7bdeb3318bded013926b6
+  normalized_sha256: sha256:b5bbe6b7ceddf7be93410bce25b8f852636f448966a7bdeb3318bded013926b6
+cas_ref: sha256:b5bbe6b7ceddf7be93410bce25b8f852636f448966a7bdeb3318bded013926b6
+coverage_gids:
+  - D5/S3/Weil/SpectralDynamics.critical_line_characterizations
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/SpectralDynamics.critical_line_characterizations
+      source_sha256: sha256:b5bbe6b7ceddf7be93410bce25b8f852636f448966a7bdeb3318bded013926b6
+      target_statement_id: sha256:dc256aba0acd189a0637ceaffa25da20302027b1666cf98bb9db774029ce4bc8
+  scribe: []
+  unresolved_subitems: []

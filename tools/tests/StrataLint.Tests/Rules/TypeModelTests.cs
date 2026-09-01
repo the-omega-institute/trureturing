@@ -182,6 +182,8 @@ public sealed class TypeModelTests
         Assert.False(RuleId.TryCreate("SL-027", out _));
         Assert.True(RuleId.TryCreate("SL-028", out _));
         Assert.True(RuleId.TryCreate("SL-029", out _));
+        Assert.True(RuleId.TryCreate("SL-030", out _));
+        Assert.True(RuleId.TryCreate("SL-031", out _));
         Assert.True(CaseId.TryCreate("D5-T0016", out _));
     }
 
@@ -193,7 +195,8 @@ public sealed class TypeModelTests
     [InlineData(27, false)]
     [InlineData(28, true)]
     [InlineData(29, true)]
-    [InlineData(30, false)]
+    [InlineData(30, true)]
+    [InlineData(31, true)]
     public void RuleIdKnownDomainPreservesTheIntentionalGapAndUpperBoundary(
         int number,
         bool expected)

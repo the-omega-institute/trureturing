@@ -1,0 +1,10 @@
+\[
+2\pi k\,\eta_\varphi(x)
+=
+(k\omega_\varphi)\log x.
+\]
+
+这解释了黄金圆的 Fourier 模式为什么对应 Mellin 变量的垂直平移。
+
+---
+

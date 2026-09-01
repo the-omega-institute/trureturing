@@ -1,0 +1,24 @@
+\[
+\boxed{
+K_{x,y}(t_{k_1},t_{k_2})
+=
+\det
+\begin{pmatrix}
+\Theta_{k_1}(x)&\Theta_{k_1}(y)\\
+\Theta_{k_2}(x)&\Theta_{k_2}(y)
+\end{pmatrix}.
+}
+\]
+
+这个表达把时间、色散和 topology 的职责分开：
+
+- \(k_1,k_2\) 选择黄金尺度圆上的两个 character readouts；
+- \(x,y\) 选择两个乘法尺度通道；
+- 行列式读取两个 readout vectors 张成的有向面积；
+- 交换通道或交换时间槽会翻转 orientation；
+- 两行或两列退化时，二阶核归零。
+
+该行列式解释沿用 `SecondMagnusSwapCurvature` 已经冻结的反对称结构。本轮只证明它在黄金采样格上的精确 realization。
+
+---
+

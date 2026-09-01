@@ -1,0 +1,17 @@
+## 1184.1 与项目 Solenoid 的关系
+
+它与项目的 universal Solenoid 不是同一个数学对象，但二者具有相同的信息架构：
+
+$$
+\boxed{
+\text{完整历史空间}
+\longrightarrow
+\text{可见完成输出},
+}
+$$
+
+且投影具有非平凡纤维。
+
+项目当前的 universal Solenoid 已机器化：
+
+* 可见圆周投影；

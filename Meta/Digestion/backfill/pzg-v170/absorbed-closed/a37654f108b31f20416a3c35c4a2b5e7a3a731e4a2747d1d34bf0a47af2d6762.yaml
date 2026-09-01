@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:a37654f108b31f20416a3c35c4a2b5e7a3a731e4a2747d1d34bf0a47af2d6762
+  normalized_sha256: sha256:a37654f108b31f20416a3c35c4a2b5e7a3a731e4a2747d1d34bf0a47af2d6762
+cas_ref: sha256:a37654f108b31f20416a3c35c4a2b5e7a3a731e4a2747d1d34bf0a47af2d6762
+coverage_gids:
+  - D5/S0/Computability/FiniteCounterexampleCertificate.finite_readout_counterexample_certificate
+receipts:
+  coverage:
+    - gid: D5/S0/Computability/FiniteCounterexampleCertificate.finite_readout_counterexample_certificate
+      source_sha256: sha256:a37654f108b31f20416a3c35c4a2b5e7a3a731e4a2747d1d34bf0a47af2d6762
+      target_statement_id: sha256:77a994d71365d345fe49ac4d4e6db7db07633e00729e27a0ccd36bf58454b913
+  scribe:
+    - gid: D5/S0/Computability/FiniteCounterexampleCertificate.finite_readout_counterexample_certificate
+      definition_sha256: sha256:e293b7630ada9db5e520c11359134f5f4c83405d88dbee9ac10f15170f6d701f
+      emission_sha256: sha256:daadea2111354820c7af72ec0fe3034f6470432d04054b8644eacebc91eba3c8
+  unresolved_subitems: []

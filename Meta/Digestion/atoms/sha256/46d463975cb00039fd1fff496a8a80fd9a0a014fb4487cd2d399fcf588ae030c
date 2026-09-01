@@ -1,0 +1,18 @@
+# 11. 下一真源
+
+当前最自然的下一节点是：
+
+1. `FinitePhaseCoherenceIdentity`。把
+   \[
+   \sum_{p,q}w_pw_q|z_p-z_q|^2
+   \]
+   写成最大总能量减共同模态能量。
+2. `FourierPhaseGenerator`。证明频率是谱时间流的生成元。
+3. `TimeAveragedPhaseHolonomyEnergy`。定义测试函数加权的时间积分能量并证明非负性和 residual 上界。
+4. `ResonanceConditionedOriginDispersion`。把时间依赖曲率运输到观察起源色散。
+5. `PrimeArchimedeanHolonomyDomination`。尝试建立显式公式忠实桥。
+
+第三条会把当前有限点态界变为适合进入 explicit formula 的积分对象。
+
+---
+

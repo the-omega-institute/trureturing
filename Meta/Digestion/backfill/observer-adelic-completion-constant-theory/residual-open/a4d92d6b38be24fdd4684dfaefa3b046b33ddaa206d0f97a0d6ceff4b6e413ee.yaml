@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:a4d92d6b38be24fdd4684dfaefa3b046b33ddaa206d0f97a0d6ceff4b6e413ee
+  normalized_sha256: sha256:a4d92d6b38be24fdd4684dfaefa3b046b33ddaa206d0f97a0d6ceff4b6e413ee
+cas_ref: sha256:a4d92d6b38be24fdd4684dfaefa3b046b33ddaa206d0f97a0d6ceff4b6e413ee
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  quarantine:
+    justification: "Retrieval preceded quarantine. D5 searches `square fold|sqrt|Xi|xiReading|zero correspondence|entire order` found canonical `xiReading`, reflection/conjugation, and zero-locus bridges, but no branch-independent square-folded function, center Taylor-series owner, zero-map theorem, or order/genus result. Pinned Mathlib search for `entire function order|Hadamard|square root composition|zero set` found analytic composition and isolated-zero APIs but no Hadamard factorization, genus-halving theorem, or Riemann-Hypothesis zero correspondence. The source's Suzuki/de Branges context is not vendored as Lean and is recorded as wait-for-capability. A local Lean construction can only define an ad hoc square-root composition; it cannot prove branch independence, the claimed zero carrier, or the strict negative-axis characterization from available declarations, so such a definition would be a source-object fork."
+    reentry_condition: "Freeze the canonical square-folded entire function (or its even Taylor series) tied to `xiReading`, prove its branch-independent zero correspondence and center nonvanishing, and supply the entire-order/Hadamard genus result before proving the RH iff negative-real-zero statement."
+    blocker_class: missing-prerequisite

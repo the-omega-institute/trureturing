@@ -1,0 +1,41 @@
+## 定理 1388.1（局部模第一定律）
+
+$$
+\boxed{
+\frac{dS}{dN}
+=
+\log\frac{N+1}{N}
+=
+-\log q
+=
+2\log\frac{\delta}{\omega}.
+}
+\tag{1388.3}
+$$
+
+也就是说：
+
+$$
+\boxed{
+dS
+=
+\varepsilon\,dN,
+\qquad
+\varepsilon
+=
+2\log\frac{\delta}{\omega}.
+}
+\tag{1388.4}
+$$
+
+所以黑洞热力学直觉在这里产生一个精确对象：
+
+* \(N\) 是外部可见 occupation；
+* \(S\) 是隐藏伙伴被部分迹后产生的熵；
+* \(\varepsilon\) 是相对模 Hamiltonian 的能级间距；
+* \(\varepsilon\) 由对象深度与观察基线的比值决定。
+
+但这仍是局部 rank-one defect 的模热力学，不是物理黑洞第一定律。
+
+---
+

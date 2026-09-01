@@ -1,0 +1,54 @@
+## 黄金概念极分解猜想
+
+每个不可约概念动力，在去除坐标冗余后，都存在分解：
+
+$$
+\boxed{
+\mathfrak C
+=
+K_{\mathfrak C}
+A_{\mathfrak C}
+N_{\mathfrak C},
+}
+\tag{1177.1}
+$$
+
+其中：
+
+* \(K_{\mathfrak C}\)：关系、相位、可逆循环；
+* \(A_{\mathfrak C}\)：生灭、尺度、稳定—不稳定；
+* \(N_{\mathfrak C}\)：历史、顺序、记忆；
+* 观察投影将三者压缩成当前概念影像。
+
+如果其最小非平凡 \(A\)-动力还满足：
+
+* 二通道；
+* 整数；
+* primitive；
+* unimodular；
+* 无外部尺度；
+
+则：
+
+$$
+\boxed{
+A_{\mathfrak C}
+\text{ 的第一非平凡 Lyapunov 步长为 }
+\log\varphi.
+}
+\tag{1177.2}
+$$
+
+这样，“所有概念都有黄金祖先”不再意味着所有概念都显示 \(\varphi\)。
+
+它意味着：
+
+$$
+\boxed{
+\text{全部概念的最小生灭尺度，
+由同一个二元 split generator 产生。}
+}
+$$
+
+---
+

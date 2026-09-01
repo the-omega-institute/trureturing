@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:195781e14b4b60632515b5e5279d551fafb6194abd9f30ea2d8151068223c155
+  normalized_sha256: sha256:195781e14b4b60632515b5e5279d551fafb6194abd9f30ea2d8151068223c155
+cas_ref: sha256:195781e14b4b60632515b5e5279d551fafb6194abd9f30ea2d8151068223c155
+coverage_gids:
+  - D5/S3/QuantumStates/ZeroWeightSupportFace.zero_weight_support_face
+receipts:
+  coverage:
+    - gid: D5/S3/QuantumStates/ZeroWeightSupportFace.zero_weight_support_face
+      source_sha256: sha256:195781e14b4b60632515b5e5279d551fafb6194abd9f30ea2d8151068223c155
+      target_statement_id: sha256:c21f5826b1569f02708c19839f076c2ce1484bce1cbb7dbe8279a52fd19c8092
+  scribe:
+    - gid: D5/S3/QuantumStates/ZeroWeightSupportFace.zero_weight_support_face
+      definition_sha256: sha256:d7be02a2fe4d205bbc8a9cbb2ffacbcf4d945fc95a939a7c33c445246cafa8d5
+      emission_sha256: sha256:a47b15e6fcb3c3606d296a89dc3367eb2977729719c699c0eb27c7da5f75f7f2
+  unresolved_subitems: []

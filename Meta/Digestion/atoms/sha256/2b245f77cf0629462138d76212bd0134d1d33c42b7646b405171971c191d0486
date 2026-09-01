@@ -1,0 +1,34 @@
+### 端点反因果状态
+
+它们在完整乘积中仍然位于 denominator。
+
+在最小 realization 中对应：
+
+$$
+\sigma_{\mathrm{Hankel}}>0.
+$$
+
+这类状态才是离线缺陷。
+
+因此：
+
+$$
+\boxed{
+\text{Solenoid 式隐藏历史}
+\sim
+\text{内部可消去状态};
+}
+$$
+
+$$
+\boxed{
+\text{离线零点}
+\sim
+\text{最小化以后仍存在的 endpoint anti-causal state}.
+}
+$$
+
+项目已有的 Hankel–Gramian 定理，把 Hankel 非零奇异值与 controllability–observability Gramian product 的正谱联系起来，为这一最小化程序提供了正式接口。
+
+---
+

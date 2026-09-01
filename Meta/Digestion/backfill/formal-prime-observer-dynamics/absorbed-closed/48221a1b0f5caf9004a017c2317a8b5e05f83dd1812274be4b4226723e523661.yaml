@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:48221a1b0f5caf9004a017c2317a8b5e05f83dd1812274be4b4226723e523661
+  normalized_sha256: sha256:48221a1b0f5caf9004a017c2317a8b5e05f83dd1812274be4b4226723e523661
+cas_ref: sha256:48221a1b0f5caf9004a017c2317a8b5e05f83dd1812274be4b4226723e523661
+coverage_gids:
+  - D5/S3/ConceptDynamics/Fibers/CanonicalDependentFiberEquivalence.whole_dependent_fiber_form
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Fibers/CanonicalDependentFiberEquivalence.whole_dependent_fiber_form
+      source_sha256: sha256:48221a1b0f5caf9004a017c2317a8b5e05f83dd1812274be4b4226723e523661
+      target_statement_id: sha256:39116608d902616141140bf04012010fb86913b59b85e6e4e3a304712958eabb
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Fibers/CanonicalDependentFiberEquivalence.whole_dependent_fiber_form
+      definition_sha256: sha256:06c08cac259fd2051452d7ac7b737ea44521e941449255f82113c0a605ec812b
+      emission_sha256: sha256:6eaac30418fd25c64bcf9e4b5fd51fa38aa04f58bc07d8ffe22d7545f6a4abcf
+  unresolved_subitems: []

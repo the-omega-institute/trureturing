@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:0a5b66f4a16198469a222b6ea1024b246f3d12d531afa68c0639578a8eb4e019
+  normalized_sha256: sha256:0a5b66f4a16198469a222b6ea1024b246f3d12d531afa68c0639578a8eb4e019
+cas_ref: sha256:0a5b66f4a16198469a222b6ea1024b246f3d12d531afa68c0639578a8eb4e019
+coverage_gids:
+  - D5/S3/ConceptDynamics/DecisionValueScale/StrictMonotoneObjectiveArgmaxAlignment.strict_monotone_factorization_preserves_argmax
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/DecisionValueScale/StrictMonotoneObjectiveArgmaxAlignment.strict_monotone_factorization_preserves_argmax
+      source_sha256: sha256:0a5b66f4a16198469a222b6ea1024b246f3d12d531afa68c0639578a8eb4e019
+      target_statement_id: sha256:cc36e83c988fe25e0217986a7b8195bed06b5e76791d2e495fa6b402a7e864f1
+  scribe:
+    - gid: D5/S3/ConceptDynamics/DecisionValueScale/StrictMonotoneObjectiveArgmaxAlignment.strict_monotone_factorization_preserves_argmax
+      definition_sha256: sha256:c408d42cb093d93b41ce1ce4997e311a4b5d2a74eac29f9143a8c88cc4ee4199
+      emission_sha256: sha256:0ef6c45d0fe6fd53ead6ab11a87e3b9eb5234ff2c09d3b47cee19a0d4336682b
+  unresolved_subitems: []

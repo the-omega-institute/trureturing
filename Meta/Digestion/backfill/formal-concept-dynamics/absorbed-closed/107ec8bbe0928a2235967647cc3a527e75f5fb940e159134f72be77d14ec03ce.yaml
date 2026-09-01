@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:107ec8bbe0928a2235967647cc3a527e75f5fb940e159134f72be77d14ec03ce
+  normalized_sha256: sha256:107ec8bbe0928a2235967647cc3a527e75f5fb940e159134f72be77d14ec03ce
+cas_ref: sha256:107ec8bbe0928a2235967647cc3a527e75f5fb940e159134f72be77d14ec03ce
+coverage_gids:
+  - D5/S3/ConceptDynamics/Trust/TypedTrustComposition.typed_trust_composes_iff_interfaces_align
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Trust/TypedTrustComposition.typed_trust_composes_iff_interfaces_align
+      source_sha256: sha256:107ec8bbe0928a2235967647cc3a527e75f5fb940e159134f72be77d14ec03ce
+      target_statement_id: sha256:278a521dca40b5e59ba4e3347239286e70b51b241a11f10c46563a2c82694e9d
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Trust/TypedTrustComposition.typed_trust_composes_iff_interfaces_align
+      definition_sha256: sha256:e7c19e2fc67cdcc7bd46f5a0fa78ec25e9543528ef71ed32dc0d9cc9374cc4ce
+      emission_sha256: sha256:c5b165e06df88f1f39995acb66394d1ec7182863fe7d332be9f763bb91fb4e61
+  unresolved_subitems: []

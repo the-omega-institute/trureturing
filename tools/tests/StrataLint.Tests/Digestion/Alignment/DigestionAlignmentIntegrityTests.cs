@@ -13,7 +13,6 @@ public sealed partial class DigestionAlignmentTests
         var currentAtom = Atom("claim/current", currentBytes);
         var forgedBytes = Encoding.UTF8.GetBytes("fabricated receipt bytes");
         var forgedAtom = new DigestionAtom(
-            "theorem/does-not-exist",
             0,
             forgedBytes.Length,
             ImmutableArray.CreateRange(forgedBytes),
@@ -32,8 +31,8 @@ public sealed partial class DigestionAlignmentTests
             DigestionAlignmentMode.Admission,
             _ => (_, _) => Atomized(currentAtom));
 
-        Assert.Equal(DigestionReceiptAlignment.Rejected, result.AlignmentFor("forged-receipt"));
-        Assert.Null(result.AtomFor("forged-receipt"));
+        Assert.Equal(DigestionReceiptAlignment.Rejected, result.AlignmentFor(AtomId(forgedAtom)));
+        Assert.Equal(forgedAtom.Fingerprints, result.AtomFor(AtomId(forgedAtom))?.Fingerprints);
     }
 
     [Fact]
@@ -58,34 +57,8 @@ public sealed partial class DigestionAlignmentTests
             DigestionAlignmentMode.Admission,
             _ => (_, _) => Atomized(currentAtom));
 
-        Assert.Equal(DigestionReceiptAlignment.Seen, result.AlignmentFor("historical-receipt"));
-        Assert.Equal(oldAtom.Fingerprints, result.AtomFor("historical-receipt")?.Fingerprints);
-    }
-
-    [Fact]
-    public void CasValidReceiptWithChangedAstPathIsNotInherited()
-    {
-        var oldBytes = Encoding.UTF8.GetBytes("historical span");
-        var currentBytes = Encoding.UTF8.GetBytes("rewritten span");
-        var oldAtom = Atom("claim/historical", oldBytes);
-        var currentAtom = Atom("claim/historical", currentBytes);
-        var oldCapture = DigestionCasStore.Capture(oldAtom.RawBytes.AsSpan());
-        var baseline = Ledger(
-            [],
-            CasEntry("historical-receipt", oldAtom, oldCapture.Reference));
-        var candidateEntry = CasEntry("historical-receipt", oldAtom, oldCapture.Reference)
-            with { AstPath = "claim/tampered" };
-        var candidate = Ledger([], candidateEntry);
-
-        var result = DigestionLedgerAligner.Evaluate(
-            candidate,
-            Snapshot(currentBytes, [oldCapture]),
-            baseline,
-            DigestionAlignmentMode.Admission,
-            _ => (_, _) => Atomized(currentAtom));
-
-        Assert.Equal(DigestionReceiptAlignment.Rejected, result.AlignmentFor("historical-receipt"));
-        Assert.Null(result.AtomFor("historical-receipt"));
+        Assert.Equal(DigestionReceiptAlignment.Seen, result.AlignmentFor(AtomId(oldAtom)));
+        Assert.Equal(oldAtom.Fingerprints, result.AtomFor(AtomId(oldAtom))?.Fingerprints);
     }
 
     [Fact]
@@ -107,8 +80,8 @@ public sealed partial class DigestionAlignmentTests
             DigestionAlignmentMode.Admission,
             _ => (_, _) => Atomized(currentAtom));
 
-        Assert.Equal(DigestionReceiptAlignment.Rejected, result.AlignmentFor("historical-receipt"));
-        Assert.Null(result.AtomFor("historical-receipt"));
+        Assert.Equal(DigestionReceiptAlignment.Rejected, result.AlignmentFor(AtomId(oldAtom)));
+        Assert.Equal(oldAtom.Fingerprints, result.AtomFor(AtomId(oldAtom))?.Fingerprints);
     }
 
     [Fact]
@@ -131,82 +104,8 @@ public sealed partial class DigestionAlignmentTests
             DigestionAlignmentMode.Admission,
             _ => (_, _) => Atomized(currentAtom));
 
-        Assert.Equal(DigestionReceiptAlignment.Seen, result.AlignmentFor("live-receipt"));
-        Assert.Equal(currentAtom.Fingerprints, result.AtomFor("live-receipt")?.Fingerprints);
-    }
-
-    [Fact]
-    public void IngestCarriesReceiptedCoverageAndUnresolvedSubitemsForwardAcrossAtomGenerations()
-    {
-        var oldBytes = Encoding.UTF8.GetBytes("# SYNTH-VOL\n\n**定理 1.1(A)**。old。\n");
-        var currentBytes = Encoding.UTF8.GetBytes("# SYNTH-VOL\n\n**定理 1.1(A)**。rewritten。\n");
-        var oldAtom = Assert.Single(AtomizerRegistry.Atomize(AtomizerRegistry.GictId, oldBytes, DigestionTestSupport.Rules).Claims);
-        var oldCapture = DigestionCasStore.Capture(oldAtom.RawBytes.AsSpan());
-        var loaded = Ledger(
-            [],
-            CasEntry("old-receipt", oldAtom, oldCapture.Reference));
-        var source = Assert.Single(loaded.RequireDigestionSources());
-        var oldEntry = Assert.Single(source.Entries) with
-        {
-            CoverageGids =
-            [
-                "D5/S3/Observer/WindowCharacter.window_algebra_has_no_character",
-                "D5/S3/Quantum/QubitWitnesses.bell_coefficients_are_not_product",
-            ],
-            Receipts = Assert.Single(source.Entries).Receipts with
-            {
-                UnresolvedSubitems =
-                [
-                    "kochen-specker-projection-valuation-obstruction",
-                    "hidden-address-local-variable-interpretation",
-                    "classical-address-realism-exclusion",
-                    "probability-not-ignorance-conclusion",
-                ],
-            },
-        };
-        var ledger = loaded.WithDigestionSources(
-            [source with { Entries = [oldEntry] }]);
-        var currentAtom = Assert.Single(AtomizerRegistry.Atomize(
-            AtomizerRegistry.GictId,
-            currentBytes,
-            DigestionTestSupport.Rules).Claims);
-        var currentAtomId = "gict-residual-"
-            + currentAtom.Fingerprints.RawSha256["sha256:".Length..];
-        var formalizationReceipt = DigestionFormalizationReceipt.Write(
-            new DigestionFormalizationReceipt(
-                currentAtomId,
-                oldEntry.CoverageGids[0],
-                new DigestionFormalizationSignature(
-                    "window_algebra_has_no_character",
-                    "theorem",
-                    "True"),
-                currentAtom.Fingerprints.RawSha256,
-                currentAtom.Fingerprints.RawSha256,
-                [new DigestionFormalizationExtension(
-                    oldEntry.CoverageGids[1],
-                    new DigestionFormalizationSignature(
-                        "bell_coefficients_are_not_product",
-                        "theorem",
-                        "True"))]));
-
-        var snapshot = Snapshot(
-            currentBytes,
-            [oldCapture],
-            extraEntries:
-            [
-                new RawRepositoryEntry(
-                    DigestionFormalizationReceipt.PathForAtom(currentAtomId),
-                    formalizationReceipt),
-            ]);
-        var plan = DigestionIngestor.Plan(ledger, snapshot, ledger, snapshot);
-        var nextGeneration = Assert.Single(
-            Assert.Single(plan.Document.RequireDigestionSources()).Entries,
-            static entry => entry.AtomId != "old-receipt");
-
-        Assert.Empty(oldEntry.CoverageGids.Except(nextGeneration.CoverageGids, StringComparer.Ordinal));
-        Assert.Empty(oldEntry.Receipts.UnresolvedSubitems.Except(
-            nextGeneration.Receipts.UnresolvedSubitems,
-            StringComparer.Ordinal));
+        Assert.Equal(DigestionReceiptAlignment.Seen, result.AlignmentFor(AtomId(currentAtom)));
+        Assert.Equal(currentAtom.Fingerprints, result.AtomFor(AtomId(currentAtom))?.Fingerprints);
     }
 
     [Fact]
@@ -233,8 +132,8 @@ public sealed partial class DigestionAlignmentTests
             CasEntry("parent", parent, parentCapture.Reference));
         var source = Assert.Single(baseline.RequireDigestionSources());
         var parentEntry = Assert.Single(source.Entries);
-        var firstId = "gict-residual-" + firstCapture.Reference["sha256:".Length..];
-        var secondId = "gict-residual-" + secondCapture.Reference["sha256:".Length..];
+        var firstId = firstCapture.Reference["sha256:".Length..];
+        var secondId = secondCapture.Reference["sha256:".Length..];
         var firstEntry = ChildEntry(parentEntry, firstId, first, firstCapture.Reference);
         var secondEntry = ChildEntry(parentEntry, secondId, second, secondCapture.Reference);
         var unchained = baseline.WithDigestionSources(
@@ -303,7 +202,7 @@ public sealed partial class DigestionAlignmentTests
             CasEntry("parent", parent, parentCapture.Reference));
         var source = Assert.Single(baseline.RequireDigestionSources());
         var parentEntry = Assert.Single(source.Entries);
-        var firstId = "gict-residual-" + firstCapture.Reference["sha256:".Length..];
+        var firstId = firstCapture.Reference["sha256:".Length..];
         var candidate = baseline.WithDigestionSources(
         [
             source with
@@ -321,7 +220,7 @@ public sealed partial class DigestionAlignmentTests
         var atomized = new AtomizedTheoryDocument(
             [parent],
             [new DigestionSlice(true, parent.RawBytes)],
-            [new DigestionClausePlan(parent.AstPath, [first, second])],
+            [new DigestionClausePlan(parent, [first, second])],
             GenreRegistryCheck.NoGenreRegistry);
 
         var result = DigestionLedgerAligner.Evaluate(
@@ -334,7 +233,7 @@ public sealed partial class DigestionAlignmentTests
         Assert.Equal(DigestionReceiptAlignment.Rejected, result.AlignmentFor(firstId));
         Assert.Null(result.AtomFor(firstId));
         Assert.Contains(result.Findings, finding => finding.Contains(
-            "entry parent malformed clause chain",
+            $"entry {parentEntry.AtomId} malformed clause chain",
             StringComparison.Ordinal));
     }
 
@@ -352,7 +251,7 @@ public sealed partial class DigestionAlignmentTests
         var baselineParent = CasEntry("parent", parent, parentCapture.Reference);
         var baselineChild = ChildEntry(
             baselineParent,
-            "inherited-child",
+            AtomId(first),
             first,
             firstCapture.Reference);
         var baseline = Ledger([], baselineParent, baselineChild);
@@ -371,7 +270,7 @@ public sealed partial class DigestionAlignmentTests
         var atomized = new AtomizedTheoryDocument(
             [parent],
             [new DigestionSlice(true, parent.RawBytes)],
-            [new DigestionClausePlan(parent.AstPath, [first, second])],
+            [new DigestionClausePlan(parent, [first, second])],
             GenreRegistryCheck.NoGenreRegistry);
 
         var result = DigestionLedgerAligner.Evaluate(
@@ -414,9 +313,11 @@ public sealed partial class DigestionAlignmentTests
         var evaluation = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(16),
             fixture.Build());
+        var parent = Assert.Single(candidate.RequireDigestionEntries(), entry =>
+            !entry.Receipts.ChainAtoms.IsEmpty);
 
         Assert.Contains(evaluation.Diagnostics, diagnostic => diagnostic.Message.Contains(
-            "entry parent malformed clause chain",
+            $"entry {parent.AtomId} malformed clause chain",
             StringComparison.Ordinal));
     }
 
@@ -429,23 +330,28 @@ public sealed partial class DigestionAlignmentTests
             candidate,
             Snapshot(sourceBytes, [parentCapture, childCapture]),
             baseline));
+        var parent = Assert.Single(candidate.RequireDigestionEntries(), entry =>
+            !entry.Receipts.ChainAtoms.IsEmpty);
 
         Assert.Contains(
-            "ingest clause chain parent parent lacks verified clause-plan proof",
+            $"ingest clause chain parent {parent.AtomId} lacks verified clause-plan proof",
             exception.Message,
             StringComparison.Ordinal);
-        Assert.Contains("entry parent malformed clause chain", exception.Message, StringComparison.Ordinal);
+        Assert.Contains(
+            $"entry {parent.AtomId} malformed clause chain",
+            exception.Message,
+            StringComparison.Ordinal);
     }
 
     [Fact]
     public void AdmissionPreservesInheritedRegisteredClauseLocatorNotClaimedByAPlan()
     {
-        var bytes = Encoding.UTF8.GetBytes("registered locator");
+        var bytes = Encoding.UTF8.GetBytes("registered atom");
         var atom = Atom("theorem/clause/fixture", bytes);
         var captured = DigestionCasStore.Capture(bytes);
         var ledger = Ledger(
             [],
-            CasEntry("registered-locator", atom, captured.Reference));
+            CasEntry("registered-atom", atom, captured.Reference));
 
         var result = DigestionLedgerAligner.Evaluate(
             ledger,
@@ -456,7 +362,7 @@ public sealed partial class DigestionAlignmentTests
 
         Assert.Equal(
             DigestionReceiptAlignment.Seen,
-            result.AlignmentFor("registered-locator"));
+            result.AlignmentFor(AtomId(atom)));
         Assert.Empty(result.Findings);
     }
 
@@ -474,7 +380,9 @@ public sealed partial class DigestionAlignmentTests
             CasEntry("parent", claims[0], parentCapture.Reference),
             CasEntry("generic-child", claims[1], childCapture.Reference));
         var source = Assert.Single(loaded.RequireDigestionSources());
-        var parent = Assert.Single(source.Entries, static entry => entry.AtomId == "parent");
+        var parentId = AtomId(claims[0]);
+        var childId = AtomId(claims[1]);
+        var parent = Assert.Single(source.Entries, entry => entry.AtomId == parentId);
         var ledger = loaded.WithDigestionSources(
         [
             source with
@@ -485,9 +393,9 @@ public sealed partial class DigestionAlignmentTests
                 [
                     parent with
                     {
-                        Receipts = parent.Receipts with { ChainAtoms = ["generic-child"] },
+                        Receipts = parent.Receipts with { ChainAtoms = [childId] },
                     },
-                    Assert.Single(source.Entries, static entry => entry.AtomId == "generic-child"),
+                    Assert.Single(source.Entries, entry => entry.AtomId == childId),
                 ],
             },
         ]);
@@ -501,10 +409,10 @@ public sealed partial class DigestionAlignmentTests
         var exception = Assert.Throws<FormatException>(() =>
             DigestionIngestor.Plan(ledger, snapshot, ledger));
 
-        Assert.Equal(DigestionReceiptAlignment.Seen, alignment.AlignmentFor("parent"));
-        Assert.Equal(DigestionReceiptAlignment.Seen, alignment.AlignmentFor("generic-child"));
+        Assert.Equal(DigestionReceiptAlignment.Seen, alignment.AlignmentFor(parentId));
+        Assert.Equal(DigestionReceiptAlignment.Seen, alignment.AlignmentFor(childId));
         Assert.Empty(alignment.Findings);
-        Assert.Contains("ingest clause chain parent parent lacks verified clause-plan proof", exception.Message);
+        Assert.Contains($"ingest clause chain parent {parentId} lacks verified clause-plan proof", exception.Message);
         Assert.Contains("parent CAS blob has no clause plan", exception.Message);
     }
 
@@ -541,7 +449,10 @@ public sealed partial class DigestionAlignmentTests
             ledger);
 
         var result = Assert.Single(Assert.Single(plan.Document.RequireDigestionSources()).Entries);
-        Assert.Equal(absorbedParent, result);
+        Assert.Equal(AtomId(parent), result.AtomId);
+        Assert.Equal(absorbedParent.Fingerprints, result.Fingerprints);
+        Assert.Equal(absorbedParent.ProjectedStatus, result.ProjectedStatus);
+        Assert.Equal(absorbedParent.CasRef, result.CasRef);
         Assert.Empty(result.Receipts.ChainAtoms);
         Assert.Equal(0, plan.ResidualOpenAdded);
         Assert.Empty(plan.CasObjects);
@@ -568,7 +479,7 @@ public sealed partial class DigestionAlignmentTests
             AtomizerRegistry.PzgId);
         var source = Assert.Single(baseline.RequireDigestionSources());
         var parentEntry = Assert.Single(source.Entries);
-        var firstId = "pzg-residual-" + firstCapture.Reference["sha256:".Length..];
+        var firstId = firstCapture.Reference["sha256:".Length..];
         const string gid = "D5/S0/Carrier/Probe";
         const string targetPath = "D5/S0/Carrier/Probe.lean";
         var target = Encoding.UTF8.GetBytes(DigestionTestSupport.Lean(gid));
@@ -584,8 +495,6 @@ public sealed partial class DigestionAlignmentTests
             ImmutableArray<string> chainAtoms) => template with
         {
             AtomId = atomId,
-            AstPath = atom.AstPath,
-            Boundary = null,
             Fingerprints = atom.Fingerprints,
             CoverageGids = [gid],
             Receipts = new DigestionReceipts(
@@ -605,7 +514,7 @@ public sealed partial class DigestionAlignmentTests
             {
                 Entries =
                 [
-                    Complete(parentEntry, "parent", parent, [firstId]),
+                    Complete(parentEntry, AtomId(parent), parent, [firstId]),
                     Complete(parentEntry, firstId, first, []),
                 ],
             },
@@ -640,10 +549,10 @@ public sealed partial class DigestionAlignmentTests
 
         var evaluatedParent = Assert.Single(
             evaluation.Entries,
-            static entry => entry.Entry.AtomId == "parent");
+            entry => entry.Entry.AtomId == AtomId(parent));
         Assert.NotEqual(DigestionMigrationState.Absorbed, evaluatedParent.DerivedStatus.Migration);
         Assert.Contains(evaluation.Findings, finding => finding.Contains(
-            "entry parent handwritten status",
+            $"entry {AtomId(parent)} handwritten status",
             StringComparison.Ordinal));
     }
 
@@ -663,8 +572,8 @@ public sealed partial class DigestionAlignmentTests
             CasEntry("parent", parent, parentCapture.Reference));
         var source = Assert.Single(baseline.RequireDigestionSources());
         var parentEntry = Assert.Single(source.Entries);
-        var firstId = "gict-residual-" + firstCapture.Reference["sha256:".Length..];
-        var invalidId = "gict-residual-" + invalidCapture.Reference["sha256:".Length..];
+        var firstId = firstCapture.Reference["sha256:".Length..];
+        var invalidId = invalidCapture.Reference["sha256:".Length..];
         var candidate = baseline.WithDigestionSources(
         [
             source with
@@ -683,7 +592,7 @@ public sealed partial class DigestionAlignmentTests
         var atomized = new AtomizedTheoryDocument(
             [parent],
             [new DigestionSlice(true, parent.RawBytes)],
-            [new DigestionClausePlan(parent.AstPath, [first, plannedSecond])],
+            [new DigestionClausePlan(parent, [first, plannedSecond])],
             GenreRegistryCheck.NoGenreRegistry);
 
         var result = DigestionLedgerAligner.Evaluate(
@@ -700,8 +609,7 @@ public sealed partial class DigestionAlignmentTests
         Assert.Null(result.AtomFor(invalidId));
     }
 
-    private static DigestionAtom Atom(string astPath, byte[] bytes) => new(
-        astPath,
+    private static DigestionAtom Atom(string _, byte[] bytes) => new(
         0,
         bytes.Length,
         ImmutableArray.CreateRange(bytes),
@@ -712,8 +620,7 @@ public sealed partial class DigestionAlignmentTests
         DigestionAtom parent,
         int start,
         int end,
-        int clause) => new(
-            $"{parent.AstPath}/clause/{clause}",
+        int _) => new(
             parent.StartByte + start,
             parent.StartByte + end,
             parent.RawBytes[start..end],
@@ -749,7 +656,7 @@ public sealed partial class DigestionAlignmentTests
             AtomizerRegistry.PzgId);
         var source = Assert.Single(baseline.RequireDigestionSources());
         var parentEntry = Assert.Single(source.Entries);
-        var childId = "pzg-residual-" + childCapture.Reference["sha256:".Length..];
+        var childId = childCapture.Reference["sha256:".Length..];
         var candidate = baseline.WithDigestionSources(
         [
             source with
@@ -774,8 +681,6 @@ public sealed partial class DigestionAlignmentTests
         string casRef) => parent with
         {
             AtomId = atomId,
-            AstPath = child.AstPath,
-            Boundary = null,
             Fingerprints = child.Fingerprints,
             CoverageGids = [],
             Receipts = new DigestionReceipts([], [], [], [], null),

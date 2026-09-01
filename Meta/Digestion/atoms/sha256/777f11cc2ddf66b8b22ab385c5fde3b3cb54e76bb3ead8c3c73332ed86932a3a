@@ -1,0 +1,26 @@
+* 无外部尺度；
+
+则：
+
+$$
+\boxed{
+A_{\mathfrak C}
+\text{ 的第一非平凡 Lyapunov 步长为 }
+\log\varphi.
+}
+\tag{1177.2}
+$$
+
+这样，“所有概念都有黄金祖先”不再意味着所有概念都显示 \(\varphi\)。
+
+它意味着：
+
+$$
+\boxed{
+\text{全部概念的最小生灭尺度，
+由同一个二元 split generator 产生。}
+}
+$$
+
+---
+

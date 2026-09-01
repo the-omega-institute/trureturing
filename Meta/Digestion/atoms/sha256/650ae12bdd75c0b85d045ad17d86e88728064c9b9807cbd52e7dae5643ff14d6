@@ -1,0 +1,65 @@
+## 定理 1276.1（主动半圆定理）
+
+在右半平面中：
+
+$$
+\boxed{
+\mathscr P_{\delta,\gamma}(x,t)<0
+}
+$$
+
+当且仅当：
+
+$$
+\boxed{
+x^2+(t-\gamma)^2<\delta^2.
+}
+\tag{1276.3}
+$$
+
+所以一个离线反射对产生一个负耗散半圆区域：
+
+$$
+\boxed{
+\mathbb D_{\rho}^{+}
+=
+\left\{
+x>0:
+x^2+(t-\gamma)^2<\delta^2
+\right\}.
+}
+\tag{1276.4}
+$$
+
+其边界：
+
+$$
+x^2+(t-\gamma)^2=\delta^2
+$$
+
+是与临界边界正交的半圆，端点正是：
+
+$$
+t_-=\gamma-\delta,
+\qquad
+t_+=\gamma+\delta.
+$$
+
+因此同一个离线零点同时是：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{bulk 中的点};\\
+&\text{boundary 上的区间};\\
+&\text{positive-real response 中的主动半圆}.
+\end{aligned}
+}
+$$
+
+在零点附近从左侧逼近时，其负贡献趋于 \(-\infty\)，其他离散零点贡献局部有界。
+
+所以完整 log-derivative 必在某个邻域失去正实性。
+
+---
+

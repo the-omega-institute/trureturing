@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:aa76aa2251ab8a2071af3f674cd3531855b014b319681306a04fd04df02caabd
+  normalized_sha256: sha256:aa76aa2251ab8a2071af3f674cd3531855b014b319681306a04fd04df02caabd
+cas_ref: sha256:aa76aa2251ab8a2071af3f674cd3531855b014b319681306a04fd04df02caabd
+coverage_gids:
+  - D5/S3/ConceptDynamics/Control/FiniteHorizonReachability.finite_horizon_reachability
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Control/FiniteHorizonReachability.finite_horizon_reachability
+      source_sha256: sha256:aa76aa2251ab8a2071af3f674cd3531855b014b319681306a04fd04df02caabd
+      target_statement_id: sha256:120a26539b9b9218b3e18494b7e8ca32adf8754cc931f42aa1b801bd51a7ed50
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Control/FiniteHorizonReachability.finite_horizon_reachability
+      definition_sha256: sha256:31f474263686eeabad36ce88c1b37caee087442c4b9d7177a1e54628ec94977c
+      emission_sha256: sha256:6720110d2b86d693f8370046cdfce4de8826c79d54c3b63a11c039a4d5798e68
+  unresolved_subitems: []

@@ -1,0 +1,35 @@
+# 7. 对白光直觉的最终校准
+
+可以保留下面这幅图景：
+
+\[
+\boxed{
+\begin{aligned}
+\text{白光}
+&\sim \text{未分辨的整体 Euler 输出},
+\\
+\text{色散}
+&\sim \text{分解为频率 }\log p\text{ 的素数通道},
+\\
+\text{颜色间的破缺}
+&\sim \text{提升更新的非交换曲率},
+\\
+\text{缺陷能量}
+&\sim \sum_{p,q}\|C_{p,q}\|^2,
+\\
+\text{共振聚合}
+&\sim \text{缺陷能量归零且共同模态能量最大},
+\\
+\text{圆}
+&\sim U(1)\text{ 相位或 Cayley-slack 单位圆},
+\\
+\text{RH 桥}
+&\sim \text{prime-side 压平忠实支配 zero-side 离线奇能量}.
+\end{aligned}
+}
+\]
+
+这套语言已经足够指导定义新节点。每一箭头仍需单独的类型、假设和误差账本。
+
+---
+

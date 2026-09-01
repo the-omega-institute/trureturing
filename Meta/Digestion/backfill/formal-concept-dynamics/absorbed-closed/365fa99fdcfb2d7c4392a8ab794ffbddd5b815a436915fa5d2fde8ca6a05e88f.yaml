@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:365fa99fdcfb2d7c4392a8ab794ffbddd5b815a436915fa5d2fde8ca6a05e88f
+  normalized_sha256: sha256:365fa99fdcfb2d7c4392a8ab794ffbddd5b815a436915fa5d2fde8ca6a05e88f
+cas_ref: sha256:365fa99fdcfb2d7c4392a8ab794ffbddd5b815a436915fa5d2fde8ca6a05e88f
+coverage_gids:
+  - D5/S3/ConceptDynamics/Transport/CompactHausdorffDescent.compact_hausdorff_automatic_quotient
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Transport/CompactHausdorffDescent.compact_hausdorff_automatic_quotient
+      source_sha256: sha256:365fa99fdcfb2d7c4392a8ab794ffbddd5b815a436915fa5d2fde8ca6a05e88f
+      target_statement_id: sha256:f33601030c1f862960e69c4d12e3c1c8c713cb5d4a63724e7a707025490c048d
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Transport/CompactHausdorffDescent.compact_hausdorff_automatic_quotient
+      definition_sha256: sha256:27ca7616d826fab109ada706aef75fd85e90aa0263bf1046288001d836a15cb8
+      emission_sha256: sha256:a68d20118529fe8e4ca56958a060e35ce9877558591876dc40037433a8d64429
+  unresolved_subitems: []

@@ -1,0 +1,46 @@
+## 条件性 Golden Jones Tower RH theorem
+
+若进一步存在 feature operators \(X_z^{(n)}\)，使 shifted de Branges 核可以写成：
+
+$$
+\boxed{
+\mathcal K_{\omega_n}(w,z)
+=
+\psi_n
+\left(
+E_{1:n}
+\left[
+(X_w^{(n)})^*
+X_z^{(n)}
+\right]
+\right),
+}
+\tag{1405.3}
+$$
+
+其中：
+
+$$
+\omega_n=\omega_0\varphi^{-2n},
+$$
+
+且 \(\psi_n\) 为正状态，那么：
+
+$$
+\mathcal K_{\omega_n}\succeq0
+\qquad
+\forall n.
+$$
+
+由于黄金尺度共尾于 \(0\)，shifted-inner threshold 因而为零，并推出 RH。项目已经机器形式化：右侧零点最大偏移与 eventual innerness threshold 相同，而且二者为零等价于临界线结论。
+
+这条路线中真正困难的唯一一步是式 (1405.3)：
+
+$$
+\boxed{
+\text{把 prime–Gamma scattering kernel 实现成黄金 Jones 塔中的正条件期望 Gram}.
+}
+$$
+
+---
+

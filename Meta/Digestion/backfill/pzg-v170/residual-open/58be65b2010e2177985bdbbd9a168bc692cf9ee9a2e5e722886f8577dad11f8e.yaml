@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:58be65b2010e2177985bdbbd9a168bc692cf9ee9a2e5e722886f8577dad11f8e
+  normalized_sha256: sha256:58be65b2010e2177985bdbbd9a168bc692cf9ee9a2e5e722886f8577dad11f8e
+cas_ref: sha256:58be65b2010e2177985bdbbd9a168bc692cf9ee9a2e5e722886f8577dad11f8e
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  quarantine:
+    justification: "Retrieval preceded quarantine. Source clause (docs/develop/theory/PZG_BEDC.md:817): \"推论:离对角不变量的平均论由对角层控制(生成级数含 ζ 因子,平均增长 ~ β′(1)·x log x 级,β′(1) = ψ² ≈ 0.382)。\" D5 search (lambdaMinus, summatory_eq_prime_axis, weighted summatory asymptotic, Chebyshev/Mertens/PNT): no weighted prime-axis summatory estimate. Pinned Mathlib search (.lake/packages/mathlib; Chebyshev.theta/psi, prime-counting bounds, Nat.Prime summations): no theorem yielding the required lambdaMinus weighted x log x asymptotic. Third-party search (PrimeNumberTheoremAnd and related PNT projects): no pinned/admissible exact lambdaMinus theorem; auxiliary files contain unfinished proofs. Local proof attempt: existing prime-axis Tendsto assumption only rewrites to the ordinary sum, so clause 3 reduces to P -> P and cannot establish the asymptotic."
+    reentry_condition: "A pinned D5, Mathlib, or admissible third-party theorem supplying a weighted lambdaMinus prime-axis summatory estimate on the beta'(1) * x log x scale lands in the repository."
+    blocker_class: missing-prerequisite

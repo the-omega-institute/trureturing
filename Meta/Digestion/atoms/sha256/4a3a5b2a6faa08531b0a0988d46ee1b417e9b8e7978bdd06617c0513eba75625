@@ -1,0 +1,101 @@
+# 第一千四百四十九部　不同形态之间还会生成新的关系形态
+
+设两个离线点为：
+
+$$
+\rho_i
+=
+\frac12+\delta_i+i\gamma_i.
+$$
+
+其归一化 Hardy/Cauchy 状态的保真度为：
+
+$$
+\boxed{
+\mathcal F_{ij}
+=
+\frac{
+4\delta_i\delta_j
+}{
+(\gamma_i-\gamma_j)^2+
+(\delta_i+\delta_j)^2
+}.
+}
+\tag{1449.1}
+$$
+
+所以单个形态之外，还有：
+
+$$
+\boxed{
+\text{形态—形态关系}.
+}
+$$
+
+定义 Gram 矩阵：
+
+$$
+\boxed{
+G_{ij}
+=
+\langle
+\widehat k_{\rho_i},
+\widehat k_{\rho_j}
+\rangle.
+}
+\tag{1449.2}
+$$
+
+它记录：
+
+* 不同缺陷的重叠；
+* 相对高度；
+* 相对深度；
+* 关系相位。
+
+对任意有限集合 \(I\)，行列式：
+
+$$
+\boxed{
+\Delta_I=\det[G_{ij}]_{i,j\in I}
+}
+\tag{1449.3}
+$$
+
+读取这些形态是否提供独立观察方向。
+
+因此“万物分形”的更高层不是单个对象继续复制，而是：
+
+$$
+\boxed{
+\text{对象的关系也再次形成对象。}
+}
+$$
+
+其层级为：
+
+$$
+\boxed{
+\begin{aligned}
+0\text{-层}
+&:\text{单个形态};\\
+1\text{-层}
+&:\text{成对关系};\\
+2\text{-层}
+&:\text{三元兼容／曲率};\\
+k\text{-层}
+&:\text{高阶 Gram／外幂／holonomy}.
+\end{aligned}
+}
+$$
+
+这也是为什么五相位去零模后产生 \(A_4\)，而其成对关系自然落入六维：
+
+$$
+\Lambda^2A_4.
+$$
+
+项目已有的六维五模格证明表明，这一关系空间具有精确的 \(1/5\) Hodge 对偶缩放和行列式 \(5^3\)，但它与 shifted-\(\xi\) 关系 Gram 的同一性仍待构造。
+
+---
+

@@ -1,0 +1,48 @@
+## 定理 1217.1（Golden cofinal positivity）
+
+若：
+
+$$
+Q(f)\ge0
+\qquad
+\forall f\in\mathcal H_{L_n},
+\quad
+\forall n\ge0,
+$$
+
+则：
+
+$$
+\boxed{
+Q(f)\ge0
+}
+$$
+
+对全部紧支撑测试成立。
+
+### 证明
+
+任取紧支撑 \(f\)。
+
+存在有限 \(L\) 使：
+
+$$
+f\in\mathcal H_L.
+$$
+
+取 \(n\) 充分大，使：
+
+$$
+L\le L_n.
+$$
+
+则：
+
+$$
+f\in\mathcal H_{L_n},
+$$
+
+由假设即得。∎
+
+---
+

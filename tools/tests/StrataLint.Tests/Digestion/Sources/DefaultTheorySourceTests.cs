@@ -20,11 +20,11 @@ public sealed class DefaultTheorySourceTests
     {
         var declaredBytes = Encoding.UTF8.GetBytes("# 已声明卷\n\n## 定理 9.9\n\n证。\n");
         var declared = GenericAtomizer.Atomize(declaredBytes, TheoryAtomizerRules.None);
-        var atom = declared.Claims.First(static claim => claim.AstPath == "定理/9.9");
+        var atom = Assert.Single(declared.Claims);
         var capture = DigestionCasStore.Capture(atom.RawBytes.AsSpan());
         var entry = DigestionTestSupport.Entry(
             atom,
-            "generic-residual-" + atom.Fingerprints.RawSha256["sha256:".Length..],
+            atom.Fingerprints.RawSha256["sha256:".Length..],
             AtomizerRegistry.GenericId,
             sourceId: "declared",
             sourcePath: DeclaredPath,
@@ -62,11 +62,13 @@ public sealed class DefaultTheorySourceTests
 
         var registered = plan.Document.RequireDigestionSources()
             .Single(static source => source.SourceId == "undeclared-volume");
+        var expectedFingerprint = DigestionFingerprint.Compute(
+            Encoding.UTF8.GetBytes("## 定理 1.1\n\n证。\n")).RawSha256;
         Assert.Equal(
-            ["定理/1.1"],
-            registered.Entries.Select(static entry => entry.AstPath).ToArray());
-        Assert.All(registered.Entries, static entry =>
-            Assert.StartsWith("generic-residual-", entry.AtomId, StringComparison.Ordinal));
+            [expectedFingerprint],
+            registered.Entries.Select(static entry => entry.Fingerprints.RawSha256).ToArray());
+        Assert.All(registered.Entries, entry =>
+            Assert.Equal(expectedFingerprint["sha256:".Length..], entry.AtomId));
     }
 
     [Fact]
@@ -101,15 +103,18 @@ public sealed class DefaultTheorySourceTests
     [Fact]
     public void ANonMarkdownTheoryFileIsRegisteredAndFallsBackToOneWholeFileAtom()
     {
+        var sourceBytes = Encoding.UTF8.GetBytes("{\"a\":1}\n{\"a\":2}\n");
         var plan = PlanWith((
             "docs/develop/theory/VOLUME_registry.jsonl",
-            Encoding.UTF8.GetBytes("{\"a\":1}\n{\"a\":2}\n")));
+            sourceBytes));
 
         var fallback = Assert.Single(plan.Fallbacks);
         Assert.Equal("volume-registry", fallback.SourceId);
         var registered = plan.Document.RequireDigestionSources()
             .Single(static source => source.SourceId == "volume-registry");
-        Assert.Equal(["coarse/source"], registered.Entries.Select(static entry => entry.AstPath).ToArray());
+        Assert.Equal(
+            [DigestionFingerprint.Compute(sourceBytes).RawSha256],
+            registered.Entries.Select(static entry => entry.Fingerprints.RawSha256).ToArray());
     }
 
     /// <summary>

@@ -1,0 +1,15 @@
+## 1128.1 一个重要修正
+
+这不意味着非酉模式在 Adele 世界中完全不存在。
+
+完整 idele class group \(C_K\) 本身不是紧致的；其 norm-one kernel \(C_K^1\) 才紧致。
+
+所以：
+
+$$
+|\cdot|^\delta
+$$
+
+可以存在于 \(C_K\) 的非紧 norm 方向，但不能被吸收到：
+
+* additive Solenoid；

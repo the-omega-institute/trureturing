@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:b7fe88191233c5121994962c3c03072c568a8082c4fc00c87d04022a00196fb5
+  normalized_sha256: sha256:b7fe88191233c5121994962c3c03072c568a8082c4fc00c87d04022a00196fb5
+cas_ref: sha256:b7fe88191233c5121994962c3c03072c568a8082c4fc00c87d04022a00196fb5
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    recorded_at_utc: 2026-08-28T00:59:29.8015940+00:00
+    gids:
+      - D5/S3/Observer/LinearMemory/ZeroMemoryCriterion.zero_memory_criterion
+    gaps:
+      - code: structural-alignment-rejected
+        detail: 定理/13.1

@@ -1,0 +1,71 @@
+# 第一千三百五十四部　新的建议形式化顺序
+
+```text
+D5/S3/Observer/GoldenModularStandardPair/
+  GoldenPositiveModularOperator.lean
+  GoldenModularConjugation.lean
+  GoldenModularInverseRelation.lean
+  GoldenTomitaInvolution.lean
+  GoldenStandardRealSubspace.lean
+  GoldenModularHamiltonianSpectrum.lean
+
+D5/S3/Observer/BogoliubovImplementability/
+  HankelBogoliubovLift.lean
+  HankelBogoliubovCCR.lean
+  FiniteRankBogoliubovHilbertSchmidt.lean
+  BogoliubovOccupationTrace.lean
+  ZeroMixingVsImplementableMixing.lean
+
+D5/S3/Observer/GoldenThermalFork/
+  GoldenRegulatorPeriod.lean
+  GoldenRGRedshiftExponent.lean
+  EuclideanCircleTemperature.lean
+  ExponentialRedshiftTemperature.lean
+  GoldenTemperatureNormalizationAmbiguity.lean
+
+D5/S3/Observer/ExponentialHorizonMellin/
+  ExponentialNullCoordinate.lean
+  HorizonModeMellinTransform.lean
+  HorizonGammaAmplitude.lean
+  PositiveNegativeFrequencyRatio.lean
+  GoldenRedshiftPlanckFactor.lean
+
+D5/S3/Analytic/Zeta/ShiftGeneratorNoGo/
+  CriticalZeroSingleFactor.lean
+  ShiftedSingleFactorSchur.lean
+  ShiftGeneratorExplicitValue.lean
+  ShiftGeneratorNotHerglotz.lean
+  LayerwiseInnerNotLoewnerMonotone.lean
+
+D5/S3/Weil/Scattering/ArithmeticColligation/
+  PrimeLocalConservativeColligation.lean
+  ArchimedeanContinuousColligationTarget.lean
+  PoleChannelColligation.lean
+  ScatteringCascadeStarProduct.lean
+  ScatteringCascadeMinimalization.lean
+  ShiftedXiTransferIdentificationTarget.lean
+
+D5/S3/Weil/Scattering/ArithmeticLivsic/
+  ArithmeticMaximalDissipativeOperator.lean
+  ArithmeticCharacteristicFunction.lean
+  CharacteristicFunctionSchur.lean
+  MinimalBoundaryUnitaryImpliesInner.lean
+  ArithmeticCharacteristicEqualsShiftedXiTarget.lean
+
+D5/S3/Analytic/Zeta/HorizonFreeEnergy/
+  RankOneHorizonDeterminant.lean
+  RankOneHorizonFreeEnergy.lean
+  HorizonSqueezeAsymptotic.lean
+  HorizonOccupationAsymptotic.lean
+  UniversalLogConditioningDivergence.lean
+
+D5/S3/Weil/PrimeRetardedGroundState/
+  PrimePositiveLogTimeSemigroup.lean
+  GammaRetardedAnalyticityTarget.lean
+  NoWhiteHoleBoundaryCondition.lean
+  ArithmeticPreferredHardyPolarization.lean
+  RetardedGroundStateImpliesRH.lean
+```
+
+---
+

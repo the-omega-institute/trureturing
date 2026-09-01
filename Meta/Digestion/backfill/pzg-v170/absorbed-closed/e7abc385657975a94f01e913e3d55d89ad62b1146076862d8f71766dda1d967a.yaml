@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:e7abc385657975a94f01e913e3d55d89ad62b1146076862d8f71766dda1d967a
+  normalized_sha256: sha256:e7abc385657975a94f01e913e3d55d89ad62b1146076862d8f71766dda1d967a
+cas_ref: sha256:e7abc385657975a94f01e913e3d55d89ad62b1146076862d8f71766dda1d967a
+coverage_gids:
+  - D5/S0/Computability/SyntaxSemanticsBoundary.same_layer_predicates_not_enumerable
+receipts:
+  coverage:
+    - gid: D5/S0/Computability/SyntaxSemanticsBoundary.same_layer_predicates_not_enumerable
+      source_sha256: sha256:e7abc385657975a94f01e913e3d55d89ad62b1146076862d8f71766dda1d967a
+      target_statement_id: sha256:cdb41993e43a7b35e44d7d13801215300dab6f1e6b6cee9664d43de19d2a09ef
+  scribe:
+    - gid: D5/S0/Computability/SyntaxSemanticsBoundary.same_layer_predicates_not_enumerable
+      definition_sha256: sha256:a6bf6279d58ec17f40316785ac45fcc798641f413d95850f3dc91d9fa8015a01
+      emission_sha256: sha256:9ad6501b519901e0b294eef7c8f315cd93efca5d0eddfde24316bfd5ab55b49c
+  unresolved_subitems: []

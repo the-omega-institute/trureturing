@@ -1,0 +1,53 @@
+## 定理 1164.1（对偶性不足定理）
+
+以下性质不能排除离线零点：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{反射成对};\\
+&\det M=1;\\
+&J M J=M^{-1};\\
+&\text{稳定与不稳定倍率互为倒数};\\
+&\text{保持 Lorentz／split 二次型}.
+\end{aligned}
+}
+$$
+
+因为所有这些条件对：
+
+$$
+\delta\neq0
+$$
+
+的 hyperbolic pair 仍然成立。
+
+所以：
+
+$$
+\boxed{
+\text{函数方程保证了对偶闭合，
+却没有保证正性闭合。}
+}
+$$
+
+这解释了为什么单靠：
+
+$$
+\rho\leftrightarrow1-\rho
+$$
+
+或：
+
+$$
+\delta\leftrightarrow-\delta
+$$
+
+不能推出：
+
+$$
+\delta=0.
+$$
+
+---
+

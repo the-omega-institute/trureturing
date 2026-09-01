@@ -1,0 +1,23 @@
+fingerprints:
+  raw_sha256: sha256:fdf7550308c2364541a81f182ebb7dc34432e9526ac774f1eea129b21ff34802
+  normalized_sha256: sha256:fdf7550308c2364541a81f182ebb7dc34432e9526ac774f1eea129b21ff34802
+cas_ref: sha256:fdf7550308c2364541a81f182ebb7dc34432e9526ac774f1eea129b21ff34802
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    recorded_at_utc: 2026-08-28T09:30:25.1406920+00:00
+    gids:
+      - D5/S3/Arith/Lattices/EnergyBoundarySelectionLaw.energy_boundary_selection_law
+    gaps:
+      - code: chain-migration-incomplete
+        detail: generic-residual-02c726b0ef40a488b6aa6866b8748e5e9d5d7e31078e93aff75cefa00ca59ffb-c81cf94d151c89a3535e21188b509c5bb5debdd97bfbbe7fb531c70b1fc68a94
+      - code: chain-migration-incomplete
+        detail: generic-residual-821609b6faa295ac4b6416bb153bbefb25047a8d5b030f9a1ed2d791d427445d-d73ed1b4fa9c8c5239ad04dc22e3c739257ced89fe7a18bb17d6a1b161cfd429
+  chain_atoms:
+    - 2e20a4f1d9a5c9f2d03f6681ec527c08f7b7df25e19988bdc73e1764c93a947e
+    - 821609b6faa295ac4b6416bb153bbefb25047a8d5b030f9a1ed2d791d427445d
+    - 02c726b0ef40a488b6aa6866b8748e5e9d5d7e31078e93aff75cefa00ca59ffb

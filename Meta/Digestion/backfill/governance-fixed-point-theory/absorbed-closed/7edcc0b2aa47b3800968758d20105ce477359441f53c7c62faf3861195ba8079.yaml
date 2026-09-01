@@ -1,0 +1,21 @@
+fingerprints:
+  raw_sha256: sha256:7edcc0b2aa47b3800968758d20105ce477359441f53c7c62faf3861195ba8079
+  normalized_sha256: sha256:7edcc0b2aa47b3800968758d20105ce477359441f53c7c62faf3861195ba8079
+cas_ref: sha256:7edcc0b2aa47b3800968758d20105ce477359441f53c7c62faf3861195ba8079
+coverage_gids:
+  - D5/S3/ConceptDynamics/GovernanceFixedPoint/DualRuleDeadlockCriterion.deadlocked_iff_empty_joint_allowance
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/GovernanceFixedPoint/DualRuleDeadlockCriterion.deadlocked_iff_empty_joint_allowance
+      source_sha256: sha256:7edcc0b2aa47b3800968758d20105ce477359441f53c7c62faf3861195ba8079
+      target_statement_id: sha256:84af505569e32d76c8bf6e823db0d61c3b80249eec88231a6b596b52b4217e11
+  scribe:
+    - gid: D5/S3/ConceptDynamics/GovernanceFixedPoint/DualRuleDeadlockCriterion.deadlocked_iff_empty_joint_allowance
+      definition_sha256: sha256:843fea64e93e0b58711409ab70dd5cc0e5de35a9c5b4e3e03ed23e0f9498e16f
+      emission_sha256: sha256:efca5fa2089d06a85d5230facac17f3d56bf2cfcec08551eccf115c05327f536
+  unresolved_subitems: []
+  chain_atoms:
+    - 7c1f75f2c7f9bea61f8a6a196284d8aba0b1a1dfa57f7b7b318477aef69b3453
+    - 0c451f5bd9d0f1dc5500719d25341159224c0ce28c06f69b8b86b32c5ab6c392
+    - 20dd2641055723d065b0e8ffc522f6dc3cb1a0b453599f5903f36bf049bc8b19
+    - 9210077a17779ee144b95896b68715acf83a802763ceea656c0a65ad296e0380

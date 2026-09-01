@@ -123,8 +123,6 @@ public sealed partial class DigestionQuarantineTests
             "docs/source.md",
             AtomizerRegistry.NoAtomizerId,
             "atom-dispositioned",
-            "fixture/atom-dispositioned",
-            null,
             new DigestionFingerprints(Digest, Digest),
             [],
             new DigestionReceipts(

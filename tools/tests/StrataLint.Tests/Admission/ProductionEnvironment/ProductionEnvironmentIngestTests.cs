@@ -21,7 +21,7 @@ public sealed partial class ProductionEnvironmentTests
         fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(sourceBytes);
         InstallDirectoryLedger(fixture, atomizerId, atom);
         using var temporary = new TemporaryDirectory();
-        var atomPath = DirectoryAtomPath("old-receipt", "residual-open");
+        var atomPath = DirectoryAtomPath(AtomId(atom), "residual-open");
         var outputPath = Path.Combine(
             temporary.Path,
             atomPath.Replace('/', Path.DirectorySeparatorChar));
@@ -54,7 +54,7 @@ public sealed partial class ProductionEnvironmentTests
     [Fact]
     public void ByteIdenticalIngestRejectsSelfReferentialGenericChainWhoseParentHasNoClausePlan()
     {
-        AssertByteIdenticalGenericChainIngestRejected("old-receipt");
+        AssertByteIdenticalGenericChainIngestRejected(chainAtomId: null);
     }
 
     [Fact]
@@ -71,7 +71,7 @@ public sealed partial class ProductionEnvironmentTests
         fixture.Files[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(sourceBytes);
         fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(sourceBytes);
         InstallDirectoryLedger(fixture, atomizerId, atom);
-        var oldPath = DirectoryAtomPath("old-receipt", "residual-open");
+        var oldPath = DirectoryAtomPath(AtomId(atom), "residual-open");
         var atomText = DirectoryAtom(atom).Replace(
             "coverage_gids: []",
             $"coverage_gids:\n  - {coverageGid}",
@@ -92,7 +92,7 @@ public sealed partial class ProductionEnvironmentTests
         var result = environment.AlignDigestionStatus(["--base", "baseline"]);
 
         Assert.True(result.Success, result.Error);
-        var newPath = DirectoryAtomPath("old-receipt", "partial-closed");
+        var newPath = DirectoryAtomPath(AtomId(atom), "partial-closed");
         Assert.False(File.Exists(Path.Combine(
             temporary.Path,
             oldPath.Replace('/', Path.DirectorySeparatorChar))));
@@ -127,7 +127,7 @@ public sealed partial class ProductionEnvironmentTests
         WriteDirectoryLedger(temporary.Path, fixture.Files);
         var existingPath = Path.Combine(
             temporary.Path,
-            DirectoryAtomPath("old-receipt", "residual-open")
+            DirectoryAtomPath(AtomId(oldAtom), "residual-open")
                 .Replace('/', Path.DirectorySeparatorChar));
         var unchangedWriteTime = new DateTime(2000, 1, 1, 0, 0, 0, DateTimeKind.Utc);
         File.SetLastWriteTimeUtc(existingPath, unchangedWriteTime);
@@ -204,7 +204,6 @@ public sealed partial class ProductionEnvironmentTests
         var oldAtom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, oldBytes, DigestionTestSupport.Rules).Claims);
         var ledger = MapOnlyEntry(IngestLedger(atomizerId, oldAtom), entry => entry with
         {
-            AtomId = "123",
             ProjectedStatus = entry.ProjectedStatus with
             {
                 Migration = DigestionMigrationState.Absorbed,
@@ -238,8 +237,8 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Equal(3, source.Entries.Length);
         Assert.Equal(
             DigestionMigrationState.Residual,
-            source.Entries.Single(static entry => entry.AtomId == "123").ProjectedStatus.Migration);
-        var casBacked = source.Entries.Where(static entry => entry.AtomId != "123").ToArray();
+            source.Entries.Single(entry => entry.AtomId == AtomId(oldAtom)).ProjectedStatus.Migration);
+        var casBacked = source.Entries.Where(entry => entry.AtomId != AtomId(oldAtom)).ToArray();
         Assert.Equal(2, casBacked.Length);
         foreach (var entry in casBacked)
         {
@@ -253,7 +252,7 @@ public sealed partial class ProductionEnvironmentTests
 
         Assert.True(File.Exists(Path.Combine(
             temporary.Path,
-            DirectoryAtomPath("123", "residual-open").Replace('/', Path.DirectorySeparatorChar))));
+            DirectoryAtomPath(AtomId(oldAtom), "residual-open").Replace('/', Path.DirectorySeparatorChar))));
     }
 
     [Fact]
@@ -310,7 +309,7 @@ public sealed partial class ProductionEnvironmentTests
     {
         var materialized = CoverWorld.Materialize(new CoverSpec
         {
-            OtherAtomBinding = ("receipt-gap-sibling", "D5/S0/Carrier/Probe.probe"),
+            OtherAtomGid = "D5/S0/Carrier/Probe.probe",
         });
         var inputs = DirectoryInputs(WithSiblingReceiptMismatch(materialized, mismatchCode));
         using var temporary = new TemporaryDirectory();
@@ -334,7 +333,7 @@ public sealed partial class ProductionEnvironmentTests
     {
         var materialized = CoverWorld.Materialize(new CoverSpec
         {
-            OtherAtomBinding = ("receipt-gap-sibling", "D5/S0/Carrier/Probe.sibling"),
+            OtherAtomGid = "D5/S0/Carrier/Probe.sibling",
             ReportDeclarations = ImmutableArray.Create("probe", "sibling"),
         });
         var inputs = DirectoryInputs(WithReceiptMismatchAtForkPoint(
@@ -460,8 +459,8 @@ public sealed partial class ProductionEnvironmentTests
             StringComparison.Ordinal);
         Assert.Contains("cas_objects_written=1", result.Output, StringComparison.Ordinal);
         var written = BackfillInventoryLoader.LoadRoot(temporary.Path);
-        var coarse = Assert.Single(written.RequireDigestionEntries().Where(static entry =>
-            entry.AstPath == "coarse/source"));
+        var coarse = Assert.Single(written.RequireDigestionEntries().Where(entry =>
+            entry.Fingerprints.RawSha256 == DigestionFingerprint.Compute(malformedBytes).RawSha256));
         Assert.Equal(coarse.Fingerprints.RawSha256, coarse.CasRef);
         var coarsePath = Path.Combine(
             temporary.Path,
@@ -516,117 +515,8 @@ public sealed partial class ProductionEnvironmentTests
         Assert.False(Directory.Exists(casRoot) && Directory.EnumerateFiles(casRoot).Any());
     }
 
-    [Fact]
-    public void IngestPreservesExactNoncanonicalStaleReceiptRepresentation()
-    {
-        var fixture = new RuleFixture();
-        var atomizerId = SyntheticNumberedAtomizer.Id;
-        var oldBytes = Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。old。\n");
-        var currentBytes = Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。rewritten。\n");
-        var oldAtom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, oldBytes, DigestionTestSupport.Rules).Claims);
-        var ledger = IngestLedger(atomizerId, oldAtom);
-        fixture.Files[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes);
-        fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(oldBytes);
-        InstallProjectedLedger(fixture, ledger, oldAtom);
-        var atomPath = DirectoryAtomPath("old-receipt", "residual-open");
-        foreach (var files in new[] { fixture.Files, fixture.Baseline })
-        {
-            files[atomPath] = files[atomPath].Replace(
-                $"ast_path: {oldAtom.AstPath}",
-                $"ast_path: \"{oldAtom.AstPath}\"",
-                StringComparison.Ordinal);
-        }
-
-        using var temporary = new TemporaryDirectory();
-        WriteDirectoryLedger(temporary.Path, fixture.Files);
-        var outputPath = Path.Combine(
-            temporary.Path,
-            atomPath.Replace('/', Path.DirectorySeparatorChar));
-        var environment = new ProductionCliEnvironment(
-            temporary.Path,
-            new FakeRepositoryGateway(
-                RawChangeSet.Create(Array.Empty<string>()),
-                Snapshot(fixture.Files),
-                Snapshot(fixture.Baseline)),
-            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
-            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
-
-        var result = environment.AlignDigestionStatus(["--base", "baseline"]);
-
-        Assert.True(result.Success, result.Error);
-        Assert.Contains(
-            $"ast_path: \"{oldAtom.AstPath}\"",
-            File.ReadAllText(outputPath),
-            StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void IngestMigratesLegacyBoundaryLedgerInOneStepAndIsIdempotent()
-    {
-        var fixture = new RuleFixture();
-        var atomizerId = SyntheticNumberedAtomizer.Id;
-        var oldBytes = Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。old。\n");
-        var currentBytes = Encoding.UTF8.GetBytes(
-            "# Synthetic\n\n**定理 1.1(A)**。rewritten。\n\n**定理 1.2(B)**。new。\n");
-        var oldAtom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, oldBytes, DigestionTestSupport.Rules).Claims);
-        var legacyLedger = BoundaryIngestLedger(atomizerId, oldAtom);
-        fixture.Files[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes);
-        fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(oldBytes);
-        InstallProjectedLedger(fixture, legacyLedger, oldAtom);
-        using var temporary = new TemporaryDirectory();
-        WriteDirectoryLedger(temporary.Path, fixture.Files);
-        var firstEnvironment = new ProductionCliEnvironment(
-            temporary.Path,
-            new FakeRepositoryGateway(
-                RawChangeSet.Create(Array.Empty<string>()),
-                Snapshot(fixture.Files),
-                Snapshot(fixture.Baseline)),
-            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
-            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
-
-        var first = firstEnvironment.AlignDigestionStatus(["--base", "baseline"]);
-
-        Assert.True(first.Success, first.Error);
-        Assert.Contains("stale_acknowledged=0", first.Output, StringComparison.Ordinal);
-        Assert.Contains("residual_open_added=2", first.Output, StringComparison.Ordinal);
-        Assert.Contains("ledger_changed=true", first.Output, StringComparison.Ordinal);
-        var migrated = BackfillInventoryLoader.LoadRoot(temporary.Path);
-        var migratedImage = DirectoryLedgerTestSupport.Image(migrated);
-        Assert.All(migrated.RequireDigestionEntries(), static entry => Assert.Null(entry.Boundary));
-        DirectoryLedgerTestSupport.ReplaceWithProjection(fixture.Files, migrated);
-        foreach (var entry in migrated.RequireDigestionEntries().Where(static entry =>
-                     entry.AtomId != "old-receipt"))
-        {
-            var relativePath = DigestionCasStore.RootPath
-                + entry.CasRef["sha256:".Length..];
-            fixture.Files[relativePath] = File.ReadAllText(Path.Combine(
-                temporary.Path,
-                relativePath.Replace('/', Path.DirectorySeparatorChar)));
-        }
-
-        var secondEnvironment = new ProductionCliEnvironment(
-            temporary.Path,
-            new FakeRepositoryGateway(
-                RawChangeSet.Create(Array.Empty<string>()),
-                Snapshot(fixture.Files),
-                Snapshot(fixture.Baseline)),
-            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
-            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
-
-        var second = secondEnvironment.AlignDigestionStatus(["--base", "baseline"]);
-
-        Assert.True(second.Success, second.Error);
-        Assert.Contains("stale_acknowledged=0", second.Output, StringComparison.Ordinal);
-        Assert.Contains("residual_open_added=0", second.Output, StringComparison.Ordinal);
-        Assert.Contains("cas_objects_written=0", second.Output, StringComparison.Ordinal);
-        Assert.Contains("ledger_changed=false", second.Output, StringComparison.Ordinal);
-        Assert.Equal(
-            migratedImage,
-            DirectoryLedgerTestSupport.Image(BackfillInventoryLoader.LoadRoot(temporary.Path)));
-    }
-
     private static BackfillInventoryDocument IngestLedger(string atomizerId, DigestionAtom atom) =>
-        BuildIngestLedger(atomizerId, atom, includeBoundary: false);
+        BuildIngestLedger(atomizerId, atom);
 
     private static BackfillInventoryDocument MapOnlyEntry(
         BackfillInventoryDocument document,
@@ -639,7 +529,7 @@ public sealed partial class ProductionEnvironmentTests
         ]);
     }
 
-    private static void AssertByteIdenticalGenericChainIngestRejected(string chainAtomId)
+    private static void AssertByteIdenticalGenericChainIngestRejected(string? chainAtomId)
     {
         var fixture = new RuleFixture();
         var atomizerId = SyntheticNumberedAtomizer.Id;
@@ -648,10 +538,12 @@ public sealed partial class ProductionEnvironmentTests
             atomizerId,
             sourceBytes,
             DigestionTestSupport.Rules).Claims);
+        var atomId = AtomId(atom);
+        chainAtomId ??= atomId;
         fixture.Files[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(sourceBytes);
         fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(sourceBytes);
         InstallDirectoryLedger(fixture, atomizerId, atom);
-        var atomPath = DirectoryAtomPath("old-receipt", "residual-open");
+        var atomPath = DirectoryAtomPath(atomId, "residual-open");
         var atomText = fixture.Files[atomPath].Replace(
             "  unresolved_subitems: []",
             $"  unresolved_subitems: []\n  chain_atoms:\n    - {chainAtomId}",
@@ -678,8 +570,8 @@ public sealed partial class ProductionEnvironmentTests
 
         Assert.False(result.Success);
         Assert.Contains(
-            "INGEST_INVALID ingest clause chain parent old-receipt lacks verified clause-plan proof: "
-                + "entry old-receipt malformed clause chain: parent CAS blob has no clause plan",
+            $"INGEST_INVALID ingest clause chain parent {atomId} lacks verified clause-plan proof: "
+                + $"entry {atomId} malformed clause chain: parent CAS blob has no clause plan",
             result.Error,
             StringComparison.Ordinal);
         Assert.Equal(atomText, TemporaryFileSystem.File.ReadAllText(outputPath));
@@ -718,8 +610,10 @@ public sealed partial class ProductionEnvironmentTests
     private static string DirectoryAtomPath(string atomId, string state) =>
         $"{BackfillInventoryLoader.RootPath}fixture-source/{state}/{atomId}.yaml";
 
+    private static string AtomId(DigestionAtom atom) =>
+        atom.Fingerprints.RawSha256["sha256:".Length..];
+
     private static string DirectoryAtom(DigestionAtom atom) => $$"""
-        ast_path: {{atom.AstPath}}
         fingerprints:
           raw_sha256: {{atom.Fingerprints.RawSha256}}
           normalized_sha256: {{atom.Fingerprints.NormalizedSha256}}
@@ -746,20 +640,14 @@ public sealed partial class ProductionEnvironmentTests
         }
     }
 
-    private static BackfillInventoryDocument BoundaryIngestLedger(
-        string atomizerId,
-        DigestionAtom atom) => BuildIngestLedger(atomizerId, atom, includeBoundary: true);
-
     private static BackfillInventoryDocument BuildIngestLedger(
         string atomizerId,
-        DigestionAtom atom,
-        bool includeBoundary)
+        DigestionAtom atom)
     {
         var entry = DigestionTestSupport.Entry(
             atom,
-            "old-receipt",
+            AtomId(atom),
             atomizerId,
-            includeBoundary: includeBoundary,
             sourceId: "fixture-source",
             sourcePath: RuleFixture.FixtureDigestionSourcePath);
         return DigestionTestSupport.Document(

@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:ec58c77abc2d1b2b22f690f3a3d268dcc2ff353d26dd2f317c0da0845820b8e0
+  normalized_sha256: sha256:ec58c77abc2d1b2b22f690f3a3d268dcc2ff353d26dd2f317c0da0845820b8e0
+cas_ref: sha256:ec58c77abc2d1b2b22f690f3a3d268dcc2ff353d26dd2f317c0da0845820b8e0
+coverage_gids:
+  - D5/S3/ConceptDynamics/DefinitionEscapeSemantics/TransportRefutationProjection.transport_refutation_witness_projects_to_prop
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/DefinitionEscapeSemantics/TransportRefutationProjection.transport_refutation_witness_projects_to_prop
+      source_sha256: sha256:ec58c77abc2d1b2b22f690f3a3d268dcc2ff353d26dd2f317c0da0845820b8e0
+      target_statement_id: sha256:3eb2d0b6db787907de5259da0b09c038271bf6fd75b884fd8703ea6fbf059440
+  scribe:
+    - gid: D5/S3/ConceptDynamics/DefinitionEscapeSemantics/TransportRefutationProjection.transport_refutation_witness_projects_to_prop
+      definition_sha256: sha256:1c6adcccabb1130ab61d393a0eaf30db8bfa17a6b61b954b00ff714dc45eb145
+      emission_sha256: sha256:62b9ea5ad42f3afd0e8029de0c537506118cf59de46479665c62fde4e4f0bdf3
+  unresolved_subitems: []

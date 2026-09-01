@@ -1,0 +1,36 @@
+# 9. 与共振压平的关系
+
+相位扭曲以后，通道同步意味着相对相位
+
+\[
+e^{-it(\omega_p-\omega_q)}
+\]
+
+在有效观察窗口内接近一，同时 residual 注入和通道起源也需要兼容。
+
+仅出现某个时刻的相位重合不足以给出全局压平。更强目标可能是：
+
+\[
+\boxed{
+\int_I
+\widetilde{\mathcal E}^{\mathrm{hol}}_P(t)w(t)\,dt
+\longrightarrow0
+}
+\]
+
+或
+
+\[
+\boxed{
+\sup_{t\in I}
+\widetilde{\mathcal E}^{\mathrm{hol}}_P(t)
+\longrightarrow0.
+}
+\]
+
+本轮统一 residual 界支持第二种路线，因为右侧与 \(t\) 无关。实际结论仍依赖 residual envelope decay。
+
+下一条 `FinitePhaseCoherenceIdentity` 应负责把 pairwise 相位差能量与共同相干模态能量连接起来。随后可以研究该相干能量在时间平均、测试函数加权和显式公式下如何投影到零点侧。
+
+---
+

@@ -1,0 +1,20 @@
+## 1237.2 RH 假时的相图
+
+离线零点产生：
+
+$$
+\mathcal K_\omega(z,z)<0
+$$
+
+的开放区域。
+
+随着 \(L\) 增大，有限测试最终能够进入该区域并形成负证书。
+
+项目已经形式化有限共轭相容节点的精确紧支撑 Fourier–Laplace 插值，因此任意有限负 profile 都可以在节点层精确编译成光滑紧支撑 Hermitian 测试。
+
+但该定理本身只解决有限节点插值；要转成完整 Weil 负性，仍需控制全部零点尾部或使用已建立的 de Branges–Weil 等距桥。
+
+Suzuki 已证明，在 RH 假设下，由 Weil distribution 完成所得 Hilbert 空间与一个 de Branges 空间同构，这表明 Weil 正性和 de Branges 正核并非偶然相似，而属于同一算子框架。([arXiv][3])
+
+---
+

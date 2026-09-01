@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:5731c87829e1d38549730a4e4d678079cccf8ddc408fd56ec10b0bc1e5e0fa18
+  normalized_sha256: sha256:5731c87829e1d38549730a4e4d678079cccf8ddc408fd56ec10b0bc1e5e0fa18
+cas_ref: sha256:5731c87829e1d38549730a4e4d678079cccf8ddc408fd56ec10b0bc1e5e0fa18
+coverage_gids:
+  - D5/S3/ConceptDynamics/Appeal/MinimalAppealLabelCount.minimal_appeal_label_count
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Appeal/MinimalAppealLabelCount.minimal_appeal_label_count
+      source_sha256: sha256:5731c87829e1d38549730a4e4d678079cccf8ddc408fd56ec10b0bc1e5e0fa18
+      target_statement_id: sha256:42469cf88e86060070e10b0fa4704f2e06299647d1dd561766ab5fbf7c7c7edd
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Appeal/MinimalAppealLabelCount.minimal_appeal_label_count
+      definition_sha256: sha256:ee5bc3e48782c2513b6ab238fb9f1cdc11081ec711a08b5ee1a18dfe4147874e
+      emission_sha256: sha256:95fea79a37ff89a9109038b8a09b0d2d577b41421ec31a22a5c4389eb61d3e78
+  unresolved_subitems: []

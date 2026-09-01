@@ -1,0 +1,294 @@
+# 本轮最终结论
+
+这一轮把此前的“正时间—负时间—边界全通相位”压缩成了一个非常清楚的算子图景。
+
+完整双向空间为：
+
+$$
+L^2(\mathbb R).
+$$
+
+在这里，只要：
+
+$$
+|\Theta_\omega(t)|=1,
+$$
+
+散射乘法算子：
+
+$$
+M_{\Theta_\omega}
+$$
+
+就是酉的。
+
+所以完整“道”允许：
+
+* 正时间传播；
+* 负时间传播；
+* causal inner；
+* anti-causal inverse-inner；
+
+同时存在。
+
+真正产生“现实方向”的，是 Hardy 极化：
+
+$$
+L^2(\mathbb R)
+=
+H_+^2\oplus H_-^2.
+$$
+
+观察者选择：
+
+$$
+H_+^2
+$$
+
+作为未来。
+
+此后，合法完成必须满足：
+
+$$
+\Theta_\omega H_+^2
+\subseteq H_+^2.
+$$
+
+即：
+
+$$
+\boxed{
+P_-M_{\Theta_\omega}P_+=0.
+}
+$$
+
+临界零点满足这一条件。
+
+离线零点则产生：
+
+$$
+\boxed{
+e^{i\gamma x}
+e^{(\delta-\omega)x}
+\mathbf1_{\{x<0\}},
+}
+$$
+
+这一精确的负时间指数尾部。
+
+所以离线零点最终可以定义为：
+
+$$
+\boxed{
+\textbf{一个在完整双向世界中仍然酉，
+但在选择未来以后产生反因果泄漏的相位模式。}
+}
+$$
+
+---
+
+单个 \(m\) 阶 inverse Blaschke 因子产生一个 \(m\) 维 model space：
+
+$$
+K_B.
+$$
+
+同一个空间同时满足：
+
+$$
+\boxed{
+K_B
+=
+\operatorname{coker}T_B
+=
+\ker T_{B^{-1}}.
+}
+$$
+
+因此它既是：
+
+* 正时间 causal factor 创造的未来 innovation；
+* 负时间 inverse factor 删除的历史方向。
+
+其维数：
+
+$$
+m
+$$
+
+同时等于：
+
+$$
+\boxed{
+\text{零点重数}
+=
+\text{Chern 荷}
+=
+\text{负平方数}
+=
+\text{Blaschke degree}
+=
+\text{反因果 Hankel rank}.
+}
+$$
+
+这给离线零点的“对偶概念”一个新的准确答案：
+
+$$
+\boxed{
+\text{它的本体对偶是反射零点；
+它的时间对偶是 causal Blaschke factor；
+它的观察者对偶是 model space \(K_B\)；
+它的证明对偶是非零 anti-causal Hankel 能量。}
+}
+$$
+
+---
+
+更深的是，负平方和反因果能量只是同一缺陷的两种符号图表。
+
+在错误地把它塞进正时间 Hilbert 空间时，它表现为：
+
+$$
+\boxed{
+\text{负范数}.
+}
+$$
+
+把它正确投影到负时间空间以后，它表现为：
+
+$$
+\boxed{
+\|\mathfrak H_\omega f\|^2>0.
+}
+$$
+
+所以可以将 RH 的负证书改写成一个正证书：
+
+$$
+\boxed{
+\text{负时间通道中是否存在任何非零能量？}
+}
+$$
+
+RH 等价于：
+
+$$
+\boxed{
+\mathfrak H_{\omega_n}=0
+\quad
+\forall n.
+}
+$$
+
+任何离线零点都会在某个有限黄金层使该算子非零。
+
+---
+
+黄金比例进一步把离线零点编码成单位盘原子：
+
+$$
+\boxed{
+q_j
+=
+\varphi^{-2(\delta_j-\omega)}
+e^{-2i\gamma_j\log\varphi}.
+}
+$$
+
+横向深度成为：
+
+$$
+-\log|q_j|,
+$$
+
+高度成为：
+
+$$
+\arg q_j,
+$$
+
+重数成为权重。
+
+有限个稀缺离线点于是产生序列：
+
+$$
+\boxed{
+c_n=\sum_jm_jq_j^n,
+}
+$$
+
+并满足有限线性递归。
+
+其 Hankel 矩阵具有有限秩。
+
+所以即使离线零点在整个零点集合中密度为零，它也不能逃脱：
+
+$$
+\boxed{
+\text{有限秩 anti-causal Hankel memory}.
+}
+$$
+
+这正是研究稀缺对象的对偶方案：
+
+* 不在复平面随机寻找点；
+* 读取负时间 impulse；
+* 采样成 moment sequence；
+* 用有限 Hankel 秩和 Prony 递归恢复它。
+
+---
+
+仓库目前已经证明 prime-power 双向历史可以重求和成酉 Poisson resolvent，也已经能够从 shifted scattering ratios 重建 \(\zeta\)。
+
+但双向酉性仍然允许 causal 与 anti-causal 两种方向。
+
+所以真正缺少的不是另一个函数方程，而是：
+
+$$
+\boxed{
+\textbf{Prime–Archimedean Hardy triangularity}.
+}
+$$
+
+即证明：
+
+$$
+\boxed{
+P_-M_{\Theta_\omega}P_+=0
+\qquad
+\forall\omega>0.
+}
+$$
+
+或等价地证明：
+
+$$
+\boxed{
+\mathcal F^{-1}\Theta_\omega
+\text{ 没有负时间支撑}.
+}
+$$
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{“道”保存完整双向酉关系；
+观察者以 Hardy 极化选择未来；
+黄金比例提供逐层逼近极化边界的自相似时钟；
+临界零点保持未来子空间；
+离线零点则把一部分酉相位泄漏成有限维负时间记忆。}
+}
+$$
+
+因此下一条真正承重、而且比“证明散射酉”更精确的命题是：
+
+$$
+\boxed{
+\text{从 prime–pole–Archimedean 数据直接证明 shifted scattering
+具有单边 Fourier 支撑。}
+}
+$$
+
+一旦完成，所有 inverse-inner denominator、反因果 Hankel 块、负平方、bulk Chern 缺陷与离线零点将被同一条因果三角性整体排除。

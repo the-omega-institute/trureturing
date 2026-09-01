@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:97c7f8047af9954dec06102aec293604412d5fa105450c6e09780e5cb7393569
+  normalized_sha256: sha256:97c7f8047af9954dec06102aec293604412d5fa105450c6e09780e5cb7393569
+cas_ref: sha256:97c7f8047af9954dec06102aec293604412d5fa105450c6e09780e5cb7393569
+coverage_gids:
+  - D5/S0/Diagonal/Equivariance/EquivariantExposure.equivariant_maps_eq_of_eq_at
+receipts:
+  coverage:
+    - gid: D5/S0/Diagonal/Equivariance/EquivariantExposure.equivariant_maps_eq_of_eq_at
+      source_sha256: sha256:97c7f8047af9954dec06102aec293604412d5fa105450c6e09780e5cb7393569
+      target_statement_id: sha256:52c4733f82037e1985e57245981b52de91a51dc0681d5be6cb4c539cd8a378dc
+  scribe:
+    - gid: D5/S0/Diagonal/Equivariance/EquivariantExposure.equivariant_maps_eq_of_eq_at
+      definition_sha256: sha256:1b4099cfa260cb3c381582205db4d655ebfdb48463893cadd4831adffd49d4f7
+      emission_sha256: sha256:27360393889b040720daf670f871e78ec8f88163ea4a92d58fec88daf90475bc
+  unresolved_subitems: []

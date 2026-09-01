@@ -1,0 +1,36 @@
+# 第一千三百三十三部　黑洞“吞噬”与霍金辐射的当前数学版本
+
+对一个离线缺陷：
+
+$$
+\rho=\frac12+\delta+i\gamma,
+$$
+
+其 bulk 信息被 Hardy 视界隐藏在 inverse-inner denominator 中。
+
+但边界仍留下：
+
+$$
+\boxed{
+J_\rho(\omega,t)
+=
+2\pi m_\rho
+P_{\delta-\omega}(t+\gamma),
+\qquad
+0<\omega<\delta.
+}
+\tag{1333.1}
+$$
+
+其中：
+
+$$
+P_h(t)
+=
+\frac1\pi
+\frac{h}{t^2+h^2}.
+$$
+
+所以：
+
+* bulk 点的位置不能直接从单一边界值读取；

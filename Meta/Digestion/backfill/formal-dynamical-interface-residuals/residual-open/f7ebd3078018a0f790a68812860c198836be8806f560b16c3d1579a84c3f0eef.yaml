@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:f7ebd3078018a0f790a68812860c198836be8806f560b16c3d1579a84c3f0eef
+  normalized_sha256: sha256:f7ebd3078018a0f790a68812860c198836be8806f560b16c3d1579a84c3f0eef
+cas_ref: sha256:f7ebd3078018a0f790a68812860c198836be8806f560b16c3d1579a84c3f0eef
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    recorded_at_utc: 2026-08-28T01:15:17.5861190+00:00
+    gids:
+      - D5/S3/Observer/HiddenFlow/InfinitesimalReducingCriterion.infinitesimal_reducing_criterion
+    gaps:
+      - code: structural-alignment-rejected
+        detail: 定理/7.1

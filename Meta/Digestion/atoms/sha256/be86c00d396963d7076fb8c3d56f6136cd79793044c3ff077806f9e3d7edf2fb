@@ -1,0 +1,16 @@
+\[
+\chi_{r,L}
+=
+\max_{p\in\mathcal P_L}|a-\lambda_{r,p}|^{-1}.
+\]
+
+一个可操作的充分条件是
+
+\[
+\boxed{
+\chi_{r,L}
+\max_{p,q\in\mathcal P_L}|C_{r;p,q}|
+\longrightarrow0.
+}
+\]
+

@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:c46ed22a92e75c2cf209a7ca908aff93bf1c276841e1aa44166075e23e85e474
+  normalized_sha256: sha256:c46ed22a92e75c2cf209a7ca908aff93bf1c276841e1aa44166075e23e85e474
+cas_ref: sha256:c46ed22a92e75c2cf209a7ca908aff93bf1c276841e1aa44166075e23e85e474
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    recorded_at_utc: 2026-08-28T01:04:33.5244440+00:00
+    gids:
+      - D5/S3/ConceptDynamics/DecisionValue/FreeInformationValue.free_ignorable_information_value_nonnegative
+    gaps:
+      - code: structural-alignment-rejected
+        detail: 定理/296.1

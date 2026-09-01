@@ -1,0 +1,63 @@
+# 第一千四百一十八部　新的条件性 RH 证明目标
+
+令：
+
+$$
+\mathfrak H_\omega
+=
+P_-M_{\Theta_\omega}P_+,
+$$
+
+并定义：
+
+$$
+\mathsf D_\omega
+=
+\mathfrak H_\omega^*
+\mathfrak H_\omega.
+$$
+
+一个比要求：
+
+$$
+\mathfrak H_\omega=0
+$$
+
+弱得多的目标是：
+
+$$
+\boxed{
+I-\mathsf D_\omega
+\succeq
+\mathsf D_\omega^2
+\qquad
+\forall\,0<\omega<\frac12.
+}
+\tag{1418.1}
+$$
+
+等价地：
+
+$$
+\boxed{
+\|\mathfrak H_\omega\|^2
+\le
+\varphi^{-1}
+\qquad
+\forall\omega.
+}
+\tag{1418.2}
+$$
+
+任何离线零点的局部互素 Hankel 分支都会在：
+
+$$
+\omega>\frac{\delta}{\sqrt\varphi}
+$$
+
+时违反这一不等式。
+
+因此，只要证明局部 Blaschke 缺陷以缺陷忠实的方式嵌入全局最小 Hankel realization，式 (1418.1) 就足以推出 RH。
+
+这产生一个新的研究端点：
+

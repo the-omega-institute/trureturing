@@ -254,7 +254,6 @@ public sealed class DigestionEvaluationScopeTests
             truth,
             includeCoverageGid ? [coverageGid] : [],
             receipts,
-            includeBoundary: false,
             sourceId: "scope-probe");
         return DigestionTestSupport.Document(
             AtomizerRegistry.NoAtomizerId,
@@ -262,8 +261,7 @@ public sealed class DigestionEvaluationScopeTests
             sourceId: "scope-probe");
     }
 
-    private static DigestionAtom Atom(string astPath, byte[] bytes) => new(
-        astPath,
+    private static DigestionAtom Atom(string _, byte[] bytes) => new(
         0,
         bytes.Length,
         ImmutableArray.CreateRange(bytes),

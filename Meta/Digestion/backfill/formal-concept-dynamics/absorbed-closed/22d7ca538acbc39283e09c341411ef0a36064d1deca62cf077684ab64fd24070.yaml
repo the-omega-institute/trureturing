@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:22d7ca538acbc39283e09c341411ef0a36064d1deca62cf077684ab64fd24070
+  normalized_sha256: sha256:22d7ca538acbc39283e09c341411ef0a36064d1deca62cf077684ab64fd24070
+cas_ref: sha256:22d7ca538acbc39283e09c341411ef0a36064d1deca62cf077684ab64fd24070
+coverage_gids:
+  - D5/S3/ConceptDynamics/InstitutionalCapture/CredentialMultiplicityCountermodel.credential_transcript_cannot_recover_person_vote_count
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/InstitutionalCapture/CredentialMultiplicityCountermodel.credential_transcript_cannot_recover_person_vote_count
+      source_sha256: sha256:22d7ca538acbc39283e09c341411ef0a36064d1deca62cf077684ab64fd24070
+      target_statement_id: sha256:32b53c6c18e38243c80cd138f3c9caabb1dd2142f74c068188efca133b29142e
+  scribe:
+    - gid: D5/S3/ConceptDynamics/InstitutionalCapture/CredentialMultiplicityCountermodel.credential_transcript_cannot_recover_person_vote_count
+      definition_sha256: sha256:d7e2b66913e8441adc973fceb5fc1bd8aa0b95c04fc294ac93df7dbbc34aa6e8
+      emission_sha256: sha256:b75c51f4df6371015f22ff8e5f2503601fbf349230b078a80213c699fca2ace7
+  unresolved_subitems: []

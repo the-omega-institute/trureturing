@@ -1,0 +1,8 @@
+\[
+\Pi_\Omega(t)
+=
+\prod_{j=1}^m e^{-it\omega_j}.
+\]
+
+Lean 证明
+

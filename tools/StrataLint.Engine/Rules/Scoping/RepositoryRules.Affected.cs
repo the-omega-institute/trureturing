@@ -30,6 +30,14 @@ internal static partial class RepositoryRules
     private static bool TheoryVolumeAffected(RuleEvaluationContext context) =>
         Changed(context, IsTheoryVolumePath);
 
+    private static bool DigestionAtomsAffected(RuleEvaluationContext context) =>
+        Changed(context, static path =>
+            path.StartsWith(BackfillInventoryLoader.RootPath, StringComparison.Ordinal));
+
+    private static bool FormalizationReceiptsAffected(RuleEvaluationContext context) =>
+        Changed(context, static path =>
+            path.StartsWith(DigestionFormalizationReceipt.RootPath, StringComparison.Ordinal));
+
     private static bool StatusAffected(RuleEvaluationContext context) =>
         Changed(context, IsStatusScope);
 

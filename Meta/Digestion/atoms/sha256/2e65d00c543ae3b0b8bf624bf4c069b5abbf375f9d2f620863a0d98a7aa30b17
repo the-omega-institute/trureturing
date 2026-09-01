@@ -1,0 +1,44 @@
+# 第一千三百八十八部　单通道的模第一定律
+
+对：
+
+$$
+q=\sigma^2
+=
+\frac{\omega^2}{\delta^2},
+$$
+
+单侧约化态为：
+
+$$
+\varrho_q
+=
+(1-q)
+\sum_{n\ge0}
+q^n|n\rangle\langle n|.
+$$
+
+其平均占据数：
+
+$$
+\boxed{
+N=\frac{q}{1-q}
+}
+\tag{1388.1}
+$$
+
+和熵：
+
+$$
+\boxed{
+S(N)
+=
+(N+1)\log(N+1)
+-
+N\log N.
+}
+\tag{1388.2}
+$$
+
+满足：
+

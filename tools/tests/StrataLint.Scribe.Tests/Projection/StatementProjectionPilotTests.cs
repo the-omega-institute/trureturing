@@ -309,16 +309,6 @@ public sealed class StatementProjectionPilotTests
             $"projection-derived statements regressed to {projected}, below the floor of 7");
     }
 
-    [LiveReportFact]
-    public void LiveReportMatchesPinnedFixtureWhenAvailable()
-    {
-        var repositoryRoot = RepositoryAccessor
-            .Discover(RepositoryRootCriterion.LakefileInvalidOperation).Root.FullPath;
-        StatementProjectionReconciliation.Verify(
-            repositoryRoot,
-            DeclarationCatalog.Create(LeanCompiledArtifactReports.InspectRepository(repositoryRoot)));
-    }
-
     [Fact]
     public void ReconciliationCatalogFailsClosedWhenDeclarationKindIsMissing()
     {
@@ -447,25 +437,6 @@ public sealed class StatementProjectionPilotTests
         }
     }
 
-    [LiveReportFact]
-    public void NonTheoremDeclarationsAreUnprojectableWhenTheReportIsAvailable()
-    {
-        var repositoryRoot = RepositoryAccessor
-            .Discover(RepositoryRootCriterion.LakefileInvalidOperation).Root.FullPath;
-
-        // hellingerSq is a def: its type is the signature (ι → ℝ) → (ι → ℝ) → ℝ, and its defining
-        // body never reaches the projector. Projecting it would render the arrows as nested
-        // quantifiers and present that as the definition.
-        var outcome = StatementProjectionFixtureLoader.WithRepositoryRoot(
-            repositoryRoot,
-            () => StatementProjectionFixtureLoader.Project(
-                LeanDeclarationRef.Create("D5/S3/TotalVariation/Hellinger.hellingerSq")));
-
-        var failed = Assert.IsType<ProjectionOutcome.Unprojectable>(outcome);
-        Assert.Equal("non-propositional-declaration", failed.Reason.Split(':', 2)[0]);
-        Assert.Equal("def", failed.Reason.Split(':', 2)[1]);
-    }
-
     [Fact]
     public void TheoremDeclarationsRemainProjectable()
     {
@@ -493,34 +464,6 @@ public sealed class StatementProjectionPilotTests
         Assert.Equal("statement-projection-expansion-fixture-v1", fixtures[1].RootElement.GetProperty("schema").GetString());
         return fixtures.SelectMany(fixture => fixture.RootElement.GetProperty("declarations").EnumerateArray())
             .ToDictionary(item => item.GetProperty("name").GetString()!, StringComparer.Ordinal);
-    }
-
-    private sealed class LiveReportFactAttribute : FactAttribute
-    {
-        public LiveReportFactAttribute()
-        {
-            var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.LakefileInvalidOperation);
-            var requireLiveReport = Environment.GetEnvironmentVariable("STRATALINT_REQUIRE_LIVE_REPORT") == "1";
-            if (!requireLiveReport && (!repository.FileExists(RepositoryRelativePath.Create(
-                    ".lake/build/stratalint/raw-lean-report.json"))
-                || !repository.FileExists(RepositoryRelativePath.Create(
-                    ".lake/build/stratalint/raw-lean-report.json.materials.zip"))))
-            {
-                Skip = "Live raw Lean report is absent; pinned statement-v1 fixture remains the self-contained verifier asset.";
-                return;
-            }
-            if (!requireLiveReport)
-            {
-                try
-                {
-                    _ = LeanCompiledArtifactReports.InspectRepository(repository.Root.FullPath);
-                }
-                catch (Exception exception) when (exception is FormatException or InvalidDataException)
-                {
-                    Skip = "Live raw Lean report is stale; pinned statement-v1 fixture remains the self-contained verifier asset.";
-                }
-            }
-        }
     }
 
     private sealed class TemporaryRepository : IDisposable

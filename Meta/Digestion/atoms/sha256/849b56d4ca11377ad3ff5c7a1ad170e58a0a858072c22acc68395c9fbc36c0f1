@@ -1,0 +1,42 @@
+## 1210.2 反射不变 Casimir
+
+定义：
+
+$$
+\boxed{
+\mathfrak C_N
+=
+\frac12
+\operatorname{Tr}
+\left(
+\Delta_N+\Delta_N^{-1}-2I
+\right).
+}
+\tag{1210.5}
+$$
+
+在一维模式上：
+
+$$
+\boxed{
+\mathfrak C_N
+=
+2\sinh^2(\delta PN).
+}
+\tag{1210.6}
+$$
+
+因此：
+
+$$
+\boxed{
+\mathfrak C_N=0
+\iff
+\delta=0.
+}
+\tag{1210.7}
+$$
+
+它是缺陷忠实的：
+
+* 反射会遗忘 \(\operatorname{sgn}\delta\)；

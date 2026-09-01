@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:4a853053f1e347ac5f0bd65641537a16527b6b216e2502721996c56b17d34039
+  normalized_sha256: sha256:4a853053f1e347ac5f0bd65641537a16527b6b216e2502721996c56b17d34039
+cas_ref: sha256:4a853053f1e347ac5f0bd65641537a16527b6b216e2502721996c56b17d34039
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  quarantine:
+    justification: "The atom combines the formal countermodel `not N_x(U)` and `N_{Ux}(U)` with the public application clause `宪法修订`. Retrieval receipts: D5 search `constitutional.?amend|posterior.?approv|prior.?legality|prior.?authoriz|宪法修订` hit D5/S3/ConceptDynamics/NormativeStructure/PriorPosteriorAuthorizationSeparation.posterior_approval_authorization_separation and D5/S3/ConceptDynamics/NormativeStructure/PosteriorApprovalAuthorizationGap.posterior_approval_does_not_imply_prior_authorization, which cover the countermodel and failed implication but expose no constitution, amendment, or constitutional-legality relation; pinned Mathlib and package search `constitutional.?amend|posterior.?approv|prior.?legality|宪法修订` missed, and Mathlib contains no constitutional-amendment semantics; reachable GitHub Lean-code searches for `constitutional amendment` and `posterior approval` both exited 0 with no hits. The local proof decomposition can reuse either frozen countermodel for the mathematical rows, but cannot state or prove the constitutional-amendment application on source semantics because the source defines no constitutional carrier, amendment predicate, or bridge to N; inventing one would violate atom boundary and definitional-substitution rules."
+    reentry_condition: "Add a canonical constitutional-state and amendment semantics plus a proved bridge instantiating the generic prior/posterior authorization countermodel as a constitutional amendment, or revise the atom so the undefined application bullet is outside the formal theorem unit."
+    blocker_class: multi-clause-guard

@@ -1,0 +1,28 @@
+# 7. 当前允许的真源推理
+
+本轮以后可以无条件使用：
+
+\[
+\boxed{
+\text{稳定通道交换曲率对 residual 是一阶加二阶小量。}
+}
+\]
+
+更精确地说，局部 residual 同时趋零时，不需要先证明观察起源收敛，也不需要排除观察起源坐标中的表观共振，原始交换曲率已经被统一压到零。
+
+这改变了 prime-side 路线的任务排序。当前最短链条是
+
+\[
+\boxed{
+\text{residual envelope decay}
+\Longrightarrow
+\text{pairwise curvature decay}
+\Longrightarrow
+\text{finite holonomy energy decay}.
+}
+\]
+
+第三箭头仍需把逐对界聚合为有限正 Gram 能量界。
+
+---
+

@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:8c1107c9166f42b0597f5ad5d6643df3dffd5be059721f4c51ae6b47d0ee49c7
+  normalized_sha256: sha256:8c1107c9166f42b0597f5ad5d6643df3dffd5be059721f4c51ae6b47d0ee49c7
+cas_ref: sha256:8c1107c9166f42b0597f5ad5d6643df3dffd5be059721f4c51ae6b47d0ee49c7
+coverage_gids:
+  - D5/S3/ConceptDynamics/Faithfulness/CoordinateDeletionRobustness.coordinate_deletion_robustness
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Faithfulness/CoordinateDeletionRobustness.coordinate_deletion_robustness
+      source_sha256: sha256:8c1107c9166f42b0597f5ad5d6643df3dffd5be059721f4c51ae6b47d0ee49c7
+      target_statement_id: sha256:b1159158c6442b0d8a0d69e1cf16b8e82e875b458818e2b7b27879d9af247f3b
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Faithfulness/CoordinateDeletionRobustness.coordinate_deletion_robustness
+      definition_sha256: sha256:02d24692dabbd5749ab6b70da39966431372a09b12ffec0d107b1b1b25dadd3a
+      emission_sha256: sha256:39474a3f87ba9b75706df2a20d27413d50372b188a6889b91581741ca0b23fd3
+  unresolved_subitems: []

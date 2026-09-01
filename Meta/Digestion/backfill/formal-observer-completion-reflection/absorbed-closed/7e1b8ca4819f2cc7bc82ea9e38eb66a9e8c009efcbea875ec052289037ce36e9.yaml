@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:7e1b8ca4819f2cc7bc82ea9e38eb66a9e8c009efcbea875ec052289037ce36e9
+  normalized_sha256: sha256:7e1b8ca4819f2cc7bc82ea9e38eb66a9e8c009efcbea875ec052289037ce36e9
+cas_ref: sha256:7e1b8ca4819f2cc7bc82ea9e38eb66a9e8c009efcbea875ec052289037ce36e9
+coverage_gids:
+  - D5/S3/ObserverMemory/Dynamics/ObservableKrylovPermanentStability.observable_krylov_once_stable_permanently
+receipts:
+  coverage:
+    - gid: D5/S3/ObserverMemory/Dynamics/ObservableKrylovPermanentStability.observable_krylov_once_stable_permanently
+      source_sha256: sha256:7e1b8ca4819f2cc7bc82ea9e38eb66a9e8c009efcbea875ec052289037ce36e9
+      target_statement_id: sha256:3f68c89e4fb1dcf66ebdddf7e00aaa83cd2f18f68d82d3b49b4ebfe46e70beab
+  scribe:
+    - gid: D5/S3/ObserverMemory/Dynamics/ObservableKrylovPermanentStability.observable_krylov_once_stable_permanently
+      definition_sha256: sha256:a7b8c8dff077b1b2c85cd931158a7f37397eb981fad704368a69bfdc2cd2c441
+      emission_sha256: sha256:46311f6cc451ee7af2e32bb32516668aa54e322572e8c9ffcf7d068a4695f689
+  unresolved_subitems: []

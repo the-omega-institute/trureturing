@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:204035dcd38f9b00bd478263a9729a788a651a547a60abc2f1ef9893830b03e3
+  normalized_sha256: sha256:204035dcd38f9b00bd478263a9729a788a651a547a60abc2f1ef9893830b03e3
+cas_ref: sha256:204035dcd38f9b00bd478263a9729a788a651a547a60abc2f1ef9893830b03e3
+coverage_gids:
+  - D5/S1/Dynamics/CodeLedgerIdentity.same_state_iff_same_code_and_ledger
+receipts:
+  coverage:
+    - gid: D5/S1/Dynamics/CodeLedgerIdentity.same_state_iff_same_code_and_ledger
+      source_sha256: sha256:204035dcd38f9b00bd478263a9729a788a651a547a60abc2f1ef9893830b03e3
+      target_statement_id: sha256:e1f90fa7f1f402d13131c59157f2505b4d3469e1dff1f1f6fc02cca0f4127d10
+  scribe:
+    - gid: D5/S1/Dynamics/CodeLedgerIdentity.same_state_iff_same_code_and_ledger
+      definition_sha256: sha256:97398cdfac5b55c7a02e76f6d619998399444aa798a9ccc88b4c869d63cd634d
+      emission_sha256: sha256:ceec07d2b264deb7acec639e3513389df8065e79e20af5f622a45d2a0a56238f
+  unresolved_subitems: []

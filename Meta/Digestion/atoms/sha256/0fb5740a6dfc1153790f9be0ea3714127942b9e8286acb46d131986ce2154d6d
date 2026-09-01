@@ -1,0 +1,49 @@
+## 1260.2 离线零点的最小修复复杂度
+
+因此可以定义：
+
+$$
+\boxed{
+\mathfrak r(\omega,T)
+=
+\deg B_{\omega,T}.
+}
+\tag{1260.8}
+$$
+
+在无抵消情况下：
+
+$$
+\boxed{
+\mathfrak r(\omega,T)
+=
+N_{\mathrm{off}}(\omega,T).
+}
+\tag{1260.9}
+$$
+
+其含义是：
+
+> 为了把第 \(\omega\) 层恢复为一个普通 Schur／Hilbert 世界，至少需要加入多少个 Blaschke 修复因子？
+
+RH 的回答是：
+
+$$
+\boxed{
+\mathfrak r(\omega,T)=0
+}
+$$
+
+对全部 \(\omega,T\) 成立。
+
+所以：
+
+$$
+\boxed{
+\text{RH 并不是说缺陷能够被修复；
+而是说根本不需要任何负指标修复。}
+}
+$$
+
+---
+

@@ -1,0 +1,84 @@
+## 1319.1 Prime 部分在绝对收敛区天然单边
+
+当：
+
+$$
+\Re s>1,
+$$
+
+有：
+
+$$
+\boxed{
+-\frac{\zeta'}{\zeta}(s)
+=
+\sum_{n\ge2}
+\frac{\Lambda(n)}{n^s}.
+}
+\tag{1319.2}
+$$
+
+写：
+
+$$
+s=\sigma-it.
+$$
+
+则：
+
+$$
+\boxed{
+-\frac{\zeta'}{\zeta}(\sigma-it)
+=
+\sum_{n\ge2}
+\Lambda(n)n^{-\sigma}
+e^{it\log n}.
+}
+\tag{1319.3}
+$$
+
+在 Fourier 约定：
+
+$$
+\mathcal F^{-1}g(x)
+=
+\frac1{2\pi}
+\int g(t)e^{-itx}\,dt
+$$
+
+下，它的逆变换支撑于：
+
+$$
+\boxed{
+x=\log n>0.
+}
+$$
+
+所以 prime Euler 数据在绝对收敛区天然属于正时间。
+
+进一步：
+
+$$
+\boxed{
+-\frac{\zeta'}{\zeta}(s)
++
+\frac{\zeta'}{\zeta}(s+1)
+=
+\sum_{n\ge2}
+\Lambda(n)
+\left(1-\frac1n\right)
+n^{-s}.
+}
+\tag{1319.4}
+$$
+
+其 prime 权重仍非负，且仍只位于：
+
+$$
+\log n>0.
+$$
+
+这正是 consecutive scattering cell 的局部因果输入。
+
+---
+

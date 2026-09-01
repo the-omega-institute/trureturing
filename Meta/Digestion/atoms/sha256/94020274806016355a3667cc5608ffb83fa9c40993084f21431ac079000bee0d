@@ -1,0 +1,25 @@
+## 定理 1348.1（逐层 Loewner 单调性不足）
+
+即使全部零点都位于临界线，\(\Theta_\omega\) 也未必关于 \(\omega\) 构成点态单调的 Herglotz–Loewner 链。
+
+所以不应把 RH 证明目标设为：
+
+$$
+\Re G_\omega\ge0
+\quad
+\forall\omega,z.
+$$
+
+正确目标应是：
+
+$$
+\boxed{
+\text{对每个固定 }\omega，
+\Theta_\omega\text{ 分别拥有一个正的因果实现。}
+}
+$$
+
+这是一条重要的研究剪枝。
+
+---
+

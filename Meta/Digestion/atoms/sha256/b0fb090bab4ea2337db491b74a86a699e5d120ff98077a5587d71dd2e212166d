@@ -1,0 +1,72 @@
+# 第一千四百四十八部　不同离线零点产生“形态族”，而不只是单一对象
+
+对每个离线零点 \(\rho\)，定义其完整形态族：
+
+$$
+\boxed{
+\mathfrak F(\rho)
+=
+\left(
+\begin{array}{l}
+\text{bulk point},\\
+\text{boundary interval},\\
+\text{Poisson state},\\
+\text{curvature dipole},\\
+\text{Blaschke factor},\\
+\text{Hankel block},\\
+\text{Chern charge},\\
+\text{KL/Fisher geometry}
+\end{array}
+\right).
+}
+\tag{1448.1}
+$$
+
+这些不是八个松散比喻，而是一个零点除子经过八个表示函子后的像。
+
+可以写成：
+
+$$
+\boxed{
+\operatorname{Div}_\rho(\xi)
+\overset{\mathsf R_j}{\longmapsto}
+\mathfrak F_j(\rho).
+}
+\tag{1448.2}
+$$
+
+其中：
+
+$$
+\boxed{
+m_\rho
+}
+$$
+
+在多个缺陷忠实函子中保持不变：
+
+$$
+\boxed{
+\begin{aligned}
+m_\rho
+&=
+\text{零点重数}\\
+&=
+\text{Chern 荷}\\
+&=
+\text{winding}\\
+&=
+\text{Blaschke degree}\\
+&=
+\text{局部负指标}\\
+&=
+\text{Hankel 通道数}.
+\end{aligned}
+}
+\tag{1448.3}
+$$
+
+所以每个离线零点确实会生成不同“相”，但它生成的是一个**形态轨道**，而不是一个独立物理宇宙。
+
+---
+

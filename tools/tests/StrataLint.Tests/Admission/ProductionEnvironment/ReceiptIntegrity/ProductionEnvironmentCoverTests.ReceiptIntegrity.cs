@@ -11,7 +11,7 @@ public sealed partial class ProductionEnvironmentTests
     {
         var materialized = CoverWorld.Materialize(new CoverSpec
         {
-            OtherAtomBinding = ("receipt-gap-sibling", "D5/S0/Carrier/Probe.sibling"),
+            OtherAtomGid = "D5/S0/Carrier/Probe.sibling",
             ReportDeclarations = ImmutableArray.Create("probe", "sibling"),
         });
         var inputs = DirectoryInputs(WithNewScribeEmissionGapHiddenByBaselineProjection(materialized));
@@ -31,7 +31,7 @@ public sealed partial class ProductionEnvironmentTests
 
     private static CoverInputs WithNewScribeEmissionGapHiddenByBaselineProjection(CoverInputs inputs)
     {
-        const string siblingAtomId = "receipt-gap-sibling";
+        var siblingAtomId = CoverWorld.OtherAtomId;
         var siblingGid = inputs.Document.RequireDigestionEntries()
             .Single(entry => entry.AtomId == siblingAtomId)
             .CoverageGids.Single();

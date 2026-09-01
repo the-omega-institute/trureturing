@@ -563,7 +563,7 @@ Fail-closed review hardened both dialect recognition and stale history. Unknown 
 bold leads, malformed Q1-Q4/settled/open labels, and duplicate locators are rejected. The
 coarse replacement obligation is owned by the baseline source identity: source rename or
 relocation, `observer-v1` to `none`, stale-acknowledgement removal, atom/path/fingerprint/CAS
-identity mutation, and a coarse CAS clone under any source or AST path are rejected. The
+identity mutation, and a coarse CAS clone under any source are rejected. The
 last independent review found the pre-settlement source-id escape; binding obligations from
 the complete baseline source set closed it. The current focused atomizer/alignment suites
 pass 29/29.
@@ -636,9 +636,9 @@ coverage or literature receipt, and no DOI is asserted in this batch:
 
 After PR #109 supplied cross-syntax receipt identity and one-step legacy conversion,
 `make ingest` completed the Phase 2 extract→identify→subtract→residual pass for the
-PR #106 theory volumes. It migrated all 20 atomized legacy receipts from `boundary` to
-`ast_path` (GICT 16, PZG 4), while leaving the 12 `atomizer: none` specification
-receipts unchanged. The resulting alignment and ledger write recorded:
+PR #106 theory volumes. It migrated all 20 atomized legacy receipts to the then-current
+structured identity (GICT 16, PZG 4), while leaving the 12 `atomizer: none`
+specification receipts unchanged. The resulting alignment and ledger write recorded:
 
 - seen: 15
 - stale acknowledged: 5 (`gict-hearts-o5-o6`, `gict-constant-Cphi`,
@@ -649,10 +649,10 @@ receipts unchanged. The resulting alignment and ledger write recorded:
 ### First-voyage autopsy (REFERENCE-ZERO-ANCHOR migrate, 2026-07-15)
 
 `make ingest` did not reach a ledger write. With the production ledger unchanged, its
-legacy byte boundaries point into the new theory bytes; the first truncated UTF-8 span
+legacy byte spans point into the new theory bytes; the first truncated UTF-8 span
 fails during digest-status evaluation. A minimal data-only trial converted only the 20
-GICT/PZG receipts from `boundary` to `ast_path` and left all 12 `atomizer: none` spec
-receipts untouched. That exposed the alignment counts but was also rejected by the
+GICT/PZG receipts to the then-current structured identity and left all 12 `atomizer: none`
+spec receipts untouched. That exposed the alignment counts but was also rejected by the
 base-owned judge:
 
 - seen: 15
@@ -663,8 +663,8 @@ base-owned judge:
 The count is 737 rather than the expected version delta of about 165 because the
 aligner subtracts only registered receipt paths, not the 587 claims atomized from the
 baseline theory volumes. More importantly, stale admission requires the candidate
-receipt preimage to be byte-equal to `origin/dev`; a structured `ast_path` receipt
-cannot be byte-equal to its legacy `boundary` preimage. The second `make ingest`
+receipt preimage to be byte-equal to `origin/dev`; the structured replacement receipt
+cannot be byte-equal to its legacy preimage. The second `make ingest`
 therefore failed on exactly the five receipts above with `INGEST_INVALID`, and wrote
 nothing. No data-only state can both retain those five as actual acknowledged stale
 receipts and pass the `origin/dev` baseline comparison. The trial ledger edit was

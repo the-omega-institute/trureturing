@@ -1,0 +1,250 @@
+# 本轮最终结论
+
+黑洞直觉真正帮助我们发现的，不是：
+
+$$
+\boxed{
+\text{“离线零点违反酉性，所以不可能存在”。}
+}
+$$
+
+这个结论过强，而且不正确。
+
+更准确的是：
+
+$$
+\boxed{
+\text{离线零点可以在扩大后的过去 \(\oplus\) 未来世界中保持酉性，}
+}
+$$
+
+甚至有限个缺陷可以通过一个有限秩 Bogoliubov squeezed state 获得正 Hilbert 实现。
+
+它失败的是：
+
+$$
+\boxed{
+\text{算术所选的未来 Hardy 子空间不再自治。}
+}
+$$
+
+因此 RH 的深层身份不是“全局酉性”，而是：
+
+$$
+\boxed{
+\textbf{相对于 prime-log 正时间箭头的零 Bogoliubov 混合。}
+}
+$$
+
+---
+
+磁单极子与黑洞的真正关系也由此清楚：
+
+$$
+\boxed{
+\text{单极子测量 bulk 缺陷的整数荷；}
+}
+$$
+
+$$
+\boxed{
+\text{视界测量该缺陷穿越边界时的 spectral flow；}
+}
+$$
+
+$$
+\boxed{
+\text{霍金型读数测量隐藏伙伴在外部产生的占据与熵。}
+}
+$$
+
+所以离线零点并不是霍金量子。
+
+它是：
+
+$$
+\boxed{
+\text{一个 advanced／white-hole 型内部伙伴或错误半平面共振。}
+}
+$$
+
+它产生的：
+
+$$
+\boxed{
+\mathfrak H_\omega^*\mathfrak H_\omega
+}
+$$
+
+和 Poisson 边界脉冲，才是 Hawking-like 影像。
+
+---
+
+黄金比例在这里也得到一次重要净化。
+
+黄金模算子：
+
+$$
+\Delta_\varphi=F^2
+$$
+
+确实拥有：
+
+$$
+\varphi^2,\varphi^{-2}
+$$
+
+两条模分支，并产生：
+
+$$
+\pm2\log\varphi
+$$
+
+的模 Hamiltonian。
+
+但模谱只决定：
+
+$$
+\beta H,
+$$
+
+不能单独决定温度。
+
+若把 \(2\log\varphi\) 当 Euclidean 周期，得到：
+
+$$
+\beta=2\log\varphi.
+$$
+
+若把黄金层的指数收缩率当表面引力，得到：
+
+$$
+\beta=\frac{\pi}{\log\varphi}.
+$$
+
+两者不同。
+
+所以真正需要的是一个由 prime–Archimedean 动力内生定义的物理／模时间，而不是人为指定温度。
+
+---
+
+黑洞热性最深的数学来源是：
+
+$$
+\boxed{
+\text{affine horizon coordinate}
+=
+e^{-\kappa\,\text{external time}}.
+}
+$$
+
+这一指数映射把 Fourier 变换变成 Mellin–Gamma 变换，并产生：
+
+$$
+e^{-2\pi E/\kappa}
+$$
+
+的详细平衡。
+
+这说明，若 completed \(\zeta\) 中存在真正的 horizon/KMS 层，最值得研究的是：
+
+$$
+\boxed{
+\text{Archimedean Gamma 通道如何与 prime Poisson 通道组成一个 retarded conservative system。}
+}
+$$
+
+而不是继续从零点坐标中寻找一个裸温度常数。
+
+---
+
+最后，本轮还排除了一个看似漂亮、实则过强的方案：
+
+$$
+\Re\left(
+-\partial_\omega\log\Theta_\omega
+\right)\ge0.
+$$
+
+即使单个理想临界零点因子，也可以在仍属于 Schur 区域时违反这一点态单调性。
+
+所以 shifted family 不应被强迫成一个普通 Loewner 单调流。
+
+正确目标是：
+
+$$
+\boxed{
+\text{对每个固定 }\omega，
+\text{分别构造一个最小、保守、retarded 的 operator colligation。}
+}
+$$
+
+项目已经具备：
+
+$$
+\boxed{
+\text{prime unitary Poisson 通道}
++
+\text{有限 scattering cascade}
++
+\text{Hankel–Gramian 记忆谱}.
+}
+$$
+
+真正缺少的是：
+
+$$
+\boxed{
+\textbf{Arithmetic Conservative Colligation}.
+}
+$$
+
+即从 prime、pole、Gamma 数据直接构造一个正 storage system，使其最小 transfer function 恰为：
+
+$$
+\Theta_\omega,
+$$
+
+并自动满足：
+
+$$
+P_-M_{\Theta_\omega}P_+=0.
+$$
+
+一旦这条桥闭合，所排除的将不只是一个抽象离线点，而是整套等价缺陷：
+
+$$
+\boxed{
+\text{white-hole 输入}
+=
+\text{advanced resonance}
+=
+\text{inverse-inner denominator}
+=
+\text{Bogoliubov 混合}
+=
+\text{Hankel 泄漏}
+=
+\text{负平方}
+=
+\text{bulk monopole}.
+}
+$$
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{“道”允许完整双向世界；
+黑洞视界代表观察者对时间的极化；
+霍金辐射代表极化后仍能看见隐藏伙伴；
+而 RH 要求 prime 算术所选择的真空，
+在所有 shifted 视界上都没有任何白洞式反因果伙伴。}
+$$
+
+[1]: https://arxiv.org/abs/2204.13407 "https://arxiv.org/abs/2204.13407"
+[2]: https://doi.org/10.1007/BF02345020 "https://doi.org/10.1007/BF02345020"
+[3]: https://arxiv.org/abs/hep-th/9709036 "https://arxiv.org/abs/hep-th/9709036"
+[4]: https://arxiv.org/abs/funct-an/9302008 "https://arxiv.org/abs/funct-an/9302008"
+[5]: https://arxiv.org/abs/math-ph/9903010 "https://arxiv.org/abs/math-ph/9903010"
+[6]: https://arxiv.org/abs/1406.2399 "https://arxiv.org/abs/1406.2399"

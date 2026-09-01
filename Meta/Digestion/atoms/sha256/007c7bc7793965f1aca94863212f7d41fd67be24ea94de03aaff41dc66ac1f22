@@ -1,0 +1,55 @@
+## 1401.1 标准 Jones 基本构造
+
+对有限指数 \(II_1\) 子因子：
+
+$$
+N\subset M,
+$$
+
+标准 Jones projection \(e_N\) 的规范迹满足：
+
+$$
+\boxed{
+\tau(e_N)
+=
+[M:N]^{-1}.
+}
+\tag{1401.1}
+$$
+
+若：
+
+$$
+[M:N]=\varphi^2,
+$$
+
+则：
+
+$$
+\boxed{
+\tau(e_N)=\varphi^{-2}.
+}
+\tag{1401.2}
+$$
+
+相应的指数信息尺度为：
+
+$$
+\boxed{
+\log[M:N]
+=
+2\log\varphi.
+}
+\tag{1401.3}
+$$
+
+Jones 的基本构造以及 Pimsner–Popa 对子因子指数、条件期望和熵的联系提供了这一算子代数背景。([eudml.org][3])
+
+项目已经独立机器证明，在非负整数二通道 unimodular 更新中：
+
+* determinant \(-1\) 的最小非平凡扩张率为 \(\varphi\)；
+* determinant \(+1\) 的最小扩张率为 \(\varphi^2\)；
+* Fibonacci 矩阵及其平方达到等号。
+
+---
+

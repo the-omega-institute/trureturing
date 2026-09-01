@@ -1,0 +1,103 @@
+# 第一千四百一十九部　三种“长度”不能再混为同一个黄金量
+
+对 shifted 双像，令：
+
+$$
+\sigma=\frac{\omega}{\delta}.
+$$
+
+定义 Rindler rapidity：
+
+$$
+\boxed{
+r=\operatorname{artanh}\sigma.
+}
+\tag{1419.1}
+$$
+
+Hardy/Poincaré 双曲距离为：
+
+$$
+\boxed{
+d_{\mathbb H}=2r.
+}
+\tag{1419.2}
+$$
+
+信息/KL 长度为：
+
+$$
+\boxed{
+D_{\mathrm{info}}
+=
+-\log(1-\sigma^2)
+=
+2\log\cosh r.
+}
+\tag{1419.3}
+$$
+
+在黄金拉伸视界：
+
+$$
+\sigma=\varphi^{-1/2}.
+$$
+
+所以：
+
+$$
+\boxed{
+\cosh r=\varphi,
+}
+\tag{1419.4}
+$$
+
+$$
+\boxed{
+r=\operatorname{arcosh}\varphi,
+}
+\tag{1419.5}
+$$
+
+$$
+\boxed{
+d_{\mathbb H}
+=
+2\operatorname{arcosh}\varphi,
+}
+\tag{1419.6}
+$$
+
+而：
+
+$$
+\boxed{
+D_{\mathrm{info}}
+=
+2\log\varphi.
+}
+\tag{1419.7}
+$$
+
+因此：
+
+$$
+\boxed{
+2\operatorname{arcosh}\varphi
+\neq
+2\log\varphi.
+}
+$$
+
+这说明此前出现的：
+
+* shifted 双像的双曲距离；
+* 黄金 Möbius 轴的平移长度；
+* 观察指数的对数；
+
+属于不同几何。
+
+它们存在函数联系，但不能仅因都含 \(\varphi\) 就认同为同一长度。
+
+---
+

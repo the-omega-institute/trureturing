@@ -1,0 +1,33 @@
+## 定理 1388.1（局部模第一定律）
+
+$$
+\boxed{
+\frac{dS}{dN}
+=
+\log\frac{N+1}{N}
+=
+-\log q
+=
+2\log\frac{\delta}{\omega}.
+}
+\tag{1388.3}
+$$
+
+也就是说：
+
+$$
+\boxed{
+dS
+=
+\varepsilon\,dN,
+\qquad
+\varepsilon
+=
+2\log\frac{\delta}{\omega}.
+}
+\tag{1388.4}
+$$
+
+所以黑洞热力学直觉在这里产生一个精确对象：
+
+* \(N\) 是外部可见 occupation；

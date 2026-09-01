@@ -1,0 +1,102 @@
+# 第一千一百一十八部　Pontryagin–Minkowski 方块
+
+对黄金 Solenoid 上的单位自同构：
+
+$$
+U_{\varphi^2}:\Sigma_K\to\Sigma_K,
+$$
+
+其 Pontryagin 对偶是：
+
+$$
+\boxed{
+q\longmapsto\varphi^2q
+\qquad
+(q\in K).
+}
+\tag{1118.1}
+$$
+
+二者满足评价兼容：
+
+$$
+\boxed{
+\langle
+U_{\varphi^2}x,q
+\rangle
+=
+\langle
+x,\varphi^2q
+\rangle.
+}
+\tag{1118.2}
+$$
+
+所以有反变方块：
+
+$$
+\boxed{
+\begin{array}{ccc}
+\Sigma_K
+&\xrightarrow{\ U_{\varphi^2}\ }&
+\Sigma_K
+\\
+\updownarrow{\scriptstyle\text{Pontryagin}}
+&&
+\updownarrow{\scriptstyle\text{Pontryagin}}
+\\
+K
+&\xleftarrow{\ \times\varphi^2\ }&
+K.
+\end{array}
+}
+\tag{1118.3}
+$$
+
+随后作 Minkowski 嵌入：
+
+$$
+\boxed{
+\sigma:
+K
+\longrightarrow
+\mathbb R^2,
+\qquad
+q\longmapsto
+\left(
+\sigma_+(q),\sigma_-(q)
+\right).
+}
+\tag{1118.4}
+$$
+
+乘法 \(\times\varphi^2\) 变成：
+
+$$
+\boxed{
+\begin{pmatrix}
+\varphi^2&0\\
+0&\varphi^{-2}
+\end{pmatrix}.
+}
+\tag{1118.5}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{Solenoid unit automorphism}
+\;\xleftrightarrow{\text{Pontryagin}}\;
+\text{离散黄金频率更新}
+\;\xrightarrow{\text{Minkowski}}\;
+\text{Lorentz boost}.
+}
+$$
+
+这才是“Solenoid 与黄金光锥对偶”的严格版本。
+
+它们不是一步对偶，而是两步函子关系。
+
+---
+

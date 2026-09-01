@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:4807ade3f72a896bc214fbbe14fdc8e0ea18611f00fce4a8d7be197b4b809d79
+  normalized_sha256: sha256:4807ade3f72a896bc214fbbe14fdc8e0ea18611f00fce4a8d7be197b4b809d79
+cas_ref: sha256:4807ade3f72a896bc214fbbe14fdc8e0ea18611f00fce4a8d7be197b4b809d79
+coverage_gids:
+  - D5/S3/Zeros/ScalingRegisterRigidity.realized_same_germ_same_total_code_excludes_scaling_register
+  - D5/S3/Zeros/ZeroGeometry.global_factor_clearing_forces_critical_line
+receipts:
+  coverage:
+    - gid: D5/S3/Zeros/ZeroGeometry.global_factor_clearing_forces_critical_line
+      source_sha256: sha256:4807ade3f72a896bc214fbbe14fdc8e0ea18611f00fce4a8d7be197b4b809d79
+      target_statement_id: sha256:1294d2d103dc63c7a3a87e817396e3c9d14606862f5152dfa45b2b4da21c2971
+  scribe: []
+  unresolved_subitems: []

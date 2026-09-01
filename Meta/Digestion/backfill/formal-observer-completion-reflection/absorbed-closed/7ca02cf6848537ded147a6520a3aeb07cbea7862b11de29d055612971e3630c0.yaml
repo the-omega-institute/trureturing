@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:7ca02cf6848537ded147a6520a3aeb07cbea7862b11de29d055612971e3630c0
+  normalized_sha256: sha256:7ca02cf6848537ded147a6520a3aeb07cbea7862b11de29d055612971e3630c0
+cas_ref: sha256:7ca02cf6848537ded147a6520a3aeb07cbea7862b11de29d055612971e3630c0
+coverage_gids:
+  - D5/S3/Observer/Approximation/IntertwiningDefectPropagation.intertwining_defect_telescope
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/Approximation/IntertwiningDefectPropagation.intertwining_defect_telescope
+      source_sha256: sha256:7ca02cf6848537ded147a6520a3aeb07cbea7862b11de29d055612971e3630c0
+      target_statement_id: sha256:12e5f5de1b99a31c124613e0f368d7d82011c018d667cedc827c4c169f8dad9b
+  scribe:
+    - gid: D5/S3/Observer/Approximation/IntertwiningDefectPropagation.intertwining_defect_telescope
+      definition_sha256: sha256:d4a1b208b778015406401557e4820046fa98ec419479d18d84e73871da472012
+      emission_sha256: sha256:19b82212e5c258243d41634eb342bbaecc67134e18ac5b6bd3d4d6d96ce42a4a
+  unresolved_subitems: []

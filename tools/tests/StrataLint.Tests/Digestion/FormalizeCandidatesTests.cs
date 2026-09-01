@@ -101,19 +101,20 @@ public sealed partial class FormalizeCandidatesTests
             kind,
             number,
             atomizer: AtomizerRegistry.GenericId);
-        var expectedAstPath = $"{kind}/{number}";
-
         var result = Run([entry], atomizer: AtomizerRegistry.GenericId);
 
-        Assert.Equal(expectedAstPath, entry.Atom.AstPath);
+        Assert.Equal(
+            DigestionFingerprint.Compute(entry.Atom.RawBytes.AsSpan()).RawSha256,
+            entry.Atom.Fingerprints.RawSha256);
         Assert.True(result.Success, result.Error);
         using var json = JsonDocument.Parse(result.Output);
         var candidates = json.RootElement.GetProperty("candidates").EnumerateArray().ToArray();
         if (expectedCandidate)
         {
-            Assert.Equal(
-                expectedAstPath,
-                Assert.Single(candidates).GetProperty("ast_path").GetString());
+            var candidate = Assert.Single(candidates);
+            Assert.Equal(entry.AtomId, candidate.GetProperty("atom_id").GetString());
+            Assert.Equal(kind, candidate.GetProperty("kind").GetString());
+            Assert.False(candidate.TryGetProperty("ast_path", out _));
         }
         else
         {
@@ -200,7 +201,17 @@ public sealed partial class FormalizeCandidatesTests
     [Fact]
     public void FormalizeCandidatesReturnsAnEmptyArrayWhenNoCandidateExists()
     {
-        var result = Run([Entry("source", "definition", "定义", "5.1")]);
+        var result = Run(
+        [
+            Entry(
+                "source",
+                "complete",
+                "定义",
+                "5.1",
+                coverageGids: ["D5/S0/Carrier/Nat"],
+                migration: "absorbed",
+                truth: "closed"),
+        ]);
 
         Assert.True(result.Success, result.Error);
         using var json = JsonDocument.Parse(result.Output);
@@ -683,8 +694,6 @@ public sealed partial class FormalizeCandidatesTests
                         $"synthetic/{entry.SourceId}.md",
                         atomizer,
                         entry.AtomId,
-                        entry.Atom.AstPath,
-                        null,
                         entry.Atom.Fingerprints,
                         ImmutableArray.CreateRange(entry.CoverageGids),
                         new DigestionReceipts(

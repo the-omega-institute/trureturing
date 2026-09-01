@@ -1,0 +1,13 @@
+### 1.1 反例检测桥
+
+目标是证明：
+
+\[
+\neg\mathrm{RH}
+\Longrightarrow
+\exists\text{ finite certified negative witness}.
+\]
+
+候选观察图表包括：
+
+- Cayley/Li 矩；

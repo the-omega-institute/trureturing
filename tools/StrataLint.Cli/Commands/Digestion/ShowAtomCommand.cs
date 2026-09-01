@@ -109,7 +109,7 @@ internal static class ShowAtomCommand
         var writer = new StringWriter(System.Globalization.CultureInfo.InvariantCulture);
         writer.WriteLine(
             $"SHOW_ATOM atom_id={entry.AtomId} source_id={entry.SourceId} "
-            + $"source_path={entry.SourcePath} atomizer={entry.Atomizer} ast_path={entry.AstPath}");
+            + $"source_path={entry.SourcePath} atomizer={entry.Atomizer}");
         if (stale)
         {
             writer.WriteLine("STALE_READ status=stale source=cas");

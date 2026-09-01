@@ -1,0 +1,43 @@
+## 1183.1 这不是纯粹的假想结构
+
+Fibonacci 融合系统存在一个 Galois 共轭的非酉版本，即 Yang–Lee 类型；它保留相关融合骨架，但不再具有通常的酉正性。相关格点实现中的父 Hamiltonian 一般是非 Hermitian 的，且该非酉理论被明确描述为 Fibonacci 融合范畴的非酉对应物。([arXiv][3])
+
+因此现实中确实存在：
+
+$$
+\boxed{
+\text{融合规则完全保留，但正性结构丢失}
+}
+$$
+
+的严格数学模型。
+
+这正好对应上一轮的中心结论：
+
+$$
+\boxed{
+\text{对偶闭合}
+\not\Rightarrow
+\text{正性闭合}.
+}
+$$
+
+可以建立以下原型对应：
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{黄金融合系统}&\text{Riemann 完成系统}\\
+\hline
+\varphi&\text{正／unitary 分支}\\
+\varphi'&\text{代数合法但非酉的 Galois 分支}\\
+\text{融合律保持}&\text{函数方程保持}\\
+\text{正维数失败}&\text{Weil／Pick 正性失败}
+\end{array}
+}
+$$
+
+这是一种结构对应，不是说 Yang–Lee 模型的谱就是 Riemann 零点。
+
+---
+

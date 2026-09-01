@@ -1,0 +1,38 @@
+## 1413.1 多通道黄金量子化
+
+若活动秩为 \(m\)，则：
+
+$$
+\boxed{
+\det(\mathsf V)^{-1}
+=
+\varphi^{2m},
+}
+\tag{1413.8}
+$$
+
+$$
+\boxed{
+-\log\det\mathsf V
+=
+2m\log\varphi,
+}
+\tag{1413.9}
+$$
+
+$$
+\boxed{
+\operatorname{Tr}
+\left[
+\mathsf D
+(I-\mathsf D)^{-1}
+\right]
+=
+m\varphi.
+}
+\tag{1413.10}
+$$
+
+所以在彼此正交、均位于黄金匹配点的 \(m\) 个通道中：
+
+* 整数 \(m\) 读取拓扑通道数；

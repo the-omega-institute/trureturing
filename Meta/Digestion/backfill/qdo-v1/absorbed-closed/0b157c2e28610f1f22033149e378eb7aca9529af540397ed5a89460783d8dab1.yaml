@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:0b157c2e28610f1f22033149e378eb7aca9529af540397ed5a89460783d8dab1
+  normalized_sha256: sha256:0b157c2e28610f1f22033149e378eb7aca9529af540397ed5a89460783d8dab1
+cas_ref: sha256:0b157c2e28610f1f22033149e378eb7aca9529af540397ed5a89460783d8dab1
+coverage_gids:
+  - D5/S3/Quantum/Algebra/FutureWordOrthogonalResidual.future_word_orthogonal_residual
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/Algebra/FutureWordOrthogonalResidual.future_word_orthogonal_residual
+      source_sha256: sha256:0b157c2e28610f1f22033149e378eb7aca9529af540397ed5a89460783d8dab1
+      target_statement_id: sha256:61a04641e1e768332bc523867c6d5d0d5e334f85269afd39c9c9ca5cedf5c806
+  scribe:
+    - gid: D5/S3/Quantum/Algebra/FutureWordOrthogonalResidual.future_word_orthogonal_residual
+      definition_sha256: sha256:37c29b6ee9cf46fc7de2d9f1d60fa7c97ac20ab0608a2ef86253b9bdbb683cc2
+      emission_sha256: sha256:7700a73d62ec76658195efafe0e617492389e78d6c47d4e981603ed5be205168
+  unresolved_subitems: []

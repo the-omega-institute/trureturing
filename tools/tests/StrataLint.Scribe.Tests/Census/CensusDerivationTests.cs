@@ -38,9 +38,11 @@ public sealed class CensusDerivationTests
 
                 """.Replace("\r\n", "\n", StringComparison.Ordinal));
             TemporaryFileSystem.File.WriteAllText(
-                Path.Combine(sourceRoot, "absorbed-closed", "synthetic-atom.yaml"),
+                Path.Combine(
+                    sourceRoot,
+                    "absorbed-closed",
+                    "0000000000000000000000000000000000000000000000000000000000000000.yaml"),
                 $$"""
-                ast_path: theorem/synthetic
                 fingerprints:
                   raw_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
                   normalized_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000

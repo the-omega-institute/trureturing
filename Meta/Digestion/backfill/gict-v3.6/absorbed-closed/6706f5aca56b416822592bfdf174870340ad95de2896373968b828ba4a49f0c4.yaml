@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:6706f5aca56b416822592bfdf174870340ad95de2896373968b828ba4a49f0c4
+  normalized_sha256: sha256:6706f5aca56b416822592bfdf174870340ad95de2896373968b828ba4a49f0c4
+cas_ref: sha256:6706f5aca56b416822592bfdf174870340ad95de2896373968b828ba4a49f0c4
+coverage_gids:
+  - D5/S1/Eigenstructure/GoldenPowerLog.golden_power_logb_nat
+receipts:
+  coverage:
+    - gid: D5/S1/Eigenstructure/GoldenPowerLog.golden_power_logb_nat
+      source_sha256: sha256:6706f5aca56b416822592bfdf174870340ad95de2896373968b828ba4a49f0c4
+      target_statement_id: sha256:6aed23f0744b8413d65331dd22e0a3b22c297eee6428d381a18e0ca9ed04c8e3
+  scribe:
+    - gid: D5/S1/Eigenstructure/GoldenPowerLog.golden_power_logb_nat
+      definition_sha256: sha256:3deda35db59ec71ebc23a13b2e543cbd3055b59c764774f11de3c81ed1258d9e
+      emission_sha256: sha256:8b27d781591ebe7f5dd0b854b09a38f38dc2bed8f0b66c7df13c4bd31737457e
+  unresolved_subitems: []

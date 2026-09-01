@@ -1,0 +1,38 @@
+## 1312.1 秩与能量的不同
+
+对每个：
+
+$$
+0<\omega<\delta,
+$$
+
+都有：
+
+$$
+\operatorname{rank}\mathfrak H_{\rho,\omega}=1.
+$$
+
+但：
+
+$$
+\mathcal E_\rho(\omega)
+=
+\frac{\omega^2}{\delta^2}
+\longrightarrow0
+\qquad
+(\omega\downarrow0).
+$$
+
+所以：
+
+$$
+\boxed{
+\text{缺陷秩始终为 }1，
+\text{缺陷能量却可以任意接近 }0.
+}
+$$
+
+这正是“极稀缺对象虽然真实存在，却几乎不可见”的严格算子模型。
+
+---
+

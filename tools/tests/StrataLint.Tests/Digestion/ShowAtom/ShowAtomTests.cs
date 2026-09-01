@@ -7,9 +7,6 @@ namespace StrataLint.Tests;
 
 public sealed partial class ShowAtomTests
 {
-    private const string BoundaryAtomId = "boundary-atom";
-    private const string AdapterAtomId = "adapter-atom";
-    private const string AdapterAstPath = "section/1";
     private const string AdapterAtomizerId = AtomizerRegistry.PeriodicTreeId;
 
     [Fact]
@@ -25,9 +22,9 @@ public sealed partial class ShowAtomTests
             "sha256:7a439c840e28e11de3fd3c0232714bef0b204d18512aba869f3a58f7da905e1f";
         var sourceBytes = Encoding.UTF8.GetBytes(prefix + rawText + suffix);
         var rawBytes = Encoding.UTF8.GetBytes(rawText);
-        var startByte = Encoding.UTF8.GetByteCount(prefix);
+        var atomId = BareAtomId(rawSha256);
         var files = FixtureFiles(
-            BoundaryLedger(sourcePath, startByte, startByte + rawBytes.Length, rawSha256, normalizedSha256),
+            ContentLedger(sourcePath, rawSha256, normalizedSha256),
             sourcePath,
             sourceBytes,
             rawSha256,
@@ -35,14 +32,13 @@ public sealed partial class ShowAtomTests
         using var temporary = new TemporaryDirectory();
         var before = Directory.EnumerateFileSystemEntries(temporary.Path).ToArray();
 
-        var result = Environment(temporary.Path, files).ShowAtom(["--atom-id", BoundaryAtomId]);
+        var result = Environment(temporary.Path, files).ShowAtom(["--atom-id", atomId]);
 
         Assert.True(result.Success, result.Error);
         Assert.Equal(string.Empty, result.Error);
         Assert.Contains(
-            $"SHOW_ATOM atom_id={BoundaryAtomId} source_id=boundary-source "
-                + $"source_path={sourcePath} atomizer={AtomizerRegistry.NoAtomizerId} "
-                + "ast_path=sample/01\n",
+            $"SHOW_ATOM atom_id={atomId} source_id=content-source "
+                + $"source_path={sourcePath} atomizer={AtomizerRegistry.NoAtomizerId}\n",
             result.Output,
             StringComparison.Ordinal);
         Assert.Contains(
@@ -67,6 +63,7 @@ public sealed partial class ShowAtomTests
             "# Synthetic document\r\n\r\n" + rawText);
         var rawBytes = Encoding.UTF8.GetBytes(rawText);
         var fingerprints = DigestionFingerprint.Compute(rawBytes);
+        var atomId = BareAtomId(fingerprints.RawSha256);
         var files = FixtureFiles(
             AdapterLedger(
                 sourcePath,
@@ -77,11 +74,11 @@ public sealed partial class ShowAtomTests
             fingerprints.RawSha256,
             rawBytes);
 
-        var result = Environment("/repo", files).ShowAtom(["--atom-id", AdapterAtomId]);
+        var result = Environment("/repo", files).ShowAtom(["--atom-id", atomId]);
 
         Assert.True(result.Success, result.Error);
         Assert.Contains(
-            $"atomizer={AdapterAtomizerId} ast_path={AdapterAstPath}\n",
+            $"atomizer={AdapterAtomizerId}\n",
             result.Output,
             StringComparison.Ordinal);
         Assert.Contains($"BEGIN_RAW_TEXT\n{rawText}END_RAW_TEXT\n", result.Output, StringComparison.Ordinal);
@@ -106,7 +103,7 @@ public sealed partial class ShowAtomTests
         var rawBytes = Encoding.UTF8.GetBytes(rawText);
         var fingerprints = DigestionFingerprint.Compute(rawBytes);
         var files = FixtureFiles(
-            BoundaryLedger(sourcePath, 0, rawBytes.Length, fingerprints.RawSha256, fingerprints.NormalizedSha256),
+            ContentLedger(sourcePath, fingerprints.RawSha256, fingerprints.NormalizedSha256),
             sourcePath,
             rawBytes,
             fingerprints.RawSha256,
@@ -129,13 +126,13 @@ public sealed partial class ShowAtomTests
         var rawBytes = Encoding.UTF8.GetBytes(rawText);
         var fingerprints = DigestionFingerprint.Compute(rawBytes);
         var files = FixtureFiles(
-            BoundaryLedger(sourcePath, 0, rawBytes.Length, fingerprints.RawSha256, fingerprints.NormalizedSha256),
+            ContentLedger(sourcePath, fingerprints.RawSha256, fingerprints.NormalizedSha256),
             sourcePath,
             rawBytes,
             fingerprints.RawSha256,
             rawBytes);
 
-        var result = Environment("/repo", files).ShowAtom(["--atom-id", BoundaryAtomId]);
+        var result = Environment("/repo", files).ShowAtom(["--atom-id", BareAtomId(fingerprints.RawSha256)]);
 
         Assert.True(result.Success, result.Error);
         Assert.Contains("BEGIN_RAW_TEXT\nreceipt\r\nEND_RAW_TEXT\n", result.Output, StringComparison.Ordinal);
@@ -159,7 +156,10 @@ public sealed partial class ShowAtomTests
         var ledger = adapterLedger.WithDigestionSources(
         [
             .. adapterLedger.RequireDigestionSources()
-                .Select(source => source with { AcknowledgedStale = [AdapterAtomId] }),
+                .Select(source => source with
+                {
+                    AcknowledgedStale = [BareAtomId(fingerprints.RawSha256)],
+                }),
         ]);
         var files = FixtureFiles(
             ledger,
@@ -168,7 +168,8 @@ public sealed partial class ShowAtomTests
             fingerprints.RawSha256,
             Encoding.UTF8.GetBytes("corrupt CAS bytes\n"));
 
-        var result = Environment("/repo", files).ShowAtom(["--atom-id", AdapterAtomId]);
+        var result = Environment("/repo", files).ShowAtom(
+            ["--atom-id", BareAtomId(fingerprints.RawSha256)]);
 
         Assert.True(result.Success, result.Error);
         Assert.Equal(string.Empty, result.Error);
@@ -198,7 +199,8 @@ public sealed partial class ShowAtomTests
             fingerprints.RawSha256,
             committedBytes);
 
-        var result = Environment("/repo", files).ShowAtom(["--atom-id", AdapterAtomId]);
+        var result = Environment("/repo", files).ShowAtom(
+            ["--atom-id", BareAtomId(fingerprints.RawSha256)]);
 
         Assert.True(result.Success, result.Error);
         Assert.DoesNotContain("STALE_READ", result.Output, StringComparison.Ordinal);
@@ -222,7 +224,8 @@ public sealed partial class ShowAtomTests
             oldFingerprints.RawSha256,
             oldBytes);
 
-        var result = Environment("/repo", files).ShowAtom(["--atom-id", AdapterAtomId]);
+        var result = Environment("/repo", files).ShowAtom(
+            ["--atom-id", BareAtomId(oldFingerprints.RawSha256)]);
 
         Assert.True(result.Success, result.Error);
         Assert.Contains("Old synthetic content", result.Output, StringComparison.Ordinal);
@@ -237,18 +240,14 @@ public sealed partial class ShowAtomTests
         var casBytes = Encoding.UTF8.GetBytes("committed receipt\n");
         var fingerprints = DigestionFingerprint.Compute(casBytes);
         var files = FixtureFiles(
-            BoundaryLedger(
-                sourcePath,
-                0,
-                sourceBytes.Length,
-                fingerprints.RawSha256,
-                fingerprints.NormalizedSha256),
+            ContentLedger(sourcePath, fingerprints.RawSha256, fingerprints.NormalizedSha256),
             sourcePath,
             sourceBytes,
             fingerprints.RawSha256,
             casBytes);
 
-        var result = Environment("/repo", files).ShowAtom(["--atom-id", BoundaryAtomId]);
+        var result = Environment("/repo", files).ShowAtom(
+            ["--atom-id", BareAtomId(fingerprints.RawSha256)]);
 
         Assert.True(result.Success, result.Error);
         Assert.Contains("committed receipt", result.Output, StringComparison.Ordinal);
@@ -269,7 +268,7 @@ public sealed partial class ShowAtomTests
         var ledgerSource = Assert.Single(ledger.RequireDigestionSources());
         ledger = ledger.WithDigestionSources(
         [
-            ledgerSource with { AcknowledgedStale = [AdapterAtomId] },
+            ledgerSource with { AcknowledgedStale = [BareAtomId(oldFingerprints.RawSha256)] },
         ]);
         var files = AdapterGenerationFixtureFiles(
             ledger,
@@ -278,7 +277,8 @@ public sealed partial class ShowAtomTests
             (oldFingerprints.RawSha256, oldBytes),
             (currentFingerprints.RawSha256, currentBytes));
 
-        var result = Environment("/repo", files).ShowAtom(["--atom-id", AdapterAtomId]);
+        var result = Environment("/repo", files).ShowAtom(
+            ["--atom-id", BareAtomId(oldFingerprints.RawSha256)]);
 
         Assert.True(result.Success, result.Error);
         Assert.Contains("STALE_READ status=stale source=cas\n", result.Output, StringComparison.Ordinal);
@@ -306,7 +306,8 @@ public sealed partial class ShowAtomTests
             (oldFingerprints.RawSha256, oldBytes),
             (currentFingerprints.RawSha256, currentBytes));
 
-        var result = Environment("/repo", files).ShowAtom(["--atom-id", AdapterAtomId]);
+        var result = Environment("/repo", files).ShowAtom(
+            ["--atom-id", BareAtomId(oldFingerprints.RawSha256)]);
 
         Assert.True(result.Success, result.Error);
         Assert.DoesNotContain("STALE_READ", result.Output, StringComparison.Ordinal);
@@ -330,7 +331,7 @@ public sealed partial class ShowAtomTests
         var ledgerSource = Assert.Single(ledger.RequireDigestionSources());
         ledger = ledger.WithDigestionSources(
         [
-            ledgerSource with { AcknowledgedStale = [AdapterAtomId] },
+            ledgerSource with { AcknowledgedStale = [BareAtomId(oldFingerprints.RawSha256)] },
         ]);
         var files = FixtureFiles(
             ledger,
@@ -339,7 +340,8 @@ public sealed partial class ShowAtomTests
             oldFingerprints.RawSha256,
             oldBytes);
 
-        var result = Environment("/repo", files).ShowAtom(["--atom-id", AdapterAtomId]);
+        var result = Environment("/repo", files).ShowAtom(
+            ["--atom-id", BareAtomId(oldFingerprints.RawSha256)]);
 
         Assert.True(result.Success, result.Error);
         Assert.Contains("STALE_READ status=stale source=cas\n", result.Output, StringComparison.Ordinal);
@@ -355,7 +357,7 @@ public sealed partial class ShowAtomTests
         var rawBytes = Encoding.UTF8.GetBytes(rawText);
         var fingerprints = DigestionFingerprint.Compute(rawBytes);
         var files = FixtureFiles(
-            BoundaryLedger(sourcePath, 0, rawBytes.Length, fingerprints.RawSha256, fingerprints.NormalizedSha256),
+            ContentLedger(sourcePath, fingerprints.RawSha256, fingerprints.NormalizedSha256),
             sourcePath,
             rawBytes,
             fingerprints.RawSha256,
@@ -363,12 +365,15 @@ public sealed partial class ShowAtomTests
         var console = new BufferedConsole();
 
         var exitCode = CliApplication.Run(
-            ["show-atom", "--atom-id", BoundaryAtomId],
+            ["show-atom", "--atom-id", BareAtomId(fingerprints.RawSha256)],
             Environment("/repo", files),
             console);
 
         Assert.Equal(0, exitCode);
-        Assert.Contains($"SHOW_ATOM atom_id={BoundaryAtomId}", console.Output, StringComparison.Ordinal);
+        Assert.Contains(
+            $"SHOW_ATOM atom_id={BareAtomId(fingerprints.RawSha256)}",
+            console.Output,
+            StringComparison.Ordinal);
         Assert.Equal(string.Empty, console.Error);
     }
 
@@ -415,23 +420,19 @@ public sealed partial class ShowAtomTests
                 ImmutableArray.CreateRange(item.Bytes))),
             ]);
 
-    private static BackfillInventoryDocument BoundaryLedger(
+    private static BackfillInventoryDocument ContentLedger(
         string sourcePath,
-        int startByte,
-        int endByte,
         string rawSha256,
         string normalizedSha256) => Document(
-            "boundary-source",
+            "content-source",
             sourcePath,
             AtomizerRegistry.NoAtomizerId,
             [Entry(
-                "boundary-source",
+                "content-source",
                 sourcePath,
                 AtomizerRegistry.NoAtomizerId,
-                BoundaryAtomId,
-                "sample/01",
-                new DigestionFingerprints(rawSha256, normalizedSha256),
-                new DigestionBoundary("sample/01", startByte, endByte))]);
+                BareAtomId(rawSha256),
+                new DigestionFingerprints(rawSha256, normalizedSha256))]);
 
     private static BackfillInventoryDocument AdapterLedger(
         string sourcePath,
@@ -444,8 +445,7 @@ public sealed partial class ShowAtomTests
                 "adapter-source",
                 sourcePath,
                 AdapterAtomizerId,
-                AdapterAtomId,
-                AdapterAstPath,
+                BareAtomId(rawSha256),
                 new DigestionFingerprints(rawSha256, normalizedSha256))]);
 
     private static BackfillInventoryDocument AdapterGenerationLedger(
@@ -460,15 +460,13 @@ public sealed partial class ShowAtomTests
                     "adapter-source",
                     sourcePath,
                     AdapterAtomizerId,
-                    AdapterAtomId,
-                    AdapterAstPath,
+                    BareAtomId(oldFingerprints.RawSha256),
                     oldFingerprints),
                 Entry(
                     "adapter-source",
                     sourcePath,
                     AdapterAtomizerId,
-                    "adapter-current",
-                    AdapterAstPath,
+                    BareAtomId(currentFingerprints.RawSha256),
                     currentFingerprints),
             ]);
 
@@ -496,20 +494,19 @@ public sealed partial class ShowAtomTests
         string sourcePath,
         string atomizer,
         string atomId,
-        string astPath,
-        DigestionFingerprints fingerprints,
-        DigestionBoundary? boundary = null) => new(
+        DigestionFingerprints fingerprints) => new(
             sourceId,
             sourcePath,
             atomizer,
             atomId,
-            astPath,
-            boundary,
             fingerprints,
             [],
             new DigestionReceipts([], [], [], [], null),
             new DigestionStatus(DigestionMigrationState.Partial, DigestionTruthState.Open),
             fingerprints.RawSha256);
+
+    private static string BareAtomId(string rawSha256) =>
+        rawSha256["sha256:".Length..];
 
     private static RawRepositorySnapshot SnapshotWithLedger(
         BackfillInventoryDocument ledger,

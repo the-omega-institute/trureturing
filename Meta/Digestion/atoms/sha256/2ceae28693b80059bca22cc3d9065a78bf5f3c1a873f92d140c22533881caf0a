@@ -1,0 +1,29 @@
+## v7.0：反射商、黄金第一分支、Pontryagin–Minkowski 缝合与离线零点的非酉下降障碍
+
+以下从前文**第一千一百一十三部**继续。
+
+这一次可以把整套几何压缩得更清楚。
+
+最关键的校准是：
+
+$$
+\boxed{
+\text{Solenoid 与黄金双曲锥不是彼此直接的 Pontryagin 对偶。}
+}
+$$
+
+更准确的依赖链是：
+
+$$
+\boxed{
+\text{Solenoid}
+\;\xleftrightarrow{\text{Pontryagin}}\;
+\text{离散算术频率}
+\;\xrightarrow{\text{Minkowski 嵌入}}\;
+\text{黄金 Lorentz 锥}.
+}
+$$
+
+也就是说：
+
+* Solenoid 位于紧致的“相位—隐藏地址”一侧；

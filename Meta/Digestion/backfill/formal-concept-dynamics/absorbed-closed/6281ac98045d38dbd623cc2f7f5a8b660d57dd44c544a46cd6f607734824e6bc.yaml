@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:6281ac98045d38dbd623cc2f7f5a8b660d57dd44c544a46cd6f607734824e6bc
+  normalized_sha256: sha256:6281ac98045d38dbd623cc2f7f5a8b660d57dd44c544a46cd6f607734824e6bc
+cas_ref: sha256:6281ac98045d38dbd623cc2f7f5a8b660d57dd44c544a46cd6f607734824e6bc
+coverage_gids:
+  - D5/S3/ConceptDynamics/Interventions/ExperimentalQuotientUniversality.experimental_quotient_universality
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Interventions/ExperimentalQuotientUniversality.experimental_quotient_universality
+      source_sha256: sha256:6281ac98045d38dbd623cc2f7f5a8b660d57dd44c544a46cd6f607734824e6bc
+      target_statement_id: sha256:4b4f89a065b92efef1a90b5cfdcac3454c191e550c1f91d0d7aaac1ba36a3c9e
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Interventions/ExperimentalQuotientUniversality.experimental_quotient_universality
+      definition_sha256: sha256:770cbe78edbc76df4a066438469895e1d92878a06669dc030e139bb01dd25664
+      emission_sha256: sha256:a0a93632fa79093840f02a5fd2b99afb5dcb4f14dd4dab5b889305479a708aed
+  unresolved_subitems: []

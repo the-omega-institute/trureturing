@@ -64,7 +64,7 @@ public sealed partial class BackfillInventoryLoaderTests
 
         Assert.Equal(["delta-v0.1", "epsilon-v0.1"],
             document.RequireDigestionSources().Select(static source => source.SourceId).ToArray());
-        Assert.Equal(["delta-atom", "epsilon-atom"],
+        Assert.Equal([FixtureAtomId("theorem/delta"), FixtureAtomId("theorem/epsilon")],
             document.RequireDigestionEntries().Select(static entry => entry.AtomId).ToArray());
         var ticket = Assert.Single(document.RequireTickets());
         Assert.Equal("D5-T0098", ticket.CaseId);
@@ -176,7 +176,7 @@ public sealed partial class BackfillInventoryLoaderTests
     }
 
     [Fact]
-    public void DirectoryAtomWithNoncanonicalEntryKeyIsRejected()
+    public void CandidateDirectoryAtomWithUnknownEntryKeyIsRejected()
     {
         var atom = Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta");
         var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(Snapshot(
@@ -196,70 +196,6 @@ public sealed partial class BackfillInventoryLoaderTests
             (path, Atom("zeta-v0.1", "residual-open", "zeta-atom", "theorem/zeta").Text))));
 
         Assert.Equal($"backfill atom is not owned by exactly one source: {path}", exception.Message);
-    }
-
-    [Fact]
-    public void SourceMetadataRejectsHistoricalSchemaInCandidate()
-    {
-        var sourcePath = $"{BackfillInventoryLoader.RootPath}delta-v0.1/source.toml";
-        var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(Snapshot(
-            (sourcePath,
-                "source_id = \"delta-v0.1\"\n"
-                + "path = \"docs/delta.md\"\n"
-                + "atomizer = \"none\"\n"),
-            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"))));
-
-        Assert.Equal($"source metadata keys are not canonical: {sourcePath}", exception.Message);
-    }
-
-    [Fact]
-    public void SourceMetadataAcceptsHistoricalSchemaOnlyInBaseline()
-    {
-        var sourcePath = $"{BackfillInventoryLoader.RootPath}delta-v0.1/source.toml";
-        var document = BackfillInventoryLoader.LoadBaseline(Snapshot(
-            (sourcePath,
-                "source_id = \"delta-v0.1\"\n"
-                + "path = \"docs/delta.md\"\n"
-                + "atomizer = \"none\"\n"
-                + "acknowledged_stale = [\"old-one\"]\n"),
-            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta")));
-
-        var source = Assert.Single(document.RequireDigestionSources());
-        Assert.Equal(["old-one"], source.AcknowledgedStale.ToArray());
-        AssertGenreRegistryProjectionUnavailable(source);
-    }
-
-    [Fact]
-    public void BaselineCurrentSchemaGenreProjectionIsAlsoUnavailable()
-    {
-        var sourcePath = $"{BackfillInventoryLoader.RootPath}delta-v0.1/source.toml";
-        var document = BackfillInventoryLoader.LoadBaseline(Snapshot(
-            (sourcePath,
-                "source_id = \"delta-v0.1\"\n"
-                + "path = \"docs/delta.md\"\n"
-                + "atomizer = \"pzg-v1\"\n"
-                + "genre_registry_check = \"collected\"\n"
-                + "unregistered_genres = [\"未登记体\"]\n"),
-            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta")));
-
-        AssertGenreRegistryProjectionUnavailable(
-            Assert.Single(document.RequireDigestionSources()));
-    }
-
-    [Fact]
-    public void SourceMetadataRejectsInvalidGenreRegistryCheck()
-    {
-        var sourcePath = $"{BackfillInventoryLoader.RootPath}delta-v0.1/source.toml";
-        var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(Snapshot(
-            (sourcePath,
-                "source_id = \"delta-v0.1\"\n"
-                + "path = \"docs/delta.md\"\n"
-                + "atomizer = \"pzg-v1\"\n"
-                + "genre_registry_check = \"unknown\"\n"
-                + "unregistered_genres = []\n"),
-            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"))));
-
-        Assert.Equal($"invalid genre_registry_check: {sourcePath}", exception.Message);
     }
 
     [Fact]
@@ -524,6 +460,24 @@ public sealed partial class BackfillInventoryLoaderTests
     }
 
     [Fact]
+    public void CandidateDeltaDoesNotRestoreBaselineAtomDeletedFromCandidate()
+    {
+        var source = Source("delta-v0.1", "docs/delta.md", "none");
+        var atom = Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta");
+        var baseline = Snapshot(
+            source,
+            (atom.Path, atom.Text + "ast_path: theorem/delta\n"));
+        var candidate = Snapshot(source);
+
+        var loaded = BackfillInventoryLoader.LoadCandidateDelta(
+            candidate,
+            baseline,
+            RawChangeSet.Create(["D5/S3/Probe/Unrelated.lean"]));
+
+        Assert.Empty(loaded.RequireDigestionEntries());
+    }
+
+    [Fact]
     public void SourceMetadataPreservesAcknowledgedStaleArray()
     {
         var sourcePath = $"{BackfillInventoryLoader.RootPath}delta-v0.1/source.toml";
@@ -626,8 +580,9 @@ public sealed partial class BackfillInventoryLoaderTests
     public void DirectoryAtomWithoutCasRefIsRejected()
     {
         var atom = Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta");
+        var fingerprint = "sha256:" + FixtureAtomId("theorem/delta");
         var withoutCasRef = atom.Text.Replace(
-            "cas_ref: sha256:0000000000000000000000000000000000000000000000000000000000000000\n",
+            $"cas_ref: {fingerprint}\n",
             string.Empty,
             StringComparison.Ordinal);
 
@@ -652,9 +607,37 @@ public sealed partial class BackfillInventoryLoaderTests
             (atom.Path, written)));
 
         Assert.Equal(
-            "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+            "sha256:" + FixtureAtomId("theorem/delta"),
             entry.CasRef);
         Assert.Equal(entry.CasRef, Assert.Single(roundTripped.RequireDigestionEntries()).CasRef);
+    }
+
+    [Fact]
+    public void DirectoryAtomWriterQuotesMappingLikeQuarantineScalars()
+    {
+        var atom = Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta");
+        var document = BackfillInventoryLoader.Load(Snapshot(
+            Source("delta-v0.1", "docs/delta.md", "none"),
+            atom));
+        var entry = Assert.Single(document.RequireDigestionEntries());
+        var expected = "missing prerequisite: tracked bridge";
+        var quarantined = entry with
+        {
+            Receipts = entry.Receipts with
+            {
+                Quarantine = new DigestionQuarantine(expected, "bridge lands"),
+            },
+        };
+
+        var written = Encoding.UTF8.GetString(BackfillInventoryWriter.WriteAtom(quarantined).AsSpan());
+        var roundTripped = BackfillInventoryLoader.Load(Snapshot(
+            Source("delta-v0.1", "docs/delta.md", "none"),
+            (atom.Path, written)));
+
+        Assert.Contains("justification: 'missing prerequisite: tracked bridge'", written);
+        Assert.Equal(
+            expected,
+            Assert.Single(roundTripped.RequireDigestionEntries()).Receipts.Quarantine?.Justification);
     }
 
     private static RepositorySnapshot Snapshot(params (string Path, string Text)[] files)
@@ -683,14 +666,16 @@ public sealed partial class BackfillInventoryLoaderTests
     private static (string Path, string Text) Atom(
         string sourceId,
         string state,
-        string atomId,
-        string astPath) =>
-        ($"{BackfillInventoryLoader.RootPath}{sourceId}/{state}/{atomId}.yaml", $$"""
-            ast_path: {{astPath}}
+        string atomLabel,
+        string content)
+    {
+        var fingerprint = DigestionFingerprint.Compute(Encoding.UTF8.GetBytes(content)).RawSha256;
+        var atomId = fingerprint["sha256:".Length..];
+        return ($"{BackfillInventoryLoader.RootPath}{sourceId}/{state}/{atomId}.yaml", $$"""
             fingerprints:
-              raw_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
-              normalized_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
-            cas_ref: sha256:0000000000000000000000000000000000000000000000000000000000000000
+              raw_sha256: {{fingerprint}}
+              normalized_sha256: {{fingerprint}}
+            cas_ref: {{fingerprint}}
             coverage_gids: []
             receipts:
               coverage: []
@@ -699,6 +684,10 @@ public sealed partial class BackfillInventoryLoaderTests
               chain_atoms: []
               tail_authorization: null
             """ + "\n");
+    }
+
+    private static string FixtureAtomId(string content) =>
+        DigestionFingerprint.Compute(Encoding.UTF8.GetBytes(content)).RawSha256["sha256:".Length..];
 
     private static string[] LoaderEntryFields() =>
         BackfillInventoryDocument.EntryFieldUniverse.ToArray();

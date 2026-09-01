@@ -1,0 +1,11 @@
+## 3.1 两种时间必须分开
+
+一个 timed event 记为：
+
+\[
+e=(\lambda_e,b_e,\omega_e,t_e).
+\]
+
+其中：
+
+- \(t_e\) 是 Fourier phase 的实参数；

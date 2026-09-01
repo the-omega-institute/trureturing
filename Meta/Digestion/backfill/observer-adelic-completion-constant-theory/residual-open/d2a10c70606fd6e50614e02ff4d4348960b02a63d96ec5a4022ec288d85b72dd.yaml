@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:d2a10c70606fd6e50614e02ff4d4348960b02a63d96ec5a4022ec288d85b72dd
+  normalized_sha256: sha256:d2a10c70606fd6e50614e02ff4d4348960b02a63d96ec5a4022ec288d85b72dd
+cas_ref: sha256:d2a10c70606fd6e50614e02ff4d4348960b02a63d96ec5a4022ec288d85b72dd
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  quarantine:
+    justification: "Missing-prerequisite after whole-statement retrieval and a local proof probe. D5 queries `Verblunsky|CMV|orthogonal polynomials on the unit circle|OPUC|Schur parameter|reflection coefficient` found only fixed-depth Li-Clark Toeplitz recovery and no Verblunsky sequence, CMV operator, OPUC correspondence, or RH-to-compactness owner. Pinned Mathlib queries with the same terms missed; its compact-operator library supplies generic `IsCompactOperator` machinery but no CMV matrix, diagonal formula, or theorem deriving compactness from the Li-Clark measure. GitHub repository searches `Verblunsky Lean` and `CMV operator Lean` both returned `total_count: 0`, so no A17 dependency or port candidate was found. The local Lean probe `/private/tmp/w72d9-limit-probe.lean` exited 0 and proves the downstream implication from `Tendsto (fun n => -star (alpha (n+1))*alpha n-1) atTop (nhds 0)` plus `norm (alpha n) <= 1` to both public limits; it cannot derive that diagonal convergence from RH. The exact missing prerequisite is a canonical Li-Clark probability measure, its Verblunsky coefficients and CMV operator on the source carrier, together with public theorems that RH makes `C_CMV-I` compact, identifies its diagonal with `-conj(alpha_n)*alpha_(n-1)-1`, and sends those diagonal coefficients to zero. Adding diagonal convergence as a premise would restate the source proof's main bridge and under-cover the RH-conditional theorem."
+    reentry_condition: "Freeze an A17-compatible OPUC interface constructing the canonical Li-Clark Verblunsky sequence and CMV operator, then prove from RH that the operator is a compact perturbation of the identity and that compactness forces its standard-basis diagonal coefficients to zero; the compiled downstream limit lemma can then supply both public conclusions."
+    blocker_class: missing-prerequisite

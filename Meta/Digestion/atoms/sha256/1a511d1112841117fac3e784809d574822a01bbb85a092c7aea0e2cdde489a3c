@@ -1,0 +1,78 @@
+## 1115.1 不同理想与余不同理想
+
+令：
+
+$$
+K=\mathbb Q(\sqrt5),
+\qquad
+\mathcal O_K=\mathbb Z[\varphi].
+$$
+
+对于单生成整数环，different 由最小多项式导数生成：
+
+$$
+\boxed{
+\mathfrak D_K
+=
+\bigl(f'(\varphi)\bigr)
+=
+(\sqrt5).
+}
+\tag{1115.4}
+$$
+
+其逆理想，即 codifferent，为：
+
+$$
+\boxed{
+\mathcal O_K^\vee
+=
+\mathfrak D_K^{-1}
+=
+\frac1{\sqrt5}\mathcal O_K.
+}
+\tag{1115.5}
+$$
+
+Codifferent 正是关于迹配对：
+
+$$
+\operatorname{Tr}_{K/\mathbb Q}(xy)
+$$
+
+的对偶格。([维基百科][1])
+
+并且：
+
+$$
+\boxed{
+[\mathcal O_K^\vee:\mathcal O_K]=5.
+}
+\tag{1115.6}
+$$
+
+所以同一个 \(5\) 同时控制：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{黄金双分支的判别式};\\
+&\text{商映射的局部 Jacobian};\\
+&\text{整数格与 Fourier 对偶格之间的指数};\\
+&\text{黄金场中唯一的分歧素数}.
+\end{aligned}
+}
+$$
+
+这给 Solenoid 与黄金光锥之间的第一个真正算术缝合：
+
+$$
+\boxed{
+\text{局部分支导数 }\sqrt5
+=
+\text{全局 Pontryagin 对偶格的缝合尺度}.
+}
+$$
+
+---
+

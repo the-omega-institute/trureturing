@@ -1,0 +1,22 @@
+- 反射增长模式 \(e^{\pm\delta t}\) 的谱值是 \(-\delta^2\)。
+
+因此正平方和负平方分别对应：
+
+\[
+\boxed{
++\gamma^2
+\leftrightarrow
+\text{elliptic / oscillatory sector},
+}
+\]
+
+\[
+\boxed{
+-\delta^2
+\leftrightarrow
+\text{hyperbolic / growth-decay sector}.
+}
+\]
+
+在 RH 的局部模式语言中，临界线对应纯相位旋转。离线位移引入互反的增长与衰减分支。
+

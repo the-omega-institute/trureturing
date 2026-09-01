@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:8d5f74da599d598975d0dbbb7addc47593743fde16ee0e4edf3209735dec6eca
+  normalized_sha256: sha256:8d5f74da599d598975d0dbbb7addc47593743fde16ee0e4edf3209735dec6eca
+cas_ref: sha256:8d5f74da599d598975d0dbbb7addc47593743fde16ee0e4edf3209735dec6eca
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  quarantine:
+    justification: "Retrieval preceded quarantine. D5 queries `spectral.?measure|projection.?valued|resolution.*identity|self.?adjoint.*measure|measure.*self.?adjoint|moment.*measure.*inner` found only source-specific measures already defined from other primitives and finite atomic constructions such as `TruncatedCircleMomentBridge.truncated_circle_moment_of_posSemidef` and `ExactTruncatedHaarFloor`; none recovers a positive measure from an arbitrary positive self-adjoint operator on the source Hilbert carrier while proving all power moments equal the displayed inner products. Pinned Mathlib returned no match for the same projection-valued spectral-measure and self-adjoint moment queries; its available finite-dimensional eigenspace and bounded C-star functional-calculus APIs do not supply the required arbitrary-Hilbert spectral theorem. The spec A17 third-party route is `wait-for-capability` because public-source, immutable-revision, and license-compatibility admission predicates remain open. The local proof decomposition can construct the measure by a finite eigenspace sum after adding finite-dimensionality, but that would be a prohibited special-case deposit; at source generality it stops at the absent projection-valued spectral theorem and scalar spectral-measure moment identity."
+    reentry_condition: "Freeze an arbitrary-Hilbert positive self-adjoint spectral theorem that constructs the scalar positive spectral measure associated to `v`, proves every operator power moment equals the corresponding measure moment under the needed domain/integrability conditions, and connects that measure to the source inverse-square moment sequence without imposing an unstated finite-dimensional restriction."
+    blocker_class: missing-prerequisite

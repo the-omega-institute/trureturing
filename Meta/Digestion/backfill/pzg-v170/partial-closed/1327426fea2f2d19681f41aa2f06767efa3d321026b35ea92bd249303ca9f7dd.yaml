@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:1327426fea2f2d19681f41aa2f06767efa3d321026b35ea92bd249303ca9f7dd
+  normalized_sha256: sha256:1327426fea2f2d19681f41aa2f06767efa3d321026b35ea92bd249303ca9f7dd
+cas_ref: sha256:1327426fea2f2d19681f41aa2f06767efa3d321026b35ea92bd249303ca9f7dd
+coverage_gids:
+  - D5/S3/Analytic/CompletedZetaMellinReconstruction.completed_zeta_mellin_reconstruction
+receipts:
+  coverage:
+    - gid: D5/S3/Analytic/CompletedZetaMellinReconstruction.completed_zeta_mellin_reconstruction
+      source_sha256: sha256:1327426fea2f2d19681f41aa2f06767efa3d321026b35ea92bd249303ca9f7dd
+      target_statement_id: sha256:cb4be47b53ec7692e9fe338bec396f0683868af5131a6683f5f2e6e7d85e1579
+  scribe:
+    - gid: D5/S3/Analytic/CompletedZetaMellinReconstruction.completed_zeta_mellin_reconstruction
+      definition_sha256: sha256:2de8843d9faf3f08273a4e1c443faf82bac098460f773d7ececb93854bb88457
+      emission_sha256: sha256:89875ace263681ced42a79da96cbcf740323be49ebe4a1d4f4d519c124fee2e8
+  unresolved_subitems:
+    - mellin-reconstruction-two-point-numerical-certificate

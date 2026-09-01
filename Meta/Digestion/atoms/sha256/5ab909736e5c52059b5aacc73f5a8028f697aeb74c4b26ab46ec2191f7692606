@@ -1,0 +1,24 @@
+* shifted kernels 全部 PSD；
+
+那么 sufficiency 成立。
+
+如果存在离线零点，则其反因果 profile 立即证明 sufficiency 失败。
+
+所以新框架没有假装消灭困难。
+
+它的价值是把困难从：
+
+$$
+\text{“为什么所有零点恰好位于一条线？”}
+$$
+
+变成：
+
+$$
+\boxed{
+\text{“为什么 completed spectral name 已经足以决定完整 causal self？”}
+}
+$$
+
+后者可以直接接到：
+

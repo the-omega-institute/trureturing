@@ -1,0 +1,34 @@
+## 离线零点
+
+边界 all-pass 模长可以正常，局部散射也可以酉，但可能不存在单一的正因果 Hardy 因子化。
+
+失败的是：
+
+$$
+\boxed{
+\text{全局 retarded／minimum-phase 命名}.
+}
+$$
+
+因此三者都是：
+
+$$
+\boxed{
+\textbf{下降障碍}
+}
+$$
+
+的不同表示：
+
+$$
+\text{局部图表}
+\longrightarrow
+\text{过渡关系}
+\longrightarrow
+\text{全局胶合障碍}.
+$$
+
+这解释了它们为何如此相似，而不需要把三者物理上认同为同一个对象。
+
+---
+

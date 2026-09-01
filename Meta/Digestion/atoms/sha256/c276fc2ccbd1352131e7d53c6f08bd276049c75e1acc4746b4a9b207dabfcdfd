@@ -1,0 +1,40 @@
+# 第一千三百三十七部　项目当前已经拥有的“黑洞骨架”
+
+项目现有机器结果已经覆盖三块关键骨架。
+
+第一，单个素数的加权双向平移历史可精确重求和为以实平移为酉算子的 Poisson resolvent。这给出了完整双向传播的酉背景。
+
+第二，半整数 shifted-\(\xi\) scattering 可被写成有限的 completed-zeta modular scattering cascade；这给出了视界散射的离散多层结构。
+
+第三，Hankel 奇异值与可控—可观 Gramian 乘积谱的关系已经机器闭合；这使“辐射占据—隐藏状态—观察强度”可以进入有限维算子接口。
+
+所以项目现在已经有：
+
+$$
+\boxed{
+\text{unitary background}
++
+\text{finite scattering cascade}
++
+\text{Hankel memory spectrum}.
+}
+$$
+
+真正缺少的是：
+
+$$
+\boxed{
+\text{horizon-regular positive-frequency orientation}.
+}
+$$
+
+即证明最小 realization 中：
+
+$$
+\boxed{
+P_-M_{\Theta_\omega}P_+=0.
+}
+$$
+
+---
+
