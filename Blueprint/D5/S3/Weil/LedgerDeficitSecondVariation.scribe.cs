@@ -1,5 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Weil;
 
@@ -38,7 +39,11 @@ internal sealed class LedgerDeficitSecondVariationDocument : IScribeDocumentDefi
                 DescribeId.Create("ledger-deficit-second-variation-identity"),
                 DeclarationHandle.Create("D5/S3/Weil/LedgerDeficitSecondVariation.ledger_deficit_second_variation_eq"),
                 H("The defining Hessian identity"),
-                StatementSource.WithoutFormula(),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Forall, Sp, F.Id("d"), InMacro, Mathbb, Grp(F.Id("R")), Comma, Sp,
+                    Operatorname, Grp(F.Id("ledgerDeficitSecondVariation")),
+                    Open, F.Id("d"), Close, Eq,
+                    D(2), F.Id("d"), Caret, Grp(D(2))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Differentiating the exponential curve twice and applying the product rule gives exactly " +
@@ -82,7 +87,14 @@ internal sealed class LedgerDeficitSecondVariationDocument : IScribeDocumentDefi
                 DescribeId.Create("zero-addressed-scaling-identity"),
                 DeclarationHandle.Create("D5/S3/Weil/LedgerDeficitSecondVariation.zero_addressed_scaling_eq"),
                 H("Zero-addressed scaling is a squared displacement"),
-                StatementSource.WithoutFormula(),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Forall, Sp, Rho, InMacro, Mathbb, Grp(F.Id("C")), Comma, Sp,
+                    Operatorname, Grp(F.Id("zeroAddressedScaling")),
+                    Open, Rho, Close, Eq,
+                    D(2), Open,
+                    Operatorname, Grp(F.Id("Re")), Open, Rho, Close,
+                    Minus, Operatorname, Grp(F.Id("criticalAbscissa")), Close,
+                    Caret, Grp(D(2))))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Unfolding the mirror-antisymmetric address and the real-part length gives twice the square " +
@@ -92,7 +104,12 @@ internal sealed class LedgerDeficitSecondVariationDocument : IScribeDocumentDefi
                 DescribeId.Create("zero-addressed-variation-mirror"),
                 DeclarationHandle.Create("D5/S3/Weil/LedgerDeficitSecondVariation.zero_addressed_variation_mirror"),
                 H("Mirror compatibility of addressed variation"),
-                StatementSource.WithoutFormula(),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Forall, Sp, Rho, InMacro, Mathbb, Grp(F.Id("C")), Comma, Sp,
+                    Operatorname, Grp(F.Id("ledgerDeficitSecondVariation")), Open, Operatorname, Grp(F.Id("zeroAddressedScaling")), Open,
+                    Operatorname, Grp(F.Id("mirror")), Open, Rho, Close, Close, Close,
+                    Eq,
+                    Operatorname, Grp(F.Id("ledgerDeficitSecondVariation")), Open, Operatorname, Grp(F.Id("zeroAddressedScaling")), Open, Rho, Close, Close))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The mirror reverses both the scaling entry and the antisymmetric address. Their product is " +
@@ -125,7 +142,13 @@ internal sealed class LedgerDeficitSecondVariationDocument : IScribeDocumentDefi
                 DescribeId.Create("mirror-pair-deficit-measure-invariant"),
                 DeclarationHandle.Create("D5/S3/Weil/LedgerDeficitSecondVariation.mirror_pair_deficit_measure_invariant"),
                 H("Mirror-pair measure compatibility"),
-                StatementSource.WithoutFormula(),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Forall, Sp, Rho, InMacro, Mathbb, Grp(F.Id("C")), Comma, Sp,
+                    F.Id("w"), InMacro, Mathbb, Grp(F.Id("R")), Comma, Sp,
+                    Operatorname, Grp(F.Id("mirrorPairDeficitMeasure")), Open,
+                    Operatorname, Grp(F.Id("mirror")), Open, Rho, Close, Comma, F.Id("w"), Close,
+                    Eq,
+                    Operatorname, Grp(F.Id("mirrorPairDeficitMeasure")), Open, Rho, Comma, F.Id("w"), Close))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The two-point measure obtained by adding the two Dirac atoms is invariant under swapping the " +
@@ -137,7 +160,9 @@ internal sealed class LedgerDeficitSecondVariationDocument : IScribeDocumentDefi
                 DeclarationHandle.Create(
                     "D5/S3/Weil/LedgerDeficitSecondVariation.ledger_deficit_second_variation_nonneg"),
                 H("The selected variation is nonnegative"),
-                StatementSource.WithoutFormula(),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Forall, Sp, F.Id("d"), InMacro, Mathbb, Grp(F.Id("R")), Comma, Sp,
+                    D(0), Leq, Operatorname, Grp(F.Id("ledgerDeficitSecondVariation")), Open, F.Id("d"), Close))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The defining Hessian identity is a nonnegative square, so every ledger displacement has " +
@@ -148,7 +173,9 @@ internal sealed class LedgerDeficitSecondVariationDocument : IScribeDocumentDefi
                 DeclarationHandle.Create(
                     "D5/S3/Weil/LedgerDeficitSecondVariation.ledger_deficit_second_variation_neg"),
                 H("The selected variation is even under reversal"),
-                StatementSource.WithoutFormula(),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Forall, Sp, F.Id("d"), InMacro, Mathbb, Grp(F.Id("R")), Comma, Sp,
+                    Operatorname, Grp(F.Id("ledgerDeficitSecondVariation")), Open, Minus, F.Id("d"), Close, Eq, Operatorname, Grp(F.Id("ledgerDeficitSecondVariation")), Open, F.Id("d"), Close))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Reversing the signed ledger displacement leaves the squared second-order energy unchanged."))),
@@ -157,7 +184,20 @@ internal sealed class LedgerDeficitSecondVariationDocument : IScribeDocumentDefi
                 DescribeId.Create("mirror-pair-zero-readout-compatibility"),
                 DeclarationHandle.Create("D5/S3/Weil/LedgerDeficitSecondVariation.mirror_pair_zero_readout_compatibility"),
                 H("Signed cancellation and even energy"),
-                StatementSource.WithoutFormula(),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Forall, Sp, Ell, Comma, Sp, Rho, Comma, Sp, F.Id("a"), Comma, Sp,
+                    Operatorname, Grp(F.Id("ledgerDeficitSecondVariation")), Open,
+                    Operatorname, Grp(F.Id("scalingLedger")), Open, Ell, Comma,
+                    Operatorname, Grp(F.Id("mirror")), Open, Rho, Close, Comma, F.Id("a"), Close, Close,
+                    Eq,
+                    Operatorname, Grp(F.Id("ledgerDeficitSecondVariation")), Open,
+                    Operatorname, Grp(F.Id("scalingLedger")), Open, Ell, Comma, Rho, Comma, F.Id("a"), Close, Close,
+                    Sp, Land, Sp,
+                    Operatorname, Grp(F.Id("scalingLedger")), Open, Ell, Comma, Rho, Comma, F.Id("a"), Close,
+                    Plus,
+                    Operatorname, Grp(F.Id("scalingLedger")), Open, Ell, Comma,
+                    Operatorname, Grp(F.Id("mirror")), Open, Rho, Close, Comma, F.Id("a"), Close,
+                    Eq, D(0)))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For every additive ledger and every common address, the mirror entries sum to zero while their " +

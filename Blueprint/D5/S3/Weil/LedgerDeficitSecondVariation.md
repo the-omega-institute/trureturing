@@ -30,7 +30,7 @@ The selected candidate is ((N - 1)^2)''(0) for N(u) = exp(-u), evaluated along t
 
 **Theorem 1.3 (The defining Hessian identity).**
 
-Lean statement: `D5/S3/Weil/LedgerDeficitSecondVariation.ledger_deficit_second_variation_eq`
+$$\forall d\in\mathbb{R}, \operatorname{ledgerDeficitSecondVariation}(d)=2d^{2}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/LedgerDeficitSecondVariation.ledger_deficit_second_variation_eq` (`✓ std3`). ∎
 
@@ -78,7 +78,7 @@ The zero address is fed to the existing scalingLedger with the additive real-par
 
 **Theorem 1.7 (Zero-addressed scaling is a squared displacement).**
 
-Lean statement: `D5/S3/Weil/LedgerDeficitSecondVariation.zero_addressed_scaling_eq`
+$$\forall \rho\in\mathbb{C}, \operatorname{zeroAddressedScaling}(\rho)=2(\operatorname{Re}(\rho)-\operatorname{criticalAbscissa})^{2}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/LedgerDeficitSecondVariation.zero_addressed_scaling_eq` (`✓ std3`). ∎
 
@@ -90,7 +90,7 @@ Unfolding the mirror-antisymmetric address and the real-part length gives twice 
 
 **Theorem 1.8 (Mirror compatibility of addressed variation).**
 
-Lean statement: `D5/S3/Weil/LedgerDeficitSecondVariation.zero_addressed_variation_mirror`
+$$\forall \rho\in\mathbb{C}, \operatorname{ledgerDeficitSecondVariation}(\operatorname{zeroAddressedScaling}(\operatorname{mirror}(\rho)))=\operatorname{ledgerDeficitSecondVariation}(\operatorname{zeroAddressedScaling}(\rho))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/LedgerDeficitSecondVariation.zero_addressed_variation_mirror` (`✓ std3`). ∎
 
@@ -126,7 +126,7 @@ A mirror pair is embedded by adding the two weighted Dirac atoms, one at each sp
 
 **Theorem 1.11 (Mirror-pair measure compatibility).**
 
-Lean statement: `D5/S3/Weil/LedgerDeficitSecondVariation.mirror_pair_deficit_measure_invariant`
+$$\forall \rho\in\mathbb{C}, w\in\mathbb{R}, \operatorname{mirrorPairDeficitMeasure}(\operatorname{mirror}(\rho),w)=\operatorname{mirrorPairDeficitMeasure}(\rho,w)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/LedgerDeficitSecondVariation.mirror_pair_deficit_measure_invariant` (`✓ std3`). ∎
 
@@ -138,7 +138,7 @@ The two-point measure obtained by adding the two Dirac atoms is invariant under 
 
 **Theorem 1.12 (The selected variation is nonnegative).**
 
-Lean statement: `D5/S3/Weil/LedgerDeficitSecondVariation.ledger_deficit_second_variation_nonneg`
+$$\forall d\in\mathbb{R}, 0\leq\operatorname{ledgerDeficitSecondVariation}(d)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/LedgerDeficitSecondVariation.ledger_deficit_second_variation_nonneg` (`✓ std3`). ∎
 
@@ -150,7 +150,7 @@ The defining Hessian identity is a nonnegative square, so every ledger displacem
 
 **Theorem 1.13 (The selected variation is even under reversal).**
 
-Lean statement: `D5/S3/Weil/LedgerDeficitSecondVariation.ledger_deficit_second_variation_neg`
+$$\forall d\in\mathbb{R}, \operatorname{ledgerDeficitSecondVariation}(-d)=\operatorname{ledgerDeficitSecondVariation}(d)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/LedgerDeficitSecondVariation.ledger_deficit_second_variation_neg` (`✓ std3`). ∎
 
@@ -162,7 +162,7 @@ Reversing the signed ledger displacement leaves the squared second-order energy 
 
 **Theorem 1.14 (Signed cancellation and even energy).**
 
-Lean statement: `D5/S3/Weil/LedgerDeficitSecondVariation.mirror_pair_zero_readout_compatibility`
+$$\forall \ell, \rho, a, \operatorname{ledgerDeficitSecondVariation}(\operatorname{scalingLedger}(\ell,\operatorname{mirror}(\rho),a))=\operatorname{ledgerDeficitSecondVariation}(\operatorname{scalingLedger}(\ell,\rho,a)) \land \operatorname{scalingLedger}(\ell,\rho,a)+\operatorname{scalingLedger}(\ell,\operatorname{mirror}(\rho),a)=0$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/LedgerDeficitSecondVariation.mirror_pair_zero_readout_compatibility` (`✓ std3`). ∎
 
