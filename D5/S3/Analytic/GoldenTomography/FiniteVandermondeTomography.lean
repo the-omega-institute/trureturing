@@ -3,13 +3,15 @@
    mirror-B: D5/B/S3/Analytic/GoldenTomography/FiniteVandermondeTomography
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Pairwise distinct finite phase nodes make the first matching number of moments a faithful readout. -/
+   digest: Distinct finite phase nodes make a matching finite moment window
+     faithful. -/
 
 import Mathlib
 
 /-!
-This owner closes exact finite tomography. It says nothing about numerical
-conditioning or an infinite family of nodes.
+This owner closes exact finite tomography. It reuses Mathlib's Vandermonde
+determinant and determinant-kernel API. It does not claim numerical stability
+or an infinite-family reconstruction theorem.
 -/
 
 set_option autoImplicit false
@@ -46,22 +48,24 @@ theorem vandermonde_det_ne_zero_of_injective
   obtain ⟨i, j, hij, hne⟩ := hZero
   exact hne (hNodes hij)
 
-/-- Pairwise distinct nodes make the Vandermonde matrix nonsingular. -/
-theorem vandermonde_nonsingular_of_injective
-    {n : ℕ} {nodes : Fin n → K} (hNodes : Function.Injective nodes) :
-    (Matrix.vandermonde nodes).Nonsingular := by
-  exact Matrix.nonsingular_iff_det_ne_zero.mpr
-    (vandermonde_det_ne_zero_of_injective hNodes)
-
-/-- The finite moment map is injective whenever its nodes are pairwise distinct. -/
+/-- The finite moment map is injective whenever its nodes are pairwise
+ distinct. -/
 theorem finite_moment_readout_injective
     {n : ℕ} {nodes : Fin n → K} (hNodes : Function.Injective nodes) :
     Function.Injective (finiteMomentReadout nodes) := by
-  unfold finiteMomentReadout
-  exact Matrix.vecMul_injective_iff.mpr
-    (vandermonde_nonsingular_of_injective hNodes).linearIndependent_row
+  intro left right hMoments
+  have hDet : Matrix.det (Matrix.vandermonde nodes) ≠ 0 :=
+    vandermonde_det_ne_zero_of_injective hNodes
+  have hDifference :
+      (left - right) ᵥ* Matrix.vandermonde nodes = 0 := by
+    rw [Matrix.sub_vecMul]
+    exact sub_eq_zero.mpr hMoments
+  have hZero : left - right = 0 :=
+    Matrix.eq_zero_of_vecMul_eq_zero hDet hDifference
+  exact sub_eq_zero.mp hZero
 
-/-- Equality of the first `n` moments is equivalent to equality of the hidden amplitudes. -/
+/-- Equality of the first `n` moments is equivalent to equality of the hidden
+ amplitudes. -/
 theorem finite_moments_eq_iff
     {n : ℕ} {nodes : Fin n → K} (hNodes : Function.Injective nodes)
     {left right : Fin n → K} :
@@ -71,7 +75,6 @@ theorem finite_moments_eq_iff
 
 #print axioms finite_moment_readout_apply
 #print axioms vandermonde_det_ne_zero_of_injective
-#print axioms vandermonde_nonsingular_of_injective
 #print axioms finite_moment_readout_injective
 #print axioms finite_moments_eq_iff
 
