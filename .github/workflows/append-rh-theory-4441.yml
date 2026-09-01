@@ -1,0 +1,61 @@
+name: append-rh-theory-4441
+
+on:
+  push:
+    branches:
+      - tmp/export-rh-theory-4441
+
+permissions:
+  contents: write
+
+jobs:
+  append:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout append payload
+        uses: actions/checkout@v4
+        with:
+          ref: tmp/export-rh-theory-4441
+          path: exporter
+
+      - name: Checkout candidate branch
+        uses: actions/checkout@v4
+        with:
+          ref: lane/math/golden-second-magnus-sampling
+          path: target
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Append exact theory payload
+        working-directory: target
+        run: |
+          set -euo pipefail
+          theory='docs/develop/theory/RH_RESEARCH_LANE_THEORY.md'
+          base_blob='e150b4982344d7d26c83a7b854d195a8a1ef8a4c'
+          final_blob='40ef79b7fca3abf6641930965ad0cd3aa2583602'
+
+          if grep -Fq '## [PR #4441] GOLDEN_SECOND_MAGNUS_SAMPLING' "$theory"; then
+            test "$(git hash-object "$theory")" = "$final_blob"
+            exit 0
+          fi
+
+          test "$(git hash-object "$theory")" = "$base_blob"
+          cp "$theory" /tmp/rh-theory-base.md
+          base64 --decode ../exporter/tmp/rh-theory-append-4441.b64 >> "$theory"
+
+          python - <<'PY'
+          from pathlib import Path
+          base = Path('/tmp/rh-theory-base.md').read_bytes()
+          final = Path('docs/develop/theory/RH_RESEARCH_LANE_THEORY.md').read_bytes()
+          if not final.startswith(base):
+              raise SystemExit('theory update is not append-only')
+          if len(final) <= len(base):
+              raise SystemExit('theory append is empty')
+          PY
+
+          test "$(git hash-object "$theory")" = "$final_blob"
+          git config user.name 'AlyciaBHZ'
+          git config user.email '50111876+AlyciaBHZ@users.noreply.github.com'
+          git add "$theory"
+          git commit -m 'docs: append golden second-Magnus shell theory'
+          git push origin HEAD:refs/heads/lane/math/golden-second-magnus-sampling
