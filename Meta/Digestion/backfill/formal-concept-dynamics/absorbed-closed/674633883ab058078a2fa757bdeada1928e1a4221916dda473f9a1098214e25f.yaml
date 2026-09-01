@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:674633883ab058078a2fa757bdeada1928e1a4221916dda473f9a1098214e25f
+  normalized_sha256: sha256:674633883ab058078a2fa757bdeada1928e1a4221916dda473f9a1098214e25f
+cas_ref: sha256:674633883ab058078a2fa757bdeada1928e1a4221916dda473f9a1098214e25f
+coverage_gids:
+  - D5/S3/ConceptDynamics/Decision/BayesianBestResponseFixedPoint.bayesian_nash_equilibrium_iff_fixed_point
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Decision/BayesianBestResponseFixedPoint.bayesian_nash_equilibrium_iff_fixed_point
+      source_sha256: sha256:674633883ab058078a2fa757bdeada1928e1a4221916dda473f9a1098214e25f
+      target_statement_id: sha256:9303a5dede95042c06e172f8dd6ca00e12b74b6ec8de61a50d99561da715717b
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Decision/BayesianBestResponseFixedPoint.bayesian_nash_equilibrium_iff_fixed_point
+      definition_sha256: sha256:b5141fbe61ad7e3397867d00b5a01e959f9f87499179fac9596e6097c89c2041
+      emission_sha256: sha256:fbe610fa6e77b80acd22b8987104d2df9995321de2b3fb8b345a83f9a1cd618d
+  unresolved_subitems: []
