@@ -11,7 +11,7 @@ internal sealed class PairCalibratedSecondMagnusObservabilityDocument
         "D5/S3/Observer/AgencyHolonomy/PairCalibratedSecondMagnusObservability.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Pair-adapted half-turn samples recover finite holonomy energy exactly.",
+        "Pair-adapted samples recover four times the finite holonomy energy.",
         H("Pair-Calibrated Second-Magnus Observability"),
         Blocks(Describe.Lean(
             DescribeId.Create("pair-calibrated-second-magnus-energy-equals-four-holonomy"),
@@ -54,9 +54,9 @@ internal sealed class PairCalibratedSecondMagnusObservabilityDocument
         Formula premises = Seq(
             Open, injective, Sp, Land, Sp, diagonalZero, Close);
         Formula calibratedEnergy = Call(
-            FormulaIdentifier.Create("E_cal"), frequency, curvature);
+            FormulaIdentifier.Create("Ecal"), frequency, curvature);
         Formula holonomyEnergy = Call(
-            FormulaIdentifier.Create("E_hol"), curvature);
+            FormulaIdentifier.Create("Ehol"), curvature);
         Formula conclusion = new Formula.Relation(
             calibratedEnergy,
             FormulaRelationOperator.Equal,

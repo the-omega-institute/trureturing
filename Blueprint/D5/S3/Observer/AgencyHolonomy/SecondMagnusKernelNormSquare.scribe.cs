@@ -11,7 +11,7 @@ internal sealed class SecondMagnusKernelNormSquareDocument
         "D5/S3/Observer/AgencyHolonomy/SecondMagnusKernelNormSquare.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The alternating Fourier slot kernel has an exact squared sine response.",
+        "Identify the exact squared strength of the alternating Fourier slot kernel.",
         H("Exact Second-Magnus Kernel Strength"),
         Blocks(Describe.Lean(
             DescribeId.Create("second-magnus-swap-kernel-norm-square"),
@@ -44,10 +44,10 @@ internal sealed class SecondMagnusKernelNormSquareDocument
 
     private static Formula NormSquareFormula()
     {
-        Formula frequencyP = F.Id("f_p");
-        Formula frequencyQ = F.Id("f_q");
-        Formula time1 = F.Id("t_1");
-        Formula time2 = F.Id("t_2");
+        Formula frequencyP = F.Id("fp");
+        Formula frequencyQ = F.Id("fq");
+        Formula time1 = F.Id("t1");
+        Formula time2 = F.Id("t2");
         Formula real = Seq(Mathbb, Grp(F.Id("R")));
         FormulaIdentifier kernel = FormulaIdentifier.Create("K");
         FormulaIdentifier sine = FormulaIdentifier.Create("sin");
@@ -67,10 +67,10 @@ internal sealed class SecondMagnusKernelNormSquareDocument
         return Disp(new Formula.BindMany(
             FormulaQuantifier.ForAll,
             [
-                Bound(FormulaIdentifier.Create("f_p"), real),
-                Bound(FormulaIdentifier.Create("f_q"), real),
-                Bound(FormulaIdentifier.Create("t_1"), real),
-                Bound(FormulaIdentifier.Create("t_2"), real),
+                Bound(FormulaIdentifier.Create("fp"), real),
+                Bound(FormulaIdentifier.Create("fq"), real),
+                Bound(FormulaIdentifier.Create("t1"), real),
+                Bound(FormulaIdentifier.Create("t2"), real),
             ],
             conclusion));
     }

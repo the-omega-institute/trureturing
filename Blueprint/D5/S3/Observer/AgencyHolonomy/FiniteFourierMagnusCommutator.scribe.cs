@@ -11,7 +11,7 @@ internal sealed class FiniteFourierMagnusCommutatorDocument
         "D5/S3/Observer/AgencyHolonomy/FiniteFourierMagnusCommutator.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Finite Fourier-valued algebra generators expose the frozen slot kernel as their exact commutator coefficient.",
+        "Expand a finite Fourier generator commutator with the frozen slot kernel.",
         H("Finite Fourier Magnus Commutator"),
         Blocks(Describe.Lean(
             DescribeId.Create("finite-fourier-algebra-generator-commutator-expansion"),
@@ -45,11 +45,11 @@ internal sealed class FiniteFourierMagnusCommutatorDocument
     {
         Formula generator = F.Id("G");
         Formula frequency = F.Id("omega");
-        Formula time1 = F.Id("t_1");
-        Formula time2 = F.Id("t_2");
+        Formula time1 = F.Id("t1");
+        Formula time2 = F.Id("t2");
         Formula p = F.Id("p");
         Formula q = F.Id("q");
-        FormulaIdentifier synthesis = FormulaIdentifier.Create("H_G");
+        FormulaIdentifier synthesis = FormulaIdentifier.Create("HG");
         FormulaIdentifier commutator = FormulaIdentifier.Create("comm");
         FormulaIdentifier kernel = FormulaIdentifier.Create("K");
         Formula frequencyP = Apply(frequency, p);

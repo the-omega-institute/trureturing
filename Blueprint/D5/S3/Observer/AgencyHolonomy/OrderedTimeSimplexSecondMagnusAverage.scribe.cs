@@ -11,7 +11,7 @@ internal sealed class OrderedTimeSimplexSecondMagnusAverageDocument
         "D5/S3/Observer/AgencyHolonomy/OrderedTimeSimplexSecondMagnusAverage.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The triangularly weighted ordered-time response has a closed finite-horizon formula.",
+        "Evaluate the ordered-simplex average of the second-Magnus kernel exactly.",
         H("Ordered-Time Simplex Second-Magnus Average"),
         Blocks(Describe.Lean(
             DescribeId.Create("ordered-time-simplex-kernel-average-formula"),
