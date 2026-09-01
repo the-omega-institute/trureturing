@@ -1,0 +1,39 @@
+\[
+\Delta_T
+=
+\{(t_1,t_2):0<t_2<t_1<T\}
+\]
+
+是有序时间单纯形，\(K_{p,q}\) 是下一节登记的 Fourier slot-swap kernel。
+
+真正连接 RH 仍需证明：
+
+\[
+\boxed{
+\mathcal E^{\mathrm{odd}}_{\mathrm{off}}(L,N,T)
+\le
+A_{L,N,T}
+\mathcal V_{r,P,T}^{\mathrm{time}}
++
+R_{r,L,N,T},
+}
+\]
+
+且：
+
+\[
+R_{r,L,N,T}\to0.
+\]
+
+若 extraction tower 再给出：
+
+\[
+\mathcal V_{r,P,T}^{\mathrm{time}}\to0,
+\]
+
+则离线 odd energy 必须消失。通过已冻结的内部曲率判据，才可进入 RH。
+
+当前节点本身没有建立这个支配。
+
+---
+

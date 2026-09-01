@@ -1,0 +1,39 @@
+\[
+\frac{d^n}{dt^n}g_-(t)
+=
+(-\delta)^n g_-(t).
+\]
+
+特别地：
+
+\[
+g_+''(t)=\delta^2g_+(t),
+\qquad
+g_-''(t)=\delta^2g_-(t).
+\]
+
+定义负二阶观察器：
+
+\[
+\mathcal L=-\frac{d^2}{dt^2}.
+\]
+
+于是：
+
+\[
+\boxed{
+\mathcal Lg_+(t)=-\delta^2g_+(t),
+\qquad
+\mathcal Lg_-(t)=-\delta^2g_-(t).
+}
+\]
+
+结合上一真源：
+
+\[
+\operatorname{reflectionPairSignedDeterminant}(\delta)
+=-\delta^2,
+\]
+
+得到精确 observer agreement：
+
