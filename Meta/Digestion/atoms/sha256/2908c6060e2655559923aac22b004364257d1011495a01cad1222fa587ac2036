@@ -1,0 +1,1 @@
+**义务**:复用冻结 `criticalDampingDefect`,定义指纹 $F(\mathrm{realPart},\mathrm{scale}):\mathrm{Fin}\,n\to\mathbb R$,$F_k=\mathrm{criticalDampingDefect}(\mathrm{realPart},\mathrm{scale}_k)$。单一公开定理:对任意有限载体与追加尺度 $\tau'$(`Fin.snoc scale τ'`),(i) 旧指纹是新指纹在 `Fin.castSucc` 上的前缀;(ii) 两个载体(允许不同的有限指标类型)若在 $\tau'$ 处 defect 不等,则扩展后指纹不等。不证明「总存在分离尺度」。
