@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:f43dd2195ee0b016f64aee8591c576599884881b727e7e7c36d92d01220c24ba
+  normalized_sha256: sha256:f43dd2195ee0b016f64aee8591c576599884881b727e7e7c36d92d01220c24ba
+cas_ref: sha256:f43dd2195ee0b016f64aee8591c576599884881b727e7e7c36d92d01220c24ba
+coverage_gids:
+  - D5/S3/ConceptDynamics/ExperimentDesign/ThreeStateAdaptiveEarlyStopping.three_state_adaptive_early_stopping_strict_advantage
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/ExperimentDesign/ThreeStateAdaptiveEarlyStopping.three_state_adaptive_early_stopping_strict_advantage
+      source_sha256: sha256:f43dd2195ee0b016f64aee8591c576599884881b727e7e7c36d92d01220c24ba
+      target_statement_id: sha256:17f205644c05ad353fc55165904e8360e1a5586e97ac9de68136b660e7bba779
+  scribe:
+    - gid: D5/S3/ConceptDynamics/ExperimentDesign/ThreeStateAdaptiveEarlyStopping.three_state_adaptive_early_stopping_strict_advantage
+      definition_sha256: sha256:2efbdd773b59584568d62ad2a596eae586096250deea866e398c57747cb452d4
+      emission_sha256: sha256:377021d33a2966c3843d275b6e616b0069c40d85543b0cb091eeff87246ab5b3
+  unresolved_subitems: []
