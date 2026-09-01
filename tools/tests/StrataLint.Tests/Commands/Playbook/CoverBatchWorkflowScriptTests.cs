@@ -127,7 +127,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
             TestProcessRunner.Run(
                 "/usr/bin/env",
                 [
-                    .. IsolatedGitEnvironment(),
                     $"PATH={binPath}{Path.PathSeparator}{Environment.GetEnvironmentVariable("PATH")}",
                     $"PLAYBOOK_TEST_CALLS={callsPath}",
                     "PLAYBOOK_STALE_REPORT=0",

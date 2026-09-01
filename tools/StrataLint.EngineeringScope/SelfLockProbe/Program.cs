@@ -6,31 +6,6 @@ internal static class SelfLockProbeProgram
 {
     internal static int Run(string[] arguments)
     {
-        if (arguments.FirstOrDefault() == "extract-blockers")
-        {
-            return TargetedProbeRunner.ExtractBlockers(arguments.Skip(1).ToArray());
-        }
-
-        if (arguments.FirstOrDefault() == "select-targets")
-        {
-            return TargetedProbeRunner.SelectTargets(arguments.Skip(1).ToArray());
-        }
-
-        if (arguments.FirstOrDefault() == "bind-red-edge")
-        {
-            return RunEdgeBinder.Bind(arguments.Skip(1).ToArray());
-        }
-
-        if (arguments.FirstOrDefault() == "seal-j0-control")
-        {
-            return J0ControlSeal.Write(arguments.Skip(1).ToArray());
-        }
-
-        if (arguments.FirstOrDefault() == "run-targeted")
-        {
-            return TargetedProbeRunner.RunTargeted(arguments.Skip(1).ToArray());
-        }
-
         if (arguments.FirstOrDefault() == "publish")
         {
             try

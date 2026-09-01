@@ -18,9 +18,6 @@ fi
 command="$1"
 shift
 case "$command" in
-  extract-blockers|select-targets|bind-red-edge|seal-j0-control|run-targeted|artifact-digest)
-    exec dotnet "$assembly" self-lock-probe "$command" "$@"
-    ;;
   evaluator-digest)
     (( $# == 0 )) || { printf '%s\n' 'SELF_LOCK_PROBE_BAD_ARGUMENT' >&2; exit 2; }
     exec dotnet "$assembly" self-lock-probe evaluator-digest --controller-root "$controller_root"
