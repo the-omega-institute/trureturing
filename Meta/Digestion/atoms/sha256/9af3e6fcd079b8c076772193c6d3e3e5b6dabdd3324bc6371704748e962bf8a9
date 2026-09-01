@@ -1,0 +1,1 @@
+**义务**:按 C-5 骨架定义 `ProjectiveJetFingerprint`(order 与 `Fin r → K` 的 tail)与构造子 `projectiveToroidalJet`(首个非零导数归一化后的 $r$ 个投影系数,anchor 阶 $m$ 由 earlierVanish 与 anchorNonzero 两个假设给出)。单一公开定理:对 $c\ne0$,`period` 与 $z\mapsto c\cdot\mathrm{period}(z)$ 在同一点 $s$、同一 anchor 阶 $m$ 上产生相同的指纹(order 与 tail 皆相等);两个假设经具名引理转移到 $c\cdot\mathrm{period}$(消费 `iteratedDeriv_const_mul_field` 与 `mul_ne_zero`)。

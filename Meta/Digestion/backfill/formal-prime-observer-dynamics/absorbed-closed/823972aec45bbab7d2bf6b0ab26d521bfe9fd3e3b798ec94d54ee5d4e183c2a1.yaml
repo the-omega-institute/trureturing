@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:823972aec45bbab7d2bf6b0ab26d521bfe9fd3e3b798ec94d54ee5d4e183c2a1
+  normalized_sha256: sha256:823972aec45bbab7d2bf6b0ab26d521bfe9fd3e3b798ec94d54ee5d4e183c2a1
+cas_ref: sha256:823972aec45bbab7d2bf6b0ab26d521bfe9fd3e3b798ec94d54ee5d4e183c2a1
+coverage_gids:
+  - D5/S3/Observer/HiddenFlow/SupportExternalMechanism.unseen_parent_config_can_change_without_observed_law
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/HiddenFlow/SupportExternalMechanism.unseen_parent_config_can_change_without_observed_law
+      source_sha256: sha256:823972aec45bbab7d2bf6b0ab26d521bfe9fd3e3b798ec94d54ee5d4e183c2a1
+      target_statement_id: sha256:e05b1d419af0c40d7b8e47c8aec0f9c6d4d2e286129cedbcccf0d4f2d892104e
+  scribe:
+    - gid: D5/S3/Observer/HiddenFlow/SupportExternalMechanism.unseen_parent_config_can_change_without_observed_law
+      definition_sha256: sha256:84cc1f70900a5c19dab395c42c4e899846e246fe6e646a78a96a349729df4d69
+      emission_sha256: sha256:5b6827441481140d485e65c3bc2242244c70d0de909ce6d81b06d86ef45cc2c5
+  unresolved_subitems: []

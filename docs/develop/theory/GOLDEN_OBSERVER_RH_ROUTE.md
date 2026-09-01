@@ -1763,3 +1763,37 @@ $$\boxed{\ \beta(v{+}1)-\beta(v)\in\{\varphi,\ \varphi^2\}\ }$$
 三条各一席位轮(codex-cli,独立 worktree,各自 PR);任一席以 `open` 出口即在本卷下一增订登记其阻断面,不复用预算 grind。研究席另行开单(非标量测度值输运 N-M1,草稿不入库),其采纳与否由 owner 裁决。
 
 后续增订继续严格追加于本节之后。
+
+---
+
+# 增订六　第二波预登记:偶极总变差、投影 jet 尺度不变性、黄金环面 index 扩张(W-G、W-E、W-F)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;选题沿用 la91 面板的常设 refill 规则(#4589),不重开面板;两条子句各由一席 codex-cli 探针在钉版工具链整证(标准三公理)后才写入,探针不入库;W-G 的来源是研究席(nyxid GPT PRO)N-M1 草稿中唯一有独立内容的恒等式,桥式解释未采纳(见 #4589 批注)。判决日:2026-09-02。
+
+## 〇　为什么是这两条
+
+增订五的 W-A、W-C 已两阶段落地,W-B 在评审。按常设规则补位:候选须两侧锚定冻结/Mathlib 声明、探针可闭合、有具名消费者、桶未满或裂桶已存在。W-G 把 N-M1 研究草稿里可独立成立的分析事实从桥式叙事中剥出来单独入库;W-E 是 C-5 自然性的入场门,其定义须在 W-B 建立的 `Analytic/Toroidal` 桶内落户。W-F 只闭合 index plumbing,三条探针皆已在钉版工具链整证;W-D1 待 Escape(F) 定义就绪后另立增订。
+
+## 一　W-G 预登记:离线曲率偶极的总变差(`OffLineCurvatureDipoleTotalVariation`)
+
+**义务**:对 $\delta>0$、任意 $\gamma\in\mathbb R$,取 `off_line_curvature_dipole` 第一合取项给出的冻结曲率密度 $\kappa_{\delta,\gamma}(t)=2\,\frac{(t-\gamma)^2-\delta^2}{((t-\gamma)^2+\delta^2)^2}$。单一公开定理证明 $\int_{\mathbb R}|\kappa_{\delta,\gamma}(t)|\,dt=\frac4\delta$。证明须 `import` 并消费冻结定理的可积性、零总质量与符号轮廓(核内负、翼上正、零点 $\gamma\pm\delta$),不得重证这些合取项;原函数 $F(t)=-\frac{2(t-\gamma)}{(t-\gamma)^2+\delta^2}$ 给出核积分 $-2/\delta$,零总质量给出翼积分 $2/\delta$。
+**可证伪预测(写在跑之前)**:若正确,定理以有限区间微积分基本定理(`intervalIntegral.integral_eq_sub_of_hasDerivAt`)、可测补集分拆(`integral_add_compl`)与 `Integrable.abs` 在钉版 Mathlib 闭合,公理集为标准三条;若总变差不等于 $4/\delta$ 或需要额外可积性假设,则 N-M1 草稿的位移次数论证($d^5\cdot$总变差的齐次度 4)失去前提,须撤回该草稿。
+**边界**:只闭合一个关于冻结偶极的 $L^1$ 恒等式;不主张任何曲率→账本亏损的输运或 RH 前件。
+
+## 二　W-E 预登记:投影 jet 指纹的尺度不变性(`ProjectiveJetScaleInvariance`)
+
+**义务**:按 C-5 骨架定义 `ProjectiveJetFingerprint`(order 与 `Fin r → K` 的 tail)与构造子 `projectiveToroidalJet`(首个非零导数归一化后的 $r$ 个投影系数,anchor 阶 $m$ 由 earlierVanish 与 anchorNonzero 两个假设给出)。单一公开定理:对 $c\ne0$,`period` 与 $z\mapsto c\cdot\mathrm{period}(z)$ 在同一点 $s$、同一 anchor 阶 $m$ 上产生相同的指纹(order 与 tail 皆相等);两个假设经具名引理转移到 $c\cdot\mathrm{period}$(消费 `iteratedDeriv_const_mul_field` 与 `mul_ne_zero`)。
+**可证伪预测(写在跑之前)**:若正确,归一化后的 tail 逐分量为 $\frac{c\,f^{(m+k+1)}(s)}{c\,f^{(m)}(s)}$ 约去 $c$,定理以 `iteratedDeriv_const_mul_field` 与 `mul_div_mul_left` 级引理闭合,公理集为标准三条;若在钉版 Mathlib 中该引理需要 `ContDiff` 前提而无法免除,则义务改标 `open` 并记录所需前提。
+**边界**:只闭合 test-vector 非零常数缩放下的不变性;anchor 阶 $m$ 由假设给出,不主张它由 `ToroidalJetDepth` 的深度证书产生(那是另一条义务),不触及 zeta 零点、RH 或 C-1 的 chart 选择。
+
+## 三　W-F 预登记:黄金环面 index 扩张(`GoldenToroidalIndexExtension`)
+
+**义务**:设 twist 族 $\{\mathrm{twist}_i\}_{i\in I}$ 与 period 族满足冻结分解 $\mathrm{period}_i(s)=\xi(s)\,\mathrm{twist}_i(s)$(`xiReading`),且在窗口 $\Omega$ 上逐点非零($\forall s\in\Omega,\ \exists i,\ \mathrm{twist}_i(s)\ne0$)。以 `Sum Index Unit` 加入任意一个黄金候选对 $(\mathrm{goldenPeriod},\mathrm{goldenTwist})$(仅假设其同样按 $\xi$ 分解)。单一公开定理证明:(i) 扩张族在 $\Omega$ 上仍逐点非零;(ii) 扩张族的窗口公共零点集 $\{s\in\Omega\mid\forall j,\ \mathrm{period}'_j(s)=0\}$ 等于原族的窗口公共零点集(两侧皆经冻结 `toroidal_common_zero_locus` 化为 $\xi$ 的零点集);并以具名引理证明:当原族全局逐点非零时,冻结 `rh_iff_all_toroidal_eisenstein_tempered` 右侧的共同零条件在扩张族与原族之间等价(经同一 RH 左侧传递)。证明须 `import` 并消费上述两冻结定理,不重证任何解析内容。
+**可证伪预测(写在跑之前)**:若正确,定理只用 `Sum.elim`、`Sum.inl` 见证与冻结定理的两次实例化闭合,公理集为标准三条,无任何 Mathlib 解析引理;若窗口公共零点集相等需要黄金候选 twist 非零,则本义务的「任意候选」措辞为假,须收窄。
+**边界**:结论中明写——不证明 eulerGerm 是非零 twist、不证明 O-5 分解、不识别 goldenTwist 为 eulerGerm 或 Zqc、不加强 RH;全局等价引理只在原族**全局**逐点非零时成立,窗口版不蕴含它;不 `import` 或调用 `o5_independence`。
+
+## 四　预算与结算
+
+三条各一席位轮(codex-cli,独立 worktree,各自 PR-1 deposit;cover 另开 PR-2,消费已在 base 的收据);任一席以 `open` 出口即在下一增订登记阻断面。W-G 的自然归属为 `Analytic/Adelic`(已满 24/24),落户于其裂桶兄弟 `Analytic/ReflectedSpectrum`(偶极的反射谱语境)或席位按路径策略选定的裂桶;W-E 与 W-F 落户 `Analytic/Toroidal`(W-B 所建)。
+
+后续增订继续严格追加于本节之后。

@@ -1,0 +1,6 @@
+## 一　W-G 预登记:离线曲率偶极的总变差(`OffLineCurvatureDipoleTotalVariation`)
+
+**义务**:对 $\delta>0$、任意 $\gamma\in\mathbb R$,取 `off_line_curvature_dipole` 第一合取项给出的冻结曲率密度 $\kappa_{\delta,\gamma}(t)=2\,\frac{(t-\gamma)^2-\delta^2}{((t-\gamma)^2+\delta^2)^2}$。单一公开定理证明 $\int_{\mathbb R}|\kappa_{\delta,\gamma}(t)|\,dt=\frac4\delta$。证明须 `import` 并消费冻结定理的可积性、零总质量与符号轮廓(核内负、翼上正、零点 $\gamma\pm\delta$),不得重证这些合取项;原函数 $F(t)=-\frac{2(t-\gamma)}{(t-\gamma)^2+\delta^2}$ 给出核积分 $-2/\delta$,零总质量给出翼积分 $2/\delta$。
+**可证伪预测(写在跑之前)**:若正确,定理以有限区间微积分基本定理(`intervalIntegral.integral_eq_sub_of_hasDerivAt`)、可测补集分拆(`integral_add_compl`)与 `Integrable.abs` 在钉版 Mathlib 闭合,公理集为标准三条;若总变差不等于 $4/\delta$ 或需要额外可积性假设,则 N-M1 草稿的位移次数论证($d^5\cdot$总变差的齐次度 4)失去前提,须撤回该草稿。
+**边界**:只闭合一个关于冻结偶极的 $L^1$ 恒等式;不主张任何曲率→账本亏损的输运或 RH 前件。
+

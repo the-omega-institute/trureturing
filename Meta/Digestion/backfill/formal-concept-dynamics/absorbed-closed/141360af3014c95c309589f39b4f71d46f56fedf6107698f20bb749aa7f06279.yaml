@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:141360af3014c95c309589f39b4f71d46f56fedf6107698f20bb749aa7f06279
+  normalized_sha256: sha256:141360af3014c95c309589f39b4f71d46f56fedf6107698f20bb749aa7f06279
+cas_ref: sha256:141360af3014c95c309589f39b4f71d46f56fedf6107698f20bb749aa7f06279
+coverage_gids:
+  - D5/S3/ConceptDynamics/Transportability/EffectiveImageNaturalitySurjectiveLift.effective_image_naturality_and_surjective_lift
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Transportability/EffectiveImageNaturalitySurjectiveLift.effective_image_naturality_and_surjective_lift
+      source_sha256: sha256:141360af3014c95c309589f39b4f71d46f56fedf6107698f20bb749aa7f06279
+      target_statement_id: sha256:002d954b710b465afbdd0a383d61cf33792d1dbe693d01fc8e345ecf43de82ce
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Transportability/EffectiveImageNaturalitySurjectiveLift.effective_image_naturality_and_surjective_lift
+      definition_sha256: sha256:1480bdf1e869b4d1aa4e4d005a3cdbadae38dd47e5c45bfb684705a982d9ff6a
+      emission_sha256: sha256:0442496bcc3bd262569155f25e70c7b953b7a022fc850ce72d0a353f3c870733
+  unresolved_subitems: []
