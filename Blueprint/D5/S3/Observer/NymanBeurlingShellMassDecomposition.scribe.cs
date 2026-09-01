@@ -40,6 +40,9 @@ internal sealed class NymanBeurlingShellMassDecompositionDocument
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. arguments]);
 
+    private static Formula.BoundVariable Bound(string name, Formula domain) =>
+        new(FormulaIdentifier.Create(name), domain);
+
     private static Formula EqualFormula(Formula left, Formula right) =>
         new Formula.Relation(left, FormulaRelationOperator.Equal, right);
 
@@ -52,10 +55,11 @@ internal sealed class NymanBeurlingShellMassDecompositionDocument
     private static Formula TheoremFormula()
     {
         Formula n = F.Id("N");
-        Formula dN = Call("d", n);
-        Formula dNext = Call("d", Seq(n, Plus, D(1)));
+        Formula naturals = Seq(Mathbb, Grp(F.Id("N")));
+        Formula dN = new Formula.Subscript(F.Id("d"), n);
+        Formula dNext = new Formula.Subscript(F.Id("d"), Seq(n, Plus, D(1)));
         Formula shell = Call("shellMass", n);
-        Formula terminal = Call("terminalMass");
+        Formula terminal = new Formula.Subscript(F.Id("m"), F.Id("infinity"));
         Formula recurrence = EqualFormula(
             new Formula.Power(dN, D(2)),
             Seq(new Formula.Power(dNext, D(2)), Plus, shell));
@@ -63,15 +67,23 @@ internal sealed class NymanBeurlingShellMassDecompositionDocument
             new Formula.Power(dN, D(2)),
             Seq(Call("tailShellMass", n), Plus, terminal));
         Formula total = EqualFormula(
-            Seq(Call("totalShellMass"), Plus, terminal),
+            Seq(F.Id("totalShellMass"), Plus, terminal),
             D(1));
         Formula rhTerminal = Iff(F.Id("RH"), EqualFormula(terminal, D(0)));
         Formula rhShells = Iff(
             F.Id("RH"),
-            EqualFormula(Call("totalShellMass"), D(1)));
+            EqualFormula(F.Id("totalShellMass"), D(1)));
+        Formula everyRecurrence = new Formula.BindMany(
+            FormulaQuantifier.ForAll,
+            [Bound("N", naturals)],
+            recurrence);
+        Formula everyTail = new Formula.BindMany(
+            FormulaQuantifier.ForAll,
+            [Bound("N", naturals)],
+            tail);
 
         return Disp(And(
-            Call("forallNat", n, recurrence),
-            And(Call("forallNat", n, tail), And(total, And(rhTerminal, rhShells)))));
+            everyRecurrence,
+            And(everyTail, And(total, And(rhTerminal, rhShells)))));
     }
 }
