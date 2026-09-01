@@ -27,9 +27,7 @@ internal sealed record ScribeTestMethod(
     string SourcePath,
     string Id,
     IReadOnlyList<string> Paths,
-    IReadOnlyList<TestMapUnknownReason> UnknownReasons,
-    bool IsStaticallySkipped = false,
-    bool IsDiscoveryConditional = false)
+    IReadOnlyList<TestMapUnknownReason> UnknownReasons)
 {
     internal IReadOnlyList<ScribeCompileTimeInputUniverse> CompileTimeInputUniverses { get; init; } = [];
 

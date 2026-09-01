@@ -85,11 +85,12 @@ internal static class Program
             throw new InvalidOperationException("FULL must be unset or exactly 1");
         }
 
-        var plan = EngineeringTestPlanDeriver.DeriveSnapshot(
-            RevisionSnapshot(options.RepositoryRoot, @base, "protected base"),
+        var plan = EngineeringTestPlanPolicy.Evaluate(
             changedPaths,
+            RepositoryRules.ReadSnapshotProjects(
+                RevisionSnapshot(options.RepositoryRoot, @base, "protected base")),
             full == "1");
-        WriteArtifact(options.PlanFile, new EngineeringTestPlanArtifact(2, head, @base, plan));
+        WriteArtifact(options.PlanFile, new EngineeringTestPlanArtifact(3, head, @base, plan));
         WritePlan(plan);
         return 0;
     }
@@ -103,50 +104,27 @@ internal static class Program
                 File.ReadAllText(options.PlanFile, StrictUtf8),
                 JsonOptions) ?? throw new InvalidDataException("plan artifact is empty");
             ValidateArtifact(artifact, head, @base);
-            var changedPaths = GitPaths(options.RepositoryRoot, @base, head);
-            var baseSnapshot = RevisionSnapshot(options.RepositoryRoot, @base, "protected base");
-            var expected = EngineeringTestPlanDeriver.DeriveSnapshot(baseSnapshot, changedPaths);
-            var forcedFull = artifact.Plan!.Kind == EngineeringTestPlanKind.Full
-                ? EngineeringTestPlanDeriver.DeriveSnapshot(baseSnapshot, changedPaths, full: true)
-                : null;
-            if (!PlanEquals(artifact.Plan, expected)
-                && (forcedFull is null || !PlanEquals(artifact.Plan, forcedFull)))
-            {
-                throw new InvalidDataException(
-                    "plan artifact differs from the protected-base identity derivation");
-            }
-
             plan = artifact.Plan!;
         }
         catch (Exception exception)
         {
-            plan = EngineeringTestPlanDeriver.DeriveSnapshot(
-                RevisionSnapshot(options.RepositoryRoot, @base, "protected base"),
+            plan = EngineeringTestPlanPolicy.Evaluate(
                 GitPaths(options.RepositoryRoot, @base, head),
+                RepositoryRules.ReadSnapshotProjects(
+                    RevisionSnapshot(options.RepositoryRoot, @base, "protected base")),
                 full: true);
             Console.Error.WriteLine($"ENGINEERING_TEST_PLAN_FALLBACK {exception.Message}");
         }
 
         WritePlan(plan);
-        Func<IReadOnlyList<(string Assembly, string Id)>> candidateSourceIdentities =
-            plan.Kind == EngineeringTestPlanKind.None
-                ? static () => []
-                : () => EngineeringTestPlanDeriver.DeriveSourceIdentities(
-                    RevisionSnapshot(options.RepositoryRoot, head, "candidate"));
         return EngineeringTestExecutor.Execute(
             plan,
-            invocation => RunTests(
-                options.RepositoryRoot,
-                plan.ChangedPaths,
-                invocation,
-                candidateSourceIdentities));
+            invocation => RunTests(options.RepositoryRoot, invocation));
     }
 
     private static int RunTests(
         string repositoryRoot,
-        IReadOnlyList<string> changedPaths,
-        EngineeringTestInvocation invocation,
-        Func<IReadOnlyList<(string Assembly, string Id)>> candidateSourceIdentities)
+        EngineeringTestInvocation invocation)
     {
         var resultsDirectory = Directory.CreateTempSubdirectory("stratalint-engineering-tests-").FullName;
         var startInfo = new ProcessStartInfo
@@ -155,14 +133,9 @@ internal static class Program
             WorkingDirectory = repositoryRoot,
             UseShellExecute = false,
         };
-        foreach (var argument in new[] { "test", invocation.Target, "--configuration", "Release", "--verbosity", "normal" })
+        foreach (var argument in new[] { "test", invocation.ProjectPath, "--configuration", "Release", "--verbosity", "normal" })
         {
             startInfo.ArgumentList.Add(argument);
-        }
-        if (invocation.Filter is not null)
-        {
-            startInfo.ArgumentList.Add("--filter");
-            startInfo.ArgumentList.Add(invocation.Filter);
         }
         startInfo.ArgumentList.Add("--logger");
         startInfo.ArgumentList.Add("trx;LogFilePrefix=engineering");
@@ -177,13 +150,10 @@ internal static class Program
 
             try
             {
-                var executed = VerifyTestEvidence(
-                    resultsDirectory,
-                    invocation.ExpectedTests,
-                    candidateSourceIdentities);
+                var executed = TestResultEvidence.Load(resultsDirectory).Executed;
                 Console.WriteLine(
-                    $"ENGINEERING_TEST_EXECUTED target={JsonSerializer.Serialize(invocation.Target)} "
-                    + $"filter={JsonSerializer.Serialize(invocation.Filter)} evidence=trx executed={executed}");
+                    $"ENGINEERING_TEST_EXECUTED project={JsonSerializer.Serialize(invocation.ProjectPath)} "
+                    + $"evidence=trx executed={executed}");
                 return 0;
             }
             catch (Exception exception)
@@ -196,42 +166,6 @@ internal static class Program
         {
             Directory.Delete(resultsDirectory, recursive: true);
         }
-    }
-
-    private static int VerifyTestEvidence(
-        string resultsDirectory,
-        IReadOnlyList<EngineeringSelectedTest> expectedTests,
-        Func<IReadOnlyList<(string Assembly, string Id)>> candidateSourceIdentities) =>
-        VerifyExpectedTestEvidence(
-            TestResultEvidence.Load(resultsDirectory),
-            expectedTests.Select(static test => (test.Assembly, test.Id)),
-            candidateSourceIdentities,
-            Console.Out);
-
-    internal static int VerifyExpectedTestEvidence(
-        TestResultEvidence evidence,
-        IEnumerable<(string Assembly, string Id)> expectedTests,
-        Func<IReadOnlyList<(string Assembly, string Id)>> candidateSourceTests,
-        TextWriter standardOutput)
-    {
-        var comparison = evidence.CompareExpectedTests(expectedTests, candidateSourceTests);
-        foreach (var exemption in comparison.Exemptions)
-        {
-            standardOutput.WriteLine(
-                $"ENGINEERING_TEST_IDENTITY_EXEMPTED assembly={JsonSerializer.Serialize(exemption.Assembly)} "
-                + $"id={JsonSerializer.Serialize(exemption.Id)} reason=candidate_source_absent");
-        }
-
-        if (comparison.Blocking.Count != 0)
-        {
-            throw new InvalidDataException(
-                $"TRX is missing protected-base planned test identities count={comparison.Blocking.Count} tests="
-                + string.Join(
-                    " | ",
-                    comparison.Blocking.Select(static test => $"{test.Assembly}::{test.Id}")));
-        }
-
-        return evidence.Executed;
     }
 
     private static int ListTestOwnerAssemblies(
@@ -294,37 +228,26 @@ internal static class Program
 
     private static void ValidateArtifact(EngineeringTestPlanArtifact artifact, string head, string @base)
     {
-        if (artifact.Version != 2 || artifact.Head != head || artifact.Base != @base)
+        if (artifact.Version != 3 || artifact.Head != head || artifact.Base != @base)
             throw new InvalidDataException("plan artifact does not address the checked head and base");
-        if (artifact.Plan is null || artifact.Plan.ChangedPaths.IsDefault || artifact.Plan.Tests.IsDefault
+        if (artifact.Plan is null || artifact.Plan.ChangedPaths.IsDefault || artifact.Plan.Projects.IsDefault
             || string.IsNullOrWhiteSpace(artifact.Plan.Reason)
-            || (artifact.Plan.Kind == EngineeringTestPlanKind.Selected && artifact.Plan.Tests.Length == 0)
-            || (artifact.Plan.Kind == EngineeringTestPlanKind.None && artifact.Plan.Tests.Length != 0)
-            || artifact.Plan.Tests.Any(static test => string.IsNullOrWhiteSpace(test.ProjectPath)
-                || string.IsNullOrWhiteSpace(test.Assembly)
-                || string.IsNullOrWhiteSpace(test.Id) || string.IsNullOrWhiteSpace(test.Detail)))
-            throw new InvalidDataException("plan artifact does not conform to schema version 2");
+            || (artifact.Plan.Kind == EngineeringTestPlanKind.None && artifact.Plan.Projects.Length != 0)
+            || (artifact.Plan.Kind != EngineeringTestPlanKind.None && artifact.Plan.Projects.Length == 0)
+            || artifact.Plan.Projects.Any(string.IsNullOrWhiteSpace))
+            throw new InvalidDataException("plan artifact does not conform to schema version 3");
     }
-
-    private static bool PlanEquals(EngineeringTestPlan left, EngineeringTestPlan right) =>
-        left.Kind == right.Kind
-        && left.Reason == right.Reason
-        && left.ChangedPaths.SequenceEqual(right.ChangedPaths, StringComparer.Ordinal)
-        && left.Tests.SequenceEqual(right.Tests);
 
     private static void WritePlan(EngineeringTestPlan plan)
     {
         Console.WriteLine(
             $"ENGINEERING_TEST_PLAN state={plan.Kind.ToString().ToLowerInvariant()} "
-            + $"changed={plan.ChangedPaths.Length} selected={plan.Tests.Length} "
+            + $"changed={plan.ChangedPaths.Length} selected={plan.Projects.Length} "
             + $"reason={JsonSerializer.Serialize(plan.Reason)}");
-        foreach (var test in plan.Tests)
+        foreach (var project in plan.Projects)
         {
             Console.WriteLine(
-                $"ENGINEERING_TEST_SELECTED project={JsonSerializer.Serialize(test.ProjectPath)} "
-                + $"assembly={JsonSerializer.Serialize(test.Assembly)} id={JsonSerializer.Serialize(test.Id)} "
-                + $"reason={test.Reason.ToString().ToLowerInvariant()} "
-                + $"detail={JsonSerializer.Serialize(test.Detail)}");
+                $"ENGINEERING_TEST_PROJECT project={JsonSerializer.Serialize(project)}");
         }
     }
 

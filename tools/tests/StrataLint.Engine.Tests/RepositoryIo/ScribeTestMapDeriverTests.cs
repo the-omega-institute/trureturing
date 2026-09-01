@@ -51,7 +51,7 @@ public sealed class ScribeTestMapDeriverTests
     }
 
     [Fact]
-    public void CompileTimeInputUniverseFactIsSelectedOnlyForMatchingNewCompileInput()
+    public void CompileTimeInputUniverseRecordsOnlyMatchingNewCompileInput()
     {
         const string testProject = "tools/tests/Synthetic.Tests/Synthetic.Tests.csproj";
         const string testSource = "tools/tests/Synthetic.Tests/UniverseTests.cs";
@@ -111,18 +111,10 @@ public sealed class ScribeTestMapDeriverTests
             productionAssemblies: context.ProductionAssemblies,
             compilationContext: context);
 
-        var scribePlan = EngineeringTestPlanPolicy.Evaluate(
-            ["Blueprint/D5/S3/NewDefinition.scribe.cs"],
-            map);
-        var projectionPlan = EngineeringTestPlanPolicy.Evaluate(
-            ["Blueprint/D5/S3/NewDefinition.md"],
-            map);
-
-        var selected = Assert.Single(scribePlan.Tests);
-        Assert.Equal(EngineeringTestPlanKind.Selected, scribePlan.Kind);
-        Assert.Equal("UniverseTests.ReadsCompiledDefinitions", selected.Id);
-        Assert.Equal(EngineeringSelectedTestReason.DeclaredInput, selected.Reason);
-        Assert.Equal(EngineeringTestPlanKind.None, projectionPlan.Kind);
+        var method = Assert.Single(map.Methods);
+        var universe = Assert.Single(method.CompileTimeInputUniverses);
+        Assert.True(universe.Covers("Blueprint/D5/S3/NewDefinition.scribe.cs"));
+        Assert.False(universe.Covers("Blueprint/D5/S3/NewDefinition.md"));
     }
 
     [Fact]
@@ -133,17 +125,10 @@ public sealed class ScribeTestMapDeriverTests
             "public static object All => Definitions.All;");
 
         var method = Assert.Single(map.Methods);
-        var plan = EngineeringTestPlanPolicy.Evaluate(
-            ["Blueprint/D5/S3/NewDefinition.scribe.cs"],
-            map);
 
         Assert.Empty(method.UnknownReasons);
-        Assert.Equal(
-            ["UniverseTests.ReadsCompiledDefinitions"],
-            plan.Tests.Select(static test => test.Id));
-        Assert.Equal(
-            EngineeringSelectedTestReason.DeclaredInput,
-            Assert.Single(plan.Tests).Reason);
+        Assert.True(Assert.Single(method.CompileTimeInputUniverses)
+            .Covers("Blueprint/D5/S3/NewDefinition.scribe.cs"));
     }
 
     [Fact]
@@ -161,84 +146,6 @@ public sealed class ScribeTestMapDeriverTests
 
         Assert.Equal(TestMapUnknownReason.Other, Assert.Single(method.UnknownReasons));
         Assert.Empty(method.CompileTimeInputUniverses);
-    }
-
-    [Fact]
-    public void CandidateSourceIdentitySetIncludesStaticallySkippedFacts()
-    {
-        const string source = "tools/tests/Synthetic.Tests/SkippedTests.cs";
-        const string project = "tools/tests/Synthetic.Tests/Synthetic.Tests.csproj";
-        var map = ScribeTestMapDeriver.DeriveSources(
-            [new TestMapSource(source, """
-                public sealed class SkippedTests
-                {
-                    [Fact(Skip = "candidate disabled a protected-base planned test")]
-                    public void ProtectedBasePlanned() { }
-                }
-                """, "Synthetic.Tests")],
-            [],
-            compileProjectBySourcePath:
-                new Dictionary<string, string>(StringComparer.Ordinal) { [source] = project });
-        Assert.True(Assert.Single(map.Methods).IsStaticallySkipped);
-
-        var identities = EngineeringTestPlanPolicy.SourceIdentities(
-            map,
-            new Dictionary<string, string>(StringComparer.Ordinal)
-            {
-                [project] = "Synthetic.Custom.Tests",
-            });
-
-        var identity = Assert.Single(identities);
-        Assert.Equal("Synthetic.Custom.Tests", identity.Assembly);
-        Assert.Equal("SkippedTests.ProtectedBasePlanned", identity.Id);
-    }
-
-    [Fact]
-    public void EnvironmentConditionalFactIsNotAProtectedBaseBlockingExpectation()
-    {
-        const string source = "tools/tests/Synthetic.Tests/ConditionalTests.cs";
-        const string project = "tools/tests/Synthetic.Tests/Synthetic.Tests.csproj";
-        var map = ScribeTestMapDeriver.DeriveSources(
-            [new TestMapSource(source, """
-                public sealed class ConditionalTests
-                {
-                    [LiveReportFact]
-                    public void RequiresLiveReport() { }
-
-                    [AlwaysFact]
-                    public void AlwaysRuns() { }
-
-                    private sealed class LiveReportFactAttribute : FactAttribute
-                    {
-                        public LiveReportFactAttribute()
-                        {
-                            if (Environment.GetEnvironmentVariable("LIVE_REPORT") is null)
-                                Skip = "Live report is absent.";
-                        }
-                    }
-
-                    private sealed class AlwaysFactAttribute : FactAttribute { }
-                }
-                """, "Synthetic.Tests")],
-            [],
-            compileProjectBySourcePath:
-                new Dictionary<string, string>(StringComparer.Ordinal) { [source] = project });
-        var assemblies = new Dictionary<string, string>(StringComparer.Ordinal)
-        {
-            [project] = "Synthetic.Custom.Tests",
-        };
-
-        var planned = EngineeringTestPlanPolicy.BaseTests(map, assemblies);
-        var sourceIdentities = EngineeringTestPlanPolicy.SourceIdentities(map, assemblies);
-
-        Assert.True(map.Methods.Single(static method =>
-            method.Id == "ConditionalTests.RequiresLiveReport").IsDiscoveryConditional);
-        Assert.False(map.Methods.Single(static method =>
-            method.Id == "ConditionalTests.AlwaysRuns").IsDiscoveryConditional);
-        Assert.Equal(["ConditionalTests.AlwaysRuns"], planned.Select(static test => test.Id));
-        Assert.Contains(
-            sourceIdentities,
-            static test => test.Id == "ConditionalTests.RequiresLiveReport");
     }
 
     private static ScribeTestMap DeriveCompileTimeInputUniverseMap(

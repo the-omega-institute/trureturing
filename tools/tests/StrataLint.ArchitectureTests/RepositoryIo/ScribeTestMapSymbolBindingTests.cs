@@ -383,25 +383,11 @@ public sealed class ScribeTestMapSymbolBindingTests
         var map = ScribeTestMapDeriver.DeriveSnapshot(snapshot);
         var tests = map.Methods.Where(static method =>
             method.Id.StartsWith("MissingMetadataTests.", StringComparison.Ordinal)).ToArray();
-        var plan = EngineeringTestPlanPolicy.Evaluate(
-            ["D5/metadata-unavailable.lean"],
-            map,
-            assemblyByProject: new Dictionary<string, string>(StringComparer.Ordinal)
-            {
-                [projectPath] = "MissingMetadata.Tests",
-            });
 
         Assert.Equal(2, tests.Length);
         Assert.All(tests, static method => Assert.True(method.IsUnknown));
-        Assert.Equal(EngineeringTestPlanKind.Selected, plan.Kind);
-        Assert.Equal(2, plan.Tests.Length);
-        Assert.All(plan.Tests, test =>
-        {
-            Assert.Equal(EngineeringSelectedTestReason.UnknownInput, test.Reason);
-            Assert.Contains(projectPath, test.Detail, StringComparison.Ordinal);
-            Assert.Contains("xUnit compile assets are unavailable", test.Detail, StringComparison.Ordinal);
-        });
-        Assert.Contains(projectPath, plan.Reason, StringComparison.Ordinal);
+        Assert.All(tests, static method =>
+            Assert.Contains(TestMapUnknownReason.MetadataUnavailable, method.UnknownReasons));
 
         var invalidLock = Assert.Throws<InvalidOperationException>(() =>
             ScribeTestMapDeriver.DeriveSnapshot(MetadataSnapshot(

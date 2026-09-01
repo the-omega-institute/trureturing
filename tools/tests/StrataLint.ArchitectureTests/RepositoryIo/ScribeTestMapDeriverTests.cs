@@ -689,8 +689,6 @@ public sealed class ScribeTestMapDeriverTests
 
     /// <summary>
     /// `EnumerateDeclared(root, "<字面量>")` 必须把该前缀登记为 declared input。
-    /// 没有这条,`EngineeringTestPlanDeriver` 就选不中调用它的测试(第二轮评审实测的缺口)。
-    /// **可达性契约只查测试 ID、不查 `Reason`**,故这一侧必须在这里单独钉住。
     /// </summary>
     [Fact]
     public void EnumerateDeclaredLiteralPrefixBecomesADeclaredPath()

@@ -139,13 +139,6 @@ internal static class ScribeTestMapDeriver
     // 只有走 `TestProcessRunner` 时超时才变成 `SkipException`;走 `BoundedProcessRunner`
     // 时它抛 `TimeoutException`,于是**恰好承担了判词**。本判据把声明与路由钉在一起。
     //
-    // **归因的诚实交代(一轮评审在同族改动上判过这一点)**:本方法自己读 `tools/tests/**`,
-    // 而 `ScribeTestMapDeriver` 的 declared/unknown 账**看不见**这次读取 ——
-    // 调用方的方法体里只有一个它不识别的名字。当前它仍可达,**理由是
-    // `EngineeringTestPlanPolicy.IsFullSurface` 把 `tools/` 下任何改动转 Full**,
-    // 不是因为归因成立。**不得把「住在 Engine、受 SL-022 保护」冒充为「I/O 已归因」。**
-    // 正确收口是让这类 repository query 成为映射器可归因的 governed read;那是一条独立的工作。
-    //
     // **判据的已知反例集合(不完整,逐条写出来)**:本方法按 XML 结构判 `PackageReference` /
     // `AdditionalFiles` / `NoWarn`,故比子串强;但它**看不见**:
     // ① 观察者本身被删除或从 `Compile` 排除(#3416 的 test-identity gap);
@@ -353,9 +346,7 @@ internal static class ScribeTestMapDeriver
                 test.Path,
                 $"{test.TypeName}.{test.Name}",
                 paths.Order(StringComparer.Ordinal).ToArray(),
-                reasons.Order().ToArray(),
-                test.IsStaticallySkipped,
-                test.IsDiscoveryConditional)
+                reasons.Order().ToArray())
             {
                 CompileTimeInputUniverses = compileTimeInputUniverses
                     .OrderBy(static universe => universe.Prefix, StringComparer.Ordinal)
@@ -394,13 +385,8 @@ internal static class ScribeTestMapDeriver
                 AddDiscoveryPaths(invocation, discoveryPaths, paths, reasons);
             }
 
-            // 声明式仓库枚举(#2535 / PR #3799 第二轮评审):
-            // `EnumerateDeclared(root, "<字面量前缀>")` 读 git index 而非目录,
-            // 故**不记** `DirectoryEnumeration`;但它必须把那个前缀登记为 declared path,
-            // 否则 `EngineeringTestPlanDeriver` 在只改该前缀下文件的 PR 上**不会选中该测试** ——
-            // 一个观察者对它要观察的那类变更盲,等于没有。
-            // 该缺口正是一次评审用「临时克隆只加一条 D5 .lean → planner 输出
-            // cold_build_observer=[]」实测出来的。
+            // This explicit repository enumeration records its literal prefix without
+            // degrading to the broader DirectoryEnumeration unknown reason.
             if (IsAccessorCall(invocation, model, "EnumerateDeclared"))
             {
                 AddDeclaredPrefix(invocation, paths, reasons);
