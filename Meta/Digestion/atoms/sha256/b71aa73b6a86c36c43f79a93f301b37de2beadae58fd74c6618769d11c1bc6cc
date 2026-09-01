@@ -1,0 +1,69 @@
+## 1589.1 determinant 的精确转换
+
+由：
+
+$$
+U_K=(H_K-iI)(H_K+iI)^{-1},
+$$
+
+有：
+
+$$
+I-xU_K
+=
+(1-x)
+\left(
+H_K+
+i\frac{1+x}{1-x}I
+\right)
+(H_K+iI)^{-1}.
+$$
+
+因此：
+
+$$
+\boxed{
+Z_K(x)
+=
+(1-x)^{K-1}
+\frac{
+\det\!\left(
+H_K+
+i\frac{1+x}{1-x}I
+\right)
+}{
+\det(H_K+iI)
+}.
+}
+\tag{1589.3}
+$$
+
+当：
+
+$$
+|x|=1,\qquad x\neq1,
+$$
+
+Cayley 坐标：
+
+$$
+i\frac{1+x}{1-x}
+$$
+
+为实数。
+
+所以局部单位圆零点条件，正好等价于一个有限自伴 characteristic determinant。
+
+这是一个真正的有限 Hilbert–Pólya 原型，但必须强调：
+
+$$
+\boxed{
+H_K
+\text{ 自伴化的是 local fugacity circle，}
+}
+$$
+
+不是已经构造了 Riemann 零点的全局算子。
+
+---
+

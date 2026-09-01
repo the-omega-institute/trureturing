@@ -1,0 +1,19 @@
+* partition functor 把所有对象都送到：
+
+  $$
+  (1-x)^{-1}.
+  $$
+
+该 functor 不是忠实的。
+
+所以：
+
+$$
+\boxed{
+\text{单凭 }\zeta\text{ 的 Euler 因子，
+不能证明 golden coding 是唯一或本体性的。}
+}
+$$
+
+黄金结构若要成为更深的跨命名迹，必须加入额外条件：
+

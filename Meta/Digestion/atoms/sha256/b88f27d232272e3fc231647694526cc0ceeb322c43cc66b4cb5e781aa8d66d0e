@@ -1,0 +1,29 @@
+## 定理 1539.1（正迹类 determinant 判据）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\exists\,A\ge0,\ A\in\mathcal S_1:
+\frac{\xi(\frac12+z)}{\xi(\frac12)}
+=
+\det(I+z^2A).
+}
+\tag{1539.2}
+$$
+
+这仍然只是等价重写，不是证明：RH 成立时，我们正是用零点构造 \(A\)。
+
+但它澄清了 \(\xi\) 的完成地位：
+
+$$
+\boxed{
+\xi
+\text{ 是一个正逆平方谱算子的标量行列式影像。}
+}
+$$
+
+它不是生成系统本身，因为 determinant 已经忘记了特征向量、历史与观察接口。
+
+---
+

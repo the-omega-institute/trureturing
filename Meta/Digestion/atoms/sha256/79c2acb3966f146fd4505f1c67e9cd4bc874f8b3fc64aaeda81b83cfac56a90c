@@ -1,0 +1,53 @@
+## 1593.2 Cayley 去紧化：保存边界几何
+
+另一种方式是：
+
+$$
+\boxed{
+h
+=
+i\frac{1+u}{1-u}
+=
+-\cot\frac\theta2.
+}
+\tag{1593.2}
+$$
+
+它把：
+
+$$
+S^1\setminus\{1\}
+$$
+
+送到：
+
+$$
+\mathbb R.
+$$
+
+该图表不保留 winding integer，却保留：
+
+* Möbius 几何；
+* 上／下半平面；
+* Poisson 核；
+* Cauchy harmonic measure。
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+\text{universal-cover 图表}
+&=\text{历史／Solenoid 图表};\\
+\text{Cayley 图表}
+&=\text{边界／Poisson 图表}.
+\end{aligned}
+}
+$$
+
+这解释了此前 Solenoid、黑洞边界与 Poisson 光影为何反复靠近，却不能简单认同。
+
+它们来自同一个 compact phase 的不同去紧化。
+
+---
+

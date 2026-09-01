@@ -1,0 +1,66 @@
+# 第一千六百八十七部　正向 Haar 化与逆向离散采样是对偶的
+
+集体自‑Haar 使用的是权重：
+
+$$
+\boxed{
+\frac{\theta_B'(x)}{2\pi m}\,dx.
+}
+\tag{1687.1}
+$$
+
+它把边界原像向前推送为 Haar：
+
+$$
+B_*\nu_B=m_{S^1}.
+$$
+
+但从 phase output 反向恢复全部原像时，出现的权重恰好相反：
+
+$$
+\boxed{
+\frac{2\pi}{\theta_B'(x_j^\alpha)}.
+}
+\tag{1687.2}
+$$
+
+更一般地，对合适的函数 \(f\)：
+
+$$
+\boxed{
+\int_{\widehat{\mathbb R}}
+f(x)\,dx
+=
+\int_{S^1}
+\left[
+\sum_{x\in B^{-1}(\zeta)}
+\frac{
+2\pi f(x)
+}{
+\theta_B'(x)
+}
+\right]
+dm_{S^1}(\zeta).
+}
+\tag{1687.3}
+$$
+
+这只是圆周覆盖的 coarea 公式。
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+\text{向前完成}
+&:\quad\theta_B'\text{ 加权并遗忘页};\\
+\text{逆向重建}
+&:\quad(\theta_B')^{-1}\text{ 加权并枚举全部页}.
+\end{aligned}
+}
+$$
+
+这构成一个精确的“辐射—内部重建”对偶。
+
+---
+

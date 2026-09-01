@@ -1,0 +1,57 @@
+# 第一千六百九十四部　非 RH 必产生有限 phase-fibre 采样系统
+
+固定有限高度窗口和 shifted 深度 \(q\)。
+
+若其中存在离线零点，则：
+
+$$
+m=\deg B_{q,T}>0.
+$$
+
+于是对任意正则相位 \(\alpha\)，都存在：
+
+1. \(m\) 个实边界采样点：
+
+   $$
+   x_1^\alpha,\ldots,x_m^\alpha;
+   $$
+2. 严格正权重：
+
+   $$
+   w_j^\alpha
+   =
+   \frac{2\pi}{
+   \theta_{B_{q,T}}'(x_j^\alpha)
+   };
+   $$
+3. 一个 \(m\) 维 Hilbert 空间；
+4. 一个精确采样恒等式；
+5. 一个有限秩 Cayley moment recurrence。
+
+因此：
+
+$$
+\boxed{
+\neg\mathrm{RH}
+}
+$$
+
+不仅意味着“某处有一个看不见的复零点”。
+
+它意味着：
+
+$$
+\boxed{
+\text{某个有限 shifted 窗口中，
+必然存在一套完整的有限正边界采样系统。}
+}
+$$
+
+异常并不是该采样系统不正。
+
+该采样系统本身完全正。
+
+异常在于：它作为 hidden inner space 存在，而 canonical arithmetic boundary state 本应是 outer/cyclic。
+
+---
+

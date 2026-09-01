@@ -1,0 +1,79 @@
+## 1544.1 黄金方向保持步长
+
+取：
+
+$$
+b=\varphi^2a.
+$$
+
+则：
+
+$$
+\begin{aligned}
+q(a,\varphi^2a)
+&=
+\frac{\varphi^2-1}{\varphi^2+1}\\
+&=
+\frac{\varphi}{\varphi+2}\\
+&=
+\frac1{\sqrt5}.
+\end{aligned}
+$$
+
+因此：
+
+$$
+\boxed{
+q_\varphi=\frac1{\sqrt5}.
+}
+\tag{1544.3}
+$$
+
+若使用至 \(M\) 阶 Cayley moments，几何尾因子成为：
+
+$$
+\boxed{
+q_\varphi^{M+1}
+=
+5^{-(M+1)/2}.
+}
+\tag{1544.4}
+$$
+
+仓库误差定理的黄金特化可写成：
+
+$$
+\boxed{
+\mathrm{Err}_M
+\le
+\frac{2}{\varphi^2}
+\mathcal S(a)
+\frac{5^{-(M+1)/2}}
+{1-5^{-1/2}},
+}
+\tag{1544.5}
+$$
+
+其中：
+
+$$
+\mathcal S(a)
+=
+\int_{\mathbb R}
+\frac{d\nu(\xi)}{\xi^2+a^2}.
+$$
+
+这给出一条严格桥梁：
+
+$$
+\boxed{
+\varphi^2\text{ 的黄金双步尺度}
+\quad\longmapsto\quad
+\frac1{\sqrt5}\text{ 的 Cayley 输运收缩}.
+}
+$$
+
+它与项目中反复出现的五判别式、\(1/\sqrt5\) 对偶尺度具有相同数值来源，但目前还不能据此认定 Cayley 输运算子就是六维五模 Hodge 对偶。
+
+---
+

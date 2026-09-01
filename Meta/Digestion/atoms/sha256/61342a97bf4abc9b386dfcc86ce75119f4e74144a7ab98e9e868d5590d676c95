@@ -1,0 +1,89 @@
+# 第一千七百五十一部　Riemann 离线缺陷的 branch-correspondence 形式
+
+固定：
+
+$$
+q>0,\qquad T<\infty.
+$$
+
+令：
+
+$$
+B_{q,T}
+$$
+
+为有限 shifted defect factor，并定义：
+
+$$
+\boxed{
+E_{q,T}=K_{B_{q,T}}.
+}
+\tag{1751.1}
+$$
+
+则：
+
+$$
+\dim E_{q,T}
+=
+\sum_{\substack{
+\delta_\rho>q\\
+|\gamma_\rho|\le T
+}}
+m_\rho.
+$$
+
+若该维数为 \(m>0\)，则：
+
+* 存在 \(m\)-维 innovation space；
+* 存在 finite Clark fibres；
+* 存在 Blaschke–Cuntz branch representation；
+* 存在 \(M_m\) 一步关系代数；
+* 存在非零 persistence interval。
+
+因此：
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\Longrightarrow
+\exists q\in\mathbb Q_{>0},\ T\in\mathbb N:
+E_{q,T}\neq0.
+}
+\tag{1751.2}
+$$
+
+而：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+E_{q,T}=0
+\quad
+\forall q,T.
+}
+\tag{1751.3}
+$$
+
+可以把：
+
+$$
+q\longmapsto E_{q,T}
+$$
+
+看作一个有限秩 correspondence persistence system。
+
+若要将全部 \(q\) 统一成单个 operator algebra，更自然的对象不是固定 \(\mathcal O_m\)，因为 \(m\) 会随 \(q\) 改变；而是：
+
+$$
+\boxed{
+\text{一个带 birth/death 的 graph correspondence
+或 Cuntz–Pimsner 型系统。}
+}
+$$
+
+图 C*-代数与 Cuntz–Krieger 结构本来就用于编码受约束 path systems 与其 operator algebras。
+
+---
+

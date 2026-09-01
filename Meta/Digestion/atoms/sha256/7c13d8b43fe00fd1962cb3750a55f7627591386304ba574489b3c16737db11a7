@@ -1,0 +1,57 @@
+# 第一千七百五十部　自由 \(m\)-页不能产生非整数黄金维数
+
+有限 Blaschke cover 的所有基本大小都是整数：
+
+$$
+m,\quad
+m-1,\quad
+m^n,\quad
+m^{2n}.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{普通 finite phase fibre 本身不能直接产生 }\varphi.
+}
+$$
+
+要产生非整数有效维数，必须再加入：
+
+* transition grammar；
+* fusion rule；
+* weighted correspondence；
+* Perron–Frobenius completion；
+* 或子因子结构。
+
+golden adjacency：
+
+$$
+A_\varphi
+$$
+
+正是最小实例。
+
+因此：
+
+$$
+\boxed{
+\text{整数页数是局部 branch multiplicity；}
+}
+$$
+
+$$
+\boxed{
+\text{黄金维数是无穷受约束历史的有效 growth dimension。}
+}
+$$
+
+这也解释了为什么黄金比例常常“只在完成后出现”。
+
+有限层只有整数计数。
+
+无理数存在于所有有限层之间的极限比例和兼容关系中。
+
+---
+

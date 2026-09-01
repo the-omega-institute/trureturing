@@ -1,0 +1,22 @@
+# 第一千七百五十部　自由 \(m\)-页不能产生非整数黄金维数
+
+有限 Blaschke cover 的所有基本大小都是整数：
+
+$$
+m,\quad
+m-1,\quad
+m^n,\quad
+m^{2n}.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{普通 finite phase fibre 本身不能直接产生 }\varphi.
+}
+$$
+
+要产生非整数有效维数，必须再加入：
+
+* transition grammar；

@@ -1,0 +1,48 @@
+* 存在非零 persistence interval。
+
+因此：
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\Longrightarrow
+\exists q\in\mathbb Q_{>0},\ T\in\mathbb N:
+E_{q,T}\neq0.
+}
+\tag{1751.2}
+$$
+
+而：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+E_{q,T}=0
+\quad
+\forall q,T.
+}
+\tag{1751.3}
+$$
+
+可以把：
+
+$$
+q\longmapsto E_{q,T}
+$$
+
+看作一个有限秩 correspondence persistence system。
+
+若要将全部 \(q\) 统一成单个 operator algebra，更自然的对象不是固定 \(\mathcal O_m\)，因为 \(m\) 会随 \(q\) 改变；而是：
+
+$$
+\boxed{
+\text{一个带 birth/death 的 graph correspondence
+或 Cuntz–Pimsner 型系统。}
+}
+$$
+
+图 C*-代数与 Cuntz–Krieger 结构本来就用于编码受约束 path systems 与其 operator algebras。
+
+---
+

@@ -1,0 +1,95 @@
+# 第一千七百三十七部　递归命名产生真正的算子分形
+
+对长度为 \(n\) 的词：
+
+$$
+\mu=(\mu_1,\ldots,\mu_n)
+\in
+\{1,\ldots,m\}^n,
+$$
+
+定义：
+
+$$
+\boxed{
+S_\mu
+=
+S_{\mu_1}\cdots S_{\mu_n}.
+}
+\tag{1737.1}
+$$
+
+则：
+
+$$
+S_\mu^*S_\nu
+=
+\delta_{\mu\nu}I
+$$
+
+对相同长度的词成立，并且：
+
+$$
+\boxed{
+\sum_{|\mu|=n}
+S_\mu S_\mu^*
+=
+I.
+}
+\tag{1737.2}
+$$
+
+因此：
+
+$$
+\boxed{
+H^2
+=
+\bigoplus_{|\mu|=n}
+S_\mu H^2.
+}
+\tag{1737.3}
+$$
+
+第 \(n\) 层拥有：
+
+$$
+\boxed{
+m^n
+}
+$$
+
+个正交 branch histories。
+
+相应的关系矩阵单位为：
+
+$$
+\boxed{
+E_{\mu\nu}
+=
+S_\mu S_\nu^*,
+\qquad
+|\mu|=|\nu|=n.
+}
+\tag{1737.4}
+$$
+
+它们生成：
+
+$$
+\boxed{
+\mathfrak A_n
+\simeq
+M_{m^n}(\mathbb C).
+}
+\tag{1737.5}
+$$
+
+于是：
+
+$$
+\dim\mathfrak A_n=m^{2n}.
+$$
+
+---
+

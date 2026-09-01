@@ -1,0 +1,58 @@
+# 第一千五百零七部　RH 的双修复固定点形式
+
+令：
+
+$$
+R_J=\ker r_J.
+$$
+
+令 \(F_{\mathrm{shift}}\) 表示：
+
+* 推进 shifted 深度；
+* 更新 Hardy scattering；
+* 产生未来 Poisson/Hankel 响应；
+
+的完整动力。
+
+预测内修复：
+
+$$
+I_{F_{\mathrm{shift}}}(R_J)
+$$
+
+会把未来可区分的反射伙伴重新分开。
+
+遗忘闭修复：
+
+$$
+C_{F_{\mathrm{shift}}}(R_J)
+$$
+
+会把动力要求合并的更多状态归入稳定商。
+
+因此目标可以写成：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+I_{F_{\mathrm{shift}}}(R_J)
+=
+R_J
+=
+C_{F_{\mathrm{shift}}}(R_J).
+}
+\tag{1507.1}
+$$
+
+一般的 interior–closure 双修复与共同固定点理论已经由项目机器证明。
+
+目前未闭合的是：
+
+1. 构造完整的 \(F_{\mathrm{shift}}\) 状态空间；
+2. 证明其 profile 与此前 Hardy/Poisson 模型一致；
+3. 将离线零点对应为 \(I(R_J)\subsetneq R_J\)；
+4. 从 prime–Gamma 正性证明 \(R_J\) 为固定点。
+
+---
+

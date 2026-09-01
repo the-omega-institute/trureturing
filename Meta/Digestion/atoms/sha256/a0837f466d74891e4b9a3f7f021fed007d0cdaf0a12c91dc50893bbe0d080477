@@ -1,0 +1,46 @@
+# 第一千七百三十四部　命名映射被提升为一个基无关的算子自同态
+
+定义：
+
+$$
+\boxed{
+\Lambda_B(X)
+=
+\sum_{j=1}^m
+S_jXS_j^*,
+\qquad
+X\in B(H^2).
+}
+\tag{1734.1}
+$$
+
+由 Cuntz 关系：
+
+$$
+\Lambda_B(XY)
+=
+\Lambda_B(X)\Lambda_B(Y),
+$$
+
+$$
+\Lambda_B(X^*)
+=
+\Lambda_B(X)^*,
+$$
+
+$$
+\Lambda_B(I)=I.
+$$
+
+所以：
+
+$$
+\boxed{
+\Lambda_B:B(H^2)\to B(H^2)
+}
+$$
+
+是一个保单位 *-endomorphism。
+
+---
+

@@ -1,0 +1,48 @@
+## 1749.1 shifted 深度提供径向悬挂候选
+
+phase \(\alpha\) 提供 equator 方向。
+
+shifted depth \(q\) 提供径向／南北方向。
+
+当一个通道在：
+
+$$
+q=\delta_\rho
+$$
+
+穿越边界时，可以把：
+
+$$
+(q,\alpha)
+$$
+
+局部压缩成一个围绕 crossing event 的二维球面。
+
+此时 phase winding 的 Bott suspension 可以产生 Chern 荷。
+
+但必须保持科学边界：
+
+$$
+\boxed{
+\text{要把这一 clutching bundle 认作 canonical \(\xi\) 谱束，
+仍需显式构造对应的谱投影。}
+}
+$$
+
+所以磁单极子与黑洞的精确关系是：
+
+$$
+\boxed{
+\begin{aligned}
+\text{黑洞／视界图表}
+&=\text{深度方向的 crossing};\\
+\text{单极子图表}
+&=\text{crossing 周围 phase degree 的 Bott suspension}.
+\end{aligned}
+}
+$$
+
+它们确实来自同一个二维缺陷模板，但不是未经构造便自动相等。
+
+---
+

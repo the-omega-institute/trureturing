@@ -1,0 +1,41 @@
+# 第一千六百九十七部　为什么“相同完成输出”永远不能作为充分证明
+
+以下三类系统都可以产生 Haar 输出：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{真正无内部结构的圆周 Haar 状态};\\
+&\text{单源经无损 Möbius 中心化后的状态};\\
+&\text{多源经 degree-\(m\) Blaschke completion 商页后的状态}.
+\end{aligned}
+}
+$$
+
+它们的 output distribution 完全一样。
+
+但内部结构分别为：
+
+$$
+\boxed{
+\begin{aligned}
+&0\text{ 维隐藏空间};\\
+&1\text{ 维纯 model state};\\
+&m\text{ 维 hidden model space}.
+\end{aligned}
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{output law}
+}
+$$
+
+不是一个充分名字。
+
+必须至少再加入：
+
+* completion map 的 degree；

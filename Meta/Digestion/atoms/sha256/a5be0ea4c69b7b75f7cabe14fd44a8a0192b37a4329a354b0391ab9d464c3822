@@ -1,0 +1,87 @@
+# 第一千六百部　完全正性而不只是标量正性
+
+仅证明：
+
+$$
+\tau_n(t)\ge0
+$$
+
+还不足以构造正谱。
+
+需要全部 moment matrices：
+
+$$
+[\tau_{i+j+1}(t)]
+$$
+
+正半定，甚至需要法向系数的 total positivity。
+
+因此 prime-to-zero 变换不能只是一个保持标量正数的线性映射。
+
+它应当在所有矩阵层保持正性。
+
+设 prime phase algebra 为：
+
+$$
+\mathcal A_{\mathrm{prime}},
+$$
+
+zero observer algebra 为：
+
+$$
+\mathcal A_{\mathrm{zero}}.
+$$
+
+真正希望构造的是一个 completely positive map：
+
+$$
+\boxed{
+\Phi_t:
+\mathcal A_{\mathrm{prime}}
+\longrightarrow
+\mathcal A_{\mathrm{zero}}.
+}
+\tag{1600.1}
+$$
+
+若存在 Stinespring 表示：
+
+$$
+\boxed{
+\Phi_t(X)
+=
+V_t^*\pi_t(X)V_t,
+}
+\tag{1600.2}
+$$
+
+则任意有限族 \(X_i\) 自动产生 Gram 正性：
+
+$$
+\boxed{
+[
+\Phi_t(X_i^*X_j)
+]_{i,j}
+\succeq0.
+}
+\tag{1600.3}
+$$
+
+这正是从局部 prime histories 产生全部 zero-side Hankel、Toeplitz 和 Schur 正关系所需的层级。
+
+所以最终证明目标应从：
+
+$$
+\text{证明某些数为正}
+$$
+
+升级为：
+
+$$
+\boxed{
+\text{构造一个算术完全正的观察输运。}
+}
+$$
+
+---
+

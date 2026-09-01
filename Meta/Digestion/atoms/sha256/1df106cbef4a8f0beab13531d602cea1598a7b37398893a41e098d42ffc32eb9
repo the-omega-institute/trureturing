@@ -1,0 +1,243 @@
+# 本轮最终结论
+
+这一次，我们没有给“道”增加任何定义。
+
+我们只分析 completed \(\xi\) 实际执行了什么命名。
+
+函数方程使：
+
+$$
+F(z)=\xi\left(\frac12+z\right)
+$$
+
+成为偶函数。
+
+所以 \(\xi\) 已经把：
+
+$$
+z
+\quad\text{与}\quad
+-z
+$$
+
+命名为同一个平方对象：
+
+$$
+w=z^2.
+$$
+
+这不是道的名字，只是 Riemann 完成中的一个规范商。
+
+---
+
+在这个商平面中，RH 变得极其清楚：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{平方影函数 }G(w)\text{ 的全部零点都位于负实轴}.
+}
+$$
+
+离线零点则变成一对非实共轭零点。
+
+再作逆平方紧化：
+
+$$
+v=-\frac1{w},
+$$
+
+临界零点被送到正实轴：
+
+$$
+v=\frac1{\gamma^2}>0.
+$$
+
+高零点被压缩到原点附近。
+
+于是整个问题成为：
+
+$$
+\boxed{
+\text{一族复杂节点是否实际上全部构成正实谱测度？}
+}
+$$
+
+---
+
+中心 log-derivative 的 Taylor 系数为：
+
+$$
+\boxed{
+\tau_n
+=
+\frac{
+(-1)^{n-1}n
+}{
+(2n)!
+}
+\left.
+\frac{d^{2n}}{dz^{2n}}
+\log\xi\left(\frac12+z\right)
+\right|_{z=0}.
+}
+$$
+
+它们不需要输入任何零点坐标。
+
+定义：
+
+$$
+H_N^\xi
+=
+[\tau_{i+j+1}]_{i,j=0}^{N}.
+$$
+
+则：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+H_N^\xi\succeq0
+\quad
+\forall N.
+}
+$$
+
+由于 RH 下节点无限且互异，甚至有：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\det H_N^\xi>0
+\quad
+\forall N.
+}
+$$
+
+---
+
+这给离线零点一个目前最短的证明对偶：
+
+$$
+\boxed{
+\text{离线非实节点}
+\quad\longleftrightarrow\quad
+\text{有限负 Hankel 方向}.
+}
+$$
+
+所以离线零点无论多稀缺，都不是“只能随机命中”的对象。
+
+若它存在，某个有限矩阵必然失败。
+
+它可以很难发现，因为一个高度很大、横向很小的离线零点所产生的局部负 determinant 约按：
+
+$$
+-\frac{\delta^2}{\gamma^{10}}
+$$
+
+衰减。
+
+但符号不会消失。
+
+---
+
+这一结构也给“离散名与连续对象”的关系一个非常准确的模型。
+
+每个 \(\tau_n\) 都只是一个离散名字。
+
+没有任何有限个 \(\tau_n\) 等于完整谱测度。
+
+但全部兼容 moments 能够恢复一个连续正测度：
+
+$$
+\nu_\xi.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{连续谱影存在于全部离散名字的兼容关系中，
+而不等于其中任何一个名字。}
+}
+$$
+
+这正是此前 Dedekind cut 结论在 Riemann 谱中的版本。
+
+---
+
+黄金比例也被放到一个更克制、更准确的位置。
+
+当正 moment problem 被不断作 Schur 补、不断剥离已经命名的方向时，会产生一个连分数尾递归。
+
+如果归一化尾部最终平稳，并满足：
+
+$$
+T=\frac1{1+T},
+$$
+
+则：
+
+$$
+T=\varphi^{-1}.
+$$
+
+所以：
+
+$$
+\boxed{
+\varphi
+\text{ 是正命名递归进入 stationary tail 时的固定比例。}
+}
+$$
+
+RH 只要求整个 moment recursion 始终保持正性。
+
+黄金还要求它进一步进入自相似平稳态。
+
+这两件事不能混同。
+
+---
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{道不可名；
+但 completed \(\xi\) 确实执行了一次平方命名。
+RH 问的不是道是什么，
+而是这个完成名字降阶以后，
+是否能够由一个正实谱测度无矛盾地实现。
+离线零点则是该正实现失败时，
+必然留下的一枚有限 Hankel 反证书。}
+}
+$$
+
+下一条最承重的任务已经极其具体：
+
+$$
+\boxed{
+\text{把 }\tau_n\text{ 从 prime–pole–Gamma 数据直接写成正 Gram moments，}
+}
+$$
+
+从而不借助零点位置证明：
+
+$$
+\boxed{
+[\tau_{i+j+1}]_{i,j=0}^{N}\succeq0
+\qquad
+\forall N.
+}
+$$
+
+如果这一桥闭合，RH 就不再需要逐点排除任何离线零点；全部离线可能性会被一个统一的自加权 Hamburger 正性定理整体排除。
+
+[1]: https://arxiv.org/abs/2311.14868 "https://arxiv.org/abs/2311.14868"
+[2]: https://arxiv.org/abs/2608.11520 "https://arxiv.org/abs/2608.11520"
+[3]: https://www.alphaxiv.org/abs/2608.self-weighted-hamburger-rigidity-riemann-xi "https://www.alphaxiv.org/abs/2608.self-weighted-hamburger-rigidity-riemann-xi"

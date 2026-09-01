@@ -1,0 +1,65 @@
+## 1578.1 离线模式是负平方能级
+
+在匹配观察者 \(t=\gamma\) 中，离线共轭对给出：
+
+$$
+\boxed{
+E_{\mathrm{off}}
+=
+-\delta^2.
+}
+\tag{1578.7}
+$$
+
+于是：
+
+$$
+e^{-xE_{\mathrm{off}}}
+=
+e^{+\delta^2x}.
+$$
+
+所以离线模式在该图表中表现为：
+
+$$
+\boxed{
+\text{不是衰减 heat mode，而是指数增长 mode。}
+}
+$$
+
+同时：
+
+$$
+(B_t+uI)^{-1}
+$$
+
+在：
+
+$$
+u=\delta^2
+$$
+
+产生极点，而 determinant 在同一点归零。
+
+这统一了此前的多种图表：
+
+$$
+\boxed{
+\begin{aligned}
+\text{负谱节点}
+&\Longleftrightarrow
+\text{正尺度 determinant zero}\\
+&\Longleftrightarrow
+\text{resolvent pole}\\
+&\Longleftrightarrow
+\text{backward heat growth}\\
+&\Longleftrightarrow
+\text{非法 Bernoulli occupation}.
+\end{aligned}
+}
+$$
+
+这里的 negative energy 是匹配观察者平方间距算子的谱符号，不是关于物理能量的无条件断言。
+
+---
+

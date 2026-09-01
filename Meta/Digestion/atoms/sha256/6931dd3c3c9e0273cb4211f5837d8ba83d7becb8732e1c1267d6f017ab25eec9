@@ -1,0 +1,22 @@
+* 或使用：
+
+  $$
+  \operatorname{lcm}(F_2,\ldots,F_N)
+  $$
+
+  形成整除塔。
+
+项目当前证明的 golden desubstitution 则位于另一侧：它在 Zeckendorf 数位上确实表现为统一的向上位移，并把 desubstitution 路径刻画为重复的数位平移。
+
+因此应区分：
+
+$$
+\boxed{
+\text{编码深度动力}
+\neq
+\text{相位覆盖逆系统}.
+}
+$$
+
+---
+

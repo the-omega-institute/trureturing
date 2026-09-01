@@ -1,0 +1,30 @@
+## 1623.1 关键科学边界
+
+整个平方影函数的阶 \(1/2\) 在 RH 真或假时都不改变。
+
+所以：
+
+$$
+\boxed{
+\text{黄金半维可以解释谱完成为何具有半阶增长，
+不能决定零点是否落在正实谱轴。}
+}
+$$
+
+可以把二者分工为：
+
+$$
+\boxed{
+\begin{aligned}
+\text{黄金超度量}
+&\longrightarrow
+\text{复杂度指数 }\frac12;\\
+\text{正 Gram／Fredholm 结构}
+&\longrightarrow
+\text{零点方向与 RH}.
+\end{aligned}
+}
+$$
+
+---
+

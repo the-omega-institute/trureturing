@@ -1,0 +1,66 @@
+# 第一千五百五十三部　移动平方影的正算子实现
+
+继续记：
+
+$$
+\Xi(t)=\xi\!\left(\frac12+it\right),
+$$
+
+以及真实法向强度：
+
+$$
+\mathcal I(\delta,t)
+=
+\left|
+\xi\!\left(\frac12+\delta+it\right)
+\right|^2.
+$$
+
+定义偶整函数：
+
+$$
+P_t(z)
+=
+\Xi(t-iz)\Xi(t+iz).
+$$
+
+因为：
+
+$$
+P_t(-z)=P_t(z),
+$$
+
+存在唯一整函数 \(Q_t\)，满足：
+
+$$
+\boxed{
+P_t(z)=Q_t(z^2).
+}
+\tag{1553.1}
+$$
+
+在实法向坐标上：
+
+$$
+\boxed{
+Q_t(\delta^2)=\mathcal I(\delta,t).
+}
+\tag{1553.2}
+$$
+
+其 Taylor 展开正是：
+
+$$
+\boxed{
+Q_t(w)
+=
+\sum_{m=0}^{\infty}
+\mathcal J_m(t)w^m.
+}
+\tag{1553.3}
+$$
+
+仓库已经机器证明，\(\mathcal J_m(t)\) 是实际 completed-\(\xi\) 强度的偶阶法向 Taylor 系数，并给出了由 \(\Xi^{(j)}(t)\) 构成的完整有限卷积公式。
+
+---
+

@@ -1,0 +1,31 @@
+## 定理 1733.1（Blaschke–Cuntz 分支定理）
+
+$$
+\boxed{
+S_i^*S_j=\delta_{ij}I,
+\qquad
+\sum_{j=1}^mS_jS_j^*=I.
+}
+\tag{1733.9}
+$$
+
+当 \(m\ge2\) 时，它给出 Cuntz 代数：
+
+$$
+\mathcal O_m
+$$
+
+的一个 Hardy-space 表示。
+
+当 \(m=1\) 时，它退化为一个单分支酉动力；这也再次说明：
+
+$$
+\boxed{
+\dim K_B=1
+}
+$$
+
+仍可能存在非平凡 inner factor，不能只用 \(m-1\) 个 sheet contrasts 判断是否存在缺陷。
+
+---
+

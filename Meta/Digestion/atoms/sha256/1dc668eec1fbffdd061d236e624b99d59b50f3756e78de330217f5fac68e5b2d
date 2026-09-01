@@ -1,0 +1,65 @@
+# 第一千五百九十八部　为什么需要相对行列式，而不是直接正乘积
+
+局部 phase blocks 的零点数量随着 prime 数量和深度迅速增加。
+
+朴素地将全部 centered blocks 相乘，会产生远多于 Riemann \(\Xi\) 的相位零点。
+
+零点自由的指数 counterterm 无法删除这些多余零点。
+
+因此真正的 global construction 不可能只是：
+
+$$
+\boxed{
+\prod_{p,N}\widehat Z_{p,N}.
+}
+$$
+
+它必须包含：
+
+* exact cancellations；
+* quotient；
+* reduced determinant；
+* chain-complex cohomology；
+* 或 superdeterminant。
+
+局部公式已经给出原型：
+
+$$
+\frac{1-x^K}{1-x}
+=
+\det_{\mathbf1^\perp}(I-xU_K).
+$$
+
+先在完整空间上计算：
+
+$$
+\det(I-xU_K)=1-x^K,
+$$
+
+再商去平凡模式：
+
+$$
+1-x.
+$$
+
+所以正确顺序是：
+
+$$
+\boxed{
+\text{先形成完整复形，
+再消去 exact／trivial states，
+最后对 reduced physical space 取 determinant。}
+}
+$$
+
+这与前文 scattering cascade 中的结论完全一致：
+
+$$
+\boxed{
+\text{先组合，后最小化；
+不能把内部可消去模式误判成 endpoint defect。}
+}
+$$
+
+---
+

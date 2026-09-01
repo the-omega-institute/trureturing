@@ -1,0 +1,58 @@
+## 1585.1 循环酉表示
+
+令：
+
+$$
+U_K:\mathbb C^K\to\mathbb C^K
+$$
+
+为循环移位：
+
+$$
+U_K(e_j)=e_{j+1\pmod K}.
+$$
+
+令常数向量为：
+
+$$
+\mathbf1=(1,\ldots,1),
+$$
+
+并定义约化空间：
+
+$$
+\boxed{
+\mathcal H_K^\circ
+=
+\mathbf1^\perp.
+}
+\tag{1585.2}
+$$
+
+\(U_K\) 保持 \(\mathcal H_K^\circ\)。
+
+在 \(\mathcal H_K^\circ\) 上，\(U_K\) 的特征值为：
+
+$$
+\zeta_K^j
+=
+e^{2\pi ij/K},
+\qquad
+j=1,\ldots,K-1.
+$$
+
+因此：
+
+$$
+\begin{aligned}
+\det_{\mathcal H_K^\circ}(I-xU_K)
+&=
+\prod_{j=1}^{K-1}
+(1-x\zeta_K^j)\\
+&=
+\frac{1-x^K}{1-x}.
+\end{aligned}
+$$
+
+于是得到：
+

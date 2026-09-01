@@ -1,0 +1,59 @@
+# 第一千五百四十五部　有限正名字与有限原子替身
+
+固定尺度和有限 observer family 时，有限 moments 无法唯一识别无限谱。
+
+仓库已在其 active-contact hypotheses 下机器证明：一个有限维正 residual 可以由至多：
+
+$$
+d+1
+$$
+
+个正接触原子精确替代，同时保持总质量和给定的全部 observer moments。
+
+因此定义：
+
+$$
+\boxed{
+\mathfrak M_N(u)
+=
+\left\{
+\pi\in\operatorname{Prob}([0,1]):
+\int x^k\,d\pi=r_k(u),
+\ 0\le k\le2N
+\right\}.
+}
+\tag{1545.1}
+$$
+
+有限正性只说明：
+
+$$
+\mathfrak M_N(u)\neq\varnothing.
+$$
+
+它常常可以由一个很小的有限原子模型实现。
+
+但这些有限原子不是“已经发现的真实 Riemann 零点”。
+
+它们只是：
+
+$$
+\boxed{
+\text{当前有限名字的一种正完成。}
+}
+$$
+
+全局问题是：
+
+$$
+\boxed{
+\bigcap_{N\ge0}\mathfrak M_N(u)
+\neq\varnothing,
+}
+\tag{1545.2}
+$$
+
+即所有有限名字是否拥有同一个兼容正完成。
+
+---
+

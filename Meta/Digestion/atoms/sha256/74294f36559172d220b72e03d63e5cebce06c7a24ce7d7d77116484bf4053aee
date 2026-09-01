@@ -1,0 +1,68 @@
+## 1573.1 每个整数都有有限出生深度
+
+定义：
+
+$$
+E_{\max}(n)=\max_p\nu_p(n).
+$$
+
+定义黄金出生深度：
+
+$$
+\boxed{
+d_\varphi(n)
+=
+\min
+\left\{
+N:
+E_{\max}(n)<F_{N+1}
+\right\}.
+}
+\tag{1573.4}
+$$
+
+每个整数都在有限层进入 \(\mathcal Z_N\)。
+
+定义 birth shell：
+
+$$
+\boxed{
+\mathcal B_N(s)
+=
+\mathcal Z_N(s)-\mathcal Z_{N-1}(s).
+}
+\tag{1573.5}
+$$
+
+其 Dirichlet 系数为 \(0\) 或 \(1\)，只保留满足：
+
+$$
+F_N
+\le
+E_{\max}(n)
+<
+F_{N+1}
+$$
+
+的整数。
+
+因此：
+
+$$
+\boxed{
+\zeta(s)
+=
+\mathcal Z_2(s)
++
+\sum_{N\ge3}
+\mathcal B_N(s)
+}
+\tag{1573.6}
+$$
+
+在绝对收敛区成立。
+
+这是一条精确的“概念出生层”分解。
+
+---
+

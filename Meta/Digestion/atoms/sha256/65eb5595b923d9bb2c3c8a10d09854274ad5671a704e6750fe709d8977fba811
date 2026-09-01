@@ -1,0 +1,1 @@
+* 但若先闭包 threshold set，再作 backward iteration，会出现额外永久状态；

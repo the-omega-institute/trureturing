@@ -1,0 +1,26 @@
+## 第一层：正 phase state
+
+构造：
+
+$$
+(\mathcal H_\xi,U_\xi,\Omega_\xi)
+$$
+
+满足：
+
+$$
+\boxed{
+c(r)
+=
+\langle
+\Omega_\xi,
+U_\xi^r\Omega_\xi
+\rangle.
+}
+\tag{1754.1}
+$$
+
+这立即推出全部 Li–Clark Toeplitz 正性。
+
+---
+

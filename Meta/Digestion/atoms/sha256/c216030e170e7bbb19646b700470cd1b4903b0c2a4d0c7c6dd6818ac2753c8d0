@@ -1,0 +1,28 @@
+# 第一千五百七十部　有限 Zeckendorf–Euler 恒等式
+
+定义有限合法词空间：
+
+$$
+\boxed{
+\Omega_N
+=
+\left\{
+(\eta_2,\ldots,\eta_N)\in\{0,1\}^{N-1}:
+\eta_k\eta_{k+1}=0
+\right\}.
+}
+\tag{1570.1}
+$$
+
+定义其 exponent energy：
+
+$$
+\boxed{
+E_N(\eta)
+=
+\sum_{k=2}^{N}
+\eta_kF_k.
+}
+\tag{1570.2}
+$$
+

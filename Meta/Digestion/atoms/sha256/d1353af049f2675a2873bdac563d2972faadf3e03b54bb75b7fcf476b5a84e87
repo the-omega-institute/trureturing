@@ -1,0 +1,22 @@
+## 1688.1 单极子整数的新读法
+
+同一个整数 \(m\) 现在同时是：
+
+$$
+\boxed{
+\begin{aligned}
+m
+&=\deg B\\
+&=\dim K_B\\
+&=\operatorname{rank}P_B\\
+&=\frac1{2\pi}\int\theta_B'\\
+&=\text{phase covering 页数}\\
+&=\text{隐藏标签 monodromy 周期}.
+\end{aligned}
+}
+\tag{1688.2}
+$$
+
+这进一步解释了磁单极子与黑洞式完成为何共享整数荷：
+
+* 单极子图表把 \(m\) 读作闭合相位绕数；

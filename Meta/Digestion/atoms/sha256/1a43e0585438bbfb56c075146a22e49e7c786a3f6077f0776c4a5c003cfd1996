@@ -1,0 +1,64 @@
+# 第一千五百六十二部　正谱的 Bernoulli 子集状态
+
+假设 RH，并固定 \(t\notin Z(\Xi)\)、\(u>0\)。
+
+定义：
+
+$$
+\boxed{
+Z_t(u)
+=
+\det(I+uA_t).
+}
+\tag{1562.1}
+$$
+
+对每个谱模式 \(a_j>0\)，定义占据率：
+
+$$
+\boxed{
+p_j(u)
+=
+\frac{ua_j}{1+ua_j}.
+}
+\tag{1562.2}
+$$
+
+则：
+
+$$
+0<p_j(u)<1.
+$$
+
+定义有限子集 \(S\) 的概率：
+
+$$
+\boxed{
+\Pr_u(S)
+=
+\frac{
+u^{|S|}
+\prod_{j\in S}a_j
+}{
+Z_t(u)
+}.
+}
+\tag{1562.3}
+$$
+
+它等价于独立 Bernoulli 乘积：
+
+$$
+\boxed{
+\Pr_u(S)
+=
+\prod_{j\in S}p_j
+\prod_{j\notin S}(1-p_j).
+}
+\tag{1562.4}
+$$
+
+因此 Fredholm determinant 是一个精确的子集配分函数。
+
+---
+

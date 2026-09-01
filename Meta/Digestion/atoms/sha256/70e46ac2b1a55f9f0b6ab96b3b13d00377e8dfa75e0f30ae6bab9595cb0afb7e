@@ -1,0 +1,45 @@
+## 1618.2 更强但更有限的前缀判据
+
+若对每个 \(N\)，都能找到有限正算子 \(A_N\)，精确满足：
+
+$$
+\boxed{
+e_m(A_N)=a_m(t),
+\qquad
+0\le m\le N,
+}
+\tag{1618.6}
+$$
+
+则对每个固定 \(m\)，当 \(N\ge m\) 后已经完全匹配，因此 RH 立即由定理 1618.2 推出。
+
+所以可建立有限可行性层级：
+
+$$
+\boxed{
+\mathfrak P_N(t)
+=
+\left\{
+A\ge0,\ \operatorname{rank}A<\infty:
+e_m(A)=a_m(t),\ 0\le m\le N
+\right\}.
+}
+\tag{1618.7}
+$$
+
+若：
+
+$$
+\boxed{
+\mathfrak P_N(t)\neq\varnothing
+\qquad
+\forall N,
+}
+$$
+
+则 RH 成立。
+
+这只是充分条件；RH 不自动保证每个有限前缀都能被一个有限无权谱**精确**匹配。更稳妥的等价版本仍是逐阶逼近。
+
+---
+

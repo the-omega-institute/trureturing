@@ -1,0 +1,57 @@
+* Archimedean Gamma channel。
+
+定义约化 Hodge Laplacian：
+
+$$
+\boxed{
+\Delta_{M,t}
+=
+d_{M,t}^*d_{M,t}
++
+d_{M,t-1}d_{M,t-1}^*.
+}
+\tag{1599.1}
+$$
+
+要求：
+
+$$
+\Delta_{M,t}>0
+$$
+
+于去除 exact 与 harmonic nuisance modes 后成立。
+
+进一步要求：
+
+$$
+\boxed{
+\det
+\left(
+I+w\Delta_{M,t}^{-1}
+\right)
+\longrightarrow
+\frac{Q_t(w)}{Q_t(0)}
+}
+\tag{1599.2}
+$$
+
+在紧集上成立，并有足够的 trace-norm 控制。
+
+那么极限算子：
+
+$$
+A_t=\lim\Delta_{M,t}^{-1}
+$$
+
+为正迹类，并自动得到：
+
+$$
+\frac{Q_t(w)}{Q_t(0)}
+=
+\det(I+wA_t).
+$$
+
+于是 RH 成立。
+
+---
+

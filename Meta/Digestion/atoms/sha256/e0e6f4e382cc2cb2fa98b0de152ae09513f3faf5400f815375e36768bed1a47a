@@ -1,0 +1,26 @@
+## 第三层：golden grammar identification
+
+进一步证明 primitive arithmetic branches 的允许转移恰由：
+
+$$
+A_\varphi
+=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}
+$$
+
+控制。
+
+此时才可内生推出：
+
+$$
+\log\varphi,\qquad
+\varphi,\qquad
+\varphi^2
+$$
+
+作为：
+
+* grammar entropy；

@@ -1,0 +1,20 @@
+## 1599.1 为什么是 Hodge，而不是普通 determinant
+
+Hodge 结构会自动区分：
+
+$$
+\boxed{
+\begin{aligned}
+\text{exact mode}
+&=\text{应被消去的内部命名冗余};\\
+\text{harmonic mode}
+&=\text{真正的全局拓扑信息};\\
+\text{negative mode}
+&=\text{正平方结构不可能产生的异常}.
+\end{aligned}
+}
+$$
+
+这正好对应此前的三类不可见：
+
+* 合法隐藏历史；

@@ -1,0 +1,73 @@
+# 第一千五百零五部　横向距离本身就是一个 Dedekind 命名切口
+
+考虑一个孤立的右侧离线零点：
+
+$$
+\rho=\frac12+\delta+i\gamma,
+\qquad
+\delta>0.
+$$
+
+对每个有理观察深度：
+
+$$
+q\in\mathbb Q_{>0},
+$$
+
+定义二元名字：
+
+$$
+\boxed{
+\beta_q(\rho)
+=
+\begin{cases}
+1,&\text{在 shifted 深度 }q\text{ 可见反因果缺陷};\\
+0,&\text{不可见}.
+\end{cases}
+}
+\tag{1505.1}
+$$
+
+在局部互素模型中：
+
+$$
+\boxed{
+\beta_q(\rho)
+=
+\mathbf1_{\{q<\delta\}}.
+}
+\tag{1505.2}
+$$
+
+因此：
+
+$$
+\boxed{
+\delta
+=
+\sup
+\left\{
+q\in\mathbb Q_{>0}:
+\beta_q(\rho)=1
+\right\}.
+}
+\tag{1505.3}
+$$
+
+这是一条非常关键的结论：
+
+$$
+\boxed{
+\text{连续横向距离 \(\delta\)
+正是全部离散 shifted 名字形成的 Dedekind 边界。}
+}
+$$
+
+所以离散名字确实可以重建连续离线深度。
+
+但 \(\delta\) 不是任何单个名字。
+
+它存在于所有名字由 \(1\) 变为 \(0\) 的共同边界。
+
+---
+

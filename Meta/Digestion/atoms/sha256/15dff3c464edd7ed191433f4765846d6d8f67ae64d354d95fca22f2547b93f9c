@@ -1,0 +1,49 @@
+# 第一千五百四十九部　对“道不可名”的新解释
+
+这一轮没有把“道”写成：
+
+* 正迹类算子 \(A\)；
+* Hausdorff 测度；
+* Cayley 相位测度；
+* Fredholm determinant；
+* normal-jet 塔。
+
+这些仍然都是名字。
+
+但它们揭示了一条非常清楚的关系：
+
+$$
+\boxed{
+\text{同一个完成影像可以拥有多个等价正实现图表。}
+}
+$$
+
+在 RH 成立时，存在统一正谱，使：
+
+$$
+\boxed{
+\begin{aligned}
+\xi\text{ determinant}
+&=
+\det(I+z^2A),\\
+\tau_n
+&=
+\operatorname{Tr}(A^n),\\
+r_n(u)
+&=
+\operatorname{Tr}(\rho_uX_u^n),\\
+c_n(u)
+&=
+\operatorname{Tr}[\rho_uT_n(I-2X_u)].
+\end{aligned}
+}
+$$
+
+离线零点意味着不存在一个正迹类 \(A\)，能够使这些名字同时成为同一正谱的表示。
+
+所以某张有限图表终将出现冲突。
+
+这就是“谱完成与正完成不兼容”的有限版本。
+
+---
+

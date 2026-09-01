@@ -1,0 +1,45 @@
+* Hankel 负时间记忆。
+
+但在证明论上，它们都可以压缩回真实法向强度的有限负系数。
+
+另一方面，中心 Hankel 塔揭示了一个正迹类算子候选：
+
+$$
+\frac{\xi(\frac12+z)}{\xi(\frac12)}
+=
+\det(I+z^2A).
+$$
+
+Cayley 紧化又把其正谱压缩到单位圆，让所有 moments 有界。
+
+而黄金比例在这一紧化中留下了一条极干净的尺度律：
+
+$$
+\boxed{
+a\mapsto\varphi^2a
+\quad\Longrightarrow\quad
+q_{\mathrm{transport}}=\frac1{\sqrt5}.
+}
+$$
+
+所以黄金比例在这里不是“道的名字”，也不是离线零点的电荷。
+
+它是：
+
+$$
+\boxed{
+\text{正谱 Cayley 图表中，一个方向保持自相似步长所诱导的五模输运率。}
+}
+$$
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{不可名本体不进入公式；
+进入公式的是它在某个完成名字下留下的正性要求。
+离线零点，就是该正性要求在有限法向 jet、有限 Hankel 或有限 Toeplitz 图表中必然发生的一次越界。}
+$$
+
+[1]: https://arxiv.org/abs/0911.1122 "https://arxiv.org/abs/0911.1122"
+[2]: https://arxiv.org/abs/2007.13582 "https://arxiv.org/abs/2007.13582"
