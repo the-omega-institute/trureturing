@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:23b664c6114192206a52db427d564ff9962335ef7e34142500cc054a10d00532
+  normalized_sha256: sha256:23b664c6114192206a52db427d564ff9962335ef7e34142500cc054a10d00532
+cas_ref: sha256:23b664c6114192206a52db427d564ff9962335ef7e34142500cc054a10d00532
+coverage_gids:
+  - D5/S3/ConceptDynamics/ExperimentDesign/EvidenceRelativeExperimentCoverCriterion.evidence_relative_experiment_cover_criterion
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/ExperimentDesign/EvidenceRelativeExperimentCoverCriterion.evidence_relative_experiment_cover_criterion
+      source_sha256: sha256:23b664c6114192206a52db427d564ff9962335ef7e34142500cc054a10d00532
+      target_statement_id: sha256:c029a2d1f530608dbf9b84290f8b7c6e4818938691e9bf1188c8ea076bac9821
+  scribe:
+    - gid: D5/S3/ConceptDynamics/ExperimentDesign/EvidenceRelativeExperimentCoverCriterion.evidence_relative_experiment_cover_criterion
+      definition_sha256: sha256:1f3f05ce0fb29485bc7097c26207af0085e93d7b4b905fed41afd6dfa7a85724
+      emission_sha256: sha256:dc55f87e43e4dabd9c751039e18dc1d8739c0c2c343406fadc97b229fe437dd8
+  unresolved_subitems: []

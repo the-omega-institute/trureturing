@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:2555be7fe592f6dc100cf7d7bbb07b7aa240a45fe4f8f4933e45e542a650d223
+  normalized_sha256: sha256:2555be7fe592f6dc100cf7d7bbb07b7aa240a45fe4f8f4933e45e542a650d223
+cas_ref: sha256:2555be7fe592f6dc100cf7d7bbb07b7aa240a45fe4f8f4933e45e542a650d223
+coverage_gids:
+  - D5/S3/Quantum/Fibers/AllFutureStatisticsSufficiency.all_future_statistics_sufficiency
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/Fibers/AllFutureStatisticsSufficiency.all_future_statistics_sufficiency
+      source_sha256: sha256:2555be7fe592f6dc100cf7d7bbb07b7aa240a45fe4f8f4933e45e542a650d223
+      target_statement_id: sha256:5702b668fa35dda9c076190d51590a216f7044322c88f39ff39872525c628d47
+  scribe:
+    - gid: D5/S3/Quantum/Fibers/AllFutureStatisticsSufficiency.all_future_statistics_sufficiency
+      definition_sha256: sha256:6cace15f52e35258489f68ebc088700ad49d108c3085b469123897f169e4a02a
+      emission_sha256: sha256:9c3db58ee7caa5e3e6003a89131c276ce3ba9b0104c94a9658d84ac675052999
+  unresolved_subitems: []
