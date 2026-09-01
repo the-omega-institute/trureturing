@@ -1,0 +1,28 @@
+\[
+\boxed{
+\text{黄金尺度圆的整数 Fourier mode}
+=
+\text{log-frequency flow 的黄金 Mellin 采样}.
+}
+\]
+
+因此新增节点没有引入第二套相位语义。`goldenScaleFourierPhase` 是既有 `fourierPhase` 的黄金坐标表达。
+
+机器同时证明：
+
+\[
+\boxed{|\Theta_k(x)|=1},
+\]
+
+以及对正数 \(x,y\)：
+
+\[
+\boxed{
+\Theta_k(xy)=\Theta_k(x)\Theta_k(y).
+}
+\]
+
+所以每个整数模式都是正乘法群到 \(U(1)\) 的酉 character。
+
+---
+
