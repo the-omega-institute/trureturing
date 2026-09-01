@@ -139,6 +139,9 @@ internal sealed class ReflectedPairCurvatureRayleighIntertwinerDocument
     private static Formula PowerTwo(Formula value) =>
         Seq(value, Caret, Grp(D(2)));
 
+    private static Formula Frac(Formula numerator, Formula denominator) =>
+        new Formula.Fraction(numerator, denominator);
+
     private static Formula Call(string name, params Formula[] arguments)
     {
         var items = new List<Formula> { Operatorname, Grp(F.Id(name)), Open };
