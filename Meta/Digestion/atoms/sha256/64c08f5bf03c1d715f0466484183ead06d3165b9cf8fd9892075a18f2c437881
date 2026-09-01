@@ -1,0 +1,10 @@
+## 3. Frozen：反射增长对与负平方有符号行列式
+
+当前 `dev` 的真源：
+
+```text
+D5/S3/Analytic/Adelic/ReflectedGrowthPairNegativeSquare.lean
+```
+
+定义反射增长对：
+

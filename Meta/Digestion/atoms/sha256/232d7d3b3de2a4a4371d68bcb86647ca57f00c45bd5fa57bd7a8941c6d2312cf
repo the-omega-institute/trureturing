@@ -1,0 +1,18 @@
+E_\rho^{\mathrm{even}}
+-
+E_\rho^{\mathrm{odd}},
+}
+\]
+
+其中：
+
+\[
+E_\rho^{\mathrm{even}}\ge0,
+\qquad
+E_\rho^{\mathrm{odd}}\ge0.
+\]
+
+全部符号风险集中在 odd spectral channel。
+
+本轮 time-ordered cocycle 给 prime side 一个更具体的候选输入：
+
