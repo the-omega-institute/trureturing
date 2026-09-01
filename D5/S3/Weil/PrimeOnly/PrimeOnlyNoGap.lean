@@ -283,6 +283,68 @@ theorem spectralCoefficient_prime_only_no_gap {P : ℝ} [Fact (0 < P)] {I : Type
 abbrev NumberFieldPrime (K : Type*) [Field K] [NumberField K] :=
   IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers K)
 
+private theorem numberFieldIdealLSeries_summable
+    (K : Type*) [Field K] [NumberField K] {sigma : ℝ} (hsigma : 1 < sigma) :
+    LSeriesSummable
+      (fun n => (Nat.card {I : Ideal (NumberField.RingOfIntegers K) //
+        Ideal.absNorm I = n} : ℝ)) sigma := by
+  let residue : ℝ := NumberField.dedekindZeta_residue K
+  refine LSeriesSummable_of_sum_norm_bigO_and_nonneg
+    (Asymptotics.isBigO_atTop_natCast_rpow_of_tendsto_div_rpow
+      (a := residue) (r := 1) ?_)
+      (fun _ => Nat.cast_nonneg _)
+      zero_le_one (by simpa using hsigma)
+  change Tendsto _ _ (nhds residue)
+  refine ((NumberField.Ideal.tendsto_norm_le_div_atTop₀ K).comp
+    tendsto_natCast_atTop_atTop).congr
+    fun n => ?_
+  simp only [Function.comp_apply, Nat.cast_le, ← Nat.cast_sum, Real.rpow_one]
+  congr
+  rw [← add_left_inj 1, ← Ideal.card_norm_le_eq_card_norm_le_add_one,
+    show Finset.Icc 1 n = Finset.Ioc 0 n from Finset.Icc_succ_left_eq_Ioc _ _,
+    show 1 = Nat.card {I : Ideal (NumberField.RingOfIntegers K) //
+      Ideal.absNorm I = 0} by simp [Ideal.absNorm_eq_zero_iff],
+    Finset.sum_Ioc_add_eq_sum_Icc (n.zero_le),
+    ← Finset.card_preimage_eq_sum_card_image_eq
+      (fun k _ => Ideal.finite_setOf_absNorm_eq k)]
+  simp [Set.coe_eq_subtype]
+
+private theorem numberFieldIdealWeight_summable
+    (K : Type*) [Field K] [NumberField K] {sigma : ℝ} (hsigma : 1 < sigma) :
+    Summable (fun I : Ideal (NumberField.RingOfIntegers K) =>
+      1 / (Ideal.absNorm I : ℝ) ^ sigma) := by
+  classical
+  have houter : Summable (fun n : ℕ =>
+      (Nat.card {I : Ideal (NumberField.RingOfIntegers K) //
+        Ideal.absNorm I = n} : ℝ) / (n : ℝ) ^ sigma) := by
+    apply (numberFieldIdealLSeries_summable K hsigma).norm.congr
+    intro n
+    rw [LSeries.norm_term_eq]
+    by_cases hn : n = 0
+    · subst n
+      simp [Real.zero_rpow (ne_of_gt (zero_lt_one.trans hsigma))]
+    · rw [if_neg hn, Complex.norm_of_nonneg (Nat.cast_nonneg _)]
+      simp
+  rw [summable_partition (s := fun n : ℕ =>
+    {I : Ideal (NumberField.RingOfIntegers K) | Ideal.absNorm I = n})
+    (fun _ => one_div_nonneg.mpr (Real.rpow_nonneg (Nat.cast_nonneg _) _))]
+  refine ⟨fun n => ?_, ?_⟩
+  · exact (Ideal.finite_setOf_absNorm_eq
+      (S := NumberField.RingOfIntegers K) n).summable
+      (fun I => 1 / (Ideal.absNorm I : ℝ) ^ sigma)
+  · convert houter using 1
+    ext n
+    let fiber : Set (Ideal (NumberField.RingOfIntegers K)) :=
+      {I | Ideal.absNorm I = n}
+    letI : Fintype fiber := (Ideal.finite_setOf_absNorm_eq n).fintype
+    change (∑' I : fiber, 1 / (Ideal.absNorm I.1 : ℝ) ^ sigma) =
+      (Nat.card fiber : ℝ) / (n : ℝ) ^ sigma
+    rw [tsum_fintype, Nat.card_eq_fintype_card]
+    simp_rw [show ∀ I : fiber, Ideal.absNorm I.1 = n from fun I => I.2]
+    simp [nsmul_eq_mul, div_eq_mul_inv, mul_comm]
+  · intro I
+    exact ExistsUnique.intro (Ideal.absNorm I) (by simp) (fun n hn => by simpa using hn.symm)
+
 /-- The source weight `1 / (k (N p)^(kσ))` on number-field prime powers. -/
 def numberFieldPrimePowerWeight (K : Type*) [Field K] [NumberField K] (σ : ℝ)
     (q : PrimePowerIndex (NumberFieldPrime K)) : ℝ :=
