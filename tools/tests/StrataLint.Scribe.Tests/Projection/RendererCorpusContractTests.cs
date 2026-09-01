@@ -9,7 +9,7 @@ namespace StrataLint.Scribe.Tests;
 public sealed partial class FormulaCorpusInventoryTests
 {
     private const string CanonicalRendererSha256 =
-        "c1c78b60d8c547021349d185ed489b6a000061aa8a812470c580388956e09a21";
+        "660f662f1de51baf5086f96d48e20bb492cac03b6700181aa6f109a49faac487";
     private const string UpdateCommand = "make -C tools update-renderer-contract";
 
     [Fact]
@@ -404,6 +404,29 @@ public sealed partial class FormulaCorpusInventoryTests
         formulas.Add(new Formula.Power(function, additive));
         formulas.Add(new Formula.Power(function, function));
         formulas.Add(new Formula.Power(function, digits));
+        formulas.Add(new Formula.Power(group, digits));
+        formulas.Add(new Formula.Power(new Formula.LatexMacro(FormulaLatexMacro.Phi), group));
+        formulas.Add(new Formula.Power(word, sequence));
+        // 26 条模块合并后暴露的完整差集(由 InventoryAllLegacyLatexStatementsAndSyntaxFamilies
+        // 自己列出,一次补齐;逐条从判词读一条补一条已失败五次)。
+        var macroPhi = new Formula.LatexMacro(FormulaLatexMacro.Phi);
+        // 两个都需要,不可互相替代:
+        //   Negate(multiplicative) 覆盖 Negate.Operand=precedence:multiplicative;
+        //   Binary(Negate x, *, y) 才是 precedence:multiplicative 且 starts-with-negation:true
+        //   (即 (-x)*y;而 -(x*y) 的 precedence 是 prefix)。
+        // 且 FunctionCall 与 Apply 是不同节点,判词点名的是 FunctionCall.Arguments。
+        formulas.Add(new Formula.Power(word, negative));
+        formulas.Add(new Formula.Power(new Formula.Norm(x), digits));
+        formulas.Add(new Formula.Subscript(macroPhi, macroPhi));
+        formulas.Add(new Formula.Subscript(sequence, macroPhi));
+        formulas.Add(new Formula.LatexGroup([additive]));
+        var negOperandMul = new Formula.Negate(multiplicative);
+        var mulStartingNeg = new Formula.Binary(negative, FormulaBinaryOperator.Multiply, y);
+        formulas.Add(negOperandMul);
+        formulas.Add(mulStartingNeg);
+        formulas.Add(new Formula.LatexGroup([mulStartingNeg]));
+        formulas.Add(new Formula.FunctionCall(FormulaIdentifier.Create("f"), [mulStartingNeg]));
+         // FunctionCall.Arguments=multiplicative;negation:true
         formulas.Add(new Formula.Power(function, one));
         formulas.Add(new Formula.Power(function, script));
         formulas.Add(new Formula.Power(function, subscript));
