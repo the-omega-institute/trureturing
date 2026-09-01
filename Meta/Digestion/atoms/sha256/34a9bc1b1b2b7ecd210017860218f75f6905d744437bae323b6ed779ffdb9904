@@ -1,0 +1,6 @@
+## 二　W-E 预登记:投影 jet 指纹的尺度不变性(`ProjectiveJetScaleInvariance`)
+
+**义务**:按 C-5 骨架定义 `ProjectiveJetFingerprint`(order 与 `Fin r → K` 的 tail)与构造子 `projectiveToroidalJet`(首个非零导数归一化后的 $r$ 个投影系数,anchor 阶 $m$ 由 earlierVanish 与 anchorNonzero 两个假设给出)。单一公开定理:对 $c\ne0$,`period` 与 $z\mapsto c\cdot\mathrm{period}(z)$ 在同一点 $s$、同一 anchor 阶 $m$ 上产生相同的指纹(order 与 tail 皆相等);两个假设经具名引理转移到 $c\cdot\mathrm{period}$(消费 `iteratedDeriv_const_mul_field` 与 `mul_ne_zero`)。
+**可证伪预测(写在跑之前)**:若正确,归一化后的 tail 逐分量为 $\frac{c\,f^{(m+k+1)}(s)}{c\,f^{(m)}(s)}$ 约去 $c$,定理以 `iteratedDeriv_const_mul_field` 与 `mul_div_mul_left` 级引理闭合,公理集为标准三条;若在钉版 Mathlib 中该引理需要 `ContDiff` 前提而无法免除,则义务改标 `open` 并记录所需前提。
+**边界**:只闭合 test-vector 非零常数缩放下的不变性;anchor 阶 $m$ 由假设给出,不主张它由 `ToroidalJetDepth` 的深度证书产生(那是另一条义务),不触及 zeta 零点、RH 或 C-1 的 chart 选择。
+
