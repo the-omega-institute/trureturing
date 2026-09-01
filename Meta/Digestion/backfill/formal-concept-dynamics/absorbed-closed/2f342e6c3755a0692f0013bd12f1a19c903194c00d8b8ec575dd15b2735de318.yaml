@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:2f342e6c3755a0692f0013bd12f1a19c903194c00d8b8ec575dd15b2735de318
+  normalized_sha256: sha256:2f342e6c3755a0692f0013bd12f1a19c903194c00d8b8ec575dd15b2735de318
+cas_ref: sha256:2f342e6c3755a0692f0013bd12f1a19c903194c00d8b8ec575dd15b2735de318
+coverage_gids:
+  - D5/S3/ConceptDynamics/NormativeStructure/VoluntarinessActionFactorizationObstruction.action_result_does_not_identify_voluntariness
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/NormativeStructure/VoluntarinessActionFactorizationObstruction.action_result_does_not_identify_voluntariness
+      source_sha256: sha256:2f342e6c3755a0692f0013bd12f1a19c903194c00d8b8ec575dd15b2735de318
+      target_statement_id: sha256:5aba0811baa0ddb6bb89b6706d99bb4a0aece73b9c241bfe01349a718aac1802
+  scribe:
+    - gid: D5/S3/ConceptDynamics/NormativeStructure/VoluntarinessActionFactorizationObstruction.action_result_does_not_identify_voluntariness
+      definition_sha256: sha256:0e518e08c46833797ede414ec59a4a2a9204373f43fa59cfb5838b4887ce8191
+      emission_sha256: sha256:6984cf28d29f02c51e2b2a8b7989b275c07475bd0c9da5bf6441dc0f81e86d64
+  unresolved_subitems: []
