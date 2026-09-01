@@ -1,0 +1,28 @@
+## 路线 A：无源 Poisson 完成
+
+从 prime–pole–Gamma 数据直接证明，在减去已知调和增长项后：
+
+$$
+\boxed{
+U(\cdot,y)
+=
+P_y*U(\cdot,0)
+\qquad
+\forall y>0.
+}
+\tag{1625.1}
+$$
+
+这会立即推出：
+
+$$
+\Delta U=0
+\quad
+\text{于 }\mathbb H,
+$$
+
+从而没有离线 Riesz 源，RH 成立。
+
+这条路线的承重点是：
+
+* 边界数据可能不绝对可积；

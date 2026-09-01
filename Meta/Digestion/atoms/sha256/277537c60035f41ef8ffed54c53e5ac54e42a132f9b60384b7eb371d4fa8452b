@@ -1,0 +1,104 @@
+# 第一千五百九十五部　合法负号：约化迹而非负能量
+
+由约化循环谱：
+
+$$
+\operatorname{Tr}
+\left(
+(U_K|_{\mathbf1^\perp})^r
+\right)
+=
+K\mathbf1_{\{K\mid r\}}-1.
+\tag{1595.1}
+$$
+
+另一方面：
+
+$$
+\log\det(I-xU)
+=
+-\sum_{r=1}^{\infty}
+\frac{x^r}{r}
+\operatorname{Tr}(U^r).
+$$
+
+所以：
+
+$$
+\boxed{
+\log Z_K(x)
+=
+\sum_{r=1}^{\infty}
+\frac{x^r-x^{Kr}}r.
+}
+\tag{1595.2}
+$$
+
+这正是：
+
+$$
+\log\frac{1-x^K}{1-x}.
+$$
+
+其中负项：
+
+$$
+-\frac{x^{Kr}}r
+$$
+
+负责删除超过 exponent cutoff 的重复历史。
+
+全局上：
+
+$$
+\boxed{
+\log
+\frac{\zeta(s)}{\zeta(Ks)}
+=
+\sum_p\sum_{r\ge1}
+\frac{
+p^{-rs}-p^{-Krs}
+}{r}
+}
+\tag{1595.3}
+$$
+
+于绝对收敛区成立。
+
+所以：
+
+$$
+\boxed{
+\text{负 connected coefficient}
+}
+$$
+
+可以只是：
+
+* exclusion；
+* Möbius 消去；
+* trivial-mode reduction；
+* cohomological cancellation。
+
+它不自动表示：
+
+* 离线零点；
+* 负范数；
+* 负物理能量；
+* 反因果障碍。
+
+真正缺陷必须通过表示不变量检测，例如：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{正平方 realization 不存在};\\
+&\text{Gram 矩阵非 PSD};\\
+&\text{inverse-inner denominator 非平凡};\\
+&\text{非实 reciprocal-square 节点}.
+\end{aligned}
+}
+$$
+
+---
+

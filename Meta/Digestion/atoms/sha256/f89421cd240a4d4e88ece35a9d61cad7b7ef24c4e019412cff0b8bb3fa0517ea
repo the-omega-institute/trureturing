@@ -1,0 +1,13 @@
+* golden shift 对应 Fibonacci digit desubstitution。
+
+因此：
+
+$$
+\boxed{
+\text{partition function 是能量谱的不变量，
+却不是局部动力与关系结构的忠实不变量。}
+}
+$$
+
+可以定义“命名 gauge groupoid”：
+

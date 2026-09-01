@@ -1,0 +1,74 @@
+# 第一千五百九十一部　局部观察者平方谱
+
+固定一个实 observer coordinate：
+
+$$
+a\notin\operatorname{Spec}H_K.
+$$
+
+定义：
+
+$$
+\boxed{
+A_{K,a}
+=
+(H_K-aI)^{-2}.
+}
+\tag{1591.1}
+$$
+
+则：
+
+$$
+A_{K,a}>0.
+$$
+
+定义局部平方影 determinant：
+
+$$
+\boxed{
+\mathcal Q_{K,a}(w)
+=
+\det(I+wA_{K,a}).
+}
+\tag{1591.2}
+$$
+
+显式地：
+
+$$
+\boxed{
+\mathcal Q_{K,a}(w)
+=
+\prod_{j=1}^{K-1}
+\left(
+1+
+\frac{w}{(h_j-a)^2}
+\right).
+}
+\tag{1591.3}
+$$
+
+所以：
+
+$$
+\boxed{
+\operatorname{Zero}\mathcal Q_{K,a}
+\subset(-\infty,0).
+}
+$$
+
+并且：
+
+$$
+[w^m]\mathcal Q_{K,a}(w)
+=
+\operatorname{Tr}
+\left(
+\bigwedge\nolimits^mA_{K,a}
+\right)
+\ge0.
+$$
+
+因此：
+

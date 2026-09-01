@@ -1,0 +1,68 @@
+# 第一千六百八十六部　最大混合隐藏态
+
+假设外部只知道 phase output：
+
+$$
+\alpha,
+$$
+
+却不知道实际位于哪个 lift：
+
+$$
+x_j^\alpha.
+$$
+
+若对 \(m\) 个 lift 采取无偏先验，则内部状态为：
+
+$$
+\boxed{
+\rho_\alpha
+=
+\frac1m
+\sum_{j=1}^{m}
+|e_j^\alpha\rangle
+\langle e_j^\alpha|.
+}
+\tag{1686.1}
+$$
+
+因为 \(\{e_j^\alpha\}\) 为正交基：
+
+$$
+\boxed{
+\rho_\alpha
+=
+\frac1m I_{K_B}.
+}
+\tag{1686.2}
+$$
+
+所以该密度矩阵与 \(\alpha\) 无关。
+
+其 von Neumann 熵为：
+
+$$
+\boxed{
+S(\rho_\alpha)=\log m.
+}
+\tag{1686.3}
+$$
+
+这给上一轮的隐藏页熵一个更强版本：
+
+$$
+\boxed{
+\text{遗忘 phase fibre 中的 lift 标签，
+等价于把有限缺陷模型空间变成最大混合态。}
+}
+$$
+
+项目已机器证明，在有限确定性系统中，确定性粗化造成的熵损失正是条件熵，且只有在实际支持上可逆时损失才为零。
+
+这里：
+
+* \(m=1\) 时无页不确定性，熵为 \(0\)；
+* \(m>1\) 时 phase completion 遗忘 \(\log m\) 的离散页信息。
+
+---
+

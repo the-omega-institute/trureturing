@@ -1,0 +1,18 @@
+# 第一千六百二十部　全局完成异常只能发生在四个位置
+
+前文已经证明，每个有限 prime 区块都可以局部实现为：
+
+$$
+\text{hard-core}
+\to
+\text{unitary phase}
+\to
+\text{self-adjoint Cayley}
+\to
+\text{positive square}.
+$$
+
+若最终仍存在离线零点，则任何从这些局部区块构造全局 \(Q_t\) 的方案，至少必须在以下一处失败。
+
+---
+

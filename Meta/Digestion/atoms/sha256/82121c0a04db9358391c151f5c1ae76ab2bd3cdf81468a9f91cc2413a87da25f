@@ -1,0 +1,40 @@
+## 定理 1500.1（No finite terminal self）
+
+在式 (1500.1) 下，不存在有限 \(N\) 使：
+
+$$
+H/\ker\Gamma_N
+\cong
+H/\ker\Gamma_\infty,
+$$
+
+其中 \(\Gamma_\infty\) 表示全部干预轮廓。
+
+### 证明
+
+若某个有限 \(N\) 已经充分，则：
+
+$$
+\ker\Gamma_N=\ker\Gamma_\infty.
+$$
+
+但严格下降保证：
+
+$$
+\ker\Gamma_{N+1}\subsetneq\ker\Gamma_N,
+$$
+
+矛盾。∎
+
+这是一种严格的“名可名，非常名”动力模型：
+
+$$
+\boxed{
+\text{任何有限名字都会被一个新的合法互动继续细化。}
+}
+$$
+
+它仍然没有定义“道”，只定义了某个观察程序没有终点。
+
+---
+

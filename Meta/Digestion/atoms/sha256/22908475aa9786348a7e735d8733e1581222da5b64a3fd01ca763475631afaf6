@@ -1,0 +1,49 @@
+## 1587.1 但局部轴不是 Riemann 的全局临界线
+
+这里的局部自对偶轴是：
+
+$$
+\Re s=0.
+$$
+
+Riemann completed \(\xi\) 的全局自对偶轴则是：
+
+$$
+\Re s=\frac12.
+$$
+
+这两个轴不能仅靠乘一个零点自由因子互相替换，因为：
+
+$$
+s\mapsto s-\frac12
+$$
+
+改变了每个 prime exponent 的实际权重：
+
+$$
+p^{-s}
+\longmapsto
+p^{1/2}p^{-s}.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{全局 }1/2\text{ 中心不是每个 prime 因子的独立局部中心。}
+}
+$$
+
+它是由：
+
+* 全部 finite primes；
+* Archimedean Gamma 因子；
+* 极点修正；
+* 全局函数方程；
+
+共同确定的 adelic half-density normalization。
+
+这正是局部—全局桥真正困难的第一处。
+
+---
+

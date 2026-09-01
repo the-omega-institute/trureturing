@@ -1,0 +1,45 @@
+## 定理 1554.1（Normal-jet exterior-power formula）
+
+RH 成立且 \(\Xi(t)\neq0\) 时：
+
+$$
+\boxed{
+\frac{\mathcal J_m(t)}{\mathcal J_0(t)}
+=
+\operatorname{Tr}
+\left(
+\bigwedge\nolimits^m A_t
+\right).
+}
+\tag{1554.1}
+$$
+
+更显式地：
+
+$$
+\boxed{
+\frac{\mathcal J_m(t)}{\Xi(t)^2}
+=
+\sum_{\lambda_1<\cdots<\lambda_m}
+\prod_{r=1}^{m}
+\frac1{(\lambda_r-t)^2}.
+}
+\tag{1554.2}
+$$
+
+所以：
+
+* \(\mathcal J_1\) 是一体逆平方谱总量；
+* \(\mathcal J_2\) 是二体反对称关系总量；
+* \(\mathcal J_m\) 是 \(m\) 个不同谱模式组成的外幂关系总量。
+
+这比“法向 jet 都应非负”更强：
+
+$$
+\boxed{
+\text{每一个法向 jet 都是一整个反对称关系扇区的正迹。}
+}
+$$
+
+---
+

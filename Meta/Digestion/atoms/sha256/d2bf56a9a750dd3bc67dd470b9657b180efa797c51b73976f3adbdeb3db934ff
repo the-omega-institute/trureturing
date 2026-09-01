@@ -1,0 +1,63 @@
+## 1539.1 中心强度与 Schatten moments
+
+实 \(\delta\) 上：
+
+$$
+\boxed{
+\frac{\mathcal I(\delta,0)}{\mathcal I(0,0)}
+=
+\det(I+\delta^2A)^2.
+}
+\tag{1539.3}
+$$
+
+定义：
+
+$$
+\boxed{
+S(u)=\frac{G'(u)}{G(u)}.
+}
+$$
+
+则：
+
+$$
+\boxed{
+S(u)
+=
+\operatorname{Tr}\!\left[
+A(I+uA)^{-1}
+\right].
+}
+\tag{1539.4}
+$$
+
+中心逆平方 moments 为：
+
+$$
+\boxed{
+\tau_n=\operatorname{Tr}(A^n).
+}
+\tag{1539.5}
+$$
+
+因此：
+
+$$
+\boxed{
+[\tau_{i+j+1}]
+=
+\left[
+\left\langle
+A^{i+\frac12},
+A^{j+\frac12}
+\right\rangle_{\mathrm{HS}}
+\right].
+}
+\tag{1539.6}
+$$
+
+前文的中心 Hankel 正性，就是 Hilbert–Schmidt Gram 正性被 determinant 命名以后留下的标量迹。
+
+---
+

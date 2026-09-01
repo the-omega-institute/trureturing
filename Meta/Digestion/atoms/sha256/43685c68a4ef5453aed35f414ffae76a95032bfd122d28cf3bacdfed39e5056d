@@ -1,0 +1,7 @@
+# 第一千五百二十七部　Stieltjes 连分数与黄金比例
+
+正矩问题进一步产生 Stieltjes／Jacobi 连分数。
+
+其每一次尾部剥离都对应：
+
+* 对当前 Gram 系统作一次 Schur 补；

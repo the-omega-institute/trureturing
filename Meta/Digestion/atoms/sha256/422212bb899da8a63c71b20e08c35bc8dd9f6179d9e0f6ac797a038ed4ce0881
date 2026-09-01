@@ -1,0 +1,50 @@
+## 路线 B：有限正谱紧性
+
+固定任意：
+
+$$
+t\notin Z(\Xi).
+$$
+
+对每个 \(N\)，由 prime–Gamma 有限数据构造：
+
+$$
+A_N(t)\ge0,
+$$
+
+并证明：
+
+$$
+\boxed{
+e_m(A_N(t))
+\longrightarrow
+\frac{\mathcal J_m(t)}
+{\mathcal J_0(t)}
+\qquad
+\forall m.
+}
+\tag{1625.2}
+$$
+
+第一阶收敛自动给出统一迹预算。
+
+随后由定理 1618.1，正行列式自动紧致并收敛为：
+
+$$
+Q_t(w)/Q_t(0),
+$$
+
+其零点只能位于负实轴，RH 成立。
+
+这条路线不需要先构造唯一 microscopic history。
+
+它只需要证明：
+
+$$
+\boxed{
+\text{每个有限 normal-jet 名字，都能越来越准确地获得一个正谱解释。}
+}
+$$
+
+---
+

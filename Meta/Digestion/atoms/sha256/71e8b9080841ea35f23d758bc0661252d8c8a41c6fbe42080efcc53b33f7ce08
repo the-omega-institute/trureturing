@@ -1,0 +1,10 @@
+* 离线负谱障碍。
+
+磁单极子图景在这里读取 harmonic/cohomological sector。
+
+黑洞/Hankel 图景读取 boundary condition 与泄漏。
+
+Riemann RH 图景要求 reduced Laplacian 始终非负。
+
+---
+

@@ -1,0 +1,38 @@
+## 1555.1 负 connected moments 的交错贡献
+
+该共轭对对 \(\kappa_n(\gamma)\) 的贡献为：
+
+$$
+\boxed{
+\kappa_n^{\mathrm{off}}(\gamma)
+=
+2m_\rho
+(-1)^n
+\delta^{-2n}.
+}
+\tag{1555.4}
+$$
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+n\text{ 偶}
+&:\quad\text{正贡献};\\
+n\text{ 奇}
+&:\quad\text{负贡献}.
+\end{aligned}
+}
+$$
+
+这给此前反复出现的：
+
+* 奇偶完成；
+* 奇层破缺；
+* 负时间交错；
+
+一个非常具体的谱来源。
+
+---
+

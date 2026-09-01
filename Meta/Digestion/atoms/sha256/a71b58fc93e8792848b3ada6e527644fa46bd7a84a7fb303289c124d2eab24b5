@@ -1,0 +1,28 @@
+# 第一千七百四十五部　时间何时能够打破隐藏纤维
+
+项目已机器证明两种互补情形。
+
+若两个 reflected branches 的 multiplier 不同，则第一非退化时间步已经能够把它们分开。
+
+对有限个互异模式，与模式数相同长度的时间窗口可以由 Vandermonde 系统精确恢复全部 amplitudes；增加观察时间只会进一步缩小 observer fibre。
+
+因此：
+
+$$
+\boxed{
+\text{时间能够显现差异，
+当且仅当动力本身没有因子化通过原来的粗名字。}
+}
+$$
+
+若所有动力都只使用：
+
+$$
+\Lambda_B
+$$
+
+作用，那么 branch matrix factor 永远不可见。
+
+必须加入：
+
+* 不同 multiplier；

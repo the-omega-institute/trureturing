@@ -1,0 +1,29 @@
+## 1593.3 一个重要修正：Fibonacci phase grids 不是标准逆系统
+
+相邻 Fibonacci 数一般不满足：
+
+$$
+F_n\mid F_{n+1}.
+$$
+
+所以：
+
+$$
+\mathbb Z/F_n\mathbb Z
+$$
+
+并不会自然形成逐层覆盖的逆系统。
+
+因此：
+
+$$
+\boxed{
+\text{Fibonacci phase grids 本身不是一个标准 Solenoid 塔。}
+}
+$$
+
+它们是网格趋于稠密的多尺度采样族。
+
+若要构造真正的 inverse-limit phase completion，需要：
+
+* 使用整除有向的全部模数；

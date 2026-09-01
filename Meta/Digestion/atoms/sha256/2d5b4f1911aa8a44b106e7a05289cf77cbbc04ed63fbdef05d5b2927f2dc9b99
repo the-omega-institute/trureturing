@@ -1,0 +1,74 @@
+# 第一千七百四十九部　相位 winding 如何真正变成磁单极子 Chern 荷
+
+圆周本身满足：
+
+$$
+H^2(S^1)=0.
+$$
+
+所以单纯的 phase monodromy 不能直接成为第一 Chern 类。
+
+但有限 Blaschke 边界值：
+
+$$
+B:S^1\to S^1
+$$
+
+具有 winding：
+
+$$
+\deg B=m.
+$$
+
+用 \(B\) 作为 equator 上的 clutching function，把两个平凡线丛：
+
+$$
+D_+\times\mathbb C,
+\qquad
+D_-\times\mathbb C
+$$
+
+沿边界粘合：
+
+$$
+v_+=B(\zeta)v_-,
+$$
+
+得到球面 \(S^2\) 上的线丛：
+
+$$
+L_B.
+$$
+
+其第一 Chern 数为：
+
+$$
+\boxed{
+c_1(L_B)=m.
+}
+\tag{1749.1}
+$$
+
+所以正确链条不是：
+
+$$
+\boxed{
+\text{圆周 monodromy}=\text{Chern 数};
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{圆周 degree}
+\xrightarrow{\text{clutching/Bott suspension}}
+\text{球面 Chern 荷}.
+}
+\tag{1749.2}
+$$
+
+这精确解释了磁单极子图景如何从 phase fibre 图景产生。
+
+---
+

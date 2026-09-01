@@ -1,0 +1,23 @@
+# 第一千五百八十一部　“道不可名”在这里得到一个可计算实例
+
+现在可以非常具体地看到：
+
+$$
+\boxed{
+\text{同一个完成名字不能唯一决定生成历史。}
+}
+$$
+
+同一个 geometric exponent distribution：
+
+$$
+(1-x)x^e
+$$
+
+在 binary lift 中是独立位过程；
+
+在 Zeckendorf lift 中是硬核相关过程。
+
+它们：
+
+* 拥有不同的局部图；

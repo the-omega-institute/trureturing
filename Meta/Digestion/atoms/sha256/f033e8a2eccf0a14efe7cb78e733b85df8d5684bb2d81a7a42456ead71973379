@@ -1,0 +1,21 @@
+* Cauchy harmonic measure。
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+\text{universal-cover 图表}
+&=\text{历史／Solenoid 图表};\\
+\text{Cayley 图表}
+&=\text{边界／Poisson 图表}.
+\end{aligned}
+}
+$$
+
+这解释了此前 Solenoid、黑洞边界与 Poisson 光影为何反复靠近，却不能简单认同。
+
+它们来自同一个 compact phase 的不同去紧化。
+
+---
+

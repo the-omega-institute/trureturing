@@ -1,0 +1,55 @@
+## 定理 1515.1（平方降阶）
+
+若 \(F\) 的整函数阶为 \(1\)，则 \(G\) 的阶为：
+
+$$
+\boxed{
+\frac12.
+}
+\tag{1515.3}
+$$
+
+### 证明
+
+因为任意 \(w\) 都有平方根 \(z\)，且：
+
+$$
+|z|=\sqrt{|w|},
+$$
+
+故最大模满足：
+
+$$
+M_G(r)=M_F(\sqrt r).
+$$
+
+于是：
+
+$$
+\begin{aligned}
+\rho(G)
+&=
+\limsup_{r\to\infty}
+\frac{
+\log\log M_G(r)
+}{
+\log r
+}\\
+&=
+\limsup_{r\to\infty}
+\frac{
+\log\log M_F(\sqrt r)
+}{
+2\log\sqrt r
+}
+=
+\frac{\rho(F)}2.
+\end{aligned}
+$$
+
+∎
+
+阶小于 \(1\) 是决定性事实：\(G\) 具有 genus-zero 的规范乘积，不再需要非平凡指数补偿项。
+
+---
+

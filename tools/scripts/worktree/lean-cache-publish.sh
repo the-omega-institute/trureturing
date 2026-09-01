@@ -200,15 +200,27 @@ case "$VERB" in
     # 失败一律 fail-open 为「不删」：列举失败、view 失败、任一 delete 失败，都只记进收据，
     # 不阻断发布。剪枝是清理，不是发布的正确性条件——为清理失败而判发布失败，是把
     # 一个可自愈的存量问题升级成供给中断。
+    # 同一 config 前缀下保留的 release 份数(含刚发布的这份)。
+    RETAIN=5
     pruned=0
     prune_error=""
     if gh release view "$tag" --repo "$REPO" --json tagName --jq .tagName >/dev/null 2>&1; then
       prefix="lean-cache-v1-${slug}-${config_sha256:0:16}-"
-      if superseded="$(gh release list --repo "$REPO" --limit 100 --json tagName --jq '.[].tagName' 2>/dev/null)"; then
+      # 保留窗口:同 config 前缀下最近 RETAIN 份(含刚发的这份)不剪。
+      # 只留一份时,任何仍在飞、其 sources 尚未换代的消费者会在 prefix 回退上落空;
+      # 保留几份让它们仍能取回一份可用的近邻,代价是有界的存量而非无界累积。
+      # 列举按创建时间倒序,故跳过前 RETAIN 个即为保留最新的那几份。
+      if superseded="$(gh release list --repo "$REPO" --limit 100 --json tagName,createdAt \
+                         --jq 'sort_by(.createdAt) | reverse | .[].tagName' 2>/dev/null)"; then
+        kept=0
         while IFS= read -r old_tag; do
           [[ -n "$old_tag" ]] || continue
           [[ "$old_tag" == "$prefix"* ]] || continue
           [[ "$old_tag" != "$tag" ]] || continue
+          if (( kept < RETAIN - 1 )); then
+            kept=$((kept + 1))
+            continue
+          fi
           if gh release delete "$old_tag" --repo "$REPO" --yes --cleanup-tag >/dev/null 2>&1; then
             pruned=$((pruned + 1))
           else

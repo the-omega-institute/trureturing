@@ -1,0 +1,21 @@
+## 1741.1 与 Jones 指数的边界
+
+$$
+\varphi^2
+$$
+
+作为关系增长率，与 Fibonacci fusion、量子维数平方和某些 Jones 指数数值一致。
+
+但：
+
+$$
+\boxed{
+\text{增长率 } \varphi^2
+\neq
+\text{自动得到一个 Jones index } \varphi^2.
+}
+$$
+
+真正的 Jones 指数还要求：
+
+* 一个具体因子包含；

@@ -1,0 +1,17 @@
+## 1690.1 rank function
+
+$$
+\boxed{
+\kappa(q)
+=
+\dim V_q
+=
+\sum_{\delta_\rho>q}
+m_\rho.
+}
+\tag{1690.4}
+$$
+
+这正是：
+
+* 活跃 Blaschke degree；

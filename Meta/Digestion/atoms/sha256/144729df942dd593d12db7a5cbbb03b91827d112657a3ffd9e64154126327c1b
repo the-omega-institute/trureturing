@@ -1,0 +1,85 @@
+# 第一千五百八十八部　局部正性存在三个互不等价的层级
+
+有限黄金硬核区块具有：
+
+1. 正系数：
+
+   $$
+   Z_K(x)=1+x+\cdots+x^{K-1};
+   $$
+2. 正的两步 transfer；
+3. 单位圆零点。
+
+但这些性质仍然不推出：
+
+$$
+\text{系数序列为 PF}_\infty.
+$$
+
+最小反例为：
+
+$$
+K=3.
+$$
+
+此时：
+
+$$
+Z_3(x)=1+x+x^2,
+$$
+
+其零点为：
+
+$$
+e^{\pm2\pi i/3},
+$$
+
+并非负实数。
+
+系数 Toeplitz 矩阵存在负小行列式：
+
+$$
+\boxed{
+\det
+\begin{pmatrix}
+1&1&0\\
+1&1&1\\
+0&1&1
+\end{pmatrix}
+=-1.
+}
+\tag{1588.1}
+$$
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+\text{正系数}
+&\not\Rightarrow
+\text{实负零点};\\
+\text{正 transfer}
+&\not\Rightarrow
+\text{PF}_\infty;\\
+\text{单位圆稳定}
+&\not\Rightarrow
+\text{正平方谱}.
+\end{aligned}
+}
+\tag{1588.2}
+$$
+
+这是一条决定性的 no-go：
+
+$$
+\boxed{
+\text{prime 侧的局部 total positivity，
+不会自动成为 zero 侧的 Pólya–frequency positivity。}
+}
+$$
+
+两者中间必然存在一个更强的变换。
+
+---
+

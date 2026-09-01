@@ -1,0 +1,38 @@
+# 第一千七百五十一部　Riemann 离线缺陷的 branch-correspondence 形式
+
+固定：
+
+$$
+q>0,\qquad T<\infty.
+$$
+
+令：
+
+$$
+B_{q,T}
+$$
+
+为有限 shifted defect factor，并定义：
+
+$$
+\boxed{
+E_{q,T}=K_{B_{q,T}}.
+}
+\tag{1751.1}
+$$
+
+则：
+
+$$
+\dim E_{q,T}
+=
+\sum_{\substack{
+\delta_\rho>q\\
+|\gamma_\rho|\le T
+}}
+m_\rho.
+$$
+
+若该维数为 \(m>0\)，则：
+
+* 存在 \(m\)-维 innovation space；

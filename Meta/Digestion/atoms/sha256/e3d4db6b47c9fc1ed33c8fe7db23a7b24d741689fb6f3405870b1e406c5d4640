@@ -1,0 +1,94 @@
+# 第一千五百四十一部　Cayley–Toeplitz 紧化
+
+令：
+
+$$
+\boxed{
+Y_u=I-2X_u.
+}
+\tag{1541.1}
+$$
+
+则：
+
+$$
+-1<Y_u\le1.
+$$
+
+定义：
+
+$$
+\boxed{
+c_n(u)
+=
+\operatorname{Tr}
+\left[
+\rho_uT_n(Y_u)
+\right],
+}
+\tag{1541.2}
+$$
+
+其中 \(T_n\) 是第一类 Chebyshev 多项式。
+
+若：
+
+$$
+T_n(1-2x)=\sum_{k=0}^{n}p_{n,k}x^k,
+$$
+
+则：
+
+$$
+\boxed{
+c_n(u)
+=
+\sum_{k=0}^{n}p_{n,k}r_k(u).
+}
+\tag{1541.3}
+$$
+
+仓库已机器证明：偶谱测度的完整 Cayley moments 可以由同一尺度的有限 Stieltjes derivative jet 精确恢复。
+
+仓库也已经证明，非负谱坐标经相应有理紧化进入 \([-1,1]\)，其 Chebyshev slack 位于 \([0,1]\)。
+
+定义：
+
+$$
+c_{-n}=c_n,
+$$
+
+以及 Toeplitz 矩阵：
+
+$$
+\boxed{
+\mathbb T_N(u)
+=
+[c_{j-k}(u)]_{j,k=0}^{N}.
+}
+\tag{1541.4}
+$$
+
+RH 下，这些是单位圆正测度的 Fourier Gram 矩阵：
+
+$$
+\boxed{
+\mathbb T_N(u)\succeq0.
+}
+\tag{1541.5}
+$$
+
+反向地，若在某一固定尺度 \(u_0\)：
+
+$$
+S(u_0)>0,
+\qquad
+\mathbb T_N(u_0)\succeq0
+\quad
+\forall N,
+$$
+
+则单位圆矩问题给出正测度；对称化后推至 \([-1,1]\)，再经 \(x=(1-y)/2\) 得到 Hausdorff 测度，并由上一节的 meromorphic rigidity 恢复正逆平方谱。
+
+因此：
+

@@ -1,0 +1,59 @@
+## v9.4：法向 Laguerre 证书、正迹类行列式、单尺度 Cayley–Toeplitz 紧化与黄金五模输运
+
+以下接续前文**第一千五百三十二部**，并补完上一轮未闭合的结论。
+
+本轮仍然不定义“道”。我们只研究 completed \(\xi\) 这一高度完成的名字，在不同观察图表中留下的可验证结构。
+
+最重要的收敛是：
+
+$$
+\boxed{
+\text{离线零点甚至不必先转译成单极子、黑洞或 Hankel 缺陷。}
+}
+$$
+
+它会直接迫使真实 completed-\(\xi\) 法向强度的某个有限阶 Taylor 系数变负：
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\Longrightarrow
+\exists\,q\in\mathbb Q,\ \exists\,m<\infty:
+\operatorname{normalJet}(q,m)<0.
+}
+$$
+
+所以，磁单极子、黑洞视界、Hankel 反因果记忆仍然是同一缺陷的有价值图表；但离线零点目前最短的证明对偶，其实只是：
+
+$$
+\boxed{
+\text{一个有理纵坐标上的有限阶负法向 jet。}
+}
+$$
+
+进一步，前文的中心逆平方 Hankel 塔可以在任一固定正尺度上紧化为：
+
+$$
+\boxed{
+[0,1]\text{ 上的 Hausdorff moments}
+\quad\longleftrightarrow\quad
+S^1\text{ 上的 Cayley–Toeplitz moments}.
+}
+$$
+
+所有相位矩都被限制在单位圆内，数值条件显著优于无界幂矩。
+
+而黄金比例出现了一条新的精确关系：
+
+$$
+\boxed{
+\frac{\varphi^2-1}{\varphi^2+1}
+=
+\frac1{\sqrt5}.
+}
+$$
+
+它表示：线性 Cayley 尺度跨越一个方向保持的黄金步长 \(\varphi^2\) 时，仓库已形式化的尺度输运余项，恰好以 \(1/\sqrt5\) 为几何收缩率。
+
+---
+

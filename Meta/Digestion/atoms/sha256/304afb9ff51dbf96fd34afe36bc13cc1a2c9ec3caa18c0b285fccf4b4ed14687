@@ -1,0 +1,53 @@
+# 第一千六百二十四部　连续体源与离散行程的交换方块
+
+现在可以把项目最新的四个机器结果组成一张统一方块。
+
+$$
+\boxed{
+\begin{array}{ccc}
+U(x,\omega)=\log|\xi|
+&
+\xrightarrow{\ \partial_\omega\ }
+&
+\Re(\xi'/\xi)
+\\[2mm]
+\downarrow{\scriptstyle\text{尺度离散化}}
+&&
+\downarrow{\scriptstyle\text{阈值／符号读出}}
+\\[2mm]
+\text{完整观察行程}
+&
+\xrightarrow{\ \text{首次差异}\ }
+&
+d_\gamma=\gamma^k.
+\end{array}
+}
+\tag{1624.1}
+$$
+
+上方由项目的 log-norm directional derivative 提供。
+
+下方由 itinerary first-difference power law 提供。
+
+横向细化映射满足恒等与复合律。
+
+每次确定性粗化的信息损失由条件熵精确记账。
+
+所以项目目前已经拥有：
+
+$$
+\boxed{
+\text{连续解析深度}
++
+\text{离散首次差异深度}
++
+\text{细化范畴}
++
+\text{遗忘熵}.
+}
+$$
+
+真正还缺的是把这张抽象观察方块实例化为完整的 \(\xi\) 零点源场。
+
+---
+

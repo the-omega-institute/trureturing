@@ -1,0 +1,26 @@
+## 第三桥：Prime–Gamma positive exterior transport
+
+最终目标是从 prime、pole、Gamma 数据直接构造：
+
+$$
+\boxed{
+A_t\ge0
+}
+$$
+
+使：
+
+$$
+\boxed{
+\frac{Q_t(w)}{Q_t(0)}
+=
+\det(I+wA_t).
+}
+$$
+
+这是 RH 的真正承重桥。
+
+前两桥本身不能证明 RH；式 (1574.2) 已经说明所有假设性离线零点会继续存在于足够深的黄金有限塔中。
+
+---
+

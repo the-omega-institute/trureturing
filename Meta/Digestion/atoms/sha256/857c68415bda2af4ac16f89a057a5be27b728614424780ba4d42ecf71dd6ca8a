@@ -1,0 +1,92 @@
+# 第一千五百六十七部　建议形式化顺序
+
+```text
+D5/S3/Analytic/Zeta/MovingPositiveFredholm/
+  MovingSquareShadow.lean
+  RHMovingSquareCanonicalProduct.lean
+  MovingInverseGapOperator.lean
+  MovingInverseGapTraceClass.lean
+  MovingSquareFredholmDeterminant.lean
+
+D5/S3/Analytic/Zeta/NormalJetExteriorPower/
+  ExteriorPowerTrace.lean
+  NormalizedNormalJet.lean
+  NormalJetEqualsExteriorTrace.lean
+  ConnectedNormalMomentEqualsSchattenTrace.lean
+  NewtonNormalJetIdentity.lean
+
+D5/S3/Analytic/Zeta/MatchedOffLineNegativeNode/
+  XiOffLineConjugatePair.lean
+  MatchedOrdinateReciprocalNode.lean
+  MatchedNodeIsNegativeReal.lean
+  MatchedMovingSquarePositiveZero.lean
+  OffLinePairAlternatingConnectedMoment.lean
+
+D5/S3/Analytic/Zeta/NearestDefectAmplification/
+  NearestOffLinePair.lean
+  RemainingReciprocalMomentBound.lean
+  OddConnectedMomentDominance.lean
+  ExplicitDefectDetectionOrder.lean
+
+D5/S3/Analytic/Zeta/NormalJetPolyaFrequency/
+  NormalJetToeplitzMatrix.lean
+  NormalJetPFSequence.lean
+  RHImpliesNormalJetTotalNonnegative.lean
+  TotalNonnegativeNormalJetImpliesNegativeSquareZeros.lean
+  OneObserverTotalPositivityRHCriterion.lean
+  CenterNormalJetFiniteMinorCertificate.lean
+
+D5/S3/Analytic/Zeta/NormalJetSchurSectors/
+  NormalJetElementarySymmetric.lean
+  NormalJetSkewSchurMinor.lean
+  SchurFunctorPositiveTrace.lean
+  AllNormalJetRelationSectorsPositive.lean
+
+D5/S3/Analytic/Zeta/NormalJetJensen/
+  NormalJetExponentialCoefficient.lean
+  NormalJetJensenPolynomial.lean
+  RHNormalJetJensenHyperbolic.lean
+  JensenHyperbolicPositiveImpliesRH.lean
+  DegreeTwoFactorialTuran.lean
+
+D5/S3/Analytic/Zeta/NormalJetVariationDiminishing/
+  FiniteNormalJetConvolution.lean
+  TotalNonnegativeVariationDiminishing.lean
+  RHNormalCompletionDoesNotIncreaseVariation.lean
+
+D5/S3/Observer/PositiveSpectralBernoulli/
+  FredholmSubsetPartitionFunction.lean
+  SpectralBernoulliOccupation.lean
+  OccupationTraceDerivative.lean
+  OccupationVarianceDerivative.lean
+  SpectralBernoulliEntropy.lean
+
+D5/S3/GoldenObserver/GoldenModeActivation/
+  GoldenOccupationEquation.lean
+  GoldenModeFugacity.lean
+  GoldenModeVacancy.lean
+  GoldenModePartitionFactor.lean
+  RiemannGoldenActivationScale.lean
+  OffLineModeNoPositiveOccupation.lean
+
+D5/S3/Analytic/Zeta/ExteriorSymmetricDuality/
+  ExteriorCompletion.lean
+  SymmetricCompletion.lean
+  ExteriorSymmetricReciprocity.lean
+  CommonConnectedPowerSums.lean
+
+D5/S3/Weil/PrimeZeroCompletionBridge/
+  PrimeSymmetricLocalFactor.lean
+  ZeroExteriorLocalFactor.lean
+  PrimeGammaToNormalJetFactorizationTarget.lean
+  PrimeGammaPositiveBidiagonalNetworkTarget.lean
+  PrimeGammaPositiveFredholmTarget.lean
+
+D5/S3/Observer/FiniteAtomicExteriorCutoff/
+  FiniteAtomicSpectralOperator.lean
+  FiniteRankExteriorPowerVanishes.lean
+  FiniteObserverCompletionNotGlobalSpectrum.lean
+```
+
+---
+

@@ -1,0 +1,17 @@
+## 1753.2 Cuntz–Krieger KMS 只能作为候选模型
+
+golden Cuntz–Krieger algebra 确实拥有由 Perron 数据控制的规范 KMS state。
+
+但不能直接宣布：
+
+$$
+\boxed{
+\text{Li–Clark moments}
+=
+\text{golden KMS correlations}.
+}
+$$
+
+若要建立这一点，必须证明：
+
+* 相同的 moments；

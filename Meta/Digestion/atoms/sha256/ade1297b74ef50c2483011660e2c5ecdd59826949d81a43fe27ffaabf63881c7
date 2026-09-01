@@ -1,0 +1,19 @@
+## 1580.2 Strong-Rayleigh 输运版本
+
+zero side 的正准自由过程具有稳定生成多项式和 strongly Rayleigh finite marginals。([arXiv][2])
+
+因此可以提出更有限的目标：
+
+$$
+\boxed{
+\text{从 prime–Gamma 数据直接证明 }
+\frac{Q_t(uz)}{Q_t(u)}
+\text{ 是 PF}_\infty
+}
+$$
+
+或其 multivariate refinement 为 stable polynomial。
+
+这等价于构造所有：
+
+* total-positive Toeplitz minors；
