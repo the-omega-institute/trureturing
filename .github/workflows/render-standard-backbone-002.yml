@@ -1,0 +1,90 @@
+name: render-standard-backbone-002
+
+on:
+  push:
+    branches:
+      - tmp/render-standard-backbone-002
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout helper payload
+        uses: actions/checkout@v4
+        with:
+          ref: tmp/render-standard-backbone-002
+          path: helper
+
+      - name: Checkout target PR branch
+        uses: actions/checkout@v4
+        with:
+          ref: lane/math/standard-math-backbone-v1
+          path: target
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Render all current Blueprint mirrors
+        working-directory: target
+        run: |
+          set -euo pipefail
+          make -C tools dotnet
+          make scribe
+
+      - name: Append finite localizer theory to the existing volume
+        working-directory: target
+        run: |
+          set -euo pipefail
+          theory='docs/develop/theory/RH_RESEARCH_LANE_THEORY.md'
+          marker='## [STANDARD BACKBONE 002] FINITE HERMITIAN AND POINT-GAP SPECTRAL LOCALIZERS'
+          cp "$theory" /tmp/theory-before.md
+          if ! grep -Fq "$marker" "$theory"; then
+            cat ../helper/tmp/theory-standard-backbone-002.md >> "$theory"
+          fi
+          python - <<'PY'
+          from pathlib import Path
+          before = Path('/tmp/theory-before.md').read_bytes()
+          final = Path('docs/develop/theory/RH_RESEARCH_LANE_THEORY.md').read_bytes()
+          final.decode('utf-8')
+          marker = b'## [STANDARD BACKBONE 002] FINITE HERMITIAN AND POINT-GAP SPECTRAL LOCALIZERS'
+          if final.count(marker) != 1:
+              raise SystemExit('localizer theory marker missing or duplicated')
+          if before.count(marker) == 0 and not final.startswith(before):
+              raise SystemExit('theory update is not append-only')
+          PY
+
+      - name: Verify scope and compile
+        working-directory: target
+        run: |
+          set -euo pipefail
+          allowed='^(Blueprint/D5/S3/Observer/AgencyHolonomy/(PrimeFourierMagnusCommutatorBridge|TimeOrderedMemoryMatrixRepresentation)\.md|Blueprint/D5/S3/Observer/Chronology/(PrimitiveMagnusLog|StepTwoFreeLieBridge|TruncatedTensorHopf|TruncatedTensorSignature)\.md|Blueprint/D5/S3/SpectralTopology/(FiniteHermitianLocalizer|FinitePointGapLocalizer|FiniteLocalizerIndex)\.md|docs/develop/theory/RH_RESEARCH_LANE_THEORY\.md)$'
+          git status --short | sed 's/^...//' | while read -r path; do
+            printf '%s\n' "$path" | grep -Eq "$allowed" || {
+              echo "unexpected generated path: $path" >&2
+              exit 1
+            }
+          done
+          test -f Blueprint/D5/S3/SpectralTopology/FiniteHermitianLocalizer.md
+          test -f Blueprint/D5/S3/SpectralTopology/FinitePointGapLocalizer.md
+          test -f Blueprint/D5/S3/SpectralTopology/FiniteLocalizerIndex.md
+          make lean
+
+      - name: Commit generated artifacts
+        working-directory: target
+        run: |
+          set -euo pipefail
+          if git diff --quiet && test -z "$(git ls-files --others --exclude-standard)"; then
+            echo 'No generated change remains.'
+            exit 0
+          fi
+          git config user.name 'AlyciaBHZ'
+          git config user.email '50111876+AlyciaBHZ@users.noreply.github.com'
+          git add Blueprint/D5/S3/Observer/Chronology/*.md
+          git add Blueprint/D5/S3/Observer/AgencyHolonomy/TimeOrderedMemoryMatrixRepresentation.md
+          git add Blueprint/D5/S3/Observer/AgencyHolonomy/PrimeFourierMagnusCommutatorBridge.md
+          git add Blueprint/D5/S3/SpectralTopology/*.md
+          git add docs/develop/theory/RH_RESEARCH_LANE_THEORY.md
+          git commit -m 'docs: render finite localizer backbone'
+          git push origin HEAD:refs/heads/lane/math/standard-math-backbone-v1
