@@ -68,7 +68,7 @@ internal sealed class HorizonThermodynamicAsymptoticsDocument
         Formula omegaSquared = Seq(omega, Caret, D(2));
         Formula quotient = Seq(
             Frac, Grp(deltaSquared, Minus, omegaSquared), Grp(deltaSquared));
-        Formula interior = Seq(Lvert, omega, Rvert, Sp, Lt, Sp, delta);
+        Formula interior = Seq(Lvert, Sp, omega, Sp, Rvert, Sp, Lt, Sp, delta);
         Formula leadingSqueeze = Seq(
             Frac, Grp(D(1)), Grp(D(2)), Sp, Call("log",
                 Seq(Frac, Grp(D(2), delta), Grp(epsilon))));
