@@ -46,10 +46,10 @@ internal sealed class FirstFrozenTheoremSuiteDocument
         Formula varphi = Varphi;
 
         Formula fourier = Seq(
-            Call("Fourier", Call("g", a)), Sp, Eq, Sp, Call("g", a),
+            Call("Fourier", Call("Gaussian", a)), Sp, Eq, Sp, Call("Gaussian", a),
             Sp, Iff, Sp, a, Sp, Eq, Sp, pi);
         Formula gaussianMellin = Seq(
-            D(2), Call("M_g", s), Sp, Eq, Sp,
+            D(2), Call("MellinGaussian", s), Sp, Eq, Sp,
             pi, Caret, Grp(Minus, s, Sp, Slash, Sp, D(2)),
             Call("Gamma", Seq(s, Sp, Slash, Sp, D(2))));
         Formula exponentialFlow = Seq(
@@ -64,7 +64,7 @@ internal sealed class FirstFrozenTheoremSuiteDocument
             Call("exp", Seq(Minus, ell)), Sp, Eq, Sp, p, Caret, Grp(Minus, D(1)),
             Sp, Iff, Sp, ell, Sp, Eq, Sp, Call("log", p));
         Formula eulerResidual = Seq(
-            F.Id("H_n"), Sp, Minus, Sp, Call("log", F.Id("n")), Sp, Minus, Sp,
+            Call("H", F.Id("n")), Sp, Minus, Sp, Call("log", F.Id("n")), Sp, Minus, Sp,
             F.Id("gamma"), Sp, To, Sp, D(0));
         Formula criticalLine = Seq(
             s, Sp, Eq, Sp, D(1), Sp, Minus, Sp, Call("conj", s),
@@ -75,7 +75,7 @@ internal sealed class FirstFrozenTheoremSuiteDocument
                 Grp(pi, Sp, Times, Sp, Call("exp", x)),
                 Grp(D(2), Sp, Times, Sp, x))));
         Formula lambertMellin = Seq(
-            Call("M_L", w), Sp, Eq, Sp, Call("Gamma", w),
+            Call("MellinLambert", w), Sp, Eq, Sp, Call("Gamma", w),
             Call("zeta", w), Call("zeta", Seq(w, Sp, Plus, Sp, F.Id("r"))),
             Grp(D(1), Sp, Minus, Sp,
                 p, Caret, Grp(Minus, Grp(w, Sp, Plus, Sp, F.Id("r")))));
