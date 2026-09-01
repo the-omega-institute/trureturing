@@ -154,6 +154,7 @@ internal static partial class DigestionLedgerAligner
         var admissionEntry = entry with
         {
             ProjectedStatus = StructuralIdentityStatus,
+            CoverageGids = [],
             Receipts = entry.Receipts with
             {
                 Coverage = [],
