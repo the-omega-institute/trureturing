@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:7fc33dc6067e9b56325da854cc48e47960509d7cd3c5ab971b3df14a48eece2f
+  normalized_sha256: sha256:7fc33dc6067e9b56325da854cc48e47960509d7cd3c5ab971b3df14a48eece2f
+cas_ref: sha256:7fc33dc6067e9b56325da854cc48e47960509d7cd3c5ab971b3df14a48eece2f
+coverage_gids:
+  - D5/S3/Analytic/Toroidal/ToroidalProvenanceCut.toroidal_provenance_cut
+receipts:
+  coverage:
+    - gid: D5/S3/Analytic/Toroidal/ToroidalProvenanceCut.toroidal_provenance_cut
+      source_sha256: sha256:7fc33dc6067e9b56325da854cc48e47960509d7cd3c5ab971b3df14a48eece2f
+      target_statement_id: sha256:f50057cf861e03c675a0719e30374e4616e7c990bcd552120a1c8ee896a00ac7
+  scribe:
+    - gid: D5/S3/Analytic/Toroidal/ToroidalProvenanceCut.toroidal_provenance_cut
+      definition_sha256: sha256:643161c69e6deb972ae8c53a5c69a017f095086269ff17c8837b586b6cc02556
+      emission_sha256: sha256:7353375ce8217dd11d7af1bec70b7bdcaac89c5883cb54fbab7cf2407659d567
+  unresolved_subitems: []
