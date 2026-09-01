@@ -7,6 +7,8 @@
 
 import Mathlib.Analysis.Fourier.AddCircle
 import Mathlib.Analysis.Normed.Group.FunctionSeries
+import Mathlib.Analysis.Normed.Ring.InfiniteSum
+import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 import Mathlib.NumberTheory.NumberField.DedekindZeta
 import Mathlib.NumberTheory.WellApproximable
 
@@ -328,20 +330,20 @@ private theorem numberFieldIdealWeight_summable
   rw [summable_partition (s := fun n : ℕ =>
     {I : Ideal (NumberField.RingOfIntegers K) | Ideal.absNorm I = n})
     (fun _ => one_div_nonneg.mpr (Real.rpow_nonneg (Nat.cast_nonneg _) _))]
-  refine ⟨fun n => ?_, ?_⟩
-  · exact (Ideal.finite_setOf_absNorm_eq
-      (S := NumberField.RingOfIntegers K) n).summable
-      (fun I => 1 / (Ideal.absNorm I : ℝ) ^ sigma)
-  · convert houter using 1
-    ext n
-    let fiber : Set (Ideal (NumberField.RingOfIntegers K)) :=
-      {I | Ideal.absNorm I = n}
-    letI : Fintype fiber := (Ideal.finite_setOf_absNorm_eq n).fintype
-    change (∑' I : fiber, 1 / (Ideal.absNorm I.1 : ℝ) ^ sigma) =
-      (Nat.card fiber : ℝ) / (n : ℝ) ^ sigma
-    rw [tsum_fintype, Nat.card_eq_fintype_card]
-    simp_rw [show ∀ I : fiber, Ideal.absNorm I.1 = n from fun I => I.2]
-    simp [nsmul_eq_mul, div_eq_mul_inv, mul_comm]
+  · refine ⟨fun n => ?_, ?_⟩
+    · exact (Ideal.finite_setOf_absNorm_eq
+        (S := NumberField.RingOfIntegers K) n).summable
+        (fun I => 1 / (Ideal.absNorm I : ℝ) ^ sigma)
+    · convert houter using 1
+      ext n
+      let fiber : Set (Ideal (NumberField.RingOfIntegers K)) :=
+        {I | Ideal.absNorm I = n}
+      letI : Fintype fiber := (Ideal.finite_setOf_absNorm_eq n).fintype
+      change (∑' I : fiber, 1 / (Ideal.absNorm I.1 : ℝ) ^ sigma) =
+        (Nat.card fiber : ℝ) / (n : ℝ) ^ sigma
+      rw [tsum_fintype, Nat.card_eq_fintype_card]
+      simp_rw [show ∀ I : fiber, Ideal.absNorm I.1 = n from fun I => I.2]
+      simp [nsmul_eq_mul, div_eq_mul_inv, mul_comm]
   · intro I
     exact ExistsUnique.intro (Ideal.absNorm I) (by simp) (fun n hn => by simpa using hn.symm)
 
@@ -358,18 +360,82 @@ theorem numberFieldPrimePowerWeight_nonnegative
   exact one_div_nonneg.mpr (mul_nonneg (Nat.cast_nonneg _)
     (Real.rpow_nonneg (Nat.cast_nonneg _) _))
 
-/-- Prime-only no-gap theorem for genuine number-field prime ideals. The explicit summability
-hypothesis is exactly the Euler-product convergence step for `σ > 1`. -/
+private theorem numberFieldPrimePowerWeight_summable
+    (K : Type*) [Field K] [NumberField K] {σ : ℝ} (hσ : 1 < σ) :
+    Summable (numberFieldPrimePowerWeight K σ) := by
+  have hprime : Summable (fun p :
+      IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers K) =>
+      1 / (Ideal.absNorm p.asIdeal : ℝ) ^ σ) := by
+    let idealWeight : Ideal (NumberField.RingOfIntegers K) → ℝ := fun I =>
+      1 / (Ideal.absNorm I : ℝ) ^ σ
+    have hnonneg : ∀ I, 0 ≤ idealWeight I := fun I =>
+      one_div_nonneg.mpr (Real.rpow_nonneg (Nat.cast_nonneg _) _)
+    have hnnreal : Summable (fun I : Ideal (NumberField.RingOfIntegers K) =>
+        NNReal.mk (idealWeight I) (hnonneg I)) :=
+      (NNReal.summable_mk hnonneg).2 (numberFieldIdealWeight_summable K hσ)
+    have hpullback := NNReal.summable_comp_injective hnnreal
+      IsDedekindDomain.HeightOneSpectrum.asIdeal_injective
+    have hcoe := NNReal.summable_coe.2 hpullback
+    simpa only [Function.comp_apply, NNReal.coe_mk, idealWeight] using hcoe
+  have hgeom : Summable (fun k : ℕ+ => (1 / 2 : ℝ) ^ k.natPred) := by
+    have hnat : Summable (fun n : ℕ => (1 / 2 : ℝ) ^ n) :=
+      summable_geometric_of_norm_lt_one (by norm_num : ‖(1 / 2 : ℝ)‖ < 1)
+    have hnnreal : Summable (fun n : ℕ =>
+        NNReal.mk ((1 / 2 : ℝ) ^ n) (pow_nonneg (by norm_num) n)) :=
+      (NNReal.summable_mk (fun n => pow_nonneg (by norm_num) n)).2 hnat
+    have hpullback := NNReal.summable_comp_injective hnnreal PNat.natPred_injective
+    have hcoe := NNReal.summable_coe.2 hpullback
+    simpa only [Function.comp_apply, NNReal.coe_mk] using hcoe
+  apply Summable.of_nonneg_of_le (numberFieldPrimePowerWeight_nonnegative K σ)
+    (fun q => ?_)
+    (hprime.mul_of_nonneg hgeom
+      (fun _ => one_div_nonneg.mpr (Real.rpow_nonneg (Nat.cast_nonneg _) _))
+      (fun _ => pow_nonneg (by norm_num) _))
+  rcases q with ⟨p, k⟩
+  let N : ℝ := Ideal.absNorm p.asIdeal
+  have hN : (2 : ℝ) ≤ N := by
+    have hNnat : 2 ≤ Ideal.absNorm p.asIdeal :=
+      (Nat.succ_le_iff).2 (NumberField.HeightOneSpectrum.one_lt_absNorm p)
+    change (2 : ℝ) ≤ (Ideal.absNorm p.asIdeal : ℝ)
+    exact_mod_cast hNnat
+  have hNpos : 0 < N := zero_lt_two.trans_le hN
+  have hNone : 1 ≤ N := one_le_two.trans hN
+  have hσpos : 0 < σ := zero_lt_one.trans hσ
+  have hNσpos : 0 < N ^ σ := Real.rpow_pos_of_pos hNpos σ
+  have hNσge : 2 ≤ N ^ σ := by
+    calc
+      2 ≤ N := hN
+      _ = N ^ (1 : ℝ) := (Real.rpow_one N).symm
+      _ ≤ N ^ σ := Real.rpow_le_rpow_of_exponent_le hNone hσ.le
+  have hkone : (1 : ℝ) ≤ k := by exact_mod_cast k.pos
+  have hratioNonneg : 0 ≤ 1 / N ^ σ := one_div_nonneg.mpr hNσpos.le
+  have hratioLe : 1 / N ^ σ ≤ (1 / 2 : ℝ) :=
+    one_div_le_one_div_of_le zero_lt_two hNσge
+  unfold numberFieldPrimePowerWeight
+  change 1 / ((k : ℝ) * N ^ ((k : ℝ) * σ)) ≤
+    (1 / N ^ σ) * (1 / 2 : ℝ) ^ k.natPred
+  rw [mul_comm (k : ℝ) σ, Real.rpow_mul hNpos.le, Real.rpow_natCast]
+  calc
+    1 / ((k : ℝ) * (N ^ σ) ^ (k : ℕ)) ≤ 1 / (N ^ σ) ^ (k : ℕ) :=
+      one_div_le_one_div_of_le (pow_pos hNσpos k)
+        (le_mul_of_one_le_left (pow_nonneg hNσpos.le k) hkone)
+    _ = (1 / N ^ σ) ^ (k : ℕ) := by rw [one_div_pow]
+    _ = (1 / N ^ σ) * (1 / N ^ σ) ^ k.natPred := by
+      rw [← pow_succ', PNat.natPred_add_one]
+    _ ≤ (1 / N ^ σ) * (1 / 2 : ℝ) ^ k.natPred :=
+      mul_le_mul_of_nonneg_left (pow_le_pow_left₀ hratioNonneg hratioLe _) hratioNonneg
+
+/-- Prime-only no-gap theorem for genuine number-field prime ideals. The convergence of the
+prime-power weight is derived from `σ > 1`. -/
 theorem numberField_prime_only_no_gap
     (K : Type*) [Field K] [NumberField K]
     {P σ : ℝ} [Fact (0 < P)] (hσ : 1 < σ)
-    (primeShift : NumberFieldPrime K → GoldenRegulatorCircle P)
-    (hsum : Summable (numberFieldPrimePowerWeight K σ)) :
+    (primeShift : NumberFieldPrime K → GoldenRegulatorCircle P) :
     sInf (Set.range fun n : {n : ℤ // n ≠ 0} =>
       spectralCoefficient (numberFieldPrimePowerWeight K σ) primeShift n) = 0 := by
-  have _ := hσ
   exact spectralCoefficient_prime_only_no_gap primeShift
-    (numberFieldPrimePowerWeight_nonnegative K σ) hsum
+    (numberFieldPrimePowerWeight_nonnegative K σ)
+    (numberFieldPrimePowerWeight_summable K hσ)
 
 /-! ### Concrete nonempty witness -/
 
