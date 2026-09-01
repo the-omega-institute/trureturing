@@ -264,6 +264,7 @@ internal static partial class ProbeReducer
         NormalizedJudgment j0) =>
         j1.Coverage is { Complete: true } j1Coverage
         && j0.Coverage is { Complete: true } j0Coverage
+        && j1Coverage.RequiredIdentities.SequenceEqual(j0Coverage.RequiredIdentities)
         && j1Coverage.ObservedIdentities.SequenceEqual(j0Coverage.ObservedIdentities);
 
     private static bool J1BlockersOwnedByBase(
