@@ -1,0 +1,40 @@
+name: validate-truncated-tensor-signature-4495
+
+on:
+  push:
+    branches:
+      - tmp/validate-truncated-tensor-signature-4495
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout validation branch
+        uses: actions/checkout@v4
+
+      - name: Install pinned .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Install pinned Lean toolchain
+        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+
+      - name: Build repository tools
+        run: make -C tools dotnet
+
+      - name: Compile truncated tensor signature
+        run: lake build D5.S3.Observer.Chronology.TruncatedTensorSignature
+
+      - name: Produce source-bound report
+        run: make lean-report
+
+      - name: Emit Blueprint mirror
+        run: make emit
+
+      - name: Verify generated mirror
+        run: test -f Blueprint/D5/S3/Observer/Chronology/TruncatedTensorSignature.md
