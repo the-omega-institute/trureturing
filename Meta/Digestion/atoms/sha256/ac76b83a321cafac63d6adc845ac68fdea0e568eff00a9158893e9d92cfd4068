@@ -1,0 +1,5 @@
+### P2. OffLineCurvatureModeIntertwiner
+
+把反射模式的二阶对数曲率精确运输到离线 dipole 公式。该节点应明确：
+
+- 目标轨道贡献；

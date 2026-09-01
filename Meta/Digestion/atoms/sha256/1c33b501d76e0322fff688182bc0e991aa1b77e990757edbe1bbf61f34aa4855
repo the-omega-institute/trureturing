@@ -1,0 +1,21 @@
+\[
+\boxed{
+M_a(pq)-M_a(qp)
+=
+C^{\mathrm{st}}
+\left(
+ a,r_p,r_q,
+ \chi_{\omega_p}(t_p)v_p,
+ \chi_{\omega_q}(t_q)v_q
+\right).
+}
+\]
+
+当：
+
+\[
+t_p=t_q=t,
+\]
+
+节点恢复已经冻结的 common-time phase-twisted curvature：
+

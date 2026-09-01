@@ -1,0 +1,14 @@
+# 7. 下一真源. SecondMagnusSwapCurvature
+
+下一节点不应再次定义列表 cocycle。它应建立连续 time-ordering 的二阶核。
+
+对两个 prime-frequency channels：
+
+\[
+\chi_p(t)=e^{-it\omega_p},
+\qquad
+\chi_q(t)=e^{-it\omega_q},
+\]
+
+定义 fixed-slot swap kernel：
+

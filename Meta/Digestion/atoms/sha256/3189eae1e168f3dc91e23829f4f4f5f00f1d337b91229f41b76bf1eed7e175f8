@@ -1,0 +1,26 @@
+\[
+K_{k,\ell}(t_1,t_2)
+=
+-2i e^{-i(t_1+t_2)(k+\ell)\Omega_\varphi/2}
+\sin\left(
+\frac{(t_1-t_2)(k-\ell)\pi}{2\log\varphi}
+\right).
+\]
+
+而 zeta 的 prime frequencies 是：
+
+\[
+\omega_p=\log p.
+\]
+
+仓库当前没有证明 \(\log p\in\Omega_\varphi\mathbb Z\)，该关系通常也不成立。黄金 Fourier lattice 与 prime log-frequency set 是两套坐标。后续需要明确的 sampling、projection、aliasing 或 Poisson 型运输定理，才能把它们接入同一 RH 桥梁。
+
+拓扑层面，定义：
+
+\[
+v_{p,q}(t)=
+\bigl(\chi_{\omega_p}(t),\chi_{\omega_q}(t)\bigr)\in\mathbb C^2.
+\]
+
+则：
+

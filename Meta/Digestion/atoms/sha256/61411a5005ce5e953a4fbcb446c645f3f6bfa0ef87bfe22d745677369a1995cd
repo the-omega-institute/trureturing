@@ -1,0 +1,8 @@
+# 10. Append 002. Second-Magnus Swap Curvature
+
+**候选 GID：**
+
+`D5/S3/Observer/AgencyHolonomy/SecondMagnusSwapCurvature`
+
+本增补建立在修复后的 `TimeOrderedPrimeMemoryCocycle` 上。原文件中的 Lean 变量 `prefix`、`suffix` 分别统一改为 `earlierWord`、`laterWord`。该改名只修复 source-bound 解析，不改变 cocycle 的定义、定理陈述或依赖图。两个节点在 PR admission 完成以前都仍是 candidate truth。
+

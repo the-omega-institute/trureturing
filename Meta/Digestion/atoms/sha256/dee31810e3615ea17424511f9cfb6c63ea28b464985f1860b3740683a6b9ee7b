@@ -1,0 +1,10 @@
+## 4. Candidate append 2026-08-31：反射增长对的二阶负谱
+
+当前候选真源：
+
+```text
+D5/S3/Analytic/Adelic/ReflectedGrowthPairSecondOrderSpectrum.lean
+```
+
+该节点只依赖已经冻结的 `ReflectedGrowthPairNegativeSquare` 和 Mathlib 的实指数 iterated derivative 定理。
+

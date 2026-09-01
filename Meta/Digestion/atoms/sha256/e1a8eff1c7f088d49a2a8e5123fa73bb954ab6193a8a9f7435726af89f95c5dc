@@ -1,0 +1,59 @@
+## 8. 当前 theorem DAG
+
+```text
+ReflectedGrowthPairNegativeSquare                 Frozen
+        |
+        v
+ReflectedGrowthPairSecondOrderSpectrum            Candidate
+        |
+        +-----------------------------+
+        |                             |
+        v                             v
+Even/Odd Observation               NegativeSquareLaplaceResolvent
+        |                             |
+        v                             v
+Orientation Recovery               Stabilization Debt / Resolvent Pole
+        |                             |
+        +---------------+-------------+
+                        |
+                        v
+              OffLineCurvatureModeIntertwiner
+                        |
+                        v
+                SignedNormalSpectralAtom
+                        |
+                        v
+             Chebyshev Negative-Support Witness
+                        |
+                        v
+             Toeplitz / Pick / Weil Negative Direction
+```
+
+并行的算术强制链仍为：
+
+```text
+Prime / Gamma / Pole data
+        |
+        v
+Balanced finite observer innovation
+        |
+        v
+Blind-sector Schur coercivity
+        |
+        v
+All finite Gram layers nonnegative
+        |
+        v
+Uniform positive completion
+        |
+        v
+Weil positivity
+        |
+        v
+RH
+```
+
+检测链和强制链最终需要在同一个有限 master observer 上相遇。
+
+---
+
