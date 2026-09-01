@@ -3,56 +3,86 @@ namespace StrataLint.Tests;
 public sealed partial class PureRevertDetectScriptTests
 {
     [Fact]
-    public void AdditionalProtectedPolicyPrefixIsNotImplicitlyReversible()
+    public void ExactNonHarnessMergeInverseIsAccepted()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new GitFixture();
         fixture.CommitFiles("seed other", new FileMutation("other/target.txt", "before\n"));
-        fixture.CommitFiles("other target", new FileMutation("other/target.txt", "after\n"));
+        var feature = fixture.CommitOnBranch(
+            "feature",
+            "other target",
+            new FileMutation("other/target.txt", "after\n"));
+        var target = fixture.MergeIntoMain(feature, "merge other target");
         fixture.CommitCandidateAndMerge(
             "other inverse",
             new FileMutation("other/target.txt", "before\n"));
 
-        AssertRejected(Run([fixture.Repository]), "PURE_REVERT_PATH_OUTSIDE_ALLOWLIST");
+        var result = Run([fixture.Repository]);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Empty(result.StandardError);
+        Assert.Contains(
+            $"target_merge_sha={target}",
+            System.Text.Encoding.UTF8.GetString(result.StandardOutput),
+            StringComparison.Ordinal);
     }
 
     [Fact]
-    public void MissingToolsProtectionPolicyAtomFailsClosed()
+    public void CiModePublishesConfirmedMarkerAndOutputs()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new GitFixture();
-        fixture.RemoveProtectionPolicyAtom("tools");
         fixture.CommitFiles("seed target", new FileMutation("tools/target.txt", "before\n"));
         var feature = fixture.CommitOnBranch(
             "feature",
             "target transition",
             new FileMutation("tools/target.txt", "after\n"));
-        fixture.MergeIntoMain(feature, "merge target");
+        var target = fixture.MergeIntoMain(feature, "merge target");
         fixture.CommitCandidateAndMerge(
             "exact inverse",
             new FileMutation("tools/target.txt", "before\n"));
+        var outputPath = fixture.ScratchPath("confirmed-output");
+        var timeoutPath = fixture.CreateTimeoutPath(expire: false);
 
-        AssertRejected(Run([fixture.Repository]), "PURE_REVERT_HISTORY_UNAVAILABLE");
+        var result = Run(
+            ["--ci", fixture.Repository, outputPath],
+            timeoutPath);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.True(result.StandardError.Length == 0, Diagnostics(result));
+        Assert.Equal(
+            $"PURE_REVERT_GATE confirmed=true target_merge_sha={target} changed_path_count=1\n",
+            System.Text.Encoding.UTF8.GetString(result.StandardOutput));
+        Assert.Equal(
+            [
+                "classification=confirmed",
+                $"target_merge_sha={target}",
+                "changed_path_count=1",
+                "confirmed=true",
+            ],
+            ScriptHarnessScratch.ReadScratchLines(outputPath));
     }
 
     [Fact]
-    public void MissingWorkflowsProtectionPolicyAtomFailsClosed()
+    public void CiModeTreatsDetectorTimeoutAsNotApplicable()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new GitFixture();
-        var workflowPath = ".github/" + "work" + "flows/target.yml";
-        fixture.RemoveProtectionPolicyAtom("workflows");
-        fixture.CommitFiles("seed workflow", new FileMutation(workflowPath, "before\n"));
-        var feature = fixture.CommitOnBranch(
-            "feature",
-            "workflow transition",
-            new FileMutation(workflowPath, "after\n"));
-        fixture.MergeIntoMain(feature, "merge workflow");
-        fixture.CommitCandidateAndMerge(
-            "exact inverse",
-            new FileMutation(workflowPath, "before\n"));
+        var outputPath = fixture.ScratchPath("timeout-output");
+        var timeoutPath = fixture.CreateTimeoutPath(expire: true);
 
-        AssertRejected(Run([fixture.Repository]), "PURE_REVERT_HISTORY_UNAVAILABLE");
+        var result = Run(
+            ["--ci", fixture.Repository, outputPath],
+            timeoutPath);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.True(result.StandardError.Length == 0, Diagnostics(result));
+        Assert.Equal(
+            "PURE_REVERT_GATE confirmed=false classification=not_applicable detector_exit=124\n",
+            System.Text.Encoding.UTF8.GetString(result.StandardOutput));
+        Assert.Equal(
+            ["confirmed=false", "classification=not_applicable"],
+            ScriptHarnessScratch.ReadScratchLines(outputPath));
     }
 
     [Fact]
