@@ -29,6 +29,10 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.PrimeForms.Splitting.ThreeRingProfileFibers
 
+-- Lean 4.33's stricter type check breaks mathlib's `Fintype` deriving handler.
+section
+set_option backward.isDefEq.respectTransparency.types false
+
 /-- A non-ramified quadratic splitting reading. -/
 inductive SplitReading where
   | split
@@ -41,6 +45,8 @@ structure ThreeRingProfile where
   eisenstein : SplitReading
   golden : SplitReading
   deriving DecidableEq, Fintype, Repr
+
+end
 
 /-- The Gaussian reading is split exactly on the unit class `1 mod 4`. -/
 def gaussianReading (u : (ZMod 60)ˣ) : SplitReading :=
@@ -62,13 +68,37 @@ def triRingImage (u : (ZMod 60)ˣ) : ThreeRingProfile :=
 theorem tri_ring_image_surjective_with_fibers_of_card_two :
     Function.Surjective triRingImage ∧
       ∀ t, Fintype.card {u : (ZMod 60)ˣ // triRingImage u = t} = 2 := by
+  letI : DecidableEq SplitReading := fun a b => by
+    cases a <;> cases b <;> infer_instance
+  letI : DecidableEq ThreeRingProfile := fun x y => by
+    rcases x with ⟨a, b, c⟩
+    rcases y with ⟨a', b', c'⟩
+    cases a <;> cases a' <;> cases b <;> cases b' <;> cases c <;> cases c' <;>
+      infer_instance
+  letI : Fintype SplitReading := ⟨{.split, .inert}, by
+    intro x
+    cases x <;> simp⟩
+  letI : Fintype ThreeRingProfile := ⟨
+    {⟨.split, .split, .split⟩, ⟨.split, .split, .inert⟩,
+     ⟨.split, .inert, .split⟩, ⟨.split, .inert, .inert⟩,
+     ⟨.inert, .split, .split⟩, ⟨.inert, .split, .inert⟩,
+     ⟨.inert, .inert, .split⟩, ⟨.inert, .inert, .inert⟩}, by
+    intro x
+    rcases x with ⟨a, b, c⟩
+    cases a <;> cases b <;> cases c <;> simp⟩
   set_option maxRecDepth 100000 in
-    decide
+    constructor
+    · intro t
+      rcases t with ⟨a, b, c⟩
+      cases a <;> cases b <;> cases c <;> decide
+    · intro t
+      rcases t with ⟨a, b, c⟩
+      cases a <;> cases b <;> cases c <;> decide
 
 example :
     triRingImage (1 : (ZMod 60)ˣ) =
       ⟨SplitReading.split, SplitReading.split, SplitReading.split⟩ := by
-  decide
+    decide
 
 #print axioms tri_ring_image_surjective_with_fibers_of_card_two
 

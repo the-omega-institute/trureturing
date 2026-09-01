@@ -54,7 +54,10 @@ private theorem apply_eq_zero_of_dsupport_subset_compl
   have hdecomp : hphiCompact.toSchwartzMap hphiSmooth = ∑ i ∈ indices, piece i := by
     ext x
     by_cases hx : phi x = 0
-    · simp [piece, hx]
+    · change phi x = _
+      rw [sum_apply]
+      change phi x = ∑ i ∈ indices, (rho i x : ℂ) * phi x
+      simp [hx]
     · have hxSupport : x ∈ tsupport phi := subset_tsupport phi hx
       have hsum : ∑ i ∈ indices, rho i x = 1 := by
         rw [← rho.sum_eq_one hxSupport]

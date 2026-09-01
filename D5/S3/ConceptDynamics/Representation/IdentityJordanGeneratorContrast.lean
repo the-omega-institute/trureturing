@@ -248,7 +248,7 @@ theorem trivial_action_degenerate_audit :
     · intro z
       rfl
     · have detZero : Matrix.det (0 : GeneratorMatrix) = 0 :=
-        Matrix.det_zero (by infer_instance)
+        Matrix.det_zero
       rw [Matrix.isUnit_iff_isUnit_det, detZero]
       exact not_isUnit_zero
 #print axioms trivial_action_degenerate_audit

@@ -141,10 +141,10 @@ def beta13OrderedNames : Nat -> List (List Nat)
       tails.map (0 :: ·) ++ tails.map (1 :: ·) ++
         (tails.takeWhile fun tail => beta13BelowGreedyPrefix (2 :: tail)).map (2 :: ·)
 
+set_option maxRecDepth 100000 in
 /-- At level ten the ordered generator is exactly the suffix-tested greedy generator. -/
 theorem beta13_names_ten_eq_ordered : beta13Names 10 = beta13OrderedNames 10 := by
-  set_option maxRecDepth 100000 in
-    decide
+  decide
 
 /-- The code for `beta13^Q` times the value of a length-`Q` name. -/
 def beta13NormalizedNameCode (word : List Nat) : Beta13GapCode :=
@@ -178,6 +178,7 @@ theorem beta13_normalized_gap_code_count_eight :
   set_option maxRecDepth 100000 in
     decide
 
+set_option maxRecDepth 100000 in
 /-- The exact code spectrum has cardinality ten at level ten. -/
 theorem beta13_normalized_gap_code_count_ten :
     (beta13NormalizedGapCodes 10).card = 10 := by

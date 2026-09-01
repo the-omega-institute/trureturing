@@ -29,8 +29,8 @@ def binaryGeometricRecurrence : LinearRecurrence Complex where
 theorem binary_characteristic_polynomial :
     binaryGeometricRecurrence.charPoly =
       Polynomial.X - Polynomial.C (2 : Complex) := by
-  simp [binaryGeometricRecurrence, LinearRecurrence.charPoly,
-    Polynomial.monomial_one_one_eq_X]
+  rw [binaryGeometricRecurrence, LinearRecurrence.charPoly]
+  simp [Polynomial.monomial_one_one_eq_X]
 
 /-- The binary recurrence has order one, and its geometric powers form a solution. -/
 theorem binary_geometric_recurrence_first_order :
@@ -46,7 +46,8 @@ theorem binary_geometric_recurrence_first_order :
 theorem binary_recurrence_solution_space_finrank :
     Module.finrank Complex binaryGeometricRecurrence.solSpace = 1 := by
   rw [Module.finrank_eq_card_basis binaryGeometricRecurrence.basis]
-  simp [binaryGeometricRecurrence]
+  change Fintype.card (Fin 1) = 1
+  exact Fintype.card_fin 1
 
 /-- The binary characteristic root multiset is exactly the singleton containing two. -/
 theorem binary_characteristic_roots :

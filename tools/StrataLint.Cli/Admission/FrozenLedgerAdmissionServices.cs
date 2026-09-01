@@ -191,12 +191,13 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
                 () =>
                 {
                     AdmissionCatalogBuildCount++;
+                    var candidateView = FrozenLedgerBaseViewReader.Read(current);
                     return DagLedgerCommandPreparation.BuildAdmissionCatalog(
                         current,
                         lean,
                         scoped.States,
                         scoped.Adjacency,
-                        preparation.BaseView,
+                        candidateView,
                         scoped.Scope,
                         currentIdentity);
                 });
@@ -239,10 +240,28 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
                 };
             }
 
-            replacementAuthorization = new FrozenLedgerReplacementAuthorization(
+            var mathlibAuthorization =
                 new MathlibUpgradeFrozenLedgerReplacementAuthorization(
                     protectedBaseSnapshot,
-                    candidateSnapshot));
+                    candidateSnapshot);
+            replacementAuthorization = new FrozenLedgerReplacementAuthorization(
+                mathlibAuthorization);
+            if (incrementalRecognition is not null)
+            {
+                var context = new FrozenLedgerReplacementAuthorizationContext(
+                    incrementalRecognition,
+                    preparation.BaseView,
+                    catalog);
+                if (!replacementAuthorization.IsAuthorized(context))
+                {
+                    return ReplacementAuthorizationRejection(
+                        protectedBaseSnapshot,
+                        candidateSnapshot,
+                        incrementalRecognition,
+                        preparation.BaseView,
+                        catalog);
+                }
+            }
         }
 
         IncrementalValidationCount++;
@@ -260,6 +279,52 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
     }
 
     private ImmutableHashSet<string> ReadProducerPaths() => ReadProducerPaths(repositoryRoot);
+
+    private static AdmissionOutcome.RuleRejected ReplacementAuthorizationRejection(
+        RepositorySnapshot protectedBase,
+        RepositorySnapshot candidate,
+        FrozenLedgerIncrementalReplacementRecognition recognition,
+        FrozenLedgerBaseView baseView,
+        FrozenMaterialCatalog catalog)
+    {
+        var affected = recognition.ReanchoredModulePaths
+            .OrderBy(static path => path.Value, StringComparer.Ordinal)
+            .ToImmutableArray();
+        if (!EffectiveLeanPins.TryRead(protectedBase, out var basePins)
+            || !EffectiveLeanPins.TryRead(candidate, out var candidatePins)
+            || basePins == candidatePins)
+        {
+            return RuleRejection(
+                affected,
+                "Mathlib upgrade frozen-ledger replacement authorization failed: "
+                    + "effective-lean-pins-changed.");
+        }
+
+        var propositionFailures = MathlibUpgradePropositionSourceDiagnostics.FindFailures(
+            protectedBase,
+            candidate,
+            recognition.ReanchoredModulePaths,
+            baseView,
+            catalog);
+        if (!propositionFailures.IsEmpty)
+        {
+            return RuleRejection(
+                propositionFailures,
+                "Mathlib upgrade frozen-ledger replacement authorization failed: "
+                    + "proposition-source-equivalent.");
+        }
+
+        var axiomFailures = affected
+            .Where(path => !catalog.ByPath.TryGetValue(path, out var material)
+                || material.AxiomClosure.Any(axiom => !LeanAxiomFacts.IsStandard(axiom)))
+            .ToImmutableArray();
+        return RuleRejection(
+            axiomFailures.IsEmpty ? affected : axiomFailures,
+            "Mathlib upgrade frozen-ledger replacement authorization failed: "
+                + (axiomFailures.IsEmpty
+                    ? "canonical authorizer rejected the recognized replacement."
+                    : "standard-axiom-closure."));
+    }
 
     private static ImmutableHashSet<string> ReadProducerPaths(string repositoryRoot)
     {

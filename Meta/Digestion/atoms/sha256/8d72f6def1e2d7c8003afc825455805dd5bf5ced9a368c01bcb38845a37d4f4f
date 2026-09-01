@@ -1,0 +1,29 @@
+\[
+K_{\Theta_\omega}(z,w)
+=
+\frac{1-\Theta_\omega(z)\overline{\Theta_\omega(w)}}
+{-i(z-\overline w)}.
+\]
+
+下一真源命名为：
+
+\[
+\boxed{\texttt{XiRatioPickKernel}.}
+\]
+
+它应证明定义域、极点排除、Hermitian symmetry、reflection compatibility、临界线假设下的 Schur/inner implication，以及有限 Gram 矩阵到 `HermitianKernelNegativeSquares` 的接口。
+
+随后建立：
+
+\[
+\boxed{\texttt{OfflineZeroPickIndexLowerBound}.}
+\]
+
+第一阶段只要求一个被窗口与采样隔离的离线零点轨道产生至少一个有限负方向。精确计数：
+
+\[
+\kappa_{\omega,T}=N_{\mathrm{off}}(\omega,T)
+\]
+
+仍登记为后续 index theorem。
+

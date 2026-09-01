@@ -32,7 +32,7 @@ report_input_state() {
 
 cd "$ROOT"
 [[ -n "$BASE" ]] \
-  || { echo "USAGE: ingest.sh ingest|align-digestion-status BASE" >&2; exit 2; }
+  || { echo "USAGE: ingest.sh ingest|align-digestion-status|mathlib-reanchor BASE" >&2; exit 2; }
 case "$VERB" in
   ingest)
     report_input_state
@@ -46,8 +46,17 @@ case "$VERB" in
       dotnet run --project "$PROJECT" --configuration Release -- \
         align-digestion-status --base "$BASE"
     ;;
+  mathlib-reanchor)
+    make -C "$ROOT" lean-report
+    base_sha="$(git -C "$ROOT" merge-base HEAD "$BASE")"
+    dotnet run --project "$PROJECT" --configuration Release -- \
+      ledger-reanchor-mathlib --base "$base_sha"
+    exec "$CONSUMER" --role digestion-alignment-consumer --report "$REPORT" -- \
+      dotnet run --project "$PROJECT" --configuration Release -- \
+        align-digestion-status --base "$base_sha"
+    ;;
   *)
-    echo "USAGE: ingest.sh ingest|align-digestion-status BASE" >&2
+    echo "USAGE: ingest.sh ingest|align-digestion-status|mathlib-reanchor BASE" >&2
     exit 2
     ;;
 esac

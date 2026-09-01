@@ -182,7 +182,6 @@ private lemma maximal_lattice_relative_index :
     rw [maximal_lattice_eq_parity, Submodule.map_sup, Submodule.map_span,
       Set.image_singleton]
     simp [Submodule.mkQ_map_self]
-    rfl
   change Nat.card (maximalLattice.map lattice.mkQ) = 2
   rw [hmap]
   calc

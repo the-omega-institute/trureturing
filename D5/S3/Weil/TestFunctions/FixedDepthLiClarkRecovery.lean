@@ -47,11 +47,12 @@ private theorem matrix_isBigO_of_entrywise
     simpa using (h i j).smul (isBigO_const_one Real (E i j) atTop)
   have hsum :
       (fun x => ∑ i, ∑ j, A x i j • E i j) =O[atTop] g := by
-    apply IsBigO.sum
-    intro i _hi
-    apply IsBigO.sum
-    intro j _hj
-    exact hterm i j
+    have hrow (i : Fin (N + 1)) :
+        (fun x => ∑ j, A x i j • E i j) =O[atTop] g := by
+      simpa only [Finset.sum_fn] using
+        (IsBigO.sum (s := Finset.univ) fun j _ => hterm i j)
+    simpa only [Finset.sum_fn] using
+      (IsBigO.sum (s := Finset.univ) fun i _ => hrow i)
   convert hsum using 1
   funext x
   ext i j
@@ -323,8 +324,11 @@ theorem fixed_depth_li_clark_recovery
     have indexBound :
         Int.natAbs (((i : Nat) : Int) - ((j : Nat) : Int)) <= N :=
       Int.natAbs_coe_sub_coe_le_of_le (by omega) (by omega)
-    simpa [matrixError, trueToeplitz, windowToeplitz, trueMoment, windowMoment, rate] using
-      momentRecovery (((i : Nat) : Int) - ((j : Nat) : Int)) indexBound
+    apply (momentRecovery (((i : Nat) : Int) - ((j : Nat) : Int)) indexBound).congr_left
+    intro L
+    change trueMoment (((i : Nat) : Int) - ((j : Nat) : Int)) -
+      windowMoment L (((i : Nat) : Int) - ((j : Nat) : Int)) = matrixError L i j
+    rw [show matrixError L = trueToeplitz - windowToeplitz L by rfl, Matrix.sub_apply]
   have matrixRecovery : matrixError =O[atTop] rate :=
     matrix_isBigO_of_entrywise entryRecovery
   have operatorRecovery :

@@ -77,9 +77,10 @@ example :
   apply finite_time_tomography (State := Rat) (Observation := Rat)
       (⟨fun _ => ⊤, fun _ _ _ => le_refl ⊤⟩ : Nat →o Submodule Rat Rat)
       (fun _ => (id : Rat → Rat))
-  · simp
+  · change (⨆ _ : Nat, (⊤ : Submodule Rat Rat)) = ⊤
+    exact iSup_const
   · intro k hk
-    simp at hk
+    exact False.elim (hk rfl)
   · intro k hk
     exact Function.injective_id
 

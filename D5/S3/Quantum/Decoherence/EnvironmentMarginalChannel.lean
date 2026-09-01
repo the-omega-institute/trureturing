@@ -60,7 +60,10 @@ theorem environment_marginal_channel {d e : Nat}
   · ext i j
     simpa [recording, recordChannel] using hEntry i j
   · ext i j
-    simpa [recording] using hEntry i j
+    change
+      (∑ a, (recording * rho * Matrix.conjTranspose recording) (i, a) (j, a)) =
+        recordGram record i j * rho i j
+    exact hEntry i j
   · intro i j
     simpa [recording] using hEntry i j
 

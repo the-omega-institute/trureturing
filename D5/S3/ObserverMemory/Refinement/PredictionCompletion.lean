@@ -95,7 +95,13 @@ theorem observation_refinement_completion
       change completionReadout update coarse
           (descend (completionProjection update fine y)) =
         forget (completionReadout update fine (completionProjection update fine y))
-      simp [completionReadout, completionProjection, hdescend.2 y, hfactor]
+      change completionReadout update coarse
+          (descend (Quotient.mk'' y)) =
+        forget (completionReadout update fine (Quotient.mk'' y))
+      rw [hdescend.2 y]
+      change coarse y = forget (fine y)
+      rw [hfactor]
+      rfl
   · intro candidate hcandidate
     apply hunique candidate
     refine ⟨hcandidate.1, ?_⟩

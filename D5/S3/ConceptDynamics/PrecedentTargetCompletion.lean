@@ -112,14 +112,15 @@ theorem target_completion_formal_distinction_not_noncircular :
         exact Prod.ext rfl hconstant
       have hfalse := congrFun hdecide false
       have htrue := congrFun hdecide true
+      unfold Function.comp at hfalse htrue
       apply Bool.false_ne_true
       calc
         false = decide (conceptJoin (fun _ : Bool => false) fact false) := by
-          simpa only [id_eq, Function.comp_apply] using hfalse
+          simpa only [id_eq] using hfalse
         _ = decide (conceptJoin (fun _ : Bool => false) fact true) :=
           congrArg decide hjoin
         _ = true := by
-          simpa only [id_eq, Function.comp_apply] using htrue.symm
+          simpa only [id_eq] using htrue.symm
     refine ⟨doctrine, ?_, ?_, hpreserved, hformal, hnoLegal, ?_⟩
     · rfl
     · intro fact hfact

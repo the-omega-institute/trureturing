@@ -123,21 +123,23 @@ private theorem signed_measure_integrable_of_jordan_restrict_eq
     (hneg : epsilon.toJordanDecomposition.negPart.restrict s =
       epsilon.toJordanDecomposition.negPart)
     {g : ℝ → ℝ} (hg : ContinuousOn g s) :
-    epsilon.Integrable g (ContinuousLinearMap.lsmul ℝ ℝ).flip := by
+    MeasureTheory.Integrable g
+      (epsilon.transpose (ContinuousLinearMap.lsmul ℝ ℝ (E := ℝ)).flip).variation := by
   have hposInt : Integrable g epsilon.toJordanDecomposition.posPart := by
     rw [← hpos]
     exact hg.integrableOn_compact hsCompact
   have hnegInt : Integrable g epsilon.toJordanDecomposition.negPart := by
     rw [← hneg]
     exact hg.integrableOn_compact hsCompact
-  have hposSigned : epsilon.toJordanDecomposition.posPart.toSignedMeasure.Integrable g
-      (ContinuousLinearMap.lsmul ℝ ℝ).flip := by
-    simpa only [VectorMeasure.Integrable, VectorMeasure.variation_transpose_lsmul_flip,
-      VectorMeasure.variation_toSignedMeasure] using hposInt
-  have hnegSigned : epsilon.toJordanDecomposition.negPart.toSignedMeasure.Integrable g
-      (ContinuousLinearMap.lsmul ℝ ℝ).flip := by
-    simpa only [VectorMeasure.Integrable, VectorMeasure.variation_transpose_lsmul_flip,
-      VectorMeasure.variation_toSignedMeasure] using hnegInt
+  have hposSigned : VectorMeasure.Integrable
+      epsilon.toJordanDecomposition.posPart.toSignedMeasure g := by
+    simpa only [VectorMeasure.Integrable, Measure.variation_toSignedMeasure] using hposInt
+  have hnegSigned : VectorMeasure.Integrable
+      epsilon.toJordanDecomposition.negPart.toSignedMeasure g := by
+    simpa only [VectorMeasure.Integrable, Measure.variation_toSignedMeasure] using hnegInt
+  change MeasureTheory.Integrable g
+    (epsilon.transpose (ContinuousLinearMap.lsmul ℝ ℝ (E := ℝ)).flip).variation
+  rw [VectorMeasure.variation_transpose_lsmul_flip]
   rw [← epsilon.toSignedMeasure_toJordanDecomposition, JordanDecomposition.toSignedMeasure]
   exact hposSigned.sub_vectorMeasure hnegSigned
 
@@ -296,10 +298,13 @@ theorem smooth_external_finite_moment_elimination
   refine ⟨kappa, hkappaEven, hkappaSmooth, hkappaCompact, hkappaExternal, ?_⟩
   intro j hj
   let jf : Fin (K + 1) := ⟨j, Nat.lt_succ_of_le hj⟩
-  have hjInt : epsilon.Integrable (fun u => u ^ (2 * j))
-      (ContinuousLinearMap.lsmul ℝ ℝ).flip :=
-    signed_measure_integrable_of_jordan_restrict_eq epsilon isCompact_Icc hpos hneg
-      (by fun_prop)
+  have hjInt : VectorMeasure.Integrable epsilon (fun u => u ^ (2 * j)) := by
+    have h := signed_measure_integrable_of_jordan_restrict_eq epsilon isCompact_Icc hpos hneg
+      (g := fun u => u ^ (2 * j)) (by fun_prop)
+    change MeasureTheory.Integrable (fun u => u ^ (2 * j))
+      (epsilon.transpose (ContinuousLinearMap.lsmul ℝ ℝ).flip).variation at h
+    simpa only [VectorMeasure.Integrable,
+      VectorMeasure.variation_transpose_lsmul_flip] using h
   have htermInt (r : Fin (K + 1)) :
       Integrable (fun u => u ^ (2 * j) * (coefficients r * basis r u)) := by
     have htermContinuous :

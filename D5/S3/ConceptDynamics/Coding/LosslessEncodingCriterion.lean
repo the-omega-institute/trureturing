@@ -43,10 +43,10 @@ theorem lossless_iff_injective_on_image {X S M : Type*}
         sender x = sender y := by
   constructor
   · intro injective x y
-    simpa only [messageConcept, Function.comp_apply] using
-      injective.eq_iff
-        (show sender x ∈ Set.range sender from ⟨x, rfl⟩)
-        (show sender y ∈ Set.range sender from ⟨y, rfl⟩)
+    unfold messageConcept Function.comp
+    exact injective.eq_iff
+      (show sender x ∈ Set.range sender from ⟨x, rfl⟩)
+      (show sender y ∈ Set.range sender from ⟨y, rfl⟩)
   · intro sameFibers source₁ source₁InRange source₂ source₂InRange sameMessage
     rcases source₁InRange with ⟨x, rfl⟩
     rcases source₂InRange with ⟨y, rfl⟩
@@ -71,8 +71,8 @@ theorem not_injective_on_image_iff_strictly_coarser {X S M : Type*}
       by_contra differentSender
       exact noCollapsedPair ⟨x, y, sameMessage, differentSender⟩
     · intro sameSender
-      simpa only [messageConcept, Function.comp_apply] using
-        congrArg encoder sameSender
+      unfold messageConcept Function.comp
+      exact congrArg encoder sameSender
   · rintro ⟨x, y, sameMessage, differentSender⟩ injective
     apply differentSender
     exact ((lossless_iff_injective_on_image sender encoder).mp injective x y).mp
