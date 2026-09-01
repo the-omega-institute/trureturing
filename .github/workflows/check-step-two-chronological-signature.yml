@@ -1,0 +1,37 @@
+name: check-step-two-chronological-signature
+
+on:
+  push:
+    branches:
+      - lane/math/step-two-chronological-signature
+
+permissions:
+  contents: read
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout candidate
+        uses: actions/checkout@v4
+
+      - name: Install pinned Lean toolchain
+        run: |
+          set -euo pipefail
+          tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+
+      - name: Restore Mathlib cache
+        run: lake exe cache get
+
+      - name: Compile step-two chronological signature
+        run: lake build D5.S3.Observer.Chronology.StepTwoChronologicalSignature
+
+      - name: Build Scribe source with warnings as errors
+        run: make -C tools dotnet
+
+      - name: Audit theorem escape hatches
+        run: |
+          set -euo pipefail
+          file='D5/S3/Observer/Chronology/StepTwoChronologicalSignature.lean'
+          ! grep -nE '(^|[^[:alnum:]_])(sorry|admit|axiom)([^[:alnum:]_]|$)' "$file"
