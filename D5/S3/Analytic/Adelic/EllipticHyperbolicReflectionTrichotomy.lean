@@ -97,21 +97,26 @@ theorem neutral_generator_trace_det_square :
     Matrix.trace neutralGenerator = 0 ∧
       Matrix.det neutralGenerator = 0 ∧
       neutralGenerator * neutralGenerator = 0 := by
-  simp [neutralGenerator]
+  constructor
+  · simp [neutralGenerator, Matrix.trace_fin_two]
+  constructor
+  · rw [Matrix.det_fin_two]
+    norm_num [neutralGenerator]
+  · simp [neutralGenerator]
 
 /-- Every nonzero reflected split has strictly negative determinant. -/
 theorem hyperbolic_generator_det_neg_of_ne_zero
     (delta : ℝ) (hdelta : delta ≠ 0) :
     Matrix.det (hyperbolicGenerator delta) < 0 := by
   rw [(hyperbolic_generator_trace_det delta).2]
-  negativity
+  nlinarith [sq_pos_of_ne_zero hdelta]
 
 /-- Every nonzero angular rate has strictly positive determinant. -/
 theorem elliptic_generator_det_pos_of_ne_zero
     (gamma : ℝ) (hgamma : gamma ≠ 0) :
     0 < Matrix.det (ellipticGenerator gamma) := by
   rw [(elliptic_generator_trace_det gamma).2]
-  positivity
+  exact sq_pos_of_ne_zero hgamma
 
 /-- The exact finite trichotomy: negative determinant and positive square for
 hyperbolic growth-decay, zero determinant for the neutral mode, and positive

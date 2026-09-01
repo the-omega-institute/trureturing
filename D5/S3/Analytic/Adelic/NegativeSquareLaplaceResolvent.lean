@@ -59,7 +59,7 @@ squared reflected split. -/
 theorem stabilization_gap_pos_iff (delta damping : ℝ) :
     0 < stabilizationGap delta damping ↔ delta ^ 2 < damping := by
   rw [stabilization_gap_eq]
-  linarith
+  constructor <;> intro h <;> linarith
 
 /-- The stabilized kernel is integrable above the exact damping threshold. -/
 theorem damped_negative_square_kernel_integrable_of_threshold
@@ -69,7 +69,7 @@ theorem damped_negative_square_kernel_integrable_of_threshold
     (stabilization_gap_pos_iff delta damping).2 hthreshold
   have hcoefficient : -(stabilizationGap delta damping) < 0 :=
     neg_lt_zero.mpr hgap
-  simpa [dampedNegativeSquareKernel] using
+  simpa only [dampedNegativeSquareKernel, neg_mul] using
     (integrableOn_exp_mul_Ioi
       (a := -(stabilizationGap delta damping)) hcoefficient 0)
 
@@ -125,7 +125,7 @@ stabilization threshold. -/
 theorem stabilization_gap_eq_zero_iff (delta damping : ℝ) :
     stabilizationGap delta damping = 0 ↔ damping = delta ^ 2 := by
   rw [stabilization_gap_eq]
-  linarith
+  constructor <;> intro h <;> linarith
 
 /-- The scalar resolvent is positive exactly on the integrable side of the
 threshold. -/

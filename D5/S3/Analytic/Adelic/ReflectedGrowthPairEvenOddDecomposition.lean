@@ -54,14 +54,14 @@ theorem negative_rate_branch_time_reversal (delta time : ℝ) :
 /-- The averaged channel is invariant under parameter reversal. -/
 theorem even_observation_even (delta time : ℝ) :
     evenObservation delta (-time) = evenObservation delta time := by
-  rw [evenObservation, positive_rate_branch_time_reversal,
+  simp only [evenObservation, positive_rate_branch_time_reversal,
     negative_rate_branch_time_reversal]
   ring
 
 /-- The difference channel changes sign under parameter reversal. -/
 theorem odd_observation_odd (delta time : ℝ) :
     oddObservation delta (-time) = -oddObservation delta time := by
-  rw [oddObservation, positive_rate_branch_time_reversal,
+  simp only [oddObservation, positive_rate_branch_time_reversal,
     negative_rate_branch_time_reversal]
   ring
 
