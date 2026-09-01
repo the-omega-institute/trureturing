@@ -12,13 +12,13 @@ jobs:
   append:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout append payload
+      - name: Checkout UTF-8 base and append payload
         uses: actions/checkout@v4
         with:
           ref: tmp/export-rh-theory-4441
           path: exporter
 
-      - name: Checkout candidate branch
+      - name: Checkout PR candidate branch
         uses: actions/checkout@v4
         with:
           ref: lane/math/golden-second-magnus-sampling
@@ -26,37 +26,52 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Append to the existing RH theory volume
+      - name: Repair and extend the existing RH theory volume
         working-directory: target
         run: |
           set -euo pipefail
           theory='docs/develop/theory/RH_RESEARCH_LANE_THEORY.md'
-          marker='## [PR #4441] GOLDEN_SECOND_MAGNUS_SAMPLING'
+          base='../exporter/docs/develop/theory/RH_RESEARCH_LANE_THEORY.md'
+          payload='../exporter/tmp/rh-theory-append-4441.b64'
+          golden_marker='## [PR #4441] GOLDEN_SECOND_MAGNUS_SAMPLING'
+          step_marker='## [PR #4441] STEP_TWO_CHRONOLOGICAL_SIGNATURE'
 
-          if grep -Fq "$marker" "$theory"; then
-            echo 'Theory section already present.'
-            exit 0
-          fi
+          test "$(git hash-object "$base")" = \
+            'e150b4982344d7d26c83a7b854d195a8a1ef8a4c'
 
-          cp "$theory" /tmp/rh-theory-before.md
-          base64 --decode ../exporter/tmp/rh-theory-append-4441.b64 >> "$theory"
+          cp "$base" "$theory"
+          base64 --decode "$payload" >> "$theory"
 
           python - <<'PY'
           from pathlib import Path
-          before = Path('/tmp/rh-theory-before.md').read_bytes()
-          after = Path('docs/develop/theory/RH_RESEARCH_LANE_THEORY.md').read_bytes()
-          marker = b'## [PR #4441] GOLDEN_SECOND_MAGNUS_SAMPLING'
-          if not after.startswith(before):
-              raise SystemExit('theory update is not append-only')
-          if after.count(marker) != 1:
-              raise SystemExit('theory section marker is missing or duplicated')
-          if len(after) <= len(before):
+
+          base = Path('../exporter/docs/develop/theory/RH_RESEARCH_LANE_THEORY.md').read_bytes()
+          final_path = Path('docs/develop/theory/RH_RESEARCH_LANE_THEORY.md')
+          final = final_path.read_bytes()
+          final.decode('utf-8')
+
+          markers = (
+              b'## [PR #4441] GOLDEN_SECOND_MAGNUS_SAMPLING',
+              b'## [PR #4441] STEP_TWO_CHRONOLOGICAL_SIGNATURE',
+          )
+
+          if not final.startswith(base):
+              raise SystemExit('repaired theory is not an append of the dev UTF-8 base')
+          if len(final) <= len(base):
               raise SystemExit('theory append is empty')
+          for marker in markers:
+              if final.count(marker) != 1:
+                  raise SystemExit(f'theory marker is missing or duplicated: {marker!r}')
           PY
+
+          if git diff --quiet -- "$theory"; then
+            echo 'RH theory volume already has the validated UTF-8 payload.'
+            exit 0
+          fi
 
           test "$(git diff --name-only)" = "$theory"
           git config user.name 'AlyciaBHZ'
           git config user.email '50111876+AlyciaBHZ@users.noreply.github.com'
           git add "$theory"
-          git commit -m 'docs: append golden second-Magnus shell theory'
+          git commit -m 'docs: repair and extend RH theory volume'
           git push origin HEAD:refs/heads/lane/math/golden-second-magnus-sampling
