@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Step-two chronological signatures are multiplicatively equivalent to the truncated BCH coordinate law, with an explicit division-free antipode.
+Step-two signature coordinates are multiplicatively equivalent to the truncated BCH law, with an explicit antipode.
 
 **Definition 1.1 (Step-two logarithmic coordinate).**
 
@@ -16,19 +16,7 @@ Lean statement: `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.StepTwo
 
 The coordinate stores degree one and the doubled degree-two Lie component.
 
-**Definition 1.2 (Truncated BCH product).**
-
-Lean statement: `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.StepTwoLogarithm.bch`
-
-*Formalization.* `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.StepTwoLogarithm.bch` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The product adds both coordinates and inserts the commutator of the degree-one components.
-
-**Definition 1.3 (Chronological logarithm).**
+**Definition 1.2 (Chronological logarithm).**
 
 Lean statement: `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.chronologicalLog`
 
@@ -40,7 +28,7 @@ Lean statement: `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.chronol
 
 The logarithm subtracts the square of degree one from doubled degree two.
 
-**Definition 1.4 (Step-two exponential).**
+**Definition 1.3 (Step-two exponential).**
 
 Lean statement: `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.chronologicalExp`
 
@@ -52,11 +40,11 @@ Lean statement: `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.chronol
 
 The exponential restores signature coordinates by adding the square of degree one.
 
-**Theorem 1.5 (Exponential after logarithm).**
+**Theorem 1.4 (Exponential after logarithm).**
 
-Lean statement: `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.chronological_exp_log`
+$$\forall a, \operatorname{chronologicalExp}(\operatorname{chronologicalLog}(a)) = a.$$
 
-*Formalization.* `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.chronological_exp_log` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.chronological_exp_log` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -64,11 +52,11 @@ Lean statement: `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.chronol
 
 Exponentiating a chronological logarithm exactly recovers its signature.
 
-**Theorem 1.6 (Logarithm after exponential).**
+**Theorem 1.5 (Logarithm after exponential).**
 
-Lean statement: `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.chronological_log_exp`
+$$\forall c, \operatorname{chronologicalLog}(\operatorname{chronologicalExp}(c)) = c.$$
 
-*Formalization.* `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.chronological_log_exp` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.chronological_log_exp` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -76,11 +64,11 @@ Lean statement: `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.chronol
 
 Taking the logarithm of a step-two exponential exactly recovers its coordinate.
 
-**Theorem 1.7 (Multiplicative BCH law).**
+**Theorem 1.6 (Multiplicative BCH law).**
 
-Lean statement: `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.chronological_log_mul`
+$$\forall a, b, \operatorname{chronologicalLog}(a \cdot b) = \operatorname{chronologicalLog}(a) \cdot \operatorname{chronologicalLog}(b).$$
 
-*Formalization.* `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.chronological_log_mul` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.chronological_log_mul` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -88,7 +76,7 @@ Lean statement: `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.chronol
 
 The complete logarithm converts Chen composition into the truncated BCH product.
 
-**Definition 1.8 (Signature-BCH multiplicative equivalence).**
+**Definition 1.7 (Signature-BCH multiplicative equivalence).**
 
 Lean statement: `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.chronologicalLogMulEquiv`
 
@@ -100,7 +88,7 @@ Lean statement: `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.chronol
 
 Logarithm and exponential form an explicit multiplicative equivalence of the two coordinate systems.
 
-**Definition 1.9 (Signature antipode).**
+**Definition 1.8 (Signature antipode).**
 
 Lean statement: `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.signatureAntipode`
 
@@ -112,11 +100,11 @@ Lean statement: `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.signatu
 
 The explicit inverse negates degree one and applies the transported quadratic correction at degree two.
 
-**Theorem 1.10 (Antipode in logarithmic coordinates).**
+**Theorem 1.9 (Antipode in logarithmic coordinates).**
 
-Lean statement: `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.chronological_log_antipode`
+$$\forall a, \operatorname{chronologicalLog}(\operatorname{signatureAntipode}(a)) = \operatorname{inverse}(\operatorname{chronologicalLog}(a)).$$
 
-*Formalization.* `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.chronological_log_antipode` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.chronological_log_antipode` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -124,11 +112,11 @@ Lean statement: `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.chronol
 
 The logarithm maps the signature antipode to coordinatewise negation.
 
-**Theorem 1.11 (Antipode reverses multiplication).**
+**Theorem 1.10 (Antipode reverses multiplication).**
 
-Lean statement: `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.signature_antipode_mul_rev`
+$$\forall a, b, \operatorname{signatureAntipode}(a \cdot b) = \operatorname{signatureAntipode}(b) \cdot \operatorname{signatureAntipode}(a).$$
 
-*Formalization.* `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.signature_antipode_mul_rev` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.signature_antipode_mul_rev` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -139,14 +127,13 @@ The antipode of a chronological product is the reversed product of the two antip
 ## References
 
 - Truth anchor: `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.StepTwoLogarithm`
-- Truth anchor: `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.StepTwoLogarithm.bch`
-- Truth anchor: `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.chronologicalLog`
 - Truth anchor: `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.chronologicalExp`
+- Truth anchor: `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.chronologicalLog`
+- Truth anchor: `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.chronologicalLogMulEquiv`
 - Truth anchor: `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.chronological_exp_log`
+- Truth anchor: `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.chronological_log_antipode`
 - Truth anchor: `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.chronological_log_exp`
 - Truth anchor: `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.chronological_log_mul`
-- Truth anchor: `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.chronologicalLogMulEquiv`
 - Truth anchor: `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.signatureAntipode`
-- Truth anchor: `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.chronological_log_antipode`
 - Truth anchor: `D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.signature_antipode_mul_rev`
 - Dependency: [D5/S3/Observer/Chronology/StepTwoChronologicalSignature](StepTwoChronologicalSignature.md)
