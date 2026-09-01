@@ -53,10 +53,14 @@ public sealed class ResourceObservationLibraryTests
             "tmp_available_inodes",
             "process_count",
             "process_tree",
+            "command_exit_status",
+            "termination_signal",
         })
         {
             Assert.Contains($"{field}=UNAVAILABLE", output, StringComparison.Ordinal);
         }
+        Assert.Contains("stall_cpu_threshold_percent=5", output, StringComparison.Ordinal);
+        Assert.Contains("stall_window_seconds=600", output, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -173,15 +177,16 @@ public sealed class ResourceObservationLibraryTests
         Assert.Equal(1, result.ExitCode);
         var output = Encoding.UTF8.GetString(result.StandardOutput);
         Assert.Contains(
-            "sequence=9 phase=periodic utc=2026-09-01T02:03:04Z utc_epoch_seconds=1788228184",
+            "sequence=9 phase=periodic stall_cpu_threshold_percent=5 stall_window_seconds=600 command_exit_status=UNAVAILABLE termination_signal=UNAVAILABLE utc=2026-09-01T02:03:04Z utc_epoch_seconds=1788228184",
             output,
             StringComparison.Ordinal);
         Assert.Contains("cgroup_path=/job.slice", output, StringComparison.Ordinal);
         Assert.Contains("memory_current=101 memory_peak=202 memory_max=max", output, StringComparison.Ordinal);
         Assert.Contains("memory_events=low:0,high:1,max:2,oom:3,oom_kill:4", output, StringComparison.Ordinal);
         Assert.Contains("memory_events_oom=3 memory_events_oom_kill=4", output, StringComparison.Ordinal);
-        Assert.Contains("process_count=3", output, StringComparison.Ordinal);
-        Assert.Contains("pid:99,ppid:1,pgid:99,rss_kb:100,cpu:00:00:01", output, StringComparison.Ordinal);
+        Assert.Contains("process_count=2", output, StringComparison.Ordinal);
+        Assert.Contains("process_cpu_seconds=5", output, StringComparison.Ordinal);
+        Assert.Contains("pid:100,ppid:99,pgid:99,rss_kb:200,cpu:00:00:02", output, StringComparison.Ordinal);
         Assert.Contains("pid:101,ppid:100,pgid:99,rss_kb:300,cpu:00:00:03", output, StringComparison.Ordinal);
         Assert.DoesNotContain("pid:500", output, StringComparison.Ordinal);
     }
@@ -313,13 +318,14 @@ public sealed class ResourceObservationLibraryTests
 
         var result = Run(
             temporary,
-            "source \"$1\"\nresource_observe_sample() { printf 'SAMPLE phase=%s observer_pid=%s\\n' \"$5\" \"$6\"; return 0; }\nresource_observe_periodically() { return 0; }\nengineering() { kill -TERM \"$$\"; return 23; }\nresource_observe_run_periodic engineering\n");
+            "source \"$1\"\nresource_observe_sample() { printf 'SAMPLE phase=%s observer_pid=%s exit=%s signal=%s\\n' \"$5\" \"$6\" \"$7\" \"$8\"; return 0; }\nresource_observe_periodically() { return 0; }\nengineering() { kill -TERM \"$$\"; return 23; }\nresource_observe_run_periodic engineering\n");
 
         Assert.Equal(23, result.ExitCode);
         var output = Encoding.UTF8.GetString(result.StandardOutput);
         Assert.Contains("RESOURCE_OBSERVATION_SIGNAL status=OBSERVED signal=TERM", output, StringComparison.Ordinal);
         Assert.Contains("SAMPLE phase=signal-TERM", output, StringComparison.Ordinal);
         Assert.Matches("SAMPLE phase=signal-TERM observer_pid=[1-9][0-9]*", output);
+        Assert.Contains("SAMPLE phase=final observer_pid= exit=23 signal=TERM", output, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -332,20 +338,45 @@ public sealed class ResourceObservationLibraryTests
 
         Assert.Equal(0, result.ExitCode);
         var output = Encoding.UTF8.GetString(result.StandardOutput);
+        Assert.Contains("RESOURCE_OBSERVATION_CRITERIA version=2", output, StringComparison.Ordinal);
         Assert.Contains("stall_cpu_threshold_percent=5", output, StringComparison.Ordinal);
         Assert.Contains("stall_window_seconds=600", output, StringComparison.Ordinal);
         Assert.Contains(
             "stall_algorithm=100*delta_process_cpu_seconds/delta_utc_epoch_seconds<5_for_every_adjacent_interval_in_contiguous_600_seconds",
             output,
             StringComparison.Ordinal);
+        Assert.Contains("stall_sample_predicate=all_stall_fields_available_and_process_count>0", output, StringComparison.Ordinal);
         Assert.Contains(
             "stall_delta_predicate=delta_utc_epoch_seconds>0_and_delta_process_cpu_seconds>=0",
             output,
             StringComparison.Ordinal);
-        Assert.Contains("observer_exclusion=sampler_pid_and_descendants", output, StringComparison.Ordinal);
+        Assert.Contains("process_count_scope=descendants_excluding_wrapper_and_sampler", output, StringComparison.Ordinal);
+        Assert.Contains("stall_output_activity=not_required", output, StringComparison.Ordinal);
         Assert.Contains("oom_algorithm=later_oom_or_oom_kill_greater_than_baseline", output, StringComparison.Ordinal);
-        Assert.Contains("disk_algorithm=baseline_positive_then_later_zero_on_same_exact_mount", output, StringComparison.Ordinal);
-        Assert.Contains("external_algorithm=run_failure_and_job_failure_and_step_cancelled_and_no_local_classification", output, StringComparison.Ordinal);
+        Assert.Contains("disk_algorithm=baseline_positive_then_later_zero_on_same_exact_mount_without_errno_or_quota_claim", output, StringComparison.Ordinal);
+        Assert.Contains("external_algorithm=command_exit_status_nonzero_and_termination_signal_observed_and_no_local_classification", output, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void SampleCarriesCriterionParametersAndTerminationFields()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var temporary = new TemporaryDirectory();
+
+        var result = Run(
+            temporary,
+            "source \"$1\"\nresource_observe_sample 4 99 \"\" \"\" final \"\" 143 TERM\n",
+            $"RESOURCE_OBSERVATION_PROC_ROOT={Path.Combine(temporary.Path, "missing-proc")}",
+            $"RESOURCE_OBSERVATION_CGROUP_ROOT={Path.Combine(temporary.Path, "missing-cgroup")}",
+            $"RESOURCE_OBSERVATION_DATE_COMMAND={Path.Combine(temporary.Path, "missing-date")}",
+            $"RESOURCE_OBSERVATION_FINDMNT_COMMAND={Path.Combine(temporary.Path, "missing-findmnt")}",
+            $"RESOURCE_OBSERVATION_DF_COMMAND={Path.Combine(temporary.Path, "missing-df")}",
+            $"RESOURCE_OBSERVATION_PS_COMMAND={Path.Combine(temporary.Path, "missing-ps")}");
+
+        Assert.Equal(1, result.ExitCode);
+        var output = Encoding.UTF8.GetString(result.StandardOutput);
+        Assert.Contains("stall_cpu_threshold_percent=5 stall_window_seconds=600", output, StringComparison.Ordinal);
+        Assert.Contains("command_exit_status=143 termination_signal=TERM", output, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -371,7 +402,7 @@ public sealed class ResourceObservationLibraryTests
 
         Assert.Equal(0, result.ExitCode);
         var output = Encoding.UTF8.GetString(result.StandardOutput);
-        Assert.StartsWith("2\t3\t", output, StringComparison.Ordinal);
+        Assert.StartsWith("1\t2\t", output, StringComparison.Ordinal);
         Assert.Contains("pid:100", output, StringComparison.Ordinal);
         Assert.DoesNotContain("pid:200", output, StringComparison.Ordinal);
         Assert.DoesNotContain("pid:201", output, StringComparison.Ordinal);

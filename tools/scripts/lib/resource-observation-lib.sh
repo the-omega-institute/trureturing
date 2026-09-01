@@ -2,14 +2,17 @@
 
 # PREREGISTERED_RESOURCE_FORENSICS_CRITERIA_BEGIN
 # `OOM_CONFIRMED`:同一 job 的完整样本中,later `memory_events_oom` 或 `memory_events_oom_kill` 严格大于 baseline。
-# `DISK_CONFIRMED`:同一精确 mount 的 baseline 可用 block/inode 为正,且 later 对应值为 0。
+# `DISK_CONFIRMED`:同一精确 mount 的 baseline 可用 block/inode 为正,且 later 对应值为 0；这是容量耗尽观测,
+# 不声称 ENOSPC/EDQUOT,因为收据没有写入 errno 或配额证据字段。
 # `LOCAL_STALL_OBSERVED`:完整的相邻样本覆盖连续 600 秒,每段 `100 * Δprocess_cpu_seconds / Δutc_epoch_seconds < 5`,
-# 且每个样本 `process_count > 0`,同时 `OOM_CONFIRMED` 与 `DISK_CONFIRMED` 均不命中。只允许命名为 stall,不得升级为 "deadlock confirmed"。
-# `EXTERNAL_UNATTRIBUTED`:`run=failure` 且 `job=failure` 且该 step `=cancelled`,并且上述三种本地分类均不命中。
+# 且每个样本 `process_count > 0`（排除 wrapper 根与采样器子树）,同时 `OOM_CONFIRMED` 与 `DISK_CONFIRMED` 均不命中。
+# 这是低 CPU stall 观测,不声称无输出或 deadlock。
+# `EXTERNAL_UNATTRIBUTED`:最终样本 `command_exit_status != 0` 且观察到 `termination_signal`,并且上述三种本地分类均不命中。
+# 这是比 GitHub run/job/step cancellation 更弱的本地终止观测,因为这些平台结论不在 RESOURCE_SAMPLE 中。
 # PREREGISTERED_RESOURCE_FORENSICS_CRITERIA_END
 
 resource_observation_emit_criteria() {
-  printf '%s\n' 'RESOURCE_OBSERVATION_CRITERIA version=1 stall_cpu_threshold_percent=5 stall_window_seconds=600 stall_algorithm=100*delta_process_cpu_seconds/delta_utc_epoch_seconds<5_for_every_adjacent_interval_in_contiguous_600_seconds stall_sample_predicate=all_fields_available_and_process_count>0 stall_delta_predicate=delta_utc_epoch_seconds>0_and_delta_process_cpu_seconds>=0 stall_exclusions=OOM_CONFIRMED_or_DISK_CONFIRMED observer_exclusion=sampler_pid_and_descendants oom_algorithm=later_oom_or_oom_kill_greater_than_baseline disk_algorithm=baseline_positive_then_later_zero_on_same_exact_mount external_algorithm=run_failure_and_job_failure_and_step_cancelled_and_no_local_classification'
+  printf '%s\n' 'RESOURCE_OBSERVATION_CRITERIA version=2 stall_cpu_threshold_percent=5 stall_window_seconds=600 stall_algorithm=100*delta_process_cpu_seconds/delta_utc_epoch_seconds<5_for_every_adjacent_interval_in_contiguous_600_seconds stall_sample_predicate=all_stall_fields_available_and_process_count>0 stall_delta_predicate=delta_utc_epoch_seconds>0_and_delta_process_cpu_seconds>=0 process_count_scope=descendants_excluding_wrapper_and_sampler stall_output_activity=not_required stall_weakening=low_cpu_stall_observation_does_not_claim_no_output_or_deadlock stall_exclusions=OOM_CONFIRMED_or_DISK_CONFIRMED observer_exclusion=sampler_pid_and_descendants_and_wrapper_root oom_algorithm=later_oom_or_oom_kill_greater_than_baseline disk_algorithm=baseline_positive_then_later_zero_on_same_exact_mount_without_errno_or_quota_claim disk_weakening=capacity_exhaustion_observation_does_not_claim_ENOSPC_or_EDQUOT external_algorithm=command_exit_status_nonzero_and_termination_signal_observed_and_no_local_classification external_weakening=does_not_claim_GitHub_run_job_or_step_conclusions'
 }
 
 resource_observation_number_or_unknown() {
@@ -187,7 +190,7 @@ resource_observation_process_values() {
       cpu_available = 1
       tree = ""
       for (i = 1; i <= count; i += 1) {
-        if ((pid[i] in included) && !(pid[i] in excluded)) {
+        if ((pid[i] in included) && pid[i] != root_pid && !(pid[i] in excluded)) {
           if (tree != "") tree = tree ";"
           tree = tree "pid:" pid[i] ",ppid:" ppid[i] ",pgid:" pgid[i] ",rss_kb:" rss[i] ",cpu:" cpu[i]
           process_count += 1
@@ -210,6 +213,8 @@ resource_observe_sample() {
   local runner_temp="$4"
   local phase="${5:-periodic}"
   local observer_pid="${6:-}"
+  local command_exit_status="${7:-UNAVAILABLE}"
+  local termination_signal="${8:-UNAVAILABLE}"
   local date_command="${RESOURCE_OBSERVATION_DATE_COMMAND:-date}"
   local timestamp=""
   local utc_epoch_seconds=""
@@ -262,8 +267,8 @@ resource_observe_sample() {
   process_values="$(resource_observation_process_values "$root_pid" "$observer_pid")"
   IFS=$'\t' read -r process_count process_cpu_seconds process_tree <<< "$process_values"
 
-  printf 'RESOURCE_SAMPLE sequence=%s phase=%s utc=%s utc_epoch_seconds=%s cgroup_path=%s memory_current=%s memory_peak=%s memory_max=%s memory_events=%s memory_events_oom=%s memory_events_oom_kill=%s workspace_mount=%s workspace_available_blocks_1k=%s workspace_available_inodes=%s runner_temp_mount=%s runner_temp_available_blocks_1k=%s runner_temp_available_inodes=%s tmp_mount=%s tmp_available_blocks_1k=%s tmp_available_inodes=%s process_count=%s process_cpu_seconds=%s process_tree=%s\n' \
-    "$sequence" "$phase" "$timestamp" "$utc_epoch_seconds" "$cgroup_path" "$memory_current" "$memory_peak" "$memory_max" \
+  printf 'RESOURCE_SAMPLE sequence=%s phase=%s stall_cpu_threshold_percent=5 stall_window_seconds=600 command_exit_status=%s termination_signal=%s utc=%s utc_epoch_seconds=%s cgroup_path=%s memory_current=%s memory_peak=%s memory_max=%s memory_events=%s memory_events_oom=%s memory_events_oom_kill=%s workspace_mount=%s workspace_available_blocks_1k=%s workspace_available_inodes=%s runner_temp_mount=%s runner_temp_available_blocks_1k=%s runner_temp_available_inodes=%s tmp_mount=%s tmp_available_blocks_1k=%s tmp_available_inodes=%s process_count=%s process_cpu_seconds=%s process_tree=%s\n' \
+    "$sequence" "$phase" "$command_exit_status" "$termination_signal" "$timestamp" "$utc_epoch_seconds" "$cgroup_path" "$memory_current" "$memory_peak" "$memory_max" \
     "$memory_events" "$memory_events_oom" "$memory_events_oom_kill" \
     "$workspace_mount" "$workspace_blocks" "$workspace_inodes" \
     "$runner_temp_mount" "$runner_temp_blocks" "$runner_temp_inodes" \
@@ -343,8 +348,9 @@ resource_observation_handle_signal() {
   local workspace="$4"
   local runner_temp="$5"
   local observer_pid="${6:-}"
+  resource_observation_last_signal="$signal_name"
   printf 'RESOURCE_OBSERVATION_SIGNAL status=OBSERVED signal=%s\n' "$signal_name"
-  resource_observe_sample 0 "$root_pid" "$workspace" "$runner_temp" "signal-$signal_name" "$observer_pid" || true
+  resource_observe_sample 0 "$root_pid" "$workspace" "$runner_temp" "signal-$signal_name" "$observer_pid" UNAVAILABLE "$signal_name" || true
   return "$prior_status"
 }
 
@@ -356,13 +362,14 @@ resource_observe_run_periodic() {
   local previous_hup=""
   local previous_int=""
   local previous_term=""
+  local resource_observation_last_signal="UNAVAILABLE"
   local root_pid="$$"
   local workspace="${GITHUB_WORKSPACE:-}"
   local runner_temp="${RUNNER_TEMP:-}"
   if [[ $# -eq 0 ]]; then return 2; fi
 
   resource_observation_emit_criteria
-  resource_observe_sample 0 "$root_pid" "$workspace" "$runner_temp" baseline "" || true
+  resource_observe_sample 0 "$root_pid" "$workspace" "$runner_temp" baseline "" UNAVAILABLE UNAVAILABLE || true
   previous_hup="$(trap -p HUP || true)"
   previous_int="$(trap -p INT || true)"
   previous_term="$(trap -p TERM || true)"
@@ -397,7 +404,7 @@ resource_observe_run_periodic() {
   if [[ "$sampler_status" -ne 0 ]]; then
     printf 'RESOURCE_OBSERVATION_SAMPLER status=UNAVAILABLE exit=%s\n' "$sampler_status"
   fi
-  resource_observe_sample 0 "$root_pid" "$workspace" "$runner_temp" final "" || true
+  resource_observe_sample 0 "$root_pid" "$workspace" "$runner_temp" final "" "$command_status" "$resource_observation_last_signal" || true
   trap - HUP INT TERM
   if [[ -n "$previous_hup" ]]; then eval "$previous_hup"; fi
   if [[ -n "$previous_int" ]]; then eval "$previous_int"; fi
