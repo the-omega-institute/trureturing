@@ -69,9 +69,10 @@ theorem damped_negative_square_kernel_integrable_of_threshold
     (stabilization_gap_pos_iff delta damping).2 hthreshold
   have hcoefficient : -(stabilizationGap delta damping) < 0 :=
     neg_lt_zero.mpr hgap
-  simpa only [dampedNegativeSquareKernel] using
-    (integrableOn_exp_mul_Ioi
-      (a := -(stabilizationGap delta damping)) hcoefficient 0)
+  change IntegrableOn
+    (fun time : ℝ => Real.exp (-(stabilizationGap delta damping) * time))
+    (Ioi 0)
+  exact integrableOn_exp_mul_Ioi hcoefficient 0
 
 /-- Integrability on the forward half-line holds exactly above the damping
 threshold. -/
