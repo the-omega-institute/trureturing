@@ -72,7 +72,10 @@ private theorem ordered_time_simplex_primitive_derivative
       HasDerivAt (fun y : ℝ => Real.cos (gap * y))
         (-gap * Real.sin (gap * x)) x := by
     exact hCosRaw.congr_deriv (by ring)
-  have hLinear := (hasDerivAt_id x).const_sub horizon
+  have hLinear :
+      HasDerivAt (fun y : ℝ => horizon - y) (-1) x := by
+    simpa only [id_eq] using
+      (hasDerivAt_id x).const_sub horizon
   have hProductRaw := hLinear.mul hSin
   have hProduct :
       HasDerivAt
