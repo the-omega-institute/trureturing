@@ -1,0 +1,10 @@
+\[
+\boxed{
+[H_G(t_1),H_G(t_2)]
+=
+\sum_{p,q}K_{p,q}(t_1,t_2)G_pG_q.
+}
+\]
+
+因此 `SecondMagnusSwapCurvature` 的 alternating kernel 已经成为有限 Fourier 生成元交换子中的精确系数。当前仍未构造 Banach 或 Hilbert 空间上的 time-ordered exponential、Bochner integral、Magnus 级数收敛或无限频率极限。
+

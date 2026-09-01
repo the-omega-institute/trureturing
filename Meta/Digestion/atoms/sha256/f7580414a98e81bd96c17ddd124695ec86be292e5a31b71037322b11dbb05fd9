@@ -1,0 +1,31 @@
+\[
+E_{\mathrm{cal}}(\omega,C)
+=
+\sum_{p,q}|K_{p,q}(T_{p,q},0)C_{p,q}|^2.
+\]
+
+新真源 `PairCalibratedSecondMagnusObservability` 机器证明：
+
+\[
+\boxed{
+E_{\mathrm{cal}}(\omega,C)
+=4E_{\mathrm{hol}}(C),
+}
+\]
+
+其中：
+
+\[
+E_{\mathrm{hol}}(C)=\sum_{p,q}|C_{p,q}|^2.
+\]
+
+并得到：
+
+\[
+E_{\mathrm{cal}}(\omega,C)=0
+\iff
+\forall p,q,\ C_{p,q}=0.
+\]
+
+这说明固定两时刻缺少反向界的原因是 resonance 与采样协议。允许 pair-adapted clocks 后，完整 off-diagonal curvature 可被精确恢复。
+

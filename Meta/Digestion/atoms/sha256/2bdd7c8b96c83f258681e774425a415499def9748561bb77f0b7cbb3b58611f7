@@ -1,0 +1,4 @@
+### P1. `HolonomyToFixedScaleWeilTransport`
+
+复用既有 fixed-scale Weil 真源，构造 finite Fourier/curvature coefficients 到合法 test function 的运输。
+

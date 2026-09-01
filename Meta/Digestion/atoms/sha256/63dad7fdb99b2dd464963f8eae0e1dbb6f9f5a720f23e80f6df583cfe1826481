@@ -1,0 +1,59 @@
+\[
+\mathcal A_g(T)
+=
+\int_0^T(T-\tau)
+4\sin^2\left(\frac{g\tau}{2}\right)d\tau.
+\]
+
+新真源 `OrderedTimeSimplexSecondMagnusAverage` 对 \(g\ne0\) 机器证明：
+
+\[
+\boxed{
+\mathcal A_g(T)
+=T^2-\frac{2(1-\cos(gT))}{g^2}.
+}
+\]
+
+同时：
+
+\[
+\mathcal A_0(T)=0,
+\qquad
+T\ge0\Longrightarrow\mathcal A_g(T)\ge0.
+\]
+
+由 \(0\le1-\cos(gT)\le2\) 可读出下一步下界：
+
+\[
+\mathcal A_g(T)\ge T^2-\frac4{g^2}.
+\]
+
+对有限单射频率族，令：
+
+\[
+\Delta_\omega=
+\min_{p\ne q}|\omega_p-\omega_q|>0.
+\]
+
+则所有非对角频率对同时满足：
+
+\[
+\mathcal A_{\omega_p-\omega_q}(T)
+\ge T^2-\frac4{\Delta_\omega^2}.
+\]
+
+当 \(T>2/\Delta_\omega\) 时，右侧严格为正。因此下一真源应为：
+
+\[
+\boxed{\texttt{FiniteFrequencyOrderedSimplexCoercivity}.}
+\]
+
+它应冻结统一窗口双边界：
+
+\[
+c_{\omega,T}E_{\mathrm{hol}}(C)
+\le E_{\mathrm{simplex}}(\omega,C;T)
+\le T^2E_{\mathrm{hol}}(C),
+\qquad c_{\omega,T}>0.
+\]
+

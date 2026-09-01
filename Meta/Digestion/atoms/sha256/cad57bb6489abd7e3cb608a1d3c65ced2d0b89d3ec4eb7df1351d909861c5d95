@@ -1,0 +1,19 @@
+## 10. 黄金周期边界
+
+离线 monodromy 的双曲判据：
+
+\[
+4\sinh^2(\delta T)>0
+\iff\delta\ne0
+\]
+
+对任意 \(T>0\) 成立。因此 \(T_\varphi=2\log\varphi\) 目前是合法采样周期与规范化选择。它尚未获得 small-divisor、continued-fraction return、frame lower bound、condition number 或 Weil/Pick index 上的独立最优性。
+
+应先冻结：
+
+\[
+\boxed{\texttt{OfflineZeroMonodromyPeriodIndependence}.}
+\]
+
+只有一般周期定理建立后，才适合定义 `GoldenPeriodOptimalityCriterion`。
+

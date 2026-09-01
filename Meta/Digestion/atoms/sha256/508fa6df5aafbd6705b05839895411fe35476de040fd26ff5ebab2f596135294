@@ -1,0 +1,17 @@
+\det(I-H^*H)^{-1}
+=
+\prod_j(1-\sigma_j^2)^{-1}.
+\]
+
+当前核心结论对一般严格收缩矩阵成立。Hankel 假设尚未承担主证明。后续需要从具体 xi/Weil symbol 构造 Hankel operator，证明 finite-section、Hilbert-Schmidt 或 trace-class 条件、负指标稳定与 Fredholm determinant 极限。
+
+候选真源为：
+
+\[
+\boxed{
+\texttt{FiniteIndexLimitStability},
+\qquad
+\texttt{FredholmHorizonIndexLimit}.
+}
+\]
+
