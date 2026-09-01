@@ -3,7 +3,8 @@
    mirror-B: D5/B/S3/ObserverMemory/FourierFibers/DegenerateModeHiddenFiber
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Equal modal multipliers leave a nonzero antisymmetric amplitude invisible at every observation time. -/
+   digest: Equal modal multipliers leave an antisymmetric amplitude invisible
+     at every observation time. -/
 
 import D5.S3.ObserverMemory.FourierFibers.FiniteCrystalTimeFrequencyBridge
 import Mathlib
@@ -49,7 +50,8 @@ theorem all_time_trace_not_injective (z : ℂ) :
   apply antisymmetricAmplitude_ne_zero
   apply hInjective
   funext time
-  simpa using antisymmetric_amplitude_invisible_all_times z time
+  rw [antisymmetric_amplitude_invisible_all_times]
+  simp [crystalTimeSample]
 
 #print axioms antisymmetric_amplitude_invisible_all_times
 #print axioms antisymmetricAmplitude_ne_zero
