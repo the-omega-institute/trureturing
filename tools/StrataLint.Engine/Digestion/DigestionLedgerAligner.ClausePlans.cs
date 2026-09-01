@@ -114,13 +114,15 @@ internal static partial class DigestionLedgerAligner
         IDictionary<string, DigestionAtom> matchedAtoms,
         ISet<string> clausePlanChainParents,
         ISet<string> verifiedClausePlanParents,
+        ISet<string> verifiedClausePlanMembers,
         ICollection<string> findings)
     {
         RejectCurrentFrontierClausePlanMembers(
             source,
             currentClausePlans,
             alignments,
-            matchedAtoms);
+            matchedAtoms,
+            verifiedClausePlanMembers);
 
         foreach (var parent in source.Entries.Where(static entry => entry.Receipts.ChainAtoms.Length > 0))
         {
@@ -222,6 +224,7 @@ internal static partial class DigestionLedgerAligner
 
             foreach (var child in accepted)
             {
+                verifiedClausePlanMembers.Add(child.AtomId);
                 alignments[child.AtomId] = DigestionReceiptAlignment.Seen;
                 matchedAtoms[child.AtomId] = DigestionAtom.FromFrozenCas(child.Blob.RawBytes);
             }
@@ -234,14 +237,16 @@ internal static partial class DigestionLedgerAligner
         DigestionLedgerSource source,
         ImmutableArray<DigestionClausePlan> currentClausePlans,
         IDictionary<string, DigestionReceiptAlignment> alignments,
-        IDictionary<string, DigestionAtom> matchedAtoms)
+        IDictionary<string, DigestionAtom> matchedAtoms,
+        ISet<string> verifiedClausePlanMembers)
     {
         var plannedChildIds = currentClausePlans
             .SelectMany(static plan => plan.Children)
             .Select(static child => child.Fingerprints.RawSha256["sha256:".Length..])
             .ToHashSet(StringComparer.Ordinal);
         foreach (var plannedEntry in source.Entries.Where(entry =>
-                     plannedChildIds.Contains(entry.AtomId)))
+                     plannedChildIds.Contains(entry.AtomId)
+                     && !verifiedClausePlanMembers.Contains(entry.AtomId)))
         {
             alignments[plannedEntry.AtomId] = DigestionReceiptAlignment.Rejected;
             matchedAtoms.Remove(plannedEntry.AtomId);

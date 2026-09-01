@@ -24,6 +24,71 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
+    public void CrossSourceChainAlignmentIsIndependentOfSourceOrder()
+    {
+        var fixture = SelfContainedClauseChain();
+        var originalSource = Assert.Single(fixture.Ledger.RequireDigestionSources());
+        var externalChild = fixture.Children[0] with
+        {
+            SourceId = "child-owner",
+            SourcePath = "docs/child-owner.md",
+        };
+        var localChild = fixture.Children[1] with
+        {
+            SourceId = "chain-owner",
+            SourcePath = "docs/chain-owner.md",
+        };
+        var parent = fixture.Parent with
+        {
+            SourceId = "chain-owner",
+            SourcePath = "docs/chain-owner.md",
+        };
+        var childOwner = originalSource with
+        {
+            SourceId = "child-owner",
+            SourcePath = "docs/child-owner.md",
+            Entries = [externalChild],
+        };
+        var chainOwner = originalSource with
+        {
+            SourceId = "chain-owner",
+            SourcePath = "docs/chain-owner.md",
+            Entries = [parent, localChild],
+        };
+        var childOwnerSourceBytes = Encoding.UTF8.GetBytes(
+            "# PZG\n\n" + Encoding.UTF8.GetString(fixture.ParentCapture.Bytes.AsSpan()));
+        var snapshot = Snapshot(
+            childOwnerSourceBytes,
+            fixture.ChildCaptures.Prepend(fixture.ParentCapture),
+            sourcePath: childOwner.SourcePath,
+            extraEntries:
+            [
+                new RawRepositoryEntry(
+                    chainOwner.SourcePath,
+                    ImmutableArray.CreateRange(fixture.CurrentSourceBytes)),
+            ]);
+
+        DigestionLedgerAlignment Evaluate(params DigestionLedgerSource[] sources) =>
+            DigestionLedgerAligner.Evaluate(
+                fixture.Ledger.WithDigestionSources([.. sources]),
+                snapshot,
+                baselineDocument: null,
+                mode: DigestionAlignmentMode.Ingest);
+
+        var childOwnerFirst = Evaluate(childOwner, chainOwner);
+        var chainOwnerFirst = Evaluate(chainOwner, childOwner);
+
+        Assert.Equal(
+            DigestionReceiptAlignment.Seen,
+            childOwnerFirst.AlignmentFor(externalChild.AtomId));
+        Assert.Equal(
+            childOwnerFirst.AlignmentFor(externalChild.AtomId),
+            chainOwnerFirst.AlignmentFor(externalChild.AtomId));
+        Assert.NotNull(childOwnerFirst.AtomFor(externalChild.AtomId));
+        Assert.NotNull(chainOwnerFirst.AtomFor(externalChild.AtomId));
+    }
+
+    [Fact]
     public void AdmissionRevalidatesInheritedChainAcrossContentDeduplicationSourceMove()
     {
         var fixture = SelfContainedClauseChain();

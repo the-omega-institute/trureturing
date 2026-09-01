@@ -13,7 +13,8 @@ internal static class DigestionBackfillValidation
         VerifiedScribeEmissions verifiedScribeEmissions,
         RawChangeSet? changes = null,
         RawChangeSet? repositoryChanges = null,
-        RawChangeSet? casChanges = null)
+        RawChangeSet? casChanges = null,
+        RawChangeSet? projectedStatusChanges = null)
     {
         var findings = BackfillInventoryRule.EvaluateDocument(
             new BackfillInventoryValidationContext(
@@ -24,7 +25,8 @@ internal static class DigestionBackfillValidation
                 verifiedScribeEmissions,
                 changes,
                 RepositoryChanges: repositoryChanges,
-                CasChanges: casChanges),
+                CasChanges: casChanges,
+                ProjectedStatusChanges: projectedStatusChanges),
             document);
         return RenderOrThrow(findings);
     }

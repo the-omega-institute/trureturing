@@ -68,9 +68,8 @@ public sealed partial class PureRevertDetectScriptTests
         {
             Repository = Path.Combine(temporary.Path, "repository");
             ScriptHarnessScratch.EnsureDirectory(Repository);
-            Git("init", "-b", "main");
-            Git("config", "user.name", "Pure Revert Test");
-            Git("config", "user.email", "pure-revert@example.invalid");
+            Git("init", "--template=", "-b", "main");
+            ConfigureSyntheticRepository(Repository);
             CommitFiles(
                 "canonical policy",
                 new FileMutation(
@@ -214,12 +213,14 @@ public sealed partial class PureRevertDetectScriptTests
         {
             var shallow = Path.Combine(temporary.Path, "shallow");
             var result = TestProcessRunner.Run(
-                "/usr/bin/git",
-                ["clone", "--depth=1", new Uri(Repository).AbsoluteUri, shallow],
+                "/usr/bin/env",
+                IsolatedGitArguments(
+                    ["clone", "--depth=1", new Uri(Repository).AbsoluteUri, shallow]),
                 temporary.Path,
                 TestBudgets.ScriptProcessHangGuard,
                 64 * 1024);
             Assert.True(result.ExitCode == 0, Diagnostics(result));
+            ConfigureSyntheticRepository(shallow);
             return shallow;
         }
 
@@ -269,12 +270,14 @@ public sealed partial class PureRevertDetectScriptTests
             Git("reset", "--hard", merge);
         }
 
-        private void Git(params string[] arguments)
+        private void Git(params string[] arguments) => GitAt(Repository, arguments);
+
+        private static void GitAt(string repository, params string[] arguments)
         {
             var result = TestProcessRunner.Run(
-                "/usr/bin/git",
-                arguments,
-                Repository,
+                "/usr/bin/env",
+                IsolatedGitArguments(arguments),
+                repository,
                 TestBudgets.ScriptProcessHangGuard,
                 64 * 1024);
             Assert.True(result.ExitCode == 0, Diagnostics(result));
@@ -283,8 +286,8 @@ public sealed partial class PureRevertDetectScriptTests
         private string GitText(params string[] arguments)
         {
             var result = TestProcessRunner.Run(
-                "/usr/bin/git",
-                arguments,
+                "/usr/bin/env",
+                IsolatedGitArguments(arguments),
                 Repository,
                 TestBudgets.ScriptProcessHangGuard,
                 64 * 1024);
@@ -295,8 +298,8 @@ public sealed partial class PureRevertDetectScriptTests
         private string GitTextWithInput(string input, params string[] arguments)
         {
             var result = TestProcessRunner.Run(
-                "/usr/bin/git",
-                arguments,
+                "/usr/bin/env",
+                IsolatedGitArguments(arguments),
                 Repository,
                 TestBudgets.ScriptProcessHangGuard,
                 64 * 1024,
@@ -304,6 +307,36 @@ public sealed partial class PureRevertDetectScriptTests
             Assert.True(result.ExitCode == 0, Diagnostics(result));
             return Encoding.UTF8.GetString(result.StandardOutput).Trim();
         }
+
+        private static void ConfigureSyntheticRepository(string repository)
+        {
+            GitAt(repository, "config", "--local", "user.name", "Pure Revert Test");
+            GitAt(repository, "config", "--local", "user.email", "pure-revert@example.invalid");
+            GitAt(repository, "config", "--local", "commit.gpgsign", "false");
+            GitAt(repository, "config", "--local", "tag.gpgsign", "false");
+            GitAt(repository, "config", "--local", "core.autocrlf", "false");
+            GitAt(repository, "config", "--local", "core.safecrlf", "false");
+            GitAt(repository, "config", "--local", "core.hooksPath", "/dev/null");
+            GitAt(repository, "config", "--local", "gc.auto", "0");
+            GitAt(repository, "config", "--local", "maintenance.auto", "false");
+        }
+
+        private static string[] IsolatedGitArguments(IEnumerable<string> arguments) =>
+        [
+            "-u", "GIT_AUTHOR_NAME",
+            "-u", "GIT_AUTHOR_EMAIL",
+            "-u", "GIT_COMMITTER_NAME",
+            "-u", "GIT_COMMITTER_EMAIL",
+            "-u", "GIT_CONFIG",
+            "-u", "GIT_CONFIG_PARAMETERS",
+            "-u", "GIT_TEMPLATE_DIR",
+            "GIT_CONFIG_GLOBAL=/dev/null",
+            "GIT_CONFIG_SYSTEM=/dev/null",
+            "GIT_CONFIG_NOSYSTEM=1",
+            "GIT_CONFIG_COUNT=0",
+            "/usr/bin/git",
+            .. arguments,
+        ];
 
         public void Dispose() => temporary.Dispose();
     }

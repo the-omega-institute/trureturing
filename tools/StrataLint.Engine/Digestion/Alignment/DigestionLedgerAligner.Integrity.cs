@@ -153,13 +153,8 @@ internal static partial class DigestionLedgerAligner
     {
         var admissionEntry = entry with
         {
-            // Once stale has been acknowledged, projected status is derived output. Including it
-            // here makes alignment invalidate its own settled receipt on a status-directory move.
-            ProjectedStatus = source.AcknowledgedStale.Contains(
-                entry.AtomId,
-                StringComparer.Ordinal)
-                ? StructuralIdentityStatus
-                : entry.ProjectedStatus,
+            ProjectedStatus = StructuralIdentityStatus,
+            CoverageGids = [],
             Receipts = entry.Receipts with
             {
                 Coverage = [],

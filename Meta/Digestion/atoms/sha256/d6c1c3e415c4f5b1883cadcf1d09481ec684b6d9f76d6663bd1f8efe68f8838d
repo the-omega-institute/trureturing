@@ -1,0 +1,43 @@
+## 1447.2 时间切片：视界与黑洞
+
+固定观察深度 \(\omega\)，令局部质量为：
+
+$$
+\boxed{
+M(\omega)=\omega-\delta.
+}
+\tag{1447.2}
+$$
+
+则：
+
+$$
+H_\omega(k,\mu)
+=
+M(\omega)\sigma_x
++
+k\sigma_y
++
+\mu\sigma_z.
+$$
+
+在：
+
+$$
+\omega=\delta
+$$
+
+处，质量变号并穿过零。
+
+这是视界／domain-wall 图表：
+
+$$
+\boxed{
+\text{沿观察时间切割同一简并点}
+\longrightarrow
+\text{边界 spectral flow}.
+}
+$$
+
+---
+

@@ -1,0 +1,18 @@
+### P3. SignedNormalSpectralAtom
+
+构造一个真正的 signed-normal support chart，使临界线轨道落在允许支撑：
+
+\[
+[0,\infty),
+\]
+
+离线反射轨道产生正质量的负支撑位置：
+
+\[
+-\delta^2<0.
+\]
+
+随后用 Chebyshev 多项式或 rational separator 将负支撑运输成有限矩和 Gram 负方向。
+
+---
+

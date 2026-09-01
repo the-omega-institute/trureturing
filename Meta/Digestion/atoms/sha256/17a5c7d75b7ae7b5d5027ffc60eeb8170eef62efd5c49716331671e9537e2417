@@ -1,0 +1,55 @@
+## 1446.1 曲率影像同样严格自相似
+
+其法向曲率偶极为：
+
+$$
+\mathscr C_{\gamma,\delta}(t)
+=
+2\frac{
+(t-\gamma)^2-\delta^2
+}{
+\bigl((t-\gamma)^2+\delta^2\bigr)^2
+}.
+$$
+
+定义：
+
+$$
+\mathscr C_*(u)
+=
+2\frac{u^2-1}{(u^2+1)^2}.
+$$
+
+则：
+
+$$
+\boxed{
+\mathscr C_{\gamma,\delta}(t)
+=
+\delta^{-2}
+\mathscr C_*
+\left(
+\frac{t-\gamma}{\delta}
+\right).
+}
+\tag{1446.4}
+$$
+
+所以不同离线零点确实生成不同“相”，但差别完全由：
+
+$$
+\boxed{
+(\gamma,\delta,m)
+}
+$$
+
+参数化：
+
+* \(\gamma\)：相位位置；
+* \(\delta\)：尺度／深度；
+* \(m\)：整数拓扑荷与局部复杂度。
+
+在归一化以后，同重数零点属于同一个普适形态类。
+
+---
+

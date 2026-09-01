@@ -1,0 +1,21 @@
+\frac{e^{\delta t}+e^{-\delta t}}2,
+\qquad
+O_\delta(t)
+=
+\frac{e^{\delta t}-e^{-\delta t}}2.
+\]
+
+目标：
+
+\[
+E_\delta(-t)=E_\delta(t),
+\qquad
+O_\delta(-t)=-O_\delta(t),
+\]
+
+\[
+E_\delta(t)^2-O_\delta(t)^2=1.
+\]
+
+偶通道保存反射不变量。奇通道保存定向。
+

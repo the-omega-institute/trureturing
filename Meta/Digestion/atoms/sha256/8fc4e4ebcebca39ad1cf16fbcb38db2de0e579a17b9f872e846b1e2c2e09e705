@@ -1,0 +1,45 @@
+## 1.2 residual 控制曲率
+
+写：
+
+\[
+\lambda_p=1+r_p,
+\qquad
+b_p=r_pv_p.
+\]
+
+`StableResidualSwapCurvatureBound` 已证明：
+
+\[
+\boxed{
+\begin{aligned}
+C^{\mathrm{st}}_{p,q}
+={}&
+(a-1)(r_pv_p-r_qv_q)
+\\
+&+r_pr_q(v_q-v_p).
+\end{aligned}
+}
+\]
+
+在 \(\|v_p\|,\|v_q\|\le1\) 下：
+
+\[
+\boxed{
+\|C^{\mathrm{st}}_{p,q}\|
+\le
+\|a-1\|\bigl(\|r_p\|+\|r_q\|\bigr)
++2\|r_p\|\|r_q\|.
+}
+\]
+
+若 \(\|r_p\|,\|r_q\|\le\varepsilon\)，则：
+
+\[
+\boxed{
+\|C^{\mathrm{st}}_{p,q}\|
+\le
+2\|a-1\|\varepsilon+2\varepsilon^2.
+}
+\]
+

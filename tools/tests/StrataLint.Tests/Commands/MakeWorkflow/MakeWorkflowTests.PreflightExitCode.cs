@@ -47,9 +47,8 @@ public sealed partial class MakeWorkflowTests
             "canonical-source-report-sentinel: byte-distinct and not a fixture report\n");
         File.WriteAllBytes(sourceReport, sentinel);
         File.WriteAllText(Path.Combine(source.Path, "README.md"), "synthetic source\n");
-        RunScenarioGit(source.Path, "init", "--initial-branch=dev");
-        RunScenarioGit(source.Path, "config", "user.email", "preflight@example.invalid");
-        RunScenarioGit(source.Path, "config", "user.name", "Preflight Fixture");
+        RunScenarioGit(source.Path, "init", "--template=", "-b", "main");
+        ConfigureScenarioRepository(source.Path);
         RunScenarioGit(source.Path, "add", ".");
         RunScenarioGit(source.Path, "commit", "-m", "synthetic source baseline");
         var headBefore = RunScenarioGitForOutput(source.Path, "rev-parse", "HEAD");
@@ -142,9 +141,8 @@ public sealed partial class MakeWorkflowTests
             report,
             "{\"modules\":[],\"schema\":\"stratalint-raw-lean-report-v2\"}\n");
         File.WriteAllText(Path.Combine(root, "README.md"), "base\n");
-        RunScenarioGit(root, "init", "--initial-branch=dev");
-        RunScenarioGit(root, "config", "user.email", "preflight@example.invalid");
-        RunScenarioGit(root, "config", "user.name", "Preflight Fixture");
+        RunScenarioGit(root, "init", "--template=", "-b", "main");
+        ConfigureScenarioRepository(root);
         RunScenarioGit(root, "add", "README.md", "tools");
         RunScenarioGit(root, "commit", "-m", "fixture base");
         var candidatePath = scenario == "stale-values"
@@ -246,8 +244,10 @@ public sealed partial class MakeWorkflowTests
             """);
 
         var result = TestProcessRunner.Run(
-            "/bin/bash",
+            "/usr/bin/env",
             [
+                .. IsolatedGitEnvironment(),
+                "/bin/bash",
                 "-c",
                 "PREFLIGHT_SCENARIO=\"$1\" BASE=HEAD^ PATH=\"$2:/usr/bin:/bin\" exec /bin/bash \"$3\"",
                 "preflight-contract",
@@ -280,8 +280,8 @@ public sealed partial class MakeWorkflowTests
     private static void RunScenarioGit(string root, params string[] arguments)
     {
         var result = TestProcessRunner.Run(
-            "/usr/bin/git",
-            arguments,
+            "/usr/bin/env",
+            IsolatedGitArguments(arguments),
             root,
             TestBudgets.ScriptProcessHangGuard,
             64 * 1024);
@@ -295,8 +295,8 @@ public sealed partial class MakeWorkflowTests
     private static string RunScenarioGitForOutput(string root, params string[] arguments)
     {
         var result = TestProcessRunner.Run(
-            "/usr/bin/git",
-            arguments,
+            "/usr/bin/env",
+            IsolatedGitArguments(arguments),
             root,
             TestBudgets.ScriptProcessHangGuard,
             64 * 1024);
@@ -307,6 +307,41 @@ public sealed partial class MakeWorkflowTests
         }
         return System.Text.Encoding.UTF8.GetString(result.StandardOutput);
     }
+
+    private static void ConfigureScenarioRepository(string repository)
+    {
+        RunScenarioGit(repository, "config", "--local", "user.name", "Preflight Fixture");
+        RunScenarioGit(repository, "config", "--local", "user.email", "preflight@example.invalid");
+        RunScenarioGit(repository, "config", "--local", "commit.gpgsign", "false");
+        RunScenarioGit(repository, "config", "--local", "tag.gpgsign", "false");
+        RunScenarioGit(repository, "config", "--local", "core.autocrlf", "false");
+        RunScenarioGit(repository, "config", "--local", "core.safecrlf", "false");
+        RunScenarioGit(repository, "config", "--local", "core.hooksPath", "/dev/null");
+        RunScenarioGit(repository, "config", "--local", "gc.auto", "0");
+        RunScenarioGit(repository, "config", "--local", "maintenance.auto", "false");
+    }
+
+    private static string[] IsolatedGitEnvironment() =>
+    [
+        "-u", "GIT_AUTHOR_NAME",
+        "-u", "GIT_AUTHOR_EMAIL",
+        "-u", "GIT_COMMITTER_NAME",
+        "-u", "GIT_COMMITTER_EMAIL",
+        "-u", "GIT_CONFIG",
+        "-u", "GIT_CONFIG_PARAMETERS",
+        "-u", "GIT_TEMPLATE_DIR",
+        "GIT_CONFIG_GLOBAL=/dev/null",
+        "GIT_CONFIG_SYSTEM=/dev/null",
+        "GIT_CONFIG_NOSYSTEM=1",
+        "GIT_CONFIG_COUNT=0",
+    ];
+
+    private static string[] IsolatedGitArguments(IEnumerable<string> arguments) =>
+    [
+        .. IsolatedGitEnvironment(),
+        "/usr/bin/git",
+        .. arguments,
+    ];
 
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
     private static void WriteExecutable(string path, string content)

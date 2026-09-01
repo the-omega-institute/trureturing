@@ -1,0 +1,25 @@
+* Hankel 泄漏方向。
+
+所以在保留时间极化的完整 profile 中：
+
+$$
+\boxed{
+\Gamma_{\mathrm{causal}}(\rho)
+\neq
+\Gamma_{\mathrm{causal}}(J\rho)
+\qquad
+(\delta\neq0).
+}
+\tag{1484.1}
+$$
+
+而在临界线上：
+
+$$
+\rho=J\rho,
+$$
+
+不存在两个不同分支。
+
+因此，若 \(\Gamma_{\mathrm{causal}}\) 被严格构造为包含这些方向的完整互动轮廓，则：
+
