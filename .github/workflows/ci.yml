@@ -10,6 +10,7 @@ on:
 
 permissions:
   contents: read
+env: { PURE_REVERT_CLASSIFIER_PATH: tools/scripts/workflow/pure-revert-detect.sh }
 
 # PR 侧按 PR 号分组并取消在途:同一 PR 连续推送时,旧 run 的结论已无意义。
 #
@@ -81,7 +82,7 @@ jobs:
         shell: bash
         run: |
           classifier="$RUNNER_TEMP/pure-revert-detect.bin"
-          if git -C candidate show "HEAD^1:tools/scripts/workflow/pure-revert-detect.sh" > "$classifier" 2>/dev/null; then
+          if git -C candidate show "HEAD^1:${PURE_REVERT_CLASSIFIER_PATH}" > "$classifier" 2>/dev/null; then
             /bin/bash "$classifier" --ci "$GITHUB_WORKSPACE/candidate" "$GITHUB_OUTPUT"
           else
             printf '%s\n' 'confirmed=false' 'classification=not_applicable' >> "$GITHUB_OUTPUT"
@@ -372,7 +373,7 @@ jobs:
         shell: bash
         run: |
           classifier="$RUNNER_TEMP/pure-revert-detect.bin"
-          if git -C candidate show "HEAD^1:tools/scripts/workflow/pure-revert-detect.sh" > "$classifier" 2>/dev/null; then
+          if git -C candidate show "HEAD^1:${PURE_REVERT_CLASSIFIER_PATH}" > "$classifier" 2>/dev/null; then
             /bin/bash "$classifier" --ci "$GITHUB_WORKSPACE/candidate" "$GITHUB_OUTPUT"
           else
             printf '%s\n' 'confirmed=false' 'classification=not_applicable' >> "$GITHUB_OUTPUT"
@@ -685,7 +686,7 @@ jobs:
         shell: bash
         run: |
           classifier="$RUNNER_TEMP/pure-revert-detect.bin"
-          if git -C candidate show "HEAD^1:tools/scripts/workflow/pure-revert-detect.sh" > "$classifier" 2>/dev/null; then
+          if git -C candidate show "HEAD^1:${PURE_REVERT_CLASSIFIER_PATH}" > "$classifier" 2>/dev/null; then
             /bin/bash "$classifier" --ci "$GITHUB_WORKSPACE/candidate" "$GITHUB_OUTPUT"
           else
             printf '%s\n' 'confirmed=false' 'classification=not_applicable' >> "$GITHUB_OUTPUT"
