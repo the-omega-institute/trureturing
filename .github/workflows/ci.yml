@@ -227,12 +227,19 @@ jobs:
             cd "$base_harness_root"
             dotnet restore tools/StrataLint.sln --locked-mode
           )
-          if [[ "$ENGINEERING_EXECUTION_FULL_REQUIRED" == "true" ]]; then
-            FULL=1 make -C "$base_harness_root/tools" engineering-tests-base-cwd REPOSITORY="$GITHUB_WORKSPACE/candidate" MODE=plan HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$plan_file"
+          execution_harness="$base_harness_root/tools/scripts/workflow/engineering-test-execution-harness.sh"
+          if [[ -e "$execution_harness" ]]; then
+            /bin/bash "$execution_harness" "$base_harness_root" "$plan_file"
           else
-            make -C "$base_harness_root/tools" engineering-tests-base-cwd REPOSITORY="$GITHUB_WORKSPACE/candidate" MODE=plan HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$plan_file"
+            printf 'RESOURCE_OBSERVATION_LOADER status=UNAVAILABLE reason=execution-harness-missing exit=0 path=%s\n' "$execution_harness"
+            if [[ "$ENGINEERING_EXECUTION_FULL_REQUIRED" == "true" ]]; then
+              FULL=1 make -C "$base_harness_root/tools" engineering-tests-base-cwd REPOSITORY="$GITHUB_WORKSPACE/candidate" MODE=plan HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$plan_file"
+            else
+              make -C "$base_harness_root/tools" engineering-tests-base-cwd REPOSITORY="$GITHUB_WORKSPACE/candidate" MODE=plan HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$plan_file"
+            fi
+            make -C "$base_harness_root/tools" engineering-tests-base-cwd REPOSITORY="$GITHUB_WORKSPACE/candidate" MODE=execute HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$plan_file"
           fi
-          make -C "$base_harness_root/tools" engineering-tests-base-cwd REPOSITORY="$GITHUB_WORKSPACE/candidate" MODE=execute HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$plan_file"
+
       - name: Run candidate selftest twice and compare bytes
         if: steps.revert.outputs.confirmed != 'true' && steps.scope.outputs.run_required == 'true'
         shell: bash
