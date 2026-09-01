@@ -43,6 +43,7 @@ jobs:
             D5.S3.ObserverMemory.FourierFibers.SymmetryBreakingObservabilityGain
             D5.S3.ObserverMemory.FourierFibers.FiniteObservabilityKrylovCriterion
             D5.S3.ObserverMemory.FourierFibers.GoldenScaleCharacterDeckBlindness
+            D5.S3.ObserverMemory.FourierFibers.SpectralFutureReadoutBridge
           )
           for module in "${modules[@]}"; do
             safe="${module//./_}"
