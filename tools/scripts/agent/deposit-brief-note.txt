@@ -13,6 +13,14 @@
   · **先读落点目录下的既有模块全文**再动手。
   · 若判定已被覆盖,**blocked 并报告**,不要制造第二真源(第 6 条)。
 
+- **⚠️ 查重的结构性盲区(必读)**:`origin/dev` 上查不到**本 pipeline 尚未合入的在飞模块**。
+  本会话已因此产生一次**异名重复**:两个不同 atom 描述同一数学(同一矩阵、同一平方定理),
+  后做的那条查遍 dev 查不到前一条(它还在未合并的 PR 里),于是重复形式化了。
+  ⟹ **除 dev 外,还须查在飞分支**:
+  `git ls-remote --heads origin 'refs/heads/lane/math/*'`,对与你主题相近的分支跑
+  `git diff --name-only origin/dev...origin/<分支> | grep '^D5/'`,**读它们的声明**。
+  发现同一数学被别的分支做了 ⟹ **blocked 并报告**,不要制造第二真源。
+
 - **落点必须用已有域**:先 `git ls-tree origin/dev --name-only D5/<S层>/` 看有哪些域,
   **严禁新建 `D5/<S层>/<新域>/`** —— 新域须注册进 `Meta/domains.yaml`,
   而该文件字节被 `ValidatedPolicy` 钉死(`CanonicalSnapshot.cs:65-70`),
