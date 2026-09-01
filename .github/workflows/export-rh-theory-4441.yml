@@ -1,0 +1,26 @@
+name: export-rh-theory-4441
+
+on:
+  push:
+    branches:
+      - tmp/export-rh-theory-4441
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+      - name: Verify source blob
+        run: |
+          test "$(git hash-object docs/develop/theory/RH_RESEARCH_LANE_THEORY.md)" = "e150b4982344d7d26c83a7b854d195a8a1ef8a4c"
+      - name: Upload exact theory source
+        uses: actions/upload-artifact@v4
+        with:
+          name: rh-theory-source-4441
+          path: docs/develop/theory/RH_RESEARCH_LANE_THEORY.md
+          if-no-files-found: error
+          retention-days: 1
