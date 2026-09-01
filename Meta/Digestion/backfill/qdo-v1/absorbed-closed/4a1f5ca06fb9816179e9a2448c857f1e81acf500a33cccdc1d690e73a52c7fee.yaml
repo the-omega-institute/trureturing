@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:4a1f5ca06fb9816179e9a2448c857f1e81acf500a33cccdc1d690e73a52c7fee
+  normalized_sha256: sha256:4a1f5ca06fb9816179e9a2448c857f1e81acf500a33cccdc1d690e73a52c7fee
+cas_ref: sha256:4a1f5ca06fb9816179e9a2448c857f1e81acf500a33cccdc1d690e73a52c7fee
+coverage_gids:
+  - D5/S3/ObserverMemory/PredictionFactors/DeterministicCompletionMinimality.minimal_deterministic_completion
+receipts:
+  coverage:
+    - gid: D5/S3/ObserverMemory/PredictionFactors/DeterministicCompletionMinimality.minimal_deterministic_completion
+      source_sha256: sha256:4a1f5ca06fb9816179e9a2448c857f1e81acf500a33cccdc1d690e73a52c7fee
+      target_statement_id: sha256:8deb30f0613a9667a86e1252f7de4e74eafbe5d7dd9338b6bfbca1ec420551aa
+  scribe:
+    - gid: D5/S3/ObserverMemory/PredictionFactors/DeterministicCompletionMinimality.minimal_deterministic_completion
+      definition_sha256: sha256:04b7de44d5f0e471013e49863b87ff3966afd0c4f74ccbd4e5147b327bea22f6
+      emission_sha256: sha256:ec3de586013de80bb1b131d4065d9d22d49f992df6c54b55cb7895903a8e0f6e
+  unresolved_subitems: []
