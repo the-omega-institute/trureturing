@@ -331,6 +331,9 @@ public sealed class LeanCachePublishTests
         const string NewTag = "lean-cache-v1-leanprover-lean4-v4-31-0-2222222222222222-1111111111111111";
         const string SupersededA = "lean-cache-v1-leanprover-lean4-v4-31-0-2222222222222222-aaaaaaaaaaaaaaaa";
         const string SupersededB = "lean-cache-v1-leanprover-lean4-v4-31-0-2222222222222222-bbbbbbbbbbbbbbbb";
+        const string RetainedC = "lean-cache-v1-leanprover-lean4-v4-31-0-2222222222222222-cccccccccccccccc";
+        const string RetainedD = "lean-cache-v1-leanprover-lean4-v4-31-0-2222222222222222-dddddddddddddddd";
+        const string EvictedE = "lean-cache-v1-leanprover-lean4-v4-31-0-2222222222222222-eeeeeeeeeeeeeeee";
         const string OtherConfig = "lean-cache-v1-leanprover-lean4-v4-31-0-9999999999999999-cccccccccccccccc";
 
         using var fixture = new PublishFixture();
@@ -350,7 +353,10 @@ public sealed class LeanCachePublishTests
                 + $"  touch '{created}'; exit 0\n"
                 + "fi\n"
                 + "if [[ \"$1 $2\" == 'release list' ]]; then\n"
-                + $"  printf '%s\\n' '{NewTag}' '{SupersededA}' '{SupersededB}' '{OtherConfig}'\n"
+                // 脚本以 --json tagName,createdAt + sort_by(.createdAt)|reverse 取序,
+                // 故夹具供出 createdAt;此处按新→旧排列,EvictedE 最旧。
+                + $"  printf '%s\\n' '{NewTag}' '{SupersededA}' '{SupersededB}'"
+                + $" '{RetainedC}' '{RetainedD}' '{EvictedE}' '{OtherConfig}'\n"
                 + "  exit 0\n"
                 + "fi\n"
                 + $"if [[ \"$1 $2\" == 'release delete' ]]; then printf '%s\\n' \"$3\" >> '{deleted}'; exit 0; fi\n"
@@ -372,8 +378,12 @@ public sealed class LeanCachePublishTests
         var removed = File.Exists(deleted) ? File.ReadAllLines(deleted) : [];
 
         // ① 同 config 的旧份被删。
-        Assert.Contains(SupersededA, removed);
-        Assert.Contains(SupersededB, removed);
+        // RETAIN=5:同 config 前缀下最新五份(含刚发布的 NewTag)不剪,只剪更旧的。
+        Assert.DoesNotContain(SupersededA, removed);
+        Assert.DoesNotContain(SupersededB, removed);
+        Assert.DoesNotContain(RetainedC, removed);
+        Assert.DoesNotContain(RetainedD, removed);
+        Assert.Contains(EvictedE, removed);
 
         // ② 刚建的那份绝不被删 —— 删了它就是把一次浪费换成一次断供。
         Assert.DoesNotContain(NewTag, removed);
@@ -382,7 +392,7 @@ public sealed class LeanCachePublishTests
         Assert.DoesNotContain(OtherConfig, removed);
 
         // 收据必须报出删了几份；剪枝静默就等于没有账。
-        Assert.Contains("\"pruned\":2", result.Text, StringComparison.Ordinal);
+        Assert.Contains("\"pruned\":1", result.Text, StringComparison.Ordinal);
     }
 
     private sealed record PublishAttempt(int ExitCode, string Text);
