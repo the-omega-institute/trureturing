@@ -167,6 +167,183 @@ theorem prime_only_no_gap {P : ℝ} [Fact (0 < P)] {I : Type*}
       exists_nonzero_fourierJumpEnergy_lt jump hweight hsum hepsilon
     exact ⟨fourierJumpEnergy weight jump n, ⟨⟨n, hn⟩, rfl⟩, henergy⟩
 
+/-! ### Prime-only observer definitions -/
+
+/-- The regulator circle `ℝ / Pℤ`. -/
+abbrev GoldenRegulatorCircle (P : ℝ) := AddCircle P
+
+/-- The `n`-th Fourier mode on the regulator circle. -/
+def fourierMode {P : ℝ} (n : ℤ) : C(GoldenRegulatorCircle P, ℂ) :=
+  fourier n
+
+/-- An arithmetic place paired with a positive prime-power exponent. -/
+abbrev PrimePowerIndex (I : Type*) := I × ℕ+
+
+/-- The circle translation belonging to the `k`-th power of a prime place. -/
+def primePowerJump {P : ℝ} {I : Type*} (primeShift : I → GoldenRegulatorCircle P)
+    (q : PrimePowerIndex I) : GoldenRegulatorCircle P :=
+  q.2.1 • primeShift q.1
+
+/-- The prime-only Dirichlet form
+`(1 / 2) ∑_(p,k) w_(p,k) ∫ |ƒ(η + kη_p) - ƒ(η)|² dη`. -/
+def primeOnlyDirichletForm {P : ℝ} [Fact (0 < P)] {I : Type*}
+    (weight : PrimePowerIndex I → ℝ) (primeShift : I → GoldenRegulatorCircle P)
+    (f : GoldenRegulatorCircle P → ℂ) : ℝ :=
+  (1 / 2) * ∑' q, weight q *
+    ∫ eta, Complex.normSq (f (eta + primePowerJump primeShift q) - f eta)
+
+/-- The finite prime-only spectral coefficient is the Dirichlet form of a Fourier mode. -/
+def spectralCoefficient {P : ℝ} [Fact (0 < P)] {I : Type*}
+    (weight : PrimePowerIndex I → ℝ) (primeShift : I → GoldenRegulatorCircle P)
+    (n : ℤ) : ℝ :=
+  primeOnlyDirichletForm weight primeShift (fourierMode n)
+
+private theorem fourier_translation_normSq {P : ℝ} [Fact (0 < P)]
+    (n : ℤ) (eta x : GoldenRegulatorCircle P) :
+    Complex.normSq (fourier n (eta + x) - fourier n eta) =
+      Complex.normSq (fourier n x - 1) := by
+  have hcharacter : fourier n (eta + x) = fourier n eta * fourier n x := by
+    simp only [fourier_apply, zsmul_add, AddCircle.toCircle_add, Circle.coe_mul]
+  rw [hcharacter, show fourier n eta * fourier n x - fourier n eta =
+    fourier n eta * (fourier n x - 1) by ring, Complex.normSq_mul]
+  have hunit : Complex.normSq (fourier n eta) = 1 := by
+    rw [fourier_apply]
+    exact Circle.normSq_coe _
+  rw [hunit, one_mul]
+
+private theorem integral_fourier_translation_normSq {P : ℝ} [Fact (0 < P)]
+    (n : ℤ) (x : GoldenRegulatorCircle P) :
+    (∫ eta, Complex.normSq (fourier n (eta + x) - fourier n eta)) =
+      P * Complex.normSq (fourier n x - 1) := by
+  have hP : 0 ≤ P := (Fact.out : 0 < P).le
+  simp_rw [fourier_translation_normSq]
+  rw [integral_const]
+  simp [Measure.real, AddCircle.measure_univ, hP]
+
+/-- Evaluation on a Fourier mode removes the circle integral. The factor `P / 2` is the
+volume of the regulator circle times the `1 / 2` in the Dirichlet form. -/
+theorem spectralCoefficient_eq_fourierJumpEnergy {P : ℝ} [Fact (0 < P)] {I : Type*}
+    (weight : PrimePowerIndex I → ℝ) (primeShift : I → GoldenRegulatorCircle P)
+    (n : ℤ) :
+    spectralCoefficient weight primeShift n =
+      (P / 2) * fourierJumpEnergy weight (primePowerJump primeShift) n := by
+  unfold spectralCoefficient primeOnlyDirichletForm fourierMode fourierJumpEnergy
+  simp_rw [integral_fourier_translation_normSq]
+  calc
+    (1 / 2) *
+        ∑' q, weight q *
+          (P * Complex.normSq (fourier n (primePowerJump primeShift q) - 1)) =
+        (1 / 2) *
+          ∑' q, P *
+            (weight q * Complex.normSq (fourier n (primePowerJump primeShift q) - 1)) := by
+      congr 1
+      apply tsum_congr
+      intro q
+      ring
+    _ = (1 / 2) * (P *
+        ∑' q, weight q *
+          Complex.normSq (fourier n (primePowerJump primeShift q) - 1)) := by
+      rw [tsum_mul_left]
+    _ = (P / 2) *
+        ∑' q, weight q *
+          Complex.normSq (fourier n (primePowerJump primeShift q) - 1) := by ring
+
+theorem spectralCoefficient_nonnegative {P : ℝ} [Fact (0 < P)] {I : Type*}
+    {weight : PrimePowerIndex I → ℝ} (primeShift : I → GoldenRegulatorCircle P)
+    (hweight : ∀ q, 0 ≤ weight q) (n : ℤ) :
+    0 ≤ spectralCoefficient weight primeShift n := by
+  have hP : 0 ≤ P := (Fact.out : 0 < P).le
+  rw [spectralCoefficient_eq_fourierJumpEnergy]
+  exact mul_nonneg (div_nonneg hP zero_le_two)
+    (fourierJumpEnergy_nonnegative _ hweight n)
+
+/-- The source theorem for any summable nonnegative family of prime-power weights. The subtype in
+the infimum excludes the trivial zero Fourier mode. -/
+theorem spectralCoefficient_prime_only_no_gap {P : ℝ} [Fact (0 < P)] {I : Type*}
+    {weight : PrimePowerIndex I → ℝ} (primeShift : I → GoldenRegulatorCircle P)
+    (hweight : ∀ q, 0 ≤ weight q) (hsum : Summable weight) :
+    sInf (Set.range fun n : {n : ℤ // n ≠ 0} =>
+      spectralCoefficient weight primeShift n) = 0 := by
+  apply csInf_eq_of_forall_ge_of_forall_gt_exists_lt
+  · exact ⟨spectralCoefficient weight primeShift 1, ⟨⟨1, one_ne_zero⟩, rfl⟩⟩
+  · intro value hvalue
+    obtain ⟨n, rfl⟩ := hvalue
+    exact spectralCoefficient_nonnegative primeShift hweight n
+  · intro epsilon hepsilon
+    have hscale : 0 < P / 2 := div_pos (Fact.out : 0 < P) zero_lt_two
+    obtain ⟨n, hn, henergy⟩ := exists_nonzero_fourierJumpEnergy_lt
+      (primePowerJump primeShift) hweight hsum (div_pos hepsilon hscale)
+    refine ⟨spectralCoefficient weight primeShift n, ⟨⟨n, hn⟩, rfl⟩, ?_⟩
+    rw [spectralCoefficient_eq_fourierJumpEnergy]
+    exact (lt_div_iff₀' hscale).mp henergy
+
+/-! ### Number-field prime ideals -/
+
+/-- Nonzero prime ideals of the ring of integers of a number field. -/
+abbrev NumberFieldPrime (K : Type*) [Field K] [NumberField K] :=
+  IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers K)
+
+/-- The source weight `1 / (k (N p)^(kσ))` on number-field prime powers. -/
+def numberFieldPrimePowerWeight (K : Type*) [Field K] [NumberField K] (σ : ℝ)
+    (q : PrimePowerIndex (NumberFieldPrime K)) : ℝ :=
+  1 / ((q.2.1 : ℝ) *
+    (Ideal.absNorm q.1.asIdeal : ℝ) ^ ((q.2.1 : ℝ) * σ))
+
+theorem numberFieldPrimePowerWeight_nonnegative
+    (K : Type*) [Field K] [NumberField K] (σ : ℝ) (q : PrimePowerIndex (NumberFieldPrime K)) :
+    0 ≤ numberFieldPrimePowerWeight K σ q := by
+  unfold numberFieldPrimePowerWeight
+  exact one_div_nonneg.mpr (mul_nonneg (Nat.cast_nonneg _)
+    (Real.rpow_nonneg (Nat.cast_nonneg _) _))
+
+/-- Prime-only no-gap theorem for genuine number-field prime ideals. The explicit summability
+hypothesis is exactly the Euler-product convergence step for `σ > 1`. -/
+theorem numberField_prime_only_no_gap
+    (K : Type*) [Field K] [NumberField K]
+    {P σ : ℝ} [Fact (0 < P)] (hσ : 1 < σ)
+    (primeShift : NumberFieldPrime K → GoldenRegulatorCircle P)
+    (hsum : Summable (numberFieldPrimePowerWeight K σ)) :
+    sInf (Set.range fun n : {n : ℤ // n ≠ 0} =>
+      spectralCoefficient (numberFieldPrimePowerWeight K σ) primeShift n) = 0 := by
+  have _ := hσ
+  exact spectralCoefficient_prime_only_no_gap primeShift
+    (numberFieldPrimePowerWeight_nonnegative K σ) hsum
+
+/-! ### Concrete nonempty witness -/
+
+/-- Two nonzero rational circle shifts, representing angles `π` and `2π/3`. -/
+def twoAngleShift (j : Fin 2) : GoldenRegulatorCircle (1 : ℝ) :=
+  if j = 0 then ((1 / 2 : ℝ) : AddCircle (1 : ℝ))
+  else ((1 / 3 : ℝ) : AddCircle (1 : ℝ))
+
+theorem six_nsmul_twoAngleShift (j : Fin 2) : 6 • twoAngleShift j = 0 := by
+  fin_cases j
+  · change 6 • (if (0 : Fin 2) = 0 then
+        ((1 / 2 : ℝ) : AddCircle (1 : ℝ)) else
+        ((1 / 3 : ℝ) : AddCircle (1 : ℝ))) = 0
+    rw [if_pos rfl]
+    rw [← AddCircle.coe_nsmul, AddCircle.coe_eq_zero_iff]
+    exact ⟨3, by norm_num⟩
+  · change 6 • (if (1 : Fin 2) = 0 then
+        ((1 / 2 : ℝ) : AddCircle (1 : ℝ)) else
+        ((1 / 3 : ℝ) : AddCircle (1 : ℝ))) = 0
+    rw [if_neg (by decide)]
+    rw [← AddCircle.coe_nsmul, AddCircle.coe_eq_zero_iff]
+    exact ⟨2, by norm_num⟩
+
+/-- At `σ = 2`, the explicit nonzero mode `n = 6` simultaneously kills both sample angles. -/
+theorem sigma_two_twoAngle_energy_six :
+    fourierJumpEnergy
+      (fun j : Fin 2 => 1 / ((j.1 + 2 : ℕ) : ℝ) ^ (2 : ℝ)) twoAngleShift 6 = 0 := by
+  have hfourier (j : Fin 2) : fourier (6 : ℤ) (twoAngleShift j) = 1 := by
+    rw [fourier_apply, show (6 : ℤ) • twoAngleShift j = 6 • twoAngleShift j by
+      exact natCast_zsmul (twoAngleShift j) 6]
+    rw [six_nsmul_twoAngleShift]
+    simp
+  unfold fourierJumpEnergy
+  rw [tsum_fintype]
+  simp [hfourier]
+
 end
 
 end D5.S3.Weil.PrimeOnly.PrimeOnlyNoGap
