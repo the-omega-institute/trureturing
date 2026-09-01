@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:b199404556868578bab55af4d26f491786d8d439e796971aceaf250f2bb7294a
+  normalized_sha256: sha256:b199404556868578bab55af4d26f491786d8d439e796971aceaf250f2bb7294a
+cas_ref: sha256:b199404556868578bab55af4d26f491786d8d439e796971aceaf250f2bb7294a
+coverage_gids:
+  - D5/S3/ObserverMemory/ProObjects/GeneralHomFormula.pro_category_hom_formula
+receipts:
+  coverage:
+    - gid: D5/S3/ObserverMemory/ProObjects/GeneralHomFormula.pro_category_hom_formula
+      source_sha256: sha256:b199404556868578bab55af4d26f491786d8d439e796971aceaf250f2bb7294a
+      target_statement_id: sha256:89a31109841b6a38ebd590ffb3d3f17e762800841e3f1797b7382baa8b8a9378
+  scribe:
+    - gid: D5/S3/ObserverMemory/ProObjects/GeneralHomFormula.pro_category_hom_formula
+      definition_sha256: sha256:0c6d9bec1984d264726a7c301822b18912a652099f6de0f678ec2ca6da7971c8
+      emission_sha256: sha256:2a9c64aab7905782615e2ff586ab0df49dfe4a048785c58329a6cc24c2a520da
+  unresolved_subitems: []

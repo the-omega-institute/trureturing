@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:cfed1ae88366252df1be50ff1d9d2f21736f8d7a1649513a58c4ea4d97814d31
+  normalized_sha256: sha256:cfed1ae88366252df1be50ff1d9d2f21736f8d7a1649513a58c4ea4d97814d31
+cas_ref: sha256:cfed1ae88366252df1be50ff1d9d2f21736f8d7a1649513a58c4ea4d97814d31
+coverage_gids:
+  - D5/S3/ObserverMemory/RefinementClosure/BehaviorUpdateWordAction.behavior_update_well_defined
+receipts:
+  coverage:
+    - gid: D5/S3/ObserverMemory/RefinementClosure/BehaviorUpdateWordAction.behavior_update_well_defined
+      source_sha256: sha256:cfed1ae88366252df1be50ff1d9d2f21736f8d7a1649513a58c4ea4d97814d31
+      target_statement_id: sha256:4fca1dce4ca77bd6aad029658dfbfb8f36b97afc3f4daf7ac5e564449b9c485d
+  scribe:
+    - gid: D5/S3/ObserverMemory/RefinementClosure/BehaviorUpdateWordAction.behavior_update_well_defined
+      definition_sha256: sha256:61fe9ff34c21551dc33ada4a734ff552871da4f5cc9b8d895f74a4b926a6b35e
+      emission_sha256: sha256:9744c0486c84d8e6fa7c35329d1f1a29760b5ba31e04f9f41db4d3cd1163b3d8
+  unresolved_subitems: []

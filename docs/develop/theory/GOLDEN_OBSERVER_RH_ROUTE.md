@@ -1729,3 +1729,37 @@ $$\boxed{\ \beta(v{+}1)-\beta(v)\in\{\varphi,\ \varphi^2\}\ }$$
 - **预算记账**:增订三预算「两席轮」如约用尽(W-B1 一轮 + W-B3 一轮;W-B2 为增订三新立义务,另计一轮)。B 线关闭,不再续测;若未来提出非标量对应,按新义务预登记,不复用本线预算。
 
 后续增订继续严格追加于本节之后。
+
+---
+
+# 增订五　B 线结案后的第一开放边:定义逃逸初等波预登记(W-A、W-C、W-B)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;六席思考面板(codex-cli ×4 teleology/parsimony/fidelity/natural-ownership、nyxid GPT PRO ×1 worth、隔离 subagent ×1 proportional-containment)并发盲评,全部 `revise`,meta-judge 由 orchestrator 收敛;本节三条子句的 Lean 陈述由 orchestrator 在钉版工具链亲跑探针确认为真(标准三公理)后才写入,以免重蹈追加部三 W-C1 的假子句先例。判决日:2026-09-02。lane issue:#4589。
+
+## 〇　为什么是这三条
+
+增订四已判死 §二(B) 的标量桥。追加部二 §D 的义务 W-A…W-F 被消化成整节 atom(24–27 KB),单定理模块无法逐字 cover;故按增订三/四的先例,把本波要派的义务逐条重述为可独立消化的小节,每节一条公开定理、一条写在跑之前的可证伪预测。选题依据:两侧皆锚定冻结声明、初等策略可闭合、自然目录未满或裂桶成本可计价、有具名消费者。W-D 依 §C 自判「C-4 是治理/证书 API,不能进入 RH 前件」不入本波;W-E 排在 W-B 之后(需 C-1 的 provenance 位与同一裂桶);W-F 待真实黄金分解消费者出现。
+
+## 一　W-A 预登记:曲率–slack 相位桥(`CurvatureSlackPhaseBridge`)
+
+**义务**:对 $a>0$、$x\ge 0$,令 $z=\frac{x-a}{x+a}$(即 `chebyshev_slack_bounds` 的 compactCoordinate),$\kappa=\frac{2(x-a)}{(x+a)^2}$(即 `off_line_curvature_dipole` 第一合取项的曲率公式在 $x=(t-\gamma)^2$、$a=\delta^2$ 下的字面形),$\mathrm{slack}_1=1-T_1(z)^2$。单一公开定理证明:$\bigl(\tfrac{(x+a)\kappa}{2}\bigr)^2+\mathrm{slack}_1=1$ 且 $\tfrac{(x+a)\kappa}{2}=z$;并在 $0<x<a$、$y=a^2/x$ 下于同一结论中证明 $z(y)=-z(x)$、$\mathrm{slack}_1(y)=\mathrm{slack}_1(x)$、$z(x)<0<z(y)$(相位相反)。模块须 `import` 上述两冻结模块,并以具名引理把 $\kappa$ 与 `off_line_curvature_dipole` 的曲率公式在 $x=(t-\gamma)^2$、$a=\delta^2$ 下字面对接;不触及 zeta、零点或 RH。
+**可证伪预测(写在跑之前)**:若正确,该定理以 `field_simp`/`ring`/`nlinarith` 级初等策略在钉版工具链闭合,公理集为标准三条;若任一子句为假,整条 W-A 作废,不得削弱子句以求闭合。
+**边界**:只闭合 A-R4 倒数对「slack 相等、相位相反」这一读数,把 C-2 的 phase bit 挣成定理;不主张其外任何 RH 前件。
+
+## 二　W-C 预登记:多尺度阻尼指纹的追加律(`MultiscaleFingerprintAppend`)
+
+**义务**:复用冻结 `criticalDampingDefect`,定义指纹 $F(\mathrm{realPart},\mathrm{scale}):\mathrm{Fin}\,n\to\mathbb R$,$F_k=\mathrm{criticalDampingDefect}(\mathrm{realPart},\mathrm{scale}_k)$。单一公开定理:对任意有限载体与追加尺度 $\tau'$(`Fin.snoc scale τ'`),(i) 旧指纹是新指纹在 `Fin.castSucc` 上的前缀;(ii) 两个载体(允许不同的有限指标类型)若在 $\tau'$ 处 defect 不等,则扩展后指纹不等。不证明「总存在分离尺度」。
+**可证伪预测(写在跑之前)**:若 C-3 有内容,则 A-R3 的单尺度碰撞在第二尺度被切开:取 X 的中心化偏移多重集 $\{+1,-1\}$、Y 为 $\{+b,+b,-b,-b\}$ 且 $\cosh b=(\cosh 1+1)/2$,则 $D_X(1)=D_Y(1)=2(\cosh 1-1)$ 而 $D_X(2)-D_Y(2)=2(\cosh 1-1)^2>0$;模块须以具名定理在钉版工具链兑现这两式。若两式任一在 kernel 下不成立,则 C-3「早期新尺度产生正 Capture」的预测被证伪,C-3 应退出而非再加尺度。
+**边界**:不主张有限矩层级完备,不引入 measure/transform 语言,不触及 zeta 零点是否存在。
+
+## 三　W-B 预登记:环面零因子 provenance 切刀(`ToroidalProvenanceCut`)
+
+**义务**:按 C-1 骨架定义 `ToroidalVanishingProfile`(selected / periodZero / twistZero 三个 Finset)与构造子 `toroidalVanishingProfile`(以 `Finset.filter` 取 period、twist 在 $s$ 处为零的 index)。单一公开定理(挣得该定义):对无零因子的标量类型,若 $i\in\mathrm{selected}$、$\mathrm{period}_i(s)=\mathrm{base}(s)\cdot\mathrm{twist}_i(s)$ 且 $\mathrm{twist}_i(s)\ne 0$,则 $i\in\mathrm{periodZero}\iff\mathrm{base}(s)=0$,且 $i\notin\mathrm{twistZero}$。只用 `mul_eq_zero` 与 `Finset.mem_filter`。
+**可证伪预测(写在跑之前)**:若 D5 已存在**可寻址**的等强陈述(逐 index 的 profile 成员刻画,而非 `toroidal_common_zero_locus` 那样在 pointwiseNonvanishing 下的全局集合相等),则本义务的交付物是 bind 报告而非新模块;若 `Analytic/Adelic` 已满(24/24,写入时实测),则须裂桶并如实计价,不得为躲容量放进语义错误的目录。定理本身预期以 `simp [mul_eq_zero]` 级策略闭合。
+**边界**:只闭合 index plumbing 的最小证书,为 C-5 的 chart 选择提供 twist 非零 provenance;不主张任何黄金通道的 twist 非零,不触及 eulerGerm 与 O-5。
+
+## 四　预算与结算
+
+三条各一席位轮(codex-cli,独立 worktree,各自 PR);任一席以 `open` 出口即在本卷下一增订登记其阻断面,不复用预算 grind。研究席另行开单(非标量测度值输运 N-M1,草稿不入库),其采纳与否由 owner 裁决。
+
+后续增订继续严格追加于本节之后。
