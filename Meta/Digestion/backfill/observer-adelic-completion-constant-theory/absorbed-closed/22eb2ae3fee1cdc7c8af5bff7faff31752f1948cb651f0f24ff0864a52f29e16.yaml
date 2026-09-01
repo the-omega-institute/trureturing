@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:22eb2ae3fee1cdc7c8af5bff7faff31752f1948cb651f0f24ff0864a52f29e16
+  normalized_sha256: sha256:22eb2ae3fee1cdc7c8af5bff7faff31752f1948cb651f0f24ff0864a52f29e16
+cas_ref: sha256:22eb2ae3fee1cdc7c8af5bff7faff31752f1948cb651f0f24ff0864a52f29e16
+coverage_gids:
+  - D5/S3/Analytic/Adelic/ObserverScaleDivisorNonidentifiability.observer_scale_not_recoverable_from_spectral_divisor
+receipts:
+  coverage:
+    - gid: D5/S3/Analytic/Adelic/ObserverScaleDivisorNonidentifiability.observer_scale_not_recoverable_from_spectral_divisor
+      source_sha256: sha256:22eb2ae3fee1cdc7c8af5bff7faff31752f1948cb651f0f24ff0864a52f29e16
+      target_statement_id: sha256:44a6e21d8727b32479b61489a69a261bd52da28db049e2bd876393365e386ce0
+  scribe:
+    - gid: D5/S3/Analytic/Adelic/ObserverScaleDivisorNonidentifiability.observer_scale_not_recoverable_from_spectral_divisor
+      definition_sha256: sha256:eda60b624e8e326dacafcc9135fd552f9deb02a7ad5e622f3d38b0289f1325ac
+      emission_sha256: sha256:a54c7a37b0d5caa48cec2e863392accb439a079db61401dae038e54f782e1a90
+  unresolved_subitems: []
