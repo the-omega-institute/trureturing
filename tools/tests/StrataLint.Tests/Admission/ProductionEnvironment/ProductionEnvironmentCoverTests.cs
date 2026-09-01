@@ -384,6 +384,44 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
+    public void CoverAtomWithReceiptsMovesCleanInheritedResidualOpenAtomToDeletableAbsorbedClosed()
+    {
+        var inputs = DirectoryInputs(CoverWorld.Materialize(new CoverSpec()));
+        const string sourceAfterHistoricalAtom =
+            "# Synthetic\n\n**定理 2.1(A)**。replacement fixture atom body。\n";
+        inputs.Files[RuleFixture.FixtureDigestionSourcePath] = sourceAfterHistoricalAtom;
+        inputs.Baseline[RuleFixture.FixtureDigestionSourcePath] = sourceAfterHistoricalAtom;
+        using var temporary = new TemporaryDirectory();
+        DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
+        var environment = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files);
+
+        var result = environment.CoverAtom(CoverArgs(inputs));
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("deletable=true", result.Output, StringComparison.Ordinal);
+        var entry = Assert.Single(
+            BackfillInventoryLoader.LoadRoot(temporary.Path).RequireDigestionEntries(),
+            candidate => candidate.AtomId == CoverWorld.DefaultAtomId);
+        Assert.Equal([inputs.Gid], entry.CoverageGids.ToArray());
+        Assert.Single(entry.Receipts.Coverage);
+        Assert.Single(entry.Receipts.Scribe);
+        Assert.Equal(DigestionMigrationState.Absorbed, entry.ProjectedStatus.Migration);
+        Assert.Equal(DigestionTruthState.Closed, entry.ProjectedStatus.Truth);
+        var ledgerRoot = Path.Combine(
+            temporary.Path,
+            BackfillInventoryLoader.RootPath.Replace('/', Path.DirectorySeparatorChar),
+            "fixture-source");
+        Assert.False(File.Exists(Path.Combine(
+            ledgerRoot,
+            "residual-open",
+            CoverWorld.DefaultAtomId + ".yaml")));
+        Assert.True(File.Exists(Path.Combine(
+            ledgerRoot,
+            "absorbed-closed",
+            CoverWorld.DefaultAtomId + ".yaml")));
+    }
+
+    [Fact]
     public void CoverAtomLeavesLedgerBytesUnchangedWhenAGateRejects()
     {
         var inputs = CoverWorld.Materialize(new CoverSpec { VerifyScribe = false });
