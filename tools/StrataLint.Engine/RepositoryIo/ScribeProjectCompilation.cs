@@ -16,6 +16,7 @@ internal sealed record ScribeProjectCompilation(
     string ProjectPath,
     CSharpCompilation Compilation,
     IReadOnlyList<(TestMapSource Source, SyntaxTree Tree)> GovernedSources,
+    IReadOnlyList<(TestMapSource Source, SyntaxTree Tree)> CallableSources,
     ScribeMetadataDegradation? MetadataDegradation);
 
 internal sealed record ScribeProjectCompilationContext(
@@ -185,10 +186,23 @@ internal static class ScribeProjectCompilationBuilder
                 .Where(tree => governedByPath.ContainsKey(tree.FilePath))
                 .Select(tree => (governedByPath[tree.FilePath], tree))
                 .ToArray();
+            var projectSources = project.Sources.ToDictionary(static source => source.Path, StringComparer.Ordinal);
+            var callableSources = compilation.SyntaxTrees
+                .Where(tree => projectSources.ContainsKey(tree.FilePath))
+                .Select(tree =>
+                {
+                    var source = projectSources[tree.FilePath];
+                    return (
+                        governedByPath.GetValueOrDefault(source.Path)
+                            ?? new TestMapSource(source.Path, source.Content, project.Path),
+                        tree);
+                })
+                .ToArray();
             return new ScribeProjectCompilation(
                 project.Path,
                 compilation,
                 sources,
+                callableSources,
                 degradations[project.Path]);
         }).ToArray();
     }
@@ -211,6 +225,7 @@ internal static class ScribeProjectCompilationBuilder
             return new ScribeProjectCompilation(
                 group.Key,
                 compilation,
+                parsed.Select(static item => (item.Source, (SyntaxTree)item.Tree)).ToArray(),
                 parsed.Select(static item => (item.Source, (SyntaxTree)item.Tree)).ToArray(),
                 null);
         }).ToArray();
