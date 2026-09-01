@@ -11,8 +11,8 @@ internal sealed class ReflectedPairCurvatureRayleighIntertwinerDocument
         "D5/S3/Analytic/Adelic/ReflectedPairCurvatureRayleighIntertwiner.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The frozen off-line curvature dipole is the normalized even-channel "
-            + "quadratic readout of a canonical two-dimensional reflected generator.",
+        "Realize the off-line curvature dipole as a normalized even-channel "
+            + "quadratic readout.",
         H("Reflected-Pair Curvature Rayleigh Intertwiner"),
         Blocks(
             DefinitionNode(
