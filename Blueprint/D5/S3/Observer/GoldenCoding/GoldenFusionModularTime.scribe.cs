@@ -46,8 +46,8 @@ internal sealed class GoldenFusionModularTimeDocument : IScribeDocumentDefinitio
         Formula eigenDelta = Seq(delta, Underscore, Grp(F.Id("eig")));
         Formula generator = F.Id("K");
         Formula swap = F.Id("J");
-        Formula plusVector = F.Id("v_plus");
-        Formula minusVector = F.Id("v_minus");
+        Formula plusVector = F.Id("vPlus");
+        Formula minusVector = F.Id("vMinus");
         Formula fibonacciLiteral = Call("matrix2", D(0), D(1), D(1), D(1));
         Formula squareLiteral = Call("matrix2", D(1), D(1), D(1), D(2));
 
