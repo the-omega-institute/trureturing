@@ -64,15 +64,19 @@ internal sealed class GoldenShellMomentDiscretizationDocument
     {
         Formula real = F.Seq(F.Mathbb, F.Grp(F.Id("R")));
         Formula natural = F.Seq(F.Mathbb, F.Grp(F.Id("N")));
-        Formula indexType = F.Id("iota");
+        Formula indexType = F.Iota;
         Formula index = F.Id("i");
         Formula weight = F.Id("m");
-        Formula defect = F.Id("delta");
+        Formula defect = F.DeltaLower;
         Formula shell = F.Id("n");
         Formula exponent = F.Id("s");
-        Formula omega = F.Id("omega");
-        Formula transcript = Call("G_perp", exponent);
-        Formula exactMoment = Call("zeta_perp", exponent);
+        Formula omega = F.Omega;
+        Formula transcript = Apply(
+            new Formula.Subscript(F.Seq(F.Mathcal, F.Grp(F.Id("G"))), F.Perp),
+            exponent);
+        Formula exactMoment = Apply(
+            new Formula.Subscript(F.Zeta, F.Perp),
+            exponent);
         Formula shellAt = Apply(shell, index);
         Formula weightAt = Apply(weight, index);
         Formula defectAt = Apply(defect, index);
@@ -92,8 +96,10 @@ internal sealed class GoldenShellMomentDiscretizationDocument
                 LessThan(lowerRadius, defectAt),
                 LessThanOrEqual(defectAt, upperRadius)));
         Formula hypotheses = And(
-            LessThan(F.D(0), exponent),
-            And(nonnegativeWeights, shellBounds));
+            Call("Finite", indexType),
+            And(
+                LessThan(F.D(0), exponent),
+                And(nonnegativeWeights, shellBounds)));
         Formula lowerFactor = F.Seq(
             F.Varphi, F.Caret,
             F.Grp(F.Minus, F.D(2), exponent));
@@ -116,5 +122,5 @@ internal sealed class GoldenShellMomentDiscretizationDocument
     }
 
     private static Formula Call(string name, params Formula[] arguments) =>
-        Apply(F.Operatorname, F.Grp(F.Id(name)), F.Seq(F.Open, F.Seq(arguments), F.Close));
+        F.Seq(F.Operatorname, F.Grp(F.Id(name)), F.Open, F.Seq(arguments), F.Close);
 }
