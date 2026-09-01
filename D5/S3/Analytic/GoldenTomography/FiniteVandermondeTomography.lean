@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/Analytic/GoldenTomography/FiniteVandermondeTomography
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Distinct finite phase nodes make a matching finite moment window
-     faithful. -/
+   digest: Distinct finite phase nodes make a matching finite moment window faithful. -/
 
 import Mathlib
 

@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/ObserverMemory/FourierFibers/GoldenScaleCharacterDeckBlindness
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Integer golden Fourier characters are blind to one full scale deck
-     step even though the golden helix level changes. -/
+   digest: Integer golden Fourier characters are blind to one full scale deck step even though the golden helix level changes. -/
 
 import D5.S3.CompletionDynamics.GoldenMobius.GoldenScaleHelix
 import Mathlib
@@ -61,7 +60,6 @@ theorem normalized_helix_scale_step (state : GoldenHelixState) :
   have hPeriod : goldenScalePeriod ≠ 0 :=
     ne_of_gt golden_scale_period_pos
   field_simp [hPeriod]
-  ring
 
 /-- Fourier readout of the golden scale quotient. -/
 def goldenHelixFourierReadout (mode : ℤ) (state : GoldenHelixState) : ℂ :=

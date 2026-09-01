@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/Observer/GoldenCoding/GoldenRationalShellRigidity
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Nonzero rational scales cannot collide under a positive golden shell
-     translation. -/
+   digest: Nonzero rational scales cannot collide under a positive golden shell translation. -/
 
 import D5.S3.Observer.GoldenCoding.PrimeGoldenScaleCoordinate
 
@@ -55,7 +54,6 @@ theorem golden_square_positive_power_irrational (n : ℕ) :
           Real.goldenRatio ^ (2 * (n + 1)) := (pow_mul _ _ _).symm
       _ = Real.goldenRatio ^ ((2 * n + 1) + 1) := by
         congr 1
-        omega
   rw [hPower]
   exact golden_ratio_positive_power_irrational (2 * n + 1)
 

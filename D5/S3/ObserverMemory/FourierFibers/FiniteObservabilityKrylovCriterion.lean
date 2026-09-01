@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/ObserverMemory/FourierFibers/FiniteObservabilityKrylovCriterion
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: A finite time window is faithful exactly when its existing
-     observable Krylov space fills the carrier. -/
+   digest: A finite time window is faithful exactly when its existing observable Krylov space fills the carrier. -/
 
 import D5.S3.ObserverMemory.Dynamics.FiniteObservabilityOrthogonalDuality
 
