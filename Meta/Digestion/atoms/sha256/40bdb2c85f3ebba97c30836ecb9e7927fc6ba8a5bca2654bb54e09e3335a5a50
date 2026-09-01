@@ -1,0 +1,34 @@
+## 6. 二阶核下降到壳层轨道
+
+对任意自然姴壳层编号 \(n_x,n_y\)，本轮机器证明：
+
+\[
+\boxed{
+\begin{aligned}
+&K_{(\varphi^2)^{n_x}x,
+      (\varphi^2)^{n_y}y}
+  (t_{k_1},t_{k_2})
+\\
+&\qquad=
+K_{x,y}(t_{k_1},t_{k_2}),
+\qquad x,y>0.
+\end{aligned}
+}
+\]
+
+两个通道可以独立移动任意完整黄金壳层。相位矩阵的四个条目分别保持，因此 determinant 保持。
+
+所以在黄金采样格上，二阶 Magnus 核通过以下商对象因子化：
+
+\[
+\boxed{
+\left(
+\mathbb R_{>0}^{\times}/\varphi^{2\mathbb Z}
+\right)^2.
+}
+\]
+
+这里形成的 topology 结论是 factorization through quotient。它不是 winding number、Chern class 或非平凡 line bundle 的存在定理。
+
+---
+

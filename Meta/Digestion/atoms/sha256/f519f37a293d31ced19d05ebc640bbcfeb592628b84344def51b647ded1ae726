@@ -1,0 +1,15 @@
+\[
+\boxed{
+K_{x,y}(t_{k_1},t_{k_2})
+=
+\det
+\begin{pmatrix}
+\Theta_{k_1}(x)&\Theta_{k_1}(y)\\
+\Theta_{k_2}(x)&\Theta_{k_2}(y)
+\end{pmatrix}.
+}
+\]
+
+这个表达把时间、色散和 topology 的职责分开：
+
+- \(k_1,k_2\) 选择黄金尺度圆上的两个 character readouts；
