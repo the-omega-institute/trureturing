@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/Analytic/Boundary/LogNormDirectionalDerivative
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: The log-norm derivative is the real part of the directional
-     logarithmic derivative. -/
+   digest: Affine log-norm derivatives equal real directional log derivatives. -/
 
 import Mathlib.Analysis.Complex.RealDeriv
 import Mathlib.Analysis.InnerProductSpace.Calculus
