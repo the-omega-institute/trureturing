@@ -1,0 +1,10 @@
+## 3.6 两事件交换恢复 prime curvature
+
+对两个 timed events \(p,q\)，候选 Lean 定理证明：
+
+\[
+\Lambda(pq)=\Lambda(qp),
+\]
+
+并证明任意初始状态上的记忆差为：
+

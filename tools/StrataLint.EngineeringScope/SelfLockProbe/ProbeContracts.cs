@@ -75,7 +75,8 @@ internal sealed record AuthorityReceiptContract(
 
 internal sealed record PublishedEvidenceContract(
     string AuthorityReceiptPath,
-    string PayloadPath);
+    string PayloadPath,
+    string PublicationId);
 
 internal static class JudgmentOutcome
 {

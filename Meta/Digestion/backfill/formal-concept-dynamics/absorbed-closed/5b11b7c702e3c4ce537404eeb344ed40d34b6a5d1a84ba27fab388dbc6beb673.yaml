@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:5b11b7c702e3c4ce537404eeb344ed40d34b6a5d1a84ba27fab388dbc6beb673
+  normalized_sha256: sha256:5b11b7c702e3c4ce537404eeb344ed40d34b6a5d1a84ba27fab388dbc6beb673
+cas_ref: sha256:5b11b7c702e3c4ce537404eeb344ed40d34b6a5d1a84ba27fab388dbc6beb673
+coverage_gids:
+  - D5/S3/ConceptDynamics/TransportValidity/AdmittedValidityReflection.validity_reflected_by_admitted_surjection
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/TransportValidity/AdmittedValidityReflection.validity_reflected_by_admitted_surjection
+      source_sha256: sha256:5b11b7c702e3c4ce537404eeb344ed40d34b6a5d1a84ba27fab388dbc6beb673
+      target_statement_id: sha256:41a25b68c7cd43f29de6e998509983ffc86ddd77e3a6a7969e1ea76577964068
+  scribe:
+    - gid: D5/S3/ConceptDynamics/TransportValidity/AdmittedValidityReflection.validity_reflected_by_admitted_surjection
+      definition_sha256: sha256:181dc53a2c5068aa338cd3c7a9ec2858a22298591583856b84483f92285e6292
+      emission_sha256: sha256:000bf1e17655a11e6b70d60c2252a2e58e9dfd2123159ebd730742dcc8c8c92e
+  unresolved_subitems: []

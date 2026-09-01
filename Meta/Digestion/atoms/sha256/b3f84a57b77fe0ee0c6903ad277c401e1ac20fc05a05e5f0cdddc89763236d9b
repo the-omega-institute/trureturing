@@ -1,0 +1,31 @@
+\[
+\boxed{
+|K_{p,q}(t_1,t_2)|^2
+=
+4\sin^2\left(
+\frac{\Delta t\,\Delta\omega}{2}
+\right).
+}
+\]
+
+在小尺度下：
+
+\[
+|K_{p,q}|^2
+\sim
+(\Delta t)^2(\Delta\omega)^2.
+\]
+
+prime specialization 给出：
+
+\[
+\boxed{
+|K_{p,q}|^2
+\sim
+(t_1-t_2)^2
+\log^2\frac pq.
+}
+\]
+
+随后定义连续生成元：
+

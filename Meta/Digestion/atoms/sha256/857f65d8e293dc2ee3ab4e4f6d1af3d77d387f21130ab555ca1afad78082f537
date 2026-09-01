@@ -1,0 +1,14 @@
+## 0.2 条件桥
+
+条件桥是形式上足以连接 RH，但其关键前提尚未由 prime side 独立构造的定理。当前最重要的条件桥是：
+
+\[
+P_{L,N}\mathcal O^{\mathrm{off}}_{L,T}P_{L,N}
+\preceq
+C_{L,N,T}\mathcal V^{\mathrm{hol}}_{r,L,N}
++
+\varepsilon_{r,L,N,T}I.
+\]
+
+这里 \(\mathcal V^{\mathrm{hol}}\) 是 prime-side 规范约化 holonomy 能量，\(\mathcal O^{\mathrm{off}}\) 是 zero-side 离线奇谱能量。该支配仍是路线的 hard heart。
+

@@ -1,0 +1,16 @@
+### 1.2 算术强制桥
+
+目标是从素数、Gamma、pole、边界项和窗口几何推出全部有限观察层非负。当前最精确的开放形式包括：
+
+\[
+\texttt{BalancedPrimePickInnovationLowerBound}
+\]
+
+和：
+
+\[
+\texttt{PrimeArchimedeanBlindSchurCoercivity}.
+\]
+
+这部分是目前最主要的 RH 承重开放边。
+

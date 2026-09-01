@@ -1,0 +1,33 @@
+\[
+\boxed{
+\Omega_2(T)
+=
+\frac12
+\int_{0<t_2<t_1<T}
+[H(t_1),H(t_2)]
+\,dt_2dt_1.
+}
+\]
+
+展开以后，每个 \((p,q)\) 对应：
+
+\[
+K_{p,q}(t_1,t_2)[A_p,A_q].
+\]
+
+该结构同时要求：
+
+\[
+\Delta t\ne0,
+\qquad
+\Delta\omega\ne0,
+\qquad
+[A_p,A_q]\ne0.
+\]
+
+任一因子为零，二阶 order defect 消失。
+
+下一 Lean 节点应先形式化有限两通道代数核和范数恒等式，不应立即承担积分收敛或 prime-zero domination。
+
+---
+

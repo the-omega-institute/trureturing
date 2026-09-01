@@ -1,0 +1,16 @@
+- RH 或其否定。
+
+它关闭的是一个纯表示桥：
+
+\[
+\boxed{
+\text{reflected split}
+\longrightarrow
+\text{signed determinant }-\delta^2
+\longrightarrow
+\text{negative second-order spectral value}.
+}
+\]
+
+---
+

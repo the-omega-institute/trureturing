@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:f297ee5ad1a9f43edcec3fdea929660a78bece7e11660c3d39d7a440917d1fef
+  normalized_sha256: sha256:f297ee5ad1a9f43edcec3fdea929660a78bece7e11660c3d39d7a440917d1fef
+cas_ref: sha256:f297ee5ad1a9f43edcec3fdea929660a78bece7e11660c3d39d7a440917d1fef
+coverage_gids:
+  - D5/S3/ConceptDynamics/Rights/FiniteActionRightsInvariance.finite_action_sequence_preserves_rights
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Rights/FiniteActionRightsInvariance.finite_action_sequence_preserves_rights
+      source_sha256: sha256:f297ee5ad1a9f43edcec3fdea929660a78bece7e11660c3d39d7a440917d1fef
+      target_statement_id: sha256:4e4176fe48ef3738634b9208c7907a4f3b9edc77cacbf221173fee2d100972d6
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Rights/FiniteActionRightsInvariance.finite_action_sequence_preserves_rights
+      definition_sha256: sha256:15aa0980dc371ed1bf01872ffd43c309143379e11fda97304111afd5aa4c6a62
+      emission_sha256: sha256:13cc745580e35e5f43df66619e6e6dfeaa0895cfde7ecd13600a153728981b6a
+  unresolved_subitems: []

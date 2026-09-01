@@ -30,6 +30,10 @@ public sealed class LeanReportInputScriptTests
     private const string ToolchainInstallerPath = "tools/scripts/workflow/install-lean-toolchain.sh";
     private const string JudgeContentAddressPath =
         "tools/scripts/workflow/judge-content-address.sh";
+    private const string RevertSelfLockProbePath =
+        "tools/scripts/workflow/revert-self-lock-probe.sh";
+    private const string PureRevertDetectPath =
+        "tools/scripts/workflow/pure-revert-detect.sh";
     private const string WorkflowPath = ".github/workflows/ci.yml";
     private static readonly string CliProjectPath = string.Join(
         '/', "tools", "StrataLint.Cli", "StrataLint.Cli.csproj");
@@ -307,6 +311,12 @@ public sealed class LeanReportInputScriptTests
             Write(
                 JudgeContentAddressPath,
                 File.ReadAllText(Path.Combine(root, JudgeContentAddressPath), Encoding.UTF8));
+            Write(
+                RevertSelfLockProbePath,
+                File.ReadAllText(Path.Combine(root, RevertSelfLockProbePath), Encoding.UTF8));
+            Write(
+                PureRevertDetectPath,
+                File.ReadAllText(Path.Combine(root, PureRevertDetectPath), Encoding.UTF8));
             Write(ScribeContentChecksPath, "#!/usr/bin/env bash\n");
             Write(
                 WorkflowPath,

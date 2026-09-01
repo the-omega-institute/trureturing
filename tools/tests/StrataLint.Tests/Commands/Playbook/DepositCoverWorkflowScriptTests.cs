@@ -398,9 +398,8 @@ public sealed partial class DepositCoverWorkflowScriptTests
             WriteMakeStub();
             WriteDotnetStub();
             WriteGitGuardStub();
-            Git("init", "-q");
-            Git("config", "user.email", "playbook@example.invalid");
-            Git("config", "user.name", "Playbook Test");
+            Git("init", "--template=", "-b", "main");
+            ConfigureSyntheticRepository();
             Git("add", "-A");
             Git("commit", "-qm", "fixture baseline");
             File.Copy(Path.Combine(Root, LeanPath), Path.Combine(Root, ".report-source"));
@@ -561,8 +560,8 @@ public sealed partial class DepositCoverWorkflowScriptTests
         private string Git(params string[] arguments)
         {
             var result = TestProcessRunner.Run(
-                "/usr/bin/git",
-                arguments,
+                "/usr/bin/env",
+                IsolatedGitArguments(arguments),
                 Root,
                 TestBudgets.PlaybookProcessHangGuard,
                 128 * 1024);

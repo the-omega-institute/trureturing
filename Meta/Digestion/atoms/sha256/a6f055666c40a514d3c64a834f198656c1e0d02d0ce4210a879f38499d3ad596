@@ -1,0 +1,18 @@
+\[
+K_{\delta,\gamma}(t)
+=
+2\frac{(t-\gamma)^2-\delta^2}
+{((t-\gamma)^2+\delta^2)^2}
+\]
+
+严格连接起来。
+
+在该桥建立以前，以下关系只能标记为结构一致：
+
+- 有符号行列式包含 \(-\delta^2\)；
+- 负二阶谱值为 \(-\delta^2\)；
+- curvature dipole 的负核心由 \((t-\gamma)^2-\delta^2<0\) 控制；
+- signed normal support 候选位置为 \(-\delta^2\)。
+
+---
+
