@@ -118,6 +118,55 @@ public sealed class DuplicateDefinitionAdvisoryTests
         Assert.Empty(Evaluate(fixture));
     }
 
+    [Theory]
+    [InlineData("casesOn")]
+    [InlineData("recOn")]
+    [InlineData("match_1_1")]
+    [InlineData("match_1_8")]
+    [InlineData("eq_1_2")]
+    public void CompilerGeneratedValueDefinitionsAreOutsideTheAdvisory(string component)
+    {
+        var fixture = new RuleFixture();
+        fixture.AddStatementModule(
+            RuleFixture.DuplicateLeftGid,
+            $"D5.S0.Carrier.DuplicateLeft.GeneratedShape.{component}",
+            DuplicateDefinitionMaterial,
+            kind: "def");
+        fixture.AddStatementModule(
+            RuleFixture.DuplicateRightGid,
+            $"D5.S1.Phase.DuplicateRight.GeneratedShape.{component}",
+            DuplicateDefinitionMaterial,
+            kind: "def",
+            touched: true);
+
+        Assert.Empty(Evaluate(fixture));
+    }
+
+    [Theory]
+    [InlineData("casesOnPurpose")]
+    [InlineData("recOnPurpose")]
+    [InlineData("match_cons")]
+    [InlineData("match_1_tail")]
+    [InlineData("eq_zero")]
+    public void NearbyAuthoredDefinitionNamesRemainChecked(string component)
+    {
+        var fixture = new RuleFixture();
+        fixture.AddStatementModule(
+            RuleFixture.DuplicateLeftGid,
+            $"D5.S0.Carrier.DuplicateLeft.{component}",
+            DuplicateDefinitionMaterial,
+            kind: "def");
+        fixture.AddStatementModule(
+            RuleFixture.DuplicateRightGid,
+            $"D5.S1.Phase.DuplicateRight.{component}",
+            DuplicateDefinitionMaterial,
+            kind: "def",
+            touched: true);
+
+        var diagnostic = Assert.Single(Evaluate(fixture));
+        Assert.Contains("duplicate-definition", diagnostic.Message, StringComparison.Ordinal);
+    }
+
     [Fact]
     public void CollidingDefinitionCandidateIsStillAdmittedUnderTheFullActiveCatalog()
     {

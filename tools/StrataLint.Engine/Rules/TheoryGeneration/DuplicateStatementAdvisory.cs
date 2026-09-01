@@ -34,6 +34,8 @@ internal static class DuplicateStatementAdvisory
     private const string EquationIndexPrefix = "eq_";
     private const string MatchAuxiliaryPrefix = "match_";
     private const string CongruenceLemma = "congr_simp";
+    private const string CasesOn = "casesOn";
+    private const string RecOn = "recOn";
 
     internal static bool IsAffectedBy(RuleEvaluationContext context) =>
         ChangedLeanModules(context).Count > 0;
@@ -109,9 +111,10 @@ internal static class DuplicateStatementAdvisory
                 .ToHashSet();
 
     // A module report carries every constant the module declares. The generated-name
-    // vocabulary filters equation-compiler artifacts and automatic instances for all
-    // supported kinds. The kind gate then limits this rule to authored theorems and
-    // value-bearing declarations whose exact material is meaningful for reuse review.
+    // vocabulary filters equation-compiler artifacts, recursor façades, and automatic
+    // instances for all supported kinds. The kind gate then limits this rule to
+    // authored theorems and value-bearing declarations whose exact material is
+    // meaningful for reuse review.
     private static bool IsAuthoredDeclaration(LeanDeclaration declaration) =>
         declaration.IncludeInStatement
         && IsSupportedKind(declaration.Kind)
@@ -132,19 +135,55 @@ internal static class DuplicateStatementAdvisory
             ? "elaborated statement"
             : $"elaborated {kind} type-and-value material";
 
-    // Closed marker vocabulary, one clause per generator the census named. Each
-    // clause is exact rather than a prefix sweep because the two failure directions
-    // are not symmetric: a clause that is too narrow adds noise to an advisory that
-    // blocks nothing, while one that is too wide silently drops the collisions this
-    // rule exists to report. So eq_zero and match_cons must survive it, and eq_1,
-    // eq_def and match_1 must not.
+    // Closed marker vocabulary, one clause per generator shape established by the
+    // repository census. Each clause is exact rather than a broad prefix sweep because
+    // the two failure directions are not symmetric: a clause that is too narrow adds
+    // noise to an advisory that blocks nothing, while one that is too wide silently
+    // drops the collisions this rule exists to report. Thus eq_zero, match_cons,
+    // casesOnPurpose and recOnPurpose survive; eq_1, match_1_4, casesOn and recOn do not.
     private static bool IsGeneratedComponent(string component) =>
         component.StartsWith('_')
         || string.Equals(component, EquationLemma, StringComparison.Ordinal)
-        || IsIndexed(component, EquationIndexPrefix)
-        || IsIndexed(component, MatchAuxiliaryPrefix)
+        || IsNumberedCompilerAuxiliary(component, EquationIndexPrefix)
+        || IsNumberedCompilerAuxiliary(component, MatchAuxiliaryPrefix)
         || string.Equals(component, CongruenceLemma, StringComparison.Ordinal)
+        || string.Equals(component, CasesOn, StringComparison.Ordinal)
+        || string.Equals(component, RecOn, StringComparison.Ordinal)
         || IsAutoInstance(component);
+
+    // Lean may append more than one numeric coordinate to a generated equation or
+    // match declaration, for example match_1_1 and match_1_8. Every segment after the
+    // prefix must be a nonempty ASCII-decimal number. Near shapes such as match_cons,
+    // match_1_tail and eq_zero remain authored.
+    private static bool IsNumberedCompilerAuxiliary(string component, string prefix)
+    {
+        if (component.Length <= prefix.Length
+            || !component.StartsWith(prefix, StringComparison.Ordinal))
+        {
+            return false;
+        }
+
+        var hasDigitInSegment = false;
+        for (var index = prefix.Length; index < component.Length; index++)
+        {
+            var current = component[index];
+            if (char.IsAsciiDigit(current))
+            {
+                hasDigitInSegment = true;
+                continue;
+            }
+
+            if (current == '_' && hasDigitInSegment)
+            {
+                hasDigitInSegment = false;
+                continue;
+            }
+
+            return false;
+        }
+
+        return hasDigitInSegment;
+    }
 
     // The 2026-08-18 census falsified the assumption that automatic instances are
     // defs: the inspector records Prop-valued instances (instIsTransNatLeHAddOfNat_d5
@@ -155,25 +194,6 @@ internal static class DuplicateStatementAdvisory
         component.Length > AutoInstancePrefix.Length
         && component.StartsWith(AutoInstancePrefix, StringComparison.Ordinal)
         && char.IsAsciiLetterUpper(component[AutoInstancePrefix.Length]);
-
-    private static bool IsIndexed(string component, string prefix)
-    {
-        if (component.Length <= prefix.Length
-            || !component.StartsWith(prefix, StringComparison.Ordinal))
-        {
-            return false;
-        }
-
-        for (var index = prefix.Length; index < component.Length; index++)
-        {
-            if (!char.IsAsciiDigit(component[index]))
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
 
     private sealed record CollisionKey(string Kind, string Address);
 
