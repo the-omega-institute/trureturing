@@ -99,8 +99,6 @@ internal static class ControllerClosure
         AddIfTracked(evaluator, tracked, "Directory.Build.props");
         AddIfTracked(evaluator, tracked, "Directory.Packages.props");
         AddIfTracked(evaluator, tracked, "tools/scripts/workflow/pure-revert-detect.sh");
-        const string orchestration = "tools/scripts/workflow/revert-self-lock-probe.sh";
-        if (tracked.Contains(orchestration)) evaluator.Add(orchestration);
         AddIfTracked(evaluator, tracked, "tools/scripts/workflow/self-lock-probe.sh");
         AddIfTracked(evaluator, tracked, "tools/scripts/report/report-supervisor.sh");
 
@@ -109,9 +107,6 @@ internal static class ControllerClosure
         owners.Add(".github/workflows/ci.yml");
         owners.UnionWith(tracked.Where(static path => path.StartsWith(
             "tools/tests/StrataLint.ScriptTests/SelfLockProbeScriptTests.",
-            StringComparison.Ordinal)));
-        owners.UnionWith(tracked.Where(static path => path.StartsWith(
-            "tools/tests/StrataLint.ScriptTests/RevertSelfLockProbeScriptTests.",
             StringComparison.Ordinal)));
         return new ControllerClosureSnapshot(
             commit,
