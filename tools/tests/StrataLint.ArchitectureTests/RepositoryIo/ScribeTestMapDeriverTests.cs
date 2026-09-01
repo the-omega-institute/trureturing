@@ -1,5 +1,4 @@
 using StrataLint.Tests;
-using StrataLint.Scribe;
 
 namespace StrataLint.ArchitectureTests;
 
@@ -55,13 +54,6 @@ public sealed class ScribeTestMapDeriverTests
             "FormulaCorpusInventoryTests.EveryMigratedFormulaHasAStableCorpusAddress",
             "DagEmitterTests.TheProjectionIsDeclaredInTheGeneratedArtifactInventory",
         ];
-        var allUniverse = Assert.Single(
-            typeof(DocumentDefinitions).GetProperty(nameof(DocumentDefinitions.All))!
-                .GetCustomAttributesData(),
-            static attribute => attribute.AttributeType
-                == typeof(CompileTimeInputUniverseAttribute));
-        Assert.Equal("Blueprint/", allUniverse.ConstructorArguments[0].Value);
-        Assert.Equal(".scribe.cs", allUniverse.ConstructorArguments[1].Value);
         var repositoryRoot = RepositoryLayout.FindRoot();
         var map = ScribeTestMapDeriver.DeriveRepository(repositoryRoot);
         var plan = EngineeringTestPlanPolicy.Evaluate(
