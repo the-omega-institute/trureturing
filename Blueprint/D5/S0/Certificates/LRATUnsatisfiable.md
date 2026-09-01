@@ -2,11 +2,11 @@
 
 ## Abstract
 
-Mathlib LRAT empty-clause proofs are exposed as exact propositional unsatisfiability certificates.
+Mathlib LRAT empty-clause proofs are exactly propositional unsatisfiability certificates.
 
 **Theorem 1.1 (Empty-clause derivability is equivalent to unsatisfiability).**
 
-Lean statement: `D5/S0/Certificates/LRATUnsatisfiable.empty_clause_proof_iff_unsatisfiable`
+$$\forall F, \operatorname{proof}(F, []) \iff \operatorname{Unsatisfiable}(F).$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/LRATUnsatisfiable.empty_clause_proof_iff_unsatisfiable` (`✓ std3`). ∎
 

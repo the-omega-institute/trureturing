@@ -2,11 +2,11 @@
 
 ## Abstract
 
-Exact nonnegative rational dual weights provide replayable infeasibility certificates for finite linear systems.
+Exact nonnegative rational dual weights certify infeasibility of finite linear inequality systems.
 
 **Theorem 1.1 (A negative rational dual combination excludes every primal solution).**
 
-Lean statement: `D5/S0/Certificates/RationalFarkas.infeasible_of_certificate`
+$$\forall A, b, \operatorname{Certificate}(A, b) \Rightarrow \neg \exists x, \operatorname{LinearFeasible}(A, b, x).$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Certificates/RationalFarkas.infeasible_of_certificate` (`✓ std3`). ∎
 

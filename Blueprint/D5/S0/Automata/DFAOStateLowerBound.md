@@ -2,11 +2,11 @@
 
 ## Abstract
 
-Finite distinguishing continuations give checkable state lower bounds for output automata built on Mathlib DFA.
+Finite distinguishing continuations certify state lower bounds for output automata built on Mathlib DFA.
 
 **Theorem 1.1 (Distinguishing continuations force distinct reached states).**
 
-Lean statement: `D5/S0/Automata/DFAOStateLowerBound.state_lower_bound_of_distinguishing_family`
+$$\begin{gathered}\forall M, D, T, c:\\{}\operatorname{DistinguishingFamily}(D, T, I) \land \operatorname{CorrectOn}(M, D, T) \Rightarrow \operatorname{card}(I) \leq \operatorname{card}(S).\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S0/Automata/DFAOStateLowerBound.state_lower_bound_of_distinguishing_family` (`✓ std3`). ∎
 

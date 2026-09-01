@@ -2,11 +2,11 @@
 
 ## Abstract
 
-Readout-value incidence identifies observational equivalence classes with singleton extent closures in Mathlib formal concept analysis.
+Readout kernels are singleton extent closures in Mathlib formal concept analysis.
 
 **Theorem 1.1 (A singleton extent closure is the common-kernel class).**
 
-Lean statement: `D5/S3/ConceptDynamics/ObservationFormalConceptAdapter.extentClosure_singleton_eq_jointKernel_class`
+$$\begin{gathered}\forall Gamma, s:\\{}\operatorname{extentClosure}(\operatorname{observationIncidence}(Gamma), \{s\})\\{}= \{y \mid (s, y) \in \operatorname{jointKernel}(Gamma)\}.\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/ObservationFormalConceptAdapter.extentClosure_singleton_eq_jointKernel_class` (`✓ std3`). ∎
 

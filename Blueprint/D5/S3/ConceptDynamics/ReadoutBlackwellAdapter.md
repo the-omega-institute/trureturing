@@ -2,11 +2,11 @@
 
 ## Abstract
 
-Measurable readout factorization is transported into the existing Blackwell order and Bayes-risk monotonicity.
+Measurable readout factorization becomes deterministic Blackwell garbling and Bayes-risk monotonicity.
 
 **Theorem 1.1 (Finer measurable readouts have no larger optimal Bayes risk).**
 
-Lean statement: `D5/S3/ConceptDynamics/ReadoutBlackwellAdapter.bayesRisk_mono_of_measurable_refinement`
+$$\begin{gathered}\forall q_{C}, q_{D}, L, mu: \operatorname{MeasurableRefines}(q_{C}, q_{D}) \Rightarrow\\{}\operatorname{bayesRisk}(L, \operatorname{deterministic}(q_{D}), mu) \leq \operatorname{bayesRisk}(L, \operatorname{deterministic}(q_{C}), mu).\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/ReadoutBlackwellAdapter.bayesRisk_mono_of_measurable_refinement` (`✓ std3`). ∎
 
