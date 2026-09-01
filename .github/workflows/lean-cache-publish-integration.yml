@@ -38,6 +38,26 @@ jobs:
     if: github.ref == 'refs/heads/dev'
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 120
+    env:
+      # 【policy-override,不是派生值】(第Ⅵ节「量腹而食」)
+      # 这不是 capacity-derived:构建的自设 deadline 受制于 runner 的【实际存活窗口】,
+      # 而该窗口不是任何可在启动期读到的静态容量(vCPU / cgroup / runner 规格都读不出它),
+      # 故不得冒充 C_i/r_i 派生。
+      # 日期:2026-09-01
+      # 域:仅本 job 的 selfbuild 步骤;不适用于任何正确性或安全上限。
+      # 正读数(runner 被回收,早于 job timeout):
+      #   run 33327885119 1h32m31s / 33340875335 1h29m03s / 33454310038 1h35m26s
+      #   三次均以 exit 143 "runner has received a shutdown signal" 结束,
+      #   最后进度 11502/11509。
+      # 反读数(活到 job timeout 才被杀):
+      #   run 33376701533 2h05m05s / 33436915971 2h05m03s,撞 timeout-minutes: 120。
+      # 取值理由:4800s(80min)显著小于最短观测回收点 5340s(1h29m),
+      #   留 ≥540s 给随后的 cache/save 上传已建成的 .lake/build。
+      # owner:仓库 τ=0 owner
+      # 永久案号:open(案号待开)
+      # 退出条件:当 runner 存活窗口成为可读的静态容量、或改用自托管 runner 后,
+      #   本值须改为 capacity-derived 或撤销。
+      SELFBUILD_DEADLINE_SECONDS: '4800'
     steps:
       - name: Check out the integration branch that was published
         id: checkout-publish
@@ -112,11 +132,51 @@ jobs:
         shell: bash
         working-directory: candidate
         run: |
-          set -euo pipefail
+          set -uo pipefail
+          # 【为什么有自设 deadline】5 次连续定时运行(33327885119 / 33340875335 /
+          # 33376701533 / 33436915971 / 33454310038)全部在 11502/11509 模块处被
+          # runner 以 exit 143 回收:全量构建需要的时间超过 runner 的存活窗口,
+          # 而本 job 此前没有任何 cache/save,故每次从零开始,进度永不累积。
+          # 自设 deadline 让构建在被 SIGTERM 之前【主动】收尾,把已建成的
+          # .lake/build 交给随后的 save 步骤落袋,下次运行由 restore 续上。
           lake exe cache get || printf '%s\n' "mathlib cache get returned nonzero; lake build will fill the gaps"
-          lake build
-          printf 'olean=%s\n' "$(find .lake/build -name '*.olean' | wc -l | tr -d ' ')"
-          echo "built=true" >> "$GITHUB_OUTPUT"
+          set +e
+          timeout --signal=INT "${SELFBUILD_DEADLINE_SECONDS}" lake build
+          build_status=$?
+          set -e
+          olean_count="$(find .lake/build -name '*.olean' | wc -l | tr -d ' ')"
+          printf 'olean=%s\n' "${olean_count}"
+          printf 'build_status=%s\n' "${build_status}"
+          echo "olean=${olean_count}" >> "$GITHUB_OUTPUT"
+          if [ "${build_status}" -eq 0 ]; then
+            echo "built=true" >> "$GITHUB_OUTPUT"
+            echo "partial=false" >> "$GITHUB_OUTPUT"
+          elif [ "${build_status}" -eq 124 ] || [ "${build_status}" -eq 130 ]; then
+            # 到达自设 deadline:本次不发布,但已建成的层要保存,供下次续建。
+            echo "built=false" >> "$GITHUB_OUTPUT"
+            echo "partial=true" >> "$GITHUB_OUTPUT"
+            printf '%s\n' "reached the self-imposed deadline; saving the partial build layer for the next run"
+          else
+            exit "${build_status}"
+          fi
+      - name: Save the Lean build layer even when the build was partial
+        # 无论完整还是部分,只要有已建成的 olean 就落袋。这一步是打破
+        # 「每次从零 → 被回收 → 又从零」死循环的唯一机制,故 if: always()。
+        if: always() && steps.selfbuild.outputs.olean != '' && steps.selfbuild.outputs.olean != '0'
+        uses: actions/cache/save@v4
+        with:
+          path: candidate/.lake/build
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-build-v1-${{ steps.addr.outputs.config_sha256 }}-${{ steps.addr.outputs.sources_sha256 }}
+      - name: Save the Lean dependency layer
+        if: always() && steps.selfbuild.outputs.olean != '' && steps.selfbuild.outputs.olean != '0'
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            candidate/.lake/packages
+            candidate/.lake/config
+            candidate/.lake/.stratalint-lean-cache-stamp.json
+            ~/.cache/mathlib
+          key: ${{ runner.os }}-${{ runner.arch }}-lake-deps-v1-${{ steps.addr.outputs.config_sha256 }}
       - name: Verify the restored build matches this commit
         id: verify
         if: steps.build.outputs.cache-hit == 'true' || steps.build.outputs.cache-matched-key != ''

@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:fee9e21d9bcfb1546d8f4668e14a950b0e605d31538c244679d73f881cdde423
+  normalized_sha256: sha256:fee9e21d9bcfb1546d8f4668e14a950b0e605d31538c244679d73f881cdde423
+cas_ref: sha256:fee9e21d9bcfb1546d8f4668e14a950b0e605d31538c244679d73f881cdde423
+coverage_gids:
+  - D5/S3/Observer/MetricGeometryLaws/WeightedJointUltrapseudometric.JointObservationQuotient
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/MetricGeometryLaws/WeightedJointUltrapseudometric.JointObservationQuotient
+      source_sha256: sha256:fee9e21d9bcfb1546d8f4668e14a950b0e605d31538c244679d73f881cdde423
+      target_statement_id: sha256:0abb832b737ab7b84e09b2d14704d4c653b3b5746d0b07a34821fb95aa227d1e
+  scribe:
+    - gid: D5/S3/Observer/MetricGeometryLaws/WeightedJointUltrapseudometric.JointObservationQuotient
+      definition_sha256: sha256:fb3a5e5856485d6cd16e8c857eaa9bb3d9e53053fc259a6785d2f879b2f52004
+      emission_sha256: sha256:dca6a4b912519912fc36129ab11028bda2988526feb01371faac1c8e327c48a8
+  unresolved_subitems: []
