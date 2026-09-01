@@ -1,0 +1,15 @@
+### 6.2 二阶读出不恢复方向
+
+\(S_\delta''(0)=2\delta^2\) 可以恢复分裂大小，但不能区分 \(\delta\) 和 \(-\delta\)。
+
+因此观察语言分层为：
+
+\[
+(\delta,\gamma)
+\longrightarrow
+\delta
+\longrightarrow
+\delta^2.
+\]
+
+- 完整复模式保存径向方向和频率方向；

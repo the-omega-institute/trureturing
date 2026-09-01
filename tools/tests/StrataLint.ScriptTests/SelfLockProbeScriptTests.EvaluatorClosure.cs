@@ -5,7 +5,7 @@ namespace StrataLint.Tests;
 public sealed partial class SelfLockProbeScriptTests
 {
     [Fact]
-    public void AddingCompiledProbeSourceChangesEvaluatorDigest()
+    public void OrchestrationAndCompiledProbeSourcesChangeEvaluatorDigest()
     {
         if (OperatingSystem.IsWindows()) return;
         using var temporary = new TemporaryDirectory();
@@ -21,6 +21,7 @@ public sealed partial class SelfLockProbeScriptTests
             ["Directory.Build.props"] = "<Project />\n",
             ["Directory.Packages.props"] = "<Project />\n",
             ["tools/scripts/workflow/pure-revert-detect.sh"] = "exit 0\n",
+            ["tools/scripts/workflow/revert-self-lock-probe.sh"] = "exit 0\n",
             ["tools/scripts/workflow/self-lock-probe.sh"] = "exit 0\n",
             ["tools/scripts/report/report-supervisor.sh"] = "exit 0\n",
             ["tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj"] =
@@ -39,6 +40,18 @@ public sealed partial class SelfLockProbeScriptTests
         GitAt(controller, "commit", "-m", "controller");
 
         var before = ReadEvaluatorDigest(controller);
+        var orchestrator = Path.Combine(
+            controller,
+            "tools",
+            "scripts",
+            "workflow",
+            "revert-self-lock-probe.sh");
+        ScriptHarnessScratch.WriteScratchText(orchestrator, "exit 1\n");
+        GitAt(controller, "add", ".");
+        GitAt(controller, "commit", "-m", "change orchestration");
+        var afterOrchestration = ReadEvaluatorDigest(controller);
+        Assert.NotEqual(before, afterOrchestration);
+
         var added = Path.Combine(
             controller,
             "tools",
@@ -49,7 +62,7 @@ public sealed partial class SelfLockProbeScriptTests
         GitAt(controller, "add", ".");
         GitAt(controller, "commit", "-m", "add compiled source");
 
-        Assert.NotEqual(before, ReadEvaluatorDigest(controller));
+        Assert.NotEqual(afterOrchestration, ReadEvaluatorDigest(controller));
     }
 
     private static string ReadEvaluatorDigest(string controller)

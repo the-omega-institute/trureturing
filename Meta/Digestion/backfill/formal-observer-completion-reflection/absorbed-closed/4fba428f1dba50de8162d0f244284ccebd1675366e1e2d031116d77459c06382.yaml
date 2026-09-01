@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:4fba428f1dba50de8162d0f244284ccebd1675366e1e2d031116d77459c06382
+  normalized_sha256: sha256:4fba428f1dba50de8162d0f244284ccebd1675366e1e2d031116d77459c06382
+cas_ref: sha256:4fba428f1dba50de8162d0f244284ccebd1675366e1e2d031116d77459c06382
+coverage_gids:
+  - D5/S3/Quantum/Decoherence/RecordingIsometry.recording_isometry_and_state_blocks
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/Decoherence/RecordingIsometry.recording_isometry_and_state_blocks
+      source_sha256: sha256:4fba428f1dba50de8162d0f244284ccebd1675366e1e2d031116d77459c06382
+      target_statement_id: sha256:43af521b12639689dce9b8b32206fb776f1842a19e5d3a431e4da8f025f66655
+  scribe:
+    - gid: D5/S3/Quantum/Decoherence/RecordingIsometry.recording_isometry_and_state_blocks
+      definition_sha256: sha256:f66604ed86ff66e490a629e9735c3321d23c48f5abede9fc0038feebd4e46826
+      emission_sha256: sha256:8924d04fb57783ee03ca584f488a9d41031e92343e8e938c241738808a763b75
+  unresolved_subitems: []

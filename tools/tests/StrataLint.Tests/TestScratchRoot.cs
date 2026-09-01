@@ -339,7 +339,7 @@ internal static class ScriptHarnessScratch
         File.WriteAllText(
             path,
             "#!/usr/bin/env bash\nset -euo pipefail\n" + body + "\n",
-            System.Text.Encoding.UTF8);
+            new System.Text.UTF8Encoding(false, true));
         File.SetUnixFileMode(
             path,
             UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
@@ -348,9 +348,14 @@ internal static class ScriptHarnessScratch
     internal static string[] ReadRecordedCalls(string path) =>
         File.Exists(path) ? File.ReadAllLines(path) : [];
 
+    internal static bool ScratchFileExists(string path) => File.Exists(path);
+
     internal static string[] ReadScratchLines(string path) => File.ReadAllLines(path);
 
     internal static string ReadScratchText(string path) => File.ReadAllText(path);
+
+    internal static string ReadTemporaryText(TemporaryDirectory temporary, string relativePath) =>
+        File.ReadAllText(Path.Combine(temporary.Path, relativePath));
 
     internal static byte[] ReadScratchBytes(string path) => File.ReadAllBytes(path);
 
@@ -359,6 +364,9 @@ internal static class ScriptHarnessScratch
 
     internal static void AppendScratchText(string path, string content) =>
         File.AppendAllText(path, content, new System.Text.UTF8Encoding(false, true));
+
+    internal static void MoveScratchFile(string sourcePath, string targetPath) =>
+        File.Move(sourcePath, targetPath);
 
     internal static void DeleteScratchFile(string path) => File.Delete(path);
 }

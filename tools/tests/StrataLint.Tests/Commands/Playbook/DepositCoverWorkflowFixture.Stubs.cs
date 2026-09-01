@@ -10,6 +10,41 @@ public sealed partial class DepositCoverWorkflowScriptTests
             ? File.ReadAllLines(freezeProbePath).Length
             : 0;
 
+        private void ConfigureSyntheticRepository()
+        {
+            Git("config", "--local", "user.name", "Playbook Test");
+            Git("config", "--local", "user.email", "playbook@example.invalid");
+            Git("config", "--local", "commit.gpgsign", "false");
+            Git("config", "--local", "tag.gpgsign", "false");
+            Git("config", "--local", "core.autocrlf", "false");
+            Git("config", "--local", "core.safecrlf", "false");
+            Git("config", "--local", "core.hooksPath", "/dev/null");
+            Git("config", "--local", "gc.auto", "0");
+            Git("config", "--local", "maintenance.auto", "false");
+        }
+
+        private static string[] IsolatedGitEnvironment() =>
+        [
+            "-u", "GIT_AUTHOR_NAME",
+            "-u", "GIT_AUTHOR_EMAIL",
+            "-u", "GIT_COMMITTER_NAME",
+            "-u", "GIT_COMMITTER_EMAIL",
+            "-u", "GIT_CONFIG",
+            "-u", "GIT_CONFIG_PARAMETERS",
+            "-u", "GIT_TEMPLATE_DIR",
+            "GIT_CONFIG_GLOBAL=/dev/null",
+            "GIT_CONFIG_SYSTEM=/dev/null",
+            "GIT_CONFIG_NOSYSTEM=1",
+            "GIT_CONFIG_COUNT=0",
+        ];
+
+        private static string[] IsolatedGitArguments(IEnumerable<string> arguments) =>
+        [
+            .. IsolatedGitEnvironment(),
+            "/usr/bin/git",
+            .. arguments,
+        ];
+
         private void CopyScript()
         {
             var root = TestRepositoryLayout.FindRoot();
@@ -261,6 +296,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
             TestProcessRunner.Run(
                 "/usr/bin/env",
                 [
+                    .. IsolatedGitEnvironment(),
                     $"PATH={binPath}{Path.PathSeparator}{Environment.GetEnvironmentVariable("PATH")}",
                     $"PLAYBOOK_TEST_CALLS={callsPath}",
                     $"PLAYBOOK_TEST_FREEZE_PROBES={freezeProbePath}",

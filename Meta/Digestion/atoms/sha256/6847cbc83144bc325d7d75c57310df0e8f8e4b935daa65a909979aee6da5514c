@@ -1,0 +1,18 @@
+## 3.7 residual 与 phase-twisted 曲率的连接
+
+对 residual event：
+
+\[
+\lambda_p=1+r_p,
+\qquad
+b_p=r_pv_p.
+\]
+
+允许两个事件拥有不同 Fourier 时间：
+
+\[
+t_p,\qquad t_q.
+\]
+
+候选 Lean 定理证明：
+

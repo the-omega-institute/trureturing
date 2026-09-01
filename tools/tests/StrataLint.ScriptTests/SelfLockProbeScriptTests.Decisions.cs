@@ -106,14 +106,14 @@ public sealed partial class SelfLockProbeScriptTests
     }
 
     [Fact]
-    public void IncompleteCoverageIsTrueRed()
+    public void DifferingRequiredIdentitySetsAreTrueRed()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new ProbeFixture();
-        fixture.J0Bundle.TrxText = CompleteTrx(
-            [PresentTest, "Engineering.Tests.ExtraObservedIdentity"]);
         fixture.J0Bundle.Supervisor["required_identities"]!.AsArray().Add(
-            EvidenceBundle.Identity("Engineering.Tests.ExtraObservedIdentity"));
+            EvidenceBundle.Identity("Engineering.Tests.BaseOnlyIdentity"));
+        fixture.J0Bundle.Supervisor["blockers"]!.AsArray().Add(
+            EvidenceBundle.Blocker("Engineering.Tests.BaseOnlyIdentity"));
         fixture.J0Bundle.Publish();
 
         AssertDecision(

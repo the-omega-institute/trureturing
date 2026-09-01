@@ -73,14 +73,16 @@ public sealed partial class ReviewRegressionTests
 
     internal static string RunGit(string root, params string[] arguments)
     {
-        var startInfo = new ProcessStartInfo("git")
+        var requestedBranch = RequestedInitialBranch(arguments);
+        var gitArguments = CanonicalGitArguments(arguments);
+        var startInfo = new ProcessStartInfo("/usr/bin/env")
         {
             WorkingDirectory = root,
             RedirectStandardOutput = true,
             RedirectStandardError = true,
             UseShellExecute = false,
         };
-        foreach (var argument in arguments)
+        foreach (var argument in IsolatedGitArguments(gitArguments))
         {
             startInfo.ArgumentList.Add(argument);
         }
@@ -90,8 +92,80 @@ public sealed partial class ReviewRegressionTests
         var stderr = process.StandardError.ReadToEnd();
         process.WaitForExit();
         Assert.True(process.ExitCode == 0, $"git {string.Join(' ', arguments)} failed: {stderr}");
+        if (arguments.Length > 0 && arguments[0] == "init")
+        {
+            ConfigureSyntheticRepository(root);
+            if (requestedBranch is not null && requestedBranch != "main")
+            {
+                RunGit(root, "symbolic-ref", "HEAD", $"refs/heads/{requestedBranch}");
+            }
+        }
         return stdout;
     }
 
+    private static string[] CanonicalGitArguments(IReadOnlyList<string> arguments)
+    {
+        if (arguments.Count == 0 || arguments[0] != "init") return arguments.ToArray();
+        var result = new List<string> { "init", "--template=", "-b", "main" };
+        for (var index = 1; index < arguments.Count; index++)
+        {
+            var argument = arguments[index];
+            if (argument is "-b" or "--initial-branch")
+            {
+                index++;
+                continue;
+            }
+            if (argument.StartsWith("--initial-branch=", StringComparison.Ordinal)) continue;
+            result.Add(argument);
+        }
+        return result.ToArray();
+    }
+
+    private static string? RequestedInitialBranch(IReadOnlyList<string> arguments)
+    {
+        for (var index = 1; index < arguments.Count; index++)
+        {
+            if (arguments[index] is "-b" or "--initial-branch")
+            {
+                return index + 1 < arguments.Count ? arguments[index + 1] : null;
+            }
+            const string prefix = "--initial-branch=";
+            if (arguments[index].StartsWith(prefix, StringComparison.Ordinal))
+            {
+                return arguments[index][prefix.Length..];
+            }
+        }
+        return null;
+    }
+
+    private static void ConfigureSyntheticRepository(string repository)
+    {
+        RunGit(repository, "config", "--local", "user.name", "StrataLint Tests");
+        RunGit(repository, "config", "--local", "user.email", "stratalint@example.invalid");
+        RunGit(repository, "config", "--local", "commit.gpgsign", "false");
+        RunGit(repository, "config", "--local", "tag.gpgsign", "false");
+        RunGit(repository, "config", "--local", "core.autocrlf", "false");
+        RunGit(repository, "config", "--local", "core.safecrlf", "false");
+        RunGit(repository, "config", "--local", "core.hooksPath", "/dev/null");
+        RunGit(repository, "config", "--local", "gc.auto", "0");
+        RunGit(repository, "config", "--local", "maintenance.auto", "false");
+    }
+
+    private static string[] IsolatedGitArguments(IEnumerable<string> arguments) =>
+    [
+        "-u", "GIT_AUTHOR_NAME",
+        "-u", "GIT_AUTHOR_EMAIL",
+        "-u", "GIT_COMMITTER_NAME",
+        "-u", "GIT_COMMITTER_EMAIL",
+        "-u", "GIT_CONFIG",
+        "-u", "GIT_CONFIG_PARAMETERS",
+        "-u", "GIT_TEMPLATE_DIR",
+        "GIT_CONFIG_GLOBAL=/dev/null",
+        "GIT_CONFIG_SYSTEM=/dev/null",
+        "GIT_CONFIG_NOSYSTEM=1",
+        "GIT_CONFIG_COUNT=0",
+        "/usr/bin/git",
+        .. arguments,
+    ];
 
 }

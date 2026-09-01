@@ -1,0 +1,17 @@
+\[
+\int_0^\infty e^{-(u-\delta^2)t}\,dt
+=
+\frac1{u-\delta^2}.
+\]
+
+并证明可积性阈值：
+
+\[
+\operatorname{IntegrableOn}
+\left(e^{-(u-\delta^2)t},[0,\infty)\right)
+\iff
+u>\delta^2.
+\]
+
+该节点把负二阶谱值连接到前向增长、附加阻尼预算和 resolvent 极点。
+
