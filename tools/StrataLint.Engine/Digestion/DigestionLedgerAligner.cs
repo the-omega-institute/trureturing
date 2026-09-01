@@ -156,14 +156,21 @@ internal static partial class DigestionLedgerAligner
         findings.AddRange(cas.Findings);
         var inheritedEntries = InheritedEntries(baselineDocument);
         var inheritedIngestStatusAuthorities = InheritedIngestStatusAuthorities(baselineDocument);
+        var ingestStatusAuthorityRejections = new HashSet<string>(StringComparer.Ordinal);
         foreach (var (source, entry) in sources.SelectMany(source =>
                      source.Entries.Select(entry => (Source: source, Entry: entry))))
         {
             var canonicalEntry = CanonicalEntry(entry);
-            var inherited = inheritedEntries.Contains(canonicalEntry)
-                // Ingest status authority is checked separately from canonical structural identity.
-                && (mode != DigestionAlignmentMode.Ingest
-                    || inheritedIngestStatusAuthorities.Contains((canonicalEntry, entry.ProjectedStatus)));
+            var structurallyInherited = inheritedEntries.Contains(canonicalEntry);
+            // Ingest status authority is checked separately from canonical structural identity.
+            var statusAuthorityInherited = mode != DigestionAlignmentMode.Ingest
+                || inheritedIngestStatusAuthorities.Contains((canonicalEntry, entry.ProjectedStatus));
+            if (structurallyInherited && !statusAuthorityInherited)
+            {
+                ingestStatusAuthorityRejections.Add(entry.AtomId);
+            }
+
+            var inherited = structurallyInherited && statusAuthorityInherited;
             alignments[entry.AtomId] = cas.ValidAtomIds.Contains(entry.AtomId) && inherited
                 ? DigestionReceiptAlignment.Seen
                 : DigestionReceiptAlignment.Rejected;
@@ -458,7 +465,10 @@ internal static partial class DigestionLedgerAligner
                 foreach (var entry in matchingEntries)
                 {
                     matchedAtoms[entry.AtomId] = atom;
-                    alignments[entry.AtomId] = DigestionReceiptAlignment.Seen;
+                    if (!ingestStatusAuthorityRejections.Contains(entry.AtomId))
+                    {
+                        alignments[entry.AtomId] = DigestionReceiptAlignment.Seen;
+                    }
                 }
 
                 if (knownContent.Contains(atom.Fingerprints.RawSha256))

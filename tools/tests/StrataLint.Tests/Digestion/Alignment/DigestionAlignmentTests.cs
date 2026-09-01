@@ -478,6 +478,93 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
+    public void IngestStatusAuthorityRejectionSurvivesRawFingerprintMatch()
+    {
+        var sourceBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。unchanged。\n");
+        var atom = Assert.Single(GictAtomizer.Atomize(sourceBytes, DigestionTestSupport.Rules).Claims);
+        var capture = DigestionCasStore.Capture(atom.RawBytes.AsSpan());
+        var baselineEntry = Entry("baseline", atom) with
+        {
+            ProjectedStatus = new DigestionStatus(
+                DigestionMigrationState.Absorbed,
+                DigestionTruthState.Open),
+        };
+        var candidateEntry = baselineEntry with
+        {
+            ProjectedStatus = new DigestionStatus(
+                DigestionMigrationState.Partial,
+                DigestionTruthState.Open),
+        };
+
+        var result = DigestionLedgerAligner.Evaluate(
+            Ledger([], candidateEntry),
+            Snapshot(
+                sourceBytes,
+                [capture],
+                extraEntries:
+                [
+                    new RawRepositoryEntry(
+                        $"Meta/Digestion/backfill/source/partial-open/{AtomId(atom)}.yaml",
+                        BackfillInventoryWriter.WriteAtom(candidateEntry)),
+                ]),
+            Ledger([], baselineEntry),
+            DigestionAlignmentMode.Ingest);
+
+        Assert.Empty(result.Findings);
+        Assert.Equal(DigestionReceiptAlignment.Rejected, result.AlignmentFor(AtomId(atom)));
+    }
+
+    [Fact]
+    public void IngestStatusAuthorityRejectionSurvivesNormalizedFingerprintMatch()
+    {
+        var baselineBytes = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(A)**。unchanged。\n");
+        var candidateBytes = Encoding.UTF8.GetBytes("# GICT\r\n\r\n**定理 1.1(A)**。unchanged。\r\n");
+        var baselineAtom = Assert.Single(GictAtomizer.Atomize(
+            baselineBytes,
+            DigestionTestSupport.Rules).Claims);
+        var candidateAtom = Assert.Single(GictAtomizer.Atomize(
+            candidateBytes,
+            DigestionTestSupport.Rules).Claims);
+        Assert.NotEqual(baselineAtom.Fingerprints.RawSha256, candidateAtom.Fingerprints.RawSha256);
+        Assert.Equal(
+            baselineAtom.Fingerprints.NormalizedSha256,
+            candidateAtom.Fingerprints.NormalizedSha256);
+
+        var capture = DigestionCasStore.Capture(baselineAtom.RawBytes.AsSpan());
+        var baselineEntry = Entry("baseline", baselineAtom) with
+        {
+            ProjectedStatus = new DigestionStatus(
+                DigestionMigrationState.Absorbed,
+                DigestionTruthState.Open),
+        };
+        var candidateEntry = baselineEntry with
+        {
+            ProjectedStatus = new DigestionStatus(
+                DigestionMigrationState.Partial,
+                DigestionTruthState.Open),
+        };
+
+        var result = DigestionLedgerAligner.Evaluate(
+            Ledger([], candidateEntry),
+            Snapshot(
+                candidateBytes,
+                [capture],
+                extraEntries:
+                [
+                    new RawRepositoryEntry(
+                        $"Meta/Digestion/backfill/source/partial-open/{AtomId(baselineAtom)}.yaml",
+                        BackfillInventoryWriter.WriteAtom(candidateEntry)),
+                ]),
+            Ledger([], baselineEntry),
+            DigestionAlignmentMode.Ingest);
+
+        Assert.Empty(result.Findings);
+        Assert.Equal(
+            DigestionReceiptAlignment.Rejected,
+            result.AlignmentFor(AtomId(baselineAtom)));
+    }
+
+    [Fact]
     public void CanonicalStatusDirectoryMoveWithoutReceiptFailsClosedInAdmission()
     {
         var sourceBytes = Encoding.UTF8.GetBytes("opaque status move source\n");
