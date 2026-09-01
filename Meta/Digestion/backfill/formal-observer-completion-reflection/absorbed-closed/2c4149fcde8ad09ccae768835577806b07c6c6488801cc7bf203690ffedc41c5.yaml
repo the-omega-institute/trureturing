@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:2c4149fcde8ad09ccae768835577806b07c6c6488801cc7bf203690ffedc41c5
+  normalized_sha256: sha256:2c4149fcde8ad09ccae768835577806b07c6c6488801cc7bf203690ffedc41c5
+cas_ref: sha256:2c4149fcde8ad09ccae768835577806b07c6c6488801cc7bf203690ffedc41c5
+coverage_gids:
+  - D5/S3/Quantum/PredictionDepth/FiniteSequentialWordCertificate.finite_sequential_word_certificate
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/PredictionDepth/FiniteSequentialWordCertificate.finite_sequential_word_certificate
+      source_sha256: sha256:2c4149fcde8ad09ccae768835577806b07c6c6488801cc7bf203690ffedc41c5
+      target_statement_id: sha256:53b3f6bd1842b7f1c6e58513fe4e01fa748366b7e4d3811c47894892a6b74aff
+  scribe:
+    - gid: D5/S3/Quantum/PredictionDepth/FiniteSequentialWordCertificate.finite_sequential_word_certificate
+      definition_sha256: sha256:a70b48ec8495acf435a8ac83014c10749121b62449fc13ff695a2551e9e96121
+      emission_sha256: sha256:9db2c633e8d5c0e9a4b6f2adf2814799b386825f83831d1371798eb84b88c7ee
+  unresolved_subitems: []

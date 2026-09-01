@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:8b0317596e54a5e2bb3de27fc29a31269163453ef8110b9f6aeb761c99cc200c
+  normalized_sha256: sha256:8b0317596e54a5e2bb3de27fc29a31269163453ef8110b9f6aeb761c99cc200c
+cas_ref: sha256:8b0317596e54a5e2bb3de27fc29a31269163453ef8110b9f6aeb761c99cc200c
+coverage_gids:
+  - D5/S3/ObserverMemory/Knowledge/FiniteCapacity.finite_knowledge_capacity
+receipts:
+  coverage:
+    - gid: D5/S3/ObserverMemory/Knowledge/FiniteCapacity.finite_knowledge_capacity
+      source_sha256: sha256:8b0317596e54a5e2bb3de27fc29a31269163453ef8110b9f6aeb761c99cc200c
+      target_statement_id: sha256:19e64d27a391cce57dddc37aee9d718d7cbfed6ce0ac6996b0f6cc7a3c36c1c7
+  scribe:
+    - gid: D5/S3/ObserverMemory/Knowledge/FiniteCapacity.finite_knowledge_capacity
+      definition_sha256: sha256:b8fc53a667869cdc01341986c24fb1f5d531189bbd193d2897fca7ff71824605
+      emission_sha256: sha256:10d6573f7c5ee2e168e86bf89e80b745fcfe17bb9708a1ba0192bb95bcfcbedc
+  unresolved_subitems: []
