@@ -74,8 +74,7 @@ private theorem ordered_time_simplex_primitive_derivative
     exact hCosRaw.congr_deriv (by ring)
   have hLinear :
       HasDerivAt (fun y : ℝ => horizon - y) (-1) x := by
-    simpa only [Pi.sub_apply, id_eq, zero_sub] using
-      (hasDerivAt_const x horizon).sub (hasDerivAt_id x)
+    fun_prop
   have hProductRaw := hLinear.mul hSin
   have hProduct :
       HasDerivAt
@@ -88,8 +87,7 @@ private theorem ordered_time_simplex_primitive_derivative
     simpa only [id_eq, mul_one] using
       (hasDerivAt_id x).const_mul (2 * horizon)
   have hSquare : HasDerivAt (fun y : ℝ => y ^ 2) (2 * x) x := by
-    simpa only [Nat.cast_ofNat, Nat.reduceSub, pow_one, mul_one] using
-      (hasDerivAt_id x).pow 2
+    fun_prop
   have hRaw :=
     ((hFirst.sub hSquare).sub
       ((hProduct.const_mul 2).div_const gap)).add
@@ -133,8 +131,9 @@ theorem ordered_time_simplex_kernel_average_formula
     _ = horizon ^ 2 -
         2 * (1 - Real.cos (gap * horizon)) / gap ^ 2 := by
           dsimp only [primitive]
-          simp only [mul_zero, Real.sin_zero, Real.cos_zero,
-            sub_zero, zero_pow, OfNat.ofNat, zero_div, add_zero]
+          simp only [sub_self, zero_mul, mul_zero, Real.sin_zero,
+            Real.cos_zero, sub_zero, zero_pow, OfNat.ofNat, zero_div,
+            add_zero]
           field_simp [hGap]
           ring
 
