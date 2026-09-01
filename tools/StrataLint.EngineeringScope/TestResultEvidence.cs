@@ -76,16 +76,18 @@ internal sealed record TestResultEvidence(
 
     internal ExpectedTestEvidence CompareExpectedTests(
         IEnumerable<(string Assembly, string Id)> expectedTests,
-        IEnumerable<(string Assembly, string Id)> candidateSourceTests)
+        Func<IReadOnlyList<(string Assembly, string Id)>> candidateSourceTests)
     {
         var actual = ExecutedTests.ToHashSet(EngineeringTestIdentityComparer.Instance);
-        var candidate = candidateSourceTests.ToHashSet(EngineeringTestIdentityComparer.Instance);
         var missing = expectedTests
             .Distinct(EngineeringTestIdentityComparer.Instance)
             .Where(test => !actual.Contains(test))
             .OrderBy(static test => test.Assembly, StringComparer.OrdinalIgnoreCase)
             .ThenBy(static test => test.Id, StringComparer.Ordinal)
             .ToArray();
+        if (missing.Length == 0) return new ExpectedTestEvidence([], []);
+
+        var candidate = candidateSourceTests().ToHashSet(EngineeringTestIdentityComparer.Instance);
         return new ExpectedTestEvidence(
             missing.Where(candidate.Contains).ToArray(),
             missing.Where(test => !candidate.Contains(test)).ToArray());

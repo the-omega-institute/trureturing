@@ -71,6 +71,33 @@ public sealed class TestResultEvidenceTests
     }
 
     [Fact]
+    public void DoesNotInspectCandidateSourceWhenEveryProtectedBaseIdentityExecuted()
+    {
+        var evidence = new TestResultEvidence(
+            2,
+            new HashSet<(string Assembly, string Id)>
+            {
+                ("First.Owner.Tests", "PlannedTests.First"),
+                ("Second.Owner.Tests", "PlannedTests.Second"),
+            });
+        (string Assembly, string Id)[] expected =
+        [
+            ("First.Owner.Tests", "PlannedTests.First"),
+            ("Second.Owner.Tests", "PlannedTests.Second"),
+        ];
+        using var output = new StringWriter { NewLine = "\n" };
+
+        var executed = Program.VerifyExpectedTestEvidence(
+            evidence,
+            expected,
+            () => throw new InvalidOperationException("candidate source should not be inspected"),
+            output);
+
+        Assert.Equal(2, executed);
+        Assert.Equal("", output.ToString());
+    }
+
+    [Fact]
     public void RejectsSkippedProtectedBaseIdentityThatStillExistsInCandidateSource()
     {
         var evidence = new TestResultEvidence(
@@ -108,7 +135,7 @@ public sealed class TestResultEvidenceTests
         ];
         using var output = new StringWriter { NewLine = "\n" };
 
-        var executed = Program.VerifyExpectedTestEvidence(evidence, expected, [], output);
+        var executed = Program.VerifyExpectedTestEvidence(evidence, expected, static () => [], output);
 
         Assert.Equal(1, executed);
         Assert.Equal(
@@ -141,7 +168,7 @@ public sealed class TestResultEvidenceTests
             () => Program.VerifyExpectedTestEvidence(
                 evidence,
                 expected,
-                candidateSource,
+                () => candidateSource,
                 output));
 
         Assert.Equal(
@@ -267,9 +294,9 @@ public sealed class TestResultEvidenceTests
     private static int VerifyExpected(
         TestResultEvidence evidence,
         IEnumerable<(string Assembly, string Id)> expected,
-        IEnumerable<(string Assembly, string Id)> candidateSource)
+        IReadOnlyList<(string Assembly, string Id)> candidateSource)
     {
         using var output = new StringWriter { NewLine = "\n" };
-        return Program.VerifyExpectedTestEvidence(evidence, expected, candidateSource, output);
+        return Program.VerifyExpectedTestEvidence(evidence, expected, () => candidateSource, output);
     }
 }

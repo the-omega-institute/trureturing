@@ -128,10 +128,10 @@ internal static class Program
         }
 
         WritePlan(plan);
-        IReadOnlyList<(string Assembly, string Id)> candidateSourceIdentities =
+        Func<IReadOnlyList<(string Assembly, string Id)>> candidateSourceIdentities =
             plan.Kind == EngineeringTestPlanKind.None
-                ? []
-                : EngineeringTestPlanDeriver.DeriveSourceIdentities(
+                ? static () => []
+                : () => EngineeringTestPlanDeriver.DeriveSourceIdentities(
                     RevisionSnapshot(options.RepositoryRoot, head, "candidate"));
         return EngineeringTestExecutor.Execute(
             plan,
@@ -146,7 +146,7 @@ internal static class Program
         string repositoryRoot,
         IReadOnlyList<string> changedPaths,
         EngineeringTestInvocation invocation,
-        IReadOnlyList<(string Assembly, string Id)> candidateSourceIdentities)
+        Func<IReadOnlyList<(string Assembly, string Id)>> candidateSourceIdentities)
     {
         var resultsDirectory = Directory.CreateTempSubdirectory("stratalint-engineering-tests-").FullName;
         var startInfo = new ProcessStartInfo
@@ -201,7 +201,7 @@ internal static class Program
     private static int VerifyTestEvidence(
         string resultsDirectory,
         IReadOnlyList<EngineeringSelectedTest> expectedTests,
-        IReadOnlyList<(string Assembly, string Id)> candidateSourceIdentities) =>
+        Func<IReadOnlyList<(string Assembly, string Id)>> candidateSourceIdentities) =>
         VerifyExpectedTestEvidence(
             TestResultEvidence.Load(resultsDirectory),
             expectedTests.Select(static test => (test.Assembly, test.Id)),
@@ -211,7 +211,7 @@ internal static class Program
     internal static int VerifyExpectedTestEvidence(
         TestResultEvidence evidence,
         IEnumerable<(string Assembly, string Id)> expectedTests,
-        IEnumerable<(string Assembly, string Id)> candidateSourceTests,
+        Func<IReadOnlyList<(string Assembly, string Id)>> candidateSourceTests,
         TextWriter standardOutput)
     {
         var comparison = evidence.CompareExpectedTests(expectedTests, candidateSourceTests);
