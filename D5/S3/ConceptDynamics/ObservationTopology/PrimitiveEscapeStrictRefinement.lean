@@ -73,7 +73,11 @@ theorem primitiveEscape_iff_strict_topology_refinement
     have witnessOpenFine : @IsOpen X (partitionTopology fineReadout) witnessOpen := by
       letI : TopologicalSpace ((forall definition : Gamma, InputOutput) × Output) := ⊥
       letI : DiscreteTopology ((forall definition : Gamma, InputOutput) × Output) := ⟨rfl⟩
-      rw [partitionTopology, isOpen_induced_iff]
+      change @IsOpen X
+        (TopologicalSpace.induced
+          (show X -> ((forall definition : Gamma, InputOutput) × Output) from fineReadout) ⊥)
+        witnessOpen
+      rw [isOpen_induced_iff]
       refine ⟨{coordinate | coordinate.2 = candidate x}, isOpen_discrete _, ?_⟩
       ext state
       rfl

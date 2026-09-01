@@ -58,13 +58,15 @@ theorem decision_sufficiency_without_full_prediction :
       Not (Refines fullPayoffProfile constantConcept) := by
   constructor
   · refine ⟨fun _ => ({true} : Set Bool), ?_⟩
+    unfold Function.comp
     funext state
     apply Set.ext
     intro action
     cases state <;> cases action <;>
-      simp [optimalActions, decisionPayoff]
+      simp [optimalActions, decisionPayoff, Function.comp_def]
   · rintro ⟨factor, hfactor⟩
     have hstates : fullPayoffProfile false = fullPayoffProfile true := by
+      unfold Function.comp at hfactor
       calc
         fullPayoffProfile false = factor () := by
           simpa [constantConcept] using congrFun hfactor false

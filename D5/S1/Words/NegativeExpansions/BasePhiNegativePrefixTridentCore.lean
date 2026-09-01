@@ -242,7 +242,6 @@ private theorem completeWord_take_prefix {w : List Bool} {q : Nat}
       (show i < completeDepth q by omega))]
     change negativeDigits canonicalExpansion q i =
       (w.map fun bit => if bit then 1 else 0)[i]
-    rw [List.getElem_map]
     have hbit := hoccurs.2 ⟨i, hi⟩
     unfold negativeDigit at hbit
     rw [← negativeDigits_apply] at hbit
@@ -258,13 +257,25 @@ private theorem completeWord_take_prefix {w : List Bool} {q : Nat}
           rw [hbit, hvalue'] at this
           contradiction
         have hzero : negativeDigits canonicalExpansion q i = 0 := by omega
+        have hiMap : i < (w.map (fun bit : Bool => if bit then 1 else 0)).length := by
+          simp [hi]
+        change negativeDigits canonicalExpansion q i =
+          (w.map (fun bit : Bool => if bit then 1 else 0))[i]'hiMap
+        rw [List.getElem_map]
         simp [hzero]
+        exact hvalue
     | true =>
         have hvalue' : w.get ⟨i, hi⟩ = true := by simpa using hvalue
         have hone : negativeDigits canonicalExpansion q i = 1 := by
           apply of_decide_eq_true
           rw [hbit, hvalue']
+        have hiMap : i < (w.map (fun bit : Bool => if bit then 1 else 0)).length := by
+          simp [hi]
+        change negativeDigits canonicalExpansion q i =
+          (w.map (fun bit : Bool => if bit then 1 else 0))[i]'hiMap
+        rw [List.getElem_map]
         simp [hone]
+        exact hvalue
 
 theorem completeWord_split_prefix {w : List Bool} {q : Nat}
     (hoccurs : NegativePrefixOccurs canonicalExpansion w q) :
@@ -633,13 +644,20 @@ theorem core_of_suffix_word {w : List Bool} {suffix : List Nat}
     rw [List.getD_append _ _ _ _ hiPrefix,
       List.getD_eq_getElem _ _ hiPrefix]
     change decide ((w.map fun bit => if bit then 1 else 0)[i.1] = 1) = w.get i
-    rw [List.getElem_map]
     cases hbit : w.get i with
     | false =>
         have hbit' : w[i.1] = false := by simpa using hbit
+        have hiMap : (i : ℕ) < (w.map (fun bit : Bool => if bit then 1 else 0)).length := by
+          simp [hiPrefix]
+        change decide ((w.map (fun bit : Bool => if bit then 1 else 0))[i.1]'hiMap = 1) = false
+        rw [List.getElem_map]
         simp [hbit']
     | true =>
         have hbit' : w[i.1] = true := by simpa using hbit
+        have hiMap : (i : ℕ) < (w.map (fun bit : Bool => if bit then 1 else 0)).length := by
+          simp [hiPrefix]
+        change decide ((w.map (fun bit : Bool => if bit then 1 else 0))[i.1]'hiMap = 1) = true
+        rw [List.getElem_map]
         simp [hbit']
 
 end

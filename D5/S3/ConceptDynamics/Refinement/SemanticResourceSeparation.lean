@@ -77,15 +77,20 @@ theorem semantic_sufficiency_can_exceed_finite_resources
   refine ⟨target, ?_, ?_⟩
   · refine ⟨extension, ?_⟩
     funext state
-    simp [target, extension]
+    change missing ⟨readout state, Set.mem_range_self state⟩ =
+      (if in_range : ∃ source, readout source = readout state
+        then missing ⟨readout state, in_range⟩ else fallback)
+    rw [dif_pos ⟨state, rfl⟩]
   · rintro ⟨factor, factorizes, within_budget⟩
     apply missing_not_allowed
     apply Finset.mem_image.mpr
     refine ⟨factor, (allowed_iff_budget factor).mpr within_budget, ?_⟩
     funext value
     rcases value with ⟨_, ⟨state, rfl⟩⟩
-    simpa [restrict, target, Function.comp_apply] using
-      (congrFun factorizes state).symm
+    change factor (readout state) = target state
+    have hfactorAt := congrFun factorizes state
+    change target state = factor (readout state) at hfactorAt
+    exact hfactorAt.symm
 
 #print axioms semantic_sufficiency_can_exceed_finite_resources
 

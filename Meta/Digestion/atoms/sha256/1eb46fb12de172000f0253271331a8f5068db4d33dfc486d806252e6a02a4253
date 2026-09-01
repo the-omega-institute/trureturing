@@ -1,0 +1,10 @@
+## 8. Pick/Pontryagin 负指标接口
+
+仓库已经冻结抽象真源：
+
+\[
+\boxed{\texttt{HermitianKernelNegativeSquares}.}
+\]
+
+下一步需要输入一个来自 completed xi 的具体函数。标准候选为：
+

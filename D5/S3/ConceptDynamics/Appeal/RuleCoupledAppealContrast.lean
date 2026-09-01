@@ -56,9 +56,10 @@ theorem rule_coupled_appeal_can_repair_without_log_explanation :
   let target := targetOracle ∘ conceptJoin caseReadout rule
   have appealEqualsTarget : appeal = target := by
     funext state
-    simp only [appeal, target, appealOracle, targetOracle, rule, caseReadout,
-      Function.comp_apply, conceptJoin]
-    cases state.1 <;> cases state.2 <;> rfl
+    simp only [appeal, target, appealOracle, targetOracle, rule, caseReadout]
+    unfold Function.comp conceptJoin
+    rcases state with ⟨ruleValue, caseValue⟩
+    cases ruleValue <;> cases caseValue <;> rfl
   refine ⟨rule, log, caseReadout, appealOracle, targetOracle,
     appealEqualsTarget, ?_, ?_⟩
   · apply

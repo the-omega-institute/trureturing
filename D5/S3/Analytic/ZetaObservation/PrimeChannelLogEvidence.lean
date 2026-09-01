@@ -398,7 +398,9 @@ theorem two_three_channels_strictly_accumulate
 theorem parameter_disequality_is_necessary :
     ¬ 0 < primeChannelLogEvidence 2 (by norm_num) 2 (by norm_num)
       (⟨2, Nat.prime_two⟩ : Nat.Primes) := by
-  rw [(equal_parameters_have_zero_evidence 2 (by norm_num)).1]
+  let p2 : Nat.Primes := ⟨2, Nat.prime_two⟩
+  change ¬0 < primeChannelLogEvidence 2 (by norm_num) 2 (by norm_num) p2
+  rw [(equal_parameters_have_zero_evidence 2 (by norm_num)).1 p2]
   norm_num
 
 #print axioms parameter_disequality_is_necessary

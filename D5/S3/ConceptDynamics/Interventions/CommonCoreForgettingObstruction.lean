@@ -68,7 +68,8 @@ example :
           false true := by
       rw [coreTrivial]
       trivial
-    rw [commonCoreRelation, sup_idem] at falseEqualsTrue
+    unfold commonCoreRelation at falseEqualsTrue
+    rw [sup_idem] at falseEqualsTrue
     exact Bool.false_ne_true falseEqualsTrue
   · exact ⟨id, rfl⟩
 

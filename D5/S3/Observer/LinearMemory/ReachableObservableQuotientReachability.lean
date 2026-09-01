@@ -81,18 +81,16 @@ theorem reachable_observable_quotient_is_reachable
     apply Submodule.subset_span
     refine ⟨k, u, ?_⟩
     congr
-  · change invisible.mkQ (⟨0, _⟩ : R) ∈ generated
-    rw [show (⟨0, _⟩ : R) = 0 by ext; rfl, map_zero]
+  · change invisible.mkQ (0 : R) ∈ generated
+    rw [map_zero]
     exact generated.zero_mem
   · intro x y hx hy quotientX quotientY
-    change invisible.mkQ (⟨x + y, _⟩ : R) ∈ generated
-    rw [show (⟨x + y, _⟩ : R) =
-        (⟨x, hx⟩ : R) + ⟨y, hy⟩ by ext; rfl, map_add]
+    change invisible.mkQ ((⟨x, hx⟩ : R) + (⟨y, hy⟩ : R)) ∈ generated
+    rw [map_add]
     exact generated.add_mem quotientX quotientY
   · intro scalar x hx quotientX
-    change invisible.mkQ (⟨scalar • x, _⟩ : R) ∈ generated
-    rw [show (⟨scalar • x, _⟩ : R) = scalar • (⟨x, hx⟩ : R) by ext; rfl,
-      map_smul]
+    change invisible.mkQ (scalar • (⟨x, hx⟩ : R)) ∈ generated
+    rw [map_smul]
     exact generated.smul_mem scalar quotientX
 
 #print axioms reachable_observable_quotient_is_reachable

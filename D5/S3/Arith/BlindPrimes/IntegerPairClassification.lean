@@ -172,7 +172,13 @@ example (x : Int) : primeResidue 1 x = 0 := by
 example : Nonempty Nat.Primes := inferInstance
 
 example : ∃ p q : Nat.Primes, Ne p q :=
-  ⟨⟨2, Nat.prime_two⟩, ⟨3, Nat.prime_three⟩, by decide⟩
+  ⟨⟨2, Nat.prime_two⟩, ⟨3, Nat.prime_three⟩, by
+    intro equality
+    have valueEquality : (2 : Nat) = 3 :=
+      congrArg (fun prime : Nat.Primes => prime.1) equality
+    have firstSuccessorEquality : (1 : Nat) = 2 := Nat.succ.inj valueEquality
+    have zeroEqualsOne : (0 : Nat) = 1 := Nat.succ.inj firstSuccessorEquality
+    exact Nat.zero_ne_one zeroEqualsOne⟩
 
 end DegenerateAudit
 

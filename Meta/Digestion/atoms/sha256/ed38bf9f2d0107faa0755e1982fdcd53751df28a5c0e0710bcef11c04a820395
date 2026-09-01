@@ -1,0 +1,10 @@
+\[
+\Theta_\omega(z)
+=
+\frac{\xi(\frac12-\omega-iz)}
+{\xi(\frac12+\omega-iz)},
+\qquad\omega>0.
+\]
+
+相应 half-plane Pick kernel 可规范化为：
+

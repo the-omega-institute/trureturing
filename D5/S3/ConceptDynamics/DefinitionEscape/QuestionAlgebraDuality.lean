@@ -145,10 +145,12 @@ theorem answerable_questions_mono
   rcases answerable with ⟨answer, questionFactors⟩
   rcases refinement with ⟨factor, refinementFactors⟩
   refine ⟨answer ∘ factor, ?_⟩
+  funext state
+  change question state = answer (factor (fine state))
   calc
-    question = answer ∘ coarse := questionFactors
-    _ = answer ∘ (factor ∘ fine) := by rw [refinementFactors]
-    _ = (answer ∘ factor) ∘ fine := by rfl
+    question state = answer (coarse state) := congrFun questionFactors state
+    _ = answer (factor (fine state)) :=
+      congrArg answer (congrFun refinementFactors state)
 
 /-- For effective readouts, inclusion of all answerable Boolean questions is not
 merely a consequence of refinement; it completely reconstructs refinement. -/

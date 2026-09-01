@@ -86,7 +86,7 @@ theorem ramified_five_matrix_reduction {n : Type*} [Fintype n] [DecidableEq n] [
       Jbar.det ^ 2 = (Jbar ^ 2).det := (Matrix.det_pow Jbar 2).symm
       _ = 0 := by
         rw [hsquare]
-        exact Matrix.det_zero (R := ZMod 5) (n := n) (inferInstance : Nonempty n)
+        exact Matrix.det_zero (R := ZMod 5) (n := n)
   have hdet_mod_five : Jbar.det = 0 := eq_zero_of_pow_eq_zero hdet_square_mod_five
   have hdet_relation : J.det ^ 2 = (5 : ℤ) ^ Fintype.card n := by
     calc
@@ -106,7 +106,7 @@ theorem ramified_five_matrix_reduction {n : Type*} [Fintype n] [DecidableEq n] [
         J.det ^ k = (J ^ k).det := (Matrix.det_pow J k).symm
         _ = 0 := by
           rw [hk]
-          exact Matrix.det_zero (R := ℤ) (n := n) (inferInstance : Nonempty n)
+          exact Matrix.det_zero (R := ℤ) (n := n)
     exact hdet_ne (eq_zero_of_pow_eq_zero hdet_pow)
   have hunit_rational : IsUnit (J.map (Int.castRingHom ℚ)) := by
     rw [Matrix.isUnit_iff_isUnit_det]

@@ -126,7 +126,7 @@ private theorem transfer_maps_transient {Y : Type*}
 /-- The source transfer restricted to the independently constructed transient carrier. -/
 noncomputable def transientTransfer {Y : Type*} (tau : Y -> Y) (n : Nat) :
     Module.End ℂ (transientSubspace tau n) :=
-  (transferOperator tau).restrict (transfer_maps_transient tau n)
+  (transferOperator tau).restrict (fun x hx => transfer_maps_transient tau n hx)
 
 private theorem transfer_maps_periodic_core {Y : Type*}
     (tau : Y -> Y) :
@@ -152,7 +152,7 @@ private theorem transfer_maps_periodic_core {Y : Type*}
 /-- The source transfer restricted to the periodic-core span. -/
 noncomputable def periodicCoreTransfer {Y : Type*} (tau : Y -> Y) :
     Module.End ℂ (periodicCoreSubspace tau) :=
-  (transferOperator tau).restrict (transfer_maps_periodic_core tau)
+  (transferOperator tau).restrict (fun x hx => transfer_maps_periodic_core tau hx)
 
 private theorem transient_transfer_nilpotent {Y : Type*}
     (tau : Y -> Y) (n : Nat) : IsNilpotent (transientTransfer tau n) := by
@@ -160,7 +160,8 @@ private theorem transient_transfer_nilpotent {Y : Type*}
   apply LinearMap.ext
   intro vector
   apply Subtype.ext
-  rw [transientTransfer, Module.End.pow_restrict]
+  rw [transientTransfer,
+    Module.End.pow_restrict n (fun x hx => transfer_maps_transient tau n hx)]
   have hvector := vector.property
   change Finsupp.lmapDomain ℂ ℂ (tau^[n]) vector.1 = 0 at hvector
   rw [<- transfer_operator_pow] at hvector
@@ -200,7 +201,8 @@ private theorem periodic_core_transfer_pow_coe
     (vector : periodicCoreSubspace tau) :
     (((periodicCoreTransfer tau) ^ n) vector).1 =
       (transferOperator tau ^ n) vector.1 := by
-  rw [periodicCoreTransfer, Module.End.pow_restrict]
+  rw [periodicCoreTransfer,
+    Module.End.pow_restrict n (fun x hx => transfer_maps_periodic_core tau hx)]
   rfl
 
 private theorem fitting_at_stable_image

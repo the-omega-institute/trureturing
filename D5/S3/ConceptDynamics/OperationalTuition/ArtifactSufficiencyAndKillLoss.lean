@@ -80,6 +80,8 @@ def finalState {Byte : Type*} [DecidableEq Byte]
     (trajectory : ToyTrajectory Byte) : ToyState Byte :=
   trajectory.events.foldl toyStep trajectory.initial
 
+-- Lean 4.33's stricter type check breaks mathlib's `Fintype` deriving handler.
+set_option backward.isDefEq.respectTransparency.types false in
 /-- The two external kills named in Part IV. -/
 inductive KillAction where
   | processGroupClear
