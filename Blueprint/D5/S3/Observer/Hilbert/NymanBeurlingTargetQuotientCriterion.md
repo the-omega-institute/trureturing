@@ -6,7 +6,7 @@ The Nyman-Beurling membership criterion is equivalent to quotient, residual-proj
 
 **Theorem 1.1 (Five equivalent Nyman-Beurling target criteria).**
 
-Lean statement: `D5/S3/Observer/Hilbert/NymanBeurlingTargetQuotientCriterion.nyman_beurling_target_quotient_criterion`
+$$RH \Leftrightarrow chi \in S_{\infty} \Leftrightarrow [chi]_{H/S_{\infty}} = 0 \Leftrightarrow \operatorname{starProjection}_{S_{\infty}^{\perp}}(chi) = 0 \Leftrightarrow \operatorname{Tendsto}(\lambda N, \operatorname{infDist}(chi, S_{N}), atTop, \operatorname{nhds}(0))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/Hilbert/NymanBeurlingTargetQuotientCriterion.nyman_beurling_target_quotient_criterion` (`✓ std3`). ∎
 
