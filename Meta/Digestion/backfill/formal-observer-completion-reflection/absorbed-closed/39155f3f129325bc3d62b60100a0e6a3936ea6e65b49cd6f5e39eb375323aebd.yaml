@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:39155f3f129325bc3d62b60100a0e6a3936ea6e65b49cd6f5e39eb375323aebd
+  normalized_sha256: sha256:39155f3f129325bc3d62b60100a0e6a3936ea6e65b49cd6f5e39eb375323aebd
+cas_ref: sha256:39155f3f129325bc3d62b60100a0e6a3936ea6e65b49cd6f5e39eb375323aebd
+coverage_gids:
+  - D5/S3/ConceptDynamics/Decision/NonuniqueOptimalActionSelector.determined_optimal_set_can_be_nonunique
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Decision/NonuniqueOptimalActionSelector.determined_optimal_set_can_be_nonunique
+      source_sha256: sha256:39155f3f129325bc3d62b60100a0e6a3936ea6e65b49cd6f5e39eb375323aebd
+      target_statement_id: sha256:e561159fe76cdc463f5db5ce5e89d0c2752e8ee9d4f538562d21322bb934498a
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Decision/NonuniqueOptimalActionSelector.determined_optimal_set_can_be_nonunique
+      definition_sha256: sha256:1224adb1a67fe5a9b8eec75af65793fa2b9a800b1d4912beffed4b11a1b4318e
+      emission_sha256: sha256:011676a683655edbc14a0d2268c99244339fca6bbe27ec29e36b1ff7b2b00d17
+  unresolved_subitems: []

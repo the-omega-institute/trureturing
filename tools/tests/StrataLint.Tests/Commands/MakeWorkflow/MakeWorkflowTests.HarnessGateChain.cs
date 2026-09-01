@@ -123,7 +123,7 @@ public sealed partial class MakeWorkflowTests
     }
 
     [Fact]
-    public void HarnessGateUsesExternalJudgeWithoutRestoreOrBuild()
+    public void HarnessGateUsesExternalJudgeWithSolutionRestoreButWithoutBuild()
     {
         if (OperatingSystem.IsWindows()) return;
 
@@ -144,6 +144,9 @@ public sealed partial class MakeWorkflowTests
             """
             #!/usr/bin/env bash
             printf '%s\n' "$*" >> "$DOTNET_LOG"
+            case "${1:-}" in
+              restore) exit 0 ;;
+            esac
             case "${2:-}" in
               check|filemap-conform) exit 0 ;;
             esac
@@ -170,13 +173,18 @@ public sealed partial class MakeWorkflowTests
 
         Assert.Equal(0, result.ExitCode);
         var invocations = File.ReadAllLines(log);
-        Assert.Equal(2, invocations.Length);
+        Assert.Equal(3, invocations.Length);
         Assert.DoesNotContain(invocations, line => line.Contains(" selftest", StringComparison.Ordinal));
         Assert.Single(invocations, line => line.Contains(" check --protected-base base", StringComparison.Ordinal));
         Assert.Single(invocations, line => line.EndsWith(" filemap-conform", StringComparison.Ordinal));
+
+        // 判官用 Roslyn 分析候选树,故解决方案的 compile assets 必须就位 —— gate 因此无条件 restore
+        // (`.github/scripts/harness-gate.sh`,为修 #4513;只在 judge cache-miss 时 restore 会让
+        // ScribeTestMapDeriver 绑不上 xUnit 符号,把 conservative unknown 从 <=281 抬到 673)。
+        // 外部 judge 模式仍然不 build judge、也不用 msbuild 解析 TargetPath。
+        Assert.Single(invocations, line => line.StartsWith("restore ", StringComparison.Ordinal));
         Assert.DoesNotContain(invocations, line =>
-            line.StartsWith("restore ", StringComparison.Ordinal)
-            || line.StartsWith("build ", StringComparison.Ordinal)
+            line.StartsWith("build ", StringComparison.Ordinal)
             || line.StartsWith("msbuild ", StringComparison.Ordinal));
     }
 

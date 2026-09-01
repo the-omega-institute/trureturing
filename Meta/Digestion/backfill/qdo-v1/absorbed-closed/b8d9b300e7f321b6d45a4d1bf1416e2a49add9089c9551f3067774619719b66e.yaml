@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:b8d9b300e7f321b6d45a4d1bf1416e2a49add9089c9551f3067774619719b66e
+  normalized_sha256: sha256:b8d9b300e7f321b6d45a4d1bf1416e2a49add9089c9551f3067774619719b66e
+cas_ref: sha256:b8d9b300e7f321b6d45a4d1bf1416e2a49add9089c9551f3067774619719b66e
+coverage_gids:
+  - D5/S3/Quantum/Completion/InfiniteDimensionalProjectionSeparation.infinite_dimensional_projection_separation
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/Completion/InfiniteDimensionalProjectionSeparation.infinite_dimensional_projection_separation
+      source_sha256: sha256:b8d9b300e7f321b6d45a4d1bf1416e2a49add9089c9551f3067774619719b66e
+      target_statement_id: sha256:7dd0c028c9b14db2f8692cd8b1ac1b8cd82d07fe2df012b574dc85cae6cf5080
+  scribe:
+    - gid: D5/S3/Quantum/Completion/InfiniteDimensionalProjectionSeparation.infinite_dimensional_projection_separation
+      definition_sha256: sha256:481a11bc5195d23f3871d9dfef7c5d126001d3db4ab78d418528482b958dc5f1
+      emission_sha256: sha256:9177a04ef5c860a18f91a5f7ee9e93d91db515864a7a847b83629ca65c997f39
+  unresolved_subitems: []
