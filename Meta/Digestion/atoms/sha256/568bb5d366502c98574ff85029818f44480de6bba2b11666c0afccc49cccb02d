@@ -1,0 +1,30 @@
+## 8. 时间、色散、破缺与 topology 的当前严格关系
+
+本轮以后，这五个概念可以按类型分层：
+
+\[
+\boxed{
+\begin{array}{c|c}
+\text{对象}&\text{机器中的角色}\\
+\hline
+L_\varphi&\text{黄金对数壳层周期}\\
+t_k&\text{整数 Fourier mode 的 Mellin 谱时间}\\
+\log x-\log y&\text{两个乘法通道的频率色散}\\
+K&\text{时间槽与频率槽的反对称二阶响应}\\
+\mathbb R_{>0}^{\times}/\varphi^{2\mathbb Z}
+&\text{整数黄金模式可见的尺度商空间}
+\end{array}
+}
+\]
+
+色散本身是频率差：
+
+\[
+\Delta\omega_{x,y}
+=\log x-\log y
+=\log\frac{x}{y},
+\qquad x,y>0.
+\]
+
+时间差与色散差共同进入已有正弦核：
+

@@ -1,0 +1,11 @@
+\[
+\mathcal E^{(2),\varphi}_{P;k_1,k_2}(s,C)
+=
+\sum_{p,q\in P}
+\left|
+K_{s_p,s_q}(t_{k_1},t_{k_2})C_{p,q}
+\right|^2.
+\]
+
+本轮机器证明：
+

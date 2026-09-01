@@ -1,0 +1,66 @@
+## 2. 从正乘法群下降到黄金尺度圆
+
+继续使用未取商坐标：
+
+\[
+\eta_\varphi(x)
+=\frac{\log x}{L_\varphi}.
+\]
+
+对正数 \(x,y\)，已有：
+
+\[
+\eta_\varphi(xy)
+=\eta_\varphi(x)+\eta_\varphi(y).
+\]
+
+本轮把它投影到单位加法圆：
+
+\[
+\boxed{
+\vartheta_\varphi(x)
+=\eta_\varphi(x)\pmod{\mathbb Z}
+\in\mathbb R/\mathbb Z.
+}
+\]
+
+机器证明：
+
+\[
+\boxed{
+\vartheta_\varphi(xy)
+=\vartheta_\varphi(x)+\vartheta_\varphi(y),
+\qquad x,y>0.
+}
+\]
+
+对任意 \(n\in\mathbb N\)，已有未取商平移律：
+
+\[
+\eta_\varphi\bigl((\varphi^2)^n x\bigr)
+=\eta_\varphi(x)+n.
+\]
+
+因此机器证明：
+
+\[
+\boxed{
+\vartheta_\varphi\bigl((\varphi^2)^n x\bigr)
+=\vartheta_\varphi(x).
+}
+\]
+
+这给出严格的商拓扑对象：
+
+\[
+\boxed{
+\mathbb R_{>0}^{\times}/\varphi^{2\mathbb Z}
+\longrightarrow
+\mathbb R/\mathbb Z.
+}
+\]
+
+本轮 Lean owner 使用自然数壳层平移，因为现有 `GoldenScaleCircle` 的公开迭代定理以 \(n\in\mathbb N\) 陈述。双向整数壳层作用和其商空间同胚仍可在后续节点中单独封装。
+
+---
+

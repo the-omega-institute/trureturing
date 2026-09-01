@@ -1,0 +1,9 @@
+\exp\left(
+-2\pi i k\frac{\log p}{2\log\varphi}
+\right)
+=
+p^{-it_k}.
+\]
+
+黄金采样的素数对 kernel 为：
+

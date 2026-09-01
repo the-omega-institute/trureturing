@@ -1,0 +1,42 @@
+## 1. 黄金对数周期与 Mellin 采样时间
+
+已有黄金尺度周期为：
+
+\[
+\boxed{
+L_\varphi=2\log\varphi.
+}
+\]
+
+已有黄金基本角频率为：
+
+\[
+\boxed{
+\Omega_\varphi
+=\frac{\pi}{\log\varphi}
+=\frac{2\pi}{L_\varphi}.
+}
+\]
+
+本轮定义第 \(k\) 个整数黄金采样时间：
+
+\[
+\boxed{
+t_k=k\Omega_\varphi,
+\qquad k\in\mathbb Z.
+}
+\]
+
+因此：
+
+\[
+\boxed{
+t_kL_\varphi=2\pi k.}
+\]
+
+这个恒等式是壳层不可见性的核心。一个完整黄金壳层在对数尺度上前进 \(L_\varphi\)，整数采样模式只积累 \(2\pi k\) 的整圈相位。
+
+这里的 \(t_k\) 是 Mellin 竖直参数的离散采样值，也就是 prime-frequency Fourier flow 的谱时间。它没有被解释为实验室物理时间。
+
+---
+

@@ -1,0 +1,42 @@
+\[
+M_\rho
+=
+\operatorname{diag}
+\left(
+\varphi^{2\delta},
+\varphi^{-2\delta}
+\right),
+\qquad
+\delta=\Re\rho-\frac12.
+\]
+
+prime side 的本轮对象位于 unitary angular layer：
+
+\[
+\Theta_k(p)\in U(1).
+\]
+
+zero side 的离线缺陷位于 radial hyperbolic layer：
+
+\[
+\delta\ne0
+\Longrightarrow
+M_\rho\text{ hyperbolic}.
+\]
+
+本轮建立的是 prime-side angular object 对黄金尺度商的拓扑下降。它没有提供 angular energy 到 radial hyperbolic discriminant 的 coercive transport。
+
+RH 路线仍需要一条承重桥：
+
+\[
+\boxed{
+\text{prime-side golden-sampled holonomy/Magnus data}
+\Longrightarrow
+\text{zero-side off-line radial or odd defect control}.
+}
+\]
+
+这条桥可以走显式公式、Weil positivity、Schur coercivity或独立构造的 integral monodromy。当前节点没有选择其中任何一种作为已证事实。
+
+---
+

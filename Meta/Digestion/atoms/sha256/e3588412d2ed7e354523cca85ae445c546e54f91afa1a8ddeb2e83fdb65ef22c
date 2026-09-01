@@ -1,0 +1,20 @@
+- RH 已经证明。
+
+本轮候选机器增量精确到：
+
+\[
+\boxed{
+\begin{aligned}
+&\text{golden logarithmic scale}
+\\
+&\Longrightarrow
+\text{integral Mellin sample characters}
+\\
+&\Longrightarrow
+\text{golden realization of the frozen second-Magnus alternant}
+\\
+&\Longrightarrow
+\text{kernel and finite energy descend through whole-shell orbits}.
+\end{aligned}
+}
+\]

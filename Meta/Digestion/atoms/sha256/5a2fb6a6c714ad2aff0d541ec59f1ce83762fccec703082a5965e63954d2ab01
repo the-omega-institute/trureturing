@@ -1,0 +1,12 @@
+\[
+\boxed{
+\Theta_k\bigl((\varphi^2)^n x\bigr)
+=
+\Theta_k(x).
+}
+\]
+
+这不是近似周期，也不是渐近自相似，而是精确下降关系。
+
+因此整数黄金 Fourier family 只能看到壳层轨道：
+

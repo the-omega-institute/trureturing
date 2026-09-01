@@ -1,0 +1,32 @@
+## 12. 严格非主张
+
+本轮不主张：
+
+- 黄金采样对不同素数频率具有统一正间隙；
+- 所有不同素数对在所有非平凡 mode pair 上都具有非零 kernel；
+- Cesàro 平均已经恢复 finite holonomy energy；
+- 黄金尺度圆已经携带非零 winding、Chern class 或 Berry curvature；
+- 自发对称破缺或物理时间箭头已经构造；
+- 无限素数 second-Magnus energy 已经定义；
+- prime-side 壳层商已经支配 zero-side radial defect；
+- 离线零点已经排除；
+- RH 已经证明。
+
+本轮候选机器增量精确到：
+
+\[
+\boxed{
+\begin{aligned}
+&\text{golden logarithmic scale}
+\\
+&\Longrightarrow
+\text{integral Mellin sample characters}
+\\
+&\Longrightarrow
+\text{golden realization of the frozen second-Magnus alternant}
+\\
+&\Longrightarrow
+\text{kernel and finite energy descend through whole-shell orbits}.
+\end{aligned}
+}
+\]

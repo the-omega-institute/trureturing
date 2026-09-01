@@ -1,0 +1,12 @@
+\[
+\boxed{
+\Theta_k(x)
+=
+\exp\left(-2\pi i k\eta_\varphi(x)\right).
+}
+\]
+
+它也可以理解为单位圆点 \(\vartheta_\varphi(x)\) 上的第 \(k\) 个 character。
+
+本轮机器证明：
+

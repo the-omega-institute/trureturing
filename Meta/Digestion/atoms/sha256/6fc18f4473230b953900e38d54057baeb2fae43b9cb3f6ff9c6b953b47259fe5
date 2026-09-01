@@ -1,0 +1,45 @@
+\[
+\boxed{
+\mathcal E^{(2),\varphi}_{P;k_1,k_2}
+\left(
+\bigl((\varphi^2)^{n_p}s_p\bigr)_{p\in P},C
+\right)
+=
+\mathcal E^{(2),\varphi}_{P;k_1,k_2}(s,C).
+}
+\]
+
+因此该有限能量只依赖每个通道的黄金壳层轨道，不依赖所选代表元。
+
+结合已经冻结的统一上界：
+
+\[
+0\le
+\mathcal E^{(2)}_P(t_1,t_2)
+\le
+4\mathcal E^{\mathrm{hol}}_P,
+\]
+
+可以得到以下严格结构链：
+
+\[
+\boxed{
+\begin{aligned}
+&\text{residual envelope control}
+\\
+&\Longrightarrow
+\text{finite holonomy energy control}
+\\
+&\Longrightarrow
+\text{golden-sampled second-Magnus energy control}
+\\
+&\Longrightarrow
+\text{the controlled observable descends through golden shell orbits}.
+\end{aligned}
+}
+\]
+
+最后一箭头描述观察空间的商结构，不增加新的衰减率。
+
+---
+
