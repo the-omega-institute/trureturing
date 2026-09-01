@@ -40,7 +40,7 @@ internal sealed class LocalReadoutCoreTheoremChainDocument : IScribeDocumentDefi
         F.Id("FiniteCertificate"),
         Sp, Land, Sp,
         Grp(F.Id("m"), Sp, Neq, Sp, Num(0), Sp, Implies, Sp,
-            F.Id("T(m)"), Sp, Eq, Sp, F.Id("lcmPrimePowerPeriods")),
+            F.Id("PhasePeriod"), Sp, Eq, Sp, F.Id("PrimePowerPeriodLcm")),
         Sp, Land, Sp,
         F.Id("ZeroModulusCounterexample"),
         Sp, Land, Sp,
