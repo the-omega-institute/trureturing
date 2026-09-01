@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:f5d293dd53c213bc9cfb17637062eabda87ed7169d9bfadfd1ef4f5674398d04
+  normalized_sha256: sha256:f5d293dd53c213bc9cfb17637062eabda87ed7169d9bfadfd1ef4f5674398d04
+cas_ref: sha256:f5d293dd53c213bc9cfb17637062eabda87ed7169d9bfadfd1ef4f5674398d04
+coverage_gids:
+  - D5/S3/ConceptDynamics/Sufficiency/TargetKnowledgeWithoutWorldKnowledge.target_knowledge_without_world_knowledge
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Sufficiency/TargetKnowledgeWithoutWorldKnowledge.target_knowledge_without_world_knowledge
+      source_sha256: sha256:f5d293dd53c213bc9cfb17637062eabda87ed7169d9bfadfd1ef4f5674398d04
+      target_statement_id: sha256:df197ddc8a008da465c544be62e157790036d3acd3d5ef7cc29c97c1abed95d5
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Sufficiency/TargetKnowledgeWithoutWorldKnowledge.target_knowledge_without_world_knowledge
+      definition_sha256: sha256:397ff8f0d54575fb091d9484a72a85d51c5a71c667ab3c071e128896022b46f5
+      emission_sha256: sha256:70f54748be45d3aa88fe26e5d347cd1c5b56b6dbe07083dbb7a51bde50589937
+  unresolved_subitems: []
