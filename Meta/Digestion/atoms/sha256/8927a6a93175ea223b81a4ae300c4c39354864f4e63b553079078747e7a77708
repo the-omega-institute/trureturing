@@ -1,0 +1,14 @@
+\[
+\boxed{
+\Lambda(w)
+=
+\prod_{j=1}^n\lambda_{e_j}.
+}
+\]
+
+定义记忆摘要的递推：
+
+\[
+M_a(\varnothing)=0,
+\]
+

@@ -1,0 +1,16 @@
+\[
+\boxed{
+\mathcal V_{r,P,T}^{\mathrm{time}}
+=
+\sum_{p,q\in P}
+\int_{\Delta_T}
+\left\|
+K_{p,q}(t_1,t_2)
+C_{r;p,q}
+\right\|^2
+\,dt_2dt_1,
+}
+\]
+
+其中：
+

@@ -1,0 +1,26 @@
+\[
+p^{-s}
+=
+p^{-\sigma}e^{-it\log p},
+\qquad
+s=\sigma+it.
+\]
+
+所以：
+
+\[
+\boxed{
+\omega_p=\log p
+}
+\]
+
+是素数的自然 Fourier 频率，\(t=\operatorname{Im}s\) 是其对偶参数。
+
+有限通道相位空间为：
+
+\[
+U(1)^P.
+\]
+
+每个通道在单位圆上旋转。标量相位乘积满足：
+

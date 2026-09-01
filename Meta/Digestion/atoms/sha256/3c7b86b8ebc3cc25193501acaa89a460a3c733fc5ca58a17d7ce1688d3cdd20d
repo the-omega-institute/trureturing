@@ -1,0 +1,16 @@
+\[
+\boxed{
+(n,\Lambda,M)\star(m,\Gamma,N)
+=
+\left(
+ n+m,
+ \Lambda\Gamma,
+ a^mM+N\Lambda
+\right).
+}
+\]
+
+这里第一个 word 先执行，第二个 word 后执行。
+
+这就是目前最精确的“时间产生 holonomy”表述：连续 Fourier 时间旋转局部注入，离散 chronology 通过扭曲 cocycle 决定这些注入如何积累。
+

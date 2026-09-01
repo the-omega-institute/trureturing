@@ -1,0 +1,18 @@
+\int_{0<t_2<t_1<T}|K_{p,q}(t_1,t_2)|^2\,dt_2dt_1
+=
+T^2-
+\frac{2\bigl(1-\cos(T\Delta\omega)\bigr)}{(\Delta\omega)^2}.
+\]
+
+对固定非零 \(\Delta\omega\)，其归一化满足：
+
+\[
+\frac{\mathcal A_T(\Delta\omega)}{T^2}\longrightarrow1.
+\]
+
+有限 prime cutoff 下，若最小 log-frequency gap 为正，便可寻求统一 frame lower bound。建议下一 GID 为：
+
+`D5/S3/Observer/AgencyHolonomy/OrderedTimeSimplexSecondMagnusAverage`
+
+它应先证明积分恒等式、非负性、非零频率差下的正性，以及依赖 finite gap 的加权下界。完成后，路线才可能从单向 domination 升级为 resonance-controlled observability。
+

@@ -1,0 +1,19 @@
+\[
+[H(t_1),H(t_2)]
+=
+\sum_{p,q\in P}
+K_{p,q}(t_1,t_2)[A_p,A_q].
+\]
+
+所以 \(K_{p,q}\) 是连续 time-ordering 的纯 Fourier slot coefficient，\(C_{p,q}\) 是离散记忆更新的非交换系数。二者乘积把两种破缺分层记账：
+
+\[
+\boxed{
+K_{p,q}:\text{time-frequency orientation defect},
+\qquad
+C_{p,q}:\text{memory-channel holonomy defect}.
+}
+\]
+
+本节点只形式化有限代数核及其能量支配，尚未形式化 ordered-simplex integral、Magnus series 收敛或无限 prime 极限。
+
