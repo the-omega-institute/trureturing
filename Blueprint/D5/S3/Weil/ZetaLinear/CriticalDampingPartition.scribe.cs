@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.ZetaLinear;
 
@@ -18,7 +20,49 @@ internal sealed class CriticalDampingPartitionDocument
             DescribeId.Create("critical-damping-partition-certificate"),
             DeclarationHandle.Create(Declaration),
             H("The centered damping partition has a nonnegative critical defect"),
-            StatementSource.WithoutFormula(),
+            StatementSource.FromAuthor(Disp(Seq(
+                Forall, Sp, F.Id("n"), InMacro, Mathbb, Grp(F.Id("N")), Comma, Sp,
+                F.Id("d"), Colon, Sp,
+                Operatorname, Grp(F.Id("Fin")), Open, F.Id("n"), Close,
+                Sp, To, Sp, Mathbb, Grp(F.Id("R")), Comma, Sp,
+                Tau, InMacro, Mathbb, Grp(F.Id("R")), Comma, Esc,
+                Operatorname, Grp(F.Id("CenteredSpectrumSymmetric")),
+                Open, F.Id("d"), Comma, Sp, Frac, Grp(D(1)), Grp(D(2)), Close,
+                Sp, Land, Sp, Tau, Neq, D(0), Sp, Rightarrow, Esc,
+                Open,
+                Operatorname, Grp(F.Id("dampingPartition")),
+                Open, F.Id("d"), Comma, Sp, Tau, Close,
+                Eq, Exp, Open, Frac, Grp(Tau), Grp(D(2)), Close, Sp, Cdot, Sp,
+                Operatorname, Grp(F.Id("tr")), Open,
+                Exp, Open, Minus, Tau, Sp, Cdot, Sp,
+                Operatorname, Grp(F.Id("dampingOperator")), Open, F.Id("d"), Close,
+                Close, Close, Sp, Land, Esc,
+                Operatorname, Grp(F.Id("dampingPartition")),
+                Open, F.Id("d"), Comma, Sp, Tau, Close,
+                Eq, Operatorname, Grp(F.Id("tr")), Open,
+                Exp, Open, Minus, Tau, Sp, Cdot, Sp,
+                Operatorname, Grp(F.Id("centeredDampingOperator")),
+                Open, F.Id("d"), Comma, Sp, Frac, Grp(D(1)), Grp(D(2)), Close,
+                Close, Close, Sp, Land, Esc,
+                Operatorname, Grp(F.Id("dampingPartition")),
+                Open, F.Id("d"), Comma, Sp, Tau, Close,
+                Eq, Operatorname, Grp(F.Id("tr")), Open,
+                Operatorname, Grp(F.Id("matrixCosh")), Open,
+                Tau, Sp, Cdot, Sp,
+                Operatorname, Grp(F.Id("centeredDampingOperator")),
+                Open, F.Id("d"), Comma, Sp, Frac, Grp(D(1)), Grp(D(2)), Close,
+                Close, Close, Sp, Land, Esc,
+                D(0), Leq, Operatorname, Grp(F.Id("criticalDampingPartitionDefect")),
+                Open, F.Id("d"), Comma, Sp, Tau, Close, Sp, Land, Esc,
+                Open, Open, Forall, Sp, F.Id("i"), InMacro,
+                Operatorname, Grp(F.Id("Fin")), Open, F.Id("n"), Close, Comma, Sp,
+                F.Id("d"), Open, F.Id("i"), Close,
+                Eq, Frac, Grp(D(1)), Grp(D(2)), Close,
+                Sp, Leftrightarrow, Sp,
+                Operatorname, Grp(F.Id("criticalDampingPartitionDefect")),
+                Open, F.Id("d"), Comma, Sp, Tau, Close, Eq, D(0),
+                Close,
+                Close))),
             AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text(
