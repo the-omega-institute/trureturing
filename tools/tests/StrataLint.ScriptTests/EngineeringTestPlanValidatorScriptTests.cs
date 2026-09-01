@@ -18,6 +18,7 @@ public sealed class EngineeringTestPlanValidatorScriptTests
         Assert.Equal(0, result.ExitCode);
         Assert.Equal("selected\t2\t1\n", Encoding.UTF8.GetString(result.StandardOutput));
         Assert.Empty(result.StandardError);
+        EngineeringTestReportScriptTests.Verify();
     }
 
     [Fact]
