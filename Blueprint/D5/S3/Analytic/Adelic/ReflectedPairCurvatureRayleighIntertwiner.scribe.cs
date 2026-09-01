@@ -98,8 +98,6 @@ internal sealed class ReflectedPairCurvatureRayleighIntertwinerDocument
                 GidRef.Create("D5/S3/Weil/Pick/HermitianKernelNegativeSquares")),
             DocumentEdge.Dependency.Create(
                 GidRef.Create("D5/S3/Weil/ZetaLinear/OfflineZeroGeometricMonodromy")),
-            DocumentEdge.Dependency.Create(
-                GidRef.Create("D5/S3/Weil/ZetaLinear/Sylvester")),
         ]));
 
     private static DocumentBlock.Describe DefinitionNode(
