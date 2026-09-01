@@ -72,9 +72,7 @@ private theorem ordered_time_simplex_primitive_derivative
       HasDerivAt (fun y : ℝ => Real.cos (gap * y))
         (-gap * Real.sin (gap * x)) x := by
     exact hCosRaw.congr_deriv (by ring)
-  have hLinear :
-      HasDerivAt (fun y : ℝ => horizon - y) (-1) x := by
-    fun_prop
+  have hLinear := (hasDerivAt_id x).const_sub horizon
   have hProductRaw := hLinear.mul hSin
   have hProduct :
       HasDerivAt
@@ -86,8 +84,7 @@ private theorem ordered_time_simplex_primitive_derivative
       HasDerivAt (fun y : ℝ => 2 * horizon * y) (2 * horizon) x := by
     simpa only [id_eq, mul_one] using
       (hasDerivAt_id x).const_mul (2 * horizon)
-  have hSquare : HasDerivAt (fun y : ℝ => y ^ 2) (2 * x) x := by
-    fun_prop
+  have hSquare := hasDerivAt_pow 2 x
   have hRaw :=
     ((hFirst.sub hSquare).sub
       ((hProduct.const_mul 2).div_const gap)).add
@@ -131,10 +128,8 @@ theorem ordered_time_simplex_kernel_average_formula
     _ = horizon ^ 2 -
         2 * (1 - Real.cos (gap * horizon)) / gap ^ 2 := by
           dsimp only [primitive]
-          simp only [sub_self, zero_mul, mul_zero, Real.sin_zero,
-            Real.cos_zero, sub_zero, zero_pow, OfNat.ofNat, zero_div,
-            add_zero]
           field_simp [hGap]
+          simp
           ring
 
 /-- A zero frequency gap has zero ordered-simplex response. -/
