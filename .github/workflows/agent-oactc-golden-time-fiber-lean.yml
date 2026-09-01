@@ -28,32 +28,23 @@ jobs:
       - name: Build target modules
         shell: bash
         run: |
-          set +e
           mkdir -p diagnostics
-          : > diagnostics/summary.tsv
-          failed=0
-          modules=(
-            D5.S3.Analytic.GoldenTomography.FiniteVandermondeTomography
-            D5.S3.Observer.GoldenCoding.GoldenRationalShellRigidity
-            D5.S3.ObserverMemory.FourierFibers.FiniteCrystalTimeFrequencyBridge
-            D5.S3.ObserverMemory.FourierFibers.TimeShiftSpectralFiberTransport
-            D5.S3.ObserverMemory.FourierFibers.TemporalFiberObserverUpgrade
-            D5.S3.ObserverMemory.FourierFibers.TemporalReflectionBreakVisibility
-            D5.S3.ObserverMemory.FourierFibers.DegenerateModeHiddenFiber
-            D5.S3.ObserverMemory.FourierFibers.SymmetryBreakingObservabilityGain
-            D5.S3.ObserverMemory.FourierFibers.FiniteObservabilityKrylovCriterion
-            D5.S3.ObserverMemory.FourierFibers.GoldenScaleCharacterDeckBlindness
-            D5.S3.ObserverMemory.FourierFibers.SpectralFutureReadoutBridge
-          )
-          for module in "${modules[@]}"; do
-            safe="${module//./_}"
-            lake build "$module" > "diagnostics/${safe}.log" 2>&1
-            status=$?
-            cat "diagnostics/${safe}.log"
-            printf '%s\t%s\n' "$module" "$status" >> diagnostics/summary.tsv
-            if [ "$status" -ne 0 ]; then failed=1; fi
-          done
-          printf '%s\n' "$failed" > diagnostics/failed
+          set +e
+          lake build \
+            D5.S3.Analytic.GoldenTomography.FiniteVandermondeTomography \
+            D5.S3.Observer.GoldenCoding.GoldenRationalShellRigidity \
+            D5.S3.ObserverMemory.FourierFibers.FiniteCrystalTimeFrequencyBridge \
+            D5.S3.ObserverMemory.FourierFibers.TimeShiftSpectralFiberTransport \
+            D5.S3.ObserverMemory.FourierFibers.TemporalFiberObserverUpgrade \
+            D5.S3.ObserverMemory.FourierFibers.TemporalReflectionBreakVisibility \
+            D5.S3.ObserverMemory.FourierFibers.DegenerateModeHiddenFiber \
+            D5.S3.ObserverMemory.FourierFibers.SymmetryBreakingObservabilityGain \
+            D5.S3.ObserverMemory.FourierFibers.FiniteObservabilityKrylovCriterion \
+            D5.S3.ObserverMemory.FourierFibers.GoldenScaleCharacterDeckBlindness \
+            D5.S3.ObserverMemory.FourierFibers.SpectralFutureReadoutBridge \
+            2>&1 | tee diagnostics/build.log
+          status=${PIPESTATUS[0]}
+          printf '%s\n' "$status" > diagnostics/status
           exit 0
       - name: Upload diagnostics
         if: always()
@@ -64,6 +55,4 @@ jobs:
           if-no-files-found: error
           retention-days: 3
       - name: Enforce successful builds
-        run: |
-          cat diagnostics/summary.tsv
-          test "$(cat diagnostics/failed)" = "0"
+        run: test "$(cat diagnostics/status)" = "0"
