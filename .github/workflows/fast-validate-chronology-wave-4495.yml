@@ -1,0 +1,38 @@
+name: fast-validate-chronology-wave-4495
+
+on:
+  push:
+    branches:
+      - tmp/validate-prime-fourier-lie-4495
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - name: Checkout validation branch
+        uses: actions/checkout@v4
+      - name: Install pinned .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+      - name: Install pinned Lean toolchain
+        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+      - name: Fetch Mathlib cache
+        run: lake exe cache get
+      - name: Build repository tools
+        run: make -C tools dotnet
+      - name: Compile chronology completion wave
+        run: |
+          lake build D5.S3.Observer.Chronology.TruncatedTensorSignature
+          lake build D5.S3.Observer.Chronology.TruncatedTensorHopf
+          lake build D5.S3.Observer.Chronology.StepTwoFreeLieBridge
+          lake build D5.S3.Observer.AgencyHolonomy.TimeOrderedMemoryMatrixRepresentation
+          lake build D5.S3.Observer.AgencyHolonomy.PrimeFourierMagnusCommutatorBridge
+      - name: Produce source-bound report
+        run: make lean-report
+      - name: Emit Blueprint mirrors
+        run: make emit
