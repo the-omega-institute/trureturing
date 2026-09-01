@@ -1,0 +1,89 @@
+name: render-standard-backbone-20260901
+
+on:
+  push:
+    branches:
+      - tmp/render-standard-backbone-20260901
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout helper payload
+        uses: actions/checkout@v4
+        with:
+          ref: tmp/render-standard-backbone-20260901
+          path: helper
+
+      - name: Checkout target PR branch
+        uses: actions/checkout@v4
+        with:
+          ref: lane/math/standard-math-backbone-v1
+          path: target
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build renderer and generate Blueprint mirrors
+        working-directory: target
+        run: |
+          set -euo pipefail
+          make -C tools dotnet
+          make scribe
+
+      - name: Append the existing RH research theory volume
+        working-directory: target
+        run: |
+          set -euo pipefail
+          theory='docs/develop/theory/RH_RESEARCH_LANE_THEORY.md'
+          payload='../helper/tmp/theory-standard-backbone-001.md'
+          cp "$theory" /tmp/rh-theory-before.md
+          if ! grep -Fq '## [STANDARD BACKBONE 001] CHRONOLOGICAL TENSOR HOPF, FREE LIE, MAGNUS, AND MATRIX HOLONOMY' "$theory"; then
+            cat "$payload" >> "$theory"
+          fi
+          python - <<'PY'
+          from pathlib import Path
+          before = Path('/tmp/rh-theory-before.md').read_bytes()
+          final = Path('docs/develop/theory/RH_RESEARCH_LANE_THEORY.md').read_bytes()
+          final.decode('utf-8')
+          marker = b'## [STANDARD BACKBONE 001] CHRONOLOGICAL TENSOR HOPF, FREE LIE, MAGNUS, AND MATRIX HOLONOMY'
+          if final.count(marker) != 1:
+              raise SystemExit('theory marker is missing or duplicated')
+          if before.count(marker) == 0 and not final.startswith(before):
+              raise SystemExit('theory update is not append-only')
+          PY
+
+      - name: Verify generated scope and compile the Lean graph
+        working-directory: target
+        run: |
+          set -euo pipefail
+          expected='Blueprint/D5/S3/Observer/AgencyHolonomy/PrimeFourierMagnusCommutatorBridge.md
+          Blueprint/D5/S3/Observer/AgencyHolonomy/TimeOrderedMemoryMatrixRepresentation.md
+          Blueprint/D5/S3/Observer/Chronology/PrimitiveMagnusLog.md
+          Blueprint/D5/S3/Observer/Chronology/StepTwoFreeLieBridge.md
+          Blueprint/D5/S3/Observer/Chronology/TruncatedTensorHopf.md
+          Blueprint/D5/S3/Observer/Chronology/TruncatedTensorSignature.md
+          docs/develop/theory/RH_RESEARCH_LANE_THEORY.md'
+          actual="$(git status --short | sed 's/^...//' | sort)"
+          printf '%s\n' "$actual"
+          test "$actual" = "$(printf '%s\n' "$expected" | sed 's/^          //' | sort)"
+          make lean
+
+      - name: Commit generated mirrors and theory append
+        working-directory: target
+        run: |
+          set -euo pipefail
+          if git diff --quiet && test -z "$(git ls-files --others --exclude-standard)"; then
+            echo 'No generated change remains.'
+            exit 0
+          fi
+          git config user.name 'AlyciaBHZ'
+          git config user.email '50111876+AlyciaBHZ@users.noreply.github.com'
+          git add Blueprint/D5/S3/Observer/Chronology/*.md
+          git add Blueprint/D5/S3/Observer/AgencyHolonomy/TimeOrderedMemoryMatrixRepresentation.md
+          git add Blueprint/D5/S3/Observer/AgencyHolonomy/PrimeFourierMagnusCommutatorBridge.md
+          git add docs/develop/theory/RH_RESEARCH_LANE_THEORY.md
+          git commit -m 'docs: render chronological tensor backbone'
+          git push origin HEAD:refs/heads/lane/math/standard-math-backbone-v1
