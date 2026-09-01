@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:13a54fc995bbb5ba9a9a2612d1a9366eec99870ea1242b550b7053d3629c09f0
+  normalized_sha256: sha256:13a54fc995bbb5ba9a9a2612d1a9366eec99870ea1242b550b7053d3629c09f0
+cas_ref: sha256:13a54fc995bbb5ba9a9a2612d1a9366eec99870ea1242b550b7053d3629c09f0
+coverage_gids:
+  - D5/S3/ConceptDynamics/Agency/DeterministicPolicyProductCount.deterministic_policy_product_and_count
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Agency/DeterministicPolicyProductCount.deterministic_policy_product_and_count
+      source_sha256: sha256:13a54fc995bbb5ba9a9a2612d1a9366eec99870ea1242b550b7053d3629c09f0
+      target_statement_id: sha256:a36582244bfe6c02f1f1f755dc34f065cfdc7b5d1e5e91d589ede23c8c7c20bc
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Agency/DeterministicPolicyProductCount.deterministic_policy_product_and_count
+      definition_sha256: sha256:979d746462a3f79d6bc573c9917341ec68e72f6886dab73d6b151b80f3d7d78a
+      emission_sha256: sha256:d9e6d1ef638a23c7314981c14a29616c20c26e3b746e08b62870db473ff8e98c
+  unresolved_subitems: []
