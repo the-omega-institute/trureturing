@@ -144,6 +144,9 @@ public sealed partial class MakeWorkflowTests
             """
             #!/usr/bin/env bash
             printf '%s\n' "$*" >> "$DOTNET_LOG"
+            case "${1:-}" in
+              restore) exit 0 ;;
+            esac
             case "${2:-}" in
               check|filemap-conform) exit 0 ;;
             esac
@@ -168,15 +171,22 @@ public sealed partial class MakeWorkflowTests
             BoundedProcessRunner.HangDetectionBudget,
             64 * 1024);
 
+        // The method name predates issue #4513: supplying a judge skips BUILDING the judge, but the
+        // solution is still restored because the judge ANALYSES the candidate tree with Roslyn
+        // symbol binding and needs its compile assets. Skipping the restore on the cached-judge
+        // path inflated the conservative unknown count from <=281 to 673 and blocked correct pull
+        // requests. The name is left unchanged on purpose: renaming a repository-reading test
+        // mints a new conservative-unknown identity, which SL-023 blocks as
+        // "conservative unknown test method introduced after fork point".
         Assert.Equal(0, result.ExitCode);
         var invocations = File.ReadAllLines(log);
-        Assert.Equal(2, invocations.Length);
+        Assert.Equal(3, invocations.Length);
         Assert.DoesNotContain(invocations, line => line.Contains(" selftest", StringComparison.Ordinal));
         Assert.Single(invocations, line => line.Contains(" check --protected-base base", StringComparison.Ordinal));
         Assert.Single(invocations, line => line.EndsWith(" filemap-conform", StringComparison.Ordinal));
+        Assert.Single(invocations, line => line.StartsWith("restore ", StringComparison.Ordinal));
         Assert.DoesNotContain(invocations, line =>
-            line.StartsWith("restore ", StringComparison.Ordinal)
-            || line.StartsWith("build ", StringComparison.Ordinal)
+            line.StartsWith("build ", StringComparison.Ordinal)
             || line.StartsWith("msbuild ", StringComparison.Ordinal));
     }
 
