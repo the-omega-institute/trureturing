@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/Weil/CurvatureLedgerBridgeRefutation
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Refute a global curvature-ledger bridge by two frozen-definition
-     toy readouts with incompatible support and mass. -/
+   digest: Refute the global curvature-ledger bridge via two frozen-definition toy readouts with incompatible support and mass. -/
 
 import D5.S3.Analytic.Boundary.InteriorCurvatureCriterion
 import D5.S3.Weil.LedgerDeficitSecondVariation
