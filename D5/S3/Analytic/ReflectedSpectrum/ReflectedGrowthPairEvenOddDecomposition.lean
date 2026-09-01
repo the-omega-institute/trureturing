@@ -1,6 +1,6 @@
-/- GID: D5/S3/Analytic/Adelic/ReflectedGrowthPairEvenOddDecomposition
+/- GID: D5/S3/Analytic/ReflectedSpectrum/ReflectedGrowthPairEvenOddDecomposition
    generality: G
-   mirror-B: D5/B/S3/Analytic/Adelic/ReflectedGrowthPairEvenOddDecomposition
+   mirror-B: D5/B/S3/Analytic/ReflectedSpectrum/ReflectedGrowthPairEvenOddDecomposition
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Even and odd reflected channels separate invariant magnitude from time orientation. -/
@@ -28,7 +28,7 @@ set_option relaxedAutoImplicit false
 
 noncomputable section
 
-namespace D5.S3.Analytic.Adelic.ReflectedGrowthPairEvenOddDecomposition
+namespace D5.S3.Analytic.ReflectedSpectrum.ReflectedGrowthPairEvenOddDecomposition
 
 open D5.S3.Analytic.Adelic.ReflectedGrowthPairNegativeSquare
 open D5.S3.Analytic.Adelic.ReflectedGrowthPairSecondOrderSpectrum
@@ -142,4 +142,4 @@ example : 0 < oddObservation 1 1 := by
 #print axioms odd_observation_eq_zero_iff
 #print axioms odd_observation_positive_of_forward_orientation
 
-end D5.S3.Analytic.Adelic.ReflectedGrowthPairEvenOddDecomposition
+end D5.S3.Analytic.ReflectedSpectrum.ReflectedGrowthPairEvenOddDecomposition

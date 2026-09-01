@@ -1,6 +1,6 @@
-/- GID: D5/S3/Analytic/Adelic/EllipticHyperbolicReflectionTrichotomy
+/- GID: D5/S3/Analytic/ReflectedSpectrum/EllipticHyperbolicReflectionTrichotomy
    generality: G
-   mirror-B: D5/B/S3/Analytic/Adelic/EllipticHyperbolicReflectionTrichotomy
+   mirror-B: D5/B/S3/Analytic/ReflectedSpectrum/EllipticHyperbolicReflectionTrichotomy
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Two-dimensional generators separate hyperbolic, neutral, and elliptic spectral sectors by determinant sign. -/
@@ -31,7 +31,7 @@ noncomputable section
 
 open scoped Matrix
 
-namespace D5.S3.Analytic.Adelic.EllipticHyperbolicReflectionTrichotomy
+namespace D5.S3.Analytic.ReflectedSpectrum.EllipticHyperbolicReflectionTrichotomy
 
 open D5.S3.Analytic.Adelic.ReflectedGrowthPairNegativeSquare
 
@@ -154,4 +154,4 @@ example :
 #print axioms hyperbolic_generator_det_neg_of_ne_zero
 #print axioms elliptic_generator_det_pos_of_ne_zero
 
-end D5.S3.Analytic.Adelic.EllipticHyperbolicReflectionTrichotomy
+end D5.S3.Analytic.ReflectedSpectrum.EllipticHyperbolicReflectionTrichotomy

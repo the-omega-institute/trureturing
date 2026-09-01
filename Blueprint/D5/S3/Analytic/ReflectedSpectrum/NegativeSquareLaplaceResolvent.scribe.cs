@@ -2,13 +2,13 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.Adelic;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.ReflectedSpectrum;
 
 internal sealed class NegativeSquareLaplaceResolventDocument
     : IScribeDocumentDefinition
 {
     private const string Prefix =
-        "D5/S3/Analytic/Adelic/NegativeSquareLaplaceResolvent.";
+        "D5/S3/Analytic/ReflectedSpectrum/NegativeSquareLaplaceResolvent.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A negative-square mode has an exact damping threshold and Laplace resolvent.",

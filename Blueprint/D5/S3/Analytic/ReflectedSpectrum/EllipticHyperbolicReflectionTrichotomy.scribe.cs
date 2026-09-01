@@ -2,13 +2,13 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.Adelic;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.ReflectedSpectrum;
 
 internal sealed class EllipticHyperbolicReflectionTrichotomyDocument
     : IScribeDocumentDefinition
 {
     private const string Prefix =
-        "D5/S3/Analytic/Adelic/EllipticHyperbolicReflectionTrichotomy.";
+        "D5/S3/Analytic/ReflectedSpectrum/EllipticHyperbolicReflectionTrichotomy.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Two-dimensional generators separate hyperbolic, neutral, and elliptic spectral "

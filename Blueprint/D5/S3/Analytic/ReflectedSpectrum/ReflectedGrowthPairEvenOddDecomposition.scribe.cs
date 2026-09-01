@@ -2,13 +2,13 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.Adelic;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.ReflectedSpectrum;
 
 internal sealed class ReflectedGrowthPairEvenOddDecompositionDocument
     : IScribeDocumentDefinition
 {
     private const string Prefix =
-        "D5/S3/Analytic/Adelic/ReflectedGrowthPairEvenOddDecomposition.";
+        "D5/S3/Analytic/ReflectedSpectrum/ReflectedGrowthPairEvenOddDecomposition.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Even and odd reflected channels separate invariant magnitude from time "

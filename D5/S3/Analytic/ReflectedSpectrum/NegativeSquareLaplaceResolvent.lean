@@ -1,6 +1,6 @@
-/- GID: D5/S3/Analytic/Adelic/NegativeSquareLaplaceResolvent
+/- GID: D5/S3/Analytic/ReflectedSpectrum/NegativeSquareLaplaceResolvent
    generality: G
-   mirror-B: D5/B/S3/Analytic/Adelic/NegativeSquareLaplaceResolvent
+   mirror-B: D5/B/S3/Analytic/ReflectedSpectrum/NegativeSquareLaplaceResolvent
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: A negative-square mode has an exact damping threshold and Laplace resolvent. -/
@@ -29,7 +29,7 @@ set_option relaxedAutoImplicit false
 
 noncomputable section
 
-namespace D5.S3.Analytic.Adelic.NegativeSquareLaplaceResolvent
+namespace D5.S3.Analytic.ReflectedSpectrum.NegativeSquareLaplaceResolvent
 
 open Set MeasureTheory
 open D5.S3.Analytic.Adelic.ReflectedGrowthPairNegativeSquare
@@ -173,4 +173,4 @@ example :
 #print axioms integral_damped_negative_square_kernel
 #print axioms negative_square_laplace_resolvent
 
-end D5.S3.Analytic.Adelic.NegativeSquareLaplaceResolvent
+end D5.S3.Analytic.ReflectedSpectrum.NegativeSquareLaplaceResolvent
