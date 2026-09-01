@@ -48,6 +48,7 @@ STOP = {"the","of","and","for","with","theorem","criterion","existence","lemma",
 # 2026-09-01 实测 formal-concept-dynamics 有 966 条因此被误滤, 其中含 ## 定义 431.3。
 PROP = re.compile(r'定理|命题|引理|推论|定义')
 MATHCMD = re.compile(r'\\[A-Za-z]{2,}')
+SELFGID = re.compile(r'^Lean GID.*?\n+`([^`]+)`', re.M | re.S)
 
 # 账目侧: origin/dev 上已有的形式化收据 (精确集合, 非启发式)
 try:
@@ -76,6 +77,14 @@ for y in sorted((R / "Meta/Digestion/backfill" / volume / "residual-open").glob(
     # \word 形式的 LaTeX 命令(\boxed \left \lceil \sum \log ...)是跨卷稳定的特征。
     math = sum(1 for l in lines if ('$' in l or MATHCMD.search(l)))
     if math < 6: continue
+    # 少数 atom 正文里直接写着 "Lean GID: `D5/...`" —— 那是作者自报的真源索引,
+    # 比任何关键词都精确。全仓仅 2 条(rh-research-lane-theory 的 Prime-side /
+    # Zero-side 真源), 但两条都会被关键词判成 CLEAN 而误派: prime-side 匹配不上
+    # 它自己写明的 PrimeSwapCurvature。
+    _gid = SELFGID.search(txt)
+    if _gid:
+        rows.append(("SELF-GID", math, len(lines), y.stem, title[:80], "", _gid.group(1)[:60]))
+        continue
     if y.stem in receipts:                            # 账目侧精确命中, 不必再猜
         rows.append(("DEPOSITED", math, len(lines), y.stem, title[:80], "", "receipt-on-dev"))
         continue
@@ -94,11 +103,13 @@ for y in sorted((R / "Meta/Digestion/backfill" / volume / "residual-open").glob(
     rows.append(("HIT" if hits else "CLEAN", math, len(lines), y.stem, title[:80],
                  ",".join(kws), ",".join(hits)))
 
-rows.sort(key=lambda r: ({"CLEAN":0,"UNKNOWN":1,"HIT":2,"DEPOSITED":3}[r[0]], -r[1]))
+rows.sort(key=lambda r: ({"CLEAN":0,"UNKNOWN":1,"HIT":2,"DEPOSITED":3,"SELF-GID":4}[r[0]], -r[1]))
 with open(out, "w", encoding="utf-8") as fh:
     fh.write("status\tmath\tlines\tatom_id\ttitle\tkeywords\thits\n")
     for r in rows: fh.write("\t".join(map(str, r)) + "\n")
-n = {k: sum(1 for r in rows if r[0] == k) for k in ("CLEAN", "UNKNOWN", "HIT", "DEPOSITED")}
+n = {k: sum(1 for r in rows if r[0] == k)
+     for k in ("CLEAN", "UNKNOWN", "HIT", "DEPOSITED", "SELF-GID")}
 print(f"DEDUP_OK clean={n['CLEAN']} unknown={n['UNKNOWN']} hit={n['HIT']} "
-      f"deposited={n['DEPOSITED']} corpus_names={len(names)} volume={volume}")
+      f"deposited={n['DEPOSITED']} self_gid={n['SELF-GID']} "
+      f"corpus_names={len(names)} volume={volume}")
 PY
