@@ -30,7 +30,7 @@ Mathlib closure operator on the inclusion order of readout families. -/
 def definitionClosureOperator {X Output : Type*} :
     ClosureOperator (Set (Concept X Output)) where
   toFun := DefinitionClosure
-  monotone' := definitionClosure_mono
+  monotone' := fun _ _ subset => definitionClosure_mono subset
   le_closure' := definitionClosure_extensive
   idempotent' := definitionClosure_idempotent
 
@@ -50,7 +50,7 @@ theorem isClosed_definitionClosureOperator_iff
 
 /-- The upstream closed-element carrier is definitionally the repository's
 semantically closed readout families. -/
-def ClosedDefinitionFamily (X Output : Type*) :=
+abbrev ClosedDefinitionFamily (X Output : Type*) :=
   (definitionClosureOperator (X := X) (Output := Output)).Closeds
 
 /-- Taking semantic closure produces a canonical closed family through the

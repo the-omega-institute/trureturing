@@ -30,18 +30,18 @@ def LinearFeasible
     (A : Constraint -> Variable -> ℚ) (b : Constraint -> ℚ)
     (x : Variable -> ℚ) : Prop :=
   forall constraint,
-    (∑ variable, A constraint variable * x variable) <= b constraint
+    (∑ column, A constraint column * x column) <= b constraint
 
 /-- A Farkas refutation uses nonnegative row weights, annihilates every primal
-variable coefficient, and gives a strictly negative weighted right-hand side. -/
+column coefficient, and gives a strictly negative weighted right-hand side. -/
 structure Certificate
     {Constraint Variable : Type*}
     [Fintype Constraint] [Fintype Variable]
     (A : Constraint -> Variable -> ℚ) (b : Constraint -> ℚ) where
   weight : Constraint -> ℚ
   nonnegative : forall constraint, 0 <= weight constraint
-  annihilates : forall variable,
-    (∑ constraint, weight constraint * A constraint variable) = 0
+  annihilates : forall column,
+    (∑ constraint, weight constraint * A constraint column) = 0
   negativeRhs : (∑ constraint, weight constraint * b constraint) < 0
 
 /-- Exact rational Farkas certificates rule out every feasible primal point. -/
@@ -54,40 +54,40 @@ theorem infeasible_of_certificate
   rintro ⟨x, feasible⟩
   have weighted (constraint : Constraint) :
       certificate.weight constraint *
-          (∑ variable, A constraint variable * x variable) <=
+          (∑ column, A constraint column * x column) <=
         certificate.weight constraint * b constraint :=
     mul_le_mul_of_nonneg_left (feasible constraint)
       (certificate.nonnegative constraint)
   have summed :
       (∑ constraint,
           certificate.weight constraint *
-            (∑ variable, A constraint variable * x variable)) <=
+            (∑ column, A constraint column * x column)) <=
         ∑ constraint, certificate.weight constraint * b constraint :=
     Finset.sum_le_sum fun constraint _ => weighted constraint
   have leftZero :
       (∑ constraint,
           certificate.weight constraint *
-            (∑ variable, A constraint variable * x variable)) = 0 := by
+            (∑ column, A constraint column * x column)) = 0 := by
     calc
       (∑ constraint,
           certificate.weight constraint *
-            (∑ variable, A constraint variable * x variable)) =
-          ∑ constraint, ∑ variable,
+            (∑ column, A constraint column * x column)) =
+          ∑ constraint, ∑ column,
             certificate.weight constraint *
-              (A constraint variable * x variable) := by
+              (A constraint column * x column) := by
         apply Finset.sum_congr rfl
         intro constraint _
         rw [Finset.mul_sum]
-      _ = ∑ variable, ∑ constraint,
+      _ = ∑ column, ∑ constraint,
             certificate.weight constraint *
-              (A constraint variable * x variable) := by
+              (A constraint column * x column) := by
         rw [Finset.sum_comm]
-      _ = ∑ variable,
+      _ = ∑ column,
             (∑ constraint,
-              certificate.weight constraint * A constraint variable) *
-                x variable := by
+              certificate.weight constraint * A constraint column) *
+                x column := by
         apply Finset.sum_congr rfl
-        intro variable _
+        intro column _
         rw [Finset.sum_mul]
         apply Finset.sum_congr rfl
         intro constraint _

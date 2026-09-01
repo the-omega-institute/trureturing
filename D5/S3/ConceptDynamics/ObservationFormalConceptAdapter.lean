@@ -30,20 +30,21 @@ universe u v
 
 /-- Explicit terminology for the repository's function-valued concept
 primitive when it is used as an observation map. -/
-abbrev Readout (X : Type u) (Output : Type v) := Concept X Output
+abbrev Readout (X : Type u) (Output : Type v) :=
+  ConceptFiberDecomposition.Concept X Output
 
-/-- An attribute records one readout from the family together with one possible
+/-- An trait records one readout from the family together with one possible
 output value. -/
 def ObservationAttribute {X : Type u} {Output : Type v}
     (Gamma : Set (Readout X Output)) :=
   Sigma fun _definition : Gamma => Output
 
-/-- A state has the attribute `(q, value)` exactly when `q` reads that value on
+/-- A state has the trait `(q, value)` exactly when `q` reads that value on
 the state. -/
 def observationIncidence {X : Type u} {Output : Type v}
     (Gamma : Set (Readout X Output))
-    (state : X) (attribute : ObservationAttribute Gamma) : Prop :=
-  attribute.1.1 state = attribute.2
+    (state : X) (trait : ObservationAttribute Gamma) : Prop :=
+  trait.1.1 state = trait.2
 
 /-- Mathlib's formal-concept extent closure of a singleton state is exactly the
 equivalence class left indistinguishable by the complete readout family. -/
@@ -62,24 +63,25 @@ theorem extentClosure_singleton_eq_jointKernel_class
       (state, other) ∈
         jointKernel (fun definition : Gamma => definition.1)
   constructor
-  · intro closed definition
-    change definition.1 state = definition.1 other
-    let attribute : ObservationAttribute Gamma :=
+  · intro closed
+    refine Set.mem_iInter.mpr fun definition => ?_
+    show definition.1 state = definition.1 other
+    let trait : ObservationAttribute Gamma :=
       ⟨definition, definition.1 state⟩
     have attributeOfState :
-        attribute ∈
+        trait ∈
           upperPolar (observationIncidence Gamma) ({state} : Set X) := by
       intro point pointMem
       have pointEq : point = state := Set.mem_singleton_iff.mp pointMem
       subst point
       rfl
     exact (closed attributeOfState).symm
-  · intro sameReadouts attribute attributeOfState
-    have atState : observationIncidence Gamma state attribute :=
+  · intro sameReadouts trait attributeOfState
+    have atState : observationIncidence Gamma state trait :=
       attributeOfState (by simp)
     have sameForAttribute :
-        attribute.1.1 state = attribute.1.1 other := by
-      exact Set.mem_iInter.1 sameReadouts attribute.1
+        trait.1.1 state = trait.1.1 other := by
+      exact Set.mem_iInter.1 sameReadouts trait.1
     unfold observationIncidence at atState ⊢
     exact sameForAttribute.symm.trans atState
 

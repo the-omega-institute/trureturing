@@ -82,15 +82,15 @@ structure DistinguishingFamily
     {Alphabet : Type u} {Output : Type v}
     (domain : Set (List Alphabet)) (target : List Alphabet -> Output)
     (Index : Type z) where
-  prefix : Index -> List Alphabet
+  witnessPrefix : Index -> List Alphabet
   continuation : Index -> Index -> List Alphabet
   left_mem : forall ⦃i j⦄, i ≠ j ->
-    prefix i ++ continuation i j ∈ domain
+    witnessPrefix i ++ continuation i j ∈ domain
   right_mem : forall ⦃i j⦄, i ≠ j ->
-    prefix j ++ continuation i j ∈ domain
+    witnessPrefix j ++ continuation i j ∈ domain
   target_ne : forall ⦃i j⦄, i ≠ j ->
-    target (prefix i ++ continuation i j) ≠
-      target (prefix j ++ continuation i j)
+    target (witnessPrefix i ++ continuation i j) ≠
+      target (witnessPrefix j ++ continuation i j)
 
 /-- Any DFAO correct on the certified domain has at least as many states as
 the finite distinguishing family has indices. -/
@@ -103,45 +103,46 @@ theorem state_lower_bound_of_distinguishing_family
     (correct : machine.CorrectOn domain target) :
     Fintype.card Index <= Fintype.card State := by
   refine Fintype.card_le_of_injective
-    (fun i : Index => machine.toDFA.eval (certificate.prefix i)) ?_
+    (fun i : Index => machine.toDFA.eval (certificate.witnessPrefix i)) ?_
   intro i j sameState
   by_contra distinct
   have leftCorrect :
       machine.evalOutput
-          (certificate.prefix i ++ certificate.continuation i j) =
-        target (certificate.prefix i ++ certificate.continuation i j) :=
+          (certificate.witnessPrefix i ++ certificate.continuation i j) =
+        target (certificate.witnessPrefix i ++ certificate.continuation i j) :=
     correct (certificate.left_mem distinct)
   have rightCorrect :
       machine.evalOutput
-          (certificate.prefix j ++ certificate.continuation i j) =
-        target (certificate.prefix j ++ certificate.continuation i j) :=
+          (certificate.witnessPrefix j ++ certificate.continuation i j) =
+        target (certificate.witnessPrefix j ++ certificate.continuation i j) :=
     correct (certificate.right_mem distinct)
   apply certificate.target_ne distinct
   calc
-    target (certificate.prefix i ++ certificate.continuation i j) =
+    target (certificate.witnessPrefix i ++ certificate.continuation i j) =
         machine.evalOutput
-          (certificate.prefix i ++ certificate.continuation i j) :=
+          (certificate.witnessPrefix i ++ certificate.continuation i j) :=
       leftCorrect.symm
     _ = machine.evalOutput
-          (certificate.prefix j ++ certificate.continuation i j) := by
+          (certificate.witnessPrefix j ++ certificate.continuation i j) := by
       unfold DFAO.evalOutput
       apply congrArg machine.output
       change
         machine.toDFA.evalFrom machine.toDFA.start
-            (certificate.prefix i ++ certificate.continuation i j) =
+            (certificate.witnessPrefix i ++ certificate.continuation i j) =
           machine.toDFA.evalFrom machine.toDFA.start
-            (certificate.prefix j ++ certificate.continuation i j)
+            (certificate.witnessPrefix j ++ certificate.continuation i j)
       rw [machine.toDFA.evalFrom_of_append,
         machine.toDFA.evalFrom_of_append]
       change
         machine.toDFA.evalFrom
-            (machine.toDFA.eval (certificate.prefix i))
+            (machine.toDFA.eval (certificate.witnessPrefix i))
             (certificate.continuation i j) =
           machine.toDFA.evalFrom
-            (machine.toDFA.eval (certificate.prefix j))
+            (machine.toDFA.eval (certificate.witnessPrefix j))
             (certificate.continuation i j)
-      rw [sameState]
-    _ = target (certificate.prefix j ++ certificate.continuation i j) :=
+      exact congrArg
+        (machine.toDFA.evalFrom · (certificate.continuation i j)) sameState
+    _ = target (certificate.witnessPrefix j ++ certificate.continuation i j) :=
       rightCorrect
 
 /-- A globally correct finite-state DFAO induces only finitely many upstream
@@ -152,9 +153,11 @@ theorem finite_leftQuotients_of_finite_dfao
     (target : List Alphabet -> Output) (accepted : Set Output)
     (correct : forall word, machine.evalOutput word = target word) :
     (Set.range
-      ({word | target word ∈ accepted} : Language Alphabet).leftQuotient).Finite := by
+      (Language.leftQuotient
+        ({word | target word ∈ accepted} : Language Alphabet))).Finite := by
   have regular :
-      ({word | target word ∈ accepted} : Language Alphabet).IsRegular := by
+      Language.IsRegular
+        ({word | target word ∈ accepted} : Language Alphabet) := by
     rw [← machine.accepts_acceptBy_eq_of_correct_everywhere
       target accepted correct]
     exact Language.isRegular_iff.mpr
