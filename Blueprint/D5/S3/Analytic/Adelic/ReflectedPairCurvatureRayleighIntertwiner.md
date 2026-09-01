@@ -2,7 +2,7 @@
 
 ## Abstract
 
-The frozen off-line curvature dipole is the normalized even-channel quadratic readout of a canonical two-dimensional reflected generator.
+Realize the off-line curvature dipole as a normalized even-channel quadratic readout.
 
 **Definition 1.1 (The detuned reflected generator).**
 
@@ -78,7 +78,7 @@ Zero splitting selects the zero one-point kernel. Every nonzero split selects th
 
 **Theorem 1.7 (The normalized readout is the rational dipole profile).**
 
-$$\forall delta: \mathbb{R}, tau: \mathbb{R}, \operatorname{normalizedCurvatureRayleighReadout}(delta, tau) = 2 \cdot \frac{(tau^{2} - delta^{2})}{((tau^{2} + delta^{2})^{2})}.$$
+$$\forall delta: \mathbb{R}, tau: \mathbb{R}, \operatorname{normalizedCurvatureRayleighReadout}(delta, tau) = 2 \cdot \frac{{tau^{2} - delta^{2}}}{{{tau^{2} + delta^{2}}^{2}}}.$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Adelic/ReflectedPairCurvatureRayleighIntertwiner.normalized_curvature_rayleigh_readout_formula` (`✓ std3`). ∎
 
@@ -154,4 +154,3 @@ Multiplying the center readout by delta squared over two yields zero on the unit
 - Dependency: [D5/S3/Quantum/FiniteDimensional](../../Quantum/FiniteDimensional.md)
 - Dependency: [D5/S3/Weil/Pick/HermitianKernelNegativeSquares](../../Weil/Pick/HermitianKernelNegativeSquares.md)
 - Dependency: [D5/S3/Weil/ZetaLinear/OfflineZeroGeometricMonodromy](../../Weil/ZetaLinear/OfflineZeroGeometricMonodromy.md)
-- Dependency: [D5/S3/Weil/ZetaLinear/Sylvester](../../Weil/ZetaLinear/Sylvester.md)
