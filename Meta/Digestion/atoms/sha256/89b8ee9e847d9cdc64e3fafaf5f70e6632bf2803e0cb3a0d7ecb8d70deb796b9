@@ -1,0 +1,8 @@
+\[
+\chi_\omega(t+u)
+=
+\chi_\omega(t)\chi_\omega(u).
+\]
+
+所以 Fourier 对偶已经给出严格的谱时间。
+

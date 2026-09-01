@@ -1,0 +1,18 @@
+\[
+\prod_{j=1}^n\chi_{\omega_j}(t)
+=
+\chi_{\sum_j\omega_j}(t).
+\]
+
+因此标量 Fourier 层仍然遗忘列表次序。谱时间已经存在，操作 chronology 尚未被标量层读取。
+
+`PhaseTwistedStableSwapCurvature` 将 Fourier 相位乘到记忆通道：
+
+\[
+v_p(t)=\chi_{\omega_p}(t)v_p.
+\]
+
+由于相位模长为一，已有 residual 曲率界和有限能量上界对 \(t\) 一致成立。
+
+---
+

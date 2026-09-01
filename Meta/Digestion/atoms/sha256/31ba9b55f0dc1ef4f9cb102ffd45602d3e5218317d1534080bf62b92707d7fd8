@@ -1,0 +1,39 @@
+# 9. 本轮严格非主张
+
+本轮不主张：
+
+- event list 已按实数时间排序；
+- Fourier 时间具有不可逆方向；
+- extraction depth 等于物理时间；
+- time-ordered exponential 已经构造；
+- Magnus expansion 已经形式化；
+- residual envelope 已经随抽取深度趋零；
+- 无限 prime holonomy energy 已经存在；
+- prime-side cocycle 已经支配 zero-side odd energy；
+- 离线零点已经被排除；
+- RH 已经证明。
+
+本轮候选机器增量精确到：
+
+\[
+\boxed{
+\text{Fourier-timed local events}
+\longrightarrow
+\text{finite affine word action}
+\longrightarrow
+\text{twisted append cocycle}
+\longrightarrow
+\text{two-event prime swap curvature}.
+}
+\]
+
+最凝练的理论结论是：
+
+\[
+\boxed{
+\text{Fourier 对偶给出谱时间，事件列表给出操作 chronology，记忆 cocycle 将二者耦合并保存顺序。}
+}
+\]
+
+---
+

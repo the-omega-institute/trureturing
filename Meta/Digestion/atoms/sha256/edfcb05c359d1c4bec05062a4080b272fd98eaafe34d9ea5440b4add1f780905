@@ -1,0 +1,4 @@
+## 3.5 拼接律是真正的 cocycle 结构
+
+设先执行 prefix \(u\)，再执行 suffix \(v\)。候选 Lean 定理证明：
+

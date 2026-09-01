@@ -1,0 +1,9 @@
+\[
+K_{p,q}(t_1,t_2)
+=
+v_{p,q}(t_1)\wedge v_{p,q}(t_2)
+\in\Lambda^2\mathbb C^2.
+\]
+
+\(K=0\) 是 evaluation map 的 rank-drop locus，\(K\ne0\) 表示两个时间切片张成有向二维单元。当前只获得 exterior-algebra 与 rank-locus 结构。尚未构造 coboundary、cohomology class、Chern class 或全局 bundle invariant。
+

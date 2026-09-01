@@ -1,0 +1,20 @@
+## 0.1 已冻结机器事实
+
+只有已经进入对应 Lean GID，并通过仓库 admission 的声明，才可以作为后续推理的无条件前提。
+
+当前与黄金素数记忆、色散和 RH 路线直接相关的已冻结节点包括：
+
+- `D5/S3/Observer/AgencyHolonomy/PrimeSwapCurvature`
+- `D5/S3/Observer/AgencyHolonomy/StableResidualSwapCurvatureBound`
+- `D5/S3/Observer/AgencyHolonomy/FiniteHolonomyEnergy`
+- `D5/S3/Observer/AgencyHolonomy/PrimeFrequencyPhaseFlow`
+- `D5/S3/Observer/AgencyHolonomy/PhaseTwistedStableSwapCurvature`
+- `D5/S3/Weil/HolonomyBridge/OffLineOrbitParityDecomposition`
+- `D5/S3/Analytic/Boundary/InteriorCurvatureCriterion`
+
+本轮候选节点为：
+
+- `D5/S3/Observer/AgencyHolonomy/TimeOrderedPrimeMemoryCocycle`
+
+在该候选通过 canonical Lean report 和 content-addressed admission 以前，本节新增结论仍应标为 candidate truth。
+

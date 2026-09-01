@@ -1,0 +1,22 @@
+### 1.1 反例检测桥
+
+目标是证明：
+
+\[
+\neg\mathrm{RH}
+\Longrightarrow
+\exists\text{ finite certified negative witness}.
+\]
+
+候选观察图表包括：
+
+- Cayley/Li 矩；
+- Toeplitz 最小特征值；
+- Pick negative square；
+- normal jet；
+- signed normal support；
+- Chebyshev 负支撑分离器；
+- Weil 紧支撑测试函数。
+
+检测桥只说明离线零点最终可见。它不解释素数侧为何排除该离线零点。
+

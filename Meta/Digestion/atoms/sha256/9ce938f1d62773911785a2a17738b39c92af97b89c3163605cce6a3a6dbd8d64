@@ -1,0 +1,22 @@
+\[
+e^{-ut}e^{-xt}
+=
+e^{-(u-\delta^2)t}
+\]
+
+在正半轴可积，需要：
+
+\[
+\boxed{u>\delta^2.}
+\]
+
+因此可以定义候选稳定化债务：
+
+\[
+\operatorname{StabilizationDebt}(-\delta^2)=\delta^2.
+\]
+
+这一结论的积分、可积性当且仅当条件和 resolvent 极点仍需独立 Lean 真源。
+
+---
+

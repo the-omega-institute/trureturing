@@ -1,0 +1,47 @@
+\[
+\mathcal E_P^{\mathrm{hol}}
+=
+\sum_{p\in P}\sum_{q\in P}
+\|C_{p,q}\|^2.
+\]
+
+`FiniteHolonomyEnergy` 已证明：
+
+\[
+\mathcal E_P^{\mathrm{hol}}\ge0,
+\]
+
+\[
+\mathcal E_P^{\mathrm{hol}}=0
+\iff
+C_{p,q}=0
+\quad\forall p,q\in P,
+\]
+
+以及在 \(|P|=M\) 和共同 residual envelope 下：
+
+\[
+\boxed{
+\mathcal E_P^{\mathrm{hol}}
+\le
+M^2
+\left(
+2\|a-1\|\varepsilon+2\varepsilon^2
+\right)^2.
+}
+\]
+
+这使 prime-side 最短链条成为：
+
+\[
+\boxed{
+\text{uniform residual decay}
+\Longrightarrow
+\text{pairwise curvature decay}
+\Longrightarrow
+\text{finite holonomy energy decay}.
+}
+\]
+
+---
+

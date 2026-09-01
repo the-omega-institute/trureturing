@@ -1,0 +1,22 @@
+\[
+I(\delta,t)
+=
+\left|
+\xi\left(\frac12+\delta+it\right)
+\right|^2
+\]
+
+构造偶阶 Taylor 系数，并机器证明前若干 normal jet 的导数公式。
+
+本轮二阶真源说明了一个局部模型：反射增长率 \(\pm\delta\) 的方向信息在对称和中消失，而平方大小 \(\delta^2\) 在二阶读出中出现。
+
+仍缺少的精确桥是：
+
+\[
+\boxed{
+\texttt{OffLineCurvatureModeIntertwiner}
+}
+\]
+
+它应把 phase-flattened reflected zero mode 的二阶对数曲率与已有离线曲率 dipole：
+
