@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:ec9ce3e26e822ac3f10f187fec146561812d304569d69b17b3f7ddd477589554
+  normalized_sha256: sha256:ec9ce3e26e822ac3f10f187fec146561812d304569d69b17b3f7ddd477589554
+cas_ref: sha256:ec9ce3e26e822ac3f10f187fec146561812d304569d69b17b3f7ddd477589554
+coverage_gids:
+  - D5/S3/Estimation/DecisionRisk/DescentDefectBounds.postprocessed_descent_defect_le
+receipts:
+  coverage:
+    - gid: D5/S3/Estimation/DecisionRisk/DescentDefectBounds.postprocessed_descent_defect_le
+      source_sha256: sha256:ec9ce3e26e822ac3f10f187fec146561812d304569d69b17b3f7ddd477589554
+      target_statement_id: sha256:d793c855dd1c736579eb8691660aa1f996acfc4fe548f4e0175554146ad18007
+  scribe:
+    - gid: D5/S3/Estimation/DecisionRisk/DescentDefectBounds.postprocessed_descent_defect_le
+      definition_sha256: sha256:6b7ae8c31234e61699db9db8f527364ad89a022441c51e22f42add01ab3ff4f0
+      emission_sha256: sha256:41ff9feb9927b21dd43a9fd5f2fb322d05e55c0f6104af815bba26027cc6b152
+  unresolved_subitems: []
