@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:216d1d5bdb284c187a175b57c3d23f3137c78fb580eae886a448bb0242a3e417
+  normalized_sha256: sha256:216d1d5bdb284c187a175b57c3d23f3137c78fb580eae886a448bb0242a3e417
+cas_ref: sha256:216d1d5bdb284c187a175b57c3d23f3137c78fb580eae886a448bb0242a3e417
+coverage_gids:
+  - D5/S3/ConceptDynamics/Communication/ExpressiveReportingCountermodel.expressive_report_space_does_not_force_truthful_revelation
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Communication/ExpressiveReportingCountermodel.expressive_report_space_does_not_force_truthful_revelation
+      source_sha256: sha256:216d1d5bdb284c187a175b57c3d23f3137c78fb580eae886a448bb0242a3e417
+      target_statement_id: sha256:1f5e8b1e837f9a4b8ee174a9f09674cc05c75708d5cec8c447a5fa7392e540d7
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Communication/ExpressiveReportingCountermodel.expressive_report_space_does_not_force_truthful_revelation
+      definition_sha256: sha256:7d7744921f21353982bfa4bb85d9923b170faa631608a92a1f8589f5083cc52a
+      emission_sha256: sha256:7a394af80bcf0e94bad0b59e97ac183dbf861871241c87b3bf4278a0e80c2f34
+  unresolved_subitems: []
