@@ -1,0 +1,21 @@
+## 1450.1 算子值完成比标量 zeta 更接近“道”
+
+若：
+
+$$
+\mathcal L_s
+$$
+
+是完整 transfer operator，则：
+
+$$
+\boxed{
+\mathbb Z(s)
+=
+(I-\mathcal L_s)^{-1}
+}
+$$
+
+保留：
+
+* 特征向量；

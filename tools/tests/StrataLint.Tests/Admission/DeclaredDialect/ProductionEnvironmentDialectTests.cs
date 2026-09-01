@@ -29,7 +29,7 @@ public sealed partial class ProductionEnvironmentTests
             WithProbeDialect(fixture.Files[TheoryAtomizerDataLoader.DataPath]);
         var rules = TheoryAtomizerDataLoader.Load(fixture.Build().Current);
         var oldAtom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, oldBytes, rules).Claims);
-        Assert.Equal("proposition/1.1", oldAtom.AstPath);
+        Assert.Matches("^sha256:[0-9a-f]{64}$", oldAtom.Fingerprints.RawSha256);
 
         fixture.Files[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes);
         fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(oldBytes);
@@ -56,9 +56,14 @@ public sealed partial class ProductionEnvironmentTests
         var written = BackfillInventoryLoader.LoadRoot(temporary.Path);
         var source = Assert.Single(written.RequireDigestionSources());
         Assert.Equal(atomizerId, source.Atomizer);
-        Assert.Contains(
-            source.Entries,
-            entry => entry.AstPath == "observation/2.3.4");
+        var currentAtoms = AtomizerRegistry.Atomize(atomizerId, currentBytes, rules).Claims;
+        Assert.Equal(
+            currentAtoms
+                .Append(oldAtom)
+                .Select(static atom => atom.Fingerprints.RawSha256)
+                .Distinct(StringComparer.Ordinal)
+                .Order(StringComparer.Ordinal),
+            source.Entries.Select(static entry => entry.Fingerprints.RawSha256).Order(StringComparer.Ordinal));
     }
 
     /// <summary>A declared dialect is refused before use when its id resolves to nothing.</summary>

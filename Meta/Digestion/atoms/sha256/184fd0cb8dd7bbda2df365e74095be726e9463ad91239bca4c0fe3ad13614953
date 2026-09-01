@@ -1,0 +1,72 @@
+# 第一千四百七十三部　建议形式化顺序
+
+```text
+D5/S3/ConceptDynamics/NamingNoGo/
+  ConnectedToDiscreteContinuousConstant.lean
+  NontrivialDiscreteNameRequiresCut.lean
+  TransitiveInvariantNameConstant.lean
+  NoNaturalNontrivialName.lean
+
+D5/S3/ConceptDynamics/NamingCut/
+  ConceptAsPartition.lean
+  ConceptComplementDual.lean
+  ConceptBoundary.lean
+  FlowCrossingConceptBoundary.lean
+  ConceptEventAsBoundaryCrossing.lean
+
+D5/S3/ConceptDynamics/NamingFiltration/
+  NamingSigmaAlgebra.lean
+  NamingRefinementFiltration.lean
+  NamedConditionalProjection.lean
+  UnnamedOrthogonalResidual.lean
+  NamingInnovation.lean
+  NoFiniteStageExhaustion.lean
+
+D5/S3/ConceptDynamics/NoTerminalName/
+  NamingInterfaceCategory.lean
+  NamingRefinementMorphism.lean
+  TerminalName.lean
+  EveryNameHasBlindRefinement.lean
+  NoTerminalNamingInterfaceTarget.lean
+
+D5/S3/ConceptDynamics/ShadowLimit/
+  CompatibleFiniteNames.lean
+  NamingInverseLimit.lean
+  ShadowLimitProjection.lean
+  ShadowLimitDependsOnProtocol.lean
+  ShadowLimitIsNotCanonicalSource.lean
+
+D5/S3/ConceptDynamics/MetaNamingTower/
+  ObjectLanguage.lean
+  MetaNamingLanguage.lean
+  NamingLanguageExtension.lean
+  NoFiniteMetaClosure.lean
+  InternalDaoSymbolIsStillName.lean
+
+D5/S3/GoldenObserver/NamingInterface/
+  BinaryRecursiveNaming.lean
+  FirstHiddenShadow.lean
+  SecondHiddenShadow.lean
+  VisibleEqualsSecondShadow.lean
+  GoldenInterfaceFixedRatio.lean
+  GoldenRatioNotUniversalWithoutHypotheses.lean
+
+D5/S3/Analytic/Zeta/OrbitwiseSelfDuality/
+  XiAntilinearReflection.lean
+  CriticalLineFixedLocus.lean
+  ZeroDivisorReflectionInvariant.lean
+  PointwiseSelfDualZero.lean
+  OrbitwiseSelfDualPair.lean
+  RHPointwiseSelfDualityCriterion.lean
+
+D5/S3/Analytic/Zeta/CompletionNoncommutation/
+  ArithmeticSpectralCompletion.lean
+  ArithmeticCausalCompletion.lean
+  PositiveCausalLift.lean
+  CompletionCommutationSquare.lean
+  OffLineZeroAsLiftObstruction.lean
+  FiniteWitnessOfCompletionFailure.lean
+```
+
+---
+

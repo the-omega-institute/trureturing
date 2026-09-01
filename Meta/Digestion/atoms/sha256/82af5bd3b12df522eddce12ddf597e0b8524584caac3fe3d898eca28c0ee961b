@@ -1,0 +1,51 @@
+## 1346.1 黄金红移的条件性热律
+
+若采用：
+
+$$
+\kappa=\chi_\varphi=2\log\varphi,
+$$
+
+则：
+
+$$
+\boxed{
+\frac{|\beta_E|^2}{|\alpha_E|^2}
+=
+\exp\left(
+-\frac{\pi E}{\log\varphi}
+\right),
+}
+\tag{1346.5}
+$$
+
+并有候选 Planck 分布：
+
+$$
+\boxed{
+N_\varphi(E)
+=
+\frac1{
+\exp\left(
+\pi E/\log\varphi
+\right)-1
+}.
+}
+\tag{1346.6}
+$$
+
+这是一条由**黄金指数坐标映射**推出的严格热律。
+
+但它不是由 \(\zeta\) 或 RH 自动推出的。
+
+必须先证明：
+
+$$
+\boxed{
+\text{项目的黄金层指标确实是外部时间，
+而 }\omega\text{ 确实是 affine horizon coordinate}.
+}
+$$
+
+---
+

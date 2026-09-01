@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:8dbd08acac9506db0cbf45f428faaff35ae609386dc0f65b3a3f5719a9a91669
+  normalized_sha256: sha256:8dbd08acac9506db0cbf45f428faaff35ae609386dc0f65b3a3f5719a9a91669
+cas_ref: sha256:8dbd08acac9506db0cbf45f428faaff35ae609386dc0f65b3a3f5719a9a91669
+coverage_gids:
+  - D5/S3/Fourier/WindowDiffraction.golden_window_fourier_amplitude
+receipts:
+  coverage:
+    - gid: D5/S3/Fourier/WindowDiffraction.golden_window_fourier_amplitude
+      source_sha256: sha256:8dbd08acac9506db0cbf45f428faaff35ae609386dc0f65b3a3f5719a9a91669
+      target_statement_id: sha256:5ca98055eb468c7b3a914369618240defc77b6c97e721968a5851d4d0046597b
+  scribe:
+    - gid: D5/S3/Fourier/WindowDiffraction.golden_window_fourier_amplitude
+      definition_sha256: sha256:ee0cf527b3e64a05ccbf9aed7384ef457372962d95f9688f5edd656ea93af459
+      emission_sha256: sha256:1ba53827514178e141cca90e8ee0fd3b5decf7c32774c5d21611be6d070e6921
+  unresolved_subitems: []

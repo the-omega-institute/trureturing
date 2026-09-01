@@ -19,8 +19,6 @@ internal static partial class RepositoryRules
     {
         None,
         Entry,
-        Boundary,
-        Address,
         HostedExtensions,
         HostedExtension,
         HostedExtensionGid,
@@ -237,7 +235,6 @@ internal static partial class RepositoryRules
             "\\\\u([0-9a-fA-F]{4})",
             static match => ((char)Convert.ToInt32(match.Groups[1].Value, 16)).ToString());
         if ((AnomalyBearingPattern.IsMatch(unescaped)
-                && !IsAddressShapedResidueAtDeclaredSlot(path, slot, unescaped)
                 && !IsSignatureNameKeyResidueAtDeclaredSlot(path, slot, unescaped)
                 && !IsDeclarationGidResidueAtDeclaredSlot(path, slot, unescaped)
                 && !IsStatementEncodingResidueAtDeclaredSlot(path, slot, unescaped))
@@ -247,17 +244,9 @@ internal static partial class RepositoryRules
         }
     }
 
-    /// <summary>
-    /// Advances the structural position by one property name. Reading the position from the
-    /// rendered location would not work: a property name is written there without escaping, so a
-    /// key literally called <c>boundary.ast_path</c> and a real nesting of <c>boundary</c> over
-    /// <c>ast_path</c> render alike. Only the descent tells them apart.
-    /// </summary>
+    /// <summary>Advances the structural position by one property name.</summary>
     private static AddressSlot ChildSlot(AddressSlot slot, string name) => (slot, name) switch
     {
-        (AddressSlot.Entry, "ast_path") => AddressSlot.Address,
-        (AddressSlot.Entry, "boundary") => AddressSlot.Boundary,
-        (AddressSlot.Boundary, "ast_path") => AddressSlot.Address,
         (AddressSlot.Entry, "hosted_extensions") => AddressSlot.HostedExtensions,
         (AddressSlot.Entry, "precommitted_signature") => AddressSlot.Signature,
         (AddressSlot.Entry, "primary_gid") => AddressSlot.PrimaryGid,
@@ -280,39 +269,6 @@ internal static partial class RepositoryRules
         AddressSlot.ReceiptList => AddressSlot.ReceiptEntry,
         _ => AddressSlot.None,
     };
-
-    /// <summary>
-    /// Tests whether the residue matches the exemption: the path is one the inventory loader
-    /// recognises, the descent reached the address slot, and the value is shaped as an address —
-    /// free of whitespace and two or more non-empty segments joined by <c>/</c>. It establishes
-    /// those three facts and nothing beyond them; it does not parse the record, and it does not
-    /// show that any entry was declared or loaded.
-    ///
-    /// No condition is redundant. Without the path, a stray key of the same name in any governed
-    /// artifact would be exempt. Without the slot, a dotted key and any nesting depth would be.
-    /// Without the shape, a prose report written into the address field would be.
-    ///
-    /// Two limits are worth stating. <c>IsCanonicalPath</c> also recognises a source manifest,
-    /// which is TOML and so never reaches this scan, but the predicate does not itself exclude it.
-    /// And the shape is what the addresses on record look like rather than a grammar the schema
-    /// states, so an adapter that one day emits a single-segment address would meet a false
-    /// positive here and this condition would have to follow the schema. The two boundary layouts
-    /// are mutually exclusive by the ledger schema, which is checked elsewhere; nothing here
-    /// establishes that exclusivity.
-    ///
-    /// The serialized record test beside this one is a separate disjunct and is unaffected.
-    /// </summary>
-    private static bool IsAddressShapedResidueAtDeclaredSlot(
-        string path,
-        AddressSlot slot,
-        string residue)
-    {
-        if (!BackfillInventoryLoader.IsCanonicalPath(path)) return false;
-        if (slot != AddressSlot.Address) return false;
-        if (residue.Any(char.IsWhiteSpace)) return false;
-        var segments = residue.Split('/');
-        return segments.Length >= 2 && segments.All(segment => segment.Length > 0);
-    }
 
     /// <summary>
     /// Tests whether the residue matches the signature-name exemption: the path is a canonical

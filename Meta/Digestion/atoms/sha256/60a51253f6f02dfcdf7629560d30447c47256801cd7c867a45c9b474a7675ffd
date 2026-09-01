@@ -1,0 +1,100 @@
+# 1. Prime-side 真源
+
+Lean GID：
+
+`D5/S3/Observer/AgencyHolonomy/PrimeSwapCurvature`
+
+主声明：
+
+`D5.S3.Observer.AgencyHolonomy.PrimeSwapCurvature.prime_swap_curvature_spec`
+
+将 Fibonacci 记忆投影到稳定通道。记稳定乘子、局部标量因子和局部记忆注入为
+
+\[
+a=-\varphi^{-1},
+\qquad
+\lambda_p=L_p^{\langle r\rangle}(s),
+\qquad
+b_p=b_{r,p}^{-}(s).
+\]
+
+抽象局部更新为
+
+\[
+U_p(x,z)=(ax+b_pz,\lambda_pz).
+\]
+
+两个更新顺序的标量坐标相同。记忆坐标之差为
+
+\[
+\boxed{
+C_{p,q}z,
+}
+\]
+
+其中
+
+\[
+\boxed{
+C_{p,q}
+=(a-\lambda_q)b_p-(a-\lambda_p)b_q.
+}
+\]
+
+Lean 证明
+
+\[
+C_{q,p}=-C_{p,q}.
+\]
+
+改变共同记忆原点 \(c\) 时，局部注入按
+
+\[
+b_p\mapsto b_p+(a-\lambda_p)c
+\]
+
+变化，而 \(C_{p,q}\) 保持不变。因此单个 \(b_p\) 依赖观察坐标，交换曲率是规范不变量。
+
+在非共振条件
+
+\[
+a-\lambda_p\ne0,
+\qquad
+a-\lambda_q\ne0
+\]
+
+下，定义局部观察起源估计
+
+\[
+c_p=\frac{b_p}{a-\lambda_p}.
+\]
+
+Lean 证明精确因子分解
+
+\[
+\boxed{
+C_{p,q}
+=(a-\lambda_p)(a-\lambda_q)(c_p-c_q),
+}
+\]
+
+以及
+
+\[
+\boxed{
+C_{p,q}=0
+\iff
+c_p=c_q.
+}
+\]
+
+所以共同 archive 可以保留。若全部局部注入来自同一个 coboundary 原点
+
+\[
+b_p=(a-\lambda_p)c,
+\]
+
+则顺序 holonomy 已经消失。
+
+---
+

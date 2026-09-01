@@ -1,0 +1,26 @@
+# 第一千一百一十七部　为什么必须从 rational Solenoid 升级到 golden-field Solenoid
+
+有一个必须明确的科学限制：
+
+$$
+\boxed{
+\widehat{\Sigma_{\mathbb Q}}=\mathbb Q.
+}
+$$
+
+但：
+
+$$
+\boxed{
+\varphi\notin\mathbb Q.
+}
+$$
+
+所以 \(\varphi\) 本身不可能是 rational universal solenoid 的 Pontryagin character。
+
+若只在仓库当前 universal solenoid 上把 \(\varphi\) 当作 character frequency，会发生类型错误。
+
+这里存在两种完全不同的“黄金 Solenoid”。
+
+---
+

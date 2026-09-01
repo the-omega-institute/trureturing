@@ -1,0 +1,16 @@
+### 1. 二阶谱节点
+
+对径向模式应形式化
+
+$$
+\frac{d^2}{dt^2}R_rho(t)=delta(rho)^2R_rho(t),
+$$
+
+从而
+
+$$
+-\frac{d^2}{dt^2}R_rho(t)=-delta(rho)^2R_rho(t).
+$$
+
+这会把有符号行列式 `-delta^2` 升级为实际二阶算子的负谱值，并连接 normal jet。
+

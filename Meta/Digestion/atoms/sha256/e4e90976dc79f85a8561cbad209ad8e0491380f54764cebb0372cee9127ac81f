@@ -1,0 +1,50 @@
+\[
+G_\delta(t)
+=
+\left(e^{\delta t},e^{-\delta t}\right).
+\]
+
+已经机器证明：
+
+\[
+G_\delta(-t)=\operatorname{swap}G_\delta(t),
+\]
+
+\[
+e^{\delta t}e^{-\delta t}=1,
+\]
+
+以及生成率对 \((\delta,-\delta)\) 满足：
+
+\[
+\operatorname{tr}=0,
+\qquad
+\det=-\delta^2.
+\]
+
+这里的 \(-\delta^2\) 是反射生成元的**有符号行列式**。它不是二次多项式的标准判别式。特征多项式为：
+
+\[
+(r-\delta)(r+\delta)=r^2-\delta^2,
+\]
+
+而标准判别式为：
+
+\[
+4\delta^2.
+\]
+
+所以：
+
+\[
+\boxed{
+\text{signed determinant}=-\delta^2,
+\qquad
+\text{polynomial discriminant}=4\delta^2.
+}
+\]
+
+函数方程型反射消除了线性方向标签，二阶平方大小仍然保留。
+
+---
+

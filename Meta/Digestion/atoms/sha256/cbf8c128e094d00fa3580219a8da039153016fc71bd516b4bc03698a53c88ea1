@@ -1,0 +1,52 @@
+# 第一千二百八十一部　Bode 宽度、横向矩与阻尼曲率是同一个对象
+
+定义 centered width：
+
+$$
+\boxed{
+W(y)
+=
+\sum_jm_j
+\max
+\left(
+\delta_j-
+\left|y-\frac12\right|,
+0
+\right).
+}
+\tag{1281.1}
+$$
+
+它可以写成：
+
+$$
+\boxed{
+W(y)
+=
+R\left(
+\left|y-\frac12\right|
+\right).
+}
+\tag{1281.2}
+$$
+
+当：
+
+$$
+0\le\delta_j\le\frac12
+$$
+
+时：
+
+$$
+\boxed{
+\int_0^\infty W(y)\,dy
+=
+\sum_jm_j\delta_j^2.
+}
+\tag{1281.3}
+$$
+
+仓库的 `BodeWidthCriterion` 已经机器证明，在有限反射共振族中：
+
+* 全部 \(\delta_j=0\)；

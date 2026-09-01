@@ -1,0 +1,26 @@
+* 但不会遗忘 \(|\delta|\)。
+
+取黄金周期：
+
+$$
+P=2\log\varphi
+$$
+
+时：
+
+$$
+\boxed{
+\mathfrak C_N
+=
+2\sinh^2
+\left(
+2N\delta\log\varphi
+\right).
+}
+\tag{1210.8}
+$$
+
+所以黄金比例在这里不是离线零点的位置，而是未来—过去不平衡的测距单位。
+
+---
+

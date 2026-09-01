@@ -1,0 +1,102 @@
+# 第一千一百三十三部　最值得形式化的新桥
+
+```text
+D5/S3/Analytic/Zeta/ReflectionQuotient/
+  RiemannReflection.lean
+  RiemannReflectionInvariant.lean
+  ReflectionInvariantRing.lean
+  ReflectionQuotientMap.lean
+  ReflectionBranchPoint.lean
+  GoldenFirstIntegralFiber.lean
+  GoldenBranchJacobian.lean
+  SpectralCoordinate.lean
+  RHQuotientSpectrumReal.lean
+
+D5/S3/GoldenField/Different/
+  GoldenMinimalPolynomial.lean
+  GoldenPolynomialDerivative.lean
+  GoldenDifferentIdeal.lean
+  GoldenCodifferent.lean
+  GoldenDualLatticeIndexFive.lean
+  BranchJacobianEqualsDifferent.lean
+
+D5/S3/GoldenField/Solenoid/
+  GoldenAdelicSolenoid.lean
+  GoldenVisibleTorus.lean
+  GoldenProfiniteFiber.lean
+  GoldenSolenoidExactSequence.lean
+  GoldenPontryaginDual.lean
+  GoldenDualExactSequence.lean
+
+D5/S3/GoldenField/PontryaginMinkowski/
+  GoldenUnitSolenoidAutomorphism.lean
+  GoldenUnitDualMultiplication.lean
+  PontryaginEvaluationCompatibility.lean
+  GoldenMinkowskiEmbedding.lean
+  GoldenUnitLorentzBoost.lean
+  GoldenNullProjectiveSlopes.lean
+
+D5/S3/AdelicDualTime/
+  IdeleNormMap.lean
+  NormOneIdeleClass.lean
+  ArchimedeanNormAnisotropyCoordinates.lean
+  GoldenUnitTangentialShift.lean
+  MellinNormalCharacter.lean
+  RegulatorTangentialCharacter.lean
+
+D5/S3/Analytic/Zeta/OffLineDescent/
+  ComplexFlowCharacter.lean
+  UnitaryFlowCharacter.lean
+  CharacterModulusExactSequence.lean
+  CompactComplexCharacterIsUnitary.lean
+  OffLineUnitaryDescentObstruction.lean
+  GoldenOffLineMonodromy.lean
+  GoldenOffLineDiscriminant.lean
+
+D5/S3/Analytic/Zeta/TwoModeCompletion/
+  ScaleRegulatorTransform.lean
+  GoldenObserverHeckeMode.lean
+  ZeroObserverMode.lean
+  ReflectionActsOnScaleAndMode.lean
+  RelativeObserverWeilForm.lean
+  NoHyperbolicEscapeTarget.lean
+```
+
+其中最先可以完全独立证明的链是：
+
+$$
+\boxed{
+c(s)=s(s-1)
+\to
+c^{-1}(1)=\{\varphi,\varphi'\}
+\to
+c'(\varphi)=\sqrt5
+\to
+\mathfrak D_K=(\sqrt5).
+}
+$$
+
+第二条是：
+
+$$
+\boxed{
+0\to\widehat{\mathbb Z}\to\Sigma_{\mathbb Q}\to\mathbb T\to0
+}
+$$
+
+的 Pontryagin 对偶化。
+
+第三条才是尚未进入仓库的核心新桥：
+
+$$
+\boxed{
+\Sigma_K
+\xleftrightarrow{\text{Pontryagin}}
+K
+\xrightarrow{\text{Minkowski}}
+\mathbb R^{1,1}.
+}
+$$
+
+---
+

@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:671d587cf73443a53ebf3e02bc5fc9c2f8816d7f04dd0509eaf1478e410c0a24
+  normalized_sha256: sha256:671d587cf73443a53ebf3e02bc5fc9c2f8816d7f04dd0509eaf1478e410c0a24
+cas_ref: sha256:671d587cf73443a53ebf3e02bc5fc9c2f8816d7f04dd0509eaf1478e410c0a24
+coverage_gids:
+  - D5/S3/ConceptDynamics/ObservationOrder/CommonPriorPosteriorAgreement.common_knowledge_posteriors_agree
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/ObservationOrder/CommonPriorPosteriorAgreement.common_knowledge_posteriors_agree
+      source_sha256: sha256:671d587cf73443a53ebf3e02bc5fc9c2f8816d7f04dd0509eaf1478e410c0a24
+      target_statement_id: sha256:a10b2210a3ffa17a9cef9a430b7a00f08094624f9b06845331f3235125f56f20
+  scribe:
+    - gid: D5/S3/ConceptDynamics/ObservationOrder/CommonPriorPosteriorAgreement.common_knowledge_posteriors_agree
+      definition_sha256: sha256:ddb4ec9c3e29b20a470a1785db4dfb183eb891a68130b9ad8261d72245f6f1ed
+      emission_sha256: sha256:37397254f51f4e2681250307f8deffef7c2dfe0f37b59bc6fea8a603239663b4
+  unresolved_subitems: []

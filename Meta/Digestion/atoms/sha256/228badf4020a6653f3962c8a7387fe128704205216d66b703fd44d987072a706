@@ -1,0 +1,39 @@
+## 1291.1 整数缺陷的统一词典
+
+在局部有限、无抵消因子化中：
+
+$$
+\boxed{
+\begin{aligned}
+m
+&=
+\operatorname{ord}_\rho\xi\\
+&=
+\text{Berry--Chern 荷}\\
+&=
+\text{de Branges 负平方数}\\
+&=
+\deg B_\omega\\
+&=
+\dim K_{B_\omega}\\
+&=
+\operatorname{rank}
+\mathfrak H_{B_\omega^{-1}}\\
+&=
+\operatorname{ind}
+T_{B_\omega^{-1}}.
+\end{aligned}
+}
+\tag{1291.3}
+$$
+
+所以离线零点的整数荷还可以解释为：
+
+$$
+\boxed{
+\textbf{为了实现该边界相位，必须调用的负时间记忆维数。}
+}
+$$
+
+---
+

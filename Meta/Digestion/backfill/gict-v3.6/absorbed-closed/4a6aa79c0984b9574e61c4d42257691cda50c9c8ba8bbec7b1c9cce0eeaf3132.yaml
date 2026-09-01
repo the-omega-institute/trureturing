@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:4a6aa79c0984b9574e61c4d42257691cda50c9c8ba8bbec7b1c9cce0eeaf3132
+  normalized_sha256: sha256:4a6aa79c0984b9574e61c4d42257691cda50c9c8ba8bbec7b1c9cce0eeaf3132
+cas_ref: sha256:4a6aa79c0984b9574e61c4d42257691cda50c9c8ba8bbec7b1c9cce0eeaf3132
+coverage_gids:
+  - D5/S3/PrimeForms/Splitting/EisensteinCriterion.neg_three_isSquare_iff
+receipts:
+  coverage:
+    - gid: D5/S3/PrimeForms/Splitting/EisensteinCriterion.neg_three_isSquare_iff
+      source_sha256: sha256:4a6aa79c0984b9574e61c4d42257691cda50c9c8ba8bbec7b1c9cce0eeaf3132
+      target_statement_id: sha256:aa979361c452ff7d44050f90590485cf8ac9e8102dd9a288d27c260b564e277b
+  scribe:
+    - gid: D5/S3/PrimeForms/Splitting/EisensteinCriterion.neg_three_isSquare_iff
+      definition_sha256: sha256:ab2e803085cf5b67fe6dcb48bf52fa2ad4716036bd58095b4cf2d15a571352e1
+      emission_sha256: sha256:611797611f013d8c1d252733f41631e829d4ce67f7f7f040881febafed4882ee
+  unresolved_subitems: []

@@ -186,61 +186,6 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Equal(1, gateway.CurrentRevisionResolutionCount);
     }
 
-    [Fact]
-    public void CheckMapsUndecodableBoundaryToSl016RuleRejection()
-    {
-        using var temporary = new TemporaryDirectory();
-        var fixture = new RuleFixture();
-        var atomizerId = SyntheticNumberedAtomizer.Id;
-        var baselineBytes = Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。old。\n");
-        var atom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, baselineBytes, DigestionTestSupport.Rules).Claims);
-        var inserted = Encoding.UTF8.GetBytes("界");
-        var currentBytes = baselineBytes[..(atom.EndByte - 1)]
-            .Concat(inserted)
-            .Concat(baselineBytes[(atom.EndByte - 1)..])
-            .ToArray();
-        var ledger = BoundaryIngestLedger(AtomizerRegistry.NoAtomizerId, atom);
-        var captured = DigestionCasStore.Capture(atom.RawBytes.AsSpan());
-        fixture.Files[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(currentBytes);
-        fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(baselineBytes);
-        DirectoryLedgerTestSupport.ReplaceWithProjection(fixture.Files, ledger);
-        DirectoryLedgerTestSupport.ReplaceWithProjection(fixture.Baseline, ledger);
-        fixture.Files.Remove(RuleFixture.FixtureCasPath);
-        fixture.Baseline.Remove(RuleFixture.FixtureCasPath);
-        fixture.Files[captured.RelativePath] = Encoding.UTF8.GetString(captured.Bytes.AsSpan());
-        fixture.Baseline[captured.RelativePath] = Encoding.UTF8.GetString(captured.Bytes.AsSpan());
-        var currentRaw = Snapshot(fixture.Files);
-        var baselineRaw = Snapshot(fixture.Baseline);
-        var candidateReport = Path.Combine(temporary.Path, "candidate.json");
-        RawLeanReportArtifact.WriteFile(
-            candidateReport,
-            Decode(currentRaw),
-            LeanAxiomReport.Create(fixture.Reports));
-        var environment = new ProductionCliEnvironment(
-            "/repo",
-            new FakeRepositoryGateway(
-                RawChangeSet.Create([RuleFixture.FixtureDigestionSourcePath]),
-                currentRaw,
-                baselineRaw),
-            new FakeLeanReportSource(null));
-        var console = new BufferedConsole();
-
-        var exitCode = CliApplication.Run(
-            [
-                "check",
-                "--candidate-lean-report", candidateReport,
-            ],
-            environment,
-            console);
-
-        Assert.Equal(1, exitCode);
-        Assert.Contains("SL-016", console.Output, StringComparison.Ordinal);
-        Assert.Contains("run make ingest", console.Output, StringComparison.Ordinal);
-        Assert.Contains("RULE_REJECTED", console.Output, StringComparison.Ordinal);
-        Assert.DoesNotContain("INFRASTRUCTURE_FAILURE", console.Output, StringComparison.Ordinal);
-        Assert.Equal(string.Empty, console.Error);
-    }
-
     // --merge-base was an undocumented legacy alias of --protected-base; the
     // parser accepts the canonical spelling only (no compatibility shims).
     [Fact]

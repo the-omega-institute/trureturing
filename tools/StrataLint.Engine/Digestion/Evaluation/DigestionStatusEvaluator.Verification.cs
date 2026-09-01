@@ -29,164 +29,16 @@ internal static partial class DigestionStatusEvaluator
             case DigestionReceiptAlignment.Stale:
                 gaps.Add(new DigestionGap(
                     "stale-receipt-not-deletable",
-                    entry.AstPath,
+                    entry.AtomId,
                     DigestionGapSeverity.NonFatal));
                 return false;
             default:
                 gaps.Add(new DigestionGap(
                     "structural-alignment-rejected",
-                    entry.AstPath,
+                    entry.AtomId,
                     DigestionGapSeverity.NonFatal));
                 return false;
         }
-    }
-
-    private static bool VerifyBoundary(
-        DigestionLedgerEntry entry,
-        RepositorySnapshot snapshot,
-        RawChangeSet? changes,
-        ICollection<DigestionGap> gaps,
-        ImmutableArray<string>.Builder findings)
-    {
-        if (changes is not null
-            && !DigestionCasStore.EntryChanged(entry, changes)
-            && !PathChanged(changes, entry.SourcePath)
-            && !PathChanged(changes, TheoryAtomizerDataLoader.DataPath))
-        {
-            return true;
-        }
-
-        var boundary = entry.Boundary;
-        if (boundary is null)
-        {
-            gaps.Add(new DigestionGap(
-                "boundary-not-reproducible",
-                entry.AstPath,
-                DigestionGapSeverity.NonFatal));
-            return false;
-        }
-
-        if (Path.GetFileName(entry.SourcePath).Contains(' ', StringComparison.Ordinal))
-        {
-            findings.Add($"source {entry.SourceId} filename contains spaces: {entry.SourcePath}");
-        }
-
-        if (!DigestionFingerprint.IsCanonicalSha256(entry.Fingerprints.RawSha256)
-            || !DigestionFingerprint.IsCanonicalSha256(entry.Fingerprints.NormalizedSha256))
-        {
-            findings.Add($"entry {entry.AtomId} fingerprints must use canonical sha256:<64 lowercase hex>");
-            gaps.Add(new DigestionGap(
-                "fingerprint-invalid",
-                entry.AtomId,
-                DigestionGapSeverity.NonFatal));
-            return false;
-        }
-
-        if (!snapshot.TryGetFile(entry.SourcePath, out var source))
-        {
-            gaps.Add(new DigestionGap(
-                "source-missing",
-                entry.SourcePath,
-                DigestionGapSeverity.NonFatal));
-            return false;
-        }
-
-        if (boundary.StartByte < 0
-            || boundary.EndByte <= boundary.StartByte
-            || boundary.EndByte > source.RawBytes.Length)
-        {
-            findings.Add(
-                $"entry {entry.AtomId} byte span is outside {entry.SourcePath}; run make ingest");
-            gaps.Add(new DigestionGap(
-                "boundary-span-invalid",
-                boundary.AstPath,
-                DigestionGapSeverity.NonFatal));
-            return false;
-        }
-
-        var storedSlice = source.RawBytes.AsSpan()[boundary.StartByte..boundary.EndByte];
-        DigestionFingerprints fingerprints;
-        try
-        {
-            fingerprints = DigestionFingerprint.Compute(storedSlice);
-        }
-        catch (DecoderFallbackException)
-        {
-            findings.Add(
-                $"entry {entry.AtomId} boundary cuts invalid UTF-8 in {entry.SourcePath}; "
-                + "run make ingest");
-            gaps.Add(new DigestionGap(
-                "boundary-not-reproducible",
-                boundary.AstPath,
-                DigestionGapSeverity.NonFatal));
-            return false;
-        }
-
-        if (fingerprints != entry.Fingerprints)
-        {
-            findings.Add(
-                $"entry {entry.AtomId} fingerprint disagrees with its source byte span; "
-                + "run make ingest");
-            gaps.Add(new DigestionGap(
-                "boundary-fingerprint-mismatch",
-                boundary.AstPath,
-                DigestionGapSeverity.NonFatal));
-            return false;
-        }
-
-        if (!TheoryAtomizerDataLoader.TryLoad(snapshot, out var atomizerRules))
-        {
-            // This tree predates the atomizer data surface, so the boundary cannot be re-derived
-            // against it. Recording a gap here would make a harness carrying this loader reject a
-            // tree the baseline harness admits, which conservative extension forbids. A tree that
-            // DOES carry the data file gets the full check below, and admission separately
-            // requires the file to exist (FILEMAP, registry, generated-artifact inventory), so
-            // this branch cannot be reached by deleting it from a current tree.
-            return true;
-        }
-
-        AtomizedTheoryDocument atomized;
-        try
-        {
-            atomized = AtomizerRegistry.Atomize(
-                entry.Atomizer,
-                source.RawBytes.AsSpan(),
-                atomizerRules);
-        }
-        catch (FormatException exception)
-        {
-            gaps.Add(new DigestionGap(
-                "boundary-not-reproducible",
-                exception.Message,
-                DigestionGapSeverity.NonFatal));
-            return false;
-        }
-
-        DigestionAtom atom;
-        try
-        {
-            atom = atomized.ResolveClaim(boundary.AstPath);
-        }
-        catch (FormatException exception)
-        {
-            gaps.Add(new DigestionGap(
-                "boundary-not-reproducible",
-                exception.Message,
-                DigestionGapSeverity.NonFatal));
-            return false;
-        }
-        if (atom.StartByte != boundary.StartByte
-            || atom.EndByte != boundary.EndByte
-            || atom.Fingerprints != entry.Fingerprints)
-        {
-            gaps.Add(new DigestionGap(
-                "boundary-fingerprint-mismatch",
-                boundary.AstPath,
-                DigestionGapSeverity.NonFatal));
-            return false;
-        }
-
-        return true;
     }
 
     private static bool VerifyCoverageReceipts(

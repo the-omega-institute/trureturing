@@ -1,0 +1,50 @@
+## 定理 1219.1（Golden positivity induction）
+
+若：
+
+$$
+Q_0\succeq0,
+\qquad
+Q_1\succeq0,
+$$
+
+并且式 (1219.2) 对全部 \(n\) 成立，且：
+
+$$
+R_n\succeq0,
+$$
+
+则：
+
+$$
+\boxed{
+Q_n\succeq0
+\qquad
+\forall n.
+}
+\tag{1219.3}
+$$
+
+### 证明
+
+对 \(n\) 归纳。
+
+若 \(Q_n,Q_{n-1}\) 非负，则对任意 \(f\)：
+
+$$
+Q_{n+1}(f)
+=
+Q_n(A_nf)
++
+Q_{n-1}(B_nf)
++
+R_n(f)
+\ge0.
+$$
+
+∎
+
+由于 Fibonacci 支撑尺度共尾，这进一步推出全部紧支撑测试的正性。
+
+---
+

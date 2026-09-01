@@ -1,0 +1,78 @@
+# 第一千二百六十七部　当前最短的缺陷忠实传导链
+
+现在可以把全部对象压缩成一条没有丢失离线缺陷的链：
+
+$$
+\boxed{
+\begin{aligned}
+\rho=\frac12+\delta+i\gamma,\quad\delta>0
+&\Longrightarrow
+z_\rho(\omega)
+=
+-\gamma+i(\delta-\omega)
+\\
+&\Longrightarrow
+\text{null 世界线在 }\omega=\delta\text{ 穿越边界}
+\\
+&\Longrightarrow
+\text{boundary Dirac mass 反演}
+\\
+&\Longrightarrow
+m\text{ 维负 Jet block 出生}
+\\
+&\Longrightarrow
+\Delta\operatorname{ind}_-=m
+\\
+&\Longrightarrow
+\deg B_\omega\text{ 增加 }m
+\\
+&\Longrightarrow
+\partial_t\arg B_\omega
+\text{ 出现 Poisson 相位脉冲}
+\\
+&\Longrightarrow
+\text{某个有限有理 Gram matrix 非 PSD}
+\\
+&\Longrightarrow
+\text{有限反 Gram／Weil effect}.
+\end{aligned}
+}
+\tag{1267.1}
+$$
+
+其中同一个整数 \(m\) 沿整条链保持：
+
+$$
+\boxed{
+\begin{aligned}
+m
+&=
+\text{零点重数}
+\\
+&=
+\text{Chern 荷}
+\\
+&=
+\text{局部 spectral flow}
+\\
+&=
+\text{负 Jet 维数}
+\\
+&=
+\text{Blaschke 修复次数}.
+\end{aligned}
+}
+\tag{1267.2}
+$$
+
+这正是此前所寻找的：
+
+$$
+\boxed{
+\text{缺陷忠实传导}.
+}
+$$
+
+没有任何一步使用：
+
+* \(\delta+(-\delta)=0\)；

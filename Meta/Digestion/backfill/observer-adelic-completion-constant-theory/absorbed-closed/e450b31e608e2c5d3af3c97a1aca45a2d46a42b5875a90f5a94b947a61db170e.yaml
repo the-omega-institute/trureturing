@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:e450b31e608e2c5d3af3c97a1aca45a2d46a42b5875a90f5a94b947a61db170e
+  normalized_sha256: sha256:e450b31e608e2c5d3af3c97a1aca45a2d46a42b5875a90f5a94b947a61db170e
+cas_ref: sha256:e450b31e608e2c5d3af3c97a1aca45a2d46a42b5875a90f5a94b947a61db170e
+coverage_gids:
+  - D5/S3/ConceptDynamics/Faithfulness/BareValueObservationNoninjective.bare_value_observation_not_injective
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Faithfulness/BareValueObservationNoninjective.bare_value_observation_not_injective
+      source_sha256: sha256:e450b31e608e2c5d3af3c97a1aca45a2d46a42b5875a90f5a94b947a61db170e
+      target_statement_id: sha256:f090f969202194de31027a02278a3fa55bf698e371baf9e766bbfe8cea59f316
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Faithfulness/BareValueObservationNoninjective.bare_value_observation_not_injective
+      definition_sha256: sha256:fd8f23c06dcd223e3e8ba9d997cec19aca98667d05ddcc33c94f1fa9279a3fb8
+      emission_sha256: sha256:9c98d9dbb5edbd72204c50f1c00772983080b9b88f8e39069837dbcc2eec75d2
+  unresolved_subitems: []

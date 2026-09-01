@@ -1,0 +1,26 @@
+# 10. 严格非主张
+
+本轮不主张：
+
+- 已定义完整连续傅立叶变换；
+- 已证明傅立叶反演或 Plancherel；
+- 频率排列本身产生时间；
+- 已得到时间方向或不可逆性；
+- zeta 虚部已经等同于物理时间；
+- 相位扭曲 holonomy 已经支配零点能量；
+- 已定位任何 zeta 零点；
+- 已证明 RH。
+
+本轮机器真源是
+
+\[
+\boxed{
+\text{Fourier character time flow}
++
+\text{scalar order collapse}
++
+\text{finite synthesis laws}.
+}
+
+---
+

@@ -1,0 +1,39 @@
+## 定理 1484.1（Conditional causal-sufficiency criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\Gamma_{\mathrm{causal}}
+\text{ 可因子化通过 }r_J.
+}
+\tag{1484.2}
+$$
+
+即存在 \(F\) 使：
+
+$$
+\boxed{
+\Gamma_{\mathrm{causal}}
+=
+F\circ r_J.
+}
+\tag{1484.3}
+$$
+
+### 证明
+
+若 RH 成立，每个 \(r_J\) 纤维为单点，因子化自动存在。
+
+若存在离线零点，则同一 \(r_J\) 纤维中的 \(\rho,J\rho\) 拥有不同 causal profile，故任何 \(F\) 都不可能同时解码两者。∎
+
+这将 RH 改写为：
+
+$$
+\boxed{
+\text{反射轨道名字是否足以解码全部因果互动。}
+}
+$$
+
+---
+

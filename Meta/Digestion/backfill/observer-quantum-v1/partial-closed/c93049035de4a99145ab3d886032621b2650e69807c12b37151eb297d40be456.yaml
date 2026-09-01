@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c93049035de4a99145ab3d886032621b2650e69807c12b37151eb297d40be456
+  normalized_sha256: sha256:c93049035de4a99145ab3d886032621b2650e69807c12b37151eb297d40be456
+cas_ref: sha256:c93049035de4a99145ab3d886032621b2650e69807c12b37151eb297d40be456
+coverage_gids:
+  - D5/S3/Quantum/Sharpness/SpectralSharpness.spectral_sharpness_zero_iff_uniform
+  - D5/S3/Quantum/Sharpness/SpectralSharpnessSaturation.spectral_sharpness_one_iff_support_le_half
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

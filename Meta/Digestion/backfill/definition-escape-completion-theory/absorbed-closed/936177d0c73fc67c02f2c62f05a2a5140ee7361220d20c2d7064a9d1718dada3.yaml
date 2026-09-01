@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:936177d0c73fc67c02f2c62f05a2a5140ee7361220d20c2d7064a9d1718dada3
+  normalized_sha256: sha256:936177d0c73fc67c02f2c62f05a2a5140ee7361220d20c2d7064a9d1718dada3
+cas_ref: sha256:936177d0c73fc67c02f2c62f05a2a5140ee7361220d20c2d7064a9d1718dada3
+coverage_gids:
+  - D5/S3/ConceptDynamics/TimeProjection/FiniteTimeProjectionRestrictionLaws.finite_time_projection_expansion_and_restriction_laws
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/TimeProjection/FiniteTimeProjectionRestrictionLaws.finite_time_projection_expansion_and_restriction_laws
+      source_sha256: sha256:936177d0c73fc67c02f2c62f05a2a5140ee7361220d20c2d7064a9d1718dada3
+      target_statement_id: sha256:b761682c244d8cd5d0d0c5db4ec8c76582acf183dd69e421c9e7279cc929d1eb
+  scribe:
+    - gid: D5/S3/ConceptDynamics/TimeProjection/FiniteTimeProjectionRestrictionLaws.finite_time_projection_expansion_and_restriction_laws
+      definition_sha256: sha256:3cb96b0e88adca420e5ca4f9429b12799fcabd9cc5fb9e68a3a0eaaa6b7244f2
+      emission_sha256: sha256:47b24f55b6faf6ec566fc7480bc3d0e5e3ab678ca1fb2061bd31c7c3573cefbb
+  unresolved_subitems: []

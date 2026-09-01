@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:afb3ccbcaac4134998b286ff7219e531648aa2a03297c03f39955e907c5dfbec
+  normalized_sha256: sha256:afb3ccbcaac4134998b286ff7219e531648aa2a03297c03f39955e907c5dfbec
+cas_ref: sha256:afb3ccbcaac4134998b286ff7219e531648aa2a03297c03f39955e907c5dfbec
+coverage_gids:
+  - D5/S3/Observer/LinearMemory/ReachableObservableQuotientReachability.reachable_observable_quotient_is_reachable
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/LinearMemory/ReachableObservableQuotientReachability.reachable_observable_quotient_is_reachable
+      source_sha256: sha256:afb3ccbcaac4134998b286ff7219e531648aa2a03297c03f39955e907c5dfbec
+      target_statement_id: sha256:ec57c2fe64320fced3dd2958fd1c040c9220ddd9efa20b5aa8e8fa208696c675
+  scribe:
+    - gid: D5/S3/Observer/LinearMemory/ReachableObservableQuotientReachability.reachable_observable_quotient_is_reachable
+      definition_sha256: sha256:54571e5ae4f4cbe5e198a9d0fe62c898968e487ba80c319379f4305280ecfa3f
+      emission_sha256: sha256:bc3b30acad74e12a52bae2ab87cdc5d5b2da3a9d5bf16fe15ee799e7fbae739a
+  unresolved_subitems: []

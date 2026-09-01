@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:78517a5fce5acc26158672adb09e903598b6eefc6b0ea3286d246fe9a2d0addf
+  normalized_sha256: sha256:78517a5fce5acc26158672adb09e903598b6eefc6b0ea3286d246fe9a2d0addf
+cas_ref: sha256:78517a5fce5acc26158672adb09e903598b6eefc6b0ea3286d246fe9a2d0addf
+coverage_gids:
+  - D5/S3/Observer/Naturality/DiagonalNaturalityDefect.diagonal_naturality_defect_eq_semiconjugacy_defect
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/Naturality/DiagonalNaturalityDefect.diagonal_naturality_defect_eq_semiconjugacy_defect
+      source_sha256: sha256:78517a5fce5acc26158672adb09e903598b6eefc6b0ea3286d246fe9a2d0addf
+      target_statement_id: sha256:fbf73cce1ff01a996c2a44b4fea5d90a7c4aada705fed4fa3bbd92cbdec2c6f7
+  scribe:
+    - gid: D5/S3/Observer/Naturality/DiagonalNaturalityDefect.diagonal_naturality_defect_eq_semiconjugacy_defect
+      definition_sha256: sha256:8cab5dae3eb281e3b6a30aa8d9fe5050c99dad07c3af0f83c81414c00ae89d98
+      emission_sha256: sha256:33c943382be50968a7d21f5065e5952b536cfe6b46b75d1b97c6477397208921
+  unresolved_subitems: []

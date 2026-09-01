@@ -1,0 +1,37 @@
+# 第一千二百九十部　Toeplitz 压缩区分正时间与负时间
+
+定义 Toeplitz 压缩：
+
+$$
+\boxed{
+T_\theta
+=
+P_+M_\theta\big|_{H_+^2}.
+}
+\tag{1290.1}
+$$
+
+令 \(B\) 为次数 \(m\) 的有限 Blaschke 积，定义 model space：
+
+$$
+\boxed{
+K_B
+=
+H_+^2\ominus BH_+^2.
+}
+\tag{1290.2}
+$$
+
+其维数为：
+
+$$
+\boxed{
+\dim K_B=m.
+}
+\tag{1290.3}
+$$
+
+若零点有重数，\(K_B\) 由相应 Hardy reproducing kernels 及其导数生成。
+
+---
+

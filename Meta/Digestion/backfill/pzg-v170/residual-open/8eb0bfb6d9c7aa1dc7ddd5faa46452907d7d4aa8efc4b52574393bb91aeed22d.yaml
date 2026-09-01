@@ -1,0 +1,12 @@
+fingerprints:
+  raw_sha256: sha256:8eb0bfb6d9c7aa1dc7ddd5faa46452907d7d4aa8efc4b52574393bb91aeed22d
+  normalized_sha256: sha256:8eb0bfb6d9c7aa1dc7ddd5faa46452907d7d4aa8efc4b52574393bb91aeed22d
+cas_ref: sha256:8eb0bfb6d9c7aa1dc7ddd5faa46452907d7d4aa8efc4b52574393bb91aeed22d
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems:
+    - fibonacci-trace-recurrence-and-sl2-identity
+    - fricke-invariant-and-bounded-orbit-classification
+    - zqc-axis-components-finite-dimensional-conservative-encoding

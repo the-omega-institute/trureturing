@@ -381,10 +381,16 @@ public sealed partial class CoverAtomTests
     {
         // anti-Goodhart: a receipt pinned for atom A may not be used to cover a
         // different atom B — the receipt's atom_id must equal --cover-atom.
-        var (result, after, before) = Execute(new CoverSpec { EnvelopeAtomId = "other-atom" });
+        var (result, after, before) = Execute(new CoverSpec
+        {
+            EnvelopeAtomId = CoverWorld.OtherAtomId,
+        });
 
         Assert.False(result.Success);
-        Assert.Contains("atom_id other-atom does not match atom cover-1", result.Error, StringComparison.Ordinal);
+        Assert.Contains(
+            $"atom_id {CoverWorld.OtherAtomId} does not match atom {CoverWorld.DefaultAtomId}",
+            result.Error,
+            StringComparison.Ordinal);
         Assert.Equal(before, after);
     }
 

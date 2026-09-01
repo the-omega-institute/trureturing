@@ -1,0 +1,30 @@
+# 第一千四百五十一部　离线零点是两个完成函子不交换的障碍
+
+考虑下面的完成方块：
+
+$$
+\boxed{
+\begin{array}{ccc}
+\text{prime–Gamma 局部数据}
+&
+\xrightarrow{\quad\mathsf{Spec}\quad}
+&
+\xi
+\\[2mm]
+\downarrow{\scriptstyle\mathsf{Obs}}
+&&
+\downarrow{\scriptstyle\mathsf{Div}}
+\\[2mm]
+\text{Hardy／Hilbert 观察系统}
+&
+\xrightarrow{\quad\det\quad}
+&
+\text{正谱完成}.
+\end{array}
+}
+\tag{1451.1}
+$$
+
+其中：
+
+* \(\mathsf{Spec}\)：局部数据的谱／行列式完成；

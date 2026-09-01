@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:d50feb50c7576fc87dd85ac894be4dd8e0084d834328f7960a0130f28376abd9
+  normalized_sha256: sha256:d50feb50c7576fc87dd85ac894be4dd8e0084d834328f7960a0130f28376abd9
+cas_ref: sha256:d50feb50c7576fc87dd85ac894be4dd8e0084d834328f7960a0130f28376abd9
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  quarantine:
+    justification: "Retrieval preceded quarantine. D5 query `kubo.?mori|petz|monotone metric|monotonicity.*metric|metric.*monotonicity|quantum.*dpi|relative entropy.*channel` found no exact owner; `D5/S3/Quantum/Divergence/QuantumRelativeEntropyDefectComposition.relative_entropy_defect_composition` is only an algebraic telescoping law, while `D5/S3/Divergence/LogDerivTrace.trace_mul_logDeriv` supplies source lemma 3.1 but not path differentiation or channel contraction. Pinned Mathlib queries `kubo.?mori|bogoliubov|monotone.*metric|matrix.*log.*deriv|logDeriv|completelyPositive.*trace` found scalar logarithmic derivatives and channel primitives but neither the positive-matrix path theorem nor Petz metric monotonicity. Reachable GitHub Lean queries `Kubo-Mori monotone` and `monotone metric Petz` exited 0 with no hits; `quantum relative entropy data processing` exited 0 and found Physlib's substantive `sandwichedRenyiEntropy_DPI_eq_one`, but that inequality contains neither the source's Kubo-Mori integral equality nor its pointwise nonnegative integrand. The local proof decomposition preserves affine segments immediately, then stops at two absent public results: theorem 3.2's matrix-log path identity and monotonicity of the Kubo-Mori quadratic form under arbitrary completely positive trace-preserving maps."
+    reentry_condition: "Expose and freeze both a public positive-definite Umegaki/Kubo-Mori affine-path identity and a public pointwise Kubo-Mori contraction theorem for completely positive trace-preserving matrix channels; then subtract the two path identities using channel linearity."
+    blocker_class: missing-prerequisite

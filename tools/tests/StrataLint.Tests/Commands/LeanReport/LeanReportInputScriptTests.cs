@@ -102,7 +102,9 @@ public sealed class LeanReportInputScriptTests
 
         var result = fixture.RunCommand("producer-paths");
 
-        Assert.Equal(0, result.ExitCode);
+        Assert.True(
+            result.ExitCode == 0,
+            Encoding.UTF8.GetString(result.StandardError));
         var paths = Lines(result);
         Assert.Contains(InputHelperPath, paths);
         Assert.Contains("Directory.Build.props", paths);
@@ -111,6 +113,7 @@ public sealed class LeanReportInputScriptTests
         Assert.Contains(SupervisorScriptPath, paths);
         Assert.Contains(CiBaselineScriptPath, paths);
         Assert.Contains(CacheEnsureScriptPath, paths);
+        Assert.Contains(CachePublishScriptPath, paths);
         Assert.Contains(ResourceObservationLibraryPath, paths);
         Assert.Contains(ToolchainInstallerPath, paths);
         Assert.Contains(JudgeContentAddressPath, paths);
@@ -294,7 +297,9 @@ public sealed class LeanReportInputScriptTests
                 CiBaselineScriptPath,
                 File.ReadAllText(Path.Combine(root, CiBaselineScriptPath), Encoding.UTF8));
             Write(CacheEnsureScriptPath, "#!/usr/bin/env bash\n");
-            Write(CachePublishScriptPath, "#!/usr/bin/env bash\n");
+            Write(
+                CachePublishScriptPath,
+                File.ReadAllText(Path.Combine(root, CachePublishScriptPath), Encoding.UTF8));
             Write(
                 ResourceObservationLibraryPath,
                 File.ReadAllText(Path.Combine(root, ResourceObservationLibraryPath), Encoding.UTF8));

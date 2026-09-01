@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:49b5d548a9dd65f91f94658f7e1368bf1ea62ad8629b0c7262356f4b9b08b5ac
+  normalized_sha256: sha256:49b5d548a9dd65f91f94658f7e1368bf1ea62ad8629b0c7262356f4b9b08b5ac
+cas_ref: sha256:49b5d548a9dd65f91f94658f7e1368bf1ea62ad8629b0c7262356f4b9b08b5ac
+coverage_gids:
+  - D5/S3/ConceptDynamics/Epistemic/RobustKnowledgeRefinementMonotonicity.robust_knowledge_monotone_under_refinement
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Epistemic/RobustKnowledgeRefinementMonotonicity.robust_knowledge_monotone_under_refinement
+      source_sha256: sha256:49b5d548a9dd65f91f94658f7e1368bf1ea62ad8629b0c7262356f4b9b08b5ac
+      target_statement_id: sha256:6f48aadde44ed79cf63db5229b5a247d72589f230febf00214752bd883861efc
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Epistemic/RobustKnowledgeRefinementMonotonicity.robust_knowledge_monotone_under_refinement
+      definition_sha256: sha256:8bf2f32e3bc620a20d64490f4a152b40576654cc7acc2fa5b4ab655abb1727fd
+      emission_sha256: sha256:6813f05a75587ae666d0ffbb3fd89b7715fae6e3c87e2d3f885a127b36dba49a
+  unresolved_subitems: []

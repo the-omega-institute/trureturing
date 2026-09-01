@@ -1,0 +1,29 @@
+## 1478.1 修复夹层
+
+项目已经机器证明：
+
+$$
+\boxed{
+I_F(R)\subseteq R\subseteq C_F(R),
+}
+\tag{1478.2}
+$$
+
+以及：
+
+$$
+\boxed{
+I_F(R)=R
+\iff
+R\text{ 是 forward congruence}
+\iff
+C_F(R)=R.
+}
+\tag{1478.3}
+$$
+
+同时，closure、稳定关系包含与 interior 之间形成两个 Galois connection。
+
+所以动力稳定的名字同时是：
+
+* 预测内修复的固定点；

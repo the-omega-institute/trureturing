@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:7b1d42910156e919ce1a4b23f5f571c926b21e7fff2a41aa9f96c4f457ba2916
+  normalized_sha256: sha256:7b1d42910156e919ce1a4b23f5f571c926b21e7fff2a41aa9f96c4f457ba2916
+cas_ref: sha256:7b1d42910156e919ce1a4b23f5f571c926b21e7fff2a41aa9f96c4f457ba2916
+coverage_gids:
+  - D5/S3/QuantumChannels/ContractionGeometry/SubmultiplicativeLogRate.submultiplicative_profile_has_unique_log_rate
+receipts:
+  coverage:
+    - gid: D5/S3/QuantumChannels/ContractionGeometry/SubmultiplicativeLogRate.submultiplicative_profile_has_unique_log_rate
+      source_sha256: sha256:7b1d42910156e919ce1a4b23f5f571c926b21e7fff2a41aa9f96c4f457ba2916
+      target_statement_id: sha256:6f2520a085e8075be5a2eb6c4efcb920df6ca66f879967896c0b533a60e282fb
+  scribe:
+    - gid: D5/S3/QuantumChannels/ContractionGeometry/SubmultiplicativeLogRate.submultiplicative_profile_has_unique_log_rate
+      definition_sha256: sha256:96402fe6e5ad9a376134f6aaeee9fe0a6aaacdcf64908e8e8f3456abd13c8543
+      emission_sha256: sha256:8508bc9f4b76c04bf630d1c2b272eb19f0144096246b5025f917c776220c69d0
+  unresolved_subitems: []

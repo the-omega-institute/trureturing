@@ -12,7 +12,6 @@ public sealed partial class TheoryAtomizerTests
         var raw = Encoding.UTF8.GetBytes("**title**〔closed〕");
         var atom = WmAtomizer.CreateAtom(
             raw,
-            "fixture/status",
             0,
             raw.Length,
             ImmutableArray<DigestionContext>.Empty);
@@ -118,9 +117,7 @@ public sealed partial class TheoryAtomizerTests
 
         var document = AtomizerRegistry.Atomize(AtomizerRegistry.PeriodicTreeId, bytes, DigestionTestSupport.Rules);
 
-        Assert.Equal(
-            ["section/0", "section/1", "section/7"],
-            document.Claims.Select(static item => item.AstPath));
+        AssertContentIdentities(document, 3);
         Assert.All(document.Claims, atom =>
             Assert.Equal(["Periodic Tree"], atom.Context.Select(static item => item.Text)));
         Assert.Equal(bytes, document.Reassemble().ToArray());
@@ -130,17 +127,19 @@ public sealed partial class TheoryAtomizerTests
     public void WmV1SplitsTheCanonicalDialectIntoExactUniqueByteAtoms()
     {
         var fixture = CanonicalWmFixtureSegments();
-        var bytes = Encoding.UTF8.GetBytes(string.Concat(fixture.Select(static item => item.Text)));
+        var bytes = Encoding.UTF8.GetBytes(string.Concat(fixture));
 
         var document = AtomizerRegistry.Atomize(AtomizerRegistry.WmId, bytes, DigestionTestSupport.Rules);
 
-        Assert.Equal(fixture.Select(static item => item.AstPath), document.Claims.Select(static item => item.AstPath));
+        Assert.Equal(
+            fixture.Select(static item => DigestionFingerprint.Compute(Encoding.UTF8.GetBytes(item)).RawSha256),
+            document.Claims.Select(static item => item.Fingerprints.RawSha256));
         Assert.Equal(GenreRegistryCheckKind.NoRegistry, document.GenreRegistryCheck.Kind);
-        Assert.Equal(document.Claims.Length, document.Claims.Select(static item => item.AstPath).Distinct(StringComparer.Ordinal).Count());
+        Assert.Equal(document.Claims.Length, document.Claims.Select(static item => item.Fingerprints.RawSha256).Distinct(StringComparer.Ordinal).Count());
         Assert.Equal(fixture.Count, document.Claims.Length);
         for (var index = 0; index < fixture.Count; index++)
         {
-            Assert.Equal(Encoding.UTF8.GetBytes(fixture[index].Text), document.Claims[index].RawBytes.ToArray());
+            Assert.Equal(Encoding.UTF8.GetBytes(fixture[index]), document.Claims[index].RawBytes.ToArray());
         }
 
         Assert.Equal(bytes, document.Reassemble().ToArray());
@@ -160,15 +159,13 @@ public sealed partial class TheoryAtomizerTests
             Encoding.UTF8.GetBytes(CanonicalWmV02Fixture()),
             DigestionTestSupport.Rules);
 
-        Assert.Equal(
-            original.Claims.Select(static atom => atom.AstPath)
-                .Append("version/v0.2")
-                .Append("audit/v0.2")
-                .Order(StringComparer.Ordinal),
-            evolved.Claims.Select(static atom => atom.AstPath).Order(StringComparer.Ordinal));
+        Assert.Equal(2, evolved.Claims
+            .Select(static atom => atom.Fingerprints.RawSha256)
+            .Except(original.Claims.Select(static atom => atom.Fingerprints.RawSha256), StringComparer.Ordinal)
+            .Count());
         foreach (var atom in original.Claims)
         {
-            var unchanged = Assert.Single(evolved.Claims, candidate => candidate.AstPath == atom.AstPath);
+            var unchanged = Assert.Single(evolved.Claims, candidate => candidate.Fingerprints.RawSha256 == atom.Fingerprints.RawSha256);
             Assert.Equal(atom.Fingerprints, unchanged.Fingerprints);
             Assert.Equal(atom.RawBytes.ToArray(), unchanged.RawBytes.ToArray());
         }
@@ -203,7 +200,7 @@ public sealed partial class TheoryAtomizerTests
             "WM source must begin with its exact H1 title",
             Assert.Single(alignment.Fallbacks).Reason,
             StringComparison.Ordinal);
-        Assert.Equal("coarse/source", Assert.Single(alignment.Residual).Atom.AstPath);
+        AssertContentIdentity(Assert.Single(alignment.Residual).Atom);
     }
 
     [Fact]
@@ -226,8 +223,10 @@ public sealed partial class TheoryAtomizerTests
             Encoding.UTF8.GetBytes(CanonicalWmFixture()),
             DigestionTestSupport.Rules);
 
-        var section = document.ResolveClaim("section/7");
-        var appendix = document.ResolveClaim("section/7-appendix");
+        var section = document.Claims.Single(static atom =>
+            Encoding.UTF8.GetString(atom.RawBytes.AsSpan()).StartsWith("## 7. Section 7", StringComparison.Ordinal));
+        var appendix = document.Claims.Single(static atom =>
+            Encoding.UTF8.GetString(atom.RawBytes.AsSpan()).StartsWith("### §7-附", StringComparison.Ordinal));
 
         Assert.DoesNotContain("§7-附", Encoding.UTF8.GetString(section.RawBytes.AsSpan()), StringComparison.Ordinal);
         Assert.StartsWith("### §7-附", Encoding.UTF8.GetString(appendix.RawBytes.AsSpan()), StringComparison.Ordinal);

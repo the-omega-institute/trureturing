@@ -1,0 +1,50 @@
+# 第一千二百三十三部　可数有理数值判据
+
+令：
+
+$$
+t\in\mathbb Q,
+\qquad
+y\in\mathbb Q_{>0}.
+$$
+
+定义：
+
+$$
+\boxed{
+\begin{aligned}
+D_n(t,y)
+={}&
+\left|
+\xi\left(
+\frac12+y+\omega_n+it
+\right)
+\right|^2\\
+&-
+\left|
+\xi\left(
+\frac12+y-\omega_n+it
+\right)
+\right|^2.
+\end{aligned}
+}
+\tag{1233.1}
+$$
+
+由式 (1227.2)，这正是：
+
+$$
+4\pi y\,
+\mathcal K_{\omega_n}(z,z)
+$$
+
+在：
+
+$$
+z=-t+iy
+$$
+
+处的分子。
+
+---
+

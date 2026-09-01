@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:5db40deeb77603206799812f973d4eee90041979570108b72914623feb17810a
+  normalized_sha256: sha256:5db40deeb77603206799812f973d4eee90041979570108b72914623feb17810a
+cas_ref: sha256:5db40deeb77603206799812f973d4eee90041979570108b72914623feb17810a
+coverage_gids:
+  - D5/S3/Factorization/Solenoid/AllPrimeRegisterExactSequence.all_prime_register_short_exact
+receipts:
+  coverage:
+    - gid: D5/S3/Factorization/Solenoid/AllPrimeRegisterExactSequence.all_prime_register_short_exact
+      source_sha256: sha256:5db40deeb77603206799812f973d4eee90041979570108b72914623feb17810a
+      target_statement_id: sha256:594c21a53f2a6f413ac90d3f77e6d83f9155aeadb467263ee471f9d5873565bb
+  scribe:
+    - gid: D5/S3/Factorization/Solenoid/AllPrimeRegisterExactSequence.all_prime_register_short_exact
+      definition_sha256: sha256:de70a7a47a2dae570ead87e4955599ba13155592a84a8c4ed4dad53651d96e59
+      emission_sha256: sha256:b80e0f124675ecd95c99c1f228aa4b8d7591b046d07153351f2b3985ab443405
+  unresolved_subitems: []

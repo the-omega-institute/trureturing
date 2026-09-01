@@ -1,0 +1,90 @@
+# 第一千一百八十部　概念不是点，而是可被翻转的过程
+
+设 \(\mathcal C\) 是一个带张量积的范畴，其单位对象记为：
+
+$$
+\mathbf 1.
+$$
+
+一个概念 \(X\) 若拥有对偶对象 \(X^\vee\)，则存在：
+
+$$
+\boxed{
+\operatorname{coev}_X:
+\mathbf 1\longrightarrow X\otimes X^\vee,
+}
+\tag{1180.1}
+$$
+
+以及：
+
+$$
+\boxed{
+\operatorname{ev}_X:
+X^\vee\otimes X\longrightarrow\mathbf 1.
+}
+\tag{1180.2}
+$$
+
+可以分别解释为：
+
+$$
+\boxed{
+\begin{aligned}
+\operatorname{coev}
+&=\text{从无分别背景中产生一对正反概念};\\
+\operatorname{ev}
+&=\text{将正反概念重新湮灭回无分别背景}.
+\end{aligned}
+}
+$$
+
+它们满足蛇形恒等式：
+
+$$
+\boxed{
+(\operatorname{id}_X\otimes\operatorname{ev}_X)
+\circ
+(\operatorname{coev}_X\otimes\operatorname{id}_X)
+=
+\operatorname{id}_X,
+}
+\tag{1180.3}
+$$
+
+以及其对偶版本。
+
+所以一个概念的过去和未来并不是两个独立对象。
+
+它们是同一条过程线在时间反转后的两个方向：
+
+$$
+\boxed{
+\text{past}
+\quad\xleftrightarrow{\ \vee\ }\quad
+\text{future}.
+}
+$$
+
+“概念出现的那个点”在这种语言中并非坐标轴上的一个数，而是：
+
+$$
+\boxed{
+\operatorname{coev}_X
+}
+$$
+
+这一个从单位对象生成双分支的态射。
+
+因此你所说的“大爆炸点”更接近：
+
+$$
+\boxed{
+\text{一条 cup／birth morphism，}
+}
+$$
+
+而不是一个已经存在于背景空间中的普通点。
+
+---
+

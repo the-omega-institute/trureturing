@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:aff4da1e934c3b9e59b77fe47ef0551d6385f87c2bdeb58cf72721e86d532a2e
+  normalized_sha256: sha256:aff4da1e934c3b9e59b77fe47ef0551d6385f87c2bdeb58cf72721e86d532a2e
+cas_ref: sha256:aff4da1e934c3b9e59b77fe47ef0551d6385f87c2bdeb58cf72721e86d532a2e
+coverage_gids:
+  - D5/S1/Recurrence/Witt/WittRowLaws.witt_row_closed_laws
+receipts:
+  coverage:
+    - gid: D5/S1/Recurrence/Witt/WittRowLaws.witt_row_closed_laws
+      source_sha256: sha256:aff4da1e934c3b9e59b77fe47ef0551d6385f87c2bdeb58cf72721e86d532a2e
+      target_statement_id: sha256:9e3af72cbc9ed957716568191c182af307072730c2244afa7d9434b00d760084
+  scribe:
+    - gid: D5/S1/Recurrence/Witt/WittRowLaws.witt_row_closed_laws
+      definition_sha256: sha256:99233e24347db7f4773bc73a634266d0b95e93227d049efcabc2f5807a9c0c4d
+      emission_sha256: sha256:3fe5315c2cff78d4d0f79d1b8ab86c9a9c0896767445719a752ce637c2a71f5d
+  unresolved_subitems: []

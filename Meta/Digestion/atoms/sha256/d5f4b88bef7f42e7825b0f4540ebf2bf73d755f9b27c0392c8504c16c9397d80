@@ -1,0 +1,15 @@
+## 1299.4 无限缺陷族需要加权或截断
+
+有限 Blaschke、Prony 和 finite-rank Hankel 结论对有限高度截断最直接。
+
+对潜在无限离线零点族，还需要：
+
+* Blaschke 收敛条件；
+* 加权 counting measure；
+* 局部 trace-class Hankel；
+* 极限负指标控制。
+
+不能把有限秩结论直接无条件推广到全局无限族。
+
+---
+

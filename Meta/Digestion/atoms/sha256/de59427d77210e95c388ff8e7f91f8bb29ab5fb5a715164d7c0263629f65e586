@@ -1,0 +1,65 @@
+# 第一千三百九十七部　Poisson 光影的参数空间就是双曲平面
+
+对密度 \(p_{\gamma,\delta}\)，计算 score：
+
+$$
+\partial_\gamma\log p_{\gamma,\delta}(t)
+=
+\frac{2(t-\gamma)}
+{(t-\gamma)^2+\delta^2},
+\tag{1397.1}
+$$
+
+$$
+\partial_\delta\log p_{\gamma,\delta}(t)
+=
+\frac1\delta
+-
+\frac{2\delta}
+{(t-\gamma)^2+\delta^2}.
+\tag{1397.2}
+$$
+
+对 Cauchy 分布积分，得到 Fisher 信息矩阵：
+
+$$
+\boxed{
+g_{\gamma\gamma}
+=
+g_{\delta\delta}
+=
+\frac1{2\delta^2},
+\qquad
+g_{\gamma\delta}=0.
+}
+\tag{1397.3}
+$$
+
+因此 Fisher–Rao 度量为：
+
+$$
+\boxed{
+ds_F^2
+=
+\frac{
+d\gamma^2+d\delta^2
+}{
+2\delta^2
+}.
+}
+\tag{1397.4}
+$$
+
+它是 Poincaré 上半平面度量的常数倍，其高斯曲率为：
+
+$$
+\boxed{
+K_F=-2.
+}
+\tag{1397.5}
+$$
+
+Cauchy location–scale family 的 Fisher 几何、KL 几何和双曲几何之间的严格联系已有成熟的信息几何结果。([arXiv][1])
+
+---
+

@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:76a92f1db92bf5498d66ded284de6162f8873704336551d1a40881e70f8b0c7e
+  normalized_sha256: sha256:76a92f1db92bf5498d66ded284de6162f8873704336551d1a40881e70f8b0c7e
+cas_ref: sha256:76a92f1db92bf5498d66ded284de6162f8873704336551d1a40881e70f8b0c7e
+coverage_gids:
+  - D5/S1/Scale/MinkowskiModelSet.minkowski_model_set_spec
+receipts:
+  coverage:
+    - gid: D5/S1/Scale/MinkowskiModelSet.minkowski_model_set_spec
+      source_sha256: sha256:76a92f1db92bf5498d66ded284de6162f8873704336551d1a40881e70f8b0c7e
+      target_statement_id: sha256:4af4e2de2fd4006228a7de048b6a7dcec6777e3c0e19ac1c5b2860c7b17bbd1f
+  scribe: []
+  unresolved_subitems: []

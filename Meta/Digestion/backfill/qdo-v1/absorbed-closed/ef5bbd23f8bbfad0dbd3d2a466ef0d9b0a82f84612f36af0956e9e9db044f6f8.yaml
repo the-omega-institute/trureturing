@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:ef5bbd23f8bbfad0dbd3d2a466ef0d9b0a82f84612f36af0956e9e9db044f6f8
+  normalized_sha256: sha256:ef5bbd23f8bbfad0dbd3d2a466ef0d9b0a82f84612f36af0956e9e9db044f6f8
+cas_ref: sha256:ef5bbd23f8bbfad0dbd3d2a466ef0d9b0a82f84612f36af0956e9e9db044f6f8
+coverage_gids:
+  - D5/S3/Observer/SymbolicStability/FinitePrefixLocalConstancy.finite_prefix_locally_constant_off_boundary
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/SymbolicStability/FinitePrefixLocalConstancy.finite_prefix_locally_constant_off_boundary
+      source_sha256: sha256:ef5bbd23f8bbfad0dbd3d2a466ef0d9b0a82f84612f36af0956e9e9db044f6f8
+      target_statement_id: sha256:220bc856b9ec5340bffbdb02b3939881f0cc06b4365003c77ba5964188462d2c
+  scribe:
+    - gid: D5/S3/Observer/SymbolicStability/FinitePrefixLocalConstancy.finite_prefix_locally_constant_off_boundary
+      definition_sha256: sha256:294fe3ade1e9ab20850c10c274934e847f51287137f9fed31d11362abf9afb60
+      emission_sha256: sha256:b48b8ab5ebbfce4e6696f22bb5d6b1d48868c2303cd65b11ca3e994054e32b8f
+  unresolved_subitems: []

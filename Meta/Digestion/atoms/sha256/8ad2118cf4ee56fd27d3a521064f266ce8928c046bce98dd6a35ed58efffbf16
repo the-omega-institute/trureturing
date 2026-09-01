@@ -1,0 +1,25 @@
+* 新增协议的边际信息具有 diminishing returns，即次模性。
+
+所以实际研究离线零点时，不应继续均匀扫描整个复平面。
+
+更有效的协议集合可以包括：
+
+$$
+\boxed{
+p=(\omega,t,L,\text{prime window},\text{kernel jet order}).
+}
+$$
+
+每一步选择最大化新的 log-det 信息：
+
+1. 用宽尺度确定是否存在曲率偶极；
+2. 用 \(\omega\) 定位可能的 crossing depth；
+3. 用 Poisson Fourier phase 定位 \(\gamma\)；
+4. 用 Hankel singular value 恢复 \(\delta\)；
+5. 用 rational Gram matrix 给出严格证书；
+6. 用 prime-side interval arithmetic 重建。
+
+黄金尺度适合作为初始多尺度字典；真正接近未知视界时，仍需要自适应细化，因为单一固定几何序列不能保证任意接近未知 \(\delta\)。
+
+---
+

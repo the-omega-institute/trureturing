@@ -1,5 +1,4 @@
 using System.Collections.Immutable;
-using System.Security.Cryptography;
 using System.Text;
 
 namespace StrataLint.Engine;
@@ -173,9 +172,7 @@ internal static class DigestionIngestor
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentNullException.ThrowIfNull(baselineDocument);
 
-        var migrationDocument = RegisterDefaultTheorySources(
-            PrepareLegacyMigrations(document),
-            snapshot);
+        var migrationDocument = RegisterDefaultTheorySources(document, snapshot);
         var evaluationChanges = changes is null
             ? null
             : IncludeCasReverseDependencies(baselineDocument, changes);
@@ -237,13 +234,6 @@ internal static class DigestionIngestor
                     throw new FormatException($"ingest source {source.SourceId} has unknown atomizer {source.Atomizer}");
                 }
 
-                sources.Add(CaptureBoundarySource(resolvedSource, snapshot, casObjects));
-                continue;
-            }
-
-            if (source.Entries.Length > 0
-                && !source.Entries.Any(static entry => entry.Boundary is null))
-            {
                 sources.Add(resolvedSource);
                 continue;
             }
@@ -255,60 +245,19 @@ internal static class DigestionIngestor
                 .ToImmutableArray();
             var priorAcknowledgments = source.AcknowledgedStale.ToHashSet(StringComparer.Ordinal);
             var entries = source.Entries.ToBuilder();
-            foreach (var reclassification in alignment.GenreReclassifications.Where(item =>
-                         item.SourceId == source.SourceId))
-            {
-                var matches = entries
-                    .Select((entry, index) => (Entry: entry, Index: index))
-                    .Where(item => item.Entry.AtomId == reclassification.AtomId)
-                    .ToArray();
-                if (matches.Length != 1)
-                {
-                    throw new FormatException(
-                        $"ingest genre reclassification atom_id resolves to {matches.Length} entries: "
-                        + reclassification.AtomId);
-                }
-
-                var (entry, index) = matches[0];
-                entries[index] = entry with
-                {
-                    AstPath = reclassification.AstPath,
-                };
-            }
-
             if (residualBySource.TryGetValue(source.SourceId, out var residual))
             {
                 foreach (var item in residual)
                 {
                     if (!atomIds.Add(item.SuggestedAtomId))
                     {
-                        var matches = entries
-                            .Select((entry, index) => (Entry: entry, Index: index))
-                            .Where(match => match.Entry.AtomId == item.SuggestedAtomId)
-                            .ToArray();
-                        if (matches.Length == 1
-                            && AstPathKind(matches[0].Entry.AstPath)
-                                == AstPathKind(item.Atom.AstPath)
-                            && (stale.Contains(matches[0].Entry.AtomId)
-                                || !alignment.IsProduced(
-                                    source.SourceId,
-                                    matches[0].Entry.AstPath)))
-                        {
-                            var (entry, index) = matches[0];
-                            entries[index] = entry with { AstPath = item.Atom.AstPath };
-                            acknowledgments = acknowledgments
-                                .Where(atomId => atomId != entry.AtomId)
-                                .ToImmutableArray();
-                            continue;
-                        }
-
-                        throw new FormatException(
-                            $"ingest residual atom_id collides with the ledger: {item.SuggestedAtomId}");
+                        continue;
                     }
 
                     var captured = AddCasObject(item.Atom.RawBytes.AsSpan(), casObjects);
                     var priorGenerations = source.Entries
-                        .Where(entry => entry.AstPath == item.Atom.AstPath)
+                        .Where(entry => entry.Fingerprints.RawSha256
+                            == item.Atom.Fingerprints.RawSha256)
                         .ToArray();
                     var receiptedCoverage = baselineSnapshot is null
                         ? ImmutableHashSet<string>.Empty
@@ -337,8 +286,6 @@ internal static class DigestionIngestor
                         source.SourcePath,
                         source.Atomizer,
                         item.SuggestedAtomId,
-                        item.Atom.AstPath,
-                        Boundary: null,
                         item.Atom.Fingerprints,
                         CoverageGids: inheritedCoverage,
                         new DigestionReceipts([], [], inheritedUnresolvedSubitems, [], null),
@@ -355,15 +302,14 @@ internal static class DigestionIngestor
                 {
                     var parentIndexes = entries
                         .Select((entry, index) => (Entry: entry, Index: index))
-                        .Where(item => item.Entry.AstPath == clausePlan.Plan.ParentAstPath
-                            && DigestionLedgerAligner.FingerprintsMatch(
+                        .Where(item => DigestionLedgerAligner.FingerprintsMatch(
                                 item.Entry.Fingerprints,
                                 clausePlan.Parent.Fingerprints))
                         .ToArray();
                     if (parentIndexes.Length != 1)
                     {
                         throw new FormatException(
-                            $"ingest clause plan parent {clausePlan.Plan.ParentAstPath} resolves to "
+                            $"ingest clause plan parent {clausePlan.Parent.Fingerprints.RawSha256} resolves to "
                             + $"{parentIndexes.Length} ledger entries");
                     }
 
@@ -381,33 +327,27 @@ internal static class DigestionIngestor
                     }
 
                     var childIds = ImmutableArray.CreateBuilder<string>(clausePlan.Plan.Children.Length);
-                    foreach (var (child, childIndex) in clausePlan.Plan.Children.Select(
-                                 (child, index) => (Child: child, Index: index)))
+                    foreach (var child in clausePlan.Plan.Children)
                     {
-                        var childId = ClauseAtomId(source, parent, child, childIndex);
-                        if (!atomIds.Add(childId))
+                        var childId = ClauseAtomId(child);
+                        if (atomIds.Add(childId))
                         {
-                            throw new FormatException(
-                                $"ingest clause atom_id collides with the ledger: {childId}");
+                            var captured = AddCasObject(child.RawBytes.AsSpan(), casObjects);
+                            entries.Add(new DigestionLedgerEntry(
+                                source.SourceId,
+                                source.SourcePath,
+                                source.Atomizer,
+                                childId,
+                                child.Fingerprints,
+                                CoverageGids: [],
+                                new DigestionReceipts([], [], [], [], null),
+                                new DigestionStatus(
+                                    DigestionMigrationState.Residual,
+                                    DigestionTruthState.Open),
+                                CasRef: captured.Reference));
+                            residualOpenAdded++;
                         }
-
-                        var captured = AddCasObject(child.RawBytes.AsSpan(), casObjects);
-                        entries.Add(new DigestionLedgerEntry(
-                            source.SourceId,
-                            source.SourcePath,
-                            source.Atomizer,
-                            childId,
-                            child.AstPath,
-                            Boundary: null,
-                            child.Fingerprints,
-                            CoverageGids: [],
-                            new DigestionReceipts([], [], [], [], null),
-                            new DigestionStatus(
-                                DigestionMigrationState.Residual,
-                                DigestionTruthState.Open),
-                            CasRef: captured.Reference));
                         childIds.Add(childId);
-                        residualOpenAdded++;
                     }
 
                     entries[parentIndex] = parent with
@@ -431,7 +371,7 @@ internal static class DigestionIngestor
         }
 
         return new DigestionIngestPlan(
-            migrationDocument.WithDigestionSources(sources.ToImmutable()),
+            NormalizeAtomIdentities(migrationDocument.WithDigestionSources(sources.ToImmutable())),
             alignment,
             staleAcknowledged,
             residualOpenAdded,
@@ -441,90 +381,8 @@ internal static class DigestionIngestor
             alignment.Fallbacks);
     }
 
-    private static string ClauseAtomId(
-        DigestionLedgerSource source,
-        DigestionLedgerEntry parent,
-        DigestionAtom child,
-        int childIndex)
-    {
-        var stem = AtomizerRegistry.Require(source.Atomizer).ResidualPrefix
-            + "-residual-"
-            + child.Fingerprints.RawSha256["sha256:".Length..];
-        var occurrenceBytes = Encoding.UTF8.GetBytes(
-            parent.AtomId + "\0" + child.AstPath + "\0" + childIndex);
-        return stem + "-" + Convert.ToHexStringLower(SHA256.HashData(occurrenceBytes));
-    }
-
-    private static DigestionLedgerSource CaptureBoundarySource(
-        DigestionLedgerSource source,
-        RepositorySnapshot snapshot,
-        IDictionary<string, DigestionCasObject> casObjects)
-    {
-        if (!snapshot.TryGetFile(source.SourcePath, out var sourceFile))
-        {
-            throw new FormatException($"ingest source path is dangling: {source.SourcePath}");
-        }
-
-        return source with
-        {
-            Entries = source.Entries
-                .Select(entry => CaptureBoundaryEntry(
-                    entry,
-                    sourceFile.RawBytes,
-                    snapshot,
-                    casObjects))
-                .ToImmutableArray(),
-        };
-    }
-
-    private static DigestionLedgerEntry CaptureBoundaryEntry(
-        DigestionLedgerEntry entry,
-        ImmutableArray<byte> sourceBytes,
-        RepositorySnapshot snapshot,
-        IDictionary<string, DigestionCasObject> casObjects)
-    {
-        var existingBoundary = entry.Boundary
-            ?? throw new FormatException(
-                $"ingest no-atomizer entry {entry.AtomId} has no boundary");
-        var casPath = DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..];
-        if (!snapshot.TryGetFile(casPath, out var blob))
-        {
-            throw new FormatException(
-                $"ingest entry {entry.AtomId} CAS blob is missing: {casPath}");
-        }
-
-        var casObject = DigestionCasStore.Capture(blob.RawBytes.AsSpan());
-        if (casObject.Reference != entry.CasRef)
-        {
-            throw new FormatException(
-                $"ingest entry {entry.AtomId} CAS blob hash mismatch: {casPath}");
-        }
-
-        var receiptBytes = blob.RawBytes.AsSpan();
-        var start = receiptBytes.IsEmpty ? -1 : sourceBytes.AsSpan().IndexOf(receiptBytes);
-        if (start < 0)
-        {
-            throw new FormatException(
-                $"ingest entry {entry.AtomId} has no byte-exact match in {entry.SourcePath}");
-        }
-
-        if (sourceBytes.AsSpan()[(start + 1)..].IndexOf(receiptBytes) >= 0)
-        {
-            throw new FormatException(
-                $"ingest entry {entry.AtomId} has multiple byte-exact matches in {entry.SourcePath}");
-        }
-
-        var rebound = new DigestionBoundary(
-            existingBoundary.AstPath,
-            start,
-            start + receiptBytes.Length);
-        return rebound == existingBoundary
-            ? entry
-            : entry with
-            {
-                Boundary = rebound,
-            };
-    }
+    private static string ClauseAtomId(DigestionAtom child) =>
+        child.Fingerprints.RawSha256["sha256:".Length..];
 
     private static DigestionCasObject AddCasObject(
         ReadOnlySpan<byte> bytes,
@@ -545,27 +403,210 @@ internal static class DigestionIngestor
         return captured;
     }
 
-    private static string AstPathKind(string astPath)
+    internal static BackfillInventoryDocument NormalizeAtomIdentities(
+        BackfillInventoryDocument document)
     {
-        var separator = astPath.IndexOf('/', StringComparison.Ordinal);
-        return separator < 0 ? astPath : astPath[..separator];
+        var sources = document.RequireDigestionSources();
+        var items = sources
+            .SelectMany((source, sourceIndex) => source.Entries.Select((entry, entryIndex) =>
+                (Source: source, SourceIndex: sourceIndex, Entry: entry, EntryIndex: entryIndex)))
+            .ToArray();
+        var oldToNew = new Dictionary<string, string>(StringComparer.Ordinal);
+        foreach (var item in items)
+        {
+            if (!DigestionFingerprint.IsCanonicalSha256(item.Entry.Fingerprints.RawSha256))
+            {
+                throw new FormatException(
+                    $"entry {item.Entry.AtomId} raw fingerprint is not canonical sha256");
+            }
+
+            var atomId = item.Entry.Fingerprints.RawSha256["sha256:".Length..];
+            if (oldToNew.TryGetValue(item.Entry.AtomId, out var existing) && existing != atomId)
+            {
+                throw new FormatException(
+                    $"ledger atom_id {item.Entry.AtomId} names multiple content hashes");
+            }
+
+            oldToNew[item.Entry.AtomId] = atomId;
+        }
+
+        string Remap(string atomId) => oldToNew.GetValueOrDefault(atomId, atomId);
+
+        var entriesBySource = sources.ToDictionary(
+            static source => source.SourceId,
+            static _ => ImmutableArray.CreateBuilder<DigestionLedgerEntry>(),
+            StringComparer.Ordinal);
+        foreach (var group in items.GroupBy(
+                     static item => item.Entry.Fingerprints.RawSha256,
+                     StringComparer.Ordinal))
+        {
+            var members = group
+                .OrderBy(static item => item.Source.SourceId, StringComparer.Ordinal)
+                .ThenBy(static item => item.Entry.AtomId, StringComparer.Ordinal)
+                .ToArray();
+            var owner = members[0];
+            var atomId = group.Key["sha256:".Length..];
+            var expectedReference = "sha256:" + atomId;
+            if (members.Any(item => item.Entry.CasRef != expectedReference))
+            {
+                throw new FormatException($"atom {atomId} CAS reference differs from its content hash");
+            }
+
+            var normalizedFingerprints = members
+                .Select(static item => item.Entry.Fingerprints.NormalizedSha256)
+                .Distinct(StringComparer.Ordinal)
+                .ToArray();
+            if (normalizedFingerprints.Length != 1)
+            {
+                throw new FormatException($"atom {atomId} has conflicting normalized fingerprints");
+            }
+
+            var statuses = members
+                .Select(static item => item.Entry.ProjectedStatus)
+                .Distinct()
+                .ToArray();
+            if (statuses.Length != 1)
+            {
+                throw new FormatException($"atom {atomId} has conflicting statuses");
+            }
+
+            var coverage = MergeCoverageReceipts(atomId, members.SelectMany(
+                static item => item.Entry.Receipts.Coverage));
+            var scribe = MergeScribeReceipts(atomId, members.SelectMany(
+                static item => item.Entry.Receipts.Scribe));
+            var chainCandidates = members
+                .Select(item => item.Entry.Receipts.ChainAtoms.Select(Remap).ToImmutableArray())
+                .Where(static chain => !chain.IsEmpty)
+                .ToArray();
+            var chain = chainCandidates.FirstOrDefault();
+            if (chainCandidates.Any(candidate => !candidate.SequenceEqual(chain, StringComparer.Ordinal)))
+            {
+                throw new FormatException($"atom {atomId} has conflicting clause chains");
+            }
+
+            var tail = SingleOptional(
+                atomId,
+                "tail authorization",
+                members.Select(static item => item.Entry.Receipts.TailAuthorization));
+            var quarantine = SingleOptional(
+                atomId,
+                "quarantine",
+                members.Select(static item => item.Entry.Receipts.Quarantine));
+            var disposition = SingleCoverDisposition(
+                atomId,
+                members.Select(static item => item.Entry.Receipts.CoverDisposition));
+            var coverageGids = members
+                .SelectMany(static item => item.Entry.CoverageGids)
+                .Distinct(StringComparer.Ordinal)
+                .Order(StringComparer.Ordinal)
+                .ToImmutableArray();
+            if (!coverageGids.IsEmpty && (quarantine is not null || disposition is not null))
+            {
+                throw new FormatException(
+                    $"atom {atomId} merged coverage conflicts with quarantine or disposition");
+            }
+
+            entriesBySource[owner.Source.SourceId].Add(new DigestionLedgerEntry(
+                owner.Source.SourceId,
+                owner.Source.SourcePath,
+                owner.Source.Atomizer,
+                atomId,
+                new DigestionFingerprints(group.Key, normalizedFingerprints[0]),
+                coverageGids,
+                new DigestionReceipts(
+                    coverage,
+                    scribe,
+                    members.SelectMany(static item => item.Entry.Receipts.UnresolvedSubitems)
+                        .Distinct(StringComparer.Ordinal)
+                        .Order(StringComparer.Ordinal)
+                        .ToImmutableArray(),
+                    chain.IsDefault ? [] : chain,
+                    tail,
+                    quarantine,
+                    disposition),
+                statuses[0],
+                expectedReference));
+        }
+
+        return document.WithDigestionSources(sources.Select(source => source with
+        {
+            AcknowledgedStale = source.AcknowledgedStale
+                .Select(Remap)
+                .Distinct(StringComparer.Ordinal)
+                .Order(StringComparer.Ordinal)
+                .ToImmutableArray(),
+            Entries = entriesBySource[source.SourceId]
+                .OrderBy(static entry => entry.AtomId, StringComparer.Ordinal)
+                .ToImmutableArray(),
+        }).ToImmutableArray());
     }
 
-    private static BackfillInventoryDocument PrepareLegacyMigrations(
-        BackfillInventoryDocument document) =>
-        document.WithDigestionSources(document.RequireDigestionSources()
-            .Select(source => !AtomizerRegistry.IsRegistered(source.Atomizer)
-                ? source
-                : source with
-                {
-                    Entries = source.Entries
-                        .Select(static entry => entry.Boundary is null
-                            ? entry
-                            : entry with
-                            {
-                                Boundary = null,
-                            })
-                        .ToImmutableArray(),
-                })
-            .ToImmutableArray());
+    private static ImmutableArray<DigestionCoverageReceipt> MergeCoverageReceipts(
+        string atomId,
+        IEnumerable<DigestionCoverageReceipt> receipts) =>
+        receipts.GroupBy(static receipt => receipt.Gid, StringComparer.Ordinal)
+            .OrderBy(static group => group.Key, StringComparer.Ordinal)
+            .Select(group =>
+            {
+                var values = group.Distinct().ToArray();
+                return values.Length == 1
+                    ? values[0]
+                    : throw new FormatException(
+                        $"atom {atomId} has conflicting coverage receipts for {group.Key}");
+            })
+            .ToImmutableArray();
+
+    private static ImmutableArray<DigestionScribeReceipt> MergeScribeReceipts(
+        string atomId,
+        IEnumerable<DigestionScribeReceipt> receipts) =>
+        receipts.GroupBy(static receipt => receipt.Gid, StringComparer.Ordinal)
+            .OrderBy(static group => group.Key, StringComparer.Ordinal)
+            .Select(group =>
+            {
+                var values = group.Distinct().ToArray();
+                return values.Length == 1
+                    ? values[0]
+                    : throw new FormatException(
+                        $"atom {atomId} has conflicting scribe receipts for {group.Key}");
+            })
+            .ToImmutableArray();
+
+    private static T? SingleOptional<T>(
+        string atomId,
+        string label,
+        IEnumerable<T?> values)
+        where T : class
+    {
+        var present = values.Where(static value => value is not null).Cast<T>().Distinct().ToArray();
+        return present.Length switch
+        {
+            0 => null,
+            1 => present[0],
+            _ => throw new FormatException($"atom {atomId} has conflicting {label}"),
+        };
+    }
+
+    private static DigestionCoverDisposition? SingleCoverDisposition(
+        string atomId,
+        IEnumerable<DigestionCoverDisposition?> values)
+    {
+        var present = values.Where(static value => value is not null).Cast<DigestionCoverDisposition>().ToArray();
+        if (present.Length == 0)
+        {
+            return null;
+        }
+
+        var first = present[0];
+        if (present.Skip(1).Any(value =>
+                value.Outcome != first.Outcome
+                || value.RecordedAtUtc != first.RecordedAtUtc
+                || !value.Gids.SequenceEqual(first.Gids, StringComparer.Ordinal)
+                || !value.Gaps.SequenceEqual(first.Gaps)))
+        {
+            throw new FormatException($"atom {atomId} has conflicting cover dispositions");
+        }
+
+        return first;
+    }
+
 }

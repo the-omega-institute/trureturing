@@ -1,0 +1,59 @@
+## 定理 1265.1（Countable finite-matrix criterion）
+
+在 shifted-\(\xi\) 核的标准解析域中：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+G_{n,N}\succeq0
+\quad
+\forall n,N.
+}
+\tag{1265.4}
+$$
+
+### 正向
+
+RH 成立时，每个 \(\Theta_{\omega_n}\) 是上半平面的 meromorphic inner／Schur 型函数，相应 de Branges 核非负。Suzuki 的 shifted-\(\xi\) 工作正是以：
+
+$$
+\Theta_\omega(z)
+=
+\frac{
+\xi(\frac12-\omega-iz)
+}{
+\xi(\frac12+\omega-iz)
+}
+$$
+
+的 meromorphic-inner 性和对应 canonical Hamiltonian 的半正定性组织 RH 判据。([arXiv][4])
+
+### 反向
+
+若存在离线零点，则某个黄金层满足：
+
+$$
+\omega_n<\delta.
+$$
+
+此时已经构造出：
+
+$$
+z_0\in\mathbb C^+
+$$
+
+使：
+
+$$
+\mathcal K_{\omega_n}(z_0,z_0)<0.
+$$
+
+严格负性在 \(z_0\) 的某个邻域保持，故该邻域含有有理点 \(q_j\)。
+
+于是某个有限 \(1\times1\) 或更高阶矩阵 \(G_{n,N}\) 非正半定。
+
+∎
+
+---
+

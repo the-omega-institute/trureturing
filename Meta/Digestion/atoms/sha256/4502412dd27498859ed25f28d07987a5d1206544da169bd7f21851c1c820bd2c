@@ -1,0 +1,70 @@
+# 第一千四百零八部　形式化顺序
+
+```text
+D5/S3/Analytic/Zeta/PoissonShadowState/
+  OffLinePoissonDensity.lean
+  OffLinePoissonMassOne.lean
+  OffLinePoissonFourier.lean
+  CriticalPoissonWeakDirac.lean
+  CurvatureIsPoissonScaleDerivative.lean
+
+D5/S3/Analytic/Zeta/CauchyInformationGeometry/
+  CauchyLocationScore.lean
+  CauchyScaleScore.lean
+  CauchyFisherMatrix.lean
+  CauchyFisherHyperbolicMetric.lean
+  CriticalBoundaryInfiniteFisherDistance.lean
+
+D5/S3/Analytic/Zeta/HorizonRelativeEntropy/
+  CauchyKLDivergence.lean
+  ShiftedPoissonKLDivergence.lean
+  ShiftedKLIsHorizonFreeEnergy.lean
+  ShiftedKLIsHyperbolicDistanceFunction.lean
+  PoissonSmoothingDecreasesShiftedKL.lean
+
+D5/S3/Observer/HorizonIndex/
+  FiniteRankHorizonIndex.lean
+  HorizonIndexSingularValueProduct.lean
+  RankOneHorizonIndex.lean
+  HorizonIndexLogEqualsFreeEnergy.lean
+  HorizonIndexDivergesAtCrossing.lean
+
+D5/S3/GoldenObserver/GoldenHorizonMatching/
+  GoldenHorizonIndex.lean
+  GoldenHorizonDeterminant.lean
+  GoldenHankelLeakage.lean
+  GoldenBogoliubovOccupation.lean
+  GoldenHorizonKL.lean
+  GoldenVisibleHiddenEnergySplit.lean
+
+D5/S3/GoldenObserver/GoldenHyperbolicAxis/
+  GoldenMobiusHalfStep.lean
+  GoldenMobiusSquare.lean
+  GoldenMobiusFixedPoints.lean
+  GoldenHyperbolicAxis.lean
+  GoldenHyperbolicTranslationLength.lean
+
+D5/S3/Observer/GoldenJonesPrototype/
+  ObserverSubfactorInclusion.lean
+  ObserverConditionalExpectation.lean
+  GoldenJonesIndex.lean
+  GoldenJonesProjectionTrace.lean
+  GoldenIndexInformationScale.lean
+  GoldenJonesTowerFloor.lean
+
+D5/S3/Weil/GoldenJonesTower/
+  ShiftedKernelConditionalExpectationTarget.lean
+  GoldenTowerKernelPositive.lean
+  GoldenTowerFiniteFloor.lean
+  GoldenTowerCofinalInnerness.lean
+  GoldenJonesTowerImpliesRHTarget.lean
+
+D5/S3/Weil/FiniteIndexHorizonExclusion/
+  HorizonIndexBoundedByObserverIndexTarget.lean
+  UniformFiniteObserverIndex.lean
+  OffLineZeroForcesUnboundedHorizonIndex.lean
+  FiniteIndexObserverExcludesOffLineZero.lean
+```
+
+---
+

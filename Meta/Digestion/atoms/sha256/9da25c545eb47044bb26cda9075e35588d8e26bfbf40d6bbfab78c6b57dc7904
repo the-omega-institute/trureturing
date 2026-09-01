@@ -1,0 +1,20 @@
+## 9. 机器 owner
+
+```text
+D5/S3/Observer/GoldenPrimeCircle/
+  GoldenScaleCircle.lean
+  GoldenVerticalSampling.lean
+  SharedChargeDifferentShells.lean
+
+D5/S3/PrimeForms/GoldenEuler/
+  GoldenChargeTomography.lean
+  GoldenLocalEulerTrichotomy.lean
+  GoldenResidueChargeBridge.lean
+
+D5/S3/Weil/GoldenCriticalSpectrum/
+  GoldenCriticalRadius.lean
+  GoldenReflectionTransfer.lean
+```
+
+---
+

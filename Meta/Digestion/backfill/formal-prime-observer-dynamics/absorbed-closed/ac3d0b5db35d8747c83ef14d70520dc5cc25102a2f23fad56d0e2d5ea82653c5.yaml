@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:ac3d0b5db35d8747c83ef14d70520dc5cc25102a2f23fad56d0e2d5ea82653c5
+  normalized_sha256: sha256:ac3d0b5db35d8747c83ef14d70520dc5cc25102a2f23fad56d0e2d5ea82653c5
+cas_ref: sha256:ac3d0b5db35d8747c83ef14d70520dc5cc25102a2f23fad56d0e2d5ea82653c5
+coverage_gids:
+  - D5/S3/ConceptDynamics/InterventionsExchange/MarginalTransportCouplingGap.marginal_transport_does_not_determine_coupling
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/InterventionsExchange/MarginalTransportCouplingGap.marginal_transport_does_not_determine_coupling
+      source_sha256: sha256:ac3d0b5db35d8747c83ef14d70520dc5cc25102a2f23fad56d0e2d5ea82653c5
+      target_statement_id: sha256:2c87ecf8a1d614b0c9435f4641c4b3ddf0045a7f98fcbdfd29f1efedea147d23
+  scribe:
+    - gid: D5/S3/ConceptDynamics/InterventionsExchange/MarginalTransportCouplingGap.marginal_transport_does_not_determine_coupling
+      definition_sha256: sha256:78ddb2813af1fc5913765db9d5fd8f36189f658203a93ff30466184925efb79c
+      emission_sha256: sha256:596b1b80fe9f371c52bde137fa62488cce64eaaefe7da86994f44a41d72cb721
+  unresolved_subitems: []

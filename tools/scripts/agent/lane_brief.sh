@@ -1,7 +1,7 @@
 #!/bin/bash
 # 器律⑨: deposit-lane brief renderer for the sshx formalization line (session w72 lineage).
 # usage: lane_brief.sh LANE WORKTREE BASESHA LEASE.json EXCL.txt OUT.md HEAD_TEMPLATE.md BODY_TEMPLATE.md [PROBE_NOTE.txt]
-#   LEASE.json = list (or {"atoms":[...]}) of digest-status v3 candidate rows: source_id, atom_id, ast_path, kind, atom_text
+#   LEASE.json = list (or {"atoms":[...]}) of digest-status candidate rows: source_id, atom_id, kind, atom_text
 #   EXCL.txt   = one atom_id per line (see refresh_exclusions.sh)
 # Glue, not program (CLAUDE.md 第 11 条辨析): fail-fast on inputs, sentinel line `LANE_BRIEF_OK` on success, idempotent (rewrites OUT).
 # The two prompt templates are DATA supplied by the caller (owner ruling #4065: no data inside scripts); this file is program only.
@@ -25,7 +25,7 @@ lease=json.load(open(leasef,encoding='utf-8')); lease=lease.get('atoms',lease) i
 assert lease, 'LANE_BRIEF_EMPTY_LEASE'
 parts=[head.rstrip('\n'),'']
 for i,a in enumerate(lease,1):
-    parts.append(f"{i}. atom_id: {a['atom_id']}\n   source: {a['source_id']}  ast_path: {a['ast_path']}  kind: {a['kind']}\n   atom_text:\n---\n{a['atom_text']}\n---")
+    parts.append(f"{i}. atom_id: {a['atom_id']}\n   source: {a['source_id']}  kind: {a['kind']}\n   atom_text:\n---\n{a['atom_text']}\n---")
 if probe: parts.append('\n>>> '+probe.strip()+'\n')
 subprocess.run(['git','-C',wt,'fetch','-q','origin','dev'],check=True)
 cnt=collections.Counter()

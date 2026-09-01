@@ -1,0 +1,30 @@
+# 2. Zero-side 真源
+
+Lean GID：
+
+`D5/S3/Weil/HolonomyBridge/OffLineOrbitParityDecomposition`
+
+主声明：
+
+`D5.S3.Weil.HolonomyBridge.OffLineOrbitParityDecomposition.off_line_orbit_parity_decomposition`
+
+对 `ZeroData` 中一个非实、离线的零点索引 \(n\)，令
+
+\[
+z=\gamma_n,
+\qquad
+A=\widehat g(z),
+\qquad
+B=\widehat g(\overline z).
+\]
+
+定义偶、奇谱通道
+
+\[
+A_{\mathrm{even}}=\frac{A+B}{2},
+\qquad
+A_{\mathrm{odd}}=\frac{A-B}{2}.
+\]
+
+仓库已有复频率卷积平方因子分解和离线四点轨道实值公式。本轮 Lean 节点证明
+

@@ -1,0 +1,57 @@
+* 用有限 Hankel 秩和 Prony 递归恢复它。
+
+---
+
+仓库目前已经证明 prime-power 双向历史可以重求和成酉 Poisson resolvent，也已经能够从 shifted scattering ratios 重建 \(\zeta\)。
+
+但双向酉性仍然允许 causal 与 anti-causal 两种方向。
+
+所以真正缺少的不是另一个函数方程，而是：
+
+$$
+\boxed{
+\textbf{Prime–Archimedean Hardy triangularity}.
+}
+$$
+
+即证明：
+
+$$
+\boxed{
+P_-M_{\Theta_\omega}P_+=0
+\qquad
+\forall\omega>0.
+}
+$$
+
+或等价地证明：
+
+$$
+\boxed{
+\mathcal F^{-1}\Theta_\omega
+\text{ 没有负时间支撑}.
+}
+$$
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{“道”保存完整双向酉关系；
+观察者以 Hardy 极化选择未来；
+黄金比例提供逐层逼近极化边界的自相似时钟；
+临界零点保持未来子空间；
+离线零点则把一部分酉相位泄漏成有限维负时间记忆。}
+}
+$$
+
+因此下一条真正承重、而且比“证明散射酉”更精确的命题是：
+
+$$
+\boxed{
+\text{从 prime–pole–Archimedean 数据直接证明 shifted scattering
+具有单边 Fourier 支撑。}
+}
+$$
+
+一旦完成，所有 inverse-inner denominator、反因果 Hankel 块、负平方、bulk Chern 缺陷与离线零点将被同一条因果三角性整体排除。

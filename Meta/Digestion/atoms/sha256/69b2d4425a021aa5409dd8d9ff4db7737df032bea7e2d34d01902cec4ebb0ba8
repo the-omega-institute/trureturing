@@ -1,0 +1,24 @@
+# 12. 严格非主张
+
+本轮不主张：
+
+- 相位已经同步；
+- holonomy 能量随时间单调；
+- 已构造时间箭头；
+- residual envelope 已经衰减；
+- 时间积分能量已经定义；
+- prime-side 能量已经等于或支配 zero-side 能量；
+- 已定位任何 zeta 零点；
+- 已证明 RH。
+
+本轮机器真源是
+
+\[
+\boxed{
+\text{unitary prime-frequency phase twist}
+\Longrightarrow
+\text{time-dependent stable curvature}
+\Longrightarrow
+\text{time-uniform finite residual-energy bound}.
+\]
+

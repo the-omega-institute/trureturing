@@ -102,8 +102,7 @@ public sealed partial class ProductionEnvironmentTests
             + "genre_registry_check = \"collected\"\n"
             + "unregistered_genres = []\n";
         fixture.Files.Remove(RuleFixture.FixtureBackfillAtomPath);
-        fixture.Files[$"{BackfillInventoryLoader.RootPath}fixture-source/residual-open/normalized-receipt.yaml"] = $$"""
-            ast_path: {{atom.AstPath}}
+        fixture.Files[$"{BackfillInventoryLoader.RootPath}fixture-source/residual-open/{AtomId(atom)}.yaml"] = $$"""
             fingerprints:
               raw_sha256: {{atom.Fingerprints.RawSha256}}
               normalized_sha256: {{atom.Fingerprints.NormalizedSha256}}
@@ -151,7 +150,7 @@ public sealed partial class ProductionEnvironmentTests
 
         Assert.True(result.Success, result.Error);
         Assert.Contains("\"entries_total\": 1", result.Output, StringComparison.Ordinal);
-        Assert.Contains("\"atom_id\": \"fixture-atom\"", result.Output, StringComparison.Ordinal);
+        Assert.Contains($"\"atom_id\": \"{RuleFixture.FixtureAtomId}\"", result.Output, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -173,8 +172,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.True(result.Success, result.Error);
         Assert.Contains("\"entries_total\": 1", result.Output, StringComparison.Ordinal);
         Assert.Contains("\"deletable_now\": 0", result.Output, StringComparison.Ordinal);
-        Assert.Contains("\"atom_id\": \"fixture-atom\"", result.Output, StringComparison.Ordinal);
-        Assert.Contains("\"code\": \"boundary-not-reproducible\"", result.Output, StringComparison.Ordinal);
+        Assert.Contains($"\"atom_id\": \"{RuleFixture.FixtureAtomId}\"", result.Output, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -202,21 +200,24 @@ public sealed partial class ProductionEnvironmentTests
         Assert.True(result.Success, result.Error);
         Assert.Contains("- unresolved_subitems: 2", result.Output, StringComparison.Ordinal);
         Assert.Contains("- mother_residual_atom_ids: 1", result.Output, StringComparison.Ordinal);
-        Assert.Contains("- `fixture-atom` (2)", result.Output, StringComparison.Ordinal);
+        Assert.Contains($"- `{RuleFixture.FixtureAtomId}` (2)", result.Output, StringComparison.Ordinal);
         Assert.True(
             result.Output.IndexOf("`alpha-residual`", StringComparison.Ordinal)
                 < result.Output.IndexOf("`zeta-residual`", StringComparison.Ordinal));
-        Assert.DoesNotContain("boundary-not-reproducible", result.Output, StringComparison.Ordinal);
     }
 
     [Fact]
-    public void DigestStatusReportsHistoricalCasReceiptAsStaleAndCurrentReceiptAsSeen()
+    public void DigestStatusReportsHistoricalAndCurrentContentAsSeen()
     {
         var fixture = new RuleFixture();
         var atomizerId = SyntheticNumberedAtomizer.Id;
         var oldBytes = Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。old。\n");
         var currentBytes = Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。rewritten。\n");
         var oldAtom = Assert.Single(AtomizerRegistry.Atomize(atomizerId, oldBytes, DigestionTestSupport.Rules).Claims);
+        var currentAtom = Assert.Single(AtomizerRegistry.Atomize(
+            atomizerId,
+            currentBytes,
+            DigestionTestSupport.Rules).Claims);
         var baselineLedger = IngestLedger(atomizerId, oldAtom);
         var baselineDocument = baselineLedger;
         var oldCapture = DigestionCasStore.Capture(oldAtom.RawBytes.AsSpan());
@@ -256,15 +257,12 @@ public sealed partial class ProductionEnvironmentTests
         var entries = json.RootElement.GetProperty("entries").EnumerateArray().ToArray();
         var historical = Assert.Single(
             entries,
-            static entry => entry.GetProperty("atom_id").GetString() == "old-receipt");
+            entry => entry.GetProperty("atom_id").GetString() == AtomId(oldAtom));
         var current = Assert.Single(
             entries,
-            static entry => entry.GetProperty("atom_id").GetString() != "old-receipt");
-        Assert.Equal("stale", historical.GetProperty("alignment").GetString());
+            entry => entry.GetProperty("atom_id").GetString() == AtomId(currentAtom));
+        Assert.Equal("seen", historical.GetProperty("alignment").GetString());
         Assert.Equal("seen", current.GetProperty("alignment").GetString());
-        Assert.Contains(
-            historical.GetProperty("gaps").EnumerateArray(),
-            static gap => gap.GetProperty("code").GetString() == "stale-receipt-not-deletable");
     }
 
     [Fact]
@@ -369,7 +367,7 @@ public sealed partial class ProductionEnvironmentTests
         fixture.AddBackfillTargets();
         var atom = fixture.Files[RuleFixture.FixtureBackfillAtomPath];
         fixture.Files.Remove(RuleFixture.FixtureBackfillAtomPath);
-        var statusPath = $"{BackfillInventoryLoader.RootPath}fixture-source/absorbed-closed/fixture-atom.yaml";
+        var statusPath = $"{BackfillInventoryLoader.RootPath}fixture-source/absorbed-closed/{RuleFixture.FixtureAtomId}.yaml";
         fixture.Files[statusPath] = atom;
 
         var unrelated = RunDigestStatus(fixture, RawChangeSet.Create(["notes/r15-unrelated.txt"]));
@@ -443,8 +441,8 @@ public sealed partial class ProductionEnvironmentTests
     {
         const string gid = "D5/S0/Carrier/BackfillTarget";
         const string targetPath = gid + ".lean";
-        const string absorbedPath =
-            "Meta/Digestion/backfill/fixture-source/absorbed-closed/fixture-atom.yaml";
+        var absorbedPath =
+            $"Meta/Digestion/backfill/fixture-source/absorbed-closed/{RuleFixture.FixtureAtomId}.yaml";
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
         fixture.Baseline[targetPath] = fixture.Files[targetPath];
@@ -537,7 +535,8 @@ public sealed partial class ProductionEnvironmentTests
     {
         var materialized = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec() with
         {
-            OtherAtomBinding = ("receipt-gap-sibling", "D5/S0/Carrier/Probe.probe"),
+            OtherAtomGid = "D5/S0/Carrier/Probe.probe",
+            OtherMigration = "absorbed",
         });
         var inputs = DirectoryInputs(WithSiblingReceiptMismatch(materialized, mismatchCode));
         using var temporary = new TemporaryDirectory();
@@ -547,7 +546,7 @@ public sealed partial class ProductionEnvironmentTests
         var result = environment.AlignScribeReceipt(
         [
             "--atom-id", CoverWorld.DefaultAtomId, "--gid", inputs.Gid,
-            "--atom-id", "receipt-gap-sibling", "--gid", inputs.Gid,
+            "--atom-id", CoverWorld.OtherAtomId, "--gid", inputs.Gid,
             "--base", "baseline",
         ]);
 
@@ -555,7 +554,7 @@ public sealed partial class ProductionEnvironmentTests
         Assert.True(inputs.VerifiedEmissions!.TryGet(
             inputs.Gid[..inputs.Gid.LastIndexOf('.')], out var verified));
         var after = BackfillInventoryLoader.LoadRoot(temporary.Path);
-        foreach (var atomId in new[] { CoverWorld.DefaultAtomId, "receipt-gap-sibling" })
+        foreach (var atomId in new[] { CoverWorld.DefaultAtomId, CoverWorld.OtherAtomId })
         {
             var entry = Assert.Single(
                 after.RequireDigestionEntries(),
@@ -575,7 +574,8 @@ public sealed partial class ProductionEnvironmentTests
     {
         var materialized = CoverWorld.Materialize(CoverWorld.StaleReceiptSpec() with
         {
-            OtherAtomBinding = ("receipt-gap-sibling", "D5/S0/Carrier/Probe.probe"),
+            OtherAtomGid = "D5/S0/Carrier/Probe.probe",
+            OtherMigration = "absorbed",
         });
         var inputs = DirectoryInputs(
             WithSiblingReceiptMismatch(materialized, "coverage-receipt-mismatch"));
@@ -587,7 +587,7 @@ public sealed partial class ProductionEnvironmentTests
         var result = environment.AlignScribeReceipt(
         [
             "--atom-id", CoverWorld.DefaultAtomId, "--gid", inputs.Gid,
-            "--atom-id", "receipt-gap-sibling", "--gid", inputs.Gid,
+            "--atom-id", CoverWorld.OtherAtomId, "--gid", inputs.Gid,
             "--base", "baseline",
         ]);
 

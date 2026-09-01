@@ -1,0 +1,10 @@
+fingerprints:
+  raw_sha256: sha256:25e5defd16fcc04c98a3fe4908ab1cb7bcf30dad1e57a40ede1228399deac413
+  normalized_sha256: sha256:25e5defd16fcc04c98a3fe4908ab1cb7bcf30dad1e57a40ede1228399deac413
+cas_ref: sha256:25e5defd16fcc04c98a3fe4908ab1cb7bcf30dad1e57a40ede1228399deac413
+coverage_gids:
+  - D5/S1/Digit/PrimeAxisAddition.prime_axis_addition_spec
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

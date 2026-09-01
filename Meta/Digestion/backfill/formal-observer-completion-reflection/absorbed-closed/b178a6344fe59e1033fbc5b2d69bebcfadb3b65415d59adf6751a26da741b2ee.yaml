@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:b178a6344fe59e1033fbc5b2d69bebcfadb3b65415d59adf6751a26da741b2ee
+  normalized_sha256: sha256:b178a6344fe59e1033fbc5b2d69bebcfadb3b65415d59adf6751a26da741b2ee
+cas_ref: sha256:b178a6344fe59e1033fbc5b2d69bebcfadb3b65415d59adf6751a26da741b2ee
+coverage_gids:
+  - D5/S1/Solenoid/Connectivity/SameFiberPathOrbitCriterion.same_fiber_path_orbit_criterion
+receipts:
+  coverage:
+    - gid: D5/S1/Solenoid/Connectivity/SameFiberPathOrbitCriterion.same_fiber_path_orbit_criterion
+      source_sha256: sha256:b178a6344fe59e1033fbc5b2d69bebcfadb3b65415d59adf6751a26da741b2ee
+      target_statement_id: sha256:47930416024ece73f0b2c98ee5d83fd1cd4c384a374501efcdec1f45f69c2681
+  scribe:
+    - gid: D5/S1/Solenoid/Connectivity/SameFiberPathOrbitCriterion.same_fiber_path_orbit_criterion
+      definition_sha256: sha256:364618a71c8213b54bb1937f25766a07023a10d759088689a61890fccd242412
+      emission_sha256: sha256:9517229f962bbdb0511e3cc690d6f9e5e51adae620e07a92a1221902f574e92e
+  unresolved_subitems: []

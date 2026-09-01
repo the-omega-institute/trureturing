@@ -1,0 +1,44 @@
+\[
+\boxed{
+\widetilde{\mathcal E}^{\mathrm{hol}}_P(t)
+=
+\sum_{p,q\in P}
+\|\widetilde C_{p,q}(t)\|^2.
+}
+\]
+
+若 \(|P|=M\)，所有通道单位有界，所有 residual 由同一 \(\varepsilon\ge0\) 控制，Lean 证明
+
+\[
+\boxed{
+0
+\le
+\widetilde{\mathcal E}^{\mathrm{hol}}_P(t)
+\le
+M^2
+\left(
+2\|a-1\|\varepsilon
++2\varepsilon^2
+\right)^2
+}
+\]
+
+对所有谱时间成立。
+
+同时：
+
+\[
+\boxed{
+\widetilde{\mathcal E}^{\mathrm{hol}}_P(t)=0
+\iff
+\forall p,q\in P,
+\widetilde C_{p,q}(t)=0.
+}
+\]
+
+所以该能量在每个时间切片上仍然是忠实的非负缺陷量。
+
+需要注意，统一上界不表示能量对时间恒定。各项内部存在不同相位，\(\widetilde C_{p,q}(t)\) 的范数可以随时间变化。机器结论只说明它始终被同一个 residual envelope 控制。
+
+---
+

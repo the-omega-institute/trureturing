@@ -1,0 +1,39 @@
+\[
+\boxed{
+\begin{aligned}
+\widetilde C_{p,q}(t)
+={}&
+(a-1)
+\left(
+r_p\widetilde v_p(t)
+-r_q\widetilde v_q(t)
+\right)
+\\
+&+
+r_pr_q
+\left(
+\widetilde v_q(t)
+-
+\widetilde v_p(t)
+\right).
+\end{aligned}
+}
+\]
+
+第一项是一阶 residual 注入失配。第二项是双 residual 修正。时间只通过两个旋转通道进入。
+
+这给后续分析两个分解方向：
+
+1. 固定 residual 深度，研究 \(t\) 上的相位干涉；
+2. 固定谱时间，研究 extraction 深度上 residual envelope 的衰减。
+
+最终需要处理一个双参数极限或统一界：
+
+\[
+(r,t)
+\longmapsto
+\widetilde C^{\langle r\rangle}_{p,q}(t).
+\]
+
+---
+

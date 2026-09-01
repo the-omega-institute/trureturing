@@ -1,0 +1,66 @@
+## 1417.1 单离线通道的有限负证书
+
+对：
+
+$$
+q=\frac{\omega^2}{\delta^2},
+$$
+
+相应标量矩阵为：
+
+$$
+\boxed{
+G_q
+=
+\begin{pmatrix}
+1-q&q\\
+q&1
+\end{pmatrix}.
+}
+\tag{1417.9}
+$$
+
+其行列式为：
+
+$$
+\boxed{
+\det G_q
+=
+1-q-q^2.
+}
+\tag{1417.10}
+$$
+
+因此：
+
+$$
+\boxed{
+\begin{array}{c|c}
+q<\varphi^{-1}&G_q\succ0\\
+q=\varphi^{-1}&G_q\succeq0\text{ 且奇异}\\
+q>\varphi^{-1}&G_q\text{ 有一个负特征值}
+\end{array}
+}
+\tag{1417.11}
+$$
+
+所以离线零点无需等到真正视界：
+
+$$
+\omega=\delta
+$$
+
+才产生病态。
+
+在：
+
+$$
+\omega>\delta/\sqrt\varphi
+$$
+
+时，已经存在一个严格的 \(2\times2\) 负 Gram 证书。
+
+这比直接逼近发散视界稳定得多。
+
+---
+

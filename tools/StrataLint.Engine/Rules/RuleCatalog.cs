@@ -105,6 +105,8 @@ public sealed class RuleCatalog
                 .Append(26)
                 .Append(28)
                 .Append(29)
+                .Append(30)
+                .Append(31)
                 .Select(RuleId.CreateKnown)
                 .ToImmutableArray();
             if (registrations.Length != expected.Length

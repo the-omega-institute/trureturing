@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:d90f690eebe81365d61e60f11044798f86cd436c25c4ef9f2a243c664dbc3243
+  normalized_sha256: sha256:d90f690eebe81365d61e60f11044798f86cd436c25c4ef9f2a243c664dbc3243
+cas_ref: sha256:d90f690eebe81365d61e60f11044798f86cd436c25c4ef9f2a243c664dbc3243
+coverage_gids:
+  - D5/S0/History/CancellationLedger.record_cancellation_is_append_only
+receipts:
+  coverage:
+    - gid: D5/S0/History/CancellationLedger.record_cancellation_is_append_only
+      source_sha256: sha256:d90f690eebe81365d61e60f11044798f86cd436c25c4ef9f2a243c664dbc3243
+      target_statement_id: sha256:87a95b59447f713b98dcec7902b25247db45b811ce20841f33060b04b3855737
+  scribe:
+    - gid: D5/S0/History/CancellationLedger.record_cancellation_is_append_only
+      definition_sha256: sha256:87613208c33efef4703e6c20e435dd5f8fc517d4cdd12f1bdccbaa863fc30c42
+      emission_sha256: sha256:cb332c1be8d06db49bc2bb9c578691506e53396ff8898768fa01bc26cf4a0137
+  unresolved_subitems: []

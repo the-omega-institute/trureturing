@@ -1,0 +1,6 @@
+- 两行或两列退化时，二阶核归零。
+
+该行列式解释沿用 `SecondMagnusSwapCurvature` 已经冻结的反对称结构。本轮只证明它在黄金采样格上的精确 realization。
+
+---
+

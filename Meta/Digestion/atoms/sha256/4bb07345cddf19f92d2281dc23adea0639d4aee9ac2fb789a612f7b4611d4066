@@ -1,0 +1,51 @@
+# 第一千四百四十九部　不同形态之间还会生成新的关系形态
+
+设两个离线点为：
+
+$$
+\rho_i
+=
+\frac12+\delta_i+i\gamma_i.
+$$
+
+其归一化 Hardy/Cauchy 状态的保真度为：
+
+$$
+\boxed{
+\mathcal F_{ij}
+=
+\frac{
+4\delta_i\delta_j
+}{
+(\gamma_i-\gamma_j)^2+
+(\delta_i+\delta_j)^2
+}.
+}
+\tag{1449.1}
+$$
+
+所以单个形态之外，还有：
+
+$$
+\boxed{
+\text{形态—形态关系}.
+}
+$$
+
+定义 Gram 矩阵：
+
+$$
+\boxed{
+G_{ij}
+=
+\langle
+\widehat k_{\rho_i},
+\widehat k_{\rho_j}
+\rangle.
+}
+\tag{1449.2}
+$$
+
+它记录：
+
+* 不同缺陷的重叠；

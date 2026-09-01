@@ -1,0 +1,23 @@
+fingerprints:
+  raw_sha256: sha256:4040087941f87b1188eb04c9299629112ed7ad62f9fd8b64bca2522461317af2
+  normalized_sha256: sha256:4040087941f87b1188eb04c9299629112ed7ad62f9fd8b64bca2522461317af2
+cas_ref: sha256:4040087941f87b1188eb04c9299629112ed7ad62f9fd8b64bca2522461317af2
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    recorded_at_utc: 2026-08-28T01:05:23.5545060+00:00
+    gids:
+      - D5/S1/FixedPoints/FiniteMonotoneTermination.finite_monotone_termination_and_nonunique_example
+    gaps:
+      - code: chain-migration-incomplete
+        detail: generic-residual-c7fc4772780dfd40df9021628a33418da044e82fd9cc6b1ae69022b566bb3f13-0295b22092cb18ec7eda7bbb5311e86f86a692c46e03981fd90883db191795db
+      - code: chain-migration-incomplete
+        detail: generic-residual-fb06d4dab7be8c3a4361c9e340a642d85de9433d5252f08afb82c9d2c4b46abd-69965f2f1ee9b1a96472eacdd1a965c235496852fd0794b474995238744b21bb
+  chain_atoms:
+    - 184449420612b9b7bb628ac4894f245dcc655d3173b67b96b055819b8dea93b0
+    - c7fc4772780dfd40df9021628a33418da044e82fd9cc6b1ae69022b566bb3f13
+    - fb06d4dab7be8c3a4361c9e340a642d85de9433d5252f08afb82c9d2c4b46abd

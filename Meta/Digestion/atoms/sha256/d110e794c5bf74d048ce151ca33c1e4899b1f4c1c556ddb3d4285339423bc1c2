@@ -1,0 +1,18 @@
+* 一个正定 Hilbert 载体。
+
+Tomita–Takesaki 模理论中，模共轭将代数映到其交换子，模群给出内禀一参数动力；在楔区量子场论中，Bisognano–Wichmann 性质把模流与保持楔区的 Lorentz boost 联系起来。([arXiv][4])
+
+这使“道自观察自身”获得一个更成熟的模型：
+
+$$
+\boxed{
+\text{状态—代数对}
+\longrightarrow
+(J,\Delta)
+\longrightarrow
+\text{内／外对偶与内禀时间}.
+}
+$$
+
+---
+

@@ -1,0 +1,40 @@
+## 十一、与离线零点曲率 dipole 的关系
+
+[repo-derived] 对离线反射对，仓库已有曲率真源
+
+$$
+K_{\delta,\gamma}(t)
+=2\frac{(t-\gamma)^2-\delta^2}
+{((t-\gamma)^2+\delta^2)^2}.
+$$
+
+分子
+
+$$
+(t-\gamma)^2-\delta^2
+$$
+
+是一个不定二次型。区域 $|t-\gamma|<|\delta|$ 为负核心，外部为正翼，总质量为零。故离线缺陷是一种局部重分配。零频率或只读取总积分的观察器无法检测它。
+
+将
+
+$$
+\tau=t-\gamma
+$$
+
+代入后，符号边界
+
+$$
+\tau^2-\delta^2=0
+$$
+
+形成两条特征线 $\tau=\pm\delta$。这与反射生成元的特征因子
+
+$$
+(r-\delta)(r+\delta)=r^2-\delta^2
+$$
+
+具有同一代数骨架。
+
+[research-target] 应建立一个明确的 observer agreement：曲率 dipole 的负核心宽度、反射增长对的双曲率和 signed normal atom 的位置都由同一个参数 $\delta^2$ 控制。只有获得精确等式或带误差运输，这一结构相似性才能承担 RH 路径。
+

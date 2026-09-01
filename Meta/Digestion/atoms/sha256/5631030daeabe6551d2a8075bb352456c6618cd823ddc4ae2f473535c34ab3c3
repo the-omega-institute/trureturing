@@ -1,0 +1,38 @@
+## 定理 1188.1（正度量实现判据）
+
+对于上述二维模式，以下命题等价：
+
+$$
+\boxed{
+\begin{aligned}
+&(1)\quad \delta=0;\\
+&(2)\quad M_\varphi(\rho)\text{ 的特征值均在单位圆上};\\
+&(3)\quad
+\exists H=H^*>0:
+M_\varphi^*HM_\varphi=H;\\
+&(4)\quad
+\mathfrak U_\varphi(\rho)=0.
+\end{aligned}
+}
+\tag{1188.5}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{离线零点不是缺少反射伙伴，}
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{它的复模时间包含非零实部，
+导致任何正定共同度量都无法保持。}
+}
+$$
+
+---
+

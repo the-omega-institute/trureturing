@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:6ac797d30316ddd60eff7645e09a4f342030ed82bbb5e6dede907b39a2f0d266
+  normalized_sha256: sha256:6ac797d30316ddd60eff7645e09a4f342030ed82bbb5e6dede907b39a2f0d266
+cas_ref: sha256:6ac797d30316ddd60eff7645e09a4f342030ed82bbb5e6dede907b39a2f0d266
+coverage_gids:
+  - D5/S3/ConceptDynamics/TimeProjection/FiniteTimeProjectionKernelAntitone.finite_time_projection_kernel_antitone
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/TimeProjection/FiniteTimeProjectionKernelAntitone.finite_time_projection_kernel_antitone
+      source_sha256: sha256:6ac797d30316ddd60eff7645e09a4f342030ed82bbb5e6dede907b39a2f0d266
+      target_statement_id: sha256:798d8244fd5670ccd8832819ec8e0b954df5f4e513e8b3ef1f110923b368e127
+  scribe:
+    - gid: D5/S3/ConceptDynamics/TimeProjection/FiniteTimeProjectionKernelAntitone.finite_time_projection_kernel_antitone
+      definition_sha256: sha256:1b99be3e97cb649182365d4f0b6c7b36649005920948b5b98f21b8664085771f
+      emission_sha256: sha256:6cca123bb40293f71caef39c6ac2f0c2551627b08f2874743a7ee9b70ea7fbb5
+  unresolved_subitems: []

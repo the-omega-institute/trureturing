@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:d0a74e3da0b02cfc5aaa623983710aa892ee35363419e8be4d370598c7d82a45
+  normalized_sha256: sha256:d0a74e3da0b02cfc5aaa623983710aa892ee35363419e8be4d370598c7d82a45
+cas_ref: sha256:d0a74e3da0b02cfc5aaa623983710aa892ee35363419e8be4d370598c7d82a45
+coverage_gids:
+  - D5/S3/ConceptDynamics/Dialectics/MinimalDialecticalRepair.IsCarryWitness
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Dialectics/MinimalDialecticalRepair.IsCarryWitness
+      source_sha256: sha256:d0a74e3da0b02cfc5aaa623983710aa892ee35363419e8be4d370598c7d82a45
+      target_statement_id: sha256:6c92a946ba8035dcfb333d53eaa11c61d86b240982a5cabcb1525cdd2e72e450
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Dialectics/MinimalDialecticalRepair.IsCarryWitness
+      definition_sha256: sha256:dd624fdd5f3312271ac5e344ec8c2470e80d75cce287682d5bda1a0567a0193b
+      emission_sha256: sha256:f0bcc47e69768a17c22cab6efc2580ab1c4b602e24758771957122dab5395a2b
+  unresolved_subitems: []

@@ -7,7 +7,7 @@ namespace StrataLint.Tests;
 
 public sealed partial class DigestionQuarantineTests
 {
-    private const string AtomId = "fixture-atom";
+    private const string AtomId = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
     private const string Digest = "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
     private const string Quarantine = """
         quarantine:
@@ -200,7 +200,6 @@ public sealed partial class DigestionQuarantineTests
             ? string.Empty
             : "\n" + Indent(quarantine, 2);
         return $"atom_id: {atomId}\n"
-            + $"ast_path: fixture/{atomId}\n"
             + "fingerprints:\n"
             + $"  raw_sha256: {Digest}\n"
             + $"  normalized_sha256: {Digest}\n"
@@ -262,8 +261,6 @@ public sealed partial class DigestionQuarantineTests
             "docs/source.md",
             AtomizerRegistry.NoAtomizerId,
             atomId,
-            $"fixture/{atomId}",
-            null,
             new DigestionFingerprints(Digest, Digest),
             [],
             new DigestionReceipts([], [], [.. unresolvedSubitems], [], null, quarantine),

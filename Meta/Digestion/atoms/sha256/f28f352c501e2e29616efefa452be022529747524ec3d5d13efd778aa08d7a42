@@ -1,0 +1,42 @@
+## 1391.1 与仓库 finite holonomy energy 的关系
+
+仓库最新的有限 Holonomy 定理已经证明：对任意有限稳定残余 swap-curvature family，其平方和非负，并且总能量为零当且仅当每个有序对曲率都为零。
+
+式 (1391.2) 提供了一个具体的 zero/Poisson channel 候选：
+
+$$
+\boxed{
+\text{离线 Poisson characters}
+\longrightarrow
+\text{pairwise swap curvature}.
+}
+$$
+
+但必须严格注明：
+
+$$
+\boxed{
+\mathcal R_{ij}
+}
+$$
+
+目前尚未被证明等于仓库中现有的 `stableResidualSwapCurvature`。
+
+需要新增一个正式函子，将：
+
+$$
+(\delta_j,\gamma_j)
+$$
+
+生成的 Poisson phase channels 映射到现有 AgencyHolonomy 接口。
+
+一旦闭合，仓库的有限 Holonomy 能量就可以成为：
+
+$$
+\boxed{
+\text{零模无毛以后仍然保留的关系性 hair 能量。}
+}
+$$
+
+---
+

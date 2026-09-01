@@ -1,0 +1,25 @@
+\frac{
+4(\delta-\omega)(\delta+\omega)
+}{
+(2\delta)^2
+}
+=
+
+1-\frac{\omega^2}{\delta^2}.
+}
+\tag{1411.5}
+
+$$
+
+而该局部反因果 Hankel 通道的奇异值为：
+
+$$
+
+\sigma_\rho(\omega)=\frac{\omega}{\delta}.
+
+$$
+
+所以：
+
+$$
+

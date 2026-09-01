@@ -11,6 +11,20 @@ public sealed partial class TheoryAtomizerTests
     private const string InterfacePhilosophySource =
         "docs/develop/theory/INTERFACE_PHILOSOPHY.md";
 
+    private static void AssertContentIdentity(DigestionAtom atom) => Assert.Equal(
+        DigestionFingerprint.Compute(atom.RawBytes.AsSpan()).RawSha256,
+        atom.Fingerprints.RawSha256);
+
+    private static void AssertContentIdentities(AtomizedTheoryDocument document, int expectedCount)
+    {
+        Assert.Equal(expectedCount, document.Claims.Length);
+        Assert.All(document.Claims, AssertContentIdentity);
+    }
+
+    private static DigestionAtom ClaimContaining(AtomizedTheoryDocument document, string text) =>
+        Assert.Single(document.Claims, atom =>
+            Encoding.UTF8.GetString(atom.RawBytes.AsSpan()).Contains(text, StringComparison.Ordinal));
+
     [Fact]
     public void RegistryFailsClosedForAnUnknownAtomizerAndListsRegisteredIds()
     {
@@ -37,7 +51,7 @@ public sealed partial class TheoryAtomizerTests
         var document = GictAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
         var atom = Assert.Single(document.Claims);
 
-        Assert.Equal("theorem/7.15", atom.AstPath);
+        AssertContentIdentity(atom);
         Assert.Equal(["GICT", "VII.7 接口"], atom.Context.Select(static item => item.Text));
         Assert.Equal(bytes, document.Reassemble().ToArray());
         Assert.Matches("^sha256:[0-9a-f]{64}$", atom.Fingerprints.RawSha256);
@@ -54,7 +68,7 @@ public sealed partial class TheoryAtomizerTests
 
         var document = PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
 
-        Assert.Equal(["theorem/26.3", "ledger/26.4"], document.Claims.Select(static item => item.AstPath));
+        AssertContentIdentities(document, 2);
         Assert.All(document.Claims, atom =>
             Assert.Equal(["PZG", "第二十六章 桥通道"], atom.Context.Select(static item => item.Text)));
         Assert.Equal(bytes, document.Reassemble().ToArray());
@@ -99,7 +113,7 @@ public sealed partial class TheoryAtomizerTests
     }
 
     [Fact]
-    public void WmV1RegistryUsesOrdinalIdsAndTheWmResidualPrefix()
+    public void WmV1RegistryUsesOrdinalIds()
     {
         Assert.Equal(
             [AtomizerRegistry.ConeId, AtomizerRegistry.GenericId,
@@ -113,7 +127,6 @@ public sealed partial class TheoryAtomizerTests
         Assert.Equal(
             AtomizerRegistry.RegisteredIds.Order(StringComparer.Ordinal).ToArray(),
             AtomizerRegistry.RegisteredIds.ToArray());
-        Assert.Equal("wm", AtomizerRegistry.Require(AtomizerRegistry.WmId).ResidualPrefix);
     }
 
     [Fact]
@@ -128,9 +141,7 @@ public sealed partial class TheoryAtomizerTests
 
         var document = GictAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
 
-        Assert.Equal(
-            ["constant/kappa", "constant/C0", "constant/Cphi"],
-            document.Claims.Select(static item => item.AstPath));
+        AssertContentIdentities(document, 3);
         Assert.Equal(bytes, document.Reassemble().ToArray());
     }
 
@@ -144,39 +155,35 @@ public sealed partial class TheoryAtomizerTests
 
         var document = PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
 
-        Assert.Equal(["open/O-5", "open/O-6"], document.Claims.Select(static item => item.AstPath));
+        AssertContentIdentities(document, 2);
         Assert.Equal(bytes, document.Reassemble().ToArray());
     }
 
     [Theory]
-    [InlineData("**§11.1 章程(三定义,ZFC 内,零新公理)**。claim。", "periodic-table/charter")]
-    [InlineData("**§11.2 四问模板(逐层机械生成)**。claim。", "periodic-table/four-question-template")]
-    [InlineData("**§11.3 三科目终表(公理之辩四连案终审)**。claim。", "periodic-table/axiom-hypothesis-definition")]
-    [InlineData("**§11.4 首件产品指针**。claim。", "periodic-table/first-product")]
-    public void ObserverV1RecognizesTheV335PeriodicTableClaimLeads(
-        string claim,
-        string expectedAstPath)
+    [InlineData("**§11.1 章程(三定义,ZFC 内,零新公理)**。claim。")]
+    [InlineData("**§11.2 四问模板(逐层机械生成)**。claim。")]
+    [InlineData("**§11.3 三科目终表(公理之辩四连案终审)**。claim。")]
+    [InlineData("**§11.4 首件产品指针**。claim。")]
+    public void ObserverV1RecognizesTheV335PeriodicTableClaimLeads(string claim)
     {
         var bytes = Encoding.UTF8.GetBytes($"# Observer\n\n{claim}\n");
 
         var atom = Assert.Single(AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes, DigestionTestSupport.Rules).Claims);
 
-        Assert.Equal(expectedAstPath, atom.AstPath);
+        AssertContentIdentity(atom);
     }
 
     [Theory]
-    [InlineData("**§12.1 互反-干涉庭(\"真理一半看不见\")**。claim。", "semantic-court/reciprocity-interference")]
-    [InlineData("**§12.2 投影-干涉庭与署名**。claim。", "semantic-court/projection-interference")]
-    [InlineData("**§12.3 滤镜与视界庭(Fable/Mythos)**。claim。", "semantic-court/filters-and-horizons")]
-    public void ObserverV1RecognizesTheV6SemanticCourtClaimLeads(
-        string claim,
-        string expectedAstPath)
+    [InlineData("**§12.1 互反-干涉庭(\"真理一半看不见\")**。claim。")]
+    [InlineData("**§12.2 投影-干涉庭与署名**。claim。")]
+    [InlineData("**§12.3 滤镜与视界庭(Fable/Mythos)**。claim。")]
+    public void ObserverV1RecognizesTheV6SemanticCourtClaimLeads(string claim)
     {
         var bytes = Encoding.UTF8.GetBytes($"# Observer\n\n{claim}\n");
 
         var atom = Assert.Single(AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes, DigestionTestSupport.Rules).Claims);
 
-        Assert.Equal(expectedAstPath, atom.AstPath);
+        AssertContentIdentity(atom);
     }
 
     [Fact]
@@ -187,7 +194,7 @@ public sealed partial class TheoryAtomizerTests
 
         var atom = Assert.Single(GictAtomizer.Atomize(bytes, DigestionTestSupport.Rules).Claims);
 
-        Assert.Equal("note/2.5", atom.AstPath);
+        AssertContentIdentity(atom);
     }
 
     [Fact]
@@ -198,7 +205,7 @@ public sealed partial class TheoryAtomizerTests
 
         var atom = Assert.Single(GictAtomizer.Atomize(bytes, DigestionTestSupport.Rules).Claims);
 
-        Assert.Equal("survey/6.35", atom.AstPath);
+        AssertContentIdentity(atom);
     }
 
     [Fact]
@@ -218,18 +225,7 @@ public sealed partial class TheoryAtomizerTests
 
         var document = GictAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
 
-        Assert.Equal(
-            [
-                "metadata/lineage",
-                "appendix/E.22",
-                "appendix/E.23",
-                "appendix/E.24",
-                "appendix/E.25",
-                "appendix/E.26",
-                "appendix/E.27",
-                "appendix/E.28",
-            ],
-            document.Claims.Select(static item => item.AstPath));
+        AssertContentIdentities(document, 8);
         Assert.Equal(bytes, document.Reassemble().ToArray());
     }
 
@@ -247,16 +243,7 @@ public sealed partial class TheoryAtomizerTests
 
         var document = PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
 
-        Assert.Equal(
-            [
-                "metadata/supplement/330",
-                "remark/27.363-27.365",
-                "remark/27.366-27.371",
-                "negative-register/batch",
-                "research-queue/batch",
-                "verdict/batch",
-            ],
-            document.Claims.Select(static item => item.AstPath));
+        AssertContentIdentities(document, 6);
         Assert.Equal(bytes, document.Reassemble().ToArray());
     }
 
@@ -277,19 +264,7 @@ public sealed partial class TheoryAtomizerTests
 
         var document = PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
 
-        Assert.Equal(
-            [
-                "consequence/7.4",
-                "principle/14.3",
-                "specification/20.2",
-                "contract/23.1",
-                "theorem-form/6.190",
-                "frontier-note/6.56",
-                "extension-table/6.38′",
-                "route/21.1",
-                "trace-note/27.82",
-            ],
-            document.Claims.Select(static item => item.AstPath));
+        AssertContentIdentities(document, 9);
     }
 
     [Theory]
@@ -376,17 +351,19 @@ public sealed partial class TheoryAtomizerTests
     }
 
     [Fact]
-    public void ObserverAdapterRejectsADuplicateClaimLocator()
+    public void ObserverAdapterKeepsContentDistinctRepeatedClaimLeads()
     {
         var bytes = Encoding.UTF8.GetBytes(
             "# Observer\n\n"
             + "**定理(观察者代数的唯一形态)。** first。\n\n"
             + "**定理(观察者代数的唯一形态)。** second。\n");
 
-        var error = Assert.Throws<TheorySourceFormatException>(() =>
-            AtomizerRegistry.Atomize(AtomizerRegistry.ObserverId, bytes, DigestionTestSupport.Rules));
+        var document = AtomizerRegistry.Atomize(
+            AtomizerRegistry.ObserverId,
+            bytes,
+            DigestionTestSupport.Rules);
 
-        Assert.Contains("duplicate observer claim locator", error.Message, StringComparison.Ordinal);
+        AssertContentIdentities(document, 2);
     }
 
     [Fact]
@@ -402,19 +379,6 @@ public sealed partial class TheoryAtomizerTests
     }
 
     [Fact]
-    public void DuplicateClaimLocatorIsAmbiguousAndFailsClosed()
-    {
-        var bytes = Encoding.UTF8.GetBytes(
-            "# GICT\n\n**定理 7.15(A)**。一。\n\n**定理 7.15(B)**。二。\n");
-
-        var document = GictAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
-        var error = Assert.Throws<FormatException>(() => document.ResolveClaim("theorem/7.15"));
-
-        Assert.Contains("ambiguous", error.Message, StringComparison.OrdinalIgnoreCase);
-        Assert.Equal(bytes, document.Reassemble().ToArray());
-    }
-
-    [Fact]
     public void UnknownNumberedClaimKindIsClassifiedAsOpenLedgerDebt()
     {
         var bytes = Encoding.UTF8.GetBytes(
@@ -423,9 +387,7 @@ public sealed partial class TheoryAtomizerTests
         var alignment = AlignUnregisteredGenres(bytes);
 
         Assert.Empty(alignment.Findings);
-        Assert.Equal(
-            "unregistered/%E6%9C%AA%E7%9F%A5%E4%BD%93/1.1",
-            Assert.Single(alignment.Residual).Atom.AstPath);
+        AssertContentIdentity(Assert.Single(alignment.Residual).Atom);
         Assert.Equal(
             ["未知体"],
             alignment.GenreRegistryChecks["source"].UnregisteredGenres.ToArray());
@@ -442,8 +404,8 @@ public sealed partial class TheoryAtomizerTests
         var atomIds = new HashSet<string>(StringComparer.Ordinal);
         Assert.All(document.Claims, atom =>
         {
-            Assert.False(string.IsNullOrWhiteSpace(atom.AstPath));
-            Assert.True(atomIds.Add(atom.AstPath), $"duplicate atom id: {atom.AstPath}");
+            Assert.False(string.IsNullOrWhiteSpace(atom.Fingerprints.RawSha256));
+            Assert.True(atomIds.Add(atom.Fingerprints.RawSha256), $"duplicate atom id: {atom.Fingerprints.RawSha256}");
             Assert.InRange(atom.StartByte, 0, sourceBytes.Length - 1);
             Assert.InRange(atom.EndByte, atom.StartByte + 1, sourceBytes.Length);
             Assert.Equal(
@@ -468,9 +430,9 @@ public sealed partial class TheoryAtomizerTests
 
         Assert.Equal(
             first.Claims.Select(static atom =>
-                (atom.AstPath, atom.StartByte, atom.EndByte, atom.Fingerprints)),
+                (atom.Fingerprints.RawSha256, atom.StartByte, atom.EndByte, atom.Fingerprints)),
             second.Claims.Select(static atom =>
-                (atom.AstPath, atom.StartByte, atom.EndByte, atom.Fingerprints)));
+                (atom.Fingerprints.RawSha256, atom.StartByte, atom.EndByte, atom.Fingerprints)));
         Assert.Equal(first.Claims.Length, second.Claims.Length);
         for (var index = 0; index < first.Claims.Length; index++)
         {
@@ -504,7 +466,7 @@ public sealed partial class TheoryAtomizerTests
         + "(新行追加于版本账,本节追加 v0.2 校核块)。";
 
     private static string CanonicalWmFixture() =>
-        string.Concat(CanonicalWmFixtureSegments().Select(static item => item.Text));
+        string.Concat(CanonicalWmFixtureSegments());
 
     private static string CanonicalWmV02Fixture()
     {
@@ -516,38 +478,33 @@ public sealed partial class TheoryAtomizerTests
         return source + "\n**v0.2 校核**(2026-07-23):追加校核,旧块不改。\n";
     }
 
-    private static IReadOnlyList<(string AstPath, string Text)> CanonicalWmFixtureSegments()
+    private static IReadOnlyList<string> CanonicalWmFixtureSegments()
     {
-        var segments = new List<(string AstPath, string Text)>
+        var segments = new List<string>
         {
-            (
-                "metadata/preamble",
-                WmTitle + "\n\n"
+            WmTitle + "\n\n"
                 + "**别名**:账本世界模型纲要\n"
                 + "**定位**:经验姊妹卷\n\n"
-                + "**版本账**(append-only):\n"),
-            ("version/v0", "- **v0**(2026-07-18)立卷。\n"),
-            ("version/v0.1", "- **v0.1**(2026-07-18)首轮结账。\n"),
-            (
-                "metadata/discipline",
-                "\n" + WmDiscipline + "\n---\n\n"),
+                + "**版本账**(append-only):\n",
+            "- **v0**(2026-07-18)立卷。\n",
+            "- **v0.1**(2026-07-18)首轮结账。\n",
+            "\n" + WmDiscipline + "\n---\n\n",
         };
 
         for (var section = 0; section <= 11; section++)
         {
-            segments.Add(($"section/{section}", $"## {section}. Section {section}\n\nSection {section} claim.\n\n"));
+            segments.Add($"## {section}. Section {section}\n\nSection {section} claim.\n\n");
             if (section == 7)
             {
-                segments.Add(("section/7-appendix", WmAppendix));
+                segments.Add(WmAppendix);
             }
         }
 
-        segments.Add((
-            "audit",
+        segments.Add(
             "## 校核记录(append-only,按版分块)\n\n"
             + "**v0 校核**(2026-07-18):立卷校核。\n\n"
             + "**v0.1 校核**(2026-07-18):首轮校核。\n\n"
-            + WmCurrentTodoClosure + "\n"));
+            + WmCurrentTodoClosure + "\n");
         return segments;
     }
     [Fact]
@@ -561,34 +518,12 @@ public sealed partial class TheoryAtomizerTests
             bytes,
             DigestionTestSupport.Rules);
 
-        Assert.Equal(
-            ["remark/3.5/occurrence/1", "remark/3.5/occurrence/2"],
-            document.Claims
-                .Where(static atom => atom.AstPath.StartsWith("remark/3.5/", StringComparison.Ordinal))
-                .Select(static atom => atom.AstPath));
-        Assert.Equal(
-            ["corollary/3.6/occurrence/1", "corollary/3.6/occurrence/2"],
-            document.Claims
-                .Where(static atom => atom.AstPath.StartsWith("corollary/3.6/", StringComparison.Ordinal))
-                .Select(static atom => atom.AstPath));
-        Assert.Equal(
-            ["theorem/3.7/occurrence/1", "theorem/3.7/occurrence/2"],
-            document.Claims
-                .Where(static atom => atom.AstPath.StartsWith("theorem/3.7/", StringComparison.Ordinal))
-                .Select(static atom => atom.AstPath));
-
-        var repeatedRemarks = document.Claims
-            .Where(static atom => atom.AstPath.StartsWith("remark/3.5/", StringComparison.Ordinal))
+        var duplicateContent = document.Claims
+            .GroupBy(static atom => atom.Fingerprints.RawSha256, StringComparer.Ordinal)
+            .Where(static group => group.Count() > 1)
             .ToArray();
-        var repeatedCorollaries = document.Claims
-            .Where(static atom => atom.AstPath.StartsWith("corollary/3.6/", StringComparison.Ordinal))
-            .ToArray();
-        var incompatibleTheorems = document.Claims
-            .Where(static atom => atom.AstPath.StartsWith("theorem/3.7/", StringComparison.Ordinal))
-            .ToArray();
-        Assert.Equal(repeatedRemarks[0].Fingerprints, repeatedRemarks[1].Fingerprints);
-        Assert.Equal(repeatedCorollaries[0].Fingerprints, repeatedCorollaries[1].Fingerprints);
-        Assert.NotEqual(incompatibleTheorems[0].Fingerprints, incompatibleTheorems[1].Fingerprints);
+        Assert.Equal(2, duplicateContent.Length);
+        Assert.All(duplicateContent, static group => Assert.Equal(2, group.Count()));
     }
 
     [Fact]
@@ -604,7 +539,7 @@ public sealed partial class TheoryAtomizerTests
             + "**引理 1.2(Second)**。next。\n");
 
         var document = PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
-        var atom = Assert.Single(document.Claims.Where(static item => item.AstPath == "theorem/1.1"));
+        var atom = ClaimContaining(document, "**定理 1.1");
 
         Assert.Equal(firstClaim, Encoding.UTF8.GetString(atom.RawBytes.AsSpan()));
         Assert.Equal(bytes, document.Reassemble().ToArray());
@@ -624,7 +559,7 @@ public sealed partial class TheoryAtomizerTests
             + "**命题 1.3(Next)**。next。\n");
 
         var document = PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
-        var atom = Assert.Single(document.Claims.Where(static item => item.AstPath == "lemma/1.2"));
+        var atom = ClaimContaining(document, "**引理 1.2");
 
         Assert.Equal(lastClaimAndProof, Encoding.UTF8.GetString(atom.RawBytes.AsSpan()));
         Assert.Equal(bytes, document.Reassemble().ToArray());
@@ -642,7 +577,7 @@ public sealed partial class TheoryAtomizerTests
             + "**引理 2.2(Next)**。next。\n");
 
         var document = PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
-        var atom = Assert.Single(document.Claims.Where(static item => item.AstPath == "theorem/2.1"));
+        var atom = ClaimContaining(document, "**定理 2.1");
 
         Assert.Equal(claimAndProof, Encoding.UTF8.GetString(atom.RawBytes.AsSpan()));
         Assert.Equal(bytes, document.Reassemble().ToArray());
@@ -655,7 +590,7 @@ public sealed partial class TheoryAtomizerTests
         var bytes = File.ReadAllBytes(Path.Combine(root, InterfacePhilosophySource));
 
         var document = PzgAtomizer.Atomize(bytes, DigestionTestSupport.Rules);
-        var atom = Assert.Single(document.Claims.Where(static item => item.AstPath == "theorem/6.12"));
+        var atom = ClaimContaining(document, "**定理 6.12");
         var rawText = Encoding.UTF8.GetString(atom.RawBytes.AsSpan());
 
         Assert.Contains(

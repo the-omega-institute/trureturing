@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:0a4e64db5e322f75162020620eb807074403fd60edefcdc1a805d545c73feea3
+  normalized_sha256: sha256:0a4e64db5e322f75162020620eb807074403fd60edefcdc1a805d545c73feea3
+cas_ref: sha256:0a4e64db5e322f75162020620eb807074403fd60edefcdc1a805d545c73feea3
+coverage_gids:
+  - D5/S3/ConceptDynamics/Coding/PriceCannotCarryAllMicroInformation.strictly_coarser_price_misses_some_target
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Coding/PriceCannotCarryAllMicroInformation.strictly_coarser_price_misses_some_target
+      source_sha256: sha256:0a4e64db5e322f75162020620eb807074403fd60edefcdc1a805d545c73feea3
+      target_statement_id: sha256:c0955c5f787b0cc6688f0514aa4c62dcc65de23a1fab580619597442544a7fb3
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Coding/PriceCannotCarryAllMicroInformation.strictly_coarser_price_misses_some_target
+      definition_sha256: sha256:01e26fc829e734582574d584e3cf89ddd775fa3970465d4bf337c14745e1c833
+      emission_sha256: sha256:717ae8d84b723cbb8dbd1e34f266885240f5630c19c38d57330cf0d13e3111b4
+  unresolved_subitems: []

@@ -1,0 +1,6 @@
+**勘正推导**:$\beta(v{+}1)-\beta(v)=\Delta\mathrm{beatty}(v)-\psi=\Delta\mathrm{beatty}(v)+(\varphi-1)$,而 Beatty 增量 $\Delta\in\{1,2\}$,故
+
+$$\boxed{\ \beta(v{+}1)-\beta(v)\in\{\varphi,\ \varphi^2\}\ }$$
+
+——黄金格的相邻间距**恰为黄金幂**,比原错写更强地支撑构思 C(数值验:$\beta(2)-\beta(1)=4.236\ldots-2.618\ldots=\varphi$)。
+

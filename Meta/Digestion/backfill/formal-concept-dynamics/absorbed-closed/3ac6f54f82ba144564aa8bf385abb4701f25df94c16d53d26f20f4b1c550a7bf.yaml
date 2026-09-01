@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:3ac6f54f82ba144564aa8bf385abb4701f25df94c16d53d26f20f4b1c550a7bf
+  normalized_sha256: sha256:3ac6f54f82ba144564aa8bf385abb4701f25df94c16d53d26f20f4b1c550a7bf
+cas_ref: sha256:3ac6f54f82ba144564aa8bf385abb4701f25df94c16d53d26f20f4b1c550a7bf
+coverage_gids:
+  - D5/S3/ConceptDynamics/DecisionValue/CompleteInputDeterminism.complete_input_agreement_excludes_deterministic_disagreement
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/DecisionValue/CompleteInputDeterminism.complete_input_agreement_excludes_deterministic_disagreement
+      source_sha256: sha256:3ac6f54f82ba144564aa8bf385abb4701f25df94c16d53d26f20f4b1c550a7bf
+      target_statement_id: sha256:92ae3b9227b0cef4c30c3ce93685ad76204fdb9279faf8117f959bced5f361e4
+  scribe:
+    - gid: D5/S3/ConceptDynamics/DecisionValue/CompleteInputDeterminism.complete_input_agreement_excludes_deterministic_disagreement
+      definition_sha256: sha256:306a00eeaf993967708eca31861b8727cb24c4f21203933b418615a9e6dad62e
+      emission_sha256: sha256:09e8d08e59fe1ad6dedd4f2be0cb507410647c848c1c3a112d9f52cc9f40026c
+  unresolved_subitems: []

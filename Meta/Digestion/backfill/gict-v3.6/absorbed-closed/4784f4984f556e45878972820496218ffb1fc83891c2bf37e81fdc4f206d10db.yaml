@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:4784f4984f556e45878972820496218ffb1fc83891c2bf37e81fdc4f206d10db
+  normalized_sha256: sha256:4784f4984f556e45878972820496218ffb1fc83891c2bf37e81fdc4f206d10db
+cas_ref: sha256:4784f4984f556e45878972820496218ffb1fc83891c2bf37e81fdc4f206d10db
+coverage_gids:
+  - D5/S3/PrimeForms/Crossing/WindingOrbitZero.sandwich_orbit_has_unique_winding_zero
+receipts:
+  coverage:
+    - gid: D5/S3/PrimeForms/Crossing/WindingOrbitZero.sandwich_orbit_has_unique_winding_zero
+      source_sha256: sha256:4784f4984f556e45878972820496218ffb1fc83891c2bf37e81fdc4f206d10db
+      target_statement_id: sha256:c81f3a539a6bbd2498a33feec0426113493a4aeadc1765fc2d67b95ad5761393
+  scribe:
+    - gid: D5/S3/PrimeForms/Crossing/WindingOrbitZero.sandwich_orbit_has_unique_winding_zero
+      definition_sha256: sha256:8592f0d8e1123fb2f7b6bfc45d5e69888d41cc94ade2503c5ce7364f3c5e5ce4
+      emission_sha256: sha256:8ef19ae675ab61653afadc7f136bdd44bc8a9f09bc370c735f29007098454465
+  unresolved_subitems: []

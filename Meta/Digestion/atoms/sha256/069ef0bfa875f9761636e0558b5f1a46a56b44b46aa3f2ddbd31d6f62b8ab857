@@ -1,0 +1,13 @@
+## 一、Retarded causality
+
+$$
+\boxed{
+\mathcal F^{-1}\Theta_\omega(x)=0
+\qquad
+(x<0).
+}
+\tag{1338.1}
+$$
+
+排除 white-hole／advanced 成分。
+

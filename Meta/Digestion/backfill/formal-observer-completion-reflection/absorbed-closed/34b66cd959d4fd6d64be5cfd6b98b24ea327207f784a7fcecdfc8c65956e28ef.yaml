@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:34b66cd959d4fd6d64be5cfd6b98b24ea327207f784a7fcecdfc8c65956e28ef
+  normalized_sha256: sha256:34b66cd959d4fd6d64be5cfd6b98b24ea327207f784a7fcecdfc8c65956e28ef
+cas_ref: sha256:34b66cd959d4fd6d64be5cfd6b98b24ea327207f784a7fcecdfc8c65956e28ef
+coverage_gids:
+  - D5/S3/Observer/LinearMemory/MemoryDimensionFormula.memory_dimension_formula
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/LinearMemory/MemoryDimensionFormula.memory_dimension_formula
+      source_sha256: sha256:34b66cd959d4fd6d64be5cfd6b98b24ea327207f784a7fcecdfc8c65956e28ef
+      target_statement_id: sha256:54e5c957b11ea3a0eda11e0d5ea8fc3e2b70d757b48a5be64d7614ac121152d9
+  scribe:
+    - gid: D5/S3/Observer/LinearMemory/MemoryDimensionFormula.memory_dimension_formula
+      definition_sha256: sha256:230de5ad12454a65b60ac3bb3e0944758f1066decfa2b4371947dba15643a082
+      emission_sha256: sha256:acbd56b6eea5004daaa8eac4a824a03dea2e514a6bb3f5707cfbb5c41929aa57
+  unresolved_subitems: []

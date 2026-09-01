@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:ef51f41c3f173a4e6a29ada379d2ab9a5d94dc0d2a3a37adc0bf05e3232f966f
+  normalized_sha256: sha256:ef51f41c3f173a4e6a29ada379d2ab9a5d94dc0d2a3a37adc0bf05e3232f966f
+cas_ref: sha256:ef51f41c3f173a4e6a29ada379d2ab9a5d94dc0d2a3a37adc0bf05e3232f966f
+coverage_gids:
+  - D5/S3/ConceptDynamics/MeasurableRefinement/MeasurableFactorInformationInclusion.measurable_factorization_generated_information_inclusion
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/MeasurableRefinement/MeasurableFactorInformationInclusion.measurable_factorization_generated_information_inclusion
+      source_sha256: sha256:ef51f41c3f173a4e6a29ada379d2ab9a5d94dc0d2a3a37adc0bf05e3232f966f
+      target_statement_id: sha256:cb730e6fd9385c6e326ad05e5a9161b5ad75cd17320bb5d7a2aa27204f17c07c
+  scribe:
+    - gid: D5/S3/ConceptDynamics/MeasurableRefinement/MeasurableFactorInformationInclusion.measurable_factorization_generated_information_inclusion
+      definition_sha256: sha256:461f5648964ed7ab9eaba52e7c2406d56bbe469abfcc690bc01e53de9b218d9c
+      emission_sha256: sha256:d965df4fa6a285d0452e322fdb549de583f5c18611d53fb5e3b5e9af59e3d962
+  unresolved_subitems: []

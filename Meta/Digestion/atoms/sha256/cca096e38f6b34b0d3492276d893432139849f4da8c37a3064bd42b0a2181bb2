@@ -1,0 +1,7 @@
+# 第一千一百一十六部　Universal Solenoid 的严格对偶序列
+
+仓库定义的 universal solenoid 由所有正整数模数上的兼容圆周坐标组成，并具有可见第一坐标投影及稠密实流。
+
+仓库进一步证明：
+
+* compatible congruence data 精确等于可见投影的核；

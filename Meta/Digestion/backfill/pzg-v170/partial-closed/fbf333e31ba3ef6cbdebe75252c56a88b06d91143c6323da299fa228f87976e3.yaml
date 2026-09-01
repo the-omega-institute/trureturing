@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:fbf333e31ba3ef6cbdebe75252c56a88b06d91143c6323da299fa228f87976e3
+  normalized_sha256: sha256:fbf333e31ba3ef6cbdebe75252c56a88b06d91143c6323da299fa228f87976e3
+cas_ref: sha256:fbf333e31ba3ef6cbdebe75252c56a88b06d91143c6323da299fa228f87976e3
+coverage_gids:
+  - D5/S3/Zeros/ZeroGeometry.projection_zero_labeled_vector_spec
+receipts:
+  coverage:
+    - gid: D5/S3/Zeros/ZeroGeometry.projection_zero_labeled_vector_spec
+      source_sha256: sha256:fbf333e31ba3ef6cbdebe75252c56a88b06d91143c6323da299fa228f87976e3
+      target_statement_id: sha256:5008a23d3d3a5f3f14c7785a36fd680d60741848e6b4b7dfa80dee9f639e52e9
+  scribe: []
+  unresolved_subitems:
+    - analytic-projection-map-and-continued-projection-identity
+    - precise-carrier-interpretation

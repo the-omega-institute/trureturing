@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:d16f780def4b5c76f31c6158df7ae34fae3d3fbf1211a27c05691b4bd2e06ed6
+  normalized_sha256: sha256:d16f780def4b5c76f31c6158df7ae34fae3d3fbf1211a27c05691b4bd2e06ed6
+cas_ref: sha256:d16f780def4b5c76f31c6158df7ae34fae3d3fbf1211a27c05691b4bd2e06ed6
+coverage_gids:
+  - D5/S3/Axis/AxisTraceMapForm.axis_trace_map_form_package
+receipts:
+  coverage:
+    - gid: D5/S3/Axis/AxisTraceMapForm.axis_trace_map_form_package
+      source_sha256: sha256:d16f780def4b5c76f31c6158df7ae34fae3d3fbf1211a27c05691b4bd2e06ed6
+      target_statement_id: sha256:14a565a3f467b49c073526f67f2d476feeb72b933d936ae371a4606c321b8cf3
+  scribe:
+    - gid: D5/S3/Axis/AxisTraceMapForm.axis_trace_map_form_package
+      definition_sha256: sha256:65307761bda0f904950ca1e2680741c3d39642e61aeb32e31bcf0fa7b6b4a5fd
+      emission_sha256: sha256:138a7b58e15c95de2f746c29fcbefd4a7ea6e61355667c3addbbcce94f5a584b
+  unresolved_subitems: []

@@ -1,0 +1,68 @@
+## 1121.1 两个坐标的语义
+
+$$
+\boxed{
+e^{2\nu}
+=
+|\sigma_+(x)\sigma_-(x)|
+}
+$$
+
+读取总 norm。
+
+所以：
+
+$$
+\boxed{
+\nu
+=
+\text{整体尺度／Mellin 时间}.
+}
+$$
+
+而：
+
+$$
+\boxed{
+e^{2\eta}
+=
+\left|
+\frac{\sigma_+(x)}
+{\sigma_-(x)}
+\right|
+}
+$$
+
+读取两个嵌入之间的各向异性。
+
+所以：
+
+$$
+\boxed{
+\eta
+=
+\text{观察者 rapidity／regulator 坐标}.
+}
+$$
+
+自然 split metric 为：
+
+$$
+\boxed{
+du\,dv
+=
+d\nu^2-d\eta^2.
+}
+\tag{1121.3}
+$$
+
+所以：
+
+$$
+(\nu,\eta)
+$$
+
+确实形成一个 \(1+1\) 维 Lorentz 图表。
+
+---
+

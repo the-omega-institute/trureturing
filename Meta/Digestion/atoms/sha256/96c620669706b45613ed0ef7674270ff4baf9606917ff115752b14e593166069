@@ -1,0 +1,31 @@
+## 定理 1255.1（Universal shifted-zero velocity）
+
+在 shifted-\(\xi\) 图表中，所有零点：
+
+* 无论高度 \(\gamma\)；
+* 无论横向距离 \(\delta\)；
+* 无论重数；
+* 无论是否位于临界线；
+
+都以同一个速度：
+
+$$
+\boxed{-i}
+$$
+
+随观察深度 \(\omega\) 移动。
+
+不同零点之间的区别不在速度，而在：
+
+$$
+\boxed{
+\text{水平标签 }-\gamma
+\quad\text{与}\quad
+\text{边界穿越时间 }\delta.
+}
+$$
+
+项目最新的 `DiscreteCompletionVelocity` 已经机器证明：层差在当前根处等于下一层残差；Newton 型离散速度在仿射根位移模型中精确恢复真实位移，并且对共同非零缩放不变。当前 shifted 零点轨迹正是一个精确仿射根轨迹。
+
+---
+

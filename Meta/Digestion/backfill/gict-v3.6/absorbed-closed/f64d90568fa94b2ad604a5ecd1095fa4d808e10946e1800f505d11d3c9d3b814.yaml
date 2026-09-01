@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:f64d90568fa94b2ad604a5ecd1095fa4d808e10946e1800f505d11d3c9d3b814
+  normalized_sha256: sha256:f64d90568fa94b2ad604a5ecd1095fa4d808e10946e1800f505d11d3c9d3b814
+cas_ref: sha256:f64d90568fa94b2ad604a5ecd1095fa4d808e10946e1800f505d11d3c9d3b814
+coverage_gids:
+  - D5/S3/Factorization/MarkovEquationMutation.markov_equation_mutation
+receipts:
+  coverage:
+    - gid: D5/S3/Factorization/MarkovEquationMutation.markov_equation_mutation
+      source_sha256: sha256:f64d90568fa94b2ad604a5ecd1095fa4d808e10946e1800f505d11d3c9d3b814
+      target_statement_id: sha256:7dca9c99b008d8f64d50823a27787cf8494f7bd85c324d8e831f8b91281161db
+  scribe:
+    - gid: D5/S3/Factorization/MarkovEquationMutation.markov_equation_mutation
+      definition_sha256: sha256:7a538c487876f273bd57cdd55609f5025910979b3b8013878c6a7ffcfbab464d
+      emission_sha256: sha256:a84f6d0d490d6b14a05514bef463276cfcf9737f1a2582e4f88adf6a33a46261
+  unresolved_subitems: []

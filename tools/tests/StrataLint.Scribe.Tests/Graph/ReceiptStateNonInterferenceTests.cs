@@ -161,9 +161,10 @@ public sealed class ReceiptStateNonInterferenceTests
         var absorbedClosed = Path.Combine(ledgerRoot, "absorbed-closed");
         TemporaryFileSystem.Directory.CreateDirectory(absorbedClosed);
         TemporaryFileSystem.File.WriteAllText(
-            Path.Combine(absorbedClosed, "synthetic-atom.yaml"),
+            Path.Combine(
+                absorbedClosed,
+                "0000000000000000000000000000000000000000000000000000000000000000.yaml"),
             $$"""
-            ast_path: theorem/synthetic
             fingerprints:
               raw_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
               normalized_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000

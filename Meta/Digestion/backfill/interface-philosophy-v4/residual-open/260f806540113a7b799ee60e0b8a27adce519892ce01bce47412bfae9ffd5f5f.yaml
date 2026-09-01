@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:260f806540113a7b799ee60e0b8a27adce519892ce01bce47412bfae9ffd5f5f
+  normalized_sha256: sha256:260f806540113a7b799ee60e0b8a27adce519892ce01bce47412bfae9ffd5f5f
+cas_ref: sha256:260f806540113a7b799ee60e0b8a27adce519892ce01bce47412bfae9ffd5f5f
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  quarantine:
+    justification: "Retrieval preceded quarantine. D5 search (information symmetry, descriptionComplexity, shortestCode, conditional complexity, prefix program, universal machine) found only an abstract minimum-cost DescriptionSystem with a private shortest-code witness, finite prefix-free coding/Kraft results, and unrelated budget bounds; no fixed universal prefix machine, conditional prefix complexity, canonical shortest-program representative, or Levin-Gacs symmetry theorem exists. Pinned Mathlib search (.lake/packages/mathlib; Kolmogorov complexity, prefix-free universal machine, shortest program, information symmetry, conditional complexity) found Turing/partrec infrastructure and unrelated Kolmogorov results but no algorithmic-information API. Third-party GitHub Lean code searches found complexitylib's machine-relative prefix complexity and random-access conditional complexity, but its symmetry module is time-bounded and assumption-based, explicitly assumes no universality, and repository searches for prefix Kolmogorov and shortest program returned no other hits. Local proof attempt: information symmetry applied to (R,p_f) would first require canonical K, K(-|-), R*, p_f, and pairing owners, then separate theorems K(p_f)=K(f)+O(log K(f)) and K(R|p_f*)=K(R|p_f)+O(log K(f)); encoding these laws as fields of a new abstract structure would merely assume the named theorem and violate non-hollowness."
+    reentry_condition: "A frozen D5 or admissible upstream development supplies a universal certified prefix machine, unconditional and conditional prefix complexity with canonical shortest-program representatives, Levin-Gacs information symmetry, and the logarithmic shortest-program/self-delimiting conversion needed to replace p_f* by p_f and K(p_f) by K(f)."
+    blocker_class: missing-prerequisite

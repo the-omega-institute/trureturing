@@ -1,0 +1,49 @@
+## 十、负平方与 Laplace 时间的桥
+
+对适当的 $u$，有
+
+$$
+\frac1{u+x}=\int_0^{\infty}e^{-ut}e^{-xt}\,dt.
+$$
+
+若 $x>0$，则 $e^{-xt}$ 在正时间衰减。若 $x=-\delta^2<0$，则
+
+$$
+e^{-xt}=e^{\delta^2t}
+$$
+
+在正时间增长。总核只有在外加阻尼超过增长率时收敛：
+
+$$
+\boxed{
+u>\delta^2.}
+$$
+
+在该区域：
+
+$$
+\boxed{
+\int_0^{\infty}e^{-(u-\delta^2)t}\,dt
+=\frac1{u-\delta^2}.
+}
+$$
+
+由此可定义稳定化债务
+
+$$
+\boxed{
+\operatorname{StabilizationDebt}(-\delta^2)=\delta^2.
+}
+$$
+
+它是压过负支撑增长所需的最小附加阻尼阈值。
+
+[research-target] `NegativeSquareLaplaceResolvent` 应证明积分值、可积条件和阈值处的极点。比只证明积分公式更重要的是完整刻画：
+
+$$
+\operatorname{Integrable}
+\left(e^{-(u-\delta^2)t};\ t>0\right)
+\quad\Longleftrightarrow\quad
+u>\delta^2.
+$$
+

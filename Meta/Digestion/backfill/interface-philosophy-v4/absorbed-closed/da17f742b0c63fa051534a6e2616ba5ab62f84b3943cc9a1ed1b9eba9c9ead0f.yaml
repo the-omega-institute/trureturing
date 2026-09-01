@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:da17f742b0c63fa051534a6e2616ba5ab62f84b3943cc9a1ed1b9eba9c9ead0f
+  normalized_sha256: sha256:da17f742b0c63fa051534a6e2616ba5ab62f84b3943cc9a1ed1b9eba9c9ead0f
+cas_ref: sha256:da17f742b0c63fa051534a6e2616ba5ab62f84b3943cc9a1ed1b9eba9c9ead0f
+coverage_gids:
+  - D5/S0/History/LedgerLimit.ledger_limit_exists_unique
+receipts:
+  coverage:
+    - gid: D5/S0/History/LedgerLimit.ledger_limit_exists_unique
+      source_sha256: sha256:da17f742b0c63fa051534a6e2616ba5ab62f84b3943cc9a1ed1b9eba9c9ead0f
+      target_statement_id: sha256:7f5d40fab42d4dee720bbbd1fd09a32e1af313b4f51ccf4ac6e60be029e8251e
+  scribe:
+    - gid: D5/S0/History/LedgerLimit.ledger_limit_exists_unique
+      definition_sha256: sha256:f6d2f7b88c2f517090963fe4fc4ca08cc5630b3edf0996fec7f67a427839eb3c
+      emission_sha256: sha256:f3addbf55764db3254da1693326b04b59b799a46255de7997e2741a1fed69e37
+  unresolved_subitems: []

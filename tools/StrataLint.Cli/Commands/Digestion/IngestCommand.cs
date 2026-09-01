@@ -32,8 +32,6 @@ internal static partial class IngestCommand
             var plannedRaw = prepared.PlannedRaw;
             var plannedSnapshot = prepared.PlannedSnapshot;
             var plannedDocument = prepared.PlannedDocument;
-            var plannedChanges = prepared.PlannedChanges;
-            var plannedScope = prepared.PlannedScope;
             var report = leanReportSource.Load(current);
             var lean = ValidateLean(plannedSnapshot, report);
             plannedDocument = MathlibUpgradeDigestionReanchor.Apply(
@@ -42,13 +40,21 @@ internal static partial class IngestCommand
                 current,
                 repositoryChanges,
                 lean);
+            var deltaImpact = BackfillDeltaImpactResolver.Resolve(
+                plannedSnapshot,
+                baseline,
+                plannedDocument,
+                prepared.PlannedChanges);
+            var evaluationChanges = deltaImpact.EvaluationChanges;
+            var receiptVerificationChanges = deltaImpact.ReceiptVerificationChanges;
+            var evaluationScope = prepared.PlannedScope;
             var truthStates = LeanTruthStates.Resolve(plannedSnapshot, lean);
             var verifiedScribeEmissions = scribeEmissionVerifier.Verify(
                 plannedSnapshot,
                 report,
-                plannedChanges);
+                receiptVerificationChanges);
             var derived = DigestionStatusEvaluator.Evaluate(
-                plannedScope,
+                evaluationScope,
                 plannedDocument,
                 plannedSnapshot,
                 lean,
@@ -56,8 +62,9 @@ internal static partial class IngestCommand
                 baselineDocument,
                 validateProjectedStatus: false,
                 baselineSnapshot: baseline,
-                changes: plannedChanges,
+                changes: receiptVerificationChanges,
                 casChanges: prepared.PlannedCasChanges,
+                projectedStatusChanges: evaluationChanges,
                 truthStates: truthStates);
             RequireNoReceiptIntegrityFailure(derived);
 
@@ -89,22 +96,20 @@ internal static partial class IngestCommand
                 finalRaw,
                 finalDocument,
                 plan.CasObjects);
-            var finalScope = DigestionEvaluationScopes.ForChanges(
-                finalChanges,
-                ImplementationPath);
             var finalCasChanges = DigestionIngestor.IncludeCasReverseDependencies(
                 baselineDocument,
                 finalChanges);
             var evaluation = DigestionStatusEvaluator.Evaluate(
-                finalScope,
+                evaluationScope,
                 finalDocument,
                 finalSnapshot,
                 lean,
                 verifiedScribeEmissions,
                 baselineDocument,
                 baselineSnapshot: baseline,
-                changes: finalChanges,
+                changes: receiptVerificationChanges,
                 casChanges: finalCasChanges,
+                projectedStatusChanges: evaluationChanges,
                 truthStates: truthStates);
             RequireNoReceiptIntegrityFailure(evaluation);
             var backfillObservations = DigestionBackfillValidation.RequireValidBackfill(
@@ -114,9 +119,14 @@ internal static partial class IngestCommand
                 LoadPolicy(finalSnapshot),
                 lean,
                 verifiedScribeEmissions,
-                DigestionEvaluationScopes.ResolveChanges(finalScope, finalChanges),
+                DigestionEvaluationScopes.ResolveChanges(
+                    evaluationScope,
+                    receiptVerificationChanges),
                 repositoryChanges: finalChanges,
-                casChanges: finalCasChanges);
+                casChanges: finalCasChanges,
+                projectedStatusChanges: DigestionEvaluationScopes.ResolveChanges(
+                    evaluationScope,
+                    evaluationChanges));
 
             return WriteResult(
                 repositoryRoot,
@@ -195,6 +205,11 @@ internal static partial class IngestCommand
             plannedRaw,
             plannedDocument,
             plan.CasObjects);
+        var plannedDeltaImpact = BackfillDeltaImpactResolver.Resolve(
+            plannedSnapshot,
+            baseline,
+            plannedDocument,
+            plannedChanges);
         var plannedScope = DigestionEvaluationScopes.ForChanges(
             plannedChanges,
             ImplementationPath);
@@ -213,6 +228,8 @@ internal static partial class IngestCommand
             plannedSnapshot,
             plannedDocument,
             plannedChanges,
+            plannedDeltaImpact.EvaluationChanges,
+            plannedDeltaImpact.ReceiptVerificationChanges,
             plannedCasChanges,
             plannedScope,
             RenderCrossVolumeClearanceGaps(plan.Document, baselineDocument),

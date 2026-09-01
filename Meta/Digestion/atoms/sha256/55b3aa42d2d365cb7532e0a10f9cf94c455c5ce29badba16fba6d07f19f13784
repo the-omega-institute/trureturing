@@ -1,0 +1,12 @@
+### 路线 A：正 Gram／storage function
+
+构造正定 storage operator：
+
+$$
+P_\omega>0,
+$$
+
+使最小 scattering realization 满足 lossless KYP 恒等式。
+
+则其 transfer 自动为 Schur／inner，反因果 denominator 被排除。
+

@@ -1,0 +1,211 @@
+# 本轮最终结论
+
+“离线零点像霍金辐射”的直觉确实有数学价值，但必须作一次精确位移：
+
+$$
+\boxed{
+\text{离线零点不是辐射，
+而是辐射背后的隐藏负频率伙伴。}
+}
+$$
+
+在 shifted scattering 中，它产生：
+
+$$
+\boxed{
+\mathfrak H_\omega
+=
+P_-M_{\Theta_\omega}P_+,
+}
+$$
+
+这一反因果 Hankel 块。
+
+把该块作 Bogoliubov 提升以后，其奇异值：
+
+$$
+\sigma_j
+$$
+
+变成挤压参数：
+
+$$
+r_j=\operatorname{artanh}\sigma_j,
+$$
+
+并产生粒子数型读数：
+
+$$
+\boxed{
+N_j
+=
+\frac{\sigma_j^2}{1-\sigma_j^2}.
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{Hankel 泄漏能量}
+}
+$$
+
+就是当前理论中最精确的“霍金辐射影像”。
+
+---
+
+磁单极子与黑洞也由此形成互补关系。
+
+磁单极子图表告诉我们：
+
+$$
+\boxed{
+\text{缺陷存在多少个整数通道。}
+}
+$$
+
+黑洞图表告诉我们：
+
+$$
+\boxed{
+\text{这些通道被视界隐藏后，向边界泄漏多强。}
+}
+$$
+
+同一个零点重数 \(m\) 同时成为：
+
+$$
+\boxed{
+\text{Chern 荷}
+=
+\text{负平方数}
+=
+\text{Blaschke degree}
+=
+\text{Hankel rank}.
+}
+$$
+
+而连续的 \(\sigma_j,N_j,S_j\) 则测量该通道的可见强度和隐藏信息量。
+
+---
+
+黑洞“吞噬一切但仍有霍金辐射”的当前严格对应是：
+
+$$
+\boxed{
+\text{bulk 状态被观察投影隐藏，
+但其边界 Green／Poisson／Hankel 影像仍然存在。}
+}
+$$
+
+离线零点在 bulk 中是单极子／共振；
+
+它在边界上变成 Poisson 脉冲；
+
+在时间极化中变成负频率伙伴；
+
+在可见外部中变成正的 Bogoliubov 占据。
+
+---
+
+但普通霍金辐射与离线缺陷仍有一个决定性差别。
+
+霍金辐射发生在因果的 retarded 黑洞演化中。
+
+而离线缺陷以 inverse-inner negative-time factor 出现，因此从解析方向看，它更接近：
+
+$$
+\boxed{
+\text{white-hole／advanced 污染}.
+}
+$$
+
+所以最准确的一句话是：
+
+$$
+\boxed{
+\text{离线零点是一个视界后的反因果伙伴；
+它在可见边界上的 Poisson–Hankel 泄漏，
+才呈现霍金式辐射形态。}
+}
+$$
+
+---
+
+黄金比例则提供一个可能的模温度：
+
+$$
+\boxed{
+\beta_\varphi=2\log\varphi,
+}
+$$
+
+其 Boltzmann 权重为：
+
+$$
+\boxed{
+e^{-\beta_\varphi E}
+=
+\varphi^{-2E}.
+}
+$$
+
+但要让黄金比例真正成为霍金温度，而不是采样刻度，必须从项目动力中证明：
+
+$$
+\boxed{
+\sigma_j^2
+=
+\varphi^{-2E_j}.
+}
+$$
+
+当前并没有这一结论。
+
+因此真正可证伪的黄金—黑洞桥是：
+
+$$
+\boxed{
+\text{Hankel 奇异谱是否满足统一的黄金 KMS 详细平衡？}
+}
+$$
+
+---
+
+最后，黑洞直觉把项目的下一条核心桥进一步说清了。
+
+仓库已经有：
+
+$$
+\boxed{
+\text{双向酉 Poisson 背景}
++
+\text{有限 scattering cascade}
++
+\text{Hankel 记忆谱}.
+}
+$$
+
+现在缺少的不是再证明散射守恒，而是：
+
+$$
+\boxed{
+\textbf{证明视界正则性与 retarded Hardy 三角性。}
+}
+$$
+
+即：
+
+$$
+\boxed{
+P_-M_{\Theta_\omega}P_+=0
+\qquad
+\forall\,0<\omega<\frac12.
+}
+$$
+
+一旦成立：
+
+* inverse-inner denominator 消失；

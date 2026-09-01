@@ -1,0 +1,57 @@
+# 第一千四百二十三部　新的最短缺陷传导链
+
+本轮以后，离线零点可以沿以下链条传导：
+
+$$
+\boxed{
+\begin{aligned}
+\rho=\frac12+\delta+i\gamma,\quad\delta>0
+&\Longrightarrow
+\mathsf D_\rho(\omega)
+=
+\frac{\omega^2}{\delta^2}\\
+&\Longrightarrow
+\exists!\,
+\omega_\varphi
+=
+\frac{\delta}{\sqrt\varphi}:
+\mathsf D_\rho(\omega_\varphi)
+=
+\varphi^{-1}\\
+&\Longrightarrow
+I-\mathsf D_\rho
+=
+\mathsf D_\rho^2\\
+&\Longrightarrow
+\det G_{\rho,\omega_\varphi}=0\\
+&\Longrightarrow
+\forall\,\omega\in
+(\omega_\varphi,\delta):
+\det G_{\rho,\omega}<0\\
+&\Longrightarrow
+\text{存在有限二代负 Gram 证书}.
+\end{aligned}
+}
+\tag{1423.1}
+$$
+
+这说明每个离线零点都必须在真正视界之前产生一个黄金零模，并随后进入负区。
+
+所以离线零点的对偶又获得一个新的概念：
+
+$$
+\boxed{
+\textbf{它是一个必然穿越黄金二影临界面的反因果世界线。}
+}
+$$
+
+磁单极子图表读取其整数荷；
+
+黑洞图表读取其视界穿越；
+
+Hardy 图表读取其反因果泄漏；
+
+黄金图表则读取它在两代自观察预算中第一次失去正性的时刻。
+
+---
+

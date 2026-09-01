@@ -13,11 +13,11 @@ public sealed partial class ProductionEnvironmentTests
 
         Assert.True(result.Success, result.Error);
         Assert.Contains(
-            "GAP atom=atom-a code=cross-volume-shared-residue-half-cleared severity=warn "
-                + "detail={\"residue\":\"shared-residue\",\"cleared_source\":\"source-a\","
-                + "\"hanging_hosts\":[\"source-b/atom-b\"]}",
+            "code=cross-volume-shared-residue-half-cleared severity=warn",
             result.Output,
             StringComparison.Ordinal);
+        Assert.Contains("\"cleared_source\":\"source-a\"", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"hanging_hosts\":[\"source-b/", result.Output, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -67,7 +67,9 @@ public sealed partial class ProductionEnvironmentTests
 
     private static BackfillInventoryDocument SharedResidueLedger(
         string atomizerId,
-        DigestionAtom atom,
+        DigestionAtom firstSourceAtom,
+        DigestionAtom? secondFirstSourceAtom,
+        DigestionAtom secondSourceAtom,
         bool clearFirst,
         bool clearSecond,
         bool includeSecondFirstSourceAtom,
@@ -76,14 +78,12 @@ public sealed partial class ProductionEnvironmentTests
         DigestionLedgerEntry Entry(
             string sourceId,
             string sourcePath,
-            string atomId,
+            DigestionAtom atom,
             bool clear) => new(
                 sourceId,
                 sourcePath,
                 atomizerId,
-                atomId,
-                atom.AstPath,
-                null,
+                AtomId(atom),
                 atom.Fingerprints,
                 [],
                 new DigestionReceipts(
@@ -99,14 +99,18 @@ public sealed partial class ProductionEnvironmentTests
 
         var sourceAEntries = new List<DigestionLedgerEntry>
         {
-            Entry("source-a", RuleFixture.FixtureDigestionSourcePath, "atom-a", clearFirst),
+            Entry(
+                "source-a",
+                RuleFixture.FixtureDigestionSourcePath,
+                firstSourceAtom,
+                clearFirst),
         };
-        if (includeSecondFirstSourceAtom)
+        if (includeSecondFirstSourceAtom && secondFirstSourceAtom is not null)
         {
             sourceAEntries.Add(Entry(
                 "source-a",
                 RuleFixture.FixtureDigestionSourcePath,
-                "atom-a-duplicate",
+                secondFirstSourceAtom,
                 clearSecondFirstSourceAtom));
         }
 
@@ -125,7 +129,7 @@ public sealed partial class ProductionEnvironmentTests
                 atomizerId,
                 [],
                 GenreRegistryProjection.Available(GenreRegistryCheck.Collected([])),
-                [Entry("source-b", "docs/CONTRIBUTING.md", "atom-b", clearSecond)]),
+                [Entry("source-b", "docs/CONTRIBUTING.md", secondSourceAtom, clearSecond)]),
         ],
         []);
     }
@@ -138,37 +142,53 @@ public sealed partial class ProductionEnvironmentTests
     {
         var fixture = new RuleFixture();
         var atomizerId = SyntheticNumberedAtomizer.Id;
-        var sourceText = "# Synthetic\n\n**定理 1.1(A)**。claim。\n";
-        var sourceBytes = Encoding.UTF8.GetBytes(sourceText);
-        var atom = Assert.Single(AtomizerRegistry.Atomize(
+        var firstSourceText = "# Synthetic\n\n**定理 1.1(A)**。source A claim。\n"
+            + (includeSecondFirstSourceAtom ? "\n**定理 1.2(B)**。source A sibling。\n" : "");
+        const string secondSourceText =
+            "# Synthetic\n\n**定理 1.1(A)**。source B claim。\n";
+        var firstSourceAtoms = AtomizerRegistry.Atomize(
             atomizerId,
-            sourceBytes,
+            Encoding.UTF8.GetBytes(firstSourceText),
+            DigestionTestSupport.Rules).Claims;
+        Assert.Equal(includeSecondFirstSourceAtom ? 2 : 1, firstSourceAtoms.Length);
+        var secondSourceAtom = Assert.Single(AtomizerRegistry.Atomize(
+            atomizerId,
+            Encoding.UTF8.GetBytes(secondSourceText),
             DigestionTestSupport.Rules).Claims);
-        var captured = DigestionCasStore.Capture(atom.RawBytes.AsSpan());
+        var secondFirstSourceAtom = includeSecondFirstSourceAtom ? firstSourceAtoms[1] : null;
         var baselineLedger = SharedResidueLedger(
             atomizerId,
-            atom,
+            firstSourceAtoms[0],
+            secondFirstSourceAtom,
+            secondSourceAtom,
             clearFirst: false,
             clearSecond: false,
             includeSecondFirstSourceAtom,
             clearSecondFirstSourceAtom: false);
         var currentLedger = SharedResidueLedger(
             atomizerId,
-            atom,
+            firstSourceAtoms[0],
+            secondFirstSourceAtom,
+            secondSourceAtom,
             clearFirst,
             clearSecond,
             includeSecondFirstSourceAtom,
             clearSecondFirstSourceAtom);
-        fixture.Files[RuleFixture.FixtureDigestionSourcePath] = sourceText;
-        fixture.Files["docs/CONTRIBUTING.md"] = sourceText;
-        fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = sourceText;
-        fixture.Baseline["docs/CONTRIBUTING.md"] = sourceText;
+        fixture.Files[RuleFixture.FixtureDigestionSourcePath] = firstSourceText;
+        fixture.Files["docs/CONTRIBUTING.md"] = secondSourceText;
+        fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = firstSourceText;
+        fixture.Baseline["docs/CONTRIBUTING.md"] = secondSourceText;
         DirectoryLedgerTestSupport.ReplaceWithProjection(fixture.Files, currentLedger);
         DirectoryLedgerTestSupport.ReplaceWithProjection(fixture.Baseline, baselineLedger);
         fixture.Files.Remove(RuleFixture.FixtureCasPath);
         fixture.Baseline.Remove(RuleFixture.FixtureCasPath);
-        fixture.Files[captured.RelativePath] = Encoding.UTF8.GetString(captured.Bytes.AsSpan());
-        fixture.Baseline[captured.RelativePath] = Encoding.UTF8.GetString(captured.Bytes.AsSpan());
+        foreach (var atom in firstSourceAtoms.Add(secondSourceAtom))
+        {
+            var captured = DigestionCasStore.Capture(atom.RawBytes.AsSpan());
+            var text = Encoding.UTF8.GetString(captured.Bytes.AsSpan());
+            fixture.Files[captured.RelativePath] = text;
+            fixture.Baseline[captured.RelativePath] = text;
+        }
         using var temporary = new TemporaryDirectory();
         DirectoryLedgerTestSupport.Write(temporary.Path, fixture.Files);
         var environment = new ProductionCliEnvironment(

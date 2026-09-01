@@ -268,8 +268,6 @@ public sealed class TruthReleaseCommandTests
             sourcePath,
             AtomizerRegistry.NoAtomizerId,
             "receipt-mismatch",
-            "manual/fixture",
-            new DigestionBoundary("manual/fixture", 0, sourceBytes.Length),
             fingerprints,
             [BlueprintGid + ".golden_spectral_marker"],
             new DigestionReceipts(

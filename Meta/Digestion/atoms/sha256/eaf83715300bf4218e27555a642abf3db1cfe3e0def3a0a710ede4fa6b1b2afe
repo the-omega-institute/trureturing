@@ -1,0 +1,22 @@
+## 第六步：转为 congruence fixed-point
+
+将所有互动轮廓编码进 shift dynamics 后，目标等价于：
+
+$$
+\boxed{
+I_F(R_J)=R_J=C_F(R_J).
+}
+$$
+
+项目已机器化一般双修复固定点原理。
+
+因此 RH 可以被转译为：
+
+$$
+\boxed{
+\text{Riemann 的反射名字是一个既充分、又动力稳定的名字。}
+}
+$$
+
+---
+

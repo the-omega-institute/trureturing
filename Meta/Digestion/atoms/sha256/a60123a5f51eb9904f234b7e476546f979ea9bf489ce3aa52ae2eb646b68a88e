@@ -1,0 +1,21 @@
+\[
+\mathbf U_{r,p}(s)
+=
+\begin{pmatrix}
+\mathbf F & \bigl(L_p^{\langle r\rangle}(s)-1\bigr)v_p\\
+0 & L_p^{\langle r\rangle}(s)
+\end{pmatrix}.
+\]
+
+将 Fibonacci 记忆投影到稳定特征通道后，记：
+
+\[
+a=-\varphi^{-1},
+\qquad
+\lambda_p=L_p^{\langle r\rangle}(s),
+\qquad
+b_p=b^-_{r,p}(s).
+\]
+
+一维稳定更新为：
+

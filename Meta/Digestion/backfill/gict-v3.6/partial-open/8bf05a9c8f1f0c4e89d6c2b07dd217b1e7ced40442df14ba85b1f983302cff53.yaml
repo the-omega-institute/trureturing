@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8bf05a9c8f1f0c4e89d6c2b07dd217b1e7ced40442df14ba85b1f983302cff53
+  normalized_sha256: sha256:8bf05a9c8f1f0c4e89d6c2b07dd217b1e7ced40442df14ba85b1f983302cff53
+cas_ref: sha256:8bf05a9c8f1f0c4e89d6c2b07dd217b1e7ced40442df14ba85b1f983302cff53
+coverage_gids:
+  - D5/E/values--json
+  - D5/S3/Constants/Values.kappa
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []

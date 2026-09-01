@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:ac6e2888c9c2358e7b0368015ab4d6f9726aff81aa25ca19133d2344b0a78df7
+  normalized_sha256: sha256:ac6e2888c9c2358e7b0368015ab4d6f9726aff81aa25ca19133d2344b0a78df7
+cas_ref: sha256:ac6e2888c9c2358e7b0368015ab4d6f9726aff81aa25ca19133d2344b0a78df7
+coverage_gids:
+  - D5/S3/Quantum/Measurement/FiniteKrausInstrumentBornMarginal.finite_kraus_instrument_born_marginal
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/Measurement/FiniteKrausInstrumentBornMarginal.finite_kraus_instrument_born_marginal
+      source_sha256: sha256:ac6e2888c9c2358e7b0368015ab4d6f9726aff81aa25ca19133d2344b0a78df7
+      target_statement_id: sha256:51cff6cab228bcdc5b9dfabab3a7fc8c9ff155746d897bec6be868e49caf4e71
+  scribe:
+    - gid: D5/S3/Quantum/Measurement/FiniteKrausInstrumentBornMarginal.finite_kraus_instrument_born_marginal
+      definition_sha256: sha256:c8e6e38d37f9397fa71b224701dce1898d87d287569d3771f79d482744b7a5d7
+      emission_sha256: sha256:0113dcb46bd162d82163e302195111147bea27ef7c96c09b37b18d9fbab70574
+  unresolved_subitems: []

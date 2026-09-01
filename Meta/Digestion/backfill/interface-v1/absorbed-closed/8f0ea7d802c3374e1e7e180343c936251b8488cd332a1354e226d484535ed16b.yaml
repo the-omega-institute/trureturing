@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:8f0ea7d802c3374e1e7e180343c936251b8488cd332a1354e226d484535ed16b
+  normalized_sha256: sha256:8f0ea7d802c3374e1e7e180343c936251b8488cd332a1354e226d484535ed16b
+cas_ref: sha256:8f0ea7d802c3374e1e7e180343c936251b8488cd332a1354e226d484535ed16b
+coverage_gids:
+  - D5/S0/Diagonal/Lawvere/QualitativeEscape.self_application_fragment_package
+receipts:
+  coverage:
+    - gid: D5/S0/Diagonal/Lawvere/QualitativeEscape.self_application_fragment_package
+      source_sha256: sha256:8f0ea7d802c3374e1e7e180343c936251b8488cd332a1354e226d484535ed16b
+      target_statement_id: sha256:f0c4a2de00a7d16370aedcbb6787d70270ac8454ee41fe2fa5d2fde28a80e370
+  scribe:
+    - gid: D5/S0/Diagonal/Lawvere/QualitativeEscape.self_application_fragment_package
+      definition_sha256: sha256:cdd89809995a1bbbeb41f7eac62723bc42b5c493a7853da1f5c7c2d4149b0fa2
+      emission_sha256: sha256:9fb89404d5e27593160e0c442c4223f4748fbb3c31ee5489b0f6c79862c6f8b7
+  unresolved_subitems: []

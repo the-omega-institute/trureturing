@@ -40,8 +40,6 @@ public sealed class DigestionReceiptIntegrityPredicateTests
             "docs/source.md",
             "none",
             "atom",
-            "manual/atom",
-            null,
             new DigestionFingerprints("sha256:synthetic", "sha256:synthetic"),
             [],
             new DigestionReceipts([], [], [], [], null),
