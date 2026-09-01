@@ -1,0 +1,43 @@
+## 1277.1 shifted-\(\xi\) 的最小因子化
+
+在有限高度截断或有限负指标图表中，设：
+
+$$
+B_{\omega,T}
+=
+\prod_{\substack{
+\rho=\frac12+\delta+i\gamma\\
+\delta>\omega,\ |\gamma|\le T
+}}
+b_{p_{\rho,\omega}^{-}}^{\,m_\rho}.
+$$
+
+则：
+
+$$
+\boxed{
+\Theta_{\omega,T}
+=
+B_{\omega,T}^{-1}
+S_{\omega,T},
+}
+\tag{1277.3}
+$$
+
+其中 \(S_{\omega,T}\) 是取消了上半平面极点后的解析部分。
+
+核恒等式为：
+
+$$
+\boxed{
+B(z)\overline{B(w)}
+k_\Theta(w,z)
+=
+k_S(w,z)-k_B(w,z).
+}
+\tag{1277.4}
+$$
+
+所以：
+
+* \(S\) 是正 Schur 候选；

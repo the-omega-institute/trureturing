@@ -1,0 +1,43 @@
+## 1443.1 每一个“相”由地址与观察者共同产生
+
+若分支地址为：
+
+$$
+a=(a_1,a_2,a_3,\ldots),
+$$
+
+则对应形态由：
+
+$$
+S_{a_1}S_{a_2}\cdots S_{a_n}(X)
+$$
+
+的极限产生。
+
+所以一个完整“相”至少包含：
+
+$$
+\boxed{
+\mathfrak A
+=
+(\text{branch address},
+\text{scale},
+\text{orientation},
+\text{observer},
+\text{hidden history}).
+}
+\tag{1443.4}
+$$
+
+不同观察者即使看到同一个完成标量，也可能具有不同地址与历史。
+
+因此不可克隆不是偶然，而是：
+
+$$
+\boxed{
+\text{完成投影通常不是单射。}
+}
+$$
+
+---
+

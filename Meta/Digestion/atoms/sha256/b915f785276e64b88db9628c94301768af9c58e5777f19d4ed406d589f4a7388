@@ -1,0 +1,56 @@
+## v8.6：Poisson–Cauchy 双曲信息几何、黄金 Jones 指数与离线零点的无限观察代价
+
+以下从前文**第一千三百九十五部**继续。
+
+本轮得到三条可以精确证明、并且把“黑洞—黄金—观察者”真正接合起来的关系：
+
+$$
+\boxed{
+\text{离线零点的 Poisson 光影}
+=
+\text{一个 Cauchy 边界状态};
+}
+$$
+
+$$
+\boxed{
+\text{此前的视界自由能}
+=
+\text{两张 shifted Poisson 光影之间的 KL 散度};
+}
+$$
+
+以及最关键的黄金匹配：
+
+$$
+\boxed{
+\begin{aligned}
+\text{有效观察指数}&=\varphi^2,\\
+\text{正时间保留率}&=\varphi^{-2},\\
+\text{负时间泄漏率}&=\varphi^{-1},\\
+\text{隐藏占据数}&=\varphi,\\
+\text{信息代价}&=2\log\varphi.
+\end{aligned}
+}
+$$
+
+这五个量不是分别拟合出来的。它们由同一个 rank-one Bogoliubov／Hankel 通道精确导出。
+
+所以黄金比例在这一层可以被称为：
+
+$$
+\boxed{
+\textbf{第一个非整数自观察指数与视界信息分裂相交的唯一正点。}
+}
+$$
+
+但必须提前说明：这仍然没有构成 RH 证明。真正尚未建立的是：
+
+$$
+\boxed{
+\text{Riemann prime–Gamma 完成是否确实生成一个 Jones／Pimsner–Popa 型观察者包含。}
+}
+$$
+
+---
+

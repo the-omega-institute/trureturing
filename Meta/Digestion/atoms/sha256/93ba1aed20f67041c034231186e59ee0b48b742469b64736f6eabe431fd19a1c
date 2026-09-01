@@ -1,0 +1,42 @@
+## 定理 1399.1（Poisson coarse-graining law）
+
+对单离线通道，共同的正时间 Poisson 完成严格降低两层观察的可区分性。
+
+$$
+\boxed{
+\text{正时间平滑}
+\Longrightarrow
+D_{\mathrm{KL}}\downarrow.
+}
+$$
+
+逆向去卷积则提高可区分性，并在：
+
+$$
+\omega\uparrow\delta
+$$
+
+时发散。
+
+所以：
+
+$$
+\boxed{
+\text{正时间}
+=
+\text{信息粗化};
+}
+$$
+
+$$
+\boxed{
+\text{负时间}
+=
+\text{信息 blow-up}.
+}
+$$
+
+这正是黑洞直觉真正有数学意义的部分：视界并不是“信息突然消失”，而是外部极化使不同 bulk 状态越来越难区分；逆向恢复则成为病态问题。
+
+---
+

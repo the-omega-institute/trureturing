@@ -1,0 +1,24 @@
+* Hankel/Gram 结构。
+
+而：
+
+$$
+\boxed{
+Z(s)=\det(I-\mathcal L_s)^{-1}
+}
+$$
+
+只保留谱乘积。
+
+因此：
+
+$$
+\boxed{
+\text{“道”若有数学载体，
+更接近 transfer category／operator-valued resolvent／completion stack；
+zeta 只是它的 decategorified determinant。}
+}
+$$
+
+---
+

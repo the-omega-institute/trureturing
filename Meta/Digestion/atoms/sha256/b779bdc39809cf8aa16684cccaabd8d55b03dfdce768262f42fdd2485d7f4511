@@ -1,0 +1,88 @@
+## 定理 1280.1（观察层运输恒等式）
+
+$$
+\boxed{
+R(\omega)
+=
+\int_\omega^\infty
+N(u)\,du,
+}
+\tag{1280.4}
+$$
+
+$$
+\boxed{
+\mathcal A(\omega,y)
+=
+R(\omega)-R(\omega+y),
+}
+\tag{1280.5}
+$$
+
+以及：
+
+$$
+\boxed{
+\mathcal A(\omega,y)
+=
+\int_\omega^{\omega+y}
+N(u)\,du.
+}
+\tag{1280.6}
+$$
+
+在无跳跃点处：
+
+$$
+\boxed{
+\partial_y\mathcal A(\omega,y)
+=
+N(\omega+y),
+}
+\tag{1280.7}
+$$
+
+$$
+\boxed{
+\partial_\omega\mathcal A(\omega,y)
+=
+N(\omega+y)-N(\omega).
+}
+\tag{1280.8}
+$$
+
+因此：
+
+$$
+\boxed{
+(\partial_\omega-\partial_y)
+\mathcal A(\omega,y)
+=
+-N(\omega).
+}
+\tag{1280.9}
+$$
+
+在分布意义下：
+
+$$
+\boxed{
+R''(\omega)
+=
+\sum_jm_j\delta_{\delta_j}(\omega).
+}
+\tag{1280.10}
+$$
+
+所以离线零点的横向除子可以由一维凸函数 \(R\) 的二阶导数完整恢复。
+
+这可以称为：
+
+$$
+\boxed{
+\textbf{transverse stop-loss tomography}.
+}
+$$
+
+---
+

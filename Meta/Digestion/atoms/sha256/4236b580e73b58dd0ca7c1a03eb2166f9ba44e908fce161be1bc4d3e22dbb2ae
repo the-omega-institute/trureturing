@@ -1,0 +1,26 @@
+* inverse-inner denominator 携带负指标。
+
+因此三者共同的母结构是：
+
+$$
+\boxed{
+\textbf{局部正则，但某一种指定结构无法全局下降。}
+}
+$$
+
+分别失败的是：
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{磁单极子}&\text{全局 gauge trivialization}\\
+\text{黑洞视界}&\text{全局静态时间极化}\\
+\text{离线零点}&\text{全局正因果谱因子化}
+\end{array}
+}
+$$
+
+它们看起来相似，是因为都属于**下降障碍**这一普适类。
+
+---
+

@@ -1,0 +1,50 @@
+## 6. 黄金临界半径
+
+对复变量 `s` 定义
+
+\[
+b(s)=\Re(s)-\frac12
+\]
+
+和黄金临界半径
+
+\[
+R_\varphi(s)=\exp(L_\varphi b(s)).
+\]
+
+机器证明
+
+\[
+R_\varphi(s)=1
+\iff
+\Re(s)=\frac12.
+\]
+
+临界反射满足
+
+\[
+b(\mathcal R s)=-b(s)
+\]
+
+以及
+
+\[
+R_\varphi(\mathcal R s)=R_\varphi(s)^{-1}.
+\]
+
+因此每一对反射伙伴都满足
+
+\[
+R_\varphi(s)R_\varphi(\mathcal R s)=1.
+\]
+
+这只是成对平衡。逐点中性要求
+
+\[
+R_\varphi(s)=1.
+\]
+
+所以函数方程型对称提供 pairwise balance，Riemann 型临界线命题要求 pointwise neutrality。Lean 中已经给出显式反例，说明乘积为一不能推出每个因子为一。
+
+---
+

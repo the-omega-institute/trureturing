@@ -1,0 +1,18 @@
+\bigl(a-(1+r_q)\bigr)r_p e^{-it\omega_p}v_p
+-
+\bigl(a-(1+r_p)\bigr)r_q e^{-it\omega_q}v_q.
+}
+\]
+
+这里的 \(t\) 是傅立叶角色的一参数群坐标。通道经过观察器的先后顺序仍由记忆更新的乘法次序表达。两个结构在该定义中第一次同时出现：
+
+\[
+\boxed{
+\text{spectral time phase}
++
+\text{memory-order curvature}.
+}
+\]
+
+---
+

@@ -1,0 +1,47 @@
+# 第一千三百二十八部　离线零点为什么不等于霍金辐射
+
+这里必须作最重要的区分。
+
+一个正常黑洞即使没有任何经典不稳定，也会产生霍金辐射。霍金辐射是视界导致的正负频率混合以及由此产生的热占据，并不是“黑洞存在非法谱点”的信号。([数字对象标识符][1])
+
+而在当前 \(\xi\) 理论中：
+
+$$
+\boxed{
+\mathfrak H_\omega\neq0
+}
+$$
+
+被用来表示 shifted scattering 中存在 inverse-inner denominator，即 RH 需要排除的横向缺陷。
+
+所以精确对应应写成：
+
+$$
+\boxed{
+\begin{aligned}
+\text{离线零点}
+&\leftrightarrow
+\text{隐藏负频率伙伴／视界内缺陷};\\
+\text{Hankel 泄漏 }
+\beta_\omega
+&\leftrightarrow
+\text{外部可见粒子产生};\\
+\text{Poisson 边界脉冲}
+&\leftrightarrow
+\text{辐射的空间—频率剖面}.
+\end{aligned}
+}
+\tag{1328.1}
+$$
+
+换言之：
+
+$$
+\boxed{
+\text{离线零点更像“产生霍金影像的内部伙伴”，
+而不是霍金量子本身。}
+}
+$$
+
+---
+

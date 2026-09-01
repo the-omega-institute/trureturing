@@ -1,0 +1,46 @@
+# 第一千四百五十二部　为什么磁单极子与黑洞都表现为“无法全局胶合”
+
+磁单极子中：
+
+* 每个局部 gauge chart 都正则；
+* 但不存在单一全局 gauge potential；
+* 过渡函数携带 Chern 类。
+
+黑洞／视界中：
+
+* 每个局部坐标图可能正则；
+* 但单一外部静止时间不能跨越整个视界；
+* 正负频率分解依赖观察者；
+* 过渡由 Bogoliubov 变换承担。
+
+shifted-\(\xi\) 中：
+
+* 边界 all-pass 模长完全正常；
+* 局部散射通道可以酉；
+* 但可能不存在全局 retarded Hardy 因子化；
+* inverse-inner denominator 携带负指标。
+
+因此三者共同的母结构是：
+
+$$
+\boxed{
+\textbf{局部正则，但某一种指定结构无法全局下降。}
+}
+$$
+
+分别失败的是：
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{磁单极子}&\text{全局 gauge trivialization}\\
+\text{黑洞视界}&\text{全局静态时间极化}\\
+\text{离线零点}&\text{全局正因果谱因子化}
+\end{array}
+}
+$$
+
+它们看起来相似，是因为都属于**下降障碍**这一普适类。
+
+---
+

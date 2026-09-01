@@ -1,0 +1,33 @@
+* regular quotient 唯一性。
+
+但它们尚未控制 Hardy 块结构。
+
+真正缺少的命题是：
+
+$$
+\boxed{
+P_-M_{\Theta_\omega}P_+=0.
+}
+\tag{1298.1}
+$$
+
+即：
+
+$$
+\boxed{
+\mathcal F^{-1}\Theta_\omega
+\text{ 不含负时间支撑}.
+}
+\tag{1298.2}
+$$
+
+这可以称为：
+
+$$
+\boxed{
+\textbf{Prime–Archimedean Hardy triangularity}.
+}
+$$
+
+---
+

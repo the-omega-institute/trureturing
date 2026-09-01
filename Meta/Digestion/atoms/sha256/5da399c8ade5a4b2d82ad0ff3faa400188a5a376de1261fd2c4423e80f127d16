@@ -1,0 +1,26 @@
+## 一、不要再从 \(\xi\) 的标量值中寻找完整“道”
+
+标量值已经丢失：
+
+* 地址；
+* 时间方向；
+* 状态—效应向量；
+* 非最小内部历史。
+
+应构造 operator-valued completion：
+
+$$
+\boxed{
+\mathcal L_{\omega,s}
+}
+$$
+
+及其：
+
+* controllability Gramian；
+* observability Gramian；
+* Hardy block；
+* storage operator。
+
+---
+

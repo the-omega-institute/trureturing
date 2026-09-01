@@ -1,0 +1,18 @@
+\[
+\boxed{
+\chi_\omega(t+u)
+=
+\chi_\omega(t)\chi_\omega(u).
+}
+\]
+
+因此固定 \(\omega\) 后，映射
+
+\[
+t\longmapsto\chi_\omega(t)
+\]
+
+是加法群 \((\mathbb R,+)\) 到单位圆乘法群的角色。这里的 \(t\) 就是傅立叶对偶中的原变量。频率 \(\omega\) 标记该原变量上的角色。
+
+同一个核也满足
+

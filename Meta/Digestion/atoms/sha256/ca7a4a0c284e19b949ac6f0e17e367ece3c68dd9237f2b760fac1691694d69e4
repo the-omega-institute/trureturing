@@ -1,0 +1,31 @@
+\[
+\mathcal V^{\mathrm{st}}_{r,P}
+=
+\frac{1}{2W_{r,P}}
+\sum_{p,q\in P}
+\|C^{\mathrm{st}}_{r;p,q}\|^2.
+\]
+
+需要机器证明：
+
+\[
+0\le\mathcal V^{\mathrm{st}}_{r,P},
+\]
+
+以及由本轮 envelope 界导出的有限聚合估计。若 \(|P|=M\)，未归一化版本应满足
+
+\[
+\sum_{p,q\in P}
+\|C^{\mathrm{st}}_{r;p,q}\|^2
+\le
+M^2
+\left(
+2\|s-1\|\varepsilon+2\varepsilon^2
+\right)^2.
+\]
+
+归一化版本还需要先固定 \(W_{r,P}\) 的定义和正性条件，避免把归一化选择隐藏在证明中。
+
+完成该有限能量节点以后，prime-side 的剩余困难将集中到两处：
+
+- 从实际 all-order local-factor extraction 得到统一 residual envelope decay；

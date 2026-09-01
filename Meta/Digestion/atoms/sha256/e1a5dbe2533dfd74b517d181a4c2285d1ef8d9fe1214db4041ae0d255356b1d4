@@ -1,0 +1,32 @@
+## 定理 1389.1（Archimedean quarter-pair thermal envelope）
+
+$$
+\boxed{
+|G_+(t)|^2
+|G_-(t)|^2
+=
+\frac{
+2\pi^2
+}{
+\cosh(\pi t)
+}.
+}
+\tag{1389.2}
+$$
+
+又因为：
+
+$$
+\frac1{\cosh(\pi t)}
+=
+\frac{
+2e^{-\pi|t|}
+}{
+1+e^{-2\pi|t|}
+},
+$$
+
+这一完成双层具有一个严格的 Fermi-like thermal envelope。
+
+---
+

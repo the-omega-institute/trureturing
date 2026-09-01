@@ -1,0 +1,63 @@
+## 定理 1290.1（正时间 Blaschke 是等距嵌入）
+
+乘法算子：
+
+$$
+T_B:H_+^2\to H_+^2
+$$
+
+满足：
+
+$$
+\boxed{
+T_B^*T_B=I.
+}
+\tag{1290.4}
+$$
+
+但：
+
+$$
+\boxed{
+T_BT_B^*
+=
+P_{BH_+^2}
+=
+I-P_{K_B}.
+}
+\tag{1290.5}
+$$
+
+所以：
+
+$$
+\boxed{
+\ker T_B=0,
+}
+$$
+
+而：
+
+$$
+\boxed{
+\operatorname{coker}T_B
+\simeq
+K_B.
+}
+$$
+
+其 Fredholm 指数为：
+
+$$
+\boxed{
+\operatorname{ind}T_B=-m.
+}
+\tag{1290.6}
+$$
+
+解释为：
+
+> 因果 inner factor 不删除已有未来状态，但创造了一个 \(m\) 维未来 innovation space。
+
+---
+

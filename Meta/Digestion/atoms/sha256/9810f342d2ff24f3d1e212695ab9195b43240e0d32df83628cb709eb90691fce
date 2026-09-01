@@ -1,0 +1,77 @@
+## 1277.1 shifted-\(\xi\) 的最小因子化
+
+在有限高度截断或有限负指标图表中，设：
+
+$$
+B_{\omega,T}
+=
+\prod_{\substack{
+\rho=\frac12+\delta+i\gamma\\
+\delta>\omega,\ |\gamma|\le T
+}}
+b_{p_{\rho,\omega}^{-}}^{\,m_\rho}.
+$$
+
+则：
+
+$$
+\boxed{
+\Theta_{\omega,T}
+=
+B_{\omega,T}^{-1}
+S_{\omega,T},
+}
+\tag{1277.3}
+$$
+
+其中 \(S_{\omega,T}\) 是取消了上半平面极点后的解析部分。
+
+核恒等式为：
+
+$$
+\boxed{
+B(z)\overline{B(w)}
+k_\Theta(w,z)
+=
+k_S(w,z)-k_B(w,z).
+}
+\tag{1277.4}
+$$
+
+所以：
+
+* \(S\) 是正 Schur 候选；
+* \(k_B\) 是有限维正 model-space kernel；
+* 但它以负号进入原核。
+
+这给三种不可见结构一个最终区分：
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{结构}&\text{意义}\\
+\hline
+\text{outer／模长部分}&\text{可见振幅}\\
+\text{inner numerator}&\text{合法隐藏相位历史}\\
+\text{inner denominator}&\text{反因果／负指标障碍}
+\end{array}
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{Solenoid 式隐藏历史}
+\neq
+\text{Blaschke 分母式离线缺陷}.
+}
+$$
+
+两者都可能对边界振幅不可见，但：
+
+* 前者是合法 lift；
+* 后者使正 Hardy／Hilbert realization 失败。
+
+---
+

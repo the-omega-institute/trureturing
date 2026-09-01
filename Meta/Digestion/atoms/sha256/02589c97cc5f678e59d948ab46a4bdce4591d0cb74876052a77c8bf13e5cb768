@@ -1,0 +1,66 @@
+# Prime–Archimedean Minimum-Phase Continuation
+
+对每一个：
+
+$$
+0<\omega<\frac12,
+$$
+
+shifted scattering：
+
+$$
+\Theta_\omega
+$$
+
+在消除全部共同 inner factors、不可控状态和不可观状态以后，其最小互素因子化满足：
+
+$$
+\boxed{
+\Theta_\omega=S_\omega,
+}
+$$
+
+即：
+
+$$
+\boxed{
+B_\omega=1.
+}
+\tag{1320.1}
+$$
+
+它具有以下等价表述：
+
+$$
+\boxed{
+\begin{aligned}
+B_\omega=1
+&\iff
+\deg B_\omega=0\\
+&\iff
+\operatorname{rank}\mathfrak H_\omega=0\\
+&\iff
+\mathfrak H_\omega=0\\
+&\iff
+\mathfrak D_\omega=0\\
+&\iff
+T_{\Theta_\omega}^*T_{\Theta_\omega}=I\\
+&\iff
+\Theta_\omega H_+^2\subseteq H_+^2\\
+&\iff
+\mathcal K_\omega\succeq0.
+\end{aligned}
+}
+\tag{1320.2}
+$$
+
+对全部：
+
+$$
+0<\omega<\frac12
+$$
+
+成立，即为 RH。
+
+---
+

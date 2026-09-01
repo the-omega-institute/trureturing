@@ -1,0 +1,17 @@
+\[
+\boxed{
+\widetilde U_p(t)
+=
+U_p\cdot z_p(t)
+}
+\]
+
+或在记忆注入中写成
+
+\[
+\boxed{
+b_p(t)=z_p(t)b_p.}
+\]
+
+随后定义时间依赖曲率
+

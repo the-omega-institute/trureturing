@@ -1,0 +1,24 @@
+## v8.5：Rindler 双层、Kruskal 因子化、Gamma 四分之一热桥与离线零点的模视界
+
+以下接续前文**第一千三百八十四部 · 第三步**。
+
+对完整 prime–pole–Gamma cascade，正确顺序应当是：
+
+$$
+\boxed{
+\text{先串联}
+\;\longrightarrow\;
+\text{消去内部望远镜因子}
+\;\longrightarrow\;
+\text{Kalman 最小化}
+\;\longrightarrow\;
+\text{检查 endpoint denominator}.
+}
+$$
+
+不能要求每个局部 scattering cell 单独 minimum-phase，因为相邻单元之间允许存在合法的零极点消去。真正代表离线缺陷的，只是完成全部消去后仍留在最小 realization 中的 inverse-inner endpoint。
+
+仓库已经机器证明，半整数 shifted-\(\xi\) scattering 是 completed-zeta quotient 的有限望远镜级联；这给上述“先组合、后最小化”的程序提供了正式代数底座。
+
+---
+
