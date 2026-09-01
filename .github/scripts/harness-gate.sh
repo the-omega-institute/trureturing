@@ -78,9 +78,15 @@ mark() {
   _t0=$now
 }
 
+# The judge ANALYSES the candidate tree with Roslyn symbol binding, so the solution's
+# compile assets must be present whether or not the judge binary itself was built here.
+# Restoring only on the cache-miss path made ScribeTestMapDeriver fail to bind xUnit
+# symbols on cache hits, inflating the conservative unknown count from <=281 to 673 and
+# blocking correct pull requests (issue #4513).
+dotnet restore "$CANDIDATE_ROOT/tools/StrataLint.sln" --locked-mode
+mark restore-solution
+
 if [[ -z "$JUDGE_DLL" ]]; then
-  dotnet restore "$CANDIDATE_ROOT/tools/StrataLint.sln" --locked-mode
-  mark restore-judge
   dotnet build \
     "$CANDIDATE_ROOT/tools/StrataLint.sln" \
     --no-restore \

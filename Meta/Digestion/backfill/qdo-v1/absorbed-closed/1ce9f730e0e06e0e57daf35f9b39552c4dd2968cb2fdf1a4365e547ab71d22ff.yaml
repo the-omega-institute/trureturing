@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:1ce9f730e0e06e0e57daf35f9b39552c4dd2968cb2fdf1a4365e547ab71d22ff
+  normalized_sha256: sha256:1ce9f730e0e06e0e57daf35f9b39552c4dd2968cb2fdf1a4365e547ab71d22ff
+cas_ref: sha256:1ce9f730e0e06e0e57daf35f9b39552c4dd2968cb2fdf1a4365e547ab71d22ff
+coverage_gids:
+  - D5/S3/ObserverMemory/Prediction/FiniteInputGeneratorPeriodicity.finite_input_generator_eventually_periodic
+receipts:
+  coverage:
+    - gid: D5/S3/ObserverMemory/Prediction/FiniteInputGeneratorPeriodicity.finite_input_generator_eventually_periodic
+      source_sha256: sha256:1ce9f730e0e06e0e57daf35f9b39552c4dd2968cb2fdf1a4365e547ab71d22ff
+      target_statement_id: sha256:8570027fb303b0d9b00dfefd88fc670c7492edb43936c63904d230dd0aabe611
+  scribe:
+    - gid: D5/S3/ObserverMemory/Prediction/FiniteInputGeneratorPeriodicity.finite_input_generator_eventually_periodic
+      definition_sha256: sha256:a392dd2272487d5fb241d82a097a8356c10748f52da3890de94c9e91efb3e130
+      emission_sha256: sha256:12dfe506845f2d362936db16ff3eb23283c75e8c6149cc8c46eb8b15250f68df
+  unresolved_subitems: []
