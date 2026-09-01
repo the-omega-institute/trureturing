@@ -7,6 +7,7 @@
 
 import D5.S3.Weil.TestFunctions.LiCurvatureFourierRepresentation
 import Mathlib.Analysis.Matrix.Order
+import Mathlib.Algebra.Ring.GeomSum
 import Mathlib.MeasureTheory.Measure.Dirac
 import Mathlib.NumberTheory.LSeries.RiemannZeta
 
@@ -182,6 +183,173 @@ theorem second_difference_recurrence_unique
       rw [show n + 1 + 1 = n + 2 by omega,
         show n + 1 - 1 = n by omega] at hx hy
       linarith
+
+/-- The finite geometric polynomial used in the source's reconstruction of the
+Li coefficients. At `n = 0` its indexing finset is empty. -/
+def geometricPolynomial (n : Nat) (z : Circle) : Complex :=
+  ∑ j ∈ Finset.range n, (z : Complex) ^ j
+
+/-- Reconstruction of a Li sequence from a circle measure and its first
+coefficient. -/
+noncomputable def reconstructedLi (mu : Measure Circle) (firstCoefficient : Real)
+    (n : Nat) : Real :=
+  firstCoefficient * ∫ z : Circle, Complex.normSq (geometricPolynomial n z) ∂mu
+
+private theorem geometricPolynomial_succ_last (z : Circle) (n : Nat) :
+    geometricPolynomial (n + 1) z = (z : Complex) ^ n + geometricPolynomial n z := by
+  simpa only [geometricPolynomial] using (geom_sum_succ' (x := (z : Complex)) (n := n))
+
+private theorem geometricPolynomial_succ_front (z : Circle) (n : Nat) :
+    geometricPolynomial (n + 1) z =
+      (z : Complex) * geometricPolynomial n z + 1 := by
+  simpa only [geometricPolynomial] using (geom_sum_succ (x := (z : Complex)) (n := n))
+
+private theorem geometric_energy_succ_sub (z : Circle) (n : Nat) :
+    Complex.normSq (geometricPolynomial (n + 1) z) -
+        Complex.normSq (geometricPolynomial n z) =
+      1 + 2 * (((z : Complex) ^ n) * conj (geometricPolynomial n z)).re := by
+  rw [geometricPolynomial_succ_last, Complex.normSq_add]
+  have powerNormSq : Complex.normSq ((z : Complex) ^ n) = 1 := by
+    rw [map_pow]
+    simp
+  rw [powerNormSq]
+  ring
+
+private theorem weighted_conj_geometric_sub (z : Circle) (n : Nat) (hn : 1 <= n) :
+    (z : Complex) ^ n * conj (geometricPolynomial n z) -
+        (z : Complex) ^ (n - 1) * conj (geometricPolynomial (n - 1) z) =
+      (z : Complex) ^ n := by
+  obtain ⟨m, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (Nat.ne_of_gt hn)
+  simp only [Nat.succ_sub_one]
+  rw [geometricPolynomial_succ_front]
+  simp only [map_add, map_mul, map_one]
+  have unitNorm : (z : Complex) * conj (z : Complex) = 1 := by
+    rw [Complex.mul_conj]
+    simp
+  calc
+    (z : Complex) ^ (m + 1) *
+          (conj (z : Complex) * conj (geometricPolynomial m z) + 1) -
+        (z : Complex) ^ m * conj (geometricPolynomial m z) =
+      (z : Complex) ^ m * ((z : Complex) * conj (z : Complex)) *
+          conj (geometricPolynomial m z) + (z : Complex) ^ (m + 1) -
+        (z : Complex) ^ m * conj (geometricPolynomial m z) := by
+          rw [pow_succ]
+          ring
+    _ = (z : Complex) ^ (m + 1) := by rw [unitNorm]; ring
+
+/-- The squared modulus of the finite geometric polynomial has the second
+difference used in the source: twice the real part of the nth circle
+character. -/
+theorem geometric_energy_second_difference (z : Circle) (n : Nat) (hn : 1 <= n) :
+    Complex.normSq (geometricPolynomial (n + 1) z) -
+          2 * Complex.normSq (geometricPolynomial n z) +
+        Complex.normSq (geometricPolynomial (n - 1) z) =
+      2 * (((z : Complex) ^ n).re) := by
+  have currentDifference := geometric_energy_succ_sub z n
+  have previousDifference := geometric_energy_succ_sub z (n - 1)
+  rw [Nat.sub_add_cancel hn] at previousDifference
+  have weightedDifference := congrArg Complex.re (weighted_conj_geometric_sub z n hn)
+  simp only [Complex.sub_re] at weightedDifference
+  linarith
+
+private theorem circleMoment_re_nat (mu : Measure Circle) [IsFiniteMeasure mu] (n : Nat) :
+    (circleMoment mu n).re = ∫ z : Circle, (((z : Complex) ^ n).re) ∂mu := by
+  have negativePowerIntegrable :
+      Integrable (fun z : Circle => (z : Complex) ^ (-(n : Int))) mu := by
+    have negativePowerContinuous :
+        Continuous (fun z : Circle => (z : Complex) ^ (-(n : Int))) := by
+      apply Continuous.zpow₀ (by fun_prop)
+      intro z
+      exact Or.inl (Circle.coe_ne_zero z)
+    simpa using negativePowerContinuous.continuousOn.integrableOn_compact
+      (μ := mu) isCompact_univ
+  rw [circleMoment, ← RCLike.re_eq_complex_re,
+    ← integral_re negativePowerIntegrable]
+  apply integral_congr_ae
+  filter_upwards [] with z
+  rw [_root_.zpow_neg, zpow_natCast]
+  have inverseAsConj : ((z : Complex) ^ n)⁻¹ = conj ((z : Complex) ^ n) := by
+    change ((↑((z ^ n : Circle)⁻¹) : Complex)) = conj (↑(z ^ n : Circle) : Complex)
+    exact Circle.coe_inv_eq_conj (z ^ n)
+  rw [inverseAsConj]
+  exact Complex.conj_re ((z : Complex) ^ n)
+
+private theorem geometric_energy_integrable
+    (mu : Measure Circle) [IsFiniteMeasure mu] (n : Nat) :
+    Integrable (fun z : Circle => Complex.normSq (geometricPolynomial n z)) mu := by
+  have energyContinuous :
+      Continuous (fun z : Circle => Complex.normSq (geometricPolynomial n z)) := by
+    unfold geometricPolynomial
+    fun_prop
+  simpa using energyContinuous.continuousOn.integrableOn_compact (μ := mu) isCompact_univ
+
+/-- The empty-sum convention in the source gives reconstructed value zero at
+index zero. -/
+theorem reconstructedLi_zero (mu : Measure Circle) (firstCoefficient : Real) :
+    reconstructedLi mu firstCoefficient 0 = 0 := by
+  simp [reconstructedLi, geometricPolynomial]
+
+/-- For a probability measure, the one-term geometric polynomial gives the
+prescribed first coefficient. -/
+theorem reconstructedLi_one
+    (mu : Measure Circle) [IsProbabilityMeasure mu] (firstCoefficient : Real) :
+    reconstructedLi mu firstCoefficient 1 = firstCoefficient := by
+  simp [reconstructedLi, geometricPolynomial]
+
+/-- A nonnegative first coefficient makes every reconstructed coefficient
+nonnegative. -/
+theorem reconstructedLi_nonneg
+    (mu : Measure Circle) [IsFiniteMeasure mu] (firstCoefficient : Real)
+    (firstCoefficientNonnegative : 0 <= firstCoefficient) (n : Nat) :
+    0 <= reconstructedLi mu firstCoefficient n := by
+  apply mul_nonneg firstCoefficientNonnegative
+  exact integral_nonneg fun z => Complex.normSq_nonneg (geometricPolynomial n z)
+
+/-- The source's integral reconstruction has second difference equal to twice
+the first coefficient times the real Fourier moment. -/
+theorem reconstructedLi_second_difference
+    (mu : Measure Circle) [IsFiniteMeasure mu] (firstCoefficient : Real)
+    (n : Nat) (hn : 1 <= n) :
+    reconstructedLi mu firstCoefficient (n + 1) -
+          2 * reconstructedLi mu firstCoefficient n +
+        reconstructedLi mu firstCoefficient (n - 1) =
+      2 * firstCoefficient * (circleMoment mu n).re := by
+  have nextIntegrable := geometric_energy_integrable mu (n + 1)
+  have currentIntegrable := geometric_energy_integrable mu n
+  have previousIntegrable := geometric_energy_integrable mu (n - 1)
+  have differenceIntegrable :
+      Integrable (fun z : Circle =>
+        Complex.normSq (geometricPolynomial (n + 1) z) -
+          2 * Complex.normSq (geometricPolynomial n z)) mu :=
+    nextIntegrable.sub (currentIntegrable.const_mul 2)
+  calc
+    reconstructedLi mu firstCoefficient (n + 1) -
+          2 * reconstructedLi mu firstCoefficient n +
+        reconstructedLi mu firstCoefficient (n - 1) =
+      firstCoefficient *
+        ((∫ z : Circle, Complex.normSq (geometricPolynomial (n + 1) z) ∂mu) -
+          2 * (∫ z : Circle, Complex.normSq (geometricPolynomial n z) ∂mu) +
+          ∫ z : Circle, Complex.normSq (geometricPolynomial (n - 1) z) ∂mu) := by
+            simp only [reconstructedLi]
+            ring
+    _ = firstCoefficient *
+        ∫ z : Circle,
+          (Complex.normSq (geometricPolynomial (n + 1) z) -
+              2 * Complex.normSq (geometricPolynomial n z) +
+            Complex.normSq (geometricPolynomial (n - 1) z)) ∂mu := by
+              congr 1
+              rw [integral_add differenceIntegrable previousIntegrable,
+                integral_sub nextIntegrable (currentIntegrable.const_mul 2),
+                integral_const_mul]
+    _ = firstCoefficient *
+        ∫ z : Circle, 2 * (((z : Complex) ^ n).re) ∂mu := by
+          congr 1
+          apply integral_congr_ae
+          filter_upwards [] with z
+          exact geometric_energy_second_difference z n hn
+    _ = 2 * firstCoefficient * (circleMoment mu n).re := by
+      rw [integral_const_mul, ← circleMoment_re_nat]
+      ring
 
 /-- A Dirac mass at 1 with coefficients (1,1) makes both sides of the
 Toeplitz integral identity equal to 4, so the construction is nonzero. -/
