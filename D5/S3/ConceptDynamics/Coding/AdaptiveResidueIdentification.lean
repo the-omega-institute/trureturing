@@ -37,12 +37,18 @@ open D5.S3.ConceptDynamics.Faithfulness.JointFaithfulnessLeibnizCriterion
 abbrev ResidueState :=
   {value : Nat // value ∈ ({0, 10, 15, 21} : Finset Nat)}
 
+-- Lean 4.33's stricter type check breaks mathlib's `Fintype` deriving handler.
+section
+set_option backward.isDefEq.respectTransparency.types false
+
 /-- The three available modular sensors. -/
 inductive ResidueSensor
   | two
   | three
   | five
   deriving DecidableEq, Fintype
+
+end
 
 /-- The modulus represented by a sensor. -/
 def sensorModulus : ResidueSensor -> Nat
@@ -109,14 +115,23 @@ private theorem adaptive_protocol_uses_readouts :
     UsesReadoutFamily residueReadout adaptiveProtocol := by
   intro round history
   by_cases hzero : round.1 = 0
-  · exact ⟨.two, by simp [adaptiveProtocol, adaptiveQuestion, hzero]⟩
+  · exact ⟨.two, by simp [adaptiveProtocol, adaptiveQuestion, hzero] <;> rfl⟩
   · by_cases hone : history ⟨0, Nat.pos_of_ne_zero hzero⟩
-    · exact ⟨.five, by simp [adaptiveProtocol, adaptiveQuestion, hzero, hone]⟩
-    · exact ⟨.three, by simp [adaptiveProtocol, adaptiveQuestion, hzero, hone]⟩
+    · exact ⟨.five, by simp [adaptiveProtocol, adaptiveQuestion, hzero, hone] <;> rfl⟩
+    · exact ⟨.three, by simp [adaptiveProtocol, adaptiveQuestion, hzero, hone] <;> rfl⟩
 
 private theorem adaptive_protocol_exact :
     Function.Injective adaptiveProtocol.transcript := by
-  decide
+  rintro ⟨left, hleft⟩ ⟨right, hright⟩ hequal
+  have hzero := congrArg
+    (fun bits : BitVec 2 => bits.getLsb ⟨0, by decide⟩) hequal
+  have hone := congrArg
+    (fun bits : BitVec 2 => bits.getLsb ⟨1, by decide⟩) hequal
+  simp only [Finset.mem_insert, Finset.mem_singleton] at hleft hright
+  rcases hleft with rfl | rfl | rfl | rfl <;>
+    rcases hright with rfl | rfl | rfl | rfl <;>
+    simp [adaptiveProtocol, adaptiveTranscript, residueReadout, sensorModulus]
+      at hzero hone ⊢
 
 private theorem residue_adaptive_exists :
     exists depth, ExactAtDepth residueReadout depth :=
@@ -237,7 +252,7 @@ theorem two_step_adaptive_residue_identification :
   · refine ⟨adaptiveProtocol, ?_, ?_, adaptive_protocol_uses_readouts,
       adaptive_protocol_exact⟩
     · intro history
-      simp [adaptiveProtocol, adaptiveQuestion]
+      simp [adaptiveProtocol, adaptiveQuestion] <;> rfl
     · intro history
       funext state
       by_cases hbit : history 0 = true <;>

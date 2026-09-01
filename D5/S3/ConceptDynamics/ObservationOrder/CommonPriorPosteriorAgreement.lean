@@ -153,12 +153,12 @@ example : (1 / 2 : Real) = 1 / 2 := by
   · simp [commonCell]
   · intro cell hcell
     have hcell' : cell = commonCell := by
-      simpa [information] using hcell
+      simpa [information, Finpartition.indiscrete] using hcell
     subst cell
     norm_num [cellPosterior, eventMass, priorMass, prior, event, commonCell]
   · intro cell hcell
     have hcell' : cell = commonCell := by
-      simpa [information] using hcell
+      simpa [information, Finpartition.indiscrete] using hcell
     subst cell
     norm_num [cellPosterior, eventMass, priorMass, prior, event, commonCell]
 

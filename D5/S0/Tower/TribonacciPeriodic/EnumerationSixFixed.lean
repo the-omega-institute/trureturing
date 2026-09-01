@@ -207,6 +207,7 @@ theorem tribonacci_inherited_orbit_states_subset_fixed_points_six :
     tribonacciCodeRoot] at hcode ⊢
   tauto
 
+set_option maxHeartbeats 800000 in
 theorem tribonacci_orbit_states_subset_fixed_points_ab_six :
     (orbitStates tribonacciPeriodSixOrbitA).toFinset ⊆
         (fixedPointCodes 6).toFinset /\

@@ -123,7 +123,8 @@ theorem iInf_orthogonal_divisibleSubspace_primeAddress_eq_vacuum :
         (Submodule.mem_iInf _).1 hx q
       have hzero : x b = 0 :=
         (mem_orthogonal_divisibleSubspace (primeAddress q) x).1 hxq b (by
-          simpa [q, PNat.dvd_iff] using hpdvd)
+          rw [encoding_primeAddress]
+          exact (PNat.dvd_iff).2 hpdvd)
       rw [hzero]
       simp [vacuumKet, hb]
   · intro hx
@@ -137,7 +138,8 @@ theorem iInf_orthogonal_divisibleSubspace_primeAddress_eq_vacuum :
       intro hb
       subst b
       have hpdvdOne : (p : ℕ) ∣ 1 := by
-        simpa [PNat.dvd_iff] using hpb
+        rw [encoding_primeAddress, encoding_vacuumAddress] at hpb
+        exact (PNat.dvd_iff).1 hpb
       exact p.2.not_dvd_one hpdvdOne
     simp [vacuumKet, hbne]
 

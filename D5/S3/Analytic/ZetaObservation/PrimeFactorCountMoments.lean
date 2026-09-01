@@ -105,8 +105,16 @@ theorem primeFactorCount_eq_tsum_support (n : Nat) :
       if 0 < n.factorization p.1 then (1 : Real) else 0) =
       ∑' p : ↑({p : Nat | p.Prime} : Set Nat),
         if 0 < n.factorization p.1 then (1 : Real) else 0 by
-    simpa only [e, Equiv.coe_fn_mk] using e.tsum_eq
-      (fun p => if 0 < n.factorization p.1 then (1 : Real) else 0)]
+    let f := fun p : ↑({p : Nat | p.Prime} : Set Nat) =>
+      if 0 < n.factorization p.1 then (1 : Real) else 0
+    calc
+      (∑' p : Nat.Primes,
+          if 0 < n.factorization p.1 then (1 : Real) else 0) =
+          ∑' p : Nat.Primes, f (e p) := by
+            apply tsum_congr
+            intro p
+            rfl
+      _ = ∑' p, f p := e.tsum_eq f]
   rw [hsub]
   rw [tsum_eq_sum (s := n.factorization.support)]
   · rw [Nat.support_factorization]

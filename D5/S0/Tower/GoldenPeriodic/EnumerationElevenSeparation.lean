@@ -185,12 +185,13 @@ theorem golden_states_for_first_three_steps_split_four
   apply Finset.Subset.antisymm
   · intro state hstate
     simp only [goldenStatesForFirstThreeStepsIn, List.filterMap_map,
-      Function.comp_apply, goldenFirstThreeOfFour, List.mem_toFinset,
-      List.mem_filterMap] at hstate
+      Function.comp_apply, List.mem_toFinset, List.mem_filterMap] at hstate
     obtain ⟨item, hitem, hselected⟩ := hstate
-    split at hselected
-    · rename_i hthree
-      simp only [Option.some.injEq] at hselected
+    by_cases hselectedCondition : (goldenFirstThreeOfFour item).2.1 = first ∧ (goldenFirstThreeOfFour item).2.2.1 = second ∧ (goldenFirstThreeOfFour item).2.2.2 = third
+    · rw [if_pos hselectedCondition] at hselected
+      simp only [Option.some.injEq, goldenFirstThreeOfFour] at hselected
+      have hthree : item.2.1 = first ∧ item.2.2.1 = second ∧ item.2.2.2.1 = third := by
+        simpa only [goldenFirstThreeOfFour] using hselectedCondition
       rw [Finset.mem_union]
       rcases List.forall_iff_forall_mem.mp hfourth item hitem hthree with
         hleft | hright
@@ -204,7 +205,8 @@ theorem golden_states_for_first_three_steps_split_four
         simp only [List.mem_filterMap]
         refine ⟨item, hitem, ?_⟩
         simp [hthree.1, hthree.2.1, hthree.2.2, hright, hselected]
-    · contradiction
+    · rw [if_neg hselectedCondition] at hselected
+      cases hselected
   · intro state hstate
     rw [Finset.mem_union] at hstate
     simp only [goldenStatesForFirstThreeStepsIn, List.filterMap_map,

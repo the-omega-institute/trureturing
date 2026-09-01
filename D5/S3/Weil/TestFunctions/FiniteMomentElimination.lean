@@ -23,19 +23,15 @@ private theorem signed_measure_distribution_apply
     (epsilon.toJordanDecomposition.posPart.toTemperedDistribution -
         epsilon.toJordanDecomposition.negPart.toTemperedDistribution) test =
       ∫ᵛ u, test u ∂<•epsilon := by
-  have hpos : epsilon.toJordanDecomposition.posPart.toSignedMeasure.Integrable
-      (fun u => test u)
-      (ContinuousLinearMap.lsmul ℝ ℝ).flip := by
-    simp only [VectorMeasure.Integrable, VectorMeasure.variation_transpose_lsmul_flip,
-      VectorMeasure.variation_toSignedMeasure]
+  have hpos : VectorMeasure.Integrable
+      epsilon.toJordanDecomposition.posPart.toSignedMeasure (fun u => test u) := by
+    simp only [VectorMeasure.Integrable, Measure.variation_toSignedMeasure]
     exact Integrable.of_bound test.continuous.aestronglyMeasurable
       ‖test.toBoundedContinuousFunction‖
       (ae_of_all _ test.toBoundedContinuousFunction.norm_coe_le_norm)
-  have hneg : epsilon.toJordanDecomposition.negPart.toSignedMeasure.Integrable
-      (fun u => test u)
-      (ContinuousLinearMap.lsmul ℝ ℝ).flip := by
-    simp only [VectorMeasure.Integrable, VectorMeasure.variation_transpose_lsmul_flip,
-      VectorMeasure.variation_toSignedMeasure]
+  have hneg : VectorMeasure.Integrable
+      epsilon.toJordanDecomposition.negPart.toSignedMeasure (fun u => test u) := by
+    simp only [VectorMeasure.Integrable, Measure.variation_toSignedMeasure]
     exact Integrable.of_bound test.continuous.aestronglyMeasurable
       ‖test.toBoundedContinuousFunction‖
       (ae_of_all _ test.toBoundedContinuousFunction.norm_coe_le_norm)
@@ -66,21 +62,23 @@ private theorem signed_measure_integrable_of_jordan_restrict_eq
     (hneg : epsilon.toJordanDecomposition.negPart.restrict s =
       epsilon.toJordanDecomposition.negPart)
     {g : ℝ → E} (hg : ContinuousOn g s) :
-    epsilon.Integrable g (ContinuousLinearMap.lsmul ℝ ℝ).flip := by
+    MeasureTheory.Integrable g
+      (epsilon.transpose (ContinuousLinearMap.lsmul ℝ ℝ (E := E)).flip).variation := by
   have hposInt : Integrable g epsilon.toJordanDecomposition.posPart := by
     rw [← hpos]
     exact hg.integrableOn_compact hsCompact
   have hnegInt : Integrable g epsilon.toJordanDecomposition.negPart := by
     rw [← hneg]
     exact hg.integrableOn_compact hsCompact
-  have hposSigned : epsilon.toJordanDecomposition.posPart.toSignedMeasure.Integrable g
-      (ContinuousLinearMap.lsmul ℝ ℝ).flip := by
-    simpa only [VectorMeasure.Integrable, VectorMeasure.variation_transpose_lsmul_flip,
-      VectorMeasure.variation_toSignedMeasure] using hposInt
-  have hnegSigned : epsilon.toJordanDecomposition.negPart.toSignedMeasure.Integrable g
-      (ContinuousLinearMap.lsmul ℝ ℝ).flip := by
-    simpa only [VectorMeasure.Integrable, VectorMeasure.variation_transpose_lsmul_flip,
-      VectorMeasure.variation_toSignedMeasure] using hnegInt
+  have hposSigned : VectorMeasure.Integrable
+      epsilon.toJordanDecomposition.posPart.toSignedMeasure g := by
+    simpa only [VectorMeasure.Integrable, Measure.variation_toSignedMeasure] using hposInt
+  have hnegSigned : VectorMeasure.Integrable
+      epsilon.toJordanDecomposition.negPart.toSignedMeasure g := by
+    simpa only [VectorMeasure.Integrable, Measure.variation_toSignedMeasure] using hnegInt
+  change MeasureTheory.Integrable g
+    (epsilon.transpose (ContinuousLinearMap.lsmul ℝ ℝ (E := E)).flip).variation
+  rw [VectorMeasure.variation_transpose_lsmul_flip]
   rw [← epsilon.toSignedMeasure_toJordanDecomposition, JordanDecomposition.toSignedMeasure]
   exact hposSigned.sub_vectorMeasure hnegSigned
 
@@ -134,13 +132,15 @@ private theorem signed_measure_integral_polynomial_eq_sum
     (∫ᵛ u, p.eval u ∂<•epsilon) =
       ∑ j ∈ Finset.range (K + 1),
         (Polynomial.hasseDeriv j p).eval b * (∫ᵛ u, (u - b) ^ j ∂<•epsilon) := by
-  have hpower (j : ℕ) : epsilon.Integrable (fun u => (u - b) ^ j)
-      (ContinuousLinearMap.lsmul ℝ ℝ).flip :=
-    signed_measure_integrable_of_jordan_restrict_eq epsilon isCompact_Icc hpos hneg
-      (by fun_prop)
-  have hterm (j : ℕ) : epsilon.Integrable
-      (fun u => (Polynomial.hasseDeriv j p).eval b * (u - b) ^ j)
-      (ContinuousLinearMap.lsmul ℝ ℝ).flip := by
+  have hpower (j : ℕ) : VectorMeasure.Integrable epsilon (fun u => (u - b) ^ j) := by
+    have h := signed_measure_integrable_of_jordan_restrict_eq epsilon isCompact_Icc hpos hneg
+      (g := fun u => (u - b) ^ j) (by fun_prop)
+    change MeasureTheory.Integrable (fun u => (u - b) ^ j)
+      (epsilon.transpose (ContinuousLinearMap.lsmul ℝ ℝ).flip).variation at h
+    simpa only [VectorMeasure.Integrable,
+      VectorMeasure.variation_transpose_lsmul_flip] using h
+  have hterm (j : ℕ) : VectorMeasure.Integrable epsilon
+      (fun u => (Polynomial.hasseDeriv j p).eval b * (u - b) ^ j) := by
     convert (hpower j).smul ((Polynomial.hasseDeriv j p).eval b) using 1
     ext u
     simp only [Pi.smul_apply, smul_eq_mul]

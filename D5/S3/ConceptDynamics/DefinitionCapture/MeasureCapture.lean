@@ -225,11 +225,18 @@ theorem infinite_counting_cas_bridge_fails :
           (conceptJoin (fun _ : Nat × Bool => ())
             (Prod.snd : Nat × Bool → Bool))
           (id : Concept (Nat × Bool) (Nat × Bool)) := by
-    rw [residual_join_law]
-    ext pair
-    simp only [Set.mem_sdiff, Set.mem_inter_iff, Set.mem_compl_iff,
-      Set.mem_setOf_eq]
-    tauto
+    calc
+      _ = defectRelation (fun _ : Nat × Bool => ())
+            (id : Concept (Nat × Bool) (Nat × Bool)) ∩
+          {pair : (Nat × Bool) × (Nat × Bool) |
+            Setoid.ker (Prod.snd : Nat × Bool → Bool) pair.1 pair.2} := by
+        ext pair
+        simp only [Set.mem_sdiff, Set.mem_inter_iff, Set.mem_compl_iff,
+          Set.mem_setOf_eq]
+        tauto
+      _ = _ := (residual_join_law (fun _ : Nat × Bool => ())
+        (Prod.snd : Nat × Bool → Bool)
+        (id : Concept (Nat × Bool) (Nat × Bool))).symm
   have residualMassTop :
       (countingCaptureWeight ((Nat × Bool) × (Nat × Bool))).mass
         (defectRelation (fun _ : Nat × Bool => ())

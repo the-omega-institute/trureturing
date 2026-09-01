@@ -1,0 +1,4 @@
+### P0. `FiniteFrequencyOrderedSimplexCoercivity`
+
+利用本轮闭式积分与有限最小频差，冻结统一时间窗口双边界。
+

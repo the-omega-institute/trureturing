@@ -263,22 +263,29 @@ public sealed partial class PureRevertDetectScriptTests
     }
 
     [Fact]
-    public void ExactInverseOutsideCanonicalHarnessAllowlistIsRejected()
+    public void ExactFrozenLedgerMergeInverseIsAccepted()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new GitFixture();
         fixture.CommitFiles(
             "seed ledger",
             new FileMutation("Golden/Frozen/accepted/node.json", "before\n"));
-        fixture.CommitFiles(
+        var feature = fixture.CommitOnBranch(
+            "feature",
             "ledger target",
             new FileMutation("Golden/Frozen/accepted/node.json", "after\n"));
+        var target = fixture.MergeIntoMain(feature, "merge ledger target");
         fixture.CommitCandidateAndMerge(
             "ledger inverse",
             new FileMutation("Golden/Frozen/accepted/node.json", "before\n"));
 
-        AssertRejected(
-            Run([fixture.Repository]),
-            "PURE_REVERT_PATH_OUTSIDE_ALLOWLIST");
+        var result = Run([fixture.Repository]);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Empty(result.StandardError);
+        Assert.Contains(
+            $"target_merge_sha={target}",
+            Encoding.UTF8.GetString(result.StandardOutput),
+            StringComparison.Ordinal);
     }
 }

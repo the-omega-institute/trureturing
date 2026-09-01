@@ -107,7 +107,8 @@ target defect, by the repository's canonical residual intersection law. -/
 theorem square_coordinate_eliminates_escape :
     defectRelation (conceptJoin completionObserver squareTarget) squareTarget =
       ∅ := by
-  rw [residual_join_law]
+  rw [residual_join_law (X := SpectralState) (C := Complex) (D := Real)
+    (Target := Real) completionObserver squareTarget squareTarget]
   ext pair
   simp [defectRelation, Setoid.ker_def]
 

@@ -76,12 +76,25 @@ theorem observer_innovation_equation
     rcases i with i | i <;> rcases j with j | j
     · simp [fullShift, oldShift, oldGram, Matrix.gram_apply,
         Matrix.fromBlocks_apply₁₁, Matrix.one_apply]
-    · simp [fullShift, oldShift, coupling, Matrix.gram_apply,
-        Matrix.fromBlocks_apply₁₂]
-    · simp [fullShift, oldShift, coupling, Matrix.gram_apply,
-        Matrix.fromBlocks_apply₂₁, inner_conj_symm]
-    · simp [fullShift, diagonal, Matrix.gram_apply,
-        Matrix.fromBlocks_apply₂₂]
+    · rcases j with ⟨⟩
+      rw [Matrix.fromBlocks_apply₁₂]
+      simp [fullShift, oldShift, coupling, Matrix.gram_apply,
+        Matrix.sub_apply, Matrix.smul_apply, Matrix.one_apply]
+    · rcases i with ⟨⟩
+      rw [Matrix.fromBlocks_apply₂₁, Matrix.conjTranspose_apply]
+      simp [fullShift, oldShift, coupling, Matrix.gram_apply,
+        Matrix.sub_apply, Matrix.smul_apply, Matrix.one_apply, inner_conj_symm]
+    · rcases i with ⟨⟩
+      rcases j with ⟨⟩
+      rw [Matrix.fromBlocks_apply₂₂]
+      change
+        (Matrix.gram K feature -
+          (a : K) • (1 : Matrix (Sum ι Unit) (Sum ι Unit) K))
+            (Sum.inr ()) (Sum.inr ()) =
+          (diagonal - (a : K) • (1 : Matrix Unit Unit K)) () ()
+      rw [Matrix.sub_apply, Matrix.sub_apply, Matrix.smul_apply, Matrix.smul_apply,
+        Matrix.one_apply_eq, Matrix.one_apply_eq]
+      simp [diagonal, Matrix.gram_apply]
   have hOld (a : ℝ) (ha : a < alphaOld) : (oldShift a).PosDef := by
     exact (hOldFloor a).2 ha
   have hDetFactor (a : ℝ) (ha : a < alphaOld) :
@@ -97,8 +110,9 @@ theorem observer_innovation_equation
       ⟪feature (Sum.inr ()), feature (Sum.inr ())⟫_K - (a : K) -
         (couplingᴴ *
           (oldGram - (a : K) • (1 : Matrix ι ι K))⁻¹ * coupling) () () := by
-    simp [diagonal, oldShift, oldGram, Matrix.det_unique,
-      RCLike.real_smul_eq_coe_mul]
+    rw [Matrix.det_unique, Matrix.sub_apply, Matrix.sub_apply,
+      Matrix.smul_apply, Matrix.one_apply_eq]
+    simp [diagonal, oldShift, oldGram, RCLike.real_smul_eq_coe_mul, smul_eq_mul]
   constructor
   · have hOldNew := hOld alphaNew hDrop
     have hFullSemi : (fullShift alphaNew).PosSemidef := by

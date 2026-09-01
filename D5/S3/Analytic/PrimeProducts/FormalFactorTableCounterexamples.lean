@@ -112,7 +112,10 @@ theorem parameter_factor_not_locally_uniform :
   have hcontinuous : ContinuousOn endpointProductLimit (Icc (0 : ℝ) 1) := by
     apply hlocal.continuousOn
     exact (Filter.Eventually.of_forall fun s : Finset ℕ => by
-      simpa [parameterFactorTable] using (continuous_id.pow s.card).continuousOn).frequently
+      apply continuousOn_finsetProd
+      intro i _hi
+      change ContinuousOn (fun x : ℝ => x) (Icc 0 1)
+      exact continuous_id.continuousOn).frequently
   have happroach : Tendsto (fun n : ℕ => (n : ℝ) / (n + 1)) atTop (𝓝 (1 : ℝ)) := by
     have heq : (fun n : ℕ => (n : ℝ) / (n + 1)) =
         fun n : ℕ => 1 - 1 / ((n : ℝ) + 1) := by
