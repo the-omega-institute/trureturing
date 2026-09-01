@@ -1,4 +1,3 @@
-using System.Collections.Immutable;
 using System.Text;
 using StrataLint.Cli;
 using StrataLint.Engine;
@@ -26,34 +25,51 @@ public sealed partial class DigestionAlignmentTests
             DigestionTruthState.Closed);
 
         Assert.Equal(DigestionReceiptAlignment.Seen, partial.Alignment);
-        Assert.Equal(partial.Alignment, absorbed.Alignment);
+        Assert.Equal(DigestionReceiptAlignment.Seen, absorbed.Alignment);
         Assert.Equal(
             new DigestionStatus(DigestionMigrationState.Absorbed, DigestionTruthState.Closed),
             partial.DerivedStatus);
-        Assert.Equal(partial.DerivedStatus, absorbed.DerivedStatus);
+        Assert.Equal(
+            new DigestionStatus(DigestionMigrationState.Absorbed, DigestionTruthState.Closed),
+            absorbed.DerivedStatus);
+        Assert.Equal(
+        [
+            new DigestionStatus(DigestionMigrationState.Partial, DigestionTruthState.Closed),
+            new DigestionStatus(DigestionMigrationState.Absorbed, DigestionTruthState.Closed),
+        ], fixture.EvaluatedStatuses);
     }
 
     [Fact]
-    public void BaselineLessFullScanProjectedStatusPositionsHaveIdenticalAlignmentAndDerivation()
+    public void FullScanProjectedStatusPositionsHaveIdenticalAlignmentAndDerivation()
     {
         var fixture = ProjectedStatusIdentityFixture.Create();
+        var baseline = fixture.WithStatus(
+            DigestionMigrationState.Partial,
+            DigestionTruthState.Closed);
         var partial = fixture.Evaluate(
             DigestionEvaluationScope.FullScan,
-            baseline: null,
+            baseline,
             DigestionMigrationState.Partial,
             DigestionTruthState.Closed);
         var absorbed = fixture.Evaluate(
             DigestionEvaluationScope.FullScan,
-            baseline: null,
+            baseline,
             DigestionMigrationState.Absorbed,
             DigestionTruthState.Closed);
 
-        Assert.Equal(DigestionReceiptAlignment.Rejected, partial.Alignment);
-        Assert.Equal(partial.Alignment, absorbed.Alignment);
+        Assert.Equal(DigestionReceiptAlignment.Seen, partial.Alignment);
+        Assert.Equal(DigestionReceiptAlignment.Seen, absorbed.Alignment);
         Assert.Equal(
-            new DigestionStatus(DigestionMigrationState.Partial, DigestionTruthState.Closed),
+            new DigestionStatus(DigestionMigrationState.Absorbed, DigestionTruthState.Closed),
             partial.DerivedStatus);
-        Assert.Equal(partial.DerivedStatus, absorbed.DerivedStatus);
+        Assert.Equal(
+            new DigestionStatus(DigestionMigrationState.Absorbed, DigestionTruthState.Closed),
+            absorbed.DerivedStatus);
+        Assert.Equal(
+        [
+            new DigestionStatus(DigestionMigrationState.Partial, DigestionTruthState.Closed),
+            new DigestionStatus(DigestionMigrationState.Absorbed, DigestionTruthState.Closed),
+        ], fixture.EvaluatedStatuses);
     }
 
     [Fact]
@@ -90,16 +106,14 @@ public sealed partial class DigestionAlignmentTests
         private const string TargetGid = "D5/S0/Carrier/ProjectedStatusIdentity";
         private const string TargetPath = "D5/S0/Carrier/ProjectedStatusIdentity.lean";
 
+        internal List<DigestionStatus> EvaluatedStatuses { get; } = [];
+
         internal static ProjectedStatusIdentityFixture Create()
         {
-            var sourceBytes = Encoding.UTF8.GetBytes("projected status identity fixture\n");
-            var atomBytes = ImmutableArray.CreateRange(sourceBytes);
-            var atom = new DigestionAtom(
-                0,
-                atomBytes.Length,
-                atomBytes,
-                DigestionFingerprint.Compute(atomBytes.AsSpan()),
-                []);
+            var sourceBytes = Encoding.UTF8.GetBytes(
+                "# GICT\n\n**定理 1.1(A)**。projected status identity fixture。\n");
+            var atomized = GictAtomizer.Atomize(sourceBytes, DigestionTestSupport.Rules);
+            var atom = Assert.Single(atomized.Claims);
             var definition = Encoding.UTF8.GetBytes("scribe definition\n");
             var emission = Encoding.UTF8.GetBytes("# emitted narrative\n");
             var definitionHash = DigestionFingerprint.Compute(definition).RawSha256;
@@ -108,7 +122,7 @@ public sealed partial class DigestionAlignmentTests
             var entry = DigestionTestSupport.Entry(
                 atom,
                 AtomId(atom),
-                AtomizerRegistry.NoAtomizerId,
+                AtomizerRegistry.GictId,
                 DigestionMigrationState.Residual,
                 DigestionTruthState.Closed,
                 [TargetGid],
@@ -120,9 +134,10 @@ public sealed partial class DigestionAlignmentTests
                     null),
                 sourceId: SourceId);
             var document = DigestionTestSupport.Document(
-                AtomizerRegistry.NoAtomizerId,
+                AtomizerRegistry.GictId,
                 [entry],
-                sourceId: SourceId);
+                sourceId: SourceId,
+                genreRegistryCheck: atomized.GenreRegistryCheck);
             var record = new ScribeEmissionRecord(
                 TargetGid,
                 ScribeEmissionAttestation.DefinitionPath(TargetGid),
@@ -179,6 +194,7 @@ public sealed partial class DigestionAlignmentTests
             DigestionMigrationState migration,
             DigestionTruthState truth)
         {
+            EvaluatedStatuses.Add(new DigestionStatus(migration, truth));
             var changes = scope == DigestionEvaluationScope.ChangedSet
                 ? RawChangeSet.Create(
                 [

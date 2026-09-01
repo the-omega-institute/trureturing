@@ -154,19 +154,6 @@ internal static partial class DigestionLedgerAligner
             ProjectedStatus = StructuralIdentityStatus,
         });
 
-    // This prior key only bounds P2 to receipts that P1 newly admits.
-    private static string PriorCanonicalEntry(
-        DigestionLedgerSource source,
-        DigestionLedgerEntry entry) =>
-        WriteReceiptIdentity(entry with
-        {
-            ProjectedStatus = source.AcknowledgedStale.Contains(
-                entry.AtomId,
-                StringComparer.Ordinal)
-                ? StructuralIdentityStatus
-                : entry.ProjectedStatus,
-        });
-
     private static string WriteReceiptIdentity(DigestionLedgerEntry entry) =>
         Convert.ToBase64String(BackfillInventoryWriter.WriteEntry(entry with
         {

@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Text;
 
 namespace StrataLint.Engine;
 
@@ -87,12 +88,210 @@ internal static partial class DigestionLedgerAligner
             .SelectMany(static source => source.Entries.Select(CanonicalEntry))
             .ToHashSet(StringComparer.Ordinal);
 
-    private static HashSet<string> PreviouslyInheritedEntries(
-        BackfillInventoryDocument? baselineDocument) =>
-        (baselineDocument?.RequireDigestionSources() ?? [])
-            .SelectMany(static source => source.Entries.Select(entry =>
-                PriorCanonicalEntry(source, entry)))
-            .ToHashSet(StringComparer.Ordinal);
+    private static ImmutableHashSet<DigestionReplayConfirmationObligation> ReplayConfirmationObligations(
+        IEnumerable<DigestionLedgerSource> candidateSources,
+        IReadOnlyDictionary<string, DigestionLedgerSource> baselineSources)
+    {
+        var obligations = ImmutableHashSet.CreateBuilder<DigestionReplayConfirmationObligation>();
+        foreach (var candidateSource in candidateSources)
+        {
+            if (!baselineSources.TryGetValue(candidateSource.SourceId, out var baselineSource))
+            {
+                continue;
+            }
+
+            var baselineByIdentity = baselineSource.Entries
+                .GroupBy(CanonicalEntry, StringComparer.Ordinal)
+                .ToDictionary(static group => group.Key, static group => group.ToArray(), StringComparer.Ordinal);
+            foreach (var candidateEntry in candidateSource.Entries)
+            {
+                if (!baselineByIdentity.TryGetValue(CanonicalEntry(candidateEntry), out var matches)
+                    || matches.Any(baselineEntry => LegacyStatusIdentityMatches(
+                        candidateSource,
+                        candidateEntry,
+                        baselineSource,
+                        baselineEntry)))
+                {
+                    continue;
+                }
+
+                obligations.Add(new DigestionReplayConfirmationObligation(
+                    candidateSource.SourceId,
+                    candidateEntry.AtomId));
+            }
+        }
+
+        return obligations.ToImmutable();
+    }
+
+    private static bool LegacyStatusIdentityMatches(
+        DigestionLedgerSource candidateSource,
+        DigestionLedgerEntry candidateEntry,
+        DigestionLedgerSource baselineSource,
+        DigestionLedgerEntry baselineEntry)
+    {
+        var candidateAcknowledged = candidateSource.AcknowledgedStale.Contains(
+            candidateEntry.AtomId,
+            StringComparer.Ordinal);
+        var baselineAcknowledged = baselineSource.AcknowledgedStale.Contains(
+            baselineEntry.AtomId,
+            StringComparer.Ordinal);
+        return (candidateAcknowledged, baselineAcknowledged) switch
+        {
+            (true, true) => true,
+            (false, false) => candidateEntry.ProjectedStatus == baselineEntry.ProjectedStatus,
+            (true, false) => baselineEntry.ProjectedStatus == StructuralIdentityStatus,
+            (false, true) => candidateEntry.ProjectedStatus == StructuralIdentityStatus,
+        };
+    }
+
+    internal static bool RequiresReplayRejection(
+        bool casValid,
+        DigestionReceiptAlignment alignment,
+        bool confirmationRequired,
+        bool contentWide,
+        bool clauseChainChild,
+        bool fingerprintConfirmed) =>
+        casValid
+        && alignment == DigestionReceiptAlignment.Seen
+        && confirmationRequired
+        && !contentWide
+        && !clauseChainChild
+        && !fingerprintConfirmed;
+
+    private static void ApplyReplayConfirmation(
+        DigestionLedgerSource source,
+        IReadOnlySet<string> validAtomIds,
+        IDictionary<string, DigestionReceiptAlignment> alignments,
+        IReadOnlyDictionary<string, DigestionAtom> matchedAtoms,
+        IReadOnlySet<DigestionReplayConfirmationObligation> obligations,
+        DigestionLedgerEntry? contentWideEntry,
+        IReadOnlySet<string> clauseChainChildIds,
+        IEnumerable<DigestionAtom> replayedAtoms)
+    {
+        var replayed = replayedAtoms.ToArray();
+        foreach (var entry in source.Entries)
+        {
+            if (RequiresReplayRejection(
+                    validAtomIds.Contains(entry.AtomId),
+                    alignments[entry.AtomId],
+                    obligations.Contains(new DigestionReplayConfirmationObligation(
+                        source.SourceId,
+                        entry.AtomId)),
+                    entry.AtomId == contentWideEntry?.AtomId,
+                    clauseChainChildIds.Contains(entry.AtomId),
+                    ReplayConfirmsEntry(entry, matchedAtoms, replayed)))
+            {
+                alignments[entry.AtomId] = DigestionReceiptAlignment.Rejected;
+            }
+        }
+    }
+
+    private static bool ReplayConfirmsEntry(
+        DigestionLedgerEntry entry,
+        IReadOnlyDictionary<string, DigestionAtom> matchedAtoms,
+        IReadOnlyList<DigestionAtom> replayedAtoms)
+    {
+        if (replayedAtoms.Any(atom => FingerprintsMatch(entry.Fingerprints, atom.Fingerprints)))
+        {
+            return true;
+        }
+
+        return matchedAtoms.TryGetValue(entry.AtomId, out var storedAtom)
+            && replayedAtoms.Any(atom =>
+                atom.RawBytes.AsSpan().IndexOf(storedAtom.RawBytes.AsSpan()) >= 0
+                || ReplayPreservesHistoricalHeadingAndBody(storedAtom.RawBytes, atom.RawBytes));
+    }
+
+    private static bool ReplayPreservesHistoricalHeadingAndBody(
+        ImmutableArray<byte> historicalBytes,
+        ImmutableArray<byte> replayedBytes)
+    {
+        if (!TryReadCompleteBlocks(historicalBytes, out var historical)
+            || !TryReadCompleteBlocks(replayedBytes, out var replayed)
+            || historical.Length < 2
+            || replayed.Length <= historical.Length
+            || historical[0].Type != typeof(MarkdownHeading)
+            || replayed[0] != historical[0])
+        {
+            return false;
+        }
+
+        var bodyLength = historical.Length - 1;
+        for (var replayIndex = 2; replayIndex + bodyLength <= replayed.Length; replayIndex++)
+        {
+            var matches = true;
+            for (var bodyIndex = 0; bodyIndex < bodyLength; bodyIndex++)
+            {
+                if (replayed[replayIndex + bodyIndex] == historical[bodyIndex + 1])
+                {
+                    continue;
+                }
+
+                matches = false;
+                break;
+            }
+
+            if (matches)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static bool TryReadCompleteBlocks(
+        ImmutableArray<byte> bytes,
+        out ImmutableArray<ReplayBlock> identities)
+    {
+        string source;
+        try
+        {
+            source = new UTF8Encoding(false, true).GetString(bytes.AsSpan());
+        }
+        catch (DecoderFallbackException)
+        {
+            identities = [];
+            return false;
+        }
+
+        var blocks = MarkdownBlockAst.Parse(source);
+        var result = ImmutableArray.CreateBuilder<ReplayBlock>(blocks.Length);
+        var cursor = 0;
+        foreach (var block in blocks)
+        {
+            if (!ContainsOnlySpacing(source.AsSpan(cursor, block.Start - cursor)))
+            {
+                identities = [];
+                return false;
+            }
+
+            result.Add(new ReplayBlock(
+                block.GetType(),
+                source[block.Start..block.End].TrimEnd('\r', '\n')));
+            cursor = block.End;
+        }
+
+        identities = result.ToImmutable();
+        return identities.Length > 0
+            && ContainsOnlySpacing(source.AsSpan(cursor));
+    }
+
+    private static bool ContainsOnlySpacing(ReadOnlySpan<char> value)
+    {
+        foreach (var character in value)
+        {
+            if (character is not (' ' or '\t' or '\r' or '\n'))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private readonly record struct ReplayBlock(Type Type, string RawText);
 
     private static bool ContentWideIdentityEqual(
         DigestionLedgerEntry candidate,

@@ -43,6 +43,8 @@ internal sealed record DigestionSourceClausePlan(
 
 internal sealed record DigestionIngestFallback(string SourceId, string Reason);
 
+internal readonly record struct DigestionReplayConfirmationObligation(string SourceId, string AtomId);
+
 internal sealed record DigestionLedgerAlignment(
     ImmutableDictionary<string, DigestionReceiptAlignment> EntryAlignments,
     ImmutableDictionary<string, DigestionAtom> MatchedAtoms,
@@ -157,18 +159,24 @@ internal static partial class DigestionLedgerAligner
 
         var cas = casEvaluation ?? DigestionCasStore.Evaluate(document, snapshot, casChanges);
         findings.AddRange(cas.Findings);
+        var baselineSources = BaselineSources(baselineDocument, findings);
         var inheritedEntries = InheritedEntries(baselineDocument);
-        var previouslyInheritedEntries = PreviouslyInheritedEntries(baselineDocument);
-        var replayConfirmationRequired = new HashSet<string>(StringComparer.Ordinal);
-        foreach (var (source, entry) in sources.SelectMany(source =>
-                     source.Entries.Select(entry => (Source: source, Entry: entry))))
+        var replayConfirmationObligations = ReplayConfirmationObligations(sources, baselineSources);
+        void ConfirmReplay(
+            DigestionLedgerSource source,
+            DigestionLedgerEntry? contentWideEntry,
+            IEnumerable<DigestionAtom>? replayedAtoms = null) => ApplyReplayConfirmation(
+                source,
+                cas.ValidAtomIds,
+                alignments,
+                matchedAtoms,
+                replayConfirmationObligations,
+                contentWideEntry,
+                clauseChainChildIds,
+                replayedAtoms ?? []);
+        foreach (var entry in sources.SelectMany(static source => source.Entries))
         {
             var inherited = inheritedEntries.Contains(CanonicalEntry(entry));
-            if (inherited
-                && !previouslyInheritedEntries.Contains(PriorCanonicalEntry(source, entry)))
-            {
-                replayConfirmationRequired.Add(entry.AtomId);
-            }
             alignments[entry.AtomId] = cas.ValidAtomIds.Contains(entry.AtomId) && inherited
                 ? DigestionReceiptAlignment.Seen
                 : DigestionReceiptAlignment.Rejected;
@@ -186,7 +194,6 @@ internal static partial class DigestionLedgerAligner
             }
         }
 
-        var baselineSources = BaselineSources(baselineDocument, findings);
         var candidateSources = sources.ToDictionary(
             static source => source.SourceId,
             StringComparer.Ordinal);
@@ -283,6 +290,8 @@ internal static partial class DigestionLedgerAligner
                     cas.ValidAtomIds.Contains(entry.AtomId)
                     && inheritedEntries.Contains(CanonicalEntry(entry)))
                 && contentWideReplacementObligations.Length == 0
+                && !source.Entries.Any(entry => replayConfirmationObligations.Contains(
+                    new DigestionReplayConfirmationObligation(source.SourceId, entry.AtomId)))
                 && !InheritedClauseChainRequiresReplay(source, changes))
             {
                 continue;
@@ -291,17 +300,25 @@ internal static partial class DigestionLedgerAligner
             if (!registeredAtomizer)
             {
                 genreRegistryChecks[source.SourceId] = GenreRegistryCheck.NoGenreRegistry;
+                var contentWideEntry = snapshot.TryGetFile(source.SourcePath, out var unregisteredFile)
+                    ? ContentWideEntry(source, unregisteredFile.RawBytes.AsSpan(), cas.ValidAtomIds)
+                    : null;
+                ConfirmReplay(source, contentWideEntry);
                 continue;
             }
 
             if (!snapshot.TryGetFile(source.SourcePath, out var sourceFile))
             {
                 findings.Add($"source path is dangling: {source.SourcePath}");
+                ConfirmReplay(source, null);
                 continue;
             }
 
             if (atomizerRules is null)
             {
+                ConfirmReplay(
+                    source,
+                    ContentWideEntry(source, sourceFile.RawBytes.AsSpan(), cas.ValidAtomIds));
                 continue;
             }
 
@@ -349,6 +366,8 @@ internal static partial class DigestionLedgerAligner
                     findings.Add($"source {source.SourceId} atomization failed: {exception.Message}");
                 }
 
+                ConfirmReplay(source, contentWideEntry);
+
                 continue;
             }
 
@@ -356,6 +375,9 @@ internal static partial class DigestionLedgerAligner
             if (integrityFailure is not null)
             {
                 findings.Add($"source {source.SourceId} atomizer integrity failed: {integrityFailure}");
+                ConfirmReplay(
+                    source,
+                    ContentWideEntry(source, sourceFile.RawBytes.AsSpan(), cas.ValidAtomIds));
                 continue;
             }
 
@@ -399,6 +421,8 @@ internal static partial class DigestionLedgerAligner
                     findings.Add($"source {source.SourceId} {reason}");
                 }
 
+                ConfirmReplay(source, contentWideEntry);
+
                 continue;
             }
 
@@ -413,24 +437,10 @@ internal static partial class DigestionLedgerAligner
                 .Select(static atom => atom.Fingerprints.RawSha256["sha256:".Length..])
                 .ToImmutableHashSet(StringComparer.Ordinal);
 
-            if (mode == DigestionAlignmentMode.Ingest)
-            {
-                var contentWideEntry = ContentWideEntry(
-                    source,
-                    sourceFile.RawBytes.AsSpan(),
-                    cas.ValidAtomIds);
-                foreach (var entry in source.Entries.Where(entry =>
-                             cas.ValidAtomIds.Contains(entry.AtomId)
-                             && alignments[entry.AtomId] == DigestionReceiptAlignment.Seen
-                             && replayConfirmationRequired.Contains(entry.AtomId)
-                             && entry.AtomId != contentWideEntry?.AtomId
-                             && !clauseChainChildIds.Contains(entry.AtomId)
-                             && !replayedAtoms.Any(atom =>
-                                 FingerprintsMatch(entry.Fingerprints, atom.Fingerprints))))
-                {
-                    alignments[entry.AtomId] = DigestionReceiptAlignment.Rejected;
-                }
-            }
+            ConfirmReplay(
+                source,
+                ContentWideEntry(source, sourceFile.RawBytes.AsSpan(), cas.ValidAtomIds),
+                replayedAtoms);
 
             var sourceStale = new List<string>();
             foreach (var baselineEntry in contentWideReplacementObligations.Where(entry =>
