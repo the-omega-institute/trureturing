@@ -1,0 +1,16 @@
+# 2. Fourier 色散已经产生谱时间
+
+`PrimeFrequencyPhaseFlow` 定义：
+
+\[
+\boxed{
+\chi_\omega(t)=e^{-it\omega}.
+}
+\]
+
+机器结论包括：
+
+\[
+\chi_\omega(0)=1,
+\]
+

@@ -5358,3 +5358,1042 @@ RH
 \]
 
 或等价的逐层素数侧创新下界。前者负责说明离线缺陷怎样产生有限负证书。后者负责说明真实算术数据为什么不允许该负证书存在。
+---
+
+## [PR #4441] GOLDEN_SECOND_MAGNUS_SAMPLING
+
+# 黄金二阶 Magnus 采样、时间色散与壳层商拓扑
+
+**候选 GID：**
+
+`D5/S3/Observer/GoldenPrimeCircle/GoldenSecondMagnusSampling`
+
+## 0. 本增补的地位
+
+本增补把此前已经分别冻结的三层结构连接起来：
+
+1. `GoldenScaleCircle` 给出黄金对数尺度与整壳平移；
+2. `GoldenVerticalSampling` 给出黄金 Fourier 模式对应的 Mellin 竖直频率；
+3. `SecondMagnusSwapCurvature` 给出时间槽与频率槽的交替二阶核。
+
+本轮不重新定义 Fourier character，也不重新定义二阶 Magnus 核。新增节点只负责证明既有对象在黄金采样格上的兼容性，以及这些对象对完整黄金壳层平移的下降性质。
+
+机器真源进入 admission 以前，本节全部标记为 candidate append。PR 通过 canonical Lean report、Scribe 一致性和 content-addressed admission 后，才可把相应陈述视为冻结真源。
+
+---
+
+## 1. 黄金对数周期与 Mellin 采样时间
+
+已有黄金尺度周期为：
+
+\[
+\boxed{
+L_\varphi=2\log\varphi.
+}
+\]
+
+已有黄金基本角频率为：
+
+\[
+\boxed{
+\Omega_\varphi
+=\frac{\pi}{\log\varphi}
+=\frac{2\pi}{L_\varphi}.
+}
+\]
+
+本轮定义第 \(k\) 个整数黄金采样时间：
+
+\[
+\boxed{
+t_k=k\Omega_\varphi,
+\qquad k\in\mathbb Z.
+}
+\]
+
+因此：
+
+\[
+\boxed{
+t_kL_\varphi=2\pi k.}
+\]
+
+这个恒等式是壳层不可见性的核心。一个完整黄金壳层在对数尺度上前进 \(L_\varphi\)，整数采样模式只积累 \(2\pi k\) 的整圈相位。
+
+这里的 \(t_k\) 是 Mellin 竖直参数的离散采样值，也就是 prime-frequency Fourier flow 的谱时间。它没有被解释为实验室物理时间。
+
+---
+
+## 2. 从正乘法群下降到黄金尺度圆
+
+继续使用未取商坐标：
+
+\[
+\eta_\varphi(x)
+=\frac{\log x}{L_\varphi}.
+\]
+
+对正数 \(x,y\)，已有：
+
+\[
+\eta_\varphi(xy)
+=\eta_\varphi(x)+\eta_\varphi(y).
+\]
+
+本轮把它投影到单位加法圆：
+
+\[
+\boxed{
+\vartheta_\varphi(x)
+=\eta_\varphi(x)\pmod{\mathbb Z}
+\in\mathbb R/\mathbb Z.
+}
+\]
+
+机器证明：
+
+\[
+\boxed{
+\vartheta_\varphi(xy)
+=\vartheta_\varphi(x)+\vartheta_\varphi(y),
+\qquad x,y>0.
+}
+\]
+
+对任意 \(n\in\mathbb N\)，已有未取商平移律：
+
+\[
+\eta_\varphi\bigl((\varphi^2)^n x\bigr)
+=\eta_\varphi(x)+n.
+\]
+
+因此机器证明：
+
+\[
+\boxed{
+\vartheta_\varphi\bigl((\varphi^2)^n x\bigr)
+=\vartheta_\varphi(x).
+}
+\]
+
+这给出严格的商拓扑对象：
+
+\[
+\boxed{
+\mathbb R_{>0}^{\times}/\varphi^{2\mathbb Z}
+\longrightarrow
+\mathbb R/\mathbb Z.
+}
+\]
+
+本轮 Lean owner 使用自然数壳层平移，因为现有 `GoldenScaleCircle` 的公开迭代定理以 \(n\in\mathbb N\) 陈述。双向整数壳层作用和其商空间同胚仍可在后续节点中单独封装。
+
+---
+
+## 3. 黄金尺度 character 与既有 Fourier phase 是同一个对象
+
+定义整数模式的黄金尺度 character：
+
+\[
+\boxed{
+\Theta_k(x)
+=
+\exp\left(-2\pi i k\eta_\varphi(x)\right).
+}
+\]
+
+它也可以理解为单位圆点 \(\vartheta_\varphi(x)\) 上的第 \(k\) 个 character。
+
+本轮机器证明：
+
+\[
+\boxed{
+\Theta_k(x)
+=
+\chi_{\log x}(t_k)
+=
+\exp(-it_k\log x).
+}
+\]
+
+这条等式把两套已经存在的坐标精确识别：
+
+\[
+\boxed{
+\text{黄金尺度圆的整数 Fourier mode}
+=
+\text{log-frequency flow 的黄金 Mellin 采样}.
+}
+\]
+
+因此新增节点没有引入第二套相位语义。`goldenScaleFourierPhase` 是既有 `fourierPhase` 的黄金坐标表达。
+
+机器同时证明：
+
+\[
+\boxed{|\Theta_k(x)|=1},
+\]
+
+以及对正数 \(x,y\)：
+
+\[
+\boxed{
+\Theta_k(xy)=\Theta_k(x)\Theta_k(y).
+}
+\]
+
+所以每个整数模式都是正乘法群到 \(U(1)\) 的酉 character。
+
+---
+
+## 4. 完整黄金壳层对整数模式不可见
+
+由：
+
+\[
+\eta_\varphi\bigl((\varphi^2)^n x\bigr)
+=\eta_\varphi(x)+n,
+\]
+
+得到：
+
+\[
+\Theta_k\bigl((\varphi^2)^n x\bigr)
+=
+\Theta_k(x)e^{-2\pi i kn}.
+\]
+
+因为 \(k\in\mathbb Z\) 且 \(n\in\mathbb N\)：
+
+\[
+e^{-2\pi i kn}=1.
+\]
+
+机器证明：
+
+\[
+\boxed{
+\Theta_k\bigl((\varphi^2)^n x\bigr)
+=
+\Theta_k(x).
+}
+\]
+
+这不是近似周期，也不是渐近自相似，而是精确下降关系。
+
+因此整数黄金 Fourier family 只能看到壳层轨道：
+
+\[
+[x]
+=
+\left\{(\varphi^2)^n x:n\in\mathbb N\right\}.
+\]
+
+未取商尺度中的整壳编号被该观察器遗忘。这个遗忘正是 topology quotient 的含义，不应描述为信号在真实空间中消失。
+
+---
+
+## 5. 黄金采样把二阶 Magnus 核变成 character alternant
+
+既有二阶核为：
+
+\[
+K_{x,y}(t_1,t_2)
+=
+\chi_{\log x}(t_1)\chi_{\log y}(t_2)
+-
+\chi_{\log y}(t_1)\chi_{\log x}(t_2).
+\]
+
+在两个黄金采样时间 \(t_{k_1},t_{k_2}\) 上，本轮机器证明：
+
+\[
+\boxed{
+\begin{aligned}
+K_{x,y}(t_{k_1},t_{k_2})
+={}&
+\Theta_{k_1}(x)\Theta_{k_2}(y)
+\\
+&-
+\Theta_{k_1}(y)\Theta_{k_2}(x).
+\end{aligned}
+}
+\]
+
+所以该核是两个黄金 circle characters 的交替行列式：
+
+\[
+\boxed{
+K_{x,y}(t_{k_1},t_{k_2})
+=
+\det
+\begin{pmatrix}
+\Theta_{k_1}(x)&\Theta_{k_1}(y)\\
+\Theta_{k_2}(x)&\Theta_{k_2}(y)
+\end{pmatrix}.
+}
+\]
+
+这个表达把时间、色散和 topology 的职责分开：
+
+- \(k_1,k_2\) 选择黄金尺度圆上的两个 character readouts；
+- \(x,y\) 选择两个乘法尺度通道；
+- 行列式读取两个 readout vectors 张成的有向面积；
+- 交换通道或交换时间槽会翻转 orientation；
+- 两行或两列退化时，二阶核归零。
+
+该行列式解释沿用 `SecondMagnusSwapCurvature` 已经冻结的反对称结构。本轮只证明它在黄金采样格上的精确 realization。
+
+---
+
+## 6. 二阶核下降到壳层轨道
+
+对任意自然姴壳层编号 \(n_x,n_y\)，本轮机器证明：
+
+\[
+\boxed{
+\begin{aligned}
+&K_{(\varphi^2)^{n_x}x,
+      (\varphi^2)^{n_y}y}
+  (t_{k_1},t_{k_2})
+\\
+&\qquad=
+K_{x,y}(t_{k_1},t_{k_2}),
+\qquad x,y>0.
+\end{aligned}
+}
+\]
+
+两个通道可以独立移动任意完整黄金壳层。相位矩阵的四个条目分别保持，因此 determinant 保持。
+
+所以在黄金采样格上，二阶 Magnus 核通过以下商对象因子化：
+
+\[
+\boxed{
+\left(
+\mathbb R_{>0}^{\times}/\varphi^{2\mathbb Z}
+\right)^2.
+}
+\]
+
+这里形成的 topology 结论是 factorization through quotient。它不是 winding number、Chern class 或非平凡 line bundle 的存在定理。
+
+---
+
+## 7. 有限二阶 Magnus 能量也下降到壳层商
+
+设有限通道类型为 \(P\)，每个通道具有正尺度 \(s_p\)、壳层编号 \(n_p\) 和既有曲率系数 \(C_{p,q}\)。定义黄金采样能量：
+
+\[
+\mathcal E^{(2),\varphi}_{P;k_1,k_2}(s,C)
+=
+\sum_{p,q\in P}
+\left|
+K_{s_p,s_q}(t_{k_1},t_{k_2})C_{p,q}
+\right|^2.
+\]
+
+本轮机器证明：
+
+\[
+\boxed{
+\mathcal E^{(2),\varphi}_{P;k_1,k_2}
+\left(
+\bigl((\varphi^2)^{n_p}s_p\bigr)_{p\in P},C
+\right)
+=
+\mathcal E^{(2),\varphi}_{P;k_1,k_2}(s,C).
+}
+\]
+
+因此该有限能量只依赖每个通道的黄金壳层轨道，不依赖所选代表元。
+
+结合已经冻结的统一上界：
+
+\[
+0\le
+\mathcal E^{(2)}_P(t_1,t_2)
+\le
+4\mathcal E^{\mathrm{hol}}_P,
+\]
+
+可以得到以下严格结构链：
+
+\[
+\boxed{
+\begin{aligned}
+&\text{residual envelope control}
+\\
+&\Longrightarrow
+\text{finite holonomy energy control}
+\\
+&\Longrightarrow
+\text{golden-sampled second-Magnus energy control}
+\\
+&\Longrightarrow
+\text{the controlled observable descends through golden shell orbits}.
+\end{aligned}
+}
+\]
+
+最后一箭头描述观察空间的商结构，不增加新的衰减率。
+
+---
+
+## 8. 时间、色散、破缺与 topology 的当前严格关系
+
+本轮以后，这五个概念可以按类型分层：
+
+\[
+\boxed{
+\begin{array}{c|c}
+\text{对象}&\text{机器中的角色}\\
+\hline
+L_\varphi&\text{黄金对数壳层周期}\\
+t_k&\text{整数 Fourier mode 的 Mellin 谱时间}\\
+\log x-\log y&\text{两个乘法通道的频率色散}\\
+K&\text{时间槽与频率槽的反对称二阶响应}\\
+\mathbb R_{>0}^{\times}/\varphi^{2\mathbb Z}
+&\text{整数黄金模式可见的尺度商空间}
+\end{array}
+}
+\]
+
+色散本身是频率差：
+
+\[
+\Delta\omega_{x,y}
+=\log x-\log y
+=\log\frac{x}{y},
+\qquad x,y>0.
+\]
+
+时间差与色散差共同进入已有正弦核：
+
+\[
+\left|K_{x,y}(t_{k_1},t_{k_2})\right|
+=
+2\left|
+\sin\left(
+\frac{(t_{k_1}-t_{k_2})(\log x-\log y)}2
+\right)
+\right|.
+\]
+
+因此反对称破缺的可见性需要：
+
+1. 两个采样模式可区分；
+2. 两个尺度通道可区分；
+3. 对应 time-frequency area 不落在共振零点［
+4. 被调制的曲率系数 \(C_{p,q}\) 本身非零。
+
+本轮的壳层 invariance 说明，同一 quotient class 内的代表元变化不改变上述可见性。
+
+---
+
+## 9. 素数特化
+
+取：
+
+\[
+x=p,
+\qquad
+y=q,
+\]
+
+其中 \(p,q\) 为素数。则：
+
+\[
+\Theta_k(p)
+=
+\exp\left(
+-2\pi i k\frac{\log p}{2\log\varphi}
+\right)
+=
+p^{-it_k}.
+\]
+
+黄金采样的素数对 kernel 为：
+
+\[
+\boxed{
+K_{p,q}(t_{k_1},t_{k_2})
+=
+\Theta_{k_1}(p)\Theta_{k_2}(q)
+-
+\Theta_{k_1}(q)\Theta_{k_2}(p).
+}
+\]
+
+它读取的相对尺度为：
+
+\[
+\frac{\log(p/q)}{2\log\varphi}.
+\]
+
+本轮没有证明该数对所有不同素数都无理，也没有证明黄金采样下的 kernel 对所有非平凡 mode pair 都非零。这些属于下一条非共振节点的义务。
+
+---
+
+## 10. 与 RH 的精确边界
+
+零点侧已有黄金径向坐标和黄金周期 monodromy：
+
+\[
+M_\rho
+=
+\operatorname{diag}
+\left(
+\varphi^{2\delta},
+\varphi^{-2\delta}
+\right),
+\qquad
+\delta=\Re\rho-\frac12.
+\]
+
+prime side 的本轮对象位于 unitary angular layer：
+
+\[
+\Theta_k(p)\in U(1).
+\]
+
+zero side 的离线缺陷位于 radial hyperbolic layer：
+
+\[
+\delta\ne0
+\Longrightarrow
+M_\rho\text{ hyperbolic}.
+\]
+
+本轮建立的是 prime-side angular object 对黄金尺度商的拓扑下降。它没有提供 angular energy 到 radial hyperbolic discriminant 的 coercive transport。
+
+RH 路线仍需要一条承重桥：
+
+\[
+\boxed{
+\text{prime-side golden-sampled holonomy/Magnus data}
+\Longrightarrow
+\text{zero-side off-line radial or odd defect control}.
+}
+\]
+
+这条桥可以走显式公式、Weil positivity、Schur coercivity或独立构造的 integral monodromy。当前节点没有选择其中任何一种作为已证事实。
+
+---
+
+## 11. 下一真源排序
+
+本轮以后，最邻近的机器节点为：
+
+1. `GoldenPrimeRatioNonresonance`。证明不同素数通道的相对黄金尺度不产生精确整数混叠，并精确列出证明所需的数论输入。
+2. `FiniteGoldenMagnusCesaroRecovery`。在有限通道上证明黄金采样的 Cesàro 平均恢复非对角 holonomy energy。
+3. `GoldenScaleSolenoidMemoryLift`。把完整壳层在可见圆上的闭合提升为 solenoid 隐藏 profinite fiber 中的非平凡记忆位移。
+4. `CriticalStripIntegralMonodromyCollapse`。在明确的 integral-lattice realization 假设下，把临界带内的整数迹间隙运输为 \(\delta=0\)。
+5. `PrimeArchimedeanBlindSchurCoercivity`。建立 prime-side 数据对 zero-side blind sector 的真正强制桥。
+
+第一条和第二条继续完成黄金采样的可识别性。第三条负责 topology memory。第四条是条件性拓扑排除器。第五条仍是整个 RH 路线的解析 hard heart。
+
+---
+
+## 12. 严格非主张
+
+本轮不主张：
+
+- 黄金采样对不同素数频率具有统一正间隙；
+- 所有不同素数对在所有非平凡 mode pair 上都具有非零 kernel；
+- Cesàro 平均已经恢复 finite holonomy energy；
+- 黄金尺度圆已经携带非零 winding、Chern class 或 Berry curvature；
+- 自发对称破缺或物理时间箭头已经构造；
+- 无限素数 second-Magnus energy 已经定义；
+- prime-side 壳层商已经支配 zero-side radial defect；
+- 离线零点已经排除；
+- RH 已经证明。
+
+本轮候选机器增量精确到：
+
+\[
+\boxed{
+\begin{aligned}
+&\text{golden logarithmic scale}
+\\
+&\Longrightarrow
+\text{integral Mellin sample characters}
+\\
+&\Longrightarrow
+\text{golden realization of the frozen second-Magnus alternant}
+\\
+&\Longrightarrow
+\text{kernel and finite energy descend through whole-shell orbits}.
+\end{aligned}
+}
+\]
+
+---
+
+## [PR #4443] ORDERED_MAGNUS_OBSERVABILITY — 二阶 Magnus 可观测性追加
+
+# 2026-09-01 追加：二阶 Magnus 可观测性与标准 Weil/Pick 主干修订
+
+## 1. 修订目标
+
+本轮关闭二阶 Magnus 层内部的四个有限缺口，并校正 RH lane 的中央算术桥：
+
+1. 将 alternating two-slot kernel 的范数上界提升为精确平方公式；
+2. 将该 kernel 识别为有限 Fourier 代数生成元交换子的精确系数；
+3. 给出逐频率对校准时钟下的精确反向可观测性；
+4. 给出 ordered-time simplex 的闭式平均公式；
+5. 直接复用已冻结的 `FixedScaleWeilQuadraticForm`，不再另建平行的有限 Weil 定义；
+6. 将后续中央开放边拆为 holonomy-to-Weil transport、xi-ratio Pick kernel 与 negative-index detection。
+
+本轮仍只维护这一统一理论卷，不创建节点级 theory 文档。
+
+## 2. 精确 kernel 强度
+
+沿用冻结对象：
+
+\[
+K_{p,q}(t_1,t_2)
+=
+\chi_{\omega_p}(t_1)\chi_{\omega_q}(t_2)
+-
+\chi_{\omega_q}(t_1)\chi_{\omega_p}(t_2),
+\qquad
+\chi_\omega(t)=e^{-it\omega}.
+\]
+
+令：
+
+\[
+A_{p,q}(t_1,t_2)
+=(t_1-t_2)\frac{\omega_p-\omega_q}{2}.
+\]
+
+新真源 `SecondMagnusKernelNormSquare` 机器证明：
+
+\[
+\boxed{
+|K_{p,q}(t_1,t_2)|^2
+=4\sin^2 A_{p,q}(t_1,t_2).
+}
+\]
+
+所以既有界 \(|K_{p,q}|\le2\) 是 sharp bound。若 \(\omega_p\ne\omega_q\)，取：
+
+\[
+t_1=\frac{\pi}{\omega_p-\omega_q},
+\qquad t_2=0,
+\]
+
+则：
+
+\[
+\boxed{|K_{p,q}(t_1,0)|^2=4.}
+\]
+
+这给出 pairwise faithfulness。任意非零频差均存在显式最大响应时刻。它尚未给出所有频率对共享的单一时钟。
+
+## 3. kernel 已进入真实交换子
+
+设 \(A\) 为复结合代数，有限生成元族为 \(G_p\in A\)，定义：
+
+\[
+H_G(t)=\sum_p\chi_{\omega_p}(t)G_p.
+\]
+
+新真源 `FiniteFourierMagnusCommutator` 机器证明：
+
+\[
+\boxed{
+[H_G(t_1),H_G(t_2)]
+=
+\sum_{p,q}K_{p,q}(t_1,t_2)G_pG_q.
+}
+\]
+
+因此 `SecondMagnusSwapCurvature` 的 alternating kernel 已经成为有限 Fourier 生成元交换子中的精确系数。当前仍未构造 Banach 或 Hilbert 空间上的 time-ordered exponential、Bochner integral、Magnus 级数收敛或无限频率极限。
+
+## 4. pair-calibrated 精确反向可观测性
+
+对有限单射频率族 \(\omega:I\to\mathbb R\)，定义：
+
+\[
+T_{p,q}
+=
+\begin{cases}
+0,&p=q,\\
+\displaystyle\frac\pi{\omega_p-\omega_q},&p\ne q.
+\end{cases}
+\]
+
+设 \(C_{p,q}\in\mathbb C\) 且 \(C_{p,p}=0\)。定义：
+
+\[
+E_{\mathrm{cal}}(\omega,C)
+=
+\sum_{p,q}|K_{p,q}(T_{p,q},0)C_{p,q}|^2.
+\]
+
+新真源 `PairCalibratedSecondMagnusObservability` 机器证明：
+
+\[
+\boxed{
+E_{\mathrm{cal}}(\omega,C)
+=4E_{\mathrm{hol}}(C),
+}
+\]
+
+其中：
+
+\[
+E_{\mathrm{hol}}(C)=\sum_{p,q}|C_{p,q}|^2.
+\]
+
+并得到：
+
+\[
+E_{\mathrm{cal}}(\omega,C)=0
+\iff
+\forall p,q,\ C_{p,q}=0.
+\]
+
+这说明固定两时刻缺少反向界的原因是 resonance 与采样协议。允许 pair-adapted clocks 后，完整 off-diagonal curvature 可被精确恢复。
+
+## 5. ordered-time simplex 的闭式响应
+
+二阶 Magnus 项使用有序区域：
+
+\[
+0\le t_2\le t_1\le T.
+\]
+
+对仅依赖时间差 \(\tau=t_1-t_2\) 的标量响应，二重积分约化为三角权重的一重积分。定义：
+
+\[
+\mathcal A_g(T)
+=
+\int_0^T(T-\tau)
+4\sin^2\left(\frac{g\tau}{2}\right)d\tau.
+\]
+
+新真源 `OrderedTimeSimplexSecondMagnusAverage` 对 \(g\ne0\) 机器证明：
+
+\[
+\boxed{
+\mathcal A_g(T)
+=T^2-\frac{2(1-\cos(gT))}{g^2}.
+}
+\]
+
+同时：
+
+\[
+\mathcal A_0(T)=0,
+\qquad
+T\ge0\Longrightarrow\mathcal A_g(T)\ge0.
+\]
+
+由 \(0\le1-\cos(gT)\le2\) 可读出下一步下界：
+
+\[
+\mathcal A_g(T)\ge T^2-\frac4{g^2}.
+\]
+
+对有限单射频率族，令：
+
+\[
+\Delta_\omega=
+\min_{p\ne q}|\omega_p-\omega_q|>0.
+\]
+
+则所有非对角频率对同时满足：
+
+\[
+\mathcal A_{\omega_p-\omega_q}(T)
+\ge T^2-\frac4{\Delta_\omega^2}.
+\]
+
+当 \(T>2/\Delta_\omega\) 时，右侧严格为正。因此下一真源应为：
+
+\[
+\boxed{\texttt{FiniteFrequencyOrderedSimplexCoercivity}.}
+\]
+
+它应冻结统一窗口双边界：
+
+\[
+c_{\omega,T}E_{\mathrm{hol}}(C)
+\le E_{\mathrm{simplex}}(\omega,C;T)
+\le T^2E_{\mathrm{hol}}(C),
+\qquad c_{\omega,T}>0.
+\]
+
+## 6. 三种可观测性分层
+
+当前二阶 Magnus 层具有三个不同强度的结论：
+
+1. pointwise boundedness：
+   \[
+   0\le E^{(2)}(t_1,t_2)\le4E_{\mathrm{hol}};
+   \]
+2. adaptive identifiability：
+   \[
+   E_{\mathrm{cal}}=4E_{\mathrm{hol}};
+   \]
+3. common-window observability coefficient：
+   \[
+   \mathcal A_g(T)=T^2-2(1-\cos(gT))/g^2.
+   \]
+
+后续不得把三者混写为同一类 Magnus positivity。固定采样可共振，pair-adapted sampling 精确，ordered window 将统一强制性归约为最小频差问题。
+
+## 7. 中央算术桥的修订
+
+仓库已经冻结：
+
+\[
+\boxed{\texttt{D5/S3/Weil/ZetaBridge/FixedScaleWeilQuadraticForm}.}
+\]
+
+该真源已经包含 convolution-square Weil test、von Mangoldt prime-power contribution、Archimedean multiplier、pole rank-one energy、zero-side sum 与 fixed-scale positivity equivalence。
+
+因此不再建立第二套有限 Weil quadratic form。缺失对象是从 chronological holonomy 数据进入既有标准 Weil 对象的运输：
+
+\[
+\boxed{
+\text{finite Fourier memory/holonomy}
+\longrightarrow
+\text{admissible Weil test function}
+\longrightarrow
+\texttt{FixedScaleWeilQuadraticForm}.
+}
+\]
+
+下一开放边命名为：
+
+\[
+\boxed{\texttt{HolonomyToFixedScaleWeilTransport}.}
+\]
+
+它至少需要证明：
+
+- finite coefficients 到 `WeilTestFunction` 的构造；
+- support 半径记账；
+- prime-power 权重与 \(\log n\) 频率匹配；
+- Gamma 与 pole 项保留；
+- truncation remainder；
+- holonomy energy 与 fixed-scale Weil form 的等式、下界或带误差比较。
+
+显式公式应成为 prime-side 与 zero-side 相遇的标准中介。当前自定义 holonomy energy 到自定义 off-line energy 的直接 domination 不再作为 primitive hard heart。
+
+## 8. Pick/Pontryagin 负指标接口
+
+仓库已经冻结抽象真源：
+
+\[
+\boxed{\texttt{HermitianKernelNegativeSquares}.}
+\]
+
+下一步需要输入一个来自 completed xi 的具体函数。标准候选为：
+
+\[
+\Theta_\omega(z)
+=
+\frac{\xi(\frac12-\omega-iz)}
+{\xi(\frac12+\omega-iz)},
+\qquad\omega>0.
+\]
+
+相应 half-plane Pick kernel 可规范化为：
+
+\[
+K_{\Theta_\omega}(z,w)
+=
+\frac{1-\Theta_\omega(z)\overline{\Theta_\omega(w)}}
+{-i(z-\overline w)}.
+\]
+
+下一真源命名为：
+
+\[
+\boxed{\texttt{XiRatioPickKernel}.}
+\]
+
+它应证明定义域、极点排除、Hermitian symmetry、reflection compatibility、临界线假设下的 Schur/inner implication，以及有限 Gram 矩阵到 `HermitianKernelNegativeSquares` 的接口。
+
+随后建立：
+
+\[
+\boxed{\texttt{OfflineZeroPickIndexLowerBound}.}
+\]
+
+第一阶段只要求一个被窗口与采样隔离的离线零点轨道产生至少一个有限负方向。精确计数：
+
+\[
+\kappa_{\omega,T}=N_{\mathrm{off}}(\omega,T)
+\]
+
+仍登记为后续 index theorem。
+
+## 9. determinant 与极限层
+
+冻结的 `HorizonEffectiveIndex` 给出有限严格收缩矩阵的 barrier：
+
+\[
+\operatorname{Ind}_{\mathrm{hor}}(H)
+=
+\det(I-H^*H)^{-1}
+=
+\prod_j(1-\sigma_j^2)^{-1}.
+\]
+
+当前核心结论对一般严格收缩矩阵成立。Hankel 假设尚未承担主证明。后续需要从具体 xi/Weil symbol 构造 Hankel operator，证明 finite-section、Hilbert-Schmidt 或 trace-class 条件、负指标稳定与 Fredholm determinant 极限。
+
+候选真源为：
+
+\[
+\boxed{
+\texttt{FiniteIndexLimitStability},
+\qquad
+\texttt{FredholmHorizonIndexLimit}.
+}
+\]
+
+## 10. 黄金周期边界
+
+离线 monodromy 的双曲判据：
+
+\[
+4\sinh^2(\delta T)>0
+\iff\delta\ne0
+\]
+
+对任意 \(T>0\) 成立。因此 \(T_\varphi=2\log\varphi\) 目前是合法采样周期与规范化选择。它尚未获得 small-divisor、continued-fraction return、frame lower bound、condition number 或 Weil/Pick index 上的独立最优性。
+
+应先冻结：
+
+\[
+\boxed{\texttt{OfflineZeroMonodromyPeriodIndependence}.}
+\]
+
+只有一般周期定理建立后，才适合定义 `GoldenPeriodOptimalityCriterion`。
+
+## 11. 修订后的 theorem DAG
+
+```text
+PrimeFrequencyPhaseFlow                         Frozen
+        |
+        v
+TimeOrderedPrimeMemoryCocycle                   Frozen
+        |
+        v
+SecondMagnusSwapCurvature                       Frozen
+        |
+        +-----------------------------+
+        |                             |
+        v                             v
+SecondMagnusKernelNormSquare       FiniteFourierMagnusCommutator
+        |                             |
+        v                             |
+PairCalibratedSecondMagnusObservability          |
+        |                             |
+        +---------------+-------------+
+                        |
+                        v
+OrderedTimeSimplexSecondMagnusAverage
+                        |
+                        v
+FiniteFrequencyOrderedSimplexCoercivity         Open
+                        |
+                        v
+HolonomyToFixedScaleWeilTransport               Open
+                        |
+                        v
+FixedScaleWeilQuadraticForm                     Frozen
+                        |
+                        v
+XiRatioPickKernel                               Open
+                        |
+                        v
+HermitianKernelNegativeSquares                  Frozen
+                        |
+                        v
+OfflineZeroPickIndexLowerBound                  Open
+                        |
+                        v
+FiniteIndexLimitStability / Fredholm limit      Open
+                        |
+                        v
+Uniform global Weil positivity                  Open
+                        |
+                        v
+RH
+```
+
+## 12. 接下来的形式化顺序
+
+### P0. `FiniteFrequencyOrderedSimplexCoercivity`
+
+利用本轮闭式积分与有限最小频差，冻结统一时间窗口双边界。
+
+### P1. `HolonomyToFixedScaleWeilTransport`
+
+复用既有 fixed-scale Weil 真源，构造 finite Fourier/curvature coefficients 到合法 test function 的运输。
+
+### P2. `XiRatioPickKernel`
+
+定义 completed-xi ratio 的具体 half-plane kernel，并证明 Hermitian 与 reflection laws。
+
+### P3. `OfflineZeroPickIndexLowerBound`
+
+把被隔离的离线零点运输成有限 Gram 负方向。
+
+### P4. `FiniteIndexLimitStability`
+
+控制采样、窗口、prime-power cutoff 与 operator dimension 增长时的负指标逃逸。
+
+### P5. `FredholmHorizonIndexLimit`
+
+把有限 determinant barrier 提升到 trace-class Fredholm determinant。
+
+## 13. 当前 claim boundary
+
+本轮机器证明：
+
+- alternating kernel 的精确 squared norm；
+- 非零频差的显式最大响应采样；
+- 有限 Fourier 代数生成元的精确 commutator expansion；
+- pair-adapted clocks 下四倍 holonomy energy 的精确恢复；
+- ordered-time simplex scalar response 的闭式公式；
+- 零频差响应为零；
+- 非负窗口上的响应非负。
+
+本轮没有证明公共固定时刻的全频率可观测性、finite-family ordered-window coercivity、time-ordered exponential、Magnus 级数收敛、holonomy-to-Weil transport、xi-ratio Pick positivity、离线零点数与负平方数的等式、Fredholm 极限、全局 Weil 正性或 RH。
+
+本轮关闭的有限链为：
+
+\[
+\boxed{
+\text{Fourier chronology}
+\longrightarrow
+\text{algebra commutator}
+\longrightarrow
+\text{exact kernel strength}
+\longrightarrow
+\text{pairwise reverse observability}
+\longrightarrow
+\text{ordered-simplex response}.
+}
+\]
+
+中央开放边现在被压缩为：
+
+\[
+\boxed{
+\texttt{FiniteFrequencyOrderedSimplexCoercivity}
+\rightarrow
+\texttt{HolonomyToFixedScaleWeilTransport}
+\rightarrow
+\texttt{XiRatioPickKernel}
+\rightarrow
+\texttt{OfflineZeroPickIndexLowerBound}.
+}

@@ -1,0 +1,28 @@
+\chi_{\omega_p}(t_1)\chi_{\omega_q}(t_2)
+-
+\chi_{\omega_q}(t_1)\chi_{\omega_p}(t_2).
+}
+\]
+
+它是两个 evaluation vectors 的二阶外积系数，也可写为一个 \(2\times2\) 行列式。因此机器节点证明：
+
+\[
+\boxed{K_{q,p}=-K_{p,q}},
+\qquad
+\boxed{K_{p,q}(t_2,t_1)=-K_{p,q}(t_1,t_2)},
+\]
+
+\[
+\boxed{t_1=t_2\Longrightarrow K_{p,q}=0},
+\qquad
+\boxed{\omega_p=\omega_q\Longrightarrow K_{p,q}=0},
+\]
+
+以及：
+
+\[
+\boxed{|K_{p,q}|\le2}.
+\]
+
+频率标签与时间槽同时交换时，两个负号抵消。由此，\(K\) 保存的是二维 orientation，不是单个相位的大小。
+

@@ -1,0 +1,4 @@
+**两侧各自实算均成功**(这不是失败的一部分,是判决的原料):
+- 曲率侧(`interior_curvature_criterion` 的字面特化):$\mu = 2\pi\,\delta_{i/4}$,总质量 $2\pi$;偶极核 $\kappa(\gamma)=-2/\delta^2$,$\int\kappa=0$。
+- 账本侧(`scalingLedger`/`halfDensityReading` 的字面特化):条目 $\pm 1/4$(镜像对相消),归一化范数 $e^{\mp 1/4}$,冻结范数形 $N(u)=e^{-u}$。
+

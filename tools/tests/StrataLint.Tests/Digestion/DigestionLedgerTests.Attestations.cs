@@ -95,12 +95,17 @@ public sealed partial class DigestionLedgerTests
         ]);
 
         var status = Assert.Single(DigestionStatusEvaluator.Evaluate(
-            DigestionEvaluationScope.FullScan,
+            DigestionEvaluationScope.ChangedSet,
             ledger,
             snapshot,
-            AcceptedLean("D5/S0/Carrier/Probe.lean")).Entries);
+            AcceptedLean("D5/S0/Carrier/Probe.lean"),
+            baselineDocument: ledger,
+            baselineSnapshot: snapshot,
+            changes: RawChangeSet.Create(["notes/unrelated.txt"])).Entries);
 
         Assert.False(status.Deletable);
+        Assert.Equal(DigestionMigrationState.Partial, status.DerivedStatus.Migration);
+        Assert.NotEqual(DigestionReceiptAlignment.Rejected, status.Alignment);
         Assert.Contains(status.Gaps, gap => gap.Code == "scribe-emission-unverified");
     }
 

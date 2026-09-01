@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:6006096d8e4e1ebd500d82670beb0af9acc1a1d7c6072e928e4de8c14ff30244
+  normalized_sha256: sha256:6006096d8e4e1ebd500d82670beb0af9acc1a1d7c6072e928e4de8c14ff30244
+cas_ref: sha256:6006096d8e4e1ebd500d82670beb0af9acc1a1d7c6072e928e4de8c14ff30244
+coverage_gids:
+  - D5/S3/ConceptDynamics/Sufficiency/PredictiveSufficiencyDescent.predictive_sufficiency_descent
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Sufficiency/PredictiveSufficiencyDescent.predictive_sufficiency_descent
+      source_sha256: sha256:6006096d8e4e1ebd500d82670beb0af9acc1a1d7c6072e928e4de8c14ff30244
+      target_statement_id: sha256:a62a9565331a49dc1b2ee77c8a859e303a99c426b373d69580b2f48814516c5f
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Sufficiency/PredictiveSufficiencyDescent.predictive_sufficiency_descent
+      definition_sha256: sha256:a950710eb5bf9b2ec7d8ebdeb2b320ef0a11efed5eca24ff0ba48e8ea8616465
+      emission_sha256: sha256:70e51a6aaf24ee07561a5967498492d704554266204f1e4264345415309384f5
+  unresolved_subitems: []
