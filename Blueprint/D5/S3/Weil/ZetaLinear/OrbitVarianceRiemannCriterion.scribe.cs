@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Weil.ZetaLinear;
 
@@ -18,7 +20,7 @@ internal sealed class OrbitVarianceRiemannCriterionDocument
             DescribeId.Create("orbit-variance-rh-criterion"),
             DeclarationHandle.Create(Declaration),
             H("Zero orbit variance is equivalent to the critical-line condition"),
-            StatementSource.WithoutFormula(),
+            StatementSource.FromAuthor(CriterionStatement()),
             AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text(
@@ -42,4 +44,13 @@ internal sealed class OrbitVarianceRiemannCriterionDocument
                         + "witness has variance 1/4 at height two, while a singleton zero "
                         + "at 1/2+i lies on the critical line and has variance zero."))),
             DescribeRole.Theorem))));
+
+    private static Formula CriterionStatement() => Disp(Seq(
+        Operatorname, Grp(F.Id("CriticalLineHypothesis")), Open, F.Id("xi"), Close,
+        Sp, Leftrightarrow, Sp,
+        Forall, Sp, F.Id("T"), Sp, InMacro, Sp, Mathbb, Grp(F.Id("R")), Comma, Esc,
+        Forall, Sp, F.Id("hT"), Colon, Sp, D(0), Sp, Lt, Sp, F.Id("T"), Comma, Esc,
+        Operatorname, Grp(F.Id("completionVariance")), Open,
+        Operatorname, Grp(F.Id("windows")), Open, F.Id("T"), Comma, Sp, F.Id("hT"), Close,
+        Comma, Sp, F.Id("multiplicity"), Close, Sp, Eq, Sp, D(0)));
 }

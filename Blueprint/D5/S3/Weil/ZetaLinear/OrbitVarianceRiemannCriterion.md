@@ -6,7 +6,7 @@ Vanishing finite-height completion variance characterizes the abstract critical-
 
 **Theorem 1.1 (Zero orbit variance is equivalent to the critical-line condition).**
 
-Lean statement: `D5/S3/Weil/ZetaLinear/OrbitVarianceRiemannCriterion.orbit_variance_rh_criterion`
+$$\operatorname{CriticalLineHypothesis}(xi) \Leftrightarrow \forall T \in \mathbb{R},\ \forall hT: 0 < T,\ \operatorname{completionVariance}(\operatorname{windows}(T, hT), multiplicity) = 0$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/ZetaLinear/OrbitVarianceRiemannCriterion.orbit_variance_rh_criterion` (`✓ std3`). ∎
 
