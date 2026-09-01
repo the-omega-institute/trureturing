@@ -41,7 +41,7 @@ def stabilizationGap (delta damping : ℝ) : ℝ :=
 
 /-- The forward Laplace kernel after adding scalar damping. -/
 def dampedNegativeSquareKernel (delta damping time : ℝ) : ℝ :=
-  Real.exp (-(stabilizationGap delta damping) * time)
+  Real.exp (-(stabilizationGap delta damping * time))
 
 /-- The scalar resolvent of the stabilized negative-square mode. -/
 def negativeSquareResolvent (delta damping : ℝ) : ℝ :=
@@ -69,7 +69,7 @@ theorem damped_negative_square_kernel_integrable_of_threshold
     (stabilization_gap_pos_iff delta damping).2 hthreshold
   have hcoefficient : -(stabilizationGap delta damping) < 0 :=
     neg_lt_zero.mpr hgap
-  simpa only [dampedNegativeSquareKernel, neg_mul] using
+  simpa only [dampedNegativeSquareKernel] using
     (integrableOn_exp_mul_Ioi
       (a := -(stabilizationGap delta damping)) hcoefficient 0)
 
@@ -93,10 +93,11 @@ theorem damped_negative_square_kernel_integrable_iff
       filter_upwards [ae_restrict_mem measurableSet_Ioi] with time htime
       have htime_nonneg : 0 ≤ time := le_of_lt htime
       have hargument_nonneg :
-          0 ≤ -(stabilizationGap delta damping) * time :=
-        mul_nonneg hcoefficient_nonneg htime_nonneg
+          0 ≤ -(stabilizationGap delta damping * time) := by
+        rw [neg_mul]
+        exact mul_nonneg hcoefficient_nonneg htime_nonneg
       have hone_le :
-          1 ≤ Real.exp (-(stabilizationGap delta damping) * time) :=
+          1 ≤ Real.exp (-(stabilizationGap delta damping * time)) :=
         Real.one_le_exp hargument_nonneg
       simpa [dampedNegativeSquareKernel, Real.norm_eq_abs,
         abs_of_pos (Real.exp_pos _)] using hone_le
