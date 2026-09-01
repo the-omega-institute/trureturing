@@ -7,15 +7,15 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.Conditioning;
 internal sealed class RankOneBornPairingWeightDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A rank-one branch weight is a nonnegative state-projection pairing equal to a squared transition modulus.",
+        "A rank-one Born weight is a trace pairing, and unread measurement is its conditional ensemble.",
         H("Rank-One Born Pairing Weight"),
         Blocks(
             Describe.Lean(
-                DescribeId.Create("rank-one-born-weight-is-a-nonnegative-state-projection-pairing"),
+                DescribeId.Create("rank-one-born-weight-is-a-trace-pairing-with-unread-ensemble"),
                 DeclarationHandle.Create(
                     "D5/S3/Observer/Conditioning/RankOneBornPairingWeight."
                         + "rank_one_born_pairing_weight"),
-                H("Rank-one Born weight is a nonnegative pairing scalar"),
+                H("Rank-one Born weight, trace pairing, and unread ensemble"),
                 StatementSource.FromAuthor(PairingFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
@@ -25,16 +25,15 @@ internal sealed class RankOneBornPairingWeightDocument : IScribeDocumentDefiniti
                             + "trace-one matrix. Fix a branch k and rank-one representations "
                             + "P_k = phi phi* and rho = psi psi*.")),
                     Paragraph(Text(
-                        "Write p_k for the canonical recordWeight, definitionally the complex "
-                            + "scalar trace(rho P_k). The first conclusion is exactly "
-                            + "p_k = |<phi, psi>|^2. The second conclusion is 0 <= p_k, so the "
-                            + "formal carrier is a nonnegative state-projection pairing scalar, "
-                            + "not a projection matrix or a quotient object.")),
+                        "Write p_k for the canonical recordWeight. The three conclusions are "
+                            + "p_k = |<phi, psi>|^2, p_k = trace(rho P_k), and unreadState P rho "
+                            + "= sum_j p_j conditionalState(P, rho, j). The second equality "
+                            + "carries the source's object-role assertion: p_k has scalar trace-"
+                            + "pairing type, not projection-matrix or quotient-object type.")),
                     Paragraph(Text(
-                        "The equality directly applies the frozen rank-one reduction. "
-                            + "Nonnegativity directly applies the canonical Born probability "
-                            + "skeleton to the positive trace-one state and the selected record "
-                            + "projection."))),
+                        "The first and third leaves directly apply the frozen rank-one reduction "
+                            + "and unread weighted-ensemble theorems. The middle leaf unfolds only "
+                            + "the canonical recordWeight and bornProbability definitions."))),
                 DescribeRole.Theorem))));
 
     private static Formula PairingFormula()
@@ -42,7 +41,12 @@ internal sealed class RankOneBornPairingWeightDocument : IScribeDocumentDefiniti
         Formula n = F.Id("n"), labels = F.Id("K"), index = F.Id("k");
         Formula projection = Projection(index), rho = F.Id("rho");
         Formula phi = F.Id("phi"), psi = F.Id("psi");
-        Formula weight = Call("tr", Seq(rho, Sp, projection));
+        Formula weight = Call("recordWeight", F.Id("P"), rho, index);
+        Formula tracePairing = Call("tr", Seq(rho, Sp, projection));
+        Formula branchIndex = F.Id("j");
+        Formula branchWeight = Call("recordWeight", F.Id("P"), rho, branchIndex);
+        Formula conditional = Call("conditionalState", F.Id("P"), rho, branchIndex);
+        Formula unread = Call("unreadState", F.Id("P"), rho);
 
         return Disp(Seq(
             Forall, Sp, n, Comma, Sp, labels, Comma, Sp,
@@ -61,7 +65,11 @@ internal sealed class RankOneBornPairingWeightDocument : IScribeDocumentDefiniti
             Open,
                 weight, Sp, Eq, Sp,
                 Lvert, Inner(phi, psi), Rvert, Caret, Grp(D(2)),
-                Sp, Land, Sp, D(0), Sp, Leq, Sp, weight,
+                Sp, Land, Sp, weight, Sp, Eq, Sp, tracePairing,
+                Sp, Land, RowBreak,
+                unread, Sp, Eq, Sp,
+                Sum, Underscore, Grp(branchIndex, Sp, InMacro, Sp, labels),
+                branchWeight, Cdot, Sp, conditional,
             Close, Dot));
     }
 
