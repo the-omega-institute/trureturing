@@ -712,6 +712,11 @@ jobs:
           path: .judge-binaries
           key: stratalint-judge-binaries-v2-${{ runner.os }}-${{ steps.judge-address.outputs.runtime }}-${{ steps.judge-address.outputs.address }}
 
+      - name: Restore candidate compile assets for cached judge
+        if: steps.judge-cache.outputs.cache-hit == 'true'
+        shell: bash
+        run: dotnet restore candidate/tools/StrataLint.sln --locked-mode
+
       - name: Download canonical Lean reports
         uses: actions/download-artifact@v4
         with:
