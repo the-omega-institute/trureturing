@@ -5,10 +5,10 @@
    anchors: []
    digest: Solenoid connectedness and quantified visible-hidden motion classification. -/
 
+import D5.S1.Solenoid.Connectivity.SameFiberPathOrbitCriterion
 import D5.S1.Solenoid.HiddenMotionRigidity
-import D5.S3.Observer.GoldenCoding.VisibleHiddenMotionDichotomy
-import D5.S3.Observer.HiddenFlow.NormalizedHiddenAddressConservation
-import D5.S3.Observer.MetricGeometryLaws.HiddenTranslationComponentCharge
+import D5.S3.Observer.HiddenFlow.DiscreteRigidity
+import D5.S3.Observer.HiddenFlow.StreamlineExistence
 
 /- Library-search audit trail (2026-09-02):
    * Frozen `path_joined_iff_real_flow_orbit` classifies every solenoid path
@@ -36,7 +36,6 @@ open D5.S1.Solenoid.Connectivity.SameFiberPathOrbitCriterion
 open D5.S3.Observer.StreamlineTheorem
 open D5.S3.Observer.HiddenFlow.ContinuousRigidity
 open D5.S3.Observer.HiddenFlow.DiscreteRigidity
-open D5.S3.Observer.HiddenFlow.NormalizedHiddenAddressConservation
 open D5.S3.Observer.HiddenFlow.StreamlineExistence
 
 noncomputable section
@@ -80,6 +79,26 @@ theorem universal_solenoid_visible_hidden_motion_classification :
     (∀ x y : UniversalSolenoid,
       Joined x y ↔ ∃ t : Real,
         y = UniversalSolenoid.realFlow t + x) ∧
+    (∀ x y : UniversalSolenoid,
+      ∀ sameProjection :
+          UniversalSolenoid.projection x = UniversalSolenoid.projection y,
+      let hiddenDifference : UniversalSolenoid.projection.ker :=
+        ⟨y - x, by
+          change UniversalSolenoid.projection (y - x) = 0
+          rw [map_sub, sub_eq_zero]
+          exact sameProjection.symm⟩
+      let hiddenCoordinate :
+          UniversalSolenoid →+
+            UniversalSolenoid ⧸ UniversalSolenoid.realFlowHom.range :=
+        QuotientAddGroup.mk' UniversalSolenoid.realFlowHom.range
+      (hiddenCoordinate x ≠ hiddenCoordinate y →
+        (∃ jump : Int →+ HiddenAddress,
+          jump 1 = hiddenKernelAddEquiv.symm hiddenDifference ∧
+            jump ≠ 0 ∧
+            ¬ ∃ flow : ContinuousAddMonoidHom Real HiddenAddress,
+              flow.toAddMonoidHom.comp (Int.castAddHom Real) = jump) ∧
+          ¬ Joined x y) ∧
+        (Joined x y → hiddenCoordinate x = hiddenCoordinate y)) ∧
     (∀ path : C(Real, UniversalSolenoid),
       ∃! data : C(Real, Real) × UniversalSolenoid.projection.ker,
         data.1 0 = baseRepresentative path 0 ∧
@@ -95,6 +114,23 @@ theorem universal_solenoid_visible_hidden_motion_classification :
     (∀ jump : Int →+ HiddenAddress, jump ≠ 0 →
       ¬ ∃ flow : ContinuousAddMonoidHom Real HiddenAddress,
         flow.toAddMonoidHom.comp (Int.castAddHom Real) = jump) := by
+  have difference_generates_discrete_jump :
+      ∀ difference : HiddenAddress, difference ≠ 0 →
+        ∃ jump : Int →+ HiddenAddress,
+          jump 1 = difference ∧ jump ≠ 0 ∧
+            ¬ ∃ flow : ContinuousAddMonoidHom Real HiddenAddress,
+              flow.toAddMonoidHom.comp (Int.castAddHom Real) = jump := by
+    intro difference difference_nonzero
+    let jump : Int →+ HiddenAddress :=
+      zmultiplesHom HiddenAddress difference
+    have jump_nonzero : jump ≠ 0 := by
+      intro jump_zero
+      have at_one := congrArg (fun action : Int →+ HiddenAddress => action 1)
+        jump_zero
+      exact difference_nonzero (by simpa [jump] using at_one)
+    refine ⟨jump, by simp [jump], jump_nonzero, ?_⟩
+    exact nonzero_integer_action_has_no_continuous_real_extension
+      jump jump_nonzero
   let hiddenAddress : HiddenAddress := fun p => if p.1 = 2 then 0 else 1
   let hiddenOffset : UniversalSolenoid.projection.ker :=
     hiddenKernelAddEquiv hiddenAddress
@@ -139,7 +175,57 @@ theorem universal_solenoid_visible_hidden_motion_classification :
     exact hiddenOffset_not_joined
       (pathConnected.joined (0 : UniversalSolenoid) hiddenOffset.1)
   refine ⟨⟨inferInstance, not_path_connected⟩,
-    path_joined_iff_real_flow_orbit, ?_, ?_, ?_⟩
+    path_joined_iff_real_flow_orbit, ?_, ?_, ?_, ?_⟩
+  · intro x y same_projection
+    let hiddenDifference : UniversalSolenoid.projection.ker :=
+      ⟨y - x, by
+        change UniversalSolenoid.projection (y - x) = 0
+        rw [map_sub, sub_eq_zero]
+        exact same_projection.symm⟩
+    let hiddenCoordinate :
+        UniversalSolenoid →+
+          UniversalSolenoid ⧸ UniversalSolenoid.realFlowHom.range :=
+      QuotientAddGroup.mk' UniversalSolenoid.realFlowHom.range
+    change
+      (hiddenCoordinate x ≠ hiddenCoordinate y →
+        (∃ jump : Int →+ HiddenAddress,
+          jump 1 = hiddenKernelAddEquiv.symm hiddenDifference ∧
+            jump ≠ 0 ∧
+            ¬ ∃ flow : ContinuousAddMonoidHom Real HiddenAddress,
+              flow.toAddMonoidHom.comp (Int.castAddHom Real) = jump) ∧
+          ¬ Joined x y) ∧
+        (Joined x y → hiddenCoordinate x = hiddenCoordinate y)
+    have joined_same_hidden_coordinate :
+        Joined x y → hiddenCoordinate x = hiddenCoordinate y := by
+      intro joined
+      rcases (path_joined_iff_real_flow_orbit x y).1 joined with ⟨t, rfl⟩
+      rw [map_add]
+      have real_flow_is_zero :
+          hiddenCoordinate (UniversalSolenoid.realFlow t) = 0 := by
+        change
+          ((UniversalSolenoid.realFlow t : UniversalSolenoid) :
+            UniversalSolenoid ⧸ UniversalSolenoid.realFlowHom.range) = 0
+        rw [QuotientAddGroup.eq_zero_iff]
+        exact ⟨t, rfl⟩
+      rw [real_flow_is_zero, zero_add]
+    refine ⟨?_, joined_same_hidden_coordinate⟩
+    intro hidden_coordinates_differ
+    have hidden_difference_nonzero :
+        hiddenKernelAddEquiv.symm hiddenDifference ≠ 0 := by
+      intro hidden_difference_zero
+      have kernel_difference_zero : hiddenDifference = 0 := by
+        apply hiddenKernelAddEquiv.symm.injective
+        simpa using hidden_difference_zero
+      have points_equal : y = x := by
+        apply sub_eq_zero.mp
+        simpa [hiddenDifference] using
+          congrArg Subtype.val kernel_difference_zero
+      exact hidden_coordinates_differ (by rw [points_equal])
+    exact ⟨difference_generates_discrete_jump
+        (hiddenKernelAddEquiv.symm hiddenDifference)
+        hidden_difference_nonzero,
+      fun joined => hidden_coordinates_differ
+        (joined_same_hidden_coordinate joined)⟩
   · intro path
     exact existsUnique_normalized_streamline path 0
   · intro first second different
@@ -150,18 +236,8 @@ theorem universal_solenoid_visible_hidden_motion_classification :
         first = motion 0 := starts.symm
         _ = motion 1 := prime_adic_hidden_motion_rigidity motion continuous 0 1
         _ = second := ends
-    · let jump : Int →+ HiddenAddress :=
-        zmultiplesHom HiddenAddress (second - first)
-      have difference_nonzero : second - first ≠ 0 :=
-        sub_ne_zero.mpr different.symm
-      have jump_nonzero : jump ≠ 0 := by
-        intro jump_zero
-        have at_one := congrArg (fun action : Int →+ HiddenAddress => action 1)
-          jump_zero
-        exact difference_nonzero (by simpa [jump] using at_one)
-      refine ⟨jump, by simp [jump], jump_nonzero, ?_⟩
-      exact nonzero_integer_action_has_no_continuous_real_extension
-        jump jump_nonzero
+    · exact difference_generates_discrete_jump
+        (second - first) (sub_ne_zero.mpr different.symm)
   · exact nonzero_integer_action_has_no_continuous_real_extension
 
 #print axioms universal_solenoid_visible_hidden_motion_classification
