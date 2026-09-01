@@ -11,7 +11,8 @@ internal sealed class EllipticHyperbolicReflectionTrichotomyDocument
         "D5/S3/Analytic/Adelic/EllipticHyperbolicReflectionTrichotomy.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Separate hyperbolic, neutral, and elliptic two-dimensional sectors by determinant and square.",
+        "Two-dimensional generators separate hyperbolic, neutral, and elliptic spectral "
+            + "sectors by determinant sign.",
         H("Elliptic-Hyperbolic Reflection Trichotomy"),
         Blocks(
             Describe.Lean(

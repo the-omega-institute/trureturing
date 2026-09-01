@@ -11,7 +11,7 @@ internal sealed class NegativeSquareLaplaceResolventDocument
         "D5/S3/Analytic/Adelic/NegativeSquareLaplaceResolvent.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Identify the exact damping threshold and Laplace resolvent of a negative-square mode.",
+        "A negative-square mode has an exact damping threshold and Laplace resolvent.",
         H("Negative-Square Laplace Resolvent"),
         Blocks(
             Describe.Lean(

@@ -11,7 +11,8 @@ internal sealed class ReflectedGrowthPairEvenOddDecompositionDocument
         "D5/S3/Analytic/Adelic/ReflectedGrowthPairEvenOddDecomposition.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Split a reflected growth pair into an invariant even channel and an oriented odd channel.",
+        "Even and odd reflected channels separate invariant magnitude from time "
+            + "orientation.",
         H("Reflected Growth Pair Even-Odd Decomposition"),
         Blocks(
             Describe.Lean(
