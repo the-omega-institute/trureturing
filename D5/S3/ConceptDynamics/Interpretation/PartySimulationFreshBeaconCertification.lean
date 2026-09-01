@@ -9,7 +9,6 @@ import D5.S3.Estimation.DataProcessing.MeasurablePostprocessingDefectContraction
 import Mathlib.MeasureTheory.Constructions.Pi
 import Mathlib.MeasureTheory.Integral.Prod
 import Mathlib.MeasureTheory.Measure.Prod
-import Mathlib.Probability.ProbabilityMassFunction.Constructions
 
 /- Library-search audit trail (2026-09-02):
    * D5 name and body-shape searches found the canonical arbitrary-carrier
@@ -41,7 +40,9 @@ fixed nontrivial guarantee likely under an all-green honest transcript: a bad
 implementation selected from the same seed realizes the identical verifier
 input, so reliability bounds approval by `delta`. Since the verifier returns a
 Boolean tier on every run, the trivial tier consequently has mass at least
-`1 - delta`.
+`1 - delta`. Taking the suite itself as `Seed`, the deployment product measure
+as `seedLaw`, and the identity as `partySuite` realizes honest sampling from
+the source deployment law without a support restriction.
 
 For the sufficient direction, each task selects an implementation before the
 independent beacon is revealed. The proof disintegrates the task-beacon product
@@ -50,18 +51,22 @@ integrates that uniform bound. The public suite map pushes the beacon law
 forward, and measurable total variation transports the ideal bound to it. -/
 theorem party_simulation_and_fresh_beacon_certification
     {Seed VerifierCoin Input Output Certificate Anchor Task : Type*}
-    [Finite Seed] [MeasurableSpace Seed] [MeasurableSingletonClass Seed]
-    [Finite VerifierCoin] [MeasurableSpace VerifierCoin]
-    [MeasurableSingletonClass VerifierCoin]
+    [MeasurableSpace Seed] [MeasurableSpace VerifierCoin]
     [MeasurableSpace Input] [MeasurableSpace Output] [MeasurableEq Output]
+    [MeasurableSpace Certificate]
     [MeasurableSpace Anchor] [MeasurableSpace Task]
     (deployment : Measure Input) [IsProbabilityMeasure deployment]
     (expected : Input -> Output) (expectedMeasurable : Measurable expected)
     (m : Nat) (epsilon delta : Real)
-    (seedLaw : PMF Seed) (verifierCoinLaw : PMF VerifierCoin)
+    (seedLaw : Measure Seed) [IsProbabilityMeasure seedLaw]
+    (verifierCoinLaw : Measure VerifierCoin)
+    [IsProbabilityMeasure verifierCoinLaw]
     (partySuite : Seed -> Fin m -> Input)
+    (partySuiteMeasurable : Measurable partySuite)
     (certificate : Seed -> Certificate)
+    (certificateMeasurable : Measurable certificate)
     (verifier : ((Fin m -> Input × Output) × Certificate) -> VerifierCoin -> Bool)
+    (verifierMeasurable : Measurable (Function.uncurry verifier))
     (coSelected : Seed -> Input -> Output)
     (taskLaw : Measure Task) [IsProbabilityMeasure taskLaw]
     (anchorLaw : Measure Anchor) [IsProbabilityMeasure anchorLaw]
@@ -69,7 +74,7 @@ theorem party_simulation_and_fresh_beacon_certification
     (implementation : Task -> Input -> Output)
     (implementationMeasurable : Measurable (Function.uncurry implementation)) :
     ((forall strategy : Seed -> Input -> Output,
-        (seedLaw.toMeasure.prod verifierCoinLaw.toMeasure).real
+        (seedLaw.prod verifierCoinLaw).real
           {omega |
             verifier
                 ((fun index =>
@@ -83,7 +88,7 @@ theorem party_simulation_and_fresh_beacon_certification
         coSelected seed (partySuite seed index) = expected (partySuite seed index)) ->
       (forall seed, epsilon < deployment.real
         {input | coSelected seed input ≠ expected input}) ->
-      (seedLaw.toMeasure.prod verifierCoinLaw.toMeasure).real
+      (seedLaw.prod verifierCoinLaw).real
           {omega |
             verifier
                 ((fun index =>
@@ -91,7 +96,7 @@ theorem party_simulation_and_fresh_beacon_certification
                   certificate omega.1)
                 omega.2 = true} <= delta ∧
         1 - delta <=
-          (seedLaw.toMeasure.prod verifierCoinLaw.toMeasure).real
+          (seedLaw.prod verifierCoinLaw).real
             {omega |
               verifier
                   ((fun index =>
@@ -113,7 +118,7 @@ theorem party_simulation_and_fresh_beacon_certification
   constructor
   · intro reliable coSelectedPasses coSelectedBad
     let jointLaw : Measure (Seed × VerifierCoin) :=
-      seedLaw.toMeasure.prod verifierCoinLaw.toMeasure
+      seedLaw.prod verifierCoinLaw
     let honestGrant : Set (Seed × VerifierCoin) :=
       {omega |
         verifier
@@ -158,8 +163,29 @@ theorem party_simulation_and_fresh_beacon_certification
     have grantBound : jointLaw.real honestGrant <= delta := by
       rw [grantEventEq]
       exact reliable coSelected
-    have honestGrantMeasurable : MeasurableSet honestGrant :=
-      honestGrant.to_countable.measurableSet
+    have honestRecordMeasurable : Measurable (fun seed : Seed =>
+        fun index : Fin m =>
+          (partySuite seed index, expected (partySuite seed index))) := by
+      exact measurable_pi_lambda _ fun index =>
+        let suiteAtIndex :=
+          (measurable_pi_apply index).comp partySuiteMeasurable
+        suiteAtIndex.prodMk (expectedMeasurable.comp suiteAtIndex)
+    have honestVerifierInputMeasurable : Measurable (fun omega : Seed × VerifierCoin =>
+        (((fun index =>
+            (partySuite omega.1 index, expected (partySuite omega.1 index))),
+          certificate omega.1), omega.2)) := by
+      exact
+        ((honestRecordMeasurable.comp measurable_fst).prodMk
+            (certificateMeasurable.comp measurable_fst)).prodMk measurable_snd
+    have honestDecisionMeasurable : Measurable (fun omega : Seed × VerifierCoin =>
+        verifier
+            ((fun index =>
+                (partySuite omega.1 index, expected (partySuite omega.1 index))),
+              certificate omega.1)
+            omega.2) :=
+      verifierMeasurable.comp honestVerifierInputMeasurable
+    have honestGrantMeasurable : MeasurableSet honestGrant := by
+      exact honestDecisionMeasurable (measurableSet_singleton true)
     have trivialIsComplement : trivialTier = honestGrantᶜ := by
       ext omega
       simp [trivialTier, honestGrant]

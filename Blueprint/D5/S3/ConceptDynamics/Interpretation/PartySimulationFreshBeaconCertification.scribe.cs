@@ -23,9 +23,12 @@ internal sealed class PartySimulationFreshBeaconCertificationDocument
             AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text(
-                    "The first implication quantifies over every seed-indexed implementation. "
+                    "The first implication quantifies over arbitrary probability laws for the "
+                        + "party seed and verifier coin, and every seed-indexed implementation. "
                         + "The certificate depends only on the party seed, and the co-selected "
-                        + "bad implementation agrees with expected behavior on that same suite.")),
+                        + "bad implementation agrees with expected behavior on that same suite. "
+                        + "Taking the suite itself as the seed, the deployment product measure "
+                        + "as its law, and the identity suite map realizes the source sampling.")),
                 Paragraph(Text(
                     "Reliability therefore applies to a verifier input identical to the honest "
                         + "all-green input. Approval of the fixed nontrivial tier has probability "
@@ -121,7 +124,7 @@ internal sealed class PartySimulationFreshBeaconCertificationDocument
         Formula partyJoint = F.Id("nuParty");
         Formula partyJointDefinition = Seq(
             partyJoint, Colon, Sp, Call("Measure", partyWorld), Sp, Eq, Sp,
-            Call("prod", Call("toMeasure", seedLaw), Call("toMeasure", coinLaw)));
+            Call("prod", seedLaw, coinLaw));
 
         Formula beaconJoint = F.Id("nuBeacon");
         Formula beaconJointDefinition = Seq(
@@ -232,15 +235,12 @@ internal sealed class PartySimulationFreshBeaconCertificationDocument
             seed, Comma, Sp, coin, Comma, Sp, input, Comma, Sp, output, Comma, Sp,
             certificateType, Comma, Sp, anchor, Comma, Sp, task, Colon, Sp, type,
             Comma, RowBreak, Grp(),
-            Typeclass("Finite", seed), Comma, Sp,
             Typeclass("MeasurableSpace", seed), Comma, Sp,
-            Typeclass("MeasurableSingletonClass", seed), Comma, RowBreak, Grp(),
-            Typeclass("Finite", coin), Comma, Sp,
             Typeclass("MeasurableSpace", coin), Comma, Sp,
-            Typeclass("MeasurableSingletonClass", coin), Comma, RowBreak, Grp(),
             Typeclass("MeasurableSpace", input), Comma, Sp,
             Typeclass("MeasurableSpace", output), Comma, Sp,
             Typeclass("MeasurableEq", output), Comma, RowBreak, Grp(),
+            Typeclass("MeasurableSpace", certificateType), Comma, Sp,
             Typeclass("MeasurableSpace", anchor), Comma, Sp,
             Typeclass("MeasurableSpace", task), Comma, Sp,
             deployment, Colon, Sp, Call("Measure", input), Comma, Sp,
@@ -249,12 +249,16 @@ internal sealed class PartySimulationFreshBeaconCertificationDocument
             Call("Measurable", expected), Comma, RowBreak, Grp(),
             budget, Colon, Sp, naturals, Comma, Sp,
             epsilon, Comma, Sp, delta, Colon, Sp, reals, Comma, RowBreak, Grp(),
-            seedLaw, Colon, Sp, Call("PMF", seed), Comma, Sp,
-            coinLaw, Colon, Sp, Call("PMF", coin), Comma, RowBreak, Grp(),
+            seedLaw, Colon, Sp, Call("Measure", seed), Comma, Sp,
+            Typeclass("IsProbabilityMeasure", seedLaw), Comma, RowBreak, Grp(),
+            coinLaw, Colon, Sp, Call("Measure", coin), Comma, Sp,
+            Typeclass("IsProbabilityMeasure", coinLaw), Comma, RowBreak, Grp(),
             partySuite, Colon, Sp, Arrow(seed, suiteType), Comma, Sp,
-            certificate, Colon, Sp, Arrow(seed, certificateType), Comma,
-            RowBreak, Grp(),
+            Call("Measurable", partySuite), Comma, RowBreak, Grp(),
+            certificate, Colon, Sp, Arrow(seed, certificateType), Comma, Sp,
+            Call("Measurable", certificate), Comma, RowBreak, Grp(),
             verifier, Colon, Sp, verifierType, Comma, Sp,
+            Call("Measurable", Call("uncurry", verifier)), Comma, RowBreak, Grp(),
             coSelected, Colon, Sp, strategyType, Comma, RowBreak, Grp(),
             taskLaw, Colon, Sp, Call("Measure", task), Comma, Sp,
             Typeclass("IsProbabilityMeasure", taskLaw), Comma, RowBreak, Grp(),
