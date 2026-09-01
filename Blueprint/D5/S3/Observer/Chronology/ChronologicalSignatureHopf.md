@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Finite step-two chronological signatures satisfy the group-like diagonal and antipode laws, and reverse-and-negate realizes the antipode on event words.
+Step-two chronological signatures satisfy the group-like coproduct and antipode laws, and the antipode reverses event order with negated values.
 
 **Definition 1.1 (Group-like diagonal).**
 
@@ -18,9 +18,9 @@ The finite group-like coproduct sends a signature to two identical copies.
 
 **Theorem 1.2 (Multiplicative diagonal).**
 
-Lean statement: `D5/S3/Observer/Chronology/ChronologicalSignatureHopf.group_like_coproduct_mul`
+$$\forall a, b, \operatorname{groupLikeCoproduct}(a \cdot b) = (\operatorname{fst}(\operatorname{groupLikeCoproduct}(a)) \cdot \operatorname{fst}(\operatorname{groupLikeCoproduct}(b)), \operatorname{snd}(\operatorname{groupLikeCoproduct}(a)) \cdot \operatorname{snd}(\operatorname{groupLikeCoproduct}(b))).$$
 
-*Formalization.* `D5/S3/Observer/Chronology/ChronologicalSignatureHopf.group_like_coproduct_mul` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/Chronology/ChronologicalSignatureHopf.group_like_coproduct_mul` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -30,9 +30,9 @@ The diagonal preserves chronological multiplication componentwise.
 
 **Theorem 1.3 (Coassociative group-like diagonal).**
 
-Lean statement: `D5/S3/Observer/Chronology/ChronologicalSignatureHopf.group_like_coproduct_coassociative`
+$$\begin{gathered}\forall a:\\{}(\operatorname{fst}(\operatorname{groupLikeCoproduct}(a)), \operatorname{fst}(\operatorname{groupLikeCoproduct}(\operatorname{snd}(\operatorname{groupLikeCoproduct}(a)))), \operatorname{snd}(\operatorname{groupLikeCoproduct}(\operatorname{snd}(\operatorname{groupLikeCoproduct}(a)))))\\{}= (\operatorname{fst}(\operatorname{groupLikeCoproduct}(\operatorname{fst}(\operatorname{groupLikeCoproduct}(a)))), \operatorname{snd}(\operatorname{groupLikeCoproduct}(\operatorname{fst}(\operatorname{groupLikeCoproduct}(a)))), \operatorname{snd}(\operatorname{groupLikeCoproduct}(a))).\end{gathered}$$
 
-*Formalization.* `D5/S3/Observer/Chronology/ChronologicalSignatureHopf.group_like_coproduct_coassociative` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/Chronology/ChronologicalSignatureHopf.group_like_coproduct_coassociative` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -42,9 +42,9 @@ Either order of iterating the diagonal produces three identical signature compon
 
 **Theorem 1.4 (Left antipode cancellation).**
 
-Lean statement: `D5/S3/Observer/Chronology/ChronologicalSignatureHopf.antipode_left_convolution`
+$$\forall a, \operatorname{signatureAntipode}(\operatorname{fst}(\operatorname{groupLikeCoproduct}(a))) \cdot \operatorname{snd}(\operatorname{groupLikeCoproduct}(a)) = 1.$$
 
-*Formalization.* `D5/S3/Observer/Chronology/ChronologicalSignatureHopf.antipode_left_convolution` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/Chronology/ChronologicalSignatureHopf.antipode_left_convolution` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -54,9 +54,9 @@ Multiplying the antipode leg by the identity leg yields the empty signature.
 
 **Theorem 1.5 (Right antipode cancellation).**
 
-Lean statement: `D5/S3/Observer/Chronology/ChronologicalSignatureHopf.antipode_right_convolution`
+$$\forall a, \operatorname{fst}(\operatorname{groupLikeCoproduct}(a)) \cdot \operatorname{signatureAntipode}(\operatorname{snd}(\operatorname{groupLikeCoproduct}(a))) = 1.$$
 
-*Formalization.* `D5/S3/Observer/Chronology/ChronologicalSignatureHopf.antipode_right_convolution` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/Chronology/ChronologicalSignatureHopf.antipode_right_convolution` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -66,9 +66,9 @@ Multiplying the identity leg by the antipode leg yields the empty signature.
 
 **Theorem 1.6 (Reverse-and-negate realizes the antipode).**
 
-Lean statement: `D5/S3/Observer/Chronology/ChronologicalSignatureHopf.chronological_signature_reverse_neg`
+$$\forall f, L, \operatorname{chronologicalSignature}(x \mapsto -\operatorname{f}(x), \operatorname{reverse}(L)) = \operatorname{signatureAntipode}(\operatorname{chronologicalSignature}(f, L)).$$
 
-*Formalization.* `D5/S3/Observer/Chronology/ChronologicalSignatureHopf.chronological_signature_reverse_neg` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/Chronology/ChronologicalSignatureHopf.chronological_signature_reverse_neg` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -78,9 +78,9 @@ Reversing an event word and negating every observed value gives exactly the anti
 
 **Theorem 1.7 (Reverse-and-negate in logarithmic coordinates).**
 
-Lean statement: `D5/S3/Observer/Chronology/ChronologicalSignatureHopf.chronological_log_reverse_neg`
+$$\forall f, L, \operatorname{chronologicalLog}(\operatorname{chronologicalSignature}(x \mapsto -\operatorname{f}(x), \operatorname{reverse}(L))) = \operatorname{inverse}(\operatorname{chronologicalLog}(\operatorname{chronologicalSignature}(f, L))).$$
 
-*Formalization.* `D5/S3/Observer/Chronology/ChronologicalSignatureHopf.chronological_log_reverse_neg` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/Chronology/ChronologicalSignatureHopf.chronological_log_reverse_neg` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -90,9 +90,9 @@ After applying the logarithm, reverse-and-negate becomes coordinatewise negation
 
 **Theorem 1.8 (Involutive chronology reversal).**
 
-Lean statement: `D5/S3/Observer/Chronology/ChronologicalSignatureHopf.chronological_signature_reverse_neg_involutive`
+$$\forall f, L, \operatorname{signatureAntipode}(\operatorname{chronologicalSignature}(x \mapsto -\operatorname{f}(x), \operatorname{reverse}(L))) = \operatorname{chronologicalSignature}(f, L).$$
 
-*Formalization.* `D5/S3/Observer/Chronology/ChronologicalSignatureHopf.chronological_signature_reverse_neg_involutive` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/Chronology/ChronologicalSignatureHopf.chronological_signature_reverse_neg_involutive` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -102,9 +102,9 @@ Applying the finite antipode after reverse-and-negate recovers the original sign
 
 **Theorem 1.9 (Reversal of concatenation).**
 
-Lean statement: `D5/S3/Observer/Chronology/ChronologicalSignatureHopf.chronological_signature_reverse_neg_append`
+$$\begin{gathered}\forall f, P, S:\\{}\operatorname{chronologicalSignature}(x \mapsto -\operatorname{f}(x), \operatorname{reverse}(\operatorname{append}(P, S)))\\{}= \operatorname{signatureAntipode}(\operatorname{chronologicalSignature}(f, S)) \cdot \operatorname{signatureAntipode}(\operatorname{chronologicalSignature}(f, P)).\end{gathered}$$
 
-*Formalization.* `D5/S3/Observer/Chronology/ChronologicalSignatureHopf.chronological_signature_reverse_neg_append` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/Chronology/ChronologicalSignatureHopf.chronological_signature_reverse_neg_append` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -114,13 +114,13 @@ Reverse-and-negate sends concatenation to the reversed product of the two antipo
 
 ## References
 
-- Truth anchor: `D5/S3/Observer/Chronology/ChronologicalSignatureHopf.groupLikeCoproduct`
-- Truth anchor: `D5/S3/Observer/Chronology/ChronologicalSignatureHopf.group_like_coproduct_mul`
-- Truth anchor: `D5/S3/Observer/Chronology/ChronologicalSignatureHopf.group_like_coproduct_coassociative`
 - Truth anchor: `D5/S3/Observer/Chronology/ChronologicalSignatureHopf.antipode_left_convolution`
 - Truth anchor: `D5/S3/Observer/Chronology/ChronologicalSignatureHopf.antipode_right_convolution`
-- Truth anchor: `D5/S3/Observer/Chronology/ChronologicalSignatureHopf.chronological_signature_reverse_neg`
 - Truth anchor: `D5/S3/Observer/Chronology/ChronologicalSignatureHopf.chronological_log_reverse_neg`
-- Truth anchor: `D5/S3/Observer/Chronology/ChronologicalSignatureHopf.chronological_signature_reverse_neg_involutive`
+- Truth anchor: `D5/S3/Observer/Chronology/ChronologicalSignatureHopf.chronological_signature_reverse_neg`
 - Truth anchor: `D5/S3/Observer/Chronology/ChronologicalSignatureHopf.chronological_signature_reverse_neg_append`
+- Truth anchor: `D5/S3/Observer/Chronology/ChronologicalSignatureHopf.chronological_signature_reverse_neg_involutive`
+- Truth anchor: `D5/S3/Observer/Chronology/ChronologicalSignatureHopf.groupLikeCoproduct`
+- Truth anchor: `D5/S3/Observer/Chronology/ChronologicalSignatureHopf.group_like_coproduct_coassociative`
+- Truth anchor: `D5/S3/Observer/Chronology/ChronologicalSignatureHopf.group_like_coproduct_mul`
 - Dependency: [D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm](StepTwoChronologicalLogarithm.md)
