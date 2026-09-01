@@ -57,7 +57,13 @@ theorem separationDeficit_join_law
     ← defectRelation_eq_separationDeficit current target, residual_join_law]
   ext pair
   simp only [Set.mem_inter_iff, Set.mem_setOf_eq]
-  rw [partition_inseparable_iff_kernel candidate, Setoid.ker_def]
+  rw [partition_inseparable_iff_kernel candidate]
+  change
+    (pair ∈ defectRelation current target ∧
+        candidate pair.1 = candidate pair.2) ↔
+      (pair ∈ defectRelation current target ∧
+        candidate pair.1 = candidate pair.2)
+  rfl
 
 #print axioms defectRelation_eq_separationDeficit
 #print axioms separationDeficit_join_law

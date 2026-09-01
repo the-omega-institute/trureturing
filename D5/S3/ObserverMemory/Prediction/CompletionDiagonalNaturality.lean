@@ -45,12 +45,22 @@ theorem completion_quotient_diagonal_naturality
   have hprojection :
       projection ∘ tau = quotientUpdate tau q ∘ projection := by
     funext y
+    change projection (tau y) = quotientUpdate tau q (projection y)
     apply (Setoid.quotientKerEquivRange (completeItinerary tau q)).injective
+    have hmk (x : Y) :
+        Setoid.quotientKerEquivRange (completeItinerary tau q) (projection x) =
+          ⟨completeItinerary tau q x, ⟨x, rfl⟩⟩ := by
+      apply Subtype.ext
+      rfl
+    simp only [quotientUpdate, Equiv.apply_symm_apply]
+    rw [hmk, hmk]
     apply Subtype.ext
     funext n
-    simp [projection, quotientUpdate, itineraryUpdate,
-      Setoid.quotientKerEquivRange, Setoid.quotientKerEquivRangeKerLift,
-      Setoid.kerLift, completeItinerary, Function.iterate_succ_apply]
+    change completeItinerary tau q (tau y) n =
+      completeItinerary tau q y (n + 1)
+    simp only [completeItinerary]
+    rw [← Function.iterate_succ_apply tau n y,
+      Function.iterate_succ_apply' tau n y]
   have h := coordinate_restriction_naturality
     (iota := Function.Embedding.refl A) projection tau (quotientUpdate tau q)
       hprojection E

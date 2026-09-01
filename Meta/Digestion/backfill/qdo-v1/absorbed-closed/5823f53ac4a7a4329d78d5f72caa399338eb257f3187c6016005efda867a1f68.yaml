@@ -8,7 +8,15 @@ receipts:
   coverage:
     - gid: D5/S3/Observer/HiddenFlow/NormalizedHiddenAddressConservation.normalized_streamline_hidden_address_conservation
       source_sha256: sha256:5823f53ac4a7a4329d78d5f72caa399338eb257f3187c6016005efda867a1f68
-      target_statement_id: sha256:cf4395aa727504cb661e4ee1595c06246b4b74a14b46a17d4a0d68298fc45e83
+      target_statement_id: sha256:9b6dc1ac9da90d796a88ee2e369fdc99f346e5fb27061c3848edd3933d601c6f
+      statement_id_history:
+        - statement_id: sha256:cf4395aa727504cb661e4ee1595c06246b4b74a14b46a17d4a0d68298fc45e83
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Observer/HiddenFlow/NormalizedHiddenAddressConservation.normalized_streamline_hidden_address_conservation
       definition_sha256: sha256:57022465b5043c54169dfde74396ad74d0c0623dab587af694b0f789d7e1aca5

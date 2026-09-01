@@ -57,7 +57,9 @@ private theorem finite_path_has_stage
   induction path with
   | refl =>
       refine ⟨1, ?_⟩
-      simp [reachStep, hstart]
+      rw [Function.iterate_succ_apply']
+      change start ∈ initial ∪ relation.image ((reachStep relation initial)^[0] ∅)
+      exact Or.inl hstart
   | tail path hrelation ih =>
       rcases ih with ⟨n, hprior⟩
       refine ⟨n + 1, ?_⟩

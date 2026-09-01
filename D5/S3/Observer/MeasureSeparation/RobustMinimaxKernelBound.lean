@@ -107,13 +107,13 @@ private theorem complementary_probability_bounds
         weight = weight * (first + second) := by rw [total, mul_one]
         _ = weight * first + weight * second := by rw [mul_add]
         _ <= weight * first + (1 - weight) * second :=
-          add_le_add le_rfl (mul_le_mul_right' lightWeight second)
+          add_le_add le_rfl (mul_le_mul_left lightWeight second)
     · rw [min_eq_right heavyWeight]
       calc
         1 - weight = (1 - weight) * (first + second) := by rw [total, mul_one]
         _ = (1 - weight) * first + (1 - weight) * second := by rw [mul_add]
         _ <= weight * first + (1 - weight) * second :=
-          add_le_add (mul_le_mul_right' heavyWeight first) le_rfl
+          add_le_add (mul_le_mul_left heavyWeight first) le_rfl
 
 private theorem separated_dirac_classifier_zero_errors :
     binaryError

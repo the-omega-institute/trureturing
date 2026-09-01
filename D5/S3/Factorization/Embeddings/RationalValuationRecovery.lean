@@ -89,7 +89,8 @@ private theorem abs_eq_of_rational_finite_valuation_profile_eq
       · rw [Nat.factorization_mul hnumx y.den_ne_zero,
           Nat.factorization_mul hnumy x.den_ne_zero]
         simp only [Finsupp.add_apply]
-        have hv := DFunLike.congr_fun hprofile ⟨p, hp⟩
+        let prime : Nat.Primes := ⟨p, hp⟩
+        have hv := DFunLike.congr_fun hprofile prime
         simp only [rationalFiniteValuationProfile_apply] at hv
         simp only [padicValRat_def, padicValInt] at hv
         rw [← Nat.factorization_def x.num.natAbs hp,
@@ -198,23 +199,29 @@ example :
   · ext p
     simp [rationalFiniteValuationProfile]
   constructor
-  · simp only [rationalFiniteValuationProfile_apply]
+  · let two : Nat.Primes := ⟨2, by norm_num⟩
     letI : Fact (Nat.Prime 2) := ⟨by norm_num⟩
-    rw [padicValRat.div (by norm_num) (by norm_num)]
-    have h6 : padicValNat 2 6 = 1 := by
-      rw [show 6 = 2 * 3 by norm_num, padicValNat.mul (by norm_num) (by norm_num),
-        padicValNat_self, padicValNat.eq_zero_of_not_dvd (by norm_num)]
-    have h35 : padicValNat 2 35 = 0 :=
-      padicValNat.eq_zero_of_not_dvd (by norm_num)
-    norm_num [padicValRat, padicValInt, h6, h35]
-  · simp only [rationalFiniteValuationProfile_apply]
+    have htwo : rationalFiniteValuationProfile ((6 : ℚ) / 35) two = 1 := by
+      rw [rationalFiniteValuationProfile_apply,
+        padicValRat.div (by norm_num) (by norm_num)]
+      have h6 : padicValNat 2 6 = 1 := by
+        rw [show 6 = 2 * 3 by norm_num, padicValNat.mul (by norm_num) (by norm_num),
+          padicValNat_self, padicValNat.eq_zero_of_not_dvd (by norm_num)]
+      have h35 : padicValNat 2 35 = 0 :=
+        padicValNat.eq_zero_of_not_dvd (by norm_num)
+      norm_num [padicValRat, padicValInt, h6, h35]
+    exact htwo
+  · let five : Nat.Primes := ⟨5, by norm_num⟩
     letI : Fact (Nat.Prime 5) := ⟨by norm_num⟩
-    rw [padicValRat.div (by norm_num) (by norm_num)]
-    have h6 : padicValNat 5 6 = 0 :=
-      padicValNat.eq_zero_of_not_dvd (by norm_num)
-    have h35 : padicValNat 5 35 = 1 := by
-      rw [show 35 = 5 * 7 by norm_num, padicValNat.mul (by norm_num) (by norm_num),
-        padicValNat_self, padicValNat.eq_zero_of_not_dvd (by norm_num)]
-    norm_num [padicValRat, padicValInt, h6, h35]
+    have hfive : rationalFiniteValuationProfile ((6 : ℚ) / 35) five = -1 := by
+      rw [rationalFiniteValuationProfile_apply,
+        padicValRat.div (by norm_num) (by norm_num)]
+      have h6 : padicValNat 5 6 = 0 :=
+        padicValNat.eq_zero_of_not_dvd (by norm_num)
+      have h35 : padicValNat 5 35 = 1 := by
+        rw [show 35 = 5 * 7 by norm_num, padicValNat.mul (by norm_num) (by norm_num),
+          padicValNat_self, padicValNat.eq_zero_of_not_dvd (by norm_num)]
+      norm_num [padicValRat, padicValInt, h6, h35]
+    exact hfive
 
 end D5.S3.Factorization.Embeddings.RationalValuationRecovery

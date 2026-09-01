@@ -31,7 +31,9 @@ theorem partitionTopology_id_eq_discrete {X : Type*} :
   · intro _setOpen
     letI : TopologicalSpace X := ⊥
     letI : DiscreteTopology X := ⟨rfl⟩
-    rw [partitionTopology, isOpen_induced_iff]
+    change @IsOpen X
+      (TopologicalSpace.induced (show X -> X from id) ⊥) set
+    rw [isOpen_induced_iff]
     exact ⟨set, isOpen_discrete _, by ext x; rfl⟩
 
 /-- A readout is faithful exactly when it induces the discrete partition
@@ -70,7 +72,9 @@ theorem discrete_partition_iff_preserves_unit_catalog_escape
         CatalogEscape catalog candidate →
           CatalogEscape (observedCatalog observe catalog)
             (observedCandidate observe candidate) := by
-  rw [partitionTopology_eq_discrete_iff_injective]
+  apply Iff.trans
+    (partitionTopology_eq_discrete_iff_injective
+      (show Concept Output Observation from observe))
   exact injective_iff_preserves_unit_catalog_escape observe
 
 #print axioms partitionTopology_eq_discrete_iff_injective

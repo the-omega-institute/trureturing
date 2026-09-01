@@ -77,7 +77,7 @@ example :
     length ((0 : PrimeExponent) + Finsupp.single ⟨2, Nat.prime_two⟩ 1) >
       length (0 : PrimeExponent) := by
   apply length_strictly_increases_under_generation
-  simp
+  exact Finsupp.single_ne_zero.mpr one_ne_zero
 
 #print axioms length_strictly_increases_under_generation
 

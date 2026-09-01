@@ -69,7 +69,7 @@ noncomputable def boundedRunIndexEquiv :
     (maxTrue fuel Q : Nat) ->
       Fin (Fintype.card (BoundedRunName maxTrue fuel Q)) ≃
         BoundedRunName maxTrue fuel Q
-  | maxTrue, fuel, 0 => Fintype.equivOfCardEq (by simp [BoundedRunName, runAdmissible])
+  | maxTrue, fuel, 0 => Fintype.equivOfCardEq (Fintype.card_fin _)
   | maxTrue, 0, q + 1 =>
       (finCongr (bounded_run_name_card_zero maxTrue q)).trans
         ((boundedRunIndexEquiv maxTrue maxTrue q).trans

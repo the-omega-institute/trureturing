@@ -43,7 +43,10 @@ theorem fiber_interior_equivalence
         @IsOpen X (partitionTopology readout)
           (@interior X (partitionTopology readout) predicate) :=
       isOpen_interior
-    rw [partitionTopology, isOpen_induced_iff] at interiorOpen
+    change ∃ coordinates : Set B,
+      @IsOpen B (⊥ : TopologicalSpace B) coordinates ∧
+        readout ⁻¹' coordinates =
+          @interior X (partitionTopology readout) predicate at interiorOpen
     rcases interiorOpen with ⟨coordinates, _coordinatesOpen, preimage_eq⟩
     have xCoordinate : readout x ∈ coordinates := by
       change x ∈ readout ⁻¹' coordinates
@@ -59,10 +62,13 @@ theorem fiber_interior_equivalence
   · intro fiberTruth
     let fiber : Set X := {y | readout y = readout x}
     have fiberOpen : @IsOpen X (partitionTopology readout) fiber := by
-      rw [partitionTopology, isOpen_induced_iff]
+      change ∃ coordinates : Set B,
+        @IsOpen B (⊥ : TopologicalSpace B) coordinates ∧
+          readout ⁻¹' coordinates = fiber
       refine ⟨{readout x}, isOpen_discrete _, ?_⟩
       ext y
-      simp [fiber]
+      change readout y = readout x ↔ readout y = readout x
+      rfl
     have fiberSubset : fiber ⊆ predicate := by
       intro y yFiber
       exact fiberTruth y yFiber

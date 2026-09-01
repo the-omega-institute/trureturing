@@ -54,7 +54,12 @@ theorem descent_defect_zero_iff_strongly_lumpable
           (fun pair : X × X =>
             if q pair.1 = q pair.2 then totalVariation (K pair.1) (K pair.2) else 0)
           (Finset.mem_univ (x, y))
-      simpa [hfiber] using hpair
+      calc
+        totalVariation (K x) (K y) =
+            (if q (x, y).1 = q (x, y).2 then
+              totalVariation (K (x, y).1) (K (x, y).2) else 0) := by
+          rw [if_pos hfiber]
+        _ ≤ descentDefect q K := hpair
     exact le_antisymm (hzero ▸ hrow_le) (total_variation_nonneg (K x) (K y))
   · intro hlump
     unfold descentDefect
@@ -71,7 +76,15 @@ theorem descent_defect_zero_iff_strongly_lumpable
           (fun pair : X × X =>
             if q pair.1 = q pair.2 then totalVariation (K pair.1) (K pair.2) else 0)
           (Finset.mem_univ (x, x))
-      simpa [totalVariation] using hdiag
+      calc
+        0 = (if q (x, x).1 = q (x, x).2 then
+              totalVariation (K (x, x).1) (K (x, x).2) else 0) := by
+          rw [if_pos rfl]
+          simp [totalVariation]
+        _ ≤ Finset.univ.sup' ⟨(x, x), Finset.mem_univ _⟩
+            (fun pair : X × X =>
+              if q pair.1 = q pair.2 then
+                totalVariation (K pair.1) (K pair.2) else 0) := hdiag
 
 /-- Fiberwise row equality is equivalent to factorization through an exact quotient kernel. -/
 theorem strongly_lumpable_iff_exact_quotient_kernel
@@ -110,7 +123,12 @@ theorem uniform_descent_error_eq_zero_of_exact_quotient_kernel
       Finset.le_sup'
         (fun y : X => totalVariation (K y) (Kbar (q y)))
         (Finset.mem_univ x)
-    simpa [hexact x, totalVariation] using hrow
+    calc
+      0 = totalVariation (K x) (Kbar (q x)) := by
+        rw [hexact x]
+        simp [totalVariation]
+      _ ≤ Finset.univ.sup' ⟨x, Finset.mem_univ _⟩
+          (fun y : X => totalVariation (K y) (Kbar (q y))) := hrow
 
 /-- A strongly lumpable kernel admits an exact quotient with zero uniform descent error. -/
 theorem strongly_lumpable_has_zero_uniform_descent_error

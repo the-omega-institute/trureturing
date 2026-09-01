@@ -124,8 +124,15 @@ theorem bounded_full_budget_second_value (maxTrue Q : Nat)
               have htailCard : Fintype.card
                   (D5.S0.Tower.DBonacci.Names.BoundedRunName
                     (maxTrue + 1) maxTrue 0) = 1 := by
-                simp [D5.S0.Tower.DBonacci.Names.BoundedRunName,
-                  D5.S0.Tower.DBonacci.Names.runAdmissible]
+                letI : Unique (D5.S0.Tower.DBonacci.Names.BoundedRunName
+                    (maxTrue + 1) maxTrue 0) :=
+                  { default := ⟨fun z => Fin.elim0 z, by rfl⟩
+                    uniq := by
+                      intro a
+                      apply Subtype.ext
+                      funext z
+                      exact Fin.elim0 z }
+                exact Fintype.card_unique
               have htailIndex :
                   (⟨i.1 - Fintype.card
                       (D5.S0.Tower.DBonacci.Names.BoundedRunName

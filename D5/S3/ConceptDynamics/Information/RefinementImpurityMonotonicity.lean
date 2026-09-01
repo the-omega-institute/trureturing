@@ -299,7 +299,8 @@ private theorem targetFiberMass_comp
     targetFiberMass mu (factor ∘ refined) target c a =
       factorTargetMass mu refined target factor c a := by
   classical
-  simp only [targetFiberMass, factorTargetMass, Function.comp_apply]
+  simp only [targetFiberMass, factorTargetMass]
+  unfold Function.comp
   have hdistribute :
       (∑' d, if factor d = c then
           (∑' x, if refined x = d ∧ target x = a then mu x else 0)
@@ -335,7 +336,8 @@ private theorem conceptFiberMass_comp
     conceptFiberMass mu (factor ∘ refined) c =
       factorConceptMass mu refined factor c := by
   classical
-  simp only [conceptFiberMass, factorConceptMass, Function.comp_apply]
+  simp only [conceptFiberMass, factorConceptMass]
+  unfold Function.comp
   have hdistribute :
       (∑' d, if factor d = c then
           (∑' x, {x | refined x = d}.indicator mu x)
@@ -467,7 +469,7 @@ private theorem collisionScore_comp_le
     collisionScore mu (factor ∘ refined) target ≤
       collisionScore mu refined target := by
   classical
-  rw [collisionScore, collisionScore]
+  unfold collisionScore
   simp_rw [targetFiberMass_comp, conceptFiberMass_comp]
   calc
     (∑' c, ∑' a,

@@ -182,23 +182,33 @@ noncomputable def goldenSmallPreimage : GoldenSurvivorState :=
   ⟨.small, goldenInverse / 2⟩
 
 example : goldenTransition goldenHigherPreimage = goldenRightPreimage := by
-  norm_num only [goldenTransition, goldenHigherPreimage, goldenRightPreimage,
-    goldenInitialTubeLows]
-  rw [if_pos]
-  · congr 1
-    nlinarith [Real.goldenRatio_sq]
-  · rw [golden_inverse_eq_sub_one]
-    nlinarith [Real.goldenRatio_sq, Real.one_lt_goldenRatio]
+  simp only [goldenHigherPreimage, goldenRightPreimage, goldenInitialTubeLows]
+  simp only [goldenTransition]
+  rw [if_pos (by
+    rw [golden_inverse_eq_sub_one]
+    nlinarith [Real.goldenRatio_sq, Real.one_lt_goldenRatio])]
+  congr 1
+  change φ * ((9 - 5 * φ) / 2) = (4 * φ - 5) / 2
+  nlinarith [Real.goldenRatio_sq]
 
 example : goldenTransition goldenRightPreimage = goldenSmallPreimage := by
-  norm_num only [goldenTransition, goldenRightPreimage, goldenSmallPreimage,
-    goldenInitialTubeLows]
-  rw [if_neg]
-  · congr 1
+  simp only [goldenRightPreimage, goldenSmallPreimage, goldenInitialTubeLows]
+  simp only [goldenTransition]
+  rw [if_neg (by
     rw [golden_inverse_eq_sub_one]
-    nlinarith [Real.goldenRatio_sq]
-  · rw [golden_inverse_eq_sub_one]
-    nlinarith [Real.goldenRatio_sq, Real.one_lt_goldenRatio]
+    nlinarith [Real.goldenRatio_sq, Real.one_lt_goldenRatio])]
+  congr 1
+  change φ ^ 2 * ((4 * φ - 5) / 2) - φ = goldenInverse / 2
+  rw [golden_inverse_eq_sub_one]
+  have hphi3 : φ ^ 3 = 2 * φ + 1 := by
+    calc
+      φ ^ 3 = φ * φ ^ 2 := by ring
+      _ = φ * (φ + 1) := by rw [Real.goldenRatio_sq]
+      _ = 2 * φ + 1 := by nlinarith [Real.goldenRatio_sq]
+  rw [show φ ^ 2 * ((4 * φ - 5) / 2) - φ =
+      (4 * φ ^ 3 - 5 * φ ^ 2) / 2 - φ by ring]
+  rw [Real.goldenRatio_sq, hphi3]
+  ring
 
 example : goldenTransition goldenSmallPreimage = goldenTailPoint := by
   norm_num only [goldenTransition, goldenSmallPreimage, goldenTailPoint]
@@ -252,42 +262,67 @@ theorem golden_closed_preperiodic_forward (state : GoldenSurvivorState)
   · right
     left
     exact (by
-      norm_num only [goldenTransition, goldenHigherPreimage, goldenRightPreimage,
-        goldenInitialTubeLows]
-      rw [if_pos]
-      · congr 1
-        nlinarith [Real.goldenRatio_sq]
-      · rw [golden_inverse_eq_sub_one]
-        nlinarith [Real.goldenRatio_sq, Real.one_lt_goldenRatio])
+      simp only [goldenHigherPreimage, goldenRightPreimage, goldenInitialTubeLows]
+      simp only [goldenTransition]
+      rw [if_pos (by
+        rw [golden_inverse_eq_sub_one]
+        nlinarith [Real.goldenRatio_sq, Real.one_lt_goldenRatio])]
+      congr 1
+      change φ * ((9 - 5 * φ) / 2) = (4 * φ - 5) / 2
+      nlinarith [Real.goldenRatio_sq])
   · right
     right
     left
     exact (by
-      norm_num only [goldenTransition, goldenRightPreimage, goldenSmallPreimage,
-        goldenInitialTubeLows]
-      rw [if_neg]
-      · congr 1
+      simp only [goldenRightPreimage, goldenSmallPreimage, goldenInitialTubeLows]
+      simp only [goldenTransition]
+      rw [if_neg (by
         rw [golden_inverse_eq_sub_one]
-        nlinarith [Real.goldenRatio_sq]
-      · rw [golden_inverse_eq_sub_one]
-        nlinarith [Real.goldenRatio_sq, Real.one_lt_goldenRatio])
+        nlinarith [Real.goldenRatio_sq, Real.one_lt_goldenRatio])]
+      congr 1
+      change φ ^ 2 * ((4 * φ - 5) / 2) - φ = goldenInverse / 2
+      rw [golden_inverse_eq_sub_one]
+      have hphi3 : φ ^ 3 = 2 * φ + 1 := by
+        calc
+          φ ^ 3 = φ * φ ^ 2 := by ring
+          _ = φ * (φ + 1) := by rw [Real.goldenRatio_sq]
+          _ = 2 * φ + 1 := by nlinarith [Real.goldenRatio_sq]
+      rw [show φ ^ 2 * ((4 * φ - 5) / 2) - φ =
+          (4 * φ ^ 3 - 5 * φ ^ 2) / 2 - φ by ring]
+      rw [Real.goldenRatio_sq, hphi3]
+      ring)
   · right; right; right; left
     norm_num only [goldenTransition, goldenSmallPreimage, goldenTailPoint]
   · right; right; right; right; left
-    norm_num only [goldenTransition, goldenTailPoint, goldenLargeMidpoint]
+    simp only [goldenTailPoint, goldenLargeMidpoint]
+    simp only [goldenTransition]
     rw [if_pos golden_inverse_half_le_inverse]
+    change (⟨.large, φ * (goldenInverse / 2)⟩ : GoldenSurvivorState) =
+      ⟨.large, (1 : ℝ) / 2⟩
     congr 1
+    change φ * (goldenInverse / 2) = (1 : ℝ) / 2
     nlinarith [golden_inverse_mul]
   · right; right; right; right; right; left
-    norm_num only [goldenTransition, goldenLargeMidpoint, goldenLargePhiPoint]
+    simp only [goldenLargeMidpoint, goldenLargePhiPoint]
+    simp only [goldenTransition]
     rw [if_pos golden_half_le_inverse]
     congr 1
+    change φ * ((1 : ℝ) / 2) = φ / 2
     ring
   · right; right; right; right; right; right
-    norm_num only [goldenTransition, goldenLargePhiPoint, goldenSmallMidpoint]
+    simp only [goldenLargePhiPoint, goldenSmallMidpoint]
+    simp only [goldenTransition]
     rw [if_neg (not_le.mpr golden_inverse_lt_phi_half)]
     congr 1
-    nlinarith [Real.goldenRatio_sq]
+    change φ ^ 2 * (φ / 2) - φ = (1 : ℝ) / 2
+    have hphi3 : φ ^ 3 = 2 * φ + 1 := by
+      calc
+        φ ^ 3 = φ * φ ^ 2 := by ring
+        _ = φ * (φ + 1) := by rw [Real.goldenRatio_sq]
+        _ = 2 * φ + 1 := by nlinarith [Real.goldenRatio_sq]
+    rw [show φ ^ 2 * (φ / 2) - φ = φ ^ 3 / 2 - φ by ring]
+    rw [hphi3]
+    ring
   · right; right; right; right; left
     norm_num only [goldenTransition, goldenSmallMidpoint, goldenLargeMidpoint]
 

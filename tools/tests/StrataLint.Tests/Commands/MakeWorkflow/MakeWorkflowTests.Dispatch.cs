@@ -122,6 +122,9 @@ public sealed partial class MakeWorkflowTests
             IngestScriptPath + " align-digestion-status",
             Recipe(makefile, "align-digestion-status"),
             StringComparison.Ordinal);
+        Assert.Equal(
+            $"\t@/bin/bash {IngestScriptPath} mathlib-reanchor \"$(BASE)\"",
+            Recipe(makefile, "mathlib-reanchor"));
         var showAtomRecipe = Recipe(makefile, "show-atom");
         Assert.Contains("dotnet run --no-build --project", showAtomRecipe, StringComparison.Ordinal);
         Assert.Contains(" show-atom --atom-id \"$(ATOM_ID)\"", showAtomRecipe, StringComparison.Ordinal);
