@@ -5,7 +5,7 @@
    anchors: []
    digest: Evaluate the ordered-simplex average of the second-Magnus kernel exactly. -/
 
-import D5.S3.Observer.AgencyHolonomy.SecondMagnusKernelNormSquare
+import D5.S3.Observer.AgencyHolonomy.SecondMagnusSwapCurvature
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 import Mathlib.Tactic
 
