@@ -37,6 +37,26 @@ public sealed class EngineeringScopeProgramTests
     }
 
     [Fact]
+    public void CandidateNewXunitProjectWithoutLiteralIsTestProjectIsSelected()
+    {
+        var result = RunBoundary(
+            root =>
+            {
+                WriteProject(root, ProductProject, isTest: false);
+                WriteProject(root, ProductTestsProject, isTest: true, ProductProject);
+            },
+            root => WriteRunnableTestProjectWithoutMarker(
+                root,
+                NewProductTestsProject,
+                ProductProject));
+
+        Assert.True(result.ExitCode == 0, result.Diagnostic);
+        Assert.Equal(
+            [NewProductTestsProject, ProductTestsProject],
+            result.SelectedProjects);
+    }
+
+    [Fact]
     public void CandidateNewProjectWithNonLiteralTestClassificationFailsClosed()
     {
         var result = RunBoundary(
@@ -207,17 +227,32 @@ public sealed class EngineeringScopeProgramTests
         }
     }
 
-    private static void WriteRunnableTestProjectWithoutMarker(string root, string path) =>
-        WriteFile(root, path, """
+    private static void WriteRunnableTestProjectWithoutMarker(
+        string root,
+        string path,
+        params string[] references)
+    {
+        var directory = Path.GetDirectoryName(path)!;
+        var projectReferences = string.Join(
+            "",
+            references.Select(reference =>
+                $"<ProjectReference Include=\"{Path.GetRelativePath(directory, reference).Replace('\\', '/')}\" />"));
+        WriteFile(root, path, $"""
             <Project Sdk="Microsoft.NET.Sdk">
               <PropertyGroup><TargetFramework>net10.0</TargetFramework></PropertyGroup>
               <ItemGroup>
+                {projectReferences}
                 <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
                 <PackageReference Include="xunit" Version="2.9.3" />
                 <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" />
               </ItemGroup>
             </Project>
             """);
+        WriteFile(
+            root,
+            Path.Combine(directory, "SmokeTests.cs"),
+            "using Xunit; public sealed class SmokeTests { [Fact] public void Runs() { } }\n");
+    }
 
     private static void WriteFile(string root, string path, string content)
     {

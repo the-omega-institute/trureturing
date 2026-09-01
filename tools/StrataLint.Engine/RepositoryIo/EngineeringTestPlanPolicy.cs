@@ -151,15 +151,17 @@ internal static class EngineeringTestPlanPolicy
             .Select(static element => element.Value.Trim())
             .Distinct(StringComparer.OrdinalIgnoreCase)
             .ToArray();
-        var classification = classifications switch
-        {
-            [] => ProjectClassification.NonTest,
-            [var value] when string.Equals(value, "true", StringComparison.OrdinalIgnoreCase) =>
-                ProjectClassification.Test,
-            [var value] when string.Equals(value, "false", StringComparison.OrdinalIgnoreCase) =>
-                ProjectClassification.NonTest,
-            _ => ProjectClassification.Ambiguous,
-        };
+        var classification = ScribeProjectCompilationContext.IsXunitProject(project.Content)
+            ? ProjectClassification.Test
+            : classifications switch
+            {
+                [] => ProjectClassification.NonTest,
+                [var value] when string.Equals(value, "true", StringComparison.OrdinalIgnoreCase) =>
+                    ProjectClassification.Test,
+                [var value] when string.Equals(value, "false", StringComparison.OrdinalIgnoreCase) =>
+                    ProjectClassification.NonTest,
+                _ => ProjectClassification.Ambiguous,
+            };
         var references = document.Descendants()
             .Where(static element => element.Name.LocalName == "ProjectReference")
             .Select(static element => (string?)element.Attribute("Include"))
