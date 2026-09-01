@@ -20,7 +20,6 @@ public sealed class ScribeTestMapSymbolBindingTests
 
         var method = Assert.Single(Derive(source).Methods);
 
-        Assert.Equal(["D5/selected.lean"], method.Paths);
         Assert.False(method.IsUnknown);
     }
 
@@ -44,7 +43,6 @@ public sealed class ScribeTestMapSymbolBindingTests
 
         var method = Assert.Single(Derive(source).Methods);
 
-        Assert.Equal(["D5/qualified.lean"], method.Paths);
         Assert.False(method.IsUnknown);
     }
 
@@ -73,7 +71,6 @@ public sealed class ScribeTestMapSymbolBindingTests
 
         var method = Assert.Single(Derive(source).Methods);
 
-        Assert.Equal(["D5/base.lean", "D5/extension.lean", "D5/group.lean"], method.Paths);
         Assert.False(method.IsUnknown);
     }
 
@@ -97,7 +94,6 @@ public sealed class ScribeTestMapSymbolBindingTests
 
         var method = Assert.Single(map.Methods);
 
-        Assert.Equal(["D5/partial.lean"], method.Paths);
         Assert.False(method.IsUnknown);
     }
 
@@ -120,7 +116,6 @@ public sealed class ScribeTestMapSymbolBindingTests
 
         var method = Assert.Single(Derive(source).Methods);
 
-        Assert.Equal(["D5/named.lean"], method.Paths);
         Assert.False(method.IsUnknown);
     }
 
@@ -138,7 +133,6 @@ public sealed class ScribeTestMapSymbolBindingTests
 
         var method = Assert.Single(Derive(source).Methods);
 
-        Assert.Equal(["D5/metadata.lean"], method.Paths);
         Assert.False(method.IsUnknown);
     }
 
@@ -178,7 +172,6 @@ public sealed class ScribeTestMapSymbolBindingTests
 
         var method = Assert.Single(Derive(source).Methods);
 
-        Assert.Empty(method.Paths);
         Assert.False(method.IsUnknown);
     }
 
@@ -217,7 +210,6 @@ public sealed class ScribeTestMapSymbolBindingTests
         var method = Assert.Single(Derive(source).Methods);
 
         Assert.Equal("DerivedFactTests.Reads", method.Id);
-        Assert.Equal(["D5/attribute.lean"], method.Paths);
     }
 
     [Fact]
@@ -247,9 +239,6 @@ public sealed class ScribeTestMapSymbolBindingTests
 
         var method = Assert.Single(Derive(source).Methods);
 
-        Assert.Equal(
-            ["D5/accessor.lean", "D5/constructor.lean", "D5/local.lean"],
-            method.Paths);
         Assert.False(method.IsUnknown);
     }
 
@@ -273,7 +262,6 @@ public sealed class ScribeTestMapSymbolBindingTests
 
         var method = Assert.Single(Derive(source).Methods);
 
-        Assert.Equal(["Meta/rules.toml"], method.Paths);
         Assert.False(method.IsUnknown);
     }
 
@@ -296,7 +284,6 @@ public sealed class ScribeTestMapSymbolBindingTests
 
         var method = Assert.Single(Derive(source).Methods);
 
-        Assert.Equal(["D5/fixture.lean"], method.Paths);
         Assert.False(method.IsUnknown);
     }
 
@@ -317,8 +304,9 @@ public sealed class ScribeTestMapSymbolBindingTests
         ],
         []);
 
-        Assert.Equal(["D5/alpha.lean"], map.Methods.Single(method => method.PartitionKey == "Alpha").Paths);
-        Assert.Equal(["D5/beta.lean"], map.Methods.Single(method => method.PartitionKey == "Beta").Paths);
+        Assert.Equal(
+            ["Alpha", "Beta"],
+            map.Methods.Select(static method => method.PartitionKey).Order(StringComparer.Ordinal).ToArray());
         Assert.All(map.Methods, static method => Assert.False(method.IsUnknown));
     }
 
@@ -360,7 +348,6 @@ public sealed class ScribeTestMapSymbolBindingTests
             ScribeTestMapDeriver.DeriveSnapshot(snapshot).Methods,
             static method => method.Id == "ConsumerTests.Reads");
 
-        Assert.Equal(["D5/shared.lean"], method.Paths);
         Assert.False(method.IsUnknown, string.Join(',', method.UnknownReasons));
     }
 
@@ -420,7 +407,6 @@ public sealed class ScribeTestMapSymbolBindingTests
             ScribeTestMapDeriver.DeriveSnapshot(snapshot).Methods,
             static method => method.Id == "AvailableMetadataTests.ExactFact");
 
-        Assert.Equal(["D5/exact-metadata.lean"], method.Paths);
         Assert.False(method.IsUnknown, string.Join(',', method.UnknownReasons));
     }
 
@@ -456,8 +442,6 @@ public sealed class ScribeTestMapSymbolBindingTests
 
         var self = Assert.Single(map.Methods, static method => method.Id ==
             "ScribeTestMapSymbolBindingTests.RepositoryMapIncludesDerivedFactsAndRetiredLedgerFixtureClosure");
-        Assert.Contains("Blueprint", self.Paths);
-        Assert.Contains("tools", self.Paths);
         Assert.False(self.IsUnknown, string.Join(',', self.UnknownReasons));
     }
 

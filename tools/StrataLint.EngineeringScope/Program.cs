@@ -70,10 +70,14 @@ internal static class Program
             throw new InvalidOperationException("FULL must be unset or exactly 1");
         }
 
+        var protectedBase = RepositoryRules.ReadSnapshotProjects(
+            RevisionSnapshot(options.RepositoryRoot, @base, "protected base"));
+        var candidate = RepositoryRules.ReadSnapshotProjects(
+            RevisionSnapshot(options.RepositoryRoot, head, "candidate"));
         var plan = EngineeringTestPlanPolicy.Evaluate(
             GitPaths(options.RepositoryRoot, @base, head),
-            RepositoryRules.ReadSnapshotProjects(
-                RevisionSnapshot(options.RepositoryRoot, @base, "protected base")),
+            protectedBase,
+            candidate,
             full == "1");
         WritePlan(plan);
         return EngineeringTestExecutor.Execute(

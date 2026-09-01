@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
 namespace StrataLint.Engine;
@@ -20,22 +21,46 @@ internal static class EngineeringTestPlanPolicy
     internal static EngineeringTestPlan Evaluate(
         IReadOnlyList<string> changedPaths,
         TestProjectTopologySnapshot protectedBase,
+        TestProjectTopologySnapshot candidate,
         bool full = false)
     {
         ArgumentNullException.ThrowIfNull(changedPaths);
         ArgumentNullException.ThrowIfNull(protectedBase);
+        ArgumentNullException.ThrowIfNull(candidate);
 
         var changed = changedPaths
             .Distinct(StringComparer.Ordinal)
             .Order(StringComparer.Ordinal)
             .ToImmutableArray();
-        var projects = protectedBase.Projects
+        var baseProjects = protectedBase.Projects
             .Select(ParseProject)
             .OrderBy(static project => project.Path, StringComparer.Ordinal)
             .ToArray();
-        var testProjects = projects
-            .Where(static project => project.IsTest)
+        var baseTestProjects = baseProjects
+            .Where(static project => project.Classification == ProjectClassification.Test)
             .Select(static project => project.Path)
+            .ToImmutableArray();
+        var baseProjectPaths = baseProjects
+            .Select(static project => project.Path)
+            .ToHashSet(StringComparer.Ordinal);
+        var candidateAddedTestProjects = candidate.Projects
+            .Select(ParseProject)
+            .Where(project => !baseProjectPaths.Contains(project.Path))
+            .Select(project => project.Classification switch
+            {
+                ProjectClassification.Test => project.Path,
+                ProjectClassification.NonTest => null,
+                _ => throw new InvalidDataException(
+                    $"candidate-added project has no literal IsTestProject classification: {project.Path}"),
+            })
+            .Where(static path => path is not null)
+            .Select(static path => path!)
+            .Order(StringComparer.Ordinal)
+            .ToImmutableArray();
+        var allTestProjects = baseTestProjects
+            .Concat(candidateAddedTestProjects)
+            .Distinct(StringComparer.Ordinal)
+            .Order(StringComparer.Ordinal)
             .ToImmutableArray();
 
         if (full)
@@ -43,46 +68,56 @@ internal static class EngineeringTestPlanPolicy
             return new EngineeringTestPlan(
                 EngineeringTestPlanKind.Full,
                 changed,
-                testProjects,
-                "FULL=1 selects every protected-base test project");
+                allTestProjects,
+                "FULL=1 selects every protected-base and candidate-added test project");
         }
 
         var affected = new HashSet<string>(StringComparer.Ordinal);
         foreach (var path in changed)
         {
-            var owner = FindOwner(projects, path);
+            var owner = FindOwner(baseProjects, path);
             if (owner is null)
             {
                 return new EngineeringTestPlan(
                     EngineeringTestPlanKind.Full,
                     changed,
-                    testProjects,
-                    $"changed path {path} has no protected-base project owner");
+                    allTestProjects,
+                    $"changed path {path} has no protected-base project owner; "
+                    + $"appended {candidateAddedTestProjects.Length} candidate-added test projects");
             }
 
             affected.Add(owner.Path);
         }
 
-        ExpandReverseClosure(projects, affected);
-        var selected = testProjects.Where(affected.Contains).ToImmutableArray();
+        ExpandReverseClosure(baseProjects, affected);
+        var selected = baseTestProjects
+            .Where(affected.Contains)
+            .Concat(candidateAddedTestProjects)
+            .Distinct(StringComparer.Ordinal)
+            .Order(StringComparer.Ordinal)
+            .ToImmutableArray();
         return selected.Length == 0
             ? new EngineeringTestPlan(
                 EngineeringTestPlanKind.None,
                 changed,
                 [],
-                "candidate delta has no affected protected-base test project")
+                "candidate delta has no affected protected-base or candidate-added test project")
             : new EngineeringTestPlan(
                 EngineeringTestPlanKind.Selected,
                 changed,
                 selected,
-                $"selected {selected.Length} protected-base reverse-dependent test projects");
+                $"selected {selected.Length} protected-base reverse-dependent or candidate-added test projects");
     }
 
     private static ProjectNode? FindOwner(IEnumerable<ProjectNode> projects, string changedPath) =>
         projects
             .Where(project => changedPath == project.Path
-                || changedPath.StartsWith(project.Directory + "/", StringComparison.Ordinal))
-            .OrderByDescending(static project => project.Directory.Length)
+                || changedPath.StartsWith(project.Directory + "/", StringComparison.Ordinal)
+                || project.CompileIncludes.Any(pattern => GlobCovers(pattern, changedPath)))
+            .OrderByDescending(project =>
+                changedPath.StartsWith(project.Directory + "/", StringComparison.Ordinal)
+                    ? project.Directory.Length
+                    : 0)
             .ThenBy(static project => project.Path, StringComparer.Ordinal)
             .FirstOrDefault();
 
@@ -111,9 +146,20 @@ internal static class EngineeringTestPlanPolicy
         var path = NormalizePath(project.Path);
         var directory = path[..path.LastIndexOf('/')];
         var document = XDocument.Parse(project.Content, LoadOptions.None);
-        var isTest = document.Descendants().Any(static element =>
-            element.Name.LocalName == "IsTestProject"
-            && string.Equals(element.Value.Trim(), "true", StringComparison.OrdinalIgnoreCase));
+        var classifications = document.Descendants()
+            .Where(static element => element.Name.LocalName == "IsTestProject")
+            .Select(static element => element.Value.Trim())
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+        var classification = classifications switch
+        {
+            [] => ProjectClassification.NonTest,
+            [var value] when string.Equals(value, "true", StringComparison.OrdinalIgnoreCase) =>
+                ProjectClassification.Test,
+            [var value] when string.Equals(value, "false", StringComparison.OrdinalIgnoreCase) =>
+                ProjectClassification.NonTest,
+            _ => ProjectClassification.Ambiguous,
+        };
         var references = document.Descendants()
             .Where(static element => element.Name.LocalName == "ProjectReference")
             .Select(static element => (string?)element.Attribute("Include"))
@@ -122,7 +168,19 @@ internal static class EngineeringTestPlanPolicy
             .Distinct(StringComparer.Ordinal)
             .Order(StringComparer.Ordinal)
             .ToImmutableArray();
-        return new ProjectNode(path, directory, isTest, references);
+        var compileIncludes = document.Descendants()
+            .Where(static element => element.Name.LocalName == "Compile")
+            .Select(static element => (string?)element.Attribute("Include"))
+            .Where(static include => !string.IsNullOrWhiteSpace(include))
+            .SelectMany(static include => include!.Split(
+                ';',
+                StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+            .Where(static include => !include.Contains("$(", StringComparison.Ordinal))
+            .Select(include => ResolveProjectItem(path, include))
+            .Distinct(StringComparer.Ordinal)
+            .Order(StringComparer.Ordinal)
+            .ToImmutableArray();
+        return new ProjectNode(path, directory, classification, references, compileIncludes);
     }
 
     private static string ResolveProjectReference(string projectPath, string include)
@@ -132,13 +190,31 @@ internal static class EngineeringTestPlanPolicy
         return Uri.UnescapeDataString(referenceUri.AbsolutePath.TrimStart('/'));
     }
 
+    private static string ResolveProjectItem(string projectPath, string include) =>
+        ResolveProjectReference(projectPath, include);
+
+    private static bool GlobCovers(string pattern, string path)
+    {
+        var expression = "^" + Regex.Escape(pattern)
+            .Replace(@"\*\*/", "(?:.*/)?", StringComparison.Ordinal)
+            .Replace(@"\*", "[^/]*", StringComparison.Ordinal)
+            .Replace(@"\?", "[^/]", StringComparison.Ordinal) + "$";
+        return Regex.IsMatch(
+            path,
+            expression,
+            RegexOptions.CultureInvariant | RegexOptions.NonBacktracking);
+    }
+
     private static string NormalizePath(string path) => path.Replace('\\', '/');
 
     private sealed record ProjectNode(
         string Path,
         string Directory,
-        bool IsTest,
-        ImmutableArray<string> References);
+        ProjectClassification Classification,
+        ImmutableArray<string> References,
+        ImmutableArray<string> CompileIncludes);
+
+    private enum ProjectClassification { NonTest, Test, Ambiguous }
 }
 
 internal static class EngineeringTestExecutor

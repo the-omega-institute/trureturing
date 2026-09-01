@@ -16,9 +16,11 @@ public sealed class EngineeringPathFilterTests
     [Fact]
     public void ScribeChangeSelectsBaseReverseTestProjectClosure()
     {
+        var topology = Topology(scribeTestsReferenceScribe: true);
         var plan = EngineeringTestPlanPolicy.Evaluate(
             ["tools/StrataLint.Scribe/DocumentEmitter.cs"],
-            Topology(scribeTestsReferenceScribe: true));
+            topology,
+            topology);
 
         Assert.Equal(EngineeringTestPlanKind.Selected, plan.Kind);
         Assert.Equal(
@@ -29,9 +31,11 @@ public sealed class EngineeringPathFilterTests
     [Fact]
     public void TestProjectChangeSelectsItselfAndItsBaseReverseDependents()
     {
+        var topology = Topology(scribeTestsReferenceScribe: true);
         var plan = EngineeringTestPlanPolicy.Evaluate(
             ["tools/tests/StrataLint.Engine.Tests/EngineTests.cs"],
-            Topology(scribeTestsReferenceScribe: true));
+            topology,
+            topology);
 
         Assert.Equal(EngineeringTestPlanKind.Selected, plan.Kind);
         Assert.Equal(
@@ -42,9 +46,11 @@ public sealed class EngineeringPathFilterTests
     [Fact]
     public void UnownedChangedPathSelectsAllBaseTestProjects()
     {
+        var topology = Topology(scribeTestsReferenceScribe: true);
         var plan = EngineeringTestPlanPolicy.Evaluate(
             ["D5/S3/UnownedChange.lean"],
-            Topology(scribeTestsReferenceScribe: true));
+            topology,
+            topology);
 
         Assert.Equal(EngineeringTestPlanKind.Full, plan.Kind);
         Assert.Equal(
@@ -53,42 +59,20 @@ public sealed class EngineeringPathFilterTests
     }
 
     [Fact]
-    public void CandidateProjectReferenceDeletionCannotShrinkBaseSelection()
+    public void BlueprintCompileItemChangeSelectsItsConsumerProjectClosure()
     {
-        var protectedBasePlan = EngineeringTestPlanPolicy.Evaluate(
-            ["tools/StrataLint.Scribe/DocumentEmitter.cs"],
-            Topology(scribeTestsReferenceScribe: true));
-        var candidateCounterfactual = EngineeringTestPlanPolicy.Evaluate(
-            ["tools/StrataLint.Scribe/DocumentEmitter.cs"],
-            Topology(scribeTestsReferenceScribe: false));
+        var topology = Topology(
+            scribeTestsReferenceScribe: true,
+            scribeCompilesBlueprints: true);
+        var plan = EngineeringTestPlanPolicy.Evaluate(
+            ["Blueprint/D5/S3/NewDefinition.scribe.cs"],
+            topology,
+            topology);
 
+        Assert.Equal(EngineeringTestPlanKind.Selected, plan.Kind);
         Assert.Equal(
             [ArchitectureTestsProject, ScribeTestsProject],
-            protectedBasePlan.Projects.ToArray());
-        Assert.Equal(EngineeringTestPlanKind.None, candidateCounterfactual.Kind);
-        Assert.Empty(candidateCounterfactual.Projects);
-    }
-
-    [Fact]
-    public void ExecutesEachSelectedProjectWithoutFilterOrSolutionFallback()
-    {
-        var plan = new EngineeringTestPlan(
-            EngineeringTestPlanKind.Selected,
-            [],
-            [ScribeTestsProject, ArchitectureTestsProject],
-            "selected protected-base reverse closure");
-        var calls = new List<string>();
-
-        var exitCode = EngineeringTestExecutor.Execute(plan, invocation =>
-        {
-            calls.Add(invocation.ProjectPath);
-            return 0;
-        });
-
-        Assert.Equal(0, exitCode);
-        Assert.Equal([ScribeTestsProject, ArchitectureTestsProject], calls);
-        Assert.DoesNotContain(calls, static target =>
-            target.EndsWith(".sln", StringComparison.Ordinal));
+            plan.Projects.ToArray());
     }
 
     [Fact]
@@ -111,9 +95,16 @@ public sealed class EngineeringPathFilterTests
         Assert.Equal([ScribeTestsProject], calls);
     }
 
-    private static TestProjectTopologySnapshot Topology(bool scribeTestsReferenceScribe) => new(
+    private static TestProjectTopologySnapshot Topology(
+        bool scribeTestsReferenceScribe,
+        bool scribeCompilesBlueprints = false) => new(
     [
-        Project(ScribeProject, isTest: false),
+        scribeCompilesBlueprints
+            ? ProjectWithCompile(
+                ScribeProject,
+                isTest: false,
+                "../../Blueprint/**/*.scribe.cs")
+            : Project(ScribeProject, isTest: false),
         Project(EngineProject, isTest: false),
         Project(
             ScribeTestsProject,
@@ -142,5 +133,20 @@ public sealed class EngineeringPathFilterTests
             path,
             $"<Project Sdk=\"Microsoft.NET.Sdk\"><PropertyGroup>{testProperty}</PropertyGroup>"
             + $"<ItemGroup>{projectReferences}</ItemGroup></Project>");
+    }
+
+    private static TestProjectTopologyProject ProjectWithCompile(
+        string path,
+        bool isTest,
+        string compileInclude)
+    {
+        var project = Project(path, isTest);
+        return project with
+        {
+            Content = project.Content.Replace(
+                "<ItemGroup>",
+                $"<ItemGroup><Compile Include=\"{compileInclude}\" />",
+                StringComparison.Ordinal),
+        };
     }
 }

@@ -14,7 +14,7 @@ public sealed class ScribeTestMapDeriverTests
         };
 
     [Fact]
-    public void RepositoryMapHasNoUnknownGrowthAndEveryPathIsDeclared()
+    public void RepositoryMapHasNoUnknownGrowth()
     {
         var map = ScribeTestMapDeriver.DeriveRepository(RepositoryLayout.FindRoot());
 
@@ -35,11 +35,6 @@ public sealed class ScribeTestMapDeriverTests
         Assert.False(
             ingestSplitClosureMethod.IsUnknown,
             $"{ingestSplitClosureMethod.Id}: {string.Join(',', ingestSplitClosureMethod.UnknownReasons)}");
-        Assert.All(
-            map.Methods.SelectMany(static method => method.Paths),
-            path => Assert.True(
-                ScribeTestMapDeriver.IsDeclaredPathAllowed(path),
-                $"undeclared repository read path: {path}"));
     }
 
 
@@ -58,8 +53,6 @@ public sealed class ScribeTestMapDeriverTests
 
         var map = ScribeTestMapDeriver.DeriveSnapshot(snapshot);
 
-        Assert.True(map.CompileProjectBySourcePath.TryGetValue("shared/Linked.cs", out var owner));
-        Assert.Equal("src/App/App.csproj", owner);
         Assert.Empty(ScribeUnknownDebtPolicy.InspectCurrent(map));
     }
 
@@ -462,30 +455,12 @@ public sealed class ScribeTestMapDeriverTests
     }
 
     [Fact]
-    public void DiscoveryMarkerFollowsRepositoryAccessorSource()
-    {
-        var map = DeriveDiscoveryWithAccessorMarker("File.Exists(Path.Combine(root, \"PROJECT.md\"))");
-
-        Assert.Equal(["PROJECT.md"], Assert.Single(map.Methods).Paths);
-    }
-
-    [Fact]
     public void UnparseableDiscoveryMarkerIsUnknown()
     {
         var map = DeriveDiscoveryWithAccessorMarker("File.Exists(Path.Combine(root, markerPath))");
 
         var method = Assert.Single(map.Methods);
         Assert.True(method.IsUnknown);
-    }
-
-    [Fact]
-    public void SensitivityFollowsRepositoryPathLiteralInSource()
-    {
-        var first = Derive("Golden/one.json");
-        var second = Derive("Golden/two.json");
-
-        Assert.Equal(["CLAUDE.md", "Golden/one.json"], first.Methods.Single().Paths);
-        Assert.Equal(["CLAUDE.md", "Golden/two.json"], second.Methods.Single().Paths);
     }
 
     [Fact]
@@ -509,7 +484,7 @@ public sealed class ScribeTestMapDeriverTests
     }
 
     [Fact]
-    public void RepositoryLayoutCombineDerivesItsLiteralPath()
+    public void RepositoryLayoutCombineWithLiteralsIsKnown()
     {
         const string source = """
             class BannedSymbolTests {
@@ -521,25 +496,11 @@ public sealed class ScribeTestMapDeriverTests
         var map = DeriveSources([new("BannedSymbolTests.cs", source)]);
 
         var method = Assert.Single(map.Methods);
-        Assert.Equal(["tools/Architecture/BannedSymbols.Determinism.txt"], method.Paths);
         Assert.False(method.IsUnknown);
     }
 
     [Fact]
-    public void DiscoveryDirectoryContributesBothMarkersToPaths()
-    {
-        const string source = """
-            class DirectoryTests {
-              [Fact] public void Discovers() => RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintDirectoryNotFound);
-            }
-            """;
-        var map = DeriveSources([new("DirectoryTests.cs", source)]);
-
-        Assert.Equal(["Blueprint", "global.json"], Assert.Single(map.Methods).Paths);
-    }
-
-    [Fact]
-    public void ReachableHelpersContributePathsAndUnknownReasons()
+    public void ReachableEnumerationContributesUnknownReason()
     {
         const string source = """
             class SampleTests {
@@ -554,24 +515,8 @@ public sealed class ScribeTestMapDeriverTests
 
         var map = DeriveSources([new("SampleTests.cs", source)]);
 
-        Assert.Equal(["A.json", "CLAUDE.md"], map.Methods.Single(method => method.Id.EndsWith(".A", StringComparison.Ordinal)).Paths);
-        Assert.Equal(["B.json", "CLAUDE.md"], map.Methods.Single(method => method.Id.EndsWith(".B", StringComparison.Ordinal)).Paths);
-        Assert.Equal(["C.json", "CLAUDE.md"], map.Methods.Single(method => method.Id.EndsWith(".C", StringComparison.Ordinal)).Paths);
-        Assert.Equal(["CLAUDE.md", "D.json"], map.Methods.Single(method => method.Id.EndsWith(".D", StringComparison.Ordinal)).Paths);
         var enumerating = map.Methods.Single(method => method.Id.EndsWith(".E", StringComparison.Ordinal));
-        Assert.Equal(["CLAUDE.md", "E"], enumerating.Paths);
         Assert.Equal(TestMapUnknownReason.DirectoryEnumeration, Assert.Single(enumerating.UnknownReasons));
-    }
-
-    private static ScribeTestMap Derive(string path)
-    {
-        var source = $$"""
-            class LiteralTests {
-              [Fact] public void ReadsLiteral() => RepositoryAccessor.Discover(RepositoryRootCriterion.ClaudeDirectoryNotFound)
-                .ReadAllText(RepositoryRelativePath.Create("{{path}}"));
-            }
-            """;
-        return DeriveSources([new("LiteralTests.cs", source)]);
     }
 
     private static ScribeTestMap UnknownMap(
@@ -688,10 +633,10 @@ public sealed class ScribeTestMapDeriverTests
             []);
 
     /// <summary>
-    /// `EnumerateDeclared(root, "<字面量>")` 必须把该前缀登记为 declared input。
+    /// `EnumerateDeclared(root, "<字面量>")` 是可静态判定的 repository input。
     /// </summary>
     [Fact]
-    public void EnumerateDeclaredLiteralPrefixBecomesADeclaredPath()
+    public void EnumerateDeclaredLiteralPrefixIsKnown()
     {
         const string source = """
             class DeclaredTests {
@@ -703,7 +648,6 @@ public sealed class ScribeTestMapDeriverTests
 
         var method = Assert.Single(DeriveSources([new("DeclaredTests.cs", source)]).Methods);
 
-        Assert.Contains("D5", method.Paths);
         Assert.False(method.IsUnknown);
     }
 

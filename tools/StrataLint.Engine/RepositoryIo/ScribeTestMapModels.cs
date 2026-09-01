@@ -15,22 +15,14 @@ internal sealed record TestMapSource(
     string Content,
     string PartitionKey = "synthetic");
 
-internal readonly record struct ScribeCompileTimeInputUniverse(string Prefix, string Suffix)
-{
-    internal bool Covers(string path) =>
-        path.StartsWith(Prefix, StringComparison.Ordinal)
-        && path.EndsWith(Suffix, StringComparison.Ordinal);
-}
+internal readonly record struct ScribeCompileTimeInputUniverse(string Prefix, string Suffix);
 
 internal sealed record ScribeTestMethod(
     string PartitionKey,
     string SourcePath,
     string Id,
-    IReadOnlyList<string> Paths,
     IReadOnlyList<TestMapUnknownReason> UnknownReasons)
 {
-    internal IReadOnlyList<ScribeCompileTimeInputUniverse> CompileTimeInputUniverses { get; init; } = [];
-
     internal bool IsUnknown => UnknownReasons.Count != 0;
 
     internal string Identity => $"{SourcePath}::{Id}";
@@ -43,11 +35,7 @@ internal sealed record ScribeTestMap(
     IReadOnlyList<string> UnclassifiedManagedProjectPaths,
     IReadOnlyList<string> OrphanManagedSourcePaths,
     IReadOnlyList<string> DanglingCompileFailProofProjectExemptionPaths,
-    IReadOnlyDictionary<string, string> CompileProjectBySourcePath,
-    IReadOnlyList<MsBuildCompileFinding> CompileQueryFindings)
-{
-    internal IReadOnlyList<ScribeMetadataDegradation> MetadataDegradations { get; init; } = [];
-}
+    IReadOnlyList<MsBuildCompileFinding> CompileQueryFindings);
 
 internal sealed record ScribeTestProjectPartition(string Key, string ProjectPath);
 

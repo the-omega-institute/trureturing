@@ -60,19 +60,11 @@ internal static class ScribeTestSymbolBinder
 {
     internal static IReadOnlyList<ScribeParsedSource> Bind(
         IEnumerable<TestMapSource> sourceFiles,
-        out IReadOnlyList<ScribeMetadataDegradation> metadataDegradations,
         IReadOnlySet<string>? productionAssemblies = null,
         ScribeProjectCompilationContext? compilationContext = null)
     {
         var sources = sourceFiles.ToArray();
         var compilations = ScribeProjectCompilationBuilder.Build(sources, compilationContext);
-        metadataDegradations = compilations
-            .Select(static project => project.MetadataDegradation)
-            .Where(static degradation => degradation is not null)
-            .Select(static degradation => degradation!)
-            .DistinctBy(static degradation => degradation.ProjectPath)
-            .OrderBy(static degradation => degradation.ProjectPath, StringComparer.Ordinal)
-            .ToArray();
         var semanticModels = new ScribeSemanticModelProvider();
         foreach (var project in compilations) semanticModels.Add(project.Compilation);
         var callablesBySymbol = new ScribeCallableIndex();
