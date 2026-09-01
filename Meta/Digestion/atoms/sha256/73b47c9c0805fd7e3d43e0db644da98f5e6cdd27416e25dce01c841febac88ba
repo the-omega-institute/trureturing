@@ -1,0 +1,25 @@
+## 定理 1535.2（可数法向判据）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal J_m(q)\ge0
+\quad
+\forall\,q\in\mathbb Q,\ m\in\mathbb N.
+}
+\tag{1535.4}
+$$
+
+一个离线零点的有限反证书只需要：
+
+$$
+\boxed{
+(q,m,\Xi(q),\Xi'(q),\ldots,\Xi^{(2m)}(q)).
+}
+$$
+
+这比“找到一个精确离线零点坐标”弱得多，却已经足够否定 RH。
+
+---
+

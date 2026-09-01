@@ -1,0 +1,59 @@
+# 第一千五百六十五部　有限正替身为何不能成为最终谱
+
+项目已经机器证明，在给定有限实 observer family 与 active-contact hypotheses 下，有限残差可以由至多 \(d+1\) 个正接触原子替代，同时保持质量和所有指定 observer moments。
+
+因此任意有限命名接口都可能拥有一个很小的正原子替身。
+
+但若该替身只有 \(r\) 个谱原子，则相应正算子秩至多为 \(r\)，从而：
+
+$$
+\boxed{
+\bigwedge\nolimits^mA_{\mathrm{finite}}=0
+\qquad
+(m>r).
+}
+\tag{1565.1}
+$$
+
+所以：
+
+$$
+\boxed{
+\operatorname{Tr}
+\left(
+\bigwedge\nolimits^mA_{\mathrm{finite}}
+\right)=0
+\qquad
+(m>r).
+}
+$$
+
+而真实 Riemann 谱若 RH 成立，具有无穷多个正节点，因此：
+
+$$
+\boxed{
+\operatorname{Tr}
+\left(
+\bigwedge\nolimits^mA_t
+\right)>0
+\qquad
+\forall m.
+}
+\tag{1565.2}
+$$
+
+这说明：
+
+$$
+\boxed{
+\text{有限原子 completion 可以准确回答有限名字，
+却不可能自动成为完整谱本体。}
+}
+$$
+
+它会在某个外幂阶以后停止产生新的关系扇区。
+
+这正是“有限名不能穷尽连续完成”的算子版本。
+
+---
+

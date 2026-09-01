@@ -1,0 +1,82 @@
+# 第一千七百四十一部　\(\varphi^2\) 是关系空间增长率
+
+定义：
+
+$$
+\mathcal H_n^\varphi
+=
+\ell^2(\mathcal W_n^\varphi).
+$$
+
+则：
+
+$$
+\dim\mathcal H_n^\varphi
+=
+F_{n+2}.
+$$
+
+完整关系算子空间为：
+
+$$
+\boxed{
+\operatorname{End}
+\left(
+\mathcal H_n^\varphi
+\right).
+}
+$$
+
+其维数为：
+
+$$
+\boxed{
+F_{n+2}^2.
+}
+\tag{1741.1}
+$$
+
+因此：
+
+$$
+\boxed{
+\lim_{n\to\infty}
+\frac{
+\dim\operatorname{End}(\mathcal H_{n+1}^\varphi)
+}{
+\dim\operatorname{End}(\mathcal H_n^\varphi)
+}
+=
+\varphi^2.
+}
+\tag{1741.2}
+$$
+
+这给 \(\varphi^2\) 一个不需要先假设 Jones 子因子的严格解释：
+
+$$
+\boxed{
+\varphi
+=
+\text{合法名字数量的增长率};
+}
+$$
+
+$$
+\boxed{
+\varphi^2
+=
+\text{名字之间全部二体关系的增长率}.
+}
+$$
+
+所以“关系比对象多一层完成”可以精确表现为：
+
+$$
+\boxed{
+\text{对象复杂度平方化为关系复杂度。}
+}
+$$
+
+---
+

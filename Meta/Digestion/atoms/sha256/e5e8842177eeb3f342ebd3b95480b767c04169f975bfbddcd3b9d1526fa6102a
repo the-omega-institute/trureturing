@@ -1,0 +1,45 @@
+## 1693.1 与 Cayley–Laguerre tomography 的接合
+
+对固定 Cayley 图表 \(\chi_a\)，定义：
+
+$$
+\boxed{
+C_n(\alpha,a)
+=
+\int
+\chi_a(x)^n\,d\mu_\alpha(x).
+}
+\tag{1693.4}
+$$
+
+由于 \(\mu_\alpha\) 是有限原子测度：
+
+$$
+\boxed{
+C_n
+=
+\sum_{j=1}^{m}
+\frac{2\pi}{
+\theta_B'(x_j^\alpha)
+}
+\chi_a(x_j^\alpha)^n.
+}
+\tag{1693.5}
+$$
+
+所以该序列满足有限阶 Prony 递归，其 Hankel rank 至多为 \(m\)。
+
+项目已经机器证明，Cayley moments 可由 causal Laguerre kernels 和 resolvent correlation 恢复，并拥有明确的有限窗口尾界。
+
+这给出一条新的有限证书路线：
+
+$$
+\boxed{
+\text{非平凡 hidden model space}
+\Longrightarrow
+\text{某个 phase fibre 的有限原子 Cayley moment system}.
+}
+$$
+
+---
+

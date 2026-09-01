@@ -1,0 +1,40 @@
+# 第一千五百五十七部　单点 Pólya–频率判据
+
+固定任意实数 \(t\)，满足：
+
+$$
+\Xi(t)\neq0.
+$$
+
+定义归一化 jet 系列：
+
+$$
+\boxed{
+a_m^{(t)}
+=
+\frac{\mathcal J_m(t)}{\mathcal J_0(t)},
+\qquad
+a_m^{(t)}=0\ \ (m<0).
+}
+\tag{1557.1}
+$$
+
+定义双无限 Toeplitz 矩阵：
+
+$$
+\boxed{
+\mathbb P_t
+=
+\left[
+a_{j-i}^{(t)}
+\right]_{i,j\ge0}.
+}
+\tag{1557.2}
+$$
+
+称其为 totally nonnegative，若全部有限小行列式均非负。
+
+Aissen–Schoenberg–Whitney 与 Edrei 的经典结果刻画了此类 Pólya–频率序列的生成函数：其零点、极点与指数因子必须具有严格的正实参数结构。对本处的整函数 \(Q_t\)，阶数仅为 \(1/2\)，因此一般表示中的分母与非平凡指数项都被排除。([PubMed][1])
+
+---
+

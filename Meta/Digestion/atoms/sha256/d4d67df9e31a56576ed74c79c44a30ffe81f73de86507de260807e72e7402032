@@ -1,0 +1,95 @@
+# 第一千七百五十八部　建议形式化顺序
+
+```text
+D5/S3/Analytic/Hardy/BlaschkeCuntz/
+  BlaschkeWanderingBasis.lean
+  BlaschkeCompositionBranch.lean
+  BlaschkeBranchIsometry.lean
+  BlaschkeCuntzOrthogonality.lean
+  BlaschkeCuntzCompleteness.lean
+  BlaschkeCuntzRepresentation.lean
+
+D5/S3/Observer/BlaschkeNamingEndomorphism/
+  BlaschkeCuntzEndomorphism.lean
+  BlaschkeEndomorphismMultiplicative.lean
+  CoordinateShiftMapsToBlaschke.lean
+  AnalyticMultiplierComposition.lean
+  BlaschkeNamingTransferOperator.lean
+
+D5/S3/Observer/ClarkCuntzGauge/
+  ClarkBasisCuntzFamily.lean
+  ClarkBasisUnitaryTransition.lean
+  CuntzGeneratorGaugeRotation.lean
+  NamingEndomorphismGaugeInvariant.lean
+  CountingTransferGaugeInvariant.lean
+
+D5/S3/Observer/HiddenRelationFactor/
+  BlaschkeTensorFactorization.lean
+  NamingEndomorphismTensorForm.lean
+  RelativeCommutantMatrixUnits.lean
+  HiddenRelationAlgebraDimension.lean
+  IteratedHiddenTensorFactor.lean
+  IteratedRelationMatrixAlgebra.lean
+
+D5/S3/GoldenObserver/GoldenCuntzKrieger/
+  GoldenAdjacencyMatrix.lean
+  GoldenAdmissiblePath.lean
+  GoldenPathCountFibonacci.lean
+  GoldenPerronEigenvalue.lean
+  GoldenDynamicalDeterminant.lean
+  GoldenParryTransition.lean
+  GoldenGrammarEntropy.lean
+
+D5/S3/GoldenObserver/GoldenRelationGrowth/
+  GoldenPathHilbertSpace.lean
+  GoldenPathRelationAlgebra.lean
+  GoldenRelationDimension.lean
+  GoldenRelationGrowthRateSquare.lean
+  RelationGrowthNotJonesIndex.lean
+
+D5/S3/Observer/CountingVsClarkAverage/
+  CuntzCountingTransfer.lean
+  ClarkGeometricTransfer.lean
+  CountingClarkAgreementMonomial.lean
+  GeneralBlaschkeMetricHair.lean
+
+D5/S3/Analytic/Zeta/DefectCorrespondence/
+  ShiftedDefectModelCorrespondence.lean
+  DefectCorrespondenceRank.lean
+  DefectDepthFactorization.lean
+  DefectProjectionOrthogonalSum.lean
+  DefectKZeroPersistenceClass.lean
+  DefectDeathRankMeasure.lean
+
+D5/S3/Topology/BlaschkeBottSuspension/
+  BlaschkeBoundaryDegree.lean
+  BlaschkeEquatorialClutching.lean
+  ClutchedLineBundle.lean
+  ClutchedLineBundleChernNumber.lean
+  CircleMonodromyVsSuspendedChern.lean
+
+D5/S3/Weil/LiClarkArithmeticState/
+  LiCurvaturePositiveDefiniteTarget.lean
+  LiPhaseGNSStateTarget.lean
+  LiClarkUnitaryMomentTarget.lean
+  LiToeplitzPositiveFromState.lean
+  LiVerblunskyFromPositiveState.lean
+  LiSzegoTransferFromArithmeticState.lean
+
+D5/S3/Weil/PrimeGammaBranchDilation/
+  PrimeBranchCorrespondenceTarget.lean
+  GammaBranchCompletionTarget.lean
+  PrimeGammaCuntzPimsnerStateTarget.lean
+  PrimeGammaPhaseMomentIdentificationTarget.lean
+  ArithmeticBranchStateImpliesRHTarget.lean
+
+D5/S3/Weil/GoldenGrammarIdentification/
+  PrimeZeckendorfBranchAlphabet.lean
+  PrimitiveBranchTransitionTarget.lean
+  GoldenForbiddenDoubleBranchTarget.lean
+  ArithmeticGoldenAdjacencyTarget.lean
+  GoldenKMSLiMomentTarget.lean
+```
+
+---
+

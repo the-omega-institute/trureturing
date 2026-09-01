@@ -1,0 +1,57 @@
+## 定理 1596.1（稳定极限保持临界轴）
+
+设 \(f_n\) 是整函数，满足：
+
+$$
+\operatorname{Zero}(f_n)\subset i\mathbb R.
+$$
+
+若：
+
+$$
+f_n\longrightarrow f
+$$
+
+在紧集上一致收敛，且：
+
+$$
+f\not\equiv0,
+$$
+
+则：
+
+$$
+\boxed{
+\operatorname{Zero}(f)\subset i\mathbb R.
+}
+\tag{1596.1}
+$$
+
+### 证明
+
+任取闭圆盘 \(D\) 与 \(i\mathbb R\) 不相交。
+
+每个 \(f_n\) 在 \(D\) 内无零点。
+
+由 Hurwitz 定理，\(f\) 在 \(D\) 内也无零点，除非 \(f\equiv0\)。
+
+遍历所有离开虚轴的圆盘即得。∎
+
+因此，若能够构造：
+
+$$
+\boxed{
+\text{由 prime–Gamma 数据形成的虚轴稳定 entire approximants}
+}
+$$
+
+并使其局部一致收敛到：
+
+$$
+\Xi,
+$$
+
+RH 将立即成立。
+
+---
+

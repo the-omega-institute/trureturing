@@ -1,0 +1,22 @@
+## 路线 B：Arithmetic Hodge–Stinespring completion
+
+直接构造：
+
+$$
+\Delta_t\ge0
+$$
+
+或 completely positive transport \(\Phi_t\)，使：
+
+$$
+\boxed{
+\frac{Q_t(w)}{Q_t(0)}
+=
+\det(I+w\Delta_t^{-1}).
+}
+\tag{1604.1}
+$$
+
+则：
+
+* normal jets 是外幂正迹；

@@ -1,0 +1,67 @@
+## 1554.1 connected normal moments 是 Schatten traces
+
+定义：
+
+$$
+\boxed{
+\kappa_n(t)
+=
+(-1)^{n-1}n
+[w^n]
+\log
+\frac{Q_t(w)}{Q_t(0)}.
+}
+\tag{1554.3}
+$$
+
+则：
+
+$$
+\boxed{
+\kappa_n(t)
+=
+\operatorname{Tr}(A_t^n)
+=
+\sum_\lambda
+\frac{m_\lambda}{(\lambda-t)^{2n}}.
+}
+\tag{1554.4}
+$$
+
+所以前文的 connected normal jets 并不是辅助组合。
+
+它们正是正谱算子的 Schatten 幂迹。
+
+普通 jets 与 connected jets 之间由 Newton 恒等式连接：
+
+$$
+\boxed{
+m\,e_m
+=
+\sum_{k=1}^{m}
+(-1)^{k-1}
+e_{m-k}\kappa_k,
+}
+\tag{1554.5}
+$$
+
+其中：
+
+$$
+e_m=\frac{\mathcal J_m}{\mathcal J_0}.
+$$
+
+因此：
+
+$$
+\boxed{
+\text{法向 Taylor 系数}
+\quad\longleftrightarrow\quad
+\text{谱幂矩}
+}
+$$
+
+是外幂坐标与连通坐标之间的精确变换。
+
+---
+

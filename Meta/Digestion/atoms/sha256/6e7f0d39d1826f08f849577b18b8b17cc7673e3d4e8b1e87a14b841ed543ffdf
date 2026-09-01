@@ -1,0 +1,80 @@
+# 第一千五百二十二部　离线共轭对的最小负块
+
+只考虑一个离线平方节点对：
+
+$$
+v=a+ib,
+\qquad
+\overline v=a-ib,
+\qquad
+b\neq0,
+$$
+
+重数均为 \(m\)。
+
+则：
+
+$$
+\tau_n
+=
+m(v^n+\overline v^{\,n}).
+$$
+
+最小非平凡 Hankel 行列式为：
+
+$$
+\Delta_1
+=
+\det
+\begin{pmatrix}
+\tau_1&\tau_2\\
+\tau_2&\tau_3
+\end{pmatrix}.
+$$
+
+直接计算：
+
+$$
+\boxed{
+\Delta_1
+=
+-4m^2
+(\Im v)^2
+|v|^2
+<0.
+}
+\tag{1522.1}
+$$
+
+代入：
+
+$$
+v
+=
+\frac{
+\gamma^2-\delta^2+2i\delta\gamma
+}{
+(\delta^2+\gamma^2)^2
+},
+$$
+
+得到：
+
+$$
+\boxed{
+\Delta_1
+=
+-
+\frac{
+16m^2\delta^2\gamma^2
+}{
+(\delta^2+\gamma^2)^6
+}.
+}
+\tag{1522.2}
+$$
+
+因此在没有其他节点干扰的局部模型中，一个离线共轭对立刻产生一个 \(2\times2\) 负行列式。
+
+---
+

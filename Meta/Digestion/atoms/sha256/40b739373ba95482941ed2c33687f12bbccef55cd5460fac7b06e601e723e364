@@ -1,0 +1,79 @@
+## 1553.1 RH 下的规范乘积
+
+假设 RH，并令 \(\lambda\) 遍历 \(\Xi\) 的实零点，重数为 \(m_\lambda\)。
+
+固定：
+
+$$
+t\notin Z(\Xi).
+$$
+
+\(Q_t\) 的零点为：
+
+$$
+-(\lambda-t)^2.
+$$
+
+由于 \(Q_t\) 的整函数阶为 \(1/2\)，其规范乘积没有非平凡指数因子：
+
+$$
+\boxed{
+\frac{Q_t(w)}{Q_t(0)}
+=
+\prod_{\lambda}
+\left(
+1+
+\frac{w}{(\lambda-t)^2}
+\right)^{m_\lambda}.
+}
+\tag{1553.4}
+$$
+
+并且：
+
+$$
+\sum_{\lambda}
+\frac{m_\lambda}{(\lambda-t)^2}
+<\infty.
+$$
+
+定义正迹类算子 \(A_t\)，令其非零特征值为：
+
+$$
+\boxed{
+a_{\lambda,t}
+=
+\frac1{(\lambda-t)^2},
+}
+\tag{1553.5}
+$$
+
+按 \(m_\lambda\) 重复。
+
+于是：
+
+$$
+\boxed{
+A_t\ge0,
+\qquad
+A_t\in\mathcal S_1,
+}
+$$
+
+且：
+
+$$
+\boxed{
+\frac{Q_t(w)}{Q_t(0)}
+=
+\det(I+wA_t).
+}
+\tag{1553.6}
+$$
+
+这不是把 \(A_t\) 命名为“道”。
+
+\(A_t\) 只是 RH 成立时，移动法向完成所允许的一张正谱图表。
+
+---
+

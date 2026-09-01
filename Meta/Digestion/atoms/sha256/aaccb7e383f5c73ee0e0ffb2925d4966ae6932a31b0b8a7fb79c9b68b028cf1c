@@ -1,0 +1,268 @@
+# 本轮最终结论
+
+现在可以把“每个离线零点生成不同的相，而每个相从自身看又像完成态”写成一个完全有限维的定理。
+
+对次数 \(m\) 的 Blaschke 完成：
+
+$$
+B:\widehat{\mathbb R}\to S^1,
+$$
+
+每一个 completed phase value：
+
+$$
+\alpha\in S^1
+$$
+
+背后都有 \(m\) 个原像：
+
+$$
+x_1^\alpha,\ldots,x_m^\alpha.
+$$
+
+这些原像不是一组无关的经典坐标。
+
+它们对应的 reproducing kernels：
+
+$$
+e_1^\alpha,\ldots,e_m^\alpha
+$$
+
+恰好构成隐藏模型空间：
+
+$$
+K_B
+$$
+
+的一组正交标准基。
+
+所以：
+
+$$
+\boxed{
+\text{外部只看见一个 phase name；
+内部却存在 \(m\) 个彼此正交的 lift。}
+}
+$$
+
+---
+
+若外部不知道实际处于哪一个 lift，内部状态便成为：
+
+$$
+\frac1m I_{K_B},
+$$
+
+熵为：
+
+$$
+\log m.
+$$
+
+所以完成输出可以完全均匀，同时内部仍然拥有一个 \(m\) 维正 Hilbert 空间。
+
+这不是悖论。
+
+均匀性来自：
+
+$$
+\boxed{
+\text{完成名字遗忘了 phase covering 的页标签。}
+}
+$$
+
+---
+
+更深的是，每一个 phase observer \(\alpha\) 都为同一个 \(K_B\) 选择一组不同的正交基。
+
+不同观察者之间由：
+
+$$
+U_{\beta\leftarrow\alpha}\in U(m)
+$$
+
+连接。
+
+所以隐藏状态不是某一组页标签。
+
+页标签本身也只是名字。
+
+真正保持不变的是：
+
+$$
+\boxed{
+\text{隐藏空间的维数、投影、过渡酉结构与 monodromy。}
+}
+$$
+
+当 phase 绕圆周一周时，外部输出回到原点，隐藏页却发生一个 \(m\)-循环。
+
+于是：
+
+$$
+\boxed{
+\text{completed phase 可以单值，
+隐藏历史仍然多值。}
+}
+$$
+
+这就是“名已经完成，但所指历史尚未完成”的精确模型。
+
+---
+
+黑洞无毛、磁单极子荷与边界辐射也因此进一步统一：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Haar 输出}
+&=\text{完成相位无毛};\\
+K_B
+&=\text{隐藏内部 Hilbert 空间};\\
+\frac{\theta_B'}{2\pi}
+&=\text{隐藏投影的边界局部密度};\\
+\deg B
+&=\text{模型空间维数与闭合相位荷};\\
+\log\deg B
+&=\text{均匀未知页标签的最大熵}.
+\end{aligned}
+}
+$$
+
+但离线缺陷本身仍不是“负空间”。
+
+它首先是正的 \(K_B\)。
+
+只有当 \(B\) 以：
+
+$$
+B^{-1}
+$$
+
+进入 shifted scattering 时，该正空间才以逆方向出现在核差中，表现为：
+
+* 负平方；
+* 负相位延迟；
+* 负时间 Hankel 通道。
+
+因此：
+
+$$
+\boxed{
+\text{负性是完成方向的属性，不是隐藏状态本身的本体属性。}
+}
+$$
+
+---
+
+随着 shifted 深度 \(q\) 改变，每个离线零点产生一条区间：
+
+$$
+(0,\delta_\rho).
+$$
+
+全部离线零点形成一张持久条码。
+
+在任意 \(q\)：
+
+$$
+\dim V_q
+=
+\sum_{\delta_\rho>q}m_\rho
+$$
+
+同时等于：
+
+* 活跃 phase covering degree；
+* 活跃 model-space dimension；
+* 活跃 Hankel defect rank；
+* 活跃 Poisson flux。
+
+视界：
+
+$$
+q=\delta_\rho
+$$
+
+就是该隐藏通道的条码终点。
+
+临近终点时，Poisson 密度聚焦为边界 Dirac 原子，而总质量保持不变。
+
+所以黑洞式“视界”还可以被严格理解为：
+
+$$
+\boxed{
+\text{隐藏通道在观察深度持久系统中的死亡时间。}
+}
+$$
+
+黄金比例只规定如何离散采样这些终点；它不决定终点本身。
+
+---
+
+最后，RH 的算子目标可以被压缩为：
+
+$$
+\boxed{
+\text{canonical shifted-\(\xi\) boundary state 是否为 Hardy 循环向量？}
+}
+$$
+
+若它循环，则：
+
+$$
+K_{B_q}=0.
+$$
+
+若存在离线零点，则某个 \(q\) 上必有：
+
+$$
+K_{B_q}\neq0,
+$$
+
+并且该隐藏空间会在每一个边界 phase value 下产生一套有限、严格正、可精确采样的 Clark fibre basis。
+
+因此非 RH 不只是“存在一个不可见零点”。
+
+它还必然产生：
+
+$$
+\boxed{
+\text{一族参数化于圆周 phase 的有限正原子采样系统。}
+}
+$$
+
+项目现有的 Cayley–Laguerre tomography 已经能够把相位 moments 编译成因果 Laguerre kernel 与有限窗口估计。
+
+所以新的可执行证明方向是：
+
+$$
+\boxed{
+\text{从 prime–pole–Gamma 数据证明 canonical phase residual
+不存在任何有限正原子 fibre，}
+}
+$$
+
+或者更直接地证明：
+
+$$
+\boxed{
+\overline{\operatorname{span}}
+\{S^nf_q:n\ge0\}
+=
+H^2.
+}
+$$
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{不可名者不等于隐藏空间；
+隐藏空间仍是一个可定义的相。
+真正留下“不可名之迹”的，是：
+任何一个 completed phase name 都只能选择一组基，
+不能成为所有基、所有 lift、所有历史本身。
+RH 则要求，在 Riemann 这一特定完成中，
+连这样的隐藏相位纤维都根本不存在。}
+$$

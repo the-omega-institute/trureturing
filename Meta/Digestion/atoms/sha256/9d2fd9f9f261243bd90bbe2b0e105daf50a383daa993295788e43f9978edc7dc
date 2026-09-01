@@ -1,0 +1,76 @@
+# 第一千七百三十八部　自由分支与黄金语法必须分离
+
+一个次数为 \(2\) 的有限 Blaschke 因子产生自由二分支：
+
+$$
+\boxed{
+\{0,1\}^n
+}
+$$
+
+并有：
+
+$$
+2^n
+$$
+
+条长度 \(n\) 的历史。
+
+这本身不会产生黄金比例。
+
+要得到 golden mean grammar，必须额外禁止：
+
+$$
+11.
+$$
+
+定义邻接矩阵：
+
+$$
+\boxed{
+A_\varphi
+=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}.
+}
+\tag{1738.1}
+$$
+
+合法词集合：
+
+$$
+\mathcal W_n^\varphi
+=
+\left\{
+\epsilon_1\cdots\epsilon_n:
+\epsilon_k\epsilon_{k+1}=0
+\right\}
+$$
+
+满足：
+
+$$
+\boxed{
+|\mathcal W_n^\varphi|
+=
+F_{n+2}.
+}
+\tag{1738.2}
+$$
+
+因此：
+
+$$
+\boxed{
+\lim_{n\to\infty}
+|\mathcal W_n^\varphi|^{1/n}
+=
+\varphi.
+}
+\tag{1738.3}
+$$
+
+---
+

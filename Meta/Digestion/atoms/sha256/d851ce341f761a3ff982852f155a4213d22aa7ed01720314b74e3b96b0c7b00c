@@ -1,0 +1,6 @@
+## 三　W-B 预登记:环面零因子 provenance 切刀(`ToroidalProvenanceCut`)
+
+**义务**:按 C-1 骨架定义 `ToroidalVanishingProfile`(selected / periodZero / twistZero 三个 Finset)与构造子 `toroidalVanishingProfile`(以 `Finset.filter` 取 period、twist 在 $s$ 处为零的 index)。单一公开定理(挣得该定义):对无零因子的标量类型,若 $i\in\mathrm{selected}$、$\mathrm{period}_i(s)=\mathrm{base}(s)\cdot\mathrm{twist}_i(s)$ 且 $\mathrm{twist}_i(s)\ne 0$,则 $i\in\mathrm{periodZero}\iff\mathrm{base}(s)=0$,且 $i\notin\mathrm{twistZero}$。只用 `mul_eq_zero` 与 `Finset.mem_filter`。
+**可证伪预测(写在跑之前)**:若 D5 已存在**可寻址**的等强陈述(逐 index 的 profile 成员刻画,而非 `toroidal_common_zero_locus` 那样在 pointwiseNonvanishing 下的全局集合相等),则本义务的交付物是 bind 报告而非新模块;若 `Analytic/Adelic` 已满(24/24,写入时实测),则须裂桶并如实计价,不得为躲容量放进语义错误的目录。定理本身预期以 `simp [mul_eq_zero]` 级策略闭合。
+**边界**:只闭合 index plumbing 的最小证书,为 C-5 的 chart 选择提供 twist 非零 provenance;不主张任何黄金通道的 twist 非零,不触及 eulerGerm 与 O-5。
+

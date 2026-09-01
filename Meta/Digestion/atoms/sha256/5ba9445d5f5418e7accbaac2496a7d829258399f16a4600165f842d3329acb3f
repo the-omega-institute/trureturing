@@ -1,0 +1,47 @@
+## 1592.2 黄金只控制收敛速度
+
+取：
+
+$$
+K_N=F_{N+1}.
+$$
+
+最小非零相位间距为：
+
+$$
+\Delta\theta_N
+=
+\frac{2\pi}{K_N}
+\asymp
+\varphi^{-N}.
+$$
+
+最大 Cayley 能量满足：
+
+$$
+\max_j|h_j|
+=
+\cot\frac{\pi}{K_N}
+\sim
+\frac{K_N}{\pi}
+\asymp
+\varphi^N.
+$$
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+\text{相位网格分辨率}
+&\sim\varphi^{-N};\\
+\text{非紧能量可见范围}
+&\sim\varphi^N.
+\end{aligned}
+}
+\tag{1592.4}
+$$
+
+黄金深度每增加一层：
+
+* compact phase resolution 约缩小 \(\varphi^{-1}\)；

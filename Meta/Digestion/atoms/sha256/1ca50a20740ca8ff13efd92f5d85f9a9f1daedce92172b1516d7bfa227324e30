@@ -1,0 +1,15 @@
+* noncompact Cayley range 约扩大 \(\varphi\)。
+
+但 Cauchy 极限本身对任意 \(K\to\infty\) 都成立。
+
+因此：
+
+$$
+\boxed{
+\varphi
+\text{ 决定完成速度，不决定 Cauchy 母形。}
+}
+$$
+
+---
+

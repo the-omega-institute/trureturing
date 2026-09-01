@@ -1,0 +1,45 @@
+## 1593.1 覆盖去紧化：保存历史
+
+选择：
+
+$$
+\theta+2\pi m,
+\qquad
+m\in\mathbb Z.
+$$
+
+这保留 winding history。
+
+对于 local root：
+
+$$
+x=e^{2\pi ij/K},
+\qquad
+x=p^{-s},
+$$
+
+全部 logarithmic lifts 为：
+
+$$
+\boxed{
+s_{p,K,j,m}
+=
+-\frac{2\pi i}{\log p}
+\left(
+m+\frac jK
+\right),
+\qquad
+m\in\mathbb Z.
+}
+\tag{1593.1}
+$$
+
+一个有限相位模式因而生成一条无限 imaginary-frequency lattice。
+
+这里：
+
+* \(j/K\) 是 phase address；
+* \(m\) 是 winding history。
+
+---
+

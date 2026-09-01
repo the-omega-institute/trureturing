@@ -1,0 +1,18 @@
+## Arithmetic Hodge Completion Conjecture
+
+对每个 observer ordinate \(t\)，构造一列有限 Hilbert complexes：
+
+$$
+\cdots
+\longrightarrow
+\mathcal C_{M,t}^{k-1}
+\overset{d_{M,t}^{k-1}}{\longrightarrow}
+\mathcal C_{M,t}^{k}
+\overset{d_{M,t}^{k}}{\longrightarrow}
+\mathcal C_{M,t}^{k+1}
+\longrightarrow\cdots,
+$$
+
+其数据来自：
+
+* finite prime cyclic phases；

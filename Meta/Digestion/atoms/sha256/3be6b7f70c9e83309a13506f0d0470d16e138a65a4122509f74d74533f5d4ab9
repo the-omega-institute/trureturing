@@ -1,0 +1,54 @@
+# 第一千五百二十一部　Hankel 行列式的 Vandermonde 形态
+
+RH 下：
+
+$$
+H_N^\xi=V_NW V_N^*,
+$$
+
+其中：
+
+$$
+(V_N)_{ij}=v_j^i,
+\qquad
+W_{jj}=m_jv_j.
+$$
+
+由 Cauchy–Binet：
+
+$$
+\boxed{
+\Delta_N^\xi
+=
+\sum_{j_0<\cdots<j_N}
+\left(
+\prod_{r=0}^{N}
+m_{j_r}v_{j_r}
+\right)
+\prod_{0\le a<b\le N}
+(v_{j_b}-v_{j_a})^2.
+}
+\tag{1521.1}
+$$
+
+所以每个有限行列式都是：
+
+$$
+\boxed{
+\text{节点正质量}
+\times
+\text{节点关系体积平方}
+}
+$$
+
+的总和。
+
+这非常符合前文“对象的关系再次形成对象”的结构：
+
+* 单节点给出 inverse-square 名字；
+* 两节点差给出关系；
+* Vandermonde 给出高阶关系体积；
+* Hankel 行列式给出整个有限关系族是否可 Gram 化。
+
+---
+

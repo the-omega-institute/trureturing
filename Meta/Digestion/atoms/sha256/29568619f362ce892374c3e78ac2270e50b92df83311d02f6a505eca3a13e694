@@ -1,0 +1,16 @@
+## 定理 1516.1（平方影 RH 判据）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\operatorname{Zero}(G)
+\subset(-\infty,0).
+}
+\tag{1516.3}
+$$
+
+这把临界线问题变成了一个普通的负实零点问题。
+
+---
+

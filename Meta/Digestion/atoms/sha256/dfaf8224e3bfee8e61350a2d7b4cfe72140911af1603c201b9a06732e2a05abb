@@ -1,0 +1,46 @@
+# 第一千七百四十六部　黄金 tomography 的准确位置
+
+项目最新证明：有限个互异正有理尺度经 lifted golden logarithmic coordinate 后仍然互异，并能由第一完整 golden time window 精确恢复 amplitudes。该结论明确工作在 universal-cover coordinate，而不保证 quotient-circle 上不存在退化。
+
+所以黄金 tomography 的作用是：
+
+$$
+\boxed{
+\text{对已经分离的 branch frequencies 提供高效有限重建。}
+}
+$$
+
+它不能完成：
+
+$$
+\boxed{
+\text{从同一个 multiplier 中重新制造 branch distinction。}
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\varphi\text{-sampling}
+}
+$$
+
+与：
+
+$$
+\boxed{
+\varphi\text{-grammar}
+}
+$$
+
+也是两件不同的事。
+
+前者是观察时钟。
+
+后者是合法历史的邻接规则。
+
+只有后者自然产生 Cuntz–Krieger 的 Perron 根 \(\varphi\)。
+
+---
+

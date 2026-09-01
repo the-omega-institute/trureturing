@@ -1,0 +1,51 @@
+## 1506.1 RH 的充分性形式
+
+对于任意名字 \(r\) 和 profile \(\Gamma\)，有：
+
+$$
+\boxed{
+\Gamma=F\circ r
+\iff
+\ker r\subseteq\ker\Gamma,
+}
+\tag{1506.1}
+$$
+
+其中 \(F\) 在 \(r\) 的实际值域上唯一。
+
+项目的 agency-self 定理正是这一最小充分商原则的正式版本。
+
+应用于：
+
+$$
+r=r_J,
+\qquad
+\Gamma=\Gamma_{\mathrm{causal}},
+$$
+
+得到条件性等价：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\Gamma_{\mathrm{causal}}
+\text{ 能因子化通过 }r_J.
+}
+\tag{1506.2}
+$$
+
+也就是：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{completed reflection name 已足以决定完整 causal profile}.
+}
+$$
+
+离线零点意味着同一 completed name 下存在两个 causal profile，因此名字不充分。
+
+---
+

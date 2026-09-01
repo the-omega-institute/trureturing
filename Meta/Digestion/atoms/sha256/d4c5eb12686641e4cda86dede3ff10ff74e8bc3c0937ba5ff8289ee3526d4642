@@ -1,0 +1,48 @@
+# 第一千五百八十一部　“道不可名”在这里得到一个可计算实例
+
+现在可以非常具体地看到：
+
+$$
+\boxed{
+\text{同一个完成名字不能唯一决定生成历史。}
+}
+$$
+
+同一个 geometric exponent distribution：
+
+$$
+(1-x)x^e
+$$
+
+在 binary lift 中是独立位过程；
+
+在 Zeckendorf lift 中是硬核相关过程。
+
+它们：
+
+* 拥有不同的局部图；
+* 拥有不同的条件独立结构；
+* 拥有不同的 transfer matrices；
+* 拥有不同的 renormalization；
+* 却有完全相同的 exponent distribution 和 partition function。
+
+所以：
+
+$$
+\boxed{
+\text{完成值相同}
+\not\Rightarrow
+\text{生成律相同}.
+}
+$$
+
+这正是不能把：
+
+$$
+\zeta
+$$
+
+直接命名为“道”的一个具体数学原因。
+
+---
+

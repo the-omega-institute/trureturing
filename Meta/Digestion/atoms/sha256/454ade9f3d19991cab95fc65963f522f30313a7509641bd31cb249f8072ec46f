@@ -1,0 +1,14 @@
+* singular inner 部分。
+
+对 completed \(\xi\) 的整函数结构，singular inner 的可能性需由增长和边界正则化单独排除。
+
+无限 Blaschke 则必须通过高度截断与局部有限性处理。
+
+所以严格程序应为：
+
+1. 在每个有界窗口排除有限原子 Blaschke 除子；
+2. 证明不存在 singular inner 残余；
+3. 使用 exhaustion 得到全局 outer 性。
+
+---
+
