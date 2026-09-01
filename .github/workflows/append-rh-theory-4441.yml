@@ -33,8 +33,6 @@ jobs:
           theory='docs/develop/theory/RH_RESEARCH_LANE_THEORY.md'
           base='../exporter/docs/develop/theory/RH_RESEARCH_LANE_THEORY.md'
           payload='../exporter/tmp/rh-theory-append-4441.b64'
-          golden_marker='## [PR #4441] GOLDEN_SECOND_MAGNUS_SAMPLING'
-          step_marker='## [PR #4441] STEP_TWO_CHRONOLOGICAL_SIGNATURE'
 
           test "$(git hash-object "$base")" = \
             'e150b4982344d7d26c83a7b854d195a8a1ef8a4c'
@@ -74,4 +72,11 @@ jobs:
           git config user.email '50111876+AlyciaBHZ@users.noreply.github.com'
           git add "$theory"
           git commit -m 'docs: repair and extend RH theory volume'
+
+          result_sha="$(git rev-parse HEAD)"
+          git push --force origin HEAD:refs/heads/tmp/rh-theory-result-4441
           git push origin HEAD:refs/heads/lane/math/golden-second-magnus-sampling
+          printf 'result_sha=%s\n' "$result_sha"
+
+          remote_sha="$(git ls-remote origin refs/heads/lane/math/golden-second-magnus-sampling | awk '{print $1}')"
+          test "$remote_sha" = "$result_sha"
