@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:fbccb60cdd408481332cb95438a622a4e06865874391117f1af9f91f6bf9b826
+  normalized_sha256: sha256:fbccb60cdd408481332cb95438a622a4e06865874391117f1af9f91f6bf9b826
+cas_ref: sha256:fbccb60cdd408481332cb95438a622a4e06865874391117f1af9f91f6bf9b826
+coverage_gids:
+  - D5/S3/Observer/MetricGeometryLaws/ItineraryFirstDifferencePowerLaw.itinerary_first_difference_power_law
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/MetricGeometryLaws/ItineraryFirstDifferencePowerLaw.itinerary_first_difference_power_law
+      source_sha256: sha256:fbccb60cdd408481332cb95438a622a4e06865874391117f1af9f91f6bf9b826
+      target_statement_id: sha256:005893cf0ff86b0afbd989960f2d2a65921f274ea6931ae65a422053f04d353d
+  scribe:
+    - gid: D5/S3/Observer/MetricGeometryLaws/ItineraryFirstDifferencePowerLaw.itinerary_first_difference_power_law
+      definition_sha256: sha256:7810cf01bb67bf27f8b943c6ab8f845ec3a861ea5282031e5da72fbb113a7965
+      emission_sha256: sha256:f99250285e6348e44f91e18a8f3f31c3ce11466c2c8502fc6254dd8cddc4dc32
+  unresolved_subitems: []

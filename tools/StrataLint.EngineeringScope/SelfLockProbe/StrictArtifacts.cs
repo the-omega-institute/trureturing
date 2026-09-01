@@ -34,28 +34,6 @@ internal static class StrictArtifacts
             ?? throw new InvalidDataException("artifact has a null top-level value");
     }
 
-    internal static JsonElement ReadJsonElement(string path)
-    {
-        EnsureRegularFile(path);
-        string text;
-        try
-        {
-            text = StrictUtf8.GetString(File.ReadAllBytes(path));
-        }
-        catch (DecoderFallbackException exception)
-        {
-            throw new InvalidDataException("artifact is not strict UTF-8", exception);
-        }
-        using var document = JsonDocument.Parse(text, new JsonDocumentOptions
-        {
-            AllowTrailingCommas = false,
-            CommentHandling = JsonCommentHandling.Disallow,
-            MaxDepth = 32,
-        });
-        RejectDuplicateMembers(document.RootElement);
-        return document.RootElement.Clone();
-    }
-
     internal static string DigestFile(string path)
     {
         EnsureRegularFile(path);
@@ -244,7 +222,7 @@ internal static class EvidencePublisher
             payloadDirectory,
             sentinelDigest);
         WriteJsonAtomically(Path.Combine(bundle, "publication.json"), pointer);
-        return new PublishedEvidenceContract(receiptPath, payload, publicationId);
+        return new PublishedEvidenceContract(receiptPath, payload);
     }
 
     private static SentinelTrxContract[] ReadTrxManifest(string staging)
