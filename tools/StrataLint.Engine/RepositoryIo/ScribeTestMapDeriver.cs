@@ -4,52 +4,6 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace StrataLint.Engine;
 
-internal enum TestMapUnknownReason
-{
-    VariablePath,
-    DirectoryEnumeration,
-    IndirectViaProductionLoader,
-    MetadataUnavailable,
-    RepositoryRootMarker,
-    Other,
-}
-
-internal sealed record TestMapSource(
-    string Path,
-    string Content,
-    string PartitionKey = "synthetic");
-
-internal sealed record ScribeTestMethod(
-    string PartitionKey,
-    string SourcePath,
-    string Id,
-    IReadOnlyList<string> Paths,
-    IReadOnlyList<TestMapUnknownReason> UnknownReasons,
-    bool IsStaticallySkipped = false,
-    bool IsDiscoveryConditional = false)
-{
-    internal bool IsUnknown => UnknownReasons.Count != 0;
-
-    internal string Identity => $"{SourcePath}::{Id}";
-
-    internal string DisplayIdentity => $"{PartitionKey}::{Id}";
-}
-
-internal sealed record ScribeTestMap(
-    IReadOnlyList<ScribeTestMethod> Methods,
-    IReadOnlyList<string> UnclassifiedManagedProjectPaths,
-    IReadOnlyList<string> OrphanManagedSourcePaths,
-    IReadOnlyList<string> DanglingCompileFailProofProjectExemptionPaths,
-    IReadOnlyDictionary<string, string> CompileProjectBySourcePath,
-    IReadOnlyList<MsBuildCompileFinding> CompileQueryFindings)
-{
-    internal IReadOnlyList<ScribeMetadataDegradation> MetadataDegradations { get; init; } = [];
-}
-
-internal sealed record ScribeTestProjectPartition(string Key, string ProjectPath);
-
-internal sealed record ScribeTrackedSource(string Path, string Content);
-
 internal static class ScribeTestMapDeriver
 {
     private const string ManagedTestProjectPrefix = "tools/tests/";
@@ -364,6 +318,7 @@ internal static class ScribeTestMapDeriver
         foreach (var test in methods.Where(static method => method.IsTest))
         {
             var paths = new HashSet<string>(StringComparer.Ordinal);
+            var compileTimeInputUniverses = new HashSet<ScribeCompileTimeInputUniverse>();
             var reasons = new HashSet<TestMapUnknownReason>();
             var pending = new Stack<ScribeBoundCallable>();
             var visited = new HashSet<ScribeBoundCallable>();
@@ -375,7 +330,11 @@ internal static class ScribeTestMapDeriver
                     continue;
                 }
 
-                InspectMethod(method, discoveryPaths, paths, reasons);
+                if (!method.IsProductionSource)
+                {
+                    InspectMethod(method, discoveryPaths, paths, reasons);
+                }
+                compileTimeInputUniverses.UnionWith(method.CompileTimeInputUniverses);
                 reasons.UnionWith(method.BindingUnknownReasons);
                 if (indirect.Any(site => site.Path == method.Path
                     && method.ContainsLine(site.Line)))
@@ -396,7 +355,13 @@ internal static class ScribeTestMapDeriver
                 paths.Order(StringComparer.Ordinal).ToArray(),
                 reasons.Order().ToArray(),
                 test.IsStaticallySkipped,
-                test.IsDiscoveryConditional));
+                test.IsDiscoveryConditional)
+            {
+                CompileTimeInputUniverses = compileTimeInputUniverses
+                    .OrderBy(static universe => universe.Prefix, StringComparer.Ordinal)
+                    .ThenBy(static universe => universe.Suffix, StringComparer.Ordinal)
+                    .ToArray(),
+            });
         }
 
         return new ScribeTestMap(
