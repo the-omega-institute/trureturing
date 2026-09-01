@@ -1,0 +1,28 @@
+## 第一桥：Euler–Zeckendorf exact lift
+
+形式化：
+
+$$
+\boxed{
+\sum_{\eta\in\Omega_N}
+x^{E_N(\eta)}
+=
+\frac{1-x^{F_{N+1}}}{1-x}.
+}
+$$
+
+并推出：
+
+$$
+\boxed{
+\mathcal Z_N(s)
+=
+\frac{\zeta(s)}
+{\zeta(F_{N+1}s)}.
+}
+$$
+
+这条桥完全初等，最容易闭合。
+
+---
+

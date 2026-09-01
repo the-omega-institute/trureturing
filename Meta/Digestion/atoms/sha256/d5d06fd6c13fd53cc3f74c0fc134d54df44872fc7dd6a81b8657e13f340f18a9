@@ -1,0 +1,45 @@
+## 1575.1 负 Galois 分支不是离线负能量
+
+允许词数满足 Binet 公式：
+
+$$
+F_{N+1}
+=
+\frac{
+\varphi^{N+1}
+-
+(-\varphi^{-1})^{N+1}
+}{
+\sqrt5}.
+$$
+
+其中：
+
+$$
+-\varphi^{-1}
+$$
+
+是 finite-depth parity correction。
+
+它是合法整数计数所必需的代数共轭分支。
+
+因此必须区分：
+
+$$
+\boxed{
+\begin{array}{c|c}
+-\varphi^{-1}
+&
+\text{合法 Galois／奇偶修正}
+\\
+-\delta^{-2}
+&
+\text{匹配离线零点产生的负谱节点}
+\end{array}
+}
+$$
+
+并非所有“负号”都表示正性障碍。
+
+---
+

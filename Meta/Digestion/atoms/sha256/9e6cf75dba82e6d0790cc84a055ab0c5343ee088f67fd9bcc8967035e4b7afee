@@ -1,0 +1,113 @@
+# 第一千六百八十二部　outer／inner 分解的最终闭合
+
+在有限窗口或适当 Hardy–Smirnov 归一化下，写：
+
+$$
+\boxed{
+F_q=B_qO_q.
+}
+\tag{1682.1}
+$$
+
+其中：
+
+$$
+|B_q(x)|=1
+\qquad
+(x\in\mathbb R),
+$$
+
+故：
+
+$$
+\boxed{
+|F_q(x)|=|O_q(x)|.
+}
+\tag{1682.2}
+$$
+
+所以 boundary modulus 只能恢复 \(O_q\)。
+
+而：
+
+$$
+B_q
+$$
+
+所携带的内容表现为：
+
+$$
+\boxed{
+K_{B_q}
+=
+H^2\ominus B_qH^2.
+}
+\tag{1682.3}
+$$
+
+若 \(O_q\) 为 outer，则：
+
+$$
+\overline{O_qH^2}=H^2,
+$$
+
+而：
+
+$$
+\overline{F_qH^2}
+=
+B_qH^2.
+$$
+
+因此：
+
+$$
+\boxed{
+K_{B_q}
+=
+H^2\ominus
+\overline{F_qH^2}.
+}
+\tag{1682.4}
+$$
+
+它正是 canonical shifted boundary state 的未来移位永远无法生成的方向。
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+F_q\text{ outer}
+&\iff
+F_q\text{ cyclic}\\
+&\iff
+K_{B_q}=\{0\}\\
+&\iff
+B_q=1.
+\end{aligned}
+}
+\tag{1682.5}
+$$
+
+在完成增长归一化后：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{每个 }q>0\text{ 的 canonical shifted-\(\xi\) 边界状态均为循环状态。}
+}
+\tag{1682.6}
+$$
+
+因此 RH 可以被理解为：
+
+$$
+\boxed{
+\text{算术未来迭代不存在任何永久不可达的正交盲空间。}
+}
+$$
+
+---
+

@@ -1,0 +1,45 @@
+# 第一千六百九十一部　视界是隐藏通道的死亡时间
+
+令：
+
+$$
+h_\rho(q)=\delta_\rho-q.
+$$
+
+在 \(q<\delta_\rho\) 时，边界密度为：
+
+$$
+\boxed{
+P_{h_\rho(q)}(x+\gamma_\rho).
+}
+\tag{1691.1}
+$$
+
+随着：
+
+$$
+q\uparrow\delta_\rho,
+$$
+
+有：
+
+$$
+h_\rho(q)\downarrow0,
+$$
+
+并且：
+
+$$
+\boxed{
+P_{h_\rho(q)}(x+\gamma_\rho)
+\rightharpoonup
+\delta_{-\gamma_\rho}.
+}
+\tag{1691.2}
+$$
+
+所以该通道在死亡前并不是逐渐消失，而是逐渐聚焦。
+
+其：
+
+* 宽度趋于零；

@@ -1,0 +1,26 @@
+## 定理 1577.1（有限负计数证书）
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\Longrightarrow
+\exists\,q,r\in\mathbb Q,\ r>0:
+Q_q(r)>0,
+\quad
+r\partial_r\log Q_q(r)<0.
+}
+\tag{1577.8}
+$$
+
+这里使用了负性开集和有理数稠密性。
+
+这是一种比高阶中心 jet 更低阶、但需要移动观察位置与尺度的证书：
+
+$$
+\boxed{
+\text{某个完成计数的“平均模式数”变成负数。}
+}
+$$
+
+---
+

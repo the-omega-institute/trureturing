@@ -1,0 +1,15 @@
+## 二、jet 匹配失败
+
+有限正算子的外幂迹不能趋近真实 normal jets：
+
+$$
+e_m(A_N)
+\nrightarrow
+\frac{\mathcal J_m(t)}
+{\mathcal J_0(t)}.
+$$
+
+局部正模型描述的是另一套完成，而不是 completed-\(\xi\)。
+
+---
+

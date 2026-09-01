@@ -1,0 +1,14 @@
+## 第二桥：prime hard-core two-step positivity
+
+形式化：
+
+$$
+M_{k+1}M_k
+$$
+
+的严格 total positivity，以及 finite prime products 的正网络表示。
+
+这可能为 zero-side PF\(_\infty\) 提供局部正性原语。
+
+---
+

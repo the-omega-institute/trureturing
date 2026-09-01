@@ -1,0 +1,81 @@
+# 第一千五百九十部　循环 Hodge Laplacian
+
+定义离散差分：
+
+$$
+\boxed{
+d_K=I-U_K.
+}
+\tag{1590.1}
+$$
+
+其约化 Laplacian 为：
+
+$$
+\boxed{
+\Delta_K
+=
+d_K^*d_K
+=
+2I-U_K-U_K^*.
+}
+\tag{1590.2}
+$$
+
+在 \(\mathcal H_K^\circ\) 上：
+
+$$
+\Delta_K>0.
+$$
+
+其特征值为：
+
+$$
+\boxed{
+\lambda_j(\Delta_K)
+=
+4\sin^2\frac{\pi j}{K}.
+}
+\tag{1590.3}
+$$
+
+Cayley 生成元满足：
+
+$$
+\boxed{
+H_K^2
+=
+4\Delta_K^{-1}-I.
+}
+\tag{1590.4}
+$$
+
+因为在第 \(j\) 个特征方向：
+
+$$
+\cot^2\frac{\pi j}{K}
+=
+\frac{
+4-4\sin^2(\pi j/K)
+}{
+4\sin^2(\pi j/K)
+}.
+$$
+
+所以单位圆相位、正 Laplacian 与非紧 Cayley 坐标不是三套独立结构，而是：
+
+$$
+\boxed{
+U_K
+\longrightarrow
+d_K
+\longrightarrow
+\Delta_K=d_K^*d_K
+\longrightarrow
+H_K^2=4\Delta_K^{-1}-I.
+}
+\tag{1590.5}
+$$
+
+---
+

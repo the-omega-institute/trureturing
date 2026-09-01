@@ -1,0 +1,86 @@
+## 定理 1557.1（One-observer total-positivity criterion）
+
+对任意满足 \(\Xi(t)\neq0\) 的固定实数 \(t\)，以下条件等价：
+
+$$
+\boxed{
+\mathrm{RH};
+}
+$$
+
+$$
+\boxed{
+\mathbb P_t
+\text{ 的全部有限小行列式非负};
+}
+$$
+
+$$
+\boxed{
+(a_m^{(t)})_{m\ge0}
+\text{ 是 PF}_\infty\text{ 序列}.
+}
+\tag{1557.3}
+$$
+
+### RH 推出全非负性
+
+由式 (1553.4)：
+
+$$
+\sum_{m\ge0}a_m^{(t)}w^m
+=
+\prod_\lambda
+(1+a_{\lambda,t}w),
+\qquad
+a_{\lambda,t}>0.
+$$
+
+这正是 PF\(_\infty\) 生成函数。
+
+### 全非负性推出 RH
+
+PF\(_\infty\) 表示与 \(Q_t\) 的整函数阶 \(1/2\) 共同推出：
+
+$$
+\operatorname{Zero}(Q_t)\subset(-\infty,0].
+$$
+
+若 \(\zeta=x+iy\) 是 \(\Xi\) 的任意零点，则：
+
+$$
+-(\zeta-t)^2\in(-\infty,0].
+$$
+
+写：
+
+$$
+\zeta-t=u+iv.
+$$
+
+条件要求：
+
+$$
+(u+iv)^2\in[0,\infty).
+$$
+
+其虚部：
+
+$$
+2uv=0.
+$$
+
+若 \(u=0\)，则实部为：
+
+$$
+-v^2\ge0,
+$$
+
+只能有 \(v=0\)。
+
+若 \(v=0\)，则 \(\zeta\) 本身为实数。
+
+因此所有 \(\Xi\) 零点均实，RH 成立。∎
+
+---
+

@@ -1,0 +1,55 @@
+## 1580.1 Prime–Gamma 准自由输运目标
+
+设：
+
+$$
+\mathcal H_{\mathrm{prime}}^{\mathrm{Zeck}}
+$$
+
+表示全部 prime Fibonacci chains 的受限配置空间。
+
+设：
+
+$$
+A_t
+$$
+
+为待构造的 zero inverse-gap operator。
+
+目标不是只证明标量恒等式，而是构造一个保持正性的变换：
+
+$$
+\boxed{
+\mathcal U_t:
+\mathcal H_{\mathrm{prime}}^{\mathrm{Zeck}}
+\longrightarrow
+\mathcal F_{\mathrm{ext}}(A_t),
+}
+\tag{1580.1}
+$$
+
+使：
+
+$$
+\boxed{
+\text{prime–pole–Gamma trace}
+=
+\det(I+wA_t).
+}
+\tag{1580.2}
+$$
+
+若进一步：
+
+$$
+A_t\ge0,
+$$
+
+则 RH 成立。
+
+目前并不存在这样的已闭合变换。
+
+显式公式只提供若干 trace-level 对应；它尚未构成一个正的 microscopic transport。
+
+---
+

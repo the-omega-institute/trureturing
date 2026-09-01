@@ -1,0 +1,25 @@
+## 1523.1 逻辑不对称
+
+RH 与其否定在这一语言中具有不同逻辑复杂度：
+
+$$
+\boxed{
+\mathrm{RH}
+=
+\forall N,\ H_N^\xi\succeq0;
+}
+\tag{1523.2}
+$$
+
+$$
+\boxed{
+\neg\mathrm{RH}
+=
+\exists N,\ H_N^\xi\not\succeq0.
+}
+\tag{1523.3}
+$$
+
+所以：
+
+* RH 假时，存在有限反证书；

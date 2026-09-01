@@ -1,0 +1,39 @@
+## v9.7：循环谱规范、Cayley–Cauchy 极限、局部 RH 与全局完成异常
+
+以下从前文**第一千五百八十四部**继续。
+
+这一轮出现了一个很关键的结构收敛：
+
+$$
+\boxed{
+\text{Zeckendorf 硬核链并不只是一个“有记忆编码”。}
+}
+$$
+
+同一个有限 Euler 因子还可以被精确改写为一个**自由酉相位系统的行列式**：
+
+$$
+\boxed{
+\sum_{e=0}^{K-1}x^e
+=
+\sum_{\eta\in\Omega_N}x^{E_N(\eta)}
+=
+\det_{\mathbf 1^\perp}(I-xU_K).
+}
+$$
+
+因此局部 prime 模式已经同时拥有三种名字：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{整数占据名字};\\
+&\text{黄金硬核历史名字};\\
+&\text{循环酉谱名字}.
+\end{aligned}
+}
+$$
+
+三者产生完全相同的标量 partition function，却拥有不同的：
+
+* 局部性；

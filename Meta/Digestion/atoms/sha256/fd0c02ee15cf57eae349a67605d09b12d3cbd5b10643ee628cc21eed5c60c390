@@ -1,0 +1,40 @@
+## 1504.1 加权命名熵
+
+给零点轨道配置可和权重 \(w_{\mathcal O}\ge0\)，定义：
+
+$$
+\boxed{
+\mathcal E_{\mathrm{orient}}
+=
+\sum_{\mathcal O}
+w_{\mathcal O}
+b(\mathcal O).
+}
+\tag{1504.5}
+$$
+
+在 causal profile 能够区分离线伙伴的条件下：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal E_{\mathrm{orient}}=0
+}
+\tag{1504.6}
+$$
+
+对任一对所有轨道取严格正权的可和权重成立。
+
+这不是传统熵，也不是物理黑洞熵。
+
+它只是：
+
+$$
+\boxed{
+\text{谱完成相对于因果完成所遗忘的方向信息量。}
+}
+$$
+
+---
+

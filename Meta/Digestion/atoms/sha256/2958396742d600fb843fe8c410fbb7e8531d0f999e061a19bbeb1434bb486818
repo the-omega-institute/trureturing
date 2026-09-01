@@ -1,0 +1,51 @@
+## 1593.3 一个重要修正：Fibonacci phase grids 不是标准逆系统
+
+相邻 Fibonacci 数一般不满足：
+
+$$
+F_n\mid F_{n+1}.
+$$
+
+所以：
+
+$$
+\mathbb Z/F_n\mathbb Z
+$$
+
+并不会自然形成逐层覆盖的逆系统。
+
+因此：
+
+$$
+\boxed{
+\text{Fibonacci phase grids 本身不是一个标准 Solenoid 塔。}
+}
+$$
+
+它们是网格趋于稠密的多尺度采样族。
+
+若要构造真正的 inverse-limit phase completion，需要：
+
+* 使用整除有向的全部模数；
+* 或使用：
+
+  $$
+  \operatorname{lcm}(F_2,\ldots,F_N)
+  $$
+
+  形成整除塔。
+
+项目当前证明的 golden desubstitution 则位于另一侧：它在 Zeckendorf 数位上确实表现为统一的向上位移，并把 desubstitution 路径刻画为重复的数位平移。
+
+因此应区分：
+
+$$
+\boxed{
+\text{编码深度动力}
+\neq
+\text{相位覆盖逆系统}.
+}
+$$
+
+---
+

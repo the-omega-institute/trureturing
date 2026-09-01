@@ -1,0 +1,39 @@
+## 1537.1 RH 下的局部平方零点
+
+若 RH 成立，\(\Xi\) 的零点均为实数 \(\lambda\)。
+
+由：
+
+$$
+\Xi(t\pm iz)=0
+$$
+
+得到：
+
+$$
+z=\pm i(\lambda-t).
+$$
+
+所以 \(Q_t\) 的零点均为：
+
+$$
+\boxed{
+-(\lambda-t)^2\le0.
+}
+\tag{1537.5}
+$$
+
+即：
+
+$$
+\boxed{
+\mathrm{RH}
+\Longrightarrow
+\operatorname{Zero}(Q_t)\subset(-\infty,0]
+\quad
+\forall t.
+}
+$$
+
+---
+

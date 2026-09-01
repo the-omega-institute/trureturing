@@ -1,0 +1,29 @@
+* horizon-like chart。
+
+所以磁单极子与黑洞看起来相似，是因为它们分别读取：
+
+$$
+\boxed{
+\text{同一个 compact phase bundle 的全局绕数与局部非紧边界图表。}
+}
+$$
+
+它们不是简单互为对偶，但共享同一个相位母结构。
+
+点态 Cayley 坐标会遗忘 winding branch；
+
+完整边界 phase field 的积分又能恢复 winding degree。
+
+所以：
+
+$$
+\boxed{
+\text{局部边界辐射可以遗忘具体历史，
+但全局通量仍然保存整数荷。}
+}
+$$
+
+这正是“黑洞吞噬细节，却保留某些整体荷”的数学原型。
+
+---
+

@@ -1,0 +1,41 @@
+## 定理 1498.1（双修复熵分解）
+
+$$
+\boxed{
+\mathcal H_{\mathrm{name}}(R)
+=
+\mathcal H_{\mathrm{pred}}(R)
++
+\mathcal H_{\mathrm{forget}}(R).
+}
+\tag{1498.5}
+$$
+
+### 证明
+
+由条件熵链式法则：
+
+$$
+H(Z_I,Z_R\mid Z_C)
+=
+H(Z_R\mid Z_C)
++
+H(Z_I\mid Z_R,Z_C).
+$$
+
+因为 \(Z_R\) 是 \(Z_I\) 的函数：
+
+$$
+H(Z_I,Z_R\mid Z_C)=H(Z_I\mid Z_C).
+$$
+
+又因为 \(Z_C\) 是 \(Z_R\) 的函数：
+
+$$
+H(Z_I\mid Z_R,Z_C)=H(Z_I\mid Z_R).
+$$
+
+代入即得。∎
+
+---
+

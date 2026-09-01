@@ -1,0 +1,34 @@
+## 路线 A：稳定 entire approximants
+
+构造：
+
+$$
+\Xi_M(z)
+$$
+
+满足：
+
+$$
+\operatorname{Zero}(\Xi_M)\subset\mathbb R,
+$$
+
+或在 centered complex 图表中：
+
+$$
+\operatorname{Zero}(F_M)\subset i\mathbb R,
+$$
+
+并证明：
+
+$$
+\Xi_M\longrightarrow\Xi
+$$
+
+局部一致。
+
+由 Hurwitz 立即得到 RH。
+
+真正困难是构造允许精确内部消去、却不引入离线零点的 prime–Gamma renormalization。
+
+---
+

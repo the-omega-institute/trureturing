@@ -1,0 +1,26 @@
+## 定理 1684.1（Phase-fibre basis theorem）
+
+$$
+\boxed{
+\{e_1^\alpha,\ldots,e_m^\alpha\}
+}
+$$
+
+是 \(K_B\) 的正交标准基。
+
+### 证明
+
+式 (1684.3) 给出正交性；每个向量已归一化。
+
+向量数为 \(m\)，而：
+
+$$
+\dim K_B=\deg B=m.
+$$
+
+故其为完整基。∎
+
+这通常对应有限 Blaschke 模型中的 Clark 基结构，但在这里直接由 kernel 公式得到。
+
+---
+

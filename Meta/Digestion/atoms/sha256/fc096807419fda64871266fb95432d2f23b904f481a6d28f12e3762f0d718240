@@ -1,0 +1,15 @@
+## Prime–Gamma No-Atomic-Phase-Fibre Target
+
+对 canonical shifted phase residual 所生成的 Herglotz／Cayley response，证明其正表示中不存在任何有限正原子部分。
+
+若所有有限高度截断均不存在这样的原子 phase fibre，则：
+
+$$
+\deg B_{q,T}=0
+$$
+
+对全部 \(q,T\) 成立，进而推出 RH。
+
+这条路线的潜在优势是：
+
+* 原子测度有有限 Hankel rank；

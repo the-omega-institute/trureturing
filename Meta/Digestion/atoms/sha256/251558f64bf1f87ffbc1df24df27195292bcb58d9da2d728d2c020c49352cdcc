@@ -1,0 +1,133 @@
+# 本轮最终结论
+
+这一轮最深的结论是：黄金硬核编码其实已经在局部完成了一次非常彻底的“交互系统到自由谱系统”的转换。
+
+对于：
+
+$$
+K=F_{N+1},
+$$
+
+有精确恒等式：
+
+$$
+\boxed{
+\sum_{\eta\in\Omega_N}
+x^{E_N(\eta)}
+=
+\det_{\mathbf1^\perp}(I-xU_K).
+}
+$$
+
+左边是一条只有两个内部状态、具有一步记忆和相邻排斥的黄金链。
+
+右边是一个 \(K-1\) 维自由酉相位系统。
+
+所以同一个完成值可以把：
+
+$$
+\boxed{
+\text{时间记忆}
+}
+$$
+
+重新命名为：
+
+$$
+\boxed{
+\text{空间谱维数}.
+}
+$$
+
+转换率正是：
+
+$$
+F_{N+1}\sim\varphi^N.
+$$
+
+这给黄金比例一个新的、极其明确的身份：
+
+$$
+\boxed{
+\varphi
+=
+\text{最小一步记忆系统的时间深度—自由谱宽度汇率。}
+}
+$$
+
+---
+
+循环酉谱再经 Cayley 变换：
+
+$$
+H_K=i(I+U_K)(I-U_K)^{-1},
+$$
+
+会成为实自伴谱：
+
+$$
+h_j=-\cot\frac{\pi j}{K}.
+$$
+
+商去常数零模以后，其 Hodge Laplacian严格为正：
+
+$$
+\Delta_K=(I-U_K)^*(I-U_K)>0.
+$$
+
+而且：
+
+$$
+\boxed{
+H_K^2=4\Delta_K^{-1}-I.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{圆周相位}
+\longrightarrow
+\text{正 Laplacian}
+\longrightarrow
+\text{非紧实谱}
+}
+$$
+
+在每个有限 prime 区块内都已经完全成立。
+
+离线零点因此绝不可能是某个局部 prime block 自身“不稳定”。
+
+---
+
+随着：
+
+$$
+K\to\infty,
+$$
+
+循环相位的 Cayley 谱严格趋向：
+
+$$
+\frac{dh}{\pi(1+h^2)}.
+$$
+
+也就是标准 Cauchy 分布。
+
+所以此前黑洞、Poisson、Cauchy 光影反复出现，确实具有一个非常底层的数学来源：
+
+$$
+\boxed{
+\text{compact phase 的 Haar 连续完成，
+在 Cayley 边界图表中必然成为 Cauchy harmonic measure。}
+}
+$$
+
+不同离线零点的 Poisson 光影，只是这个普适 Cauchy 母形的平移和缩放。
+
+因此不能把“出现 Cauchy 分布”本身视为离线异常。
+
+异常在于该 Cauchy 模式的：
+
+* 中心；

@@ -1,0 +1,33 @@
+# 第一千五百部　无终命名的严格模型
+
+令干预集合逐层增加：
+
+$$
+I_0\subset I_1\subset I_2\subset\cdots.
+$$
+
+相应 profile 为：
+
+$$
+\Gamma_n:
+H\to
+\left(
+I_n\to\operatorname{PMF}(O)
+\right).
+$$
+
+若：
+
+$$
+\boxed{
+\ker\Gamma_{n+1}
+\subsetneq
+\ker\Gamma_n
+\qquad
+\forall n,
+}
+\tag{1500.1}
+$$
+
+则没有任何有限阶段能够成为完整 agency-self。
+

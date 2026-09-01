@@ -1,0 +1,89 @@
+# 第一千五百八十三部　建议形式化顺序
+
+```text
+D5/S3/Arithmetic/ZeckendorfEuler/
+  FiniteZeckendorfWord.lean
+  FiniteZeckendorfEnergy.lean
+  FiniteZeckendorfEnergyInjective.lean
+  FiniteZeckendorfEnergyRange.lean
+  FiniteZeckendorfGeometricSum.lean
+  InfiniteZeckendorfEulerFactor.lean
+
+D5/S3/Arithmetic/NamingMemoryClassification/
+  MemorylessBinaryNaming.lean
+  GaplessBinaryWeightsArePowersTwo.lean
+  OneStepHardCoreNaming.lean
+  GaplessHardCoreWeightsAreFibonacci.lean
+  GoldenIsFirstMemoryfulNamingRate.lean
+
+D5/S3/Arithmetic/PrimeFibonacciGenome/
+  PrimeZeckendorfDigit.lean
+  PrimeFibonacciConfiguration.lean
+  IntegerToPrimeFibonacciGenome.lean
+  PrimeFibonacciGenomeToInteger.lean
+  PrimeFibonacciGenomeEquiv.lean
+
+D5/S3/Analytic/Zeta/GoldenPowerFreeTower/
+  FiniteGoldenEulerFactor.lean
+  GoldenPowerFreeEulerProduct.lean
+  GoldenPowerFreeZetaRatio.lean
+  GoldenIntegerBirthDepth.lean
+  GoldenBirthShellDirichletSeries.lean
+  GoldenTowerCompletionBound.lean
+
+D5/S3/Arithmetic/NamingGauge/
+  ExponentNamingSystem.lean
+  EnergyPreservingRecoding.lean
+  BinaryExponentName.lean
+  ZeckendorfExponentName.lean
+  PartitionFunctionRecodingInvariant.lean
+  PartitionFunctionNotFaithfulToLocality.lean
+
+D5/S3/Arithmetic/GoldenHardCoreTransfer/
+  GoldenHardCoreTransferMatrix.lean
+  GoldenHardCorePartitionRecurrence.lean
+  GoldenTwoStepTransfer.lean
+  GoldenTwoStepStrictTotalPositive.lean
+  GoldenUnweightedTransferSpectrum.lean
+
+D5/S3/Analytic/Zeta/ZeroQuasiFreeProcess/
+  MovingInverseGapOperator.lean
+  ScaleOccupationContraction.lean
+  MovingCountingGeneratingFunction.lean
+  PositiveContractionDeterminantPGF.lean
+  RHQuasiFreeCountingCriterion.lean
+
+D5/S3/Analytic/Zeta/ZeroCountingStatistics/
+  ZeroModeMeanCount.lean
+  ZeroModeVariance.lean
+  ZeroModeSubPoisson.lean
+  ZeroModeFactorialCumulant.lean
+  AlternatingFactorialCumulants.lean
+  OffLineNegativeMeanCertificate.lean
+
+D5/S3/Analytic/Zeta/SquaredGapHeat/
+  SquaredGapOperator.lean
+  InverseGapFredholmDeterminant.lean
+  SquaredGapResolventTrace.lean
+  SquaredGapHeatTrace.lean
+  LogDetHeatRepresentation.lean
+  OffLineMatchedNegativeHeatMode.lean
+
+D5/S3/GoldenObserver/LogisticActivation/
+  ResolventOccupationFlow.lean
+  LogScaleLogisticEquation.lean
+  GoldenSecondShadowOccupation.lean
+  GoldenActivationScale.lean
+  EntropyMaximumNotGolden.lean
+
+D5/S3/Weil/PrimeZeroExteriorTransport/
+  PrimeGoldenHardCoreStateSpace.lean
+  PrimeHardCorePositiveNetwork.lean
+  GammaCompletionChannelTarget.lean
+  PrimeGammaToExteriorTransferTarget.lean
+  PositiveExteriorTransferImpliesRHTarget.lean
+  PrimeGammaStrongRayleighTarget.lean
+```
+
+---
+

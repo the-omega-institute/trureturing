@@ -1,0 +1,61 @@
+# 第一千六百八十九部　自‑Haar 并不意味着相同的内部
+
+取两个次数均为 \(m\) 的有限 Blaschke 积：
+
+$$
+B_1,\qquad B_2.
+$$
+
+它们都满足：
+
+$$
+(B_r)_*\nu_{B_r}
+=
+m_{S^1},
+\qquad
+r=1,2.
+$$
+
+它们也都有：
+
+$$
+\dim K_{B_r}=m,
+\qquad
+S(I/m)=\log m.
+$$
+
+但它们的零点位置可能完全不同。
+
+因此：
+
+$$
+\boxed{
+\begin{aligned}
+\text{同一个 Haar 输出}\\
++\text{同一个隐藏维数}\\
++\text{同一个最大混合熵}
+\end{aligned}
+}
+$$
+
+仍然不足以确定内部除子。
+
+真正继续区分 \(B_1,B_2\) 的是：
+
+$$
+\boxed{
+\begin{aligned}
+&\theta_{B_r}'(x);\\
+&\text{phase-fibre 原像 }x_j^\alpha;\\
+&\text{不同 \(\alpha\) 基之间的酉过渡};\\
+&\text{外部固定 Cayley 图表中的 moments}.
+\end{aligned}
+}
+$$
+
+所以完成名字可以在越来越多层面相同，而内部生成历史仍然不同。
+
+这正是“名可名，非常名”的一个严格有限维样本。
+
+---
+

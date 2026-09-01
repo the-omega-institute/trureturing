@@ -1,0 +1,32 @@
+## 定理 1585.1（三重微观规范）
+
+$$
+\boxed{
+\sum_{e=0}^{K-1}x^e
+=
+\sum_{\eta\in\Omega_N}x^{E_N(\eta)}
+=
+\det_{\mathcal H_K^\circ}(I-xU_K).
+}
+\tag{1585.3}
+$$
+
+三端分别是：
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{表示}&\text{结构}\\
+\hline
+e\in\{0,\ldots,K-1\}
+&\text{单一截断占据数}\\
+\eta\in\Omega_N
+&\text{二状态、一步记忆硬核链}\\
+U_K|_{\mathbf1^\perp}
+&\text{\(K-1\) 个自由酉相位模式}
+\end{array}
+}
+$$
+
+---
+

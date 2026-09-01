@@ -1,0 +1,37 @@
+## 1685.2 过渡矩阵的显式模长
+
+若：
+
+$$
+B(x_j^\alpha)=\alpha,
+\qquad
+B(x_k^\beta)=\beta,
+$$
+
+则由 reproducing kernel：
+
+$$
+\boxed{
+\left|
+\left(
+U_{\beta\leftarrow\alpha}
+\right)_{kj}
+\right|^2
+=
+\frac{
+|1-\alpha\overline\beta|^2
+}{
+(x_j^\alpha-x_k^\beta)^2
+\theta_B'(x_j^\alpha)
+\theta_B'(x_k^\beta)
+}.
+}
+\tag{1685.6}
+$$
+
+因为 \(U_{\beta\leftarrow\alpha}\) 酉，其模平方矩阵为双随机矩阵。
+
+所以不同 phase names 之间的转换不是任意概率映射，而是来自一个隐藏酉变换。
+
+---
+

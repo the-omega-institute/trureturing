@@ -1,0 +1,34 @@
+## 1753.1 项目当前已经闭合与未闭合的部分
+
+项目已经机器证明：
+
+1. 若固定深度 moments 能以
+
+   $$
+   O(e^{-L}L^{N-1})
+   $$
+
+   恢复，则有限 Toeplitz 算子范数与最小特征值也以同阶恢复。
+
+2. 在已经假设存在有限偶正测度并完成 Li moment identification 时，Cayley–Laguerre tomography 给出明确 resolvent integral。
+
+3. 一旦 Verblunsky 参数已经满足
+
+   $$
+   |\alpha_n|<1,
+   $$
+
+   规范 Szegő transfer 就属于 \(SU(1,1)\)。
+
+但尚未证明的是第一步：
+
+$$
+\boxed{
+\text{实际 Li curvature sequence 是一个正定函数。}
+}
+$$
+
+即尚未构造式 (1753.1) 中的正算术状态。
+
+---
+

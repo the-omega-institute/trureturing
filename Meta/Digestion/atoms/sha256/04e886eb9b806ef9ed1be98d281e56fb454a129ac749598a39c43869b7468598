@@ -1,0 +1,67 @@
+# 第一千七百五十三部　Li–Clark 正性可以重写为“是否存在算术状态”
+
+项目中的 Li–Clark moments 为：
+
+$$
+c(r)
+=
+\frac{
+\lambda_{|r+1|}
+-2\lambda_{|r|}
++\lambda_{|r-1|}
+}{
+2\lambda_1
+}.
+$$
+
+有限 Toeplitz block 为：
+
+$$
+T_N=[c(j-k)]_{j,k=0}^N.
+$$
+
+若存在一个 Hilbert 空间 \(\mathcal H\)、一个酉算子 \(U\) 和单位向量 \(\Omega\)，使：
+
+$$
+\boxed{
+c(r)
+=
+\langle\Omega,U^r\Omega\rangle,
+}
+\tag{1753.1}
+$$
+
+则对任意有限系数 \(a_j\)：
+
+$$
+\begin{aligned}
+\sum_{j,k}
+\overline{a_j}a_kc(j-k)
+&=
+\left\|
+\sum_ja_jU^j\Omega
+\right\|^2\\
+&\ge0.
+\end{aligned}
+$$
+
+所以全部 Toeplitz matrices 自动正半定。
+
+因此真正承重的目标可以从：
+
+$$
+\boxed{
+\text{逐个证明 }T_N\succeq0
+}
+$$
+
+提升为：
+
+$$
+\boxed{
+\text{从 prime–Gamma 数据构造一个正的算术 phase state }(\mathcal H,U,\Omega).
+}
+$$
+
+---
+

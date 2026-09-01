@@ -1,0 +1,76 @@
+# 第一千五百四十三部　离线零点的 Cayley 径向逃逸
+
+令离线零点在 \(\Xi\)-平面中的坐标为：
+
+$$
+\eta_\rho=\gamma-i\delta.
+$$
+
+对线性尺度 \(a>0\)，定义 Cayley 坐标：
+
+$$
+\boxed{
+\zeta_a(\rho)
+=
+\frac{\eta_\rho+ia}{\eta_\rho-ia}.
+}
+\tag{1543.1}
+$$
+
+临界情形 \(\delta=0\) 时：
+
+$$
+|\zeta_a(\rho)|=1.
+$$
+
+右侧离线情形 \(\delta>0\) 时：
+
+$$
+\boxed{
+|\zeta_a(\rho)|^2
+=
+\frac{\gamma^2+(a-\delta)^2}
+{\gamma^2+(a+\delta)^2}
+<1.
+}
+\tag{1543.2}
+$$
+
+反射伙伴 \(\delta\mapsto-\delta\) 被送到 reciprocal 外部点。
+
+因此：
+
+$$
+\boxed{
+\text{临界零点是单位圆相位；
+离线反射对是单位圆内外的一对 reciprocal 径向逃逸。}
+}
+$$
+
+对固定 \((\gamma,\delta)\)，径向偏离在：
+
+$$
+\boxed{
+a_*=\sqrt{\gamma^2+\delta^2}
+}
+\tag{1543.3}
+$$
+
+处最大。
+
+此时：
+
+$$
+\boxed{
+|\zeta_{a_*}(\rho)|^2
+=
+\frac{\sqrt{\gamma^2+\delta^2}-\delta}
+{\sqrt{\gamma^2+\delta^2}+\delta}.
+}
+\tag{1543.4}
+$$
+
+所以单尺度在逻辑上足够，但数值上最好让 Cayley 尺度匹配零点总半径。
+
+---
+

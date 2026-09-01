@@ -1,0 +1,30 @@
+## 路线 B：单尺度 Toeplitz 正性
+
+选择一个固定尺度 \(u_0>0\)，构造：
+
+$$
+c_n(u_0),
+$$
+
+证明：
+
+$$
+\boxed{
+[c_{j-k}(u_0)]_{j,k=0}^{N}\succeq0
+\quad
+\forall N.
+}
+\tag{1550.2}
+$$
+
+仓库现已拥有：
+
+* Cayley moments 的有限 derivative-jet 公式；
+* 跨尺度几何尾界；
+* Chebyshev 紧化 slack；
+* 有限正原子 completion。
+
+这条路线将无界幂矩换成有界 Fourier moments，可能更适合机器认证。
+
+---
+

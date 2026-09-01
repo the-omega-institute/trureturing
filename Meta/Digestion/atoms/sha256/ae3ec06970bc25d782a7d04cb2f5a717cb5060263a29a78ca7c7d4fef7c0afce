@@ -1,0 +1,86 @@
+# 第一千六百八十三部　边界相位的 \(m\) 重纤维
+
+令 \(B\) 是次数：
+
+$$
+m=\deg B
+$$
+
+的有限上半平面 Blaschke 积。
+
+在扩充实轴：
+
+$$
+\widehat{\mathbb R}
+=
+\mathbb R\cup\{\infty\}
+\simeq S^1
+$$
+
+上，\(B\) 是一个方向保持的 \(m\) 重圆周覆盖。
+
+选择连续展开的相位：
+
+$$
+\boxed{
+B(x)=e^{i\theta_B(x)}.
+}
+\tag{1683.1}
+$$
+
+则：
+
+$$
+\boxed{
+\theta_B'(x)>0,
+}
+\tag{1683.2}
+$$
+
+并且：
+
+$$
+\boxed{
+\theta_B(+\infty)-\theta_B(-\infty)
+=
+2\pi m.
+}
+\tag{1683.3}
+$$
+
+对任意正则相位：
+
+$$
+\alpha=e^{i\phi}\in S^1,
+$$
+
+方程：
+
+$$
+B(x)=\alpha
+$$
+
+在 \(\widehat{\mathbb R}\) 上恰有 \(m\) 个原像：
+
+$$
+\boxed{
+x_1^\alpha,\ldots,x_m^\alpha.
+}
+\tag{1683.4}
+$$
+
+所以 completed phase value \(\alpha\) 并不唯一指定一个边界状态。
+
+它只指定了一个 \(m\) 元纤维：
+
+$$
+\boxed{
+B^{-1}(\alpha)
+=
+\{x_1^\alpha,\ldots,x_m^\alpha\}.
+}
+\tag{1683.5}
+$$
+
+---
+

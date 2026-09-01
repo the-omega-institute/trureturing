@@ -1,0 +1,60 @@
+# 第一千六百九十三部　phase-fibre Clark 测度
+
+固定：
+
+$$
+\alpha\in S^1.
+$$
+
+对 phase fibre：
+
+$$
+B^{-1}(\alpha)
+=
+\{x_1^\alpha,\ldots,x_m^\alpha\},
+$$
+
+定义离散正测度：
+
+$$
+\boxed{
+\mu_\alpha
+=
+\sum_{j=1}^{m}
+\frac{
+2\pi
+}{
+\theta_B'(x_j^\alpha)
+}
+\delta_{x_j^\alpha}.
+}
+\tag{1693.1}
+$$
+
+则采样公式可写成：
+
+$$
+\boxed{
+\|f\|_{K_B}^2
+=
+\int_{\mathbb R}
+|f(x)|^2\,d\mu_\alpha(x).
+}
+\tag{1693.2}
+$$
+
+所以：
+
+$$
+\boxed{
+K_B
+\simeq
+L^2(\mu_\alpha).
+}
+\tag{1693.3}
+$$
+
+每个 phase observer 都把同一个隐藏 Hilbert 空间表示为一个 \(m\) 原子正测度空间。
+
+---
+

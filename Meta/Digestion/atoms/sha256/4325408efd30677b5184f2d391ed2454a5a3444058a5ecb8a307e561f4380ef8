@@ -1,0 +1,27 @@
+## 定理 1541.1（单尺度 Cayley–Toeplitz 判据）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+S(u_0)>0
+\quad\text{且}\quad
+\mathbb T_N(u_0)\succeq0
+\quad
+\forall N.
+}
+\tag{1541.6}
+$$
+
+这张图表的关键优点是：
+
+$$
+\boxed{
+|c_n(u_0)|\le1.
+}
+$$
+
+它把无界幂矩问题变成单位圆上的有界相位问题。
+
+---
+

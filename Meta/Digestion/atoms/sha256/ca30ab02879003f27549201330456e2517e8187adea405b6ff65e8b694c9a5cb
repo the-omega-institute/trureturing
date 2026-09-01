@@ -1,0 +1,26 @@
+# 第一千五百七十四部　标量完成不识别微观命名
+
+同一个 local Euler factor：
+
+$$
+\frac1{1-x}
+$$
+
+既有 binary independent lift，也有 Zeckendorf hard-core lift。
+
+二者之间存在能量保持双射：
+
+$$
+\boxed{
+\text{binary digits}
+\longleftrightarrow
+e\in\mathbb N
+\longleftrightarrow
+\text{Zeckendorf digits}.
+}
+\tag{1574.1}
+$$
+
+但这个双射不保持局部关系：
+
+* binary 位彼此独立；

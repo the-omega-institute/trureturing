@@ -1,0 +1,105 @@
+# 第一千六百零五部　建议形式化顺序
+
+```text
+D5/S3/Arithmetic/ZeckendorfCycleDeterminant/
+  FiniteExponentInterval.lean
+  ZeckendorfEnergyBijection.lean
+  CyclicShiftOperator.lean
+  CyclicShiftMeanZeroRestriction.lean
+  ReducedCyclicDeterminant.lean
+  ZeckendorfHardCoreEqualsCyclicDeterminant.lean
+
+D5/S3/Arithmetic/GoldenDepthWidthDuality/
+  GoldenHardCoreStateWidth.lean
+  GoldenCyclicSpectralWidth.lean
+  FibonacciDepthToWidth.lean
+  GoldenDepthWidthEntropyRate.lean
+  PartitionEquivalenceNotLocalConjugacy.lean
+
+D5/S3/Analytic/PrimeLocalCriticality/
+  FinitePrimePowerFreeFactor.lean
+  CenteredFinitePrimeFactor.lean
+  CenteredPrimeSinhRatio.lean
+  CenteredPrimeZerosImaginary.lean
+  LocalPrimeCriticalAxis.lean
+  LocalAxisNotGlobalHalfShift.lean
+
+D5/S3/Analytic/CyclicCayleyGenerator/
+  ReducedCycleNoFixedMode.lean
+  CycleCayleySelfAdjoint.lean
+  CycleCayleySpectrumCotangent.lean
+  CycleDeterminantCayleyFormula.lean
+  LocalUnitCircleAsSelfAdjointSpectrum.lean
+
+D5/S3/Analytic/CyclicHodge/
+  CycleDifferenceOperator.lean
+  ReducedCycleLaplacianPositive.lean
+  CycleLaplacianSpectrum.lean
+  CayleySquareLaplacianIdentity.lean
+  TrivialModeReductionExplainsEulerDenominator.lean
+
+D5/S3/Analytic/LocalPositiveSquareCompletion/
+  CycleObserverShift.lean
+  CycleInverseSquareOperator.lean
+  CyclePositiveSquareDeterminant.lean
+  CycleNormalJetsExteriorPositive.lean
+  LocalPFCompletionAfterCayleySquare.lean
+
+D5/S3/Analytic/CayleyCauchyLimit/
+  ReducedCycleEmpiricalMeasure.lean
+  UniformPhaseRiemannSum.lean
+  CayleyPushforwardIsCauchy.lean
+  CycleCayleyMeasureWeakLimit.lean
+  GoldenCayleyResolutionRate.lean
+  AffineCauchyPoissonShadow.lean
+
+D5/S3/Observer/TwoDecompactifications/
+  CircleUniversalCoverCoordinate.lean
+  CircleCayleyCoordinate.lean
+  CoverRetainsWinding.lean
+  CayleyForgetsWindingBranch.lean
+  BoundaryPhaseRecoversDegree.lean
+  GoldenPhaseGridNotInverseSystem.lean
+
+D5/S3/GoldenObserver/ParryNamingProcess/
+  GoldenMeanAdjacency.lean
+  GoldenMeanPerronVector.lean
+  GoldenParryTransition.lean
+  GoldenParryStationaryMeasure.lean
+  GoldenParryDetailedBalance.lean
+  GoldenParryEntropyRate.lean
+  GoldenSecondShadowProbabilitySplit.lean
+
+D5/S3/Arithmetic/ReducedCycleTrace/
+  ReducedCyclePowerTrace.lean
+  ReducedCycleLogDetExpansion.lean
+  PowerFreeConnectedCounterterm.lean
+  NegativeConnectedTermIsModeRemoval.lean
+  ConnectedNegativityNotOffLineDefect.lean
+
+D5/S3/Analytic/Zeta/StableCriticalApproximation/
+  ImaginaryZeroEntireClass.lean
+  FiniteProductPreservesImaginaryZeros.lean
+  LocallyUniformLimitPreservesImaginaryZeros.lean
+  PrimeGammaStableApproximationImpliesRH.lean
+  GoldenPowerFreeTowerNotIndependentApproximation.lean
+
+D5/S3/Weil/ArithmeticHodgeCompletion/
+  PrimeCycleHilbertComplex.lean
+  ArchimedeanBoundaryComplexTarget.lean
+  PrimeGammaReducedLaplacianTarget.lean
+  ReducedLaplacianPositiveTarget.lean
+  ReducedLaplacianFredholmLimitTarget.lean
+  ArithmeticHodgeCompletionImpliesRHTarget.lean
+
+D5/S3/Weil/ArithmeticCompletePositivity/
+  PrimePhaseOperatorAlgebra.lean
+  ZeroObserverOperatorAlgebra.lean
+  ArithmeticCPTransportTarget.lean
+  ArithmeticStinespringDilationTarget.lean
+  CPTransportGivesMomentGram.lean
+  CPTransportGivesPositiveExteriorCompletion.lean
+```
+
+---
+

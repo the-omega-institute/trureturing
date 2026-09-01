@@ -1,0 +1,68 @@
+# 第一千五百六十部　Jensen 有限多项式塔
+
+写：
+
+$$
+\frac{Q_t(w)}{Q_t(0)}
+=
+\sum_{m=0}^{\infty}
+a_m^{(t)}w^m
+=
+\sum_{m=0}^{\infty}
+\gamma_m^{(t)}
+\frac{w^m}{m!},
+$$
+
+其中：
+
+$$
+\gamma_m^{(t)}
+=
+m!a_m^{(t)}.
+$$
+
+定义 degree \(d\)、shift \(n\) 的 Jensen 多项式：
+
+$$
+\boxed{
+J_{d,n}^{(t)}(X)
+=
+\sum_{k=0}^{d}
+\binom dk
+\gamma_{n+k}^{(t)}X^k.
+}
+\tag{1560.1}
+$$
+
+Jensen–Pólya 理论将 Laguerre–Pólya 类的实零点性质编译成全部有限 Jensen 多项式的双曲性；Riemann \(\Xi\) 的经典 Jensen 判据以及近年的渐近双曲性研究正沿这一路线展开。([arXiv][2])
+
+因此：
+
+$$
+\boxed{
+\mathrm{RH}
+\Longrightarrow
+J_{d,n}^{(t)}
+\text{ 全部只有实零点}.
+}
+\tag{1560.2}
+$$
+
+反向地，若全部 \(a_m^{(t)}\ge0\)，且全部 Jensen 多项式双曲，则 \(Q_t\) 属于 type-I Laguerre–Pólya 类，从而 RH 成立。
+
+所以：
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\Longrightarrow
+\begin{cases}
+\text{某个 }a_m^{(t)}<0,\\
+\text{或某个有限 Jensen 多项式非双曲}.
+\end{cases}
+}
+\tag{1560.3}
+$$
+
+---
+

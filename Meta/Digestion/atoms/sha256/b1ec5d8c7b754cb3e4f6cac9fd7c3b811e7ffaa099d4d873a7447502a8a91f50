@@ -1,0 +1,53 @@
+## v10.4：Blaschke–Cuntz 分支代数、黄金 Cuntz–Krieger 语法、关系维数与相位 winding 的 Bott 悬挂
+
+以下从前文**第一千七百三十二部**继续。
+
+这一轮得到一个新的严格分层：
+
+$$
+\boxed{
+\text{有限 Blaschke 因子的次数 }m
+\text{产生自由的整数分支结构；}
+}
+$$
+
+而：
+
+$$
+\boxed{
+\varphi
+\text{ 并不来自分支数本身，
+而来自分支历史之间的 Fibonacci 语法约束。}
+}
+$$
+
+因此必须区分：
+
+$$
+\boxed{
+\begin{aligned}
+m
+&=\text{当前一步有多少个正交 branch channels};\\
+m^n
+&=\text{自由递归 \(n\) 步后的 branch 数};\\
+\varphi^n
+&=\text{施加 golden grammar 后的合法历史数};\\
+\varphi^{2n}
+&=\text{这些合法历史之间的关系空间增长率}.
+\end{aligned}
+}
+$$
+
+这给此前反复出现的：
+
+* 整数页数；
+* 黄金维数；
+* \(\varphi^2\)；
+* Jones-like 指数；
+* phase fibre；
+* 关系先于对象；
+
+一个更清楚的依赖顺序。
+
+---
+

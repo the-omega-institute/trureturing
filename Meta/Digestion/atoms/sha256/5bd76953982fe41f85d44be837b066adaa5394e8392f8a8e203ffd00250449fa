@@ -1,0 +1,29 @@
+## 1596.1 但现有黄金 power-free 塔不满足该要求
+
+前文得到：
+
+$$
+\mathcal Z_N(s)
+=
+\frac{\zeta(s)}{\zeta(F_{N+1}s)}.
+$$
+
+它不是独立于 \(\zeta\) 零点构造的稳定近似。
+
+任何 \(\zeta\) 零点都会原样保留在足够深的 \(\mathcal Z_N\) 中。
+
+所以这条塔虽然精确刻画 prime exponent history，却不能成为 RH 的稳定逼近证明。
+
+同样，朴素 finite Euler products 只在右半平面收敛，不能直接在临界带中局部一致逼近 completed \(\Xi\)。
+
+因此：
+
+$$
+\boxed{
+\text{局部稳定性没有失败；
+失败的是尚未构造出保持稳定性的全局正则化极限。}
+}
+$$
+
+---
+

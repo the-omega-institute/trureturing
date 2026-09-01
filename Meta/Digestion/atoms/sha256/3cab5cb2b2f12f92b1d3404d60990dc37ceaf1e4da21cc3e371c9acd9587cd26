@@ -1,0 +1,6 @@
+## 一　判决:§二(B) 猜想(桥)= **refuted**(kernel 判死,负向结案)
+
+按增订三预登记的两步走完:
+1. **W-B2(定义,独立论证)**:选定 $((N-1)^2)''(0)$,$N(u)=e^{-u}$,沿账本位移率求值——论证纯内在($\log N$ 仿射故曲率恒零;未平方候选带号非中心能量;范数坐标下到酉轨迹的平方距离是自然局部能量,偶、可加、免校准),先于任何玩具比对固定。机器恒等式 $V(d)=2d^2$;地址 $\rho-\mathrm{mirror}(\rho)$;嵌入 $\mathrm{ofReal}(w)\cdot\delta_\rho$;镜像相容六定理(`D5/S3/Weil/LedgerDeficitSecondVariation`)。
+2. **W-B3(重测,冻结定义字面特化)**:双例开庭——$Z_1=\{3/4,1/4\}$:曲率 $2\pi\,\delta_{i/4}$(质量 $2\pi$)vs 亏损 $\tfrac1{32}\delta_{3/4}+\tfrac1{32}\delta_{1/4}$(质量 $\tfrac1{16}$);$Z_2=\{1,0\}$:曲率 $2\pi\,\delta_{i/2}$ vs 亏损 $\tfrac12\delta_1+\tfrac12\delta_0$(质量 $1$)。`no_global_mass_normalization` 与 `curvature_ledger_bridge_refuted`(`D5/S3/Weil/CurvatureLedgerBridgeRefutation`,std3):$\neg\exists$ 全局常数同时匹配两例($c=2\pi$ 与 $c=32\pi$ 互斥),支撑失配独立成立。
+
