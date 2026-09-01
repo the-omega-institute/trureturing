@@ -36,6 +36,7 @@ jobs:
             D5.S3.Observer.AgencyHolonomy.SecondMagnusKernelNormSquare
             D5.S3.Observer.AgencyHolonomy.FiniteFourierMagnusCommutator
             D5.S3.Observer.AgencyHolonomy.PairCalibratedSecondMagnusObservability
+            D5.S3.Observer.AgencyHolonomy.OrderedTimeSimplexSecondMagnusAverage
           )
           for module in "${modules[@]}"; do
             safe="${module//./_}"
