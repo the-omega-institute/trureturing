@@ -46,15 +46,15 @@ internal sealed class HorizonEffectiveIndexDocument : IScribeDocumentDefinition
         Formula i = F.Id("i");
         Formula h = F.Id("H");
         Formula k = F.Id("K");
-        Formula sigma = F.Id("sigma");
+        Formula sigma = SigmaLower;
         Formula naturals = Seq(Mathbb, Grp(F.Id("N")));
         Formula oneByOne = MatrixSpace(D(1));
         Formula defect = Call("horizonDefect", h);
         Formula index = Call("horizonEffectiveIndex", h);
-        Formula singularFactor = Power(
+        Formula singularFactor = Raised(
             Grp(Seq(
                 D(1), Sp, Minus, Sp,
-                Power(Call("finiteSingularValue", h, i), D(2)))),
+                Raised(Call("finiteSingularValue", h, i), D(2)))),
             Seq(Minus, D(1)));
 
         Formula contractiveHankelLaw = Seq(
@@ -94,8 +94,8 @@ internal sealed class HorizonEffectiveIndexDocument : IScribeDocumentDefinition
             Open,
             Call(
                 "Tendsto",
-                Seq(Open, sigma, Sp, Mapsto, Sp, Power(
-                    Grp(Seq(D(1), Sp, Minus, Sp, Power(sigma, D(2)))),
+                Seq(Open, sigma, Sp, Mapsto, Sp, Raised(
+                    Grp(Seq(D(1), Sp, Minus, Sp, Raised(sigma, D(2)))),
                     Seq(Minus, D(1))), Close),
                 Call("nhdsWithin", D(1), Call("Iio", D(1))),
                 F.Id("atTop")),
@@ -120,15 +120,15 @@ internal sealed class HorizonEffectiveIndexDocument : IScribeDocumentDefinition
     }
 
     private static Formula MatrixSpace(Formula dimension) =>
-        Power(
+        Raised(
             Seq(Mathbb, Grp(F.Id("R"))),
             Seq(dimension, Sp, Times, Sp, dimension));
 
     private static Formula ZeroMatrix(Formula dimension) =>
-        new Formula.Subscript(D(0), Seq(dimension, Sp, Times, Sp, dimension));
+        Seq(D(0), Underscore, Grp(dimension, Sp, Times, Sp, dimension));
 
-    private static Formula Power(Formula value, Formula exponent) =>
-        new Formula.Power(value, exponent);
+    private static Formula Raised(Formula value, Formula exponent) =>
+        Seq(value, Caret, Grp(exponent));
 
     private static Formula Call(string name, params Formula[] arguments)
     {
