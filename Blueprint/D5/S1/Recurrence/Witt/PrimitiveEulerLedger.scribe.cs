@@ -57,7 +57,7 @@ internal sealed class PrimitiveEulerLedgerDocument : IScribeDocumentDefinition
         Formula powerSeries = Seq(
             Operatorname, Grp(F.Id("PowerSeries")), Open, integers, Close);
         Formula product = Seq(
-            Prod, Underscore, Grp(D(0), Leq, n, Lt, cutoff), Sp,
+            Prod, Underscore, Grp(D(0), Leq, Sp, n, Lt, cutoff), Sp,
             Open, D(1), Minus, x, Caret, Grp(n, Plus, D(1)), Close,
             Caret, Grp(Open, Minus, c, Underscore, n, Close));
 
@@ -67,7 +67,7 @@ internal sealed class PrimitiveEulerLedgerDocument : IScribeDocumentDefinition
             Exists, Bang, Sp, c, Colon, Sp, naturals, Sp, To, Sp, integers,
             Comma, RowBreak,
             Forall, Sp, cutoff, Comma, Sp, degree, InMacro, naturals, Comma, Esc,
-            degree, Leq, cutoff, Sp, Rightarrow, Sp,
+            degree, Leq, Sp, cutoff, Sp, Rightarrow, Sp,
             Coeff(degree, product), Eq, Coeff(degree, f), Dot));
     }
 
