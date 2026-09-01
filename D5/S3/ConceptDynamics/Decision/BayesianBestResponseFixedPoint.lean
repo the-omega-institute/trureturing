@@ -1,6 +1,6 @@
-/- GID: D5/S3/ConceptDynamics/DecisionValue/BayesianBestResponseFixedPoint
+/- GID: D5/S3/ConceptDynamics/Decision/BayesianBestResponseFixedPoint
    generality: G
-   mirror-B: D5/B/S3/ConceptDynamics/DecisionValue/BayesianBestResponseFixedPoint
+   mirror-B: D5/B/S3/ConceptDynamics/Decision/BayesianBestResponseFixedPoint
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Finite Bayesian best responses are nonempty and equilibria are fixed points. -/
@@ -30,7 +30,7 @@ set_option relaxedAutoImplicit false
 
 noncomputable section
 
-namespace D5.S3.ConceptDynamics.DecisionValue.BayesianBestResponseFixedPoint
+namespace D5.S3.ConceptDynamics.Decision.BayesianBestResponseFixedPoint
 
 /-- The prior mass of a signal fiber. The prior uses nonnegative real weights;
 normalization of the total mass is not needed for conditional argmaxes. -/
@@ -346,4 +346,4 @@ theorem coordination_mismatch_not_bayesian_nash :
 #print axioms coordination_mismatch_player_zero_strict_deviation
 #print axioms coordination_mismatch_not_bayesian_nash
 
-end D5.S3.ConceptDynamics.DecisionValue.BayesianBestResponseFixedPoint
+end D5.S3.ConceptDynamics.Decision.BayesianBestResponseFixedPoint
