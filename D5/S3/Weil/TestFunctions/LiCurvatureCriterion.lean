@@ -351,6 +351,73 @@ theorem reconstructedLi_second_difference
       rw [integral_const_mul, ← circleMoment_re_nat]
       ring
 
+/-- Li's curvature criterion. The Li criterion, the canonical curvature
+recurrence, the RH Fourier representation from the preceding theorem, and the
+circle Herglotz representation are explicit hypotheses because no canonical
+owners connecting these data are available in the pinned library. The
+Toeplitz Gram identity and the integral reconstruction are proved above. -/
+theorem li_curvature_criterion
+    (c : Int -> Complex) (liCoefficient : Nat -> Real)
+    (liCriterion : RiemannHypothesis ↔ forall n, 0 <= liCoefficient n)
+    (liZero : liCoefficient 0 = 0)
+    (liOneNonnegative : 0 <= liCoefficient 1)
+    (curvatureRecurrence : forall n, 1 <= n ->
+      liCoefficient (n + 1) - 2 * liCoefficient n + liCoefficient (n - 1) =
+        2 * liCoefficient 1 * (c n).re)
+    (rhFourierRepresentation : RiemannHypothesis ->
+      ∃ mu : Measure Circle, IsProbabilityMeasure mu ∧
+        forall n, c n = circleMoment mu n)
+    (circleHerglotzRepresentation :
+      (forall N, Matrix.PosSemidef (toeplitzMatrix c N)) ->
+        ∃ mu : Measure Circle, IsProbabilityMeasure mu ∧
+          forall n, c n = circleMoment mu n) :
+    RiemannHypothesis ↔ forall N, Matrix.PosSemidef (toeplitzMatrix c N) := by
+  constructor
+  · intro riemannHypothesis N
+    rcases rhFourierRepresentation riemannHypothesis with
+      ⟨mu, probabilityMeasure, momentRepresentation⟩
+    letI : IsProbabilityMeasure mu := probabilityMeasure
+    have matrixIdentity :
+        toeplitzMatrix c N = toeplitzMatrix (circleMoment mu) N := by
+      ext j k
+      exact momentRepresentation _
+    rw [matrixIdentity]
+    exact circle_moment_toeplitz_posSemidef mu N
+  · intro allToeplitzPositive
+    rcases circleHerglotzRepresentation allToeplitzPositive with
+      ⟨mu, probabilityMeasure, momentRepresentation⟩
+    letI : IsProbabilityMeasure mu := probabilityMeasure
+    let reconstructed : Nat -> Real := reconstructedLi mu (liCoefficient 1)
+    have reconstructedZero : reconstructed 0 = liCoefficient 0 := by
+      rw [show reconstructed 0 = reconstructedLi mu (liCoefficient 1) 0 by rfl,
+        reconstructedLi_zero, liZero]
+    have reconstructedOne : reconstructed 1 = liCoefficient 1 := by
+      exact reconstructedLi_one mu (liCoefficient 1)
+    have reconstructedRecurrence : forall n, 1 <= n ->
+        reconstructed (n + 1) - 2 * reconstructed n + reconstructed (n - 1) =
+          2 * liCoefficient 1 * (c n).re := by
+      intro n hn
+      change reconstructedLi mu (liCoefficient 1) (n + 1) -
+            2 * reconstructedLi mu (liCoefficient 1) n +
+          reconstructedLi mu (liCoefficient 1) (n - 1) =
+        2 * liCoefficient 1 * (c n).re
+      calc
+        reconstructedLi mu (liCoefficient 1) (n + 1) -
+              2 * reconstructedLi mu (liCoefficient 1) n +
+            reconstructedLi mu (liCoefficient 1) (n - 1) =
+          2 * liCoefficient 1 * (circleMoment mu n).re :=
+            reconstructedLi_second_difference mu (liCoefficient 1) n hn
+        _ = 2 * liCoefficient 1 * (c n).re := by
+          rw [momentRepresentation]
+    have reconstructionIdentity : reconstructed = liCoefficient :=
+      second_difference_recurrence_unique reconstructed liCoefficient
+        (fun n => 2 * liCoefficient 1 * (c n).re)
+        reconstructedZero reconstructedOne reconstructedRecurrence curvatureRecurrence
+    apply liCriterion.mpr
+    intro n
+    rw [← congrFun reconstructionIdentity n]
+    exact reconstructedLi_nonneg mu (liCoefficient 1) liOneNonnegative n
+
 /-- A Dirac mass at 1 with coefficients (1,1) makes both sides of the
 Toeplitz integral identity equal to 4, so the construction is nonzero. -/
 theorem dirac_one_toeplitz_witness :
@@ -379,6 +446,9 @@ theorem quadratic_second_difference_witness :
 #print axioms toeplitz_quadratic_eq_integral
 #print axioms circle_moment_toeplitz_posSemidef
 #print axioms second_difference_recurrence_unique
+#print axioms geometric_energy_second_difference
+#print axioms reconstructedLi_second_difference
+#print axioms li_curvature_criterion
 #print axioms dirac_one_toeplitz_witness
 #print axioms quadratic_second_difference_witness
 
