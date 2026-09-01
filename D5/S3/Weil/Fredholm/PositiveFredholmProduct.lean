@@ -1,6 +1,6 @@
 /- GID: D5/S3/Weil/Fredholm/PositiveFredholmProduct
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
+   mirror-B: D5/B/S3/Weil/Fredholm/PositiveFredholmProduct
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Positive square-folded spectral factors form a convergent monotone product. -/
