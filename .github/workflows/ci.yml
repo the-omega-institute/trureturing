@@ -3,7 +3,11 @@ name: admission
 
 on:
   push:
-    branches: [dev]
+    # integration-ci-4393-forensics-tests 只为在 push 侧真跑本分支的 workflow 改动而临时加入:
+    # pull_request_target 的 workflow 文本取自默认分支,故集成分支上的 PR 侧改动不生效
+    # (2026-08-26 实测,job 97880197744/97886399674);push 事件的 workflow 取自被推的那个分支。
+    # 此行随集成分支一起删除,不提议给 dev。
+    branches: [dev, integration-ci-4393-forensics-tests]
   pull_request_target:
     branches: [dev, 'integration-**']
     types: [opened, synchronize, reopened]
