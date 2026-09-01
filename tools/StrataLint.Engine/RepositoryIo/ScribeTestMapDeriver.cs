@@ -330,7 +330,10 @@ internal static class ScribeTestMapDeriver
                     continue;
                 }
 
-                InspectMethod(method, discoveryPaths, paths, reasons);
+                if (!method.IsProductionSource)
+                {
+                    InspectMethod(method, discoveryPaths, paths, reasons);
+                }
                 compileTimeInputUniverses.UnionWith(method.CompileTimeInputUniverses);
                 reasons.UnionWith(method.BindingUnknownReasons);
                 if (indirect.Any(site => site.Path == method.Path

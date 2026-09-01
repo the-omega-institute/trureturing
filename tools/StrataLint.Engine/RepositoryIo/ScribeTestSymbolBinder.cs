@@ -51,6 +51,8 @@ internal sealed class ScribeBoundCallable
     internal HashSet<ScribeBoundCallable> Targets { get; } = [];
     internal HashSet<ScribeCompileTimeInputUniverse> CompileTimeInputUniverses { get; } = [];
     internal HashSet<TestMapUnknownReason> BindingUnknownReasons { get; } = [];
+    internal bool MentionsCompileTimeInputUniverse { get; set; }
+    internal bool IsProductionSource { get; set; }
 
     internal bool ContainsLine(int line) => InspectionNodes.Any(node =>
     {
@@ -85,7 +87,10 @@ internal static class ScribeTestSymbolBinder
 
         foreach (var project in compilations)
         {
-            foreach (var item in project.GovernedSources)
+            var governedTrees = project.GovernedSources
+                .Select(static item => item.Tree)
+                .ToHashSet(ReferenceEqualityComparer.Instance);
+            foreach (var item in project.CallableSources)
             {
                 var model = project.Compilation.GetSemanticModel(item.Tree);
                 var root = item.Tree.GetRoot();
@@ -129,7 +134,7 @@ internal static class ScribeTestSymbolBinder
                 foreach (var declaration in root.DescendantNodes().OfType<TypeDeclarationSyntax>())
                 {
                     if (model.GetDeclaredSymbol(declaration) is not INamedTypeSymbol type) continue;
-                    foreach (var constructor in type.InstanceConstructors)
+                    foreach (var constructor in type.InstanceConstructors.Concat(type.StaticConstructors))
                     {
                         if (!callablesBySymbol.Contains(constructor)
                             && (constructor.IsImplicitlyDeclared
@@ -148,6 +153,10 @@ internal static class ScribeTestSymbolBinder
                         }
                     }
                 }
+                if (!governedTrees.Contains(item.Tree))
+                {
+                    continue;
+                }
                 if (project.MetadataDegradation is not null)
                 {
                     foreach (var test in roots.Where(static callable => callable.IsTest))
@@ -161,6 +170,7 @@ internal static class ScribeTestSymbolBinder
 
         foreach (var (callable, symbol) in symbolsByCallable)
         {
+            callable.IsProductionSource = IsProductionReader(symbol, productionAssemblies);
             BindEdges(
                 callable,
                 symbol,
@@ -168,6 +178,7 @@ internal static class ScribeTestSymbolBinder
                 callablesBySymbol,
                 productionAssemblies);
         }
+        LimitProductionTargets(symbolsByCallable, productionAssemblies);
 
         return parsed;
     }
@@ -202,6 +213,7 @@ internal static class ScribeTestSymbolBinder
             InspectionNodes(declaration));
         callablesBySymbol.Add(normalized, callable);
         symbolsByCallable.Add(callable, normalized);
+        AddCompileTimeInputUniverses(normalized, callable.CompileTimeInputUniverses);
         roots.Add(callable);
     }
 
@@ -239,6 +251,7 @@ internal static class ScribeTestSymbolBinder
         ScribeCallableIndex callablesBySymbol,
         IReadOnlySet<string>? productionAssemblies)
     {
+        var detectProductionRepositoryRead = !IsProductionReader(symbol, productionAssemblies);
         if (callable.IsTest)
         {
             AddConstructors(symbol.ContainingType, callable.Targets, callablesBySymbol);
@@ -263,6 +276,7 @@ internal static class ScribeTestSymbolBinder
                         model,
                         callablesBySymbol,
                         productionAssemblies,
+                        detectProductionRepositoryRead,
                         failWhenUnresolved: true);
                     break;
                 case ObjectCreationExpressionSyntax or ImplicitObjectCreationExpressionSyntax
@@ -273,20 +287,45 @@ internal static class ScribeTestSymbolBinder
                         model,
                         callablesBySymbol,
                         productionAssemblies,
+                        detectProductionRepositoryRead,
                         failWhenUnresolved: node is not AttributeSyntax attribute
                             || IsTestAttribute(attribute, model));
                     break;
                 case MemberAccessExpressionSyntax member when member.Parent is not InvocationExpressionSyntax:
-                    BindMemberNode(member, callable, model, callablesBySymbol);
-                    break;
-                case IdentifierNameSyntax identifier when identifier.Parent is not InvocationExpressionSyntax:
-                    if (!IsInsideNameof(identifier, model))
+                    if (IsInsideNameof(member, model))
                     {
-                        BindMemberNode(identifier, callable, model, callablesBySymbol);
+                        MarkCompileTimeInputUniverseMention(member, callable, model);
+                    }
+                    else
+                    {
+                        BindMemberNode(
+                            member,
+                            callable,
+                            model,
+                            callablesBySymbol,
+                            productionAssemblies);
                     }
                     break;
+                case IdentifierNameSyntax identifier when identifier.Parent is not InvocationExpressionSyntax:
+                    if (IsInsideNameof(identifier, model))
+                    {
+                        MarkCompileTimeInputUniverseMention(identifier, callable, model);
+                    }
+                    else
+                    {
+                        BindMemberNode(
+                            identifier,
+                            callable,
+                            model,
+                            callablesBySymbol,
+                            productionAssemblies);
+                    }
+                    break;
+                case TypeOfExpressionSyntax typeOf:
+                    MarkCompileTimeInputUniverseMention(typeOf.Type, callable, model);
+                    break;
                 case ElementAccessExpressionSyntax element:
-                    BindMemberNode(element, callable, model, callablesBySymbol);
+                    BindMemberNode(element, callable, model, callablesBySymbol, productionAssemblies);
                     break;
             }
         }
@@ -298,6 +337,7 @@ internal static class ScribeTestSymbolBinder
         SemanticModel model,
         ScribeCallableIndex callablesBySymbol,
         IReadOnlySet<string>? productionAssemblies,
+        bool detectProductionRepositoryRead,
         bool failWhenUnresolved)
     {
         var info = model.GetSymbolInfo(node);
@@ -315,12 +355,14 @@ internal static class ScribeTestSymbolBinder
                 caller,
                 model,
                 callablesBySymbol,
-                productionAssemblies);
+                productionAssemblies,
+                detectProductionRepositoryRead);
             return;
         }
 
         var candidates = info.CandidateSymbols.OfType<IMethodSymbol>().ToArray();
-        if (candidates.Length == 1
+        if (detectProductionRepositoryRead
+            && candidates.Length == 1
             && IsProductionRepositoryRead(candidates[0], node, model, productionAssemblies))
         {
             caller.BindingUnknownReasons.Add(TestMapUnknownReason.IndirectViaProductionLoader);
@@ -337,18 +379,27 @@ internal static class ScribeTestSymbolBinder
         ScribeBoundCallable caller,
         SemanticModel model,
         ScribeCallableIndex callablesBySymbol,
-        IReadOnlySet<string>? productionAssemblies)
+        IReadOnlySet<string>? productionAssemblies,
+        bool detectProductionRepositoryRead)
     {
         var normalized = ScribeCallableIndex.Normalize(method);
+        AddCompileTimeInputUniverses(normalized, caller.CompileTimeInputUniverses);
         if (callablesBySymbol.TryGetValue(normalized, out var target))
         {
             caller.Targets.Add(target);
+            if (detectProductionRepositoryRead
+                && IsProductionRepositoryRead(normalized, node, model, productionAssemblies))
+            {
+                caller.BindingUnknownReasons.Add(TestMapUnknownReason.IndirectViaProductionLoader);
+            }
         }
-        else if (IsProductionRepositoryRead(normalized, node, model, productionAssemblies))
+        else if (detectProductionRepositoryRead
+                 && IsProductionRepositoryRead(normalized, node, model, productionAssemblies))
         {
             caller.BindingUnknownReasons.Add(TestMapUnknownReason.IndirectViaProductionLoader);
         }
-        else if (IsReflectionDispatch(normalized))
+        else if (IsReflectionDispatch(normalized)
+                 && caller.CompileTimeInputUniverses.Count == 0)
         {
             caller.BindingUnknownReasons.Add(TestMapUnknownReason.Other);
         }
@@ -358,7 +409,8 @@ internal static class ScribeTestSymbolBinder
         SyntaxNode node,
         ScribeBoundCallable caller,
         SemanticModel model,
-        ScribeCallableIndex callablesBySymbol)
+        ScribeCallableIndex callablesBySymbol,
+        IReadOnlySet<string>? productionAssemblies)
     {
         switch (model.GetSymbolInfo(node).Symbol)
         {
@@ -368,6 +420,11 @@ internal static class ScribeTestSymbolBinder
                 break;
             case IPropertySymbol property:
                 AddCompileTimeInputUniverses(property, caller.CompileTimeInputUniverses);
+                if (property.IsStatic
+                    && productionAssemblies?.Contains(property.ContainingAssembly.Name) == true)
+                {
+                    AddStaticConstructors(property.ContainingType, caller.Targets, callablesBySymbol);
+                }
                 AddAccessor(property.GetMethod, caller.Targets, callablesBySymbol);
                 AddAccessor(property.SetMethod, caller.Targets, callablesBySymbol);
                 break;
@@ -379,10 +436,10 @@ internal static class ScribeTestSymbolBinder
     }
 
     private static void AddCompileTimeInputUniverses(
-        IPropertySymbol property,
+        ISymbol symbol,
         HashSet<ScribeCompileTimeInputUniverse> universes)
     {
-        foreach (var attribute in property.GetAttributes().Where(static attribute =>
+        foreach (var attribute in symbol.GetAttributes().Where(static attribute =>
                      attribute.AttributeClass?.ToDisplayString()
                          == typeof(CompileTimeInputUniverseAttribute).FullName))
         {
@@ -396,12 +453,74 @@ internal static class ScribeTestSymbolBinder
         }
     }
 
+    private static void MarkCompileTimeInputUniverseMention(
+        SyntaxNode node,
+        ScribeBoundCallable caller,
+        SemanticModel model)
+    {
+        var symbol = model.GetSymbolInfo(node).Symbol ?? model.GetTypeInfo(node).Type;
+        if (symbol is not null && (HasCompileTimeInputUniverse(symbol)
+            || symbol is INamedTypeSymbol type && type.GetMembers().Any(HasCompileTimeInputUniverse)))
+        {
+            caller.MentionsCompileTimeInputUniverse = true;
+        }
+    }
+
+    private static bool HasCompileTimeInputUniverse(ISymbol symbol) => symbol.GetAttributes().Any(
+        static attribute => attribute.AttributeClass?.ToDisplayString()
+            == typeof(CompileTimeInputUniverseAttribute).FullName);
+
+    private static void LimitProductionTargets(
+        IReadOnlyDictionary<ScribeBoundCallable, IMethodSymbol> symbolsByCallable,
+        IReadOnlySet<string>? productionAssemblies)
+    {
+        if (productionAssemblies is null) return;
+
+        var production = symbolsByCallable
+            .Where(pair => productionAssemblies.Contains(pair.Value.ContainingAssembly.Name))
+            .Select(static pair => pair.Key)
+            .ToHashSet();
+        var relevant = production.Where(static callable =>
+                callable.CompileTimeInputUniverses.Count != 0
+                || callable.MentionsCompileTimeInputUniverse
+                    && callable.BindingUnknownReasons.Contains(TestMapUnknownReason.Other))
+            .ToHashSet();
+        var changed = true;
+        while (changed)
+        {
+            changed = false;
+            foreach (var callable in production)
+            {
+                if (!relevant.Contains(callable) && callable.Targets.Any(relevant.Contains))
+                {
+                    relevant.Add(callable);
+                    changed = true;
+                }
+            }
+        }
+
+        foreach (var callable in symbolsByCallable.Keys)
+        {
+            callable.Targets.RemoveWhere(target =>
+                production.Contains(target) && !relevant.Contains(target));
+        }
+    }
+
     private static void AddConstructors(
         INamedTypeSymbol type,
         HashSet<ScribeBoundCallable> targets,
         ScribeCallableIndex callablesBySymbol)
     {
         foreach (var constructor in type.InstanceConstructors)
+            AddAccessor(constructor, targets, callablesBySymbol);
+    }
+
+    private static void AddStaticConstructors(
+        INamedTypeSymbol type,
+        HashSet<ScribeBoundCallable> targets,
+        ScribeCallableIndex callablesBySymbol)
+    {
+        foreach (var constructor in type.StaticConstructors)
             AddAccessor(constructor, targets, callablesBySymbol);
     }
 

@@ -1,6 +1,9 @@
 namespace StrataLint.Engine;
 
-[AttributeUsage(AttributeTargets.Property, AllowMultiple = true, Inherited = false)]
+[AttributeUsage(
+    AttributeTargets.Method | AttributeTargets.Property,
+    AllowMultiple = true,
+    Inherited = false)]
 internal sealed class CompileTimeInputUniverseAttribute(
     string prefix,
     string suffix) : Attribute

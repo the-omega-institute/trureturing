@@ -126,6 +126,44 @@ public sealed class ScribeTestMapDeriverTests
     }
 
     [Fact]
+    public void CompileTimeInputUniverseFlowsThroughAnUnmarkedProductionPropertyWrapper()
+    {
+        var map = DeriveCompileTimeInputUniverseMap(
+            "_ = DefinitionWrapper.All;",
+            "public static object All => Definitions.All;");
+
+        var method = Assert.Single(map.Methods);
+        var plan = EngineeringTestPlanPolicy.Evaluate(
+            ["Blueprint/D5/S3/NewDefinition.scribe.cs"],
+            map);
+
+        Assert.Empty(method.UnknownReasons);
+        Assert.Equal(
+            ["UniverseTests.ReadsCompiledDefinitions"],
+            plan.Tests.Select(static test => test.Id));
+        Assert.Equal(
+            EngineeringSelectedTestReason.DeclaredInput,
+            Assert.Single(plan.Tests).Reason);
+    }
+
+    [Fact]
+    public void UnmarkedReflectionWrapperAroundCompileTimeUniverseFailsClosedWithASignal()
+    {
+        var map = DeriveCompileTimeInputUniverseMap(
+            "_ = DefinitionWrapper.All;",
+            """
+            public static object? All => typeof(Definitions)
+                .GetProperty("All")!
+                .GetValue(null);
+            """);
+
+        var method = Assert.Single(map.Methods);
+
+        Assert.Equal(TestMapUnknownReason.Other, Assert.Single(method.UnknownReasons));
+        Assert.Empty(method.CompileTimeInputUniverses);
+    }
+
+    [Fact]
     public void CandidateSourceIdentitySetIncludesStaticallySkippedFacts()
     {
         const string source = "tools/tests/Synthetic.Tests/SkippedTests.cs";
@@ -201,5 +239,73 @@ public sealed class ScribeTestMapDeriverTests
         Assert.Contains(
             sourceIdentities,
             static test => test.Id == "ConditionalTests.RequiresLiveReport");
+    }
+
+    private static ScribeTestMap DeriveCompileTimeInputUniverseMap(
+        string testStatement,
+        string wrapperMember)
+    {
+        const string testProject = "tools/tests/Synthetic.Tests/Synthetic.Tests.csproj";
+        const string testSource = "tools/tests/Synthetic.Tests/UniverseTests.cs";
+        const string productionProject = "src/Corpus/Corpus.csproj";
+        const string productionSource = "src/Corpus/Definitions.cs";
+        var tracked = new ScribeTrackedSource[]
+        {
+            new(testProject, """
+                <Project Sdk="Microsoft.NET.Sdk">
+                  <ItemGroup>
+                    <PackageReference Include="xunit" Version="2.9.3" />
+                    <ProjectReference Include="../../../src/Corpus/Corpus.csproj" />
+                  </ItemGroup>
+                </Project>
+                """),
+            new(testSource, $$"""
+                using StrataLint.Engine;
+                using Xunit;
+
+                public sealed class UniverseTests
+                {
+                    [Fact]
+                    public void ReadsCompiledDefinitions() { {{testStatement}} }
+                }
+                """),
+            new(productionProject, "<Project Sdk=\"Microsoft.NET.Sdk\" />"),
+            new(productionSource, $$"""
+                NAMESPACE StrataLint.Engine
+                {
+                    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Method)]
+                    public sealed class CompileTimeInputUniverseAttribute(
+                        string prefix,
+                        string suffix) : Attribute;
+
+                    public static class Definitions
+                    {
+                        [CompileTimeInputUniverse("Blueprint/", ".scribe.cs")]
+                        public static object All => new();
+                    }
+
+                    public static class DefinitionWrapper
+                    {
+                        {{wrapperMember}}
+                    }
+                }
+                """.Replace("NAMESPACE", "name" + "space", StringComparison.Ordinal)),
+        };
+        var projectBySource = new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            [testSource] = testProject,
+            [productionSource] = productionProject,
+        };
+        var context = ScribeProjectCompilationContext.Create(
+            tracked,
+            projectBySource,
+            new HashSet<string>(StringComparer.Ordinal) { testProject });
+        return ScribeTestMapDeriver.DeriveSources(
+            [new TestMapSource(testSource, tracked.Single(file => file.Path == testSource).Content)],
+            [],
+            compileProjectBySourcePath:
+                new Dictionary<string, string>(StringComparer.Ordinal) { [testSource] = testProject },
+            productionAssemblies: context.ProductionAssemblies,
+            compilationContext: context);
     }
 }

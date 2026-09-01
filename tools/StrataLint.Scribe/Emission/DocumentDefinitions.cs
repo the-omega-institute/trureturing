@@ -45,12 +45,14 @@ public static class DocumentDefinitions
     [CompileTimeInputUniverse("Blueprint/", ".scribe.cs")]
     public static ImmutableArray<DocumentDefinition> All => Definitions.Value;
 
+    [CompileTimeInputUniverse("Blueprint/", ".scribe.cs")]
     public static ImmutableArray<DocumentDefinition> Discover(Assembly assembly)
     {
         ArgumentNullException.ThrowIfNull(assembly);
         return DiscoverCore(assembly);
     }
 
+    [CompileTimeInputUniverse("Blueprint/", ".scribe.cs")]
     public static ImmutableArray<DocumentDefinition> Discover(
         Assembly assembly,
         string repositoryRoot)

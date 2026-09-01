@@ -1,4 +1,5 @@
 using StrataLint.Tests;
+using StrataLint.Scribe;
 
 namespace StrataLint.ArchitectureTests;
 
@@ -43,10 +44,35 @@ public sealed class ScribeTestMapDeriverTests
     }
 
     [Fact]
-    public void BlueprintScribeDefinitionsAreAttributedToStrataLintScribeByMsBuildCompileItems()
+    public void RealScribePayloadSelectsTheKnownCompileTimeUniverseConsumers()
     {
+        const int PreviousDirectUniverseReplayCount = 276;
+        const int RecoveredConsumers = 26;
+        string[] requiredFacts =
+        [
+            "DescribeMigrationTests.EveryCurrentTheoremClassNodeHasAnExplicitLatexStatement",
+            "DescribeMigrationTests.InventoryCurrentDescribeKindContracts",
+            "FormulaCorpusInventoryTests.EveryMigratedFormulaHasAStableCorpusAddress",
+            "DagEmitterTests.TheProjectionIsDeclaredInTheGeneratedArtifactInventory",
+        ];
+        var allUniverse = Assert.Single(
+            typeof(DocumentDefinitions).GetProperty(nameof(DocumentDefinitions.All))!
+                .GetCustomAttributesData(),
+            static attribute => attribute.AttributeType
+                == typeof(CompileTimeInputUniverseAttribute));
+        Assert.Equal("Blueprint/", allUniverse.ConstructorArguments[0].Value);
+        Assert.Equal(".scribe.cs", allUniverse.ConstructorArguments[1].Value);
         var repositoryRoot = RepositoryLayout.FindRoot();
         var map = ScribeTestMapDeriver.DeriveRepository(repositoryRoot);
+        var plan = EngineeringTestPlanPolicy.Evaluate(
+        [
+            "Blueprint/D5/S3/Weil/Pick/HorizonEffectiveIndex.md",
+            "Blueprint/D5/S3/Weil/Pick/HorizonEffectiveIndex.scribe.cs",
+            "D5/S3/Weil/Pick/HorizonEffectiveIndex.lean",
+            "Golden/Frozen/accepted/6c22798b7d01eb5c9ca68b3a5ce0bf0c0168a59db6a1d5839dd426f5d3a26c19.json",
+            "Meta/Digestion/formalizations/2b461ae4386c5455af90147eeecb5c8eba7cd06987bac67a4077327dc8c954e6.v1.json",
+        ],
+            map);
         var blueprint = map.CompileProjectBySourcePath
             .Where(static pair => pair.Key.StartsWith("Blueprint/", StringComparison.Ordinal)
                 && pair.Key.EndsWith(".scribe.cs", StringComparison.Ordinal))
@@ -58,13 +84,21 @@ public sealed class ScribeTestMapDeriverTests
                 && path.EndsWith(".scribe.cs", StringComparison.Ordinal))
             .Order(StringComparer.Ordinal)
             .ToArray();
-
         Assert.Equal(tracked, blueprint.Select(static pair => pair.Key));
         Assert.All(
             blueprint,
             pair => Assert.Equal(
                 "tools/StrataLint.Scribe/StrataLint.Scribe.csproj",
                 pair.Value));
+        Assert.Equal(PreviousDirectUniverseReplayCount + RecoveredConsumers, plan.Tests.Length);
+        Assert.All(requiredFacts, id =>
+        {
+            var method = Assert.Single(map.Methods, candidate => candidate.Id == id);
+            Assert.Empty(method.UnknownReasons);
+            Assert.Equal(
+                EngineeringSelectedTestReason.DeclaredInput,
+                Assert.Single(plan.Tests, candidate => candidate.Id == id).Reason);
+        });
     }
 
     [Fact]
