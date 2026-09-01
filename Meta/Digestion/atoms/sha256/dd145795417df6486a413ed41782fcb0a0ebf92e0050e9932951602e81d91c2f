@@ -1,0 +1,47 @@
+## Golden suspension hypothesis
+
+Riemann completion 的预测空间可能不是单独的黄金均值移位，而是：
+
+$$
+\boxed{
+\text{黄金双曲基底}
+\times
+\text{一个边际／中性 log-time 方向}.
+}
+$$
+
+其中：
+
+$$
+\begin{aligned}
+\varphi^n
+&=\text{基底的双曲分支数};\\
+n
+&=\text{中性方向在第 \(n\) 层的可用长度}.
+\end{aligned}
+$$
+
+于是：
+
+$$
+\boxed{
+\#\text{states at level }n
+\asymp
+n\varphi^n.
+}
+\tag{1623.1}
+$$
+
+这与 Riemann 平方零点计数的主结构精确一致。
+
+但这一解释仍然只是计数匹配。
+
+真正要将其提升为数学定理，需要构造：
+
+1. 黄金 symbolic base；
+2. 一个零 Lyapunov 的 suspension coordinate；
+3. 其 transfer determinant；
+4. 该 determinant 与 \(G\) 的同一性。
+
+---
+

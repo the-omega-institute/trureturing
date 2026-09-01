@@ -1,0 +1,62 @@
+# 第一千六百九十五部　RH 的 phase-fibre 空性判据
+
+在规范 shifted 因子化成立的条件下，以下条件等价：
+
+$$
+\boxed{
+\mathrm{RH};
+}
+$$
+
+$$
+\boxed{
+B_q=1
+\quad
+\forall q>0;
+}
+$$
+
+$$
+\boxed{
+K_{B_q}=\{0\}
+\quad
+\forall q>0;
+}
+$$
+
+$$
+\boxed{
+\text{不存在任何非空 phase fibre Clark basis};
+}
+$$
+
+$$
+\boxed{
+\theta_{B_q}'=0;
+}
+$$
+
+$$
+\boxed{
+\mathfrak N_q=0;
+}
+$$
+
+$$
+\boxed{
+\text{canonical shifted boundary state 为 cyclic}.
+}
+\tag{1695.1}
+$$
+
+所以 RH 可以重新表述为：
+
+$$
+\boxed{
+\text{completed-\(\xi\) 的 canonical phase name，
+在任意正 shifted 深度下都没有隐藏正交 lift。}
+}
+$$
+
+---
+

@@ -1,0 +1,8 @@
+* 全部 prime 链的有限配置决定一个整数。
+
+项目已经证明 golden substitution 的 block-start 操作会把规范 Zeckendorf 数位整体上移一位，且 desubstitution 路径正是这种统一位移的迭代。
+
+所以这一 prime–Fibonacci genome 不只是静态编码，还具有一个项目现成的 golden shift 动力。
+
+---
+

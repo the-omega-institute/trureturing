@@ -1,0 +1,43 @@
+* 或 superdeterminant。
+
+局部公式已经给出原型：
+
+$$
+\frac{1-x^K}{1-x}
+=
+\det_{\mathbf1^\perp}(I-xU_K).
+$$
+
+先在完整空间上计算：
+
+$$
+\det(I-xU_K)=1-x^K,
+$$
+
+再商去平凡模式：
+
+$$
+1-x.
+$$
+
+所以正确顺序是：
+
+$$
+\boxed{
+\text{先形成完整复形，
+再消去 exact／trivial states，
+最后对 reduced physical space 取 determinant。}
+}
+$$
+
+这与前文 scattering cascade 中的结论完全一致：
+
+$$
+\boxed{
+\text{先组合，后最小化；
+不能把内部可消去模式误判成 endpoint defect。}
+}
+$$
+
+---
+

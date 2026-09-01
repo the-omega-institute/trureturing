@@ -1,0 +1,62 @@
+## 1535.1 离线零点强迫有限负 jet
+
+设：
+
+$$
+\rho
+=
+\frac12+\delta_0+i\gamma,
+\qquad
+\delta_0\neq0
+$$
+
+是离线零点。
+
+则：
+
+$$
+\mathcal I(\delta_0,\gamma)=0.
+$$
+
+而：
+
+$$
+0
+=
+\sum_{m=0}^{\infty}
+\mathcal J_m(\gamma)\delta_0^{2m}.
+\tag{1535.2}
+$$
+
+假设全部：
+
+$$
+\mathcal J_m(\gamma)\ge0.
+$$
+
+由于 \(\delta_0^{2m}>0\)，式 (1535.2) 只能在所有系数均为零时成立。
+
+但所有 Taylor 系数均为零会使：
+
+$$
+\mathcal I(\delta,\gamma)\equiv0,
+$$
+
+继而迫使 \(\xi\) 恒等为零，矛盾。
+
+所以：
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\Longrightarrow
+\exists\,m\ge1:
+\mathcal J_m(\gamma)<0.
+}
+\tag{1535.3}
+$$
+
+这不依赖任何统计密度，也不依赖离线零点是否极其稀疏。
+
+---
+

@@ -1,0 +1,45 @@
+# 第一千五百六十一部　全非负性是“不可增加符号变化”的命名律
+
+Pólya–频率序列的 Toeplitz 卷积具有 variation-diminishing 性质：对有限支撑实序列 \(x\)，经过该正卷积以后，符号变化次数不会增加。这是 Schoenberg 全正性理论的核心结构后果。([PubMed][1])
+
+因此 RH 下，固定 \(t\) 的法向完成核满足：
+
+$$
+\boxed{
+\operatorname{Var}
+(\mathbb P_t x)
+\le
+\operatorname{Var}(x).
+}
+\tag{1561.1}
+$$
+
+可以解释为：
+
+$$
+\boxed{
+\text{合法的 completed normal name
+不会凭空制造比输入更多的正负切割。}
+}
+$$
+
+离线零点使某个有限小行列式变负，说明这一全正命名律失效。
+
+所以离线缺陷不仅是：
+
+* 一个负 jet；
+* 一个非实节点；
+* 一个反因果通道；
+
+它还是：
+
+$$
+\boxed{
+\text{一个可能制造额外符号振荡的完成缺陷。}
+}
+$$
+
+这里最严格的反证书仍然是负小行列式；variation-diminishing 是其动力解释。
+
+---
+

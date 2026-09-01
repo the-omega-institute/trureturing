@@ -1,0 +1,38 @@
+## 1690.1 rank function
+
+$$
+\boxed{
+\kappa(q)
+=
+\dim V_q
+=
+\sum_{\delta_\rho>q}
+m_\rho.
+}
+\tag{1690.4}
+$$
+
+这正是：
+
+* 活跃 Blaschke degree；
+* model-space dimension；
+* Hankel defect rank；
+* phase flux 总质量。
+
+在分布意义下：
+
+$$
+\boxed{
+-d\kappa
+=
+\sum_\rho
+m_\rho
+\delta_{\delta_\rho}.
+}
+\tag{1690.5}
+$$
+
+所以离线深度集合就是持久条码的全部终点。
+
+---
+

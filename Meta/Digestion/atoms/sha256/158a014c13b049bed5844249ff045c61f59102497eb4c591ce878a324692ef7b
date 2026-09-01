@@ -1,0 +1,96 @@
+# 第一千五百五十八部　全部小行列式是 Schur 关系扇区
+
+RH 下，令：
+
+$$
+\mathbf a_t
+=
+(a_{\lambda,t})_\lambda
+=
+\left(
+\frac1{(\lambda-t)^2}
+\right)_\lambda.
+$$
+
+则：
+
+$$
+a_m^{(t)}
+=
+e_m(\mathbf a_t),
+$$
+
+其中 \(e_m\) 是初等对称函数。
+
+任意 Toeplitz 小行列式可以写成一个 skew Schur 函数：
+
+$$
+\boxed{
+\det
+\left[
+e_{\lambda_i'-\mu_j'-i+j}
+(\mathbf a_t)
+\right]
+=
+s_{\lambda/\mu}(\mathbf a_t).
+}
+\tag{1558.1}
+$$
+
+因为：
+
+$$
+\mathbf a_t\ge0,
+$$
+
+所以：
+
+$$
+\boxed{
+s_{\lambda/\mu}(\mathbf a_t)\ge0.
+}
+\tag{1558.2}
+$$
+
+对普通分拆 \(\lambda\)，还可写成：
+
+$$
+\boxed{
+s_\lambda(\mathbf a_t)
+=
+\operatorname{Tr}
+\left(
+\mathbb S_\lambda A_t
+\right),
+}
+\tag{1558.3}
+$$
+
+其中 \(\mathbb S_\lambda\) 是相应 Schur 函子。
+
+所以全非负性不是一堆互不相关的不等式。
+
+它是一整套表示扇区的正迹：
+
+$$
+\boxed{
+\begin{aligned}
+\lambda=(1^m)
+&\longrightarrow
+\bigwedge^m A_t;\\
+\lambda=(m)
+&\longrightarrow
+\operatorname{Sym}^m A_t;\\
+\text{一般 }\lambda
+&\longrightarrow
+\text{混合关系扇区}.
+\end{aligned}
+}
+$$
+
+这给“关系的关系仍然形成对象”一个规范代数版本。
+
+需要保持边界：若某个有限观察压缩恰为四维，则其二阶外幂确实为六维；但这并不自动把当前 \(\bigwedge^2A_t\) 与项目已有的六维 \(\Lambda^2A_4\) 五模格认同为同一对象。
+
+---
+

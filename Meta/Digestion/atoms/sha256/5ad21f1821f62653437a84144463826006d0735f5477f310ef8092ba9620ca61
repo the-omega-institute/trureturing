@@ -1,0 +1,51 @@
+## 1592.1 一切 Poisson 光影都是该母形的仿射像
+
+令：
+
+$$
+t=\gamma+\delta h.
+$$
+
+则标准 Cauchy 测度被送到：
+
+$$
+\boxed{
+p_{\gamma,\delta}(t)\,dt
+=
+\frac1\pi
+\frac{\delta\,dt}{
+(t-\gamma)^2+\delta^2
+}.
+}
+\tag{1592.3}
+$$
+
+所以此前离线零点产生的 Poisson/Cauchy 边界影像，恰好属于：
+
+$$
+\boxed{
+\text{循环相位 Haar 完成的仿射形态族。}
+}
+$$
+
+这解释了为什么不同离线零点拥有相同母形。
+
+但同时也说明：
+
+$$
+\boxed{
+\text{Cauchy 母形本身不是离线缺陷证书。}
+}
+$$
+
+它是圆周相位经 Cayley 图表后的普适结果。
+
+离线零点只负责选择：
+
+* 中心 \(\gamma\)；
+* 尺度 \(\delta\)；
+* 重数 \(m\)；
+* inner／inverse-inner 方向。
+
+---
+

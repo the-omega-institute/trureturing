@@ -1,0 +1,40 @@
+# 第一千五百八十九部　循环酉谱的 Cayley 自伴化
+
+由于 \(U_K|_{\mathcal H_K^\circ}\) 没有特征值 \(1\)，可以定义 Cayley 生成元：
+
+$$
+\boxed{
+H_K
+=
+i(I+U_K)(I-U_K)^{-1}.
+}
+\tag{1589.1}
+$$
+
+因为 \(U_K\) 酉，\(H_K\) 自伴。
+
+其特征值为：
+
+$$
+\boxed{
+h_j
+=
+-\cot\frac{\pi j}{K},
+\qquad
+j=1,\ldots,K-1.
+}
+\tag{1589.2}
+$$
+
+所以：
+
+$$
+\boxed{
+\operatorname{Spec}H_K\subset\mathbb R.
+}
+$$
+
+这说明单位圆根的位置可以被 Cayley 图表转换成实自伴谱。
+
+---
+

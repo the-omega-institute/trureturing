@@ -1,0 +1,42 @@
+## 1563.1 黄金点的全部量
+
+在：
+
+$$
+ua=\varphi
+$$
+
+时：
+
+$$
+\boxed{
+\begin{aligned}
+\text{占据率}
+&=\varphi^{-1};\\
+\text{空缺率}
+&=\varphi^{-2};\\
+\text{odds}
+&=\varphi;\\
+\text{单模行列式因子}
+&=1+\varphi=\varphi^2;\\
+\text{单模 log-det}
+&=2\log\varphi.
+\end{aligned}
+}
+\tag{1563.8}
+$$
+
+所以前文反复出现的黄金 Jones、Bogoliubov、第二影关系，在这里获得一个不需要子因子假设的最小模型：
+
+$$
+\boxed{
+\text{它们都是一个正 Fredholm 模式达到 }
+ua=\varphi
+\text{ 时的同一 Bernoulli 分裂。}
+}
+$$
+
+但这仍然只是模式级黄金激活，不是“道的温度”，也不意味着所有 Riemann 模式必须在同一 \(u\) 同时达到黄金点。
+
+---
+

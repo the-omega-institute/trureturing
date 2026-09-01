@@ -1,0 +1,74 @@
+# 第一千五百一十九部　RH 下的正测度表示
+
+若 RH 成立，则：
+
+$$
+v_j=\gamma_j^{-2}>0.
+$$
+
+定义正测度：
+
+$$
+\boxed{
+\nu_\xi
+=
+\sum_j
+m_jv_j\,\delta_{v_j}.
+}
+\tag{1519.1}
+$$
+
+于是：
+
+$$
+\boxed{
+\tau_{n+1}
+=
+\int_0^\infty
+x^n\,d\nu_\xi(x).
+}
+\tag{1519.2}
+$$
+
+并且：
+
+$$
+\boxed{
+\mathcal M_\xi(w)
+=
+\int_0^\infty
+\frac{d\nu_\xi(x)}
+{1+wx}.
+}
+\tag{1519.3}
+$$
+
+所以 \(\mathcal M_\xi\) 是一个 Stieltjes 型正响应。
+
+对 \(w>0\)：
+
+$$
+\boxed{
+(-1)^k
+\mathcal M_\xi^{(k)}(w)
+=
+k!
+\int_0^\infty
+\frac{x^k\,d\nu_\xi(x)}
+{(1+wx)^{k+1}}
+>0.
+}
+\tag{1519.4}
+$$
+
+因此 RH 不仅意味着零点在线，还意味着：
+
+$$
+\boxed{
+\mathcal M_\xi
+\text{ 是完全单调的正谱 resolvent}.
+}
+$$
+
+---
+

@@ -1,0 +1,58 @@
+# 第一千四百九十五部　连续对象可以由离散切口重建，但不等于任何切口
+
+取一个实数：
+
+$$
+x\in\mathbb R.
+$$
+
+对每个有理数 \(q\in\mathbb Q\)，定义二元名字：
+
+$$
+\boxed{
+\nu_q(x)
+=
+\begin{cases}
+1,&q<x,\\
+0,&q\ge x.
+\end{cases}
+}
+\tag{1495.1}
+$$
+
+每一个 \(\nu_q\) 都只回答一个离散问题：
+
+> \(x\) 是否位于切口 \(q\) 的右侧？
+
+任意单个 \(\nu_q\) 显然不能确定 \(x\)。
+
+但是全部有理切口的兼容轮廓：
+
+$$
+\boxed{
+\Gamma(x)
+=
+\bigl(\nu_q(x)\bigr)_{q\in\mathbb Q}
+}
+\tag{1495.2}
+$$
+
+可以恢复 \(x\)：
+
+$$
+\boxed{
+x
+=
+\sup
+\left\{
+q\in\mathbb Q:
+\nu_q(x)=1
+\right\}.
+}
+\tag{1495.3}
+$$
+
+这就是 Dedekind cut 的观察版本。
+
+---
+

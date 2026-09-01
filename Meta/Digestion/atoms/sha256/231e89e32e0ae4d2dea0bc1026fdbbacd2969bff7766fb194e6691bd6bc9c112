@@ -1,0 +1,17 @@
+* 反因果障碍。
+
+真正缺陷必须通过表示不变量检测，例如：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{正平方 realization 不存在};\\
+&\text{Gram 矩阵非 PSD};\\
+&\text{inverse-inner denominator 非平凡};\\
+&\text{非实 reciprocal-square 节点}.
+\end{aligned}
+}
+$$
+
+---
+

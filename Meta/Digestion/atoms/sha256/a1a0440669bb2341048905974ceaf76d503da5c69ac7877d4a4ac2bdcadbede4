@@ -1,0 +1,78 @@
+# 第一千五百二十六部　正 Jacobi 实现
+
+若全部 \(H_N^\xi\) 正定，对 \(\nu_\xi\) 作 Gram–Schmidt，可得一列正交多项式。
+
+乘法算子：
+
+$$
+(Af)(x)=xf(x)
+$$
+
+在：
+
+$$
+L^2(\nu_\xi)
+$$
+
+上是正、自伴、紧致支撑的算子。
+
+令：
+
+$$
+e(x)=1.
+$$
+
+则：
+
+$$
+\boxed{
+\tau_{n+1}
+=
+\langle e,A^ne\rangle.
+}
+\tag{1526.1}
+$$
+
+并且：
+
+$$
+\boxed{
+\mathcal M_\xi(w)
+=
+\left\langle
+e,
+(I+wA)^{-1}e
+\right\rangle.
+}
+\tag{1526.2}
+$$
+
+所以 RH 还等价于：
+
+$$
+\boxed{
+\text{中心平方影 log-derivative
+拥有一个正自伴 cyclic resolvent realization}.
+}
+$$
+
+离线零点则意味着：
+
+$$
+\boxed{
+\text{相应的紧化节点不能成为正自伴谱。}
+}
+$$
+
+这比直接寻找 Hilbert–Pólya 算子稍弱，却非常具体：
+
+* 该算子的谱不是 \(\gamma\)；
+* 而是：
+
+  $$
+  \gamma^{-2};
+  $$
+* 由逆变换仍可恢复零点高度。
+
+---
+

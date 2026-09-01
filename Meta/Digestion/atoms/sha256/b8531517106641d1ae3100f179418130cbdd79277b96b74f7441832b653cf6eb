@@ -1,0 +1,88 @@
+# 第一千五百八十七部　每个有限 prime 区块都有自己的局部临界轴
+
+令：
+
+$$
+x=p^{-s},
+\qquad
+L_p=\log p.
+$$
+
+有限 prime 区块为：
+
+$$
+Z_{p,K}(s)
+=
+\frac{1-p^{-Ks}}{1-p^{-s}}.
+$$
+
+作对称归一化：
+
+$$
+\boxed{
+\widehat Z_{p,K}(s)
+=
+p^{(K-1)s/2}
+Z_{p,K}(s).
+}
+\tag{1587.1}
+$$
+
+直接化简：
+
+$$
+\boxed{
+\widehat Z_{p,K}(s)
+=
+\frac{
+\sinh(KL_ps/2)
+}{
+\sinh(L_ps/2)
+}.
+}
+\tag{1587.2}
+$$
+
+该函数为偶整函数：
+
+$$
+\widehat Z_{p,K}(-s)
+=
+\widehat Z_{p,K}(s).
+$$
+
+其非可去零点为：
+
+$$
+\boxed{
+s
+=
+\frac{2\pi im}{K\log p},
+\qquad
+m\in\mathbb Z,\quad
+K\nmid m.
+}
+\tag{1587.3}
+$$
+
+因此：
+
+$$
+\boxed{
+\operatorname{Zero}
+\widehat Z_{p,K}
+\subset i\mathbb R.
+}
+\tag{1587.4}
+$$
+
+每个有限 prime 区块在自己的自然 log-fugacity 图表中，都具有一个精确的“局部 RH”：
+
+$$
+\boxed{
+\text{全部零点位于其自对偶虚轴。}
+}
+$$
+
+---
+

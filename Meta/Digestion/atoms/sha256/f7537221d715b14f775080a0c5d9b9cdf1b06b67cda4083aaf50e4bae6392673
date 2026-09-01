@@ -1,0 +1,15 @@
+## 定理 1592.1（Cayley–Cauchy 极限）
+
+$$
+\boxed{
+\mu_K
+\Longrightarrow
+\frac{dh}{\pi(1+h^2)}.
+}
+\tag{1592.2}
+$$
+
+即有限循环 Haar 相位经 Cayley 映射后，严格趋于标准 Cauchy 分布。
+
+---
+

@@ -1,0 +1,69 @@
+# 第一千五百一十八部　genus-zero 乘积与中心矩
+
+令 \(\lambda_j\) 遍历 \(G\) 的不同零点，重数为 \(m_j\)，并定义：
+
+$$
+v_j=-\lambda_j^{-1}.
+$$
+
+因为 \(G\) 的阶为 \(1/2<1\)，规范乘积为：
+
+$$
+\boxed{
+\frac{G(w)}{G(0)}
+=
+\prod_j
+\left(
+1-\frac w{\lambda_j}
+\right)^{m_j}
+=
+\prod_j
+(1+v_jw)^{m_j}.
+}
+\tag{1518.1}
+$$
+
+其对数导数为：
+
+$$
+\boxed{
+\mathcal M_\xi(w)
+:=
+\frac{G'(w)}{G(w)}
+=
+\sum_j
+\frac{m_jv_j}{1+v_jw}.
+}
+\tag{1518.2}
+$$
+
+在 \(w=0\) 附近展开：
+
+$$
+\boxed{
+\mathcal M_\xi(w)
+=
+\sum_{n=0}^{\infty}
+(-1)^n
+\tau_{n+1}w^n,
+}
+\tag{1518.3}
+$$
+
+其中：
+
+$$
+\boxed{
+\tau_n
+=
+\sum_jm_jv_j^n,
+\qquad
+n\ge1.
+}
+\tag{1518.4}
+$$
+
+这些 \(\tau_n\) 是 completed \(\xi\) 的中心逆平方幂和。
+
+---
+

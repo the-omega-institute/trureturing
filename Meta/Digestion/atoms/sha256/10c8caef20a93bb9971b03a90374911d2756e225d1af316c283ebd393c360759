@@ -1,0 +1,56 @@
+# 第一千六百八十八部　相位单值，隐藏基却具有单值化阻碍
+
+让 phase parameter：
+
+$$
+\alpha=e^{i\phi}
+$$
+
+绕圆周一周：
+
+$$
+\phi:0\longrightarrow2\pi.
+$$
+
+输出相位回到原值。
+
+但每一个连续跟踪的原像：
+
+$$
+x_j^\alpha
+$$
+
+通常不会回到原来的标签，而会进入下一张覆盖页。
+
+由于：
+
+$$
+B:S^1\to S^1
+$$
+
+是连通的 degree-\(m\) covering，其基本群生成元在纤维上作用为一个 \(m\)-循环。
+
+所以一次完整 phase loop 诱导：
+
+$$
+\boxed{
+1\mapsto2\mapsto\cdots\mapsto m\mapsto1.
+}
+\tag{1688.1}
+$$
+
+只有绕行 \(m\) 周以后，每张有标签的页才回到自身。
+
+因此：
+
+$$
+\boxed{
+\text{外部 completed phase 已回到原点，
+隐藏页历史却只完成了一次非平凡置换。}
+}
+$$
+
+这是一种精确的 monodromy memory。
+
+---
+

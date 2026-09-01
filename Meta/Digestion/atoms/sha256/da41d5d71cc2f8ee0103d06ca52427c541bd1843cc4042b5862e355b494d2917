@@ -1,0 +1,66 @@
+## 1734.1 它把基本相位变成 \(B\)
+
+令：
+
+$$
+M_zf(z)=zf(z).
+$$
+
+则：
+
+$$
+\begin{aligned}
+S_jM_zf
+&=
+e_j(z)\,B(z)f(B(z))\\
+&=
+M_BS_jf.
+\end{aligned}
+$$
+
+所以：
+
+$$
+S_jM_z=M_BS_j.
+$$
+
+求和得到：
+
+$$
+\boxed{
+\Lambda_B(M_z)=M_B.
+}
+\tag{1734.2}
+$$
+
+更一般地，对任意有界解析函数 \(f\)：
+
+$$
+\boxed{
+\Lambda_B(M_f)=M_{f\circ B}.
+}
+\tag{1734.3}
+$$
+
+因此：
+
+$$
+\boxed{
+z\longmapsto B(z)
+}
+$$
+
+这一 phase naming map，在完整算子层的提升就是：
+
+$$
+\boxed{
+\Lambda_B.
+}
+$$
+
+它不选择某一张 sheet。
+
+它同时保留全部分支嵌入。
+
+---
+

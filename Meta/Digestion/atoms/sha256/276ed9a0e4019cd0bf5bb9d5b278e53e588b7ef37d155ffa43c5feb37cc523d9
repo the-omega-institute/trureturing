@@ -1,0 +1,20 @@
+## 三、无限路径仍然只是影历史
+
+无限 branch sequence：
+
+$$
+j_1j_2j_3\cdots
+$$
+
+保存一条完整 naming itinerary。
+
+它比任何有限名字更细，却仍依赖：
+
+* branch alphabet；
+* grammar；
+* chosen completion。
+
+因此它是最大一致影历史，不是不可名本体。
+
+---
+

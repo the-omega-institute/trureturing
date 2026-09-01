@@ -1,0 +1,19 @@
+## 路线 A：全法向 Laguerre 正性
+
+从 prime–pole–Gamma 数据直接证明：
+
+$$
+\boxed{
+\mathcal J_m(t)\ge0
+\quad
+\forall t\in\mathbb R,\ m\ge0.
+}
+\tag{1550.1}
+$$
+
+仓库已经机器化了 \(\mathcal J_m\) 的全部导数卷积公式；缺失的是该表达式的统一正性证明。
+
+这条路线最短，但需要同时控制连续 \(t\) 与无限 \(m\)。
+
+---
+

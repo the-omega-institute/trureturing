@@ -1,0 +1,37 @@
+## 1507.1 离线零点的修复熵
+
+在有限高度截断和全支撑权重下，定义：
+
+$$
+\boxed{
+\mathcal H_{\mathrm{RH}}(T)
+=
+H\!\left(
+Z_{I(R_J)}
+\mid
+Z_{R_J}
+\right).
+}
+\tag{1507.2}
+$$
+
+它测量：
+
+> 为了使 completed reflection name 能预测全部 shifted causal response，还需要补回多少方向信息？
+
+在理想局部模型中，每个离线反射轨道贡献一个二元定向区别。
+
+因此：
+
+$$
+\boxed{
+\mathcal H_{\mathrm{RH}}(T)=0
+}
+$$
+
+当且仅当高度窗口内不存在离线轨道。
+
+这为 RH 提供了一个“预测修复熵归零”的表述。
+
+---
+

@@ -1,0 +1,27 @@
+* 给定圆盘内 Verblunsky 参数后，Szegő transfer 自动属于 \(SU(1,1)\)。
+
+缺失的正是中间那条最关键的桥：
+
+$$
+\boxed{
+\text{Prime–Gamma 数据}
+\longrightarrow
+\text{正算术 phase state}
+\longrightarrow
+\text{Li–Clark Toeplitz 正性}.
+}
+$$
+
+黄金 Cuntz–Krieger state 可以作为一个受约束分支模型，但不能未经证明便与实际 Li moments 认同。
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{不可名者不等于 Cuntz 代数；
+Cuntz 代数只记录一套名字怎样不断分支。
+整数 \(m\) 是一步可见的分支数；
+黄金 \(\varphi\) 是无穷受约束历史的增长率；
+\(\varphi^2\) 是这些历史之间关系的增长率；
+离线零点则是在 Riemann 完成中出现的一块本不应存在的 branch correspondence。}
+$$

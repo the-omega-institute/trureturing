@@ -1,0 +1,42 @@
+## 1527.1 黄金与 RH 的严格分工
+
+由此必须区分：
+
+$$
+\boxed{
+\mathrm{RH}
+\Longleftrightarrow
+\text{矩递归始终保持正性};
+}
+$$
+
+与：
+
+$$
+\boxed{
+\text{黄金出现}
+\Longleftarrow
+\text{归一化后的矩递归尾部进一步趋于平稳}.
+}
+$$
+
+RH 本身并不自动推出：
+
+$$
+T_n\to\varphi^{-1}.
+$$
+
+黄金还需要一个额外的自相似／stationarity 假设。
+
+因此黄金比例在这里最准确的身份是：
+
+$$
+\boxed{
+\text{正 Stieltjes 命名递归的平稳尾固定点，}
+}
+$$
+
+而不是不可名本体的数值。
+
+---
+

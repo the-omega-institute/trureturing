@@ -1,0 +1,44 @@
+## 1594.1 时间反演
+
+平稳分布为：
+
+$$
+\boxed{
+\pi
+=
+\frac1{\varphi^2+1}
+\left(
+\varphi^2,1
+\right).
+}
+\tag{1594.4}
+$$
+
+并有详细平衡：
+
+$$
+\boxed{
+\pi_0P_{01}
+=
+\pi_1P_{10}.
+}
+\tag{1594.5}
+$$
+
+所以最大熵黄金链是可逆 Markov 链。
+
+其熵率为：
+
+$$
+\boxed{
+h_{\mathrm{Parry}}
+=
+\log\varphi.
+}
+\tag{1594.6}
+$$
+
+项目已经将 Fibonacci/golden gap word 精确连接到最小 Zeckendorf 数位测试，因此这一二状态符号动力在仓库中已有直接数位接口。
+
+---
+

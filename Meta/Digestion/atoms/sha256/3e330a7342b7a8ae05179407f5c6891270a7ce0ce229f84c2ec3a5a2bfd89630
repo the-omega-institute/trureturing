@@ -1,0 +1,82 @@
+# 第一千五百七十七部　全计数统计与有限概率证书
+
+令随机总占据数为：
+
+$$
+N_{t,u}.
+$$
+
+则：
+
+$$
+\boxed{
+\mathbb E[N_{t,u}]
+=
+\operatorname{Tr}K_{t,u},
+}
+\tag{1577.1}
+$$
+
+$$
+\boxed{
+\operatorname{Var}(N_{t,u})
+=
+\operatorname{Tr}
+\left[
+K_{t,u}(I-K_{t,u})
+\right]
+\le
+\mathbb E[N_{t,u}].
+}
+\tag{1577.2}
+$$
+
+所以 RH 下，该完成是 sub-Poissonian 的。
+
+定义 factorial cumulants：
+
+$$
+\log
+\mathbb E
+\left[
+(1+z)^{N_{t,u}}
+\right]
+=
+\sum_{r\ge1}
+\frac{
+\kappa_r^{(F)}
+}{
+r!
+}
+z^r.
+$$
+
+则：
+
+$$
+\boxed{
+\kappa_r^{(F)}
+=
+(-1)^{r-1}
+(r-1)!
+\operatorname{Tr}
+(K_{t,u}^r).
+}
+\tag{1577.3}
+$$
+
+所以：
+
+$$
+\boxed{
+(-1)^{r-1}
+\kappa_r^{(F)}
+\ge0.
+}
+\tag{1577.4}
+$$
+
+这是 PF\(_\infty\) 与 total positivity 的概率版本。
+
+---
+

@@ -1,0 +1,51 @@
+* 全局反射；
+
+以后，是否仍然存在：
+
+$$
+\boxed{
+A_t\ge0
+}
+$$
+
+使：
+
+$$
+\frac{Q_t(w)}{Q_t(0)}
+=
+\det(I+wA_t).
+$$
+
+离线零点正是这一全局正平方实现失败的证书。
+
+因此它目前最准确的身份是：
+
+$$
+\boxed{
+\textbf{局部自伴性全部成立，
+却无法通过全局完成保持为正 Hodge 平方的一枚 completion anomaly。}
+}
+$$
+
+---
+
+下一条真正承重的路线不再只是证明某些系数为正，而是构造：
+
+$$
+\boxed{
+\text{Prime–Gamma Arithmetic Hodge Completion}
+}
+$$
+
+或等价的：
+
+$$
+\boxed{
+\text{完全正 Stinespring 输运}.
+}
+$$
+
+需要从局部循环相位与约化 Laplacian出发，经过全部合法零模消去，最终得到一个正迹类 global inverse-gap operator。
+
+一旦这一完全正输运存在：
+

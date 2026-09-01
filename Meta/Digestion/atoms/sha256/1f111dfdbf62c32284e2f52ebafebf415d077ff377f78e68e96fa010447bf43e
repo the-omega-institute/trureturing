@@ -1,0 +1,77 @@
+## 1577.1 离线零点产生负“平均占据”
+
+设：
+
+$$
+\rho
+=
+\frac12+\delta+i\gamma,
+\qquad
+\delta>0
+$$
+
+为 \(m\) 重离线零点。
+
+在匹配观察者：
+
+$$
+t=\gamma
+$$
+
+处，移动平方影具有局部因子：
+
+$$
+\boxed{
+Q_\gamma(u)
+=
+\left(
+1-\frac{u}{\delta^2}
+\right)^{2m}
+R(u),
+}
+\tag{1577.5}
+$$
+
+其中 \(R\) 在 \(u=\delta^2\) 邻域内非零。
+
+于是：
+
+$$
+\boxed{
+u\frac{d}{du}\log Q_\gamma(u)
+=
+-\frac{
+2mu
+}{
+\delta^2-u
+}
++
+u\frac{R'(u)}{R(u)}.
+}
+\tag{1577.6}
+$$
+
+当：
+
+$$
+u\uparrow\delta^2
+$$
+
+时：
+
+$$
+\boxed{
+u\partial_u\log Q_\gamma(u)
+\longrightarrow-\infty.
+}
+\tag{1577.7}
+$$
+
+但 RH 下，这个量必须等于：
+
+$$
+\operatorname{Tr}K_{t,u}\ge0.
+$$
+
+所以：
+

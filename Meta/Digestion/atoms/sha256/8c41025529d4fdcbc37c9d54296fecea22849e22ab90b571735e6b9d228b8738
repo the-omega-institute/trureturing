@@ -1,0 +1,55 @@
+## 1574.1 一个重要的 RH no-go
+
+设：
+
+$$
+\zeta(\rho)=0,
+\qquad
+\Re\rho>0.
+$$
+
+对充分大的 \(N\)：
+
+$$
+F_{N+1}\Re\rho>1.
+$$
+
+于是：
+
+$$
+\zeta(F_{N+1}\rho)\neq0,
+$$
+
+因为该点位于 Euler product 的绝对收敛零自由区。
+
+因此：
+
+$$
+\boxed{
+\mathcal Z_N(\rho)
+=
+\frac{\zeta(\rho)}
+{\zeta(F_{N+1}\rho)}
+=
+0.
+}
+\tag{1574.2}
+$$
+
+所以任何假设性的离线零点，都会原封不动地出现在全部足够深的黄金幂自由 approximants 中。
+
+这意味着：
+
+$$
+\boxed{
+\text{正 Dirichlet 系数}
++
+\text{有限黄金记忆}
+}
+$$
+
+本身不可能排除离线零点。
+
+真正缺少的仍是：
+
+* Gamma 无穷位；

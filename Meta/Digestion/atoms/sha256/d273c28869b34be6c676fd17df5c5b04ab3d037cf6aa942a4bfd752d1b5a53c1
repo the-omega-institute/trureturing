@@ -1,0 +1,75 @@
+* Poisson/Hankel 边界响应。
+
+对一个 \(J\)-轨道 \(\mathcal O\)，定义：
+
+$$
+\boxed{
+d_{\mathrm{causal}}(\mathcal O)
+=
+\left|
+\Gamma_{\mathrm{causal}}(\mathcal O)
+\right|.
+}
+\tag{1504.1}
+$$
+
+在局部双分支模型中：
+
+$$
+\boxed{
+d_{\mathrm{causal}}(\mathcal O)
+=
+\begin{cases}
+1,&\mathcal O\text{ 为临界单点};\\
+2,&\mathcal O\text{ 为离线反射对}.
+\end{cases}
+}
+\tag{1504.2}
+$$
+
+定义局部命名缺陷：
+
+$$
+\boxed{
+b(\mathcal O)
+=
+\log_2
+d_{\mathrm{causal}}(\mathcal O).
+}
+\tag{1504.3}
+$$
+
+于是：
+
+$$
+\boxed{
+b(\mathcal O)
+=
+\begin{cases}
+0,&\text{临界零点};\\
+1,&\text{离线反射对}.
+\end{cases}
+}
+\tag{1504.4}
+$$
+
+所以每个离线轨道相对于 completed reflection name 多出一个：
+
+$$
+\boxed{
+\text{法向定向比特}.
+}
+$$
+
+它回答：
+
+$$
+\delta>0
+\quad\text{还是}\quad
+\delta<0.
+$$
+
+函数方程保留轨道，却不保留这一个方向位。
+
+---
+

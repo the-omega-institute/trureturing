@@ -1,0 +1,47 @@
+## 1685.1 不同相位观察者之间的酉过渡
+
+对：
+
+$$
+\alpha,\beta\in S^1,
+$$
+
+定义：
+
+$$
+\boxed{
+U_{\beta\leftarrow\alpha}
+=
+\mathcal U_\beta
+\mathcal U_\alpha^{-1}
+\in U(m).
+}
+\tag{1685.4}
+$$
+
+由于它连接两组正交标准基：
+
+$$
+U_{\beta\leftarrow\alpha}
+$$
+
+必为酉矩阵。
+
+并且：
+
+$$
+\boxed{
+U_{\gamma\leftarrow\beta}
+U_{\beta\leftarrow\alpha}
+=
+U_{\gamma\leftarrow\alpha}.
+}
+\tag{1685.5}
+$$
+
+这是一张真正的观察者过渡群胚。
+
+项目已经机器证明，规范 predictive-completion maps 满足恒等与复合律；当前相位纤维的酉过渡可以接入同类的形式接口。
+
+---
+

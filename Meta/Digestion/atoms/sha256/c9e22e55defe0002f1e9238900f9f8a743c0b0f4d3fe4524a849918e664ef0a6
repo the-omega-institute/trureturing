@@ -1,0 +1,82 @@
+# 第一千六百九十九部　形式化顺序
+
+```text
+D5/S3/Analytic/Hardy/PhaseFibreClarkBasis/
+  FiniteBlaschkeBoundaryCover.lean
+  BlaschkePhaseRegularFiber.lean
+  SamePhaseKernelOrthogonal.lean
+  BoundaryKernelDiagonalPhaseDerivative.lean
+  PhaseFibreNormalizedKernels.lean
+  PhaseFibreClarkBasis.lean
+  PhaseFibreSamplingIdentity.lean
+
+D5/S3/Observer/PhaseFibreCoordinates/
+  PhaseFibreEvaluationMap.lean
+  PhaseFibreEvaluationIsometry.lean
+  PhaseFibreEvaluationUnitary.lean
+  PhaseObserverTransitionMatrix.lean
+  PhaseObserverTransitionComposition.lean
+  PhaseObserverTransitionUnistochastic.lean
+
+D5/S3/Entropy/ModelSpaceMaximalMixing/
+  UniformPhaseFibreState.lean
+  UniformPhaseFibreDensityMatrix.lean
+  UniformPhaseFibreIsMaximallyMixed.lean
+  PhaseFibreVonNeumannEntropy.lean
+  DegreeOneZeroSheetEntropy.lean
+
+D5/S3/Observer/BlaschkePhaseDisintegration/
+  ForwardPhaseDelayMeasure.lean
+  ForwardPhaseMeasurePushforwardHaar.lean
+  BoundaryCoverCoareaFormula.lean
+  InversePhaseFibreWeights.lean
+  ForwardDerivativeInverseDerivativeDuality.lean
+
+D5/S3/Observer/BlaschkeMonodromy/
+  BoundaryBlaschkeCoveringDegree.lean
+  PhaseLoopLift.lean
+  PhaseLoopSheetPermutation.lean
+  ConnectedCoverMonodromyCycle.lean
+  MonodromyPeriodEqualsDegree.lean
+
+D5/S3/Analytic/Zeta/DefectPersistence/
+  OffLineDefectInterval.lean
+  ShiftedDefectVectorSpace.lean
+  DefectPersistenceMap.lean
+  DefectPersistenceComposition.lean
+  DefectRankFunction.lean
+  DefectBarcodeEndpointMeasure.lean
+  DefectBarcodeMomentFormula.lean
+
+D5/S3/Analytic/Zeta/PhaseFibreAtDepth/
+  ShiftedFiniteBlaschkeFactor.lean
+  ShiftedPhaseFibreBasis.lean
+  ShiftedPhaseFibreDimension.lean
+  HorizonPhaseFibreFocusing.lean
+  PhaseFibreDeathAtDepth.lean
+
+D5/S3/Weil/ClarkCayleyTomography/
+  PhaseFibreClarkMeasure.lean
+  ClarkMeasurePositiveAtomic.lean
+  ClarkMeasureCayleyMoment.lean
+  ClarkMomentFiniteRank.lean
+  ClarkMomentPronyRecurrence.lean
+  LaguerreRecoversClarkCayleyMomentTarget.lean
+
+D5/S3/Weil/NoAtomicPhaseFibre/
+  CanonicalShiftedPhaseResidualTarget.lean
+  CanonicalResidualHerglotzMeasureTarget.lean
+  OffLineBlaschkeCreatesAtomicResidual.lean
+  PrimeGammaNoAtomicResidualTarget.lean
+  NoAtomicResidualAllWindowsImpliesRH.lean
+
+D5/S3/Weil/ArithmeticCyclicity/
+  CanonicalShiftedBoundaryStateTarget.lean
+  CanonicalStateHardySmirnovTarget.lean
+  HiddenOrthogonalComplementEqualsModelSpace.lean
+  PrimeGammaCyclicityTarget.lean
+  ArithmeticCyclicityImpliesRH.lean
+```
+
+---
+

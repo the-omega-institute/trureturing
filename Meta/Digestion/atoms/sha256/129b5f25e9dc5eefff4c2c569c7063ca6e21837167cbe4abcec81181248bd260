@@ -1,0 +1,93 @@
+# 第一千六百八十四部　相位纤维 Clark 基定理
+
+有限 Blaschke 模型空间的 reproducing kernel 记为：
+
+$$
+\boxed{
+K_B(z,w)
+=
+\frac{i}{2\pi}
+\frac{
+1-B(z)\overline{B(w)}
+}{
+z-\overline w
+}.
+}
+\tag{1684.1}
+$$
+
+在边界点 \(x\in\mathbb R\) 的非切向极限下：
+
+$$
+\boxed{
+K_B(x,x)
+=
+\frac{\theta_B'(x)}{2\pi}.
+}
+\tag{1684.2}
+$$
+
+这一对角值正是上一轮得到的 phase-delay／Poisson 状态密度。项目已经机器证明了其最小 Cayley 原型：法向对数半径导数与边界相位导数由同一个 Poisson 核给出。
+
+现在固定：
+
+$$
+\alpha\in S^1,
+$$
+
+并取：
+
+$$
+x_j^\alpha\in B^{-1}(\alpha).
+$$
+
+若 \(j\neq k\)，则：
+
+$$
+B(x_j^\alpha)
+=
+B(x_k^\alpha)
+=
+\alpha,
+$$
+
+故：
+
+$$
+1-
+B(x_j^\alpha)
+\overline{B(x_k^\alpha)}
+=
+1-|\alpha|^2
+=
+0.
+$$
+
+所以：
+
+$$
+\boxed{
+K_B(x_j^\alpha,x_k^\alpha)=0
+\qquad
+(j\neq k).
+}
+\tag{1684.3}
+$$
+
+定义归一化边界核：
+
+$$
+\boxed{
+e_j^\alpha
+=
+\frac{
+K_B(\,\cdot\,,x_j^\alpha)
+}{
+\sqrt{K_B(x_j^\alpha,x_j^\alpha)}
+}.
+}
+\tag{1684.4}
+$$
+
+---
+

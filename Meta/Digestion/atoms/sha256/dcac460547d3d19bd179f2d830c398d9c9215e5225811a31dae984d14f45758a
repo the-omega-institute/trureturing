@@ -1,0 +1,32 @@
+## 1618.1 应用于 moving square shadow
+
+固定：
+
+$$
+t\in\mathbb R,
+\qquad
+\Xi(t)\neq0,
+$$
+
+定义：
+
+$$
+\frac{Q_t(w)}{Q_t(0)}
+=
+\sum_{m\ge0}
+a_m(t)w^m,
+$$
+
+其中：
+
+$$
+a_m(t)
+=
+\frac{\mathcal J_m(t)}
+{\mathcal J_0(t)}.
+$$
+
+项目已经机器化：\(\mathcal J_m(t)\) 是 actual completed-\(\xi\) normal intensity 的真实偶阶 Taylor 系数，而不是人为制造的形式序列。
+
+于是得到：
+
