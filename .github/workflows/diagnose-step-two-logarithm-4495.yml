@@ -1,0 +1,47 @@
+name: diagnose-step-two-logarithm-4495
+
+on:
+  push:
+    branches:
+      - tmp/finalize-step-two-logarithm-4495
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout candidate branch
+        uses: actions/checkout@v4
+        with:
+          ref: lane/math/step-two-chronological-logarithm
+          fetch-depth: 0
+
+      - name: Install pinned .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Capture repository-tools build
+        id: build
+        shell: bash
+        run: |
+          set +e
+          make -C tools dotnet > /tmp/step-two-logarithm-dotnet.log 2>&1
+          code=$?
+          printf '%s\n' "$code" > /tmp/step-two-logarithm-dotnet.exit
+          cat /tmp/step-two-logarithm-dotnet.log
+          exit "$code"
+
+      - name: Upload build diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: step-two-logarithm-dotnet-diagnostics
+          path: |
+            /tmp/step-two-logarithm-dotnet.log
+            /tmp/step-two-logarithm-dotnet.exit
+          if-no-files-found: error
+          retention-days: 1
