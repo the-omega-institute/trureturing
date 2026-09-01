@@ -10,27 +10,28 @@ internal sealed class GoldenPositivityInductionDocument : IScribeDocumentDefinit
         "D5/S3/Weil/TestFunctions/GoldenPositivityInduction.golden_positivity_induction";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A two-step positive recurrence propagates through cofinal Fibonacci support layers.",
+        "A two-step positive recurrence propagates through a chosen cofinal support schedule.",
         H("Golden Positivity Induction"),
         Blocks(Describe.Lean(
             DescribeId.Create("golden-positivity-induction"),
             DeclarationHandle.Create(Handle),
-            H("Fibonacci-layer positivity reaches every compact Weil test"),
+            H("Recurrent-layer positivity reaches every compact Weil test"),
             StatementSource.FromAuthor(TheoremFormula()),
             AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(
                 "The carrier is the canonical compactly supported Weil-test space. "
-                    + "Layer n consists of tests supported within the Fibonacci radius "
-                    + "fib(n+5). Two-step induction proves positivity on every layer, "
-                    + "and compact support together with Fibonacci cofinality places every "
-                    + "Weil test in one of those layers."))),
+                    + "The chosen positive support schedule satisfies "
+                    + "L(n+2)=L(n+1)+L(n), the source relation (1219.1). Layer n consists "
+                    + "of tests supported within radius L(n). Two-step induction proves "
+                    + "positivity on every layer, and cofinality derived from positivity "
+                    + "and the recurrence places every Weil test in one of those layers."))),
             DescribeRole.Theorem))));
 
     private static Formula TheoremFormula()
     {
         Formula natural = Call("Nat"), real = Call("Real");
         Formula test = Call("WeilTestFunction");
-        Formula n = F.Id("n"), x = F.Id("x"), f = F.Id("f");
+        Formula n = F.Id("n"), x = F.Id("x"), f = F.Id("f"), l = F.Id("L");
         Formula q = F.Id("Q"), a = F.Id("A"), b = F.Id("B"), r = F.Id("R");
         Formula layer = F.Id("Layer");
 
@@ -49,9 +50,18 @@ internal sealed class GoldenPositivityInductionDocument : IScribeDocumentDefinit
                     NotEqual(Apply(f, x), D(0)),
                     LessOrEqual(
                         new Formula.Absolute(x),
-                        Call("fib", Add(n, D(5)))))),
+                        Apply(l, n)))),
             f,
             test);
+
+        Formula schedulePositive = ForAll(
+            [Bound("n", natural)],
+            Less(D(0), Apply(l, n)));
+        Formula scheduleRecurrence = ForAll(
+            [Bound("n", natural)],
+            Equal(
+                Apply(l, next),
+                Add(Apply(l, Add(n, D(1))), Apply(l, n))));
 
         Formula aType = ForAll(
             [Bound("n", natural)],
@@ -86,12 +96,14 @@ internal sealed class GoldenPositivityInductionDocument : IScribeDocumentDefinit
             LessOrEqual(D(0), Apply(q, f)));
 
         return Disp(new Formula.Aligned([
-            Seq(Forall, Sp, q, Colon, Sp, new Formula.TypeArrow(test, real), Comma),
+            Seq(Forall, Sp, l, Colon, Sp, new Formula.TypeArrow(natural, real), Comma),
+            Seq(q, Colon, Sp, new Formula.TypeArrow(test, real), Comma),
             Seq(Operatorname, Grp(F.Id("let")), Sp, layer, Open, n, Close, Sp,
                 Colon, Eq, Sp, layerBody, Comma),
             Seq(Forall, Sp, a, Colon, Sp, aType, Comma),
             Seq(b, Colon, Sp, bType, Comma, Sp, r, Colon, Sp, rType, Comma),
-            Seq(All(baseZero, baseOne, recurrence, residualPositive), Sp, Rightarrow),
+            Seq(All(schedulePositive, scheduleRecurrence, baseZero, baseOne,
+                recurrence, residualPositive), Sp, Rightarrow),
             Seq(All(layerConclusion, globalConclusion), Dot),
         ]));
     }
@@ -110,6 +122,9 @@ internal sealed class GoldenPositivityInductionDocument : IScribeDocumentDefinit
 
     private static Formula LessOrEqual(Formula left, Formula right) =>
         new Formula.Relation(left, FormulaRelationOperator.LessThanOrEqual, right);
+
+    private static Formula Less(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.LessThan, right);
 
     private static Formula Implies(Formula left, Formula right) =>
         new Formula.Logic(left, FormulaLogicOperator.Implies, right);
