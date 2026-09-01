@@ -30,11 +30,16 @@ jobs:
       - name: Compile truncated tensor signature
         run: lake build D5.S3.Observer.Chronology.TruncatedTensorSignature
 
+      - name: Compile truncated tensor Hopf laws
+        run: lake build D5.S3.Observer.Chronology.TruncatedTensorHopf
+
       - name: Produce source-bound report
         run: make lean-report
 
-      - name: Emit Blueprint mirror
+      - name: Emit Blueprint mirrors
         run: make emit
 
-      - name: Verify generated mirror
-        run: test -f Blueprint/D5/S3/Observer/Chronology/TruncatedTensorSignature.md
+      - name: Verify generated mirrors
+        run: |
+          test -f Blueprint/D5/S3/Observer/Chronology/TruncatedTensorSignature.md
+          test -f Blueprint/D5/S3/Observer/Chronology/TruncatedTensorHopf.md
