@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:5b58056e6a08af759e21683928583c927c1e920aa3f655a2a6f990a01393034c
+  normalized_sha256: sha256:5b58056e6a08af759e21683928583c927c1e920aa3f655a2a6f990a01393034c
+cas_ref: sha256:5b58056e6a08af759e21683928583c927c1e920aa3f655a2a6f990a01393034c
+coverage_gids:
+  - D5/S3/Observer/LinearMemory/DualGramVisibleRanges.dual_gram_visible_ranges
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/LinearMemory/DualGramVisibleRanges.dual_gram_visible_ranges
+      source_sha256: sha256:5b58056e6a08af759e21683928583c927c1e920aa3f655a2a6f990a01393034c
+      target_statement_id: sha256:391393aa7087d7d5f3b234fed82f004e66005ea674c9c4ede407652ca0799957
+  scribe:
+    - gid: D5/S3/Observer/LinearMemory/DualGramVisibleRanges.dual_gram_visible_ranges
+      definition_sha256: sha256:c79360848737ddbf0f16ac61bf8c62d41b963d575b0699d37407b767d6c47d7a
+      emission_sha256: sha256:d495cca09be651dd44aa6f8ce5a334b68f5feb261245cab9215979eca25e0b5a
+  unresolved_subitems: []
