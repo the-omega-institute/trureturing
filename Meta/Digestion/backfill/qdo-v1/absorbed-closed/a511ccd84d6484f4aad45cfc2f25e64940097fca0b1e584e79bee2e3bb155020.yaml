@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:a511ccd84d6484f4aad45cfc2f25e64940097fca0b1e584e79bee2e3bb155020
+  normalized_sha256: sha256:a511ccd84d6484f4aad45cfc2f25e64940097fca0b1e584e79bee2e3bb155020
+cas_ref: sha256:a511ccd84d6484f4aad45cfc2f25e64940097fca0b1e584e79bee2e3bb155020
+coverage_gids:
+  - D5/S3/Observer/MetricGeometryLaws/DiscountedPredictionPseudometric.discounted_prediction_pseudometric
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/MetricGeometryLaws/DiscountedPredictionPseudometric.discounted_prediction_pseudometric
+      source_sha256: sha256:a511ccd84d6484f4aad45cfc2f25e64940097fca0b1e584e79bee2e3bb155020
+      target_statement_id: sha256:1e10d91280047d81683b70dac63353a04aa060624f8a693049ade1fd7d253c7c
+  scribe:
+    - gid: D5/S3/Observer/MetricGeometryLaws/DiscountedPredictionPseudometric.discounted_prediction_pseudometric
+      definition_sha256: sha256:9d9c40d84e17debb51a9637dec306c257aa3258431557a9bb6d7b6ac495ddde8
+      emission_sha256: sha256:1c9f24f2ef53a854a9199329ba4f2f820f6d142a68e40ea0a7bee145ef08b564
+  unresolved_subitems: []
