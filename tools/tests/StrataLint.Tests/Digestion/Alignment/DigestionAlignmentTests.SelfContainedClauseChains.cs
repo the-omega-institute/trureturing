@@ -7,6 +7,40 @@ namespace StrataLint.Tests;
 public sealed partial class DigestionAlignmentTests
 {
     [Fact]
+    public void IngestStatusAuthorityRejectionOutranksVerifiedClauseChainSeenWhichOutranksFrontierRejection()
+    {
+        var fixture = SelfContainedClauseChain();
+        var changedChild = fixture.Children[0] with
+        {
+            ProjectedStatus = new DigestionStatus(
+                DigestionMigrationState.Partial,
+                DigestionTruthState.Open),
+        };
+        var unchangedChild = fixture.Children[1];
+        var candidate = ChainLedger(
+            fixture,
+            fixture.Parent,
+            [changedChild, unchangedChild]);
+
+        var result = DigestionLedgerAligner.Evaluate(
+            candidate,
+            Snapshot(
+                fixture.CurrentSourceBytes,
+                fixture.ChildCaptures.Prepend(fixture.ParentCapture)),
+            fixture.Ledger,
+            DigestionAlignmentMode.Ingest);
+
+        Assert.Equal(
+            DigestionReceiptAlignment.Rejected,
+            result.AlignmentFor(changedChild.AtomId));
+        Assert.Null(result.AtomFor(changedChild.AtomId));
+        Assert.Equal(
+            DigestionReceiptAlignment.Seen,
+            result.AlignmentFor(unchangedChild.AtomId));
+        Assert.NotNull(result.AtomFor(unchangedChild.AtomId));
+    }
+
+    [Fact]
     public void SelfContainedClauseChain_VerifiesHistoricalParentAfterSameLocatorSourceRewrite()
     {
         var fixture = SelfContainedClauseChain(sameCurrentNumber: true);

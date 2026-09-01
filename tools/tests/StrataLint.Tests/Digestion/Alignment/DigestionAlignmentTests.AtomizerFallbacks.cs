@@ -7,6 +7,77 @@ namespace StrataLint.Tests;
 public sealed partial class DigestionAlignmentTests
 {
     [Fact]
+    public void IngestStatusAuthorityRejectionSurvivesDecoderFallbackContentWideMatch()
+    {
+        var sourceBytes = Encoding.UTF8.GetBytes("whole source bytes\n");
+        var coarseBytes = ImmutableArray.CreateRange(sourceBytes);
+        var coarse = new DigestionAtom(
+            0,
+            sourceBytes.Length,
+            coarseBytes,
+            DigestionFingerprint.ComputeOpaque(coarseBytes.AsSpan()),
+            []);
+        var capture = DigestionCasStore.Capture(coarseBytes.AsSpan());
+        var baselineEntry = Entry("baseline", coarse) with
+        {
+            ProjectedStatus = new DigestionStatus(
+                DigestionMigrationState.Absorbed,
+                DigestionTruthState.Open),
+        };
+        var candidateEntry = baselineEntry with
+        {
+            ProjectedStatus = new DigestionStatus(
+                DigestionMigrationState.Partial,
+                DigestionTruthState.Open),
+        };
+
+        var result = DigestionLedgerAligner.Evaluate(
+            Ledger([], candidateEntry),
+            Snapshot(sourceBytes, [capture]),
+            Ledger([], baselineEntry),
+            DigestionAlignmentMode.Ingest,
+            _ => (_, _) => throw new TheorySourceFormatException("synthetic parse failure"));
+
+        Assert.Equal(DigestionReceiptAlignment.Rejected, result.AlignmentFor(AtomId(coarse)));
+        Assert.Null(result.AtomFor(AtomId(coarse)));
+    }
+
+    [Fact]
+    public void IngestStatusAuthorityRejectionSurvivesZeroClaimContentWideMatch()
+    {
+        var sourceBytes = Encoding.UTF8.GetBytes("not a recognised claim\n");
+        var coarseBytes = ImmutableArray.CreateRange(sourceBytes);
+        var coarse = new DigestionAtom(
+            0,
+            sourceBytes.Length,
+            coarseBytes,
+            DigestionFingerprint.ComputeOpaque(coarseBytes.AsSpan()),
+            []);
+        var capture = DigestionCasStore.Capture(coarseBytes.AsSpan());
+        var baselineEntry = Entry("baseline", coarse) with
+        {
+            ProjectedStatus = new DigestionStatus(
+                DigestionMigrationState.Absorbed,
+                DigestionTruthState.Open),
+        };
+        var candidateEntry = baselineEntry with
+        {
+            ProjectedStatus = new DigestionStatus(
+                DigestionMigrationState.Partial,
+                DigestionTruthState.Open),
+        };
+
+        var result = DigestionLedgerAligner.Evaluate(
+            Ledger([], candidateEntry),
+            Snapshot(sourceBytes, [capture]),
+            Ledger([], baselineEntry),
+            DigestionAlignmentMode.Ingest);
+
+        Assert.Equal(DigestionReceiptAlignment.Rejected, result.AlignmentFor(AtomId(coarse)));
+        Assert.Null(result.AtomFor(AtomId(coarse)));
+    }
+
+    [Fact]
     public void IngestRejectsAtomizerHashFailureInsteadOfFallingBack()
     {
         var (ledger, oldCapture) = ExistingCasBackedLedger();

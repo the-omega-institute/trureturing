@@ -512,6 +512,7 @@ public sealed partial class DigestionAlignmentTests
 
         Assert.Empty(result.Findings);
         Assert.Equal(DigestionReceiptAlignment.Rejected, result.AlignmentFor(AtomId(atom)));
+        Assert.Null(result.AtomFor(AtomId(atom)));
     }
 
     [Fact]
@@ -562,6 +563,7 @@ public sealed partial class DigestionAlignmentTests
         Assert.Equal(
             DigestionReceiptAlignment.Rejected,
             result.AlignmentFor(AtomId(baselineAtom)));
+        Assert.Null(result.AtomFor(AtomId(baselineAtom)));
     }
 
     [Fact]

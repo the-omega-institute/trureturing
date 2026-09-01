@@ -465,10 +465,7 @@ internal static partial class DigestionLedgerAligner
                 foreach (var entry in matchingEntries)
                 {
                     matchedAtoms[entry.AtomId] = atom;
-                    if (!ingestStatusAuthorityRejections.Contains(entry.AtomId))
-                    {
-                        alignments[entry.AtomId] = DigestionReceiptAlignment.Seen;
-                    }
+                    alignments[entry.AtomId] = DigestionReceiptAlignment.Seen;
                 }
 
                 if (knownContent.Contains(atom.Fingerprints.RawSha256))
@@ -516,6 +513,20 @@ internal static partial class DigestionLedgerAligner
                         $"source {source.SourceId} stale receipts are not acknowledged: "
                         + string.Join(", ", unacknowledged));
                 }
+            }
+        }
+
+        // Final precedence: Ingest status-authority rejection > verified clause-chain Seen (F2)
+        // > current-frontier rejection. Reapply it after every alignment and matched-atom writer.
+        // The rejection exists to stop Seen inheritance; settled non-Seen verdicts (such as an
+        // acknowledged-stale settlement) are not downgraded by it.
+        foreach (var atomId in ingestStatusAuthorityRejections)
+        {
+            if (alignments.TryGetValue(atomId, out var verdict)
+                && verdict == DigestionReceiptAlignment.Seen)
+            {
+                alignments[atomId] = DigestionReceiptAlignment.Rejected;
+                matchedAtoms.Remove(atomId);
             }
         }
 
