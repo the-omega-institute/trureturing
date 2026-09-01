@@ -91,15 +91,14 @@ instance [Semiring A] : Monoid (StepTwoSignature A) where
   one := identity
   mul := compose
   one_mul signature := by
-    rcases signature with ⟨first, second⟩
+    change compose identity signature = signature
     ext <;> simp [compose, identity]
   mul_one signature := by
-    rcases signature with ⟨first, second⟩
+    change compose signature identity = signature
     ext <;> simp [compose, identity]
   mul_assoc left middle right := by
-    rcases left with ⟨leftOne, leftTwo⟩
-    rcases middle with ⟨middleOne, middleTwo⟩
-    rcases right with ⟨rightOne, rightTwo⟩
+    change compose (compose left middle) right =
+      compose left (compose middle right)
     ext <;> simp [compose] <;> noncomm_ring
 
 @[simp]
@@ -249,6 +248,9 @@ theorem doubled_magnus_two_events_eq_commutator
       commutator (observe eventP) (observe eventQ) := by
   simp only [chronologicalSignature, mul_one]
   rw [doubled_magnus_degree_two_mul]
+  change
+    0 + 0 + commutator (observe eventP) (observe eventQ) =
+      commutator (observe eventP) (observe eventQ)
   simp
 
 /-- Reversing a two-event chronology reverses the orientation of its
