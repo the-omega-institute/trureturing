@@ -4,10 +4,12 @@
 # 判据: 理论卷标题的 ASCII 括注(作者自给的英文名)对 D5 模块名+声明名全语料做子串匹配。
 # 三态, 不冒领 (第 4 条): CLEAN=关键词无命中 / HIT=有命中 / UNKNOWN=标题无 ASCII 括注,
 #   本器拿不到查重键,不下结论。UNKNOWN 不是"干净",是"本器查不了",须席位自行查。
-# 适用边界(2026-09-01 实测): 只有标题带作者自给英文名的卷可判。
-#   observer-adelic-completion-constant-theory: 168 条可判 (clean 19 / hit 149);
-#   formal-prime-observer-dynamics: 1879 atom 中 1666 条 <20 行、107 条标题无定理级词、
-#   ASCII 括注为 0 ==> 全部 UNKNOWN。对这类卷本器只做粗筛与密度排序。
+# 全仓实测(2026-09-01, 28 卷): clean=119 unknown=1588 hit=849, 可判总数 2556
+#   (residual-open 约 15,000 条, 故只有约 17% 是定理级单元)。
+#   hit=849 是本器最有价值的输出: 这些 atom 已有对应 Lean, 只差 cover 绑账。
+# 适用边界: 只有标题带作者自给英文名的卷可判 —— 其余归 UNKNOWN。
+#   pzg-v170 的 1928 个 atom 行数中位数仅 3(1827 条 <12 行), 是研究日志卷而非定理集,
+#   entropy-info-primes-o5 的 54 条中位数 1 行; 这两卷的 0 是真 0, 不是盲区。
 # 非承重: CLEAN 也只排除同名, 排除不了异名覆盖; 席位仍须走完 cover 查重五路。
 # usage: atom_dedup.sh REPO VOLUME OUT.tsv   (sentinel: DEDUP_OK clean=<n> hit=<n>)
 set -euo pipefail
@@ -35,7 +37,10 @@ corpus = "\n".join(names).lower()
 STOP = {"the","of","and","for","with","theorem","criterion","existence","lemma","principle",
         "property","condition","form","case","type","general","exact","local","global","new",
         "law","rule","test","value","map","set","one","two","all","non","via","under","from"}
-PROP = re.compile(r'定理|命题|引理|推论')
+# 「定义」也是可形式化对象 (Lean 的 def 与 theorem 同为承重产出); 漏掉它会把整卷判空 ——
+# 2026-09-01 实测 formal-concept-dynamics 有 966 条因此被误滤, 其中含 ## 定义 431.3。
+PROP = re.compile(r'定理|命题|引理|推论|定义')
+MATHCMD = re.compile(r'\\[A-Za-z]{2,}')
 
 cas = R / "Meta/Digestion/atoms/sha256"
 rows = []
@@ -48,9 +53,12 @@ for y in sorted((R / "Meta/Digestion/backfill" / volume / "residual-open").glob(
     if not re.match(r'^#+\s', title): continue        # 无标题者非独立命题单元
     # 定理级: 标题含定理级词, 或正文含之 (中文标题卷的标题只有编号+描述)
     if not (PROP.search(title) or PROP.search(txt)): continue
-    # 数学密度: 卷与卷的分隔符不同 —— adelic 用 $$, FPOD 用 \[ ... \]。
-    # 只数 '$' 会把 FPOD 的真定理全判成 math=0 (2026-09-01 实测误滤 182 条)。
-    math = sum(1 for l in lines if ('$' in l or '\\[' in l or '\\boxed' in l or '\\begin{' in l))
+    # 数学密度: 数 LaTeX 命令, 不数分隔符。
+    # 分隔符逐卷不同 —— adelic 用 $$, FPOD 用 \[ ... \], formal-concept-dynamics 用裸 [ ... ]
+    # (markdown 转换丢了反斜杠)。拿分隔符当代理, 每换一个卷就失效一次:
+    # 2026-09-01 实测先后误判 FPOD 182 条、concept-dynamics 336 条为 math=0。
+    # \word 形式的 LaTeX 命令(\boxed \left \lceil \sum \log ...)是跨卷稳定的特征。
+    math = sum(1 for l in lines if ('$' in l or MATHCMD.search(l)))
     if math < 6: continue
     kws = [w.lower() for w in re.findall(r'[A-Za-z][A-Za-z\-]{2,}', title)
            if w.lower() not in STOP and len(w) >= 4]
