@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:52e6755798d53911ef8c7abb7a4393acfabeb090b3a5774456acf7c222ad4b4b
+  normalized_sha256: sha256:52e6755798d53911ef8c7abb7a4393acfabeb090b3a5774456acf7c222ad4b4b
+cas_ref: sha256:52e6755798d53911ef8c7abb7a4393acfabeb090b3a5774456acf7c222ad4b4b
+coverage_gids:
+  - D5/S3/Weil/Budget/CaratheodoryScaleCovariance.caratheodory_scale_covariance
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/Budget/CaratheodoryScaleCovariance.caratheodory_scale_covariance
+      source_sha256: sha256:52e6755798d53911ef8c7abb7a4393acfabeb090b3a5774456acf7c222ad4b4b
+      target_statement_id: sha256:fad7a11adbb7146dd731501cebb2bde8109c25862b37cef1f676de91037545ca
+  scribe:
+    - gid: D5/S3/Weil/Budget/CaratheodoryScaleCovariance.caratheodory_scale_covariance
+      definition_sha256: sha256:05c41f82f3db5750e8a7dc1a7b95a3236349f235dfaf533420ab167561869838
+      emission_sha256: sha256:0a8ab93113d67e3d733dccf91298fde1e09759ffbac9a7e3ea62859f6b520f32
+  unresolved_subitems: []
