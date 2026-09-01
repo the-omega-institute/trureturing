@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:d568f088916e75f04ec76800f1074b2d2d29551ee3ffda4a639d67a22726e836
+  normalized_sha256: sha256:d568f088916e75f04ec76800f1074b2d2d29551ee3ffda4a639d67a22726e836
+cas_ref: sha256:d568f088916e75f04ec76800f1074b2d2d29551ee3ffda4a639d67a22726e836
+coverage_gids:
+  - D5/S3/ContinuousObservables/TransientObservableFilter.transient_observable_filter
+receipts:
+  coverage:
+    - gid: D5/S3/ContinuousObservables/TransientObservableFilter.transient_observable_filter
+      source_sha256: sha256:d568f088916e75f04ec76800f1074b2d2d29551ee3ffda4a639d67a22726e836
+      target_statement_id: sha256:1d0d9087ed791d88ffcfabef98304abe43ddd764e6b4d419c9e3dda491daec26
+  scribe:
+    - gid: D5/S3/ContinuousObservables/TransientObservableFilter.transient_observable_filter
+      definition_sha256: sha256:e6874ff82d71a563a321b775cef258b8e652e55747d74aeb5076752c99dd809d
+      emission_sha256: sha256:95c5d007e5a6c816f46854aba8b32eba377dfe62f660892ee59c84c273753bd2
+  unresolved_subitems: []

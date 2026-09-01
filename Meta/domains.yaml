@@ -14,6 +14,9 @@ domains:
   Asymptotics:
     stratum: S0
     definition: Asymptotic bounds for finite-listing weights and exclusion of nonzero limiting phases.
+  Automata:
+    stratum: S0
+    definition: Finite-state output automata with distinguishing-continuation state lower bounds over the Mathlib DFA carrier.
   Axis:
     stratum: S3
     definition: Prime-axis escape arguments over the natural primes.
@@ -23,6 +26,9 @@ domains:
   CertificateHistory:
     stratum: S0
     definition: Finite event-history certificates and the finite sets of generating events they reference.
+  Certificates:
+    stratum: S0
+    definition: Kernel-checkable refutation and infeasibility certificates such as LRAT propositional proofs and rational Farkas dual weights.
   CompletionDynamics:
     stratum: S3
     definition: Dynamical structures of observer completion - golden Mobius fixed points, projective jets and first-break orders, and real-completion thread fibers with blow-up coordinates.

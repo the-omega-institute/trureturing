@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:5799caf962759eaa97de5e645f3fdb08aa67078aea4e71caf03c13b67a97efb5
+  normalized_sha256: sha256:5799caf962759eaa97de5e645f3fdb08aa67078aea4e71caf03c13b67a97efb5
+cas_ref: sha256:5799caf962759eaa97de5e645f3fdb08aa67078aea4e71caf03c13b67a97efb5
+coverage_gids:
+  - D5/S1/FixedPoints/TransientTrees/DepthTruncatedClassification.depth_truncated_tree_classification_and_naturality
+receipts:
+  coverage:
+    - gid: D5/S1/FixedPoints/TransientTrees/DepthTruncatedClassification.depth_truncated_tree_classification_and_naturality
+      source_sha256: sha256:5799caf962759eaa97de5e645f3fdb08aa67078aea4e71caf03c13b67a97efb5
+      target_statement_id: sha256:2d7125c31fb4572452689a96b92b854808267ed4caface4666dc037d1bdde9b9
+  scribe:
+    - gid: D5/S1/FixedPoints/TransientTrees/DepthTruncatedClassification.depth_truncated_tree_classification_and_naturality
+      definition_sha256: sha256:0d9321b4bb7722f4c36573b8503b3aeaba3ed264bdc0c4f593e811d94008eb99
+      emission_sha256: sha256:61dc2fcc3a33735ba1e456ccf0d289ee24e223d1e55718f96089593c74f7f99c
+  unresolved_subitems: []
