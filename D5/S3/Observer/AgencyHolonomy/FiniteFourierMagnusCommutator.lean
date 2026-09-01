@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Observer/AgencyHolonomy/FiniteFourierMagnusCommutator
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Expand the commutator of a finite Fourier-valued algebra generator with the frozen second-Magnus slot kernel as its exact coefficient. -/
+   digest: Expand a finite Fourier generator commutator with the frozen slot kernel. -/
 
 import D5.S3.Observer.AgencyHolonomy.SecondMagnusSwapCurvature
 import Mathlib.Algebra.Algebra.Operations
@@ -75,7 +75,7 @@ theorem finite_fourier_algebra_generator_commutator_expansion
   ring
 
 /-- At equal times the finite Fourier generator commutes with itself and the
-kernel expansion vanishes term by term. -/
+kernel expansion vanishes. -/
 theorem finite_fourier_algebra_generator_equal_time_commutator
     {ι : Type u} {A : Type v} [Fintype ι] [Ring A] [Algebra ℂ A]
     (generator : ι → A) (frequency : ι → ℝ) (time : ℝ) :
@@ -84,67 +84,7 @@ theorem finite_fourier_algebra_generator_equal_time_commutator
         (finiteFourierAlgebraGenerator generator frequency time) = 0 := by
   simp [algebraCommutator]
 
-/-- If the algebra generators commute pairwise, every Fourier-time
-commutator vanishes. -/
-theorem finite_fourier_algebra_generator_commutator_eq_zero_of_pairwise
-    {ι : Type u} {A : Type v} [Fintype ι] [Ring A] [Algebra ℂ A]
-    (generator : ι → A) (frequency : ι → ℝ) (time1 time2 : ℝ)
-    (hCommute : ∀ p q, generator p * generator q = generator q * generator p) :
-    algebraCommutator
-        (finiteFourierAlgebraGenerator generator frequency time1)
-        (finiteFourierAlgebraGenerator generator frequency time2) = 0 := by
-  rw [finite_fourier_algebra_generator_commutator_expansion]
-  classical
-  let swap : ι × ι ≃ ι × ι := Equiv.prodComm ι ι
-  have hSwap :
-      (∑ p, ∑ q,
-          secondMagnusSwapKernel
-              (frequency p) (frequency q) time1 time2 •
-            (generator p * generator q)) =
-        -(∑ p, ∑ q,
-          secondMagnusSwapKernel
-              (frequency p) (frequency q) time1 time2 •
-            (generator p * generator q)) := by
-    calc
-      (∑ p, ∑ q,
-          secondMagnusSwapKernel
-              (frequency p) (frequency q) time1 time2 •
-            (generator p * generator q)) =
-          ∑ pair : ι × ι,
-            secondMagnusSwapKernel
-                (frequency pair.1) (frequency pair.2) time1 time2 •
-              (generator pair.1 * generator pair.2) := by
-            simp [Fintype.sum_prod_type]
-      _ = ∑ pair : ι × ι,
-            secondMagnusSwapKernel
-                (frequency pair.2) (frequency pair.1) time1 time2 •
-              (generator pair.2 * generator pair.1) := by
-            exact Fintype.sum_equiv swap _ _ (fun _ => rfl)
-      _ = -(∑ pair : ι × ι,
-            secondMagnusSwapKernel
-                (frequency pair.1) (frequency pair.2) time1 time2 •
-              (generator pair.1 * generator pair.2)) := by
-            rw [← Finset.sum_neg_distrib]
-            apply Finset.sum_congr rfl
-            intro pair hpair
-            rw [second_magnus_swap_kernel_swap_frequency,
-              hCommute pair.2 pair.1]
-            simp
-      _ = -(∑ p, ∑ q,
-          secondMagnusSwapKernel
-              (frequency p) (frequency q) time1 time2 •
-            (generator p * generator q)) := by
-            simp [Fintype.sum_prod_type]
-  have hTwo :
-      (2 : ℕ) • (∑ p, ∑ q,
-          secondMagnusSwapKernel
-              (frequency p) (frequency q) time1 time2 •
-            (generator p * generator q)) = 0 := by
-    rw [two_nsmul, hSwap, add_neg_cancel]
-  exact (nsmul_eq_zero_iff_right (by norm_num : (2 : ℕ) ≠ 0)).mp hTwo
-
 #print axioms finite_fourier_algebra_generator_commutator_expansion
 #print axioms finite_fourier_algebra_generator_equal_time_commutator
-#print axioms finite_fourier_algebra_generator_commutator_eq_zero_of_pairwise
 
 end D5.S3.Observer.AgencyHolonomy.FiniteFourierMagnusCommutator
