@@ -99,7 +99,7 @@ instance [Semiring A] : Monoid (StepTwoSignature A) where
   mul_assoc left middle right := by
     change compose (compose left middle) right =
       compose left (compose middle right)
-    ext <;> simp [compose] <;> noncomm_ring
+    ext <;> simp [compose, mul_add, add_mul, mul_assoc] <;> abel
 
 @[simp]
 theorem degreeOne_one [Semiring A] :
@@ -246,12 +246,13 @@ theorem doubled_magnus_two_events_eq_commutator
     doubledMagnusDegreeTwo
         (chronologicalSignature observe [eventP, eventQ]) =
       commutator (observe eventP) (observe eventQ) := by
-  simp only [chronologicalSignature, mul_one]
-  rw [doubled_magnus_degree_two_mul]
-  change
-    0 + 0 + commutator (observe eventP) (observe eventQ) =
-      commutator (observe eventP) (observe eventQ)
-  simp
+  have hPair :
+      chronologicalSignature observe [eventP, eventQ] =
+        eventSignature (observe eventP) *
+          eventSignature (observe eventQ) := by
+    simp [chronologicalSignature]
+  rw [hPair, doubled_magnus_degree_two_mul]
+  simp [doubledMagnusDegreeTwo, eventSignature]
 
 /-- Reversing a two-event chronology reverses the orientation of its
 degree-two logarithmic coordinate. -/
