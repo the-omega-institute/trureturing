@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Observer.Hilbert;
 
@@ -17,7 +19,7 @@ internal sealed class NymanBeurlingTargetQuotientCriterionDocument
             DescribeId.Create("nyman-beurling-target-quotient-criterion"),
             DeclarationHandle.Create(Declaration),
             H("Five equivalent Nyman-Beurling target criteria"),
-            StatementSource.WithoutFormula(),
+            StatementSource.FromAuthor(CriterionStatement()),
             AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text(
@@ -33,4 +35,31 @@ internal sealed class NymanBeurlingTargetQuotientCriterionDocument
                     "Constant coordinate-line towers in the real Euclidean plane witness both "
                         + "the simultaneously true and the simultaneously false cases."))),
             DescribeRole.Theorem))));
+
+    private static Formula CriterionStatement()
+    {
+        Formula chi = F.Id("chi");
+        Formula cumulativeSpace = Seq(F.Id("S"), Underscore, Grp(Infty));
+        Formula stageSpace = Seq(F.Id("S"), Underscore, Grp(F.Id("N")));
+        Formula quotientClass = Seq(
+            OpenBracket, chi, CloseBracket, Underscore,
+            Grp(F.Id("H"), Slash, cumulativeSpace));
+        Formula residualProjection = Seq(
+            Operatorname, Grp(F.Id("starProjection")), Underscore,
+            Grp(cumulativeSpace, Caret, Grp(Perp)), Open, chi, Close);
+        Formula distanceLimit = Seq(
+            Operatorname, Grp(F.Id("Tendsto")), Open,
+            LambdaLower, Sp, F.Id("N"), Comma, Sp,
+            Operatorname, Grp(F.Id("infDist")), Open,
+            chi, Comma, Sp, stageSpace, Close,
+            Comma, Sp, F.Id("atTop"), Comma, Sp,
+            Operatorname, Grp(F.Id("nhds")), Open, D(0), Close, Close);
+
+        return Disp(Seq(
+            F.Id("RH"), Sp, Leftrightarrow, Sp,
+            chi, Sp, InMacro, Sp, cumulativeSpace, Sp, Leftrightarrow, Sp,
+            quotientClass, Sp, Eq, Sp, D(0), Sp, Leftrightarrow, Sp,
+            residualProjection, Sp, Eq, Sp, D(0), Sp, Leftrightarrow, Sp,
+            distanceLimit));
+    }
 }
