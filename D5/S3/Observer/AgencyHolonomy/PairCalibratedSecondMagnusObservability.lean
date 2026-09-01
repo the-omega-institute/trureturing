@@ -3,10 +3,11 @@
    mirror-B: D5/B/S3/Observer/AgencyHolonomy/PairCalibratedSecondMagnusObservability
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Pair-adapted half-turn sampling recovers four times the finite off-diagonal holonomy energy exactly. -/
+   digest: Pair-adapted samples recover four times the finite holonomy energy. -/
 
-import D5.S3.Observer.AgencyHolonomy.SecondMagnusKernelNormSquare
+import D5.S3.Observer.AgencyHolonomy.SecondMagnusSwapCurvature
 import D5.S3.Observer.AgencyHolonomy.FiniteHolonomyEnergy
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Tactic
 
 /-!
@@ -35,7 +36,6 @@ noncomputable section
 namespace D5.S3.Observer.AgencyHolonomy.PairCalibratedSecondMagnusObservability
 
 open D5.S3.Observer.AgencyHolonomy.SecondMagnusSwapCurvature
-open D5.S3.Observer.AgencyHolonomy.SecondMagnusKernelNormSquare
 open D5.S3.Observer.AgencyHolonomy.FiniteHolonomyEnergy
 
 universe u
@@ -58,8 +58,48 @@ noncomputable def pairCalibratedSecondMagnusEnergy
         (pairCalibratedTime (frequency p) (frequency q)) 0 *
       curvature p q‖ ^ 2
 
+private theorem local_second_magnus_swap_kernel_norm_sq
+    (frequencyP frequencyQ time1 time2 : ℝ) :
+    ‖secondMagnusSwapKernel frequencyP frequencyQ time1 time2‖ ^ 2 =
+      4 * Real.sin
+        ((time1 - time2) * ((frequencyP - frequencyQ) / 2)) ^ 2 := by
+  rw [second_magnus_swap_kernel_sine_form]
+  have hPhase :
+      ‖Complex.exp
+          (-Complex.I * ((time1 + time2 : ℝ) : ℂ) *
+            (((frequencyP + frequencyQ) / 2 : ℝ) : ℂ))‖ = 1 := by
+    simp [Complex.norm_exp, Complex.mul_re]
+  have hCoefficient : ‖(-2 : ℂ) * Complex.I‖ = 2 := by
+    norm_num
+  have hSineComplex :
+      Complex.sin
+          ((((time1 - time2) *
+            ((frequencyP - frequencyQ) / 2) : ℝ) : ℂ)) =
+        (Real.sin
+          ((time1 - time2) * ((frequencyP - frequencyQ) / 2)) : ℂ) := by
+    exact (Complex.ofReal_sin _).symm
+  rw [norm_mul, norm_mul, hCoefficient, hPhase, hSineComplex,
+    Complex.norm_real, Real.norm_eq_abs, mul_one]
+  nlinarith [sq_abs
+    (Real.sin ((time1 - time2) * ((frequencyP - frequencyQ) / 2)))]
+
+private theorem pair_calibrated_kernel_half_turn_norm_sq
+    (frequencyP frequencyQ : ℝ)
+    (hFrequency : frequencyP ≠ frequencyQ) :
+    ‖secondMagnusSwapKernel frequencyP frequencyQ
+        (Real.pi / (frequencyP - frequencyQ)) 0‖ ^ 2 = 4 := by
+  rw [local_second_magnus_swap_kernel_norm_sq]
+  have hGap : frequencyP - frequencyQ ≠ 0 := sub_ne_zero.mpr hFrequency
+  have hArea :
+      (Real.pi / (frequencyP - frequencyQ) - 0) *
+          ((frequencyP - frequencyQ) / 2) = Real.pi / 2 := by
+    field_simp [hGap]
+    ring
+  rw [hArea, Real.sin_pi_div_two]
+  norm_num
+
 private theorem pair_calibrated_term
-    {ι : Type u} [Fintype ι]
+    {ι : Type u}
     (frequency : ι → ℝ) (curvature : ι → ι → ℂ)
     (hFrequency : Function.Injective frequency)
     (hDiagonal : ∀ p, curvature p p = 0)
@@ -78,7 +118,7 @@ private theorem pair_calibrated_term
       exact hpq (hFrequency hEqual)
     rw [pairCalibratedTime, if_neg hFrequencyNe]
     rw [norm_mul, mul_pow]
-    rw [second_magnus_swap_kernel_half_turn_norm_sq
+    rw [pair_calibrated_kernel_half_turn_norm_sq
       (frequency p) (frequency q) hFrequencyNe]
 
 /-- Pair-adapted half-turn sampling gives an exact reverse estimate: the
