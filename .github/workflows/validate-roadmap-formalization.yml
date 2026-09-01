@@ -1,0 +1,100 @@
+name: validate-roadmap-formalization
+
+on:
+  push:
+    branches:
+      - lane/math/chronological-tensor-hopf
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout candidate
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: lane/math/chronological-tensor-hopf
+
+      - name: Install pinned Lean toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          "$HOME/.elan/bin/elan" toolchain install "$(cat lean-toolchain)"
+
+      - name: Compile all roadmap modules
+        shell: bash
+        run: |
+          set +e
+          mkdir -p tmp/roadmap-validation
+          lake build \
+            D5.S3.Observer.Chronology.TruncatedTensorSignature \
+            D5.S3.Observer.Chronology.TruncatedTensorHopf \
+            D5.S3.Observer.Chronology.PrimitiveMagnusLog \
+            D5.S3.Observer.Chronology.StepTwoFreeLieBridge \
+            D5.S3.Observer.Chronology.TimeOrderedMemoryMatrixRepresentation \
+            D5.S3.Observer.Chronology.PrimeFourierMagnusCommutatorBridge \
+            D5.S3.SpectralTopology.FiniteHermitianLocalizer \
+            D5.S3.SpectralTopology.FinitePointGapLocalizer \
+            D5.S3.SpectralTopology.FiniteLocalizerIndex \
+            D5.S3.Aperiodic.AlgebraicCutProjectData \
+            D5.S3.Aperiodic.AcceptedModelSet \
+            D5.S3.Aperiodic.GoldenCutProjectSpecialization \
+            D5.S3.Observer.HigherHolonomy.FiniteMatrixTransport \
+            D5.S3.Observer.HigherHolonomy.MatrixGaugeCovariance \
+            D5.S3.Observer.HigherHolonomy.TriangleHolonomyCurvature \
+            D5.S3.Observer.Sheaf.FiniteObserverSheaf \
+            D5.S3.Observer.Sheaf.ObserverSheafLaplacian \
+            D5.S3.Observer.Sheaf.ObserverGluingObstruction \
+            D5.S3.Dynamics.SpaceTime.CommutingSpaceTimeAction \
+            D5.S3.Dynamics.SpaceTime.QuasiperiodicTorusFlow \
+            D5.S3.Dynamics.SpaceTime.TimeTranslationStabilizer \
+            D5.S3.Weil.Pick.FinitePickPositivity \
+            D5.S3.Weil.Pick.DeBrangesRovnyakKernel \
+            D5.S3.Weil.Pick.CompletePickInterpolationProperty \
+            D5.S3.Arithmetic.HigherOrderFourier.FiniteGowersCubeMoment \
+            D5.S3.Arithmetic.HigherOrderFourier.GowersTranslationModulationInvariance \
+            D5.S3.Arithmetic.HigherOrderFourier.GowersU2FourierIdentity \
+            D5.S3.Arithmetic.HigherOrderFourier.QuadraticPhaseGowersU3 \
+            D5.S3.Dynamics.Koopman.DiscreteKoopmanOperator \
+            D5.S3.Dynamics.Koopman.FiniteKoopmanUnitary \
+            D5.S3.Dynamics.Koopman.KoopmanClosureOperatorBridge \
+            D5.S3.Dynamics.Koopman.KoopmanLocalizerBridge \
+            > tmp/roadmap-validation/lean.log 2>&1
+          printf '%s\n' "$?" > tmp/roadmap-validation/lean-status
+          cat tmp/roadmap-validation/lean.log
+          exit 0
+
+      - name: Build Scribe with warnings as errors
+        shell: bash
+        run: |
+          set +e
+          dotnet build tools/StrataLint.Scribe/StrataLint.Scribe.csproj \
+            --configuration Release -warnaserror \
+            > tmp/roadmap-validation/scribe.log 2>&1
+          printf '%s\n' "$?" > tmp/roadmap-validation/scribe-status
+          cat tmp/roadmap-validation/scribe.log
+          exit 0
+
+      - name: Publish exact diagnostics
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'AlyciaBHZ'
+          git config user.email '50111876+AlyciaBHZ@users.noreply.github.com'
+          git add -f tmp/roadmap-validation/lean.log \
+            tmp/roadmap-validation/lean-status \
+            tmp/roadmap-validation/scribe.log \
+            tmp/roadmap-validation/scribe-status
+          git commit -m 'ci: record roadmap formalization validation' || true
+          git push origin HEAD:refs/heads/tmp/roadmap-validation --force
+
+      - name: Enforce validation result
+        shell: bash
+        run: |
+          test "$(cat tmp/roadmap-validation/lean-status)" = 0
+          test "$(cat tmp/roadmap-validation/scribe-status)" = 0
