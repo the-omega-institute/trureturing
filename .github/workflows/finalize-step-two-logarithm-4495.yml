@@ -1,0 +1,267 @@
+name: finalize-step-two-logarithm-4495
+
+on:
+  push:
+    branches:
+      - tmp/finalize-step-two-logarithm-4495
+
+permissions:
+  contents: write
+
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout candidate branch
+        uses: actions/checkout@v4
+        with:
+          ref: lane/math/step-two-chronological-logarithm
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Fetch stacked base
+        run: |
+          set -euo pipefail
+          git fetch origin integration-chronology-hopf-wave-1
+          test "$(git rev-parse origin/integration-chronology-hopf-wave-1)" = "f00533e137393df60338172c4a2ed823ec44f8b4"
+
+      - name: Install pinned .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Install pinned Lean toolchain
+        run: |
+          set -euo pipefail
+          tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+
+      - name: Build repository tools
+        run: make -C tools dotnet
+
+      - name: Compile the new Lean owner
+        run: lake build D5.S3.Observer.Chronology.StepTwoChronologicalLogarithm
+
+      - name: Produce canonical Lean report
+        run: make lean-report
+
+      - name: Emit canonical Scribe mirror
+        run: make emit
+
+      - name: Append one scoped Freeze event
+        run: |
+          set -euo pipefail
+          dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj \
+            --configuration Release --no-build --no-launch-profile -- \
+            ledger-append \
+            --candidate-lean-report .lake/build/stratalint/raw-lean-report.json
+          tools/scripts/agent/scope-freeze-delta.sh \
+            origin/integration-chronology-hopf-wave-1
+
+      - name: Append the logarithm theory to the existing volume
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path('docs/develop/theory/RH_RESEARCH_LANE_THEORY.md')
+          marker = '## [PR #4495] STEP_TWO_CHRONOLOGICAL_LOGARITHM'
+          text = path.read_text(encoding='utf-8')
+          if marker in text:
+              raise SystemExit(0)
+
+          addition = r'''
+
+---
+
+## [PR #4495] STEP_TWO_CHRONOLOGICAL_LOGARITHM
+
+### 二阶 Chen 坐标与 BCH 坐标的严格等价
+
+令一个有限二阶 chronological signature 写成
+
+\[
+S=(x,D),
+\]
+
+其中 \(x\) 是一次坐标，\(D\) 是两倍的二次坐标。其 Chen 乘法为
+
+\[
+(x,D)\star(y,E)
+=
+\left(x+y,\;D+2xy+E\right).
+\]
+
+定义 division-free logarithmic coordinate
+
+\[
+\log_2(x,D)
+=
+\left(x,\;D-x^2\right)
+\]
+
+以及逆映射
+
+\[
+\exp_2(x,L)
+=
+\left(x,\;L+x^2\right).
+\]
+
+本节点机器证明
+
+\[
+\boxed{
+\exp_2\!\left(\log_2 S\right)=S,
+\qquad
+\log_2\!\left(\exp_2 L\right)=L.
+}
+\]
+
+对数坐标上的截断 BCH 乘法是
+
+\[
+(x,L)\operatorname{BCH}_2(y,M)
+=
+\left(x+y,\;L+M+[x,y]\right),
+\qquad
+[x,y]=xy-yx.
+\]
+
+并且
+
+\[
+\boxed{
+\log_2(S\star T)
+=
+\log_2(S)\operatorname{BCH}_2\log_2(T).
+}
+\]
+
+因此 Chen monoid 与 step-two BCH monoid 之间存在显式 multiplicative equivalence。
+
+### 显式 antipode
+
+signature 坐标中的逆元为
+
+\[
+\boxed{
+\mathcal S(x,D)
+=
+\left(-x,\;-D+2x^2\right).
+}
+\]
+
+它满足
+
+\[
+\mathcal S(S)\star S=1,
+\qquad
+S\star\mathcal S(S)=1,
+\]
+
+\[
+\mathcal S(S\star T)
+=
+\mathcal S(T)\star\mathcal S(S),
+\qquad
+\mathcal S^2(S)=S,
+\]
+
+而 logarithmic coordinate 把 antipode 化为普通取负：
+
+\[
+\boxed{
+\log_2\!\left(\mathcal S(S)\right)
+=-\log_2(S).
+}
+\]
+
+对单事件 \(a\)，还有
+
+\[
+\mathcal S(\operatorname{Sig}(a))
+=
+\operatorname{Sig}(-a).
+\]
+
+这些定理只使用环恒等式，不依赖 \(2^{-1}\)，所以可在任意可能非交换的 `Ring` 上成立。
+
+### 当前边界与下一层
+
+该节点闭合的是有限 step-two Chen/BCH 坐标变换。它尚未构造线性 tensor coalgebra、Mathlib `HopfAlgebra` 实例、group-like element 的标准 coproduct、primitive logarithm、free Lie embedding、无限 signature 或 Magnus 级数收敛。
+
+下一层必须把一次坐标放入模 \(V\)，把二次坐标放入 \(V\otimes V\)，并证明
+
+\[
+D+\tau D=2x\otimes x
+\]
+
+等价于二阶 group-like 条件。随后
+
+\[
+L_2=D-x\otimes x
+\]
+
+应满足
+
+\[
+\tau L_2=-L_2,
+\]
+
+从而成为真正的 degree-two primitive/free-Lie Magnus coordinate。
+'''
+          path.write_text(text + addition, encoding='utf-8')
+          PY
+
+      - name: Verify final artifact scope
+        run: |
+          set -euo pipefail
+          test -f Blueprint/D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.md
+          python3 - <<'PY'
+          import json
+          import subprocess
+          from pathlib import Path
+
+          base = 'origin/integration-chronology-hopf-wave-1'
+          module = 'D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.lean'
+          accepted = []
+          for path in Path('Golden/Frozen/accepted').glob('*.json'):
+              try:
+                  payload = json.loads(path.read_text())['payload']
+              except Exception:
+                  continue
+              selector = payload.get('descriptor_selector') or payload.get('input', {}).get('descriptor_selector')
+              if selector == module:
+                  accepted.append(str(path))
+          if len(accepted) != 1:
+              raise SystemExit(f'expected one Freeze event for {module}, found {accepted}')
+
+          changed = subprocess.check_output(
+              ['git', 'diff', '--name-only', base], text=True).splitlines()
+          allowed = {
+              module,
+              'Blueprint/D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.scribe.cs',
+              'Blueprint/D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.md',
+              'docs/develop/theory/RH_RESEARCH_LANE_THEORY.md',
+              accepted[0],
+          }
+          extra = sorted(set(changed) - allowed)
+          missing = sorted(allowed - set(changed))
+          if extra or missing:
+              raise SystemExit(f'artifact scope mismatch extra={extra} missing={missing}')
+          print('FREEZE_EVENT=' + accepted[0])
+          PY
+
+      - name: Commit generated mirror, Freeze, and theory append
+        run: |
+          set -euo pipefail
+          git config user.name 'AlyciaBHZ'
+          git config user.email '50111876+AlyciaBHZ@users.noreply.github.com'
+          git add \
+            Blueprint/D5/S3/Observer/Chronology/StepTwoChronologicalLogarithm.md \
+            Golden/Frozen/accepted/*.json \
+            docs/develop/theory/RH_RESEARCH_LANE_THEORY.md
+          git commit -m 'ledger: freeze step-two chronological logarithm'
+          git push origin HEAD:refs/heads/lane/math/step-two-chronological-logarithm
