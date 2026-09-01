@@ -54,8 +54,7 @@ public sealed class ScribeTestMapDeriverTests
             "FormulaCorpusInventoryTests.EveryMigratedFormulaHasAStableCorpusAddress",
             "DagEmitterTests.TheProjectionIsDeclaredInTheGeneratedArtifactInventory",
         ];
-        var repositoryRoot = RepositoryLayout.FindRoot();
-        var map = ScribeTestMapDeriver.DeriveRepository(repositoryRoot);
+        var map = ScribeTestMapDeriver.DeriveRepository(RepositoryLayout.FindRoot());
         var plan = EngineeringTestPlanPolicy.Evaluate(
         [
             "Blueprint/D5/S3/Weil/Pick/HorizonEffectiveIndex.md",
@@ -70,7 +69,7 @@ public sealed class ScribeTestMapDeriverTests
                 && pair.Key.EndsWith(".scribe.cs", StringComparison.Ordinal))
             .OrderBy(static pair => pair.Key, StringComparer.Ordinal)
             .ToArray();
-        var tracked = GitIndexRepositoryFiles.Enumerate(repositoryRoot)
+        var tracked = GitIndexRepositoryFiles.Enumerate(RepositoryLayout.FindRoot())
             .Select(static file => file.RelativePath)
             .Where(static path => path.StartsWith("Blueprint/", StringComparison.Ordinal)
                 && path.EndsWith(".scribe.cs", StringComparison.Ordinal))
