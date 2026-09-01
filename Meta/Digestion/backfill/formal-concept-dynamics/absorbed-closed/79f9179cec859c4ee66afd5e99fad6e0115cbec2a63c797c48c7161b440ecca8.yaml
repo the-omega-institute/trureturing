@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:79f9179cec859c4ee66afd5e99fad6e0115cbec2a63c797c48c7161b440ecca8
+  normalized_sha256: sha256:79f9179cec859c4ee66afd5e99fad6e0115cbec2a63c797c48c7161b440ecca8
+cas_ref: sha256:79f9179cec859c4ee66afd5e99fad6e0115cbec2a63c797c48c7161b440ecca8
+coverage_gids:
+  - D5/S3/ConceptDynamics/Audits/MinimumAuditSetCover.minimum_audit_set_is_set_cover
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Audits/MinimumAuditSetCover.minimum_audit_set_is_set_cover
+      source_sha256: sha256:79f9179cec859c4ee66afd5e99fad6e0115cbec2a63c797c48c7161b440ecca8
+      target_statement_id: sha256:2fe2f0a9acfc789fc31f8fd16073ccc59c078134059736006c726af9e4a38848
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Audits/MinimumAuditSetCover.minimum_audit_set_is_set_cover
+      definition_sha256: sha256:600ce52276b0471ae9b0332fdcf68cce2d588b5cb50f5c3081b89630eeb94b58
+      emission_sha256: sha256:edd8adc33cbce47a30ca827e23995660c2f2a3bbaeb00c79e226777365bd8c9d
+  unresolved_subitems: []
