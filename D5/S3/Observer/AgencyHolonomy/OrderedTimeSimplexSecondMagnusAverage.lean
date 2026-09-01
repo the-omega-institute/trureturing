@@ -60,35 +60,43 @@ private theorem ordered_time_simplex_primitive_derivative
       ((horizon - x) *
         (4 * Real.sin (gap * x / 2) ^ 2)) x := by
   have hInner : HasDerivAt (fun y : ℝ => gap * y) gap x := by
-    convert (hasDerivAt_id x).const_mul gap using 1 <;> ring
+    simpa only [id_eq, mul_one] using
+      (hasDerivAt_id x).const_mul gap
+  have hSinRaw := (Real.hasDerivAt_sin (gap * x)).comp x hInner
   have hSin :
       HasDerivAt (fun y : ℝ => Real.sin (gap * y))
         (gap * Real.cos (gap * x)) x := by
-    convert (Real.hasDerivAt_sin (gap * x)).comp x hInner using 1 <;> ring
+    exact hSinRaw.congr_deriv (by ring)
+  have hCosRaw := (Real.hasDerivAt_cos (gap * x)).comp x hInner
   have hCos :
       HasDerivAt (fun y : ℝ => Real.cos (gap * y))
         (-gap * Real.sin (gap * x)) x := by
-    convert (Real.hasDerivAt_cos (gap * x)).comp x hInner using 1 <;> ring
+    exact hCosRaw.congr_deriv (by ring)
   have hLinear :
       HasDerivAt (fun y : ℝ => horizon - y) (-1) x := by
-    convert (hasDerivAt_const x horizon).sub (hasDerivAt_id x) using 1 <;> ring
+    simpa only [Pi.sub_apply, id_eq, zero_sub] using
+      (hasDerivAt_const x horizon).sub (hasDerivAt_id x)
+  have hProductRaw := hLinear.mul hSin
   have hProduct :
       HasDerivAt
         (fun y : ℝ => (horizon - y) * Real.sin (gap * y))
         (-Real.sin (gap * x) +
           (horizon - x) * (gap * Real.cos (gap * x))) x := by
-    convert hLinear.mul hSin using 1 <;> ring
+    exact hProductRaw.congr_deriv (by ring)
   have hFirst :
       HasDerivAt (fun y : ℝ => 2 * horizon * y) (2 * horizon) x := by
-    convert (hasDerivAt_id x).const_mul (2 * horizon) using 1 <;> ring
+    simpa only [id_eq, mul_one] using
+      (hasDerivAt_id x).const_mul (2 * horizon)
   have hSquare : HasDerivAt (fun y : ℝ => y ^ 2) (2 * x) x := by
-    convert (hasDerivAt_id x).pow 2 using 1 <;> ring
+    simpa only [Nat.cast_ofNat, Nat.reduceSub, pow_one, mul_one] using
+      (hasDerivAt_id x).pow 2
   have hRaw :=
     ((hFirst.sub hSquare).sub
       ((hProduct.const_mul 2).div_const gap)).add
         ((hCos.const_mul 2).div_const (gap ^ 2))
-  convert hRaw using 1
-  · ring
+  refine (hRaw.congr_of_eventuallyEq
+    (Filter.Eventually.of_forall fun y => ?_)).congr_deriv ?_
+  · rfl
   · rw [four_mul_sin_sq_half]
     field_simp [hGap]
     ring
@@ -125,6 +133,8 @@ theorem ordered_time_simplex_kernel_average_formula
     _ = horizon ^ 2 -
         2 * (1 - Real.cos (gap * horizon)) / gap ^ 2 := by
           dsimp only [primitive]
+          simp only [mul_zero, Real.sin_zero, Real.cos_zero,
+            sub_zero, zero_pow, OfNat.ofNat, zero_div, add_zero]
           field_simp [hGap]
           ring
 
@@ -140,7 +150,7 @@ theorem ordered_time_simplex_kernel_average_nonnegative
   unfold orderedTimeSimplexKernelAverage
   apply intervalIntegral.integral_nonneg hHorizon
   intro tau hTau
-  positivity
+  exact mul_nonneg (sub_nonneg.mpr hTau.2) (by positivity)
 
 #print axioms ordered_time_simplex_kernel_average_formula
 #print axioms ordered_time_simplex_kernel_average_zero_gap
