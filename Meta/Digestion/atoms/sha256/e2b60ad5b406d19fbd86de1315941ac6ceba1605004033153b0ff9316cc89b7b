@@ -1,0 +1,42 @@
+## 历史重建路线
+
+进一步要求存在相容嵌入或完全正映射：
+
+$$
+\Phi_{N,M}:
+\mathcal A_N\to\mathcal A_M,
+$$
+
+满足：
+
+$$
+\Phi_{N,N}=\operatorname{id},
+$$
+
+$$
+\Phi_{N,L}
+=
+\Phi_{M,L}\circ\Phi_{N,M}.
+$$
+
+它证明：
+
+$$
+\boxed{
+\text{这些有限正名字来自同一个可追踪生成历史。}
+}
+$$
+
+后者更强，也更接近 prime–Gamma microscopic transport，但不是 RH 本身所必需。
+
+这与“道不可名”完全一致：
+
+$$
+\boxed{
+\text{正谱影像可以被证明存在，
+而不必声称某一套有限命名历史就是唯一源头。}
+}
+$$
+
+---
+

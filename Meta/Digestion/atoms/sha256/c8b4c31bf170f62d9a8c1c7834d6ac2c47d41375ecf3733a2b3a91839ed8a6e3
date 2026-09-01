@@ -1,0 +1,76 @@
+# 第一千五百一十二部　建议形式化顺序
+
+```text
+D5/S3/ConceptDynamics/DedekindNaming/
+  RationalThresholdName.lean
+  ThresholdProfileMonotone.lean
+  ThresholdProfileDeterminesReal.lean
+  NoFiniteThresholdFamilyDeterminesReal.lean
+  ContinuousParameterAsNamingBoundary.lean
+
+D5/S3/ConceptDynamics/DynamicConcept/
+  NamingKernel.lean
+  QuotientDynamicsWellDefined.lean
+  StableNameIffForwardCongruence.lean
+  DynamicConceptAsStableName.lean
+
+D5/S3/ConceptDynamics/NamingRepairEntropy/
+  PredictiveRepairQuotient.lean
+  ForgettingRepairQuotient.lean
+  PredictiveRepairEntropy.lean
+  ForgettingRepairEntropy.lean
+  NamingHorizonEntropyChainRule.lean
+  ZeroNamingEntropyIffStable.lean
+
+D5/S3/Observer/AgencySelf/NoFiniteTerminalSelf/
+  InterventionTower.lean
+  RestrictedAgencyKernel.lean
+  InterventionExpansionRefinesKernel.lean
+  StrictKernelTowerNoFiniteTerminal.lean
+  AgencyShadowLimit.lean
+
+D5/S3/ConceptDynamics/LocalNamingDescent/
+  LocalNamingChart.lean
+  NamingTransition.lean
+  NamingCocycle.lean
+  GlobalNamingTrivialization.lean
+  NamingDescentObstruction.lean
+
+D5/S3/Analytic/Zeta/ReflectionOrientationInformation/
+  ReflectionOrbitCausalProfile.lean
+  CriticalOrbitOneProfile.lean
+  OffLineOrbitTwoProfiles.lean
+  ReflectionOrientationBit.lean
+  WeightedOrientationEntropy.lean
+
+D5/S3/Analytic/Zeta/OffLineDepthDedekindCut/
+  RationalShiftDefectName.lean
+  ShiftDefectNameIffBelowDepth.lean
+  OffLineDepthAsSupremum.lean
+  OffLineDepthTailCount.lean
+  OffLineBirthMeasure.lean
+
+D5/S3/Analytic/Zeta/ReflectionNameSufficiency/
+  ReflectionNameKernel.lean
+  CausalProfileKernel.lean
+  ProfileFactorsThroughNameIffKernelInclusion.lean
+  ReflectionNameSufficientIffRH.lean
+  ReflectionNamePredictiveRepairEntropy.lean
+
+D5/S3/Analytic/Zeta/RiemannNamingFixedPoint/
+  ShiftedResponseDynamics.lean
+  ReflectionNamePredictiveInterior.lean
+  ReflectionNameForgettingClosure.lean
+  OffLineZeroOpensRepairInterval.lean
+  RHNamingRepairFixedPointTarget.lean
+
+D5/S3/ConceptDynamics/ApophaticTrace/
+  NamingRefinementCategory.lean
+  ContextIndexedTrace.lean
+  RefinementNaturalTrace.lean
+  DefectFaithfulTraceFamily.lean
+  NoIdentificationWithUnnamedSource.lean
+```
+
+---
+

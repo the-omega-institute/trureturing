@@ -1,0 +1,41 @@
+## 1560.1 二阶 Jensen 不等式
+
+\(d=2\) 时，双曲性要求：
+
+$$
+\boxed{
+(\gamma_{n+1}^{(t)})^2
+\ge
+\gamma_n^{(t)}
+\gamma_{n+2}^{(t)}.
+}
+\tag{1560.4}
+$$
+
+写回普通 jet 系数：
+
+$$
+\boxed{
+\left(
+a_{n+1}^{(t)}
+\right)^2
+\ge
+\frac{n+2}{n+1}
+a_n^{(t)}
+a_{n+2}^{(t)}.
+}
+\tag{1560.5}
+$$
+
+这比普通 log-concavity：
+
+$$
+(a_{n+1})^2\ge a_na_{n+2}
+$$
+
+更强。
+
+所以 RH 的法向系数不只需要为正，还必须满足无穷层 factorial-strengthened Turán 关系。
+
+---
+

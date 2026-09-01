@@ -1,0 +1,43 @@
+## 1616.1 这比“边界模长为一”强在哪里
+
+Blaschke 因子满足：
+
+$$
+|b_a(x)|=1.
+$$
+
+所以边界模长看不到离线除子。
+
+但法向导数看到：
+
+$$
+-\partial_y\log|b_a|=2\pi P_\beta.
+$$
+
+因此必须区分：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Dirichlet 数据}
+&=\text{边界值／边界模长};\\
+\text{Neumann 数据}
+&=\text{法向响应／Poisson 辐射}.
+\end{aligned}
+}
+$$
+
+离线零点可以对 Dirichlet 边界完全隐形，却不可能同时对完整 Dirichlet–to–Neumann 映射隐形。
+
+这也是为什么项目最新机器化的：
+
+$$
+\partial_\omega\log|\xi|
+=
+\Re\frac{\xi'}{\xi}
+$$
+
+如此关键：它正是从标量边界名字进入法向源场的接口。
+
+---
+

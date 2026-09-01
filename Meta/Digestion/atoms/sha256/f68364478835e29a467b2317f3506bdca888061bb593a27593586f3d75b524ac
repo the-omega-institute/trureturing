@@ -1,0 +1,42 @@
+## 1690.2 全部横向矩是条码 moments
+
+对任意：
+
+$$
+s>0,
+$$
+
+有：
+
+$$
+\boxed{
+s\int_0^\infty
+q^{s-1}\kappa(q)\,dq
+=
+\sum_\rho
+m_\rho\delta_\rho^s.
+}
+\tag{1690.6}
+$$
+
+特别地：
+
+$$
+\boxed{
+\int_0^\infty
+\kappa(q)\,dq
+=
+\sum_\rho m_\rho\delta_\rho.
+}
+\tag{1690.7}
+$$
+
+因此：
+
+* 零阶条码量是通道数；
+* 一阶条码量是总持续深度；
+* 二阶量是横向 Bode 能量；
+* 全部 moments 恢复深度分布。
+
+---
+

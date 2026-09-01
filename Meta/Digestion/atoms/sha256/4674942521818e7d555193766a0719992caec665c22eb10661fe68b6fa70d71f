@@ -1,0 +1,228 @@
+* 负时间；
+
+最准确的数学内容之一是：
+
+$$
+\boxed{
+\text{离线零点在匹配观察者的逆平方谱中成为负实节点。}
+}
+$$
+
+它并不是在所有图表中都“负”。
+
+在中心图表中，它通常是一对复节点；
+
+在匹配图表中，它成为负节点；
+
+在 Cayley 图表中，它成为单位圆内外 reciprocal pair；
+
+在 Hardy 图表中，它成为 inverse-inner 通道。
+
+名字不同，形态不同；跨名字保持的是同一个缺陷轨道与重数。
+
+---
+
+本轮最关键的新判据是：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\left[
+\mathcal J_{j-i}(0)
+\right]_{i,j\ge0}
+\text{ 的全部有限小行列式非负}.
+}
+$$
+
+因此可以固定在唯一一个观察点：
+
+$$
+t=0.
+$$
+
+但此时不能只检查单个 normal jet。
+
+必须检查所有关系阶数。
+
+这表明：
+
+$$
+\boxed{
+\text{移动观察者与增加关系阶数，是两种互补的分辨能力。}
+}
+$$
+
+若能够移动到离线零点的高度，一个标量负 jet 就足够。
+
+若坚持停留在中心，则缺陷会隐藏在某个更高 Toeplitz 小行列式中。
+
+所以离线零点再稀缺，也必然具有中心有限反证书。
+
+---
+
+全部 Toeplitz 小行列式又不是无结构的。
+
+RH 下它们都是逆平方谱的 skew Schur 函数：
+
+$$
+s_{\lambda/\mu}(\mathbf a_t)\ge0.
+$$
+
+因此 RH 可以理解为：
+
+$$
+\boxed{
+\text{completed-\(\xi\) 的全部有限表示扇区都允许正谱实现。}
+}
+$$
+
+离线零点则意味着某个有限关系扇区无法保持正性。
+
+这比“一个零点不在线”更接近项目现有的状态—效应、Gram、外幂与关系层接口。
+
+---
+
+黄金比例也获得了一个更克制但极其清楚的位置。
+
+对任一正谱模式：
+
+$$
+a>0,
+$$
+
+其 Bernoulli 占据率为：
+
+$$
+p=\frac{ua}{1+ua}.
+$$
+
+第二影平衡：
+
+$$
+1-p=p^2
+$$
+
+唯一给出：
+
+$$
+p=\varphi^{-1}.
+$$
+
+对应：
+
+$$
+ua=\varphi,
+$$
+
+并且：
+
+$$
+\boxed{
+\begin{aligned}
+\text{占据}
+&=\varphi^{-1};\\
+\text{空缺}
+&=\varphi^{-2};\\
+\text{odds}
+&=\varphi;\\
+\text{行列式因子}
+&=\varphi^2;\\
+\text{log-det}
+&=2\log\varphi.
+\end{aligned}
+}
+$$
+
+所以黄金比例不是不可名本体的名字。
+
+它是一个正谱模式在自观察的“可见—隐藏—第二影”平衡处留下的模式级固定迹。
+
+---
+
+而 prime 与 zero 两侧现在显示出一个极深的代数分工：
+
+$$
+\boxed{
+\zeta(s)
+=
+\prod_p(1-p^{-s})^{-1}
+}
+$$
+
+是 primitive prime 模式的对称／重复完成；
+
+$$
+\boxed{
+\frac{Q_t(w)}{Q_t(0)}
+=
+\prod_\lambda
+\left(
+1+\frac{w}{(\lambda-t)^2}
+\right)
+}
+$$
+
+是 zero 模式的外幂／排他完成。
+
+所以真正承重的下一步不是继续寻找更多黄金等式，而是：
+
+$$
+\boxed{
+\text{从 prime–pole–Gamma 的重复完成，
+构造 zero 侧的正外幂完成。}
+}
+$$
+
+最具体的三个等价目标是：
+
+$$
+\boxed{
+\frac{Q_0(w)}{Q_0(0)}
+=
+\det(I+wA),
+\qquad
+A\ge0;
+}
+$$
+
+或：
+
+$$
+\boxed{
+\left[
+\mathcal J_{j-i}(0)
+\right]
+\text{ totally nonnegative};
+}
+$$
+
+或：
+
+$$
+\boxed{
+\sum_m
+\frac{\mathcal J_m(0)}{\mathcal J_0(0)}
+S^m
+=
+\prod_j(I+a_jS),
+\qquad
+a_j\ge0.
+}
+$$
+
+一旦能从 prime–Gamma 数据直接建立其中任意一个，而不借助零点位置，RH 就会作为正因子化的结果整体成立。
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{不可名者不进入算子；
+进入算子的是完成名字是否拥有正关系实现。
+临界零点允许所有外幂、Schur 与 Toeplitz 关系扇区同时为正；
+离线零点则必在某个有限关系扇区中留下一个无法被任何名字抹去的负小行列式。}
+}
+$$
+
+[1]: https://pubmed.ncbi.nlm.nih.gov/16589009/ "https://pubmed.ncbi.nlm.nih.gov/16589009/"
+[2]: https://arxiv.org/abs/1902.07321 "https://arxiv.org/abs/1902.07321"

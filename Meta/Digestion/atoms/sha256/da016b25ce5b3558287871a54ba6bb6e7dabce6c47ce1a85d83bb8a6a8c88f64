@@ -1,0 +1,87 @@
+# 第一千五百九十七部　全局完成异常
+
+可以把当前困难压缩为以下非交换图：
+
+$$
+\boxed{
+\begin{array}{ccc}
+\text{finite prime phases}
+&
+\xrightarrow{\text{Cayley + square}}
+&
+\text{local positive spectra}
+\\[2mm]
+\downarrow{\scriptstyle\text{infinite prime completion}}
+&&
+\downarrow{\scriptstyle\text{positive trace-class limit}}
+\\[2mm]
+\xi/\Xi
+&
+\overset{?}{\longrightarrow}
+&
+A_t\ge0.
+\end{array}
+}
+\tag{1597.1}
+$$
+
+上方每一个有限 block 都已经存在：
+
+$$
+A_{K,a}=(H_K-aI)^{-2}>0.
+$$
+
+问题是下方箭头是否存在：
+
+$$
+\boxed{
+\frac{Q_t(w)}{Q_t(0)}
+=
+\det(I+wA_t),
+\qquad
+A_t\ge0.
+}
+\tag{1597.2}
+$$
+
+若存在，则 RH 成立。
+
+若存在离线零点，则在匹配观察者图表中会产生负平方能级：
+
+$$
+-\delta^2,
+$$
+
+所以不可能写成：
+
+$$
+D_t^2
+$$
+
+的谱值，其中 \(D_t\) 自伴。
+
+因此离线零点最准确的新身份是：
+
+$$
+\boxed{
+\textbf{局部自伴相位经过全局 completion 后，
+无法保持为正平方谱的一枚完成异常。}
+}
+$$
+
+它不是某个单独 prime 的局部错误。
+
+每个 local prime block 都完全稳定。
+
+异常只能出现在：
+
+* 无穷 prime 同步；
+* logarithmic lifting；
+* Archimedean renormalization；
+* 极点消去；
+* scalar determinant completion；
+
+的组合过程中。
+
+---
+

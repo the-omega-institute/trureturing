@@ -1,0 +1,17 @@
+# 第一千五百五十四部　法向 jet 是外幂迹
+
+Fredholm 行列式展开为：
+
+$$
+\det(I+wA_t)
+=
+\sum_{m=0}^{\infty}
+w^m
+\operatorname{Tr}
+\left(
+\bigwedge\nolimits^m A_t
+\right).
+$$
+
+因此：
+

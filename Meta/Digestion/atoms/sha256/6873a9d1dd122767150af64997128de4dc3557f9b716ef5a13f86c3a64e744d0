@@ -1,0 +1,39 @@
+## 1516.2 从平方名字恢复离线几何
+
+由于：
+
+$$
+|\lambda_\rho|
+=
+|z_\rho|^2
+=
+\delta^2+\gamma^2,
+$$
+
+有：
+
+$$
+\boxed{
+\delta^2
+=
+\frac{
+|\lambda_\rho|+\Re\lambda_\rho
+}{2},
+}
+\tag{1516.5}
+$$
+
+$$
+\boxed{
+\gamma^2
+=
+\frac{
+|\lambda_\rho|-\Re\lambda_\rho
+}{2}.
+}
+\tag{1516.6}
+$$
+
+因此平方命名虽然遗忘了 \(z\) 与 \(-z\) 的分支，却没有遗忘：
+
+* 横向深度的绝对值；

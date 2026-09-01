@@ -1,0 +1,180 @@
+## 定理 1520.1（中心自加权 Hamburger 判据）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+H_N^\xi\succeq0
+\qquad
+\forall N\ge0.
+}
+\tag{1520.2}
+$$
+
+### RH 推出正性
+
+对任意：
+
+$$
+c=(c_0,\ldots,c_N),
+$$
+
+令：
+
+$$
+p(x)=\sum_{k=0}^{N}c_kx^k.
+$$
+
+则：
+
+$$
+\begin{aligned}
+c^*H_N^\xi c
+&=
+\sum_{i,j}
+\overline{c_i}c_j
+\tau_{i+j+1}
+\\
+&=
+\sum_r
+m_rv_r
+\left|
+p(v_r)
+\right|^2
+\ge0.
+\end{aligned}
+\tag{1520.3}
+$$
+
+由于 Riemann 零点有无限多个不同高度，非零有限次数多项式不能在全部 \(v_r\) 上消失，所以实际上：
+
+$$
+\boxed{
+H_N^\xi\succ0.
+}
+\tag{1520.4}
+$$
+
+---
+
+### Hankel 正性推出 RH
+
+假设：
+
+$$
+H_N^\xi\succeq0
+\quad
+\forall N.
+$$
+
+由 Hamburger moment theorem，存在正测度 \(\mu\) 于 \(\mathbb R\)，使：
+
+$$
+\boxed{
+\tau_{n+1}
+=
+\int_{\mathbb R}
+x^n\,d\mu(x).
+}
+\tag{1520.5}
+$$
+
+因为 \(\tau_n\) 来自一个在原点具有正收敛半径的解析函数，矩增长至多为指数型，所以 \(\mu\) 可以取为紧支撑测度。
+
+定义：
+
+$$
+\widetilde{\mathcal M}(w)
+=
+\int_{\mathbb R}
+\frac{d\mu(x)}
+{1+wx}.
+$$
+
+它在 \(w=0\) 的 Taylor 级数为：
+
+$$
+\widetilde{\mathcal M}(w)
+=
+\sum_{n\ge0}
+(-1)^n\tau_{n+1}w^n.
+$$
+
+所以：
+
+$$
+\widetilde{\mathcal M}(w)
+=
+\mathcal M_\xi(w)
+$$
+
+在原点邻域成立，继而由解析延拓成立于共同定义域。
+
+另一方面，\(\widetilde{\mathcal M}\) 的奇点只能来自实支撑点 \(x\in\mathbb R\)，位置为：
+
+$$
+w=-x^{-1}.
+$$
+
+所以 \(\mathcal M_\xi\) 的每个极点：
+
+$$
+w=-v_j^{-1}
+$$
+
+必须对应实数 \(v_j\)。
+
+更进一步，在该极点处：
+
+$$
+\operatorname{Res}
+\widetilde{\mathcal M}
+\left(
+-\frac1{v_j}
+\right)
+=
+\frac{\mu(\{v_j\})}{v_j}.
+$$
+
+而：
+
+$$
+\operatorname{Res}
+\mathcal M_\xi
+\left(
+-\frac1{v_j}
+\right)
+=
+m_j>0.
+$$
+
+所以：
+
+$$
+\boxed{
+\mu(\{v_j\})=m_jv_j\ge0.
+}
+$$
+
+因 \(m_j>0\)、\(v_j\neq0\)，得到：
+
+$$
+\boxed{
+v_j>0.
+}
+$$
+
+于是：
+
+$$
+\lambda_j=-v_j^{-1}<0,
+$$
+
+所有 \(\rho\) 都位于临界线。
+
+∎
+
+Stieltjes/Hamburger 矩列与 Hankel 正性的经典关系是成熟的矩问题理论；这里额外起决定作用的是“节点同时决定矩权”的自加权结构。([arXiv][1])
+
+---
+

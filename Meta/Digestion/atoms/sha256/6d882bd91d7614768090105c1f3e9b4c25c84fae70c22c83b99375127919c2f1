@@ -1,0 +1,81 @@
+# 第一千七百四十三部　Cuntz counting average 与 Clark geometric average 不相同
+
+由 Cuntz generators 定义均匀 transfer：
+
+$$
+\boxed{
+\mathcal L_B^{\mathrm{cnt}}(X)
+=
+\frac1m
+\sum_{j=1}^m
+S_j^*XS_j.
+}
+\tag{1743.1}
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal L_B^{\mathrm{cnt}}
+\circ
+\Lambda_B
+=
+\operatorname{id}.
+}
+\tag{1743.2}
+$$
+
+并且：
+
+$$
+\boxed{
+E_B^{\mathrm{cnt}}
+=
+\Lambda_B\circ
+\mathcal L_B^{\mathrm{cnt}}
+}
+\tag{1743.3}
+$$
+
+是到 \(\Lambda_B(B(H^2))\) 的保单位完全正投影。
+
+但 Clark fibre average 使用的是：
+
+$$
+\boxed{
+w_j(\alpha)
+=
+\frac1{|B'(\zeta_j^\alpha)|},
+}
+$$
+
+而不是统一的 \(1/m\)。
+
+所以必须区分：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Cuntz counting state}
+&=\text{把 branch labels 当作等权};\\
+\text{Clark conditional state}
+&=\text{按局部 inverse Jacobian 加权}.
+\end{aligned}
+}
+$$
+
+它们只有在最均匀模型：
+
+$$
+\boxed{
+B(z)=e^{ic}z^m
+}
+$$
+
+中自然重合。
+
+一般 \(B\) 的 metric hair 正存在于两种平均之间的差异。
+
+---
+

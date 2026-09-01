@@ -1,0 +1,49 @@
+# 第一千五百零八部　有限验证为何不能成为终极名字
+
+令：
+
+$$
+r_T
+$$
+
+只记录高度不超过 \(T\) 的零点信息。
+
+即使已经严格验证：
+
+$$
+|\Im\rho|\le T
+\Longrightarrow
+\Re\rho=\frac12,
+$$
+
+\(r_T\) 仍然只是有限观察接口。
+
+若存在高度大于 \(T\) 的离线零点，其 causal profile 不由 \(r_T\) 解码。
+
+所以：
+
+$$
+\boxed{
+\text{有限高度验证只能证明有限接口的充分性，
+不能证明完整 profile 的充分性。}
+}
+$$
+
+要从所有有限 \(T\) 推到全局，必须提供一个统一结构，例如：
+
+* 正 storage operator；
+* uniform retention gap；
+* 全尺度 Weil 正性；
+* stable congruence theorem；
+* 全局 factorization。
+
+这不是“计算得还不够多”的问题，而是：
+
+$$
+\boxed{
+\text{有限名字与统一生成律是不同类型的证据。}
+}
+$$
+
+---
+

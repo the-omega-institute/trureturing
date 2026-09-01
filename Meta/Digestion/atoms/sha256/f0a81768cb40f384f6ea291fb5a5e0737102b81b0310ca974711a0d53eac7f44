@@ -1,0 +1,89 @@
+# 第一千五百三十一部　建议形式化顺序
+
+```text
+D5/S3/Analytic/Zeta/CenteredKleinFour/
+  CenteredXi.lean
+  CenteredXiFunctionalInvolution.lean
+  CenteredXiRealityInvolution.lean
+  CenteredXiCriticalReflection.lean
+  GenericZeroKleinFourOrbit.lean
+  CriticalZeroOrbitCollapse.lean
+
+D5/S3/Analytic/Zeta/SquareDescent/
+  CenteredXiEven.lean
+  XiSquareDescentFunction.lean
+  XiFactorsThroughSquare.lean
+  SquareDescentUnique.lean
+  SquareDescentOrderHalf.lean
+  SquareDescentGenusZero.lean
+
+D5/S3/Analytic/Zeta/SquareDescentRH/
+  ZeroSquareName.lean
+  CriticalZeroMapsNegativeReal.lean
+  NegativeSquareNameImpliesCritical.lean
+  RHSquareDescentNegativeAxisCriterion.lean
+  OffLineSquareNameNonreal.lean
+  SquareNameRecoversDepthHeight.lean
+
+D5/S3/Analytic/Zeta/ReciprocalSquareNodes/
+  ReciprocalSquareNode.lean
+  CriticalReciprocalNodePositive.lean
+  OffLineReciprocalNodeFormula.lean
+  ReciprocalNodeRecoversDepth.lean
+  ReciprocalNodeRecoversHeight.lean
+  ReciprocalNodeOrientation.lean
+
+D5/S3/Analytic/Zeta/CenteredInverseSquareMoments/
+  SquareDescentCanonicalProduct.lean
+  SquareDescentLogDerivative.lean
+  ReciprocalPowerMoment.lean
+  CenteredEvenJetMomentFormula.lean
+  ReciprocalMomentReality.lean
+
+D5/S3/Analytic/Zeta/SelfWeightedHamburger/
+  CenteredHankelMatrix.lean
+  RHCenteredHankelPositive.lean
+  HamburgerMeasureFromHankelTower.lean
+  SelfWeightedPoleLocationReal.lean
+  SelfWeightedResidueForcesPositiveNode.lean
+  RHCenteredOneTowerCriterion.lean
+  RHLeadingHankelDeterminantCriterion.lean
+
+D5/S3/Analytic/Zeta/HankelVandermonde/
+  PositiveNodeVandermondeGram.lean
+  CenteredHankelCauchyBinet.lean
+  RHLeadingDeterminantPositiveSum.lean
+  SingleConjugatePairNegativeDeterminant.lean
+  SingleOffLinePairDepthFormula.lean
+
+D5/S3/Observer/CenteredMomentNames/
+  FiniteCenteredMomentInterface.lean
+  CenteredMomentNamingCone.lean
+  NestedMomentNamingCones.lean
+  FullMomentProfile.lean
+  CompactMomentProfileSufficient.lean
+  FirstNegativeMomentCertificate.lean
+
+D5/S3/Analytic/Zeta/PositiveJacobiRealization/
+  CenteredMomentOrthogonalPolynomials.lean
+  CenteredPositiveJacobiOperator.lean
+  CenteredLogDerivativeResolvent.lean
+  RHPositiveJacobiRealizationCriterion.lean
+  OffLineNoPositiveJacobiRealization.lean
+
+D5/S3/GoldenObserver/StieltjesTail/
+  StieltjesTailSchurComplement.lean
+  NormalizedStationaryMomentTail.lean
+  StationaryTailInverseBranch.lean
+  StationaryTailGoldenFixedPoint.lean
+  GoldenStieltjesTailConjecture.lean
+
+D5/S3/Weil/CenteredHankelPrimeBridge/
+  CenteredJetPrimePoleGammaFormulaTarget.lean
+  CenteredMomentIntervalCertificate.lean
+  PrimeSideCenteredHankelGramTarget.lean
+  AllCenteredHankelPositiveImpliesRHTarget.lean
+```
+
+---
+

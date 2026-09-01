@@ -1,0 +1,45 @@
+## 定理 1591.1（局部 positive-square completion）
+
+每一个有限黄金 hard-core Euler 区块，在循环谱规范中经过：
+
+$$
+\text{Cayley}
++
+\text{observer shift}
++
+\text{平方}
+$$
+
+以后，都拥有一个正外幂 determinant completion。
+
+这正是前文希望在 Riemann zero side 得到的有限模型：
+
+$$
+\boxed{
+\det(I+wA),
+\qquad A\ge0.
+}
+$$
+
+所以局部问题已经解决。
+
+真正困难不是：
+
+$$
+\text{hard-core 是否能 free-fermionize？}
+$$
+
+因为它在 partition level 已经可以。
+
+真正困难是：
+
+$$
+\boxed{
+\text{全部 prime 局部自伴相位，
+能否经过 Gamma 与全局正则化，
+仍然形成同一个正平方谱。}
+}
+$$
+
+---
+

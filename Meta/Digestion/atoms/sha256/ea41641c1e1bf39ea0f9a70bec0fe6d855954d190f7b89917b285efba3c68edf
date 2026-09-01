@@ -1,0 +1,70 @@
+# 第一千五百七十四部　标量完成不识别微观命名
+
+同一个 local Euler factor：
+
+$$
+\frac1{1-x}
+$$
+
+既有 binary independent lift，也有 Zeckendorf hard-core lift。
+
+二者之间存在能量保持双射：
+
+$$
+\boxed{
+\text{binary digits}
+\longleftrightarrow
+e\in\mathbb N
+\longleftrightarrow
+\text{Zeckendorf digits}.
+}
+\tag{1574.1}
+$$
+
+但这个双射不保持局部关系：
+
+* binary 位彼此独立；
+* Zeckendorf 位有 nearest-neighbor exclusion；
+* binary shift 对应精确乘 \(2\)；
+* golden shift 对应 Fibonacci digit desubstitution。
+
+因此：
+
+$$
+\boxed{
+\text{partition function 是能量谱的不变量，
+却不是局部动力与关系结构的忠实不变量。}
+}
+$$
+
+可以定义“命名 gauge groupoid”：
+
+* 对象是自然数 exponent 的不同唯一编码；
+* 态射是能量保持的编码转换；
+* partition functor 把所有对象都送到：
+
+  $$
+  (1-x)^{-1}.
+  $$
+
+该 functor 不是忠实的。
+
+所以：
+
+$$
+\boxed{
+\text{单凭 }\zeta\text{ 的 Euler 因子，
+不能证明 golden coding 是唯一或本体性的。}
+}
+$$
+
+黄金结构若要成为更深的跨命名迹，必须加入额外条件：
+
+* 一步局部记忆；
+* substitution covariance；
+* primitive unimodularity；
+* observer desubstitution；
+* Archimedean completion compatibility。
+
+---
+

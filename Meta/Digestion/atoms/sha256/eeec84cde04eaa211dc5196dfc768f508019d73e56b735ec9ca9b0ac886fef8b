@@ -1,0 +1,41 @@
+## 1594.2 黄金固定点位于临界无权边界
+
+真实 Euler 权重为：
+
+$$
+x=p^{-\sigma}<1
+\qquad
+(\sigma>0).
+$$
+
+此时位 \(k\) 的权重为：
+
+$$
+x^{F_k},
+$$
+
+随 \(k\) 改变，系统不是平移不变的 stationary golden mean chain。
+
+所以：
+
+$$
+\boxed{
+\varphi
+}
+$$
+
+在这里首先属于：
+
+$$
+\boxed{
+x=1
+\text{ 的无权组合临界点与最大熵容量。}
+}
+$$
+
+它不是每个收敛 Euler Gibbs state 中自动出现的局部 occupation probability。
+
+这解释了为什么纯 \(\zeta\) 的常规数值中并不会直接裸露一个统一黄金比例。
+
+---
+

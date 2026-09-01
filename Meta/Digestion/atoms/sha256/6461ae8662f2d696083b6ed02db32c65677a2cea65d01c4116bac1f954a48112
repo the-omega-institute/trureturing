@@ -1,0 +1,55 @@
+# 第一千七百五十二部　黄金缺陷语法并不由 RH 问题自动给出
+
+当前可以构造 defect correspondence：
+
+$$
+E_{q,T}.
+$$
+
+但其存在只记录离线零点。
+
+它并不会自动获得 golden adjacency：
+
+$$
+A_\varphi.
+$$
+
+因为不同离线零点之间目前只有：
+
+* 不同高度；
+* 不同深度；
+* 重数；
+* 对称伙伴；
+
+尚没有证明它们的 branch histories 满足：
+
+$$
+11\text{ forbidden}.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{Riemann defect graph}
+\neq
+\text{自动等于 golden mean graph}.
+}
+$$
+
+要使黄金语法成为 Riemann 系统的内禀结构，必须从算术侧证明某种 primitive rule，例如：
+
+$$
+\boxed{
+\text{连续两次使用同一 hidden branch 不合法，}
+}
+$$
+
+或等价的 Fibonacci substitution／Zeckendorf constraint。
+
+目前项目的 golden tomography 证明的是：已经互异的 lifted rational scales 可以被有限时间窗口恢复。它没有证明全部 Riemann branch history 服从 golden adjacency。
+
+这是黄金—RH 路线必须保留的核心未闭合桥。
+
+---
+

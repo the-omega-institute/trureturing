@@ -1,0 +1,73 @@
+# 第一千七百三十六部　隐藏关系代数是 \(M_m\)，不只是 \(m-1\) 个对比量
+
+定义酉映射：
+
+$$
+\boxed{
+\mathcal U_B:
+K_B\otimes H^2
+\longrightarrow
+H^2,
+}
+\tag{1736.1}
+$$
+
+其作用为：
+
+$$
+\mathcal U_B(e_j\otimes f)=S_jf.
+$$
+
+由 Cuntz 分解，\(\mathcal U_B\) 为酉同构。
+
+在该张量图表中：
+
+$$
+\boxed{
+\mathcal U_B^*
+\Lambda_B(X)
+\mathcal U_B
+=
+I_{K_B}\otimes X.
+}
+\tag{1736.2}
+$$
+
+所以：
+
+$$
+\boxed{
+\Lambda_B(B(H^2))'
+\cap
+B(H^2)
+\simeq
+B(K_B)
+\simeq
+M_m(\mathbb C).
+}
+\tag{1736.3}
+$$
+
+显式矩阵单位为：
+
+$$
+\boxed{
+E_{ij}=S_iS_j^*.
+}
+\tag{1736.4}
+$$
+
+它们满足：
+
+$$
+E_{ij}E_{k\ell}
+=
+\delta_{jk}E_{i\ell},
+$$
+
+$$
+E_{ij}^*=E_{ji}.
+$$
+
+---
+

@@ -1,0 +1,61 @@
+# 第一千七百三十三部　有限 Blaschke 因子自然生成 Cuntz 分支
+
+设：
+
+$$
+B
+$$
+
+是次数为：
+
+$$
+m\ge1
+$$
+
+的有限 Blaschke 积，并经归一化满足：
+
+$$
+B(0)=0.
+$$
+
+定义模型空间：
+
+$$
+\boxed{
+K_B=H^2\ominus BH^2.
+}
+\tag{1733.1}
+$$
+
+则：
+
+$$
+\dim K_B=m.
+$$
+
+取任意正交标准基：
+
+$$
+\boxed{
+e_1,\ldots,e_m
+}
+\tag{1733.2}
+$$
+
+并定义：
+
+$$
+\boxed{
+(S_jf)(z)
+=
+e_j(z)\,f(B(z)),
+\qquad
+1\le j\le m.
+}
+\tag{1733.3}
+$$
+
+这是有限 Blaschke product 在 Hardy 空间中产生 Cuntz 表示的标准结构；已有工作明确构造了由有限 Blaschke product 诱导的 \(\mathcal O_m\) Hardy-space 表示。
+
+---
+

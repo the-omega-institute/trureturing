@@ -1,0 +1,43 @@
+## Clark metric entropy
+
+对固定 finite Blaschke \(B\)，规范 fibre 概率为：
+
+$$
+w_j(\alpha)
+=
+|B'(\zeta_j^\alpha)|^{-1}.
+$$
+
+其平均条件熵：
+
+$$
+\boxed{
+\overline h_B
+=
+\int h_B(\alpha)\,dm(\alpha)
+\le\log m.
+}
+\tag{1742.4}
+$$
+
+它测量同一个 \(m\) 页 covering 中 phase speed 的不均匀程度。
+
+因此：
+
+$$
+\boxed{
+\begin{aligned}
+\log m
+&=\text{自由 branch capacity};\\
+\log\varphi
+&=\text{受约束语法 capacity};\\
+\overline h_B
+&=\text{具体 inner geometry 的条件熵}.
+\end{aligned}
+}
+$$
+
+三者不能混同。
+
+---
+

@@ -1,0 +1,30 @@
+## 1593.2 Cayley 去紧化：保存边界几何
+
+另一种方式是：
+
+$$
+\boxed{
+h
+=
+i\frac{1+u}{1-u}
+=
+-\cot\frac\theta2.
+}
+\tag{1593.2}
+$$
+
+它把：
+
+$$
+S^1\setminus\{1\}
+$$
+
+送到：
+
+$$
+\mathbb R.
+$$
+
+该图表不保留 winding integer，却保留：
+
+* Möbius 几何；

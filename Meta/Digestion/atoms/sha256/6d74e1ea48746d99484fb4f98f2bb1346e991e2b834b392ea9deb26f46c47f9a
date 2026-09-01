@@ -1,0 +1,95 @@
+# 第一千五百七十六部　RH 下的零侧准自由过程
+
+回到移动平方影：
+
+$$
+Q_t(w)
+$$
+
+并假设 RH。
+
+前文已经得到：
+
+$$
+\boxed{
+\frac{Q_t(w)}{Q_t(0)}
+=
+\det(I+wA_t),
+\qquad
+A_t\ge0,\quad A_t\in\mathcal S_1.
+}
+\tag{1576.1}
+$$
+
+固定：
+
+$$
+u>0,
+$$
+
+定义正收缩：
+
+$$
+\boxed{
+K_{t,u}
+=
+uA_t(I+uA_t)^{-1}.
+}
+\tag{1576.2}
+$$
+
+则：
+
+$$
+0\le K_{t,u}<I,
+\qquad
+K_{t,u}\in\mathcal S_1.
+$$
+
+对复变量 \(z\)：
+
+$$
+\begin{aligned}
+\frac{Q_t(uz)}{Q_t(u)}
+&=
+\frac{\det(I+uzA_t)}
+{\det(I+uA_t)}
+\\
+&=
+\det
+\left(
+I-K_{t,u}+zK_{t,u}
+\right).
+\end{aligned}
+$$
+
+因此：
+
+$$
+\boxed{
+\frac{Q_t(uz)}{Q_t(u)}
+=
+\det
+\left(
+I-K_{t,u}+zK_{t,u}
+\right).
+}
+\tag{1576.3}
+$$
+
+若 \(p_j\) 是 \(K_{t,u}\) 的特征值，则：
+
+$$
+\boxed{
+\frac{Q_t(uz)}{Q_t(u)}
+=
+\prod_j
+(1-p_j+p_jz).
+}
+\tag{1576.4}
+$$
+
+这正是独立 Bernoulli 总占据数的 probability generating function。
+
+---
+

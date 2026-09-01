@@ -1,0 +1,74 @@
+## 1517.1 离线节点的显式形式
+
+令：
+
+$$
+R=\delta^2+\gamma^2.
+$$
+
+则：
+
+$$
+\boxed{
+v_\rho
+=
+\frac{
+\gamma^2-\delta^2+2i\delta\gamma
+}{
+R^2
+}.
+}
+\tag{1517.3}
+$$
+
+因此：
+
+$$
+\boxed{
+|v_\rho|=\frac1R,
+}
+\tag{1517.4}
+$$
+
+$$
+\boxed{
+\Im v_\rho
+=
+\frac{2\delta\gamma}{R^2}.
+}
+\tag{1517.5}
+$$
+
+反向恢复公式为：
+
+$$
+\boxed{
+\delta^2
+=
+\frac{
+|v_\rho|-\Re v_\rho
+}{
+2|v_\rho|^2
+},
+}
+\tag{1517.6}
+$$
+
+$$
+\boxed{
+\gamma^2
+=
+\frac{
+|v_\rho|+\Re v_\rho
+}{
+2|v_\rho|^2
+}.
+}
+\tag{1517.7}
+$$
+
+所以 \(v_\rho\) 不是任意重参数化。
+
+它同时编码：
+
+* 深度；

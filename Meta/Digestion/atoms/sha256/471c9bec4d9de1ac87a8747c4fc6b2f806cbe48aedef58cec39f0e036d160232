@@ -1,0 +1,38 @@
+## 定理 1735.1（Observer-gauge invariance）
+
+尽管 individual branch generators 随 phase observer 改变，
+
+$$
+\boxed{
+\sum_kS_k^\beta X(S_k^\beta)^*
+=
+\sum_jS_j^\alpha X(S_j^\alpha)^*.
+}
+\tag{1735.3}
+$$
+
+因此：
+
+$$
+\boxed{
+\Lambda_B
+}
+$$
+
+与 Clark 基、sheet 标签及 phase observer 无关。
+
+这是一条非常接近“跨命名迹”的严格结构：
+
+$$
+\boxed{
+\text{每一条分支叫什么、如何编号依赖观察者；
+所有分支共同实施的命名动力不依赖观察者。}
+}
+$$
+
+但 \(\Lambda_B\) 仍然不是“道”。
+
+它只是某个 inner naming map \(B\) 的基无关算子提升。
+
+---
+

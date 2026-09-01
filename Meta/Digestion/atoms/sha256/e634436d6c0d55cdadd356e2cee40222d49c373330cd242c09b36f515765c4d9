@@ -1,0 +1,25 @@
+# 第一千五百二十三部　离线零点的有限证明对偶
+
+由定理 1520.1：
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\Longrightarrow
+\exists N,\exists c\neq0:
+c^*H_N^\xi c<0.
+}
+\tag{1523.1}
+$$
+
+因此离线零点的证明对偶可以最终写成：
+
+$$
+\boxed{
+\text{一个由有限个中心 jet 构成的负 Hankel 向量。}
+}
+$$
+
+它不要求：
+
+* 猜测离线零点高度；

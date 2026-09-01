@@ -1,0 +1,33 @@
+# 第一千五百二十四部　命名深度
+
+定义最早负证书深度：
+
+$$
+\boxed{
+N_{\mathrm{cert}}
+=
+\inf
+\left\{
+N:
+\lambda_{\min}
+(H_N^\xi)<0
+\right\}.
+}
+\tag{1524.1}
+$$
+
+若 RH 成立：
+
+$$
+N_{\mathrm{cert}}=\infty.
+$$
+
+若 RH 失败：
+
+$$
+N_{\mathrm{cert}}<\infty.
+$$
+
+但 \(N_{\mathrm{cert}}\) 不只取决于：
+
+* 离线零点高度；

@@ -1,0 +1,88 @@
+# 第一千七百四十部　黄金 KMS 状态与第二影分裂
+
+\(A_\varphi\) 的正 Perron 向量可取：
+
+$$
+r=
+\begin{pmatrix}
+\varphi\\
+1
+\end{pmatrix},
+$$
+
+满足：
+
+$$
+A_\varphi r=\varphi r.
+$$
+
+相应最大熵 Markov 转移为：
+
+$$
+P_{ij}
+=
+\frac{
+A_{ij}r_j
+}{
+\varphi r_i
+}.
+$$
+
+因此：
+
+$$
+\boxed{
+P
+=
+\begin{pmatrix}
+\varphi^{-1}&\varphi^{-2}\\
+1&0
+\end{pmatrix}.
+}
+\tag{1740.1}
+$$
+
+从自由状态 \(0\) 出发：
+
+$$
+\boxed{
+P(0\to0)=\varphi^{-1},
+}
+$$
+
+$$
+\boxed{
+P(0\to1)=\varphi^{-2}.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+1=\varphi^{-1}+\varphi^{-2}.
+}
+\tag{1740.2}
+$$
+
+此前的“第一影 + 第二影”关系，在这里变成了一个规范的 Perron–Frobenius 概率分裂。
+
+在标准 gauge energy 规定每条边能量为 \(1\) 时，强连通有限图的临界 KMS 逆温度由：
+
+$$
+\beta_c=\log\rho(A)
+$$
+
+给出；因此 golden graph 的规范临界值为：
+
+$$
+\boxed{
+\beta_\varphi=\log\varphi.
+}
+\tag{1740.3}
+$$
+
+能量单位重标定会同步重标定 \(\beta\)，所以它仍然不是无条件的物理温度。
+
+---
+

@@ -1,0 +1,112 @@
+# 第一千五百三十四部　真实法向强度与机器化 jet
+
+定义实临界线函数：
+
+$$
+\boxed{
+\Xi(t)
+=
+\xi\!\left(\frac12+it\right),
+\qquad t\in\mathbb R.
+}
+\tag{1534.1}
+$$
+
+定义真实法向强度：
+
+$$
+\boxed{
+\mathcal I(\delta,t)
+=
+\left|
+\xi\!\left(
+\frac12+\delta+it
+\right)
+\right|^2.
+}
+\tag{1534.2}
+$$
+
+由函数方程和实结构：
+
+$$
+\boxed{
+\mathcal I(\delta,t)
+=
+\Xi(t-i\delta)\Xi(t+i\delta).
+}
+\tag{1534.3}
+$$
+
+所以它关于 \(\delta\) 是偶整函数：
+
+$$
+\boxed{
+\mathcal I(\delta,t)
+=
+\sum_{m=0}^{\infty}
+\mathcal J_m(t)\delta^{2m},
+}
+\tag{1534.4}
+$$
+
+其中：
+
+$$
+\boxed{
+\mathcal J_m(t)
+=
+\frac1{(2m)!}
+\left.
+\partial_\delta^{2m}
+\mathcal I(\delta,t)
+\right|_{\delta=0}.
+}
+\tag{1534.5}
+$$
+
+项目已机器证明：
+
+$$
+\boxed{
+\mathcal J_m(t)
+=
+\sum_{j=0}^{2m}
+\frac{(-1)^{m+j}}{j!(2m-j)!}\,
+\Xi^{(j)}(t)\Xi^{(2m-j)}(t).
+}
+\tag{1534.6}
+$$
+
+并显式给出：
+
+$$
+\mathcal J_0(t)=\Xi(t)^2,
+$$
+
+$$
+\boxed{
+\mathcal J_1(t)
+=
+\Xi'(t)^2-\Xi(t)\Xi''(t),
+}
+\tag{1534.7}
+$$
+
+以及：
+
+$$
+\boxed{
+\mathcal J_2(t)
+=
+\frac14\Xi''(t)^2
+-\frac13\Xi'(t)\Xi'''(t)
++\frac1{12}\Xi(t)\Xi^{(4)}(t).
+}
+\tag{1534.8}
+$$
+
+这里的 \(\mathcal J_m\) 是真实强度的 Taylor 系数，而不是先定义卷积公式后赋予它物理意义。
+
+---
+

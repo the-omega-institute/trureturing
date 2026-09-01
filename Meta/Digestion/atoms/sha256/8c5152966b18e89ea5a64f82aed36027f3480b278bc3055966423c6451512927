@@ -1,0 +1,54 @@
+* Cauchy 连续极限。
+
+所以：
+
+$$
+\boxed{
+\text{离线零点不能被归因于某一个 prime 的局部不稳定。}
+}
+$$
+
+它只能是以下全局步骤中的异常：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{无穷 prime 同步};\\
+&\text{不同 }\log p\text{ 周期的非公度叠加};\\
+&\text{Archimedean half-density normalization};\\
+&\text{极点与 trivial mode 消去};\\
+&\text{analytic continuation};\\
+&\text{从相位谱到平方谱的全局下降}.
+\end{aligned}
+}
+$$
+
+因此离线零点最准确的本轮定义是：
+
+$$
+\boxed{
+\textbf{一个局部全部可自伴化，
+但全局完成后不能再由正 Hodge 平方实现的 completion anomaly。}
+}
+$$
+
+它在不同名字中表现为：
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{名字}&\text{异常形态}\\
+\hline
+\text{中心平方影}&\text{非实逆平方节点}\\
+\text{匹配观察者}&\text{负平方能级}\\
+\text{Hardy}&\text{inverse-inner 通道}\\
+\text{de Branges}&\text{负 Gram 方向}\\
+\text{Hodge}&\text{无法写成 }d^*d+dd^*\\
+\text{Poisson}&\text{带方向的 Cauchy 边界影像}\\
+\text{拓扑}&\text{非零 index／Chern 荷}
+\end{array}
+}
+$$
+
+---
+

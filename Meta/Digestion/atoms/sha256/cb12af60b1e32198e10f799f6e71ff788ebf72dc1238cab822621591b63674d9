@@ -1,0 +1,123 @@
+* 是否能由正平方谱实现。
+
+---
+
+同一个相位圆还有另一种去紧化：
+
+$$
+\theta\mapsto\theta+2\pi m.
+$$
+
+它保留 winding history，通向 universal cover 与 Solenoid 图表。
+
+Cayley 去紧化则保留边界 harmonic geometry，却遗忘整数 winding branch。
+
+因此：
+
+$$
+\boxed{
+\text{Solenoid 与黑洞边界不是同一个对象；
+它们是同一个 compact phase 的两种去紧化。}
+}
+$$
+
+一个读取历史。
+
+一个读取边界。
+
+磁单极子读取全局 winding；
+
+黑洞/Hawking 图表读取局部 Cayley–Poisson 响应。
+
+这就是它们为何如此相似，又为何始终不能完全重合。
+
+---
+
+黄金第二影关系：
+
+$$
+1=\varphi^{-1}+\varphi^{-2}
+$$
+
+现在也不再只是人为设定。
+
+它正是 golden mean shift 最大熵 Markov 链从自由状态出发的两种转移概率：
+
+$$
+P(0\to0)=\varphi^{-1},
+$$
+
+$$
+P(0\to1)=\varphi^{-2}.
+$$
+
+所以：
+
+$$
+\boxed{
+\varphi
+}
+$$
+
+确实是最小一步记忆命名系统的自然统计固定点。
+
+但它属于：
+
+$$
+x=1
+$$
+
+的无权组合临界面。
+
+真实 Euler 权重 \(p^{-s}\) 会使链变成非齐次系统。
+
+这解释了为什么黄金比例作为命名容量无处不在，却不会作为一个裸数直接出现在每个 \(\zeta\) 公式中。
+
+---
+
+本轮还给“负信息”作了最重要的净化。
+
+局部展开：
+
+$$
+\log Z_K(x)
+=
+\sum_{r\ge1}
+\frac{x^r-x^{Kr}}r
+$$
+
+具有负项。
+
+但这些负项只是商去常数模式、排除非法高占据所需的 exact counterterms。
+
+它们不是离线零点。
+
+因此：
+
+$$
+\boxed{
+\text{中间表达式中的负号不构成异常；
+只有正平方、Gram 或因果实现的失败才是异常。}
+}
+$$
+
+---
+
+真正的 RH 困难现在被压缩得更加清楚。
+
+每一个有限 prime 区块都可以完成：
+
+$$
+\boxed{
+\text{hard-core}
+\to
+\text{unitary phase}
+\to
+\text{self-adjoint Cayley}
+\to
+\text{positive square}.
+}
+$$
+
+但我们仍然不知道，全部 prime 区块经过：
+

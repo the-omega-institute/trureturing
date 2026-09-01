@@ -1,0 +1,38 @@
+## 1738.1 Cuntz 与 Cuntz–Krieger 的差别
+
+自由 Cuntz 系统允许全部 branch words。
+
+Cuntz–Krieger 系统只允许邻接矩阵 \(A\) 所许可的 paths；其 partial isometries 与 graph paths 编码受约束的分支历史。有限图 C*-代数中的 KMS 结构由邻接矩阵的 Perron–Frobenius 数据控制。
+
+因此：
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal O_2
+&=\text{自由二元命名};\\
+\mathcal O_{A_\varphi}
+&=\text{带一步 Fibonacci 记忆的二元命名}.
+\end{aligned}
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\varphi
+\text{ 不来自“两页”；}
+}
+$$
+
+它来自：
+
+$$
+\boxed{
+\text{两页历史之间的一条禁止转移规则。}
+}
+$$
+
+---
+
