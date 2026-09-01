@@ -102,8 +102,24 @@ private noncomputable def matrixHermitianPairEquiv (d : Nat) :
   left_inv A := realPart_add_I_smul_imaginaryPart A
   right_inv A := by
     apply Prod.ext
-    · simp
-    · simp
+    · apply Subtype.ext
+      ext i j
+      change
+        (ℜ ((A.1 : Matrix (Fin d) (Fin d) ℂ) +
+          Complex.I • (A.2 : Matrix (Fin d) (Fin d) ℂ)) :
+          Matrix (Fin d) (Fin d) ℂ) i j = (A.1 : Matrix (Fin d) (Fin d) ℂ) i j
+      rw [(realPart (A := Matrix (Fin d) (Fin d) ℂ)).map_add,
+        realPart_smul]
+      simp [A.1.2.coe_realPart, congrArg Subtype.val A.2.2.imaginaryPart]
+    · apply Subtype.ext
+      ext i j
+      change
+        (ℑ ((A.1 : Matrix (Fin d) (Fin d) ℂ) +
+          Complex.I • (A.2 : Matrix (Fin d) (Fin d) ℂ)) :
+          Matrix (Fin d) (Fin d) ℂ) i j = (A.2 : Matrix (Fin d) (Fin d) ℂ) i j
+      rw [(imaginaryPart (A := Matrix (Fin d) (Fin d) ℂ)).map_add,
+        imaginaryPart_smul]
+      simp [A.1.2.imaginaryPart, A.2.2.coe_realPart]
   map_add' A B := by
     apply Prod.ext
     · exact (realPart (A := Matrix (Fin d) (Fin d) ℂ)).map_add A B

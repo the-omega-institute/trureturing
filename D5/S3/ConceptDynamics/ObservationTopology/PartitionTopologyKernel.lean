@@ -25,12 +25,18 @@ theorem partition_inseparable_iff_kernel
     by_contra different
     let fiber : Set X := readout ⁻¹' {readout x}
     have fiberOpen : @IsOpen X (partitionTopology readout) fiber := by
-      rw [partitionTopology, isOpen_induced_iff]
+      change @IsOpen X
+        (TopologicalSpace.induced (show X -> B from readout) ⊥) fiber
+      rw [isOpen_induced_iff]
       exact ⟨{readout x}, isOpen_discrete _, rfl⟩
-    have xInFiber : x ∈ fiber := by simp [fiber]
+    have xInFiber : x ∈ fiber := by
+      change readout x ∈ ({readout x} : Set B)
+      exact Set.mem_singleton _
     have yNotInFiber : y ∉ fiber := by
       intro yInFiber
-      have equality : readout y = readout x := by simpa [fiber] using yInFiber
+      have equality : readout y = readout x := by
+        change readout y ∈ ({readout x} : Set B) at yInFiber
+        exact Set.mem_singleton_iff.mp yInFiber
       exact different equality.symm
     exact yNotInFiber
       ((@Inseparable.mem_open_iff X (partitionTopology readout)
@@ -38,9 +44,12 @@ theorem partition_inseparable_iff_kernel
   · intro sameReadout
     apply (@inseparable_iff_forall_isOpen X (partitionTopology readout) x y).2
     intro set setOpen
-    rw [partitionTopology, isOpen_induced_iff] at setOpen
+    change @IsOpen X
+      (TopologicalSpace.induced (show X -> B from readout) ⊥) set at setOpen
+    rw [isOpen_induced_iff] at setOpen
     rcases setOpen with ⟨coordinates, _coordinatesOpen, rfl⟩
-    simpa only [Set.mem_preimage, sameReadout]
+    change readout x ∈ coordinates ↔ readout y ∈ coordinates
+    rw [sameReadout]
 
 theorem partitionTopology_eq_of_kernel_iff
     {X B C : Type*} (first : Concept X B) (second : Concept X C)
@@ -50,11 +59,13 @@ theorem partitionTopology_eq_of_kernel_iff
   letI : DiscreteTopology B := ⟨rfl⟩
   letI : TopologicalSpace C := ⊥
   letI : DiscreteTopology C := ⟨rfl⟩
+  change TopologicalSpace.induced (show X -> B from first) ⊥ =
+    TopologicalSpace.induced (show X -> C from second) ⊥
   apply TopologicalSpace.ext_iff.mpr
   intro set
   constructor
   · intro firstOpen
-    rw [partitionTopology, isOpen_induced_iff] at firstOpen ⊢
+    rw [isOpen_induced_iff] at firstOpen ⊢
     rcases firstOpen with ⟨coordinates, _coordinatesOpen, rfl⟩
     let secondCoordinates : Set C :=
       {coordinate | exists x, second x = coordinate ∧ first x ∈ coordinates}
@@ -69,7 +80,7 @@ theorem partitionTopology_eq_of_kernel_iff
       exact hy
     · intro hx; exact ⟨x, rfl, hx⟩
   · intro secondOpen
-    rw [partitionTopology, isOpen_induced_iff] at secondOpen ⊢
+    rw [isOpen_induced_iff] at secondOpen ⊢
     rcases secondOpen with ⟨coordinates, _coordinatesOpen, rfl⟩
     let firstCoordinates : Set B :=
       {coordinate | exists x, first x = coordinate ∧ second x ∈ coordinates}

@@ -53,7 +53,7 @@ theorem refinement_iff_kernel_inclusion_on_effective_images
       intro x
       apply (Set.rangeFactorization_eq_rangeFactorization_iff _ _).mpr
       exact hkernel _ _ (by
-        simpa using Set.apply_rangeSplitting r (Set.rangeFactorization r x))
+        exact Set.apply_rangeSplitting r (Set.rangeFactorization r x))
     refine ⟨factor, hfactor, ?_⟩
     intro other hother
     funext value

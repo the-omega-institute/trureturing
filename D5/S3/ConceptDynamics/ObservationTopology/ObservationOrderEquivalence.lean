@@ -61,22 +61,28 @@ theorem partition_open_inclusion_implies_refines
   apply (target_recovery_criterion fine coarse).1.mpr
   intro x y sameFine
   by_contra differentCoarse
-  let coarseFiber : Set X := coarse ⁻¹' {coarse x}
+  let coarseFiber : Set X :=
+    (show X -> Coarse from coarse) ⁻¹' {coarse x}
   have coarseFiberOpen : @IsOpen X (partitionTopology coarse) coarseFiber := by
     letI : TopologicalSpace Coarse := ⊥
     letI : DiscreteTopology Coarse := ⟨rfl⟩
-    rw [partitionTopology, isOpen_induced_iff]
+    change @IsOpen X
+      (TopologicalSpace.induced (show X -> Coarse from coarse) ⊥) coarseFiber
+    rw [isOpen_induced_iff]
     exact ⟨{coarse x}, isOpen_discrete _, rfl⟩
   have fineFiberOpen : @IsOpen X (partitionTopology fine) coarseFiber :=
     openInclusion coarseFiber coarseFiberOpen
   have fineInseparable : @Inseparable X (partitionTopology fine) x y :=
     (partition_inseparable_iff_kernel fine x y).2 sameFine
-  have xInFiber : x ∈ coarseFiber := by simp [coarseFiber]
+  have xInFiber : x ∈ coarseFiber := by
+    change coarse x ∈ ({coarse x} : Set Coarse)
+    exact Set.mem_singleton _
   have yInFiber : y ∈ coarseFiber :=
     ((@Inseparable.mem_open_iff X (partitionTopology fine)
       x y coarseFiber fineInseparable fineFiberOpen).mp xInFiber)
   have sameCoarse : coarse y = coarse x := by
-    simpa [coarseFiber] using yInFiber
+    change coarse y ∈ ({coarse x} : Set Coarse) at yInFiber
+    exact Set.mem_singleton_iff.mp yInFiber
   exact differentCoarse sameCoarse.symm
 
 /-- Readout refinement is exactly inclusion of the corresponding partition

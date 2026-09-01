@@ -40,12 +40,11 @@ theorem policy_capability_monotone
     (refinement : Refines q_C q_D) :
     policyCapability q_C U ⊆ policyCapability q_D U := by
   rcases refinement with ⟨factor, hfactor⟩
-  have range_inclusion :=
-    Set.range_comp_subset_range
-      (fun policy : C -> U => policy ∘ factor)
-      (fun policy : D -> U => policy ∘ q_D)
-  simpa only [policyCapability, hfactor, Function.comp_apply, Function.comp_def]
-    using range_inclusion
+  rintro _ ⟨policy, rfl⟩
+  refine ⟨policy ∘ factor, ?_⟩
+  rw [hfactor]
+  unfold Function.comp
+  rfl
 
 /-- The public state domain is inhabited. -/
 example : Bool := false

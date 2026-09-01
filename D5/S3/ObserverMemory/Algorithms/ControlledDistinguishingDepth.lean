@@ -167,7 +167,7 @@ private theorem controlled_relation_stable_at_latest
     rw [hdepth] at hle
     simp only [Option.getD_some] at hle
     have hleLatest : depth ≤ latest := by
-      simpa [latest] using hle
+      exact hle
     omega
   · intro hbounded
     apply (mem_controlled_depth_iff_shortest_later update readout pair latest).2

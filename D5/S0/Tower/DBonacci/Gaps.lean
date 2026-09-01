@@ -39,7 +39,14 @@ theorem boundedGapFuelList_length (maxTrue fuel Q : Nat) (hfuel : fuel ≤ maxTr
     (boundedGapFuelList maxTrue fuel Q).length =
       Fintype.card (BoundedRunName maxTrue fuel Q) - 1 := by
   induction Q generalizing fuel with
-  | zero => simp [boundedGapFuelList, BoundedRunName, runAdmissible]
+  | zero =>
+      have hcard : Fintype.card (BoundedRunName maxTrue fuel 0) = 1 := by
+        apply Fintype.card_eq_one_iff.mpr
+        refine ⟨⟨fun i => Fin.elim0 i, by simp [runAdmissible]⟩, ?_⟩
+        intro name
+        apply Subtype.ext
+        funext i; exact Fin.elim0 i
+      simp [boundedGapFuelList, hcard]
   | succ Q ih =>
       cases fuel with
       | zero =>
@@ -179,13 +186,21 @@ theorem bounded_gap_invariant (maxTrue fuel Q : Nat)
     BoundedGapInvariant maxTrue fuel Q := by
   induction Q generalizing fuel with
   | zero =>
+      have hcard : Fintype.card (BoundedRunName maxTrue fuel 0) = 1 := by
+        apply Fintype.card_eq_one_iff.mpr
+        refine ⟨⟨fun i => Fin.elim0 i, by simp [runAdmissible]⟩, ?_⟩
+        intro name
+        apply Subtype.ext
+        funext i
+        exact Fin.elim0 i
       constructor
       · intro k hk
-        norm_num [BoundedRunName, runAdmissible] at hk
+        rw [hcard] at hk
+        omega
       · have hlast : boundedLastIndex maxTrue fuel 0 =
             ⟨0, bounded_run_level_pos maxTrue fuel 0⟩ := by
           apply Fin.ext
-          simp [boundedLastIndex, BoundedRunName, runAdmissible]
+          simp [boundedLastIndex, hcard]
         rw [boundedTerminalGap, hlast, boundedIndexedNameValue_level_zero]
         simp [dbonacciGapLength, boundedTerminalFuel]
   | succ q ih =>

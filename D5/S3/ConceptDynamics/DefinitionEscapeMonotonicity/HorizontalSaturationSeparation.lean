@@ -146,11 +146,11 @@ theorem target_visibility_is_necessary :
           semanticCompletion constantSensorFamily booleanTarget true := by
       calc
         _ = factor (interfaceUnion constantSensorFamily false) := by
-          simpa only [Function.comp_apply] using congrFun factors false
+          exact congrFun factors false
         _ = factor (interfaceUnion constantSensorFamily true) :=
           congrArg factor sameReadout
         _ = _ := by
-          simpa only [Function.comp_apply] using (congrFun factors true).symm
+          exact (congrFun factors true).symm
     have targetEquality := congrArg Prod.snd equalOutputs
     exact Bool.false_ne_true (by
       simpa only [semanticCompletion, conceptJoin, booleanTarget, id_eq] using

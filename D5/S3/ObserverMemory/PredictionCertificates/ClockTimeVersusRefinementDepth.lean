@@ -34,6 +34,7 @@ def longRunUpdate : Unit -> Unit := id
 /-- The one-state system exposes its unique state immediately. -/
 def longRunReadout : Unit -> Unit := id
 
+set_option backward.isDefEq.respectTransparency false in
 /-- Four clock states whose readout stays flat until the final state. -/
 inductive DelayedState where
   | zero
@@ -82,8 +83,7 @@ theorem clock_time_does_not_determine_refinement_depth :
     have hchosen :
         completeItinerary delayedUpdate delayedReadout DelayedState.zero chosen ≠
           completeItinerary delayedUpdate delayedReadout DelayedState.one chosen := by
-      dsimp [chosen]
-      rw [distinguishingTime, dif_pos hseparates]
+      simp only [chosen, distinguishingTime, dif_pos hseparates]
       exact Classical.choose_spec hseparates
     have hnotzero : chosen ≠ 0 := by
       intro hzero

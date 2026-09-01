@@ -36,8 +36,8 @@ theorem language_postprocessing_preserves_missing_distinction
     ∀ postprocess : Language -> Output,
       (postprocess ∘ language) x = (postprocess ∘ language) y := by
   intro postprocess
-  simpa only [Function.comp_apply] using
-    congrArg postprocess missingDistinction.1
+  unfold Function.comp
+  exact congrArg postprocess missingDistinction.1
 
 /-- A constant language and identity phenomenon readout satisfy the source's
 missing-distinction premise, and every language-only postprocessor preserves

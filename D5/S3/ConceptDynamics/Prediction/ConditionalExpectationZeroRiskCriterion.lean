@@ -41,12 +41,20 @@ theorem zero_prediction_risk_iff_ae_observation_measurable
           mu target x) ^ 2 ∂mu) = 0 ↔
       AEStronglyMeasurable[MeasurableSpace.comap observation inferInstance]
         target mu := by
+  let projected : Lp Real 2 mu :=
+    ↑(condExpL2 Real Real hObservation.comap_le (hTarget.toLp target))
+  have hProjectedEq :
+      (projected : X -> Real) =ᵐ[mu]
+        MeasureTheory.condExp
+          (MeasurableSpace.comap observation inferInstance) mu target := by
+    simpa only [projected] using
+      (MemLp.condExpL2_ae_eq_condExp hObservation.comap_le hTarget)
   have hResidualLp :
       MemLp
         (target - MeasureTheory.condExp
           (MeasurableSpace.comap observation inferInstance) mu target)
         2 mu :=
-    hTarget.sub hTarget.condExp
+    hTarget.sub <| MemLp.ae_eq hProjectedEq (Lp.memLp projected)
   have hResidualIntegrable :
       Integrable
         ((target - MeasureTheory.condExp

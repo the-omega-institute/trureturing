@@ -8,7 +8,15 @@ receipts:
   coverage:
     - gid: D5/S3/Observer/MetricGeometryLaws/ItineraryFirstDifferencePowerLaw.itinerary_first_difference_power_law
       source_sha256: sha256:fbccb60cdd408481332cb95438a622a4e06865874391117f1af9f91f6bf9b826
-      target_statement_id: sha256:005893cf0ff86b0afbd989960f2d2a65921f274ea6931ae65a422053f04d353d
+      target_statement_id: sha256:5435604f6596ba3195a7301908cdcfd79a778eaea556d26969d29366c8fe2487
+      statement_id_history:
+        - statement_id: sha256:005893cf0ff86b0afbd989960f2d2a65921f274ea6931ae65a422053f04d353d
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Observer/MetricGeometryLaws/ItineraryFirstDifferencePowerLaw.itinerary_first_difference_power_law
       definition_sha256: sha256:7810cf01bb67bf27f8b943c6ab8f845ec3a861ea5282031e5da72fbb113a7965

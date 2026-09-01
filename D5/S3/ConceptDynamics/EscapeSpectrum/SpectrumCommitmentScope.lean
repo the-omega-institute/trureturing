@@ -28,6 +28,10 @@ namespace D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope
 
 open D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentSettlement
 
+-- Lean 4.33's stricter type check breaks mathlib's `Fintype` deriving handler.
+section
+set_option backward.isDefEq.respectTransparency.types false
+
 /-- The five frozen DESC v1.0 theorem atoms, in T1--T5 order. -/
 inductive SpectrumAtom
   | t1
@@ -36,6 +40,8 @@ inductive SpectrumAtom
   | t4
   | t5
   deriving DecidableEq, Fintype
+
+end
 
 /-- Scope classes distinguished by the local commitment. -/
 inductive ScopeClass

@@ -83,8 +83,8 @@ theorem golden_power_free_exponent_set :
     interval_cases k
     · exact (hk [true] (by simp) 0) (by
         simp [IsGoldenPowerFactor, goldenFactor, wordPower])
-    · apply (hk (goldenFactor 1 0) (by simp [goldenFactor]) 0)
-      simp [IsGoldenPowerFactor, goldenFactor]
+    · apply (hk [true] (by simp) 0)
+      simp [IsGoldenPowerFactor, goldenFactor, wordPower, goldenWord_zero]
     · exact (hk [true, false, true] (by simp) 5)
         (isGoldenPowerFactor_of_le (by omega) golden_cube_is_power_factor)
     · exact (hk [true, false, true] (by simp) 5) golden_cube_is_power_factor

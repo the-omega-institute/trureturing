@@ -34,10 +34,12 @@ theorem rho_unipotent_integer_power (m : ℤ) :
   have generatorUnit :
       rhoUnipotentUnit = Matrix.SpecialLinearGroup.mapGL ℚ ModularGroup.T := by
     apply Units.ext
+    rw [Matrix.SpecialLinearGroup.mapGL_coe_matrix]
+    rw [Matrix.SpecialLinearGroup.map_apply_coe]
     ext i j
     fin_cases i <;> fin_cases j <;>
-      norm_num [rhoUnipotentUnit, rhoUnipotentGenerator,
-        Matrix.SpecialLinearGroup.mapGL_coe_matrix, ModularGroup.T, Matrix.map_apply]
+      norm_num [rhoUnipotentUnit, rhoUnipotentGenerator, ModularGroup.T,
+        Matrix.map_apply]
   change ((rhoUnipotentUnit ^ m : GeneratorMatrixˣ) : GeneratorMatrix) = _
   rw [generatorUnit, ← map_zpow]
   rw [Matrix.SpecialLinearGroup.mapGL_coe_matrix,

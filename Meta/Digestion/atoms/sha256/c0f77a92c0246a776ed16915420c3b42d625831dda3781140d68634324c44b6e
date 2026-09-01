@@ -1,0 +1,39 @@
+## 7. 中央算术桥的修订
+
+仓库已经冻结：
+
+\[
+\boxed{\texttt{D5/S3/Weil/ZetaBridge/FixedScaleWeilQuadraticForm}.}
+\]
+
+该真源已经包含 convolution-square Weil test、von Mangoldt prime-power contribution、Archimedean multiplier、pole rank-one energy、zero-side sum 与 fixed-scale positivity equivalence。
+
+因此不再建立第二套有限 Weil quadratic form。缺失对象是从 chronological holonomy 数据进入既有标准 Weil 对象的运输：
+
+\[
+\boxed{
+\text{finite Fourier memory/holonomy}
+\longrightarrow
+\text{admissible Weil test function}
+\longrightarrow
+\texttt{FixedScaleWeilQuadraticForm}.
+}
+\]
+
+下一开放边命名为：
+
+\[
+\boxed{\texttt{HolonomyToFixedScaleWeilTransport}.}
+\]
+
+它至少需要证明：
+
+- finite coefficients 到 `WeilTestFunction` 的构造；
+- support 半径记账；
+- prime-power 权重与 \(\log n\) 频率匹配；
+- Gamma 与 pole 项保留；
+- truncation remainder；
+- holonomy energy 与 fixed-scale Weil form 的等式、下界或带误差比较。
+
+显式公式应成为 prime-side 与 zero-side 相遇的标准中介。当前自定义 holonomy energy 到自定义 off-line energy 的直接 domination 不再作为 primitive hard heart。
+

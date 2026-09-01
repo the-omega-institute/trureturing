@@ -8,7 +8,15 @@ receipts:
   coverage:
     - gid: D5/S3/Entropy/Observation/CompletionInformationChainDecompositionCanonical.completion_information_chain_decomposition_canonical
       source_sha256: sha256:3080104b9d954b2d5ec856097c5d2aaa038ad064474d85ef925475ccbe887e8d
-      target_statement_id: sha256:4fb01381e6b5c5774e7dde24282859a6749a85779f3658ef60dd35ff18957e50
+      target_statement_id: sha256:86a95743c8e2107ffbcb59d9af81e6391c1be2369c1d9cf0bfb8b794b753f5cd
+      statement_id_history:
+        - statement_id: sha256:4fb01381e6b5c5774e7dde24282859a6749a85779f3658ef60dd35ff18957e50
+          environment_pin:
+            toolchain: leanprover/lean4:v4.31.0
+            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
+          superseded_by_pin:
+            toolchain: leanprover/lean4:v4.33.0
+            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Entropy/Observation/CompletionInformationChainDecompositionCanonical.completion_information_chain_decomposition_canonical
       definition_sha256: sha256:898c1f3ed5b788a6b241e20f2e5e0fe82d22e56c552f6993d7da7c91e60b21b2

@@ -157,7 +157,13 @@ theorem concept_kernel_order_duality (X : Type u) :
   · intro C D q_C q_D
     apply Setoid.ext
     intro x y
-    simp only [Setoid.ker_def, conceptJoin, Setoid.inf_iff_and, Prod.mk.injEq]
+    change (q_C x, q_D x) = (q_C y, q_D y) ↔
+      q_C x = q_C y ∧ q_D x = q_D y
+    constructor
+    · intro h
+      exact ⟨congrArg Prod.fst h, congrArg Prod.snd h⟩
+    · rintro ⟨hC, hD⟩
+      exact Prod.ext hC hD
   · intro C D q_C q_D
     rw [commonCoarsening, Setoid.ker_mk_eq, Setoid.sup_eq_eqvGen]
 

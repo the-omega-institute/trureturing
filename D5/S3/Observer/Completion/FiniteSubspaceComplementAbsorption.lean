@@ -59,8 +59,7 @@ theorem finite_subspace_complement_absorption
     hSourceOrthonormal.toSubtypeRange.exists_hilbertBasis_extension
   let removed : Set W := Subtype.val ⁻¹' Set.range sourceVectors
   have hRemovedFinite : removed.Finite :=
-    (Set.finite_range sourceVectors).preimage
-      (Set.InjOn.mono Subtype.val_injective.injOn (by simp))
+    (Set.finite_range sourceVectors).preimage Subtype.val_injective.injOn
   have hAmbientInfinite : Infinite W := by
     refine ⟨fun hFinite => ?_⟩
     letI : Finite W := hFinite

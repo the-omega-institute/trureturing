@@ -440,19 +440,27 @@ theorem tribonacci_champion_combined_mem_closed :
 
 theorem tribonacci_champion_large_transition :
     transition tribonacciChampionLargeState = tribonacciChampionCombinedState := by
+  have hbranch : ¬ (tribonacciChampionLargeState.coordinate ≤ t⁻¹) := by
+    change ¬ (tribonacciLargeCoordinate ≤ t⁻¹)
+    exact not_le.mpr tribonacci_inverse_lt_large
+  rw [D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciPeriodicTransition.eq_1,
+    show tribonacciChampionLargeState.kind = .large by rfl]
+  simp only [if_neg hbranch]
   simp only [
-    D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciPeriodicTransition,
     tribonacciChampionLargeState]
-  rw [if_neg (not_le.mpr tribonacci_inverse_lt_large)]
   congr 1
   exact tribonacci_large_branch
 
 theorem tribonacci_champion_combined_transition :
     transition tribonacciChampionCombinedState = tribonacciChampionLargeState := by
+  have hbranch : tribonacciChampionCombinedState.coordinate ≤ t⁻¹ := by
+    change tribonacciMiddleCoordinate ≤ t⁻¹
+    exact tribonacci_middle_le_inverse
+  rw [D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciPeriodicTransition.eq_1,
+    show tribonacciChampionCombinedState.kind = .combined by rfl]
+  simp only [if_pos hbranch]
   simp only [
-    D5.S0.Tower.DBonacciGeneral.TribonacciPeriodicGenerator.tribonacciPeriodicTransition,
     tribonacciChampionCombinedState]
-  rw [if_pos tribonacci_middle_le_inverse]
   congr 1
   exact tribonacci_middle_scale
 
