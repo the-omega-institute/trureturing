@@ -2,6 +2,7 @@ namespace StrataLint.Engine;
 
 internal sealed record BackfillDeltaImpact(
     RawChangeSet EvaluationChanges,
+    RawChangeSet ReceiptVerificationChanges,
     bool HasAffectedEdges);
 
 internal static class BackfillDeltaImpactResolver
@@ -51,8 +52,19 @@ internal static class BackfillDeltaImpactResolver
                 new RawChange(RepoPath.CreateKnown(path), RawChangeKind.Modified));
         }
 
+        var receiptVerificationEntries = evaluationEntries
+            .ToDictionary(static entry => entry.Key, static entry => entry.Value, StringComparer.Ordinal);
+        foreach (var change in repositoryChanges.Entries.Where(static change =>
+                     change.Path.Value.StartsWith("D5/", StringComparison.Ordinal)
+                     && change.Path.Value.EndsWith(".lean", StringComparison.Ordinal)))
+        {
+            receiptVerificationEntries.TryAdd(change.Path.Value, change);
+        }
+
         return new BackfillDeltaImpact(
             RawChangeSet.CreateWithKinds(evaluationEntries.Values.Select(static change =>
+                (change.Path.Value, change.Kind))),
+            RawChangeSet.CreateWithKinds(receiptVerificationEntries.Values.Select(static change =>
                 (change.Path.Value, change.Kind))),
             affectedEntryPaths.Count > 0);
     }
@@ -64,6 +76,11 @@ internal static class BackfillDeltaImpactResolver
         IReadOnlySet<string> changedPaths)
     {
         if (EntryPathIsInDelta(entry, changedPaths)
+            || FileValueChanged(
+                BackfillInventoryLoader.RootPath + entry.SourceId + "/source.toml",
+                current,
+                baseline,
+                changedPaths)
             || FileValueChanged(entry.SourcePath, current, baseline, changedPaths)
             || FileValueChanged(CasPath(entry), current, baseline, changedPaths)
             || entry.Receipts.TailAuthorization is { } tail
@@ -80,6 +97,16 @@ internal static class BackfillDeltaImpactResolver
 
         foreach (var gid in entry.CoverageGids)
         {
+            if (Gid.TryParse(gid, out var parsedGid)
+                && FileValueChanged(
+                    parsedGid.Path.Value,
+                    current,
+                    baseline,
+                    changedPaths))
+            {
+                return true;
+            }
+
             var documentGid = ScribeEmissionAttestation.DocumentGid(gid);
             if (FileValueChanged(
                     ScribeEmissionAttestation.DefinitionPath(documentGid),
@@ -182,10 +209,9 @@ internal static class BackfillDeltaImpactResolver
 
         var sourcePrefix = BackfillInventoryLoader.RootPath + entry.SourceId + "/";
         var suffix = "/" + entry.AtomId + ".yaml";
-        return changedPaths.Contains(sourcePrefix + "source.toml")
-            || changedPaths.Any(path =>
-                path.StartsWith(sourcePrefix, StringComparison.Ordinal)
-                && path.EndsWith(suffix, StringComparison.Ordinal));
+        return changedPaths.Any(path =>
+            path.StartsWith(sourcePrefix, StringComparison.Ordinal)
+            && path.EndsWith(suffix, StringComparison.Ordinal));
     }
 
     private static bool FileValueChanged(
