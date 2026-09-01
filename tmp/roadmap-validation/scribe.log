@@ -1,0 +1,13 @@
+  Determining projects to restore...
+  Restored /home/runner/work/trureturing/trureturing/tools/Trureturing.Truth/Trureturing.Truth.csproj (in 1.57 sec).
+  Restored /home/runner/work/trureturing/trureturing/tools/StrataLint.Engine/StrataLint.Engine.csproj (in 2.6 sec).
+  Restored /home/runner/work/trureturing/trureturing/tools/StrataLint.Scribe/StrataLint.Scribe.csproj (in 2.92 sec).
+  Trureturing.Truth -> /home/runner/work/trureturing/trureturing/tools/Trureturing.Truth/bin/Release/net10.0/Trureturing.Truth.dll
+  StrataLint.Engine -> /home/runner/work/trureturing/trureturing/tools/StrataLint.Engine/bin/Release/net10.0/StrataLint.Engine.dll
+  StrataLint.Scribe -> /home/runner/work/trureturing/trureturing/tools/StrataLint.Scribe/bin/Release/net10.0/StrataLint.Scribe.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:01:00.25
