@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/Constants/FiniteStieltjesOperatorRealization
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Finite positive Stieltjes moments have positive Hankel matrices
-     and a positive diagonal operator realization. -/
+   digest: Finite positive Stieltjes moments have positive Hankel matrices and a positive diagonal operator realization. -/
 
 import Mathlib.Analysis.InnerProductSpace.GramMatrix
 import Mathlib.Analysis.InnerProductSpace.PiL2
