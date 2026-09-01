@@ -1,0 +1,455 @@
+/- GID: D5/S3/Weil/TestFunctions/LiCurvatureCriterion
+   generality: I
+   mirror-B: D5/B/S3/Weil/TestFunctions/LiCurvatureCriterion
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   digest: Toeplitz positivity and recurrence uniqueness support the Li curvature criterion. -/
+
+import D5.S3.Weil.TestFunctions.LiCurvatureFourierRepresentation
+import Mathlib.Analysis.Matrix.Order
+import Mathlib.Algebra.Ring.GeomSum
+import Mathlib.MeasureTheory.Measure.Dirac
+import Mathlib.NumberTheory.LSeries.RiemannZeta
+
+/- Library-search audit trail (2026-09-01):
+   * D5 name and body-shape searches found no Li curvature criterion. The exact
+     preceding Fourier representation is
+     LiCurvatureFourierRepresentation.li_curvature_fourier_representation.
+   * ExactTruncatedHaarFloor.circle_moment_toeplitz_posSemidef contains the
+     forward Gram calculation only as a private helper; its public theorem has
+     additional Haar-floor hypotheses and cannot be reused as this owner.
+     TruncatedCircleMomentBridge.truncated_circle_moment_of_posSemidef is the
+     finite-order converse, not one common representing measure for all orders.
+   * Pinned Mathlib supplies Matrix.PosSemidef, integral_conj, finite-sum
+     integration, and circle powers. Its Herglotz hits concern the
+     Herglotz--Riesz kernel; no circle Herglotz/Bochner representation theorem
+     or second-difference uniqueness theorem was found.
+   * Installed non-Mathlib Lake packages contain no matching Herglotz,
+     Toeplitz-moment, or Li-criterion declaration. -/
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+
+noncomputable section
+
+open Matrix MeasureTheory
+open scoped BigOperators ComplexConjugate ComplexOrder
+
+namespace D5.S3.Weil.TestFunctions.LiCurvatureCriterion
+
+noncomputable local instance circleMeasurableSpace : MeasurableSpace Circle := borel Circle
+local instance circleBorelSpace : BorelSpace Circle := ⟨rfl⟩
+
+/-- Fourier coefficient convention used by the source: the nth moment uses
+the character z ^ (-n). -/
+noncomputable def circleMoment (mu : Measure Circle) (n : Int) : Complex :=
+  ∫ z : Circle, (z : Complex) ^ (-n) ∂mu
+
+/-- The source Toeplitz matrix [c_(j-k)]. -/
+def toeplitzMatrix (c : Int -> Complex) (N : Nat) :
+    Matrix (Fin (N + 1)) (Fin (N + 1)) Complex := fun j k =>
+  c (((j : Nat) : Int) - ((k : Nat) : Int))
+
+/-- The analytic polynomial determined by a finite coefficient vector. -/
+def analyticPolynomial {N : Nat} (a : Fin (N + 1) -> Complex) (z : Circle) : Complex :=
+  ∑ j, a j * (z : Complex) ^ (j : Nat)
+
+private theorem circle_moment_integrand_eq_gram (z : Circle) (j k : Nat) :
+    (z : Complex) ^ (-((j : Int) - (k : Int))) =
+      (z : Complex) ^ k * star ((z : Complex) ^ j) := by
+  rw [neg_sub, zpow_sub₀ (Circle.coe_ne_zero z), div_eq_mul_inv]
+  congr 1
+  change ((↑(z ^ j) : Complex)⁻¹) = star (↑(z ^ j) : Complex)
+  rw [← Circle.coe_inv, Circle.coe_inv_eq_conj]
+  rfl
+
+theorem circle_moment_toeplitz_entry
+    (mu : Measure Circle) (N : Nat) (j k : Fin (N + 1)) :
+    toeplitzMatrix (circleMoment mu) N j k =
+      ∫ z : Circle,
+        (z : Complex) ^ (k : Nat) * star ((z : Complex) ^ (j : Nat)) ∂mu := by
+  apply integral_congr_ae
+  filter_upwards [] with z
+  exact circle_moment_integrand_eq_gram z j k
+
+/-- A circle moment sequence is Hermitian without a separate symmetry
+hypothesis. -/
+theorem circle_moment_toeplitz_isHermitian
+    (mu : Measure Circle) (N : Nat) :
+    (toeplitzMatrix (circleMoment mu) N).IsHermitian := by
+  apply Matrix.IsHermitian.ext
+  intro i j
+  rw [circle_moment_toeplitz_entry, circle_moment_toeplitz_entry]
+  change conj (∫ z : Circle,
+      (z : Complex) ^ (i : Nat) * star ((z : Complex) ^ (j : Nat)) ∂mu) = _
+  rw [← integral_conj]
+  apply integral_congr_ae
+  filter_upwards [] with z
+  rw [map_mul]
+  change star ((z : Complex) ^ (i : Nat)) *
+      star (star ((z : Complex) ^ (j : Nat))) = _
+  rw [star_star, mul_comm]
+
+/-- The finite Toeplitz quadratic form of circle Fourier moments is exactly
+the integral of the squared modulus of the coefficient polynomial. This is
+the source's positive-definiteness identity, in Mathlib's convention that the
+first vector argument is conjugate-linear. -/
+theorem toeplitz_quadratic_eq_integral
+    (mu : Measure Circle) [IsFiniteMeasure mu]
+    (N : Nat) (a : Fin (N + 1) -> Complex) :
+    star a ⬝ᵥ (toeplitzMatrix (circleMoment mu) N *ᵥ a) =
+      ∫ z : Circle,
+        analyticPolynomial a z * star (analyticPolynomial a z) ∂mu := by
+  classical
+  have integrandIntegrable (j k : Fin (N + 1)) :
+      Integrable (fun z : Circle =>
+        (z : Complex) ^ (k : Nat) * star ((z : Complex) ^ (j : Nat))) mu := by
+    have continuousIntegrand : Continuous (fun z : Circle =>
+        (z : Complex) ^ (k : Nat) * star ((z : Complex) ^ (j : Nat))) := by
+      fun_prop
+    simpa using continuousIntegrand.continuousOn.integrableOn_compact
+      (μ := mu) isCompact_univ
+  have energyExpansion :
+      (∫ z : Circle,
+          analyticPolynomial a z * star (analyticPolynomial a z) ∂mu) =
+        ∑ j : Fin (N + 1), ∑ k : Fin (N + 1),
+          star (a j) * toeplitzMatrix (circleMoment mu) N j k * a k := by
+    calc
+      (∫ z : Circle,
+          analyticPolynomial a z * star (analyticPolynomial a z) ∂mu) =
+          ∫ z : Circle, ∑ j : Fin (N + 1), ∑ k : Fin (N + 1),
+            star (a j) *
+              ((z : Complex) ^ (k : Nat) * star ((z : Complex) ^ (j : Nat))) *
+              a k ∂mu := by
+                refine integral_congr_ae (Filter.Eventually.of_forall fun z => ?_)
+                simp only [analyticPolynomial, star_sum, star_mul]
+                simp_rw [Finset.sum_mul, Finset.mul_sum]
+                rw [Finset.sum_comm]
+                apply Finset.sum_congr rfl
+                intro j _
+                apply Finset.sum_congr rfl
+                intro k _
+                ring
+      _ = ∑ j : Fin (N + 1), ∑ k : Fin (N + 1),
+          star (a j) * toeplitzMatrix (circleMoment mu) N j k * a k := by
+            rw [integral_finsetSum Finset.univ]
+            · apply Finset.sum_congr rfl
+              intro j _
+              rw [integral_finsetSum Finset.univ]
+              · apply Finset.sum_congr rfl
+                intro k _
+                rw [circle_moment_toeplitz_entry]
+                simp only [integral_const_mul, integral_mul_const]
+              · intro k _
+                exact ((integrandIntegrable j k).const_mul (star (a j))).mul_const (a k)
+            · intro j _
+              exact integrable_finsetSum Finset.univ fun k _ =>
+                ((integrandIntegrable j k).const_mul (star (a j))).mul_const (a k)
+  rw [energyExpansion]
+  simp only [dotProduct, mulVec, Pi.star_apply, Finset.mul_sum]
+  ring_nf
+
+/-- Every finite Toeplitz matrix cut from a circle moment sequence is positive
+semidefinite. -/
+theorem circle_moment_toeplitz_posSemidef
+    (mu : Measure Circle) [IsFiniteMeasure mu] (N : Nat) :
+    Matrix.PosSemidef (toeplitzMatrix (circleMoment mu) N) := by
+  apply Matrix.PosSemidef.of_dotProduct_mulVec_nonneg
+    (circle_moment_toeplitz_isHermitian mu N)
+  intro a
+  rw [toeplitz_quadratic_eq_integral]
+  simp only [RCLike.star_def, Complex.mul_conj]
+  exact integral_nonneg fun z =>
+    Complex.zero_le_real.mpr (Complex.normSq_nonneg (analyticPolynomial a z))
+
+/-- The two initial values and the same second differences uniquely determine
+a real sequence. -/
+theorem second_difference_recurrence_unique
+    (x y curvature : Nat -> Real)
+    (zeroValue : x 0 = y 0)
+    (oneValue : x 1 = y 1)
+    (xRecurrence : forall n, 1 <= n ->
+      x (n + 1) - 2 * x n + x (n - 1) = curvature n)
+    (yRecurrence : forall n, 1 <= n ->
+      y (n + 1) - 2 * y n + y (n - 1) = curvature n) :
+    x = y := by
+  funext n
+  induction n using Nat.twoStepInduction with
+  | zero => exact zeroValue
+  | one => exact oneValue
+  | more n ih0 ih1 =>
+      have hx := xRecurrence (n + 1) (by omega)
+      have hy := yRecurrence (n + 1) (by omega)
+      rw [show n + 1 + 1 = n + 2 by omega,
+        show n + 1 - 1 = n by omega] at hx hy
+      linarith
+
+/-- The finite geometric polynomial used in the source's reconstruction of the
+Li coefficients. At `n = 0` its indexing finset is empty. -/
+def geometricPolynomial (n : Nat) (z : Circle) : Complex :=
+  ∑ j ∈ Finset.range n, (z : Complex) ^ j
+
+/-- Reconstruction of a Li sequence from a circle measure and its first
+coefficient. -/
+noncomputable def reconstructedLi (mu : Measure Circle) (firstCoefficient : Real)
+    (n : Nat) : Real :=
+  firstCoefficient * ∫ z : Circle, Complex.normSq (geometricPolynomial n z) ∂mu
+
+private theorem geometricPolynomial_succ_last (z : Circle) (n : Nat) :
+    geometricPolynomial (n + 1) z = (z : Complex) ^ n + geometricPolynomial n z := by
+  simpa only [geometricPolynomial] using (geom_sum_succ' (x := (z : Complex)) (n := n))
+
+private theorem geometricPolynomial_succ_front (z : Circle) (n : Nat) :
+    geometricPolynomial (n + 1) z =
+      (z : Complex) * geometricPolynomial n z + 1 := by
+  simpa only [geometricPolynomial] using (geom_sum_succ (x := (z : Complex)) (n := n))
+
+private theorem geometric_energy_succ_sub (z : Circle) (n : Nat) :
+    Complex.normSq (geometricPolynomial (n + 1) z) -
+        Complex.normSq (geometricPolynomial n z) =
+      1 + 2 * (((z : Complex) ^ n) * conj (geometricPolynomial n z)).re := by
+  rw [geometricPolynomial_succ_last, Complex.normSq_add]
+  have powerNormSq : Complex.normSq ((z : Complex) ^ n) = 1 := by
+    rw [map_pow]
+    simp
+  rw [powerNormSq]
+  ring
+
+private theorem weighted_conj_geometric_sub (z : Circle) (n : Nat) (hn : 1 <= n) :
+    (z : Complex) ^ n * conj (geometricPolynomial n z) -
+        (z : Complex) ^ (n - 1) * conj (geometricPolynomial (n - 1) z) =
+      (z : Complex) ^ n := by
+  obtain ⟨m, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (Nat.ne_of_gt hn)
+  simp only [Nat.succ_sub_one]
+  rw [geometricPolynomial_succ_front]
+  simp only [map_add, map_mul, map_one]
+  have unitNorm : (z : Complex) * conj (z : Complex) = 1 := by
+    rw [Complex.mul_conj]
+    simp
+  calc
+    (z : Complex) ^ (m + 1) *
+          (conj (z : Complex) * conj (geometricPolynomial m z) + 1) -
+        (z : Complex) ^ m * conj (geometricPolynomial m z) =
+      (z : Complex) ^ m * ((z : Complex) * conj (z : Complex)) *
+          conj (geometricPolynomial m z) + (z : Complex) ^ (m + 1) -
+        (z : Complex) ^ m * conj (geometricPolynomial m z) := by
+          rw [pow_succ]
+          ring
+    _ = (z : Complex) ^ (m + 1) := by rw [unitNorm]; ring
+
+/-- The squared modulus of the finite geometric polynomial has the second
+difference used in the source: twice the real part of the nth circle
+character. -/
+theorem geometric_energy_second_difference (z : Circle) (n : Nat) (hn : 1 <= n) :
+    Complex.normSq (geometricPolynomial (n + 1) z) -
+          2 * Complex.normSq (geometricPolynomial n z) +
+        Complex.normSq (geometricPolynomial (n - 1) z) =
+      2 * (((z : Complex) ^ n).re) := by
+  have currentDifference := geometric_energy_succ_sub z n
+  have previousDifference := geometric_energy_succ_sub z (n - 1)
+  rw [Nat.sub_add_cancel hn] at previousDifference
+  have weightedDifference := congrArg Complex.re (weighted_conj_geometric_sub z n hn)
+  simp only [Complex.sub_re] at weightedDifference
+  linarith
+
+private theorem circleMoment_re_nat (mu : Measure Circle) [IsFiniteMeasure mu] (n : Nat) :
+    (circleMoment mu n).re = ∫ z : Circle, (((z : Complex) ^ n).re) ∂mu := by
+  have negativePowerIntegrable :
+      Integrable (fun z : Circle => (z : Complex) ^ (-(n : Int))) mu := by
+    have negativePowerContinuous :
+        Continuous (fun z : Circle => (z : Complex) ^ (-(n : Int))) := by
+      apply Continuous.zpow₀ (by fun_prop)
+      intro z
+      exact Or.inl (Circle.coe_ne_zero z)
+    simpa using negativePowerContinuous.continuousOn.integrableOn_compact
+      (μ := mu) isCompact_univ
+  rw [circleMoment, ← RCLike.re_eq_complex_re,
+    ← integral_re negativePowerIntegrable]
+  apply integral_congr_ae
+  filter_upwards [] with z
+  rw [_root_.zpow_neg, zpow_natCast]
+  have inverseAsConj : ((z : Complex) ^ n)⁻¹ = conj ((z : Complex) ^ n) := by
+    change ((↑((z ^ n : Circle)⁻¹) : Complex)) = conj (↑(z ^ n : Circle) : Complex)
+    exact Circle.coe_inv_eq_conj (z ^ n)
+  rw [inverseAsConj]
+  exact Complex.conj_re ((z : Complex) ^ n)
+
+private theorem geometric_energy_integrable
+    (mu : Measure Circle) [IsFiniteMeasure mu] (n : Nat) :
+    Integrable (fun z : Circle => Complex.normSq (geometricPolynomial n z)) mu := by
+  have energyContinuous :
+      Continuous (fun z : Circle => Complex.normSq (geometricPolynomial n z)) := by
+    unfold geometricPolynomial
+    fun_prop
+  simpa using energyContinuous.continuousOn.integrableOn_compact (μ := mu) isCompact_univ
+
+/-- The empty-sum convention in the source gives reconstructed value zero at
+index zero. -/
+theorem reconstructedLi_zero (mu : Measure Circle) (firstCoefficient : Real) :
+    reconstructedLi mu firstCoefficient 0 = 0 := by
+  simp [reconstructedLi, geometricPolynomial]
+
+/-- For a probability measure, the one-term geometric polynomial gives the
+prescribed first coefficient. -/
+theorem reconstructedLi_one
+    (mu : Measure Circle) [IsProbabilityMeasure mu] (firstCoefficient : Real) :
+    reconstructedLi mu firstCoefficient 1 = firstCoefficient := by
+  simp [reconstructedLi, geometricPolynomial]
+
+/-- A nonnegative first coefficient makes every reconstructed coefficient
+nonnegative. -/
+theorem reconstructedLi_nonneg
+    (mu : Measure Circle) [IsFiniteMeasure mu] (firstCoefficient : Real)
+    (firstCoefficientNonnegative : 0 <= firstCoefficient) (n : Nat) :
+    0 <= reconstructedLi mu firstCoefficient n := by
+  apply mul_nonneg firstCoefficientNonnegative
+  exact integral_nonneg fun z => Complex.normSq_nonneg (geometricPolynomial n z)
+
+/-- The source's integral reconstruction has second difference equal to twice
+the first coefficient times the real Fourier moment. -/
+theorem reconstructedLi_second_difference
+    (mu : Measure Circle) [IsFiniteMeasure mu] (firstCoefficient : Real)
+    (n : Nat) (hn : 1 <= n) :
+    reconstructedLi mu firstCoefficient (n + 1) -
+          2 * reconstructedLi mu firstCoefficient n +
+        reconstructedLi mu firstCoefficient (n - 1) =
+      2 * firstCoefficient * (circleMoment mu n).re := by
+  have nextIntegrable := geometric_energy_integrable mu (n + 1)
+  have currentIntegrable := geometric_energy_integrable mu n
+  have previousIntegrable := geometric_energy_integrable mu (n - 1)
+  have differenceIntegrable :
+      Integrable (fun z : Circle =>
+        Complex.normSq (geometricPolynomial (n + 1) z) -
+          2 * Complex.normSq (geometricPolynomial n z)) mu :=
+    nextIntegrable.sub (currentIntegrable.const_mul 2)
+  calc
+    reconstructedLi mu firstCoefficient (n + 1) -
+          2 * reconstructedLi mu firstCoefficient n +
+        reconstructedLi mu firstCoefficient (n - 1) =
+      firstCoefficient *
+        ((∫ z : Circle, Complex.normSq (geometricPolynomial (n + 1) z) ∂mu) -
+          2 * (∫ z : Circle, Complex.normSq (geometricPolynomial n z) ∂mu) +
+          ∫ z : Circle, Complex.normSq (geometricPolynomial (n - 1) z) ∂mu) := by
+            simp only [reconstructedLi]
+            ring
+    _ = firstCoefficient *
+        ∫ z : Circle,
+          (Complex.normSq (geometricPolynomial (n + 1) z) -
+              2 * Complex.normSq (geometricPolynomial n z) +
+            Complex.normSq (geometricPolynomial (n - 1) z)) ∂mu := by
+              congr 1
+              rw [integral_add differenceIntegrable previousIntegrable,
+                integral_sub nextIntegrable (currentIntegrable.const_mul 2),
+                integral_const_mul]
+    _ = firstCoefficient *
+        ∫ z : Circle, 2 * (((z : Complex) ^ n).re) ∂mu := by
+          congr 1
+          apply integral_congr_ae
+          filter_upwards [] with z
+          exact geometric_energy_second_difference z n hn
+    _ = 2 * firstCoefficient * (circleMoment mu n).re := by
+      rw [integral_const_mul, ← circleMoment_re_nat]
+      ring
+
+/-- Li's curvature criterion. The Li criterion, the canonical curvature
+recurrence, the RH Fourier representation from the preceding theorem, and the
+circle Herglotz representation are explicit hypotheses because no canonical
+owners connecting these data are available in the pinned library. The
+Toeplitz Gram identity and the integral reconstruction are proved above. -/
+theorem li_curvature_criterion
+    (c : Int -> Complex) (liCoefficient : Nat -> Real)
+    (liCriterion : RiemannHypothesis ↔ forall n, 0 <= liCoefficient n)
+    (liZero : liCoefficient 0 = 0)
+    (liOneNonnegative : 0 <= liCoefficient 1)
+    (curvatureRecurrence : forall n, 1 <= n ->
+      liCoefficient (n + 1) - 2 * liCoefficient n + liCoefficient (n - 1) =
+        2 * liCoefficient 1 * (c n).re)
+    (rhFourierRepresentation : RiemannHypothesis ->
+      ∃ mu : Measure Circle, IsProbabilityMeasure mu ∧
+        forall n, c n = circleMoment mu n)
+    (circleHerglotzRepresentation :
+      (forall N, Matrix.PosSemidef (toeplitzMatrix c N)) ->
+        ∃ mu : Measure Circle, IsProbabilityMeasure mu ∧
+          forall n, c n = circleMoment mu n) :
+    RiemannHypothesis ↔ forall N, Matrix.PosSemidef (toeplitzMatrix c N) := by
+  constructor
+  · intro riemannHypothesis N
+    rcases rhFourierRepresentation riemannHypothesis with
+      ⟨mu, probabilityMeasure, momentRepresentation⟩
+    letI : IsProbabilityMeasure mu := probabilityMeasure
+    have matrixIdentity :
+        toeplitzMatrix c N = toeplitzMatrix (circleMoment mu) N := by
+      ext j k
+      exact momentRepresentation _
+    rw [matrixIdentity]
+    exact circle_moment_toeplitz_posSemidef mu N
+  · intro allToeplitzPositive
+    rcases circleHerglotzRepresentation allToeplitzPositive with
+      ⟨mu, probabilityMeasure, momentRepresentation⟩
+    letI : IsProbabilityMeasure mu := probabilityMeasure
+    let reconstructed : Nat -> Real := reconstructedLi mu (liCoefficient 1)
+    have reconstructedZero : reconstructed 0 = liCoefficient 0 := by
+      rw [show reconstructed 0 = reconstructedLi mu (liCoefficient 1) 0 by rfl,
+        reconstructedLi_zero, liZero]
+    have reconstructedOne : reconstructed 1 = liCoefficient 1 := by
+      exact reconstructedLi_one mu (liCoefficient 1)
+    have reconstructedRecurrence : forall n, 1 <= n ->
+        reconstructed (n + 1) - 2 * reconstructed n + reconstructed (n - 1) =
+          2 * liCoefficient 1 * (c n).re := by
+      intro n hn
+      change reconstructedLi mu (liCoefficient 1) (n + 1) -
+            2 * reconstructedLi mu (liCoefficient 1) n +
+          reconstructedLi mu (liCoefficient 1) (n - 1) =
+        2 * liCoefficient 1 * (c n).re
+      calc
+        reconstructedLi mu (liCoefficient 1) (n + 1) -
+              2 * reconstructedLi mu (liCoefficient 1) n +
+            reconstructedLi mu (liCoefficient 1) (n - 1) =
+          2 * liCoefficient 1 * (circleMoment mu n).re :=
+            reconstructedLi_second_difference mu (liCoefficient 1) n hn
+        _ = 2 * liCoefficient 1 * (c n).re := by
+          rw [momentRepresentation]
+    have reconstructionIdentity : reconstructed = liCoefficient :=
+      second_difference_recurrence_unique reconstructed liCoefficient
+        (fun n => 2 * liCoefficient 1 * (c n).re)
+        reconstructedZero reconstructedOne reconstructedRecurrence curvatureRecurrence
+    apply liCriterion.mpr
+    intro n
+    rw [← congrFun reconstructionIdentity n]
+    exact reconstructedLi_nonneg mu (liCoefficient 1) liOneNonnegative n
+
+/-- A Dirac mass at 1 with coefficients (1,1) makes both sides of the
+Toeplitz integral identity equal to 4, so the construction is nonzero. -/
+theorem dirac_one_toeplitz_witness :
+    let mu : Measure Circle := Measure.dirac 1
+    let a : Fin 2 -> Complex := fun _ => 1
+    star a ⬝ᵥ (toeplitzMatrix (circleMoment mu) 1 *ᵥ a) = 4 ∧
+      (∫ z : Circle,
+        analyticPolynomial a z * star (analyticPolynomial a z) ∂mu) = 4 := by
+  dsimp only
+  rw [toeplitz_quadratic_eq_integral]
+  simp [analyticPolynomial, Fin.sum_univ_two]
+  norm_num
+
+/-- The sequence n^2 realizes constant second difference 2, with initial
+segment 0,1,4,9. -/
+theorem quadratic_second_difference_witness :
+    let x : Nat -> Real := fun n => n ^ 2
+    x 0 = 0 ∧ x 1 = 1 ∧ x 2 = 4 ∧ x 3 = 9 ∧
+      forall n, 1 <= n -> x (n + 1) - 2 * x n + x (n - 1) = 2 := by
+  dsimp only
+  refine ⟨by norm_num, by norm_num, by norm_num, by norm_num, ?_⟩
+  intro n hn
+  push_cast [Nat.cast_sub hn]
+  ring
+
+#print axioms toeplitz_quadratic_eq_integral
+#print axioms circle_moment_toeplitz_posSemidef
+#print axioms second_difference_recurrence_unique
+#print axioms geometric_energy_second_difference
+#print axioms reconstructedLi_second_difference
+#print axioms li_curvature_criterion
+#print axioms dirac_one_toeplitz_witness
+#print axioms quadratic_second_difference_witness
+
+end D5.S3.Weil.TestFunctions.LiCurvatureCriterion

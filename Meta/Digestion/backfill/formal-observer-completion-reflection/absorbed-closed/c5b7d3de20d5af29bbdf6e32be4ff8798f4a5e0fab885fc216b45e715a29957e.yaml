@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:c5b7d3de20d5af29bbdf6e32be4ff8798f4a5e0fab885fc216b45e715a29957e
+  normalized_sha256: sha256:c5b7d3de20d5af29bbdf6e32be4ff8798f4a5e0fab885fc216b45e715a29957e
+cas_ref: sha256:c5b7d3de20d5af29bbdf6e32be4ff8798f4a5e0fab885fc216b45e715a29957e
+coverage_gids:
+  - D5/S3/Quantum/Dynamics/ObserverPullbackTraceIdentity.observer_pullback_trace_identity
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/Dynamics/ObserverPullbackTraceIdentity.observer_pullback_trace_identity
+      source_sha256: sha256:c5b7d3de20d5af29bbdf6e32be4ff8798f4a5e0fab885fc216b45e715a29957e
+      target_statement_id: sha256:e29b6cd795ff1c378aada17fe22e5ce04e0950dd9380481993e3dfe8a19e7f0f
+  scribe:
+    - gid: D5/S3/Quantum/Dynamics/ObserverPullbackTraceIdentity.observer_pullback_trace_identity
+      definition_sha256: sha256:76b8069bbacd32919e2711ec5b77dc7f7a39b79d21881854aa4dbac1ba4cf0bf
+      emission_sha256: sha256:6575ae404c043d38bb8fb7613aae0aca77f2c4df8ba630465e5083681d068328
+  unresolved_subitems: []

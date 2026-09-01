@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:39b1ad87cb5ee51dfeec148e31612d79165ffa6d1bf89199586e1ff4bf886713
+  normalized_sha256: sha256:39b1ad87cb5ee51dfeec148e31612d79165ffa6d1bf89199586e1ff4bf886713
+cas_ref: sha256:39b1ad87cb5ee51dfeec148e31612d79165ffa6d1bf89199586e1ff4bf886713
+coverage_gids:
+  - D5/S3/ConceptDynamics/Attribution/SymmetricResponsibilityAllocation.symmetric_responsibility_is_uniform
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Attribution/SymmetricResponsibilityAllocation.symmetric_responsibility_is_uniform
+      source_sha256: sha256:39b1ad87cb5ee51dfeec148e31612d79165ffa6d1bf89199586e1ff4bf886713
+      target_statement_id: sha256:ca736a263fdb4472878c95010fd9416d4053fd4d7cc2fcc498dfb9307ed86b92
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Attribution/SymmetricResponsibilityAllocation.symmetric_responsibility_is_uniform
+      definition_sha256: sha256:fbf2621fb911579828c259a1c399ce27edc866ac7aee0178cd4a11d3cec9ffb7
+      emission_sha256: sha256:f30bc43f4985e1283fa0f4f1e338c69aa128789dfa676d4f86623ba794d79ad7
+  unresolved_subitems: []

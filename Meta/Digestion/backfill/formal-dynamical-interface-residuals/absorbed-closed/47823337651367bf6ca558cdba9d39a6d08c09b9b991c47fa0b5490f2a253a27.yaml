@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:47823337651367bf6ca558cdba9d39a6d08c09b9b991c47fa0b5490f2a253a27
+  normalized_sha256: sha256:47823337651367bf6ca558cdba9d39a6d08c09b9b991c47fa0b5490f2a253a27
+cas_ref: sha256:47823337651367bf6ca558cdba9d39a6d08c09b9b991c47fa0b5490f2a253a27
+coverage_gids:
+  - D5/S3/Observer/BlockStructure/ProjectionCommutatorCrossBlockCriterion.projection_commutator_cross_blocks
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/BlockStructure/ProjectionCommutatorCrossBlockCriterion.projection_commutator_cross_blocks
+      source_sha256: sha256:47823337651367bf6ca558cdba9d39a6d08c09b9b991c47fa0b5490f2a253a27
+      target_statement_id: sha256:e14417d0252846920966337a7c870b8c623ab4162a09c0f20c111314290c8461
+  scribe:
+    - gid: D5/S3/Observer/BlockStructure/ProjectionCommutatorCrossBlockCriterion.projection_commutator_cross_blocks
+      definition_sha256: sha256:5acc4905d4faef3ca056da3e003d875c692b4224fc1045ca1d3222762eeb438b
+      emission_sha256: sha256:aa1da66d4f455d6c9fb92b4dea324fa0b32e5677a4fecee1780c775061036995
+  unresolved_subitems: []
