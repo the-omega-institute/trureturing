@@ -3,8 +3,7 @@
    mirror-B: D5/B/S1/Words/AdmissibleWords/AdmissibleRelationSpaceGrowth
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: The endomorphism space of complex-valued admissible words has
-   squared Fibonacci dimension and golden-ratio-squared consecutive growth. -/
+   digest: The endomorphism space of complex-valued admissible words has squared Fibonacci dimension and golden-ratio-squared consecutive growth. -/
 
 import D5.S1.Words.AdmissibleWords.AdmissibleCount
 import Mathlib.Analysis.SpecificLimits.Fibonacci
