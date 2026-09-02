@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:1a1ee231038c635da891a69f1eb20fd924c5305e80750303b1d4098c4d490d81
+  normalized_sha256: sha256:1a1ee231038c635da891a69f1eb20fd924c5305e80750303b1d4098c4d490d81
+cas_ref: sha256:1a1ee231038c635da891a69f1eb20fd924c5305e80750303b1d4098c4d490d81
+coverage_gids:
+  - D5/S3/Weil/ZetaGamma/PoleContinuumCompletion.pole_continuum_completion
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/ZetaGamma/PoleContinuumCompletion.pole_continuum_completion
+      source_sha256: sha256:1a1ee231038c635da891a69f1eb20fd924c5305e80750303b1d4098c4d490d81
+      target_statement_id: sha256:599a2bb0ee8a44109539a63f3244304b6fe025acb6479e8a4cfa429c954a73e1
+  scribe:
+    - gid: D5/S3/Weil/ZetaGamma/PoleContinuumCompletion.pole_continuum_completion
+      definition_sha256: sha256:5fc57e43fe192548d7bccef466a8e8154af7db23e11435707c0feae5be92365e
+      emission_sha256: sha256:bade462e0a417181850785d7443c67f00fd4006631cf00aca25383f499162737
+  unresolved_subitems: []
