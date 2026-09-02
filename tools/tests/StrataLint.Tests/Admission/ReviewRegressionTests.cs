@@ -584,26 +584,28 @@ public sealed partial class ReviewRegressionTests
     }
 
     [Fact]
-    public void FormalizationReceiptResidenceIsClosedWorldCanonical()
+    public void FormalizationReceiptResidenceRejectsNonContentAddressedName()
     {
         Assert.True(RuleId.TryCreate("SL-000", out var sl000));
         var canonical =
+            "Meta/Digestion/formalizations/" + new string('a', 64) + ".v1.json";
+        var nonContentAddressed =
             "Meta/Digestion/formalizations/sample-residual-"
             + new string('a', 64) + ".v1.json";
         var fixture = new RuleFixture();
         fixture.Files[canonical] = "{}\n";
-        fixture.Files["Meta/Digestion/formalizations/BAD.v1.json"] = "{}\n";
+        fixture.Files[nonContentAddressed] = "{}\n";
 
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
             RuleCatalog.Default.Execute(
-                fixture.Build(RawChangeSet.Create(["Meta/Digestion/formalizations/BAD.v1.json"]))));
+                fixture.Build(RawChangeSet.Create([nonContentAddressed]))));
 
         Assert.DoesNotContain(
             completed.Capability.Diagnostics,
             item => item.Path == canonical && item.RuleId == sl000);
         var rejected = Assert.Single(
             completed.Capability.Diagnostics,
-            item => item.Path == "Meta/Digestion/formalizations/BAD.v1.json"
+            item => item.Path == nonContentAddressed
                 && item.RuleId == sl000);
         Assert.Equal(sl000, rejected.RuleId);
         Assert.Equal("unknown Meta artifact", rejected.Message);

@@ -25,7 +25,7 @@ internal static partial class CoverWorld
                 spec.ReportType),
             atom.Fingerprints.RawSha256,
             atom.Fingerprints.RawSha256);
-        files[DigestionFormalizationReceipt.PathForAtom(CoverWorld.OtherAtomId)] =
+        files[DigestionFormalizationReceipt.PathForRawSha256(atom.Fingerprints.RawSha256)] =
             System.Text.Encoding.UTF8.GetString(
                 DigestionFormalizationReceipt.Write(receipt).AsSpan());
     }

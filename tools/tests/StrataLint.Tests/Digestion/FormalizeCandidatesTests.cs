@@ -377,7 +377,7 @@ public sealed partial class FormalizeCandidatesTests
     }
 
     [Fact]
-    public void FormalizeCandidatesKeepsAtomWhenMatchingReceiptPathIsNoncanonical()
+    public void FormalizeCandidatesDoesNotRecognizeReceiptAtNoncanonicalPath()
     {
         var entry = Entry("source", "Uppercase-atom", "定理", "5.5");
         var receipt = DigestionFormalizationReceipt.Write(new DigestionFormalizationReceipt(
@@ -387,7 +387,12 @@ public sealed partial class FormalizeCandidatesTests
             entry.Atom.Fingerprints.RawSha256,
             entry.Atom.Fingerprints.RawSha256)).ToArray();
 
-        var result = Run([entry], formalizationReceipt: receipt);
+        var result = Run(
+            [entry],
+            formalizationReceipt: receipt,
+            formalizationReceiptPath: DigestionFormalizationReceipt.RootPath
+                + entry.AtomId
+                + DigestionFormalizationReceipt.PathSuffix);
 
         Assert.True(result.Success, result.Error);
         using var json = JsonDocument.Parse(result.Output);
@@ -550,7 +555,8 @@ public sealed partial class FormalizeCandidatesTests
         VerifiedScribeEmissions? scribeEmissions = null,
         string atomizer = AtomizerRegistry.PzgId,
         IReadOnlyList<string>? arguments = null,
-        byte[]? rulesBytes = null)
+        byte[]? rulesBytes = null,
+        string? formalizationReceiptPath = null)
     {
         var sources = entries
             .GroupBy(static entry => entry.SourceId, StringComparer.Ordinal)
@@ -602,9 +608,9 @@ public sealed partial class FormalizeCandidatesTests
         {
             Assert.Single(entries);
             files.Add(new RawRepositoryEntry(
-                DigestionFormalizationReceipt.RootPath
-                    + entries[0].AtomId
-                    + DigestionFormalizationReceipt.PathSuffix,
+                formalizationReceiptPath
+                    ?? DigestionFormalizationReceipt.PathForRawSha256(
+                        entries[0].Atom.Fingerprints.RawSha256),
                 ImmutableArray.CreateRange(formalizationReceipt)));
         }
 

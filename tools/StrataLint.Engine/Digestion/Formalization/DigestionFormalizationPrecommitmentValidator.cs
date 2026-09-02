@@ -47,7 +47,8 @@ internal static class DigestionFormalizationPrecommitmentValidator
                 {
                     RequireBaseOwnedEdges(
                         baselineSnapshot,
-                        DigestionFormalizationReceipt.PathForAtom(entry.AtomId),
+                        DigestionFormalizationReceipt.PathForRawSha256(
+                            entry.Fingerprints.RawSha256),
                         entry,
                         [gid],
                         candidateReport);
@@ -119,7 +120,7 @@ internal static class DigestionFormalizationPrecommitmentValidator
         {
             return LoadBaseOwnedReceipt(
                     baselineSnapshot,
-                    DigestionFormalizationReceipt.PathForAtom(atomId),
+                    DigestionFormalizationReceipt.PathForRawSha256(rawSha256),
                     atomId,
                     rawSha256)
                 .RegisteredGids

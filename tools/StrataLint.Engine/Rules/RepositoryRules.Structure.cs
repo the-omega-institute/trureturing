@@ -314,28 +314,71 @@ internal static partial class RepositoryRules
         RuleEvaluationContext context)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
+        var pathsByRawSha256 = new Dictionary<string, List<string>>(StringComparer.Ordinal);
         foreach (var (path, file) in context.Current.Files
                      .Where(static item => item.Key.Value.StartsWith(
                          DigestionFormalizationReceipt.RootPath,
                          StringComparison.Ordinal))
-                     .Where(item => context.IsBaseFactAffected(item.Key.Value))
                      .OrderBy(static item => item.Key.Value, StringComparer.Ordinal))
         {
-            if (!TryGetFormalizationReceiptFileAtomId(path.Value, out var fileAtomId))
+            var hasFileAtomId = TryGetFormalizationReceiptFileAtomId(
+                path.Value,
+                out var fileAtomId);
+            if (!TryGetFormalizationReceiptAtomId(file, out var receiptAtomId))
             {
-                findings.Add(new RuleFinding(
-                    path.Value,
-                    "formalization receipt filename must be <64 lowercase hex>.v1.json"));
-                continue;
+                if (hasFileAtomId)
+                {
+                    findings.Add(new RuleFinding(
+                        path.Value,
+                        $"formalization receipt atom_id must match filename atom id {fileAtomId}"));
+                }
             }
-
-            if (!TryGetFormalizationReceiptAtomId(file, out var receiptAtomId)
-                || !string.Equals(receiptAtomId, fileAtomId, StringComparison.Ordinal))
+            else if (hasFileAtomId
+                && !string.Equals(receiptAtomId, fileAtomId, StringComparison.Ordinal))
             {
                 findings.Add(new RuleFinding(
                     path.Value,
                     $"formalization receipt atom_id must match filename atom id {fileAtomId}"));
             }
+
+            if (!TryGetFormalizationReceiptRawSha256(file, out var rawSha256)
+                || !DigestionFingerprint.IsCanonicalSha256(rawSha256))
+            {
+                findings.Add(new RuleFinding(
+                    path.Value,
+                    hasFileAtomId
+                        ? "formalization receipt raw_sha256 must be canonical sha256:<64 lowercase hex>"
+                        : "formalization receipt filename must be <64 lowercase hex>.v1.json"));
+                continue;
+            }
+
+            var canonicalPath = DigestionFormalizationReceipt.PathForRawSha256(rawSha256);
+            if (!string.Equals(path.Value, canonicalPath, StringComparison.Ordinal))
+            {
+                findings.Add(new RuleFinding(
+                    path.Value,
+                    $"formalization receipt path for raw_sha256 {rawSha256} "
+                    + $"must be {canonicalPath}, not {path.Value}"));
+            }
+
+            if (!pathsByRawSha256.TryGetValue(rawSha256, out var paths))
+            {
+                paths = [];
+                pathsByRawSha256.Add(rawSha256, paths);
+            }
+
+            paths.Add(path.Value);
+        }
+
+        foreach (var (rawSha256, paths) in pathsByRawSha256
+                     .Where(static pair => pair.Value.Count > 1)
+                     .OrderBy(static pair => pair.Key, StringComparer.Ordinal))
+        {
+            var orderedPaths = paths.Order(StringComparer.Ordinal).ToArray();
+            findings.Add(new RuleFinding(
+                orderedPaths[0],
+                $"formalization receipt raw_sha256 {rawSha256} must be unique; found at "
+                + string.Join(", ", orderedPaths)));
         }
 
         return findings.ToImmutable();
@@ -378,6 +421,30 @@ internal static partial class RepositoryRules
             }
 
             atomId = atomIdElement.GetString() ?? string.Empty;
+            return true;
+        }
+        catch (JsonException)
+        {
+            return false;
+        }
+    }
+
+    private static bool TryGetFormalizationReceiptRawSha256(
+        RepositoryFile file,
+        out string rawSha256)
+    {
+        rawSha256 = string.Empty;
+        try
+        {
+            using var document = JsonDocument.Parse(file.Text);
+            if (document.RootElement.ValueKind != JsonValueKind.Object
+                || !document.RootElement.TryGetProperty("raw_sha256", out var rawSha256Element)
+                || rawSha256Element.ValueKind != JsonValueKind.String)
+            {
+                return false;
+            }
+
+            rawSha256 = rawSha256Element.GetString() ?? string.Empty;
             return true;
         }
         catch (JsonException)

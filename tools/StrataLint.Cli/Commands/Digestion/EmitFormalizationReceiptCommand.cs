@@ -36,8 +36,6 @@ internal static class EmitFormalizationReceiptCommand
         try
         {
             var options = ParseArguments(arguments);
-            var relativeOut = options.OutPath ?? DigestionFormalizationReceipt.PathForAtom(options.AtomId);
-            var outputPath = ResolveOutputPath(repositoryRoot, options.AtomId, relativeOut);
 
             // Gate: the primary and every hosted-extension GID must select a Lean
             // declaration, not a module.
@@ -59,13 +57,19 @@ internal static class EmitFormalizationReceiptCommand
             // fingerprint (cas_ref / raw_sha256) is read here so the receipt binds
             // to the atom's actual content (fail-closed if absent/ambiguous).
             var entry = LocateAtom(document, options.AtomId);
+            var canonicalReceiptPath = DigestionFormalizationReceipt.PathForRawSha256(
+                entry.Fingerprints.RawSha256);
+            var relativeOut = options.OutPath ?? canonicalReceiptPath;
+            var outputPath = ResolveOutputPath(
+                repositoryRoot,
+                entry.Fingerprints.RawSha256,
+                relativeOut);
 
             // Resolve signatures from the current report. If an atom receipt already
             // exists, every old pin is immutable: hosted deposit may append a new
             // secondary pin but may not rewrite the primary or an earlier extension.
             var report = leanReportSource.Load(current);
             var extensions = new Dictionary<string, DigestionFormalizationExtension>(StringComparer.Ordinal);
-            var canonicalReceiptPath = DigestionFormalizationReceipt.PathForAtom(options.AtomId);
             Gid primaryGid;
             DigestionFormalizationSignature signature;
             if (current.TryGetFile(canonicalReceiptPath, out _))
@@ -191,7 +195,7 @@ internal static class EmitFormalizationReceiptCommand
 
     private static string ResolveOutputPath(
         string repositoryRoot,
-        string atomId,
+        string rawSha256,
         string relativeOut)
     {
         if (Path.IsPathRooted(relativeOut))
@@ -214,7 +218,7 @@ internal static class EmitFormalizationReceiptCommand
         }
 
         var canonicalFileName = Path.GetFileName(
-            DigestionFormalizationReceipt.PathForAtom(atomId));
+            DigestionFormalizationReceipt.PathForRawSha256(rawSha256));
         var outputFileName = Path.GetFileName(outputPath);
         var temporaryPrefix = canonicalFileName + ".tmp.";
         if (!string.Equals(outputFileName, canonicalFileName, StringComparison.Ordinal)

@@ -51,18 +51,25 @@ internal sealed record DigestionFormalizationReceipt(
     internal ImmutableArray<string> RegisteredGids =>
         [PrimaryGid, .. Extensions(this).Select(static extension => extension.Gid)];
 
-    internal static string PathForAtom(string atomId) =>
-        RootPath + atomId + PathSuffix;
+    internal static string PathForRawSha256(string rawSha256)
+    {
+        if (!DigestionFingerprint.IsCanonicalSha256(rawSha256))
+        {
+            throw new FormatException(
+                "formalization receipt raw_sha256 must be canonical sha256:<64 lowercase hex>");
+        }
 
-    // Shape-only residence check for the closed-world path policy (SL-000): one
-    // lowercase atom-id segment between the canonical root and the versioned
-    // suffix. Content validity stays with Load; residence classification stays
-    // with FILEMAP.
+        return RootPath + rawSha256["sha256:".Length..] + PathSuffix;
+    }
+
+    // Shape-only residence check for the closed-world path policy (SL-000): the
+    // bare lowercase raw SHA-256 between the canonical root and versioned suffix.
+    // Content binding stays with Load; residence classification stays with FILEMAP.
     internal static bool IsCanonicalPath(string path)
     {
-        if (!path.StartsWith(RootPath, StringComparison.Ordinal)
-            || !path.EndsWith(PathSuffix, StringComparison.Ordinal)
-            || path.Length <= RootPath.Length + PathSuffix.Length)
+        if (path.Length != RootPath.Length + 64 + PathSuffix.Length
+            || !path.StartsWith(RootPath, StringComparison.Ordinal)
+            || !path.EndsWith(PathSuffix, StringComparison.Ordinal))
         {
             return false;
         }
@@ -71,7 +78,7 @@ internal sealed record DigestionFormalizationReceipt(
             RootPath.Length,
             path.Length - RootPath.Length - PathSuffix.Length))
         {
-            if (value is not ((>= 'a' and <= 'z') or (>= '0' and <= '9') or '-'))
+            if (value is not ((>= 'a' and <= 'f') or (>= '0' and <= '9')))
             {
                 return false;
             }
@@ -144,17 +151,26 @@ internal sealed record DigestionFormalizationReceipt(
     // that does not select a declaration, or a non-canonical fingerprint all throw
     // FormatException. Modeled on ScribeEmissionAttestation.Load.
     internal static DigestionFormalizationReceipt Load(RepositorySnapshot snapshot, string relativePath)
-        => Load(snapshot, relativePath, validateCanonicalBytes: true);
+        => Load(
+            snapshot,
+            relativePath,
+            validateCanonicalBytes: true,
+            validatePathBinding: true);
 
     internal static DigestionFormalizationReceipt LoadTrusted(
         RepositorySnapshot snapshot,
         string relativePath) =>
-        Load(snapshot, relativePath, validateCanonicalBytes: false);
+        Load(
+            snapshot,
+            relativePath,
+            validateCanonicalBytes: false,
+            validatePathBinding: false);
 
     private static DigestionFormalizationReceipt Load(
         RepositorySnapshot snapshot,
         string relativePath,
-        bool validateCanonicalBytes)
+        bool validateCanonicalBytes,
+        bool validatePathBinding)
     {
         ArgumentNullException.ThrowIfNull(snapshot);
         ArgumentException.ThrowIfNullOrWhiteSpace(relativePath);
@@ -214,6 +230,17 @@ internal sealed record DigestionFormalizationReceipt(
             RequireString(document.RootElement, "raw_sha256"),
             hostedExtensions.ToImmutable());
         Validate(receipt);
+        if (validatePathBinding)
+        {
+            var canonicalPath = PathForRawSha256(receipt.RawSha256);
+            if (!string.Equals(relativePath, canonicalPath, StringComparison.Ordinal))
+            {
+                throw new FormatException(
+                    $"formalization receipt path for raw_sha256 {receipt.RawSha256} "
+                    + $"must be {canonicalPath}, not {relativePath}");
+            }
+        }
+
         return receipt;
     }
 

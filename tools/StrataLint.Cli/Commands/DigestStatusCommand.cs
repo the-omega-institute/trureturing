@@ -142,7 +142,8 @@ internal static class DigestStatusCommand
                     .ToArray();
                 var presentReceiptAtomIds = readinessEntries
                     .Where(item => snapshot.TryGetFile(
-                        DigestionFormalizationReceipt.PathForAtom(item.Entry.AtomId),
+                        DigestionFormalizationReceipt.PathForRawSha256(
+                            item.Entry.Fingerprints.RawSha256),
                         out _))
                     .Select(static item => item.Entry.AtomId)
                     .ToImmutableHashSet(StringComparer.Ordinal);
@@ -554,7 +555,8 @@ internal static class DigestStatusCommand
                 "current-formalization-receipt",
                 receipt.PrimaryGid,
                 receipt.RegisteredGids,
-                DigestionFormalizationReceipt.PathForAtom(entry.AtomId));
+                DigestionFormalizationReceipt.PathForRawSha256(
+                    entry.Fingerprints.RawSha256));
     }
 
     private static DigestionFormalizationReceipt? CurrentFormalizationReceiptModel(
@@ -562,7 +564,8 @@ internal static class DigestStatusCommand
         RepositorySnapshot snapshot,
         LeanAxiomReport leanReport)
     {
-        var path = DigestionFormalizationReceipt.PathForAtom(entry.AtomId);
+        var path = DigestionFormalizationReceipt.PathForRawSha256(
+            entry.Fingerprints.RawSha256);
         if (!DigestionFormalizationReceipt.IsCanonicalPath(path))
         {
             return null;
