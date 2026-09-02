@@ -205,7 +205,8 @@ public sealed class EmitFormalizationReceiptTests
         Assert.True(File.Exists(Path.Combine(temporary.Path, relativeOut)));
         Assert.False(File.Exists(Path.Combine(
             temporary.Path,
-            DigestionFormalizationReceipt.PathForAtom(CoverWorld.DefaultAtomId))));
+            DigestionFormalizationReceipt.PathForRawSha256(
+                "sha256:" + CoverWorld.DefaultAtomId))));
     }
 
     [Fact]
@@ -216,7 +217,8 @@ public sealed class EmitFormalizationReceiptTests
         var environment = BuildEmitEnvironment(temporary.Path, inputs);
         var absoluteOut = Path.Combine(
             temporary.Path,
-            DigestionFormalizationReceipt.PathForAtom(CoverWorld.DefaultAtomId)
+            DigestionFormalizationReceipt.PathForRawSha256(
+                "sha256:" + CoverWorld.DefaultAtomId)
                 + ".tmp.absolute");
 
         var result = environment.EmitFormalizationReceipt(
@@ -290,7 +292,8 @@ public sealed class EmitFormalizationReceiptTests
         Assert.Contains("--out must not be empty", result.Error, StringComparison.Ordinal);
         Assert.False(File.Exists(Path.Combine(
             temporary.Path,
-            DigestionFormalizationReceipt.PathForAtom(CoverWorld.DefaultAtomId))));
+            DigestionFormalizationReceipt.PathForRawSha256(
+                "sha256:" + CoverWorld.DefaultAtomId))));
     }
 
     [Fact]

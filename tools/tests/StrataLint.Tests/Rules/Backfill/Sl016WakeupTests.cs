@@ -349,7 +349,10 @@ public sealed class Sl016WakeupTests
 
         Assert.Contains(findings, finding =>
             finding.Contains(gid, StringComparison.Ordinal)
-            && finding.Contains("formalization receipt fingerprint does not match atom", StringComparison.Ordinal));
+            && finding.Contains(
+                "digestion formalization receipt is missing: "
+                    + DigestionFormalizationReceipt.PathForRawSha256(reboundFingerprint),
+                StringComparison.Ordinal));
     }
 
     [Fact]
@@ -679,7 +682,8 @@ public sealed class Sl016WakeupTests
             RuleFixture.FixtureCasReference);
         var receiptText = Encoding.UTF8.GetString(
             DigestionFormalizationReceipt.Write(receipt).AsSpan());
-        var receiptPath = DigestionFormalizationReceipt.PathForAtom(atomId);
+        var receiptPath = DigestionFormalizationReceipt.PathForRawSha256(
+            RuleFixture.FixtureCasReference);
         foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
         {
             files[receiptPath] = receiptText;

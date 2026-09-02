@@ -157,9 +157,8 @@ public sealed partial class FormalizeCandidatesTests
             [primaryGid, firstHostedGid, secondHostedGid],
             recorded.GetProperty("gids").EnumerateArray().Select(static gid => gid.GetString()));
         Assert.Equal(
-            DigestionFormalizationReceipt.RootPath
-                + entry.AtomId
-                + DigestionFormalizationReceipt.PathSuffix,
+            DigestionFormalizationReceipt.PathForRawSha256(
+                entry.Atom.Fingerprints.RawSha256),
             recorded.GetProperty("receipt_path").GetString());
     }
 

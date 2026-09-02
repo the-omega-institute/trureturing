@@ -193,7 +193,8 @@ internal static class ShowAtomCommand
         DigestionLedgerEntry entry,
         RepositorySnapshot snapshot)
     {
-        var path = DigestionFormalizationReceipt.PathForAtom(entry.AtomId);
+        var path = DigestionFormalizationReceipt.PathForRawSha256(
+            entry.Fingerprints.RawSha256);
         if (!snapshot.TryGetFile(path, out _))
         {
             return new FormalizationReceiptPointer.Unavailable(

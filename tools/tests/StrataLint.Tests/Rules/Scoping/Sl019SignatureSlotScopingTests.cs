@@ -6,8 +6,10 @@ namespace StrataLint.Tests;
 
 public sealed class Sl019SignatureSlotScopingTests
 {
+    private const string ReceiptAtomId =
+        "0000000000000000000000000000000000000000000000000000000000000000";
     private const string ReceiptPath =
-        "Meta/Digestion/formalizations/fixture-signature-slot.v1.json";
+        "Meta/Digestion/formalizations/" + ReceiptAtomId + ".v1.json";
     private const string FailureNameKey =
         "ns(n0,35:InfiniteIdentificationFiniteFailure)";
     private const string FailureGid =
@@ -234,7 +236,7 @@ public sealed class Sl019SignatureSlotScopingTests
                 signature))
             : ImmutableArray<DigestionFormalizationExtension>.Empty;
         var receipt = new DigestionFormalizationReceipt(
-            "fixture-signature-slot",
+            ReceiptAtomId,
             primaryGid ?? "D5/S0/Carrier/SignatureSlot.primary_probe",
             hostedExtension
                 ? new DigestionFormalizationSignature(

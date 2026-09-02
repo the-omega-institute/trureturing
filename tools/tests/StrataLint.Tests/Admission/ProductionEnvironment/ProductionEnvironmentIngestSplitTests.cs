@@ -296,7 +296,8 @@ public sealed partial class ProductionEnvironmentTests
             new DigestionFormalizationSignature("goldenRing", "def", "Nat"),
             currentAtom.Fingerprints.RawSha256,
             currentAtom.Fingerprints.RawSha256);
-        var receiptPath = DigestionFormalizationReceipt.PathForAtom(currentAtomId);
+        var receiptPath = DigestionFormalizationReceipt.PathForRawSha256(
+            currentAtom.Fingerprints.RawSha256);
         var receiptText = Encoding.UTF8.GetString(DigestionFormalizationReceipt.Write(receipt).AsSpan());
         fixture.Files[receiptPath] = receiptText;
         fixture.Baseline[receiptPath] = receiptText;
