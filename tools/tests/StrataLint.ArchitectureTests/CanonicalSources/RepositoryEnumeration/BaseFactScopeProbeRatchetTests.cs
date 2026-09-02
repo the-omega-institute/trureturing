@@ -197,7 +197,12 @@ public sealed class BaseFactScopeProbeRatchetTests
     }
 
     private static IEnumerable<MethodInfo> ProbeMethods() =>
-        typeof(R15ScopeNarrowingTests).Assembly.GetTypes()
+        new[]
+        {
+            typeof(R15ScopeNarrowingTests).Assembly,
+            typeof(AdmissionTests).Assembly,
+        }
+            .SelectMany(static assembly => assembly.GetTypes())
             .OrderBy(static type => type.FullName, StringComparer.Ordinal)
             .SelectMany(static type => type.GetMethods(
                 BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
