@@ -72,10 +72,10 @@ internal sealed class JetPencilFiniteExpansionDocument
         Formula determinant = Call("det", pencil);
         Formula determinantClause = EqualTo(
             determinant,
-            Power(Grp(difference), length));
+            Power(Seq(Open, difference, Close), length));
         Formula summand = new Formula.Fraction(
-            Power(shift, index),
-            Power(Grp(difference), Seq(index, Sp, Plus, Sp, D(1))));
+            Power(Seq(shift), index),
+            Power(Seq(Open, difference, Close), Seq(index, Sp, Plus, Sp, D(1))));
         Formula finiteSeries = Seq(
             Sum, Underscore, Grp(Seq(index, Eq, D(0))), Caret,
             Grp(Seq(length, Sp, Minus, Sp, D(1))), Sp, summand);
@@ -87,7 +87,7 @@ internal sealed class JetPencilFiniteExpansionDocument
             [Bound("k", natural)],
             Implies(
                 LessThanOrEqual(D(1), index),
-                EqualTo(Call("trace", Power(shift, index)), D(0))));
+                EqualTo(Call("trace", Power(Seq(shift), index)), D(0))));
         Formula guardedInverseClause = Implies(
             NotEqualTo(point, rho),
             inverseClause);

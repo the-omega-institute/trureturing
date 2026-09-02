@@ -6,7 +6,7 @@ A finite nilpotent jet pencil has an explicit determinant and inverse series.
 
 **Theorem 1.1 (The nilpotent pencil terminates after its jet length).**
 
-$$\forall m \in \mathbb{N}, rho \in \mathbb{C}, s \in \mathbb{C},\; \operatorname{det}\left(\operatorname{jetPencil}\left(m, rho, s\right)\right) = {s - rho}^{m} \land \left(\left(\forall k \in \mathbb{N},\; 1 \le k \Rightarrow \operatorname{trace}\left(\operatorname{nilpotentJetShift}\left(m\right)^{k}\right) = 0\right) \land \left(s \ne rho \Rightarrow \operatorname{jetPencil}\left(m, rho, s\right)^{-1} = \sum_{k=0}^{m - 1} \frac{\operatorname{nilpotentJetShift}\left(m\right)^{k}}{{s - rho}^{k + 1}}\right)\right)$$
+$$\forall m \in \mathbb{N}, rho \in \mathbb{C}, s \in \mathbb{C},\; \operatorname{det}\left(\operatorname{jetPencil}\left(m, rho, s\right)\right) = (s - rho)^{m} \land \left(\left(\forall k \in \mathbb{N},\; 1 \le k \Rightarrow \operatorname{trace}\left(\operatorname{nilpotentJetShift}\left(m\right)^{k}\right) = 0\right) \land \left(s \ne rho \Rightarrow \operatorname{jetPencil}\left(m, rho, s\right)^{-1} = \sum_{k=0}^{m - 1} \frac{\operatorname{nilpotentJetShift}\left(m\right)^{k}}{(s - rho)^{k + 1}}\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/BlockStructure/JetPencilFiniteExpansion.jet_pencil_finite_expansion` (`✓ std3`). ∎
 
