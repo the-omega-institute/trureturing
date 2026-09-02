@@ -8,7 +8,7 @@ internal sealed class StateRecordReadoutDistinguishabilityDocument
     : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Append-generated records preserve endpoint collapse and conditional record separation.",
+        "Abstract histories preserve endpoint collapse and conditional record separation.",
         H("State and Record Readout Distinguishability"),
         Blocks(
             Describe.Lean(
@@ -27,12 +27,13 @@ internal sealed class StateRecordReadoutDistinguishabilityDocument
                             + "that relation. Let O be a RecordedObserver with q1 : X -> A, the "
                             + "controlled update T1 : X x Y2 -> X, and q2 : Lambda1 -> Y2.")),
                     Paragraph(Text(
-                        "ObserverHistory is generated from an initial augmented state by its next "
-                            + "constructor. The endpoint and recordImage are the two projections "
-                            + "obtained by folding the source one-step evolution, so recordImage is "
-                            + "not an arbitrary caller-supplied map.")),
+                        "Let H be an abstract history carrier. A HistoryEvolution E supplies an "
+                            + "advance operation and an observation H -> X x Lambda1, with a law "
+                            + "identifying the observation after advance with the source one-step "
+                            + "evolution. Endpoint and recordImage are the two projections of that "
+                            + "single certified observation.")),
                     Paragraph(Text(
-                        "Let two such generated histories have the same endpoint x and respective "
+                        "Let two histories in H have the same endpoint x and respective "
                             + "record images lambda and lambdaPrime, with the images distinct.")),
                     Paragraph(Text(
                         "The first public conjunct quantifies over every state-only readout s. "
@@ -62,16 +63,18 @@ internal sealed class StateRecordReadoutDistinguishabilityDocument
         Formula readingType = F.Id("A");
         Formula stateOutputType = F.Id("Y");
         Formula recordOutputType = new Formula.Subscript(F.Id("Y"), D(2));
+        Formula historyType = F.Id("H");
         Formula recordOpsType = Call("AppendOnlyOps", recordType, readingType);
         Formula recordOps = F.Id("R");
         Formula observerType =
             Call("RecordedObserver", stateType, recordType, readingType, recordOutputType, recordOps);
         Formula observer = F.Id("O");
-        Formula historyType =
-            Call("ObserverHistory", stateType, recordType, readingType, recordOutputType,
-                recordOps, observer);
-        Formula endpoint = Call("endpoint", recordOps, observer);
-        Formula recordImage = Call("recordImage", recordOps, observer);
+        Formula historyOpsType =
+            Call("HistoryEvolution", historyType, stateType, recordType, readingType,
+                recordOutputType, recordOps, observer);
+        Formula historyOps = F.Id("E");
+        Formula endpoint = Call("endpoint", historyOps);
+        Formula recordImage = Call("recordImage", historyOps);
         Formula recordReadout = Call("q2", observer);
         Formula first = F.Id("gamma");
         Formula second = F.Id("gammaPrime");
@@ -101,10 +104,11 @@ internal sealed class StateRecordReadoutDistinguishabilityDocument
         return Disp(Seq(
             Forall, Sp,
             stateType, Comma, Sp, recordType, Comma, Sp, readingType, Comma, Sp,
-            stateOutputType, Comma, Sp, recordOutputType,
+            stateOutputType, Comma, Sp, recordOutputType, Comma, Sp, historyType,
             Colon, Sp, type, Comma, Esc,
             recordOps, Colon, Sp, recordOpsType, Comma, Esc,
             observer, Colon, Sp, observerType, Comma, Esc,
+            historyOps, Colon, Sp, historyOpsType, Comma, Esc,
             first, Comma, Sp, second, Colon, Sp, historyType, Comma, Sp,
             state, Colon, Sp, stateType, Comma, Sp,
             firstRecord, Comma, Sp, secondRecord, Colon, Sp, recordType, Comma, Esc,
