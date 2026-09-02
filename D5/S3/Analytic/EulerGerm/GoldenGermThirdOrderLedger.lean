@@ -6,14 +6,17 @@
    digest: Explicit third-order golden Euler ledger and cancellation below phi^5. -/
 
 import D5.S3.Analytic.GoldenEulerBeta
-import D5.S3.Analytic.EulerGerm.GoldenGermSecondOrderFactorization
+import D5.S3.Analytic.EulerGerm.GoldenLocalFactor
 import Mathlib.Topology.Algebra.InfiniteSum.Group
 
 /- Library-search audit trail (2026-09-03):
-   * Repository searches found the frozen exponent ledger and second-order
-     normalization, but no third-order cancellation at the phi-fifth line.
-   * The required declarations were checked by fully qualified name through
-     `make lean`; both source modules have active schema-v5 Freeze events.
+   * The frozen `golden_germ_second_order_factorization` supplies the global
+     factorization and its unique continuation, but does not expose the local
+     normalized remainder needed by this ledger.
+   * This module therefore reuses the canonical definitions `germLocalFactor`
+     and `o5Beta`, together with `o5_beta_zero`, `o5_beta_power_law`,
+     `o5_beta_closed_form`, and `o5_beta_growth`, while proving the required
+     local identity independently from the six-mode expansion.
    * Pinned Mathlib supplies floor bounds, complex-power addition, prime rpow
      summability, product summability, and natural head-tail splitting. -/
 
@@ -24,19 +27,8 @@ set_option relaxedAutoImplicit false
 
 open D5.S3.Analytic.GoldenEulerBeta
 open D5.S3.Analytic.EulerGerm.GoldenLocalFactor
-open D5.S3.Analytic.EulerGerm.GoldenGermSecondOrderFactorization
 
 noncomputable section
-
-private theorem frozen_second_order_deviation (s : Complex)
-    (hs : 1 / Real.goldenRatio ^ 4 < s.re) :
-    Summable (fun p : Nat.Primes =>
-      ‖(1 - (p : Complex) ^
-          (-s * ((Real.goldenRatio ^ 3 : Real) : Complex))) *
-        (1 + (p : Complex) ^
-          (-s * ((Real.goldenRatio ^ 2 : Real) : Complex)))⁻¹ *
-        germLocalFactor s p - 1‖) :=
-  golden_germ_second_order_factorization.2 s hs
 
 private theorem prime_real_pos (p : Nat.Primes) : 0 < (p : Real) := by
   exact_mod_cast p.prop.pos

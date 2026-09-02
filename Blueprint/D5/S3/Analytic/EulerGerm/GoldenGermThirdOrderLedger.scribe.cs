@@ -28,11 +28,15 @@ internal sealed class GoldenGermThirdOrderLedgerDocument
                         + "phi to the fifth power. Splitting after six modes isolates the "
                         + "remaining tail.")),
                 Paragraph(Text(
-                    "After the frozen second-order normalization, the only monomials strictly "
-                        + "below the phi-fifth threshold are minus y-squared and plus "
-                        + "x-squared y. The displayed factors cancel both; the first retained "
-                        + "monomial x y-squared lies exactly on the threshold, and the tail "
-                        + "starts there and grows linearly.")),
+                    "The frozen golden_germ_second_order_factorization gives the global "
+                        + "factorization and its unique continuation, but does not expose the "
+                        + "local normalized remainder needed here. This ledger instead reuses "
+                        + "the canonical definitions germLocalFactor and o5Beta, together with "
+                        + "o5_beta_zero, o5_beta_power_law, o5_beta_closed_form, and "
+                        + "o5_beta_growth, and proves the local identity independently from the "
+                        + "six-mode expansion. Its displayed factors cancel minus y-squared and "
+                        + "plus x-squared y; the first retained monomial x y-squared lies exactly "
+                        + "on the threshold, and the tail starts there and grows linearly.")),
                 Paragraph(Text(
                     "This is the next local extraction step on the golden Euler germ staircase "
                         + "used in OACTC parts 580 and 581 and on the RH-route O-5 control line. "
@@ -44,8 +48,6 @@ internal sealed class GoldenGermThirdOrderLedgerDocument
         [
             DocumentEdge.Dependency.Create(GidRef.Create(
                 "D5/S3/Analytic/GoldenEulerBeta")),
-            DocumentEdge.Dependency.Create(GidRef.Create(
-                "D5/S3/Analytic/EulerGerm/GoldenGermSecondOrderFactorization")),
         ]));
 
     private static Formula TheoremFormula()
