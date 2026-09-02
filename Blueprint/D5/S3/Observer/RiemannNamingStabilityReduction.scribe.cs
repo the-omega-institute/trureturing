@@ -34,8 +34,8 @@ internal sealed class RiemannNamingStabilityReductionDocument : IScribeDocumentD
     private static Formula TheoremFormula()
     {
         Formula rh = F.Id("RH");
-        Formula update = F.Id("F_shift");
-        Formula relation = F.Id("R_J");
+        Formula update = new Formula.Subscript(F.Id("F"), F.Id("shift"));
+        Formula relation = new Formula.Subscript(F.Id("R"), F.Id("J"));
         Formula stable = Call("IsForwardCongruence", update, relation);
         Formula interiorFixed = Seq(Call("I", update, relation), Sp, Eq, Sp, relation);
         Formula closureFixed = Seq(Call("C", update, relation), Sp, Eq, Sp, relation);
