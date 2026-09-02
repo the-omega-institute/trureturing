@@ -157,11 +157,6 @@ theorem golden_germ_first_pole_asymptotic :
     zero_mul, sub_zero]
   field_simp [hne]
 
-private theorem one_is_right_of_golden_boundary :
-    1 / Real.goldenRatio ^ 2 < (1 : ℝ) := by
-  rw [div_lt_one (sq_pos_of_pos Real.goldenRatio_pos)]
-  nlinarith [Real.one_lt_goldenRatio]
-
 #print axioms golden_germ_first_pole_asymptotic
 
 end

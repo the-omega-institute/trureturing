@@ -23,8 +23,8 @@ internal sealed class GoldenGermFirstPoleAsymptoticDocument
             Blocks(
                 Paragraph(Text(
                     "This theorem is the next real-boundary node in the golden "
-                        + "Euler germ extraction ladder of OACTC parts 580 and 581, "
-                        + "on the RH-route O-5 control line. It advances the remaining "
+                        + "Euler germ extraction ladder of OACTC parts 580 and 581. "
+                        + "It advances the remaining "
                         + "boundary from an explicit complex residue and real-axis "
                         + "positivity to a directional quantitative asymptotic.")),
                 Paragraph(Text(
