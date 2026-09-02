@@ -87,8 +87,8 @@ internal sealed class GettierWitnessDocument : IScribeDocumentDefinition
     {
         Formula predicate = F.Id("P");
         Formula evidence = F.Id("E");
-        Formula beliefAtZero = F.Id("Bel_0");
-        Formula beliefAtOne = F.Id("Bel_1");
+        Formula beliefAtZero = new Formula.Subscript(F.Id("Bel"), D(0));
+        Formula beliefAtOne = new Formula.Subscript(F.Id("Bel"), D(1));
         Formula justified = F.Id("Just");
         Formula admissible = F.Id("Adm");
         Formula state = F.Id("n");
@@ -105,9 +105,9 @@ internal sealed class GettierWitnessDocument : IScribeDocumentDefinition
             Begin, Grp(F.Id("gathered")),
             Apply("P", state), Sp, Iff, Sp, state, Sp, Eq, Sp, zero, Comma, Sp,
             Apply("E", state), Sp, Eq, Sp, seven, Comma, RowBreak, Grp(),
-            Apply("Bel_0", evidence, predicate, state), Sp, Iff, Sp,
+            new Formula.Apply(beliefAtZero, [evidence, predicate, state]), Sp, Iff, Sp,
             state, Sp, Eq, Sp, zero, Comma, Sp,
-            Apply("Bel_1", evidence, predicate, state), Sp, Iff, Sp,
+            new Formula.Apply(beliefAtOne, [evidence, predicate, state]), Sp, Iff, Sp,
             state, Sp, Eq, Sp, one, Comma, RowBreak, Grp(),
             Apply("Just", value, predicate), Sp, Iff, Sp,
             value, Sp, Eq, Sp, seven, Comma, Sp,
