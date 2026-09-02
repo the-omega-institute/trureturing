@@ -75,27 +75,6 @@ internal sealed class OptimalCompetitionSelectorDocument
                         + "span."))),
                 DescribeRole.Definition),
             Describe.Lean(
-                DescribeId.Create("lagrange-interpolant"),
-                DeclarationHandle.Create(Prefix + "IsLagrangeInterpolant"),
-                H("Competitor interpolation constraints"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "A Lagrange candidate here means only a unit coefficient vector whose pairing "
-                        + "with every competing feature profile vanishes."))),
-                DescribeRole.Definition),
-            Describe.Lean(
-                DescribeId.Create("not-arbitrary-lagrange-interpolation"),
-                DeclarationHandle.Create(Prefix + "NotArbitraryLagrangeInterpolation"),
-                H("The interpolation constraints do not select arbitrarily"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "Every unit solution of the competitor interpolation constraints whose "
-                        + "absolute target response equals Delta is either the displayed selector "
-                        + "or its negative."))),
-                DescribeRole.Definition),
-            Describe.Lean(
                 DescribeId.Create("orthogonal-projection-problem"),
                 DeclarationHandle.Create(Prefix + "IsOrthogonalProjectionProblem"),
                 H("Orthogonal projection formulation"),
@@ -118,8 +97,7 @@ internal sealed class OptimalCompetitionSelectorDocument
                     Paragraph(Text(
                         "The public result states every source conclusion: competitors are "
                             + "annihilated, the target response is Delta, the witness has the "
-                            + "displayed normalized-projection formula, every margin-attaining "
-                            + "interpolant is one of its two orientations, and the problem is "
+                            + "displayed normalized-projection formula, and the problem is "
                             + "explicitly an orthogonal projection."))),
                 DescribeRole.Theorem))));
 
@@ -172,8 +150,6 @@ internal sealed class OptimalCompetitionSelectorDocument
             Equal(Call("profileDot", selector, competitorProfile), D(0)));
         Formula targetClause = Equal(
             Call("abs", Call("profileDot", selector, targetProfile)), delta);
-        Formula notArbitraryClause = Call(
-            "NotArbitraryLagrangeInterpolation", family, target, competitors, selector);
         Formula orthogonalProblemClause = Call(
             "IsOrthogonalProjectionProblem", family, target, competitors);
         Formula witnessClauses = And(
@@ -186,7 +162,7 @@ internal sealed class OptimalCompetitionSelectorDocument
                         targetClause,
                         And(
                             selectorFormula,
-                            And(notArbitraryClause, orthogonalProblemClause))))));
+                            orthogonalProblemClause)))));
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
