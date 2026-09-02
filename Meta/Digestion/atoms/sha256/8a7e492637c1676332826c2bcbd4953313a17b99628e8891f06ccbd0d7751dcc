@@ -1,0 +1,16 @@
+\[
+\mathbb P\left(
+X_{p,h}=1\ \forall h\in H
+\right)
+=
+1-\frac{\nu_p(H)}p.
+\]
+
+每个单点边缘为：
+
+\[
+\mathbb P(X_{p,h}=1)=1-\frac1p.
+\]
+
+定义归一化 all-one correlation ratio：
+

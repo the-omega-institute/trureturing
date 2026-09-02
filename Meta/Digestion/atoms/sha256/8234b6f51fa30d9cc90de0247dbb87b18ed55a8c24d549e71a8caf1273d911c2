@@ -1,0 +1,25 @@
+核心对象是一个右半平面上无条件定义的**相关完备化 ζ 生成元**。对有限构型
+\[
+H=\{h_1,\ldots,h_k\},
+\]
+在平方零源变量代数中定义
+\[
+\mathcal M_H(\sigma)
+=
+\mathbb E_{\sigma}
+\prod_{h\in H}
+\bigl(1+\varepsilon_h\Lambda(N+h)\bigr),
+\qquad
+\mathbb P_\sigma(N=n)=\frac{n^{-\sigma}}{\zeta(\sigma)}.
+\]
+其对数
+\[
+\mathcal K_H(\sigma)=\log\mathcal M_H(\sigma)
+\]
+的 \(\varepsilon_A\) 系数，恰为平移族
+\[
+\{\Lambda(N+h):h\in A\}
+\]
+的联合累积量。因此：
+
+- 孪生素数构型是二阶 connected jet；

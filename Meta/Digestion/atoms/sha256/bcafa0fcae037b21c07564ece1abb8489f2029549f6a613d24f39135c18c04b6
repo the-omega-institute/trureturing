@@ -1,0 +1,11 @@
+### C3 右半平面 prime-side jet
+
+对每个 \(A\subseteq H\)：
+
+\[
+[\varepsilon_A]\,
+\partial_s\log\Xi_H
+\]
+
+等于 \(\kappa_A\) 的某个明确 completed Mellin transform，加上显式 archimedean 项。
+

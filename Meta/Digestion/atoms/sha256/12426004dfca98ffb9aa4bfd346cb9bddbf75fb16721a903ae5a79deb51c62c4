@@ -1,0 +1,51 @@
+核心对象是一个右半平面上无条件定义的**相关完备化 ζ 生成元**。对有限构型
+\[
+H=\{h_1,\ldots,h_k\},
+\]
+在平方零源变量代数中定义
+\[
+\mathcal M_H(\sigma)
+=
+\mathbb E_{\sigma}
+\prod_{h\in H}
+\bigl(1+\varepsilon_h\Lambda(N+h)\bigr),
+\qquad
+\mathbb P_\sigma(N=n)=\frac{n^{-\sigma}}{\zeta(\sigma)}.
+\]
+其对数
+\[
+\mathcal K_H(\sigma)=\log\mathcal M_H(\sigma)
+\]
+的 \(\varepsilon_A\) 系数，恰为平移族
+\[
+\{\Lambda(N+h):h\in A\}
+\]
+的联合累积量。因此：
+
+- 孪生素数构型是二阶 connected jet；
+- 素数三元组是三阶 connected jet；
+- 素数四元组是四阶 connected jet；
+- 所有有限构型构成一个相关完备化塔。
+
+零点侧则以
+\[
+J(s)=1-\overline s
+\]
+为同高度镜像。若
+\[
+\rho=\frac12+\delta+i\gamma,
+\]
+则
+\[
+J\rho=\frac12-\delta+i\gamma.
+\]
+镜像对自动消去所有横向奇阶 jet，却保留
+\[
+\delta^2,\delta^4,\ldots.
+\]
+故完整对称并不使 RH 不可观察；它只使**一阶符号不可观察**，二阶正缺陷仍能严格检测离线深度。
+
+本理论最终提出一个开放的 **Trace–Jet Bridge**：存在一个带构型源变量的 completed determinant，其第 \(k\) 个源混合 jet 在素数侧给出 \(k\)-点加法累积量，在零点侧给出 \(k\)-级谱相关电荷。Montgomery 型二点关系是这一桥的已知影子，而不是整座桥本身。
+
+---
+

@@ -1,0 +1,20 @@
+\[
+R_p(H)
+=
+\{-h\bmod p:h\in H\},
+\]
+
+以及：
+
+\[
+\nu_p(H)=|R_p(H)|.
+\]
+
+构型称为 **admissible**，若：
+
+\[
+\nu_p(H)<p
+\qquad
+\forall p.
+\]
+

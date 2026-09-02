@@ -1,0 +1,18 @@
+## 53. QuantumOrbitLift
+
+保持完全可选：
+
+```lean
+structure QuantumOrbitLift where
+  left right : Type
+  hLeft hRight : InnerProductSpace ℂ ...
+  state : ...
+  mirror : ...
+  density : ...
+  entangled : ¬ Separable density
+```
+
+若无法给出自然 inhabitant，则“量子纠缠”停留在 model 标签。
+
+---
+

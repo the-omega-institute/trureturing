@@ -1,0 +1,14 @@
+### ZC-A　对称不定位反例
+
+```lean
+theorem quartetPolynomial_full_symmetry_and_offline
+    (delta gamma : ℝ) (hdelta : delta ≠ 0) (hgamma : gamma ≠ 0) :
+    reflectionInvariant (quartetPolynomial delta gamma) ∧
+    conjugationCovariant (quartetPolynomial delta gamma) ∧
+    allFourRootsOffCritical delta gamma
+```
+
+**目的：** 永久排除“完整对称自动推出 RH”。
+
+---
+

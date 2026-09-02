@@ -1,0 +1,4 @@
+### N2　`ZeckendorfOrbitCode`
+
+把零点 centered coordinates 的两个 sign bits、两个 Zeckendorf magnitude threads 与 multiplicity code 合并，并使 \(C,R,J\) 作用成为显式 sign flips。
+

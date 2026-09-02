@@ -1,0 +1,18 @@
+\[
+\operatorname{tsign}(x)
+=
+\begin{cases}
+-1,&x<0,\\
+0,&x=0,\\
++1,&x>0.
+\end{cases}
+\]
+
+对零点
+
+\[
+\rho=\frac12+\delta+i\gamma
+\]
+
+定义第 \(N\) 层轨道码：
+

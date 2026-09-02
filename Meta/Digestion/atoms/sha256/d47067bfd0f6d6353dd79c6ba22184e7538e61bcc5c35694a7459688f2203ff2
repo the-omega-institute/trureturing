@@ -1,0 +1,12 @@
+\[
+\mathcal Z_T(\mathbf u)
+=
+\mathbb E
+\exp
+\left(
+\sum_{a\in\mathscr O_T}u_aX_a
+\right).
+\]
+
+定义 connected orbit cumulants：
+

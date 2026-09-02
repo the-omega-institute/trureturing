@@ -1,0 +1,29 @@
+\begin{pmatrix}
+\mathcal H_\varphi(z)\\
+\mathcal H_\varphi(\varphi z)
+\end{pmatrix},
+\qquad
+M(z)
+=
+\begin{pmatrix}
+1&e^{-\varphi^2z}\\
+1&0
+\end{pmatrix},
+\]
+
+则：
+
+\[
+V(z)=M(z)V(\varphi z).
+\]
+
+不同尺度矩阵通常不交换。若：
+
+\[
+x=e^{-\varphi^2z},
+\qquad
+y=e^{-\varphi^3z},
+\]
+
+则：
+

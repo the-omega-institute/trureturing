@@ -1,0 +1,25 @@
+### 四点
+
+\[
+\boxed{
+\begin{aligned}
+\kappa_{1234}
+={}&M_{1234}
+-\sum_{\text{4 triples}}M_{ijk}M_l
+-\sum_{\text{3 pairings}}M_{ij}M_{kl}\\
+&+2\sum_{\text{6 pairs}}M_{ij}M_kM_l
+-6M_1M_2M_3M_4.
+\end{aligned}
+}
+\]
+
+所以“素数四元组是四点读数”的严格版本是：
+
+\[
+\boxed{
+\text{四阶 mixed derivative after all lower partitions are subtracted}.
+}
+\]
+
+---
+

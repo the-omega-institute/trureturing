@@ -1,0 +1,16 @@
+### ZC-I　孪生模五特征表
+
+```lean
+theorem twin_mod_five_character_table :
+    ∀ a : ZMod 5,
+      twinCharacterWord a =
+        match a with
+        | 0 => (0, -1)
+        | 1 => (1, -1)
+        | 2 => (-1, 1)
+        | 3 => (-1, 0)
+        | 4 => (1, 1)
+```
+
+---
+

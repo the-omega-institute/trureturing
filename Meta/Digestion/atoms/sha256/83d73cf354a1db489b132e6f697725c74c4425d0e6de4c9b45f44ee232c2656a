@@ -1,0 +1,10 @@
+\[
+\partial_s\log\Xi_H
+=
+E_H(s;\varepsilon)
++
+\sum_{\rho(\varepsilon)}
+\frac{m_\rho(\varepsilon)}
+{s-\rho(\varepsilon)}.
+\]
+

@@ -1,0 +1,13 @@
+\[
+\boxed{
+\mathcal H_\varphi(z)
+=
+\mathcal H_\varphi(\varphi z)
++
+e^{-\varphi^2z}
+\mathcal H_\varphi(\varphi^2z).
+}
+\]
+
+等价地：
+
