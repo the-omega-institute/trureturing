@@ -1,0 +1,1 @@
+**缺口**:`IsNontrivialZero.im_ne_zero {ρ : ℂ} (hρ : IsNontrivialZero ρ) : ρ.im ≠ 0`,即实 0<s<1 时 ζ(s) ≠ 0(经典:η(s)>0 且 ζ(s)=η(s)/(1−2^{1−s})<0)。钉版 Mathlib 仅有 `riemannZeta_ne_zero_of_one_le_re`;本仓 `D5/S3/Zeros/Symmetry/ZeroOrbitDegeneracy` 已记同一缺口。

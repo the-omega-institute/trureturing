@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:780d20045950f8cb6caee2ed03681dd7ad0b543eea6e37128f0d80cb250eb050
+  normalized_sha256: sha256:780d20045950f8cb6caee2ed03681dd7ad0b543eea6e37128f0d80cb250eb050
+cas_ref: sha256:780d20045950f8cb6caee2ed03681dd7ad0b543eea6e37128f0d80cb250eb050
+coverage_gids:
+  - D5/S3/ObserverMemory/Knowledge/RelationalStrongestPostconditionComposition.relational_strongest_postcondition_composition
+receipts:
+  coverage:
+    - gid: D5/S3/ObserverMemory/Knowledge/RelationalStrongestPostconditionComposition.relational_strongest_postcondition_composition
+      source_sha256: sha256:780d20045950f8cb6caee2ed03681dd7ad0b543eea6e37128f0d80cb250eb050
+      target_statement_id: sha256:4bdb3219746d0c3ec842bc93c2768ecc57c97ce1b57de59d306af97ccac9864d
+  scribe:
+    - gid: D5/S3/ObserverMemory/Knowledge/RelationalStrongestPostconditionComposition.relational_strongest_postcondition_composition
+      definition_sha256: sha256:4b179969ad09f91197563b42608bb682dcc986f7fb9eb84a1c830a9886c7f214
+      emission_sha256: sha256:9c1093a2a4bb4349489ecbcd170cd444d0b218b9457ce94bc104f050031004a9
+  unresolved_subitems: []
