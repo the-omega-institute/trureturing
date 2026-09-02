@@ -1,20 +1,24 @@
 /- GID: D5/S3/Analytic/Christoffel/NoAtomCostDecay
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Analytic/Christoffel/NoAtomCostDecay
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Outside the supported circle, Christoffel evaluation costs decay exponentially. -/
+   digest: Normalized Cayley-zero measures have exponentially decaying exterior costs. -/
 
 import D5.S3.Analytic.ZetaObservation.ChristoffelAtomFloor
+import D5.S3.Weil.ZeroSum
 import Mathlib.Analysis.Complex.Norm
 import Mathlib.Analysis.SpecificLimits.Basic
+import Mathlib.MeasureTheory.Measure.Dirac
 import Mathlib.MeasureTheory.Measure.Support
 
 /- Library-search audit trail (2026-09-02):
-   * The repository owner `ChristoffelAtomFloor.christoffelEvaluationCost`
-     is imported directly; this module does not create a second cost definition.
+   * Repository owners `ZeroSum.ZeroData` and
+     `ChristoffelAtomFloor.christoffelEvaluationCost` are imported directly;
+     this module creates neither a second zeta-zero family nor a second cost.
    * Pinned Mathlib supplies `Polynomial.eval_monomial`,
      `Polynomial.natDegree_monomial_le`, `Measure.support_mem_ae`,
+     `Measure.sum_apply`, `ENNReal.ofReal_tsum_of_nonneg`,
      `MeasureTheory.lintegral_const`, `iInf_le`, and
      `ENNReal.tendsto_pow_atTop_nhds_zero_of_lt_one`.
    * Loogle, LeanSearch, and Reservoir exposed no whole-theorem or third-party
@@ -29,9 +33,62 @@ namespace D5.S3.Analytic.Christoffel.NoAtomCostDecay
 
 open Filter MeasureTheory Set Topology
 open scoped ENNReal
+open D5.S3.Weil.ZeroSum
 
 abbrev christoffelEvaluationCost :=
   D5.S3.Analytic.ZetaObservation.ChristoffelAtomFloor.christoffelEvaluationCost
+
+/-- The source coordinate `z_rho = -i (rho - 1/2)` attached to a nontrivial
+zeta zero. -/
+noncomputable abbrev shiftedZetaZero : Complex → Complex :=
+  spectralParameter
+
+/-- The source Cayley map `w_a(z) = (z + ia) / (z - ia)`. -/
+def cayleyZeroMap (scale : Real) (z : Complex) : Complex :=
+  (z + Complex.I * (scale : Complex)) /
+    (z - Complex.I * (scale : Complex))
+
+/-- Source-specific data defining `mu_a`: the repository's exhaustive
+nontrivial zeta-zero family, a Cayley scale above `1/2`, and normalized
+positive absolutely summable weights invariant under both stored zeta-zero
+symmetries. -/
+structure CayleyZeroMeasureData where
+  zeros : ZeroData
+  scale : Real
+  scale_gt_half : (1 / 2 : Real) < scale
+  weight : Nat -> Real
+  weight_pos : forall index, 0 < weight index
+  weight_reflection : forall index,
+    weight (zeros.reflection index) = weight index
+  weight_conjugation : forall index,
+    weight (zeros.conjugation index) = weight index
+  weight_abs_summable : Summable fun index => |weight index|
+  weight_normalized : tsum weight = 1
+
+/-- The normalized weighted Dirac sum of the Cayley images of the shifted
+nontrivial zeta zeros, namely the source measure `mu_a`. -/
+noncomputable def cayleyZeroMeasure (data : CayleyZeroMeasureData) : Measure Complex :=
+  Measure.sum fun index =>
+    ENNReal.ofReal (data.weight index) •
+      Measure.dirac
+        (cayleyZeroMap data.scale (shiftedZetaZero (data.zeros.zero index)))
+
+/-- Normalization of the positive weights makes the Cayley-zero measure a
+probability measure. -/
+theorem cayleyZeroMeasure_univ (data : CayleyZeroMeasureData) :
+    cayleyZeroMeasure data Set.univ = 1 := by
+  rw [cayleyZeroMeasure, Measure.sum_apply _ MeasurableSet.univ]
+  simp only [Measure.smul_apply, smul_eq_mul, Measure.dirac_apply_of_mem (Set.mem_univ _),
+    mul_one]
+  rw [← ENNReal.ofReal_tsum_of_nonneg (fun index => (data.weight_pos index).le)
+    data.weight_abs_summable.of_abs]
+  rw [data.weight_normalized]
+  norm_num
+
+instance (data : CayleyZeroMeasureData) : IsFiniteMeasure (cayleyZeroMeasure data) where
+  measure_univ_lt_top := by
+    rw [cayleyZeroMeasure_univ]
+    exact ENNReal.one_lt_top
 
 /-- The complex unit circle that carries the Cayley zero measure under the
 support hypothesis. -/
@@ -65,12 +122,8 @@ lemma observationPolynomial_norm_on_circle
   change ‖z‖ = 1 at zOnCircle
   rw [zOnCircle, one_div]
 
-/-- For the finite Cayley zero measure, support on the unit circle and an
-evaluation point outside that circle force the normalized monomial energy,
-the Christoffel upper bound, and hence the cost itself to vanish
-geometrically. The support premise is the source volume's RH-equivalent
-condition for its project measure `mu_a`; it is deliberately public here. -/
-theorem no_atom_cost_decay
+/-- The measure-theoretic estimate used by the source-specific public theorem. -/
+private theorem finite_measure_no_atom_cost_decay
     (muA : Measure Complex) [finiteMeasure : IsFiniteMeasure muA] (w : Complex)
     (supportOnCircle : muA.support ⊆ complexUnitCircle)
     (outsideCircle : 1 < ‖w‖) :
@@ -160,19 +213,52 @@ theorem no_atom_cost_decay
   exact tendsto_of_tendsto_of_tendsto_of_le_of_le tendsto_const_nhds
     upperBoundTendsToZero (fun _ => bot_le) costUpperBound
 
+/-- For the normalized positive symmetric Cayley-zero measure, support on the
+unit circle and an evaluation point outside that circle force the source
+monomial energy, the Christoffel upper bound, and hence the cost itself to
+vanish geometrically. The finite-measure fact is derived from the defining
+weight normalization, rather than assumed. -/
+theorem no_atom_cost_decay
+    (data : CayleyZeroMeasureData) (w : Complex)
+    (supportOnCircle : (cayleyZeroMeasure data).support ⊆ complexUnitCircle)
+    (outsideCircle : 1 < ‖w‖) :
+    (∀ degree : Nat, (observationPolynomial w degree).eval w = 1) ∧
+    (∀ (degree : Nat) (z : Complex), z ∈ complexUnitCircle →
+      ‖(observationPolynomial w degree).eval z‖ = ‖w‖⁻¹ ^ degree) ∧
+    (∀ degree : Nat, 0 ≤ christoffelEvaluationCost (cayleyZeroMeasure data) w degree) ∧
+    (∀ degree : Nat,
+      christoffelEvaluationCost (cayleyZeroMeasure data) w degree ≤
+        cayleyZeroMeasure data complexUnitCircle *
+          ENNReal.ofReal (‖w‖⁻¹ ^ (degree * 2))) ∧
+    Tendsto
+      (fun degree : Nat => christoffelEvaluationCost (cayleyZeroMeasure data) w degree)
+      atTop (𝓝 0) :=
+  finite_measure_no_atom_cost_decay
+    (cayleyZeroMeasure data) w supportOnCircle outsideCircle
+
 /-- Reverse probe: the public theorem exposes the source's exponential upper
 bound as an independently projectable conclusion. -/
 example
-    (muA : Measure Complex) [IsFiniteMeasure muA] (w : Complex)
-    (supportOnCircle : muA.support ⊆ complexUnitCircle)
+    (data : CayleyZeroMeasureData) (w : Complex)
+    (supportOnCircle : (cayleyZeroMeasure data).support ⊆ complexUnitCircle)
     (outsideCircle : 1 < ‖w‖) (degree : Nat) :
-    christoffelEvaluationCost muA w degree ≤
-      muA complexUnitCircle * ENNReal.ofReal (‖w‖⁻¹ ^ (degree * 2)) :=
-  (no_atom_cost_decay muA w supportOnCircle outsideCircle).2.2.2.1 degree
+    christoffelEvaluationCost (cayleyZeroMeasure data) w degree ≤
+      cayleyZeroMeasure data complexUnitCircle *
+        ENNReal.ofReal (‖w‖⁻¹ ^ (degree * 2)) :=
+  (no_atom_cost_decay data w supportOnCircle outsideCircle).2.2.2.1 degree
 
 /-- Trivialization probe: the key outside-circle premise excludes the zero
 evaluation point, so `w = 0` cannot make the theorem vacuous. -/
 example : ¬(1 < ‖(0 : Complex)‖) := by norm_num
+
+/-- Source-carrier probe: normalization forbids the public measure from
+collapsing to the zero measure. -/
+example (data : CayleyZeroMeasureData) : cayleyZeroMeasure data ≠ 0 := by
+  intro measureZero
+  have univZero := congrArg (fun measure : Measure Complex => measure Set.univ) measureZero
+  rw [cayleyZeroMeasure_univ] at univZero
+  change (1 : ENNReal) = 0 at univZero
+  exact one_ne_zero univZero
 
 /-- Separation probe: at degree one the witness distinguishes zero from the
 exterior evaluation point, so it has not collapsed to a constant polynomial. -/

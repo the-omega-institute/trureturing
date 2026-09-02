@@ -22,10 +22,13 @@ internal sealed class NoAtomCostDecayDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "Let muA be a finite measure on the complex plane whose support is "
-                            + "contained in the unit circle, and let w have norm greater than "
-                            + "one. For every natural degree N, the observation polynomial is "
-                            + "the genuine complex polynomial with value (z/w)^N at z.")),
+                        "Let the Cayley-zero data contain the repository's nontrivial zeta-zero "
+                            + "family, a scale a greater than one half, and positive real weights "
+                            + "that are invariant under reflection and conjugation, absolutely "
+                            + "summable, and normalized to sum to one. Let muA be their named "
+                            + "weighted Dirac sum after the shifted zeros pass through the source "
+                            + "Cayley map. Assume its support is contained in the unit circle and "
+                            + "let w have norm greater than one.")),
                     Paragraph(Text(
                         "Its value at w is one and its norm on the unit circle is the Nth "
                             + "power of the inverse norm of w. The same polynomial is an "
@@ -35,8 +38,9 @@ internal sealed class NoAtomCostDecayDocument : IScribeDocumentDefinition
                         "Consequently the cost is nonnegative, is bounded above by the "
                             + "unit-circle mass times the displayed inverse-norm power, and "
                             + "tends to zero. In the source volume the support premise for "
-                            + "muA is equivalent to RH, so this declaration is conditional "
-                            + "and does not assert RH."))),
+                            + "muA is equivalent to RH. Finiteness follows from normalization, so "
+                            + "this declaration is conditional on support, does not add a "
+                            + "generic finite-measure premise, and does not assert RH."))),
                 DescribeRole.Theorem))));
 
     private static Formula.BoundVariable Bound(string name, Formula domain) =>
@@ -73,7 +77,8 @@ internal sealed class NoAtomCostDecayDocument : IScribeDocumentDefinition
     {
         Formula complex = Call("Complex");
         Formula natural = Call("Nat");
-        Formula measure = F.Id("muA");
+        Formula cayleyData = F.Id("cayleyZeros");
+        Formula measure = Call("CayleyZeroMeasure", cayleyData);
         Formula point = F.Id("w");
         Formula degree = F.Id("N");
         Formula z = F.Id("z");
@@ -92,10 +97,8 @@ internal sealed class NoAtomCostDecayDocument : IScribeDocumentDefinition
                 Call("Product", degree, F.D(2))));
 
         Formula hypotheses = And(
-            Call("IsFiniteMeasure", measure),
-            And(
-                SubsetOf(Call("MeasureSupport", measure), circle),
-                LessThan(F.D(1), pointNorm)));
+            SubsetOf(Call("MeasureSupport", measure), circle),
+            LessThan(F.D(1), pointNorm));
         Formula centerValue = ForEveryN(EqualTo(evaluationAtPoint, F.D(1)));
         Formula circleNorm = new Formula.BindMany(
             FormulaQuantifier.ForAll,
@@ -121,7 +124,7 @@ internal sealed class NoAtomCostDecayDocument : IScribeDocumentDefinition
 
         return F.Disp(new Formula.BindMany(
             FormulaQuantifier.ForAll,
-            [Bound("muA", Call("Measure", complex)), Bound("w", complex)],
+            [Bound("cayleyZeros", Call("CayleyZeroMeasureData")), Bound("w", complex)],
             Implies(hypotheses, conclusions)));
     }
 }
