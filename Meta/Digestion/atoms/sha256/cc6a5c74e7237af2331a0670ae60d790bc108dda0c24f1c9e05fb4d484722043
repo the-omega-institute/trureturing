@@ -1,0 +1,6 @@
+### 定义 35.1（MirrorHilbertLift）
+
+把上述额外数据封装为一个结构。只有在存在自然 `MirrorHilbertLift` 并证明 reduced state 非纯时，才把离线对称对称为量子纠缠对。
+
+---
+

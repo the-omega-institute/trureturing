@@ -1,0 +1,10 @@
+### “完整对称使 RH 不可观察，因此 RH 应该错误”
+
+该推理不成立：
+
+- 离线四元组不破坏完整对称；
+- RH 是 fixed-locus localization，不是 symmetry restoration；
+- 一阶 transverse 读数确实盲；
+- 二阶正缺陷严格可见；
+- RH 当前真值必须由额外分析机制决定。
+

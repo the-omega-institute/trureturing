@@ -1,0 +1,19 @@
+## 56. Zero orbit atlas
+
+对已知零点数据：
+
+1. 建立 \(C,R,J\) 轨道；
+2. 记录：
+   \[
+   \delta,\gamma,m;
+   \]
+3. 生成多尺度 Zeckendorf orbit threads；
+4. 计算：
+   \[
+   \mathfrak D_T(\tau),\quad
+   \sum\delta^{2r},\quad
+   E_{ab};
+   \]
+5. 检查枚举不变性；
+6. 不把“所有已知零点在线”外推成 RH。
+

@@ -1,0 +1,15 @@
+\[
+\boxed{
+\kappa_A(\sigma)
+=
+\left.
+\frac{\partial^k}
+{\partial\varepsilon_{h_1}\cdots\partial\varepsilon_{h_k}}
+\log\mathcal M_H(\sigma)
+\right|_{\varepsilon=0}.
+}
+\]
+
+这严格实现：
+
+- 二点构型是二阶源 jet；

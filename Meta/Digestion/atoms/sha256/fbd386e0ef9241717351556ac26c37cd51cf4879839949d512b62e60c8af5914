@@ -1,0 +1,11 @@
+\[
+M_A(X)
+=
+\frac1X\sum_{n\le X}
+\prod_{h\in A}\Lambda(n+h),
+\]
+
+再用 partition Möbius inversion计算 \(\kappa_A(X)\)。
+
+必须同时报告所有 proper-subset moments，防止把低阶分解误认为高阶 connected signal。
+

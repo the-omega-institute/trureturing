@@ -1,0 +1,18 @@
+## 16D. ζ 因子是 local cluster modes 的全球装配
+
+令：
+
+\[
+X=p^{-\varphi^2s},
+\qquad
+Y=p^{-\varphi^3s}.
+\]
+
+黄金 local generating function 的低阶项具有：
+
+\[
+1+X+Y+XY+\cdots.
+\]
+
+仓库已经证明第二阶分解：
+

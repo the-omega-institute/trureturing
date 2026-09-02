@@ -1,0 +1,11 @@
+### ZC-B　黄金实数线程误差
+
+```lean
+theorem goldenQuantization_error (x : ℝ) (hx : 0 ≤ x) (N : ℕ) :
+    0 ≤ x - goldenQuantization N x / Real.goldenRatio ^ N ∧
+    x - goldenQuantization N x / Real.goldenRatio ^ N <
+      Real.goldenRatio ^ (-(N : ℤ))
+```
+
+---
+

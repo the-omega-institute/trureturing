@@ -1,0 +1,12 @@
+### ZC-E　有限 admissibility 检验
+
+```lean
+theorem admissible_iff_small_primes
+    (H : PrimeConstellation) :
+    Admissible H ↔
+      ∀ p : Nat.Primes, p.1 ≤ H.card →
+        residueSupportCard p H < p
+```
+
+---
+

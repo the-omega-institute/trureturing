@@ -1,0 +1,12 @@
+\[
+d_\varphi(x)
+=
+\left\lceil
+\log_\varphi\frac1x
+\right\rceil.
+\]
+
+因此越靠近临界线的离线零点，有限观察者需要越深的黄金分辨率才能看到 transverse bit。
+
+---
+

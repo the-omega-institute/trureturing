@@ -1,0 +1,30 @@
+\[
+\boxed{
+\text{整个零点状态}
+=
+\text{全部有限加法构型 connected cumulants 的统一频谱响应}.
+}
+\]
+
+但这不意味着：
+
+\[
+\text{一个零点}
+\leftrightarrow
+\text{一个固定 prime tuple}.
+\]
+
+更准确的是：
+
+\[
+\boxed{
+\text{一个构型}
+\leftrightarrow
+\text{全体零点轨道上的一个响应 charge field}.
+}
+\]
+
+孪生素数是 \(k=2\) charge channel；三元组是 \(k=3\) channel；四元组是 \(k=4\) channel。
+
+---
+
