@@ -20,18 +20,18 @@ internal sealed class FiniteCompetitionSeparabilityDocument : IScribeDocumentDef
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "The scale family, every external depth, and the finite orbit family "
-                            + "are public inputs. The sign and conjugation exclusions state the "
-                            + "orbit quotient directly, without introducing a proxy quotient.")),
+                        "The distinct nonzero scale family, every external depth, and the finite "
+                            + "orbit family are public inputs. The sign and conjugation exclusions "
+                            + "state the orbit quotient directly, without a proxy quotient.")),
                     Paragraph(Text(
-                        "The supplied scales construct the common denominator. Its disk bounds "
-                            + "exclude unit-circle poles, while the finite-point premise keeps "
-                            + "each displayed rational profile defined at every competitor.")),
+                        "The full profile carries every scale coordinate and every reference "
+                            + "coordinate. Its numerators are the canonical common-denominator "
+                            + "polynomial basis, and the no-pole premise defines all evaluations.")),
                     Paragraph(Text(
-                        "An even polynomial with every competing orbit as a root gives a real-"
-                            + "linear functional that vanishes on the competitor span but not "
-                            + "on the target profile. Closedness of the finite span then makes "
-                            + "the displayed distance strictly positive."))),
+                        "Projection onto the reference block sends the full competitor span into "
+                            + "the reference competitor span. A polynomial vanishing on every "
+                            + "competing orbit separates the projected target, and closedness of "
+                            + "the finite full-profile span makes the distance positive."))),
                 DescribeRole.Theorem))));
 
     private static Formula TheoremFormula()
@@ -45,11 +45,14 @@ internal sealed class FiniteCompetitionSeparabilityDocument : IScribeDocumentDef
         Formula scaleDepth = F.Id("N");
         Formula point = F.Id("z");
         Formula referenceDepth = F.Id("d");
+        Formula multiplicity = F.Id("n");
+        Formula totalDepth = F.Id("Q");
         Formula factor = F.Id("f");
         Formula denominator = F.Id("D");
         Formula numerator = F.Id("p");
         Formula feature = Phi;
         Formula competitorSpace = F.Id("W");
+        Formula index = F.Id("I");
         Formula i = F.Id("i");
         Formula j = F.Id("j");
         Formula k = F.Id("k");
@@ -57,7 +60,7 @@ internal sealed class FiniteCompetitionSeparabilityDocument : IScribeDocumentDef
         Formula finScale = Call("Fin", scaleCount);
         Formula finPoint = Call("Fin", Add(competitorCount, D(1)));
         Formula finCompetitor = Call("Fin", competitorCount);
-        Formula index = Call("Fin", Add(referenceDepth, D(1)));
+        Formula referenceIndex = Call("Fin", Add(referenceDepth, D(1)));
         Formula polynomial = Call("Polynomial", complex);
         Formula vector = Arrow(index, complex);
 
@@ -75,6 +78,10 @@ internal sealed class FiniteCompetitionSeparabilityDocument : IScribeDocumentDef
                 Typed(i, finScale),
                 Call("pow", scaleFactor, Add(depthAtI, D(1)))));
 
+        Formula scaleNonzero = new Formula.BindMany(
+            FormulaQuantifier.ForAll,
+            [Bound("i", finScale)],
+            NotEqual(scaleAtI, D(0)));
         Formula scaleInDisk = new Formula.BindMany(
             FormulaQuantifier.ForAll,
             [Bound("i", finScale)],
@@ -95,6 +102,14 @@ internal sealed class FiniteCompetitionSeparabilityDocument : IScribeDocumentDef
             [Bound("j", finPoint)],
             NotEqual(Call("eval", rawDenominator, pointAtJ), D(0)));
 
+        Formula multiplicityDefinition = Seq(
+            Typed(multiplicity, Arrow(finScale, natural)), Comma, Sp,
+            Forall, Sp, Typed(i, finScale), Comma, Sp,
+            Apply(multiplicity, i), Sp, Eq, Sp, Add(depthAtI, D(1)));
+        Formula totalDepthDefinition = Seq(
+            Typed(totalDepth, natural), Sp, Eq, Sp,
+            Call("sum", finScale,
+                Lambda(Typed(i, finScale), Apply(multiplicity, i))));
         Formula factorDefinition = Seq(
             Typed(factor, Arrow(finScale, polynomial)), Comma, Sp,
             Forall, Sp, Typed(i, finScale), Comma, Sp,
@@ -109,14 +124,38 @@ internal sealed class FiniteCompetitionSeparabilityDocument : IScribeDocumentDef
                 finScale,
                 Lambda(
                     Typed(i, finScale),
-                    Call("pow", Apply(factor, i), Add(depthAtI, D(1))))));
+                    Call("pow", Apply(factor, i), Apply(multiplicity, i)))));
+        Formula sigmaIndex = Call(
+            "Sigma",
+            finScale,
+            Lambda(Typed(i, finScale), Call("Fin", Apply(multiplicity, i))));
+        Formula indexDefinition = Seq(
+            Typed(index, Call("Type")), Sp, Eq, Sp,
+            Call("Sum", sigmaIndex, referenceIndex));
+        Formula scaleNumerator = Seq(
+            Call(
+                "pow",
+                Add(F.Id("X"), Call("C", Call("ofReal", scaleAtI))),
+                j),
+            Sp, Cdot, Sp,
+            Call("pow", Apply(factor, i), Seq(depthAtI, Sp, Minus, Sp, j)),
+            Sp, Cdot, Sp,
+            Call(
+                "prodExcept",
+                finScale,
+                i,
+                Lambda(
+                    Typed(k, finScale),
+                    Call("pow", Apply(factor, k), Apply(multiplicity, k)))));
         Formula numeratorDefinition = Seq(
             Typed(numerator, Arrow(index, polynomial)), Comma, Sp,
-            Forall, Sp, Typed(k, index), Comma, Sp,
-            Apply(numerator, k), Sp, Eq, Sp,
-            Mul(
-                denominator,
-                Call("pow", F.Id("X"), Mul(D(2), k))));
+            Forall, Sp, Typed(i, finScale), Comma, Sp,
+            Typed(j, Call("Fin", Apply(multiplicity, i))), Comma, Sp,
+            Apply(numerator, Call("inl", i, j)), Sp, Eq, Sp, scaleNumerator,
+            SemiSpace,
+            Forall, Sp, Typed(j, referenceIndex), Comma, Sp,
+            Apply(numerator, Call("inr", j)), Sp, Eq, Sp,
+            denominator, Sp, Cdot, Sp, Call("pow", F.Id("X"), j));
         Formula featureDefinition = Seq(
             Typed(feature, Arrow(complex, vector)), Comma, Sp,
             Forall, Sp, Typed(w, complex), Comma, Sp, Typed(k, index), Comma, Sp,
@@ -136,8 +175,11 @@ internal sealed class FiniteCompetitionSeparabilityDocument : IScribeDocumentDef
                         Apply(feature, Apply(point, Call("succ", j)))))));
         Formula letObjects = Seq(
             Operatorname, Grp(F.Id("let")), Open,
+            multiplicityDefinition, SemiSpace,
+            totalDepthDefinition, SemiSpace,
             factorDefinition, SemiSpace,
             denominatorDefinition, SemiSpace,
+            indexDefinition, SemiSpace,
             numeratorDefinition, SemiSpace,
             featureDefinition, SemiSpace,
             competitorDefinition, Close);
@@ -148,6 +190,14 @@ internal sealed class FiniteCompetitionSeparabilityDocument : IScribeDocumentDef
             Implies(
                 Equal(Call("norm", w), D(1)),
                 NotEqual(Call("eval", denominator, w), D(0))));
+        Formula numeratorBasis = And(
+            Call("LinearIndependent", complex, numerator),
+            Equal(
+                Call("span", complex, Call("range", numerator)),
+                Call(
+                    "degreeLT",
+                    complex,
+                    Add(Add(totalDepth, referenceDepth), D(1)))));
         Formula margin = Less(
             D(0),
             Call(
@@ -158,7 +208,11 @@ internal sealed class FiniteCompetitionSeparabilityDocument : IScribeDocumentDef
             FormulaQuantifier.Exists,
             FormulaIdentifier.Create("d"),
             natural,
-            Seq(letObjects, Comma, Sp, And(unitCirclePoleFree, margin)));
+            Seq(
+                letObjects,
+                Comma,
+                Sp,
+                And(numeratorBasis, And(unitCirclePoleFree, margin))));
 
         return Disp(new Formula.Aligned([
             Seq(Forall, Sp,
@@ -166,6 +220,8 @@ internal sealed class FiniteCompetitionSeparabilityDocument : IScribeDocumentDef
                 Typed(competitorCount, natural), Comma),
             Seq(Typed(scale, Arrow(finScale, real)), Comma, Sp,
                 Typed(scaleDepth, Arrow(finScale, natural)), Comma),
+            Seq(Typed(F.Id("scaleNonzero"), scaleNonzero), Comma, Sp,
+                Typed(F.Id("scaleInjective"), Call("Injective", scale)), Comma),
             Seq(Typed(F.Id("scaleInDisk"), scaleInDisk), Comma),
             Seq(Typed(point, Arrow(finPoint, complex)), Comma),
             Seq(Typed(F.Id("orbitDistinct"), orbitDistinct), Comma),
