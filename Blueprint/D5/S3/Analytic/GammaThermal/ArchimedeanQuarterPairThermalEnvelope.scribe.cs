@@ -24,7 +24,9 @@ internal sealed class ArchimedeanQuarterPairThermalEnvelopeDocument
                         "For every real t, the first conjunct gives the squared-norm product "
                             + "of Gamma(1/4 + it/2) and Gamma(3/4 + it/2) as "
                             + "2 pi^2 / cosh(pi t). The second conjunct gives exactly the "
-                            + "reciprocal-cosh exponential identity with |t|.")),
+                            + "reciprocal-cosh exponential identity with |t|. The third "
+                            + "conjunct combines them into the concrete pair's exact "
+                            + "Fermi-like exponential envelope.")),
                     Paragraph(Text(
                         "The proof specializes the pinned Gamma duplication and reflection "
                             + "identities, then rewrites the hyperbolic cosine using real "
@@ -79,8 +81,15 @@ internal sealed class ArchimedeanQuarterPairThermalEnvelopeDocument
         Formula second = EqualTo(
             new Formula.Fraction(D(1), cosh),
             new Formula.Fraction(secondNumerator, secondDenominator));
-        Formula conclusion =
-            new Formula.Logic(first, FormulaLogicOperator.And, second);
+        Formula third = EqualTo(
+            normProduct,
+            Multiply(
+                Multiply(D(2), Square(Pi)),
+                new Formula.Fraction(secondNumerator, secondDenominator)));
+        Formula conclusion = new Formula.Logic(
+            first,
+            FormulaLogicOperator.And,
+            new Formula.Logic(second, FormulaLogicOperator.And, third));
 
         return Disp(new Formula.BindMany(
             FormulaQuantifier.ForAll,

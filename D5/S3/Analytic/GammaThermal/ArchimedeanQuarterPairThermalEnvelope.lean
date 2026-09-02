@@ -124,16 +124,38 @@ private lemma reciprocal_cosh_fermi_identity (t : ℝ) :
   ring_nf
   simp
 
+/-- The exact Fermi-like envelope obtained by combining the concrete quarter-pair
+identity with the reciprocal-cosh exponential identity. -/
+private lemma gamma_quarter_pair_fermi_identity (t : ℝ) :
+    ‖archimedeanGammaPlus t‖ ^ 2 * ‖archimedeanGammaMinus t‖ ^ 2 =
+      2 * Real.pi ^ 2 *
+        (2 * Real.exp (-Real.pi * |t|) /
+          (1 + Real.exp (-2 * Real.pi * |t|))) := by
+  calc
+    ‖archimedeanGammaPlus t‖ ^ 2 * ‖archimedeanGammaMinus t‖ ^ 2 =
+        2 * Real.pi ^ 2 / Real.cosh (Real.pi * t) :=
+      gamma_quarter_pair_norm_identity t
+    _ = 2 * Real.pi ^ 2 * (1 / Real.cosh (Real.pi * t)) := by ring
+    _ = 2 * Real.pi ^ 2 *
+          (2 * Real.exp (-Real.pi * |t|) /
+            (1 + Real.exp (-2 * Real.pi * |t|))) := by
+      rw [reciprocal_cosh_fermi_identity t]
+
 /-- The two quarter-shifted Archimedean Gamma channels have the exact squared-norm
-thermal envelope, and the reciprocal hyperbolic cosine has its strict
-Fermi-like exponential form. -/
+thermal envelope, the reciprocal hyperbolic cosine has its exponential form,
+and their combination is the strict Fermi-like envelope of this concrete pair. -/
 theorem archimedean_quarter_pair_thermal_envelope (t : ℝ) :
     ‖archimedeanGammaPlus t‖ ^ 2 * ‖archimedeanGammaMinus t‖ ^ 2 =
         2 * Real.pi ^ 2 / Real.cosh (Real.pi * t) ∧
       1 / Real.cosh (Real.pi * t) =
         2 * Real.exp (-Real.pi * |t|) /
-          (1 + Real.exp (-2 * Real.pi * |t|)) :=
-  ⟨gamma_quarter_pair_norm_identity t, reciprocal_cosh_fermi_identity t⟩
+          (1 + Real.exp (-2 * Real.pi * |t|)) ∧
+      ‖archimedeanGammaPlus t‖ ^ 2 * ‖archimedeanGammaMinus t‖ ^ 2 =
+        2 * Real.pi ^ 2 *
+          (2 * Real.exp (-Real.pi * |t|) /
+            (1 + Real.exp (-2 * Real.pi * |t|))) :=
+  ⟨gamma_quarter_pair_norm_identity t, reciprocal_cosh_fermi_identity t,
+    gamma_quarter_pair_fermi_identity t⟩
 
 -- Reverse probe for CAS assertion A1: the public theorem makes the quarter-pair
 -- product strictly positive at the central parameter.
@@ -147,7 +169,16 @@ example :
 example (t : ℝ) :
     0 < 2 * Real.exp (-Real.pi * |t|) /
       (1 + Real.exp (-2 * Real.pi * |t|)) := by
-  rw [← (archimedean_quarter_pair_thermal_envelope t).2]
+  rw [← (archimedean_quarter_pair_thermal_envelope t).2.1]
   exact one_div_pos.mpr (Real.cosh_pos _)
+
+-- Reverse and mutation probe for CAS assertion A3: this direct `.2.2`
+-- projection must disappear if the third public conjunct is removed.
+example :
+    ‖archimedeanGammaPlus 0‖ ^ 2 * ‖archimedeanGammaMinus 0‖ ^ 2 =
+      2 * Real.pi ^ 2 := by
+  have h := (archimedean_quarter_pair_thermal_envelope 0).2.2
+  norm_num at h
+  exact h
 
 end D5.S3.Analytic.GammaThermal.ArchimedeanQuarterPairThermalEnvelope
