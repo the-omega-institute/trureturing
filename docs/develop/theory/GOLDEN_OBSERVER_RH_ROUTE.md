@@ -2043,3 +2043,31 @@ G-d/G-e 一席位轮(同模块,codex-cli,独立 worktree,PR-1 deposit 绑 G-d at
 G-f 一席位轮、M3-f 第二级一席位轮(各 codex-cli,独立 worktree,PR-1 deposit;cover 另开 PR-2);具名目标不占预算。
 
 后续增订继续严格追加于本节之后。
+
+---
+
+# 增订十四　M3 separator 阶梯收口:完整 separator(M3-f-3、M3-f-4、M3-f-5 预登记)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;研究席一席(GPT PRO 公司池,advisory,阶梯设计)+ 探针一席(codex-cli,`lake env lean`,0 sorry,标准三公理,828 行,在 dev 新增量上整证第 3–5 级);由 orchestrator(claude 主循环)撰写。判决日:2026-09-03。lane issue:#4589。
+
+## 〇　为什么是这一节
+
+增订十一预登记的截断 separator(M3-e)与增订十三预登记的闭带衰减(M3-f 第二级)之后,只剩极限步。探针按研究席的路线 A 在冻结栈上一次整证了第 3–5 级:峰函数 b 与有限例外 killer k 的存在;Burnol 卷积幂的轨道外尾项界 4^{−(N+1)}·majorant(majorant 由冻结 `EF_lit_zetaZeroConfig` 的绝对可和性传输到任意 `ZeroData`,与 M2-c 同一机制);以及**完整 separator**:离线非实零点 ⇒ 存在偶测试函数使 `zeroSum` 实部严格为负。与冻结的 R-F(RH ⇒ 本仓 O-6 正性)合起来,对本仓测试类而言,「偶测试类上的 Weil 正性 ⟺ 所有非实零点在临界线」只差 M3-d(实轴零点排除)这一条经典事实——本节**不**断言该等价,只预登记三条定理。
+
+## 一　M3-f-5 预登记:完整 separator(`OffLineNonrealZeroNegativeWeilSquare`)
+
+**义务**:公开定理 `offLineNonrealZero_yields_negative_weil_square (Z : ZeroData) (n : ℕ) (hOff : (Z.zero n).re ≠ criticalAbscissa) (hIm : (Z.zero n).im ≠ 0) : ∃ g : WeilTestFunction, ∃ hZero : SymmetricConvergent Z (convolutionSquare g), (zeroSum Z (convolutionSquare g) hZero).re < 0`。闭合路线:M3-f-3 给出 b、k、E;令 S := Σ'_j ‖zeroSummand Z (convolutionSquare k) j‖(由冻结 EF 可和性有限);取 N 使 (1/4)^{N+1}·S < 4·重数;g := convolve (convolutionSuccPower b N) k;`SymmetricConvergent` 由冻结 M2-c 给出;把绝对收敛的全和拆为轨道 + 补集:轨道贡献 = −4·重数(冻结 M3-a 与卷积幂变换公式),补集由 M3-f-4 界住;实部严格为负。落点 `D5/S3/Weil/ZetaBridge/`(或按容量规则分桶)。
+**可证伪预测(写在跑之前)**:若正确,定理只消费冻结的 `ConvolutionPowerAmplification`、`EvenTestFunctionFiniteInterpolation`、`PrescribedPairNegativeOrbit`、`SymmetricConvergentOfZetaSummable`、闭带衰减(增订十三)与钉版 Mathlib,公理集为标准三条;若卷积幂在本仓测试类中不封闭、或 EF 可和性不能传输到任意 `ZeroData` 的 `zeroSummand`,则本条为假并须记所缺引理。
+**边界**:`hIm` 不可省略(M3-d 具名缺口);本条不断言 O-6 ⟹ RH,不断言任何零点存在。
+
+## 二　M3-f-3 与 M3-f-4 预登记(同模块两条公开定理)
+
+**义务**:`exists_peak_and_finite_exception_killer (Z : ZeroData) (n : ℕ) (hOff : (Z.zero n).re ≠ criticalAbscissa) (hIm : (Z.zero n).im ≠ 0) : ∃ b k : WeilTestFunction, ∃ E : Finset ℕ, (∀ j, j ∈ E ↔ Z.reflection j ∈ E) ∧ (∀ j, j ∈ E ↔ Z.conjugation j ∈ E) ∧ zeroOrbit Z n ⊆ E ∧ fourierLaplace b (Z.gamma n) = 1 ∧ fourierLaplace b (conj (Z.gamma n)) = 1 ∧ fourierLaplace k (Z.gamma n) = 1 ∧ fourierLaplace k (conj (Z.gamma n)) = -1 ∧ (∀ j ∉ E, ‖fourierLaplace b (Z.gamma j)‖ ≤ 1 / 2 ∧ ‖fourierLaplace b (conj (Z.gamma j))‖ ≤ 1 / 2) ∧ (∀ j ∈ E, j ∉ zeroOrbit Z n → fourierLaplace k (Z.gamma j) = 0 ∧ fourierLaplace k (conj (Z.gamma j)) = 0)` 与 `burnol_power_tail_bound (Z : ZeroData) (n : ℕ) (b k : WeilTestFunction) (E : Finset ℕ) (N : ℕ) (hB : ∀ i ∉ E, ‖fourierLaplace b (Z.gamma i)‖ ≤ 1 / 2 ∧ ‖fourierLaplace b (conj (Z.gamma i))‖ ≤ 1 / 2) (hK : ∀ i ∈ E, i ∉ zeroOrbit Z n → fourierLaplace k (Z.gamma i) = 0 ∧ fourierLaplace k (conj (Z.gamma i)) = 0) : Summable (fun j : {j : ℕ // j ∉ zeroOrbit Z n} => zeroSummand Z (convolutionSquare (convolve (convolutionSuccPower b N) k)) j.1) ∧ ‖∑' j : {j : ℕ // j ∉ zeroOrbit Z n}, zeroSummand Z (convolutionSquare (convolve (convolutionSuccPower b N) k)) j.1‖ ≤ (1 / 4 : ℝ) ^ (N + 1) * ∑' j : ℕ, ‖zeroSummand Z (convolutionSquare k) j‖`(`zeroOrbit` 为本仓已有或本模块定义的四点轨道 Finset;若为本模块新定义,须在同模块以消费它的定理使其 earn its freeze)。
+**可证伪预测(写在跑之前)**:若正确,二者在钉版工具链闭合且公理集为标准三条;若 E = symmetricIndices R 的反射/共轭封闭性不成立(与冻结封闭引理矛盾),或闭带衰减的常数依赖于 t,则本条为假。
+**边界**:M3-f-3 的 E 是有限例外集,不断言其大小;M3-f-4 的界对每个 N 成立,不断言最优常数。
+
+## 三　预算与结算
+
+一席位轮(同模块三条公开定理,codex-cli,独立 worktree;deposit 绑 M3-f-5 atom;M3-f-3/4 走 PR-1b 收据后 PR-2 cover);该 lane 须在增订十三的闭带衰减模块合入后开工,以绑定而非重证。
+
+后续增订继续严格追加于本节之后。
