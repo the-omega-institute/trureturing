@@ -47,7 +47,7 @@ internal sealed class GoldenGermThirdOrderLedgerDocument
             DescribeRole.Theorem)),
         [
             DocumentEdge.Dependency.Create(GidRef.Create(
-                "D5/S3/Analytic/GoldenEulerBeta")),
+                "D5/S3/Analytic/EulerGerm/GoldenLocalFactor")),
         ]));
 
     private static Formula TheoremFormula()
