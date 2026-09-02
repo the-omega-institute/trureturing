@@ -1,0 +1,6 @@
+## 二　M1-b 具名缺失载体(open,不派席):非平凡零点无穷
+
+**缺口**:`nontrivialZeros_infinite : {ρ : ℂ | IsNontrivialZero ρ}.Infinite`。钉版 Mathlib `ZetaZeros.lean` 无 `Infinite` 或 $N(T)$ 下界;本仓 `D5/S3/Weil/ZetaRvm` 只有上界计数。其经典来源为 Hardy(1914)临界线上无穷零点或 Riemann–von Mangoldt 计数下界,属解析数论重型载体,不是初等波。
+**可证伪预测(写在跑之前)**:若 M1-a 落地而 M1-b 仍缺,则本仓一切「∀ Z : ZeroData, …」形式的 O-6 陈述在 kernel 意义上仍是条件性的;主线「修复非空洞语义」的出口只有三种——上游 Mathlib 补入无穷性、本仓以外部形式化(标 `literature-attested` 并 import)接入、或在本卷显式改写 O-6 为以 `Set.Infinite` 为前件的条件陈述;**不得**以公理或 `ASSUMED-UNVERIFIED` 冒充已闭合。
+**边界**:本节不是义务,不占席位;它只使 R-D 的「空类型诊断」有了精确的判据。
+

@@ -1,0 +1,1 @@
+**缺口**:`nontrivialZeros_infinite : {ρ : ℂ | IsNontrivialZero ρ}.Infinite`。钉版 Mathlib `ZetaZeros.lean` 无 `Infinite` 或 $N(T)$ 下界;本仓 `D5/S3/Weil/ZetaRvm` 只有上界计数。其经典来源为 Hardy(1914)临界线上无穷零点或 Riemann–von Mangoldt 计数下界,属解析数论重型载体,不是初等波。
