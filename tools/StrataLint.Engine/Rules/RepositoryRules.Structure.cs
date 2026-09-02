@@ -314,12 +314,19 @@ internal static partial class RepositoryRules
         RuleEvaluationContext context)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        foreach (var (path, file) in context.Current.Files
-                     .Where(static item => item.Key.Value.StartsWith(
+        var paths = context.Changes.Paths
+            .Where(static path => path.Value.StartsWith(
                          DigestionFormalizationReceipt.RootPath,
                          StringComparison.Ordinal))
-                     .Where(item => context.IsBaseFactAffected(item.Key.Value))
-                     .OrderBy(static item => item.Key.Value, StringComparer.Ordinal))
+            .Where(path => context.Baseline.TryGetFile(path.Value, out _)
+                && context.Current.TryGetFile(path.Value, out _))
+            .OrderBy(static path => path.Value, StringComparer.Ordinal)
+            .ToImmutableArray();
+        var inputs = ImmutableArray.CreateBuilder<DigestionFormalizationReceiptTransitionInput>();
+        var inputPaths = ImmutableArray.CreateBuilder<string>();
+        var candidateAtomIds = ImmutableArray.CreateBuilder<string>();
+        var fileAtomIds = ImmutableArray.CreateBuilder<string>();
+        foreach (var path in paths)
         {
             if (!TryGetFormalizationReceiptFileAtomId(path.Value, out var fileAtomId))
             {
@@ -329,12 +336,45 @@ internal static partial class RepositoryRules
                 continue;
             }
 
-            if (!TryGetFormalizationReceiptAtomId(file, out var receiptAtomId)
-                || !string.Equals(receiptAtomId, fileAtomId, StringComparison.Ordinal))
+            try
+            {
+                var baseline = DigestionFormalizationReceipt.LoadTrusted(context.Baseline, path.Value);
+                var candidate = DigestionFormalizationReceipt.Load(context.Current, path.Value);
+                inputs.Add(new DigestionFormalizationReceiptTransitionInput(baseline, candidate));
+                inputPaths.Add(path.Value);
+                candidateAtomIds.Add(candidate.AtomId);
+                fileAtomIds.Add(fileAtomId);
+            }
+            catch (Exception exception) when (exception is not OutOfMemoryException)
             {
                 findings.Add(new RuleFinding(
                     path.Value,
-                    $"formalization receipt atom_id must match filename atom id {fileAtomId}"));
+                    "formalization receipt transition Rejected by schema/shape clause: "
+                    + exception.Message));
+            }
+        }
+
+        var results = DigestionFormalizationReceiptTransition.EvaluateBatch(
+            inputs.ToImmutable(),
+            context.Baseline,
+            context.Current,
+            context.Lean.Report);
+        for (var index = 0; index < results.Length; index++)
+        {
+            if (results[index].Kind == DigestionFormalizationReceiptTransitionKind.Rejected)
+            {
+                findings.Add(new RuleFinding(
+                    inputPaths[index],
+                    "formalization receipt transition Rejected: " + results[index].Clause));
+            }
+            else if (!string.Equals(
+                         candidateAtomIds[index],
+                         fileAtomIds[index],
+                         StringComparison.Ordinal))
+            {
+                findings.Add(new RuleFinding(
+                    inputPaths[index],
+                    $"formalization receipt atom_id must match filename atom id {fileAtomIds[index]}"));
             }
         }
 
@@ -360,30 +400,6 @@ internal static partial class RepositoryRules
 
         atomId = stem;
         return true;
-    }
-
-    private static bool TryGetFormalizationReceiptAtomId(
-        RepositoryFile file,
-        out string atomId)
-    {
-        atomId = string.Empty;
-        try
-        {
-            using var document = JsonDocument.Parse(file.Text);
-            if (document.RootElement.ValueKind != JsonValueKind.Object
-                || !document.RootElement.TryGetProperty("atom_id", out var atomIdElement)
-                || atomIdElement.ValueKind != JsonValueKind.String)
-            {
-                return false;
-            }
-
-            atomId = atomIdElement.GetString() ?? string.Empty;
-            return true;
-        }
-        catch (JsonException)
-        {
-            return false;
-        }
     }
 
     private static ImmutableArray<RuleFinding> DigestionAtomsAppendOnly(

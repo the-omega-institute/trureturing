@@ -66,22 +66,21 @@ internal static class EmitFormalizationReceiptCommand
             var report = leanReportSource.Load(current);
             var extensions = new Dictionary<string, DigestionFormalizationExtension>(StringComparer.Ordinal);
             var canonicalReceiptPath = DigestionFormalizationReceipt.PathForAtom(options.AtomId);
-            var reanchoredPaths = ImmutableHashSet.CreateBuilder<RepoPath>();
+            var protectedBase = options.ReanchorSignature
+                ? Decode(repository.ReadRevision(options.BaselineRevision!))
+                : current;
             DigestionFormalizationReceipt? existingReceipt = null;
             Gid primaryGid;
             DigestionFormalizationSignature signature;
             if (current.TryGetFile(canonicalReceiptPath, out _))
             {
-                var existing = DigestionFormalizationReceipt.Load(current, canonicalReceiptPath);
+                var existing = options.ReanchorSignature
+                    ? DigestionFormalizationReceipt.LoadTrusted(protectedBase, canonicalReceiptPath)
+                    : DigestionFormalizationReceipt.Load(current, canonicalReceiptPath);
                 existingReceipt = existing;
                 if (options.ReanchorSignature)
                 {
-                    RequireReanchorAtomBinding(existing, entry);
                     RequireReanchorPrimaryGidBinding(existing, gids[0]);
-                }
-                else
-                {
-                    RequireExistingReceiptBinding(existing, entry);
                 }
 
                 if (!Gid.TryParse(existing.PrimaryGid, out var existingPrimaryGid))
@@ -92,12 +91,6 @@ internal static class EmitFormalizationReceiptCommand
 
                 primaryGid = existingPrimaryGid;
                 signature = DigestionFormalizationReceipt.ResolveSignature(primaryGid, report);
-                RequireUnchangedSignature(
-                    primaryGid,
-                    signature,
-                    existing.Signature,
-                    options.ReanchorSignature,
-                    reanchoredPaths);
                 foreach (var extension in existing.HostedExtensions)
                 {
                     if (!Gid.TryParse(extension.Gid, out var extensionGid))
@@ -107,12 +100,6 @@ internal static class EmitFormalizationReceiptCommand
                     }
 
                     var currentSignature = DigestionFormalizationReceipt.ResolveSignature(extensionGid, report);
-                    RequireUnchangedSignature(
-                        extensionGid,
-                        currentSignature,
-                        extension.Signature,
-                        options.ReanchorSignature,
-                        reanchoredPaths);
                     extensions.Add(
                         extension.Gid,
                         new DigestionFormalizationExtension(extension.Gid, currentSignature));
@@ -134,14 +121,8 @@ internal static class EmitFormalizationReceiptCommand
                          !string.Equals(gid.Value, primaryGid.Value, StringComparison.Ordinal)))
             {
                 var secondarySignature = DigestionFormalizationReceipt.ResolveSignature(secondaryGid, report);
-                if (extensions.TryGetValue(secondaryGid.Value, out var existing))
+                if (extensions.ContainsKey(secondaryGid.Value))
                 {
-                    RequireUnchangedSignature(
-                        secondaryGid,
-                        secondarySignature,
-                        existing.Signature,
-                        options.ReanchorSignature,
-                        reanchoredPaths);
                     continue;
                 }
 
@@ -157,17 +138,33 @@ internal static class EmitFormalizationReceiptCommand
                 entry.CasRef,
                 entry.Fingerprints.RawSha256,
                 extensions.Values.OrderBy(static extension => extension.Gid, StringComparer.Ordinal).ToImmutableArray());
-            if (existingReceipt is not null && options.ReanchorSignature)
+            if (existingReceipt is not null)
             {
-                RequireReanchorReceiptBinding(existingReceipt, receipt);
-                if (reanchoredPaths.Count > 0)
+                var transition = DigestionFormalizationReceiptTransition.Evaluate(
+                    existingReceipt,
+                    receipt,
+                    protectedBase,
+                    current,
+                    report);
+                if (options.ReanchorSignature
+                    && (transition.Kind == DigestionFormalizationReceiptTransitionKind.HostedAppend
+                        || transition.Clause.Contains("mixed transition", StringComparison.Ordinal)))
                 {
-                    var protectedBase = Decode(repository.ReadRevision(options.BaselineRevision!));
-                    RequireEquivalentPropositionSources(
-                        protectedBase,
-                        current,
-                        report,
-                        reanchoredPaths.ToImmutable());
+                    throw new InvalidOperationException(
+                        "reanchor requires unchanged hosted_extensions gid set");
+                }
+
+                if (transition.Kind == DigestionFormalizationReceiptTransitionKind.Rejected)
+                {
+                    throw new InvalidOperationException(transition.Clause);
+                }
+
+                if (!options.ReanchorSignature
+                    && transition.Kind == DigestionFormalizationReceiptTransitionKind.SignatureReanchor)
+                {
+                    throw new InvalidOperationException(
+                        "existing formalization receipt signature changed for "
+                        + transition.AffectedGids[0]);
                 }
             }
 
@@ -213,72 +210,6 @@ internal static class EmitFormalizationReceiptCommand
         return matches[0];
     }
 
-    private static void RequireExistingReceiptBinding(
-        DigestionFormalizationReceipt receipt,
-        DigestionLedgerEntry entry)
-    {
-        if (!string.Equals(receipt.AtomId, entry.AtomId, StringComparison.Ordinal)
-            || !string.Equals(receipt.CasRef, entry.Fingerprints.RawSha256, StringComparison.Ordinal)
-            || !string.Equals(receipt.RawSha256, entry.Fingerprints.RawSha256, StringComparison.Ordinal))
-        {
-            throw new InvalidOperationException(
-                $"existing formalization receipt conflicts with atom: {entry.AtomId}");
-        }
-    }
-
-    private static void RequireUnchangedSignature(
-        Gid gid,
-        DigestionFormalizationSignature current,
-        DigestionFormalizationSignature pinned,
-        bool reanchorSignature,
-        ImmutableHashSet<RepoPath>.Builder reanchoredPaths)
-    {
-        if (current == pinned)
-        {
-            return;
-        }
-
-        if (!reanchorSignature)
-        {
-            throw new InvalidOperationException(
-                $"existing formalization receipt signature changed for {gid.Value}");
-        }
-
-        if (!string.Equals(current.NameKey, pinned.NameKey, StringComparison.Ordinal))
-        {
-            throw new InvalidOperationException(
-                $"reanchor requires unchanged signature name_key for {gid.Value}");
-        }
-
-        if (!string.Equals(current.Kind, pinned.Kind, StringComparison.Ordinal))
-        {
-            throw new InvalidOperationException(
-                $"reanchor requires unchanged signature kind for {gid.Value}");
-        }
-
-        reanchoredPaths.Add(gid.Path);
-    }
-
-    private static void RequireReanchorAtomBinding(
-        DigestionFormalizationReceipt receipt,
-        DigestionLedgerEntry entry)
-    {
-        if (!string.Equals(receipt.AtomId, entry.AtomId, StringComparison.Ordinal))
-        {
-            throw new InvalidOperationException("reanchor requires unchanged atom_id");
-        }
-
-        if (!string.Equals(receipt.CasRef, entry.Fingerprints.RawSha256, StringComparison.Ordinal))
-        {
-            throw new InvalidOperationException("reanchor requires unchanged cas_ref");
-        }
-
-        if (!string.Equals(receipt.RawSha256, entry.Fingerprints.RawSha256, StringComparison.Ordinal))
-        {
-            throw new InvalidOperationException("reanchor requires unchanged raw_sha256");
-        }
-    }
-
     private static void RequireReanchorPrimaryGidBinding(
         DigestionFormalizationReceipt receipt,
         Gid commandLinePrimaryGid)
@@ -291,71 +222,6 @@ internal static class EmitFormalizationReceiptCommand
             throw new InvalidOperationException(
                 "reanchor requires --gid to equal existing primary_gid: "
                 + receipt.PrimaryGid);
-        }
-    }
-
-    private static void RequireReanchorReceiptBinding(
-        DigestionFormalizationReceipt existing,
-        DigestionFormalizationReceipt replacement)
-    {
-        var existingExtensionGids = existing.HostedExtensions
-            .Select(static extension => extension.Gid)
-            .ToHashSet(StringComparer.Ordinal);
-        var replacementExtensionGids = replacement.HostedExtensions
-            .Select(static extension => extension.Gid)
-            .ToHashSet(StringComparer.Ordinal);
-        if (!existingExtensionGids.SetEquals(replacementExtensionGids))
-        {
-            throw new InvalidOperationException(
-                "reanchor requires unchanged hosted_extensions gid set");
-        }
-    }
-
-    private static void RequireEquivalentPropositionSources(
-        RepositorySnapshot protectedBase,
-        RepositorySnapshot candidate,
-        LeanAxiomReport report,
-        ImmutableHashSet<RepoPath> reanchoredPaths)
-    {
-        var equivalent = false;
-        string? failureDetail = null;
-        try
-        {
-            var baseView = FrozenLedgerBaseViewReader.Read(protectedBase);
-            var truth = DagLedgerCommandPreparation.BuildTruth(candidate, report);
-            var states = LeanTruthStates.Resolve(candidate, truth.Lean);
-            var adjacency = LeanImportAdjacency.Build(candidate, truth.Lean);
-            var candidateCatalog = FrozenContentAddress.BuildAdmissionCatalog(
-                candidate,
-                truth.Lean,
-                states,
-                adjacency,
-                reanchoredPaths,
-                baseView.ActiveByPath);
-            equivalent = LeanPropositionSourceComparer.AreEquivalent(
-                protectedBase,
-                candidate,
-                reanchoredPaths,
-                baseView,
-                candidateCatalog);
-            if (!equivalent)
-            {
-                failureDetail = "Lean proposition source comparer returned false";
-            }
-        }
-        catch (Exception exception) when (exception is not OutOfMemoryException)
-        {
-            failureDetail = exception.Message;
-        }
-
-        if (!equivalent)
-        {
-            throw new InvalidOperationException(
-                "reanchor requires equivalent Lean proposition source for "
-                + string.Join(", ", reanchoredPaths
-                    .OrderBy(static path => path.Value, StringComparer.Ordinal)
-                    .Select(static path => path.Value))
-                + (failureDetail is null ? string.Empty : $": {failureDetail}"));
         }
     }
 
