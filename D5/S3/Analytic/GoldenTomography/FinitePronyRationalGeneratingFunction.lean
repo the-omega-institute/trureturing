@@ -11,10 +11,10 @@ import Mathlib.Analysis.SpecificLimits.Normed
 This module isolates the exact analytic bridge used by finite Prony theory.
 A finite sum of exponential modes has a generating series equal to the finite
 sum of its geometric resolvents. The proof is split into a one-mode geometric
-series, a finite family combination, and the final named generating-series
-identity. The theorem is pointwise on a common disk of convergence. It makes no
-claim about unknown-node recovery, noisy stability, confluent repeated nodes,
-or infinite Hankel operators.
+series, a finite family combination, public summability, and final value
+identification. The theorem is pointwise on a common disk of convergence. It
+makes no claim about unknown-node recovery, noisy stability, confluent repeated
+nodes, or infinite Hankel operators.
 -/
 
 /- Library-search audit trail (2026-09-02):
@@ -48,10 +48,15 @@ def finitePronyConvergesAt {m : ℕ}
     (nodes : Fin m → ℂ) (z : ℂ) : Prop :=
   ∀ j, ‖nodes j * z‖ < 1
 
+/-- The `n`th term of the finite Prony generating series at `z`. -/
+def finitePronySeriesTerm {m : ℕ}
+    (nodes weights : Fin m → ℂ) (z : ℂ) (n : ℕ) : ℂ :=
+  finitePronyMoment nodes weights n * z ^ n
+
 /-- The generating series of the finite Prony moment sequence. -/
 def finitePronyGeneratingSeries {m : ℕ}
     (nodes weights : Fin m → ℂ) (z : ℂ) : ℂ :=
-  ∑' n : ℕ, finitePronyMoment nodes weights n * z ^ n
+  ∑' n : ℕ, finitePronySeriesTerm nodes weights z n
 
 /-- The finite sum of geometric resolvents attached to the same modes. -/
 def finitePronyRationalFunction {m : ℕ}
@@ -83,15 +88,24 @@ private theorem finite_prony_finite_sum_hasSum
   exact finite_prony_mode_resolvent_hasSum
     nodes weights z j (hConverges j)
 
-private theorem finite_prony_rational_generating_function_hasSum
+private theorem finite_prony_series_hasSum
     {m : ℕ} (nodes weights : Fin m → ℂ) (z : ℂ)
     (hConverges : finitePronyConvergesAt nodes z) :
     HasSum
-      (fun n : ℕ => finitePronyMoment nodes weights n * z ^ n)
+      (finitePronySeriesTerm nodes weights z)
       (finitePronyRationalFunction nodes weights z) := by
-  simpa [finitePronyMoment, finitePronyRationalFunction,
-    Finset.sum_mul, mul_pow, mul_assoc] using
+  simpa [finitePronySeriesTerm, finitePronyMoment,
+    finitePronyRationalFunction, Finset.sum_mul, mul_pow, mul_assoc] using
     (finite_prony_finite_sum_hasSum nodes weights z hConverges)
+
+/-- On the common geometric disk, the finite Prony generating series is
+summable. This separates the convergence obligation from identification of its
+sum. -/
+theorem finite_prony_generating_series_summable
+    {m : ℕ} (nodes weights : Fin m → ℂ) (z : ℂ)
+    (hConverges : finitePronyConvergesAt nodes z) :
+    Summable (finitePronySeriesTerm nodes weights z) :=
+  (finite_prony_series_hasSum nodes weights z hConverges).summable
 
 /-- Formula (1295.1--1295.2): on every point where all modal geometric
 series converge, the generating series of the finite Prony moments is exactly
@@ -101,26 +115,38 @@ theorem finite_prony_rational_generating_function
     (hConverges : finitePronyConvergesAt nodes z) :
     finitePronyGeneratingSeries nodes weights z =
       finitePronyRationalFunction nodes weights z := by
-  change
-    (∑' n : ℕ, finitePronyMoment nodes weights n * z ^ n) =
-      finitePronyRationalFunction nodes weights z
-  exact (finite_prony_rational_generating_function_hasSum
-    nodes weights z hConverges).tsum_eq
+  unfold finitePronyGeneratingSeries
+  exact (finite_prony_series_hasSum nodes weights z hConverges).tsum_eq
 
 -- A concrete one-mode witness shows that the convergence hypotheses are
--- inhabited and that the public equality specializes to a nonzero resolvent.
+-- inhabited, that the series is summable, and that the public equality
+-- specializes to a nonzero resolvent.
 example :
-    finitePronyGeneratingSeries
-        (fun _ : Fin 1 => (0 : ℂ))
-        (fun _ : Fin 1 => (1 : ℂ))
-        (1 : ℂ) = 1 := by
-  have h := finite_prony_rational_generating_function
-    (fun _ : Fin 1 => (0 : ℂ))
-    (fun _ : Fin 1 => (1 : ℂ))
-    (1 : ℂ)
-    (by simp [finitePronyConvergesAt])
-  simpa [finitePronyRationalFunction] using h
+    Summable
+        (finitePronySeriesTerm
+          (fun _ : Fin 1 => (0 : ℂ))
+          (fun _ : Fin 1 => (1 : ℂ))
+          (1 : ℂ)) ∧
+      finitePronyGeneratingSeries
+          (fun _ : Fin 1 => (0 : ℂ))
+          (fun _ : Fin 1 => (1 : ℂ))
+          (1 : ℂ) = 1 := by
+  have hConverges :
+      finitePronyConvergesAt
+        (fun _ : Fin 1 => (0 : ℂ)) (1 : ℂ) := by
+    simp [finitePronyConvergesAt]
+  constructor
+  · exact finite_prony_generating_series_summable
+      (fun _ : Fin 1 => (0 : ℂ))
+      (fun _ : Fin 1 => (1 : ℂ))
+      (1 : ℂ) hConverges
+  · have h := finite_prony_rational_generating_function
+      (fun _ : Fin 1 => (0 : ℂ))
+      (fun _ : Fin 1 => (1 : ℂ))
+      (1 : ℂ) hConverges
+    simpa [finitePronyRationalFunction] using h
 
+#print axioms finite_prony_generating_series_summable
 #print axioms finite_prony_rational_generating_function
 
 end D5.S3.Analytic.GoldenTomography.FinitePronyRationalGeneratingFunction
