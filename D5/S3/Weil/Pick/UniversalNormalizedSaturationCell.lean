@@ -52,7 +52,7 @@ function, contact phase, and interior contact location, normalized unit-phase
 contact has the universal indefinite two-point Pick relation. -/
 theorem universal_normalized_saturation_cell
     (schurCandidate : Real -> Real -> Nat ->
-      (Complex -> Complex) -> Circle -> Complex -> Complex)
+      (Complex -> Complex) -> Circle -> Complex.UnitDisc -> Complex)
     (contactPoint : Real -> Real -> Nat ->
       (Complex -> Complex) -> Circle -> Complex.UnitDisc)
     (hzero : forall zeroHeight offlineDistance zeroMultiplicity
@@ -70,9 +70,10 @@ theorem universal_normalized_saturation_cell
         completedFunction contactPhase
       let a := contactPoint zeroHeight offlineDistance zeroMultiplicity
         completedFunction contactPhase
-      let pickKernel : Complex -> Complex -> Complex := fun z w =>
-        (1 - schur z * conj (schur w)) / (1 - z * conj w)
-      let points : Fin 2 -> Complex := ![0, a]
+      let pickKernel : Complex.UnitDisc -> Complex.UnitDisc -> Complex := fun z w =>
+        (1 - schur z * conj (schur w)) /
+          (1 - (z : Complex) * conj (w : Complex))
+      let points : Fin 2 -> Complex.UnitDisc := ![(0 : Complex.UnitDisc), a]
       let relation : Matrix (Fin 2) (Fin 2) Complex := fun i j =>
         pickKernel (points i) (points j)
       relation = !![(1 : Complex), 1; 1, 0] /\
@@ -89,22 +90,33 @@ theorem universal_normalized_saturation_cell
     exact hcontact zeroHeight offlineDistance zeroMultiplicity completedFunction contactPhase
   have hrelation :
       (fun i j : Fin 2 =>
-        (1 - schur (![0, (a : Complex)] i) *
-          conj (schur (![0, (a : Complex)] j))) /
-          (1 - (![0, (a : Complex)] i) *
-            conj (![0, (a : Complex)] j))) =
+        (1 - schur (![(0 : Complex.UnitDisc), a] i) *
+          conj (schur (![(0 : Complex.UnitDisc), a] j))) /
+          (1 - ((![(0 : Complex.UnitDisc), a] i : Complex.UnitDisc) : Complex) *
+            conj ((![(0 : Complex.UnitDisc), a] j : Complex.UnitDisc) : Complex))) =
         !![(1 : Complex), 1; 1, 0] := by
     ext i j
     fin_cases i <;> fin_cases j <;>
       simp [hschurZero, hschurContact, Complex.mul_conj, Circle.normSq_coe]
-  let normalized : Complex -> Complex := fun z =>
+  let normalized : Complex.UnitDisc -> Complex := fun z =>
     conj (contactPhase : Complex) * schur z
   have hnormalizedZero : normalized 0 = 0 := by
     simp [normalized, hschurZero]
   have hnormalizedContact : normalized a = 1 := by
     simp [normalized, hschurContact, <- Complex.normSq_eq_conj_mul_self]
-  have hvisible := minimal_relational_visibility normalized a
-    hnormalizedZero hnormalizedContact
+  let extended : Complex -> Complex :=
+    Function.extend ((↑) : Complex.UnitDisc -> Complex) normalized 0
+  have hextendedAt (z : Complex.UnitDisc) :
+      extended (z : Complex) = normalized z := by
+    simpa [extended] using
+      Complex.UnitDisc.coe_injective.extend_apply normalized 0 z
+  have hextendedZero : extended 0 = 0 := by
+    change extended ((0 : Complex.UnitDisc) : Complex) = 0
+    rw [hextendedAt, hnormalizedZero]
+  have hextendedContact : extended a = 1 := by
+    rw [hextendedAt, hnormalizedContact]
+  have hvisible := minimal_relational_visibility extended a
+    hextendedZero hextendedContact
   have hfibonacciNot :
       Not (Matrix.PosSemidef !![(1 : Complex), 1; 1, 0]) := by
     intro hpositive

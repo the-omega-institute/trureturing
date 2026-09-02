@@ -43,10 +43,11 @@ internal sealed class UniversalNormalizedSaturationCellDocument : IScribeDocumen
         Formula circle = Call("Circle");
         Formula disk = Call("UnitDisc");
         Formula complexFunction = Arrow(complex, complex);
+        Formula diskFunction = Arrow(disk, complex);
         Formula schurFamily = Arrow(
             real,
             Arrow(real, Arrow(natural,
-                Arrow(complexFunction, Arrow(circle, complexFunction)))));
+                Arrow(complexFunction, Arrow(circle, diskFunction)))));
         Formula pointFamily = Arrow(
             real,
             Arrow(real, Arrow(natural,
