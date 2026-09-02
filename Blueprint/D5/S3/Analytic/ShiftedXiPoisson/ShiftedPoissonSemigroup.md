@@ -22,7 +22,7 @@ The Poisson kernel is the scaled half-Cauchy probability measure, and convolutio
 
 The named shiftedPhaseFourier carrier evaluates the characteristic function at minus t, exactly matching the source convention. Its factorization is exp(-omega times abs(t)) times the independently defined finite zero sum Q_T; Q_T contains the delta and ordinate factors and has no omega parameter. The main equality is proved through this certificate.
 
-The canonicalShiftedZeroWindow constructor takes the finite set of all canonical xi zeros with ordinates in (0,T], and analytic order provides multiplicity. If that window contains an actual xi zero, the supporting noncollapse theorem separates the densities at any two distinct admissible shifts. No Riemann-hypothesis or inverse-positivity premise occurs in either public equality leaf.
+The canonicalShiftedZeroWindow constructor takes the finite set of all canonical xi zeros with ordinates in (0,T], and analytic order provides multiplicity. The local library does not exhibit a concrete zeta zero, so the supporting noncollapse theorem states the source-grounded window-nonemptiness condition explicitly and then separates a concrete pair of densities without caller-supplied zero coordinates. No Riemann-hypothesis or inverse-positivity premise occurs in either public equality leaf.
 
 ## References
 
