@@ -1,4 +1,5 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S1.Depth.ContinuedFractions;
 
@@ -23,6 +24,9 @@ internal sealed class FiniteTerminationApproximationDocument : IScribeDocumentDe
 
         Formula Positive(Formula value) =>
             new Formula.Relation(zero, FormulaRelationOperator.LessThan, value);
+
+        Formula Lambda(Formula binder, Formula body) =>
+            F.Seq(F.Open, binder, F.Sp, F.Mapsto, F.Sp, body, F.Close);
 
         var product = Multiply(q, x);
         var integerErrorDefinition = new Formula.BindMany(
@@ -72,7 +76,7 @@ internal sealed class FiniteTerminationApproximationDocument : IScribeDocumentDe
                     FormulaLogicOperator.Implies,
                     Positive(FiniteError(Q, x)))));
         var infiniteApproximation = Equal(
-            Call("liminfAtTop", FiniteError(Q, x)),
+            Call("liminfAtTop", Lambda(Q, FiniteError(Q, x))),
             zero);
         var theoremStatement = new Formula.Bind(
             FormulaQuantifier.ForAll,

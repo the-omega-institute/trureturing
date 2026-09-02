@@ -30,7 +30,7 @@ At a positive level Q this is the finite minimum over denominators from one thro
 
 **Theorem 1.3 (Finite termination and infinite approximation).**
 
-$$\forall x \in R,\; \left(x \in Q \Leftrightarrow \left(\exists Q \in N,\; 0 < Q \land \operatorname{finiteApproximationError}\left(Q, x\right) = 0\right)\right) \land \left(\left(\operatorname{Irrational}\left(x\right) \Rightarrow \left(\forall Q \in N,\; 0 < Q \Rightarrow 0 < \operatorname{finiteApproximationError}\left(Q, x\right)\right)\right) \land \operatorname{liminfAtTop}\left(\operatorname{finiteApproximationError}\left(Q, x\right)\right) = 0\right)$$
+$$\forall x \in R,\; \left(x \in Q \Leftrightarrow \left(\exists Q \in N,\; 0 < Q \land \operatorname{finiteApproximationError}\left(Q, x\right) = 0\right)\right) \land \left(\left(\operatorname{Irrational}\left(x\right) \Rightarrow \left(\forall Q \in N,\; 0 < Q \Rightarrow 0 < \operatorname{finiteApproximationError}\left(Q, x\right)\right)\right) \land \operatorname{liminfAtTop}\left((Q \mapsto \operatorname{finiteApproximationError}\left(Q, x\right))\right) = 0\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Depth/ContinuedFractions/FiniteTerminationApproximation.finite_termination_and_infinite_approximation` (`✓ std3`). ∎
 
