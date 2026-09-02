@@ -1,0 +1,51 @@
+# 第一千八百零七部　Li 相位测度就是 \(\alpha=1\) Clark 测度
+
+由定义：
+
+$$
+\boxed{
+\mathcal C_\xi(z)
+=
+\frac{1+\mathfrak s_\xi(z)}
+{1-\mathfrak s_\xi(z)}.
+}
+\tag{1807.1}
+$$
+
+而 Clark 理论正是通过：
+
+$$
+\Re
+\frac{\alpha+\mathfrak s(z)}
+{\alpha-\mathfrak s(z)}
+$$
+
+构造 Schur 函数的边界正测度；在 \(\alpha=1\) 时，上式就是 \(\mathcal C_\xi\)。Clark 测度及其模型空间酉表示是该理论的标准结构。([语义学者][3])
+
+因此，RH 成立时：
+
+$$
+\boxed{
+\mu_\xi
+=
+\frac1{2\lambda_1}
+\sum_\rho
+\frac{m_\rho}{|\rho|^2}
+\delta_{\omega_\rho}
+}
+\tag{1807.2}
+$$
+
+不是一个后来附加的零点测度。
+
+它正是：
+
+$$
+\boxed{
+\mathfrak s_\xi
+\text{ 的 }\alpha=1\text{ Aleksandrov–Clark 测度}.
+}
+$$
+
+---
+

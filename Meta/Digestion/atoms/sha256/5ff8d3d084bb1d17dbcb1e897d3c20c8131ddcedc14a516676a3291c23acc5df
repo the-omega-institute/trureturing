@@ -1,0 +1,64 @@
+# 第一千八百一十八部　RH 下 Li 相位动力是复现的，不是热混合的
+
+RH 成立时：
+
+$$
+\boxed{
+c_n
+=
+\sum_jw_j\zeta_j^n,
+}
+\tag{1818.1}
+$$
+
+其中：
+
+$$
+w_j>0,
+\qquad
+\sum_jw_j=1,
+\qquad
+|\zeta_j|=1.
+$$
+
+因为权重绝对可和，有限截断：
+
+$$
+\sum_{j=1}^{M}w_j\zeta_j^n
+$$
+
+在 \(n\in\mathbb Z\) 上一致逼近 \(c_n\)。
+
+所以：
+
+$$
+\boxed{
+(c_n)
+\text{ 是 Bohr almost-periodic sequence}.
+}
+\tag{1818.2}
+$$
+
+它是纯相位复现，而不是衰减到零的混合相关函数。
+
+进一步，合并相同节点后的权重记为 \(W_\zeta\)，则：
+
+$$
+\boxed{
+\lim_{N\to\infty}
+\frac1N
+\sum_{n=0}^{N-1}
+|c_n|^2
+=
+\sum_\zeta W_\zeta^2
+>0.
+}
+\tag{1818.3}
+$$
+
+所以 exact Li phase state 始终保留非零平均平方复现。
+
+项目已机器证明时间平移在有限谱纤维上恰等于对 modal amplitudes 作对角乘法，并满足精确半群律；这正是式 (1818.1) 的有限模式载体。
+
+---
+

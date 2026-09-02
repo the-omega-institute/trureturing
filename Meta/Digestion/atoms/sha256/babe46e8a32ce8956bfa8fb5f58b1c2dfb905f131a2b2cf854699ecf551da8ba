@@ -1,0 +1,30 @@
+## 1818.1 黑洞热类比的再次校准
+
+内部 Poisson 响应：
+
+$$
+\Re L_\xi\!\left(\frac12+x+iy\right)
+$$
+
+是平滑的。
+
+但其边界源测度：
+
+$$
+\sum_\gamma m_\gamma\delta_\gamma
+$$
+
+是离散的。
+
+所以：
+
+$$
+\boxed{
+\text{连续“辐射场”来自 Poisson 粗化；
+精确谱状态仍然是纯点、酉、可复现的。}
+}
+$$
+
+因此 Hawking-like 语言适用于：
+
+* 径向 Poisson 平滑；

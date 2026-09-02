@@ -1,0 +1,50 @@
+## 1900.2 projected holonomy
+
+设 \(P_p\) 是第 \(p\) 个局部可见／物理子空间投影，定义：
+
+$$
+\widehat T_{q\leftarrow p}
+=
+P_qT_{q\leftarrow p}P_p.
+$$
+
+则一般：
+
+$$
+\widehat T_{r\leftarrow q}
+\widehat T_{q\leftarrow p}
+\neq
+\widehat T_{r\leftarrow p}.
+$$
+
+定义三角回路缺陷：
+
+$$
+\boxed{
+\Omega_{pqr}
+=
+\widehat T_{p\leftarrow r}
+\widehat T_{r\leftarrow q}
+\widehat T_{q\leftarrow p}
+-
+P_p.
+}
+\tag{1900.3}
+$$
+
+这才是 cross-prime curvature 的合理候选。
+
+所以磁单极子式 holonomy 若要进入 Riemann 理论，不能来自局部 Euler determinant，也不能来自未投影 full frames。
+
+它必须来自：
+
+$$
+\boxed{
+\text{不同局部正完成经过投影、约化后无法全局平坦胶合。}
+}
+$$
+
+目前尚未证明 \(\Omega_{pqr}\) 与离线零点除子相同。
+
+---
+

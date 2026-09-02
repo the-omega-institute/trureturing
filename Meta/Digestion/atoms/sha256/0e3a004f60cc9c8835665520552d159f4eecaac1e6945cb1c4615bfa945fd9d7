@@ -1,0 +1,52 @@
+## 1849.1 要读取重数，必须加入喷流
+
+若 \(\rho\) 是 \(m\) 重零点：
+
+$$
+L_\xi(s)
+=
+\frac{m}{s-\rho}+O(1).
+$$
+
+尺度 \(a\) 的 arithmetic Schur function 在：
+
+$$
+z_{a,\rho}
+$$
+
+附近满足：
+
+$$
+\boxed{
+\mathfrak s_a(z)
+=
+1-
+\frac{
+4aA(a)
+}{
+m(1-z_{a,\rho})^2
+}
+(z-z_{a,\rho})
++
+O((z-z_{a,\rho})^2).
+}
+\tag{1849.1}
+$$
+
+因此重数进入接触导数，而不是进入零阶值：
+
+$$
+\mathfrak s_a(z_{a,\rho})=1.
+$$
+
+必须使用：
+
+* confluent Pick matrix；
+* derivative evaluation；
+* model-space dimension；
+* shifted Blaschke degree；
+
+才能恢复 \(m\)。
+
+---
+

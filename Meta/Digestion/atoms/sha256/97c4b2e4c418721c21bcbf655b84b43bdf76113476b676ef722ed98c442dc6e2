@@ -1,0 +1,85 @@
+## 1792.1 多尺度 Li 曲率权重
+
+可直接定义尺度 \(a\) 的曲率模式和：
+
+$$
+\boxed{
+d_n^{(a)}
+=
+\sum_\rho
+W_{a,\rho}
+\omega_{a,\rho}^{\,n},
+}
+\tag{1792.3}
+$$
+
+其中：
+
+$$
+\boxed{
+W_{a,\rho}
+=
+\frac{
+4a^2
+}{
+a^2-
+\left(
+\rho-\frac12
+\right)^2
+}.
+}
+\tag{1792.4}
+$$
+
+该公式来自广义 Li 和
+
+$$
+\sum_\rho
+\left(
+1-\omega_{a,\rho}^{\,n}
+\right)
+$$
+
+的二阶差分；即使不先建立广义 Li 系数，也可把式 (1792.3) 直接作为绝对收敛更好的 curvature profile。
+
+若 RH 成立：
+
+$$
+\rho-\frac12=i\gamma,
+$$
+
+则：
+
+$$
+\boxed{
+W_{a,\rho}
+=
+\frac{4a^2}{a^2+\gamma^2}
+>0.
+}
+\tag{1792.5}
+$$
+
+而且：
+
+$$
+\boxed{
+W_{a,\rho}
+=
+4\pi a\,P_a(\gamma).
+}
+\tag{1792.6}
+$$
+
+因此尺度 \(a\) 的 Li–Clark 状态，是按 Poisson 窗口 \(P_a\) 对临界零点进行加权后，投射到相位圆上的正谱状态。
+
+标准 Li 系数只是：
+
+$$
+a=\frac12
+$$
+
+这一张图表。
+
+---
+

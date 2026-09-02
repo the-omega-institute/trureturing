@@ -1,0 +1,59 @@
+# 第一千八百零六部　算术 Schur 函数
+
+定义：
+
+$$
+\boxed{
+\mathfrak s_\xi(z)
+=
+\frac{
+\mathcal C_\xi(z)-1
+}{
+\mathcal C_\xi(z)+1
+}.
+}
+\tag{1806.1}
+$$
+
+代入式 (1801.6)：
+
+$$
+\boxed{
+\mathfrak s_\xi(z)
+=
+\frac{
+L_\xi(s)-\lambda_1
+}{
+L_\xi(s)+\lambda_1
+},
+\qquad
+s=\frac1{1-z}.
+}
+\tag{1806.2}
+$$
+
+因为：
+
+$$
+L_\xi(1)=\lambda_1,
+$$
+
+所以：
+
+$$
+\boxed{
+\mathfrak s_\xi(0)=0.
+}
+\tag{1806.3}
+$$
+
+由 Cayley 变换：
+
+$$
+\Re\mathcal C_\xi(z)>0
+\iff
+|\mathfrak s_\xi(z)|<1.
+$$
+
+因此：
+

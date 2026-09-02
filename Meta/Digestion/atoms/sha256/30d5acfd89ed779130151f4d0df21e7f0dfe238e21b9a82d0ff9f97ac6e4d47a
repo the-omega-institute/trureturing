@@ -1,0 +1,104 @@
+# 第一千八百四十四部　算术 Nevanlinna Gram 就是 canonical energy Gram
+
+设 \(\Psi(x,z)\) 是对应 canonical system 的 Weyl 解。
+
+标准 Lagrange 恒等式给出：
+
+$$
+\boxed{
+\frac{
+m_\xi(z)-\overline{m_\xi(w)}
+}{
+z-\overline w
+}
+=
+\int_0^\infty
+\Psi(x,w)^*
+H_\xi(x)
+\Psi(x,z)
+\,dx.
+}
+\tag{1844.1}
+$$
+
+右侧显然是 Gram 核。
+
+所以：
+
+$$
+\boxed{
+\text{Nevanlinna kernel positivity}
+=
+\text{canonical Hamiltonian 能量正性}.
+}
+\tag{1844.2}
+$$
+
+换回 \(s,t\) 坐标以后，这正对应前文的算术核：
+
+$$
+\boxed{
+\mathcal N_\xi(s,t)
+=
+\frac{
+L_\xi(s)+\overline{L_\xi(t)}
+}{
+s+\overline t-1
+}.
+}
+\tag{1844.3}
+$$
+
+因此此前提出的：
+
+$$
+\mathcal N_\xi(s,t)
+=
+\langle V_t,V_s\rangle
+$$
+
+并不只是寻找某个抽象 feature map。
+
+更具体的目标是寻找：
+
+$$
+\boxed{
+V_s(x)
+=
+H_\xi(x)^{1/2}
+\Psi(x,z_s).
+}
+$$
+
+于是：
+
+$$
+\boxed{
+\mathcal N_\xi(s,t)
+=
+\int
+V_t(x)^*V_s(x)\,dx.
+}
+\tag{1844.4}
+$$
+
+仓库已经机器证明，Cayley 变换下 de Branges 与 Nevanlinna kernels 通过可逆对角 gauge 相联，而且有限 Gram 正性双向等价。
+
+所以现在主桥可以重新命名为：
+
+$$
+\boxed{
+\textbf{Prime–Gamma Canonical Hamiltonian Construction}.
+}
+$$
+
+一旦从算术数据构造出：
+
+$$
+H_\xi(x)\succeq0,
+$$
+
+RH 自动成立。
+
+---
+

@@ -1,0 +1,34 @@
+## 定理 1787.1（Li curvature phase expansion）
+
+$$
+\boxed{
+d_n
+=
+\sum_\rho
+\frac{
+\omega_\rho^n
+}{
+\rho(1-\rho)
+}.
+}
+\tag{1787.4}
+$$
+
+因此 Li 二阶差分确实是一条离散时间信号：
+
+$$
+\boxed{
+\text{mode}
+=
+\omega_\rho,
+\qquad
+\text{amplitude}
+=
+\frac1{\rho(1-\rho)}.
+}
+$$
+
+这正是项目 Li–Clark Toeplitz 序列背后的零点级时间模型。
+
+---
+

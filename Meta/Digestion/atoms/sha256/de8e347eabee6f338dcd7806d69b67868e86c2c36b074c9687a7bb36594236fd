@@ -1,0 +1,35 @@
+* 全局 RH 仍然不自动成立。
+
+真正需要构造的是一个共同 Hilbert 空间和 feature family：
+
+$$
+\boxed{
+\mathcal N_\xi(s,t)
+=
+\frac{
+L_\xi(s)+\overline{L_\xi(t)}
+}{
+s+\overline t-1
+}
+=
+\langle V_t,V_s\rangle.
+}
+\tag{1921.2}
+$$
+
+或更强地构造完全正映射：
+
+$$
+\boxed{
+\Phi_\xi:
+\mathcal A_{\mathrm{prime}}
+\longrightarrow
+B(\mathcal H_{\mathrm{arith}}).
+}
+\tag{1921.3}
+$$
+
+一旦是完全正映射，所有矩阵层关系自动正半定。
+
+---
+

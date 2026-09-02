@@ -1,0 +1,55 @@
+# 第一千八百一十一部　Schwarz–Li 标量判据
+
+由于：
+
+$$
+K(0,0)=1,
+\qquad
+K(0,z)=K(z,0)=1,
+$$
+
+有：
+
+$$
+\begin{aligned}
+\det
+\begin{pmatrix}
+K(0,0)&K(0,z)\\
+K(z,0)&K(z,z)
+\end{pmatrix}
+&=
+\frac{1-|\mathfrak s_\xi(z)|^2}
+{1-|z|^2}
+-1\\
+&=
+\frac{
+|z|^2-
+|\mathfrak s_\xi(z)|^2
+}{
+1-|z|^2
+}.
+\end{aligned}
+\tag{1811.1}
+$$
+
+所以二点 Pick 正性恰等于：
+
+$$
+\boxed{
+|\mathfrak s_\xi(z)|
+\le
+|z|.
+}
+\tag{1811.2}
+$$
+
+这就是带归一化：
+
+$$
+\mathfrak s_\xi(0)=0
+$$
+
+的 Schwarz 引理。
+
+因此得到一个非常短的标量判据：
+

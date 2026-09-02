@@ -1,0 +1,63 @@
+# 第一千八百一十三部　Nevanlinna 核的零点 Gram 分解
+
+定义右半平面 Nevanlinna 核：
+
+$$
+\boxed{
+\mathcal N_\xi(s,t)
+=
+\frac{
+L_\xi(s)+\overline{L_\xi(t)}
+}{
+s+\overline t-1
+},
+\qquad
+\Re s,\Re t>\frac12.
+}
+\tag{1813.1}
+$$
+
+在圆盘坐标中：
+
+$$
+1-z\overline w
+=
+\frac{
+s+\overline t-1
+}{
+s\overline t
+}.
+$$
+
+因此 Carathéodory 核：
+
+$$
+\frac{
+\mathcal C_\xi(z)+
+\overline{\mathcal C_\xi(w)}
+}{
+1-z\overline w
+}
+$$
+
+与 \(\mathcal N_\xi\) 只相差可逆的对角 gauge：
+
+$$
+\boxed{
+\frac{
+\mathcal C_\xi(z)+
+\overline{\mathcal C_\xi(w)}
+}{
+1-z\overline w
+}
+=
+\frac{s\overline t}{\lambda_1}
+\mathcal N_\xi(s,t).
+}
+\tag{1813.2}
+$$
+
+仓库在 2026 年 9 月 2 日最新 formalization 中，已经机器证明了这一类 Cayley–Nevanlinna 与 de Branges 核之间的精确对角 gauge 恒等式，以及有限 Gram 正性的双向等价；同时也明确证明了 gauge 分母非消失不可省略。
+
+---
+

@@ -1,0 +1,59 @@
+# 第一千九百零二部　标量完成可以抹去 \(\varphi\)，但关系核会把它重新显现
+
+现在可以解释一个此前反复出现的现象。
+
+局部生成历史中存在黄金因子：
+
+$$
+\mathfrak S,\quad\mathfrak C.
+$$
+
+完成后只剩：
+
+$$
+\mathfrak I=\mathfrak S\mathfrak C,
+$$
+
+而 \(\mathfrak I\) 不含 \(\varphi\)。
+
+同样地，局部 prime frame relations 可以完全被 determinant 抹去：
+
+$$
+\det(I-xD_p)
+$$
+
+不记录 \(F_q^{-1}F_p\)。
+
+但当我们重新要求一个共同 Gram kernel 时，被抹去的关系必须重新出现。
+
+若关系可以正胶合，得到：
+
+$$
+K\succeq0.
+$$
+
+若不能，最小二点裂口重新显现为：
+
+$$
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix},
+$$
+
+黄金谱随之重新出现。
+
+因此：
+
+$$
+\boxed{
+\text{黄金不是 scalar completion 的显式参数；
+它是被 scalar completion 遗忘的最小关系在重建时产生的谱。}
+}
+\tag{1902.1}
+$$
+
+这可能是目前对“为什么 \(\zeta\) 本身看不到黄金，而向前、向后推理却总遇到黄金”的最清楚解释。
+
+---
+

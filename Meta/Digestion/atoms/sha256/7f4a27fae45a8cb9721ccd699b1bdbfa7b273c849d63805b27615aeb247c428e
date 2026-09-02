@@ -1,0 +1,73 @@
+# 第一千八百零八部　其他 Clark 相位是 \(L_\xi\) 的等势线
+
+取：
+
+$$
+\alpha=e^{i\vartheta}\neq1.
+$$
+
+方程：
+
+$$
+\mathfrak s_\xi(z)=\alpha
+$$
+
+等价于：
+
+$$
+\frac{L-\lambda_1}{L+\lambda_1}
+=
+\alpha.
+$$
+
+解得：
+
+$$
+\boxed{
+L
+=
+\lambda_1
+\frac{1+\alpha}{1-\alpha}
+=
+i\lambda_1
+\cot\frac{\vartheta}{2}.
+}
+\tag{1808.1}
+$$
+
+所以不同 Clark observer 并不是在观察不同的 completed function。
+
+它们选择的是 \(L_\xi\) 的不同纯虚等势值。
+
+特别地：
+
+$$
+\alpha=1
+$$
+
+对应 \(L_\xi=\infty\)，即 \(\xi\) 的零点；
+
+$$
+\alpha=-1
+$$
+
+对应：
+
+$$
+L_\xi=0,
+$$
+
+即 \(\xi'\) 的零点。
+
+因此：
+
+$$
+\boxed{
+\text{\(\xi\) 零点只是完整 Clark phase family 中的一个相位切片。}
+}
+$$
+
+在 RH 成立时，全部 Clark 相位切片都由同一个正 Schur 系统承载于临界边界；不同相位改变观察基，不改变底层正性。
+
+---
+

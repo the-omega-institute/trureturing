@@ -1,0 +1,43 @@
+## 1910.1 黄金比例是离正锥的精确距离
+
+因此：
+
+$$
+\boxed{
+\operatorname{dist}_{\mathrm{op}}
+\left(
+\mathbb F,\operatorname{PSD}_2
+\right)
+=
+\varphi^{-1}.
+}
+\tag{1910.8}
+$$
+
+由于负部分只有秩 \(1\)，Frobenius 距离同样为：
+
+$$
+\boxed{
+\operatorname{dist}_{F}
+\left(
+\mathbb F,\operatorname{PSD}_2
+\right)
+=
+\varphi^{-1}.
+}
+\tag{1910.9}
+$$
+
+所以：
+
+$$
+\boxed{
+\varphi^{-1}
+}
+$$
+
+不仅是一个负本征值。
+
+它还是：
+
+* 最小正修复成本；

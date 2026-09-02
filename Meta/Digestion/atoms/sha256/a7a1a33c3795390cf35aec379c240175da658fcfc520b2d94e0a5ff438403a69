@@ -1,0 +1,85 @@
+## 1805.1 一般观察尺度
+
+对任意：
+
+$$
+a>0,
+$$
+
+定义：
+
+$$
+\boxed{
+\omega_{a,\gamma}
+=
+\frac{i\gamma-a}{i\gamma+a}.
+}
+\tag{1805.5}
+$$
+
+若：
+
+$$
+\omega_{a,\gamma}
+=
+e^{i\theta_a(\gamma)},
+$$
+
+则：
+
+$$
+\boxed{
+-\theta_a'(\gamma)
+=
+\frac{2a}{a^2+\gamma^2}
+=
+2\pi P_a(\gamma).
+}
+\tag{1805.6}
+$$
+
+所以所有 Cayley 观察者都在用 Poisson harmonic measure 对同一零点集合重新加权。
+
+定义：
+
+$$
+\boxed{
+\mathcal C_{\xi,a}(z)
+=
+\frac{
+L_\xi\!\left(
+\frac12+
+a\frac{1+z}{1-z}
+\right)
+}{
+L_\xi(\frac12+a)
+}.
+}
+\tag{1805.7}
+$$
+
+若 RH 成立，它的正相位测度为：
+
+$$
+\boxed{
+\mu_{\xi,a}
+=
+\frac1{L_\xi(\frac12+a)}
+\sum_\gamma
+m_\gamma
+\frac{a}{a^2+\gamma^2}
+\delta_{\omega_{a,\gamma}}.
+}
+\tag{1805.8}
+$$
+
+标准 Li 图表就是：
+
+$$
+a=\frac12.
+$$
+
+在这个尺度上，传统未归一化 Li 权重恰好直接等于相位 Jacobian；这给 \(1/2\) 一个比“习惯归一化”更结构性的解释。
+
+---
+

@@ -1,0 +1,23 @@
+## Schur 安全版本
+
+从 prime–Gamma 数据直接证明：
+
+$$
+\boxed{
+|\kappa_n|<1
+\qquad
+\forall n.
+}
+\tag{1798.4}
+$$
+
+黄金强化：
+
+$$
+|\kappa_n|^2\le\varphi^{-1}
+$$
+
+提供显式统一安全带，但明显强于 RH 所需。
+
+---
+

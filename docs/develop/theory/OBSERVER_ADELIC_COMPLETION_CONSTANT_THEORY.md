@@ -173808,3 +173808,10693 @@ Cuntz 代数只记录一套名字怎样不断分支。
 \(\varphi^2\) 是这些历史之间关系的增长率；
 离线零点则是在 Riemann 完成中出现的一块本不应存在的 branch correspondence。}
 $$
+以下先补全上一轮未完成的形式化尾部，再继续推进。
+
+```text
+D5/S3/Observer/DepthBreadthObservability/
+  TemporalObservationAlgebra.lean
+  MultiplicityCommutant.lean
+  ObservationDepthKernel.lean
+  ObservationBreadthKernel.lean
+  DepthBreadthKernelMonotone.lean
+  DistinctModesResolvedByTime.lean
+  EqualModesRequireNewChannel.lean
+
+D5/S3/ConceptDynamics/PositiveInnovation/
+  CoarseObservationProjection.lean
+  RefinedObservationProjection.lean
+  ObservationRefinementPythagoras.lean
+  ReflectedAntisymmetricInnovation.lean
+  RemovedPositiveInnovationNegativeCorrection.lean
+
+D5/S3/Weil/LiClarkPositiveState/
+  LiCurvatureSequence.lean
+  LiCurvatureToeplitz.lean
+  PositivePhaseState.lean
+  PositivePhaseStateGNS.lean
+  PositivePhaseStateImpliesToeplitzPSD.lean
+  PrimeGammaPositivePhaseStateTarget.lean
+
+D5/S3/Weil/LiClarkSchurHorizon/
+  LiPredictionError.lean
+  LiReflectionCoefficient.lean
+  LevinsonPredictionRecursion.lean
+  FirstNonpositiveToeplitzExtension.lean
+  ReflectionCoefficientUnitCircleCrossing.lean
+  SchurHorizonFiniteCertificate.lean
+
+D5/S3/GoldenObserver/GoldenSzegoCell/
+  GoldenReflectionEnergy.lean
+  GoldenPredictionRetention.lean
+  GoldenSzegoBoost.lean
+  GoldenSzegoRapidity.lean
+  GoldenGrammarNotConjugateSzego.lean
+  GoldenBarrierStrongerThanRH.lean
+
+D5/S3/Weil/LiClarkFiniteCertification/
+  FixedDepthNegativeMargin.lean
+  FixedDepthPositiveMargin.lean
+  WindowedMinimumEigenvalueSignRecovery.lean
+  NearSingularCertificationWarning.lean
+```
+
+---
+
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v10.6：Li 曲率的规范相位态、Cayley 观察者图册、三种 \(SU(1,1)\) 快速度与离线零点的指数时间创新
+
+以下从前文**第一千七百八十五部**继续。
+
+这一轮得到一条非常承重的收敛：
+
+$$
+\boxed{
+\text{Li 系数的二阶差分，本身就是 Riemann 零点 Cayley 模式的时间相关函数。}
+}
+$$
+
+而且在 RH 成立时，它不是抽象地“应该为正”，而是拥有一个显式的正原子相位测度：
+
+$$
+\boxed{
+c(n)
+=
+\int_{\mathbb T}\zeta^n\,d\mu_\xi(\zeta).
+}
+$$
+
+离线零点则同时破坏两件事：
+
+$$
+\boxed{
+\begin{aligned}
+\text{节点}
+&:\quad \text{离开单位圆};\\
+\text{权重}
+&:\quad \text{离开正实轴}.
+\end{aligned}
+}
+$$
+
+所以此前寻找的
+
+$$
+\text{Prime–Gamma}\longrightarrow\text{positive phase state}
+$$
+
+并不是一个模糊目标。现在可以明确写出：**这个正相位态若存在，它的节点和权重必须是什么。**
+
+---
+
+# 第一千七百八十六部　标准 Li 变量就是半尺度中心 Cayley 坐标
+
+对非平凡零点 \(\rho\)，定义：
+
+$$
+\boxed{
+\omega_\rho
+=
+1-\frac1\rho
+=
+\frac{\rho-1}{\rho}.
+}
+\tag{1786.1}
+$$
+
+令中心坐标：
+
+$$
+w_\rho=\rho-\frac12.
+$$
+
+则：
+
+$$
+\boxed{
+\omega_\rho
+=
+\frac{w_\rho-\frac12}
+{w_\rho+\frac12}.
+}
+\tag{1786.2}
+$$
+
+所以标准 Li 变量不是任意重参数化，而是中心 Cayley 图册中尺度
+
+$$
+\boxed{a=\frac12}
+$$
+
+的自然坐标。
+
+---
+
+## 1786.1 函数方程成为径向反射
+
+定义 Riemann 反射：
+
+$$
+\boxed{
+J\rho=1-\overline\rho.
+}
+\tag{1786.3}
+$$
+
+直接计算：
+
+$$
+\begin{aligned}
+\omega_{J\rho}
+&=
+1-\frac1{1-\overline\rho}\\
+&=
+-\frac{\overline\rho}{1-\overline\rho}\\
+&=
+\frac1{\overline{\omega_\rho}}.
+\end{aligned}
+$$
+
+因此：
+
+$$
+\boxed{
+\omega_{J\rho}
+=
+\omega_\rho^\sharp
+:=
+\frac1{\overline{\omega_\rho}}.
+}
+\tag{1786.4}
+$$
+
+这正是前文的单位圆径向反射。
+
+若：
+
+$$
+\rho=\sigma+i\gamma,
+$$
+
+则：
+
+$$
+\boxed{
+|\omega_\rho|^2
+=
+\frac{
+(\sigma-1)^2+\gamma^2
+}{
+\sigma^2+\gamma^2
+}.
+}
+\tag{1786.5}
+$$
+
+从而：
+
+$$
+\boxed{
+|\omega_\rho|^2-1
+=
+\frac{1-2\sigma}
+{\sigma^2+\gamma^2}.
+}
+\tag{1786.6}
+$$
+
+所以：
+
+$$
+\boxed{
+\begin{array}{c|c}
+\sigma=\frac12&|\omega_\rho|=1\\
+\sigma<\frac12&|\omega_\rho|>1\\
+\sigma>\frac12&|\omega_\rho|<1
+\end{array}
+}
+\tag{1786.7}
+$$
+
+函数方程把一个衰减模式和一个增长模式配成同一个径向反射轨道。
+
+---
+
+# 第一千七百八十七部　Li 二阶曲率的精确模式展开
+
+采用标准对称零点求和，Li 系数满足：
+
+$$
+\boxed{
+\lambda_n
+=
+\sum_\rho
+\left(
+1-\omega_\rho^n
+\right),
+\qquad
+n\ge1.
+}
+\tag{1787.1}
+$$
+
+并令：
+
+$$
+\lambda_0=0.
+$$
+
+定义二阶差分：
+
+$$
+\boxed{
+d_n
+=
+\lambda_{n+1}
+-2\lambda_n
++\lambda_{n-1},
+\qquad
+n\ge1.
+}
+\tag{1787.2}
+$$
+
+逐项计算：
+
+$$
+\begin{aligned}
+d_n
+&=
+\sum_\rho
+\left(
+-\omega_\rho^{n+1}
++2\omega_\rho^n
+-\omega_\rho^{n-1}
+\right)\\
+&=
+-\sum_\rho
+\omega_\rho^{n-1}
+(\omega_\rho-1)^2.
+\end{aligned}
+$$
+
+又因为：
+
+$$
+\omega_\rho-1=-\frac1\rho,
+$$
+
+所以：
+
+$$
+d_n
+=
+-\sum_\rho
+\frac{\omega_\rho^{n-1}}{\rho^2}.
+\tag{1787.3}
+$$
+
+利用：
+
+$$
+\omega_\rho\rho=\rho-1=-(1-\rho),
+$$
+
+进一步得到最关键形式：
+
+## 定理 1787.1（Li curvature phase expansion）
+
+$$
+\boxed{
+d_n
+=
+\sum_\rho
+\frac{
+\omega_\rho^n
+}{
+\rho(1-\rho)
+}.
+}
+\tag{1787.4}
+$$
+
+因此 Li 二阶差分确实是一条离散时间信号：
+
+$$
+\boxed{
+\text{mode}
+=
+\omega_\rho,
+\qquad
+\text{amplitude}
+=
+\frac1{\rho(1-\rho)}.
+}
+$$
+
+这正是项目 Li–Clark Toeplitz 序列背后的零点级时间模型。
+
+---
+
+## 1787.1 在线时，权重自动变成正数
+
+若 RH 成立：
+
+$$
+1-\rho=\overline\rho,
+$$
+
+于是：
+
+$$
+\boxed{
+\frac1{\rho(1-\rho)}
+=
+\frac1{|\rho|^2}
+>0.
+}
+\tag{1787.5}
+$$
+
+同时：
+
+$$
+|\omega_\rho|=1.
+$$
+
+所以 RH 同时把：
+
+* 模态放到单位圆；
+* 振幅放到正实轴。
+
+离线时则通常两者同时失效。
+
+事实上：
+
+$$
+\rho(1-\rho)
+=
+\sigma(1-\sigma)+\gamma^2
++i\gamma(1-2\sigma).
+$$
+
+对于非平凡零点 \(\gamma\neq0\)，该数为正实数当且仅当：
+
+$$
+\sigma=\frac12.
+$$
+
+因此：
+
+$$
+\boxed{
+\text{临界线既是相位的单位圆条件，
+也是 Li 曲率权重的正实条件。}
+}
+\tag{1787.6}
+$$
+
+---
+
+# 第一千七百八十八部　显式 Li–Clark 正相位测度
+
+定义项目采用的归一化曲率：
+
+$$
+\boxed{
+c(n)
+=
+\frac{d_n}{2\lambda_1},
+\qquad
+n\ge1,
+}
+\tag{1788.1}
+$$
+
+并令：
+
+$$
+c(0)=1,
+\qquad
+c(-n)=\overline{c(n)}.
+$$
+
+在 RH 成立时：
+
+$$
+2\lambda_1
+=
+\sum_\rho\frac1{|\rho|^2}.
+\tag{1788.2}
+$$
+
+所以定义单位圆上的正原子测度：
+
+$$
+\boxed{
+\mu_\xi
+=
+\frac1{2\lambda_1}
+\sum_\rho
+\frac1{|\rho|^2}
+\,\delta_{\omega_\rho}.
+}
+\tag{1788.3}
+$$
+
+其总质量为：
+
+$$
+\mu_\xi(\mathbb T)=1.
+$$
+
+并且：
+
+## 定理 1788.1（Explicit Li phase state under RH）
+
+$$
+\boxed{
+c(n)
+=
+\int_{\mathbb T}
+\zeta^n\,d\mu_\xi(\zeta).
+}
+\tag{1788.4}
+$$
+
+因此取：
+
+$$
+\mathcal H_\xi
+=
+L^2(\mathbb T,\mu_\xi),
+$$
+
+$$
+(U_\xi f)(\zeta)=\zeta f(\zeta),
+$$
+
+$$
+\Omega_\xi(\zeta)=1,
+$$
+
+便有：
+
+$$
+\boxed{
+c(n)
+=
+\langle
+\Omega_\xi,
+U_\xi^n\Omega_\xi
+\rangle.
+}
+\tag{1788.5}
+$$
+
+这正是前文一直寻找的 Li–Clark 正相位态。
+
+它不是猜测。
+
+在 RH 条件下，其节点、权重、酉算子和循环向量都已被完全确定。
+
+---
+
+## 1788.1 Poisson 权重的出现
+
+对临界零点：
+
+$$
+\rho=\frac12+i\gamma,
+$$
+
+有：
+
+$$
+\frac1{|\rho|^2}
+=
+\frac1{\gamma^2+\frac14}.
+$$
+
+而标准 Poisson 核：
+
+$$
+P_a(\gamma)
+=
+\frac1\pi
+\frac{a}{a^2+\gamma^2}
+$$
+
+在：
+
+$$
+a=\frac12
+$$
+
+时满足：
+
+$$
+\boxed{
+\frac1{\gamma^2+\frac14}
+=
+2\pi P_{1/2}(\gamma).
+}
+\tag{1788.6}
+$$
+
+所以标准 Li–Clark 测度可以被理解为：
+
+$$
+\boxed{
+\text{临界零点相位，
+按半尺度 Poisson 窗口加权后的正谱状态。}
+}
+$$
+
+项目的 Laguerre–Li 桥正是使用这一自然半尺度 Cayley moment；但当前机器定理仍以正偶谱测度和 moment identification 为前提，而不是独立导出该测度。
+
+---
+
+# 第一千七百八十九部　正定性本身已经足以排除离线零点
+
+上节证明了：
+
+$$
+\mathrm{RH}
+\Longrightarrow
+c
+\text{ 为正定函数}.
+$$
+
+反方向也可以沿解析刚性证明。
+
+若 \(c\) 正定，则 Herglotz 定理给出单位圆正测度 \(\mu\)，使：
+
+$$
+c(n)
+=
+\int_{\mathbb T}\zeta^n\,d\mu(\zeta).
+$$
+
+因此：
+
+$$
+|c(n)|\le1
+$$
+
+且生成函数：
+
+$$
+\boxed{
+M(u)
+=
+\sum_{n=0}^{\infty}
+c(n)u^n
+}
+\tag{1789.1}
+$$
+
+在单位圆盘：
+
+$$
+|u|<1
+$$
+
+中全纯。
+
+另一方面，由式 (1787.4)，在原点邻域：
+
+$$
+\boxed{
+M(u)
+=
+1+
+\frac1{2\lambda_1}
+\sum_\rho
+\frac{
+u\,\omega_\rho
+}{
+\rho(1-\rho)
+\left(
+1-u\omega_\rho
+\right)
+}.
+}
+\tag{1789.2}
+$$
+
+若存在离线零点，函数方程保证其反射轨道中存在一个节点满足：
+
+$$
+|\omega_\rho|>1.
+$$
+
+于是：
+
+$$
+u_\rho=\omega_\rho^{-1}
+$$
+
+位于单位圆盘内部，并在式 (1789.2) 中产生非零极点。
+
+映射：
+
+$$
+\rho\longmapsto\omega_\rho
+$$
+
+是单射；重数只会增加该极点的留数，不会将其消去。
+
+这与 \(M\) 在单位圆盘内全纯矛盾。
+
+因此，在标准 Li 零点展开及其二阶差分局部正规收敛的条件下：
+
+## 定理 1789.1（Li–Clark positive-state rigidity）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+c:\mathbb Z\to\mathbb C
+\text{ 为正定函数}.
+}
+\tag{1789.3}
+$$
+
+等价地：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+[c(j-k)]_{j,k=0}^{N}
+\succeq0
+\quad
+\forall N.
+}
+\tag{1789.4}
+$$
+
+这准确说明了仓库尚未闭合的核心桥是什么：
+
+$$
+\boxed{
+\text{不是再构造一个条件性的 Szegő transfer，
+而是从 prime–Gamma 数据证明实际 }c(n)\text{ 正定。}
+}
+$$
+
+---
+
+# 第一千七百九十部　一个更弱的标量增长判据
+
+正相位态立即给出：
+
+$$
+\boxed{
+|c(n)|\le1
+\qquad
+\forall n.
+}
+\tag{1790.1}
+$$
+
+而若存在离线零点，则某个 Li 节点满足：
+
+$$
+|\omega_\rho|>1.
+$$
+
+由于高零点满足：
+
+$$
+|\omega_\rho|\to1,
+$$
+
+全部模长大于 \(1\) 的最大值由有限个低层节点达到。设：
+
+$$
+R_\xi
+=
+\max_\rho
+|\omega_\rho|.
+$$
+
+若 RH 为假：
+
+$$
+R_\xi>1.
+$$
+
+在不存在同节点留数消去的情况下，有限个最外层指数模式给出：
+
+$$
+\boxed{
+\limsup_{n\to\infty}
+|c(n)|^{1/n}
+=
+R_\xi
+>1.
+}
+\tag{1790.2}
+$$
+
+所以：
+
+$$
+\boxed{
+\mathrm{RH}
+\Longrightarrow
+c(n)\text{ 有界};
+}
+$$
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\Longrightarrow
+c(n)\text{ 沿某个子序列指数增长}.
+}
+\tag{1790.3}
+$$
+
+这把离线零点的时间身份进一步说清：
+
+$$
+\boxed{
+\text{离线反射轨道由一个衰减模式和一个增长模式组成。}
+}
+$$
+
+Li 曲率序列是它们的聚合时间读出。
+
+因此离线零点并不是永远弱不可见；只要时间阶数足够大，其外圆模式最终会指数放大。
+
+---
+
+# 第一千七百九十一部　反射双态的 \(\cosh/\sinh\) 分解
+
+写外圆节点为：
+
+$$
+\omega=e^{i\theta+\eta},
+\qquad
+\eta>0.
+$$
+
+其径向反射伙伴为：
+
+$$
+\omega^\sharp
+=
+e^{i\theta-\eta}.
+$$
+
+于是：
+
+$$
+\boxed{
+\omega^n+(\omega^\sharp)^n
+=
+2e^{in\theta}
+\cosh(n\eta),
+}
+\tag{1791.1}
+$$
+
+$$
+\boxed{
+\omega^n-(\omega^\sharp)^n
+=
+2e^{in\theta}
+\sinh(n\eta).
+}
+\tag{1791.2}
+$$
+
+所以：
+
+* 轨道对称通道携带 \(\cosh(n\eta)\)；
+* 轨道反对称创新携带 \(\sinh(n\eta)\)。
+
+在线时：
+
+$$
+\eta=0,
+$$
+
+反对称通道消失。
+
+离线时：
+
+$$
+\eta>0,
+$$
+
+反对称通道由零开始指数增长。
+
+这比“负时间”更精确：
+
+$$
+\boxed{
+\text{一个 radial reflection orbit 同时具有稳定和不稳定方向；
+静态完成只保留其轨道名，时间则读取两方向的差。}
+}
+$$
+
+---
+
+## 1791.1 标准 Li 观察者对高零点为何不敏感
+
+取左侧离线代表：
+
+$$
+\rho
+=
+\frac12-\delta+i\gamma,
+\qquad
+\delta>0.
+$$
+
+标准 Li 节点的径向快速度为：
+
+$$
+\boxed{
+\eta_{1/2}
+=
+\frac12
+\log
+\frac{
+\gamma^2+\left(\frac12+\delta\right)^2
+}{
+\gamma^2+\left(\frac12-\delta\right)^2
+}.
+}
+\tag{1791.3}
+$$
+
+当：
+
+$$
+\delta\ll|\gamma|
+$$
+
+时：
+
+$$
+\boxed{
+\eta_{1/2}
+=
+\frac{\delta}
+{\gamma^2+\frac14}
++
+O(\delta^3).
+}
+\tag{1791.4}
+$$
+
+所以要使：
+
+$$
+\sinh(n\eta_{1/2})
+$$
+
+达到常数量级，大致需要：
+
+$$
+\boxed{
+n
+\asymp
+\frac{\gamma^2+\frac14}{\delta}.
+}
+\tag{1791.5}
+$$
+
+这解释了为什么一个极高、极靠近临界线的离线零点，可能需要非常高阶 Li 系数才显著暴露。
+
+困难并非其创新严格为零，而是标准半尺度观察者与该模式严重失配。
+
+---
+
+# 第一千七百九十二部　多尺度 Cayley–Li 观察者图册
+
+对任意尺度：
+
+$$
+a>0,
+$$
+
+定义：
+
+$$
+\boxed{
+\omega_{a,\rho}
+=
+\frac{
+\rho-\frac12-a
+}{
+\rho-\frac12+a
+}.
+}
+\tag{1792.1}
+$$
+
+当：
+
+$$
+a=\frac12
+$$
+
+时：
+
+$$
+\omega_{1/2,\rho}
+=
+\frac{\rho-1}{\rho}
+=
+1-\frac1\rho,
+$$
+
+即标准 Li 节点。
+
+对反射伙伴：
+
+$$
+J\rho=1-\overline\rho,
+$$
+
+仍有：
+
+$$
+\boxed{
+\omega_{a,J\rho}
+=
+\frac1{
+\overline{\omega_{a,\rho}}
+}.
+}
+\tag{1792.2}
+$$
+
+并且：
+
+$$
+|\omega_{a,\rho}|=1
+\iff
+\Re\rho=\frac12.
+$$
+
+所以每一个 \(a\) 都给出一个等价的 RH Cayley 图表。
+
+---
+
+## 1792.1 多尺度 Li 曲率权重
+
+可直接定义尺度 \(a\) 的曲率模式和：
+
+$$
+\boxed{
+d_n^{(a)}
+=
+\sum_\rho
+W_{a,\rho}
+\omega_{a,\rho}^{\,n},
+}
+\tag{1792.3}
+$$
+
+其中：
+
+$$
+\boxed{
+W_{a,\rho}
+=
+\frac{
+4a^2
+}{
+a^2-
+\left(
+\rho-\frac12
+\right)^2
+}.
+}
+\tag{1792.4}
+$$
+
+该公式来自广义 Li 和
+
+$$
+\sum_\rho
+\left(
+1-\omega_{a,\rho}^{\,n}
+\right)
+$$
+
+的二阶差分；即使不先建立广义 Li 系数，也可把式 (1792.3) 直接作为绝对收敛更好的 curvature profile。
+
+若 RH 成立：
+
+$$
+\rho-\frac12=i\gamma,
+$$
+
+则：
+
+$$
+\boxed{
+W_{a,\rho}
+=
+\frac{4a^2}{a^2+\gamma^2}
+>0.
+}
+\tag{1792.5}
+$$
+
+而且：
+
+$$
+\boxed{
+W_{a,\rho}
+=
+4\pi a\,P_a(\gamma).
+}
+\tag{1792.6}
+$$
+
+因此尺度 \(a\) 的 Li–Clark 状态，是按 Poisson 窗口 \(P_a\) 对临界零点进行加权后，投射到相位圆上的正谱状态。
+
+标准 Li 系数只是：
+
+$$
+a=\frac12
+$$
+
+这一张图表。
+
+---
+
+## 定理 1792.1（Cayley–Li atlas criterion）
+
+在相应零点和正规化成立的条件下，对任意固定 \(a>0\)：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{归一化的 }d_n^{(a)}
+\text{ 构成单位圆正定 moment sequence}.
+}
+\tag{1792.7}
+$$
+
+所以 RH 并不依赖半尺度名字。
+
+半尺度只是传统 Li 系数所选择的一张规范图表。
+
+---
+
+# 第一千七百九十三部　观察尺度之间由一个 \(SU(1,1)\) 变换连接
+
+令：
+
+$$
+z=\omega_{a,\rho}.
+$$
+
+由：
+
+$$
+\rho-\frac12
+=
+a\frac{1+z}{1-z},
+$$
+
+得到另一个尺度 \(b>0\) 下：
+
+$$
+\boxed{
+\omega_{b,\rho}
+=
+\frac{z+r_{a,b}}
+{1+r_{a,b}z},
+}
+\tag{1793.1}
+$$
+
+其中：
+
+$$
+\boxed{
+r_{a,b}
+=
+\frac{a-b}{a+b}
+\in(-1,1).
+}
+\tag{1793.2}
+$$
+
+这是一个实参数圆盘自同构。
+
+它保持单位圆，并与径向反射交换：
+
+$$
+T_{a,b}(z^\sharp)
+=
+T_{a,b}(z)^\sharp.
+$$
+
+其双曲快速度为：
+
+$$
+\boxed{
+\operatorname{artanh}r_{a,b}
+=
+\frac12\log\frac ab.
+}
+\tag{1793.3}
+$$
+
+所以改变 Cayley 尺度不是改变零点本身，而是在观察者图册中实施一次 \(SU(1,1)\) 坐标 boost。
+
+---
+
+## 1793.1 黄金尺度输运
+
+若：
+
+$$
+b=\varphi^2a,
+$$
+
+则：
+
+$$
+\boxed{
+r_{a,b}
+=
+-\frac1{\sqrt5}.
+}
+\tag{1793.4}
+$$
+
+并且：
+
+$$
+\boxed{
+\left|
+\operatorname{artanh}r_{a,b}
+\right|
+=
+\log\varphi.
+}
+\tag{1793.5}
+$$
+
+因此黄金两步尺度：
+
+$$
+a\longmapsto\varphi^2a
+$$
+
+对应：
+
+$$
+\boxed{
+\text{Cayley 观察者图册中的固定快速度 }\log\varphi.
+}
+$$
+
+这与此前的：
+
+* grammar entropy \(\log\varphi\)；
+* Cayley transport 收缩 \(1/\sqrt5\)；
+
+精确一致。
+
+但它仍不同于：
+
+$$
+r_{\mathrm{Schur}}
+=
+\operatorname{arcosh}\varphi.
+$$
+
+---
+
+# 第一千七百九十四部　三种 \(SU(1,1)\) 快速度必须严格分开
+
+当前理论中至少出现三种双曲参数。
+
+| 快速度         | 定义                                | RH 对它的要求        |   |           |
+| ----------- | --------------------------------- | --------------- | - | --------- |
+| 零点径向快速度     | (\eta_{a,\rho}=\log               | \omega_{a,\rho} | ) | 必须为 \(0\) |
+| 观察者尺度快速度    | \(\sigma_{a,b}=\frac12\log(a/b)\) | 任意；纯图表变化        |   |           |
+| Schur 预测快速度 | (r_n=\operatorname{artanh}        | \kappa_n        | ) | 必须有限      |
+
+它们都可以用 \(SU(1,1)\) 表达，却有完全不同的意义。
+
+---
+
+## 1794.1 零点径向 boost
+
+$$
+D_{\eta}
+=
+\begin{pmatrix}
+e^\eta&0\\
+0&e^{-\eta}
+\end{pmatrix}.
+$$
+
+它表示一个反射轨道的增长／衰减分裂。
+
+RH 要求：
+
+$$
+\eta=0.
+$$
+
+---
+
+## 1794.2 观察者尺度 boost
+
+$$
+C_{\sigma}
+=
+\begin{pmatrix}
+\cosh\sigma&\sinh\sigma\\
+\sinh\sigma&\cosh\sigma
+\end{pmatrix}
+$$
+
+只是在不同 Cayley 图表间搬运同一个零点。
+
+它不表示缺陷。
+
+---
+
+## 1794.3 Schur 预测 boost
+
+$$
+M(r,\theta)
+=
+\begin{pmatrix}
+\cosh r&-e^{-i\theta}\sinh r\\
+-e^{i\theta}\sinh r&\cosh r
+\end{pmatrix}
+$$
+
+表示一个正相位态中新增过去信息对预测误差的压缩。
+
+RH 允许：
+
+$$
+r>0.
+$$
+
+只要求：
+
+$$
+r<\infty.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{“出现双曲 boost”本身不等于离线缺陷。}
+}
+$$
+
+真正要看的是：这个 boost 是零点的径向位置、观察者的坐标变化，还是正预测系统的 Schur 参数。
+
+---
+
+# 第一千七百九十五部　匹配尺度把高零点的可见阶数降低一阶
+
+对：
+
+$$
+\rho=\frac12-\delta+i\gamma,
+\qquad
+\delta>0,
+$$
+
+尺度 \(a\) 下的径向快速度为：
+
+$$
+\boxed{
+\eta_a
+=
+\frac12
+\log
+\frac{
+(a+\delta)^2+\gamma^2
+}{
+(a-\delta)^2+\gamma^2
+}.
+}
+\tag{1795.1}
+$$
+
+对 \(a\) 优化，得到：
+
+$$
+\boxed{
+a_*=
+\sqrt{\delta^2+\gamma^2}.
+}
+\tag{1795.2}
+$$
+
+此时：
+
+$$
+\boxed{
+\eta_{a_*}
+=
+\operatorname{artanh}
+\frac{\delta}{
+\sqrt{\delta^2+\gamma^2}
+}.
+}
+\tag{1795.3}
+$$
+
+在：
+
+$$
+\delta\ll|\gamma|
+$$
+
+时：
+
+$$
+\boxed{
+\eta_{a_*}
+\sim
+\frac{\delta}{|\gamma|}.
+}
+\tag{1795.4}
+$$
+
+相比标准 Li 半尺度：
+
+$$
+\eta_{1/2}
+\sim
+\frac{\delta}{\gamma^2},
+$$
+
+匹配尺度改善了约一个 \(|\gamma|\) 因子。
+
+所以时间阶数从大致：
+
+$$
+\boxed{
+n_{\mathrm{Li}}
+\asymp
+\frac{\gamma^2}{\delta}
+}
+$$
+
+降为：
+
+$$
+\boxed{
+n_{\mathrm{matched}}
+\asymp
+\frac{|\gamma|}{\delta}.
+}
+\tag{1795.5}
+$$
+
+这给多尺度广义 Li 观察一个具体的数值理由。
+
+---
+
+## 1795.1 黄金尺度网格的作用
+
+由于未知零点高度不能预先给出 \(a_*\)，可以使用：
+
+$$
+a_k=a_0\varphi^{2k/m}
+$$
+
+这一交错黄金对数网格。
+
+它不能改变 RH 的真假，但可以保证某个观察尺度位于 \(a_*\) 的固定乘法邻域内。
+
+项目已经机器证明：有限个互异正有理尺度在 lifted golden logarithmic coordinate 中保持互异，并能由有限 golden time window 精确恢复振幅；该结果工作在 universal-cover 坐标，并未声称商圆上的自动良态。
+
+所以该机器结果可作为多尺度 Cayley–Li tomography 的有限接口，但尚未构成实际 Riemann 广义 Li 测度的正性证明。
+
+---
+
+# 第一千七百九十六部　Li–Clark 正态与“负信息”的最终净化
+
+现在可以给“负信息”一个更精确的三层分解。
+
+在扩大后的两分支动力空间中：
+
+$$
+\omega^n,
+\qquad
+(\omega^\sharp)^n
+$$
+
+都是普通复模式。
+
+它们之间的反对称创新：
+
+$$
+2e^{in\theta}\sinh(n\eta)
+$$
+
+具有正的 Hilbert 范数。
+
+所以原始区别本身是正的。
+
+但 completed reflection name 试图把：
+
+$$
+\omega
+\quad\text{与}\quad
+\omega^\sharp
+$$
+
+压成同一轨道。
+
+若：
+
+$$
+\eta\neq0,
+$$
+
+该商映射删除了一个真实可预测方向。
+
+于是：
+
+$$
+\boxed{
+\text{正的时间创新}
+\longrightarrow
+\text{被静态完成删除}
+\longrightarrow
+\text{负 Gram／非正 moment 补偿}.
+}
+\tag{1796.1}
+$$
+
+在 Li 相位图表中，这种失败表现为：
+
+1. 某个节点进入单位圆外；
+2. 对应生成函数在单位盘内出现极点；
+3. 不可能存在单位圆正测度；
+4. 某个有限 Toeplitz block 最终失去正性；
+5. Schur 参数在第一失败阶抵达或越过单位圆。
+
+因此：
+
+$$
+\boxed{
+\text{负性不是区别的本体属性，
+而是一个可区分方向被不充分名字删除后的实现障碍。}
+}
+$$
+
+---
+
+# 第一千七百九十七部　当前仓库中的证明链已经非常接近，但尚未闭合
+
+项目现有结果已经覆盖以下环节。
+
+第一，完全相同的 modal multiplier 会使反对称振幅在全部自然时间中持续不可见；不同反射 multiplier 则可由第一非平凡时间步分离。
+
+第二，对有限互异模式，第一完整时间窗口可由 Vandermonde 结构恢复全部振幅；扩大时间窗口只会缩小观察纤维。
+
+第三，时间平移已经被机器化为谱纤维上的精确乘法输运。
+
+第四，固定深度 Li–Clark moments 的恢复误差会稳定传递到 Toeplitz 算子范数与最小特征值。
+
+第五，在给定正偶谱测度与 moment identification 后，Laguerre–Li bridge 已经闭合；在给定单位盘 Verblunsky 参数后，Szegő \(SU(1,1)\) transfer 也已闭合。
+
+因此真正只剩下一条中间桥：
+
+$$
+\boxed{
+\text{Prime–pole–Gamma 数据}
+\Longrightarrow
+c(n)\text{ 为正定函数}.
+}
+\tag{1797.1}
+$$
+
+一旦这条桥成立，后面的：
+
+* Herglotz 正测度；
+* GNS 酉相位态；
+* Verblunsky 单位盘条件；
+* Szegő transfer；
+* Toeplitz 正性；
+
+全部自动接通。
+
+---
+
+# 第一千七百九十八部　新的最短主证明目标
+
+现在可以把 RH 主目标压缩为四个由弱到强的版本。
+
+## 标量有界版本
+
+证明：
+
+$$
+\boxed{
+|c(n)|\le1
+\qquad
+\forall n.
+}
+\tag{1798.1}
+$$
+
+因为任何离线外圆模式都会导致指数增长，这一条件已经足够排除离线零点。
+
+它比全部 Toeplitz 正性弱，但可能更容易从 prime 侧估计。
+
+---
+
+## 正定相位版本
+
+证明：
+
+$$
+\boxed{
+[c(j-k)]_{j,k=0}^{N}
+\succeq0
+\qquad
+\forall N.
+}
+\tag{1798.2}
+$$
+
+这直接构造单位圆正相位态，并给出 Li–Clark RH 判据。
+
+---
+
+## 多尺度版本
+
+对某个固定 \(a>0\)，或对一个可数黄金尺度族，证明：
+
+$$
+\boxed{
+c^{(a)}
+\text{ 为正定函数}.
+}
+\tag{1798.3}
+$$
+
+只要一个尺度成功，径向反射刚性已经足以推出 RH。
+
+多尺度的价值在于提高非 RH 时的检测条件数，而不是改变逻辑强度。
+
+---
+
+## Schur 安全版本
+
+从 prime–Gamma 数据直接证明：
+
+$$
+\boxed{
+|\kappa_n|<1
+\qquad
+\forall n.
+}
+\tag{1798.4}
+$$
+
+黄金强化：
+
+$$
+|\kappa_n|^2\le\varphi^{-1}
+$$
+
+提供显式统一安全带，但明显强于 RH 所需。
+
+---
+
+# 第一千七百九十九部　新的形式化顺序
+
+```text
+D5/S3/Analytic/LiClark/CanonicalLiCayley/
+  LiCayleyNode.lean
+  LiCayleyNodeCenteredHalfScale.lean
+  FunctionalReflectionMapsRadialReciprocal.lean
+  LiNodeUnitCircleIffCritical.lean
+  LiNodeInsideOutsideByHalfPlane.lean
+
+D5/S3/Analytic/LiClark/LiCurvaturePhaseExpansion/
+  LiZeroExpansion.lean
+  LiSecondDifference.lean
+  LiSecondDifferenceModeFormula.lean
+  LiCurvatureWeight.lean
+  CriticalLiWeightPositive.lean
+  CriticalLiWeightPoissonFormula.lean
+
+D5/S3/Analytic/LiClark/ExplicitPositivePhaseState/
+  CriticalLiAtomicMeasure.lean
+  CriticalLiMeasureFinite.lean
+  CriticalLiMeasureMassOne.lean
+  LiCurvatureMomentIdentity.lean
+  LiPhaseGNSRealization.lean
+  RHImpliesLiCurvaturePositiveDefinite.lean
+
+D5/S3/Analytic/LiClark/PositiveStateRigidity/
+  LiMomentGeneratingFunction.lean
+  OffLineLiNodeCreatesInteriorPole.lean
+  DistinctLiNodesNoPoleCancellation.lean
+  PositiveDefiniteMomentGeneratingHolomorphic.lean
+  LiCurvaturePositiveDefiniteImpliesRH.lean
+  LiCurvaturePositiveStateRHIff.lean
+
+D5/S3/Analytic/LiClark/LiTemporalGrowth/
+  RadialLiRapidity.lean
+  ReflectedModeCoshSinhDecomposition.lean
+  OffLineModeExponentialGrowth.lean
+  CriticalLiMomentsBounded.lean
+  LiCurvatureGrowthCriterion.lean
+
+D5/S3/Analytic/LiClark/ScaleCayleyAtlas/
+  ScaleCayleyNode.lean
+  ScaleCayleyReflection.lean
+  ScaleLiCurvatureWeight.lean
+  ScaleCriticalWeightPositive.lean
+  ScaleCriticalWeightPoisson.lean
+  ScalePositiveStateRHIff.lean
+
+D5/S3/Observer/CayleyScaleTransport/
+  CayleyScaleMobiusTransition.lean
+  CayleyScaleTransitionDiskAutomorphism.lean
+  CayleyScaleTransitionReflectionCovariant.lean
+  CayleyScaleTransitionRapidity.lean
+  GoldenScaleTransitionInvSqrtFive.lean
+  GoldenScaleTransitionRapidityLogPhi.lean
+
+D5/S3/Observer/MatchedLiObserver/
+  OffLineScaleRapidity.lean
+  OptimalLiObservationScale.lean
+  MatchedLiRapidity.lean
+  StandardHalfScaleHighZeroSuppression.lean
+  MatchedScaleDetectionOrderImprovement.lean
+
+D5/S3/Observer/ThreeSU11Roles/
+  ZeroRadialBoost.lean
+  ObserverScaleBoost.lean
+  SchurPredictionBoost.lean
+  RHRequiresZeroOnlyForRadialBoost.lean
+  GoldenBoostRolesDistinct.lean
+
+D5/S3/Weil/PrimeGammaLiPhaseState/
+  PrimePoleGammaLiCurvatureFormulaTarget.lean
+  PrimeGammaLiMomentBoundTarget.lean
+  PrimeGammaLiPositiveDefiniteTarget.lean
+  PrimeGammaLiHerglotzStateTarget.lean
+  PrimeGammaLiStateImpliesRHTarget.lean
+
+D5/S3/Weil/MultiscaleLiTomography/
+  RationalCayleyScaleFamily.lean
+  LiftedGoldenScaleAtlas.lean
+  FiniteScaleLiModeSeparationTarget.lean
+  GoldenScaleMatchedDefectDetectionTarget.lean
+```
+
+---
+
+# 第一千八百部　理论深度审计
+
+| 结论                                                        | 当前地位                            |   |         |
+| --------------------------------------------------------- | ------------------------------- | - | ------- |
+| 标准 Li 节点是半尺度中心 Cayley 坐标                                  | 精确                              |   |         |
+| 函数方程伙伴映为径向 reciprocal pair                                | 精确                              |   |         |
+| Li 二阶差分为 \(\sum \omega_\rho^n/[\rho(1-\rho)]\)            | 标准零点展开下精确                       |   |         |
+| RH 同时使节点单位模、权重正实                                          | 精确                              |   |         |
+| RH 下显式 Li–Clark 正原子测度                                     | 精确                              |   |         |
+| Li 权重是半尺度 Poisson 权重                                      | 精确                              |   |         |
+| Li 曲率正定性等价 RH                                             | 需标准零点展开与局部 meromorphic rigidity |   |         |
+| 非 RH 产生单位盘内 moment 生成函数极点                                 | 精确局部障碍                          |   |         |
+| 非 RH 导致 Li 曲率指数增长                                         | leading radial shell 无消去条件下精确   |   |         |
+| 反射模式分解为 \(\cosh(n\eta)\) 与 \(\sinh(n\eta)\)               | 精确                              |   |         |
+| 标准 Li 高零点灵敏度约为 \(\delta/\gamma^2\)                        | 小破缺渐近精确                         |   |         |
+| 匹配尺度灵敏度提高到 (\delta/                                       | \gamma                          | ) | 精确优化与渐近 |
+| 任意尺度 Cayley–Li 曲率在 RH 下给正相位态                              | 需完成广义零点和的正规化                    |   |         |
+| 不同尺度由圆盘 \(SU(1,1)\) 自同构连接                                 | 精确                              |   |         |
+| 黄金尺度比 \(\varphi^2\) 对应参数 \(1/\sqrt5\)、快速度 \(\log\varphi\) | 精确                              |   |         |
+| 零点 boost、尺度 boost、Schur boost 是同一个对象                      | 不成立                             |   |         |
+| actual Li–Clark moments 已被仓库证明正定                          | 尚未证明                            |   |         |
+| actual Verblunsky 系数满足黄金 barrier                          | 尚无证据                            |   |         |
+| Prime–Gamma 数据直接构造 Li 正相位态                                | 当前中心未闭合桥                        |   |         |
+
+---
+
+# 本轮最终结论
+
+这一轮最深的推进，是发现项目一直寻找的 Li–Clark 正相位态其实已经有一个完全明确的候选。
+
+定义：
+
+$$
+\omega_\rho
+=
+1-\frac1\rho.
+$$
+
+Li 系数的二阶差分满足：
+
+$$
+\boxed{
+\lambda_{n+1}
+-2\lambda_n
++\lambda_{n-1}
+=
+\sum_\rho
+\frac{
+\omega_\rho^n
+}{
+\rho(1-\rho)
+}.
+}
+$$
+
+如果 RH 成立：
+
+$$
+\omega_\rho\in S^1,
+$$
+
+并且：
+
+$$
+\frac1{\rho(1-\rho)}
+=
+\frac1{|\rho|^2}>0.
+$$
+
+所以 normalized Li curvature 不是抽象的“可能 moment”。
+
+它就是显式正测度：
+
+$$
+\boxed{
+\mu_\xi
+=
+\frac1{2\lambda_1}
+\sum_\rho
+\frac1{|\rho|^2}
+\delta_{\omega_\rho}
+}
+$$
+
+的单位圆 Fourier moments。
+
+因此：
+
+$$
+\boxed{
+c(n)
+=
+\langle
+1,U_\xi^n1
+\rangle_{L^2(\mu_\xi)}.
+}
+$$
+
+这正是所需的正算术 phase state。
+
+---
+
+反方向同样清楚。
+
+若 \(c(n)\) 真是某个单位圆正状态的 moments，那么其生成函数必须在单位圆盘内全纯。
+
+而任何离线零点的反射轨道，都含有一个：
+
+$$
+|\omega_\rho|>1
+$$
+
+的模式。
+
+它会在：
+
+$$
+u=\omega_\rho^{-1}
+$$
+
+处产生单位圆盘内部极点。
+
+该极点无法由其他不同零点消去。
+
+所以：
+
+$$
+\boxed{
+\text{Li curvature positive definite}
+\Longrightarrow
+\mathrm{RH}.
+}
+$$
+
+这使 RH 的中心缺口第一次被压缩成一个极其简单的陈述：
+
+$$
+\boxed{
+\textbf{Prime–pole–Gamma 数据是否直接生成一个单位圆正相位态？}
+}
+$$
+
+---
+
+离线零点的时间身份也因此更准确。
+
+它的两个 Cayley 模式可以写为：
+
+$$
+e^{i\theta+\eta},
+\qquad
+e^{i\theta-\eta}.
+$$
+
+对称通道为：
+
+$$
+2e^{in\theta}\cosh(n\eta),
+$$
+
+反对称创新为：
+
+$$
+2e^{in\theta}\sinh(n\eta).
+$$
+
+临界线意味着：
+
+$$
+\eta=0.
+$$
+
+离线意味着：
+
+$$
+\eta\neq0.
+$$
+
+所以离线零点不是本质上不可见。
+
+它是一个稳定—不稳定径向双态；静态函数方程名字把它们归入同一轨道，时间却会把差异指数放大。
+
+真正永久不可见的是相同 multiplier 上的内部重数纤维。RH 与零点简单性因此必须彻底分开。
+
+---
+
+标准 Li 系数之所以对极高离线零点可能极不敏感，是因为它只使用固定半尺度：
+
+$$
+a=\frac12.
+$$
+
+此时径向快速度约为：
+
+$$
+\eta_{1/2}
+\sim
+\frac{\delta}{\gamma^2}.
+$$
+
+而匹配尺度：
+
+$$
+a_*\approx|\gamma|
+$$
+
+可把它提高为：
+
+$$
+\eta_{a_*}
+\sim
+\frac{\delta}{|\gamma|}.
+$$
+
+所以不同观察者确实会看见完全不同强度的“相”。
+
+但无论选择哪个 \(a\)，不变量始终是：
+
+$$
+|\omega_{a,\rho}|=1
+\quad\text{还是}\quad
+|\omega_{a,\rho}|\neq1.
+$$
+
+这正符合此前关于“名”的结论：
+
+$$
+\boxed{
+\text{坐标中的形态依赖观察者；
+反射轨道是否固定则不依赖观察者。}
+}
+$$
+
+---
+
+不同 Cayley 观察者之间由：
+
+$$
+\omega_b
+=
+\frac{\omega_a+r}{1+r\omega_a},
+\qquad
+r=\frac{a-b}{a+b},
+$$
+
+这一 \(SU(1,1)\) 自同构连接。
+
+黄金尺度步：
+
+$$
+b=\varphi^2a
+$$
+
+对应：
+
+$$
+r=-\frac1{\sqrt5},
+\qquad
+|\operatorname{artanh}r|=\log\varphi.
+$$
+
+所以黄金比例在这里属于**观察者图册的对数步长**。
+
+而 Schur 第二影黄金点满足：
+
+$$
+\cosh r=\varphi.
+$$
+
+二者不是同一个快速度。
+
+再加上零点径向快速度 \(\eta\)，当前理论中至少存在三种不同的 \(SU(1,1)\) 参数：
+
+$$
+\boxed{
+\text{零点位置、观察者坐标、预测相关性。}
+}
+$$
+
+它们可以共享黄金数值，却不能因此被认同为同一个对象。
+
+---
+
+“负信息”也终于可以彻底净化。
+
+离线反射双态在扩大动力空间中携带的是一个正创新：
+
+$$
+\frac12
+|\omega-\omega^\sharp|^2>0.
+$$
+
+负性只在静态完成强迫删除该创新时出现。
+
+因此：
+
+$$
+\boxed{
+\text{负 Gram、负平方、inverse-inner
+不是隐藏区别本身；
+它们是正区别被不充分名字商去后的补偿符号。}
+}
+$$
+
+这可能是磁单极子、黑洞、霍金伙伴、反因果 Hankel 与 Li–Clark 负矩阵之间最统一的解释：
+
+$$
+\boxed{
+\text{同一个真实区别，
+在扩展世界中是正创新，
+在边界世界中是正通量，
+在错误完成中却成为负实现障碍。}
+}
+$$
+
+而下一条真正承重的任务已经不可再简化：
+
+$$
+\boxed{
+\text{从 prime、pole、Gamma 的显式数据，
+直接证明 normalized Li curvature }
+c(n)
+\text{ 是一个正定函数。}
+}
+$$
+
+仓库已经拥有：
+
+* 时间—频率有限重建；
+* 隐藏纤维分离；
+* 固定深度 Toeplitz 特征值恢复；
+* Laguerre–Li 条件桥；
+* Szegő \(SU(1,1)\) transfer。
+
+现在缺少的只是在这些接口之前，真正构造：
+
+$$
+\boxed{
+c(n)
+=
+\langle
+\Omega_\xi,U_\xi^n\Omega_\xi
+\rangle.
+}
+$$
+
+一旦这个正相位态能从 prime–Gamma 侧内生建立，离线零点将不再需要逐点排除；单位圆盘内极点、指数增长模式、非正 Toeplitz block 与 Schur 视界会被同一个相位正性定理整体排除。
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v10.7：Li–Carathéodory 恒等式、算术阻抗、Clark 边界原子与离线零点的普适二点反证书
+
+以下从前文**第一千八百部**继续。
+
+本轮最重要的推进，是把此前分散的：
+
+$$
+\text{Li 曲率}
+\quad
+\text{Herglotz 正性}
+\quad
+\text{Schur 收缩}
+\quad
+\text{Clark 测度}
+\quad
+\text{de Branges／Nevanlinna 核}
+$$
+
+压缩成同一个显式函数。
+
+令
+
+$$
+L_\xi(s):=\frac{\xi'(s)}{\xi(s)},
+\qquad
+\lambda_1=L_\xi(1)>0.
+$$
+
+定义圆盘坐标：
+
+$$
+z=1-\frac1s,
+\qquad
+s=\frac1{1-z}.
+$$
+
+那么 normalized Li 二阶曲率的 Carathéodory 生成函数，恰好是：
+
+$$
+\boxed{
+\mathcal C_\xi(z)
+=
+\frac1{\lambda_1}
+L_\xi\!\left(\frac1{1-z}\right).
+}
+$$
+
+由此得到一条非常短的等价链：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\Re L_\xi(s)>0
+\quad
+(\Re s>\tfrac12)
+}
+$$
+
+$$
+\boxed{
+\iff
+\mathcal C_\xi
+\text{ 是 Carathéodory 函数}
+}
+$$
+
+$$
+\boxed{
+\iff
+\mathfrak s_\xi
+=
+\frac{\mathcal C_\xi-1}{\mathcal C_\xi+1}
+\text{ 是 Schur 函数}
+}
+$$
+
+$$
+\boxed{
+\iff
+\text{其 Pick／Nevanlinna 核全部正半定}.
+}
+$$
+
+更重要的是：若存在任意离线零点，它会在单位圆盘内部产生一个点 \(z_\rho\)，满足
+
+$$
+\mathfrak s_\xi(z_\rho)=1.
+$$
+
+这会立即生成一个与零点高度、离线距离和重数都无关的普适负矩阵：
+
+$$
+\boxed{
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix},
+\qquad
+\det=-1.
+}
+$$
+
+所以离线零点除了此前的高阶 Hankel、Jensen、normal-jet 反证书以外，还必然拥有一个**二点 Pick 反证书**。
+
+---
+
+# 第一千八百零一部　Li 曲率的 Carathéodory 生成函数
+
+采用标准 Keiper–Li 归一化：
+
+$$
+\boxed{
+\frac{d}{dz}
+\log
+\xi\!\left(\frac1{1-z}\right)
+=
+\sum_{n=1}^{\infty}
+\lambda_n z^{n-1}.
+}
+\tag{1801.1}
+$$
+
+Li 的原始判据用 \(\lambda_n\) 的非负性刻画 RH；这里研究的则是它们的二阶差分。([科学直达][1])
+
+令：
+
+$$
+\lambda_0=0,
+$$
+
+$$
+\boxed{
+d_n
+=
+\lambda_{n+1}
+-
+2\lambda_n
++
+\lambda_{n-1},
+\qquad
+n\ge1,
+}
+\tag{1801.2}
+$$
+
+并定义：
+
+$$
+\boxed{
+c_n=\frac{d_n}{2\lambda_1},
+\qquad
+c_0=1.
+}
+\tag{1801.3}
+$$
+
+现在定义：
+
+$$
+\boxed{
+\mathcal C_\xi(z)
+=
+1+
+2\sum_{n=1}^{\infty}
+c_nz^n.
+}
+\tag{1801.4}
+$$
+
+令：
+
+$$
+G(z)
+=
+\frac{d}{dz}
+\log
+\xi\!\left(\frac1{1-z}\right).
+$$
+
+则：
+
+$$
+\sum_{n\ge1}\lambda_nz^n=zG(z).
+$$
+
+直接移动指标：
+
+$$
+\begin{aligned}
+\sum_{n\ge1}d_nz^n
+&=
+\sum_{n\ge1}\lambda_{n+1}z^n
+-
+2\sum_{n\ge1}\lambda_nz^n
++
+\sum_{n\ge1}\lambda_{n-1}z^n\\
+&=
+G(z)-\lambda_1-2zG(z)+z^2G(z)\\
+&=
+(1-z)^2G(z)-\lambda_1.
+\end{aligned}
+\tag{1801.5}
+$$
+
+因此：
+
+$$
+\begin{aligned}
+\mathcal C_\xi(z)
+&=
+1+
+\frac1{\lambda_1}
+\sum_{n\ge1}d_nz^n\\
+&=
+\frac{(1-z)^2}{\lambda_1}G(z).
+\end{aligned}
+$$
+
+而：
+
+$$
+\frac{d}{dz}\frac1{1-z}
+=
+\frac1{(1-z)^2}.
+$$
+
+所以得到：
+
+## 定理 1801.1（Li–Carathéodory 恒等式）
+
+$$
+\boxed{
+\mathcal C_\xi(z)
+=
+\frac1{\lambda_1}
+\frac{\xi'}{\xi}
+\left(
+\frac1{1-z}
+\right).
+}
+\tag{1801.6}
+$$
+
+这不是近似，也不是在 RH 假设下才成立。
+
+它是 Li 二阶曲率与 completed-\(\xi\) 对数导数之间的精确恒等式，最初在 \(z=0\) 邻域成立，并按亚纯延拓理解。
+
+---
+
+# 第一千八百零二部　单位圆盘就是临界线右半平面
+
+变换：
+
+$$
+s=\frac1{1-z}
+$$
+
+满足：
+
+$$
+z=1-\frac1s=\frac{s-1}{s}.
+$$
+
+于是：
+
+$$
+|z|<1
+\iff
+|s-1|<|s|.
+$$
+
+平方后：
+
+$$
+(\Re s-1)^2+(\Im s)^2
+<
+(\Re s)^2+(\Im s)^2,
+$$
+
+即：
+
+$$
+\boxed{
+|z|<1
+\iff
+\Re s>\frac12.
+}
+\tag{1802.1}
+$$
+
+所以：
+
+$$
+\boxed{
+\mathbb D
+\overset{s=1/(1-z)}{\longleftrightarrow}
+\left\{
+s:\Re s>\frac12
+\right\}.
+}
+$$
+
+单位圆：
+
+$$
+|z|=1
+$$
+
+对应临界线：
+
+$$
+\Re s=\frac12.
+$$
+
+圆盘内部对应临界线右侧。
+
+圆盘外部对应临界线左侧。
+
+因此，Li 的 Cayley 坐标不是一种任意美化；它把 RH 精确变成：
+
+$$
+\boxed{
+\text{所有谱奇点都只能停留在观察圆盘的边界。}
+}
+$$
+
+---
+
+# 第一千八百零三部　RH 等价于 \(L_\xi\) 的正实性
+
+令：
+
+$$
+s=\frac12+w,
+\qquad
+\Re w>0.
+$$
+
+若 RH 成立，centered completed function：
+
+$$
+F(w)=\xi\!\left(\frac12+w\right)
+$$
+
+具有 genus-zero 平方乘积：
+
+$$
+\boxed{
+\frac{F(w)}{F(0)}
+=
+\prod_{\gamma>0}
+\left(
+1+\frac{w^2}{\gamma^2}
+\right)^{m_\gamma}.
+}
+\tag{1803.1}
+$$
+
+对数求导：
+
+$$
+\boxed{
+L_\xi\!\left(\frac12+w\right)
+=
+\sum_{\gamma>0}
+m_\gamma
+\left(
+\frac1{w-i\gamma}
++
+\frac1{w+i\gamma}
+\right).
+}
+\tag{1803.2}
+$$
+
+若：
+
+$$
+w=x+iy,
+\qquad
+x>0,
+$$
+
+则每项实部均严格为正：
+
+$$
+\Re\frac1{w-i\gamma}
+=
+\frac{x}{x^2+(y-\gamma)^2}>0.
+$$
+
+因此：
+
+$$
+\boxed{
+\Re
+L_\xi\!\left(
+\frac12+x+iy
+\right)
+=
+\sum_{\gamma}
+m_\gamma
+\frac{x}{x^2+(y-\gamma)^2}
+>0.
+}
+\tag{1803.3}
+$$
+
+右边正是临界零点计数测度的 Poisson 延拓。
+
+反过来，若 \(L_\xi\) 在：
+
+$$
+\Re s>\frac12
+$$
+
+全纯且具有正实部，则该区域不可能含 \(\xi\) 的零点，因为每个零点都会成为 \(L_\xi\) 的极点。
+
+再由函数方程的反射对称，左侧也不存在离线零点。
+
+所以：
+
+## 定理 1803.1（正实对数导数判据）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+L_\xi
+\text{ 在 }\Re s>\frac12
+\text{ 全纯且 }
+\Re L_\xi(s)>0.
+}
+\tag{1803.4}
+$$
+
+这与近年直接研究 \(\Re(\xi'/\xi)\) 在临界线附近正性的工作属于同一解析对象，但这里强调的是完整半平面的等价判据，而不是某个局部零点自由区。([arXiv][2])
+
+---
+
+# 第一千八百零四部　平方、半平面与圆盘的三重正性
+
+令：
+
+$$
+w=s-\frac12.
+$$
+
+由于 centered log derivative 是奇函数：
+
+$$
+L_\xi\!\left(\frac12-w\right)
+=
+-
+L_\xi\!\left(\frac12+w\right),
+$$
+
+定义平方变量：
+
+$$
+u=w^2,
+$$
+
+以及：
+
+$$
+\boxed{
+\mathscr T_\xi(u)
+=
+\frac1{2\sqrt u}
+L_\xi\!\left(
+\frac12+\sqrt u
+\right).
+}
+\tag{1804.1}
+$$
+
+若 RH 成立，则：
+
+$$
+\boxed{
+\mathscr T_\xi(u)
+=
+\sum_{\gamma>0}
+\frac{m_\gamma}{u+\gamma^2}.
+}
+\tag{1804.2}
+$$
+
+因此 \(\mathscr T_\xi\) 是正测度：
+
+$$
+\nu_\xi
+=
+\sum_{\gamma>0}
+m_\gamma\delta_{\gamma^2}
+$$
+
+的 Stieltjes 变换。
+
+由此得到三个完全等价的正性图表：
+
+$$
+\boxed{
+\begin{array}{c|c|c}
+\text{坐标}&\text{函数类}&\text{谱位置}\\
+\hline
+u=(s-\frac12)^2
+&
+\text{Stieltjes}
+&
+\gamma^2\in\mathbb R_{>0}
+\\
+s
+&
+\text{positive-real}
+&
+\Re s>\frac12
+\\
+z=1-\frac1s
+&
+\text{Carathéodory／Schur}
+&
+|z|<1
+\end{array}
+}
+\tag{1804.3}
+$$
+
+所以：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathscr T_\xi\text{ 是 Stieltjes 函数}
+}
+$$
+
+$$
+\boxed{
+\iff
+L_\xi\text{ 是右半平面的 positive-real impedance}
+}
+$$
+
+$$
+\boxed{
+\iff
+\mathcal C_\xi\text{ 是圆盘 Carathéodory 函数}.
+}
+$$
+
+这是此前：
+
+* 中心逆平方 Hankel；
+* Li–Clark；
+* Nevanlinna；
+* Hardy scattering；
+
+四条路线的统一坐标三角。
+
+---
+
+# 第一千八百零五部　Li 权重是 Cayley 相位的 Jacobian
+
+若 RH 成立，写：
+
+$$
+\rho=\frac12+i\gamma.
+$$
+
+其 Li 相位为：
+
+$$
+\boxed{
+\omega_\gamma
+=
+1-\frac1\rho
+=
+\frac{i\gamma-\frac12}
+{i\gamma+\frac12}
+\in\mathbb T.
+}
+\tag{1805.1}
+$$
+
+令：
+
+$$
+\omega_\gamma=e^{i\theta(\gamma)}.
+$$
+
+则：
+
+$$
+\begin{aligned}
+\frac{d}{d\gamma}\log\omega_\gamma
+&=
+\frac{i}{i\gamma-\frac12}
+-
+\frac{i}{i\gamma+\frac12}\\
+&=
+-\frac{i}{\gamma^2+\frac14}.
+\end{aligned}
+$$
+
+所以：
+
+$$
+\boxed{
+-\theta'(\gamma)
+=
+\frac1{\gamma^2+\frac14}.
+}
+\tag{1805.2}
+$$
+
+而 Li–Clark 权重恰为：
+
+$$
+\frac1{|\rho|^2}
+=
+\frac1{\gamma^2+\frac14}.
+$$
+
+因此：
+
+$$
+\boxed{
+\text{Li 权重}
+=
+\text{临界线高度到单位圆相位的角 Jacobian}.
+}
+\tag{1805.3}
+$$
+
+这不是偶然的 Poisson 类似。
+
+标准半尺度 Cayley 图表把每个零点按其相位对高度扰动的灵敏度加权。
+
+又因为：
+
+$$
+2\lambda_1
+=
+\sum_\rho
+\frac{m_\rho}{|\rho|^2},
+$$
+
+所以：
+
+$$
+\boxed{
+2\lambda_1
+=
+\sum_\rho
+m_\rho\left[-\theta'(\gamma_\rho)\right].
+}
+\tag{1805.4}
+$$
+
+即 \(\lambda_1\) 是全部临界零点的总 Cayley 角灵敏度的一半。
+
+---
+
+## 1805.1 一般观察尺度
+
+对任意：
+
+$$
+a>0,
+$$
+
+定义：
+
+$$
+\boxed{
+\omega_{a,\gamma}
+=
+\frac{i\gamma-a}{i\gamma+a}.
+}
+\tag{1805.5}
+$$
+
+若：
+
+$$
+\omega_{a,\gamma}
+=
+e^{i\theta_a(\gamma)},
+$$
+
+则：
+
+$$
+\boxed{
+-\theta_a'(\gamma)
+=
+\frac{2a}{a^2+\gamma^2}
+=
+2\pi P_a(\gamma).
+}
+\tag{1805.6}
+$$
+
+所以所有 Cayley 观察者都在用 Poisson harmonic measure 对同一零点集合重新加权。
+
+定义：
+
+$$
+\boxed{
+\mathcal C_{\xi,a}(z)
+=
+\frac{
+L_\xi\!\left(
+\frac12+
+a\frac{1+z}{1-z}
+\right)
+}{
+L_\xi(\frac12+a)
+}.
+}
+\tag{1805.7}
+$$
+
+若 RH 成立，它的正相位测度为：
+
+$$
+\boxed{
+\mu_{\xi,a}
+=
+\frac1{L_\xi(\frac12+a)}
+\sum_\gamma
+m_\gamma
+\frac{a}{a^2+\gamma^2}
+\delta_{\omega_{a,\gamma}}.
+}
+\tag{1805.8}
+$$
+
+标准 Li 图表就是：
+
+$$
+a=\frac12.
+$$
+
+在这个尺度上，传统未归一化 Li 权重恰好直接等于相位 Jacobian；这给 \(1/2\) 一个比“习惯归一化”更结构性的解释。
+
+---
+
+# 第一千八百零六部　算术 Schur 函数
+
+定义：
+
+$$
+\boxed{
+\mathfrak s_\xi(z)
+=
+\frac{
+\mathcal C_\xi(z)-1
+}{
+\mathcal C_\xi(z)+1
+}.
+}
+\tag{1806.1}
+$$
+
+代入式 (1801.6)：
+
+$$
+\boxed{
+\mathfrak s_\xi(z)
+=
+\frac{
+L_\xi(s)-\lambda_1
+}{
+L_\xi(s)+\lambda_1
+},
+\qquad
+s=\frac1{1-z}.
+}
+\tag{1806.2}
+$$
+
+因为：
+
+$$
+L_\xi(1)=\lambda_1,
+$$
+
+所以：
+
+$$
+\boxed{
+\mathfrak s_\xi(0)=0.
+}
+\tag{1806.3}
+$$
+
+由 Cayley 变换：
+
+$$
+\Re\mathcal C_\xi(z)>0
+\iff
+|\mathfrak s_\xi(z)|<1.
+$$
+
+因此：
+
+## 定理 1806.1（算术 Schur 判据）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathfrak s_\xi
+\text{ 是单位圆盘上的 Schur 函数}.
+}
+\tag{1806.4}
+$$
+
+RH 成立时，代表测度是纯原子测度，故 \(\mathfrak s_\xi\) 进一步是一个 meromorphic inner function：其边界值在 Lebesgue 几乎处处具有单位模。
+
+仓库已经机器证明了一般 Schur–Herglotz Cayley 变换的严格等价，并明确记录了正尺度与分母非消失条件；因此这里真正缺失的不是 Cayley 代数，而是把 \(\mathfrak s_\xi\) 实例化并证明其算术正性。
+
+---
+
+# 第一千八百零七部　Li 相位测度就是 \(\alpha=1\) Clark 测度
+
+由定义：
+
+$$
+\boxed{
+\mathcal C_\xi(z)
+=
+\frac{1+\mathfrak s_\xi(z)}
+{1-\mathfrak s_\xi(z)}.
+}
+\tag{1807.1}
+$$
+
+而 Clark 理论正是通过：
+
+$$
+\Re
+\frac{\alpha+\mathfrak s(z)}
+{\alpha-\mathfrak s(z)}
+$$
+
+构造 Schur 函数的边界正测度；在 \(\alpha=1\) 时，上式就是 \(\mathcal C_\xi\)。Clark 测度及其模型空间酉表示是该理论的标准结构。([语义学者][3])
+
+因此，RH 成立时：
+
+$$
+\boxed{
+\mu_\xi
+=
+\frac1{2\lambda_1}
+\sum_\rho
+\frac{m_\rho}{|\rho|^2}
+\delta_{\omega_\rho}
+}
+\tag{1807.2}
+$$
+
+不是一个后来附加的零点测度。
+
+它正是：
+
+$$
+\boxed{
+\mathfrak s_\xi
+\text{ 的 }\alpha=1\text{ Aleksandrov–Clark 测度}.
+}
+$$
+
+---
+
+## 1807.1 零点是 Schur 函数与相位 \(1\) 的边界接触
+
+若：
+
+$$
+\xi(\rho)=0
+$$
+
+且零点重数为 \(m_\rho\)，则：
+
+$$
+L_\xi(s)
+=
+\frac{m_\rho}{s-\rho}
++
+O(1).
+$$
+
+因此：
+
+$$
+\frac{L_\xi(s)-\lambda_1}
+{L_\xi(s)+\lambda_1}
+=
+1-
+\frac{2\lambda_1}{m_\rho}
+(s-\rho)
++
+O((s-\rho)^2).
+\tag{1807.3}
+$$
+
+在：
+
+$$
+z_\rho=1-\frac1\rho
+$$
+
+附近：
+
+$$
+s-\rho
+=
+\rho^2(z-z_\rho)
++
+O((z-z_\rho)^2).
+$$
+
+所以：
+
+$$
+\boxed{
+\mathfrak s_\xi(z)
+=
+1-
+\frac{2\lambda_1\rho^2}{m_\rho}
+(z-z_\rho)
++
+O((z-z_\rho)^2).
+}
+\tag{1807.4}
+$$
+
+若 RH 成立，\(z_\rho\in\mathbb T\)，并且：
+
+$$
+\boxed{
+z_\rho
+\mathfrak s_\xi'(z_\rho)
+=
+\frac{
+2\lambda_1|\rho|^2
+}{
+m_\rho
+}
+>0.
+}
+\tag{1807.5}
+$$
+
+由 Clark 原子公式：
+
+$$
+\mu_\xi(\{z_\rho\})
+=
+\frac1{|\mathfrak s_\xi'(z_\rho)|},
+$$
+
+便得到：
+
+$$
+\boxed{
+\mu_\xi(\{z_\rho\})
+=
+\frac{
+m_\rho
+}{
+2\lambda_1|\rho|^2
+}.
+}
+\tag{1807.6}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{零点重数}
+\quad\longleftrightarrow\quad
+\text{Clark 原子质量}
+\quad\longleftrightarrow\quad
+\text{边界角导数}.
+}
+$$
+
+Li、Clark、零点重数三者在这里完全接合。
+
+---
+
+# 第一千八百零八部　其他 Clark 相位是 \(L_\xi\) 的等势线
+
+取：
+
+$$
+\alpha=e^{i\vartheta}\neq1.
+$$
+
+方程：
+
+$$
+\mathfrak s_\xi(z)=\alpha
+$$
+
+等价于：
+
+$$
+\frac{L-\lambda_1}{L+\lambda_1}
+=
+\alpha.
+$$
+
+解得：
+
+$$
+\boxed{
+L
+=
+\lambda_1
+\frac{1+\alpha}{1-\alpha}
+=
+i\lambda_1
+\cot\frac{\vartheta}{2}.
+}
+\tag{1808.1}
+$$
+
+所以不同 Clark observer 并不是在观察不同的 completed function。
+
+它们选择的是 \(L_\xi\) 的不同纯虚等势值。
+
+特别地：
+
+$$
+\alpha=1
+$$
+
+对应 \(L_\xi=\infty\)，即 \(\xi\) 的零点；
+
+$$
+\alpha=-1
+$$
+
+对应：
+
+$$
+L_\xi=0,
+$$
+
+即 \(\xi'\) 的零点。
+
+因此：
+
+$$
+\boxed{
+\text{\(\xi\) 零点只是完整 Clark phase family 中的一个相位切片。}
+}
+$$
+
+在 RH 成立时，全部 Clark 相位切片都由同一个正 Schur 系统承载于临界边界；不同相位改变观察基，不改变底层正性。
+
+---
+
+# 第一千八百零九部　离线零点是非法的内部 Clark 接触
+
+若：
+
+$$
+\rho
+=
+\sigma+i\gamma,
+\qquad
+\sigma>\frac12,
+$$
+
+则：
+
+$$
+z_\rho
+=
+1-\frac1\rho
+$$
+
+满足：
+
+$$
+|z_\rho|<1.
+$$
+
+同时式 (1807.4) 表明，\(\mathfrak s_\xi\) 在该点的可去延拓满足：
+
+$$
+\boxed{
+\mathfrak s_\xi(z_\rho)=1.
+}
+\tag{1809.1}
+$$
+
+但非恒定 Schur 函数不可能在圆盘内部取得单位模值。
+
+因此可以把离线零点定义为：
+
+$$
+\boxed{
+\textbf{一个试图把 Clark 边界原子移入观察圆盘内部的谱接触。}
+}
+$$
+
+在线零点是合法边界接触。
+
+离线零点是非法内部接触。
+
+这比“离线零点是负能量”更准确，因为：
+
+* 原子质量本身仍然是正的；
+* 异常在于它被放置到了正 Schur 系统不允许的位置。
+
+---
+
+# 第一千八百一十部　普适 \(2\times2\) Pick 反证书
+
+定义 de Branges–Rovnyak／Pick 核：
+
+$$
+\boxed{
+K_{\mathfrak s}(z,w)
+=
+\frac{
+1-
+\mathfrak s_\xi(z)
+\overline{\mathfrak s_\xi(w)}
+}{
+1-z\overline w
+}.
+}
+\tag{1810.1}
+$$
+
+若 \(\mathfrak s_\xi\) 为 Schur 函数，则对任意有限点集：
+
+$$
+[K_{\mathfrak s}(z_i,z_j)]\succeq0.
+$$
+
+现在使用：
+
+$$
+\mathfrak s_\xi(0)=0,
+\qquad
+\mathfrak s_\xi(z_\rho)=1.
+$$
+
+则：
+
+$$
+K_{\mathfrak s}(0,0)=1,
+$$
+
+$$
+K_{\mathfrak s}(0,z_\rho)
+=
+K_{\mathfrak s}(z_\rho,0)
+=
+1,
+$$
+
+$$
+K_{\mathfrak s}(z_\rho,z_\rho)=0.
+$$
+
+所以：
+
+## 定理 1810.1（Universal off-line Pick obstruction）
+
+任一右侧离线零点都产生：
+
+$$
+\boxed{
+\begin{pmatrix}
+K(0,0)&K(0,z_\rho)\\
+K(z_\rho,0)&K(z_\rho,z_\rho)
+\end{pmatrix}
+=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}.
+}
+\tag{1810.2}
+$$
+
+其行列式恒为：
+
+$$
+\boxed{-1.}
+\tag{1810.3}
+$$
+
+这个负值与：
+
+* \(\gamma\)；
+* \(\delta=\sigma-\frac12\)；
+* 零点重数；
+
+全部无关。
+
+重数只进入接触点附近的导数，不进入这一零阶 Pick 惯性。
+
+所以离线零点的有限证明对偶可以比此前的高阶 Hankel 证书更短：
+
+$$
+\boxed{
+\text{一个基点 \(0\)、一个离线像点，以及一个固定负行列式 \(-1\)。}
+}
+$$
+
+---
+
+## 1810.1 有理二点证书
+
+因为上述行列式在 \(z_\rho\) 处严格为负，连续性保证其在某个邻域内仍为负。
+
+该邻域必含 Gaussian rational：
+
+$$
+q\in(\mathbb Q+i\mathbb Q)\cap\mathbb D.
+$$
+
+所以：
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\Longrightarrow
+\exists q\in\mathbb Q(i)\cap\mathbb D:
+\det
+\begin{pmatrix}
+K(0,0)&K(0,q)\\
+K(q,0)&K(q,q)
+\end{pmatrix}
+<0.
+}
+\tag{1810.4}
+$$
+
+不需要知道精确零点坐标。
+
+只需要在一个有理圆盘点严格认证负值。
+
+---
+
+# 第一千八百一十一部　Schwarz–Li 标量判据
+
+由于：
+
+$$
+K(0,0)=1,
+\qquad
+K(0,z)=K(z,0)=1,
+$$
+
+有：
+
+$$
+\begin{aligned}
+\det
+\begin{pmatrix}
+K(0,0)&K(0,z)\\
+K(z,0)&K(z,z)
+\end{pmatrix}
+&=
+\frac{1-|\mathfrak s_\xi(z)|^2}
+{1-|z|^2}
+-1\\
+&=
+\frac{
+|z|^2-
+|\mathfrak s_\xi(z)|^2
+}{
+1-|z|^2
+}.
+\end{aligned}
+\tag{1811.1}
+$$
+
+所以二点 Pick 正性恰等于：
+
+$$
+\boxed{
+|\mathfrak s_\xi(z)|
+\le
+|z|.
+}
+\tag{1811.2}
+$$
+
+这就是带归一化：
+
+$$
+\mathfrak s_\xi(0)=0
+$$
+
+的 Schwarz 引理。
+
+因此得到一个非常短的标量判据：
+
+## 定理 1811.1（Riemann–Schwarz 判据）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\left|
+\frac{
+L_\xi(s)-\lambda_1
+}{
+L_\xi(s)+\lambda_1
+}
+\right|
+\le
+\left|
+1-\frac1s
+\right|
+}
+\tag{1811.3}
+$$
+
+对全部：
+
+$$
+\Re s>\frac12
+$$
+
+成立；若分母消失，则视为判据失败。
+
+---
+
+## 1811.1 完全展开的阻抗不等式
+
+令：
+
+$$
+r^2
+=
+\left|
+1-\frac1s
+\right|^2
+=
+\frac{|s-1|^2}{|s|^2}.
+$$
+
+式 (1811.3) 等价于：
+
+$$
+|L-\lambda_1|^2
+\le
+r^2|L+\lambda_1|^2.
+$$
+
+展开后：
+
+$$
+\boxed{
+(1-r^2)
+\left(
+|L|^2+\lambda_1^2
+\right)
+\le
+2\lambda_1(1+r^2)\Re L.
+}
+\tag{1811.4}
+$$
+
+又因为：
+
+$$
+|s|^2-|s-1|^2=2\Re s-1,
+$$
+
+得到：
+
+$$
+\boxed{
+(2\Re s-1)
+\left(
+|L_\xi(s)|^2+\lambda_1^2
+\right)
+\le
+2\lambda_1
+\left(
+|s|^2+|s-1|^2
+\right)
+\Re L_\xi(s).
+}
+\tag{1811.5}
+$$
+
+这是一条只涉及单点：
+
+$$
+\xi'/\xi(s)
+$$
+
+的实不等式。
+
+非 RH 必使它在某个有限点严格失败。
+
+---
+
+# 第一千八百一十二部　Schwarz–Pick 微分约束
+
+若 RH 成立，\(\mathfrak s_\xi\) 是 Schur 函数，所以：
+
+$$
+\frac{
+|\mathfrak s_\xi'(z)|
+}{
+1-|\mathfrak s_\xi(z)|^2
+}
+\le
+\frac1{1-|z|^2}.
+}
+\tag{1812.1}
+$$
+
+令：
+
+$$
+L=L_\xi(s).
+$$
+
+有：
+
+$$
+\frac{d\mathfrak s_\xi}{ds}
+=
+\frac{
+2\lambda_1L_\xi'(s)
+}{
+(L+\lambda_1)^2
+},
+$$
+
+以及：
+
+$$
+\frac{ds}{dz}=s^2.
+$$
+
+另一方面：
+
+$$
+1-|\mathfrak s_\xi|^2
+=
+\frac{
+4\lambda_1\Re L
+}{
+|L+\lambda_1|^2
+},
+$$
+
+$$
+1-|z|^2
+=
+\frac{
+2\Re s-1
+}{
+|s|^2
+}.
+$$
+
+代入并消去全部 gauge factors，得到：
+
+## 定理 1812.1（Log-derivative Schwarz–Pick inequality）
+
+RH 蕴含：
+
+$$
+\boxed{
+(2\Re s-1)
+\left|
+\left(
+\frac{\xi'}{\xi}
+\right)'(s)
+\right|
+\le
+2\Re
+\frac{\xi'}{\xi}(s),
+\qquad
+\Re s>\frac12.
+}
+\tag{1812.2}
+$$
+
+即：
+
+$$
+\boxed{
+(2\Re s-1)
+\left|
+\frac{\xi''}{\xi}
+-
+\left(\frac{\xi'}{\xi}\right)^2
+\right|
+\le
+2\Re\frac{\xi'}{\xi}.
+}
+\tag{1812.3}
+$$
+
+这是一条二阶局部解析约束。
+
+更高阶 Pick matrices 会生成完整的高阶导数不等式塔。
+
+---
+
+# 第一千八百一十三部　Nevanlinna 核的零点 Gram 分解
+
+定义右半平面 Nevanlinna 核：
+
+$$
+\boxed{
+\mathcal N_\xi(s,t)
+=
+\frac{
+L_\xi(s)+\overline{L_\xi(t)}
+}{
+s+\overline t-1
+},
+\qquad
+\Re s,\Re t>\frac12.
+}
+\tag{1813.1}
+$$
+
+在圆盘坐标中：
+
+$$
+1-z\overline w
+=
+\frac{
+s+\overline t-1
+}{
+s\overline t
+}.
+$$
+
+因此 Carathéodory 核：
+
+$$
+\frac{
+\mathcal C_\xi(z)+
+\overline{\mathcal C_\xi(w)}
+}{
+1-z\overline w
+}
+$$
+
+与 \(\mathcal N_\xi\) 只相差可逆的对角 gauge：
+
+$$
+\boxed{
+\frac{
+\mathcal C_\xi(z)+
+\overline{\mathcal C_\xi(w)}
+}{
+1-z\overline w
+}
+=
+\frac{s\overline t}{\lambda_1}
+\mathcal N_\xi(s,t).
+}
+\tag{1813.2}
+$$
+
+仓库在 2026 年 9 月 2 日最新 formalization 中，已经机器证明了这一类 Cayley–Nevanlinna 与 de Branges 核之间的精确对角 gauge 恒等式，以及有限 Gram 正性的双向等价；同时也明确证明了 gauge 分母非消失不可省略。
+
+---
+
+## 1813.1 RH 下的显式 Gram 特征
+
+若 RH 成立，则对每个零点：
+
+$$
+\rho+\overline\rho=1.
+$$
+
+于是：
+
+$$
+\begin{aligned}
+\frac{
+\frac1{s-\rho}
++
+\frac1{\overline t-\overline\rho}
+}{
+s+\overline t-1
+}
+&=
+\frac{
+s+\overline t-(\rho+\overline\rho)
+}{
+(s-\rho)
+(\overline t-\overline\rho)
+(s+\overline t-1)
+}\\
+&=
+\frac1{
+(s-\rho)
+(\overline t-\overline\rho)
+}.
+\end{aligned}
+$$
+
+因此：
+
+## 定理 1813.1（Zero-resolvent Gram formula）
+
+在 RH 下，以规范对称方式求和：
+
+$$
+\boxed{
+\mathcal N_\xi(s,t)
+=
+\sum_\rho
+\frac{
+m_\rho
+}{
+(s-\rho)
+(\overline t-\overline\rho)
+}.
+}
+\tag{1813.3}
+$$
+
+所以它是向量：
+
+$$
+v_s(\rho)
+=
+\frac{\sqrt{m_\rho}}{s-\rho}
+$$
+
+的 Gram 核：
+
+$$
+\boxed{
+\mathcal N_\xi(s,t)
+=
+\langle v_t,v_s\rangle.
+}
+\tag{1813.4}
+$$
+
+这给 RH 一个极其具体的 Hilbert 实现：
+
+$$
+\boxed{
+\text{completed-\(\xi\) 的 normalized log-response
+必须是一族 zero-resolvent feature vectors 的 Gram kernel。}
+}
+$$
+
+---
+
+## 1813.2 离线修正项的符号
+
+若：
+
+$$
+\rho=\sigma+i\gamma
+$$
+
+不在临界线上，则：
+
+$$
+\rho+\overline\rho=2\sigma.
+$$
+
+于是：
+
+$$
+\boxed{
+\begin{aligned}
+&
+\frac{
+\frac1{s-\rho}
++
+\frac1{\overline t-\overline\rho}
+}{
+s+\overline t-1
+}\\[1mm]
+&=
+\frac1{
+(s-\rho)(\overline t-\overline\rho)
+}
++
+\frac{
+1-2\sigma
+}{
+(s+\overline t-1)
+(s-\rho)
+(\overline t-\overline\rho)
+}.
+\end{aligned}
+}
+\tag{1813.5}
+$$
+
+第一项是普通 rank-one Gram 项。
+
+第二项是：
+
+$$
+\boxed{
+1-2\sigma=-2\left(\sigma-\frac12\right)
+}
+$$
+
+乘以一个正 Cauchy kernel 与 rank-one kernel 的 Schur product。
+
+因此右侧离线零点：
+
+$$
+\sigma>\frac12
+$$
+
+精确产生一个负的 kernel correction。
+
+这可能是“负信息”目前最简洁的代数来源：
+
+$$
+\boxed{
+\text{负号不是零点本身；
+它是偏离固定线后，Gram 分解所需的修正系数。}
+}
+$$
+
+---
+
+# 第一千八百一十四部　函数方程把 Nevanlinna 核变成 divided difference
+
+函数方程给出：
+
+$$
+L_\xi(s)
+=
+-
+L_\xi(1-s).
+$$
+
+实结构给出：
+
+$$
+\overline{L_\xi(t)}
+=
+L_\xi(\overline t).
+$$
+
+所以：
+
+$$
+-\overline{L_\xi(t)}
+=
+L_\xi(1-\overline t).
+$$
+
+因此：
+
+$$
+\boxed{
+\mathcal N_\xi(s,t)
+=
+\frac{
+L_\xi(s)
+-
+L_\xi(1-\overline t)
+}{
+s-(1-\overline t)
+}.
+}
+\tag{1814.1}
+$$
+
+它是 \(L_\xi\) 在一个点与其反射点之间的 Loewner divided-difference kernel。
+
+所以 RH 还可以解释为：
+
+$$
+\boxed{
+\text{函数方程给出的反射 divided difference
+是否始终形成正 Gram 核？}
+}
+$$
+
+这比单独研究 \(L_\xi(s)\) 的数值更深，因为它直接检测：
+
+$$
+\text{不同观察者之间的关系}
+$$
+
+而不是单点读数。
+
+---
+
+# 第一千八百一十五部　prime-power 在 Li 圆盘中是 singular-inner semigroup
+
+在：
+
+$$
+\Re s>1
+$$
+
+的 Euler 收敛区：
+
+$$
+\boxed{
+L_\xi(s)
+=
+\frac1s
++
+\frac1{s-1}
+-
+\frac12\log\pi
++
+\frac12\psi\!\left(\frac s2\right)
+-
+\sum_{n\ge2}
+\Lambda(n)n^{-s}.
+}
+\tag{1815.1}
+$$
+
+现在使用：
+
+$$
+s=\frac1{1-z}
+=
+\frac12+
+\frac12
+\frac{1+z}{1-z}.
+$$
+
+于是：
+
+$$
+\boxed{
+n^{-s}
+=
+n^{-1/2}
+\exp
+\left[
+-\frac{\log n}{2}
+\frac{1+z}{1-z}
+\right].
+}
+\tag{1815.2}
+$$
+
+定义：
+
+$$
+\boxed{
+\Sigma_a(z)
+=
+\exp
+\left[
+-a\frac{1+z}{1-z}
+\right],
+\qquad
+a>0.
+}
+\tag{1815.3}
+$$
+
+因为：
+
+$$
+\Re\frac{1+z}{1-z}>0
+\qquad
+(|z|<1),
+$$
+
+所以：
+
+$$
+|\Sigma_a(z)|<1.
+$$
+
+而在单位圆上除 \(z=1\) 外：
+
+$$
+\frac{1+z}{1-z}
+$$
+
+为纯虚数，因此：
+
+$$
+|\Sigma_a|=1.
+$$
+
+所以 \(\Sigma_a\) 是锚定在边界点 \(z=1\) 的 singular inner function。
+
+同时：
+
+$$
+\boxed{
+\Sigma_a\Sigma_b
+=
+\Sigma_{a+b}.
+}
+\tag{1815.4}
+$$
+
+因此：
+
+$$
+\boxed{
+n^{-s(z)}
+=
+n^{-1/2}
+\Sigma_{\frac12\log n}(z).
+}
+\tag{1815.5}
+$$
+
+这说明：
+
+$$
+\boxed{
+\text{离散乘法尺度 }n
+\text{ 在 Li 图表中变成连续 singular-inner 时间 }
+\frac12\log n.
+}
+$$
+
+prime powers 对应同一个 inner semigroup 的重复时间。
+
+---
+
+## 1815.1 Euler 区只覆盖一个 horodisk
+
+条件：
+
+$$
+\Re s>1
+$$
+
+在 \(z\)-平面中等价于：
+
+$$
+\boxed{
+\left|
+z-\frac12
+\right|
+<
+\frac12.
+}
+\tag{1815.6}
+$$
+
+所以 Euler 展开只直接控制一个与 \(z=1\) 相切的 horodisk，而不是整个单位圆盘。
+
+RH 要求的是：
+
+$$
+\mathcal C_\xi
+$$
+
+在完整单位圆盘中保持正实性。
+
+因此真正困难是：
+
+$$
+\boxed{
+\text{如何把 Euler horodisk 中的 prime singular-inner 数据，
+连同 Gamma/pole 通道，
+完成成整个圆盘上的 Carathéodory 函数。}
+}
+$$
+
+仓库最新的零区下降反例已经机器证明：仅有“阈值严格缩小”并不能把一个窄区域中的正性自动推进到临界边界；必须提供真实的解析增益。
+
+仓库的 innerness self-improvement 定理也明确要求：每一步必须真的把 innerness 从阈值 \(a\) 输运到更小的 \(F(a)\)，并且迭代阈值确实趋于零；单纯的数值收缩不够。
+
+---
+
+# 第一千八百一十六部　为什么局部 Euler 因子永远不够
+
+每个 prime 局部 determinant 可以完全相同，但跨 prime 的 frame transition 仍然不同。
+
+仓库已经用显式两分支矩阵构造机器证明：存在两组 prime-indexed frame，它们在每个 prime 上产生完全相同的局部 Euler determinant，却具有不同的跨 prime transition product。
+
+因此：
+
+$$
+\boxed{
+\text{全部局部 Euler determinants}
+}
+$$
+
+并不能恢复：
+
+$$
+\boxed{
+\text{cross-prime Gram、holonomy 或完全正输运。}
+}
+$$
+
+这说明主证明缺少的不是另一个标量 Euler 乘积，而是：
+
+$$
+\boxed{
+\textbf{一个跨 prime 的正关系结构。}
+}
+$$
+
+更精确的目标应是构造 Hilbert 空间 \(\mathcal H_{\rm arith}\) 与向量族 \(V_s\)，满足：
+
+$$
+\boxed{
+\frac{
+L_\xi(s)+\overline{L_\xi(t)}
+}{
+s+\overline t-1
+}
+=
+\langle V_t,V_s\rangle_{\mathcal H_{\rm arith}}.
+}
+\tag{1816.1}
+$$
+
+这可以称为：
+
+# Arithmetic Nevanlinna Gram Conjecture
+
+一旦从 prime、pole、Gamma 数据直接构造出式 (1816.1)，RH 立即成立。
+
+而且仓库刚刚已经机器闭合：经过 Cayley gauge 后，该 Nevanlinna Gram 正性与对应 de Branges Gram 正性完全等价。
+
+---
+
+# 第一千八百一十七部　观察位置与关系阶数的互补
+
+当前已经出现三类等价但资源分配不同的判据。
+
+| 图表                         |         观察位置 |                             关系阶数 | 非 RH 证书               |
+| -------------------------- | -----------: | -------------------------------: | --------------------- |
+| moving normal jet          | 可移动到任意 \(t\) |                           单个高阶系数 | \(\mathcal J_m(t)<0\) |
+| one-observer PF\(_\infty\) |   固定一个 \(t\) |             全部有限 Toeplitz minors | 某个负 minor             |
+| Li–Pick 图表                 |  遍历圆盘点 \(z\) | 只需锚定 \(0\) 的 \(2\times2\) kernel | determinant \(<0\)    |
+
+仓库最新的 one-observer total-positivity theorem 已经机器化逻辑闭合，但它明确保留了 PF\(_\infty\) 表示和全部 minors 等价等深层解析桥作为假设。
+
+仓库的 Jensen obstruction 同样已经把“非 RH 必有负系数或有限非双曲 Jensen 多项式”机器化，但真正的 Laguerre–Pólya 分类仍然是显式前提。
+
+本轮的 Li–Pick 图表给出另一种资源交换：
+
+$$
+\boxed{
+\text{不提高矩阵阶数，
+而是允许观察点在圆盘中移动。}
+}
+$$
+
+任意离线零点在其自身 Cayley 像附近，都能被一个二点矩阵捕获。
+
+这与项目的时间纤维结果完全一致：
+
+* 增加观察窗口只会缩小 fibre；
+* 互异有限模式可由足够长的时间窗口精确恢复；
+* 反射模式只要 multiplier 不同，第一非平凡时间步已经能分离。
+
+---
+
+# 第一千八百一十八部　RH 下 Li 相位动力是复现的，不是热混合的
+
+RH 成立时：
+
+$$
+\boxed{
+c_n
+=
+\sum_jw_j\zeta_j^n,
+}
+\tag{1818.1}
+$$
+
+其中：
+
+$$
+w_j>0,
+\qquad
+\sum_jw_j=1,
+\qquad
+|\zeta_j|=1.
+$$
+
+因为权重绝对可和，有限截断：
+
+$$
+\sum_{j=1}^{M}w_j\zeta_j^n
+$$
+
+在 \(n\in\mathbb Z\) 上一致逼近 \(c_n\)。
+
+所以：
+
+$$
+\boxed{
+(c_n)
+\text{ 是 Bohr almost-periodic sequence}.
+}
+\tag{1818.2}
+$$
+
+它是纯相位复现，而不是衰减到零的混合相关函数。
+
+进一步，合并相同节点后的权重记为 \(W_\zeta\)，则：
+
+$$
+\boxed{
+\lim_{N\to\infty}
+\frac1N
+\sum_{n=0}^{N-1}
+|c_n|^2
+=
+\sum_\zeta W_\zeta^2
+>0.
+}
+\tag{1818.3}
+$$
+
+所以 exact Li phase state 始终保留非零平均平方复现。
+
+项目已机器证明时间平移在有限谱纤维上恰等于对 modal amplitudes 作对角乘法，并满足精确半群律；这正是式 (1818.1) 的有限模式载体。
+
+---
+
+## 1818.1 黑洞热类比的再次校准
+
+内部 Poisson 响应：
+
+$$
+\Re L_\xi\!\left(\frac12+x+iy\right)
+$$
+
+是平滑的。
+
+但其边界源测度：
+
+$$
+\sum_\gamma m_\gamma\delta_\gamma
+$$
+
+是离散的。
+
+所以：
+
+$$
+\boxed{
+\text{连续“辐射场”来自 Poisson 粗化；
+精确谱状态仍然是纯点、酉、可复现的。}
+}
+$$
+
+因此 Hawking-like 语言适用于：
+
+* 径向 Poisson 平滑；
+* DtN 边界响应；
+* 隐藏伙伴被部分迹后的读数。
+
+它不意味着 completed-\(\xi\) 的精确 Li phase state 本身是一个真正热混合谱。
+
+若 RH 为假，某个 \(|\omega_\rho|>1\) 的模式会使 \(c_n\) 沿子序列指数增长。
+
+所以真正的动力二分不是：
+
+$$
+\text{热}
+\quad\text{对}\quad
+\text{非热},
+$$
+
+而是：
+
+$$
+\boxed{
+\begin{aligned}
+\mathrm{RH}
+&:\quad
+\text{单位圆纯相位、 bounded recurrence};\\
+\neg\mathrm{RH}
+&:\quad
+\text{hyperbolic radial mode、exponential instability}.
+\end{aligned}
+}
+$$
+
+---
+
+# 第一千八百一十九部　黄金比例在这一层的准确位置
+
+本轮的 Carathéodory／Schur／Clark 判据本身不需要黄金比例。
+
+任何：
+
+$$
+a>0
+$$
+
+都能定义一个 Cayley observer：
+
+$$
+\mathcal C_{\xi,a}.
+$$
+
+RH 对所有这些图表具有相同真假值。
+
+黄金比例只在选择离散观察图册时进入。
+
+取：
+
+$$
+\boxed{
+a_k
+=
+\frac12\varphi^{2k}.
+}
+\tag{1819.1}
+$$
+
+相邻观察者之间的圆盘自同构参数为：
+
+$$
+\boxed{
+r
+=
+\frac{a_k-a_{k+1}}
+{a_k+a_{k+1}}
+=
+-\frac1{\sqrt5},
+}
+\tag{1819.2}
+$$
+
+其双曲快速度为：
+
+$$
+\boxed{
+|\operatorname{artanh}r|
+=
+\log\varphi.
+}
+\tag{1819.3}
+$$
+
+所以黄金比例在这里承担：
+
+$$
+\boxed{
+\text{Cayley observer atlas 的等双曲步长。}
+}
+$$
+
+标准 \(a=\frac12\) 则承担：
+
+$$
+\boxed{
+\text{Li 权重与相位 Jacobian 的自归一化基点。}
+}
+$$
+
+这两种作用都不意味着：
+
+* Verblunsky 系数必须等于黄金比例；
+* Clark 原子质量必须服从 Fibonacci；
+* RH 本身含有黄金常数作为必要参数。
+
+黄金仍然属于**观察协议和命名语法**，而不是零点位置的本体坐标。
+
+---
+
+# 第一千八百二十部　新的最短证明目标
+
+本轮以后，Prime–Gamma 侧有四个等价强度不同的目标。
+
+## 目标 A：正实阻抗
+
+证明：
+
+$$
+\boxed{
+\Re
+\frac{\xi'}{\xi}(s)
+>0
+\qquad
+\forall\Re s>\frac12.
+}
+\tag{1820.1}
+$$
+
+这是最短标量目标。
+
+---
+
+## 目标 B：Riemann–Schwarz 不等式
+
+证明：
+
+$$
+\boxed{
+\left|
+\frac{
+L_\xi(s)-\lambda_1
+}{
+L_\xi(s)+\lambda_1
+}
+\right|
+\le
+\left|
+1-\frac1s
+\right|.
+}
+\tag{1820.2}
+$$
+
+它比正实性携带更多归一化信息，并立即产生二点 Pick 正性。
+
+---
+
+## 目标 C：算术 Nevanlinna Gram
+
+构造：
+
+$$
+\boxed{
+\frac{
+L_\xi(s)+\overline{L_\xi(t)}
+}{
+s+\overline t-1
+}
+=
+\langle V_t,V_s\rangle.
+}
+\tag{1820.3}
+$$
+
+这是最结构化的正性目标。
+
+---
+
+## 目标 D：Prime singular-inner 到 Clark 正态的完全正输运
+
+从：
+
+$$
+\Sigma_{\frac12\log n}(z)
+$$
+
+这一 prime singular-inner semigroup，连同 Gamma 与 pole 通道，构造：
+
+$$
+\boxed{
+\mathcal C_\xi(z)
+=
+\int_{\mathbb T}
+\frac{1+z\zeta}{1-z\zeta}
+\,d\mu_\xi(\zeta),
+\qquad
+\mu_\xi\ge0.
+}
+\tag{1820.4}
+$$
+
+这不仅证明 RH，还解释 prime histories 怎样被完成成 zero phase state。
+
+目标 D 最强。
+
+目标 A 已足够证明 RH。
+
+---
+
+# 第一千八百二十一部　建议形式化顺序
+
+```text
+D5/S3/Analytic/LiClark/LiCaratheodory/
+  LiSecondDifference.lean
+  LiSecondDifferenceGeneratingSeries.lean
+  LiCaratheodoryFunction.lean
+  LiCaratheodoryLogDerivativeIdentity.lean
+  LiDiskCriticalHalfPlaneEquiv.lean
+
+D5/S3/Analytic/Zeta/PositiveRealLogDerivative/
+  CenteredXiLogDerivative.lean
+  RHLogDerivativePoissonExpansion.lean
+  RHImpliesLogDerivativePositiveReal.lean
+  PositiveRealLogDerivativeExcludesRightZeros.lean
+  PositiveRealLogDerivativeRHIff.lean
+  RationalPositiveRealCriterion.lean
+
+D5/S3/Analytic/Zeta/SquareCayleyStieltjesTriangle/
+  CenteredOddLogDerivative.lean
+  SquaredLogDerivativeStieltjesTransform.lean
+  RHStieltjesSquareCriterion.lean
+  StieltjesToPositiveRealPullback.lean
+  PositiveRealToCaratheodoryPullback.lean
+
+D5/S3/Analytic/LiClark/LiPhaseJacobian/
+  CriticalLiCayleyPhase.lean
+  CriticalLiPhaseDerivative.lean
+  LiWeightEqualsPhaseJacobian.lean
+  LiOneTotalAngularSensitivity.lean
+  ScalePhaseJacobian.lean
+  ScaleLiHarmonicMeasure.lean
+
+D5/S3/Analytic/LiClark/ArithmeticSchur/
+  ArithmeticSchurFunction.lean
+  ArithmeticSchurAtOrigin.lean
+  RHArithmeticSchur.lean
+  RHArithmeticSchurInner.lean
+  ArithmeticSchurRHIff.lean
+
+D5/S3/Analytic/LiClark/LiClarkIdentification/
+  LiPhaseMeasure.lean
+  ArithmeticClarkMeasureOne.lean
+  XiZeroSchurBoundaryContact.lean
+  XiZeroSchurAngularDerivative.lean
+  XiMultiplicityClarkAtomMass.lean
+  ClarkPhaseLogDerivativeLevelSet.lean
+
+D5/S3/Analytic/LiClark/OffLineInteriorContact/
+  OffLineZeroLiDiskPoint.lean
+  OffLineLiPointInsideDisk.lean
+  ArithmeticSchurRemovableAtZero.lean
+  ArithmeticSchurValueOneAtXiZero.lean
+  InteriorClarkContactContradictsSchur.lean
+
+D5/S3/Weil/Pick/UniversalOffLineCertificate/
+  ArithmeticSchurPickKernel.lean
+  PickKernelAtOrigin.lean
+  OffLineUniversalTwoPointMatrix.lean
+  OffLineUniversalDeterminantMinusOne.lean
+  RationalNearbyPickCertificate.lean
+  RationalTwoPointRHIff.lean
+
+D5/S3/Analytic/LiClark/RiemannSchwarz/
+  ArithmeticSchurSchwarzBound.lean
+  RiemannSchwarzLogDerivativeInequality.lean
+  RiemannSchwarzExpandedImpedanceInequality.lean
+  ArithmeticSchwarzPickDerivativeBound.lean
+  LogDerivativeSchwarzPickInequality.lean
+
+D5/S3/Weil/Pick/XiNevanlinnaGram/
+  XiNevanlinnaKernel.lean
+  XiCaratheodoryNevanlinnaGauge.lean
+  RHZeroResolventGram.lean
+  OffLineSignedKernelCorrection.lean
+  XiNevanlinnaKernelRHIff.lean
+
+D5/S3/Analytic/PrimeSingularInner/
+  LiCayleyEulerHorodisk.lean
+  BoundaryOneSingularInnerSemigroup.lean
+  PrimePowerAsSingularInnerTime.lean
+  PrimeLogDerivativeSingularInnerExpansion.lean
+  EulerHorodiskNotFullDisk.lean
+
+D5/S3/Weil/PrimeGammaNevanlinnaGram/
+  PrimeSingularInnerFeatureSpaceTarget.lean
+  PoleGammaPositiveRealCompletionTarget.lean
+  CrossPrimeFrameGramTarget.lean
+  ArithmeticNevanlinnaGramTarget.lean
+  ArithmeticNevanlinnaGramImpliesRHTarget.lean
+
+D5/S3/Observer/LiPhaseRecurrence/
+  CriticalLiPhaseAtomicState.lean
+  LiCorrelationUniformAlmostPeriodic.lean
+  LiCorrelationMeanSquareRecurrence.lean
+  OffLineLiExponentialInstability.lean
+  LiBoundedCorrelationRHIff.lean
+
+D5/S3/GoldenObserver/LiCayleyAtlas/
+  HalfScaleLiSelfJacobian.lean
+  GoldenCayleyScaleLattice.lean
+  GoldenScaleTransitionInvSqrtFive.lean
+  GoldenScaleHyperbolicStepLogPhi.lean
+  GoldenAtlasNotNeededForRH.lean
+```
+
+---
+
+# 第一千八百二十二部　理论深度审计
+
+| 结论                                                               | 当前地位              |            |          |
+| ---------------------------------------------------------------- | ----------------- | ---------- | -------- |
+| Li 二阶曲率 Carathéodory 生成函数等于 normalized \(\xi'/\xi\)              | 本轮核心精确恒等式         |            |          |
+| 单位圆盘对应 \(\Re s>1/2\)                                             | 精确                |            |          |
+| RH 等价于 \(\Re(\xi'/\xi)>0\) 于整个右半平面                               | 精确                |            |          |
+| square／positive-real／Carathéodory 三重等价                           | 精确                |            |          |
+| Li 权重等于半尺度 Cayley 相位 Jacobian                                    | 本轮核心精确恒等式         |            |          |
+| Li phase measure 是 arithmetic Schur 的 \(\alpha=1\) Clark measure | 精确                |            |          |
+| Clark atom质量恢复零点重数和 (                                            | \rho              | ^{-2})     | 精确       |
+| 离线零点映成圆盘内部的 \(\mathfrak s_\xi=1\) 接触                             | 精确                |            |          |
+| 任一离线零点产生固定 determinant \(-1\) 的二点 Pick 块                         | 本轮核心定理            |            |          |
+| 非 RH 存在 Gaussian-rational 二点负证书                                  | 精确连续性推论           |            |          |
+| Riemann–Schwarz 单点不等式等价 RH                                       | 在标准亚纯延拓约定下精确      |            |          |
+| Schwarz–Pick 给出 ((2\sigma-1)                                     | L'                | \le2\Re L) | 精确 RH 推论 |
+| Nevanlinna kernel 在 RH 下有零点 resolvent Gram 分解                    | 精确                |            |          |
+| 离线偏移产生系数 \(1-2\Re\rho\) 的 signed kernel correction               | 精确                |            |          |
+| prime powers 在 Li 圆盘中形成 singular-inner semigroup                 | 精确于 Euler 区       |            |          |
+| Euler 区仅对应 tangent horodisk                                      | 精确                |            |          |
+| 局部 Euler determinants 能恢复 cross-prime frame                      | 不成立；仓库已有反例        |            |          |
+| Cayley–Nevanlinna 与 de Branges kernel PSD 等价                     | 仓库最新机器闭合          |            |          |
+| one-observer PF\(_\infty\) 逻辑闭合                                  | 仓库最新机器闭合，但解析桥仍是假设 |            |          |
+| strict threshold shrinking 自动给出临界线 descent                       | 不成立；仓库最新机器反例      |            |          |
+| RH 下 Li phase process 为纯点 almost-periodic dynamics               | 精确                |            |          |
+| Li phase state 本身是热混合连续谱                                         | 不成立               |            |          |
+| 黄金比例是 RH 判据的必要常数                                                 | 不成立               |            |          |
+| Prime–Gamma arithmetic Nevanlinna Gram                           | 当前最短未闭合桥          |            |          |
+
+---
+
+# 本轮最终结论
+
+这一轮没有定义“道”。
+
+进入公式的不是不可名本体，而是：
+
+$$
+\boxed{
+\text{completed-\(\xi\) 这个名字对观察变化作出的 infinitesimal response。}
+}
+$$
+
+这个 response 就是：
+
+$$
+\frac{\xi'}{\xi}.
+$$
+
+Li 二阶曲率的全部时间 moments，被精确压缩进：
+
+$$
+\boxed{
+\mathcal C_\xi(z)
+=
+\frac1{\lambda_1}
+\frac{\xi'}{\xi}
+\left(
+\frac1{1-z}
+\right).
+}
+$$
+
+所以 Li、Herglotz、Schur、Clark 和 Pick 并不是五条平行路线。
+
+它们是同一个函数的五种语言。
+
+---
+
+若 RH 成立，\(\mathcal C_\xi\) 是正实函数。
+
+它的边界正测度正是：
+
+$$
+\mu_\xi
+=
+\frac1{2\lambda_1}
+\sum_\rho
+\frac{m_\rho}{|\rho|^2}
+\delta_{1-1/\rho}.
+$$
+
+权重：
+
+$$
+|\rho|^{-2}
+$$
+
+又恰好是临界线高度到 Li 相位的角 Jacobian。
+
+所以 Li measure 不是任意给零点加权。
+
+它是在观察者 \(s=1\) 看来，零点相位对高度变化的自然灵敏度测度。
+
+---
+
+将 \(\mathcal C_\xi\) 再作 Cayley 变换，得到 arithmetic Schur function：
+
+$$
+\mathfrak s_\xi
+=
+\frac{\mathcal C_\xi-1}
+{\mathcal C_\xi+1}.
+$$
+
+RH 成立时，\(\xi\) 的每个零点成为：
+
+$$
+\mathfrak s_\xi=1
+$$
+
+的合法边界 Clark atom。
+
+其原子质量由边界角导数精确恢复：
+
+$$
+\mu_\xi(\{z_\rho\})
+=
+\frac1{|\mathfrak s_\xi'(z_\rho)|}
+=
+\frac{
+m_\rho
+}{
+2\lambda_1|\rho|^2
+}.
+$$
+
+因此零点重数、Li 权重和 Clark 原子不再是三个不同对象。
+
+它们是同一次边界接触的不同读数。
+
+---
+
+如果零点离线，它的 Cayley 像进入圆盘内部，但仍满足：
+
+$$
+\mathfrak s_\xi(z_\rho)=1.
+$$
+
+这等于要求一个 Schur 函数在内部取得单位模。
+
+不可能。
+
+而且这种不可能性会留下固定的二点矩阵：
+
+$$
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}.
+$$
+
+行列式永远为：
+
+$$
+-1.
+$$
+
+所以离线零点的证明对偶不必总是一个很高阶、很微弱的 Hankel 特征值。
+
+在最适配的 Schur 图表中，它拥有一个幅度完全不衰减的普适二点负证书。
+
+高零点之所以难找，不是因为这个规范证书很弱，而是因为我们不知道应该把第二个观察点放在哪里。
+
+这再次体现：
+
+$$
+\boxed{
+\text{移动观察者可以降低所需关系阶数。}
+}
+$$
+
+---
+
+本轮还把 RH 压缩成了一条单点不等式：
+
+$$
+\left|
+\frac{
+\xi'/\xi(s)-\lambda_1
+}{
+\xi'/\xi(s)+\lambda_1
+}
+\right|
+\le
+\left|
+1-\frac1s
+\right|,
+\qquad
+\Re s>\frac12.
+$$
+
+它是 completed-\(\xi\) 的 Schwarz 收缩律。
+
+任何离线零点都会在某个邻域严格违反它，因此还会产生一个 Gaussian-rational 反证书。
+
+---
+
+更深的是，RH 下的 Nevanlinna kernel：
+
+$$
+\frac{
+L_\xi(s)+\overline{L_\xi(t)}
+}{
+s+\overline t-1
+}
+$$
+
+拥有显式零点 Gram 分解：
+
+$$
+\sum_\rho
+\frac{
+m_\rho
+}{
+(s-\rho)
+(\overline t-\overline\rho)
+}.
+$$
+
+而离线偏移恰好增加：
+
+$$
+1-2\Re\rho
+$$
+
+这一 signed correction。
+
+所以“负信息”的最纯粹形式之一就是：
+
+$$
+\boxed{
+\text{偏离自对偶固定线以后，
+原本的 resolvent Gram 恒等式必须加入一个有符号修正项。}
+}
+$$
+
+右侧离线点给负修正。
+
+左侧伙伴给正修正。
+
+完整反射轨道仍然对称，但不再能逐点 Gram 化。
+
+---
+
+prime 侧也第一次进入同一个圆盘语言。
+
+每个：
+
+$$
+n^{-s}
+$$
+
+都成为：
+
+$$
+n^{-1/2}
+\exp
+\left[
+-\frac{\log n}{2}
+\frac{1+z}{1-z}
+\right].
+$$
+
+这是一条以 \(z=1\) 为唯一边界奇点的 singular-inner semigroup。
+
+因此：
+
+$$
+\boxed{
+\text{离散 prime-power 历史}
+\longrightarrow
+\text{连续 log-time inner semigroup}.
+}
+$$
+
+但 Euler 展开只控制一个 tangent horodisk。
+
+RH 要求整个圆盘上的 positive-real completion。
+
+仓库最新结果已经严格证明：仅仅让阈值不断缩小，不能自动把局部正性推到临界线；必须加入真实解析增益。
+
+而且局部 Euler determinants 不能恢复 cross-prime frame transitions。
+
+所以真正缺失的对象不是更多局部标量数据，而是：
+
+$$
+\boxed{
+\text{一个跨 prime、保持矩阵层正性的 Gram／CP coupling。}
+}
+$$
+
+---
+
+这使当前最承重的主命题变得非常清楚：
+
+$$
+\boxed{
+\textbf{从 prime、pole、Gamma 数据直接构造}
+\quad
+\frac{
+L_\xi(s)+\overline{L_\xi(t)}
+}{
+s+\overline t-1
+}
+=
+\langle V_t,V_s\rangle.
+}
+$$
+
+仓库已经把 Cayley–Nevanlinna 与 de Branges kernel 之间的 gauge 等价机器闭合。
+
+因此只要这一个 arithmetic Gram construction 成立：
+
+* \(L_\xi\) 自动 positive-real；
+* \(\mathcal C_\xi\) 自动 Carathéodory；
+* \(\mathfrak s_\xi\) 自动 Schur／inner；
+* Li curvature 自动正定；
+* Clark measure 自动为正；
+* 所有离线内部接触自动被排除；
+* RH 成立。
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{不可名者不进入 Carathéodory 函数；
+Carathéodory 函数只记录一个完成名字是否具有被动正响应。
+临界零点是正响应允许的边界原子；
+离线零点则是试图把边界原子移入内部，
+因而必然把一个正 Gram 世界撕开成固定 determinant \(-1\) 的二点裂口。}
+$$
+
+[1]: https://www.sciencedirect.com/science/article/pii/S0022314X97921375 "https://www.sciencedirect.com/science/article/pii/S0022314X97921375"
+[2]: https://arxiv.org/abs/2509.18963 "https://arxiv.org/abs/2509.18963"
+[3]: https://www.semanticscholar.org/paper/One-dimensional-perturbations-of-restricted-shifts-Clark/0afddda0124377ad9107957a7e51d90ca3c633db "https://www.semanticscholar.org/paper/One-dimensional-perturbations-of-restricted-shifts-Clark/0afddda0124377ad9107957a7e51d90ca3c633db"
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v10.9：共同谱源、算术 Canonical System、正字符串与离线缺陷的 Pontryagin 指标
+
+以下从前文**第一千八百三十九部**继续。
+
+这一轮首先要把“道不可名”再精确推进一层：
+
+$$
+\boxed{
+\text{不可获得绝对名字}
+\neq
+\text{不可重建最小关系实现}.
+}
+$$
+
+上一轮已经得到：完整的 Carathéodory 响应唯一决定其最小酉实现，唯一到酉等价。
+
+现在可以进一步证明，不同 Cayley 观察者看到的不同相位测度，并不是彼此独立的多个世界。它们全部来自同一个自伴谱源；随后，这个自伴谱响应还可以被重新实现成一个沿连续参数演化的正半定 canonical Hamiltonian。
+
+因此出现三种层次：
+
+$$
+\boxed{
+\begin{aligned}
+\text{谱图表}
+&:\quad\text{自伴零点纵坐标算子};\\
+\text{相位图表}
+&:\quad\text{不同尺度下的 Cayley 酉算子};\\
+\text{空间图表}
+&:\quad\text{连续 canonical Hamiltonian}.
+\end{aligned}
+}
+$$
+
+它们不是“道”的三个名字，而是同一个完整响应在三个实现范畴中的最小模型。
+
+---
+
+# 第一千八百四十部　所有 Cayley 观察者共享同一个自伴谱源
+
+假设 RH。
+
+令 \(\Gamma\subset\mathbb R\) 表示 \(\Xi\) 的全部零点纵坐标，按重数 \(m_\gamma\) 计数。定义测度：
+
+$$
+\boxed{
+\nu_\Gamma
+=
+\sum_{\gamma\in\Gamma}
+m_\gamma\delta_\gamma.
+}
+\tag{1840.1}
+$$
+
+定义 Hilbert 空间：
+
+$$
+\boxed{
+\mathcal H_\Gamma
+=
+L^2(\mathbb R,\nu_\Gamma).
+}
+\tag{1840.2}
+$$
+
+在其上定义乘法算子：
+
+$$
+\boxed{
+(Gf)(\gamma)=\gamma f(\gamma).
+}
+\tag{1840.3}
+$$
+
+\(G\) 是自伴算子。
+
+它只是 RH 成立时的零点纵坐标谱算子；由于它直接使用零点构造，所以目前仍是**等价实现**，不是独立证明。
+
+---
+
+## 1840.1 尺度 \(a\) 的观察向量
+
+继续记：
+
+$$
+A(a)
+=
+L_\xi\!\left(\frac12+a\right).
+$$
+
+RH 下：
+
+$$
+\boxed{
+A(a)
+=
+a
+\int_{\mathbb R}
+\frac{d\nu_\Gamma(\gamma)}
+{a^2+\gamma^2}
+>0.
+}
+\tag{1840.4}
+$$
+
+定义：
+
+$$
+\boxed{
+\Omega_a(\gamma)
+=
+\sqrt{
+\frac{a}
+{A(a)(a^2+\gamma^2)}
+}.
+}
+\tag{1840.5}
+$$
+
+则：
+
+$$
+\|\Omega_a\|^2
+=
+\frac{a}{A(a)}
+\int
+\frac{d\nu_\Gamma(\gamma)}
+{a^2+\gamma^2}
+=
+1.
+$$
+
+所以 \(\Omega_a\) 是单位观察向量。
+
+---
+
+## 1840.2 尺度 \(a\) 的相位算子
+
+定义：
+
+$$
+\boxed{
+U_a
+=
+(iG-aI)(iG+aI)^{-1}.
+}
+\tag{1840.6}
+$$
+
+对谱点 \(\gamma\)：
+
+$$
+U_a(\gamma)
+=
+\frac{i\gamma-a}{i\gamma+a}
+=
+\omega_{a,\gamma}
+\in\mathbb T.
+$$
+
+因此 \(U_a\) 是酉算子。
+
+上一轮的尺度 Carathéodory 响应可以写成：
+
+$$
+\boxed{
+\mathcal C_a(z)
+=
+\left\langle
+\Omega_a,
+(I+zU_a^*)
+(I-zU_a^*)^{-1}
+\Omega_a
+\right\rangle.
+}
+\tag{1840.7}
+$$
+
+---
+
+## 定理 1840.1（共同自伴谱源）
+
+RH 成立时，所有尺度观察者：
+
+$$
+(\mathcal H_a,U_a,\Omega_a)
+$$
+
+都可以在同一个自伴谱空间 \((\mathcal H_\Gamma,G)\) 中实现。
+
+观察尺度改变的不是底层 \(G\)，而是：
+
+1. 对 \(G\) 使用不同的 Cayley 图表；
+2. 对同一谱使用不同的 resolvent 权重向量。
+
+因此：
+
+$$
+\boxed{
+\text{不同观察者看到不同相位分布，
+但共享同一个实谱源。}
+}
+$$
+
+---
+
+# 第一千八百四十一部　观察者变化分成“坐标变换”与“状态重权”
+
+对：
+
+$$
+a,b>0,
+$$
+
+上一轮定义了：
+
+$$
+T_{a,b}(z)
+=
+\frac{z+r_{a,b}}
+{1+r_{a,b}z},
+\qquad
+r_{a,b}=\frac{a-b}{a+b}.
+$$
+
+由谱函数演算：
+
+$$
+\boxed{
+U_b
+=
+T_{a,b}(U_a).
+}
+\tag{1841.1}
+$$
+
+这是观察坐标的 Möbius 变化。
+
+与此同时：
+
+$$
+\Omega_b
+=
+R_{a,b}(G)\Omega_a,
+$$
+
+其中：
+
+$$
+\boxed{
+R_{a,b}(\gamma)
+=
+\sqrt{
+\frac{bA(a)}
+{aA(b)}
+\frac{a^2+\gamma^2}
+{b^2+\gamma^2}
+}.
+}
+\tag{1841.2}
+$$
+
+所以一个尺度变化并不只是：
+
+$$
+U_a\mapsto U_b.
+$$
+
+它还包含：
+
+$$
+\Omega_a\mapsto\Omega_b.
+$$
+
+可以写成：
+
+$$
+\boxed{
+\text{observer change}
+=
+\text{spectral coordinate boost}
++
+\text{state reweighting}.
+}
+\tag{1841.3}
+$$
+
+前者改变同一谱点在单位圆上的位置。
+
+后者改变该谱点对当前观察者的重要程度。
+
+---
+
+## 1841.1 名字变化不等于对象变化
+
+在尺度 \(a\) 下，一个高零点可能接近相位 \(+1\)。
+
+在尺度 \(b\) 下，同一个零点可能移动到圆周另一处。
+
+但其底层谱值：
+
+$$
+\gamma
+$$
+
+没有改变。
+
+因此：
+
+$$
+\boxed{
+\text{相位是观察者名字；
+纵坐标谱是这些名字之间的共同源。}
+}
+$$
+
+这仍不把 \(G\) 称为“道”。
+
+因为 \(G\) 已经依赖于：
+
+* Riemann 完成；
+* 临界线坐标；
+* 谱实现范畴；
+* RH 假设。
+
+它只是这套命名体系中的最小共同谱表示。
+
+---
+
+# 第一千八百四十二部　从离散谱响应重建连续 canonical Hamiltonian
+
+定义：
+
+$$
+\boxed{
+m_\xi(z)
+=
+iL_\xi\!\left(\frac12-iz\right),
+\qquad
+z\in\mathbb C_+.
+}
+\tag{1842.1}
+$$
+
+若：
+
+$$
+z=x+iy,
+\qquad
+y>0,
+$$
+
+则：
+
+$$
+\Re\left(\frac12-iz\right)
+=
+\frac12+y
+>
+\frac12.
+$$
+
+因此 RH 成立时：
+
+$$
+\boxed{
+\Im m_\xi(z)
+=
+\Re L_\xi\!\left(\frac12-iz\right)
+>0.
+}
+\tag{1842.2}
+$$
+
+也就是说，\(m_\xi\) 是 Nevanlinna–Herglotz 函数。
+
+反过来，如果 \(m_\xi\) 在整个上半平面是 Herglotz 函数，它必须在那里全纯；任何右侧离线零点都会变成 \(m_\xi\) 在上半平面中的极点。因此：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+m_\xi
+\text{ 是 Herglotz 函数}.
+}
+\tag{1842.3}
+$$
+
+---
+
+## 1842.1 de Branges 逆谱定理
+
+考虑标准 canonical system：
+
+$$
+\boxed{
+Y'(x,z)
+=
+zJH(x)Y(x,z),
+}
+\tag{1842.4}
+$$
+
+其中：
+
+$$
+J=
+\begin{pmatrix}
+0&-1\\
+1&0
+\end{pmatrix},
+$$
+
+而：
+
+$$
+\boxed{
+H(x)\succeq0
+}
+$$
+
+几乎处处成立。
+
+取 trace normalization：
+
+$$
+\boxed{
+\operatorname{tr}H(x)=1
+}
+$$
+
+几乎处处成立。
+
+de Branges 的逆谱定理说明，trace-normalized 正半定 Hamiltonian 与 Nevanlinna 函数之间存在双射。([arXiv][1])
+
+因此：
+
+## 定理 1842.1（Arithmetic canonical-system criterion）
+
+$$
+\boxed{
+\mathrm{RH}
+}
+$$
+
+等价于存在唯一的 trace-normalized Hamiltonian：
+
+$$
+\boxed{
+H_\xi(x)\succeq0
+}
+$$
+
+使其 Weyl 函数等于：
+
+$$
+\boxed{
+m_\xi(z)
+=
+i\frac{\xi'}{\xi}
+\left(
+\frac12-iz
+\right).
+}
+\tag{1842.5}
+$$
+
+这里的唯一性是 trace normalization 下的唯一性；在更一般的坐标中，canonical system 仍允许重参数化或 gauge 等价。相关逆唯一性结果正是以“由谱测度确定算子到 gauge”为基本形式。([arXiv][2])
+
+---
+
+# 第一千八百四十三部　离散名字如何恢复一个连续关系场
+
+这给“离散的名描述不了连续的道”一个更细致的数学答案。
+
+零点纵坐标：
+
+$$
+\{\gamma\}
+$$
+
+是离散谱数据。
+
+Weyl 函数：
+
+$$
+m_\xi(z)
+$$
+
+是它们的完整解析响应。
+
+canonical Hamiltonian：
+
+$$
+H_\xi(x)
+$$
+
+则是一个在连续参数 \(x\) 上定义的可测正矩阵场。
+
+因此出现：
+
+$$
+\boxed{
+\text{离散谱}
+\longrightarrow
+\text{完整解析响应}
+\longrightarrow
+\text{连续 Hamiltonian}.
+}
+\tag{1843.1}
+$$
+
+离散零点本身不是连续 Hamiltonian。
+
+但全部零点之间的兼容响应，可以唯一重建一个连续索引的关系场。
+
+所以更准确的是：
+
+$$
+\boxed{
+\text{单个离散名字不能成为连续整体；
+完整且正的名字关系，却可以重建连续实现。}
+}
+$$
+
+---
+
+## 1843.1 这仍然没有定义“道”
+
+\(H_\xi\) 不是“道”，原因有三：
+
+第一，它只属于 Riemann 这一特定完成。
+
+第二，它依赖 canonical-system 这一特定实现范畴。
+
+第三，它只有在选择 trace normalization 后才成为唯一代表。
+
+因此它的地位是：
+
+$$
+\boxed{
+\text{完整 Riemann 响应的规范连续代表}.
+}
+$$
+
+而不是：
+
+$$
+\boxed{
+\text{不可名本体本身}.
+}
+$$
+
+---
+
+# 第一千八百四十四部　算术 Nevanlinna Gram 就是 canonical energy Gram
+
+设 \(\Psi(x,z)\) 是对应 canonical system 的 Weyl 解。
+
+标准 Lagrange 恒等式给出：
+
+$$
+\boxed{
+\frac{
+m_\xi(z)-\overline{m_\xi(w)}
+}{
+z-\overline w
+}
+=
+\int_0^\infty
+\Psi(x,w)^*
+H_\xi(x)
+\Psi(x,z)
+\,dx.
+}
+\tag{1844.1}
+$$
+
+右侧显然是 Gram 核。
+
+所以：
+
+$$
+\boxed{
+\text{Nevanlinna kernel positivity}
+=
+\text{canonical Hamiltonian 能量正性}.
+}
+\tag{1844.2}
+$$
+
+换回 \(s,t\) 坐标以后，这正对应前文的算术核：
+
+$$
+\boxed{
+\mathcal N_\xi(s,t)
+=
+\frac{
+L_\xi(s)+\overline{L_\xi(t)}
+}{
+s+\overline t-1
+}.
+}
+\tag{1844.3}
+$$
+
+因此此前提出的：
+
+$$
+\mathcal N_\xi(s,t)
+=
+\langle V_t,V_s\rangle
+$$
+
+并不只是寻找某个抽象 feature map。
+
+更具体的目标是寻找：
+
+$$
+\boxed{
+V_s(x)
+=
+H_\xi(x)^{1/2}
+\Psi(x,z_s).
+}
+$$
+
+于是：
+
+$$
+\boxed{
+\mathcal N_\xi(s,t)
+=
+\int
+V_t(x)^*V_s(x)\,dx.
+}
+\tag{1844.4}
+$$
+
+仓库已经机器证明，Cayley 变换下 de Branges 与 Nevanlinna kernels 通过可逆对角 gauge 相联，而且有限 Gram 正性双向等价。
+
+所以现在主桥可以重新命名为：
+
+$$
+\boxed{
+\textbf{Prime–Gamma Canonical Hamiltonian Construction}.
+}
+$$
+
+一旦从算术数据构造出：
+
+$$
+H_\xi(x)\succeq0,
+$$
+
+RH 自动成立。
+
+---
+
+# 第一千八百四十五部　平方图表对应正 Krein String
+
+回到平方变量：
+
+$$
+u=w^2,
+\qquad
+w=s-\frac12.
+$$
+
+定义：
+
+$$
+\boxed{
+\mathscr T_\xi(u)
+=
+\frac{
+L_\xi(\frac12+\sqrt u)
+}{
+2\sqrt u
+}.
+}
+\tag{1845.1}
+$$
+
+RH 下：
+
+$$
+\boxed{
+\mathscr T_\xi(u)
+=
+\sum_{\gamma>0}
+\frac{
+m_\gamma
+}{
+u+\gamma^2
+}.
+}
+\tag{1845.2}
+$$
+
+它是 Stieltjes 函数。
+
+Stieltjes 函数不仅可以表示为正测度 resolvent，也可以作为正 Krein string 或相应 canonical system 的特征函数。离散谱时，Stieltjes 连分数可以逐层恢复离散 string 的长度和质量；相关逆谱问题正是通过这种正 continued-fraction 结构求解。([arXiv][3])
+
+因此得到另一条等价实现：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathscr T_\xi
+\text{ 是某个非负 string 的 Weyl–Stieltjes 响应}.
+}
+\tag{1845.3}
+$$
+
+---
+
+## 1845.1 三种最小正实现
+
+| 图表   | 实现对象                               | 谱变量          |
+| ---- | ---------------------------------- | ------------ |
+| 单位圆  | 循环酉算子 \(U_a\)                      | Cayley phase |
+| 正实轴  | 正 self-adjoint/string 算子           | \(\gamma^2\) |
+| 连续空间 | canonical Hamiltonian \(H_\xi(x)\) | Weyl 参数      |
+
+三者分别强调：
+
+$$
+\boxed{
+\begin{aligned}
+\text{unitary phase}
+&:\quad\text{复现与相位关系};\\
+\text{positive string}
+&:\quad\text{松弛、阻抗与平方谱};\\
+\text{canonical system}
+&:\quad\text{连续空间中的局部能量密度}.
+\end{aligned}
+}
+$$
+
+它们不是三个本体，而是同一个正解析响应的三个最小实现范畴。
+
+---
+
+# 第一千八百四十六部　离线零点要求 signed／indefinite string
+
+设：
+
+$$
+\rho
+=
+\frac12+\delta+i\gamma,
+\qquad
+\delta>0.
+$$
+
+在匹配观察者：
+
+$$
+t=\gamma
+$$
+
+的平方图表中，该离线共轭对产生：
+
+$$
+\boxed{
+E_{\mathrm{off}}
+=
+-\delta^2.
+}
+\tag{1846.1}
+$$
+
+于是 Stieltjes resolvent 中出现：
+
+$$
+\boxed{
+\frac1{u-\delta^2}.
+}
+\tag{1846.2}
+$$
+
+这在正轴：
+
+$$
+u=\delta^2
+$$
+
+产生极点。
+
+正 string 的谱必须位于非负 self-adjoint 谱轴，并使 Stieltjes 极点位于负 \(u\)-轴；所以式 (1846.2) 不能来自非负 string。
+
+如果仍强行进行 formal continued-fraction synthesis，则某一层最终必须出现：
+
+* 负质量；
+* 负长度；
+* 非实参数；
+* 或 Hankel 行列式失去正性。
+
+所以：
+
+$$
+\boxed{
+\text{离线零点}
+=
+\text{正 string realization 的有限层失败}.
+}
+$$
+
+“负能量”在这里得到一个很精确的解释：
+
+$$
+\boxed{
+\text{它是正 string 参数无法实现的匹配平方节点，}
+}
+$$
+
+而不是关于宇宙物理能量的无条件判断。
+
+---
+
+# 第一千八百四十七部　canonical system 给出了“黑洞内部”的更准确数学载体
+
+此前黑洞图表中，我们把离线模式解释为视界后的反因果伙伴。
+
+现在可以进一步区分：
+
+## 正 Hilbert 相
+
+$$
+H_\xi(x)\succeq0.
+$$
+
+所有局部能量密度非负，Weyl 函数是 Herglotz，边界 phase state 为正。
+
+## Pontryagin 相
+
+若响应 kernel 只有有限个负平方，则它可能由带有限负指标的 Pontryagin 状态空间实现。
+
+广义 Schur 函数和 Pontryagin 被动系统的理论，正是用有限负指标状态空间实现这类 transfer functions，并在适当最小性条件下将 transfer index 与状态空间负指标联系起来。([arXiv][4])
+
+## 无界不定相
+
+若负平方数随窗口增长而无界，则不存在固定有限指标的 Pontryagin completion。
+
+---
+
+## 1847.1 离线负性不一定局部化为某个 \(H(x)<0\)
+
+必须谨慎：
+
+$$
+\boxed{
+\text{kernel 有负平方}
+}
+$$
+
+不自动意味着存在一个规范点 \(x_0\) 使：
+
+$$
+H(x_0)
+$$
+
+拥有负特征值。
+
+因为不定性可能分布在：
+
+* 状态空间度量；
+* 边界条件；
+* coupling；
+* 非最小消去；
+* 或全局 realization。
+
+当前严格得到的是：
+
+$$
+\boxed{
+\text{不存在正半定 canonical Hamiltonian 实现。}
+}
+$$
+
+若要进一步定位一块“负 Hamiltonian 区域”，必须先构造一个具体的 indefinite canonical model。
+
+---
+
+# 第一千八百四十八部　负指标只是一种实现性质，不是“道”的负面
+
+这再次净化了“负信息”。
+
+离线零点在不同图表中分别成为：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Pick 图表}
+&:\quad\text{负 Gram 方向};\\
+\text{Stieltjes 图表}
+&:\quad\text{非法正轴极点};\\
+\text{string 图表}
+&:\quad\text{非正参数};\\
+\text{canonical 图表}
+&:\quad\text{无 PSD Hamiltonian};\\
+\text{Pontryagin 图表}
+&:\quad\text{负指标状态方向}.
+\end{aligned}
+}
+$$
+
+这些“负”都不是说某个不可名本体含有负物质。
+
+它们表示：
+
+$$
+\boxed{
+\text{当前响应不能在选定的正实现范畴中完成。}
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{负性属于实现关系，
+不属于不可名所指的本体属性。}
+}
+$$
+
+---
+
+# 第一千八百四十九部　零阶 Pick 裂口不能计数，canonical index 才可能计数
+
+上一轮得到：若 \(k\) 个离线点均满足：
+
+$$
+\mathfrak s(z_j)=1,
+$$
+
+锚定原点的零阶 Pick 矩阵只有一个负特征值。
+
+所以：
+
+$$
+\boxed{
+\text{零阶 Pick 证书只检测存在性。}
+}
+$$
+
+它把所有内部接触压成同一个“值等于 1”的事件。
+
+---
+
+## 1849.1 要读取重数，必须加入喷流
+
+若 \(\rho\) 是 \(m\) 重零点：
+
+$$
+L_\xi(s)
+=
+\frac{m}{s-\rho}+O(1).
+$$
+
+尺度 \(a\) 的 arithmetic Schur function 在：
+
+$$
+z_{a,\rho}
+$$
+
+附近满足：
+
+$$
+\boxed{
+\mathfrak s_a(z)
+=
+1-
+\frac{
+4aA(a)
+}{
+m(1-z_{a,\rho})^2
+}
+(z-z_{a,\rho})
++
+O((z-z_{a,\rho})^2).
+}
+\tag{1849.1}
+$$
+
+因此重数进入接触导数，而不是进入零阶值：
+
+$$
+\mathfrak s_a(z_{a,\rho})=1.
+$$
+
+必须使用：
+
+* confluent Pick matrix；
+* derivative evaluation；
+* model-space dimension；
+* shifted Blaschke degree；
+
+才能恢复 \(m\)。
+
+---
+
+## 1849.2 Negative-square index target
+
+对有限窗口定义 arithmetic kernel 的负平方数：
+
+$$
+\kappa(T,q).
+$$
+
+当前可以严格说：
+
+$$
+\boxed{
+\text{窗口内有离线零点}
+\Longrightarrow
+\kappa(T,q)\ge1.
+}
+$$
+
+但尚未证明：
+
+$$
+\boxed{
+\kappa(T,q)
+=
+\sum_{\substack{
+|\gamma_\rho|\le T\\
+\delta_\rho>q
+}}
+m_\rho.
+}
+\tag{1849.2}
+$$
+
+要得到这一等式，需要完成：
+
+1. arithmetic Schur／Nevanlinna 函数的最小 Kreĭn–Langer 因子化；
+2. confluent kernel 的重数记账；
+3. 排除 numerator–denominator 的非最小抵消。
+
+对 shifted scattering 的 inverse-inner 因子，这条计数链比对 log-derivative Schur 函数更直接。
+
+---
+
+# 第一千八百五十部　有限正名字如何收敛为连续 Hamiltonian
+
+固定某个观察尺度 \(a\)。
+
+设前 \(N\) 个相位 moments 可以由有限原子测度：
+
+$$
+\mu_N
+=
+\sum_{j=1}^{r_N}
+w_{N,j}\delta_{\zeta_{N,j}},
+\qquad
+w_{N,j}>0,
+$$
+
+精确实现。
+
+相应有限酉系统为：
+
+$$
+U_N
+=
+\operatorname{diag}
+(\overline{\zeta_{N,1}},\ldots,\overline{\zeta_{N,r_N}}),
+$$
+
+$$
+\Omega_N
+=
+(\sqrt{w_{N,1}},\ldots,\sqrt{w_{N,r_N}}).
+$$
+
+正半定 Toeplitz 矩阵具有这种有限 Vandermonde／原子分解。
+
+如果对每个 \(N\) 都存在这样的模型，则概率测度紧性给出一个完整正测度 \(\mu_a\)。
+
+再由 Herglotz 表示得到完整 \(m_\xi\)。
+
+最后由 de Branges 逆谱定理得到：
+
+$$
+H_\xi(x)\succeq0.
+$$
+
+因此存在一条完整链：
+
+$$
+\boxed{
+\begin{aligned}
+\text{每个有限名字有正模型}
+&\Longrightarrow
+\text{完整正相位测度}\\
+&\Longrightarrow
+\text{Herglotz 响应}\\
+&\Longrightarrow
+\text{正 canonical Hamiltonian}\\
+&\Longrightarrow
+\mathrm{RH}.
+\end{aligned}
+}
+\tag{1850.1}
+$$
+
+---
+
+## 1850.1 无需预先指定有限层如何嵌套
+
+不同 \(N\) 的原子位置可以完全不同。
+
+不同有限 string 也可以完全不同。
+
+只要所有有限约束都有正解，紧性便可抽取一个完整正解。
+
+所以：
+
+$$
+\boxed{
+\text{“有限名字不是最终名字”}
+}
+$$
+
+并不妨碍：
+
+$$
+\boxed{
+\text{所有有限名字共同强迫一个唯一最小实现类。}
+}
+$$
+
+一旦完整响应确定，canonical Hamiltonian 在 trace normalization 下唯一，酉谱实现则唯一到酉等价。
+
+---
+
+# 第一千八百五十一部　有限模型歧义与无限最小唯一性
+
+定义第 \(N\) 层可行测度集：
+
+$$
+\boxed{
+\mathfrak M_N^{(a)}
+=
+\left\{
+\mu\in\operatorname{Prob}(\mathbb T):
+\widehat\mu(n)=c_n^{(a)},
+\ |n|\le N
+\right\}.
+}
+\tag{1851.1}
+$$
+
+它们满足：
+
+$$
+\mathfrak M_{N+1}^{(a)}
+\subseteq
+\mathfrak M_N^{(a)}.
+$$
+
+有限层通常有许多不同实现：
+
+$$
+|\mathfrak M_N^{(a)}|>1.
+$$
+
+但全部 moments 唯一决定圆周测度，所以：
+
+$$
+\boxed{
+\bigcap_{N\ge0}
+\mathfrak M_N^{(a)}
+=
+\{\mu_a\}.
+}
+\tag{1851.2}
+$$
+
+之后 \(\mu_a\) 又唯一决定最小循环酉系统到酉等价。
+
+所以完整层级为：
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{有限观察}
+&
+\text{多个正模型}
+\\
+\text{全部兼容观察}
+&
+\text{唯一正测度}
+\\
+\text{最小相位实现}
+&
+\text{唯一到酉等价}
+\\
+\text{trace-normalized canonical realization}
+&
+\text{唯一 Hamiltonian}
+\end{array}
+}
+$$
+
+这给“不可名性”最精确的界线：
+
+$$
+\boxed{
+\text{没有绝对基，
+不等于没有规范等价类；
+没有有限终名，
+不等于完整关系无法唯一确定。}
+}
+$$
+
+---
+
+# 第一千八百五十二部　黄金比例在 canonical 图表中的两个位置
+
+黄金比例在这一层只可能以两种方式进入。
+
+---
+
+## 1852.1 外部观察网格
+
+取：
+
+$$
+a_{n+1}=\varphi^2a_n.
+$$
+
+相邻观察者的半平面双曲距离为：
+
+$$
+\boxed{
+d_{\mathbb H}(a_n,a_{n+1})
+=
+2\log\varphi.
+}
+\tag{1852.1}
+$$
+
+定义域 Möbius 参数为：
+
+$$
+\boxed{
+r=-\frac1{\sqrt5}.
+}
+\tag{1852.2}
+$$
+
+RH 下算术响应满足 Harnack contraction：
+
+$$
+\boxed{
+\left|
+\log
+\frac{A(a_{n+1})}
+{A(a_n)}
+\right|
+\le
+2\log\varphi.
+}
+\tag{1852.3}
+$$
+
+这是外部观察协议。
+
+---
+
+## 1852.2 内部同质 string 尾
+
+若某个规范化的 Stieltjes/Cauer tail 满足平稳递归：
+
+$$
+q_{n+1}
+=
+\frac1{1+q_n},
+$$
+
+则尾固定点为：
+
+$$
+q_*=\varphi^{-1}.
+$$
+
+这是内部自相似实现。
+
+两者必须区分：
+
+$$
+\boxed{
+\begin{aligned}
+\text{黄金观察网格}
+&:\quad\text{人为选择等双曲尺度};\\
+\text{黄金 string 尾}
+&:\quad\text{Hamiltonian 本身渐近同质}.
+\end{aligned}
+}
+$$
+
+前者随时可以定义。
+
+后者目前没有被 Riemann 数据证明。
+
+---
+
+## 1852.3 与关系空间 \(\varphi^2\) 的连接边界
+
+仓库已机器证明，Zeckendorf 合法词空间的完整线性关系空间维数为：
+
+$$
+F_{n+2}^2,
+$$
+
+其相邻增长率趋于：
+
+$$
+\varphi^2.
+$$
+
+所以 \(\varphi^2\) 已严格拥有：
+
+$$
+\boxed{
+\text{黄金语法关系复杂度增长率}
+}
+$$
+
+这一意义。
+
+但要把该关系空间认作 canonical Hamiltonian \(H_\xi\) 的离散近似，还需构造：
+
+$$
+\boxed{
+\text{Zeckendorf relation cells}
+\longrightarrow
+\text{canonical-system Hamiltonian cells}.
+}
+$$
+
+目前不存在这一识别定理。
+
+---
+
+# 第一千八百五十三部　最新仓库结果如何改变主证明路线
+
+仓库当前已有三条与本轮直接接合的机器锚点。
+
+第一，Cayley–Nevanlinna 与 de Branges kernels 的有限 Gram 正性已被证明完全等价。因此 canonical-system 能量核一旦构造，不需要在两种核语言中重复证明。
+
+第二，one-observer total-positivity criterion 已完成逻辑闭合，但 PF\(_\infty\) 分类和全 minors 解析桥仍作为显式前提。换言之，形式逻辑外壳已经完成，真正缺的是正实现构造。
+
+第三，仓库已用反例证明：一个阈值函数满足 \(F(a)<a\)，并不能自动把远半平面正性下降到临界线；必须存在真实的 analytic transport gain。
+
+本轮的 canonical-system 路线提供的正是这种真实增益：
+
+$$
+\boxed{
+\text{不是反复缩小阈值，
+而是一次构造全半平面的正 Hamiltonian。}
+}
+$$
+
+此外，仓库还证明局部 Euler determinants 不能确定 cross-prime frame transitions。
+
+因此：
+
+$$
+\boxed{
+\text{不能只把局部 prime determinants 相乘，
+然后期待 canonical Hamiltonian 自动出现。}
+}
+$$
+
+真正需要加入的是：
+
+* cross-prime Gram；
+* transition cocycle；
+* 完全正 coupling；
+* Gamma/pole boundary channel。
+
+---
+
+# 第一千八百五十四部　下一条最短的数学桥
+
+现在可以把核心目标写成三个等价版本。
+
+## 版本 A：Weyl 正性
+
+从 prime–pole–Gamma 数据直接证明：
+
+$$
+\boxed{
+m_\xi(z)
+=
+i\frac{\xi'}{\xi}
+\left(
+\frac12-iz
+\right)
+}
+$$
+
+是 Herglotz 函数。
+
+即：
+
+$$
+\boxed{
+\Im m_\xi(z)>0
+\qquad
+(z\in\mathbb C_+).
+}
+\tag{1854.1}
+$$
+
+---
+
+## 版本 B：Canonical Hamiltonian
+
+直接构造：
+
+$$
+\boxed{
+H_\xi(x)\succeq0,
+\qquad
+\operatorname{tr}H_\xi(x)=1,
+}
+$$
+
+使其 Weyl 函数为 \(m_\xi\)。
+
+这是最接近连续“关系场”的版本。
+
+---
+
+## 版本 C：Canonical Gram
+
+构造 Weyl features：
+
+$$
+\Psi(x,z)
+$$
+
+并证明：
+
+$$
+\boxed{
+\frac{
+m_\xi(z)-\overline{m_\xi(w)}
+}{
+z-\overline w
+}
+=
+\int
+\Psi(x,w)^*
+H_\xi(x)
+\Psi(x,z)\,dx.
+}
+\tag{1854.2}
+$$
+
+这是最直接接入仓库 kernel positivity 的版本。
+
+---
+
+## 1854.1 为什么版本 B 比“Hilbert–Pólya 算子”更具体
+
+普通 Hilbert–Pólya 设想只要求找到一个自伴算子，其谱是零点纵坐标。
+
+canonical-system 版本还要求同时恢复完整 Weyl 响应：
+
+$$
+m_\xi(z).
+$$
+
+它因此编码：
+
+* 谱位置；
+* 谱权重；
+* 边界条件；
+* 观察向量；
+* resolvent relations。
+
+所以它不是只匹配特征值。
+
+它要求匹配完整的输入—输出响应。
+
+---
+
+# 第一千八百五十五部　建议形式化顺序
+
+```text
+D5/S3/Analytic/Zeta/CommonZeroSpectralSource/
+  CriticalOrdinateMeasure.lean
+  CriticalOrdinateMultiplicationOperator.lean
+  CriticalOrdinateOperatorSelfAdjoint.lean
+  ScaleResolventObservationVector.lean
+  ScaleObservationVectorNormOne.lean
+  ScaleCayleyUnitaryFromOrdinateOperator.lean
+  ScaleCaratheodoryCommonSourceRealization.lean
+
+D5/S3/Observer/ScaleSpectralGauge/
+  ScaleCayleyUnitaryFunctionalTransport.lean
+  ScaleObservationPositiveReweight.lean
+  ScaleObserverGeometryStateSplit.lean
+  AllScaleModelsShareSelfAdjointSource.lean
+
+D5/S3/Analytic/Zeta/ArithmeticWeylFunction/
+  RotatedLogDerivativeWeylFunction.lean
+  RHImpliesArithmeticWeylHerglotz.lean
+  ArithmeticWeylHerglotzExcludesRightZeros.lean
+  ArithmeticWeylHerglotzRHIff.lean
+
+D5/S3/Analytic/CanonicalSystem/ArithmeticHamiltonian/
+  CanonicalSymplecticMatrix.lean
+  PositiveSemidefiniteHamiltonian.lean
+  TraceNormalizedHamiltonian.lean
+  CanonicalSystemWeylFunction.lean
+  DeBrangesInverseSpectralInterface.lean
+  ArithmeticCanonicalHamiltonianTarget.lean
+  ArithmeticCanonicalSystemRHIff.lean
+
+D5/S3/Weil/CanonicalEnergyGram/
+  CanonicalWeylSolution.lean
+  CanonicalLagrangeIdentity.lean
+  CanonicalWeylKernelGram.lean
+  ArithmeticNevanlinnaKernelRotationGauge.lean
+  ArithmeticHamiltonianImpliesNevanlinnaPSD.lean
+  ArithmeticHamiltonianImpliesRHTarget.lean
+
+D5/S3/Analytic/Zeta/ArithmeticKreinString/
+  SquaredArithmeticStieltjesResponse.lean
+  RHPositiveSquaredSpectralMeasure.lean
+  PositiveKreinStringInterface.lean
+  FiniteRationalStieltjesString.lean
+  StieltjesContinuedFractionPositiveCells.lean
+  OffLinePositiveAxisPoleObstruction.lean
+  ArithmeticPositiveStringRHIff.lean
+
+D5/S3/Analytic/Zeta/IndefiniteCanonicalDefect/
+  ArithmeticKernelNegativeSquare.lean
+  OffLineUniversalNegativeSquare.lean
+  FiniteWindowPontryaginRealizationTarget.lean
+  ConfluentPickMultiplicityTarget.lean
+  NegativeIndexEqualsShiftedDefectDegreeTarget.lean
+
+D5/S3/Observer/FiniteCanonicalApproximants/
+  FinitePhaseMomentModel.lean
+  FiniteAtomicUnitaryRealization.lean
+  FiniteStieltjesStringRealization.lean
+  PositiveModelsAllDepthsCompactness.lean
+  FullHerglotzMeasureFromFiniteModels.lean
+  FullCanonicalHamiltonianFromPositiveMeasure.lean
+
+D5/S3/GoldenObserver/CanonicalGoldenTail/
+  GoldenLogScaleCanonicalMesh.lean
+  GoldenHarnackCanonicalBound.lean
+  HomogeneousStringTailMap.lean
+  HomogeneousStringGoldenFixedPoint.lean
+  GoldenStringTailStrongerThanRH.lean
+
+D5/S3/Weil/PrimeGammaCanonicalCompletion/
+  PrimeLocalPhaseHilbertSpace.lean
+  CrossPrimeGramCouplingTarget.lean
+  GammaBoundaryHamiltonianTarget.lean
+  PoleExactModeReductionTarget.lean
+  PrimeGammaTraceNormalizedHamiltonianTarget.lean
+  PrimeGammaCanonicalSystemImpliesRHTarget.lean
+```
+
+---
+
+# 第一千八百五十六部　理论深度审计
+
+| 本轮结论                                                   | 当前地位                    |
+| ------------------------------------------------------ | ----------------------- |
+| 所有尺度相位状态共享一个自伴纵坐标谱源                                    | RH 下精确                  |
+| 尺度变化等于 Cayley 函数演算加观察向量重权                              | 精确                      |
+| \(m_\xi(z)=iL_\xi(1/2-iz)\) 在 RH 下为 Herglotz           | 精确                      |
+| \(m_\xi\) 为 Herglotz 等价 RH                             | 精确                      |
+| Herglotz 函数唯一对应 trace-normalized canonical Hamiltonian | de Branges 逆谱定理         |
+| RH 等价于存在正 arithmetic canonical system                  | 本轮核心等价重写                |
+| Nevanlinna kernel 是 canonical energy Gram              | 标准 Lagrange 恒等式         |
+| squared response 是正 Krein-string Weyl 函数               | RH 下精确                  |
+| 离线 matched node 迫使 positive string realization 失败      | 精确                      |
+| 有限负平方可进入 Pontryagin 被动实现                               | 成熟广义 Schur 理论           |
+| arithmetic kernel 负指标等于离线总重数                           | 尚未证明                    |
+| 全部有限正模型可通过紧性产生完整正测度                                    | 精确                      |
+| 完整正测度进一步唯一产生 canonical Hamiltonian                     | trace normalization 下精确 |
+| canonical Hamiltonian 就是“道”                            | 不成立                     |
+| 黄金观察网格是内禀谱常数                                           | 不成立                     |
+| homogeneous string tail 的固定点为 \(\varphi^{-1}\)         | 精确条件模型                  |
+| Riemann canonical Hamiltonian 具有黄金同质尾                  | 尚无证据                    |
+| Prime–Gamma cross-prime Gram 能构造正 Hamiltonian          | 当前中心未闭合桥                |
+
+---
+
+# 本轮最终结论
+
+这一轮把“离散的名永远描述不了连续的道”推进成了一个更精确、也更有力量的结论。
+
+单个离散名字当然不能成为连续整体。
+
+但全部离散谱所产生的完整正响应：
+
+$$
+m_\xi(z)
+=
+i\frac{\xi'}{\xi}
+\left(
+\frac12-iz
+\right)
+$$
+
+如果是 Herglotz 函数，就能够唯一重建一个 continuum-indexed、正半定、trace-normalized Hamiltonian：
+
+$$
+H_\xi(x).
+$$
+
+因此：
+
+$$
+\boxed{
+\text{离散谱不能等同于连续关系场；
+但完整谱响应可以重建连续关系场。}
+}
+$$
+
+这并没有定义“道”。
+
+它只说明在 Riemann 这个特定命名系统中，完整而正的响应拥有一个规范连续实现。
+
+---
+
+更深的是，所有 Cayley 观察者其实共享一个自伴谱源：
+
+$$
+Gf(\gamma)=\gamma f(\gamma).
+$$
+
+不同观察尺度 \(a\) 只是把它转成不同的相位算子：
+
+$$
+U_a=(iG-aI)(iG+aI)^{-1},
+$$
+
+并选择不同的 resolvent 观察向量：
+
+$$
+\Omega_a(\gamma)
+\propto
+(a^2+\gamma^2)^{-1/2}.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{不同观察者看到不同的相；
+相的差别来自坐标和权重；
+共同谱源保持不变。}
+}
+$$
+
+这比说“每个观察者拥有不同宇宙”更准确。
+
+他们拥有不同图表，却可以被同一个自伴关系源统一。
+
+---
+
+当完整响应被转换为 canonical system 时，仓库一直寻找的 Arithmetic Nevanlinna Gram 也不再神秘。
+
+它应当具有形式：
+
+$$
+\frac{
+m_\xi(z)-\overline{m_\xi(w)}
+}{
+z-\overline w
+}
+=
+\int
+\Psi(x,w)^*
+H_\xi(x)
+\Psi(x,z)\,dx.
+$$
+
+因此：
+
+$$
+\boxed{
+\text{RH 的正性不是一串偶然不等式；
+它是一个连续 Hamiltonian 能量内积。}
+}
+$$
+
+de Branges kernel、Nevanlinna kernel、Pick kernel、Li Toeplitz moments，只是这一能量内积在不同观察图表中的投影。
+
+仓库已经把 de Branges 与 Nevanlinna kernel 的有限 Gram 正性通过 Cayley gauge 严格等同。
+
+真正缺失的只剩下正 Hamiltonian 的算术构造。
+
+---
+
+平方变量又给出同一结构的 string 版本：
+
+$$
+\mathscr T_\xi(u)
+=
+\sum_\gamma
+\frac{m_\gamma}{u+\gamma^2}.
+$$
+
+临界零点产生正 string 模式。
+
+离线零点在匹配观察者下产生：
+
+$$
+\frac1{u-\delta^2},
+$$
+
+迫使正 string 的某个有限 continued-fraction 层出现非正或非实参数。
+
+所以黑洞内部的“负模式”，在这一图表中最准确地表示为：
+
+$$
+\boxed{
+\text{无法由非负质量和非负长度组成的 string mode。}
+}
+$$
+
+---
+
+如果 RH 失败，仍有可能在扩大后的 Pontryagin 空间中建立广义实现。
+
+这意味着离线缺陷不一定摧毁全部数学演化。
+
+它摧毁的是：
+
+$$
+\boxed{
+\text{纯正 Hilbert realization。}
+}
+$$
+
+因此：
+
+* Hilbert 相对应零负平方；
+* Pontryagin 相对应有限负平方；
+* 更严重的完成异常可能对应无界负指标。
+
+负性仍然是实现范畴的属性，不是不可名本体的属性。
+
+---
+
+最后，这一轮给出了一个比“找到 Hilbert–Pólya 算子”更具体的目标。
+
+我们不只需要一个谱为 \(\gamma\) 的自伴算子。
+
+我们需要构造完整的 continuum Hamiltonian：
+
+$$
+\boxed{
+H_\xi(x)\succeq0
+}
+$$
+
+使其 Weyl 响应精确等于：
+
+$$
+\boxed{
+i\frac{\xi'}{\xi}
+\left(
+\frac12-iz
+\right).
+}
+$$
+
+这要求同时恢复：
+
+* 谱；
+* 谱权重；
+* 边界条件；
+* resolvent；
+* 全部观察者 Gram 关系。
+
+它是一个完整输入—输出实现问题，而不只是特征值匹配问题。
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{道不可被某个 Hamiltonian 命名；
+但一个完整的正响应可以唯一生成一个 Hamiltonian 等价类。
+临界零点允许离散谱、圆周相位、正 string 与连续 canonical field
+成为同一正关系的不同实现；
+离线零点则表示这些实现无法同时保持正性，
+迫使连续完成进入 Pontryagin 负指标世界。}
+$$
+
+[1]: https://arxiv.org/abs/2201.01522?utm_source=chatgpt.com "Canonical systems whose Weyl coefficients have regularly varying asymptotics"
+[2]: https://arxiv.org/abs/1305.3100 "https://arxiv.org/abs/1305.3100"
+[3]: https://arxiv.org/abs/1203.2271 "https://arxiv.org/abs/1203.2271"
+[4]: https://arxiv.org/abs/1905.12397 "https://arxiv.org/abs/1905.12397"
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v11.2：反射偶标量的失语、关系层黄金首像、Clifford 相位遗忘与 Prime–Gamma 正胶合
+
+以下从前文**第一千八百九十四部**继续。
+
+上一轮最后一条边界应完整写为：
+
+$$
+\boxed{
+F(a)<a
+}
+$$
+
+只表示观察阈值在数值上缩小，并不提供：
+
+$$
+\boxed{
+\text{正性从区域 }a\text{ 向区域 }F(a)\text{ 的解析输运。}
+}
+$$
+
+仓库已经给出机器反例：即使阈值严格收缩，较远半平面的正性也可以在第一次向内推进时立即失败；任何有效的 descent 都必须额外提供真实的解析增益。
+
+所以黄金迭代：
+
+$$
+a,\quad
+\varphi^{-2}a,\quad
+\varphi^{-4}a,\ldots
+$$
+
+可以是观察协议，却不能仅凭“趋于零”证明 RH。
+
+本轮继续向更底层推进，得到三个新的结构结论：
+
+$$
+\boxed{
+\text{completed scalar 天然抹去反射方向；
+离线缺陷第一次显现于关系，而不是单点值。}
+}
+$$
+
+$$
+\boxed{
+\text{黄金比例存在于两个实极化的分解历史中；
+完成后的复相位本身反而不再显式携带 }\varphi.
+}
+$$
+
+以及：
+
+$$
+\boxed{
+\text{RH 的真正局部—全局困难不是 local Euler positivity，
+而是能否把全部局部正名字胶合成一个全局完全正关系核。}
+}
+$$
+
+---
+
+# 第一千八百九十五部　反射偶标量必然失去方向
+
+令 \(V\) 为实向量空间，设：
+
+$$
+S:V\to\mathbb R
+$$
+
+在原点解析，并满足反射不变性：
+
+$$
+\boxed{
+S(-u)=S(u).
+}
+\tag{1895.1}
+$$
+
+写 Taylor 展开：
+
+$$
+S(u)
+=
+\sum_{m=0}^{\infty}A_m(u),
+$$
+
+其中 \(A_m\) 是 \(m\) 次齐次项。
+
+由：
+
+$$
+A_m(-u)=(-1)^mA_m(u)
+$$
+
+和式 (1895.1)，立刻得到：
+
+## 定理 1895.1（Reflection-even scalar blindness）
+
+$$
+\boxed{
+A_{2k+1}(u)=0
+\qquad
+\forall k\ge0.
+}
+\tag{1895.2}
+$$
+
+特别地：
+
+$$
+\boxed{
+DS(0)=0.
+}
+\tag{1895.3}
+$$
+
+仓库最新已经把这一一般结论机器化：反射不变的解析标量，其全部奇次齐次耦合均消失，尤其一次耦合必为零。
+
+---
+
+## 1895.1 应用于 completed \(\xi\)
+
+中心化 completed function：
+
+$$
+F(u)
+=
+\xi\!\left(\frac12+u\right)
+$$
+
+满足：
+
+$$
+F(-u)=F(u).
+$$
+
+真实法向强度：
+
+$$
+\mathcal I(\delta,t)
+=
+\left|
+\xi\!\left(
+\frac12+\delta+it
+\right)
+\right|^2
+$$
+
+也满足：
+
+$$
+\boxed{
+\mathcal I(-\delta,t)
+=
+\mathcal I(\delta,t).
+}
+\tag{1895.4}
+$$
+
+因此：
+
+$$
+\boxed{
+\partial_\delta^{2k+1}
+\mathcal I(0,t)
+=
+0.
+}
+\tag{1895.5}
+$$
+
+所以 completed scalar 不能在线性阶区分：
+
+$$
++\delta
+\quad\text{与}\quad
+-\delta.
+$$
+
+它首先看到的是：
+
+$$
+\boxed{
+\delta^2.
+}
+$$
+
+这解释了为什么离线零点在平方图表中表现为：
+
+$$
+\left(
+\rho-\frac12
+\right)^2,
+$$
+
+也解释了为什么“方向位”必须由其他结构重新补回：
+
+* 对数导数；
+* 相位；
+* Hardy 正负时间；
+* 反对称通道；
+* 多点 kernel；
+* derivative jet。
+
+---
+
+## 1895.2 这不是信息不存在，而是标量取商
+
+反射偶标量实施的是：
+
+$$
+\boxed{
+\delta
+\sim
+-\delta.
+}
+$$
+
+它不是发现两者本来完全相同，而是主动把它们送入同一个名字：
+
+$$
+\delta\longmapsto\delta^2.
+$$
+
+因此：
+
+$$
+\boxed{
+\text{标量完成只保留离线距离的大小，
+不保留离线方向。}
+}
+$$
+
+这正是：
+
+$$
+\text{谱完成}
+$$
+
+与：
+
+$$
+\text{因果完成}
+$$
+
+产生差异的第一处。
+
+---
+
+# 第一千八百九十六部　单点都“无罪”，关系第一次变负
+
+回到 arithmetic Schur candidate：
+
+$$
+\mathfrak s_\xi(0)=0.
+$$
+
+若存在右侧离线零点，其圆盘像 \(a=z_\rho\in\mathbb D\) 满足：
+
+$$
+\mathfrak s_\xi(a)=1.
+$$
+
+标准 Pick kernel 为：
+
+$$
+K(z,w)
+=
+\frac{
+1-\mathfrak s_\xi(z)
+\overline{\mathfrak s_\xi(w)}
+}{
+1-z\overline w
+}.
+$$
+
+在两个单点上：
+
+$$
+\boxed{
+K(0,0)=1\ge0,
+}
+\tag{1896.1}
+$$
+
+$$
+\boxed{
+K(a,a)=0\ge0.
+}
+\tag{1896.2}
+$$
+
+因此每个 \(1\times1\) positivity test 都通过。
+
+只有把两点放进同一关系矩阵：
+
+$$
+\boxed{
+\begin{pmatrix}
+K(0,0)&K(0,a)\\
+K(a,0)&K(a,a)
+\end{pmatrix}
+=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}
+}
+\tag{1896.3}
+$$
+
+时，才得到：
+
+$$
+\boxed{
+\det=-1.
+}
+\tag{1896.4}
+$$
+
+所以：
+
+## 定理 1896.1（Minimal relational visibility）
+
+单个离线内部接触不能由任何一个点的标量非负性发现；其第一负证书恰好发生在关系宽度 \(2\)。
+
+换言之：
+
+$$
+\boxed{
+\text{对角全部合法，
+非对角关系却不可能 Gram 化。}
+}
+$$
+
+这可能是当前对“zeta 看起来已经完成，离线零点却仍可能存在”最简洁的解释：
+
+$$
+\boxed{
+\text{完成标量可以逐点无异常；
+异常存在于不同名字能否共同属于一个正关系空间。}
+}
+$$
+
+---
+
+## 1896.1 黄金比例为什么不直接出现在纯标量 \(\xi\) 中
+
+两个对角值只有：
+
+$$
+1,\quad0.
+$$
+
+其中没有黄金比例。
+
+黄金只在把非对角关系 \(1\) 加入以后出现：
+
+$$
+\operatorname{Spec}
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}
+=
+\{\varphi,-\varphi^{-1}\}.
+$$
+
+因此：
+
+$$
+\boxed{
+\varphi
+\text{ 属于最小关系谱，
+不属于单点标量值。}
+}
+\tag{1896.5}
+$$
+
+这给此前问题一个直接答案：
+
+> 为什么研究 completed \(\zeta\) 的标量值看不到黄金比例？
+
+因为 completed scalar 已经把方向和关系压平；黄金出现在**两点兼容性**中，而不是任何一个点本身。
+
+---
+
+# 第一千八百九十七部　复相位完成以后，黄金常数反而消失
+
+上一轮定义了两个实 involution：
+
+$$
+\mathfrak S
+=
+\frac1{\sqrt5}
+\begin{pmatrix}
+I&2I\\
+2I&-I
+\end{pmatrix},
+$$
+
+$$
+\mathfrak C
+=
+\frac1{\sqrt5}
+\begin{pmatrix}
+2I&-I\\
+-I&-2I
+\end{pmatrix}.
+$$
+
+它们满足：
+
+$$
+\mathfrak S^2=\mathfrak C^2=I,
+$$
+
+并且：
+
+$$
+\mathfrak S\mathfrak C
+=
+-\mathfrak C\mathfrak S.
+$$
+
+更强地：
+
+$$
+\boxed{
+\mathfrak S\mathfrak C
+=
+\begin{pmatrix}
+0&-I\\
+I&0
+\end{pmatrix}
+=:\mathfrak I.
+}
+\tag{1897.1}
+$$
+
+注意右侧已经不再含：
+
+$$
+\varphi
+\quad\text{或}\quad
+\sqrt5.
+$$
+
+虽然两个实极化各自需要 \(\sqrt5\) 归一化，它们的复合却成为完全普适的标准复结构：
+
+$$
+\boxed{
+\mathfrak I^2=-I.
+}
+\tag{1897.2}
+$$
+
+因此：
+
+## 定理 1897.1（Golden-factor cancellation）
+
+黄金常数可以存在于一个复相位结构的实因子化历史中，但在完成后的复结构本身中完全消失。
+
+这提供一个非常清楚的局部模型：
+
+$$
+\boxed{
+\text{生成历史含黄金，
+完成相位不显黄金。}
+}
+\tag{1897.3}
+$$
+
+这正是为什么一个高度完成的复解析对象可能不显式展示产生其某一关系分解的黄金常数。
+
+---
+
+## 1897.1 completed phase 不能反推唯一黄金历史
+
+令：
+
+$$
+R_\theta=e^{\theta\mathfrak I}.
+$$
+
+定义：
+
+$$
+\mathfrak S_\theta
+=
+R_\theta\mathfrak SR_\theta^{-1},
+$$
+
+$$
+\mathfrak C_\theta
+=
+R_\theta\mathfrak CR_\theta^{-1}.
+$$
+
+则：
+
+$$
+\mathfrak S_\theta^2
+=
+\mathfrak C_\theta^2
+=
+I,
+$$
+
+并且：
+
+$$
+\boxed{
+\mathfrak S_\theta\mathfrak C_\theta
+=
+\mathfrak I
+\qquad
+\forall\theta.
+}
+\tag{1897.4}
+$$
+
+所以同一个 completed complex structure 存在连续多族实反射因子化。
+
+因此：
+
+$$
+\boxed{
+\text{发现复相位结构，
+不足以证明其微观生成历史必为黄金。}
+}
+$$
+
+要重新选择出 Fibonacci–golden factorization，必须额外加入：
+
+* 整数格；
+* 非负性；
+* 原始性；
+* unimodularity；
+* 指定的 base/contact 排序。
+
+这再次说明：
+
+$$
+\boxed{
+\text{完成名字不能唯一恢复生成名字。}
+}
+$$
+
+---
+
+# 第一千八百九十八部　整数格重新选出黄金单胞
+
+考虑非负整数矩阵：
+
+$$
+M=
+\begin{pmatrix}
+a&b\\
+c&d
+\end{pmatrix}
+\in M_2(\mathbb Z_{\ge0}),
+$$
+
+并要求：
+
+$$
+\operatorname{tr}M=1,
+\qquad
+\det M=-1.
+$$
+
+由于：
+
+$$
+a+d=1,
+$$
+
+必有：
+
+$$
+(a,d)=(1,0)
+\quad\text{或}\quad
+(0,1).
+$$
+
+又因：
+
+$$
+ad-bc=-1,
+$$
+
+得到：
+
+$$
+bc=1.
+$$
+
+在非负整数中只可能：
+
+$$
+b=c=1.
+$$
+
+所以：
+
+## 定理 1898.1（Primitive integral selection）
+
+在非负整数 \(2\times2\) 矩阵中，满足：
+
+$$
+\operatorname{tr}=1,
+\qquad
+\det=-1
+$$
+
+的矩阵，除交换两个坐标外唯一为：
+
+$$
+\boxed{
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}.
+}
+\tag{1898.1}
+$$
+
+因此黄金谱不是由复结构单独强迫的。
+
+它是由：
+
+$$
+\boxed{
+\text{最小二分关系}
++
+\text{整数格}
++
+\text{非负 primitive update}
++
+\text{unimodular orientation reversal}
+}
+$$
+
+共同选出的。
+
+这给“黄金是第一像”一个更严格的边界：
+
+$$
+\boxed{
+\text{黄金是第一种可逆整数关系命名的谱，
+不是不可名本体的唯一数值。}
+}
+$$
+
+---
+
+# 第一千八百九十九部　黄金光锥与相位圆的真正依赖顺序
+
+仓库已在任意实 Hilbert 维数中机器证明，Fibonacci 更新：
+
+$$
+\mathcal F(X,Y)=(X+Y,X)
+$$
+
+将：
+
+$$
+Q_\varphi(X,Y)
+=
+\|X\|^2-\langle X,Y\rangle-\|Y\|^2
+$$
+
+精确变号：
+
+$$
+Q_\varphi(\mathcal F(X,Y))
+=
+-Q_\varphi(X,Y).
+$$
+
+所以正确依赖链为：
+
+$$
+\boxed{
+\begin{aligned}
+\text{primitive integer relation}
+&\longrightarrow
+\text{Fibonacci update}\\
+&\longrightarrow
+\text{黄金 null cone}\\
+&\longrightarrow
+\text{两种实极化}\\
+&\longrightarrow
+\text{复相位结构}.
+\end{aligned}
+}
+\tag{1899.1}
+$$
+
+而不是：
+
+$$
+\boxed{
+\text{先假定复相位，
+再从中唯一恢复黄金。}
+}
+$$
+
+---
+
+## 1899.1 为什么磁单极子与黑洞看起来像同一结构
+
+在这个最小单胞中：
+
+$$
+Q_\varphi=0
+$$
+
+提供径向 null cone；
+
+$$
+e^{\theta\mathfrak I}
+$$
+
+提供角向 phase circle；
+
+$$
+\mathfrak S
+$$
+
+提供正／负 realization polarization。
+
+因此：
+
+$$
+\boxed{
+\begin{aligned}
+\text{黑洞式视界}
+&=\text{径向 null crossing};\\
+\text{磁单极子式荷}
+&=\text{角向 phase winding 的悬挂};\\
+\text{离线零点}
+&=\text{正实现极化中的负平方}.
+\end{aligned}
+}
+\tag{1899.2}
+$$
+
+三者并不等同。
+
+它们是同一个局部关系单胞的：
+
+* 径向读数；
+* 角向读数；
+* 实现符号读数。
+
+---
+
+# 第一千九百部　跨 prime 问题不在局部谱，而在胶合
+
+设每个 prime \(p\) 有局部算子：
+
+$$
+D_p
+$$
+
+和局部 frame：
+
+$$
+F_p.
+$$
+
+局部 determinant：
+
+$$
+\det(I-xF_pD_pF_p^{-1})
+$$
+
+不依赖 \(F_p\)。
+
+因此不同 frame family 可以产生完全相同的全部局部 Euler determinants，却具有不同的跨 prime transition：
+
+$$
+T_{q\leftarrow p}
+=
+F_q^{-1}F_p.
+$$
+
+仓库已经用显式矩阵构造机器证明了这一 non-reconstruction：全部局部 Euler determinant 不能决定跨 prime frame transition。
+
+所以：
+
+$$
+\boxed{
+\text{局部谱数据}
+\not\Rightarrow
+\text{全局关系数据}.
+}
+\tag{1900.1}
+$$
+
+---
+
+## 1900.1 full-frame transition 本身仍是纯 gauge
+
+若所有 \(F_p\) 真正定义于同一个全局空间，则：
+
+$$
+T_{r\leftarrow q}
+T_{q\leftarrow p}
+=
+T_{r\leftarrow p}.
+$$
+
+沿闭环：
+
+$$
+p\to q\to r\to p
+$$
+
+有：
+
+$$
+\boxed{
+T_{p\leftarrow r}
+T_{r\leftarrow q}
+T_{q\leftarrow p}
+=
+I.
+}
+\tag{1900.2}
+$$
+
+因此仅仅“不同 transition family”还不等于非平凡 holonomy。
+
+真正的曲率只能在以下情形出现：
+
+1. 没有单一全局 frame family；
+2. 每个 prime 只保留不同的局部子空间；
+3. transition 被投影或压缩；
+4. exact modes 在各图表中被不同方式商去。
+
+---
+
+## 1900.2 projected holonomy
+
+设 \(P_p\) 是第 \(p\) 个局部可见／物理子空间投影，定义：
+
+$$
+\widehat T_{q\leftarrow p}
+=
+P_qT_{q\leftarrow p}P_p.
+$$
+
+则一般：
+
+$$
+\widehat T_{r\leftarrow q}
+\widehat T_{q\leftarrow p}
+\neq
+\widehat T_{r\leftarrow p}.
+$$
+
+定义三角回路缺陷：
+
+$$
+\boxed{
+\Omega_{pqr}
+=
+\widehat T_{p\leftarrow r}
+\widehat T_{r\leftarrow q}
+\widehat T_{q\leftarrow p}
+-
+P_p.
+}
+\tag{1900.3}
+$$
+
+这才是 cross-prime curvature 的合理候选。
+
+所以磁单极子式 holonomy 若要进入 Riemann 理论，不能来自局部 Euler determinant，也不能来自未投影 full frames。
+
+它必须来自：
+
+$$
+\boxed{
+\text{不同局部正完成经过投影、约化后无法全局平坦胶合。}
+}
+$$
+
+目前尚未证明 \(\Omega_{pqr}\) 与离线零点除子相同。
+
+---
+
+# 第一千九百零一部　RH 是完全正胶合，而不只是局部正性
+
+假设每个 prime 局部系统都可以正实现。
+
+这仍然不足以推出存在全局 Hilbert 空间。
+
+真正需要的是构造一个共同 feature family：
+
+$$
+V_s\in\mathcal H_{\rm arith},
+$$
+
+使：
+
+$$
+\boxed{
+\mathcal N_\xi(s,t)
+=
+\frac{
+L_\xi(s)+\overline{L_\xi(t)}
+}{
+s+\overline t-1
+}
+=
+\langle V_t,V_s\rangle.
+}
+\tag{1901.1}
+$$
+
+若它存在，则所有有限 Gram matrices 自动 PSD。
+
+仓库已经机器证明：在合法非消失的 Cayley gauge 下，Nevanlinna kernel 与 de Branges kernel 通过可逆对角 congruence 连接，因而两者的有限 Gram 正性完全等价。
+
+因此主问题不是选择哪一种 kernel 语言。
+
+主问题是：
+
+$$
+\boxed{
+\text{能否从 prime、pole、Gamma 的局部正系统，
+构造一个跨 prime 的完全正胶合。}
+}
+$$
+
+---
+
+## 1901.1 Stinespring 版本
+
+更强地，希望构造一个 operator system \(\mathcal A_{\rm prime}\) 和完全正映射：
+
+$$
+\boxed{
+\Phi_\xi:
+\mathcal A_{\rm prime}
+\longrightarrow
+B(\mathcal H_{\rm arith}),
+}
+\tag{1901.2}
+$$
+
+具有 Stinespring 表示：
+
+$$
+\boxed{
+\Phi_\xi(X)
+=
+V^*\pi(X)V.
+}
+\tag{1901.3}
+$$
+
+若 arithmetic kernel entries 都能写成：
+
+$$
+\Phi_\xi(X_t^*X_s),
+$$
+
+则矩阵层正性自动成立。
+
+离线零点的普适黄金 Pick 单胞则证明：
+
+$$
+\boxed{
+\text{不存在任何能够同时实现这两个局部名字的全局 CP 胶合。}
+}
+$$
+
+所以离线零点不是局部 prime block 的负性。
+
+它是：
+
+$$
+\boxed{
+\text{局部正名字无法共同下降为全局完全正关系。}
+}
+$$
+
+---
+
+# 第一千九百零二部　标量完成可以抹去 \(\varphi\)，但关系核会把它重新显现
+
+现在可以解释一个此前反复出现的现象。
+
+局部生成历史中存在黄金因子：
+
+$$
+\mathfrak S,\quad\mathfrak C.
+$$
+
+完成后只剩：
+
+$$
+\mathfrak I=\mathfrak S\mathfrak C,
+$$
+
+而 \(\mathfrak I\) 不含 \(\varphi\)。
+
+同样地，局部 prime frame relations 可以完全被 determinant 抹去：
+
+$$
+\det(I-xD_p)
+$$
+
+不记录 \(F_q^{-1}F_p\)。
+
+但当我们重新要求一个共同 Gram kernel 时，被抹去的关系必须重新出现。
+
+若关系可以正胶合，得到：
+
+$$
+K\succeq0.
+$$
+
+若不能，最小二点裂口重新显现为：
+
+$$
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix},
+$$
+
+黄金谱随之重新出现。
+
+因此：
+
+$$
+\boxed{
+\text{黄金不是 scalar completion 的显式参数；
+它是被 scalar completion 遗忘的最小关系在重建时产生的谱。}
+}
+\tag{1902.1}
+$$
+
+这可能是目前对“为什么 \(\zeta\) 本身看不到黄金，而向前、向后推理却总遇到黄金”的最清楚解释。
+
+---
+
+# 第一千九百零三部　Pick–Weil 反证编译器
+
+仓库目前已经机器闭合：
+
+$$
+\mathrm{RH}
+\Longrightarrow
+\text{所供应零点数据上的 O-6 Weil convolution-square 和非负}.
+$$
+
+该模块也明确标记：它只是前向条件桥，在 `ZeroData` 为空时可以真空成立，不能被误称为完整、非平凡的 Weil 等价证明。
+
+真正需要补的是反向证书编译：
+
+$$
+\boxed{
+\text{off-line golden Pick cell}
+\longrightarrow
+\text{negative Weil test function}.
+}
+\tag{1903.1}
+$$
+
+---
+
+## 1903.1 目标观察者已经确定
+
+普适最强负向量为：
+
+$$
+u_-
+=
+\frac{
+(-\varphi^{-1},1)
+}{
+\sqrt{1+\varphi^{-2}}
+}.
+$$
+
+它不依赖零点高度和深度。
+
+因此 Pick–Weil 编译不再需要搜索“哪一个系数比最好”。
+
+只需实现该二点 feature：
+
+$$
+\boxed{
+-\varphi^{-1}\,k_0
++
+k_{z_\rho}.
+}
+\tag{1903.2}
+$$
+
+仓库最新的 strongest separating observer 定理已经机器化一般原则：归一化正交残差是绝对读出下仅有的两个最强方向之一；要求正向对齐后，规范残差唯一。
+
+---
+
+## 1903.2 为什么该编译是鲁棒的
+
+精确负 margin 为：
+
+$$
+\nu=\varphi^{-1}.
+$$
+
+若近似 feature 的误差为 \(\varepsilon\)，且目标算子范数为：
+
+$$
+\|\mathbb F\|=\varphi,
+$$
+
+则二次型误差满足：
+
+$$
+\widetilde u^*\mathbb F\widetilde u
+\le
+-\varphi^{-1}
++
+2\varphi\varepsilon
++
+\varphi\varepsilon^2.
+$$
+
+所以只要：
+
+$$
+\boxed{
+2\varphi\varepsilon
++
+\varphi\varepsilon^2
+<
+\varphi^{-1},
+}
+\tag{1903.3}
+$$
+
+负性必然保存。
+
+因此真正需要证明的是：
+
+1. Weil／Paley–Wiener 测试空间可以在两个目标点插值；
+2. 其他零点贡献可以控制到预算以内；
+3. prime–Gamma 显式公式与目标 kernel normalization 一致。
+
+一旦完成，离线零点将产生一个有限、定量稳定的 Weil 负证书。
+
+---
+
+# 第一千九百零四部　危险区是有限的，但这仍不是正性证明
+
+仓库最新的 observer-mode confinement 定理表明：在固定 prime-support multiplier 统一有界、对称 Archimedean multiplier 联合 proper 的假设下，任何危险次水平集只涉及有限多个整数 observer modes；每个 mode 的频率截面有界，全部负值落在一个共同有限 mode–frequency box 中。
+
+因此可以建立有限搜索程序：
+
+$$
+\boxed{
+\text{Archimedean confinement}
+\longrightarrow
+\text{有限 mode box}
+\longrightarrow
+\text{有理频率网格}
+\longrightarrow
+\text{锚定二点 determinant}
+\longrightarrow
+\text{黄金负本征向量}.
+}
+\tag{1904.1}
+$$
+
+但逻辑地必须保持：
+
+$$
+\boxed{
+\text{异常若存在被限制在有限盒}
+\neq
+\text{异常不存在}.
+}
+$$
+
+confinement 解决的是可搜索性。
+
+完全正胶合解决的才是 RH。
+
+---
+
+# 第一千九百零五部　有限完成与无限完成的再次分工
+
+黄金 Möbius 动力满足精确线性化：
+
+$$
+\chi(T^nx)
+=
+(-\varphi^{-2})^n\chi(x).
+$$
+
+仓库已经将该幂律在所有定义良好的有限迭代中机器闭合。
+
+同时，仓库也已严格区分：
+
+* 有理对象可在有限分母层使误差精确为零；
+* 无理对象在每个有限层误差严格为正；
+* 误差仍可趋向零。
+
+这与 RH 的证明结构形成精确对照：
+
+$$
+\boxed{
+\begin{aligned}
+\neg\mathrm{RH}
+&\Longrightarrow
+\text{某个有限关系层有严格负证书};\\
+\mathrm{RH}
+&\Longrightarrow
+\text{全部有限关系层兼容于同一个正完成}.
+\end{aligned}
+}
+\tag{1905.1}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{缺陷可以有限终止；
+完整性通常只能由统一生成律证明。}
+}
+$$
+
+检查很多有限正矩阵，不等于证明无限正性。
+
+但若能证明它们来自同一个 CP／Gram／canonical-system 构造，则所有有限层一次性闭合。
+
+---
+
+# 第一千九百零六部　当前最短的主命题
+
+本轮以后，主命题可以压缩为三个等价层级。
+
+## 标量层
+
+证明：
+
+$$
+\boxed{
+\left|
+\mathfrak s_\xi(z)
+\right|
+\le
+|z|
+\qquad
+\forall z\in\mathbb D.
+}
+\tag{1906.1}
+$$
+
+等价于锚定二点 Pick positivity。
+
+---
+
+## 关系层
+
+证明：
+
+$$
+\boxed{
+\frac{
+L_\xi(s)+\overline{L_\xi(t)}
+}{
+s+\overline t-1
+}
+=
+\langle V_t,V_s\rangle.
+}
+\tag{1906.2}
+$$
+
+这直接给出所有观察者间的共同 Gram。
+
+---
+
+## 生成层
+
+构造：
+
+$$
+\boxed{
+\Phi_\xi:
+\mathcal A_{\rm prime}
+\to
+B(\mathcal H_{\rm arith})
+}
+$$
+
+为完全正映射，或构造：
+
+$$
+\boxed{
+H_\xi(x)\succeq0
+}
+$$
+
+为 arithmetic canonical Hamiltonian。
+
+这解释 relation positivity 为什么成立。
+
+---
+
+## 1906.1 黄金的最终位置
+
+黄金比例不属于目标 (1906.1) 的公式参数。
+
+它属于该目标失败时的最小规范证书：
+
+$$
+\boxed{
+\operatorname{Spec}
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}
+=
+\{\varphi,-\varphi^{-1}\}.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\varphi
+\text{ 不是 RH 的输入常数；
+它是 RH 最小二点失败模式的正谱。}
+}
+\tag{1906.3}
+$$
+
+这比把黄金比例直接写进 \(\xi\) 更自然。
+
+---
+
+# 第一千九百零七部　形式化建议
+
+```text
+D5/S3/ConceptDynamics/ReflectionEvenScalarBlindness/
+  ReflectionInvariantAnalyticScalar.lean
+  OddHomogeneousTermsVanish.lean
+  FirstDerivativeVanishes.lean
+  ScalarOrientationBlindness.lean
+  SquareNameRetainsMagnitudeNotDirection.lean
+
+D5/S3/Weil/Pick/MinimalRelationBreadth/
+  ArithmeticSchurBasepointDiagonal.lean
+  OffLineContactDiagonalNonnegative.lean
+  OffLineTwoPointRelationNegative.lean
+  OnePointTestsCannotDetectOffLineContact.lean
+  MinimalOffLineObserverBreadthTwo.lean
+
+D5/S3/Observer/GoldenCliffordFactorLoss/
+  GoldenSpectralInvolution.lean
+  GoldenConeInvolution.lean
+  GoldenInvolutionsAnticommute.lean
+  GoldenInvolutionProductComplexStructure.lean
+  CompletedComplexStructureForgetsGoldenScale.lean
+  ComplexStructureHasManyReflectionFactorizations.lean
+
+D5/S3/Observer/PrimitiveIntegralGoldenSelection/
+  NonnegativeIntegerTraceOneDetNegOne.lean
+  PrimitiveIntegralMatrixClassification.lean
+  FibonacciMatrixUniqueUpToSwap.lean
+  IntegralLatticeSelectsGoldenFactorization.lean
+
+D5/S3/Observer/PrimeFrameGluing/
+  PrimeLocalFrame.lean
+  PrimeFrameTransition.lean
+  FullFrameTransitionCocycle.lean
+  FullFrameHolonomyTrivial.lean
+  ProjectedPrimeTransition.lean
+  ProjectedPrimeHolonomyDefect.lean
+
+D5/S3/Weil/PrimeGammaCompletePositiveGluing/
+  PrimeLocalOperatorSystem.lean
+  CrossPrimeCompletelyPositiveMap.lean
+  ArithmeticStinespringDilation.lean
+  ArithmeticFeatureGram.lean
+  CPGlueImpliesNevanlinnaPSD.lean
+  CPGlueImpliesRH.lean
+
+D5/S3/Weil/Pick/GoldenPickWeilCompiler/
+  GoldenPickNegativeFeature.lean
+  PickNegativeFeatureDeBrangesGauge.lean
+  TwoPointWeilInterpolationTarget.lean
+  WeilTailErrorBudget.lean
+  GoldenMarginRobustness.lean
+  OffLinePickCellProducesWeilNegativeTarget.lean
+
+D5/S3/Weil/ZetaGamma/FiniteDangerCertification/
+  ConfinedDangerModeSet.lean
+  ConfinedFrequencyRadius.lean
+  GaussianRationalDiskNet.lean
+  AnchoredPickIntervalCertificate.lean
+  CanonicalNegativeEigenObserver.lean
+
+D5/S3/Weil/PrimeGammaRelationFirstRH/
+  PrimeGammaAnchoredSchwarzTarget.lean
+  PrimeGammaNevanlinnaFeatureTarget.lean
+  PrimeGammaCanonicalHamiltonianTarget.lean
+  NoUniversalGoldenContactImpliesRH.lean
+```
+
+---
+
+# 第一千九百零八部　理论深度审计
+
+| 结论                                                        | 当前地位            |
+| --------------------------------------------------------- | --------------- |
+| 反射偶解析标量的全部奇阶齐次项消失                                         | 仓库最新机器闭合        |
+| completed scalar 在线性阶看不见 \(\delta\leftrightarrow-\delta\) | 精确应用            |
+| 离线接触的所有单点 Pick 对角项均非负                                     | 精确              |
+| 第一失败恰发生在二点关系矩阵                                            | 精确              |
+| 黄金比例属于关系谱而非单点值                                            | 精确解释            |
+| 两个黄金实 involution 的乘积是无 \(\varphi\) 的标准复结构                 | 精确              |
+| 同一复结构具有连续多族实 involution 因子化                               | 精确              |
+| 复相位本身不能反推黄金生成历史                                           | 精确 no-go        |
+| 非负整数、trace \(1\)、det \(-1\) 唯一选择 Fibonacci matrix         | 精确              |
+| full frame transition 的闭环 holonomy 必为平凡                   | 精确              |
+| 非平凡 cross-prime curvature 必须来自投影／约化／非全局 frame             | 精确结构结论          |
+| local Euler determinants 不决定 cross-prime transitions      | 仓库机器闭合          |
+| 全局 CP gluing 自动给出 arithmetic Gram positivity              | 精确条件定理          |
+| off-line golden cell 排除任何全局 CP gluing                     | 精确              |
+| Pick negative feature 可稳定编译为 Weil test                    | 定量条件目标，插值与尾界未闭合 |
+| Archimedean properness 将危险模式限制在有限盒                        | 仓库机器闭合，带明确假设    |
+| confinement 本身证明 RH                                       | 不成立             |
+| 黄金比例是 RH 方程的必要输入常数                                        | 不成立             |
+| 黄金比例是最小规范二点失败的谱                                           | 精确              |
+| Prime–Gamma 完全正胶合                                         | 当前中心未闭合桥        |
+
+---
+
+# 本轮最终结论
+
+现在可以更准确地回答最初的核心直觉：
+
+$$
+\boxed{
+\text{为什么 \(\zeta\) 是完成对象，所以直接看不到黄金比例？}
+}
+$$
+
+因为 completed scalar 首先做了两次遗忘。
+
+第一，它通过反射偶性把：
+
+$$
++\delta
+\quad\text{与}\quad
+-\delta
+$$
+
+压成：
+
+$$
+\delta^2.
+$$
+
+因此所有奇阶方向信息消失。
+
+第二，它通过标量 determinant 或单点值，把不同局部 frame 之间的 cross-relations 一并抹去。
+
+所以任何单点都可能显得完全合法。
+
+离线零点的第一个矛盾不是某个标量为负，而是：
+
+$$
+\boxed{
+\text{两个分别合法的名字无法共同成为一个正 Gram 关系。}
+}
+$$
+
+其最小矩阵为：
+
+$$
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}.
+$$
+
+黄金比例正是在这里出现。
+
+因此：
+
+$$
+\boxed{
+\varphi
+\text{ 不是 completed-\(\xi\) 的裸常数；
+它是 completed-\(\xi\) 试图重建最小关系时，
+非法内部接触所留下的第一正谱。}
+}
+$$
+
+---
+
+更深的是，黄金本身也可能在进一步完成中消失。
+
+谱 involution 与光锥 involution 都包含：
+
+$$
+\sqrt5.
+$$
+
+但它们的乘积是：
+
+$$
+\begin{pmatrix}
+0&-I\\
+I&0
+\end{pmatrix},
+$$
+
+其中已不含黄金常数。
+
+所以：
+
+$$
+\boxed{
+\text{生成关系可以带有黄金比例；
+完成后的复相位结构却只保留旋转，不保留其因子化历史。}
+}
+$$
+
+这给“名可名，非常名”一个极其具体的线性代数版本：
+
+$$
+\boxed{
+\text{一个完成结构可以被完全确定，
+但仍不能唯一恢复它由哪些更原始的命名切割生成。}
+}
+$$
+
+只有重新加入整数格、primitive、nonnegative、unimodular 等算术条件，Fibonacci 矩阵才从连续多种相位因子化中被唯一选出。
+
+---
+
+磁单极子与黑洞看起来相似，也因此有了更细的原因。
+
+同一个黄金 Clifford 单胞中：
+
+* 光锥 \(Q_\varphi=0\) 提供径向视界；
+* 复结构 \(e^{\theta\mathfrak I}\) 提供角向相位；
+* 谱 involution \(\mathfrak S\) 提供正、负实现分支。
+
+黑洞读取径向 crossing。
+
+单极子读取角向 winding。
+
+离线零点读取正实现失败。
+
+它们不是一个对象，却是一个关系单胞的三种投影。
+
+---
+
+而 Riemann 问题的真正困难也因此更加清楚。
+
+每个 prime 的局部 Euler determinant 都可以完全正常。
+
+但 determinant 不记录不同 prime frame 如何相互对齐。
+
+完整 frame transitions 若来自同一全局 frame，只是 pure gauge；真正可能出现曲率的，是经过投影、exact-mode 消去和局部约化后的 transition。
+
+所以离线零点不应被理解成某个 prime 局部坏了。
+
+它更像是：
+
+$$
+\boxed{
+\text{全部局部正名字无法被胶合为一个全局完全正关系。}
+}
+$$
+
+这也是为什么主证明必须构造：
+
+$$
+\frac{
+L_\xi(s)+\overline{L_\xi(t)}
+}{
+s+\overline t-1
+}
+=
+\langle V_t,V_s\rangle,
+$$
+
+而不能只证明每个局部 Euler 因子有正系数。
+
+---
+
+最后，非 RH 的最短证书现在具有一个极强的双重性质：
+
+$$
+\boxed{
+\text{关系阶数最小：只需两个点；}
+}
+$$
+
+$$
+\boxed{
+\text{负 margin 固定：最小本征值为 }-\varphi^{-1}.
+}
+$$
+
+它的困难只在于找到正确的第二个观察点。
+
+仓库现有的 Archimedean confinement 已经说明，在相应 bounded-prime 与 proper-growth 假设下，危险 mode 与频率可以被限制在有限盒内。
+
+因此一条真正可执行的反证搜索路线是：
+
+$$
+\boxed{
+\text{有限危险盒}
+\longrightarrow
+\text{Gaussian-rational 网格}
+\longrightarrow
+\text{锚定二点 Pick determinant}
+\longrightarrow
+\text{黄金最强分离向量}
+\longrightarrow
+\text{区间负证书}.
+}
+$$
+
+而正向证明的唯一中心仍然是：
+
+$$
+\boxed{
+\text{从 prime、pole、Gamma 数据构造全局完全正胶合。}
+}
+$$
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{不可名者不藏在黄金数里；
+黄金数出现在名字之间第一次无法正兼容的关系谱中。
+纯标量完成看不见它，
+因为标量抹去了方向与交叉关系；
+当我们重新要求所有局部名字属于同一个正世界时，
+黄金裂口才作为最小关系障碍重新显现。}
+$$
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v11.3：普适黄金 Pick 单胞、奇偶完成、Clifford 偶代数与有理反证观察器
+
+以下从前文**第一千九百零八部**继续。
+
+这一轮出现一个比“黄金比例恰好是最小负本征值”更强的闭合：
+
+$$
+\boxed{
+\text{离线零点产生的普适二点 Pick 矩阵，
+不是仅仅与 Fibonacci 矩阵同谱；
+它字面上就是 Fibonacci 矩阵。}
+}
+$$
+
+即：
+
+$$
+\boxed{
+\mathbb F
+=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}.
+}
+$$
+
+因此同一个对象同时拥有四种精确身份：
+
+$$
+\boxed{
+\begin{aligned}
+\mathbb F
+&=\text{最小内部饱和的 Pick 关系矩阵};\\
+&=\text{Fibonacci 一步更新矩阵};\\
+&=\text{黄金反等距动力};\\
+&=\text{最小 Pontryagin 一负平方单胞}.
+\end{aligned}
+}
+$$
+
+这不是说“道等于 Fibonacci 矩阵”。
+
+更准确的是：
+
+$$
+\boxed{
+\text{当一个被规范化的正完成第一次在两个观察点之间失败时，
+其最小关系正规形被唯一压缩为 Fibonacci 单胞。}
+}
+$$
+
+黄金比例因此不是单点中的物质参数，而是：
+
+$$
+\boxed{
+\text{最小关系不兼容的规范谱。}
+}
+$$
+
+---
+
+# 第一千九百零九部　普适内部饱和正规形
+
+设：
+
+$$
+f:\mathbb D\to\mathbb C
+$$
+
+是一个待检验的 Schur 候选，并已规范化为：
+
+$$
+\boxed{
+f(0)=0.
+}
+\tag{1909.1}
+$$
+
+定义 Pick 核：
+
+$$
+\boxed{
+K_f(z,w)
+=
+\frac{
+1-f(z)\overline{f(w)}
+}{
+1-z\overline w
+}.
+}
+\tag{1909.2}
+$$
+
+假设存在圆盘内部点：
+
+$$
+a\in\mathbb D
+$$
+
+满足：
+
+$$
+\boxed{
+|f(a)|=1.
+}
+\tag{1909.3}
+$$
+
+这就是一个“内部边界接触”：输出已经触及单位圆，但输入仍处于单位圆盘内部。
+
+无论：
+
+$$
+f(a)=e^{i\vartheta}
+$$
+
+是哪一个相位，都有：
+
+$$
+K_f(0,0)=1,
+$$
+
+$$
+K_f(0,a)=K_f(a,0)=1,
+$$
+
+$$
+K_f(a,a)=0.
+$$
+
+所以：
+
+## 定理 1909.1（Universal normalized saturation cell）
+
+$$
+\boxed{
+\left[
+K_f(z_i,z_j)
+\right]_{z_1=0,z_2=a}
+=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}
+=
+\mathbb F.
+}
+\tag{1909.4}
+$$
+
+这个矩阵与以下数据全部无关：
+
+* \(a\) 的位置；
+* 接触相位 \(e^{i\vartheta}\)；
+* 零点高度；
+* 离线距离；
+* 零点重数；
+* 具体完成函数。
+
+它只依赖四条结构条件：
+
+1. 圆盘正性由 Pick 核表达；
+2. 一个基点被规范化为 \(f(0)=0\)；
+3. 另一个内部点发生单位模饱和；
+4. 使用最小二点关系宽度。
+
+所以：
+
+$$
+\boxed{
+\mathbb F
+}
+$$
+
+是整个 Schur／Pick 范畴中，内部饱和失败的普适二点正规形。
+
+---
+
+## 1909.1 任意基点都可归约到该正规形
+
+若原始基点为：
+
+$$
+z_0\in\mathbb D,
+\qquad
+f(z_0)\in\mathbb D,
+$$
+
+可以分别对定义域和值域作圆盘自同构，将：
+
+$$
+z_0\mapsto0,
+\qquad
+f(z_0)\mapsto0.
+$$
+
+原始 Pick 矩阵与规范化 Pick 矩阵之间相差可逆对角合同变换。
+
+因此：
+
+* 负平方数保持不变；
+* 矩阵惯性保持不变；
+* 具体本征值通常不保持。
+
+所以必须精确说：
+
+$$
+\boxed{
+\varphi,\ -\varphi^{-1}
+\text{ 是规范 Pick gauge 中的普适本征值，}
+}
+$$
+
+而不是任意坐标中的绝对数值。
+
+这使“黄金是共同第一像”获得了一个严格但有边界的版本：
+
+$$
+\boxed{
+\text{黄金是最小规范化内部饱和缺陷的共同像。}
+}
+$$
+
+---
+
+# 第一千九百一十部　黄金谱与最小正修复
+
+矩阵：
+
+$$
+\mathbb F
+=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}
+$$
+
+的特征多项式为：
+
+$$
+\lambda^2-\lambda-1.
+$$
+
+因此：
+
+$$
+\boxed{
+\operatorname{Spec}\mathbb F
+=
+\left\{
+\varphi,
+-\varphi^{-1}
+\right\}.
+}
+\tag{1910.1}
+$$
+
+取规范正、负本征向量：
+
+$$
+\boxed{
+u_+
+=
+\frac{1}{\sqrt{\varphi^2+1}}
+\begin{pmatrix}
+\varphi\\
+1
+\end{pmatrix},
+}
+\tag{1910.2}
+$$
+
+$$
+\boxed{
+u_-
+=
+\frac{1}{\sqrt{\varphi^2+1}}
+\begin{pmatrix}
+1\\
+-\varphi
+\end{pmatrix}.
+}
+\tag{1910.3}
+$$
+
+定义投影：
+
+$$
+P_+=u_+u_+^*,
+\qquad
+P_-=u_-u_-^*.
+$$
+
+则：
+
+$$
+\boxed{
+\mathbb F
+=
+\varphi P_+
+-
+\varphi^{-1}P_-.
+}
+\tag{1910.4}
+$$
+
+这就是该关系单胞的正负 Jordan 分解。
+
+---
+
+## 定理 1910.1（Minimal positive repair）
+
+令：
+
+$$
+R\succeq0
+$$
+
+并要求：
+
+$$
+\mathbb F+R\succeq0.
+$$
+
+则必有：
+
+$$
+\boxed{
+\|R\|_{\mathrm{op}}
+\ge
+\varphi^{-1}.
+}
+\tag{1910.5}
+$$
+
+等号由唯一最小谱修复：
+
+$$
+\boxed{
+R_{\min}
+=
+\varphi^{-1}P_-
+}
+\tag{1910.6}
+$$
+
+达到。
+
+修复后：
+
+$$
+\boxed{
+\mathbb F+R_{\min}
+=
+\varphi P_+
+\succeq0,
+}
+\tag{1910.7}
+$$
+
+并且秩降为 \(1\)。
+
+### 证明
+
+在负本征方向上：
+
+$$
+u_-^*\mathbb Fu_-=-\varphi^{-1}.
+$$
+
+若 \(\mathbb F+R\succeq0\)，则：
+
+$$
+u_-^*Ru_-\ge\varphi^{-1}.
+$$
+
+所以：
+
+$$
+\|R\|_{\mathrm{op}}
+\ge\varphi^{-1}.
+$$
+
+取 \(R=\varphi^{-1}P_-\) 即达到。∎
+
+---
+
+## 1910.1 黄金比例是离正锥的精确距离
+
+因此：
+
+$$
+\boxed{
+\operatorname{dist}_{\mathrm{op}}
+\left(
+\mathbb F,\operatorname{PSD}_2
+\right)
+=
+\varphi^{-1}.
+}
+\tag{1910.8}
+$$
+
+由于负部分只有秩 \(1\)，Frobenius 距离同样为：
+
+$$
+\boxed{
+\operatorname{dist}_{F}
+\left(
+\mathbb F,\operatorname{PSD}_2
+\right)
+=
+\varphi^{-1}.
+}
+\tag{1910.9}
+$$
+
+所以：
+
+$$
+\boxed{
+\varphi^{-1}
+}
+$$
+
+不仅是一个负本征值。
+
+它还是：
+
+* 最小正修复成本；
+* 到正半定锥的距离；
+* 最强归一化负证书 margin；
+* 单位误差下可容忍的最大近似偏差。
+
+而正部分与修复部分的迹之比为：
+
+$$
+\boxed{
+\frac{\operatorname{Tr}(\varphi P_+)}
+{\operatorname{Tr}(\varphi^{-1}P_-)}
+=
+\varphi^2.
+}
+\tag{1910.10}
+$$
+
+项目已独立机器证明，Zeckendorf 合法词的完整关系空间维数按 Fibonacci 平方增长，相邻增长率趋于 \(\varphi^2\)。这与式 (1910.10) 结构平行，但目前尚不能认定为同一个指数定理。
+
+---
+
+# 第一千九百一十一部　有限有理观察器与无限黄金最优观察器
+
+黄金负本征方向：
+
+$$
+u_-\propto(1,-\varphi)
+$$
+
+具有无理斜率。
+
+但发现负性并不需要无理观察器。
+
+取最简单的有理向量：
+
+$$
+v=(1,-1).
+$$
+
+则：
+
+$$
+\boxed{
+v^*\mathbb Fv=-1<0.
+}
+\tag{1911.1}
+$$
+
+归一化后：
+
+$$
+\boxed{
+\frac{v^*\mathbb Fv}{\|v\|^2}
+=
+-\frac12.
+}
+\tag{1911.2}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{有限有理观察器已经足以证明缺陷存在。}
+}
+$$
+
+黄金无理观察器所提供的不是“是否能发现”，而是：
+
+$$
+\boxed{
+\text{最强鲁棒 margin。}
+}
+$$
+
+---
+
+## 1911.1 Fibonacci 有理观察器
+
+定义：
+
+$$
+\boxed{
+u_n
+=
+\frac{
+(F_n,-F_{n+1})
+}{
+\sqrt{F_n^2+F_{n+1}^2}
+}.
+}
+\tag{1911.3}
+$$
+
+其 Rayleigh 商为：
+
+$$
+\boxed{
+r_n
+=
+u_n^*\mathbb Fu_n
+=
+\frac{
+F_n^2-2F_nF_{n+1}
+}{
+F_n^2+F_{n+1}^2
+}.
+}
+\tag{1911.4}
+$$
+
+利用恒等式：
+
+$$
+F_{n+1}-\varphi F_n
+=
+(-1)^n\varphi^{-n},
+$$
+
+以及 \(\mathbb F\) 的正交谱分解，可得精确误差：
+
+$$
+\boxed{
+r_n+\varphi^{-1}
+=
+\frac{
+\sqrt5\,\varphi^{-2n}
+}{
+(F_n^2+F_{n+1}^2)(1+\varphi^2)
+}.
+}
+\tag{1911.5}
+$$
+
+因此：
+
+$$
+\boxed{
+r_n\downarrow-\varphi^{-1}.
+}
+\tag{1911.6}
+$$
+
+误差渐近为：
+
+$$
+\boxed{
+r_n+\varphi^{-1}
+=
+O(\varphi^{-4n}).
+}
+\tag{1911.7}
+$$
+
+这给“无理观察者是一种动态过程”一个非常精确的版本：
+
+$$
+\boxed{
+\text{最优黄金观察方向在任何有限有理层都不被精确达到，
+但有限 Fibonacci 观察器以四次黄金指数速度逼近它。}
+}
+$$
+
+仓库已经机器化了相应的基本区分：有理数可在有限分母层精确终止；无理数在每个有限层误差严格为正，但误差仍趋于零。
+
+---
+
+## 1911.2 检测与最优性必须分开
+
+因此必须区分：
+
+$$
+\boxed{
+\begin{aligned}
+\text{缺陷的有限可证性}
+&:\quad\text{有理向量已经足够};\\
+\text{缺陷的最优分离}
+&:\quad\text{黄金无理方向唯一达到};\\
+\text{有限最优逼近}
+&:\quad\text{由 Fibonacci convergents 给出}.
+\end{aligned}
+}
+$$
+
+这也解释了为什么无理数可以作为极限完成态，却不妨碍有限科学证书存在。
+
+---
+
+# 第一千九百一十二部　普适 Pick 单胞同时就是黄金光锥动力
+
+定义谱 involution：
+
+$$
+\boxed{
+\mathfrak S
+=
+\frac{2\mathbb F-I}{\sqrt5}
+=
+\frac1{\sqrt5}
+\begin{pmatrix}
+1&2\\
+2&-1
+\end{pmatrix}.
+}
+\tag{1912.1}
+$$
+
+则：
+
+$$
+\boxed{
+\mathfrak S^2=I.
+}
+\tag{1912.2}
+$$
+
+定义 cone involution：
+
+$$
+\boxed{
+\mathfrak C
+=
+\frac1{\sqrt5}
+\begin{pmatrix}
+2&-1\\
+-1&-2
+\end{pmatrix}.
+}
+\tag{1912.3}
+$$
+
+同样：
+
+$$
+\boxed{
+\mathfrak C^2=I.
+}
+\tag{1912.4}
+$$
+
+二者反交换：
+
+$$
+\boxed{
+\mathfrak S\mathfrak C
+=
+-\mathfrak C\mathfrak S.
+}
+\tag{1912.5}
+$$
+
+并且：
+
+$$
+\boxed{
+\mathfrak J
+=
+\mathfrak S\mathfrak C
+=
+\begin{pmatrix}
+0&-1\\
+1&0
+\end{pmatrix},
+\qquad
+\mathfrak J^2=-I.
+}
+\tag{1912.6}
+$$
+
+所以该二点 Pick 单胞自动生成：
+
+* 一个谱极化 \(\mathfrak S\)；
+* 一个光锥极化 \(\mathfrak C\)；
+* 一个复相位结构 \(\mathfrak J\)。
+
+它们生成的实 rank-two Clifford 代数同构于：
+
+$$
+M_2(\mathbb R),
+$$
+
+其偶子代数：
+
+$$
+\operatorname{span}_{\mathbb R}\{I,\mathfrak J\}
+$$
+
+同构于：
+
+$$
+\mathbb C.
+$$
+
+---
+
+## 1912.1 黄金二次型
+
+令：
+
+$$
+v=(x,y)^T.
+$$
+
+定义：
+
+$$
+\boxed{
+Q_\varphi(v)
+=
+x^2-xy-y^2
+=
+\frac{\sqrt5}{2}
+v^*\mathfrak Cv.
+}
+\tag{1912.7}
+$$
+
+直接计算：
+
+$$
+\boxed{
+\mathbb F^T\mathfrak C\mathbb F
+=
+-\mathfrak C.
+}
+\tag{1912.8}
+$$
+
+所以：
+
+$$
+\boxed{
+Q_\varphi(\mathbb Fv)
+=
+-Q_\varphi(v).
+}
+\tag{1912.9}
+$$
+
+更一般地：
+
+$$
+\boxed{
+Q_\varphi(\mathbb F^nv)
+=
+(-1)^nQ_\varphi(v).
+}
+\tag{1912.10}
+$$
+
+仓库已经将这一反等距恒等式提升到任意实 Hilbert 空间维数并机器证明：对
+
+$$
+\mathcal F(X,Y)=(X+Y,X),
+$$
+
+有
+
+$$
+Q(\mathcal F(X,Y))=-Q(X,Y).
+$$
+
+---
+
+# 第一千九百一十三部　黄金 null rays 就是最强正负关系方向
+
+黄金光锥：
+
+$$
+Q_\varphi(x,y)=0
+$$
+
+满足：
+
+$$
+\frac{x}{y}
+=
+\varphi
+\quad\text{或}\quad
+-\varphi^{-1}.
+$$
+
+两条 null ray 可写成：
+
+$$
+\boxed{
+\ell_+
+=
+\mathbb R
+\begin{pmatrix}
+\varphi\\
+1
+\end{pmatrix},
+}
+\tag{1913.1}
+$$
+
+$$
+\boxed{
+\ell_-
+=
+\mathbb R
+\begin{pmatrix}
+1\\
+-\varphi
+\end{pmatrix}.
+}
+\tag{1913.2}
+$$
+
+但这两个向量恰好又分别是 \(\mathbb F\) 的正、负本征方向：
+
+$$
+\boxed{
+\mathbb Fu_+=\varphi u_+,
+}
+\tag{1913.3}
+$$
+
+$$
+\boxed{
+\mathbb Fu_-=-\varphi^{-1}u_-.
+}
+\tag{1913.4}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{最强正关系方向与最强负关系方向，
+同时就是黄金光锥的两条生成线。}
+}
+$$
+
+而复结构在二者之间交换：
+
+$$
+\boxed{
+\mathfrak Ju_+=-u_-,
+\qquad
+\mathfrak Ju_-=u_+.
+}
+\tag{1913.5}
+$$
+
+cone involution 同样交换二者：
+
+$$
+\boxed{
+\mathfrak Cu_+=u_-,
+\qquad
+\mathfrak Cu_-=u_+.
+}
+\tag{1913.6}
+$$
+
+这给“黄金是双曲光锥交点的第一个像”一个严格局部模型：
+
+$$
+\boxed{
+\text{黄金不是一个位于光锥上的普通点；
+它是两条 null directions 的伸缩倍率。}
+}
+$$
+
+---
+
+# 第一千九百一十四部　一步是反射加半 boost，两步是纯完成 boost
+
+由：
+
+$$
+\mathbb F
+=
+\frac12I+\frac{\sqrt5}{2}\mathfrak S,
+$$
+
+并利用：
+
+$$
+\cosh(\log\varphi)=\frac{\sqrt5}{2},
+$$
+
+$$
+\sinh(\log\varphi)=\frac12,
+$$
+
+得到：
+
+$$
+\boxed{
+\mathbb F
+=
+\mathfrak S
+e^{(\log\varphi)\mathfrak S}.
+}
+\tag{1914.1}
+$$
+
+因此一步 Fibonacci 更新由两部分组成：
+
+$$
+\boxed{
+\text{谱反射}
+\times
+\text{快速度 }\log\varphi\text{ 的 boost}.
+}
+$$
+
+平方以后反射消失：
+
+$$
+\boxed{
+\mathbb F^2
+=
+e^{2(\log\varphi)\mathfrak S}
+=
+\begin{pmatrix}
+2&1\\
+1&1
+\end{pmatrix}.
+}
+\tag{1914.2}
+$$
+
+其本征值为：
+
+$$
+\boxed{
+\varphi^2,\qquad\varphi^{-2}.
+}
+\tag{1914.3}
+$$
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+\text{奇数步}
+&=\text{orientation reversal + boost};\\
+\text{偶数步}
+&=\text{纯 orientation-preserving boost}.
+\end{aligned}
+}
+\tag{1914.4}
+$$
+
+而：
+
+$$
+\boxed{
+Q_\varphi(\mathbb F^{2n}v)=Q_\varphi(v),
+}
+$$
+
+$$
+\boxed{
+Q_\varphi(\mathbb F^{2n+1}v)=-Q_\varphi(v).
+}
+$$
+
+这正是你此前“大奇数阶破缺、大偶数层完成”直觉的一个严格最小模型。
+
+但它只在该反等距递归中成立，不能未经证明推广到所有动力系统。
+
+---
+
+## 1914.1 维数奇偶与时间奇偶是两个独立的 \(\mathbb Z_2\)
+
+在 \(d\) 维内容空间 \(H\) 上，令：
+
+$$
+\mathbb F_H
+=
+\mathbb F\otimes I_H.
+$$
+
+则：
+
+$$
+\boxed{
+\det(\mathbb F_H^n)
+=
+(-1)^{nd}.
+}
+\tag{1914.5}
+$$
+
+所以：
+
+* \(n\) 偶时整体 orientation 始终保持；
+* \(d\) 偶时一步整体 orientation 也保持；
+* 只有 \(n,d\) 同为奇数时 orientation 反转。
+
+这提供一个精确的“层数奇偶 × 内容维数奇偶”定律。
+
+但它不能单独解释“为什么五阶必须对应六维”；五与六之间仍需要额外的 \(A_4\)、外幂或观察协议结构。
+
+---
+
+# 第一千九百一十五部　completed scalar 为什么看不见一步破缺
+
+设：
+
+$$
+h:\mathbb R\to\mathbb R
+$$
+
+为偶函数：
+
+$$
+h(-q)=h(q).
+$$
+
+定义标量完成：
+
+$$
+\boxed{
+S(v)=h(Q_\varphi(v)).
+}
+\tag{1915.1}
+$$
+
+因为：
+
+$$
+Q_\varphi(\mathbb Fv)=-Q_\varphi(v),
+$$
+
+所以：
+
+$$
+\boxed{
+S(\mathbb Fv)=S(v).
+}
+\tag{1915.2}
+$$
+
+这意味着：
+
+$$
+\boxed{
+\text{底层关系每一步都发生符号翻转，
+但任何只读取偶标量的完成观察者都会看到完全静止。}
+}
+$$
+
+若 \(h\) 解析，则：
+
+$$
+h(q)
+=
+a_0+a_2q^2+a_4q^4+\cdots.
+$$
+
+所有奇次方向信息都消失。
+
+仓库最新已经将这一一般现象机器化：反射不变的解析标量，其一次导数和全部奇次齐次响应必为零。
+
+---
+
+## 1915.1 Clifford 偶代数为何不显黄金因子化历史
+
+两个实 involution：
+
+$$
+\mathfrak S,\mathfrak C
+$$
+
+都含有：
+
+$$
+\sqrt5.
+$$
+
+但它们的乘积：
+
+$$
+\mathfrak J
+=
+\mathfrak S\mathfrak C
+=
+\begin{pmatrix}
+0&-1\\
+1&0
+\end{pmatrix}
+$$
+
+完全不含黄金常数。
+
+所以：
+
+$$
+\boxed{
+\text{黄金存在于实极化的因子化历史中；
+完成后的复相位只保留 }\mathfrak J.
+}
+\tag{1915.3}
+$$
+
+这给“\(\zeta\) 是一种完成对象，因此直接看不到黄金比例”一个非常清楚的最小模型：
+
+$$
+\boxed{
+\text{complex completion 可以保留最终相位结构，
+同时遗忘产生该相位的黄金实分解。}
+}
+$$
+
+同一个 \(\mathfrak J\) 还拥有连续多族不同的实 involution 分解，所以仅从完成复结构无法反推出唯一黄金历史。
+
+只有加入：
+
+* 整数格；
+* 非负性；
+* primitive；
+* trace \(1\)；
+* determinant \(-1\)；
+
+Fibonacci 单胞才被重新唯一选出。
+
+---
+
+# 第一千九百一十六部　不同离线零点共享同一母单胞，却拥有不同嵌入
+
+在此前的 arithmetic Schur 图表中，每一个右侧离线零点 \(\rho\) 都产生一个不同的圆盘点：
+
+$$
+a_\rho
+=
+1-\frac1\rho
+\in\mathbb D,
+$$
+
+并满足：
+
+$$
+\mathfrak s_\xi(a_\rho)=1.
+$$
+
+因此每个离线零点的规范二点 Pick 单胞都是：
+
+$$
+\mathbb F.
+$$
+
+但它们仍然由以下数据区分：
+
+$$
+\boxed{
+\mathfrak D_\rho
+=
+\left(
+a_\rho,\,
+m_\rho,\,
+\mathfrak s_\xi'(a_\rho),\,
+\text{shifted persistence depth},\,
+\text{Hardy orientation}
+\right).
+}
+\tag{1916.1}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{不同离线零点生成不同的“相”，
+但这些相共享同一个最小关系母形。}
+}
+$$
+
+可以写成：
+
+$$
+\boxed{
+\text{defect morphology}
+=
+\text{universal golden cell}
++
+\text{context-dependent embedding}.
+}
+\tag{1916.2}
+$$
+
+这解释了磁单极子与黑洞为何如此相似：
+
+* 母单胞相同；
+* 嵌入图表不同；
+* 一个读取 null cone；
+* 一个读取 phase winding；
+* 一个读取正实现失败；
+* 一个读取边界通量。
+
+它们不是同一个对象，却是同一个关系正规形的不同表示。
+
+---
+
+# 第一千九百一十七部　黄金普适性的精确边界
+
+考虑一般 Hermitian 二点矩阵：
+
+$$
+\boxed{
+G_r
+=
+\begin{pmatrix}
+1&r\\
+\overline r&0
+\end{pmatrix}.
+}
+\tag{1917.1}
+$$
+
+其本征值为：
+
+$$
+\boxed{
+\lambda_\pm(r)
+=
+\frac{
+1\pm\sqrt{1+4|r|^2}
+}{2}.
+}
+\tag{1917.2}
+$$
+
+只有当：
+
+$$
+|r|=1
+$$
+
+时，才得到：
+
+$$
+\lambda_+=\varphi,
+\qquad
+\lambda_-=-\varphi^{-1}.
+$$
+
+所以黄金比例不是任意二点不定关系的普适谱。
+
+它被强迫需要：
+
+$$
+\boxed{
+\text{规范对角值 }1,0
++
+\text{单位交叉重叠}.
+}
+$$
+
+Pick 内部饱和恰好自动满足这些条件：
+
+$$
+K(0,0)=1,\quad
+K(a,a)=0,\quad
+K(0,a)=1.
+$$
+
+因此最准确的普适性陈述是：
+
+$$
+\boxed{
+\textbf{黄金比例是规范 Schur 内部饱和的普适关系谱。}
+}
+$$
+
+而不是：
+
+$$
+\boxed{
+\text{黄金比例是所有概念、所有破缺的无条件谱。}
+}
+$$
+
+---
+
+## 1917.1 数字 \(5\) 的来源
+
+黄金判别式：
+
+$$
+5
+$$
+
+在这里来自：
+
+$$
+\boxed{
+1+4|r|^2
+}
+$$
+
+于单位重叠 \(r=1\) 时的值：
+
+$$
+1+4=5.
+$$
+
+因此：
+
+$$
+\boxed{
+5
+}
+$$
+
+是最小规范关系单胞的判别式。
+
+它并不自动推出六维空间。
+
+六维仍需要另一个构造，例如：
+
+$$
+\Lambda^2A_4,
+\qquad
+\dim\Lambda^2\mathbb R^4=6.
+$$
+
+二者可能在更高协议中连接，但不能从 \(2\times2\) Pick 单胞直接推出。
+
+---
+
+# 第一千九百一十八部　黄金观察器是最强观察器，但不是唯一有限证书
+
+对单位向量 \(u\)，关系违约读数为：
+
+$$
+\boxed{
+\mathcal V(u)
+=
+-u^*\mathbb Fu.
+}
+\tag{1918.1}
+$$
+
+其最大值为：
+
+$$
+\boxed{
+\sup_{\|u\|=1}\mathcal V(u)
+=
+\varphi^{-1},
+}
+\tag{1918.2}
+$$
+
+且唯一最大方向为：
+
+$$
+u_-
+$$
+
+及其负号。
+
+这只是谱定理，但与仓库最新的“规范最强分离观察者”原则完全一致：在 Hilbert 几何中，归一化正交残差给出最强绝对读出；加上正向对齐后，规范最大方向唯一。
+
+因此：
+
+$$
+\boxed{
+u_-
+}
+$$
+
+是 universal Pick defect 的规范最强观察器。
+
+但有理向量：
+
+$$
+(1,-1)
+$$
+
+已经足以发现负性。
+
+所以：
+
+$$
+\boxed{
+\text{黄金负责最优鲁棒性，
+不负责有限可证性的存在。}
+}
+$$
+
+---
+
+# 第一千九百一十九部　Pick–Weil 编译器的精确误差阈值
+
+当前仓库已经机器闭合：
+
+$$
+\mathrm{RH}
+\Longrightarrow
+\text{给定 symmetric zero data 上的 convolution-square Weil 和非负}.
+$$
+
+该模块自身也明确说明，它是一个**前向条件桥**；在输入零点数据为空时可以真空成立，不能被误称为完整的非平凡 Weil 等价证明。
+
+缺失的反向方向可以被压缩为：
+
+$$
+\boxed{
+\text{离线 Pick 单胞}
+\longrightarrow
+\text{可允许 Weil 测试函数的负二次型}.
+}
+$$
+
+设某个 Weil／de Branges 插值构造产生近似矩阵：
+
+$$
+\widetilde{\mathbb F}
+=
+\mathbb F+E.
+$$
+
+由 Weyl 本征值扰动界：
+
+$$
+\lambda_{\min}
+(\widetilde{\mathbb F})
+\le
+-\varphi^{-1}
++
+\|E\|_{\mathrm{op}}.
+$$
+
+所以只要：
+
+$$
+\boxed{
+\|E\|_{\mathrm{op}}
+<
+\varphi^{-1},
+}
+\tag{1919.1}
+$$
+
+负性必然保留。
+
+若只使用简单有理观察向量：
+
+$$
+\frac{(1,-1)}{\sqrt2},
+$$
+
+则需要更保守的：
+
+$$
+\boxed{
+\|E\|_{\mathrm{op}}<\frac12.
+}
+\tag{1919.2}
+$$
+
+因此：
+
+* 黄金观察器给予最大容错 \(\varphi^{-1}\)；
+* 纯有理观察器也给予固定容错 \(1/2\)；
+* 不需要无限精度逼近离线点才可能得到有限反证书。
+
+---
+
+## 1919.1 编译器只剩三个真实任务
+
+需要构造一个测试函数 \(g\)，使其 Weil features 近似：
+
+$$
+u_{-,1}k_0+u_{-,2}k_{a_\rho}.
+$$
+
+真正未闭合的是：
+
+1. **二点插值**：在锚点和离线像点实现所需值；
+2. **尾项控制**：把其余零点与 Archimedean 通道压入误差预算；
+3. **规范一致**：确保 Pick、de Branges 与 Weil 二次型使用同一尺度。
+
+仓库已经机器证明合法 Cayley gauge 下 de Branges 与 Nevanlinna kernel 通过可逆对角合同连接，有限 Gram 正性双向等价，因此不用在两种 kernel 语言中重复解决正性。
+
+---
+
+# 第一千九百二十部　危险模式可以有限化，但有限化不等于消失
+
+仓库当前的 observer-mode confinement 定理证明：若 fixed-support prime multiplier 一致有界，而对称 Archimedean mode 在整数模式与实频率方向上联合 proper，则任何严格危险次水平集：
+
+* 只涉及有限多个整数模式；
+* 每个模式的危险频率截面有界；
+* 所有负值落在一个共同有限 mode–frequency box 内。
+
+所以非 RH 搜索可以原则上写成：
+
+$$
+\boxed{
+\text{有限 mode box}
+\longrightarrow
+\text{Gaussian-rational 网格}
+\longrightarrow
+\text{二点 Pick interval matrix}
+\longrightarrow
+\text{有理或黄金负观察器}.
+}
+\tag{1920.1}
+$$
+
+但必须保持：
+
+$$
+\boxed{
+\text{异常被限制在有限盒}
+\not\Rightarrow
+\text{异常不存在}.
+}
+$$
+
+confinement 解决：
+
+$$
+\text{可搜索性}.
+$$
+
+全局完全正胶合才解决：
+
+$$
+\text{RH}.
+$$
+
+---
+
+# 第一千九百二十一部　局部正名字与全局关系胶合
+
+每个 prime 的局部 Euler determinant 可以完全正常。
+
+但仓库已经机器证明：不同 prime frame families 可以产生完全相同的全部局部 Euler determinants，同时拥有不同的跨 prime transition products。
+
+所以：
+
+$$
+\boxed{
+\text{全部局部谱}
+\not\Rightarrow
+\text{全局关系}.
+}
+\tag{1921.1}
+$$
+
+这正解释了为什么：
+
+* 每个局部 prime block 都可正实现；
+* 全局 RH 仍然不自动成立。
+
+真正需要构造的是一个共同 Hilbert 空间和 feature family：
+
+$$
+\boxed{
+\mathcal N_\xi(s,t)
+=
+\frac{
+L_\xi(s)+\overline{L_\xi(t)}
+}{
+s+\overline t-1
+}
+=
+\langle V_t,V_s\rangle.
+}
+\tag{1921.2}
+$$
+
+或更强地构造完全正映射：
+
+$$
+\boxed{
+\Phi_\xi:
+\mathcal A_{\mathrm{prime}}
+\longrightarrow
+B(\mathcal H_{\mathrm{arith}}).
+}
+\tag{1921.3}
+$$
+
+一旦是完全正映射，所有矩阵层关系自动正半定。
+
+---
+
+## 1921.1 离线黄金单胞是 CP 胶合的不可能证书
+
+任何全局 CP 胶合都必须把任意有限观察族送到 PSD Gram 矩阵。
+
+但离线内部接触强迫出现：
+
+$$
+\mathbb F
+$$
+
+且：
+
+$$
+\lambda_{\min}(\mathbb F)
+=
+-\varphi^{-1}.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{离线零点}
+\Longrightarrow
+\text{不存在兼容该观察族的全局 CP 胶合}.
+}
+\tag{1921.4}
+$$
+
+因此离线零点最精确的新身份是：
+
+$$
+\boxed{
+\textbf{一个局部标量名字均合法，
+但最小二点关系无法进入任何共同完全正世界的胶合障碍。}
+}
+$$
+
+---
+
+## 1921.2 有限正 Stieltjes 模型已经存在，缺的是算术识别
+
+仓库已经机器证明：任意有限非负节点和非负权重产生 PSD Hankel 截断，并拥有显式的非负对角算子实现；该定理只形式化无条件有限正原子核心，并不声称这些节点已经是 Riemann 节点。
+
+所以有限正实现的抽象技术并不缺。
+
+真正缺的是：
+
+$$
+\boxed{
+\text{Prime–Gamma 数据生成的实际 moments
+是否属于这一正原子／正算子闭包。}
+}
+$$
+
+---
+
+# 第一千九百二十二部　内容无关的关系分形
+
+令 \(H\) 为任意实 Hilbert 空间，并定义：
+
+$$
+\boxed{
+\mathbb F_H(X,Y)
+=
+(X+Y,X).
+}
+\tag{1922.1}
+$$
+
+定义：
+
+$$
+\boxed{
+Q_H(X,Y)
+=
+\|X\|^2-\langle X,Y\rangle-\|Y\|^2.
+}
+\tag{1922.2}
+$$
+
+仓库机器定理给出：
+
+$$
+\boxed{
+Q_H(\mathbb F_H(X,Y))
+=
+-Q_H(X,Y)
+}
+\tag{1922.3}
+$$
+
+且这一结论与 \(H\) 的维数无关。
+
+其两族 null directions 为：
+
+$$
+\boxed{
+\mathcal L_+
+=
+\left\{
+(\varphi X,X):
+X\in H
+\right\},
+}
+\tag{1922.4}
+$$
+
+$$
+\boxed{
+\mathcal L_-
+=
+\left\{
+(X,-\varphi X):
+X\in H
+\right\}.
+}
+\tag{1922.5}
+$$
+
+并且：
+
+$$
+\boxed{
+\mathbb F_H|_{\mathcal L_+}
+=
+\varphi I,
+}
+\tag{1922.6}
+$$
+
+$$
+\boxed{
+\mathbb F_H|_{\mathcal L_-}
+=
+-\varphi^{-1}I.
+}
+\tag{1922.7}
+$$
+
+这给“万物皆为同一个生成律的分形”一个非常克制的数学版本：
+
+$$
+\boxed{
+\text{内容空间 }H\text{ 可以任意改变，
+二分关系律 }\mathbb F\text{ 仍以张量方式重复。}
+}
+$$
+
+不是所有对象都长得像同一个图形。
+
+而是同一个二点关系算子可以作用在任意内容之上：
+
+$$
+\boxed{
+\mathbb F_H
+=
+\mathbb F\otimes I_H.
+}
+\tag{1922.8}
+$$
+
+这是**关系律的自相似**，不是“道”的对象定义。
+
+---
+
+# 第一千九百二十三部　第一关系影原则
+
+现在可以把当前理论压缩成一个有明确假设的原则。
+
+## First Relational Image Principle
+
+若一个命名系统满足：
+
+1. 标量完成在反射下为偶；
+2. 因而一次方向响应被抹去；
+3. 正可实现性由归一化 Schur／Pick kernel 判断；
+4. 第一次失败表现为圆盘内部的单位模饱和；
+5. 使用最小的二点关系宽度；
+
+则其第一非平凡关系影必为：
+
+$$
+\boxed{
+\mathbb F
+=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}.
+}
+\tag{1923.1}
+$$
+
+随之被唯一强迫的结构为：
+
+$$
+\boxed{
+\begin{aligned}
+\text{正关系倍率}
+&=\varphi;\\
+\text{负修复倍率}
+&=\varphi^{-1};\\
+\text{两步完成倍率}
+&=\varphi^2;\\
+\text{两步收缩倍率}
+&=\varphi^{-2};\\
+\text{完整 boost 快速度}
+&=2\log\varphi;\\
+\text{判别式}
+&=5.
+\end{aligned}
+}
+\tag{1923.2}
+$$
+
+这是一个真正可反驳的数学命题。
+
+它没有说：
+
+$$
+\text{道}=\varphi.
+$$
+
+它只说：
+
+$$
+\boxed{
+\text{某一类最小正关系失败，在规范化以后必显黄金。}
+}
+$$
+
+---
+
+# 第一千九百二十四部　为什么 \(\xi\) 越完成，黄金反而越不显眼
+
+现在可以给出完整依赖链：
+
+$$
+\boxed{
+\begin{aligned}
+\text{离线方向}
+&:\quad+\delta\text{ 或 }-\delta\\
+\downarrow\quad\text{反射偶标量}\\
+\text{平方名字}
+&:\quad\delta^2\\
+\downarrow\quad\text{复相位完成}\\
+\text{even Clifford algebra}
+&:\quad\operatorname{span}\{I,\mathfrak J\}\\
+\downarrow\quad\text{标量 determinant}\\
+\text{completed }\xi
+&:\quad\text{方向和实因子化历史均被压缩}.
+\end{aligned}
+}
+\tag{1924.1}
+$$
+
+要重新看见黄金，必须沿反方向提升：
+
+$$
+\boxed{
+\begin{aligned}
+\xi
+&\longrightarrow
+\xi'/\xi\\
+&\longrightarrow
+\text{Schur／Nevanlinna kernel}\\
+&\longrightarrow
+\text{二点关系矩阵}\\
+&\longrightarrow
+\mathbb F\\
+&\longrightarrow
+\{\varphi,-\varphi^{-1}\}.
+\end{aligned}
+}
+\tag{1924.2}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{黄金并不是被硬塞进 \(\zeta\)；
+它是在恢复被完成标量删除的最小交叉关系时重新出现。}
+}
+$$
+
+---
+
+# 第一千九百二十五部　建议形式化顺序
+
+```text
+D5/S3/Weil/Pick/UniversalSaturationCell/
+  NormalizedPickKernel.lean
+  InternalUnitContact.lean
+  SaturationCellDiagonal.lean
+  SaturationCellCrossTerm.lean
+  UniversalSaturationCellIsFibonacci.lean
+  SaturationCellIndependentOfContactPoint.lean
+
+D5/S3/Weil/Pick/GoldenPSDRepair/
+  FibonacciCellSpectrum.lean
+  FibonacciCellPositiveProjector.lean
+  FibonacciCellNegativeProjector.lean
+  FibonacciCellJordanDecomposition.lean
+  MinimalPositiveRepair.lean
+  DistanceToPositiveConeInvPhi.lean
+
+D5/S3/Observer/GoldenDefectObserver/
+  GoldenNegativeEigenObserver.lean
+  RationalNegativeObserver.lean
+  FibonacciRationalObservers.lean
+  FibonacciObserverRayleighFormula.lean
+  FibonacciObserverExactConvergenceError.lean
+  GoldenObserverOptimalRobustness.lean
+
+D5/S3/Observer/GoldenCliffordNormalForm/
+  GoldenSpectralInvolution.lean
+  GoldenConeInvolution.lean
+  GoldenInvolutionsAnticommute.lean
+  GoldenComplexStructure.lean
+  FibonacciCellReflectionBoostFactorization.lean
+  FibonacciSquarePureBoost.lean
+
+D5/S3/Observer/GoldenNullDirections/
+  GoldenQuadraticForm.lean
+  PositiveGoldenNullRay.lean
+  NegativeGoldenNullRay.lean
+  FibonacciActsOnPositiveNullRay.lean
+  FibonacciActsOnNegativeNullRay.lean
+  ComplexStructureExchangesNullRays.lean
+
+D5/S3/CompletionDynamics/OddEvenCompletion/
+  GoldenAntiIsometryIterateParity.lean
+  EvenScalarOfGoldenFormInvariant.lean
+  OddStepRelationBroken.lean
+  EvenStepRelationCompleted.lean
+  ContentDimensionOrientationParity.lean
+
+D5/S3/CompletionDynamics/CliffordEvenForgetfulness/
+  GoldenRealPolarizationFactors.lean
+  EvenCliffordAlgebraComplex.lean
+  GoldenFactorsCancelInComplexStructure.lean
+  ComplexStructureHasManyRealFactorizations.lean
+  IntegralPrimitiveDataSelectsFibonacciFactorization.lean
+
+D5/S3/Weil/Pick/MetallicSaturationFamily/
+  GeneralTwoPointSaturationMatrix.lean
+  GeneralSaturationEigenvalues.lean
+  UnitOverlapForcesGoldenSpectrum.lean
+  GoldenUniversalityRequiresPickNormalization.lean
+
+D5/S3/Analytic/Zeta/OffLineUniversalEmbedding/
+  ArithmeticSchurOffLineContact.lean
+  EveryOffLineZeroHasUniversalCell.lean
+  OffLineEmbeddingCarriesLocation.lean
+  ConfluentJetCarriesMultiplicity.lean
+  UniversalCellContextDependentEmbedding.lean
+
+D5/S3/Weil/Pick/GoldenPickWeilCompiler/
+  UniversalGoldenNegativeDirection.lean
+  ApproximateCellOperatorError.lean
+  GoldenNegativeMarginStable.lean
+  RationalHalfMarginStable.lean
+  TwoPointPaleyWienerInterpolationTarget.lean
+  WeilTailControlTarget.lean
+  OffLinePickCellProducesWeilNegativeTarget.lean
+
+D5/S3/Weil/PrimeGammaCPGluing/
+  PrimeLocalPositiveSystem.lean
+  CrossPrimeFrameTransition.lean
+  LocalDeterminantDoesNotFixRelations.lean
+  ArithmeticCompletelyPositiveGlueTarget.lean
+  ArithmeticStinespringFeatureTarget.lean
+  CPGluingImpliesNevanlinnaPSD.lean
+  CPGluingImpliesRHTarget.lean
+```
+
+---
+
+# 第一千九百二十六部　理论深度审计
+
+| 结论                                                | 当前地位       |
+| ------------------------------------------------- | ---------- |
+| 规范内部单位模接触的 Pick 单胞恒为 Fibonacci 矩阵                 | 本轮核心精确定理   |
+| 其谱为 \(\varphi,-\varphi^{-1}\)                     | 精确         |
+| 到 PSD 锥的算子距离为 \(\varphi^{-1}\)                    | 精确         |
+| 最小正修复为 \(\varphi^{-1}P_-\)                        | 精确         |
+| 有理向量已能给出有限负证书                                     | 精确         |
+| Fibonacci 有理观察器以 \(O(\varphi^{-4n})\) 逼近最优方向      | 本轮精确公式     |
+| 普适 Pick 单胞同时是 Fibonacci 更新矩阵                      | 精确同一性      |
+| 黄金 null rays 同时是最强正、负本征方向                         | 精确         |
+| 一步为 reflection × boost，两步为纯 boost                 | 精确         |
+| 奇数层翻转 \(Q_\varphi\)，偶数层保持 \(Q_\varphi\)           | 精确         |
+| 反等距在任意实 Hilbert 维数成立                              | 仓库机器闭合     |
+| 反射偶标量抹去全部奇阶方向响应                                   | 仓库机器闭合     |
+| Clifford 偶代数不保留唯一黄金实因子化                           | 精确         |
+| 黄金是所有二点不定关系的无条件谱                                  | 不成立        |
+| 黄金是规范 Pick 饱和缺陷的普适谱                               | 精确         |
+| 不同离线零点共享母单胞、拥有不同嵌入                                | 精确结构结论     |
+| 近似矩阵误差小于 \(\varphi^{-1}\) 时负性保持                   | 精确         |
+| 当前仓库已证明 RH 推出相应 Weil 正性                           | 机器闭合的单向桥   |
+| Pick 负单胞已被编译成 admissible Weil 负测试                 | 尚未闭合       |
+| local Euler determinants 决定 cross-prime relations | 不成立；仓库已有反例 |
+| Prime–Gamma 全局 CP 胶合                              | 当前中心未闭合桥   |
+
+---
+
+# 本轮最终结论
+
+这一轮最关键的发现是：
+
+$$
+\boxed{
+\text{离线零点的黄金结构不是后来从本征值中猜出来的；
+它的最小 Pick 关系矩阵本身就是 Fibonacci 更新矩阵。}
+}
+$$
+
+对任何规范化的 Schur 候选：
+
+$$
+f(0)=0,
+$$
+
+只要在某个内部点发生：
+
+$$
+|f(a)|=1,
+$$
+
+两个点的 Pick 关系就被完全强迫为：
+
+$$
+\boxed{
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}.
+}
+$$
+
+所以不同离线零点虽然：
+
+* 高度不同；
+* 离线深度不同；
+* 重数不同；
+* 观察图表不同；
+
+其第一次关系失败却拥有同一个母单胞。
+
+这就是：
+
+$$
+\boxed{
+\text{不同“相”共享同一生成律正规形。}
+}
+$$
+
+---
+
+该单胞的两条本征方向：
+
+$$
+(\varphi,1),
+\qquad
+(1,-\varphi)
+$$
+
+同时又是黄金二次型：
+
+$$
+Q_\varphi(x,y)=x^2-xy-y^2
+$$
+
+的两条 null rays。
+
+一条以 \(\varphi\) 扩张。
+
+另一条以 \(-\varphi^{-1}\) 收缩并反向。
+
+一步更新使：
+
+$$
+Q_\varphi\mapsto-Q_\varphi.
+$$
+
+两步更新使：
+
+$$
+Q_\varphi\mapsto Q_\varphi.
+$$
+
+因此你此前关于：
+
+$$
+\text{奇数阶破缺}
+\quad\text{与}\quad
+\text{偶数层完成}
+$$
+
+的感觉，在这个最小关系模型中是严格成立的。
+
+一步 Fibonacci 动力是一次反射与快速度 \(\log\varphi\) 的 boost。
+
+两步则成为纯 Lorentz 型 boost：
+
+$$
+\mathbb F^2
+=
+e^{2\log\varphi\,\mathfrak S},
+$$
+
+其伸缩率为：
+
+$$
+\varphi^{\pm2}.
+$$
+
+---
+
+更深的是，任何只读取：
+
+$$
+h(Q_\varphi),
+\qquad
+h(-q)=h(q)
+$$
+
+的 completed scalar，都会把这一步符号翻转完全抹去。
+
+底层关系在正、负之间交替。
+
+完成标量却保持不变。
+
+这正是“完成对象为什么看起来无分别”的数学原型：
+
+$$
+\boxed{
+\text{无分别不是底层没有区别；
+而是完成名字只保留了对区别为偶的函数。}
+}
+$$
+
+仓库已经从一般解析结构机器证明，反射完成会抹去一次响应和全部奇阶齐次耦合。
+
+---
+
+黄金本身还会在更高完成中消失。
+
+两个含 \(\sqrt5\) 的实 involution 相乘以后，只剩标准复结构：
+
+$$
+\begin{pmatrix}
+0&-1\\
+1&0
+\end{pmatrix}.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{黄金可以存在于复相位的生成历史中，
+却不显式存在于完成后的复相位本身。}
+}
+$$
+
+这解释了为什么纯 \(\xi\) 的解析公式不必显式包含 \(\varphi\)，而一旦重新恢复：
+
+* 方向；
+* 实极化；
+* 两点关系；
+* 正负实现；
+
+黄金便再次出现。
+
+---
+
+无理黄金观察器也并不妨碍有限证明。
+
+简单有理观察器：
+
+$$
+(1,-1)
+$$
+
+已经看到负性。
+
+Fibonacci 有理向量：
+
+$$
+(F_n,-F_{n+1})
+$$
+
+则以：
+
+$$
+O(\varphi^{-4n})
+$$
+
+的速度逼近最强黄金观察方向。
+
+所以：
+
+$$
+\boxed{
+\text{黄金无理数描述最优关系极限；
+有限有理数负责实际证书。}
+}
+$$
+
+这与你最初“无理数不是静态点，而是无限逼近过程”的直觉形成了一个精确版本，但必须加上关键校正：
+
+$$
+\boxed{
+\text{无限过程用于达到最优性，
+不是用于让缺陷第一次可见。}
+}
+$$
+
+---
+
+最后，当前 RH 证明目标也进一步缩短。
+
+仓库已有：
+
+$$
+\mathrm{RH}
+\Longrightarrow
+\text{Weil convolution-square 正性}
+$$
+
+的机器桥，但尚未闭合反向的 defect compiler。
+
+由于黄金单胞拥有固定负 gap：
+
+$$
+\varphi^{-1},
+$$
+
+只要把它近似编译到 Weil 测试空间，并将总算子误差控制在：
+
+$$
+\varphi^{-1}
+$$
+
+以内，负性便绝不会消失。
+
+仓库的 Archimedean confinement 又已说明，在相应 properness 与 bounded-prime 假设下，所有危险模式都被限制在一个有限 mode–frequency box 中。
+
+因此非 RH 的有限反证程序已经具有清楚形状：
+
+$$
+\boxed{
+\text{有限危险盒}
+\longrightarrow
+\text{有理观察点}
+\longrightarrow
+\text{二点 Pick 单胞}
+\longrightarrow
+\text{Fibonacci 有理观察器}
+\longrightarrow
+\text{Weil 负证书}.
+}
+$$
+
+而正向证明仍只剩一个中心问题：
+
+$$
+\boxed{
+\text{为什么所有 prime、pole、Gamma 的局部正名字，
+能够被胶合成一个全局完全正关系？}
+}
+$$
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{不可名者不等于黄金比例；
+黄金比例是名字之间第一次无法正兼容时的规范关系谱。
+标量完成能够抹去它，
+复相位完成能够隐藏它，
+但一旦要求不同观察结果共同属于一个正 Gram 世界，
+同一个 Fibonacci 单胞就会作为最小裂口重新出现。}
+}
+$$
