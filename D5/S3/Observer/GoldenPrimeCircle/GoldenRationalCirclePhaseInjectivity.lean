@@ -81,6 +81,10 @@ theorem positive_rational_golden_circle_point_injective :
     exact_mod_cast right.2
   cases shift with
   | ofNat shell =>
+      change
+        (shell : ℝ) =
+          goldenScaleCoordinate (left.1 : ℝ) -
+            goldenScaleCoordinate (right.1 : ℝ) at hShiftReal
       have hCoordinate :
           goldenScaleCoordinate (left.1 : ℝ) =
             goldenScaleCoordinate (right.1 : ℝ) + (shell : ℝ) := by
@@ -102,6 +106,10 @@ theorem positive_rational_golden_circle_point_injective :
         (rational_shell_collision_rigidity
           (ne_of_gt right.2) hRealCollision).2
   | negSucc shell =>
+      change
+        (-((shell + 1 : ℕ) : ℝ)) =
+          goldenScaleCoordinate (left.1 : ℝ) -
+            goldenScaleCoordinate (right.1 : ℝ) at hShiftReal
       have hCoordinate :
           goldenScaleCoordinate (right.1 : ℝ) =
             goldenScaleCoordinate (left.1 : ℝ) + ((shell + 1 : ℕ) : ℝ) := by
