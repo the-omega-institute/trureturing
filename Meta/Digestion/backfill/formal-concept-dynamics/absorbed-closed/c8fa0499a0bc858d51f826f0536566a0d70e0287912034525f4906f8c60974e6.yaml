@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:c8fa0499a0bc858d51f826f0536566a0d70e0287912034525f4906f8c60974e6
+  normalized_sha256: sha256:c8fa0499a0bc858d51f826f0536566a0d70e0287912034525f4906f8c60974e6
+cas_ref: sha256:c8fa0499a0bc858d51f826f0536566a0d70e0287912034525f4906f8c60974e6
+coverage_gids:
+  - D5/S3/ConceptDynamics/Contestability/InvisibleDefectUnrepairable.challenge_blind_review_cannot_separate
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Contestability/InvisibleDefectUnrepairable.challenge_blind_review_cannot_separate
+      source_sha256: sha256:c8fa0499a0bc858d51f826f0536566a0d70e0287912034525f4906f8c60974e6
+      target_statement_id: sha256:bb5c09ca1dfc533de339187e515743f42544e2c7e0666dc74a262505a4951b72
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Contestability/InvisibleDefectUnrepairable.challenge_blind_review_cannot_separate
+      definition_sha256: sha256:e263cab8b31f1b801715fdfc1feb3d00eb5972ec23390e239a7954a13b60217d
+      emission_sha256: sha256:427de672c80e297b0386fe6bf96acb7dbc1ae650de03861d2d24243b58b76867
+  unresolved_subitems: []
