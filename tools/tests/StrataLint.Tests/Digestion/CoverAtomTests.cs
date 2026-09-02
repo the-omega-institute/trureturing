@@ -296,7 +296,8 @@ public sealed partial class CoverAtomTests
 
     private static CoverExecution Execute(CoverSpec spec,
         IReadOnlyList<string>? args = null,
-        RawChangeSet? changes = null)
+        RawChangeSet? changes = null,
+        LeanAxiomReport? currentReport = null)
     {
         var inputs = spec.Materialize();
         var currentFiles = DirectoryLedgerTestSupport.Project(inputs.Files);
@@ -311,7 +312,7 @@ public sealed partial class CoverAtomTests
                 changes ?? RawChangeSet.Create(Array.Empty<string>()),
                 CoverWorld.Raw(currentFiles),
                 CoverWorld.Raw(baselineFiles)),
-            new FakeLeanReportSource(inputs.Report),
+            new FakeLeanReportSource(currentReport ?? inputs.Report),
             new FakeScribeEmissionVerifier(inputs.VerifiedEmissions),
             CoverWorld.TimeProvider);
         var effectiveArgs = args

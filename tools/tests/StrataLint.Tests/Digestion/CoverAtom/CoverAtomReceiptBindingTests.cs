@@ -97,6 +97,39 @@ public sealed partial class CoverAtomTests
     }
 
     [Fact]
+    public void CoverWithoutReceiptRejectsGidAmbiguousInCurrentReport()
+    {
+        var spec = new CoverSpec();
+        var inputs = spec.Materialize();
+        var reportFiles = inputs.Report.Files.ToDictionary(
+            pair => pair.Key.Value,
+            pair => pair.Value,
+            StringComparer.Ordinal);
+        var targetPath = spec.ModuleGid + ".lean";
+        var targetReport = reportFiles[targetPath];
+        var targetDeclaration = Assert.Single(targetReport.Declarations);
+        reportFiles[targetPath] = targetReport with
+        {
+            Declarations =
+            [
+                targetDeclaration,
+                targetDeclaration with { Name = "Namespace." + targetDeclaration.Name },
+            ],
+        };
+        var ambiguousReport = LeanAxiomReport.Create(reportFiles);
+
+        var execution = Execute(
+            spec,
+            ["--cover-atom", spec.AtomId, "--gid", spec.Gid, "--base", "baseline"],
+            currentReport: ambiguousReport);
+
+        Assert.False(execution.Result.Success);
+        Assert.Contains("COVER_INVALID", execution.Result.Error, StringComparison.Ordinal);
+        Assert.Contains("resolves to 2 report declarations", execution.Result.Error, StringComparison.Ordinal);
+        Assert.Equal(execution.Before, execution.After);
+    }
+
+    [Fact]
     public void CoverWithoutReceiptRejectsGidThatIsNotClosedInCurrentReport()
     {
         var spec = new CoverSpec
