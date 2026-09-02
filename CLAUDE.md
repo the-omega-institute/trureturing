@@ -255,14 +255,14 @@ worker 的搜索能力是宿主产品默认,仓库无法强制;agent 派发时�
 
 **16. 实施在独立 worktree,主干保持可发布;主检出常驻 dev,merge 才算完成。**
 代码实施与大改在**独立 git worktree**(各自分支)进行,不在主工作树/主干直接堆——这样多路实施可**并行推进**,各自一个 PR,互不污染;主干任何时刻可发布。并行安全由 harness 保证:地址算出(不撞)+ CI required-check(对错机器判)+ SL-022 元层门控。合并回主干走 PR + required-check,不自并。
-**在 worktree 的工作及时提交并同步远程(push),不留长期未提交改动。** 未提交的工作树改动是脆的、无地址的:`git stash` 跨 worktree 全局共享会误叠外来改动;冻结账本 provenance 要求被冻结模块的 blob 已提交可达(未提交 blob 无法 attest);未提交改动易与 rebase/新提交失配、易丢失。故:一个逻辑单元完成即 commit(而非攒一大堆散改动),推分支到远程留痕(工件化,第9条),让 CI/协作/后续 rebase 有确定的内容寻址锚点。
+**在 worktree 的工作及时提交并同步远程(push),不留长期未提交改动。** 工具契约不要求先提交:`ledger-append` 默认经 `repository.ReadCurrentChanges()` 读取相对 HEAD 的未提交工作树 delta,`deposit` / `cover` 只改工作树、不自动提交。未提交的工作树改动仍是脆的、无地址的:`git stash` 跨 worktree 全局共享会误叠外来改动;未提交改动易与 rebase/新提交失配、易丢失。故:一个逻辑单元完成即 commit(而非攒一大堆散改动),推分支到远程留痕(工件化,第9条),让 CI/协作/后续 rebase 有确定的内容寻址锚点。
 **主检出常驻 `dev` 且及时同步;一切工作在 worktree;merge 才算完成(用户 2026-08-15 定)。**
 - **主检出(主工作树)永远停在 `dev`**:不在其上建分支、不改文件、不 checkout 别的分支;它只有一个动作——**及时 `git pull --ff-only origin dev` 同步**(开工前、合并后、派席前各一次)。主检出是**活的基线**(远端 auto-merge 持续推进 dev,主检出随每次同步移动;先例 2026-08-13:据主仓半小时的读数报告了一个 upstream 已删掉的模块),故凡取读数、改文件、写报告都在钉住的 worktree 里做,主检出只用来同步与看 dev。
 - **所有工作——不分大小、不分代码/文档/元层(含改本文件)——一律在独立 worktree 实施**,经 `make worktree`(器律③)。「只改一行」不是例外:例外就是在主检出上堆脏改动的第一步。
 - **worktree 及时清理或复用**:PR 合并即回收该 worktree,或复用它开下一单;不留僵尸 worktree(工具层门 `make -C tools clean-lanes` 列出/回收已可回收的 lane,以 `make -C tools help` 为准)。回收前查两样:分支已 MERGED、树无未提交改动——二者任缺即不回收,回到「及时提交推送」那一款。
 - **走 PR merge 流程,merge 后才算完成**:push → `make pr-open [AUTO_MERGE=1]` → 三 required check 绿 → 显式选择 auto-merge 时自动合入 dev(缺省不 arm,否则由后续显式合并动作落地)→ 同步主检出 → 回收 worktree。**「完成」的唯一判据是该 PR 状态为 MERGED**——PR 已开、CI 已绿、「只差合并」都不是完成,汇报里不得把它们说成完成(第 4 条不冒领);未合并即仍是 open。CLOSED ≠ MERGED:见 CLOSED 须复查 dev 的真实状态,不得当成已合、也不得当成没修。
 *成熟锚*:feature branch / worktree 隔离、trunk-based 的可发布主干、并行开发的冲突避免、频繁提交与推送(small commits, push early)、内容寻址 provenance、definition of done(合并即完成,非「代码写好」)。
-〔守护:**半硬**·并行不撞由 GID 地址代数 + required-check 机器保证;"在 worktree 做 + 及时提交推送"靠 agent 遵此条 + 本授权(本轮先例:全局 stash 误叠、冻结账本未提交 blob 不可达,皆因未及时提交);「主检出常驻 dev」「merge 才算完成」不可 lint,靠对手官评审与本条,硬投影=完成声明须引用 PR 的 MERGED 状态与合入 dev 的提交 SHA〕
+〔守护:**半硬**·并行不撞由 GID 地址代数 + required-check 机器保证;"在 worktree 做 + 及时提交推送"靠 agent 遵此条 + 本授权(本轮先例:全局 stash 因未及时提交而误叠);「主检出常驻 dev」「merge 才算完成」不可 lint,靠对手官评审与本条,硬投影=完成声明须引用 PR 的 MERGED 状态与合入 dev 的提交 SHA〕
 
 **16′. 剥洋葱:一次 PR 只剥一层,层层落地;禁把一个改造攒成一个大 PR(用户 2026-08-29 定)。**
 第 16 条说「merge 才算完成」;本款补上**一次该 merge 多少**。**一个需要多步才能到位的改造,不得攒成一个大 PR,而应剥成有序的层,每层一个 PR 独立落地。** 这不是风格偏好,是与第 19 条禁 `strict` **同一个数学**:dev 在动,大 PR 追不上。**实测(2026-08-29)**:`origin/dev` 近 24h **835 个提交**、近 6h **135 个**、近 1h **11 个**;而本仓近 60 个已合并 PR 的文件数分布是 `min=1 p25=2 中位=5 p75=13 max=233`。一个 65 文件的 PR 在这样的漂移下,从开工到评审结束期间 base 会前进上百个提交,**冲突不是偶然而是必然**。
