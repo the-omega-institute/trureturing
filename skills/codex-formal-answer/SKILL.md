@@ -1,6 +1,6 @@
 ---
 name: codex-formal-answer
-description: Use when answering mathematical, conceptual, philosophical, or metaphysical questions through repository-first scientific reasoning, a clause-complete formal bridge, and an ordinary conversational answer.
+description: Use when answering mathematical, conceptual, philosophical, or metaphysical questions through repository-first scientific reasoning, a clause-complete formal bridge, and an ordinary conversational answer; the formal work stays internal and is shown only when the user asks for it.
 ---
 
 # Codex Formal Answer Workflow
@@ -13,9 +13,19 @@ This repository copy is the single source of truth for `skills/codex-formal-answ
 
 This file is Codex-specific packaging of repository obligations; it has no authority of its own. `docs/develop/spec/golden-ledger-repo-spec.md` is the sole normative specification; `CLAUDE.md` is the invariant frame governing how work is done; and `agents/CONTEXT.md` is the finite-context map and routing aid, not an authority above the specification. Live harness output is the decisive judge of fact about the current tree. If this file disagrees with any of them, they win and this file is the bug.
 
-This skill produces two things. An internal assertion record for the current run always exists, including when no Lean is written. The default public product is an ordinary conversational answer rendered from that record. The internal record carries the clause inventory, `P`/`G`/`S` bridge, premise map, evidence, outcomes, conditions, and derivation; Step 7 directs the public answer to be drafted only from that record and subjects it to a bounded worker audit. That audit reduces leakage but cannot guarantee that natural-language strength never exceeds the register.
+This skill produces two things. An internal assertion record for the current run always exists, including when no Lean is written. The default public product is an ordinary conversational answer rendered from that record; the user sees only that answer unless they ask for the record (see the conversation contract). The internal record carries the clause inventory, `P`/`G`/`S` bridge, premise map, evidence, outcomes, conditions, and derivation; Step 7 directs the public answer to be drafted only from that record and subjects it to a bounded worker audit. That audit reduces leakage but cannot guarantee that natural-language strength never exceeds the register.
 
 codex-formalize owns digestion atoms and their deposit and coverage workflow. This skill owns the user's clause-complete `P`/`G`/`S` bridge, inferential completion, assertion register, and renderer. Do not import freezing, deposit, coverage, receipt-ledger, or truth-DAG publication machinery. Leave a repository mutation only when Step 2 selects a new-`G` compile route and Step 6 retains substantive canonical source.
+
+## Conversation contract
+
+The user talks to this skill as to any ordinary assistant: a question comes in, a plain answer goes out, turn after turn. The whole method below runs between those two events, inside the repository, and stays invisible unless it is asked for. Three modes govern every turn; the first two are alternatives selected by the user's request, and the third always holds:
+
+1. `plain`: the default public product is an ordinary conversational answer rendered from the internal record under Step 7. It carries no `P`/`G`/`S` labels, GIDs, module paths, build receipts, search traces, or outcome vocabulary, and it never says less than the register permits merely to hide the method.
+2. `show-work`: when the user asks to see the reasoning, in any wording, append the current run's internal `record` after the plain answer, verbatim from the Step 1 to Step 6 records: the clause inventory, the `P`/`G`/`S` bridge, the premise map, the search trace, every build command with its exit code, the settlement register with its validity history, and `side_effects`. Never re-narrate the record: disclosure changes what is attached, not what is claimed (`disclosure_preserves_claims`). The record shown is the current run's; do not promise later retrieval.
+3. `in-repository`: the internal process is conducted in the repository worktree, not in prose. Every `formalizable` assertion is written as a Lean file under `D5/` in the current worktree and judged by `make lean` before Step 5: on the reuse route the file is the `S` application of the cited declaration to exact `P`; on the new-`G` route it is `G` together with `S`. Prose that was never compiled yields no formal outcome, and reading a module is not the same act as compiling against it. Whether the file is kept is decided in Step 6, not here.
+
+Each user turn is one run of the state machine. Records of earlier turns in the same conversation are context for Step 1 and Step 2, never a substitute for a current build: a claim carried over from an earlier turn is re-settled from its own evidence in this run or reported as `open`.
 
 ## Read first
 
@@ -36,6 +46,26 @@ codex-formalize owns digestion atoms and their deposit and coverage workflow. Th
 - `gain_difference_self_zero_and_cocycle` - `D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/GainDifferenceCocycle.lean`
 - `dependency_closure_admission_antitone` - `D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/DependencyClosureAdmissionAntitone.lean`
 - `spectrum_commitment_local_settlement` - `D5/S3/ConceptDynamics/EscapeSpectrum/SpectrumCommitmentSettlement.lean`
+
+## Self anchors
+
+The register and renderer that Steps 5 and 7 describe are themselves formalized in this repository, so the skill's own logic is a set of compiled declarations that the skill can cite like any other. Steps 5 and 7 must agree with these declarations: where this prose and the compiled statement differ, the compiled statement is the model and this file is the bug.
+
+- `settle_first_match` - `D5/S3/ConceptDynamics/Answering/AssertionSettlementCeiling.lean`
+- `failed_build_settles_open_or_not_formalized` - `D5/S3/ConceptDynamics/Answering/AssertionSettlementCeiling.lean`
+- `not_formalized_independent_of_build` - `D5/S3/ConceptDynamics/Answering/AssertionSettlementCeiling.lean`
+- `open_permits_only_unsettled` - `D5/S3/ConceptDynamics/Answering/AssertionSettlementCeiling.lean`
+- `formal_claim_requires_successful_build` - `D5/S3/ConceptDynamics/Answering/AssertionSettlementCeiling.lean`
+- `revise_preserves_history_prefix` - `D5/S3/ConceptDynamics/Answering/RegisterValidityHistory.lean`
+- `revise_leaves_exactly_one_active` - `D5/S3/ConceptDynamics/Answering/RegisterValidityHistory.lean`
+- `revise_preserves_other_keys` - `D5/S3/ConceptDynamics/Answering/RegisterValidityHistory.lean`
+- `rendered_takeaway_within_ceiling` - `D5/S3/ConceptDynamics/Answering/AssertionSettlementCeiling.lean`
+- `rendered_formal_claim_is_compiled` - `D5/S3/ConceptDynamics/Answering/AssertionSettlementCeiling.lean`
+- `open_key_blocks_emission` - `D5/S3/ConceptDynamics/Answering/AssertionSettlementCeiling.lean`
+- `disclosure_preserves_claims` - `D5/S3/ConceptDynamics/Answering/AssertionSettlementCeiling.lean`
+- `show_work_exposes_record` - `D5/S3/ConceptDynamics/Answering/AssertionSettlementCeiling.lean`
+
+What these theorems say: the five outcomes are assigned by exhaustive first match; a failed build settles nothing and cannot reclassify a clause; an `open` record permits only the claim that conveys nothing about `P`; every formal-grade claim the ceiling permits, and therefore every one an audited answer conveys, is backed by one successful build; revision keeps exactly one active settlement per assertion key without overwriting the history; and the show-work switch attaches the record without changing the audited claims. What they do not say: they verify no particular answer, they do not decide whether a Lean statement is the user's `P`, and they do not model the competent-reader mapping from prose to takeaways, which remains the Step 7 worker judgment. The self-reference is the ordinary internalization of this repository: a procedure that judges by compiled declarations is itself a compiled declaration one layer up, and the layer above that one is still `open`.
 
 ## State machine
 
@@ -67,7 +97,7 @@ Do not call search complete when output was truncated, a referenced source was u
 
 Invoke the remaining disciplines from `CLAUDE.md` item 5-double-prime here. Bind lookup-copy, blind-residual, budget-envelope, Pareto/gain, and dependency-closure admission to `C`/`F`/`M` route evaluation, and record each application and result; Step 5 owns append-only and local settlement.
 
-Search chooses only the implementation route: reuse one exact compiled declaration, compile one new load-bearing `G`, or produce no Lean. Failed proof, unavailable compiler, elapsed effort, and convenience do not revise Step 1; they leave the internal result unsettled.
+Search chooses only the implementation route: reuse one exact compiled declaration, compile one new load-bearing `G`, or, for a `not-formalizable` record only, produce no Lean. Failed proof, unavailable compiler, elapsed effort, and convenience do not revise Step 1; they leave the internal result unsettled.
 
 Across all routes, record an unavailable required capability with its command and result or an explicit unavailable-state note; never silently treat it as completed work.
 
@@ -95,7 +125,7 @@ Implement the missing composition through this ordered completion:
 2. Use `G` to implement only the missing composition; a conjunction of unrelated hits, a renamed theorem, a conclusion repeated as a hypothesis, or definitions chosen to make the conclusion reflexive is not completion.
 3. Use `S` to apply `G` to exact `P`; for a broad question, separate interpretations and prove their boundary instead of forcing an ambiguous yes/no predicate.
 
-On the reuse route, carry out Step 2's reuse decision and write no new Lean. On the new-`G` compile route only, run `make help`, inspect current project structure, and measure compiler capability with current `make` doors and exit codes; never use a cold bare Lake command. Route the smallest canonical module, prove only the missing composition, and add concrete inhabited examples or countermodels when needed to establish non-vacuity. Compile `G` and any formally graded `S`. On the no-Lean route, write no ornamental definition or scenario wrapper.
+On the reuse route, carry out Step 2's reuse decision: write the `S` application of the reused declaration to exact `P` as `run-local` build evidence in the current worktree, compile it through the current `make` door, and write no new `G`. On the new-`G` compile route only, run `make help`, inspect current project structure, and measure compiler capability with current `make` doors and exit codes; never use a cold bare Lake command. Route the smallest canonical module, prove only the missing composition, and add concrete inhabited examples or countermodels when needed to establish non-vacuity. Compile `G` and any formally graded `S`. On the no-Lean route, which exists only for `not-formalizable` records, write no ornamental definition or scenario wrapper.
 
 Capability failure is not evidence for or against `P`. A failed or unavailable compile leaves the formal result unsettled.
 
@@ -123,7 +153,7 @@ Postcondition: every assertion key has exactly one active record with one outcom
 
 Apply the first matching route and stop at one:
 
-1. `reuse-complete`: one existing declaration already proves the whole `G` or canonical `P`, including every clause and boundary. Cite that `project-source` and stop persistence. Multiple adjacent hits that still require a deduction do not qualify.
+1. `reuse-complete`: one existing declaration already proves the whole `G` or canonical `P`, including every clause and boundary. Record the compiled `S` application from Step 4 in the run record as `run-local` evidence, remove its file, cite that `project-source`, and stop persistence. Multiple adjacent hits that still require a deduction do not qualify.
 2. `discard-thin`: the only new code is scenario-only `S`, an import wrapper, an ornamental definition, or a theorem whose conclusion is assumed. Keep it as `run-local` build evidence only, then remove it.
 3. `persist-synthesis`: a new reusable `G` closes a genuine inferential gap, has nontrivial examples or hypotheses, reuses existing declarations, and compiles without `sorry` or nonstandard axioms. Route it to a canonical module, retain it as `tracked-lean` with a matching canonical `Describe` source that states the model's interpretive and empirical limits there, connect it to the project import graph, and verify it with `make lean`; use `make lean-report` only when the answer needs a machine-readable closure.
 4. `open-compile`: otherwise, including an unavailable compiler, failed elaboration, unresolved model, or nonstandard axiom closure. Preserve the exact source, command, exit code, and diagnostics in the current-run record as `open`; never report the proposition as proved.
@@ -148,7 +178,7 @@ Enforce these scope rules during that audit:
 
 Treat each active record's maximum permitted claim as the drafting ceiling: whenever the competent-reader test identifies an excess, reject and redraft it. The competent-reader takeaway, natural-language entailment, and no-hidden-premise checks are worker judgments, not decidable procedures; this prompt-level audit reduces the leak surface and blocks identified channels, but unbounded pragmatic conveyance means it cannot guarantee strength preservation. There is no lint behind it; do not claim machine-level enforcement.
 
-Default suppression yields when it would hide a material condition, model boundary, unresolved ambiguity, compiler or axiom limitation material to the answer, persistent repository mutation, or an audit record requested for proof review, reproduction, debugging, or challenge. Expose the minimum formal detail the answer needs. When a formal predicate's ordinary-language name differs materially from its formal content, state in ordinary words what the term actually means there; a formal symbol or bare "within the model" does not suffice. Include excluded ordinary readings and material observer, world, and time indices whenever they change the answer. When the user requests the full record, show the current run's record; do not promise indefinite storage or later retrieval.
+Default suppression yields when it would hide a material condition, model boundary, unresolved ambiguity, compiler or axiom limitation material to the answer, persistent repository mutation, or an audit record requested for proof review, reproduction, debugging, or challenge. Expose the minimum formal detail the answer needs. When a formal predicate's ordinary-language name differs materially from its formal content, state in ordinary words what the term actually means there; a formal symbol or bare "within the model" does not suffice. Include excluded ordinary readings and material observer, world, and time indices whenever they change the answer. When the user requests the full record, which is the `show-work` mode of the conversation contract, append the current run's record after the plain answer verbatim; do not promise indefinite storage or later retrieval.
 
 If Step 6 retained source, add one ordinary sentence naming every changed path, whether it was committed, and the plain verification result. This action disclosure is a narrow exception to suppressing proof-provenance paths and receipts. If nothing was written, claim nothing about repository mutation.
 

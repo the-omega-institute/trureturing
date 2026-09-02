@@ -139,7 +139,7 @@ internal static class Program
                 options.RepositoryRoot,
                 plan.ChangedPaths,
                 invocation,
-                candidateSourceIdentities));
+                candidateSourceIdentities), Console.Error);
     }
 
     private static int RunTests(
