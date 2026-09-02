@@ -186,22 +186,22 @@ theorem symmetric_off_line_quartic_spec
       exact Or.inl rfl
     exact hOffLine root hRoot (hLocalized root hRoot)
 
-/-- There exists an entire function with a nonempty zero set invariant under
-reflection and conjugation, while every zero lies off the critical line. This
-same witness refutes the universal implication from full zero-set symmetry to
-critical-line localization. -/
+/-- There exists an entire function with a nonempty zero set that obeys the
+reflection and conjugation functional equations, while every zero lies off the
+critical line. This same witness refutes the universal implication from these
+functional equations to critical-line localization. -/
 theorem symmetric_off_line_entire_exists :
     ∃ F : Complex → Complex,
       Differentiable Complex F ∧
         (∃ s : Complex, F s = 0) ∧
-        (∀ s : Complex, F s = 0 → F (1 - s) = 0) ∧
-        (∀ s : Complex, F s = 0 → F (conj s) = 0) ∧
+        (∀ s : Complex, F (1 - s) = F s) ∧
+        (∀ s : Complex, F (conj s) = conj (F s)) ∧
         (∀ s : Complex, F s = 0 → s.re ≠ criticalAbscissa) ∧
         ¬ (∀ G : Complex → Complex,
           Differentiable Complex G →
           (∃ s : Complex, G s = 0) →
-          (∀ s : Complex, G s = 0 → G (1 - s) = 0) →
-          (∀ s : Complex, G s = 0 → G (conj s) = 0) →
+          (∀ s : Complex, G (1 - s) = G s) →
+          (∀ s : Complex, G (conj s) = conj (G s)) →
           ∀ s : Complex, G s = 0 → s.re = criticalAbscissa) := by
   let centered : Complex[X] := X - C (criticalAbscissa : Complex)
   let quartic : Complex[X] :=
@@ -220,31 +220,22 @@ theorem symmetric_off_line_entire_exists :
     change quartic.eval root = 0
     apply (hRoots root).2
     exact Or.inl rfl
-  have hReflectionZeros : ∀ s : Complex, F s = 0 → F (1 - s) = 0 := by
-    intro s hs
-    change quartic.eval (1 - s) = 0
-    calc
-      quartic.eval (1 - s) = quartic.eval s := by
-        simpa only [quartic, centered] using hReflection s
-      _ = 0 := hs
-  have hConjugationZeros : ∀ s : Complex, F s = 0 → F (conj s) = 0 := by
-    intro s hs
-    change quartic.eval (conj s) = 0
-    calc
-      quartic.eval (conj s) = conj (quartic.eval s) := by
-        simpa only [quartic, centered] using hConjugation s
-      _ = conj 0 := congrArg conj hs
-      _ = 0 := map_zero (starRingEnd Complex)
+  have hReflectionF : ∀ s : Complex, F (1 - s) = F s := by
+    intro s
+    simpa only [F, quartic, centered] using hReflection s
+  have hConjugationF : ∀ s : Complex, F (conj s) = conj (F s) := by
+    intro s
+    simpa only [F, quartic, centered] using hConjugation s
   have hOffLineF : ∀ s : Complex, F s = 0 → s.re ≠ criticalAbscissa := by
     intro s hs
     apply hOffLine s
     simpa only [F, quartic, centered] using hs
-  refine ⟨F, hEntireF, ⟨root, hRoot⟩, hReflectionZeros,
-    hConjugationZeros, hOffLineF, ?_⟩
+  refine ⟨F, hEntireF, ⟨root, hRoot⟩, hReflectionF,
+    hConjugationF, hOffLineF, ?_⟩
   intro hLocalization
   exact hOffLineF root hRoot
-    (hLocalization F hEntireF ⟨root, hRoot⟩ hReflectionZeros
-      hConjugationZeros root hRoot)
+    (hLocalization F hEntireF ⟨root, hRoot⟩ hReflectionF
+      hConjugationF root hRoot)
 
 #print axioms symmetric_off_line_quartic_spec
 #print axioms symmetric_off_line_entire_exists

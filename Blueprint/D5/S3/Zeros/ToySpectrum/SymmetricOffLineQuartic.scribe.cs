@@ -7,8 +7,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Zeros.ToySpectrum;
 internal sealed class SymmetricOffLineQuarticDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "An entire function exists whose nonempty zero set has full reflection and "
-            + "conjugation symmetry while every zero remains off the critical line.",
+        "An entire function exists that obeys the reflection and conjugation functional "
+            + "equations, has a zero, and has every zero off the critical line.",
         H("Symmetric Off-Line Quartic"),
         Blocks(Describe.Lean(
             DescribeId.Create("a-fully-symmetric-off-line-entire-function-exists"),
@@ -22,14 +22,12 @@ internal sealed class SymmetricOffLineQuarticDocument : IScribeDocumentDefinitio
                 Paragraph(Text(
                     "The witness is the centered quartic from the family theorem at unit "
                         + "transverse and vertical displacements. It is complex differentiable "
-                        + "everywhere and has an explicit zero, so the zero-set clauses are not "
-                        + "vacuous.")),
+                        + "everywhere and has an explicit zero.")),
                 Paragraph(Text(
-                    "Reflection invariance and conjugation covariance of the quartic imply "
-                        + "invariance of its zero set under both generators. Every zero has real "
-                        + "part different from the critical abscissa; applying a hypothetical "
-                        + "universal localization implication to the same nonempty zero set gives "
-                        + "the displayed contradiction."))),
+                    "The quartic obeys the reflection identity and conjugation covariance "
+                        + "pointwise. Every zero has real part different from the critical "
+                        + "abscissa; applying a hypothetical universal localization implication "
+                        + "with the same functional equations gives the displayed contradiction."))),
             DescribeRole.Theorem)),
         []));
 
@@ -73,15 +71,11 @@ internal sealed class SymmetricOffLineQuarticDocument : IScribeDocumentDefinitio
         Formula witnessReflection = new Formula.BindMany(
             FormulaQuantifier.ForAll,
             [Bound("s", complex)],
-            Implies(
-                EqualTo(witnessAtS, D(0)),
-                EqualTo(Apply(witness, Seq(D(1), Sp, Minus, Sp, s)), D(0))));
+            EqualTo(Apply(witness, Seq(D(1), Sp, Minus, Sp, s)), witnessAtS));
         Formula witnessConjugation = new Formula.BindMany(
             FormulaQuantifier.ForAll,
             [Bound("s", complex)],
-            Implies(
-                EqualTo(witnessAtS, D(0)),
-                EqualTo(Apply(witness, Call("conj", s)), D(0))));
+            EqualTo(Apply(witness, Call("conj", s)), Call("conj", witnessAtS)));
         Formula witnessOffLine = new Formula.BindMany(
             FormulaQuantifier.ForAll,
             [Bound("s", complex)],
@@ -97,15 +91,11 @@ internal sealed class SymmetricOffLineQuarticDocument : IScribeDocumentDefinitio
         Formula generalReflection = new Formula.BindMany(
             FormulaQuantifier.ForAll,
             [Bound("s", complex)],
-            Implies(
-                EqualTo(generalAtS, D(0)),
-                EqualTo(Apply(general, Seq(D(1), Sp, Minus, Sp, s)), D(0))));
+            EqualTo(Apply(general, Seq(D(1), Sp, Minus, Sp, s)), generalAtS));
         Formula generalConjugation = new Formula.BindMany(
             FormulaQuantifier.ForAll,
             [Bound("s", complex)],
-            Implies(
-                EqualTo(generalAtS, D(0)),
-                EqualTo(Apply(general, Call("conj", s)), D(0))));
+            EqualTo(Apply(general, Call("conj", s)), Call("conj", generalAtS)));
         Formula generalLocalization = new Formula.BindMany(
             FormulaQuantifier.ForAll,
             [Bound("s", complex)],
