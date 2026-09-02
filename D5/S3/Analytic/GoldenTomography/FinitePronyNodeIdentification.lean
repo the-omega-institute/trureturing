@@ -67,7 +67,7 @@ theorem recurrence_window_identifies_node_roots {m : ℕ}
               (∑ degree in candidate.support,
                 candidate.coeff degree * nodes mode ^ degree) := by
         apply Finset.sum_congr rfl
-        intro mode hmode
+        intro mode _
         rw [eval_eq_sum]
         ring
       _ = ∑ mode, ∑ degree in candidate.support,
@@ -75,10 +75,10 @@ theorem recurrence_window_identifies_node_roots {m : ℕ}
               (weights mode *
                 nodes mode ^ ((time : ℕ) + degree)) := by
         apply Finset.sum_congr rfl
-        intro mode hmode
+        intro mode _
         rw [Finset.mul_sum]
         apply Finset.sum_congr rfl
-        intro degree hdegree
+        intro degree _
         rw [pow_add]
         ring
       _ = ∑ degree in candidate.support, ∑ mode,
@@ -90,7 +90,7 @@ theorem recurrence_window_identifies_node_roots {m : ℕ}
             candidate.coeff degree *
               pronyMoment nodes weights ((time : ℕ) + degree) := by
         apply Finset.sum_congr rfl
-        intro degree hdegree
+        intro degree _
         unfold pronyMoment
         rw [Finset.mul_sum]
       _ = 0 := hRecurrence time
