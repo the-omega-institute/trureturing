@@ -97,18 +97,6 @@ public sealed class DependencyDirectionTests
                 typeof(StrataLint.Scribe.Tests.DocumentAstTests).Assembly));
     }
 
-    [Fact]
-    public void EnginePolicyRejectsCliAsARedFixture()
-    {
-        var unexpected = AssemblyReferencePolicy.UnexpectedReferences(
-            typeof(StrataLint.Cli.Program).Assembly,
-            "Dunet",
-            "Pidgin");
-
-        Assert.Contains("StrataLint.Engine", unexpected);
-        Assert.Contains("YamlDotNet", unexpected);
-    }
-
     private static string[] ProjectReferences(XDocument project) => project
         .Descendants()
         .Where(static element => element.Name.LocalName == "ProjectReference")

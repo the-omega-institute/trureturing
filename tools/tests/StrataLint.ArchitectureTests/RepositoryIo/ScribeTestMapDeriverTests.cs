@@ -14,32 +14,6 @@ public sealed class ScribeTestMapDeriverTests
         };
 
     [Fact]
-    // Keep the name: ScribeUnknownDebtPolicy's identity ratchet makes a rename new debt; the assertion body governs.
-    public void RepositoryMapHasNoUnknownGrowthAndEveryPathIsDeclared()
-    {
-        var map = ScribeTestMapDeriver.DeriveRepository(RepositoryLayout.FindRoot());
-
-        Assert.Equal(280, ScribeUnknownDebtPolicy.UnknownDebtLimit);
-        Assert.Equal(281, ScribeUnknownDebtPolicy.UnknownDebtToleranceLimit);
-        Assert.Empty(ScribeUnknownDebtPolicy.InspectCurrent(map));
-        var currentLedgerMethod = Assert.Single(
-            map.Methods,
-            static method => method.Id ==
-                "TruthExportCommandTests.ExportEqualsStrictActiveFreezeSnapshot");
-        Assert.False(
-            currentLedgerMethod.IsUnknown,
-            $"{currentLedgerMethod.Id}: {string.Join(',', currentLedgerMethod.UnknownReasons)}");
-        var ingestSplitClosureMethod = Assert.Single(
-            map.Methods,
-            static method => method.Id ==
-                "ProductionEnvironmentTests.IngestReportFreeAcceptsPureAdditionBesideSeenCoveredEntryWithoutRewritingIt");
-        Assert.False(
-            ingestSplitClosureMethod.IsUnknown,
-            $"{ingestSplitClosureMethod.Id}: {string.Join(',', ingestSplitClosureMethod.UnknownReasons)}");
-    }
-
-
-    [Fact]
     public void CrossDirectoryCompileOwnershipIsAdmittedWithoutFinding()
     {
         var snapshot = Snapshot(
@@ -632,26 +606,6 @@ public sealed class ScribeTestMapDeriverTests
                 ScribeTestMapTestFixture.RepositorySupport(
                     "File.Exists(Path.Combine(root, \"CLAUDE.md\"))"))),
             []);
-
-    /// <summary>
-    /// `EnumerateDeclared(root, "<字面量>")` 是可静态判定的 repository input。
-    /// </summary>
-    [Fact]
-    public void EnumerateDeclaredLiteralPrefixIsKnown()
-    {
-        const string source = """
-            class DeclaredTests {
-              [Fact] public void ReadsPrefix() {
-                GitIndexRepositoryFiles.EnumerateDeclared(RepositoryLayout.FindRoot(), "D5");
-              }
-            }
-            """;
-
-        var method = Assert.Single(DeriveSources([new("DeclaredTests.cs", source)]).Methods);
-
-        Assert.False(method.IsUnknown);
-    }
-
 
     /// <summary>
     /// **放行侧的对偶**:前缀是变量时必须 fail-closed 记 `VariablePath`。

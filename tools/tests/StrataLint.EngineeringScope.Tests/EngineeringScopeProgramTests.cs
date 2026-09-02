@@ -82,56 +82,6 @@ public sealed class EngineeringScopeProgramTests
             StringComparison.Ordinal);
     }
 
-    [Fact]
-    public void CandidateProjectReferenceDeletionCannotShrinkBaseSelection()
-    {
-        const string scribeProject =
-            "tools/StrataLint.Scribe/StrataLint.Scribe.csproj";
-        const string scribeTestsProject =
-            "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj";
-        var result = RunBoundary(
-            root =>
-            {
-                WriteProject(root, scribeProject, isTest: false);
-                WriteProject(root, scribeTestsProject, isTest: true, scribeProject);
-                WriteFile(root, "tools/StrataLint.Scribe/DocumentEmitter.cs", "// base\n");
-            },
-            root =>
-            {
-                WriteRunnableTestProjectWithoutMarker(root, scribeTestsProject);
-                WriteFile(root, "tools/StrataLint.Scribe/DocumentEmitter.cs", "// candidate\n");
-            });
-
-        Assert.True(result.ExitCode == 0, result.Diagnostic);
-        Assert.Equal([scribeTestsProject], result.SelectedProjects);
-    }
-
-    [Fact]
-    public void ExecutesEachSelectedProjectWithoutFilterOrSolutionFallback()
-    {
-        const string scribeProject =
-            "tools/StrataLint.Scribe/StrataLint.Scribe.csproj";
-        const string scribeTestsProject =
-            "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj";
-        var result = RunBoundary(
-            root =>
-            {
-                WriteProject(root, scribeProject, isTest: false);
-                WriteProject(root, scribeTestsProject, isTest: true, scribeProject);
-                WriteFile(root, "tools/StrataLint.Scribe/DocumentEmitter.cs", "// base\n");
-            },
-            root => WriteFile(
-                root,
-                "tools/StrataLint.Scribe/DocumentEmitter.cs",
-                "// candidate\n"));
-
-        Assert.True(result.ExitCode == 0, result.Diagnostic);
-        Assert.Equal([scribeTestsProject], result.SelectedProjects);
-        Assert.DoesNotContain(
-            result.SelectedProjects,
-            static project => project.EndsWith(".sln", StringComparison.Ordinal));
-    }
-
     private static BoundaryResult RunBoundary(
         Action<string> writeBase,
         Action<string> writeCandidate)

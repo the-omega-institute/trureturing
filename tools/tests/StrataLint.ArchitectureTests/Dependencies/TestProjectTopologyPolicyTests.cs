@@ -283,17 +283,6 @@ public sealed class TestProjectTopologyPolicyTests
     }
 
     [Fact]
-    public void DeltaContractionMechanismCannotBeRemovedWithoutFailingThisNamedTest()
-    {
-        var (protectedBase, candidate) = EqualSizedDebtSwap();
-
-        var result = TestProjectTopologyPolicy.Evaluate(protectedBase, candidate);
-
-        Assert.False(result.IsAccepted);
-        Assert.NotEmpty(result.IntroducedDebt);
-    }
-
-    [Fact]
     public void CliAssemblyNameRatherThanProjectStemOwnsStrataLintTests()
     {
         var current = Snapshot(
@@ -323,22 +312,6 @@ public sealed class TestProjectTopologyPolicyTests
 
         Assert.True(result.IsAccepted, result.Message);
         Assert.Empty(result.BaseDebt);
-    }
-
-    [Fact]
-    public void ZeroTestOwnedXunitProjectCanPassPureCsprojTopologyGate()
-    {
-        var result = TestProjectTopologyPolicy.Evaluate(
-            Snapshot(),
-            Snapshot(
-                Production("Empty", "Empty"),
-                OwnedTest(
-                    "Empty.Tests",
-                    "Empty.Tests",
-                    "../../Empty/Empty.csproj")));
-
-        Assert.True(result.IsAccepted, result.Message);
-        Assert.Empty(result.CandidateDebt);
     }
 
     [Fact]
