@@ -1,5 +1,5 @@
 /- GID: D5/S3/Analytic/EulerGerm/GermProductNonvanishingAboveThreeFifths
-   generality: G
+   generality: I
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
