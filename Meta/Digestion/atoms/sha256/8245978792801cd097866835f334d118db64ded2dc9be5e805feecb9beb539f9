@@ -1,0 +1,14 @@
+## 52. Trace–Jet Bridge
+
+```lean
+def TraceJetBridge (H : PrimeConstellation) : Prop := ...
+```
+
+目标分三层：
+
+1. \(k=1\)：回收 classical explicit formula；
+2. \(k=2\)：回收短区间方差／pair-correlation 的有限核版本；
+3. 一般 \(k\)：建立 connected polyspectrum 与 zero \(k\)-level measure 的桥。
+
+---
+

@@ -1,0 +1,12 @@
+### N12　`CumulantOuroboros`
+
+把“衔尾蛇/莫比乌斯”落到严格的：
+
+\[
+\mathcal M=\exp\mathcal K,
+\qquad
+\mathcal K=\log\mathcal M
+\]
+
+和 partition-lattice Möbius inversion，而不是只保留拓扑比喻。
+

@@ -1,0 +1,18 @@
+\[
+\mathcal Z_T(u)
+=
+\sum_a
+m_aw_a
+\left(
+e^{u\delta_a}
++
+e^{-u\delta_a}
+\right).
+\]
+
+显然：
+
+\[
+\mathcal Z_T(-u)=\mathcal Z_T(u).
+\]
+

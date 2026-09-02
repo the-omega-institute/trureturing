@@ -1,0 +1,36 @@
+\[
+\Delta\log|\xi(s)|
+=
+2\pi
+\sum_\rho m_\rho\delta_\rho.
+\]
+
+其单原子电荷是：
+
+\[
+2\pi m_\rho.
+\]
+
+而横向 deficit 是：
+
+\[
+\delta_\rho^{2r}.
+\]
+
+仓库已经反证了“一次全局标量归一化即可把 deficit measure 变成 curvature measure”的朴素桥。
+
+因此本理论坚持：
+
+\[
+\boxed{
+\begin{aligned}
+2\pi m_\rho&=\text{divisor/Riesz charge},\\
+\delta_\rho^{2r}&=\text{transverse displacement moment}.
+\end{aligned}
+}
+\]
+
+二者可以共同进入一个带权测度，但不是同一个量。
+
+---
+

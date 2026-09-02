@@ -1,0 +1,10 @@
+### N3　`TernaryGapCurvature`
+
+在 \(2/4\)-gap 语言中定义：
+
+\[
+\kappa_j\in\{-1,0,+1\},
+\]
+
+并证明模 \(3\) admissibility 等价于 \(\kappa_j\neq0\)。
+

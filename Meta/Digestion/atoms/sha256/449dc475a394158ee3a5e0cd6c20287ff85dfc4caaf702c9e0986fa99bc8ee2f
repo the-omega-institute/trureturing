@@ -1,0 +1,18 @@
+\[
+A_{p,j}
+=
+\{h_1,\ldots,h_j\}\bmod p.
+\]
+
+读入下一个 gap 后更新当前 residue 并扩张集合；若：
+
+\[
+A_{p,j}=\mathbb Z/p\mathbb Z,
+\]
+
+则进入拒绝态。
+
+所有 \(p\le k\) 的自动机直积给出构型的有限 admissibility certificate。
+
+---
+

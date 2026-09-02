@@ -1,0 +1,30 @@
+\[
+\chi_5(a)
+=
+\begin{cases}
+0,&5\mid a,\\
++1,&a\equiv\pm1\pmod5,\\
+-1,&a\equiv\pm2\pmod5.
+\end{cases}
+\]
+
+它对应 \(\mathbb Q(\sqrt5)\) 中：
+
+\[
++1=\text{split},
+\qquad
+0=\text{ramified},
+\qquad
+-1=\text{inert}.
+\]
+
+同时：
+
+\[
+\varphi' = 1-\varphi,
+\qquad
+\varphi\varphi'=-1.
+\]
+
+因此黄金单位本身具有 norm \(-1\)，而模 \(5\) 特征提供自然的 \(-1,0,+1\) 局部通道。
+

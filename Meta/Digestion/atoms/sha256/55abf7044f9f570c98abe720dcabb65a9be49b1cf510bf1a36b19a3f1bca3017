@@ -1,0 +1,26 @@
+## 45. 建议目录
+
+```text
+D5/S1/Depth/ZeckendorfRealThread.lean
+D5/S1/PrimeConstellation/Core.lean
+D5/S1/PrimeConstellation/GoldenGapCurvature.lean
+D5/S1/PrimeConstellation/ModFiveCharacterWord.lean
+
+D5/S3/PrimeConstellation/LocalCorrelationFactor.lean
+D5/S3/PrimeConstellation/AdmissibilityAutomaton.lean
+D5/S3/PrimeConstellation/SubsetCumulant.lean
+D5/S3/PrimeConstellation/ZetaGibbsCorrelationCompletion.lean
+D5/S3/PrimeConstellation/FinitePolyspectrum.lean
+
+D5/S3/Zeros/OrbitJet/KleinOrbitType.lean
+D5/S3/Zeros/OrbitJet/SignedZeckendorfZeroCode.lean
+D5/S3/Zeros/OrbitJet/TransverseCumulants.lean
+D5/S3/Zeros/OrbitJet/PoissonOrbitGraph.lean
+
+D5/X_Frontier/ConstellationZero/CorrelationCompletedXi.lean
+D5/X_Frontier/ConstellationZero/TraceJetBridge.lean
+D5/X_Frontier/ConstellationZero/QuantumOrbitLift.lean
+```
+
+---
+

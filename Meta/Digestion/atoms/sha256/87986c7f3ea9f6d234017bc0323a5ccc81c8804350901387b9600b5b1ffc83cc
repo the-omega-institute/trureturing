@@ -1,0 +1,27 @@
+\[
+S(v)
+=
+\sum_{k\in\operatorname{wdigits}(v)}
+F_{k+1},
+\qquad
+v=
+\sum_{k\in\operatorname{wdigits}(v)}
+F_k,
+\]
+
+以及：
+
+\[
+\beta(v)=S(v)-v\psi,
+\qquad
+\psi=1-\varphi,
+\]
+
+逐项使用：
+
+\[
+F_{k+1}-\psi F_k=\varphi^k
+\]
+
+得到：
+

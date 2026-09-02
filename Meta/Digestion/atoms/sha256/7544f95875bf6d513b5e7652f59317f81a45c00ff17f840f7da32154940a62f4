@@ -1,0 +1,10 @@
+## 14. 反射、反码与点数奇偶
+
+构型反射会逆转 gap word：
+
+\[
+b(H^\vee)=\operatorname{reverse}(b(H)).
+\]
+
+曲率满足：
+

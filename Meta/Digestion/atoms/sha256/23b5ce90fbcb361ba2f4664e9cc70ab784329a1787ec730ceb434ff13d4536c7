@@ -1,0 +1,15 @@
+## 47. 相关完备化 germ
+
+证明对 \(\sigma>1\)：
+
+```lean
+def correlationMoment
+    (sigma : Set.Ioi (1 : ℝ))
+    (H : PrimeConstellation)
+    (A : Finset H) : ℝ
+```
+
+以及所有有限 mixed coefficients 的绝对收敛。
+
+---
+

@@ -1,0 +1,10 @@
+\[
+\boxed{
+\kappa(H^\vee)
+=
+-\operatorname{reverse}(\kappa(H)).
+}
+\]
+
+若模 \(3\) admissibility 迫使 \(b\) 交替，且 gap word 长度为 \(k-1\)，则：
+

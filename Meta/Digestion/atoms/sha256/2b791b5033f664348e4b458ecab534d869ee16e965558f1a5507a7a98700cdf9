@@ -1,0 +1,16 @@
+## 54. Prime constellation atlas
+
+对固定 \(k,D\)：
+
+1. 枚举
+   \[
+   H\subseteq[0,D],\quad 0\in H,\quad |H|=k;
+   \]
+2. 按平移与反射取商；
+3. 计算
+   \[
+   R_p(H),\nu_p(H),L_p(H),\quad p\le P;
+   \]
+4. 保存：
+   - gap Zeckendorf words；
+   

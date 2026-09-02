@@ -1,0 +1,17 @@
+\[
+|\operatorname{Orb}(\rho)|
+=
+\begin{cases}
+4,&\delta\neq0,\ \gamma\neq0,\\
+2,&\delta=0,\ \gamma\neq0,\\
+2,&\delta\neq0,\ \gamma=0,\\
+1,&\delta=\gamma=0.
+\end{cases}
+\]
+
+对经典非平凡 ζ 零点，实轴情形应另由
+\[
+0<\sigma<1\Longrightarrow\zeta(\sigma)\neq0
+\]
+排除。
+
