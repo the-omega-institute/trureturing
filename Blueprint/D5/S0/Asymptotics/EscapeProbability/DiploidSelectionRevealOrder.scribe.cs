@@ -11,12 +11,12 @@ internal sealed class DiploidSelectionRevealOrderDocument : IScribeDocumentDefin
             + "diploid_selection_reveal_order";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Positive heterozygote effect changes the rare-allele signal from second to first order.",
+        "Nonzero heterozygote effect changes the rare-allele signal from second to first order.",
         H("Diploid Selection Reveal Order"),
         Blocks(Describe.Lean(
             DescribeId.Create("diploid-selection-reveal-order"),
             DeclarationHandle.Create(Declaration),
-            H("Complete recessivity is quadratic and positive dominance is linear"),
+            H("Complete recessivity is quadratic and nonzero dominance is linear"),
             StatementSource.FromAuthor(TheoremFormula()),
             AssessedProvenance.FromRepo(),
             Blocks(
@@ -28,8 +28,8 @@ internal sealed class DiploidSelectionRevealOrderDocument : IScribeDocumentDefin
                     "For nonzero s, complete recessivity has the displayed exact change, a "
                         + "cubic remainder after its quadratic leading term, and analytic "
                         + "order two. Under h greater than zero, the exposed change has a "
-                        + "quadratic remainder after its linear leading term and analytic "
-                        + "order one."))),
+                        + "quadratic remainder after its linear leading term. Whenever hs is "
+                        + "nonzero, the selection reveal order is one."))),
             DescribeRole.Theorem)),
         [
             DocumentEdge.Dependency.Create(GidRef.Create(
@@ -124,6 +124,8 @@ internal sealed class DiploidSelectionRevealOrderDocument : IScribeDocumentDefin
         Formula exposedOrder = Call(
             "analyticOrderAt", Call("selectionChange", dominance), zero);
         Formula positiveDominance = Seq(zero, Sp, Lt, Sp, dominance);
+        Formula nonzeroDominanceSelection = Seq(
+            dominanceSelection, Sp, Neq, Sp, zero);
         Formula exposedRemainder = Call(
             "IsBigOAtZero", point,
             Subtract(exposedChange, exposedLeading), pointSquared);
@@ -147,7 +149,7 @@ internal sealed class DiploidSelectionRevealOrderDocument : IScribeDocumentDefin
             Open, positiveDominance, Sp, Rightarrow, Sp,
             exposedRemainder, Close, Sp, Land,
             RowBreak, Grp(),
-            Open, positiveDominance, Sp, Rightarrow, Sp,
+            Open, nonzeroDominanceSelection, Sp, Rightarrow, Sp,
             exposedOrder, Sp, Eq, Sp, one, Close, Dot));
     }
 }
