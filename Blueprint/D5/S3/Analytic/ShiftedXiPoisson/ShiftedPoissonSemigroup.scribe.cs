@@ -47,12 +47,14 @@ internal sealed class ShiftedPoissonSemigroupDocument : IScribeDocumentDefinitio
                     Paragraph(Text(
                         "The canonicalShiftedZeroWindow constructor takes the finite set of all "
                             + "canonical xi zeros with ordinates in (0,T], and analytic order "
-                            + "provides multiplicity. The local library does not exhibit a "
-                            + "concrete zeta zero, so the supporting noncollapse theorem states "
-                            + "the source-grounded window-nonemptiness condition explicitly and "
-                            + "then separates a concrete pair of densities without caller-supplied "
-                            + "zero coordinates. No Riemann-hypothesis or inverse-positivity premise "
-                            + "occurs in either public equality leaf."))),
+                            + "provides multiplicity. Theorem 347.1 is unconditional: it fixes no "
+                            + "window-nonemptiness hypothesis, and the empty window is a legitimate "
+                            + "instance under which both sides reduce to the zero measure and the "
+                            + "identity still holds. The source defines the ordinate window without "
+                            + "asserting that it is nonempty, so no such condition is claimed here. "
+                            + "The retained certificates are the poissonKernel nondegeneracy and the "
+                            + "shiftedPhaseFourier factorization through Q_T. No Riemann-hypothesis "
+                            + "or inverse-positivity premise occurs in either public equality leaf."))),
                 DescribeRole.Theorem))));
 
     private static Formula TheoremFormula()
