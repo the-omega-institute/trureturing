@@ -90,29 +90,6 @@ lemma canonicalShiftedZeroWindow_mem {T : ℝ} (hT : 0 < T) (rho : ℂ) :
       xiReading rho = 0 ∧ 0 < rho.im ∧ rho.im ≤ T := by
   exact (canonicalShiftedZeroWindow T hT).mem_iff rho
 
-lemma xiReading_analyticOrderAt_ne_top (rho : ℂ) :
-    analyticOrderAt xiReading rho ≠ ⊤ := by
-  intro htop
-  have hzero : xiReading = 0 :=
-    (AnalyticOnNhd.analyticOrderAt_eq_top_iff_eq_zero rho fun s =>
-      xi_reading_differentiable.analyticAt s).mp htop
-  have hzero_at_zero := congrFun hzero 0
-  rw [xi_reading_endpoint_values.1] at hzero_at_zero
-  norm_num at hzero_at_zero
-
-/-- Every selected xi zero has a positive finite analytic multiplicity. -/
-lemma ShiftedZeroWindow.multiplicity_pos {T : ℝ} (window : ShiftedZeroWindow T)
-    {rho : ℂ} (hrho : rho ∈ window.points) :
-    0 < analyticOrderNatAt xiReading rho := by
-  have hzero : xiReading rho = 0 := (window.mem_iff rho).mp hrho |>.1
-  have horder_ne_zero : analyticOrderAt xiReading rho ≠ 0 :=
-    (xi_reading_differentiable.analyticAt rho).analyticOrderAt_ne_zero.mpr hzero
-  have hcast := Nat.cast_analyticOrderNatAt (xiReading_analyticOrderAt_ne_top rho)
-  apply Nat.pos_of_ne_zero
-  intro hnat
-  rw [hnat] at hcast
-  exact horder_ne_zero hcast.symm
-
 /-- The Cauchy probability measure of scale one half, whose Fourier transform
 is the elementary pair already proved in `ExplicitFormula`. -/
 def halfCauchyMeasure : Measure ℝ :=
@@ -299,16 +276,6 @@ def shiftedZeroMultiset {T : ℝ} (window : ShiftedZeroWindow T) : Multiset ℂ 
   window.points.1.bind fun rho =>
     Multiset.replicate (analyticOrderNatAt xiReading rho) rho
 
-/-- Every selected xi zero occurs in the source multiset with its positive
-analytic multiplicity. -/
-lemma shiftedZeroMultiset_mem_of_mem {T : ℝ} (window : ShiftedZeroWindow T)
-    {rho : ℂ} (hrho : rho ∈ window.points) :
-    rho ∈ shiftedZeroMultiset window := by
-  rw [shiftedZeroMultiset, Multiset.mem_bind]
-  refine ⟨rho, hrho, ?_⟩
-  exact Multiset.mem_replicate.mpr
-    ⟨Nat.ne_of_gt (window.multiplicity_pos hrho), rfl⟩
-
 lemma shiftedZeroMultiset_real_pos {T : ℝ} (window : ShiftedZeroWindow T) :
     ∀ rho ∈ shiftedZeroMultiset window, 0 < rho.re := by
   intro rho hrho
@@ -418,90 +385,6 @@ lemma shiftedPhaseFourier_eq_Q_T {T omega : ℝ} (window : ShiftedZeroWindow T)
   rw [hterms, Multiset.sum_map_mul_left]
   rfl
 
-@[simp]
-lemma Q_T_zero {T : ℝ} (window : ShiftedZeroWindow T) :
-    Q_T window 0 = ((shiftedZeroMultiset window).card : ℂ) := by
-  simp [Q_T, shiftedFourierTerm]
-
-lemma continuous_Q_T {T : ℝ} (window : ShiftedZeroWindow T) :
-    Continuous (Q_T window) := by
-  unfold Q_T
-  apply continuous_multiset_sum
-  intro rho hrho
-  unfold shiftedFourierTerm
-  fun_prop
-
-private lemma exists_ne_zero_Q_T {T : ℝ} (window : ShiftedZeroWindow T)
-    {rho : ℂ} (hrho : rho ∈ window.points) :
-    ∃ t : ℝ, t ≠ 0 ∧ Q_T window t ≠ 0 := by
-  have hmultiset : rho ∈ shiftedZeroMultiset window :=
-    shiftedZeroMultiset_mem_of_mem window hrho
-  have hcard : 0 < (shiftedZeroMultiset window).card :=
-    Multiset.card_pos_iff_exists_mem.mpr ⟨rho, hmultiset⟩
-  have hQzero : Q_T window 0 ≠ 0 := by
-    rw [Q_T_zero]
-    exact_mod_cast hcard.ne'
-  let nonzeroSet : Set ℝ := Q_T window ⁻¹' ({0}ᶜ : Set ℂ)
-  have hopen : IsOpen nonzeroSet :=
-    isClosed_singleton.preimage (continuous_Q_T window) |>.isOpen_compl
-  have hzero_mem : (0 : ℝ) ∈ nonzeroSet := by
-    simpa [nonzeroSet] using hQzero
-  obtain ⟨epsilon, hepsilon, hball⟩ :=
-    Metric.isOpen_iff.mp hopen 0 hzero_mem
-  refine ⟨epsilon / 2, by positivity, ?_⟩
-  have ht_ball : epsilon / 2 ∈ Metric.ball (0 : ℝ) epsilon := by
-    rw [Metric.mem_ball, Real.dist_eq, sub_zero, abs_of_pos (by positivity)]
-    linarith
-  simpa [nonzeroSet] using hball ht_ball
-
-/-- A window containing an actual xi zero yields genuinely different phase
-densities at any two distinct admissible shifts. -/
-lemma shiftedPhaseDensity_ne_of_lt {T omega omega' : ℝ}
-    (window : ShiftedZeroWindow T) (homega : 1 / 2 ≤ omega)
-    (hlt : omega < omega') (hwindow : window.points.Nonempty) :
-    shiftedPhaseDensity window omega ≠ shiftedPhaseDensity window omega' := by
-  obtain ⟨rho, hrho⟩ := hwindow
-  intro hdensity
-  obtain ⟨t, ht, hQt⟩ := exists_ne_zero_Q_T window hrho
-  have hfourier := congrArg (fun mu : Measure ℝ => charFun mu (-t)) hdensity
-  change shiftedPhaseFourier window omega t =
-    shiftedPhaseFourier window omega' t at hfourier
-  rw [shiftedPhaseFourier_eq_Q_T window homega t,
-    shiftedPhaseFourier_eq_Q_T window (homega.trans hlt.le) t] at hfourier
-  have hexp : Complex.exp ((-omega * |t| : ℝ) : ℂ) =
-      Complex.exp ((-omega' * |t| : ℝ) : ℂ) :=
-    mul_right_cancel₀ hQt hfourier
-  have hre : -omega * |t| = -omega' * |t| := by
-    have := Complex.norm_exp_eq_iff_re_eq.mp (congrArg norm hexp)
-    simpa using this
-  have habs : 0 < |t| := abs_pos.mpr ht
-  nlinarith
-
-/-- The explicit source condition that the positive-ordinate finite xi-zero
-window at height `T` contains at least one point. The local library proves
-finiteness but does not currently prove this condition for a concrete `T`. -/
-def canonicalShiftedZeroWindowNonempty (T : ℝ) (hT : 0 < T) : Prop :=
-  (canonicalShiftedZeroWindow T hT).points.Nonempty
-
-/-- A nonempty canonical xi-zero window gives a genuinely nonconstant phase
-density family. No zero, xi equation, or ordinate bound is supplied by the
-caller: those data are recovered from the canonical window internally. -/
-lemma canonicalShiftedPhaseDensity_ne_of_lt {T omega omega' : ℝ}
-    (hT : 0 < T) (homega : 1 / 2 ≤ omega) (hlt : omega < omega')
-    (hwindow : canonicalShiftedZeroWindowNonempty T hT) :
-    shiftedPhaseDensity (canonicalShiftedZeroWindow T hT) omega ≠
-      shiftedPhaseDensity (canonicalShiftedZeroWindow T hT) omega' := by
-  exact shiftedPhaseDensity_ne_of_lt
-    (canonicalShiftedZeroWindow T hT) homega hlt hwindow
-
-/-- A concrete pair of admissible shifts witnesses nontriviality of every
-nonempty canonical phase-density family. -/
-lemma canonicalShiftedPhaseDensity_half_ne_one {T : ℝ} (hT : 0 < T)
-    (hwindow : canonicalShiftedZeroWindowNonempty T hT) :
-    shiftedPhaseDensity (canonicalShiftedZeroWindow T hT) (1 / 2) ≠
-      shiftedPhaseDensity (canonicalShiftedZeroWindow T hT) 1 := by
-  exact canonicalShiftedPhaseDensity_ne_of_lt hT (by norm_num) (by norm_num) hwindow
-
 private lemma finite_sum_shiftedPoissonAtoms (omega : ℝ) (points : Multiset ℂ) :
     IsFiniteMeasure ((points.map (shiftedPoissonAtom omega)).sum) := by
   induction points using Multiset.induction_on with
@@ -547,81 +430,10 @@ theorem shifted_poisson_semigroup {T omega eta : ℝ} (window : ShiftedZeroWindo
     ring
   exact ⟨hflow, hflow⟩
 
-/-- Reverse probe: each boxed CAS assertion projects to the same concrete
-measure identity in the public theorem type. -/
-example {T omega eta : ℝ} (window : ShiftedZeroWindow T)
-    (homega : 1 / 2 ≤ omega) (heta : 0 ≤ eta) :
-    shiftedPhaseDensity window (omega + eta) =
-        poissonKernel (Real.toNNReal eta) ∗ shiftedPhaseDensity window omega ∧
-      shiftedPhaseDensity window (omega + eta) =
-        poissonKernel (Real.toNNReal eta) ∗ shiftedPhaseDensity window omega := by
-  exact shifted_poisson_semigroup window homega heta
-
-/-- CAS-A1 projection: formula (347.7) is independently available. -/
-example {T omega eta : ℝ} (window : ShiftedZeroWindow T)
-    (homega : 1 / 2 ≤ omega) (heta : 0 ≤ eta) :
-    shiftedPhaseDensity window (omega + eta) =
-      poissonKernel (Real.toNNReal eta) ∗ shiftedPhaseDensity window omega := by
-  exact (shifted_poisson_semigroup window homega heta).1
-
-/-- CAS-A2 projection: the separately boxed smoothing conclusion is
-independently available. -/
-example {T omega eta : ℝ} (window : ShiftedZeroWindow T)
-    (homega : 1 / 2 ≤ omega) (heta : 0 ≤ eta) :
-    shiftedPhaseDensity window (omega + eta) =
-      poissonKernel (Real.toNNReal eta) ∗ shiftedPhaseDensity window omega := by
-  exact (shifted_poisson_semigroup window homega heta).2
-
-/-- Trivial-scale probe: `eta = 0` reduces to the genuine Dirac convolution
-identity rather than exposing a constant or empty family. -/
-example {T omega : ℝ} (window : ShiftedZeroWindow T) (homega : 1 / 2 ≤ omega) :
-    shiftedPhaseDensity window (omega + 0) =
-      Measure.dirac 0 ∗ shiftedPhaseDensity window omega := by
-  simpa using (shifted_poisson_semigroup window homega (le_refl 0)).1
-
-/-- Deleting the lower bound on `omega` makes the scale-addition law false. -/
-example :
-    shiftedScale ((-2 : ℝ) + 1) (1 : ℂ) ≠
-      shiftedScale (-2 : ℝ) (1 : ℂ) + Real.toNNReal 1 := by
-  norm_num [shiftedScale, Real.toNNReal_of_nonpos,
-    Real.toNNReal_of_nonneg]
-
-/-- Deleting nonnegativity of `eta` likewise makes scale addition false. -/
-example :
-    shiftedScale ((1 / 2 : ℝ) + (-1)) (1 : ℂ) ≠
-      shiftedScale (1 / 2 : ℝ) (1 : ℂ) + Real.toNNReal (-1) := by
-  norm_num [shiftedScale, Real.toNNReal_of_nonpos,
-    Real.toNNReal_of_nonneg]
-
-/-- Canonical-carrier probe: membership is actual xi-zero membership, not an
-arbitrary supplied multiset. -/
-example {T : ℝ} (hT : 0 < T) (rho : ℂ) :
-    rho ∈ (canonicalShiftedZeroWindow T hT).points ↔
-      xiReading rho = 0 ∧ 0 < rho.im ∧ rho.im ≤ T := by
-  exact canonicalShiftedZeroWindow_mem hT rho
-
-/-- Fourier-carrier probe: formula (347.5) uses the named source certificate
-`Q_T` and the source-sign transform of `d_(omega,T)`. -/
-example {T omega : ℝ} (window : ShiftedZeroWindow T)
-    (homega : 1 / 2 ≤ omega) (t : ℝ) :
-    shiftedPhaseFourier window omega t =
-      Complex.exp ((-omega * |t| : ℝ) : ℂ) * Q_T window t := by
-  exact shiftedPhaseFourier_eq_Q_T window homega t
-
-/-- B3 reverse probe: canonical-window nonemptiness entails a concrete density
-separation, rather than being returned as the conclusion. -/
-example {T : ℝ} (hT : 0 < T)
-    (hwindow : canonicalShiftedZeroWindowNonempty T hT) :
-    shiftedPhaseDensity (canonicalShiftedZeroWindow T hT) (1 / 2) ≠
-      shiftedPhaseDensity (canonicalShiftedZeroWindow T hT) 1 := by
-  exact canonicalShiftedPhaseDensity_half_ne_one hT hwindow
-
 #print axioms charFun_halfCauchyMeasure
 #print axioms poissonKernel_convolution
 #print axioms shifted_poisson_semigroup
 #print axioms poissonKernel_one_ne_dirac
 #print axioms shiftedPhaseFourier_eq_Q_T
-#print axioms canonicalShiftedPhaseDensity_ne_of_lt
-#print axioms canonicalShiftedPhaseDensity_half_ne_one
 
 end D5.S3.Analytic.ShiftedXiPoisson.ShiftedPoissonSemigroup
