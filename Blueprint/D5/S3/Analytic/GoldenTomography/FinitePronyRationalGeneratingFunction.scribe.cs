@@ -1,6 +1,4 @@
 using static StrataLint.Scribe.DefinitionDsl;
-using static StrataLint.Scribe.FormulaDsl;
-using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.GoldenTomography;
 
@@ -19,7 +17,7 @@ internal sealed class FinitePronyRationalGeneratingFunctionDocument
                         + "FinitePronyRationalGeneratingFunction."
                         + "finite_prony_rational_generating_function"),
                 H("Finite Prony moments sum to their rational resolvents"),
-                StatementSource.FromAuthor(TheoremFormula()),
+                StatementSource.FromLean(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
@@ -44,30 +42,4 @@ internal sealed class FinitePronyRationalGeneratingFunctionDocument
                             + "Hankel operator."))),
                 DescribeRole.Theorem)),
         []));
-
-    private static Formula Call(string name, params Formula[] arguments)
-    {
-        var items = new List<Formula> { Operatorname, Grp(F.Id(name)), Open };
-        for (var index = 0; index < arguments.Length; index++)
-        {
-            if (index > 0) items.AddRange([Comma, Sp]);
-            items.Add(arguments[index]);
-        }
-        items.Add(Close);
-        return Seq([.. items]);
-    }
-
-    private static Formula TheoremFormula()
-    {
-        Formula nodes = F.Id("q");
-        Formula weights = F.Id("m");
-        Formula point = F.Id("z");
-
-        return Disp(Seq(
-            Forall, Sp, nodes, Comma, Sp, weights, Comma, Sp, point, Comma, Sp,
-            Call("finitePronyConvergesAt", nodes, point), Sp, Rightarrow, Sp,
-            Call("finitePronyGeneratingSeries", nodes, weights, point),
-            Sp, Eq, Sp,
-            Call("finitePronyRationalFunction", nodes, weights, point), Dot));
-    }
 }
