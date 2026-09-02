@@ -171,9 +171,9 @@ theorem normalized_diagonal_reads_mass_and_support
       (atomicSupportKernel mass support).value
         (normalizedUpperSample support) (normalizedUpperSample support) =
         ((mass * support : ℝ) : ℂ) ∧
-      ((atomicSupportKernel mass support).value
+      (((atomicSupportKernel mass support).value
         (normalizedUpperSample support) (normalizedUpperSample support)).re < 0 ↔
-        support < 0 := by
+        support < 0) := by
   have hfeature := stieltjes_feature_normalized_upper_sample support
   have hmassValue :
       (atomicMassKernel mass support).value
