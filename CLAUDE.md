@@ -113,6 +113,51 @@ import 只许向下;**投影不当骨骼**——文档、书、论文都是图�
 *成熟锚*:有向无环图(DAG)架构、依赖倒置原则、承重结构与装饰的分离、形式化优先(formalization-first)、文献引用 vs 结构绑定之别、自动编号(LaTeX theorem counters 之于手写编号)。
 〔守护:**硬+软**·SL-001 向下 import 机器强制;理论不当真源靠 Scribe 类型化引用(GID 构造期解析)+ 评审;编号自生成随 Scribe 发射机器化〕
 
+**7′. 理论产出是一条单向链:什么源产什么、什么 PR 落哪几个面、冻结与消化是两个正交状态(用户 2026-09-02 定)。**
+第 7 条定了**方向**(理论卷只是参考输入,Lean 形式化才是唯一真源);本款把那条方向**逐环写死**,使任一 PR 都能被读者与机器同时定位在链上的哪一环。**路径→kind→producer→verifier 的映射不在此复制**——其唯一真源是 `Meta/FILEMAP.toml`(strict loader + `FileMapPolicy` 执法,`FILEMAP-DATA-VERIFIER` 判 `verified_by` 悬空);本款只定**次序、PR 形态与状态语义**,二者若冲突以 FILEMAP 为准(第 6 条一名一址)。
+
+```
+docs/develop/theory/**                       参考输入·卷只增不减,程序对其零知识
+  │ make ingest
+  ├─► Meta/Digestion/atoms/sha256/<atom_id>              atom CAS blob·一经产出不可变
+  └─► Meta/Digestion/backfill/<source_id>/<态>/<atom_id>.yaml   消化账目·三态见下
+  │ 形式化(先库后证,第 11 条)——链上唯一一环不由 make 产出
+  ▼
+D5/<GID 路径>.lean                           数学唯一真源
+  │ 手写 Scribe 定义(叙事 canonical 源)
+  ▼
+Blueprint/D5/<同一 GID 路径>.scribe.cs
+  │ make emit
+  ▼
+Blueprint/D5/<同一 GID 路径>.md              投影·禁手改
+  │ make deposit ATOM_ID=x GID=g
+  ├─► Golden/Frozen/accepted/<event_hash>.json           冻结事件·append-only
+  └─► Meta/Digestion/formalizations/<atom_id>.v1.json    覆盖收据(预登记签名)
+  │ make cover / cover-batch
+  ▼
+backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
+```
+**GID 路径在三处逐段同形**(`D5/….lean` ↔ `Blueprint/D5/….scribe.cs` ↔ `Blueprint/D5/….md`),这是第 6 条"地址由算法算出"的落点:三处对不齐即地址错,不是文件少写了一个。
+
+**三类 PR,面集合封闭(2026-09-02 实测最近 370 个已合并 PR,窗口 08-30..09-02,8 个驱动者)**:
+- **deposit(178/370)**:`D5/*.lean` + `Blueprint/*.scribe.cs` + `Blueprint/*.md` + `Golden/Frozen/accepted/*` [+ `Meta/Digestion/formalizations/*`]。**文件数中位 5**,最常见签名恰为该五件(116/178);另 31 件不带收据(收据另行 cover)。
+- **cover**:同一 `atom_id` 的账目条目由 `residual-open/` 迁入 `absorbed-closed/`,并对齐收据。**最小形两个文件**(实测 #4649)。
+- **ingest**:`docs/develop/theory/**` + `atoms/sha256/*` + `backfill/**/residual-open/*`。
+
+**deposit 与 cover 必是两个 PR——这是机器判,不是惯例。** `DigestionFormalizationPrecommitmentValidator` 要求新增的每条 coverage edge `(atom_id, gid)` 在 **baseline 快照**里已有注册该 gid 的预登记收据,否则判 `coverage pair (…) has no valid base-owned formalization precommitment`。收据须先随 deposit 落进 base,下一个 PR 才能加覆盖边。**实测佐证:178 个 deposit PR 中同时做 `residual-open`→`absorbed-closed` 迁移的,0 个。**
+
+**冻结态与消化态是两个正交状态机,禁互相冒充**:
+- **冻结态(真值侧,二值)**:`Golden/Frozen/accepted/` 中存在该 `statement_id` 的 `Freeze` 事件 ⟺ 已冻结,**永不解冻**(第〇节冻结律;SL-008 append-only diff 守卫)。实测 2,946 条,`event_type` 全为 `Freeze`、`schema_version` 全为 5;payload 承重四项(以 writer 为准):`statement_id`(节点身份)、`declaration_statement_ids`、`descriptor_selector`(指回 `.lean` 路径)、`prerequisite_frozen_node_ids`——**末项就是真值 DAG 的边**,不是元数据。
+- **消化态(账目侧,三值)**:`residual-open`(尚无 GID 覆盖)/ `partial-closed`(子项部分覆盖)/ `absorbed-closed`(覆盖 GID 与收据齐备)。实测 18,291 / 127 / 1,105,atom CAS 19,542,source 28(27 卷 md + 1 个 `.jsonl` 注册表)。
+- **两者不同构,故是两句话**:定理已冻结 **⇏** 其 atom 已 `absorbed-closed`(还差 cover 那一步);atom `absorbed-closed` **⟹** 其 `coverage_gids` 所指声明已冻结。汇报与 PR 说明里把"冻结了"写成"消化了"(或反之)即第 4 条冒领。
+
+**每个理论 PR 的说明须写清三项(承第 9′ 条产地,不另立格式)**:①**形态**(deposit / cover / ingest);②**链上这一环**——哪个 `source_id` 的哪个 `atom_id` → 哪个 GID;③**落地后的状态**——冻结事件的 `event_hash`(deposit),或 atom 由哪态迁到哪态(cover)。判据是"读者能否据此在链上定位这次改动",不是"提没提这几个词"。
+
+**反面即病(如何自查)**:①手改 `Blueprint/**/*.md` —— 它是 `ScribeEmitter` 的投影,改它即造第二真源(第 6 条),正解是改 `.scribe.cs` 后 `make emit`;②手改 `atoms/sha256/*` —— atom 一经产出不可变(第〇节总则「atoms 不删」),勘误走"追加散文 + 追加新 atom";③冻结后原地编辑 `.lean` 想修补 —— 必撞 SL-008,正解是弃分支重做一次 deposit;④deposit PR 里"顺手"把 atom 迁到 `absorbed-closed` —— 见上,`0/178` 是正形而非巧合。
+**多驱动者并行不必分配领域**:地址由 GID 代数算出,天然不撞(第 6 条);同窗口 8 个驱动者、370 个 PR 未见路径争抢。**真正的撞车是两人各证同一命题——那个机器不会红**,故开工前与开 PR 前各查一次本仓已有声明(第 11 条先库后证含搜本仓)。
+*成熟锚*:构建图的产者唯一性(Bazel 每个输出恰有一个 rule)、数据血缘(data lineage)、事件溯源之"事件是真源、读模型可重建"、工作流状态与领域状态分离(workflow state ≠ domain state)、生成物标明产者。
+〔守护:**硬 + 硬投影 + 软,诚实分栏**·**硬**——路径→kind→producer 由 FILEMAP strict loader 与 `FileMapPolicy` 执法;冻结面 append-only 由 SL-008 判;deposit 与 cover 分 PR 由 `DigestionFormalizationPrecommitmentValidator` 的 base-owned 预登记判红(上引判词即其输出)。**硬投影(尚未 lint,记 `open`)**——三类 PR 的面集合可由 changed-path 交集机器判,当前**无此规则**,不得称已执法。**软**——PR 说明三项**不可 lint**,且与第 9′ 条同一个数学:正文在检查后、合并前可编辑,任何 check-time 读取只证明"那一刻有";故**不为它造门**(第 20″ 条),靠对手官评审与第 12 条尸检。按器律⑤,"不可 lint"不构成豁免〕
+
 **8. 生长自相似,裂由压力。**
 **不预建空壳**;抽象只在第二个实例或已证实的压力出现时才上收(通用证明成立才归 `Metallic/`,跨族定理出现才归 `Moduli/`,桶超限才 split)。目录随首个真实工件出生。
 *成熟锚*:YAGNI、演化式架构(evolutionary architecture)、比例约束(不把局部事实立成普遍法)。
