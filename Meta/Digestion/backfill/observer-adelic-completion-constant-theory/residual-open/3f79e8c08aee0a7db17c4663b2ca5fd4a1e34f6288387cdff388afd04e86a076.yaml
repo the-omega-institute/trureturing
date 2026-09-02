@@ -7,3 +7,7 @@ receipts:
   coverage: []
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Missing prerequisite for the whole RH Gram equivalence: D5 search `xiReading|RiemannHypothesis|Hadamard|logarithmic.*derivative|zero.*expansion|Gram` hit CompletedZeta.xiReading, FirstLiCoefficientNormalization, Weil.ZetaCore.Statement, GlobalLogarithmicGaugeCriterion, RiemannPoissonDensity, and finite CriticalLineOscillatorGram, but no theorem deriving the global symmetric xi logarithmic-derivative zero expansion or the exact toric-kernel Gram identity from RH; pinned Mathlib search `RiemannHypothesis|riemannXi|hadamard|logDeriv|logarithmicDerivative|zero.*expansion|RKHS.OfKernel` hit only generic RKHS/local logarithmic-derivative infrastructure and no global xi zero expansion; installed third-party packages plausible, proofwidgets, batteries, Cli, aesop, importGraph, LeanSearchClient, and Qq had no relevant hit; local proof decomposition reaches the absent RH-to-Hadamard-expansion bridge (and the reverse holomorphic-kernel-to-zero-location bridge), while assuming the desired equality would restate the atom."
+    reentry_condition: "Provide frozen Lean theorems deriving the global symmetric Hadamard logarithmic-derivative expansion for xi from the repository's RiemannHypothesis carrier, including convergence/multiplicity control, and deriving the reverse zero-location conclusion from the toric Gram-kernel identity."
+    blocker_class: missing-prerequisite
