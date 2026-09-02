@@ -249,7 +249,7 @@ theorem no_atom_cost_decay
       (fun degree : Nat => cayleyChristoffelCost data w degree)
       atTop (𝓝 0) :=
   by
-    simpa only [cayleyChristoffelCost] using
+    simpa only [cayleyChristoffelCost_eq_christoffelEvaluationCost] using
       finite_measure_no_atom_cost_decay
         (cayleyZeroMeasure data) w supportOnCircle outsideCircle
 
