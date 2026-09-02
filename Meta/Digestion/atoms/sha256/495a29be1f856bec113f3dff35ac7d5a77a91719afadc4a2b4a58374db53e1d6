@@ -1,0 +1,68 @@
+# 第一千四百九十八部　命名视界具有精确的信息分解
+
+假设 \(X\) 有限，并赋予一个全支撑概率测度。
+
+令：
+
+$$
+I=I_F(R),\qquad C=C_F(R).
+$$
+
+因为：
+
+$$
+I\subseteq R\subseteq C,
+$$
+
+对应的商随机变量满足确定性链：
+
+$$
+\boxed{
+Z_I\longrightarrow Z_R\longrightarrow Z_C.
+}
+\tag{1498.1}
+$$
+
+定义预测缺失信息：
+
+$$
+\boxed{
+\mathcal H_{\mathrm{pred}}(R)
+=
+H(Z_I\mid Z_R).
+}
+\tag{1498.2}
+$$
+
+它测量：
+
+> 当前名字还缺少多少未来所必需的区分？
+
+定义遗忘代价：
+
+$$
+\boxed{
+\mathcal H_{\mathrm{forget}}(R)
+=
+H(Z_R\mid Z_C).
+}
+\tag{1498.3}
+$$
+
+它测量：
+
+> 为使名字在动力下稳定，必须再忘掉多少当前区别？
+
+定义总命名视界：
+
+$$
+\boxed{
+\mathcal H_{\mathrm{name}}(R)
+=
+H(Z_I\mid Z_C).
+}
+\tag{1498.4}
+$$
+
+---
+

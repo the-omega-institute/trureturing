@@ -1,0 +1,58 @@
+# 第一千七百三十五部　Clark 观察基改变，分支律不改变
+
+前文已经得到：每一个 phase observer：
+
+$$
+\alpha\in\mathbb T
+$$
+
+都会为 \(K_B\) 选择一个 Clark 正交基：
+
+$$
+\boxed{
+e_1^\alpha,\ldots,e_m^\alpha.
+}
+$$
+
+因此每个 \(\alpha\) 都产生一族 Cuntz generators：
+
+$$
+\boxed{
+S_j^\alpha f
+=
+e_j^\alpha\,(f\circ B).
+}
+\tag{1735.1}
+$$
+
+对另一个 phase observer \(\beta\)，存在酉矩阵：
+
+$$
+U_{\beta\leftarrow\alpha}\in U(m)
+$$
+
+使：
+
+$$
+e_k^\beta
+=
+\sum_{j=1}^m
+U_{\beta\leftarrow\alpha,kj}
+e_j^\alpha.
+$$
+
+于是：
+
+$$
+\boxed{
+S_k^\beta
+=
+\sum_{j=1}^m
+U_{\beta\leftarrow\alpha,kj}
+S_j^\alpha.
+}
+\tag{1735.2}
+$$
+
+---
+

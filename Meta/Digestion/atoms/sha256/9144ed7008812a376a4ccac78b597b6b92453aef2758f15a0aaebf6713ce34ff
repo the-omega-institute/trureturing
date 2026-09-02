@@ -1,0 +1,90 @@
+* 活跃 Poisson flux。
+
+视界：
+
+$$
+q=\delta_\rho
+$$
+
+就是该隐藏通道的条码终点。
+
+临近终点时，Poisson 密度聚焦为边界 Dirac 原子，而总质量保持不变。
+
+所以黑洞式“视界”还可以被严格理解为：
+
+$$
+\boxed{
+\text{隐藏通道在观察深度持久系统中的死亡时间。}
+}
+$$
+
+黄金比例只规定如何离散采样这些终点；它不决定终点本身。
+
+---
+
+最后，RH 的算子目标可以被压缩为：
+
+$$
+\boxed{
+\text{canonical shifted-\(\xi\) boundary state 是否为 Hardy 循环向量？}
+}
+$$
+
+若它循环，则：
+
+$$
+K_{B_q}=0.
+$$
+
+若存在离线零点，则某个 \(q\) 上必有：
+
+$$
+K_{B_q}\neq0,
+$$
+
+并且该隐藏空间会在每一个边界 phase value 下产生一套有限、严格正、可精确采样的 Clark fibre basis。
+
+因此非 RH 不只是“存在一个不可见零点”。
+
+它还必然产生：
+
+$$
+\boxed{
+\text{一族参数化于圆周 phase 的有限正原子采样系统。}
+}
+$$
+
+项目现有的 Cayley–Laguerre tomography 已经能够把相位 moments 编译成因果 Laguerre kernel 与有限窗口估计。
+
+所以新的可执行证明方向是：
+
+$$
+\boxed{
+\text{从 prime–pole–Gamma 数据证明 canonical phase residual
+不存在任何有限正原子 fibre，}
+}
+$$
+
+或者更直接地证明：
+
+$$
+\boxed{
+\overline{\operatorname{span}}
+\{S^nf_q:n\ge0\}
+=
+H^2.
+}
+$$
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{不可名者不等于隐藏空间；
+隐藏空间仍是一个可定义的相。
+真正留下“不可名之迹”的，是：
+任何一个 completed phase name 都只能选择一组基，
+不能成为所有基、所有 lift、所有历史本身。
+RH 则要求，在 Riemann 这一特定完成中，
+连这样的隐藏相位纤维都根本不存在。}
+$$

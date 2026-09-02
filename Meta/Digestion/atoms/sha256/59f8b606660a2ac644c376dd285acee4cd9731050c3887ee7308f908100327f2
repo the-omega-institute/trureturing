@@ -1,0 +1,2 @@
+**边界**:结论中明写——不证明 eulerGerm 是非零 twist、不证明 O-5 分解、不识别 goldenTwist 为 eulerGerm 或 Zqc、不加强 RH;全局等价引理只在原族**全局**逐点非零时成立,窗口版不蕴含它;不 `import` 或调用 `o5_independence`。
+

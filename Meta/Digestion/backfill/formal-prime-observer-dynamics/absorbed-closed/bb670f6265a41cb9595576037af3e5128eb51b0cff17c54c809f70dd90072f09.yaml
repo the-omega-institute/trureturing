@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:bb670f6265a41cb9595576037af3e5128eb51b0cff17c54c809f70dd90072f09
+  normalized_sha256: sha256:bb670f6265a41cb9595576037af3e5128eb51b0cff17c54c809f70dd90072f09
+cas_ref: sha256:bb670f6265a41cb9595576037af3e5128eb51b0cff17c54c809f70dd90072f09
+coverage_gids:
+  - D5/S3/Observer/ProbabilisticClosure/SingleSampleLawNonimplication.single_coupled_sample_does_not_determine_law_or_state
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/ProbabilisticClosure/SingleSampleLawNonimplication.single_coupled_sample_does_not_determine_law_or_state
+      source_sha256: sha256:bb670f6265a41cb9595576037af3e5128eb51b0cff17c54c809f70dd90072f09
+      target_statement_id: sha256:40389951a4ef18933482a4a17addfc5b4270e658a6c43eac21cea496fe285050
+  scribe:
+    - gid: D5/S3/Observer/ProbabilisticClosure/SingleSampleLawNonimplication.single_coupled_sample_does_not_determine_law_or_state
+      definition_sha256: sha256:7bde2c7de6b289070b1f0bb2dcda4a172a5b8ecf2e08e6aa8b521ffcc43b1541
+      emission_sha256: sha256:3b238429d056d857491e31e86ef7fabd9851cad8475fdfd30222d1f6d00322a8
+  unresolved_subitems: []

@@ -1,0 +1,32 @@
+## 路线 B：Arithmetic Hodge–Stinespring completion
+
+直接构造：
+
+$$
+\Delta_t\ge0
+$$
+
+或 completely positive transport \(\Phi_t\)，使：
+
+$$
+\boxed{
+\frac{Q_t(w)}{Q_t(0)}
+=
+\det(I+w\Delta_t^{-1}).
+}
+\tag{1604.1}
+$$
+
+则：
+
+* normal jets 是外幂正迹；
+* connected jets 是 Schatten traces；
+* Hankel matrices 是 Gram；
+* Toeplitz minors 是 Schur 正扇区；
+* 全部零点位于负实平方轴；
+* RH 成立。
+
+该路线比逐项证明无穷多个不等式更结构化。
+
+---
+

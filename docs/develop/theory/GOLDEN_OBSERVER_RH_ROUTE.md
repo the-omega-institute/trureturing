@@ -1709,3 +1709,119 @@ $$\boxed{\ \beta(v{+}1)-\beta(v)\in\{\varphi,\ \varphi^2\}\ }$$
 **边界**:W-B2 是定义义务而非定理义务;其交付物是定义 + 论证 + 相容性引理,重测(W-B3)另行开单。
 
 后续增订继续严格追加于本节之后。
+
+---
+
+# 增订四　W-B3 判决:桥假,结案(B 线全弧收官)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;W-B2 定义席(sci-la88-wb2)与 W-B3 重测席(sci-la89-wb3)均为 codex-cli 单席;orchestrator 亲验各信封、rollout 独立性抽查、两侧读数;零评审席。判决日:2026-09-01/02。
+
+## 一　判决:§二(B) 猜想(桥)= **refuted**(kernel 判死,负向结案)
+
+按增订三预登记的两步走完:
+1. **W-B2(定义,独立论证)**:选定 $((N-1)^2)''(0)$,$N(u)=e^{-u}$,沿账本位移率求值——论证纯内在($\log N$ 仿射故曲率恒零;未平方候选带号非中心能量;范数坐标下到酉轨迹的平方距离是自然局部能量,偶、可加、免校准),先于任何玩具比对固定。机器恒等式 $V(d)=2d^2$;地址 $\rho-\mathrm{mirror}(\rho)$;嵌入 $\mathrm{ofReal}(w)\cdot\delta_\rho$;镜像相容六定理(`D5/S3/Weil/LedgerDeficitSecondVariation`)。
+2. **W-B3(重测,冻结定义字面特化)**:双例开庭——$Z_1=\{3/4,1/4\}$:曲率 $2\pi\,\delta_{i/4}$(质量 $2\pi$)vs 亏损 $\tfrac1{32}\delta_{3/4}+\tfrac1{32}\delta_{1/4}$(质量 $\tfrac1{16}$);$Z_2=\{1,0\}$:曲率 $2\pi\,\delta_{i/2}$ vs 亏损 $\tfrac12\delta_1+\tfrac12\delta_0$(质量 $1$)。`no_global_mass_normalization` 与 `curvature_ledger_bridge_refuted`(`D5/S3/Weil/CurvatureLedgerBridgeRefutation`,std3):$\neg\exists$ 全局常数同时匹配两例($c=2\pi$ 与 $c=32\pi$ 互斥),支撑失配独立成立。
+
+## 二　弃的内容(这不是空手而归)
+
+- **可去混淆已消**:「定义没选对」被 W-B2 的独立论证排除——判死的是**结构盲核**:内部曲率原子的质量是常量 $2\pi\cdot\mathrm{mult}$(计数型,对位移不敏感),账本亏损二阶变分随位移平方变(能量型,对位移二次敏感);二者不是同一个量的两个坐标,任何标量归一都救不回。`off_line_curvature_dipole` 的偶极矩若要成为「账本失衡荷」,须换**非标量**的对应(如位移加权的曲率矩),那是新猜想,须另行预登记。
+- **正资产清单**:B 线全弧沉淀七个冻结真值节点(定义模块六定理 + 桥反驳二定理中的可复用读出),外加一条方法论判例——**盲核的完整处置**:发现词汇缺口(W-B1 blocked)→ 独立定义(W-B2)→ 判死结构(W-B3),每步预登记、每步 kernel 化;「弃一个美的猜想」全程无一步靠语气,全靠读数。
+- **预算记账**:增订三预算「两席轮」如约用尽(W-B1 一轮 + W-B3 一轮;W-B2 为增订三新立义务,另计一轮)。B 线关闭,不再续测;若未来提出非标量对应,按新义务预登记,不复用本线预算。
+
+后续增订继续严格追加于本节之后。
+
+---
+
+# 增订五　B 线结案后的第一开放边:定义逃逸初等波预登记(W-A、W-C、W-B)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;六席思考面板(codex-cli ×4 teleology/parsimony/fidelity/natural-ownership、nyxid GPT PRO ×1 worth、隔离 subagent ×1 proportional-containment)并发盲评,全部 `revise`,meta-judge 由 orchestrator 收敛;本节三条子句的 Lean 陈述由 orchestrator 在钉版工具链亲跑探针确认为真(标准三公理)后才写入,以免重蹈追加部三 W-C1 的假子句先例。判决日:2026-09-02。lane issue:#4589。
+
+## 〇　为什么是这三条
+
+增订四已判死 §二(B) 的标量桥。追加部二 §D 的义务 W-A…W-F 被消化成整节 atom(24–27 KB),单定理模块无法逐字 cover;故按增订三/四的先例,把本波要派的义务逐条重述为可独立消化的小节,每节一条公开定理、一条写在跑之前的可证伪预测。选题依据:两侧皆锚定冻结声明、初等策略可闭合、自然目录未满或裂桶成本可计价、有具名消费者。W-D 依 §C 自判「C-4 是治理/证书 API,不能进入 RH 前件」不入本波;W-E 排在 W-B 之后(需 C-1 的 provenance 位与同一裂桶);W-F 待真实黄金分解消费者出现。
+
+## 一　W-A 预登记:曲率–slack 相位桥(`CurvatureSlackPhaseBridge`)
+
+**义务**:对 $a>0$、$x\ge 0$,令 $z=\frac{x-a}{x+a}$(即 `chebyshev_slack_bounds` 的 compactCoordinate),$\kappa=\frac{2(x-a)}{(x+a)^2}$(即 `off_line_curvature_dipole` 第一合取项的曲率公式在 $x=(t-\gamma)^2$、$a=\delta^2$ 下的字面形),$\mathrm{slack}_1=1-T_1(z)^2$。单一公开定理证明:$\bigl(\tfrac{(x+a)\kappa}{2}\bigr)^2+\mathrm{slack}_1=1$ 且 $\tfrac{(x+a)\kappa}{2}=z$;并在 $0<x<a$、$y=a^2/x$ 下于同一结论中证明 $z(y)=-z(x)$、$\mathrm{slack}_1(y)=\mathrm{slack}_1(x)$、$z(x)<0<z(y)$(相位相反)。模块须 `import` 上述两冻结模块,并以具名引理把 $\kappa$ 与 `off_line_curvature_dipole` 的曲率公式在 $x=(t-\gamma)^2$、$a=\delta^2$ 下字面对接;不触及 zeta、零点或 RH。
+**可证伪预测(写在跑之前)**:若正确,该定理以 `field_simp`/`ring`/`nlinarith` 级初等策略在钉版工具链闭合,公理集为标准三条;若任一子句为假,整条 W-A 作废,不得削弱子句以求闭合。
+**边界**:只闭合 A-R4 倒数对「slack 相等、相位相反」这一读数,把 C-2 的 phase bit 挣成定理;不主张其外任何 RH 前件。
+
+## 二　W-C 预登记:多尺度阻尼指纹的追加律(`MultiscaleFingerprintAppend`)
+
+**义务**:复用冻结 `criticalDampingDefect`,定义指纹 $F(\mathrm{realPart},\mathrm{scale}):\mathrm{Fin}\,n\to\mathbb R$,$F_k=\mathrm{criticalDampingDefect}(\mathrm{realPart},\mathrm{scale}_k)$。单一公开定理:对任意有限载体与追加尺度 $\tau'$(`Fin.snoc scale τ'`),(i) 旧指纹是新指纹在 `Fin.castSucc` 上的前缀;(ii) 两个载体(允许不同的有限指标类型)若在 $\tau'$ 处 defect 不等,则扩展后指纹不等。不证明「总存在分离尺度」。
+**可证伪预测(写在跑之前)**:若 C-3 有内容,则 A-R3 的单尺度碰撞在第二尺度被切开:取 X 的中心化偏移多重集 $\{+1,-1\}$、Y 为 $\{+b,+b,-b,-b\}$ 且 $\cosh b=(\cosh 1+1)/2$,则 $D_X(1)=D_Y(1)=2(\cosh 1-1)$ 而 $D_X(2)-D_Y(2)=2(\cosh 1-1)^2>0$;模块须以具名定理在钉版工具链兑现这两式。若两式任一在 kernel 下不成立,则 C-3「早期新尺度产生正 Capture」的预测被证伪,C-3 应退出而非再加尺度。
+**边界**:不主张有限矩层级完备,不引入 measure/transform 语言,不触及 zeta 零点是否存在。
+
+## 三　W-B 预登记:环面零因子 provenance 切刀(`ToroidalProvenanceCut`)
+
+**义务**:按 C-1 骨架定义 `ToroidalVanishingProfile`(selected / periodZero / twistZero 三个 Finset)与构造子 `toroidalVanishingProfile`(以 `Finset.filter` 取 period、twist 在 $s$ 处为零的 index)。单一公开定理(挣得该定义):对无零因子的标量类型,若 $i\in\mathrm{selected}$、$\mathrm{period}_i(s)=\mathrm{base}(s)\cdot\mathrm{twist}_i(s)$ 且 $\mathrm{twist}_i(s)\ne 0$,则 $i\in\mathrm{periodZero}\iff\mathrm{base}(s)=0$,且 $i\notin\mathrm{twistZero}$。只用 `mul_eq_zero` 与 `Finset.mem_filter`。
+**可证伪预测(写在跑之前)**:若 D5 已存在**可寻址**的等强陈述(逐 index 的 profile 成员刻画,而非 `toroidal_common_zero_locus` 那样在 pointwiseNonvanishing 下的全局集合相等),则本义务的交付物是 bind 报告而非新模块;若 `Analytic/Adelic` 已满(24/24,写入时实测),则须裂桶并如实计价,不得为躲容量放进语义错误的目录。定理本身预期以 `simp [mul_eq_zero]` 级策略闭合。
+**边界**:只闭合 index plumbing 的最小证书,为 C-5 的 chart 选择提供 twist 非零 provenance;不主张任何黄金通道的 twist 非零,不触及 eulerGerm 与 O-5。
+
+## 四　预算与结算
+
+三条各一席位轮(codex-cli,独立 worktree,各自 PR);任一席以 `open` 出口即在本卷下一增订登记其阻断面,不复用预算 grind。研究席另行开单(非标量测度值输运 N-M1,草稿不入库),其采纳与否由 owner 裁决。
+
+后续增订继续严格追加于本节之后。
+
+---
+
+# 增订六　第二波预登记:偶极总变差、投影 jet 尺度不变性、黄金环面 index 扩张(W-G、W-E、W-F)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;选题沿用 la91 面板的常设 refill 规则(#4589),不重开面板;两条子句各由一席 codex-cli 探针在钉版工具链整证(标准三公理)后才写入,探针不入库;W-G 的来源是研究席(nyxid GPT PRO)N-M1 草稿中唯一有独立内容的恒等式,桥式解释未采纳(见 #4589 批注)。判决日:2026-09-02。
+
+## 〇　为什么是这两条
+
+增订五的 W-A、W-C 已两阶段落地,W-B 在评审。按常设规则补位:候选须两侧锚定冻结/Mathlib 声明、探针可闭合、有具名消费者、桶未满或裂桶已存在。W-G 把 N-M1 研究草稿里可独立成立的分析事实从桥式叙事中剥出来单独入库;W-E 是 C-5 自然性的入场门,其定义须在 W-B 建立的 `Analytic/Toroidal` 桶内落户。W-F 只闭合 index plumbing,三条探针皆已在钉版工具链整证;W-D1 待 Escape(F) 定义就绪后另立增订。
+
+## 一　W-G 预登记:离线曲率偶极的总变差(`OffLineCurvatureDipoleTotalVariation`)
+
+**义务**:对 $\delta>0$、任意 $\gamma\in\mathbb R$,取 `off_line_curvature_dipole` 第一合取项给出的冻结曲率密度 $\kappa_{\delta,\gamma}(t)=2\,\frac{(t-\gamma)^2-\delta^2}{((t-\gamma)^2+\delta^2)^2}$。单一公开定理证明 $\int_{\mathbb R}|\kappa_{\delta,\gamma}(t)|\,dt=\frac4\delta$。证明须 `import` 并消费冻结定理的可积性、零总质量与符号轮廓(核内负、翼上正、零点 $\gamma\pm\delta$),不得重证这些合取项;原函数 $F(t)=-\frac{2(t-\gamma)}{(t-\gamma)^2+\delta^2}$ 给出核积分 $-2/\delta$,零总质量给出翼积分 $2/\delta$。
+**可证伪预测(写在跑之前)**:若正确,定理以有限区间微积分基本定理(`intervalIntegral.integral_eq_sub_of_hasDerivAt`)、可测补集分拆(`integral_add_compl`)与 `Integrable.abs` 在钉版 Mathlib 闭合,公理集为标准三条;若总变差不等于 $4/\delta$ 或需要额外可积性假设,则 N-M1 草稿的位移次数论证($d^5\cdot$总变差的齐次度 4)失去前提,须撤回该草稿。
+**边界**:只闭合一个关于冻结偶极的 $L^1$ 恒等式;不主张任何曲率→账本亏损的输运或 RH 前件。
+
+## 二　W-E 预登记:投影 jet 指纹的尺度不变性(`ProjectiveJetScaleInvariance`)
+
+**义务**:按 C-5 骨架定义 `ProjectiveJetFingerprint`(order 与 `Fin r → K` 的 tail)与构造子 `projectiveToroidalJet`(首个非零导数归一化后的 $r$ 个投影系数,anchor 阶 $m$ 由 earlierVanish 与 anchorNonzero 两个假设给出)。单一公开定理:对 $c\ne0$,`period` 与 $z\mapsto c\cdot\mathrm{period}(z)$ 在同一点 $s$、同一 anchor 阶 $m$ 上产生相同的指纹(order 与 tail 皆相等);两个假设经具名引理转移到 $c\cdot\mathrm{period}$(消费 `iteratedDeriv_const_mul_field` 与 `mul_ne_zero`)。
+**可证伪预测(写在跑之前)**:若正确,归一化后的 tail 逐分量为 $\frac{c\,f^{(m+k+1)}(s)}{c\,f^{(m)}(s)}$ 约去 $c$,定理以 `iteratedDeriv_const_mul_field` 与 `mul_div_mul_left` 级引理闭合,公理集为标准三条;若在钉版 Mathlib 中该引理需要 `ContDiff` 前提而无法免除,则义务改标 `open` 并记录所需前提。
+**边界**:只闭合 test-vector 非零常数缩放下的不变性;anchor 阶 $m$ 由假设给出,不主张它由 `ToroidalJetDepth` 的深度证书产生(那是另一条义务),不触及 zeta 零点、RH 或 C-1 的 chart 选择。
+
+## 三　W-F 预登记:黄金环面 index 扩张(`GoldenToroidalIndexExtension`)
+
+**义务**:设 twist 族 $\{\mathrm{twist}_i\}_{i\in I}$ 与 period 族满足冻结分解 $\mathrm{period}_i(s)=\xi(s)\,\mathrm{twist}_i(s)$(`xiReading`),且在窗口 $\Omega$ 上逐点非零($\forall s\in\Omega,\ \exists i,\ \mathrm{twist}_i(s)\ne0$)。以 `Sum Index Unit` 加入任意一个黄金候选对 $(\mathrm{goldenPeriod},\mathrm{goldenTwist})$(仅假设其同样按 $\xi$ 分解)。单一公开定理证明:(i) 扩张族在 $\Omega$ 上仍逐点非零;(ii) 扩张族的窗口公共零点集 $\{s\in\Omega\mid\forall j,\ \mathrm{period}'_j(s)=0\}$ 等于原族的窗口公共零点集(两侧皆经冻结 `toroidal_common_zero_locus` 化为 $\xi$ 的零点集);并以具名引理证明:当原族全局逐点非零时,冻结 `rh_iff_all_toroidal_eisenstein_tempered` 右侧的共同零条件在扩张族与原族之间等价(经同一 RH 左侧传递)。证明须 `import` 并消费上述两冻结定理,不重证任何解析内容。
+**可证伪预测(写在跑之前)**:若正确,定理只用 `Sum.elim`、`Sum.inl` 见证与冻结定理的两次实例化闭合,公理集为标准三条,无任何 Mathlib 解析引理;若窗口公共零点集相等需要黄金候选 twist 非零,则本义务的「任意候选」措辞为假,须收窄。
+**边界**:结论中明写——不证明 eulerGerm 是非零 twist、不证明 O-5 分解、不识别 goldenTwist 为 eulerGerm 或 Zqc、不加强 RH;全局等价引理只在原族**全局**逐点非零时成立,窗口版不蕴含它;不 `import` 或调用 `o5_independence`。
+
+## 四　预算与结算
+
+三条各一席位轮(codex-cli,独立 worktree,各自 PR-1 deposit;cover 另开 PR-2,消费已在 base 的收据);任一席以 `open` 出口即在下一增订登记阻断面。W-G 的自然归属为 `Analytic/Adelic`(已满 24/24),落户于其裂桶兄弟 `Analytic/ReflectedSpectrum`(偶极的反射谱语境)或席位按路径策略选定的裂桶;W-E 与 W-F 落户 `Analytic/Toroidal`(W-B 所建)。
+
+后续增订继续严格追加于本节之后。
+
+---
+
+# 增订七　主线第一步:`ZeroData` 非空洞性的精确边界(M1-a、M1-b)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;la101 第三波六席面板(codex ×2、GPT PRO ×2、隔离 subagent ×2,GPT PRO 与 codex 各有载体失败已在 #4589 逐席披露)收敛后由 orchestrator 撰写;研究探针为一席隔离 subagent(`lake env lean`,0 sorry,标准三公理),其证明文件存 orchestrator scratchpad,不入库。判决日:2026-09-02。lane issue:#4589。
+
+## 〇　为什么是这一条
+
+第三部 §四 立项裁决把「修复非空洞语义」列为 O-6 主线第一步;§M1 与 R-D 指出:凡对 `Z : ZeroData` 量化的 O-6 陈述,在 `ZeroData` 可居留性未定前皆可能空洞。探针把这个问题压缩成一条精确等价与一个具名缺口:可居留性**恰**等价于非平凡零点集无穷,而后者不在钉版 Mathlib 与本仓中。本增订只预登记可在钉版工具链闭合的那一半,并把另一半诚实记为缺失载体,不以公理补。
+
+## 一　M1-a 预登记:`ZeroData` 可居留性等价于非平凡零点无穷(`ZeroDataNonemptyIffInfinite`)
+
+**义务**:单一公开定理 `nonempty_zeroData_iff_infinite : Nonempty ZeroData ↔ {ρ : ℂ | IsNontrivialZero ρ}.Infinite`,其中 `ZeroData`、`IsNontrivialZero` 为冻结 `D5/S3/Weil/ZeroSum` 的定义。正向:`zero : ℕ → ℂ` 单射且逐项非平凡零点,故零点集无穷。反向:由钉版 Mathlib `NumberTheory/LSeries/ZetaZeros`(零点集闭、离散、紧交有限)与 Lindelöf 可数性得非平凡零点集可数,无穷可数集给出枚举;重数由 `analyticOrderAt` 的存在与唯一性给出;反射置换与共轭置换由 `riemannZeta_one_sub`、`riemannZeta_conj` 及重数守恒引理给出;局部有限由紧交有限给出。模块须消费上述 Mathlib 与冻结声明,不重证零点集拓扑。
+**可证伪预测(写在跑之前)**:若正确,定理以 `Set.Countable`/`Denumerable` 枚举、`analyticOrderAt` 引理与 `Equiv.Perm` 构造在钉版工具链闭合,公理集为标准三条;若 `ZeroData` 的某一字段(如共轭置换的重数守恒)在钉版 Mathlib 无对应引理,则该字段名与所缺引理名记入下一增订,义务改标 `open`,不得削弱字段。
+**边界**:本义务不证明零点集无穷,不给出任何一个零点,不主张 O-6 非空洞;它只把「非空洞」精确地归约为 M1-b。
+
+## 二　M1-b 具名缺失载体(open,不派席):非平凡零点无穷
+
+**缺口**:`nontrivialZeros_infinite : {ρ : ℂ | IsNontrivialZero ρ}.Infinite`。钉版 Mathlib `ZetaZeros.lean` 无 `Infinite` 或 $N(T)$ 下界;本仓 `D5/S3/Weil/ZetaRvm` 只有上界计数。其经典来源为 Hardy(1914)临界线上无穷零点或 Riemann–von Mangoldt 计数下界,属解析数论重型载体,不是初等波。
+**可证伪预测(写在跑之前)**:若 M1-a 落地而 M1-b 仍缺,则本仓一切「∀ Z : ZeroData, …」形式的 O-6 陈述在 kernel 意义上仍是条件性的;主线「修复非空洞语义」的出口只有三种——上游 Mathlib 补入无穷性、本仓以外部形式化(标 `literature-attested` 并 import)接入、或在本卷显式改写 O-6 为以 `Set.Infinite` 为前件的条件陈述;**不得**以公理或 `ASSUMED-UNVERIFIED` 冒充已闭合。
+**边界**:本节不是义务,不占席位;它只使 R-D 的「空类型诊断」有了精确的判据。
+
+## 三　预算与结算
+
+M1-a 一席位轮(codex-cli,独立 worktree,PR-1 deposit;cover 另开 PR-2);M1-b 不占预算,待 owner 在三种出口中裁决。
+
+后续增订继续严格追加于本节之后。

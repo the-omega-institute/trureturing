@@ -1,0 +1,75 @@
+# 第一千五百七十三部　黄金幂自由 zeta 完成塔
+
+取：
+
+$$
+x=p^{-s}.
+$$
+
+有限局部 Euler 因子为：
+
+$$
+\boxed{
+Z_{p,N}(s)
+=
+\sum_{\eta\in\Omega_N}
+p^{-sE_N(\eta)}
+=
+\frac{
+1-p^{-F_{N+1}s}
+}{
+1-p^{-s}
+}.
+}
+\tag{1573.1}
+$$
+
+在：
+
+$$
+\Re s>1
+$$
+
+中，对全部 prime 取积：
+
+$$
+\boxed{
+\mathcal Z_N(s)
+=
+\prod_p Z_{p,N}(s)
+=
+\frac{\zeta(s)}
+{\zeta(F_{N+1}s)}.
+}
+\tag{1573.2}
+$$
+
+另一方面：
+
+$$
+\frac{1-p^{-Ks}}{1-p^{-s}}
+=
+1+p^{-s}+\cdots+p^{-(K-1)s}.
+$$
+
+所以：
+
+$$
+\boxed{
+\mathcal Z_N(s)
+=
+\sum_{\substack{
+n\ge1\\
+\nu_p(n)<F_{N+1}\ \forall p
+}}
+n^{-s}.
+}
+\tag{1573.3}
+$$
+
+即 \(\mathcal Z_N\) 是 \(F_{N+1}\)-free integers 的 Dirichlet 完成。
+
+最初几层为：
+
+| Zeckendorf 深度 \(N\) | exponent cutoff \(F_{N+1}\) | Dirichlet 完成          |
+| ------------------: | --------------------------: | --------------------- |

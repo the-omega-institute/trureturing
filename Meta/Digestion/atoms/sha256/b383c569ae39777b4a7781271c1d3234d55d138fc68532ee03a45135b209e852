@@ -1,0 +1,63 @@
+# 第一千六百八十五部　页标签就是隐藏 Hilbert 空间的观察基
+
+定义相位纤维评价映射：
+
+$$
+\boxed{
+\mathcal U_\alpha:
+K_B\longrightarrow\mathbb C^m,
+}
+\tag{1685.1}
+$$
+
+$$
+\boxed{
+\mathcal U_\alpha f
+=
+\left(
+\sqrt{
+\frac{2\pi}{\theta_B'(x_1^\alpha)}
+}
+f(x_1^\alpha),
+\ldots,
+\sqrt{
+\frac{2\pi}{\theta_B'(x_m^\alpha)}
+}
+f(x_m^\alpha)
+\right).
+}
+\tag{1685.2}
+$$
+
+由式 (1684.5)：
+
+$$
+\boxed{
+\mathcal U_\alpha
+\text{ 是酉同构}.
+}
+\tag{1685.3}
+$$
+
+因此：
+
+$$
+\boxed{
+K_B\simeq\mathbb C^m
+}
+$$
+
+并不是通过一个预先固定的“绝对页标签”实现。
+
+每一个相位观察者 \(\alpha\) 都给出一套不同的正交坐标：
+
+$$
+\mathcal U_\alpha.
+$$
+
+所以页标签不是隐藏空间的本体元素。
+
+它是某个 phase name 为隐藏空间选择的一组观察基。
+
+---
+

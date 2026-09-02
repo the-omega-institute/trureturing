@@ -1,0 +1,50 @@
+# 第一千五百一十六部　RH 成为负实轴零点命题
+
+若 \(\rho\) 是 \(\xi\) 的零点，定义平方名字：
+
+$$
+\boxed{
+\lambda_\rho
+=
+\left(\rho-\frac12\right)^2.
+}
+\tag{1516.1}
+$$
+
+因为 \(z_\rho\) 与 \(-z_\rho\) 被平方映射识别，\(\lambda_\rho\) 正是 \(G\) 的零点。
+
+若 RH 成立：
+
+$$
+z_\rho=i\gamma,
+$$
+
+于是：
+
+$$
+\boxed{
+\lambda_\rho=-\gamma^2<0.
+}
+\tag{1516.2}
+$$
+
+反之，若：
+
+$$
+\lambda_\rho<0,
+$$
+
+则其平方根必为纯虚数：
+
+$$
+z_\rho=\pm i\sqrt{-\lambda_\rho},
+$$
+
+所以：
+
+$$
+\Re\rho=\frac12.
+$$
+
+因此：
+

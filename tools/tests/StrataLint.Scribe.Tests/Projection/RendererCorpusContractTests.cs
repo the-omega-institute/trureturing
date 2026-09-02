@@ -9,7 +9,7 @@ namespace StrataLint.Scribe.Tests;
 public sealed partial class FormulaCorpusInventoryTests
 {
     private const string CanonicalRendererSha256 =
-        "d22fcea070ce3788c5532a5186c137bfc5ed69bf2a6e1ea841aeca4d523a5fe7";
+        "8b4045d1fd35864cbc2913f1bf463a386ed615f4dfce2da20737eb6bc4a9138e";
     private const string UpdateCommand = "make -C tools update-renderer-contract";
 
     [Fact]
@@ -393,6 +393,7 @@ public sealed partial class FormulaCorpusInventoryTests
         // Repository formulas apply subscripted functions such as H_c(p, q).
         formulas.Add(new Formula.Apply(subscript, [x]));
         formulas.Add(new Formula.Power(additive, x));
+        formulas.Add(new Formula.Power(additive, digits));
         formulas.Add(new Formula.Power(multiplicative, x));
         formulas.Add(new Formula.Power(script, function));
         formulas.Add(new Formula.Power(x, additive));
@@ -403,9 +404,38 @@ public sealed partial class FormulaCorpusInventoryTests
         formulas.Add(new Formula.Power(function, additive));
         formulas.Add(new Formula.Power(function, function));
         formulas.Add(new Formula.Power(function, digits));
+        formulas.Add(new Formula.Power(group, digits));
+        formulas.Add(new Formula.Power(new Formula.LatexMacro(FormulaLatexMacro.Phi), group));
+        formulas.Add(new Formula.Power(word, sequence));
+        // 26 条模块合并后暴露的完整差集(由 InventoryAllLegacyLatexStatementsAndSyntaxFamilies
+        // 自己列出,一次补齐;逐条从判词读一条补一条已失败五次)。
+        var macroPhi = new Formula.LatexMacro(FormulaLatexMacro.Phi);
+        // 两个都需要,不可互相替代:
+        //   Negate(multiplicative) 覆盖 Negate.Operand=precedence:multiplicative;
+        //   Binary(Negate x, *, y) 才是 precedence:multiplicative 且 starts-with-negation:true
+        //   (即 (-x)*y;而 -(x*y) 的 precedence 是 prefix)。
+        // 且 FunctionCall 与 Apply 是不同节点,判词点名的是 FunctionCall.Arguments。
+        formulas.Add(new Formula.Power(word, negative));
+        formulas.Add(new Formula.Power(new Formula.Norm(x), digits));
+        formulas.Add(new Formula.Subscript(macroPhi, macroPhi));
+        formulas.Add(new Formula.Subscript(sequence, macroPhi));
+        formulas.Add(new Formula.LatexGroup([additive]));
+        var negOperandMul = new Formula.Negate(multiplicative);
+        var mulStartingNeg = new Formula.Binary(negative, FormulaBinaryOperator.Multiply, y);
+        formulas.Add(negOperandMul);
+        formulas.Add(mulStartingNeg);
+        formulas.Add(new Formula.LatexGroup([mulStartingNeg]));
+        formulas.Add(new Formula.FunctionCall(FormulaIdentifier.Create("f"), [mulStartingNeg]));
+         // FunctionCall.Arguments=multiplicative;negation:true
         formulas.Add(new Formula.Power(function, one));
         formulas.Add(new Formula.Power(function, script));
         formulas.Add(new Formula.Power(function, subscript));
+        // 2026-09-02 席位新增 scribe 定义暴露的两项(判词逐字):
+        //   formula-children:Power(Base=Apply,Exponent=LatexWord)
+        //   formula-children:Subscript(Base=LatexMacro,Index=LatexWord)
+        var applyNode = new Formula.Apply(subscript, [x]);
+        formulas.Add(new Formula.Power(applyNode, word));
+        formulas.Add(new Formula.Subscript(macroPhi, word));
         // 仓库实际使用的 Power 子组合,由 AssertRendererVocabularyCoverage 点名要求覆盖。
         formulas.Add(new Formula.Power(function, sequence));
         formulas.Add(new Formula.Power(function, x));
@@ -436,6 +466,9 @@ public sealed partial class FormulaCorpusInventoryTests
         formulas.Add(new Formula.Power(x, y));
         formulas.Add(new Formula.LatexGroup([script]));
 
+        formulas.Add(new Formula.Subscript(
+            new Formula.LatexMacro(FormulaLatexMacro.Phi),
+            digits));
         formulas.Add(new Formula.Subscript(
             new Formula.LatexMacro(FormulaLatexMacro.Phi),
             sequence));

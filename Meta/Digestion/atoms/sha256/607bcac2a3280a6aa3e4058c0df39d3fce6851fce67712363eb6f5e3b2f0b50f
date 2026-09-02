@@ -1,0 +1,58 @@
+## 1557.1 一个点足够，但需要全部关系阶
+
+特别取：
+
+$$
+t=0.
+$$
+
+因为：
+
+$$
+\Xi(0)\neq0,
+$$
+
+有：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\left[
+\mathcal J_{j-i}(0)
+\right]_{i,j\ge0}
+\text{ totally nonnegative}.
+}
+\tag{1557.4}
+$$
+
+所以不需要在全部纵坐标上扫描。
+
+但必须检查全部有限关系小行列式。
+
+这给出本轮最深的观察交换：
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{移动标量判据}
+&
+\mathcal J_m(t)\ge0
+\quad
+\forall t,m
+\\[1mm]
+\text{固定关系判据}
+&
+\det
+[\mathcal J_{j_r-i_s}(0)]
+\ge0
+\quad
+\forall\text{ finite }I,J
+\end{array}
+}
+$$
+
+连续位置自由度被编译成了离散的关系阶数。
+
+---
+

@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:29568619f362ce892374c3e78ac2270e50b92df83311d02f6a505eca3a13e694
+  normalized_sha256: sha256:29568619f362ce892374c3e78ac2270e50b92df83311d02f6a505eca3a13e694
+cas_ref: sha256:29568619f362ce892374c3e78ac2270e50b92df83311d02f6a505eca3a13e694
+coverage_gids: []
+receipts:
+  coverage: []
+  scribe: []
+  unresolved_subitems: []
+  quarantine:
+    justification: "Whole-statement retrieval isolates a strict-endpoint prerequisite absent from the current library. The source defines F(z)=xi(1/2+z), its square descent G, and claims RH iff every G-zero lies in the strict interval (-infinity,0); the forward implication therefore needs xi(1/2) != 0 to exclude the square image 0. D5 searches Riemann|centeredXi|critical line|square descent|square.*zero|zero.*negative and body shapes for factorization through z^2 found canonical xiReading, centeredXi, completed-zeta zero bridges, and other critical-line criteria but no square-descent criterion or center-nonvanishing owner. Pinned Mathlib searches for even-function square factorization, complex square roots, riemannZeta at one half, and zeta nonvanishing found IsAlgClosed.exists_pow_nat_eq and only riemannZeta_ne_zero_of_one_le_re, not riemannZeta(1/2) != 0. Installed-package searches missed; Loogle query riemannZeta (1 / 2) != 0 returned zero declarations; A17 GitHub Lean-code searches for riemannZeta/riemannXi at one half, xiReading, and square descent found no theorem. Local probe /private/tmp/w73c5-square-probe.lean exited 0: using the frozen centeredXi carrier and an algebraic square root it proves the exact strict-negative equivalence from the single hypothesis centeredXi 0 != 0; deleting that hypothesis leaves only nonpositive zero location, while adding it to the deposit would under-cover the unconditional source theorem."
+    reentry_condition: "A frozen D5 or admissible upstream theorem proves centeredXi 0 != 0 (equivalently xiReading (1/2) != 0 or riemannZeta (1/2) != 0) on the canonical completed-zeta carrier, allowing the checked square-descent probe to discharge the strict endpoint without an extra source premise."
+    blocker_class: missing-prerequisite

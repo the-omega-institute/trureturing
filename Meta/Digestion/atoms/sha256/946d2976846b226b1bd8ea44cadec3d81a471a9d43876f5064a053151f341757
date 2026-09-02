@@ -1,0 +1,33 @@
+## 1520.1 纯标量行列式版本
+
+定义：
+
+$$
+\boxed{
+\Delta_N^\xi
+=
+\det
+\left[
+\tau_{i+j+1}
+\right]_{i,j=0}^{N}.
+}
+\tag{1520.6}
+$$
+
+由 Sylvester 判据和 RH 下的严格正定性：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\Delta_N^\xi>0
+\qquad
+\forall N\ge0.
+}
+\tag{1520.7}
+$$
+
+所以 RH 被压缩成一列完全由中心偶阶 jet 计算的实数符号。
+
+---
+

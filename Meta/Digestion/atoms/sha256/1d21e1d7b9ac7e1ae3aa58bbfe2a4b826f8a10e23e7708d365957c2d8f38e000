@@ -1,0 +1,100 @@
+# 第一千六百一十五部（续）　Green–Blaschke 分解与边界辐射
+
+对：
+
+$$
+a=\alpha+i\beta\in\mathbb H,
+\qquad
+\beta>0,
+$$
+
+上半平面 Blaschke 因子为：
+
+$$
+b_a(z)=\frac{z-a}{z-\overline a}.
+$$
+
+其边界模长恒为 \(1\)，但法向导数并不消失。直接计算：
+
+$$
+\boxed{
+-\left.
+\partial_y\log|b_a(x+iy)|
+\right|_{y=0^+}
+=
+\frac{2\beta}{
+(x-\alpha)^2+\beta^2
+}.
+}
+\tag{1615.4}
+$$
+
+令标准 Poisson 核为：
+
+$$
+P_\beta(x-\alpha)
+=
+\frac1\pi
+\frac{\beta}{
+(x-\alpha)^2+\beta^2
+},
+$$
+
+则：
+
+$$
+\boxed{
+-\partial_y\log|b_a(x+iy)|_{y=0^+}
+=
+2\pi P_\beta(x-\alpha).
+}
+\tag{1615.5}
+$$
+
+对离线零点：
+
+$$
+\rho=\frac12+\delta+i\gamma,
+$$
+
+对应上半平面点：
+
+$$
+a_\rho=-\gamma+i\delta.
+$$
+
+所以它在边界留下：
+
+$$
+\boxed{
+2\pi P_\delta(x+\gamma).
+}
+\tag{1615.6}
+$$
+
+其中：
+
+$$
+\begin{aligned}
+-\gamma&=\text{边界脉冲中心},\\
+\delta&=\text{脉冲宽度},\\
+m_\rho&=\text{脉冲总质量／零点重数}.
+\end{aligned}
+$$
+
+因此此前的“霍金式辐射”可以被进一步净化为一个严格的边值问题：
+
+$$
+\boxed{
+\text{bulk 中的对数奇点}
+\longrightarrow
+\text{boundary 上的 Poisson 法向通量}.
+}
+$$
+
+磁单极子图表读取围绕源的闭合通量；黑洞图表读取同一源在观察边界上的 Dirichlet–to–Neumann 响应。
+
+它们不只是相似，而是同一个 Riesz 点源的两种边界读法。
+
+---
+

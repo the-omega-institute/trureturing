@@ -1,0 +1,68 @@
+# 第一千五百七十九部　尺度方向是一个 logistic 激活流
+
+对：
+
+$$
+B\ge0
+$$
+
+定义：
+
+$$
+\boxed{
+K_u
+=
+u(B+uI)^{-1}.
+}
+\tag{1579.1}
+$$
+
+令尺度时间为：
+
+$$
+\theta=\log u.
+$$
+
+直接求导：
+
+$$
+\boxed{
+\frac{dK_u}{d\theta}
+=
+K_u(I-K_u).
+}
+\tag{1579.2}
+$$
+
+所以每个正谱模式：
+
+$$
+p(u)=\frac{u}{E+u}
+$$
+
+沿尺度方向满足 logistic flow：
+
+$$
+\boxed{
+\frac{dp}{d\log u}
+=
+p(1-p).
+}
+\tag{1579.3}
+$$
+
+其 odds 为：
+
+$$
+\boxed{
+\frac{p}{1-p}
+=
+\frac{u}{E}.
+}
+\tag{1579.4}
+$$
+
+因此尺度乘法变成 log-odds 的平移。
+
+---
+

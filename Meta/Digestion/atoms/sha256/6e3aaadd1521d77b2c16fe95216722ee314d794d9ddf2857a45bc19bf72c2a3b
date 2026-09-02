@@ -1,0 +1,57 @@
+# 第一千五百七十二部　正整数的 prime–Fibonacci genome
+
+对任意正整数：
+
+$$
+n=\prod_p p^{\nu_p(n)},
+$$
+
+对每个 prime exponent 作 Zeckendorf 分解：
+
+$$
+\boxed{
+\nu_p(n)
+=
+\sum_{k\ge2}
+\eta_{p,k}F_k,
+}
+\tag{1572.1}
+$$
+
+其中：
+
+$$
+\eta_{p,k}\eta_{p,k+1}=0.
+$$
+
+于是：
+
+$$
+\boxed{
+n
+=
+\prod_{p}
+\prod_{k\ge2}
+p^{\eta_{p,k}F_k}.
+}
+\tag{1572.2}
+$$
+
+因此正整数与以下配置严格一一对应：
+
+$$
+\boxed{
+\left\{
+\eta_{p,k}\in\{0,1\}:
+\begin{array}{l}
+\eta_{p,k}\eta_{p,k+1}=0,\\
+\text{全局只有有限多个非零位}
+\end{array}
+\right\}.
+}
+\tag{1572.3}
+$$
+
+可以把每个 prime 看成一条 Fibonacci 染色体：
+
+* \(p\) 决定局部尺度 \(\log p\)；

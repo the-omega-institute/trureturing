@@ -1,0 +1,87 @@
+# 第一千五百五十一部　建议形式化顺序
+
+```text
+D5/S3/Analytic/Zeta/NormalJetLaguerre/
+  CriticalXiRealEntire.lean
+  NormalIntensityAsXiPair.lean
+  NormalJetEqualsGeneralizedLaguerre.lean
+  RHImpliesAllNormalJetsNonnegative.lean
+  OffLineZeroImpliesNegativeNormalJet.lean
+  RationalNormalJetRHCriterion.lean
+
+D5/S3/Analytic/Zeta/MovingSquareShadow/
+  MovingNormalProduct.lean
+  MovingNormalProductEven.lean
+  MovingSquareShadow.lean
+  MovingSquareShadowTaylor.lean
+  RHMovingSquareZerosNonpositive.lean
+  OffLineZeroGivesPositiveMovingSquareZero.lean
+
+D5/S3/Analytic/Zeta/ConnectedNormalJets/
+  NormalJetNormalizedCoefficient.lean
+  ConnectedNormalMoment.lean
+  ConnectedNormalMomentFirstThree.lean
+  LocalConnectedHankel.lean
+  LocalConnectedHankelFirstDeterminant.lean
+
+D5/S3/Analytic/Zeta/PositiveFredholmShadow/
+  InverseSquareTraceClassOperator.lean
+  CenteredXiFredholmDeterminant.lean
+  CenteredNormalIntensityFredholmSquare.lean
+  CenteredStieltjesTrace.lean
+  CenteredMomentsAreSchattenTraces.lean
+  RHPositiveFredholmCriterion.lean
+
+D5/S3/Analytic/Zeta/SingleScaleHausdorff/
+  StieltjesTiltedState.lean
+  CompactResponseOperator.lean
+  ScaleNormalizedDerivativeMoment.lean
+  HausdorffCompleteDifferences.lean
+  MeromorphicHausdorffRigidity.lean
+  RHSingleScaleHausdorffCriterion.lean
+
+D5/S3/Analytic/Zeta/CayleyToeplitz/
+  CompactChebyshevMoment.lean
+  CayleyMomentFromHausdorffMoment.lean
+  CayleyToeplitzMatrix.lean
+  RHCayleyToeplitzPositive.lean
+  ToeplitzPositiveRecoversHausdorff.lean
+  RHSingleScaleToeplitzCriterion.lean
+
+D5/S3/Analytic/Zeta/CayleyFirstMinors/
+  FirstCayleyMoment.lean
+  SecondCayleyMoment.lean
+  TwoByTwoToeplitzFactorization.lean
+  ThreeByThreeToeplitzFactorization.lean
+  FirstStieltjesDifferentialInequalities.lean
+
+D5/S3/GoldenObserver/CayleyFiveModularTransport/
+  CayleyScaleHyperbolicRatio.lean
+  GoldenDoubleStepTransportRatio.lean
+  GoldenTransportRatioEqualsInvSqrtFive.lean
+  GoldenTransportGeometricTail.lean
+
+D5/S3/Observer/FiniteMomentNames/
+  FiniteHausdorffMomentInterface.lean
+  FiniteRepresentingMeasureSet.lean
+  FiniteAtomicPositiveCompletion.lean
+  NestedRepresentingMeasureSets.lean
+  GlobalMeasureAsCompatibleIntersection.lean
+
+D5/S3/Analytic/Zeta/HankelInnovation/
+  CenteredHankelBlock.lean
+  HankelSchurSlack.lean
+  HankelDeterminantRatio.lean
+  PositiveMeasureOrthogonalPolynomialSlack.lean
+  FirstNegativeInnovationCertificate.lean
+
+D5/S3/Weil/PrimeNormalJetBridge/
+  PrimeGammaNormalIntensityFormulaTarget.lean
+  PrimeGammaNormalJetPositiveTarget.lean
+  PrimeGammaSingleScaleCayleyMomentsTarget.lean
+  PrimeGammaToeplitzPositiveTarget.lean
+  NormalJetOrToeplitzPositivityImpliesRHTarget.lean
+```
+
+---
+

@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:b23fbbe4adfac67d36d01b53abfe2b5778fdee60a9632585064a9466c56183f0
+  normalized_sha256: sha256:b23fbbe4adfac67d36d01b53abfe2b5778fdee60a9632585064a9466c56183f0
+cas_ref: sha256:b23fbbe4adfac67d36d01b53abfe2b5778fdee60a9632585064a9466c56183f0
+coverage_gids:
+  - D5/S3/Observer/Hankel/HankelRankMinimality.hankel_rank_eq_reachable_dim_sub_inter_unobservable_dim
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/Hankel/HankelRankMinimality.hankel_rank_eq_reachable_dim_sub_inter_unobservable_dim
+      source_sha256: sha256:b23fbbe4adfac67d36d01b53abfe2b5778fdee60a9632585064a9466c56183f0
+      target_statement_id: sha256:79ba7a4ceabfa0ea7b09d498c022ae48731de286d82719eb5244b9f7fbe2e1a6
+  scribe:
+    - gid: D5/S3/Observer/Hankel/HankelRankMinimality.hankel_rank_eq_reachable_dim_sub_inter_unobservable_dim
+      definition_sha256: sha256:386ccf501a179c223175ae5cbf5a3983c270bbfc4582bf768c70bb5deac0632a
+      emission_sha256: sha256:2af15ca9f0303377a0b8c926f2aa6aeff79f14a82aa3e9ae3d5c6c32b3de4757
+  unresolved_subitems: []

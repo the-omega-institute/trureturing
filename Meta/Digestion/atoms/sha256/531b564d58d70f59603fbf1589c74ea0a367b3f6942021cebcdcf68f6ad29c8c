@@ -1,0 +1,65 @@
+## 1569.2 Zeckendorf 硬核占据
+
+令 Fibonacci 数满足：
+
+$$
+F_2=1,\qquad
+F_3=2,\qquad
+F_{k+1}=F_k+F_{k-1}.
+$$
+
+Zeckendorf 定理给出每个非负整数的唯一表示：
+
+$$
+\boxed{
+e=\sum_{k\ge2}\eta_kF_k,
+}
+\tag{1569.5}
+$$
+
+其中：
+
+$$
+\eta_k\in\{0,1\},
+\qquad
+\eta_k\eta_{k+1}=0.
+$$
+
+也就是说，相邻 Fibonacci 位不能同时占据。Zeckendorf 唯一分解及其广义版本是成熟结果；项目也已把规范 Zeckendorf 表示的数值次序与词典序严格对齐。([arXiv][1])
+
+因此：
+
+$$
+\boxed{
+\frac1{1-x}
+=
+\sum_{\substack{
+\eta_k\in\{0,1\}\\
+\eta_k\eta_{k+1}=0\\
+\operatorname{supp}\eta\text{ finite}
+}}
+x^{\sum_{k\ge2}\eta_kF_k}.
+}
+\tag{1569.6}
+$$
+
+这不是独立位，而是一个一维 nearest-neighbor hard-core system。
+
+所以同一个几何占据已经至少具有：
+
+$$
+\boxed{
+\begin{array}{c|c|c}
+\text{名字}&\text{微观自由度}&\text{局部关系}\\
+\hline
+e\in\mathbb N&\text{一个无限占据数}&\text{无内部结构}\\
+\text{binary}&0/1\text{ 位}&\text{彼此独立}\\
+\text{Zeckendorf}&0/1\text{ 位}&\text{禁止相邻 }1
+\end{array}
+}
+$$
+
+它们的 scalar partition function 完全相同。
+
+---
+

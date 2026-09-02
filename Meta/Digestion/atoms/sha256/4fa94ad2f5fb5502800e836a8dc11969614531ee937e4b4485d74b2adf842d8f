@@ -1,0 +1,28 @@
+## 语法熵
+
+golden adjacency 只保留 Fibonacci 合法路径：
+
+$$
+\boxed{
+h_{\mathrm{grammar}}=\log\varphi.
+}
+\tag{1742.2}
+$$
+
+对于二元自由系统：
+
+$$
+\log\varphi<\log2.
+$$
+
+差值：
+
+$$
+\boxed{
+\log\frac2\varphi
+}
+\tag{1742.3}
+$$
+
+是禁止相邻 \(1\) 所删除的渐近 branch capacity。
+

@@ -1,0 +1,46 @@
+# 第一千五百九十二部　循环相位的 Cauchy 连续极限
+
+定义经验谱测度：
+
+$$
+\boxed{
+\mu_K
+=
+\frac1{K-1}
+\sum_{j=1}^{K-1}
+\delta_{-\cot(\pi j/K)}.
+}
+\tag{1592.1}
+$$
+
+对任意有界连续函数 \(f\)：
+
+$$
+\begin{aligned}
+\int f\,d\mu_K
+&=
+\frac1{K-1}
+\sum_{j=1}^{K-1}
+f\left(-\cot\frac{\pi j}{K}\right)\\
+&\longrightarrow
+\int_0^1
+f(-\cot\pi u)\,du.
+\end{aligned}
+$$
+
+令：
+
+$$
+h=-\cot(\pi u).
+$$
+
+则：
+
+$$
+du
+=
+\frac{dh}{\pi(1+h^2)}.
+$$
+
+因此：
+

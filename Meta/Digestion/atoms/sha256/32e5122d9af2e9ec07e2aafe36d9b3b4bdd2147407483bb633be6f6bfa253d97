@@ -1,0 +1,50 @@
+## 1562.1 平均模式数与涨落
+
+定义占据算子：
+
+$$
+\boxed{
+P_{t,u}
+=
+uA_t(I+uA_t)^{-1}.
+}
+\tag{1562.5}
+$$
+
+则：
+
+$$
+0\le P_{t,u}<I.
+$$
+
+并有：
+
+$$
+\boxed{
+u\frac{d}{du}\log Z_t(u)
+=
+\operatorname{Tr}P_{t,u}
+=
+\sum_jp_j(u),
+}
+\tag{1562.6}
+$$
+
+$$
+\boxed{
+\left(
+u\frac{d}{du}
+\right)^2
+\log Z_t(u)
+=
+\operatorname{Tr}
+\left[
+P_{t,u}(I-P_{t,u})
+\right].
+}
+\tag{1562.7}
+$$
+
+所以：
+
+* 一阶对数导数读取平均被激活模式数；

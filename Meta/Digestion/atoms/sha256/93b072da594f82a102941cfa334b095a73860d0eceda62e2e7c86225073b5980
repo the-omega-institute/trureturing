@@ -1,0 +1,38 @@
+# 第一千五百四十四部　黄金尺度与五模输运
+
+仓库的 Cayley scale-transport 定理表明，从尺度 \(a>0\) 输运到 \(b>0\) 时，有限 moment 截断的几何余项由：
+
+$$
+\boxed{
+q(a,b)
+=
+\left|
+\frac{a-b}{a+b}
+\right|
+}
+\tag{1544.1}
+$$
+
+控制。
+
+若：
+
+$$
+b=ae^\eta,
+$$
+
+则：
+
+$$
+\boxed{
+q(a,b)
+=
+\tanh\frac{|\eta|}{2}.
+}
+\tag{1544.2}
+$$
+
+所以 Cayley 尺度本身具有双曲距离结构。
+
+---
+

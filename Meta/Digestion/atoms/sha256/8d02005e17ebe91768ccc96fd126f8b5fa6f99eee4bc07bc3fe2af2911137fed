@@ -1,0 +1,57 @@
+# 第一千五百三十九部　正迹类 Fredholm determinant 实现
+
+回到中心：
+
+$$
+F(z)=\xi\!\left(\frac12+z\right)=G(z^2).
+$$
+
+若 RH 成立，\(G\) 的零点为：
+
+$$
+-\gamma_j^2.
+$$
+
+定义正迹类算子 \(A\)，令其非零特征值为：
+
+$$
+\boxed{
+v_j=\gamma_j^{-2},
+}
+$$
+
+并按零点重数重复。
+
+由于：
+
+$$
+\sum_jm_j\gamma_j^{-2}<\infty,
+$$
+
+\(A\) 是 trace class，并且：
+
+$$
+\boxed{
+\frac{
+\xi(\frac12+z)
+}{
+\xi(\frac12)
+}
+=
+\det(I+z^2A).
+}
+\tag{1539.1}
+$$
+
+反过来，若存在正迹类 \(A\) 满足式 (1539.1)，Fredholm determinant 的全部零点只能为：
+
+$$
+z=\pm i\lambda^{-1/2},
+\qquad
+\lambda\in\operatorname{Spec}(A)\setminus\{0\},
+$$
+
+因而 RH 成立。
+
+所以：
+

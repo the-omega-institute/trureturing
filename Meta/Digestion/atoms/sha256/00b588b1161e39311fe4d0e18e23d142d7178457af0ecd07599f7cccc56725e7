@@ -1,0 +1,82 @@
+# 第一千五百八十六部　黄金深度—谱宽度对偶
+
+Zeckendorf 图表只需要两个内部状态：
+
+* 前一位为 \(0\)；
+* 前一位为 \(1\)。
+
+但它需要 \(N\) 层时间深度。
+
+循环谱图表只需要一步 determinant，却需要：
+
+$$
+K-1=F_{N+1}-1
+$$
+
+个谱方向。
+
+因此存在精确的复杂度交换：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Zeckendorf 图表}
+&:\quad
+\text{固定状态宽度 }2
++
+\text{增长时间深度 }N;\\
+\text{循环谱图表}
+&:\quad
+\text{单步时间}
++
+\text{增长谱宽度 }F_{N+1}-1.
+\end{aligned}
+}
+\tag{1586.1}
+$$
+
+由 Binet 渐近：
+
+$$
+F_{N+1}
+\sim
+\frac{\varphi^{N+1}}{\sqrt5},
+$$
+
+得到：
+
+$$
+\boxed{
+\lim_{N\to\infty}
+\frac1N
+\log
+\bigl(
+\dim\mathcal H_{F_{N+1}}^\circ+1
+\bigr)
+=
+\log\varphi.
+}
+\tag{1586.2}
+$$
+
+所以：
+
+$$
+\boxed{
+\log\varphi
+}
+$$
+
+还可以解释为：
+
+$$
+\boxed{
+\text{将一步局部记忆的时间深度，
+转换成自由相位谱宽度时的渐近汇率。}
+}
+$$
+
+这比单纯说“合法词数按 \(\varphi^N\) 增长”更强：它表明同一个标量完成可以把时间记忆重新编码为空间维数。
+
+---
+

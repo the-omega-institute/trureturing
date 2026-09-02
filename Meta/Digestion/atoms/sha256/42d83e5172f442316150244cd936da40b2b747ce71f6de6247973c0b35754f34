@@ -1,0 +1,80 @@
+# 第一千七百四十四部　粗名字隐藏的是一个矩阵因子
+
+在张量图表：
+
+$$
+H^2\simeq K_B\otimes H^2
+$$
+
+中，命名自同态为：
+
+$$
+\Lambda_B(X)
+=
+I_{K_B}\otimes X.
+$$
+
+所以它完全不作用于第一个 tensor factor：
+
+$$
+K_B.
+$$
+
+这表示：
+
+$$
+\boxed{
+\text{粗 phase name 只推进“已经被命名的未来”，
+而把 branch relation factor 原样留在相对 commutant 中。}
+}
+$$
+
+重复 \(n\) 次后：
+
+$$
+\boxed{
+H^2
+\simeq
+K_B^{\otimes n}
+\otimes H^2,
+}
+\tag{1744.1}
+$$
+
+并且：
+
+$$
+\boxed{
+\Lambda_B^n(X)
+=
+I_{K_B^{\otimes n}}
+\otimes X.
+}
+\tag{1744.2}
+$$
+
+隐藏关系因子增长为：
+
+$$
+\boxed{
+B(K_B^{\otimes n})
+\simeq
+M_{m^n}.
+}
+\tag{1744.3}
+$$
+
+所以只重复同一个 coarse name：
+
+$$
+B,B^2,B^3,\ldots
+$$
+
+并不会自动读取这个 matrix factor。
+
+它只是让同一不可见 tensor factor 继续累积。
+
+这与项目机器证明的精确退化结论一致：若两个模式的 multiplier 相同，反对称 amplitude 即使观察全部自然时间仍然不可见。
+
+---
+

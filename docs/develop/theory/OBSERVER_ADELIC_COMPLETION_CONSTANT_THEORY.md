@@ -154721,3 +154721,19090 @@ $$
 谱名字已经完成，因果名字却仍要求重新区分。}
 }
 $$
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v9.2：无终命名、Dedekind 影切、双修复熵与离线零点的定向信息
+
+以下从前文**第一千四百九十四部**继续。
+
+这一轮最重要的校正是：
+
+$$
+\boxed{
+\text{“离散的名永远描述不了连续的道”不能理解为：
+离散符号不能编码连续对象。}
+}
+$$
+
+一个可数语言可以定义实数、函数空间乃至连续流形；无穷多个离散判断也可以唯一恢复一个连续参数。
+
+真正不可完成的是：
+
+$$
+\boxed{
+\text{任何单一名字，都只是一次取商；
+它不能既保留全部连续关系，又仍然只是这个名字。}
+}
+$$
+
+因此问题不在“离散符号数量太少”，而在于：
+
+$$
+\boxed{
+\text{名字必须切割；
+切割必然产生纤维、边界、方向和残余。}
+}
+$$
+
+连续能够从无穷多个名字的**兼容关系**中重建，却不等于其中任何一个名字。
+
+这一区分将“不可名”从神秘断言推进成了可证明的命名动力学。
+
+---
+
+# 第一千四百九十五部　连续对象可以由离散切口重建，但不等于任何切口
+
+取一个实数：
+
+$$
+x\in\mathbb R.
+$$
+
+对每个有理数 \(q\in\mathbb Q\)，定义二元名字：
+
+$$
+\boxed{
+\nu_q(x)
+=
+\begin{cases}
+1,&q<x,\\
+0,&q\ge x.
+\end{cases}
+}
+\tag{1495.1}
+$$
+
+每一个 \(\nu_q\) 都只回答一个离散问题：
+
+> \(x\) 是否位于切口 \(q\) 的右侧？
+
+任意单个 \(\nu_q\) 显然不能确定 \(x\)。
+
+但是全部有理切口的兼容轮廓：
+
+$$
+\boxed{
+\Gamma(x)
+=
+\bigl(\nu_q(x)\bigr)_{q\in\mathbb Q}
+}
+\tag{1495.2}
+$$
+
+可以恢复 \(x\)：
+
+$$
+\boxed{
+x
+=
+\sup
+\left\{
+q\in\mathbb Q:
+\nu_q(x)=1
+\right\}.
+}
+\tag{1495.3}
+$$
+
+这就是 Dedekind cut 的观察版本。
+
+---
+
+## 定理 1495.1（连续参数的离散影切重建）
+
+连续参数 \(x\) 可以由可数多个二元名字唯一恢复，但：
+
+1. 没有任何单个名字等于 \(x\)；
+2. 没有任何有限子族能够精确确定任意实数 \(x\)；
+3. 连续信息存在于全部名字之间的序、单调性与兼容性中。
+
+因此：
+
+$$
+\boxed{
+\text{连续不是某个离散名字的内容；
+连续是全部离散切口相互兼容时形成的极限关系。}
+}
+$$
+
+这给“道不可名”一个更精确的解释：
+
+$$
+\boxed{
+\text{即使全部名字共同指向某个连续结构，
+该连续结构也不能被认同为其中一个名字。}
+}
+$$
+
+---
+
+## 1495.1 名字越完备，切口越稠密
+
+每个 \(\nu_q\) 的不连续边界是单点：
+
+$$
+\partial\nu_q=\{q\}.
+$$
+
+全部有理切口的边界集合为：
+
+$$
+\bigcup_{q\in\mathbb Q}\{q\}
+=
+\mathbb Q,
+$$
+
+它在 \(\mathbb R\) 中稠密。
+
+所以离散名字要逼近连续对象，真正必须变得稠密的是：
+
+$$
+\boxed{
+\text{名字的边界。}
+}
+$$
+
+不是把连续变成离散，而是把未被任何有限名字消除的连续性推入越来越稠密的切口之间。
+
+---
+
+# 第一千四百九十六部　“名”应被理解为商，而不是描述句
+
+设状态空间为 \(X\)。
+
+一个命名接口：
+
+$$
+r:X\to R
+$$
+
+诱导等价关系：
+
+$$
+\boxed{
+x\sim_r y
+\iff
+r(x)=r(y).
+}
+\tag{1496.1}
+$$
+
+因此，一个名字的真正数学内容是：
+
+$$
+\boxed{
+\ker r.
+}
+$$
+
+名字决定哪些状态在当前语言中被视为相同。
+
+它同时产生：
+
+$$
+\boxed{
+\begin{aligned}
+X/\ker r
+&=\text{可见概念空间};\\
+[x]_r
+&=\text{名字背后的隐藏纤维};\\
+\ker r
+&=\text{被该名字抹去的区别}.
+\end{aligned}
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{名不是把对象完整搬入语言；
+名是选择哪些区别值得被保留。}
+}
+$$
+
+一旦这个选择发生：
+
+* 同名／异名出现；
+* 内部／外部出现；
+* 自身／他者出现；
+* 正向／反向出现；
+* 当前名字的盲区也同时出现。
+
+因此对偶不是在“道”中被预先命名好的两样东西。
+
+它首先是：
+
+$$
+\boxed{
+\text{一次取商所产生的两侧与纤维。}
+}
+$$
+
+---
+
+# 第一千四百九十七部　概念是动力稳定的名字
+
+现在加入动力：
+
+$$
+F:X\to X.
+$$
+
+一个名字 \(R\) 若要成为自治概念，必须满足：
+
+$$
+x\,R\,y
+\Longrightarrow
+F(x)\,R\,F(y).
+\tag{1497.1}
+$$
+
+即 \(R\) 必须是 forward congruence。
+
+否则两个当前被称作相同的状态，下一时刻会产生不同名字，当前概念不能预测自己的演化。
+
+所以在这个模型内，可以定义：
+
+$$
+\boxed{
+\operatorname{Concept}_F(R)
+\iff
+F\text{ 能下降为 }X/R\text{ 上的良定义动力}.
+}
+\tag{1497.2}
+$$
+
+这不是对“所有概念”的终极定义，而是一个严格的动力概念判据。
+
+---
+
+## 1497.1 每个原始名字的双重修复
+
+项目当前已经机器证明，对任意等价关系 \(R\)，存在两种规范修复：
+
+$$
+\boxed{
+I_F(R)\subseteq R\subseteq C_F(R),
+}
+\tag{1497.3}
+$$
+
+其中：
+
+* \(I_F(R)\) 是 \(R\) 内部最大的 forward congruence；
+* \(C_F(R)\) 是包含 \(R\) 的最小 forward congruence；
+* 二者都是单调、幂等的；
+* 它们与稳定关系的包含形成两个 Galois connection；
+* 稳定名字恰好是二者的共同固定点。
+
+于是：
+
+$$
+\boxed{
+I_F(R)=R=C_F(R)
+}
+\tag{1497.4}
+$$
+
+表示名字已经能够形成自治概念。
+
+若不成立，名字必须在两个方向之间选择。
+
+### 预测修复
+
+$$
+I_F(R)
+$$
+
+把“当前同名但未来会分叉”的状态重新区分。
+
+### 遗忘修复
+
+$$
+C_F(R)
+$$
+
+把动力迫使相连的更多状态继续合并。
+
+因此：
+
+$$
+\boxed{
+\text{一个不稳定的名字，
+总是在“增加区分”与“增加遗忘”之间张开一个区间。}
+}
+$$
+
+---
+
+# 第一千四百九十八部　命名视界具有精确的信息分解
+
+假设 \(X\) 有限，并赋予一个全支撑概率测度。
+
+令：
+
+$$
+I=I_F(R),\qquad C=C_F(R).
+$$
+
+因为：
+
+$$
+I\subseteq R\subseteq C,
+$$
+
+对应的商随机变量满足确定性链：
+
+$$
+\boxed{
+Z_I\longrightarrow Z_R\longrightarrow Z_C.
+}
+\tag{1498.1}
+$$
+
+定义预测缺失信息：
+
+$$
+\boxed{
+\mathcal H_{\mathrm{pred}}(R)
+=
+H(Z_I\mid Z_R).
+}
+\tag{1498.2}
+$$
+
+它测量：
+
+> 当前名字还缺少多少未来所必需的区分？
+
+定义遗忘代价：
+
+$$
+\boxed{
+\mathcal H_{\mathrm{forget}}(R)
+=
+H(Z_R\mid Z_C).
+}
+\tag{1498.3}
+$$
+
+它测量：
+
+> 为使名字在动力下稳定，必须再忘掉多少当前区别？
+
+定义总命名视界：
+
+$$
+\boxed{
+\mathcal H_{\mathrm{name}}(R)
+=
+H(Z_I\mid Z_C).
+}
+\tag{1498.4}
+$$
+
+---
+
+## 定理 1498.1（双修复熵分解）
+
+$$
+\boxed{
+\mathcal H_{\mathrm{name}}(R)
+=
+\mathcal H_{\mathrm{pred}}(R)
++
+\mathcal H_{\mathrm{forget}}(R).
+}
+\tag{1498.5}
+$$
+
+### 证明
+
+由条件熵链式法则：
+
+$$
+H(Z_I,Z_R\mid Z_C)
+=
+H(Z_R\mid Z_C)
++
+H(Z_I\mid Z_R,Z_C).
+$$
+
+因为 \(Z_R\) 是 \(Z_I\) 的函数：
+
+$$
+H(Z_I,Z_R\mid Z_C)=H(Z_I\mid Z_C).
+$$
+
+又因为 \(Z_C\) 是 \(Z_R\) 的函数：
+
+$$
+H(Z_I\mid Z_R,Z_C)=H(Z_I\mid Z_R).
+$$
+
+代入即得。∎
+
+---
+
+## 1498.1 稳定名字的熵判据
+
+在全支撑有限模型中：
+
+$$
+\boxed{
+\mathcal H_{\mathrm{name}}(R)=0
+\iff
+I_F(R)=R=C_F(R).
+}
+\tag{1498.6}
+$$
+
+所以一个概念的自治性可以解释为：
+
+$$
+\boxed{
+\text{预测不再要求增加区别，
+稳定性也不再要求增加遗忘。}
+}
+$$
+
+这比单纯说“定义准确”更强，因为它同时包含未来动力。
+
+---
+
+# 第一千四百九十九部　“自我”只能是相对于互动集合的最小充分商
+
+设历史空间为 \(H\)，干预集合为 \(I\)，输出集合为 \(O\)。
+
+完整互动轮廓为：
+
+$$
+\Gamma:
+H\to
+\left(
+I\to\operatorname{PMF}(O)
+\right).
+\tag{1499.1}
+$$
+
+定义：
+
+$$
+h\sim_\Gamma h'
+\iff
+\Gamma(h)=\Gamma(h').
+$$
+
+则：
+
+$$
+\boxed{
+H/\ker\Gamma
+}
+$$
+
+是所有允许互动均无法进一步区分的历史类。
+
+项目已经机器证明：若某个历史接口 \(r:H\to R\) 足以解码完整互动轮廓，
+
+$$
+\Gamma=F\circ r,
+$$
+
+那么在 \(r\) 的实际值域上，存在唯一映射进入 \(H/\ker\Gamma\)，并把每个接口值送到对应的互动等价类。
+
+因此：
+
+$$
+\boxed{
+\text{任何充分的“自我名字”，
+都必须至少保留完整互动商的信息。}
+}
+$$
+
+---
+
+## 1499.1 没有脱离互动语境的绝对 self
+
+如果扩大干预集合：
+
+$$
+I_0\subseteq I_1,
+$$
+
+则通常：
+
+$$
+\boxed{
+\ker\Gamma_{I_1}
+\subseteq
+\ker\Gamma_{I_0}.
+}
+\tag{1499.2}
+$$
+
+更多干预能够区分更多历史。
+
+因此 agency-self 依赖：
+
+* 允许问什么；
+* 能观察什么；
+* 观察多久；
+* 允许多高精度。
+
+这不意味着“自我不存在”，而是：
+
+$$
+\boxed{
+\text{自我作为可操作概念，必然相对于一个互动语境。}
+}
+$$
+
+不可名本体不应被重新命名成某个绝对 self quotient。
+
+---
+
+# 第一千五百部　无终命名的严格模型
+
+令干预集合逐层增加：
+
+$$
+I_0\subset I_1\subset I_2\subset\cdots.
+$$
+
+相应 profile 为：
+
+$$
+\Gamma_n:
+H\to
+\left(
+I_n\to\operatorname{PMF}(O)
+\right).
+$$
+
+若：
+
+$$
+\boxed{
+\ker\Gamma_{n+1}
+\subsetneq
+\ker\Gamma_n
+\qquad
+\forall n,
+}
+\tag{1500.1}
+$$
+
+则没有任何有限阶段能够成为完整 agency-self。
+
+## 定理 1500.1（No finite terminal self）
+
+在式 (1500.1) 下，不存在有限 \(N\) 使：
+
+$$
+H/\ker\Gamma_N
+\cong
+H/\ker\Gamma_\infty,
+$$
+
+其中 \(\Gamma_\infty\) 表示全部干预轮廓。
+
+### 证明
+
+若某个有限 \(N\) 已经充分，则：
+
+$$
+\ker\Gamma_N=\ker\Gamma_\infty.
+$$
+
+但严格下降保证：
+
+$$
+\ker\Gamma_{N+1}\subsetneq\ker\Gamma_N,
+$$
+
+矛盾。∎
+
+这是一种严格的“名可名，非常名”动力模型：
+
+$$
+\boxed{
+\text{任何有限名字都会被一个新的合法互动继续细化。}
+}
+$$
+
+它仍然没有定义“道”，只定义了某个观察程序没有终点。
+
+---
+
+# 第一千五百零一部　局部名字的胶合比全局名字更基本
+
+既然不存在天然的终极名字，更合理的数学对象不是一个全局标签，而是：
+
+$$
+\boxed{
+\text{局部名字}
++
+\text{重叠区域的变换}
++
+\text{胶合条件}.
+}
+$$
+
+设 \(\{U_i\}\) 为一个覆盖。
+
+在每个 \(U_i\) 上选择局部名字 \(n_i\)。
+
+在重叠处存在变换：
+
+$$
+g_{ij}:n_j\longrightarrow n_i.
+$$
+
+它们应满足：
+
+$$
+\boxed{
+g_{ij}g_{jk}=g_{ik}
+}
+\tag{1501.1}
+$$
+
+于三重重叠成立。
+
+若存在局部重定义 \(h_i\)，使：
+
+$$
+g_{ij}=h_i^{-1}h_j,
+$$
+
+则能够选出统一的全局图表。
+
+若不能，则存在下降障碍。
+
+---
+
+## 1501.1 这里仍然没有定义“道”
+
+局部名字组成的层、sheaf 或 stack 仍然只是一套描述系统。
+
+它的价值在于：
+
+$$
+\boxed{
+\text{不必假定存在一个规范全局名字，
+仍可严格研究所有局部名字如何相容。}
+}
+$$
+
+所以它适合作为“不可名性之迹”的数学，而不是“道的数学定义”。
+
+---
+
+# 第一千五百零二部　单极子、黑洞与离线零点共享的是下降模板
+
+它们不必是同一物理对象。
+
+它们共享的是同一个命名结构：
+
+$$
+\boxed{
+\text{局部图表合法}
++
+\text{过渡关系合法}
++
+\text{指定类型的全局图表不存在}.
+}
+$$
+
+| 系统              | 局部名字                           | 过渡数据              | 无法得到的全局名字            | 障碍读数                         |
+| --------------- | ------------------------------ | ----------------- | -------------------- | ---------------------------- |
+| 磁单极子            | 局部 gauge 势                     | \(U(1)\) 过渡函数     | 单一全局势                | Chern 类                      |
+| 黑洞视界            | 局部时间／频率极化                      | Bogoliubov 变换     | 全局静态时间               | spectral flow、占据             |
+| shifted-\(\xi\) | numerator／denominator 局部 frame | \(\Theta_\omega\) | 正 retarded Hardy 因子化 | Blaschke degree、Hankel index |
+
+因此它们的相似不是“道被定义后复制了自己”。
+
+更准确地说：
+
+$$
+\boxed{
+\text{它们属于同一个下降障碍普适类。}
+}
+$$
+
+所谓“万物皆为分形”，在此表现为：
+
+$$
+\boxed{
+\text{同一种局部—过渡—胶合结构，
+在不同范畴中反复出现。}
+}
+$$
+
+这是操作分形或关系分形，不是实体图像分形。
+
+---
+
+# 第一千五百零三部　Riemann 反射名字
+
+定义零点上的反线性反射：
+
+$$
+\boxed{
+J(\rho)=1-\overline\rho.
+}
+\tag{1503.1}
+$$
+
+completed \(\xi\) 使零点除子在 \(J\) 下不变。
+
+定义轨道名字：
+
+$$
+\boxed{
+r_J(\rho)=[\rho]_J.
+}
+\tag{1503.2}
+$$
+
+该名字只保留反射轨道，不保留轨道中的方向。
+
+若：
+
+$$
+\Re\rho=\frac12,
+$$
+
+则：
+
+$$
+J(\rho)=\rho,
+$$
+
+轨道为单点。
+
+若：
+
+$$
+\Re\rho\neq\frac12,
+$$
+
+则轨道为二点：
+
+$$
+\{\rho,J\rho\}.
+$$
+
+因此：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+r_J\text{ 在全部非平凡上半零点上单射}.
+}
+\tag{1503.3}
+$$
+
+这只是 RH 的商空间重写，但它使“完成遗忘了什么”非常清楚：
+
+$$
+\boxed{
+\text{离线反射轨道被完成名字抹去了法向方向。}
+}
+$$
+
+---
+
+# 第一千五百零四部　离线零点的定向比特
+
+令 \(\Gamma_{\mathrm{causal}}\) 保留：
+
+* shifted 深度；
+* Hardy 时间方向；
+* inner／inverse-inner 取向；
+* Poisson/Hankel 边界响应。
+
+对一个 \(J\)-轨道 \(\mathcal O\)，定义：
+
+$$
+\boxed{
+d_{\mathrm{causal}}(\mathcal O)
+=
+\left|
+\Gamma_{\mathrm{causal}}(\mathcal O)
+\right|.
+}
+\tag{1504.1}
+$$
+
+在局部双分支模型中：
+
+$$
+\boxed{
+d_{\mathrm{causal}}(\mathcal O)
+=
+\begin{cases}
+1,&\mathcal O\text{ 为临界单点};\\
+2,&\mathcal O\text{ 为离线反射对}.
+\end{cases}
+}
+\tag{1504.2}
+$$
+
+定义局部命名缺陷：
+
+$$
+\boxed{
+b(\mathcal O)
+=
+\log_2
+d_{\mathrm{causal}}(\mathcal O).
+}
+\tag{1504.3}
+$$
+
+于是：
+
+$$
+\boxed{
+b(\mathcal O)
+=
+\begin{cases}
+0,&\text{临界零点};\\
+1,&\text{离线反射对}.
+\end{cases}
+}
+\tag{1504.4}
+$$
+
+所以每个离线轨道相对于 completed reflection name 多出一个：
+
+$$
+\boxed{
+\text{法向定向比特}.
+}
+$$
+
+它回答：
+
+$$
+\delta>0
+\quad\text{还是}\quad
+\delta<0.
+$$
+
+函数方程保留轨道，却不保留这一个方向位。
+
+---
+
+## 1504.1 加权命名熵
+
+给零点轨道配置可和权重 \(w_{\mathcal O}\ge0\)，定义：
+
+$$
+\boxed{
+\mathcal E_{\mathrm{orient}}
+=
+\sum_{\mathcal O}
+w_{\mathcal O}
+b(\mathcal O).
+}
+\tag{1504.5}
+$$
+
+在 causal profile 能够区分离线伙伴的条件下：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal E_{\mathrm{orient}}=0
+}
+\tag{1504.6}
+$$
+
+对任一对所有轨道取严格正权的可和权重成立。
+
+这不是传统熵，也不是物理黑洞熵。
+
+它只是：
+
+$$
+\boxed{
+\text{谱完成相对于因果完成所遗忘的方向信息量。}
+}
+$$
+
+---
+
+# 第一千五百零五部　横向距离本身就是一个 Dedekind 命名切口
+
+考虑一个孤立的右侧离线零点：
+
+$$
+\rho=\frac12+\delta+i\gamma,
+\qquad
+\delta>0.
+$$
+
+对每个有理观察深度：
+
+$$
+q\in\mathbb Q_{>0},
+$$
+
+定义二元名字：
+
+$$
+\boxed{
+\beta_q(\rho)
+=
+\begin{cases}
+1,&\text{在 shifted 深度 }q\text{ 可见反因果缺陷};\\
+0,&\text{不可见}.
+\end{cases}
+}
+\tag{1505.1}
+$$
+
+在局部互素模型中：
+
+$$
+\boxed{
+\beta_q(\rho)
+=
+\mathbf1_{\{q<\delta\}}.
+}
+\tag{1505.2}
+$$
+
+因此：
+
+$$
+\boxed{
+\delta
+=
+\sup
+\left\{
+q\in\mathbb Q_{>0}:
+\beta_q(\rho)=1
+\right\}.
+}
+\tag{1505.3}
+$$
+
+这是一条非常关键的结论：
+
+$$
+\boxed{
+\text{连续横向距离 \(\delta\)
+正是全部离散 shifted 名字形成的 Dedekind 边界。}
+}
+$$
+
+所以离散名字确实可以重建连续离线深度。
+
+但 \(\delta\) 不是任何单个名字。
+
+它存在于所有名字由 \(1\) 变为 \(0\) 的共同边界。
+
+---
+
+## 1505.1 全体离线深度的出生谱
+
+对全部右侧离线零点定义：
+
+$$
+\boxed{
+\kappa(\omega)
+=
+\sum_\rho
+m_\rho
+\mathbf1_{\{\delta_\rho>\omega\}}.
+}
+\tag{1505.4}
+$$
+
+它记录第 \(\omega\) 层仍然活跃的反因果通道数。
+
+在分布意义下：
+
+$$
+\boxed{
+-d\kappa
+=
+\sum_\rho
+m_\rho
+\delta_{\delta_\rho}.
+}
+\tag{1505.5}
+$$
+
+所以全部连续横向坐标被编码为一个离散层数函数的跳跃测度。
+
+这就是：
+
+$$
+\boxed{
+\text{命名出生谱}.
+}
+$$
+
+临界线对应全部出生深度压缩到：
+
+$$
+\delta=0.
+$$
+
+RH 则对应正半轴上没有任何出生原子。
+
+---
+
+# 第一千五百零六部　\(\xi\) 是一个高度完成的名字，而不是最终名字
+
+\(\xi\) 把：
+
+* 素数；
+* 素数幂历史；
+* Gamma 无穷位；
+* 极点修正；
+* 函数方程反射；
+
+压缩成一个标量整函数。
+
+它保留：
+
+* 零点除子；
+* 增长阶；
+* 反射轨道；
+* 解析完成。
+
+但它不显式保留：
+
+* 每个模式的 causal orientation；
+* Hardy 内／外取向；
+* 历史 lift；
+* 可控—可观状态；
+* 局部散射最小 realization。
+
+所以：
+
+$$
+\boxed{
+\xi
+}
+$$
+
+是一个极其强大的名字，却仍然是名字。
+
+它在 \(J\)-轨道层已经完成，但未必自动是 causal-profile 层的充分统计量。
+
+---
+
+## 1506.1 RH 的充分性形式
+
+对于任意名字 \(r\) 和 profile \(\Gamma\)，有：
+
+$$
+\boxed{
+\Gamma=F\circ r
+\iff
+\ker r\subseteq\ker\Gamma,
+}
+\tag{1506.1}
+$$
+
+其中 \(F\) 在 \(r\) 的实际值域上唯一。
+
+项目的 agency-self 定理正是这一最小充分商原则的正式版本。
+
+应用于：
+
+$$
+r=r_J,
+\qquad
+\Gamma=\Gamma_{\mathrm{causal}},
+$$
+
+得到条件性等价：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\Gamma_{\mathrm{causal}}
+\text{ 能因子化通过 }r_J.
+}
+\tag{1506.2}
+$$
+
+也就是：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{completed reflection name 已足以决定完整 causal profile}.
+}
+$$
+
+离线零点意味着同一 completed name 下存在两个 causal profile，因此名字不充分。
+
+---
+
+# 第一千五百零七部　RH 的双修复固定点形式
+
+令：
+
+$$
+R_J=\ker r_J.
+$$
+
+令 \(F_{\mathrm{shift}}\) 表示：
+
+* 推进 shifted 深度；
+* 更新 Hardy scattering；
+* 产生未来 Poisson/Hankel 响应；
+
+的完整动力。
+
+预测内修复：
+
+$$
+I_{F_{\mathrm{shift}}}(R_J)
+$$
+
+会把未来可区分的反射伙伴重新分开。
+
+遗忘闭修复：
+
+$$
+C_{F_{\mathrm{shift}}}(R_J)
+$$
+
+会把动力要求合并的更多状态归入稳定商。
+
+因此目标可以写成：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+I_{F_{\mathrm{shift}}}(R_J)
+=
+R_J
+=
+C_{F_{\mathrm{shift}}}(R_J).
+}
+\tag{1507.1}
+$$
+
+一般的 interior–closure 双修复与共同固定点理论已经由项目机器证明。
+
+目前未闭合的是：
+
+1. 构造完整的 \(F_{\mathrm{shift}}\) 状态空间；
+2. 证明其 profile 与此前 Hardy/Poisson 模型一致；
+3. 将离线零点对应为 \(I(R_J)\subsetneq R_J\)；
+4. 从 prime–Gamma 正性证明 \(R_J\) 为固定点。
+
+---
+
+## 1507.1 离线零点的修复熵
+
+在有限高度截断和全支撑权重下，定义：
+
+$$
+\boxed{
+\mathcal H_{\mathrm{RH}}(T)
+=
+H\!\left(
+Z_{I(R_J)}
+\mid
+Z_{R_J}
+\right).
+}
+\tag{1507.2}
+$$
+
+它测量：
+
+> 为了使 completed reflection name 能预测全部 shifted causal response，还需要补回多少方向信息？
+
+在理想局部模型中，每个离线反射轨道贡献一个二元定向区别。
+
+因此：
+
+$$
+\boxed{
+\mathcal H_{\mathrm{RH}}(T)=0
+}
+$$
+
+当且仅当高度窗口内不存在离线轨道。
+
+这为 RH 提供了一个“预测修复熵归零”的表述。
+
+---
+
+# 第一千五百零八部　有限验证为何不能成为终极名字
+
+令：
+
+$$
+r_T
+$$
+
+只记录高度不超过 \(T\) 的零点信息。
+
+即使已经严格验证：
+
+$$
+|\Im\rho|\le T
+\Longrightarrow
+\Re\rho=\frac12,
+$$
+
+\(r_T\) 仍然只是有限观察接口。
+
+若存在高度大于 \(T\) 的离线零点，其 causal profile 不由 \(r_T\) 解码。
+
+所以：
+
+$$
+\boxed{
+\text{有限高度验证只能证明有限接口的充分性，
+不能证明完整 profile 的充分性。}
+}
+$$
+
+要从所有有限 \(T\) 推到全局，必须提供一个统一结构，例如：
+
+* 正 storage operator；
+* uniform retention gap；
+* 全尺度 Weil 正性；
+* stable congruence theorem；
+* 全局 factorization。
+
+这不是“计算得还不够多”的问题，而是：
+
+$$
+\boxed{
+\text{有限名字与统一生成律是不同类型的证据。}
+}
+$$
+
+---
+
+# 第一千五百零九部　黄金比例在不可名理论中的最终位置
+
+黄金比例不能被称为“道的名字”。
+
+它属于一种特殊的残余递归。
+
+设第 \(n\) 层尚未被语言表达的能量为：
+
+$$
+U_n>0.
+$$
+
+假设每层使用相同规则：
+
+$$
+U_{n+1}=qU_n,
+$$
+
+且本层新显现量：
+
+$$
+V_n=U_n-U_{n+1}
+$$
+
+恰好等于两层以后仍未命名的残余：
+
+$$
+V_n=U_{n+2}.
+$$
+
+则：
+
+$$
+1-q=q^2.
+$$
+
+因此：
+
+$$
+\boxed{
+q=\varphi^{-1}.
+}
+\tag{1509.1}
+$$
+
+所以黄金比例的严格含义是：
+
+$$
+\boxed{
+\text{在最小二层自相似命名过程中，
+新显现与第二层残余达到平衡时的唯一正比例。}
+}
+$$
+
+它是命名界面的稳定迹，不是不可名本体的数值。
+
+---
+
+## 1509.1 黄金普适性仍需证明一个结构前提
+
+要声称黄金在“一切概念”中普适，必须证明所有 primitive naming dynamics 在最小化以后都满足：
+
+$$
+\boxed{
+V_n=U_{n+2}.
+}
+$$
+
+如果存在不可约三层、四层或多分支命名动力，就会出现其他代数常数。
+
+所以科学问题不是：
+
+$$
+\text{还能在哪里发现 }\varphi？
+$$
+
+而是：
+
+$$
+\boxed{
+\text{为什么 primitive naming closure 必须恰好是二层？}
+}
+$$
+
+这才是黄金普适性的承重命题。
+
+---
+
+# 第一千五百一十部　“道迹”只能是跨名字的自然关系
+
+既然道不能成为对象，所谓“道迹”也不能定义为某个固定实体。
+
+更谨慎的形式是：
+
+对每一个命名接口 \(r\)，有一个上下文相关量：
+
+$$
+T_r.
+$$
+
+若 \(r_2\) 细化 \(r_1\)：
+
+$$
+r_1=f\circ r_2,
+$$
+
+则要求：
+
+$$
+\boxed{
+T_{r_1}=f_*T_{r_2}.
+}
+\tag{1510.1}
+$$
+
+这样的自然族可以称为：
+
+$$
+\boxed{
+\text{跨命名迹}.
+}
+$$
+
+它不声称找到了道，只说明某个结构不依赖于具体命名图表。
+
+候选包括：
+
+* winding；
+* Chern 荷；
+* zero multiplicity；
+* Blaschke degree；
+* Hankel rank；
+* spectral-flow index。
+
+此前这些整数在不同表示中反复相等，正说明它们可能是同一缺陷的跨命名迹。
+
+而：
+
+* 坐标位置；
+* 具体 gauge；
+* 具体 Hardy 基；
+* 具体 Solenoid 地址；
+
+通常不是自然迹。
+
+---
+
+# 第一千五百一十一部　新的依赖总表
+
+|  层 | 可研究对象          | 它做了什么             | 不可被误认为什么 |
+| -: | -------------- | ----------------- | -------- |
+|  0 | 不可名性约束         | 禁止终极名字冒充所指        | 道的定义     |
+|  1 | 离散切口           | 产生二元判断与边界         | 连续整体     |
+|  2 | 等价关系           | 决定哪些状态同名          | 对象本身     |
+|  3 | 名字商空间          | 形成可见概念            | 完整历史     |
+|  4 | 修复区间 \([I,C]\) | 衡量预测与遗忘冲突         | 本体裂缝     |
+|  5 | 稳定 congruence  | 形成自治概念动力          | 绝对概念     |
+|  6 | 互动 profile     | 定义可操作 agency-self | 绝对自我     |
+|  7 | 逆极限历史          | 保存兼容名字 lift       | 道        |
+|  8 | 谱完成 \(\xi\)    | 汇总算术名字与反射轨道       | 完整生成系统   |
+|  9 | causal profile | 保留方向与时间极化         | 标量谱      |
+| 10 | 离线零点           | 见证谱名字不充分          | 道的反面     |
+| 11 | index／winding  | 跨表示保存缺陷           | 具体名字     |
+| 12 | 正性证明           | 证明两个完成能够兼容        | 对不可名者的定义 |
+
+---
+
+# 第一千五百一十二部　建议形式化顺序
+
+```text
+D5/S3/ConceptDynamics/DedekindNaming/
+  RationalThresholdName.lean
+  ThresholdProfileMonotone.lean
+  ThresholdProfileDeterminesReal.lean
+  NoFiniteThresholdFamilyDeterminesReal.lean
+  ContinuousParameterAsNamingBoundary.lean
+
+D5/S3/ConceptDynamics/DynamicConcept/
+  NamingKernel.lean
+  QuotientDynamicsWellDefined.lean
+  StableNameIffForwardCongruence.lean
+  DynamicConceptAsStableName.lean
+
+D5/S3/ConceptDynamics/NamingRepairEntropy/
+  PredictiveRepairQuotient.lean
+  ForgettingRepairQuotient.lean
+  PredictiveRepairEntropy.lean
+  ForgettingRepairEntropy.lean
+  NamingHorizonEntropyChainRule.lean
+  ZeroNamingEntropyIffStable.lean
+
+D5/S3/Observer/AgencySelf/NoFiniteTerminalSelf/
+  InterventionTower.lean
+  RestrictedAgencyKernel.lean
+  InterventionExpansionRefinesKernel.lean
+  StrictKernelTowerNoFiniteTerminal.lean
+  AgencyShadowLimit.lean
+
+D5/S3/ConceptDynamics/LocalNamingDescent/
+  LocalNamingChart.lean
+  NamingTransition.lean
+  NamingCocycle.lean
+  GlobalNamingTrivialization.lean
+  NamingDescentObstruction.lean
+
+D5/S3/Analytic/Zeta/ReflectionOrientationInformation/
+  ReflectionOrbitCausalProfile.lean
+  CriticalOrbitOneProfile.lean
+  OffLineOrbitTwoProfiles.lean
+  ReflectionOrientationBit.lean
+  WeightedOrientationEntropy.lean
+
+D5/S3/Analytic/Zeta/OffLineDepthDedekindCut/
+  RationalShiftDefectName.lean
+  ShiftDefectNameIffBelowDepth.lean
+  OffLineDepthAsSupremum.lean
+  OffLineDepthTailCount.lean
+  OffLineBirthMeasure.lean
+
+D5/S3/Analytic/Zeta/ReflectionNameSufficiency/
+  ReflectionNameKernel.lean
+  CausalProfileKernel.lean
+  ProfileFactorsThroughNameIffKernelInclusion.lean
+  ReflectionNameSufficientIffRH.lean
+  ReflectionNamePredictiveRepairEntropy.lean
+
+D5/S3/Analytic/Zeta/RiemannNamingFixedPoint/
+  ShiftedResponseDynamics.lean
+  ReflectionNamePredictiveInterior.lean
+  ReflectionNameForgettingClosure.lean
+  OffLineZeroOpensRepairInterval.lean
+  RHNamingRepairFixedPointTarget.lean
+
+D5/S3/ConceptDynamics/ApophaticTrace/
+  NamingRefinementCategory.lean
+  ContextIndexedTrace.lean
+  RefinementNaturalTrace.lean
+  DefectFaithfulTraceFamily.lean
+  NoIdentificationWithUnnamedSource.lean
+```
+
+---
+
+# 第一千五百一十三部　理论深度审计
+
+| 本轮结果                                        | 地位                   |
+| ------------------------------------------- | -------------------- |
+| 连续参数可由无穷二元切口恢复                              | 精确 Dedekind 构造       |
+| 连续性位于切口的兼容关系中                               | 精确解释                 |
+| 动力概念可建模为稳定等价关系                              | 精确                   |
+| predictive interior／forgetting closure      | 项目机器锚点               |
+| 双修复熵链式分解                                    | 本轮精确定理               |
+| agency-self 是完整互动轮廓的最小充分商                   | 项目机器锚点               |
+| 严格干预核塔没有有限终点                                | 本轮精确定理               |
+| 局部名字与下降障碍统一单极子／视界／\(\xi\)                   | 结构模板                 |
+| 离线反射轨道携带一位 causal orientation 信息            | 局部双分支模型中精确           |
+| 离线深度是 shifted 二元名字的 Dedekind cut            | 局部互素模型中精确            |
+| RH 等价于 reflection name 的 causal sufficiency | 完整 profile 分离条件下精确   |
+| RH 等价于 reflection name 的双修复固定点              | 待构造 shifted dynamics |
+| 黄金是二层残余递归固定迹                                | 精确条件定理               |
+| 所有 primitive concepts 必为二层递归                | 尚未证明                 |
+| “道迹”是自然族而非对象                                | 方法论边界                |
+
+---
+
+# 本轮最终结论
+
+“道不可名”并不意味着离散名字毫无意义。
+
+更准确的是：
+
+$$
+\boxed{
+\text{离散名字能够通过无穷兼容切口恢复连续参数，
+却不能把其中任何一个名字认作连续本身。}
+}
+$$
+
+一个实数可以由全部有理阈值的 yes/no 判断恢复：
+
+$$
+x
+=
+\sup\{q\in\mathbb Q:q<x\}.
+$$
+
+但 \(x\) 不等于其中任何一次判断。
+
+连续信息存在于全部判断之间的顺序、兼容性和共同边界中。
+
+同样，所谓“道迹”若存在，也不应是某个最终词语，而应是不同名字之间反复保持的自然关系。
+
+---
+
+名字的真实数学本体是等价关系。
+
+一个名字决定：
+
+$$
+\text{哪些状态被称为相同。}
+$$
+
+在动力中，它只有成为 forward congruence，才能形成自治概念。
+
+项目最新的双修复定理表明，每个名字都夹在：
+
+$$
+I_F(R)
+\subseteq
+R
+\subseteq
+C_F(R)
+$$
+
+之间。
+
+左侧要求为了预测未来补回区别；
+
+右侧要求为了动力稳定继续遗忘。
+
+一个稳定概念是二者共同固定点。
+
+因此命名最深的矛盾不是“真名与假名”，而是：
+
+$$
+\boxed{
+\text{预测要求更多区别，
+稳定要求更多认同。}
+}
+$$
+
+二者之间的区间就是命名视界。
+
+---
+
+“自我”也只能被理解为相对于互动集合的最小充分商。
+
+两个历史若在全部允许干预下拥有相同未来轮廓，就属于同一个 agency-self 类。
+
+任何充分接口都唯一地映向这个商。
+
+所以负时间可以是同一当前 self 背后的历史纤维。
+
+但这类纤维是合法不可区分历史。
+
+离线零点不是这种合法纤维。
+
+---
+
+completed \(\xi\) 只给零点一个反射轨道名字：
+
+$$
+\rho\sim1-\overline\rho.
+$$
+
+临界零点中，名字的两个 lift 本来就是同一点。
+
+离线零点中，同一名字下面有两个不同的 causal lift：
+
+* 一个向正时间；
+* 一个向负时间；
+* 一个表现为 inner；
+* 一个表现为 inverse-inner。
+
+因此每个离线轨道相对于 causal profile 多出一个法向定向比特。
+
+其横向距离 \(\delta\) 又可以由所有有理 shifted 判断恢复：
+
+$$
+\delta
+=
+\sup\{q\in\mathbb Q_{>0}:\text{深度 }q\text{ 仍检测到缺陷}\}.
+$$
+
+所以离线零点的连续坐标不是某个离散名字，而是全部离散观察由“可见”转为“不可见”的 Dedekind 边界。
+
+---
+
+这使 RH 获得了一个非常纯粹的新表达：
+
+$$
+\boxed{
+\text{completed reflection name 是否已经足以决定完整 causal profile？}
+}
+$$
+
+若足够，则 profile 因子化通过反射轨道商。
+
+若不足，则某个同名反射对会被未来实验重新区分。
+
+项目已经提供了一般 agency-self 最小商与 congruence 双修复的机器基础；剩余工作是把 shifted-\(\xi\) 的 causal response 接入这两个接口。
+
+最终目标是：
+
+$$
+\boxed{
+I_{F_{\mathrm{shift}}}(R_J)
+=
+R_J
+=
+C_{F_{\mathrm{shift}}}(R_J).
+}
+$$
+
+这不是定义道。
+
+它只证明：
+
+$$
+\boxed{
+\text{在 Riemann 这一特定命名系统中，
+谱完成与因果完成恰好兼容。}
+}
+$$
+
+---
+
+黄金比例也得到最终的克制定位。
+
+它不是道的名字。
+
+若每层未命名残余以固定比例 \(q\) 继续隐藏，并且当前新显现量恰等于两层以后仍隐藏的量，则：
+
+$$
+1-q=q^2,
+$$
+
+从而：
+
+$$
+q=\varphi^{-1}.
+$$
+
+所以黄金比例是：
+
+$$
+\boxed{
+\text{最小二层自相似命名过程的稳定残余比例。}
+}
+$$
+
+要将它提升为万物普适常数，必须证明所有 primitive naming dynamics 都能最小化为二层闭环；这一点目前仍是可反驳猜想。
+
+---
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{道不可被名字占有；
+连续却可以在无穷名字的兼容边界中留下迹。
+概念是稳定的名字，
+自我是互动充分商，
+黄金是二层命名残余的固定比，
+离线零点则是谱名字不足以承载因果方向时留下的一位定向信息。}
+}
+$$
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v9.3：克莱因四命名群、平方降阶、自加权 Hamburger 塔与离线零点的有限反证书
+
+以下从前文**第一千五百一十三部**继续。
+
+这一轮仍然不尝试定义“道”。
+
+我们只研究 completed \(\xi\) 已经实际实施的一次命名：
+
+$$
+\boxed{
+\text{函数方程把两个中心分支 }z\text{ 与 }-z\text{ 命名为同一对象。}
+}
+$$
+
+这一命名不是比喻。令
+
+$$
+F(z):=\xi\!\left(\frac12+z\right).
+$$
+
+函数方程给出：
+
+$$
+F(z)=F(-z).
+$$
+
+因此 \(F\) 必然因子化通过平方映射：
+
+$$
+\boxed{
+z\longmapsto w=z^2.
+}
+$$
+
+平方映射就是 completed \(\xi\) 的第一层规范“名字”：
+
+* 它保留反射轨道；
+* 它遗忘轨道中的正负分支；
+* 它不定义未命名本体；
+* 但它把 RH 精确转写成一个实零点、正测度和有限 Hankel 正性问题。
+
+本轮最承重的结论是：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{一个由 }\xi\text{ 中心偶阶导数构成的单一 Hankel 塔全部正半定}.
+}
+$$
+
+因此一个无论多稀疏、多高、多靠近临界线的离线零点，最终都必然产生一个**有限负矩阵证书**。
+
+这正是此前一直寻找的对偶方案：
+
+$$
+\boxed{
+\text{不直接寻找稀缺离线点；
+寻找它不可能逃脱的有限正性破坏。}
+}
+$$
+
+---
+
+# 第一千五百一十四部　\(\xi\) 的克莱因四命名群
+
+继续令：
+
+$$
+F(z)=\xi\left(\frac12+z\right).
+$$
+
+存在三个自然对称：
+
+$$
+\boxed{
+A(z)=-z,
+}
+\tag{1514.1}
+$$
+
+$$
+\boxed{
+B(z)=\overline z,
+}
+\tag{1514.2}
+$$
+
+$$
+\boxed{
+C(z)=-\overline z=A\circ B(z).
+}
+\tag{1514.3}
+$$
+
+它们满足：
+
+$$
+A^2=B^2=C^2=I,
+\qquad
+AB=BA=C.
+$$
+
+所以形成克莱因四群：
+
+$$
+\boxed{
+V_4=\{I,A,B,C\}.
+}
+$$
+
+其中：
+
+* \(A\) 来自函数方程；
+* \(B\) 来自 \(\xi\) 的实结构；
+* \(C\) 是关于临界线的反射。
+
+临界线在中心坐标中为：
+
+$$
+\boxed{
+\operatorname{Fix}(C)=i\mathbb R.
+}
+\tag{1514.4}
+$$
+
+---
+
+## 1514.1 零点轨道的两种大小
+
+设：
+
+$$
+z_\rho=\rho-\frac12=\delta+i\gamma.
+$$
+
+一般离线零点产生四元轨道：
+
+$$
+\boxed{
+\{
+z_\rho,\,
+-z_\rho,\,
+\overline{z_\rho},\,
+-\overline{z_\rho}
+\}.
+}
+\tag{1514.5}
+$$
+
+若：
+
+$$
+\delta=0,
+$$
+
+则：
+
+$$
+z_\rho=-\overline{z_\rho},
+$$
+
+四元轨道退化成：
+
+$$
+\boxed{
+\{i\gamma,-i\gamma\}.
+}
+\tag{1514.6}
+$$
+
+因此 RH 可以先写成：
+
+$$
+\boxed{
+\text{所有一般四元零点轨道都退化为二元轨道。}
+}
+$$
+
+但这一写法仍然保留了过多分支。函数方程已经告诉我们，应先商去 \(A:z\mapsto-z\)。
+
+---
+
+# 第一千五百一十五部　平方影函数
+
+因为 \(F\) 是偶整函数，其 Taylor 级数只有偶次项：
+
+$$
+F(z)=\sum_{n=0}^{\infty}c_nz^{2n}.
+$$
+
+定义：
+
+$$
+\boxed{
+G(w):=\sum_{n=0}^{\infty}c_nw^n.
+}
+\tag{1515.1}
+$$
+
+则 \(G\) 是唯一满足：
+
+$$
+\boxed{
+F(z)=G(z^2)
+}
+\tag{1515.2}
+$$
+
+的整函数。
+
+可以称 \(G\) 为：
+
+$$
+\boxed{
+\textbf{\(\xi\) 的平方影函数}.
+}
+$$
+
+它不是“道”的影子，而是 \(\xi\) 在商去函数方程分支以后留下的解析影像。
+
+---
+
+## 定理 1515.1（平方降阶）
+
+若 \(F\) 的整函数阶为 \(1\)，则 \(G\) 的阶为：
+
+$$
+\boxed{
+\frac12.
+}
+\tag{1515.3}
+$$
+
+### 证明
+
+因为任意 \(w\) 都有平方根 \(z\)，且：
+
+$$
+|z|=\sqrt{|w|},
+$$
+
+故最大模满足：
+
+$$
+M_G(r)=M_F(\sqrt r).
+$$
+
+于是：
+
+$$
+\begin{aligned}
+\rho(G)
+&=
+\limsup_{r\to\infty}
+\frac{
+\log\log M_G(r)
+}{
+\log r
+}\\
+&=
+\limsup_{r\to\infty}
+\frac{
+\log\log M_F(\sqrt r)
+}{
+2\log\sqrt r
+}
+=
+\frac{\rho(F)}2.
+\end{aligned}
+$$
+
+∎
+
+阶小于 \(1\) 是决定性事实：\(G\) 具有 genus-zero 的规范乘积，不再需要非平凡指数补偿项。
+
+---
+
+# 第一千五百一十六部　RH 成为负实轴零点命题
+
+若 \(\rho\) 是 \(\xi\) 的零点，定义平方名字：
+
+$$
+\boxed{
+\lambda_\rho
+=
+\left(\rho-\frac12\right)^2.
+}
+\tag{1516.1}
+$$
+
+因为 \(z_\rho\) 与 \(-z_\rho\) 被平方映射识别，\(\lambda_\rho\) 正是 \(G\) 的零点。
+
+若 RH 成立：
+
+$$
+z_\rho=i\gamma,
+$$
+
+于是：
+
+$$
+\boxed{
+\lambda_\rho=-\gamma^2<0.
+}
+\tag{1516.2}
+$$
+
+反之，若：
+
+$$
+\lambda_\rho<0,
+$$
+
+则其平方根必为纯虚数：
+
+$$
+z_\rho=\pm i\sqrt{-\lambda_\rho},
+$$
+
+所以：
+
+$$
+\Re\rho=\frac12.
+$$
+
+因此：
+
+## 定理 1516.1（平方影 RH 判据）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\operatorname{Zero}(G)
+\subset(-\infty,0).
+}
+\tag{1516.3}
+$$
+
+这把临界线问题变成了一个普通的负实零点问题。
+
+---
+
+## 1516.1 离线零点在平方影平面中的身份
+
+对：
+
+$$
+z_\rho=\delta+i\gamma,
+$$
+
+有：
+
+$$
+\boxed{
+\lambda_\rho
+=
+\delta^2-\gamma^2
++
+2i\delta\gamma.
+}
+\tag{1516.4}
+$$
+
+若：
+
+$$
+\gamma>0,
+$$
+
+则：
+
+$$
+\operatorname{sgn}
+\Im\lambda_\rho
+=
+\operatorname{sgn}\delta.
+$$
+
+所以函数方程商去 \(z\leftrightarrow-z\) 后，离线零点不再表现为“离开一条竖线”，而表现为：
+
+$$
+\boxed{
+\text{平方影函数的非实零点}.
+}
+$$
+
+它的同层对偶就是：
+
+$$
+\boxed{
+\lambda_\rho
+\longleftrightarrow
+\overline{\lambda_\rho}.
+}
+$$
+
+---
+
+## 1516.2 从平方名字恢复离线几何
+
+由于：
+
+$$
+|\lambda_\rho|
+=
+|z_\rho|^2
+=
+\delta^2+\gamma^2,
+$$
+
+有：
+
+$$
+\boxed{
+\delta^2
+=
+\frac{
+|\lambda_\rho|+\Re\lambda_\rho
+}{2},
+}
+\tag{1516.5}
+$$
+
+$$
+\boxed{
+\gamma^2
+=
+\frac{
+|\lambda_\rho|-\Re\lambda_\rho
+}{2}.
+}
+\tag{1516.6}
+$$
+
+因此平方命名虽然遗忘了 \(z\) 与 \(-z\) 的分支，却没有遗忘：
+
+* 横向深度的绝对值；
+* 零点高度；
+* 离线取向的共轭对。
+
+它是一个真正的信息充分商，而不是任意粗化。
+
+---
+
+# 第一千五百一十七部　逆平方紧化
+
+进一步定义：
+
+$$
+\boxed{
+v_\rho
+=
+-\frac1{\lambda_\rho}
+=
+-\left(
+\rho-\frac12
+\right)^{-2}.
+}
+\tag{1517.1}
+$$
+
+如果 RH 成立：
+
+$$
+\boxed{
+v_\rho=\frac1{\gamma^2}>0.
+}
+\tag{1517.2}
+$$
+
+所以复变换：
+
+$$
+\boxed{
+\rho
+\longmapsto
+v_\rho
+=
+-\left(\rho-\frac12\right)^{-2}
+}
+$$
+
+同时完成三件事：
+
+1. 商去函数方程的 \(\pm\) 分支；
+2. 把临界线送到正实轴；
+3. 把高零点压缩到 \(v=0\) 附近。
+
+这可以称为：
+
+$$
+\boxed{
+\textbf{中心逆平方命名}.
+}
+$$
+
+---
+
+## 1517.1 离线节点的显式形式
+
+令：
+
+$$
+R=\delta^2+\gamma^2.
+$$
+
+则：
+
+$$
+\boxed{
+v_\rho
+=
+\frac{
+\gamma^2-\delta^2+2i\delta\gamma
+}{
+R^2
+}.
+}
+\tag{1517.3}
+$$
+
+因此：
+
+$$
+\boxed{
+|v_\rho|=\frac1R,
+}
+\tag{1517.4}
+$$
+
+$$
+\boxed{
+\Im v_\rho
+=
+\frac{2\delta\gamma}{R^2}.
+}
+\tag{1517.5}
+$$
+
+反向恢复公式为：
+
+$$
+\boxed{
+\delta^2
+=
+\frac{
+|v_\rho|-\Re v_\rho
+}{
+2|v_\rho|^2
+},
+}
+\tag{1517.6}
+$$
+
+$$
+\boxed{
+\gamma^2
+=
+\frac{
+|v_\rho|+\Re v_\rho
+}{
+2|v_\rho|^2
+}.
+}
+\tag{1517.7}
+$$
+
+所以 \(v_\rho\) 不是任意重参数化。
+
+它同时编码：
+
+* 深度；
+* 高度；
+* 方向；
+* 完成层级。
+
+RH 精确成为：
+
+$$
+\boxed{
+v_\rho\in\mathbb R_{>0}
+\quad
+\text{对全部零点轨道成立}.
+}
+\tag{1517.8}
+$$
+
+---
+
+# 第一千五百一十八部　genus-zero 乘积与中心矩
+
+令 \(\lambda_j\) 遍历 \(G\) 的不同零点，重数为 \(m_j\)，并定义：
+
+$$
+v_j=-\lambda_j^{-1}.
+$$
+
+因为 \(G\) 的阶为 \(1/2<1\)，规范乘积为：
+
+$$
+\boxed{
+\frac{G(w)}{G(0)}
+=
+\prod_j
+\left(
+1-\frac w{\lambda_j}
+\right)^{m_j}
+=
+\prod_j
+(1+v_jw)^{m_j}.
+}
+\tag{1518.1}
+$$
+
+其对数导数为：
+
+$$
+\boxed{
+\mathcal M_\xi(w)
+:=
+\frac{G'(w)}{G(w)}
+=
+\sum_j
+\frac{m_jv_j}{1+v_jw}.
+}
+\tag{1518.2}
+$$
+
+在 \(w=0\) 附近展开：
+
+$$
+\boxed{
+\mathcal M_\xi(w)
+=
+\sum_{n=0}^{\infty}
+(-1)^n
+\tau_{n+1}w^n,
+}
+\tag{1518.3}
+$$
+
+其中：
+
+$$
+\boxed{
+\tau_n
+=
+\sum_jm_jv_j^n,
+\qquad
+n\ge1.
+}
+\tag{1518.4}
+$$
+
+这些 \(\tau_n\) 是 completed \(\xi\) 的中心逆平方幂和。
+
+---
+
+## 1518.1 不需要输入零点坐标
+
+令：
+
+$$
+L(z)
+=
+\log
+\xi\left(\frac12+z\right)
+$$
+
+为 \(z=0\) 邻域中的解析对数。
+
+由于：
+
+$$
+L(z)=\log G(z^2),
+$$
+
+得到：
+
+$$
+\boxed{
+\tau_n
+=
+\frac{
+(-1)^{n-1}n
+}{
+(2n)!
+}
+\left.
+\frac{d^{2n}}{dz^{2n}}
+\log\xi\left(\frac12+z\right)
+\right|_{z=0}.
+}
+\tag{1518.5}
+$$
+
+所以每个 \(\tau_n\) 都可以直接由 \(\xi\) 在中心的偶阶 jet 计算，不需要预先知道任何零点纵坐标。
+
+这使后续 Hankel 判据成为真正的函数内生判据。
+
+---
+
+# 第一千五百一十九部　RH 下的正测度表示
+
+若 RH 成立，则：
+
+$$
+v_j=\gamma_j^{-2}>0.
+$$
+
+定义正测度：
+
+$$
+\boxed{
+\nu_\xi
+=
+\sum_j
+m_jv_j\,\delta_{v_j}.
+}
+\tag{1519.1}
+$$
+
+于是：
+
+$$
+\boxed{
+\tau_{n+1}
+=
+\int_0^\infty
+x^n\,d\nu_\xi(x).
+}
+\tag{1519.2}
+$$
+
+并且：
+
+$$
+\boxed{
+\mathcal M_\xi(w)
+=
+\int_0^\infty
+\frac{d\nu_\xi(x)}
+{1+wx}.
+}
+\tag{1519.3}
+$$
+
+所以 \(\mathcal M_\xi\) 是一个 Stieltjes 型正响应。
+
+对 \(w>0\)：
+
+$$
+\boxed{
+(-1)^k
+\mathcal M_\xi^{(k)}(w)
+=
+k!
+\int_0^\infty
+\frac{x^k\,d\nu_\xi(x)}
+{(1+wx)^{k+1}}
+>0.
+}
+\tag{1519.4}
+$$
+
+因此 RH 不仅意味着零点在线，还意味着：
+
+$$
+\boxed{
+\mathcal M_\xi
+\text{ 是完全单调的正谱 resolvent}.
+}
+$$
+
+---
+
+# 第一千五百二十部　单一 Hankel 塔判据
+
+定义：
+
+$$
+\boxed{
+H_N^\xi
+=
+\left[
+\tau_{i+j+1}
+\right]_{i,j=0}^{N}.
+}
+\tag{1520.1}
+$$
+
+---
+
+## 定理 1520.1（中心自加权 Hamburger 判据）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+H_N^\xi\succeq0
+\qquad
+\forall N\ge0.
+}
+\tag{1520.2}
+$$
+
+### RH 推出正性
+
+对任意：
+
+$$
+c=(c_0,\ldots,c_N),
+$$
+
+令：
+
+$$
+p(x)=\sum_{k=0}^{N}c_kx^k.
+$$
+
+则：
+
+$$
+\begin{aligned}
+c^*H_N^\xi c
+&=
+\sum_{i,j}
+\overline{c_i}c_j
+\tau_{i+j+1}
+\\
+&=
+\sum_r
+m_rv_r
+\left|
+p(v_r)
+\right|^2
+\ge0.
+\end{aligned}
+\tag{1520.3}
+$$
+
+由于 Riemann 零点有无限多个不同高度，非零有限次数多项式不能在全部 \(v_r\) 上消失，所以实际上：
+
+$$
+\boxed{
+H_N^\xi\succ0.
+}
+\tag{1520.4}
+$$
+
+---
+
+### Hankel 正性推出 RH
+
+假设：
+
+$$
+H_N^\xi\succeq0
+\quad
+\forall N.
+$$
+
+由 Hamburger moment theorem，存在正测度 \(\mu\) 于 \(\mathbb R\)，使：
+
+$$
+\boxed{
+\tau_{n+1}
+=
+\int_{\mathbb R}
+x^n\,d\mu(x).
+}
+\tag{1520.5}
+$$
+
+因为 \(\tau_n\) 来自一个在原点具有正收敛半径的解析函数，矩增长至多为指数型，所以 \(\mu\) 可以取为紧支撑测度。
+
+定义：
+
+$$
+\widetilde{\mathcal M}(w)
+=
+\int_{\mathbb R}
+\frac{d\mu(x)}
+{1+wx}.
+$$
+
+它在 \(w=0\) 的 Taylor 级数为：
+
+$$
+\widetilde{\mathcal M}(w)
+=
+\sum_{n\ge0}
+(-1)^n\tau_{n+1}w^n.
+$$
+
+所以：
+
+$$
+\widetilde{\mathcal M}(w)
+=
+\mathcal M_\xi(w)
+$$
+
+在原点邻域成立，继而由解析延拓成立于共同定义域。
+
+另一方面，\(\widetilde{\mathcal M}\) 的奇点只能来自实支撑点 \(x\in\mathbb R\)，位置为：
+
+$$
+w=-x^{-1}.
+$$
+
+所以 \(\mathcal M_\xi\) 的每个极点：
+
+$$
+w=-v_j^{-1}
+$$
+
+必须对应实数 \(v_j\)。
+
+更进一步，在该极点处：
+
+$$
+\operatorname{Res}
+\widetilde{\mathcal M}
+\left(
+-\frac1{v_j}
+\right)
+=
+\frac{\mu(\{v_j\})}{v_j}.
+$$
+
+而：
+
+$$
+\operatorname{Res}
+\mathcal M_\xi
+\left(
+-\frac1{v_j}
+\right)
+=
+m_j>0.
+$$
+
+所以：
+
+$$
+\boxed{
+\mu(\{v_j\})=m_jv_j\ge0.
+}
+$$
+
+因 \(m_j>0\)、\(v_j\neq0\)，得到：
+
+$$
+\boxed{
+v_j>0.
+}
+$$
+
+于是：
+
+$$
+\lambda_j=-v_j^{-1}<0,
+$$
+
+所有 \(\rho\) 都位于临界线。
+
+∎
+
+Stieltjes/Hamburger 矩列与 Hankel 正性的经典关系是成熟的矩问题理论；这里额外起决定作用的是“节点同时决定矩权”的自加权结构。([arXiv][1])
+
+---
+
+## 1520.1 纯标量行列式版本
+
+定义：
+
+$$
+\boxed{
+\Delta_N^\xi
+=
+\det
+\left[
+\tau_{i+j+1}
+\right]_{i,j=0}^{N}.
+}
+\tag{1520.6}
+$$
+
+由 Sylvester 判据和 RH 下的严格正定性：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\Delta_N^\xi>0
+\qquad
+\forall N\ge0.
+}
+\tag{1520.7}
+$$
+
+所以 RH 被压缩成一列完全由中心偶阶 jet 计算的实数符号。
+
+---
+
+# 第一千五百二十一部　Hankel 行列式的 Vandermonde 形态
+
+RH 下：
+
+$$
+H_N^\xi=V_NW V_N^*,
+$$
+
+其中：
+
+$$
+(V_N)_{ij}=v_j^i,
+\qquad
+W_{jj}=m_jv_j.
+$$
+
+由 Cauchy–Binet：
+
+$$
+\boxed{
+\Delta_N^\xi
+=
+\sum_{j_0<\cdots<j_N}
+\left(
+\prod_{r=0}^{N}
+m_{j_r}v_{j_r}
+\right)
+\prod_{0\le a<b\le N}
+(v_{j_b}-v_{j_a})^2.
+}
+\tag{1521.1}
+$$
+
+所以每个有限行列式都是：
+
+$$
+\boxed{
+\text{节点正质量}
+\times
+\text{节点关系体积平方}
+}
+$$
+
+的总和。
+
+这非常符合前文“对象的关系再次形成对象”的结构：
+
+* 单节点给出 inverse-square 名字；
+* 两节点差给出关系；
+* Vandermonde 给出高阶关系体积；
+* Hankel 行列式给出整个有限关系族是否可 Gram 化。
+
+---
+
+# 第一千五百二十二部　离线共轭对的最小负块
+
+只考虑一个离线平方节点对：
+
+$$
+v=a+ib,
+\qquad
+\overline v=a-ib,
+\qquad
+b\neq0,
+$$
+
+重数均为 \(m\)。
+
+则：
+
+$$
+\tau_n
+=
+m(v^n+\overline v^{\,n}).
+$$
+
+最小非平凡 Hankel 行列式为：
+
+$$
+\Delta_1
+=
+\det
+\begin{pmatrix}
+\tau_1&\tau_2\\
+\tau_2&\tau_3
+\end{pmatrix}.
+$$
+
+直接计算：
+
+$$
+\boxed{
+\Delta_1
+=
+-4m^2
+(\Im v)^2
+|v|^2
+<0.
+}
+\tag{1522.1}
+$$
+
+代入：
+
+$$
+v
+=
+\frac{
+\gamma^2-\delta^2+2i\delta\gamma
+}{
+(\delta^2+\gamma^2)^2
+},
+$$
+
+得到：
+
+$$
+\boxed{
+\Delta_1
+=
+-
+\frac{
+16m^2\delta^2\gamma^2
+}{
+(\delta^2+\gamma^2)^6
+}.
+}
+\tag{1522.2}
+$$
+
+因此在没有其他节点干扰的局部模型中，一个离线共轭对立刻产生一个 \(2\times2\) 负行列式。
+
+---
+
+## 1522.1 为什么极高离线零点仍然难检测
+
+当：
+
+$$
+\gamma\gg|\delta|,
+$$
+
+式 (1522.2) 约为：
+
+$$
+\boxed{
+\Delta_1
+\sim
+-
+16m^2
+\frac{\delta^2}{\gamma^{10}}.
+}
+\tag{1522.3}
+$$
+
+所以离线缺陷虽然具有严格负符号，其幅度却可能极端微小。
+
+这解释了：
+
+$$
+\boxed{
+\text{“存在有限证书”与“证书容易数值发现”是两件完全不同的事。}
+}
+$$
+
+当还有大量更低的临界节点时，它们的正 Gram 背景可能遮蔽这一微弱局部块；必须使用高阶多项式过滤、Christoffel 局部化或结构化 Schur 补才能将其分离。
+
+---
+
+# 第一千五百二十三部　离线零点的有限证明对偶
+
+由定理 1520.1：
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\Longrightarrow
+\exists N,\exists c\neq0:
+c^*H_N^\xi c<0.
+}
+\tag{1523.1}
+$$
+
+因此离线零点的证明对偶可以最终写成：
+
+$$
+\boxed{
+\text{一个由有限个中心 jet 构成的负 Hankel 向量。}
+}
+$$
+
+它不要求：
+
+* 猜测离线零点高度；
+* 在复平面随机扫描；
+* 直接求解 \(\xi(s)=0\)；
+* 知道离线零点有多少个。
+
+只需要计算：
+
+$$
+\tau_1,\ldots,\tau_{2N+1}
+$$
+
+并认证有限矩阵：
+
+$$
+H_N^\xi
+$$
+
+的最小特征值为负。
+
+---
+
+## 1523.1 逻辑不对称
+
+RH 与其否定在这一语言中具有不同逻辑复杂度：
+
+$$
+\boxed{
+\mathrm{RH}
+=
+\forall N,\ H_N^\xi\succeq0;
+}
+\tag{1523.2}
+$$
+
+$$
+\boxed{
+\neg\mathrm{RH}
+=
+\exists N,\ H_N^\xi\not\succeq0.
+}
+\tag{1523.3}
+$$
+
+所以：
+
+* RH 假时，存在有限反证书；
+* RH 真时，不能靠“检查了很多 \(N\)”完成证明；
+* 真命题仍需要一个对全部 \(N\) 的统一正性生成律。
+
+这正是“不可名性”在证明论中的一条痕迹：
+
+$$
+\boxed{
+\text{缺陷可以被一个有限名字抓住；
+无缺陷不能由无限次未发现缺陷自动证明。}
+}
+$$
+
+一篇 2026 年 8 月的 contour-Hankel 预印本也独立发展了移动轮廓、有限原子矩与非实共轭对负指标之间的联系，说明“非实零点 \(\to\) 有限 Hankel 惯性事件”确实是一条活跃研究方向。([arXiv][2])
+
+---
+
+# 第一千五百二十四部　命名深度
+
+定义最早负证书深度：
+
+$$
+\boxed{
+N_{\mathrm{cert}}
+=
+\inf
+\left\{
+N:
+\lambda_{\min}
+(H_N^\xi)<0
+\right\}.
+}
+\tag{1524.1}
+$$
+
+若 RH 成立：
+
+$$
+N_{\mathrm{cert}}=\infty.
+$$
+
+若 RH 失败：
+
+$$
+N_{\mathrm{cert}}<\infty.
+$$
+
+但 \(N_{\mathrm{cert}}\) 不只取决于：
+
+* 离线零点高度；
+* 横向距离；
+* 重数。
+
+它还取决于：
+
+* 更低节点造成的正背景；
+* 节点间相位抵消；
+* 所选幂基的条件数；
+* 需要消去多少已知节点才能隔离异常。
+
+所以：
+
+$$
+\boxed{
+N_{\mathrm{cert}}
+}
+$$
+
+更接近一种：
+
+$$
+\boxed{
+\text{离线零点的证明复杂度／命名深度}.
+}
+$$
+
+这比“离线零点在高度 \(T\)”更能描述它为什么可能极难发现。
+
+---
+
+# 第一千五百二十五部　连续谱影由离散名字塔恢复
+
+每一个：
+
+$$
+\tau_n
+$$
+
+都只是一个离散标量名字。
+
+任意有限前缀：
+
+$$
+(\tau_1,\ldots,\tau_K)
+$$
+
+通常对应许多不同正测度。
+
+只有完整无穷矩序列才唯一恢复紧支撑测度：
+
+$$
+\nu_\xi.
+$$
+
+因此：
+
+$$
+\boxed{
+\text{正谱测度不等于某一个矩；
+它存在于全部矩之间的兼容关系中。}
+}
+$$
+
+这和 Dedekind cut 完全同型：
+
+* 单个有理判断不等于实数；
+* 全部兼容判断恢复实数；
+* 单个矩不等于测度；
+* 全部兼容矩恢复测度。
+
+---
+
+## 1525.1 有限命名锥
+
+定义第 \(N\) 层 Hamburger 锥：
+
+$$
+\boxed{
+\mathfrak C_N
+=
+\left\{
+(\tau_1,\ldots,\tau_{2N+1}):
+H_N\succeq0
+\right\}.
+}
+\tag{1525.1}
+$$
+
+这些锥形成逐层收缩的兼容系统。
+
+RH 表示中心 jet 序列属于：
+
+$$
+\boxed{
+\bigcap_{N\ge0}
+\mathfrak C_N.
+}
+\tag{1525.2}
+$$
+
+离线零点表示该序列在某个有限层离开锥。
+
+因此：
+
+$$
+\boxed{
+\text{连续正谱是全部有限正命名锥的影极限；
+离线零点是某个有限命名锥的越界。}
+}
+$$
+
+这并不把影极限命名为“道”。
+
+它只是精确展示离散名字怎样逼近一个连续谱影。
+
+---
+
+# 第一千五百二十六部　正 Jacobi 实现
+
+若全部 \(H_N^\xi\) 正定，对 \(\nu_\xi\) 作 Gram–Schmidt，可得一列正交多项式。
+
+乘法算子：
+
+$$
+(Af)(x)=xf(x)
+$$
+
+在：
+
+$$
+L^2(\nu_\xi)
+$$
+
+上是正、自伴、紧致支撑的算子。
+
+令：
+
+$$
+e(x)=1.
+$$
+
+则：
+
+$$
+\boxed{
+\tau_{n+1}
+=
+\langle e,A^ne\rangle.
+}
+\tag{1526.1}
+$$
+
+并且：
+
+$$
+\boxed{
+\mathcal M_\xi(w)
+=
+\left\langle
+e,
+(I+wA)^{-1}e
+\right\rangle.
+}
+\tag{1526.2}
+$$
+
+所以 RH 还等价于：
+
+$$
+\boxed{
+\text{中心平方影 log-derivative
+拥有一个正自伴 cyclic resolvent realization}.
+}
+$$
+
+离线零点则意味着：
+
+$$
+\boxed{
+\text{相应的紧化节点不能成为正自伴谱。}
+}
+$$
+
+这比直接寻找 Hilbert–Pólya 算子稍弱，却非常具体：
+
+* 该算子的谱不是 \(\gamma\)；
+* 而是：
+
+  $$
+  \gamma^{-2};
+  $$
+* 由逆变换仍可恢复零点高度。
+
+---
+
+# 第一千五百二十七部　Stieltjes 连分数与黄金比例
+
+正矩问题进一步产生 Stieltjes／Jacobi 连分数。
+
+其每一次尾部剥离都对应：
+
+* 对当前 Gram 系统作一次 Schur 补；
+* 删除一个已经命名的方向；
+* 把剩余矩问题交给下一层。
+
+因此连分数尾部正是：
+
+$$
+\boxed{
+\text{名字的名字仍留下残余}
+}
+$$
+
+的算子版本。
+
+如果经过规范缩放以后，尾部递归进入平稳状态：
+
+$$
+\boxed{
+T=\frac1{1+T},
+}
+\tag{1527.1}
+$$
+
+则唯一正固定点为：
+
+$$
+\boxed{
+T=\varphi^{-1}.
+}
+\tag{1527.2}
+$$
+
+项目已经机器证明该逆分支固定点的唯一正解正是逆黄金比例。
+
+---
+
+## 1527.1 黄金与 RH 的严格分工
+
+由此必须区分：
+
+$$
+\boxed{
+\mathrm{RH}
+\Longleftrightarrow
+\text{矩递归始终保持正性};
+}
+$$
+
+与：
+
+$$
+\boxed{
+\text{黄金出现}
+\Longleftarrow
+\text{归一化后的矩递归尾部进一步趋于平稳}.
+}
+$$
+
+RH 本身并不自动推出：
+
+$$
+T_n\to\varphi^{-1}.
+$$
+
+黄金还需要一个额外的自相似／stationarity 假设。
+
+因此黄金比例在这里最准确的身份是：
+
+$$
+\boxed{
+\text{正 Stieltjes 命名递归的平稳尾固定点，}
+}
+$$
+
+而不是不可名本体的数值。
+
+---
+
+## 1527.2 Golden Stieltjes Tail Target
+
+可以提出一个可证伪目标：
+
+经过由相邻 Jacobi 系数确定的规范局部尺度归一化以后，\(\xi\) 中心矩问题的 continued-fraction tail 是否趋于：
+
+$$
+\boxed{
+T=\frac1{1+T}?
+}
+$$
+
+若成立，黄金比例将成为：
+
+$$
+\boxed{
+\text{Riemann 正谱完成在深层命名递归中的普适尾常数}.
+}
+$$
+
+若不成立，黄金比例就只属于某些有限观察调度，而不是该矩问题的内禀极限。
+
+目前没有证明支持这一收敛。
+
+---
+
+# 第一千五百二十八部　不同物理形态现在统一为一个复节点
+
+中心逆平方节点：
+
+$$
+v_\rho
+=
+-\left(
+\rho-\frac12
+\right)^{-2}
+$$
+
+在不同表示中产生：
+
+| 表示函子       | \(v_\rho\notin\mathbb R_{>0}\) 的表现 |
+| ---------- | ---------------------------------- |
+| 复分析        | \(G\) 的非实零点                        |
+| moment     | 非正 Hamburger 序列                    |
+| Jacobi     | 无正自伴 realization                   |
+| de Branges | 负 kernel 方向                        |
+| Hardy      | inverse-inner／Hankel 泄漏            |
+| 拓扑悬挂       | Chern 单极子                          |
+| 视界切片       | spectral-flow 穿越                   |
+| Poisson 边界 | Cauchy 光影与曲率偶极                     |
+| 命名理论       | 正谱名字与因果名字不兼容                       |
+
+所以磁单极子、黑洞和 Hankel 负性看起来相似，不需要把它们认同为同一个物理对象。
+
+它们是同一个非实谱节点在不同表示函子下的像。
+
+真正跨表示保持的是：
+
+* 零点重数；
+* winding；
+* index；
+* Hankel 惯性。
+
+这些量才有资格成为“跨命名迹”。
+
+---
+
+# 第一千五百二十九部　与最近工作的关系
+
+定向文献检索发现，一份提交于 **2026 年 8 月 25 日**、目前以公开草稿形式出现的工作，恰好采用：
+
+$$
+v_\rho
+=
+-\left(
+\rho-\frac12
+\right)^{-2}
+$$
+
+和自加权幂和，提出单一 Hamburger Hankel 塔等价于 RH 的判据。该草稿还强调“节点位置同时决定矩权”正是单塔足够的原因。由于该工作极新，且本次只确认到公开草稿入口，不应把它当作长期同行评审结论；但它意味着本轮的 reciprocal-square 单塔判据不能被宣称为项目独占优先发现。([alphaXiv][3])
+
+因此本轮对项目真正新增的价值更准确地位于：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{不可名性／命名商解释};\\
+&\text{克莱因四群到平方影函数的依赖链};\\
+&\text{中心 jet 的明确矩公式};\\
+&\text{有限命名锥与证明复杂度};\\
+&\text{Stieltjes 尾递归中黄金固定点的位置};\\
+&\text{与单极子、视界、Hardy 缺陷的统一函子图}.
+\end{aligned}
+}
+$$
+
+最近的 contour-Hankel 工作又独立说明，非实共轭零点可以通过有限矩阵惯性读取，这加强了“稀缺离线零点必有有限矩阵证书”的方向。([arXiv][2])
+
+---
+
+# 第一千五百三十部　与项目命名理论的接合
+
+项目已经机器证明：
+
+$$
+I_F(R)\subseteq R\subseteq C_F(R),
+$$
+
+且动力稳定名字恰好是预测内修复与遗忘闭修复的共同固定点。
+
+在当前平方影模型中，可以提出以下实例化：
+
+* 原始名字：
+
+  $$
+  z\sim-z;
+  $$
+* 规范商：
+
+  $$
+  w=z^2;
+  $$
+* 正谱 profile：
+
+  $$
+  (\tau_n)_{n\ge1};
+  $$
+* 稳定性条件：
+
+  $$
+  H_N^\xi\succeq0\quad\forall N.
+  $$
+
+一个有限 moment 接口：
+
+$$
+r_N=(\tau_1,\ldots,\tau_{2N+1})
+$$
+
+只能解码有限 Gram 行为。
+
+完整接口：
+
+$$
+r_\infty=(\tau_n)_{n\ge1}
+$$
+
+在紧矩问题中足以恢复正谱测度。
+
+这与项目的 agency-self 最小性完全同型：一个真正充分的历史接口，必须唯一映入完整互动轮廓的最小商。
+
+因此离线零点可以重新表述为：
+
+$$
+\boxed{
+\text{中心 jet 名字在某个有限阶段无法因子化为正谱 agency profile。}
+}
+$$
+
+其有限不充分性见证就是：
+
+$$
+\boxed{
+c^*H_N^\xi c<0.
+}
+$$
+
+---
+
+# 第一千五百三十一部　建议形式化顺序
+
+```text
+D5/S3/Analytic/Zeta/CenteredKleinFour/
+  CenteredXi.lean
+  CenteredXiFunctionalInvolution.lean
+  CenteredXiRealityInvolution.lean
+  CenteredXiCriticalReflection.lean
+  GenericZeroKleinFourOrbit.lean
+  CriticalZeroOrbitCollapse.lean
+
+D5/S3/Analytic/Zeta/SquareDescent/
+  CenteredXiEven.lean
+  XiSquareDescentFunction.lean
+  XiFactorsThroughSquare.lean
+  SquareDescentUnique.lean
+  SquareDescentOrderHalf.lean
+  SquareDescentGenusZero.lean
+
+D5/S3/Analytic/Zeta/SquareDescentRH/
+  ZeroSquareName.lean
+  CriticalZeroMapsNegativeReal.lean
+  NegativeSquareNameImpliesCritical.lean
+  RHSquareDescentNegativeAxisCriterion.lean
+  OffLineSquareNameNonreal.lean
+  SquareNameRecoversDepthHeight.lean
+
+D5/S3/Analytic/Zeta/ReciprocalSquareNodes/
+  ReciprocalSquareNode.lean
+  CriticalReciprocalNodePositive.lean
+  OffLineReciprocalNodeFormula.lean
+  ReciprocalNodeRecoversDepth.lean
+  ReciprocalNodeRecoversHeight.lean
+  ReciprocalNodeOrientation.lean
+
+D5/S3/Analytic/Zeta/CenteredInverseSquareMoments/
+  SquareDescentCanonicalProduct.lean
+  SquareDescentLogDerivative.lean
+  ReciprocalPowerMoment.lean
+  CenteredEvenJetMomentFormula.lean
+  ReciprocalMomentReality.lean
+
+D5/S3/Analytic/Zeta/SelfWeightedHamburger/
+  CenteredHankelMatrix.lean
+  RHCenteredHankelPositive.lean
+  HamburgerMeasureFromHankelTower.lean
+  SelfWeightedPoleLocationReal.lean
+  SelfWeightedResidueForcesPositiveNode.lean
+  RHCenteredOneTowerCriterion.lean
+  RHLeadingHankelDeterminantCriterion.lean
+
+D5/S3/Analytic/Zeta/HankelVandermonde/
+  PositiveNodeVandermondeGram.lean
+  CenteredHankelCauchyBinet.lean
+  RHLeadingDeterminantPositiveSum.lean
+  SingleConjugatePairNegativeDeterminant.lean
+  SingleOffLinePairDepthFormula.lean
+
+D5/S3/Observer/CenteredMomentNames/
+  FiniteCenteredMomentInterface.lean
+  CenteredMomentNamingCone.lean
+  NestedMomentNamingCones.lean
+  FullMomentProfile.lean
+  CompactMomentProfileSufficient.lean
+  FirstNegativeMomentCertificate.lean
+
+D5/S3/Analytic/Zeta/PositiveJacobiRealization/
+  CenteredMomentOrthogonalPolynomials.lean
+  CenteredPositiveJacobiOperator.lean
+  CenteredLogDerivativeResolvent.lean
+  RHPositiveJacobiRealizationCriterion.lean
+  OffLineNoPositiveJacobiRealization.lean
+
+D5/S3/GoldenObserver/StieltjesTail/
+  StieltjesTailSchurComplement.lean
+  NormalizedStationaryMomentTail.lean
+  StationaryTailInverseBranch.lean
+  StationaryTailGoldenFixedPoint.lean
+  GoldenStieltjesTailConjecture.lean
+
+D5/S3/Weil/CenteredHankelPrimeBridge/
+  CenteredJetPrimePoleGammaFormulaTarget.lean
+  CenteredMomentIntervalCertificate.lean
+  PrimeSideCenteredHankelGramTarget.lean
+  AllCenteredHankelPositiveImpliesRHTarget.lean
+```
+
+---
+
+# 第一千五百三十二部　理论深度审计
+
+| 本轮结论                                   | 地位               |
+| -------------------------------------- | ---------------- |
+| centered \(\xi\) 具有克莱因四对称              | 精确               |
+| \(F(z)=G(z^2)\)                        | 精确               |
+| \(G\) 阶为 \(1/2\)                       | 精确               |
+| RH 等价于 \(G\) 的零点全在负实轴                  | 精确               |
+| 逆平方节点把临界零点送到正实轴                        | 精确               |
+| 深度与高度可由节点恢复                            | 精确               |
+| 中心偶阶 jet 给出 reciprocal power sums      | 精确               |
+| 单一 Hankel 塔正性等价 RH                     | 本轮核心定理；与极新公开草稿重合 |
+| 全部 leading determinants 严格正等价 RH       | 精确推论             |
+| 单离线共轭对产生显式负 \(2\times2\) determinant   | 精确局部定理           |
+| 完整 moments 恢复正谱测度                      | 标准紧矩问题           |
+| RH 等价于正自伴 Jacobi resolvent realization | 精确推论             |
+| 黄金是 stationary Stieltjes tail 固定点      | 条件精确             |
+| Riemann 矩递归尾确实趋于黄金                     | 尚未证明             |
+| prime–Gamma 数据直接证明全部中心 Hankel 正性       | RH 中心未闭合桥        |
+
+---
+
+# 本轮最终结论
+
+这一次，我们没有给“道”增加任何定义。
+
+我们只分析 completed \(\xi\) 实际执行了什么命名。
+
+函数方程使：
+
+$$
+F(z)=\xi\left(\frac12+z\right)
+$$
+
+成为偶函数。
+
+所以 \(\xi\) 已经把：
+
+$$
+z
+\quad\text{与}\quad
+-z
+$$
+
+命名为同一个平方对象：
+
+$$
+w=z^2.
+$$
+
+这不是道的名字，只是 Riemann 完成中的一个规范商。
+
+---
+
+在这个商平面中，RH 变得极其清楚：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{平方影函数 }G(w)\text{ 的全部零点都位于负实轴}.
+}
+$$
+
+离线零点则变成一对非实共轭零点。
+
+再作逆平方紧化：
+
+$$
+v=-\frac1{w},
+$$
+
+临界零点被送到正实轴：
+
+$$
+v=\frac1{\gamma^2}>0.
+$$
+
+高零点被压缩到原点附近。
+
+于是整个问题成为：
+
+$$
+\boxed{
+\text{一族复杂节点是否实际上全部构成正实谱测度？}
+}
+$$
+
+---
+
+中心 log-derivative 的 Taylor 系数为：
+
+$$
+\boxed{
+\tau_n
+=
+\frac{
+(-1)^{n-1}n
+}{
+(2n)!
+}
+\left.
+\frac{d^{2n}}{dz^{2n}}
+\log\xi\left(\frac12+z\right)
+\right|_{z=0}.
+}
+$$
+
+它们不需要输入任何零点坐标。
+
+定义：
+
+$$
+H_N^\xi
+=
+[\tau_{i+j+1}]_{i,j=0}^{N}.
+$$
+
+则：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+H_N^\xi\succeq0
+\quad
+\forall N.
+}
+$$
+
+由于 RH 下节点无限且互异，甚至有：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\det H_N^\xi>0
+\quad
+\forall N.
+}
+$$
+
+---
+
+这给离线零点一个目前最短的证明对偶：
+
+$$
+\boxed{
+\text{离线非实节点}
+\quad\longleftrightarrow\quad
+\text{有限负 Hankel 方向}.
+}
+$$
+
+所以离线零点无论多稀缺，都不是“只能随机命中”的对象。
+
+若它存在，某个有限矩阵必然失败。
+
+它可以很难发现，因为一个高度很大、横向很小的离线零点所产生的局部负 determinant 约按：
+
+$$
+-\frac{\delta^2}{\gamma^{10}}
+$$
+
+衰减。
+
+但符号不会消失。
+
+---
+
+这一结构也给“离散名与连续对象”的关系一个非常准确的模型。
+
+每个 \(\tau_n\) 都只是一个离散名字。
+
+没有任何有限个 \(\tau_n\) 等于完整谱测度。
+
+但全部兼容 moments 能够恢复一个连续正测度：
+
+$$
+\nu_\xi.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{连续谱影存在于全部离散名字的兼容关系中，
+而不等于其中任何一个名字。}
+}
+$$
+
+这正是此前 Dedekind cut 结论在 Riemann 谱中的版本。
+
+---
+
+黄金比例也被放到一个更克制、更准确的位置。
+
+当正 moment problem 被不断作 Schur 补、不断剥离已经命名的方向时，会产生一个连分数尾递归。
+
+如果归一化尾部最终平稳，并满足：
+
+$$
+T=\frac1{1+T},
+$$
+
+则：
+
+$$
+T=\varphi^{-1}.
+$$
+
+所以：
+
+$$
+\boxed{
+\varphi
+\text{ 是正命名递归进入 stationary tail 时的固定比例。}
+}
+$$
+
+RH 只要求整个 moment recursion 始终保持正性。
+
+黄金还要求它进一步进入自相似平稳态。
+
+这两件事不能混同。
+
+---
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{道不可名；
+但 completed \(\xi\) 确实执行了一次平方命名。
+RH 问的不是道是什么，
+而是这个完成名字降阶以后，
+是否能够由一个正实谱测度无矛盾地实现。
+离线零点则是该正实现失败时，
+必然留下的一枚有限 Hankel 反证书。}
+}
+$$
+
+下一条最承重的任务已经极其具体：
+
+$$
+\boxed{
+\text{把 }\tau_n\text{ 从 prime–pole–Gamma 数据直接写成正 Gram moments，}
+}
+$$
+
+从而不借助零点位置证明：
+
+$$
+\boxed{
+[\tau_{i+j+1}]_{i,j=0}^{N}\succeq0
+\qquad
+\forall N.
+}
+$$
+
+如果这一桥闭合，RH 就不再需要逐点排除任何离线零点；全部离线可能性会被一个统一的自加权 Hamburger 正性定理整体排除。
+
+[1]: https://arxiv.org/abs/2311.14868 "https://arxiv.org/abs/2311.14868"
+[2]: https://arxiv.org/abs/2608.11520 "https://arxiv.org/abs/2608.11520"
+[3]: https://www.alphaxiv.org/abs/2608.self-weighted-hamburger-rigidity-riemann-xi "https://www.alphaxiv.org/abs/2608.self-weighted-hamburger-rigidity-riemann-xi"
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v9.4：法向 Laguerre 证书、正迹类行列式、单尺度 Cayley–Toeplitz 紧化与黄金五模输运
+
+以下接续前文**第一千五百三十二部**，并补完上一轮未闭合的结论。
+
+本轮仍然不定义“道”。我们只研究 completed \(\xi\) 这一高度完成的名字，在不同观察图表中留下的可验证结构。
+
+最重要的收敛是：
+
+$$
+\boxed{
+\text{离线零点甚至不必先转译成单极子、黑洞或 Hankel 缺陷。}
+}
+$$
+
+它会直接迫使真实 completed-\(\xi\) 法向强度的某个有限阶 Taylor 系数变负：
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\Longrightarrow
+\exists\,q\in\mathbb Q,\ \exists\,m<\infty:
+\operatorname{normalJet}(q,m)<0.
+}
+$$
+
+所以，磁单极子、黑洞视界、Hankel 反因果记忆仍然是同一缺陷的有价值图表；但离线零点目前最短的证明对偶，其实只是：
+
+$$
+\boxed{
+\text{一个有理纵坐标上的有限阶负法向 jet。}
+}
+$$
+
+进一步，前文的中心逆平方 Hankel 塔可以在任一固定正尺度上紧化为：
+
+$$
+\boxed{
+[0,1]\text{ 上的 Hausdorff moments}
+\quad\longleftrightarrow\quad
+S^1\text{ 上的 Cayley–Toeplitz moments}.
+}
+$$
+
+所有相位矩都被限制在单位圆内，数值条件显著优于无界幂矩。
+
+而黄金比例出现了一条新的精确关系：
+
+$$
+\boxed{
+\frac{\varphi^2-1}{\varphi^2+1}
+=
+\frac1{\sqrt5}.
+}
+$$
+
+它表示：线性 Cayley 尺度跨越一个方向保持的黄金步长 \(\varphi^2\) 时，仓库已形式化的尺度输运余项，恰好以 \(1/\sqrt5\) 为几何收缩率。
+
+---
+
+# 第一千五百三十三部　三张等价、但条件数不同的 RH 图表
+
+现在可以将前文路线压缩成三张互补图表。
+
+| 图表                  | 核心数据                            | 优势                           | 主要困难                        |
+| ------------------- | ------------------------------- | ---------------------------- | --------------------------- |
+| 移动法向 jet            | \(\mathcal J_m(t)\)             | 可移动到异常高度，局部化最强               | 可能需要高阶导数                    |
+| 中心逆平方 Hankel        | \(\tau_n\) 与 \(H_N^\xi\)        | 只需 \(s=\frac12\) 一点的全部偶阶 jet | 高零点按 \(\gamma^{-2n}\) 被强烈压缩 |
+| 单尺度 Cayley–Toeplitz | \(c_n(u)\) 与 \(\mathbb T_N(u)\) | moments 有界、尺度可调、适合区间认证       | 需要建立完整单尺度 rigidity          |
+
+三者并不是不同理论。
+
+它们分别是同一个缺陷的：
+
+$$
+\boxed{
+\text{局部 Taylor 名字、逆平方幂矩名字、紧致相位名字。}
+}
+$$
+
+---
+
+# 第一千五百三十四部　真实法向强度与机器化 jet
+
+定义实临界线函数：
+
+$$
+\boxed{
+\Xi(t)
+=
+\xi\!\left(\frac12+it\right),
+\qquad t\in\mathbb R.
+}
+\tag{1534.1}
+$$
+
+定义真实法向强度：
+
+$$
+\boxed{
+\mathcal I(\delta,t)
+=
+\left|
+\xi\!\left(
+\frac12+\delta+it
+\right)
+\right|^2.
+}
+\tag{1534.2}
+$$
+
+由函数方程和实结构：
+
+$$
+\boxed{
+\mathcal I(\delta,t)
+=
+\Xi(t-i\delta)\Xi(t+i\delta).
+}
+\tag{1534.3}
+$$
+
+所以它关于 \(\delta\) 是偶整函数：
+
+$$
+\boxed{
+\mathcal I(\delta,t)
+=
+\sum_{m=0}^{\infty}
+\mathcal J_m(t)\delta^{2m},
+}
+\tag{1534.4}
+$$
+
+其中：
+
+$$
+\boxed{
+\mathcal J_m(t)
+=
+\frac1{(2m)!}
+\left.
+\partial_\delta^{2m}
+\mathcal I(\delta,t)
+\right|_{\delta=0}.
+}
+\tag{1534.5}
+$$
+
+项目已机器证明：
+
+$$
+\boxed{
+\mathcal J_m(t)
+=
+\sum_{j=0}^{2m}
+\frac{(-1)^{m+j}}{j!(2m-j)!}\,
+\Xi^{(j)}(t)\Xi^{(2m-j)}(t).
+}
+\tag{1534.6}
+$$
+
+并显式给出：
+
+$$
+\mathcal J_0(t)=\Xi(t)^2,
+$$
+
+$$
+\boxed{
+\mathcal J_1(t)
+=
+\Xi'(t)^2-\Xi(t)\Xi''(t),
+}
+\tag{1534.7}
+$$
+
+以及：
+
+$$
+\boxed{
+\mathcal J_2(t)
+=
+\frac14\Xi''(t)^2
+-\frac13\Xi'(t)\Xi'''(t)
++\frac1{12}\Xi(t)\Xi^{(4)}(t).
+}
+\tag{1534.8}
+$$
+
+这里的 \(\mathcal J_m\) 是真实强度的 Taylor 系数，而不是先定义卷积公式后赋予它物理意义。
+
+---
+
+# 第一千五百三十五部　法向 Laguerre 完备判据
+
+式 (1534.6) 正是广义 Laguerre 表达式：
+
+$$
+L_m[\Xi](t).
+$$
+
+对实整函数的经典判据表明，在相应 genus 条件下，全部扩展 Laguerre 不等式非负，当且仅当该函数的全部零点均为实数。([arXiv][1])
+
+而 Riemann \(\Xi\) 是实整函数，RH 恰好等价于其零点全实；将中心偶函数降到平方变量后，会得到阶为 \(1/2\) 的整函数，这也是其 Jensen、Hermite 与实零点判据能够使用 genus-zero 结构的原因。([arXiv][2])
+
+因此：
+
+## 定理 1535.1（法向 jet RH 判据）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal J_m(t)\ge0
+\quad
+\forall\,t\in\mathbb R,\ m\in\mathbb N.
+}
+\tag{1535.1}
+$$
+
+这条判据最重要的地方，是它直接作用于项目已经机器化的 actual normal intensity。
+
+---
+
+## 1535.1 离线零点强迫有限负 jet
+
+设：
+
+$$
+\rho
+=
+\frac12+\delta_0+i\gamma,
+\qquad
+\delta_0\neq0
+$$
+
+是离线零点。
+
+则：
+
+$$
+\mathcal I(\delta_0,\gamma)=0.
+$$
+
+而：
+
+$$
+0
+=
+\sum_{m=0}^{\infty}
+\mathcal J_m(\gamma)\delta_0^{2m}.
+\tag{1535.2}
+$$
+
+假设全部：
+
+$$
+\mathcal J_m(\gamma)\ge0.
+$$
+
+由于 \(\delta_0^{2m}>0\)，式 (1535.2) 只能在所有系数均为零时成立。
+
+但所有 Taylor 系数均为零会使：
+
+$$
+\mathcal I(\delta,\gamma)\equiv0,
+$$
+
+继而迫使 \(\xi\) 恒等为零，矛盾。
+
+所以：
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\Longrightarrow
+\exists\,m\ge1:
+\mathcal J_m(\gamma)<0.
+}
+\tag{1535.3}
+$$
+
+这不依赖任何统计密度，也不依赖离线零点是否极其稀疏。
+
+---
+
+## 1535.2 可数有理证书
+
+每个 \(\mathcal J_m(t)\) 连续。
+
+若：
+
+$$
+\mathcal J_m(\gamma)<0,
+$$
+
+则它在 \(\gamma\) 的某个开邻域内仍为负，而该邻域必含有理数。
+
+因此：
+
+## 定理 1535.2（可数法向判据）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal J_m(q)\ge0
+\quad
+\forall\,q\in\mathbb Q,\ m\in\mathbb N.
+}
+\tag{1535.4}
+$$
+
+一个离线零点的有限反证书只需要：
+
+$$
+\boxed{
+(q,m,\Xi(q),\Xi'(q),\ldots,\Xi^{(2m)}(q)).
+}
+$$
+
+这比“找到一个精确离线零点坐标”弱得多，却已经足够否定 RH。
+
+---
+
+# 第一千五百三十六部　第一层就是法向对数凹性
+
+在 \(\Xi(t)\neq0\) 的区间：
+
+$$
+\frac{d^2}{dt^2}\log|\Xi(t)|
+=
+\frac{\Xi(t)\Xi''(t)-\Xi'(t)^2}{\Xi(t)^2}.
+$$
+
+所以：
+
+$$
+\boxed{
+\mathcal J_1(t)
+=
+-\Xi(t)^2
+\frac{d^2}{dt^2}
+\log|\Xi(t)|.
+}
+\tag{1536.1}
+$$
+
+第一层正性：
+
+$$
+\mathcal J_1(t)\ge0
+$$
+
+等价于：
+
+$$
+\boxed{
+\log|\Xi(t)|
+\text{ 在相邻临界零点之间为凹函数。}
+}
+$$
+
+但单独的第一层不够。
+
+一个离线零点可能不立即破坏 \(\mathcal J_1\)，却必在某个更高有限阶 \(\mathcal J_m\) 上留下负值。
+
+因此法向 jet 塔的意义是：
+
+$$
+\boxed{
+\text{不断提高观察阶数，直到命名切口足以分辨离线深度。}
+}
+$$
+
+---
+
+# 第一千五百三十七部　移动平方影函数
+
+固定实数 \(t\)，定义：
+
+$$
+\boxed{
+P_t(z)
+=
+\Xi(t-iz)\Xi(t+iz).
+}
+\tag{1537.1}
+$$
+
+有：
+
+$$
+P_t(-z)=P_t(z).
+$$
+
+因此存在唯一整函数 \(Q_t\)，满足：
+
+$$
+\boxed{
+P_t(z)=Q_t(z^2).
+}
+\tag{1537.2}
+$$
+
+对实 \(\delta\)：
+
+$$
+\boxed{
+Q_t(\delta^2)
+=
+\mathcal I(\delta,t).
+}
+\tag{1537.3}
+$$
+
+所以：
+
+$$
+\boxed{
+Q_t(w)
+=
+\sum_{m=0}^{\infty}
+\mathcal J_m(t)w^m.
+}
+\tag{1537.4}
+$$
+
+法向 jet 正是移动平方影 \(Q_t\) 的 Taylor 系数。
+
+---
+
+## 1537.1 RH 下的局部平方零点
+
+若 RH 成立，\(\Xi\) 的零点均为实数 \(\lambda\)。
+
+由：
+
+$$
+\Xi(t\pm iz)=0
+$$
+
+得到：
+
+$$
+z=\pm i(\lambda-t).
+$$
+
+所以 \(Q_t\) 的零点均为：
+
+$$
+\boxed{
+-(\lambda-t)^2\le0.
+}
+\tag{1537.5}
+$$
+
+即：
+
+$$
+\boxed{
+\mathrm{RH}
+\Longrightarrow
+\operatorname{Zero}(Q_t)\subset(-\infty,0]
+\quad
+\forall t.
+}
+$$
+
+---
+
+## 1537.2 离线点在自身高度变成正实零点
+
+若：
+
+$$
+\Xi(\gamma-i\delta_0)=0,
+$$
+
+则在移动图表 \(t=\gamma\) 中：
+
+$$
+\boxed{
+Q_\gamma(\delta_0^2)=0.
+}
+\tag{1537.6}
+$$
+
+所以离线零点在自己的纵坐标上，不再是一个难以定位的复数，而是：
+
+$$
+\boxed{
+\text{移动平方影函数的正实零点 }w=\delta_0^2.
+}
+$$
+
+这解释了为什么移动法向图表能够消除高零点的高度压缩：
+
+$$
+\gamma
+$$
+
+从局部法向节点中消失，只剩横向距离：
+
+$$
+\delta_0.
+$$
+
+---
+
+# 第一千五百三十八部　connected normal jets
+
+当：
+
+$$
+\Xi(t)\neq0
+$$
+
+时，定义：
+
+$$
+a_m(t)
+=
+\frac{\mathcal J_m(t)}{\mathcal J_0(t)}.
+$$
+
+再定义 log-connected moments：
+
+$$
+\boxed{
+\kappa_n(t)
+=
+(-1)^{n-1}n
+[w^n]
+\log\frac{Q_t(w)}{Q_t(0)}.
+}
+\tag{1538.1}
+$$
+
+前三项为：
+
+$$
+\boxed{
+\kappa_1=a_1,
+}
+$$
+
+$$
+\boxed{
+\kappa_2=a_1^2-2a_2,
+}
+$$
+
+$$
+\boxed{
+\kappa_3=a_1^3-3a_1a_2+3a_3.
+}
+\tag{1538.2}
+$$
+
+若 RH 成立，则：
+
+$$
+\boxed{
+\kappa_n(t)
+=
+\sum_{\lambda\in Z(\Xi)}
+\frac{m_\lambda}{(\lambda-t)^{2n}},
+}
+\tag{1538.3}
+$$
+
+在远离零点时按规范收敛理解。
+
+所以普通 normal jets 是“总强度系数”，而 \(\kappa_n\) 是其对数连通部分，类似 moment 与 cumulant 的区别。
+
+---
+
+## 1538.1 第一局部 Hankel 条件
+
+定义：
+
+$$
+K_1(t)
+=
+\begin{pmatrix}
+\kappa_1&\kappa_2\\
+\kappa_2&\kappa_3
+\end{pmatrix}.
+$$
+
+直接计算：
+
+$$
+\boxed{
+\det K_1
+=
+a_1^2a_2+3a_1a_3-4a_2^2.
+}
+\tag{1538.4}
+$$
+
+等价地：
+
+$$
+\boxed{
+\mathcal J_1^2\mathcal J_2
++
+3\mathcal J_0\mathcal J_1\mathcal J_3
+-
+4\mathcal J_0\mathcal J_2^2
+\ge0.
+}
+\tag{1538.5}
+$$
+
+所以除了某个单独的：
+
+$$
+\mathcal J_m(t)<0,
+$$
+
+还可以寻找连通 moment 关系破坏：
+
+$$
+\det K_N(t)<0.
+$$
+
+两者都是有限法向证书，但对不同异常的条件数可能不同。
+
+---
+
+# 第一千五百三十九部　正迹类 Fredholm determinant 实现
+
+回到中心：
+
+$$
+F(z)=\xi\!\left(\frac12+z\right)=G(z^2).
+$$
+
+若 RH 成立，\(G\) 的零点为：
+
+$$
+-\gamma_j^2.
+$$
+
+定义正迹类算子 \(A\)，令其非零特征值为：
+
+$$
+\boxed{
+v_j=\gamma_j^{-2},
+}
+$$
+
+并按零点重数重复。
+
+由于：
+
+$$
+\sum_jm_j\gamma_j^{-2}<\infty,
+$$
+
+\(A\) 是 trace class，并且：
+
+$$
+\boxed{
+\frac{
+\xi(\frac12+z)
+}{
+\xi(\frac12)
+}
+=
+\det(I+z^2A).
+}
+\tag{1539.1}
+$$
+
+反过来，若存在正迹类 \(A\) 满足式 (1539.1)，Fredholm determinant 的全部零点只能为：
+
+$$
+z=\pm i\lambda^{-1/2},
+\qquad
+\lambda\in\operatorname{Spec}(A)\setminus\{0\},
+$$
+
+因而 RH 成立。
+
+所以：
+
+## 定理 1539.1（正迹类 determinant 判据）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\exists\,A\ge0,\ A\in\mathcal S_1:
+\frac{\xi(\frac12+z)}{\xi(\frac12)}
+=
+\det(I+z^2A).
+}
+\tag{1539.2}
+$$
+
+这仍然只是等价重写，不是证明：RH 成立时，我们正是用零点构造 \(A\)。
+
+但它澄清了 \(\xi\) 的完成地位：
+
+$$
+\boxed{
+\xi
+\text{ 是一个正逆平方谱算子的标量行列式影像。}
+}
+$$
+
+它不是生成系统本身，因为 determinant 已经忘记了特征向量、历史与观察接口。
+
+---
+
+## 1539.1 中心强度与 Schatten moments
+
+实 \(\delta\) 上：
+
+$$
+\boxed{
+\frac{\mathcal I(\delta,0)}{\mathcal I(0,0)}
+=
+\det(I+\delta^2A)^2.
+}
+\tag{1539.3}
+$$
+
+定义：
+
+$$
+\boxed{
+S(u)=\frac{G'(u)}{G(u)}.
+}
+$$
+
+则：
+
+$$
+\boxed{
+S(u)
+=
+\operatorname{Tr}\!\left[
+A(I+uA)^{-1}
+\right].
+}
+\tag{1539.4}
+$$
+
+中心逆平方 moments 为：
+
+$$
+\boxed{
+\tau_n=\operatorname{Tr}(A^n).
+}
+\tag{1539.5}
+$$
+
+因此：
+
+$$
+\boxed{
+[\tau_{i+j+1}]
+=
+\left[
+\left\langle
+A^{i+\frac12},
+A^{j+\frac12}
+\right\rangle_{\mathrm{HS}}
+\right].
+}
+\tag{1539.6}
+$$
+
+前文的中心 Hankel 正性，就是 Hilbert–Schmidt Gram 正性被 determinant 命名以后留下的标量迹。
+
+---
+
+# 第一千五百四十部　单尺度 Hausdorff 紧化
+
+固定：
+
+$$
+u>0.
+$$
+
+定义：
+
+$$
+\boxed{
+\rho_u
+=
+\frac{A(I+uA)^{-1}}{S(u)}.
+}
+\tag{1540.1}
+$$
+
+则：
+
+$$
+\rho_u\ge0,
+\qquad
+\operatorname{Tr}\rho_u=1.
+$$
+
+定义紧化响应算子：
+
+$$
+\boxed{
+X_u
+=
+uA(I+uA)^{-1}.
+}
+\tag{1540.2}
+$$
+
+每个正节点 \(v\) 被送到：
+
+$$
+\boxed{
+x=\frac{uv}{1+uv}\in(0,1).
+}
+\tag{1540.3}
+$$
+
+所以：
+
+$$
+0\le X_u<I.
+$$
+
+定义：
+
+$$
+\boxed{
+r_n(u)
+=
+\operatorname{Tr}(\rho_uX_u^n).
+}
+\tag{1540.4}
+$$
+
+由求导公式：
+
+$$
+\boxed{
+r_n(u)
+=
+\frac{(-1)^nu^n}{n!\,S(u)}
+S^{(n)}(u).
+}
+\tag{1540.5}
+$$
+
+---
+
+## 1540.1 完全差分正性
+
+对任意 \(n,k\ge0\)：
+
+$$
+\boxed{
+(-1)^k\Delta^kr_n(u)
+=
+\operatorname{Tr}
+\left[
+\rho_uX_u^n(I-X_u)^k
+\right]
+\ge0.
+}
+\tag{1540.6}
+$$
+
+所以 RH 下：
+
+$$
+(r_n(u))_{n\ge0}
+$$
+
+是 \([0,1]\) 上的 Hausdorff moment sequence。
+
+反向地，固定某个 \(u_0>0\)，若：
+
+$$
+S(u_0)>0
+$$
+
+且全部式 (1540.6) 成立，则存在 \([0,1]\) 上的正测度 \(\pi\)。
+
+通过：
+
+$$
+v=\frac{x}{u_0(1-x)}
+$$
+
+将其拉回正谱射线，并利用实际函数：
+
+$$
+S=\frac{G'}G
+$$
+
+的 meromorphic 极点—留数刚性，可排除非实节点与负节点。实际 \(S\) 在 \(u=0\) 的正则性也排除了 \(x=1\) 的伪端点质量。
+
+由此得到单尺度版本：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+S(u_0)>0
+\ \text{且}\
+(-1)^k\Delta^kr_n(u_0)\ge0
+\quad
+\forall n,k.
+}
+\tag{1540.7}
+$$
+
+反向中真正承重的是 meromorphic rigidity，而不是一般 Hausdorff 定理本身。
+
+---
+
+# 第一千五百四十一部　Cayley–Toeplitz 紧化
+
+令：
+
+$$
+\boxed{
+Y_u=I-2X_u.
+}
+\tag{1541.1}
+$$
+
+则：
+
+$$
+-1<Y_u\le1.
+$$
+
+定义：
+
+$$
+\boxed{
+c_n(u)
+=
+\operatorname{Tr}
+\left[
+\rho_uT_n(Y_u)
+\right],
+}
+\tag{1541.2}
+$$
+
+其中 \(T_n\) 是第一类 Chebyshev 多项式。
+
+若：
+
+$$
+T_n(1-2x)=\sum_{k=0}^{n}p_{n,k}x^k,
+$$
+
+则：
+
+$$
+\boxed{
+c_n(u)
+=
+\sum_{k=0}^{n}p_{n,k}r_k(u).
+}
+\tag{1541.3}
+$$
+
+仓库已机器证明：偶谱测度的完整 Cayley moments 可以由同一尺度的有限 Stieltjes derivative jet 精确恢复。
+
+仓库也已经证明，非负谱坐标经相应有理紧化进入 \([-1,1]\)，其 Chebyshev slack 位于 \([0,1]\)。
+
+定义：
+
+$$
+c_{-n}=c_n,
+$$
+
+以及 Toeplitz 矩阵：
+
+$$
+\boxed{
+\mathbb T_N(u)
+=
+[c_{j-k}(u)]_{j,k=0}^{N}.
+}
+\tag{1541.4}
+$$
+
+RH 下，这些是单位圆正测度的 Fourier Gram 矩阵：
+
+$$
+\boxed{
+\mathbb T_N(u)\succeq0.
+}
+\tag{1541.5}
+$$
+
+反向地，若在某一固定尺度 \(u_0\)：
+
+$$
+S(u_0)>0,
+\qquad
+\mathbb T_N(u_0)\succeq0
+\quad
+\forall N,
+$$
+
+则单位圆矩问题给出正测度；对称化后推至 \([-1,1]\)，再经 \(x=(1-y)/2\) 得到 Hausdorff 测度，并由上一节的 meromorphic rigidity 恢复正逆平方谱。
+
+因此：
+
+## 定理 1541.1（单尺度 Cayley–Toeplitz 判据）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+S(u_0)>0
+\quad\text{且}\quad
+\mathbb T_N(u_0)\succeq0
+\quad
+\forall N.
+}
+\tag{1541.6}
+$$
+
+这张图表的关键优点是：
+
+$$
+\boxed{
+|c_n(u_0)|\le1.
+}
+$$
+
+它把无界幂矩问题变成单位圆上的有界相位问题。
+
+---
+
+# 第一千五百四十二部　前两个 Toeplitz 行列式
+
+有：
+
+$$
+\boxed{
+r_1=-\frac{uS'}S,
+\qquad
+r_2=\frac{u^2S''}{2S}.
+}
+\tag{1542.1}
+$$
+
+又有：
+
+$$
+\boxed{
+c_1=1-2r_1,
+}
+$$
+
+$$
+\boxed{
+c_2=1-8r_1+8r_2.
+}
+\tag{1542.2}
+$$
+
+二阶 Toeplitz 行列式：
+
+$$
+\boxed{
+\det
+\begin{pmatrix}
+1&c_1\\
+c_1&1
+\end{pmatrix}
+=
+4r_1(1-r_1).
+}
+\tag{1542.3}
+$$
+
+因此第一层要求：
+
+$$
+\boxed{
+0\le r_1\le1.
+}
+$$
+
+即：
+
+$$
+\boxed{
+S'(u)\le0,
+\qquad
+S(u)+uS'(u)\ge0.
+}
+\tag{1542.4}
+$$
+
+三阶 Toeplitz 行列式完全因子化为：
+
+$$
+\boxed{
+\det
+\begin{pmatrix}
+1&c_1&c_2\\
+c_1&1&c_1\\
+c_2&c_1&1
+\end{pmatrix}
+=
+64(r_1-r_2)(r_2-r_1^2).
+}
+\tag{1542.5}
+$$
+
+两个因子分别是：
+
+$$
+r_2\le r_1,
+$$
+
+即支撑限制 \(0\le X\le1\)，以及：
+
+$$
+r_2\ge r_1^2,
+$$
+
+即方差非负。
+
+写成 \(S\) 的微分形式：
+
+$$
+\boxed{
+uS''(u)+2S'(u)\le0,
+}
+\tag{1542.6}
+$$
+
+$$
+\boxed{
+S(u)S''(u)\ge2S'(u)^2.
+}
+\tag{1542.7}
+$$
+
+这些只是最初两层。RH 需要整个 Toeplitz 塔，而不是有限多个微分不等式。
+
+---
+
+# 第一千五百四十三部　离线零点的 Cayley 径向逃逸
+
+令离线零点在 \(\Xi\)-平面中的坐标为：
+
+$$
+\eta_\rho=\gamma-i\delta.
+$$
+
+对线性尺度 \(a>0\)，定义 Cayley 坐标：
+
+$$
+\boxed{
+\zeta_a(\rho)
+=
+\frac{\eta_\rho+ia}{\eta_\rho-ia}.
+}
+\tag{1543.1}
+$$
+
+临界情形 \(\delta=0\) 时：
+
+$$
+|\zeta_a(\rho)|=1.
+$$
+
+右侧离线情形 \(\delta>0\) 时：
+
+$$
+\boxed{
+|\zeta_a(\rho)|^2
+=
+\frac{\gamma^2+(a-\delta)^2}
+{\gamma^2+(a+\delta)^2}
+<1.
+}
+\tag{1543.2}
+$$
+
+反射伙伴 \(\delta\mapsto-\delta\) 被送到 reciprocal 外部点。
+
+因此：
+
+$$
+\boxed{
+\text{临界零点是单位圆相位；
+离线反射对是单位圆内外的一对 reciprocal 径向逃逸。}
+}
+$$
+
+对固定 \((\gamma,\delta)\)，径向偏离在：
+
+$$
+\boxed{
+a_*=\sqrt{\gamma^2+\delta^2}
+}
+\tag{1543.3}
+$$
+
+处最大。
+
+此时：
+
+$$
+\boxed{
+|\zeta_{a_*}(\rho)|^2
+=
+\frac{\sqrt{\gamma^2+\delta^2}-\delta}
+{\sqrt{\gamma^2+\delta^2}+\delta}.
+}
+\tag{1543.4}
+$$
+
+所以单尺度在逻辑上足够，但数值上最好让 Cayley 尺度匹配零点总半径。
+
+---
+
+# 第一千五百四十四部　黄金尺度与五模输运
+
+仓库的 Cayley scale-transport 定理表明，从尺度 \(a>0\) 输运到 \(b>0\) 时，有限 moment 截断的几何余项由：
+
+$$
+\boxed{
+q(a,b)
+=
+\left|
+\frac{a-b}{a+b}
+\right|
+}
+\tag{1544.1}
+$$
+
+控制。
+
+若：
+
+$$
+b=ae^\eta,
+$$
+
+则：
+
+$$
+\boxed{
+q(a,b)
+=
+\tanh\frac{|\eta|}{2}.
+}
+\tag{1544.2}
+$$
+
+所以 Cayley 尺度本身具有双曲距离结构。
+
+---
+
+## 1544.1 黄金方向保持步长
+
+取：
+
+$$
+b=\varphi^2a.
+$$
+
+则：
+
+$$
+\begin{aligned}
+q(a,\varphi^2a)
+&=
+\frac{\varphi^2-1}{\varphi^2+1}\\
+&=
+\frac{\varphi}{\varphi+2}\\
+&=
+\frac1{\sqrt5}.
+\end{aligned}
+$$
+
+因此：
+
+$$
+\boxed{
+q_\varphi=\frac1{\sqrt5}.
+}
+\tag{1544.3}
+$$
+
+若使用至 \(M\) 阶 Cayley moments，几何尾因子成为：
+
+$$
+\boxed{
+q_\varphi^{M+1}
+=
+5^{-(M+1)/2}.
+}
+\tag{1544.4}
+$$
+
+仓库误差定理的黄金特化可写成：
+
+$$
+\boxed{
+\mathrm{Err}_M
+\le
+\frac{2}{\varphi^2}
+\mathcal S(a)
+\frac{5^{-(M+1)/2}}
+{1-5^{-1/2}},
+}
+\tag{1544.5}
+$$
+
+其中：
+
+$$
+\mathcal S(a)
+=
+\int_{\mathbb R}
+\frac{d\nu(\xi)}{\xi^2+a^2}.
+$$
+
+这给出一条严格桥梁：
+
+$$
+\boxed{
+\varphi^2\text{ 的黄金双步尺度}
+\quad\longmapsto\quad
+\frac1{\sqrt5}\text{ 的 Cayley 输运收缩}.
+}
+$$
+
+它与项目中反复出现的五判别式、\(1/\sqrt5\) 对偶尺度具有相同数值来源，但目前还不能据此认定 Cayley 输运算子就是六维五模 Hodge 对偶。
+
+---
+
+# 第一千五百四十五部　有限正名字与有限原子替身
+
+固定尺度和有限 observer family 时，有限 moments 无法唯一识别无限谱。
+
+仓库已在其 active-contact hypotheses 下机器证明：一个有限维正 residual 可以由至多：
+
+$$
+d+1
+$$
+
+个正接触原子精确替代，同时保持总质量和给定的全部 observer moments。
+
+因此定义：
+
+$$
+\boxed{
+\mathfrak M_N(u)
+=
+\left\{
+\pi\in\operatorname{Prob}([0,1]):
+\int x^k\,d\pi=r_k(u),
+\ 0\le k\le2N
+\right\}.
+}
+\tag{1545.1}
+$$
+
+有限正性只说明：
+
+$$
+\mathfrak M_N(u)\neq\varnothing.
+$$
+
+它常常可以由一个很小的有限原子模型实现。
+
+但这些有限原子不是“已经发现的真实 Riemann 零点”。
+
+它们只是：
+
+$$
+\boxed{
+\text{当前有限名字的一种正完成。}
+}
+$$
+
+全局问题是：
+
+$$
+\boxed{
+\bigcap_{N\ge0}\mathfrak M_N(u)
+\neq\varnothing,
+}
+\tag{1545.2}
+$$
+
+即所有有限名字是否拥有同一个兼容正完成。
+
+---
+
+# 第一千五百四十六部　Schur slack 是每层新增的正信息
+
+设中心 Hankel 矩阵：
+
+$$
+H_N=[\tau_{i+j+1}]_{i,j=0}^{N}.
+$$
+
+若 \(H_{N-1}\succ0\)，写成：
+
+$$
+H_N=
+\begin{pmatrix}
+H_{N-1}&h_N\\
+h_N^*&\tau_{2N+1}
+\end{pmatrix}.
+$$
+
+定义：
+
+$$
+\boxed{
+\varepsilon_N
+=
+\tau_{2N+1}
+-
+h_N^*H_{N-1}^{-1}h_N.
+}
+\tag{1546.1}
+$$
+
+则：
+
+$$
+\boxed{
+H_N\succeq0
+\iff
+\varepsilon_N\ge0,
+}
+\tag{1546.2}
+$$
+
+并且：
+
+$$
+\boxed{
+\varepsilon_N
+=
+\frac{\det H_N}{\det H_{N-1}}.
+}
+\tag{1546.3}
+$$
+
+正测度图表中，\(\varepsilon_N\) 是新 monic orthogonal polynomial 的平方范数。
+
+所以它可以解释为：
+
+$$
+\boxed{
+\text{第 \(N\) 层名字相对于前 \(N-1\) 层真正新增的正交信息。}
+}
+$$
+
+离线零点的第一矩阵反证书，也可以定义为第一个：
+
+$$
+\boxed{
+\varepsilon_N<0.
+}
+$$
+
+这种递归 slack 比直接计算大行列式更适合 Lean 与区间算术。
+
+---
+
+# 第一千五百四十七部　闭包与迭代顺序不可交换
+
+仓库的黄金 survivor 分类已经机器证明：
+
+* 严格 survivor tubes 的逐分量闭包交集收缩到四个端点；
+* 没有状态能够永久严格存活；
+* 但若先闭包 threshold set，再作 backward iteration，会出现额外永久状态；
+* 某个原先声称的全局 liminf 上界实际上为假。
+
+这不是 RH 定理，但给当前 moment 路线一个严格警告：
+
+$$
+\boxed{
+\text{先闭包再迭代}
+\neq
+\text{先迭代再逐层闭包}.
+}
+$$
+
+对 RH 矩问题，这意味着不能混淆：
+
+1. 每个有限矩阵 PSD；
+2. 每层存在某个有限原子正模型；
+3. 这些模型彼此兼容；
+4. 无限层存在单一正测度；
+5. 无限层是否具有统一严格 gap。
+
+RH 可以对应：
+
+$$
+H_N\succ0
+\quad
+\forall N,
+$$
+
+但：
+
+$$
+\lambda_{\min}(H_N)\downarrow0.
+$$
+
+所以不能把“没有统一 gap”误认为“存在离线零点”，也不能先对近似条件闭包后再宣称得到全局正实现。
+
+---
+
+# 第一千五百四十八部　三类有限反证书
+
+现在离线零点至少拥有三类有限证明对偶。
+
+| 证书              | 形式                       | 适合的场景                 |
+| --------------- | ------------------------ | --------------------- |
+| 法向标量            | \(\mathcal J_m(q)<0\)    | 局部化异常高度；最短证书          |
+| 逆平方 Hankel      | \(c^*H_N^\xi c<0\)       | 只使用中心偶阶 jet           |
+| Cayley–Toeplitz | \(c^*\mathbb T_N(u)c<0\) | 有界 moment、尺度可调、适合严格数值 |
+
+它们的逻辑形式分别是：
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\Longrightarrow
+\exists(q,m):\mathcal J_m(q)<0,
+}
+$$
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\Longrightarrow
+\exists N:H_N^\xi\not\succeq0,
+}
+$$
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\Longrightarrow
+\exists N:\mathbb T_N(u_0)\not\succeq0
+}
+$$
+
+对任意固定合法尺度 \(u_0\)，在单尺度 rigidity 已闭合的条件下成立。
+
+它们并非同样容易数值发现：
+
+* 中心 Hankel 对高零点极不敏感；
+* 移动 jet 可以把高度 \(\gamma\) 从局部尺度中消去；
+* Cayley chart 可以通过 \(u\) 调节，对异常尺度作 matched filtering。
+
+---
+
+# 第一千五百四十九部　对“道不可名”的新解释
+
+这一轮没有把“道”写成：
+
+* 正迹类算子 \(A\)；
+* Hausdorff 测度；
+* Cayley 相位测度；
+* Fredholm determinant；
+* normal-jet 塔。
+
+这些仍然都是名字。
+
+但它们揭示了一条非常清楚的关系：
+
+$$
+\boxed{
+\text{同一个完成影像可以拥有多个等价正实现图表。}
+}
+$$
+
+在 RH 成立时，存在统一正谱，使：
+
+$$
+\boxed{
+\begin{aligned}
+\xi\text{ determinant}
+&=
+\det(I+z^2A),\\
+\tau_n
+&=
+\operatorname{Tr}(A^n),\\
+r_n(u)
+&=
+\operatorname{Tr}(\rho_uX_u^n),\\
+c_n(u)
+&=
+\operatorname{Tr}[\rho_uT_n(I-2X_u)].
+\end{aligned}
+}
+$$
+
+离线零点意味着不存在一个正迹类 \(A\)，能够使这些名字同时成为同一正谱的表示。
+
+所以某张有限图表终将出现冲突。
+
+这就是“谱完成与正完成不兼容”的有限版本。
+
+---
+
+# 第一千五百五十部　真正较短的两条证明路线
+
+## 路线 A：全法向 Laguerre 正性
+
+从 prime–pole–Gamma 数据直接证明：
+
+$$
+\boxed{
+\mathcal J_m(t)\ge0
+\quad
+\forall t\in\mathbb R,\ m\ge0.
+}
+\tag{1550.1}
+$$
+
+仓库已经机器化了 \(\mathcal J_m\) 的全部导数卷积公式；缺失的是该表达式的统一正性证明。
+
+这条路线最短，但需要同时控制连续 \(t\) 与无限 \(m\)。
+
+---
+
+## 路线 B：单尺度 Toeplitz 正性
+
+选择一个固定尺度 \(u_0>0\)，构造：
+
+$$
+c_n(u_0),
+$$
+
+证明：
+
+$$
+\boxed{
+[c_{j-k}(u_0)]_{j,k=0}^{N}\succeq0
+\quad
+\forall N.
+}
+\tag{1550.2}
+$$
+
+仓库现已拥有：
+
+* Cayley moments 的有限 derivative-jet 公式；
+* 跨尺度几何尾界；
+* Chebyshev 紧化 slack；
+* 有限正原子 completion。
+
+这条路线将无界幂矩换成有界 Fourier moments，可能更适合机器认证。
+
+---
+
+# 第一千五百五十一部　建议形式化顺序
+
+```text
+D5/S3/Analytic/Zeta/NormalJetLaguerre/
+  CriticalXiRealEntire.lean
+  NormalIntensityAsXiPair.lean
+  NormalJetEqualsGeneralizedLaguerre.lean
+  RHImpliesAllNormalJetsNonnegative.lean
+  OffLineZeroImpliesNegativeNormalJet.lean
+  RationalNormalJetRHCriterion.lean
+
+D5/S3/Analytic/Zeta/MovingSquareShadow/
+  MovingNormalProduct.lean
+  MovingNormalProductEven.lean
+  MovingSquareShadow.lean
+  MovingSquareShadowTaylor.lean
+  RHMovingSquareZerosNonpositive.lean
+  OffLineZeroGivesPositiveMovingSquareZero.lean
+
+D5/S3/Analytic/Zeta/ConnectedNormalJets/
+  NormalJetNormalizedCoefficient.lean
+  ConnectedNormalMoment.lean
+  ConnectedNormalMomentFirstThree.lean
+  LocalConnectedHankel.lean
+  LocalConnectedHankelFirstDeterminant.lean
+
+D5/S3/Analytic/Zeta/PositiveFredholmShadow/
+  InverseSquareTraceClassOperator.lean
+  CenteredXiFredholmDeterminant.lean
+  CenteredNormalIntensityFredholmSquare.lean
+  CenteredStieltjesTrace.lean
+  CenteredMomentsAreSchattenTraces.lean
+  RHPositiveFredholmCriterion.lean
+
+D5/S3/Analytic/Zeta/SingleScaleHausdorff/
+  StieltjesTiltedState.lean
+  CompactResponseOperator.lean
+  ScaleNormalizedDerivativeMoment.lean
+  HausdorffCompleteDifferences.lean
+  MeromorphicHausdorffRigidity.lean
+  RHSingleScaleHausdorffCriterion.lean
+
+D5/S3/Analytic/Zeta/CayleyToeplitz/
+  CompactChebyshevMoment.lean
+  CayleyMomentFromHausdorffMoment.lean
+  CayleyToeplitzMatrix.lean
+  RHCayleyToeplitzPositive.lean
+  ToeplitzPositiveRecoversHausdorff.lean
+  RHSingleScaleToeplitzCriterion.lean
+
+D5/S3/Analytic/Zeta/CayleyFirstMinors/
+  FirstCayleyMoment.lean
+  SecondCayleyMoment.lean
+  TwoByTwoToeplitzFactorization.lean
+  ThreeByThreeToeplitzFactorization.lean
+  FirstStieltjesDifferentialInequalities.lean
+
+D5/S3/GoldenObserver/CayleyFiveModularTransport/
+  CayleyScaleHyperbolicRatio.lean
+  GoldenDoubleStepTransportRatio.lean
+  GoldenTransportRatioEqualsInvSqrtFive.lean
+  GoldenTransportGeometricTail.lean
+
+D5/S3/Observer/FiniteMomentNames/
+  FiniteHausdorffMomentInterface.lean
+  FiniteRepresentingMeasureSet.lean
+  FiniteAtomicPositiveCompletion.lean
+  NestedRepresentingMeasureSets.lean
+  GlobalMeasureAsCompatibleIntersection.lean
+
+D5/S3/Analytic/Zeta/HankelInnovation/
+  CenteredHankelBlock.lean
+  HankelSchurSlack.lean
+  HankelDeterminantRatio.lean
+  PositiveMeasureOrthogonalPolynomialSlack.lean
+  FirstNegativeInnovationCertificate.lean
+
+D5/S3/Weil/PrimeNormalJetBridge/
+  PrimeGammaNormalIntensityFormulaTarget.lean
+  PrimeGammaNormalJetPositiveTarget.lean
+  PrimeGammaSingleScaleCayleyMomentsTarget.lean
+  PrimeGammaToeplitzPositiveTarget.lean
+  NormalJetOrToeplitzPositivityImpliesRHTarget.lean
+```
+
+---
+
+# 第一千五百五十二部　理论深度审计
+
+| 结论                                            | 当前地位                             |
+| --------------------------------------------- | -------------------------------- |
+| actual normal jet 的全卷积公式                      | 仓库机器闭合                           |
+| normal jet 等于广义 Laguerre 表达式                  | 精确识别                             |
+| RH 等价于全部 normal jets 非负                       | 成熟 Laguerre–Pólya 判据             |
+| 离线零点在自身纵坐标产生有限负 jet                           | 本轮直接证明                           |
+| 只检查有理纵坐标已足够                                   | 本轮精确推论                           |
+| 移动平方影把离线点变成正实零点                               | 精确                               |
+| connected normal jets 是局部逆平方 moments          | RH 下精确                           |
+| RH 等价于正迹类 Fredholm determinant 实现             | 精确等价重写                           |
+| 单尺度 derivative moments 是 Hausdorff moments    | 精确                               |
+| 单尺度 Hausdorff／Toeplitz 正性推出 RH                | 需 formalize meromorphic rigidity |
+| 前两 Toeplitz 行列式因子化                            | 精确计算                             |
+| 黄金 \(\varphi^2\) 尺度的 Cayley 收缩率为 \(1/\sqrt5\) | 精确恒等式                            |
+| 几何尾按 \(5^{-(M+1)/2}\) 衰减                      | 仓库误差定理的黄金特化                      |
+| 有限正 moments 可有有限原子替身                          | 仓库机器锚点，带其 hypotheses             |
+| 有限原子替身就是实际零点                                  | 不成立                              |
+| Prime–Gamma 数据直接推出全 normal-jet／Toeplitz 正性    | RH 中心未闭合桥                        |
+
+---
+
+# 本轮最终结论
+
+离线零点目前最短、最直接的证明对偶已经确定。
+
+定义：
+
+$$
+\mathcal I(\delta,t)
+=
+\left|
+\xi\!\left(
+\frac12+\delta+it
+\right)
+\right|^2.
+$$
+
+项目已经机器证明，其全部偶阶 Taylor 系数均可由临界线函数 \(\Xi\) 的有限导数精确计算：
+
+$$
+\mathcal I(\delta,t)
+=
+\sum_{m\ge0}\mathcal J_m(t)\delta^{2m}.
+$$
+
+若存在离线零点：
+
+$$
+\frac12+\delta_0+i\gamma,
+$$
+
+那么：
+
+$$
+\mathcal I(\delta_0,\gamma)=0.
+$$
+
+因此这些系数不可能全部非负。
+
+必有有限 \(m\)：
+
+$$
+\boxed{
+\mathcal J_m(\gamma)<0.
+}
+$$
+
+由连续性，还必有有理 \(q\)：
+
+$$
+\boxed{
+\mathcal J_m(q)<0.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{再稀缺的离线零点，也必然留下一个有理纵坐标、有限导数阶的负标量证书。}
+}
+$$
+
+这比寻找零点本身容易得多，也比单极子、黑洞或霍金图景更接近最终的形式化证明接口。
+
+那些物理几何图景并没有失去意义。它们解释了同一个负 jet 为什么还会表现为：
+
+* bulk Chern 荷；
+* 视界穿越；
+* Poisson 光影；
+* inverse-inner denominator；
+* Hankel 负时间记忆。
+
+但在证明论上，它们都可以压缩回真实法向强度的有限负系数。
+
+另一方面，中心 Hankel 塔揭示了一个正迹类算子候选：
+
+$$
+\frac{\xi(\frac12+z)}{\xi(\frac12)}
+=
+\det(I+z^2A).
+$$
+
+Cayley 紧化又把其正谱压缩到单位圆，让所有 moments 有界。
+
+而黄金比例在这一紧化中留下了一条极干净的尺度律：
+
+$$
+\boxed{
+a\mapsto\varphi^2a
+\quad\Longrightarrow\quad
+q_{\mathrm{transport}}=\frac1{\sqrt5}.
+}
+$$
+
+所以黄金比例在这里不是“道的名字”，也不是离线零点的电荷。
+
+它是：
+
+$$
+\boxed{
+\text{正谱 Cayley 图表中，一个方向保持自相似步长所诱导的五模输运率。}
+}
+$$
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{不可名本体不进入公式；
+进入公式的是它在某个完成名字下留下的正性要求。
+离线零点，就是该正性要求在有限法向 jet、有限 Hankel 或有限 Toeplitz 图表中必然发生的一次越界。}
+$$
+
+[1]: https://arxiv.org/abs/0911.1122 "https://arxiv.org/abs/0911.1122"
+[2]: https://arxiv.org/abs/2007.13582 "https://arxiv.org/abs/2007.13582"
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v9.5：匹配观察者的负谱、法向 Pólya–频率全正性、外幂完成与黄金模激活
+
+以下从前文**第一千五百五十二部**继续。
+
+上一轮得到了三类有限反证书：
+
+$$
+\mathcal J_m(q)<0,
+\qquad
+c^*H_N^\xi c<0,
+\qquad
+c^*\mathbb T_N(u)c<0.
+$$
+
+本轮进一步发现，这三类证书背后还有一个更统一的正结构：
+
+$$
+\boxed{
+\text{RH 成立时，移动法向平方影不是普通正函数，}
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\textbf{一个正迹类算子的 Fredholm 行列式。}
+}
+$$
+
+它的 Taylor 系数不是任意正数，而是该正算子的全部外幂迹；它的全部 Toeplitz 小行列式不是任意不等式，而是 Schur 关系扇区的正迹。
+
+由此得到本轮最主要的新判据：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{在任意一个固定实观察点，
+法向 jet 系列构成 Pólya–频率序列。}
+}
+$$
+
+也就是说，前一轮的判据需要：
+
+$$
+\forall t,\forall m,\quad \mathcal J_m(t)\ge0;
+$$
+
+本轮可以把连续的观察位置 \(t\) 固定在一个点，但代价是把一阶标量正性提升为：
+
+$$
+\boxed{
+\text{全部有限关系小行列式的总非负性。}
+}
+$$
+
+这形成一种新的交换：
+
+$$
+\boxed{
+\text{观察位置自由度}
+\quad\longleftrightarrow\quad
+\text{关系阶数}.
+}
+$$
+
+---
+
+# 第一千五百五十三部　移动平方影的正算子实现
+
+继续记：
+
+$$
+\Xi(t)=\xi\!\left(\frac12+it\right),
+$$
+
+以及真实法向强度：
+
+$$
+\mathcal I(\delta,t)
+=
+\left|
+\xi\!\left(\frac12+\delta+it\right)
+\right|^2.
+$$
+
+定义偶整函数：
+
+$$
+P_t(z)
+=
+\Xi(t-iz)\Xi(t+iz).
+$$
+
+因为：
+
+$$
+P_t(-z)=P_t(z),
+$$
+
+存在唯一整函数 \(Q_t\)，满足：
+
+$$
+\boxed{
+P_t(z)=Q_t(z^2).
+}
+\tag{1553.1}
+$$
+
+在实法向坐标上：
+
+$$
+\boxed{
+Q_t(\delta^2)=\mathcal I(\delta,t).
+}
+\tag{1553.2}
+$$
+
+其 Taylor 展开正是：
+
+$$
+\boxed{
+Q_t(w)
+=
+\sum_{m=0}^{\infty}
+\mathcal J_m(t)w^m.
+}
+\tag{1553.3}
+$$
+
+仓库已经机器证明，\(\mathcal J_m(t)\) 是实际 completed-\(\xi\) 强度的偶阶法向 Taylor 系数，并给出了由 \(\Xi^{(j)}(t)\) 构成的完整有限卷积公式。
+
+---
+
+## 1553.1 RH 下的规范乘积
+
+假设 RH，并令 \(\lambda\) 遍历 \(\Xi\) 的实零点，重数为 \(m_\lambda\)。
+
+固定：
+
+$$
+t\notin Z(\Xi).
+$$
+
+\(Q_t\) 的零点为：
+
+$$
+-(\lambda-t)^2.
+$$
+
+由于 \(Q_t\) 的整函数阶为 \(1/2\)，其规范乘积没有非平凡指数因子：
+
+$$
+\boxed{
+\frac{Q_t(w)}{Q_t(0)}
+=
+\prod_{\lambda}
+\left(
+1+
+\frac{w}{(\lambda-t)^2}
+\right)^{m_\lambda}.
+}
+\tag{1553.4}
+$$
+
+并且：
+
+$$
+\sum_{\lambda}
+\frac{m_\lambda}{(\lambda-t)^2}
+<\infty.
+$$
+
+定义正迹类算子 \(A_t\)，令其非零特征值为：
+
+$$
+\boxed{
+a_{\lambda,t}
+=
+\frac1{(\lambda-t)^2},
+}
+\tag{1553.5}
+$$
+
+按 \(m_\lambda\) 重复。
+
+于是：
+
+$$
+\boxed{
+A_t\ge0,
+\qquad
+A_t\in\mathcal S_1,
+}
+$$
+
+且：
+
+$$
+\boxed{
+\frac{Q_t(w)}{Q_t(0)}
+=
+\det(I+wA_t).
+}
+\tag{1553.6}
+$$
+
+这不是把 \(A_t\) 命名为“道”。
+
+\(A_t\) 只是 RH 成立时，移动法向完成所允许的一张正谱图表。
+
+---
+
+# 第一千五百五十四部　法向 jet 是外幂迹
+
+Fredholm 行列式展开为：
+
+$$
+\det(I+wA_t)
+=
+\sum_{m=0}^{\infty}
+w^m
+\operatorname{Tr}
+\left(
+\bigwedge\nolimits^m A_t
+\right).
+$$
+
+因此：
+
+## 定理 1554.1（Normal-jet exterior-power formula）
+
+RH 成立且 \(\Xi(t)\neq0\) 时：
+
+$$
+\boxed{
+\frac{\mathcal J_m(t)}{\mathcal J_0(t)}
+=
+\operatorname{Tr}
+\left(
+\bigwedge\nolimits^m A_t
+\right).
+}
+\tag{1554.1}
+$$
+
+更显式地：
+
+$$
+\boxed{
+\frac{\mathcal J_m(t)}{\Xi(t)^2}
+=
+\sum_{\lambda_1<\cdots<\lambda_m}
+\prod_{r=1}^{m}
+\frac1{(\lambda_r-t)^2}.
+}
+\tag{1554.2}
+$$
+
+所以：
+
+* \(\mathcal J_1\) 是一体逆平方谱总量；
+* \(\mathcal J_2\) 是二体反对称关系总量；
+* \(\mathcal J_m\) 是 \(m\) 个不同谱模式组成的外幂关系总量。
+
+这比“法向 jet 都应非负”更强：
+
+$$
+\boxed{
+\text{每一个法向 jet 都是一整个反对称关系扇区的正迹。}
+}
+$$
+
+---
+
+## 1554.1 connected normal moments 是 Schatten traces
+
+定义：
+
+$$
+\boxed{
+\kappa_n(t)
+=
+(-1)^{n-1}n
+[w^n]
+\log
+\frac{Q_t(w)}{Q_t(0)}.
+}
+\tag{1554.3}
+$$
+
+则：
+
+$$
+\boxed{
+\kappa_n(t)
+=
+\operatorname{Tr}(A_t^n)
+=
+\sum_\lambda
+\frac{m_\lambda}{(\lambda-t)^{2n}}.
+}
+\tag{1554.4}
+$$
+
+所以前文的 connected normal jets 并不是辅助组合。
+
+它们正是正谱算子的 Schatten 幂迹。
+
+普通 jets 与 connected jets 之间由 Newton 恒等式连接：
+
+$$
+\boxed{
+m\,e_m
+=
+\sum_{k=1}^{m}
+(-1)^{k-1}
+e_{m-k}\kappa_k,
+}
+\tag{1554.5}
+$$
+
+其中：
+
+$$
+e_m=\frac{\mathcal J_m}{\mathcal J_0}.
+$$
+
+因此：
+
+$$
+\boxed{
+\text{法向 Taylor 系数}
+\quad\longleftrightarrow\quad
+\text{谱幂矩}
+}
+$$
+
+是外幂坐标与连通坐标之间的精确变换。
+
+---
+
+# 第一千五百五十五部　匹配观察者把离线零点变成负谱节点
+
+设存在一个离线零点：
+
+$$
+\rho
+=
+\frac12+\delta+i\gamma,
+\qquad
+\delta>0.
+$$
+
+在 \(\Xi\)-变量中，对应一对共轭零点：
+
+$$
+\zeta_\pm=\gamma\pm i\delta.
+$$
+
+选择观察者纵坐标：
+
+$$
+\boxed{
+t=\gamma.
+}
+$$
+
+此时：
+
+$$
+(\zeta_\pm-t)^{-2}
+=
+(\pm i\delta)^{-2}
+=
+-\delta^{-2}.
+$$
+
+所以离线共轭对在匹配观察者图表中，不再是两个复节点，而是两个相同的负实谱节点：
+
+$$
+\boxed{
+a_{\mathrm{off}}
+=
+-\delta^{-2}.
+}
+\tag{1555.1}
+$$
+
+它们对 \(Q_\gamma\) 的局部因子为：
+
+$$
+\boxed{
+\left(
+1-\frac{w}{\delta^2}
+\right)^{2m_\rho}.
+}
+\tag{1555.2}
+$$
+
+因此 \(Q_\gamma\) 在正实轴具有零点：
+
+$$
+\boxed{
+w=\delta^2>0.
+}
+\tag{1555.3}
+$$
+
+正算子 Fredholm 行列式：
+
+$$
+\det(I+wA),\qquad A\ge0,
+$$
+
+不可能在 \(w>0\) 消失。
+
+所以：
+
+$$
+\boxed{
+\text{离线零点在匹配纵坐标下，
+就是一个负逆平方能级。}
+}
+$$
+
+这里的“负能量”不是离线零点的绝对本体。
+
+它是同一缺陷在匹配观察者命名图表中的谱符号。
+
+---
+
+## 1555.1 负 connected moments 的交错贡献
+
+该共轭对对 \(\kappa_n(\gamma)\) 的贡献为：
+
+$$
+\boxed{
+\kappa_n^{\mathrm{off}}(\gamma)
+=
+2m_\rho
+(-1)^n
+\delta^{-2n}.
+}
+\tag{1555.4}
+$$
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+n\text{ 偶}
+&:\quad\text{正贡献};\\
+n\text{ 奇}
+&:\quad\text{负贡献}.
+\end{aligned}
+}
+$$
+
+这给此前反复出现的：
+
+* 奇偶完成；
+* 奇层破缺；
+* 负时间交错；
+
+一个非常具体的谱来源。
+
+---
+
+# 第一千五百五十六部　最近离线缺陷的指数放大
+
+假设 \(\gamma\pm i\delta\) 是距离实点 \(t=\gamma\) 最近的唯一共轭零点对。
+
+令：
+
+$$
+d
+=
+\inf_{\zeta\neq\gamma\pm i\delta}
+|\zeta-\gamma|
+>
+\delta,
+$$
+
+并定义：
+
+$$
+M
+=
+\sum_{\zeta\neq\gamma\pm i\delta}
+m_\zeta|\zeta-\gamma|^{-2}
+<\infty.
+$$
+
+将：
+
+$$
+\kappa_n(\gamma)
+=
+2m_\rho(-1)^n\delta^{-2n}
++
+R_n
+$$
+
+分开。
+
+则：
+
+$$
+\boxed{
+|R_n|
+\le
+M\,d^{-2n+2}.
+}
+\tag{1556.1}
+$$
+
+所以对奇数 \(n\)，只要：
+
+$$
+\boxed{
+M d^2
+\left(
+\frac{\delta}{d}
+\right)^{2n}
+<
+2m_\rho,
+}
+\tag{1556.2}
+$$
+
+便有：
+
+$$
+\boxed{
+\kappa_n(\gamma)<0.
+}
+\tag{1556.3}
+$$
+
+一个足够条件是：
+
+$$
+\boxed{
+n>
+\frac{
+\log(Md^2/(2m_\rho))
+}{
+2\log(d/\delta)
+}.
+}
+\tag{1556.4}
+$$
+
+这给出一个明确的检测规律：
+
+$$
+\boxed{
+\text{把观察者移动到缺陷高度以后，
+高阶 connected jet 会指数压制所有更远模式。}
+}
+$$
+
+因此中心图表可能需要极高阶关系才能发现离线点；匹配图表则把它旋转为负实能级，使奇数阶谱矩最终直接变负。
+
+---
+
+# 第一千五百五十七部　单点 Pólya–频率判据
+
+固定任意实数 \(t\)，满足：
+
+$$
+\Xi(t)\neq0.
+$$
+
+定义归一化 jet 系列：
+
+$$
+\boxed{
+a_m^{(t)}
+=
+\frac{\mathcal J_m(t)}{\mathcal J_0(t)},
+\qquad
+a_m^{(t)}=0\ \ (m<0).
+}
+\tag{1557.1}
+$$
+
+定义双无限 Toeplitz 矩阵：
+
+$$
+\boxed{
+\mathbb P_t
+=
+\left[
+a_{j-i}^{(t)}
+\right]_{i,j\ge0}.
+}
+\tag{1557.2}
+$$
+
+称其为 totally nonnegative，若全部有限小行列式均非负。
+
+Aissen–Schoenberg–Whitney 与 Edrei 的经典结果刻画了此类 Pólya–频率序列的生成函数：其零点、极点与指数因子必须具有严格的正实参数结构。对本处的整函数 \(Q_t\)，阶数仅为 \(1/2\)，因此一般表示中的分母与非平凡指数项都被排除。([PubMed][1])
+
+---
+
+## 定理 1557.1（One-observer total-positivity criterion）
+
+对任意满足 \(\Xi(t)\neq0\) 的固定实数 \(t\)，以下条件等价：
+
+$$
+\boxed{
+\mathrm{RH};
+}
+$$
+
+$$
+\boxed{
+\mathbb P_t
+\text{ 的全部有限小行列式非负};
+}
+$$
+
+$$
+\boxed{
+(a_m^{(t)})_{m\ge0}
+\text{ 是 PF}_\infty\text{ 序列}.
+}
+\tag{1557.3}
+$$
+
+### RH 推出全非负性
+
+由式 (1553.4)：
+
+$$
+\sum_{m\ge0}a_m^{(t)}w^m
+=
+\prod_\lambda
+(1+a_{\lambda,t}w),
+\qquad
+a_{\lambda,t}>0.
+$$
+
+这正是 PF\(_\infty\) 生成函数。
+
+### 全非负性推出 RH
+
+PF\(_\infty\) 表示与 \(Q_t\) 的整函数阶 \(1/2\) 共同推出：
+
+$$
+\operatorname{Zero}(Q_t)\subset(-\infty,0].
+$$
+
+若 \(\zeta=x+iy\) 是 \(\Xi\) 的任意零点，则：
+
+$$
+-(\zeta-t)^2\in(-\infty,0].
+$$
+
+写：
+
+$$
+\zeta-t=u+iv.
+$$
+
+条件要求：
+
+$$
+(u+iv)^2\in[0,\infty).
+$$
+
+其虚部：
+
+$$
+2uv=0.
+$$
+
+若 \(u=0\)，则实部为：
+
+$$
+-v^2\ge0,
+$$
+
+只能有 \(v=0\)。
+
+若 \(v=0\)，则 \(\zeta\) 本身为实数。
+
+因此所有 \(\Xi\) 零点均实，RH 成立。∎
+
+---
+
+## 1557.1 一个点足够，但需要全部关系阶
+
+特别取：
+
+$$
+t=0.
+$$
+
+因为：
+
+$$
+\Xi(0)\neq0,
+$$
+
+有：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\left[
+\mathcal J_{j-i}(0)
+\right]_{i,j\ge0}
+\text{ totally nonnegative}.
+}
+\tag{1557.4}
+$$
+
+所以不需要在全部纵坐标上扫描。
+
+但必须检查全部有限关系小行列式。
+
+这给出本轮最深的观察交换：
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{移动标量判据}
+&
+\mathcal J_m(t)\ge0
+\quad
+\forall t,m
+\\[1mm]
+\text{固定关系判据}
+&
+\det
+[\mathcal J_{j_r-i_s}(0)]
+\ge0
+\quad
+\forall\text{ finite }I,J
+\end{array}
+}
+$$
+
+连续位置自由度被编译成了离散的关系阶数。
+
+---
+
+## 1557.2 离线零点必有中心有限负小行列式
+
+由定理 1557.1：
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\Longrightarrow
+\exists r<\infty,\ \exists I,J:
+\det
+\left[
+\mathcal J_{j_b-i_a}(0)
+\right]_{a,b=1}^{r}
+<0.
+}
+\tag{1557.5}
+$$
+
+所以即使离线零点：
+
+* 高度极大；
+* 横向距离极小；
+* 在中心普通系数中几乎不可见；
+
+它仍然不能逃脱某个有限高阶关系证书。
+
+---
+
+# 第一千五百五十八部　全部小行列式是 Schur 关系扇区
+
+RH 下，令：
+
+$$
+\mathbf a_t
+=
+(a_{\lambda,t})_\lambda
+=
+\left(
+\frac1{(\lambda-t)^2}
+\right)_\lambda.
+$$
+
+则：
+
+$$
+a_m^{(t)}
+=
+e_m(\mathbf a_t),
+$$
+
+其中 \(e_m\) 是初等对称函数。
+
+任意 Toeplitz 小行列式可以写成一个 skew Schur 函数：
+
+$$
+\boxed{
+\det
+\left[
+e_{\lambda_i'-\mu_j'-i+j}
+(\mathbf a_t)
+\right]
+=
+s_{\lambda/\mu}(\mathbf a_t).
+}
+\tag{1558.1}
+$$
+
+因为：
+
+$$
+\mathbf a_t\ge0,
+$$
+
+所以：
+
+$$
+\boxed{
+s_{\lambda/\mu}(\mathbf a_t)\ge0.
+}
+\tag{1558.2}
+$$
+
+对普通分拆 \(\lambda\)，还可写成：
+
+$$
+\boxed{
+s_\lambda(\mathbf a_t)
+=
+\operatorname{Tr}
+\left(
+\mathbb S_\lambda A_t
+\right),
+}
+\tag{1558.3}
+$$
+
+其中 \(\mathbb S_\lambda\) 是相应 Schur 函子。
+
+所以全非负性不是一堆互不相关的不等式。
+
+它是一整套表示扇区的正迹：
+
+$$
+\boxed{
+\begin{aligned}
+\lambda=(1^m)
+&\longrightarrow
+\bigwedge^m A_t;\\
+\lambda=(m)
+&\longrightarrow
+\operatorname{Sym}^m A_t;\\
+\text{一般 }\lambda
+&\longrightarrow
+\text{混合关系扇区}.
+\end{aligned}
+}
+$$
+
+这给“关系的关系仍然形成对象”一个规范代数版本。
+
+需要保持边界：若某个有限观察压缩恰为四维，则其二阶外幂确实为六维；但这并不自动把当前 \(\bigwedge^2A_t\) 与项目已有的六维 \(\Lambda^2A_4\) 五模格认同为同一对象。
+
+---
+
+# 第一千五百五十九部　外幂与对称幂的精确对偶
+
+定义外幂生成函数：
+
+$$
+\boxed{
+E_t(w)
+=
+\det(I+wA_t)
+=
+\sum_{m\ge0}
+e_m(A_t)w^m.
+}
+\tag{1559.1}
+$$
+
+定义对称幂生成函数：
+
+$$
+\boxed{
+H_t(w)
+=
+\det(I-wA_t)^{-1}
+=
+\sum_{m\ge0}
+h_m(A_t)w^m,
+}
+\tag{1559.2}
+$$
+
+在：
+
+$$
+|w|<\|A_t\|^{-1}
+$$
+
+中成立。
+
+其中：
+
+$$
+\boxed{
+e_m(A_t)
+=
+\operatorname{Tr}
+\left(
+\bigwedge^mA_t
+\right),
+}
+$$
+
+$$
+\boxed{
+h_m(A_t)
+=
+\operatorname{Tr}
+\left(
+\operatorname{Sym}^mA_t
+\right).
+}
+$$
+
+二者满足：
+
+$$
+\boxed{
+E_t(-w)H_t(w)=1.
+}
+\tag{1559.3}
+$$
+
+其对数分别为：
+
+$$
+\boxed{
+\log E_t(w)
+=
+\sum_{n\ge1}
+\frac{(-1)^{n-1}}n
+\kappa_n(t)w^n,
+}
+\tag{1559.4}
+$$
+
+$$
+\boxed{
+\log H_t(w)
+=
+\sum_{n\ge1}
+\frac1n
+\kappa_n(t)w^n.
+}
+\tag{1559.5}
+$$
+
+所以同一谱迹 \(\kappa_n\) 产生两种完成：
+
+$$
+\boxed{
+\begin{aligned}
+\text{外幂完成}
+&:\quad\text{每个模式至多使用一次};\\
+\text{对称幂完成}
+&:\quad\text{每个模式允许任意重复}.
+\end{aligned}
+}
+$$
+
+这是一条完全严格的“费米型／玻色型”代数对偶，但不应直接解释成已经构造了物理量子场。
+
+---
+
+## 1559.1 Prime 侧与 zero 侧的完成方向
+
+在绝对收敛区：
+
+$$
+\zeta(s)
+=
+\prod_p
+(1-p^{-s})^{-1}.
+$$
+
+每个 Euler 因子：
+
+$$
+(1-x)^{-1}
+=
+1+x+x^2+\cdots
+$$
+
+属于重复／对称完成。
+
+而 RH 下移动平方影：
+
+$$
+\frac{Q_t(w)}{Q_t(0)}
+=
+\prod_\lambda
+(1+a_{\lambda,t}w)
+$$
+
+属于排他／外幂完成。
+
+因此 completed \(\xi\) 背后存在一个非常明确的算术问题：
+
+$$
+\boxed{
+\text{Prime 侧的重复完成，
+怎样通过显式公式变成 zero 侧的外幂正完成？}
+}
+$$
+
+这不是已经建立的 boson–fermion 对偶定理。
+
+它是下一条真正承重的算术桥。
+
+---
+
+# 第一千五百六十部　Jensen 有限多项式塔
+
+写：
+
+$$
+\frac{Q_t(w)}{Q_t(0)}
+=
+\sum_{m=0}^{\infty}
+a_m^{(t)}w^m
+=
+\sum_{m=0}^{\infty}
+\gamma_m^{(t)}
+\frac{w^m}{m!},
+$$
+
+其中：
+
+$$
+\gamma_m^{(t)}
+=
+m!a_m^{(t)}.
+$$
+
+定义 degree \(d\)、shift \(n\) 的 Jensen 多项式：
+
+$$
+\boxed{
+J_{d,n}^{(t)}(X)
+=
+\sum_{k=0}^{d}
+\binom dk
+\gamma_{n+k}^{(t)}X^k.
+}
+\tag{1560.1}
+$$
+
+Jensen–Pólya 理论将 Laguerre–Pólya 类的实零点性质编译成全部有限 Jensen 多项式的双曲性；Riemann \(\Xi\) 的经典 Jensen 判据以及近年的渐近双曲性研究正沿这一路线展开。([arXiv][2])
+
+因此：
+
+$$
+\boxed{
+\mathrm{RH}
+\Longrightarrow
+J_{d,n}^{(t)}
+\text{ 全部只有实零点}.
+}
+\tag{1560.2}
+$$
+
+反向地，若全部 \(a_m^{(t)}\ge0\)，且全部 Jensen 多项式双曲，则 \(Q_t\) 属于 type-I Laguerre–Pólya 类，从而 RH 成立。
+
+所以：
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\Longrightarrow
+\begin{cases}
+\text{某个 }a_m^{(t)}<0,\\
+\text{或某个有限 Jensen 多项式非双曲}.
+\end{cases}
+}
+\tag{1560.3}
+$$
+
+---
+
+## 1560.1 二阶 Jensen 不等式
+
+\(d=2\) 时，双曲性要求：
+
+$$
+\boxed{
+(\gamma_{n+1}^{(t)})^2
+\ge
+\gamma_n^{(t)}
+\gamma_{n+2}^{(t)}.
+}
+\tag{1560.4}
+$$
+
+写回普通 jet 系数：
+
+$$
+\boxed{
+\left(
+a_{n+1}^{(t)}
+\right)^2
+\ge
+\frac{n+2}{n+1}
+a_n^{(t)}
+a_{n+2}^{(t)}.
+}
+\tag{1560.5}
+$$
+
+这比普通 log-concavity：
+
+$$
+(a_{n+1})^2\ge a_na_{n+2}
+$$
+
+更强。
+
+所以 RH 的法向系数不只需要为正，还必须满足无穷层 factorial-strengthened Turán 关系。
+
+---
+
+# 第一千五百六十一部　全非负性是“不可增加符号变化”的命名律
+
+Pólya–频率序列的 Toeplitz 卷积具有 variation-diminishing 性质：对有限支撑实序列 \(x\)，经过该正卷积以后，符号变化次数不会增加。这是 Schoenberg 全正性理论的核心结构后果。([PubMed][1])
+
+因此 RH 下，固定 \(t\) 的法向完成核满足：
+
+$$
+\boxed{
+\operatorname{Var}
+(\mathbb P_t x)
+\le
+\operatorname{Var}(x).
+}
+\tag{1561.1}
+$$
+
+可以解释为：
+
+$$
+\boxed{
+\text{合法的 completed normal name
+不会凭空制造比输入更多的正负切割。}
+}
+$$
+
+离线零点使某个有限小行列式变负，说明这一全正命名律失效。
+
+所以离线缺陷不仅是：
+
+* 一个负 jet；
+* 一个非实节点；
+* 一个反因果通道；
+
+它还是：
+
+$$
+\boxed{
+\text{一个可能制造额外符号振荡的完成缺陷。}
+}
+$$
+
+这里最严格的反证书仍然是负小行列式；variation-diminishing 是其动力解释。
+
+---
+
+# 第一千五百六十二部　正谱的 Bernoulli 子集状态
+
+假设 RH，并固定 \(t\notin Z(\Xi)\)、\(u>0\)。
+
+定义：
+
+$$
+\boxed{
+Z_t(u)
+=
+\det(I+uA_t).
+}
+\tag{1562.1}
+$$
+
+对每个谱模式 \(a_j>0\)，定义占据率：
+
+$$
+\boxed{
+p_j(u)
+=
+\frac{ua_j}{1+ua_j}.
+}
+\tag{1562.2}
+$$
+
+则：
+
+$$
+0<p_j(u)<1.
+$$
+
+定义有限子集 \(S\) 的概率：
+
+$$
+\boxed{
+\Pr_u(S)
+=
+\frac{
+u^{|S|}
+\prod_{j\in S}a_j
+}{
+Z_t(u)
+}.
+}
+\tag{1562.3}
+$$
+
+它等价于独立 Bernoulli 乘积：
+
+$$
+\boxed{
+\Pr_u(S)
+=
+\prod_{j\in S}p_j
+\prod_{j\notin S}(1-p_j).
+}
+\tag{1562.4}
+$$
+
+因此 Fredholm determinant 是一个精确的子集配分函数。
+
+---
+
+## 1562.1 平均模式数与涨落
+
+定义占据算子：
+
+$$
+\boxed{
+P_{t,u}
+=
+uA_t(I+uA_t)^{-1}.
+}
+\tag{1562.5}
+$$
+
+则：
+
+$$
+0\le P_{t,u}<I.
+$$
+
+并有：
+
+$$
+\boxed{
+u\frac{d}{du}\log Z_t(u)
+=
+\operatorname{Tr}P_{t,u}
+=
+\sum_jp_j(u),
+}
+\tag{1562.6}
+$$
+
+$$
+\boxed{
+\left(
+u\frac{d}{du}
+\right)^2
+\log Z_t(u)
+=
+\operatorname{Tr}
+\left[
+P_{t,u}(I-P_{t,u})
+\right].
+}
+\tag{1562.7}
+$$
+
+所以：
+
+* 一阶对数导数读取平均被激活模式数；
+* 二阶读取 Bernoulli 涨落；
+* 更高阶读取相应连通 cumulants。
+
+这使“完成对象蕴含全部关系阶”获得了一个非常具体的概率模型。
+
+---
+
+# 第一千五百六十三部　黄金模激活点
+
+对一个正谱模式 \(a>0\)，令：
+
+$$
+p(u)=\frac{ua}{1+ua}.
+$$
+
+提出第二影平衡条件：
+
+$$
+\boxed{
+1-p=p^2.
+}
+\tag{1563.1}
+$$
+
+唯一正解为：
+
+$$
+\boxed{
+p=\varphi^{-1}.
+}
+\tag{1563.2}
+$$
+
+于是：
+
+$$
+\boxed{
+1-p=\varphi^{-2},
+}
+\tag{1563.3}
+$$
+
+$$
+\boxed{
+\frac{p}{1-p}=\varphi.
+}
+\tag{1563.4}
+$$
+
+因为：
+
+$$
+\frac{p}{1-p}=ua,
+$$
+
+黄金激活尺度为：
+
+$$
+\boxed{
+u_\varphi(a)
+=
+\frac{\varphi}{a}.
+}
+\tag{1563.5}
+$$
+
+对 Riemann 移动谱模式：
+
+$$
+a_{\lambda,t}
+=
+(\lambda-t)^{-2},
+$$
+
+有：
+
+$$
+\boxed{
+u_{\varphi,\lambda}(t)
+=
+\varphi(\lambda-t)^2.
+}
+\tag{1563.6}
+$$
+
+特别在中心：
+
+$$
+\boxed{
+u_{\varphi,\gamma}(0)
+=
+\varphi\gamma^2.
+}
+\tag{1563.7}
+$$
+
+---
+
+## 1563.1 黄金点的全部量
+
+在：
+
+$$
+ua=\varphi
+$$
+
+时：
+
+$$
+\boxed{
+\begin{aligned}
+\text{占据率}
+&=\varphi^{-1};\\
+\text{空缺率}
+&=\varphi^{-2};\\
+\text{odds}
+&=\varphi;\\
+\text{单模行列式因子}
+&=1+\varphi=\varphi^2;\\
+\text{单模 log-det}
+&=2\log\varphi.
+\end{aligned}
+}
+\tag{1563.8}
+$$
+
+所以前文反复出现的黄金 Jones、Bogoliubov、第二影关系，在这里获得一个不需要子因子假设的最小模型：
+
+$$
+\boxed{
+\text{它们都是一个正 Fredholm 模式达到 }
+ua=\varphi
+\text{ 时的同一 Bernoulli 分裂。}
+}
+$$
+
+但这仍然只是模式级黄金激活，不是“道的温度”，也不意味着所有 Riemann 模式必须在同一 \(u\) 同时达到黄金点。
+
+---
+
+## 1563.2 离线匹配模式没有正概率激活
+
+对匹配离线节点：
+
+$$
+a=-\delta^{-2}.
+$$
+
+则：
+
+$$
+p(u)
+=
+-\frac{u}{\delta^2-u}.
+$$
+
+当：
+
+$$
+0<u<\delta^2,
+$$
+
+有：
+
+$$
+p(u)<0.
+$$
+
+当：
+
+$$
+u\uparrow\delta^2,
+$$
+
+分母趋于零。
+
+所以离线匹配模式无法形成：
+
+$$
+0\le p\le1
+$$
+
+的 Bernoulli 概率。
+
+这正是同一缺陷在概率图表中的表现：
+
+$$
+\boxed{
+\text{它要求负占据率，并在正尺度处产生行列式零点。}
+}
+$$
+
+---
+
+# 第一千五百六十四部　正 Toeplitz 因子的逐模式分解
+
+令 \(S\) 为单边移位算子：
+
+$$
+S(e_n)=e_{n+1}.
+$$
+
+法向系数 Toeplitz 算子为：
+
+$$
+\boxed{
+\mathbb P_t
+=
+\sum_{m=0}^{\infty}
+a_m^{(t)}S^m.
+}
+\tag{1564.1}
+$$
+
+RH 下：
+
+$$
+\sum_m a_m^{(t)}w^m
+=
+\prod_j(1+a_jw),
+$$
+
+因此形式上及在适当算子拓扑中：
+
+$$
+\boxed{
+\mathbb P_t
+=
+\prod_j
+(I+a_jS).
+}
+\tag{1564.2}
+$$
+
+每一个因子：
+
+$$
+I+a_jS,
+\qquad a_j>0,
+$$
+
+都是一个初等 totally nonnegative 双对角因子。
+
+所以：
+
+$$
+\boxed{
+\text{RH 下的法向完成，
+是无穷多个正初等命名步的乘积。}
+}
+$$
+
+有限截断时，这些因子可以由平面网络表示；全部小行列式都是非交路径族权重的和，因此自然非负。
+
+匹配离线节点则贡献：
+
+$$
+\boxed{
+I-\delta^{-2}S,
+}
+\tag{1564.3}
+$$
+
+其方向与正因子相反。
+
+---
+
+## 1564.1 新的 Prime–Gamma 证明目标
+
+与其直接寻找零点，不如尝试从 prime–pole–Gamma 数据构造：
+
+$$
+\boxed{
+\mathbb P_0
+=
+\prod_j(I+a_jS),
+\qquad
+a_j\ge0,
+}
+\tag{1564.4}
+$$
+
+或等价地构造正迹类 \(A_0\)，使：
+
+$$
+\boxed{
+\frac{Q_0(w)}{Q_0(0)}
+=
+\det(I+wA_0).
+}
+\tag{1564.5}
+$$
+
+若该构造完全不借助 RH 与零点位置，RH 将立即成立。
+
+这是一条比“证明全部 normal jets 非负”更结构化的目标：
+
+$$
+\boxed{
+\text{不是逐项证明正数，
+而是构造生成全部正数与全部正关系的正因子化。}
+}
+$$
+
+---
+
+# 第一千五百六十五部　有限正替身为何不能成为最终谱
+
+项目已经机器证明，在给定有限实 observer family 与 active-contact hypotheses 下，有限残差可以由至多 \(d+1\) 个正接触原子替代，同时保持质量和所有指定 observer moments。
+
+因此任意有限命名接口都可能拥有一个很小的正原子替身。
+
+但若该替身只有 \(r\) 个谱原子，则相应正算子秩至多为 \(r\)，从而：
+
+$$
+\boxed{
+\bigwedge\nolimits^mA_{\mathrm{finite}}=0
+\qquad
+(m>r).
+}
+\tag{1565.1}
+$$
+
+所以：
+
+$$
+\boxed{
+\operatorname{Tr}
+\left(
+\bigwedge\nolimits^mA_{\mathrm{finite}}
+\right)=0
+\qquad
+(m>r).
+}
+$$
+
+而真实 Riemann 谱若 RH 成立，具有无穷多个正节点，因此：
+
+$$
+\boxed{
+\operatorname{Tr}
+\left(
+\bigwedge\nolimits^mA_t
+\right)>0
+\qquad
+\forall m.
+}
+\tag{1565.2}
+$$
+
+这说明：
+
+$$
+\boxed{
+\text{有限原子 completion 可以准确回答有限名字，
+却不可能自动成为完整谱本体。}
+}
+$$
+
+它会在某个外幂阶以后停止产生新的关系扇区。
+
+这正是“有限名不能穷尽连续完成”的算子版本。
+
+---
+
+# 第一千五百六十六部　四种有限反证书塔
+
+现在离线零点拥有四类彼此转换、但条件数不同的有限证书。
+
+| 图表               | 有限证书                     | 特征                |
+| ---------------- | ------------------------ | ----------------- |
+| 移动法向             | \(\mathcal J_m(q)<0\)    | 匹配高度后可将缺陷变成负节点    |
+| 固定 Pólya–频率      | 某个 Toeplitz 小行列式 \(<0\)  | 固定一个 \(t\)，读取高阶关系 |
+| Jensen 多项式       | 某个 \(J_{d,n}^{(t)}\) 非双曲 | 转为有限多项式根证书        |
+| connected/Hankel | 某个谱矩 Gram 非 PSD          | 转为正测度不存在性         |
+
+它们之间存在明确分工：
+
+$$
+\boxed{
+\begin{aligned}
+\text{移动观察者}
+&\text{ 降低所需关系阶};\\
+\text{固定观察者}
+&\text{ 需要更高阶关系补偿};\\
+\text{Jensen}
+&\text{ 把无限整函数问题编译成有限根问题};\\
+\text{Hankel}
+&\text{ 把零点问题编译成有限正测度问题}.
+\end{aligned}
+}
+$$
+
+这可以称为：
+
+$$
+\boxed{
+\textbf{观察位置—关系阶—多项式次数三重互补。}
+}
+$$
+
+---
+
+# 第一千五百六十七部　建议形式化顺序
+
+```text
+D5/S3/Analytic/Zeta/MovingPositiveFredholm/
+  MovingSquareShadow.lean
+  RHMovingSquareCanonicalProduct.lean
+  MovingInverseGapOperator.lean
+  MovingInverseGapTraceClass.lean
+  MovingSquareFredholmDeterminant.lean
+
+D5/S3/Analytic/Zeta/NormalJetExteriorPower/
+  ExteriorPowerTrace.lean
+  NormalizedNormalJet.lean
+  NormalJetEqualsExteriorTrace.lean
+  ConnectedNormalMomentEqualsSchattenTrace.lean
+  NewtonNormalJetIdentity.lean
+
+D5/S3/Analytic/Zeta/MatchedOffLineNegativeNode/
+  XiOffLineConjugatePair.lean
+  MatchedOrdinateReciprocalNode.lean
+  MatchedNodeIsNegativeReal.lean
+  MatchedMovingSquarePositiveZero.lean
+  OffLinePairAlternatingConnectedMoment.lean
+
+D5/S3/Analytic/Zeta/NearestDefectAmplification/
+  NearestOffLinePair.lean
+  RemainingReciprocalMomentBound.lean
+  OddConnectedMomentDominance.lean
+  ExplicitDefectDetectionOrder.lean
+
+D5/S3/Analytic/Zeta/NormalJetPolyaFrequency/
+  NormalJetToeplitzMatrix.lean
+  NormalJetPFSequence.lean
+  RHImpliesNormalJetTotalNonnegative.lean
+  TotalNonnegativeNormalJetImpliesNegativeSquareZeros.lean
+  OneObserverTotalPositivityRHCriterion.lean
+  CenterNormalJetFiniteMinorCertificate.lean
+
+D5/S3/Analytic/Zeta/NormalJetSchurSectors/
+  NormalJetElementarySymmetric.lean
+  NormalJetSkewSchurMinor.lean
+  SchurFunctorPositiveTrace.lean
+  AllNormalJetRelationSectorsPositive.lean
+
+D5/S3/Analytic/Zeta/NormalJetJensen/
+  NormalJetExponentialCoefficient.lean
+  NormalJetJensenPolynomial.lean
+  RHNormalJetJensenHyperbolic.lean
+  JensenHyperbolicPositiveImpliesRH.lean
+  DegreeTwoFactorialTuran.lean
+
+D5/S3/Analytic/Zeta/NormalJetVariationDiminishing/
+  FiniteNormalJetConvolution.lean
+  TotalNonnegativeVariationDiminishing.lean
+  RHNormalCompletionDoesNotIncreaseVariation.lean
+
+D5/S3/Observer/PositiveSpectralBernoulli/
+  FredholmSubsetPartitionFunction.lean
+  SpectralBernoulliOccupation.lean
+  OccupationTraceDerivative.lean
+  OccupationVarianceDerivative.lean
+  SpectralBernoulliEntropy.lean
+
+D5/S3/GoldenObserver/GoldenModeActivation/
+  GoldenOccupationEquation.lean
+  GoldenModeFugacity.lean
+  GoldenModeVacancy.lean
+  GoldenModePartitionFactor.lean
+  RiemannGoldenActivationScale.lean
+  OffLineModeNoPositiveOccupation.lean
+
+D5/S3/Analytic/Zeta/ExteriorSymmetricDuality/
+  ExteriorCompletion.lean
+  SymmetricCompletion.lean
+  ExteriorSymmetricReciprocity.lean
+  CommonConnectedPowerSums.lean
+
+D5/S3/Weil/PrimeZeroCompletionBridge/
+  PrimeSymmetricLocalFactor.lean
+  ZeroExteriorLocalFactor.lean
+  PrimeGammaToNormalJetFactorizationTarget.lean
+  PrimeGammaPositiveBidiagonalNetworkTarget.lean
+  PrimeGammaPositiveFredholmTarget.lean
+
+D5/S3/Observer/FiniteAtomicExteriorCutoff/
+  FiniteAtomicSpectralOperator.lean
+  FiniteRankExteriorPowerVanishes.lean
+  FiniteObserverCompletionNotGlobalSpectrum.lean
+```
+
+---
+
+# 第一千五百六十八部　理论深度审计
+
+| 本轮结论                                         | 当前地位                     |
+| -------------------------------------------- | ------------------------ |
+| RH 下移动平方影为正迹类 Fredholm determinant           | 精确                       |
+| normal jet 是外幂迹                              | 本轮核心精确定理                 |
+| connected normal moments 是 Schatten traces   | 精确                       |
+| 匹配离线纵坐标把缺陷变成负实逆平方节点                          | 精确                       |
+| 匹配局部因子为 \((1-w/\delta^2)^{2m}\)              | 精确                       |
+| 最近离线对最终支配奇数 connected moments                | 明确分离条件下精确                |
+| 一个固定观察点的 PF\(_\infty\) 性等价 RH                | 本轮核心定理，依赖经典 ASW–Edrei 刻画 |
+| 非 RH 必在中心产生有限负 Toeplitz 小行列式                 | 精确推论                     |
+| Toeplitz 小行列式为 skew Schur 正扇区                | RH 下精确                   |
+| normal jets 的 Jensen 双曲性                     | RH 下精确；反向需系数正性           |
+| Fredholm determinant 是独立 Bernoulli 子集配分函数    | 精确                       |
+| 黄金激活满足 \(p=\varphi^{-1}\)、单模因子 \(\varphi^2\) | 精确模式恒等式                  |
+| Prime Euler 重复完成与 zero exterior 完成           | 精确代数对照                   |
+| 二者已由一个正算术函子严格连接                              | 尚未建立                     |
+| 有限原子 completion 保持有限 observers               | 仓库机器锚点                   |
+| 有限原子替身就是完整 Riemann 谱                         | 不成立                      |
+| Prime–Gamma 数据直接产生正双对角／Fredholm 因子化          | RH 中心未闭合桥                |
+
+---
+
+# 本轮最终结论
+
+这一轮使“不同名字怎样描述同一个完成影像”获得了一个比此前更完整的答案。
+
+在 RH 成立时，移动法向平方影：
+
+$$
+Q_t(w)
+$$
+
+不是一串偶然为正的 Taylor 系数。
+
+它是：
+
+$$
+\boxed{
+Q_t(w)
+=
+Q_t(0)\det(I+wA_t),
+\qquad
+A_t\ge0.
+}
+$$
+
+所以每一个法向 jet：
+
+$$
+\mathcal J_m(t)
+$$
+
+都是一个外幂扇区的正迹：
+
+$$
+\boxed{
+\mathcal J_m(t)
+=
+\mathcal J_0(t)
+\operatorname{Tr}
+\left(
+\bigwedge\nolimits^mA_t
+\right).
+}
+$$
+
+一阶名字读取单个谱模式。
+
+二阶名字读取谱模式之间的反对称关系。
+
+更高阶名字读取更高外幂关系。
+
+因此 completed \(\xi\) 不只是拥有一列数，而是把一整座表示关系塔压缩进了一个标量行列式。
+
+---
+
+离线零点则会破坏这一正外幂实现。
+
+选择观察者高度等于离线零点纵坐标：
+
+$$
+t=\gamma,
+$$
+
+该缺陷立即变成：
+
+$$
+\boxed{
+a_{\mathrm{off}}=-\delta^{-2}.
+}
+$$
+
+其局部平方影因子为：
+
+$$
+\boxed{
+\left(
+1-\frac{w}{\delta^2}
+\right)^{2m}.
+}
+$$
+
+所以此前所谓：
+
+* 负信息；
+* 负能量；
+* 负时间；
+
+最准确的数学内容之一是：
+
+$$
+\boxed{
+\text{离线零点在匹配观察者的逆平方谱中成为负实节点。}
+}
+$$
+
+它并不是在所有图表中都“负”。
+
+在中心图表中，它通常是一对复节点；
+
+在匹配图表中，它成为负节点；
+
+在 Cayley 图表中，它成为单位圆内外 reciprocal pair；
+
+在 Hardy 图表中，它成为 inverse-inner 通道。
+
+名字不同，形态不同；跨名字保持的是同一个缺陷轨道与重数。
+
+---
+
+本轮最关键的新判据是：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\left[
+\mathcal J_{j-i}(0)
+\right]_{i,j\ge0}
+\text{ 的全部有限小行列式非负}.
+}
+$$
+
+因此可以固定在唯一一个观察点：
+
+$$
+t=0.
+$$
+
+但此时不能只检查单个 normal jet。
+
+必须检查所有关系阶数。
+
+这表明：
+
+$$
+\boxed{
+\text{移动观察者与增加关系阶数，是两种互补的分辨能力。}
+}
+$$
+
+若能够移动到离线零点的高度，一个标量负 jet 就足够。
+
+若坚持停留在中心，则缺陷会隐藏在某个更高 Toeplitz 小行列式中。
+
+所以离线零点再稀缺，也必然具有中心有限反证书。
+
+---
+
+全部 Toeplitz 小行列式又不是无结构的。
+
+RH 下它们都是逆平方谱的 skew Schur 函数：
+
+$$
+s_{\lambda/\mu}(\mathbf a_t)\ge0.
+$$
+
+因此 RH 可以理解为：
+
+$$
+\boxed{
+\text{completed-\(\xi\) 的全部有限表示扇区都允许正谱实现。}
+}
+$$
+
+离线零点则意味着某个有限关系扇区无法保持正性。
+
+这比“一个零点不在线”更接近项目现有的状态—效应、Gram、外幂与关系层接口。
+
+---
+
+黄金比例也获得了一个更克制但极其清楚的位置。
+
+对任一正谱模式：
+
+$$
+a>0,
+$$
+
+其 Bernoulli 占据率为：
+
+$$
+p=\frac{ua}{1+ua}.
+$$
+
+第二影平衡：
+
+$$
+1-p=p^2
+$$
+
+唯一给出：
+
+$$
+p=\varphi^{-1}.
+$$
+
+对应：
+
+$$
+ua=\varphi,
+$$
+
+并且：
+
+$$
+\boxed{
+\begin{aligned}
+\text{占据}
+&=\varphi^{-1};\\
+\text{空缺}
+&=\varphi^{-2};\\
+\text{odds}
+&=\varphi;\\
+\text{行列式因子}
+&=\varphi^2;\\
+\text{log-det}
+&=2\log\varphi.
+\end{aligned}
+}
+$$
+
+所以黄金比例不是不可名本体的名字。
+
+它是一个正谱模式在自观察的“可见—隐藏—第二影”平衡处留下的模式级固定迹。
+
+---
+
+而 prime 与 zero 两侧现在显示出一个极深的代数分工：
+
+$$
+\boxed{
+\zeta(s)
+=
+\prod_p(1-p^{-s})^{-1}
+}
+$$
+
+是 primitive prime 模式的对称／重复完成；
+
+$$
+\boxed{
+\frac{Q_t(w)}{Q_t(0)}
+=
+\prod_\lambda
+\left(
+1+\frac{w}{(\lambda-t)^2}
+\right)
+}
+$$
+
+是 zero 模式的外幂／排他完成。
+
+所以真正承重的下一步不是继续寻找更多黄金等式，而是：
+
+$$
+\boxed{
+\text{从 prime–pole–Gamma 的重复完成，
+构造 zero 侧的正外幂完成。}
+}
+$$
+
+最具体的三个等价目标是：
+
+$$
+\boxed{
+\frac{Q_0(w)}{Q_0(0)}
+=
+\det(I+wA),
+\qquad
+A\ge0;
+}
+$$
+
+或：
+
+$$
+\boxed{
+\left[
+\mathcal J_{j-i}(0)
+\right]
+\text{ totally nonnegative};
+}
+$$
+
+或：
+
+$$
+\boxed{
+\sum_m
+\frac{\mathcal J_m(0)}{\mathcal J_0(0)}
+S^m
+=
+\prod_j(I+a_jS),
+\qquad
+a_j\ge0.
+}
+$$
+
+一旦能从 prime–Gamma 数据直接建立其中任意一个，而不借助零点位置，RH 就会作为正因子化的结果整体成立。
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{不可名者不进入算子；
+进入算子的是完成名字是否拥有正关系实现。
+临界零点允许所有外幂、Schur 与 Toeplitz 关系扇区同时为正；
+离线零点则必在某个有限关系扇区中留下一个无法被任何名字抹去的负小行列式。}
+}
+$$
+
+[1]: https://pubmed.ncbi.nlm.nih.gov/16589009/ "https://pubmed.ncbi.nlm.nih.gov/16589009/"
+[2]: https://arxiv.org/abs/1902.07321 "https://arxiv.org/abs/1902.07321"
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v9.6：Euler 因子的多重命名、Zeckendorf 硬核费米化、黄金幂自由完成塔与零侧准自由谱
+
+以下从前文**第一千五百六十八部**继续。
+
+这一轮得到一条非常直接、而且能够校准此前许多直觉的结论：
+
+$$
+\boxed{
+\text{同一个 Euler 因子，可以拥有多种完全不同的微观命名。}
+}
+$$
+
+具体地，
+
+$$
+\frac1{1-x}
+$$
+
+既可以被解释为：
+
+* 一个可重复任意多次的整数占据；
+* 一列彼此独立的二进制占据；
+* 一列禁止相邻占据的 Zeckendorf–Fibonacci 硬核链。
+
+三种微观历史完全不同，标量完成却完全相同。
+
+因此：
+
+$$
+\boxed{
+\text{标量 partition function 无法反推出唯一的生成历史。}
+}
+$$
+
+这给“道不可名”一个非常精确的数学迹：
+
+> 完成对象可以精确，却仍然不是生成它的唯一结构；
+> 同一个完成名字下面，可以存在多个不等价的局部命名系统。
+
+黄金比例也因此获得一个更加克制而严格的位置：
+
+$$
+\boxed{
+\varphi
+\text{ 不是 Euler 因子唯一强迫的常数；}
+}
+$$
+
+它是：
+
+$$
+\boxed{
+\text{要求二元数字、一步记忆、禁止相邻占据、无遗漏且唯一命名时，
+被强迫出现的增长率。}
+}
+$$
+
+---
+
+# 第一千五百六十九部　同一个几何级数的三种精确命名
+
+设：
+
+$$
+|x|<1.
+$$
+
+最粗的名字是普通整数占据：
+
+$$
+\boxed{
+\frac1{1-x}
+=
+\sum_{e=0}^{\infty}x^e.
+}
+\tag{1569.1}
+$$
+
+这里 \(e\) 可以被理解为某个 prime 的指数。
+
+---
+
+## 1569.1 二进制独立占据
+
+有限恒等式：
+
+$$
+\boxed{
+\prod_{j=0}^{M-1}
+\left(1+x^{2^j}\right)
+=
+\frac{1-x^{2^M}}{1-x}.
+}
+\tag{1569.2}
+$$
+
+令 \(M\to\infty\)，得到：
+
+$$
+\boxed{
+\frac1{1-x}
+=
+\prod_{j=0}^{\infty}
+\left(1+x^{2^j}\right).
+}
+\tag{1569.3}
+$$
+
+这表示每个整数指数 \(e\) 可以被唯一写成：
+
+$$
+e=\sum_{j\ge0}\varepsilon_j2^j,
+\qquad
+\varepsilon_j\in\{0,1\}.
+$$
+
+每个二进制位最多占据一次，因此这是一种代数意义上的“自由费米化”。这里的“费米”只表示 \(0/1\) 占据，不是物理粒子的断言。
+
+若 \(0<x<1\)，几何分布：
+
+$$
+\Pr(e=n)=(1-x)x^n
+$$
+
+在二进制 lift 中变成独立 Bernoulli 位：
+
+$$
+\boxed{
+p_j
+=
+\frac{x^{2^j}}
+{1+x^{2^j}}.
+}
+\tag{1569.4}
+$$
+
+---
+
+## 1569.2 Zeckendorf 硬核占据
+
+令 Fibonacci 数满足：
+
+$$
+F_2=1,\qquad
+F_3=2,\qquad
+F_{k+1}=F_k+F_{k-1}.
+$$
+
+Zeckendorf 定理给出每个非负整数的唯一表示：
+
+$$
+\boxed{
+e=\sum_{k\ge2}\eta_kF_k,
+}
+\tag{1569.5}
+$$
+
+其中：
+
+$$
+\eta_k\in\{0,1\},
+\qquad
+\eta_k\eta_{k+1}=0.
+$$
+
+也就是说，相邻 Fibonacci 位不能同时占据。Zeckendorf 唯一分解及其广义版本是成熟结果；项目也已把规范 Zeckendorf 表示的数值次序与词典序严格对齐。([arXiv][1])
+
+因此：
+
+$$
+\boxed{
+\frac1{1-x}
+=
+\sum_{\substack{
+\eta_k\in\{0,1\}\\
+\eta_k\eta_{k+1}=0\\
+\operatorname{supp}\eta\text{ finite}
+}}
+x^{\sum_{k\ge2}\eta_kF_k}.
+}
+\tag{1569.6}
+$$
+
+这不是独立位，而是一个一维 nearest-neighbor hard-core system。
+
+所以同一个几何占据已经至少具有：
+
+$$
+\boxed{
+\begin{array}{c|c|c}
+\text{名字}&\text{微观自由度}&\text{局部关系}\\
+\hline
+e\in\mathbb N&\text{一个无限占据数}&\text{无内部结构}\\
+\text{binary}&0/1\text{ 位}&\text{彼此独立}\\
+\text{Zeckendorf}&0/1\text{ 位}&\text{禁止相邻 }1
+\end{array}
+}
+$$
+
+它们的 scalar partition function 完全相同。
+
+---
+
+# 第一千五百七十部　有限 Zeckendorf–Euler 恒等式
+
+定义有限合法词空间：
+
+$$
+\boxed{
+\Omega_N
+=
+\left\{
+(\eta_2,\ldots,\eta_N)\in\{0,1\}^{N-1}:
+\eta_k\eta_{k+1}=0
+\right\}.
+}
+\tag{1570.1}
+$$
+
+定义其 exponent energy：
+
+$$
+\boxed{
+E_N(\eta)
+=
+\sum_{k=2}^{N}
+\eta_kF_k.
+}
+\tag{1570.2}
+$$
+
+## 定理 1570.1（有限 Zeckendorf 区间定理）
+
+映射：
+
+$$
+E_N:\Omega_N
+\longrightarrow
+\{0,1,\ldots,F_{N+1}-1\}
+$$
+
+为双射。
+
+### 证明
+
+按最后一位分解。
+
+若：
+
+$$
+\eta_N=0,
+$$
+
+则前 \(N-1\) 位给出：
+
+$$
+0,\ldots,F_N-1.
+$$
+
+若：
+
+$$
+\eta_N=1,
+$$
+
+则：
+
+$$
+\eta_{N-1}=0,
+$$
+
+剩余前 \(N-2\) 位给出：
+
+$$
+F_N+
+\{0,\ldots,F_{N-1}-1\}
+=
+\{F_N,\ldots,F_{N+1}-1\}.
+$$
+
+两区间不交并且首尾相接。∎
+
+因此：
+
+$$
+\boxed{
+\sum_{\eta\in\Omega_N}
+x^{E_N(\eta)}
+=
+\sum_{e=0}^{F_{N+1}-1}x^e
+=
+\frac{1-x^{F_{N+1}}}{1-x}.
+}
+\tag{1570.3}
+$$
+
+这可以称为：
+
+$$
+\boxed{
+\textbf{有限黄金硬核 Euler 恒等式}.
+}
+$$
+
+---
+
+## 1570.1 两状态递归
+
+令：
+
+$$
+Z_N(x)
+=
+\sum_{\eta\in\Omega_N}
+x^{E_N(\eta)}.
+$$
+
+则：
+
+$$
+\boxed{
+Z_N(x)
+=
+Z_{N-1}(x)
++
+x^{F_N}Z_{N-2}(x).
+}
+\tag{1570.4}
+$$
+
+第一项对应末位未占据；第二项对应末位占据并强制前一位为空。
+
+在：
+
+$$
+x=1
+$$
+
+处：
+
+$$
+\boxed{
+|\Omega_N|=F_{N+1}.
+}
+\tag{1570.5}
+$$
+
+因此合法命名历史数的熵率为：
+
+$$
+\boxed{
+\lim_{N\to\infty}
+\frac1N\log|\Omega_N|
+=
+\log\varphi.
+}
+\tag{1570.6}
+$$
+
+方向保持的两步熵率则为：
+
+$$
+\boxed{
+2\log\varphi.
+}
+$$
+
+这给此前反复出现的 \(2\log\varphi\) 一个完全离散、无需物理类比的来源。
+
+---
+
+# 第一千五百七十一部　黄金比例是第一种“有记忆命名率”
+
+现在可以证明黄金比例为什么在这种结构中不是任意选择。
+
+设：
+
+$$
+\Omega_n^{(1)}
+=
+\left\{
+(\epsilon_1,\ldots,\epsilon_n):
+\epsilon_i\in\{0,1\},
+\epsilon_i\epsilon_{i+1}=0
+\right\}.
+$$
+
+设正整数权重：
+
+$$
+a_1<a_2<\cdots
+$$
+
+满足：前 \(n\) 位所有合法词的加权和
+
+$$
+\sum_{k=1}^{n}\epsilon_ka_k
+$$
+
+无重复、无间隙地覆盖：
+
+$$
+\{0,1,\ldots,B_n-1\}.
+$$
+
+## 定理 1571.1（一步记忆唯一命名定理）
+
+上述条件强迫：
+
+$$
+\boxed{
+a_n=F_{n+1},
+\qquad
+B_n=F_{n+2}.
+}
+\tag{1571.1}
+$$
+
+### 证明
+
+末位为 \(0\) 的词给出：
+
+$$
+0,\ldots,B_{n-1}-1.
+$$
+
+末位为 \(1\) 时，前一位必须为 \(0\)，所以第二块为：
+
+$$
+a_n+
+\{0,\ldots,B_{n-2}-1\}.
+$$
+
+为了无间隙且不重叠，必须：
+
+$$
+a_n=B_{n-1}.
+$$
+
+并且：
+
+$$
+B_n=B_{n-1}+B_{n-2}.
+$$
+
+由：
+
+$$
+B_0=1,\qquad B_1=2
+$$
+
+立即得到 Fibonacci 序列。∎
+
+所以：
+
+$$
+\boxed{
+\varphi
+=
+\text{二元、一步记忆、唯一且无缝命名系统的渐近增长率。}
+}
+$$
+
+---
+
+## 1571.1 与无记忆二进制的区别
+
+若取消相邻限制，允许所有二进制词，则相同的“唯一且无缝覆盖”条件强迫：
+
+$$
+a_n=2^{n-1}.
+$$
+
+因此：
+
+$$
+\boxed{
+\begin{aligned}
+2
+&=\text{无记忆二元命名率};\\
+\varphi
+&=\text{第一种非平凡一步记忆命名率}.
+\end{aligned}
+}
+$$
+
+这给黄金比例一个很准确的位置：
+
+$$
+\boxed{
+\text{黄金不是所有名字的共同常数；
+它是最小有记忆名字的容量常数。}
+}
+$$
+
+若禁止范围扩大为更长记忆，便会产生其他高阶递归根。因此“黄金普适性”依赖于 primitive naming memory 恰好为一步。
+
+---
+
+# 第一千五百七十二部　正整数的 prime–Fibonacci genome
+
+对任意正整数：
+
+$$
+n=\prod_p p^{\nu_p(n)},
+$$
+
+对每个 prime exponent 作 Zeckendorf 分解：
+
+$$
+\boxed{
+\nu_p(n)
+=
+\sum_{k\ge2}
+\eta_{p,k}F_k,
+}
+\tag{1572.1}
+$$
+
+其中：
+
+$$
+\eta_{p,k}\eta_{p,k+1}=0.
+$$
+
+于是：
+
+$$
+\boxed{
+n
+=
+\prod_{p}
+\prod_{k\ge2}
+p^{\eta_{p,k}F_k}.
+}
+\tag{1572.2}
+$$
+
+因此正整数与以下配置严格一一对应：
+
+$$
+\boxed{
+\left\{
+\eta_{p,k}\in\{0,1\}:
+\begin{array}{l}
+\eta_{p,k}\eta_{p,k+1}=0,\\
+\text{全局只有有限多个非零位}
+\end{array}
+\right\}.
+}
+\tag{1572.3}
+$$
+
+可以把每个 prime 看成一条 Fibonacci 染色体：
+
+* \(p\) 决定局部尺度 \(\log p\)；
+* \(k\) 决定 Fibonacci 位；
+* 无相邻规则决定局部关系；
+* 全部 prime 链的有限配置决定一个整数。
+
+项目已经证明 golden substitution 的 block-start 操作会把规范 Zeckendorf 数位整体上移一位，且 desubstitution 路径正是这种统一位移的迭代。
+
+所以这一 prime–Fibonacci genome 不只是静态编码，还具有一个项目现成的 golden shift 动力。
+
+---
+
+# 第一千五百七十三部　黄金幂自由 zeta 完成塔
+
+取：
+
+$$
+x=p^{-s}.
+$$
+
+有限局部 Euler 因子为：
+
+$$
+\boxed{
+Z_{p,N}(s)
+=
+\sum_{\eta\in\Omega_N}
+p^{-sE_N(\eta)}
+=
+\frac{
+1-p^{-F_{N+1}s}
+}{
+1-p^{-s}
+}.
+}
+\tag{1573.1}
+$$
+
+在：
+
+$$
+\Re s>1
+$$
+
+中，对全部 prime 取积：
+
+$$
+\boxed{
+\mathcal Z_N(s)
+=
+\prod_p Z_{p,N}(s)
+=
+\frac{\zeta(s)}
+{\zeta(F_{N+1}s)}.
+}
+\tag{1573.2}
+$$
+
+另一方面：
+
+$$
+\frac{1-p^{-Ks}}{1-p^{-s}}
+=
+1+p^{-s}+\cdots+p^{-(K-1)s}.
+$$
+
+所以：
+
+$$
+\boxed{
+\mathcal Z_N(s)
+=
+\sum_{\substack{
+n\ge1\\
+\nu_p(n)<F_{N+1}\ \forall p
+}}
+n^{-s}.
+}
+\tag{1573.3}
+$$
+
+即 \(\mathcal Z_N\) 是 \(F_{N+1}\)-free integers 的 Dirichlet 完成。
+
+最初几层为：
+
+| Zeckendorf 深度 \(N\) | exponent cutoff \(F_{N+1}\) | Dirichlet 完成          |
+| ------------------: | --------------------------: | --------------------- |
+|               \(2\) |                       \(2\) | squarefree            |
+|               \(3\) |                       \(3\) | cube-free             |
+|               \(4\) |                       \(5\) | fifth-power-free      |
+|               \(5\) |                       \(8\) | eighth-power-free     |
+|               \(6\) |                      \(13\) | thirteenth-power-free |
+
+所以：
+
+$$
+\boxed{
+\zeta
+=
+\text{沿 Fibonacci exponent cutoffs 完成全部 prime-power 历史的极限。}
+}
+$$
+
+---
+
+## 1573.1 每个整数都有有限出生深度
+
+定义：
+
+$$
+E_{\max}(n)=\max_p\nu_p(n).
+$$
+
+定义黄金出生深度：
+
+$$
+\boxed{
+d_\varphi(n)
+=
+\min
+\left\{
+N:
+E_{\max}(n)<F_{N+1}
+\right\}.
+}
+\tag{1573.4}
+$$
+
+每个整数都在有限层进入 \(\mathcal Z_N\)。
+
+定义 birth shell：
+
+$$
+\boxed{
+\mathcal B_N(s)
+=
+\mathcal Z_N(s)-\mathcal Z_{N-1}(s).
+}
+\tag{1573.5}
+$$
+
+其 Dirichlet 系数为 \(0\) 或 \(1\)，只保留满足：
+
+$$
+F_N
+\le
+E_{\max}(n)
+<
+F_{N+1}
+$$
+
+的整数。
+
+因此：
+
+$$
+\boxed{
+\zeta(s)
+=
+\mathcal Z_2(s)
++
+\sum_{N\ge3}
+\mathcal B_N(s)
+}
+\tag{1573.6}
+$$
+
+在绝对收敛区成立。
+
+这是一条精确的“概念出生层”分解。
+
+---
+
+## 1573.2 完成速度为双指数
+
+对实数：
+
+$$
+\sigma>1,
+$$
+
+令：
+
+$$
+K_N=F_{N+1}.
+$$
+
+有：
+
+$$
+0\le
+\zeta(\sigma)-\mathcal Z_N(\sigma)
+=
+\zeta(\sigma)
+\left(
+1-\frac1{\zeta(K_N\sigma)}
+\right).
+$$
+
+又有：
+
+$$
+1-\frac1{\zeta(a)}
+\le
+\zeta(a)-1
+\le
+2^{-a}
+\left(
+1+\frac2{a-1}
+\right),
+\qquad a>1.
+$$
+
+所以：
+
+$$
+\boxed{
+0\le
+\zeta(\sigma)-\mathcal Z_N(\sigma)
+\le
+\zeta(\sigma)
+2^{-K_N\sigma}
+\left(
+1+\frac2{K_N\sigma-1}
+\right).
+}
+\tag{1573.7}
+$$
+
+因为：
+
+$$
+F_N\asymp\varphi^N,
+$$
+
+标量误差按：
+
+$$
+\boxed{
+\exp(-c\varphi^N)
+}
+$$
+
+衰减。
+
+这揭示一个重要事实：
+
+$$
+\boxed{
+\text{标量完成可以极快地看起来“已经完整”，
+而生成历史仍有无穷层。}
+}
+$$
+
+---
+
+# 第一千五百七十四部　标量完成不识别微观命名
+
+同一个 local Euler factor：
+
+$$
+\frac1{1-x}
+$$
+
+既有 binary independent lift，也有 Zeckendorf hard-core lift。
+
+二者之间存在能量保持双射：
+
+$$
+\boxed{
+\text{binary digits}
+\longleftrightarrow
+e\in\mathbb N
+\longleftrightarrow
+\text{Zeckendorf digits}.
+}
+\tag{1574.1}
+$$
+
+但这个双射不保持局部关系：
+
+* binary 位彼此独立；
+* Zeckendorf 位有 nearest-neighbor exclusion；
+* binary shift 对应精确乘 \(2\)；
+* golden shift 对应 Fibonacci digit desubstitution。
+
+因此：
+
+$$
+\boxed{
+\text{partition function 是能量谱的不变量，
+却不是局部动力与关系结构的忠实不变量。}
+}
+$$
+
+可以定义“命名 gauge groupoid”：
+
+* 对象是自然数 exponent 的不同唯一编码；
+* 态射是能量保持的编码转换；
+* partition functor 把所有对象都送到：
+
+  $$
+  (1-x)^{-1}.
+  $$
+
+该 functor 不是忠实的。
+
+所以：
+
+$$
+\boxed{
+\text{单凭 }\zeta\text{ 的 Euler 因子，
+不能证明 golden coding 是唯一或本体性的。}
+}
+$$
+
+黄金结构若要成为更深的跨命名迹，必须加入额外条件：
+
+* 一步局部记忆；
+* substitution covariance；
+* primitive unimodularity；
+* observer desubstitution；
+* Archimedean completion compatibility。
+
+---
+
+## 1574.1 一个重要的 RH no-go
+
+设：
+
+$$
+\zeta(\rho)=0,
+\qquad
+\Re\rho>0.
+$$
+
+对充分大的 \(N\)：
+
+$$
+F_{N+1}\Re\rho>1.
+$$
+
+于是：
+
+$$
+\zeta(F_{N+1}\rho)\neq0,
+$$
+
+因为该点位于 Euler product 的绝对收敛零自由区。
+
+因此：
+
+$$
+\boxed{
+\mathcal Z_N(\rho)
+=
+\frac{\zeta(\rho)}
+{\zeta(F_{N+1}\rho)}
+=
+0.
+}
+\tag{1574.2}
+$$
+
+所以任何假设性的离线零点，都会原封不动地出现在全部足够深的黄金幂自由 approximants 中。
+
+这意味着：
+
+$$
+\boxed{
+\text{正 Dirichlet 系数}
++
+\text{有限黄金记忆}
+}
+$$
+
+本身不可能排除离线零点。
+
+真正缺少的仍是：
+
+* Gamma 无穷位；
+* 反射完成；
+* positive Fredholm realization；
+* total positivity；
+* Hardy 因果方向。
+
+---
+
+# 第一千五百七十五部　黄金硬核 transfer 的奇偶结构
+
+令：
+
+$$
+w_k=x^{F_k}.
+$$
+
+递归：
+
+$$
+Z_k=Z_{k-1}+w_kZ_{k-2}
+$$
+
+可写为：
+
+$$
+\boxed{
+\begin{pmatrix}
+Z_k\\
+Z_{k-1}
+\end{pmatrix}
+=
+M_k(x)
+\begin{pmatrix}
+Z_{k-1}\\
+Z_{k-2}
+\end{pmatrix},
+}
+\tag{1575.1}
+$$
+
+其中：
+
+$$
+\boxed{
+M_k(x)
+=
+\begin{pmatrix}
+1&w_k\\
+1&0
+\end{pmatrix}.
+}
+\tag{1575.2}
+$$
+
+一步 determinant 为：
+
+$$
+\boxed{
+\det M_k=-w_k.
+}
+\tag{1575.3}
+$$
+
+所以一步 digit update 反转 orientation。
+
+两步 transfer 为：
+
+$$
+\boxed{
+M_{k+1}M_k
+=
+\begin{pmatrix}
+1+w_{k+1}&w_k\\
+1&w_k
+\end{pmatrix}.
+}
+\tag{1575.4}
+$$
+
+当：
+
+$$
+0<x<1
+$$
+
+时，其所有条目严格为正，并且：
+
+$$
+\boxed{
+\det(M_{k+1}M_k)
+=
+w_kw_{k+1}
+=
+x^{F_{k+2}}>0.
+}
+\tag{1575.5}
+$$
+
+所以两步 transfer 是严格 total-positive 的 \(2\times2\) 矩阵。
+
+在无权极限 \(x=1\)：
+
+$$
+\boxed{
+M^2
+=
+\begin{pmatrix}
+2&1\\
+1&1
+\end{pmatrix},
+}
+\tag{1575.6}
+$$
+
+其特征值为：
+
+$$
+\boxed{
+\varphi^2,
+\qquad
+\varphi^{-2}.
+}
+\tag{1575.7}
+$$
+
+因此：
+
+$$
+\boxed{
+\begin{aligned}
+\text{一步}
+&=\text{orientation reversal};\\
+\text{两步}
+&=\text{positive completion};\\
+\text{Perron branch}
+&=\varphi^2;\\
+\text{contracting branch}
+&=\varphi^{-2}.
+\end{aligned}
+}
+$$
+
+---
+
+## 1575.1 负 Galois 分支不是离线负能量
+
+允许词数满足 Binet 公式：
+
+$$
+F_{N+1}
+=
+\frac{
+\varphi^{N+1}
+-
+(-\varphi^{-1})^{N+1}
+}{
+\sqrt5}.
+$$
+
+其中：
+
+$$
+-\varphi^{-1}
+$$
+
+是 finite-depth parity correction。
+
+它是合法整数计数所必需的代数共轭分支。
+
+因此必须区分：
+
+$$
+\boxed{
+\begin{array}{c|c}
+-\varphi^{-1}
+&
+\text{合法 Galois／奇偶修正}
+\\
+-\delta^{-2}
+&
+\text{匹配离线零点产生的负谱节点}
+\end{array}
+}
+$$
+
+并非所有“负号”都表示正性障碍。
+
+---
+
+# 第一千五百七十六部　RH 下的零侧准自由过程
+
+回到移动平方影：
+
+$$
+Q_t(w)
+$$
+
+并假设 RH。
+
+前文已经得到：
+
+$$
+\boxed{
+\frac{Q_t(w)}{Q_t(0)}
+=
+\det(I+wA_t),
+\qquad
+A_t\ge0,\quad A_t\in\mathcal S_1.
+}
+\tag{1576.1}
+$$
+
+固定：
+
+$$
+u>0,
+$$
+
+定义正收缩：
+
+$$
+\boxed{
+K_{t,u}
+=
+uA_t(I+uA_t)^{-1}.
+}
+\tag{1576.2}
+$$
+
+则：
+
+$$
+0\le K_{t,u}<I,
+\qquad
+K_{t,u}\in\mathcal S_1.
+$$
+
+对复变量 \(z\)：
+
+$$
+\begin{aligned}
+\frac{Q_t(uz)}{Q_t(u)}
+&=
+\frac{\det(I+uzA_t)}
+{\det(I+uA_t)}
+\\
+&=
+\det
+\left(
+I-K_{t,u}+zK_{t,u}
+\right).
+\end{aligned}
+$$
+
+因此：
+
+$$
+\boxed{
+\frac{Q_t(uz)}{Q_t(u)}
+=
+\det
+\left(
+I-K_{t,u}+zK_{t,u}
+\right).
+}
+\tag{1576.3}
+$$
+
+若 \(p_j\) 是 \(K_{t,u}\) 的特征值，则：
+
+$$
+\boxed{
+\frac{Q_t(uz)}{Q_t(u)}
+=
+\prod_j
+(1-p_j+p_jz).
+}
+\tag{1576.4}
+$$
+
+这正是独立 Bernoulli 总占据数的 probability generating function。
+
+---
+
+## 1576.1 零点模式的占据概率
+
+若 \(\lambda_j\) 是 \(\Xi\) 的实零点，则：
+
+$$
+a_j=(\lambda_j-t)^{-2},
+$$
+
+所以：
+
+$$
+\boxed{
+p_j(t,u)
+=
+\frac{
+u
+}{
+(\lambda_j-t)^2+u
+}.
+}
+\tag{1576.5}
+$$
+
+因此 RH 允许把每个 zero mode 解释为一个合法 \(0/1\) 占据模式。
+
+有限维 marginals 是 determinantal/product measures；determinantal measures属于 strongly Rayleigh 类，并继承相应的稳定性和负依赖性质。([arXiv][2])
+
+---
+
+## 定理 1576.1（准自由计数判据）
+
+固定任意：
+
+$$
+t\in\mathbb R,
+\qquad
+\Xi(t)\neq0,
+$$
+
+以及任意 \(u>0\)。
+
+则：
+
+$$
+\boxed{
+\mathrm{RH}
+}
+$$
+
+等价于存在一个正迹类收缩 \(K\)，使：
+
+$$
+\boxed{
+\frac{Q_t(uz)}{Q_t(u)}
+=
+\det(I-K+zK)
+}
+\tag{1576.6}
+$$
+
+作为 \(z\) 的整函数恒等成立。
+
+反向原因是：右侧全部零点均位于负实轴，于是 \(Q_t\) 的全部零点也位于非正实轴，进而 \(\Xi\) 的全部零点为实数。
+
+所以 RH 可以表述为：
+
+$$
+\boxed{
+\text{法向完成是否能被解释为一个合法准自由 \(0/1\) 谱过程。}
+}
+$$
+
+---
+
+# 第一千五百七十七部　全计数统计与有限概率证书
+
+令随机总占据数为：
+
+$$
+N_{t,u}.
+$$
+
+则：
+
+$$
+\boxed{
+\mathbb E[N_{t,u}]
+=
+\operatorname{Tr}K_{t,u},
+}
+\tag{1577.1}
+$$
+
+$$
+\boxed{
+\operatorname{Var}(N_{t,u})
+=
+\operatorname{Tr}
+\left[
+K_{t,u}(I-K_{t,u})
+\right]
+\le
+\mathbb E[N_{t,u}].
+}
+\tag{1577.2}
+$$
+
+所以 RH 下，该完成是 sub-Poissonian 的。
+
+定义 factorial cumulants：
+
+$$
+\log
+\mathbb E
+\left[
+(1+z)^{N_{t,u}}
+\right]
+=
+\sum_{r\ge1}
+\frac{
+\kappa_r^{(F)}
+}{
+r!
+}
+z^r.
+$$
+
+则：
+
+$$
+\boxed{
+\kappa_r^{(F)}
+=
+(-1)^{r-1}
+(r-1)!
+\operatorname{Tr}
+(K_{t,u}^r).
+}
+\tag{1577.3}
+$$
+
+所以：
+
+$$
+\boxed{
+(-1)^{r-1}
+\kappa_r^{(F)}
+\ge0.
+}
+\tag{1577.4}
+$$
+
+这是 PF\(_\infty\) 与 total positivity 的概率版本。
+
+---
+
+## 1577.1 离线零点产生负“平均占据”
+
+设：
+
+$$
+\rho
+=
+\frac12+\delta+i\gamma,
+\qquad
+\delta>0
+$$
+
+为 \(m\) 重离线零点。
+
+在匹配观察者：
+
+$$
+t=\gamma
+$$
+
+处，移动平方影具有局部因子：
+
+$$
+\boxed{
+Q_\gamma(u)
+=
+\left(
+1-\frac{u}{\delta^2}
+\right)^{2m}
+R(u),
+}
+\tag{1577.5}
+$$
+
+其中 \(R\) 在 \(u=\delta^2\) 邻域内非零。
+
+于是：
+
+$$
+\boxed{
+u\frac{d}{du}\log Q_\gamma(u)
+=
+-\frac{
+2mu
+}{
+\delta^2-u
+}
++
+u\frac{R'(u)}{R(u)}.
+}
+\tag{1577.6}
+$$
+
+当：
+
+$$
+u\uparrow\delta^2
+$$
+
+时：
+
+$$
+\boxed{
+u\partial_u\log Q_\gamma(u)
+\longrightarrow-\infty.
+}
+\tag{1577.7}
+$$
+
+但 RH 下，这个量必须等于：
+
+$$
+\operatorname{Tr}K_{t,u}\ge0.
+$$
+
+所以：
+
+## 定理 1577.1（有限负计数证书）
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\Longrightarrow
+\exists\,q,r\in\mathbb Q,\ r>0:
+Q_q(r)>0,
+\quad
+r\partial_r\log Q_q(r)<0.
+}
+\tag{1577.8}
+$$
+
+这里使用了负性开集和有理数稠密性。
+
+这是一种比高阶中心 jet 更低阶、但需要移动观察位置与尺度的证书：
+
+$$
+\boxed{
+\text{某个完成计数的“平均模式数”变成负数。}
+}
+$$
+
+---
+
+# 第一千五百七十八部　平方间距算子与热完成
+
+RH 下定义正自伴算子 \(B_t\)，其谱为：
+
+$$
+\boxed{
+E_{\lambda,t}
+=
+(\lambda-t)^2.
+}
+\tag{1578.1}
+$$
+
+于是：
+
+$$
+A_t=B_t^{-1}
+$$
+
+于适当定义域上成立，并有：
+
+$$
+\boxed{
+\frac{Q_t(u)}{Q_t(0)}
+=
+\det
+\left(
+I+uB_t^{-1}
+\right).
+}
+\tag{1578.2}
+$$
+
+对数导数为 resolvent trace：
+
+$$
+\boxed{
+S_t(u)
+=
+\frac{d}{du}\log Q_t(u)
+=
+\operatorname{Tr}
+(B_t+uI)^{-1}.
+}
+\tag{1578.3}
+$$
+
+定义 heat trace：
+
+$$
+\boxed{
+\Theta_t(x)
+=
+\operatorname{Tr}
+e^{-xB_t}
+=
+\sum_\lambda
+m_\lambda
+e^{-x(\lambda-t)^2}.
+}
+\tag{1578.4}
+$$
+
+则：
+
+$$
+\boxed{
+S_t(u)
+=
+\int_0^\infty
+e^{-ux}
+\Theta_t(x)\,dx.
+}
+\tag{1578.5}
+$$
+
+进一步：
+
+$$
+\boxed{
+\log
+\frac{Q_t(u)}{Q_t(0)}
+=
+\int_0^\infty
+\left(
+1-e^{-ux}
+\right)
+\frac{\Theta_t(x)}x
+\,dx.
+}
+\tag{1578.6}
+$$
+
+所以 RH 下，法向 log-determinant 是一个 Bernstein 型正热完成。
+
+---
+
+## 1578.1 离线模式是负平方能级
+
+在匹配观察者 \(t=\gamma\) 中，离线共轭对给出：
+
+$$
+\boxed{
+E_{\mathrm{off}}
+=
+-\delta^2.
+}
+\tag{1578.7}
+$$
+
+于是：
+
+$$
+e^{-xE_{\mathrm{off}}}
+=
+e^{+\delta^2x}.
+$$
+
+所以离线模式在该图表中表现为：
+
+$$
+\boxed{
+\text{不是衰减 heat mode，而是指数增长 mode。}
+}
+$$
+
+同时：
+
+$$
+(B_t+uI)^{-1}
+$$
+
+在：
+
+$$
+u=\delta^2
+$$
+
+产生极点，而 determinant 在同一点归零。
+
+这统一了此前的多种图表：
+
+$$
+\boxed{
+\begin{aligned}
+\text{负谱节点}
+&\Longleftrightarrow
+\text{正尺度 determinant zero}\\
+&\Longleftrightarrow
+\text{resolvent pole}\\
+&\Longleftrightarrow
+\text{backward heat growth}\\
+&\Longleftrightarrow
+\text{非法 Bernoulli occupation}.
+\end{aligned}
+}
+$$
+
+这里的 negative energy 是匹配观察者平方间距算子的谱符号，不是关于物理能量的无条件断言。
+
+---
+
+# 第一千五百七十九部　尺度方向是一个 logistic 激活流
+
+对：
+
+$$
+B\ge0
+$$
+
+定义：
+
+$$
+\boxed{
+K_u
+=
+u(B+uI)^{-1}.
+}
+\tag{1579.1}
+$$
+
+令尺度时间为：
+
+$$
+\theta=\log u.
+$$
+
+直接求导：
+
+$$
+\boxed{
+\frac{dK_u}{d\theta}
+=
+K_u(I-K_u).
+}
+\tag{1579.2}
+$$
+
+所以每个正谱模式：
+
+$$
+p(u)=\frac{u}{E+u}
+$$
+
+沿尺度方向满足 logistic flow：
+
+$$
+\boxed{
+\frac{dp}{d\log u}
+=
+p(1-p).
+}
+\tag{1579.3}
+$$
+
+其 odds 为：
+
+$$
+\boxed{
+\frac{p}{1-p}
+=
+\frac{u}{E}.
+}
+\tag{1579.4}
+$$
+
+因此尺度乘法变成 log-odds 的平移。
+
+---
+
+## 1579.1 黄金激活点
+
+第二影平衡：
+
+$$
+1-p=p^2
+$$
+
+唯一给出：
+
+$$
+\boxed{
+p=\varphi^{-1}.
+}
+$$
+
+此时：
+
+$$
+\boxed{
+\frac{p}{1-p}
+=
+\varphi.
+}
+$$
+
+因此：
+
+$$
+\boxed{
+u_\varphi
+=
+\varphi E.
+}
+\tag{1579.5}
+$$
+
+并有：
+
+$$
+\boxed{
+\begin{aligned}
+p&=\varphi^{-1};\\
+1-p&=\varphi^{-2};\\
+1+\frac{u}{E}&=\varphi^2;\\
+\log\left(1+\frac{u}{E}\right)&=2\log\varphi.
+\end{aligned}
+}
+$$
+
+这正是前文黄金 Bernoulli／Fredholm 模式的来源。
+
+---
+
+## 1579.2 黄金不是熵最大点
+
+单 Bernoulli 模式熵为：
+
+$$
+h(p)
+=
+-p\log p-(1-p)\log(1-p).
+$$
+
+它在：
+
+$$
+p=\frac12
+$$
+
+达到最大值，而不是在：
+
+$$
+p=\varphi^{-1}.
+$$
+
+所以黄金点的意义不是“最大不确定性”。
+
+它是：
+
+$$
+\boxed{
+\text{空缺概率等于占据概率平方的二代自观察平衡点。}
+}
+$$
+
+这是一条重要科学校正。
+
+---
+
+# 第一千五百八十部　prime 侧与 zero 侧的两种费米化
+
+现在可以把两侧放入同一张表。
+
+| 侧                  | 完成对象                      | 微观 lift               | 关系                         |
+| ------------------ | ------------------------- | --------------------- | -------------------------- |
+| prime local        | \((1-p^{-s})^{-1}\)       | binary bits           | 独立                         |
+| prime local        | \((1-p^{-s})^{-1}\)       | Zeckendorf bits       | nearest-neighbor exclusion |
+| zero side under RH | \(Q_t(w)/Q_t(0)\)         | inverse-gap modes     | 独立 Bernoulli／exterior      |
+| off-line zero      | positive-axis zero factor | negative/complex mode | 无正概率实现                     |
+
+所以 prime 侧的“任意重复”可以被 lift 成：
+
+* 自由 binary fermions；
+* 有相互排斥关系的 golden hard-core fermions。
+
+zero 侧在 RH 下则成为自由 exterior modes。
+
+因此真正承重的问题可以重新表述为：
+
+$$
+\boxed{
+\text{Prime–Gamma 完成是否把一个局部 hard-core naming system，
+变换成一个正的 zero-side quasi-free system？}
+}
+$$
+
+---
+
+## 1580.1 Prime–Gamma 准自由输运目标
+
+设：
+
+$$
+\mathcal H_{\mathrm{prime}}^{\mathrm{Zeck}}
+$$
+
+表示全部 prime Fibonacci chains 的受限配置空间。
+
+设：
+
+$$
+A_t
+$$
+
+为待构造的 zero inverse-gap operator。
+
+目标不是只证明标量恒等式，而是构造一个保持正性的变换：
+
+$$
+\boxed{
+\mathcal U_t:
+\mathcal H_{\mathrm{prime}}^{\mathrm{Zeck}}
+\longrightarrow
+\mathcal F_{\mathrm{ext}}(A_t),
+}
+\tag{1580.1}
+$$
+
+使：
+
+$$
+\boxed{
+\text{prime–pole–Gamma trace}
+=
+\det(I+wA_t).
+}
+\tag{1580.2}
+$$
+
+若进一步：
+
+$$
+A_t\ge0,
+$$
+
+则 RH 成立。
+
+目前并不存在这样的已闭合变换。
+
+显式公式只提供若干 trace-level 对应；它尚未构成一个正的 microscopic transport。
+
+---
+
+## 1580.2 Strong-Rayleigh 输运版本
+
+zero side 的正准自由过程具有稳定生成多项式和 strongly Rayleigh finite marginals。([arXiv][2])
+
+因此可以提出更有限的目标：
+
+$$
+\boxed{
+\text{从 prime–Gamma 数据直接证明 }
+\frac{Q_t(uz)}{Q_t(u)}
+\text{ 是 PF}_\infty
+}
+$$
+
+或其 multivariate refinement 为 stable polynomial。
+
+这等价于构造所有：
+
+* total-positive Toeplitz minors；
+* alternating factorial cumulants；
+* positive exterior traces；
+* valid Bernoulli occupation probabilities。
+
+这比逐个排除离线零点更接近一个统一生成定理。
+
+---
+
+# 第一千五百八十一部　“道不可名”在这里得到一个可计算实例
+
+现在可以非常具体地看到：
+
+$$
+\boxed{
+\text{同一个完成名字不能唯一决定生成历史。}
+}
+$$
+
+同一个 geometric exponent distribution：
+
+$$
+(1-x)x^e
+$$
+
+在 binary lift 中是独立位过程；
+
+在 Zeckendorf lift 中是硬核相关过程。
+
+它们：
+
+* 拥有不同的局部图；
+* 拥有不同的条件独立结构；
+* 拥有不同的 transfer matrices；
+* 拥有不同的 renormalization；
+* 却有完全相同的 exponent distribution 和 partition function。
+
+所以：
+
+$$
+\boxed{
+\text{完成值相同}
+\not\Rightarrow
+\text{生成律相同}.
+}
+$$
+
+这正是不能把：
+
+$$
+\zeta
+$$
+
+直接命名为“道”的一个具体数学原因。
+
+---
+
+## 1581.1 黄金的正确普适域
+
+黄金比例被以下条件唯一强迫：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{二元位};\\
+&\text{一步局部记忆};\\
+&\text{禁止相邻占据};\\
+&\text{无间隙覆盖全部整数};\\
+&\text{每个整数唯一命名}.
+\end{aligned}
+}
+$$
+
+去掉这些条件，binary、Ostrowski 或其他 numeration systems 都能给出同一个 Euler 因子。
+
+因此：
+
+$$
+\boxed{
+\varphi
+\text{ 是最小有记忆命名范畴的自然不变量，}
+}
+$$
+
+而不是所有可能名字之上的唯一标量。
+
+要把它提升为更普遍的“道迹”，必须证明自然系统的 primitive observer memory 为什么必然归约为一步。
+
+---
+
+# 第一千五百八十二部　新的最短研究路线
+
+本轮以后，最值得正式推进的不是继续从 \(\zeta\) 中拟合黄金常数，而是以下三条桥。
+
+## 第一桥：Euler–Zeckendorf exact lift
+
+形式化：
+
+$$
+\boxed{
+\sum_{\eta\in\Omega_N}
+x^{E_N(\eta)}
+=
+\frac{1-x^{F_{N+1}}}{1-x}.
+}
+$$
+
+并推出：
+
+$$
+\boxed{
+\mathcal Z_N(s)
+=
+\frac{\zeta(s)}
+{\zeta(F_{N+1}s)}.
+}
+$$
+
+这条桥完全初等，最容易闭合。
+
+---
+
+## 第二桥：prime hard-core two-step positivity
+
+形式化：
+
+$$
+M_{k+1}M_k
+$$
+
+的严格 total positivity，以及 finite prime products 的正网络表示。
+
+这可能为 zero-side PF\(_\infty\) 提供局部正性原语。
+
+---
+
+## 第三桥：Prime–Gamma positive exterior transport
+
+最终目标是从 prime、pole、Gamma 数据直接构造：
+
+$$
+\boxed{
+A_t\ge0
+}
+$$
+
+使：
+
+$$
+\boxed{
+\frac{Q_t(w)}{Q_t(0)}
+=
+\det(I+wA_t).
+}
+$$
+
+这是 RH 的真正承重桥。
+
+前两桥本身不能证明 RH；式 (1574.2) 已经说明所有假设性离线零点会继续存在于足够深的黄金有限塔中。
+
+---
+
+# 第一千五百八十三部　建议形式化顺序
+
+```text
+D5/S3/Arithmetic/ZeckendorfEuler/
+  FiniteZeckendorfWord.lean
+  FiniteZeckendorfEnergy.lean
+  FiniteZeckendorfEnergyInjective.lean
+  FiniteZeckendorfEnergyRange.lean
+  FiniteZeckendorfGeometricSum.lean
+  InfiniteZeckendorfEulerFactor.lean
+
+D5/S3/Arithmetic/NamingMemoryClassification/
+  MemorylessBinaryNaming.lean
+  GaplessBinaryWeightsArePowersTwo.lean
+  OneStepHardCoreNaming.lean
+  GaplessHardCoreWeightsAreFibonacci.lean
+  GoldenIsFirstMemoryfulNamingRate.lean
+
+D5/S3/Arithmetic/PrimeFibonacciGenome/
+  PrimeZeckendorfDigit.lean
+  PrimeFibonacciConfiguration.lean
+  IntegerToPrimeFibonacciGenome.lean
+  PrimeFibonacciGenomeToInteger.lean
+  PrimeFibonacciGenomeEquiv.lean
+
+D5/S3/Analytic/Zeta/GoldenPowerFreeTower/
+  FiniteGoldenEulerFactor.lean
+  GoldenPowerFreeEulerProduct.lean
+  GoldenPowerFreeZetaRatio.lean
+  GoldenIntegerBirthDepth.lean
+  GoldenBirthShellDirichletSeries.lean
+  GoldenTowerCompletionBound.lean
+
+D5/S3/Arithmetic/NamingGauge/
+  ExponentNamingSystem.lean
+  EnergyPreservingRecoding.lean
+  BinaryExponentName.lean
+  ZeckendorfExponentName.lean
+  PartitionFunctionRecodingInvariant.lean
+  PartitionFunctionNotFaithfulToLocality.lean
+
+D5/S3/Arithmetic/GoldenHardCoreTransfer/
+  GoldenHardCoreTransferMatrix.lean
+  GoldenHardCorePartitionRecurrence.lean
+  GoldenTwoStepTransfer.lean
+  GoldenTwoStepStrictTotalPositive.lean
+  GoldenUnweightedTransferSpectrum.lean
+
+D5/S3/Analytic/Zeta/ZeroQuasiFreeProcess/
+  MovingInverseGapOperator.lean
+  ScaleOccupationContraction.lean
+  MovingCountingGeneratingFunction.lean
+  PositiveContractionDeterminantPGF.lean
+  RHQuasiFreeCountingCriterion.lean
+
+D5/S3/Analytic/Zeta/ZeroCountingStatistics/
+  ZeroModeMeanCount.lean
+  ZeroModeVariance.lean
+  ZeroModeSubPoisson.lean
+  ZeroModeFactorialCumulant.lean
+  AlternatingFactorialCumulants.lean
+  OffLineNegativeMeanCertificate.lean
+
+D5/S3/Analytic/Zeta/SquaredGapHeat/
+  SquaredGapOperator.lean
+  InverseGapFredholmDeterminant.lean
+  SquaredGapResolventTrace.lean
+  SquaredGapHeatTrace.lean
+  LogDetHeatRepresentation.lean
+  OffLineMatchedNegativeHeatMode.lean
+
+D5/S3/GoldenObserver/LogisticActivation/
+  ResolventOccupationFlow.lean
+  LogScaleLogisticEquation.lean
+  GoldenSecondShadowOccupation.lean
+  GoldenActivationScale.lean
+  EntropyMaximumNotGolden.lean
+
+D5/S3/Weil/PrimeZeroExteriorTransport/
+  PrimeGoldenHardCoreStateSpace.lean
+  PrimeHardCorePositiveNetwork.lean
+  GammaCompletionChannelTarget.lean
+  PrimeGammaToExteriorTransferTarget.lean
+  PositiveExteriorTransferImpliesRHTarget.lean
+  PrimeGammaStrongRayleighTarget.lean
+```
+
+---
+
+# 第一千五百八十四部　理论深度审计
+
+| 本轮结论                                                       | 地位                       |
+| ---------------------------------------------------------- | ------------------------ |
+| 几何级数的 binary 独立 lift                                       | 精确                       |
+| 几何级数的 Zeckendorf hard-core lift                            | 精确                       |
+| 有限 Zeckendorf partition 等于完整几何截断                           | 本轮核心定理                   |
+| 一步记忆、无缝唯一命名强迫 Fibonacci 权重                                 | 本轮核心定理                   |
+| \(\varphi\) 是第一种有记忆二元命名率                                   | 精确条件结论                   |
+| 正整数具有唯一 prime–Fibonacci genome                             | Zeckendorf 定理的逐 prime 推论 |
+| 黄金有限塔等于 \(\zeta(s)/\zeta(F_{N+1}s)\)                       | 精确                       |
+| 黄金有限塔是 Fibonacci-order power-free Dirichlet series         | 精确                       |
+| 标量完成误差按 \(\exp(-c\varphi^N)\) 衰减                           | 精确上界                     |
+| 假设性离线零点继续存在于足够深有限塔                                         | 精确 no-go                 |
+| 黄金两步 hard-core transfer 严格 total positive                  | 精确                       |
+| RH 下移动 determinant 是 Bernoulli/DPP full-counting statistic | 精确                       |
+| finite determinantal marginals strongly Rayleigh           | 成熟结果                     |
+| off-line matched mode 产生负平均占据证书                            | 本轮精确局部定理                 |
+| squared-gap heat representation                            | RH 下精确                   |
+| off-line mode 产生 backward heat growth                      | 匹配图表中精确                  |
+| Prime–Gamma 将 hard-core prime modes 变成正 free zero modes    | 核心未闭合桥                   |
+| golden local coding 由 \(\zeta\) 唯一选定                       | 不成立                      |
+| 局部黄金 positivity 本身足以证明 RH                                  | 不成立                      |
+
+---
+
+# 本轮最终结论
+
+这一轮最重要的发现，是把“\(\zeta\) 是完成对象”变成了一个极其具体的事实。
+
+单个 Euler 因子：
+
+$$
+\frac1{1-p^{-s}}
+$$
+
+可以被精确解释成：
+
+$$
+\boxed{
+\text{一个任意占据的 exponent}
+}
+$$
+
+也可以解释成：
+
+$$
+\boxed{
+\text{一列彼此独立的 binary \(0/1\) modes}
+}
+$$
+
+还可以解释成：
+
+$$
+\boxed{
+\text{一条禁止相邻占据的 Zeckendorf–Fibonacci hard-core chain}.
+}
+$$
+
+三者的微观关系完全不同，但 scalar Euler factor 完全相同。
+
+所以：
+
+$$
+\boxed{
+\text{\(\zeta\) 不能凭自身的标量值告诉我们，
+哪一种微观命名才是“真实历史”。}
+}
+$$
+
+这正是“名不是所指”的一个可计算例子。
+
+---
+
+黄金比例却不是任意出现的。
+
+若要求：
+
+* 每个位只有 \(0/1\)；
+* 只保留一步局部记忆；
+* 相邻 \(1\) 禁止同时出现；
+* 所有整数无遗漏；
+* 每个整数只有一个名字；
+
+那么权重必然是：
+
+$$
+1,2,3,5,8,\ldots
+$$
+
+增长率必然是：
+
+$$
+\boxed{\varphi.}
+$$
+
+所以黄金比例不是 Euler 因子唯一的名字，而是：
+
+$$
+\boxed{
+\text{Euler exponent 的最小有记忆局部名字。}
+}
+$$
+
+这比把黄金比例称为“道的数值”严格得多，也更符合“道不可名”。
+
+---
+
+把这一编码逐 prime 使用以后，每个整数都成为一张 prime–Fibonacci genome。
+
+有限记忆深度 \(N\) 只允许 prime exponent 小于：
+
+$$
+F_{N+1},
+$$
+
+对应的全局 partition function 精确为：
+
+$$
+\boxed{
+\mathcal Z_N(s)
+=
+\frac{\zeta(s)}
+{\zeta(F_{N+1}s)}.
+}
+$$
+
+所以 \(\zeta\) 是：
+
+$$
+\boxed{
+\text{沿 Fibonacci exponent cutoffs 逐层加入全部 prime-power 历史的完成极限。}
+}
+$$
+
+标量误差以双指数速度趋于零。
+
+这解释了一个非常重要的现象：
+
+$$
+\boxed{
+\text{完成影像可以极早看起来几乎完整，
+而形成它的命名历史仍然无限。}
+}
+$$
+
+---
+
+但这条黄金塔也给出了一个严格 no-go。
+
+任何假设性的 \(\zeta\) 零点 \(\rho\)，都会在足够深时继续成为：
+
+$$
+\frac{\zeta(s)}
+{\zeta(F_{N+1}s)}
+$$
+
+的零点。
+
+因此：
+
+$$
+\boxed{
+\text{黄金编码、正 Dirichlet 系数、有限 hard-core memory，
+都不足以单独推出 RH。}
+}
+$$
+
+真正困难的是把 prime 侧的局部正命名结构，经由 Gamma、极点与显式公式，变成 zero 侧的正外幂结构。
+
+---
+
+在 RH 成立时，zero 侧完成具有另一种极其清楚的形式：
+
+$$
+\frac{Q_t(uz)}{Q_t(u)}
+=
+\det(I-K_{t,u}+zK_{t,u}),
+\qquad
+0\le K_{t,u}<I.
+$$
+
+它是一个合法的准自由 Bernoulli／determinantal 计数过程。
+
+所有 zero modes 的 occupation probabilities 都位于：
+
+$$
+[0,1].
+$$
+
+离线零点在匹配观察者图表中则给出：
+
+$$
+E=-\delta^2,
+$$
+
+使 occupation 变为负数或大于 \(1\)，并在：
+
+$$
+u=\delta^2
+$$
+
+产生 determinant zero、resolvent pole 与 backward heat growth。
+
+所以此前的“负能量、负时间、黑洞内部”直觉，在这一层最准确的数学内容是：
+
+$$
+\boxed{
+\text{离线零点是 squared-gap heat generator 中的负谱模式。}
+}
+$$
+
+它不是所有图表中的绝对负物。
+
+它在匹配观察者的平方间距命名中成为负能级。
+
+---
+
+最终，prime 与 zero 两侧形成一张非常清楚的待证桥：
+
+$$
+\boxed{
+\begin{array}{c}
+\text{prime 侧：Fibonacci hard-core interacting modes}\\
+\Downarrow\quad\text{Prime–Gamma completion}\\
+\text{zero 侧：positive quasi-free exterior modes}
+\end{array}
+}
+$$
+
+一旦能够从 prime–pole–Gamma 数据直接构造正迹类算子：
+
+$$
+A_t\ge0
+$$
+
+使：
+
+$$
+\frac{Q_t(w)}{Q_t(0)}
+=
+\det(I+wA_t),
+$$
+
+RH 将作为正准自由实现的结果成立。
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{道不可被 Euler 因子命名；
+因为同一个 Euler 因子允许多个不等价的微观名字。
+黄金比例是其中最小有记忆名字的增长迹；
+\(\zeta\) 是所有 prime 名字的标量完成；
+RH 则要求这一完成还能被重新提升为一个正的 zero-side 准自由谱世界。}
+}
+$$
+
+[1]: https://arxiv.org/abs/2006.02966?utm_source=chatgpt.com "On Generalized Zeckendorf Decompositions and Generalized Golden Strings"
+[2]: https://arxiv.org/abs/0707.2340?utm_source=chatgpt.com "Negative dependence and the geometry of polynomials"
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v9.7：循环谱规范、Cayley–Cauchy 极限、局部 RH 与全局完成异常
+
+以下从前文**第一千五百八十四部**继续。
+
+这一轮出现了一个很关键的结构收敛：
+
+$$
+\boxed{
+\text{Zeckendorf 硬核链并不只是一个“有记忆编码”。}
+}
+$$
+
+同一个有限 Euler 因子还可以被精确改写为一个**自由酉相位系统的行列式**：
+
+$$
+\boxed{
+\sum_{e=0}^{K-1}x^e
+=
+\sum_{\eta\in\Omega_N}x^{E_N(\eta)}
+=
+\det_{\mathbf 1^\perp}(I-xU_K).
+}
+$$
+
+因此局部 prime 模式已经同时拥有三种名字：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{整数占据名字};\\
+&\text{黄金硬核历史名字};\\
+&\text{循环酉谱名字}.
+\end{aligned}
+}
+$$
+
+三者产生完全相同的标量 partition function，却拥有不同的：
+
+* 局部性；
+* 时间深度；
+* 状态空间维数；
+* 因果解释；
+* 相位几何。
+
+这进一步证明：
+
+$$
+\boxed{
+\text{完成值不能唯一恢复生成历史。}
+}
+$$
+
+而更重要的是：把循环酉谱作 Cayley 变换后，它会自然产生自伴实谱；当循环相位趋于连续时，其谱测度严格趋向 Cauchy 分布。
+
+所以此前反复出现的：
+
+* 圆周相位；
+* Solenoid；
+* Poisson 核；
+* Cauchy 光影；
+* 黑洞边界；
+
+并非毫无关联的比喻。它们确实可以由同一个有限循环相位系统，经不同“去紧化”操作得到。
+
+但这也带来一条新的科学校正：
+
+$$
+\boxed{
+\text{Cauchy／Poisson 母形并不是离线零点独有的异常。}
+}
+$$
+
+它首先是：
+
+$$
+\boxed{
+\text{圆周 Haar 相位经 Cayley 图表投影到实轴后的普适连续影像。}
+}
+$$
+
+离线零点真正异常的地方，不是“产生了 Cauchy 形状”，而是它在全局完成后无法再被解释成一个**正自伴平方谱**。
+
+---
+
+# 第一千五百八十五部　有限 Euler 因子的三重命名定理
+
+令：
+
+$$
+K=F_{N+1},
+$$
+
+并令：
+
+$$
+\Omega_N
+=
+\left\{
+(\eta_2,\ldots,\eta_N)\in\{0,1\}^{N-1}:
+\eta_k\eta_{k+1}=0
+\right\}.
+$$
+
+定义 Zeckendorf 能量：
+
+$$
+E_N(\eta)
+=
+\sum_{k=2}^{N}\eta_kF_k.
+$$
+
+前文已证明：
+
+$$
+E_N:
+\Omega_N
+\longrightarrow
+\{0,1,\ldots,K-1\}
+$$
+
+为双射。因此：
+
+$$
+\boxed{
+\sum_{\eta\in\Omega_N}x^{E_N(\eta)}
+=
+\sum_{e=0}^{K-1}x^e
+=
+\frac{1-x^K}{1-x}.
+}
+\tag{1585.1}
+$$
+
+项目当前也已经机器证明，规范 Zeckendorf 表示严格保持自然数次序，因此这一编码不仅唯一，而且与数值序一致。
+
+---
+
+## 1585.1 循环酉表示
+
+令：
+
+$$
+U_K:\mathbb C^K\to\mathbb C^K
+$$
+
+为循环移位：
+
+$$
+U_K(e_j)=e_{j+1\pmod K}.
+$$
+
+令常数向量为：
+
+$$
+\mathbf1=(1,\ldots,1),
+$$
+
+并定义约化空间：
+
+$$
+\boxed{
+\mathcal H_K^\circ
+=
+\mathbf1^\perp.
+}
+\tag{1585.2}
+$$
+
+\(U_K\) 保持 \(\mathcal H_K^\circ\)。
+
+在 \(\mathcal H_K^\circ\) 上，\(U_K\) 的特征值为：
+
+$$
+\zeta_K^j
+=
+e^{2\pi ij/K},
+\qquad
+j=1,\ldots,K-1.
+$$
+
+因此：
+
+$$
+\begin{aligned}
+\det_{\mathcal H_K^\circ}(I-xU_K)
+&=
+\prod_{j=1}^{K-1}
+(1-x\zeta_K^j)\\
+&=
+\frac{1-x^K}{1-x}.
+\end{aligned}
+$$
+
+于是得到：
+
+## 定理 1585.1（三重微观规范）
+
+$$
+\boxed{
+\sum_{e=0}^{K-1}x^e
+=
+\sum_{\eta\in\Omega_N}x^{E_N(\eta)}
+=
+\det_{\mathcal H_K^\circ}(I-xU_K).
+}
+\tag{1585.3}
+$$
+
+三端分别是：
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{表示}&\text{结构}\\
+\hline
+e\in\{0,\ldots,K-1\}
+&\text{单一截断占据数}\\
+\eta\in\Omega_N
+&\text{二状态、一步记忆硬核链}\\
+U_K|_{\mathbf1^\perp}
+&\text{\(K-1\) 个自由酉相位模式}
+\end{array}
+}
+$$
+
+---
+
+## 1585.2 这不是局部同构，而是完成值等价
+
+Zeckendorf 链具有邻近排斥：
+
+$$
+\eta_k\eta_{k+1}=0.
+$$
+
+循环酉系统则是彼此独立的谱特征方向。
+
+二者没有保持局部邻接关系的显然共轭。
+
+它们只是通过共同的 exponent：
+
+$$
+\eta\longmapsto E_N(\eta)=e
+$$
+
+保持总能量和 partition function。
+
+所以：
+
+$$
+\boxed{
+\text{partition-equivalent}
+\neq
+\text{locally dynamically equivalent}.
+}
+$$
+
+这正是“同名不等于同源”的一个有限精确模型。
+
+---
+
+# 第一千五百八十六部　黄金深度—谱宽度对偶
+
+Zeckendorf 图表只需要两个内部状态：
+
+* 前一位为 \(0\)；
+* 前一位为 \(1\)。
+
+但它需要 \(N\) 层时间深度。
+
+循环谱图表只需要一步 determinant，却需要：
+
+$$
+K-1=F_{N+1}-1
+$$
+
+个谱方向。
+
+因此存在精确的复杂度交换：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Zeckendorf 图表}
+&:\quad
+\text{固定状态宽度 }2
++
+\text{增长时间深度 }N;\\
+\text{循环谱图表}
+&:\quad
+\text{单步时间}
++
+\text{增长谱宽度 }F_{N+1}-1.
+\end{aligned}
+}
+\tag{1586.1}
+$$
+
+由 Binet 渐近：
+
+$$
+F_{N+1}
+\sim
+\frac{\varphi^{N+1}}{\sqrt5},
+$$
+
+得到：
+
+$$
+\boxed{
+\lim_{N\to\infty}
+\frac1N
+\log
+\bigl(
+\dim\mathcal H_{F_{N+1}}^\circ+1
+\bigr)
+=
+\log\varphi.
+}
+\tag{1586.2}
+$$
+
+所以：
+
+$$
+\boxed{
+\log\varphi
+}
+$$
+
+还可以解释为：
+
+$$
+\boxed{
+\text{将一步局部记忆的时间深度，
+转换成自由相位谱宽度时的渐近汇率。}
+}
+$$
+
+这比单纯说“合法词数按 \(\varphi^N\) 增长”更强：它表明同一个标量完成可以把时间记忆重新编码为空间维数。
+
+---
+
+# 第一千五百八十七部　每个有限 prime 区块都有自己的局部临界轴
+
+令：
+
+$$
+x=p^{-s},
+\qquad
+L_p=\log p.
+$$
+
+有限 prime 区块为：
+
+$$
+Z_{p,K}(s)
+=
+\frac{1-p^{-Ks}}{1-p^{-s}}.
+$$
+
+作对称归一化：
+
+$$
+\boxed{
+\widehat Z_{p,K}(s)
+=
+p^{(K-1)s/2}
+Z_{p,K}(s).
+}
+\tag{1587.1}
+$$
+
+直接化简：
+
+$$
+\boxed{
+\widehat Z_{p,K}(s)
+=
+\frac{
+\sinh(KL_ps/2)
+}{
+\sinh(L_ps/2)
+}.
+}
+\tag{1587.2}
+$$
+
+该函数为偶整函数：
+
+$$
+\widehat Z_{p,K}(-s)
+=
+\widehat Z_{p,K}(s).
+$$
+
+其非可去零点为：
+
+$$
+\boxed{
+s
+=
+\frac{2\pi im}{K\log p},
+\qquad
+m\in\mathbb Z,\quad
+K\nmid m.
+}
+\tag{1587.3}
+$$
+
+因此：
+
+$$
+\boxed{
+\operatorname{Zero}
+\widehat Z_{p,K}
+\subset i\mathbb R.
+}
+\tag{1587.4}
+$$
+
+每个有限 prime 区块在自己的自然 log-fugacity 图表中，都具有一个精确的“局部 RH”：
+
+$$
+\boxed{
+\text{全部零点位于其自对偶虚轴。}
+}
+$$
+
+---
+
+## 1587.1 但局部轴不是 Riemann 的全局临界线
+
+这里的局部自对偶轴是：
+
+$$
+\Re s=0.
+$$
+
+Riemann completed \(\xi\) 的全局自对偶轴则是：
+
+$$
+\Re s=\frac12.
+$$
+
+这两个轴不能仅靠乘一个零点自由因子互相替换，因为：
+
+$$
+s\mapsto s-\frac12
+$$
+
+改变了每个 prime exponent 的实际权重：
+
+$$
+p^{-s}
+\longmapsto
+p^{1/2}p^{-s}.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{全局 }1/2\text{ 中心不是每个 prime 因子的独立局部中心。}
+}
+$$
+
+它是由：
+
+* 全部 finite primes；
+* Archimedean Gamma 因子；
+* 极点修正；
+* 全局函数方程；
+
+共同确定的 adelic half-density normalization。
+
+这正是局部—全局桥真正困难的第一处。
+
+---
+
+# 第一千五百八十八部　局部正性存在三个互不等价的层级
+
+有限黄金硬核区块具有：
+
+1. 正系数：
+
+   $$
+   Z_K(x)=1+x+\cdots+x^{K-1};
+   $$
+2. 正的两步 transfer；
+3. 单位圆零点。
+
+但这些性质仍然不推出：
+
+$$
+\text{系数序列为 PF}_\infty.
+$$
+
+最小反例为：
+
+$$
+K=3.
+$$
+
+此时：
+
+$$
+Z_3(x)=1+x+x^2,
+$$
+
+其零点为：
+
+$$
+e^{\pm2\pi i/3},
+$$
+
+并非负实数。
+
+系数 Toeplitz 矩阵存在负小行列式：
+
+$$
+\boxed{
+\det
+\begin{pmatrix}
+1&1&0\\
+1&1&1\\
+0&1&1
+\end{pmatrix}
+=-1.
+}
+\tag{1588.1}
+$$
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+\text{正系数}
+&\not\Rightarrow
+\text{实负零点};\\
+\text{正 transfer}
+&\not\Rightarrow
+\text{PF}_\infty;\\
+\text{单位圆稳定}
+&\not\Rightarrow
+\text{正平方谱}.
+\end{aligned}
+}
+\tag{1588.2}
+$$
+
+这是一条决定性的 no-go：
+
+$$
+\boxed{
+\text{prime 侧的局部 total positivity，
+不会自动成为 zero 侧的 Pólya–frequency positivity。}
+}
+$$
+
+两者中间必然存在一个更强的变换。
+
+---
+
+# 第一千五百八十九部　循环酉谱的 Cayley 自伴化
+
+由于 \(U_K|_{\mathcal H_K^\circ}\) 没有特征值 \(1\)，可以定义 Cayley 生成元：
+
+$$
+\boxed{
+H_K
+=
+i(I+U_K)(I-U_K)^{-1}.
+}
+\tag{1589.1}
+$$
+
+因为 \(U_K\) 酉，\(H_K\) 自伴。
+
+其特征值为：
+
+$$
+\boxed{
+h_j
+=
+-\cot\frac{\pi j}{K},
+\qquad
+j=1,\ldots,K-1.
+}
+\tag{1589.2}
+$$
+
+所以：
+
+$$
+\boxed{
+\operatorname{Spec}H_K\subset\mathbb R.
+}
+$$
+
+这说明单位圆根的位置可以被 Cayley 图表转换成实自伴谱。
+
+---
+
+## 1589.1 determinant 的精确转换
+
+由：
+
+$$
+U_K=(H_K-iI)(H_K+iI)^{-1},
+$$
+
+有：
+
+$$
+I-xU_K
+=
+(1-x)
+\left(
+H_K+
+i\frac{1+x}{1-x}I
+\right)
+(H_K+iI)^{-1}.
+$$
+
+因此：
+
+$$
+\boxed{
+Z_K(x)
+=
+(1-x)^{K-1}
+\frac{
+\det\!\left(
+H_K+
+i\frac{1+x}{1-x}I
+\right)
+}{
+\det(H_K+iI)
+}.
+}
+\tag{1589.3}
+$$
+
+当：
+
+$$
+|x|=1,\qquad x\neq1,
+$$
+
+Cayley 坐标：
+
+$$
+i\frac{1+x}{1-x}
+$$
+
+为实数。
+
+所以局部单位圆零点条件，正好等价于一个有限自伴 characteristic determinant。
+
+这是一个真正的有限 Hilbert–Pólya 原型，但必须强调：
+
+$$
+\boxed{
+H_K
+\text{ 自伴化的是 local fugacity circle，}
+}
+$$
+
+不是已经构造了 Riemann 零点的全局算子。
+
+---
+
+# 第一千五百九十部　循环 Hodge Laplacian
+
+定义离散差分：
+
+$$
+\boxed{
+d_K=I-U_K.
+}
+\tag{1590.1}
+$$
+
+其约化 Laplacian 为：
+
+$$
+\boxed{
+\Delta_K
+=
+d_K^*d_K
+=
+2I-U_K-U_K^*.
+}
+\tag{1590.2}
+$$
+
+在 \(\mathcal H_K^\circ\) 上：
+
+$$
+\Delta_K>0.
+$$
+
+其特征值为：
+
+$$
+\boxed{
+\lambda_j(\Delta_K)
+=
+4\sin^2\frac{\pi j}{K}.
+}
+\tag{1590.3}
+$$
+
+Cayley 生成元满足：
+
+$$
+\boxed{
+H_K^2
+=
+4\Delta_K^{-1}-I.
+}
+\tag{1590.4}
+$$
+
+因为在第 \(j\) 个特征方向：
+
+$$
+\cot^2\frac{\pi j}{K}
+=
+\frac{
+4-4\sin^2(\pi j/K)
+}{
+4\sin^2(\pi j/K)
+}.
+$$
+
+所以单位圆相位、正 Laplacian 与非紧 Cayley 坐标不是三套独立结构，而是：
+
+$$
+\boxed{
+U_K
+\longrightarrow
+d_K
+\longrightarrow
+\Delta_K=d_K^*d_K
+\longrightarrow
+H_K^2=4\Delta_K^{-1}-I.
+}
+\tag{1590.5}
+$$
+
+---
+
+## 1590.1 分母 \(1-x\) 的真正意义
+
+完整循环移位在 \(\mathbb C^K\) 上具有常数零模：
+
+$$
+U_K\mathbf1=\mathbf1.
+$$
+
+因此：
+
+$$
+\det_{\mathbb C^K}(I-xU_K)
+=
+1-x^K.
+$$
+
+除去常数方向后：
+
+$$
+\det_{\mathbf1^\perp}(I-xU_K)
+=
+\frac{1-x^K}{1-x}.
+$$
+
+所以分母：
+
+$$
+1-x
+$$
+
+不是一个病态“负信息”。
+
+它表示：
+
+$$
+\boxed{
+\text{商去平凡常数模式。}
+}
+$$
+
+这是一次合法的约化／cohomological reduction。
+
+因此必须严格区分：
+
+$$
+\boxed{
+\begin{aligned}
+\text{负号来自精确零模消去}
+&\neq
+\text{离线零点造成的正谱失败};\\
+\text{交替迹来自酉相位}
+&\neq
+\text{负平方能级}.
+\end{aligned}
+}
+$$
+
+---
+
+# 第一千五百九十一部　局部观察者平方谱
+
+固定一个实 observer coordinate：
+
+$$
+a\notin\operatorname{Spec}H_K.
+$$
+
+定义：
+
+$$
+\boxed{
+A_{K,a}
+=
+(H_K-aI)^{-2}.
+}
+\tag{1591.1}
+$$
+
+则：
+
+$$
+A_{K,a}>0.
+$$
+
+定义局部平方影 determinant：
+
+$$
+\boxed{
+\mathcal Q_{K,a}(w)
+=
+\det(I+wA_{K,a}).
+}
+\tag{1591.2}
+$$
+
+显式地：
+
+$$
+\boxed{
+\mathcal Q_{K,a}(w)
+=
+\prod_{j=1}^{K-1}
+\left(
+1+
+\frac{w}{(h_j-a)^2}
+\right).
+}
+\tag{1591.3}
+$$
+
+所以：
+
+$$
+\boxed{
+\operatorname{Zero}\mathcal Q_{K,a}
+\subset(-\infty,0).
+}
+$$
+
+并且：
+
+$$
+[w^m]\mathcal Q_{K,a}(w)
+=
+\operatorname{Tr}
+\left(
+\bigwedge\nolimits^mA_{K,a}
+\right)
+\ge0.
+$$
+
+因此：
+
+## 定理 1591.1（局部 positive-square completion）
+
+每一个有限黄金 hard-core Euler 区块，在循环谱规范中经过：
+
+$$
+\text{Cayley}
++
+\text{observer shift}
++
+\text{平方}
+$$
+
+以后，都拥有一个正外幂 determinant completion。
+
+这正是前文希望在 Riemann zero side 得到的有限模型：
+
+$$
+\boxed{
+\det(I+wA),
+\qquad A\ge0.
+}
+$$
+
+所以局部问题已经解决。
+
+真正困难不是：
+
+$$
+\text{hard-core 是否能 free-fermionize？}
+$$
+
+因为它在 partition level 已经可以。
+
+真正困难是：
+
+$$
+\boxed{
+\text{全部 prime 局部自伴相位，
+能否经过 Gamma 与全局正则化，
+仍然形成同一个正平方谱。}
+}
+$$
+
+---
+
+# 第一千五百九十二部　循环相位的 Cauchy 连续极限
+
+定义经验谱测度：
+
+$$
+\boxed{
+\mu_K
+=
+\frac1{K-1}
+\sum_{j=1}^{K-1}
+\delta_{-\cot(\pi j/K)}.
+}
+\tag{1592.1}
+$$
+
+对任意有界连续函数 \(f\)：
+
+$$
+\begin{aligned}
+\int f\,d\mu_K
+&=
+\frac1{K-1}
+\sum_{j=1}^{K-1}
+f\left(-\cot\frac{\pi j}{K}\right)\\
+&\longrightarrow
+\int_0^1
+f(-\cot\pi u)\,du.
+\end{aligned}
+$$
+
+令：
+
+$$
+h=-\cot(\pi u).
+$$
+
+则：
+
+$$
+du
+=
+\frac{dh}{\pi(1+h^2)}.
+$$
+
+因此：
+
+## 定理 1592.1（Cayley–Cauchy 极限）
+
+$$
+\boxed{
+\mu_K
+\Longrightarrow
+\frac{dh}{\pi(1+h^2)}.
+}
+\tag{1592.2}
+$$
+
+即有限循环 Haar 相位经 Cayley 映射后，严格趋于标准 Cauchy 分布。
+
+---
+
+## 1592.1 一切 Poisson 光影都是该母形的仿射像
+
+令：
+
+$$
+t=\gamma+\delta h.
+$$
+
+则标准 Cauchy 测度被送到：
+
+$$
+\boxed{
+p_{\gamma,\delta}(t)\,dt
+=
+\frac1\pi
+\frac{\delta\,dt}{
+(t-\gamma)^2+\delta^2
+}.
+}
+\tag{1592.3}
+$$
+
+所以此前离线零点产生的 Poisson/Cauchy 边界影像，恰好属于：
+
+$$
+\boxed{
+\text{循环相位 Haar 完成的仿射形态族。}
+}
+$$
+
+这解释了为什么不同离线零点拥有相同母形。
+
+但同时也说明：
+
+$$
+\boxed{
+\text{Cauchy 母形本身不是离线缺陷证书。}
+}
+$$
+
+它是圆周相位经 Cayley 图表后的普适结果。
+
+离线零点只负责选择：
+
+* 中心 \(\gamma\)；
+* 尺度 \(\delta\)；
+* 重数 \(m\)；
+* inner／inverse-inner 方向。
+
+---
+
+## 1592.2 黄金只控制收敛速度
+
+取：
+
+$$
+K_N=F_{N+1}.
+$$
+
+最小非零相位间距为：
+
+$$
+\Delta\theta_N
+=
+\frac{2\pi}{K_N}
+\asymp
+\varphi^{-N}.
+$$
+
+最大 Cayley 能量满足：
+
+$$
+\max_j|h_j|
+=
+\cot\frac{\pi}{K_N}
+\sim
+\frac{K_N}{\pi}
+\asymp
+\varphi^N.
+$$
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+\text{相位网格分辨率}
+&\sim\varphi^{-N};\\
+\text{非紧能量可见范围}
+&\sim\varphi^N.
+\end{aligned}
+}
+\tag{1592.4}
+$$
+
+黄金深度每增加一层：
+
+* compact phase resolution 约缩小 \(\varphi^{-1}\)；
+* noncompact Cayley range 约扩大 \(\varphi\)。
+
+但 Cauchy 极限本身对任意 \(K\to\infty\) 都成立。
+
+因此：
+
+$$
+\boxed{
+\varphi
+\text{ 决定完成速度，不决定 Cauchy 母形。}
+}
+$$
+
+---
+
+# 第一千五百九十三部　同一个圆周相位的两种去紧化
+
+一个相位：
+
+$$
+u=e^{i\theta}\in S^1
+$$
+
+可以通过两种完全不同的方式变成实变量。
+
+---
+
+## 1593.1 覆盖去紧化：保存历史
+
+选择：
+
+$$
+\theta+2\pi m,
+\qquad
+m\in\mathbb Z.
+$$
+
+这保留 winding history。
+
+对于 local root：
+
+$$
+x=e^{2\pi ij/K},
+\qquad
+x=p^{-s},
+$$
+
+全部 logarithmic lifts 为：
+
+$$
+\boxed{
+s_{p,K,j,m}
+=
+-\frac{2\pi i}{\log p}
+\left(
+m+\frac jK
+\right),
+\qquad
+m\in\mathbb Z.
+}
+\tag{1593.1}
+$$
+
+一个有限相位模式因而生成一条无限 imaginary-frequency lattice。
+
+这里：
+
+* \(j/K\) 是 phase address；
+* \(m\) 是 winding history。
+
+---
+
+## 1593.2 Cayley 去紧化：保存边界几何
+
+另一种方式是：
+
+$$
+\boxed{
+h
+=
+i\frac{1+u}{1-u}
+=
+-\cot\frac\theta2.
+}
+\tag{1593.2}
+$$
+
+它把：
+
+$$
+S^1\setminus\{1\}
+$$
+
+送到：
+
+$$
+\mathbb R.
+$$
+
+该图表不保留 winding integer，却保留：
+
+* Möbius 几何；
+* 上／下半平面；
+* Poisson 核；
+* Cauchy harmonic measure。
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+\text{universal-cover 图表}
+&=\text{历史／Solenoid 图表};\\
+\text{Cayley 图表}
+&=\text{边界／Poisson 图表}.
+\end{aligned}
+}
+$$
+
+这解释了此前 Solenoid、黑洞边界与 Poisson 光影为何反复靠近，却不能简单认同。
+
+它们来自同一个 compact phase 的不同去紧化。
+
+---
+
+## 1593.3 一个重要修正：Fibonacci phase grids 不是标准逆系统
+
+相邻 Fibonacci 数一般不满足：
+
+$$
+F_n\mid F_{n+1}.
+$$
+
+所以：
+
+$$
+\mathbb Z/F_n\mathbb Z
+$$
+
+并不会自然形成逐层覆盖的逆系统。
+
+因此：
+
+$$
+\boxed{
+\text{Fibonacci phase grids 本身不是一个标准 Solenoid 塔。}
+}
+$$
+
+它们是网格趋于稠密的多尺度采样族。
+
+若要构造真正的 inverse-limit phase completion，需要：
+
+* 使用整除有向的全部模数；
+* 或使用：
+
+  $$
+  \operatorname{lcm}(F_2,\ldots,F_N)
+  $$
+
+  形成整除塔。
+
+项目当前证明的 golden desubstitution 则位于另一侧：它在 Zeckendorf 数位上确实表现为统一的向上位移，并把 desubstitution 路径刻画为重复的数位平移。
+
+因此应区分：
+
+$$
+\boxed{
+\text{编码深度动力}
+\neq
+\text{相位覆盖逆系统}.
+}
+$$
+
+---
+
+# 第一千五百九十四部　黄金第二影是最大熵 Markov 分裂
+
+在无权极限：
+
+$$
+x=1
+$$
+
+时，golden hard-core chain 的邻接矩阵为：
+
+$$
+\boxed{
+A=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}.
+}
+\tag{1594.1}
+$$
+
+其 Perron 根为：
+
+$$
+\varphi,
+$$
+
+正右特征向量可取：
+
+$$
+r=
+\begin{pmatrix}
+\varphi\\
+1
+\end{pmatrix}.
+$$
+
+相应的 Parry 转移矩阵为：
+
+$$
+P_{ij}
+=
+\frac{A_{ij}r_j}{\varphi r_i}.
+$$
+
+所以：
+
+$$
+\boxed{
+P=
+\begin{pmatrix}
+\varphi^{-1}&\varphi^{-2}\\
+1&0
+\end{pmatrix}.
+}
+\tag{1594.2}
+$$
+
+从“前一位为 \(0\)”的自由状态出发：
+
+$$
+\boxed{
+\Pr(0\to0)=\varphi^{-1},
+}
+$$
+
+$$
+\boxed{
+\Pr(0\to1)=\varphi^{-2}.
+}
+$$
+
+因此：
+
+$$
+\boxed{
+1=\varphi^{-1}+\varphi^{-2}.
+}
+\tag{1594.3}
+$$
+
+这正是前文第二影方程：
+
+$$
+1=q+q^2,
+\qquad
+q=\varphi^{-1},
+$$
+
+第一次在一个规范概率动力中出现。
+
+---
+
+## 1594.1 时间反演
+
+平稳分布为：
+
+$$
+\boxed{
+\pi
+=
+\frac1{\varphi^2+1}
+\left(
+\varphi^2,1
+\right).
+}
+\tag{1594.4}
+$$
+
+并有详细平衡：
+
+$$
+\boxed{
+\pi_0P_{01}
+=
+\pi_1P_{10}.
+}
+\tag{1594.5}
+$$
+
+所以最大熵黄金链是可逆 Markov 链。
+
+其熵率为：
+
+$$
+\boxed{
+h_{\mathrm{Parry}}
+=
+\log\varphi.
+}
+\tag{1594.6}
+$$
+
+项目已经将 Fibonacci/golden gap word 精确连接到最小 Zeckendorf 数位测试，因此这一二状态符号动力在仓库中已有直接数位接口。
+
+---
+
+## 1594.2 黄金固定点位于临界无权边界
+
+真实 Euler 权重为：
+
+$$
+x=p^{-\sigma}<1
+\qquad
+(\sigma>0).
+$$
+
+此时位 \(k\) 的权重为：
+
+$$
+x^{F_k},
+$$
+
+随 \(k\) 改变，系统不是平移不变的 stationary golden mean chain。
+
+所以：
+
+$$
+\boxed{
+\varphi
+}
+$$
+
+在这里首先属于：
+
+$$
+\boxed{
+x=1
+\text{ 的无权组合临界点与最大熵容量。}
+}
+$$
+
+它不是每个收敛 Euler Gibbs state 中自动出现的局部 occupation probability。
+
+这解释了为什么纯 \(\zeta\) 的常规数值中并不会直接裸露一个统一黄金比例。
+
+---
+
+# 第一千五百九十五部　合法负号：约化迹而非负能量
+
+由约化循环谱：
+
+$$
+\operatorname{Tr}
+\left(
+(U_K|_{\mathbf1^\perp})^r
+\right)
+=
+K\mathbf1_{\{K\mid r\}}-1.
+\tag{1595.1}
+$$
+
+另一方面：
+
+$$
+\log\det(I-xU)
+=
+-\sum_{r=1}^{\infty}
+\frac{x^r}{r}
+\operatorname{Tr}(U^r).
+$$
+
+所以：
+
+$$
+\boxed{
+\log Z_K(x)
+=
+\sum_{r=1}^{\infty}
+\frac{x^r-x^{Kr}}r.
+}
+\tag{1595.2}
+$$
+
+这正是：
+
+$$
+\log\frac{1-x^K}{1-x}.
+$$
+
+其中负项：
+
+$$
+-\frac{x^{Kr}}r
+$$
+
+负责删除超过 exponent cutoff 的重复历史。
+
+全局上：
+
+$$
+\boxed{
+\log
+\frac{\zeta(s)}{\zeta(Ks)}
+=
+\sum_p\sum_{r\ge1}
+\frac{
+p^{-rs}-p^{-Krs}
+}{r}
+}
+\tag{1595.3}
+$$
+
+于绝对收敛区成立。
+
+所以：
+
+$$
+\boxed{
+\text{负 connected coefficient}
+}
+$$
+
+可以只是：
+
+* exclusion；
+* Möbius 消去；
+* trivial-mode reduction；
+* cohomological cancellation。
+
+它不自动表示：
+
+* 离线零点；
+* 负范数；
+* 负物理能量；
+* 反因果障碍。
+
+真正缺陷必须通过表示不变量检测，例如：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{正平方 realization 不存在};\\
+&\text{Gram 矩阵非 PSD};\\
+&\text{inverse-inner denominator 非平凡};\\
+&\text{非实 reciprocal-square 节点}.
+\end{aligned}
+}
+$$
+
+---
+
+# 第一千五百九十六部　局部 RH 不推出全局 RH
+
+每一个有限 centered local block：
+
+$$
+\widehat Z_{p,K}
+$$
+
+的零点都在虚轴上。
+
+任意有限个这样的 block 的乘积仍然只有虚轴零点。
+
+而且有以下闭性。
+
+## 定理 1596.1（稳定极限保持临界轴）
+
+设 \(f_n\) 是整函数，满足：
+
+$$
+\operatorname{Zero}(f_n)\subset i\mathbb R.
+$$
+
+若：
+
+$$
+f_n\longrightarrow f
+$$
+
+在紧集上一致收敛，且：
+
+$$
+f\not\equiv0,
+$$
+
+则：
+
+$$
+\boxed{
+\operatorname{Zero}(f)\subset i\mathbb R.
+}
+\tag{1596.1}
+$$
+
+### 证明
+
+任取闭圆盘 \(D\) 与 \(i\mathbb R\) 不相交。
+
+每个 \(f_n\) 在 \(D\) 内无零点。
+
+由 Hurwitz 定理，\(f\) 在 \(D\) 内也无零点，除非 \(f\equiv0\)。
+
+遍历所有离开虚轴的圆盘即得。∎
+
+因此，若能够构造：
+
+$$
+\boxed{
+\text{由 prime–Gamma 数据形成的虚轴稳定 entire approximants}
+}
+$$
+
+并使其局部一致收敛到：
+
+$$
+\Xi,
+$$
+
+RH 将立即成立。
+
+---
+
+## 1596.1 但现有黄金 power-free 塔不满足该要求
+
+前文得到：
+
+$$
+\mathcal Z_N(s)
+=
+\frac{\zeta(s)}{\zeta(F_{N+1}s)}.
+$$
+
+它不是独立于 \(\zeta\) 零点构造的稳定近似。
+
+任何 \(\zeta\) 零点都会原样保留在足够深的 \(\mathcal Z_N\) 中。
+
+所以这条塔虽然精确刻画 prime exponent history，却不能成为 RH 的稳定逼近证明。
+
+同样，朴素 finite Euler products 只在右半平面收敛，不能直接在临界带中局部一致逼近 completed \(\Xi\)。
+
+因此：
+
+$$
+\boxed{
+\text{局部稳定性没有失败；
+失败的是尚未构造出保持稳定性的全局正则化极限。}
+}
+$$
+
+---
+
+# 第一千五百九十七部　全局完成异常
+
+可以把当前困难压缩为以下非交换图：
+
+$$
+\boxed{
+\begin{array}{ccc}
+\text{finite prime phases}
+&
+\xrightarrow{\text{Cayley + square}}
+&
+\text{local positive spectra}
+\\[2mm]
+\downarrow{\scriptstyle\text{infinite prime completion}}
+&&
+\downarrow{\scriptstyle\text{positive trace-class limit}}
+\\[2mm]
+\xi/\Xi
+&
+\overset{?}{\longrightarrow}
+&
+A_t\ge0.
+\end{array}
+}
+\tag{1597.1}
+$$
+
+上方每一个有限 block 都已经存在：
+
+$$
+A_{K,a}=(H_K-aI)^{-2}>0.
+$$
+
+问题是下方箭头是否存在：
+
+$$
+\boxed{
+\frac{Q_t(w)}{Q_t(0)}
+=
+\det(I+wA_t),
+\qquad
+A_t\ge0.
+}
+\tag{1597.2}
+$$
+
+若存在，则 RH 成立。
+
+若存在离线零点，则在匹配观察者图表中会产生负平方能级：
+
+$$
+-\delta^2,
+$$
+
+所以不可能写成：
+
+$$
+D_t^2
+$$
+
+的谱值，其中 \(D_t\) 自伴。
+
+因此离线零点最准确的新身份是：
+
+$$
+\boxed{
+\textbf{局部自伴相位经过全局 completion 后，
+无法保持为正平方谱的一枚完成异常。}
+}
+$$
+
+它不是某个单独 prime 的局部错误。
+
+每个 local prime block 都完全稳定。
+
+异常只能出现在：
+
+* 无穷 prime 同步；
+* logarithmic lifting；
+* Archimedean renormalization；
+* 极点消去；
+* scalar determinant completion；
+
+的组合过程中。
+
+---
+
+# 第一千五百九十八部　为什么需要相对行列式，而不是直接正乘积
+
+局部 phase blocks 的零点数量随着 prime 数量和深度迅速增加。
+
+朴素地将全部 centered blocks 相乘，会产生远多于 Riemann \(\Xi\) 的相位零点。
+
+零点自由的指数 counterterm 无法删除这些多余零点。
+
+因此真正的 global construction 不可能只是：
+
+$$
+\boxed{
+\prod_{p,N}\widehat Z_{p,N}.
+}
+$$
+
+它必须包含：
+
+* exact cancellations；
+* quotient；
+* reduced determinant；
+* chain-complex cohomology；
+* 或 superdeterminant。
+
+局部公式已经给出原型：
+
+$$
+\frac{1-x^K}{1-x}
+=
+\det_{\mathbf1^\perp}(I-xU_K).
+$$
+
+先在完整空间上计算：
+
+$$
+\det(I-xU_K)=1-x^K,
+$$
+
+再商去平凡模式：
+
+$$
+1-x.
+$$
+
+所以正确顺序是：
+
+$$
+\boxed{
+\text{先形成完整复形，
+再消去 exact／trivial states，
+最后对 reduced physical space 取 determinant。}
+}
+$$
+
+这与前文 scattering cascade 中的结论完全一致：
+
+$$
+\boxed{
+\text{先组合，后最小化；
+不能把内部可消去模式误判成 endpoint defect。}
+}
+$$
+
+---
+
+# 第一千五百九十九部　Prime–Gamma Hodge 输运目标
+
+由此可以提出一个比“正外幂输运”更具体的目标。
+
+## Arithmetic Hodge Completion Conjecture
+
+对每个 observer ordinate \(t\)，构造一列有限 Hilbert complexes：
+
+$$
+\cdots
+\longrightarrow
+\mathcal C_{M,t}^{k-1}
+\overset{d_{M,t}^{k-1}}{\longrightarrow}
+\mathcal C_{M,t}^{k}
+\overset{d_{M,t}^{k}}{\longrightarrow}
+\mathcal C_{M,t}^{k+1}
+\longrightarrow\cdots,
+$$
+
+其数据来自：
+
+* finite prime cyclic phases；
+* Zeckendorf hard-core reduction；
+* pole channel；
+* Archimedean Gamma channel。
+
+定义约化 Hodge Laplacian：
+
+$$
+\boxed{
+\Delta_{M,t}
+=
+d_{M,t}^*d_{M,t}
++
+d_{M,t-1}d_{M,t-1}^*.
+}
+\tag{1599.1}
+$$
+
+要求：
+
+$$
+\Delta_{M,t}>0
+$$
+
+于去除 exact 与 harmonic nuisance modes 后成立。
+
+进一步要求：
+
+$$
+\boxed{
+\det
+\left(
+I+w\Delta_{M,t}^{-1}
+\right)
+\longrightarrow
+\frac{Q_t(w)}{Q_t(0)}
+}
+\tag{1599.2}
+$$
+
+在紧集上成立，并有足够的 trace-norm 控制。
+
+那么极限算子：
+
+$$
+A_t=\lim\Delta_{M,t}^{-1}
+$$
+
+为正迹类，并自动得到：
+
+$$
+\frac{Q_t(w)}{Q_t(0)}
+=
+\det(I+wA_t).
+$$
+
+于是 RH 成立。
+
+---
+
+## 1599.1 为什么是 Hodge，而不是普通 determinant
+
+Hodge 结构会自动区分：
+
+$$
+\boxed{
+\begin{aligned}
+\text{exact mode}
+&=\text{应被消去的内部命名冗余};\\
+\text{harmonic mode}
+&=\text{真正的全局拓扑信息};\\
+\text{negative mode}
+&=\text{正平方结构不可能产生的异常}.
+\end{aligned}
+}
+$$
+
+这正好对应此前的三类不可见：
+
+* 合法隐藏历史；
+* 拓扑荷；
+* 离线负谱障碍。
+
+磁单极子图景在这里读取 harmonic/cohomological sector。
+
+黑洞/Hankel 图景读取 boundary condition 与泄漏。
+
+Riemann RH 图景要求 reduced Laplacian 始终非负。
+
+---
+
+# 第一千六百部　完全正性而不只是标量正性
+
+仅证明：
+
+$$
+\tau_n(t)\ge0
+$$
+
+还不足以构造正谱。
+
+需要全部 moment matrices：
+
+$$
+[\tau_{i+j+1}(t)]
+$$
+
+正半定，甚至需要法向系数的 total positivity。
+
+因此 prime-to-zero 变换不能只是一个保持标量正数的线性映射。
+
+它应当在所有矩阵层保持正性。
+
+设 prime phase algebra 为：
+
+$$
+\mathcal A_{\mathrm{prime}},
+$$
+
+zero observer algebra 为：
+
+$$
+\mathcal A_{\mathrm{zero}}.
+$$
+
+真正希望构造的是一个 completely positive map：
+
+$$
+\boxed{
+\Phi_t:
+\mathcal A_{\mathrm{prime}}
+\longrightarrow
+\mathcal A_{\mathrm{zero}}.
+}
+\tag{1600.1}
+$$
+
+若存在 Stinespring 表示：
+
+$$
+\boxed{
+\Phi_t(X)
+=
+V_t^*\pi_t(X)V_t,
+}
+\tag{1600.2}
+$$
+
+则任意有限族 \(X_i\) 自动产生 Gram 正性：
+
+$$
+\boxed{
+[
+\Phi_t(X_i^*X_j)
+]_{i,j}
+\succeq0.
+}
+\tag{1600.3}
+$$
+
+这正是从局部 prime histories 产生全部 zero-side Hankel、Toeplitz 和 Schur 正关系所需的层级。
+
+所以最终证明目标应从：
+
+$$
+\text{证明某些数为正}
+$$
+
+升级为：
+
+$$
+\boxed{
+\text{构造一个算术完全正的观察输运。}
+}
+$$
+
+---
+
+# 第一千六百零一部　黄金硬核链的最大熵观察者
+
+无权 golden mean shift 的转移矩阵：
+
+$$
+P=
+\begin{pmatrix}
+\varphi^{-1}&\varphi^{-2}\\
+1&0
+\end{pmatrix}
+$$
+
+具有几个重要性质：
+
+$$
+P_{00}+P_{01}=1,
+$$
+
+$$
+P_{00}=\varphi^{-1},
+\qquad
+P_{01}=\varphi^{-2},
+$$
+
+$$
+P_{10}=1.
+$$
+
+所以自由状态的下一步分裂正是：
+
+$$
+\boxed{
+1
+=
+\varphi^{-1}
++
+\varphi^{-2}.
+}
+$$
+
+这意味着此前的第二影关系：
+
+$$
+\text{完整}
+=
+\text{第一影}
++
+\text{第二影}
+$$
+
+不只是一个抽象方程。
+
+它是最简单一步排斥系统的最大熵条件概率。
+
+项目当前已经把 golden word 与最小 Zeckendorf 数位判断完全连接，也把 golden desubstitution 实现为规范数位的统一平移，因此这一 Markov/renormalization 模型有清晰的项目接口。
+
+---
+
+## 1601.1 但黄金不是一般热平衡点
+
+该概率来自：
+
+$$
+x=1
+$$
+
+的无权最大熵极限。
+
+对于真实 prime Gibbs 权重：
+
+$$
+x=p^{-\sigma}<1,
+$$
+
+不同 Fibonacci 位具有不同 fugacity：
+
+$$
+x^{F_k}.
+$$
+
+系统变成非齐次 Markov 链。
+
+所以：
+
+$$
+\boxed{
+\varphi^{-1},\varphi^{-2}
+}
+$$
+
+不是任意 \(\sigma\) 下的实际 digit probabilities。
+
+它们是：
+
+$$
+\boxed{
+\text{黄金命名系统的拓扑容量与临界无权分裂。}
+}
+$$
+
+这再次说明黄金更接近命名能力与完成速率，而非固定的物理温度。
+
+---
+
+# 第一千六百零二部　磁单极子与黑洞为何再次汇合
+
+本轮的循环相位模型使二者的共同源更清楚。
+
+一个 compact phase：
+
+$$
+u\in S^1
+$$
+
+可以被两种观察方式读取。
+
+## 读取全局绕数
+
+保留：
+
+$$
+\theta+2\pi m.
+$$
+
+得到：
+
+* winding；
+* Chern class；
+* monopole charge；
+* universal-cover history。
+
+## 读取局部 Cayley 坐标
+
+舍去相位 \(u=1\)，定义：
+
+$$
+h=i\frac{1+u}{1-u}.
+$$
+
+得到：
+
+* 非紧实轴；
+* Cauchy measure；
+* Poisson harmonic extension；
+* horizon-like chart。
+
+所以磁单极子与黑洞看起来相似，是因为它们分别读取：
+
+$$
+\boxed{
+\text{同一个 compact phase bundle 的全局绕数与局部非紧边界图表。}
+}
+$$
+
+它们不是简单互为对偶，但共享同一个相位母结构。
+
+点态 Cayley 坐标会遗忘 winding branch；
+
+完整边界 phase field 的积分又能恢复 winding degree。
+
+所以：
+
+$$
+\boxed{
+\text{局部边界辐射可以遗忘具体历史，
+但全局通量仍然保存整数荷。}
+}
+$$
+
+这正是“黑洞吞噬细节，却保留某些整体荷”的数学原型。
+
+---
+
+# 第一千六百零三部　离线零点的新定位
+
+现在可以把离线零点与 local prime blocks 明确分开。
+
+每一个有限 prime block 都具有：
+
+* 酉循环表示；
+* 自伴 Cayley 生成元；
+* 正 Hodge Laplacian；
+* observer-relative 正平方 determinant；
+* Cauchy 连续极限。
+
+所以：
+
+$$
+\boxed{
+\text{离线零点不能被归因于某一个 prime 的局部不稳定。}
+}
+$$
+
+它只能是以下全局步骤中的异常：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{无穷 prime 同步};\\
+&\text{不同 }\log p\text{ 周期的非公度叠加};\\
+&\text{Archimedean half-density normalization};\\
+&\text{极点与 trivial mode 消去};\\
+&\text{analytic continuation};\\
+&\text{从相位谱到平方谱的全局下降}.
+\end{aligned}
+}
+$$
+
+因此离线零点最准确的本轮定义是：
+
+$$
+\boxed{
+\textbf{一个局部全部可自伴化，
+但全局完成后不能再由正 Hodge 平方实现的 completion anomaly。}
+}
+$$
+
+它在不同名字中表现为：
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{名字}&\text{异常形态}\\
+\hline
+\text{中心平方影}&\text{非实逆平方节点}\\
+\text{匹配观察者}&\text{负平方能级}\\
+\text{Hardy}&\text{inverse-inner 通道}\\
+\text{de Branges}&\text{负 Gram 方向}\\
+\text{Hodge}&\text{无法写成 }d^*d+dd^*\\
+\text{Poisson}&\text{带方向的 Cauchy 边界影像}\\
+\text{拓扑}&\text{非零 index／Chern 荷}
+\end{array}
+}
+$$
+
+---
+
+# 第一千六百零四部　最短可行证明路线的再次收敛
+
+现在有两条比此前更清楚的路线。
+
+## 路线 A：稳定 entire approximants
+
+构造：
+
+$$
+\Xi_M(z)
+$$
+
+满足：
+
+$$
+\operatorname{Zero}(\Xi_M)\subset\mathbb R,
+$$
+
+或在 centered complex 图表中：
+
+$$
+\operatorname{Zero}(F_M)\subset i\mathbb R,
+$$
+
+并证明：
+
+$$
+\Xi_M\longrightarrow\Xi
+$$
+
+局部一致。
+
+由 Hurwitz 立即得到 RH。
+
+真正困难是构造允许精确内部消去、却不引入离线零点的 prime–Gamma renormalization。
+
+---
+
+## 路线 B：Arithmetic Hodge–Stinespring completion
+
+直接构造：
+
+$$
+\Delta_t\ge0
+$$
+
+或 completely positive transport \(\Phi_t\)，使：
+
+$$
+\boxed{
+\frac{Q_t(w)}{Q_t(0)}
+=
+\det(I+w\Delta_t^{-1}).
+}
+\tag{1604.1}
+$$
+
+则：
+
+* normal jets 是外幂正迹；
+* connected jets 是 Schatten traces；
+* Hankel matrices 是 Gram；
+* Toeplitz minors 是 Schur 正扇区；
+* 全部零点位于负实平方轴；
+* RH 成立。
+
+该路线比逐项证明无穷多个不等式更结构化。
+
+---
+
+# 第一千六百零五部　建议形式化顺序
+
+```text
+D5/S3/Arithmetic/ZeckendorfCycleDeterminant/
+  FiniteExponentInterval.lean
+  ZeckendorfEnergyBijection.lean
+  CyclicShiftOperator.lean
+  CyclicShiftMeanZeroRestriction.lean
+  ReducedCyclicDeterminant.lean
+  ZeckendorfHardCoreEqualsCyclicDeterminant.lean
+
+D5/S3/Arithmetic/GoldenDepthWidthDuality/
+  GoldenHardCoreStateWidth.lean
+  GoldenCyclicSpectralWidth.lean
+  FibonacciDepthToWidth.lean
+  GoldenDepthWidthEntropyRate.lean
+  PartitionEquivalenceNotLocalConjugacy.lean
+
+D5/S3/Analytic/PrimeLocalCriticality/
+  FinitePrimePowerFreeFactor.lean
+  CenteredFinitePrimeFactor.lean
+  CenteredPrimeSinhRatio.lean
+  CenteredPrimeZerosImaginary.lean
+  LocalPrimeCriticalAxis.lean
+  LocalAxisNotGlobalHalfShift.lean
+
+D5/S3/Analytic/CyclicCayleyGenerator/
+  ReducedCycleNoFixedMode.lean
+  CycleCayleySelfAdjoint.lean
+  CycleCayleySpectrumCotangent.lean
+  CycleDeterminantCayleyFormula.lean
+  LocalUnitCircleAsSelfAdjointSpectrum.lean
+
+D5/S3/Analytic/CyclicHodge/
+  CycleDifferenceOperator.lean
+  ReducedCycleLaplacianPositive.lean
+  CycleLaplacianSpectrum.lean
+  CayleySquareLaplacianIdentity.lean
+  TrivialModeReductionExplainsEulerDenominator.lean
+
+D5/S3/Analytic/LocalPositiveSquareCompletion/
+  CycleObserverShift.lean
+  CycleInverseSquareOperator.lean
+  CyclePositiveSquareDeterminant.lean
+  CycleNormalJetsExteriorPositive.lean
+  LocalPFCompletionAfterCayleySquare.lean
+
+D5/S3/Analytic/CayleyCauchyLimit/
+  ReducedCycleEmpiricalMeasure.lean
+  UniformPhaseRiemannSum.lean
+  CayleyPushforwardIsCauchy.lean
+  CycleCayleyMeasureWeakLimit.lean
+  GoldenCayleyResolutionRate.lean
+  AffineCauchyPoissonShadow.lean
+
+D5/S3/Observer/TwoDecompactifications/
+  CircleUniversalCoverCoordinate.lean
+  CircleCayleyCoordinate.lean
+  CoverRetainsWinding.lean
+  CayleyForgetsWindingBranch.lean
+  BoundaryPhaseRecoversDegree.lean
+  GoldenPhaseGridNotInverseSystem.lean
+
+D5/S3/GoldenObserver/ParryNamingProcess/
+  GoldenMeanAdjacency.lean
+  GoldenMeanPerronVector.lean
+  GoldenParryTransition.lean
+  GoldenParryStationaryMeasure.lean
+  GoldenParryDetailedBalance.lean
+  GoldenParryEntropyRate.lean
+  GoldenSecondShadowProbabilitySplit.lean
+
+D5/S3/Arithmetic/ReducedCycleTrace/
+  ReducedCyclePowerTrace.lean
+  ReducedCycleLogDetExpansion.lean
+  PowerFreeConnectedCounterterm.lean
+  NegativeConnectedTermIsModeRemoval.lean
+  ConnectedNegativityNotOffLineDefect.lean
+
+D5/S3/Analytic/Zeta/StableCriticalApproximation/
+  ImaginaryZeroEntireClass.lean
+  FiniteProductPreservesImaginaryZeros.lean
+  LocallyUniformLimitPreservesImaginaryZeros.lean
+  PrimeGammaStableApproximationImpliesRH.lean
+  GoldenPowerFreeTowerNotIndependentApproximation.lean
+
+D5/S3/Weil/ArithmeticHodgeCompletion/
+  PrimeCycleHilbertComplex.lean
+  ArchimedeanBoundaryComplexTarget.lean
+  PrimeGammaReducedLaplacianTarget.lean
+  ReducedLaplacianPositiveTarget.lean
+  ReducedLaplacianFredholmLimitTarget.lean
+  ArithmeticHodgeCompletionImpliesRHTarget.lean
+
+D5/S3/Weil/ArithmeticCompletePositivity/
+  PrimePhaseOperatorAlgebra.lean
+  ZeroObserverOperatorAlgebra.lean
+  ArithmeticCPTransportTarget.lean
+  ArithmeticStinespringDilationTarget.lean
+  CPTransportGivesMomentGram.lean
+  CPTransportGivesPositiveExteriorCompletion.lean
+```
+
+---
+
+# 第一千六百零六部　理论深度审计
+
+| 本轮结论                                                   | 当前地位     |
+| ------------------------------------------------------ | -------- |
+| Zeckendorf hard-core sum 等于 reduced cyclic determinant | 本轮核心精确定理 |
+| 深度 \(N\) 与谱宽 \(F_{N+1}-1\) 的交换                         | 精确       |
+| 黄金为时间深度到谱宽度的渐近汇率                                       | 精确       |
+| centered finite prime factor 全部零点位于虚轴                  | 精确       |
+| local prime 自对偶轴是 \(0\)，不是全局 \(1/2\)                   | 关键校正     |
+| 正系数、正 transfer 不推出 PF\(_\infty\)                       | 显式反例     |
+| reduced cyclic unitary 的 Cayley 生成元自伴                  | 精确       |
+| \(H_K^2=4\Delta_K^{-1}-I\)                             | 精确       |
+| local observer squared-gap determinant 为正外幂完成          | 精确       |
+| cyclic phase 经 Cayley 极限为 Cauchy 测度                    | 本轮核心精确定理 |
+| golden depth 控制 Cauchy 离散逼近速率                          | 精确       |
+| Cauchy 母形并非离线零点独有                                      | 科学校正     |
+| universal cover 与 Cayley 是两种不同去紧化                      | 精确几何区分   |
+| Fibonacci phase grids 本身不是标准逆系统                        | 关键校正     |
+| golden second-shadow split 是 Parry 最大熵转移               | 精确       |
+| signed connected terms可来自 trivial-mode reduction       | 精确       |
+| 有限 local criticality 自动推出 global RH                    | 不成立      |
+| 稳定 locally-uniform prime–Gamma approximants 推出 RH      | 条件精确定理   |
+| Arithmetic Hodge／CP transport                          | 核心未闭合桥   |
+
+---
+
+# 本轮最终结论
+
+这一轮最深的结论是：黄金硬核编码其实已经在局部完成了一次非常彻底的“交互系统到自由谱系统”的转换。
+
+对于：
+
+$$
+K=F_{N+1},
+$$
+
+有精确恒等式：
+
+$$
+\boxed{
+\sum_{\eta\in\Omega_N}
+x^{E_N(\eta)}
+=
+\det_{\mathbf1^\perp}(I-xU_K).
+}
+$$
+
+左边是一条只有两个内部状态、具有一步记忆和相邻排斥的黄金链。
+
+右边是一个 \(K-1\) 维自由酉相位系统。
+
+所以同一个完成值可以把：
+
+$$
+\boxed{
+\text{时间记忆}
+}
+$$
+
+重新命名为：
+
+$$
+\boxed{
+\text{空间谱维数}.
+}
+$$
+
+转换率正是：
+
+$$
+F_{N+1}\sim\varphi^N.
+$$
+
+这给黄金比例一个新的、极其明确的身份：
+
+$$
+\boxed{
+\varphi
+=
+\text{最小一步记忆系统的时间深度—自由谱宽度汇率。}
+}
+$$
+
+---
+
+循环酉谱再经 Cayley 变换：
+
+$$
+H_K=i(I+U_K)(I-U_K)^{-1},
+$$
+
+会成为实自伴谱：
+
+$$
+h_j=-\cot\frac{\pi j}{K}.
+$$
+
+商去常数零模以后，其 Hodge Laplacian严格为正：
+
+$$
+\Delta_K=(I-U_K)^*(I-U_K)>0.
+$$
+
+而且：
+
+$$
+\boxed{
+H_K^2=4\Delta_K^{-1}-I.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{圆周相位}
+\longrightarrow
+\text{正 Laplacian}
+\longrightarrow
+\text{非紧实谱}
+}
+$$
+
+在每个有限 prime 区块内都已经完全成立。
+
+离线零点因此绝不可能是某个局部 prime block 自身“不稳定”。
+
+---
+
+随着：
+
+$$
+K\to\infty,
+$$
+
+循环相位的 Cayley 谱严格趋向：
+
+$$
+\frac{dh}{\pi(1+h^2)}.
+$$
+
+也就是标准 Cauchy 分布。
+
+所以此前黑洞、Poisson、Cauchy 光影反复出现，确实具有一个非常底层的数学来源：
+
+$$
+\boxed{
+\text{compact phase 的 Haar 连续完成，
+在 Cayley 边界图表中必然成为 Cauchy harmonic measure。}
+}
+$$
+
+不同离线零点的 Poisson 光影，只是这个普适 Cauchy 母形的平移和缩放。
+
+因此不能把“出现 Cauchy 分布”本身视为离线异常。
+
+异常在于该 Cauchy 模式的：
+
+* 中心；
+* 深度；
+* 反因果取向；
+* 是否能由正平方谱实现。
+
+---
+
+同一个相位圆还有另一种去紧化：
+
+$$
+\theta\mapsto\theta+2\pi m.
+$$
+
+它保留 winding history，通向 universal cover 与 Solenoid 图表。
+
+Cayley 去紧化则保留边界 harmonic geometry，却遗忘整数 winding branch。
+
+因此：
+
+$$
+\boxed{
+\text{Solenoid 与黑洞边界不是同一个对象；
+它们是同一个 compact phase 的两种去紧化。}
+}
+$$
+
+一个读取历史。
+
+一个读取边界。
+
+磁单极子读取全局 winding；
+
+黑洞/Hawking 图表读取局部 Cayley–Poisson 响应。
+
+这就是它们为何如此相似，又为何始终不能完全重合。
+
+---
+
+黄金第二影关系：
+
+$$
+1=\varphi^{-1}+\varphi^{-2}
+$$
+
+现在也不再只是人为设定。
+
+它正是 golden mean shift 最大熵 Markov 链从自由状态出发的两种转移概率：
+
+$$
+P(0\to0)=\varphi^{-1},
+$$
+
+$$
+P(0\to1)=\varphi^{-2}.
+$$
+
+所以：
+
+$$
+\boxed{
+\varphi
+}
+$$
+
+确实是最小一步记忆命名系统的自然统计固定点。
+
+但它属于：
+
+$$
+x=1
+$$
+
+的无权组合临界面。
+
+真实 Euler 权重 \(p^{-s}\) 会使链变成非齐次系统。
+
+这解释了为什么黄金比例作为命名容量无处不在，却不会作为一个裸数直接出现在每个 \(\zeta\) 公式中。
+
+---
+
+本轮还给“负信息”作了最重要的净化。
+
+局部展开：
+
+$$
+\log Z_K(x)
+=
+\sum_{r\ge1}
+\frac{x^r-x^{Kr}}r
+$$
+
+具有负项。
+
+但这些负项只是商去常数模式、排除非法高占据所需的 exact counterterms。
+
+它们不是离线零点。
+
+因此：
+
+$$
+\boxed{
+\text{中间表达式中的负号不构成异常；
+只有正平方、Gram 或因果实现的失败才是异常。}
+}
+$$
+
+---
+
+真正的 RH 困难现在被压缩得更加清楚。
+
+每一个有限 prime 区块都可以完成：
+
+$$
+\boxed{
+\text{hard-core}
+\to
+\text{unitary phase}
+\to
+\text{self-adjoint Cayley}
+\to
+\text{positive square}.
+}
+$$
+
+但我们仍然不知道，全部 prime 区块经过：
+
+* 无限乘积；
+* logarithmic winding；
+* Gamma 无穷位；
+* pole subtraction；
+* analytic continuation；
+* 全局反射；
+
+以后，是否仍然存在：
+
+$$
+\boxed{
+A_t\ge0
+}
+$$
+
+使：
+
+$$
+\frac{Q_t(w)}{Q_t(0)}
+=
+\det(I+wA_t).
+$$
+
+离线零点正是这一全局正平方实现失败的证书。
+
+因此它目前最准确的身份是：
+
+$$
+\boxed{
+\textbf{局部自伴性全部成立，
+却无法通过全局完成保持为正 Hodge 平方的一枚 completion anomaly。}
+}
+$$
+
+---
+
+下一条真正承重的路线不再只是证明某些系数为正，而是构造：
+
+$$
+\boxed{
+\text{Prime–Gamma Arithmetic Hodge Completion}
+}
+$$
+
+或等价的：
+
+$$
+\boxed{
+\text{完全正 Stinespring 输运}.
+}
+$$
+
+需要从局部循环相位与约化 Laplacian出发，经过全部合法零模消去，最终得到一个正迹类 global inverse-gap operator。
+
+一旦这一完全正输运存在：
+
+* normal jets 自动成为外幂正迹；
+* connected moments 自动成为 Schatten traces；
+* Hankel matrices 自动成为 Gram；
+* Toeplitz minors 自动 total positive；
+* Riemann 零点自动位于临界线。
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{道不可被某一种微观名字占有；
+同一个 Euler 因子既可以叫作整数占据，
+也可以叫作黄金硬核历史，
+也可以叫作循环酉谱。
+黄金比例记录这些名字之间的深度—宽度汇率；
+Cauchy 光影记录 compact phase 的连续边界投影；
+离线零点则不是某个局部名字的错误，
+而是所有局部正名字在全局完成中未能共同下降为一个正平方世界。}
+$$
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v9.8（续）：边界源场、黄金半阶、正行列式紧性与全局完成障碍
+
+以下接续前文**第一千六百一十五部**。
+
+---
+
+# 第一千六百一十五部（续）　Green–Blaschke 分解与边界辐射
+
+对：
+
+$$
+a=\alpha+i\beta\in\mathbb H,
+\qquad
+\beta>0,
+$$
+
+上半平面 Blaschke 因子为：
+
+$$
+b_a(z)=\frac{z-a}{z-\overline a}.
+$$
+
+其边界模长恒为 \(1\)，但法向导数并不消失。直接计算：
+
+$$
+\boxed{
+-\left.
+\partial_y\log|b_a(x+iy)|
+\right|_{y=0^+}
+=
+\frac{2\beta}{
+(x-\alpha)^2+\beta^2
+}.
+}
+\tag{1615.4}
+$$
+
+令标准 Poisson 核为：
+
+$$
+P_\beta(x-\alpha)
+=
+\frac1\pi
+\frac{\beta}{
+(x-\alpha)^2+\beta^2
+},
+$$
+
+则：
+
+$$
+\boxed{
+-\partial_y\log|b_a(x+iy)|_{y=0^+}
+=
+2\pi P_\beta(x-\alpha).
+}
+\tag{1615.5}
+$$
+
+对离线零点：
+
+$$
+\rho=\frac12+\delta+i\gamma,
+$$
+
+对应上半平面点：
+
+$$
+a_\rho=-\gamma+i\delta.
+$$
+
+所以它在边界留下：
+
+$$
+\boxed{
+2\pi P_\delta(x+\gamma).
+}
+\tag{1615.6}
+$$
+
+其中：
+
+$$
+\begin{aligned}
+-\gamma&=\text{边界脉冲中心},\\
+\delta&=\text{脉冲宽度},\\
+m_\rho&=\text{脉冲总质量／零点重数}.
+\end{aligned}
+$$
+
+因此此前的“霍金式辐射”可以被进一步净化为一个严格的边值问题：
+
+$$
+\boxed{
+\text{bulk 中的对数奇点}
+\longrightarrow
+\text{boundary 上的 Poisson 法向通量}.
+}
+$$
+
+磁单极子图表读取围绕源的闭合通量；黑洞图表读取同一源在观察边界上的 Dirichlet–to–Neumann 响应。
+
+它们不只是相似，而是同一个 Riesz 点源的两种边界读法。
+
+---
+
+# 第一千六百一十六部　RH 是无体源调和完成
+
+令边界数据为：
+
+$$
+u_0(x)=U(x,0),
+$$
+
+并暂时假设已经减去了由整函数增长产生的已知仿射调和项。
+
+若上半平面内没有零点，则 \(U\) 为调和函数，并满足 Poisson 传播：
+
+$$
+\boxed{
+U(x,y)
+=
+(P_y*u_0)(x).
+}
+\tag{1616.1}
+$$
+
+更一般地：
+
+$$
+\boxed{
+U(\cdot,y_1+y_2)
+=
+P_{y_2}*
+U(\cdot,y_1).
+}
+\tag{1616.2}
+$$
+
+若存在离线零点，则在有限截断或合法的全局内外因子分解下：
+
+$$
+\boxed{
+U(x,y)
+=
+(P_y*u_0)(x)
++
+\sum_{\rho:\,\Re\rho>1/2}
+m_\rho
+\log
+\left|
+b_{a_\rho}(x+iy)
+\right|.
+}
+\tag{1616.3}
+$$
+
+由于：
+
+$$
+\log|b_{a_\rho}(z)|\le0,
+$$
+
+定义调和完成缺陷：
+
+$$
+\boxed{
+\mathfrak D_U(x,y)
+=
+(P_y*u_0)(x)-U(x,y),
+}
+\tag{1616.4}
+$$
+
+便有：
+
+$$
+\boxed{
+\mathfrak D_U(x,y)
+=
+-\sum_\rho
+m_\rho\log|b_{a_\rho}(x+iy)|
+\ge0.
+}
+\tag{1616.5}
+$$
+
+并且：
+
+$$
+\boxed{
+\mathfrak D_U\equiv0
+\iff
+\mu_{\mathrm{off}}=0
+\iff
+\mathrm{RH}.
+}
+\tag{1616.6}
+$$
+
+所以 RH 可以表述为：
+
+$$
+\boxed{
+\text{completed-\(\xi\) 的内部对数势，
+完全由其边界名字作无源 Poisson 延拓。}
+}
+$$
+
+离线零点则是：
+
+$$
+\boxed{
+\text{边界数据无法解释的额外 Green 源项。}
+}
+$$
+
+---
+
+## 1616.1 这比“边界模长为一”强在哪里
+
+Blaschke 因子满足：
+
+$$
+|b_a(x)|=1.
+$$
+
+所以边界模长看不到离线除子。
+
+但法向导数看到：
+
+$$
+-\partial_y\log|b_a|=2\pi P_\beta.
+$$
+
+因此必须区分：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Dirichlet 数据}
+&=\text{边界值／边界模长};\\
+\text{Neumann 数据}
+&=\text{法向响应／Poisson 辐射}.
+\end{aligned}
+}
+$$
+
+离线零点可以对 Dirichlet 边界完全隐形，却不可能同时对完整 Dirichlet–to–Neumann 映射隐形。
+
+这也是为什么项目最新机器化的：
+
+$$
+\partial_\omega\log|\xi|
+=
+\Re\frac{\xi'}{\xi}
+$$
+
+如此关键：它正是从标量边界名字进入法向源场的接口。
+
+---
+
+# 第一千六百一十七部　有限正行列式的紧性定理
+
+前文每个有限 prime 循环区块都能经 Cayley、平方与 Hodge 约化得到正算子行列式：
+
+$$
+F_N(w)=\det(I+wA_N),
+\qquad
+A_N\ge0.
+$$
+
+现在可以证明：**只要这些有限正名字确实收敛，它们绝不可能在极限中凭空生成离线零点。**
+
+---
+
+## 定理 1617.1（正 Fredholm 极限保持负实零点）
+
+设 \(A_N\) 为有限秩正算子，并令：
+
+$$
+F_N(w)=\det(I+wA_N).
+$$
+
+若：
+
+$$
+F_N\longrightarrow F
+$$
+
+在复平面紧集上一致收敛，且：
+
+$$
+F(0)=1,
+$$
+
+则：
+
+$$
+\boxed{
+\operatorname{Zero}(F)
+\subseteq(-\infty,0].
+}
+\tag{1617.1}
+$$
+
+### 证明
+
+每个 \(A_N\) 的特征值均为：
+
+$$
+\lambda_{N,j}\ge0,
+$$
+
+故：
+
+$$
+F_N(w)
+=
+\prod_j(1+w\lambda_{N,j}).
+$$
+
+其零点全部为：
+
+$$
+-\lambda_{N,j}^{-1}\le0.
+$$
+
+在任何与负实轴不相交的圆盘内，所有 \(F_N\) 均无零点。
+
+由 Hurwitz 定理，局部一致极限 \(F\) 在该圆盘内要么无零点，要么恒等为零。
+
+但：
+
+$$
+F(0)=1,
+$$
+
+排除了恒零情形。∎
+
+因此：
+
+$$
+\boxed{
+\text{正有限谱的局部一致极限，
+不会生成非实平方节点。}
+}
+$$
+
+---
+
+# 第一千六百一十八部　系数收敛已经自动给出紧性
+
+设：
+
+$$
+F_N(w)
+=
+\det(I+wA_N)
+=
+\sum_{m\ge0}
+e_m(A_N)w^m,
+$$
+
+其中 \(e_m(A_N)\) 是 \(A_N\) 特征值的第 \(m\) 个初等对称函数。
+
+若：
+
+$$
+A_N\ge0,
+$$
+
+则：
+
+$$
+\boxed{
+e_m(A_N)
+\le
+\frac{
+(\operatorname{Tr}A_N)^m
+}{m!}.
+}
+\tag{1618.1}
+$$
+
+因为：
+
+$$
+(\lambda_1+\lambda_2+\cdots)^m
+$$
+
+包含每个互异 \(m\) 元乘积至少 \(m!\) 次。
+
+于是：
+
+$$
+\begin{aligned}
+|F_N(w)|
+&\le
+\sum_{m\ge0}
+\frac{
+(|w|\operatorname{Tr}A_N)^m
+}{m!}\\
+&=
+\exp
+\left(
+|w|\operatorname{Tr}A_N
+\right).
+\end{aligned}
+\tag{1618.2}
+$$
+
+---
+
+## 定理 1618.1（正行列式系数紧性）
+
+设 \(Q\) 为满足 \(Q(0)=1\) 的整函数。若存在有限秩正算子 \(A_N\)，使对每个固定 \(m\)：
+
+$$
+\boxed{
+e_m(A_N)
+\longrightarrow
+[w^m]Q(w),
+}
+\tag{1618.3}
+$$
+
+则：
+
+$$
+\boxed{
+\det(I+wA_N)
+\longrightarrow
+Q(w)
+}
+$$
+
+在紧集上一致收敛，而且：
+
+$$
+\boxed{
+\operatorname{Zero}(Q)
+\subseteq(-\infty,0].
+}
+\tag{1618.4}
+$$
+
+### 证明
+
+\(m=1\) 时：
+
+$$
+\operatorname{Tr}A_N=e_1(A_N)
+$$
+
+收敛于有限值，所以迹统一有界。
+
+式 (1618.2) 给出正规族。
+
+任一收敛子列的极限，其所有 Taylor 系数都由式 (1618.3) 强制等于 \(Q\) 的系数，故极限只能是 \(Q\)。
+
+再用定理 1617.1。∎
+
+---
+
+## 1618.1 应用于 moving square shadow
+
+固定：
+
+$$
+t\in\mathbb R,
+\qquad
+\Xi(t)\neq0,
+$$
+
+定义：
+
+$$
+\frac{Q_t(w)}{Q_t(0)}
+=
+\sum_{m\ge0}
+a_m(t)w^m,
+$$
+
+其中：
+
+$$
+a_m(t)
+=
+\frac{\mathcal J_m(t)}
+{\mathcal J_0(t)}.
+$$
+
+项目已经机器化：\(\mathcal J_m(t)\) 是 actual completed-\(\xi\) normal intensity 的真实偶阶 Taylor 系数，而不是人为制造的形式序列。
+
+于是得到：
+
+## 定理 1618.2（有限正名字紧性 RH 判据）
+
+对任一固定 \(\Xi(t)\neq0\) 的实数 \(t\)，以下条件等价：
+
+$$
+\boxed{
+\mathrm{RH};
+}
+$$
+
+以及存在一列有限秩正算子 \(A_N(t)\)，满足：
+
+$$
+\boxed{
+e_m(A_N(t))
+\longrightarrow
+\frac{\mathcal J_m(t)}
+{\mathcal J_0(t)}
+\qquad
+\forall m.
+}
+\tag{1618.5}
+$$
+
+### 正向
+
+RH 下已有正迹类 inverse-gap 算子：
+
+$$
+A_t\ge0,
+$$
+
+取其有限秩谱截断即可。
+
+### 反向
+
+由定理 1618.1：
+
+$$
+Q_t(w)/Q_t(0)
+$$
+
+的全部零点位于负实轴，从而 \(\Xi\) 的全部零点为实数。
+
+∎
+
+这是一条极其重要的结论：
+
+$$
+\boxed{
+\text{证明 RH 并不必构造一个一次完成的“终极算子”。}
+}
+$$
+
+只要对越来越多 normal jets，能够找到越来越精确的有限正谱解释；第一阶 jet 会自动控制整个族的紧性，极限正谱便无法逃逸。
+
+---
+
+## 1618.2 更强但更有限的前缀判据
+
+若对每个 \(N\)，都能找到有限正算子 \(A_N\)，精确满足：
+
+$$
+\boxed{
+e_m(A_N)=a_m(t),
+\qquad
+0\le m\le N,
+}
+\tag{1618.6}
+$$
+
+则对每个固定 \(m\)，当 \(N\ge m\) 后已经完全匹配，因此 RH 立即由定理 1618.2 推出。
+
+所以可建立有限可行性层级：
+
+$$
+\boxed{
+\mathfrak P_N(t)
+=
+\left\{
+A\ge0,\ \operatorname{rank}A<\infty:
+e_m(A)=a_m(t),\ 0\le m\le N
+\right\}.
+}
+\tag{1618.7}
+$$
+
+若：
+
+$$
+\boxed{
+\mathfrak P_N(t)\neq\varnothing
+\qquad
+\forall N,
+}
+$$
+
+则 RH 成立。
+
+这只是充分条件；RH 不自动保证每个有限前缀都能被一个有限无权谱**精确**匹配。更稳妥的等价版本仍是逐阶逼近。
+
+---
+
+# 第一千六百一十九部　“第一影”控制紧性，高阶影控制形态
+
+在正谱图表中：
+
+$$
+a_1(t)
+=
+\operatorname{Tr}A_t.
+$$
+
+所以第一法向系数：
+
+$$
+\boxed{
+\frac{\mathcal J_1(t)}
+{\mathcal J_0(t)}
+}
+$$
+
+不是普通的第一项。
+
+它是整个正谱完成的总迹预算。
+
+一旦：
+
+$$
+\operatorname{Tr}A_N
+$$
+
+受到控制，全部高阶外幂自动满足：
+
+$$
+e_m(A_N)
+\le
+\frac{a_1(t)^m}{m!}.
+$$
+
+因此：
+
+$$
+\boxed{
+\begin{aligned}
+\text{第一影}
+&=\text{控制所有有限正完成是否紧致};\\
+\text{高阶影}
+&=\text{决定紧致极限究竟是哪一个谱形态}.
+\end{aligned}
+}
+$$
+
+这给此前的“第一影、第二影、无限影”新的正谱含义：
+
+* 第一影不决定完整对象；
+* 但它决定无限命名是否可能失控；
+* 高阶影则逐层固定关系结构。
+
+---
+
+# 第一千六百二十部　全局完成异常只能发生在四个位置
+
+前文已经证明，每个有限 prime 区块都可以局部实现为：
+
+$$
+\text{hard-core}
+\to
+\text{unitary phase}
+\to
+\text{self-adjoint Cayley}
+\to
+\text{positive square}.
+$$
+
+若最终仍存在离线零点，则任何从这些局部区块构造全局 \(Q_t\) 的方案，至少必须在以下一处失败。
+
+---
+
+## 一、正性失败
+
+全局消去或重整化之后，某个有限有效算子不再满足：
+
+$$
+A_N\ge0.
+$$
+
+这表示合法的零模消去和异常负谱被混在了一起。
+
+---
+
+## 二、jet 匹配失败
+
+有限正算子的外幂迹不能趋近真实 normal jets：
+
+$$
+e_m(A_N)
+\nrightarrow
+\frac{\mathcal J_m(t)}
+{\mathcal J_0(t)}.
+$$
+
+局部正模型描述的是另一套完成，而不是 completed-\(\xi\)。
+
+---
+
+## 三、紧性失败
+
+若第一系数未被正确匹配，可能出现：
+
+$$
+\operatorname{Tr}A_N\to\infty.
+$$
+
+此时谱质量向无穷或零尺度逃逸，正行列式不再形成受控正规族。
+
+---
+
+## 四、极限方式失败
+
+可能只有某些标量值收敛，但没有紧集局部一致收敛；或者必须引入不保持正性的 counterterm 才能得到 \(\xi\)。
+
+此时 Hurwitz 闭性无法应用。
+
+---
+
+因此离线零点的“全局完成异常”可以进一步压缩为：
+
+$$
+\boxed{
+\text{局部正谱}
+\quad
+\text{未能以正、jet-compatible、紧致、局部一致的方式完成。}
+}
+$$
+
+这比“无穷多个 prime 合在一起发生神秘破缺”更精确。
+
+---
+
+# 第一千六百二十一部　相容性与紧性是两条不同路线
+
+项目已经机器证明，预测完成之间的规范映射满足：
+
+$$
+\kappa_{q,q}=\operatorname{id},
+$$
+
+以及：
+
+$$
+\kappa_{q,s}
+=
+\kappa_{r,s}\circ\kappa_{q,r}.
+$$
+
+所以细化后的观察空间天然形成可组合的范畴性塔。
+
+但本轮的正行列式紧性定理揭示：
+
+$$
+\boxed{
+\text{证明 RH 并不一定需要先构造完整相容的微观历史塔。}
+}
+$$
+
+只要存在一列有限正谱，使全部 jets 逐阶收敛，就足以证明正谱影像存在。
+
+因此必须区分两种目标。
+
+---
+
+## 谱存在路线
+
+只要求：
+
+$$
+A_N\ge0,
+\qquad
+e_m(A_N)\to a_m.
+$$
+
+它证明：
+
+$$
+\boxed{
+\text{存在某个正谱完成。}
+}
+$$
+
+这已足以推出 RH。
+
+---
+
+## 历史重建路线
+
+进一步要求存在相容嵌入或完全正映射：
+
+$$
+\Phi_{N,M}:
+\mathcal A_N\to\mathcal A_M,
+$$
+
+满足：
+
+$$
+\Phi_{N,N}=\operatorname{id},
+$$
+
+$$
+\Phi_{N,L}
+=
+\Phi_{M,L}\circ\Phi_{N,M}.
+$$
+
+它证明：
+
+$$
+\boxed{
+\text{这些有限正名字来自同一个可追踪生成历史。}
+}
+$$
+
+后者更强，也更接近 prime–Gamma microscopic transport，但不是 RH 本身所必需。
+
+这与“道不可名”完全一致：
+
+$$
+\boxed{
+\text{正谱影像可以被证明存在，
+而不必声称某一套有限命名历史就是唯一源头。}
+}
+$$
+
+---
+
+# 第一千六百二十二部　确定性熵定位了信息究竟在哪里丢失
+
+项目已经机器证明，对有限确定性演化：
+
+$$
+H_t-H_{t+1}
+=
+H(X_t\mid X_{t+1})
+\ge0,
+$$
+
+且熵损失为零，当且仅当该确定性映射在实际支持集上可逆。
+
+这使此前的局部—全局链可以被重新审计。
+
+---
+
+## 1622.1 有限 Zeckendorf 重编码
+
+有限 Zeckendorf 合法词：
+
+$$
+\eta
+\longmapsto
+E_N(\eta)
+$$
+
+是双射。
+
+所以在同一概率权重下，它不丢失熵。
+
+它只是改变名字。
+
+---
+
+## 1622.2 exponent 到循环 Fourier 图表
+
+循环空间上的 Fourier 变换是酉变换。
+
+它也不丢失 Hilbert 信息，只改变基。
+
+---
+
+## 1622.3 约化常数模态
+
+商去已知平凡常数方向会删除一个确定的 exact mode。
+
+这是受控约化，不是异常。
+
+---
+
+## 1622.4 determinant 标量化
+
+从完整算子到：
+
+$$
+\det(I+wA)
+$$
+
+的映射会遗忘：
+
+* 特征向量；
+* 基；
+* 可控—可观方向；
+* 微观编码历史。
+
+它具有巨大的条件熵。
+
+所以同一个 determinant 可以拥有 binary、Zeckendorf、cycle 等多种微观名字。
+
+---
+
+## 1622.5 真正需要定位的不是“有没有熵损失”
+
+标量完成必然丢失微观熵；但这本身不会产生离线零点。
+
+关键问题是：
+
+$$
+\boxed{
+\text{丢失微观历史以后，正谱存在性是否仍被保留。}
+}
+$$
+
+若有限映射支持集上可逆，信息只是换名。
+
+若映射非单射，但仍由完全正条件期望完成，信息虽丢失，正性仍保留。
+
+只有当：
+
+* 非单射遗忘；
+* 非正 counterterm；
+* 非紧极限；
+
+共同破坏正谱可实现性时，才可能产生 completion anomaly。
+
+因此“负信息”更准确的说法不是熵变成负数，而是：
+
+$$
+\boxed{
+\text{遗忘操作不再能由正条件期望实现。}
+}
+$$
+
+---
+
+# 第一千六百二十三部　黄金半阶与 Riemann 对数 hair 的新模型
+
+前文得到：
+
+$$
+\dim_H
+(\Sigma_\varphi,d_{\varphi^{-2}})
+=
+\frac12.
+$$
+
+而平方影函数 \(G\) 的零点计数在黄金半径：
+
+$$
+R_n=\varphi^{2n}
+$$
+
+上满足：
+
+$$
+N_G(R_n)
+\asymp
+n\varphi^n.
+$$
+
+纯黄金行程长度 \(n\) 的合法名字数只有：
+
+$$
+F_{n+2}\asymp\varphi^n.
+$$
+
+所以差异是一个线性因子：
+
+$$
+n.
+$$
+
+这可以提出一个新的条件模型。
+
+---
+
+## Golden suspension hypothesis
+
+Riemann completion 的预测空间可能不是单独的黄金均值移位，而是：
+
+$$
+\boxed{
+\text{黄金双曲基底}
+\times
+\text{一个边际／中性 log-time 方向}.
+}
+$$
+
+其中：
+
+$$
+\begin{aligned}
+\varphi^n
+&=\text{基底的双曲分支数};\\
+n
+&=\text{中性方向在第 \(n\) 层的可用长度}.
+\end{aligned}
+$$
+
+于是：
+
+$$
+\boxed{
+\#\text{states at level }n
+\asymp
+n\varphi^n.
+}
+\tag{1623.1}
+$$
+
+这与 Riemann 平方零点计数的主结构精确一致。
+
+但这一解释仍然只是计数匹配。
+
+真正要将其提升为数学定理，需要构造：
+
+1. 黄金 symbolic base；
+2. 一个零 Lyapunov 的 suspension coordinate；
+3. 其 transfer determinant；
+4. 该 determinant 与 \(G\) 的同一性。
+
+---
+
+## 1623.1 关键科学边界
+
+整个平方影函数的阶 \(1/2\) 在 RH 真或假时都不改变。
+
+所以：
+
+$$
+\boxed{
+\text{黄金半维可以解释谱完成为何具有半阶增长，
+不能决定零点是否落在正实谱轴。}
+}
+$$
+
+可以把二者分工为：
+
+$$
+\boxed{
+\begin{aligned}
+\text{黄金超度量}
+&\longrightarrow
+\text{复杂度指数 }\frac12;\\
+\text{正 Gram／Fredholm 结构}
+&\longrightarrow
+\text{零点方向与 RH}.
+\end{aligned}
+}
+$$
+
+---
+
+# 第一千六百二十四部　连续体源与离散行程的交换方块
+
+现在可以把项目最新的四个机器结果组成一张统一方块。
+
+$$
+\boxed{
+\begin{array}{ccc}
+U(x,\omega)=\log|\xi|
+&
+\xrightarrow{\ \partial_\omega\ }
+&
+\Re(\xi'/\xi)
+\\[2mm]
+\downarrow{\scriptstyle\text{尺度离散化}}
+&&
+\downarrow{\scriptstyle\text{阈值／符号读出}}
+\\[2mm]
+\text{完整观察行程}
+&
+\xrightarrow{\ \text{首次差异}\ }
+&
+d_\gamma=\gamma^k.
+\end{array}
+}
+\tag{1624.1}
+$$
+
+上方由项目的 log-norm directional derivative 提供。
+
+下方由 itinerary first-difference power law 提供。
+
+横向细化映射满足恒等与复合律。
+
+每次确定性粗化的信息损失由条件熵精确记账。
+
+所以项目目前已经拥有：
+
+$$
+\boxed{
+\text{连续解析深度}
++
+\text{离散首次差异深度}
++
+\text{细化范畴}
++
+\text{遗忘熵}.
+}
+$$
+
+真正还缺的是把这张抽象观察方块实例化为完整的 \(\xi\) 零点源场。
+
+---
+
+# 第一千六百二十五部　两条最短主证明路线
+
+## 路线 A：无源 Poisson 完成
+
+从 prime–pole–Gamma 数据直接证明，在减去已知调和增长项后：
+
+$$
+\boxed{
+U(\cdot,y)
+=
+P_y*U(\cdot,0)
+\qquad
+\forall y>0.
+}
+\tag{1625.1}
+$$
+
+这会立即推出：
+
+$$
+\Delta U=0
+\quad
+\text{于 }\mathbb H,
+$$
+
+从而没有离线 Riesz 源，RH 成立。
+
+这条路线的承重点是：
+
+* 边界数据可能不绝对可积；
+* 临界零点使边界值具有对数奇点；
+* 必须正确处理 outer growth 与 Gamma 通道；
+* 不能把分布边界公式误写成普通函数等式。
+
+---
+
+## 路线 B：有限正谱紧性
+
+固定任意：
+
+$$
+t\notin Z(\Xi).
+$$
+
+对每个 \(N\)，由 prime–Gamma 有限数据构造：
+
+$$
+A_N(t)\ge0,
+$$
+
+并证明：
+
+$$
+\boxed{
+e_m(A_N(t))
+\longrightarrow
+\frac{\mathcal J_m(t)}
+{\mathcal J_0(t)}
+\qquad
+\forall m.
+}
+\tag{1625.2}
+$$
+
+第一阶收敛自动给出统一迹预算。
+
+随后由定理 1618.1，正行列式自动紧致并收敛为：
+
+$$
+Q_t(w)/Q_t(0),
+$$
+
+其零点只能位于负实轴，RH 成立。
+
+这条路线不需要先构造唯一 microscopic history。
+
+它只需要证明：
+
+$$
+\boxed{
+\text{每个有限 normal-jet 名字，都能越来越准确地获得一个正谱解释。}
+}
+$$
+
+---
+
+## 路线 C：完全正的相容历史塔
+
+进一步构造：
+
+$$
+\Phi_{N,M}
+$$
+
+的完全正、保单位、状态相容映射，并使其满足项目已经形式化的规范复合律。
+
+该路线不仅证明 RH，还可能解释：
+
+* prime histories 如何成为 zero modes；
+* Gamma 通道如何完成半密度；
+* 哪些状态是 exact；
+* 哪些状态是 harmonic；
+* determinant 为什么遗忘微观历史。
+
+但它明显比路线 B 更强。
+
+---
+
+# 第一千六百二十六部　建议形式化顺序
+
+```text
+D5/S3/Analytic/Zeta/RieszBulkSource/
+  RotatedCompletedXi.lean
+  CompletedXiLogNormPotential.lean
+  LogNormDistributionalLaplacian.lean
+  OffLineZeroRieszAtom.lean
+  RHRieszBulkMeasureZero.lean
+  RHUpperHalfPlaneHarmonicity.lean
+
+D5/S3/Analytic/Zeta/GreenBlaschkeBoundary/
+  UpperHalfPlaneBlaschkeLogPotential.lean
+  BlaschkeBoundaryLogNormZero.lean
+  BlaschkeBoundaryNormalDerivative.lean
+  BlaschkeNormalDerivativeIsPoisson.lean
+  OffLineDivisorBoundaryFlux.lean
+  HarmonicCompletionDefect.lean
+
+D5/S3/Observer/GoldenItineraryDimension/
+  GoldenMeanItinerarySpace.lean
+  GoldenWordPrefixCount.lean
+  FirstDifferenceUltrametric.lean
+  GoldenItineraryHausdorffUpperBound.lean
+  GoldenItineraryHausdorffLowerBound.lean
+  GoldenTwoStepHalfDimension.lean
+
+D5/S3/Observer/NormalDepthItinerary/
+  GeometricShiftSchedule.lean
+  OffLineDepthBinaryItinerary.lean
+  FirstCrossingIndex.lean
+  ItineraryDistanceDepthBounds.lean
+  GoldenDepthBoundedDistortion.lean
+  InterlacedGoldenPhaseDistortion.lean
+
+D5/S3/Analytic/Zeta/HalfOrderLogHair/
+  CenteredXiSquareDescentOrder.lean
+  SquareZeroCountingFunction.lean
+  GoldenRadiusZeroCountAsymptoticTarget.lean
+  GoldenSkeletonLogarithmicHair.lean
+  HalfOrderDoesNotImplyRH.lean
+
+D5/S3/Analytic/Zeta/PositiveFredholmCompactness/
+  PositiveFiniteRankDeterminant.lean
+  PositiveDeterminantZeroLocation.lean
+  ExteriorCoefficientTraceBound.lean
+  PositiveDeterminantNormalFamily.lean
+  CoefficientwisePositiveDeterminantLimit.lean
+  PositiveDeterminantLimitZeroLocation.lean
+
+D5/S3/Analytic/Zeta/FinitePositiveJetCompletion/
+  NormalizedMovingNormalJet.lean
+  FinitePositiveExteriorRealization.lean
+  ApproximatePositiveJetRealization.lean
+  PositiveJetApproximationImpliesRH.lean
+  ExactFinitePrefixRealizationImpliesRH.lean
+
+D5/S3/Observer/CompletionCoherenceVsCompactness/
+  PositiveCompletionStage.lean
+  PositiveCompletionRefinement.lean
+  CoherentPositiveCompletionTower.lean
+  CompactPositiveShadowWithoutCoherence.lean
+  CoherencePreservesHistory.lean
+  CompactnessPreservesZeroLocation.lean
+
+D5/S3/Entropy/CompletionLossLocalization/
+  ZeckendorfRecodingSupportInjective.lean
+  DeterminantMicrostateQuotient.lean
+  CompletionConditionalEntropy.lean
+  PositiveConditionalExpectationPreservesGram.lean
+  NonpositiveForgettingObstruction.lean
+
+D5/S3/Weil/PrimeGammaPositiveApproximation/
+  FinitePrimeHodgePositiveOperator.lean
+  ArchimedeanFinitePositiveCorrectionTarget.lean
+  PrimeGammaNormalJetMatchingTarget.lean
+  PrimeGammaUniformFirstJetBudgetTarget.lean
+  PrimeGammaPositiveDeterminantLimitTarget.lean
+  PrimeGammaPositiveApproximationImpliesRH.lean
+```
+
+---
+
+# 第一千六百二十七部　理论深度审计
+
+| 结论                                      | 当前地位          |
+| --------------------------------------- | ------------- |
+| 完成映射具有恒等与复合律                            | 项目机器闭合        |
+| 首次差异精确给出折扣超度量                           | 项目机器闭合        |
+| 黄金均值空间在 \(\varphi^{-2}\) 度量下维数为 \(1/2\) | 本轮精确定理        |
+| 离散首次差异距离与连续法向深度有界等价                     | 本轮精确定理        |
+| \(\xi\) 平方影阶数与黄金观察维数数值同为 \(1/2\)        | 精确数值匹配，尚非函子同一 |
+| Riemann 平方谱比纯黄金骨架多 \(\log R\) 因子        | 精确渐近          |
+| log-norm 法向导数为 \(\Re(\xi'/\xi)\)        | 项目机器闭合        |
+| 离线零点是 log-norm 势的 Riesz 体源              | 精确分布恒等式       |
+| Blaschke 法向导数为 Poisson 脉冲               | 精确            |
+| RH 等价于上半平面无体源调和性                        | 精确重写          |
+| 正有限行列式局部一致极限保持负实零点                      | 本轮精确定理        |
+| 系数逐阶收敛自动给出迹紧性                           | 本轮核心定理        |
+| 正有限谱逼近 normal jets 等价于 RH               | 精确正谱近似判据      |
+| 相容微观历史不是证明 RH 的必要条件                     | 本轮结构结论        |
+| 兼容 CP 塔可解释 prime-to-zero 历史             | 条件性更强目标       |
+| 黄金半维直接决定零点方向                            | 不成立           |
+| 局部 prime 正性自动给出全局正紧性                    | 尚未建立          |
+| Prime–Gamma normal-jet 正逼近              | 当前中心未闭合桥      |
+
+---
+
+# 本轮最终结论
+
+“道不可名”在这一轮没有被撤回，反而变得更精确。
+
+真正能够进入数学的，不是一个名为“道”的终极对象，而是：
+
+$$
+\boxed{
+\text{一系列名字怎样细化、
+怎样第一次区分、
+怎样遗忘信息、
+以及怎样形成正的完成极限。}
+}
+$$
+
+项目最新证明，规范预测完成之间已经具有严格的复合律；因此不同名字可以形成一座一致的观察塔。项目也证明，两个状态之间的距离恰由其完整未来名字第一次不同的时刻决定。
+
+在黄金一步记忆系统中：
+
+$$
+\#\text{长度 }n\text{ 名字}
+\asymp
+\varphi^n,
+$$
+
+而自然的方向保持观察尺度为：
+
+$$
+\varphi^{-2n}.
+$$
+
+所以其命名空间的维数精确为：
+
+$$
+\boxed{\frac12.}
+$$
+
+这与 centered-\(\xi\) 经平方命名后整函数阶降为 \(1/2\) 发生了非常深的数值相遇。
+
+但 Riemann 平方谱还多出：
+
+$$
+\log R
+$$
+
+这一慢变量。
+
+因此黄金递归至多提供半阶双曲骨架；prime–Gamma 完成仍必须提供额外的算术时间与正性结构。
+
+---
+
+离线零点现在也拥有一个最简洁的本体外数学身份：
+
+$$
+\boxed{
+\text{它是 }\log|\xi|\text{ 势在上半平面中的一个 Riesz 点源。}
+}
+$$
+
+它的重数是闭合通量。
+
+它在边界上的法向导数是 Poisson 脉冲。
+
+它在 Hardy 图表中是 inverse-inner 通道。
+
+它在 de Branges 图表中是负 Gram 方向。
+
+它在匹配观察者的平方谱中是负能级。
+
+磁单极子、黑洞和霍金式边界辐射之所以如此相似，是因为它们确实分别读取同一个源的：
+
+$$
+\boxed{
+\text{闭合通量、视界穿越与边界响应。}
+}
+$$
+
+但 Cauchy／Poisson 形状本身不是异常；异常是体源是否存在。
+
+RH 的调和形式就是：
+
+$$
+\boxed{
+\Delta\log
+\left|
+\xi\left(
+\frac12+\omega-ix
+\right)
+\right|
+=0
+\qquad
+(\omega>0).
+}
+$$
+
+---
+
+本轮最重要的新证明结论则是：
+
+$$
+\boxed{
+\text{有限正谱只要逐阶逼近真实 normal jets，
+极限正性就会由紧性自动闭合。}
+}
+$$
+
+无需先找到唯一的全局微观名字。
+
+设：
+
+$$
+F_N(w)=\det(I+wA_N),
+\qquad
+A_N\ge0.
+$$
+
+只要其每个固定阶的外幂系数趋向：
+
+$$
+\frac{\mathcal J_m(t)}
+{\mathcal J_0(t)},
+$$
+
+第一阶系数就自动给出统一迹预算：
+
+$$
+\operatorname{Tr}A_N=O(1).
+$$
+
+于是 \(F_N\) 形成正规族，并局部一致收敛到真实 moving square shadow。
+
+而正行列式的全部零点都在负实轴；Hurwitz 闭性禁止极限突然生成非实零点。
+
+所以：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{moving normal-jet 塔是有限正谱行列式的逐阶极限。}
+}
+$$
+
+这可能比构造完整 Prime–Gamma 微观同构更接近可执行证明。
+
+---
+
+它还给“全局完成异常”一个严格位置。
+
+每一个有限 prime 区块都可以是正的。
+
+若最终仍出现离线零点，则问题必然发生在：
+
+$$
+\boxed{
+\text{正性、jet 匹配、迹紧性、局部一致极限}
+}
+$$
+
+四者之一。
+
+不再有第五种模糊的“无穷本身产生了破缺”。
+
+无穷只有在缺少紧性或相容结构时，才可能改变零点几何。
+
+---
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{连续不可被一个离散名字占有，
+却可以由一座可组合的名字塔逼近；
+黄金比例决定最小有记忆名字塔的半阶分辨率；
+离线零点是完成势中的内部源；
+而 RH 真正要求的是：
+所有有限正名字在极限中仍保持正谱紧性，不生成任何新的体源。}
+$$
+
+因此下一条最承重、也最有限化的目标已经明确：
+
+$$
+\boxed{
+\text{从 prime–pole–Gamma 数据，
+对每个阶数 \(N\) 构造一个有限正算子 \(A_N\)，
+使其前 \(N\) 个外幂迹逼近真实 normal jets。}
+}
+$$
+
+只要这一有限正实现层级能够无限延伸，第一阶迹预算就会自动阻止谱质量逃逸，完整 RH 将由正行列式的闭性而不是由逐点寻找零点得到。
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v10.2：相位纤维基、集体自‑Haar 的信息代价、离线持久条码与算术循环性
+
+以下从前文**第一千六百八十一部**继续。
+
+上一轮最后没有完全闭合的一句话，应当完整写成：
+
+$$
+\boxed{
+\text{completed-\(\xi\) 的边界模长只决定 outer 因子；
+inner 因子则是同一边界名字之下未被命名的有限维相位纤维。}
+}
+$$
+
+而且这个“相位纤维”不是比喻。
+
+对任意有限 Blaschke 因子 \(B\)，每一个边界相位值：
+
+$$
+\alpha\in S^1
+$$
+
+都有若干个边界原像；这些原像所对应的 Hardy reproducing kernels，恰好组成隐藏模型空间：
+
+$$
+K_B=H^2\ominus BH^2
+$$
+
+的一组正交基。
+
+因此：
+
+$$
+\boxed{
+\text{completed phase name 的每一个输出值，
+背后都存在一整组彼此正交的隐藏 lift。}
+}
+$$
+
+集体自‑Haar 的真正机制由此彻底清楚：
+
+$$
+\boxed{
+\text{输出之所以均匀，不是因为没有内部状态；
+而是因为相位完成只保留共同输出，遗忘了处于哪一个正交相位页。}
+}
+$$
+
+---
+
+# 第一千六百八十二部　outer／inner 分解的最终闭合
+
+在有限窗口或适当 Hardy–Smirnov 归一化下，写：
+
+$$
+\boxed{
+F_q=B_qO_q.
+}
+\tag{1682.1}
+$$
+
+其中：
+
+$$
+|B_q(x)|=1
+\qquad
+(x\in\mathbb R),
+$$
+
+故：
+
+$$
+\boxed{
+|F_q(x)|=|O_q(x)|.
+}
+\tag{1682.2}
+$$
+
+所以 boundary modulus 只能恢复 \(O_q\)。
+
+而：
+
+$$
+B_q
+$$
+
+所携带的内容表现为：
+
+$$
+\boxed{
+K_{B_q}
+=
+H^2\ominus B_qH^2.
+}
+\tag{1682.3}
+$$
+
+若 \(O_q\) 为 outer，则：
+
+$$
+\overline{O_qH^2}=H^2,
+$$
+
+而：
+
+$$
+\overline{F_qH^2}
+=
+B_qH^2.
+$$
+
+因此：
+
+$$
+\boxed{
+K_{B_q}
+=
+H^2\ominus
+\overline{F_qH^2}.
+}
+\tag{1682.4}
+$$
+
+它正是 canonical shifted boundary state 的未来移位永远无法生成的方向。
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+F_q\text{ outer}
+&\iff
+F_q\text{ cyclic}\\
+&\iff
+K_{B_q}=\{0\}\\
+&\iff
+B_q=1.
+\end{aligned}
+}
+\tag{1682.5}
+$$
+
+在完成增长归一化后：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{每个 }q>0\text{ 的 canonical shifted-\(\xi\) 边界状态均为循环状态。}
+}
+\tag{1682.6}
+$$
+
+因此 RH 可以被理解为：
+
+$$
+\boxed{
+\text{算术未来迭代不存在任何永久不可达的正交盲空间。}
+}
+$$
+
+---
+
+# 第一千六百八十三部　边界相位的 \(m\) 重纤维
+
+令 \(B\) 是次数：
+
+$$
+m=\deg B
+$$
+
+的有限上半平面 Blaschke 积。
+
+在扩充实轴：
+
+$$
+\widehat{\mathbb R}
+=
+\mathbb R\cup\{\infty\}
+\simeq S^1
+$$
+
+上，\(B\) 是一个方向保持的 \(m\) 重圆周覆盖。
+
+选择连续展开的相位：
+
+$$
+\boxed{
+B(x)=e^{i\theta_B(x)}.
+}
+\tag{1683.1}
+$$
+
+则：
+
+$$
+\boxed{
+\theta_B'(x)>0,
+}
+\tag{1683.2}
+$$
+
+并且：
+
+$$
+\boxed{
+\theta_B(+\infty)-\theta_B(-\infty)
+=
+2\pi m.
+}
+\tag{1683.3}
+$$
+
+对任意正则相位：
+
+$$
+\alpha=e^{i\phi}\in S^1,
+$$
+
+方程：
+
+$$
+B(x)=\alpha
+$$
+
+在 \(\widehat{\mathbb R}\) 上恰有 \(m\) 个原像：
+
+$$
+\boxed{
+x_1^\alpha,\ldots,x_m^\alpha.
+}
+\tag{1683.4}
+$$
+
+所以 completed phase value \(\alpha\) 并不唯一指定一个边界状态。
+
+它只指定了一个 \(m\) 元纤维：
+
+$$
+\boxed{
+B^{-1}(\alpha)
+=
+\{x_1^\alpha,\ldots,x_m^\alpha\}.
+}
+\tag{1683.5}
+$$
+
+---
+
+# 第一千六百八十四部　相位纤维 Clark 基定理
+
+有限 Blaschke 模型空间的 reproducing kernel 记为：
+
+$$
+\boxed{
+K_B(z,w)
+=
+\frac{i}{2\pi}
+\frac{
+1-B(z)\overline{B(w)}
+}{
+z-\overline w
+}.
+}
+\tag{1684.1}
+$$
+
+在边界点 \(x\in\mathbb R\) 的非切向极限下：
+
+$$
+\boxed{
+K_B(x,x)
+=
+\frac{\theta_B'(x)}{2\pi}.
+}
+\tag{1684.2}
+$$
+
+这一对角值正是上一轮得到的 phase-delay／Poisson 状态密度。项目已经机器证明了其最小 Cayley 原型：法向对数半径导数与边界相位导数由同一个 Poisson 核给出。
+
+现在固定：
+
+$$
+\alpha\in S^1,
+$$
+
+并取：
+
+$$
+x_j^\alpha\in B^{-1}(\alpha).
+$$
+
+若 \(j\neq k\)，则：
+
+$$
+B(x_j^\alpha)
+=
+B(x_k^\alpha)
+=
+\alpha,
+$$
+
+故：
+
+$$
+1-
+B(x_j^\alpha)
+\overline{B(x_k^\alpha)}
+=
+1-|\alpha|^2
+=
+0.
+$$
+
+所以：
+
+$$
+\boxed{
+K_B(x_j^\alpha,x_k^\alpha)=0
+\qquad
+(j\neq k).
+}
+\tag{1684.3}
+$$
+
+定义归一化边界核：
+
+$$
+\boxed{
+e_j^\alpha
+=
+\frac{
+K_B(\,\cdot\,,x_j^\alpha)
+}{
+\sqrt{K_B(x_j^\alpha,x_j^\alpha)}
+}.
+}
+\tag{1684.4}
+$$
+
+---
+
+## 定理 1684.1（Phase-fibre basis theorem）
+
+$$
+\boxed{
+\{e_1^\alpha,\ldots,e_m^\alpha\}
+}
+$$
+
+是 \(K_B\) 的正交标准基。
+
+### 证明
+
+式 (1684.3) 给出正交性；每个向量已归一化。
+
+向量数为 \(m\)，而：
+
+$$
+\dim K_B=\deg B=m.
+$$
+
+故其为完整基。∎
+
+这通常对应有限 Blaschke 模型中的 Clark 基结构，但在这里直接由 kernel 公式得到。
+
+---
+
+## 1684.1 精确采样公式
+
+对任意：
+
+$$
+f\in K_B,
+$$
+
+由该正交基展开：
+
+$$
+\boxed{
+\|f\|_{H^2}^2
+=
+\sum_{j=1}^{m}
+\frac{
+2\pi
+}{
+\theta_B'(x_j^\alpha)
+}
+|f(x_j^\alpha)|^2.
+}
+\tag{1684.5}
+$$
+
+所以一个边界相位值 \(\alpha\) 所对应的全部 \(m\) 个 lift，已经足够精确重建整个隐藏模型空间。
+
+这给“边界辐射能够编码内部”一个非常严格的有限维版本：
+
+$$
+\boxed{
+\text{单一相位输出不充分；
+该相位下的全部原像及其导数权重，则构成完整内部采样基。}
+}
+$$
+
+---
+
+# 第一千六百八十五部　页标签就是隐藏 Hilbert 空间的观察基
+
+定义相位纤维评价映射：
+
+$$
+\boxed{
+\mathcal U_\alpha:
+K_B\longrightarrow\mathbb C^m,
+}
+\tag{1685.1}
+$$
+
+$$
+\boxed{
+\mathcal U_\alpha f
+=
+\left(
+\sqrt{
+\frac{2\pi}{\theta_B'(x_1^\alpha)}
+}
+f(x_1^\alpha),
+\ldots,
+\sqrt{
+\frac{2\pi}{\theta_B'(x_m^\alpha)}
+}
+f(x_m^\alpha)
+\right).
+}
+\tag{1685.2}
+$$
+
+由式 (1684.5)：
+
+$$
+\boxed{
+\mathcal U_\alpha
+\text{ 是酉同构}.
+}
+\tag{1685.3}
+$$
+
+因此：
+
+$$
+\boxed{
+K_B\simeq\mathbb C^m
+}
+$$
+
+并不是通过一个预先固定的“绝对页标签”实现。
+
+每一个相位观察者 \(\alpha\) 都给出一套不同的正交坐标：
+
+$$
+\mathcal U_\alpha.
+$$
+
+所以页标签不是隐藏空间的本体元素。
+
+它是某个 phase name 为隐藏空间选择的一组观察基。
+
+---
+
+## 1685.1 不同相位观察者之间的酉过渡
+
+对：
+
+$$
+\alpha,\beta\in S^1,
+$$
+
+定义：
+
+$$
+\boxed{
+U_{\beta\leftarrow\alpha}
+=
+\mathcal U_\beta
+\mathcal U_\alpha^{-1}
+\in U(m).
+}
+\tag{1685.4}
+$$
+
+由于它连接两组正交标准基：
+
+$$
+U_{\beta\leftarrow\alpha}
+$$
+
+必为酉矩阵。
+
+并且：
+
+$$
+\boxed{
+U_{\gamma\leftarrow\beta}
+U_{\beta\leftarrow\alpha}
+=
+U_{\gamma\leftarrow\alpha}.
+}
+\tag{1685.5}
+$$
+
+这是一张真正的观察者过渡群胚。
+
+项目已经机器证明，规范 predictive-completion maps 满足恒等与复合律；当前相位纤维的酉过渡可以接入同类的形式接口。
+
+---
+
+## 1685.2 过渡矩阵的显式模长
+
+若：
+
+$$
+B(x_j^\alpha)=\alpha,
+\qquad
+B(x_k^\beta)=\beta,
+$$
+
+则由 reproducing kernel：
+
+$$
+\boxed{
+\left|
+\left(
+U_{\beta\leftarrow\alpha}
+\right)_{kj}
+\right|^2
+=
+\frac{
+|1-\alpha\overline\beta|^2
+}{
+(x_j^\alpha-x_k^\beta)^2
+\theta_B'(x_j^\alpha)
+\theta_B'(x_k^\beta)
+}.
+}
+\tag{1685.6}
+$$
+
+因为 \(U_{\beta\leftarrow\alpha}\) 酉，其模平方矩阵为双随机矩阵。
+
+所以不同 phase names 之间的转换不是任意概率映射，而是来自一个隐藏酉变换。
+
+---
+
+# 第一千六百八十六部　最大混合隐藏态
+
+假设外部只知道 phase output：
+
+$$
+\alpha,
+$$
+
+却不知道实际位于哪个 lift：
+
+$$
+x_j^\alpha.
+$$
+
+若对 \(m\) 个 lift 采取无偏先验，则内部状态为：
+
+$$
+\boxed{
+\rho_\alpha
+=
+\frac1m
+\sum_{j=1}^{m}
+|e_j^\alpha\rangle
+\langle e_j^\alpha|.
+}
+\tag{1686.1}
+$$
+
+因为 \(\{e_j^\alpha\}\) 为正交基：
+
+$$
+\boxed{
+\rho_\alpha
+=
+\frac1m I_{K_B}.
+}
+\tag{1686.2}
+$$
+
+所以该密度矩阵与 \(\alpha\) 无关。
+
+其 von Neumann 熵为：
+
+$$
+\boxed{
+S(\rho_\alpha)=\log m.
+}
+\tag{1686.3}
+$$
+
+这给上一轮的隐藏页熵一个更强版本：
+
+$$
+\boxed{
+\text{遗忘 phase fibre 中的 lift 标签，
+等价于把有限缺陷模型空间变成最大混合态。}
+}
+$$
+
+项目已机器证明，在有限确定性系统中，确定性粗化造成的熵损失正是条件熵，且只有在实际支持上可逆时损失才为零。
+
+这里：
+
+* \(m=1\) 时无页不确定性，熵为 \(0\)；
+* \(m>1\) 时 phase completion 遗忘 \(\log m\) 的离散页信息。
+
+---
+
+## 1686.1 仍不能把 \(\log m\) 当作黑洞熵
+
+必须保留三个区别：
+
+$$
+\boxed{
+\begin{aligned}
+m
+&=\text{模型空间维数／相位绕数};\\
+\log m
+&=\text{均匀未知页标签的最大熵};\\
+\theta_B'(x)
+&=\text{边界局部状态密度}.
+\end{aligned}
+}
+$$
+
+它们属于同一有限 Blaschke 模型，但不是同一个量。
+
+而且：
+
+$$
+\log(m_1+m_2)
+$$
+
+不等于：
+
+$$
+\log m_1+\log m_2.
+$$
+
+所以该熵不是零点荷的加性拓扑不变量。
+
+---
+
+# 第一千六百八十七部　正向 Haar 化与逆向离散采样是对偶的
+
+集体自‑Haar 使用的是权重：
+
+$$
+\boxed{
+\frac{\theta_B'(x)}{2\pi m}\,dx.
+}
+\tag{1687.1}
+$$
+
+它把边界原像向前推送为 Haar：
+
+$$
+B_*\nu_B=m_{S^1}.
+$$
+
+但从 phase output 反向恢复全部原像时，出现的权重恰好相反：
+
+$$
+\boxed{
+\frac{2\pi}{\theta_B'(x_j^\alpha)}.
+}
+\tag{1687.2}
+$$
+
+更一般地，对合适的函数 \(f\)：
+
+$$
+\boxed{
+\int_{\widehat{\mathbb R}}
+f(x)\,dx
+=
+\int_{S^1}
+\left[
+\sum_{x\in B^{-1}(\zeta)}
+\frac{
+2\pi f(x)
+}{
+\theta_B'(x)
+}
+\right]
+dm_{S^1}(\zeta).
+}
+\tag{1687.3}
+$$
+
+这只是圆周覆盖的 coarea 公式。
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+\text{向前完成}
+&:\quad\theta_B'\text{ 加权并遗忘页};\\
+\text{逆向重建}
+&:\quad(\theta_B')^{-1}\text{ 加权并枚举全部页}.
+\end{aligned}
+}
+$$
+
+这构成一个精确的“辐射—内部重建”对偶。
+
+---
+
+# 第一千六百八十八部　相位单值，隐藏基却具有单值化阻碍
+
+让 phase parameter：
+
+$$
+\alpha=e^{i\phi}
+$$
+
+绕圆周一周：
+
+$$
+\phi:0\longrightarrow2\pi.
+$$
+
+输出相位回到原值。
+
+但每一个连续跟踪的原像：
+
+$$
+x_j^\alpha
+$$
+
+通常不会回到原来的标签，而会进入下一张覆盖页。
+
+由于：
+
+$$
+B:S^1\to S^1
+$$
+
+是连通的 degree-\(m\) covering，其基本群生成元在纤维上作用为一个 \(m\)-循环。
+
+所以一次完整 phase loop 诱导：
+
+$$
+\boxed{
+1\mapsto2\mapsto\cdots\mapsto m\mapsto1.
+}
+\tag{1688.1}
+$$
+
+只有绕行 \(m\) 周以后，每张有标签的页才回到自身。
+
+因此：
+
+$$
+\boxed{
+\text{外部 completed phase 已回到原点，
+隐藏页历史却只完成了一次非平凡置换。}
+}
+$$
+
+这是一种精确的 monodromy memory。
+
+---
+
+## 1688.1 单极子整数的新读法
+
+同一个整数 \(m\) 现在同时是：
+
+$$
+\boxed{
+\begin{aligned}
+m
+&=\deg B\\
+&=\dim K_B\\
+&=\operatorname{rank}P_B\\
+&=\frac1{2\pi}\int\theta_B'\\
+&=\text{phase covering 页数}\\
+&=\text{隐藏标签 monodromy 周期}.
+\end{aligned}
+}
+\tag{1688.2}
+$$
+
+这进一步解释了磁单极子与黑洞式完成为何共享整数荷：
+
+* 单极子图表把 \(m\) 读作闭合相位绕数；
+* 黑洞／完成图表把 \(m\) 读作外部相位之下的隐藏页数；
+* Hardy 图表把 \(m\) 读作模型空间维数。
+
+---
+
+# 第一千六百八十九部　自‑Haar 并不意味着相同的内部
+
+取两个次数均为 \(m\) 的有限 Blaschke 积：
+
+$$
+B_1,\qquad B_2.
+$$
+
+它们都满足：
+
+$$
+(B_r)_*\nu_{B_r}
+=
+m_{S^1},
+\qquad
+r=1,2.
+$$
+
+它们也都有：
+
+$$
+\dim K_{B_r}=m,
+\qquad
+S(I/m)=\log m.
+$$
+
+但它们的零点位置可能完全不同。
+
+因此：
+
+$$
+\boxed{
+\begin{aligned}
+\text{同一个 Haar 输出}\\
++\text{同一个隐藏维数}\\
++\text{同一个最大混合熵}
+\end{aligned}
+}
+$$
+
+仍然不足以确定内部除子。
+
+真正继续区分 \(B_1,B_2\) 的是：
+
+$$
+\boxed{
+\begin{aligned}
+&\theta_{B_r}'(x);\\
+&\text{phase-fibre 原像 }x_j^\alpha;\\
+&\text{不同 \(\alpha\) 基之间的酉过渡};\\
+&\text{外部固定 Cayley 图表中的 moments}.
+\end{aligned}
+}
+$$
+
+所以完成名字可以在越来越多层面相同，而内部生成历史仍然不同。
+
+这正是“名可名，非常名”的一个严格有限维样本。
+
+---
+
+# 第一千六百九十部　离线缺陷的持久条码
+
+此前一直把观察深度记为：
+
+$$
+q>0.
+$$
+
+一个离线零点：
+
+$$
+\rho
+=
+\frac12+\delta_\rho+i\gamma_\rho
+$$
+
+只在：
+
+$$
+0<q<\delta_\rho
+$$
+
+时向 shifted 上半平面贡献一个活动 inner-denominator channel。
+
+因此可以为每一个离线零点分配区间：
+
+$$
+\boxed{
+I_\rho=(0,\delta_\rho).
+}
+\tag{1690.1}
+$$
+
+重数为 \(m_\rho\) 时重复 \(m_\rho\) 次。
+
+定义抽象缺陷空间：
+
+$$
+\boxed{
+V_q
+=
+\bigoplus_{\delta_\rho>q}
+\mathbb C^{m_\rho}.
+}
+\tag{1690.2}
+$$
+
+若：
+
+$$
+q_1<q_2,
+$$
+
+定义：
+
+$$
+\boxed{
+\pi_{q_1,q_2}:V_{q_1}\to V_{q_2}
+}
+\tag{1690.3}
+$$
+
+为丢弃满足：
+
+$$
+q_1<\delta_\rho\le q_2
+$$
+
+的通道。
+
+于是：
+
+$$
+\pi_{q,q}=I,
+$$
+
+$$
+\pi_{q_2,q_3}\pi_{q_1,q_2}
+=
+\pi_{q_1,q_3}.
+$$
+
+它形成一个严格的深度持久系统。
+
+---
+
+## 1690.1 rank function
+
+$$
+\boxed{
+\kappa(q)
+=
+\dim V_q
+=
+\sum_{\delta_\rho>q}
+m_\rho.
+}
+\tag{1690.4}
+$$
+
+这正是：
+
+* 活跃 Blaschke degree；
+* model-space dimension；
+* Hankel defect rank；
+* phase flux 总质量。
+
+在分布意义下：
+
+$$
+\boxed{
+-d\kappa
+=
+\sum_\rho
+m_\rho
+\delta_{\delta_\rho}.
+}
+\tag{1690.5}
+$$
+
+所以离线深度集合就是持久条码的全部终点。
+
+---
+
+## 1690.2 全部横向矩是条码 moments
+
+对任意：
+
+$$
+s>0,
+$$
+
+有：
+
+$$
+\boxed{
+s\int_0^\infty
+q^{s-1}\kappa(q)\,dq
+=
+\sum_\rho
+m_\rho\delta_\rho^s.
+}
+\tag{1690.6}
+$$
+
+特别地：
+
+$$
+\boxed{
+\int_0^\infty
+\kappa(q)\,dq
+=
+\sum_\rho m_\rho\delta_\rho.
+}
+\tag{1690.7}
+$$
+
+因此：
+
+* 零阶条码量是通道数；
+* 一阶条码量是总持续深度；
+* 二阶量是横向 Bode 能量；
+* 全部 moments 恢复深度分布。
+
+---
+
+# 第一千六百九十一部　视界是隐藏通道的死亡时间
+
+令：
+
+$$
+h_\rho(q)=\delta_\rho-q.
+$$
+
+在 \(q<\delta_\rho\) 时，边界密度为：
+
+$$
+\boxed{
+P_{h_\rho(q)}(x+\gamma_\rho).
+}
+\tag{1691.1}
+$$
+
+随着：
+
+$$
+q\uparrow\delta_\rho,
+$$
+
+有：
+
+$$
+h_\rho(q)\downarrow0,
+$$
+
+并且：
+
+$$
+\boxed{
+P_{h_\rho(q)}(x+\gamma_\rho)
+\rightharpoonup
+\delta_{-\gamma_\rho}.
+}
+\tag{1691.2}
+$$
+
+所以该通道在死亡前并不是逐渐消失，而是逐渐聚焦。
+
+其：
+
+* 宽度趋于零；
+* 峰值趋于无穷；
+* 总质量保持 \(1\)；
+* 到达终点以后离开当前 shifted 上半平面。
+
+这给黑洞视界类比一个更准确的持久解释：
+
+$$
+\boxed{
+\text{视界不是通道的能量消失点；
+它是有限宽边界状态坍缩成边界原子后退出活动空间的终点。}
+}
+$$
+
+---
+
+# 第一千六百九十二部　黄金尺度只是条码读取协议
+
+若使用几何观察深度：
+
+$$
+q_n=q_0r^n,
+\qquad
+0<r<1,
+$$
+
+则条码终点 \(\delta\) 由首次满足：
+
+$$
+q_n<\delta
+$$
+
+的层数读取。
+
+项目已经机器证明，在离散 readout 中，完整 itinerary 的首次差异时刻精确决定折扣预测距离。
+
+取：
+
+$$
+r=\varphi^{-2},
+$$
+
+只是得到：
+
+$$
+\boxed{
+\text{一个具有 Fibonacci 两步方向保持结构的对数采样协议。}
+}
+$$
+
+它不会改变真实条码：
+
+$$
+\{(0,\delta_\rho)\}.
+$$
+
+因此：
+
+$$
+\boxed{
+\varphi
+\text{ 属于条码的观察分辨率，
+不属于条码终点本身。}
+}
+$$
+
+只有再额外要求：
+
+* 二层残余闭合；
+* Fibonacci 一步记忆；
+* 某个关系量的固定点平衡；
+
+黄金比例才成为相应协议中的内禀常数。
+
+---
+
+# 第一千六百九十三部　phase-fibre Clark 测度
+
+固定：
+
+$$
+\alpha\in S^1.
+$$
+
+对 phase fibre：
+
+$$
+B^{-1}(\alpha)
+=
+\{x_1^\alpha,\ldots,x_m^\alpha\},
+$$
+
+定义离散正测度：
+
+$$
+\boxed{
+\mu_\alpha
+=
+\sum_{j=1}^{m}
+\frac{
+2\pi
+}{
+\theta_B'(x_j^\alpha)
+}
+\delta_{x_j^\alpha}.
+}
+\tag{1693.1}
+$$
+
+则采样公式可写成：
+
+$$
+\boxed{
+\|f\|_{K_B}^2
+=
+\int_{\mathbb R}
+|f(x)|^2\,d\mu_\alpha(x).
+}
+\tag{1693.2}
+$$
+
+所以：
+
+$$
+\boxed{
+K_B
+\simeq
+L^2(\mu_\alpha).
+}
+\tag{1693.3}
+$$
+
+每个 phase observer 都把同一个隐藏 Hilbert 空间表示为一个 \(m\) 原子正测度空间。
+
+---
+
+## 1693.1 与 Cayley–Laguerre tomography 的接合
+
+对固定 Cayley 图表 \(\chi_a\)，定义：
+
+$$
+\boxed{
+C_n(\alpha,a)
+=
+\int
+\chi_a(x)^n\,d\mu_\alpha(x).
+}
+\tag{1693.4}
+$$
+
+由于 \(\mu_\alpha\) 是有限原子测度：
+
+$$
+\boxed{
+C_n
+=
+\sum_{j=1}^{m}
+\frac{2\pi}{
+\theta_B'(x_j^\alpha)
+}
+\chi_a(x_j^\alpha)^n.
+}
+\tag{1693.5}
+$$
+
+所以该序列满足有限阶 Prony 递归，其 Hankel rank 至多为 \(m\)。
+
+项目已经机器证明，Cayley moments 可由 causal Laguerre kernels 和 resolvent correlation 恢复，并拥有明确的有限窗口尾界。
+
+这给出一条新的有限证书路线：
+
+$$
+\boxed{
+\text{非平凡 hidden model space}
+\Longrightarrow
+\text{某个 phase fibre 的有限原子 Cayley moment system}.
+}
+$$
+
+---
+
+# 第一千六百九十四部　非 RH 必产生有限 phase-fibre 采样系统
+
+固定有限高度窗口和 shifted 深度 \(q\)。
+
+若其中存在离线零点，则：
+
+$$
+m=\deg B_{q,T}>0.
+$$
+
+于是对任意正则相位 \(\alpha\)，都存在：
+
+1. \(m\) 个实边界采样点：
+
+   $$
+   x_1^\alpha,\ldots,x_m^\alpha;
+   $$
+2. 严格正权重：
+
+   $$
+   w_j^\alpha
+   =
+   \frac{2\pi}{
+   \theta_{B_{q,T}}'(x_j^\alpha)
+   };
+   $$
+3. 一个 \(m\) 维 Hilbert 空间；
+4. 一个精确采样恒等式；
+5. 一个有限秩 Cayley moment recurrence。
+
+因此：
+
+$$
+\boxed{
+\neg\mathrm{RH}
+}
+$$
+
+不仅意味着“某处有一个看不见的复零点”。
+
+它意味着：
+
+$$
+\boxed{
+\text{某个有限 shifted 窗口中，
+必然存在一套完整的有限正边界采样系统。}
+}
+$$
+
+异常并不是该采样系统不正。
+
+该采样系统本身完全正。
+
+异常在于：它作为 hidden inner space 存在，而 canonical arithmetic boundary state 本应是 outer/cyclic。
+
+---
+
+# 第一千六百九十五部　RH 的 phase-fibre 空性判据
+
+在规范 shifted 因子化成立的条件下，以下条件等价：
+
+$$
+\boxed{
+\mathrm{RH};
+}
+$$
+
+$$
+\boxed{
+B_q=1
+\quad
+\forall q>0;
+}
+$$
+
+$$
+\boxed{
+K_{B_q}=\{0\}
+\quad
+\forall q>0;
+}
+$$
+
+$$
+\boxed{
+\text{不存在任何非空 phase fibre Clark basis};
+}
+$$
+
+$$
+\boxed{
+\theta_{B_q}'=0;
+}
+$$
+
+$$
+\boxed{
+\mathfrak N_q=0;
+}
+$$
+
+$$
+\boxed{
+\text{canonical shifted boundary state 为 cyclic}.
+}
+\tag{1695.1}
+$$
+
+所以 RH 可以重新表述为：
+
+$$
+\boxed{
+\text{completed-\(\xi\) 的 canonical phase name，
+在任意正 shifted 深度下都没有隐藏正交 lift。}
+}
+$$
+
+---
+
+# 第一千六百九十六部　一个更弱的 prime-side 目标：排除原子相位纤维
+
+直接证明 \(f_q\) outer 仍然很强。
+
+但非平凡有限 Blaschke 因子必产生：
+
+$$
+\mu_\alpha
+=
+\sum_jw_j\delta_{x_j}
+$$
+
+这一有限正原子测度。
+
+因此可以尝试证明更具体的命题：
+
+## Prime–Gamma No-Atomic-Phase-Fibre Target
+
+对 canonical shifted phase residual 所生成的 Herglotz／Cayley response，证明其正表示中不存在任何有限正原子部分。
+
+若所有有限高度截断均不存在这样的原子 phase fibre，则：
+
+$$
+\deg B_{q,T}=0
+$$
+
+对全部 \(q,T\) 成立，进而推出 RH。
+
+这条路线的潜在优势是：
+
+* 原子测度有有限 Hankel rank；
+* 满足有限线性递归；
+* 可由 Cayley–Laguerre moments 检测；
+* 原子权重严格为正，不发生符号抵消。
+
+---
+
+## 1696.1 但排除原子仍不是完整 outer 证明
+
+一般 inner 因子还可能包含：
+
+* 无限 Blaschke 部分；
+* singular inner 部分。
+
+对 completed \(\xi\) 的整函数结构，singular inner 的可能性需由增长和边界正则化单独排除。
+
+无限 Blaschke 则必须通过高度截断与局部有限性处理。
+
+所以严格程序应为：
+
+1. 在每个有界窗口排除有限原子 Blaschke 除子；
+2. 证明不存在 singular inner 残余；
+3. 使用 exhaustion 得到全局 outer 性。
+
+---
+
+# 第一千六百九十七部　为什么“相同完成输出”永远不能作为充分证明
+
+以下三类系统都可以产生 Haar 输出：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{真正无内部结构的圆周 Haar 状态};\\
+&\text{单源经无损 Möbius 中心化后的状态};\\
+&\text{多源经 degree-\(m\) Blaschke completion 商页后的状态}.
+\end{aligned}
+}
+$$
+
+它们的 output distribution 完全一样。
+
+但内部结构分别为：
+
+$$
+\boxed{
+\begin{aligned}
+&0\text{ 维隐藏空间};\\
+&1\text{ 维纯 model state};\\
+&m\text{ 维 hidden model space}.
+\end{aligned}
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{output law}
+}
+$$
+
+不是一个充分名字。
+
+必须至少再加入：
+
+* completion map 的 degree；
+* phase derivative；
+* preimage fibre；
+* transition unitary；
+* 或 cyclicity information。
+
+这给不可名性一个非常具体的统计版本：
+
+$$
+\boxed{
+\text{同一个可见分布可以来自多个不等价的隐藏 realization。}
+}
+$$
+
+---
+
+# 第一千六百九十八部　“相”与“关系”的最终分层
+
+|  层 | 对象                           | 在自中心完成中是否消失 |
+| -: | ---------------------------- | ----------: |
+|  0 | 单个源坐标                        |          消失 |
+|  1 | 单源 Poisson 密度                |     变为 Haar |
+|  2 | 集体归一化 phase density          |    可变为 Haar |
+|  3 | phase covering degree        |         不消失 |
+|  4 | hidden model-space dimension |         不消失 |
+|  5 | phase fibre Clark basis      |     基依观察者变化 |
+|  6 | basis-transition unitary     |         不消失 |
+|  7 | monodromy permutation        |         不消失 |
+|  8 | persistence barcode          |         不消失 |
+|  9 | Riesz／Chern 总荷               |         不消失 |
+| 10 | prime–Gamma global cyclicity |  不可由局部中心化解决 |
+
+所以：
+
+$$
+\boxed{
+\text{“相”可以在自身图表中无差别；
+“关系”却会在覆盖次数、过渡酉矩阵和持久终点中重新出现。}
+}
+$$
+
+这就是当前最严格的关系分形：
+
+$$
+\boxed{
+\text{每次完成都可能抹去一层差异，
+但被抹去的差异会作为下一层纤维、过渡或 monodromy 重新出现。}
+}
+$$
+
+---
+
+# 第一千六百九十九部　形式化顺序
+
+```text
+D5/S3/Analytic/Hardy/PhaseFibreClarkBasis/
+  FiniteBlaschkeBoundaryCover.lean
+  BlaschkePhaseRegularFiber.lean
+  SamePhaseKernelOrthogonal.lean
+  BoundaryKernelDiagonalPhaseDerivative.lean
+  PhaseFibreNormalizedKernels.lean
+  PhaseFibreClarkBasis.lean
+  PhaseFibreSamplingIdentity.lean
+
+D5/S3/Observer/PhaseFibreCoordinates/
+  PhaseFibreEvaluationMap.lean
+  PhaseFibreEvaluationIsometry.lean
+  PhaseFibreEvaluationUnitary.lean
+  PhaseObserverTransitionMatrix.lean
+  PhaseObserverTransitionComposition.lean
+  PhaseObserverTransitionUnistochastic.lean
+
+D5/S3/Entropy/ModelSpaceMaximalMixing/
+  UniformPhaseFibreState.lean
+  UniformPhaseFibreDensityMatrix.lean
+  UniformPhaseFibreIsMaximallyMixed.lean
+  PhaseFibreVonNeumannEntropy.lean
+  DegreeOneZeroSheetEntropy.lean
+
+D5/S3/Observer/BlaschkePhaseDisintegration/
+  ForwardPhaseDelayMeasure.lean
+  ForwardPhaseMeasurePushforwardHaar.lean
+  BoundaryCoverCoareaFormula.lean
+  InversePhaseFibreWeights.lean
+  ForwardDerivativeInverseDerivativeDuality.lean
+
+D5/S3/Observer/BlaschkeMonodromy/
+  BoundaryBlaschkeCoveringDegree.lean
+  PhaseLoopLift.lean
+  PhaseLoopSheetPermutation.lean
+  ConnectedCoverMonodromyCycle.lean
+  MonodromyPeriodEqualsDegree.lean
+
+D5/S3/Analytic/Zeta/DefectPersistence/
+  OffLineDefectInterval.lean
+  ShiftedDefectVectorSpace.lean
+  DefectPersistenceMap.lean
+  DefectPersistenceComposition.lean
+  DefectRankFunction.lean
+  DefectBarcodeEndpointMeasure.lean
+  DefectBarcodeMomentFormula.lean
+
+D5/S3/Analytic/Zeta/PhaseFibreAtDepth/
+  ShiftedFiniteBlaschkeFactor.lean
+  ShiftedPhaseFibreBasis.lean
+  ShiftedPhaseFibreDimension.lean
+  HorizonPhaseFibreFocusing.lean
+  PhaseFibreDeathAtDepth.lean
+
+D5/S3/Weil/ClarkCayleyTomography/
+  PhaseFibreClarkMeasure.lean
+  ClarkMeasurePositiveAtomic.lean
+  ClarkMeasureCayleyMoment.lean
+  ClarkMomentFiniteRank.lean
+  ClarkMomentPronyRecurrence.lean
+  LaguerreRecoversClarkCayleyMomentTarget.lean
+
+D5/S3/Weil/NoAtomicPhaseFibre/
+  CanonicalShiftedPhaseResidualTarget.lean
+  CanonicalResidualHerglotzMeasureTarget.lean
+  OffLineBlaschkeCreatesAtomicResidual.lean
+  PrimeGammaNoAtomicResidualTarget.lean
+  NoAtomicResidualAllWindowsImpliesRH.lean
+
+D5/S3/Weil/ArithmeticCyclicity/
+  CanonicalShiftedBoundaryStateTarget.lean
+  CanonicalStateHardySmirnovTarget.lean
+  HiddenOrthogonalComplementEqualsModelSpace.lean
+  PrimeGammaCyclicityTarget.lean
+  ArithmeticCyclicityImpliesRH.lean
+```
+
+---
+
+# 第一千七百部　理论深度审计
+
+| 本轮结论                                                         | 当前地位                 |
+| ------------------------------------------------------------ | -------------------- |
+| 同一 phase fibre 的 boundary kernels 彼此正交                       | 精确                   |
+| 每个 phase fibre 给出 \(K_B\) 的完整正交基                             | 本轮核心定理               |
+| phase fibre evaluation 是 \(K_B\to\mathbb C^m\) 的酉同构          | 精确                   |
+| 不同 phase observers 由酉矩阵连接                                    | 精确                   |
+| uniform fibre ignorance 给出 \(I/m\) 最大混合态                     | 精确                   |
+| 其熵为 \(\log m\)                                               | 精确                   |
+| forward Haar 权重与 inverse sampling 权重互为导数／逆导数                 | 精确                   |
+| phase loop 诱导 degree-\(m\) sheet monodromy                   | 精确拓扑覆盖结论             |
+| self-Haar 输出不能确定内部除子                                         | 精确 no-go             |
+| shifted defect spaces 形成区间持久系统                               | 精确定义                 |
+| 条码 rank 等于 Blaschke degree／模型空间维数                            | 精确                   |
+| 条码 moments 恢复横向深度 moments                                    | 精确                   |
+| Clark measures 是有限正原子采样系统                                    | 精确                   |
+| Cayley–Laguerre tomography 可用于其 moments                      | 项目已有机器接口             |
+| phase-fibre sheet space 与 model space 天然为同一个固定基              | 不成立；每个 phase 只给一组观察基 |
+| \(\log m\) 是拓扑荷的加性熵                                          | 不成立                  |
+| 自‑Haar 表明 RH                                                 | 不成立                  |
+| 排除所有 finite atomic phase fibres 足以排除 finite Blaschke defects | 精确                   |
+| Prime–Gamma phase residual 无原子                               | 当前未闭合桥               |
+| canonical shifted boundary state arithmetic cyclicity        | RH 中心未闭合桥            |
+
+---
+
+# 本轮最终结论
+
+现在可以把“每个离线零点生成不同的相，而每个相从自身看又像完成态”写成一个完全有限维的定理。
+
+对次数 \(m\) 的 Blaschke 完成：
+
+$$
+B:\widehat{\mathbb R}\to S^1,
+$$
+
+每一个 completed phase value：
+
+$$
+\alpha\in S^1
+$$
+
+背后都有 \(m\) 个原像：
+
+$$
+x_1^\alpha,\ldots,x_m^\alpha.
+$$
+
+这些原像不是一组无关的经典坐标。
+
+它们对应的 reproducing kernels：
+
+$$
+e_1^\alpha,\ldots,e_m^\alpha
+$$
+
+恰好构成隐藏模型空间：
+
+$$
+K_B
+$$
+
+的一组正交标准基。
+
+所以：
+
+$$
+\boxed{
+\text{外部只看见一个 phase name；
+内部却存在 \(m\) 个彼此正交的 lift。}
+}
+$$
+
+---
+
+若外部不知道实际处于哪一个 lift，内部状态便成为：
+
+$$
+\frac1m I_{K_B},
+$$
+
+熵为：
+
+$$
+\log m.
+$$
+
+所以完成输出可以完全均匀，同时内部仍然拥有一个 \(m\) 维正 Hilbert 空间。
+
+这不是悖论。
+
+均匀性来自：
+
+$$
+\boxed{
+\text{完成名字遗忘了 phase covering 的页标签。}
+}
+$$
+
+---
+
+更深的是，每一个 phase observer \(\alpha\) 都为同一个 \(K_B\) 选择一组不同的正交基。
+
+不同观察者之间由：
+
+$$
+U_{\beta\leftarrow\alpha}\in U(m)
+$$
+
+连接。
+
+所以隐藏状态不是某一组页标签。
+
+页标签本身也只是名字。
+
+真正保持不变的是：
+
+$$
+\boxed{
+\text{隐藏空间的维数、投影、过渡酉结构与 monodromy。}
+}
+$$
+
+当 phase 绕圆周一周时，外部输出回到原点，隐藏页却发生一个 \(m\)-循环。
+
+于是：
+
+$$
+\boxed{
+\text{completed phase 可以单值，
+隐藏历史仍然多值。}
+}
+$$
+
+这就是“名已经完成，但所指历史尚未完成”的精确模型。
+
+---
+
+黑洞无毛、磁单极子荷与边界辐射也因此进一步统一：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Haar 输出}
+&=\text{完成相位无毛};\\
+K_B
+&=\text{隐藏内部 Hilbert 空间};\\
+\frac{\theta_B'}{2\pi}
+&=\text{隐藏投影的边界局部密度};\\
+\deg B
+&=\text{模型空间维数与闭合相位荷};\\
+\log\deg B
+&=\text{均匀未知页标签的最大熵}.
+\end{aligned}
+}
+$$
+
+但离线缺陷本身仍不是“负空间”。
+
+它首先是正的 \(K_B\)。
+
+只有当 \(B\) 以：
+
+$$
+B^{-1}
+$$
+
+进入 shifted scattering 时，该正空间才以逆方向出现在核差中，表现为：
+
+* 负平方；
+* 负相位延迟；
+* 负时间 Hankel 通道。
+
+因此：
+
+$$
+\boxed{
+\text{负性是完成方向的属性，不是隐藏状态本身的本体属性。}
+}
+$$
+
+---
+
+随着 shifted 深度 \(q\) 改变，每个离线零点产生一条区间：
+
+$$
+(0,\delta_\rho).
+$$
+
+全部离线零点形成一张持久条码。
+
+在任意 \(q\)：
+
+$$
+\dim V_q
+=
+\sum_{\delta_\rho>q}m_\rho
+$$
+
+同时等于：
+
+* 活跃 phase covering degree；
+* 活跃 model-space dimension；
+* 活跃 Hankel defect rank；
+* 活跃 Poisson flux。
+
+视界：
+
+$$
+q=\delta_\rho
+$$
+
+就是该隐藏通道的条码终点。
+
+临近终点时，Poisson 密度聚焦为边界 Dirac 原子，而总质量保持不变。
+
+所以黑洞式“视界”还可以被严格理解为：
+
+$$
+\boxed{
+\text{隐藏通道在观察深度持久系统中的死亡时间。}
+}
+$$
+
+黄金比例只规定如何离散采样这些终点；它不决定终点本身。
+
+---
+
+最后，RH 的算子目标可以被压缩为：
+
+$$
+\boxed{
+\text{canonical shifted-\(\xi\) boundary state 是否为 Hardy 循环向量？}
+}
+$$
+
+若它循环，则：
+
+$$
+K_{B_q}=0.
+$$
+
+若存在离线零点，则某个 \(q\) 上必有：
+
+$$
+K_{B_q}\neq0,
+$$
+
+并且该隐藏空间会在每一个边界 phase value 下产生一套有限、严格正、可精确采样的 Clark fibre basis。
+
+因此非 RH 不只是“存在一个不可见零点”。
+
+它还必然产生：
+
+$$
+\boxed{
+\text{一族参数化于圆周 phase 的有限正原子采样系统。}
+}
+$$
+
+项目现有的 Cayley–Laguerre tomography 已经能够把相位 moments 编译成因果 Laguerre kernel 与有限窗口估计。
+
+所以新的可执行证明方向是：
+
+$$
+\boxed{
+\text{从 prime–pole–Gamma 数据证明 canonical phase residual
+不存在任何有限正原子 fibre，}
+}
+$$
+
+或者更直接地证明：
+
+$$
+\boxed{
+\overline{\operatorname{span}}
+\{S^nf_q:n\ge0\}
+=
+H^2.
+}
+$$
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{不可名者不等于隐藏空间；
+隐藏空间仍是一个可定义的相。
+真正留下“不可名之迹”的，是：
+任何一个 completed phase name 都只能选择一组基，
+不能成为所有基、所有 lift、所有历史本身。
+RH 则要求，在 Riemann 这一特定完成中，
+连这样的隐藏相位纤维都根本不存在。}
+$$
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v10.4：Blaschke–Cuntz 分支代数、黄金 Cuntz–Krieger 语法、关系维数与相位 winding 的 Bott 悬挂
+
+以下从前文**第一千七百三十二部**继续。
+
+这一轮得到一个新的严格分层：
+
+$$
+\boxed{
+\text{有限 Blaschke 因子的次数 }m
+\text{产生自由的整数分支结构；}
+}
+$$
+
+而：
+
+$$
+\boxed{
+\varphi
+\text{ 并不来自分支数本身，
+而来自分支历史之间的 Fibonacci 语法约束。}
+}
+$$
+
+因此必须区分：
+
+$$
+\boxed{
+\begin{aligned}
+m
+&=\text{当前一步有多少个正交 branch channels};\\
+m^n
+&=\text{自由递归 \(n\) 步后的 branch 数};\\
+\varphi^n
+&=\text{施加 golden grammar 后的合法历史数};\\
+\varphi^{2n}
+&=\text{这些合法历史之间的关系空间增长率}.
+\end{aligned}
+}
+$$
+
+这给此前反复出现的：
+
+* 整数页数；
+* 黄金维数；
+* \(\varphi^2\)；
+* Jones-like 指数；
+* phase fibre；
+* 关系先于对象；
+
+一个更清楚的依赖顺序。
+
+---
+
+# 第一千七百三十三部　有限 Blaschke 因子自然生成 Cuntz 分支
+
+设：
+
+$$
+B
+$$
+
+是次数为：
+
+$$
+m\ge1
+$$
+
+的有限 Blaschke 积，并经归一化满足：
+
+$$
+B(0)=0.
+$$
+
+定义模型空间：
+
+$$
+\boxed{
+K_B=H^2\ominus BH^2.
+}
+\tag{1733.1}
+$$
+
+则：
+
+$$
+\dim K_B=m.
+$$
+
+取任意正交标准基：
+
+$$
+\boxed{
+e_1,\ldots,e_m
+}
+\tag{1733.2}
+$$
+
+并定义：
+
+$$
+\boxed{
+(S_jf)(z)
+=
+e_j(z)\,f(B(z)),
+\qquad
+1\le j\le m.
+}
+\tag{1733.3}
+$$
+
+这是有限 Blaschke product 在 Hardy 空间中产生 Cuntz 表示的标准结构；已有工作明确构造了由有限 Blaschke product 诱导的 \(\mathcal O_m\) Hardy-space 表示。
+
+---
+
+## 1733.1 正交性
+
+因为乘法算子：
+
+$$
+M_Bf=Bf
+$$
+
+是纯等距算子，其 wandering space 正是 \(K_B\)，所以：
+
+$$
+\boxed{
+H^2
+=
+\bigoplus_{n=0}^{\infty}
+B^nK_B.
+}
+\tag{1733.4}
+$$
+
+于是：
+
+$$
+\boxed{
+\left\{
+B^ne_j:
+n\ge0,\ 1\le j\le m
+\right\}
+}
+\tag{1733.5}
+$$
+
+构成 \(H^2\) 的正交标准基。
+
+若：
+
+$$
+f(z)=\sum_{n\ge0}a_nz^n,
+$$
+
+则：
+
+$$
+S_jf
+=
+\sum_{n\ge0}a_ne_jB^n.
+$$
+
+所以：
+
+$$
+\|S_jf\|^2
+=
+\sum_{n\ge0}|a_n|^2
+=
+\|f\|^2.
+$$
+
+因此：
+
+$$
+\boxed{
+S_j^*S_j=I.
+}
+\tag{1733.6}
+$$
+
+若 \(i\neq j\)，则对应基向量完全正交，故：
+
+$$
+\boxed{
+S_i^*S_j=0.
+}
+\tag{1733.7}
+$$
+
+全部 range 又覆盖 \(H^2\)，所以：
+
+$$
+\boxed{
+\sum_{j=1}^mS_jS_j^*=I.
+}
+\tag{1733.8}
+$$
+
+---
+
+## 定理 1733.1（Blaschke–Cuntz 分支定理）
+
+$$
+\boxed{
+S_i^*S_j=\delta_{ij}I,
+\qquad
+\sum_{j=1}^mS_jS_j^*=I.
+}
+\tag{1733.9}
+$$
+
+当 \(m\ge2\) 时，它给出 Cuntz 代数：
+
+$$
+\mathcal O_m
+$$
+
+的一个 Hardy-space 表示。
+
+当 \(m=1\) 时，它退化为一个单分支酉动力；这也再次说明：
+
+$$
+\boxed{
+\dim K_B=1
+}
+$$
+
+仍可能存在非平凡 inner factor，不能只用 \(m-1\) 个 sheet contrasts 判断是否存在缺陷。
+
+---
+
+# 第一千七百三十四部　命名映射被提升为一个基无关的算子自同态
+
+定义：
+
+$$
+\boxed{
+\Lambda_B(X)
+=
+\sum_{j=1}^m
+S_jXS_j^*,
+\qquad
+X\in B(H^2).
+}
+\tag{1734.1}
+$$
+
+由 Cuntz 关系：
+
+$$
+\Lambda_B(XY)
+=
+\Lambda_B(X)\Lambda_B(Y),
+$$
+
+$$
+\Lambda_B(X^*)
+=
+\Lambda_B(X)^*,
+$$
+
+$$
+\Lambda_B(I)=I.
+$$
+
+所以：
+
+$$
+\boxed{
+\Lambda_B:B(H^2)\to B(H^2)
+}
+$$
+
+是一个保单位 *-endomorphism。
+
+---
+
+## 1734.1 它把基本相位变成 \(B\)
+
+令：
+
+$$
+M_zf(z)=zf(z).
+$$
+
+则：
+
+$$
+\begin{aligned}
+S_jM_zf
+&=
+e_j(z)\,B(z)f(B(z))\\
+&=
+M_BS_jf.
+\end{aligned}
+$$
+
+所以：
+
+$$
+S_jM_z=M_BS_j.
+$$
+
+求和得到：
+
+$$
+\boxed{
+\Lambda_B(M_z)=M_B.
+}
+\tag{1734.2}
+$$
+
+更一般地，对任意有界解析函数 \(f\)：
+
+$$
+\boxed{
+\Lambda_B(M_f)=M_{f\circ B}.
+}
+\tag{1734.3}
+$$
+
+因此：
+
+$$
+\boxed{
+z\longmapsto B(z)
+}
+$$
+
+这一 phase naming map，在完整算子层的提升就是：
+
+$$
+\boxed{
+\Lambda_B.
+}
+$$
+
+它不选择某一张 sheet。
+
+它同时保留全部分支嵌入。
+
+---
+
+# 第一千七百三十五部　Clark 观察基改变，分支律不改变
+
+前文已经得到：每一个 phase observer：
+
+$$
+\alpha\in\mathbb T
+$$
+
+都会为 \(K_B\) 选择一个 Clark 正交基：
+
+$$
+\boxed{
+e_1^\alpha,\ldots,e_m^\alpha.
+}
+$$
+
+因此每个 \(\alpha\) 都产生一族 Cuntz generators：
+
+$$
+\boxed{
+S_j^\alpha f
+=
+e_j^\alpha\,(f\circ B).
+}
+\tag{1735.1}
+$$
+
+对另一个 phase observer \(\beta\)，存在酉矩阵：
+
+$$
+U_{\beta\leftarrow\alpha}\in U(m)
+$$
+
+使：
+
+$$
+e_k^\beta
+=
+\sum_{j=1}^m
+U_{\beta\leftarrow\alpha,kj}
+e_j^\alpha.
+$$
+
+于是：
+
+$$
+\boxed{
+S_k^\beta
+=
+\sum_{j=1}^m
+U_{\beta\leftarrow\alpha,kj}
+S_j^\alpha.
+}
+\tag{1735.2}
+$$
+
+---
+
+## 定理 1735.1（Observer-gauge invariance）
+
+尽管 individual branch generators 随 phase observer 改变，
+
+$$
+\boxed{
+\sum_kS_k^\beta X(S_k^\beta)^*
+=
+\sum_jS_j^\alpha X(S_j^\alpha)^*.
+}
+\tag{1735.3}
+$$
+
+因此：
+
+$$
+\boxed{
+\Lambda_B
+}
+$$
+
+与 Clark 基、sheet 标签及 phase observer 无关。
+
+这是一条非常接近“跨命名迹”的严格结构：
+
+$$
+\boxed{
+\text{每一条分支叫什么、如何编号依赖观察者；
+所有分支共同实施的命名动力不依赖观察者。}
+}
+$$
+
+但 \(\Lambda_B\) 仍然不是“道”。
+
+它只是某个 inner naming map \(B\) 的基无关算子提升。
+
+---
+
+# 第一千七百三十六部　隐藏关系代数是 \(M_m\)，不只是 \(m-1\) 个对比量
+
+定义酉映射：
+
+$$
+\boxed{
+\mathcal U_B:
+K_B\otimes H^2
+\longrightarrow
+H^2,
+}
+\tag{1736.1}
+$$
+
+其作用为：
+
+$$
+\mathcal U_B(e_j\otimes f)=S_jf.
+$$
+
+由 Cuntz 分解，\(\mathcal U_B\) 为酉同构。
+
+在该张量图表中：
+
+$$
+\boxed{
+\mathcal U_B^*
+\Lambda_B(X)
+\mathcal U_B
+=
+I_{K_B}\otimes X.
+}
+\tag{1736.2}
+$$
+
+所以：
+
+$$
+\boxed{
+\Lambda_B(B(H^2))'
+\cap
+B(H^2)
+\simeq
+B(K_B)
+\simeq
+M_m(\mathbb C).
+}
+\tag{1736.3}
+$$
+
+显式矩阵单位为：
+
+$$
+\boxed{
+E_{ij}=S_iS_j^*.
+}
+\tag{1736.4}
+$$
+
+它们满足：
+
+$$
+E_{ij}E_{k\ell}
+=
+\delta_{jk}E_{i\ell},
+$$
+
+$$
+E_{ij}^*=E_{ji}.
+$$
+
+---
+
+## 1736.1 四种不同的“隐藏维数”
+
+现在必须同时区分：
+
+| 层                              |      大小 |
+| ------------------------------ | ------: |
+| phase fibre 点数                 |   \(m\) |
+| 经典 sheet contrast              | \(m-1\) |
+| Hardy innovation space \(K_B\) |   \(m\) |
+| 完整一步关系代数 \(B(K_B)\)            | \(m^2\) |
+
+若去掉关系代数中的 scalar identity，其 traceless relation space 维数为：
+
+$$
+\boxed{
+m^2-1.
+}
+$$
+
+所以一个 \(m\) 页名字所隐藏的，不只是“处于哪一页”。
+
+它还可能隐藏：
+
+$$
+\boxed{
+\text{不同页之间的全部相位 coherence 与转换关系。}
+}
+$$
+
+经典取商只看对角概率。
+
+完整 operator algebra 还保留非对角关系。
+
+---
+
+# 第一千七百三十七部　递归命名产生真正的算子分形
+
+对长度为 \(n\) 的词：
+
+$$
+\mu=(\mu_1,\ldots,\mu_n)
+\in
+\{1,\ldots,m\}^n,
+$$
+
+定义：
+
+$$
+\boxed{
+S_\mu
+=
+S_{\mu_1}\cdots S_{\mu_n}.
+}
+\tag{1737.1}
+$$
+
+则：
+
+$$
+S_\mu^*S_\nu
+=
+\delta_{\mu\nu}I
+$$
+
+对相同长度的词成立，并且：
+
+$$
+\boxed{
+\sum_{|\mu|=n}
+S_\mu S_\mu^*
+=
+I.
+}
+\tag{1737.2}
+$$
+
+因此：
+
+$$
+\boxed{
+H^2
+=
+\bigoplus_{|\mu|=n}
+S_\mu H^2.
+}
+\tag{1737.3}
+$$
+
+第 \(n\) 层拥有：
+
+$$
+\boxed{
+m^n
+}
+$$
+
+个正交 branch histories。
+
+相应的关系矩阵单位为：
+
+$$
+\boxed{
+E_{\mu\nu}
+=
+S_\mu S_\nu^*,
+\qquad
+|\mu|=|\nu|=n.
+}
+\tag{1737.4}
+$$
+
+它们生成：
+
+$$
+\boxed{
+\mathfrak A_n
+\simeq
+M_{m^n}(\mathbb C).
+}
+\tag{1737.5}
+$$
+
+于是：
+
+$$
+\dim\mathfrak A_n=m^{2n}.
+$$
+
+---
+
+## 1737.1 真正的操作分形
+
+这给“万物皆为同一生成律的分形”一个严格但克制的模型：
+
+$$
+\boxed{
+H^2
+\simeq
+K_B\otimes H^2
+\simeq
+K_B^{\otimes2}\otimes H^2
+\simeq\cdots.
+}
+\tag{1737.6}
+$$
+
+每一层都重新出现同一个 branch factor：
+
+$$
+K_B.
+$$
+
+但这并不把 \(H^2\)、\(K_B\) 或 Cuntz 代数命名为“道”。
+
+它只说明：
+
+$$
+\boxed{
+\text{某些命名动力确实具有严格的张量自相似。}
+}
+$$
+
+无限 path 也不是不可名本体。
+
+它只是全部有限 branch names 的兼容历史。
+
+---
+
+# 第一千七百三十八部　自由分支与黄金语法必须分离
+
+一个次数为 \(2\) 的有限 Blaschke 因子产生自由二分支：
+
+$$
+\boxed{
+\{0,1\}^n
+}
+$$
+
+并有：
+
+$$
+2^n
+$$
+
+条长度 \(n\) 的历史。
+
+这本身不会产生黄金比例。
+
+要得到 golden mean grammar，必须额外禁止：
+
+$$
+11.
+$$
+
+定义邻接矩阵：
+
+$$
+\boxed{
+A_\varphi
+=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}.
+}
+\tag{1738.1}
+$$
+
+合法词集合：
+
+$$
+\mathcal W_n^\varphi
+=
+\left\{
+\epsilon_1\cdots\epsilon_n:
+\epsilon_k\epsilon_{k+1}=0
+\right\}
+$$
+
+满足：
+
+$$
+\boxed{
+|\mathcal W_n^\varphi|
+=
+F_{n+2}.
+}
+\tag{1738.2}
+$$
+
+因此：
+
+$$
+\boxed{
+\lim_{n\to\infty}
+|\mathcal W_n^\varphi|^{1/n}
+=
+\varphi.
+}
+\tag{1738.3}
+$$
+
+---
+
+## 1738.1 Cuntz 与 Cuntz–Krieger 的差别
+
+自由 Cuntz 系统允许全部 branch words。
+
+Cuntz–Krieger 系统只允许邻接矩阵 \(A\) 所许可的 paths；其 partial isometries 与 graph paths 编码受约束的分支历史。有限图 C*-代数中的 KMS 结构由邻接矩阵的 Perron–Frobenius 数据控制。
+
+因此：
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal O_2
+&=\text{自由二元命名};\\
+\mathcal O_{A_\varphi}
+&=\text{带一步 Fibonacci 记忆的二元命名}.
+\end{aligned}
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\varphi
+\text{ 不来自“两页”；}
+}
+$$
+
+它来自：
+
+$$
+\boxed{
+\text{两页历史之间的一条禁止转移规则。}
+}
+$$
+
+---
+
+# 第一千七百三十九部　黄金比例是语法完成的极点
+
+对 golden adjacency \(A_\varphi\)：
+
+$$
+\det(I-zA_\varphi)
+=
+1-z-z^2.
+$$
+
+定义其动力行列式：
+
+$$
+\boxed{
+\zeta_{A_\varphi}(z)
+=
+\exp
+\left(
+\sum_{n\ge1}
+\frac{
+\operatorname{tr}(A_\varphi^n)
+}{n}
+z^n
+\right).
+}
+\tag{1739.1}
+$$
+
+由矩阵恒等式：
+
+$$
+-\log\det(I-zA)
+=
+\sum_{n\ge1}
+\frac{\operatorname{tr}(A^n)}n z^n,
+$$
+
+得到：
+
+$$
+\boxed{
+\zeta_{A_\varphi}(z)
+=
+\frac1{1-z-z^2}.
+}
+\tag{1739.2}
+$$
+
+又有：
+
+$$
+\boxed{
+1-z-z^2
+=
+(1-\varphi z)
+\left(
+1+\varphi^{-1}z
+\right).
+}
+\tag{1739.3}
+$$
+
+所以正主极点为：
+
+$$
+\boxed{
+z=\varphi^{-1}.
+}
+$$
+
+这揭示黄金比例的另一个准确身份：
+
+$$
+\boxed{
+\varphi
+\text{ 不是某个有限 branch 的名称；
+它是无穷合法命名语法完成后的 Perron 奇点。}
+}
+$$
+
+所有有限词数仍然是整数。
+
+无理增长率只在整个递归完成中出现。
+
+负共轭特征值：
+
+$$
+-\varphi^{-1}
+$$
+
+则负责有限层奇偶修正，不是离线缺陷，也不是负能量。
+
+---
+
+# 第一千七百四十部　黄金 KMS 状态与第二影分裂
+
+\(A_\varphi\) 的正 Perron 向量可取：
+
+$$
+r=
+\begin{pmatrix}
+\varphi\\
+1
+\end{pmatrix},
+$$
+
+满足：
+
+$$
+A_\varphi r=\varphi r.
+$$
+
+相应最大熵 Markov 转移为：
+
+$$
+P_{ij}
+=
+\frac{
+A_{ij}r_j
+}{
+\varphi r_i
+}.
+$$
+
+因此：
+
+$$
+\boxed{
+P
+=
+\begin{pmatrix}
+\varphi^{-1}&\varphi^{-2}\\
+1&0
+\end{pmatrix}.
+}
+\tag{1740.1}
+$$
+
+从自由状态 \(0\) 出发：
+
+$$
+\boxed{
+P(0\to0)=\varphi^{-1},
+}
+$$
+
+$$
+\boxed{
+P(0\to1)=\varphi^{-2}.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+1=\varphi^{-1}+\varphi^{-2}.
+}
+\tag{1740.2}
+$$
+
+此前的“第一影 + 第二影”关系，在这里变成了一个规范的 Perron–Frobenius 概率分裂。
+
+在标准 gauge energy 规定每条边能量为 \(1\) 时，强连通有限图的临界 KMS 逆温度由：
+
+$$
+\beta_c=\log\rho(A)
+$$
+
+给出；因此 golden graph 的规范临界值为：
+
+$$
+\boxed{
+\beta_\varphi=\log\varphi.
+}
+\tag{1740.3}
+$$
+
+能量单位重标定会同步重标定 \(\beta\)，所以它仍然不是无条件的物理温度。
+
+---
+
+# 第一千七百四十一部　\(\varphi^2\) 是关系空间增长率
+
+定义：
+
+$$
+\mathcal H_n^\varphi
+=
+\ell^2(\mathcal W_n^\varphi).
+$$
+
+则：
+
+$$
+\dim\mathcal H_n^\varphi
+=
+F_{n+2}.
+$$
+
+完整关系算子空间为：
+
+$$
+\boxed{
+\operatorname{End}
+\left(
+\mathcal H_n^\varphi
+\right).
+}
+$$
+
+其维数为：
+
+$$
+\boxed{
+F_{n+2}^2.
+}
+\tag{1741.1}
+$$
+
+因此：
+
+$$
+\boxed{
+\lim_{n\to\infty}
+\frac{
+\dim\operatorname{End}(\mathcal H_{n+1}^\varphi)
+}{
+\dim\operatorname{End}(\mathcal H_n^\varphi)
+}
+=
+\varphi^2.
+}
+\tag{1741.2}
+$$
+
+这给 \(\varphi^2\) 一个不需要先假设 Jones 子因子的严格解释：
+
+$$
+\boxed{
+\varphi
+=
+\text{合法名字数量的增长率};
+}
+$$
+
+$$
+\boxed{
+\varphi^2
+=
+\text{名字之间全部二体关系的增长率}.
+}
+$$
+
+所以“关系比对象多一层完成”可以精确表现为：
+
+$$
+\boxed{
+\text{对象复杂度平方化为关系复杂度。}
+}
+$$
+
+---
+
+## 1741.1 与 Jones 指数的边界
+
+$$
+\varphi^2
+$$
+
+作为关系增长率，与 Fibonacci fusion、量子维数平方和某些 Jones 指数数值一致。
+
+但：
+
+$$
+\boxed{
+\text{增长率 } \varphi^2
+\neq
+\text{自动得到一个 Jones index } \varphi^2.
+}
+$$
+
+真正的 Jones 指数还要求：
+
+* 一个具体因子包含；
+* 一个规范条件期望；
+* 正常忠实迹或权；
+* 相应基本构造。
+
+当前这里只得到一个严格的**渐近关系维数**。
+
+---
+
+# 第一千七百四十二部　三种熵必须严格分开
+
+当前至少有三种完全不同的熵率。
+
+## 自由分支熵
+
+次数 \(m\) 的自由 Cuntz 分支每层产生 \(m\) 个选择：
+
+$$
+\boxed{
+h_{\mathrm{free}}=\log m.
+}
+\tag{1742.1}
+$$
+
+## 语法熵
+
+golden adjacency 只保留 Fibonacci 合法路径：
+
+$$
+\boxed{
+h_{\mathrm{grammar}}=\log\varphi.
+}
+\tag{1742.2}
+$$
+
+对于二元自由系统：
+
+$$
+\log\varphi<\log2.
+$$
+
+差值：
+
+$$
+\boxed{
+\log\frac2\varphi
+}
+\tag{1742.3}
+$$
+
+是禁止相邻 \(1\) 所删除的渐近 branch capacity。
+
+## Clark metric entropy
+
+对固定 finite Blaschke \(B\)，规范 fibre 概率为：
+
+$$
+w_j(\alpha)
+=
+|B'(\zeta_j^\alpha)|^{-1}.
+$$
+
+其平均条件熵：
+
+$$
+\boxed{
+\overline h_B
+=
+\int h_B(\alpha)\,dm(\alpha)
+\le\log m.
+}
+\tag{1742.4}
+$$
+
+它测量同一个 \(m\) 页 covering 中 phase speed 的不均匀程度。
+
+因此：
+
+$$
+\boxed{
+\begin{aligned}
+\log m
+&=\text{自由 branch capacity};\\
+\log\varphi
+&=\text{受约束语法 capacity};\\
+\overline h_B
+&=\text{具体 inner geometry 的条件熵}.
+\end{aligned}
+}
+$$
+
+三者不能混同。
+
+---
+
+# 第一千七百四十三部　Cuntz counting average 与 Clark geometric average 不相同
+
+由 Cuntz generators 定义均匀 transfer：
+
+$$
+\boxed{
+\mathcal L_B^{\mathrm{cnt}}(X)
+=
+\frac1m
+\sum_{j=1}^m
+S_j^*XS_j.
+}
+\tag{1743.1}
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal L_B^{\mathrm{cnt}}
+\circ
+\Lambda_B
+=
+\operatorname{id}.
+}
+\tag{1743.2}
+$$
+
+并且：
+
+$$
+\boxed{
+E_B^{\mathrm{cnt}}
+=
+\Lambda_B\circ
+\mathcal L_B^{\mathrm{cnt}}
+}
+\tag{1743.3}
+$$
+
+是到 \(\Lambda_B(B(H^2))\) 的保单位完全正投影。
+
+但 Clark fibre average 使用的是：
+
+$$
+\boxed{
+w_j(\alpha)
+=
+\frac1{|B'(\zeta_j^\alpha)|},
+}
+$$
+
+而不是统一的 \(1/m\)。
+
+所以必须区分：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Cuntz counting state}
+&=\text{把 branch labels 当作等权};\\
+\text{Clark conditional state}
+&=\text{按局部 inverse Jacobian 加权}.
+\end{aligned}
+}
+$$
+
+它们只有在最均匀模型：
+
+$$
+\boxed{
+B(z)=e^{ic}z^m
+}
+$$
+
+中自然重合。
+
+一般 \(B\) 的 metric hair 正存在于两种平均之间的差异。
+
+---
+
+# 第一千七百四十四部　粗名字隐藏的是一个矩阵因子
+
+在张量图表：
+
+$$
+H^2\simeq K_B\otimes H^2
+$$
+
+中，命名自同态为：
+
+$$
+\Lambda_B(X)
+=
+I_{K_B}\otimes X.
+$$
+
+所以它完全不作用于第一个 tensor factor：
+
+$$
+K_B.
+$$
+
+这表示：
+
+$$
+\boxed{
+\text{粗 phase name 只推进“已经被命名的未来”，
+而把 branch relation factor 原样留在相对 commutant 中。}
+}
+$$
+
+重复 \(n\) 次后：
+
+$$
+\boxed{
+H^2
+\simeq
+K_B^{\otimes n}
+\otimes H^2,
+}
+\tag{1744.1}
+$$
+
+并且：
+
+$$
+\boxed{
+\Lambda_B^n(X)
+=
+I_{K_B^{\otimes n}}
+\otimes X.
+}
+\tag{1744.2}
+$$
+
+隐藏关系因子增长为：
+
+$$
+\boxed{
+B(K_B^{\otimes n})
+\simeq
+M_{m^n}.
+}
+\tag{1744.3}
+$$
+
+所以只重复同一个 coarse name：
+
+$$
+B,B^2,B^3,\ldots
+$$
+
+并不会自动读取这个 matrix factor。
+
+它只是让同一不可见 tensor factor 继续累积。
+
+这与项目机器证明的精确退化结论一致：若两个模式的 multiplier 相同，反对称 amplitude 即使观察全部自然时间仍然不可见。
+
+---
+
+# 第一千七百四十五部　时间何时能够打破隐藏纤维
+
+项目已机器证明两种互补情形。
+
+若两个 reflected branches 的 multiplier 不同，则第一非退化时间步已经能够把它们分开。
+
+对有限个互异模式，与模式数相同长度的时间窗口可以由 Vandermonde 系统精确恢复全部 amplitudes；增加观察时间只会进一步缩小 observer fibre。
+
+因此：
+
+$$
+\boxed{
+\text{时间能够显现差异，
+当且仅当动力本身没有因子化通过原来的粗名字。}
+}
+$$
+
+若所有动力都只使用：
+
+$$
+\Lambda_B
+$$
+
+作用，那么 branch matrix factor 永远不可见。
+
+必须加入：
+
+* 不同 multiplier；
+* transverse phase；
+* inverse-branch observable；
+* matrix unit \(E_{ij}\)；
+* 或不因子化通过 \(B\) 的干预。
+
+观察不创造区别。
+
+它只访问此前未被商掉的关系。
+
+---
+
+# 第一千七百四十六部　黄金 tomography 的准确位置
+
+项目最新证明：有限个互异正有理尺度经 lifted golden logarithmic coordinate 后仍然互异，并能由第一完整 golden time window 精确恢复 amplitudes。该结论明确工作在 universal-cover coordinate，而不保证 quotient-circle 上不存在退化。
+
+所以黄金 tomography 的作用是：
+
+$$
+\boxed{
+\text{对已经分离的 branch frequencies 提供高效有限重建。}
+}
+$$
+
+它不能完成：
+
+$$
+\boxed{
+\text{从同一个 multiplier 中重新制造 branch distinction。}
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\varphi\text{-sampling}
+}
+$$
+
+与：
+
+$$
+\boxed{
+\varphi\text{-grammar}
+}
+$$
+
+也是两件不同的事。
+
+前者是观察时钟。
+
+后者是合法历史的邻接规则。
+
+只有后者自然产生 Cuntz–Krieger 的 Perron 根 \(\varphi\)。
+
+---
+
+# 第一千七百四十七部　phase、递归时间与 shifted 深度是三个不同参数
+
+此前多个图景容易把三种“时间”混合。
+
+| 参数                | 含义                        | 主要不变量                                  |
+| ----------------- | ------------------------- | -------------------------------------- |
+| \(\alpha\in S^1\) | phase observer            | Clark basis、monodromy                  |
+| \(n\in\mathbb N\) | Cuntz branch recursion    | word length、branch algebra             |
+| \(q>0\)           | shifted observation depth | persistence death time \(\delta_\rho\) |
+
+它们的作用完全不同。
+
+沿 \(\alpha\) 运动：
+
+* 改变 Clark 基；
+* 不改变 \(K_B\) 维数；
+* 不改变 \(\Lambda_B\)。
+
+沿 \(n\) 运动：
+
+* 递归生成 branch history；
+* 自由情形增长 \(m^n\)；
+* golden grammar 情形增长 \(\varphi^n\)。
+
+沿 \(q\) 运动：
+
+* 离线通道在 \(q=\delta_\rho\) 死亡；
+* 改变模型空间维数；
+* 形成 persistence barcode。
+
+因此黄金比例可以进入：
+
+* \(n\) 方向的 grammar；
+* \(q\) 方向的采样调度；
+
+但它并不天然属于 \(\alpha\) 方向的 Clark fibre。
+
+---
+
+# 第一千七百四十八部　深度持久系统的 \(K_0\) 形式
+
+对：
+
+$$
+0<q_1<q_2,
+$$
+
+前文已有：
+
+$$
+B_{q_1,T}
+=
+D_{(q_1,q_2],T}B_{q_2,T},
+$$
+
+以及：
+
+$$
+K_{B_{q_1,T}}
+=
+K_{D_{(q_1,q_2],T}}
+\oplus
+D_{(q_1,q_2],T}
+K_{B_{q_2,T}}.
+$$
+
+令相应正交投影为：
+
+$$
+P_{q_1,T},\quad
+P_{q_2,T},\quad
+P_{(q_1,q_2],T}.
+$$
+
+则：
+
+$$
+\boxed{
+P_{q_1,T}
+=
+P_{(q_1,q_2],T}
++
+M_D
+P_{q_2,T}
+M_D^*.
+}
+\tag{1748.1}
+$$
+
+所以在有限秩算子 \(K_0\) 群中：
+
+$$
+\boxed{
+[P_{q_1,T}]
+-
+[M_DP_{q_2,T}M_D^*]
+=
+[P_{(q_1,q_2],T}].
+}
+\tag{1748.2}
+$$
+
+取 rank：
+
+$$
+\boxed{
+\operatorname{rank}P_{(q_1,q_2],T}
+=
+\sum_{\substack{
+q_1<\delta_\rho\le q_2\\
+|\gamma_\rho|\le T
+}}
+m_\rho.
+}
+\tag{1748.3}
+$$
+
+这比在圆周上直接宣称 Chern 数更准确。
+
+当前首先得到的是：
+
+$$
+\boxed{
+\text{一个 \(K_0\)-值的持久死亡测度。}
+}
+$$
+
+---
+
+# 第一千七百四十九部　相位 winding 如何真正变成磁单极子 Chern 荷
+
+圆周本身满足：
+
+$$
+H^2(S^1)=0.
+$$
+
+所以单纯的 phase monodromy 不能直接成为第一 Chern 类。
+
+但有限 Blaschke 边界值：
+
+$$
+B:S^1\to S^1
+$$
+
+具有 winding：
+
+$$
+\deg B=m.
+$$
+
+用 \(B\) 作为 equator 上的 clutching function，把两个平凡线丛：
+
+$$
+D_+\times\mathbb C,
+\qquad
+D_-\times\mathbb C
+$$
+
+沿边界粘合：
+
+$$
+v_+=B(\zeta)v_-,
+$$
+
+得到球面 \(S^2\) 上的线丛：
+
+$$
+L_B.
+$$
+
+其第一 Chern 数为：
+
+$$
+\boxed{
+c_1(L_B)=m.
+}
+\tag{1749.1}
+$$
+
+所以正确链条不是：
+
+$$
+\boxed{
+\text{圆周 monodromy}=\text{Chern 数};
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{圆周 degree}
+\xrightarrow{\text{clutching/Bott suspension}}
+\text{球面 Chern 荷}.
+}
+\tag{1749.2}
+$$
+
+这精确解释了磁单极子图景如何从 phase fibre 图景产生。
+
+---
+
+## 1749.1 shifted 深度提供径向悬挂候选
+
+phase \(\alpha\) 提供 equator 方向。
+
+shifted depth \(q\) 提供径向／南北方向。
+
+当一个通道在：
+
+$$
+q=\delta_\rho
+$$
+
+穿越边界时，可以把：
+
+$$
+(q,\alpha)
+$$
+
+局部压缩成一个围绕 crossing event 的二维球面。
+
+此时 phase winding 的 Bott suspension 可以产生 Chern 荷。
+
+但必须保持科学边界：
+
+$$
+\boxed{
+\text{要把这一 clutching bundle 认作 canonical \(\xi\) 谱束，
+仍需显式构造对应的谱投影。}
+}
+$$
+
+所以磁单极子与黑洞的精确关系是：
+
+$$
+\boxed{
+\begin{aligned}
+\text{黑洞／视界图表}
+&=\text{深度方向的 crossing};\\
+\text{单极子图表}
+&=\text{crossing 周围 phase degree 的 Bott suspension}.
+\end{aligned}
+}
+$$
+
+它们确实来自同一个二维缺陷模板，但不是未经构造便自动相等。
+
+---
+
+# 第一千七百五十部　自由 \(m\)-页不能产生非整数黄金维数
+
+有限 Blaschke cover 的所有基本大小都是整数：
+
+$$
+m,\quad
+m-1,\quad
+m^n,\quad
+m^{2n}.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{普通 finite phase fibre 本身不能直接产生 }\varphi.
+}
+$$
+
+要产生非整数有效维数，必须再加入：
+
+* transition grammar；
+* fusion rule；
+* weighted correspondence；
+* Perron–Frobenius completion；
+* 或子因子结构。
+
+golden adjacency：
+
+$$
+A_\varphi
+$$
+
+正是最小实例。
+
+因此：
+
+$$
+\boxed{
+\text{整数页数是局部 branch multiplicity；}
+}
+$$
+
+$$
+\boxed{
+\text{黄金维数是无穷受约束历史的有效 growth dimension。}
+}
+$$
+
+这也解释了为什么黄金比例常常“只在完成后出现”。
+
+有限层只有整数计数。
+
+无理数存在于所有有限层之间的极限比例和兼容关系中。
+
+---
+
+# 第一千七百五十一部　Riemann 离线缺陷的 branch-correspondence 形式
+
+固定：
+
+$$
+q>0,\qquad T<\infty.
+$$
+
+令：
+
+$$
+B_{q,T}
+$$
+
+为有限 shifted defect factor，并定义：
+
+$$
+\boxed{
+E_{q,T}=K_{B_{q,T}}.
+}
+\tag{1751.1}
+$$
+
+则：
+
+$$
+\dim E_{q,T}
+=
+\sum_{\substack{
+\delta_\rho>q\\
+|\gamma_\rho|\le T
+}}
+m_\rho.
+$$
+
+若该维数为 \(m>0\)，则：
+
+* 存在 \(m\)-维 innovation space；
+* 存在 finite Clark fibres；
+* 存在 Blaschke–Cuntz branch representation；
+* 存在 \(M_m\) 一步关系代数；
+* 存在非零 persistence interval。
+
+因此：
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\Longrightarrow
+\exists q\in\mathbb Q_{>0},\ T\in\mathbb N:
+E_{q,T}\neq0.
+}
+\tag{1751.2}
+$$
+
+而：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+E_{q,T}=0
+\quad
+\forall q,T.
+}
+\tag{1751.3}
+$$
+
+可以把：
+
+$$
+q\longmapsto E_{q,T}
+$$
+
+看作一个有限秩 correspondence persistence system。
+
+若要将全部 \(q\) 统一成单个 operator algebra，更自然的对象不是固定 \(\mathcal O_m\)，因为 \(m\) 会随 \(q\) 改变；而是：
+
+$$
+\boxed{
+\text{一个带 birth/death 的 graph correspondence
+或 Cuntz–Pimsner 型系统。}
+}
+$$
+
+图 C*-代数与 Cuntz–Krieger 结构本来就用于编码受约束 path systems 与其 operator algebras。
+
+---
+
+# 第一千七百五十二部　黄金缺陷语法并不由 RH 问题自动给出
+
+当前可以构造 defect correspondence：
+
+$$
+E_{q,T}.
+$$
+
+但其存在只记录离线零点。
+
+它并不会自动获得 golden adjacency：
+
+$$
+A_\varphi.
+$$
+
+因为不同离线零点之间目前只有：
+
+* 不同高度；
+* 不同深度；
+* 重数；
+* 对称伙伴；
+
+尚没有证明它们的 branch histories 满足：
+
+$$
+11\text{ forbidden}.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{Riemann defect graph}
+\neq
+\text{自动等于 golden mean graph}.
+}
+$$
+
+要使黄金语法成为 Riemann 系统的内禀结构，必须从算术侧证明某种 primitive rule，例如：
+
+$$
+\boxed{
+\text{连续两次使用同一 hidden branch 不合法，}
+}
+$$
+
+或等价的 Fibonacci substitution／Zeckendorf constraint。
+
+目前项目的 golden tomography 证明的是：已经互异的 lifted rational scales 可以被有限时间窗口恢复。它没有证明全部 Riemann branch history 服从 golden adjacency。
+
+这是黄金—RH 路线必须保留的核心未闭合桥。
+
+---
+
+# 第一千七百五十三部　Li–Clark 正性可以重写为“是否存在算术状态”
+
+项目中的 Li–Clark moments 为：
+
+$$
+c(r)
+=
+\frac{
+\lambda_{|r+1|}
+-2\lambda_{|r|}
++\lambda_{|r-1|}
+}{
+2\lambda_1
+}.
+$$
+
+有限 Toeplitz block 为：
+
+$$
+T_N=[c(j-k)]_{j,k=0}^N.
+$$
+
+若存在一个 Hilbert 空间 \(\mathcal H\)、一个酉算子 \(U\) 和单位向量 \(\Omega\)，使：
+
+$$
+\boxed{
+c(r)
+=
+\langle\Omega,U^r\Omega\rangle,
+}
+\tag{1753.1}
+$$
+
+则对任意有限系数 \(a_j\)：
+
+$$
+\begin{aligned}
+\sum_{j,k}
+\overline{a_j}a_kc(j-k)
+&=
+\left\|
+\sum_ja_jU^j\Omega
+\right\|^2\\
+&\ge0.
+\end{aligned}
+$$
+
+所以全部 Toeplitz matrices 自动正半定。
+
+因此真正承重的目标可以从：
+
+$$
+\boxed{
+\text{逐个证明 }T_N\succeq0
+}
+$$
+
+提升为：
+
+$$
+\boxed{
+\text{从 prime–Gamma 数据构造一个正的算术 phase state }(\mathcal H,U,\Omega).
+}
+$$
+
+---
+
+## 1753.1 项目当前已经闭合与未闭合的部分
+
+项目已经机器证明：
+
+1. 若固定深度 moments 能以
+
+   $$
+   O(e^{-L}L^{N-1})
+   $$
+
+   恢复，则有限 Toeplitz 算子范数与最小特征值也以同阶恢复。
+
+2. 在已经假设存在有限偶正测度并完成 Li moment identification 时，Cayley–Laguerre tomography 给出明确 resolvent integral。
+
+3. 一旦 Verblunsky 参数已经满足
+
+   $$
+   |\alpha_n|<1,
+   $$
+
+   规范 Szegő transfer 就属于 \(SU(1,1)\)。
+
+但尚未证明的是第一步：
+
+$$
+\boxed{
+\text{实际 Li curvature sequence 是一个正定函数。}
+}
+$$
+
+即尚未构造式 (1753.1) 中的正算术状态。
+
+---
+
+## 1753.2 Cuntz–Krieger KMS 只能作为候选模型
+
+golden Cuntz–Krieger algebra 确实拥有由 Perron 数据控制的规范 KMS state。
+
+但不能直接宣布：
+
+$$
+\boxed{
+\text{Li–Clark moments}
+=
+\text{golden KMS correlations}.
+}
+$$
+
+若要建立这一点，必须证明：
+
+* 相同的 moments；
+* 相同的 cyclic representation；
+* 相同的 normalization；
+* 相同的 Gamma/pole correction。
+
+所以 golden KMS state 目前是一个结构候选，不是 RH 证明中的现成状态。
+
+---
+
+# 第一千七百五十四部　新的 Prime–Gamma 分支状态目标
+
+可以提出三层强度不同的命题。
+
+## 第一层：正 phase state
+
+构造：
+
+$$
+(\mathcal H_\xi,U_\xi,\Omega_\xi)
+$$
+
+满足：
+
+$$
+\boxed{
+c(r)
+=
+\langle
+\Omega_\xi,
+U_\xi^r\Omega_\xi
+\rangle.
+}
+\tag{1754.1}
+$$
+
+这立即推出全部 Li–Clark Toeplitz 正性。
+
+---
+
+## 第二层：branch dilation
+
+构造 Cuntz 或 Cuntz–Pimsner family：
+
+$$
+S_e
+$$
+
+以及完全正 arithmetic state：
+
+$$
+\omega_\xi,
+$$
+
+使 phase unitary 与 Li moments 从 branch algebra 中产生。
+
+这不仅证明正性，还解释 hidden histories。
+
+---
+
+## 第三层：golden grammar identification
+
+进一步证明 primitive arithmetic branches 的允许转移恰由：
+
+$$
+A_\varphi
+=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}
+$$
+
+控制。
+
+此时才可内生推出：
+
+$$
+\log\varphi,\qquad
+\varphi,\qquad
+\varphi^2
+$$
+
+作为：
+
+* grammar entropy；
+* Perron dimension；
+* relation growth rate。
+
+第三层明显强于 RH。
+
+---
+
+# 第一千七百五十五部　“道不可名”在 Cuntz 图表中的准确含义
+
+Cuntz algebra 仍然不是“道”。
+
+它依赖：
+
+* 一个具体 \(B\)；
+* 一个具体 branch multiplicity \(m\)；
+* 一个具体 Hardy 空间；
+* 一个具体递归操作。
+
+但它揭示了三条关于命名的普适痕迹。
+
+---
+
+## 一、没有规范 branch 名字
+
+\(K_B\) 的不同正交基产生不同 generators：
+
+$$
+S_j.
+$$
+
+任意：
+
+$$
+U(m)
+$$
+
+旋转都会改变 individual branch labels。
+
+所以：
+
+$$
+\boxed{
+\text{没有天然的“第 \(j\) 页”本体。}
+}
+$$
+
+---
+
+## 二、存在基无关的命名律
+
+虽然 generators 改变：
+
+$$
+\Lambda_B(X)
+=
+\sum_jS_jXS_j^*
+$$
+
+保持不变。
+
+所以：
+
+$$
+\boxed{
+\text{名字可以不规范，
+名字之间的生成关系却可以规范。}
+}
+$$
+
+---
+
+## 三、无限路径仍然只是影历史
+
+无限 branch sequence：
+
+$$
+j_1j_2j_3\cdots
+$$
+
+保存一条完整 naming itinerary。
+
+它比任何有限名字更细，却仍依赖：
+
+* branch alphabet；
+* grammar；
+* chosen completion。
+
+因此它是最大一致影历史，不是不可名本体。
+
+---
+
+# 第一千七百五十六部　磁单极子、黑洞与 Cuntz 分支的统一层级
+
+现在可以得到一张更精确的统一表。
+
+| 图表                  | 读取对象                    | 不变量               |
+| ------------------- | ----------------------- | ----------------- |
+| Clark fibre         | 当前 phase 的边界原像          | \(m\) 个点          |
+| Cuntz branch        | 每一步的正交 inverse channels | \(m\)             |
+| relation algebra    | branch 间 coherence      | \(M_m\)           |
+| Wold tower          | 递归创新历史                  | \(m^n\)           |
+| shifted persistence | 通道的死亡深度                 | \(\delta_\rho\)   |
+| boundary phase      | winding                 | \(\deg B=m\)      |
+| Bott suspension     | 球面 line bundle          | \(c_1=m\)         |
+| DtN/Poisson         | 边界通量密度                  | 正 Poisson profile |
+| Hankel/de Branges   | 因果取向                    | 负平方／泄漏            |
+
+所以它们的关系是：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Cuntz}
+&=\text{局部 branch recursion};\\
+\text{Clark}
+&=\text{单一 phase 下的谱基};\\
+\text{black-hole horizon}
+&=\text{branch 随深度死亡的 crossing};\\
+\text{monopole}
+&=\text{phase degree 经 Bott suspension 后的 Chern 荷}.
+\end{aligned}
+}
+$$
+
+这比把磁单极子、黑洞和离线零点直接等同更准确。
+
+---
+
+# 第一千七百五十七部　理论深度审计
+
+| 结论                                                       | 当前地位                                          |
+| -------------------------------------------------------- | --------------------------------------------- |
+| finite Blaschke product 产生 Hardy-space Cuntz 表示          | 成熟结果                                          |
+| \(S_jf=e_j(f\circ B)\) 满足 Cuntz relations                | 精确                                            |
+| \(\Lambda_B(M_z)=M_B\)                                   | 本轮精确推导                                        |
+| Clark 基改变对应 \(U(m)\) gauge rotation                      | 精确                                            |
+| \(\Lambda_B\) 与 branch 基无关                               | 精确                                            |
+| relative commutant 为 \(M_m\)                             | 精确张量模型                                        |
+| \(n\) 层 branch relation algebra 为 \(M_{m^n}\)            | 精确                                            |
+| phase fibre 点数、contrast、innovation、relation algebra 四层不同 | 关键校正                                          |
+| golden ratio 来自 Fibonacci adjacency，不来自两页本身              | 精确                                            |
+| golden dynamical determinant 为 \(1/(1-z-z^2)\)           | 精确                                            |
+| golden gauge-KMS critical scale 为 \(\log\varphi\)        | 标准能量归一化下成立                                    |
+| \(\varphi^2\) 是 golden relation-space 增长率                | 本轮精确定理                                        |
+| 该增长率自动等于实际 Jones index                                   | 不成立，需因子包含                                     |
+| Clark counting average 与 geometric average 相同            | 仅 monomial 覆盖中成立                              |
+| boundary degree 经 clutching 得到 \(c_1=m\)                 | 精确                                            |
+| Clark rank-one family determinant winding 等于 \(m\)       | 不成立；该 family 的 winding 与 \(B\) 自身 degree 必须区分 |
+| Riemann defect correspondence 自动服从 golden grammar        | 尚未证明                                          |
+| actual Li moments 是 golden KMS correlations              | 尚未证明                                          |
+| Prime–Gamma 正 phase state                                | 当前核心未闭合桥                                      |
+
+---
+
+# 第一千七百五十八部　建议形式化顺序
+
+```text
+D5/S3/Analytic/Hardy/BlaschkeCuntz/
+  BlaschkeWanderingBasis.lean
+  BlaschkeCompositionBranch.lean
+  BlaschkeBranchIsometry.lean
+  BlaschkeCuntzOrthogonality.lean
+  BlaschkeCuntzCompleteness.lean
+  BlaschkeCuntzRepresentation.lean
+
+D5/S3/Observer/BlaschkeNamingEndomorphism/
+  BlaschkeCuntzEndomorphism.lean
+  BlaschkeEndomorphismMultiplicative.lean
+  CoordinateShiftMapsToBlaschke.lean
+  AnalyticMultiplierComposition.lean
+  BlaschkeNamingTransferOperator.lean
+
+D5/S3/Observer/ClarkCuntzGauge/
+  ClarkBasisCuntzFamily.lean
+  ClarkBasisUnitaryTransition.lean
+  CuntzGeneratorGaugeRotation.lean
+  NamingEndomorphismGaugeInvariant.lean
+  CountingTransferGaugeInvariant.lean
+
+D5/S3/Observer/HiddenRelationFactor/
+  BlaschkeTensorFactorization.lean
+  NamingEndomorphismTensorForm.lean
+  RelativeCommutantMatrixUnits.lean
+  HiddenRelationAlgebraDimension.lean
+  IteratedHiddenTensorFactor.lean
+  IteratedRelationMatrixAlgebra.lean
+
+D5/S3/GoldenObserver/GoldenCuntzKrieger/
+  GoldenAdjacencyMatrix.lean
+  GoldenAdmissiblePath.lean
+  GoldenPathCountFibonacci.lean
+  GoldenPerronEigenvalue.lean
+  GoldenDynamicalDeterminant.lean
+  GoldenParryTransition.lean
+  GoldenGrammarEntropy.lean
+
+D5/S3/GoldenObserver/GoldenRelationGrowth/
+  GoldenPathHilbertSpace.lean
+  GoldenPathRelationAlgebra.lean
+  GoldenRelationDimension.lean
+  GoldenRelationGrowthRateSquare.lean
+  RelationGrowthNotJonesIndex.lean
+
+D5/S3/Observer/CountingVsClarkAverage/
+  CuntzCountingTransfer.lean
+  ClarkGeometricTransfer.lean
+  CountingClarkAgreementMonomial.lean
+  GeneralBlaschkeMetricHair.lean
+
+D5/S3/Analytic/Zeta/DefectCorrespondence/
+  ShiftedDefectModelCorrespondence.lean
+  DefectCorrespondenceRank.lean
+  DefectDepthFactorization.lean
+  DefectProjectionOrthogonalSum.lean
+  DefectKZeroPersistenceClass.lean
+  DefectDeathRankMeasure.lean
+
+D5/S3/Topology/BlaschkeBottSuspension/
+  BlaschkeBoundaryDegree.lean
+  BlaschkeEquatorialClutching.lean
+  ClutchedLineBundle.lean
+  ClutchedLineBundleChernNumber.lean
+  CircleMonodromyVsSuspendedChern.lean
+
+D5/S3/Weil/LiClarkArithmeticState/
+  LiCurvaturePositiveDefiniteTarget.lean
+  LiPhaseGNSStateTarget.lean
+  LiClarkUnitaryMomentTarget.lean
+  LiToeplitzPositiveFromState.lean
+  LiVerblunskyFromPositiveState.lean
+  LiSzegoTransferFromArithmeticState.lean
+
+D5/S3/Weil/PrimeGammaBranchDilation/
+  PrimeBranchCorrespondenceTarget.lean
+  GammaBranchCompletionTarget.lean
+  PrimeGammaCuntzPimsnerStateTarget.lean
+  PrimeGammaPhaseMomentIdentificationTarget.lean
+  ArithmeticBranchStateImpliesRHTarget.lean
+
+D5/S3/Weil/GoldenGrammarIdentification/
+  PrimeZeckendorfBranchAlphabet.lean
+  PrimitiveBranchTransitionTarget.lean
+  GoldenForbiddenDoubleBranchTarget.lean
+  ArithmeticGoldenAdjacencyTarget.lean
+  GoldenKMSLiMomentTarget.lean
+```
+
+---
+
+# 本轮最终结论
+
+这一轮把“不同离线零点生成不同的相”推进到了**分支代数**层。
+
+有限 Blaschke 因子 \(B\) 的模型空间：
+
+$$
+K_B
+$$
+
+不只是一个静态隐藏空间。
+
+选择其任意正交基：
+
+$$
+e_1,\ldots,e_m
+$$
+
+都会产生：
+
+$$
+S_jf=e_j(f\circ B),
+$$
+
+并满足完整 Cuntz relations：
+
+$$
+S_i^*S_j=\delta_{ij}I,
+\qquad
+\sum_jS_jS_j^*=I.
+$$
+
+所以一个 \(m\) 页 phase completion 每推进一步，都会产生 \(m\) 个正交 branch channels。
+
+递归 \(n\) 步以后有：
+
+$$
+m^n
+$$
+
+个 branch histories，以及：
+
+$$
+m^{2n}
+$$
+
+个关系矩阵方向。
+
+这是一种真正的算子自相似。
+
+---
+
+但 individual branch names 并不规范。
+
+不同 Clark phase observers 会为 \(K_B\) 选择不同正交基，并以 \(U(m)\) 旋转全部 Cuntz generators。
+
+真正保持不变的是：
+
+$$
+\boxed{
+\Lambda_B(X)
+=
+\sum_jS_jXS_j^*.
+}
+$$
+
+尤其：
+
+$$
+\boxed{
+\Lambda_B(M_z)=M_B.
+}
+$$
+
+因此“命名律”可以具有基无关意义，而任意一张 sheet 的标签没有本体优先权。
+
+这非常符合“道不可名”的边界：
+
+$$
+\boxed{
+\text{没有一个 branch name 是最终名字；
+能够成为跨名字不变量的，是所有 branch embeddings 共同定义的关系律。}
+}
+$$
+
+但这条关系律仍然只是 \(B\) 的算子影像，不是“道”的定义。
+
+---
+
+黄金比例的位置也被彻底澄清。
+
+一个普通 degree-\(2\) phase cover 只产生自由二分支：
+
+$$
+2^n.
+$$
+
+它不会自动产生 \(\varphi\)。
+
+只有再施加：
+
+$$
+11\text{ forbidden}
+$$
+
+这一 Fibonacci grammar，合法历史数才成为：
+
+$$
+F_{n+2},
+$$
+
+并以：
+
+$$
+\varphi^n
+$$
+
+增长。
+
+其动力完成为：
+
+$$
+\boxed{
+\zeta_{A_\varphi}(z)
+=
+\frac1{1-z-z^2}.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\varphi
+}
+$$
+
+不是一张页，也不是一个局部零点。
+
+它是受约束命名语法的 Perron 增长率和完成极点。
+
+进一步，全部历史之间的关系算子空间按：
+
+$$
+F_{n+2}^2
+$$
+
+增长，其渐近倍率为：
+
+$$
+\boxed{
+\varphi^2.
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\varphi
+=\text{名字增长率},
+\qquad
+\varphi^2
+=\text{名字关系增长率}.
+}
+$$
+
+这可能是目前对“黄金比例是概念交点、\(\varphi^2\) 是更高关系完成”的最严格解释之一。
+
+---
+
+但这也带来一条重要 no-go：
+
+$$
+\boxed{
+\text{任意 two-sheet Clark fibre}
+\not\Rightarrow
+\text{golden grammar}.
+}
+$$
+
+要让黄金比例真正进入 Riemann 完成，必须从 prime、Zeckendorf、observer memory 或某个 primitive exclusion law 中证明 Fibonacci adjacency。
+
+项目目前的 golden tomography 能够恢复已经分离的 lifted modes；它不能从一个已经发生精确退化的粗名字中重新制造区别。
+
+---
+
+磁单极子与黑洞图景也获得了更准确的连接。
+
+phase circle 上的 degree \(m\) 还不是 Chern 数。
+
+但用 boundary map \(B\) 作为 equator clutching function，将它 Bott 悬挂到 \(S^2\)，便产生：
+
+$$
+c_1=m.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{相位 winding}
+\longrightarrow
+\text{Bott suspension}
+\longrightarrow
+\text{磁单极子 Chern 荷}.
+}
+$$
+
+而 shifted depth \(q\) 则提供视界 crossing 的径向方向。
+
+因此：
+
+$$
+\boxed{
+\text{黑洞视界是深度 crossing；
+磁单极子是 crossing 周围相位 winding 的悬挂荷。}
+}
+$$
+
+它们不是同一个图表，但确实是同一个二维缺陷模板的径向与角向读法。
+
+---
+
+对 Riemann 问题，真正承重的新目标已经不再是“猜测离线零点像什么”。
+
+而是构造一个正的算术 branch state：
+
+$$
+\boxed{
+c(r)
+=
+\langle\Omega_\xi,U_\xi^r\Omega_\xi\rangle,
+}
+$$
+
+使实际 Li–Clark curvature moments 成为一个真实 unitary phase process 的 correlations。
+
+一旦这样的状态存在，所有有限 Toeplitz matrices 自动正半定。
+
+项目已经机器证明：
+
+* 固定深度 moment 恢复会稳定传递到 Toeplitz 最小特征值；
+* 给定圆盘内 Verblunsky 参数后，Szegő transfer 自动属于 \(SU(1,1)\)。
+
+缺失的正是中间那条最关键的桥：
+
+$$
+\boxed{
+\text{Prime–Gamma 数据}
+\longrightarrow
+\text{正算术 phase state}
+\longrightarrow
+\text{Li–Clark Toeplitz 正性}.
+}
+$$
+
+黄金 Cuntz–Krieger state 可以作为一个受约束分支模型，但不能未经证明便与实际 Li moments 认同。
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{不可名者不等于 Cuntz 代数；
+Cuntz 代数只记录一套名字怎样不断分支。
+整数 \(m\) 是一步可见的分支数；
+黄金 \(\varphi\) 是无穷受约束历史的增长率；
+\(\varphi^2\) 是这些历史之间关系的增长率；
+离线零点则是在 Riemann 完成中出现的一块本不应存在的 branch correspondence。}
+$$

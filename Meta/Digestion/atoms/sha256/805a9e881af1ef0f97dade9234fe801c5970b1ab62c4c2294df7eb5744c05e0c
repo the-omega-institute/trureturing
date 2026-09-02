@@ -1,0 +1,75 @@
+# 第一千五百四十六部　Schur slack 是每层新增的正信息
+
+设中心 Hankel 矩阵：
+
+$$
+H_N=[\tau_{i+j+1}]_{i,j=0}^{N}.
+$$
+
+若 \(H_{N-1}\succ0\)，写成：
+
+$$
+H_N=
+\begin{pmatrix}
+H_{N-1}&h_N\\
+h_N^*&\tau_{2N+1}
+\end{pmatrix}.
+$$
+
+定义：
+
+$$
+\boxed{
+\varepsilon_N
+=
+\tau_{2N+1}
+-
+h_N^*H_{N-1}^{-1}h_N.
+}
+\tag{1546.1}
+$$
+
+则：
+
+$$
+\boxed{
+H_N\succeq0
+\iff
+\varepsilon_N\ge0,
+}
+\tag{1546.2}
+$$
+
+并且：
+
+$$
+\boxed{
+\varepsilon_N
+=
+\frac{\det H_N}{\det H_{N-1}}.
+}
+\tag{1546.3}
+$$
+
+正测度图表中，\(\varepsilon_N\) 是新 monic orthogonal polynomial 的平方范数。
+
+所以它可以解释为：
+
+$$
+\boxed{
+\text{第 \(N\) 层名字相对于前 \(N-1\) 层真正新增的正交信息。}
+}
+$$
+
+离线零点的第一矩阵反证书，也可以定义为第一个：
+
+$$
+\boxed{
+\varepsilon_N<0.
+}
+$$
+
+这种递归 slack 比直接计算大行列式更适合 Lean 与区间算术。
+
+---
+

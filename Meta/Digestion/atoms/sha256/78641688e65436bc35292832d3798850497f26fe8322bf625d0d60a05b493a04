@@ -1,0 +1,66 @@
+## 1540.1 完全差分正性
+
+对任意 \(n,k\ge0\)：
+
+$$
+\boxed{
+(-1)^k\Delta^kr_n(u)
+=
+\operatorname{Tr}
+\left[
+\rho_uX_u^n(I-X_u)^k
+\right]
+\ge0.
+}
+\tag{1540.6}
+$$
+
+所以 RH 下：
+
+$$
+(r_n(u))_{n\ge0}
+$$
+
+是 \([0,1]\) 上的 Hausdorff moment sequence。
+
+反向地，固定某个 \(u_0>0\)，若：
+
+$$
+S(u_0)>0
+$$
+
+且全部式 (1540.6) 成立，则存在 \([0,1]\) 上的正测度 \(\pi\)。
+
+通过：
+
+$$
+v=\frac{x}{u_0(1-x)}
+$$
+
+将其拉回正谱射线，并利用实际函数：
+
+$$
+S=\frac{G'}G
+$$
+
+的 meromorphic 极点—留数刚性，可排除非实节点与负节点。实际 \(S\) 在 \(u=0\) 的正则性也排除了 \(x=1\) 的伪端点质量。
+
+由此得到单尺度版本：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+S(u_0)>0
+\ \text{且}\
+(-1)^k\Delta^kr_n(u_0)\ge0
+\quad
+\forall n,k.
+}
+\tag{1540.7}
+$$
+
+反向中真正承重的是 meromorphic rigidity，而不是一般 Hausdorff 定理本身。
+
+---
+

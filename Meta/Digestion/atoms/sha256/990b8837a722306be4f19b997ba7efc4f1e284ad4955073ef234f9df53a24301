@@ -1,0 +1,29 @@
+## 1576.1 零点模式的占据概率
+
+若 \(\lambda_j\) 是 \(\Xi\) 的实零点，则：
+
+$$
+a_j=(\lambda_j-t)^{-2},
+$$
+
+所以：
+
+$$
+\boxed{
+p_j(t,u)
+=
+\frac{
+u
+}{
+(\lambda_j-t)^2+u
+}.
+}
+\tag{1576.5}
+$$
+
+因此 RH 允许把每个 zero mode 解释为一个合法 \(0/1\) 占据模式。
+
+有限维 marginals 是 determinantal/product measures；determinantal measures属于 strongly Rayleigh 类，并继承相应的稳定性和负依赖性质。([arXiv][2])
+
+---
+

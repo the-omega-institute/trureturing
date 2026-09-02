@@ -1,0 +1,83 @@
+# 第一千六百二十六部　建议形式化顺序
+
+```text
+D5/S3/Analytic/Zeta/RieszBulkSource/
+  RotatedCompletedXi.lean
+  CompletedXiLogNormPotential.lean
+  LogNormDistributionalLaplacian.lean
+  OffLineZeroRieszAtom.lean
+  RHRieszBulkMeasureZero.lean
+  RHUpperHalfPlaneHarmonicity.lean
+
+D5/S3/Analytic/Zeta/GreenBlaschkeBoundary/
+  UpperHalfPlaneBlaschkeLogPotential.lean
+  BlaschkeBoundaryLogNormZero.lean
+  BlaschkeBoundaryNormalDerivative.lean
+  BlaschkeNormalDerivativeIsPoisson.lean
+  OffLineDivisorBoundaryFlux.lean
+  HarmonicCompletionDefect.lean
+
+D5/S3/Observer/GoldenItineraryDimension/
+  GoldenMeanItinerarySpace.lean
+  GoldenWordPrefixCount.lean
+  FirstDifferenceUltrametric.lean
+  GoldenItineraryHausdorffUpperBound.lean
+  GoldenItineraryHausdorffLowerBound.lean
+  GoldenTwoStepHalfDimension.lean
+
+D5/S3/Observer/NormalDepthItinerary/
+  GeometricShiftSchedule.lean
+  OffLineDepthBinaryItinerary.lean
+  FirstCrossingIndex.lean
+  ItineraryDistanceDepthBounds.lean
+  GoldenDepthBoundedDistortion.lean
+  InterlacedGoldenPhaseDistortion.lean
+
+D5/S3/Analytic/Zeta/HalfOrderLogHair/
+  CenteredXiSquareDescentOrder.lean
+  SquareZeroCountingFunction.lean
+  GoldenRadiusZeroCountAsymptoticTarget.lean
+  GoldenSkeletonLogarithmicHair.lean
+  HalfOrderDoesNotImplyRH.lean
+
+D5/S3/Analytic/Zeta/PositiveFredholmCompactness/
+  PositiveFiniteRankDeterminant.lean
+  PositiveDeterminantZeroLocation.lean
+  ExteriorCoefficientTraceBound.lean
+  PositiveDeterminantNormalFamily.lean
+  CoefficientwisePositiveDeterminantLimit.lean
+  PositiveDeterminantLimitZeroLocation.lean
+
+D5/S3/Analytic/Zeta/FinitePositiveJetCompletion/
+  NormalizedMovingNormalJet.lean
+  FinitePositiveExteriorRealization.lean
+  ApproximatePositiveJetRealization.lean
+  PositiveJetApproximationImpliesRH.lean
+  ExactFinitePrefixRealizationImpliesRH.lean
+
+D5/S3/Observer/CompletionCoherenceVsCompactness/
+  PositiveCompletionStage.lean
+  PositiveCompletionRefinement.lean
+  CoherentPositiveCompletionTower.lean
+  CompactPositiveShadowWithoutCoherence.lean
+  CoherencePreservesHistory.lean
+  CompactnessPreservesZeroLocation.lean
+
+D5/S3/Entropy/CompletionLossLocalization/
+  ZeckendorfRecodingSupportInjective.lean
+  DeterminantMicrostateQuotient.lean
+  CompletionConditionalEntropy.lean
+  PositiveConditionalExpectationPreservesGram.lean
+  NonpositiveForgettingObstruction.lean
+
+D5/S3/Weil/PrimeGammaPositiveApproximation/
+  FinitePrimeHodgePositiveOperator.lean
+  ArchimedeanFinitePositiveCorrectionTarget.lean
+  PrimeGammaNormalJetMatchingTarget.lean
+  PrimeGammaUniformFirstJetBudgetTarget.lean
+  PrimeGammaPositiveDeterminantLimitTarget.lean
+  PrimeGammaPositiveApproximationImpliesRH.lean
+```
+
+---
+

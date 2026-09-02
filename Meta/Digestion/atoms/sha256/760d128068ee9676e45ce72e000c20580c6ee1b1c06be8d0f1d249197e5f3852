@@ -1,0 +1,34 @@
+## 1585.2 这不是局部同构，而是完成值等价
+
+Zeckendorf 链具有邻近排斥：
+
+$$
+\eta_k\eta_{k+1}=0.
+$$
+
+循环酉系统则是彼此独立的谱特征方向。
+
+二者没有保持局部邻接关系的显然共轭。
+
+它们只是通过共同的 exponent：
+
+$$
+\eta\longmapsto E_N(\eta)=e
+$$
+
+保持总能量和 partition function。
+
+所以：
+
+$$
+\boxed{
+\text{partition-equivalent}
+\neq
+\text{locally dynamically equivalent}.
+}
+$$
+
+这正是“同名不等于同源”的一个有限精确模型。
+
+---
+

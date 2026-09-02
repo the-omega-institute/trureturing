@@ -1,0 +1,17 @@
+## 定理 1535.1（法向 jet RH 判据）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal J_m(t)\ge0
+\quad
+\forall\,t\in\mathbb R,\ m\in\mathbb N.
+}
+\tag{1535.1}
+$$
+
+这条判据最重要的地方，是它直接作用于项目已经机器化的 actual normal intensity。
+
+---
+

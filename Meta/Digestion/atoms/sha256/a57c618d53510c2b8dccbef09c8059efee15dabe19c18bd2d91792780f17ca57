@@ -1,0 +1,33 @@
+## 1581.1 黄金的正确普适域
+
+黄金比例被以下条件唯一强迫：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{二元位};\\
+&\text{一步局部记忆};\\
+&\text{禁止相邻占据};\\
+&\text{无间隙覆盖全部整数};\\
+&\text{每个整数唯一命名}.
+\end{aligned}
+}
+$$
+
+去掉这些条件，binary、Ostrowski 或其他 numeration systems 都能给出同一个 Euler 因子。
+
+因此：
+
+$$
+\boxed{
+\varphi
+\text{ 是最小有记忆命名范畴的自然不变量，}
+}
+$$
+
+而不是所有可能名字之上的唯一标量。
+
+要把它提升为更普遍的“道迹”，必须证明自然系统的 primitive observer memory 为什么必然归约为一步。
+
+---
+

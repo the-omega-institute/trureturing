@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:f148ee323c00cafeb324e305c183ed32c879731550de28b5649cdf04c019d8a6
+  normalized_sha256: sha256:f148ee323c00cafeb324e305c183ed32c879731550de28b5649cdf04c019d8a6
+cas_ref: sha256:f148ee323c00cafeb324e305c183ed32c879731550de28b5649cdf04c019d8a6
+coverage_gids:
+  - D5/S3/ConceptDynamics/InterventionsExchange/StableFlipCounterfactualOpposition.stable_flip_intervention_equivalent_counterfactual_opposite
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/InterventionsExchange/StableFlipCounterfactualOpposition.stable_flip_intervention_equivalent_counterfactual_opposite
+      source_sha256: sha256:f148ee323c00cafeb324e305c183ed32c879731550de28b5649cdf04c019d8a6
+      target_statement_id: sha256:703a109be9a59eb76f0e285b9c5c9544f83a31520101758851c313d8ac94cdd0
+  scribe:
+    - gid: D5/S3/ConceptDynamics/InterventionsExchange/StableFlipCounterfactualOpposition.stable_flip_intervention_equivalent_counterfactual_opposite
+      definition_sha256: sha256:9e3228320ed192cdef37931dc18f967c9f69b75c34c2590c0b7b4d72299d1f60
+      emission_sha256: sha256:c945f612f94ae58db170f8a4d28f9cc32a5b23480828e59c74634df991fac16f
+  unresolved_subitems: []

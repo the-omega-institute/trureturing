@@ -6,4 +6,5 @@ coverage_gids: []
 receipts:
   coverage: []
   scribe: []
-  unresolved_subitems: []
+  unresolved_subitems:
+    - generation-mechanism-invariance-undefined

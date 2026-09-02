@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:7fc9158179bcbcdbcf41426525ce2a29bc9f4e3316014708d1f2e6a4bd76a449
+  normalized_sha256: sha256:7fc9158179bcbcdbcf41426525ce2a29bc9f4e3316014708d1f2e6a4bd76a449
+cas_ref: sha256:7fc9158179bcbcdbcf41426525ce2a29bc9f4e3316014708d1f2e6a4bd76a449
+coverage_gids:
+  - D5/S3/Factorization/Embeddings/RationalFiniteValuationKernel.rational_finite_valuation_kernel_and_sign_recovery
+receipts:
+  coverage:
+    - gid: D5/S3/Factorization/Embeddings/RationalFiniteValuationKernel.rational_finite_valuation_kernel_and_sign_recovery
+      source_sha256: sha256:7fc9158179bcbcdbcf41426525ce2a29bc9f4e3316014708d1f2e6a4bd76a449
+      target_statement_id: sha256:ee952b51c0297cde9da66732fcd5aa49e928fecbaf94dbd7378516f5e2edd77f
+  scribe:
+    - gid: D5/S3/Factorization/Embeddings/RationalFiniteValuationKernel.rational_finite_valuation_kernel_and_sign_recovery
+      definition_sha256: sha256:9bd78283eb3cdbaf81799f408851886754ff3b8e48ded9e1b276eb1cb85bbad4
+      emission_sha256: sha256:96fd253253ce9c28db767cc131a516636ec4c59654b5f0f3699e4d85c8312809
+  unresolved_subitems: []
