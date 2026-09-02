@@ -14,7 +14,7 @@ public sealed class EngineeringPathFilterTests
         {
             calls.Add(invocation);
             return 0;
-        });
+        }, TextWriter.Null);
 
         Assert.Equal(EngineeringTestPlanKind.Full, plan.Kind);
         Assert.Equal(0, exitCode);
@@ -51,7 +51,7 @@ public sealed class EngineeringPathFilterTests
         {
             calls.Add(invocation);
             return 0;
-        });
+        }, TextWriter.Null);
 
         Assert.Equal(EngineeringTestPlanKind.Selected, plan.Kind);
         Assert.Contains(plan.Tests, static test =>
@@ -84,7 +84,7 @@ public sealed class EngineeringPathFilterTests
         {
             calls.Add(invocation);
             return 0;
-        });
+        }, TextWriter.Null);
 
         Assert.Equal(EngineeringTestPlanKind.None, plan.Kind);
         Assert.Equal(0, exitCode);
@@ -127,7 +127,7 @@ public sealed class EngineeringPathFilterTests
         var exitCode = EngineeringTestExecutor.Execute(plan, invocation =>
         {
             calls.Add(invocation);
-            if (throws) throw new InvalidOperationException("selected invocation\nfailed");
+            if (throws) throw new InvalidOperationException("selected invocation failed\nsecond line");
             return 137;
         }, standardError);
 
@@ -143,6 +143,7 @@ public sealed class EngineeringPathFilterTests
             "ENGINEERING_TEST_SELECTED_INVOCATION_FAILED InvalidOperationException:",
             diagnostic,
             StringComparison.Ordinal);
+        Assert.Contains("selected invocation failed second line", diagnostic, StringComparison.Ordinal);
         Assert.DoesNotContain('\r', diagnostic);
         Assert.DoesNotContain('\n', diagnostic);
     }
@@ -167,7 +168,7 @@ public sealed class EngineeringPathFilterTests
         {
             calls.Add(invocation);
             return 0;
-        });
+        }, TextWriter.Null);
 
         Assert.Equal(EngineeringTestPlanKind.Selected, plan.Kind);
         Assert.Contains(plan.Tests, static test =>
