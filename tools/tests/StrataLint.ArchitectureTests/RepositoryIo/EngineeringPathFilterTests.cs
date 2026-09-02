@@ -108,9 +108,9 @@ public sealed class EngineeringPathFilterTests
     }
 
     [Theory]
-    [InlineData(false)]
-    [InlineData(true)]
-    public void SelectedExecutionFailureReturnsWithoutFullReplay(bool throws)
+    [InlineData(false, 137)]
+    [InlineData(true, 1)]
+    public void SelectedExecutionFailureIsReportedWithoutFullReplay(bool throws, int expectedExitCode)
     {
         var map = Map(new ScribeTestMethod(
             "tools/tests/StrataLint.Tests",
@@ -122,18 +122,29 @@ public sealed class EngineeringPathFilterTests
             ["Meta/Digestion/example.json"],
             map);
         var calls = new List<EngineeringTestInvocation>();
+        using var standardError = new StringWriter();
 
         var exitCode = EngineeringTestExecutor.Execute(plan, invocation =>
         {
             calls.Add(invocation);
-            if (throws && calls.Count == 1) throw new InvalidOperationException("selected invocation failed");
-            return calls.Count == 1 ? 1 : 0;
-        });
+            if (throws) throw new InvalidOperationException("selected invocation\nfailed");
+            return 137;
+        }, standardError);
 
-        Assert.NotEqual(0, exitCode);
+        Assert.Equal(expectedExitCode, exitCode);
         Assert.Single(calls);
         Assert.NotNull(calls[0].Filter);
-        if (!throws) Assert.Equal(1, exitCode);
+        if (!throws) return;
+
+        var diagnostic = standardError.ToString();
+        Assert.EndsWith(standardError.NewLine, diagnostic, StringComparison.Ordinal);
+        diagnostic = diagnostic[..^standardError.NewLine.Length];
+        Assert.StartsWith(
+            "ENGINEERING_TEST_SELECTED_INVOCATION_FAILED InvalidOperationException:",
+            diagnostic,
+            StringComparison.Ordinal);
+        Assert.DoesNotContain('\r', diagnostic);
+        Assert.DoesNotContain('\n', diagnostic);
     }
 
     [Fact]

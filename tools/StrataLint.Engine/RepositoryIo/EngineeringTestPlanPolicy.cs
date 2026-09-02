@@ -317,7 +317,8 @@ internal static class EngineeringTestExecutor
 {
     internal static int Execute(
         EngineeringTestPlan plan,
-        Func<EngineeringTestInvocation, int> run)
+        Func<EngineeringTestInvocation, int> run,
+        TextWriter? standardError = null)
     {
         if (plan.Kind == EngineeringTestPlanKind.None)
         {
@@ -334,7 +335,7 @@ internal static class EngineeringTestExecutor
         }
         catch (Exception exception)
         {
-            Console.Error.WriteLine(
+            (standardError ?? Console.Error).WriteLine(
                 $"ENGINEERING_TEST_SELECTED_INVOCATION_FAILED {exception.GetType().Name}: {exception.Message.ReplaceLineEndings(" ")}");
             return 1;
         }
