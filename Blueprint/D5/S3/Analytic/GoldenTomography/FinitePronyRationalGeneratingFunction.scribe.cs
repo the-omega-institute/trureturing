@@ -19,19 +19,23 @@ internal sealed class FinitePronyRationalGeneratingFunctionDocument
                         + "FinitePronyRationalGeneratingFunction."
                         + "finite_prony_rational_generating_function"),
                 H("Finite Prony moments sum to their rational resolvents"),
-                StatementSource.FromLean(),
+                StatementSource.FromAuthor(TheoremFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "For finitely many complex nodes q_j and weights m_j, define the nth "
-                            + "moment c_n as the sum of m_j q_j^n. At every complex z for "
-                            + "which each geometric mode q_j z has norm below one, the series "
-                            + "sum of c_n z^n equals the finite sum of m_j divided by "
-                            + "1 - q_j z.")),
+                            + "moment c_n as the sum of m_j q_j^n. The named predicate "
+                            + "finitePronyConvergesAt records that every geometric mode q_j z "
+                            + "has norm below one.")),
                     Paragraph(Text(
-                        "The proof applies Mathlib's geometric-series HasSum theorem to each "
-                            + "mode, multiplies by its weight, and combines the finitely many "
-                            + "series with hasSum_sum. The result is the analytic bridge from "
+                        "The Lean proof is separated into three machine-checkable layers. A "
+                            + "single mode is summed with Mathlib's geometric-series HasSum "
+                            + "theorem, the finite family is combined with hasSum_sum, and the "
+                            + "result is exposed through the named generating-series and "
+                            + "rational-function interfaces.")),
+                    Paragraph(Text(
+                        "On the common convergence disk, finitePronyGeneratingSeries equals "
+                            + "finitePronyRationalFunction. This is the analytic bridge from "
                             + "finite exponential moments to a rational transfer function.")),
                     Paragraph(Text(
                         "The theorem is pointwise on the common disk of convergence. It does "
@@ -40,4 +44,30 @@ internal sealed class FinitePronyRationalGeneratingFunctionDocument
                             + "Hankel operator."))),
                 DescribeRole.Theorem)),
         []));
+
+    private static Formula Call(string name, params Formula[] arguments)
+    {
+        var items = new List<Formula> { Operatorname, Grp(F.Id(name)), Open };
+        for (var index = 0; index < arguments.Length; index++)
+        {
+            if (index > 0) items.AddRange([Comma, Sp]);
+            items.Add(arguments[index]);
+        }
+        items.Add(Close);
+        return Seq([.. items]);
+    }
+
+    private static Formula TheoremFormula()
+    {
+        Formula nodes = F.Id("q");
+        Formula weights = F.Id("m");
+        Formula point = F.Id("z");
+
+        return Disp(Seq(
+            Forall, Sp, nodes, Comma, Sp, weights, Comma, Sp, point, Comma, Sp,
+            Call("finitePronyConvergesAt", nodes, point), Sp, Rightarrow, Sp,
+            Call("finitePronyGeneratingSeries", nodes, weights, point),
+            Sp, Eq, Sp,
+            Call("finitePronyRationalFunction", nodes, weights, point), Dot));
+    }
 }
