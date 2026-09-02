@@ -6,6 +6,7 @@
    digest: The shifted Cayley transform identifies de Branges and Nevanlinna kernels by a nonvanishing diagonal gauge, preserving every finite positive-semidefinite Gram test. -/
 
 import D5.S3.Analytic.Characterizations.ShiftedHerglotzCriterion
+import Mathlib.Algebra.Group.Pi.Units
 import Mathlib.LinearAlgebra.Matrix.PosDef
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 
@@ -38,6 +39,7 @@ noncomputable section
 namespace D5.S3.Weil.Pick.CayleyNevanlinnaKernelEquivalence
 
 open Complex Matrix
+open scoped ComplexOrder
 open D5.S3.Analytic.Characterizations.ShiftedHerglotzCriterion
 
 /-- The scalar de Branges defect kernel in the normalization from the source. -/
@@ -140,7 +142,104 @@ theorem gauge_nonvanishing_is_necessary :
   simp [nevanlinnaKernel, deBrangesKernel, shiftedCayleyTransform,
     Real.pi_ne_zero]
 
+/-- For every finite sample, the two kernel Gram matrices are positive
+semidefinite simultaneously. The positive scalar is absorbed into the
+invertible diagonal gauge, so both implications follow from one congruence. -/
+theorem cayley_nevanlinna_kernel_posSemidef_iff
+    (omega : Real) (theta : Complex -> Complex) (homega : 0 < omega)
+    (hden : forall x, 1 + theta x ≠ 0) {n : Nat}
+    (points : Fin n -> Complex) :
+    Matrix.PosSemidef
+        (fun i j => deBrangesKernel theta (points i) (points j)) ↔
+      Matrix.PosSemidef
+        (fun i j => nevanlinnaKernel omega theta (points i) (points j)) := by
+  classical
+  let c : Real := 4 * Real.pi / omega
+  have hc : 0 < c := by
+    dsimp [c]
+    exact div_pos (mul_pos (by norm_num) Real.pi_pos) homega
+  let root : Real := Real.sqrt c
+  have hroot : 0 < root := by
+    exact Real.sqrt_pos.2 hc
+  let scale : Fin n -> Complex := fun i =>
+    (root : Complex) / (1 + theta (points i))
+  let gauge : Matrix (Fin n) (Fin n) Complex := Matrix.diagonal scale
+  let deBrangesGram : Matrix (Fin n) (Fin n) Complex :=
+    fun i j => deBrangesKernel theta (points i) (points j)
+  let nevanlinnaGram : Matrix (Fin n) (Fin n) Complex :=
+    fun i j => nevanlinnaKernel omega theta (points i) (points j)
+  change Matrix.PosSemidef deBrangesGram ↔
+    Matrix.PosSemidef nevanlinnaGram
+  have hdenStar (x : Complex) : 1 + star (theta x) ≠ 0 := by
+    have hstar : star (1 + theta x) ≠ 0 :=
+      star_ne_zero.mpr (hden x)
+    simpa using hstar
+  have hrootSquareReal : root * root = c := by
+    rw [show root * root = root ^ 2 by ring]
+    exact Real.sq_sqrt hc.le
+  have hrootSquare :
+      (root : Complex) * (root : Complex) =
+        4 * (Real.pi : Complex) / (omega : Complex) := by
+    calc
+      (root : Complex) * (root : Complex) = ((root * root : Real) : Complex) := by
+        norm_cast
+      _ = (c : Complex) := by rw [hrootSquareReal]
+      _ = 4 * (Real.pi : Complex) / (omega : Complex) := by
+        dsimp [c]
+        push_cast
+        rfl
+  have hrootSquareOmega :
+      (root : Complex) ^ 2 * (omega : Complex) =
+        4 * (Real.pi : Complex) := by
+    rw [pow_two, hrootSquare, div_mul_cancel₀ _
+      (Complex.ofReal_ne_zero.mpr homega.ne')]
+  have hscale (i : Fin n) : scale i ≠ 0 := by
+    exact div_ne_zero (Complex.ofReal_ne_zero.mpr hroot.ne')
+      (hden (points i))
+  have hunit : IsUnit gauge := by
+    apply Matrix.isUnit_diagonal.mpr
+    rw [Pi.isUnit_iff]
+    intro i
+    exact isUnit_iff_ne_zero.mpr (hscale i)
+  have hscaleProduct (i j : Fin n) :
+      scale i * star (scale j) =
+        (4 * (Real.pi : Complex) / (omega : Complex)) /
+          ((1 + theta (points i)) *
+            (1 + star (theta (points j)))) := by
+    dsimp [scale]
+    simp only [Complex.star_def, map_div₀, map_add, map_one,
+      Complex.conj_ofReal]
+    field_simp [hden (points i), hdenStar (points j)]
+    rw [hrootSquareOmega]
+  have hmatrix :
+      nevanlinnaGram = gauge * deBrangesGram * gaugeᴴ := by
+    ext i j
+    dsimp only [nevanlinnaGram]
+    rw [cayley_nevanlinna_kernel_identity omega theta homega hden]
+    simp only [gauge, Matrix.diagonal_conjTranspose, Matrix.diagonal_mul,
+      Matrix.mul_diagonal, Pi.star_apply]
+    dsimp only [deBrangesGram]
+    calc
+      (4 * (Real.pi : Complex) / (omega : Complex) *
+            deBrangesKernel theta (points i) (points j)) /
+          ((1 + theta (points i)) *
+            (1 + star (theta (points j)))) =
+        ((4 * (Real.pi : Complex) / (omega : Complex)) /
+            ((1 + theta (points i)) *
+              (1 + star (theta (points j))))) *
+          deBrangesKernel theta (points i) (points j) := by ring
+      _ = (scale i * star (scale j)) *
+          deBrangesKernel theta (points i) (points j) := by
+        rw [hscaleProduct]
+      _ = scale i * deBrangesKernel theta (points i) (points j) *
+          star (scale j) := by ring
+  rw [hmatrix]
+  simpa only [Matrix.star_eq_conjTranspose] using
+    (hunit.posSemidef_star_right_conjugate_iff
+      (x := deBrangesGram)).symm
+
 #print axioms cayley_nevanlinna_kernel_identity
 #print axioms gauge_nonvanishing_is_necessary
+#print axioms cayley_nevanlinna_kernel_posSemidef_iff
 
 end D5.S3.Weil.Pick.CayleyNevanlinnaKernelEquivalence
