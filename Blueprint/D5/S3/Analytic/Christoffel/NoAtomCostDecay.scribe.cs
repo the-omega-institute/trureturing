@@ -11,7 +11,7 @@ internal sealed class NoAtomCostDecayDocument : IScribeDocumentDefinition
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Unit-circle support gives an explicit polynomial witness and an exponential "
-            + "upper bound for the Christoffel evaluation cost.",
+            + "upper bound for the source Cayley-zero Christoffel cost.",
         H("No-Atom Christoffel Cost Decay"),
         Blocks(
             Describe.Lean(
@@ -32,8 +32,9 @@ internal sealed class NoAtomCostDecayDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "Its value at w is one and its norm on the unit circle is the Nth "
                             + "power of the inverse norm of w. The same polynomial is an "
-                            + "admissible witness in the repository's existing Christoffel "
-                            + "evaluation-cost infimum.")),
+                            + "admissible witness for CayleyChristoffelCost, the named source "
+                            + "object lambda_N^{mu_a}(w). An explicit Lean equality bridges "
+                            + "that object to the repository's generic Christoffel infimum.")),
                     Paragraph(Text(
                         "Consequently the cost is nonnegative, is bounded above by the "
                             + "unit-circle mass times the displayed inverse-norm power, and "
@@ -88,7 +89,7 @@ internal sealed class NoAtomCostDecayDocument : IScribeDocumentDefinition
         Formula polynomial = Call("ObservationPolynomial", point, degree);
         Formula evaluationAtPoint = Call("PolynomialEval", polynomial, point);
         Formula evaluationAtZ = Call("PolynomialEval", polynomial, z);
-        Formula cost = Call("ChristoffelEvaluationCost", measure, point, degree);
+        Formula cost = Call("CayleyChristoffelCost", cayleyData, point, degree);
         Formula mass = Call("MeasureOf", measure, circle);
         Formula upperPower = Call(
             "ENNRealOfReal",

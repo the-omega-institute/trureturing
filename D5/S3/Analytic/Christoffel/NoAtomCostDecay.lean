@@ -15,7 +15,7 @@ import Mathlib.MeasureTheory.Measure.Support
 /- Library-search audit trail (2026-09-02):
    * Repository owners `ZeroSum.ZeroData` and
      `ChristoffelAtomFloor.christoffelEvaluationCost` are imported directly;
-     this module creates neither a second zeta-zero family nor a second cost.
+     the source-specific cost below is only a named carrier over that owner.
    * Pinned Mathlib supplies `Polynomial.eval_monomial`,
      `Polynomial.natDegree_monomial_le`, `Measure.support_mem_ae`,
      `Measure.sum_apply`, `ENNReal.ofReal_tsum_of_nonneg`,
@@ -72,6 +72,21 @@ noncomputable def cayleyZeroMeasure (data : CayleyZeroMeasureData) : Measure Com
     ENNReal.ofReal (data.weight index) •
       Measure.dirac
         (cayleyZeroMap data.scale (shiftedZetaZero (data.zeros.zero index)))
+
+/-- The source volume's `lambda_N^{mu_a}(w)`: the least squared polynomial
+energy for the named Cayley-zero measure, with degree at most `degree` and
+value one at `w`. -/
+def cayleyChristoffelCost
+    (data : CayleyZeroMeasureData) (w : Complex) (degree : Nat) : ENNReal :=
+  christoffelEvaluationCost (cayleyZeroMeasure data) w degree
+
+/-- The source-specific cost is exactly the repository's generic Christoffel
+infimum specialized to the Cayley-zero measure. -/
+theorem cayleyChristoffelCost_eq_christoffelEvaluationCost
+    (data : CayleyZeroMeasureData) (w : Complex) (degree : Nat) :
+    cayleyChristoffelCost data w degree =
+      christoffelEvaluationCost (cayleyZeroMeasure data) w degree :=
+  rfl
 
 /-- Normalization of the positive weights makes the Cayley-zero measure a
 probability measure. -/
@@ -225,16 +240,24 @@ theorem no_atom_cost_decay
     (∀ degree : Nat, (observationPolynomial w degree).eval w = 1) ∧
     (∀ (degree : Nat) (z : Complex), z ∈ complexUnitCircle →
       ‖(observationPolynomial w degree).eval z‖ = ‖w‖⁻¹ ^ degree) ∧
-    (∀ degree : Nat, 0 ≤ christoffelEvaluationCost (cayleyZeroMeasure data) w degree) ∧
+    (∀ degree : Nat, 0 ≤ cayleyChristoffelCost data w degree) ∧
     (∀ degree : Nat,
-      christoffelEvaluationCost (cayleyZeroMeasure data) w degree ≤
+      cayleyChristoffelCost data w degree ≤
         cayleyZeroMeasure data complexUnitCircle *
           ENNReal.ofReal (‖w‖⁻¹ ^ (degree * 2))) ∧
     Tendsto
-      (fun degree : Nat => christoffelEvaluationCost (cayleyZeroMeasure data) w degree)
+      (fun degree : Nat => cayleyChristoffelCost data w degree)
       atTop (𝓝 0) :=
-  finite_measure_no_atom_cost_decay
-    (cayleyZeroMeasure data) w supportOnCircle outsideCircle
+  by
+    simpa only [cayleyChristoffelCost] using
+      finite_measure_no_atom_cost_decay
+        (cayleyZeroMeasure data) w supportOnCircle outsideCircle
+
+/-- Bridge probe: the source-specific cost rewrites to the generic infimum owner. -/
+example (data : CayleyZeroMeasureData) (w : Complex) (degree : Nat) :
+    cayleyChristoffelCost data w degree =
+      christoffelEvaluationCost (cayleyZeroMeasure data) w degree :=
+  cayleyChristoffelCost_eq_christoffelEvaluationCost data w degree
 
 /-- Reverse probe: the public theorem exposes the source's exponential upper
 bound as an independently projectable conclusion. -/
@@ -242,7 +265,7 @@ example
     (data : CayleyZeroMeasureData) (w : Complex)
     (supportOnCircle : (cayleyZeroMeasure data).support ⊆ complexUnitCircle)
     (outsideCircle : 1 < ‖w‖) (degree : Nat) :
-    christoffelEvaluationCost (cayleyZeroMeasure data) w degree ≤
+    cayleyChristoffelCost data w degree ≤
       cayleyZeroMeasure data complexUnitCircle *
         ENNReal.ofReal (‖w‖⁻¹ ^ (degree * 2)) :=
   (no_atom_cost_decay data w supportOnCircle outsideCircle).2.2.2.1 degree
