@@ -1,0 +1,75 @@
+## 1813.2 离线修正项的符号
+
+若：
+
+$$
+\rho=\sigma+i\gamma
+$$
+
+不在临界线上，则：
+
+$$
+\rho+\overline\rho=2\sigma.
+$$
+
+于是：
+
+$$
+\boxed{
+\begin{aligned}
+&
+\frac{
+\frac1{s-\rho}
++
+\frac1{\overline t-\overline\rho}
+}{
+s+\overline t-1
+}\\[1mm]
+&=
+\frac1{
+(s-\rho)(\overline t-\overline\rho)
+}
++
+\frac{
+1-2\sigma
+}{
+(s+\overline t-1)
+(s-\rho)
+(\overline t-\overline\rho)
+}.
+\end{aligned}
+}
+\tag{1813.5}
+$$
+
+第一项是普通 rank-one Gram 项。
+
+第二项是：
+
+$$
+\boxed{
+1-2\sigma=-2\left(\sigma-\frac12\right)
+}
+$$
+
+乘以一个正 Cauchy kernel 与 rank-one kernel 的 Schur product。
+
+因此右侧离线零点：
+
+$$
+\sigma>\frac12
+$$
+
+精确产生一个负的 kernel correction。
+
+这可能是“负信息”目前最简洁的代数来源：
+
+$$
+\boxed{
+\text{负号不是零点本身；
+它是偏离固定线后，Gram 分解所需的修正系数。}
+}
+$$
+
+---
+

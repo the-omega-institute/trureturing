@@ -1,0 +1,115 @@
+* 正负实现；
+
+黄金便再次出现。
+
+---
+
+无理黄金观察器也并不妨碍有限证明。
+
+简单有理观察器：
+
+$$
+(1,-1)
+$$
+
+已经看到负性。
+
+Fibonacci 有理向量：
+
+$$
+(F_n,-F_{n+1})
+$$
+
+则以：
+
+$$
+O(\varphi^{-4n})
+$$
+
+的速度逼近最强黄金观察方向。
+
+所以：
+
+$$
+\boxed{
+\text{黄金无理数描述最优关系极限；
+有限有理数负责实际证书。}
+}
+$$
+
+这与你最初“无理数不是静态点，而是无限逼近过程”的直觉形成了一个精确版本，但必须加上关键校正：
+
+$$
+\boxed{
+\text{无限过程用于达到最优性，
+不是用于让缺陷第一次可见。}
+}
+$$
+
+---
+
+最后，当前 RH 证明目标也进一步缩短。
+
+仓库已有：
+
+$$
+\mathrm{RH}
+\Longrightarrow
+\text{Weil convolution-square 正性}
+$$
+
+的机器桥，但尚未闭合反向的 defect compiler。
+
+由于黄金单胞拥有固定负 gap：
+
+$$
+\varphi^{-1},
+$$
+
+只要把它近似编译到 Weil 测试空间，并将总算子误差控制在：
+
+$$
+\varphi^{-1}
+$$
+
+以内，负性便绝不会消失。
+
+仓库的 Archimedean confinement 又已说明，在相应 properness 与 bounded-prime 假设下，所有危险模式都被限制在一个有限 mode–frequency box 中。
+
+因此非 RH 的有限反证程序已经具有清楚形状：
+
+$$
+\boxed{
+\text{有限危险盒}
+\longrightarrow
+\text{有理观察点}
+\longrightarrow
+\text{二点 Pick 单胞}
+\longrightarrow
+\text{Fibonacci 有理观察器}
+\longrightarrow
+\text{Weil 负证书}.
+}
+$$
+
+而正向证明仍只剩一个中心问题：
+
+$$
+\boxed{
+\text{为什么所有 prime、pole、Gamma 的局部正名字，
+能够被胶合成一个全局完全正关系？}
+}
+$$
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{不可名者不等于黄金比例；
+黄金比例是名字之间第一次无法正兼容时的规范关系谱。
+标量完成能够抹去它，
+复相位完成能够隐藏它，
+但一旦要求不同观察结果共同属于一个正 Gram 世界，
+同一个 Fibonacci 单胞就会作为最小裂口重新出现。}
+}
+$$

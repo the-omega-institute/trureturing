@@ -1,0 +1,20 @@
+## 0.2 本卷新增的整体 owner
+
+截至取阅截点，本卷以下组合结构尚未发现单一 owner：
+
+\[
+\boxed{
+\text{prime constellation}
+\longrightarrow
+\text{local residue automata}
+\longrightarrow
+\text{connected source jets}
+\longrightarrow
+\text{zero-orbit cumulants}
+\longrightarrow
+\text{signed Zeckendorf threads}.
+}
+\]
+
+---
+

@@ -1,0 +1,45 @@
+## v10.6：Li 曲率的规范相位态、Cayley 观察者图册、三种 \(SU(1,1)\) 快速度与离线零点的指数时间创新
+
+以下从前文**第一千七百八十五部**继续。
+
+这一轮得到一条非常承重的收敛：
+
+$$
+\boxed{
+\text{Li 系数的二阶差分，本身就是 Riemann 零点 Cayley 模式的时间相关函数。}
+}
+$$
+
+而且在 RH 成立时，它不是抽象地“应该为正”，而是拥有一个显式的正原子相位测度：
+
+$$
+\boxed{
+c(n)
+=
+\int_{\mathbb T}\zeta^n\,d\mu_\xi(\zeta).
+}
+$$
+
+离线零点则同时破坏两件事：
+
+$$
+\boxed{
+\begin{aligned}
+\text{节点}
+&:\quad \text{离开单位圆};\\
+\text{权重}
+&:\quad \text{离开正实轴}.
+\end{aligned}
+}
+$$
+
+所以此前寻找的
+
+$$
+\text{Prime–Gamma}\longrightarrow\text{positive phase state}
+$$
+
+并不是一个模糊目标。现在可以明确写出：**这个正相位态若存在，它的节点和权重必须是什么。**
+
+---
+

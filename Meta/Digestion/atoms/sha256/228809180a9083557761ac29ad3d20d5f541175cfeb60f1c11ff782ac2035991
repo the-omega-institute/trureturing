@@ -1,0 +1,9 @@
+### ZC-C　Zeckendorf 线程单射
+
+```lean
+theorem zeckendorfRealThread_injective :
+    Function.Injective zeckendorfRealThread
+```
+
+---
+

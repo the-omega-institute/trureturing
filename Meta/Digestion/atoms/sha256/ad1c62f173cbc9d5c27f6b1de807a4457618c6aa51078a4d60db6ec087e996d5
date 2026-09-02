@@ -1,0 +1,10 @@
+\[
+q_A(\rho)
+=
+\operatorname{Res}_{s=\rho}
+[\varepsilon_A]\,
+\partial_s\log\Xi_H(s;\varepsilon).
+\]
+
+它是零点轨道对构型 \(A\) 的 spectral response charge。
+

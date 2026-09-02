@@ -1,0 +1,11 @@
+### ZC-G　模三 ternary curvature
+
+```lean
+theorem two_four_gap_mod_three_admissible_iff
+    (H : TwoFourGapConstellation) :
+    ModThreeAdmissible H ↔
+      ∀ i, gapCurvature H i ≠ 0
+```
+
+---
+

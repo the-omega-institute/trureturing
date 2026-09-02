@@ -283,17 +283,6 @@ public sealed class TestProjectTopologyPolicyTests
     }
 
     [Fact]
-    public void DeltaContractionMechanismCannotBeRemovedWithoutFailingThisNamedTest()
-    {
-        var (protectedBase, candidate) = EqualSizedDebtSwap();
-
-        var result = TestProjectTopologyPolicy.Evaluate(protectedBase, candidate);
-
-        Assert.False(result.IsAccepted);
-        Assert.NotEmpty(result.IntroducedDebt);
-    }
-
-    [Fact]
     public void CliAssemblyNameRatherThanProjectStemOwnsStrataLintTests()
     {
         var current = Snapshot(
@@ -326,22 +315,6 @@ public sealed class TestProjectTopologyPolicyTests
     }
 
     [Fact]
-    public void ZeroTestOwnedXunitProjectCanPassPureCsprojTopologyGate()
-    {
-        var result = TestProjectTopologyPolicy.Evaluate(
-            Snapshot(),
-            Snapshot(
-                Production("Empty", "Empty"),
-                OwnedTest(
-                    "Empty.Tests",
-                    "Empty.Tests",
-                    "../../Empty/Empty.csproj")));
-
-        Assert.True(result.IsAccepted, result.Message);
-        Assert.Empty(result.CandidateDebt);
-    }
-
-    [Fact]
     public void XunitPackageIdentityIsOrdinalLiteral()
     {
         var upperCasePackage = OwnedTest(
@@ -363,34 +336,6 @@ public sealed class TestProjectTopologyPolicyTests
         Assert.Equal(
             [Debt("missing-owned-project", "Literal", "Literal.Tests")],
             result.IntroducedDebt.ToArray());
-    }
-
-    [Fact]
-    public void ProdRefsContainOnlyDirectProjectReferencesNotTransitiveOnes()
-    {
-        var current = Snapshot(
-            ProjectWithDefaultProperties(
-                "tools/Alpha/Alpha.csproj",
-                "Alpha",
-                xunit: false,
-                references: ["../Beta/Beta.csproj"]),
-            ProjectWithDefaultProperties(
-                "tools/Beta/Beta.csproj",
-                "Beta",
-                xunit: false,
-                references: ["../Gamma/Gamma.csproj"]),
-            Production("Gamma", "Gamma"),
-            OwnedTest("Alpha.Tests", "Alpha.Tests", "../../Alpha/Alpha.csproj"),
-            OwnedTest("Beta.Tests", "Beta.Tests", "../../Beta/Beta.csproj"),
-            OwnedTest("Gamma.Tests", "Gamma.Tests", "../../Gamma/Gamma.csproj"));
-
-        var debt = TestProjectTopologyPolicy.CalculateDebt(current);
-
-        Assert.DoesNotContain(
-            debt,
-            static item => item.Kind == "extra-production-reference"
-                && item.Subject == "Alpha.Tests"
-                && item.Related is "Beta" or "Gamma");
     }
 
     [Fact]

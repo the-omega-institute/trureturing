@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trureturing.Truth.Tests", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.ScriptTests", "tests\StrataLint.ScriptTests\StrataLint.ScriptTests.csproj", "{69F57989-E714-4637-AD0E-EE2A7722E057}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.TestSupport", "TestSupport\StrataLint.TestSupport\StrataLint.TestSupport.csproj", "{764CF3C5-F85B-4E50-8AD0-979810B3C5C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -183,6 +185,18 @@ Global
 		{69F57989-E714-4637-AD0E-EE2A7722E057}.Release|x64.Build.0 = Release|Any CPU
 		{69F57989-E714-4637-AD0E-EE2A7722E057}.Release|x86.ActiveCfg = Release|Any CPU
 		{69F57989-E714-4637-AD0E-EE2A7722E057}.Release|x86.Build.0 = Release|Any CPU
+		{764CF3C5-F85B-4E50-8AD0-979810B3C5C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{764CF3C5-F85B-4E50-8AD0-979810B3C5C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{764CF3C5-F85B-4E50-8AD0-979810B3C5C0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{764CF3C5-F85B-4E50-8AD0-979810B3C5C0}.Debug|x64.Build.0 = Debug|Any CPU
+		{764CF3C5-F85B-4E50-8AD0-979810B3C5C0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{764CF3C5-F85B-4E50-8AD0-979810B3C5C0}.Debug|x86.Build.0 = Debug|Any CPU
+		{764CF3C5-F85B-4E50-8AD0-979810B3C5C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{764CF3C5-F85B-4E50-8AD0-979810B3C5C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{764CF3C5-F85B-4E50-8AD0-979810B3C5C0}.Release|x64.ActiveCfg = Release|Any CPU
+		{764CF3C5-F85B-4E50-8AD0-979810B3C5C0}.Release|x64.Build.0 = Release|Any CPU
+		{764CF3C5-F85B-4E50-8AD0-979810B3C5C0}.Release|x86.ActiveCfg = Release|Any CPU
+		{764CF3C5-F85B-4E50-8AD0-979810B3C5C0}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -190,5 +204,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{8272A61A-2A16-4F60-8B53-DA1BE6939CA2} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 		{69F57989-E714-4637-AD0E-EE2A7722E057} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
+		{764CF3C5-F85B-4E50-8AD0-979810B3C5C0} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
 	EndGlobalSection
 EndGlobal

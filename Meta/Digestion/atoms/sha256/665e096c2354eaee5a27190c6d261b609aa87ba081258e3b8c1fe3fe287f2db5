@@ -1,0 +1,1 @@
+- **G-g**:修正的 RH 等价形:令 D_primary := D_cg − D_3 + D_22 − D_loc(divisor 记号,`MeromorphicOn.divisor`),则 D_primary = D_2,且 RH ⟺ U 上所有 D_primary>0 的点实部 = 1/(2φ²)。重型;须先冻结 divisor 恒等式。

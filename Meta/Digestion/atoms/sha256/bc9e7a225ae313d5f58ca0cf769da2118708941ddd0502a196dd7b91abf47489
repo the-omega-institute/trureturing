@@ -1,0 +1,27 @@
+### 定义 33.1（结构纠缠）
+
+若存在跨越两个非空轨道分区的 connected cumulant 非零，则称状态在该分区上结构纠缠。
+
+若所有跨分区 connected cumulants 均为零，则 joint state 因子化，不存在全局结构纠缠。
+
+因此：
+
+\[
+\boxed{
+\text{函数方程配对}
+\not\Rightarrow
+\text{所有零点对彼此全局纠缠}.
+}
+\]
+
+“所有离线零点共同纠缠”必须提升为可检验猜想：
+
+\[
+\boxed{
+\forall T,\ 
+\text{off-line orbit cumulant hypergraph 在其非空时连通}.
+}
+\]
+
+---
+

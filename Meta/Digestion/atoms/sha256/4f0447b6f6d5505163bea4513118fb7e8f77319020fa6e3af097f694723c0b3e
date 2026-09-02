@@ -1,0 +1,44 @@
+# 第一千八百四十八部　负指标只是一种实现性质，不是“道”的负面
+
+这再次净化了“负信息”。
+
+离线零点在不同图表中分别成为：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Pick 图表}
+&:\quad\text{负 Gram 方向};\\
+\text{Stieltjes 图表}
+&:\quad\text{非法正轴极点};\\
+\text{string 图表}
+&:\quad\text{非正参数};\\
+\text{canonical 图表}
+&:\quad\text{无 PSD Hamiltonian};\\
+\text{Pontryagin 图表}
+&:\quad\text{负指标状态方向}.
+\end{aligned}
+}
+$$
+
+这些“负”都不是说某个不可名本体含有负物质。
+
+它们表示：
+
+$$
+\boxed{
+\text{当前响应不能在选定的正实现范畴中完成。}
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{负性属于实现关系，
+不属于不可名所指的本体属性。}
+}
+$$
+
+---
+

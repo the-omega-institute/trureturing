@@ -1,0 +1,18 @@
+## 3. Ouroboros 轨道闭合
+
+对一个 generic 零点：
+
+\[
+\rho
+\xrightarrow{J}
+1-\overline\rho
+\xrightarrow{C}
+1-\rho
+\xrightarrow{J}
+\overline\rho
+\xrightarrow{C}
+\rho.
+\]
+
+这是 Klein 四群 Cayley 图中的四边闭环。
+

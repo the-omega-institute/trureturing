@@ -1,0 +1,53 @@
+## 1901.1 Stinespring 版本
+
+更强地，希望构造一个 operator system \(\mathcal A_{\rm prime}\) 和完全正映射：
+
+$$
+\boxed{
+\Phi_\xi:
+\mathcal A_{\rm prime}
+\longrightarrow
+B(\mathcal H_{\rm arith}),
+}
+\tag{1901.2}
+$$
+
+具有 Stinespring 表示：
+
+$$
+\boxed{
+\Phi_\xi(X)
+=
+V^*\pi(X)V.
+}
+\tag{1901.3}
+$$
+
+若 arithmetic kernel entries 都能写成：
+
+$$
+\Phi_\xi(X_t^*X_s),
+$$
+
+则矩阵层正性自动成立。
+
+离线零点的普适黄金 Pick 单胞则证明：
+
+$$
+\boxed{
+\text{不存在任何能够同时实现这两个局部名字的全局 CP 胶合。}
+}
+$$
+
+所以离线零点不是局部 prime block 的负性。
+
+它是：
+
+$$
+\boxed{
+\text{局部正名字无法共同下降为全局完全正关系。}
+}
+$$
+
+---
+

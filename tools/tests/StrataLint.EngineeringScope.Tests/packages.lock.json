@@ -128,6 +128,9 @@
           "StrataLint.Engine": "[1.0.0, )"
         }
       },
+      "stratalint.testsupport": {
+        "type": "Project"
+      },
       "trureturing.truth": {
         "type": "Project"
       },

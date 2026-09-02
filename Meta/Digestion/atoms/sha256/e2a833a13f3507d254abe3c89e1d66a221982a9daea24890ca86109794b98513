@@ -1,0 +1,9 @@
+\[
+\operatorname{reverse}(b)
+=
+\begin{cases}
+b,&k\text{ 为偶数},\\
+1-b,&k\text{ 为奇数}.
+\end{cases}
+\]
+

@@ -1,0 +1,47 @@
+## 1815.1 Euler 区只覆盖一个 horodisk
+
+条件：
+
+$$
+\Re s>1
+$$
+
+在 \(z\)-平面中等价于：
+
+$$
+\boxed{
+\left|
+z-\frac12
+\right|
+<
+\frac12.
+}
+\tag{1815.6}
+$$
+
+所以 Euler 展开只直接控制一个与 \(z=1\) 相切的 horodisk，而不是整个单位圆盘。
+
+RH 要求的是：
+
+$$
+\mathcal C_\xi
+$$
+
+在完整单位圆盘中保持正实性。
+
+因此真正困难是：
+
+$$
+\boxed{
+\text{如何把 Euler horodisk 中的 prime singular-inner 数据，
+连同 Gamma/pole 通道，
+完成成整个圆盘上的 Carathéodory 函数。}
+}
+$$
+
+仓库最新的零区下降反例已经机器证明：仅有“阈值严格缩小”并不能把一个窄区域中的正性自动推进到临界边界；必须提供真实的解析增益。
+
+仓库的 innerness self-improvement 定理也明确要求：每一步必须真的把 innerness 从阈值 \(a\) 输运到更小的 \(F(a)\)，并且迭代阈值确实趋于零；单纯的数值收缩不够。
+
+---
+

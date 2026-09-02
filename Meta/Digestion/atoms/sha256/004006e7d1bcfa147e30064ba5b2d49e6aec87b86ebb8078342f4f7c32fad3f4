@@ -1,0 +1,322 @@
+# 本轮最终结论
+
+这一轮把“不同离线零点生成不同的相”推进到了**分支代数**层。
+
+有限 Blaschke 因子 \(B\) 的模型空间：
+
+$$
+K_B
+$$
+
+不只是一个静态隐藏空间。
+
+选择其任意正交基：
+
+$$
+e_1,\ldots,e_m
+$$
+
+都会产生：
+
+$$
+S_jf=e_j(f\circ B),
+$$
+
+并满足完整 Cuntz relations：
+
+$$
+S_i^*S_j=\delta_{ij}I,
+\qquad
+\sum_jS_jS_j^*=I.
+$$
+
+所以一个 \(m\) 页 phase completion 每推进一步，都会产生 \(m\) 个正交 branch channels。
+
+递归 \(n\) 步以后有：
+
+$$
+m^n
+$$
+
+个 branch histories，以及：
+
+$$
+m^{2n}
+$$
+
+个关系矩阵方向。
+
+这是一种真正的算子自相似。
+
+---
+
+但 individual branch names 并不规范。
+
+不同 Clark phase observers 会为 \(K_B\) 选择不同正交基，并以 \(U(m)\) 旋转全部 Cuntz generators。
+
+真正保持不变的是：
+
+$$
+\boxed{
+\Lambda_B(X)
+=
+\sum_jS_jXS_j^*.
+}
+$$
+
+尤其：
+
+$$
+\boxed{
+\Lambda_B(M_z)=M_B.
+}
+$$
+
+因此“命名律”可以具有基无关意义，而任意一张 sheet 的标签没有本体优先权。
+
+这非常符合“道不可名”的边界：
+
+$$
+\boxed{
+\text{没有一个 branch name 是最终名字；
+能够成为跨名字不变量的，是所有 branch embeddings 共同定义的关系律。}
+}
+$$
+
+但这条关系律仍然只是 \(B\) 的算子影像，不是“道”的定义。
+
+---
+
+黄金比例的位置也被彻底澄清。
+
+一个普通 degree-\(2\) phase cover 只产生自由二分支：
+
+$$
+2^n.
+$$
+
+它不会自动产生 \(\varphi\)。
+
+只有再施加：
+
+$$
+11\text{ forbidden}
+$$
+
+这一 Fibonacci grammar，合法历史数才成为：
+
+$$
+F_{n+2},
+$$
+
+并以：
+
+$$
+\varphi^n
+$$
+
+增长。
+
+其动力完成为：
+
+$$
+\boxed{
+\zeta_{A_\varphi}(z)
+=
+\frac1{1-z-z^2}.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\varphi
+}
+$$
+
+不是一张页，也不是一个局部零点。
+
+它是受约束命名语法的 Perron 增长率和完成极点。
+
+进一步，全部历史之间的关系算子空间按：
+
+$$
+F_{n+2}^2
+$$
+
+增长，其渐近倍率为：
+
+$$
+\boxed{
+\varphi^2.
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\varphi
+=\text{名字增长率},
+\qquad
+\varphi^2
+=\text{名字关系增长率}.
+}
+$$
+
+这可能是目前对“黄金比例是概念交点、\(\varphi^2\) 是更高关系完成”的最严格解释之一。
+
+---
+
+但这也带来一条重要 no-go：
+
+$$
+\boxed{
+\text{任意 two-sheet Clark fibre}
+\not\Rightarrow
+\text{golden grammar}.
+}
+$$
+
+要让黄金比例真正进入 Riemann 完成，必须从 prime、Zeckendorf、observer memory 或某个 primitive exclusion law 中证明 Fibonacci adjacency。
+
+项目目前的 golden tomography 能够恢复已经分离的 lifted modes；它不能从一个已经发生精确退化的粗名字中重新制造区别。
+
+---
+
+磁单极子与黑洞图景也获得了更准确的连接。
+
+phase circle 上的 degree \(m\) 还不是 Chern 数。
+
+但用 boundary map \(B\) 作为 equator clutching function，将它 Bott 悬挂到 \(S^2\)，便产生：
+
+$$
+c_1=m.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{相位 winding}
+\longrightarrow
+\text{Bott suspension}
+\longrightarrow
+\text{磁单极子 Chern 荷}.
+}
+$$
+
+而 shifted depth \(q\) 则提供视界 crossing 的径向方向。
+
+因此：
+
+$$
+\boxed{
+\text{黑洞视界是深度 crossing；
+磁单极子是 crossing 周围相位 winding 的悬挂荷。}
+}
+$$
+
+它们不是同一个图表，但确实是同一个二维缺陷模板的径向与角向读法。
+
+---
+
+对 Riemann 问题，真正承重的新目标已经不再是“猜测离线零点像什么”。
+
+而是构造一个正的算术 branch state：
+
+$$
+\boxed{
+c(r)
+=
+\langle\Omega_\xi,U_\xi^r\Omega_\xi\rangle,
+}
+$$
+
+使实际 Li–Clark curvature moments 成为一个真实 unitary phase process 的 correlations。
+
+一旦这样的状态存在，所有有限 Toeplitz matrices 自动正半定。
+
+项目已经机器证明：
+
+* 固定深度 moment 恢复会稳定传递到 Toeplitz 最小特征值；
+* 给定圆盘内 Verblunsky 参数后，Szegő transfer 自动属于 \(SU(1,1)\)。
+
+缺失的正是中间那条最关键的桥：
+
+$$
+\boxed{
+\text{Prime–Gamma 数据}
+\longrightarrow
+\text{正算术 phase state}
+\longrightarrow
+\text{Li–Clark Toeplitz 正性}.
+}
+$$
+
+黄金 Cuntz–Krieger state 可以作为一个受约束分支模型，但不能未经证明便与实际 Li moments 认同。
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{不可名者不等于 Cuntz 代数；
+Cuntz 代数只记录一套名字怎样不断分支。
+整数 \(m\) 是一步可见的分支数；
+黄金 \(\varphi\) 是无穷受约束历史的增长率；
+\(\varphi^2\) 是这些历史之间关系的增长率；
+离线零点则是在 Riemann 完成中出现的一块本不应存在的 branch correspondence。}
+$$
+以下先补全上一轮未完成的形式化尾部，再继续推进。
+
+```text
+D5/S3/Observer/DepthBreadthObservability/
+  TemporalObservationAlgebra.lean
+  MultiplicityCommutant.lean
+  ObservationDepthKernel.lean
+  ObservationBreadthKernel.lean
+  DepthBreadthKernelMonotone.lean
+  DistinctModesResolvedByTime.lean
+  EqualModesRequireNewChannel.lean
+
+D5/S3/ConceptDynamics/PositiveInnovation/
+  CoarseObservationProjection.lean
+  RefinedObservationProjection.lean
+  ObservationRefinementPythagoras.lean
+  ReflectedAntisymmetricInnovation.lean
+  RemovedPositiveInnovationNegativeCorrection.lean
+
+D5/S3/Weil/LiClarkPositiveState/
+  LiCurvatureSequence.lean
+  LiCurvatureToeplitz.lean
+  PositivePhaseState.lean
+  PositivePhaseStateGNS.lean
+  PositivePhaseStateImpliesToeplitzPSD.lean
+  PrimeGammaPositivePhaseStateTarget.lean
+
+D5/S3/Weil/LiClarkSchurHorizon/
+  LiPredictionError.lean
+  LiReflectionCoefficient.lean
+  LevinsonPredictionRecursion.lean
+  FirstNonpositiveToeplitzExtension.lean
+  ReflectionCoefficientUnitCircleCrossing.lean
+  SchurHorizonFiniteCertificate.lean
+
+D5/S3/GoldenObserver/GoldenSzegoCell/
+  GoldenReflectionEnergy.lean
+  GoldenPredictionRetention.lean
+  GoldenSzegoBoost.lean
+  GoldenSzegoRapidity.lean
+  GoldenGrammarNotConjugateSzego.lean
+  GoldenBarrierStrongerThanRH.lean
+
+D5/S3/Weil/LiClarkFiniteCertification/
+  FixedDepthNegativeMargin.lean
+  FixedDepthPositiveMargin.lean
+  WindowedMinimumEigenvalueSignRecovery.lean
+  NearSingularCertificationWarning.lean
+```
+
+---
+

@@ -1,0 +1,11 @@
+\[
+\mathcal H_\varphi(z)
+=
+\sum_{v\ge0}
+e^{-z\beta(v)},
+\qquad
+\Re z>0.
+\]
+
+对每个素数 \(p\)，黄金 local factor 为：
+

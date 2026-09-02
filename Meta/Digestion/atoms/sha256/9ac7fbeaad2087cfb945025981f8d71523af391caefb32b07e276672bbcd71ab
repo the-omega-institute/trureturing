@@ -1,0 +1,13 @@
+### N1　`ZeckendorfRealThread`
+
+把任意非负实数表示为：
+
+\[
+\bigl(
+\operatorname{wdigits}
+\lfloor\varphi^N x\rfloor
+\bigr)_{N\ge0}
+\]
+
+并给出显式误差与单射重构。
+

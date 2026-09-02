@@ -1,0 +1,14 @@
+## 26. 有限镜像闭合零点窗
+
+取上半平面中每个 \(J\)-orbit 的右代表：
+
+\[
+\rho_a=\frac12+\delta_a+i\gamma_a,
+\qquad
+\delta_a\ge0,
+\]
+
+并保留重数 \(m_a\) 与正权 \(w_a\)。
+
+定义横向 moment generating function：
+

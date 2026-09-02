@@ -1,0 +1,30 @@
+## 版本 A：Weyl 正性
+
+从 prime–pole–Gamma 数据直接证明：
+
+$$
+\boxed{
+m_\xi(z)
+=
+i\frac{\xi'}{\xi}
+\left(
+\frac12-iz
+\right)
+}
+$$
+
+是 Herglotz 函数。
+
+即：
+
+$$
+\boxed{
+\Im m_\xi(z)>0
+\qquad
+(z\in\mathbb C_+).
+}
+\tag{1854.1}
+$$
+
+---
+

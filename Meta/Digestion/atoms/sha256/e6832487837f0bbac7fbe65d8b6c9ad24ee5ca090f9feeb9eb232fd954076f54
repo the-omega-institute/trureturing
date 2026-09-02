@@ -1,0 +1,10 @@
+## 5. 黄金量化线程
+
+对 \(x\ge0\) 和 \(N\in\mathbb N\)，定义：
+
+\[
+q_N(x)=\left\lfloor\varphi^N x\right\rfloor.
+\]
+
+令：
+

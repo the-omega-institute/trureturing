@@ -1,0 +1,56 @@
+## 1840.1 尺度 \(a\) 的观察向量
+
+继续记：
+
+$$
+A(a)
+=
+L_\xi\!\left(\frac12+a\right).
+$$
+
+RH 下：
+
+$$
+\boxed{
+A(a)
+=
+a
+\int_{\mathbb R}
+\frac{d\nu_\Gamma(\gamma)}
+{a^2+\gamma^2}
+>0.
+}
+\tag{1840.4}
+$$
+
+定义：
+
+$$
+\boxed{
+\Omega_a(\gamma)
+=
+\sqrt{
+\frac{a}
+{A(a)(a^2+\gamma^2)}
+}.
+}
+\tag{1840.5}
+$$
+
+则：
+
+$$
+\|\Omega_a\|^2
+=
+\frac{a}{A(a)}
+\int
+\frac{d\nu_\Gamma(\gamma)}
+{a^2+\gamma^2}
+=
+1.
+$$
+
+所以 \(\Omega_a\) 是单位观察向量。
+
+---
+

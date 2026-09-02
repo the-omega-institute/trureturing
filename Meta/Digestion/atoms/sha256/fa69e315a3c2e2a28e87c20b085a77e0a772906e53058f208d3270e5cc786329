@@ -1,0 +1,107 @@
+## v10.7：Li–Carathéodory 恒等式、算术阻抗、Clark 边界原子与离线零点的普适二点反证书
+
+以下从前文**第一千八百部**继续。
+
+本轮最重要的推进，是把此前分散的：
+
+$$
+\text{Li 曲率}
+\quad
+\text{Herglotz 正性}
+\quad
+\text{Schur 收缩}
+\quad
+\text{Clark 测度}
+\quad
+\text{de Branges／Nevanlinna 核}
+$$
+
+压缩成同一个显式函数。
+
+令
+
+$$
+L_\xi(s):=\frac{\xi'(s)}{\xi(s)},
+\qquad
+\lambda_1=L_\xi(1)>0.
+$$
+
+定义圆盘坐标：
+
+$$
+z=1-\frac1s,
+\qquad
+s=\frac1{1-z}.
+$$
+
+那么 normalized Li 二阶曲率的 Carathéodory 生成函数，恰好是：
+
+$$
+\boxed{
+\mathcal C_\xi(z)
+=
+\frac1{\lambda_1}
+L_\xi\!\left(\frac1{1-z}\right).
+}
+$$
+
+由此得到一条非常短的等价链：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\Re L_\xi(s)>0
+\quad
+(\Re s>\tfrac12)
+}
+$$
+
+$$
+\boxed{
+\iff
+\mathcal C_\xi
+\text{ 是 Carathéodory 函数}
+}
+$$
+
+$$
+\boxed{
+\iff
+\mathfrak s_\xi
+=
+\frac{\mathcal C_\xi-1}{\mathcal C_\xi+1}
+\text{ 是 Schur 函数}
+}
+$$
+
+$$
+\boxed{
+\iff
+\text{其 Pick／Nevanlinna 核全部正半定}.
+}
+$$
+
+更重要的是：若存在任意离线零点，它会在单位圆盘内部产生一个点 \(z_\rho\)，满足
+
+$$
+\mathfrak s_\xi(z_\rho)=1.
+$$
+
+这会立即生成一个与零点高度、离线距离和重数都无关的普适负矩阵：
+
+$$
+\boxed{
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix},
+\qquad
+\det=-1.
+}
+$$
+
+所以离线零点除了此前的高阶 Hankel、Jensen、normal-jet 反证书以外，还必然拥有一个**二点 Pick 反证书**。
+
+---
+

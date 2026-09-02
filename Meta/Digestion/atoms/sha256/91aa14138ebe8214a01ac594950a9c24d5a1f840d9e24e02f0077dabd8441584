@@ -1,0 +1,53 @@
+# 第一千八百一十部　普适 \(2\times2\) Pick 反证书
+
+定义 de Branges–Rovnyak／Pick 核：
+
+$$
+\boxed{
+K_{\mathfrak s}(z,w)
+=
+\frac{
+1-
+\mathfrak s_\xi(z)
+\overline{\mathfrak s_\xi(w)}
+}{
+1-z\overline w
+}.
+}
+\tag{1810.1}
+$$
+
+若 \(\mathfrak s_\xi\) 为 Schur 函数，则对任意有限点集：
+
+$$
+[K_{\mathfrak s}(z_i,z_j)]\succeq0.
+$$
+
+现在使用：
+
+$$
+\mathfrak s_\xi(0)=0,
+\qquad
+\mathfrak s_\xi(z_\rho)=1.
+$$
+
+则：
+
+$$
+K_{\mathfrak s}(0,0)=1,
+$$
+
+$$
+K_{\mathfrak s}(0,z_\rho)
+=
+K_{\mathfrak s}(z_\rho,0)
+=
+1,
+$$
+
+$$
+K_{\mathfrak s}(z_\rho,z_\rho)=0.
+$$
+
+所以：
+

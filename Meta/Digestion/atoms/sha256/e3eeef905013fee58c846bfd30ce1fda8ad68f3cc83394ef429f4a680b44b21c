@@ -1,0 +1,29 @@
+### 定义 16E.2（coherent zero）
+
+若对任意有限 local-factor deletion，零点仍保留，则称其为 coherent zero。
+
+经典 ζ 的非平凡零点在仓库中已经被证明对有限 Euler 素数修改稳定；这正是 coherent divisor 的原型。
+
+因此，黄金 germ 若用于 RH detector，应考察：
+
+\[
+\boxed{
+\frac{\text{full golden divisor}}
+{\text{finite local prime-address divisor}}
+}
+\]
+
+而不是要求黄金 germ 的全部零点都在一条线。
+
+这与本卷的 prime-constellation 理论共享同一原则：
+
+\[
+\boxed{
+\text{scalar local product不是完整相关本体；}
+\quad
+\text{必须区分 local memory 与 global coherence}.
+}
+\]
+
+---
+

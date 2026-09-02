@@ -1,0 +1,10 @@
+\[
+|\xi(\tfrac12+\delta+it_0)|^2
+=
+C_m\delta^{2m}
++
+O(\delta^{2m+2}),
+\qquad
+C_m>0.
+\]
+

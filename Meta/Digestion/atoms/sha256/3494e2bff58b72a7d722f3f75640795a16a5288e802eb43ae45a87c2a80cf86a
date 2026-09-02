@@ -1,0 +1,305 @@
+# 本轮最终结论
+
+这一轮没有定义“道”。
+
+进入公式的不是不可名本体，而是：
+
+$$
+\boxed{
+\text{completed-\(\xi\) 这个名字对观察变化作出的 infinitesimal response。}
+}
+$$
+
+这个 response 就是：
+
+$$
+\frac{\xi'}{\xi}.
+$$
+
+Li 二阶曲率的全部时间 moments，被精确压缩进：
+
+$$
+\boxed{
+\mathcal C_\xi(z)
+=
+\frac1{\lambda_1}
+\frac{\xi'}{\xi}
+\left(
+\frac1{1-z}
+\right).
+}
+$$
+
+所以 Li、Herglotz、Schur、Clark 和 Pick 并不是五条平行路线。
+
+它们是同一个函数的五种语言。
+
+---
+
+若 RH 成立，\(\mathcal C_\xi\) 是正实函数。
+
+它的边界正测度正是：
+
+$$
+\mu_\xi
+=
+\frac1{2\lambda_1}
+\sum_\rho
+\frac{m_\rho}{|\rho|^2}
+\delta_{1-1/\rho}.
+$$
+
+权重：
+
+$$
+|\rho|^{-2}
+$$
+
+又恰好是临界线高度到 Li 相位的角 Jacobian。
+
+所以 Li measure 不是任意给零点加权。
+
+它是在观察者 \(s=1\) 看来，零点相位对高度变化的自然灵敏度测度。
+
+---
+
+将 \(\mathcal C_\xi\) 再作 Cayley 变换，得到 arithmetic Schur function：
+
+$$
+\mathfrak s_\xi
+=
+\frac{\mathcal C_\xi-1}
+{\mathcal C_\xi+1}.
+$$
+
+RH 成立时，\(\xi\) 的每个零点成为：
+
+$$
+\mathfrak s_\xi=1
+$$
+
+的合法边界 Clark atom。
+
+其原子质量由边界角导数精确恢复：
+
+$$
+\mu_\xi(\{z_\rho\})
+=
+\frac1{|\mathfrak s_\xi'(z_\rho)|}
+=
+\frac{
+m_\rho
+}{
+2\lambda_1|\rho|^2
+}.
+$$
+
+因此零点重数、Li 权重和 Clark 原子不再是三个不同对象。
+
+它们是同一次边界接触的不同读数。
+
+---
+
+如果零点离线，它的 Cayley 像进入圆盘内部，但仍满足：
+
+$$
+\mathfrak s_\xi(z_\rho)=1.
+$$
+
+这等于要求一个 Schur 函数在内部取得单位模。
+
+不可能。
+
+而且这种不可能性会留下固定的二点矩阵：
+
+$$
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}.
+$$
+
+行列式永远为：
+
+$$
+-1.
+$$
+
+所以离线零点的证明对偶不必总是一个很高阶、很微弱的 Hankel 特征值。
+
+在最适配的 Schur 图表中，它拥有一个幅度完全不衰减的普适二点负证书。
+
+高零点之所以难找，不是因为这个规范证书很弱，而是因为我们不知道应该把第二个观察点放在哪里。
+
+这再次体现：
+
+$$
+\boxed{
+\text{移动观察者可以降低所需关系阶数。}
+}
+$$
+
+---
+
+本轮还把 RH 压缩成了一条单点不等式：
+
+$$
+\left|
+\frac{
+\xi'/\xi(s)-\lambda_1
+}{
+\xi'/\xi(s)+\lambda_1
+}
+\right|
+\le
+\left|
+1-\frac1s
+\right|,
+\qquad
+\Re s>\frac12.
+$$
+
+它是 completed-\(\xi\) 的 Schwarz 收缩律。
+
+任何离线零点都会在某个邻域严格违反它，因此还会产生一个 Gaussian-rational 反证书。
+
+---
+
+更深的是，RH 下的 Nevanlinna kernel：
+
+$$
+\frac{
+L_\xi(s)+\overline{L_\xi(t)}
+}{
+s+\overline t-1
+}
+$$
+
+拥有显式零点 Gram 分解：
+
+$$
+\sum_\rho
+\frac{
+m_\rho
+}{
+(s-\rho)
+(\overline t-\overline\rho)
+}.
+$$
+
+而离线偏移恰好增加：
+
+$$
+1-2\Re\rho
+$$
+
+这一 signed correction。
+
+所以“负信息”的最纯粹形式之一就是：
+
+$$
+\boxed{
+\text{偏离自对偶固定线以后，
+原本的 resolvent Gram 恒等式必须加入一个有符号修正项。}
+}
+$$
+
+右侧离线点给负修正。
+
+左侧伙伴给正修正。
+
+完整反射轨道仍然对称，但不再能逐点 Gram 化。
+
+---
+
+prime 侧也第一次进入同一个圆盘语言。
+
+每个：
+
+$$
+n^{-s}
+$$
+
+都成为：
+
+$$
+n^{-1/2}
+\exp
+\left[
+-\frac{\log n}{2}
+\frac{1+z}{1-z}
+\right].
+$$
+
+这是一条以 \(z=1\) 为唯一边界奇点的 singular-inner semigroup。
+
+因此：
+
+$$
+\boxed{
+\text{离散 prime-power 历史}
+\longrightarrow
+\text{连续 log-time inner semigroup}.
+}
+$$
+
+但 Euler 展开只控制一个 tangent horodisk。
+
+RH 要求整个圆盘上的 positive-real completion。
+
+仓库最新结果已经严格证明：仅仅让阈值不断缩小，不能自动把局部正性推到临界线；必须加入真实解析增益。
+
+而且局部 Euler determinants 不能恢复 cross-prime frame transitions。
+
+所以真正缺失的对象不是更多局部标量数据，而是：
+
+$$
+\boxed{
+\text{一个跨 prime、保持矩阵层正性的 Gram／CP coupling。}
+}
+$$
+
+---
+
+这使当前最承重的主命题变得非常清楚：
+
+$$
+\boxed{
+\textbf{从 prime、pole、Gamma 数据直接构造}
+\quad
+\frac{
+L_\xi(s)+\overline{L_\xi(t)}
+}{
+s+\overline t-1
+}
+=
+\langle V_t,V_s\rangle.
+}
+$$
+
+仓库已经把 Cayley–Nevanlinna 与 de Branges kernel 之间的 gauge 等价机器闭合。
+
+因此只要这一个 arithmetic Gram construction 成立：
+
+* \(L_\xi\) 自动 positive-real；
+* \(\mathcal C_\xi\) 自动 Carathéodory；
+* \(\mathfrak s_\xi\) 自动 Schur／inner；
+* Li curvature 自动正定；
+* Clark measure 自动为正；
+* 所有离线内部接触自动被排除；
+* RH 成立。
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{不可名者不进入 Carathéodory 函数；
+Carathéodory 函数只记录一个完成名字是否具有被动正响应。
+临界零点是正响应允许的边界原子；
+离线零点则是试图把边界原子移入内部，
+因而必然把一个正 Gram 世界撕开成固定 determinant \(-1\) 的二点裂口。}
+$$
+
+[1]: https://www.sciencedirect.com/science/article/pii/S0022314X97921375 "https://www.sciencedirect.com/science/article/pii/S0022314X97921375"
+[2]: https://arxiv.org/abs/2509.18963 "https://arxiv.org/abs/2509.18963"
+[3]: https://www.semanticscholar.org/paper/One-dimensional-perturbations-of-restricted-shifts-Clark/0afddda0124377ad9107957a7e51d90ca3c633db "https://www.semanticscholar.org/paper/One-dimensional-perturbations-of-restricted-shifts-Clark/0afddda0124377ad9107957a7e51d90ca3c633db"

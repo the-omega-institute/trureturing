@@ -1,0 +1,94 @@
+# 第一千八百零三部　RH 等价于 \(L_\xi\) 的正实性
+
+令：
+
+$$
+s=\frac12+w,
+\qquad
+\Re w>0.
+$$
+
+若 RH 成立，centered completed function：
+
+$$
+F(w)=\xi\!\left(\frac12+w\right)
+$$
+
+具有 genus-zero 平方乘积：
+
+$$
+\boxed{
+\frac{F(w)}{F(0)}
+=
+\prod_{\gamma>0}
+\left(
+1+\frac{w^2}{\gamma^2}
+\right)^{m_\gamma}.
+}
+\tag{1803.1}
+$$
+
+对数求导：
+
+$$
+\boxed{
+L_\xi\!\left(\frac12+w\right)
+=
+\sum_{\gamma>0}
+m_\gamma
+\left(
+\frac1{w-i\gamma}
++
+\frac1{w+i\gamma}
+\right).
+}
+\tag{1803.2}
+$$
+
+若：
+
+$$
+w=x+iy,
+\qquad
+x>0,
+$$
+
+则每项实部均严格为正：
+
+$$
+\Re\frac1{w-i\gamma}
+=
+\frac{x}{x^2+(y-\gamma)^2}>0.
+$$
+
+因此：
+
+$$
+\boxed{
+\Re
+L_\xi\!\left(
+\frac12+x+iy
+\right)
+=
+\sum_{\gamma}
+m_\gamma
+\frac{x}{x^2+(y-\gamma)^2}
+>0.
+}
+\tag{1803.3}
+$$
+
+右边正是临界零点计数测度的 Poisson 延拓。
+
+反过来，若 \(L_\xi\) 在：
+
+$$
+\Re s>\frac12
+$$
+
+全纯且具有正实部，则该区域不可能含 \(\xi\) 的零点，因为每个零点都会成为 \(L_\xi\) 的极点。
+
+再由函数方程的反射对称，左侧也不存在离线零点。
+
+所以：
+

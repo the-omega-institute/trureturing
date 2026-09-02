@@ -1,0 +1,69 @@
+## 1912.1 黄金二次型
+
+令：
+
+$$
+v=(x,y)^T.
+$$
+
+定义：
+
+$$
+\boxed{
+Q_\varphi(v)
+=
+x^2-xy-y^2
+=
+\frac{\sqrt5}{2}
+v^*\mathfrak Cv.
+}
+\tag{1912.7}
+$$
+
+直接计算：
+
+$$
+\boxed{
+\mathbb F^T\mathfrak C\mathbb F
+=
+-\mathfrak C.
+}
+\tag{1912.8}
+$$
+
+所以：
+
+$$
+\boxed{
+Q_\varphi(\mathbb Fv)
+=
+-Q_\varphi(v).
+}
+\tag{1912.9}
+$$
+
+更一般地：
+
+$$
+\boxed{
+Q_\varphi(\mathbb F^nv)
+=
+(-1)^nQ_\varphi(v).
+}
+\tag{1912.10}
+$$
+
+仓库已经将这一反等距恒等式提升到任意实 Hilbert 空间维数并机器证明：对
+
+$$
+\mathcal F(X,Y)=(X+Y,X),
+$$
+
+有
+
+$$
+Q(\mathcal F(X,Y))=-Q(X,Y).
+$$
+
+---
+

@@ -1,0 +1,22 @@
+* 一个复相位结构 \(\mathfrak J\)。
+
+它们生成的实 rank-two Clifford 代数同构于：
+
+$$
+M_2(\mathbb R),
+$$
+
+其偶子代数：
+
+$$
+\operatorname{span}_{\mathbb R}\{I,\mathfrak J\}
+$$
+
+同构于：
+
+$$
+\mathbb C.
+$$
+
+---
+

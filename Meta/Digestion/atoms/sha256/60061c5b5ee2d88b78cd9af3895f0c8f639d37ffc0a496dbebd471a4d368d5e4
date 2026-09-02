@@ -1,0 +1,11 @@
+### ZC-F　局部 all-one correlation
+
+```lean
+theorem local_all_one_probability
+    (p : Nat.Primes) (H : PrimeConstellation) :
+    localJointProbability p H =
+      1 - residueSupportCard p H / p
+```
+
+---
+

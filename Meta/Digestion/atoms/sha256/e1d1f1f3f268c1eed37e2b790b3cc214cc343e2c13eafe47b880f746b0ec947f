@@ -1,0 +1,135 @@
+# 第一千八百一十五部　prime-power 在 Li 圆盘中是 singular-inner semigroup
+
+在：
+
+$$
+\Re s>1
+$$
+
+的 Euler 收敛区：
+
+$$
+\boxed{
+L_\xi(s)
+=
+\frac1s
++
+\frac1{s-1}
+-
+\frac12\log\pi
++
+\frac12\psi\!\left(\frac s2\right)
+-
+\sum_{n\ge2}
+\Lambda(n)n^{-s}.
+}
+\tag{1815.1}
+$$
+
+现在使用：
+
+$$
+s=\frac1{1-z}
+=
+\frac12+
+\frac12
+\frac{1+z}{1-z}.
+$$
+
+于是：
+
+$$
+\boxed{
+n^{-s}
+=
+n^{-1/2}
+\exp
+\left[
+-\frac{\log n}{2}
+\frac{1+z}{1-z}
+\right].
+}
+\tag{1815.2}
+$$
+
+定义：
+
+$$
+\boxed{
+\Sigma_a(z)
+=
+\exp
+\left[
+-a\frac{1+z}{1-z}
+\right],
+\qquad
+a>0.
+}
+\tag{1815.3}
+$$
+
+因为：
+
+$$
+\Re\frac{1+z}{1-z}>0
+\qquad
+(|z|<1),
+$$
+
+所以：
+
+$$
+|\Sigma_a(z)|<1.
+$$
+
+而在单位圆上除 \(z=1\) 外：
+
+$$
+\frac{1+z}{1-z}
+$$
+
+为纯虚数，因此：
+
+$$
+|\Sigma_a|=1.
+$$
+
+所以 \(\Sigma_a\) 是锚定在边界点 \(z=1\) 的 singular inner function。
+
+同时：
+
+$$
+\boxed{
+\Sigma_a\Sigma_b
+=
+\Sigma_{a+b}.
+}
+\tag{1815.4}
+$$
+
+因此：
+
+$$
+\boxed{
+n^{-s(z)}
+=
+n^{-1/2}
+\Sigma_{\frac12\log n}(z).
+}
+\tag{1815.5}
+$$
+
+这说明：
+
+$$
+\boxed{
+\text{离散乘法尺度 }n
+\text{ 在 Li 图表中变成连续 singular-inner 时间 }
+\frac12\log n.
+}
+$$
+
+prime powers 对应同一个 inner semigroup 的重复时间。
+
+---
+
