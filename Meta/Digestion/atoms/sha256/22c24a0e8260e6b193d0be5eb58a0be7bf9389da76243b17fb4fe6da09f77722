@@ -1,0 +1,6 @@
+## 四　M2-c 预登记:每个 `ZeroData` 对每个 Weil 测试函数对称收敛(`SymmetricConvergentOfZetaSummable`)
+
+**义务**:单一公开定理 `symmetricConvergent_of_zeroData (Z : ZeroData) (g : WeilTestFunction) : SymmetricConvergent Z g`。闭合路线:冻结的 `Zeta23.WeilEF.EF_lit_zetaZeroConfig` 给出重数加权零点项的绝对可和性;经 `ClassicExplicitFormula.zeroEquiv` 将其转写到 `Z` 的枚举,`HasSum` 沿等价传输,`tendsto_symmetricIndices` 把对称截断和的极限接到该和。落点 `D5/S3/Weil/ZetaBridge/`。
+**可证伪预测(写在跑之前)**:若正确,定理为冻结重型结果的中等提取,公理集为标准三条,且 §M2 第 3 条(canonical `SymmetricConvergent`)由此**强于**原文(对所有 `g`,不限卷积平方);若 `EF_lit_zetaZeroConfig` 的光滑性/紧支前提与 `WeilTestFunction` 不匹配,则记所缺前提名并改标 `open`。
+**边界**:本义务不改 O-6 的陈述;`hZero` 前件的消去(改写 O-6)是后续独立义务,须先经本条冻结。
+
