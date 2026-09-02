@@ -95,10 +95,11 @@ internal sealed class OptimalCompetitionSelectorDocument
                         "For a finite real-rational feature family satisfying all five source "
                             + "conditions, the premise Delta > 0 yields a unit witness in W perp.")),
                     Paragraph(Text(
-                        "The public result states every source conclusion: competitors are "
-                            + "annihilated, the target response is Delta, the witness has the "
-                            + "displayed normalized-projection formula, and the problem is "
-                            + "explicitly an orthogonal projection."))),
+                        "The public result keeps membership in W perp as the source-aligned "
+                            + "orthogonality assertion. Competitor annihilation is its derived "
+                            + "generator-level expansion, not another conjunction leaf. The target "
+                            + "response is Delta, the witness has the displayed normalized-projection "
+                            + "formula, and the problem is explicitly an orthogonal projection."))),
                 DescribeRole.Theorem))));
 
     private static Formula Apply(Formula function, params Formula[] arguments)
@@ -129,14 +130,11 @@ internal sealed class OptimalCompetitionSelectorDocument
         Formula family = F.Id("Phi");
         Formula target = new Formula.Subscript(F.Id("z"), D(0));
         Formula competitors = F.Id("z");
-        Formula index = F.Id("j");
         Formula complex = Seq(Mathbb, Grp(F.Id("C")));
         Formula profileSpace = Call("EuclideanSpace", complex, Call("Fin", dimension));
         Formula profileFamily = Call("FiniteRealRationalFeatureFamily", dimension);
         Formula competitorFamily = Seq(Call("Fin", competitorCount), Sp, To, Sp, complex);
         Formula targetProfile = Call("featureProfile", family, target);
-        Formula competitorProfile = Call(
-            "featureProfile", family, Apply(competitors, index));
         Formula space = F.Id("W");
         Formula orthogonal = Seq(space, Caret, Grp(Perp));
         Formula delta = F.Id("Delta");
@@ -145,9 +143,6 @@ internal sealed class OptimalCompetitionSelectorDocument
         Formula selectorFormula = Equal(
             selector,
             Seq(Call("norm", projection), Caret, Grp(Minus, D(1)), Sp, Cdot, Sp, projection));
-        Formula competitorClause = Seq(
-            Forall, Sp, index, Colon, Sp, Call("Fin", competitorCount), Comma, Sp,
-            Equal(Call("profileDot", selector, competitorProfile), D(0)));
         Formula targetClause = Equal(
             Call("abs", Call("profileDot", selector, targetProfile)), delta);
         Formula orthogonalProblemClause = Call(
@@ -157,12 +152,10 @@ internal sealed class OptimalCompetitionSelectorDocument
             And(
                 Seq(selector, Sp, InMacro, Sp, orthogonal),
                 And(
-                    Grp(competitorClause),
+                    targetClause,
                     And(
-                        targetClause,
-                        And(
-                            selectorFormula,
-                            orthogonalProblemClause)))));
+                        selectorFormula,
+                        orthogonalProblemClause))));
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),

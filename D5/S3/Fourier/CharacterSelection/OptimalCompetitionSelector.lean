@@ -108,10 +108,38 @@ private theorem normalized_residual_exact_readout
   · rw [gEq, inner_neg_left, abs_neg] at gMax
     exact gMax
 
+/-- Competitor annihilation is the generator-level expansion of T4. It follows from T4 by
+`Submodule.span_induction`; it is not an independent public assertion. -/
+private theorem orthogonal_membership_implies_competitor_annihilation
+    {d m : Nat} (family : FiniteRealRationalFeatureFamily d)
+    (competitors : Fin m -> Complex) (candidate : CharacterProfileSpace d)
+    (candidateMem : candidate ∈ (competitorProfileSpace family competitors)ᗮ) :
+    ∀ j : Fin m, profileDot candidate (featureProfile family (competitors j)) = 0 := by
+  let W := competitorProfileSpace family competitors
+  change candidate ∈ Wᗮ at candidateMem
+  have annihilatesSpan :
+      ∀ y : CharacterProfileSpace d, y ∈ W -> inner Real candidate y = 0 := by
+    intro y yMem
+    refine Submodule.span_induction
+      (p := fun y _ => inner Real candidate y = 0) ?_ ?_ ?_ ?_ yMem
+    · intro y yRange
+      apply Submodule.inner_left_of_mem_orthogonal (K := W)
+      · exact Submodule.subset_span yRange
+      · exact candidateMem
+    · simp
+    · intro x y _ _ hx hy
+      simp only [inner_add_right, hx, hy, add_zero]
+    · intro r x _ hx
+      simp only [real_inner_smul_right, hx, mul_zero]
+  intro j
+  change inner Real candidate (featureProfile family (competitors j)) = 0
+  exact annihilatesSpan _ (Submodule.subset_span (Set.mem_range_self j))
+
 /-- OACTC 925.1: the normalized projection of the target profile onto the orthogonal complement
-of the real competitor span is a unit selector. It annihilates every competing profile, has
-absolute target response equal to the metric margin, and is exactly the displayed projection
-formula. The public conclusion also records that the margin is an orthogonal-projection problem. -/
+of the real competitor span is a unit selector. Orthogonal-complement membership has competitor
+annihilation as its generator-level corollary. The selector has absolute target response equal to
+the metric margin and is exactly the displayed projection formula. The public conclusion also
+records that the margin is an orthogonal-projection problem. -/
 theorem optimal_competition_selector
     {d m : Nat}
     (family : FiniteRealRationalFeatureFamily d) (target : Complex)
@@ -122,7 +150,6 @@ theorem optimal_competition_selector
     ∃ cStar : CharacterProfileSpace d,
       ‖cStar‖ = 1 ∧
       cStar ∈ Wᗮ ∧
-      (∀ j : Fin m, profileDot cStar (featureProfile family (competitors j)) = 0) ∧
       abs (profileDot cStar (featureProfile family target)) = delta ∧
       cStar =
         ‖Wᗮ.starProjection (featureProfile family target)‖⁻¹ •
@@ -161,14 +188,7 @@ theorem optimal_competition_selector
     have readout := normalized_residual_exact_readout closedW x residualNeZero
     rw [residualEq, ← marginEq] at readout
     exact readout
-  have cStarAnnihilates :
-      ∀ j : Fin m, profileDot cStar (featureProfile family (competitors j)) = 0 := by
-    intro j
-    change inner Real cStar (featureProfile family (competitors j)) = 0
-    apply Submodule.inner_left_of_mem_orthogonal (K := W)
-    · exact Submodule.subset_span (Set.mem_range_self j)
-    · exact cStarMem
-  refine ⟨cStar, cStarNorm, cStarMem, cStarAnnihilates, cStarReadout, ?_, ?_⟩
+  refine ⟨cStar, cStarNorm, cStarMem, cStarReadout, ?_, ?_⟩
   · simpa only [x] using cStarFormula
   · exact marginEq
 
@@ -204,8 +224,9 @@ private theorem selector_competitor_annihilation_check
       ∀ j : Fin m, profileDot cStar (featureProfile family (competitors j)) = 0 := by
   have result := optimal_competition_selector family target competitors positiveMargin
   dsimp only at result
-  rcases result with ⟨cStar, _, _, cStarAnnihilates, _⟩
-  exact ⟨cStar, cStarAnnihilates⟩
+  rcases result with ⟨cStar, _, cStarMem, _⟩
+  exact ⟨cStar,
+    orthogonal_membership_implies_competitor_annihilation family competitors cStar cStarMem⟩
 
 private theorem selector_target_response_check
     {d m : Nat}
@@ -217,7 +238,7 @@ private theorem selector_target_response_check
         selectorMargin family target competitors := by
   have result := optimal_competition_selector family target competitors positiveMargin
   dsimp only at result
-  rcases result with ⟨cStar, _, _, _, cStarReadout, _⟩
+  rcases result with ⟨cStar, _, _, cStarReadout, _⟩
   exact ⟨cStar, cStarReadout⟩
 
 private theorem selector_formula_check
@@ -233,7 +254,7 @@ private theorem selector_formula_check
           (featureProfile family target) := by
   have result := optimal_competition_selector family target competitors positiveMargin
   dsimp only at result
-  rcases result with ⟨cStar, _, _, _, _, cStarFormula, _⟩
+  rcases result with ⟨cStar, _, _, _, cStarFormula, _⟩
   exact ⟨cStar, cStarFormula⟩
 
 private theorem selector_projection_problem_check
@@ -244,7 +265,7 @@ private theorem selector_projection_problem_check
     IsOrthogonalProjectionProblem family target competitors := by
   have result := optimal_competition_selector family target competitors positiveMargin
   dsimp only at result
-  rcases result with ⟨_, _, _, _, _, _, projectionProblem⟩
+  rcases result with ⟨_, _, _, _, _, projectionProblem⟩
   exact projectionProblem
 
 private noncomputable def zeroFeatureFamily (d : Nat) : FiniteRealRationalFeatureFamily d where

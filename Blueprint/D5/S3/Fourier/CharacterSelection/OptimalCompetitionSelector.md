@@ -90,7 +90,7 @@ The geometric margin is exactly the norm of the target feature profile's project
 
 **Theorem 1.8 (The normalized complementary projection is optimal).**
 
-$$\begin{gathered}\forall d, m: \mathbb{N},\\{}Phi: \operatorname{FiniteRealRationalFeatureFamily}(d), z_{0}: \mathbb{C}, z: \operatorname{Fin}(m) \to \mathbb{C},\\{}\operatorname{let}(W := \operatorname{competitorProfileSpace}(Phi, z), Delta := \operatorname{selectorMargin}(Phi, z_{0}, z))\;\\{}0 < Delta \Rightarrow \exists c_{*}: \operatorname{EuclideanSpace}(\mathbb{C}, \operatorname{Fin}(d)), \operatorname{norm}(c_{*}) = 1 \land \left(c_{*} \in W^{\perp} \land \left({\forall j: \operatorname{Fin}(m), \operatorname{profileDot}(c_{*}, \operatorname{featureProfile}(Phi, z(j))) = 0} \land \left(\operatorname{abs}(\operatorname{profileDot}(c_{*}, \operatorname{featureProfile}(Phi, z_{0}))) = Delta \land \left(c_{*} = \operatorname{norm}(\operatorname{starProjection}(W^{\perp}, \operatorname{featureProfile}(Phi, z_{0})))^{-1} \cdot \operatorname{starProjection}(W^{\perp}, \operatorname{featureProfile}(Phi, z_{0})) \land \operatorname{IsOrthogonalProjectionProblem}(Phi, z_{0}, z)\right)\right)\right)\right).\end{gathered}$$
+$$\begin{gathered}\forall d, m: \mathbb{N},\\{}Phi: \operatorname{FiniteRealRationalFeatureFamily}(d), z_{0}: \mathbb{C}, z: \operatorname{Fin}(m) \to \mathbb{C},\\{}\operatorname{let}(W := \operatorname{competitorProfileSpace}(Phi, z), Delta := \operatorname{selectorMargin}(Phi, z_{0}, z))\;\\{}0 < Delta \Rightarrow \exists c_{*}: \operatorname{EuclideanSpace}(\mathbb{C}, \operatorname{Fin}(d)), \operatorname{norm}(c_{*}) = 1 \land \left(c_{*} \in W^{\perp} \land \left(\operatorname{abs}(\operatorname{profileDot}(c_{*}, \operatorname{featureProfile}(Phi, z_{0}))) = Delta \land \left(c_{*} = \operatorname{norm}(\operatorname{starProjection}(W^{\perp}, \operatorname{featureProfile}(Phi, z_{0})))^{-1} \cdot \operatorname{starProjection}(W^{\perp}, \operatorname{featureProfile}(Phi, z_{0})) \land \operatorname{IsOrthogonalProjectionProblem}(Phi, z_{0}, z)\right)\right)\right).\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Fourier/CharacterSelection/OptimalCompetitionSelector.optimal_competition_selector` (`✓ std3`). ∎
 
@@ -100,7 +100,7 @@ $$\begin{gathered}\forall d, m: \mathbb{N},\\{}Phi: \operatorname{FiniteRealRati
 
 For a finite real-rational feature family satisfying all five source conditions, the premise Delta > 0 yields a unit witness in W perp.
 
-The public result states every source conclusion: competitors are annihilated, the target response is Delta, the witness has the displayed normalized-projection formula, and the problem is explicitly an orthogonal projection.
+The public result keeps membership in W perp as the source-aligned orthogonality assertion. Competitor annihilation is its derived generator-level expansion, not another conjunction leaf. The target response is Delta, the witness has the displayed normalized-projection formula, and the problem is explicitly an orthogonal projection.
 
 ## References
 
