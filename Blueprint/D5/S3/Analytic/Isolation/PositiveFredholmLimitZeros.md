@@ -2,11 +2,23 @@
 
 ## Abstract
 
-Locally uniform limits of finite positive spectral determinants have only nonpositive real zeros.
+Locally uniform limits of determinants of finite-rank positive operators have only nonpositive real zeros.
 
-**Theorem 1.1 (Positive spectral determinant limits preserve their zero locus).**
+**Theorem 1.1 (Positive matrix determinants factor over the spectrum).**
 
-$$\forall r: \mathbb{N} \to \mathbb{N}, \\{}\lambda: {N: \mathbb{N}} \to Fin\left(r\left(N\right)\right) \to \mathbb{R}, \\{}F: \mathbb{C} \to \mathbb{C}, \\{}{{\forall N\in \mathbb{N}, \forall j\in Fin\left(r\left(N\right)\right), 0 \le \lambda\left(N, j\right)} \land {TendstoLocallyUniformly\left((N, w) \mapsto \prod_{j\in Fin\left(r\left(N\right)\right)} {1 + w \cdot \lambda\left(N, j\right)}, F, atTop\right)}} \Rightarrow \\{}\forall w\in \mathbb{C}, F\left(w\right) = 0 \Rightarrow {Im\left(w\right) = 0 \land Re\left(w\right) \le 0}.$$
+$$\forall r: \mathbb{N}, \\{}A: Matrix\left(Fin\left(r\right), Fin\left(r\right), \mathbb{C}\right), \\{}w: \mathbb{C}, \\{}PosSemidef\left(A\right) \Rightarrow \\{}det\left(1 + w \cdot A\right) = \prod_{j\in Fin\left(r\right)} {1 + w \cdot eigenvalue\left(A, j\right)}.$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Isolation/PositiveFredholmLimitZeros.positive_matrix_det_factorization` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A positive semidefinite complex matrix is the finite-range model of a finite-rank positive operator. The matrix spectral theorem diagonalizes it by a unitary change of basis. Determinant multiplicativity cancels the unitary factors and leaves the product of one plus the complex argument times each real eigenvalue.
+
+**Theorem 1.2 (Positive spectral determinant limits preserve their zero locus).**
+
+$$\forall r: \mathbb{N} \to \mathbb{N}, \\{}A: {N: \mathbb{N}} \to Matrix\left(Fin\left(r\left(N\right)\right), Fin\left(r\left(N\right)\right), \mathbb{C}\right), \\{}F: \mathbb{C} \to \mathbb{C}, \\{}{{\forall N\in \mathbb{N}, PosSemidef\left(A\left(N\right)\right)} \land {TendstoLocallyUniformly\left((N, w) \mapsto det\left(1 + w \cdot A\left(N\right)\right), F, atTop\right)} \land {F\left(0\right) = 1}} \Rightarrow \\{}\forall w\in \mathbb{C}, F\left(w\right) = 0 \Rightarrow {Im\left(w\right) = 0 \land Re\left(w\right) \le 0}.$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Isolation/PositiveFredholmLimitZeros.positive_fredholm_limit_zeros` (`✓ std3`). ∎
 
@@ -14,12 +26,13 @@ $$\forall r: \mathbb{N} \to \mathbb{N}, \\{}\lambda: {N: \mathbb{N}} \to Fin\lef
 
 *Commentary.*
 
-For every finite rank and every indexed nonnegative real spectrum, form the determinant polynomial as the product of the factors one plus the complex argument times an eigenvalue. If these polynomials converge locally uniformly on the complex plane, every zero of the limit has zero imaginary part and nonpositive real part.
+For every index, the source operator is represented on its finite range by a positive semidefinite Hermitian matrix. Its approximating function is publicly the determinant of the identity plus the complex argument times that matrix. If these determinants converge locally uniformly, and the limit is normalized to one at zero, every zero of the limit has zero imaginary part and nonpositive real part.
 
-The normalization at zero is automatic from the displayed spectral product and local uniform convergence, so the Lean statement proves a strictly stronger form without adding that redundant premise.
+The public factorization bridge rewrites each determinant as the finite product over the matrix eigenvalues. Positive semidefiniteness makes those eigenvalues nonnegative. The locally uniform limit argument then compares every off-axis factor with a suitable positive real point; boundedness there prevents a zero away from the nonpositive real axis.
 
-Repository and pinned-library searches found locally uniform limit regularity and analytic isolated-zero theorems, but no existing theorem that preserves this zero locus. The proof instead compares each off-axis factor with the same factor on a suitable positive real point. Boundedness at that point supplies a positive lower bound at the candidate zero, contradicting convergence there.
+The normalization at zero is displayed as a premise exactly as in the source statement and excludes zero itself as a zero of the limit.
 
 ## References
 
 - Truth anchor: `D5/S3/Analytic/Isolation/PositiveFredholmLimitZeros.positive_fredholm_limit_zeros`
+- Truth anchor: `D5/S3/Analytic/Isolation/PositiveFredholmLimitZeros.positive_matrix_det_factorization`

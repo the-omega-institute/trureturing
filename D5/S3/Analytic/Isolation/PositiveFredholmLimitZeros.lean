@@ -6,24 +6,80 @@
    digest: Positive spectral determinant limits have only nonpositive real zeros. -/
 
 import Mathlib.Analysis.Complex.LocallyUniformLimit
+import Mathlib.Analysis.Matrix.PosDef
 import Mathlib.Tactic
 
 open Filter Set
-open scoped BigOperators Topology
+open scoped BigOperators ComplexOrder Topology
 
 namespace D5.S3.Analytic.Isolation.PositiveFredholmLimitZeros
 
-/-- A compact-uniform limit of determinants constructed from finite nonnegative spectra
-cannot acquire a zero away from the nonpositive real axis. -/
+/-- The determinant of the identity plus a scalar multiple of a positive semidefinite
+complex matrix factors over its nonnegative real eigenvalues. -/
+theorem positive_matrix_det_factorization
+    {rank : ℕ} (A : Matrix (Fin rank) (Fin rank) ℂ)
+    (hA : A.PosSemidef) (w : ℂ) :
+    Matrix.det (1 + w • A) =
+      ∏ j, (1 + w * (hA.1.eigenvalues j : ℂ)) := by
+  classical
+  conv_lhs => rw [hA.1.spectral_theorem]
+  let U := hA.1.eigenvectorUnitary
+  let D : Matrix (Fin rank) (Fin rank) ℂ :=
+    Matrix.diagonal (RCLike.ofReal ∘ hA.1.eigenvalues)
+  change Matrix.det (1 + w • Unitary.conjStarAlgAut ℂ _ U D) = _
+  have hconj : 1 + w • Unitary.conjStarAlgAut ℂ _ U D =
+      Unitary.conjStarAlgAut ℂ _ U (1 + w • D) := by
+    rw [map_add, map_one, map_smul]
+  rw [hconj, Unitary.conjStarAlgAut_apply, Matrix.det_mul, Matrix.det_mul]
+  have hdet : Matrix.det (U : Matrix (Fin rank) (Fin rank) ℂ) *
+      Matrix.det (star (U : Matrix (Fin rank) (Fin rank) ℂ)) = 1 := by
+    rw [← Matrix.det_mul]
+    have hunit : (U : Matrix (Fin rank) (Fin rank) ℂ) *
+        star (U : Matrix (Fin rank) (Fin rank) ℂ) = 1 :=
+      Unitary.mul_star_self_of_mem U.prop
+    rw [hunit, Matrix.det_one]
+  calc
+    Matrix.det (U : Matrix (Fin rank) (Fin rank) ℂ) * Matrix.det (1 + w • D) *
+          Matrix.det (star (U : Matrix (Fin rank) (Fin rank) ℂ)) =
+        (Matrix.det (U : Matrix (Fin rank) (Fin rank) ℂ) *
+          Matrix.det (star (U : Matrix (Fin rank) (Fin rank) ℂ))) *
+          Matrix.det (1 + w • D) := by ring
+    _ = Matrix.det (1 + w • D) := by rw [hdet, one_mul]
+    _ = ∏ j, (1 + w * (hA.1.eigenvalues j : ℂ)) := by
+      have hdiag : 1 + w • D = Matrix.diagonal
+          (fun j => 1 + w * (hA.1.eigenvalues j : ℂ)) := by
+        ext i j
+        by_cases hij : i = j
+        · subst j
+          simp [D]
+        · simp [D, hij]
+      rw [hdiag, Matrix.det_diagonal]
+
+/-- A compact-uniform limit of determinants of finite-rank positive operators cannot
+acquire a zero away from the nonpositive real axis. -/
 theorem positive_fredholm_limit_zeros
     (rank : ℕ → ℕ)
-    (eigenvalue : (N : ℕ) → Fin (rank N) → ℝ)
-    (hpositive : ∀ N j, 0 ≤ eigenvalue N j)
+    (A : (N : ℕ) → Matrix (Fin (rank N)) (Fin (rank N)) ℂ)
+    (hA : ∀ N, (A N).PosSemidef)
     (F : ℂ → ℂ)
     (hlimit : TendstoLocallyUniformly
-      (fun N w => ∏ j, (1 + w * (eigenvalue N j : ℂ))) F atTop) :
+      (fun N w => Matrix.det (1 + w • A N)) F atTop)
+    (hF0 : F 0 = 1) :
     ∀ w, F w = 0 → w.im = 0 ∧ w.re ≤ 0 := by
+  let eigenvalue : (N : ℕ) → Fin (rank N) → ℝ :=
+    fun N => (hA N).1.eigenvalues
+  have hpositive (N : ℕ) (j : Fin (rank N)) : 0 ≤ eigenvalue N j := by
+    exact (hA N).eigenvalues_nonneg j
+  have hfamily :
+      (fun N w => Matrix.det (1 + w • A N)) =
+        (fun N w => ∏ j, (1 + w * (eigenvalue N j : ℂ))) := by
+    funext N w
+    simpa [eigenvalue] using positive_matrix_det_factorization (A N) (hA N) w
+  rw [hfamily] at hlimit
   intro w hw
+  by_cases hwzero : w = 0
+  · subst w
+    exact (one_ne_zero (hF0.symm.trans hw)).elim
   have hpoint (z : ℂ) :
       Tendsto (fun N => ∏ j, (1 + z * (eigenvalue N j : ℂ))) atTop (𝓝 (F z)) :=
     (tendstoLocallyUniformlyOn_univ.mpr hlimit).tendsto_at (mem_univ z)
@@ -161,6 +217,7 @@ theorem positive_fredholm_limit_zeros
     rw [hw, norm_zero, zero_mul] at hfinal
     norm_num at hfinal
 
+#print axioms positive_matrix_det_factorization
 #print axioms positive_fredholm_limit_zeros
 
 end D5.S3.Analytic.Isolation.PositiveFredholmLimitZeros
