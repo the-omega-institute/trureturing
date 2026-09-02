@@ -39,10 +39,11 @@ abbrev FullProfileCoordinate {scaleCount : Nat}
 /-- For distinct nonzero real Cayley scales and their finite depths, finitely
 many pairwise distinct sign-conjugacy orbits admit a finite full multiscale
 profile whose target has positive distance from the real span of all competitor
-profiles. The scale coordinates and reference coordinates use the canonical
-common-denominator polynomial basis. Its disk constraint also certifies that
-the denominator has no unit-circle zero; the finite-point no-pole premise keeps
-every displayed rational profile defined. -/
+profiles. Every canonical common-denominator basis coordinate is evaluated in
+the even variable `w ^ 2`, so the profile is even, commutes with conjugation,
+and is real on real inputs. The disk constraint certifies that the composed
+denominator has no unit-circle zero, while the finite-point no-pole premise
+keeps every displayed rational profile defined. -/
 theorem finite_competition_separability
     (scaleCount competitorCount : Nat)
     (scale : Fin scaleCount -> Real) (scaleDepth : Fin scaleCount -> Nat)
@@ -54,7 +55,7 @@ theorem finite_competition_separability
       z i ≠ z j /\ z i ≠ -z j /\
         z i ≠ conj (z j) /\ z i ≠ -conj (z j))
     (noPole : forall j,
-      Polynomial.eval (z j) (∏ i : Fin scaleCount,
+      Polynomial.eval ((z j) ^ 2) (∏ i : Fin scaleCount,
         (1 + Polynomial.C (scale i : Complex) * Polynomial.X) ^
           (scaleDepth i + 1)) ≠ 0) :
     exists referenceDepth : Nat,
@@ -74,24 +75,27 @@ theorem finite_competition_separability
         | Sum.inr j => denominator * Polynomial.X ^ (j : Nat)
       let feature : Complex -> FullProfileCoordinate scaleDepth referenceDepth ->
           Complex := fun w coordinate =>
-        (numerator coordinate).eval w / denominator.eval w
+        (numerator coordinate).eval (w ^ 2) / denominator.eval (w ^ 2)
       let competitorSpace : Submodule Real
           (FullProfileCoordinate scaleDepth referenceDepth -> Complex) :=
         span Real (Set.range fun j : Fin competitorCount => feature (z j.succ))
       (LinearIndependent Complex numerator /\
           span Complex (Set.range numerator) =
             Polynomial.degreeLT Complex (totalDepth + referenceDepth + 1)) /\
-        (forall w, ‖w‖ = 1 -> denominator.eval w ≠ 0) /\
-          0 < infDist (feature (z 0)) (competitorSpace : Set _) := by
+        (forall w, ‖w‖ = 1 -> denominator.eval (w ^ 2) ≠ 0) /\
+          (forall coordinate w, feature (-w) coordinate = feature w coordinate) /\
+            (forall coordinate w,
+              feature (conj w) coordinate = conj (feature w coordinate)) /\
+              (forall coordinate (xi : Real),
+                (feature (xi : Complex) coordinate).im = 0) /\
+                0 < infDist (feature (z 0)) (competitorSpace : Set _) := by
   let denominator : Complex[X] :=
     ∏ i : Fin scaleCount,
       (1 + Polynomial.C (scale i : Complex) * Polynomial.X) ^ (scaleDepth i + 1)
   let separator : Complex[X] :=
     ∏ j : Fin competitorCount,
-      (Polynomial.X - Polynomial.C (z j.succ)) *
-        (Polynomial.X - Polynomial.C (-z j.succ)) *
-          ((Polynomial.X - Polynomial.C (conj (z j.succ))) *
-            (Polynomial.X - Polynomial.C (-conj (z j.succ))))
+      (Polynomial.X - Polynomial.C ((z j.succ) ^ 2)) *
+        (Polynomial.X - Polynomial.C ((conj (z j.succ)) ^ 2))
   let referenceDepth : Nat := separator.natDegree
   let numerator : FullProfileCoordinate scaleDepth referenceDepth -> Complex[X] :=
     fun coordinate =>
@@ -106,7 +110,7 @@ theorem finite_competition_separability
     | Sum.inr j => denominator * Polynomial.X ^ (j : Nat)
   let feature : Complex -> FullProfileCoordinate scaleDepth referenceDepth ->
       Complex := fun w coordinate =>
-    (numerator coordinate).eval w / denominator.eval w
+    (numerator coordinate).eval (w ^ 2) / denominator.eval (w ^ 2)
   let competitorSpace : Submodule Real
       (FullProfileCoordinate scaleDepth referenceDepth -> Complex) :=
     span Real (Set.range fun j : Fin competitorCount => feature (z j.succ))
@@ -140,8 +144,57 @@ theorem finite_competition_separability
       norm_neg, norm_one] at hNorm
     linarith [scaleInDisk i]
   have denominator_ne_zero (j : Fin (competitorCount + 1)) :
-      denominator.eval (z j) ≠ 0 := by
+      denominator.eval ((z j) ^ 2) ≠ 0 := by
     simpa only [denominator] using noPole j
+  have denominator_conj :
+      denominator.map (starRingEnd Complex) = denominator := by
+    simp [denominator, Polynomial.map_prod]
+  have numerator_conj
+      (coordinate : FullProfileCoordinate scaleDepth referenceDepth) :
+      (numerator coordinate).map (starRingEnd Complex) = numerator coordinate := by
+    cases coordinate with
+    | inl ij => simp [numerator, Polynomial.map_prod]
+    | inr j => simp [numerator, denominator_conj]
+  have denominator_eval_conj (w : Complex) :
+      denominator.eval (conj w) = conj (denominator.eval w) := by
+    calc
+      denominator.eval (conj w) =
+          (denominator.map (starRingEnd Complex)).eval (conj w) := by
+            rw [denominator_conj]
+      _ = conj (denominator.eval w) := by
+        exact Polynomial.eval_map_apply (starRingEnd Complex) w
+  have numerator_eval_conj
+      (coordinate : FullProfileCoordinate scaleDepth referenceDepth) (w : Complex) :
+      (numerator coordinate).eval (conj w) =
+        conj ((numerator coordinate).eval w) := by
+    calc
+      (numerator coordinate).eval (conj w) =
+          ((numerator coordinate).map (starRingEnd Complex)).eval (conj w) := by
+            rw [numerator_conj coordinate]
+      _ = conj ((numerator coordinate).eval w) := by
+        exact Polynomial.eval_map_apply (starRingEnd Complex) w
+  have feature_even
+      (coordinate : FullProfileCoordinate scaleDepth referenceDepth) (w : Complex) :
+      feature (-w) coordinate = feature w coordinate := by
+    change (numerator coordinate).eval ((-w) ^ 2) /
+        denominator.eval ((-w) ^ 2) =
+      (numerator coordinate).eval (w ^ 2) / denominator.eval (w ^ 2)
+    rw [neg_sq]
+  have feature_conj
+      (coordinate : FullProfileCoordinate scaleDepth referenceDepth) (w : Complex) :
+      feature (conj w) coordinate = conj (feature w coordinate) := by
+    change (numerator coordinate).eval ((conj w) ^ 2) /
+        denominator.eval ((conj w) ^ 2) =
+      conj ((numerator coordinate).eval (w ^ 2) / denominator.eval (w ^ 2))
+    rw [← map_pow, numerator_eval_conj, denominator_eval_conj, map_div₀]
+  have feature_real
+      (coordinate : FullProfileCoordinate scaleDepth referenceDepth) (xi : Real) :
+      (feature (xi : Complex) coordinate).im = 0 := by
+    have hConj := feature_conj coordinate (xi : Complex)
+    rw [Complex.conj_ofReal] at hConj
+    have hIm := congrArg Complex.im hConj
+    simp only [Complex.conj_im] at hIm
+    linarith
   let referenceProjection :
       (FullProfileCoordinate scaleDepth referenceDepth -> Complex) →ₗ[Real]
         (Fin (referenceDepth + 1) -> Complex) :=
@@ -153,12 +206,12 @@ theorem finite_competition_separability
         intro a x
         rfl }
   let referenceFeature : Complex -> Fin (referenceDepth + 1) -> Complex :=
-    fun w k => w ^ (k : Nat)
+    fun w k => (w ^ 2) ^ (k : Nat)
   have projection_feature (j : Fin (competitorCount + 1)) :
       referenceProjection (feature (z j)) = referenceFeature (z j) := by
     funext k
-    change (denominator * Polynomial.X ^ (k : Nat)).eval (z j) /
-        denominator.eval (z j) = (z j) ^ (k : Nat)
+    change (denominator * Polynomial.X ^ (k : Nat)).eval ((z j) ^ 2) /
+        denominator.eval ((z j) ^ 2) = ((z j) ^ 2) ^ (k : Nat)
     simp only [Polynomial.eval_mul, Polynomial.eval_pow, Polynomial.eval_X]
     field_simp [denominator_ne_zero j]
   let referenceCompetitorSpace : Submodule Real
@@ -180,11 +233,11 @@ theorem finite_competition_separability
     · intro a x _ hx
       simpa only [map_smul] using referenceCompetitorSpace.smul_mem a hx
   have separator_eval_competitor (j : Fin competitorCount) :
-      separator.eval (z j.succ) = 0 := by
+      separator.eval ((z j.succ) ^ 2) = 0 := by
     simp only [separator, Polynomial.eval_prod]
     apply Finset.prod_eq_zero (Finset.mem_univ j)
     simp
-  have separator_eval_target : separator.eval (z 0) ≠ 0 := by
+  have separator_eval_target : separator.eval ((z 0) ^ 2) ≠ 0 := by
     simp only [separator, Polynomial.eval_prod]
     apply Finset.prod_ne_zero_iff.mpr
     intro j _
@@ -192,18 +245,24 @@ theorem finite_competition_separability
       Polynomial.eval_C]
     have hOrbit := orbitDistinct 0 j.succ (Fin.succ_ne_zero j).symm
     apply mul_ne_zero
-    · apply mul_ne_zero
-      · exact sub_ne_zero.mpr hOrbit.1
-      · exact sub_ne_zero.mpr hOrbit.2.1
-    · apply mul_ne_zero
-      · exact sub_ne_zero.mpr hOrbit.2.2.1
-      · exact sub_ne_zero.mpr hOrbit.2.2.2
+    · apply sub_ne_zero.mpr
+      intro hSquare
+      rcases eq_or_eq_neg_of_sq_eq_sq (z 0) (z j.succ) hSquare with hEqual | hNeg
+      · exact hOrbit.1 hEqual
+      · exact hOrbit.2.1 hNeg
+    · apply sub_ne_zero.mpr
+      intro hSquare
+      rcases eq_or_eq_neg_of_sq_eq_sq (z 0) (conj (z j.succ)) hSquare with
+        hEqual | hNeg
+      · exact hOrbit.2.2.1 hEqual
+      · exact hOrbit.2.2.2 hNeg
   have separator_eval_as_sum (j : Fin (competitorCount + 1)) :
       (∑ k : Fin (separator.natDegree + 1),
-        separator.coeff k * referenceFeature (z j) k) = separator.eval (z j) := by
+        separator.coeff k * referenceFeature (z j) k) =
+          separator.eval ((z j) ^ 2) := by
     rw [Polynomial.eval_eq_sum_range,
       ← Fin.sum_univ_eq_sum_range (fun k =>
-        separator.coeff k * (z j) ^ k)]
+        separator.coeff k * ((z j) ^ 2) ^ k)]
   have functional_vanishes_on_span
       (v : Fin (separator.natDegree + 1) -> Complex)
       (hv : v ∈ referenceCompetitorSpace) :
@@ -244,7 +303,7 @@ theorem finite_competition_separability
   let _ : FiniteDimensional Real competitorSpace :=
     Module.Finite.span_of_finite Real (Set.finite_range fun j : Fin competitorCount =>
       feature (z j.succ))
-  refine ⟨?_, ?_, ?_⟩
+  refine ⟨?_, ?_, feature_even, feature_conj, feature_real, ?_⟩
   · have basisResult :=
       CommonDenominatorPolynomialBasis.common_denominator_polynomial_basis
         scaleCount (fun i => (scale i : Complex)) scaleDepth referenceDepth
@@ -259,7 +318,9 @@ theorem finite_competition_separability
       congr 3
       funext coordinate
       cases coordinate <;> rfl
-  · simpa only [denominator] using unitCirclePoleFree
+  · intro w hw
+    apply unitCirclePoleFree (w ^ 2)
+    rw [norm_pow, hw, one_pow]
   · refine (IsClosed.notMem_iff_infDist_pos ?_ ?_).mp ?_
     · exact Submodule.closed_of_finiteDimensional _
     · exact ⟨0, Submodule.zero_mem _⟩
