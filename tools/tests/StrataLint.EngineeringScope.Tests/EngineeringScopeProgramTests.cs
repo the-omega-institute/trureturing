@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Text.Json;
 using StrataLint.EngineeringScope;
+using StrataLint.TestSupport;
 using Xunit;
 
 namespace StrataLint.EngineeringScope.Tests;
@@ -135,7 +136,8 @@ public sealed class EngineeringScopeProgramTests
         Action<string> writeBase,
         Action<string> writeCandidate)
     {
-        var root = Directory.CreateTempSubdirectory("stratalint-engineering-scope-").FullName;
+        var root = TemporaryFileSystem.Directory.CreateTempSubdirectory(
+            "stratalint-engineering-scope-").FullName;
         var originalFull = Environment.GetEnvironmentVariable("FULL");
         var originalOutput = Console.Out;
         var originalError = Console.Error;
@@ -187,7 +189,7 @@ public sealed class EngineeringScopeProgramTests
             Console.SetOut(originalOutput);
             Console.SetError(originalError);
             Environment.SetEnvironmentVariable("FULL", originalFull);
-            Directory.Delete(root, recursive: true);
+            TemporaryFileSystem.Directory.Delete(root, recursive: true);
         }
     }
 
@@ -257,8 +259,8 @@ public sealed class EngineeringScopeProgramTests
     private static void WriteFile(string root, string path, string content)
     {
         var fullPath = Path.Combine(root, path);
-        Directory.CreateDirectory(Path.GetDirectoryName(fullPath)!);
-        File.WriteAllText(fullPath, content);
+        TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(fullPath)!);
+        TemporaryFileSystem.File.WriteAllText(fullPath, content);
     }
 
     private static string GitText(string root, params string[] arguments) =>

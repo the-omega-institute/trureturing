@@ -67,14 +67,17 @@ public sealed class DependencyDirectionTests
     }
 
     [Fact]
-    public void EngineeringScopeTestsReferenceOnlyEngineeringScope()
+    public void EngineeringScopeTestsReferenceOnlyEngineeringScopeAndTestSupport()
     {
         Assert.Equal(
-            ["StrataLint.EngineeringScope"],
+            ["StrataLint.EngineeringScope", "StrataLint.TestSupport"],
             AssemblyReferencePolicy.ApplicationReferences(
                 typeof(StrataLint.EngineeringScope.Tests.TestProcessRunnerTests).Assembly));
         Assert.Equal(
-            ["../../StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj"],
+            [
+                "../../StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+                "../../TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",
+            ],
             ProjectReferences(XDocument.Load(Path.Combine(
                 RepositoryLayout.FindRoot(),
                 "tools",
@@ -84,10 +87,10 @@ public sealed class DependencyDirectionTests
     }
 
     [Fact]
-    public void ScribeTestsReferenceOnlyEngineAndScribe()
+    public void ScribeTestsReferenceOnlyEngineScribeAndTestSupport()
     {
         Assert.Equal(
-            ["StrataLint.Engine", "StrataLint.Scribe"],
+            ["StrataLint.Engine", "StrataLint.Scribe", "StrataLint.TestSupport"],
             AssemblyReferencePolicy.ApplicationReferences(
                 typeof(StrataLint.Scribe.Tests.DocumentAstTests).Assembly));
     }

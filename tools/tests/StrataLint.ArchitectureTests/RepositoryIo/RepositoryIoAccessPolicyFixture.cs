@@ -13,7 +13,7 @@ internal static class RepositoryIoAccessPolicy
     internal const string ScribeTestsProject = "StrataLint.Scribe.Tests";
     internal const string ScribeTestsPrefix = "tools/tests/StrataLint.Scribe.Tests/";
     internal const string TemporaryFileSystemPath =
-        ScribeTestsPrefix + "Support/TemporaryFileSystem.cs";
+        "tools/TestSupport/StrataLint.TestSupport/TemporaryFileSystem.cs";
 
     private static readonly IReadOnlySet<string> AuthorizedGatewayPaths =
         new HashSet<string>(StringComparer.Ordinal)

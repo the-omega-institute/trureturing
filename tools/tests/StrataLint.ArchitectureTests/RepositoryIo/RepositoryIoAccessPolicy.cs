@@ -21,9 +21,8 @@ public sealed class RepositoryIoAccessPolicyTests
         var source = File.ReadAllText(Path.Combine(
             RepositoryLayout.FindRoot(),
             "tools",
-            "tests",
-            "StrataLint.Scribe.Tests",
-            "Support",
+            "TestSupport",
+            "StrataLint.TestSupport",
             "TemporaryFileSystem.cs"));
         var syntax = CSharpSyntaxTree.ParseText(source).GetRoot();
         var temporaryFileSystem = syntax.DescendantNodes()
