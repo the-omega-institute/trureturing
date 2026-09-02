@@ -1,43 +1,43 @@
 using System.Text;
 
-namespace StrataLint.Scribe.Tests;
+namespace StrataLint.TestSupport;
 
 // Every path-bearing operation is confined to the process temporary directory.
-internal static class TemporaryFileSystem
+public static class TemporaryFileSystem
 {
-    internal static class File
+    public static class File
     {
-        internal static bool Exists(string path) => System.IO.File.Exists(EnsureTemporaryPath(path));
-        internal static string ReadAllText(string path) =>
+        public static bool Exists(string path) => System.IO.File.Exists(EnsureTemporaryPath(path));
+        public static string ReadAllText(string path) =>
             System.IO.File.ReadAllText(EnsureTemporaryPath(path));
-        internal static string ReadAllText(string path, Encoding encoding) =>
+        public static string ReadAllText(string path, Encoding encoding) =>
             System.IO.File.ReadAllText(EnsureTemporaryPath(path), encoding);
-        internal static byte[] ReadAllBytes(string path) =>
+        public static byte[] ReadAllBytes(string path) =>
             System.IO.File.ReadAllBytes(EnsureTemporaryPath(path));
-        internal static void WriteAllText(string path, string contents) =>
+        public static void WriteAllText(string path, string contents) =>
             System.IO.File.WriteAllText(EnsureTemporaryPath(path), contents);
-        internal static void WriteAllText(string path, string contents, Encoding encoding) =>
+        public static void WriteAllText(string path, string contents, Encoding encoding) =>
             System.IO.File.WriteAllText(EnsureTemporaryPath(path), contents, encoding);
-        internal static void WriteAllBytes(string path, byte[] contents) =>
+        public static void WriteAllBytes(string path, byte[] contents) =>
             System.IO.File.WriteAllBytes(EnsureTemporaryPath(path), contents);
-        internal static void AppendAllText(string path, string contents) =>
+        public static void AppendAllText(string path, string contents) =>
             System.IO.File.AppendAllText(EnsureTemporaryPath(path), contents);
-        internal static void AppendAllText(string path, string contents, Encoding encoding) =>
+        public static void AppendAllText(string path, string contents, Encoding encoding) =>
             System.IO.File.AppendAllText(EnsureTemporaryPath(path), contents, encoding);
-        internal static void Delete(string path) =>
+        public static void Delete(string path) =>
             System.IO.File.Delete(EnsureTemporaryPath(path));
     }
 
-    internal static class Directory
+    public static class Directory
     {
-        internal static bool Exists(string path) =>
+        public static bool Exists(string path) =>
             System.IO.Directory.Exists(EnsureTemporaryPath(path));
-        internal static DirectoryInfo CreateDirectory(string path) =>
+        public static DirectoryInfo CreateDirectory(string path) =>
             System.IO.Directory.CreateDirectory(EnsureTemporaryPath(path));
-        internal static DirectoryInfo CreateTempSubdirectory(string? prefix = null) =>
+        public static DirectoryInfo CreateTempSubdirectory(string? prefix = null) =>
             System.IO.Directory.CreateTempSubdirectory(prefix);
-        internal static string GetCurrentDirectory() => System.IO.Directory.GetCurrentDirectory();
-        internal static void Delete(string path, bool recursive) =>
+        public static string GetCurrentDirectory() => System.IO.Directory.GetCurrentDirectory();
+        public static void Delete(string path, bool recursive) =>
             System.IO.Directory.Delete(EnsureTemporaryPath(path), recursive);
     }
 

@@ -1,7 +1,6 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using StrataLint.Engine;
 using System.Text.RegularExpressions;
 
 namespace StrataLint.ArchitectureTests;
@@ -60,21 +59,6 @@ internal static partial class RemoteStateIndependencePolicy
     {
         "GetAsync", "GetByteArrayAsync", "GetStreamAsync", "GetStringAsync", "PostAsync", "SendAsync",
     };
-
-    internal static IReadOnlyList<RemoteStateFinding> InspectRepository(string repositoryRoot)
-    {
-        var findings = new List<RemoteStateFinding>();
-        foreach (var file in GitIndexRepositoryFiles.Enumerate(repositoryRoot))
-        {
-            if (file.RelativePath.StartsWith("tools/tests/", StringComparison.Ordinal)
-                && file.RelativePath.EndsWith(".cs", StringComparison.Ordinal))
-            {
-                findings.AddRange(InspectTestSource(new(file.RelativePath, File.ReadAllText(file.FullPath))));
-            }
-        }
-        return findings.OrderBy(static item => item.Path, StringComparer.Ordinal)
-            .ThenBy(static item => item.Line).ThenBy(static item => item.Operation, StringComparer.Ordinal).ToArray();
-    }
 
     internal static IReadOnlyList<RemoteStateFinding> InspectTestSource(RemoteStateSource source)
     {
@@ -227,9 +211,6 @@ internal static partial class RemoteStateIndependencePolicy
         }
     }
 
-    private static bool IsAllowedRevision(ExpressionSyntax expression) =>
-        TryLiteral(expression, out var value) && AllowedRevisions.Contains(value);
-
     private static bool UsesRealGateway(InvocationExpressionSyntax invocation, SyntaxNode scope) =>
         invocation.Expression is MemberAccessExpressionSyntax member
         && IsRealGateway(member.Expression, scope, new HashSet<string>(StringComparer.Ordinal));
@@ -266,6 +247,9 @@ internal static partial class RemoteStateIndependencePolicy
         scope.DescendantNodes().OfType<VariableDeclaratorSyntax>()
             .Where(item => item.Identifier.ValueText == identifier && item.Initializer is not null)
             .Select(static item => item.Initializer!.Value);
+
+    private static bool IsAllowedRevision(ExpressionSyntax expression) =>
+        TryLiteral(expression, out var value) && AllowedRevisions.Contains(value);
 
     private static bool UsesHttpClient(InvocationExpressionSyntax invocation, SyntaxNode scope)
     {

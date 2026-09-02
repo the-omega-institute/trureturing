@@ -17,8 +17,6 @@ internal sealed class ScribeBoundCallable
         string typeName,
         string name,
         bool isTest,
-        bool isStaticallySkipped,
-        bool isDiscoveryConditional,
         SyntaxNode syntax,
         SemanticModel semanticModel,
         ScribeSemanticModelProvider semanticModels,
@@ -29,8 +27,6 @@ internal sealed class ScribeBoundCallable
         TypeName = typeName;
         Name = name;
         IsTest = isTest;
-        IsStaticallySkipped = isStaticallySkipped;
-        IsDiscoveryConditional = isDiscoveryConditional;
         Syntax = syntax;
         SemanticModel = semanticModel;
         SemanticModels = semanticModels;
@@ -42,8 +38,6 @@ internal sealed class ScribeBoundCallable
     internal string TypeName { get; }
     internal string Name { get; }
     internal bool IsTest { get; }
-    internal bool IsStaticallySkipped { get; }
-    internal bool IsDiscoveryConditional { get; }
     internal SyntaxNode Syntax { get; }
     internal SemanticModel SemanticModel { get; }
     internal ScribeSemanticModelProvider SemanticModels { get; }
@@ -66,19 +60,11 @@ internal static class ScribeTestSymbolBinder
 {
     internal static IReadOnlyList<ScribeParsedSource> Bind(
         IEnumerable<TestMapSource> sourceFiles,
-        out IReadOnlyList<ScribeMetadataDegradation> metadataDegradations,
         IReadOnlySet<string>? productionAssemblies = null,
         ScribeProjectCompilationContext? compilationContext = null)
     {
         var sources = sourceFiles.ToArray();
         var compilations = ScribeProjectCompilationBuilder.Build(sources, compilationContext);
-        metadataDegradations = compilations
-            .Select(static project => project.MetadataDegradation)
-            .Where(static degradation => degradation is not null)
-            .Select(static degradation => degradation!)
-            .DistinctBy(static degradation => degradation.ProjectPath)
-            .OrderBy(static degradation => degradation.ProjectPath, StringComparer.Ordinal)
-            .ToArray();
         var semanticModels = new ScribeSemanticModelProvider();
         foreach (var project in compilations) semanticModels.Add(project.Compilation);
         var callablesBySymbol = new ScribeCallableIndex();
@@ -202,11 +188,6 @@ internal static class ScribeTestSymbolBinder
             symbol.ContainingType?.Name ?? "<global>",
             symbol.Name,
             isTest,
-            isTest && IsStaticallySkipped((MethodDeclarationSyntax)declaration, model),
-            isTest && IsDiscoveryConditional(
-                (MethodDeclarationSyntax)declaration,
-                model,
-                semanticModels),
             declaration,
             model,
             semanticModels,
@@ -581,40 +562,6 @@ internal static class ScribeTestSymbolBinder
             if (display is "Xunit.FactAttribute" or "Xunit.TheoryAttribute") return true;
         }
         return false;
-    }
-
-    private static bool IsStaticallySkipped(MethodDeclarationSyntax method, SemanticModel model) =>
-        method.AttributeLists.SelectMany(static list => list.Attributes)
-            .Where(attribute => IsTestAttribute(attribute, model))
-            .Any(static attribute => attribute.ArgumentList?.Arguments.Any(static argument =>
-                argument.NameEquals?.Name.Identifier.ValueText == "Skip"
-                && !argument.Expression.IsKind(SyntaxKind.NullLiteralExpression)) == true);
-
-    private static bool IsDiscoveryConditional(
-        MethodDeclarationSyntax method,
-        SemanticModel model,
-        ScribeSemanticModelProvider semanticModels) => method.AttributeLists
-        .SelectMany(static list => list.Attributes)
-        .Where(attribute => IsTestAttribute(attribute, model))
-        .SelectMany(attribute => Symbols(model.GetSymbolInfo(attribute)).OfType<IMethodSymbol>())
-        .SelectMany(static constructor => constructor.DeclaringSyntaxReferences)
-        .Select(static reference => reference.GetSyntax())
-        .Any(declaration => ConstructorAssignsFactSkip(declaration, model, semanticModels));
-
-    private static bool ConstructorAssignsFactSkip(
-        SyntaxNode declaration,
-        SemanticModel fallback,
-        ScribeSemanticModelProvider semanticModels)
-    {
-        var model = semanticModels.ModelFor(declaration, fallback);
-        return model is not null && declaration.DescendantNodes()
-            .OfType<AssignmentExpressionSyntax>()
-            .Where(static assignment => assignment.IsKind(SyntaxKind.SimpleAssignmentExpression))
-            .Any(assignment => model.GetSymbolInfo(assignment.Left).Symbol is IPropertySymbol
-            {
-                Name: "Skip",
-                ContainingType: { } type,
-            } && type.ToDisplayString() == "Xunit.FactAttribute");
     }
 
     private static bool IsInsideNameof(SyntaxNode node, SemanticModel model) => node.Ancestors()

@@ -231,7 +231,7 @@ public sealed partial class MakeWorkflowTests
             done
             case "${PREFLIGHT_SCENARIO:-}:$directory:$target" in
               semantic-test:tools:engineering-tests)
-                [[ "$original" != *"MODE=execute"* ]] || exit 41
+                exit 41
                 ;;
               semantic-gate:.:gate) exit 42 ;;
               timeout:.:lean-report) exit 124 ;;
