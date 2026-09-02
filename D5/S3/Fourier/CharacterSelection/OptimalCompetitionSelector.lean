@@ -80,13 +80,16 @@ def IsLagrangeInterpolant
   ‖candidate‖ = 1 ∧
     forall j : Fin m, profileDot candidate (featureProfile family (competitors j)) = 0
 
-/-- The zero-value interpolation constraints do not uniquely select the displayed coefficient
-vector. This is the source's explicit negation of arbitrary Lagrange selection. -/
+/-- Every unit interpolant attaining the target margin is one of the two optimal orientations. -/
 def NotArbitraryLagrangeInterpolation
     {d m : Nat} (family : FiniteRealRationalFeatureFamily d)
-    (competitors : Fin m -> Complex) (cStar : CharacterProfileSpace d) : Prop :=
-  ¬∀ alternative : CharacterProfileSpace d,
-    IsLagrangeInterpolant family competitors alternative → alternative = cStar
+    (target : Complex) (competitors : Fin m -> Complex)
+    (cStar : CharacterProfileSpace d) : Prop :=
+  ∀ alternative : CharacterProfileSpace d,
+    IsLagrangeInterpolant family competitors alternative →
+    abs (profileDot alternative (featureProfile family target)) =
+      selectorMargin family target competitors →
+    alternative = cStar ∨ alternative = -cStar
 
 /-- The target margin is the norm of the target's complementary orthogonal projection. -/
 def IsOrthogonalProjectionProblem
@@ -123,11 +126,30 @@ private theorem normalized_residual_exact_readout
   · rw [gEq, inner_neg_left, abs_neg] at gMax
     exact gMax
 
+private theorem interpolant_mem_competitor_orthogonal
+    {d m : Nat} (family : FiniteRealRationalFeatureFamily d)
+    (competitors : Fin m -> Complex) (candidate : CharacterProfileSpace d)
+    (annihilates : ∀ j : Fin m,
+      profileDot candidate (featureProfile family (competitors j)) = 0) :
+    candidate ∈ (competitorProfileSpace family competitors)ᗮ := by
+  rw [Submodule.mem_orthogonal']
+  intro y yMem
+  refine Submodule.span_induction
+    (p := fun y _ => inner Real candidate y = 0) ?_ ?_ ?_ ?_ yMem
+  · intro y yMem
+    rcases yMem with ⟨j, rfl⟩
+    simpa only [profileDot] using annihilates j
+  · simp
+  · intro x y _ _ hx hy
+    simp only [inner_add_right, hx, hy, add_zero]
+  · intro r x _ hx
+    simp only [real_inner_smul_right, hx, mul_zero]
+
 /-- OACTC 925.1: the normalized projection of the target profile onto the orthogonal complement
 of the real competitor span is a unit selector. It annihilates every competing profile, has
 absolute target response equal to the metric margin, and is exactly the displayed projection
-formula. The public conclusion also records separately that the zero-value interpolation constraints
-do not arbitrarily select this vector and that the margin is an orthogonal-projection problem. -/
+formula. The public conclusion also classifies every margin-attaining interpolant up to sign and
+records that the margin is an orthogonal-projection problem. -/
 theorem optimal_competition_selector
     {d m : Nat}
     (family : FiniteRealRationalFeatureFamily d) (target : Complex)
@@ -143,7 +165,7 @@ theorem optimal_competition_selector
       cStar =
         ‖Wᗮ.starProjection (featureProfile family target)‖⁻¹ •
           Wᗮ.starProjection (featureProfile family target) ∧
-      NotArbitraryLagrangeInterpolation family competitors cStar ∧
+      NotArbitraryLagrangeInterpolation family target competitors cStar ∧
       IsOrthogonalProjectionProblem family target competitors := by
   classical
   dsimp only
@@ -186,21 +208,26 @@ theorem optimal_competition_selector
     · exact Submodule.subset_span (Set.mem_range_self j)
     · exact cStarMem
   have notArbitraryLagrange :
-      NotArbitraryLagrangeInterpolation family competitors cStar := by
-    intro uniquelySelected
-    have negCStarInterpolates : IsLagrangeInterpolant family competitors (-cStar) := by
-      refine ⟨?_, ?_⟩
-      · simpa only [norm_neg] using cStarNorm
-      · intro j
-        rw [profileDot, inner_neg_left]
-        exact neg_eq_zero.mpr (by simpa only [profileDot] using cStarAnnihilates j)
-    have negEq : -cStar = cStar := uniquelySelected (-cStar) negCStarInterpolates
-    have addSelfZero : cStar + cStar = 0 := neg_eq_iff_add_eq_zero.mp negEq
-    have twoSmulZero : (2 : Real) • cStar = 0 := by
-      simpa only [two_smul] using addSelfZero
-    have cStarZero : cStar = 0 :=
-      (smul_eq_zero.mp twoSmulZero).resolve_left (by norm_num)
-    simp only [cStarZero, norm_zero, zero_ne_one] at cStarNorm
+      NotArbitraryLagrangeInterpolation family target competitors cStar := by
+    intro alternative alternativeInterpolates alternativeOptimal
+    have alternativeMem : alternative ∈ Wᗮ :=
+      interpolant_mem_competitor_orthogonal family competitors alternative
+        alternativeInterpolates.2
+    have alternativeClosedMem : alternative ∈ closedWᗮ := by
+      change alternative ∈ Wᗮ
+      exact alternativeMem
+    have alternativeNorm : ‖alternative‖ ≤ 1 := by
+      rw [alternativeInterpolates.1]
+    have alternativeMaximal :
+        abs (inner Real alternative x) = ‖residual closedW x‖ := by
+      change abs (profileDot alternative (featureProfile family target)) =
+        ‖residual closedW x‖
+      rw [residualEq, ← marginEq]
+      exact alternativeOptimal
+    have canonical := canonical_strongest_separating_observer closedW x residualNeZero
+    have classified :=
+      (canonical.2.2.1 alternative alternativeClosedMem alternativeNorm).mp alternativeMaximal
+    simpa only [cStar] using classified
   refine ⟨cStar, cStarNorm, cStarMem, cStarAnnihilates, cStarReadout, ?_,
     notArbitraryLagrange, ?_⟩
   · simpa only [x] using cStarFormula
@@ -247,25 +274,21 @@ example
     exact Metric.infDist_zero_of_mem (Submodule.zero_mem _)]
   exact lt_irrefl 0
 
--- A8 projection probe: the public result exposes the non-arbitrary Lagrange leaf.
+-- A8 reverse probe: the public result must classify every margin-attaining interpolant.
 example
     {d m : Nat} (family : FiniteRealRationalFeatureFamily d) (target : Complex)
     (competitors : Fin m -> Complex)
     (positiveMargin : 0 < selectorMargin family target competitors) :
-    ∃ cStar, NotArbitraryLagrangeInterpolation family competitors cStar := by
+    ∃ cStar, ∀ alternative,
+      IsLagrangeInterpolant family competitors alternative →
+      abs (profileDot alternative (featureProfile family target)) =
+        selectorMargin family target competitors →
+      alternative = cStar ∨ alternative = -cStar := by
   rcases optimal_competition_selector family target competitors positiveMargin with
     ⟨cStar, _, _, _, _, _, notArbitrary, _⟩
-  exact ⟨cStar, notArbitrary⟩
-
--- A9 projection probe: the public result exposes the orthogonal-problem leaf.
-example
-    {d m : Nat} (family : FiniteRealRationalFeatureFamily d) (target : Complex)
-    (competitors : Fin m -> Complex)
-    (positiveMargin : 0 < selectorMargin family target competitors) :
-    IsOrthogonalProjectionProblem family target competitors := by
-  rcases optimal_competition_selector family target competitors positiveMargin with
-    ⟨_, _, _, _, _, _, _, orthogonalProblem⟩
-  exact orthogonalProblem
+  refine ⟨cStar, ?_⟩
+  intro alternative alternativeInterpolates alternativeOptimal
+  exact notArbitrary alternative alternativeInterpolates alternativeOptimal
 
 #print axioms optimal_competition_selector
 

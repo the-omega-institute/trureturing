@@ -91,8 +91,9 @@ internal sealed class OptimalCompetitionSelectorDocument
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "It is not the case that every unit solution of the bare zero-value "
-                        + "interpolation constraints equals the displayed selector."))),
+                    "Every unit solution of the competitor interpolation constraints whose "
+                        + "absolute target response equals Delta is either the displayed selector "
+                        + "or its negative."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("orthogonal-projection-problem"),
@@ -117,8 +118,9 @@ internal sealed class OptimalCompetitionSelectorDocument
                     Paragraph(Text(
                         "The public result states every source conclusion: competitors are "
                             + "annihilated, the target response is Delta, the witness has the "
-                            + "displayed normalized-projection formula, the interpolation is not "
-                            + "arbitrary, and the problem is explicitly an orthogonal projection."))),
+                            + "displayed normalized-projection formula, every margin-attaining "
+                            + "interpolant is one of its two orientations, and the problem is "
+                            + "explicitly an orthogonal projection."))),
                 DescribeRole.Theorem))));
 
     private static Formula Apply(Formula function, params Formula[] arguments)
@@ -171,7 +173,7 @@ internal sealed class OptimalCompetitionSelectorDocument
         Formula targetClause = Equal(
             Call("abs", Call("profileDot", selector, targetProfile)), delta);
         Formula notArbitraryClause = Call(
-            "NotArbitraryLagrangeInterpolation", family, competitors, selector);
+            "NotArbitraryLagrangeInterpolation", family, target, competitors, selector);
         Formula orthogonalProblemClause = Call(
             "IsOrthogonalProjectionProblem", family, target, competitors);
         Formula witnessClauses = And(
