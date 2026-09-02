@@ -1910,3 +1910,41 @@ M2-a/M2-b 一席位轮(同模块,codex-cli,独立 worktree,PR-1 deposit 绑 M2-a
 M3-a/M3-c 一席位轮(同模块,codex-cli,独立 worktree,PR-1 deposit 绑 M3-a atom;M3-c 两 atom 以 PR-1b 收据后 PR-2 cover),M3-b 一席位轮(独立模块)。截断 separator(以 `symmetricIndices T` 为界)待三条冻结后另立增订。勘误与具名缺口不占预算。
 
 后续增订继续严格追加于本节之后。
+
+---
+
+# 增订十　黄金 Euler germ 线:窗口内局部因子的零点(G-a、G-b 预登记;G-c 具名缺口;第 6 步疑似为假)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;方向修订由用户 2026-09-02 给出(「黄金 Euler germ 才是正经线路」);两席 codex-cli 探针(窗口数值扫描 + Lean 条件判据;零点认证可行性 + 字典引理,`lake env lean` exit 0,标准三公理),数值零点由 orchestrator 独立复算确认;由 orchestrator(claude 主循环)撰写。判决日:2026-09-02。lane issue:#4589。本节进入 `D5/S3/Analytic/EulerGerm/` 桶(其他驱动者活线),只做其尚未冻结的边。
+
+## 〇　为什么是这一节
+
+冻结的 `golden_germ_second_order_factorization` 给出 continuedGerm(s) = ζ(φ²s)·ζ(φ³s)·ζ(2φ²s)⁻¹·G3(s),G3 在 Re s > 1/φ⁴ 绝对收敛。绝对收敛乘积为零当且仅当某因子为零,故 §M5 第 6 步「严格窗口内无消去」精确等价于每个 `germLocalFactor s p` 在窗口内非零。**数值证据强烈指向该步为假**:p=2 的局部因子在 σ∈[0.12,0.40]、t∈[0,60] 内有 ≥10 个零点(如 s₀ ≈ 0.23815329946211908 + 5.256712292901926 i,80 位精度残差 ≤ 1e-57;orchestrator 以 float64、V=400 独立复算 |f₂(s₀)| ≈ 6e-16,邻点 ≈ 1e-2),p=3 有 12 个候选,p=5 无;在 s₀ 处三个 ζ 型因子的模为 0.287、0.947、0.553,故不是 ζ 因子的消去。**含义**:连续延拓的 germ 在窗口内有不来自 ζ 的零点,「窗口零点定位 ⟺ RH」必须改写为含局部因子零因子(= G3 零因子)的亚纯 divisor 恒等式。kernel 侧:实轴上局部因子恒非零;精确尾项阈值 σ₀ = 0.4311(冻结的 2/3 为粗切口);G3 延拓只到 Re s > 1/φ⁴ ≈ 0.146,窗口下沿 1/(2φ³) ≈ 0.118 尚无冻结覆盖。
+
+## 一　G-a 预登记:G3 的零集等于局部因子零集之并(`LocalFactorZeroDivisor`)
+
+**义务**:公开定理 `G3_eq_zero_iff_exists_local_factor_zero (s : ℂ) (hs : 1 / Real.goldenRatio ^ 4 < s.re) : (∏' p : Nat.Primes, (1 - (p : ℂ) ^ (-s * ((Real.goldenRatio ^ 3 : ℝ) : ℂ))) * (1 + (p : ℂ) ^ (-s * ((Real.goldenRatio ^ 2 : ℝ) : ℂ)))⁻¹ * germLocalFactor s p) = 0 ↔ ∃ p : Nat.Primes, germLocalFactor s p = 0`,乘积表达式与冻结 `golden_germ_second_order_factorization` 的 G3 逐字相同。闭合路线:冻结的偏差可和性给出绝对收敛;两个规范化因子由模 < 1 非零;钉版 Mathlib 的 `tprod` 零/非零引理收尾。落点 `D5/S3/Analytic/EulerGerm/`。
+**可证伪预测(写在跑之前)**:若正确,定理只消费冻结的第二阶因子分解模块与钉版 Mathlib,公理集为标准三条;若 `tprod` 的零判据在钉版缺失或 G3 表达式与冻结 `let` 不同构,则记所缺引理名并改标 `open`。
+**边界**:不断言任何局部因子有零点。
+
+## 二　G-b 预登记:局部因子的解析性与最小模零点判据(同模块)
+
+**义务**:同模块两条公开定理 `germLocalFactor_analyticOnNhd_pos (p : ℕ) (hp : p.Prime) : AnalyticOnNhd ℂ (fun s : ℂ => germLocalFactor s p) {s : ℂ | 0 < s.re}` 与 `exists_zero_in_ball_of_boundary_norm_gt_center {f : ℂ → ℂ} {c : ℂ} {r : ℝ} (hr : 0 < r) (hf : AnalyticOnNhd ℂ f (Metric.closedBall c r)) (hgap : ∀ z ∈ Metric.sphere c r, ‖f c‖ < ‖f z‖) : ∃ z ∈ Metric.ball c r, f z = 0`。闭合路线:后者由最大模原理施于 1/f(Mathlib `Analysis.Complex.AbsMax`);前者由局部一致收敛的级数解析性。
+**可证伪预测(写在跑之前)**:若正确,二者在钉版工具链闭合且公理集为标准三条;若 `AbsMax` 的形式不支持闭球上 `AnalyticOnNhd` 的边界最大值陈述,则记所缺引理名并改标 `open`。
+**边界**:本条把「认证一个零点」归约为两条不等式(中心上界、边界一致下界),不证明任何具体不等式。
+
+## 三　G-c 具名缺失载体(open,不派席):s₀ 附近零点的 kernel 认证
+
+**缺口**:`germLocalFactor_two_has_zero_near_candidate : ∃ z ∈ Metric.ball (⟨23815329946211908/10^17, 5256712292901926/10^15⟩ : ℂ) (1/10^8), germLocalFactor z 2 = 0`。由 G-b 归约为:存在有理 L 使 ‖germLocalFactor c 2‖ < L 且圆周上 L ≤ ‖germLocalFactor z 2‖。钉版 Mathlib 无 Rouché/辐角原理,亦无可供 kernel 使用的定向舍入超越函数包络(log 2、exp、sin/cos 的有理封闭);`norm_num`/`positivity`/`bound` 不提供该层。成本:一次性手工证书为重型;可复用管线需新基础设施。
+**可证伪预测(写在跑之前)**:若 kernel 得到闭盘上 ‖germLocalFactor z 2‖ 的正下界,或圆周上零点计数为 0,则 G-c 为假且本节「第 6 步疑似为假」的数值判断须撤回;某一包络方法的失败本身不构成否证。
+**边界**:本节不是义务,不占席位;零点的单性与唯一性未验证。
+
+## 四　对 §M5 第 6–7 步的诚实改写(不改旧 atom)
+
+在 G-c 认证之前,「窗口内无消去」记为 **疑似为假(数值)**;「窗口零点定位 ⟺ RH」的正确目标形态是:在 Re s > 1/φ⁴ 上,continuedGerm 的零因子 = ζ(φ²s)、ζ(φ³s) 的零因子 − ζ(2φ²s) 的零因子 + G3 的零因子,而 G-a 把最后一项化为局部因子零因子;RH 只约束前两项。任何省略 G3 零因子的「等价」陈述列入暂不接受的说法。
+
+## 五　预算与结算
+
+G-a/G-b 一席位轮(同模块,codex-cli,独立 worktree,PR-1 deposit 绑 G-a atom;G-b 两 atom 以 PR-1b 收据后 PR-2 cover);G-c 不占预算,待认证基础设施或 owner 裁决。
+
+后续增订继续严格追加于本节之后。

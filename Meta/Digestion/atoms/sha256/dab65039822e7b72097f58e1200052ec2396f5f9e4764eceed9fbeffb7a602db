@@ -1,0 +1,1 @@
+**缺口**:`germLocalFactor_two_has_zero_near_candidate : ∃ z ∈ Metric.ball (⟨23815329946211908/10^17, 5256712292901926/10^15⟩ : ℂ) (1/10^8), germLocalFactor z 2 = 0`。由 G-b 归约为:存在有理 L 使 ‖germLocalFactor c 2‖ < L 且圆周上 L ≤ ‖germLocalFactor z 2‖。钉版 Mathlib 无 Rouché/辐角原理,亦无可供 kernel 使用的定向舍入超越函数包络(log 2、exp、sin/cos 的有理封闭);`norm_num`/`positivity`/`bound` 不提供该层。成本:一次性手工证书为重型;可复用管线需新基础设施。
