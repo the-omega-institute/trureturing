@@ -55,6 +55,7 @@ internal class FrozenLedgerReplacementRecognition
             .MinBy(static path => path.Value, StringComparer.Ordinal);
 
         return !baseModulePaths.IsEmpty
+            && !deletedModulePaths.IsEmpty
             && witnessPath is not null
             && !retainedModulePaths.Overlaps(newModulePaths)
             && deletedModulePaths.SetEquals(baseModulePaths.Except(retainedModulePaths))
