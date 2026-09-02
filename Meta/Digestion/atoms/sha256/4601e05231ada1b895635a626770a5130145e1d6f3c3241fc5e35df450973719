@@ -1,0 +1,54 @@
+# 第一千八百九十九部　黄金光锥与相位圆的真正依赖顺序
+
+仓库已在任意实 Hilbert 维数中机器证明，Fibonacci 更新：
+
+$$
+\mathcal F(X,Y)=(X+Y,X)
+$$
+
+将：
+
+$$
+Q_\varphi(X,Y)
+=
+\|X\|^2-\langle X,Y\rangle-\|Y\|^2
+$$
+
+精确变号：
+
+$$
+Q_\varphi(\mathcal F(X,Y))
+=
+-Q_\varphi(X,Y).
+$$
+
+所以正确依赖链为：
+
+$$
+\boxed{
+\begin{aligned}
+\text{primitive integer relation}
+&\longrightarrow
+\text{Fibonacci update}\\
+&\longrightarrow
+\text{黄金 null cone}\\
+&\longrightarrow
+\text{两种实极化}\\
+&\longrightarrow
+\text{复相位结构}.
+\end{aligned}
+}
+\tag{1899.1}
+$$
+
+而不是：
+
+$$
+\boxed{
+\text{先假定复相位，
+再从中唯一恢复黄金。}
+}
+$$
+
+---
+

@@ -1,0 +1,20 @@
+\[
+\boxed{
+\kappa_A(\sigma)
+=
+\left.
+\frac{\partial^k}
+{\partial\varepsilon_{h_1}\cdots\partial\varepsilon_{h_k}}
+\log\mathcal M_H(\sigma)
+\right|_{\varepsilon=0}.
+}
+\]
+
+这严格实现：
+
+- 二点构型是二阶源 jet；
+- 三点构型是三阶源 jet；
+- 四点构型是四阶源 jet。
+
+---
+

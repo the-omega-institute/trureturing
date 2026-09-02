@@ -1,0 +1,39 @@
+## 24. 零点 pair correlation 读到的是聚合二点谱
+
+Montgomery 型 pair correlation 与 Goldston–Montgomery 型结果表明，在明确假设与归一化下，零点二点统计和短区间素数二阶方差之间存在严格联系。
+
+但短区间方差展开为：
+
+\[
+\sum_{|h|<H}
+(H-|h|)
+\sum_{n\le X}
+(\Lambda(n)-1)(\Lambda(n+h)-1)
+\]
+
+这一类三角加权和。
+
+所以零点 pair correlation 首先读取的是：
+
+\[
+\boxed{
+\text{所有二点 shifts 的加权聚合频谱},
+}
+\]
+
+而不是只把 \(h=2\) 单独贴在某一对零点上。
+
+要从聚合频谱恢复孪生素数，需要足够丰富的测试核和 shift-Fourier 反演。
+
+这解释了：
+
+\[
+\boxed{
+\zeta\text{ 包含全部素数}
+\quad\text{但}\quad
+\text{单个 Euler product 不直接隔离 }h=2.
+}
+\]
+
+---
+

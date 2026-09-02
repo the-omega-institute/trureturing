@@ -1,0 +1,21 @@
+## 定理 1909.1（Universal normalized saturation cell）
+
+$$
+\boxed{
+\left[
+K_f(z_i,z_j)
+\right]_{z_1=0,z_2=a}
+=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}
+=
+\mathbb F.
+}
+\tag{1909.4}
+$$
+
+这个矩阵与以下数据全部无关：
+
+* \(a\) 的位置；

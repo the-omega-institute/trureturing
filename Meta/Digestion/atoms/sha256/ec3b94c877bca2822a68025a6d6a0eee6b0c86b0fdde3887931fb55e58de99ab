@@ -1,0 +1,10 @@
+### ZC-K　镜像奇 jet 消去
+
+```lean
+theorem mirrorClosed_odd_transverse_moment_zero
+    (window : Finset ZeroOrbit) :
+    ∀ r, oddTransverseMoment window (2 * r + 1) = 0
+```
+
+---
+

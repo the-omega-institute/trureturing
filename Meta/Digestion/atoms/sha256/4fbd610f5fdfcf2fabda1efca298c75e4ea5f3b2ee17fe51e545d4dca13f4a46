@@ -1,0 +1,51 @@
+## 1903.2 为什么该编译是鲁棒的
+
+精确负 margin 为：
+
+$$
+\nu=\varphi^{-1}.
+$$
+
+若近似 feature 的误差为 \(\varepsilon\)，且目标算子范数为：
+
+$$
+\|\mathbb F\|=\varphi,
+$$
+
+则二次型误差满足：
+
+$$
+\widetilde u^*\mathbb F\widetilde u
+\le
+-\varphi^{-1}
++
+2\varphi\varepsilon
++
+\varphi\varepsilon^2.
+$$
+
+所以只要：
+
+$$
+\boxed{
+2\varphi\varepsilon
++
+\varphi\varepsilon^2
+<
+\varphi^{-1},
+}
+\tag{1903.3}
+$$
+
+负性必然保存。
+
+因此真正需要证明的是：
+
+1. Weil／Paley–Wiener 测试空间可以在两个目标点插值；
+2. 其他零点贡献可以控制到预算以内；
+3. prime–Gamma 显式公式与目标 kernel normalization 一致。
+
+一旦完成，离线零点将产生一个有限、定量稳定的 Weil 负证书。
+
+---
+

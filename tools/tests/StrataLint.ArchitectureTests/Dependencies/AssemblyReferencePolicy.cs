@@ -12,16 +12,6 @@ internal static class AssemblyReferencePolicy
             .Order(StringComparer.Ordinal)
             .ToArray();
 
-    internal static string[] UnexpectedReferences(
-        Assembly assembly,
-        params string[] allowedNonPlatformReferences)
-    {
-        var allowed = allowedNonPlatformReferences.ToHashSet(StringComparer.Ordinal);
-        return NonPlatformReferences(assembly)
-            .Where(reference => !allowed.Contains(reference))
-            .ToArray();
-    }
-
     internal static string[] ApplicationReferences(Assembly assembly) =>
         NonPlatformReferences(assembly)
             .Where(static name =>

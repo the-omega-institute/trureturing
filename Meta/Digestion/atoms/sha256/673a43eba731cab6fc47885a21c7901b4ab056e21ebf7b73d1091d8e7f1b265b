@@ -1,0 +1,21 @@
+## 1911.2 检测与最优性必须分开
+
+因此必须区分：
+
+$$
+\boxed{
+\begin{aligned}
+\text{缺陷的有限可证性}
+&:\quad\text{有理向量已经足够};\\
+\text{缺陷的最优分离}
+&:\quad\text{黄金无理方向唯一达到};\\
+\text{有限最优逼近}
+&:\quad\text{由 Fibonacci convergents 给出}.
+\end{aligned}
+}
+$$
+
+这也解释了为什么无理数可以作为极限完成态，却不妨碍有限科学证书存在。
+
+---
+

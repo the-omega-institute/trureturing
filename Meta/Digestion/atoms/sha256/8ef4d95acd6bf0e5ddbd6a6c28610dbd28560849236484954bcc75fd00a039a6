@@ -1,0 +1,43 @@
+## 定理 1812.1（Log-derivative Schwarz–Pick inequality）
+
+RH 蕴含：
+
+$$
+\boxed{
+(2\Re s-1)
+\left|
+\left(
+\frac{\xi'}{\xi}
+\right)'(s)
+\right|
+\le
+2\Re
+\frac{\xi'}{\xi}(s),
+\qquad
+\Re s>\frac12.
+}
+\tag{1812.2}
+$$
+
+即：
+
+$$
+\boxed{
+(2\Re s-1)
+\left|
+\frac{\xi''}{\xi}
+-
+\left(\frac{\xi'}{\xi}\right)^2
+\right|
+\le
+2\Re\frac{\xi'}{\xi}.
+}
+\tag{1812.3}
+$$
+
+这是一条二阶局部解析约束。
+
+更高阶 Pick matrices 会生成完整的高阶导数不等式塔。
+
+---
+

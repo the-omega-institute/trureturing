@@ -1,0 +1,37 @@
+# 第一千七百九十七部　当前仓库中的证明链已经非常接近，但尚未闭合
+
+项目现有结果已经覆盖以下环节。
+
+第一，完全相同的 modal multiplier 会使反对称振幅在全部自然时间中持续不可见；不同反射 multiplier 则可由第一非平凡时间步分离。
+
+第二，对有限互异模式，第一完整时间窗口可由 Vandermonde 结构恢复全部振幅；扩大时间窗口只会缩小观察纤维。
+
+第三，时间平移已经被机器化为谱纤维上的精确乘法输运。
+
+第四，固定深度 Li–Clark moments 的恢复误差会稳定传递到 Toeplitz 算子范数与最小特征值。
+
+第五，在给定正偶谱测度与 moment identification 后，Laguerre–Li bridge 已经闭合；在给定单位盘 Verblunsky 参数后，Szegő \(SU(1,1)\) transfer 也已闭合。
+
+因此真正只剩下一条中间桥：
+
+$$
+\boxed{
+\text{Prime–pole–Gamma 数据}
+\Longrightarrow
+c(n)\text{ 为正定函数}.
+}
+\tag{1797.1}
+$$
+
+一旦这条桥成立，后面的：
+
+* Herglotz 正测度；
+* GNS 酉相位态；
+* Verblunsky 单位盘条件；
+* Szegő transfer；
+* Toeplitz 正性；
+
+全部自动接通。
+
+---
+

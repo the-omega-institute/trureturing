@@ -1,0 +1,6 @@
+## 一　G-a 预登记:G3 的零集等于局部因子零集之并(`LocalFactorZeroDivisor`)
+
+**义务**:公开定理 `G3_eq_zero_iff_exists_local_factor_zero (s : ℂ) (hs : 1 / Real.goldenRatio ^ 4 < s.re) : (∏' p : Nat.Primes, (1 - (p : ℂ) ^ (-s * ((Real.goldenRatio ^ 3 : ℝ) : ℂ))) * (1 + (p : ℂ) ^ (-s * ((Real.goldenRatio ^ 2 : ℝ) : ℂ)))⁻¹ * germLocalFactor s p) = 0 ↔ ∃ p : Nat.Primes, germLocalFactor s p = 0`,乘积表达式与冻结 `golden_germ_second_order_factorization` 的 G3 逐字相同。闭合路线:冻结的偏差可和性给出绝对收敛;两个规范化因子由模 < 1 非零;钉版 Mathlib 的 `tprod` 零/非零引理收尾。落点 `D5/S3/Analytic/EulerGerm/`。
+**可证伪预测(写在跑之前)**:若正确,定理只消费冻结的第二阶因子分解模块与钉版 Mathlib,公理集为标准三条;若 `tprod` 的零判据在钉版缺失或 G3 表达式与冻结 `let` 不同构,则记所缺引理名并改标 `open`。
+**边界**:不断言任何局部因子有零点。
+

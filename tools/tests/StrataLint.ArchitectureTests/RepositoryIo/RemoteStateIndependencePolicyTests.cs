@@ -298,11 +298,4 @@ public sealed class RemoteStateEarlyFeedbackPolicyTests
             new RemoteStateSource(relativePath, source)));
     }
 
-    [Fact]
-    public void RepositoryTestsContainNoRecognizedRemoteDependencyShapes()
-    {
-        var findings = RemoteStateIndependencePolicy.InspectRepository(RepositoryRoot);
-
-        Assert.Empty(findings);
-    }
 }

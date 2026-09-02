@@ -1,0 +1,42 @@
+## 1. Klein 四群零点轨道
+
+定义三个作用：
+
+\[
+C(s)=\overline s,
+\qquad
+R(s)=1-s,
+\qquad
+J(s)=1-\overline s.
+\]
+
+它们满足：
+
+\[
+C^2=R^2=J^2=1,
+\qquad
+CR=RC=J.
+\]
+
+故：
+
+\[
+G_\zeta=\{1,C,R,J\}\cong C_2\times C_2.
+\]
+
+对
+
+\[
+\rho=\frac12+\delta+i\gamma
+\]
+
+有：
+
+\[
+\begin{aligned}
+C\rho&=\frac12+\delta-i\gamma,\\
+R\rho&=\frac12-\delta-i\gamma,\\
+J\rho&=\frac12-\delta+i\gamma.
+\end{aligned}
+\]
+

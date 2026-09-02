@@ -1,0 +1,47 @@
+## 0.1 已有而不应重证的仓库支点
+
+本理论消费下列已冻结支点：
+
+1. `D5/S3/Weil/ZetaBridge/ConvolutionSquareOffLineOrbits`  
+   离线非实零点形成四点轨道，轨道卷积平方贡献可化为单项实部的四倍。
+
+2. `D5/S3/Zeros/Symmetry/CriticalDampingFlatness`  
+   有限零点窗的中心化双曲余弦缺陷为零，当且仅当全部横向偏移均为零。
+
+3. `D5/S3/Zeros/CriticalZeroTransverseGap`  
+   \(r\) 重临界零点的强度横向首项次数为 \(2r\)。
+
+4. `D5/S3/Analytic/Boundary/InteriorCurvatureCriterion`  
+   右侧离线零点产生质量为 \(2\pi m_\rho\) 的 Riesz 原子；该内部测度为零等价于 RH 型零点定位。
+
+5. `D5/S3/Analytic/PoissonPhaseHolonomy/PairwisePoissonHolonomyEnergy`  
+   正横向深度下，二点相位 holonomy 能量非负、共同高度平移不变，并检测高度差。
+
+6. `D5/S3/Observer/AgencyHolonomy/ScalarMemoryBlindness` 与  
+   `GoldenScalarDihedralBlindness`  
+   标量 Euler/完成读数可以遗忘有序素数词和隐藏 memory。
+
+7. `D5/S3/Observer/AgencyHolonomy/OrderedPrimeHolonomyCasimir`  
+   有序素数 holonomy 的一阶响应消失，而负二阶响应读出平方 winding 的正和。
+
+8. `D5/S3/Weil/ZetaBridge/ZeroSumEnumerationInvariance`  
+   对称零点和及其极限不依赖零点枚举，也不依赖收敛见证。
+
+9. `D5/S1/Words/Powers/GoldenDesubstitutionZeckendorf`、  
+   `D5/S1/Deficit/ZeckendorfDisplacementReading`、  
+   `D5/S3/Analytic/GoldenEulerBeta`  
+   已建立 Zeckendorf 数位、黄金替换上移和 O-5 指数账户之间的基础桥。
+
+10. `D5/S3/Observer/AgencyHolonomy/GoldenCharacterQuotient`  
+    模 \(5\) 二次特征在非分歧素数上给出 \(\pm1\) 商，并证明标量乘积遗忘词序。
+
+11. `D5/S3/Weil/ZetaBridge/PrimeJumpDecomposition`  
+    素数项已被重写为 coherent mass 减去非负平移能量。
+
+12. 仓库理论层已提出“相关阶数轴”
+    \[
+    (S,k,b,a,t),
+    \qquad S\subseteq\mathbb P_{\mathrm{finite}},
+    \]
+    但尚未把 Hardy–Littlewood 加法构型、connected cumulant、Zeckendorf 镜像线程和零点轨道 jet 合为一个 kernel-ready 理论。
+

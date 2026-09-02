@@ -1,0 +1,62 @@
+## 1818.1 黑洞热类比的再次校准
+
+内部 Poisson 响应：
+
+$$
+\Re L_\xi\!\left(\frac12+x+iy\right)
+$$
+
+是平滑的。
+
+但其边界源测度：
+
+$$
+\sum_\gamma m_\gamma\delta_\gamma
+$$
+
+是离散的。
+
+所以：
+
+$$
+\boxed{
+\text{连续“辐射场”来自 Poisson 粗化；
+精确谱状态仍然是纯点、酉、可复现的。}
+}
+$$
+
+因此 Hawking-like 语言适用于：
+
+* 径向 Poisson 平滑；
+* DtN 边界响应；
+* 隐藏伙伴被部分迹后的读数。
+
+它不意味着 completed-\(\xi\) 的精确 Li phase state 本身是一个真正热混合谱。
+
+若 RH 为假，某个 \(|\omega_\rho|>1\) 的模式会使 \(c_n\) 沿子序列指数增长。
+
+所以真正的动力二分不是：
+
+$$
+\text{热}
+\quad\text{对}\quad
+\text{非热},
+$$
+
+而是：
+
+$$
+\boxed{
+\begin{aligned}
+\mathrm{RH}
+&:\quad
+\text{单位圆纯相位、 bounded recurrence};\\
+\neg\mathrm{RH}
+&:\quad
+\text{hyperbolic radial mode、exponential instability}.
+\end{aligned}
+}
+$$
+
+---
+

@@ -1,0 +1,47 @@
+# 第一千八百一十六部　为什么局部 Euler 因子永远不够
+
+每个 prime 局部 determinant 可以完全相同，但跨 prime 的 frame transition 仍然不同。
+
+仓库已经用显式两分支矩阵构造机器证明：存在两组 prime-indexed frame，它们在每个 prime 上产生完全相同的局部 Euler determinant，却具有不同的跨 prime transition product。
+
+因此：
+
+$$
+\boxed{
+\text{全部局部 Euler determinants}
+}
+$$
+
+并不能恢复：
+
+$$
+\boxed{
+\text{cross-prime Gram、holonomy 或完全正输运。}
+}
+$$
+
+这说明主证明缺少的不是另一个标量 Euler 乘积，而是：
+
+$$
+\boxed{
+\textbf{一个跨 prime 的正关系结构。}
+}
+$$
+
+更精确的目标应是构造 Hilbert 空间 \(\mathcal H_{\rm arith}\) 与向量族 \(V_s\)，满足：
+
+$$
+\boxed{
+\frac{
+L_\xi(s)+\overline{L_\xi(t)}
+}{
+s+\overline t-1
+}
+=
+\langle V_t,V_s\rangle_{\mathcal H_{\rm arith}}.
+}
+\tag{1816.1}
+$$
+
+这可以称为：
+

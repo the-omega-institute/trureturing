@@ -1,0 +1,5 @@
+- \(k=3\) 的 Fourier 变换是 bispectrum：
+  \[
+  A(\theta_1)A(\theta_2)
+  A(-\theta_1-\theta_2);
+  \]

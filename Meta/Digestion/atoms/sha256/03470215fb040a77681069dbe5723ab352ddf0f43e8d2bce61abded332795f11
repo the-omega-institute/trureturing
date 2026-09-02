@@ -1,0 +1,86 @@
+## 1895.1 应用于 completed \(\xi\)
+
+中心化 completed function：
+
+$$
+F(u)
+=
+\xi\!\left(\frac12+u\right)
+$$
+
+满足：
+
+$$
+F(-u)=F(u).
+$$
+
+真实法向强度：
+
+$$
+\mathcal I(\delta,t)
+=
+\left|
+\xi\!\left(
+\frac12+\delta+it
+\right)
+\right|^2
+$$
+
+也满足：
+
+$$
+\boxed{
+\mathcal I(-\delta,t)
+=
+\mathcal I(\delta,t).
+}
+\tag{1895.4}
+$$
+
+因此：
+
+$$
+\boxed{
+\partial_\delta^{2k+1}
+\mathcal I(0,t)
+=
+0.
+}
+\tag{1895.5}
+$$
+
+所以 completed scalar 不能在线性阶区分：
+
+$$
++\delta
+\quad\text{与}\quad
+-\delta.
+$$
+
+它首先看到的是：
+
+$$
+\boxed{
+\delta^2.
+}
+$$
+
+这解释了为什么离线零点在平方图表中表现为：
+
+$$
+\left(
+\rho-\frac12
+\right)^2,
+$$
+
+也解释了为什么“方向位”必须由其他结构重新补回：
+
+* 对数导数；
+* 相位；
+* Hardy 正负时间；
+* 反对称通道；
+* 多点 kernel；
+* derivative jet。
+
+---
+

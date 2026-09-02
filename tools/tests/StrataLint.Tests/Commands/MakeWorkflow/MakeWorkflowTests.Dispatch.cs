@@ -270,7 +270,7 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("engineering-tests-base-cwd: engineering-tests", makefile, StringComparison.Ordinal);
         Assert.Equal(0, RecipeCount(makefile, "engineering-tests-base-cwd"));
         Assert.Equal(
-            "\t@cd \"$(ENGINEERING_TESTS_CWD)\" && dotnet run --project \"$(HERE)/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj\" --configuration Release --no-launch-profile -- --mode \"$(MODE)\" --repository \"$(REPOSITORY)\" --head \"$(HEAD)\" --base \"$(BASE)\" --plan-file \"$(PLAN_FILE)\"",
+            "\t@cd \"$(ENGINEERING_TESTS_CWD)\" && dotnet run --project \"$(HERE)/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj\" --configuration Release --no-launch-profile -- --repository \"$(REPOSITORY)\" --head \"$(HEAD)\" --base \"$(BASE)\"",
             engineeringTestsRecipe);
         Assert.Single(
             Regex.Matches(
@@ -545,10 +545,10 @@ public sealed partial class MakeWorkflowTests
     {
         foreach (Match match in Regex.Matches(
             shell,
-            @"(?m)^[ \t]*(?:FULL=1[ \t]+)?(?:CI=true[ \t]+)?(?:STRATALINT_REQUIRE_LIVE_REPORT=1[ \t]+)?make[ \t]+-C[ \t]+(?:candidate/)?tools[ \t]+engineering-tests[ \t]+MODE=(?<mode>plan|execute)\b[^\r\n]*$",
+            @"(?m)^[ \t]*(?:FULL=1[ \t]+)?(?:CI=true[ \t]+)?(?:STRATALINT_REQUIRE_LIVE_REPORT=1[ \t]+)?make[ \t]+-C[ \t]+(?:candidate/)?tools[ \t]+engineering-tests\b[^\r\n]*$",
             RegexOptions.CultureInvariant | RegexOptions.NonBacktracking))
         {
-            yield return $"make -C tools engineering-tests MODE={match.Groups["mode"].Value}";
+            yield return "make -C tools engineering-tests";
         }
 
         foreach (Match match in Regex.Matches(

@@ -1,0 +1,37 @@
+## 1852.2 内部同质 string 尾
+
+若某个规范化的 Stieltjes/Cauer tail 满足平稳递归：
+
+$$
+q_{n+1}
+=
+\frac1{1+q_n},
+$$
+
+则尾固定点为：
+
+$$
+q_*=\varphi^{-1}.
+$$
+
+这是内部自相似实现。
+
+两者必须区分：
+
+$$
+\boxed{
+\begin{aligned}
+\text{黄金观察网格}
+&:\quad\text{人为选择等双曲尺度};\\
+\text{黄金 string 尾}
+&:\quad\text{Hamiltonian 本身渐近同质}.
+\end{aligned}
+}
+$$
+
+前者随时可以定义。
+
+后者目前没有被 Riemann 数据证明。
+
+---
+

@@ -1,0 +1,65 @@
+# 第一千八百五十部　有限正名字如何收敛为连续 Hamiltonian
+
+固定某个观察尺度 \(a\)。
+
+设前 \(N\) 个相位 moments 可以由有限原子测度：
+
+$$
+\mu_N
+=
+\sum_{j=1}^{r_N}
+w_{N,j}\delta_{\zeta_{N,j}},
+\qquad
+w_{N,j}>0,
+$$
+
+精确实现。
+
+相应有限酉系统为：
+
+$$
+U_N
+=
+\operatorname{diag}
+(\overline{\zeta_{N,1}},\ldots,\overline{\zeta_{N,r_N}}),
+$$
+
+$$
+\Omega_N
+=
+(\sqrt{w_{N,1}},\ldots,\sqrt{w_{N,r_N}}).
+$$
+
+正半定 Toeplitz 矩阵具有这种有限 Vandermonde／原子分解。
+
+如果对每个 \(N\) 都存在这样的模型，则概率测度紧性给出一个完整正测度 \(\mu_a\)。
+
+再由 Herglotz 表示得到完整 \(m_\xi\)。
+
+最后由 de Branges 逆谱定理得到：
+
+$$
+H_\xi(x)\succeq0.
+$$
+
+因此存在一条完整链：
+
+$$
+\boxed{
+\begin{aligned}
+\text{每个有限名字有正模型}
+&\Longrightarrow
+\text{完整正相位测度}\\
+&\Longrightarrow
+\text{Herglotz 响应}\\
+&\Longrightarrow
+\text{正 canonical Hamiltonian}\\
+&\Longrightarrow
+\mathrm{RH}.
+\end{aligned}
+}
+\tag{1850.1}
+$$
+
+---
+

@@ -1,0 +1,25 @@
+## 目标 B：Riemann–Schwarz 不等式
+
+证明：
+
+$$
+\boxed{
+\left|
+\frac{
+L_\xi(s)-\lambda_1
+}{
+L_\xi(s)+\lambda_1
+}
+\right|
+\le
+\left|
+1-\frac1s
+\right|.
+}
+\tag{1820.2}
+$$
+
+它比正实性携带更多归一化信息，并立即产生二点 Pick 正性。
+
+---
+

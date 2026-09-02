@@ -1,0 +1,31 @@
+## 定理 1811.1（Riemann–Schwarz 判据）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\left|
+\frac{
+L_\xi(s)-\lambda_1
+}{
+L_\xi(s)+\lambda_1
+}
+\right|
+\le
+\left|
+1-\frac1s
+\right|
+}
+\tag{1811.3}
+$$
+
+对全部：
+
+$$
+\Re s>\frac12
+$$
+
+成立；若分母消失，则视为判据失败。
+
+---
+

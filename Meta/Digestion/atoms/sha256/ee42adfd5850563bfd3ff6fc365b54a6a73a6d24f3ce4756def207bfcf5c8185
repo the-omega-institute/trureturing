@@ -1,0 +1,37 @@
+# 第一千九百零四部　危险区是有限的，但这仍不是正性证明
+
+仓库最新的 observer-mode confinement 定理表明：在固定 prime-support multiplier 统一有界、对称 Archimedean multiplier 联合 proper 的假设下，任何危险次水平集只涉及有限多个整数 observer modes；每个 mode 的频率截面有界，全部负值落在一个共同有限 mode–frequency box 中。
+
+因此可以建立有限搜索程序：
+
+$$
+\boxed{
+\text{Archimedean confinement}
+\longrightarrow
+\text{有限 mode box}
+\longrightarrow
+\text{有理频率网格}
+\longrightarrow
+\text{锚定二点 determinant}
+\longrightarrow
+\text{黄金负本征向量}.
+}
+\tag{1904.1}
+$$
+
+但逻辑地必须保持：
+
+$$
+\boxed{
+\text{异常若存在被限制在有限盒}
+\neq
+\text{异常不存在}.
+}
+$$
+
+confinement 解决的是可搜索性。
+
+完全正胶合解决的才是 RH。
+
+---
+

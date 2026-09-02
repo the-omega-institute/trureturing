@@ -1,0 +1,20 @@
+### 定义 3.1（Ouroboros orbit cycle）
+
+上述四步闭合称为零点的 **Ouroboros orbit cycle**。
+
+它表达的是：
+
+\[
+\text{作用闭合}
+\quad\text{而不是}\quad
+\text{拓扑曲面已经被证明为 Klein bottle}.
+\]
+
+后文将区分：
+
+1. 群作用的四边闭环；
+2. partition lattice 上 moment–cumulant 的 Möbius 反演闭环；
+3. 需要额外 monodromy 前件的几何 Möbius/Klein 提升。
+
+---
+

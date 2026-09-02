@@ -1,0 +1,30 @@
+## 版本 C：Canonical Gram
+
+构造 Weyl features：
+
+$$
+\Psi(x,z)
+$$
+
+并证明：
+
+$$
+\boxed{
+\frac{
+m_\xi(z)-\overline{m_\xi(w)}
+}{
+z-\overline w
+}
+=
+\int
+\Psi(x,w)^*
+H_\xi(x)
+\Psi(x,z)\,dx.
+}
+\tag{1854.2}
+$$
+
+这是最直接接入仓库 kernel positivity 的版本。
+
+---
+

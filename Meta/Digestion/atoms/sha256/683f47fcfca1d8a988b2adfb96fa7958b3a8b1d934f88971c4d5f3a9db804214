@@ -1,0 +1,49 @@
+## 定理 1813.1（Zero-resolvent Gram formula）
+
+在 RH 下，以规范对称方式求和：
+
+$$
+\boxed{
+\mathcal N_\xi(s,t)
+=
+\sum_\rho
+\frac{
+m_\rho
+}{
+(s-\rho)
+(\overline t-\overline\rho)
+}.
+}
+\tag{1813.3}
+$$
+
+所以它是向量：
+
+$$
+v_s(\rho)
+=
+\frac{\sqrt{m_\rho}}{s-\rho}
+$$
+
+的 Gram 核：
+
+$$
+\boxed{
+\mathcal N_\xi(s,t)
+=
+\langle v_t,v_s\rangle.
+}
+\tag{1813.4}
+$$
+
+这给 RH 一个极其具体的 Hilbert 实现：
+
+$$
+\boxed{
+\text{completed-\(\xi\) 的 normalized log-response
+必须是一族 zero-resolvent feature vectors 的 Gram kernel。}
+}
+$$
+
+---
+

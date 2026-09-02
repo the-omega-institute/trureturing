@@ -1,0 +1,14 @@
+\[
+\operatorname{ZOC}_N(\rho)
+=
+\Bigl(
+\operatorname{tsign}(\delta),
+\mathsf Z_N(|\delta|),
+\operatorname{tsign}(\gamma),
+\mathsf Z_N(|\gamma|),
+\operatorname{wdigits}(m_\rho)
+\Bigr).
+\]
+
+这里 `ZOC` 表示 **Zeckendorf Orbit Code**。
+

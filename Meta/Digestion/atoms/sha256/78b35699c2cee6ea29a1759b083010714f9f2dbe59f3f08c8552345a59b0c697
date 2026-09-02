@@ -1,0 +1,16 @@
+## 50. Poisson orbit graph
+
+只消费仓库已有 pairwise energy：
+
+```lean
+def poissonOrbitWeight (a b : RightOffLineOrbit) : ℝ := ...
+
+theorem poissonOrbitWeight_nonnegative ...
+theorem poissonOrbitWeight_eq_zero_iff_equalHeight ...
+theorem poissonOrbitWeight_commonShift_invariant ...
+```
+
+不把该边权冒充经典 ζ 必然耦合。
+
+---
+

@@ -1,0 +1,19 @@
+\[
+P_{\delta,\gamma}(s)
+=
+\bigl((z-\delta)^2+\gamma^2\bigr)
+\bigl((z+\delta)^2+\gamma^2\bigr).
+\]
+
+其零点恰为：
+
+\[
+\frac12\pm\delta\pm i\gamma.
+\]
+
+同时：
+
+\[
+P_{\delta,\gamma}(1-s)=P_{\delta,\gamma}(s),
+\]
+

@@ -1,0 +1,55 @@
+# 第一千九百二十四部　为什么 \(\xi\) 越完成，黄金反而越不显眼
+
+现在可以给出完整依赖链：
+
+$$
+\boxed{
+\begin{aligned}
+\text{离线方向}
+&:\quad+\delta\text{ 或 }-\delta\\
+\downarrow\quad\text{反射偶标量}\\
+\text{平方名字}
+&:\quad\delta^2\\
+\downarrow\quad\text{复相位完成}\\
+\text{even Clifford algebra}
+&:\quad\operatorname{span}\{I,\mathfrak J\}\\
+\downarrow\quad\text{标量 determinant}\\
+\text{completed }\xi
+&:\quad\text{方向和实因子化历史均被压缩}.
+\end{aligned}
+}
+\tag{1924.1}
+$$
+
+要重新看见黄金，必须沿反方向提升：
+
+$$
+\boxed{
+\begin{aligned}
+\xi
+&\longrightarrow
+\xi'/\xi\\
+&\longrightarrow
+\text{Schur／Nevanlinna kernel}\\
+&\longrightarrow
+\text{二点关系矩阵}\\
+&\longrightarrow
+\mathbb F\\
+&\longrightarrow
+\{\varphi,-\varphi^{-1}\}.
+\end{aligned}
+}
+\tag{1924.2}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{黄金并不是被硬塞进 \(\zeta\)；
+它是在恢复被完成标量删除的最小交叉关系时重新出现。}
+}
+$$
+
+---
+

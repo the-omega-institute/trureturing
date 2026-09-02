@@ -1,0 +1,11 @@
+\[
+M_A(\sigma)
+=
+\frac1{\zeta(\sigma)}
+\sum_{n\ge1}
+\frac{\prod_{h\in A}\Lambda(n+h)}
+{n^\sigma}.
+\]
+
+定义 connected 生成元：
+

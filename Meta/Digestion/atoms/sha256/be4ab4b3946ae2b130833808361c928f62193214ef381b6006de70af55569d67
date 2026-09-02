@@ -1,0 +1,33 @@
+## 1810.1 有理二点证书
+
+因为上述行列式在 \(z_\rho\) 处严格为负，连续性保证其在某个邻域内仍为负。
+
+该邻域必含 Gaussian rational：
+
+$$
+q\in(\mathbb Q+i\mathbb Q)\cap\mathbb D.
+$$
+
+所以：
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\Longrightarrow
+\exists q\in\mathbb Q(i)\cap\mathbb D:
+\det
+\begin{pmatrix}
+K(0,0)&K(0,q)\\
+K(q,0)&K(q,q)
+\end{pmatrix}
+<0.
+}
+\tag{1810.4}
+$$
+
+不需要知道精确零点坐标。
+
+只需要在一个有理圆盘点严格认证负值。
+
+---
+
