@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:d67b90a245671c2e727c3bb973d09e821113d5a5fc3cb2c61063a5ce9969b701
+  normalized_sha256: sha256:d67b90a245671c2e727c3bb973d09e821113d5a5fc3cb2c61063a5ce9969b701
+cas_ref: sha256:d67b90a245671c2e727c3bb973d09e821113d5a5fc3cb2c61063a5ce9969b701
+coverage_gids:
+  - D5/S3/Factorization/IdealClassGroups/PrincipalIdealCriterion.principal_ideal_criterion
+receipts:
+  coverage:
+    - gid: D5/S3/Factorization/IdealClassGroups/PrincipalIdealCriterion.principal_ideal_criterion
+      source_sha256: sha256:d67b90a245671c2e727c3bb973d09e821113d5a5fc3cb2c61063a5ce9969b701
+      target_statement_id: sha256:ff3ba352322ace1ea1fbffdac167de3fd52697c5889a85428245fe6061f622b2
+  scribe:
+    - gid: D5/S3/Factorization/IdealClassGroups/PrincipalIdealCriterion.principal_ideal_criterion
+      definition_sha256: sha256:ed07da7a1d78668dc3a5964d9c06dce0e7c85a7961b04ccf508c77b5a68ca4c2
+      emission_sha256: sha256:0483e432108342971c0757476572d7a34c07c61b28b80eeca801df03436ff177
+  unresolved_subitems: []
