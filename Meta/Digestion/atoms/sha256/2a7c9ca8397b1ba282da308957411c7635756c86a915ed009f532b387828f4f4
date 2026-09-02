@@ -1,0 +1,6 @@
+## 二　G-e 预登记:次模展开与 G3 的 sharp 横坐标(同模块)
+
+**义务**:同模块两条公开定理 `germLocalFactor_next_mode_expansion (s : ℂ) (p : Nat.Primes) (hs : 0 < s.re) : let x := (p:ℂ)^(-s·φ²); let y := (p:ℂ)^(-s·φ³); (1 - y) * (1 + x)⁻¹ * germLocalFactor s p - 1 = -y^2 + (1 - y) * (1 + x)⁻¹ * ∑' k : ℕ, (p:ℂ)^(-s * (o5Beta (k+4) : ℂ))` 与 `second_normalized_factor_deviation_norm_summable_sharp (s : ℂ) (hs : 1 / (2 * Real.goldenRatio ^ 3) < s.re) : Summable (fun p : Nat.Primes => ‖(1 - (p:ℂ)^(-s·φ³)) * (1 + (p:ℂ)^(-s·φ²))⁻¹ * germLocalFactor s p - 1‖)`(表达式与冻结 `let G3` 的因子逐字相同)。闭合路线:o5Beta 0..3 = 0, φ², φ³, φ⁴ 与 (1+x)(1+y)=1+x+y+xy;Re s>0 上 ‖x‖<1;四模 tsum 拆分;尾项由冻结 `o5_beta_growth`/`o5_beta_power_law` 与不等式 2φ³+1+k ≤ o5Beta(k+4) 控制;`Nat.Primes.summable_rpow` 以指数 2φ³·Re s > 1 收尾。
+**可证伪预测(写在跑之前)**:若正确,G3 在 Re s > 1/(2φ³) 绝对收敛,第二阶因子分解可延拓至整个严格窗口;若 o5Beta 4 ≠ 2φ³+1 或尾项下界不成立,则 sharp 横坐标不同于 1/(2φ³),须以实际值改写。
+**边界**:本条不重做冻结的第二阶因子分解本身,只给出其收敛域的精确边界;将因子分解延拓到 Re s > 1/(2φ³) 的定理另立义务。
+
