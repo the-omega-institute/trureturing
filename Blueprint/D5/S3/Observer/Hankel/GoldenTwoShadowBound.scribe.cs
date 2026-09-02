@@ -10,22 +10,28 @@ internal sealed class GoldenTwoShadowBoundDocument : IScribeDocumentDefinition
         "D5/S3/Observer/Hankel/GoldenTwoShadowBound.golden_two_shadow_bound";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A contractive Hankel map satisfies six equivalent golden-ratio Gram bounds.",
+        "A contractive continuous linear map satisfies one six-entry golden Gram "
+            + "equivalence, and the spectral threshold is sharp.",
         H("Golden Two-Shadow Bound"),
         Blocks(Describe.Lean(
             DescribeId.Create("golden-two-shadow-bound"),
             DeclarationHandle.Create(Declaration),
-            H("Six golden Gram criteria agree"),
+            H("Six golden Gram criteria agree at the maximal threshold"),
             StatementSource.FromAuthor(TheoremFormula()),
             AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text(
-                    "The positive operator D is constructed as the adjoint of the Hankel map "
-                        + "composed with that map. Contractivity supplies the source positive-"
-                        + "contraction scope.")),
+                    "For every contractive continuous linear map, the positive operator D is "
+                        + "constructed as its adjoint composed with the map. The six displayed "
+                        + "formulas are entries of one List.TFAE statement.")),
                 Paragraph(Text(
                     "The inverse criteria quantify units whose values are exactly I-D, so the "
-                        + "display records invertibility together with each order bound."))),
+                        + "display records invertibility together with each order bound.")),
+                Paragraph(Text(
+                    "When both Hilbert spaces are nontrivial, every spectral threshold strictly "
+                        + "above the inverse golden ratio admits a contractive rank-one map with "
+                        + "Gram norm below that threshold for which the positive two-shadow "
+                        + "inequality fails. Thus the golden threshold is maximal."))),
             DescribeRole.Theorem))));
 
     private static Formula TheoremFormula()
@@ -35,6 +41,7 @@ internal sealed class GoldenTwoShadowBoundDocument : IScribeDocumentDefinition
         Formula hankel = F.Id("H");
         Formula gram = F.Id("D");
         Formula complement = F.Id("C");
+        Formula threshold = F.Id("t");
         Formula type = Call("Type");
         Formula real = Seq(Mathbb, Grp(F.Id("R")));
         Formula complex = Seq(Mathbb, Grp(F.Id("C")));
@@ -68,6 +75,24 @@ internal sealed class GoldenTwoShadowBoundDocument : IScribeDocumentDefinition
             Exists, Sp, Typed(complement, unitType), Comma, Sp,
             Equal(complementValue, Subtract(identity, gram)), Sp, Land, Sp,
             LessOrEqual(Multiply(gram, inverseValue), phiIdentity));
+        Formula tfae = Seq(
+            Operatorname, Grp(F.Id("List"), Dot, F.Id("TFAE")), Open,
+            OpenBracket,
+            first, Comma, Sp,
+            second, Comma, Sp,
+            third, Comma, Sp,
+            fourth, Comma, Sp,
+            fifth, Comma, Sp,
+            sixth,
+            CloseBracket, Close);
+        Formula sharpGramSquare = Seq(
+            Grp(gramConstruction), Caret, Grp(D(2)));
+        Formula sharpFailure = Seq(
+            Neg, Sp, Open,
+            LessOrEqual(
+                sharpGramSquare,
+                Subtract(identity, Grp(gramConstruction))),
+            Close);
 
         return Disp(new Formula.Aligned([
             Seq(
@@ -81,15 +106,25 @@ internal sealed class GoldenTwoShadowBoundDocument : IScribeDocumentDefinition
                 Typeclass("InnerProductSpace", complex, codomain), Sp, Land, Sp,
                 Typeclass("CompleteSpace", codomain), Comma),
             Seq(
+                Grp(), Open,
                 Forall, Sp, Typed(hankel, mapType), Comma, Sp,
                 new Formula.Norm(hankel), Sp, Leq, Sp, D(1), Sp,
                 Rightarrow),
             Seq(
                 Grp(), F.Id("let"), Sp, gram, Colon, Sp, endomorphisms,
                 Sp, Eq, Sp, gramConstruction, Semi),
-            Seq(Grp(), first, Sp, Iff, Sp, second, Sp, Iff, Sp, third),
-            Seq(Grp(), Iff, Sp, fourth, Sp, Iff, Sp, fifth),
-            Seq(Grp(), Iff, Sp, sixth, Dot),
+            Seq(Grp(), tfae, Close, Sp, Land, Sp, Open),
+            Seq(
+                Grp(), Call("Nontrivial", domain), Sp, Rightarrow, Sp,
+                Call("Nontrivial", codomain), Sp, Rightarrow),
+            Seq(
+                Grp(), Forall, Sp, Typed(threshold, real), Comma, Sp,
+                phiInverse, Sp, Lt, Sp, threshold, Sp, Rightarrow),
+            Seq(
+                Grp(), Exists, Sp, Typed(hankel, mapType), Comma, Sp,
+                LessOrEqual(new Formula.Norm(hankel), D(1)), Sp, Land, Sp,
+                LessOrEqual(new Formula.Norm(Grp(gramConstruction)), threshold)),
+            Seq(Grp(), Land, Sp, sharpFailure, Close, Dot),
         ]));
     }
 

@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Observer/Hankel/GoldenTwoShadowBound
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Six golden-ratio criteria for a contractive Hankel Gram operator are equivalent. -/
+   digest: Six golden-ratio Gram criteria are equivalent, and their spectral threshold is sharp. -/
 
 import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Order
 import Mathlib.Analysis.CStarAlgebra.ContinuousLinearMap
@@ -34,12 +34,7 @@ namespace D5.S3.Observer.Hankel.GoldenTwoShadowBound
 open Ring
 open scoped CStarAlgebra
 
-/-- For a contractive Hankel map, construct its positive Gram operator
-`D = H†H`. The two polynomial order bounds, the norm bounds for `D` and `H`,
-and the two inverse order bounds are equivalent at the golden threshold. The
-unit witnesses in the final clauses expose the source inverse without relying
-on a totalized inverse at a nonunit. -/
-theorem golden_two_shadow_bound
+private theorem golden_two_shadow_equivalences
     {V W : Type*}
     [NormedAddCommGroup V] [InnerProductSpace ℂ V] [CompleteSpace V]
     [NormedAddCommGroup W] [InnerProductSpace ℂ W] [CompleteSpace W]
@@ -238,5 +233,77 @@ theorem golden_two_shadow_bound
         _ = algebraMap ℝ A (Real.goldenRatio ^ 2) := by
           rw [Real.goldenRatio_sq, map_add, map_one]
   tfae_finish
+
+/-- For every contractive continuous linear map, construct its positive Gram
+operator `D = H†H`. The two polynomial order bounds, the norm bounds for `D`
+and `H`, and the two inverse order bounds are equivalent at the golden
+threshold. Moreover, on nontrivial source and target spaces, every larger
+spectral threshold admits a contractive rank-one Gram operator for which the
+positive two-shadow inequality fails. -/
+theorem golden_two_shadow_bound
+    (V W : Type*)
+    [NormedAddCommGroup V] [InnerProductSpace ℂ V] [CompleteSpace V]
+    [NormedAddCommGroup W] [InnerProductSpace ℂ W] [CompleteSpace W] :
+    (∀ H : V →L[ℂ] W, ‖H‖ ≤ 1 →
+      let D : V →L[ℂ] V := H.adjoint ∘L H
+      List.TFAE [
+        D ^ 2 ≤ 1 - D,
+        D + D ^ 2 ≤ 1,
+        ‖D‖ ≤ Real.goldenRatio⁻¹,
+        ‖H‖ ≤ Real.sqrt Real.goldenRatio⁻¹,
+        ∃ complement : (V →L[ℂ] V)ˣ,
+          (complement : V →L[ℂ] V) = 1 - D ∧
+            (↑complement⁻¹ : V →L[ℂ] V) ≤
+              algebraMap ℝ (V →L[ℂ] V) (Real.goldenRatio ^ 2),
+        ∃ complement : (V →L[ℂ] V)ˣ,
+          (complement : V →L[ℂ] V) = 1 - D ∧
+            D * (↑complement⁻¹ : V →L[ℂ] V) ≤
+              algebraMap ℝ (V →L[ℂ] V) Real.goldenRatio]) ∧
+      (Nontrivial V → Nontrivial W →
+        ∀ t : ℝ, Real.goldenRatio⁻¹ < t →
+          ∃ H : V →L[ℂ] W,
+            ‖H‖ ≤ 1 ∧
+              ‖H.adjoint ∘L H‖ ≤ t ∧
+                ¬ ((H.adjoint ∘L H) ^ 2 ≤
+                  1 - (H.adjoint ∘L H))) := by
+  refine ⟨fun H hH => golden_two_shadow_equivalences H hH, ?_⟩
+  intro hV hW t ht
+  let _ : Nontrivial V := hV
+  let _ : Nontrivial W := hW
+  let r : ℝ := min t 1
+  have hPhiLtOne : Real.goldenRatio⁻¹ < 1 :=
+    inv_lt_one_of_one_lt₀ Real.one_lt_goldenRatio
+  have hrGt : Real.goldenRatio⁻¹ < r := by
+    exact lt_min ht hPhiLtOne
+  have hrNonnegative : 0 ≤ r := by
+    exact (inv_pos.mpr Real.goldenRatio_pos).le.trans hrGt.le
+  have hrLeOne : r ≤ 1 := min_le_right t 1
+  have hrLeT : r ≤ t := min_le_left t 1
+  let s : ℝ := Real.sqrt r
+  have hsNonnegative : 0 ≤ s := Real.sqrt_nonneg r
+  have hsSquare : s ^ 2 = r := Real.sq_sqrt hrNonnegative
+  obtain ⟨v, hv⟩ := exists_norm_eq V (c := 1) (by norm_num)
+  obtain ⟨w, hw⟩ := exists_norm_eq W (c := 1) (by norm_num)
+  let H : V →L[ℂ] W := s • InnerProductSpace.rankOne ℂ w v
+  have hHNorm : ‖H‖ = s := by
+    change ‖s • InnerProductSpace.rankOne ℂ w v‖ = s
+    rw [norm_smul, InnerProductSpace.norm_rankOne, hv, hw]
+    simp [Real.norm_eq_abs, abs_of_nonneg hsNonnegative]
+  have hHContraction : ‖H‖ ≤ 1 := by
+    rw [hHNorm]
+    nlinarith
+  have hDNorm : ‖H.adjoint ∘L H‖ = r := by
+    calc
+      ‖H.adjoint ∘L H‖ = ‖H‖ * ‖H‖ :=
+        ContinuousLinearMap.norm_adjoint_comp_self H
+      _ = s * s := by rw [hHNorm]
+      _ = r := by simpa [pow_two] using hsSquare
+  refine ⟨H, hHContraction, hDNorm.le.trans hrLeT, ?_⟩
+  intro hTwoShadow
+  have hGoldenBound : ‖H.adjoint ∘L H‖ ≤ Real.goldenRatio⁻¹ :=
+    ((golden_two_shadow_equivalences H hHContraction).out 0 2).mp
+      hTwoShadow
+  rw [hDNorm] at hGoldenBound
+  exact (not_lt_of_ge hGoldenBound) hrGt
 
 end D5.S3.Observer.Hankel.GoldenTwoShadowBound
