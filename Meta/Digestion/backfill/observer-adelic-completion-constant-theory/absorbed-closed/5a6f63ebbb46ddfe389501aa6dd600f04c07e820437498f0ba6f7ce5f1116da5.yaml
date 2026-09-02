@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:5a6f63ebbb46ddfe389501aa6dd600f04c07e820437498f0ba6f7ce5f1116da5
+  normalized_sha256: sha256:5a6f63ebbb46ddfe389501aa6dd600f04c07e820437498f0ba6f7ce5f1116da5
+cas_ref: sha256:5a6f63ebbb46ddfe389501aa6dd600f04c07e820437498f0ba6f7ce5f1116da5
+coverage_gids:
+  - D5/S3/Observer/Residuals/GoldenResidualPeriodicity.unforced_golden_completion_has_no_off_line_fixed_point
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/Residuals/GoldenResidualPeriodicity.unforced_golden_completion_has_no_off_line_fixed_point
+      source_sha256: sha256:5a6f63ebbb46ddfe389501aa6dd600f04c07e820437498f0ba6f7ce5f1116da5
+      target_statement_id: sha256:34c646efcbf485c3b969d861ad0d85bca82efc734803c5b4e28ca8e52f4f467c
+  scribe:
+    - gid: D5/S3/Observer/Residuals/GoldenResidualPeriodicity.unforced_golden_completion_has_no_off_line_fixed_point
+      definition_sha256: sha256:41a359b0561c40166f538afb08d7b702493ac355df612df2908ab5fa828fcdd6
+      emission_sha256: sha256:3c91366594d366345b2cd60daced9db58f0c9c77dc21a6d111e09699c3d51e73
+  unresolved_subitems: []
