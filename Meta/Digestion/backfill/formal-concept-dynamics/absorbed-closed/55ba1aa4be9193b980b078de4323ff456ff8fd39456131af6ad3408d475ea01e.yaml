@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:55ba1aa4be9193b980b078de4323ff456ff8fd39456131af6ad3408d475ea01e
+  normalized_sha256: sha256:55ba1aa4be9193b980b078de4323ff456ff8fd39456131af6ad3408d475ea01e
+cas_ref: sha256:55ba1aa4be9193b980b078de4323ff456ff8fd39456131af6ad3408d475ea01e
+coverage_gids:
+  - D5/S3/ConceptDynamics/DecisionValue/DecisionWithoutFullPrediction.decision_sufficiency_without_full_prediction
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/DecisionValue/DecisionWithoutFullPrediction.decision_sufficiency_without_full_prediction
+      source_sha256: sha256:55ba1aa4be9193b980b078de4323ff456ff8fd39456131af6ad3408d475ea01e
+      target_statement_id: sha256:5eb70d036f5415c6c1cda04e20a6b28514d8e0d2c5048a026ef43606425a20ff
+  scribe:
+    - gid: D5/S3/ConceptDynamics/DecisionValue/DecisionWithoutFullPrediction.decision_sufficiency_without_full_prediction
+      definition_sha256: sha256:13a186d8f603f1836e6fc46b207ac5022f94c0a5c464225568781e16e2b28042
+      emission_sha256: sha256:9520d9fda7d4c4c798a78c8c7d3e91dd7bb64a6283441d3bfca27965bc002d67
+  unresolved_subitems: []
