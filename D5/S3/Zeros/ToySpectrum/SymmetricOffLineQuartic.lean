@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Zeros/ToySpectrum/SymmetricOffLineQuartic
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: A symmetric entire quartic has four distinct zeros, all off the critical line. -/
+   digest: A fully symmetric entire function exists with every zero off the critical line. -/
 
 import D5.S3.Weil.Convention
 import Mathlib.Analysis.Calculus.Deriv.Polynomial
@@ -186,6 +186,67 @@ theorem symmetric_off_line_quartic_spec
       exact Or.inl rfl
     exact hOffLine root hRoot (hLocalized root hRoot)
 
+/-- There exists an entire function with a nonempty zero set invariant under
+reflection and conjugation, while every zero lies off the critical line. This
+same witness refutes the universal implication from full zero-set symmetry to
+critical-line localization. -/
+theorem symmetric_off_line_entire_exists :
+    ∃ F : Complex → Complex,
+      Differentiable Complex F ∧
+        (∃ s : Complex, F s = 0) ∧
+        (∀ s : Complex, F s = 0 → F (1 - s) = 0) ∧
+        (∀ s : Complex, F s = 0 → F (conj s) = 0) ∧
+        (∀ s : Complex, F s = 0 → s.re ≠ criticalAbscissa) ∧
+        ¬ (∀ G : Complex → Complex,
+          Differentiable Complex G →
+          (∃ s : Complex, G s = 0) →
+          (∀ s : Complex, G s = 0 → G (1 - s) = 0) →
+          (∀ s : Complex, G s = 0 → G (conj s) = 0) →
+          ∀ s : Complex, G s = 0 → s.re = criticalAbscissa) := by
+  let centered : Complex[X] := X - C (criticalAbscissa : Complex)
+  let quartic : Complex[X] :=
+    ((centered - C ((1 : Real) : Complex)) ^ 2 + C (((1 : Real) : Complex) ^ 2)) *
+      ((centered + C ((1 : Real) : Complex)) ^ 2 + C (((1 : Real) : Complex) ^ 2))
+  let F : Complex → Complex := fun s => quartic.eval s
+  let root : Complex :=
+    (criticalAbscissa : Complex) + ((1 : Real) : Complex) +
+      Complex.I * ((1 : Real) : Complex)
+  rcases symmetric_off_line_quartic_spec
+      (1 : Real) (1 : Real) (by norm_num) (by norm_num) with
+    ⟨hEntire, hRoots, _, hReflection, hConjugation, hOffLine, _⟩
+  have hEntireF : Differentiable Complex F := by
+    simpa only [F, quartic, centered] using hEntire
+  have hRoot : F root = 0 := by
+    change quartic.eval root = 0
+    apply (hRoots root).2
+    exact Or.inl rfl
+  have hReflectionZeros : ∀ s : Complex, F s = 0 → F (1 - s) = 0 := by
+    intro s hs
+    change quartic.eval (1 - s) = 0
+    calc
+      quartic.eval (1 - s) = quartic.eval s := by
+        simpa only [quartic, centered] using hReflection s
+      _ = 0 := hs
+  have hConjugationZeros : ∀ s : Complex, F s = 0 → F (conj s) = 0 := by
+    intro s hs
+    change quartic.eval (conj s) = 0
+    calc
+      quartic.eval (conj s) = conj (quartic.eval s) := by
+        simpa only [quartic, centered] using hConjugation s
+      _ = conj 0 := congrArg conj hs
+      _ = 0 := map_zero (starRingEnd Complex)
+  have hOffLineF : ∀ s : Complex, F s = 0 → s.re ≠ criticalAbscissa := by
+    intro s hs
+    apply hOffLine s
+    simpa only [F, quartic, centered] using hs
+  refine ⟨F, hEntireF, ⟨root, hRoot⟩, hReflectionZeros,
+    hConjugationZeros, hOffLineF, ?_⟩
+  intro hLocalization
+  exact hOffLineF root hRoot
+    (hLocalization F hEntireF ⟨root, hRoot⟩ hReflectionZeros
+      hConjugationZeros root hRoot)
+
 #print axioms symmetric_off_line_quartic_spec
+#print axioms symmetric_off_line_entire_exists
 
 end D5.S3.Zeros.ToySpectrum.SymmetricOffLineQuartic

@@ -7,27 +7,29 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Zeros.ToySpectrum;
 internal sealed class SymmetricOffLineQuarticDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A centered quartic has full reflection and conjugation symmetry while all four zeros remain off the critical line.",
+        "An entire function exists whose nonempty zero set has full reflection and "
+            + "conjugation symmetry while every zero remains off the critical line.",
         H("Symmetric Off-Line Quartic"),
         Blocks(Describe.Lean(
-            DescribeId.Create("full-symmetry-does-not-force-critical-line-localization"),
+            DescribeId.Create("a-fully-symmetric-off-line-entire-function-exists"),
             DeclarationHandle.Create(
                 "D5/S3/Zeros/ToySpectrum/SymmetricOffLineQuartic."
-                    + "symmetric_off_line_quartic_spec"),
-            H("Full symmetry does not force critical-line localization"),
+                    + "symmetric_off_line_entire_exists"),
+            H("A fully symmetric off-line entire function exists"),
             StatementSource.FromAuthor(TheoremFormula()),
             AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text(
-                    "For arbitrary nonzero real transverse and vertical parameters, the displayed "
-                        + "centered quartic is complex differentiable everywhere. Its zeros are "
-                        + "exactly the four independent sign choices, and the nonzero hypotheses "
-                        + "make those four points distinct.")),
+                    "The witness is the centered quartic from the family theorem at unit "
+                        + "transverse and vertical displacements. It is complex differentiable "
+                        + "everywhere and has an explicit zero, so the zero-set clauses are not "
+                        + "vacuous.")),
                 Paragraph(Text(
-                    "Evaluation is invariant under s mapped to one minus s and is covariant under "
-                        + "complex conjugation. Nevertheless every zero has real part different "
-                        + "from the critical abscissa, and an explicit root refutes universal "
-                        + "fixed-line localization for this same polynomial."))),
+                    "Reflection invariance and conjugation covariance of the quartic imply "
+                        + "invariance of its zero set under both generators. Every zero has real "
+                        + "part different from the critical abscissa; applying a hypothetical "
+                        + "universal localization implication to the same nonempty zero set gives "
+                        + "the displayed contradiction."))),
             DescribeRole.Theorem)),
         []));
 
@@ -37,115 +39,103 @@ internal sealed class SymmetricOffLineQuarticDocument : IScribeDocumentDefinitio
     private static Formula And(Formula left, Formula right) =>
         new Formula.Logic(left, FormulaLogicOperator.And, right);
 
+    private static Formula Apply(Formula function, params Formula[] arguments) =>
+        new Formula.Apply(function, [.. arguments]);
+
     private static Formula EqualTo(Formula left, Formula right) =>
         new Formula.Relation(left, FormulaRelationOperator.Equal, right);
 
     private static Formula Implies(Formula left, Formula right) =>
         new Formula.Logic(left, FormulaLogicOperator.Implies, right);
 
-    private static Formula LambdaExpr(Formula binder, Formula body) =>
-        Seq(Open, binder, Sp, Mapsto, Sp, body, Close);
-
     private static Formula NotEqualTo(Formula left, Formula right) =>
         new Formula.Relation(left, FormulaRelationOperator.NotEqual, right);
 
-    private static Formula Square(Formula value) =>
-        new Formula.Power(Seq(Open, value, Close), D(2));
-
     private static Formula TheoremFormula()
     {
-        Formula real = Call("Real");
         Formula complex = Call("Complex");
-        Formula delta = F.Id("delta");
-        Formula gamma = F.Id("gamma");
+        Formula functionType = Seq(
+            Open,
+            new Formula.TypeArrow(complex, complex),
+            Close);
+        Formula witness = F.Id("F");
+        Formula general = F.Id("G");
         Formula s = F.Id("s");
-        Formula x = F.Id("X");
-        Formula centered = F.Id("centered");
         Formula critical = Call("criticalAbscissa");
-        Formula quartic = new Formula.Subscript(F.Id("P"), Seq(delta, Comma, gamma));
-        Formula imaginary = F.Id("i");
+        Formula witnessAtS = Apply(witness, s);
+        Formula generalAtS = Apply(general, s);
 
-        Formula centeredDefinition = Seq(x, Sp, Minus, Sp, Call("C", critical));
-        Formula gammaSquare = Square(Call("C", gamma));
-        Formula leftQuadratic = Seq(
-            Square(Seq(centered, Sp, Minus, Sp, Call("C", delta))),
-            Sp, Plus, Sp, gammaSquare);
-        Formula rightQuadratic = Seq(
-            Square(Seq(centered, Sp, Plus, Sp, Call("C", delta))),
-            Sp, Plus, Sp, gammaSquare);
-        Formula quarticDefinition = Seq(
-            Open, leftQuadratic, Close, Sp, Times, Sp,
-            Open, rightQuadratic, Close);
+        Formula witnessEntire = Call("Differentiable", complex, witness);
+        Formula witnessNonempty = new Formula.BindMany(
+            FormulaQuantifier.Exists,
+            [Bound("s", complex)],
+            EqualTo(witnessAtS, D(0)));
+        Formula witnessReflection = new Formula.BindMany(
+            FormulaQuantifier.ForAll,
+            [Bound("s", complex)],
+            Implies(
+                EqualTo(witnessAtS, D(0)),
+                EqualTo(Apply(witness, Seq(D(1), Sp, Minus, Sp, s)), D(0))));
+        Formula witnessConjugation = new Formula.BindMany(
+            FormulaQuantifier.ForAll,
+            [Bound("s", complex)],
+            Implies(
+                EqualTo(witnessAtS, D(0)),
+                EqualTo(Apply(witness, Call("conj", s)), D(0))));
+        Formula witnessOffLine = new Formula.BindMany(
+            FormulaQuantifier.ForAll,
+            [Bound("s", complex)],
+            Implies(
+                EqualTo(witnessAtS, D(0)),
+                NotEqualTo(Call("Re", s), critical)));
 
-        Formula upperRight = Seq(
-            critical, Sp, Plus, Sp, delta, Sp, Plus, Sp,
-            imaginary, Sp, Times, Sp, gamma);
-        Formula lowerRight = Seq(
-            critical, Sp, Plus, Sp, delta, Sp, Minus, Sp,
-            imaginary, Sp, Times, Sp, gamma);
-        Formula upperLeft = Seq(
-            critical, Sp, Minus, Sp, delta, Sp, Plus, Sp,
-            imaginary, Sp, Times, Sp, gamma);
-        Formula lowerLeft = Seq(
-            critical, Sp, Minus, Sp, delta, Sp, Minus, Sp,
-            imaginary, Sp, Times, Sp, gamma);
-        Formula rootSet = Seq(
-            OpenBrace, upperRight, Comma, Sp, lowerRight, Comma, Sp,
-            upperLeft, Comma, Sp, lowerLeft, CloseBrace);
-        Formula evaluated = Call("eval", quartic, s);
+        Formula generalEntire = Call("Differentiable", complex, general);
+        Formula generalNonempty = new Formula.BindMany(
+            FormulaQuantifier.Exists,
+            [Bound("s", complex)],
+            EqualTo(generalAtS, D(0)));
+        Formula generalReflection = new Formula.BindMany(
+            FormulaQuantifier.ForAll,
+            [Bound("s", complex)],
+            Implies(
+                EqualTo(generalAtS, D(0)),
+                EqualTo(Apply(general, Seq(D(1), Sp, Minus, Sp, s)), D(0))));
+        Formula generalConjugation = new Formula.BindMany(
+            FormulaQuantifier.ForAll,
+            [Bound("s", complex)],
+            Implies(
+                EqualTo(generalAtS, D(0)),
+                EqualTo(Apply(general, Call("conj", s)), D(0))));
+        Formula generalLocalization = new Formula.BindMany(
+            FormulaQuantifier.ForAll,
+            [Bound("s", complex)],
+            Implies(
+                EqualTo(generalAtS, D(0)),
+                EqualTo(Call("Re", s), critical)));
+        Formula boxedNonimplication = new Formula.Not(new Formula.BindMany(
+            FormulaQuantifier.ForAll,
+            [Bound("G", functionType)],
+            Implies(
+                generalEntire,
+                Implies(
+                    generalNonempty,
+                    Implies(
+                        generalReflection,
+                        Implies(generalConjugation, generalLocalization))))));
 
-        Formula entireClause = Call(
-            "Differentiable", complex, LambdaExpr(s, evaluated));
-        Formula exactRootsClause = new Formula.BindMany(
-            FormulaQuantifier.ForAll,
-            [Bound("s", complex)],
-            new Formula.Logic(
-                EqualTo(evaluated, D(0)),
-                FormulaLogicOperator.Iff,
-                Seq(s, Sp, InMacro, Sp, rootSet)));
-        Formula cardinalityClause = EqualTo(Call("card", rootSet), D(4));
-        Formula reflectionClause = new Formula.BindMany(
-            FormulaQuantifier.ForAll,
-            [Bound("s", complex)],
-            EqualTo(
-                Call("eval", quartic, Seq(D(1), Sp, Minus, Sp, s)),
-                evaluated));
-        Formula conjugationClause = new Formula.BindMany(
-            FormulaQuantifier.ForAll,
-            [Bound("s", complex)],
-            EqualTo(
-                Call("eval", quartic, Call("conj", s)),
-                Call("conj", evaluated)));
-        Formula zeroPremise = EqualTo(evaluated, D(0));
-        Formula offLineClause = new Formula.BindMany(
-            FormulaQuantifier.ForAll,
-            [Bound("s", complex)],
-            Implies(zeroPremise, NotEqualTo(Call("Re", s), critical)));
-        Formula nonLocalizationClause = new Formula.Not(new Formula.BindMany(
-            FormulaQuantifier.ForAll,
-            [Bound("s", complex)],
-            Implies(zeroPremise, EqualTo(Call("Re", s), critical))));
-        Formula conclusion = And(
-            entireClause,
+        Formula witnessProperties = And(
+            witnessEntire,
             And(
-                exactRootsClause,
+                witnessNonempty,
                 And(
-                    cardinalityClause,
+                    witnessReflection,
                     And(
-                        reflectionClause,
-                        And(
-                            conjugationClause,
-                            And(offLineClause, nonLocalizationClause))))));
+                        witnessConjugation,
+                        And(witnessOffLine, boxedNonimplication)))));
 
-        return Disp(Seq(
-            Forall, Sp, delta, Comma, Sp, gamma, Sp, InMacro, Sp, real,
-            Comma, RowBreak, Grp(),
-            Open, NotEqualTo(delta, D(0)), Sp, Land, Sp,
-            NotEqualTo(gamma, D(0)), Close, Sp, Rightarrow,
-            RowBreak, Grp(), Operatorname, Grp(F.Id("let")), Sp,
-            centered, Sp, Colon, Eq, Sp, centeredDefinition, Comma,
-            RowBreak, Grp(), Operatorname, Grp(F.Id("let")), Sp,
-            quartic, Sp, Colon, Eq, Sp, quarticDefinition, Comma,
-            RowBreak, Grp(), conclusion, Dot));
+        return Disp(new Formula.BindMany(
+            FormulaQuantifier.Exists,
+            [Bound("F", functionType)],
+            witnessProperties));
     }
 }

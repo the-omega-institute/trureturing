@@ -2,22 +2,22 @@
 
 ## Abstract
 
-A centered quartic has full reflection and conjugation symmetry while all four zeros remain off the critical line.
+An entire function exists whose nonempty zero set has full reflection and conjugation symmetry while every zero remains off the critical line.
 
-**Theorem 1.1 (Full symmetry does not force critical-line localization).**
+**Theorem 1.1 (A fully symmetric off-line entire function exists).**
 
-$$\forall delta, gamma \in \operatorname{Real}\left(\right),\\{}(delta \ne 0 \land gamma \ne 0) \Rightarrow\\{}\operatorname{let} centered := X - \operatorname{C}\left(\operatorname{criticalAbscissa}\left(\right)\right),\\{}\operatorname{let} P_{delta,gamma} := ((centered - \operatorname{C}\left(delta\right))^{2} + (\operatorname{C}\left(gamma\right))^{2}) \times ((centered + \operatorname{C}\left(delta\right))^{2} + (\operatorname{C}\left(gamma\right))^{2}),\\{}\operatorname{Differentiable}\left(\operatorname{Complex}\left(\right), (s \mapsto \operatorname{eval}\left(P_{delta,gamma}, s\right))\right) \land \left(\left(\forall s \in \operatorname{Complex}\left(\right),\; \operatorname{eval}\left(P_{delta,gamma}, s\right) = 0 \Leftrightarrow s \in \{\operatorname{criticalAbscissa}\left(\right) + delta + i \times gamma, \operatorname{criticalAbscissa}\left(\right) + delta - i \times gamma, \operatorname{criticalAbscissa}\left(\right) - delta + i \times gamma, \operatorname{criticalAbscissa}\left(\right) - delta - i \times gamma\}\right) \land \left(\operatorname{card}\left(\{\operatorname{criticalAbscissa}\left(\right) + delta + i \times gamma, \operatorname{criticalAbscissa}\left(\right) + delta - i \times gamma, \operatorname{criticalAbscissa}\left(\right) - delta + i \times gamma, \operatorname{criticalAbscissa}\left(\right) - delta - i \times gamma\}\right) = 4 \land \left(\left(\forall s \in \operatorname{Complex}\left(\right),\; \operatorname{eval}\left(P_{delta,gamma}, 1 - s\right) = \operatorname{eval}\left(P_{delta,gamma}, s\right)\right) \land \left(\left(\forall s \in \operatorname{Complex}\left(\right),\; \operatorname{eval}\left(P_{delta,gamma}, \operatorname{conj}\left(s\right)\right) = \operatorname{conj}\left(\operatorname{eval}\left(P_{delta,gamma}, s\right)\right)\right) \land \left(\left(\forall s \in \operatorname{Complex}\left(\right),\; \operatorname{eval}\left(P_{delta,gamma}, s\right) = 0 \Rightarrow \operatorname{Re}\left(s\right) \ne \operatorname{criticalAbscissa}\left(\right)\right) \land \left(\neg \left(\forall s \in \operatorname{Complex}\left(\right),\; \operatorname{eval}\left(P_{delta,gamma}, s\right) = 0 \Rightarrow \operatorname{Re}\left(s\right) = \operatorname{criticalAbscissa}\left(\right)\right)\right)\right)\right)\right)\right)\right).$$
+$$\exists F \in (\operatorname{Complex}\left(\right) \to \operatorname{Complex}\left(\right)),\; \operatorname{Differentiable}\left(\operatorname{Complex}\left(\right), F\right) \land \left(\left(\exists s \in \operatorname{Complex}\left(\right),\; F\left(s\right) = 0\right) \land \left(\left(\forall s \in \operatorname{Complex}\left(\right),\; F\left(s\right) = 0 \Rightarrow F\left(1 - s\right) = 0\right) \land \left(\left(\forall s \in \operatorname{Complex}\left(\right),\; F\left(s\right) = 0 \Rightarrow F\left(\operatorname{conj}\left(s\right)\right) = 0\right) \land \left(\left(\forall s \in \operatorname{Complex}\left(\right),\; F\left(s\right) = 0 \Rightarrow \operatorname{Re}\left(s\right) \ne \operatorname{criticalAbscissa}\left(\right)\right) \land \left(\neg \left(\forall G \in (\operatorname{Complex}\left(\right) \to \operatorname{Complex}\left(\right)),\; \operatorname{Differentiable}\left(\operatorname{Complex}\left(\right), G\right) \Rightarrow \left(\left(\exists s \in \operatorname{Complex}\left(\right),\; G\left(s\right) = 0\right) \Rightarrow \left(\left(\forall s \in \operatorname{Complex}\left(\right),\; G\left(s\right) = 0 \Rightarrow G\left(1 - s\right) = 0\right) \Rightarrow \left(\left(\forall s \in \operatorname{Complex}\left(\right),\; G\left(s\right) = 0 \Rightarrow G\left(\operatorname{conj}\left(s\right)\right) = 0\right) \Rightarrow \left(\forall s \in \operatorname{Complex}\left(\right),\; G\left(s\right) = 0 \Rightarrow \operatorname{Re}\left(s\right) = \operatorname{criticalAbscissa}\left(\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Zeros/ToySpectrum/SymmetricOffLineQuartic.symmetric_off_line_quartic_spec` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Zeros/ToySpectrum/SymmetricOffLineQuartic.symmetric_off_line_entire_exists` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-For arbitrary nonzero real transverse and vertical parameters, the displayed centered quartic is complex differentiable everywhere. Its zeros are exactly the four independent sign choices, and the nonzero hypotheses make those four points distinct.
+The witness is the centered quartic from the family theorem at unit transverse and vertical displacements. It is complex differentiable everywhere and has an explicit zero, so the zero-set clauses are not vacuous.
 
-Evaluation is invariant under s mapped to one minus s and is covariant under complex conjugation. Nevertheless every zero has real part different from the critical abscissa, and an explicit root refutes universal fixed-line localization for this same polynomial.
+Reflection invariance and conjugation covariance of the quartic imply invariance of its zero set under both generators. Every zero has real part different from the critical abscissa; applying a hypothetical universal localization implication to the same nonempty zero set gives the displayed contradiction.
 
 ## References
 
-- Truth anchor: `D5/S3/Zeros/ToySpectrum/SymmetricOffLineQuartic.symmetric_off_line_quartic_spec`
+- Truth anchor: `D5/S3/Zeros/ToySpectrum/SymmetricOffLineQuartic.symmetric_off_line_entire_exists`
