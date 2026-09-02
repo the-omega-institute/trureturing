@@ -158,6 +158,9 @@ domains:
   Solenoid:
     stratum: S1
     definition: The universal solenoid carrier, its visible projection, and hidden fiber structure.
+  SpectralTopology:
+    stratum: S3
+    definition: Finite spectral localizers, point gaps, and chiral inertia counts for doubled Hermitian block operators.
   TotalVariation:
     stratum: S3
     definition: Finite total-variation distance between mass functions and its comparison inequalities against the classical divergence, including Pinsker-type bounds.
