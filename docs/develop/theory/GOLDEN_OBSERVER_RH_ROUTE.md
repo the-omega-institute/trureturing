@@ -1763,3 +1763,65 @@ $$\boxed{\ \beta(v{+}1)-\beta(v)\in\{\varphi,\ \varphi^2\}\ }$$
 三条各一席位轮(codex-cli,独立 worktree,各自 PR);任一席以 `open` 出口即在本卷下一增订登记其阻断面,不复用预算 grind。研究席另行开单(非标量测度值输运 N-M1,草稿不入库),其采纳与否由 owner 裁决。
 
 后续增订继续严格追加于本节之后。
+
+---
+
+# 增订六　第二波预登记:偶极总变差、投影 jet 尺度不变性、黄金环面 index 扩张(W-G、W-E、W-F)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;选题沿用 la91 面板的常设 refill 规则(#4589),不重开面板;两条子句各由一席 codex-cli 探针在钉版工具链整证(标准三公理)后才写入,探针不入库;W-G 的来源是研究席(nyxid GPT PRO)N-M1 草稿中唯一有独立内容的恒等式,桥式解释未采纳(见 #4589 批注)。判决日:2026-09-02。
+
+## 〇　为什么是这两条
+
+增订五的 W-A、W-C 已两阶段落地,W-B 在评审。按常设规则补位:候选须两侧锚定冻结/Mathlib 声明、探针可闭合、有具名消费者、桶未满或裂桶已存在。W-G 把 N-M1 研究草稿里可独立成立的分析事实从桥式叙事中剥出来单独入库;W-E 是 C-5 自然性的入场门,其定义须在 W-B 建立的 `Analytic/Toroidal` 桶内落户。W-F 只闭合 index plumbing,三条探针皆已在钉版工具链整证;W-D1 待 Escape(F) 定义就绪后另立增订。
+
+## 一　W-G 预登记:离线曲率偶极的总变差(`OffLineCurvatureDipoleTotalVariation`)
+
+**义务**:对 $\delta>0$、任意 $\gamma\in\mathbb R$,取 `off_line_curvature_dipole` 第一合取项给出的冻结曲率密度 $\kappa_{\delta,\gamma}(t)=2\,\frac{(t-\gamma)^2-\delta^2}{((t-\gamma)^2+\delta^2)^2}$。单一公开定理证明 $\int_{\mathbb R}|\kappa_{\delta,\gamma}(t)|\,dt=\frac4\delta$。证明须 `import` 并消费冻结定理的可积性、零总质量与符号轮廓(核内负、翼上正、零点 $\gamma\pm\delta$),不得重证这些合取项;原函数 $F(t)=-\frac{2(t-\gamma)}{(t-\gamma)^2+\delta^2}$ 给出核积分 $-2/\delta$,零总质量给出翼积分 $2/\delta$。
+**可证伪预测(写在跑之前)**:若正确,定理以有限区间微积分基本定理(`intervalIntegral.integral_eq_sub_of_hasDerivAt`)、可测补集分拆(`integral_add_compl`)与 `Integrable.abs` 在钉版 Mathlib 闭合,公理集为标准三条;若总变差不等于 $4/\delta$ 或需要额外可积性假设,则 N-M1 草稿的位移次数论证($d^5\cdot$总变差的齐次度 4)失去前提,须撤回该草稿。
+**边界**:只闭合一个关于冻结偶极的 $L^1$ 恒等式;不主张任何曲率→账本亏损的输运或 RH 前件。
+
+## 二　W-E 预登记:投影 jet 指纹的尺度不变性(`ProjectiveJetScaleInvariance`)
+
+**义务**:按 C-5 骨架定义 `ProjectiveJetFingerprint`(order 与 `Fin r → K` 的 tail)与构造子 `projectiveToroidalJet`(首个非零导数归一化后的 $r$ 个投影系数,anchor 阶 $m$ 由 earlierVanish 与 anchorNonzero 两个假设给出)。单一公开定理:对 $c\ne0$,`period` 与 $z\mapsto c\cdot\mathrm{period}(z)$ 在同一点 $s$、同一 anchor 阶 $m$ 上产生相同的指纹(order 与 tail 皆相等);两个假设经具名引理转移到 $c\cdot\mathrm{period}$(消费 `iteratedDeriv_const_mul_field` 与 `mul_ne_zero`)。
+**可证伪预测(写在跑之前)**:若正确,归一化后的 tail 逐分量为 $\frac{c\,f^{(m+k+1)}(s)}{c\,f^{(m)}(s)}$ 约去 $c$,定理以 `iteratedDeriv_const_mul_field` 与 `mul_div_mul_left` 级引理闭合,公理集为标准三条;若在钉版 Mathlib 中该引理需要 `ContDiff` 前提而无法免除,则义务改标 `open` 并记录所需前提。
+**边界**:只闭合 test-vector 非零常数缩放下的不变性;anchor 阶 $m$ 由假设给出,不主张它由 `ToroidalJetDepth` 的深度证书产生(那是另一条义务),不触及 zeta 零点、RH 或 C-1 的 chart 选择。
+
+## 三　W-F 预登记:黄金环面 index 扩张(`GoldenToroidalIndexExtension`)
+
+**义务**:设 twist 族 $\{\mathrm{twist}_i\}_{i\in I}$ 与 period 族满足冻结分解 $\mathrm{period}_i(s)=\xi(s)\,\mathrm{twist}_i(s)$(`xiReading`),且在窗口 $\Omega$ 上逐点非零($\forall s\in\Omega,\ \exists i,\ \mathrm{twist}_i(s)\ne0$)。以 `Sum Index Unit` 加入任意一个黄金候选对 $(\mathrm{goldenPeriod},\mathrm{goldenTwist})$(仅假设其同样按 $\xi$ 分解)。单一公开定理证明:(i) 扩张族在 $\Omega$ 上仍逐点非零;(ii) 扩张族的窗口公共零点集 $\{s\in\Omega\mid\forall j,\ \mathrm{period}'_j(s)=0\}$ 等于原族的窗口公共零点集(两侧皆经冻结 `toroidal_common_zero_locus` 化为 $\xi$ 的零点集);并以具名引理证明:当原族全局逐点非零时,冻结 `rh_iff_all_toroidal_eisenstein_tempered` 右侧的共同零条件在扩张族与原族之间等价(经同一 RH 左侧传递)。证明须 `import` 并消费上述两冻结定理,不重证任何解析内容。
+**可证伪预测(写在跑之前)**:若正确,定理只用 `Sum.elim`、`Sum.inl` 见证与冻结定理的两次实例化闭合,公理集为标准三条,无任何 Mathlib 解析引理;若窗口公共零点集相等需要黄金候选 twist 非零,则本义务的「任意候选」措辞为假,须收窄。
+**边界**:结论中明写——不证明 eulerGerm 是非零 twist、不证明 O-5 分解、不识别 goldenTwist 为 eulerGerm 或 Zqc、不加强 RH;全局等价引理只在原族**全局**逐点非零时成立,窗口版不蕴含它;不 `import` 或调用 `o5_independence`。
+
+## 四　预算与结算
+
+三条各一席位轮(codex-cli,独立 worktree,各自 PR-1 deposit;cover 另开 PR-2,消费已在 base 的收据);任一席以 `open` 出口即在下一增订登记阻断面。W-G 的自然归属为 `Analytic/Adelic`(已满 24/24),落户于其裂桶兄弟 `Analytic/ReflectedSpectrum`(偶极的反射谱语境)或席位按路径策略选定的裂桶;W-E 与 W-F 落户 `Analytic/Toroidal`(W-B 所建)。
+
+后续增订继续严格追加于本节之后。
+
+---
+
+# 增订七　主线第一步:`ZeroData` 非空洞性的精确边界(M1-a、M1-b)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;la101 第三波六席面板(codex ×2、GPT PRO ×2、隔离 subagent ×2,GPT PRO 与 codex 各有载体失败已在 #4589 逐席披露)收敛后由 orchestrator 撰写;研究探针为一席隔离 subagent(`lake env lean`,0 sorry,标准三公理),其证明文件存 orchestrator scratchpad,不入库。判决日:2026-09-02。lane issue:#4589。
+
+## 〇　为什么是这一条
+
+第三部 §四 立项裁决把「修复非空洞语义」列为 O-6 主线第一步;§M1 与 R-D 指出:凡对 `Z : ZeroData` 量化的 O-6 陈述,在 `ZeroData` 可居留性未定前皆可能空洞。探针把这个问题压缩成一条精确等价与一个具名缺口:可居留性**恰**等价于非平凡零点集无穷,而后者不在钉版 Mathlib 与本仓中。本增订只预登记可在钉版工具链闭合的那一半,并把另一半诚实记为缺失载体,不以公理补。
+
+## 一　M1-a 预登记:`ZeroData` 可居留性等价于非平凡零点无穷(`ZeroDataNonemptyIffInfinite`)
+
+**义务**:单一公开定理 `nonempty_zeroData_iff_infinite : Nonempty ZeroData ↔ {ρ : ℂ | IsNontrivialZero ρ}.Infinite`,其中 `ZeroData`、`IsNontrivialZero` 为冻结 `D5/S3/Weil/ZeroSum` 的定义。正向:`zero : ℕ → ℂ` 单射且逐项非平凡零点,故零点集无穷。反向:由钉版 Mathlib `NumberTheory/LSeries/ZetaZeros`(零点集闭、离散、紧交有限)与 Lindelöf 可数性得非平凡零点集可数,无穷可数集给出枚举;重数由 `analyticOrderAt` 的存在与唯一性给出;反射置换与共轭置换由 `riemannZeta_one_sub`、`riemannZeta_conj` 及重数守恒引理给出;局部有限由紧交有限给出。模块须消费上述 Mathlib 与冻结声明,不重证零点集拓扑。
+**可证伪预测(写在跑之前)**:若正确,定理以 `Set.Countable`/`Denumerable` 枚举、`analyticOrderAt` 引理与 `Equiv.Perm` 构造在钉版工具链闭合,公理集为标准三条;若 `ZeroData` 的某一字段(如共轭置换的重数守恒)在钉版 Mathlib 无对应引理,则该字段名与所缺引理名记入下一增订,义务改标 `open`,不得削弱字段。
+**边界**:本义务不证明零点集无穷,不给出任何一个零点,不主张 O-6 非空洞;它只把「非空洞」精确地归约为 M1-b。
+
+## 二　M1-b 具名缺失载体(open,不派席):非平凡零点无穷
+
+**缺口**:`nontrivialZeros_infinite : {ρ : ℂ | IsNontrivialZero ρ}.Infinite`。钉版 Mathlib `ZetaZeros.lean` 无 `Infinite` 或 $N(T)$ 下界;本仓 `D5/S3/Weil/ZetaRvm` 只有上界计数。其经典来源为 Hardy(1914)临界线上无穷零点或 Riemann–von Mangoldt 计数下界,属解析数论重型载体,不是初等波。
+**可证伪预测(写在跑之前)**:若 M1-a 落地而 M1-b 仍缺,则本仓一切「∀ Z : ZeroData, …」形式的 O-6 陈述在 kernel 意义上仍是条件性的;主线「修复非空洞语义」的出口只有三种——上游 Mathlib 补入无穷性、本仓以外部形式化(标 `literature-attested` 并 import)接入、或在本卷显式改写 O-6 为以 `Set.Infinite` 为前件的条件陈述;**不得**以公理或 `ASSUMED-UNVERIFIED` 冒充已闭合。
+**边界**:本节不是义务,不占席位;它只使 R-D 的「空类型诊断」有了精确的判据。
+
+## 三　预算与结算
+
+M1-a 一席位轮(codex-cli,独立 worktree,PR-1 deposit;cover 另开 PR-2);M1-b 不占预算,待 owner 在三种出口中裁决。
+
+后续增订继续严格追加于本节之后。

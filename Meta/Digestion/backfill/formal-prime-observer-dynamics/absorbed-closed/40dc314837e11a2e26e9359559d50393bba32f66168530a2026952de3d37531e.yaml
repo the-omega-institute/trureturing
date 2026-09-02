@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:40dc314837e11a2e26e9359559d50393bba32f66168530a2026952de3d37531e
+  normalized_sha256: sha256:40dc314837e11a2e26e9359559d50393bba32f66168530a2026952de3d37531e
+cas_ref: sha256:40dc314837e11a2e26e9359559d50393bba32f66168530a2026952de3d37531e
+coverage_gids:
+  - D5/S3/Factorization/PrimePowers/SimpleToPGroupTrivial.alternating_five_hom_to_pgroup_trivial
+receipts:
+  coverage:
+    - gid: D5/S3/Factorization/PrimePowers/SimpleToPGroupTrivial.alternating_five_hom_to_pgroup_trivial
+      source_sha256: sha256:40dc314837e11a2e26e9359559d50393bba32f66168530a2026952de3d37531e
+      target_statement_id: sha256:957ffdf0766605c8a90eecaeeb0b6a428beb25904e3a7bbfdf5ec59de740b9b8
+  scribe:
+    - gid: D5/S3/Factorization/PrimePowers/SimpleToPGroupTrivial.alternating_five_hom_to_pgroup_trivial
+      definition_sha256: sha256:f1ac66dd4a1b0e5974e303bfd9223bc8d91a3c52f1fdf62f8b3f754226a99a45
+      emission_sha256: sha256:b8aa842419e2f831d6d073250bddda0fbaab2d88f64705065466936b246d0de3
+  unresolved_subitems: []

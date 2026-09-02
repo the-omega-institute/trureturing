@@ -1,0 +1,6 @@
+## 一　M1-a 预登记:`ZeroData` 可居留性等价于非平凡零点无穷(`ZeroDataNonemptyIffInfinite`)
+
+**义务**:单一公开定理 `nonempty_zeroData_iff_infinite : Nonempty ZeroData ↔ {ρ : ℂ | IsNontrivialZero ρ}.Infinite`,其中 `ZeroData`、`IsNontrivialZero` 为冻结 `D5/S3/Weil/ZeroSum` 的定义。正向:`zero : ℕ → ℂ` 单射且逐项非平凡零点,故零点集无穷。反向:由钉版 Mathlib `NumberTheory/LSeries/ZetaZeros`(零点集闭、离散、紧交有限)与 Lindelöf 可数性得非平凡零点集可数,无穷可数集给出枚举;重数由 `analyticOrderAt` 的存在与唯一性给出;反射置换与共轭置换由 `riemannZeta_one_sub`、`riemannZeta_conj` 及重数守恒引理给出;局部有限由紧交有限给出。模块须消费上述 Mathlib 与冻结声明,不重证零点集拓扑。
+**可证伪预测(写在跑之前)**:若正确,定理以 `Set.Countable`/`Denumerable` 枚举、`analyticOrderAt` 引理与 `Equiv.Perm` 构造在钉版工具链闭合,公理集为标准三条;若 `ZeroData` 的某一字段(如共轭置换的重数守恒)在钉版 Mathlib 无对应引理,则该字段名与所缺引理名记入下一增订,义务改标 `open`,不得削弱字段。
+**边界**:本义务不证明零点集无穷,不给出任何一个零点,不主张 O-6 非空洞;它只把「非空洞」精确地归约为 M1-b。
+

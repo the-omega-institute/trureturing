@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:defefa9caf98e4408e4047552e055c97247be608cc2108c4ab0e944c156f2130
+  normalized_sha256: sha256:defefa9caf98e4408e4047552e055c97247be608cc2108c4ab0e944c156f2130
+cas_ref: sha256:defefa9caf98e4408e4047552e055c97247be608cc2108c4ab0e944c156f2130
+coverage_gids:
+  - D5/S3/ConceptDynamics/InterventionLaws/OracleLawErrorDetection.oracle_intervention_law_error_detection
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/InterventionLaws/OracleLawErrorDetection.oracle_intervention_law_error_detection
+      source_sha256: sha256:defefa9caf98e4408e4047552e055c97247be608cc2108c4ab0e944c156f2130
+      target_statement_id: sha256:2e684a743e58d76bb2c8b69416477f6e12c5fa6e4f202cf2c3b128aeec73613f
+  scribe:
+    - gid: D5/S3/ConceptDynamics/InterventionLaws/OracleLawErrorDetection.oracle_intervention_law_error_detection
+      definition_sha256: sha256:af3d671f96afd7278ebbf521f7662c908f36bc099d3f4d7df518254cb513d5ad
+      emission_sha256: sha256:eae369e7732e8285d100175b3cec10ff40f097c1927c8e7d03d75b1ad055f691
+  unresolved_subitems: []

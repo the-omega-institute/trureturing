@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:6c7ee23a68ec435794a8a5ff0cd207620512236a1a3d4e00f3a02e09aac4e2fd
+  normalized_sha256: sha256:6c7ee23a68ec435794a8a5ff0cd207620512236a1a3d4e00f3a02e09aac4e2fd
+cas_ref: sha256:6c7ee23a68ec435794a8a5ff0cd207620512236a1a3d4e00f3a02e09aac4e2fd
+coverage_gids:
+  - D5/S3/Weil/CurvatureLedgerBridgeRefutation.curvature_ledger_bridge_refuted
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/CurvatureLedgerBridgeRefutation.curvature_ledger_bridge_refuted
+      source_sha256: sha256:6c7ee23a68ec435794a8a5ff0cd207620512236a1a3d4e00f3a02e09aac4e2fd
+      target_statement_id: sha256:29fd259e2e64864de52bb6952a808f89bebdd9905ced6793bfce1267e64fdc6a
+  scribe:
+    - gid: D5/S3/Weil/CurvatureLedgerBridgeRefutation.curvature_ledger_bridge_refuted
+      definition_sha256: sha256:ccfbf09d9784aba5fc3fa9b42e16aac3781944b97fbe6087b48a93fa22ab0816
+      emission_sha256: sha256:f965cb9796d8740f1d7e52266174492fbd0a5e68cc96abf7fe4648706c9e623f
+  unresolved_subitems: []
