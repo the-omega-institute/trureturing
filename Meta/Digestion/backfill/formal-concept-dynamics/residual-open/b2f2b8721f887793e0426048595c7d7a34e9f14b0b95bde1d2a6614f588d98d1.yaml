@@ -8,3 +8,11 @@ receipts:
   scribe: []
   unresolved_subitems:
     - generation-mechanism-invariance-undefined
+  cover_disposition:
+    outcome: partial-closed
+    recorded_at_utc: 2026-09-02T22:43:40.7748780+00:00
+    gids:
+      - D5/S3/ConceptDynamics/Refinement/HumeInductiveCore.hume_inductive_core
+    gaps:
+      - code: unresolved-subitem
+        detail: generation-mechanism-invariance-undefined
