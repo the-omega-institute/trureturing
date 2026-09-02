@@ -30,7 +30,7 @@ The public statement retains the finite representative set, natural multipliciti
 
 Its first conjunct says that for every natural r, the (2r+1)-st iterated derivative of that concrete Z_T at zero is zero. Its second conjunct states pairwise cancellation of delta^(2r+1) with (-delta)^(2r+1). Its third conjunct states that the two even powers instead sum to 2 delta^(2r), so the narrative does not strengthen the Lean theorem into strict nonvanishing.
 
-The proof differentiates the finite sum using pinned Mathlib and applies the imported arbitrary-order derivative formula for the reflected exponential pair. It uses only the displayed window hypotheses and no conjectural premise such as the Riemann hypothesis.
+The proof differentiates the finite sum using pinned Mathlib and applies the imported arbitrary-order derivative formula for the reflected exponential pair. The positive-weight and nonnegative-displacement hypotheses are carried because the source states them as window conditions, but the derivation does not use either one: the odd-order cancellation holds for arbitrary real weights and arbitrary real displacements, and the underscore prefixes on both binders record that fact mechanically. No conjectural premise such as the Riemann hypothesis occurs.
 
 ## References
 

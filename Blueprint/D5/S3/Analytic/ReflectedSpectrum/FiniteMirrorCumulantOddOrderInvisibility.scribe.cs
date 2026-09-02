@@ -49,8 +49,13 @@ internal sealed class FiniteMirrorCumulantOddOrderInvisibilityDocument
                     Paragraph(Text(
                         "The proof differentiates the finite sum using pinned Mathlib and applies "
                             + "the imported arbitrary-order derivative formula for the reflected "
-                            + "exponential pair. It uses only the displayed window hypotheses and "
-                            + "no conjectural premise such as the Riemann hypothesis."))),
+                            + "exponential pair. The positive-weight and nonnegative-displacement "
+                            + "hypotheses are carried because the source states them as window "
+                            + "conditions, but the derivation does not use either one: the odd-order "
+                            + "cancellation holds for arbitrary real weights and arbitrary real "
+                            + "displacements, and the underscore prefixes on both binders record "
+                            + "that fact mechanically. No conjectural premise such as the Riemann "
+                            + "hypothesis occurs."))),
                 DescribeRole.Theorem)),
         [
             DocumentEdge.Dependency.Create(GidRef.Create(
