@@ -13,8 +13,9 @@ internal sealed class HankelMinimalStateDimensionDocument
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Every finite-dimensional realization with the same Markov parameters has "
-            + "dimension at least the stable Hankel rank, and the reachable-state quotient "
-            + "by its all-future invisible part has exactly that dimension.",
+            + "dimension at least the stable Hankel rank. The named reachable-observable "
+            + "quotient realization attains that minimum, while raw state dimension is "
+            + "presentation-dependent.",
         H("Hankel Minimal State Dimension"),
         Blocks(Describe.Lean(
             DescribeId.Create("hankel-minimal-state-dimension"),
@@ -30,9 +31,14 @@ internal sealed class HankelMinimalStateDimensionDocument
                         + "Markov parameter.")),
                 Paragraph(Text(
                     "For row and column horizons at least finrank(K,V), the common finite "
-                        + "Hankel rank is no larger than finrank(K,V'). The quotient of the "
-                        + "imported reachable subspace by the imported all-future invisible "
-                        + "subspace has finrank exactly equal to that Hankel rank."))),
+                        + "Hankel rank is no larger than finrank(K,V'). The named quotient "
+                        + "realization (A_min, B_min, C_min) has every original Markov "
+                        + "parameter and state dimension equal to that rank.")),
+                Paragraph(Text(
+                    "A one-dimensional padded realization witnesses that raw state dimension "
+                        + "is not invariant under complete input-output behavior. The infimum "
+                        + "of all finite same-behavior state dimensions is exactly the Hankel "
+                        + "rank, and the named quotient realizes it."))),
             DescribeRole.Theorem))));
 
     private static Formula TheoremFormula()
@@ -53,10 +59,7 @@ internal sealed class HankelMinimalStateDimensionDocument
         Formula columns = F.Id("s");
         Formula stateDimension = Call("finrank", scalar, state);
         Formula competingDimension = Call("finrank", scalar, competingState);
-        Formula reachable = Call("reachableSubspace", evolution, control);
-        Formula invisible = Call("eventualKernel", readout, evolution);
-        Formula residual = Call("comap", invisible, Call("subtype", reachable));
-        Formula quotient = Call("Quotient", reachable, residual);
+        Formula quotient = Call("MinimalStateSpace", evolution, control, readout);
         Formula hankel = Call(
             "finiteHankel", evolution, control, readout, rows, columns);
         Formula hankelRank = Call("finrank", scalar, Call("range", hankel));
@@ -66,9 +69,23 @@ internal sealed class HankelMinimalStateDimensionDocument
                 competingReadout, time),
             Sp, Eq, Sp,
             Call("markovParameter", evolution, control, readout, time));
+        Formula originalBehavior = Lambda(time,
+            Call("markovParameter", evolution, control, readout, time));
+        Formula minimalBehavior = Lambda(time,
+            Call("markovParameter",
+                Call("minimalDynamics", evolution, control, readout),
+                Call("minimalInput", evolution, control, readout),
+                Call("minimalOutput", evolution, control, readout), time));
         Formula lowerBound = Seq(hankelRank, Sp, Leq, Sp, competingDimension);
-        Formula attainment = Seq(
-            Call("finrank", scalar, quotient), Sp, Eq, Sp, hankelRank);
+        Formula quotientSignature = Seq(
+            Open, minimalBehavior, Comma, Sp, Call("finrank", scalar, quotient), Close,
+            Sp, Eq, Sp,
+            Open, originalBehavior, Comma, Sp, hankelRank, Close);
+        Formula rawDimensionNotInvariant = Seq(
+            Neg, Sp, Call("StateDimensionInvariantAt", originalBehavior));
+        Formula minimumDimension = Seq(
+            Call("sInf", Call("sameBehaviorDimensions", evolution, control, readout)),
+            Sp, Eq, Sp, hankelRank);
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
@@ -105,9 +122,15 @@ internal sealed class HankelMinimalStateDimensionDocument
             stateDimension, Sp, Leq, Sp, rows, Sp, Land, Sp,
             stateDimension, Sp, Leq, Sp, columns, Sp,
             Rightarrow, RowBreak, Grp(),
-            lowerBound, Sp, Land, Sp, attainment, Dot,
+            lowerBound, Sp, Land, RowBreak, Grp(),
+            quotientSignature, Sp, Land, RowBreak, Grp(),
+            rawDimensionNotInvariant, Sp, Land, RowBreak, Grp(),
+            minimumDimension, Dot,
             End, Grp(F.Id("gathered"))));
     }
+
+    private static Formula Lambda(Formula binder, Formula body) =>
+        Seq(Open, binder, Sp, Mapsto, Sp, body, Close);
 
     private static Formula Call(string name, params Formula[] arguments)
     {
