@@ -1,0 +1,4 @@
+### 定义 16E.1（finite-addressed zero）
+
+若删除有限集合 \(S\supseteq\operatorname{Addr}(s_0)\) 后零点消失，则称 \(s_0\) 为 finite-addressed local zero。
+

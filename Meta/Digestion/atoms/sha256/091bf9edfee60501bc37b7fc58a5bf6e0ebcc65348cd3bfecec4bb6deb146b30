@@ -1,0 +1,107 @@
+# 第一千九百一十二部　普适 Pick 单胞同时就是黄金光锥动力
+
+定义谱 involution：
+
+$$
+\boxed{
+\mathfrak S
+=
+\frac{2\mathbb F-I}{\sqrt5}
+=
+\frac1{\sqrt5}
+\begin{pmatrix}
+1&2\\
+2&-1
+\end{pmatrix}.
+}
+\tag{1912.1}
+$$
+
+则：
+
+$$
+\boxed{
+\mathfrak S^2=I.
+}
+\tag{1912.2}
+$$
+
+定义 cone involution：
+
+$$
+\boxed{
+\mathfrak C
+=
+\frac1{\sqrt5}
+\begin{pmatrix}
+2&-1\\
+-1&-2
+\end{pmatrix}.
+}
+\tag{1912.3}
+$$
+
+同样：
+
+$$
+\boxed{
+\mathfrak C^2=I.
+}
+\tag{1912.4}
+$$
+
+二者反交换：
+
+$$
+\boxed{
+\mathfrak S\mathfrak C
+=
+-\mathfrak C\mathfrak S.
+}
+\tag{1912.5}
+$$
+
+并且：
+
+$$
+\boxed{
+\mathfrak J
+=
+\mathfrak S\mathfrak C
+=
+\begin{pmatrix}
+0&-1\\
+1&0
+\end{pmatrix},
+\qquad
+\mathfrak J^2=-I.
+}
+\tag{1912.6}
+$$
+
+所以该二点 Pick 单胞自动生成：
+
+* 一个谱极化 \(\mathfrak S\)；
+* 一个光锥极化 \(\mathfrak C\)；
+* 一个复相位结构 \(\mathfrak J\)。
+
+它们生成的实 rank-two Clifford 代数同构于：
+
+$$
+M_2(\mathbb R),
+$$
+
+其偶子代数：
+
+$$
+\operatorname{span}_{\mathbb R}\{I,\mathfrak J\}
+$$
+
+同构于：
+
+$$
+\mathbb C.
+$$
+
+---
+

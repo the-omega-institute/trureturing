@@ -1,0 +1,14 @@
+\[
+\boxed{
+Z_{\mathrm{germ}}^{(2)}(s)
+=
+\zeta(\varphi^2s)
+\zeta(\varphi^3s)
+\zeta(2\varphi^2s)^{-1}
+G_3(s).
+}
+\]
+
+这里：
+
+- \(\zeta(\varphi^2s)\) 是第一 primitive mode；

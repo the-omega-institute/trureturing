@@ -1,0 +1,20 @@
+# 第一千九百二十一部　局部正名字与全局关系胶合
+
+每个 prime 的局部 Euler determinant 可以完全正常。
+
+但仓库已经机器证明：不同 prime frame families 可以产生完全相同的全部局部 Euler determinants，同时拥有不同的跨 prime transition products。
+
+所以：
+
+$$
+\boxed{
+\text{全部局部谱}
+\not\Rightarrow
+\text{全局关系}.
+}
+\tag{1921.1}
+$$
+
+这正解释了为什么：
+
+* 每个局部 prime block 都可正实现；

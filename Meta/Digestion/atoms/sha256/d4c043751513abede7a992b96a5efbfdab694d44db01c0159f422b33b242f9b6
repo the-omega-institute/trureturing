@@ -1,0 +1,18 @@
+## 定理 1806.1（算术 Schur 判据）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathfrak s_\xi
+\text{ 是单位圆盘上的 Schur 函数}.
+}
+\tag{1806.4}
+$$
+
+RH 成立时，代表测度是纯原子测度，故 \(\mathfrak s_\xi\) 进一步是一个 meromorphic inner function：其边界值在 Lebesgue 几乎处处具有单位模。
+
+仓库已经机器证明了一般 Schur–Herglotz Cayley 变换的严格等价，并明确记录了正尺度与分母非消失条件；因此这里真正缺失的不是 Cayley 代数，而是把 \(\mathfrak s_\xi\) 实例化并证明其算术正性。
+
+---
+

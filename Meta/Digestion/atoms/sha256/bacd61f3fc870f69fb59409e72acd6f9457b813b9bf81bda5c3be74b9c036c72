@@ -1,0 +1,26 @@
+\[
+\boxed{
+\operatorname{grade}
+=
+(k,m,2r).
+}
+\]
+
+其含义分别是：
+
+\[
+\boxed{
+\begin{aligned}
+k&=\text{多少个不同加法 shift 参与 connected 读数},\\
+m&=\text{解析零点的局部 ramification/multiplicity},\\
+2r&=\text{镜像商观察者首次看见 transverse defect 的阶}.
+\end{aligned}
+}
+\]
+
+这三者不能直接相等。
+
+“孪生素数是二点读数”和“二重零点的二阶导数”都出现数字 \(2\)，但它们作用在不同变量上。
+
+---
+

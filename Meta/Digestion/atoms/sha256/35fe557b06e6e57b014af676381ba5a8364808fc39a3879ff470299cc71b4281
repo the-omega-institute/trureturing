@@ -1,0 +1,7 @@
+\sum_{v\ge0}p^{-s\beta(v)}
+=
+\mathcal H_\varphi(s\log p).
+\]
+
+因此所有素数地址共享同一个 universal dynamics，只是时间尺度不同：
+

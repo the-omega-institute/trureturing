@@ -1,0 +1,51 @@
+## 定理 1898.1（Primitive integral selection）
+
+在非负整数 \(2\times2\) 矩阵中，满足：
+
+$$
+\operatorname{tr}=1,
+\qquad
+\det=-1
+$$
+
+的矩阵，除交换两个坐标外唯一为：
+
+$$
+\boxed{
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}.
+}
+\tag{1898.1}
+$$
+
+因此黄金谱不是由复结构单独强迫的。
+
+它是由：
+
+$$
+\boxed{
+\text{最小二分关系}
++
+\text{整数格}
++
+\text{非负 primitive update}
++
+\text{unimodular orientation reversal}
+}
+$$
+
+共同选出的。
+
+这给“黄金是第一像”一个更严格的边界：
+
+$$
+\boxed{
+\text{黄金是第一种可逆整数关系命名的谱，
+不是不可名本体的唯一数值。}
+}
+$$
+
+---
+

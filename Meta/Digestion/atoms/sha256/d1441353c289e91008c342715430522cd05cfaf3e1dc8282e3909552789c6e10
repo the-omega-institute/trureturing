@@ -1,0 +1,30 @@
+\[
+\mathsf Z_N(x)
+=
+\operatorname{wdigits}(q_N(x))
+\]
+
+为整数 \(q_N(x)\) 的规范 Zeckendorf 数位。
+
+由 floor 定义：
+
+\[
+q_N(x)
+\le
+\varphi^N x
+<
+q_N(x)+1.
+\]
+
+所以：
+
+\[
+\boxed{
+0
+\le
+x-\frac{q_N(x)}{\varphi^N}
+<
+\varphi^{-N}.
+}
+\]
+

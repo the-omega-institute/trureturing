@@ -1,0 +1,108 @@
+# 第一千八百二十一部　建议形式化顺序
+
+```text
+D5/S3/Analytic/LiClark/LiCaratheodory/
+  LiSecondDifference.lean
+  LiSecondDifferenceGeneratingSeries.lean
+  LiCaratheodoryFunction.lean
+  LiCaratheodoryLogDerivativeIdentity.lean
+  LiDiskCriticalHalfPlaneEquiv.lean
+
+D5/S3/Analytic/Zeta/PositiveRealLogDerivative/
+  CenteredXiLogDerivative.lean
+  RHLogDerivativePoissonExpansion.lean
+  RHImpliesLogDerivativePositiveReal.lean
+  PositiveRealLogDerivativeExcludesRightZeros.lean
+  PositiveRealLogDerivativeRHIff.lean
+  RationalPositiveRealCriterion.lean
+
+D5/S3/Analytic/Zeta/SquareCayleyStieltjesTriangle/
+  CenteredOddLogDerivative.lean
+  SquaredLogDerivativeStieltjesTransform.lean
+  RHStieltjesSquareCriterion.lean
+  StieltjesToPositiveRealPullback.lean
+  PositiveRealToCaratheodoryPullback.lean
+
+D5/S3/Analytic/LiClark/LiPhaseJacobian/
+  CriticalLiCayleyPhase.lean
+  CriticalLiPhaseDerivative.lean
+  LiWeightEqualsPhaseJacobian.lean
+  LiOneTotalAngularSensitivity.lean
+  ScalePhaseJacobian.lean
+  ScaleLiHarmonicMeasure.lean
+
+D5/S3/Analytic/LiClark/ArithmeticSchur/
+  ArithmeticSchurFunction.lean
+  ArithmeticSchurAtOrigin.lean
+  RHArithmeticSchur.lean
+  RHArithmeticSchurInner.lean
+  ArithmeticSchurRHIff.lean
+
+D5/S3/Analytic/LiClark/LiClarkIdentification/
+  LiPhaseMeasure.lean
+  ArithmeticClarkMeasureOne.lean
+  XiZeroSchurBoundaryContact.lean
+  XiZeroSchurAngularDerivative.lean
+  XiMultiplicityClarkAtomMass.lean
+  ClarkPhaseLogDerivativeLevelSet.lean
+
+D5/S3/Analytic/LiClark/OffLineInteriorContact/
+  OffLineZeroLiDiskPoint.lean
+  OffLineLiPointInsideDisk.lean
+  ArithmeticSchurRemovableAtZero.lean
+  ArithmeticSchurValueOneAtXiZero.lean
+  InteriorClarkContactContradictsSchur.lean
+
+D5/S3/Weil/Pick/UniversalOffLineCertificate/
+  ArithmeticSchurPickKernel.lean
+  PickKernelAtOrigin.lean
+  OffLineUniversalTwoPointMatrix.lean
+  OffLineUniversalDeterminantMinusOne.lean
+  RationalNearbyPickCertificate.lean
+  RationalTwoPointRHIff.lean
+
+D5/S3/Analytic/LiClark/RiemannSchwarz/
+  ArithmeticSchurSchwarzBound.lean
+  RiemannSchwarzLogDerivativeInequality.lean
+  RiemannSchwarzExpandedImpedanceInequality.lean
+  ArithmeticSchwarzPickDerivativeBound.lean
+  LogDerivativeSchwarzPickInequality.lean
+
+D5/S3/Weil/Pick/XiNevanlinnaGram/
+  XiNevanlinnaKernel.lean
+  XiCaratheodoryNevanlinnaGauge.lean
+  RHZeroResolventGram.lean
+  OffLineSignedKernelCorrection.lean
+  XiNevanlinnaKernelRHIff.lean
+
+D5/S3/Analytic/PrimeSingularInner/
+  LiCayleyEulerHorodisk.lean
+  BoundaryOneSingularInnerSemigroup.lean
+  PrimePowerAsSingularInnerTime.lean
+  PrimeLogDerivativeSingularInnerExpansion.lean
+  EulerHorodiskNotFullDisk.lean
+
+D5/S3/Weil/PrimeGammaNevanlinnaGram/
+  PrimeSingularInnerFeatureSpaceTarget.lean
+  PoleGammaPositiveRealCompletionTarget.lean
+  CrossPrimeFrameGramTarget.lean
+  ArithmeticNevanlinnaGramTarget.lean
+  ArithmeticNevanlinnaGramImpliesRHTarget.lean
+
+D5/S3/Observer/LiPhaseRecurrence/
+  CriticalLiPhaseAtomicState.lean
+  LiCorrelationUniformAlmostPeriodic.lean
+  LiCorrelationMeanSquareRecurrence.lean
+  OffLineLiExponentialInstability.lean
+  LiBoundedCorrelationRHIff.lean
+
+D5/S3/GoldenObserver/LiCayleyAtlas/
+  HalfScaleLiSelfJacobian.lean
+  GoldenCayleyScaleLattice.lean
+  GoldenScaleTransitionInvSqrtFive.lean
+  GoldenScaleHyperbolicStepLogPhi.lean
+  GoldenAtlasNotNeededForRH.lean
+```
+
+---
+

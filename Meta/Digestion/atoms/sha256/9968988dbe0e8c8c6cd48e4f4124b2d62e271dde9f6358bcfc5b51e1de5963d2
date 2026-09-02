@@ -1,0 +1,18 @@
+* 单位误差下可容忍的最大近似偏差。
+
+而正部分与修复部分的迹之比为：
+
+$$
+\boxed{
+\frac{\operatorname{Tr}(\varphi P_+)}
+{\operatorname{Tr}(\varphi^{-1}P_-)}
+=
+\varphi^2.
+}
+\tag{1910.10}
+$$
+
+项目已独立机器证明，Zeckendorf 合法词的完整关系空间维数按 Fibonacci 平方增长，相邻增长率趋于 \(\varphi^2\)。这与式 (1910.10) 结构平行，但目前尚不能认定为同一个指数定理。
+
+---
+

@@ -1,0 +1,10 @@
+## P2　奇阶盲性
+
+任何只读取 transverse 奇矩或一阶 response 的镜像闭合观察者，都无法区分：
+
+\[
+\delta=0
+\quad\text{与}\quad
+\{\pm\delta\}\text{ 的符号}.
+\]
+

@@ -1,0 +1,43 @@
+## 1849.2 Negative-square index target
+
+对有限窗口定义 arithmetic kernel 的负平方数：
+
+$$
+\kappa(T,q).
+$$
+
+当前可以严格说：
+
+$$
+\boxed{
+\text{窗口内有离线零点}
+\Longrightarrow
+\kappa(T,q)\ge1.
+}
+$$
+
+但尚未证明：
+
+$$
+\boxed{
+\kappa(T,q)
+=
+\sum_{\substack{
+|\gamma_\rho|\le T\\
+\delta_\rho>q
+}}
+m_\rho.
+}
+\tag{1849.2}
+$$
+
+要得到这一等式，需要完成：
+
+1. arithmetic Schur／Nevanlinna 函数的最小 Kreĭn–Langer 因子化；
+2. confluent kernel 的重数记账；
+3. 排除 numerator–denominator 的非最小抵消。
+
+对 shifted scattering 的 inverse-inner 因子，这条计数链比对 log-derivative Schur 函数更直接。
+
+---
+

@@ -1,0 +1,24 @@
+## 1914.1 维数奇偶与时间奇偶是两个独立的 \(\mathbb Z_2\)
+
+在 \(d\) 维内容空间 \(H\) 上，令：
+
+$$
+\mathbb F_H
+=
+\mathbb F\otimes I_H.
+$$
+
+则：
+
+$$
+\boxed{
+\det(\mathbb F_H^n)
+=
+(-1)^{nd}.
+}
+\tag{1914.5}
+$$
+
+所以：
+
+* \(n\) 偶时整体 orientation 始终保持；

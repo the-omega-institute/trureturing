@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:8029d84cecac9f8f2fcf7b6329dad5af8521e24d26f3bc78f25c19e7971d2214
+  normalized_sha256: sha256:8029d84cecac9f8f2fcf7b6329dad5af8521e24d26f3bc78f25c19e7971d2214
+cas_ref: sha256:8029d84cecac9f8f2fcf7b6329dad5af8521e24d26f3bc78f25c19e7971d2214
+coverage_gids:
+  - D5/S3/ConceptDynamics/Representation/LoyaltyCannotRepairUnderexpression.loyalty_cannot_repair_underexpression
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Representation/LoyaltyCannotRepairUnderexpression.loyalty_cannot_repair_underexpression
+      source_sha256: sha256:8029d84cecac9f8f2fcf7b6329dad5af8521e24d26f3bc78f25c19e7971d2214
+      target_statement_id: sha256:4355de141addd9a0b87146e394a320d808f4dba0900b8569f7dc74cf4f825b97
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Representation/LoyaltyCannotRepairUnderexpression.loyalty_cannot_repair_underexpression
+      definition_sha256: sha256:41ba5a57907384189b55c612c89ff463b0b85e518bc98ed5b1973a9683274414
+      emission_sha256: sha256:323305b9bcedb3442e68ac728d2d14377fde8b4e5733ba2b7a2257344dd66516
+  unresolved_subitems: []

@@ -1,0 +1,29 @@
+## 58. 六层结构
+
+\[
+\boxed{
+\begin{aligned}
+\text{Layer 1: }&
+H\subset\mathbb Z
+&&\text{加法构型};\\
+\text{Layer 2: }&
+R_p(H),\nu_p(H),\chi_{5,H}
+&&\text{局部 residue memory};\\
+\text{Layer 3: }&
+\mathcal M_H,\mathcal K_H
+&&\text{moment/cumulant completion};\\
+\text{Layer 4: }&
+\text{polyspectrum}
+&&\text{频域编码};\\
+\text{Layer 5: }&
+G_\zeta\text{-orbits},\ \operatorname{ZOC}
+&&\text{零点镜像线程};\\
+\text{Layer 6: }&
+\Xi_H,\ q_H(\rho)
+&&\text{开放 Trace–Jet bridge}.
+\end{aligned}
+}
+\]
+
+---
+

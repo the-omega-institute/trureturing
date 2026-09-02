@@ -1,0 +1,72 @@
+# 第一千八百九十七部　复相位完成以后，黄金常数反而消失
+
+上一轮定义了两个实 involution：
+
+$$
+\mathfrak S
+=
+\frac1{\sqrt5}
+\begin{pmatrix}
+I&2I\\
+2I&-I
+\end{pmatrix},
+$$
+
+$$
+\mathfrak C
+=
+\frac1{\sqrt5}
+\begin{pmatrix}
+2I&-I\\
+-I&-2I
+\end{pmatrix}.
+$$
+
+它们满足：
+
+$$
+\mathfrak S^2=\mathfrak C^2=I,
+$$
+
+并且：
+
+$$
+\mathfrak S\mathfrak C
+=
+-\mathfrak C\mathfrak S.
+$$
+
+更强地：
+
+$$
+\boxed{
+\mathfrak S\mathfrak C
+=
+\begin{pmatrix}
+0&-I\\
+I&0
+\end{pmatrix}
+=:\mathfrak I.
+}
+\tag{1897.1}
+$$
+
+注意右侧已经不再含：
+
+$$
+\varphi
+\quad\text{或}\quad
+\sqrt5.
+$$
+
+虽然两个实极化各自需要 \(\sqrt5\) 归一化，它们的复合却成为完全普适的标准复结构：
+
+$$
+\boxed{
+\mathfrak I^2=-I.
+}
+\tag{1897.2}
+$$
+
+因此：
+

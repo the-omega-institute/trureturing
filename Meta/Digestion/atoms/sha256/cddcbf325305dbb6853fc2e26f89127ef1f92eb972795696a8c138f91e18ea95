@@ -1,0 +1,14 @@
+* 或全局 realization。
+
+当前严格得到的是：
+
+$$
+\boxed{
+\text{不存在正半定 canonical Hamiltonian 实现。}
+}
+$$
+
+若要进一步定位一块“负 Hamiltonian 区域”，必须先构造一个具体的 indefinite canonical model。
+
+---
+

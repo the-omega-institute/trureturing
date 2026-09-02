@@ -1,0 +1,31 @@
+## 16F. 与构型累积量理论的接口
+
+黄金 germ 是本理论的 \(1\)-dimensional hard-core prototype：
+
+- Zeckendorf word 给出允许 occupation configurations；
+- local factor 是 partition function；
+- 对数给出 connected cluster modes；
+- ζ 因子是把同一 mode 对所有素数地址进行 Euler 装配；
+- residual factor 保存局部非独立记忆；
+- finite-address quotient 提取 global coherent divisor。
+
+prime constellation completion 则把“occupation position”从 Fibonacci index 推广为加法 shifts \(h\in H\)，并把 local cluster log 推广为 partition-lattice cumulants。
+
+所以两条线并非同一对象，但拥有同一个范畴骨架：
+
+\[
+\boxed{
+\text{configuration language}
+\to
+\text{partition function}
+\to
+\log
+\to
+\text{connected modes}
+\to
+\text{global spectral assembly}.
+}
+\]
+
+---
+

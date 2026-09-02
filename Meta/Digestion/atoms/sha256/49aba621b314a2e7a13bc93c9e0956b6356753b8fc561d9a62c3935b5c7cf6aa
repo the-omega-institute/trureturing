@@ -1,0 +1,59 @@
+## 1897.1 completed phase 不能反推唯一黄金历史
+
+令：
+
+$$
+R_\theta=e^{\theta\mathfrak I}.
+$$
+
+定义：
+
+$$
+\mathfrak S_\theta
+=
+R_\theta\mathfrak SR_\theta^{-1},
+$$
+
+$$
+\mathfrak C_\theta
+=
+R_\theta\mathfrak CR_\theta^{-1}.
+$$
+
+则：
+
+$$
+\mathfrak S_\theta^2
+=
+\mathfrak C_\theta^2
+=
+I,
+$$
+
+并且：
+
+$$
+\boxed{
+\mathfrak S_\theta\mathfrak C_\theta
+=
+\mathfrak I
+\qquad
+\forall\theta.
+}
+\tag{1897.4}
+$$
+
+所以同一个 completed complex structure 存在连续多族实反射因子化。
+
+因此：
+
+$$
+\boxed{
+\text{发现复相位结构，
+不足以证明其微观生成历史必为黄金。}
+}
+$$
+
+要重新选择出 Fibonacci–golden factorization，必须额外加入：
+
+* 整数格；

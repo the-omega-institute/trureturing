@@ -1,0 +1,25 @@
+# 第一千九百零三部　Pick–Weil 反证编译器
+
+仓库目前已经机器闭合：
+
+$$
+\mathrm{RH}
+\Longrightarrow
+\text{所供应零点数据上的 O-6 Weil convolution-square 和非负}.
+$$
+
+该模块也明确标记：它只是前向条件桥，在 `ZeroData` 为空时可以真空成立，不能被误称为完整、非平凡的 Weil 等价证明。
+
+真正需要补的是反向证书编译：
+
+$$
+\boxed{
+\text{off-line golden Pick cell}
+\longrightarrow
+\text{negative Weil test function}.
+}
+\tag{1903.1}
+$$
+
+---
+

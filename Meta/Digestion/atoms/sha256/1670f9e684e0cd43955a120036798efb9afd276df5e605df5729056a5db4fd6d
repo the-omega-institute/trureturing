@@ -1,0 +1,102 @@
+# 第一千八百零五部　Li 权重是 Cayley 相位的 Jacobian
+
+若 RH 成立，写：
+
+$$
+\rho=\frac12+i\gamma.
+$$
+
+其 Li 相位为：
+
+$$
+\boxed{
+\omega_\gamma
+=
+1-\frac1\rho
+=
+\frac{i\gamma-\frac12}
+{i\gamma+\frac12}
+\in\mathbb T.
+}
+\tag{1805.1}
+$$
+
+令：
+
+$$
+\omega_\gamma=e^{i\theta(\gamma)}.
+$$
+
+则：
+
+$$
+\begin{aligned}
+\frac{d}{d\gamma}\log\omega_\gamma
+&=
+\frac{i}{i\gamma-\frac12}
+-
+\frac{i}{i\gamma+\frac12}\\
+&=
+-\frac{i}{\gamma^2+\frac14}.
+\end{aligned}
+$$
+
+所以：
+
+$$
+\boxed{
+-\theta'(\gamma)
+=
+\frac1{\gamma^2+\frac14}.
+}
+\tag{1805.2}
+$$
+
+而 Li–Clark 权重恰为：
+
+$$
+\frac1{|\rho|^2}
+=
+\frac1{\gamma^2+\frac14}.
+$$
+
+因此：
+
+$$
+\boxed{
+\text{Li 权重}
+=
+\text{临界线高度到单位圆相位的角 Jacobian}.
+}
+\tag{1805.3}
+$$
+
+这不是偶然的 Poisson 类似。
+
+标准半尺度 Cayley 图表把每个零点按其相位对高度扰动的灵敏度加权。
+
+又因为：
+
+$$
+2\lambda_1
+=
+\sum_\rho
+\frac{m_\rho}{|\rho|^2},
+$$
+
+所以：
+
+$$
+\boxed{
+2\lambda_1
+=
+\sum_\rho
+m_\rho\left[-\theta'(\gamma_\rho)\right].
+}
+\tag{1805.4}
+$$
+
+即 \(\lambda_1\) 是全部临界零点的总 Cayley 角灵敏度的一半。
+
+---
+

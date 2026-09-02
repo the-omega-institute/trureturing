@@ -1,0 +1,20 @@
+### 定理 6.1（Klein 作用的两符号位实现）
+
+在保持三个无符号 Zeckendorf 数据不变的情况下：
+
+\[
+\begin{aligned}
+C&:(\varepsilon_\delta,\varepsilon_\gamma)
+\mapsto
+(\varepsilon_\delta,-\varepsilon_\gamma),\\
+J&:(\varepsilon_\delta,\varepsilon_\gamma)
+\mapsto
+(-\varepsilon_\delta,\varepsilon_\gamma),\\
+R&:(\varepsilon_\delta,\varepsilon_\gamma)
+\mapsto
+(-\varepsilon_\delta,-\varepsilon_\gamma).
+\end{aligned}
+\]
+
+因此 generic 离线四元组正好对应两个符号位的全部四个状态。
+

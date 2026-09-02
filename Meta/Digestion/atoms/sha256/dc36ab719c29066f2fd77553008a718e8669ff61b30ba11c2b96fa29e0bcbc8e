@@ -1,0 +1,65 @@
+# 第一千九百一十六部　不同离线零点共享同一母单胞，却拥有不同嵌入
+
+在此前的 arithmetic Schur 图表中，每一个右侧离线零点 \(\rho\) 都产生一个不同的圆盘点：
+
+$$
+a_\rho
+=
+1-\frac1\rho
+\in\mathbb D,
+$$
+
+并满足：
+
+$$
+\mathfrak s_\xi(a_\rho)=1.
+$$
+
+因此每个离线零点的规范二点 Pick 单胞都是：
+
+$$
+\mathbb F.
+$$
+
+但它们仍然由以下数据区分：
+
+$$
+\boxed{
+\mathfrak D_\rho
+=
+\left(
+a_\rho,\,
+m_\rho,\,
+\mathfrak s_\xi'(a_\rho),\,
+\text{shifted persistence depth},\,
+\text{Hardy orientation}
+\right).
+}
+\tag{1916.1}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{不同离线零点生成不同的“相”，
+但这些相共享同一个最小关系母形。}
+}
+$$
+
+可以写成：
+
+$$
+\boxed{
+\text{defect morphology}
+=
+\text{universal golden cell}
++
+\text{context-dependent embedding}.
+}
+\tag{1916.2}
+$$
+
+这解释了磁单极子与黑洞为何如此相似：
+
+* 母单胞相同；

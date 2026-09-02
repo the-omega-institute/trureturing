@@ -1,0 +1,91 @@
+# 第一千九百二十五部　建议形式化顺序
+
+```text
+D5/S3/Weil/Pick/UniversalSaturationCell/
+  NormalizedPickKernel.lean
+  InternalUnitContact.lean
+  SaturationCellDiagonal.lean
+  SaturationCellCrossTerm.lean
+  UniversalSaturationCellIsFibonacci.lean
+  SaturationCellIndependentOfContactPoint.lean
+
+D5/S3/Weil/Pick/GoldenPSDRepair/
+  FibonacciCellSpectrum.lean
+  FibonacciCellPositiveProjector.lean
+  FibonacciCellNegativeProjector.lean
+  FibonacciCellJordanDecomposition.lean
+  MinimalPositiveRepair.lean
+  DistanceToPositiveConeInvPhi.lean
+
+D5/S3/Observer/GoldenDefectObserver/
+  GoldenNegativeEigenObserver.lean
+  RationalNegativeObserver.lean
+  FibonacciRationalObservers.lean
+  FibonacciObserverRayleighFormula.lean
+  FibonacciObserverExactConvergenceError.lean
+  GoldenObserverOptimalRobustness.lean
+
+D5/S3/Observer/GoldenCliffordNormalForm/
+  GoldenSpectralInvolution.lean
+  GoldenConeInvolution.lean
+  GoldenInvolutionsAnticommute.lean
+  GoldenComplexStructure.lean
+  FibonacciCellReflectionBoostFactorization.lean
+  FibonacciSquarePureBoost.lean
+
+D5/S3/Observer/GoldenNullDirections/
+  GoldenQuadraticForm.lean
+  PositiveGoldenNullRay.lean
+  NegativeGoldenNullRay.lean
+  FibonacciActsOnPositiveNullRay.lean
+  FibonacciActsOnNegativeNullRay.lean
+  ComplexStructureExchangesNullRays.lean
+
+D5/S3/CompletionDynamics/OddEvenCompletion/
+  GoldenAntiIsometryIterateParity.lean
+  EvenScalarOfGoldenFormInvariant.lean
+  OddStepRelationBroken.lean
+  EvenStepRelationCompleted.lean
+  ContentDimensionOrientationParity.lean
+
+D5/S3/CompletionDynamics/CliffordEvenForgetfulness/
+  GoldenRealPolarizationFactors.lean
+  EvenCliffordAlgebraComplex.lean
+  GoldenFactorsCancelInComplexStructure.lean
+  ComplexStructureHasManyRealFactorizations.lean
+  IntegralPrimitiveDataSelectsFibonacciFactorization.lean
+
+D5/S3/Weil/Pick/MetallicSaturationFamily/
+  GeneralTwoPointSaturationMatrix.lean
+  GeneralSaturationEigenvalues.lean
+  UnitOverlapForcesGoldenSpectrum.lean
+  GoldenUniversalityRequiresPickNormalization.lean
+
+D5/S3/Analytic/Zeta/OffLineUniversalEmbedding/
+  ArithmeticSchurOffLineContact.lean
+  EveryOffLineZeroHasUniversalCell.lean
+  OffLineEmbeddingCarriesLocation.lean
+  ConfluentJetCarriesMultiplicity.lean
+  UniversalCellContextDependentEmbedding.lean
+
+D5/S3/Weil/Pick/GoldenPickWeilCompiler/
+  UniversalGoldenNegativeDirection.lean
+  ApproximateCellOperatorError.lean
+  GoldenNegativeMarginStable.lean
+  RationalHalfMarginStable.lean
+  TwoPointPaleyWienerInterpolationTarget.lean
+  WeilTailControlTarget.lean
+  OffLinePickCellProducesWeilNegativeTarget.lean
+
+D5/S3/Weil/PrimeGammaCPGluing/
+  PrimeLocalPositiveSystem.lean
+  CrossPrimeFrameTransition.lean
+  LocalDeterminantDoesNotFixRelations.lean
+  ArithmeticCompletelyPositiveGlueTarget.lean
+  ArithmeticStinespringFeatureTarget.lean
+  CPGluingImpliesNevanlinnaPSD.lean
+  CPGluingImpliesRHTarget.lean
+```
+
+---
+

@@ -1,0 +1,4 @@
+## P8　全局零点纠缠不是函数方程推论
+
+若构造出的 orbit generating functional 在不同 mirror orbits 间完全因子化，则所有跨轨道 cumulants 为零；这将否定“所有离线零点共同纠缠”的强版本，同时保留每对内部相关。
+

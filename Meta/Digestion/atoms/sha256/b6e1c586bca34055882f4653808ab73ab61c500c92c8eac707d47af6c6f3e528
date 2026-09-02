@@ -1,0 +1,55 @@
+## 1788.1 Poisson 权重的出现
+
+对临界零点：
+
+$$
+\rho=\frac12+i\gamma,
+$$
+
+有：
+
+$$
+\frac1{|\rho|^2}
+=
+\frac1{\gamma^2+\frac14}.
+$$
+
+而标准 Poisson 核：
+
+$$
+P_a(\gamma)
+=
+\frac1\pi
+\frac{a}{a^2+\gamma^2}
+$$
+
+在：
+
+$$
+a=\frac12
+$$
+
+时满足：
+
+$$
+\boxed{
+\frac1{\gamma^2+\frac14}
+=
+2\pi P_{1/2}(\gamma).
+}
+\tag{1788.6}
+$$
+
+所以标准 Li–Clark 测度可以被理解为：
+
+$$
+\boxed{
+\text{临界零点相位，
+按半尺度 Poisson 窗口加权后的正谱状态。}
+}
+$$
+
+项目的 Laguerre–Li 桥正是使用这一自然半尺度 Cayley moment；但当前机器定理仍以正偶谱测度和 moment identification 为前提，而不是独立导出该测度。
+
+---
+

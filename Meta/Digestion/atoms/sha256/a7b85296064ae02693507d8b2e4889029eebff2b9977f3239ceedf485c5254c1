@@ -1,0 +1,20 @@
+\[
+\boxed{
+\text{correlation spectrum}
+=
+\text{其多维 Fourier 编码}.
+}
+\]
+
+具体地：
+
+\[
+\begin{aligned}
+\text{twin } \{0,2\}&\leftrightarrow C_2(2),\\
+\text{triplet } \{0,2,6\}&\leftrightarrow C_3(2,6),\\
+\text{quadruplet } \{0,2,6,8\}&\leftrightarrow C_4(2,6,8).
+\end{aligned}
+\]
+
+---
+

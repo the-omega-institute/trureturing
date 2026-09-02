@@ -1,0 +1,14 @@
+## 48. Abel 极限运输
+
+```lean
+theorem hardyLittlewood_implies_zetaGibbs_limit
+    (hHL : HardyLittlewoodAsymptotic H) :
+    Tendsto (correlationMoment · H H.univ)
+      (nhdsWithin 1 (Set.Ioi 1))
+      (nhds (singularSeries H))
+```
+
+该声明必须保留 `hHL`，不得把 conjecture 偷入基础。
+
+---
+

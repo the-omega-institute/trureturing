@@ -1,0 +1,10 @@
+### 定义 44.1（Möbius zero-bundle model）
+
+若一个参数回路上的平行移动把：
+
+\[
+\delta\mapsto-\delta,
+\]
+
+则 transverse sign line bundle 的第一 Stiefel–Whitney 类非零，称为 Möbius zero bundle。
+

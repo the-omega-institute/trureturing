@@ -1,0 +1,9 @@
+\[
+K_T(a_1,\ldots,a_r)
+=
+\left.
+\partial_{u_{a_1}}\cdots\partial_{u_{a_r}}
+\log\mathcal Z_T(\mathbf u)
+\right|_{\mathbf u=0}.
+\]
+

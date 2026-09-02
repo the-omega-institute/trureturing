@@ -1,0 +1,18 @@
+## 51. Correlation-completed xi
+
+先冻结接口，不给 `sorry` 伪装成结论：
+
+```lean
+structure CorrelationCompletedXi
+    (H : PrimeConstellation) where
+  value : ℂ → SourceAlgebra H → ℂ
+  base_eq_xi : ...
+  reflection_covariant : ...
+  primeJet : ...
+  meromorphic : ...
+```
+
+只有构造出 inhabitant 后才能消费。
+
+---
+

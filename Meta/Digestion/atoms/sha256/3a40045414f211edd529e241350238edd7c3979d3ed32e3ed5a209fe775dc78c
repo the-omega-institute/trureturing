@@ -1,0 +1,16 @@
+### 定理 2.1（对称非定位）
+
+存在具有完整 \(G_\zeta\) 对称、但全部零点均离开临界线的整函数。
+
+因此：
+
+\[
+\boxed{
+\text{full symmetry}
+\not\Rightarrow
+\text{fixed-line localization}.
+}
+\]
+
+这直接修正“完整对称不允许离线零点”的推理。
+

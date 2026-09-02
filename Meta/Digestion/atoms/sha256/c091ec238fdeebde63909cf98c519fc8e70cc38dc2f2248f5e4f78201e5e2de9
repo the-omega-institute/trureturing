@@ -1,0 +1,11 @@
+\[
+\boxed{
+\mathfrak S(H)
+=
+\prod_pL_p(H).
+}
+\]
+
+因此奇异级数不是否定 Euler 结构，而是另一种 Euler 结构：
+
+- 不同素数模数在有限层面由 CRT 分解；
