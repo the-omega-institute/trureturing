@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:068911e74b4c4501bd7d4f09dc16f92f50d01e7b5ccfdba326fa80159de2be1e
+  normalized_sha256: sha256:068911e74b4c4501bd7d4f09dc16f92f50d01e7b5ccfdba326fa80159de2be1e
+cas_ref: sha256:068911e74b4c4501bd7d4f09dc16f92f50d01e7b5ccfdba326fa80159de2be1e
+coverage_gids:
+  - D5/S3/ConceptDynamics/Restoration/RestorationCompensationAsymmetry.identity_restoration_implies_compensation_with_converse_countermodel
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Restoration/RestorationCompensationAsymmetry.identity_restoration_implies_compensation_with_converse_countermodel
+      source_sha256: sha256:068911e74b4c4501bd7d4f09dc16f92f50d01e7b5ccfdba326fa80159de2be1e
+      target_statement_id: sha256:98431fcd69ba705fb8e7f39f7e9d2827093f77db53785835c401946249a69a82
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Restoration/RestorationCompensationAsymmetry.identity_restoration_implies_compensation_with_converse_countermodel
+      definition_sha256: sha256:4cdcee0030ed5acea1063f210c8572df472a2f87e6d464c893014239df36a663
+      emission_sha256: sha256:37bca00928ede54a27bc96bdf87544736748301d6dbd2bce95a3165f9ca74cb3
+  unresolved_subitems: []
