@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:a2ab3e4cd95e50322654203ca56176e7aab3dd61f577e519e70390bf6dfe45df
+  normalized_sha256: sha256:a2ab3e4cd95e50322654203ca56176e7aab3dd61f577e519e70390bf6dfe45df
+cas_ref: sha256:a2ab3e4cd95e50322654203ca56176e7aab3dd61f577e519e70390bf6dfe45df
+coverage_gids:
+  - D5/S3/ConceptDynamics/Reversibility/LeftInvertibleRecoversAllTargets.left_invertible_recovers_all_targets
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Reversibility/LeftInvertibleRecoversAllTargets.left_invertible_recovers_all_targets
+      source_sha256: sha256:a2ab3e4cd95e50322654203ca56176e7aab3dd61f577e519e70390bf6dfe45df
+      target_statement_id: sha256:f09ff3c72eaf8312e3e650b29f554e54d88500e3a8ef3e1ecadeffc2441c510b
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Reversibility/LeftInvertibleRecoversAllTargets.left_invertible_recovers_all_targets
+      definition_sha256: sha256:473c429de60788f6120b19dc316fe42db7e18880c76a928a8cb57b2fcaac4919
+      emission_sha256: sha256:fb3f71d90d123863ee4de711e47d0c97d999bc1a02533aa33d3c3555908fbd84
+  unresolved_subitems: []
