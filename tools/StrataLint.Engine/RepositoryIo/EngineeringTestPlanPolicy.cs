@@ -317,7 +317,8 @@ internal static class EngineeringTestExecutor
 {
     internal static int Execute(
         EngineeringTestPlan plan,
-        Func<EngineeringTestInvocation, int> run)
+        Func<EngineeringTestInvocation, int> run,
+        TextWriter standardError)
     {
         if (plan.Kind == EngineeringTestPlanKind.None)
         {
@@ -330,9 +331,13 @@ internal static class EngineeringTestExecutor
         var filter = string.Join('|', plan.Tests.Select(static test => $"FullyQualifiedName~{test.Id}").Distinct(StringComparer.Ordinal));
         try
         {
-            if (run(new EngineeringTestInvocation("tools/StrataLint.sln", filter, plan.Tests)) == 0) return 0;
+            return run(new EngineeringTestInvocation("tools/StrataLint.sln", filter, plan.Tests));
         }
-        catch (Exception) { }
-        return run(new EngineeringTestInvocation("tools/StrataLint.sln", null, plan.Tests));
+        catch (Exception exception)
+        {
+            standardError.WriteLine(
+                $"ENGINEERING_TEST_SELECTED_INVOCATION_FAILED {exception.GetType().Name}: {exception.Message.ReplaceLineEndings(" ")}");
+            return 1;
+        }
     }
 }
