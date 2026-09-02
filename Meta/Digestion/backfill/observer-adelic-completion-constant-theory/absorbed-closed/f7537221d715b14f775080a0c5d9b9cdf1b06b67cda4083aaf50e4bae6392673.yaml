@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:f7537221d715b14f775080a0c5d9b9cdf1b06b67cda4083aaf50e4bae6392673
+  normalized_sha256: sha256:f7537221d715b14f775080a0c5d9b9cdf1b06b67cda4083aaf50e4bae6392673
+cas_ref: sha256:f7537221d715b14f775080a0c5d9b9cdf1b06b67cda4083aaf50e4bae6392673
+coverage_gids:
+  - D5/S3/Analytic/Asymptotics/CycleCayleyMeasureWeakLimit.cycle_cayley_measure_weak_limit
+receipts:
+  coverage:
+    - gid: D5/S3/Analytic/Asymptotics/CycleCayleyMeasureWeakLimit.cycle_cayley_measure_weak_limit
+      source_sha256: sha256:f7537221d715b14f775080a0c5d9b9cdf1b06b67cda4083aaf50e4bae6392673
+      target_statement_id: sha256:6239920512fc4729381380dba5e95e5c12606c3d44a7ab27b2953d14f21c7d6a
+  scribe:
+    - gid: D5/S3/Analytic/Asymptotics/CycleCayleyMeasureWeakLimit.cycle_cayley_measure_weak_limit
+      definition_sha256: sha256:e970df6bc64e1142428ea722bf5ed0e58fda6e8cd315f9d65e7a7c2b5666fe4d
+      emission_sha256: sha256:7d40d170f616c8fe88e302c5c85936b9a919fb61b5e83c696b5f20d2e5cfd834
+  unresolved_subitems: []
