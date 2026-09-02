@@ -22,16 +22,15 @@ internal sealed class StateRecordReadoutDistinguishabilityDocument
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "Let O be a RecordedObserver on a state type X, reading type A, and "
-                            + "second-layer output Y2. Its fields are q1 : X -> A, the controlled "
-                            + "update T1 : X x Y2 -> X, and q2 : AppendOnlyRecord A -> Y2. "
-                            + "AppendOnlyRecord A stores a list; the operational transition changes "
-                            + "it by lambda.append(q1(x)), so old entries remain a prefix.")),
+                        "Let Lambda1 be a record type equipped with named AppendOnlyOps: append, "
+                            + "a monotonic prefix relation, and a certificate that append preserves "
+                            + "that relation. Let O be a RecordedObserver with q1 : X -> A, the "
+                            + "controlled update T1 : X x Y2 -> X, and q2 : Lambda1 -> Y2.")),
                     Paragraph(Text(
-                        "An ObserverHistory contains an initial augmented state (x, lambda) and "
-                            + "a finite list of second-layer inputs. Its endpoint and recordImage "
-                            + "are the two projections obtained by folding the source one-step "
-                            + "evolution over those inputs, so recordImage is not an arbitrary map.")),
+                        "ObserverHistory is generated from an initial augmented state by its next "
+                            + "constructor. The endpoint and recordImage are the two projections "
+                            + "obtained by folding the source one-step evolution, so recordImage is "
+                            + "not an arbitrary caller-supplied map.")),
                     Paragraph(Text(
                         "Let two such generated histories have the same endpoint x and respective "
                             + "record images lambda and lambdaPrime, with the images distinct.")),
@@ -59,17 +58,20 @@ internal sealed class StateRecordReadoutDistinguishabilityDocument
     {
         Formula type = Seq(Operatorname, Grp(F.Id("Type")));
         Formula stateType = F.Id("X");
+        Formula recordType = new Formula.Subscript(F.Id("Lambda"), D(1));
         Formula readingType = F.Id("A");
         Formula stateOutputType = F.Id("Y");
         Formula recordOutputType = new Formula.Subscript(F.Id("Y"), D(2));
-        Formula recordType = Call("AppendOnlyRecord", readingType);
+        Formula recordOpsType = Call("AppendOnlyOps", recordType, readingType);
+        Formula recordOps = F.Id("R");
         Formula observerType =
-            Call("RecordedObserver", stateType, readingType, recordOutputType);
-        Formula historyType =
-            Call("ObserverHistory", stateType, readingType, recordOutputType);
+            Call("RecordedObserver", stateType, recordType, readingType, recordOutputType, recordOps);
         Formula observer = F.Id("O");
-        Formula endpoint = Call("endpoint", observer);
-        Formula recordImage = Call("recordImage", observer);
+        Formula historyType =
+            Call("ObserverHistory", stateType, recordType, readingType, recordOutputType,
+                recordOps, observer);
+        Formula endpoint = Call("endpoint", recordOps, observer);
+        Formula recordImage = Call("recordImage", recordOps, observer);
         Formula recordReadout = Call("q2", observer);
         Formula first = F.Id("gamma");
         Formula second = F.Id("gammaPrime");
@@ -98,9 +100,10 @@ internal sealed class StateRecordReadoutDistinguishabilityDocument
 
         return Disp(Seq(
             Forall, Sp,
-            stateType, Comma, Sp, readingType, Comma, Sp,
+            stateType, Comma, Sp, recordType, Comma, Sp, readingType, Comma, Sp,
             stateOutputType, Comma, Sp, recordOutputType,
             Colon, Sp, type, Comma, Esc,
+            recordOps, Colon, Sp, recordOpsType, Comma, Esc,
             observer, Colon, Sp, observerType, Comma, Esc,
             first, Comma, Sp, second, Colon, Sp, historyType, Comma, Sp,
             state, Colon, Sp, stateType, Comma, Sp,

@@ -9,14 +9,13 @@ import D5.S3.ConceptDynamics.ConceptFiberDecomposition
 import Mathlib.Data.Setoid.Basic
 
 /- Library-search audit trail (2026-09-02):
-   * Repository append-only ledgers use `List` extension and `List.IsPrefix`,
-     but no existing carrier combines that record law with Definition 45.1's
-     controlled update, first readout, second readout, and generated history.
-   * Pinned Lean supplies `List.prefix_append`; pinned Mathlib supplies
-     `Setoid.ker_def`. Both exact hits are applied below.
-   * Loogle confirmed the prefix API. LeanSearch returned no result, while
-     GitHub code search and Reservoir rejected the attempted public endpoints.
-     The full receipt is `/tmp/SEARCH-dep0902m.md`. -/
+   * No repository declaration combines an abstract append-only record carrier
+     with Definition 45.1's controlled update and generated histories.
+   * Pinned Mathlib supplies the exact `Setoid.ker_def` kernel characterization.
+     Core `congrArg` supplies transport through an arbitrary state readout.
+   * Loogle confirmed `Setoid.ker_def`; GitHub search found no matching observer
+     theorem. LeanSearch's attempted API returned 404. The full ordered receipt
+     and the local/external search boundaries are `/tmp/SEARCH-dep0902m.md`. -/
 
 namespace D5.S3.ObserverMemory.Trajectories.StateRecordReadoutDistinguishability
 
@@ -25,118 +24,135 @@ open D5.S3.ConceptDynamics.ConceptFiberDecomposition
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-/-- The named record carrier from Definition 45.1. The operational transition
-below changes its list of readings only through `append`. -/
-structure AppendOnlyRecord (Reading : Type*) where
-  entries : List Reading
-deriving DecidableEq, Repr
-
-namespace AppendOnlyRecord
-
-/-- The empty append-only record. -/
-def empty {Reading : Type*} : AppendOnlyRecord Reading :=
-  ⟨[]⟩
-
-/-- Append the current first-layer reading `q1 x` to the record. -/
-def append {Reading : Type*}
-    (record : AppendOnlyRecord Reading) (reading : Reading) : AppendOnlyRecord Reading :=
-  ⟨record.entries ++ [reading]⟩
-
-/-- Record-column monotonicity is the prefix order on stored readings. -/
-def IsPrefix {Reading : Type*}
-    (earlier later : AppendOnlyRecord Reading) : Prop :=
-  earlier.entries <+: later.entries
-
-/-- One append preserves the entire old record as a prefix. -/
-theorem prefix_append {Reading : Type*}
-    (record : AppendOnlyRecord Reading) (reading : Reading) :
-    IsPrefix record (append record reading) := by
-  exact List.prefix_append record.entries [reading]
-
-end AppendOnlyRecord
+/-- Definition 45.1's abstract append-only record structure. It specifies only
+the append operation, the monotonicity relation, and preservation by one append;
+it does not choose a representation, an empty record, or strict growth. -/
+structure AppendOnlyOps (Record Reading : Type*) where
+  append : Record → Reading → Record
+  IsPrefix : Record → Record → Prop
+  prefix_append : ∀ record reading, IsPrefix record (append record reading)
 
 /-- Definition 45.1's one-layer observer with record, controlled update, and
 second-layer readout. The controlled update has the exact domain `X x Y2`. -/
-structure RecordedObserver (State Reading SecondOutput : Type*) where
+structure RecordedObserver
+    (State Record Reading SecondOutput : Type*)
+    (recordOps : AppendOnlyOps Record Reading) where
   q1 : Concept State Reading
   controlledUpdate : State × SecondOutput → State
-  q2 : Concept (AppendOnlyRecord Reading) SecondOutput
+  q2 : Concept Record SecondOutput
 
 /-- The augmented state `(x, lambda)` from Definition 45.1. -/
-abbrev AugmentedState (State Reading : Type*) :=
-  State × AppendOnlyRecord Reading
+abbrev AugmentedState (State Record : Type*) := State × Record
 
 /-- The source one-step evolution
 `(x, lambda) |-> (controlledUpdate (x, z), lambda.append (q1 x))`. -/
-def step {State Reading SecondOutput : Type*}
-    (observer : RecordedObserver State Reading SecondOutput)
-    (current : AugmentedState State Reading) (z : SecondOutput) :
-    AugmentedState State Reading :=
-  (observer.controlledUpdate (current.1, z), current.2.append (observer.q1 current.1))
+def step {State Record Reading SecondOutput : Type*}
+    (recordOps : AppendOnlyOps Record Reading)
+    (observer : RecordedObserver State Record Reading SecondOutput recordOps)
+    (current : AugmentedState State Record) (z : SecondOutput) :
+    AugmentedState State Record :=
+  (observer.controlledUpdate (current.1, z),
+    recordOps.append current.2 (observer.q1 current.1))
 
-/-- A finite history is operational data: an augmented initial state followed
-by the second-layer inputs used by the fixed controlled update in one round. -/
-structure ObserverHistory (State Reading SecondOutput : Type*) where
-  initial : AugmentedState State Reading
-  inputs : List SecondOutput
+universe uState uRecord uReading uSecondOutput
 
-/-- Run Definition 45.1's one-step evolution along the entire history. -/
-def finalState {State Reading SecondOutput : Type*}
-    (observer : RecordedObserver State Reading SecondOutput)
-    (history : ObserverHistory State Reading SecondOutput) :
-    AugmentedState State Reading :=
-  history.inputs.foldl (step observer) history.initial
+/-- A history is generated freely from an augmented initial state by repeated
+applications of Definition 45.1's controlled step. No input-list carrier is
+part of its public representation. -/
+inductive ObserverHistory
+    (State : Type uState) (Record : Type uRecord) (Reading : Type uReading)
+    (SecondOutput : Type uSecondOutput)
+    (recordOps : AppendOnlyOps Record Reading)
+    (observer : RecordedObserver State Record Reading SecondOutput recordOps) :
+    Type (max (max uState uRecord) (max uReading uSecondOutput)) where
+  | initial (initialState : AugmentedState State Record)
+  | next
+      (history : ObserverHistory State Record Reading SecondOutput recordOps observer)
+      (z : SecondOutput)
+
+namespace ObserverHistory
+
+/-- Fold a generated history through a supplied one-step evolution. -/
+def fold {State Record Reading SecondOutput : Type*}
+    {recordOps : AppendOnlyOps Record Reading}
+    {observer : RecordedObserver State Record Reading SecondOutput recordOps}
+    (advance : AugmentedState State Record → SecondOutput → AugmentedState State Record) :
+    ObserverHistory State Record Reading SecondOutput recordOps observer →
+      AugmentedState State Record
+  | .initial initialState => initialState
+  | .next history z => advance (fold advance history) z
+
+/-- The augmented state at which a generated history starts. -/
+def start {State Record Reading SecondOutput : Type*}
+    {recordOps : AppendOnlyOps Record Reading}
+    {observer : RecordedObserver State Record Reading SecondOutput recordOps} :
+    ObserverHistory State Record Reading SecondOutput recordOps observer →
+      AugmentedState State Record
+  | .initial initialState => initialState
+  | .next history _ => start history
+
+end ObserverHistory
+
+/-- Fold Definition 45.1's one-step evolution along the generated history. -/
+def finalState {State Record Reading SecondOutput : Type*}
+    (recordOps : AppendOnlyOps Record Reading)
+    (observer : RecordedObserver State Record Reading SecondOutput recordOps)
+    (history : ObserverHistory State Record Reading SecondOutput recordOps observer) :
+    AugmentedState State Record :=
+  ObserverHistory.fold (step recordOps observer) history
 
 /-- The endpoint of a generated observer history. -/
-def endpoint {State Reading SecondOutput : Type*}
-    (observer : RecordedObserver State Reading SecondOutput) :
-    Concept (ObserverHistory State Reading SecondOutput) State :=
-  fun history => (finalState observer history).1
+def endpoint {State Record Reading SecondOutput : Type*}
+    (recordOps : AppendOnlyOps Record Reading)
+    (observer : RecordedObserver State Record Reading SecondOutput recordOps) :
+    Concept (ObserverHistory State Record Reading SecondOutput recordOps observer) State :=
+  fun history => (finalState recordOps observer history).1
 
 /-- The record image is computed by repeated `append`; it is not caller-supplied. -/
-def recordImage {State Reading SecondOutput : Type*}
-    (observer : RecordedObserver State Reading SecondOutput) :
-    Concept (ObserverHistory State Reading SecondOutput) (AppendOnlyRecord Reading) :=
-  fun history => (finalState observer history).2
-
-private theorem foldl_record_prefix {State Reading SecondOutput : Type*}
-    (observer : RecordedObserver State Reading SecondOutput)
-    (inputs : List SecondOutput) (current : AugmentedState State Reading) :
-    current.2.IsPrefix (inputs.foldl (step observer) current).2 := by
-  induction inputs generalizing current with
-  | nil => exact List.prefix_rfl
-  | cons z rest inductionHypothesis =>
-      rw [List.foldl_cons]
-      exact (AppendOnlyRecord.prefix_append current.2 (observer.q1 current.1)).trans
-        (inductionHypothesis (current := step observer current z))
+def recordImage {State Record Reading SecondOutput : Type*}
+    (recordOps : AppendOnlyOps Record Reading)
+    (observer : RecordedObserver State Record Reading SecondOutput recordOps) :
+    Concept (ObserverHistory State Record Reading SecondOutput recordOps observer) Record :=
+  fun history => (finalState recordOps observer history).2
 
 /-- Every generated history has a monotone record column: its initial record is
 a prefix of its final record image. -/
-theorem history_record_prefix {State Reading SecondOutput : Type*}
-    (observer : RecordedObserver State Reading SecondOutput)
-    (history : ObserverHistory State Reading SecondOutput) :
-    history.initial.2.IsPrefix (recordImage observer history) := by
-  change history.initial.2.IsPrefix
-    (history.inputs.foldl (step observer) history.initial).2
-  exact foldl_record_prefix observer history.inputs history.initial
+theorem history_record_prefix {State Record Reading SecondOutput : Type*}
+    (recordOps : AppendOnlyOps Record Reading)
+    (observer : RecordedObserver State Record Reading SecondOutput recordOps)
+    (prefixRefl : ∀ record, recordOps.IsPrefix record record)
+    (prefixTrans : ∀ {first middle last},
+      recordOps.IsPrefix first middle → recordOps.IsPrefix middle last →
+        recordOps.IsPrefix first last)
+    (history : ObserverHistory State Record Reading SecondOutput recordOps observer) :
+    recordOps.IsPrefix (ObserverHistory.start history).2
+      (recordImage recordOps observer history) := by
+  induction history with
+  | initial initialState => exact prefixRefl initialState.2
+  | next history z inductionHypothesis =>
+      exact prefixTrans inductionHypothesis
+        (recordOps.prefix_append (finalState recordOps observer history).2
+          (observer.q1 (finalState recordOps observer history).1))
 
 /-- Generated histories with one endpoint are equal under every state-only
 readout, while `q2` distinguishes their append-only record images exactly when
 its two outputs differ. Source: QUANTITATIVE_DIAGONALIZATION_OBSERVER_COMPLETION.md,
 Definition 45.1 at lines 47031-47039 and Proposition 45.4 at lines 47063-47072. -/
 theorem state_record_readout_distinguishability
-    {State Reading StateOutput SecondOutput : Type*}
-    (observer : RecordedObserver State Reading SecondOutput)
-    (first second : ObserverHistory State Reading SecondOutput)
-    (x : State) (lambda lambdaPrime : AppendOnlyRecord Reading)
+    {State Record Reading StateOutput SecondOutput : Type*}
+    (recordOps : AppendOnlyOps Record Reading)
+    (observer : RecordedObserver State Record Reading SecondOutput recordOps)
+    (first second : ObserverHistory State Record Reading SecondOutput recordOps observer)
+    (x : State) (lambda lambdaPrime : Record)
     (historyData :
-      endpoint observer first = x ∧ endpoint observer second = x ∧
-        recordImage observer first = lambda ∧
-          recordImage observer second = lambdaPrime ∧
+      endpoint recordOps observer first = x ∧ endpoint recordOps observer second = x ∧
+        recordImage recordOps observer first = lambda ∧
+          recordImage recordOps observer second = lambdaPrime ∧
           lambda ≠ lambdaPrime) :
     (∀ stateReadout : Concept State StateOutput,
-      stateReadout (endpoint observer first) = stateReadout (endpoint observer second)) ∧
-      ((¬Setoid.ker (observer.q2 ∘ recordImage observer) first second) ↔
+      stateReadout (endpoint recordOps observer first) =
+        stateReadout (endpoint recordOps observer second)) ∧
+      ((¬Setoid.ker (observer.q2 ∘ recordImage recordOps observer) first second) ↔
         observer.q2 lambda ≠ observer.q2 lambdaPrime) := by
   rcases historyData with
     ⟨firstEndsAtX, secondEndsAtX, firstRecord, secondRecord, _recordsDifferent⟩
@@ -144,8 +160,8 @@ theorem state_record_readout_distinguishability
   · intro stateReadout
     exact congrArg stateReadout (firstEndsAtX.trans secondEndsAtX.symm)
   · change
-      (observer.q2 (recordImage observer first) ≠
-          observer.q2 (recordImage observer second)) ↔
+      (observer.q2 (recordImage recordOps observer first) ≠
+          observer.q2 (recordImage recordOps observer second)) ↔
         observer.q2 lambda ≠ observer.q2 lambdaPrime
     rw [firstRecord, secondRecord]
 
@@ -160,44 +176,58 @@ example : True := by
           ⟨rfl, rfl, rfl, rfl, Bool.false_ne_true⟩
   trivial
 
-/-- Reverse probe for CAS-A3 on two histories generated by append-only evolution. -/
+/-- A non-list record carrier used to verify that the public theorem accepts
+alternative append-only representations. -/
+private structure ChunkedRecord (Reading : Type*) where
+  chunks : List (List Reading)
+deriving DecidableEq
+
+private def chunkedOps (Reading : Type*) : AppendOnlyOps (ChunkedRecord Reading) Reading where
+  append record reading := ⟨record.chunks ++ [[reading]]⟩
+  IsPrefix earlier later := earlier.chunks <+: later.chunks
+  prefix_append record reading := List.prefix_append record.chunks [[reading]]
+
+/-- B3 acceptance and CAS-A3 reverse probe: an alternative record carrier is
+accepted by the public theorem, and unequal outputs imply record distinction. -/
 example :
-    let observer : RecordedObserver Unit Bool Bool :=
-      ⟨fun _ => true, fun _ => (), fun record => record.entries.any id⟩
-    let first : ObserverHistory Unit Bool Bool :=
-      ⟨((), AppendOnlyRecord.empty), []⟩
-    let second : ObserverHistory Unit Bool Bool :=
-      ⟨((), AppendOnlyRecord.empty), [false]⟩
-    ¬Setoid.ker (observer.q2 ∘ recordImage observer) first second := by
-  let observer : RecordedObserver Unit Bool Bool :=
-    ⟨fun _ => true, fun _ => (), fun record => record.entries.any id⟩
-  let first : ObserverHistory Unit Bool Bool :=
-    ⟨((), AppendOnlyRecord.empty), []⟩
-  let second : ObserverHistory Unit Bool Bool :=
-    ⟨((), AppendOnlyRecord.empty), [false]⟩
+    let recordOps := chunkedOps Bool
+    let observer : RecordedObserver Unit (ChunkedRecord Bool) Bool Bool recordOps :=
+      ⟨fun _ => true, fun _ => (), fun record => record.chunks.isEmpty⟩
+    let first : ObserverHistory Unit (ChunkedRecord Bool) Bool Bool recordOps observer :=
+      .initial ((), ⟨[]⟩)
+    let second : ObserverHistory Unit (ChunkedRecord Bool) Bool Bool recordOps observer :=
+      .next first false
+    ¬Setoid.ker (observer.q2 ∘ recordImage recordOps observer) first second := by
+  let recordOps := chunkedOps Bool
+  let observer : RecordedObserver Unit (ChunkedRecord Bool) Bool Bool recordOps :=
+    ⟨fun _ => true, fun _ => (), fun record => record.chunks.isEmpty⟩
+  let first : ObserverHistory Unit (ChunkedRecord Bool) Bool Bool recordOps observer :=
+    .initial ((), ⟨[]⟩)
+  let second : ObserverHistory Unit (ChunkedRecord Bool) Bool Bool recordOps observer :=
+    .next first false
   have result :=
     state_record_readout_distinguishability (StateOutput := Unit)
-      observer first second () AppendOnlyRecord.empty ⟨[true]⟩
+      recordOps observer first second () ⟨[]⟩ ⟨[[true]]⟩
         ⟨rfl, rfl, rfl, rfl, by decide⟩
   exact result.2.mpr (by decide)
 
-/-- Append-only monotonicity remains nontrivial even when every reading is `Unit`. -/
+/-- The distinct-record premise remains satisfiable when every reading is `Unit`. -/
 example :
-    (AppendOnlyRecord.empty : AppendOnlyRecord Unit) ≠
-      (AppendOnlyRecord.empty : AppendOnlyRecord Unit).append () := by
+    (⟨[]⟩ : ChunkedRecord Unit) ≠ (⟨[[()]]⟩ : ChunkedRecord Unit) := by
   decide
 
 /-- A constant record readout is allowed: both sides of the conditional
 distinguishability equivalence are false. -/
 example :
-    let observer : RecordedObserver Unit Bool Unit :=
-      ⟨fun _ => true, fun _ => (), fun _ => ()⟩
-    let first : ObserverHistory Unit Bool Unit :=
-      ⟨((), AppendOnlyRecord.empty), []⟩
-    let second : ObserverHistory Unit Bool Unit :=
-      ⟨((), AppendOnlyRecord.empty), [()]⟩
-    Setoid.ker (observer.q2 ∘ recordImage observer) first second ∧
-      ¬(observer.q2 AppendOnlyRecord.empty ≠ observer.q2 ⟨[true]⟩) := by
+    let recordOps := chunkedOps Unit
+    let observer : RecordedObserver Unit (ChunkedRecord Unit) Unit Unit recordOps :=
+      ⟨fun _ => (), fun _ => (), fun _ => ()⟩
+    let first : ObserverHistory Unit (ChunkedRecord Unit) Unit Unit recordOps observer :=
+      .initial ((), ⟨[]⟩)
+    let second : ObserverHistory Unit (ChunkedRecord Unit) Unit Unit recordOps observer :=
+      .next first ()
+    Setoid.ker (observer.q2 ∘ recordImage recordOps observer) first second ∧
+      ¬(observer.q2 ⟨[]⟩ ≠ observer.q2 ⟨[[()]]⟩) := by
   simp [Setoid.ker_def]
 
 #print axioms state_record_readout_distinguishability
