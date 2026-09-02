@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:bd32c63c8a01524967ee40037afc0f39294c511cd9ca6aefeed5a47f13681004
+  normalized_sha256: sha256:bd32c63c8a01524967ee40037afc0f39294c511cd9ca6aefeed5a47f13681004
+cas_ref: sha256:bd32c63c8a01524967ee40037afc0f39294c511cd9ca6aefeed5a47f13681004
+coverage_gids:
+  - D5/S3/ConceptDynamics/Identifiability/RoleProfileAdaptiveDepthOptimality.independent_role_profile_adaptive_depth_optimality
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Identifiability/RoleProfileAdaptiveDepthOptimality.independent_role_profile_adaptive_depth_optimality
+      source_sha256: sha256:bd32c63c8a01524967ee40037afc0f39294c511cd9ca6aefeed5a47f13681004
+      target_statement_id: sha256:1abfdb30eb71e6fcea74f9aac143ddacd314091f413471f623843e1213f12f2a
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Identifiability/RoleProfileAdaptiveDepthOptimality.independent_role_profile_adaptive_depth_optimality
+      definition_sha256: sha256:b665c03902f0f1056a2b7d12108757f6899c11aaa966694177b5213eb7616008
+      emission_sha256: sha256:922c3d69038c80c2b15537352fff1ea66f8ebe5bda5b8aaa899ba4352c79249c
+  unresolved_subitems: []
