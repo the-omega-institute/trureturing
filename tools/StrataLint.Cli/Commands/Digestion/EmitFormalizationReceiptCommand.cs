@@ -77,9 +77,13 @@ internal static class EmitFormalizationReceiptCommand
                 if (options.ReanchorSignature)
                 {
                     RequireReanchorAtomBinding(existing, entry);
+                    RequireReanchorPrimaryGidBinding(existing, gids[0]);
+                }
+                else
+                {
+                    RequireExistingReceiptBinding(existing, entry);
                 }
 
-                RequireExistingReceiptBinding(existing, entry);
                 if (!Gid.TryParse(existing.PrimaryGid, out var existingPrimaryGid))
                 {
                     throw new InvalidOperationException(
@@ -109,7 +113,9 @@ internal static class EmitFormalizationReceiptCommand
                         extension.Signature,
                         options.ReanchorSignature,
                         reanchoredPaths);
-                    extensions.Add(extension.Gid, extension);
+                    extensions.Add(
+                        extension.Gid,
+                        new DigestionFormalizationExtension(extension.Gid, currentSignature));
                 }
             }
             else
@@ -238,11 +244,16 @@ internal static class EmitFormalizationReceiptCommand
                 $"existing formalization receipt signature changed for {gid.Value}");
         }
 
-        if (!string.Equals(current.NameKey, pinned.NameKey, StringComparison.Ordinal)
-            || !string.Equals(current.Kind, pinned.Kind, StringComparison.Ordinal))
+        if (!string.Equals(current.NameKey, pinned.NameKey, StringComparison.Ordinal))
         {
             throw new InvalidOperationException(
-                $"reanchor requires unchanged signature name_key and kind for {gid.Value}");
+                $"reanchor requires unchanged signature name_key for {gid.Value}");
+        }
+
+        if (!string.Equals(current.Kind, pinned.Kind, StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException(
+                $"reanchor requires unchanged signature kind for {gid.Value}");
         }
 
         reanchoredPaths.Add(gid.Path);
@@ -252,11 +263,34 @@ internal static class EmitFormalizationReceiptCommand
         DigestionFormalizationReceipt receipt,
         DigestionLedgerEntry entry)
     {
-        if (!string.Equals(receipt.AtomId, entry.AtomId, StringComparison.Ordinal)
-            || !string.Equals(receipt.CasRef, entry.Fingerprints.RawSha256, StringComparison.Ordinal)
-            || !string.Equals(receipt.RawSha256, entry.Fingerprints.RawSha256, StringComparison.Ordinal))
+        if (!string.Equals(receipt.AtomId, entry.AtomId, StringComparison.Ordinal))
         {
-            throw ReanchorBindingChanged();
+            throw new InvalidOperationException("reanchor requires unchanged atom_id");
+        }
+
+        if (!string.Equals(receipt.CasRef, entry.Fingerprints.RawSha256, StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException("reanchor requires unchanged cas_ref");
+        }
+
+        if (!string.Equals(receipt.RawSha256, entry.Fingerprints.RawSha256, StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException("reanchor requires unchanged raw_sha256");
+        }
+    }
+
+    private static void RequireReanchorPrimaryGidBinding(
+        DigestionFormalizationReceipt receipt,
+        Gid commandLinePrimaryGid)
+    {
+        if (!string.Equals(
+                receipt.PrimaryGid,
+                commandLinePrimaryGid.Value,
+                StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException(
+                "reanchor requires --gid to equal existing primary_gid: "
+                + receipt.PrimaryGid);
         }
     }
 
@@ -270,19 +304,12 @@ internal static class EmitFormalizationReceiptCommand
         var replacementExtensionGids = replacement.HostedExtensions
             .Select(static extension => extension.Gid)
             .ToHashSet(StringComparer.Ordinal);
-        if (!string.Equals(existing.AtomId, replacement.AtomId, StringComparison.Ordinal)
-            || !string.Equals(existing.CasRef, replacement.CasRef, StringComparison.Ordinal)
-            || !string.Equals(existing.RawSha256, replacement.RawSha256, StringComparison.Ordinal)
-            || !string.Equals(existing.PrimaryGid, replacement.PrimaryGid, StringComparison.Ordinal)
-            || !existingExtensionGids.SetEquals(replacementExtensionGids))
+        if (!existingExtensionGids.SetEquals(replacementExtensionGids))
         {
-            throw ReanchorBindingChanged();
+            throw new InvalidOperationException(
+                "reanchor requires unchanged hosted_extensions gid set");
         }
     }
-
-    private static InvalidOperationException ReanchorBindingChanged() => new(
-        "reanchor requires unchanged atom and GID bindings "
-        + "(atom_id/cas_ref/raw_sha256/primary_gid/hosted_extensions gid set)");
 
     private static void RequireEquivalentPropositionSources(
         RepositorySnapshot protectedBase,
@@ -385,8 +412,7 @@ internal static class EmitFormalizationReceiptCommand
         string? outPath = null;
         var reanchorSignature = false;
         string? baselineRevision = null;
-        var reanchorSyntax = arguments.Contains("--reanchor-signature", StringComparer.Ordinal)
-            || arguments.Contains("--base", StringComparer.Ordinal);
+        var reanchorSyntax = arguments.Contains("--reanchor-signature", StringComparer.Ordinal);
         for (var index = 0; index < arguments.Count;)
         {
             if (arguments[index] == "--reanchor-signature")
