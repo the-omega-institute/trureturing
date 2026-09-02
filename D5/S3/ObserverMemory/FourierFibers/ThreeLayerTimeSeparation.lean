@@ -59,7 +59,9 @@ theorem three_mode_update_bijective :
     funext mode
     have hmode := congrFun h mode
     fin_cases mode <;>
-      simpa [oneStepSpectralUpdate, spectralFiberTransport, threeModes] using hmode
+      norm_num [oneStepSpectralUpdate, spectralFiberTransport, threeModes]
+        at hmode ⊢ <;>
+      linarith
   · intro target
     refine ⟨fun mode => target mode / threeModes mode, ?_⟩
     funext mode
