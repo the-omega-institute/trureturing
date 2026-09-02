@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:009ab340cab48d11205d167a831ee514fc58ce7ec959946df708bf71e0990c62
+  normalized_sha256: sha256:009ab340cab48d11205d167a831ee514fc58ce7ec959946df708bf71e0990c62
+cas_ref: sha256:009ab340cab48d11205d167a831ee514fc58ce7ec959946df708bf71e0990c62
+coverage_gids:
+  - D5/S3/ConceptDynamics/Identifiability/BinaryIdentificationRepairDepthEquality.unconstrained_binary_identification_depth_equals_repair_bits
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Identifiability/BinaryIdentificationRepairDepthEquality.unconstrained_binary_identification_depth_equals_repair_bits
+      source_sha256: sha256:009ab340cab48d11205d167a831ee514fc58ce7ec959946df708bf71e0990c62
+      target_statement_id: sha256:1d1f97e29f6075075c41d00ab9429d69118d73ed48cdd8cf55f3dbae17f46915
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Identifiability/BinaryIdentificationRepairDepthEquality.unconstrained_binary_identification_depth_equals_repair_bits
+      definition_sha256: sha256:fa524afd5beb483e36b604aeb43415b8eee0e10951175621b4944233892419d4
+      emission_sha256: sha256:085d7b50e37c9007c6026d360c4be213c00c52b65308982d9b98b095552ca38a
+  unresolved_subitems: []
