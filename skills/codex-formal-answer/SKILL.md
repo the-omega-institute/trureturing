@@ -59,11 +59,11 @@ The register and renderer that Steps 5 and 7 describe are themselves formalized 
 - `revise_preserves_history_prefix` - `D5/S3/ConceptDynamics/Answering/RegisterValidityHistory.lean`
 - `revise_leaves_exactly_one_active` - `D5/S3/ConceptDynamics/Answering/RegisterValidityHistory.lean`
 - `revise_preserves_other_keys` - `D5/S3/ConceptDynamics/Answering/RegisterValidityHistory.lean`
-- `rendered_takeaway_within_ceiling` - `D5/S3/ConceptDynamics/Answering/RenderCeilingDisclosure.lean`
-- `rendered_formal_claim_is_compiled` - `D5/S3/ConceptDynamics/Answering/RenderCeilingDisclosure.lean`
-- `open_key_blocks_emission` - `D5/S3/ConceptDynamics/Answering/RenderCeilingDisclosure.lean`
-- `disclosure_preserves_claims` - `D5/S3/ConceptDynamics/Answering/RenderCeilingDisclosure.lean`
-- `show_work_exposes_record` - `D5/S3/ConceptDynamics/Answering/RenderCeilingDisclosure.lean`
+- `rendered_takeaway_within_ceiling` - `D5/S3/ConceptDynamics/Answering/AssertionSettlementCeiling.lean`
+- `rendered_formal_claim_is_compiled` - `D5/S3/ConceptDynamics/Answering/AssertionSettlementCeiling.lean`
+- `open_key_blocks_emission` - `D5/S3/ConceptDynamics/Answering/AssertionSettlementCeiling.lean`
+- `disclosure_preserves_claims` - `D5/S3/ConceptDynamics/Answering/AssertionSettlementCeiling.lean`
+- `show_work_exposes_record` - `D5/S3/ConceptDynamics/Answering/AssertionSettlementCeiling.lean`
 
 What these theorems say: the five outcomes are assigned by exhaustive first match; a failed build settles nothing and cannot reclassify a clause; an `open` record permits only the claim that conveys nothing about `P`; every formal-grade claim the ceiling permits, and therefore every one an audited answer conveys, is backed by one successful build; revision keeps exactly one active settlement per assertion key without overwriting the history; and the show-work switch attaches the record without changing the audited claims. What they do not say: they verify no particular answer, they do not decide whether a Lean statement is the user's `P`, and they do not model the competent-reader mapping from prose to takeaways, which remains the Step 7 worker judgment. The self-reference is the ordinary internalization of this repository: a procedure that judges by compiled declarations is itself a compiled declaration one layer up, and the layer above that one is still `open`.
 
