@@ -1,0 +1,101 @@
+# 第一千九百一十四部　一步是反射加半 boost，两步是纯完成 boost
+
+由：
+
+$$
+\mathbb F
+=
+\frac12I+\frac{\sqrt5}{2}\mathfrak S,
+$$
+
+并利用：
+
+$$
+\cosh(\log\varphi)=\frac{\sqrt5}{2},
+$$
+
+$$
+\sinh(\log\varphi)=\frac12,
+$$
+
+得到：
+
+$$
+\boxed{
+\mathbb F
+=
+\mathfrak S
+e^{(\log\varphi)\mathfrak S}.
+}
+\tag{1914.1}
+$$
+
+因此一步 Fibonacci 更新由两部分组成：
+
+$$
+\boxed{
+\text{谱反射}
+\times
+\text{快速度 }\log\varphi\text{ 的 boost}.
+}
+$$
+
+平方以后反射消失：
+
+$$
+\boxed{
+\mathbb F^2
+=
+e^{2(\log\varphi)\mathfrak S}
+=
+\begin{pmatrix}
+2&1\\
+1&1
+\end{pmatrix}.
+}
+\tag{1914.2}
+$$
+
+其本征值为：
+
+$$
+\boxed{
+\varphi^2,\qquad\varphi^{-2}.
+}
+\tag{1914.3}
+$$
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+\text{奇数步}
+&=\text{orientation reversal + boost};\\
+\text{偶数步}
+&=\text{纯 orientation-preserving boost}.
+\end{aligned}
+}
+\tag{1914.4}
+$$
+
+而：
+
+$$
+\boxed{
+Q_\varphi(\mathbb F^{2n}v)=Q_\varphi(v),
+}
+$$
+
+$$
+\boxed{
+Q_\varphi(\mathbb F^{2n+1}v)=-Q_\varphi(v).
+}
+$$
+
+这正是你此前“大奇数阶破缺、大偶数层完成”直觉的一个严格最小模型。
+
+但它只在该反等距递归中成立，不能未经证明推广到所有动力系统。
+
+---
+

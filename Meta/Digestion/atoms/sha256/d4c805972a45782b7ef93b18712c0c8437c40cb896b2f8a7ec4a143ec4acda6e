@@ -1,0 +1,124 @@
+# 第一千八百零四部　平方、半平面与圆盘的三重正性
+
+令：
+
+$$
+w=s-\frac12.
+$$
+
+由于 centered log derivative 是奇函数：
+
+$$
+L_\xi\!\left(\frac12-w\right)
+=
+-
+L_\xi\!\left(\frac12+w\right),
+$$
+
+定义平方变量：
+
+$$
+u=w^2,
+$$
+
+以及：
+
+$$
+\boxed{
+\mathscr T_\xi(u)
+=
+\frac1{2\sqrt u}
+L_\xi\!\left(
+\frac12+\sqrt u
+\right).
+}
+\tag{1804.1}
+$$
+
+若 RH 成立，则：
+
+$$
+\boxed{
+\mathscr T_\xi(u)
+=
+\sum_{\gamma>0}
+\frac{m_\gamma}{u+\gamma^2}.
+}
+\tag{1804.2}
+$$
+
+因此 \(\mathscr T_\xi\) 是正测度：
+
+$$
+\nu_\xi
+=
+\sum_{\gamma>0}
+m_\gamma\delta_{\gamma^2}
+$$
+
+的 Stieltjes 变换。
+
+由此得到三个完全等价的正性图表：
+
+$$
+\boxed{
+\begin{array}{c|c|c}
+\text{坐标}&\text{函数类}&\text{谱位置}\\
+\hline
+u=(s-\frac12)^2
+&
+\text{Stieltjes}
+&
+\gamma^2\in\mathbb R_{>0}
+\\
+s
+&
+\text{positive-real}
+&
+\Re s>\frac12
+\\
+z=1-\frac1s
+&
+\text{Carathéodory／Schur}
+&
+|z|<1
+\end{array}
+}
+\tag{1804.3}
+$$
+
+所以：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathscr T_\xi\text{ 是 Stieltjes 函数}
+}
+$$
+
+$$
+\boxed{
+\iff
+L_\xi\text{ 是右半平面的 positive-real impedance}
+}
+$$
+
+$$
+\boxed{
+\iff
+\mathcal C_\xi\text{ 是圆盘 Carathéodory 函数}.
+}
+$$
+
+这是此前：
+
+* 中心逆平方 Hankel；
+* Li–Clark；
+* Nevanlinna；
+* Hardy scattering；
+
+四条路线的统一坐标三角。
+
+---
+

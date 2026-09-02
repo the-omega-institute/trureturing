@@ -1,0 +1,44 @@
+## 1840.2 尺度 \(a\) 的相位算子
+
+定义：
+
+$$
+\boxed{
+U_a
+=
+(iG-aI)(iG+aI)^{-1}.
+}
+\tag{1840.6}
+$$
+
+对谱点 \(\gamma\)：
+
+$$
+U_a(\gamma)
+=
+\frac{i\gamma-a}{i\gamma+a}
+=
+\omega_{a,\gamma}
+\in\mathbb T.
+$$
+
+因此 \(U_a\) 是酉算子。
+
+上一轮的尺度 Carathéodory 响应可以写成：
+
+$$
+\boxed{
+\mathcal C_a(z)
+=
+\left\langle
+\Omega_a,
+(I+zU_a^*)
+(I-zU_a^*)^{-1}
+\Omega_a
+\right\rangle.
+}
+\tag{1840.7}
+$$
+
+---
+

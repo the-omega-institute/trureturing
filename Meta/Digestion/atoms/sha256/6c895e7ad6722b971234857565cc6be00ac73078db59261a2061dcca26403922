@@ -1,0 +1,47 @@
+## 1842.1 de Branges 逆谱定理
+
+考虑标准 canonical system：
+
+$$
+\boxed{
+Y'(x,z)
+=
+zJH(x)Y(x,z),
+}
+\tag{1842.4}
+$$
+
+其中：
+
+$$
+J=
+\begin{pmatrix}
+0&-1\\
+1&0
+\end{pmatrix},
+$$
+
+而：
+
+$$
+\boxed{
+H(x)\succeq0
+}
+$$
+
+几乎处处成立。
+
+取 trace normalization：
+
+$$
+\boxed{
+\operatorname{tr}H(x)=1
+}
+$$
+
+几乎处处成立。
+
+de Branges 的逆谱定理说明，trace-normalized 正半定 Hamiltonian 与 Nevanlinna 函数之间存在双射。([arXiv][1])
+
+因此：
+

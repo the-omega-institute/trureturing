@@ -1,0 +1,17 @@
+## 1794.2 观察者尺度 boost
+
+$$
+C_{\sigma}
+=
+\begin{pmatrix}
+\cosh\sigma&\sinh\sigma\\
+\sinh\sigma&\cosh\sigma
+\end{pmatrix}
+$$
+
+只是在不同 Cayley 图表间搬运同一个零点。
+
+它不表示缺陷。
+
+---
+

@@ -1,0 +1,42 @@
+# 第一千八百四十部　所有 Cayley 观察者共享同一个自伴谱源
+
+假设 RH。
+
+令 \(\Gamma\subset\mathbb R\) 表示 \(\Xi\) 的全部零点纵坐标，按重数 \(m_\gamma\) 计数。定义测度：
+
+$$
+\boxed{
+\nu_\Gamma
+=
+\sum_{\gamma\in\Gamma}
+m_\gamma\delta_\gamma.
+}
+\tag{1840.1}
+$$
+
+定义 Hilbert 空间：
+
+$$
+\boxed{
+\mathcal H_\Gamma
+=
+L^2(\mathbb R,\nu_\Gamma).
+}
+\tag{1840.2}
+$$
+
+在其上定义乘法算子：
+
+$$
+\boxed{
+(Gf)(\gamma)=\gamma f(\gamma).
+}
+\tag{1840.3}
+$$
+
+\(G\) 是自伴算子。
+
+它只是 RH 成立时的零点纵坐标谱算子；由于它直接使用零点构造，所以目前仍是**等价实现**，不是独立证明。
+
+---
+

@@ -1,0 +1,6 @@
+## Pontryagin 相
+
+若响应 kernel 只有有限个负平方，则它可能由带有限负指标的 Pontryagin 状态空间实现。
+
+广义 Schur 函数和 Pontryagin 被动系统的理论，正是用有限负指标状态空间实现这类 transfer functions，并在适当最小性条件下将 transfer index 与状态空间负指标联系起来。([arXiv][4])
+

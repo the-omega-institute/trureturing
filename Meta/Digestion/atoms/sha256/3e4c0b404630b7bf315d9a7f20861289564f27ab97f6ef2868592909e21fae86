@@ -1,0 +1,48 @@
+## 1899.1 为什么磁单极子与黑洞看起来像同一结构
+
+在这个最小单胞中：
+
+$$
+Q_\varphi=0
+$$
+
+提供径向 null cone；
+
+$$
+e^{\theta\mathfrak I}
+$$
+
+提供角向 phase circle；
+
+$$
+\mathfrak S
+$$
+
+提供正／负 realization polarization。
+
+因此：
+
+$$
+\boxed{
+\begin{aligned}
+\text{黑洞式视界}
+&=\text{径向 null crossing};\\
+\text{磁单极子式荷}
+&=\text{角向 phase winding 的悬挂};\\
+\text{离线零点}
+&=\text{正实现极化中的负平方}.
+\end{aligned}
+}
+\tag{1899.2}
+$$
+
+三者并不等同。
+
+它们是同一个局部关系单胞的：
+
+* 径向读数；
+* 角向读数；
+* 实现符号读数。
+
+---
+

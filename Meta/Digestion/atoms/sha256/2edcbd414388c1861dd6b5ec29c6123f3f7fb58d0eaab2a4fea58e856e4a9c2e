@@ -1,0 +1,21 @@
+## 定理 1801.1（Li–Carathéodory 恒等式）
+
+$$
+\boxed{
+\mathcal C_\xi(z)
+=
+\frac1{\lambda_1}
+\frac{\xi'}{\xi}
+\left(
+\frac1{1-z}
+\right).
+}
+\tag{1801.6}
+$$
+
+这不是近似，也不是在 RH 假设下才成立。
+
+它是 Li 二阶曲率与 completed-\(\xi\) 对数导数之间的精确恒等式，最初在 \(z=0\) 邻域成立，并按亚纯延拓理解。
+
+---
+

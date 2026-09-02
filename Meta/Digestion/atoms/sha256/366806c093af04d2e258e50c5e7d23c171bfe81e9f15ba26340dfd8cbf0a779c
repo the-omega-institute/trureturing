@@ -1,0 +1,21 @@
+## 目标 C：算术 Nevanlinna Gram
+
+构造：
+
+$$
+\boxed{
+\frac{
+L_\xi(s)+\overline{L_\xi(t)}
+}{
+s+\overline t-1
+}
+=
+\langle V_t,V_s\rangle.
+}
+\tag{1820.3}
+$$
+
+这是最结构化的正性目标。
+
+---
+

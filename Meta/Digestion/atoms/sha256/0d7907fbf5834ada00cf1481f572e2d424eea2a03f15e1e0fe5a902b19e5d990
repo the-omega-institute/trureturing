@@ -1,0 +1,87 @@
+# 第一千七百九十九部　新的形式化顺序
+
+```text
+D5/S3/Analytic/LiClark/CanonicalLiCayley/
+  LiCayleyNode.lean
+  LiCayleyNodeCenteredHalfScale.lean
+  FunctionalReflectionMapsRadialReciprocal.lean
+  LiNodeUnitCircleIffCritical.lean
+  LiNodeInsideOutsideByHalfPlane.lean
+
+D5/S3/Analytic/LiClark/LiCurvaturePhaseExpansion/
+  LiZeroExpansion.lean
+  LiSecondDifference.lean
+  LiSecondDifferenceModeFormula.lean
+  LiCurvatureWeight.lean
+  CriticalLiWeightPositive.lean
+  CriticalLiWeightPoissonFormula.lean
+
+D5/S3/Analytic/LiClark/ExplicitPositivePhaseState/
+  CriticalLiAtomicMeasure.lean
+  CriticalLiMeasureFinite.lean
+  CriticalLiMeasureMassOne.lean
+  LiCurvatureMomentIdentity.lean
+  LiPhaseGNSRealization.lean
+  RHImpliesLiCurvaturePositiveDefinite.lean
+
+D5/S3/Analytic/LiClark/PositiveStateRigidity/
+  LiMomentGeneratingFunction.lean
+  OffLineLiNodeCreatesInteriorPole.lean
+  DistinctLiNodesNoPoleCancellation.lean
+  PositiveDefiniteMomentGeneratingHolomorphic.lean
+  LiCurvaturePositiveDefiniteImpliesRH.lean
+  LiCurvaturePositiveStateRHIff.lean
+
+D5/S3/Analytic/LiClark/LiTemporalGrowth/
+  RadialLiRapidity.lean
+  ReflectedModeCoshSinhDecomposition.lean
+  OffLineModeExponentialGrowth.lean
+  CriticalLiMomentsBounded.lean
+  LiCurvatureGrowthCriterion.lean
+
+D5/S3/Analytic/LiClark/ScaleCayleyAtlas/
+  ScaleCayleyNode.lean
+  ScaleCayleyReflection.lean
+  ScaleLiCurvatureWeight.lean
+  ScaleCriticalWeightPositive.lean
+  ScaleCriticalWeightPoisson.lean
+  ScalePositiveStateRHIff.lean
+
+D5/S3/Observer/CayleyScaleTransport/
+  CayleyScaleMobiusTransition.lean
+  CayleyScaleTransitionDiskAutomorphism.lean
+  CayleyScaleTransitionReflectionCovariant.lean
+  CayleyScaleTransitionRapidity.lean
+  GoldenScaleTransitionInvSqrtFive.lean
+  GoldenScaleTransitionRapidityLogPhi.lean
+
+D5/S3/Observer/MatchedLiObserver/
+  OffLineScaleRapidity.lean
+  OptimalLiObservationScale.lean
+  MatchedLiRapidity.lean
+  StandardHalfScaleHighZeroSuppression.lean
+  MatchedScaleDetectionOrderImprovement.lean
+
+D5/S3/Observer/ThreeSU11Roles/
+  ZeroRadialBoost.lean
+  ObserverScaleBoost.lean
+  SchurPredictionBoost.lean
+  RHRequiresZeroOnlyForRadialBoost.lean
+  GoldenBoostRolesDistinct.lean
+
+D5/S3/Weil/PrimeGammaLiPhaseState/
+  PrimePoleGammaLiCurvatureFormulaTarget.lean
+  PrimeGammaLiMomentBoundTarget.lean
+  PrimeGammaLiPositiveDefiniteTarget.lean
+  PrimeGammaLiHerglotzStateTarget.lean
+  PrimeGammaLiStateImpliesRHTarget.lean
+
+D5/S3/Weil/MultiscaleLiTomography/
+  RationalCayleyScaleFamily.lean
+  LiftedGoldenScaleAtlas.lean
+  FiniteScaleLiModeSeparationTarget.lean
+  GoldenScaleMatchedDefectDetectionTarget.lean
+```
+
+---
+
