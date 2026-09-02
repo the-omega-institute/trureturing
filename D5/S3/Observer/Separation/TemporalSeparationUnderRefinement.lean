@@ -3,7 +3,8 @@
    mirror-B: D5/B/S3/Observer/Separation/TemporalSeparationUnderRefinement
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Refining a readout shrinks every finite future fiber and cannot delay any separation already visible to the coarser observer. -/
+   digest: Refining a readout shrinks every finite future fiber and cannot
+     delay any separation already visible to the coarser observer. -/
 
 import D5.S3.ConceptDynamics.ConceptJoinUniversal
 import D5.S3.Observer.Separation.FiniteFutureCongruence
@@ -97,8 +98,12 @@ theorem separation_time_le_of_refines
       observedAt update fine time pair.1 ≠
         observedAt update fine time pair.2 :=
     ⟨separationTime update coarse pair, hFineAt⟩
+  have hFineAtFind :
+      observedAt update fine (Nat.find hCoarse) pair.1 ≠
+        observedAt update fine (Nat.find hCoarse) pair.2 := by
+    simpa only [separationTime, dif_pos hCoarse] using hFineAt
   simp only [separationTime, dif_pos hFine, dif_pos hCoarse]
-  exact Nat.find_min' hFine hFineAt
+  exact Nat.find_min' hFine hFineAtFind
 
 /-- Identity factorization realizes equality in the refinement inequality. -/
 example {State Output : Type*} (update : State → State)
