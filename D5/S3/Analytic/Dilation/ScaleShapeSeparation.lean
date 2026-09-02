@@ -22,9 +22,13 @@ noncomputable section
 def scaleSpectrum (a : ℝ) (lambda : ℕ → ℝ) : ℕ → ℝ :=
   fun n => a * lambda n
 
-/-- The zero set of the spectral zeta attached to a real spectrum. -/
+/-- The domain where the raw spectral Dirichlet series is genuinely summable. -/
+def spectralZetaSummableAt (lambda : ℕ → ℝ) (s : ℂ) : Prop :=
+  Summable (fun n : ℕ => (lambda n : ℂ) ^ (-s))
+
+/-- The zero set of the raw spectral zeta on its summability domain. -/
 def spectralZeroSet (lambda : ℕ → ℝ) : Set ℂ :=
-  {s | spectralZeta lambda s = 0}
+  {s | spectralZetaSummableAt lambda s ∧ spectralZeta lambda s = 0}
 
 /-- Scaling a positive spectrum factors its spectral zeta by `a ^ (-s)`. -/
 lemma spectralZeta_scale (a : ℝ) (ha : 0 < a) (lambda : ℕ → ℝ)
@@ -40,14 +44,26 @@ lemma spectralZeta_scale (a : ℝ) (ha : 0 < a) (lambda : ℕ → ℝ)
       rw [Complex.ofReal_mul, Complex.mul_cpow_ofReal_nonneg ha.le (hpos n).le]
     _ = (a : ℂ) ^ (-s) * ∑' n : ℕ, (lambda n : ℂ) ^ (-s) := tsum_mul_left
 
+/-- Positive scaling preserves and reflects the summability domain of the raw Dirichlet series. -/
+lemma spectralZetaSummableAt_scale (a : ℝ) (ha : 0 < a) (lambda : ℕ → ℝ)
+    (hpos : ∀ n, 0 < lambda n) (s : ℂ) :
+    spectralZetaSummableAt (scaleSpectrum a lambda) s ↔
+      spectralZetaSummableAt lambda s := by
+  unfold spectralZetaSummableAt scaleSpectrum
+  simp_rw [Complex.ofReal_mul,
+    Complex.mul_cpow_ofReal_nonneg ha.le (hpos _).le]
+  exact summable_mul_left_iff
+    (Complex.cpow_ne_zero_iff.mpr (Or.inl (Complex.ofReal_ne_zero.mpr ha.ne')))
+
 /-- A positive overall scale leaves every spectral-zeta zero unchanged. -/
 lemma spectralZeroSet_scale (a : ℝ) (ha : 0 < a) (lambda : ℕ → ℝ)
     (hpos : ∀ n, 0 < lambda n) :
     spectralZeroSet (scaleSpectrum a lambda) = spectralZeroSet lambda := by
   ext s
   rw [spectralZeroSet, spectralZeroSet, Set.mem_ofPred_eq,
+    spectralZetaSummableAt_scale a ha lambda hpos s,
     spectralZeta_scale a ha lambda hpos s]
-  exact mul_eq_zero_iff_left
+  exact and_congr_right fun _ => mul_eq_zero_iff_left
     (Complex.cpow_ne_zero_iff.mpr (Or.inl (Complex.ofReal_ne_zero.mpr ha.ne')))
 
 /-- Scale-shape separation for positive spectra: overall scale preserves the spectral-zeta
@@ -79,6 +95,15 @@ example (a : ℝ) (ha : 0 < a) (lambda : ℕ → ℝ)
     (hpos : ∀ n, 0 < lambda n) (s : ℂ) :
     s ∈ spectralZeroSet (scaleSpectrum a lambda) ↔ s ∈ spectralZeroSet lambda := by
   rw [scale_shape_separation a ha lambda hpos |>.1]
+
+/-- Expected-red carrier probe for source assertions A1/A2: the divergent series with
+`lambda n = n + 1` at `s = 0` must not acquire a zero from totalized `tsum`. -/
+example : (0 : ℂ) ∉ spectralZeroSet (fun n : ℕ => (n + 1 : ℝ)) := by
+  rintro ⟨hsum, _⟩
+  have hnot : ¬Summable (fun _ : ℕ => (1 : ℂ)) := by
+    simpa only [summable_const_iff] using (one_ne_zero : (1 : ℂ) ≠ 0)
+  apply hnot
+  simpa [spectralZetaSummableAt] using hsum
 
 /-- Trivialization probe: zero cannot be supplied as the overall positive scale. -/
 example : ¬(0 : ℝ) > 0 := by norm_num
