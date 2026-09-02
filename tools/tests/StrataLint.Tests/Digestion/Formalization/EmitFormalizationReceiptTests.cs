@@ -15,6 +15,8 @@ namespace StrataLint.Tests;
 // the fail-closed rejects.
 public sealed class EmitFormalizationReceiptTests
 {
+    private const string PreviousRenderedType = "Old.True";
+
     [Fact]
     public void EmitReadsTheDirectoryFormDigestionLedger()
     {
@@ -66,6 +68,129 @@ public sealed class EmitFormalizationReceiptTests
         Assert.Equal("theorem", receipt.Signature.Kind);
         Assert.Equal("True", receipt.Signature.Type);
         Assert.True(DigestionFormalizationReceipt.Write(receipt).AsSpan().SequenceEqual(bytes));
+    }
+
+    [Fact]
+    public void EmitReanchorsOnlyTypeWhenExplicitAndPropositionSourceEquivalent()
+    {
+        var inputs = ReanchorInputs(ReanchorSpec());
+        using var temporary = new TemporaryDirectory();
+        var environment = BuildEmitEnvironment(temporary.Path, inputs);
+        var previous = inputs.Files[inputs.EnvelopePath];
+        var oldField = $"\"type\": \"{PreviousRenderedType}\"";
+        const string newField = "\"type\": \"True\"";
+        Assert.Equal(1, previous.Split(oldField, StringSplitOptions.None).Length - 1);
+
+        var result = environment.EmitFormalizationReceipt(ReanchorArguments(inputs));
+
+        Assert.True(result.Success, result.Error);
+        var actual = File.ReadAllText(Path.Combine(temporary.Path, inputs.EnvelopePath));
+        Assert.Equal(previous.Replace(oldField, newField, StringComparison.Ordinal), actual);
+    }
+
+    [Fact]
+    public void EmitReanchorRejectsChangedNameKeyOrKind()
+    {
+        DigestionFormalizationSignature[] changedIdentities =
+        [
+            new("renamed_probe", "theorem", PreviousRenderedType),
+            new("probe", "def", PreviousRenderedType),
+        ];
+        foreach (var changedIdentity in changedIdentities)
+        {
+            var inputs = ReanchorInputs(ReanchorSpec() with
+            {
+                PrecommittedSignature = changedIdentity,
+            });
+
+            var result = ExecuteReanchor(inputs);
+
+            Assert.False(result.Success, changedIdentity.ToString());
+            Assert.Contains(
+                "reanchor requires unchanged signature name_key and kind",
+                result.Error,
+                StringComparison.Ordinal);
+        }
+    }
+
+    [Fact]
+    public void EmitReanchorRejectsChangedAtomOrGidBinding()
+    {
+        const string secondaryModule = "D5/S3/Observer/WindowRegisterCRT";
+        const string secondaryDeclaration = "window_register_crt_decomposition";
+        var secondaryGid = secondaryModule + "." + secondaryDeclaration;
+        var changedGidSet = ReanchorInputs(ReanchorSpec() with
+        {
+            SecondaryTarget = (secondaryModule, secondaryDeclaration),
+            IncludeSecondaryPrecommittedSignature = false,
+        });
+        var scenarios = new (string Name, CoverInputs Inputs, string? AdditionalGid)[]
+        {
+            ("atom_id", ReanchorInputs(ReanchorSpec() with
+            {
+                EnvelopeAtomId = new string('a', 64),
+            }), null),
+            ("cas_ref", ReanchorInputs(ReanchorSpec() with
+            {
+                EnvelopeCasRef = "sha256:" + new string('b', 64),
+            }), null),
+            ("raw_sha256", ReanchorInputs(ReanchorSpec() with
+            {
+                EnvelopeRawSha256 = "sha256:" + new string('c', 64),
+            }), null),
+            ("hosted_extensions", changedGidSet, secondaryGid),
+        };
+
+        foreach (var scenario in scenarios)
+        {
+            var result = ExecuteReanchor(
+                scenario.Inputs,
+                scenario.AdditionalGid is null ? [] : [scenario.AdditionalGid]);
+
+            Assert.False(result.Success, scenario.Name);
+            Assert.Contains(
+                "reanchor requires unchanged atom and GID bindings",
+                result.Error,
+                StringComparison.Ordinal);
+        }
+    }
+
+    [Fact]
+    public void EmitReanchorRejectsInequivalentPropositionSource()
+    {
+        var inputs = ReanchorInputs(ReanchorSpec());
+        Assert.True(Gid.TryParse(inputs.Gid, out var gid));
+        var targetPath = gid.Path.Value;
+        inputs.Files[targetPath] = inputs.Files[targetPath].Replace(
+            "theorem probe : True",
+            "theorem probe : False",
+            StringComparison.Ordinal);
+
+        var result = ExecuteReanchor(inputs);
+
+        Assert.False(result.Success);
+        Assert.Contains(
+            "reanchor requires equivalent Lean proposition source",
+            result.Error,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void EmitRejectsChangedExistingSignatureWithoutExplicitReanchorMode()
+    {
+        var inputs = ReanchorInputs(ReanchorSpec());
+        using var temporary = new TemporaryDirectory();
+        var environment = BuildEmitEnvironment(temporary.Path, inputs);
+
+        var result = environment.EmitFormalizationReceipt(
+            ["--atom-id", CoverWorld.DefaultAtomId, "--gid", inputs.Gid]);
+
+        Assert.False(result.Success);
+        Assert.Contains(
+            $"existing formalization receipt signature changed for {inputs.Gid}",
+            result.Error,
+            StringComparison.Ordinal);
+        Assert.False(File.Exists(Path.Combine(temporary.Path, inputs.EnvelopePath)));
     }
 
     [Fact]
@@ -423,6 +548,62 @@ public sealed class EmitFormalizationReceiptTests
                 CoverWorld.Raw(directoryInputs.Files),
                 CoverWorld.Raw(directoryInputs.Baseline)),
             new FakeLeanReportSource(directoryInputs.Report));
+    }
+
+    private static CoverSpec ReanchorSpec() => new()
+    {
+        IncludeEnvelope = true,
+        BaselineTargetIdentical = true,
+        PrecommittedSignature = new DigestionFormalizationSignature(
+            "ns(n0,5:probe)",
+            "theorem",
+            PreviousRenderedType),
+    };
+
+    private static CoverInputs ReanchorInputs(CoverSpec spec)
+    {
+        var inputs = CoverWorld.Materialize(spec);
+        var report = LeanAxiomReport.Create(inputs.Report.Files.ToDictionary(
+            static item => item.Key.Value,
+            static item => new LeanFileReport(
+                item.Value.Imports,
+                item.Value.Declarations.Select(static declaration =>
+                    string.Equals(declaration.Name, "probe", StringComparison.Ordinal)
+                        ? declaration with { NameKey = "ns(n0,5:probe)" }
+                        : declaration).ToImmutableArray(),
+                item.Value.Error),
+            StringComparer.Ordinal));
+        return inputs with { Report = report };
+    }
+
+    private static IReadOnlyList<string> ReanchorArguments(
+        CoverInputs inputs,
+        IReadOnlyList<string>? additionalGids = null)
+    {
+        var arguments = new List<string>
+        {
+            "--atom-id", CoverWorld.DefaultAtomId,
+            "--gid", inputs.Gid,
+        };
+        foreach (var gid in additionalGids ?? [])
+        {
+            arguments.Add("--gid");
+            arguments.Add(gid);
+        }
+
+        arguments.Add("--reanchor-signature");
+        arguments.Add("--base");
+        arguments.Add("baseline");
+        return arguments;
+    }
+
+    private static CommandResult ExecuteReanchor(
+        CoverInputs inputs,
+        IReadOnlyList<string>? additionalGids = null)
+    {
+        using var temporary = new TemporaryDirectory();
+        return BuildEmitEnvironment(temporary.Path, inputs)
+            .EmitFormalizationReceipt(ReanchorArguments(inputs, additionalGids));
     }
 
     private static class TemporaryFileSystem

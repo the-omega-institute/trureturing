@@ -66,11 +66,19 @@ internal static class EmitFormalizationReceiptCommand
             var report = leanReportSource.Load(current);
             var extensions = new Dictionary<string, DigestionFormalizationExtension>(StringComparer.Ordinal);
             var canonicalReceiptPath = DigestionFormalizationReceipt.PathForAtom(options.AtomId);
+            var reanchoredPaths = ImmutableHashSet.CreateBuilder<RepoPath>();
+            DigestionFormalizationReceipt? existingReceipt = null;
             Gid primaryGid;
             DigestionFormalizationSignature signature;
             if (current.TryGetFile(canonicalReceiptPath, out _))
             {
                 var existing = DigestionFormalizationReceipt.Load(current, canonicalReceiptPath);
+                existingReceipt = existing;
+                if (options.ReanchorSignature)
+                {
+                    RequireReanchorAtomBinding(existing, entry);
+                }
+
                 RequireExistingReceiptBinding(existing, entry);
                 if (!Gid.TryParse(existing.PrimaryGid, out var existingPrimaryGid))
                 {
@@ -80,7 +88,12 @@ internal static class EmitFormalizationReceiptCommand
 
                 primaryGid = existingPrimaryGid;
                 signature = DigestionFormalizationReceipt.ResolveSignature(primaryGid, report);
-                RequireUnchangedSignature(primaryGid, signature, existing.Signature);
+                RequireUnchangedSignature(
+                    primaryGid,
+                    signature,
+                    existing.Signature,
+                    options.ReanchorSignature,
+                    reanchoredPaths);
                 foreach (var extension in existing.HostedExtensions)
                 {
                     if (!Gid.TryParse(extension.Gid, out var extensionGid))
@@ -90,12 +103,23 @@ internal static class EmitFormalizationReceiptCommand
                     }
 
                     var currentSignature = DigestionFormalizationReceipt.ResolveSignature(extensionGid, report);
-                    RequireUnchangedSignature(extensionGid, currentSignature, extension.Signature);
+                    RequireUnchangedSignature(
+                        extensionGid,
+                        currentSignature,
+                        extension.Signature,
+                        options.ReanchorSignature,
+                        reanchoredPaths);
                     extensions.Add(extension.Gid, extension);
                 }
             }
             else
             {
+                if (options.ReanchorSignature)
+                {
+                    throw new InvalidOperationException(
+                        "reanchor requires an existing canonical formalization receipt");
+                }
+
                 primaryGid = gids[0];
                 signature = DigestionFormalizationReceipt.ResolveSignature(primaryGid, report);
             }
@@ -106,7 +130,12 @@ internal static class EmitFormalizationReceiptCommand
                 var secondarySignature = DigestionFormalizationReceipt.ResolveSignature(secondaryGid, report);
                 if (extensions.TryGetValue(secondaryGid.Value, out var existing))
                 {
-                    RequireUnchangedSignature(secondaryGid, secondarySignature, existing.Signature);
+                    RequireUnchangedSignature(
+                        secondaryGid,
+                        secondarySignature,
+                        existing.Signature,
+                        options.ReanchorSignature,
+                        reanchoredPaths);
                     continue;
                 }
 
@@ -122,6 +151,20 @@ internal static class EmitFormalizationReceiptCommand
                 entry.CasRef,
                 entry.Fingerprints.RawSha256,
                 extensions.Values.OrderBy(static extension => extension.Gid, StringComparer.Ordinal).ToImmutableArray());
+            if (existingReceipt is not null && options.ReanchorSignature)
+            {
+                RequireReanchorReceiptBinding(existingReceipt, receipt);
+                if (reanchoredPaths.Count > 0)
+                {
+                    var protectedBase = Decode(repository.ReadRevision(options.BaselineRevision!));
+                    RequireEquivalentPropositionSources(
+                        protectedBase,
+                        current,
+                        report,
+                        reanchoredPaths.ToImmutable());
+                }
+            }
+
             var bytes = DigestionFormalizationReceipt.Write(receipt);
 
             var directory = Path.GetDirectoryName(outputPath)
@@ -180,12 +223,112 @@ internal static class EmitFormalizationReceiptCommand
     private static void RequireUnchangedSignature(
         Gid gid,
         DigestionFormalizationSignature current,
-        DigestionFormalizationSignature pinned)
+        DigestionFormalizationSignature pinned,
+        bool reanchorSignature,
+        ImmutableHashSet<RepoPath>.Builder reanchoredPaths)
     {
-        if (current != pinned)
+        if (current == pinned)
+        {
+            return;
+        }
+
+        if (!reanchorSignature)
         {
             throw new InvalidOperationException(
                 $"existing formalization receipt signature changed for {gid.Value}");
+        }
+
+        if (!string.Equals(current.NameKey, pinned.NameKey, StringComparison.Ordinal)
+            || !string.Equals(current.Kind, pinned.Kind, StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException(
+                $"reanchor requires unchanged signature name_key and kind for {gid.Value}");
+        }
+
+        reanchoredPaths.Add(gid.Path);
+    }
+
+    private static void RequireReanchorAtomBinding(
+        DigestionFormalizationReceipt receipt,
+        DigestionLedgerEntry entry)
+    {
+        if (!string.Equals(receipt.AtomId, entry.AtomId, StringComparison.Ordinal)
+            || !string.Equals(receipt.CasRef, entry.Fingerprints.RawSha256, StringComparison.Ordinal)
+            || !string.Equals(receipt.RawSha256, entry.Fingerprints.RawSha256, StringComparison.Ordinal))
+        {
+            throw ReanchorBindingChanged();
+        }
+    }
+
+    private static void RequireReanchorReceiptBinding(
+        DigestionFormalizationReceipt existing,
+        DigestionFormalizationReceipt replacement)
+    {
+        var existingExtensionGids = existing.HostedExtensions
+            .Select(static extension => extension.Gid)
+            .ToHashSet(StringComparer.Ordinal);
+        var replacementExtensionGids = replacement.HostedExtensions
+            .Select(static extension => extension.Gid)
+            .ToHashSet(StringComparer.Ordinal);
+        if (!string.Equals(existing.AtomId, replacement.AtomId, StringComparison.Ordinal)
+            || !string.Equals(existing.CasRef, replacement.CasRef, StringComparison.Ordinal)
+            || !string.Equals(existing.RawSha256, replacement.RawSha256, StringComparison.Ordinal)
+            || !string.Equals(existing.PrimaryGid, replacement.PrimaryGid, StringComparison.Ordinal)
+            || !existingExtensionGids.SetEquals(replacementExtensionGids))
+        {
+            throw ReanchorBindingChanged();
+        }
+    }
+
+    private static InvalidOperationException ReanchorBindingChanged() => new(
+        "reanchor requires unchanged atom and GID bindings "
+        + "(atom_id/cas_ref/raw_sha256/primary_gid/hosted_extensions gid set)");
+
+    private static void RequireEquivalentPropositionSources(
+        RepositorySnapshot protectedBase,
+        RepositorySnapshot candidate,
+        LeanAxiomReport report,
+        ImmutableHashSet<RepoPath> reanchoredPaths)
+    {
+        var equivalent = false;
+        string? failureDetail = null;
+        try
+        {
+            var baseView = FrozenLedgerBaseViewReader.Read(protectedBase);
+            var truth = DagLedgerCommandPreparation.BuildTruth(candidate, report);
+            var states = LeanTruthStates.Resolve(candidate, truth.Lean);
+            var adjacency = LeanImportAdjacency.Build(candidate, truth.Lean);
+            var candidateCatalog = FrozenContentAddress.BuildAdmissionCatalog(
+                candidate,
+                truth.Lean,
+                states,
+                adjacency,
+                reanchoredPaths,
+                baseView.ActiveByPath);
+            equivalent = LeanPropositionSourceComparer.AreEquivalent(
+                protectedBase,
+                candidate,
+                reanchoredPaths,
+                baseView,
+                candidateCatalog);
+            if (!equivalent)
+            {
+                failureDetail = "Lean proposition source comparer returned false";
+            }
+        }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        {
+            failureDetail = exception.Message;
+        }
+
+        if (!equivalent)
+        {
+            throw new InvalidOperationException(
+                "reanchor requires equivalent Lean proposition source for "
+                + string.Join(", ", reanchoredPaths
+                    .OrderBy(static path => path.Value, StringComparer.Ordinal)
+                    .Select(static path => path.Value))
+                + (failureDetail is null ? string.Empty : $": {failureDetail}"));
         }
     }
 
@@ -231,18 +374,36 @@ internal static class EmitFormalizationReceiptCommand
     private sealed record ReceiptArguments(
         string AtomId,
         ImmutableArray<string> Gids,
-        string? OutPath);
+        string? OutPath,
+        bool ReanchorSignature,
+        string? BaselineRevision);
 
     private static ReceiptArguments ParseArguments(IReadOnlyList<string> arguments)
     {
         string? atomId = null;
         var gids = ImmutableArray.CreateBuilder<string>();
         string? outPath = null;
-        for (var index = 0; index < arguments.Count; index += 2)
+        var reanchorSignature = false;
+        string? baselineRevision = null;
+        var reanchorSyntax = arguments.Contains("--reanchor-signature", StringComparer.Ordinal)
+            || arguments.Contains("--base", StringComparer.Ordinal);
+        for (var index = 0; index < arguments.Count;)
         {
+            if (arguments[index] == "--reanchor-signature")
+            {
+                if (reanchorSignature)
+                {
+                    throw Usage(reanchorSyntax);
+                }
+
+                reanchorSignature = true;
+                index++;
+                continue;
+            }
+
             if (index + 1 >= arguments.Count)
             {
-                throw Usage();
+                throw Usage(reanchorSyntax);
             }
 
             switch (arguments[index])
@@ -256,17 +417,24 @@ internal static class EmitFormalizationReceiptCommand
                 case "--out" when outPath is null:
                     outPath = arguments[index + 1];
                     break;
+                case "--base" when baselineRevision is null:
+                    baselineRevision = arguments[index + 1];
+                    break;
                 default:
-                    throw Usage();
+                    throw Usage(reanchorSyntax);
             }
+
+            index += 2;
         }
 
         if (string.IsNullOrWhiteSpace(atomId)
             || gids.Count == 0
             || gids.Any(string.IsNullOrWhiteSpace)
-            || gids.Distinct(StringComparer.Ordinal).Count() != gids.Count)
+            || gids.Distinct(StringComparer.Ordinal).Count() != gids.Count
+            || reanchorSignature != (baselineRevision is not null)
+            || baselineRevision is not null && string.IsNullOrWhiteSpace(baselineRevision))
         {
-            throw Usage();
+            throw Usage(reanchorSyntax);
         }
 
         if (outPath is not null && string.IsNullOrWhiteSpace(outPath))
@@ -277,13 +445,16 @@ internal static class EmitFormalizationReceiptCommand
         return new ReceiptArguments(
             atomId,
             gids.ToImmutable(),
-            outPath);
+            outPath,
+            reanchorSignature,
+            baselineRevision);
     }
 
-    private static InvalidOperationException Usage() => new(
+    private static InvalidOperationException Usage(bool includeReanchor = false) => new(
         "USAGE: StrataLint emit-formalization-receipt --atom-id ATOM_ID --gid PRIMARY_GID "
         + "[--gid SECONDARY_GID ...] "
-        + "[--out RECEIPT_PATH]");
+        + "[--out RECEIPT_PATH]"
+        + (includeReanchor ? " [--reanchor-signature --base REV]" : string.Empty));
 
     private static BackfillInventoryDocument LoadDocument(RepositorySnapshot snapshot) =>
         BackfillInventoryLoader.Load(snapshot);
