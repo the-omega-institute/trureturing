@@ -211,7 +211,11 @@ internal static partial class CoverAtomCommand
             var truthStates = LeanTruthStates.Resolve(current, lean);
             foreach (var gid in gids)
             {
-                RequireCurrentClosedDeclaration(gid, report, truthStates);
+                var edge = CurrentEdgeValidator.Validate(gid.Value, current, report, truthStates);
+                if (!edge.IsClosed)
+                {
+                    throw new InvalidOperationException(edge.Diagnostic);
+                }
             }
 
             var verifiedScribeEmissions = scribeEmissionVerifier.Verify(
@@ -406,33 +410,6 @@ internal static partial class CoverAtomCommand
         }
 
         return entry;
-    }
-
-    private static void RequireCurrentClosedDeclaration(
-        Gid gid,
-        LeanAxiomReport report,
-        IReadOnlyDictionary<RepoPath, TruthState> truthStates)
-    {
-        var formal = (Target.Formal)gid.ToTarget();
-        var selector = formal.Declaration!;
-        var matches = report.Files.TryGetValue(formal.Path, out var module)
-            && string.IsNullOrEmpty(module.Error)
-            ? module.Declarations.Count(declaration =>
-                string.Equals(declaration.Name, selector, StringComparison.Ordinal)
-                || declaration.Name.EndsWith("." + selector, StringComparison.Ordinal))
-            : 0;
-        if (matches != 1)
-        {
-            throw new InvalidOperationException(
-                $"cover GID {gid.Value} resolves to {matches} report declarations");
-        }
-
-        if (!truthStates.TryGetValue(formal.Path, out var state) || state != TruthState.Closed)
-        {
-            throw new InvalidOperationException(
-                $"cover GID {gid.Value} is lean-state-{state.ToString().ToLowerInvariant()}; "
-                + "the current report module must be Closed");
-        }
     }
 
     private static (DigestionCoverageReceipt Coverage, DigestionScribeReceipt Scribe) BuildReceipts(

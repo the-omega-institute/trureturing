@@ -36,7 +36,7 @@ The three clauses are one theorem chain in the self anchors below: the answer's 
 
 ## Method anchors
 
-`CLAUDE.md` item 5-double-prime solely owns the meanings of the eight disciplines and marks their use as agent reasoning as analogical. The registry below supplies only grep-resolvable frozen declaration addresses; it does not restate theorem content or assert a one-to-one discipline/declaration mapping. The pre-commitment discipline has no single frozen declaration and is carried by the existing machinery named in `CLAUDE.md`. The Pareto discipline has two anchors.
+`CLAUDE.md` item 5-double-prime solely owns the meanings of the eight disciplines and marks their use as agent reasoning as analogical. The registry below supplies only grep-resolvable frozen declaration addresses; it does not restate theorem content or assert a one-to-one discipline/declaration mapping. The forward-commitment discipline has no single frozen declaration and is carried by the existing machinery named in `CLAUDE.md`. The Pareto discipline has two anchors.
 
 - `lookup_copy_zero_loss_and_nonanticipating_failure` - `D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/RetrospectiveLookupFailure.lean`
 - `blind_residual_charge_decomposition` - `D5/S3/ConceptDynamics/EscapeSpectrum/BlindResidualChargeDecomposition.lean`
@@ -73,7 +73,7 @@ Follow the steps in order. Do not pass a step until its postcondition holds.
 
 ### 0. Fix the answer commitment
 
-Before searching, record the candidate answer propositions, what would count as answering each one, what would refute each one, and the bounded stopping and settlement criteria. Apply the pre-commitment discipline from `CLAUDE.md` item 5-double-prime; do not revise the criteria to fit evidence already seen.
+Before searching, record the candidate answer propositions, what would count as answering each one, what would refute each one, and the bounded stopping and settlement criteria. Apply the forward-commitment discipline from `CLAUDE.md` item 5-double-prime; do not revise the criteria to fit evidence already seen.
 
 Postcondition: the answer, refutation, and stop conditions are fixed before evidence collection.
 

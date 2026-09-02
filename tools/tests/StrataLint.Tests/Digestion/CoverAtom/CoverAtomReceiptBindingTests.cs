@@ -80,7 +80,7 @@ public sealed partial class CoverAtomTests
     }
 
     [Fact]
-    public void CoverWithoutReceiptRejectsGidAbsentFromCurrentReport()
+    public void CoverCallsCurrentEdgeValidatorForGidAbsentFromCurrentReport()
     {
         var spec = new CoverSpec
         {
@@ -92,12 +92,13 @@ public sealed partial class CoverAtomTests
             ["--cover-atom", spec.AtomId, "--gid", spec.Gid, "--base", "baseline"]);
 
         Assert.False(execution.Result.Success);
+        Assert.Contains("current edge GID", execution.Result.Error, StringComparison.Ordinal);
         Assert.Contains("resolves to 0 report declarations", execution.Result.Error, StringComparison.Ordinal);
         Assert.Equal(execution.Before, execution.After);
     }
 
     [Fact]
-    public void CoverWithoutReceiptRejectsGidAmbiguousInCurrentReport()
+    public void CoverCallsCurrentEdgeValidatorForGidAmbiguousInCurrentReport()
     {
         var spec = new CoverSpec();
         var inputs = spec.Materialize();
@@ -125,12 +126,13 @@ public sealed partial class CoverAtomTests
 
         Assert.False(execution.Result.Success);
         Assert.Contains("COVER_INVALID", execution.Result.Error, StringComparison.Ordinal);
+        Assert.Contains("current edge GID", execution.Result.Error, StringComparison.Ordinal);
         Assert.Contains("resolves to 2 report declarations", execution.Result.Error, StringComparison.Ordinal);
         Assert.Equal(execution.Before, execution.After);
     }
 
     [Fact]
-    public void CoverWithoutReceiptRejectsGidThatIsNotClosedInCurrentReport()
+    public void CoverCallsCurrentEdgeValidatorForGidThatIsNotClosedInCurrentReport()
     {
         var spec = new CoverSpec
         {
@@ -142,6 +144,7 @@ public sealed partial class CoverAtomTests
             ["--cover-atom", spec.AtomId, "--gid", spec.Gid, "--base", "baseline"]);
 
         Assert.False(execution.Result.Success);
+        Assert.Contains("current edge GID", execution.Result.Error, StringComparison.Ordinal);
         Assert.Contains("lean-state-open", execution.Result.Error, StringComparison.Ordinal);
         Assert.Equal(execution.Before, execution.After);
     }

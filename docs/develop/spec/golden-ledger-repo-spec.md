@@ -551,7 +551,7 @@ Frontier 语义资格的唯一数据 owner 是 `docs/MISSION.md` 的可选 `fron
 
 `DigestionLedgerEvaluation.HasReceiptIntegrityFailure` 对 coverage/Scribe mismatch 的**绝对式谓词本体**不因 M:N 放开而弱化;`digest-status` 等全账读侧仍如实报告全部 fatal identity,闭合仍要求 entry 的全部 GID 收据与 Lean/Scribe 条件齐备。为避免存量 backlog 令所有无关写入全局自锁,`cover-atom` 与其 post-cover `align-scribe-receipt` 写前门采用 fork-point delta:按 `(code,atom_id,detail)` 只 grandfather baseline 已存在的同一 fatal identity,任何 candidate-new identity 与所有结构 findings 仍 fail-closed;这只是 writer 消费作用域,不改上述中央谓词。
 
-**cover 终判词与选择重试(#2137)。** `cover-atom` 已通过预承诺、Lean/Scribe 与结构门、但结果仍非 deletable `closed` 时,命令虽保持失败退出,仍须把该次机器终判词原子写入同一 canonical atom 文件 `Meta/Digestion/backfill/<source>/<projected-state>/<atom_id>.yaml` 的 `receipts.cover_disposition`;不得另建 session 清单或第二套 governance store。此字段与人工语义隔离用的 `receipts.quarantine` 分工明确:前者是 cover 机器对一次精确 GID 集的失败结果,后者是带 justification/reentry condition 的人工治理判断;两者不得共存。精确账形为:
+**cover 终判词与选择重试(#2137)。** `cover-atom` 已通过 Lean/Scribe 与结构门、但结果仍非 deletable `closed` 时,命令虽保持失败退出,仍须把该次机器终判词原子写入同一 canonical atom 文件 `Meta/Digestion/backfill/<source>/<projected-state>/<atom_id>.yaml` 的 `receipts.cover_disposition`;不得另建 session 清单或第二套 governance store。此字段与人工语义隔离用的 `receipts.quarantine` 分工明确:前者是 cover 机器对一次精确 GID 集的失败结果,后者是带 justification/reentry condition 的人工治理判断;两者不得共存。精确账形为:
 
 ```yaml
 receipts:

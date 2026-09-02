@@ -97,16 +97,21 @@ If the search cannot be completed faithfully, end the task as `open` with no dep
 
 ### 4. Learn the current artifact shape
 
-Run:
+Read the nearest current Lean and Scribe artifacts in the target bucket, then read the live
+path-policy and header owners. The current working tree is the template; historical commits
+are not a workflow contract.
 
 ```sh
-git log --no-merges -20 --format=%H --grep='^formalize: deposit'
-git show <sha>
+git ls-files '<target-lean-directory>/*.lean'
+git ls-files '<target-blueprint-directory>/*.scribe.cs'
+sed -n '1,12p' <nearest-current-lean-module>
 ```
 
-Read the most recent actual `formalize: deposit` commit. That commit is the live template for the exact Lean header shape, the `.scribe.cs` mirror shape, and the files touched by deposit. Copy its shape rather than formats remembered or restated here. If this file and that commit disagree, the commit wins.
+Copy the exact shape from current tracked neighbours rather than from remembered or historical
+formats. If this file and the current tree disagree, the current tree and its live harness win.
 
-Postcondition: the chosen template SHA and its touched paths are recorded, and the planned artifacts follow that observed shape.
+Postcondition: the chosen current neighbours and owner paths are recorded, and the planned
+artifacts follow that observed shape.
 
 ### 5. Write and compile the artifacts
 
@@ -128,7 +133,7 @@ limit=$(sed -nE 's/.*DirectoryFileLimit = ([0-9]+);.*/\1/p' tools/StrataLint.Eng
 
 Committed Blueprint `.md` renderer oracles are excluded from capacity, but `.scribe.cs` sources count. If the natural target directory is full, do not place the module in a semantically wrong directory to evade the limit: split the bucket, register the new domain in `Meta/domains.yaml`, place the module in the new directory, and carry the protected-surface cost for the conservative-extension gate to judge. A protected-surface change is priced work, not a stopping condition. Reserve `open` for what is genuinely unresolvable, such as an ambiguity that cannot be settled without weakening the claim or a proof that will not close, never for work that merely costs more.
 
-Iterate with a scoped build (`lake build <YourModuleName>`), then run the canonical door once when the artifacts are final:
+Iterate on the source artifacts, then run the canonical door when they are ready:
 
 ```sh
 make lean
@@ -160,7 +165,10 @@ make cover ATOM_ID=<id> GID=<gid>
 make preflight
 ```
 
-All three commands must exit 0. Judge them only by exit code, and never pipe a judgment command: `cmd | tail -1` reports the pipe's exit status, not the command's, and three landed incidents (a merge that silently failed, a ceremony run on a stale base, a cover failure read as success) trace to exactly this. Run the command bare, or capture `$?` on the command itself before any formatting.
+Deposit and cover operate on the same working tree and may land in the same pull request. Neither
+command creates an intermediate commit.
+
+All three commands must exit 0. Judge them only by exit code, and never pipe a judgment command: `cmd | tail -1` reports the pipe's exit status, not the command's, and three landed incidents (a merge that silently failed, validation run on a stale base, a cover failure read as success) trace to exactly this. Run the command bare, or capture `$?` on the command itself before any formatting.
 
 If any command exits nonzero, stop and end as `open`. Report the failed command and exit code, machine diagnostics, touched paths, and the actual resulting tree state; deposit and cover do not commit their changes.
 
@@ -193,7 +201,7 @@ Postcondition: the task ends with an opened pull request, or with evidence-compl
 
 ## Fidelity and non-hollowness gate
 
-Before Step 7, the producing seat must answer every item with concrete evidence. This checklist collects producer-side evidence; it is not machine-verified and does not itself prove non-hollowness. The repository's own machine gate is deferred by the skipped `CoverAtomEnvelopeTests.cs` signature-match test cited below. An independent adversarial reviewer, not the producing seat, would turn this evidence into verification.
+Before Step 7, the producing seat must answer every item with concrete evidence. This checklist collects producer-side evidence; it is not machine-verified and does not itself prove non-hollowness. Independent adversarial review, not producer self-attestation, turns this evidence into verification.
 
 - Conclusion substance: show that the conclusion is not `True`, not definitionally equal to `True`, and not a restatement of a hypothesis.
 - Hypothesis satisfiability: exhibit a Lean term witnessing the hypotheses that elaborates in the pinned toolchain, such as a checked `example` in the module or a term the seat states and checks, and carry that term in the report. Prose asserting or naming a witness does not discharge this item; if no compiling witness can be produced, the outcome is `open` and deposit is blocked.
@@ -208,7 +216,7 @@ Before Step 7, the producing seat must answer every item with concrete evidence.
 
 Finally, run the grader-trap checklist against your own work before sign-off — witness-vs-universal, instance-vs-general, conditional-vs-unconditional, pointwise-vs-operator, proof-internal-vs-addressable-statement, multi-clause residue names, mechanism-vs-outcome — and record for each either "not applicable" or how your statement clears it. Reviewers will run exactly this list; a mismatch you find yourself is a free fix, one they find is a blocked lane.
 
-Any item without evidence blocks deposit. Mark an unverified fact exactly `ASSUMED-UNVERIFIED`; never replace measurement with hedging language. The repository's current signature-match test explicitly leaves this gap open: `CoverAtomEnvelopeTests.cs` says an unchanged pre-committed `theorem t : True` would pass, so compilation, deposit, and cover do not certify fidelity.
+Any item without evidence blocks deposit. Mark an unverified fact exactly `ASSUMED-UNVERIFIED`; never replace measurement with hedging language. Compilation, deposit, and cover do not by themselves certify clause fidelity, so the evidence checklist remains mandatory.
 
 ## Earned hard gates (precedent taxonomy)
 
@@ -228,7 +236,7 @@ Every entry below names a failure class that actually occurred in landed rounds 
 - **No new top-level domain for one module (three landed rejections in one day).** When your module's natural parent directory is at its file limit, the repository convention is a SPLIT BUCKET under that parent (`Parent/NewBucket/`, split-only, no moves), recorded in the stratum's MAP file (split-history entry AND bucket-catalog line; create the stratum MAP and register it as a governance document if the stratum has none), with any new group name registered where the precedent registers it. Reuse an existing bucket whenever ownership genuinely fits (a symmetry theorem belongs in the existing `Symmetry/` bucket, not a new sibling). Registering a fresh top-level domain in `Meta/domains.yaml` for a single module is the anti-pattern: every instance was struck down by review and relocated.
 - **FromLean is only legal for projector-registered shapes (five-statement landed rejection).** A lane once used `StatementSource.FromLean()` for all five of its Describes; the kernel projector returned Unprojectable for every one (`Finset`, a repo predicate, `LT.lt`, `DirichletCharacter`, `Nat.Prime` are all outside the registered shapes), the emitter exited 1, and no Blueprint mirror existed for the fidelity gate. `FromAuthor` with a typed Disp formula is the DEFAULT; before even considering FromLean, verify the statement's every constituent is projector-registered — when in doubt, FromAuthor. Then run the emit and READ the produced `.md`: a missing mirror blocks deposit by itself.
 
-- **Header law (three landed violations).** The six-line header sits at byte zero and the digest is a SINGLE line ending ` -/` on line 6. A wrapped digest is a violation; ` -/` alone on line 7 is the same violation. Copy the shape from the latest landed deposit commit, then verify your file's line 6 ends with ` -/`.
+- **Header law (three landed violations).** The six-line header sits at byte zero and the digest is a SINGLE line ending ` -/` on line 6. A wrapped digest is a violation; ` -/` alone on line 7 is the same violation. Copy the shape from a current tracked neighbour, then verify your file's line 6 ends with ` -/`.
 - **Generality tag follows the weakest import and the module's nature (two landed blockers).** A concrete-instance module (fixed modulus, fixed witness set) is `generality: I`; a general theorem module is `G`; a `G` tag on a file importing `I`-level facts is a violation. Compare your nearest landed neighbors before writing the tag.
 - **Scribe formula rejection taxonomy (dozens of mechanical rejections; owner `FormulaDsl.cs`/`LatexWriter.cs` wins on current tokens):** `F.Id` arguments are strictly alphabetic; `D()` takes one digit per argument (`D(2,3)` never `D(23)`); `Sp` is required after macro and relation tokens (`Neg`, `Neq`, `Vert`, `Lvert`, `Rvert`, `Forall`, `InMacro`, `Exists` after `Neg`, …) before `F.Id`/`Operatorname`; `Star` not `Ast`; `Neg` not `Not`; the `FormulaDsl` usings are required; no private string-to-Formula helpers; the displayed formula must mirror every conjunct of the Lean statement — mirror-value swaps (two constants exchanged between clauses) are a landed reviewer catch, so read your emitted `.md` value by value.
 
@@ -239,16 +247,16 @@ A landed pull request consisting of one generic one-line `def` plus two `simp`-t
 - **Encoding is not formalization.** Strip your Lean statement of its prose-borrowed names and read what remains. If it is a generic set/logic triviality (`∀ x ∈ S, f x ⊆ {c}` under an "observer" vocabulary), you have renamed the source clause, not discharged it. Before depositing a definition, answer in writing: *what named theorem would make this definition earn its freeze?* If no such theorem is in reach, the honest outcome is `open` with the definition offered as a sketch, not a deposit.
 - **Definition-only modules are presumptively insufficient.** A new `def` must ship with at least one NAMED theorem that either instantiates it against existing repository structures, characterizes it (an iff with independently defined sides), or proves a property that some later consumer can cite. Anonymous `example`s are fidelity evidence, never deposit content: they have no GID, cannot enter coverage, and cannot be cited by anything.
 - **No island modules.** A module whose only relationship to the repository is its directory path is a second framework wearing repository vocabulary. If your definition names a concept the repository already has machinery for (observers, windows, channels, walks), it must import and connect to that machinery — an "observer" predicate that touches none of the existing observer declarations belongs to nothing and discharges nothing. If the concept genuinely has no repository counterpart yet, say so explicitly and justify why a floating generic definition is worth freezing now rather than when its first theorem arrives.
-- **The external-referee test.** Ask whether the module would survive review as a standalone library contribution: a one-line definition with `simp` examples would be rejected anywhere as content-free. The ceremony cost of a deposit (freeze, receipts, coverage) is justified by content, and "it compiles and is honest" is the floor for a report, not a reason to deposit.
+- **The external-referee test.** Ask whether the module would survive review as a standalone library contribution: a one-line definition with `simp` examples would be rejected anywhere as content-free. The cost of freezing and covering a deposit is justified by content, and "it compiles and is honest" is the floor for a report, not a reason to deposit.
 - **The pull-request body is evidence, not decoration.** Carry the clause-mapping echo, the search trace, and the explicit honest-partial disclosure (what is asserted, what remains open) in the pull-request body. An empty body on a deposit pull request hides exactly the thinness these gates exist to catch.
 
 ### Moving base (multiple drivers, hourly-advancing dev)
 
 Several machines drive this repository concurrently and `dev` advances roughly hourly; three landed incidents define the discipline:
 
-- **Merge `origin/dev` and verify before any ceremony**: the only trustworthy sync check is `git merge-base --is-ancestor origin/dev HEAD` — a piped or prettified merge command has silently failed and sent a ceremony onto a stale base.
+- **Merge `origin/dev` and verify before changing the working tree**: the only trustworthy sync check is `git merge-base --is-ancestor origin/dev HEAD` — a piped or prettified merge command has silently failed and sent validation onto a stale base.
 - **A capacity or baseline red may be the baseline's fault, not yours**: a candidate diffed against an older base once made another driver's new file look like this lane's twelfth — the remedy was merging newer `dev` and re-pushing, not restructuring. Before treating a structural red as yours, re-sync and re-run.
-- **The remote branch may have been advanced by automation** (update-branch bots): if push is rejected, fetch the branch itself, merge, and push again — never force-push, and never rebase after a deposit (frozen provenance pins the commit lineage; rebasing orphans it).
+- **The remote branch may have been advanced by automation** (update-branch bots): if push is rejected, fetch the branch itself and follow the repository's merge-only synchronization policy. Never force-push. Deposit and cover remain uncommitted working-tree changes until the builder creates the single explicit commit from Step 7.
 
 ### Process honesty
 
@@ -273,7 +281,7 @@ Several machines drive this repository concurrently and `dev` advances roughly h
 
 - Path policy is owned by `tools/StrataLint.Engine/Coordinates/RepositoryPathPolicy.cs` and its registered policy data.
 - Capacity limits are owned by `tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs`.
-- Lean header shape is owned by the live harness and demonstrated by the latest landed deposit.
+- Lean header shape is owned by the live harness and demonstrated by current tracked neighbours.
 - Import direction is owned by the repository specification and its StrataLint rules.
 - Admission, freezing, coverage, and status are owned by the canonical `make` doors and `tools/`.
 
