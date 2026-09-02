@@ -64,6 +64,22 @@ public sealed class DependencyDirectionTests
                 "tests",
                 "StrataLint.Tests",
                 "StrataLint.Tests.csproj"))));
+
+        Assert.Equal(
+            ["StrataLint", "StrataLint.Engine", "StrataLint.Tests"],
+            AssemblyReferencePolicy.ApplicationReferences(
+                typeof(StrataLint.Tests.R15ScopeNarrowingTests).Assembly));
+        Assert.Equal(
+            [
+                "../../StrataLint.Cli/StrataLint.Cli.csproj",
+                "../StrataLint.Tests/StrataLint.Tests.csproj",
+            ],
+            ProjectReferences(XDocument.Load(Path.Combine(
+                RepositoryLayout.FindRoot(),
+                "tools",
+                "tests",
+                "StrataLint.Rules.Tests",
+                "StrataLint.Rules.Tests.csproj"))));
     }
 
     [Fact]
