@@ -1948,3 +1948,63 @@ M3-a/M3-c 一席位轮(同模块,codex-cli,独立 worktree,PR-1 deposit 绑 M3-a
 G-a/G-b 一席位轮(同模块,codex-cli,独立 worktree,PR-1 deposit 绑 G-a atom;G-b 两 atom 以 PR-1b 收据后 PR-2 cover);G-c 不占预算,待认证基础设施或 owner 裁决。
 
 后续增订继续严格追加于本节之后。
+
+---
+
+# 增订十一　M3 separator 阶梯第四级:截断 separator(M3-e 预登记)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;探针一席(codex-cli,`lake env lean`,0 sorry,标准三公理,在 dev 新增量上整证)后由 orchestrator(claude 主循环)撰写;证明文件存 orchestrator scratchpad,不入库。判决日:2026-09-03。lane issue:#4589。
+
+## 〇　为什么是这一节
+
+增订九预登记的 M3-a(指定谱值对 ⇒ 离线轨道贡献 = −4·重数)、M3-b(偶测试函数变换的有限插值)、M3-c(实轴离线零点轨道恒非负)已全部冻结并消化闭合。研究席给出的阶梯第四级——以对称截断 `symmetricIndices T` 为界的 separator——探针在冻结栈上以精确陈述整证:用反射类代表点 rep(k)=min(k, reflection k) 构造符号分离的频率集,在目标轨道代表点插值 1/−1、其余轨道 0,由 M3-b 得 g;偶性把值传输到整个轨道,γ 的单射性使非零值只出现在目标四点;截断的反射/共轭封闭引理把四点全放进截断;M3-a 给出 −4·重数。**此级不含任何新的解析输入**;它把「离线零点 ⇒ 负 Weil 平方和」在有限截断内彻底闭合,剩下的只是极限(M3-f,重型:需 Burnol 式卷积幂与余项估计)。
+
+## 一　M3-e 预登记:截断 separator(`OffLineZeroNegativeTruncatedWeilSquare`)
+
+**义务**:单一公开定理 `offLineZero_yields_negative_truncated_weil_square (Z : ZeroData) (n : ℕ) (T : ℝ) (hn : n ∈ Z.symmetricIndices T) (hOff : (Z.zero n).re ≠ criticalAbscissa) (hIm : (Z.zero n).im ≠ 0) : ∃ g : WeilTestFunction, (truncatedZeroSum Z (convolutionSquare g) T).re < 0`。闭合路线:反射类代表点集 S 的符号分离性由代表点的极小性证得;冻结 `even_weilTestFunction_finite_interpolation` 给出 g;冻结 `fourierLaplace_convolutionSquare_complex`、`gamma_reflection`/`gamma_conjugation`、`reflection_mem_symmetricIndices`/`conjugation_mem_symmetricIndices`、`zero_symmetries_commute`、`mirror_index_fixed_iff_critical`、`multiplicity_pos` 与冻结 `prescribed_pair_gives_negative_zero_orbit` 收尾。落点 `D5/S3/Weil/ZetaBridge/`。
+**可证伪预测(写在跑之前)**:若正确,定理只消费上列冻结声明与钉版 Mathlib 的有限和引理,公理集为标准三条;若某 `ZeroData` 的截断不在反射/共轭下封闭(与冻结封闭引理矛盾)或 γ 非单射,则本条为假并须修正前提。
+**边界**:本条不涉及极限、不断言 `SymmetricConvergent`、不给出 `zeroSum` 的符号;`hIm` 是 M3-d 具名缺口(实轴排除)的显式替身,不得省略。
+
+## 二　M3-f 具名目标(不在本节预登记):完整 separator
+
+`offLineZero_yields_negative_weil_square (Z) (hOff : ∃ n, (Z.zero n).re ≠ criticalAbscissa) : ∃ g, ∃ hZero, (zeroSum Z (convolutionSquare g) hZero).re < 0`——由 M2-c 知 `hZero` 对所有 g 成立,故只差极限:须控制截断外零点的贡献(Burnol 式卷积幂 g^{⋆N} 使目标轨道贡献 −4·重数·1 而其余衰减为 O(4^{−N}))。所需解析输入:有界带上变换的衰减估计与卷积幂的变换公式;记为下一增订的探针对象,成本重型。
+
+## 三　预算与结算
+
+M3-e 一席位轮(codex-cli,独立 worktree,PR-1 deposit;cover 另开 PR-2);M3-f 不占本节预算。
+
+后续增订继续严格追加于本节之后。
+
+---
+
+# 增订十二　黄金 germ 线:局部因子的通用缩放与 G3 的 sharp 横坐标(G-d、G-e 预登记;G-f、G-g 具名目标)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;研究席一席(GPT PRO,advisory:给出分解与文献)+ 探针一席(codex-cli,`lake env lean`,0 sorry,标准三公理,含 β 值的 kernel 证书),关键代数由 orchestrator 独立验算(β(3)=2+3φ=φ⁴、β(4)=3+4φ=2φ³+1、β(5)=φ⁵;缩放检验 f₅((log2/log5)·s₀)≈0);由 orchestrator(claude 主循环)撰写。判决日:2026-09-03。lane issue:#4589。
+
+## 〇　为什么是这一节
+
+增订十把 G3 的零集化为局部因子零集之并,并以数值证据指出 p=2、3 的局部因子在窗口内有零点。本节记录两条把这一现象**结构化**的初等事实:①所有局部因子是同一个整函数 Φ(z)=Σ_v e^{−β(v)z} 沿 z=(log p)s 的截取,故各 p 的零点集互为相似像(这解释了为何 p=5 在窗口内无零点:缩放因子 log 2/log 5 把 p=2 的零点压到窗口下方);②β(3)=φ⁴=φ²+φ³ 使前四项精确因子化为 (1+x)(1+y),φ⁴ 处的广义 Euler 系数恰为 0,G3 的领头修正项是 −p^{−2φ³s},其绝对收敛横坐标**恰为 1/(2φ³)——黄金窗口的下沿**(冻结的 1/φ⁴ 只是充分界)。这使第二阶因子分解精确覆盖整个严格窗口,补上了增订十指出的下切片缺口。
+
+## 一　G-d 预登记:局部因子的通用缩放(`LocalFactorUniversalScaling`)
+
+**义务**:公开定理 `germLocalFactor_prime_scaling (p q : Nat.Primes) (s : ℂ) : germLocalFactor s p = germLocalFactor ((((Real.log p / Real.log q : ℝ)) : ℂ) * s) q`。闭合路线:正实底 `cpow` 的主支恒等式 `(p:ℂ)^w = exp(w·log p)`(Mathlib `Complex.cpow_def_of_ne_zero`、`Complex.natCast_log`),逐项相等后 `tsum_congr`。落点 `D5/S3/Analytic/EulerGerm/`。
+**可证伪预测(写在跑之前)**:若正确,定理只消费 `GoldenLocalFactor` 与钉版 Mathlib,公理集为标准三条;推论:任一 p 的零点 s₀ 给出 f_q 在 (log p/log q)·s₀ 的零点(数值已验)。若 `cpow` 对自然数底出现非主支相位,则本条为假并须改写为显式 `exp` 形。
+**边界**:不断言任何零点存在。
+
+## 二　G-e 预登记:次模展开与 G3 的 sharp 横坐标(同模块)
+
+**义务**:同模块两条公开定理 `germLocalFactor_next_mode_expansion (s : ℂ) (p : Nat.Primes) (hs : 0 < s.re) : let x := (p:ℂ)^(-s·φ²); let y := (p:ℂ)^(-s·φ³); (1 - y) * (1 + x)⁻¹ * germLocalFactor s p - 1 = -y^2 + (1 - y) * (1 + x)⁻¹ * ∑' k : ℕ, (p:ℂ)^(-s * (o5Beta (k+4) : ℂ))` 与 `second_normalized_factor_deviation_norm_summable_sharp (s : ℂ) (hs : 1 / (2 * Real.goldenRatio ^ 3) < s.re) : Summable (fun p : Nat.Primes => ‖(1 - (p:ℂ)^(-s·φ³)) * (1 + (p:ℂ)^(-s·φ²))⁻¹ * germLocalFactor s p - 1‖)`(表达式与冻结 `let G3` 的因子逐字相同)。闭合路线:o5Beta 0..3 = 0, φ², φ³, φ⁴ 与 (1+x)(1+y)=1+x+y+xy;Re s>0 上 ‖x‖<1;四模 tsum 拆分;尾项由冻结 `o5_beta_growth`/`o5_beta_power_law` 与不等式 2φ³+1+k ≤ o5Beta(k+4) 控制;`Nat.Primes.summable_rpow` 以指数 2φ³·Re s > 1 收尾。
+**可证伪预测(写在跑之前)**:若正确,G3 在 Re s > 1/(2φ³) 绝对收敛,第二阶因子分解可延拓至整个严格窗口;若 o5Beta 4 ≠ 2φ³+1 或尾项下界不成立,则 sharp 横坐标不同于 1/(2φ³),须以实际值改写。
+**边界**:本条不重做冻结的第二阶因子分解本身,只给出其收敛域的精确边界;将因子分解延拓到 Re s > 1/(2φ³) 的定理另立义务。
+
+## 三　具名目标(不在本节预登记)
+
+- **G-f**:p ≥ 5 时局部因子在拉回临界线 σ = 1/(2φ²) 上非零(三角界:前三模精确 + 增长界,中等);数值:p=2、3 在 σ=1/(2φ²)、|t|≤60 的最小模分别 0.0144、0.0102(非零,但无 kernel 界)。
+- **G-g**:修正的 RH 等价形:令 D_primary := D_cg − D_3 + D_22 − D_loc(divisor 记号,`MeromorphicOn.divisor`),则 D_primary = D_2,且 RH ⟺ U 上所有 D_primary>0 的点实部 = 1/(2φ²)。重型;须先冻结 divisor 恒等式。
+- **G-c**(增订十)仍 open。
+
+## 四　预算与结算
+
+G-d/G-e 一席位轮(同模块,codex-cli,独立 worktree,PR-1 deposit 绑 G-d atom;G-e 两 atom 以 PR-1b 收据后 PR-2 cover)。具名目标不占预算。
+
+后续增订继续严格追加于本节之后。
