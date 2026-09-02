@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:2a6dc708d0c85b0cbf4679ac6cecf84c628209795be8c6dd11d4593e4f4ff1a4
+  normalized_sha256: sha256:2a6dc708d0c85b0cbf4679ac6cecf84c628209795be8c6dd11d4593e4f4ff1a4
+cas_ref: sha256:2a6dc708d0c85b0cbf4679ac6cecf84c628209795be8c6dd11d4593e4f4ff1a4
+coverage_gids:
+  - D5/S3/ConceptDynamics/Disclosure/SensitiveLeakageMonotonicity.sensitive_leakage_monotone
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Disclosure/SensitiveLeakageMonotonicity.sensitive_leakage_monotone
+      source_sha256: sha256:2a6dc708d0c85b0cbf4679ac6cecf84c628209795be8c6dd11d4593e4f4ff1a4
+      target_statement_id: sha256:823dbbb59c9e321d2a0c802d176d1b7389c39ccfecda7b8427dc81aed015975e
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Disclosure/SensitiveLeakageMonotonicity.sensitive_leakage_monotone
+      definition_sha256: sha256:ca114fcde69172aa0ab353200025c06b0d7d6fbe63c5aa7d32f6fd8ae2337502
+      emission_sha256: sha256:600e792c323274cd27a779f86d586710b6725e0843dd6e6262ed33afee976faf
+  unresolved_subitems: []

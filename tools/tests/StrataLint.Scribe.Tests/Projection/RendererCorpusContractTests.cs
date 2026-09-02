@@ -9,7 +9,7 @@ namespace StrataLint.Scribe.Tests;
 public sealed partial class FormulaCorpusInventoryTests
 {
     private const string CanonicalRendererSha256 =
-        "8b4045d1fd35864cbc2913f1bf463a386ed615f4dfce2da20737eb6bc4a9138e";
+        "b7daa5c27ba3986fc3db108dba1237eea346349f1befa7a50e43290e0754c2bd";
     private const string UpdateCommand = "make -C tools update-renderer-contract";
 
     [Fact]
@@ -436,6 +436,11 @@ public sealed partial class FormulaCorpusInventoryTests
         var applyNode = new Formula.Apply(subscript, [x]);
         formulas.Add(new Formula.Power(applyNode, word));
         formulas.Add(new Formula.Subscript(macroPhi, word));
+        // 2026-09-02 判词逐字: formula-context:LatexGroup.Items=precedence:logic;
+        //   produces-script:false;starts-with-negation:false
+        // precedence:logic 只由 Formula.Logic 产生(LatexWriter.WriteLogic 的 LogicPrecedence)。
+        var logicNode = new Formula.Logic(x, FormulaLogicOperator.And, y);
+        formulas.Add(new Formula.LatexGroup([logicNode]));
         // 仓库实际使用的 Power 子组合,由 AssertRendererVocabularyCoverage 点名要求覆盖。
         formulas.Add(new Formula.Power(function, sequence));
         formulas.Add(new Formula.Power(function, x));

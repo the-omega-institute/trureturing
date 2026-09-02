@@ -112,7 +112,7 @@ internal sealed partial class RuleFixture
             ["Library/queries.yaml"] = "schema_version: 1\nqueries: []\n",
             [RingPath] = Header + "def goldenRing : Nat := 0\n",
             [ValuesBindingPath] = HeaderFor("D5/S0/Carrier/ValuesBinding", "I")
-                + "def fixtureValue : Nat := 0\n",
+                + "def fixtureValue : Int := 0\n",
             [BlueprintPath] = "# Golden ring\n",
             [BlueprintSourcePath] = "// synthetic Scribe definition\n",
             [FixtureDigestionSourcePath] = FixtureDigestionSource,
@@ -136,7 +136,7 @@ internal sealed partial class RuleFixture
                     new LeanDeclaration(
                         "fixtureValue",
                         "def",
-                        "Nat",
+                        "Int",
                         ImmutableArray.Create("Classical.choice", "Quot.sound", "propext")),
                 ]),
         };

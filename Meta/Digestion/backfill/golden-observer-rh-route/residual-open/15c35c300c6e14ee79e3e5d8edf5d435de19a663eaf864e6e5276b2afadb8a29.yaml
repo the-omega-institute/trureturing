@@ -7,6 +7,16 @@ receipts:
   coverage: []
   scribe: []
   unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    recorded_at_utc: 2026-09-02T07:31:26.5945480+00:00
+    gids:
+      - D5/S1/Deficit/Beatty/GoldenSpectralCoordinate.golden_natural_scale_hits_half
+    gaps:
+      - code: chain-migration-incomplete
+        detail: 1c9ee18c41d8523fdfbb800f7ab9b99d07e6675a1d88cc35deb1c2cbb504bfca
+      - code: chain-migration-incomplete
+        detail: 2c476f5d6f1539dd3c603c8658722211546db29497ebb6f5e4c99797068af535
   chain_atoms:
     - 86cbe20b80b7c842e8e9338bc0eb3d9a759904e5e4d246583e46e1c31c6d3ef7
     - 2c476f5d6f1539dd3c603c8658722211546db29497ebb6f5e4c99797068af535

@@ -1,0 +1,1 @@
+**勘误二**:第 5–6 步不能经 `critical_offline_split_tendsto_explicit_formula` 闭合——该定理另需 `ArchimedeanConvergent (convolutionSquare g)` 前提且指向显式公式表达式;实际闭合用冻结的 `truncatedZeroSum_tendsto` 与闭集 `Set.Ici 0` 的极限引理。

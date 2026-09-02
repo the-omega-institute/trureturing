@@ -1,0 +1,1 @@
+**义务**:同模块两条公开定理 `symmetricConvergent_enum_invariant (Z Z' : ZeroData) (g : WeilTestFunction) : SymmetricConvergent Z g ↔ SymmetricConvergent Z' g` 与 `zeroSum_enum_invariant (Z Z' : ZeroData) (g : WeilTestFunction) (h : SymmetricConvergent Z g) (h' : SymmetricConvergent Z' g) : zeroSum Z g h = zeroSum Z' g h'`,二者由 M2-a 与冻结的 `zeroSum_eq_of_tendsto`、`truncatedZeroSum_tendsto` 直接得出。

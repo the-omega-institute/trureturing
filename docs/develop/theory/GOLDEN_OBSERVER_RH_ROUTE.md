@@ -1825,3 +1825,44 @@ $$\boxed{\ \beta(v{+}1)-\beta(v)\in\{\varphi,\ \varphi^2\}\ }$$
 M1-a 一席位轮(codex-cli,独立 worktree,PR-1 deposit;cover 另开 PR-2);M1-b 不占预算,待 owner 在三种出口中裁决。
 
 后续增订继续严格追加于本节之后。
+
+---
+
+# 增订八　R-F 路线勘误与 M2 枚举不变性(M2-a、M2-b、M2-c)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;R-F 探针一席(codex-cli,`lake env lean`,0 sorry,标准三公理)与 M2 探针一席(codex-cli,同上)在暖树上整证后由 orchestrator(claude 主循环)撰写,无面板席;两份证明文件存 orchestrator scratchpad,不入库。判决日:2026-09-02。lane issue:#4589。
+
+## 〇　为什么是这一节
+
+第三部 §四 立项裁决的主线第二步(RH ⟹ 本仓 O-6,R-F)已由探针整证并按 `GoldenObserverRoute` 转写先例落为 `D5/S3/Weil/ZetaBridge/RhImpliesWeilPositivity`(PR #4754);探针同时暴露了 §R-F 闭合路线文本的两处缺陷。atom 不可变,故勘误以本节追加发布,旧节一个字节不动。§M2 是主线第一步「修复非空洞语义」的另一半:`hZero` 前件的可派生性与枚举无关性。M2 探针证明它们在冻结栈上可闭合,且其中的收敛前件已由冻结的 `Zeta23.WeilEF` 绝对可和性直接给出——这使 O-6 的 `hZero` 从「调用者任选前件」变为可派生事实。
+
+## 一　R-F 路线勘误(不改 atom,只追加)
+
+**勘误一**:§R-F 闭合路线第 3 步引用的 `truncatedCriticalConvolutionSquareSum_re_nonnegative` 在 D5 不存在;实际冻结定理为 `D5/S3/Weil/ZetaBridge/ConvolutionSquareCriticalLine.critical_line_truncated_sum_real_nonnegative`。
+**勘误二**:第 5–6 步不能经 `critical_offline_split_tendsto_explicit_formula` 闭合——该定理另需 `ArchimedeanConvergent (convolutionSquare g)` 前提且指向显式公式表达式;实际闭合用冻结的 `truncatedZeroSum_tendsto` 与闭集 `Set.Ici 0` 的极限引理。
+**勘误三**:`o6WeilPositivityStatement` 定义于 `D5/X_Frontier/Hearts`,可冻结模块不得 import X_Frontier,故 R-F 的落地陈述是该定义体的逐字转写(定理名保留 atom 所给),并以导入 Hearts 的 scratch 文件 `exact` 出 `RiemannHypothesis → o6WeilPositivityStatement` 作忠实见证(exit 0,不入库)。
+**边界**:本勘误不改变 §R-F 的义务、预测或科学接受门;R-F 在 `ZeroData` 空时亦形式成立,仍不得宣传为非空洞 Weil 正性结果。
+
+## 二　M2-a 预登记:对称截断和的枚举不变性(`ZeroSumEnumerationInvariance`)
+
+**义务**:公开定理 `truncatedZeroSum_enum_invariant (Z Z' : ZeroData) (g : WeilTestFunction) (T : ℝ) : truncatedZeroSum Z g T = truncatedZeroSum Z' g T`,其中 `ZeroData`、`truncatedZeroSum` 为冻结 `D5/S3/Weil/ZeroSum` 的定义。闭合路线:由 `zero_injective` 与 `zero_exhaustive` 得两枚举间的 `ℕ ≃ ℕ`(冻结 `ClassicExplicitFormula.zeroEquiv`),重数经 `multiplicity_eq_zeroMult` 一致,`symmetricIndices T` 沿该等价传输,`Finset.sum_equiv` 收尾。落点须在 `ClassicExplicitFormula` 下游(否则 import 成环),建议 `D5/S3/Weil/ZetaBridge/ZeroSumEnumerationInvariance`。
+**可证伪预测(写在跑之前)**:若正确,定理只依赖 `ZeroSum`、`ClassicExplicitFormula` 两冻结模块与钉版 Mathlib 的有限和重排,公理集为标准三条;若某 `ZeroData` 字段不足以确定 `symmetricIndices` 的传输(例如 `gamma` 的定义不随枚举等价交换),则该字段名记入下一增订,义务改标 `open`。
+**边界**:本义务不证明任何收敛,不涉及 `zeroSum`。
+
+## 三　M2-b 预登记:`zeroSum` 与 `SymmetricConvergent` 的枚举不变性(同模块)
+
+**义务**:同模块两条公开定理 `symmetricConvergent_enum_invariant (Z Z' : ZeroData) (g : WeilTestFunction) : SymmetricConvergent Z g ↔ SymmetricConvergent Z' g` 与 `zeroSum_enum_invariant (Z Z' : ZeroData) (g : WeilTestFunction) (h : SymmetricConvergent Z g) (h' : SymmetricConvergent Z' g) : zeroSum Z g h = zeroSum Z' g h'`,二者由 M2-a 与冻结的 `zeroSum_eq_of_tendsto`、`truncatedZeroSum_tendsto` 直接得出。
+**可证伪预测(写在跑之前)**:若 M2-a 落地,则本义务在钉版工具链上为初等推论,公理集为标准三条;若 `zeroSum` 的 `choose` 定义使等式不可由极限唯一性得到,则记入下一增订并改标 `open`。
+**边界**:不主张任何枚举是 canonical;只主张零点和不依赖枚举。
+
+## 四　M2-c 预登记:每个 `ZeroData` 对每个 Weil 测试函数对称收敛(`SymmetricConvergentOfZetaSummable`)
+
+**义务**:单一公开定理 `symmetricConvergent_of_zeroData (Z : ZeroData) (g : WeilTestFunction) : SymmetricConvergent Z g`。闭合路线:冻结的 `Zeta23.WeilEF.EF_lit_zetaZeroConfig` 给出重数加权零点项的绝对可和性;经 `ClassicExplicitFormula.zeroEquiv` 将其转写到 `Z` 的枚举,`HasSum` 沿等价传输,`tendsto_symmetricIndices` 把对称截断和的极限接到该和。落点 `D5/S3/Weil/ZetaBridge/`。
+**可证伪预测(写在跑之前)**:若正确,定理为冻结重型结果的中等提取,公理集为标准三条,且 §M2 第 3 条(canonical `SymmetricConvergent`)由此**强于**原文(对所有 `g`,不限卷积平方);若 `EF_lit_zetaZeroConfig` 的光滑性/紧支前提与 `WeilTestFunction` 不匹配,则记所缺前提名并改标 `open`。
+**边界**:本义务不改 O-6 的陈述;`hZero` 前件的消去(改写 O-6)是后续独立义务,须先经本条冻结。
+
+## 五　预算与结算
+
+M2-a/M2-b 一席位轮(同模块,codex-cli,独立 worktree,PR-1 deposit 绑 M2-a atom;M2-b 两 atom 以 PR-1b 收据绑定后 PR-2 cover),M2-c 一席位轮(独立模块)。勘误不占预算。
+
+后续增订继续严格追加于本节之后。

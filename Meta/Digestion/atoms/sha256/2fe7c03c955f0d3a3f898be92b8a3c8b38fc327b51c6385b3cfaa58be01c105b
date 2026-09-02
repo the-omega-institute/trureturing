@@ -1,0 +1,6 @@
+## 二　M2-a 预登记:对称截断和的枚举不变性(`ZeroSumEnumerationInvariance`)
+
+**义务**:公开定理 `truncatedZeroSum_enum_invariant (Z Z' : ZeroData) (g : WeilTestFunction) (T : ℝ) : truncatedZeroSum Z g T = truncatedZeroSum Z' g T`,其中 `ZeroData`、`truncatedZeroSum` 为冻结 `D5/S3/Weil/ZeroSum` 的定义。闭合路线:由 `zero_injective` 与 `zero_exhaustive` 得两枚举间的 `ℕ ≃ ℕ`(冻结 `ClassicExplicitFormula.zeroEquiv`),重数经 `multiplicity_eq_zeroMult` 一致,`symmetricIndices T` 沿该等价传输,`Finset.sum_equiv` 收尾。落点须在 `ClassicExplicitFormula` 下游(否则 import 成环),建议 `D5/S3/Weil/ZetaBridge/ZeroSumEnumerationInvariance`。
+**可证伪预测(写在跑之前)**:若正确,定理只依赖 `ZeroSum`、`ClassicExplicitFormula` 两冻结模块与钉版 Mathlib 的有限和重排,公理集为标准三条;若某 `ZeroData` 字段不足以确定 `symmetricIndices` 的传输(例如 `gamma` 的定义不随枚举等价交换),则该字段名记入下一增订,义务改标 `open`。
+**边界**:本义务不证明任何收敛,不涉及 `zeroSum`。
+
