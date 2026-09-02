@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:efa60c95eff77958bfe10be41d9436d45b6aa1987e724e096a92c5ae76a17af1
+  normalized_sha256: sha256:efa60c95eff77958bfe10be41d9436d45b6aa1987e724e096a92c5ae76a17af1
+cas_ref: sha256:efa60c95eff77958bfe10be41d9436d45b6aa1987e724e096a92c5ae76a17af1
+coverage_gids:
+  - D5/S3/ConceptDynamics/Appeal/RuleCoupledAppealContrast.rule_coupled_appeal_can_repair_without_log_explanation
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Appeal/RuleCoupledAppealContrast.rule_coupled_appeal_can_repair_without_log_explanation
+      source_sha256: sha256:efa60c95eff77958bfe10be41d9436d45b6aa1987e724e096a92c5ae76a17af1
+      target_statement_id: sha256:9aec49853aaf1098b6686eaa0779bb8762a5e36577f00ca158207376c14b46a4
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Appeal/RuleCoupledAppealContrast.rule_coupled_appeal_can_repair_without_log_explanation
+      definition_sha256: sha256:d8c2d69d017880152a57b58e8d215be6698dcf7b263cbf6da68027db800d4ab4
+      emission_sha256: sha256:45ba3b4d4529194b07b9d0704c861442943385f6c156bebe1852a9fdc54bc730
+  unresolved_subitems: []

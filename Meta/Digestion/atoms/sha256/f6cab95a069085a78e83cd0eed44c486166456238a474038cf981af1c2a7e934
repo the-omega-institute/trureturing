@@ -1,0 +1,2 @@
+**边界**:只闭合 test-vector 非零常数缩放下的不变性;anchor 阶 $m$ 由假设给出,不主张它由 `ToroidalJetDepth` 的深度证书产生(那是另一条义务),不触及 zeta 零点、RH 或 C-1 的 chart 选择。
+

@@ -1,0 +1,1 @@
+**可证伪预测(写在跑之前)**:若正确,归一化后的 tail 逐分量为 $\frac{c\,f^{(m+k+1)}(s)}{c\,f^{(m)}(s)}$ 约去 $c$,定理以 `iteratedDeriv_const_mul_field` 与 `mul_div_mul_left` 级引理闭合,公理集为标准三条;若在钉版 Mathlib 中该引理需要 `ContDiff` 前提而无法免除,则义务改标 `open` 并记录所需前提。
