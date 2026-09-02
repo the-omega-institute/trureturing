@@ -26,9 +26,14 @@ internal sealed class ZeroDensityReciprocalPrimeSetDocument
                     "There is one subset of the primes whose relative counting ratio tends "
                         + "to zero while its reciprocal-prime family is not summable.")),
                 Paragraph(Text(
+                    "The Lean witness is a classical, noncomputable selection: its block "
+                        + "endpoints use Nat.find on analytic existence of enough reciprocal "
+                        + "mass. It is not a computable enumeration of the subset.")),
+                Paragraph(Text(
                     "For the same subset, evidence asymptotic to one over p yields mutually "
-                        + "singular transcript laws when the named Kakutani product-law "
-                        + "dichotomy holds. Both hypotheses remain explicit in the formula."))),
+                        + "singular transcript laws under the singularity-versus-divergent-"
+                        + "energy equivalence from the source's Theorem 233.1. No separate "
+                        + "absolute-continuity-versus-summability premise is assumed."))),
             DescribeRole.Theorem))));
 
     private static Formula TheoremFormula()
@@ -50,15 +55,18 @@ internal sealed class ZeroDensityReciprocalPrimeSetDocument
             Call("relativePrimeCountingRatio", support, F.Id("n")), Sp, Eq, Sp, D(0));
         Formula reciprocalDiverges = Seq(
             Neg, Sp, Call("Summable", reciprocal));
-        Formula productCriterion = Call(
-            "SignalKakutaniDichotomy", evidence, lawP, lawQ);
         Formula asymptoticEvidence = Call(
             "IsTheta", restrictedEvidence, F.Id("cofinite"), reciprocal);
         Formula completion = Seq(lawP, Sp, Perp, Sp, lawQ);
+        Formula evidenceDiverges = Seq(Neg, Sp, Call("Summable", evidence));
+        Formula singularityCriterion = new Formula.Logic(
+            completion,
+            FormulaLogicOperator.Iff,
+            evidenceDiverges);
         Formula conditionalCompletion = Seq(
             Forall, Sp, evidence, Comma, Sp, lawP, Comma, Sp, lawQ, Comma, Sp,
             new Formula.Logic(
-                productCriterion,
+                singularityCriterion,
                 FormulaLogicOperator.Implies,
                 new Formula.Logic(
                     asymptoticEvidence,

@@ -6,18 +6,19 @@
    digest: Zero-density prime support has divergent reciprocal mass and conditional completion. -/
 /- Library-search audit trail (2026-09-03): repository searches for relative prime
    density, sparse prime support, reciprocal mass, Hellinger energy, Kakutani, and
-   transcript-law singularity found the exact reusable `primeIndexEquiv`,
-   `relativePrimeCountingRatio`, and `SignalKakutaniDichotomy` declarations, but no
-   theorem giving a zero-relative-density set with divergent actual `1 / p` mass.
+   transcript-law singularity found the exact reusable `primeIndexEquiv` and
+   `relativePrimeCountingRatio` declarations, but no theorem giving a zero-relative-
+   density set with divergent actual `1 / p` mass or discharging the source's
+   singularity/divergence bridge.
    The existing square-indexed module uses `1 / (sqrt(index) + 1)`, not `1 / p`.
    Pinned Mathlib supplies `Nat.Primes.not_summable_one_div` and the exact residue-
    class theorem `summable_indicator_mod_iff`; GitHub and Reservoir searches found
    no exact external theorem in a pinned dependency. The construction below uses
-   successively thinner residue classes on explicit finite index blocks. -/
+   `Nat.find` on analytic block existence to classically select successively thinner
+   finite index blocks; it is noncomputable. -/
 
 import Mathlib.Analysis.SumOverResidueClass
 import D5.S3.Analytic.ZetaEntropyPlane.PrimeRelativeDensityEvidenceDivergence
-import D5.S3.Observer.MeasureSeparation.WeakPrimeSignalCompletionThreshold
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -27,7 +28,6 @@ namespace D5.S3.Analytic.ZetaEntropyPlane.ZeroDensityReciprocalPrimeSet
 open Filter Finset MeasureTheory Asymptotics
 open scoped Topology Nat.Prime MeasureTheory
 open D5.S3.Analytic.ZetaEntropyPlane.PrimeRelativeDensityEvidenceDivergence
-open D5.S3.Observer.MeasureSeparation.WeakPrimeSignalCompletionThreshold
 
 noncomputable section
 
@@ -199,7 +199,7 @@ private theorem chosen_stable_below {k j n : Nat} (hkj : k <= j)
       · intro hold
         exact Or.inl (ih'.mpr hold)
 
-/-- The explicitly accumulated sparse set of prime indices. -/
+/-- The classically selected and accumulated sparse set of prime indices. -/
 private def sparseIndexSupport : Set Nat :=
   {n | ∃ k, n ∈ (sparseStates k).chosen}
 
@@ -513,7 +513,7 @@ private theorem sparseIndexSupport_not_summable :
   rw [abs_of_nonneg hnonneg] at this
   linarith
 
-/-- Proposition 235.1's explicit prime subset, obtained from the sparse index blocks above. -/
+/-- Proposition 235.1's prime subset, classically selected from the sparse index blocks above. -/
 def sparseReciprocalPrimeSupport : Set Nat.Primes :=
   primeIndexEquiv '' sparseIndexSupport
 
@@ -567,17 +567,18 @@ theorem sparse_reciprocal_prime_support_not_summable :
     rfl
   exact summable_subtype_iff_indicator.mp hsubtype
 
-/-- FPOD Proposition 235.1 (source lines 13812--13830). There is one prime
+/-- FPOD Proposition 235.1 (source lines 13813--13834). There is one prime
 subset with zero relative density and divergent reciprocal mass. Moreover, under
-the source's Theorem 233.1 product-law bridge, any prime evidence asymptotic to
-`1 / p` on that subset still makes the two transcript laws mutually singular. -/
+the singularity/divergence equivalence in source Theorem 233.1 (lines 13702--13710),
+any prime evidence asymptotic to `1 / p` on that subset still makes the two
+transcript laws mutually singular. -/
 theorem zero_density_divergent_reciprocal_prime_set :
     ∃ S : Set Nat.Primes,
       Tendsto (relativePrimeCountingRatio S) atTop (nhds 0) ∧
       ¬ Summable (fun p : S => (1 : Real) / p.1.1) ∧
       ∀ {Transcript : Type} [MeasurableSpace Transcript]
         (evidence : Nat.Primes -> Real) (productP productQ : Measure Transcript),
-        SignalKakutaniDichotomy evidence productP productQ ->
+        (productP ⟂ₘ productQ ↔ ¬ Summable evidence) ->
         ((fun p : S => evidence p.1) =Θ[cofinite]
           (fun p : S => (1 : Real) / p.1.1)) ->
         productP ⟂ₘ productQ := by
@@ -585,26 +586,35 @@ theorem zero_density_divergent_reciprocal_prime_set :
     sparse_reciprocal_prime_support_density_zero,
     sparse_reciprocal_prime_support_not_summable, ?_⟩
   intro Transcript _ evidence productP productQ hK htheta
-  apply hK.1.mpr
+  apply hK.mpr
   intro hevidence
   apply sparse_reciprocal_prime_support_not_summable
   exact htheta.summable_iff.mp (hevidence.subtype sparseReciprocalPrimeSupport)
 
 #print axioms zero_density_divergent_reciprocal_prime_set
 
-/-- Reverse probe: the public proposition exposes both nontrivial properties of one support. -/
-example : ∃ S : Set Nat.Primes,
-    Tendsto (relativePrimeCountingRatio S) atTop (nhds 0) ∧
-      ¬ Summable (fun p : S => (1 : Real) / p.1.1) := by
-  obtain ⟨S, hdensity, hdivergence, _⟩ :=
+/-- Reverse probe for A1: the public proposition exposes zero relative density. -/
+private theorem reverse_probe_a1_density_zero :
+    ∃ S : Set Nat.Primes,
+      Tendsto (relativePrimeCountingRatio S) atTop (nhds 0) := by
+  obtain ⟨S, hdensity, _, _⟩ :=
     zero_density_divergent_reciprocal_prime_set
-  exact ⟨S, hdensity, hdivergence⟩
+  exact ⟨S, hdensity⟩
+
+/-- Reverse probe for A2: the public proposition exposes divergent reciprocal mass. -/
+private theorem reverse_probe_a2_reciprocal_divergence :
+    ∃ S : Set Nat.Primes,
+      ¬ Summable (fun p : S => (1 : Real) / p.1.1) := by
+  obtain ⟨S, _, hdivergence, _⟩ :=
+    zero_density_divergent_reciprocal_prime_set
+  exact ⟨S, hdivergence⟩
 
 /-- Reverse probe for A3: the public proposition separately exposes conditional completion. -/
-example : ∃ S : Set Nat.Primes,
+private theorem reverse_probe_a3_conditional_completion :
+    ∃ S : Set Nat.Primes,
     ∀ {Transcript : Type} [MeasurableSpace Transcript]
       (evidence : Nat.Primes -> Real) (productP productQ : Measure Transcript),
-      SignalKakutaniDichotomy evidence productP productQ ->
+      (productP ⟂ₘ productQ ↔ ¬ Summable evidence) ->
       ((fun p : S => evidence p.1) =Θ[cofinite]
         (fun p : S => (1 : Real) / p.1.1)) ->
       productP ⟂ₘ productQ := by
@@ -613,11 +623,22 @@ example : ∃ S : Set Nat.Primes,
   exact ⟨S, hcompletion⟩
 
 /-- Trivialization probe: no finite prime set can replace the theorem's support. -/
-example (S : Set Nat.Primes) (hS : S.Finite) :
+private theorem finite_prime_support_reciprocal_summable
+    (S : Set Nat.Primes) (hS : S.Finite) :
     Summable (fun p : S => (1 : Real) / p.1.1) := by
   letI : Finite S := hS.to_subtype
   letI := Fintype.ofFinite S
   exact (hasSum_fintype _).summable
+
+/-- The selected support is simultaneously infinite and zero-density. -/
+private theorem sparse_reciprocal_prime_support_infinite_and_sparse :
+    sparseReciprocalPrimeSupport.Infinite ∧
+      Tendsto (relativePrimeCountingRatio sparseReciprocalPrimeSupport)
+        atTop (nhds 0) := by
+  refine ⟨?_, sparse_reciprocal_prime_support_density_zero⟩
+  intro hfinite
+  exact sparse_reciprocal_prime_support_not_summable
+    (finite_prime_support_reciprocal_summable sparseReciprocalPrimeSupport hfinite)
 
 end
 
