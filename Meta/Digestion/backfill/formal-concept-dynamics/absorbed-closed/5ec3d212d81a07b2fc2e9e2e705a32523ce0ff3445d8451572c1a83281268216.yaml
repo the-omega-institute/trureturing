@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:5ec3d212d81a07b2fc2e9e2e705a32523ce0ff3445d8451572c1a83281268216
+  normalized_sha256: sha256:5ec3d212d81a07b2fc2e9e2e705a32523ce0ff3445d8451572c1a83281268216
+cas_ref: sha256:5ec3d212d81a07b2fc2e9e2e705a32523ce0ff3445d8451572c1a83281268216
+coverage_gids:
+  - D5/S3/ConceptDynamics/EmergencyEvidenceNecessity.emergency_evidence_necessity
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/EmergencyEvidenceNecessity.emergency_evidence_necessity
+      source_sha256: sha256:5ec3d212d81a07b2fc2e9e2e705a32523ce0ff3445d8451572c1a83281268216
+      target_statement_id: sha256:15f228c7e88047f90746f4c7885143c171c4864b7b5d67070fcbfe1b50a6ce90
+  scribe:
+    - gid: D5/S3/ConceptDynamics/EmergencyEvidenceNecessity.emergency_evidence_necessity
+      definition_sha256: sha256:11ba80a8213e4a89516a14dfc6b0ccc3b10d072ec43fa222e692984ef13eac75
+      emission_sha256: sha256:0d1bbad420252f1a00b7ee1c711087d5e658065c5725941c4dc5fed6ec385380
+  unresolved_subitems: []
