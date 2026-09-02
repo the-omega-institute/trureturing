@@ -12,8 +12,8 @@ internal sealed class LocalFactorUniversalScalingDocument
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Golden prime-local factors are logarithmic rescalings of one universal series, "
-            + "and their second normalized deviations are absolutely summable down to "
-            + "the strict lower edge one over twice phi cubed.",
+            + "and their second normalized deviations are absolutely summable under the "
+            + "sharper sufficient bound one over twice phi cubed.",
         H("Golden Local-Factor Universal Scaling"),
         Blocks(
             Describe.Lean(
@@ -57,19 +57,19 @@ internal sealed class LocalFactorUniversalScalingDocument
                 DeclarationHandle.Create(
                     Module
                         + "second_normalized_factor_deviation_norm_summable_sharp"),
-                H("The second normalized deviations are summable at the sharp edge"),
+                H("The second normalized deviations have a sharper sufficient bound"),
                 StatementSource.FromAuthor(SharpSummabilityFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
                         "The leading deviation is the square of the phi-cubed mode. Its "
-                            + "prime sum converges precisely under the strict inequality "
+                            + "prime sum is summable under the sufficient strict inequality "
                             + "two times phi cubed times the real part of s greater than "
                             + "one; the tail is controlled from o5Beta of four onward.")),
                     Paragraph(Text(
-                        "This sharpens the frozen sufficient bound one over phi to the "
-                            + "fourth to the golden-window lower edge one over twice phi "
-                            + "cubed. It asserts no zero of any local factor."))),
+                        "This gives a sharper sufficient bound, improving one over phi to "
+                            + "the fourth to one over twice phi cubed. It asserts no zero "
+                            + "of any local factor."))),
                 DescribeRole.Theorem)),
         []));
 

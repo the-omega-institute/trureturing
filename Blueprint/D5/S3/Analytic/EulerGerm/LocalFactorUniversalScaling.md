@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Golden prime-local factors are logarithmic rescalings of one universal series, and their second normalized deviations are absolutely summable down to the strict lower edge one over twice phi cubed.
+Golden prime-local factors are logarithmic rescalings of one universal series, and their second normalized deviations are absolutely summable under the sharper sufficient bound one over twice phi cubed.
 
 **Theorem 1.1 (Prime-local factors are logarithmic rescalings).**
 
@@ -32,7 +32,7 @@ The first four exponent values are zero, phi squared, phi cubed, and phi to the 
 
 For positive real part, the norm of x is strictly below one, so the displayed inverse is legitimate. The remaining sum starts exactly at o5Beta of four.
 
-**Theorem 1.3 (The second normalized deviations are summable at the sharp edge).**
+**Theorem 1.3 (The second normalized deviations have a sharper sufficient bound).**
 
 $$\forall s \in \mathbb{C},\; \frac{1}{2 \times \varphi^{3}} < \Re(s) \Rightarrow \operatorname{Summable}\left(p: \operatorname{Primes}\left(\mathbb{N}\right) \mapsto \left\lVert (1 - p^{-s \times \varphi^{3}}) \times (1 + p^{-s \times \varphi^{2}})^{-1} \times \operatorname{germLocalFactor}\left(s, p\right) - 1 \right\rVert\right)$$
 
@@ -42,9 +42,9 @@ $$\forall s \in \mathbb{C},\; \frac{1}{2 \times \varphi^{3}} < \Re(s) \Rightarro
 
 *Commentary.*
 
-The leading deviation is the square of the phi-cubed mode. Its prime sum converges precisely under the strict inequality two times phi cubed times the real part of s greater than one; the tail is controlled from o5Beta of four onward.
+The leading deviation is the square of the phi-cubed mode. Its prime sum is summable under the sufficient strict inequality two times phi cubed times the real part of s greater than one; the tail is controlled from o5Beta of four onward.
 
-This sharpens the frozen sufficient bound one over phi to the fourth to the golden-window lower edge one over twice phi cubed. It asserts no zero of any local factor.
+This gives a sharper sufficient bound, improving one over phi to the fourth to one over twice phi cubed. It asserts no zero of any local factor.
 
 ## References
 
