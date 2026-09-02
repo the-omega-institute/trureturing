@@ -623,20 +623,6 @@ private theorem fourth_threshold_lt_third_threshold :
       _ = Real.goldenRatio ^ 4 := by ring
   exact one_div_lt_one_div_of_lt hphi3 hphi3_lt_phi4
 
-private theorem one_fourth_in_regularity_region :
-    1 / Real.goldenRatio ^ 4 < (((1 / 4 : Real) : Complex)).re := by
-  have hphi2 : 2 < Real.goldenRatio ^ 2 := by
-    rw [Real.goldenRatio_sq]
-    linarith [Real.one_lt_goldenRatio]
-  have hphi4 : 4 < Real.goldenRatio ^ 4 := by
-    calc
-      4 < (Real.goldenRatio ^ 2) ^ 2 := by nlinarith
-      _ = Real.goldenRatio ^ 4 := by ring
-  change 1 / Real.goldenRatio ^ 4 < (1 / 4 : Real)
-  rw [div_lt_iff₀ (by positivity : 0 < Real.goldenRatio ^ 4)]
-  norm_num at hphi4 ⊢
-  linarith
-
 /-- The second signed cancellation makes the normalized golden Euler product
 holomorphic above `1 / phi^4`; at the structural pole `1 / phi^3` it is
 continuous and nonzero. -/

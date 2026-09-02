@@ -13,12 +13,14 @@ internal sealed class GoldenGermSecondNormalizedFactorRegularityDocument
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The second normalized golden germ product is holomorphic above one over phi "
-            + "to the fourth and is continuous and nonzero at the structural pole.",
+            + "to the fourth and is continuous and nonzero at the structural point "
+            + "one over phi cubed.",
         H("Golden Germ Second Normalized Factor Regularity"),
         Blocks(Describe.Lean(
             DescribeId.Create("golden-germ-second-normalized-factor-regularity"),
             DeclarationHandle.Create(Declaration),
-            H("The second normalized factor is regular at the structural pole"),
+            H("The second normalized factor is regular at the structural point "
+                + "one over phi cubed"),
             StatementSource.FromAuthor(TheoremFormula()),
             AssessedProvenance.FromRepo(),
             Blocks(
@@ -42,10 +44,12 @@ internal sealed class GoldenGermSecondNormalizedFactorRegularityDocument
                         + "nonzero. Frozen pointwise deviation summability then makes the "
                         + "infinite product nonzero.")),
                 Paragraph(Text(
-                    "The theorem does not assert a pole of the continued germ, does not "
-                        + "claim regularity on the line with real part one over phi to the "
-                        + "fourth, and does not prove or imply O-5 or the Riemann "
-                        + "hypothesis."))),
+                    "The value one over phi cubed is the structural point given by "
+                        + "D5.X_Frontier.Hearts.structuralPole. This theorem does not "
+                        + "assert that the structural point is a pole; the pole conclusion "
+                        + "is reserved for a later theorem. It does not claim regularity "
+                        + "on the line with real part one over phi to the fourth, and does "
+                        + "not prove or imply O-5 or the Riemann hypothesis."))),
             DescribeRole.Theorem)),
         [
             DocumentEdge.Dependency.Create(GidRef.Create(
