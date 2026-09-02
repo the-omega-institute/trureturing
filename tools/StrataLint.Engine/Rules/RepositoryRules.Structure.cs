@@ -318,8 +318,7 @@ internal static partial class RepositoryRules
             .Where(static path => path.Value.StartsWith(
                          DigestionFormalizationReceipt.RootPath,
                          StringComparison.Ordinal))
-            .Where(path => context.Baseline.TryGetFile(path.Value, out _)
-                && context.Current.TryGetFile(path.Value, out _))
+            .Where(path => context.Current.TryGetFile(path.Value, out _))
             .OrderBy(static path => path.Value, StringComparer.Ordinal)
             .ToImmutableArray();
         var inputs = ImmutableArray.CreateBuilder<DigestionFormalizationReceiptTransitionInput>();
@@ -338,8 +337,20 @@ internal static partial class RepositoryRules
 
             try
             {
-                var baseline = DigestionFormalizationReceipt.LoadTrusted(context.Baseline, path.Value);
                 var candidate = DigestionFormalizationReceipt.Load(context.Current, path.Value);
+                if (!context.Baseline.TryGetFile(path.Value, out _))
+                {
+                    if (!string.Equals(candidate.AtomId, fileAtomId, StringComparison.Ordinal))
+                    {
+                        findings.Add(new RuleFinding(
+                            path.Value,
+                            $"formalization receipt atom_id must match filename atom id {fileAtomId}"));
+                    }
+
+                    continue;
+                }
+
+                var baseline = DigestionFormalizationReceipt.LoadTrusted(context.Baseline, path.Value);
                 inputs.Add(new DigestionFormalizationReceiptTransitionInput(baseline, candidate));
                 inputPaths.Add(path.Value);
                 candidateAtomIds.Add(candidate.AtomId);

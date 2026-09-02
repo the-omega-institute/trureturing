@@ -13,6 +13,8 @@ public sealed class FormalizationReceiptIdentityTests
         "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb";
     private const string CanonicalPath =
         "Meta/Digestion/formalizations/" + BareAtomId + ".v1.json";
+    private const string OtherCanonicalPath =
+        "Meta/Digestion/formalizations/" + OtherBareAtomId + ".v1.json";
     private const string LegacyAtomId = "generic-residual-" + BareAtomId;
     private const string LegacyPath =
         "Meta/Digestion/formalizations/" + LegacyAtomId + ".v1.json";
@@ -20,10 +22,14 @@ public sealed class FormalizationReceiptIdentityTests
     private const string OtherPrimaryGid = "D5/S0/Carrier/ValuesBinding.fixtureValue";
     private const string HostedGid = "D5/S0/Carrier/Ring.hosted";
     private const string ReplacementHostedGid = "D5/S0/Carrier/Ring.replacement";
+    private const string OtherGid = "D5/S0/Carrier/Other.other";
+    private const string OtherPath = "D5/S0/Carrier/Other.lean";
     private const string PrimaryNameKey =
         "ns(ns(ns(ns(ns(n0,2:D5),2:S0),7:Carrier),4:Ring),10:goldenRing)";
     private const string HostedNameKey =
         "ns(ns(ns(ns(ns(n0,2:D5),2:S0),7:Carrier),4:Ring),6:hosted)";
+    private const string OtherNameKey =
+        "ns(ns(ns(ns(ns(n0,2:D5),2:S0),7:Carrier),5:Other),5:other)";
     private const string UnrelatedPath = "notes/unrelated.txt";
     private const string RuleImplementationPath =
         "tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs";
@@ -47,12 +53,14 @@ public sealed class FormalizationReceiptIdentityTests
     }
 
     [Fact]
-    public void NewReceiptIsOutsideTheTransitionRule()
+    public void NewReceiptKeepsFilenameIdentityLawButIsOutsideTransitionEvaluation()
     {
         var fixture = new RuleFixture();
-        fixture.Files[CanonicalPath] = ReceiptText(Receipt());
+        fixture.Files[CanonicalPath] = ReceiptText(Receipt(atomId: OtherBareAtomId));
 
-        Assert.Empty(Findings(Execute(fixture, CanonicalPath)));
+        var finding = Assert.Single(Findings(Execute(fixture, CanonicalPath)));
+        Assert.Contains("atom_id must match filename", finding.Message, StringComparison.Ordinal);
+        Assert.DoesNotContain("transition Rejected", finding.Message, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -77,6 +85,26 @@ public sealed class FormalizationReceiptIdentityTests
             extension.Signature);
 
         Assert.Empty(Findings(Execute(fixture, CanonicalPath)));
+    }
+
+    [Theory]
+    [InlineData("name_key")]
+    [InlineData("kind")]
+    [InlineData("type")]
+    public void HostedAppendSignatureMustEqualCandidateReportCompletely(string field)
+    {
+        var candidateSignature = field switch
+        {
+            "name_key" => Signature("renamed-hosted", "theorem", "True"),
+            "kind" => Signature(HostedNameKey, "def", "True"),
+            _ => Signature(HostedNameKey, "theorem", "False"),
+        };
+        var candidate = Extension(HostedGid, candidateSignature);
+        var report = Signature(HostedNameKey, "theorem", "True");
+        var fixture = Transition(Receipt(), Receipt(hosted: [candidate]));
+        fixture.Reports[RuleFixture.RingPath] = RingReport(Signature(), report);
+
+        AssertRejected(fixture, "complete (name_key, kind, type)");
     }
 
     [Fact]
@@ -199,6 +227,38 @@ public sealed class FormalizationReceiptIdentityTests
             RuleFixture.RingPath);
     }
 
+    [Theory]
+    [InlineData("name_key")]
+    [InlineData("kind")]
+    public void ExistingHostedSignatureNameKeyAndKindCannotChange(string field)
+    {
+        var baseline = Extension(HostedGid, Signature(HostedNameKey, "theorem", "True"));
+        var candidateSignature = field == "name_key"
+            ? Signature("renamed-hosted", "theorem", "True")
+            : Signature(HostedNameKey, "def", "True");
+        var candidate = Extension(HostedGid, candidateSignature);
+        var fixture = Transition(
+            Receipt(hosted: [baseline]),
+            Receipt(hosted: [candidate]));
+
+        AssertRejected(fixture, field);
+    }
+
+    [Fact]
+    public void ReanchoredHostedSignatureMustEqualCandidateReportCompletely()
+    {
+        var baseline = Extension(HostedGid, Signature(HostedNameKey, "theorem", "Old.True"));
+        var candidate = Extension(HostedGid, Signature(HostedNameKey, "theorem", "True"));
+        var fixture = Transition(
+            Receipt(hosted: [baseline]),
+            Receipt(hosted: [candidate]));
+        fixture.Reports[RuleFixture.RingPath] = RingReport(
+            Signature(),
+            Signature(HostedNameKey, "theorem", "False"));
+
+        AssertRejected(fixture, "complete (name_key, kind, type)");
+    }
+
     [Fact]
     public void ExistingHostedExtensionDeletionIsRejectedWithMigrationClause()
     {
@@ -290,6 +350,63 @@ public sealed class FormalizationReceiptIdentityTests
     }
 
     [Fact]
+    public void DeletedReceiptIsOutsideTheTransitionRule()
+    {
+        var fixture = new RuleFixture();
+        SetHistorical(fixture, CanonicalPath, ReceiptText(Receipt()));
+        fixture.Files.Remove(CanonicalPath);
+
+        Assert.Empty(Findings(Execute(fixture, CanonicalPath)));
+    }
+
+    [Fact]
+    public void BatchSourceComparisonRejectsOnlyReceiptWhoseModuleChanged()
+    {
+        var fixture = new RuleFixture();
+        SetHistorical(fixture, RuleFixture.RingPath, "def goldenRing : Nat := 0\n");
+        SetHistorical(fixture, RuleFixture.ValuesBindingPath, "def fixtureValue : Int := 0\n");
+        SetHistorical(
+            fixture,
+            CanonicalPath,
+            ReceiptText(Receipt(signature: Signature(type: "Nat"))));
+        fixture.Files[CanonicalPath] = ReceiptText(Receipt(signature: Signature(type: "Int")));
+        SetHistorical(
+            fixture,
+            OtherCanonicalPath,
+            ReceiptText(Receipt(
+                atomId: OtherBareAtomId,
+                primaryGid: OtherGid,
+                signature: Signature(OtherNameKey, "def", "OldNat"))));
+        fixture.Files[OtherCanonicalPath] = ReceiptText(Receipt(
+            atomId: OtherBareAtomId,
+            primaryGid: OtherGid,
+            signature: Signature(OtherNameKey, "def", "Nat")));
+        const string otherSource = "def other : Nat := 1\n";
+        SetHistorical(fixture, OtherPath, otherSource);
+        AddFrozenDeclarations(
+            fixture,
+            (RuleFixture.RingPath, "goldenRing", Signature(type: "Nat"), 'd'),
+            (OtherPath, "other", Signature(OtherNameKey, "def", "Nat"), 'e'));
+        fixture.Files[RuleFixture.RingPath] = fixture.Baseline[RuleFixture.RingPath].Replace(
+            "def goldenRing : Nat := 0",
+            "def goldenRing : Int := 0",
+            StringComparison.Ordinal);
+        fixture.Reports[RuleFixture.RingPath] = FileReport(
+            "goldenRing",
+            Signature(type: "Int"));
+
+        var findings = Findings(Execute(
+            fixture,
+            CanonicalPath,
+            OtherCanonicalPath,
+            RuleFixture.RingPath));
+
+        var finding = Assert.Single(findings);
+        Assert.Equal(CanonicalPath, finding.Path);
+        Assert.DoesNotContain(findings, item => item.Path == OtherCanonicalPath);
+    }
+
+    [Fact]
     [BaseFactScopeProbe(31)]
     public void Sl031FormalizationReceiptIdentityScopesHistoryAndKeepsOnlyReceiptDeltaChecks()
     {
@@ -341,26 +458,43 @@ public sealed class FormalizationReceiptIdentityTests
         fixture.ForkPoint[RuleFixture.ValuesBindingPath] = valuesBindingSource;
         fixture.Files[RuleFixture.ValuesBindingPath] = valuesBindingSource;
 
-        var path = RepoPath.CreateKnown(RuleFixture.RingPath);
         var source = $"def goldenRing : {baselineSignature.Type} := 0\n";
         fixture.Baseline[RuleFixture.RingPath] = source;
         fixture.ForkPoint[RuleFixture.RingPath] = source;
         fixture.Files[RuleFixture.RingPath] = source;
-        var report = RingReport(baselineSignature);
-        fixture.BaselineReports[RuleFixture.RingPath] = report;
-        fixture.Reports[RuleFixture.RingPath] = report;
-        var declarations = CanonicalStatementWriter.DeclarationStatementIds(path, report);
-        var statementId = StatementId.Create(Fingerprint('d'));
-        var material = new FrozenNodeMaterial(
-            path,
-            declarations,
-            statementId,
-            FrozenContentAddress.ComputeFrozenNodeId(path, statementId, []),
-            [],
-            []);
+        AddFrozenDeclarations(
+            fixture,
+            (RuleFixture.RingPath, "goldenRing", baselineSignature, 'd'));
+    }
+
+    private static void AddFrozenDeclarations(
+        RuleFixture fixture,
+        params (string Path, string Declaration, DigestionFormalizationSignature Signature, char StatementDigit)[]
+            declarations)
+    {
+        var states = ImmutableDictionary.CreateBuilder<RepoPath, TruthState>();
+        var materials = ImmutableArray.CreateBuilder<FrozenNodeMaterial>();
+        foreach (var declaration in declarations)
+        {
+            var path = RepoPath.CreateKnown(declaration.Path);
+            var report = FileReport(declaration.Declaration, declaration.Signature);
+            fixture.BaselineReports[declaration.Path] = report;
+            fixture.Reports[declaration.Path] = report;
+            var statementIds = CanonicalStatementWriter.DeclarationStatementIds(path, report);
+            var statementId = StatementId.Create(Fingerprint(declaration.StatementDigit));
+            states.Add(path, TruthState.Closed);
+            materials.Add(new FrozenNodeMaterial(
+                path,
+                statementIds,
+                statementId,
+                FrozenContentAddress.ComputeFrozenNodeId(path, statementId, []),
+                [],
+                []));
+        }
+
         var catalog = FrozenMaterialCatalog.Create(
-            ImmutableDictionary<RepoPath, TruthState>.Empty.Add(path, TruthState.Closed),
-            [material],
+            states.ToImmutable(),
+            materials.ToImmutable(),
             ImmutableDictionary<RepoPath, ImmutableArray<CaseId>>.Empty,
             ImmutableDictionary<RepoPath, ImmutableArray<string>>.Empty);
         foreach (var file in FrozenLedgerTestData.EventFiles(catalog))
@@ -371,6 +505,11 @@ public sealed class FormalizationReceiptIdentityTests
             fixture.Files[file.Path.Value] = text;
         }
     }
+
+    private static LeanFileReport FileReport(
+        string declaration,
+        DigestionFormalizationSignature signature) =>
+        new([], [Declaration(declaration, signature)]);
 
     private static void AssertEquivalentSourceFixture(RuleFixture fixture)
     {

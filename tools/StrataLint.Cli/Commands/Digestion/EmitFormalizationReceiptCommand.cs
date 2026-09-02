@@ -70,14 +70,16 @@ internal static class EmitFormalizationReceiptCommand
                 ? Decode(repository.ReadRevision(options.BaselineRevision!))
                 : current;
             DigestionFormalizationReceipt? existingReceipt = null;
+            DigestionFormalizationReceipt? transitionBaselineReceipt = null;
             Gid primaryGid;
             DigestionFormalizationSignature signature;
             if (current.TryGetFile(canonicalReceiptPath, out _))
             {
-                var existing = options.ReanchorSignature
-                    ? DigestionFormalizationReceipt.LoadTrusted(protectedBase, canonicalReceiptPath)
-                    : DigestionFormalizationReceipt.Load(current, canonicalReceiptPath);
+                var existing = DigestionFormalizationReceipt.Load(current, canonicalReceiptPath);
                 existingReceipt = existing;
+                transitionBaselineReceipt = options.ReanchorSignature
+                    ? DigestionFormalizationReceipt.LoadTrusted(protectedBase, canonicalReceiptPath)
+                    : existing;
                 if (options.ReanchorSignature)
                 {
                     RequireReanchorPrimaryGidBinding(existing, gids[0]);
@@ -141,7 +143,7 @@ internal static class EmitFormalizationReceiptCommand
             if (existingReceipt is not null)
             {
                 var transition = DigestionFormalizationReceiptTransition.Evaluate(
-                    existingReceipt,
+                    transitionBaselineReceipt!,
                     receipt,
                     protectedBase,
                     current,

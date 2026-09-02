@@ -152,6 +152,48 @@ public sealed class EmitFormalizationReceiptTests
     }
 
     [Fact]
+    public void EmitReanchorRejectsCurrentHostedAppendMixedWithPrimaryTypeChangeWithoutWriting()
+    {
+        const string hostedModule = "D5/S3/Observer/WindowRegisterCRT";
+        const string hostedDeclaration = "window_register_crt_decomposition";
+        var hostedGid = hostedModule + "." + hostedDeclaration;
+        var inputs = ReanchorInputs(ReanchorSpec() with
+        {
+            SecondaryTarget = (hostedModule, hostedDeclaration),
+            IncludeSecondaryPrecommittedSignature = false,
+        });
+        Assert.True(Gid.TryParse(hostedGid, out var parsedHostedGid));
+        var currentReceipt = DigestionFormalizationReceipt.Load(
+            DigestionTestSupport.Snapshot((
+                inputs.EnvelopePath,
+                Encoding.UTF8.GetBytes(inputs.Files[inputs.EnvelopePath]))),
+            inputs.EnvelopePath);
+        var hostedSignature = DigestionFormalizationReceipt.ResolveSignature(
+            parsedHostedGid,
+            inputs.Report);
+        inputs.Files[inputs.EnvelopePath] = Encoding.UTF8.GetString(
+            DigestionFormalizationReceipt.Write(currentReceipt with
+            {
+                HostedExtensions =
+                [
+                    new DigestionFormalizationExtension(hostedGid, hostedSignature),
+                ],
+            }).AsSpan());
+        using var temporary = new TemporaryDirectory();
+        var outputPath = Path.Combine(temporary.Path, inputs.EnvelopePath);
+        Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
+        var before = Encoding.UTF8.GetBytes(inputs.Files[inputs.EnvelopePath]);
+        File.WriteAllBytes(outputPath, before);
+
+        var result = BuildEmitEnvironment(temporary.Path, inputs)
+            .EmitFormalizationReceipt(ReanchorArguments(inputs));
+
+        Assert.False(result.Success);
+        Assert.Contains("unchanged hosted_extensions gid set", result.Error, StringComparison.Ordinal);
+        Assert.True(before.AsSpan().SequenceEqual(File.ReadAllBytes(outputPath)));
+    }
+
+    [Fact]
     public void EmitReanchorRejectsChangedNameKey()
     {
         var inputs = ReanchorInputs(ReanchorSpec() with

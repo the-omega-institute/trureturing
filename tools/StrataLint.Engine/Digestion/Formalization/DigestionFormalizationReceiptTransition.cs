@@ -82,7 +82,6 @@ internal static class DigestionFormalizationReceiptTransition
             return preliminary.Select(static item => item.Result).ToImmutableArray();
         }
 
-        string? sourceFailure = null;
         try
         {
             var baseView = FrozenLedgerBaseViewReader.Read(protectedBase);
@@ -95,47 +94,70 @@ internal static class DigestionFormalizationReceiptTransition
             };
             var states = LeanTruthStates.Resolve(candidateSnapshot, lean);
             var adjacency = LeanImportAdjacency.Build(candidateSnapshot, lean);
-            var candidateCatalog = FrozenContentAddress.BuildAdmissionCatalog(
-                candidateSnapshot,
-                lean,
-                states,
-                adjacency,
-                allReanchoredPaths,
-                baseView.ActiveByPath);
-            if (!LeanPropositionSourceComparer.AreEquivalent(
-                    protectedBase,
-                    candidateSnapshot,
-                    allReanchoredPaths,
-                    baseView,
-                    candidateCatalog))
+            var results = ImmutableArray.CreateBuilder<DigestionFormalizationReceiptTransitionResult>(
+                preliminary.Length);
+            foreach (var item in preliminary)
             {
-                sourceFailure = "Lean proposition source comparer returned false";
+                if (item.Result.Kind != DigestionFormalizationReceiptTransitionKind.SignatureReanchor)
+                {
+                    results.Add(item.Result);
+                    continue;
+                }
+
+                string? sourceFailure = null;
+                try
+                {
+                    var candidateCatalog = FrozenContentAddress.BuildAdmissionCatalog(
+                        candidateSnapshot,
+                        lean,
+                        states,
+                        adjacency,
+                        item.ReanchoredPaths,
+                        baseView.ActiveByPath);
+                    if (!LeanPropositionSourceComparer.AreEquivalent(
+                            protectedBase,
+                            candidateSnapshot,
+                            item.ReanchoredPaths,
+                            baseView,
+                            candidateCatalog))
+                    {
+                        sourceFailure = "Lean proposition source comparer returned false";
+                    }
+                }
+                catch (Exception exception) when (exception is not OutOfMemoryException)
+                {
+                    sourceFailure = exception.Message;
+                }
+
+                results.Add(sourceFailure is null
+                    ? item.Result
+                    : RejectSource(item, sourceFailure));
             }
+
+            return results.ToImmutable();
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
-            sourceFailure = exception.Message;
+            return preliminary.Select(item =>
+                item.Result.Kind == DigestionFormalizationReceiptTransitionKind.SignatureReanchor
+                    ? RejectSource(item, exception.Message)
+                    : item.Result).ToImmutableArray();
         }
-
-        if (sourceFailure is null)
-        {
-            return preliminary.Select(static item => item.Result).ToImmutableArray();
-        }
-
-        return preliminary.Select(item =>
-            item.Result.Kind == DigestionFormalizationReceiptTransitionKind.SignatureReanchor
-                ? DigestionFormalizationReceiptTransitionResult.Rejected(
-                    "reanchor requires equivalent Lean proposition source "
-                    + "(SignatureReanchor clause) for "
-                    + string.Join(
-                        ", ",
-                        item.ReanchoredPaths
-                            .OrderBy(static path => path.Value, StringComparer.Ordinal)
-                            .Select(static path => path.Value))
-                    + ": "
-                    + sourceFailure)
-                : item.Result).ToImmutableArray();
     }
+
+    private static DigestionFormalizationReceiptTransitionResult RejectSource(
+        Preliminary item,
+        string sourceFailure) =>
+        DigestionFormalizationReceiptTransitionResult.Rejected(
+            "reanchor requires equivalent Lean proposition source "
+            + "(SignatureReanchor clause) for "
+            + string.Join(
+                ", ",
+                item.ReanchoredPaths
+                    .OrderBy(static path => path.Value, StringComparer.Ordinal)
+                    .Select(static path => path.Value))
+            + ": "
+            + sourceFailure);
 
     private static Preliminary EvaluateFields(
         DigestionFormalizationReceiptTransitionInput transition,
