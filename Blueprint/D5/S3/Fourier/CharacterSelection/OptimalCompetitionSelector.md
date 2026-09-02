@@ -16,7 +16,31 @@ Lean statement: `D5/S3/Fourier/CharacterSelection/OptimalCompetitionSelector.Cha
 
 The coefficient carrier is EuclideanSpace C (Fin d), the finite complex coordinate space named in the source chain.
 
-**Definition 1.2 (Underlying real profile pairing).**
+**Definition 1.2 (Finite real-rational feature family).**
+
+Lean statement: `D5/S3/Fourier/CharacterSelection/OptimalCompetitionSelector.FiniteRealRationalFeatureFamily`
+
+*Formalization.* `D5/S3/Fourier/CharacterSelection/OptimalCompetitionSelector.FiniteRealRationalFeatureFamily` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The carrier consists of d real rational functions. Its public fields require conjugation equivariance, evenness, reality on the real axis, every pole outside the critical strip, and sufficient decay in the real direction.
+
+**Definition 1.3 (Evaluation of the feature family).**
+
+Lean statement: `D5/S3/Fourier/CharacterSelection/OptimalCompetitionSelector.featureProfile`
+
+*Formalization.* `D5/S3/Fourier/CharacterSelection/OptimalCompetitionSelector.featureProfile` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Phi(z) evaluates every real-rational feature at the same complex point and collects the values in EuclideanSpace C (Fin d).
+
+**Definition 1.4 (Underlying real profile pairing).**
 
 Lean statement: `D5/S3/Fourier/CharacterSelection/OptimalCompetitionSelector.profileDot`
 
@@ -28,7 +52,7 @@ Lean statement: `D5/S3/Fourier/CharacterSelection/OptimalCompetitionSelector.pro
 
 Because the competitor span is real, the source dot product is represented by the underlying real inner product on the complex coordinate space.
 
-**Definition 1.3 (Real span of competitor profiles).**
+**Definition 1.5 (Real span of competitor profiles).**
 
 Lean statement: `D5/S3/Fourier/CharacterSelection/OptimalCompetitionSelector.competitorProfileSpace`
 
@@ -40,7 +64,7 @@ Lean statement: `D5/S3/Fourier/CharacterSelection/OptimalCompetitionSelector.com
 
 W is the real submodule spanned by the finite family Phi(z_j).
 
-**Definition 1.4 (Target-to-competitor margin).**
+**Definition 1.6 (Target-to-competitor margin).**
 
 Lean statement: `D5/S3/Fourier/CharacterSelection/OptimalCompetitionSelector.selectorMargin`
 
@@ -52,9 +76,45 @@ Lean statement: `D5/S3/Fourier/CharacterSelection/OptimalCompetitionSelector.sel
 
 Delta is the metric distance from the target profile to the real competitor span.
 
-**Theorem 1.5 (The normalized complementary projection is optimal).**
+**Definition 1.7 (Competitor interpolation constraints).**
 
-$$\begin{gathered}\forall d, m: \mathbb{N},\\{}Phi: \mathbb{C} \to \operatorname{EuclideanSpace}(\mathbb{C}, \operatorname{Fin}(d)), z_{0}: \mathbb{C}, z: \operatorname{Fin}(m) \to \mathbb{C},\\{}\operatorname{let}(W := \operatorname{competitorProfileSpace}(Phi, z), Delta := \operatorname{selectorMargin}(Phi, z_{0}, z))\;\\{}0 < Delta \Rightarrow \exists c_{*}: \operatorname{EuclideanSpace}(\mathbb{C}, \operatorname{Fin}(d)), \operatorname{norm}(c_{*}) = 1 \land \left(c_{*} \in W^{\perp} \land \left({\forall j: \operatorname{Fin}(m), \operatorname{profileDot}(c_{*}, Phi(z(j))) = 0} \land \left(\operatorname{abs}(\operatorname{profileDot}(c_{*}, Phi(z_{0}))) = Delta \land c_{*} = \operatorname{norm}(\operatorname{starProjection}(W^{\perp}, Phi(z_{0})))^{-1} \cdot \operatorname{starProjection}(W^{\perp}, Phi(z_{0}))\right)\right)\right).\end{gathered}$$
+Lean statement: `D5/S3/Fourier/CharacterSelection/OptimalCompetitionSelector.IsLagrangeInterpolant`
+
+*Formalization.* `D5/S3/Fourier/CharacterSelection/OptimalCompetitionSelector.IsLagrangeInterpolant` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A Lagrange candidate here means only a unit coefficient vector whose pairing with every competing feature profile vanishes.
+
+**Definition 1.8 (The interpolation constraints do not select arbitrarily).**
+
+Lean statement: `D5/S3/Fourier/CharacterSelection/OptimalCompetitionSelector.NotArbitraryLagrangeInterpolation`
+
+*Formalization.* `D5/S3/Fourier/CharacterSelection/OptimalCompetitionSelector.NotArbitraryLagrangeInterpolation` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+It is not the case that every unit solution of the bare zero-value interpolation constraints equals the displayed selector.
+
+**Definition 1.9 (Orthogonal projection formulation).**
+
+Lean statement: `D5/S3/Fourier/CharacterSelection/OptimalCompetitionSelector.IsOrthogonalProjectionProblem`
+
+*Formalization.* `D5/S3/Fourier/CharacterSelection/OptimalCompetitionSelector.IsOrthogonalProjectionProblem` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The geometric margin is exactly the norm of the target feature profile's projection onto the orthogonal complement of the competitor span.
+
+**Theorem 1.10 (The normalized complementary projection is optimal).**
+
+$$\begin{gathered}\forall d, m: \mathbb{N},\\{}Phi: \operatorname{FiniteRealRationalFeatureFamily}(d), z_{0}: \mathbb{C}, z: \operatorname{Fin}(m) \to \mathbb{C},\\{}\operatorname{let}(W := \operatorname{competitorProfileSpace}(Phi, z), Delta := \operatorname{selectorMargin}(Phi, z_{0}, z))\;\\{}0 < Delta \Rightarrow \exists c_{*}: \operatorname{EuclideanSpace}(\mathbb{C}, \operatorname{Fin}(d)), \operatorname{norm}(c_{*}) = 1 \land \left(c_{*} \in W^{\perp} \land \left({\forall j: \operatorname{Fin}(m), \operatorname{profileDot}(c_{*}, \operatorname{featureProfile}(Phi, z(j))) = 0} \land \left(\operatorname{abs}(\operatorname{profileDot}(c_{*}, \operatorname{featureProfile}(Phi, z_{0}))) = Delta \land \left(c_{*} = \operatorname{norm}(\operatorname{starProjection}(W^{\perp}, \operatorname{featureProfile}(Phi, z_{0})))^{-1} \cdot \operatorname{starProjection}(W^{\perp}, \operatorname{featureProfile}(Phi, z_{0})) \land \left(\operatorname{NotArbitraryLagrangeInterpolation}(Phi, z, c_{*}) \land \operatorname{IsOrthogonalProjectionProblem}(Phi, z_{0}, z)\right)\right)\right)\right)\right).\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Fourier/CharacterSelection/OptimalCompetitionSelector.optimal_competition_selector` (`✓ std3`). ∎
 
@@ -62,14 +122,19 @@ $$\begin{gathered}\forall d, m: \mathbb{N},\\{}Phi: \mathbb{C} \to \operatorname
 
 *Commentary.*
 
-Under the sole substantive premise Delta > 0, the displayed witness has unit norm and belongs to the orthogonal complement of W.
+For a finite real-rational feature family satisfying all five source conditions, the premise Delta > 0 yields a unit witness in W perp.
 
-The same public result states all three displayed source conclusions: every competing profile is annihilated, the absolute target response is Delta, and the witness equals the normalized complementary projection.
+The public result states every source conclusion: competitors are annihilated, the target response is Delta, the witness has the displayed normalized-projection formula, the interpolation is not arbitrary, and the problem is explicitly an orthogonal projection.
 
 ## References
 
 - Truth anchor: `D5/S3/Fourier/CharacterSelection/OptimalCompetitionSelector.CharacterProfileSpace`
+- Truth anchor: `D5/S3/Fourier/CharacterSelection/OptimalCompetitionSelector.FiniteRealRationalFeatureFamily`
+- Truth anchor: `D5/S3/Fourier/CharacterSelection/OptimalCompetitionSelector.IsLagrangeInterpolant`
+- Truth anchor: `D5/S3/Fourier/CharacterSelection/OptimalCompetitionSelector.IsOrthogonalProjectionProblem`
+- Truth anchor: `D5/S3/Fourier/CharacterSelection/OptimalCompetitionSelector.NotArbitraryLagrangeInterpolation`
 - Truth anchor: `D5/S3/Fourier/CharacterSelection/OptimalCompetitionSelector.competitorProfileSpace`
+- Truth anchor: `D5/S3/Fourier/CharacterSelection/OptimalCompetitionSelector.featureProfile`
 - Truth anchor: `D5/S3/Fourier/CharacterSelection/OptimalCompetitionSelector.optimal_competition_selector`
 - Truth anchor: `D5/S3/Fourier/CharacterSelection/OptimalCompetitionSelector.profileDot`
 - Truth anchor: `D5/S3/Fourier/CharacterSelection/OptimalCompetitionSelector.selectorMargin`

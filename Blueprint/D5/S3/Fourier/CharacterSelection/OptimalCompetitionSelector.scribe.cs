@@ -25,6 +25,27 @@ internal sealed class OptimalCompetitionSelectorDocument
                         + "coordinate space named in the source chain."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("finite-real-rational-feature-family"),
+                DeclarationHandle.Create(Prefix + "FiniteRealRationalFeatureFamily"),
+                H("Finite real-rational feature family"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The carrier consists of d real rational functions. Its public fields require "
+                        + "conjugation equivariance, evenness, reality on the real axis, every pole "
+                        + "outside the critical strip, and sufficient decay in the real direction."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("feature-profile"),
+                DeclarationHandle.Create(Prefix + "featureProfile"),
+                H("Evaluation of the feature family"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Phi(z) evaluates every real-rational feature at the same complex point and "
+                        + "collects the values in EuclideanSpace C (Fin d)."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("profile-dot"),
                 DeclarationHandle.Create(Prefix + "profileDot"),
                 H("Underlying real profile pairing"),
@@ -54,6 +75,36 @@ internal sealed class OptimalCompetitionSelectorDocument
                         + "span."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("lagrange-interpolant"),
+                DeclarationHandle.Create(Prefix + "IsLagrangeInterpolant"),
+                H("Competitor interpolation constraints"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "A Lagrange candidate here means only a unit coefficient vector whose pairing "
+                        + "with every competing feature profile vanishes."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("not-arbitrary-lagrange-interpolation"),
+                DeclarationHandle.Create(Prefix + "NotArbitraryLagrangeInterpolation"),
+                H("The interpolation constraints do not select arbitrarily"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "It is not the case that every unit solution of the bare zero-value "
+                        + "interpolation constraints equals the displayed selector."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("orthogonal-projection-problem"),
+                DeclarationHandle.Create(Prefix + "IsOrthogonalProjectionProblem"),
+                H("Orthogonal projection formulation"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The geometric margin is exactly the norm of the target feature profile's "
+                        + "projection onto the orthogonal complement of the competitor span."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("optimal-competition-selector"),
                 DeclarationHandle.Create(Prefix + "optimal_competition_selector"),
                 H("The normalized complementary projection is optimal"),
@@ -61,13 +112,13 @@ internal sealed class OptimalCompetitionSelectorDocument
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "Under the sole substantive premise Delta > 0, the displayed witness has "
-                            + "unit norm and belongs to the orthogonal complement of W.")),
+                        "For a finite real-rational feature family satisfying all five source "
+                            + "conditions, the premise Delta > 0 yields a unit witness in W perp.")),
                     Paragraph(Text(
-                        "The same public result states all three displayed source conclusions: "
-                            + "every competing profile is annihilated, the absolute target response "
-                            + "is Delta, and the witness equals the normalized complementary "
-                            + "projection."))),
+                        "The public result states every source conclusion: competitors are "
+                            + "annihilated, the target response is Delta, the witness has the "
+                            + "displayed normalized-projection formula, the interpolation is not "
+                            + "arbitrary, and the problem is explicitly an orthogonal projection."))),
                 DescribeRole.Theorem))));
 
     private static Formula Apply(Formula function, params Formula[] arguments)
@@ -95,16 +146,17 @@ internal sealed class OptimalCompetitionSelectorDocument
     {
         Formula dimension = F.Id("d");
         Formula competitorCount = F.Id("m");
-        Formula profile = F.Id("Phi");
+        Formula family = F.Id("Phi");
         Formula target = new Formula.Subscript(F.Id("z"), D(0));
         Formula competitors = F.Id("z");
         Formula index = F.Id("j");
         Formula complex = Seq(Mathbb, Grp(F.Id("C")));
         Formula profileSpace = Call("EuclideanSpace", complex, Call("Fin", dimension));
-        Formula profileFamily = Seq(complex, Sp, To, Sp, profileSpace);
+        Formula profileFamily = Call("FiniteRealRationalFeatureFamily", dimension);
         Formula competitorFamily = Seq(Call("Fin", competitorCount), Sp, To, Sp, complex);
-        Formula targetProfile = Apply(profile, target);
-        Formula competitorProfile = Apply(profile, Apply(competitors, index));
+        Formula targetProfile = Call("featureProfile", family, target);
+        Formula competitorProfile = Call(
+            "featureProfile", family, Apply(competitors, index));
         Formula space = F.Id("W");
         Formula orthogonal = Seq(space, Caret, Grp(Perp));
         Formula delta = F.Id("Delta");
@@ -118,23 +170,33 @@ internal sealed class OptimalCompetitionSelectorDocument
             Equal(Call("profileDot", selector, competitorProfile), D(0)));
         Formula targetClause = Equal(
             Call("abs", Call("profileDot", selector, targetProfile)), delta);
+        Formula notArbitraryClause = Call(
+            "NotArbitraryLagrangeInterpolation", family, competitors, selector);
+        Formula orthogonalProblemClause = Call(
+            "IsOrthogonalProjectionProblem", family, target, competitors);
         Formula witnessClauses = And(
             Equal(Call("norm", selector), D(1)),
             And(
                 Seq(selector, Sp, InMacro, Sp, orthogonal),
-                And(Grp(competitorClause), And(targetClause, selectorFormula))));
+                And(
+                    Grp(competitorClause),
+                    And(
+                        targetClause,
+                        And(
+                            selectorFormula,
+                            And(notArbitraryClause, orthogonalProblemClause))))));
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
             Forall, Sp, dimension, Comma, Sp, competitorCount, Colon, Sp,
             Mathbb, Grp(F.Id("N")), Comma, RowBreak, Grp(),
-            profile, Colon, Sp, profileFamily, Comma, Sp,
+            family, Colon, Sp, profileFamily, Comma, Sp,
             target, Colon, Sp, complex, Comma, Sp,
             competitors, Colon, Sp, competitorFamily, Comma, RowBreak, Grp(),
             Operatorname, Grp(F.Id("let")), Open,
-            space, Sp, Colon, Eq, Sp, Call("competitorProfileSpace", profile, competitors),
+            space, Sp, Colon, Eq, Sp, Call("competitorProfileSpace", family, competitors),
             Comma, Sp, delta, Sp, Colon, Eq, Sp,
-            Call("selectorMargin", profile, target, competitors), Close, SemiSpace, RowBreak, Grp(),
+            Call("selectorMargin", family, target, competitors), Close, SemiSpace, RowBreak, Grp(),
             D(0), Sp, Lt, Sp, delta, Sp, Rightarrow, Sp,
             Exists, Sp, selector, Colon, Sp, profileSpace, Comma, Sp,
             witnessClauses, Dot,
