@@ -14,7 +14,8 @@ public sealed class ScribeTestMapDeriverTests
         };
 
     [Fact]
-    public void RepositoryMapHasNoUnknownGrowth()
+    // Keep the name: ScribeUnknownDebtPolicy's identity ratchet makes a rename new debt; the assertion body governs.
+    public void RepositoryMapHasNoUnknownGrowthAndEveryPathIsDeclared()
     {
         var map = ScribeTestMapDeriver.DeriveRepository(RepositoryLayout.FindRoot());
 
