@@ -12,7 +12,7 @@ internal sealed class DiscriminantDeterminantProductDocument
             + "discriminant_determinant_product";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The two mod-five sine determinants have golden ratio and discriminant product.",
+        "Conditional Lerch data identify the two mod-five holonomy determinants.",
         H("Discriminant Determinant Product"),
         Blocks(Describe.Lean(
             DescribeId.Create("discriminant-determinant-product"),
@@ -22,23 +22,23 @@ internal sealed class DiscriminantDeterminantProductDocument
             AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text(
-                    "The two source sectors are represented by two times sine of pi over five "
-                        + "and two times sine of two pi over five. Their product is the square "
-                        + "root of five.")),
+                    "Assuming the reflected Hurwitz derivative formula at both source-fixed "
+                        + "mod-five representatives, the frozen determinant bridge evaluates "
+                        + "the two zeta-regularized massless holonomy determinants.")),
                 Paragraph(Text(
-                    "Ordering the second sector over the first gives the golden ratio. The proof "
-                        + "uses the exact fifth-angle cosine value and the sine double-angle "
-                        + "identity."))),
+                    "Their product is the square root of five, while ordering the second sector "
+                        + "over the first gives the golden ratio."))),
             DescribeRole.Theorem))));
 
     private static Formula TheoremFormula()
     {
-        Formula firstSector = Seq(
-            D(2), Sp, Times, Sp,
-            Call("sin", new Formula.Fraction(Pi, D(5))));
-        Formula secondSector = Seq(
-            D(2), Sp, Times, Sp,
-            Call("sin", new Formula.Fraction(Seq(D(2), Sp, Times, Sp, Pi), D(5))));
+        Formula firstHolonomy = new Formula.Fraction(D(1), D(5));
+        Formula secondHolonomy = new Formula.Fraction(D(2), D(5));
+        Formula firstSector = Call("masslessHolonomyDeterminant", firstHolonomy);
+        Formula secondSector = Call("masslessHolonomyDeterminant", secondHolonomy);
+        Formula lerchPremises = And(
+            Call("HasReflectedHurwitzDerivativeAtZeroFormula", firstHolonomy),
+            Call("HasReflectedHurwitzDerivativeAtZeroFormula", secondHolonomy));
         Formula productIdentity = EqualTo(
             Seq(Grp(firstSector), Sp, Times, Sp, Grp(secondSector)),
             Call("sqrt", D(5)));
@@ -46,7 +46,7 @@ internal sealed class DiscriminantDeterminantProductDocument
             new Formula.Fraction(secondSector, firstSector),
             F.Id("goldenRatio"));
 
-        return Disp(And(productIdentity, ratioIdentity));
+        return Disp(Implies(lerchPremises, And(productIdentity, ratioIdentity)));
     }
 
     private static Formula EqualTo(Formula left, Formula right) =>
@@ -54,6 +54,9 @@ internal sealed class DiscriminantDeterminantProductDocument
 
     private static Formula And(Formula left, Formula right) =>
         new Formula.Logic(left, FormulaLogicOperator.And, right);
+
+    private static Formula Implies(Formula left, Formula right) =>
+        new Formula.Logic(left, FormulaLogicOperator.Implies, right);
 
     private static Formula Call(string name, params Formula[] arguments)
     {

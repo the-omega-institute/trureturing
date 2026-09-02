@@ -2,11 +2,11 @@
 
 ## Abstract
 
-The two mod-five sine determinants have golden ratio and discriminant product.
+Conditional Lerch data identify the two mod-five holonomy determinants.
 
 **Theorem 1.1 (The mod-five sector determinants recover the golden constants).**
 
-$${2 \times \operatorname{sin}(\frac{\pi}{5})} \times {2 \times \operatorname{sin}(\frac{2 \times \pi}{5})} = \operatorname{sqrt}(5) \land \frac{2 \times \operatorname{sin}(\frac{2 \times \pi}{5})}{2 \times \operatorname{sin}(\frac{\pi}{5})} = goldenRatio$$
+$$\left(\operatorname{HasReflectedHurwitzDerivativeAtZeroFormula}(\frac{1}{5}) \land \operatorname{HasReflectedHurwitzDerivativeAtZeroFormula}(\frac{2}{5})\right) \Rightarrow \left({\operatorname{masslessHolonomyDeterminant}(\frac{1}{5})} \times {\operatorname{masslessHolonomyDeterminant}(\frac{2}{5})} = \operatorname{sqrt}(5) \land \frac{\operatorname{masslessHolonomyDeterminant}(\frac{2}{5})}{\operatorname{masslessHolonomyDeterminant}(\frac{1}{5})} = goldenRatio\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/HolonomyDeterminant/DiscriminantDeterminantProduct.discriminant_determinant_product` (`✓ std3`). ∎
 
@@ -14,10 +14,11 @@ $${2 \times \operatorname{sin}(\frac{\pi}{5})} \times {2 \times \operatorname{si
 
 *Commentary.*
 
-The two source sectors are represented by two times sine of pi over five and two times sine of two pi over five. Their product is the square root of five.
+Assuming the reflected Hurwitz derivative formula at both source-fixed mod-five representatives, the frozen determinant bridge evaluates the two zeta-regularized massless holonomy determinants.
 
-Ordering the second sector over the first gives the golden ratio. The proof uses the exact fifth-angle cosine value and the sine double-angle identity.
+Their product is the square root of five, while ordering the second sector over the first gives the golden ratio.
 
 ## References
 
 - Truth anchor: `D5/S3/Analytic/HolonomyDeterminant/DiscriminantDeterminantProduct.discriminant_determinant_product`
+- Dependency: [D5/S3/Analytic/HolonomyDeterminant/MasslessHolonomyDeterminant](MasslessHolonomyDeterminant.md)
