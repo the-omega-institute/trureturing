@@ -3,7 +3,8 @@
    mirror-B: D5/B/S3/Observer/GoldenPrimeCircle/GoldenRationalCirclePhaseInjectivity
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: The golden scale-circle point is injective on positive rational scales despite whole-shell blindness on positive reals. -/
+   digest: The golden scale-circle point is injective on positive rational
+     scales despite whole-shell blindness on positive reals. -/
 
 import D5.S3.Observer.GoldenPrimeCircle.GoldenSecondMagnusSampling
 import D5.S3.Observer.GoldenCoding.GoldenRationalShellRigidity
@@ -83,7 +84,6 @@ theorem positive_rational_golden_circle_point_injective :
       have hCoordinate :
           goldenScaleCoordinate (left.1 : ℝ) =
             goldenScaleCoordinate (right.1 : ℝ) + (shell : ℝ) := by
-        simp only [Int.cast_ofNat] at hShiftReal
         linarith
       have hScaledPos :
           0 < (Real.goldenRatio ^ 2) ^ shell * (right.1 : ℝ) :=
@@ -105,7 +105,6 @@ theorem positive_rational_golden_circle_point_injective :
       have hCoordinate :
           goldenScaleCoordinate (right.1 : ℝ) =
             goldenScaleCoordinate (left.1 : ℝ) + ((shell + 1 : ℕ) : ℝ) := by
-        rw [Int.cast_negSucc] at hShiftReal
         linarith
       have hScaledPos :
           0 < (Real.goldenRatio ^ 2) ^ (shell + 1) * (left.1 : ℝ) :=
