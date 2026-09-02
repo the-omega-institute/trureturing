@@ -1,0 +1,6 @@
+## 五　M3-d 具名缺失载体(open,不派席):非平凡零点不在实轴
+
+**缺口**:`IsNontrivialZero.im_ne_zero {ρ : ℂ} (hρ : IsNontrivialZero ρ) : ρ.im ≠ 0`,即实 0<s<1 时 ζ(s) ≠ 0(经典:η(s)>0 且 ζ(s)=η(s)/(1−2^{1−s})<0)。钉版 Mathlib 仅有 `riemannZeta_ne_zero_of_one_le_re`;本仓 `D5/S3/Zeros/Symmetry/ZeroOrbitDegeneracy` 已记同一缺口。
+**可证伪预测(写在跑之前)**:若 M3-a/b/c 落地而 M3-d 仍缺,则本仓任何形如「离线零点 ⟹ 存在负 Weil 平方和」的 separator 只能以 `(Z.zero n).im ≠ 0` 为显式前件陈述;**不得**以公理补入实轴排除。
+**边界**:本节不是义务,不占席位。
+
