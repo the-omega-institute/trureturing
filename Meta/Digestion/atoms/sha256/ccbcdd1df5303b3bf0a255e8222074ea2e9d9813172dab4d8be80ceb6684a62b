@@ -1,0 +1,22 @@
+## 25. 高阶零点相关的正确预期
+
+Rudnick–Sarnak 型 \(n\)-level correlation 说明，高阶零点统计本身是自然对象。
+
+本理论提出但不预设：
+
+\[
+\boxed{
+k\text{-point additive prime cumulant}
+\quad\longleftrightarrow\quad
+k\text{-level connected zero statistic}.
+}
+\]
+
+这是一条 transform-level bridge，不是一一配对：
+
+- 一个素数三元组不对应某三个固定零点；
+- 它对应零点三阶 connected 频谱中的一个 shift-Fourier coefficient；
+- 全体零点状态可能是全部构型相关性的统一多谱编码。
+
+---
+

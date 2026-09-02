@@ -1,0 +1,19 @@
+## 57. Cross-polyspectral experiment
+
+以同一窗函数族比较：
+
+- prime shift \(k\)-cumulants；
+- zero \(k\)-level statistics；
+- Fourier/Paley–Wiener test kernel。
+
+目标不是拟合一条漂亮曲线，而是寻找一个满足：
+
+- 规范明确；
+- 截断误差可界；
+- 可反演；
+- 对不同 \(H\) 有分辨率；
+
+的有限 Trace–Jet dictionary。
+
+---
+

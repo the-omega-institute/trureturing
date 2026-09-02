@@ -1,0 +1,22 @@
+- finite-address quotient 提取 global coherent divisor。
+
+prime constellation completion 则把“occupation position”从 Fibonacci index 推广为加法 shifts \(h\in H\)，并把 local cluster log 推广为 partition-lattice cumulants。
+
+所以两条线并非同一对象，但拥有同一个范畴骨架：
+
+\[
+\boxed{
+\text{configuration language}
+\to
+\text{partition function}
+\to
+\log
+\to
+\text{connected modes}
+\to
+\text{global spectral assembly}.
+}
+\]
+
+---
+

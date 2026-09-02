@@ -1,0 +1,14 @@
+### 29.1 构型轴 \(k\)
+
+\[
+k=|H|
+\]
+
+由源变量 mixed derivative 的数量给出：
+
+\[
+\partial_{\varepsilon_{h_1}}\cdots
+\partial_{\varepsilon_{h_k}}
+\log\mathcal M.
+\]
+

@@ -1,0 +1,17 @@
+\[
+\boxed{
+\mathfrak S_{\mathrm{conn}}(A)
+=
+\sum_{\pi\in\Pi(A)}
+(-1)^{|\pi|-1}
+(|\pi|-1)!
+\prod_{B\in\pi}\mathfrak S(B).
+}
+\]
+
+这是一个条件定理，而不是 prime \(k\)-tuple conjecture 的证明。
+
+它把奇异级数从“原始矩常数”提升成一整套 connected singular-series hierarchy。
+
+---
+

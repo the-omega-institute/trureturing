@@ -1,0 +1,12 @@
+\[
+C_k(h_1,\ldots,h_{k-1})
+=
+\frac1M
+\sum_n
+a(n)
+a(n+h_1)\cdots
+a(n+h_{k-1}).
+\]
+
+令：
+

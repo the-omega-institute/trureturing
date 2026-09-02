@@ -1,0 +1,16 @@
+\[
+\mathcal N_H
+=
+\mathbb R[\varepsilon_h:h\in H]
+/
+(\varepsilon_h^2:h\in H).
+\]
+
+任意单项式都对应一个子集：
+
+\[
+\varepsilon_A=\prod_{h\in A}\varepsilon_h.
+\]
+
+正次数理想是 nilpotent，因此对常数项为 \(1\) 的元素，有限对数严格定义：
+

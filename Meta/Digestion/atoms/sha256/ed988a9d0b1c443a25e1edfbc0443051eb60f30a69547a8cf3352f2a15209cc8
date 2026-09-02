@@ -1,0 +1,25 @@
+## 62. 新理论的最小不可删核心
+
+若将本卷压缩为最小内核，必须保留以下五条：
+
+\[
+\boxed{
+\begin{aligned}
+&\text{(i) symmetry orbit }\neq\text{ fixed-line localization};\\
+&\text{(ii) additive constellations are connected source jets};\\
+&\text{(iii) mirror closure removes odd jets but preserves even defects};\\
+&\text{(iv) Zeckendorf codes amplitudes as completion threads and mirrors as sign complements};\\
+&\text{(v) a genuine prime–zero identification requires a Trace–Jet Bridge}.
+\end{aligned}
+}
+\]
+
+删除任意一条，理论都会退化为：
+
+- 错误的 symmetry argument；
+- 普通的 prime \(k\)-tuple 记号；
+- 普通的 Zeckendorf 序列化；
+- 或没有可证伪接口的量子隐喻。
+
+---
+

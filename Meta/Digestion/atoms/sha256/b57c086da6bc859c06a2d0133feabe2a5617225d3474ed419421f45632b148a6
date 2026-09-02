@@ -1,0 +1,6 @@
+- 只翻转 transverse sign sheet。
+
+bitwise complement 一般不是规范 Zeckendorf word，因此不作为本理论的反码。
+
+---
+

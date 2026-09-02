@@ -1,0 +1,4 @@
+## P9　specific shift 需要 Fourier 反演
+
+仅有聚合 short-interval variance 不能无损确定 \(h=2\) 系数；必须增加足够测试核或全 polyspectrum。
+

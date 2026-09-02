@@ -1,0 +1,23 @@
+## 7. RH 的线程判据
+
+对任一零点：
+
+\[
+\delta=0
+\iff
+q_N(|\delta|)=0
+\quad\forall N.
+\]
+
+故：
+
+\[
+\boxed{
+\mathrm{RH}
+\iff
+\text{每个非平凡零点的 transverse Zeckendorf thread 恒为零线程}.
+}
+\]
+
+这只是等价编码，不是 RH 的证明。
+

@@ -1,0 +1,20 @@
+\[
+|\Omega_\rho\rangle
+=
+\frac1{\sqrt2}
+\left(
+|+\rangle_L|-\rangle_R
++
+e^{i\theta_\rho}
+|-\rangle_L|+\rangle_R
+\right).
+\]
+
+它的 Schmidt rank 为 \(2\)，故是 entangled state。
+
+但：
+
+- 对称轨道本身没有自动指定 \(\theta_\rho\)；
+- 没有自动指定左右 tensor factors；
+- 没有自动给出物理测量代数。
+

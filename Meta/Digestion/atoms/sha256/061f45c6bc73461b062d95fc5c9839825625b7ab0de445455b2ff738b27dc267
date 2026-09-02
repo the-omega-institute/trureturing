@@ -1,0 +1,9 @@
+## 16C. Zeckendorf 最低数位分解与 Mahler 方程
+
+按最低允许 Fibonacci index 是否占据，把所有合法 word 分为两类：
+
+1. 最低位置空；
+2. 最低位置占据，故下一位置必须空。
+
+由整体 index shift 得到：
+

@@ -1,0 +1,24 @@
+## 32. 一级：镜像结构相关
+
+对 transverse mirror pair 选取均匀 side 变量：
+
+\[
+S\in\{-1,+1\},
+\qquad
+X=S\delta,
+\qquad
+X^\vee=-S\delta.
+\]
+
+则：
+
+\[
+\mathbb E[X]=0,
+\qquad
+XX^\vee=-\delta^2.
+\]
+
+两个 sign readout 互相完全决定，其 mutual information 为一 bit。
+
+这是一种**经典 perfect anti-correlation**。
+
