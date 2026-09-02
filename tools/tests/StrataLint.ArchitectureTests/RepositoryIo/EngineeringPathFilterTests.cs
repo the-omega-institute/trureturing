@@ -110,7 +110,7 @@ public sealed class EngineeringPathFilterTests
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
-    public void SelectedExecutionFailureFallsBackToFull(bool throws)
+    public void SelectedExecutionFailureReturnsWithoutFullReplay(bool throws)
     {
         var map = Map(new ScribeTestMethod(
             "tools/tests/StrataLint.Tests",
@@ -130,11 +130,10 @@ public sealed class EngineeringPathFilterTests
             return calls.Count == 1 ? 1 : 0;
         });
 
-        Assert.Equal(0, exitCode);
-        Assert.Equal(2, calls.Count);
+        Assert.NotEqual(0, exitCode);
+        Assert.Single(calls);
         Assert.NotNull(calls[0].Filter);
-        Assert.Equal("tools/StrataLint.sln", calls[1].Target);
-        Assert.Null(calls[1].Filter);
+        if (!throws) Assert.Equal(1, exitCode);
     }
 
     [Fact]
