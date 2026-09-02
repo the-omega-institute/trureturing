@@ -1,0 +1,4 @@
+## 一　M5 第 1 步勘误(不改 atom,只追加)
+
+§M5 第 1 步「证明 `eulerGerm` 在 Re s>1/φ² 的收敛和解析性」相对 dev 已陈旧:`D5/S3/Analytic/EulerGerm/{GermProductConvergence,GermProductAnalytic,GoldenGermProductAbscissa}` 与 `D5/S3/Analytic/GoldenEulerBeta` 已冻结该步(并行控制线由其他驱动者推进,已含因子分解、延拓与零点集模块)。探针核实:β(0)=0、β(1)=φ²、缺口集恰为 {φ, φ²},绝对收敛横坐标恰为 1/φ²;唯一未落地的是 Hearts 字面索引 `eulerGerm` 到冻结 `germLocalFactor` 乘积的 13 行传输,不构成独立义务。本卷 lane 不进入并行控制线。
+
