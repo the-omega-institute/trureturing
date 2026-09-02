@@ -76,6 +76,276 @@ theorem A293316_data_through_twelve :
       [1, 3, 7, 15, 28, 50, 87, 147, 245, 404, 662, 1080, 1757] := by
   decide
 
+theorem mexScan_bounds (used : Finset ℕ) (fuel candidate : ℕ) :
+    candidate ≤ mexScan used fuel candidate ∧
+      mexScan used fuel candidate ≤ candidate + fuel := by
+  induction fuel generalizing candidate with
+  | zero => simp [mexScan]
+  | succ fuel ih =>
+      simp only [mexScan]
+      split_ifs
+      · have hbounds := ih (candidate + 1)
+        omega
+      · omega
+
+theorem mexPos_pos (used : Finset ℕ) : 1 ≤ mexPos used := by
+  exact (mexScan_bounds used (used.card + 1) 1).1
+
+theorem mexPos_le_card_add_two (used : Finset ℕ) :
+    mexPos used ≤ used.card + 2 := by
+  have hbound := (mexScan_bounds used (used.card + 1) 1).2
+  simpa [mexPos, Nat.add_assoc, Nat.add_comm, Nat.add_left_comm] using hbound
+
+theorem state_length (plusOne : Bool) (n : ℕ) :
+    (complementaryState plusOne n).1.length = n + 1 ∧
+      (complementaryState plusOne n).2.length = n + 1 := by
+  induction n using Nat.twoStepInduction with
+  | zero => simp [complementaryState]
+  | one => simp [complementaryState]
+  | more n _ ih =>
+      simp [complementaryState, ih]
+
+theorem state_succ_append (plusOne : Bool) (n : ℕ) :
+    ∃ nextA nextB,
+      complementaryState plusOne (n + 1) =
+        ((complementaryState plusOne n).1 ++ [nextA],
+          (complementaryState plusOne n).2 ++ [nextB]) := by
+  cases n with
+  | zero =>
+      exact ⟨3, 4, by simp [complementaryState]⟩
+  | succ n =>
+      exact ⟨_, _, rfl⟩
+
+theorem state_succ_getD_first (plusOne : Bool) (n : ℕ) :
+    (complementaryState plusOne (n + 1)).1.getD n 0 =
+      kimberlingA plusOne n := by
+  obtain ⟨nextA, nextB, hstate⟩ := state_succ_append plusOne n
+  rw [hstate]
+  unfold kimberlingA
+  apply List.getD_append
+  rw [(state_length plusOne n).1]
+  omega
+
+theorem state_succ_getD_second (plusOne : Bool) (n : ℕ) :
+    (complementaryState plusOne (n + 1)).2.getD n 0 =
+      kimberlingB plusOne n := by
+  obtain ⟨nextA, nextB, hstate⟩ := state_succ_append plusOne n
+  rw [hstate]
+  unfold kimberlingB
+  apply List.getD_append
+  rw [(state_length plusOne n).2]
+  omega
+
+theorem b_pos (plusOne : Bool) (n : ℕ) : 1 ≤ kimberlingB plusOne n := by
+  induction n using Nat.twoStepInduction with
+  | zero => simp [kimberlingB, complementaryState]
+  | one => simp [kimberlingB, complementaryState]
+  | more n _ _ =>
+      unfold kimberlingB
+      rw [complementaryState]
+      dsimp only
+      rw [List.getD_append_right]
+      · rw [(state_length plusOne (n + 1)).2]
+        have hindex : n + 2 - (n + 1 + 1) = 0 := by omega
+        rw [hindex]
+        simpa using mexPos_pos _
+      · rw [(state_length plusOne (n + 1)).2]
+
+theorem a_rec_false (n : ℕ) :
+    kimberlingA false (n + 2) + 1 =
+      kimberlingA false (n + 1) + kimberlingA false n +
+        kimberlingB false n := by
+  change (complementaryState false (n + 2)).1.getD (n + 2) 0 + 1 = _
+  rw [complementaryState]
+  dsimp only
+  rw [List.getD_append_right]
+  · rw [(state_length false (n + 1)).1]
+    have hindex : n + 2 - (n + 1 + 1) = 0 := by omega
+    rw [hindex]
+    simp only [List.getD_cons_zero]
+    simp only [if_neg (by decide : false ≠ true)]
+    rw [state_succ_getD_first, state_succ_getD_second]
+    have hpositive := b_pos false n
+    simp only [add_zero]
+    exact Nat.sub_add_cancel (by omega)
+  · rw [(state_length false (n + 1)).1]
+
+theorem a_rec_true (n : ℕ) :
+    kimberlingA true (n + 2) =
+      kimberlingA true (n + 1) + kimberlingA true n +
+        kimberlingB true n + 1 := by
+  change (complementaryState true (n + 2)).1.getD (n + 2) 0 = _
+  rw [complementaryState]
+  dsimp only
+  rw [List.getD_append_right]
+  · rw [(state_length true (n + 1)).1]
+    have hindex : n + 2 - (n + 1 + 1) = 0 := by omega
+    rw [hindex]
+    simp only [List.getD_cons_zero]
+    simp only [if_true]
+    rw [state_succ_getD_first, state_succ_getD_second]
+    change kimberlingA true (n + 1) + kimberlingA true n +
+        kimberlingB true n + 1 = _
+    rfl
+  · rw [(state_length true (n + 1)).1]
+
+theorem a_pos (plusOne : Bool) (n : ℕ) : 1 ≤ kimberlingA plusOne n := by
+  induction n using Nat.twoStepInduction with
+  | zero => simp [kimberlingA, complementaryState]
+  | one => simp [kimberlingA, complementaryState]
+  | more n hn _ =>
+      cases plusOne with
+      | false =>
+          have hrec := a_rec_false n
+          have hb := b_pos false n
+          omega
+      | true =>
+          have hrec := a_rec_true n
+          omega
+
+theorem a_mono_succ (plusOne : Bool) (n : ℕ) :
+    kimberlingA plusOne n ≤ kimberlingA plusOne (n + 1) := by
+  cases n with
+  | zero =>
+      cases plusOne <;> simp [kimberlingA, complementaryState]
+  | succ n =>
+      cases plusOne with
+      | false =>
+          have hrec := a_rec_false n
+          have hb := b_pos false n
+          change kimberlingA false (n + 1) ≤
+            kimberlingA false (n + 2)
+          omega
+      | true =>
+          have hrec := a_rec_true n
+          change kimberlingA true (n + 1) ≤
+            kimberlingA true (n + 2)
+          omega
+
+theorem a_two_step (plusOne : Bool) (n : ℕ) :
+    2 * kimberlingA plusOne n ≤ kimberlingA plusOne (n + 2) := by
+  cases plusOne with
+  | false =>
+      have hrec := a_rec_false n
+      have hb := b_pos false n
+      have hmono := a_mono_succ false n
+      omega
+  | true =>
+      have hrec := a_rec_true n
+      have hmono := a_mono_succ true n
+      omega
+
+theorem a_ge_geometric (plusOne : Bool) (n : ℕ) :
+    (6 / 5 : ℝ) ^ n ≤ kimberlingA plusOne n := by
+  induction n using Nat.twoStepInduction with
+  | zero => simp [kimberlingA, complementaryState]
+  | one => norm_num [kimberlingA, complementaryState]
+  | more n hn _ =>
+      have htwo := a_two_step plusOne n
+      calc
+        (6 / 5 : ℝ) ^ (n + 2) = (6 / 5 : ℝ) ^ n * (36 / 25) := by
+          rw [pow_add]
+          norm_num
+        _ ≤ (6 / 5 : ℝ) ^ n * 2 := by
+          exact mul_le_mul_of_nonneg_left (by norm_num) (by positivity)
+        _ ≤ (kimberlingA plusOne n : ℝ) * 2 := by
+          exact mul_le_mul_of_nonneg_right hn (by norm_num)
+        _ = (2 * kimberlingA plusOne n : ℕ) := by
+          push_cast
+          ring
+        _ ≤ kimberlingA plusOne (n + 2) := by exact_mod_cast htwo
+
+theorem b_linear (plusOne : Bool) (n : ℕ) :
+    kimberlingB plusOne n ≤ 2 * n + 4 := by
+  induction n using Nat.twoStepInduction with
+  | zero => simp [kimberlingB, complementaryState]
+  | one => simp [kimberlingB, complementaryState]
+  | more n _ _ =>
+      unfold kimberlingB
+      rw [complementaryState]
+      dsimp only
+      rw [List.getD_append_right]
+      · rw [(state_length plusOne (n + 1)).2]
+        have hindex : n + 2 - (n + 1 + 1) = 0 := by omega
+        rw [hindex]
+        simp only [List.getD_cons_zero]
+        have hfinset := List.toFinset_card_le
+          ((complementaryState plusOne (n + 1)).1 ++
+            (complementaryState plusOne (n + 1)).2)
+        rw [List.length_append, (state_length plusOne (n + 1)).1,
+          (state_length plusOne (n + 1)).2] at hfinset
+        refine (mexPos_le_card_add_two _).trans ?_
+        have hinsert := Finset.card_insert_le
+          (if plusOne then
+            (complementaryState plusOne (n + 1)).1.getD (n + 1) 0 +
+                (complementaryState plusOne (n + 1)).1.getD n 0 +
+              (complementaryState plusOne (n + 1)).2.getD n 0 +
+                if plusOne then 1 else 0
+          else
+            ((complementaryState plusOne (n + 1)).1.getD (n + 1) 0 +
+                (complementaryState plusOne (n + 1)).1.getD n 0 +
+              (complementaryState plusOne (n + 1)).2.getD n 0 +
+                if plusOne then 1 else 0) - 1)
+          (((complementaryState plusOne (n + 1)).1 ++
+            (complementaryState plusOne (n + 1)).2).toFinset)
+        omega
+      · rw [(state_length plusOne (n + 1)).2]
+
+theorem linear_over_geometric_tendsto :
+    Tendsto
+      (fun n : ℕ =>
+        (2 * (n : ℝ) + 5) / (6 / 5 : ℝ) ^ (n + 1))
+      atTop (nhds 0) := by
+  have hlinear :
+      Tendsto (fun n : ℕ => (n : ℝ) / (6 / 5 : ℝ) ^ n)
+        atTop (nhds 0) := by
+    simpa using
+      tendsto_pow_const_div_const_pow_of_one_lt 1
+        (by norm_num : (1 : ℝ) < 6 / 5)
+  have hconstant :
+      Tendsto (fun n : ℕ => (1 : ℝ) / (6 / 5 : ℝ) ^ n)
+        atTop (nhds 0) := by
+    simpa using
+      tendsto_pow_const_div_const_pow_of_one_lt 0
+        (by norm_num : (1 : ℝ) < 6 / 5)
+  have hsum :=
+    (hlinear.const_mul (5 / 3 : ℝ)).add
+      (hconstant.const_mul (25 / 6 : ℝ))
+  convert hsum using 1
+  · funext n
+    field_simp [show (6 / 5 : ℝ) ≠ 0 by norm_num]
+    ring
+  · norm_num
+
+theorem b_add_one_relative_error_tendsto (plusOne : Bool) :
+    Tendsto
+      (fun n =>
+        ((kimberlingB plusOne n : ℝ) + 1) /
+          kimberlingA plusOne (n + 1))
+      atTop (nhds 0) := by
+  refine squeeze_zero ?_ ?_ linear_over_geometric_tendsto
+  · intro n
+    have ha : (0 : ℝ) < kimberlingA plusOne (n + 1) := by
+      exact_mod_cast a_pos plusOne (n + 1)
+    exact div_nonneg (by positivity) ha.le
+  · intro n
+    have hbNat : kimberlingB plusOne n + 1 ≤ 2 * n + 5 := by
+      have hb := b_linear plusOne n
+      omega
+    have hb :
+        (kimberlingB plusOne n : ℝ) + 1 ≤ 2 * (n : ℝ) + 5 := by
+      exact_mod_cast hbNat
+    have ha := a_ge_geometric plusOne (n + 1)
+    have hpower : (0 : ℝ) < (6 / 5 : ℝ) ^ (n + 1) := by positivity
+    calc
+      ((kimberlingB plusOne n : ℝ) + 1) /
+            kimberlingA plusOne (n + 1) ≤
+          ((kimberlingB plusOne n : ℝ) + 1) /
+            (6 / 5 : ℝ) ^ (n + 1) :=
+        div_le_div_of_nonneg_left (by positivity) hpower ha
+      _ ≤ (2 * (n : ℝ) + 5) / (6 / 5 : ℝ) ^ (n + 1) :=
+        div_le_div_of_nonneg_right hb hpower.le
+
 /-- A nonnegative sequence driven by a strict affine contraction and a
 vanishing additive error tends to zero. -/
 theorem vanishing_affine_error {d error : ℕ → ℝ} {q : ℝ}
@@ -260,6 +530,66 @@ theorem perturbed_fibonacci_ratio {x error : ℕ → ℝ}
   apply tendsto_iff_dist_tendsto_zero.2
   simpa [Real.dist_eq] using habsoluteLimit
 
-#print axioms perturbed_fibonacci_ratio
+/-- The consecutive ratios of OEIS A293317 tend to the golden ratio. -/
+theorem A293317_ratio_tendsto :
+    Tendsto
+      (fun n => (kimberlingA false (n + 1) : ℝ) /
+        kimberlingA false n)
+      atTop (nhds Real.goldenRatio) := by
+  apply perturbed_fibonacci_ratio
+    (x := fun n => (kimberlingA false n : ℝ))
+    (error := fun n => (kimberlingB false n : ℝ) - 1)
+  · intro n
+    exact_mod_cast a_pos false n
+  · intro n
+    have hrec := congrArg (fun k : ℕ => (k : ℝ)) (a_rec_false n)
+    push_cast at hrec
+    linarith
+  · rw [tendsto_zero_iff_abs_tendsto_zero]
+    refine squeeze_zero (fun n => abs_nonneg _) ?_
+      (b_add_one_relative_error_tendsto false)
+    intro n
+    have ha : (0 : ℝ) < kimberlingA false (n + 1) := by
+      exact_mod_cast a_pos false (n + 1)
+    change
+      |((kimberlingB false n : ℝ) - 1) /
+          kimberlingA false (n + 1)| ≤ _
+    rw [abs_div, abs_of_pos ha]
+    apply div_le_div_of_nonneg_right _ ha.le
+    calc
+      |(kimberlingB false n : ℝ) - 1| ≤
+          |(kimberlingB false n : ℝ)| + |(1 : ℝ)| := abs_sub _ _
+      _ = (kimberlingB false n : ℝ) + 1 := by simp
+
+/-- The consecutive ratios of OEIS A293316 tend to the golden ratio. -/
+theorem A293316_ratio_tendsto :
+    Tendsto
+      (fun n => (kimberlingA true (n + 1) : ℝ) /
+        kimberlingA true n)
+      atTop (nhds Real.goldenRatio) := by
+  apply perturbed_fibonacci_ratio
+    (x := fun n => (kimberlingA true n : ℝ))
+    (error := fun n => (kimberlingB true n : ℝ) + 1)
+  · intro n
+    exact_mod_cast a_pos true n
+  · intro n
+    exact_mod_cast a_rec_true n
+  · exact b_add_one_relative_error_tendsto true
+
+/-- The two complementary Kimberling sequences satisfy their conjectured
+golden consecutive-ratio limits. -/
+theorem kimberling_complementary_golden_limits :
+    Tendsto
+        (fun n => (kimberlingA false (n + 1) : ℝ) /
+          kimberlingA false n)
+        atTop (nhds Real.goldenRatio) ∧
+      Tendsto
+        (fun n => (kimberlingA true (n + 1) : ℝ) /
+          kimberlingA true n)
+        atTop (nhds Real.goldenRatio) :=
+  ⟨A293317_ratio_tendsto, A293316_ratio_tendsto⟩
+
+#print axioms A293317_ratio_tendsto
+#print axioms A293316_ratio_tendsto
 
 end D5.S1.Recurrence.ComplementaryGoldenRatioLimit
