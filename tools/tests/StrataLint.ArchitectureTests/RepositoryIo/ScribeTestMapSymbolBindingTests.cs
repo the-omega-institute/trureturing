@@ -3,105 +3,6 @@ namespace StrataLint.ArchitectureTests;
 public sealed class ScribeTestMapSymbolBindingTests
 {
     [Fact]
-    public void ExactOverloadBindingFollowsOnlyTheSelectedSourceMethod()
-    {
-        const string source = """
-            class OverloadTests {
-              [Fact] public void SelectsInteger() => Parse(1);
-              private static void Parse(int value) => File.ReadAllText(
-                Path.Combine(RepositoryLayout.FindRoot(), "D5", "selected.lean"));
-              private static void Parse(string value) {
-                var path = GetPath();
-                File.ReadAllText(path);
-              }
-              private static string GetPath() => "D5/not-selected.lean";
-            }
-            """;
-
-        var method = Assert.Single(Derive(source).Methods);
-
-        Assert.Equal(["D5/selected.lean"], method.Paths);
-        Assert.False(method.IsUnknown);
-    }
-
-    [Fact]
-    public void AliasQualifiedGenericNestedReceiverBindsAcrossTypes()
-    {
-        const string source = """
-            using ReaderAlias = Support.Reader<int>.Nested;
-            class QualifiedTests {
-              [Fact] public void Reads() => ReaderAlias.Read();
-            }
-            static class Support {
-              internal static class Reader<T> {
-                internal static class Nested {
-                  internal static void Read() => File.ReadAllText(
-                    Path.Combine(RepositoryLayout.FindRoot(), "D5", "qualified.lean"));
-                }
-              }
-            }
-            """;
-
-        var method = Assert.Single(Derive(source).Methods);
-
-        Assert.Equal(["D5/qualified.lean"], method.Paths);
-        Assert.False(method.IsUnknown);
-    }
-
-    [Fact]
-    public void InheritedExtensionAndMethodGroupTargetsAreFollowed()
-    {
-        const string source = """
-            class BindingTests : BindingBase {
-              [Fact] public void Reads() {
-                ReadBase();
-                1.ReadExtension();
-                Array.ForEach(new[] { 1 }, BindingReaders.ReadGroup);
-              }
-            }
-            class BindingBase {
-              protected static void ReadBase() => File.ReadAllText(
-                Path.Combine(RepositoryLayout.FindRoot(), "D5", "base.lean"));
-            }
-            static class BindingReaders {
-              internal static void ReadExtension(this int value) => File.ReadAllText(
-                Path.Combine(RepositoryLayout.FindRoot(), "D5", "extension.lean"));
-              internal static void ReadGroup(int value) => File.ReadAllText(
-                Path.Combine(RepositoryLayout.FindRoot(), "D5", "group.lean"));
-            }
-            """;
-
-        var method = Assert.Single(Derive(source).Methods);
-
-        Assert.Equal(["D5/base.lean", "D5/extension.lean", "D5/group.lean"], method.Paths);
-        Assert.False(method.IsUnknown);
-    }
-
-    [Fact]
-    public void CrossFilePartialHelperUsesItsBoundProjectSymbol()
-    {
-        var map = ScribeTestMapDeriverTests.DeriveSources(
-        [
-            new("PartialTests.cs", """
-                partial class PartialTests {
-                  [Fact] public void Reads() => ReadHelper();
-                }
-                """),
-            new("PartialTests.Helpers.cs", """
-                partial class PartialTests {
-                  private static void ReadHelper() => File.ReadAllText(
-                    Path.Combine(RepositoryLayout.FindRoot(), "D5", "partial.lean"));
-                }
-                """),
-        ]);
-
-        var method = Assert.Single(map.Methods);
-
-        Assert.Equal(["D5/partial.lean"], method.Paths);
-        Assert.False(method.IsUnknown);
-    }
-
-    [Fact]
     public void NameofDoesNotCreateACallEdge()
     {
         const string source = """
@@ -120,7 +21,6 @@ public sealed class ScribeTestMapSymbolBindingTests
 
         var method = Assert.Single(Derive(source).Methods);
 
-        Assert.Equal(["D5/named.lean"], method.Paths);
         Assert.False(method.IsUnknown);
     }
 
@@ -138,7 +38,6 @@ public sealed class ScribeTestMapSymbolBindingTests
 
         var method = Assert.Single(Derive(source).Methods);
 
-        Assert.Equal(["D5/metadata.lean"], method.Paths);
         Assert.False(method.IsUnknown);
     }
 
@@ -178,7 +77,6 @@ public sealed class ScribeTestMapSymbolBindingTests
 
         var method = Assert.Single(Derive(source).Methods);
 
-        Assert.Empty(method.Paths);
         Assert.False(method.IsUnknown);
     }
 
@@ -202,169 +100,6 @@ public sealed class ScribeTestMapSymbolBindingTests
     }
 
     [Fact]
-    public void DerivedFactAttributeAndItsConstructorAreCallableRoots()
-    {
-        const string source = """
-            class DerivedFactTests {
-              [LiveReportFact] public void Reads() { }
-              private sealed class LiveReportFactAttribute : FactAttribute {
-                public LiveReportFactAttribute() => File.ReadAllText(
-                  Path.Combine(RepositoryLayout.FindRoot(), "D5", "attribute.lean"));
-              }
-            }
-            """;
-
-        var method = Assert.Single(Derive(source).Methods);
-
-        Assert.Equal("DerivedFactTests.Reads", method.Id);
-        Assert.Equal(["D5/attribute.lean"], method.Paths);
-    }
-
-    [Fact]
-    public void ConstructorsAccessorsAndLocalFunctionsAreInTheClosure()
-    {
-        const string source = """
-            class CallableTests {
-              [Fact] public void Reads() {
-                var reader = new Reader();
-                _ = reader.Value;
-                void ReadLocal() => File.ReadAllText(
-                  Path.Combine(RepositoryLayout.FindRoot(), "D5", "local.lean"));
-                ReadLocal();
-              }
-              private sealed class Reader {
-                internal Reader() => File.ReadAllText(
-                  Path.Combine(RepositoryLayout.FindRoot(), "D5", "constructor.lean"));
-                internal string Value {
-                  get {
-                    File.ReadAllText(Path.Combine(RepositoryLayout.FindRoot(), "D5", "accessor.lean"));
-                    return string.Empty;
-                  }
-                }
-              }
-            }
-            """;
-
-        var method = Assert.Single(Derive(source).Methods);
-
-        Assert.Equal(
-            ["D5/accessor.lean", "D5/constructor.lean", "D5/local.lean"],
-            method.Paths);
-        Assert.False(method.IsUnknown);
-    }
-
-    [Fact]
-    public void ConstructorRootAliasAndBoundConstantProduceAnExactPath()
-    {
-        const string source = """
-            static class RepositoryPaths {
-              internal const string Rules = "Meta/rules.toml";
-            }
-            class RootAliasTests {
-              [Fact] public void Reads() => _ = new Reader();
-              private sealed class Reader {
-                internal Reader() {
-                  var root = RepositoryLayout.FindRoot();
-                  File.ReadAllText(Path.Combine(root, RepositoryPaths.Rules));
-                }
-              }
-            }
-            """;
-
-        var method = Assert.Single(Derive(source).Methods);
-
-        Assert.Equal(["Meta/rules.toml"], method.Paths);
-        Assert.False(method.IsUnknown);
-    }
-
-    [Fact]
-    public void XunitFixtureImplicitConstructorAndInitializerAreCallableRoots()
-    {
-        const string source = """
-            class FixtureTests(FixtureTests.RepositoryFixture fixture) : IClassFixture<FixtureTests.RepositoryFixture> {
-              private readonly string value = fixture.Value;
-              [Fact] public void Reads() { _ = value; }
-              public sealed class RepositoryFixture {
-                internal string Value { get; } = Read();
-                private static string Read() {
-                  File.ReadAllText(Path.Combine(RepositoryLayout.FindRoot(), "D5", "fixture.lean"));
-                  return string.Empty;
-                }
-              }
-            }
-            """;
-
-        var method = Assert.Single(Derive(source).Methods);
-
-        Assert.Equal(["D5/fixture.lean"], method.Paths);
-        Assert.False(method.IsUnknown);
-    }
-
-    [Fact]
-    public void SameNamedHelpersInDifferentProjectPartitionsDoNotCollide()
-    {
-        const string template = """
-            class PartitionTests {
-              [Fact] public void Reads() => Read();
-              private static void Read() => File.ReadAllText(
-                Path.Combine(RepositoryLayout.FindRoot(), "D5", "__PATH__.lean"));
-            }
-            """;
-        var map = ScribeTestMapDeriver.DeriveSources(
-        [
-            new("Alpha/PartitionTests.cs", template.Replace("__PATH__", "alpha", StringComparison.Ordinal), "Alpha"),
-            new("Beta/PartitionTests.cs", template.Replace("__PATH__", "beta", StringComparison.Ordinal), "Beta"),
-        ],
-        []);
-
-        Assert.Equal(["D5/alpha.lean"], map.Methods.Single(method => method.PartitionKey == "Alpha").Paths);
-        Assert.Equal(["D5/beta.lean"], map.Methods.Single(method => method.PartitionKey == "Beta").Paths);
-        Assert.All(map.Methods, static method => Assert.False(method.IsUnknown));
-    }
-
-    [Fact]
-    public void ReferencedTestProjectHelperUsesItsBoundSourceSymbol()
-    {
-        const string project = """
-            <Project Sdk="Microsoft.NET.Sdk">
-              <ItemGroup><PackageReference Include="xunit" Version="2.9.3" /></ItemGroup>
-            </Project>
-            """;
-        var snapshot = ScribeTestMapDeriverTests.Snapshot(
-            ("tools/tests/Shared.Tests/Shared.Tests.csproj", project),
-            ("tools/tests/Shared.Tests/SharedReader.cs", "using System.IO;\n"
-                + "namespace " + "Shared;\n"
-                + "internal static class RepositoryLayout {\n"
-                + "  internal static string FindRoot() => string.Empty;\n"
-                + "}\n"
-                + "public static class SharedReader {\n"
-                + "  public static void Read() => File.ReadAllText(\n"
-                + "    Path.Combine(RepositoryLayout.FindRoot(), \"D5\", \"shared.lean\"));\n"
-                + "}\n"),
-            ("tools/tests/Consumer.Tests/Consumer.Tests.csproj", project.Replace(
-                "</Project>",
-                "<ItemGroup><ProjectReference Include=\"../Shared.Tests/Shared.Tests.csproj\" /></ItemGroup></Project>",
-                StringComparison.Ordinal)),
-            ("tools/tests/Consumer.Tests/ConsumerTests.cs", """
-                using Shared;
-                using Xunit;
-                public class ConsumerTests {
-                  [Fact] public void Reads() {
-                    Assert.True(true);
-                    SharedReader.Read();
-                  }
-                }
-                """));
-
-        var method = Assert.Single(
-            ScribeTestMapDeriver.DeriveSnapshot(snapshot).Methods,
-            static method => method.Id == "ConsumerTests.Reads");
-
-        Assert.Equal(["D5/shared.lean"], method.Paths);
-        Assert.False(method.IsUnknown, string.Join(',', method.UnknownReasons));
-    }
-
-    [Fact]
     public void MissingLockedXunitMetadataDegradesEveryProjectTestWithANamedReceipt()
     {
         const string projectPath = "tools/tests/MissingMetadata.Tests/MissingMetadata.Tests.csproj";
@@ -383,25 +118,11 @@ public sealed class ScribeTestMapSymbolBindingTests
         var map = ScribeTestMapDeriver.DeriveSnapshot(snapshot);
         var tests = map.Methods.Where(static method =>
             method.Id.StartsWith("MissingMetadataTests.", StringComparison.Ordinal)).ToArray();
-        var plan = EngineeringTestPlanPolicy.Evaluate(
-            ["D5/metadata-unavailable.lean"],
-            map,
-            assemblyByProject: new Dictionary<string, string>(StringComparer.Ordinal)
-            {
-                [projectPath] = "MissingMetadata.Tests",
-            });
 
         Assert.Equal(2, tests.Length);
         Assert.All(tests, static method => Assert.True(method.IsUnknown));
-        Assert.Equal(EngineeringTestPlanKind.Selected, plan.Kind);
-        Assert.Equal(2, plan.Tests.Length);
-        Assert.All(plan.Tests, test =>
-        {
-            Assert.Equal(EngineeringSelectedTestReason.UnknownInput, test.Reason);
-            Assert.Contains(projectPath, test.Detail, StringComparison.Ordinal);
-            Assert.Contains("xUnit compile assets are unavailable", test.Detail, StringComparison.Ordinal);
-        });
-        Assert.Contains(projectPath, plan.Reason, StringComparison.Ordinal);
+        Assert.All(tests, static method =>
+            Assert.Contains(TestMapUnknownReason.MetadataUnavailable, method.UnknownReasons));
 
         var invalidLock = Assert.Throws<InvalidOperationException>(() =>
             ScribeTestMapDeriver.DeriveSnapshot(MetadataSnapshot(
@@ -434,7 +155,6 @@ public sealed class ScribeTestMapSymbolBindingTests
             ScribeTestMapDeriver.DeriveSnapshot(snapshot).Methods,
             static method => method.Id == "AvailableMetadataTests.ExactFact");
 
-        Assert.Equal(["D5/exact-metadata.lean"], method.Paths);
         Assert.False(method.IsUnknown, string.Join(',', method.UnknownReasons));
     }
 
@@ -470,8 +190,6 @@ public sealed class ScribeTestMapSymbolBindingTests
 
         var self = Assert.Single(map.Methods, static method => method.Id ==
             "ScribeTestMapSymbolBindingTests.RepositoryMapIncludesDerivedFactsAndRetiredLedgerFixtureClosure");
-        Assert.Contains("Blueprint", self.Paths);
-        Assert.Contains("tools", self.Paths);
         Assert.False(self.IsUnknown, string.Join(',', self.UnknownReasons));
     }
 

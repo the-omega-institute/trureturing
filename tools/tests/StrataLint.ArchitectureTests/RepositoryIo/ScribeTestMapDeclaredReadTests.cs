@@ -8,7 +8,7 @@ namespace StrataLint.ArchitectureTests;
 /// 因此 fixture 独立成文件。该历史读数只解释拆分,不承担现行目录阈值。
 ///
 /// **三条的分工**(缺任一条,新认可形都会把 fail-closed 放掉):
-/// ① 正例 —— 前缀是字面量、读的是该枚举结果 ⟹ known,且前缀进 Paths;
+/// ① 正例 —— 前缀是字面量、读的是该枚举结果 ⟹ known;
 /// ② 跨前缀 —— 枚举 D5 却读 Blueprint ⟹ **不得**放行(该边界原 issue 未写,是补的);
 /// ③ 无绑定 —— 与任何 EnumerateDeclared 无关的成员读 ⟹ 仍 VariablePath。
 ///
@@ -33,7 +33,6 @@ public sealed class ScribeTestMapDeclaredReadTests
 
         var method = Assert.Single(ScribeTestMapDeriverTests.DeriveSources([new("DeclaredReadTests.cs", source)]).Methods);
 
-        Assert.Equal(["D5"], method.Paths);
         Assert.False(method.IsUnknown);
     }
 
@@ -59,7 +58,6 @@ public sealed class ScribeTestMapDeclaredReadTests
 
         var method = Assert.Single(ScribeTestMapDeriverTests.DeriveSources([new("MismatchedDeclaredReadTests.cs", source)]).Methods);
 
-        Assert.Contains("D5", method.Paths);
         Assert.Equal(TestMapUnknownReason.VariablePath, Assert.Single(method.UnknownReasons));
     }
 

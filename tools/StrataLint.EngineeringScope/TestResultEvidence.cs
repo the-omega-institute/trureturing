@@ -13,7 +13,7 @@ internal sealed record TestResultEvidence(
         if (files.Length == 0) throw new InvalidDataException("dotnet test produced no TRX evidence");
 
         var executed = 0;
-        var actual = new HashSet<(string Assembly, string Id)>(EngineeringTestIdentityComparer.Instance);
+        var actual = new HashSet<(string Assembly, string Id)>();
         var unresolved = new List<string>();
         foreach (var file in files)
         {
@@ -73,43 +73,8 @@ internal sealed record TestResultEvidence(
     internal int CountAssembly(string expectedAssembly) =>
         ExecutedTests.Count(test =>
             StringComparer.OrdinalIgnoreCase.Equals(test.Assembly, expectedAssembly));
-
-    internal ExpectedTestEvidence CompareExpectedTests(
-        IEnumerable<(string Assembly, string Id)> expectedTests,
-        IEnumerable<(string Assembly, string Id)> candidateSourceTests)
-    {
-        var actual = ExecutedTests.ToHashSet(EngineeringTestIdentityComparer.Instance);
-        var candidate = candidateSourceTests.ToHashSet(EngineeringTestIdentityComparer.Instance);
-        var missing = expectedTests
-            .Distinct(EngineeringTestIdentityComparer.Instance)
-            .Where(test => !actual.Contains(test))
-            .OrderBy(static test => test.Assembly, StringComparer.OrdinalIgnoreCase)
-            .ThenBy(static test => test.Id, StringComparer.Ordinal)
-            .ToArray();
-        return new ExpectedTestEvidence(
-            missing.Where(candidate.Contains).ToArray(),
-            missing.Where(test => !candidate.Contains(test)).ToArray());
-    }
 }
-
-internal sealed record ExpectedTestEvidence(
-    IReadOnlyList<(string Assembly, string Id)> Blocking,
-    IReadOnlyList<(string Assembly, string Id)> Exemptions);
 
 internal sealed class InfrastructureUnresolvedException(IReadOnlyList<string> tests)
     : Exception(
         $"INFRASTRUCTURE_UNRESOLVED count={tests.Count} tests={string.Join(" | ", tests)}");
-
-internal sealed class EngineeringTestIdentityComparer : IEqualityComparer<(string Assembly, string Id)>
-{
-    internal static readonly EngineeringTestIdentityComparer Instance = new();
-
-    public bool Equals((string Assembly, string Id) x, (string Assembly, string Id) y) =>
-        StringComparer.OrdinalIgnoreCase.Equals(x.Assembly, y.Assembly)
-        && StringComparer.Ordinal.Equals(x.Id, y.Id);
-
-    public int GetHashCode((string Assembly, string Id) value) =>
-        HashCode.Combine(
-            StringComparer.OrdinalIgnoreCase.GetHashCode(value.Assembly),
-            StringComparer.Ordinal.GetHashCode(value.Id));
-}

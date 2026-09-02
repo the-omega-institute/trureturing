@@ -137,6 +137,9 @@
           "Trureturing.Truth": "[0.1.0, )"
         }
       },
+      "stratalint.testsupport": {
+        "type": "Project"
+      },
       "trureturing.truth": {
         "type": "Project"
       },
