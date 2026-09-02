@@ -9,7 +9,7 @@ namespace StrataLint.Scribe.Tests;
 public sealed partial class FormulaCorpusInventoryTests
 {
     private const string CanonicalRendererSha256 =
-        "660f662f1de51baf5086f96d48e20bb492cac03b6700181aa6f109a49faac487";
+        "8b4045d1fd35864cbc2913f1bf463a386ed615f4dfce2da20737eb6bc4a9138e";
     private const string UpdateCommand = "make -C tools update-renderer-contract";
 
     [Fact]
@@ -430,6 +430,12 @@ public sealed partial class FormulaCorpusInventoryTests
         formulas.Add(new Formula.Power(function, one));
         formulas.Add(new Formula.Power(function, script));
         formulas.Add(new Formula.Power(function, subscript));
+        // 2026-09-02 席位新增 scribe 定义暴露的两项(判词逐字):
+        //   formula-children:Power(Base=Apply,Exponent=LatexWord)
+        //   formula-children:Subscript(Base=LatexMacro,Index=LatexWord)
+        var applyNode = new Formula.Apply(subscript, [x]);
+        formulas.Add(new Formula.Power(applyNode, word));
+        formulas.Add(new Formula.Subscript(macroPhi, word));
         // 仓库实际使用的 Power 子组合,由 AssertRendererVocabularyCoverage 点名要求覆盖。
         formulas.Add(new Formula.Power(function, sequence));
         formulas.Add(new Formula.Power(function, x));
