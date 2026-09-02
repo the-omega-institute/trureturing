@@ -1797,3 +1797,31 @@ $$\boxed{\ \beta(v{+}1)-\beta(v)\in\{\varphi,\ \varphi^2\}\ }$$
 三条各一席位轮(codex-cli,独立 worktree,各自 PR-1 deposit;cover 另开 PR-2,消费已在 base 的收据);任一席以 `open` 出口即在下一增订登记阻断面。W-G 的自然归属为 `Analytic/Adelic`(已满 24/24),落户于其裂桶兄弟 `Analytic/ReflectedSpectrum`(偶极的反射谱语境)或席位按路径策略选定的裂桶;W-E 与 W-F 落户 `Analytic/Toroidal`(W-B 所建)。
 
 后续增订继续严格追加于本节之后。
+
+---
+
+# 增订七　主线第一步:`ZeroData` 非空洞性的精确边界(M1-a、M1-b)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;la101 第三波六席面板(codex ×2、GPT PRO ×2、隔离 subagent ×2,GPT PRO 与 codex 各有载体失败已在 #4589 逐席披露)收敛后由 orchestrator 撰写;研究探针为一席隔离 subagent(`lake env lean`,0 sorry,标准三公理),其证明文件存 orchestrator scratchpad,不入库。判决日:2026-09-02。lane issue:#4589。
+
+## 〇　为什么是这一条
+
+第三部 §四 立项裁决把「修复非空洞语义」列为 O-6 主线第一步;§M1 与 R-D 指出:凡对 `Z : ZeroData` 量化的 O-6 陈述,在 `ZeroData` 可居留性未定前皆可能空洞。探针把这个问题压缩成一条精确等价与一个具名缺口:可居留性**恰**等价于非平凡零点集无穷,而后者不在钉版 Mathlib 与本仓中。本增订只预登记可在钉版工具链闭合的那一半,并把另一半诚实记为缺失载体,不以公理补。
+
+## 一　M1-a 预登记:`ZeroData` 可居留性等价于非平凡零点无穷(`ZeroDataNonemptyIffInfinite`)
+
+**义务**:单一公开定理 `nonempty_zeroData_iff_infinite : Nonempty ZeroData ↔ {ρ : ℂ | IsNontrivialZero ρ}.Infinite`,其中 `ZeroData`、`IsNontrivialZero` 为冻结 `D5/S3/Weil/ZeroSum` 的定义。正向:`zero : ℕ → ℂ` 单射且逐项非平凡零点,故零点集无穷。反向:由钉版 Mathlib `NumberTheory/LSeries/ZetaZeros`(零点集闭、离散、紧交有限)与 Lindelöf 可数性得非平凡零点集可数,无穷可数集给出枚举;重数由 `analyticOrderAt` 的存在与唯一性给出;反射置换与共轭置换由 `riemannZeta_one_sub`、`riemannZeta_conj` 及重数守恒引理给出;局部有限由紧交有限给出。模块须消费上述 Mathlib 与冻结声明,不重证零点集拓扑。
+**可证伪预测(写在跑之前)**:若正确,定理以 `Set.Countable`/`Denumerable` 枚举、`analyticOrderAt` 引理与 `Equiv.Perm` 构造在钉版工具链闭合,公理集为标准三条;若 `ZeroData` 的某一字段(如共轭置换的重数守恒)在钉版 Mathlib 无对应引理,则该字段名与所缺引理名记入下一增订,义务改标 `open`,不得削弱字段。
+**边界**:本义务不证明零点集无穷,不给出任何一个零点,不主张 O-6 非空洞;它只把「非空洞」精确地归约为 M1-b。
+
+## 二　M1-b 具名缺失载体(open,不派席):非平凡零点无穷
+
+**缺口**:`nontrivialZeros_infinite : {ρ : ℂ | IsNontrivialZero ρ}.Infinite`。钉版 Mathlib `ZetaZeros.lean` 无 `Infinite` 或 $N(T)$ 下界;本仓 `D5/S3/Weil/ZetaRvm` 只有上界计数。其经典来源为 Hardy(1914)临界线上无穷零点或 Riemann–von Mangoldt 计数下界,属解析数论重型载体,不是初等波。
+**可证伪预测(写在跑之前)**:若 M1-a 落地而 M1-b 仍缺,则本仓一切「∀ Z : ZeroData, …」形式的 O-6 陈述在 kernel 意义上仍是条件性的;主线「修复非空洞语义」的出口只有三种——上游 Mathlib 补入无穷性、本仓以外部形式化(标 `literature-attested` 并 import)接入、或在本卷显式改写 O-6 为以 `Set.Infinite` 为前件的条件陈述;**不得**以公理或 `ASSUMED-UNVERIFIED` 冒充已闭合。
+**边界**:本节不是义务,不占席位;它只使 R-D 的「空类型诊断」有了精确的判据。
+
+## 三　预算与结算
+
+M1-a 一席位轮(codex-cli,独立 worktree,PR-1 deposit;cover 另开 PR-2);M1-b 不占预算,待 owner 在三种出口中裁决。
+
+后续增订继续严格追加于本节之后。
