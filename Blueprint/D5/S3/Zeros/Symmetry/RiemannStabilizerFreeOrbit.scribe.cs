@@ -118,8 +118,8 @@ internal sealed class RiemannStabilizerFreeOrbitDocument : IScribeDocumentDefini
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
-            rhClause, Sp, Land,
-            RowBreak, Grp(), orbitClause, Dot,
+            Open, rhClause, Close, Sp, Land,
+            RowBreak, Grp(), Open, orbitClause, Close, Dot,
             End, Grp(F.Id("gathered"))));
     }
 }
