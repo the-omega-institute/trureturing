@@ -1,0 +1,6 @@
+## 一　M3-f-5 预登记:完整 separator(`OffLineNonrealZeroNegativeWeilSquare`)
+
+**义务**:公开定理 `offLineNonrealZero_yields_negative_weil_square (Z : ZeroData) (n : ℕ) (hOff : (Z.zero n).re ≠ criticalAbscissa) (hIm : (Z.zero n).im ≠ 0) : ∃ g : WeilTestFunction, ∃ hZero : SymmetricConvergent Z (convolutionSquare g), (zeroSum Z (convolutionSquare g) hZero).re < 0`。闭合路线:M3-f-3 给出 b、k、E;令 S := Σ'_j ‖zeroSummand Z (convolutionSquare k) j‖(由冻结 EF 可和性有限);取 N 使 (1/4)^{N+1}·S < 4·重数;g := convolve (convolutionSuccPower b N) k;`SymmetricConvergent` 由冻结 M2-c 给出;把绝对收敛的全和拆为轨道 + 补集:轨道贡献 = −4·重数(冻结 M3-a 与卷积幂变换公式),补集由 M3-f-4 界住;实部严格为负。落点 `D5/S3/Weil/ZetaBridge/`(或按容量规则分桶)。
+**可证伪预测(写在跑之前)**:若正确,定理只消费冻结的 `ConvolutionPowerAmplification`、`EvenTestFunctionFiniteInterpolation`、`PrescribedPairNegativeOrbit`、`SymmetricConvergentOfZetaSummable`、闭带衰减(增订十三)与钉版 Mathlib,公理集为标准三条;若卷积幂在本仓测试类中不封闭、或 EF 可和性不能传输到任意 `ZeroData` 的 `zeroSummand`,则本条为假并须记所缺引理。
+**边界**:`hIm` 不可省略(M3-d 具名缺口);本条不断言 O-6 ⟹ RH,不断言任何零点存在。
+
