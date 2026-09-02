@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:9e4740138d8fd6b997300acf2ae3d85737b98de60535bf09fd42d7e8e5f4e1ab
+  normalized_sha256: sha256:9e4740138d8fd6b997300acf2ae3d85737b98de60535bf09fd42d7e8e5f4e1ab
+cas_ref: sha256:9e4740138d8fd6b997300acf2ae3d85737b98de60535bf09fd42d7e8e5f4e1ab
+coverage_gids:
+  - D5/S3/Analytic/PoissonPhaseHolonomy/PairwisePoissonHolonomyEnergy.pairwise_poisson_holonomy_energy
+receipts:
+  coverage:
+    - gid: D5/S3/Analytic/PoissonPhaseHolonomy/PairwisePoissonHolonomyEnergy.pairwise_poisson_holonomy_energy
+      source_sha256: sha256:9e4740138d8fd6b997300acf2ae3d85737b98de60535bf09fd42d7e8e5f4e1ab
+      target_statement_id: sha256:3c8a0aa421c81c7f9b40e0b2f216a8f01368f18e578e8e5364d238f50daba006
+  scribe:
+    - gid: D5/S3/Analytic/PoissonPhaseHolonomy/PairwisePoissonHolonomyEnergy.pairwise_poisson_holonomy_energy
+      definition_sha256: sha256:3519b87c52a0870407f192692e4a60d982e5704bdbf6b1b4a067c327564f3c1b
+      emission_sha256: sha256:f19792102b72ea380b411e4573780ee00ba83f8ae731549913ac8590bf90dea2
+  unresolved_subitems: []
