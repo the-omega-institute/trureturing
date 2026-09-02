@@ -30,6 +30,8 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Equal(before + 3, fixture.CommitCount());
         Assert.Equal(
             [
+                "dotnet:show-atom",
+                "dotnet:show-atom",
                 "make:lean-report",
                 "dotnet:cover-atom",
                 "dotnet:cover-atom",
@@ -64,7 +66,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Equal(failedBefore + 1, failedFixture.CommitCount());
         Assert.Contains("cover_disposition:", failedFixture.BackfillContents(), StringComparison.Ordinal);
         Assert.Equal(
-            ["make:lean-report", "dotnet:cover-atom"],
+            ["dotnet:show-atom", "make:lean-report", "dotnet:cover-atom"],
             failedFixture.CallKinds());
         Assert.Empty(failedFixture.Status());
     }
@@ -84,7 +86,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         var result = fixture.RunBatch(atoms);
 
         Assert.True(result.ExitCode == 0, Diagnostics(result));
-        Assert.Equal("make:lean-report", fixture.CallKinds()[0]);
+        Assert.Equal("make:lean-report", fixture.CallKinds()[2]);
         Assert.False(File.Exists(Path.Combine(
             fixture.Root,
             TransactionFixture.ReceiptRelativePath + ".tmp.abandoned")));
@@ -129,6 +131,9 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 [
                     $"PATH={binPath}{Path.PathSeparator}{Environment.GetEnvironmentVariable("PATH")}",
                     $"PLAYBOOK_TEST_CALLS={callsPath}",
+                    $"PLAYBOOK_ATOM_RAW_SHA256={RawSha256}",
+                    $"PLAYBOOK_SECONDARY_ATOM_RAW_SHA256={SecondaryRawSha256}",
+                    $"PLAYBOOK_RECEIPT_PATH={ReceiptRelativePath}",
                     "PLAYBOOK_STALE_REPORT=0",
                     "PLAYBOOK_INVALID_RECEIPT=0",
                     $"PLAYBOOK_COVER_DISPOSITION_FAILURE={(coverDispositionFailure ? "1" : "0")}",

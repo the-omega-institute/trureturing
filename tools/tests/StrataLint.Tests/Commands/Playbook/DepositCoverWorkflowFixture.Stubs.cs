@@ -87,6 +87,23 @@ public sealed partial class DepositCoverWorkflowScriptTests
             printf 'dotnet:%s\n' "$command" >> "$PLAYBOOK_TEST_CALLS"
             read -r -a parts <<< "$command"
             case "${parts[0]:-}" in
+              show-atom)
+                if [[ ${parts[1]:-} != --atom-id || -z ${parts[2]:-} ]]; then
+                  echo 'SHOW_ATOM_INVALID synthetic atom transport mismatch' >&2
+                  exit 95
+                fi
+                case "${parts[2]}" in
+                  atom-1) raw_sha256=$PLAYBOOK_ATOM_RAW_SHA256 ;;
+                  atom-2) raw_sha256=$PLAYBOOK_SECONDARY_ATOM_RAW_SHA256 ;;
+                  *)
+                    echo "SHOW_ATOM_INVALID synthetic atom is absent: ${parts[2]}" >&2
+                    exit 94
+                    ;;
+                esac
+                printf 'ATOM_RECORD atom_id=%s source=ledger\n' "${parts[2]}"
+                printf 'HASH_RECORD raw_sha256=%s normalized_sha256=%s cas_ref=%s source=ledger\n' \
+                  "$raw_sha256" "$raw_sha256" "$raw_sha256"
+                ;;
               deposit-header-check)
                 if [[ ${parts[1]:-} != --target \
                     || ${parts[2]:-} != "${PLAYBOOK_TARGET_MODULE:-}" ]]; then
@@ -111,7 +128,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
                   > "Golden/Frozen/accepted/${event_id}.json"
                 if [[ -n ${PLAYBOOK_MUTATE_RECEIPT_AFTER_PREPARE:-} ]]; then
                   printf '%s' "$PLAYBOOK_MUTATE_RECEIPT_AFTER_PREPARE" \
-                    > Meta/Digestion/formalizations/atom-1.v1.json
+                    > "$PLAYBOOK_RECEIPT_PATH"
                 fi
                 if [[ -f fail-ledger-once ]]; then
                   rm fail-ledger-once
@@ -136,9 +153,22 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 done
                 requested_gid=${gids[0]:-}
                 primary_gid=$requested_gid
-                [[ -n $out ]] || out="Meta/Digestion/formalizations/${atom}.v1.json"
+                case "$atom" in
+                  atom-1) raw_sha256=$PLAYBOOK_ATOM_RAW_SHA256 ;;
+                  atom-2) raw_sha256=$PLAYBOOK_SECONDARY_ATOM_RAW_SHA256 ;;
+                  *)
+                    echo "FORMALIZATION_RECEIPT_INVALID synthetic atom is absent: $atom" >&2
+                    exit 48
+                    ;;
+                esac
+                canonical="Meta/Digestion/formalizations/${raw_sha256#sha256:}.v1.json"
+                [[ -n $out ]] || out=$canonical
+                if [[ $out != "$canonical" && $out != "$canonical.tmp."?* ]]; then
+                  echo "FORMALIZATION_RECEIPT_INVALID --out must name $canonical or ${canonical}.tmp.<suffix>" >&2
+                  exit 48
+                fi
                 mkdir -p "$(dirname "$out")"
-                existing="Meta/Digestion/formalizations/${atom}.v1.json"
+                existing=$canonical
                 if [[ -f $existing ]]; then
                   existing_atom=$(jq -r '.atom_id // ""' "$existing")
                   existing_primary=$(jq -r '.primary_gid // ""' "$existing")
@@ -171,7 +201,15 @@ public sealed partial class DepositCoverWorkflowScriptTests
                     --align-scribe-receipt) align=1 ;;
                   esac
                 done
-                expected_envelope="Meta/Digestion/formalizations/${atom}.v1.json"
+                case "$atom" in
+                  atom-1) raw_sha256=$PLAYBOOK_ATOM_RAW_SHA256 ;;
+                  atom-2) raw_sha256=$PLAYBOOK_SECONDARY_ATOM_RAW_SHA256 ;;
+                  *)
+                    echo "COVER_INVALID synthetic atom is absent: $atom" >&2
+                    exit 46
+                    ;;
+                esac
+                expected_envelope="Meta/Digestion/formalizations/${raw_sha256#sha256:}.v1.json"
                 if [[ $envelope != "$expected_envelope" ]]; then
                   echo "COVER_INVALID envelope $envelope does not match atom $atom" >&2
                   exit 46
@@ -264,6 +302,9 @@ public sealed partial class DepositCoverWorkflowScriptTests
                     $"PATH={binPath}{Path.PathSeparator}{Environment.GetEnvironmentVariable("PATH")}",
                     $"PLAYBOOK_TEST_CALLS={callsPath}",
                     $"PLAYBOOK_TEST_FREEZE_PROBES={freezeProbePath}",
+                    $"PLAYBOOK_ATOM_RAW_SHA256={RawSha256}",
+                    $"PLAYBOOK_SECONDARY_ATOM_RAW_SHA256={SecondaryRawSha256}",
+                    $"PLAYBOOK_RECEIPT_PATH={ReceiptRelativePath}",
                     $"PLAYBOOK_STALE_REPORT={(staleReport ? "1" : "0")}",
                     $"PLAYBOOK_INVALID_RECEIPT={(invalidReceipt ? "1" : "0")}",
                     $"PLAYBOOK_COVER_DISPOSITION_FAILURE={(coverDispositionFailure ? "1" : "0")}",
@@ -279,6 +320,32 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 ],
                 Root,
                 timeout ?? BoundedProcessRunner.HangDetectionBudget,
+                128 * 1024);
+
+        internal ProcessOutput RunMakeDeposit() =>
+            TestProcessRunner.Run(
+                "/usr/bin/env",
+                [
+                    $"PATH={binPath}{Path.PathSeparator}{Environment.GetEnvironmentVariable("PATH")}",
+                    $"PLAYBOOK_TEST_CALLS={callsPath}",
+                    $"PLAYBOOK_TEST_FREEZE_PROBES={freezeProbePath}",
+                    $"PLAYBOOK_ATOM_RAW_SHA256={RawSha256}",
+                    $"PLAYBOOK_SECONDARY_ATOM_RAW_SHA256={SecondaryRawSha256}",
+                    $"PLAYBOOK_RECEIPT_PATH={ReceiptRelativePath}",
+                    "PLAYBOOK_STALE_REPORT=0",
+                    "PLAYBOOK_INVALID_RECEIPT=0",
+                    "PLAYBOOK_COVER_DISPOSITION_FAILURE=0",
+                    "PLAYBOOK_MUTATE_RECEIPT_AFTER_PREPARE=",
+                    $"PLAYBOOK_TARGET_MODULE={LeanPath}",
+                    "PLAYBOOK_REJECT_DEPOSIT_HEADER=0",
+                    "/usr/bin/make",
+                    "deposit",
+                    "BASE=HEAD",
+                    $"ATOM_ID={AtomId}",
+                    $"GID={Gid}",
+                ],
+                Root,
+                BoundedProcessRunner.HangDetectionBudget,
                 128 * 1024);
 
         public void Dispose()

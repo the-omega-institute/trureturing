@@ -9,8 +9,11 @@ COMMAND="${1:-}"
 BASE="${2:-origin/dev}"
 ATOM_ID="${3:-}"
 GID="${4:-}"
+RAW_SHA256=""
+RECEIPT_PATH=""
 BATCH_ATOM_IDS=()
 BATCH_GIDS=()
+BATCH_RECEIPT_PATHS=()
 PREPARED_RECEIPT_PATH=""
 PREPARED_RECEIPT_ORIGINAL_PATH=""
 PREPARED_RECEIPT_REPLACES_EXISTING=0
@@ -68,11 +71,43 @@ require_transaction_arguments() {
 
   DOCUMENT_GID="${GID%.*}"
   MODULE_PATH="${DOCUMENT_GID}.lean"
-  RECEIPT_PATH="Meta/Digestion/formalizations/${ATOM_ID}.v1.json"
   if [[ "$DOCUMENT_GID" == "$GID" || ! -f "$MODULE_PATH" ]]; then
     echo "PLAYBOOK_INVALID GID does not resolve to a Lean module: $GID" >&2
     return 2
   fi
+}
+
+derive_receipt_path() {
+  local show_output status line field hash_record_count=0 raw_sha256_count=0
+  local fields=()
+  RAW_SHA256=""
+  RECEIPT_PATH=""
+  if show_output="$(run_cli show-atom --atom-id "$ATOM_ID")"; then
+    :
+  else
+    status=$?
+    echo "PLAYBOOK_INVALID cannot resolve authoritative ledger atom: $ATOM_ID" >&2
+    return "$status"
+  fi
+
+  while IFS= read -r line; do
+    [[ "$line" == "HASH_RECORD "* ]] || continue
+    hash_record_count=$((hash_record_count + 1))
+    read -r -a fields <<< "$line"
+    for field in "${fields[@]}"; do
+      [[ "$field" == raw_sha256=* ]] || continue
+      raw_sha256_count=$((raw_sha256_count + 1))
+      RAW_SHA256="${field#raw_sha256=}"
+    done
+  done <<< "$show_output"
+
+  if [[ "$hash_record_count" -ne 1 || "$raw_sha256_count" -ne 1 \
+      || ! "$RAW_SHA256" =~ ^sha256:[0-9a-f]{64}$ ]]; then
+    echo "PLAYBOOK_INVALID show-atom returned no unique canonical ledger raw_sha256 for atom: $ATOM_ID" >&2
+    return 2
+  fi
+
+  RECEIPT_PATH="Meta/Digestion/formalizations/${RAW_SHA256#sha256:}.v1.json"
 }
 
 require_cover_batch_arguments() {
@@ -103,8 +138,15 @@ require_cover_batch_arguments() {
       status=$?
       return "$status"
     fi
+    if derive_receipt_path; then
+      :
+    else
+      status=$?
+      return "$status"
+    fi
     BATCH_ATOM_IDS+=("$atom")
     BATCH_GIDS+=("$gid")
+    BATCH_RECEIPT_PATHS+=("$RECEIPT_PATH")
   done < "$atoms_file"
 
   if [[ "${#BATCH_ATOM_IDS[@]}" -eq 0 ]]; then
@@ -118,6 +160,7 @@ derive_cover_batch_row_state() {
   ATOM_ID="${BATCH_ATOM_IDS[index]}"
   GID="${BATCH_GIDS[index]}"
   require_transaction_arguments
+  RECEIPT_PATH="${BATCH_RECEIPT_PATHS[index]}"
 }
 
 cleanup_cover_batch_temporaries() {
@@ -517,6 +560,7 @@ case "$COMMAND" in
     ;;
   deposit)
     require_transaction_arguments
+    derive_receipt_path
     require_new_module_blueprint_mirror
     cleanup_transaction_temporaries
     if freeze_exists; then
@@ -540,6 +584,7 @@ case "$COMMAND" in
     ;;
   cover)
     require_transaction_arguments
+    derive_receipt_path
     cleanup_transaction_temporaries
     step lean-report make lean-report
     cover_row

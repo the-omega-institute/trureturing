@@ -15,7 +15,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         fixture.ChangeFormalization();
         var before = fixture.CommitCount();
 
-        var result = fixture.Run("deposit");
+        var result = fixture.RunMakeDeposit();
 
         Assert.True(result.ExitCode == 0, Diagnostics(result));
         Assert.Equal(before + 2, fixture.CommitCount());
@@ -25,6 +25,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Empty(fixture.Status());
         Assert.Equal(
             [
+                "dotnet:show-atom",
                 "make:lean-report",
                 "dotnet:deposit-header-check",
                 "make:emit",
@@ -32,6 +33,12 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 "dotnet:ledger-append",
             ],
             fixture.CallKinds());
+        Assert.Contains(fixture.Calls(), call => call.StartsWith(
+            "dotnet:emit-formalization-receipt"
+                + $" --atom-id {TransactionFixture.AtomId}"
+                + $" --gid {TransactionFixture.Gid}"
+                + $" --out {TransactionFixture.ReceiptRelativePath}.tmp.",
+            StringComparison.Ordinal));
 
         var phaseA = fixture.CommitPaths("HEAD~1");
         Assert.Contains(TransactionFixture.LeanPath, phaseA);
@@ -70,7 +77,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Equal(1, fixture.FreezeCount());
         Assert.DoesNotContain("dotnet:ledger-append", fixture.CallKinds());
         Assert.Equal(
-            ["dotnet:deposit-header-check", "dotnet:emit-formalization-receipt"],
+            ["dotnet:show-atom", "dotnet:deposit-header-check", "dotnet:emit-formalization-receipt"],
             fixture.CallKinds());
         Assert.True(File.Exists(fixture.ReceiptPath));
         Assert.Empty(fixture.Status());
@@ -95,7 +102,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Equal(1, fixture.FreezeCount());
         Assert.DoesNotContain("dotnet:ledger-append", fixture.CallKinds());
         Assert.Equal(
-            ["dotnet:deposit-header-check", "dotnet:emit-formalization-receipt"],
+            ["dotnet:show-atom", "dotnet:deposit-header-check", "dotnet:emit-formalization-receipt"],
             fixture.CallKinds());
         Assert.Empty(fixture.Status());
     }
@@ -158,7 +165,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.NotEqual(0, result.ExitCode);
         Assert.Contains("STALE_LEAN_REPORT", Encoding.UTF8.GetString(result.StandardError), StringComparison.Ordinal);
         Assert.Equal(
-            ["make:lean-report", "dotnet:deposit-header-check", "make:emit"],
+            ["dotnet:show-atom", "make:lean-report", "dotnet:deposit-header-check", "make:emit"],
             fixture.CallKinds());
         Assert.Equal(0, fixture.FreezeCount());
     }
@@ -314,6 +321,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Equal(before + 1, fixture.CommitCount());
         Assert.Equal(
             [
+                "dotnet:show-atom",
                 "make:lean-report",
                 "dotnet:cover-atom",
                 "dotnet:align-scribe-receipt",
@@ -341,7 +349,9 @@ public sealed partial class DepositCoverWorkflowScriptTests
             StringComparison.Ordinal);
         Assert.Equal(before + 1, fixture.CommitCount());
         Assert.Contains("cover_disposition:", fixture.BackfillContents(), StringComparison.Ordinal);
-        Assert.Equal(["make:lean-report", "dotnet:cover-atom"], fixture.CallKinds());
+        Assert.Equal(
+            ["dotnet:show-atom", "make:lean-report", "dotnet:cover-atom"],
+            fixture.CallKinds());
         Assert.Empty(fixture.Status());
     }
 
@@ -353,6 +363,10 @@ public sealed partial class DepositCoverWorkflowScriptTests
     {
         internal const string AtomId = "atom-1";
         internal const string SecondaryAtomId = "atom-2";
+        internal const string RawSha256 =
+            "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+        internal const string SecondaryRawSha256 =
+            "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb";
         internal const string Gid = "D5/S0/Carrier/Probe.probe";
         internal const string LeanPath = "D5/S0/Carrier/Probe.lean";
         internal const string SecondaryGid =
@@ -365,9 +379,10 @@ public sealed partial class DepositCoverWorkflowScriptTests
         internal const string EmissionPath = "Blueprint/D5/S0/Carrier/Probe.md";
         internal const string LedgerPath = FrozenLedgerChangeClassifier.AcceptedRoot;
         internal const string BackfillPath = "Meta/BACKFILL.yaml";
-        internal const string ReceiptRelativePath = "Meta/Digestion/formalizations/atom-1.v1.json";
+        internal const string ReceiptRelativePath =
+            "Meta/Digestion/formalizations/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.v1.json";
         internal const string SecondaryReceiptRelativePath =
-            "Meta/Digestion/formalizations/atom-2.v1.json";
+            "Meta/Digestion/formalizations/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.v1.json";
 
         private const string ScriptPath = "tools/scripts/workflow/playbook-workflows.sh";
         private readonly TemporaryDirectory temporary = new();
