@@ -1,0 +1,4 @@
+## 二　M3-f 具名目标(不在本节预登记):完整 separator
+
+`offLineZero_yields_negative_weil_square (Z) (hOff : ∃ n, (Z.zero n).re ≠ criticalAbscissa) : ∃ g, ∃ hZero, (zeroSum Z (convolutionSquare g) hZero).re < 0`——由 M2-c 知 `hZero` 对所有 g 成立,故只差极限:须控制截断外零点的贡献(Burnol 式卷积幂 g^{⋆N} 使目标轨道贡献 −4·重数·1 而其余衰减为 O(4^{−N}))。所需解析输入:有界带上变换的衰减估计与卷积幂的变换公式;记为下一增订的探针对象,成本重型。
+
