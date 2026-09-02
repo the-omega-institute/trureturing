@@ -156,32 +156,28 @@ Only after Step 6 passes, run:
 
 ```sh
 make deposit ATOM_ID=<id> GID=<D5/Path/Module.theorem_name>
+make cover ATOM_ID=<id> GID=<gid>
 make preflight
 ```
 
-Both commands must exit 0. Judge them only by exit code, and never pipe a judgment command: `cmd | tail -1` reports the pipe's exit status, not the command's, and three landed incidents (a merge that silently failed, a ceremony run on a stale base, a cover failure read as success) trace to exactly this. Run the command bare, or capture `$?` on the command itself before any formatting.
+All three commands must exit 0. Judge them only by exit code, and never pipe a judgment command: `cmd | tail -1` reports the pipe's exit status, not the command's, and three landed incidents (a merge that silently failed, a ceremony run on a stale base, a cover failure read as success) trace to exactly this. Run the command bare, or capture `$?` on the command itself before any formatting.
 
-If `make deposit` or `make preflight` exits nonzero, stop before `cover` and end as `open`. Report the failed command and exit code, machine diagnostics, touched paths, and the actual resulting tree and commit state; `deposit` may already have produced commits before failing.
+If any command exits nonzero, stop and end as `open`. Report the failed command and exit code, machine diagnostics, touched paths, and the actual resulting tree state; deposit and cover do not commit their changes.
 
-To close the atom, run:
-
-```sh
-make cover ATOM_ID=<id> GID=<gid>
-```
-
-Before reporting commit structure, inspect:
+Before pushing, inspect the complete deposit-and-cover delta and create one builder-owned commit:
 
 ```sh
-git log --no-merges --grep='^formalize: cover'
+git status --short
+git diff --check
+git add -A
+git commit -F <commit-message-file>
 ```
 
-Recheck the live history and report what it actually shows; do not turn this observation into a permanent rule.
-
-Postcondition: deposit and preflight exited 0, and cover either exited 0 or its failure is captured as an `open` outcome with diagnostics.
+Postcondition: deposit, cover, and preflight exited 0; the complete intended delta is in one explicit builder commit; and the worktree is clean. A failure is captured as an `open` outcome with diagnostics and no push.
 
 ### 8. Push and open the pull request, or report `open`
 
-After `make deposit` and `make preflight` both exit 0 and Step 7 completes, push the current branch and use the repository door:
+After Step 7 completes, push the committed current branch and use the repository door:
 
 ```sh
 git push -u origin <branch>

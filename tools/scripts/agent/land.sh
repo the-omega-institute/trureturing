@@ -3,7 +3,8 @@
 # 用法: land.sh LANE BRANCH MSGFILE [--wait-pr N] [--cover ATOM GID]...
 # 语义: [等待 PR N 合入] → cd LANE → checkout/建 BRANCH(自 origin/dev,已存在则合 dev)
 #       → make lean-report(合 dev 可能带进新 D5 模块)→ 逐对 make cover
-#       → preflight(locale 熔断)→ push → pr-open → 等 MERGED。零 cover 对 = 纯 deposit 分支照落。
+#       → preflight(locale 熔断)→ builder commit → push → pr-open → 等 MERGED。
+#       零 cover 对 = 纯 deposit 分支照落。
 set -x
 L="${LAND_LOG_DIR:-${TMPDIR:-/tmp}/land-logs}"; mkdir -p "$L/flights"
 LANE=$1; BRANCH=$2; MSG=$3; shift 3
@@ -15,6 +16,7 @@ while [ $# -gt 0 ]; do case "$1" in
 TAG=$(basename "$MSG" .msg)
 [ -d "$LANE/.git" ] || [ -f "$LANE/.git" ] || { echo "BAD_LANE=$LANE"; exit 88; }
 [ -r "$MSG" ] && [ -s "$MSG" ] || { echo "BAD_MSG=$MSG"; exit 89; }
+MSG="$(cd "$(dirname "$MSG")" && pwd -P)/$(basename "$MSG")"
 dotnet run \
   --project "$LANE/tools/StrataLint.Cli/StrataLint.Cli.csproj" \
   --configuration Release \
@@ -61,6 +63,14 @@ if [ "$P" -ne 0 ]; then
   R=$(grep -cE "^RULE_REJECTED" "$L/flights/$TAG-preflight.log" || true)
   echo "RULE_REJECTED_LINES=$R"; [ "$R" -eq 0 ] || { echo HALT_ADMISSION_RED; exit 94; }
 fi
+git add -A || { echo HALT_LAND_STAGE; exit 98; }
+if git diff --cached --quiet; then
+  echo LAND_COMMIT_SKIPPED reason=tree-unchanged
+else
+  git commit -F "$MSG" || { echo HALT_LAND_COMMIT; exit 98; }
+  echo "LAND_COMMIT=$(git rev-parse HEAD)"
+fi
+[ -z "$(git status --porcelain)" ] || { echo HALT_DIRTY_AFTER_LAND_COMMIT; exit 98; }
 LEAN4_GUARDRAILS_BYPASS=1 git push -u origin "$BRANCH" || exit 95
 make pr-open HEAD="$BRANCH" MESSAGE="$MSG" AUTO_MERGE=1 > "$L/flights/$TAG-propen.log" 2>&1; O=$?; echo "PROPEN_EXIT=$O"
 [ "$O" -eq 0 ] || exit 96
