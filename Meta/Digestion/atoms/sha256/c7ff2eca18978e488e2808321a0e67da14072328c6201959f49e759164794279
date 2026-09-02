@@ -1,0 +1,6 @@
+## 三　M2-b 预登记:`zeroSum` 与 `SymmetricConvergent` 的枚举不变性(同模块)
+
+**义务**:同模块两条公开定理 `symmetricConvergent_enum_invariant (Z Z' : ZeroData) (g : WeilTestFunction) : SymmetricConvergent Z g ↔ SymmetricConvergent Z' g` 与 `zeroSum_enum_invariant (Z Z' : ZeroData) (g : WeilTestFunction) (h : SymmetricConvergent Z g) (h' : SymmetricConvergent Z' g) : zeroSum Z g h = zeroSum Z' g h'`,二者由 M2-a 与冻结的 `zeroSum_eq_of_tendsto`、`truncatedZeroSum_tendsto` 直接得出。
+**可证伪预测(写在跑之前)**:若 M2-a 落地,则本义务在钉版工具链上为初等推论,公理集为标准三条;若 `zeroSum` 的 `choose` 定义使等式不可由极限唯一性得到,则记入下一增订并改标 `open`。
+**边界**:不主张任何枚举是 canonical;只主张零点和不依赖枚举。
+

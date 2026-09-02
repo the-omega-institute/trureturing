@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:21b48a2a5127b188b8b2b5c26127f36444c9cc50fc30ea6829adbba68e0c59e7
+  normalized_sha256: sha256:21b48a2a5127b188b8b2b5c26127f36444c9cc50fc30ea6829adbba68e0c59e7
+cas_ref: sha256:21b48a2a5127b188b8b2b5c26127f36444c9cc50fc30ea6829adbba68e0c59e7
+coverage_gids:
+  - D5/S3/ConceptDynamics/Discussion/SourceBoundedParaphraseBlindSpot.source_bounded_paraphrases_preserve_target_blind_spot
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Discussion/SourceBoundedParaphraseBlindSpot.source_bounded_paraphrases_preserve_target_blind_spot
+      source_sha256: sha256:21b48a2a5127b188b8b2b5c26127f36444c9cc50fc30ea6829adbba68e0c59e7
+      target_statement_id: sha256:db9e8c8682b4c6a1c5b6ff2e92b59a6cb263814cf1ef991f7c2c49a6bcc278c3
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Discussion/SourceBoundedParaphraseBlindSpot.source_bounded_paraphrases_preserve_target_blind_spot
+      definition_sha256: sha256:fe319c555eefb16afdf99cc4c31f30e447ccedb00b34499ae0034b51cb2f5bd4
+      emission_sha256: sha256:5ac4ff3a906e361a2d2356a06158091c42d02bca38d1eb13747bee4312c4dc72
+  unresolved_subitems: []
