@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/Reversibility/WaitingValueReversibility
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Preserved information and options explain when waiting retains value. -/
+   digest: Waiting preserves immediate value, while genuine exposure can reverse it. -/
 
 import D5.S3.ConceptDynamics.Reversibility.OpportunityLossValueReversal
 import D5.S3.ConceptDynamics.Reversibility.WaitingCostValueReversal
@@ -33,24 +33,33 @@ open D5.S3.ConceptDynamics.Reversibility.OpportunityLossValueReversal
 open D5.S3.ConceptDynamics.Reversibility.WaitingCostValueReversal
 open D5.S3.ConceptDynamics.Reversibility.WorldChangeValueReversal
 
-/-- Constant-policy simulation and nonnegative value follow from free,
-world-preserving, ignorable information and retained actions. Opportunity
-loss, positive cost, world change, public disclosure, and a triggered
-third-party response each have a same-model counterexample in which waiting
-is strictly worse. -/
+/-- A retained constant policy exactly preserves its immediate-action value,
+and optimal value is nonnegative under free, world-preserving, ignorable
+information. Opportunity loss, positive cost, world change, genuine public
+exposure, and a triggered third-party response each have a same-model
+counterexample in which waiting is strictly worse. -/
 theorem waiting_value_from_information_and_option_preservation
     :
-    (∀ {Evidence Action : Type*}
+    (∀ {State Evidence Action : Type*}
+      (expectation : Concept (State -> Real) Real)
+      (observe : Concept State Evidence)
+      (worldAfterObservation : Evidence -> State -> State)
+      (utility : Concept State (Action -> Real))
       (actionsBeforeObservation : Set Action)
       (actionsAfterObservation : Evidence -> Set Action)
       (candidatePolicies : Set (Evidence -> Action)),
-      (((∀ action ∈ actionsBeforeObservation,
+      (((∀ evidence state,
+            worldAfterObservation evidence state = state) ∧
+          (∀ action ∈ actionsBeforeObservation,
             (fun _ : Evidence => action) ∈ candidatePolicies) ∧
           (∀ evidence, actionsBeforeObservation ⊆
             actionsAfterObservation evidence)) ->
         ∀ action ∈ actionsBeforeObservation,
           (fun _ : Evidence => action) ∈
-            admissiblePolicies candidatePolicies actionsAfterObservation)) ∧
+              admissiblePolicies candidatePolicies actionsAfterObservation ∧
+            informedExpectedValue expectation observe worldAfterObservation
+                utility 0 (fun _ : Evidence => action) =
+              uninformedExpectedValue expectation utility action)) ∧
     (∀ {State Evidence Action : Type*}
       (expectation : Concept (State -> Real) Real)
       (observe : Concept State Evidence)
@@ -152,28 +161,39 @@ theorem waiting_value_from_information_and_option_preservation
           admissiblePolicies candidatePolicies actionsAfterObservation)
         informedValue ∧
       informedValue < uninformedValue) ∧
-    (∃ (expectation : Concept (Unit -> Real) Real)
-      (observe : Concept Unit Unit)
-      (worldAfterObservation : Unit -> Unit -> Unit)
-      (utility : Concept Unit (Unit -> Real))
-      (publicDisclosure : Concept Unit Unit)
-      (exposurePenalty : Unit -> Real)
+    (∃ (expectation : Concept (Bool -> Real) Real)
+      (observe : Concept Bool Bool)
+      (worldAfterObservation : Bool -> Bool -> Bool)
+      (utility : Concept Bool (Unit -> Real))
+      (publicDisclosure : Concept Bool Bool)
+      (exposurePenalty : Bool -> Real)
       (actionsBeforeObservation : Set Unit)
-      (actionsAfterObservation : Unit -> Set Unit)
-      (candidatePolicies : Set (Unit -> Unit))
-      (uninformedValue exposedValue : Real),
+      (actionsAfterObservation : Bool -> Set Unit)
+      (candidatePolicies : Set (Bool -> Unit))
+      (uninformedValue unexposedValue exposedValue : Real),
       (∀ evidence state,
         worldAfterObservation evidence state = state) ∧
       (∀ action ∈ actionsBeforeObservation,
-        (fun _ : Unit => action) ∈ candidatePolicies) ∧
+        (fun _ : Bool => action) ∈ candidatePolicies) ∧
       (∀ evidence, actionsBeforeObservation ⊆
         actionsAfterObservation evidence) ∧
-      (∃ state,
-        0 < exposurePenalty (publicDisclosure (observe state))) ∧
+      (∃ stateWithoutExposure stateWithExposure,
+        observe stateWithoutExposure ≠ observe stateWithExposure ∧
+        publicDisclosure (observe stateWithoutExposure) ≠
+          publicDisclosure (observe stateWithExposure) ∧
+        exposurePenalty (publicDisclosure (observe stateWithoutExposure)) = 0 ∧
+        0 < exposurePenalty
+          (publicDisclosure (observe stateWithExposure))) ∧
       IsGreatest
         ((uninformedExpectedValue expectation utility) ''
           actionsBeforeObservation)
         uninformedValue ∧
+      IsGreatest
+        ((informedExpectedValue expectation observe worldAfterObservation
+            utility 0) ''
+          admissiblePolicies candidatePolicies actionsAfterObservation)
+        unexposedValue ∧
+      uninformedValue ≤ unexposedValue ∧
       IsGreatest
         ((fun policy => expectation (fun state =>
             utility (worldAfterObservation (observe state) state)
@@ -216,11 +236,16 @@ theorem waiting_value_from_information_and_option_preservation
   refine ⟨?_, ?_, opportunity_loss_can_reverse_waiting_value,
     positive_waiting_cost_can_reverse_value,
     world_change_can_reverse_waiting_value, ?_, ?_⟩
-  · rintro Evidence Action actionsBeforeObservation actionsAfterObservation
-      candidatePolicies ⟨canIgnoreInformation, actionSetNotReduced⟩
+  · rintro State Evidence Action expectation observe worldAfterObservation
+      utility actionsBeforeObservation actionsAfterObservation candidatePolicies
+      ⟨observationDoesNotChangeWorld, canIgnoreInformation,
+        actionSetNotReduced⟩
       action actionAvailable
-    exact ⟨canIgnoreInformation action actionAvailable,
-      fun evidence => actionSetNotReduced evidence actionAvailable⟩
+    constructor
+    · exact ⟨canIgnoreInformation action actionAvailable,
+        fun evidence => actionSetNotReduced evidence actionAvailable⟩
+    · simp [informedExpectedValue, uninformedExpectedValue,
+        observationDoesNotChangeWorld]
   · rintro State Evidence Action expectation observe worldAfterObservation utility
       informationCost actionsBeforeObservation actionsAfterObservation
       candidatePolicies uninformedValue informedValue uninformedOptimal
@@ -233,37 +258,48 @@ theorem waiting_value_from_information_and_option_preservation
       observationDoesNotChangeWorld canIgnoreInformation actionSetNotReduced
       uninformedOptimal informedOptimal
   · refine ⟨
-      (fun payoff => payoff ()),
-      (fun _ => ()),
+      (fun payoff => payoff true),
+      (fun state => state),
       (fun _ state => state),
       (fun _ _ => 1),
-      (fun _ => ()),
-      (fun _ => 1),
+      (fun evidence => evidence),
+      (fun disclosed => if disclosed then 2 else 0),
       Set.univ,
       (fun _ => Set.univ),
       Set.univ,
       1,
-      0,
-      ?_, ?_, ?_, ?_, ?_, ?_, by norm_num⟩
+      1,
+      -1,
+      ?_, ?_, ?_, ?_, ?_, ?_, by norm_num, ?_, by norm_num⟩
     · intro _ state
       rfl
     · intro _ _
       exact Set.mem_univ _
     · intro _ _ _
       exact Set.mem_univ _
-    · exact ⟨(), by norm_num⟩
+    · exact ⟨false, true, by simp⟩
     · constructor
       · exact Set.mem_image_of_mem _ (Set.mem_univ ())
       · intro value hValue
         rcases hValue with ⟨action, _, rfl⟩
-        exact le_rfl
+        simp [uninformedExpectedValue]
     · constructor
       · refine ⟨fun _ => (), ?_, ?_⟩
         · exact ⟨Set.mem_univ _, fun _ => Set.mem_univ _⟩
-        · norm_num
+        · simp [informedExpectedValue]
       · intro value hValue
         rcases hValue with ⟨policy, _, rfl⟩
-        norm_num
+        simp [informedExpectedValue]
+    · constructor
+      · refine ⟨fun _ => (), ?_, ?_⟩
+        · exact ⟨Set.mem_univ _, fun _ => Set.mem_univ _⟩
+        · norm_num [informedExpectedValue]
+          rw [← one_add_one_eq_two]
+          exact sub_add_cancel_left 1 1
+      · intro value hValue
+        rcases hValue with ⟨policy, _, rfl⟩
+        norm_num [informedExpectedValue]
+        simpa only [one_add_one_eq_two] using (le_refl (2 : Real))
   · refine ⟨
       (fun payoff => payoff false),
       (fun _ => ()),
