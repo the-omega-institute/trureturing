@@ -1,0 +1,1 @@
+**可证伪预测(写在跑之前)**:若正确,定理只消费冻结的 `ConvolutionPowerAmplification`、`EvenTestFunctionFiniteInterpolation`、`PrescribedPairNegativeOrbit`、`SymmetricConvergentOfZetaSummable`、闭带衰减(增订十三)与钉版 Mathlib,公理集为标准三条;若卷积幂在本仓测试类中不封闭、或 EF 可和性不能传输到任意 `ZeroData` 的 `zeroSummand`,则本条为假并须记所缺引理。
