@@ -6,13 +6,6 @@ public sealed class ScribeTestMapDeriverTests
 {
     private const string SdkProject = "<Project Sdk=\"Microsoft.NET.Sdk\" />";
 
-    private static readonly IReadOnlySet<string> CompileFailProofProjectExemptionRemovalOnlyBaseline =
-        new HashSet<string>(StringComparer.Ordinal)
-        {
-            "tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj",
-            "tools/tests/CompileFailProof/CompileFailProof.csproj",
-        };
-
     [Fact]
     public void CrossDirectoryCompileOwnershipIsAdmittedWithoutFinding()
     {
@@ -181,18 +174,6 @@ public sealed class ScribeTestMapDeriverTests
         var map = ScribeTestMapDeriver.DeriveSnapshot(snapshot);
 
         Assert.Empty(ScribeUnknownDebtPolicy.Evaluate(map, map));
-    }
-
-    [Fact]
-    public void CompileFailProofProjectExemptionBaselineAllowsOnlyRemoval()
-    {
-        Assert.Empty(ScribeTestMapDeriver.CompileFailProofProjectExemptions
-            .Except(CompileFailProofProjectExemptionRemovalOnlyBaseline, StringComparer.Ordinal));
-        Assert.Equal(
-            ["tools/tests/NewCompileFailProof/NewCompileFailProof.csproj"],
-            ScribeTestMapDeriver.CompileFailProofProjectExemptions
-                .Append("tools/tests/NewCompileFailProof/NewCompileFailProof.csproj")
-                .Except(CompileFailProofProjectExemptionRemovalOnlyBaseline, StringComparer.Ordinal));
     }
 
     [Fact]

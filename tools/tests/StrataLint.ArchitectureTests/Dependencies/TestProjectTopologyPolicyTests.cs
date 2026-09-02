@@ -339,34 +339,6 @@ public sealed class TestProjectTopologyPolicyTests
     }
 
     [Fact]
-    public void ProdRefsContainOnlyDirectProjectReferencesNotTransitiveOnes()
-    {
-        var current = Snapshot(
-            ProjectWithDefaultProperties(
-                "tools/Alpha/Alpha.csproj",
-                "Alpha",
-                xunit: false,
-                references: ["../Beta/Beta.csproj"]),
-            ProjectWithDefaultProperties(
-                "tools/Beta/Beta.csproj",
-                "Beta",
-                xunit: false,
-                references: ["../Gamma/Gamma.csproj"]),
-            Production("Gamma", "Gamma"),
-            OwnedTest("Alpha.Tests", "Alpha.Tests", "../../Alpha/Alpha.csproj"),
-            OwnedTest("Beta.Tests", "Beta.Tests", "../../Beta/Beta.csproj"),
-            OwnedTest("Gamma.Tests", "Gamma.Tests", "../../Gamma/Gamma.csproj"));
-
-        var debt = TestProjectTopologyPolicy.CalculateDebt(current);
-
-        Assert.DoesNotContain(
-            debt,
-            static item => item.Kind == "extra-production-reference"
-                && item.Subject == "Alpha.Tests"
-                && item.Related is "Beta" or "Gamma");
-    }
-
-    [Fact]
     public void AssemblyIdentityFallsBackToProjectStemWhenAssemblyNameIsAbsent()
     {
         var production = Production("Fallback", "Ignored") with

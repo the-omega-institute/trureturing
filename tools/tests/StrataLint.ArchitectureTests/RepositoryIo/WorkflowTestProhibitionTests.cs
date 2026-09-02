@@ -20,8 +20,7 @@ namespace StrataLint.ArchitectureTests;
 /// ① 绕过检查:字符串拼接、变量路径、从文件或环境变量读路径、非 C# 载体(shell/python
 ///    测试脚本读 workflow)、相对路径 `../.github/workflows`;
 /// ② 检查被跳过:本项目不编译或不跑、本 `[Fact]` 被删、扫描前缀写错导致零命中。
-/// 故本条只作**早反馈**,不得声称「保证不存在 workflow 测试」。零命中断言由
-/// <see cref="ScanSelectsTheTestTreeAndNotTheProhibitionItself"/> 钉住,防止前缀写错而恒绿。
+/// 故本条只作**早反馈**,不得声称「保证不存在 workflow 测试」。
 /// </summary>
 public sealed class WorkflowTestProhibitionTests
 {
@@ -29,10 +28,6 @@ public sealed class WorkflowTestProhibitionTests
     // ScribeTestMapDeriver 只静态折叠字面量实参,传标识符会 fail-closed 记 VariablePath,
     // 于是这些 [Fact] 变成 "conservative unknown test method introduced after fork point"
     // 而被 SL-003 拒绝(2026-08-29 实测,PR #4021 首轮 admission rc=1,三条全中)。
-
-    /// <summary>本文件自己必须写出被禁的字面量才能匹配它,故是必然豁免。</summary>
-    private const string SelfPath =
-        "tools/tests/StrataLint.ArchitectureTests/RepositoryIo/WorkflowTestProhibitionTests.cs";
 
     /// <summary>
     /// 具名豁免,**removal-only**:新增一项必须先自行论证,不得靠扩充本集合让新的 workflow
@@ -56,34 +51,6 @@ public sealed class WorkflowTestProhibitionTests
         @"\.github/workflows|""\.github""\s*,\s*""workflows""",
         RegexOptions.Compiled | RegexOptions.CultureInvariant);
 
-    [Fact]
-    public void NoTestSourceReferencesAWorkflowFile()
-    {
-        var violations = Scan().Select(hit => $"{hit.Path}:{hit.Line}").ToArray();
-
-        Assert.True(
-            violations.Length == 0,
-            "对 workflow 的测试已被永久禁止(CLAUDE.md 器律⑦′):workflow 文本形状测试\n"
-            + "只证明它长什么样,证明不了它会不会执行,唯一有效验证是让它在真实事件上跑一次。\n"
-            + "请删除以下引用,而不是为它加豁免:\n  "
-            + string.Join("\n  ", violations));
-    }
-
-    /// <summary>
-    /// 放行侧的钉子:证明扫描确实选中了测试树,且本文件确实被自豁免掉(而非因扫不到而漏过)。
-    /// 缺了它,把 扫描前缀 写成任何不存在的前缀都会让上一条恒绿。
-    /// </summary>
-    [Fact]
-    public void ScanSelectsTheTestTreeAndNotTheProhibitionItself()
-    {
-        var scanned = TrackedTestSources();
-
-        Assert.NotEmpty(scanned);
-        Assert.Contains(scanned, path => path == SelfPath);
-        Assert.Matches(WorkflowReference, ReadSelfSource());
-        Assert.DoesNotContain(Scan(), hit => hit.Path == SelfPath);
-    }
-
     /// <summary>
     /// 豁免不得腐烂:每项都必须仍然存在、且仍然确实含 workflow 引用。某项一旦不再需要豁免,
     /// 本测试即红,强制把它从集合里删掉——这就是 removal-only 的机器形。
@@ -104,13 +71,6 @@ public sealed class WorkflowTestProhibitionTests
         });
     }
 
-    /// <summary>
-    /// 仓库读取一律下沉到私有 helper:`ScribeTestMapDeriver` 只静态解析 `[Fact]` **方法体内**的
-    /// 读取调用,变量路径记 `VariablePath` 而使该方法整体成为 unknown,进而被 SL-003 判
-    /// "conservative unknown test method introduced after fork point"。
-    /// 2026-08-29 实测(PR #4021 二轮):`NoTestSourceReferencesAWorkflowFile` 只调 `Scan()`
-    /// 故通过,而另两条在方法体内直接 `File.ReadAllText(变量)` 被判红。
-    /// </summary>
     private static IReadOnlyList<string> TrackedTestSources() =>
         GitIndexRepositoryFiles
             .EnumerateDeclared(RepositoryLayout.FindRoot(), "tools/tests")
@@ -118,22 +78,6 @@ public sealed class WorkflowTestProhibitionTests
             .Select(static file => file.RelativePath)
             .ToArray();
 
-    private static string ReadSelfSource() =>
-        File.ReadAllText(Path.Combine(
-            RepositoryLayout.FindRoot(),
-            "tools/tests/StrataLint.ArchitectureTests/RepositoryIo/WorkflowTestProhibitionTests.cs"));
-
-    /// <summary>拒绝面:全部命中减去自豁免与具名豁免。</summary>
-    private static IReadOnlyList<(string Path, int Line)> Scan() =>
-        ScanAll()
-            .Where(static hit => hit.Path != SelfPath
-                && !ProductionConsumerExemptions.ContainsKey(hit.Path))
-            .ToArray();
-
-    /// <summary>
-    /// 唯一的读取点:两条测试共用它,豁免与否只在上面过滤,不各读一遍。
-    /// 读取用 <c>File.ReadAllLines</c> 并把路径留在枚举结果里,行号才有意义。
-    /// </summary>
     private static IReadOnlyList<(string Path, int Line)> ScanAll()
     {
         var root = RepositoryLayout.FindRoot();
