@@ -1,0 +1,72 @@
+# 第一千九百一十九部　Pick–Weil 编译器的精确误差阈值
+
+当前仓库已经机器闭合：
+
+$$
+\mathrm{RH}
+\Longrightarrow
+\text{给定 symmetric zero data 上的 convolution-square Weil 和非负}.
+$$
+
+该模块自身也明确说明，它是一个**前向条件桥**；在输入零点数据为空时可以真空成立，不能被误称为完整的非平凡 Weil 等价证明。
+
+缺失的反向方向可以被压缩为：
+
+$$
+\boxed{
+\text{离线 Pick 单胞}
+\longrightarrow
+\text{可允许 Weil 测试函数的负二次型}.
+}
+$$
+
+设某个 Weil／de Branges 插值构造产生近似矩阵：
+
+$$
+\widetilde{\mathbb F}
+=
+\mathbb F+E.
+$$
+
+由 Weyl 本征值扰动界：
+
+$$
+\lambda_{\min}
+(\widetilde{\mathbb F})
+\le
+-\varphi^{-1}
++
+\|E\|_{\mathrm{op}}.
+$$
+
+所以只要：
+
+$$
+\boxed{
+\|E\|_{\mathrm{op}}
+<
+\varphi^{-1},
+}
+\tag{1919.1}
+$$
+
+负性必然保留。
+
+若只使用简单有理观察向量：
+
+$$
+\frac{(1,-1)}{\sqrt2},
+$$
+
+则需要更保守的：
+
+$$
+\boxed{
+\|E\|_{\mathrm{op}}<\frac12.
+}
+\tag{1919.2}
+$$
+
+因此：
+
+* 黄金观察器给予最大容错 \(\varphi^{-1}\)；

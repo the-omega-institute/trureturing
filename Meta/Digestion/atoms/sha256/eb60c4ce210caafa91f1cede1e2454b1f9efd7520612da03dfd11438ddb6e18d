@@ -1,0 +1,71 @@
+# 第一千九百零七部　形式化建议
+
+```text
+D5/S3/ConceptDynamics/ReflectionEvenScalarBlindness/
+  ReflectionInvariantAnalyticScalar.lean
+  OddHomogeneousTermsVanish.lean
+  FirstDerivativeVanishes.lean
+  ScalarOrientationBlindness.lean
+  SquareNameRetainsMagnitudeNotDirection.lean
+
+D5/S3/Weil/Pick/MinimalRelationBreadth/
+  ArithmeticSchurBasepointDiagonal.lean
+  OffLineContactDiagonalNonnegative.lean
+  OffLineTwoPointRelationNegative.lean
+  OnePointTestsCannotDetectOffLineContact.lean
+  MinimalOffLineObserverBreadthTwo.lean
+
+D5/S3/Observer/GoldenCliffordFactorLoss/
+  GoldenSpectralInvolution.lean
+  GoldenConeInvolution.lean
+  GoldenInvolutionsAnticommute.lean
+  GoldenInvolutionProductComplexStructure.lean
+  CompletedComplexStructureForgetsGoldenScale.lean
+  ComplexStructureHasManyReflectionFactorizations.lean
+
+D5/S3/Observer/PrimitiveIntegralGoldenSelection/
+  NonnegativeIntegerTraceOneDetNegOne.lean
+  PrimitiveIntegralMatrixClassification.lean
+  FibonacciMatrixUniqueUpToSwap.lean
+  IntegralLatticeSelectsGoldenFactorization.lean
+
+D5/S3/Observer/PrimeFrameGluing/
+  PrimeLocalFrame.lean
+  PrimeFrameTransition.lean
+  FullFrameTransitionCocycle.lean
+  FullFrameHolonomyTrivial.lean
+  ProjectedPrimeTransition.lean
+  ProjectedPrimeHolonomyDefect.lean
+
+D5/S3/Weil/PrimeGammaCompletePositiveGluing/
+  PrimeLocalOperatorSystem.lean
+  CrossPrimeCompletelyPositiveMap.lean
+  ArithmeticStinespringDilation.lean
+  ArithmeticFeatureGram.lean
+  CPGlueImpliesNevanlinnaPSD.lean
+  CPGlueImpliesRH.lean
+
+D5/S3/Weil/Pick/GoldenPickWeilCompiler/
+  GoldenPickNegativeFeature.lean
+  PickNegativeFeatureDeBrangesGauge.lean
+  TwoPointWeilInterpolationTarget.lean
+  WeilTailErrorBudget.lean
+  GoldenMarginRobustness.lean
+  OffLinePickCellProducesWeilNegativeTarget.lean
+
+D5/S3/Weil/ZetaGamma/FiniteDangerCertification/
+  ConfinedDangerModeSet.lean
+  ConfinedFrequencyRadius.lean
+  GaussianRationalDiskNet.lean
+  AnchoredPickIntervalCertificate.lean
+  CanonicalNegativeEigenObserver.lean
+
+D5/S3/Weil/PrimeGammaRelationFirstRH/
+  PrimeGammaAnchoredSchwarzTarget.lean
+  PrimeGammaNevanlinnaFeatureTarget.lean
+  PrimeGammaCanonicalHamiltonianTarget.lean
+  NoUniversalGoldenContactImpliesRH.lean
+```
+
+---
+

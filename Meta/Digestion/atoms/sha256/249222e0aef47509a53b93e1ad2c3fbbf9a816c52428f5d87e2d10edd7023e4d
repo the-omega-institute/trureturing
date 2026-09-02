@@ -1,0 +1,82 @@
+# 第一千八百五十一部　有限模型歧义与无限最小唯一性
+
+定义第 \(N\) 层可行测度集：
+
+$$
+\boxed{
+\mathfrak M_N^{(a)}
+=
+\left\{
+\mu\in\operatorname{Prob}(\mathbb T):
+\widehat\mu(n)=c_n^{(a)},
+\ |n|\le N
+\right\}.
+}
+\tag{1851.1}
+$$
+
+它们满足：
+
+$$
+\mathfrak M_{N+1}^{(a)}
+\subseteq
+\mathfrak M_N^{(a)}.
+$$
+
+有限层通常有许多不同实现：
+
+$$
+|\mathfrak M_N^{(a)}|>1.
+$$
+
+但全部 moments 唯一决定圆周测度，所以：
+
+$$
+\boxed{
+\bigcap_{N\ge0}
+\mathfrak M_N^{(a)}
+=
+\{\mu_a\}.
+}
+\tag{1851.2}
+$$
+
+之后 \(\mu_a\) 又唯一决定最小循环酉系统到酉等价。
+
+所以完整层级为：
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{有限观察}
+&
+\text{多个正模型}
+\\
+\text{全部兼容观察}
+&
+\text{唯一正测度}
+\\
+\text{最小相位实现}
+&
+\text{唯一到酉等价}
+\\
+\text{trace-normalized canonical realization}
+&
+\text{唯一 Hamiltonian}
+\end{array}
+}
+$$
+
+这给“不可名性”最精确的界线：
+
+$$
+\boxed{
+\text{没有绝对基，
+不等于没有规范等价类；
+没有有限终名，
+不等于完整关系无法唯一确定。}
+}
+$$
+
+---
+

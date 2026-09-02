@@ -1,0 +1,37 @@
+## 定理 1789.1（Li–Clark positive-state rigidity）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+c:\mathbb Z\to\mathbb C
+\text{ 为正定函数}.
+}
+\tag{1789.3}
+$$
+
+等价地：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+[c(j-k)]_{j,k=0}^{N}
+\succeq0
+\quad
+\forall N.
+}
+\tag{1789.4}
+$$
+
+这准确说明了仓库尚未闭合的核心桥是什么：
+
+$$
+\boxed{
+\text{不是再构造一个条件性的 Szegő transfer，
+而是从 prime–Gamma 数据证明实际 }c(n)\text{ 正定。}
+}
+$$
+
+---
+

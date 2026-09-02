@@ -1,0 +1,63 @@
+## 1910.1 黄金比例是离正锥的精确距离
+
+因此：
+
+$$
+\boxed{
+\operatorname{dist}_{\mathrm{op}}
+\left(
+\mathbb F,\operatorname{PSD}_2
+\right)
+=
+\varphi^{-1}.
+}
+\tag{1910.8}
+$$
+
+由于负部分只有秩 \(1\)，Frobenius 距离同样为：
+
+$$
+\boxed{
+\operatorname{dist}_{F}
+\left(
+\mathbb F,\operatorname{PSD}_2
+\right)
+=
+\varphi^{-1}.
+}
+\tag{1910.9}
+$$
+
+所以：
+
+$$
+\boxed{
+\varphi^{-1}
+}
+$$
+
+不仅是一个负本征值。
+
+它还是：
+
+* 最小正修复成本；
+* 到正半定锥的距离；
+* 最强归一化负证书 margin；
+* 单位误差下可容忍的最大近似偏差。
+
+而正部分与修复部分的迹之比为：
+
+$$
+\boxed{
+\frac{\operatorname{Tr}(\varphi P_+)}
+{\operatorname{Tr}(\varphi^{-1}P_-)}
+=
+\varphi^2.
+}
+\tag{1910.10}
+$$
+
+项目已独立机器证明，Zeckendorf 合法词的完整关系空间维数按 Fibonacci 平方增长，相邻增长率趋于 \(\varphi^2\)。这与式 (1910.10) 结构平行，但目前尚不能认定为同一个指数定理。
+
+---
+

@@ -1,0 +1,15 @@
+* Szegő \(SU(1,1)\) transfer。
+
+现在缺少的只是在这些接口之前，真正构造：
+
+$$
+\boxed{
+c(n)
+=
+\langle
+\Omega_\xi,U_\xi^n\Omega_\xi
+\rangle.
+}
+$$
+
+一旦这个正相位态能从 prime–Gamma 侧内生建立，离线零点将不再需要逐点排除；单位圆盘内极点、指数增长模式、非正 Toeplitz block 与 Schur 视界会被同一个相位正性定理整体排除。

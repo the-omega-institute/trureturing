@@ -1,0 +1,16 @@
+* RH 成立。
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{不可名者不进入 Carathéodory 函数；
+Carathéodory 函数只记录一个完成名字是否具有被动正响应。
+临界零点是正响应允许的边界原子；
+离线零点则是试图把边界原子移入内部，
+因而必然把一个正 Gram 世界撕开成固定 determinant \(-1\) 的二点裂口。}
+$$
+
+[1]: https://www.sciencedirect.com/science/article/pii/S0022314X97921375 "https://www.sciencedirect.com/science/article/pii/S0022314X97921375"
+[2]: https://arxiv.org/abs/2509.18963 "https://arxiv.org/abs/2509.18963"
+[3]: https://www.semanticscholar.org/paper/One-dimensional-perturbations-of-restricted-shifts-Clark/0afddda0124377ad9107957a7e51d90ca3c633db "https://www.semanticscholar.org/paper/One-dimensional-perturbations-of-restricted-shifts-Clark/0afddda0124377ad9107957a7e51d90ca3c633db"

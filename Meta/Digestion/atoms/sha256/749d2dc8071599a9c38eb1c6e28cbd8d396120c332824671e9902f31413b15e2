@@ -1,0 +1,47 @@
+## 1852.1 外部观察网格
+
+取：
+
+$$
+a_{n+1}=\varphi^2a_n.
+$$
+
+相邻观察者的半平面双曲距离为：
+
+$$
+\boxed{
+d_{\mathbb H}(a_n,a_{n+1})
+=
+2\log\varphi.
+}
+\tag{1852.1}
+$$
+
+定义域 Möbius 参数为：
+
+$$
+\boxed{
+r=-\frac1{\sqrt5}.
+}
+\tag{1852.2}
+$$
+
+RH 下算术响应满足 Harnack contraction：
+
+$$
+\boxed{
+\left|
+\log
+\frac{A(a_{n+1})}
+{A(a_n)}
+\right|
+\le
+2\log\varphi.
+}
+\tag{1852.3}
+$$
+
+这是外部观察协议。
+
+---
+

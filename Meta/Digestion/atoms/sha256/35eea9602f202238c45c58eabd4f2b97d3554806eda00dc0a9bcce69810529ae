@@ -1,0 +1,45 @@
+# 第一千九百部　跨 prime 问题不在局部谱，而在胶合
+
+设每个 prime \(p\) 有局部算子：
+
+$$
+D_p
+$$
+
+和局部 frame：
+
+$$
+F_p.
+$$
+
+局部 determinant：
+
+$$
+\det(I-xF_pD_pF_p^{-1})
+$$
+
+不依赖 \(F_p\)。
+
+因此不同 frame family 可以产生完全相同的全部局部 Euler determinants，却具有不同的跨 prime transition：
+
+$$
+T_{q\leftarrow p}
+=
+F_q^{-1}F_p.
+$$
+
+仓库已经用显式矩阵构造机器证明了这一 non-reconstruction：全部局部 Euler determinant 不能决定跨 prime frame transition。
+
+所以：
+
+$$
+\boxed{
+\text{局部谱数据}
+\not\Rightarrow
+\text{全局关系数据}.
+}
+\tag{1900.1}
+$$
+
+---
+

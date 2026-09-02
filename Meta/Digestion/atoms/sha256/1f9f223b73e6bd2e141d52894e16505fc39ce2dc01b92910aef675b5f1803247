@@ -1,0 +1,64 @@
+## First Relational Image Principle
+
+若一个命名系统满足：
+
+1. 标量完成在反射下为偶；
+2. 因而一次方向响应被抹去；
+3. 正可实现性由归一化 Schur／Pick kernel 判断；
+4. 第一次失败表现为圆盘内部的单位模饱和；
+5. 使用最小的二点关系宽度；
+
+则其第一非平凡关系影必为：
+
+$$
+\boxed{
+\mathbb F
+=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}.
+}
+\tag{1923.1}
+$$
+
+随之被唯一强迫的结构为：
+
+$$
+\boxed{
+\begin{aligned}
+\text{正关系倍率}
+&=\varphi;\\
+\text{负修复倍率}
+&=\varphi^{-1};\\
+\text{两步完成倍率}
+&=\varphi^2;\\
+\text{两步收缩倍率}
+&=\varphi^{-2};\\
+\text{完整 boost 快速度}
+&=2\log\varphi;\\
+\text{判别式}
+&=5.
+\end{aligned}
+}
+\tag{1923.2}
+$$
+
+这是一个真正可反驳的数学命题。
+
+它没有说：
+
+$$
+\text{道}=\varphi.
+$$
+
+它只说：
+
+$$
+\boxed{
+\text{某一类最小正关系失败，在规范化以后必显黄金。}
+}
+$$
+
+---
+

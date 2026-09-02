@@ -1,0 +1,75 @@
+# 第一千八百一十九部　黄金比例在这一层的准确位置
+
+本轮的 Carathéodory／Schur／Clark 判据本身不需要黄金比例。
+
+任何：
+
+$$
+a>0
+$$
+
+都能定义一个 Cayley observer：
+
+$$
+\mathcal C_{\xi,a}.
+$$
+
+RH 对所有这些图表具有相同真假值。
+
+黄金比例只在选择离散观察图册时进入。
+
+取：
+
+$$
+\boxed{
+a_k
+=
+\frac12\varphi^{2k}.
+}
+\tag{1819.1}
+$$
+
+相邻观察者之间的圆盘自同构参数为：
+
+$$
+\boxed{
+r
+=
+\frac{a_k-a_{k+1}}
+{a_k+a_{k+1}}
+=
+-\frac1{\sqrt5},
+}
+\tag{1819.2}
+$$
+
+其双曲快速度为：
+
+$$
+\boxed{
+|\operatorname{artanh}r|
+=
+\log\varphi.
+}
+\tag{1819.3}
+$$
+
+所以黄金比例在这里承担：
+
+$$
+\boxed{
+\text{Cayley observer atlas 的等双曲步长。}
+}
+$$
+
+标准 \(a=\frac12\) 则承担：
+
+$$
+\boxed{
+\text{Li 权重与相位 Jacobian 的自归一化基点。}
+}
+$$
+
+这两种作用都不意味着：
+
+* Verblunsky 系数必须等于黄金比例；

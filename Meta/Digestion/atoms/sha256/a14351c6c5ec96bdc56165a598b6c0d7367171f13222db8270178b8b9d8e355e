@@ -1,0 +1,27 @@
+## 生成层
+
+构造：
+
+$$
+\boxed{
+\Phi_\xi:
+\mathcal A_{\rm prime}
+\to
+B(\mathcal H_{\rm arith})
+}
+$$
+
+为完全正映射，或构造：
+
+$$
+\boxed{
+H_\xi(x)\succeq0
+}
+$$
+
+为 arithmetic canonical Hamiltonian。
+
+这解释 relation positivity 为什么成立。
+
+---
+

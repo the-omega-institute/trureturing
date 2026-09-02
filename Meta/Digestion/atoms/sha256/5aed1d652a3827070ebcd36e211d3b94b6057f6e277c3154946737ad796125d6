@@ -1,0 +1,50 @@
+## 定理 1788.1（Explicit Li phase state under RH）
+
+$$
+\boxed{
+c(n)
+=
+\int_{\mathbb T}
+\zeta^n\,d\mu_\xi(\zeta).
+}
+\tag{1788.4}
+$$
+
+因此取：
+
+$$
+\mathcal H_\xi
+=
+L^2(\mathbb T,\mu_\xi),
+$$
+
+$$
+(U_\xi f)(\zeta)=\zeta f(\zeta),
+$$
+
+$$
+\Omega_\xi(\zeta)=1,
+$$
+
+便有：
+
+$$
+\boxed{
+c(n)
+=
+\langle
+\Omega_\xi,
+U_\xi^n\Omega_\xi
+\rangle.
+}
+\tag{1788.5}
+$$
+
+这正是前文一直寻找的 Li–Clark 正相位态。
+
+它不是猜测。
+
+在 RH 条件下，其节点、权重、酉算子和循环向量都已被完全确定。
+
+---
+

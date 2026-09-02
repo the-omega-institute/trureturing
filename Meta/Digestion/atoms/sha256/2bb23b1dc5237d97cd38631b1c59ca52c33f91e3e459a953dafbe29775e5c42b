@@ -1,0 +1,65 @@
+# 第一千八百一十四部　函数方程把 Nevanlinna 核变成 divided difference
+
+函数方程给出：
+
+$$
+L_\xi(s)
+=
+-
+L_\xi(1-s).
+$$
+
+实结构给出：
+
+$$
+\overline{L_\xi(t)}
+=
+L_\xi(\overline t).
+$$
+
+所以：
+
+$$
+-\overline{L_\xi(t)}
+=
+L_\xi(1-\overline t).
+$$
+
+因此：
+
+$$
+\boxed{
+\mathcal N_\xi(s,t)
+=
+\frac{
+L_\xi(s)
+-
+L_\xi(1-\overline t)
+}{
+s-(1-\overline t)
+}.
+}
+\tag{1814.1}
+$$
+
+它是 \(L_\xi\) 在一个点与其反射点之间的 Loewner divided-difference kernel。
+
+所以 RH 还可以解释为：
+
+$$
+\boxed{
+\text{函数方程给出的反射 divided difference
+是否始终形成正 Gram 核？}
+}
+$$
+
+这比单独研究 \(L_\xi(s)\) 的数值更深，因为它直接检测：
+
+$$
+\text{不同观察者之间的关系}
+$$
+
+而不是单点读数。
+
+---
+

@@ -1,0 +1,104 @@
+# 第一千九百一十三部　黄金 null rays 就是最强正负关系方向
+
+黄金光锥：
+
+$$
+Q_\varphi(x,y)=0
+$$
+
+满足：
+
+$$
+\frac{x}{y}
+=
+\varphi
+\quad\text{或}\quad
+-\varphi^{-1}.
+$$
+
+两条 null ray 可写成：
+
+$$
+\boxed{
+\ell_+
+=
+\mathbb R
+\begin{pmatrix}
+\varphi\\
+1
+\end{pmatrix},
+}
+\tag{1913.1}
+$$
+
+$$
+\boxed{
+\ell_-
+=
+\mathbb R
+\begin{pmatrix}
+1\\
+-\varphi
+\end{pmatrix}.
+}
+\tag{1913.2}
+$$
+
+但这两个向量恰好又分别是 \(\mathbb F\) 的正、负本征方向：
+
+$$
+\boxed{
+\mathbb Fu_+=\varphi u_+,
+}
+\tag{1913.3}
+$$
+
+$$
+\boxed{
+\mathbb Fu_-=-\varphi^{-1}u_-.
+}
+\tag{1913.4}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{最强正关系方向与最强负关系方向，
+同时就是黄金光锥的两条生成线。}
+}
+$$
+
+而复结构在二者之间交换：
+
+$$
+\boxed{
+\mathfrak Ju_+=-u_-,
+\qquad
+\mathfrak Ju_-=u_+.
+}
+\tag{1913.5}
+$$
+
+cone involution 同样交换二者：
+
+$$
+\boxed{
+\mathfrak Cu_+=u_-,
+\qquad
+\mathfrak Cu_-=u_+.
+}
+\tag{1913.6}
+$$
+
+这给“黄金是双曲光锥交点的第一个像”一个严格局部模型：
+
+$$
+\boxed{
+\text{黄金不是一个位于光锥上的普通点；
+它是两条 null directions 的伸缩倍率。}
+}
+$$
+
+---
+

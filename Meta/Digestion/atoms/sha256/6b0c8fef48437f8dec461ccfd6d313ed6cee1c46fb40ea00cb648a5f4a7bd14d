@@ -1,0 +1,20 @@
+## 定理 1792.1（Cayley–Li atlas criterion）
+
+在相应零点和正规化成立的条件下，对任意固定 \(a>0\)：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{归一化的 }d_n^{(a)}
+\text{ 构成单位圆正定 moment sequence}.
+}
+\tag{1792.7}
+$$
+
+所以 RH 并不依赖半尺度名字。
+
+半尺度只是传统 Li 系数所选择的一张规范图表。
+
+---
+

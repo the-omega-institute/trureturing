@@ -1,0 +1,37 @@
+## 1813.1 RH 下的显式 Gram 特征
+
+若 RH 成立，则对每个零点：
+
+$$
+\rho+\overline\rho=1.
+$$
+
+于是：
+
+$$
+\begin{aligned}
+\frac{
+\frac1{s-\rho}
++
+\frac1{\overline t-\overline\rho}
+}{
+s+\overline t-1
+}
+&=
+\frac{
+s+\overline t-(\rho+\overline\rho)
+}{
+(s-\rho)
+(\overline t-\overline\rho)
+(s+\overline t-1)
+}\\
+&=
+\frac1{
+(s-\rho)
+(\overline t-\overline\rho)
+}.
+\end{aligned}
+$$
+
+因此：
+

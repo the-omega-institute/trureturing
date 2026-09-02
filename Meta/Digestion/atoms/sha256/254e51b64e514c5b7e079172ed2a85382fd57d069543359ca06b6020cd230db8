@@ -1,0 +1,31 @@
+## 目标 D：Prime singular-inner 到 Clark 正态的完全正输运
+
+从：
+
+$$
+\Sigma_{\frac12\log n}(z)
+$$
+
+这一 prime singular-inner semigroup，连同 Gamma 与 pole 通道，构造：
+
+$$
+\boxed{
+\mathcal C_\xi(z)
+=
+\int_{\mathbb T}
+\frac{1+z\zeta}{1-z\zeta}
+\,d\mu_\xi(\zeta),
+\qquad
+\mu_\xi\ge0.
+}
+\tag{1820.4}
+$$
+
+这不仅证明 RH，还解释 prime histories 怎样被完成成 zero phase state。
+
+目标 D 最强。
+
+目标 A 已足够证明 RH。
+
+---
+

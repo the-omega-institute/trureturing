@@ -1,0 +1,41 @@
+## 1900.1 full-frame transition 本身仍是纯 gauge
+
+若所有 \(F_p\) 真正定义于同一个全局空间，则：
+
+$$
+T_{r\leftarrow q}
+T_{q\leftarrow p}
+=
+T_{r\leftarrow p}.
+$$
+
+沿闭环：
+
+$$
+p\to q\to r\to p
+$$
+
+有：
+
+$$
+\boxed{
+T_{p\leftarrow r}
+T_{r\leftarrow q}
+T_{q\leftarrow p}
+=
+I.
+}
+\tag{1900.2}
+$$
+
+因此仅仅“不同 transition family”还不等于非平凡 holonomy。
+
+真正的曲率只能在以下情形出现：
+
+1. 没有单一全局 frame family；
+2. 每个 prime 只保留不同的局部子空间；
+3. transition 被投影或压缩；
+4. exact modes 在各图表中被不同方式商去。
+
+---
+
