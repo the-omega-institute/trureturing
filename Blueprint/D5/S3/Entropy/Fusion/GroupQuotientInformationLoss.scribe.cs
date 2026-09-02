@@ -36,7 +36,13 @@ internal sealed class GroupQuotientInformationLossDocument : IScribeDocumentDefi
                         "For arbitrary PMFs P and Q, the fourth conjunct is the unrestricted "
                             + "extended-nonnegative-real Kullback-Leibler chain rule. Its conditional "
                             + "divergences are weighted by the P quotient marginal. No positivity or "
-                            + "absolute-continuity premise is added; infinite divergence is allowed."))),
+                            + "absolute-continuity premise is added; infinite divergence is allowed.")),
+                    Paragraph(Text(
+                        "The fifth conjunct names the quotient data-processing loss as total KL "
+                            + "minus quotient KL and identifies it with the same weighted conditional "
+                            + "divergence. Under the classical extended-value convention this "
+                            + "subtraction identity is asserted when the quotient KL is finite, so "
+                            + "the undefined infinity-minus-infinity case is not silently collapsed."))),
                 DescribeRole.Theorem))));
 
     private static Formula At(Formula family, Formula argument) =>
@@ -66,6 +72,10 @@ internal sealed class GroupQuotientInformationLossDocument : IScribeDocumentDefi
         Formula qConditional = Subscript(q, Seq(Gamma, Bar, b));
         Formula conditionalEntropy = Call("Hcond", Subscript(z, F.Id("s")));
         Formula loss = Seq(Entropy(z), Sp, Minus, Sp, Entropy(zQuotient));
+        Formula quotientDivergence = Divergence(pQuotient, qQuotient);
+        Formula conditionalDivergence = Seq(
+            Sum, Underscore, Grp(b), At(pQuotient, b), Sp, Cdot, Sp,
+            Divergence(pConditional, qConditional));
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),
@@ -89,9 +99,12 @@ internal sealed class GroupQuotientInformationLossDocument : IScribeDocumentDefi
             Sp, Rightarrow, Sp, zConditional, Sp, Eq, Sp, Uniform(group), Close,
             Sp, Land, RowBreak,
             Divergence(p, q), Sp, Eq, Sp,
-            Divergence(pQuotient, qQuotient), Sp, Plus, Sp,
-            Sum, Underscore, Grp(b), At(pQuotient, b), Sp, Cdot, Sp,
-            Divergence(pConditional, qConditional), Dot,
+            quotientDivergence, Sp, Plus, Sp, conditionalDivergence,
+            Sp, Land, RowBreak,
+            Open, quotientDivergence, Sp, Neq, Sp, Infty,
+            Sp, Rightarrow, Sp,
+            Divergence(p, q), Sp, Minus, Sp, quotientDivergence,
+            Sp, Eq, Sp, conditionalDivergence, Close, Dot,
             End, Grp(F.Id("gathered"))));
     }
 }

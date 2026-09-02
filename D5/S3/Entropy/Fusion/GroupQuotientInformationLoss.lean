@@ -55,6 +55,18 @@ noncomputable def pmfKLDivergence {X : Type*} [Fintype X] (p q : PMF X) : ENNRea
   letI : MeasurableSpace X := ⊤
   exact klDiv p.toMeasure q.toMeasure
 
+/-- The data-processing loss of the genuine orbit projection. Extended subtraction makes the
+definition total; the public theorem uses the classical finite-marginal convention needed to
+recover the conditional-divergence value. Source:
+QUANTITATIVE_DIAGONALIZATION_OBSERVER_COMPLETION.md, lines 373-382. -/
+noncomputable def quotientDataProcessingLoss
+    {G Y : Type*} [Fintype G] [Group G] [Fintype Y] [MulAction G Y]
+    (p q : PMF Y) : ENNReal :=
+  pmfKLDivergence p q -
+    pmfKLDivergence
+      (p.map fun y => (Quotient.mk'' y : MulAction.orbitRel.Quotient G Y))
+      (q.map fun y => (Quotient.mk'' y : MulAction.orbitRel.Quotient G Y))
+
 private theorem realMass_is_probability {X : Type*} [Fintype X] (p : PMF X) :
     (forall x, 0 <= realMass p x) /\ ∑ x, realMass p x = 1 := by
   constructor
@@ -320,10 +332,11 @@ private theorem conditional_entropy_eq_log_card_only_if_uniform
     linarith
   exact (entropy_eq_log_card_iff_uniform (conditional p b) (hc_law b hb)).1 (by simpa [L])
 
-/- Source: QUANTITATIVE_DIAGONALIZATION_OBSERVER_COMPLETION.md, lines 340-372.
-For a finite free `G`-set, a chosen section gives genuine quotient/residual coordinates. The four
+/- Source: QUANTITATIVE_DIAGONALIZATION_OBSERVER_COMPLETION.md, lines 355-382.
+For a finite free `G`-set, a chosen section gives genuine quotient/residual coordinates. The five
 conjuncts state, respectively, the Shannon chain rule, its information-loss rearrangement, the
-only-if uniform-fiber equality case, and the unrestricted extended-valued KL chain rule. -/
+only-if uniform-fiber equality case, the unrestricted extended-valued KL chain rule, and the
+conditional data-processing-loss identity under the classical finite-marginal convention. -/
 theorem group_quotient_information_loss
     {G Y : Type*} [Fintype G] [Group G] [Fintype Y]
     [MulAction G Y] [IsCancelSMul G Y]
@@ -345,11 +358,17 @@ theorem group_quotient_information_loss
         forall b, marginal joint b ≠ 0 ->
           conditional joint b = fun _ => (Fintype.card G : Real)⁻¹) /\
       pmfKLDivergence P Q =
-        pmfKLDivergence
+      pmfKLDivergence
           (P.map fun y => (Quotient.mk'' y : MulAction.orbitRel.Quotient G Y))
           (Q.map fun y => (Quotient.mk'' y : MulAction.orbitRel.Quotient G Y)) +
           ∑ b, (firstMarginalPMF jointP b) *
-            pmfKLDivergence (fiberPMF jointP b) (fiberPMF jointQ b) := by
+            pmfKLDivergence (fiberPMF jointP b) (fiberPMF jointQ b) /\
+      (pmfKLDivergence
+            (P.map fun y => (Quotient.mk'' y : MulAction.orbitRel.Quotient G Y))
+            (Q.map fun y => (Quotient.mk'' y : MulAction.orbitRel.Quotient G Y)) ≠ ⊤ ->
+        quotientDataProcessingLoss (G := G) P Q =
+          ∑ b, (firstMarginalPMF jointP b) *
+            pmfKLDivergence (fiberPMF jointP b) (fiberPMF jointQ b)) := by
   classical
   dsimp only
   let coordinates := MulAction.selfEquivOrbitsQuotientProd' (φ := representative) hsection
@@ -382,12 +401,14 @@ theorem group_quotient_information_loss
   have hloss : shannonEntropy zMass - shannonEntropy quotientLaw =
       conditionalEntropy joint := by
     linarith
-  refine ⟨hchain, hloss, ?_, ?_⟩
-  · intro hmaximum
-    apply conditional_entropy_eq_log_card_only_if_uniform joint hjoint_law
-    rw [← hloss]
-    exact hmaximum
-  · letI : MeasurableSpace Y := ⊤
+  have hklChain :
+      pmfKLDivergence P Q =
+        pmfKLDivergence
+            (P.map fun y => (Quotient.mk'' y : MulAction.orbitRel.Quotient G Y))
+            (Q.map fun y => (Quotient.mk'' y : MulAction.orbitRel.Quotient G Y)) +
+          ∑ b, (firstMarginalPMF jointP b) *
+            pmfKLDivergence (fiberPMF jointP b) (fiberPMF jointQ b) := by
+    letI : MeasurableSpace Y := ⊤
     letI : MeasurableSpace (MulAction.orbitRel.Quotient G Y) := ⊤
     letI : MeasurableSpace G := ⊤
     simp only [pmfKLDivergence]
@@ -433,6 +454,14 @@ theorem group_quotient_information_loss
     rw [hcoordinateKL, hklMarginal] at hklCoordinate
     simpa only [jointP, jointQ, pMarginal, pKernel, qKernel, pmfKernel_apply,
       quotientMap, coordinates] using hklCoordinate
+  refine ⟨hchain, hloss, ?_, hklChain, ?_⟩
+  · intro hmaximum
+    apply conditional_entropy_eq_log_card_only_if_uniform joint hjoint_law
+    rw [← hloss]
+    exact hmaximum
+  · intro hquotientFinite
+    apply ENNReal.sub_eq_of_eq_add_rev hquotientFinite
+    exact hklChain
 
 /- Reverse probe A2: the information-loss identity is independently projectable. -/
 example
@@ -489,7 +518,36 @@ example
         ∑ b, (firstMarginalPMF jointP b) *
           pmfKLDivergence (fiberPMF jointP b) (fiberPMF jointQ b) := by
   dsimp only
-  exact (group_quotient_information_loss representative hsection Z P Q).2.2.2
+  exact (group_quotient_information_loss representative hsection Z P Q).2.2.2.1
+
+/- Reverse probe A5: the quotient data-processing loss is independently projectable. -/
+example
+    {G Y : Type*} [Fintype G] [Group G] [Fintype Y]
+    [MulAction G Y] [IsCancelSMul G Y]
+    (representative : MulAction.orbitRel.Quotient G Y -> Y)
+    (hsection : Function.LeftInverse Quotient.mk'' representative)
+    (Z P Q : PMF Y) :
+    let coordinates := MulAction.selfEquivOrbitsQuotientProd' hsection
+      (fun y => IsCancelSMul.stabilizer_eq_bot y)
+    let jointP := P.map coordinates
+    let jointQ := Q.map coordinates
+    pmfKLDivergence
+          (P.map fun y => (Quotient.mk'' y : MulAction.orbitRel.Quotient G Y))
+          (Q.map fun y => (Quotient.mk'' y : MulAction.orbitRel.Quotient G Y)) ≠ ⊤ ->
+      quotientDataProcessingLoss (G := G) P Q =
+        ∑ b, (firstMarginalPMF jointP b) *
+          pmfKLDivergence (fiberPMF jointP b) (fiberPMF jointQ b) := by
+  dsimp only
+  exact (group_quotient_information_loss representative hsection Z P Q).2.2.2.2
+
+/- Mutation probe A5: the unrestricted additive A4 equality alone cannot justify subtraction at
+`top`; the finite quotient-divergence condition in A5 is mathematically active. -/
+example :
+    ¬ (forall total quotient conditional : ENNReal,
+      total = quotient + conditional -> total - quotient = conditional) := by
+  intro hcollapse
+  have hbad := hcollapse ⊤ ⊤ 1 (by simp)
+  norm_num at hbad
 
 /- Trivialization probe A3: a point mass on a two-point fiber is not conditionally uniform and
 therefore cannot attain the conditional entropy `log 2`. -/
