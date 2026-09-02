@@ -5,7 +5,7 @@
    anchors: []
    digest: Critical localization fixes mirror indices; off-line zeros have four-point orbits. -/
 
-import D5.S3.Analytic.Zeta.RealUnitIntervalZetaNonvanishing
+import D5.S3.Analytic.Isolation.RealUnitIntervalZetaNonvanishing
 import D5.S3.Zeros.Symmetry.ZeroOrbitCardinality
 
 /-! Library and repository search audit (2026-09-03):
@@ -25,7 +25,7 @@ import D5.S3.Zeros.Symmetry.ZeroOrbitCardinality
 
 namespace D5.S3.Zeros.Symmetry.CriticalLineStabilizerOrbit
 
-open D5.S3.Analytic.Zeta.RealUnitIntervalZetaNonvanishing
+open D5.S3.Analytic.Isolation.RealUnitIntervalZetaNonvanishing
 open D5.S3.Weil.Convention
 open D5.S3.Weil.ZeroSum
 open D5.S3.Zeros.Symmetry.ZeroOrbitCardinality

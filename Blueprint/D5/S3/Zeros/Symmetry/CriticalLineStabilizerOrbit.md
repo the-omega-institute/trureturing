@@ -21,5 +21,5 @@ The real-unit-interval nonvanishing theorem rules out a conjugation-fixed nontri
 ## References
 
 - Truth anchor: `D5/S3/Zeros/Symmetry/CriticalLineStabilizerOrbit.critical_line_stabilizer_orbit_dichotomy`
-- Dependency: [D5/S3/Analytic/Zeta/RealUnitIntervalZetaNonvanishing](../../Analytic/Zeta/RealUnitIntervalZetaNonvanishing.md)
+- Dependency: [D5/S3/Analytic/Isolation/RealUnitIntervalZetaNonvanishing](../../Analytic/Isolation/RealUnitIntervalZetaNonvanishing.md)
 - Dependency: [D5/S3/Zeros/Symmetry/ZeroOrbitCardinality](ZeroOrbitCardinality.md)

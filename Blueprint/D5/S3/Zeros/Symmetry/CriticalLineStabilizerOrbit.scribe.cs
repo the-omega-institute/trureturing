@@ -70,7 +70,7 @@ internal sealed class CriticalLineStabilizerOrbitDocument : IScribeDocumentDefin
                 DescribeRole.Theorem)),
             [
                 DocumentEdge.Dependency.Create(GidRef.Create(
-                    "D5/S3/Analytic/Zeta/RealUnitIntervalZetaNonvanishing")),
+                    "D5/S3/Analytic/Isolation/RealUnitIntervalZetaNonvanishing")),
                 DocumentEdge.Dependency.Create(GidRef.Create(
                     "D5/S3/Zeros/Symmetry/ZeroOrbitCardinality")),
             ]));

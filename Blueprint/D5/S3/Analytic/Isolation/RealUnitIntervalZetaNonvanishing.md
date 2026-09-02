@@ -8,7 +8,7 @@ Riemann zeta is nonzero at every real point strictly between zero and one.
 
 $$\forall sigma\in \mathbb{R},\ 0<sigma \land sigma<1 \Rightarrow \zeta(sigma) \neq 0$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Zeta/RealUnitIntervalZetaNonvanishing.riemannZeta_ne_zero_on_real_unit_interval` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/Isolation/RealUnitIntervalZetaNonvanishing.riemannZeta_ne_zero_on_real_unit_interval` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -20,4 +20,4 @@ At a positive real argument every adjacent pair is strictly positive. The eta fa
 
 ## References
 
-- Truth anchor: `D5/S3/Analytic/Zeta/RealUnitIntervalZetaNonvanishing.riemannZeta_ne_zero_on_real_unit_interval`
+- Truth anchor: `D5/S3/Analytic/Isolation/RealUnitIntervalZetaNonvanishing.riemannZeta_ne_zero_on_real_unit_interval`

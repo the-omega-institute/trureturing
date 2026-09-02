@@ -2,7 +2,7 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.Isolation;
 
 internal sealed class RealUnitIntervalZetaNonvanishingDocument : IScribeDocumentDefinition
 {
@@ -12,13 +12,13 @@ internal sealed class RealUnitIntervalZetaNonvanishingDocument : IScribeDocument
         Blocks(Describe.Lean(
             DescribeId.Create("riemann-zeta-is-nonzero-on-the-open-real-unit-interval"),
             DeclarationHandle.Create(
-                "D5/S3/Analytic/Zeta/RealUnitIntervalZetaNonvanishing."
+                "D5/S3/Analytic/Isolation/RealUnitIntervalZetaNonvanishing."
                     + "riemannZeta_ne_zero_on_real_unit_interval"),
             H("Riemann zeta is nonzero on the open real unit interval"),
             StatementSource.FromAuthor(Disp(Seq(
                 Forall, Sp, F.Id("sigma"), InMacro, Sp, Mathbb, Grp(F.Id("R")), Comma, Esc,
                 D(0), Lt, F.Id("sigma"), Sp, Land, Sp, F.Id("sigma"), Lt, D(1),
-                Sp, Rightarrow, Sp, Zeta, Open, F.Id("sigma"), Close, Sp, Neq, Sp, D(0)))),
+                Sp, Rightarrow, Sp, F.Zeta, Open, F.Id("sigma"), Close, Sp, Neq, Sp, D(0)))),
             AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text(

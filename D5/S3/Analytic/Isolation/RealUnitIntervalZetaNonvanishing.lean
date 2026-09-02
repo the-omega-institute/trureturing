@@ -1,6 +1,6 @@
-/- GID: D5/S3/Analytic/Zeta/RealUnitIntervalZetaNonvanishing
+/- GID: D5/S3/Analytic/Isolation/RealUnitIntervalZetaNonvanishing
    generality: G
-   mirror-B: D5/B/S3/Analytic/Zeta/RealUnitIntervalZetaNonvanishing
+   mirror-B: D5/B/S3/Analytic/Isolation/RealUnitIntervalZetaNonvanishing
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Riemann zeta is nonzero at every real point strictly between zero and one. -/
@@ -29,7 +29,7 @@ import Mathlib.NumberTheory.LSeries.RiemannZeta
 
 open Complex Filter Set Topology
 
-namespace D5.S3.Analytic.Zeta.RealUnitIntervalZetaNonvanishing
+namespace D5.S3.Analytic.Isolation.RealUnitIntervalZetaNonvanishing
 
 noncomputable section
 
@@ -354,4 +354,4 @@ theorem riemannZeta_ne_zero_on_real_unit_interval :
 
 end
 
-end D5.S3.Analytic.Zeta.RealUnitIntervalZetaNonvanishing
+end D5.S3.Analytic.Isolation.RealUnitIntervalZetaNonvanishing
