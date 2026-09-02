@@ -1,0 +1,59 @@
+# 第一千八百四十五部　平方图表对应正 Krein String
+
+回到平方变量：
+
+$$
+u=w^2,
+\qquad
+w=s-\frac12.
+$$
+
+定义：
+
+$$
+\boxed{
+\mathscr T_\xi(u)
+=
+\frac{
+L_\xi(\frac12+\sqrt u)
+}{
+2\sqrt u
+}.
+}
+\tag{1845.1}
+$$
+
+RH 下：
+
+$$
+\boxed{
+\mathscr T_\xi(u)
+=
+\sum_{\gamma>0}
+\frac{
+m_\gamma
+}{
+u+\gamma^2
+}.
+}
+\tag{1845.2}
+$$
+
+它是 Stieltjes 函数。
+
+Stieltjes 函数不仅可以表示为正测度 resolvent，也可以作为正 Krein string 或相应 canonical system 的特征函数。离散谱时，Stieltjes 连分数可以逐层恢复离散 string 的长度和质量；相关逆谱问题正是通过这种正 continued-fraction 结构求解。([arXiv][3])
+
+因此得到另一条等价实现：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathscr T_\xi
+\text{ 是某个非负 string 的 Weyl–Stieltjes 响应}.
+}
+\tag{1845.3}
+$$
+
+---
+

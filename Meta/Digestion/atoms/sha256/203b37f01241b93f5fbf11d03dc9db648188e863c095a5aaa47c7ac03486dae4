@@ -1,0 +1,64 @@
+# 第一千八百一十二部　Schwarz–Pick 微分约束
+
+若 RH 成立，\(\mathfrak s_\xi\) 是 Schur 函数，所以：
+
+$$
+\frac{
+|\mathfrak s_\xi'(z)|
+}{
+1-|\mathfrak s_\xi(z)|^2
+}
+\le
+\frac1{1-|z|^2}.
+}
+\tag{1812.1}
+$$
+
+令：
+
+$$
+L=L_\xi(s).
+$$
+
+有：
+
+$$
+\frac{d\mathfrak s_\xi}{ds}
+=
+\frac{
+2\lambda_1L_\xi'(s)
+}{
+(L+\lambda_1)^2
+},
+$$
+
+以及：
+
+$$
+\frac{ds}{dz}=s^2.
+$$
+
+另一方面：
+
+$$
+1-|\mathfrak s_\xi|^2
+=
+\frac{
+4\lambda_1\Re L
+}{
+|L+\lambda_1|^2
+},
+$$
+
+$$
+1-|z|^2
+=
+\frac{
+2\Re s-1
+}{
+|s|^2
+}.
+$$
+
+代入并消去全部 gauge factors，得到：
+

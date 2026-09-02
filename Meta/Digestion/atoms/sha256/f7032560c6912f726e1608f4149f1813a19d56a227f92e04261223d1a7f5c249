@@ -1,0 +1,47 @@
+# 第一千九百二十部　危险模式可以有限化，但有限化不等于消失
+
+仓库当前的 observer-mode confinement 定理证明：若 fixed-support prime multiplier 一致有界，而对称 Archimedean mode 在整数模式与实频率方向上联合 proper，则任何严格危险次水平集：
+
+* 只涉及有限多个整数模式；
+* 每个模式的危险频率截面有界；
+* 所有负值落在一个共同有限 mode–frequency box 内。
+
+所以非 RH 搜索可以原则上写成：
+
+$$
+\boxed{
+\text{有限 mode box}
+\longrightarrow
+\text{Gaussian-rational 网格}
+\longrightarrow
+\text{二点 Pick interval matrix}
+\longrightarrow
+\text{有理或黄金负观察器}.
+}
+\tag{1920.1}
+$$
+
+但必须保持：
+
+$$
+\boxed{
+\text{异常被限制在有限盒}
+\not\Rightarrow
+\text{异常不存在}.
+}
+$$
+
+confinement 解决：
+
+$$
+\text{可搜索性}.
+$$
+
+全局完全正胶合才解决：
+
+$$
+\text{RH}.
+$$
+
+---
+

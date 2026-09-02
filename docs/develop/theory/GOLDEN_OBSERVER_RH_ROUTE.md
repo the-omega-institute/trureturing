@@ -1866,3 +1866,85 @@ M1-a 一席位轮(codex-cli,独立 worktree,PR-1 deposit;cover 另开 PR-2);M1-b
 M2-a/M2-b 一席位轮(同模块,codex-cli,独立 worktree,PR-1 deposit 绑 M2-a atom;M2-b 两 atom 以 PR-1b 收据绑定后 PR-2 cover),M2-c 一席位轮(独立模块)。勘误不占预算。
 
 后续增订继续严格追加于本节之后。
+
+---
+
+# 增订九　M5 第 1 步勘误与 M3 separator 阶梯(M3-a、M3-b、M3-c;M3-d 具名缺口)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;研究席一席(GPT PRO,`chatgpt-pro-pool`,advisory,给出分解与文献)+ 探针两席(codex-cli,`lake env lean`,0 sorry,标准三公理:M5 探针、M3 探针),由 orchestrator(claude 主循环)核对约定并撰写;证明文件存 orchestrator scratchpad,不入库。判决日:2026-09-02。lane issue:#4589。
+
+## 〇　为什么是这一节
+
+第三部 §四 主线第四步要求「精确暴露 O-6 ⟹ RH 所需的 separator theorem」。研究席指出并经探针在 kernel 确认:对本仓测试类(实轴上偶、C^∞、紧支),separator 的障碍**不是偶性**而是**实轴零点**——离线非实零点的四点轨道可被偶测试函数强制为负,而实轴上的离线零点其轨道退化为两点、贡献恒非负。故 separator 的诚实形态必须显式带实轴排除依赖,而该依赖(实区间 (0,1) 上 ζ 非零)在钉版 Mathlib 与本仓皆缺。本节把阶梯前三级预登记为义务,第四级记为具名缺口。
+
+## 一　M5 第 1 步勘误(不改 atom,只追加)
+
+§M5 第 1 步「证明 `eulerGerm` 在 Re s>1/φ² 的收敛和解析性」相对 dev 已陈旧:`D5/S3/Analytic/EulerGerm/{GermProductConvergence,GermProductAnalytic,GoldenGermProductAbscissa}` 与 `D5/S3/Analytic/GoldenEulerBeta` 已冻结该步(并行控制线由其他驱动者推进,已含因子分解、延拓与零点集模块)。探针核实:β(0)=0、β(1)=φ²、缺口集恰为 {φ, φ²},绝对收敛横坐标恰为 1/φ²;唯一未落地的是 Hearts 字面索引 `eulerGerm` 到冻结 `germLocalFactor` 乘积的 13 行传输,不构成独立义务。本卷 lane 不进入并行控制线。
+
+## 二　M3-a 预登记:指定谱值对使离线轨道贡献为负(`PrescribedPairNegativeOrbit`)
+
+**义务**:公开定理 `prescribed_pair_gives_negative_zero_orbit (Z : ZeroData) (n : ℕ) (hOff : (Z.zero n).re ≠ criticalAbscissa) (hIm : (Z.zero n).im ≠ 0) (g : WeilTestFunction) (hz : fourierLaplace g (Z.gamma n) = 1) (hcz : fourierLaplace g (conj (Z.gamma n)) = -1) : (∑ k ∈ ({n, Z.reflection n, Z.conjugation n, Z.conjugation (Z.reflection n)} : Finset ℕ), zeroSummand Z (convolutionSquare g) k).re = -4 * (Z.multiplicity n : ℝ)`。闭合路线:`hIm` 给出共轭指标与 `n` 不同,与 `hOff` 一起由冻结 `zero_orbit_card_four_of_off_line` 得四指标互异;冻结 `off_line_zero_orbit_sum_eq_four_mul_re` 与 `convolutionSquare` 的变换因子分解 G(z)·conj G(conj z) 把实部化为 −4·重数。落点 `D5/S3/Weil/ZetaBridge/`。
+**可证伪预测(写在跑之前)**:若正确,定理只消费冻结的轨道和与因子分解引理,公理集为标准三条;若四指标在某 `ZeroData` 下不互异(重数或置换退化),则定理对该情形为假,须以 `hIm` 之外的显式前提修正并记入下一增订。
+**边界**:不构造任何测试函数;只把「指定两个谱值」翻译成轨道贡献的符号。
+
+## 三　M3-b 预登记:偶测试函数变换的有限插值(`EvenTestFunctionFiniteInterpolation`)
+
+**义务**:公开定理 `even_weilTestFunction_finite_interpolation (S : Finset ℂ) (hsep : ∀ ⦃z w : ℂ⦄, z ∈ S → w ∈ S → z ≠ w → z ≠ -w) (a : S → ℂ) : ∃ g : WeilTestFunction, ∀ z : S, fourierLaplace g z.1 = a z`。闭合路线:符号分离使 z ↦ z² 在 S 上单射;取缩放的偶紧支 seed,使其变换在所有节点非零;偶阶导数的变换为 (−1)^r z^{2r}·Φ(z),在平方节点上作 Lagrange 插值(Mathlib `Lagrange.interpolate`),复合得偶、C^∞、紧支的 g。落点 `D5/S3/Weil/TestFunctions/`(与冻结 `FinitePaleyWienerInterpolation` 同桶)。
+**可证伪预测(写在跑之前)**:若正确,定理在钉版工具链闭合且不引入新公理;若某有限符号分离集上求值泛函线性相关(平方节点 Vandermonde 退化),则定理为假——这与 `hsep` 矛盾,故实际的可证伪面是「seed 变换在全部节点非零」这一步能否闭合。
+**边界**:不控制 S 之外的谱值;不给出任何衰减估计。
+
+## 四　M3-c 预登记:实轴离线零点的轨道贡献恒非负(与 M3-a 同模块)
+
+**义务**:同模块两条公开定理 `real_off_line_zero_orbit_sum_re (Z : ZeroData) (n : ℕ) (hReal : (Z.zero n).im = 0) (hOff : (Z.zero n).re ≠ criticalAbscissa) (g : WeilTestFunction) : (∑ k ∈ ({n, Z.reflection n, Z.conjugation n, Z.conjugation (Z.reflection n)} : Finset ℕ), zeroSummand Z (convolutionSquare g) k).re = 2 * (Z.multiplicity n : ℝ) * Complex.normSq (fourierLaplace g (Z.gamma n))` 与 `prescribed_pair_impossible_for_real_zero (Z : ZeroData) (n : ℕ) (hReal : (Z.zero n).im = 0) (g : WeilTestFunction) (hz : fourierLaplace g (Z.gamma n) = 1) (hcz : fourierLaplace g (conj (Z.gamma n)) = -1) : False`。
+**可证伪预测(写在跑之前)**:若正确,则对任何允许实轴离线零点的抽象 `ZeroData`,偶测试类上的 Weil 正性不能分离该零点——separator 在无实轴排除时为假,这是 kernel 可见的否定性事实;若某 `ZeroData` 的实轴零点轨道不退化为两点,则本条为假并须修正轨道基数引理的前提。
+**边界**:本条不断言 zeta 有或没有实轴非平凡零点。
+
+## 五　M3-d 具名缺失载体(open,不派席):非平凡零点不在实轴
+
+**缺口**:`IsNontrivialZero.im_ne_zero {ρ : ℂ} (hρ : IsNontrivialZero ρ) : ρ.im ≠ 0`,即实 0<s<1 时 ζ(s) ≠ 0(经典:η(s)>0 且 ζ(s)=η(s)/(1−2^{1−s})<0)。钉版 Mathlib 仅有 `riemannZeta_ne_zero_of_one_le_re`;本仓 `D5/S3/Zeros/Symmetry/ZeroOrbitDegeneracy` 已记同一缺口。
+**可证伪预测(写在跑之前)**:若 M3-a/b/c 落地而 M3-d 仍缺,则本仓任何形如「离线零点 ⟹ 存在负 Weil 平方和」的 separator 只能以 `(Z.zero n).im ≠ 0` 为显式前件陈述;**不得**以公理补入实轴排除。
+**边界**:本节不是义务,不占席位。
+
+## 六　预算与结算
+
+M3-a/M3-c 一席位轮(同模块,codex-cli,独立 worktree,PR-1 deposit 绑 M3-a atom;M3-c 两 atom 以 PR-1b 收据后 PR-2 cover),M3-b 一席位轮(独立模块)。截断 separator(以 `symmetricIndices T` 为界)待三条冻结后另立增订。勘误与具名缺口不占预算。
+
+后续增订继续严格追加于本节之后。
+
+---
+
+# 增订十　黄金 Euler germ 线:窗口内局部因子的零点(G-a、G-b 预登记;G-c 具名缺口;第 6 步疑似为假)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;方向修订由用户 2026-09-02 给出(「黄金 Euler germ 才是正经线路」);两席 codex-cli 探针(窗口数值扫描 + Lean 条件判据;零点认证可行性 + 字典引理,`lake env lean` exit 0,标准三公理),数值零点由 orchestrator 独立复算确认;由 orchestrator(claude 主循环)撰写。判决日:2026-09-02。lane issue:#4589。本节进入 `D5/S3/Analytic/EulerGerm/` 桶(其他驱动者活线),只做其尚未冻结的边。
+
+## 〇　为什么是这一节
+
+冻结的 `golden_germ_second_order_factorization` 给出 continuedGerm(s) = ζ(φ²s)·ζ(φ³s)·ζ(2φ²s)⁻¹·G3(s),G3 在 Re s > 1/φ⁴ 绝对收敛。绝对收敛乘积为零当且仅当某因子为零,故 §M5 第 6 步「严格窗口内无消去」精确等价于每个 `germLocalFactor s p` 在窗口内非零。**数值证据强烈指向该步为假**:p=2 的局部因子在 σ∈[0.12,0.40]、t∈[0,60] 内有 ≥10 个零点(如 s₀ ≈ 0.23815329946211908 + 5.256712292901926 i,80 位精度残差 ≤ 1e-57;orchestrator 以 float64、V=400 独立复算 |f₂(s₀)| ≈ 6e-16,邻点 ≈ 1e-2),p=3 有 12 个候选,p=5 无;在 s₀ 处三个 ζ 型因子的模为 0.287、0.947、0.553,故不是 ζ 因子的消去。**含义**:连续延拓的 germ 在窗口内有不来自 ζ 的零点,「窗口零点定位 ⟺ RH」必须改写为含局部因子零因子(= G3 零因子)的亚纯 divisor 恒等式。kernel 侧:实轴上局部因子恒非零;精确尾项阈值 σ₀ = 0.4311(冻结的 2/3 为粗切口);G3 延拓只到 Re s > 1/φ⁴ ≈ 0.146,窗口下沿 1/(2φ³) ≈ 0.118 尚无冻结覆盖。
+
+## 一　G-a 预登记:G3 的零集等于局部因子零集之并(`LocalFactorZeroDivisor`)
+
+**义务**:公开定理 `G3_eq_zero_iff_exists_local_factor_zero (s : ℂ) (hs : 1 / Real.goldenRatio ^ 4 < s.re) : (∏' p : Nat.Primes, (1 - (p : ℂ) ^ (-s * ((Real.goldenRatio ^ 3 : ℝ) : ℂ))) * (1 + (p : ℂ) ^ (-s * ((Real.goldenRatio ^ 2 : ℝ) : ℂ)))⁻¹ * germLocalFactor s p) = 0 ↔ ∃ p : Nat.Primes, germLocalFactor s p = 0`,乘积表达式与冻结 `golden_germ_second_order_factorization` 的 G3 逐字相同。闭合路线:冻结的偏差可和性给出绝对收敛;两个规范化因子由模 < 1 非零;钉版 Mathlib 的 `tprod` 零/非零引理收尾。落点 `D5/S3/Analytic/EulerGerm/`。
+**可证伪预测(写在跑之前)**:若正确,定理只消费冻结的第二阶因子分解模块与钉版 Mathlib,公理集为标准三条;若 `tprod` 的零判据在钉版缺失或 G3 表达式与冻结 `let` 不同构,则记所缺引理名并改标 `open`。
+**边界**:不断言任何局部因子有零点。
+
+## 二　G-b 预登记:局部因子的解析性与最小模零点判据(同模块)
+
+**义务**:同模块两条公开定理 `germLocalFactor_analyticOnNhd_pos (p : ℕ) (hp : p.Prime) : AnalyticOnNhd ℂ (fun s : ℂ => germLocalFactor s p) {s : ℂ | 0 < s.re}` 与 `exists_zero_in_ball_of_boundary_norm_gt_center {f : ℂ → ℂ} {c : ℂ} {r : ℝ} (hr : 0 < r) (hf : AnalyticOnNhd ℂ f (Metric.closedBall c r)) (hgap : ∀ z ∈ Metric.sphere c r, ‖f c‖ < ‖f z‖) : ∃ z ∈ Metric.ball c r, f z = 0`。闭合路线:后者由最大模原理施于 1/f(Mathlib `Analysis.Complex.AbsMax`);前者由局部一致收敛的级数解析性。
+**可证伪预测(写在跑之前)**:若正确,二者在钉版工具链闭合且公理集为标准三条;若 `AbsMax` 的形式不支持闭球上 `AnalyticOnNhd` 的边界最大值陈述,则记所缺引理名并改标 `open`。
+**边界**:本条把「认证一个零点」归约为两条不等式(中心上界、边界一致下界),不证明任何具体不等式。
+
+## 三　G-c 具名缺失载体(open,不派席):s₀ 附近零点的 kernel 认证
+
+**缺口**:`germLocalFactor_two_has_zero_near_candidate : ∃ z ∈ Metric.ball (⟨23815329946211908/10^17, 5256712292901926/10^15⟩ : ℂ) (1/10^8), germLocalFactor z 2 = 0`。由 G-b 归约为:存在有理 L 使 ‖germLocalFactor c 2‖ < L 且圆周上 L ≤ ‖germLocalFactor z 2‖。钉版 Mathlib 无 Rouché/辐角原理,亦无可供 kernel 使用的定向舍入超越函数包络(log 2、exp、sin/cos 的有理封闭);`norm_num`/`positivity`/`bound` 不提供该层。成本:一次性手工证书为重型;可复用管线需新基础设施。
+**可证伪预测(写在跑之前)**:若 kernel 得到闭盘上 ‖germLocalFactor z 2‖ 的正下界,或圆周上零点计数为 0,则 G-c 为假且本节「第 6 步疑似为假」的数值判断须撤回;某一包络方法的失败本身不构成否证。
+**边界**:本节不是义务,不占席位;零点的单性与唯一性未验证。
+
+## 四　对 §M5 第 6–7 步的诚实改写(不改旧 atom)
+
+在 G-c 认证之前,「窗口内无消去」记为 **疑似为假(数值)**;「窗口零点定位 ⟺ RH」的正确目标形态是:在 Re s > 1/φ⁴ 上,continuedGerm 的零因子 = ζ(φ²s)、ζ(φ³s) 的零因子 − ζ(2φ²s) 的零因子 + G3 的零因子,而 G-a 把最后一项化为局部因子零因子;RH 只约束前两项。任何省略 G3 零因子的「等价」陈述列入暂不接受的说法。
+
+## 五　预算与结算
+
+G-a/G-b 一席位轮(同模块,codex-cli,独立 worktree,PR-1 deposit 绑 G-a atom;G-b 两 atom 以 PR-1b 收据后 PR-2 cover);G-c 不占预算,待认证基础设施或 owner 裁决。
+
+后续增订继续严格追加于本节之后。

@@ -1,0 +1,18 @@
+## 版本 B：Canonical Hamiltonian
+
+直接构造：
+
+$$
+\boxed{
+H_\xi(x)\succeq0,
+\qquad
+\operatorname{tr}H_\xi(x)=1,
+}
+$$
+
+使其 Weyl 函数为 \(m_\xi\)。
+
+这是最接近连续“关系场”的版本。
+
+---
+

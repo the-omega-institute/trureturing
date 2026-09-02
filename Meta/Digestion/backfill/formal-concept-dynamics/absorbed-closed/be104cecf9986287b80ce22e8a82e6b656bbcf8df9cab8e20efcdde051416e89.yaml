@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:be104cecf9986287b80ce22e8a82e6b656bbcf8df9cab8e20efcdde051416e89
+  normalized_sha256: sha256:be104cecf9986287b80ce22e8a82e6b656bbcf8df9cab8e20efcdde051416e89
+cas_ref: sha256:be104cecf9986287b80ce22e8a82e6b656bbcf8df9cab8e20efcdde051416e89
+coverage_gids:
+  - D5/S3/ConceptDynamics/Uncertainty/FourWayIndependence.four_uncertainties_have_all_truth_profiles
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Uncertainty/FourWayIndependence.four_uncertainties_have_all_truth_profiles
+      source_sha256: sha256:be104cecf9986287b80ce22e8a82e6b656bbcf8df9cab8e20efcdde051416e89
+      target_statement_id: sha256:4297ea0ed79bcddde409676e1f117e5099a315fc03e3f36c36a0a8952d93a318
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Uncertainty/FourWayIndependence.four_uncertainties_have_all_truth_profiles
+      definition_sha256: sha256:7be3f10310c42054477008b40ea50993d378687c289398ccd9d9c0e7f4e984c6
+      emission_sha256: sha256:7dc602dda19908f25b81d3691539ab8c452d416462a0d0226dc57e295e3a2692
+  unresolved_subitems: []

@@ -1,0 +1,37 @@
+## 1794.3 Schur 预测 boost
+
+$$
+M(r,\theta)
+=
+\begin{pmatrix}
+\cosh r&-e^{-i\theta}\sinh r\\
+-e^{i\theta}\sinh r&\cosh r
+\end{pmatrix}
+$$
+
+表示一个正相位态中新增过去信息对预测误差的压缩。
+
+RH 允许：
+
+$$
+r>0.
+$$
+
+只要求：
+
+$$
+r<\infty.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{“出现双曲 boost”本身不等于离线缺陷。}
+}
+$$
+
+真正要看的是：这个 boost 是零点的径向位置、观察者的坐标变化，还是正预测系统的 Schur 参数。
+
+---
+

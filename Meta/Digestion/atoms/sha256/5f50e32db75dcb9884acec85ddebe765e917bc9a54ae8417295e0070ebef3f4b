@@ -1,0 +1,38 @@
+## 1847.1 离线负性不一定局部化为某个 \(H(x)<0\)
+
+必须谨慎：
+
+$$
+\boxed{
+\text{kernel 有负平方}
+}
+$$
+
+不自动意味着存在一个规范点 \(x_0\) 使：
+
+$$
+H(x_0)
+$$
+
+拥有负特征值。
+
+因为不定性可能分布在：
+
+* 状态空间度量；
+* 边界条件；
+* coupling；
+* 非最小消去；
+* 或全局 realization。
+
+当前严格得到的是：
+
+$$
+\boxed{
+\text{不存在正半定 canonical Hamiltonian 实现。}
+}
+$$
+
+若要进一步定位一块“负 Hamiltonian 区域”，必须先构造一个具体的 indefinite canonical model。
+
+---
+

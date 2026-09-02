@@ -1,0 +1,46 @@
+## 定理 1810.1（Universal off-line Pick obstruction）
+
+任一右侧离线零点都产生：
+
+$$
+\boxed{
+\begin{pmatrix}
+K(0,0)&K(0,z_\rho)\\
+K(z_\rho,0)&K(z_\rho,z_\rho)
+\end{pmatrix}
+=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}.
+}
+\tag{1810.2}
+$$
+
+其行列式恒为：
+
+$$
+\boxed{-1.}
+\tag{1810.3}
+$$
+
+这个负值与：
+
+* \(\gamma\)；
+* \(\delta=\sigma-\frac12\)；
+* 零点重数；
+
+全部无关。
+
+重数只进入接触点附近的导数，不进入这一零阶 Pick 惯性。
+
+所以离线零点的有限证明对偶可以比此前的高阶 Hankel 证书更短：
+
+$$
+\boxed{
+\text{一个基点 \(0\)、一个离线像点，以及一个固定负行列式 \(-1\)。}
+}
+$$
+
+---
+

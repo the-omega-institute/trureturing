@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:6bcd2a8b0d7f867681a9865b781e2be90855213ac3d5218740ed88c48999e67a
+  normalized_sha256: sha256:6bcd2a8b0d7f867681a9865b781e2be90855213ac3d5218740ed88c48999e67a
+cas_ref: sha256:6bcd2a8b0d7f867681a9865b781e2be90855213ac3d5218740ed88c48999e67a
+coverage_gids:
+  - D5/S3/ConceptDynamics/Topology/ContinuousHardClassificationObstruction.continuous_hard_classification_obstruction
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Topology/ContinuousHardClassificationObstruction.continuous_hard_classification_obstruction
+      source_sha256: sha256:6bcd2a8b0d7f867681a9865b781e2be90855213ac3d5218740ed88c48999e67a
+      target_statement_id: sha256:3a8032530d343f5f9fe233f1ca82a0398705715e95a9824df470403ce49f055b
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Topology/ContinuousHardClassificationObstruction.continuous_hard_classification_obstruction
+      definition_sha256: sha256:db389c7b53d937e30fc43ecb0db8861139cd03b13dda36438b03fd874f2512e3
+      emission_sha256: sha256:974154db8a8e84b99c997502b9f8557a1df8f6b690d77a946329509dc2c95678
+  unresolved_subitems: []

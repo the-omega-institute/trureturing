@@ -1,0 +1,21 @@
+## 关系层
+
+证明：
+
+$$
+\boxed{
+\frac{
+L_\xi(s)+\overline{L_\xi(t)}
+}{
+s+\overline t-1
+}
+=
+\langle V_t,V_s\rangle.
+}
+\tag{1906.2}
+$$
+
+这直接给出所有观察者间的共同 Gram。
+
+---
+

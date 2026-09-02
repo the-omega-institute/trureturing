@@ -1,0 +1,53 @@
+## 1915.1 Clifford 偶代数为何不显黄金因子化历史
+
+两个实 involution：
+
+$$
+\mathfrak S,\mathfrak C
+$$
+
+都含有：
+
+$$
+\sqrt5.
+$$
+
+但它们的乘积：
+
+$$
+\mathfrak J
+=
+\mathfrak S\mathfrak C
+=
+\begin{pmatrix}
+0&-1\\
+1&0
+\end{pmatrix}
+$$
+
+完全不含黄金常数。
+
+所以：
+
+$$
+\boxed{
+\text{黄金存在于实极化的因子化历史中；
+完成后的复相位只保留 }\mathfrak J.
+}
+\tag{1915.3}
+$$
+
+这给“\(\zeta\) 是一种完成对象，因此直接看不到黄金比例”一个非常清楚的最小模型：
+
+$$
+\boxed{
+\text{complex completion 可以保留最终相位结构，
+同时遗忘产生该相位的黄金实分解。}
+}
+$$
+
+同一个 \(\mathfrak J\) 还拥有连续多族不同的实 involution 分解，所以仅从完成复结构无法反推出唯一黄金历史。
+
+只有加入：
+
+* 整数格；

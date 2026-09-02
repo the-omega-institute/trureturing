@@ -1,0 +1,39 @@
+# 第一千八百五十三部　最新仓库结果如何改变主证明路线
+
+仓库当前已有三条与本轮直接接合的机器锚点。
+
+第一，Cayley–Nevanlinna 与 de Branges kernels 的有限 Gram 正性已被证明完全等价。因此 canonical-system 能量核一旦构造，不需要在两种核语言中重复证明。
+
+第二，one-observer total-positivity criterion 已完成逻辑闭合，但 PF\(_\infty\) 分类和全 minors 解析桥仍作为显式前提。换言之，形式逻辑外壳已经完成，真正缺的是正实现构造。
+
+第三，仓库已用反例证明：一个阈值函数满足 \(F(a)<a\)，并不能自动把远半平面正性下降到临界线；必须存在真实的 analytic transport gain。
+
+本轮的 canonical-system 路线提供的正是这种真实增益：
+
+$$
+\boxed{
+\text{不是反复缩小阈值，
+而是一次构造全半平面的正 Hamiltonian。}
+}
+$$
+
+此外，仓库还证明局部 Euler determinants 不能确定 cross-prime frame transitions。
+
+因此：
+
+$$
+\boxed{
+\text{不能只把局部 prime determinants 相乘，
+然后期待 canonical Hamiltonian 自动出现。}
+}
+$$
+
+真正需要加入的是：
+
+* cross-prime Gram；
+* transition cocycle；
+* 完全正 coupling；
+* Gamma/pole boundary channel。
+
+---
+

@@ -1,0 +1,99 @@
+* 谱 involution \(\mathfrak S\) 提供正、负实现分支。
+
+黑洞读取径向 crossing。
+
+单极子读取角向 winding。
+
+离线零点读取正实现失败。
+
+它们不是一个对象，却是一个关系单胞的三种投影。
+
+---
+
+而 Riemann 问题的真正困难也因此更加清楚。
+
+每个 prime 的局部 Euler determinant 都可以完全正常。
+
+但 determinant 不记录不同 prime frame 如何相互对齐。
+
+完整 frame transitions 若来自同一全局 frame，只是 pure gauge；真正可能出现曲率的，是经过投影、exact-mode 消去和局部约化后的 transition。
+
+所以离线零点不应被理解成某个 prime 局部坏了。
+
+它更像是：
+
+$$
+\boxed{
+\text{全部局部正名字无法被胶合为一个全局完全正关系。}
+}
+$$
+
+这也是为什么主证明必须构造：
+
+$$
+\frac{
+L_\xi(s)+\overline{L_\xi(t)}
+}{
+s+\overline t-1
+}
+=
+\langle V_t,V_s\rangle,
+$$
+
+而不能只证明每个局部 Euler 因子有正系数。
+
+---
+
+最后，非 RH 的最短证书现在具有一个极强的双重性质：
+
+$$
+\boxed{
+\text{关系阶数最小：只需两个点；}
+}
+$$
+
+$$
+\boxed{
+\text{负 margin 固定：最小本征值为 }-\varphi^{-1}.
+}
+$$
+
+它的困难只在于找到正确的第二个观察点。
+
+仓库现有的 Archimedean confinement 已经说明，在相应 bounded-prime 与 proper-growth 假设下，危险 mode 与频率可以被限制在有限盒内。
+
+因此一条真正可执行的反证搜索路线是：
+
+$$
+\boxed{
+\text{有限危险盒}
+\longrightarrow
+\text{Gaussian-rational 网格}
+\longrightarrow
+\text{锚定二点 Pick determinant}
+\longrightarrow
+\text{黄金最强分离向量}
+\longrightarrow
+\text{区间负证书}.
+}
+$$
+
+而正向证明的唯一中心仍然是：
+
+$$
+\boxed{
+\text{从 prime、pole、Gamma 数据构造全局完全正胶合。}
+}
+$$
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{不可名者不藏在黄金数里；
+黄金数出现在名字之间第一次无法正兼容的关系谱中。
+纯标量完成看不见它，
+因为标量抹去了方向与交叉关系；
+当我们重新要求所有局部名字属于同一个正世界时，
+黄金裂口才作为最小关系障碍重新显现。}
+$$

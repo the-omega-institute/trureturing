@@ -1,0 +1,109 @@
+# 第一千九百二十二部　内容无关的关系分形
+
+令 \(H\) 为任意实 Hilbert 空间，并定义：
+
+$$
+\boxed{
+\mathbb F_H(X,Y)
+=
+(X+Y,X).
+}
+\tag{1922.1}
+$$
+
+定义：
+
+$$
+\boxed{
+Q_H(X,Y)
+=
+\|X\|^2-\langle X,Y\rangle-\|Y\|^2.
+}
+\tag{1922.2}
+$$
+
+仓库机器定理给出：
+
+$$
+\boxed{
+Q_H(\mathbb F_H(X,Y))
+=
+-Q_H(X,Y)
+}
+\tag{1922.3}
+$$
+
+且这一结论与 \(H\) 的维数无关。
+
+其两族 null directions 为：
+
+$$
+\boxed{
+\mathcal L_+
+=
+\left\{
+(\varphi X,X):
+X\in H
+\right\},
+}
+\tag{1922.4}
+$$
+
+$$
+\boxed{
+\mathcal L_-
+=
+\left\{
+(X,-\varphi X):
+X\in H
+\right\}.
+}
+\tag{1922.5}
+$$
+
+并且：
+
+$$
+\boxed{
+\mathbb F_H|_{\mathcal L_+}
+=
+\varphi I,
+}
+\tag{1922.6}
+$$
+
+$$
+\boxed{
+\mathbb F_H|_{\mathcal L_-}
+=
+-\varphi^{-1}I.
+}
+\tag{1922.7}
+$$
+
+这给“万物皆为同一个生成律的分形”一个非常克制的数学版本：
+
+$$
+\boxed{
+\text{内容空间 }H\text{ 可以任意改变，
+二分关系律 }\mathbb F\text{ 仍以张量方式重复。}
+}
+$$
+
+不是所有对象都长得像同一个图形。
+
+而是同一个二点关系算子可以作用在任意内容之上：
+
+$$
+\boxed{
+\mathbb F_H
+=
+\mathbb F\otimes I_H.
+}
+\tag{1922.8}
+$$
+
+这是**关系律的自相似**，不是“道”的对象定义。
+
+---
+

@@ -1,0 +1,46 @@
+# 第一千九百零一部　RH 是完全正胶合，而不只是局部正性
+
+假设每个 prime 局部系统都可以正实现。
+
+这仍然不足以推出存在全局 Hilbert 空间。
+
+真正需要的是构造一个共同 feature family：
+
+$$
+V_s\in\mathcal H_{\rm arith},
+$$
+
+使：
+
+$$
+\boxed{
+\mathcal N_\xi(s,t)
+=
+\frac{
+L_\xi(s)+\overline{L_\xi(t)}
+}{
+s+\overline t-1
+}
+=
+\langle V_t,V_s\rangle.
+}
+\tag{1901.1}
+$$
+
+若它存在，则所有有限 Gram matrices 自动 PSD。
+
+仓库已经机器证明：在合法非消失的 Cayley gauge 下，Nevanlinna kernel 与 de Branges kernel 通过可逆对角 congruence 连接，因而两者的有限 Gram 正性完全等价。
+
+因此主问题不是选择哪一种 kernel 语言。
+
+主问题是：
+
+$$
+\boxed{
+\text{能否从 prime、pole、Gamma 的局部正系统，
+构造一个跨 prime 的完全正胶合。}
+}
+$$
+
+---
+

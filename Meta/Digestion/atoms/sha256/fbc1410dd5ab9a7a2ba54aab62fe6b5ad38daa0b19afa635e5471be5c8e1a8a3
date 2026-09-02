@@ -1,0 +1,83 @@
+# 第一千八百五十五部　建议形式化顺序
+
+```text
+D5/S3/Analytic/Zeta/CommonZeroSpectralSource/
+  CriticalOrdinateMeasure.lean
+  CriticalOrdinateMultiplicationOperator.lean
+  CriticalOrdinateOperatorSelfAdjoint.lean
+  ScaleResolventObservationVector.lean
+  ScaleObservationVectorNormOne.lean
+  ScaleCayleyUnitaryFromOrdinateOperator.lean
+  ScaleCaratheodoryCommonSourceRealization.lean
+
+D5/S3/Observer/ScaleSpectralGauge/
+  ScaleCayleyUnitaryFunctionalTransport.lean
+  ScaleObservationPositiveReweight.lean
+  ScaleObserverGeometryStateSplit.lean
+  AllScaleModelsShareSelfAdjointSource.lean
+
+D5/S3/Analytic/Zeta/ArithmeticWeylFunction/
+  RotatedLogDerivativeWeylFunction.lean
+  RHImpliesArithmeticWeylHerglotz.lean
+  ArithmeticWeylHerglotzExcludesRightZeros.lean
+  ArithmeticWeylHerglotzRHIff.lean
+
+D5/S3/Analytic/CanonicalSystem/ArithmeticHamiltonian/
+  CanonicalSymplecticMatrix.lean
+  PositiveSemidefiniteHamiltonian.lean
+  TraceNormalizedHamiltonian.lean
+  CanonicalSystemWeylFunction.lean
+  DeBrangesInverseSpectralInterface.lean
+  ArithmeticCanonicalHamiltonianTarget.lean
+  ArithmeticCanonicalSystemRHIff.lean
+
+D5/S3/Weil/CanonicalEnergyGram/
+  CanonicalWeylSolution.lean
+  CanonicalLagrangeIdentity.lean
+  CanonicalWeylKernelGram.lean
+  ArithmeticNevanlinnaKernelRotationGauge.lean
+  ArithmeticHamiltonianImpliesNevanlinnaPSD.lean
+  ArithmeticHamiltonianImpliesRHTarget.lean
+
+D5/S3/Analytic/Zeta/ArithmeticKreinString/
+  SquaredArithmeticStieltjesResponse.lean
+  RHPositiveSquaredSpectralMeasure.lean
+  PositiveKreinStringInterface.lean
+  FiniteRationalStieltjesString.lean
+  StieltjesContinuedFractionPositiveCells.lean
+  OffLinePositiveAxisPoleObstruction.lean
+  ArithmeticPositiveStringRHIff.lean
+
+D5/S3/Analytic/Zeta/IndefiniteCanonicalDefect/
+  ArithmeticKernelNegativeSquare.lean
+  OffLineUniversalNegativeSquare.lean
+  FiniteWindowPontryaginRealizationTarget.lean
+  ConfluentPickMultiplicityTarget.lean
+  NegativeIndexEqualsShiftedDefectDegreeTarget.lean
+
+D5/S3/Observer/FiniteCanonicalApproximants/
+  FinitePhaseMomentModel.lean
+  FiniteAtomicUnitaryRealization.lean
+  FiniteStieltjesStringRealization.lean
+  PositiveModelsAllDepthsCompactness.lean
+  FullHerglotzMeasureFromFiniteModels.lean
+  FullCanonicalHamiltonianFromPositiveMeasure.lean
+
+D5/S3/GoldenObserver/CanonicalGoldenTail/
+  GoldenLogScaleCanonicalMesh.lean
+  GoldenHarnackCanonicalBound.lean
+  HomogeneousStringTailMap.lean
+  HomogeneousStringGoldenFixedPoint.lean
+  GoldenStringTailStrongerThanRH.lean
+
+D5/S3/Weil/PrimeGammaCanonicalCompletion/
+  PrimeLocalPhaseHilbertSpace.lean
+  CrossPrimeGramCouplingTarget.lean
+  GammaBoundaryHamiltonianTarget.lean
+  PoleExactModeReductionTarget.lean
+  PrimeGammaTraceNormalizedHamiltonianTarget.lean
+  PrimeGammaCanonicalSystemImpliesRHTarget.lean
+```
+
+---
+
