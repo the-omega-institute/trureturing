@@ -5,7 +5,9 @@ public sealed class FormalizationWorkflowInstructionTests
     [Fact]
     public void WorktreeDisciplineDoesNotRequireCommittedBlobBeforeDeposit()
     {
-        var instructions = Read("CLAUDE.md");
+        var instructions = File.ReadAllText(Path.Combine(
+            RepositoryLayout.FindRoot(),
+            "CLAUDE.md"));
 
         Assert.DoesNotContain("未提交 blob", instructions, StringComparison.Ordinal);
         Assert.Contains("repository.ReadCurrentChanges()", instructions, StringComparison.Ordinal);
@@ -15,7 +17,12 @@ public sealed class FormalizationWorkflowInstructionTests
     [Fact]
     public void BatchDepositLaneDocumentsFourArtifacts()
     {
-        var script = Read("tools/scripts/agent/batch_pr.sh");
+        var script = File.ReadAllText(Path.Combine(
+            RepositoryLayout.FindRoot(),
+            "tools",
+            "scripts",
+            "agent",
+            "batch_pr.sh"));
 
         Assert.Contains(
             "每条四件(Lean / scribe.cs / md / 冻结条目)",
@@ -26,7 +33,11 @@ public sealed class FormalizationWorkflowInstructionTests
     [Fact]
     public void FormalAnswerSkillDoesNotImportRetiredFormalizationReceiptLedger()
     {
-        var skill = Read("skills/codex-formal-answer/SKILL.md");
+        var skill = File.ReadAllText(Path.Combine(
+            RepositoryLayout.FindRoot(),
+            "skills",
+            "codex-formal-answer",
+            "SKILL.md"));
 
         Assert.DoesNotContain("receipt-ledger", skill, StringComparison.OrdinalIgnoreCase);
         Assert.Contains(
@@ -38,7 +49,11 @@ public sealed class FormalizationWorkflowInstructionTests
     [Fact]
     public void TheoryIngestSkillTreatsLedgerAsEvidenceRatherThanFormalizationReceipt()
     {
-        var skill = Read("skills/codex-theory-ingest/SKILL.md");
+        var skill = File.ReadAllText(Path.Combine(
+            RepositoryLayout.FindRoot(),
+            "skills",
+            "codex-theory-ingest",
+            "SKILL.md"));
 
         Assert.DoesNotContain("supplies that receipt", skill, StringComparison.OrdinalIgnoreCase);
         Assert.Contains("supplies that evidence", skill, StringComparison.Ordinal);
@@ -51,7 +66,4 @@ public sealed class FormalizationWorkflowInstructionTests
             skill,
             StringComparison.Ordinal);
     }
-
-    private static string Read(string relativePath) =>
-        File.ReadAllText(Path.Combine(RepositoryLayout.FindRoot(), relativePath));
 }
