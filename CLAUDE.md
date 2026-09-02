@@ -131,33 +131,31 @@ Blueprint/D5/<同一 GID 路径>.scribe.cs
   ▼
 Blueprint/D5/<同一 GID 路径>.md              投影·禁手改
   │ make deposit ATOM_ID=x GID=g
-  ├─► Golden/Frozen/accepted/<event_hash>.json           冻结事件·append-only
-  └─► Meta/Digestion/formalizations/<atom_id>.v1.json    覆盖收据(预登记签名)
+  └─► Golden/Frozen/accepted/<event_hash>.json           冻结事件·append-only
   │ make cover / cover-batch
   ▼
 backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 ```
 **GID 路径在三处逐段同形**(`D5/….lean` ↔ `Blueprint/D5/….scribe.cs` ↔ `Blueprint/D5/….md`),这是第 6 条"地址由算法算出"的落点:三处对不齐即地址错,不是文件少写了一个。
 
-**三类 PR,面集合封闭(2026-09-02 实测最近 370 个已合并 PR,窗口 08-30..09-02,8 个驱动者)**:
-- **deposit(178/370)**:`D5/*.lean` + `Blueprint/*.scribe.cs` + `Blueprint/*.md` + `Golden/Frozen/accepted/*` [+ `Meta/Digestion/formalizations/*`]。**文件数中位 5**,最常见签名恰为该五件(116/178);另 31 件不带收据(收据另行 cover)。
-- **cover**:同一 `atom_id` 的账目条目由 `residual-open/` 迁入 `absorbed-closed/`,并对齐收据。**最小形两个文件**(实测 #4649)。
+**三类改动形态,面集合封闭;deposit 与 cover 可在同一 PR、同一工作树顺序执行**:
+- **deposit**:`D5/*.lean` + `Blueprint/*.scribe.cs` + `Blueprint/*.md` + `Golden/Frozen/accepted/*`。
+- **cover**:同一 `atom_id` 的账目条目写入 coverage 边,并由 residual-open 迁入机器派生的目标状态。
 - **ingest**:`docs/develop/theory/**` + `atoms/sha256/*` + `backfill/**/residual-open/*`。
 
-**deposit 与 cover 必是两个 PR——这是机器判,不是惯例。** `DigestionFormalizationPrecommitmentValidator` 要求新增的每条 coverage edge `(atom_id, gid)` 在 **baseline 快照**里已有注册该 gid 的预登记收据,否则判 `coverage pair (…) has no valid base-owned formalization precommitment`。收据须先随 deposit 落进 base,下一个 PR 才能加覆盖边。**实测佐证:178 个 deposit PR 中同时做 `residual-open`→`absorbed-closed` 迁移的,0 个。**
-**为什么必须取自 base,而非"当前状态自洽 + delta 合法"即可(2026-09-02 用户提问,查证后记此)**:收据里的 `precommitted_signature` **字面就是从 lean report 里读出来的**(`DigestionFormalizationReceipt.ResolveSignature(gid, report)`;`EmitFormalizationReceiptCommand` 注释原话 *Resolve signatures from the current report*),而判据是 `deposited(candidate report) != pinned(收据)`。**故收据一旦也来自候选,两侧即同一次 `make lean-report` 的两个副本,比对恒真**——这条检查会退化成一个什么都不守的钉子(与第 20 条守护第六项所记的空钉子同形:用被测函数本身算期望值,变异后期望与实际一起变)。**base-owned 不是多一道仪式,是让该比对非恒真的唯一办法**:参照物必须取自候选改不动的地方,而 base 快照(merge ref 的 `HEAD^1`)是唯一这样的地方。**这不违反第 20‴ 条**——那条要求的是**判定面**限于变更闭包,不是要求判据的**参照物**也来自候选;`base→candidate` 的 delta 本就有两端,base 就是另一端。同一模式亦见于冻结面:`LeanPropositionSourceComparer.AreEquivalent(protectedBase, candidate, …)`。**可命名的失效**:mathlib pin 升级会使类型签名漂移(收据的 `statement_id_history` 带 `environment_pin` / `superseded_by_pin` 二字段即为此设),deposit 在旧 pin 下冻结、cover 在新 pin 下跑,签名不等即红,强制走 reanchor,而不是**悄悄按新签名销账**——漂移后的状态恰恰是完全自洽的,故"当前状态合法"在此正是最危险的判据。**诚实边界(不冒领)**:base-owned 只保证"cover 落地时那条声明仍是 deposit 冻结时的那条声明";它**不**保证该 GID 在数学上真的覆盖了那条 atom——`pinned` 由 deposit 当时的 report 算得,不由 atom 的内容推出,故"预登记"只在 deposit→cover 区间内成立。语义覆盖性机器判不了,靠评审。**要去掉 base-owned,唯一的路不是放宽成 delta 自洽(那是退化成恒真),而是给 `pinned` 一个独立于候选 lean report 的来源**(如从 atom 内容派生期望签名)——那是另一个设计,且更贵,不是简化。
+**已退役(owner 2026-09-02:边即数据,不记动作)。**
 
 **冻结态与消化态是两个正交状态机,禁互相冒充**:
 - **冻结态(真值侧,二值)**:`Golden/Frozen/accepted/` 中存在该 `statement_id` 的 `Freeze` 事件 ⟺ 已冻结,**永不解冻**(第〇节冻结律;SL-008 append-only diff 守卫)。实测 2,946 条,`event_type` 全为 `Freeze`、`schema_version` 全为 5;payload 承重四项(以 writer 为准):`statement_id`(节点身份)、`declaration_statement_ids`、`descriptor_selector`(指回 `.lean` 路径)、`prerequisite_frozen_node_ids`——**末项就是真值 DAG 的边**,不是元数据。
-- **消化态(账目侧,三值)**:`residual-open`(尚无 GID 覆盖)/ `partial-closed`(子项部分覆盖)/ `absorbed-closed`(覆盖 GID 与收据齐备)。实测 18,291 / 127 / 1,105,atom CAS 19,542,source 28(27 卷 md + 1 个 `.jsonl` 注册表)。
+- **消化态(账目侧,三值)**:`residual-open`(尚无 GID 覆盖)/ `partial-closed`(子项部分覆盖)/ `absorbed-closed`(覆盖 GID 与 coverage 数据齐备)。实测 18,291 / 127 / 1,105,atom CAS 19,542,source 28(27 卷 md + 1 个 `.jsonl` 注册表)。
 - **两者不同构,故是两句话**:定理已冻结 **⇏** 其 atom 已 `absorbed-closed`(还差 cover 那一步);atom `absorbed-closed` **⟹** 其 `coverage_gids` 所指声明已冻结。汇报与 PR 说明里把"冻结了"写成"消化了"(或反之)即第 4 条冒领。
 
-**每个理论 PR 的说明须写清三项(承第 9′ 条产地,不另立格式)**:①**形态**(deposit / cover / ingest);②**链上这一环**——哪个 `source_id` 的哪个 `atom_id` → 哪个 GID;③**落地后的状态**——冻结事件的 `event_hash`(deposit),或 atom 由哪态迁到哪态(cover)。判据是"读者能否据此在链上定位这次改动",不是"提没提这几个词"。
+**每个理论 PR 的说明须写清三项(承第 9′ 条产地,不另立格式)**:①**形态**(deposit / cover / deposit+cover / ingest);②**链上这一环**——哪个 `source_id` 的哪个 `atom_id` → 哪个 GID;③**落地后的状态**——冻结事件的 `event_hash`(deposit),或 atom 由哪态迁到哪态(cover)。判据是"读者能否据此在链上定位这次改动",不是"提没提这几个词"。
 
-**反面即病(如何自查)**:①手改 `Blueprint/**/*.md` —— 它是 `ScribeEmitter` 的投影,改它即造第二真源(第 6 条),正解是改 `.scribe.cs` 后 `make emit`;②手改 `atoms/sha256/*` —— atom 一经产出不可变(第〇节总则「atoms 不删」),勘误走"追加散文 + 追加新 atom";③冻结后原地编辑 `.lean` 想修补 —— 必撞 SL-008,正解是弃分支重做一次 deposit;④deposit PR 里"顺手"把 atom 迁到 `absorbed-closed` —— 见上,`0/178` 是正形而非巧合。
+**反面即病(如何自查)**:①手改 `Blueprint/**/*.md` —— 它是 `ScribeEmitter` 的投影,改它即造第二真源(第 6 条),正解是改 `.scribe.cs` 后 `make emit`;②手改 `atoms/sha256/*` —— atom 一经产出不可变(第〇节总则「atoms 不删」),勘误走"追加散文 + 追加新 atom";③冻结后原地编辑 `.lean` 想修补 —— 必撞 SL-008,正解是弃分支重做一次 deposit。
 **多驱动者并行不必分配领域**:地址由 GID 代数算出,天然不撞(第 6 条);同窗口 8 个驱动者、370 个 PR 未见路径争抢。**真正的撞车是两人各证同一命题——那个机器不会红**,故开工前与开 PR 前各查一次本仓已有声明(第 11 条先库后证含搜本仓)。
 *成熟锚*:构建图的产者唯一性(Bazel 每个输出恰有一个 rule)、数据血缘(data lineage)、事件溯源之"事件是真源、读模型可重建"、工作流状态与领域状态分离(workflow state ≠ domain state)、生成物标明产者。
-〔守护:**硬 + 硬投影 + 软,诚实分栏**·**硬**——路径→kind→producer 由 FILEMAP strict loader 与 `FileMapPolicy` 执法;冻结面 append-only 由 SL-008 判;deposit 与 cover 分 PR 由 `DigestionFormalizationPrecommitmentValidator` 的 base-owned 预登记判红(上引判词即其输出)。**硬投影(尚未 lint,记 `open`)**——三类 PR 的面集合可由 changed-path 交集机器判,当前**无此规则**,不得称已执法。**软**——PR 说明三项**不可 lint**,且与第 9′ 条同一个数学:正文在检查后、合并前可编辑,任何 check-time 读取只证明"那一刻有";故**不为它造门**(第 20″ 条),靠对手官评审与第 12 条尸检。按器律⑤,"不可 lint"不构成豁免〕
+〔守护:**硬 + 硬投影 + 软,诚实分栏**·**硬**——路径→kind→producer 由 FILEMAP strict loader 与 `FileMapPolicy` 执法;冻结面 append-only 由 SL-008 判;coverage 边的 GID 唯一存在、Closed 与当前 statement identity 由 cover 写前门和 SL-016 判。**硬投影(尚未 lint,记 `open`)**——三类改动形态的面集合可由 changed-path 交集机器判,当前**无此规则**,不得称已执法。**软**——PR 说明三项**不可 lint**,且与第 9′ 条同一个数学:正文在检查后、合并前可编辑,任何 check-time 读取只证明"那一刻有";故**不为它造门**(第 20″ 条),靠对手官评审与第 12 条尸检。按器律⑤,"不可 lint"不构成豁免〕
 
 **8. 生长自相似,裂由压力。**
 **不预建空壳**;抽象只在第二个实例或已证实的压力出现时才上收(通用证明成立才归 `Metallic/`,跨族定理出现才归 `Moduli/`,桶超限才 split)。目录随首个真实工件出生。

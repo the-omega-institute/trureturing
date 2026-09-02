@@ -572,7 +572,6 @@ internal static partial class BackfillInventoryLoader
         }
 
         var directoryDocument = loadDirectory(snapshot);
-        ValidateQuarantineMachineFormMarkers(snapshot, directoryDocument);
         return directoryDocument;
     }
 
@@ -609,7 +608,7 @@ internal static partial class BackfillInventoryLoader
         var directory = Path.Combine(root, RootPath.Replace('/', Path.DirectorySeparatorChar));
         var paths = Directory.EnumerateFiles(directory, "*", SearchOption.AllDirectories)
             .Concat(EnumerateD5LeanPaths(root))
-            .Concat(EnumerateFormalizationReceiptPaths(root));
+            ;
         return LoadRootSnapshot(root, paths);
     }
 

@@ -42,7 +42,7 @@ Re-read the current `export PATH` from `tools/scripts/local-harness-gate.sh` for
 
 Build through the canonical `make -C tools dotnet` door because `make show-atom` runs the Release CLI with `--no-build`.
 
-Before any deposit, require `git status --short` to print nothing except the intended formalization changes. Prefer a fully clean tree before beginning the task. The deposit workflow in `tools/scripts/workflow/playbook-workflows.sh` stages with `git add -A` in both `commit_phase_a_if_needed` and `commit_all_if_needed`; therefore every change in the tree can enter a deposit commit.
+Before any deposit, require `git status --short` to print nothing except the intended formalization changes. Prefer a fully clean tree before beginning the task. Deposit and cover only update the working tree; inspect their resulting delta and commit it through the normal repository workflow.
 
 Postcondition: the pinned toolchain is on PATH; `pwd -P` and `git rev-parse --show-toplevel` agree with the assigned or created isolated lane; `make -C tools dotnet` has built the CLI so `make show-atom` succeeds; and no unrelated or unexplained change is present.
 
@@ -136,7 +136,7 @@ make lean
 
 Judge completion only by exit code, never elapsed time or quiet output. Full doors cost minutes each; a landed lane died by burning its entire three-hour budget on seventy-two full preflight runs chasing a flaky unrelated test. Iterate scoped, verify canonically once.
 
-Run every shape check NOW, before Step 7: line 6 ends with ` -/`, the generality tag matches the weakest import and the module's nature, the scribe formulas obey the rejection taxonomy, the emitted `.md` mirrors every conjunct. After a successful deposit the module's bytes are pinned by the frozen ledger — a defect found before the ceremony is a free edit; the same defect found after is a full rewind ritual (restore the frozen ledger and receipts from `origin/dev`, re-run the ceremony). Three landed header violations were repaired the expensive way; do not join them.
+Run every shape check NOW, before Step 7: line 6 ends with ` -/`, the generality tag matches the weakest import and the module's nature, the scribe formulas obey the rejection taxonomy, the emitted `.md` mirrors every conjunct. After a successful deposit the module's bytes are pinned by the frozen ledger, so catch defects before depositing rather than creating a conflicting frozen state.
 
 Postcondition: both source artifacts exist in the observed shape and `make lean` exits 0.
 
@@ -257,7 +257,7 @@ Several machines drive this repository concurrently and `dev` advances roughly h
 ### Process honesty
 
 - **Never claim a build result without its exit code.** A seat once reported `lake` green while the build failed; since then the dispatcher re-runs the build at collection and a false green is a terminal lane offense. Report the command and the exit code; quiet output and elapsed time are not evidence.
-- **Never touch `Meta/Digestion/**`.** Ledger surgery (coverage, residue removal, state moves) is exclusively the dispatcher's; a seat once edited it and the change was reverted wholesale. The same applies to `Golden/Frozen/**` and formalization receipts.
+- **Never touch `Meta/Digestion/**`.** Ledger surgery (coverage, residue removal, state moves) is exclusively the dispatcher's; a seat once edited it and the change was reverted wholesale. The same applies to `Golden/Frozen/**`.
 - **When a dispatcher assigns output paths, write exactly those.** `result.json` (a conclusion envelope, no logs inline) and `done.sentinel` at the assigned paths are the deliverable; your final prose message is not. A sentinel written while you keep running is worse than no sentinel — write it last, then stop.
 
 ## Prohibitions
@@ -269,7 +269,6 @@ Several machines drive this repository concurrently and `dev` advances roughly h
 - Never hand-edit the frozen ledger; the deposit door owns it.
 - Never add a declaration to a module with an active Freeze event; the frozen ledger owns this constraint.
 - Never exceed directory capacity; `tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs` owns this rule.
-- Never hand-edit formalization receipts; the deposit and cover doors own them.
 - Never edit `Meta/Digestion/**` from a producing seat; digestion-ledger surgery is dispatcher-owned.
 - Never weaken the echoed statement to make a proof close; the statement echo and this fidelity gate own that obligation.
 - Never invent a "needs human review" outcome; `CLAUDE.md` 22 forbids human-review gates outright.
@@ -280,6 +279,6 @@ Several machines drive this repository concurrently and `dev` advances roughly h
 - Capacity limits are owned by `tools/StrataLint.Engine/Rules/RepositoryRules.Structure.cs`.
 - Lean header shape is owned by the live harness and demonstrated by the latest landed deposit.
 - Import direction is owned by the repository specification and its StrataLint rules.
-- Admission, freezing, receipts, coverage, and status are owned by the canonical `make` doors and `tools/`.
+- Admission, freezing, coverage, and status are owned by the canonical `make` doors and `tools/`.
 
 This skill names each concern's owner without reproducing its definitions or thresholds. The prohibitions above are pointers that carry the owner's name. Discover each concern's current form from its owner; the harness is the judge.

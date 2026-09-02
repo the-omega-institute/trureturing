@@ -157,7 +157,6 @@ public sealed class EngineeringPathFilterTests
             "Blueprint/D5/S3/QuantumBounds/ReferenceFrame/ReferenceFrameTaxExact.scribe.cs",
             "D5/S3/QuantumBounds/ReferenceFrame/ReferenceFrameTaxExact.lean",
             "Golden/Frozen/accepted/2d08439d70b4a41aa0a08eec6b47bdb25c3bc7199added3404b63ec68deaf5a4.json",
-            "Meta/Digestion/formalizations/cone-residual-1013db8f686811f4043dadb9867335e028412bfb1aca2ef31229e238fd2db820.v1.json",
         ];
         var plan = EngineeringTestPlanDeriver.DeriveRepository(
             RepositoryLayout.FindRoot(),

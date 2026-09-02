@@ -256,21 +256,6 @@ public sealed partial class ProductionEnvironmentTests
         Assert.True(result.Success, result.Error);
     }
 
-    [Fact]
-    public void RouteIgnoresCapacityExcludedDirectories()
-    {
-        using var temporary = RouteRepository();
-        var files = Enumerable.Range(0, RepositoryRules.DirectoryFileLimit + 1).ToDictionary(
-            index => $"Meta/Digestion/formalizations/receipt-{index:D2}.v1.json",
-            static _ => "{}\n",
-            StringComparer.Ordinal);
-        var environment = RouteEnvironment(temporary.Path, files);
-
-        var result = environment.Route(["manifest.json"]);
-
-        Assert.True(result.Success, result.Error);
-    }
-
     private static Dictionary<string, string> LeanBucketFiles(int count) =>
         Enumerable.Range(0, count).ToDictionary(
             index => $"D5/S0/Carrier/Existing{index:D2}.lean",

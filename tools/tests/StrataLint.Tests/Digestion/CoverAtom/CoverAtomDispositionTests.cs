@@ -5,20 +5,6 @@ namespace StrataLint.Tests;
 
 public sealed partial class CoverAtomTests
 {
-    private static void AssertFailedDispositionDoesNotAdmitCoverage(CoverExecution execution)
-    {
-        Assert.NotEqual(execution.Before, execution.After);
-        var entry = Assert.Single(
-            execution.AfterDocument.RequireDigestionEntries(),
-            candidate => candidate.AtomId == CoverWorld.DefaultAtomId);
-        Assert.NotNull(entry.Receipts.CoverDisposition);
-        Assert.Empty(entry.CoverageGids);
-        Assert.Empty(entry.Receipts.Coverage);
-        Assert.Empty(entry.Receipts.Scribe);
-        Assert.Equal(DigestionMigrationState.Residual, entry.ProjectedStatus.Migration);
-        Assert.Equal(DigestionTruthState.Open, entry.ProjectedStatus.Truth);
-    }
-
     [Fact]
     public void CoverRecordsPartialClosedDispositionWithoutAdmittingCoverage()
     {
@@ -124,8 +110,7 @@ public sealed partial class CoverAtomTests
             BackfillInventoryLoader.LoadRoot(temporary.Path));
 
         var result = CoverWorld.Environment(temporary.Path, inputs, currentFiles).CoverAtom(
-            ["--cover-atom", spec.AtomId, "--gid", inputs.Gid, "--base", "baseline",
-                "--envelope", inputs.EnvelopePath]);
+            ["--cover-atom", spec.AtomId, "--gid", inputs.Gid, "--base", "baseline"]);
 
         var afterDocument = BackfillInventoryLoader.LoadRoot(temporary.Path);
         return new CoverExecution(

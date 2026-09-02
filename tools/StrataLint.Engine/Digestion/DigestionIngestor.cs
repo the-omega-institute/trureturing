@@ -259,17 +259,7 @@ internal static class DigestionIngestor
                         .Where(entry => entry.Fingerprints.RawSha256
                             == item.Atom.Fingerprints.RawSha256)
                         .ToArray();
-                    var receiptedCoverage = baselineSnapshot is null
-                        ? ImmutableHashSet<string>.Empty
-                        : DigestionFormalizationPrecommitmentValidator.RegisteredBaseOwnedGids(
-                            baselineSnapshot,
-                            item.SuggestedAtomId,
-                            item.Atom.Fingerprints.RawSha256);
-                    var inheritedCoverage = priorGenerations
-                        .SelectMany(static entry => entry.CoverageGids)
-                        .Distinct(StringComparer.Ordinal)
-                        .Where(receiptedCoverage.Contains)
-                        .ToImmutableArray();
+                    var inheritedCoverage = ImmutableArray<string>.Empty;
                     var inheritedUnresolvedSubitems = priorGenerations
                         .SelectMany(static entry => entry.Receipts.UnresolvedSubitems)
                         .Distinct(StringComparer.Ordinal)

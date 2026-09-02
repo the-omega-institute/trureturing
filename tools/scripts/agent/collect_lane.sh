@@ -25,7 +25,7 @@ echo "=== tree"; git -C "$WT" status --porcelain | head -5; echo "branch: $(git 
 if [ -n "$MB" ]; then
   echo "=== non-added paths vs merge-base"; git -C "$WT" diff --name-status "$MB..HEAD" | grep -v '^A' | cut -c1-140
   echo "=== out-of-scope paths"; git -C "$WT" diff --name-only "$MB..HEAD" | grep -v -E '^(D5|Blueprint|Golden|Meta/Digestion|Evidence)/' | cut -c1-140
-  echo "=== receipts"; for p in $(git -C "$WT" diff --name-only --diff-filter=A "$MB..HEAD" | grep '^Meta/Digestion/formalizations/'); do git -C "$WT" cat-file -e "origin/dev:$p" 2>/dev/null && echo "COLLISION $p"; done; echo "receipts added: $(git -C "$WT" diff --name-only --diff-filter=A "$MB..HEAD" | grep -c '^Meta/Digestion/formalizations/')"
+  echo "=== digestion delta"; git -C "$WT" diff --name-status "$MB..HEAD" -- Meta/Digestion/backfill | cut -c1-140
   echo "=== buckets"; for d in $(git -C "$WT" diff --name-only --diff-filter=A "$MB..HEAD" | grep '^D5/.*\.lean$' | xargs -n1 dirname 2>/dev/null | sort -u); do echo "$d dev=$(git -C "$WT" ls-tree origin/dev --name-only "$d/" | grep -c '\.lean$') +branch=$(git -C "$WT" diff --name-only --diff-filter=A "$MB..HEAD" | grep -c "^$d/[^/]*\.lean$")"; done
   echo "=== merge-tree"; git -C "$WT" merge-tree --write-tree origin/dev HEAD >/dev/null 2>&1 && echo clean || echo CONFLICT
 fi
