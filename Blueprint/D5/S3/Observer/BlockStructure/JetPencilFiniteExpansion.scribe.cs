@@ -24,10 +24,10 @@ internal sealed class JetPencilFiniteExpansionDocument
                         + "exactly one step below the diagonal and zero elsewhere. The reused "
                         + "jetPencil m rho s is (s-rho) times the identity minus this shift.")),
                 Paragraph(Text(
-                    "The sole premise s != rho is the exact nonvanishing condition for the "
-                        + "displayed inverse. It makes the determinant a unit and prevents "
-                        + "totalized scalar division from disguising the singular spectral "
-                        + "point. No positivity assumption on m is needed; at m = 0 the empty "
+                    "There is no global premise: the determinant and positive-power trace "
+                        + "identities hold for every s and rho. The condition s != rho guards "
+                        + "only the displayed inverse series, whose denominators are powers of "
+                        + "s-rho. No positivity assumption on m is needed; at m = 0 the empty "
                         + "matrix identities remain valid.")),
                 Paragraph(Text(
                     "Lower triangularity gives determinant (s-rho)^m. Cayley-Hamilton makes "
@@ -73,7 +73,6 @@ internal sealed class JetPencilFiniteExpansionDocument
         Formula determinantClause = EqualTo(
             determinant,
             Power(Grp(difference), length));
-        Formula unitClause = Call("IsUnit", determinant);
         Formula summand = new Formula.Fraction(
             Power(shift, index),
             Power(Grp(difference), Seq(index, Sp, Plus, Sp, D(1))));
@@ -89,9 +88,12 @@ internal sealed class JetPencilFiniteExpansionDocument
             Implies(
                 LessThanOrEqual(D(1), index),
                 EqualTo(Call("trace", Power(shift, index)), D(0))));
+        Formula guardedInverseClause = Implies(
+            NotEqualTo(point, rho),
+            inverseClause);
         Formula conclusion = And(
             determinantClause,
-            And(unitClause, And(inverseClause, traceClause)));
+            And(traceClause, guardedInverseClause));
 
         return new Formula.BindMany(
             FormulaQuantifier.ForAll,
@@ -100,6 +102,6 @@ internal sealed class JetPencilFiniteExpansionDocument
                 Bound("rho", complex),
                 Bound("s", complex),
             ],
-            Implies(NotEqualTo(point, rho), conclusion));
+            conclusion);
     }
 }

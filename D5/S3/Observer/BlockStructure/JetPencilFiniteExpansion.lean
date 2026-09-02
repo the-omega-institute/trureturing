@@ -138,46 +138,41 @@ theorem jet_pencil_inverse_finite_series (m : Nat) (rho s : Complex)
     _ = (s - rho)⁻¹ • G := by rw [Matrix.nonsing_inv_mul _ hUnit, one_mul]
     _ = jetResolventSeries m rho s := hSeries.symm
 
-/-- The visible jet-to-mass clauses: the determinant, invertibility off the
-spectral point, the finite inverse series, and traceless positive powers. -/
-theorem jet_pencil_finite_expansion (m : Nat) (rho s : Complex)
-    (hs : s ≠ rho) :
+/-- The visible jet-to-mass clauses: the unconditional determinant and
+traceless-power identities, and the finite inverse series off the spectral point. -/
+theorem jet_pencil_finite_expansion (m : Nat) (rho s : Complex) :
     (jetPencil m rho s).det = (s - rho) ^ m ∧
-      IsUnit (jetPencil m rho s).det ∧
-      (jetPencil m rho s)⁻¹ = jetResolventSeries m rho s ∧
-      ∀ k : Nat, 1 ≤ k →
-        Matrix.trace ((nilpotentJetShift m) ^ k) = 0 := by
-  have hDet := jet_pencil_determinant m rho s
-  have hUnit : IsUnit (jetPencil m rho s).det := by
-    rw [hDet]
-    exact isUnit_iff_ne_zero.mpr
-      (pow_ne_zero m (sub_ne_zero.mpr hs))
-  exact ⟨hDet, hUnit, jet_pencil_inverse_finite_series m rho s hs,
-    nilpotent_jet_shift_trace_power m⟩
+      (∀ k : Nat, 1 ≤ k →
+        Matrix.trace ((nilpotentJetShift m) ^ k) = 0) ∧
+      (s ≠ rho →
+        (jetPencil m rho s)⁻¹ = jetResolventSeries m rho s) := by
+  exact ⟨jet_pencil_determinant m rho s,
+    nilpotent_jet_shift_trace_power m,
+    jet_pencil_inverse_finite_series m rho s⟩
 
 private theorem positive_numeric_witness :
     jetPencil 2 1 3 = !![(2 : Complex), 0; -1, 2] ∧
       (jetPencil 2 1 3).det = 4 ∧
+      Matrix.trace (nilpotentJetShift 2) = 0 ∧
       (jetPencil 2 1 3)⁻¹ =
-        !![(1 / 2 : Complex), 0; 1 / 4, 1 / 2] ∧
-      Matrix.trace (nilpotentJetShift 2) = 0 := by
+        !![(1 / 2 : Complex), 0; 1 / 4, 1 / 2] := by
   refine ⟨?_, ?_, ?_, ?_⟩
   · ext i j
     fin_cases i <;> fin_cases j <;>
       norm_num [jetPencil, nilpotentJetShift, Matrix.smul_apply]
   · rw [jet_pencil_determinant]
     norm_num
+  · norm_num [Matrix.trace_fin_two, nilpotentJetShift]
   · rw [jet_pencil_inverse_finite_series 2 1 3 (by norm_num)]
     ext i j
     fin_cases i <;> fin_cases j <;>
       norm_num [jetResolventSeries, nilpotentJetShift, Matrix.smul_apply,
         Finset.sum_range_succ, Matrix.mul_apply, Fin.sum_univ_two]
-  · norm_num [Matrix.trace_fin_two, nilpotentJetShift]
 
 private theorem singular_numeric_witness :
     jetPencil 1 0 0 = 0 ∧
       (jetPencil 1 0 0).det = 0 ∧
-      ¬ IsUnit (jetPencil 1 0 0).det := by
+      ¬(0 : Complex) ≠ 0 := by
   refine ⟨?_, ?_, ?_⟩
   · ext i j
     fin_cases i
@@ -185,8 +180,13 @@ private theorem singular_numeric_witness :
     norm_num [jetPencil, nilpotentJetShift, Matrix.smul_apply]
   · rw [jet_pencil_determinant]
     norm_num
-  · rw [jet_pencil_determinant]
-    norm_num [isUnit_iff_ne_zero]
+  · simp
+
+private theorem trace_guard_numeric_witness :
+    ¬(1 ≤ (0 : Nat)) ∧
+      Matrix.trace ((nilpotentJetShift 2) ^ 0) = (2 : Complex) ∧
+      Matrix.trace ((nilpotentJetShift 2) ^ 0) ≠ 0 := by
+  norm_num [Matrix.trace_fin_two]
 
 #print axioms jet_pencil_finite_expansion
 
