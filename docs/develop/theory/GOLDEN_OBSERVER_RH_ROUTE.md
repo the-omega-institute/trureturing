@@ -2008,3 +2008,38 @@ M3-e 一席位轮(codex-cli,独立 worktree,PR-1 deposit;cover 另开 PR-2);M3-f
 G-d/G-e 一席位轮(同模块,codex-cli,独立 worktree,PR-1 deposit 绑 G-d atom;G-e 两 atom 以 PR-1b 收据后 PR-2 cover)。具名目标不占预算。
 
 后续增订继续严格追加于本节之后。
+
+---
+
+# 增订十三　G-f 与 M3-f 第二级预登记(临界线上 p ≥ 5 局部因子非零;测试函数变换的闭带衰减)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;研究席一席(GPT PRO 公司池,advisory,M3-f 极限步阶梯)+ 探针两席(codex-cli,`lake env lean`,0 sorry,标准三公理:G-f 探针 522 行、M3-f 前两级探针),由 orchestrator(claude 主循环)撰写。判决日:2026-09-03。lane issue:#4589。
+
+## 〇　为什么是这一节
+
+增订十二把「p ≥ 5 时局部因子在拉回临界线上非零」列为具名目标 G-f;探针以精确陈述整证(前四模精确 + 冻结 √5 斜率增长界,有理包络 599/600),故本节预登记为义务。增订十一把完整 separator 记为具名目标 M3-f;研究席给出的阶梯第一级(卷积幂的变换公式)经探针核实**已在冻结模块 `D5/S3/Fourier/ConvolutionPowerAmplification` 中**(`fourierLaplace_convolve_complex`、`convolutionSuccPower`、`fourierLaplace_convolutionSuccPower`),不另立义务、只绑定;第二级——测试函数变换在闭带 |Im w| ≤ η 上的一致衰减 C/(1+Re w²)——探针整证,本节预登记。研究席特别指出:极限步所需的是**闭带**一致估计,只在更小带成立的引理不够(零点频率可逼近带边)。
+
+## 一　G-f 预登记:p ≥ 5 时局部因子在拉回临界线上非零(`LocalFactorCriticalLineNonvanishing`)
+
+**义务**:单一公开定理 `germLocalFactor_critical_line_nonzero_of_five_le {p : ℕ} (hp : p.Prime) (h5 : 5 ≤ p) (t : ℝ) : germLocalFactor ((((1 / (2 * Real.goldenRatio ^ 2) : ℝ) : ℂ) + Complex.I * (t : ℂ))) p ≠ 0`。闭合路线:三角不等式 ‖f_p‖ ≥ 1 − Σ_{v≥1} p^{−σ₀β(v)},σ₀=1/(2φ²);前四模用冻结 `o5_beta_closed_form` 精确求值(p^{−1/2}, p^{−φ/2}, p^{−φ²/2}, …),v ≥ 4 的尾项由冻结 `o5_beta_growth`(√5 斜率)化为几何级数;p=5 时总和 < 1 的有理证书 599/600;更大素数单调更好。落点 `D5/S3/Analytic/EulerGerm/`。
+**可证伪预测(写在跑之前)**:若正确,定理只消费 `GoldenLocalFactor`/`GoldenEulerBeta` 与钉版 Mathlib 的 rpow 单调性,公理集为标准三条;数值余量 p=5: 0.040、p=7: 0.279、p=11: 0.489。若某 t 使 p=5 局部因子在该线上为零,则本条为假且三角界的某一项估计必错。
+**边界**:不对 p=2、3 作任何断言(二者在 |t| ≤ 60 数值非零,最小模 0.0144 / 0.0102,无 kernel 界);h-only 的三角引理在 s=0 处为假(两个发散 tsum 均取 0),故任何通用三角引理须带 0 < Re s。
+
+## 二　M3-f 第二级预登记:测试函数变换的闭带衰减(`FourierLaplaceClosedStripDecay`)
+
+**义务**:单一公开定理 `fourierLaplace_decay_closedStrip (b : WeilTestFunction) (η : ℝ) (hη : 0 ≤ η) : ∃ C : ℝ, 0 ≤ C ∧ ∀ w : ℂ, |w.im| ≤ η → ‖fourierLaplace b w‖ ≤ C / (1 + w.re ^ 2)`。闭合路线:紧支给出 ‖exp(−I w x)‖ ≤ exp(η|x|);两次分部积分(Mathlib `integral_mul_deriv_eq_deriv_mul_of_integrable`、`ContDiff.iterate_deriv`、`HasCompactSupport.deriv`)得 ‖(I w)² B(w)‖ ≤ ∫ exp(η|x|)‖b''‖;取 C = C₀ + C₂(C_j = ∫ exp(η|x|)‖b^{(j)}‖)并用 |w|² ≥ Re w² 收尾。落点 `D5/S3/Weil/TestFunctions/`(或 `D5/S3/Weil/`,与 `FourierLaplace` 同层)。
+**可证伪预测(写在跑之前)**:若正确,定理只消费 `TestFunctions`/`FourierLaplace` 与钉版 Mathlib,公理集为标准三条;若分部积分的边界项因支撑非紧而不消失(与 `WeilTestFunction` 定义矛盾),则本条为假。
+**边界**:不涉及零点、不涉及 zeroSum;η 任意非负,极限步取 η = 1/2。
+
+## 三　具名目标(不在本节预登记)
+
+- **M3-f-3**:峰函数 b 与有限例外 killer k 的存在(`exists_peak_and_finite_exception_killer`):B(γ_n)=B(conj γ_n)=1,K(γ_n)=1,K(conj γ_n)=−1,K 在有限例外轨道上为 0,且例外集外 ‖B‖ ≤ 1/2(由第二级衰减 + 局部有限)。中等。
+- **M3-f-4**:`burnol_power_tail_bound`——g_N = b^{⋆N} ⋆ k 的轨道外 tsum ≤ 4^{−N}·(convolutionSquare k 的绝对可和 majorant,来自冻结 `EF_zero_sum_summable`)。**承重引理,重型**。
+- **M3-f-5**:完整 separator(取 N 使 4^{−N}S < 4·重数,严格)。重型。
+- **G-g**(增订十二)、**G-c**(增订十)、**M3-d**(增订九)仍 open。
+
+## 四　预算与结算
+
+G-f 一席位轮、M3-f 第二级一席位轮(各 codex-cli,独立 worktree,PR-1 deposit;cover 另开 PR-2);具名目标不占预算。
+
+后续增订继续严格追加于本节之后。
