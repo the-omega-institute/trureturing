@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Zeros.Symmetry;
 internal sealed class SymmetricSimpleZeroFixedAxisDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A symmetric simple zero stays fixed by completed reflection along its unique local continuation.",
+        "A symmetric simple zero has a public unique local continuation fixed by completed reflection.",
         H("Symmetric Simple Zero Fixed Axis"),
         Blocks(
             Describe.Lean(
@@ -20,12 +20,12 @@ internal sealed class SymmetricSimpleZeroFixedAxisDocument : IScribeDocumentDefi
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "The statement retains the reflected function family, both local derivative "
-                            + "fields, and their continuity assumptions on the real-complex product.")),
+                        "The statement exposes positive parameter and zero radii together with the "
+                            + "implicit-function continuation through the base zero.")),
                     Paragraph(Text(
-                        "The imported simple-zero theorem puts every nearby zero on the critical line. "
-                            + "The canonical reflection equivalence then makes each such zero fixed, "
-                            + "so both conclusions are public."))),
+                        "The continuation is continuous at the base parameter, is the unique zero in "
+                            + "the displayed ball, and remains fixed by completed reflection on the "
+                            + "whole displayed parameter interval."))),
                 DescribeRole.Theorem)),
         [
             DocumentEdge.Dependency.Create(
@@ -45,6 +45,10 @@ internal sealed class SymmetricSimpleZeroFixedAxisDocument : IScribeDocumentDefi
         Formula baseZero = new Formula.Subscript(zero, D(0));
         Formula pair = Grp(time, Comma, Sp, zero);
         Formula basePair = Grp(baseTime, Comma, Sp, baseZero);
+        Formula delta = F.Id("delta");
+        Formula epsilon = F.Id("epsilon");
+        Formula branch = F.Id("rho");
+        Formula parameter = F.Id("kappa");
         Formula critical = F.Id("criticalAbscissa");
         Formula continuousLinear = Call("ContinuousLinearMap", real, real, complex);
 
@@ -58,10 +62,15 @@ internal sealed class SymmetricSimpleZeroFixedAxisDocument : IScribeDocumentDefi
         Formula ds(Formula t, Formula z) => Apply(spaceDerivative, t, z);
         Formula realPart(Formula z) => Seq(Re, Open, z, Close);
         Formula mirror(Formula z) => Call("mirror", z);
+        Formula branchAt(Formula t) => Apply(branch, t);
+        Formula nearParameter = Seq(
+            new Formula.Absolute(Seq(parameter, Sp, Minus, Sp, baseTime)),
+            Sp, Lt, Sp, delta);
+        Formula nearZero(Formula z) => Seq(
+            z, Sp, InMacro, Sp, Call("ball", baseZero, epsilon));
         Formula neighborhood(Formula center) => Call("nhds", center);
         Formula eventually(Formula center, Formula proposition) =>
             Call("EventuallyAt", pair, neighborhood(center), proposition);
-
         Formula reflection = new Formula.BindMany(
             FormulaQuantifier.ForAll,
             [
@@ -100,12 +109,45 @@ internal sealed class SymmetricSimpleZeroFixedAxisDocument : IScribeDocumentDefi
             value(baseTime, baseZero), Sp, Eq, Sp, D(0), Sp, Land, Sp,
             ds(baseTime, baseZero), Sp, Neq, Sp, D(0), Sp, Land, Sp,
             mirror(baseZero), Sp, Eq, Sp, baseZero);
-        Formula fixedNearbyZero = eventually(basePair, Seq(
-            value(time, zero), Sp, Eq, Sp, D(0), Sp, Rightarrow, Sp,
-            Open,
-            mirror(zero), Sp, Eq, Sp, zero, Sp, Land, Sp,
-            realPart(zero), Sp, Eq, Sp, critical,
-            Close));
+        Formula branchLocality = Seq(
+            Forall, Sp, Typed(parameter, real), Comma, Sp,
+            nearParameter, Sp, Rightarrow, Sp, nearZero(branchAt(parameter)));
+        Formula branchZero = Seq(
+            Forall, Sp, Typed(parameter, real), Comma, Sp,
+            nearParameter, Sp, Rightarrow, Sp,
+            value(parameter, branchAt(parameter)), Sp, Eq, Sp, D(0));
+        Formula branchUnique = Seq(
+            Forall, Sp, Typed(parameter, real), Comma, Sp,
+            nearParameter, Sp, Rightarrow, Sp,
+            Forall, Sp, Typed(zero, complex), Comma, Sp,
+            nearZero(zero), Sp, Rightarrow, Sp,
+            value(parameter, zero), Sp, Eq, Sp, D(0), Sp, Rightarrow, Sp,
+            zero, Sp, Eq, Sp, branchAt(parameter));
+        Formula branchFixed = Seq(
+            Forall, Sp, Typed(parameter, real), Comma, Sp,
+            nearParameter, Sp, Rightarrow, Sp,
+            mirror(branchAt(parameter)), Sp, Eq, Sp, branchAt(parameter));
+        Formula branchAxis = Seq(
+            Forall, Sp, Typed(parameter, real), Comma, Sp,
+            nearParameter, Sp, Rightarrow, Sp,
+            realPart(branchAt(parameter)), Sp, Eq, Sp, critical);
+        Formula continuation = Seq(
+            Exists, Sp, Typed(delta, real), Comma, Sp,
+            D(0), Sp, Lt, Sp, delta, Sp, Land,
+            RowBreak, Grp(),
+            Exists, Sp, Typed(epsilon, real), Comma, Sp,
+            D(0), Sp, Lt, Sp, epsilon, Sp, Land,
+            RowBreak, Grp(),
+            Exists, Sp, Typed(branch, Seq(real, Sp, To, Sp, complex)), Comma,
+            RowBreak, Grp(),
+            branchAt(baseTime), Sp, Eq, Sp, baseZero, Sp, Land, Sp,
+            Call("ContinuousAt", branch, baseTime), Sp, Land,
+            RowBreak, Grp(),
+            Open, branchLocality, Close, Sp, Land, RowBreak, Grp(),
+            Open, branchZero, Close, Sp, Land, RowBreak, Grp(),
+            Open, branchUnique, Close, Sp, Land, RowBreak, Grp(),
+            Open, branchFixed, Close, Sp, Land, RowBreak, Grp(),
+            Open, branchAxis, Close);
 
         return Disp(Seq(
             Forall, Sp,
@@ -117,8 +159,9 @@ internal sealed class SymmetricSimpleZeroFixedAxisDocument : IScribeDocumentDefi
             baseZero, InMacro, Sp, complex, Comma, Esc,
             regularity, Sp, Rightarrow,
             RowBreak, Grp(),
-            Open, simpleBase, Close, Sp, Rightarrow, Sp,
-            fixedNearbyZero, Dot));
+            Open, simpleBase, Close, Sp, Rightarrow,
+            RowBreak, Grp(),
+            continuation, Dot));
     }
 
     private static Formula Apply(Formula function, params Formula[] arguments) =>
