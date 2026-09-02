@@ -91,6 +91,31 @@ public sealed class EmitFormalizationReceiptTests
     }
 
     [Fact]
+    public void CandidateReceiptLoaderRejectsPathThatDoesNotMatchRawSha256()
+    {
+        var rawSha256 = "sha256:" + new string('a', 64);
+        var wrongPath = DigestionFormalizationReceipt.RootPath
+            + new string('b', 64)
+            + DigestionFormalizationReceipt.PathSuffix;
+        var bytes = DigestionFormalizationReceipt.Write(new DigestionFormalizationReceipt(
+            "candidate",
+            "D5/S0/Carrier/Probe.probe",
+            new DigestionFormalizationSignature("probe", "theorem", "True"),
+            rawSha256,
+            rawSha256));
+        var snapshot = DigestionTestSupport.Snapshot((wrongPath, bytes.ToArray()));
+
+        var exception = Assert.Throws<FormatException>(() =>
+            DigestionFormalizationReceipt.Load(snapshot, wrongPath));
+
+        Assert.Contains(
+            DigestionFormalizationReceipt.PathForRawSha256(rawSha256),
+            exception.Message,
+            StringComparison.Ordinal);
+        Assert.Contains("raw_sha256", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void EmitExtendsAnExistingReceiptWithARecomputedSecondarySignature()
     {
         const string secondaryModule = "D5/S3/Observer/WindowRegisterCRT";

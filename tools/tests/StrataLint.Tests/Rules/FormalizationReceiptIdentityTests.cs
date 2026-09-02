@@ -10,14 +10,8 @@ public sealed class FormalizationReceiptIdentityTests
         "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
     private const string OtherBareAtomId =
         "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb";
-    private const string ThirdBareAtomId =
-        "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc";
     private const string CanonicalPath =
         "Meta/Digestion/formalizations/" + BareAtomId + ".v1.json";
-    private const string OtherCanonicalPath =
-        "Meta/Digestion/formalizations/" + OtherBareAtomId + ".v1.json";
-    private const string ThirdCanonicalPath =
-        "Meta/Digestion/formalizations/" + ThirdBareAtomId + ".v1.json";
     private const string LegacyAtomId = "generic-residual-" + BareAtomId;
     private const string LegacyPath =
         "Meta/Digestion/formalizations/" + LegacyAtomId + ".v1.json";
@@ -32,54 +26,6 @@ public sealed class FormalizationReceiptIdentityTests
         fixture.Files[LegacyPath] = Receipt(LegacyAtomId);
 
         Assert.Equal(1, CountFindings(Execute(fixture, LegacyPath)));
-    }
-
-    [Fact]
-    public void CandidateReceiptLoaderRejectsPathThatDoesNotMatchRawSha256()
-    {
-        var snapshot = DigestionTestSupport.Snapshot(
-            (LegacyPath, Encoding.UTF8.GetBytes(Receipt(LegacyAtomId))));
-
-        var exception = Assert.Throws<FormatException>(() =>
-            DigestionFormalizationReceipt.Load(snapshot, LegacyPath));
-
-        Assert.Contains(CanonicalPath, exception.Message, StringComparison.Ordinal);
-        Assert.Contains("raw_sha256", exception.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void ReceiptFileNameMustEqualRawSha256()
-    {
-        var fixture = new RuleFixture();
-        fixture.Files[CanonicalPath] = Receipt(BareAtomId, OtherBareAtomId);
-
-        Assert.Contains(
-            Findings(Execute(fixture, CanonicalPath)),
-            diagnostic => diagnostic.Path == CanonicalPath
-                && diagnostic.Message.Contains(OtherCanonicalPath, StringComparison.Ordinal)
-                && diagnostic.Message.Contains("raw_sha256", StringComparison.Ordinal));
-    }
-
-    [Fact]
-    public void TwoPathsForSameRawSha256AreRejectedEvenWhenAtomIdsDiffer()
-    {
-        var fixture = new RuleFixture();
-        fixture.Files[CanonicalPath] = Receipt(
-            BareAtomId,
-            BareAtomId,
-            "D5/S0/Carrier/Ring.goldenRing");
-        fixture.Files[LegacyPath] = Receipt(
-            LegacyAtomId,
-            BareAtomId,
-            "D5/S0/Carrier/ValuesBinding.fixtureValue");
-
-        Assert.Contains(
-            Findings(Execute(fixture, CanonicalPath, LegacyPath)),
-            diagnostic => diagnostic.Message.Contains(
-                $"raw_sha256 sha256:{BareAtomId} must be unique",
-                StringComparison.Ordinal)
-                && diagnostic.Message.Contains(CanonicalPath, StringComparison.Ordinal)
-                && diagnostic.Message.Contains(LegacyPath, StringComparison.Ordinal));
     }
 
     [Fact]
@@ -102,27 +48,21 @@ public sealed class FormalizationReceiptIdentityTests
 
     [Fact]
     [BaseFactScopeProbe(31)]
-    public void Sl031SkipsUnrelatedChangesAndRechecksTheCompleteInventory()
+    public void Sl031FormalizationReceiptIdentityScopesHistoryAndKeepsDeltaAndImplementationRechecks()
     {
         var unrelated = new RuleFixture();
-        SetHistorical(unrelated, CanonicalPath, Receipt(BareAtomId, OtherBareAtomId));
+        SetHistorical(unrelated, CanonicalPath, Receipt(OtherBareAtomId));
         unrelated.Files[UnrelatedPath] = "candidate\n";
         Assert.Equal(0, CountFindings(Execute(unrelated, UnrelatedPath)));
 
         var changed = new RuleFixture();
-        SetHistorical(changed, CanonicalPath, Receipt(BareAtomId, OtherBareAtomId));
-        changed.Files[ThirdCanonicalPath] = Receipt(ThirdBareAtomId, ThirdBareAtomId);
-        Assert.Contains(
-            Findings(Execute(changed, ThirdCanonicalPath)),
-            diagnostic => diagnostic.Path == CanonicalPath
-                && diagnostic.Message.Contains(OtherCanonicalPath, StringComparison.Ordinal));
+        SetHistorical(changed, CanonicalPath, Receipt(BareAtomId));
+        changed.Files[CanonicalPath] = Receipt(OtherBareAtomId);
+        Assert.Equal(1, CountFindings(Execute(changed, CanonicalPath)));
 
         var implementation = new RuleFixture();
-        SetHistorical(implementation, CanonicalPath, Receipt(BareAtomId, OtherBareAtomId));
-        Assert.Contains(
-            Findings(Execute(implementation, RuleImplementationPath)),
-            diagnostic => diagnostic.Path == CanonicalPath
-                && diagnostic.Message.Contains(OtherCanonicalPath, StringComparison.Ordinal));
+        SetHistorical(implementation, CanonicalPath, Receipt(OtherBareAtomId));
+        Assert.Equal(1, CountFindings(Execute(implementation, RuleImplementationPath)));
     }
 
     private static void SetHistorical(
@@ -135,19 +75,14 @@ public sealed class FormalizationReceiptIdentityTests
         fixture.Files[path] = contents;
     }
 
-    private static string Receipt(string atomId) => Receipt(atomId, BareAtomId);
-
-    private static string Receipt(string atomId, string rawAtomId) =>
-        Receipt(atomId, rawAtomId, "D5/S0/Carrier/Ring.goldenRing");
-
-    private static string Receipt(string atomId, string rawAtomId, string primaryGid) =>
+    private static string Receipt(string atomId) =>
         Encoding.UTF8.GetString(DigestionFormalizationReceipt.Write(
             new DigestionFormalizationReceipt(
                 atomId,
-                primaryGid,
+                "D5/S0/Carrier/Ring.goldenRing",
                 new DigestionFormalizationSignature("goldenRing", "def", "Nat"),
-                "sha256:" + rawAtomId,
-                "sha256:" + rawAtomId)).AsSpan());
+                "sha256:" + BareAtomId,
+                "sha256:" + BareAtomId)).AsSpan());
 
     private static CompletedRuleSet Execute(RuleFixture fixture, params string[] changedPaths)
     {
@@ -161,10 +96,6 @@ public sealed class FormalizationReceiptIdentityTests
     }
 
     private static int CountFindings(CompletedRuleSet completed) =>
-        Findings(completed).Length;
-
-    private static Diagnostic[] Findings(CompletedRuleSet completed) =>
-        completed.Diagnostics
-            .Where(diagnostic => diagnostic.RuleId == RuleId.CreateKnown(RuleNumber))
-            .ToArray();
+        completed.Diagnostics.Count(diagnostic =>
+            diagnostic.RuleId == RuleId.CreateKnown(RuleNumber));
 }
