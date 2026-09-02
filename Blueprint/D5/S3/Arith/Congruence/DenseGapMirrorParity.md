@@ -21,3 +21,4 @@ The Boolean gap code is constructed by recording four-gaps as true. Mod-three ad
 ## References
 
 - Truth anchor: `D5/S3/Arith/Congruence/DenseGapMirrorParity.dense_gap_mirror_parity`
+- Dependency: [D5/S3/Arith/Congruence/EvenDenseConstellationMirrorCode](EvenDenseConstellationMirrorCode.md)

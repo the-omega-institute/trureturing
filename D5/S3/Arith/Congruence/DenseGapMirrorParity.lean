@@ -5,6 +5,7 @@
    anchors: []
    digest: Point-count parity controls reflection of alternating finite gap codes. -/
 
+import D5.S3.Arith.Congruence.EvenDenseConstellationMirrorCode
 import Mathlib.Data.Fin.Basic
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Tactic
@@ -20,11 +21,12 @@ an even number of points and complements it when the point count is odd.
 /- Search and duplication audit (2026-09-03):
    * D5 searches for normalized gap bits, alternating configuration codes,
      reverse-complement parity, and constellation mirror laws found no
-     whole-statement owner. Existing golden-word and palindrome modules concern
-     different source families.
-   * Body-shape searches for `if Even i.val then`, `Fin.induction` with parity,
-     and `Fin.rev` with `Nat.even_sub` found no D5 or pinned-Mathlib owner for
-     the private finite-index argument.
+     whole-statement owner. `EvenDenseConstellationMirrorCode` owns the even
+     child clause on lists and is applied below after a carrier-preserving
+     conversion; existing golden-word modules concern different source families.
+   * Body-shape searches for the odd reverse-complement law, `Fin.induction`
+     with parity, and `Fin.rev` with `Nat.even_sub` found no D5 or pinned-Mathlib
+     owner for the remaining private finite-index argument.
    * Pinned Mathlib supplies `Bool.not_eq`, `Nat.even_sub`, `Fin.rev`,
      `List.isChain_iff_getElem`, and `List.getElem_reverse`; each is applied
      below. Its Boolean-count module has no mirror-parity theorem.
@@ -37,6 +39,8 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 namespace D5.S3.Arith.Congruence.DenseGapMirrorParity
+
+open D5.S3.Arith.Congruence.EvenDenseConstellationMirrorCode
 
 private theorem alternating_value
     {n : Nat} (gapCode : Fin (n + 1) -> Bool)
@@ -55,62 +59,40 @@ private theorem alternating_value
         omega
       simp [Fin.succ, hodd, hnotEven]
 
-private theorem finite_alternating_mirror_parity
+private theorem finite_alternating_reverse_complement_of_odd
     (extraPoints : Nat) (gapCode : Fin (extraPoints + 1) -> Bool)
     (alternating : forall i : Fin extraPoints,
-      Not (gapCode i.castSucc = gapCode i.succ)) :
-    (Even (extraPoints + 2) ->
-        gapCode ∘ Fin.rev = gapCode) /\
-      (Odd (extraPoints + 2) ->
-        gapCode ∘ Fin.rev = fun i => !gapCode i) := by
-  constructor
-  · intro hPointEven
-    have hCodeLengthEven : Even extraPoints := by
-      rcases hPointEven with ⟨half, hhalf⟩
-      refine ⟨half - 1, ?_⟩
-      omega
-    funext i
-    change gapCode (Fin.rev i) = gapCode i
-    rw [alternating_value gapCode alternating (Fin.rev i),
-      alternating_value gapCode alternating i]
-    have hi : i.val <= extraPoints := Nat.le_of_lt_succ i.isLt
-    have hrev : (Fin.rev i).val = extraPoints - i.val := by
-      simp only [Fin.rev]
-      omega
-    rw [hrev]
-    simp [Nat.even_sub hi, hCodeLengthEven]
-  · intro hPointOdd
-    have hCodeLengthOdd : Odd extraPoints := by
-      rcases hPointOdd with ⟨half, hhalf⟩
-      refine ⟨half - 1, ?_⟩
-      omega
-    have hCodeLengthNotEven : Not (Even extraPoints) := by
-      rintro ⟨evenHalf, hEven⟩
-      rcases hCodeLengthOdd with ⟨oddHalf, hOdd⟩
-      omega
-    funext i
-    change gapCode (Fin.rev i) = !gapCode i
-    rw [alternating_value gapCode alternating (Fin.rev i),
-      alternating_value gapCode alternating i]
-    have hi : i.val <= extraPoints := Nat.le_of_lt_succ i.isLt
-    have hrev : (Fin.rev i).val = extraPoints - i.val := by
-      simp only [Fin.rev]
-      omega
-    rw [hrev]
-    by_cases hiEven : Even i.val <;>
-      simp [Nat.even_sub hi, hCodeLengthNotEven, hiEven]
+      Not (gapCode i.castSucc = gapCode i.succ))
+    (hPointOdd : Odd (extraPoints + 2)) :
+    gapCode ∘ Fin.rev = fun i => !gapCode i := by
+  have hCodeLengthOdd : Odd extraPoints := by
+    rcases hPointOdd with ⟨half, hhalf⟩
+    refine ⟨half - 1, ?_⟩
+    omega
+  have hCodeLengthNotEven : Not (Even extraPoints) := by
+    rintro ⟨evenHalf, hEven⟩
+    rcases hCodeLengthOdd with ⟨oddHalf, hOdd⟩
+    omega
+  funext i
+  change gapCode (Fin.rev i) = !gapCode i
+  rw [alternating_value gapCode alternating (Fin.rev i),
+    alternating_value gapCode alternating i]
+  have hi : i.val <= extraPoints := Nat.le_of_lt_succ i.isLt
+  have hrev : (Fin.rev i).val = extraPoints - i.val := by
+    simp only [Fin.rev]
+    omega
+  rw [hrev]
+  by_cases hiEven : Even i.val <;>
+    simp [Nat.even_sub hi, hCodeLengthNotEven, hiEven]
 
-private theorem alternating_gap_mirror_parity
+private theorem alternating_gap_reverse_complement_of_odd
     (pointCount : Nat) (gapCode : List Bool)
     (codeLength : gapCode.length + 1 = pointCount)
-    (alternating : gapCode.IsChain fun left right => Not (left = right)) :
-    (Even pointCount -> gapCode.reverse = gapCode) /\
-      (Odd pointCount ->
-        gapCode.reverse = gapCode.map fun bit => !bit) := by
+    (alternating : gapCode.IsChain fun left right => Not (left = right))
+    (hPointOdd : Odd pointCount) :
+    gapCode.reverse = gapCode.map fun bit => !bit := by
   cases gapCode with
   | nil =>
-      norm_num at codeLength
-      subst pointCount
       simp
   | cons first rest =>
       have pointCountEq : pointCount = rest.length + 2 := by
@@ -123,38 +105,21 @@ private theorem alternating_gap_mirror_parity
         intro i
         rw [List.isChain_iff_getElem] at alternating
         exact alternating i.val (by simp only [List.length_cons]; omega)
-      have indexedParity :=
-        finite_alternating_mirror_parity rest.length indexedCode indexedAlternating
-      constructor
-      · intro hEven
-        rw [pointCountEq] at hEven
-        have indexedSelf := indexedParity.1 hEven
-        apply List.ext_getElem (by simp)
-        intro i hReverse hCode
-        rw [List.getElem_reverse]
-        let index : Fin (rest.length + 1) :=
-          ⟨i, by simpa only [List.length_cons] using hCode⟩
-        have hAtIndex := congrFun indexedSelf index
-        change indexedCode (Fin.rev index) = indexedCode index at hAtIndex
-        have hIndexEq : rest.length + 1 - (i + 1) = rest.length - i := by
-          omega
-        simpa only [indexedCode, index, Fin.rev, List.length_cons,
-          Nat.add_sub_cancel_left, Nat.add_sub_cancel, hIndexEq] using hAtIndex
-      · intro hOdd
-        rw [pointCountEq] at hOdd
-        have indexedComplement := indexedParity.2 hOdd
-        apply List.ext_getElem (by simp)
-        intro i hReverse hMap
-        rw [List.getElem_reverse, List.getElem_map]
-        have hi : i < rest.length + 1 := by
-          simpa only [List.length_map, List.length_cons] using hMap
-        let index : Fin (rest.length + 1) := ⟨i, hi⟩
-        have hAtIndex := congrFun indexedComplement index
-        change indexedCode (Fin.rev index) = !indexedCode index at hAtIndex
-        have hIndexEq : rest.length + 1 - (i + 1) = rest.length - i := by
-          omega
-        simpa only [indexedCode, index, Fin.rev, List.length_cons,
-          Nat.add_sub_cancel_left, Nat.add_sub_cancel, hIndexEq] using hAtIndex
+      rw [pointCountEq] at hPointOdd
+      have indexedComplement := finite_alternating_reverse_complement_of_odd
+        rest.length indexedCode indexedAlternating hPointOdd
+      apply List.ext_getElem (by simp)
+      intro i hReverse hMap
+      rw [List.getElem_reverse, List.getElem_map]
+      have hi : i < rest.length + 1 := by
+        simpa only [List.length_map, List.length_cons] using hMap
+      let index : Fin (rest.length + 1) := ⟨i, hi⟩
+      have hAtIndex := congrFun indexedComplement index
+      change indexedCode (Fin.rev index) = !indexedCode index at hAtIndex
+      have hIndexEq : rest.length + 1 - (i + 1) = rest.length - i := by
+        omega
+      simpa only [indexedCode, index, Fin.rev, List.length_cons,
+        Nat.add_sub_cancel_left, Nat.add_sub_cancel, hIndexEq] using hAtIndex
 
 /-- Construct the normalized gap code from a dense integer configuration.
 Mod-three admissibility forces its adjacent bits to alternate, after which
@@ -269,9 +234,57 @@ theorem dense_gap_mirror_parity
       · exact ⟨i1, hcover.symm⟩
       · exact ⟨i2, hcover.symm⟩
   dsimp only
-  simpa only [gapBit] using
-    alternating_gap_mirror_parity (gapCount + 1) (List.ofFn gapBit) (by simp)
-      bitAlternating
+  constructor
+  · intro hEven
+    let points := List.ofFn offset
+    have hDensePoints : forall (i : Nat) (hi : i + 1 < points.length),
+        points[i + 1] - points[i] = 2 \/
+          points[i + 1] - points[i] = 4 := by
+      intro i hi
+      have hiGap : i < gapCount := by
+        simp [points] at hi
+        omega
+      let gapIndex : Fin gapCount := ⟨i, hiGap⟩
+      simp only [points, List.getElem_ofFn]
+      simpa [gapIndex, Fin.succ, Fin.castSucc] using denseGaps gapIndex
+    have hAdmissiblePoints : exists omitted : ZMod 3,
+        forall (i : Nat) (hi : i < points.length),
+          (points[i] : ZMod 3) ≠ omitted := by
+      simp only [Function.Surjective] at modThreeAdmissible
+      push Not at modThreeAdmissible
+      obtain ⟨omitted, homitted⟩ := modThreeAdmissible
+      refine ⟨omitted, ?_⟩
+      intro i hi
+      have hiFin : i < gapCount + 1 := by simpa [points] using hi
+      rw [show points[i] = offset ⟨i, hiFin⟩ by
+        exact List.getElem_ofFn hi]
+      exact homitted ⟨i, hiFin⟩
+    have hOwner := even_dense_constellation_gap_code_self
+      points hDensePoints hAdmissiblePoints (by simpa [points])
+    have hCode :
+        points.zipWith (fun left right => decide (right - left = 4)) points.tail =
+          List.ofFn gapBit := by
+      apply List.ext_getElem
+      · simp [points]
+      · intro i hleft hright
+        rw [List.getElem_zipWith]
+        rw [List.getElem_tail]
+        have hiGap : i < gapCount := by simpa using hright
+        have hiPoint : i < points.length := by simp [points]; omega
+        have hiSuccPoint : i + 1 < points.length := by simp [points]; omega
+        conv_lhs =>
+          rw [show points[i + 1] = offset ⟨i + 1, by omega⟩ by
+            exact List.getElem_ofFn hiSuccPoint]
+          rw [show points[i] = offset ⟨i, by omega⟩ by
+            exact List.getElem_ofFn hiPoint]
+        conv_rhs => rw [List.getElem_ofFn]
+        rfl
+    rw [hCode] at hOwner
+    simpa only [gapBit] using hOwner
+  · intro hOdd
+    simpa only [gapBit] using
+      alternating_gap_reverse_complement_of_odd
+        (gapCount + 1) (List.ofFn gapBit) (by simp) bitAlternating hOdd
 
 #print axioms dense_gap_mirror_parity
 
