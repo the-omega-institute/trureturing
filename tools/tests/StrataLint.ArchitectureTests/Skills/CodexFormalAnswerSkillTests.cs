@@ -7,7 +7,7 @@ using Markdig.Syntax.Inlines;
 
 namespace StrataLint.ArchitectureTests;
 
-public sealed class CodexFormalAnswerSkillTests
+public sealed partial class CodexFormalAnswerSkillTests
 {
     private const string AuthorityHeading = "5. Settle outcomes and freeze the answer register";
     private const string GeneralizationHeading = "3. Fix the exact statement echo";
