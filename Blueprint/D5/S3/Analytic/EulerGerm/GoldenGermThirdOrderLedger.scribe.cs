@@ -44,11 +44,7 @@ internal sealed class GoldenGermThirdOrderLedgerDocument
                         + "than one over phi to the fifth power. It does not assert O-5, a "
                         + "global continuation or nonvanishing theorem, or the Riemann "
                         + "Hypothesis."))),
-            DescribeRole.Theorem)),
-        [
-            DocumentEdge.Dependency.Create(GidRef.Create(
-                "D5/S3/Analytic/EulerGerm/GoldenLocalFactor")),
-        ]));
+            DescribeRole.Theorem))));
 
     private static Formula TheoremFormula()
     {
