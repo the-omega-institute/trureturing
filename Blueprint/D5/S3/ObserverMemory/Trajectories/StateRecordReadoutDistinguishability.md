@@ -2,11 +2,11 @@
 
 ## Abstract
 
-Equal endpoints collapse under state readouts; record separation is exactly output inequality.
+Append-generated records preserve endpoint collapse and conditional record separation.
 
 **Theorem 1.1 (State readouts merge; record readouts separate conditionally).**
 
-$$\forall Gamma, X, Lambda_{1}, Y, Y_{2}: \operatorname{Type},\ e: Gamma \to X, r: Gamma \to Lambda_{1}, q_{2}: Lambda_{1} \to Y_{2},\ gamma, gammaPrime: Gamma, x: X, lambda, lambdaPrime: Lambda_{1},\ (e\left(gamma\right) = x \land e\left(gammaPrime\right) = x \land r\left(gamma\right) = lambda \land r\left(gammaPrime\right) = lambdaPrime \land lambda \neq lambdaPrime) \Rightarrow\ (\forall s: X \to Y, s\left(e\left(gamma\right)\right) = s\left(e\left(gammaPrime\right)\right)) \land\ (\neg \operatorname{ker}\left(q_{2} \circ r, gamma, gammaPrime\right) \iff \left(q_{2}\right)\left(lambda\right) \neq \left(q_{2}\right)\left(lambdaPrime\right)).$$
+$$\forall X, A, Y, Y_{2}: \operatorname{Type},\ O: \operatorname{RecordedObserver}\left(X, A, Y_{2}\right),\ gamma, gammaPrime: \operatorname{ObserverHistory}\left(X, A, Y_{2}\right), x: X, lambda, lambdaPrime: \operatorname{AppendOnlyRecord}\left(A\right),\ (\operatorname{endpoint}\left(O\right)\left(gamma\right) = x \land \operatorname{endpoint}\left(O\right)\left(gammaPrime\right) = x \land \operatorname{recordImage}\left(O\right)\left(gamma\right) = lambda \land \operatorname{recordImage}\left(O\right)\left(gammaPrime\right) = lambdaPrime \land lambda \neq lambdaPrime) \Rightarrow\ (\forall s: X \to Y, s\left(\operatorname{endpoint}\left(O\right)\left(gamma\right)\right) = s\left(\operatorname{endpoint}\left(O\right)\left(gammaPrime\right)\right)) \land\ (\neg \operatorname{ker}\left(\operatorname{q2}\left(O\right) \circ \operatorname{recordImage}\left(O\right), gamma, gammaPrime\right) \iff \operatorname{q2}\left(O\right)\left(lambda\right) \neq \operatorname{q2}\left(O\right)\left(lambdaPrime\right)).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/Trajectories/StateRecordReadoutDistinguishability.state_record_readout_distinguishability` (`✓ std3`). ∎
 
@@ -14,7 +14,11 @@ $$\forall Gamma, X, Lambda_{1}, Y, Y_{2}: \operatorname{Type},\ e: Gamma \to X, 
 
 *Commentary.*
 
-Let two histories have the same endpoint x and respective record images lambda and lambdaPrime, with the record images distinct. The endpoint and record-image maps use the repository's canonical generic Concept readout carrier.
+Let O be a RecordedObserver on a state type X, reading type A, and second-layer output Y2. Its fields are q1 : X -> A, the controlled update T1 : X x Y2 -> X, and q2 : AppendOnlyRecord A -> Y2. AppendOnlyRecord A stores a list; the operational transition changes it by lambda.append(q1(x)), so old entries remain a prefix.
+
+An ObserverHistory contains an initial augmented state (x, lambda) and a finite list of second-layer inputs. Its endpoint and recordImage are the two projections obtained by folding the source one-step evolution over those inputs, so recordImage is not an arbitrary map.
+
+Let two such generated histories have the same endpoint x and respective record images lambda and lambdaPrime, with the images distinct.
 
 The first public conjunct quantifies over every state-only readout s. Since both histories end at x, their state readout values are equal.
 

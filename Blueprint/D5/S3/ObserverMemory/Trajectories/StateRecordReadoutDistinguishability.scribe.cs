@@ -8,7 +8,7 @@ internal sealed class StateRecordReadoutDistinguishabilityDocument
     : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Equal endpoints collapse under state readouts; record separation is exactly output inequality.",
+        "Append-generated records preserve endpoint collapse and conditional record separation.",
         H("State and Record Readout Distinguishability"),
         Blocks(
             Describe.Lean(
@@ -22,10 +22,19 @@ internal sealed class StateRecordReadoutDistinguishabilityDocument
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "Let two histories have the same endpoint x and respective record "
-                            + "images lambda and lambdaPrime, with the record images distinct. "
-                            + "The endpoint and record-image maps use the repository's canonical "
-                            + "generic Concept readout carrier.")),
+                        "Let O be a RecordedObserver on a state type X, reading type A, and "
+                            + "second-layer output Y2. Its fields are q1 : X -> A, the controlled "
+                            + "update T1 : X x Y2 -> X, and q2 : AppendOnlyRecord A -> Y2. "
+                            + "AppendOnlyRecord A stores a list; the operational transition changes "
+                            + "it by lambda.append(q1(x)), so old entries remain a prefix.")),
+                    Paragraph(Text(
+                        "An ObserverHistory contains an initial augmented state (x, lambda) and "
+                            + "a finite list of second-layer inputs. Its endpoint and recordImage "
+                            + "are the two projections obtained by folding the source one-step "
+                            + "evolution over those inputs, so recordImage is not an arbitrary map.")),
+                    Paragraph(Text(
+                        "Let two such generated histories have the same endpoint x and respective "
+                            + "record images lambda and lambdaPrime, with the images distinct.")),
                     Paragraph(Text(
                         "The first public conjunct quantifies over every state-only readout s. "
                             + "Since both histories end at x, their state readout values are equal.")),
@@ -49,14 +58,19 @@ internal sealed class StateRecordReadoutDistinguishabilityDocument
     private static Formula TheoremFormula()
     {
         Formula type = Seq(Operatorname, Grp(F.Id("Type")));
-        Formula historyType = F.Id("Gamma");
         Formula stateType = F.Id("X");
-        Formula recordType = new Formula.Subscript(F.Id("Lambda"), D(1));
+        Formula readingType = F.Id("A");
         Formula stateOutputType = F.Id("Y");
         Formula recordOutputType = new Formula.Subscript(F.Id("Y"), D(2));
-        Formula endpoint = F.Id("e");
-        Formula recordImage = F.Id("r");
-        Formula recordReadout = new Formula.Subscript(F.Id("q"), D(2));
+        Formula recordType = Call("AppendOnlyRecord", readingType);
+        Formula observerType =
+            Call("RecordedObserver", stateType, readingType, recordOutputType);
+        Formula historyType =
+            Call("ObserverHistory", stateType, readingType, recordOutputType);
+        Formula observer = F.Id("O");
+        Formula endpoint = Call("endpoint", observer);
+        Formula recordImage = Call("recordImage", observer);
+        Formula recordReadout = Call("q2", observer);
         Formula first = F.Id("gamma");
         Formula second = F.Id("gammaPrime");
         Formula state = F.Id("x");
@@ -84,12 +98,10 @@ internal sealed class StateRecordReadoutDistinguishabilityDocument
 
         return Disp(Seq(
             Forall, Sp,
-            historyType, Comma, Sp, stateType, Comma, Sp, recordType, Comma, Sp,
+            stateType, Comma, Sp, readingType, Comma, Sp,
             stateOutputType, Comma, Sp, recordOutputType,
             Colon, Sp, type, Comma, Esc,
-            endpoint, Colon, Sp, Arrow(historyType, stateType), Comma, Sp,
-            recordImage, Colon, Sp, Arrow(historyType, recordType), Comma, Sp,
-            recordReadout, Colon, Sp, Arrow(recordType, recordOutputType), Comma, Esc,
+            observer, Colon, Sp, observerType, Comma, Esc,
             first, Comma, Sp, second, Colon, Sp, historyType, Comma, Sp,
             state, Colon, Sp, stateType, Comma, Sp,
             firstRecord, Comma, Sp, secondRecord, Colon, Sp, recordType, Comma, Esc,
