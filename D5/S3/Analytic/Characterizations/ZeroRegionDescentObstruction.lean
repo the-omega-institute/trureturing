@@ -3,9 +3,7 @@
    mirror-B: D5/B/S3/Analytic/Characterizations/ZeroRegionDescentObstruction
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Half-plane threshold positivity is automatically monotone only
-   toward narrower regions, and strict threshold shrinkage alone does not
-   imply Wang-style descent. -/
+   digest: Half-plane threshold positivity is automatically monotone only toward narrower regions, and strict threshold shrinkage alone does not imply Wang-style descent. -/
 
 import Mathlib.Tactic
 
