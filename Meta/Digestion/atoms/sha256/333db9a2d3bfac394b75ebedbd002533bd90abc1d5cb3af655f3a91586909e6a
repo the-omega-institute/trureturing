@@ -1,0 +1,74 @@
+# 十七、真正的有限生成器候选是 operator determinant
+
+无限构型可以由有限语法：
+
+$$
+U,\quad A=D_\Lambda
+$$
+
+生成。
+
+若进一步存在 source insertions：
+
+$$
+B_h=U^{-h}BU^h,
+$$
+
+则可以定义：
+
+$$
+\Delta(s;\varepsilon)
+=
+\det
+\left(
+I-A_0(s)-\sum_h\varepsilon_hB_h(s)
+\right).
+$$
+
+其对数展开：
+
+$$
+-\log\Delta
+$$
+
+会自动产生所有阶数的 cyclic traces：
+
+$$
+\operatorname{Tr}
+(B_{h_1}\cdots B_{h_k}).
+$$
+
+于是：
+
+$$
+\boxed{
+\text{无穷多个构型系数}
+}
+$$
+
+不再由无穷多个独立规则定义，而由一个 determinant 生成。
+
+这才是从“无限定义”跃迁到“有限生成律”的正确方向。
+
+ZCOCT 已经把这一方向登记为 Trace–Jet Bridge：素数侧的 \(k\)-点加法累积量应对应带 source 的 completed determinant 的第 \(k\) 阶谱响应。
+
+真正需要证明的是：
+
+$$
+\boxed{
+[\varepsilon_H]\log\Delta
+=
+\kappa_H^{\mathrm{arith}}
+}
+$$
+
+在安全区域成立，并且该 determinant：
+
+* 有正 Hilbert 实现；
+* 能延拓到临界结构；
+* 无源截面等于 \(\xi\)；
+* 全部零点响应无盲核；
+* 高阶 source tail 统一可控。
+
+---
+

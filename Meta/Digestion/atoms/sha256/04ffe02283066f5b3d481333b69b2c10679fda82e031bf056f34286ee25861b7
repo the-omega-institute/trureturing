@@ -1,0 +1,96 @@
+# 四、Schur 余量就是“每一层新出现的不可约项”
+
+取低阶观察量：
+
+$$
+X_1,\ldots,X_m
+$$
+
+和一个新观察量 \(Y\)。
+
+定义 Gram 矩阵：
+
+$$
+G_{ij}
+=
+\langle X_i,X_j\rangle,
+$$
+
+交叉向量：
+
+$$
+b_i
+=
+\langle X_i,Y\rangle,
+$$
+
+以及：
+
+$$
+c=\langle Y,Y\rangle.
+$$
+
+若 \(G\) 正定，则由低阶观察量对 \(Y\) 的最佳线性预测为：
+
+$$
+Y_{\mathrm{pred}}
+=
+\sum_i(G^{-1}b)_iX_i.
+$$
+
+剩余创新能量为：
+
+$$
+\boxed{
+\Delta(Y\mid X_1,\ldots,X_m)
+=
+c-b^*G^{-1}b.
+}
+$$
+
+并且：
+
+$$
+\boxed{
+\Delta(Y\mid X_1,\ldots,X_m)
+=
+\|Y-Y_{\mathrm{pred}}\|^2
+\ge0.
+}
+$$
+
+所以：
+
+$$
+\Delta=0
+\iff
+Y\in\operatorname{span}\{X_1,\ldots,X_m\}.
+$$
+
+这就是你所说的：
+
+> 每一层都有一个约不掉的项。
+
+它在正几何中不是神秘余数，而是新块相对于旧块的 Schur complement。
+
+因此应当严格区分：
+
+$$
+\boxed{
+\begin{aligned}
+\kappa_H
+&=\text{分拆意义下的 connected 系数};\\
+\Delta_H
+&=\text{Hilbert 预测意义下的正交创新能量}.
+\end{aligned}
+}
+$$
+
+\(\kappa_H\) 可以有正负号。
+
+\(\Delta_H\) 必定非负。
+
+真正适合最终 RH 正性闭合的是后者。
+
+---
+

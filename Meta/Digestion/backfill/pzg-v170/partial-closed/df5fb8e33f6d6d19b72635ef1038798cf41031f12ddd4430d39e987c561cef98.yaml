@@ -3,14 +3,13 @@ fingerprints:
   normalized_sha256: sha256:df5fb8e33f6d6d19b72635ef1038798cf41031f12ddd4430d39e987c561cef98
 cas_ref: sha256:df5fb8e33f6d6d19b72635ef1038798cf41031f12ddd4430d39e987c561cef98
 coverage_gids:
-  - D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec
-  - D5/S3/Zeros/ToySpectrum/QuadraticCollisionModel.off_line_zeros_born_in_pairs_not_created
-  - D5/S3/Zeros/ToySpectrum/QuadraticCollisionModel.quadratic_collision_model_certificate
+  - gid: D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec
+    target_statement_id: sha256:773d66b0555f487674ddca38ae7bcaa9d03ca98e1bc0feb168ec3c60b371ed67
+  - gid: D5/S3/Zeros/ToySpectrum/QuadraticCollisionModel.off_line_zeros_born_in_pairs_not_created
+    target_statement_id: sha256:5b2874fff00f65248ad623dd0d831b4147b6b354000077a1e6aa6804bd3735a7
+  - gid: D5/S3/Zeros/ToySpectrum/QuadraticCollisionModel.quadratic_collision_model_certificate
+    target_statement_id: sha256:b659a5404ddd2400a0ab551d6a903a32e9ecf8751a2ac41437b77b4c52c104de
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec
-      source_sha256: sha256:df5fb8e33f6d6d19b72635ef1038798cf41031f12ddd4430d39e987c561cef98
-      target_statement_id: sha256:773d66b0555f487674ddca38ae7bcaa9d03ca98e1bc0feb168ec3c60b371ed67
   scribe:
     - gid: D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec
       definition_sha256: sha256:bde4ed75cb707872d65ee1d8275ee4883ea7cd4a9fe14d00b44b6f218b59be0f

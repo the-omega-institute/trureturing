@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:61be34dcfc52fb025f3cfcfb8945c6dfa00ea8e0523e4cb4cc058a95dd22116c
 cas_ref: sha256:61be34dcfc52fb025f3cfcfb8945c6dfa00ea8e0523e4cb4cc058a95dd22116c
 coverage_gids:
-  - D5/S3/CompletionDynamics/GoldenMobius/GoldenCompletionExactLinearization.golden_completion_exact_linearization
+  - gid: D5/S3/CompletionDynamics/GoldenMobius/GoldenCompletionExactLinearization.golden_completion_exact_linearization
+    target_statement_id: sha256:b5d47661dcca299dab6d9c9106772de757cf6b9aa520d841fd0ce316f2112a90
 receipts:
-  coverage:
-    - gid: D5/S3/CompletionDynamics/GoldenMobius/GoldenCompletionExactLinearization.golden_completion_exact_linearization
-      source_sha256: sha256:61be34dcfc52fb025f3cfcfb8945c6dfa00ea8e0523e4cb4cc058a95dd22116c
-      target_statement_id: sha256:b5d47661dcca299dab6d9c9106772de757cf6b9aa520d841fd0ce316f2112a90
   scribe:
     - gid: D5/S3/CompletionDynamics/GoldenMobius/GoldenCompletionExactLinearization.golden_completion_exact_linearization
       definition_sha256: sha256:5498f88d42214998bd9050121cdd7f8b95a8a134b4a259989cc0d2b1669586e4

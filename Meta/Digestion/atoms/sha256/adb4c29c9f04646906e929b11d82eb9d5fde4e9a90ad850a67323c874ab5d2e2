@@ -1,0 +1,47 @@
+## 576. 两个正锥
+
+Weil 路线使用 convolution-square 锥：
+
+$$
+\mathcal C_W
+=
+\{
+g*\widetilde g:
+g\in\mathcal W
+\}.
+$$
+
+Casimir 路线使用区间平方锥：
+
+$$
+\mathcal C_H
+=
+\left\{
+|A(x)|^2
++
+x(1-x)|B(x)|^2
+\right\}.
+$$
+
+RH 分别表现为：
+
+$$
+L_Z(\mathcal C_W)\subseteq[0,\infty),
+$$
+
+以及：
+
+$$
+L_{\mathcal X}(\mathcal C_H)\subseteq[0,\infty).
+$$
+
+两条路线看似不同，本质上都是：
+
+$$
+\boxed{
+\text{一个谱线性泛函是否属于某个正锥的对偶锥。}
+}
+$$
+
+---
+

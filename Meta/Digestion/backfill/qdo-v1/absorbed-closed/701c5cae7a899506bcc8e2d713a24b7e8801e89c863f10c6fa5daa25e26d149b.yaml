@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:701c5cae7a899506bcc8e2d713a24b7e8801e89c863f10c6fa5daa25e26d149b
 cas_ref: sha256:701c5cae7a899506bcc8e2d713a24b7e8801e89c863f10c6fa5daa25e26d149b
 coverage_gids:
-  - D5/S3/ContinuousObservables/AnchoredObserverDistanceInvariance.anchored_observer_distance_invariance
+  - gid: D5/S3/ContinuousObservables/AnchoredObserverDistanceInvariance.anchored_observer_distance_invariance
+    target_statement_id: sha256:31af5459876ce58550af4bea5e81e39c000bbb944c882b2768865901080a9e50
 receipts:
-  coverage:
-    - gid: D5/S3/ContinuousObservables/AnchoredObserverDistanceInvariance.anchored_observer_distance_invariance
-      source_sha256: sha256:701c5cae7a899506bcc8e2d713a24b7e8801e89c863f10c6fa5daa25e26d149b
-      target_statement_id: sha256:31af5459876ce58550af4bea5e81e39c000bbb944c882b2768865901080a9e50
   scribe:
     - gid: D5/S3/ContinuousObservables/AnchoredObserverDistanceInvariance.anchored_observer_distance_invariance
       definition_sha256: sha256:51c5fcdfafe16eb0cabfb9a3cfc8c3daea7a16400f2c1a5a47d74131755b8a68

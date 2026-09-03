@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:7d1660acc6e4e998d6d4066c7f181d3f8db2f2c476fe4ef59931e0274104595a
 cas_ref: sha256:7d1660acc6e4e998d6d4066c7f181d3f8db2f2c476fe4ef59931e0274104595a
 coverage_gids:
-  - D5/S3/Weil/Scattering/UniformDampingCriterion.uniform_damping_iff_critical_line
+  - gid: D5/S3/Weil/Scattering/UniformDampingCriterion.uniform_damping_iff_critical_line
+    target_statement_id: sha256:5083b85b28f1759f4637d084b79a25c8ade1fbbaee5155c00fe5e1d59531f1a3
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/Scattering/UniformDampingCriterion.uniform_damping_iff_critical_line
-      source_sha256: sha256:7d1660acc6e4e998d6d4066c7f181d3f8db2f2c476fe4ef59931e0274104595a
-      target_statement_id: sha256:5083b85b28f1759f4637d084b79a25c8ade1fbbaee5155c00fe5e1d59531f1a3
   scribe:
     - gid: D5/S3/Weil/Scattering/UniformDampingCriterion.uniform_damping_iff_critical_line
       definition_sha256: sha256:7e3e94306cb66387caa4eb8d7534f59108d353eef5681f3fbc1d3312df8e6af3

@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:52a3d964180167d47c87bed83c979daf4106ed3047a8d2d35b7f030eb464eb5a
 cas_ref: sha256:52a3d964180167d47c87bed83c979daf4106ed3047a8d2d35b7f030eb464eb5a
 coverage_gids:
-  - D5/S0/Conventions/Complement/OrderUnitAmbientDependence.order_unit_complement_depends_on_ambient
+  - gid: D5/S0/Conventions/Complement/OrderUnitAmbientDependence.order_unit_complement_depends_on_ambient
+    target_statement_id: sha256:1e6da81bfdac75095c75c125177507d1b402bd11c20f2addc5cd6d0d98618abd
 receipts:
-  coverage:
-    - gid: D5/S0/Conventions/Complement/OrderUnitAmbientDependence.order_unit_complement_depends_on_ambient
-      source_sha256: sha256:52a3d964180167d47c87bed83c979daf4106ed3047a8d2d35b7f030eb464eb5a
-      target_statement_id: sha256:1e6da81bfdac75095c75c125177507d1b402bd11c20f2addc5cd6d0d98618abd
   scribe:
     - gid: D5/S0/Conventions/Complement/OrderUnitAmbientDependence.order_unit_complement_depends_on_ambient
       definition_sha256: sha256:e98ee76a946eb76475878e4177209ffe17a57a2e802e55b08584cf913b4aa0ba

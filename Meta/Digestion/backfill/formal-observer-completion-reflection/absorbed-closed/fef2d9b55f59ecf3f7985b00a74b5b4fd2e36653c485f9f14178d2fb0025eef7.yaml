@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:fef2d9b55f59ecf3f7985b00a74b5b4fd2e36653c485f9f14178d2fb0025eef7
 cas_ref: sha256:fef2d9b55f59ecf3f7985b00a74b5b4fd2e36653c485f9f14178d2fb0025eef7
 coverage_gids:
-  - D5/S3/Quantum/Dynamics/ProductDynamicsLocalSupport.product_pullback_local_support
+  - gid: D5/S3/Quantum/Dynamics/ProductDynamicsLocalSupport.product_pullback_local_support
+    target_statement_id: sha256:92f7fd3dbd98b99e0adc63ea5c354e551e5f2efebe23539e0a5b8b8860a7bc66
 receipts:
-  coverage:
-    - gid: D5/S3/Quantum/Dynamics/ProductDynamicsLocalSupport.product_pullback_local_support
-      source_sha256: sha256:fef2d9b55f59ecf3f7985b00a74b5b4fd2e36653c485f9f14178d2fb0025eef7
-      target_statement_id: sha256:92f7fd3dbd98b99e0adc63ea5c354e551e5f2efebe23539e0a5b8b8860a7bc66
   scribe:
     - gid: D5/S3/Quantum/Dynamics/ProductDynamicsLocalSupport.product_pullback_local_support
       definition_sha256: sha256:95704d55935225703f51bbba7eb42e69892c2c1d10f1d464e14dfe4b004f86cd

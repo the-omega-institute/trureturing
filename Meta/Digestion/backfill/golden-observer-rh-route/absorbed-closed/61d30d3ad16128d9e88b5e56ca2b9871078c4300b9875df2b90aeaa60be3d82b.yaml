@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:61d30d3ad16128d9e88b5e56ca2b9871078c4300b9875df2b90aeaa60be3d82b
 cas_ref: sha256:61d30d3ad16128d9e88b5e56ca2b9871078c4300b9875df2b90aeaa60be3d82b
 coverage_gids:
-  - D5/S3/Analytic/GermWindow/GoldenGermWindowLineDichotomy.golden_continued_germ_off_line_zero_iff_of_rh
+  - gid: D5/S3/Analytic/GermWindow/GoldenGermWindowLineDichotomy.golden_continued_germ_off_line_zero_iff_of_rh
+    target_statement_id: sha256:3d9402b2f7afb08d51261e8571a84c0601a619178ea1074c1a079b0f345b68d6
 receipts:
-  coverage:
-    - gid: D5/S3/Analytic/GermWindow/GoldenGermWindowLineDichotomy.golden_continued_germ_off_line_zero_iff_of_rh
-      source_sha256: sha256:61d30d3ad16128d9e88b5e56ca2b9871078c4300b9875df2b90aeaa60be3d82b
-      target_statement_id: sha256:3d9402b2f7afb08d51261e8571a84c0601a619178ea1074c1a079b0f345b68d6
   scribe:
     - gid: D5/S3/Analytic/GermWindow/GoldenGermWindowLineDichotomy.golden_continued_germ_off_line_zero_iff_of_rh
       definition_sha256: sha256:0318478c62ce2b640d5a6439be8997621d0e8d40b0f64b9eeb46c11653913f81

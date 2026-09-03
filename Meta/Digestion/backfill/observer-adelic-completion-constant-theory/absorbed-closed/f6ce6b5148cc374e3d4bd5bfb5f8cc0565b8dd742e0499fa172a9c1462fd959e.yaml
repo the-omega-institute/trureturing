@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:f6ce6b5148cc374e3d4bd5bfb5f8cc0565b8dd742e0499fa172a9c1462fd959e
 cas_ref: sha256:f6ce6b5148cc374e3d4bd5bfb5f8cc0565b8dd742e0499fa172a9c1462fd959e
 coverage_gids:
-  - D5/S3/Weil/TestFunctions/SmoothExternalMomentElimination.smooth_external_finite_moment_elimination
+  - gid: D5/S3/Weil/TestFunctions/SmoothExternalMomentElimination.smooth_external_finite_moment_elimination
+    target_statement_id: sha256:01a2add680db71e772bad60af3364ae87cb5fc1cdb4376aa39948fae06796cca
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/TestFunctions/SmoothExternalMomentElimination.smooth_external_finite_moment_elimination
-      source_sha256: sha256:f6ce6b5148cc374e3d4bd5bfb5f8cc0565b8dd742e0499fa172a9c1462fd959e
-      target_statement_id: sha256:01a2add680db71e772bad60af3364ae87cb5fc1cdb4376aa39948fae06796cca
   scribe:
     - gid: D5/S3/Weil/TestFunctions/SmoothExternalMomentElimination.smooth_external_finite_moment_elimination
       definition_sha256: sha256:b815bb9233df7b88f0490074c440d68eee07f5a946987ea50d6930ea34c6e7f0

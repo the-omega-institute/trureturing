@@ -1,0 +1,48 @@
+## 561. 无有限维线性 realization
+
+如果存在固定有限维矩阵 \(A\) 和向量 \(v,w\)，使：
+
+$$
+a_n=v^\ast A^nw,
+$$
+
+由 Cayley–Hamilton 定理，\((a_n)\) 必满足阶数不超过 \(\dim A\) 的线性递推。
+
+因此：
+
+$$
+\boxed{
+\text{不存在有限维线性系统精确产生全部 Casimir moments。}
+}
+$$
+
+这就是它与 Fibonacci 的严格区别：
+
+$$
+\boxed{
+\text{Fibonacci Hankel rank}=2,
+}
+$$
+
+而：
+
+$$
+\boxed{
+\text{RH Casimir Hankel rank}=\infty.
+}
+$$
+
+所以你说：
+
+> 每层都有一个约不掉的项，并不像 Fibonacci 那样能写成简单递推。
+
+在这里获得了一个精确答案：
+
+$$
+\boxed{
+\text{是的，任何固定有限维递推都不可能精确关闭该谱。}
+}
+$$
+
+---
+

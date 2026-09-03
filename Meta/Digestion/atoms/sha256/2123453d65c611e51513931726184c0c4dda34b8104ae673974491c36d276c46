@@ -1,0 +1,72 @@
+# 十三、素数“奇数个／偶数个”应该放在哪里
+
+你的素数奇偶直觉可以保留，但对象必须是有限配置，而不是全体素数的无限基数。
+
+对整数 \(n\)，定义：
+
+$$
+\Omega(n)=\sum_pv_p(n).
+$$
+
+则：
+
+$$
+(-1)^{\Omega(n)}
+$$
+
+严格区分：
+
+* 使用偶数个素因子的配置；
+* 使用奇数个素因子的配置。
+
+对有限素数构型 \(H\)，也可按：
+
+$$
+|H|\bmod2
+$$
+
+拆成偶阶和奇阶 source cumulants：
+
+$$
+\mathcal K_{\mathrm{even}}(\varepsilon)
+=
+\frac{
+\mathcal K(\varepsilon)
++
+\mathcal K(-\varepsilon)
+}{2},
+$$
+
+$$
+\mathcal K_{\mathrm{odd}}(\varepsilon)
+=
+\frac{
+\mathcal K(\varepsilon)
+-
+\mathcal K(-\varepsilon)
+}{2}.
+$$
+
+项目已经在稠密 \(2/4\)-gap 构型中机器证明：
+
+* 偶数点构型反射后 gap code 不变；
+* 奇数点构型反射后 gap code 取补。
+
+所以 prime constellation 确实天然具有偶／奇 source sector。
+
+但必须保留层级：
+
+$$
+\boxed{
+\text{prime-factor parity}
+\neq
+\text{constellation-degree parity}
+\neq
+\text{zero-reflection parity}.
+}
+$$
+
+它们需要 Trace–Jet Bridge 才能被证明是同一个全局分级的不同表示。
+
+---
+

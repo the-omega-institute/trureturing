@@ -1,0 +1,65 @@
+# 十一、零点奇通道正是相干缺陷的观察接口
+
+项目已经证明，对一个非实离线轨道，Weil 贡献可以写成：
+
+$$
+\boxed{
+Q_{\operatorname{orb}(\rho)}(g)
+=
+E_\rho^{\mathrm{even}}(g)
+-
+E_\rho^{\mathrm{odd}}(g),
+}
+$$
+
+其中：
+
+$$
+E_\rho^{\mathrm{even}}\ge0,
+\qquad
+E_\rho^{\mathrm{odd}}\ge0.
+$$
+
+奇通道由两个镜像评价之差产生：
+
+$$
+A_{\mathrm{odd}}
+=
+\frac{
+\widehat g(z)
+-
+\widehat g(\overline z)
+}{2}.
+$$
+
+所有符号风险都被隔离在这个奇能量中。
+
+而且项目已经证明，只要存在一个非实离线零点，就能构造测试函数，使整个完整 Weil 零点和严格为负；其余所有零点无法永久抵消目标轨道。
+
+所以零点侧已经有：
+
+$$
+\boxed{
+\text{离线相对差异}
+\Longrightarrow
+\text{可被奇观察者检测的能量}.
+}
+$$
+
+真正缺少的是 prime-side 的忠实支配：
+
+$$
+\boxed{
+E_{\mathrm{zero}}^{\mathrm{odd}}
+\preceq
+C
+E_{\mathrm{prime}}^{\mathrm{hol}}
++
+\varepsilon I.
+}
+$$
+
+这正是双 RH 理论所指出的相对桥。
+
+---
+

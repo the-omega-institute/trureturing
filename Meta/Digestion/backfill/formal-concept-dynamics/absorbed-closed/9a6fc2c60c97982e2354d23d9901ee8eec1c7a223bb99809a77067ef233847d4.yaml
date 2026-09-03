@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:9a6fc2c60c97982e2354d23d9901ee8eec1c7a223bb99809a77067ef233847d4
 cas_ref: sha256:9a6fc2c60c97982e2354d23d9901ee8eec1c7a223bb99809a77067ef233847d4
 coverage_gids:
-  - D5/S1/FixedPoints/Reachability/RelationalReachStageExpansion.finite_step_expansion_with_initial_stages
+  - gid: D5/S1/FixedPoints/Reachability/RelationalReachStageExpansion.finite_step_expansion_with_initial_stages
+    target_statement_id: sha256:4e7fde0d927dde8348eb618c6004435668d67349a116322e532506613745f317
 receipts:
-  coverage:
-    - gid: D5/S1/FixedPoints/Reachability/RelationalReachStageExpansion.finite_step_expansion_with_initial_stages
-      source_sha256: sha256:9a6fc2c60c97982e2354d23d9901ee8eec1c7a223bb99809a77067ef233847d4
-      target_statement_id: sha256:4e7fde0d927dde8348eb618c6004435668d67349a116322e532506613745f317
   scribe:
     - gid: D5/S1/FixedPoints/Reachability/RelationalReachStageExpansion.finite_step_expansion_with_initial_stages
       definition_sha256: sha256:4848653408d30d7dafca77de1cd527796445fef3ba8327df4d5dd8baa0fa7f63
