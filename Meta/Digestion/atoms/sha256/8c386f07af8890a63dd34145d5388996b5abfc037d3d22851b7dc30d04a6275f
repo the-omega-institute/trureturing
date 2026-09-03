@@ -1,0 +1,40 @@
+## 42. 多观察者图册
+
+选择多个观察者：
+
+$$
+\{O_\alpha\}.
+$$
+
+在重叠区域上，转换函数为：
+
+$$
+g_{\beta\alpha}
+=
+T_\beta T_\alpha^{-1}.
+$$
+
+它们应满足 cocycle：
+
+$$
+g_{\gamma\beta}
+g_{\beta\alpha}
+=
+g_{\gamma\alpha}.
+$$
+
+于是全局对象不是任何单个名字，而是由所有相容观察 chart 粘合出的 section。
+
+这给出：
+
+$$
+\boxed{
+\text{“绝对对象”}
+=
+\text{全部相对观察之间保持一致的粘合类}.
+}
+$$
+
+ζ 的不同表示正可被看成不同 chart：
+
+* Dirichlet 级数；

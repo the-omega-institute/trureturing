@@ -215,187 +215,10 @@ public sealed partial class FormalizeCandidatesTests
 
         Assert.True(result.Success, result.Error);
         using var json = JsonDocument.Parse(result.Output);
-        Assert.Equal("stratalint-formalize-candidates-v4", json.RootElement.GetProperty("schema").GetString());
+        Assert.Equal("stratalint-formalize-candidates-v5", json.RootElement.GetProperty("schema").GetString());
         Assert.Empty(json.RootElement.GetProperty("candidates").EnumerateArray());
-        Assert.Empty(json.RootElement.GetProperty("recorded_formalizations").EnumerateArray());
+        Assert.False(json.RootElement.TryGetProperty("recorded_formalizations", out _));
         Assert.Empty(json.RootElement.GetProperty("withheld").EnumerateArray());
-    }
-
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
-    public void FormalizeCandidatesKeepsAtomWhenReceiptContentDoesNotMatchCurrentEntry(
-        bool mismatchCasRef)
-    {
-        var entry = Entry("source", "stale-receipt", "定理", "5.2");
-        var receipt = DigestionFormalizationReceipt.Write(new DigestionFormalizationReceipt(
-            entry.AtomId,
-            "D5/S0/Synthetic/Receipt.stale_receipt",
-            new DigestionFormalizationSignature("stale-receipt", "theorem", "statement-v1"),
-            mismatchCasRef
-                ? "sha256:0000000000000000000000000000000000000000000000000000000000000000"
-                : entry.Atom.Fingerprints.RawSha256,
-            mismatchCasRef
-                ? entry.Atom.Fingerprints.RawSha256
-                : "sha256:1111111111111111111111111111111111111111111111111111111111111111"))
-            .ToArray();
-
-        var result = Run([entry], formalizationReceipt: receipt);
-
-        Assert.True(result.Success, result.Error);
-        using var json = JsonDocument.Parse(result.Output);
-        Assert.Equal(
-            entry.AtomId,
-            Assert.Single(json.RootElement.GetProperty("candidates").EnumerateArray())
-                .GetProperty("atom_id")
-                .GetString());
-    }
-
-    [Fact]
-    public void FormalizeCandidatesKeepsAtomWhenReceiptDeclarationIsMissingFromCurrentLeanReport()
-    {
-        var entry = Entry("source", "missing-declaration", "定理", "5.3");
-
-        var result = Run(
-            [entry],
-            formalizationReceipt: ValidReceipt(entry),
-            leanReport: LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>()));
-
-        Assert.True(result.Success, result.Error);
-        using var json = JsonDocument.Parse(result.Output);
-        Assert.Equal(
-            entry.AtomId,
-            Assert.Single(json.RootElement.GetProperty("candidates").EnumerateArray())
-                .GetProperty("atom_id")
-                .GetString());
-    }
-
-    [Fact]
-    public void FormalizeCandidatesDoesNotTreatDriftedReceiptSignatureAsCurrentFormalization()
-    {
-        var entry = Entry("source", "signature-drift", "定理", "5.5");
-        var receipt = DigestionFormalizationReceipt.Write(new DigestionFormalizationReceipt(
-            entry.AtomId,
-            "D5/S0/Synthetic/Receipt.signature_drift",
-            new DigestionFormalizationSignature("different", "axiom", "False"),
-            entry.Atom.Fingerprints.RawSha256,
-            entry.Atom.Fingerprints.RawSha256)).ToArray();
-
-        var result = Run([entry], formalizationReceipt: receipt);
-
-        Assert.True(result.Success, result.Error);
-        using var json = JsonDocument.Parse(result.Output);
-        Assert.Equal(
-            entry.AtomId,
-            Assert.Single(json.RootElement.GetProperty("candidates").EnumerateArray())
-                .GetProperty("atom_id")
-                .GetString());
-        Assert.Empty(json.RootElement.GetProperty("recorded_formalizations").EnumerateArray());
-    }
-
-    [Fact]
-    public void FormalizeCandidatesDoesNotTreatDriftedHostedSignatureAsCurrentFormalization()
-    {
-        var entry = Entry("source", "hosted-signature-drift", "定理", "5.6");
-        const string hostedGid = "D5/S0/Synthetic/Receipt.hosted_secondary";
-        var receipt = DigestionFormalizationReceipt.Write(new DigestionFormalizationReceipt(
-            entry.AtomId,
-            "D5/S0/Synthetic/Receipt.hosted_signature_drift",
-            new DigestionFormalizationSignature(
-                "hosted_signature_drift", "theorem", "statement-v1"),
-            entry.Atom.Fingerprints.RawSha256,
-            entry.Atom.Fingerprints.RawSha256,
-            [
-                new DigestionFormalizationExtension(
-                    hostedGid,
-                    new DigestionFormalizationSignature(
-                        "hosted_secondary", "theorem", "hosted-statement-v1")),
-            ])).ToArray();
-        var report = LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>
-        {
-            ["D5/S0/Synthetic/Receipt.lean"] = new LeanFileReport(
-                [],
-                [
-                    new LeanDeclaration(
-                        "hosted_signature_drift", "theorem", "statement-v1", []),
-                    new LeanDeclaration(
-                        "hosted_secondary", "theorem", "hosted-statement-v2", []),
-                ]),
-        });
-
-        var result = Run([entry], formalizationReceipt: receipt, leanReport: report);
-
-        Assert.True(result.Success, result.Error);
-        using var json = JsonDocument.Parse(result.Output);
-        Assert.Equal(
-            entry.AtomId,
-            Assert.Single(json.RootElement.GetProperty("candidates").EnumerateArray())
-                .GetProperty("atom_id")
-                .GetString());
-        Assert.Empty(json.RootElement.GetProperty("recorded_formalizations").EnumerateArray());
-    }
-
-    [Theory]
-    [InlineData("{not-json}\n")]
-    [InlineData("{}\n")]
-    public void FormalizeCandidatesKeepsAtomWhenFormalizationReceiptIsMalformed(string receipt)
-    {
-        var entry = Entry("source", "malformed-receipt", "定理", "5.3");
-
-        var result = Run([entry], formalizationReceipt: Encoding.UTF8.GetBytes(receipt));
-
-        Assert.True(result.Success, result.Error);
-        using var json = JsonDocument.Parse(result.Output);
-        Assert.Equal(
-            entry.AtomId,
-            Assert.Single(json.RootElement.GetProperty("candidates").EnumerateArray())
-                .GetProperty("atom_id")
-                .GetString());
-        Assert.Empty(json.RootElement.GetProperty("withheld").EnumerateArray());
-    }
-
-    [Fact]
-    public void FormalizeCandidatesKeepsAtomWhenReceiptAtomIdDoesNotMatchPath()
-    {
-        var entry = Entry("source", "receipt-path-owner", "定理", "5.4");
-        var receipt = DigestionFormalizationReceipt.Write(new DigestionFormalizationReceipt(
-            "different-atom",
-            "D5/S0/Synthetic/Receipt.different_atom",
-            new DigestionFormalizationSignature("different-atom", "theorem", "statement-v1"),
-            entry.Atom.Fingerprints.RawSha256,
-            entry.Atom.Fingerprints.RawSha256)).ToArray();
-
-        var result = Run([entry], formalizationReceipt: receipt);
-
-        Assert.True(result.Success, result.Error);
-        using var json = JsonDocument.Parse(result.Output);
-        Assert.Equal(
-            entry.AtomId,
-            Assert.Single(json.RootElement.GetProperty("candidates").EnumerateArray())
-                .GetProperty("atom_id")
-                .GetString());
-    }
-
-    [Fact]
-    public void FormalizeCandidatesKeepsAtomWhenMatchingReceiptPathIsNoncanonical()
-    {
-        var entry = Entry("source", "Uppercase-atom", "定理", "5.5");
-        var receipt = DigestionFormalizationReceipt.Write(new DigestionFormalizationReceipt(
-            entry.AtomId,
-            "D5/S0/Synthetic/Receipt.Uppercase_atom",
-            new DigestionFormalizationSignature("Uppercase_atom", "theorem", "statement-v1"),
-            entry.Atom.Fingerprints.RawSha256,
-            entry.Atom.Fingerprints.RawSha256)).ToArray();
-
-        var result = Run([entry], formalizationReceipt: receipt);
-
-        Assert.True(result.Success, result.Error);
-        using var json = JsonDocument.Parse(result.Output);
-        Assert.Equal(
-            entry.AtomId,
-            Assert.Single(json.RootElement.GetProperty("candidates").EnumerateArray())
-                .GetProperty("atom_id")
-                .GetString());
     }
 
     [Fact]
@@ -492,7 +315,7 @@ public sealed partial class FormalizeCandidatesTests
 
         Assert.True(result.Success, result.Error);
         using var json = JsonDocument.Parse(result.Output);
-        Assert.Equal("stratalint-formalize-candidates-v4", json.RootElement.GetProperty("schema").GetString());
+        Assert.Equal("stratalint-formalize-candidates-v5", json.RootElement.GetProperty("schema").GetString());
         Assert.Equal(
             ["plain-closed", "proved-closed"],
             json.RootElement.GetProperty("candidates")
@@ -545,7 +368,6 @@ public sealed partial class FormalizeCandidatesTests
         bool includeCas = true,
         bool driftCas = false,
         BackfillInventoryDocument? ledger = null,
-        byte[]? formalizationReceipt = null,
         LeanAxiomReport? leanReport = null,
         VerifiedScribeEmissions? scribeEmissions = null,
         string atomizer = AtomizerRegistry.PzgId,
@@ -598,16 +420,6 @@ public sealed partial class FormalizeCandidatesTests
             }
         }
 
-        if (formalizationReceipt is not null)
-        {
-            Assert.Single(entries);
-            files.Add(new RawRepositoryEntry(
-                DigestionFormalizationReceipt.RootPath
-                    + entries[0].AtomId
-                    + DigestionFormalizationReceipt.PathSuffix,
-                ImmutableArray.CreateRange(formalizationReceipt)));
-        }
-
         var environment = new ProductionCliEnvironment(
                 "/repo",
                 new FakeRepositoryGateway(
@@ -618,17 +430,6 @@ public sealed partial class FormalizeCandidatesTests
             new FakeScribeEmissionVerifier(scribeEmissions ?? VerifiedScribeEmissions.Empty));
         return environment.DigestStatus(arguments ?? ["--formalize-candidates"]);
     }
-
-    private static byte[] ValidReceipt(EntryFixture entry) =>
-        DigestionFormalizationReceipt.Write(new DigestionFormalizationReceipt(
-            entry.AtomId,
-            "D5/S0/Synthetic/Receipt." + entry.AtomId.Replace('-', '_'),
-            new DigestionFormalizationSignature(
-                entry.AtomId.Replace('-', '_'),
-                "theorem",
-                "statement-v1"),
-            entry.Atom.Fingerprints.RawSha256,
-            entry.Atom.Fingerprints.RawSha256)).ToArray();
 
     private static LeanAxiomReport CurrentLeanReport(IReadOnlyList<EntryFixture> entries) =>
         LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)

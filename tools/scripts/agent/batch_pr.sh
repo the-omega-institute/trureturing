@@ -1,7 +1,7 @@
 #!/bin/bash
 # 把多条理论 deposit lane 合并成一个 PR(用户 2026-09-01 定)。
 # 理由(第 16′ 条判据①要求写明为何不可再分):这些是**同一层的并列项**,不是多层改造 ——
-# 每条 5 文件(Lean/scribe.cs/md/冻结条目/收据),路径互不相交、零共享聚合物、互不依赖,
+# 每条四件(Lean / scribe.cs / md / 冻结条目),路径互不相交、零共享聚合物、互不依赖,
 # 分开只增加 CI 轮数,不降低冲突概率。
 # usage: batch_pr.sh WORKTREE OUTBRANCH lane1 lane2 ...   (sentinel: BATCH_PR_OK merged=<n>)
 set -uo pipefail

@@ -1,0 +1,39 @@
+## 111. 总零点 divisor 永远是偶的
+
+函数方程使 mirror pair 重数相等。
+
+所以总 divisor 中该轨道贡献为：
+
+$$
+m_\rho
+\left(
+[\rho]+[J\rho]
+\right)
+=
+m_\rho e_\rho^+.
+$$
+
+它位于 even sector。
+
+因此：
+
+$$
+\boxed{
+\text{总零点集合完全对称}
+}
+$$
+
+并不能说明 sign representation 不存在。
+
+它只说明实际 divisor vector 恰好落在 invariant subspace。
+
+这正是：
+
+$$
+\boxed{
+\text{complete symmetry with hidden broken directions}.
+}
+$$
+
+---
+

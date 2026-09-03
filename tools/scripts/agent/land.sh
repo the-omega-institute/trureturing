@@ -1,23 +1,22 @@
 #!/usr/bin/env bash
-# 统一两阶段落地器(铸器,替代 sed 克隆链;器律③)
-# 用法: land.sh LANE BRANCH MSGFILE [--wait-pr N] [--cover ATOM GID]... [--phase2-branch B2 --phase2-msg M2]
+# 统一落地器(铸器,替代 sed 克隆链;器律③)
+# 用法: land.sh LANE BRANCH MSGFILE [--wait-pr N] [--cover ATOM GID]...
 # 语义: [等待 PR N 合入] → cd LANE → checkout/建 BRANCH(自 origin/dev,已存在则合 dev)
 #       → make lean-report(合 dev 可能带进新 D5 模块)→ 逐对 make cover
-#       → preflight(locale 熔断)→ push → pr-open → 等 MERGED
-#       → 若给 phase2: 从新 dev 建 B2 重复 cover/落地。零 cover 对 = 纯 deposit 分支照落。
+#       → preflight(locale 熔断)→ builder commit → push → pr-open → 等 MERGED。
+#       零 cover 对 = 纯 deposit 分支照落。
 set -x
 L="${LAND_LOG_DIR:-${TMPDIR:-/tmp}/land-logs}"; mkdir -p "$L/flights"
 LANE=$1; BRANCH=$2; MSG=$3; shift 3
-WAITPR=""; COVERS=(); P2BRANCH=""; P2MSG=""
+WAITPR=""; COVERS=()
 while [ $# -gt 0 ]; do case "$1" in
   --wait-pr) WAITPR=$2; shift 2;;
   --cover) COVERS+=("$2	$3"); shift 3;;
-  --phase2-branch) P2BRANCH=$2; shift 2;;
-  --phase2-msg) P2MSG=$2; shift 2;;
   *) echo "UNKNOWN_ARG $1"; exit 64;; esac; done
 TAG=$(basename "$MSG" .msg)
 [ -d "$LANE/.git" ] || [ -f "$LANE/.git" ] || { echo "BAD_LANE=$LANE"; exit 88; }
 [ -r "$MSG" ] && [ -s "$MSG" ] || { echo "BAD_MSG=$MSG"; exit 89; }
+MSG="$(cd "$(dirname "$MSG")" && pwd -P)/$(basename "$MSG")"
 dotnet run \
   --project "$LANE/tools/StrataLint.Cli/StrataLint.Cli.csproj" \
   --configuration Release \
@@ -64,11 +63,17 @@ if [ "$P" -ne 0 ]; then
   R=$(grep -cE "^RULE_REJECTED" "$L/flights/$TAG-preflight.log" || true)
   echo "RULE_REJECTED_LINES=$R"; [ "$R" -eq 0 ] || { echo HALT_ADMISSION_RED; exit 94; }
 fi
+git add -A || { echo HALT_LAND_STAGE; exit 98; }
+if git diff --cached --quiet; then
+  echo LAND_COMMIT_SKIPPED reason=tree-unchanged
+else
+  git commit -F "$MSG" || { echo HALT_LAND_COMMIT; exit 98; }
+  echo "LAND_COMMIT=$(git rev-parse HEAD)"
+fi
+[ -z "$(git status --porcelain)" ] || { echo HALT_DIRTY_AFTER_LAND_COMMIT; exit 98; }
 LEAN4_GUARDRAILS_BYPASS=1 git push -u origin "$BRANCH" || exit 95
 make pr-open HEAD="$BRANCH" MESSAGE="$MSG" AUTO_MERGE=1 > "$L/flights/$TAG-propen.log" 2>&1; O=$?; echo "PROPEN_EXIT=$O"
 [ "$O" -eq 0 ] || exit 96
 PR=$(grep -oE "pr=[0-9]+" "$L/flights/$TAG-propen.log" | head -1 | cut -d= -f2); echo "PHASE1_PR=$PR"
 until [ "$(gh api repos/the-omega-institute/trureturing/pulls/$PR --jq '.merged')" = "true" ]; do sleep 30; done
 echo PHASE1_MERGED
-# 两阶段 = 两次调用:第二次用 --wait-pr <PHASE1_PR> 自串。P2BRANCH/P2MSG 保留位不实现。
-[ -z "$P2BRANCH" ] || { echo "PHASE2_NOT_INLINE use a second land.sh call"; exit 65; }

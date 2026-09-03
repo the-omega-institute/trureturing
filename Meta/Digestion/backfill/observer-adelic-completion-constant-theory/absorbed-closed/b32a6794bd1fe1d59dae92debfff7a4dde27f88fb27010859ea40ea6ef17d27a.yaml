@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:b32a6794bd1fe1d59dae92debfff7a4dde27f88fb27010859ea40ea6ef17d27a
+  normalized_sha256: sha256:b32a6794bd1fe1d59dae92debfff7a4dde27f88fb27010859ea40ea6ef17d27a
+cas_ref: sha256:b32a6794bd1fe1d59dae92debfff7a4dde27f88fb27010859ea40ea6ef17d27a
+coverage_gids:
+  - D5/S3/Weil/Budget/CrossScaleGramIdentity.cross_scale_gram_identity
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/Budget/CrossScaleGramIdentity.cross_scale_gram_identity
+      source_sha256: sha256:b32a6794bd1fe1d59dae92debfff7a4dde27f88fb27010859ea40ea6ef17d27a
+      target_statement_id: sha256:ecc2a7096efd0bf21497625a00e3b1845da259ae3edb92f755cb9f664ec987cb
+  scribe:
+    - gid: D5/S3/Weil/Budget/CrossScaleGramIdentity.cross_scale_gram_identity
+      definition_sha256: sha256:ea625f0ad81987454b4bf9ba5872aee2c9c39b3d7c5f4677b5227fa0db305528
+      emission_sha256: sha256:ce39c2b5b0041e0df22e19390076e8e8b1feea11a97ecc3cf39752b7877d11e5
+  unresolved_subitems: []

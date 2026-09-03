@@ -1,0 +1,18 @@
+## 69. Profinite Naming Tower
+
+形式化：
+
+$$
+\widehat{\mathbb Z}
+=
+\varprojlim_m\mathbb Z/m\mathbb Z,
+$$
+
+并证明：
+
+* 每个有限周期名字是一个投影；
+* 所有模数坐标联合后在整数上单射；
+* 任意有限模数集合仍留下无限纤维。
+
+---
+

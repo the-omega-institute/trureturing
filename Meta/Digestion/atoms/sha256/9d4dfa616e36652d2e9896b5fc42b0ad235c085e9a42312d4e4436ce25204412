@@ -1,0 +1,36 @@
+## 64. ζ 的稳定对象与隐藏动力学
+
+仓库的 scalar memory blindness 已证明：即使每一步内部 memory 按 Fibonacci substitution 更新，scalar Euler coordinate 仍完全不读取 memory；具有相同 scalar 初值的不同内部状态在所有有限 prime words 后给出相同 scalar readout。
+
+所以：
+
+$$
+\boxed{
+\text{scalar stability}
+\not\Rightarrow
+\text{内部状态唯一}.
+}
+$$
+
+这支持你的“ζ 是动力学投影”直觉。
+
+但它只能推出：
+
+$$
+\boxed{
+\text{ζ 型标量可能不是完整状态描述}.
+}
+$$
+
+不能推出：
+
+$$
+\boxed{
+\text{经典 ζ 的 RH 必然为假}.
+}
+$$
+
+对象的零点 divisor 仍然是该标量函数自身的绝对性质。
+
+---
+

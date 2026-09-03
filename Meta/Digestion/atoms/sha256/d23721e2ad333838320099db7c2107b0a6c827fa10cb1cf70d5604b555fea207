@@ -1,0 +1,16 @@
+* \(h_a\) 控制 branch mixing。
+
+这是一份严格可定义的量子模型，但其与 ζ 的关系仍需证明一个 spectral identification：
+
+$$
+\det(s-\widehat H)
+\stackrel{?}{\propto}
+\xi(s)
+$$
+
+或更合理的 regularized determinant 版本。
+
+在此之前，只能称为 **quantum orbit lift**。
+
+---
+

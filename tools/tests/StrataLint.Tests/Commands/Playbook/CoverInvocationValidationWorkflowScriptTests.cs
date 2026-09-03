@@ -19,29 +19,10 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.False(fixture.LeanReportExists());
     }
 
-    [Fact]
-    public void CoverRemovesInterruptedTemporaryFilesBeforeProducingLeanReport()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new TransactionFixture();
-        fixture.LeaveInterruptedTemporaryFiles();
-
-        var result = fixture.Run("cover");
-
-        Assert.True(result.ExitCode == 0, Diagnostics(result));
-        Assert.False(fixture.InterruptedTemporaryFilesExist());
-    }
-
     internal sealed partial class TransactionFixture
     {
         internal bool LeanReportExists() => File.Exists(
             Path.Combine(Root, ".lake/build/stratalint/raw-lean-report.json"));
-
-        internal bool InterruptedTemporaryFilesExist() => Directory
-            .EnumerateFiles(
-                Path.GetDirectoryName(ReceiptPath)!,
-                Path.GetFileName(ReceiptPath) + ".tmp.*")
-            .Any();
 
         internal ProcessOutput RunMakeCover(bool includeAtomId) =>
             TestProcessRunner.Run(

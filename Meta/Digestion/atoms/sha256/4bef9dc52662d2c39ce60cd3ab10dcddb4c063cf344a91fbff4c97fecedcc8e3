@@ -1,0 +1,45 @@
+## 59. 对象层并不因此相对
+
+经典 RH 陈述：
+
+$$
+\forall\rho,\quad
+\xi(\rho)=0
+\Longrightarrow
+\Re\rho=\frac12.
+$$
+
+也可以写成：
+
+$$
+\boxed{
+J\rho=\rho.
+}
+$$
+
+这里 \(J(s)=1-\overline s\) 是 completed zeta 自身给出的规范 involution。
+
+所以 RH 不是任意坐标系下的个人判断，而是一个内禀 fixed-locus 命题。
+
+真正相对的是：
+
+$$
+\boxed{
+\text{有限观察者能否检测 }J\rho\neq\rho.
+}
+$$
+
+仓库的有限 damping defect 已经表明：即使镜像平均消去了 transverse sign，二阶偶缺陷仍可检测离线深度；其为零当且仅当有限窗全部位于临界线。
+
+因此：
+
+$$
+\boxed{
+\text{符号是相对／被商掉的，}
+\qquad
+|\delta|^2\text{ 仍是内禀可见的}.
+}
+$$
+
+---
+

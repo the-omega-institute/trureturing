@@ -1,0 +1,1 @@
+**义务**:公开定理 `offLineZero_negative_truncated_weil_square (Z : ZeroData) (n : ℕ) (T : ℝ) (hn : n ∈ Z.symmetricIndices T) (hOff : (Z.zero n).re ≠ criticalAbscissa) : ∃ g : WeilTestFunction, (truncatedZeroSum Z (convolutionSquare g) T).re < 0`。

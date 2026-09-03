@@ -241,7 +241,9 @@ public sealed class ActiveRuleScopeProbeTests
         VerifiedScribeEmissions? emissions = null) =>
         Assert.IsType<RuleExecutionOutcome.Completed>(
             RuleCatalog.Default.Execute(
-                fixture.Build(RawChangeSet.Create([changedPath]), verifiedScribeEmissions: emissions)))
+                fixture.BuildScopeProbe(
+                    RawChangeSet.Create([changedPath]),
+                    verifiedScribeEmissions: emissions)))
             .Capability;
 
     private static void AssertFinding(

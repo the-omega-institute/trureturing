@@ -1,0 +1,1 @@
+**义务**:公开定理 `riemannZeta_real_zero_outside_Ioo (x : ℝ) (hout : ¬ (0 < x ∧ x < 1)) (hz : riemannZeta (x : ℂ) = 0) : ∃ n : ℕ, x = -2 * (n + 1)`。

@@ -1,0 +1,57 @@
+## 139. 反射对的最小二维实现
+
+定义：
+
+$$
+\mathcal C(q)
+=
+\begin{pmatrix}
+1&-q\\
+1&0
+\end{pmatrix}.
+$$
+
+有：
+
+$$
+\operatorname{tr}\mathcal C(q)=1,
+\qquad
+\det\mathcal C(q)=q.
+$$
+
+其本征值为：
+
+$$
+\lambda_\pm
+=
+\frac12
+\pm
+\sqrt{\frac14-q}.
+$$
+
+所以任意反射对：
+
+$$
+s,\quad1-s
+$$
+
+都是矩阵：
+
+$$
+\mathcal C(s(1-s))
+$$
+
+的两个本征值。
+
+这给出一个严格的“下一维坐标系”：
+
+$$
+\boxed{
+\text{一维外部不变量 }q
+\quad\longrightarrow\quad
+\text{二维内部坐标矩阵 }\mathcal C(q).
+}
+$$
+
+---
+

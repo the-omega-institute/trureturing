@@ -1,0 +1,74 @@
+# 第二十一部　Poisson 轨道图的地位
+
+对于两个右侧离线轨道：
+
+$$
+\rho_a=\frac12+\delta_a+i\gamma_a,
+$$
+
+$$
+\rho_b=\frac12+\delta_b+i\gamma_b,
+$$
+
+项目已有非负二点能量：
+
+$$
+\boxed{
+E_{ab}
+=
+\frac{
+(\gamma_b-\gamma_a)^2
+}{
+\pi(\delta_a+\delta_b)
+\left(
+(\delta_a+\delta_b)^2+
+(\gamma_b-\gamma_a)^2
+\right)
+}.
+}
+$$
+
+它满足：
+
+$$
+E_{ab}\ge0,
+$$
+
+$$
+E_{ab}=0
+\iff
+\gamma_a=\gamma_b,
+$$
+
+并在共同高度平移下不变。
+
+这允许定义 Poisson orbit graph。
+
+但必须严格区分：
+
+$$
+\text{图连通},
+$$
+
+$$
+\text{经典状态非因子化},
+$$
+
+$$
+\text{GHZ 量子纠缠},
+$$
+
+$$
+\ker\mathcal T=\{0\},
+$$
+
+$$
+\alpha_\mathcal T>0.
+$$
+
+它们不是同一个命题。
+
+Poisson 图是自然二点 observer，不是完整全阶 Trace–Jet Bridge。
+
+---
+

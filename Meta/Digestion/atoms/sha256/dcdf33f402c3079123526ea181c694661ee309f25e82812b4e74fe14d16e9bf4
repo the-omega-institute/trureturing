@@ -1,0 +1,24 @@
+## 110. Monodromy 图
+
+定义图：
+
+$$
+\mathcal G_{\mathrm{mon}}
+=
+(V,E),
+$$
+
+其中：
+
+$$
+V=\mathscr Z
+$$
+
+是所研究零点分支集合，而：
+
+$$
+\{a,b\}\in E
+$$
+
+当且仅当参数空间中存在一个 generic double-zero component，其局部 monodromy 交换 \(a,b\)。
+

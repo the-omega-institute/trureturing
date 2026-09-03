@@ -1,0 +1,35 @@
+## 6. 二进制周期塔
+
+继续拆分：
+
+$$
+2,\ 4,\ 8,\ 16,\ldots
+$$
+
+得到：
+
+$$
+\mathbb Z/2\mathbb Z
+\leftarrow
+\mathbb Z/4\mathbb Z
+\leftarrow
+\mathbb Z/8\mathbb Z
+\leftarrow\cdots.
+$$
+
+其逆极限是：
+
+$$
+\boxed{
+\mathbb Z_2
+=
+\varprojlim_k
+\mathbb Z/2^k\mathbb Z.
+}
+$$
+
+这就是所有二进制有限周期名字的统一对象。
+
+所以：
+
+* 奇偶是最低一位；

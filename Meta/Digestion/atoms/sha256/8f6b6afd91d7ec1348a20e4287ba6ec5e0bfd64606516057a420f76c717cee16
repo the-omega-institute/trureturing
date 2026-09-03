@@ -1,0 +1,48 @@
+## 46. 何时是 Klein bottle
+
+若再加入一个相位圆：
+
+$$
+\theta\in S^1
+$$
+
+并采用：
+
+$$
+(\tau+L,\theta)
+\sim
+(\tau,-\theta),
+$$
+
+其 mapping torus 是 Klein bottle。
+
+但若只采用：
+
+$$
+\theta\mapsto\theta+\pi,
+$$
+
+这是圆的方向保持旋转，mapping torus 仍是 torus 型，而不是 Klein bottle。
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+\text{实符号翻转}
+&\Rightarrow
+\text{Möbius line};\\
+\text{相位反射}
+&\Rightarrow
+\text{Klein bottle mapping torus};\\
+\pi\text{ 平移}
+&\Rightarrow
+\text{orientation-preserving screw torus}.
+\end{aligned}
+}
+$$
+
+这严格区分了此前混在一起的三种拓扑直觉。
+
+---
+

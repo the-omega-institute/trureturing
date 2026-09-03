@@ -1,0 +1,26 @@
+## 154. 第五优先级：分岔与 monodromy
+
+先不要直接形式化完整 Weierstrass preparation；先关闭 toy model：
+
+```lean
+theorem quadraticMirrorBifurcation
+    (mu gamma : ℝ) :
+    zeroSet (fun s : ℂ =>
+      (s - (1 / 2 + gamma * I))^2 - mu) =
+      ...
+```
+
+然后证明：
+
+```lean
+theorem squareRootLoop_swapsBranches
+```
+
+最后才建设一般条件性：
+
+```lean
+theorem firstOffAxisExit_requires_multipleZero
+```
+
+---
+

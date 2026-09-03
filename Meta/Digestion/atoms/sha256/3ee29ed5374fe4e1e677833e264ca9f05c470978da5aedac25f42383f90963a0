@@ -1,0 +1,4 @@
+# 增订十八　勘误:M3-d-1 在 s = 1 处为假(Mathlib 约定值),改以 s ≠ 1 预登记(M3-d-1′)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;实施席 codex-cli(flight `la134-impl-m3d`)在动手前核出反例并按增订十六 §五 的回退条款只 deposit 了 M3-d-4(#4995);本节勘误由 orchestrator(claude 主循环)撰写。判决日:2026-09-03。lane issue:#4589。
+

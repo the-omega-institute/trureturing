@@ -1,0 +1,13 @@
+## 69. Profinite Naming Tower
+
+形式化：
+
+$$
+\widehat{\mathbb Z}
+=
+\varprojlim_m\mathbb Z/m\mathbb Z,
+$$
+
+并证明：
+
+* 每个有限周期名字是一个投影；
