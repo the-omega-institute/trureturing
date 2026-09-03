@@ -18,7 +18,7 @@ A point theta of the universal solenoid is a family of circle coordinates, one f
 
 The value is an API one, not mathematical novelty. The proof is the defining compatibility field instantiated at index 1; nothing is discovered.
 
-Three modules elsewhere in the repository each carry a private declaration of the projection theta = 0 special case; one of them packages theta as a point of the projection kernel. Those three modules are frozen and therefore cannot import this module. Naming the fact here removes none of those declarations; it stops the next private copy from being written.
+Three modules elsewhere in the repository each carry a private declaration of the projection theta = 0 special case; one of them packages theta as a point of the projection kernel. Those three modules are frozen and therefore cannot import this module. Naming the fact here removes none of those declarations, and this module has no Lean consumer today. What it adds is a public name for a statement that would otherwise be derived privately a fourth time.
 
 All three private copies assume that the projection vanishes, while this identity needs no such hypothesis. The unconditional form is the primary theorem here, and those copies are its instances.
 
@@ -32,7 +32,7 @@ $$\begin{aligned}\forall theta: UniversalSolenoid,\\\operatorname{projection}\le
 
 *Commentary.*
 
-For every solenoid point theta whose visible projection is zero, and for every positive integer m, multiplying the index-m circle coordinate by m gives zero. This is the special case used by the three private declarations.
+For every solenoid point theta whose visible projection is zero, and for every positive integer m, multiplying the index-m circle coordinate by m gives zero. This is the special case that the three private declarations state.
 
 The proof applies the unconditional coordinate-projection identity and then rewrites with the supplied vanishing hypothesis. It adds a public API name for the specialization, not a new mathematical argument.
 

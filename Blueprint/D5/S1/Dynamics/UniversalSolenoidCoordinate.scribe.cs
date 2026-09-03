@@ -37,8 +37,10 @@ internal sealed class UniversalSolenoidCoordinateDocument : IScribeDocumentDefin
                             + "declaration of the projection theta = 0 special case; one of "
                             + "them packages theta as a point of the projection kernel. Those "
                             + "three modules are frozen and therefore cannot import this "
-                            + "module. Naming the fact here removes none of those declarations; "
-                            + "it stops the next private copy from being written.")),
+                            + "module. Naming the fact here removes none of those "
+                            + "declarations, and this module has no Lean consumer today. "
+                            + "What it adds is a public name for a statement that would "
+                            + "otherwise be derived privately a fourth time.")),
                     Paragraph(Text(
                         "All three private copies assume that the projection vanishes, while "
                             + "this identity needs no such hypothesis. The unconditional form "
@@ -55,8 +57,8 @@ internal sealed class UniversalSolenoidCoordinateDocument : IScribeDocumentDefin
                     Paragraph(Text(
                         "For every solenoid point theta whose visible projection is zero, and "
                             + "for every positive integer m, multiplying the index-m circle "
-                            + "coordinate by m gives zero. This is the special case used by the "
-                            + "three private declarations.")),
+                            + "coordinate by m gives zero. This is the special case that the "
+                            + "three private declarations state.")),
                     Paragraph(Text(
                         "The proof applies the unconditional coordinate-projection identity "
                             + "and then rewrites with the supplied vanishing hypothesis. It "
