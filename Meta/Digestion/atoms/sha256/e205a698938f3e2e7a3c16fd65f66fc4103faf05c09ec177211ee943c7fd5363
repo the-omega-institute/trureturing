@@ -1,0 +1,117 @@
+# 最终凝聚
+
+这一轮最终得到的是一个比“RH 因为有无限条件所以不能完成”更准确的结论：
+
+$$
+\boxed{
+\text{RH 的有限层级确实永不终止，}
+}
+$$
+
+但：
+
+$$
+\boxed{
+\text{它不允许一种只在最后无穷层才突然出现的幻影失败。}
+}
+$$
+
+在 Casimir–Hausdorff 紧化中：
+
+$$
+\boxed{
+\text{所有有限矩前缀都可实现}
+\Longrightarrow
+\text{存在唯一全局 }[0,1]\text{ 测度}.
+}
+$$
+
+所以若 RH 为假，某个有限矩层最终必定失败。
+
+仓库的 Weil 路线已经从另一方向证明：相对于 `ZeroData`，任意离线零点都会产生一个单独的负 convolution-square 见证。
+
+真正不能有限终止的是 RH 为真时的谱创新链：
+
+$$
+\boxed{
+\alpha_n>0
+\quad
+\forall n.
+}
+$$
+
+它没有 Fibonacci 型有限递推，因为：
+
+$$
+\boxed{
+\operatorname{rank}H_N=N+1.
+}
+$$
+
+但它又不是无控制的无限：
+
+$$
+\boxed{
+\alpha_n\to0.
+}
+$$
+
+所以最准确的整体结构是：
+
+$$
+\boxed{
+\text{每层有新信息}
++
+\text{新信息强度趋零}
++
+\text{整体形成紧致无限秩算子}.
+}
+$$
+
+黄金比例在其中的一个极精确位置是：
+
+$$
+\boxed{
+\varphi(1-\varphi)=-1.
+}
+$$
+
+它是 Casimir 区间外 odd localizer 的单位负点。
+
+而 classical RH 要求的是：
+
+$$
+\boxed{
+x(1-x)\ge0
+}
+$$
+
+对全部 coherent Casimir 谱成立。
+
+最终，RH 真正需要寻找的不是一个会在有限阶停下来的递推，而是：
+
+$$
+\boxed{
+\text{一个从素数侧直接构造的、}
+}
+$$
+
+$$
+\boxed{
+\text{紧致、无限秩、正、自伴、不可约的 Jacobi 算子。}
+}
+$$
+
+它既必须允许：
+
+$$
+\text{每层都有一个新的非零 coupling},
+$$
+
+又必须保证：
+
+$$
+\text{所有 coupling 共同落在正收缩区间中}.
+$$
+
+这就是“无限递归”与“全局重完”能够同时成立的精确结构。

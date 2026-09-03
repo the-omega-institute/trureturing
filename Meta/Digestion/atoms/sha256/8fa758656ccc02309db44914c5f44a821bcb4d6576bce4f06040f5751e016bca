@@ -1,0 +1,60 @@
+## 552. 正—收缩重组定理
+
+在反射 Casimir canonical-product 与矩表示的前提下：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathrm{P\!-\!RH}
+\land
+\mathrm{C\!-\!RH}.
+}
+$$
+
+因为二者合起来恰好给出：
+
+$$
+\boxed{
+0\le J\le I.
+}
+$$
+
+其谱满足：
+
+$$
+\operatorname{Spec}(J)\subseteq[0,1].
+$$
+
+反过来，若 \(J\) 是正收缩算子，则其循环谱测度支撑于 \([0,1]\)，由对数导数解析识别可推出：
+
+$$
+q_\rho\in[1/4,\infty),
+$$
+
+从而：
+
+$$
+\Re\rho=\frac12.
+$$
+
+这两个命题比 E-RH/O-RH 更接近你的“全局与观察者”直觉：
+
+$$
+\boxed{
+\mathrm{P\!-\!RH}
+=
+\text{全局正实状态存在};
+}
+$$
+
+$$
+\boxed{
+\mathrm{C\!-\!RH}
+=
+\text{唯一观察边界未被穿越}.
+}
+$$
+
+---
+

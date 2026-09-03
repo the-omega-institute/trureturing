@@ -1,0 +1,18 @@
+## 480. 奇偶分类幻影
+
+```lean
+def parityCylinder (m : ℕ) : Set ℕ :=
+  {k | k % (2 ^ m) = 2 ^ m - 1}
+
+theorem parityCylinder_nonempty_nested :
+    (∀ m, (parityCylinder m).Nonempty) ∧
+    (∀ m, parityCylinder (m + 1) ⊆ parityCylinder m)
+
+theorem parityCylinder_iInter_empty :
+    ⋂ m, parityCylinder m = ∅
+```
+
+并在 \(\mathbb Z_2\) 中证明其极限点为 \(-1\)。
+
+---
+

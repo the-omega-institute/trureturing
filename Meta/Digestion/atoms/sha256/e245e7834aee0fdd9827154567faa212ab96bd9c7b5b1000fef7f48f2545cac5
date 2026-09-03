@@ -1,0 +1,50 @@
+## 509. 但奇角色没有让 prime vector 进入 \(\ell^2\)
+
+这是一个必须保留的边界。
+
+壳层字符只改变标量聚合：
+
+$$
+E_j
+\longmapsto
+(-1)^jE_j.
+$$
+
+它不改变每个 prime amplitude 的绝对值。
+
+若把素数频率看作正交坐标，则：
+
+$$
+\sum_p
+\left|
+(-1)^{\operatorname{shell}(p)}
+p^{-1/2-it}
+\right|^2
+=
+\sum_p\frac1p
+=
+\infty.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{odd shell observer regularizes a scalar projection，}
+}
+$$
+
+但：
+
+$$
+\boxed{
+\text{它没有完成整个 prime Hilbert state。}
+}
+$$
+
+这正好对应项目反复出现的 scalar blindness：
+
+> 一个投影可以表现稳定，而完整内部状态仍然没有被恢复。
+
+---
+

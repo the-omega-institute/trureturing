@@ -1,0 +1,32 @@
+* 使用奇数个素因子的配置。
+
+对有限素数构型 \(H\)，也可按：
+
+$$
+|H|\bmod2
+$$
+
+拆成偶阶和奇阶 source cumulants：
+
+$$
+\mathcal K_{\mathrm{even}}(\varepsilon)
+=
+\frac{
+\mathcal K(\varepsilon)
++
+\mathcal K(-\varepsilon)
+}{2},
+$$
+
+$$
+\mathcal K_{\mathrm{odd}}(\varepsilon)
+=
+\frac{
+\mathcal K(\varepsilon)
+-
+\mathcal K(-\varepsilon)
+}{2}.
+$$
+
+项目已经在稠密 \(2/4\)-gap 构型中机器证明：
+
