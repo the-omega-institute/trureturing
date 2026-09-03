@@ -15,11 +15,28 @@ internal enum FileMapKind
     Ledger,
 }
 
+internal enum FileMapAdmissionPlane
+{
+    Judge,
+    Content,
+}
+
 internal sealed record FileMapResidencePolicy(
     string CaseId,
     string Desired,
     int KnownViolationCount,
     string Status);
+
+internal sealed class FileMapAdmissionPlaneException(
+    string code,
+    string path,
+    string location,
+    string message) : FormatException($"Invalid FILEMAP at {location}: {code}: {message}.")
+{
+    internal string Code { get; } = code;
+
+    internal string Path { get; } = path;
+}
 
 internal sealed record FileMapEntry
 {
@@ -28,6 +45,7 @@ internal sealed record FileMapEntry
     internal FileMapEntry(
         string pattern,
         FileMapKind kind,
+        FileMapAdmissionPlane admissionPlane,
         string producedBy,
         ImmutableArray<string> consumedBy,
         ImmutableArray<string> verifiedBy,
@@ -40,6 +58,7 @@ internal sealed record FileMapEntry
         glob = FileMapGlob.Create(pattern);
         Pattern = pattern;
         Kind = kind;
+        AdmissionPlane = admissionPlane;
         ProducedBy = producedBy;
         ConsumedBy = consumedBy;
         VerifiedBy = verifiedBy;
@@ -53,6 +72,8 @@ internal sealed record FileMapEntry
     internal string Pattern { get; }
 
     internal FileMapKind Kind { get; }
+
+    internal FileMapAdmissionPlane AdmissionPlane { get; }
 
     internal string ProducedBy { get; }
 
@@ -100,11 +121,11 @@ internal static class FileMapLoader
         "^[A-Za-z][A-Za-z0-9.-]*$",
         RegexOptions.CultureInvariant | RegexOptions.NonBacktracking);
     private static readonly string[] EntryKeys =
-        ["artifact_id", "consumed_by", "kind", "pattern", "produced_by", "runtime_disposition", "verified_by"];
+        ["admission_plane", "artifact_id", "consumed_by", "kind", "pattern", "produced_by", "runtime_disposition", "verified_by"];
     private static readonly string[] ResidenceEntryKeys =
-        ["artifact_id", "consumed_by", "kind", "pattern", "produced_by", "residence_violation", "runtime_disposition", "verified_by"];
+        ["admission_plane", "artifact_id", "consumed_by", "kind", "pattern", "produced_by", "residence_violation", "runtime_disposition", "verified_by"];
     private static readonly string[] RunLocalEntryKeys =
-        ["artifact_id", "consumed_by", "history_requirement", "kind", "mode", "pattern", "produced_by", "runtime_disposition", "verified_by"];
+        ["admission_plane", "artifact_id", "consumed_by", "history_requirement", "kind", "mode", "pattern", "produced_by", "runtime_disposition", "verified_by"];
     private static readonly string[] GeneratedArtifactEntryKeys = RunLocalEntryKeys;
 
     internal static FileMapManifest LoadRepository(string repositoryRoot)
@@ -216,6 +237,19 @@ internal static class FileMapLoader
 
     private static FileMapEntry ParseEntry(TomlTable table, string location)
     {
+        if (!table.ContainsKey("admission_plane"))
+        {
+            var path = table.TryGetValue("pattern", out var rawPattern)
+                && rawPattern is string declaredPattern
+                    ? declaredPattern
+                    : location;
+            throw new FileMapAdmissionPlaneException(
+                "FILEMAP-ADMISSION-PLANE-MISSING",
+                path,
+                location,
+                "admission_plane is required");
+        }
+
         var hasResidenceViolation = table.ContainsKey("residence_violation");
         var isRunLocal = table.TryGetValue("runtime_disposition", out var disposition)
             && disposition is "run-local";
@@ -245,6 +279,7 @@ internal static class FileMapLoader
             "ledger" => FileMapKind.Ledger,
             _ => throw Invalid(location, "kind must be truth, program, data, generated, or ledger"),
         };
+        var admissionPlane = RequiredAdmissionPlane(table, pattern, location);
         var producedBy = RequiredName(table, "produced_by", location, allowNone: true);
         var consumedBy = RequiredNames(table, "consumed_by", location);
         var verifiedBy = RequiredNames(table, "verified_by", location);
@@ -301,6 +336,7 @@ internal static class FileMapLoader
         return new FileMapEntry(
             pattern,
             kind,
+            admissionPlane,
             producedBy,
             consumedBy,
             verifiedBy,
@@ -353,6 +389,32 @@ internal static class FileMapLoader
         && string.Equals(value, value.Trim(), StringComparison.Ordinal)
             ? value
             : throw Invalid(location, $"{key} must be a non-empty canonical string");
+
+    private static FileMapAdmissionPlane RequiredAdmissionPlane(
+        TomlTable table,
+        string pattern,
+        string location)
+    {
+        table.TryGetValue("admission_plane", out var raw);
+        var value = raw as string;
+        if (value != "judge" && value != "content")
+        {
+            throw InvalidAdmissionPlane(pattern, location);
+        }
+
+        return value == "judge"
+            ? FileMapAdmissionPlane.Judge
+            : FileMapAdmissionPlane.Content;
+    }
+
+    private static FileMapAdmissionPlaneException InvalidAdmissionPlane(
+        string pattern,
+        string location) =>
+        new(
+            "FILEMAP-ADMISSION-PLANE-INVALID",
+            pattern,
+            location,
+            "admission_plane must be judge or content");
 
     private static void RequireExactKeys(TomlTable table, string location, params string[] expected)
     {

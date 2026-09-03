@@ -6,6 +6,40 @@ namespace StrataLint.Tests;
 public sealed class FileMapConformCommandTests
 {
     [Fact]
+    public void MissingAdmissionPlaneIsReportedAsAPolicyFinding()
+    {
+        using var fixture = new TemporaryDirectory();
+        WriteAdmissionPlaneFixture(fixture.Path, string.Empty);
+
+        var result = FileMapConformCommand.Run([], fixture.Path);
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.StartsWith(
+            "FILEMAP-ADMISSION-PLANE-MISSING Synthetic/**:",
+            result.Output,
+            StringComparison.Ordinal);
+        Assert.Empty(result.Error);
+    }
+
+    [Theory]
+    [InlineData("admission_plane = \"unknown\"\n")]
+    [InlineData("admission_plane = 1\n")]
+    public void InvalidAdmissionPlaneIsReportedAsAPolicyFinding(string admissionPlaneLine)
+    {
+        using var fixture = new TemporaryDirectory();
+        WriteAdmissionPlaneFixture(fixture.Path, admissionPlaneLine);
+
+        var result = FileMapConformCommand.Run([], fixture.Path);
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.StartsWith(
+            "FILEMAP-ADMISSION-PLANE-INVALID Synthetic/**:",
+            result.Output,
+            StringComparison.Ordinal);
+        Assert.Empty(result.Error);
+    }
+
+    [Fact]
     public void ProducerWriteSetQueryReturnsOnlyCommittedEntriesFromStrictFileMap()
     {
         using var fixture = new TemporaryDirectory();
@@ -25,6 +59,7 @@ public sealed class FileMapConformCommandTests
             [[files]]
             pattern = "Committed/ledger/**"
             kind = "ledger"
+            admission_plane = "content"
             produced_by = "IngestCommand"
             consumed_by = ["LedgerLoader"]
             verified_by = ["LedgerLoader"]
@@ -34,6 +69,7 @@ public sealed class FileMapConformCommandTests
             [[files]]
             pattern = "Committed/source/**"
             kind = "data"
+            admission_plane = "content"
             produced_by = "IngestCommand"
             consumed_by = ["SourceLoader"]
             verified_by = ["SourceLoader"]
@@ -43,6 +79,7 @@ public sealed class FileMapConformCommandTests
             [[files]]
             pattern = "Local/**"
             kind = "generated"
+            admission_plane = "content"
             produced_by = "IngestCommand"
             consumed_by = ["LocalReader"]
             verified_by = ["IngestCommand"]
@@ -52,6 +89,7 @@ public sealed class FileMapConformCommandTests
             [[files]]
             pattern = "Other/source.txt"
             kind = "data"
+            admission_plane = "content"
             produced_by = "OtherProducer"
             consumed_by = ["SourceLoader"]
             verified_by = ["SourceLoader"]
@@ -91,6 +129,32 @@ public sealed class FileMapConformCommandTests
         Assert.Equal(0, result.ExitCode);
         Assert.Equal(string.Empty, result.Output);
         Assert.Equal(string.Empty, result.Error);
+    }
+
+    private static void WriteAdmissionPlaneFixture(string root, string admissionPlaneLine)
+    {
+        var meta = Path.Combine(root, "Meta");
+        Directory.CreateDirectory(meta);
+        File.WriteAllText(
+            Path.Combine(meta, "FILEMAP.toml"),
+            $$"""
+            schema_version = 2
+
+            [residence_policy]
+            case_id = "RESIDENCE-EPOCH"
+            desired = "data-must-live-outside-tools"
+            known_violation_count = 0
+            status = "closed"
+
+            [[files]]
+            pattern = "Synthetic/**"
+            kind = "data"
+            {{admissionPlaneLine}}produced_by = "none"
+            consumed_by = ["reader"]
+            verified_by = ["SnapshotDecoder"]
+            artifact_id = "none"
+            runtime_disposition = "committed-source"
+            """ + "\n");
     }
 
     [Fact]

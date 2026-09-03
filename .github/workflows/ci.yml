@@ -75,6 +75,211 @@ jobs:
           base_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD^1)"
           test -n "$head_sha"
           test -n "$base_sha"
+      - name: Enforce admission plane partition
+        if: steps.checkout-merge.outcome == 'success'
+        shell: bash
+        env:
+          ADMISSION_EVENT_NAME: ${{ github.event_name }}
+          ADMISSION_BASE_REF: ${{ github.event.pull_request.base.ref || '' }}
+        run: |
+          set -euo pipefail
+          if [[ "$ADMISSION_EVENT_NAME" == "push" ]]; then
+            printf '%s\n' 'ADMISSION_PLANE_PARTITION status=n/a reason=event-is-push'
+            exit 0
+          fi
+          if [[ "$ADMISSION_EVENT_NAME" != "pull_request_target" ]]; then
+            printf 'ADMISSION_PLANE_PARTITION status=n/a reason=event-is-%s\n' "$ADMISSION_EVENT_NAME"
+            exit 0
+          fi
+          if [[ "$ADMISSION_BASE_REF" != "dev" && "$ADMISSION_BASE_REF" != integration-* ]]; then
+            printf 'ADMISSION_PLANE_PARTITION status=n/a reason=base-is-%s\n' "$ADMISSION_BASE_REF"
+            exit 0
+          fi
+
+          delta_file="$RUNNER_TEMP/admission-plane-delta.z"
+          policy_file="$RUNNER_TEMP/admission-plane-base.toml"
+          if ! git -C candidate diff --name-only -z --no-renames HEAD^1 HEAD > "$delta_file"; then
+            printf '%s\n' 'ADMISSION_PLANE_PARTITION status=policy-unavailable reason=delta-unavailable' >&2
+            exit 1
+          fi
+          policy_fetched=true
+          if ! git -C candidate show HEAD^1:Meta/FILEMAP.toml > "$policy_file"; then
+            policy_fetched=false
+          fi
+
+          ADMISSION_DELTA_FILE="$delta_file" \
+          ADMISSION_POLICY_FILE="$policy_file" \
+          ADMISSION_POLICY_FETCHED="$policy_fetched" \
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          import re
+          import sys
+
+          try:
+              import tomllib
+          except ImportError:
+              tomllib = None
+
+          repair_paths = {
+              ".github/workflows/ci.yml",
+              "Meta/FILEMAP.toml",
+          }
+
+          def read_delta():
+              raw = Path(os.environ["ADMISSION_DELTA_FILE"]).read_bytes()
+              parts = raw.split(b"\0")
+              if parts[-1:] == [b""]:
+                  parts.pop()
+              return [part.decode("utf-8", errors="strict") for part in parts]
+
+          try:
+              changed_paths = read_delta()
+          except (OSError, UnicodeError) as exception:
+              print(
+                  "ADMISSION_PLANE_PARTITION status=policy-unavailable "
+                  f"reason=delta-invalid detail={json.dumps(str(exception))}",
+                  file=sys.stderr,
+              )
+              raise SystemExit(1)
+
+          is_repair = set(changed_paths).issubset(repair_paths)
+
+          def policy_unavailable(reason, detail=None, allow_repair=True):
+              suffix = "" if detail is None else f" detail={json.dumps(detail)}"
+              if allow_repair and is_repair:
+                  print(
+                      "ADMISSION_PLANE_PARTITION status=policy-unavailable "
+                      f"reason={reason} self-repair=true{suffix}"
+                  )
+                  raise SystemExit(0)
+              print(
+                  "ADMISSION_PLANE_PARTITION status=policy-unavailable "
+                  f"reason={reason}{suffix}",
+                  file=sys.stderr,
+              )
+              raise SystemExit(1)
+
+          if os.environ["ADMISSION_POLICY_FETCHED"] != "true":
+              policy_unavailable("base-filemap-unavailable")
+          if tomllib is None:
+              policy_unavailable("tomllib-unavailable")
+
+          try:
+              with Path(os.environ["ADMISSION_POLICY_FILE"]).open("rb") as stream:
+                  document = tomllib.load(stream)
+          except (OSError, UnicodeError, tomllib.TOMLDecodeError) as exception:
+              policy_unavailable("base-filemap-parse-failed", str(exception))
+
+          if document.get("schema_version") != 2:
+              policy_unavailable("base-filemap-schema-invalid")
+          entries = document.get("files")
+          if not isinstance(entries, list) or not entries:
+              policy_unavailable("base-filemap-files-invalid")
+
+          compiled_entries = []
+          patterns = []
+          for index, entry in enumerate(entries):
+              if not isinstance(entry, dict):
+                  policy_unavailable("base-filemap-entry-invalid", f"files[{index}]")
+              pattern = entry.get("pattern")
+              plane = entry.get("admission_plane")
+              if not isinstance(pattern, str) or not pattern or pattern != pattern.strip():
+                  policy_unavailable("base-filemap-pattern-invalid", f"files[{index}]")
+              if plane not in {"judge", "content"}:
+                  policy_unavailable(
+                      "base-filemap-admission-plane-invalid",
+                      f"files[{index}] pattern={pattern}",
+                  )
+              if (
+                  pattern.startswith("/")
+                  or "\\" in pattern
+                  or "//" in pattern
+                  or any(ord(character) < 32 or ord(character) > 126 for character in pattern)
+                  or any(segment in {"", ".", ".."} for segment in pattern.split("/"))
+              ):
+                  policy_unavailable("base-filemap-pattern-unsafe", pattern)
+
+              expression = [r"\A"]
+              cursor = 0
+              while cursor < len(pattern):
+                  character = pattern[cursor]
+                  if character == "*" and cursor + 1 < len(pattern) and pattern[cursor + 1] == "*":
+                      if cursor + 2 < len(pattern) and pattern[cursor + 2] == "/":
+                          expression.append(r"(?:.*/)?")
+                          cursor += 3
+                      else:
+                          expression.append(r".*")
+                          cursor += 2
+                      continue
+                  if character == "*":
+                      expression.append(r"[^/]*")
+                  elif character == "?":
+                      expression.append(r"[^/]")
+                  else:
+                      expression.append(re.escape(character))
+                  cursor += 1
+              expression.append(r"\Z")
+              try:
+                  matcher = re.compile("".join(expression))
+              except re.error as exception:
+                  policy_unavailable("base-filemap-pattern-invalid", str(exception))
+              patterns.append(pattern)
+              compiled_entries.append((pattern, plane, matcher))
+
+          if patterns != sorted(patterns) or len(patterns) != len(set(patterns)):
+              policy_unavailable("base-filemap-pattern-order-invalid")
+
+          def matches(path):
+              return [entry for entry in compiled_entries if entry[2].match(path)]
+
+          for repair_path in sorted(repair_paths):
+              repair_matches = matches(repair_path)
+              if len(repair_matches) != 1 or repair_matches[0][1] != "judge":
+                  policy_unavailable(
+                      "self-repair-path-not-judge",
+                      f"path={repair_path} matches={len(repair_matches)}",
+                      allow_repair=False,
+                  )
+
+          by_plane = {"judge": [], "content": []}
+          for path in changed_paths:
+              path_matches = matches(path)
+              if len(path_matches) != 1:
+                  policy_unavailable(
+                      "path-match-count-invalid",
+                      f"path={path} matches={len(path_matches)}",
+                      allow_repair=False,
+                  )
+              by_plane[path_matches[0][1]].append(path)
+
+          judge_paths = by_plane["judge"]
+          content_paths = by_plane["content"]
+          if judge_paths and content_paths:
+              print(
+                  "ADMISSION_PLANE_PARTITION status=mixed "
+                  f"judge={len(judge_paths)} content={len(content_paths)}",
+                  file=sys.stderr,
+              )
+              for path in judge_paths[:20]:
+                  print(f"judge_path={json.dumps(path)}", file=sys.stderr)
+              for path in content_paths[:20]:
+                  print(f"content_path={json.dumps(path)}", file=sys.stderr)
+              raise SystemExit(1)
+          if judge_paths:
+              print(
+                  "ADMISSION_PLANE_PARTITION status=judge-only "
+                  f"judge={len(judge_paths)} content=0"
+              )
+          elif content_paths:
+              print(
+                  "ADMISSION_PLANE_PARTITION status=content-only "
+                  f"judge=0 content={len(content_paths)}"
+              )
+          else:
+              print("ADMISSION_PLANE_PARTITION status=empty judge=0 content=0")
+          PY
       - name: Classify exact revert
         id: revert
         if: github.event_name == 'pull_request_target' && steps.checkout-merge.outcome == 'success'

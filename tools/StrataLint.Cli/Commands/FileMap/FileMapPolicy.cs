@@ -184,7 +184,16 @@ internal static class FileMapPolicy
 
     internal static IReadOnlyList<FileMapFinding> InspectRepository(string repositoryRoot)
     {
-        var manifest = FileMapLoader.LoadRepository(repositoryRoot);
+        FileMapManifest manifest;
+        try
+        {
+            manifest = FileMapLoader.LoadRepository(repositoryRoot);
+        }
+        catch (FileMapAdmissionPlaneException exception)
+        {
+            return [new FileMapFinding(exception.Code, exception.Path, exception.Message)];
+        }
+
         var paths = TrackedPaths(repositoryRoot);
         var trackedModes = TrackedModes(repositoryRoot);
         var files = paths
@@ -582,6 +591,15 @@ internal static class FileMapPolicy
 
             var entry = matches[0];
             var kind = entry.Kind;
+            if (path == FileMapLoader.RelativePath
+                && entry.AdmissionPlane is not FileMapAdmissionPlane.Judge)
+            {
+                findings.Add(new FileMapFinding(
+                    "FILEMAP-ADMISSION-PLANE-INVALID",
+                    path,
+                    "FILEMAP policy source must be assigned to the judge admission plane"));
+            }
+
             if (path.Split('/').Contains("Generated", StringComparer.Ordinal)
                 && kind is not FileMapKind.Generated
                 || path.StartsWith("Golden/Projection/", StringComparison.Ordinal)
