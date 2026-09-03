@@ -1,0 +1,30 @@
+## 定理 2106.1（临界长度剖面重叠律）
+
+$$
+\boxed{
+\lim_{N\to\infty}
+\frac{
+\langle f_{N,+},f_{N,-}\rangle
+}{
+\|f_{N,+}\|\|f_{N,-}\|
+}
+=
+\frac{|a|}{\sinh|a|}.
+}
+\tag{2106.3}
+$$
+
+相应的归一化 Gram 行列式趋于：
+
+$$
+\boxed{
+1-
+\left(
+\frac{|a|}{\sinh|a|}
+\right)^2.
+}
+\tag{2106.4}
+$$
+
+---
+

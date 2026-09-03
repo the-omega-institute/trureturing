@@ -1,0 +1,79 @@
+## 628. 固定偏移最终总能被单素数看见
+
+`GreedyResidues` 在把无素数区间转成相邻素数时，使用了 Bertrand 型结论：在适当的 \(N\) 之后可以找到素数 \(q\) 满足：
+
+$$
+N<q\le2N.
+$$
+
+仓库相应桥定理还保留了：
+
+$$
+q\le2N.
+$$
+
+给定任意小偏移：
+
+$$
+\delta>0,
+$$
+
+令：
+
+$$
+Y=e^{1/\delta},
+\qquad
+N=\lceil Y\rceil.
+$$
+
+则存在素数：
+
+$$
+N<q\le2N\le4Y.
+$$
+
+所以：
+
+$$
+\frac1\delta
+<
+\log q
+\le
+\frac1\delta+\log4.
+$$
+
+于是：
+
+$$
+0
+\le
+\delta-\frac1{\log q}
+<
+(\log4)\delta^2.
+$$
+
+即：
+
+$$
+\boxed{
+\operatorname{dist}
+\left(
+\delta,\mathscr R_{\mathbb P}
+\right)
+=
+O(\delta^2).
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{任何固定标准非零偏移都不会永远逃过素数观察。}
+}
+$$
+
+PrimeGaps 揭示的是某些尺度上的局部困难和非均匀性，不是绝对不可逼近。
+
+---
+

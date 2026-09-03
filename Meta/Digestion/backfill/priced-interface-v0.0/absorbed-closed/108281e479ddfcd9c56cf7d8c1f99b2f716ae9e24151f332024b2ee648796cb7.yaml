@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:108281e479ddfcd9c56cf7d8c1f99b2f716ae9e24151f332024b2ee648796cb7
+  normalized_sha256: sha256:108281e479ddfcd9c56cf7d8c1f99b2f716ae9e24151f332024b2ee648796cb7
+cas_ref: sha256:108281e479ddfcd9c56cf7d8c1f99b2f716ae9e24151f332024b2ee648796cb7
+coverage_gids:
+  - gid: D5/S0/Naming/SkewedIndependentKillRate.skewed_independent_kill_rate
+    target_statement_id: sha256:1057223963afd2ad00d497514e6b40c62f29cc4a2749e08682b3f4945d016c46
+receipts:
+  scribe:
+    - gid: D5/S0/Naming/SkewedIndependentKillRate.skewed_independent_kill_rate
+      definition_sha256: sha256:33e7bbe870aefac81e65cca9df6b53eb35a63c862b540a4953209ef3b2d3f7a8
+      emission_sha256: sha256:e2d310e91405ea92f9d389384d8ed7d05e6b198c3be9913fb4f0de6463eb987e
+  unresolved_subitems: []

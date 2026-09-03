@@ -1,0 +1,101 @@
+# 第两千零八十九部　高 \(t\) 不使单个模式加速，但会扩大有效频率带宽
+
+Riemann–Siegel 公式在临界线上具有形式：
+
+$$
+\boxed{
+Z(t)
+=
+2\sum_{n\le N}
+\frac{
+\cos(\vartheta(t)-t\log n)
+}{
+\sqrt n
+}
++
+R(t),
+}
+\tag{2089.1}
+$$
+
+其中：
+
+$$
+N\sim\sqrt{\frac{t}{2\pi}}.
+$$
+
+这是计算临界线零点的标准公式。([dlmf.nist.gov][2])
+
+第 \(n\) 个模式在 Riemann–Siegel 旋转框架中的相位为：
+
+$$
+\phi_n(t)
+=
+\vartheta(t)-t\log n.
+$$
+
+其相对角速度为：
+
+$$
+\boxed{
+\dot\phi_n(t)
+=
+\vartheta'(t)-\log n.
+}
+\tag{2089.2}
+$$
+
+而：
+
+$$
+\vartheta'(t)
+\sim
+\frac12\log\frac{t}{2\pi}.
+$$
+
+因此相对角速度接近零的模式满足：
+
+$$
+\log n
+\approx
+\frac12\log\frac{t}{2\pi},
+$$
+
+即：
+
+$$
+\boxed{
+n\approx
+\sqrt{\frac{t}{2\pi}}.
+}
+\tag{2089.3}
+$$
+
+所以随着 \(t\) 增大，真正发生的是：
+
+$$
+\boxed{
+\text{驻相 packet 向越来越大的 }n\text{ 移动，}
+}
+$$
+
+并且有效参与模式数大约按：
+
+$$
+\sqrt t
+$$
+
+增长。
+
+这可以称为：
+
+$$
+\boxed{
+\text{频谱带宽增长或相位剪切增强，}
+}
+$$
+
+而不是单个线段的角加速度。
+
+---
+

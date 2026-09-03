@@ -1,0 +1,114 @@
+# 606. 一般 \(m\) 重零点的黄金转导律
+
+考虑局部 Weierstrass 方程：
+
+$$
+\boxed{
+z^m=\frac1{L_{mH}}.
+}
+$$
+
+其全部根为：
+
+$$
+\boxed{
+z_k
+=
+L_{mH}^{-1/m}
+e^{2\pi ik/m},
+\qquad
+k=0,\ldots,m-1.
+}
+$$
+
+它们的共同半径满足：
+
+$$
+\boxed{
+|z_k|
+\longrightarrow
+\varphi^{-H}
+\qquad(m\to\infty,\ m\text{ 为偶数}).
+}
+$$
+
+事实上：
+
+$$
+\boxed{
+\varphi^{-H}
+=
+\lim_{m\to\infty}
+L_{mH}^{-1/m}.
+}
+$$
+
+而：
+
+$$
+L_{mH}
+=
+\prod_p
+p^{v_p(L_{mH})},
+$$
+
+所以：
+
+$$
+\boxed{
+\varphi^{-H}
+=
+\lim_{m\to\infty}
+\prod_p
+p^{-v_p(L_{mH})/m}.
+}
+$$
+
+取对数：
+
+$$
+\boxed{
+H\log\varphi
+=
+\lim_{m\to\infty}
+\frac1m
+\sum_p
+v_p(L_{mH})\log p.
+}
+$$
+
+这意味着：
+
+> **黄金偏移不是全体素数无法逼近的对象；它是 Lucas 轨道中全部素数因子对数压力的极限。**
+
+可以把：
+
+$$
+\mathcal P_H(m)
+=
+\frac1m\log L_{mH}
+$$
+
+称为 **Lucas prime pressure**。
+
+它满足：
+
+$$
+\boxed{
+\mathcal P_H(m)
+=
+H\log\varphi
++
+\frac1m
+\log
+\left(
+1+(-1)^{mH}\varphi^{-2mH}
+\right).
+}
+$$
+
+最后一项就是始终未被有限层完全消去的黄金共轭残余。
+
+它：
+
+* 永远非零于有限 \(m\)；

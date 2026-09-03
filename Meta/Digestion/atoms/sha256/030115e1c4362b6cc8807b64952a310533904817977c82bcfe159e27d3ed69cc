@@ -1,0 +1,47 @@
+* 每个离线零点轨道的符号风险精确集中在一个非负奇能量中。
+
+所以真正的下一桥已经被压缩成：
+
+$$
+\boxed{
+\text{能否用 Kakeya 式多尺度观察网，
+把全部 prime-frequency pairwise 可见性，
+统一转化为对 zero-side 法向奇能量的支配？}
+}
+$$
+
+如果能证明：
+
+$$
+\text{非 sticky}
+\Longrightarrow
+\text{odd energy 无法隐藏},
+$$
+
+同时证明：
+
+$$
+\text{sticky}
+\Longrightarrow
+\text{违反素数频率的算术结构或全局正性},
+$$
+
+那么离线奇能量只能为零。
+
+---
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{离线零点不是旋转战胜了束缚；
+它是一个原本退化的一维长度剖面，
+在法向偏移后分裂成两个独立方向，
+而无限 prime phases 仍然设法让这两个方向在同一高度同时不可见。
+Kakeya 所要控制的不是有没有方向，
+而是如此多的方向能否在所有尺度上共同隐藏这一新增维度。}
+$$
+
+[1]: https://arxiv.org/abs/1801.05914 "https://arxiv.org/abs/1801.05914"
+[2]: https://dlmf.nist.gov/25.9 "https://dlmf.nist.gov/25.9"
+[3]: https://arxiv.org/abs/2502.17655 "https://arxiv.org/abs/2502.17655"

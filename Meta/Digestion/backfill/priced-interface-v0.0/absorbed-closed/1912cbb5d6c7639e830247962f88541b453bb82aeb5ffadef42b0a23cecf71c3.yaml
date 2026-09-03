@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:1912cbb5d6c7639e830247962f88541b453bb82aeb5ffadef42b0a23cecf71c3
+  normalized_sha256: sha256:1912cbb5d6c7639e830247962f88541b453bb82aeb5ffadef42b0a23cecf71c3
+cas_ref: sha256:1912cbb5d6c7639e830247962f88541b453bb82aeb5ffadef42b0a23cecf71c3
+coverage_gids:
+  - gid: D5/S3/Entropy/Relabeling/DifferentialEntropyChangeOfVariables.differential_entropy_change_of_variables
+    target_statement_id: sha256:44779d2f6d6cfe28e2fde842a9ec17f74d40133ab7021bc655ef0430d0bd0384
+receipts:
+  scribe:
+    - gid: D5/S3/Entropy/Relabeling/DifferentialEntropyChangeOfVariables.differential_entropy_change_of_variables
+      definition_sha256: sha256:0a46ad4785cb8e729f78ed5c50ff6198fa482fde044740b45d9bdb6d972f6dcf
+      emission_sha256: sha256:2a3d416e21acf04e6063050b431947eac70edaaefb2b85a419f5716b45c97b9f
+  unresolved_subitems: []
