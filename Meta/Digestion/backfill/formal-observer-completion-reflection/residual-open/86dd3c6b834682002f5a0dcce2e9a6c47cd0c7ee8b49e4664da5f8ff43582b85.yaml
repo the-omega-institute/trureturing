@@ -4,12 +4,10 @@ fingerprints:
 cas_ref: sha256:86dd3c6b834682002f5a0dcce2e9a6c47cd0c7ee8b49e4664da5f8ff43582b85
 coverage_gids: []
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems: []
   cover_disposition:
     outcome: partial-closed
-    recorded_at_utc: 2026-08-28T02:46:13.7625580+00:00
     gids:
       - D5/S3/Observer/ProbabilisticClosure/TransitiveInvariantDistribution.transitive_invariant_distribution_unique_uniform
     gaps:

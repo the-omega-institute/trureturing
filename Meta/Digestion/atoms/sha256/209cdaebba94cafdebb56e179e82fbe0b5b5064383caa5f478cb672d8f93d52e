@@ -1,0 +1,22 @@
+## 530. 缺少统一正性压缩器
+
+仓库已经把 RH 等价地压成 Weil-square positivity，但尚未从 prime side 构造一个明显为正的全局 operator。
+
+因此：
+
+$$
+\boxed{
+\operatorname{HardCore}(\mathrm{RH})
+=
+\text{marginal tail}
++
+\text{unbounded arity}
++
+\text{nonlocal shift}
++
+\text{missing positive operator}.
+}
+$$
+
+---
+

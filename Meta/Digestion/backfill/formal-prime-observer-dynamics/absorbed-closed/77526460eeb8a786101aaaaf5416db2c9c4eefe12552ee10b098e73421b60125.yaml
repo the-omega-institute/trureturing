@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:77526460eeb8a786101aaaaf5416db2c9c4eefe12552ee10b098e73421b60125
 cas_ref: sha256:77526460eeb8a786101aaaaf5416db2c9c4eefe12552ee10b098e73421b60125
 coverage_gids:
-  - D5/S3/Estimation/DecisionRisk/PosteriorHistoryCompression.posterior_history_compression
+  - gid: D5/S3/Estimation/DecisionRisk/PosteriorHistoryCompression.posterior_history_compression
+    target_statement_id: sha256:fe244886b865ff148ad39101be14946f72fe1a9546c78a6fe1d3d2e5157a48f7
 receipts:
-  coverage:
-    - gid: D5/S3/Estimation/DecisionRisk/PosteriorHistoryCompression.posterior_history_compression
-      source_sha256: sha256:77526460eeb8a786101aaaaf5416db2c9c4eefe12552ee10b098e73421b60125
-      target_statement_id: sha256:fe244886b865ff148ad39101be14946f72fe1a9546c78a6fe1d3d2e5157a48f7
   scribe:
     - gid: D5/S3/Estimation/DecisionRisk/PosteriorHistoryCompression.posterior_history_compression
       definition_sha256: sha256:0ea5efb796e08d25855f4e576dd2bb4694a389a9084ec253b3ea9c396cf8f363

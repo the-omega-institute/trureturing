@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:3c96e95566e8554421829dcb57cbccc4be7ced2994c0a39c5b8fecd5d0349c90
 cas_ref: sha256:3c96e95566e8554421829dcb57cbccc4be7ced2994c0a39c5b8fecd5d0349c90
 coverage_gids:
-  - D5/S3/ObserverMemory/RefinementClosure/ContinuousBehaviorClosureStability.continuous_dynamics_preserves_behavior_closure
+  - gid: D5/S3/ObserverMemory/RefinementClosure/ContinuousBehaviorClosureStability.continuous_dynamics_preserves_behavior_closure
+    target_statement_id: sha256:7b2233ea0e0709a1764c34d22154bb1a635c8b35c8bd7ccfaad041d44f9e343d
 receipts:
-  coverage:
-    - gid: D5/S3/ObserverMemory/RefinementClosure/ContinuousBehaviorClosureStability.continuous_dynamics_preserves_behavior_closure
-      source_sha256: sha256:3c96e95566e8554421829dcb57cbccc4be7ced2994c0a39c5b8fecd5d0349c90
-      target_statement_id: sha256:7b2233ea0e0709a1764c34d22154bb1a635c8b35c8bd7ccfaad041d44f9e343d
   scribe:
     - gid: D5/S3/ObserverMemory/RefinementClosure/ContinuousBehaviorClosureStability.continuous_dynamics_preserves_behavior_closure
       definition_sha256: sha256:db6e5d0fed4bbaa5afcba5d24a07768e3b817f5c79c13714f87dea2ed1c17512

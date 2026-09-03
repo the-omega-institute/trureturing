@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:ae0e0efad15a057a98560f6be6059b3e019b4458ee88f3e9e3d5f190be6a5810
 cas_ref: sha256:ae0e0efad15a057a98560f6be6059b3e019b4458ee88f3e9e3d5f190be6a5810
 coverage_gids:
-  - D5/S3/ConceptDynamics/DefinitionEscapeMonotonicity/SubfamilyInadequacyPersistence.full_family_inadequacy_persists_to_subfamilies
+  - gid: D5/S3/ConceptDynamics/DefinitionEscapeMonotonicity/SubfamilyInadequacyPersistence.full_family_inadequacy_persists_to_subfamilies
+    target_statement_id: sha256:9eb8ae1ad8cc9c8aaeca522a3d8e222beea6c1a8cda375e2dbec863a26dfb372
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/DefinitionEscapeMonotonicity/SubfamilyInadequacyPersistence.full_family_inadequacy_persists_to_subfamilies
-      source_sha256: sha256:ae0e0efad15a057a98560f6be6059b3e019b4458ee88f3e9e3d5f190be6a5810
-      target_statement_id: sha256:9eb8ae1ad8cc9c8aaeca522a3d8e222beea6c1a8cda375e2dbec863a26dfb372
   scribe:
     - gid: D5/S3/ConceptDynamics/DefinitionEscapeMonotonicity/SubfamilyInadequacyPersistence.full_family_inadequacy_persists_to_subfamilies
       definition_sha256: sha256:d5373a897246311f4a8234ae7eac4bc25d2bd34c0ca8921f62d089e42f12fda0

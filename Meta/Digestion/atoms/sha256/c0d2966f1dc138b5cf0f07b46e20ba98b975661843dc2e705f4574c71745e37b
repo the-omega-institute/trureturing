@@ -1,0 +1,6 @@
+## 二　W-6 预登记:RH ⟹ 截断正性(同模块第二条公开定理)
+
+**义务**:公开定理 `rh_implies_truncatedWeilSquarePositivity (hRH : RiemannHypothesis) (Z : ZeroData) : ∀ (T : ℝ) (g : WeilTestFunction), 0 ≤ (truncatedZeroSum Z (convolutionSquare g) T).re`。
+**可证伪预测(写在跑之前)**:若正确,证明与 R-F 内部 `hnonneg` 同形:RH 下 `zeroData_zero_on_critical_line_of_rh` 使 `symmetricIndices T` 的临界线过滤为全集(`Finset.filter_true_of_mem`),再用 `critical_line_truncated_sum_real_nonnegative Z g T` 的第二分量;标准三公理。这两条都是公开冻结定理,本条不重证它们;R-F 自身只暴露极限版,故本条不是重复。
+**边界**:同 §〇。
+

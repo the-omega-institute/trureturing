@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:4c9350a876532f67fe013fbd09c7d70fe75d78a09f60b3b6b5fcc7c7bdb942c7
 cas_ref: sha256:4c9350a876532f67fe013fbd09c7d70fe75d78a09f60b3b6b5fcc7c7bdb942c7
 coverage_gids:
-  - D5/S3/Observer/ProbabilisticClosure/GraphMechanismLawSeparation.opposite_graphs_same_observational_law
+  - gid: D5/S3/Observer/ProbabilisticClosure/GraphMechanismLawSeparation.opposite_graphs_same_observational_law
+    target_statement_id: sha256:976f3b7e6c04f7d0c8581be147f645437c2da6d7ccc454e865c1c8cd0465ae38
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/ProbabilisticClosure/GraphMechanismLawSeparation.opposite_graphs_same_observational_law
-      source_sha256: sha256:4c9350a876532f67fe013fbd09c7d70fe75d78a09f60b3b6b5fcc7c7bdb942c7
-      target_statement_id: sha256:976f3b7e6c04f7d0c8581be147f645437c2da6d7ccc454e865c1c8cd0465ae38
   scribe:
     - gid: D5/S3/Observer/ProbabilisticClosure/GraphMechanismLawSeparation.opposite_graphs_same_observational_law
       definition_sha256: sha256:e56ecd59f0f6e77465e7776609847e1da041925f9af7067634915526dfdbf0dd

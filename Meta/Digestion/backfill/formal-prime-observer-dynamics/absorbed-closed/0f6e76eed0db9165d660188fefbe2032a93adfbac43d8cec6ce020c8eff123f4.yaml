@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:0f6e76eed0db9165d660188fefbe2032a93adfbac43d8cec6ce020c8eff123f4
 cas_ref: sha256:0f6e76eed0db9165d660188fefbe2032a93adfbac43d8cec6ce020c8eff123f4
 coverage_gids:
-  - D5/S3/Observer/DynamicProgramming/BellmanFixedPointIteration.bellman_contraction_unique_fixed_point_and_iteration_bound
+  - gid: D5/S3/Observer/DynamicProgramming/BellmanFixedPointIteration.bellman_contraction_unique_fixed_point_and_iteration_bound
+    target_statement_id: sha256:a7959905595ec07a099c863cadf7adad1bd1fd6bc6cbce7b1ff3e57b3ff8efdc
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/DynamicProgramming/BellmanFixedPointIteration.bellman_contraction_unique_fixed_point_and_iteration_bound
-      source_sha256: sha256:0f6e76eed0db9165d660188fefbe2032a93adfbac43d8cec6ce020c8eff123f4
-      target_statement_id: sha256:a7959905595ec07a099c863cadf7adad1bd1fd6bc6cbce7b1ff3e57b3ff8efdc
   scribe:
     - gid: D5/S3/Observer/DynamicProgramming/BellmanFixedPointIteration.bellman_contraction_unique_fixed_point_and_iteration_bound
       definition_sha256: sha256:c1c4f38f0457712baa1eee0e184b60855d54fc8d519f55c24990f375501244bf

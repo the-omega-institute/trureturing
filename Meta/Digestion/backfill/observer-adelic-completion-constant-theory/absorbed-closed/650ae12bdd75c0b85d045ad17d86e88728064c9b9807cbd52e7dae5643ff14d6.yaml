@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:650ae12bdd75c0b85d045ad17d86e88728064c9b9807cbd52e7dae5643ff14d6
 cas_ref: sha256:650ae12bdd75c0b85d045ad17d86e88728064c9b9807cbd52e7dae5643ff14d6
 coverage_gids:
-  - D5/S3/Analytic/Boundary/ActiveSemicircle.active_semicircle_criterion
+  - gid: D5/S3/Analytic/Boundary/ActiveSemicircle.active_semicircle_criterion
+    target_statement_id: sha256:4aab00bee9d7df0dbee683386e47becda4865801256e28b09b6940c968793519
 receipts:
-  coverage:
-    - gid: D5/S3/Analytic/Boundary/ActiveSemicircle.active_semicircle_criterion
-      source_sha256: sha256:650ae12bdd75c0b85d045ad17d86e88728064c9b9807cbd52e7dae5643ff14d6
-      target_statement_id: sha256:4aab00bee9d7df0dbee683386e47becda4865801256e28b09b6940c968793519
   scribe:
     - gid: D5/S3/Analytic/Boundary/ActiveSemicircle.active_semicircle_criterion
       definition_sha256: sha256:534199c0cbed039e3d20f66b955efd691b66a5cfb6bacdc31b30c08383f172cd

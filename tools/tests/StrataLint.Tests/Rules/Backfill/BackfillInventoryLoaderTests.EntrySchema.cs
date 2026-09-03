@@ -25,12 +25,14 @@ public sealed partial class BackfillInventoryLoaderTests
     }
 
     [Theory]
-    [InlineData("coverage-key")]
-    [InlineData("receipts-coverage")]
-    [InlineData("source-sha")]
-    [InlineData("statement-history")]
-    [InlineData("recorded-at")]
-    public void DirectoryAtomRejectsEachRetiredCoverageField(string retiredField)
+    [InlineData("coverage-key", false)]
+    [InlineData("receipts-coverage", false)]
+    [InlineData("receipts-coverage", true)]
+    [InlineData("source-sha", false)]
+    [InlineData("statement-history", false)]
+    [InlineData("recorded-at", false)]
+    [InlineData("recorded-at", true)]
+    public void DirectoryAtomRejectsEachRetiredCoverageField(string retiredField, bool baseline)
     {
         var sourceKey = "source_" + "sha256";
         var historyKey = "statement_id_" + "history";
@@ -81,11 +83,22 @@ public sealed partial class BackfillInventoryLoaderTests
             _ => atom,
         };
 
-        var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(Snapshot(
+        var snapshot = Snapshot(
             Source("delta-v0.1", "docs/delta.md", "none"),
-            atom)));
+            atom);
+        var exception = Assert.Throws<FormatException>(() =>
+            baseline
+                ? BackfillInventoryLoader.LoadBaseline(snapshot)
+                : BackfillInventoryLoader.Load(snapshot));
 
-        Assert.Contains("keys are not canonical", exception.Message, StringComparison.Ordinal);
+        var expectedMessage = retiredField switch
+        {
+            "receipts-coverage" => "receipts keys are not canonical",
+            "recorded-at" => "cover_disposition keys are not canonical",
+            "source-sha" or "statement-history" => "coverage edge keys are not canonical",
+            _ => "source delta-v0.1 entry keys are not canonical",
+        };
+        Assert.Contains(expectedMessage, exception.Message, StringComparison.Ordinal);
     }
 
     [Fact]

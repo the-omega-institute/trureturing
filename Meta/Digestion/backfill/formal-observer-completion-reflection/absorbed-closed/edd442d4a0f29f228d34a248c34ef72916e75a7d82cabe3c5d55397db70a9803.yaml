@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:edd442d4a0f29f228d34a248c34ef72916e75a7d82cabe3c5d55397db70a9803
 cas_ref: sha256:edd442d4a0f29f228d34a248c34ef72916e75a7d82cabe3c5d55397db70a9803
 coverage_gids:
-  - D5/S3/Quantum/Tomography/SequentialVisibleSpaceStability.sequential_visible_space_once_stable_permanently
+  - gid: D5/S3/Quantum/Tomography/SequentialVisibleSpaceStability.sequential_visible_space_once_stable_permanently
+    target_statement_id: sha256:e0e8e0bf5f537e750b1a28d18b8a729163031980c8d3b82536d00d37319025a0
 receipts:
-  coverage:
-    - gid: D5/S3/Quantum/Tomography/SequentialVisibleSpaceStability.sequential_visible_space_once_stable_permanently
-      source_sha256: sha256:edd442d4a0f29f228d34a248c34ef72916e75a7d82cabe3c5d55397db70a9803
-      target_statement_id: sha256:e0e8e0bf5f537e750b1a28d18b8a729163031980c8d3b82536d00d37319025a0
   scribe:
     - gid: D5/S3/Quantum/Tomography/SequentialVisibleSpaceStability.sequential_visible_space_once_stable_permanently
       definition_sha256: sha256:7e8d1e808d43e0d0f31252a83a8af921b2f15870e99a347f6daaec9c176507fc

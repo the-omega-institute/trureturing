@@ -1,0 +1,37 @@
+# Prime–Zero Relative Coherence Theorem
+
+$$
+\boxed{
+\text{若所有 prime-local observer origins 相干，
+则所有非平凡零点的实部相同。}
+}
+$$
+
+形式上：
+
+$$
+\boxed{
+\left(
+C_{p,q}=0
+\quad
+\forall p,q
+\right)
+\Longrightarrow
+\left(
+\Re\rho=\Re\sigma
+\quad
+\forall\rho,\sigma
+\right).
+}
+$$
+
+然后函数方程自动给出：
+
+$$
+\Re\rho=\frac12.
+$$
+
+这比直接试图从 prime curvature 读出绝对临界值更符合 gauge 结构。
+
+---
+

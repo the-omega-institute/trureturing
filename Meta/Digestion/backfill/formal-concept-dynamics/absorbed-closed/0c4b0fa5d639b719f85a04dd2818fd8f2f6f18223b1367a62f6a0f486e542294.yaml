@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:0c4b0fa5d639b719f85a04dd2818fd8f2f6f18223b1367a62f6a0f486e542294
 cas_ref: sha256:0c4b0fa5d639b719f85a04dd2818fd8f2f6f18223b1367a62f6a0f486e542294
 coverage_gids:
-  - D5/S3/ConceptDynamics/ExperimentBoundary/PassiveJointBoundaryObstruction.adaptive_cost_reduction_and_passive_boundary
+  - gid: D5/S3/ConceptDynamics/ExperimentBoundary/PassiveJointBoundaryObstruction.adaptive_cost_reduction_and_passive_boundary
+    target_statement_id: sha256:d01efd00f022b5d5994b8b97624669d2613858c2efba1f3b51b6293a707b2fc8
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/ExperimentBoundary/PassiveJointBoundaryObstruction.adaptive_cost_reduction_and_passive_boundary
-      source_sha256: sha256:0c4b0fa5d639b719f85a04dd2818fd8f2f6f18223b1367a62f6a0f486e542294
-      target_statement_id: sha256:d01efd00f022b5d5994b8b97624669d2613858c2efba1f3b51b6293a707b2fc8
   scribe:
     - gid: D5/S3/ConceptDynamics/ExperimentBoundary/PassiveJointBoundaryObstruction.adaptive_cost_reduction_and_passive_boundary
       definition_sha256: sha256:ad7ac543974c7eaaf8955927b62d40c6540721c76c73bba9ee17a4b3e9518ac6

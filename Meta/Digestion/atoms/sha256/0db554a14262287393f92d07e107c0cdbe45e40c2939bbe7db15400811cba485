@@ -1,0 +1,67 @@
+## 490. 有限矩阵压缩
+
+选择一个可数 form core：
+
+$$
+e_1,e_2,e_3,\ldots
+$$
+
+并令：
+
+$$
+V_N=\operatorname{span}\{e_1,\ldots,e_N\}.
+$$
+
+定义有限 Hermitian 矩阵：
+
+$$
+G_N
+=
+\bigl(
+B_Z(e_i,e_j)
+\bigr)_{1\le i,j\le N}.
+$$
+
+在 \(V_\infty=\bigcup_NV_N\) 是 form core 的前提下：
+
+$$
+\boxed{
+A_Z\ge0
+\iff
+G_N\succeq0
+\quad
+\forall N.
+}
+$$
+
+如果 \(A_Z\not\ge0\)，则存在 \(g\)：
+
+$$
+Q_Z(g)<0.
+$$
+
+由 core 稠密性和二次型连续性，可以找到有限线性组合 \(g_N\in V_N\)，仍满足：
+
+$$
+Q_Z(g_N)<0.
+$$
+
+所以：
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\Longrightarrow
+\exists N,\quad
+\lambda_{\min}(G_N)<0.
+}
+$$
+
+这给出一个严格的结论：
+
+> 如果 RH 为假，那么在合适的可数 form core 中，必然存在一个有限矩阵负证书。
+
+但没有任何已知统一上界告诉我们这个 \(N\) 有多大。
+
+---
+

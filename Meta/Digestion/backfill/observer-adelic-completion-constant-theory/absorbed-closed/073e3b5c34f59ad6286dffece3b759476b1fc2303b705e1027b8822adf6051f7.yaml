@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:073e3b5c34f59ad6286dffece3b759476b1fc2303b705e1027b8822adf6051f7
 cas_ref: sha256:073e3b5c34f59ad6286dffece3b759476b1fc2303b705e1027b8822adf6051f7
 coverage_gids:
-  - D5/S3/Analytic/HolonomyDeterminant/MasslessHolonomyDeterminant.massless_holonomy_determinant
+  - gid: D5/S3/Analytic/HolonomyDeterminant/MasslessHolonomyDeterminant.massless_holonomy_determinant
+    target_statement_id: sha256:f3642463b5b2a58c467a69a86c97daaa1621ffc751635a2f5f83e276f0fa2341
 receipts:
-  coverage:
-    - gid: D5/S3/Analytic/HolonomyDeterminant/MasslessHolonomyDeterminant.massless_holonomy_determinant
-      source_sha256: sha256:073e3b5c34f59ad6286dffece3b759476b1fc2303b705e1027b8822adf6051f7
-      target_statement_id: sha256:f3642463b5b2a58c467a69a86c97daaa1621ffc751635a2f5f83e276f0fa2341
   scribe:
     - gid: D5/S3/Analytic/HolonomyDeterminant/MasslessHolonomyDeterminant.massless_holonomy_determinant
       definition_sha256: sha256:7969829201814ebb1c87bd633b50eb1176ea542266923be89467783b17caf962
