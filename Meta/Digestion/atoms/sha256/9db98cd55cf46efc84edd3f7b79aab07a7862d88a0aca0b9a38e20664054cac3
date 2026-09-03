@@ -1,0 +1,43 @@
+## 3. 零点反射奇偶
+
+$$
+p_J
+=
+\begin{cases}
+0,&Jv=v,\\
+1,&Jv=-v.
+\end{cases}
+$$
+
+它区分 spectral even/odd modes。
+
+再加入观察者奇偶：
+
+$$
+p_O=1.
+$$
+
+一个全局可观察标量必须满足选择律：
+
+$$
+\boxed{
+p_\Omega+p_H+p_J+p_O
+\equiv0
+\pmod2.
+}
+$$
+
+这不是说自然界已被证明服从这个具体四项规则，而是一个清晰的候选 observer-completed grading。
+
+其最简单版本是：
+
+$$
+\boxed{
+p_J+p_O=0\pmod2.
+}
+$$
+
+所以一个奇观察者只耦合奇零点模式。
+
+---
+

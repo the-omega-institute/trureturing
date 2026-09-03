@@ -284,5 +284,6 @@ public sealed class R13ScopeNarrowingTests
 
     private static CompletedRuleSet Execute(RuleFixture fixture, string changedPath) =>
         Assert.IsType<RuleExecutionOutcome.Completed>(
-            RuleCatalog.Default.Execute(fixture.Build(RawChangeSet.Create([changedPath])))).Capability;
+            RuleCatalog.Default.Execute(
+                fixture.BuildScopeProbe(RawChangeSet.Create([changedPath])))).Capability;
 }

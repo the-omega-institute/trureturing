@@ -1,0 +1,82 @@
+# 第两千一百一十七部　这条路线最可能先证明什么
+
+最现实的第一层结论不是 RH，而是某种横向束缚：
+
+$$
+\boxed{
+\zeta(\rho)=0
+\Longrightarrow
+\left|
+\Re\rho-\frac12
+\right|
+\log|\Im\rho|
+\le C.
+}
+\tag{2117.1}
+$$
+
+这表示任何离线零点都必须停留在：
+
+$$
+O(1/\log t)
+$$
+
+的未分辨或临界分辨区。
+
+但该结论目前仍需要真正的 signed-Kakeya coercivity，尚未证明。
+
+第二层可能是密度结论：
+
+$$
+\boxed{
+\#\left\{
+\rho:
+|\Im\rho|\le T,\;
+|\Re\rho-\tfrac12|\ge\frac c{\log T}
+\right\}
+}
+$$
+
+受到强上界。
+
+第三层才是利用：
+
+* Pick 普适负证书；
+* Laguerre 曲率尖峰；
+* Weil separator；
+* de Bruijn–Newman 临界刚性；
+
+把残余的：
+
+$$
+\delta\log t=O(1)
+$$
+
+区域进一步压缩到：
+
+$$
+\delta=0.
+$$
+
+所以更可能的完整证明结构是：
+
+$$
+\boxed{
+\text{Kakeya 多尺度束缚}
+\Longrightarrow
+\delta=O(1/\log t)
+}
+$$
+
+再接：
+
+$$
+\boxed{
+\text{解析正性／关系刚性}
+\Longrightarrow
+\delta=0.
+}
+$$
+
+---
+

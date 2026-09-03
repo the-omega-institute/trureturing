@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:b4b1d00ea2d7a1cbbd75500510cf0ae8a1859047c4b80d689a8024f516a54bff
+  normalized_sha256: sha256:b4b1d00ea2d7a1cbbd75500510cf0ae8a1859047c4b80d689a8024f516a54bff
+cas_ref: sha256:b4b1d00ea2d7a1cbbd75500510cf0ae8a1859047c4b80d689a8024f516a54bff
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Interpretation/JointLawCertificationValueSeparation.joint_law_certification_value_separation
+    target_statement_id: sha256:edb84f8b1472b7dd54cc7bd3e9d90eecb722196790a34cc590debd2454c39fdb
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Interpretation/JointLawCertificationValueSeparation.joint_law_certification_value_separation
+      definition_sha256: sha256:20855224ae895df43f3898e2e6c4f904e125d971dd18d707bbd391d12e5c5ea7
+      emission_sha256: sha256:c3184ad7df58170f210a4a7aed850ed4dfd8f92602551a85af63d769a20189e7
+  unresolved_subitems: []

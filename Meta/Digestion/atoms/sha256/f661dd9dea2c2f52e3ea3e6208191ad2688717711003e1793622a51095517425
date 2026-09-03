@@ -1,0 +1,62 @@
+## 448. 分类完备不等于证明完备
+
+注意，每一层分类已经覆盖全部自然数 \(k\)。
+
+例如奇偶分裂本身就是：
+
+$$
+\mathbb N
+=
+2\mathbb N
+\sqcup
+(2\mathbb N+1).
+$$
+
+所以问题不是“分类遗漏了某些 \(k\)”。
+
+问题是：
+
+$$
+\boxed{
+\text{每一个分类块本身仍然是无限的。}
+}
+$$
+
+将：
+
+$$
+\forall k\,P(k)
+$$
+
+改写为：
+
+$$
+\left(\forall r\,P(2r)\right)
+\land
+\left(\forall r\,P(2r+1)\right)
+$$
+
+在没有额外递归律时，只是重新包装同一个无限量词。
+
+一个拆分只有在存在复杂度下降时才真正有用，例如：
+
+$$
+P(2r)\Longleftarrow P(r),
+$$
+
+$$
+P(2r+1)\Longleftarrow P(r),
+$$
+
+并且映射带有统一收缩或归纳结构。
+
+否则：
+
+$$
+\boxed{
+\text{split is not compression}.
+}
+$$
+
+---
+

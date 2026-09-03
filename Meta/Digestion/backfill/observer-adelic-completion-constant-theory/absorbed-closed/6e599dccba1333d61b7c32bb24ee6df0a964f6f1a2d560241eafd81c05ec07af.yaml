@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:6e599dccba1333d61b7c32bb24ee6df0a964f6f1a2d560241eafd81c05ec07af
+  normalized_sha256: sha256:6e599dccba1333d61b7c32bb24ee6df0a964f6f1a2d560241eafd81c05ec07af
+cas_ref: sha256:6e599dccba1333d61b7c32bb24ee6df0a964f6f1a2d560241eafd81c05ec07af
+coverage_gids:
+  - gid: D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.archimedean_jump_decomposition
+    target_statement_id: sha256:ea82ee67fd0ea0b68effb6c26225e50ad1d16ae8ab91fe789a339b2cca6e1c4b
+receipts:
+  scribe:
+    - gid: D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.archimedean_jump_decomposition
+      definition_sha256: sha256:07cd537c7ce63705ee4b4097ae4f88a3bfeb2a7aa2126642374001eda752b84d
+      emission_sha256: sha256:ef282173ebe1836dd23af9ffb8460864e142c767e3f74a491ea963ac620eec1d
+  unresolved_subitems: []

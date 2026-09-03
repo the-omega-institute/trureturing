@@ -431,21 +431,6 @@ internal static class BackfillInventoryRule
         try
         {
             var baselineDocument = LoadBaselineDocument(context.Baseline);
-            if (DigestionStatementIdHistoryValidator.IsAffectedBy(
-                    context.RepositoryChanges ?? context.Changes))
-            {
-                var historyBaseline = LoadStatementIdHistoryBaselineDocument(context.Baseline);
-                foreach (var finding in DigestionStatementIdHistoryValidator.Validate(
-                             historyBaseline,
-                             document,
-                             context.Baseline,
-                             context.Current,
-                             context.RepositoryChanges ?? context.Changes))
-                {
-                    findings.Add(new RuleFinding(BackfillPath, finding, AdmissionEffect.Block));
-                }
-            }
-
             var evaluation = DigestionStatusEvaluator.Evaluate(
                 context.Changes is null
                     ? DigestionEvaluationScope.FullScan
@@ -498,20 +483,6 @@ internal static class BackfillInventoryRule
         try
         {
             return BackfillInventoryLoader.LoadBaseline(baseline);
-        }
-        catch (FormatException exception) when (
-            string.Equals(exception.Message, "required governance document is missing", StringComparison.Ordinal))
-        {
-            throw new FormatException("baseline digestion ledger is missing");
-        }
-    }
-
-    private static BackfillInventoryDocument LoadStatementIdHistoryBaselineDocument(
-        RepositorySnapshot baseline)
-    {
-        try
-        {
-            return BackfillInventoryLoader.LoadStatementIdHistoryBaseline(baseline);
         }
         catch (FormatException exception) when (
             string.Equals(exception.Message, "required governance document is missing", StringComparison.Ordinal))

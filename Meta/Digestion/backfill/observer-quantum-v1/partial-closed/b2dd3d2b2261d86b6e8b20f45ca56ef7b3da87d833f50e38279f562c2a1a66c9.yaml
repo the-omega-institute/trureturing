@@ -3,17 +3,25 @@ fingerprints:
   normalized_sha256: sha256:b2dd3d2b2261d86b6e8b20f45ca56ef7b3da87d833f50e38279f562c2a1a66c9
 cas_ref: sha256:b2dd3d2b2261d86b6e8b20f45ca56ef7b3da87d833f50e38279f562c2a1a66c9
 coverage_gids:
-  - D5/S3/Divergence/DpiDefect.dpi_defect_nonneg
-  - D5/S3/DivergenceSupport/ZeroSupportDefect.dpi_defect_nonneg_zero_support
-  - D5/S3/Entropy/Forgetting/CapacityMonotone.deterministic_forgetting_entropy_capacity_monotone
-  - D5/S3/Observer/MeasurementMarginal.copied_record_partial_trace_eq_address_blocks
-  - D5/S3/Observer/MeasurementMarginal.copied_record_partial_trace_offDiagonal_eq_zero
-  - D5/S3/ObserverMemory/FiniteForgettingCertificate.finite_history_certificate
-  - D5/S3/ObserverMemory/MultiCopyErasure.multi_copy_erasure_quantifier
-  - D5/S3/ObserverMemory/TwoTimeKnowledge.finite_certificate_instantiates_forgot
-  - D5/S3/ObserverMemory/TwoTimeKnowledge.knows_of_later_readout_factors_through_earlier
+  - gid: D5/S3/Divergence/DpiDefect.dpi_defect_nonneg
+    target_statement_id: sha256:31bdba8fc8afca6d5390e967dfbb067a34fa96b758cb0c1ff55748587be9f2b8
+  - gid: D5/S3/DivergenceSupport/ZeroSupportDefect.dpi_defect_nonneg_zero_support
+    target_statement_id: sha256:2bec750f0e24b41141b6489925caf191ab445e94cd503f0220b1d621e05880f2
+  - gid: D5/S3/Entropy/Forgetting/CapacityMonotone.deterministic_forgetting_entropy_capacity_monotone
+    target_statement_id: sha256:3ff49f6500e6bb53d5b93d49444f71ebe7639de59662aa4b601c0125f066c73a
+  - gid: D5/S3/Observer/MeasurementMarginal.copied_record_partial_trace_eq_address_blocks
+    target_statement_id: sha256:ed1277ea6dbf8903211f8def0accb6d4736022a79aec370b4f457f6fb3791fac
+  - gid: D5/S3/Observer/MeasurementMarginal.copied_record_partial_trace_offDiagonal_eq_zero
+    target_statement_id: sha256:9fafc1ada78b79fc35e6b544ed36b183b6d0a6414474871841698f8414aec477
+  - gid: D5/S3/ObserverMemory/FiniteForgettingCertificate.finite_history_certificate
+    target_statement_id: sha256:a8c088f9d1b92aed04b60c4e9847aa05701deb34b6e76c52dcf35f666808cfd7
+  - gid: D5/S3/ObserverMemory/MultiCopyErasure.multi_copy_erasure_quantifier
+    target_statement_id: sha256:2471f95c50e0ff8da07e0761e6b346d56c9fe04ceddce5f375a0a418db50e4d4
+  - gid: D5/S3/ObserverMemory/TwoTimeKnowledge.finite_certificate_instantiates_forgot
+    target_statement_id: sha256:dac2e6a256f94f4cb35bad0724c6a71741bc8f74a5f001f8644b0f851ede301a
+  - gid: D5/S3/ObserverMemory/TwoTimeKnowledge.knows_of_later_readout_factors_through_earlier
+    target_statement_id: sha256:df34080426470bcb7c2f65c6bc5503494e7440e1a981ff778ded65b4cc11c06e
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems:
     - v2-entropy-monotone-capacity-decrease

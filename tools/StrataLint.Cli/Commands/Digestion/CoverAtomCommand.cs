@@ -4,7 +4,7 @@ using StrataLint.Engine;
 namespace StrataLint.Cli;
 
 // Phase 1 cover transaction: bind one or more already-proven Lean declarations to an
-// existing open residual atom by writing coverage_gids + coverage/scribe
+// existing open residual atom by writing a coverage edge plus its Scribe receipt
 // receipts. cover is the narrow sibling of ingest — it reuses
 // DigestionStatusEvaluator for the structural gates and never adds residual
 // atoms or rebinds boundaries. The write is all-or-nothing with a fail-closed
@@ -211,7 +211,12 @@ internal static partial class CoverAtomCommand
             var truthStates = LeanTruthStates.Resolve(current, lean);
             foreach (var gid in gids)
             {
-                var edge = CurrentEdgeValidator.Validate(gid.Value, current, report, truthStates);
+                var edge = CurrentEdgeValidator.Validate(
+                    gid.Value,
+                    current,
+                    report,
+                    truthStates,
+                    frozenStatements);
                 if (!edge.IsClosed)
                 {
                     throw new InvalidOperationException(edge.Diagnostic);
@@ -246,11 +251,10 @@ internal static partial class CoverAtomCommand
                 .ToImmutableArray();
             var covered = target with
             {
-                CoverageGids = target.CoverageGids.AddRange(addedGids),
+                Coverage = target.Coverage.AddRange(
+                    addedReceipts.Select(static receipt => receipt.Coverage)),
                 Receipts = target.Receipts with
                 {
-                    Coverage = target.Receipts.Coverage.AddRange(
-                        addedReceipts.Select(static receipt => receipt.Coverage)),
                     Scribe = target.Receipts.Scribe.AddRange(
                         addedReceipts.Select(static receipt => receipt.Scribe)),
                     CoverDisposition = null,
@@ -412,7 +416,7 @@ internal static partial class CoverAtomCommand
         return entry;
     }
 
-    private static (DigestionCoverageReceipt Coverage, DigestionScribeReceipt Scribe) BuildReceipts(
+    private static (DigestionCoverageEdge Coverage, DigestionScribeReceipt Scribe) BuildReceipts(
         DigestionLedgerEntry entry,
         Gid gid,
         RepositorySnapshot snapshot,
@@ -444,10 +448,7 @@ internal static partial class CoverAtomCommand
             throw new InvalidOperationException($"cover Scribe definition is absent: {definitionPath}");
         }
 
-        var coverage = new DigestionCoverageReceipt(
-            gid.Value,
-            entry.Fingerprints.RawSha256,
-            targetStatementId!.Value);
+        var coverage = new DigestionCoverageEdge(gid.Value, targetStatementId!.Value);
         var scribe = new DigestionScribeReceipt(
             gid.Value,
             DigestionFingerprint.Compute(definition.RawBytes.AsSpan()).RawSha256,
@@ -511,8 +512,7 @@ internal static partial class CoverAtomCommand
                 .Select(static gap => new DigestionDispositionGap(gap.Code, gap.Detail))
                 .OrderBy(static gap => gap.Code, StringComparer.Ordinal)
                 .ThenBy(static gap => gap.Detail, StringComparer.Ordinal)
-                .ToImmutableArray(),
-            recordedAtUtc.ToUniversalTime());
+                .ToImmutableArray());
         var dispositionDocument = ReplaceEntry(
             document,
             target.AtomId,

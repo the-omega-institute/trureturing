@@ -1,0 +1,16 @@
+* additive shift 的真实全局分布。
+
+所以：
+
+$$
+\boxed{
+\text{profinite local completion}
+\neq
+\text{global prime completion}.
+}
+$$
+
+缺少的正是 archimedean/global direction。
+
+---
+

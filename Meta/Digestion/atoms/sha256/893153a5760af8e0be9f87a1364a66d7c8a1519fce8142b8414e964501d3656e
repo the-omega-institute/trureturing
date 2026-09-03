@@ -1,0 +1,89 @@
+## 622. 相邻素数产生规范空洞
+
+设 \(p<q\) 是相邻素数。
+
+因为：
+
+$$
+r_p>r_q,
+$$
+
+且 \(p,q\) 之间没有其他素数，所以区间：
+
+$$
+\left(
+\frac1{\log q},
+\frac1{\log p}
+\right)
+$$
+
+中没有其他单素数分辨率点。
+
+定义中心：
+
+$$
+\boxed{
+a_{p,q}
+=
+\frac12
+\left(
+\frac1{\log p}
++
+\frac1{\log q}
+\right),
+}
+$$
+
+以及半宽：
+
+$$
+\boxed{
+h_{p,q}
+=
+\frac12
+\left(
+\frac1{\log p}
+-
+\frac1{\log q}
+\right).
+}
+$$
+
+则：
+
+$$
+\boxed{
+\operatorname{dist}
+\left(
+a_{p,q},
+\mathscr R_{\mathbb P}
+\right)
+=
+h_{p,q}.
+}
+$$
+
+并且：
+
+$$
+\boxed{
+h_{p,q}
+=
+\frac{
+\log(q/p)
+}{
+2\log p\log q
+}.
+}
+$$
+
+所以每个相邻素数间隔都确定了一个“最难被单素数尺度逼近”的偏移。
+
+与有理逼近中的黄金比例不同，这里没有一个固定的全局最坏点；而是有一列随素数高度移动的局部最坏点：
+
+$$
+a_{p_n,p_{n+1}}.
+$$
+
+---
+

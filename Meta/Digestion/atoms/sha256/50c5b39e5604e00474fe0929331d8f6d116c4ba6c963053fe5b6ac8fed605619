@@ -1,0 +1,54 @@
+## 546. 有限矩前缀的见证空间
+
+对每个 \(N\)，定义：
+
+$$
+\mathfrak M_N
+=
+\left\{
+\mu\ge0:
+\operatorname{supp}\mu\subseteq[0,1],
+\quad
+\int x^n\,d\mu=a_n
+\;\;(0\le n\le N)
+\right\}.
+$$
+
+由于 \(a_0\) 固定，所有候选测度具有相同有限总质量。
+
+有限正测度在紧区间 \([0,1]\) 上的固定质量集合，在弱-* 拓扑下是紧的。
+
+每个矩约束：
+
+$$
+\mu\longmapsto\int x^n\,d\mu=a_n
+$$
+
+是闭条件，所以：
+
+$$
+\mathfrak M_N
+$$
+
+是闭紧集，并且：
+
+$$
+\mathfrak M_{N+1}\subseteq\mathfrak M_N.
+$$
+
+因此：
+
+$$
+\boxed{
+\forall N,\ \mathfrak M_N\neq\varnothing
+\Longrightarrow
+\bigcap_N\mathfrak M_N\neq\varnothing.
+}
+$$
+
+交中的测度同时实现全部矩。
+
+由于多项式在 \(C([0,1])\) 中稠密，该测度还是唯一的。
+
+---
+

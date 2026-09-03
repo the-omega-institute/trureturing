@@ -88,7 +88,6 @@ public sealed partial class ProductionEnvironmentTests
                 [],
                 new DigestionReceipts(
                     [],
-                    [],
                     clear ? [] : ["shared-residue"],
                     [],
                     null),

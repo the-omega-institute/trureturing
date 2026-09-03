@@ -1,0 +1,10 @@
+## 1. 素因子占据奇偶
+
+$$
+p_{\Omega}(n)
+=
+\Omega(n)\bmod2.
+$$
+
+它由 Liouville 符号读取。
+

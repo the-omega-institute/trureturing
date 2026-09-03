@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:09c69206e5adb5a0bcd0671b173564b27145da5850f50179b5f931143fe2bdc7
+  normalized_sha256: sha256:09c69206e5adb5a0bcd0671b173564b27145da5850f50179b5f931143fe2bdc7
+cas_ref: sha256:09c69206e5adb5a0bcd0671b173564b27145da5850f50179b5f931143fe2bdc7
+coverage_gids:
+  - gid: D5/S3/Weil/Budget/ResolventFrontierGeometry.resolvent_frontier_basic_properties
+    target_statement_id: sha256:db05e9592f6597b34e54ad3845888d0cc407a305d644488462d295bd8e41f31d
+receipts:
+  scribe:
+    - gid: D5/S3/Weil/Budget/ResolventFrontierGeometry.resolvent_frontier_basic_properties
+      definition_sha256: sha256:d4c792ac1fbb7e069cef5d844fe561bfe724f8f3c6be53a30f4a6a677965ef61
+      emission_sha256: sha256:ebc1a11b53b568d33795120d061d0bcd3599a8dd9fb9f6f171806ea848c33ced
+  unresolved_subitems: []

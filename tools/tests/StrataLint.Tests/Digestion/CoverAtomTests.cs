@@ -6,8 +6,8 @@ using StrataLint.Engine;
 namespace StrataLint.Tests;
 
 // Phase 1 cover transaction gate matrix. cover binds one already-proven Lean
-// declaration to an existing open residual atom by writing coverage_gids +
-// coverage/scribe receipts, all-or-nothing. Precondition and integrity rejects
+// declaration to an existing open residual atom by writing a coverage edge plus
+// its Scribe receipt, all-or-nothing. Precondition and integrity rejects
 // leave the ledger unchanged; a terminal initial-cover failure writes only its
 // disposition.
 public sealed partial class CoverAtomTests
@@ -27,7 +27,7 @@ public sealed partial class CoverAtomTests
             afterDocument.RequireDigestionEntries(),
             candidate => candidate.AtomId == CoverWorld.DefaultAtomId);
         Assert.Equal(["D5/S0/Carrier/Probe.probe"], entry.CoverageGids.ToArray());
-        Assert.Single(entry.Receipts.Coverage);
+        Assert.Single(entry.Coverage);
         Assert.Single(entry.Receipts.Scribe);
         Assert.Equal(DigestionMigrationState.Absorbed, entry.ProjectedStatus.Migration);
         Assert.Equal(DigestionTruthState.Closed, entry.ProjectedStatus.Truth);
@@ -102,7 +102,7 @@ public sealed partial class CoverAtomTests
             execution.AfterDocument.RequireDigestionEntries(),
             candidate => candidate.AtomId == CoverWorld.DefaultAtomId);
         Assert.Equal(["D5/S0/Carrier/Probe.probe"], entry.CoverageGids.ToArray());
-        Assert.Single(entry.Receipts.Coverage);
+        Assert.Single(entry.Coverage);
         Assert.Single(entry.Receipts.Scribe);
     }
 
@@ -116,7 +116,7 @@ public sealed partial class CoverAtomTests
 
         Assert.False(result.Success);
         Assert.Contains("resolves to 0 report declarations", result.Error, StringComparison.Ordinal);
-        Assert.DoesNotContain("coverage-receipt-mismatch", result.Error, StringComparison.Ordinal);
+        Assert.DoesNotContain("coverage-target-mismatch", result.Error, StringComparison.Ordinal);
         Assert.DoesNotContain("target-declaration-missing", result.Error, StringComparison.Ordinal);
         Assert.Equal(before, after);
     }
@@ -436,12 +436,13 @@ internal static partial class CoverWorld
         "# Synthetic\n\n**定理 1.1(A)**。unrelated sibling atom body。\n";
     private const string OtherSourcePath = "docs/COVER_SIBLING.md";
     private const string UnrelatedSourcePath = "docs/CONTRIBUTING.md";
+    private const string GovernanceDocumentAnchor = "  - \"docs/CONTRIBUTING.md\"\n";
 
     internal static readonly string DefaultAtomId = AtomIdFor(DefaultSourceText);
     internal static readonly string OtherAtomId = AtomIdFor(OtherSourceText);
     internal static readonly string UnrelatedAtomId = AtomIdFor(UnrelatedSourceText);
-    internal static readonly DateTimeOffset RecordedAtUtc = new(2026, 8, 26, 4, 3, 2, TestBudgets.ZeroDuration);
-    internal static TimeProvider TimeProvider { get; } = new FixedTimeProvider(RecordedAtUtc);
+    internal static readonly DateTimeOffset FixtureUtc = new(2026, 8, 26, 4, 3, 2, TestBudgets.ZeroDuration);
+    internal static TimeProvider TimeProvider { get; } = new FixedTimeProvider(FixtureUtc);
 
     internal static CoverSpec StaleReceiptSpec() => new()
     {
@@ -528,9 +529,15 @@ internal static partial class CoverWorld
             UnrelatedSourcePath,
             useUnrelatedBaselineCoverage: false);
         var ledger = DirectoryLedgerTestSupport.Image(document);
+        var registry = spec.OtherAtomGid is null
+            ? TestRegistry.Canonical
+            : TestRegistry.Canonical.Replace(
+                GovernanceDocumentAnchor,
+                GovernanceDocumentAnchor + $"  - \"{OtherSourcePath}\"\n",
+                StringComparison.Ordinal);
         var files = new Dictionary<string, string>(StringComparer.Ordinal)
         {
-            ["Meta/registry.yaml"] = TestRegistry.Canonical,
+            ["Meta/registry.yaml"] = registry,
             ["Meta/domains.yaml"] = TestRegistry.Domains,
             [RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(sourceBytes),
             [targetPath] = Encoding.UTF8.GetString(targetBytes),

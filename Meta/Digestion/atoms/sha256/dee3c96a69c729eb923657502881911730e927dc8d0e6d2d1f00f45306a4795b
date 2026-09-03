@@ -1,0 +1,83 @@
+# 第一千九百八十二部　核心—纤维—分支轨迹三分解
+
+给定有限 Gram \(G\) 和正定参考 \(B\)，先取 exact common floor：
+
+$$
+\alpha_*
+=
+\lambda_{\min}
+\left(
+B^{-1/2}GB^{-1/2}
+\right).
+$$
+
+在正表示情形：
+
+$$
+G=\alpha_*B+R_*,
+\qquad
+R_*\succeq0.
+$$
+
+现在假设 residual \(R_*\) 可表示为反射商空间上的正测度：
+
+$$
+\nu_*.
+$$
+
+由于支撑位于：
+
+$$
+[-1/4,0],
+$$
+
+可作唯一分解：
+
+$$
+\boxed{
+\nu_*
+=
+c_0\delta_0
++
+\nu_{\mathrm{reg}},
+}
+\tag{1982.1}
+$$
+
+其中：
+
+$$
+\operatorname{supp}\nu_{\mathrm{reg}}
+\subset[-1/4,0).
+$$
+
+于是系统分成三层：
+
+$$
+\boxed{
+\begin{aligned}
+\alpha_*B
+&=\text{共同完成核心};\\
+c_0\delta_0
+&=\text{位于反射分支轨迹的临界谱};\\
+\nu_{\mathrm{reg}}
+&=\text{拥有非平凡两页 lift 的离线毛发}.
+\end{aligned}
+}
+\tag{1982.2}
+$$
+
+所以更准确的三分解是：
+
+$$
+\boxed{
+\text{common core}
++
+\text{branch-locus spectrum}
++
+\text{off-branch fibre}.
+}
+$$
+
+---
+

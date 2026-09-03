@@ -1,0 +1,64 @@
+## 369. 宇称通道是尺度差分 cocycle
+
+取对数：
+
+$$
+\log\operatorname{Str}_s
+=
+\log\zeta(2s)-\log\zeta(s).
+$$
+
+所以 supertrace 是尺度加倍作用：
+
+$$
+D:s\mapsto2s
+$$
+
+下的乘法 coboundary：
+
+$$
+\boxed{
+\operatorname{Str}
+=
+\frac{D^\ast\zeta}{\zeta}.
+}
+$$
+
+反复作用得到：
+
+$$
+\prod_{j=0}^{m-1}
+\operatorname{Str}(2^js)
+=
+\frac{\zeta(2^ms)}{\zeta(s)}.
+$$
+
+在 \(\Re s>1\) 中：
+
+$$
+\zeta(2^ms)\to1,
+$$
+
+所以：
+
+$$
+\boxed{
+\frac1{\zeta(s)}
+=
+\prod_{j=0}^{\infty}
+\frac{
+\zeta(2^{j+1}s)
+}{
+\zeta(2^js)
+}.
+}
+$$
+
+也就是说：
+
+> 无限层相对宇称观察，望远镜式地重构出 Möbius inverse \(1/\zeta\)。
+
+这是一个真正的“周期的周期—观察的观察”结构。
+
+---
+

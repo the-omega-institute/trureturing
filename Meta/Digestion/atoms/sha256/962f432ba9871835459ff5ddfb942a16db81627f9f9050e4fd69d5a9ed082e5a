@@ -1,0 +1,45 @@
+## 503. 固定 \(k\) 与全体 \(k\) 的差异
+
+简单估计给出：
+
+$$
+\sum_{p>P}|L_p(H)-1|
+\lesssim
+k^2\sum_{p>P}\frac1{p^2}
+\lesssim
+\frac{k^2}{P}.
+$$
+
+所以对固定 \(k\)：
+
+$$
+P\to\infty
+\Longrightarrow
+\text{局部 Euler 尾趋零}.
+$$
+
+但该估计对所有 \(k\) 不统一。
+
+若希望误差趋零，需要至少使：
+
+$$
+\boxed{
+\frac{k^2}{P}\to0.
+}
+$$
+
+因此真正的逃逸方向不是固定 \(k\) 下不断加入素数，而是：
+
+$$
+\boxed{
+k\to\infty
+\quad\text{与}\quad
+P\to\infty
+\text{ 的联合对角线}.
+}
+$$
+
+当构型阶增长得比素数截断更快时，新的 residual 不断进入。
+
+---
+

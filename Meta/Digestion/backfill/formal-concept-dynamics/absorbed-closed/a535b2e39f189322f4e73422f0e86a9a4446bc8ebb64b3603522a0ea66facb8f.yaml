@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:a535b2e39f189322f4e73422f0e86a9a4446bc8ebb64b3603522a0ea66facb8f
 cas_ref: sha256:a535b2e39f189322f4e73422f0e86a9a4446bc8ebb64b3603522a0ea66facb8f
 coverage_gids:
-  - D5/S3/ConceptDynamics/Audits/LedgerIntegrityVeracitySeparation.ledger_integrity_does_not_imply_input_veracity
+  - gid: D5/S3/ConceptDynamics/Audits/LedgerIntegrityVeracitySeparation.ledger_integrity_does_not_imply_input_veracity
+    target_statement_id: sha256:87e436c25359448bc49a8515fa3554b5a97b4f8103f675d2b49c2148df5c298e
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Audits/LedgerIntegrityVeracitySeparation.ledger_integrity_does_not_imply_input_veracity
-      source_sha256: sha256:a535b2e39f189322f4e73422f0e86a9a4446bc8ebb64b3603522a0ea66facb8f
-      target_statement_id: sha256:87e436c25359448bc49a8515fa3554b5a97b4f8103f675d2b49c2148df5c298e
   scribe:
     - gid: D5/S3/ConceptDynamics/Audits/LedgerIntegrityVeracitySeparation.ledger_integrity_does_not_imply_input_veracity
       definition_sha256: sha256:731f466efa4ca44dd68d4696779a7439883ac6ed00812a6b575d7a9b71bb8d85

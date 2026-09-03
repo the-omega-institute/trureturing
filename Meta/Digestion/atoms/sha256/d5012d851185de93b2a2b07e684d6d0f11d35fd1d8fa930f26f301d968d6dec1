@@ -1,0 +1,45 @@
+## 306. 三组 localizing matrices
+
+定义：
+
+$$
+H_N^{(0)}
+=
+\bigl(
+p_{i+j+1}
+\bigr)_{0\le i,j\le N},
+$$
+
+$$
+H_N^{(x)}
+=
+\bigl(
+p_{i+j+2}
+\bigr)_{0\le i,j\le N},
+$$
+
+$$
+H_N^{(1-x)}
+=
+\bigl(
+p_{i+j+1}-p_{i+j+2}
+\bigr)_{0\le i,j\le N}.
+$$
+
+RH 推出：
+
+$$
+\boxed{
+H_N^{(0)}\succeq0,
+\qquad
+H_N^{(x)}\succeq0,
+\qquad
+H_N^{(1-x)}\succeq0
+}
+$$
+
+对所有 \(N\) 成立。
+
+它们分别表达：
+
+* 测度正性；

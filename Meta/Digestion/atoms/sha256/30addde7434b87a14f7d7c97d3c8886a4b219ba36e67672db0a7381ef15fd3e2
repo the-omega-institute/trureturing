@@ -1,0 +1,11 @@
+## 270. Transfer-resolvent realization
+
+```lean
+theorem golden_local_function_eq_transfer_resolvent
+    {z : ℂ} (hz : 0 < z.re) :
+    goldenUniversalLocalFunction z =
+      ((1 - goldenWeightedRotation z)⁻¹ 1) goldenBasePoint
+```
+
+---
+

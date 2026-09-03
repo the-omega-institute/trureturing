@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:e6b6e8a71fd5202748af05c1f2e02eba0b892a3c1863e4bf605cc47f9d8a830d
 cas_ref: sha256:e6b6e8a71fd5202748af05c1f2e02eba0b892a3c1863e4bf605cc47f9d8a830d
 coverage_gids:
-  - D5/S3/ConceptDynamics/OperationalTuition/ArtifactSufficiencyAndKillLoss.artifact_sufficient_iff_every_kill_zero_byte_loss
+  - gid: D5/S3/ConceptDynamics/OperationalTuition/ArtifactSufficiencyAndKillLoss.artifact_sufficient_iff_every_kill_zero_byte_loss
+    target_statement_id: sha256:390e67f4b1246695171801849d7706176f0db77e4815485c77dfaffcd05cb0d8
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/OperationalTuition/ArtifactSufficiencyAndKillLoss.artifact_sufficient_iff_every_kill_zero_byte_loss
-      source_sha256: sha256:e6b6e8a71fd5202748af05c1f2e02eba0b892a3c1863e4bf605cc47f9d8a830d
-      target_statement_id: sha256:390e67f4b1246695171801849d7706176f0db77e4815485c77dfaffcd05cb0d8
   scribe:
     - gid: D5/S3/ConceptDynamics/OperationalTuition/ArtifactSufficiencyAndKillLoss.artifact_sufficient_iff_every_kill_zero_byte_loss
       definition_sha256: sha256:fa71190003af1e54b84f598320750cdee64d778679b679ebabc14a6af31c72d3

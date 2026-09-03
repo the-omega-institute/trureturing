@@ -1,0 +1,46 @@
+## 536. Prime-to-Weil positive factorization
+
+目标应当不是继续增加更多等价 RH 条件，而是构造：
+
+$$
+\boxed{
+T_{\mathrm{prime}}
+:
+\mathcal H_W
+\longrightarrow
+\mathcal K_{\mathrm{arith}}
+}
+$$
+
+使：
+
+$$
+\boxed{
+Q_Z(g)
+=
+\|T_{\mathrm{prime}}g\|^2.
+}
+$$
+
+一旦成立：
+
+$$
+Q_Z(g)\ge0
+\quad
+\forall g,
+$$
+
+仓库现有等价定理便推出 RH。
+
+这才是最强的有限压缩：
+
+$$
+\boxed{
+\text{无限 positivity conditions}
+\longrightarrow
+\text{一个范数平方恒等式}.
+}
+$$
+
+---
+

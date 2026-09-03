@@ -73,7 +73,8 @@ public sealed class RuleEngineTests
         var fixture = new RuleFixture();
 
         Assert.DoesNotContain(BackfillInventoryLoader.RelativePath, fixture.Files.Keys);
-        var document = BackfillInventoryLoader.Load(fixture.Build().Current);
+        var document = BackfillInventoryLoader.Load(
+            fixture.BuildScopeProbe(RawChangeSet.Create(fixture.Changes)).Current);
         var source = Assert.Single(document.RequireDigestionSources());
         var entry = Assert.Single(source.Entries);
 
@@ -84,7 +85,7 @@ public sealed class RuleEngineTests
         Assert.Equal(RuleFixture.FixtureCasReference, entry.Fingerprints.RawSha256);
         Assert.Equal(RuleFixture.FixtureCasReference, entry.CasRef);
         Assert.Equal(DigestionMigrationState.Partial, entry.ProjectedStatus.Migration);
-        Assert.Equal(DigestionTruthState.Closed, entry.ProjectedStatus.Truth);
+        Assert.Equal(DigestionTruthState.Open, entry.ProjectedStatus.Truth);
     }
 
     [Theory]
@@ -96,7 +97,10 @@ public sealed class RuleEngineTests
         {
             green.AddBackfillTargets();
         }
-        var greenResult = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(number), green.Build());
+        var greenContext = number == 3
+            ? green.Build()
+            : green.BuildScopeProbe(RawChangeSet.Create(green.Changes));
+        var greenResult = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(number), greenContext);
         Assert.Empty(greenResult.Diagnostics);
         Assert.Null(greenResult.DeferredCase);
 
@@ -111,8 +115,9 @@ public sealed class RuleEngineTests
         red.Changes.Add(changedPath);
         var redContext = number switch
         {
+            3 => red.Build(RawChangeSet.Create([changedPath])),
             20 => red.BuildForRuleCompatibility(),
-            _ => red.Build(RawChangeSet.Create([changedPath])),
+            _ => red.BuildScopeProbe(RawChangeSet.Create([changedPath])),
         };
         var redResult = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(number), redContext);
 
@@ -140,7 +145,9 @@ public sealed class RuleEngineTests
         fixture.Changes.Add(changedPath);
         var context = number == 20
             ? fixture.BuildForRuleCompatibility()
-            : fixture.Build(RawChangeSet.Create([changedPath]));
+            : number == 3
+                ? fixture.Build(RawChangeSet.Create([changedPath]))
+                : fixture.BuildScopeProbe(RawChangeSet.Create([changedPath]));
 
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
             RuleCatalog.Default.Execute(context)).Capability;
@@ -168,7 +175,7 @@ public sealed class RuleEngineTests
         fixture.ForkPoint[targetPath] = "# Fixture target\n";
 
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
-            RuleCatalog.Default.Execute(fixture.Build(RawChangeSet.Create([targetPath])))).Capability;
+            RuleCatalog.Default.Execute(fixture.BuildScopeProbe(RawChangeSet.Create([targetPath])))).Capability;
 
         Assert.Contains(RuleId.CreateKnown(17), completed.ExecutedRules);
         Assert.Contains(completed.Diagnostics, diagnostic =>
@@ -183,7 +190,7 @@ public sealed class RuleEngineTests
     {
         var fixture = new RuleFixture();
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
-            RuleCatalog.Default.Execute(fixture.Build(RawChangeSet.Create([path])))).Capability;
+            RuleCatalog.Default.Execute(fixture.BuildScopeProbe(RawChangeSet.Create([path])))).Capability;
 
         Assert.Contains(RuleId.CreateKnown(number), completed.ExecutedRules);
     }
@@ -197,7 +204,7 @@ public sealed class RuleEngineTests
         var fixture = new RuleFixture();
         var changes = RawChangeSet.Create(path is null ? [] : [path]);
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
-            RuleCatalog.Default.Execute(fixture.Build(changes))).Capability;
+            RuleCatalog.Default.Execute(fixture.BuildScopeProbe(changes))).Capability;
         var skippedProperty = typeof(CompletedRuleSet).GetProperty("SkippedRules");
         Assert.NotNull(skippedProperty);
         var skipped = Assert.IsType<ImmutableArray<RuleId>>(skippedProperty!.GetValue(completed));
@@ -216,7 +223,7 @@ public sealed class RuleEngineTests
 
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
             RuleCatalog.Default.Execute(
-                fixture.Build(RawChangeSet.Create([path]))));
+                fixture.BuildScopeProbe(RawChangeSet.Create([path]))));
 
         Assert.DoesNotContain(
             completed.Capability.Diagnostics,
@@ -239,7 +246,9 @@ public sealed class RuleEngineTests
         fixture.Files["Evidence/D5/S0/Carrier/Result.run.json"] =
             "{\"anomaly\":\"fixture drift\",\"case_id\":\"D5-T0097\"}\n";
 
-        var diagnostics = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(19), fixture.Build()).Diagnostics;
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(19),
+            fixture.BuildScopeProbe(RawChangeSet.Create(fixture.Changes))).Diagnostics;
 
         Assert.Empty(diagnostics);
     }
@@ -267,7 +276,7 @@ public sealed class RuleEngineTests
 
         var diagnostics = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(19),
-            fixture.Build()).Diagnostics;
+            fixture.BuildScopeProbe(RawChangeSet.Create(fixture.Changes))).Diagnostics;
 
         Assert.Empty(diagnostics);
     }
@@ -278,7 +287,9 @@ public sealed class RuleEngineTests
         var fixture = new RuleFixture();
         fixture.UseSyntheticDirectoryBackfill();
 
-        var diagnostics = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build()).Diagnostics;
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(16),
+            fixture.BuildScopeProbe(RawChangeSet.Create(fixture.Changes))).Diagnostics;
 
         Assert.DoesNotContain(diagnostics, diagnostic =>
             diagnostic.Message.Contains("canonical", StringComparison.Ordinal)
@@ -297,7 +308,9 @@ public sealed class RuleEngineTests
         fixture.AddBackfillTargets();
         fixture.UseValidDirectoryBackfill();
 
-        var diagnostics = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build()).Diagnostics;
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(16),
+            fixture.BuildScopeProbe(RawChangeSet.Create(fixture.Changes))).Diagnostics;
 
         Assert.Empty(diagnostics);
     }
@@ -312,7 +325,7 @@ public sealed class RuleEngineTests
 
         var diagnostics = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(16),
-            fixture.Build()).Diagnostics;
+            fixture.BuildScopeProbe(RawChangeSet.Create(fixture.Changes))).Diagnostics;
 
         Assert.Empty(diagnostics);
     }
@@ -327,7 +340,7 @@ public sealed class RuleEngineTests
 
         var diagnostic = Assert.Single(RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(16),
-            fixture.Build()).Diagnostics);
+            fixture.BuildScopeProbe(RawChangeSet.Create(fixture.Changes))).Diagnostics);
 
         Assert.Equal(
             $"source metadata keys are not canonical: {RuleFixture.FixtureBackfillSourcePath}",
@@ -343,13 +356,14 @@ public sealed class RuleEngineTests
         fixture.Files[RuleFixture.FixtureBackfillAtomPath] = fixture.Files[
                 RuleFixture.FixtureBackfillAtomPath]
             .Replace(
-                "coverage_gids:\n  - D5/S0/Carrier/BackfillTarget",
-                "coverage_gids:\n  - D5/S0/Carrier/BackfillTarget\n  - D5/S0/Carrier/BackfillTarget",
+                "coverage_gids:\n  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null",
+                "coverage_gids:\n  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null\n"
+                    + "  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null",
                 StringComparison.Ordinal);
 
         var diagnostics = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(16),
-            fixture.Build()).Diagnostics;
+            fixture.BuildScopeProbe(RawChangeSet.Create(fixture.Changes))).Diagnostics;
 
         Assert.Contains(diagnostics, diagnostic => diagnostic.Message ==
             $"entry {RuleFixture.FixtureAtomId} CAS blob is missing: {RuleFixture.FixtureCasPath}");
@@ -370,12 +384,14 @@ public sealed class RuleEngineTests
         fixture.Files[RuleFixture.FixtureBackfillAtomPath] = fixture.Files[
                 RuleFixture.FixtureBackfillAtomPath]
             .Replace(
-                "coverage_gids:\n  - D5/S0/Carrier/BackfillTarget",
-                "coverage_gids:\n  - D5/S0/Carrier/BackfillTarget\n  - D5/S0/Carrier/BackfillTarget",
+                "coverage_gids:\n  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null",
+                "coverage_gids:\n  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null\n"
+                    + "  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null",
                 StringComparison.Ordinal);
 
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
-            RuleCatalog.Default.Execute(fixture.Build()));
+            RuleCatalog.Default.Execute(
+                fixture.BuildScopeProbe(RawChangeSet.Create(fixture.Changes))));
 
         Assert.Contains(completed.Capability.Diagnostics, diagnostic =>
             diagnostic.RuleId == RuleId.CreateKnown(16)
@@ -390,7 +406,7 @@ public sealed class RuleEngineTests
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
         fixture.Files[RuleFixture.FixtureCasPath] = "trusted committed bytes";
-        var context = fixture.Build(RawChangeSet.Create(["notes/unrelated.txt"]));
+        var context = fixture.BuildScopeProbe(RawChangeSet.Create(["notes/unrelated.txt"]));
 
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
             RuleCatalog.Default.Execute(context));
@@ -405,7 +421,7 @@ public sealed class RuleEngineTests
     {
         var (fixture, frozenChanges) = FrozenStatementDriftFixture();
         var changes = RawChangeSet.Create(frozenChanges);
-        var context = fixture.Build(changes);
+        var context = fixture.BuildScopeProbe(changes);
         var document = BackfillInventoryLoader.Load(context.Current);
         var evaluation = DigestionStatusEvaluator.Evaluate(
             DigestionEvaluationScope.ChangedSet,
@@ -420,14 +436,14 @@ public sealed class RuleEngineTests
         Assert.True(BackfillInventoryRule.IsAffectedBy(context));
         Assert.Contains(
             Assert.Single(evaluation.Entries).Gaps,
-            static gap => gap.Code == "coverage-receipt-mismatch");
+            static gap => gap.Code == "coverage-target-mismatch");
     }
 
     [Fact]
     public void LeanToolchainChangeWakesSl016BecauseItsLeanReportInputCanDrift()
     {
         var fixture = new RuleFixture();
-        var context = fixture.Build(RawChangeSet.Create(["lean-toolchain"]));
+        var context = fixture.BuildScopeProbe(RawChangeSet.Create(["lean-toolchain"]));
 
         Assert.True(BackfillInventoryRule.IsAffectedBy(context));
     }
@@ -442,7 +458,7 @@ public sealed class RuleEngineTests
     public void EveryAtomizerBuildInputWakesSl016BecauseItsProjectionCanDrift(string changedPath)
     {
         var fixture = new RuleFixture();
-        var context = fixture.Build(RawChangeSet.Create([changedPath]));
+        var context = fixture.BuildScopeProbe(RawChangeSet.Create([changedPath]));
 
         Assert.True(BackfillInventoryRule.IsAffectedBy(context));
     }
@@ -450,9 +466,8 @@ public sealed class RuleEngineTests
     [Fact]
     public void Sl016DerivedStatusIsTheSameWhetherOrNotFrozenStatementDriftIsInTheCandidateDelta()
     {
-        // Skipping historical receipt replay must reuse the base verdict rather than turn a
-        // partial entry into absorbed. The stale receipt itself is reported only when its
-        // authority input is in the candidate delta.
+        // Current edges are validated regardless of whether the frozen drift itself is in
+        // the candidate delta, so both projections must report the same stale target.
         const string coverageGid = "D5/S0/Carrier/BackfillTarget";
         var (fixture, frozenChanges) = FrozenStatementDriftFixture();
 
@@ -464,8 +479,8 @@ public sealed class RuleEngineTests
             RawChangeSet.Create(["notes/unrelated.txt"]));
 
         Assert.Contains(touched.Gaps, gap =>
-            gap.Code == "coverage-receipt-mismatch" && gap.Detail == coverageGid);
-        Assert.DoesNotContain(untouched.Gaps, static gap => gap.Code == "coverage-receipt-mismatch");
+            gap.Code == "coverage-target-mismatch" && gap.Detail == coverageGid);
+        Assert.Contains(untouched.Gaps, static gap => gap.Code == "coverage-target-mismatch");
         Assert.Equal(DigestionMigrationState.Partial, untouched.DerivedStatus.Migration);
         Assert.Equal(touched.DerivedStatus, untouched.DerivedStatus);
     }
@@ -483,14 +498,14 @@ public sealed class RuleEngineTests
         }
 
         var unrelated = Assert.IsType<RuleExecutionOutcome.Completed>(RuleCatalog.Default.Execute(
-            fixture.Build(RawChangeSet.Create([RuleFixture.BlueprintPath])))).Capability;
+            fixture.BuildScopeProbe(RawChangeSet.Create([RuleFixture.BlueprintPath])))).Capability;
 
         Assert.DoesNotContain(unrelated.Diagnostics, diagnostic =>
             diagnostic.Message.Contains("handwritten status", StringComparison.Ordinal));
 
         fixture.Files[RuleFixture.FixtureDigestionSourcePath] += "changed";
         var relevant = Assert.IsType<RuleExecutionOutcome.Completed>(RuleCatalog.Default.Execute(
-            fixture.Build(RawChangeSet.Create([RuleFixture.FixtureDigestionSourcePath])))).Capability;
+            fixture.BuildScopeProbe(RawChangeSet.Create([RuleFixture.FixtureDigestionSourcePath])))).Capability;
 
         Assert.Contains(relevant.Diagnostics, diagnostic =>
             diagnostic.Message.Contains("handwritten status", StringComparison.Ordinal));
@@ -500,7 +515,7 @@ public sealed class RuleEngineTests
         RuleFixture fixture,
         RawChangeSet changes)
     {
-        var context = fixture.Build(changes);
+        var context = fixture.BuildScopeProbe(changes);
         var document = BackfillInventoryLoader.Load(context.Current);
         var evaluation = DigestionStatusEvaluator.Evaluate(
             DigestionEvaluationScope.ChangedSet,
@@ -526,11 +541,8 @@ public sealed class RuleEngineTests
             files[targetPath] = fixture.Files[targetPath];
             files[RuleFixture.FixtureBackfillAtomPath] = files[RuleFixture.FixtureBackfillAtomPath]
                 .Replace(
-                    "coverage: []",
-                    "coverage:\n"
-                    + $"    - gid: {coverageGid}\n"
-                    + $"      source_sha256: {RuleFixture.FixtureCasReference}\n"
-                    + $"      target_statement_id: {baselineStatementId}",
+                    "target_statement_id: null",
+                    $"target_statement_id: {baselineStatementId}",
                     StringComparison.Ordinal);
         }
 
@@ -563,7 +575,9 @@ public sealed class RuleEngineTests
         // Stratum content -> X_Assumptions (carrying a registered classical debt): allowed.
         var allowed = new RuleFixture();
         allowed.AddAssumptionImport();
-        Assert.Empty(RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(1), allowed.Build()).Diagnostics);
+        Assert.Empty(RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(1),
+            allowed.BuildScopeProbe(RawChangeSet.Create(allowed.Changes))).Diagnostics);
 
         // X_Assumptions -> stratum content: forbidden, so the foundation stays a sink.
         var forbidden = new RuleFixture();
@@ -571,7 +585,7 @@ public sealed class RuleEngineTests
         var diagnostic = Assert.Single(
             RuleCatalog.Default.EvaluateSingle(
                 RuleId.CreateKnown(1),
-                forbidden.Build(RawChangeSet.Create([RuleFixture.AssumptionDebtPath]))).Diagnostics);
+                forbidden.BuildScopeProbe(RawChangeSet.Create([RuleFixture.AssumptionDebtPath]))).Diagnostics);
         Assert.Equal(RuleId.CreateKnown(1), diagnostic.RuleId);
         Assert.Equal(RuleFixture.AssumptionDebtPath, diagnostic.Path);
         Assert.Contains("may not import", diagnostic.Message, StringComparison.Ordinal);
@@ -587,7 +601,7 @@ public sealed class RuleEngineTests
         var diagnostic = Assert.Single(
             RuleCatalog.Default.EvaluateSingle(
                 RuleId.CreateKnown(18),
-                fixture.Build(RawChangeSet.Create(["Evidence/D5/values.result.json"]))).Diagnostics);
+                fixture.BuildScopeProbe(RawChangeSet.Create(["Evidence/D5/values.result.json"]))).Diagnostics);
 
         Assert.Equal("canonical values projection must be Evidence/D5/values.json", diagnostic.Message);
     }
@@ -600,7 +614,9 @@ public sealed class RuleEngineTests
         fixture.Files[RuleFixture.ValuesProjectionPath] += "\n";
 
         Assert.Empty(
-            RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(18), fixture.Build()).Diagnostics);
+            RuleCatalog.Default.EvaluateSingle(
+                RuleId.CreateKnown(18),
+                fixture.BuildScopeProbe(RawChangeSet.Create(fixture.Changes))).Diagnostics);
     }
 
     [Fact]
@@ -646,7 +662,7 @@ public sealed class RuleEngineTests
         var context = fixture.Changes.Any(path =>
                 path.EndsWith(".scribe.cs", StringComparison.Ordinal))
             ? fixture.BuildForProtectedRuleCompatibility()
-            : fixture.Build();
+            : fixture.BuildScopeProbe(RawChangeSet.Create(fixture.Changes));
         return RuleCatalog.Default.EvaluateSingle(ruleId!, context).Diagnostics;
     }
 
@@ -658,7 +674,8 @@ public sealed class RuleEngineTests
     {
         var result = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(number),
-            new RuleFixture().Build());
+            new RuleFixture().BuildScopeProbe(
+                RawChangeSet.Create([RuleFixture.BlueprintPath])));
 
         Assert.Empty(result.Diagnostics);
         Assert.Equal(CaseId.CreateKnown(caseId), result.DeferredCase);
@@ -701,7 +718,7 @@ public sealed class RuleEngineTests
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(19),
-            fixture.Build());
+            fixture.BuildScopeProbe(RawChangeSet.Create(fixture.Changes)));
 
         Assert.Empty(evaluation.Diagnostics);
     }
@@ -730,7 +747,7 @@ public sealed class RuleEngineTests
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(19),
-            fixture.Build(RawChangeSet.Create([RuleFixture.TowerManifestPath])));
+            fixture.BuildScopeProbe(RawChangeSet.Create([RuleFixture.TowerManifestPath])));
 
         var diagnostic = Assert.Single(evaluation.Diagnostics);
         Assert.Contains(
