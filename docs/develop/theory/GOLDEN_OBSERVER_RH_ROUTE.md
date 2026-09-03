@@ -2284,3 +2284,30 @@ G-g-6 给出 RH 下开窗口零点集 = 线上 ζ(φ²s) 回拉零点 ∪ 局部
 一席位轮(codex-cli,独立 worktree,两条同模块;同 PR deposit(绑 G-g-7 atom)+ 两条 cover)。预计 ≤ 60 分钟。
 
 后续增订继续严格追加于本节之后。
+---
+
+# 增订二十二　零点无穷 ⟹ Weil 平方正性 ⟺ RH,不再相对于具体的 `ZeroData`(W-3 / W-4 预登记)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;探针一席(codex-cli,`probe-zerodata`,533s)核出 `Nonempty ZeroData ↔ {ρ | IsNontrivialZero ρ}.Infinite` 已于 2026-09-02 由本 lane 冻结(`ZetaBridge/ZeroDataNonemptyIffInfinite.nonempty_zeroData_iff_infinite`,M1-a),Z1–Z4(可数性、离散性、重数、置换、装配)无需重做;本节两条皆为对冻结 W-2(`Separator/WeilSquarePositivityCriterion.rh_iff_weilSquarePositivity`,#5069)与 M1-a 的短绑定,由 orchestrator(claude 主循环)撰写。判决日:2026-09-03。lane issue:#4589。
+
+## 〇　为什么是这一节
+
+W-2 把 RH 与 Weil 平方正性绑在一起,但量词落在一个给定的 `Z : ZeroData` 上。M1-a 给出 `ZeroData` 恰在非平凡零点集无穷时可居;于是只要假设**零点无穷**(M1-b,本仓仍 open;另一 lane `rh-canonical-zero-data-nonvacuity-*` 由显式 Riemann–von Mangoldt 假设推它),等价就可以对**一切** `Z`(W-3)或**某个** `Z`(W-4)陈述,不再依赖谁提供了枚举。**诚实边界**:①`hInf` 未在本仓证明(M1-b);②`ZeroData` 的构造用了 `Classical.choice`(非构造性枚举),W-3/W-4 只是量词层面的收口;③右侧仍是本仓定义的正性;④不构成 RH 证明。
+
+## 一　W-3 预登记:∀-形(`WeilSquarePositivityCriterionOfInfinite`,落 `D5/S3/Weil/Separator/`)
+
+**义务**:公开定理 `rh_iff_forall_zeroData_weilSquarePositivity (hInf : {rho : ℂ | IsNontrivialZero rho}.Infinite) : RiemannHypothesis ↔ ∀ Z : ZeroData, ∀ (g : WeilTestFunction) (hZero : SymmetricConvergent Z (convolutionSquare g)), 0 ≤ (zeroSum Z (convolutionSquare g) hZero).re`。
+**可证伪预测(写在跑之前)**:若正确,⟹ 对任意 Z 用 W-2 的 ⟹;⟸ 由 `nonempty_zeroData_iff_infinite.mpr hInf` 取一个 Z,再用 W-2 的 ⟸;标准三公理。若 M1-a 的陈述不是 `Nonempty ZeroData ↔ {rho | IsNontrivialZero rho}.Infinite`(与 `ZeroDataNonemptyIffInfinite.lean:237` 字面矛盾),则本条为假。
+**边界**:见 §〇。
+
+## 二　W-4 预登记:∃-形(同模块第二条公开定理)
+
+**义务**:公开定理 `rh_iff_exists_zeroData_weilSquarePositivity (hInf : {rho : ℂ | IsNontrivialZero rho}.Infinite) : RiemannHypothesis ↔ ∃ Z : ZeroData, ∀ (g : WeilTestFunction) (hZero : SymmetricConvergent Z (convolutionSquare g)), 0 ≤ (zeroSum Z (convolutionSquare g) hZero).re`。
+**可证伪预测(写在跑之前)**:⟹ 取 M1-a 给出的 Z 与 W-2 的 ⟹;⟸ 对给定的 Z 用 W-2 的 ⟸;标准三公理。
+**边界**:同 §〇。
+
+## 三　预算与结算
+
+一席位轮(codex-cli,独立 worktree,两条同模块,`Separator/` 第三个模块;同 PR deposit(绑 W-3 atom)+ 两条 cover)。预计 ≤ 40 分钟。
+
+后续增订继续严格追加于本节之后。
