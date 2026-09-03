@@ -1,0 +1,24 @@
+## 9. 基概率状态
+
+对实数 \(\sigma>1\)，定义：
+
+$$
+\Pr_\sigma(N=n)
+=
+\frac{n^{-\sigma}}{\zeta(\sigma)}.
+$$
+
+对有界或适当可积的算术观察量 \(F\)，定义：
+
+$$
+\boxed{
+\omega_\sigma(F)
+=
+\frac1{\zeta(\sigma)}
+\sum_{n\ge1}
+\frac{F(n)}{n^\sigma}.
+}
+$$
+
+---
+

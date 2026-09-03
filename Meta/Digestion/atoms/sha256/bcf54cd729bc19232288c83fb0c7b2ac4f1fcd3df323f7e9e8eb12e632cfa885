@@ -1,0 +1,36 @@
+## 33. 局部镜像 Hilbert 空间
+
+对每个轨道定义：
+
+$$
+\mathcal H_o
+=
+\operatorname{span}
+\{|+\rangle_o,|-\rangle_o\}
+\cong\mathbb C^2.
+$$
+
+有限窗口空间为：
+
+$$
+\mathcal H_T
+=
+\bigotimes_{o\in T}\mathcal H_o.
+$$
+
+定义：
+
+$$
+|\boldsymbol{+}\rangle
+=
+\bigotimes_{o\in T}|+\rangle_o,
+$$
+
+$$
+|\boldsymbol{-}\rangle
+=
+\bigotimes_{o\in T}|-\rangle_o.
+$$
+
+---
+

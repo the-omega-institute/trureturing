@@ -1,0 +1,42 @@
+## 200. \(q\)-零点的 Stieltjes 型 moments
+
+若 RH 成立，\(\mathfrak X(q)\) 的零点可写为：
+
+$$
+q_n=\frac14+\gamma_n^2>0.
+$$
+
+定义：
+
+$$
+x_n=q_n^{-1}\in(0,4).
+$$
+
+对 \(k\ge1\) 定义：
+
+$$
+m_k
+=
+\sum_n
+\frac{\mu_n}{q_n^k}
+=
+\sum_n\mu_nx_n^k.
+$$
+
+则对任意有限系数 \(c_0,\ldots,c_r\)：
+
+$$
+\sum_{i,j}
+c_ic_jm_{i+j}
+=
+\sum_n\mu_n
+\left(
+\sum_i c_ix_n^i
+\right)^2
+\ge0.
+$$
+
+因此所有适当 Hankel 矩阵都应半正定。
+
+---
+

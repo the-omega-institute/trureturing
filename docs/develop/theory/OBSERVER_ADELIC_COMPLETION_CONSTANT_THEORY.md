@@ -184498,3 +184498,2431 @@ $$
 同一个 Fibonacci 单胞就会作为最小裂口重新出现。}
 }
 $$
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v11.4：质量正性、支撑正性、公共谱底与“精确之名并不穷尽所指”
+
+以下从前文**第一千九百二十六部**继续。
+
+本轮最重要的推进，是必须彻底分开三件过去容易混在一起的事：
+
+$$
+\boxed{
+\text{状态是否为正}
+}
+$$
+
+$$
+\boxed{
+\text{状态是否位于允许的几何支撑上}
+}
+$$
+
+$$
+\boxed{
+\text{多个观察图表是否拥有共同的正背景}
+}
+$$
+
+离线零点并不一定破坏第一种正性。
+
+它可以是一个完全正质量的谱原子，同时位于错误的法向支撑坐标；普通 Hankel 矩阵仍然正，真正变负的是支撑 localizer。
+
+因此，“离线零点是负能量”必须进一步修正为：
+
+$$
+\boxed{
+\textbf{离线零点不是负质量，而是正质量位于正因果实现所禁止的支撑一侧。}
+}
+$$
+
+与此同时，仓库最新形式化把“公共完成背景”精确压缩成了一个最小广义本征值：
+
+$$
+\boxed{
+\text{最大共同 Haar 成分}
+=
+\text{白化 Gram 的最小本征值}.
+}
+$$
+
+这使黄金 Pick 单胞中的：
+
+$$
+-\varphi^{-1}
+$$
+
+获得了一个更准确的身份：
+
+$$
+\boxed{
+\textbf{它是规范二点关系相对于共同正背景的精确负谱底。}
+}
+$$
+
+---
+
+# 第一千九百二十七部　三种正性
+
+设一列实矩为：
+
+$$
+\mu_n=\int_{\mathbb R}x^n\,d\mu(x),
+$$
+
+其中 \(\mu\) 是正测度。
+
+定义普通 Hankel 矩阵：
+
+$$
+\boxed{
+H_N^{(0)}
+=
+[\mu_{i+j}]_{i,j=0}^{N}.
+}
+\tag{1927.1}
+$$
+
+定义一次支撑 localizing 矩阵：
+
+$$
+\boxed{
+H_N^{(1)}
+=
+[\mu_{i+j+1}]_{i,j=0}^{N}.
+}
+\tag{1927.2}
+$$
+
+对多项式：
+
+$$
+p(x)=\sum_{k=0}^{N}c_kx^k,
+$$
+
+有：
+
+$$
+\boxed{
+c^*H_N^{(0)}c
+=
+\int|p(x)|^2\,d\mu(x)
+\ge0.
+}
+\tag{1927.3}
+$$
+
+因此 \(H_N^{(0)}\) 检验的是：
+
+$$
+\boxed{
+\text{质量是否为正}.
+}
+$$
+
+而：
+
+$$
+\boxed{
+c^*H_N^{(1)}c
+=
+\int x|p(x)|^2\,d\mu(x).
+}
+\tag{1927.4}
+$$
+
+它检验的是：
+
+$$
+\boxed{
+\text{支撑是否位于 }x\ge0.
+}
+$$
+
+第三种正性则是：给定一个正定参考 Gram \(B\)，寻找最大 \(\alpha\)，使：
+
+$$
+\boxed{
+G-\alpha B\succeq0.
+}
+\tag{1927.5}
+$$
+
+它检验的是：
+
+$$
+\boxed{
+\text{所有观察方向共同保留了多少统一正背景}.
+}
+$$
+
+所以三者分别是：
+
+| 正性层          | 检验对象 | 失败含义          |
+| ------------ | ---- | ------------- |
+| 普通 Hankel    | 正质量  | 状态本身不是正测度     |
+| localizing   | 支撑位置 | 正质量落在禁止区域     |
+| common floor | 共同背景 | 多个方向不能共享统一正核心 |
+
+离线零点最自然地首先失败于第二层，而不一定失败于第一层。
+
+---
+
+# 第一千九百二十八部　正质量可以位于负支撑
+
+令反射分裂为：
+
+$$
+\delta\in\mathbb R.
+$$
+
+仓库定义的 signed-normal 坐标为：
+
+$$
+\boxed{
+x_\delta=-\delta^2.
+}
+\tag{1928.1}
+$$
+
+取正质量：
+
+$$
+m>0.
+$$
+
+定义单原子矩：
+
+$$
+\mu_n=m x_\delta^n.
+$$
+
+令：
+
+$$
+v_N(x)
+=
+(1,x,x^2,\ldots,x^N)^T.
+$$
+
+则：
+
+$$
+\boxed{
+H_N^{(0)}
+=
+m\,v_N(x_\delta)v_N(x_\delta)^*
+\succeq0.
+}
+\tag{1928.2}
+$$
+
+但：
+
+$$
+\boxed{
+H_N^{(1)}
+=
+m x_\delta
+v_N(x_\delta)v_N(x_\delta)^*.
+}
+\tag{1928.3}
+$$
+
+当：
+
+$$
+\delta\neq0
+$$
+
+时：
+
+$$
+x_\delta=-\delta^2<0,
+$$
+
+所以 \(H_N^{(1)}\) 在 \(v_N(x_\delta)\) 方向严格为负。
+
+仓库最新已经把这一事实机器化：正质量的 signed-normal 原子拥有普通正 Hankel 矩阵，但只要反射分裂非零，其一次 shifted localizing 矩阵就存在严格负读出。
+
+最小的一维情形为：
+
+$$
+\boxed{
+H_0^{(0)}=[m]>0,
+}
+\tag{1928.4}
+$$
+
+$$
+\boxed{
+H_0^{(1)}=[-m\delta^2]<0.
+}
+\tag{1928.5}
+$$
+
+所以无需高阶矩阵便可区分：
+
+$$
+\boxed{
+\begin{aligned}
+m
+&=\text{质量};\\
+-\delta^2
+&=\text{支撑坐标}.
+\end{aligned}
+}
+$$
+
+这意味着此前的许多“负性”直觉必须重写：
+
+$$
+\boxed{
+\text{负号位于坐标，不位于质量。}
+}
+$$
+
+---
+
+# 第一千九百二十九部　有限支撑的 localizing 完备性
+
+设：
+
+$$
+\mu
+=
+\sum_{j=1}^{r}
+w_j\delta_{x_j},
+\qquad
+w_j>0,
+$$
+
+其中 \(x_j\) 互异。
+
+普通 Hankel 矩阵永远满足：
+
+$$
+H_N^{(0)}\succeq0,
+$$
+
+无论 \(x_j\) 正负。
+
+但若某个：
+
+$$
+x_k<0,
+$$
+
+取 Lagrange 多项式 \(p_k\)，满足：
+
+$$
+p_k(x_k)=1,
+$$
+
+$$
+p_k(x_j)=0
+\qquad
+(j\neq k).
+$$
+
+则：
+
+$$
+\begin{aligned}
+\int x|p_k(x)|^2\,d\mu(x)
+&=
+\sum_j
+w_jx_j|p_k(x_j)|^2\\
+&=
+w_kx_k\\
+&<0.
+\end{aligned}
+$$
+
+因此：
+
+## 定理 1929.1（有限原子支撑完备性）
+
+对有限正原子测度：
+
+$$
+\boxed{
+H_N^{(1)}\succeq0
+\quad
+\forall N
+}
+$$
+
+当且仅当：
+
+$$
+\boxed{
+\operatorname{supp}\mu
+\subseteq[0,\infty).
+}
+\tag{1929.1}
+$$
+
+所以普通 Hankel 正性只证明：
+
+$$
+\text{“有一个正状态”}.
+$$
+
+localizing 正性进一步证明：
+
+$$
+\text{“该正状态位于指定的允许几何区域”}.
+$$
+
+这正是 RH 图表中必须区分的两件事。
+
+---
+
+# 第一千九百三十部　法向深度就是一个广义本征值
+
+继续设有限支撑有 \(r\) 个不同节点。
+
+令 Vandermonde 矩阵为：
+
+$$
+V_{ij}=x_j^i,
+\qquad
+0\le i\le r-1.
+$$
+
+令：
+
+$$
+W=\operatorname{diag}(w_1,\ldots,w_r),
+$$
+
+$$
+X=\operatorname{diag}(x_1,\ldots,x_r).
+$$
+
+则完整秩矩阵满足：
+
+$$
+\boxed{
+H^{(0)}
+=
+VWV^*,
+}
+\tag{1930.1}
+$$
+
+$$
+\boxed{
+H^{(1)}
+=
+VWXV^*.
+}
+\tag{1930.2}
+$$
+
+因此：
+
+$$
+H^{(1)}-\lambda H^{(0)}
+=
+VW(X-\lambda I)V^*.
+$$
+
+从而：
+
+$$
+\boxed{
+\det
+\left(
+H^{(1)}-\lambda H^{(0)}
+\right)
+=
+|\det V|^2
+\det W
+\prod_{j=1}^{r}(x_j-\lambda).
+}
+\tag{1930.3}
+$$
+
+所以广义本征值恰好是全部支撑节点：
+
+$$
+\boxed{
+\operatorname{Spec}
+\left(
+H^{(1)},H^{(0)}
+\right)
+=
+\{x_1,\ldots,x_r\}.
+}
+\tag{1930.4}
+$$
+
+等价地，白化矩阵：
+
+$$
+\boxed{
+Q_{\mathrm{supp}}
+=
+(H^{(0)})^{-1/2}
+H^{(1)}
+(H^{(0)})^{-1/2}
+}
+\tag{1930.5}
+$$
+
+的谱就是支撑坐标。
+
+因此：
+
+$$
+\boxed{
+\sup
+\left\{
+\beta:
+H^{(1)}-\beta H^{(0)}\succeq0
+\right\}
+=
+\min_jx_j.
+}
+\tag{1930.6}
+$$
+
+---
+
+## 1930.1 应用于离线法向深度
+
+若：
+
+$$
+x_j=-\delta_j^2,
+$$
+
+则：
+
+$$
+\boxed{
+\lambda_{\min}
+(Q_{\mathrm{supp}})
+=
+-\max_j\delta_j^2.
+}
+\tag{1930.7}
+$$
+
+因此最深离线距离可直接恢复为：
+
+$$
+\boxed{
+\delta_{\max}
+=
+\sqrt{
+-\lambda_{\min}
+(Q_{\mathrm{supp}})
+}.
+}
+\tag{1930.8}
+$$
+
+若全部 signed-normal 节点本来已知满足：
+
+$$
+x_j\le0,
+$$
+
+那么：
+
+$$
+\lambda_{\min}(Q_{\mathrm{supp}})\ge0
+$$
+
+只能意味着：
+
+$$
+x_j=0
+\qquad
+\forall j.
+$$
+
+也就是：
+
+$$
+\delta_j=0
+\qquad
+\forall j.
+$$
+
+这给出一个非常简洁的有限窗口 RH 诊断原型：
+
+$$
+\boxed{
+\text{法向支撑底线为零}
+\iff
+\text{该窗口没有离线分裂}.
+}
+$$
+
+真正困难不是这一线性代数，而是从 prime–Gamma 数据中构造出规范的 signed-normal moments。
+
+---
+
+# 第一千九百三十一部　公共谱底与支撑底是同一个序结构
+
+给定 Hermitian 矩阵 \(A\) 和正定矩阵 \(B\)，定义：
+
+$$
+\boxed{
+\operatorname{Floor}(A\mid B)
+=
+\sup
+\left\{
+\alpha\in\mathbb R:
+A-\alpha B\succeq0
+\right\}.
+}
+\tag{1931.1}
+$$
+
+标准广义本征值计算给出：
+
+$$
+\boxed{
+\operatorname{Floor}(A\mid B)
+=
+\lambda_{\min}
+\left(
+B^{-1/2}AB^{-1/2}
+\right).
+}
+\tag{1931.2}
+$$
+
+现在有两种完全不同、但形式相同的应用。
+
+### 公共 Haar 底
+
+$$
+\boxed{
+\alpha_{\mathrm{Haar}}
+=
+\operatorname{Floor}(G\mid B_{\mathrm{Haar}}).
+}
+\tag{1931.3}
+$$
+
+### 几何支撑底
+
+$$
+\boxed{
+\alpha_{\mathrm{supp}}
+=
+\operatorname{Floor}
+(H^{(1)}\mid H^{(0)}).
+}
+\tag{1931.4}
+$$
+
+第一种问：
+
+> 可从整个状态中抽出多少统一 Haar 背景？
+
+第二种问：
+
+> 该状态允许的最低几何坐标在哪里？
+
+仓库最新形式化已经证明，在其有理特征 Gram 设置中，最大可支配 normalized-Haar 成分精确等于两个不同白化坐标中的共同最小本征值；可逆合同不会改变这一 floor。
+
+所以：
+
+$$
+\boxed{
+\text{完成背景}
+}
+$$
+
+与：
+
+$$
+\boxed{
+\text{支撑边界}
+}
+$$
+
+本质上都是同一种序问题：
+
+$$
+\boxed{
+\text{一个 Hermitian 对相对于另一个正参考还能向下移动多少。}
+}
+$$
+
+---
+
+# 第一千九百三十二部　Haar 核心—结构毛发分解
+
+令：
+
+$$
+Q
+=
+B^{-1/2}GB^{-1/2}.
+$$
+
+定义：
+
+$$
+\alpha_*
+=
+\lambda_{\min}(Q).
+$$
+
+则：
+
+$$
+\boxed{
+Q
+=
+\alpha_*I
++
+R_*,
+}
+\tag{1932.1}
+$$
+
+其中：
+
+$$
+R_*=Q-\alpha_*I\succeq0,
+$$
+
+并且：
+
+$$
+\ker R_*\neq\{0\}.
+$$
+
+变回原坐标：
+
+$$
+\boxed{
+G
+=
+\alpha_*B
++
+B^{1/2}R_*B^{1/2}.
+}
+\tag{1932.2}
+$$
+
+在仓库的正有理 Gram 场景中：
+
+$$
+\alpha_*
+$$
+
+不仅是矩阵 floor，还等于最大可以从表示测度中抽出的 normalized-Haar 质量；剩余 Toeplitz residual 仍可由正有限测度表示。
+
+因此可将其解释为：
+
+$$
+\boxed{
+\begin{aligned}
+\alpha_*B
+&=\text{所有观察方向共享的无差别核心};\\
+B^{1/2}R_*B^{1/2}
+&=\text{在有限特征层中仍被保留的结构毛发}.
+\end{aligned}
+}
+\tag{1932.3}
+$$
+
+必须注意：唯一的是 \(\alpha_*\) 和 residual Gram；实现 residual 的具体测度仍可能不唯一。
+
+所以：
+
+$$
+\boxed{
+\text{共同核心可以被精确命名，
+但精确核心并不穷尽全部生成历史。}
+}
+$$
+
+---
+
+## 1932.1 三种谱相
+
+$$
+\boxed{
+\begin{array}{c|c}
+\alpha_*>0
+&
+\text{存在严格共同 Haar 核心}
+\\
+\alpha_*=0
+&
+\text{正状态位于共同背景锥边界}
+\\
+\alpha_*<0
+&
+\text{连零共同背景都无法正实现}
+\end{array}
+}
+\tag{1932.4}
+$$
+
+第一种是 robust completion。
+
+第二种是 critical completion。
+
+第三种是 relation obstruction。
+
+---
+
+# 第一千九百三十三部　黄金 Pick 单胞是负公共谱底
+
+考虑普适二点矩阵：
+
+$$
+\mathbb F
+=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}.
+$$
+
+相对于：
+
+$$
+B=I,
+$$
+
+其 signed floor 为：
+
+$$
+\boxed{
+\operatorname{Floor}
+(\mathbb F\mid I)
+=
+\lambda_{\min}(\mathbb F)
+=
+-\varphi^{-1}.
+}
+\tag{1933.1}
+$$
+
+因此：
+
+$$
+\boxed{
+\mathbb F+\varphi^{-1}I
+=
+\sqrt5\,P_+
+\succeq0.
+}
+\tag{1933.2}
+$$
+
+其中 \(P_+\) 是正黄金本征方向的秩一投影。
+
+这里必须严格说明：仓库的 exact common-spectrum theorem 假设 \(G\) 来自正测度 Gram，因此不能直接应用于不定的 \(\mathbb F\)。
+
+但同一个广义最小本征值函数可以自然延伸到 signed Hermitian 数据。
+
+在这个延伸下：
+
+$$
+\boxed{
+-\varphi^{-1}
+}
+$$
+
+不是一个正 Haar 质量，而是：
+
+$$
+\boxed{
+\text{该关系距离可拥有共同正背景还缺少多少统一谱量。}
+}
+$$
+
+因此黄金负本征值获得了一个更准确的定义：
+
+$$
+\boxed{
+\varphi^{-1}
+=
+\text{规范内部饱和关系的共同背景赤字}.
+}
+\tag{1933.3}
+$$
+
+---
+
+## 1933.1 两种修复不能混同
+
+统一背景修复为：
+
+$$
+\boxed{
+R_{\mathrm{iso}}
+=
+\varphi^{-1}I.
+}
+\tag{1933.4}
+$$
+
+它对所有方向加入相同量。
+
+最小方向修复为：
+
+$$
+\boxed{
+R_{\mathrm{dir}}
+=
+\varphi^{-1}P_-.
+}
+\tag{1933.5}
+$$
+
+它只修复负黄金本征方向。
+
+二者的 operator norm 都是：
+
+$$
+\varphi^{-1},
+$$
+
+但：
+
+* \(R_{\mathrm{iso}}\) 是公共谱底修复；
+* \(R_{\mathrm{dir}}\) 是最小秩、最小迹修复。
+
+所以：
+
+$$
+\boxed{
+\text{Haar 核心问题与最强分离观察者问题共享同一负 margin，
+但修复几何不同。}
+}
+$$
+
+---
+
+# 第一千九百三十四部　观察位置、关系宽度与多项式阶数的互补
+
+同一个离线缺陷可以在三种资源分配下被发现。
+
+## 匹配法向坐标
+
+若已经知道正确纵坐标，并将反射分裂转成：
+
+$$
+x=-\delta^2,
+$$
+
+只需一维 localizer：
+
+$$
+\boxed{
+[-m\delta^2]<0.
+}
+$$
+
+关系宽度是 \(1\)。
+
+---
+
+## 归一化 Schur 图表
+
+若知道离线点的圆盘像 \(a\)，但使用正关系语言，则需要二点 Pick 矩阵：
+
+$$
+\boxed{
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}.
+}
+$$
+
+关系宽度是 \(2\)，黄金谱出现。
+
+---
+
+## 固定观察者、未知位置
+
+若观察点固定、异常位置未知，则必须增加：
+
+* 多项式次数；
+* moment 阶数；
+* Toeplitz/Hankel 宽度；
+* 或卷积幂。
+
+因此：
+
+$$
+\boxed{
+\text{几何匹配越精确，
+所需关系阶数越低。}
+}
+\tag{1934.1}
+$$
+
+反过来：
+
+$$
+\boxed{
+\text{观察位置越固定，
+越需要高阶关系来补偿。}
+}
+$$
+
+黄金比例并不是所有证书都必然出现的常数。
+
+它只在“规范基点 + 内部饱和点”的二点关系正规形中被强迫。
+
+---
+
+# 第一千九百三十五部　多项式 localizer 与 Weil separator 是同一种机制
+
+有限原子矩问题中，负支撑由 Lagrange 多项式隔离：
+
+$$
+p(x_*)=1,
+$$
+
+$$
+p(x_j)=0
+\qquad
+(j\neq *),
+$$
+
+从而：
+
+$$
+\int x|p(x)|^2\,d\mu(x)
+=
+w_*x_*<0.
+$$
+
+对于无限零点族，不能用一个有限多项式精确杀死全部其他模式。
+
+仓库最新完成了一种无限版本：
+
+1. 选择有限对称异常集合 \(E\)；
+2. 构造 unit peak \(b\)，在目标轨道取值 \(1\)；
+3. 在 \(E\) 外满足：
+
+   $$
+   |\widehat b|\le\frac12;
+   $$
+4. 构造 exception killer \(k\)，在目标共轭对取相反值，在其他有限异常点为零；
+5. 使用卷积幂：
+
+   $$
+   g_N=b^{*(N+1)}*k.
+   $$
+
+于是平方后的补集尾部被压到：
+
+$$
+\boxed{
+\left(\frac14\right)^{N+1}M.
+}
+\tag{1935.1}
+$$
+
+而目标四点轨道的负贡献保持不变。
+
+只要：
+
+$$
+\left(\frac14\right)^{N+1}M<A,
+$$
+
+即：
+
+$$
+\boxed{
+N+1>
+\frac{\log(M/A)}{\log4},
+}
+\tag{1935.2}
+$$
+
+完整零点和便严格为负。
+
+仓库现在已经机器证明：给定一个非实离线零点，可构造这样的 powered even separator，使完整 Weil convolution-square 零点和具有严格负实部。
+
+所以：
+
+$$
+\boxed{
+\text{Weil separator 是无限谱上的 Lagrange localizer。}
+}
+$$
+
+有限异常由插值精确消去。
+
+无限尾部由幂放大几何压低。
+
+---
+
+## 1935.1 黄金不是负证书存在性的必要条件
+
+该正式编译器使用的是：
+
+$$
+\frac12
+\quad\text{和}\quad
+\frac14,
+$$
+
+而不是 \(\varphi\)。
+
+这证明：
+
+$$
+\boxed{
+\text{离线缺陷存在有限负 Weil 证书，
+不依赖黄金比例。}
+}
+$$
+
+黄金比例提供的是：
+
+$$
+\boxed{
+\text{规范二点关系下的最优本征方向与最大固定 margin。}
+}
+$$
+
+而 Weil powering 提供的是：
+
+$$
+\boxed{
+\text{把局部负性编译进允许测试函数空间的全局隔离机制。}
+}
+$$
+
+两者分工不同。
+
+---
+
+# 第一千九百三十六部　当前 formal truth boundary
+
+最新仓库审计并没有把所有相关大命题都宣称为完成，反而主动隔离了三个尚缺前提的原子。
+
+目前已闭合的是：
+
+$$
+\boxed{
+\text{给定一个 supplied nonreal off-line zero}
+\Longrightarrow
+\text{存在负 full Weil square}.
+}
+$$
+
+尚未在当前公共依赖链中闭合的是：
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\Longrightarrow
+\text{actual completed-\(\xi\) canonical distribution 上的负证书}.
+}
+$$
+
+具体缺少：
+
+1. 一个公共可导入的实轴非零桥，用于排除正实离线零点；
+2. completed-\(\xi\) 在完整光滑紧支撑测试空间上的 canonical Weil distribution；
+3. 该分布与枚举无关 zero-side 和的识别；
+4. 与有限 prime-power cutoff 表达式的正式连接。
+
+Li 路线同样仍缺少 canonical derivative-defined Li sequence、Schoenberg 桥以及圆周 Bochner/Herglotz 的完整机器接口。最新 digestion 因此把这些更强陈述放入 quarantine，而不是把抽象条件定理误记为实际 Riemann 定理。
+
+这意味着当前最准确的评价是：
+
+$$
+\boxed{
+\text{负证书的数学机制已经闭合；
+actual \(\xi\) 的正式接口尚未完全接通。}
+}
+$$
+
+---
+
+# 第一千九百三十七部　Solenoid：所有有限名字共享一个精确投影
+
+设：
+
+$$
+\theta=(\theta_m)_{m\ge1}
+$$
+
+是 universal solenoid 点。
+
+仓库最新机器证明：
+
+$$
+\boxed{
+m\theta_m
+=
+\pi(\theta)
+\qquad
+\forall m\ge1.
+}
+\tag{1937.1}
+$$
+
+若：
+
+$$
+\pi(\theta)=0,
+$$
+
+则：
+
+$$
+\boxed{
+m\theta_m=0.
+}
+\tag{1937.2}
+$$
+
+也就是说，每一个第 \(m\) 层坐标都是 \(m\)-torsion。
+
+这给命名理论一个非常精确的模型：
+
+$$
+\boxed{
+\text{每个有限坐标经自己的尺度归一化，
+都得到同一个可见投影。}
+}
+$$
+
+但：
+
+$$
+\boxed{
+\theta_m
+}
+$$
+
+本身并不决定整个兼容族 \(\theta\)。
+
+---
+
+## 1937.1 有限层全可终止，完整历史仍可无有限终点
+
+给定有限指标集合：
+
+$$
+m_1,\ldots,m_k,
+$$
+
+令：
+
+$$
+L=\operatorname{lcm}(m_1,\ldots,m_k).
+$$
+
+若 \(\pi(\theta)=0\)，则：
+
+$$
+L\theta_{m_i}
+=
+\frac{L}{m_i}
+\left(
+m_i\theta_{m_i}
+\right)
+=
+0.
+$$
+
+所以任意有限坐标族都有一个共同有限 annihilator。
+
+但这不意味着存在单一有限 \(L\)，能够消灭全部无限坐标。
+
+在标准识别：
+
+$$
+\ker\pi\simeq\widehat{\mathbb Z}
+$$
+
+中，存在无限阶兼容历史。
+
+因此：
+
+$$
+\boxed{
+\text{每个有限名字都呈现为有限 torsion；
+全部名字的兼容历史却不必是有限 torsion。}
+}
+\tag{1937.3}
+$$
+
+这正是：
+
+$$
+\boxed{
+\text{有限层可终止}
+\quad\text{与}\quad
+\text{完整历史无有限终名}
+}
+$$
+
+同时成立的严格模型。
+
+---
+
+# 第一千九百三十八部　精确的名字仍然可以极不充分
+
+Solenoid 恒等式：
+
+$$
+m\theta_m=\pi(\theta)
+$$
+
+是完全精确的。
+
+但投影：
+
+$$
+\pi
+$$
+
+仍然具有非平凡纤维。
+
+同样，common-spectrum floor：
+
+$$
+\alpha_*
+$$
+
+在不同白化图表中完全相同。
+
+但仅知道 \(\alpha_*\) 仍不能恢复完整 Gram 或表示测度。
+
+因此必须区分：
+
+$$
+\boxed{
+\text{名字是否正确}
+}
+$$
+
+与：
+
+$$
+\boxed{
+\text{名字是否穷尽}.
+}
+$$
+
+这两个性质彼此独立。
+
+可以将其写成一个一般原则：
+
+## Exact-name non-exhaustion principle
+
+若：
+
+$$
+N:X\to Y
+$$
+
+为命名映射，则：
+
+$$
+\boxed{
+\text{所有兼容图表都精确给出 }N(x)
+}
+$$
+
+并不推出：
+
+$$
+\boxed{
+N\text{ 为单射}.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{“名可名”可以是真；
+“非常名”仍然成立，
+因为名字未必穷尽其纤维。}
+}
+$$
+
+---
+
+## 1938.1 两种共同核心
+
+| 系统                  | 共同可见量                     | 隐藏部分                                  |
+| ------------------- | ------------------------- | ------------------------------------- |
+| Universal Solenoid  | \(\pi(\theta)=m\theta_m\) | \(\ker\pi\) 中的兼容 torsion 历史           |
+| Rational Gram       | \(\alpha_*B\)             | \(G-\alpha_*B\) 的结构 residual          |
+| Hardy factorization | boundary outer modulus    | inner/model-space fibre               |
+| Riemann completion  | scalar \(\xi\) 与反射轨道      | causal orientation 与 off-line divisor |
+
+它们不是同一个对象。
+
+但都重复：
+
+$$
+\boxed{
+\text{共同影像}
++
+\text{未被该影像穷尽的纤维}.
+}
+$$
+
+这才是“分形”的更严格含义：重复的是**投影—纤维结构**，而不是外形。
+
+---
+
+# 第一千九百三十九部　合法负号与非法负支撑
+
+仓库最新的 golden Euler germ 结果提供了一个重要反例，说明不能把所有负号都解释为离线缺陷。
+
+它构造了一个有限 signed correction \(C_4\)，使：
+
+$$
+\boxed{
+C_4K_3=1+R_4,
+}
+\tag{1939.1}
+$$
+
+并证明所有 residual monomial weights 都位于 \(\beta_6\) 以上，prime deviation 在：
+
+$$
+\Re s>\frac1{\beta_6}
+$$
+
+时绝对可和；同时：
+
+$$
+\frac1{\beta_6}<\frac1{10}.
+$$
+
+该结果明确只是一层有限局部 cancellation certificate，不声称 RH、全局 continuation 或 all-order extraction。
+
+所以：
+
+$$
+\boxed{
+\text{中间公式含负系数}
+}
+$$
+
+并不等于：
+
+$$
+\boxed{
+\text{最终正实现含负支撑}.
+}
+$$
+
+---
+
+## 1939.1 两类负性的区别
+
+### 合法 counterterm 负号
+
+它用于：
+
+* 消去低阶 exact mode；
+* inclusion–exclusion；
+* 提高 residual exponent floor；
+* 使余项进入可和区域。
+
+其合法性由：
+
+$$
+\boxed{
+\text{最小化以后 residual 支撑仍位于允许区域}
+}
+$$
+
+保证。
+
+### 离线 localizer 负号
+
+它表现为：
+
+$$
+x_\delta=-\delta^2<0.
+$$
+
+即使质量：
+
+$$
+m>0,
+$$
+
+支撑仍位于禁止半轴。
+
+其负性在最小 realization 后仍然存在，不能由 exact-mode cancellation 消除。
+
+所以真正判断标准不是“有没有减号”，而是：
+
+$$
+\boxed{
+\text{经过全部合法约化以后，
+剩余支撑和 Gram 是否仍可正实现。}
+}
+$$
+
+---
+
+# 第一千九百四十部　解析完成与正性完成是两个独立轴
+
+Golden Euler germ 推进的是：
+
+$$
+\boxed{
+\text{局部 Euler 余项的最低 exponent floor}.
+}
+$$
+
+Exact common-spectrum floor 检验的是：
+
+$$
+\boxed{
+\text{有限关系 Gram 的最低正背景 floor}.
+}
+$$
+
+Signed-normal localizer 检验的是：
+
+$$
+\boxed{
+\text{谱原子所在的几何 support floor}.
+}
+$$
+
+因此一个完成状态至少需要三个坐标：
+
+$$
+\boxed{
+\mathcal C
+=
+\left(
+\beta_{\mathrm{exp}},
+\alpha_{\mathrm{Haar}},
+\alpha_{\mathrm{supp}}
+\right).
+}
+\tag{1940.1}
+$$
+
+其中：
+
+* \(\beta_{\mathrm{exp}}\) 越大，局部余项越容易在更宽区域可和；
+* \(\alpha_{\mathrm{Haar}}>0\) 表示存在严格公共背景；
+* \(\alpha_{\mathrm{supp}}\ge0\) 表示支撑未离开允许区域。
+
+所以：
+
+$$
+\boxed{
+\text{解析延拓很深}
+\not\Rightarrow
+\text{关系正性成立}.
+}
+$$
+
+同样：
+
+$$
+\boxed{
+\text{局部系数可和}
+\not\Rightarrow
+\text{跨 prime Gram 可以完全正胶合}.
+}
+$$
+
+这解释了为什么 golden germ 的不断推进虽然重要，却不能单独到达 RH。
+
+---
+
+# 第一千九百四十一部　磁单极子、黑洞与负 localizer 的符号统一
+
+同一个离线缺陷在不同图表中的符号可以完全不同。
+
+| 图表                      | 读数             |                符号 |
+| ----------------------- | -------------- | ----------------: |
+| Riesz 质量                | 零点重数 \(m\)     |                 正 |
+| Chern／winding           | 定向整数荷          |             取决于方向 |
+| Poisson／DtN             | 边界通量密度         |                 正 |
+| 普通 Hankel               | 原子质量 Gram      |               正半定 |
+| signed-normal localizer | \(-m\delta^2\) |                 负 |
+| Pick 关系                 | 最小本征值          | \(-\varphi^{-1}\) |
+| Weil square             | 隔离后的完整二次型      |                 负 |
+
+所以没有矛盾。
+
+磁单极子图表问：
+
+> 是否存在一个带正重数的局部源？
+
+黑洞／Poisson 图表问：
+
+> 该源向边界释放多少正通量？
+
+localizer 图表问：
+
+> 该正源是否处于允许的因果支撑一侧？
+
+Pick／Weil 图表问：
+
+> 它能否与其他观察结果共同进入一个正 Hilbert 世界？
+
+因此：
+
+$$
+\boxed{
+\text{正质量}
++
+\text{负支撑}
+}
+$$
+
+是完全一致的。
+
+“负信息”并不是信息量小于零。
+
+它是：
+
+$$
+\boxed{
+\text{一个正存在无法满足所选择的正因果支撑约束。}
+}
+$$
+
+---
+
+# 第一千九百四十二部　新的三段式关系分形
+
+现在可以把此前“万物皆为同一生成律的分形”压缩成一个更稳定的结构。
+
+## 第一段：共同影像
+
+存在一个 completion map：
+
+$$
+\Pi:X\to Y.
+$$
+
+它保留所有观察者共同同意的部分。
+
+例如：
+
+* Solenoid projection；
+* boundary modulus；
+* Haar common floor；
+* scalar determinant。
+
+## 第二段：隐藏纤维
+
+$$
+\Pi^{-1}(y)
+$$
+
+保留被共同影像抹去的差别。
+
+例如：
+
+* profinite history；
+* inner factor；
+* model space；
+* residual measure；
+* cross-prime frame。
+
+## 第三段：合法性 localizer
+
+还需要一个更强观察器判断隐藏纤维能否进入指定正实现：
+
+$$
+\boxed{
+\mathcal L(\text{fibre})\succeq0?
+}
+$$
+
+例如：
+
+* shifted Hankel；
+* support localizer；
+* Pick kernel；
+* Nevanlinna Gram；
+* Weil convolution-square。
+
+因此真正重复的母结构是：
+
+$$
+\boxed{
+\text{共同影像}
+\;+\;
+\text{隐藏纤维}
+\;+\;
+\text{合法性 localizer}.
+}
+\tag{1942.1}
+$$
+
+这是一种操作分形。
+
+它不定义“道”。
+
+它描述每次命名和完成以后必然出现的关系层。
+
+---
+
+# 第一千九百四十三部　signed-normal defect energy
+
+对有限高度窗口 \(T\)，从每一个右侧离线反射轨道取：
+
+$$
+\delta_\rho
+=
+\Re\rho-\frac12>0.
+$$
+
+定义法向缺陷测度：
+
+$$
+\boxed{
+\nu_T^{\mathrm n}
+=
+\sum_{\substack{
+0<\Im\rho\le T\\
+\Re\rho>1/2
+}}
+m_\rho
+\delta_{-\delta_\rho^2}.
+}
+\tag{1943.1}
+$$
+
+其零阶矩为：
+
+$$
+\boxed{
+M_0(T)
+=
+\sum_\rho m_\rho.
+}
+\tag{1943.2}
+$$
+
+一次 localizing 矩为：
+
+$$
+\boxed{
+M_1(T)
+=
+-\sum_\rho
+m_\rho\delta_\rho^2
+\le0.
+}
+\tag{1943.3}
+$$
+
+因此定义：
+
+$$
+\boxed{
+\mathcal E_{\mathrm{off}}(T)
+=
+-M_1(T)
+=
+\sum_\rho
+m_\rho\delta_\rho^2
+\ge0.
+}
+\tag{1943.4}
+$$
+
+则：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal E_{\mathrm{off}}(T)=0
+\qquad
+\forall T.
+}
+\tag{1943.5}
+$$
+
+这是一个无抵消的零点侧 order parameter。
+
+每一个离线轨道都贡献严格正量。
+
+但它不是标准全纯 Weil 测试的直接输出，因为：
+
+$$
+\delta_\rho^2
+$$
+
+依赖反射配对和实部，而不是单一全纯变量的值。
+
+所以真正困难变成：
+
+$$
+\boxed{
+\text{能否从 prime–Gamma 数据直接构造这一 signed-normal 能量？}
+}
+$$
+
+---
+
+## 1943.1 为什么它比普通 zero sum 更干净
+
+普通显式公式中的不同零点贡献可能：
+
+* 振荡；
+* 相位抵消；
+* 需要插值隔离；
+* 需要控制无穷尾部。
+
+而：
+
+$$
+\mathcal E_{\mathrm{off}}(T)
+$$
+
+只累加：
+
+$$
+m_\rho\delta_\rho^2.
+$$
+
+不存在符号抵消。
+
+因此它是理论上最理想的 defect observable。
+
+代价是它并非一个显然的单变量全纯测试函数。
+
+这再次表现了观察者资源交换：
+
+$$
+\boxed{
+\text{越直接读取法向几何，
+越不属于纯标量解析语言。}
+}
+$$
+
+---
+
+# 第一千九百四十四部　Normal-support bifloor RH target
+
+对每个有限窗口，目标是构造两个 canonical 矩阵：
+
+$$
+H_{0,T}
+$$
+
+和：
+
+$$
+H_{1,T}.
+$$
+
+其中 \(H_{0,T}\) 编码正质量，\(H_{1,T}\) 编码 signed-normal 坐标。
+
+定义：
+
+$$
+\boxed{
+\beta_T
+=
+\lambda_{\min}
+\left(
+H_{0,T}^{-1/2}
+H_{1,T}
+H_{0,T}^{-1/2}
+\right).
+}
+\tag{1944.1}
+$$
+
+在有限原子 full-resolution 情形：
+
+$$
+\boxed{
+\beta_T
+=
+-\max_{|\Im\rho|\le T}
+\left(
+\Re\rho-\frac12
+\right)^2.
+}
+\tag{1944.2}
+$$
+
+所以：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\beta_T=0
+\qquad
+\forall T.
+}
+\tag{1944.3}
+$$
+
+进一步加入 common-Haar Gram \(B_T\)，定义：
+
+$$
+\boxed{
+\alpha_T
+=
+\lambda_{\min}
+\left(
+B_T^{-1/2}
+H_{0,T}
+B_T^{-1/2}
+\right).
+}
+\tag{1944.4}
+$$
+
+于是：
+
+* \(\alpha_T\) 检验是否有共同正相位核心；
+* \(\beta_T\) 检验该正状态的法向支撑是否临界。
+
+因此新的双 floor 目标为：
+
+$$
+\boxed{
+\alpha_T\ge0,
+\qquad
+\beta_T\ge0
+\quad
+\forall T.
+}
+\tag{1944.5}
+$$
+
+由于 signed-normal 节点本身不大于零，第二个不等式会强迫：
+
+$$
+\beta_T=0.
+$$
+
+这条路线把 RH 转成：
+
+$$
+\boxed{
+\text{正质量实现}
++
+\text{非负法向 localizer}.
+}
+$$
+
+---
+
+# 第一千九百四十五部　当前最短的三条研究路线
+
+## 路线一：Weil 反证编译
+
+这一方向现在已经非常接近正式闭合：
+
+$$
+\text{nonreal off-line zero}
+\Longrightarrow
+\text{negative full Weil square}
+$$
+
+已机器证明。
+
+剩余首先是补齐 canonical completed-\(\xi\) distribution 与实轴非零公共桥。
+
+它适合构造有限反证书。
+
+---
+
+## 路线二：signed-normal support floor
+
+构造 canonical normal moment pencil：
+
+$$
+(H_1,H_0),
+$$
+
+并从 prime–Gamma 数据证明：
+
+$$
+H_1\succeq0.
+$$
+
+由于零点侧的 signed-normal 支撑本来满足：
+
+$$
+x=-\delta^2\le0,
+$$
+
+这会强迫全部支撑位于 \(0\)。
+
+它是最直接的几何路线。
+
+---
+
+## 路线三：全局完全正胶合
+
+构造 arithmetic feature family：
+
+$$
+V_s
+$$
+
+使：
+
+$$
+\boxed{
+\frac{
+L_\xi(s)+\overline{L_\xi(t)}
+}{
+s+\overline t-1
+}
+=
+\langle V_t,V_s\rangle.
+}
+\tag{1945.1}
+$$
+
+或构造完全正映射：
+
+$$
+\Phi_\xi:
+\mathcal A_{\mathrm{prime}}
+\to
+B(\mathcal H_{\mathrm{arith}}).
+$$
+
+这是最强的生成性证明。
+
+它不仅证明没有离线支撑，还解释全部局部 prime 名字为什么能进入同一个正关系世界。
+
+---
+
+# 第一千九百四十六部　建议形式化顺序
+
+```text
+D5/S3/Analytic/ReflectedSpectrum/MassSupportSeparation/
+  PositiveAtomicMoment.lean
+  OrdinaryHankelPositiveAtAnyRealSupport.lean
+  ShiftedLocalizerTestsSupport.lean
+  NegativeSupportAtomHasNegativeLocalizer.lean
+  PositiveMassIsNotPositiveSupport.lean
+
+D5/S3/Analytic/ReflectedSpectrum/FiniteSupportLocalizingCompleteness/
+  FinitePositiveAtomicMeasure.lean
+  LagrangeAtomSeparator.lean
+  NegativeAtomProducesLocalizingWitness.lean
+  AllShiftedHankelPositiveIffNonnegativeSupport.lean
+
+D5/S3/Analytic/ReflectedSpectrum/NormalDepthPencil/
+  FiniteNormalVandermonde.lean
+  NormalMomentZeroMatrix.lean
+  NormalMomentShiftMatrix.lean
+  NormalPencilDeterminantFactorization.lean
+  NormalPencilSpectrumEqualsSignedDepths.lean
+  DeepestOffLineDepthFromLeastEigenvalue.lean
+
+D5/S3/Observer/GeneralizedSpectralFloor/
+  HermitianReferenceFloor.lean
+  FloorEqualsWhitenedLeastEigenvalue.lean
+  FloorCongruenceInvariant.lean
+  HaarFloorAndSupportFloorSameOrderForm.lean
+
+D5/S3/Observer/HaarCoreHairDecomposition/
+  ExactHaarCore.lean
+  PositiveResidualHair.lean
+  OptimalResidualSingular.lean
+  CommonCoreUniqueResidualMeasureNonunique.lean
+  FloorObserverPhaseTrichotomy.lean
+
+D5/S3/Weil/Pick/SignedGoldenCommonFloor/
+  UniversalPickCellSignedFloor.lean
+  GoldenIsotropicRepair.lean
+  GoldenDirectionalRepair.lean
+  IsotropicVsDirectionalRepair.lean
+  GoldenDeficitIsNotPositiveHaarMass.lean
+
+D5/S3/Weil/ZetaBridge/LocalizerSeparatorDuality/
+  FiniteLagrangeLocalizer.lean
+  InfinitePeakKillerLocalizer.lean
+  ConvolutionPowerTailSuppression.lean
+  LocalizingWitnessToWeilWitnessTarget.lean
+  WeilWitnessAsInfiniteSupportSeparator.lean
+
+D5/S3/Dynamics/SolenoidFiniteNameInfiniteHistory/
+  SolenoidCoordinateCommonProjection.lean
+  KernelCoordinateTorsion.lean
+  FiniteCoordinateLcmAnnihilator.lean
+  NoUniformFiniteAnnihilatorModel.lean
+  ExactProjectionNoninjective.lean
+
+D5/S3/ConceptDynamics/ExactNameNonExhaustion/
+  ExactNamingMap.lean
+  NamingFiber.lean
+  ExactDoesNotImplyInjective.lean
+  CommonInvariantDoesNotRecoverHistory.lean
+  ProjectionFiberLocalizerPattern.lean
+
+D5/S3/Analytic/EulerGerm/CountertermVsSupport/
+  SignedCounterterm.lean
+  ExactCancellationRaisesExponentFloor.lean
+  BenignNegativeCoefficient.lean
+  NegativeSupportSurvivesMinimalReduction.lean
+  CoefficientSignNotSupportSign.lean
+
+D5/S3/Weil/NormalSupportBifloor/
+  CanonicalNormalMassGramTarget.lean
+  CanonicalNormalLocalizingGramTarget.lean
+  CanonicalNormalSupportFloorTarget.lean
+  PositiveNormalLocalizerForcesCriticalSupport.lean
+  NormalBifloorImpliesRHTarget.lean
+
+D5/S3/Weil/CanonicalXiDistributionRepair/
+  PublicRealAxisZetaNonzeroTarget.lean
+  CanonicalCompletedXiWeilDistributionTarget.lean
+  EnumerationIndependentZeroPairingTarget.lean
+  PrimeJumpIdentificationTarget.lean
+  OffLineNegativeWeilSquareRHIffTarget.lean
+```
+
+---
+
+# 第一千九百四十七部　理论深度审计
+
+| 结论                                                        | 当前地位                  |
+| --------------------------------------------------------- | --------------------- |
+| 正质量负支撑的普通 Hankel 可保持 PSD                                  | 仓库机器闭合的单原子版本          |
+| off-line signed-normal atom 的 shifted localizer 严格为负      | 仓库机器闭合                |
+| 有限正原子支撑由全部 localizing matrices 完整识别                       | 本轮精确定理                |
+| full-resolution moment pencil 的谱等于支撑节点                    | 本轮精确定理                |
+| 最小 generalized eigenvalue 恢复最深离线距离                        | 精确                    |
+| 最大 common Haar component 等于白化最小本征值                        | 仓库最新机器闭合              |
+| Haar floor 与 support floor 是同一种序结构                        | 本轮统一                  |
+| 黄金 Pick 单胞的 signed common floor 为 \(-\varphi^{-1}\)       | 精确                    |
+| \(\varphi^{-1}\) 是共同背景赤字而非负质量                             | 精确解释                  |
+| Weil peak–killer 是无限谱 Lagrange localizer                  | 精确结构对应                |
+| supplied nonreal off-line zero 产生负 full Weil square       | 仓库机器闭合                |
+| \(\neg RH\) 已经在 canonical \(\xi\)-distribution 上完全编译      | 尚未闭合；最新审计已 quarantine |
+| Solenoid 坐标缩放精确恢复共同 projection                            | 仓库机器闭合                |
+| 每个有限 kernel 坐标 torsion，但完整历史可无统一有限阶                       | 标准 Solenoid 模型中的精确结论  |
+| Golden germ signed correction 可提高 residual exponent floor | 仓库机器闭合                |
+| 中间负系数等于离线负支撑                                              | 不成立                   |
+| 解析完成深度自动推出关系正性                                            | 不成立                   |
+| canonical signed-normal moment pencil 可由 prime–Gamma 数据构造 | 当前新核心桥                |
+| Prime–Gamma 全局完全正胶合                                       | 当前最强未闭合桥              |
+
+---
+
+# 本轮最终结论
+
+这一轮最深的修正是：
+
+$$
+\boxed{
+\text{离线零点不是一个负状态。}
+}
+$$
+
+它可以拥有：
+
+* 正重数；
+* 正 Riesz 质量；
+* 正 Poisson 通量；
+* 正普通 Hankel Gram；
+* 正模型空间。
+
+真正的异常是：
+
+$$
+\boxed{
+\text{这些正质量位于 signed-normal 坐标的负支撑。}
+}
+$$
+
+对单个离线分裂：
+
+$$
+x=-\delta^2,
+$$
+
+普通 Hankel 为：
+
+$$
+mvv^*\succeq0,
+$$
+
+而一次 localizer 为：
+
+$$
+-m\delta^2vv^*\preceq0.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{状态正性不能替代支撑正性。}
+}
+$$
+
+这也解释了黑洞、磁单极子与离线零点的符号为何看似矛盾。
+
+磁单极子读取的是正整数荷。
+
+黑洞边界读取的是正通量。
+
+moment localizer 读取的则是该正荷是否处于允许的因果一侧。
+
+同一个对象在“存在多少”与“位于哪里”两个问题下，完全可以分别为正与负。
+
+---
+
+最新 common-spectrum floor 定理又说明：
+
+$$
+\boxed{
+\text{一个有限 Gram 中最大的共同无差别背景，
+精确等于白化后的最小本征值。}
+}
+$$
+
+因此一个状态可以分解为：
+
+$$
+\boxed{
+\text{共同 Haar 核心}
++
+\text{结构 residual hair}.
+}
+$$
+
+该核心在不同可逆坐标中完全一致。
+
+但它仍不能恢复全部 residual 历史。
+
+这与 Solenoid 新恒等式形成了非常深的平行：
+
+$$
+m\theta_m=\pi(\theta).
+$$
+
+每一个有限坐标经尺度归一化，都精确给出同一个可见 projection。
+
+但没有一个有限坐标等于整个 Solenoid 点。
+
+所以：
+
+$$
+\boxed{
+\text{名字可以完全正确，却仍然不穷尽所指。}
+}
+$$
+
+这可能是“道可道，非常道”目前最精确的数学影子之一。
+
+不是说语言必然错误。
+
+而是说：
+
+$$
+\boxed{
+\text{正确的商、投影、谱底和 determinant，
+仍然可能拥有非平凡纤维。}
+}
+$$
+
+---
+
+黄金比例也被重新定位。
+
+普适 Pick 单胞：
+
+$$
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}
+$$
+
+相对于共同单位背景的 signed floor 为：
+
+$$
+-\varphi^{-1}.
+$$
+
+因此：
+
+$$
+\boxed{
+\varphi^{-1}
+}
+$$
+
+不是离线原子的质量，也不是离线深度。
+
+它是：
+
+$$
+\boxed{
+\text{两个单独合法的名字无法共同进入正关系世界时，
+相对于统一正背景所欠缺的精确量。}
+}
+$$
+
+匹配法向观察者不需要黄金，只需一个一维 localizer。
+
+固定关系图表则产生二点 Fibonacci 单胞。
+
+所以黄金属于：
+
+$$
+\boxed{
+\text{最小规范关系不兼容，}
+}
+$$
+
+不属于：
+
+$$
+\boxed{
+\text{所有缺陷的原始坐标。}
+}
+$$
+
+---
+
+仓库最新的负 Weil-square 定理又说明，这种局部支撑异常确实可以被编译成允许的全局测试函数。
+
+有限异常点被精确杀死。
+
+无限补集通过卷积幂按：
+
+$$
+4^{-(N+1)}
+$$
+
+几何压低。
+
+所以给定一个非实离线零点以后，负的完整 Weil 平方已经是机器闭合的有限证书。
+
+这条编译并不使用黄金比例。
+
+黄金提供最优局部 margin。
+
+卷积幂提供全局谱隔离。
+
+---
+
+Golden Euler germ 的最新推进则告诉我们，负号本身完全不足以判断异常。
+
+一个 signed correction 可以合法消去低阶模式，将全部 residual exponent 推到更高的正 floor，并改善 Euler 余项的可和区域。
+
+所以：
+
+$$
+\boxed{
+\text{合法负号}
+=
+\text{exact-mode cancellation};
+}
+$$
+
+$$
+\boxed{
+\text{非法负性}
+=
+\text{最小约化后仍处于负支撑或负 Gram 方向}.
+}
+$$
+
+这应当成为整个理论以后判断“负信息”的基本规则。
+
+---
+
+最终，当前最有希望的新对象不是另一个黄金公式，而是一对 generalized spectral floors：
+
+$$
+\boxed{
+\alpha_{\mathrm{Haar}}
+=
+\lambda_{\min}
+\left(
+B^{-1/2}GB^{-1/2}
+\right),
+}
+$$
+
+$$
+\boxed{
+\alpha_{\mathrm{supp}}
+=
+\lambda_{\min}
+\left(
+H_0^{-1/2}H_1H_0^{-1/2}
+\right).
+}
+$$
+
+第一个读取共同完成核心。
+
+第二个读取最深法向支撑。
+
+在有限 signed-normal 原子模型中：
+
+$$
+\boxed{
+\alpha_{\mathrm{supp}}
+=
+-\delta_{\max}^2.
+}
+$$
+
+因此 RH 可以被重新理解为：
+
+$$
+\boxed{
+\text{所有有限窗口中的正质量谱，
+其 signed-normal 支撑底线始终恰好为零。}
+}
+$$
+
+真正承重的下一步，是从 prime、pole、Gamma 数据构造这一 canonical normal moment pencil。
+
+一旦能够证明其 localizing side 非负，由于 signed-normal 坐标本来就不大于零，全部离线支撑将被整体压缩到：
+
+$$
+\delta=0.
+$$
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{不可名者不等于隐藏纤维；
+隐藏纤维仍然可以被研究。
+每次完成只给出一个共同影像，
+每个共同影像都可能有真实纤维，
+而 localizer 所判断的不是纤维是否存在，
+而是这些纤维能否合法地进入同一个正关系世界。
+离线零点，就是正质量纤维落在错误支撑一侧所留下的最小完成障碍。}
+$$

@@ -1,0 +1,75 @@
+## 141. RH 的矩阵相分类
+
+若 \(\rho\) 是非平凡零点，令：
+
+$$
+q_\rho=\rho(1-\rho).
+$$
+
+则：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\forall\rho,\quad
+q_\rho\in\left(\frac14,\infty\right)
+}
+$$
+
+等价于：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{每个零点轨道伴随矩阵 }
+\mathcal C(q_\rho)
+\text{ 都是实椭圆型}.
+}
+$$
+
+当 \(q>0\) 时，归一化：
+
+$$
+\widehat{\mathcal C}(q)
+=
+q^{-1/2}\mathcal C(q)
+$$
+
+满足：
+
+$$
+\det\widehat{\mathcal C}(q)=1,
+$$
+
+$$
+\operatorname{tr}\widehat{\mathcal C}(q)
+=
+\frac1{\sqrt q}.
+$$
+
+于是：
+
+$$
+q>\frac14
+\iff
+\left|
+\operatorname{tr}\widehat{\mathcal C}(q)
+\right|<2.
+$$
+
+这正是 \(SL_2(\mathbb R)\) 中的椭圆分类。
+
+所以 RH 也可以写成：
+
+$$
+\boxed{
+\text{所有零点轨道的 determinant-normalized companion 均为 elliptic}.
+}
+$$
+
+这不是 Hilbert–Pólya 证明，因为它只是把每个零点轨道逐个放入一个二维伴随块；尚未构造一个统一的自伴全局算子。
+
+---
+
