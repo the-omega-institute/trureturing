@@ -1,0 +1,14 @@
+* 对数提取 connected primitive modes。
+
+所以：
+
+$$
+\boxed{
+\frac1\zeta
+}
+$$
+
+不是一个随意的“负 ζ”，而是**对有限素数子集进行奇偶 Möbius 反演后的超迹**。
+
+---
+

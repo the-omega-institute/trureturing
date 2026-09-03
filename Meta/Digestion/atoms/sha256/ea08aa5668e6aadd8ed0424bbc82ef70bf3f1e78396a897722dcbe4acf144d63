@@ -1,0 +1,13 @@
+## 409. 总宇称无连续延伸
+
+```lean
+theorem finiteSupportParity_no_continuous_extension :
+    ¬ ∃ L :
+      (∀ p : Prime, ZMod 2) →+ ZMod 2,
+      Continuous L ∧
+      ∀ x : DirectSum Prime (fun _ => ZMod 2),
+        L x.toPi = finiteSupportParity x
+```
+
+---
+
