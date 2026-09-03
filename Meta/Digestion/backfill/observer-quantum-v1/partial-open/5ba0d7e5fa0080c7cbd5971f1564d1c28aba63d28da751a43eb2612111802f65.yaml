@@ -1,0 +1,32 @@
+fingerprints:
+  raw_sha256: sha256:5ba0d7e5fa0080c7cbd5971f1564d1c28aba63d28da751a43eb2612111802f65
+  normalized_sha256: sha256:5ba0d7e5fa0080c7cbd5971f1564d1c28aba63d28da751a43eb2612111802f65
+cas_ref: sha256:5ba0d7e5fa0080c7cbd5971f1564d1c28aba63d28da751a43eb2612111802f65
+coverage_gids:
+  - gid: D5/S3/Observer/MetricGeometry/OrbitConnesDistance.orbit_connes_distance_eq
+    target_statement_id: null
+  - gid: D5/S3/Observer/MetricGeometry/VisiblePhaseInfinity.hiddenTranslation_visible_phase_witness
+    target_statement_id: null
+  - gid: D5/S3/Observer/MetricGeometry/VisiblePhaseInfinity.visible_phase_separation_distance_eq_top
+    target_statement_id: null
+  - gid: D5/S3/Observer/MetricGeometry/WindowObserverDistance.window_observer_distance_eq_cycle_distance
+    target_statement_id: null
+  - gid: D5/S3/Observer/ObserverMetric.commute_iff_updateDefect_eq_zero
+    target_statement_id: null
+  - gid: D5/S3/Observer/ObserverMetric.invariant_iff_const_on_cyclic_window
+    target_statement_id: null
+  - gid: D5/S3/Observer/ObserverMetric.perturbationSeminorm_add_le
+    target_statement_id: null
+  - gid: D5/S3/Observer/ObserverMetric.perturbationSeminorm_eq_zero_iff
+    target_statement_id: null
+  - gid: D5/S3/Observer/ObserverMetric.perturbationSeminorm_smul
+    target_statement_id: null
+  - gid: D5/S3/Observer/ObserverMetric.updateDefect_eq_zero_iff_invariant
+    target_statement_id: null
+receipts:
+  scribe: []
+  unresolved_subitems:
+    - LP-eight-pair-certificate
+    - rieffel-metric-bundle-over-torus
+    - streamline-infinity-at-nonintegral-fiber-offset
+    - type-II-infinity-classification
