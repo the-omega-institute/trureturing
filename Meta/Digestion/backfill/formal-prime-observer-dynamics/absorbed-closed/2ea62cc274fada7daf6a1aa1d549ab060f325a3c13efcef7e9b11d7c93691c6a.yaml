@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:2ea62cc274fada7daf6a1aa1d549ab060f325a3c13efcef7e9b11d7c93691c6a
+  normalized_sha256: sha256:2ea62cc274fada7daf6a1aa1d549ab060f325a3c13efcef7e9b11d7c93691c6a
+cas_ref: sha256:2ea62cc274fada7daf6a1aa1d549ab060f325a3c13efcef7e9b11d7c93691c6a
+coverage_gids:
+  - D5/S3/Estimation/ExperimentCost/KernelTowerNilpotentRecovery.finite_kernel_tower_recovers_block_profile
+receipts:
+  coverage:
+    - gid: D5/S3/Estimation/ExperimentCost/KernelTowerNilpotentRecovery.finite_kernel_tower_recovers_block_profile
+      source_sha256: sha256:2ea62cc274fada7daf6a1aa1d549ab060f325a3c13efcef7e9b11d7c93691c6a
+      target_statement_id: sha256:ae23dfbd5d06ac0b40adbda3eff8d3ce2d329e577c99be0530d712768448d832
+  scribe:
+    - gid: D5/S3/Estimation/ExperimentCost/KernelTowerNilpotentRecovery.finite_kernel_tower_recovers_block_profile
+      definition_sha256: sha256:9e3a7c1c88c2ec9de9d8ad1c2270df8f6f25508495941260f5cb945ee869505a
+      emission_sha256: sha256:8ea7af67ece6747f4dd61efa9ab6bf5ed1d9037128dc7c0cfd185ecb9d9610f5
+  unresolved_subitems: []
