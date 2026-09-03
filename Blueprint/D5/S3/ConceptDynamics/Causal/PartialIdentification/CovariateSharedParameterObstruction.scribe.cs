@@ -17,6 +17,8 @@ internal sealed class CovariateSharedParameterObstructionDocument
             Paragraph(Text(
                 "The actual joint model requires one parameter for both strata. With equal covariate weights, the two responses cancel and the global query is always one half.")),
             Paragraph(Text(
+                "The value one half is forced by the affine complement involution x maps to one minus x and equal weighting. This algebraic fixed-point mechanism makes no claim about the Riemann zeta function or the location of its zeros.")),
+            Paragraph(Text(
                 "This construction proves that stratum-level sharpness alone is insufficient for weighted global sharpness. Joint combinability, or an equivalent product-feasibility condition, is a substantive causal assumption.")),
             Describe.Lean(
                 DescribeId.Create("local-attainable-iff"),
@@ -26,6 +28,15 @@ internal sealed class CovariateSharedParameterObstructionDocument
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For either complementary response, every value between zero and one is realized by an admissible stratum-specific parameter, and no value outside the interval is realized."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("complement-fixed-point-eq-half"),
+                DeclarationHandle.Create(Prefix + "complement_fixed_point_eq_half"),
+                H("The affine complement involution has fixed point one half"),
+                StatementSource.FromLean(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Solving x equals one minus x gives the unique affine midpoint. The theorem is intentionally independent of analytic number theory."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("shared-parameter-attainable-iff"),
