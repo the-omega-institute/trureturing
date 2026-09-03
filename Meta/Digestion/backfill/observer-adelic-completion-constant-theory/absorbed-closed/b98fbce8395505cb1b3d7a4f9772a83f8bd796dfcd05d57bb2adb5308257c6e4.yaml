@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:b98fbce8395505cb1b3d7a4f9772a83f8bd796dfcd05d57bb2adb5308257c6e4
+  normalized_sha256: sha256:b98fbce8395505cb1b3d7a4f9772a83f8bd796dfcd05d57bb2adb5308257c6e4
+cas_ref: sha256:b98fbce8395505cb1b3d7a4f9772a83f8bd796dfcd05d57bb2adb5308257c6e4
+coverage_gids:
+  - D5/S3/Weil/ZetaCore/CertifiedStickyMatrix.certified_sticky_matrix
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/ZetaCore/CertifiedStickyMatrix.certified_sticky_matrix
+      source_sha256: sha256:b98fbce8395505cb1b3d7a4f9772a83f8bd796dfcd05d57bb2adb5308257c6e4
+      target_statement_id: sha256:ee9b6581b8e5e52e93d3538c50633ed2bd67029d96355a7f3f6e18d962a9c6e0
+  scribe:
+    - gid: D5/S3/Weil/ZetaCore/CertifiedStickyMatrix.certified_sticky_matrix
+      definition_sha256: sha256:bfab2364401b8f104958a3d0b3a7ea8cc0a99ff6ef4f469f180d7a472a01327e
+      emission_sha256: sha256:79ea35d23b87572dfac1ecd75fc118eabcbabc23da7e4d16f423100dacfee4e8
+  unresolved_subitems: []
