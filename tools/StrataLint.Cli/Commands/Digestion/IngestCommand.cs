@@ -28,74 +28,104 @@ internal static partial class IngestCommand
             var document = prepared.CurrentDocument;
             var baselineDocument = prepared.BaselineDocument;
             var plan = prepared.Plan;
-            var repositoryChanges = prepared.RepositoryChanges;
-            var plannedRaw = prepared.PlannedRaw;
             var plannedSnapshot = prepared.PlannedSnapshot;
             var plannedDocument = prepared.PlannedDocument;
             var report = leanReportSource.Load(current);
             var lean = ValidateLean(plannedSnapshot, report);
-            plannedDocument = MathlibUpgradeDigestionReanchor.Apply(
-                plannedDocument,
-                baseline,
-                current,
-                repositoryChanges,
-                lean);
-            var deltaImpact = BackfillDeltaImpactResolver.Resolve(
-                plannedSnapshot,
-                baseline,
-                plannedDocument,
-                prepared.PlannedChanges);
-            var evaluationChanges = deltaImpact.EvaluationChanges;
-            var receiptVerificationChanges = deltaImpact.ReceiptVerificationChanges;
-            var evaluationScope = prepared.PlannedScope;
             var truthStates = LeanTruthStates.Resolve(plannedSnapshot, lean);
-            var verifiedScribeEmissions = scribeEmissionVerifier.Verify(
-                plannedSnapshot,
-                report,
-                receiptVerificationChanges);
-            var derived = DigestionStatusEvaluator.Evaluate(
-                evaluationScope,
+            plannedDocument = DigestionCoverageTargetAligner.Align(
                 plannedDocument,
                 plannedSnapshot,
                 lean,
-                verifiedScribeEmissions,
-                baselineDocument,
-                validateProjectedStatus: false,
-                baselineSnapshot: baseline,
-                changes: receiptVerificationChanges,
-                casChanges: prepared.PlannedCasChanges,
-                projectedStatusChanges: evaluationChanges,
-                truthStates: truthStates);
-            RequireNoReceiptIntegrityFailure(derived);
-
-            var statusByAtomId = derived.Entries.ToDictionary(
-                static item => item.Entry.AtomId,
-                static item => item.DerivedStatus,
-                StringComparer.Ordinal);
-            var refreshed = plannedDocument.WithDigestionSources(
-                plannedDocument.RequireDigestionSources()
-                    .Select(source => source with
-                    {
-                        Entries = source.Entries
-                            .Select(entry => entry with
-                            {
-                                ProjectedStatus = statusByAtomId[entry.AtomId],
-                            })
-                            .ToImmutableArray(),
-                    })
-                    .ToImmutableArray());
-            var finalRaw = AddCasObjects(
-                ReplaceLedger(currentRaw, document, refreshed),
+                truthStates);
+            var fixedPointRaw = AddCasObjects(
+                ReplaceLedger(currentRaw, document, plannedDocument),
                 plan.CasObjects);
-            var finalSnapshot = Decode(finalRaw);
+            var fixedPointSnapshot = Decode(fixedPointRaw);
+            var fixedPointChanges = EffectiveChanges(prepared.BaselineRaw, fixedPointRaw);
+            var deltaImpact = BackfillDeltaImpactResolver.Resolve(
+                fixedPointSnapshot,
+                baseline,
+                plannedDocument,
+                fixedPointChanges);
+            var verifiedScribeEmissions = scribeEmissionVerifier.Verify(
+                fixedPointSnapshot,
+                report,
+                deltaImpact.ReceiptVerificationChanges);
+            DigestionEvaluationScope evaluationScope;
+            RawChangeSet evaluationChanges;
+            RawChangeSet receiptVerificationChanges;
+            var remainingIterations = plannedDocument.RequireDigestionEntries().Length + 2;
+            while (true)
+            {
+                if (--remainingIterations == 0)
+                {
+                    throw new InvalidOperationException(
+                        "digestion status derivation did not reach a fixed point");
+                }
+
+                evaluationChanges = deltaImpact.EvaluationChanges;
+                receiptVerificationChanges = deltaImpact.ReceiptVerificationChanges;
+                evaluationScope = DigestionEvaluationScopes.ForChanges(
+                    fixedPointChanges,
+                    ImplementationPath);
+                var evaluationCasChanges = DigestionIngestor.IncludeCasReverseDependencies(
+                    baselineDocument,
+                    fixedPointChanges);
+                var derived = DigestionStatusEvaluator.Evaluate(
+                    evaluationScope,
+                    plannedDocument,
+                    fixedPointSnapshot,
+                    lean,
+                    verifiedScribeEmissions,
+                    baselineDocument,
+                    validateProjectedStatus: false,
+                    baselineSnapshot: baseline,
+                    changes: receiptVerificationChanges,
+                    casChanges: evaluationCasChanges,
+                    projectedStatusChanges: evaluationChanges,
+                    truthStates: truthStates);
+                RequireNoReceiptIntegrityFailure(derived);
+
+                if (derived.Entries.All(static item =>
+                        item.DerivedStatus == item.Entry.ProjectedStatus))
+                {
+                    break;
+                }
+
+                var statusByAtomId = derived.Entries.ToDictionary(
+                    static item => item.Entry.AtomId,
+                    static item => item.DerivedStatus,
+                    StringComparer.Ordinal);
+                plannedDocument = plannedDocument.WithDigestionSources(
+                    plannedDocument.RequireDigestionSources()
+                        .Select(source => source with
+                        {
+                            Entries = source.Entries
+                                .Select(entry => entry with
+                                {
+                                    ProjectedStatus = statusByAtomId[entry.AtomId],
+                                })
+                                .ToImmutableArray(),
+                        })
+                        .ToImmutableArray());
+                fixedPointRaw = AddCasObjects(
+                    ReplaceLedger(currentRaw, document, plannedDocument),
+                    plan.CasObjects);
+                fixedPointSnapshot = Decode(fixedPointRaw);
+                fixedPointChanges = EffectiveChanges(prepared.BaselineRaw, fixedPointRaw);
+                deltaImpact = BackfillDeltaImpactResolver.Resolve(
+                    fixedPointSnapshot,
+                    baseline,
+                    plannedDocument,
+                    fixedPointChanges);
+            }
+
+            var finalRaw = fixedPointRaw;
+            var finalSnapshot = fixedPointSnapshot;
             LeanTruthStates.RequireSameManagedInputs(plannedSnapshot, finalSnapshot);
             var finalDocument = LoadDocument(finalSnapshot);
-            var finalChanges = IngestChanges(
-                repositoryChanges,
-                currentRaw,
-                finalRaw,
-                finalDocument,
-                plan.CasObjects);
+            var finalChanges = EffectiveChanges(prepared.BaselineRaw, finalRaw);
             var finalCasChanges = DigestionIngestor.IncludeCasReverseDependencies(
                 baselineDocument,
                 finalChanges);
@@ -159,6 +189,7 @@ internal static partial class IngestCommand
         var baseline = Decode(baselineRaw);
         return new IngestInputs(
             currentRaw,
+            baselineRaw,
             current,
             baseline,
             LoadDocument(current),
@@ -218,6 +249,7 @@ internal static partial class IngestCommand
             plannedChanges);
         return new IngestPreparation(
             currentRaw,
+            inputs.BaselineRaw,
             current,
             baseline,
             currentDocument,
@@ -317,18 +349,6 @@ internal static partial class IngestCommand
     private sealed record ResidualHost(string Residue, string SourceId, string AtomId);
 
     private sealed record ResidueSourceVote(string Residue, string SourceId);
-
-    private static string ParseArguments(IReadOnlyList<string> arguments)
-    {
-        if (arguments.Count == 2
-            && arguments[0] == "--base"
-            && !string.IsNullOrWhiteSpace(arguments[1]))
-        {
-            return arguments[1];
-        }
-
-        throw new InvalidOperationException("USAGE: StrataLint ingest --base REV");
-    }
 
     private static BackfillInventoryDocument LoadDocument(RepositorySnapshot snapshot) =>
         BackfillInventoryLoader.Load(snapshot);

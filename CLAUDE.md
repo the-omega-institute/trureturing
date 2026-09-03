@@ -152,10 +152,12 @@ backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 
 **两 PR 律、预登记 formalization 收据及其机器已退役(owner 2026-09-02:边即数据,不记动作)。**
 
+**coverage 边 schema 的 L2 三步迁移(owner 2026-09-03 定)**:持久化键名始终为 `coverage_gids`;旧形元素是 GID 字符串,新形元素是 `{gid,target_statement_id}` 对象(`target_statement_id` 可为 `null`),空列表两形逐字节相同。**L2a expand(本 PR)** 同时在 candidate 与 protected-base 读取面按元素类型严格识别两形,将旧 `coverage_gids` 及可选 `receipts.coverage` 投影为新边,writer 只写对象形,并暂留一次性 `migrate-digestion-coverage` 工具;**L2b migrate** 只迁移非空旧形条目,空 `coverage_gids: []` 条目零字节改动;**L2c contract** 在迁移清零后删除 candidate/base 旧形投影、迁移器、CLI 动词及迁移专用测试,loader 只接受对象形。L2a 的双读是有终点的 schema expand,不是永久兼容层;未完成 L2c 即迁移未收口。
+
 **冻结态与消化态是两个正交状态机,禁互相冒充**:
 - **冻结态(真值侧,二值)**:`Golden/Frozen/accepted/` 中存在该 `statement_id` 的 `Freeze` 事件 ⟺ 已冻结,**永不解冻**(第〇节冻结律;SL-008 append-only diff 守卫)。在 commit `572cd43587f120a379cf83871b68c249be36cd5e` 实测 3,013 条,`event_type` 全为 `Freeze`、`schema_version` 全为 5;payload 承重四项(以 writer 为准):`statement_id`(节点身份)、`declaration_statement_ids`、`descriptor_selector`(指回 `.lean` 路径)、`prerequisite_frozen_node_ids`——**末项就是真值 DAG 的边**,不是元数据。
 - **消化态(账目侧,三值)**:`residual-open`(尚无 GID 覆盖)/ `partial-closed`(子项部分覆盖)/ `absorbed-closed`(覆盖 GID 与 coverage 数据齐备)。在 commit `572cd43587f120a379cf83871b68c249be36cd5e` 实测 18,234 / 127 / 1,201,atom CAS 19,581,source 28(27 卷 md + 1 个 `.jsonl` 注册表)。
-- **两者不同构,故是两句话**:定理已冻结 **⇏** 其 atom 已 `absorbed-closed`(还差 cover 那一步);atom `absorbed-closed` **⟹** 其 `coverage_gids` 所指声明已冻结。汇报与 PR 说明里把"冻结了"写成"消化了"(或反之)即第 4 条冒领。
+- **两者不同构,故是两句话**:定理已冻结 **⇏** 其 atom 已 `absorbed-closed`(还差 cover 那一步);atom `absorbed-closed` **⟹** 其 `coverage_gids[].gid` 所指声明已冻结。汇报与 PR 说明里把"冻结了"写成"消化了"(或反之)即第 4 条冒领。
 
 **每个理论 PR 的说明须写清三项(承第 9′ 条产地,不另立格式)**:①**形态**(deposit / cover / deposit+cover / ingest);②**链上这一环**——哪个 `source_id` 的哪个 `atom_id` → 哪个 GID;③**落地后的状态**——冻结事件的 `event_hash`(deposit),或 atom 由哪态迁到哪态(cover)。判据是"读者能否据此在链上定位这次改动",不是"提没提这几个词"。
 
