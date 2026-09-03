@@ -1,0 +1,12 @@
+fingerprints:
+  raw_sha256: sha256:f3d16b63db26cb6c0de6cf7515a894066ee0109c823e80a483eb51dce3c6f03e
+  normalized_sha256: sha256:f3d16b63db26cb6c0de6cf7515a894066ee0109c823e80a483eb51dce3c6f03e
+cas_ref: sha256:f3d16b63db26cb6c0de6cf7515a894066ee0109c823e80a483eb51dce3c6f03e
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/RecordCorrelationMonogamy.record_correlation_monogamy
+    target_statement_id: null
+  - gid: D5/S3/ObserverMemory/RecordCorrelationMonogamy.three_quarter_address_record_certificate
+    target_statement_id: null
+receipts:
+  scribe: []
+  unresolved_subitems: []

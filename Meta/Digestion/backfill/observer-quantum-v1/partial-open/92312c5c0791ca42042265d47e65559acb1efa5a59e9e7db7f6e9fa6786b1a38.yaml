@@ -1,0 +1,30 @@
+fingerprints:
+  raw_sha256: sha256:92312c5c0791ca42042265d47e65559acb1efa5a59e9e7db7f6e9fa6786b1a38
+  normalized_sha256: sha256:92312c5c0791ca42042265d47e65559acb1efa5a59e9e7db7f6e9fa6786b1a38
+cas_ref: sha256:92312c5c0791ca42042265d47e65559acb1efa5a59e9e7db7f6e9fa6786b1a38
+coverage_gids:
+  - gid: D5/S3/ContinuousObservables/CentralWinding.central_winding_certificate
+    target_statement_id: null
+  - gid: D5/S3/Observer/MatrixUnitCertificate.matrix_unit_mul
+    target_statement_id: null
+  - gid: D5/S3/Observer/WindowRegister.clockMatrix_pow_card
+    target_statement_id: null
+  - gid: D5/S3/Observer/WindowRegister.shiftMatrix_pow_card
+    target_statement_id: null
+  - gid: D5/S3/Observer/WindowRegister.windowRoot_isPrimitiveRoot
+    target_statement_id: null
+  - gid: D5/S3/Observer/WindowRegister.window_commutant_eq_scalars
+    target_statement_id: null
+  - gid: D5/S3/Observer/WindowRegister.window_unitary
+    target_statement_id: null
+  - gid: D5/S3/Observer/WindowRegister.window_weyl
+    target_statement_id: null
+  - gid: D5/S3/ObserverMemory/PrimePowerTensorTower.prime_power_tensor_factor_decomposition
+    target_statement_id: null
+  - gid: D5/S3/QuantumBounds/RobertsonSchrodinger.robertson_schrodinger
+    target_statement_id: null
+receipts:
+  scribe: []
+  unresolved_subitems:
+    - noncommutative-algebra-bundle-over-torus
+    - universal-c-star-crossed-product-identification
