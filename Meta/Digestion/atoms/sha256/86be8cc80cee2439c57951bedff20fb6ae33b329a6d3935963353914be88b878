@@ -1,0 +1,41 @@
+## 98. 完成就是把 cocycle 降为常数
+
+寻找 \(a(s)\)，使：
+
+$$
+c^a(s)=\varepsilon,
+\qquad
+\varepsilon\in\{+1,-1\}.
+$$
+
+令：
+
+$$
+\Lambda(s)=a(s)F(s),
+$$
+
+则：
+
+$$
+\boxed{
+\Lambda(1-s)
+=
+\varepsilon\Lambda(s).
+}
+$$
+
+这里：
+
+* \(\varepsilon=+1\)：even completion；
+* \(\varepsilon=-1\)：odd completion。
+
+对 Riemann ζ，Gamma、\(\pi\) 和极点消去因子把原始扭曲函数方程重规范化为：
+
+$$
+\xi(1-s)=\xi(s).
+$$
+
+所以 completed \(\xi\) 是 cocycle 被完全平凡化后的 even state。
+
+---
+

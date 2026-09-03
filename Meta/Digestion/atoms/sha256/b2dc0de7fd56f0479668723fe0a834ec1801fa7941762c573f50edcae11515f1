@@ -1,0 +1,15 @@
+## 412. 偶奇 sector
+
+```lean
+theorem evenOddOmega_dirichlet_decomposition
+    {s : ℂ} (hs : 1 < s.re) :
+    evenOmegaSeries s =
+      (riemannZeta s +
+        riemannZeta (2 * s) / riemannZeta s) / 2 ∧
+    oddOmegaSeries s =
+      (riemannZeta s -
+        riemannZeta (2 * s) / riemannZeta s) / 2
+```
+
+---
+

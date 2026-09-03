@@ -1,0 +1,47 @@
+## 118. 同一个局部构型有六种信息层
+
+固定 \(p\) 和规范有序构型：
+
+$$
+H=(h_1,\ldots,h_k).
+$$
+
+定义完整有序 residue word：
+
+$$
+W_p(H)
+=
+(-h_1,\ldots,-h_k)\bmod p.
+$$
+
+它逐级投影为：
+
+$$
+\boxed{
+W_p(H)
+\longrightarrow
+R_p(H)
+\longrightarrow
+\pi_p(H)
+\longrightarrow
+(m_r)_r
+\longrightarrow
+\nu_p(H)
+\longrightarrow
+L_p(H).
+}
+$$
+
+其中：
+
+1. \(W_p(H)\)：保存顺序与 residue 值；
+2. \(R_p(H)\)：只保存无序 residue support；
+3. \(\pi_p(H)\)：只保存哪些 offsets 发生碰撞；
+4. \((m_r)\)：只保存碰撞块大小；
+5. \(\nu_p(H)\)：只保存不同块数量；
+6. \(L_p(H)\)：再把 \(\nu_p(H)\) 压成一个标量。
+
+每一步都可能不可逆。
+
+---
+

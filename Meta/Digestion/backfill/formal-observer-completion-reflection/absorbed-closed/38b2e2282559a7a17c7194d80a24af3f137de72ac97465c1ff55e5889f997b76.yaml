@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:38b2e2282559a7a17c7194d80a24af3f137de72ac97465c1ff55e5889f997b76
+  normalized_sha256: sha256:38b2e2282559a7a17c7194d80a24af3f137de72ac97465c1ff55e5889f997b76
+cas_ref: sha256:38b2e2282559a7a17c7194d80a24af3f137de72ac97465c1ff55e5889f997b76
+coverage_gids:
+  - D5/S3/Quantum/Measurement/PovmOutcomeLowerBound.povm_outcome_lower_bound
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/Measurement/PovmOutcomeLowerBound.povm_outcome_lower_bound
+      source_sha256: sha256:38b2e2282559a7a17c7194d80a24af3f137de72ac97465c1ff55e5889f997b76
+      target_statement_id: sha256:25c85aa233c66074c39875e6b7d6d31b691a6702151a784a26aa37fec5177b1e
+  scribe:
+    - gid: D5/S3/Quantum/Measurement/PovmOutcomeLowerBound.povm_outcome_lower_bound
+      definition_sha256: sha256:d12337f54e96822340e33d89694581124656a11a4bdcc33d9e06aae2a7f891e8
+      emission_sha256: sha256:26bcb1b1fd460cba653b8ff2227f5e81dbb279abbe51e5a0ee052fdb2f381ff2
+  unresolved_subitems: []

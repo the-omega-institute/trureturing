@@ -466,6 +466,13 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 scribeEmissionVerifier,
                 arguments);
 
+    public CommandResult MigrateDigestionCoverage(IReadOnlyList<string> arguments) =>
+        IngestCommand.RunCoverageMigration(
+            repositoryRoot,
+            repository,
+            leanReportSource,
+            arguments);
+
     public CommandResult CoverAtom(IReadOnlyList<string> arguments) =>
         scribeEmissionVerifier is null
             ? new CommandResult(

@@ -1,0 +1,22 @@
+### 50.2 构型 jet 缺陷
+
+在 \(\Re s>1\) 定义：
+
+$$
+\boxed{
+\mathfrak d_A^{\mathrm{jet}}(\mathcal R;s)
+=
+[\varepsilon_A]
+\log
+\frac{
+\Delta_H(s;\varepsilon)
+}{
+\Delta_H(s;0)
+}
+-
+\kappa_A^{\mathrm{arith}}(s).
+}
+$$
+
+---
+

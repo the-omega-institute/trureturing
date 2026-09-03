@@ -52,7 +52,7 @@ public sealed partial class DigestionQuarantineTests
     {
         var atom = Atom(AtomId, Quarantine).Replace(
             "coverage_gids: []",
-            "coverage_gids:\n  - D5/S0/Carrier/Probe.probe",
+            "coverage_gids:\n  - gid: D5/S0/Carrier/Probe.probe\n    target_statement_id: null",
             StringComparison.Ordinal);
 
         var error = Assert.Throws<FormatException>(() =>
@@ -159,7 +159,6 @@ public sealed partial class DigestionQuarantineTests
             + $"cas_ref: {Digest}\n"
             + "coverage_gids: []\n"
             + "receipts:\n"
-            + "  coverage: []\n"
             + "  scribe: []\n"
             + Indent(unresolved, 2)
             + quarantineBlock
@@ -198,7 +197,7 @@ public sealed partial class DigestionQuarantineTests
             atomId,
             new DigestionFingerprints(Digest, Digest),
             [],
-            new DigestionReceipts([], [], [.. unresolvedSubitems], [], null, quarantine),
+            new DigestionReceipts([], [.. unresolvedSubitems], [], null, quarantine),
             new DigestionStatus(DigestionMigrationState.Residual, DigestionTruthState.Open),
             Digest);
 

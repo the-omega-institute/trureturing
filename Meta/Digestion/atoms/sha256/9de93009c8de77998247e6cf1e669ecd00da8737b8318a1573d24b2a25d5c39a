@@ -1,0 +1,24 @@
+* \(\varepsilon_v=1\)：长跳 \(\varphi^2\)。
+
+但 \(\varepsilon_v\) 并不按：
+
+$$
+0,1,0,1,\ldots
+$$
+
+普通交替。
+
+由 Beatty 闭式：
+
+$$
+\varepsilon_v
+=
+\left\lfloor\frac{v+2}{\varphi}\right\rfloor
+-
+\left\lfloor\frac{v+1}{\varphi}\right\rfloor.
+$$
+
+它是一个由无理旋转产生的二值机械词。
+
+---
+

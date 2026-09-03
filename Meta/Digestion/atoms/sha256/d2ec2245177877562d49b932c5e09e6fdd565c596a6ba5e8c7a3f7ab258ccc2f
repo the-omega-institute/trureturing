@@ -1,0 +1,32 @@
+## 43. 黄金尺度环
+
+令：
+
+$$
+L=\log\varphi.
+$$
+
+假设在某个黄金 regulator quotient 中，尺度参数满足周期识别。
+
+若 even channel 满足：
+
+$$
+c(\tau+L)=c(\tau),
+$$
+
+而 odd channel 满足：
+
+$$
+d(\tau+L)=-d(\tau),
+$$
+
+则：
+
+$$
+d(\tau+2L)=d(\tau).
+$$
+
+所以 odd channel 是反周期的。
+
+---
+

@@ -19,7 +19,7 @@ internal sealed partial class RuleFixture
     internal const string FixtureBackfillSourcePath =
         "Meta/Digestion/backfill/fixture-source/source.toml";
     internal const string FixtureBackfillAtomPath =
-        "Meta/Digestion/backfill/fixture-source/partial-closed/"
+        "Meta/Digestion/backfill/fixture-source/partial-open/"
         + FixtureAtomId
         + ".yaml";
     internal const string FixtureBackfill = """
@@ -36,16 +36,16 @@ internal sealed partial class RuleFixture
                   normalized_sha256: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881
                 cas_ref: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881
                 coverage_gids:
-                  - D5/S0/Carrier/BackfillTarget
+                  - gid: D5/S0/Carrier/BackfillTarget
+                    target_statement_id: null
                 receipts:
-                  coverage: []
                   scribe: []
                   unresolved_subitems: []
                   chain_atoms: []
                   tail_authorization: null
                 status:
                   migration: partial
-                  truth: closed
+                  truth: open
         """ + "\n";
     internal const string FixtureBackfillSource = """
         source_id = "fixture-source"
@@ -60,9 +60,9 @@ internal sealed partial class RuleFixture
           normalized_sha256: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881
         cas_ref: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881
         coverage_gids:
-          - D5/S0/Carrier/BackfillTarget
+          - gid: D5/S0/Carrier/BackfillTarget
+            target_statement_id: null
         receipts:
-          coverage: []
           scribe: []
           unresolved_subitems: []
           chain_atoms: []
@@ -100,14 +100,16 @@ internal sealed partial class RuleFixture
 
     internal RuleFixture()
     {
-        var repositoryRoot = TestRepositoryLayout.FindRoot();
         Files = new Dictionary<string, string>(StringComparer.Ordinal)
         {
             ["Meta/domains.yaml"] = TestRegistry.Domains,
             [FixtureBackfillSourcePath] = FixtureBackfillSource,
             [FixtureBackfillAtomPath] = FixtureBackfillAtom,
             [TheoryAtomizerDataLoader.DataPath] = File.ReadAllText(
-                Path.Combine(repositoryRoot, TheoryAtomizerDataLoader.DataPath), Encoding.UTF8),
+                Path.Combine(
+                    TestRepositoryLayout.FindRoot(),
+                    "Meta/Digestion/atomizers.toml"),
+                Encoding.UTF8),
             ["Meta/registry.yaml"] = TestRegistry.Canonical,
             ["Library/queries.yaml"] = "schema_version: 1\nqueries: []\n",
             [RingPath] = Header + "def goldenRing : Nat := 0\n",
@@ -193,7 +195,6 @@ internal sealed partial class RuleFixture
             cas_ref: sha256:0000000000000000000000000000000000000000000000000000000000000000
             coverage_gids: []
             receipts:
-              coverage: []
               scribe: []
               unresolved_subitems: []
               chain_atoms: []
@@ -204,7 +205,7 @@ internal sealed partial class RuleFixture
     internal void UseValidDirectoryBackfill()
     {
         const string sourcePath = "delta-v0.1/source.toml";
-        const string atomPath = "delta-v0.1/partial-closed/"
+        const string atomPath = "delta-v0.1/partial-open/"
             + "2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881.yaml";
         var source = $"source_id = \"delta-v0.1\"\npath = \"{FixtureDigestionSourcePath}\"\natomizer = \"none\"\n"
             + "genre_registry_check = \"no-registry\"\nunregistered_genres = []\n";
@@ -214,9 +215,9 @@ internal sealed partial class RuleFixture
               normalized_sha256: {FixtureCasReference}
             cas_ref: {FixtureCasReference}
             coverage_gids:
-              - D5/S0/Carrier/BackfillTarget
+              - gid: D5/S0/Carrier/BackfillTarget
+                target_statement_id: null
             receipts:
-              coverage: []
               scribe: []
               unresolved_subitems: []
               chain_atoms: []
@@ -306,11 +307,24 @@ internal sealed partial class RuleFixture
     internal RuleEvaluationContext Build(
         RawChangeSet changes,
         ValidatedPolicy? suppliedPolicy = null,
-        VerifiedScribeEmissions? verifiedScribeEmissions = null)
+        VerifiedScribeEmissions? verifiedScribeEmissions = null) =>
+        Build(changes, suppliedPolicy, verifiedScribeEmissions, includeProjectFiles: true);
+
+    internal RuleEvaluationContext BuildScopeProbe(
+        RawChangeSet changes,
+        ValidatedPolicy? suppliedPolicy = null,
+        VerifiedScribeEmissions? verifiedScribeEmissions = null) =>
+        Build(changes, suppliedPolicy, verifiedScribeEmissions, includeProjectFiles: false);
+
+    private RuleEvaluationContext Build(
+        RawChangeSet changes,
+        ValidatedPolicy? suppliedPolicy,
+        VerifiedScribeEmissions? verifiedScribeEmissions,
+        bool includeProjectFiles)
     {
-        var current = Decode(Files);
-        var baseline = Decode(Baseline);
-        var forkPoint = Decode(ForkPoint);
+        var current = Decode(Files, includeProjectFiles);
+        var baseline = Decode(Baseline, includeProjectFiles);
+        var forkPoint = Decode(ForkPoint, includeProjectFiles);
         var policy = suppliedPolicy;
         if (policy is null)
         {
@@ -571,9 +585,8 @@ internal sealed partial class RuleFixture
 
     internal void AddValuesProjection()
     {
-        var repositoryRoot = TestRepositoryLayout.FindRoot();
         Files[ValuesProjectionPath] = File.ReadAllText(
-            Path.Combine(repositoryRoot, ValuesProjectionPath),
+            Path.Combine(TestRepositoryLayout.FindRoot(), "Evidence/D5/values.json"),
             Encoding.UTF8);
     }
 
@@ -589,9 +602,14 @@ internal sealed partial class RuleFixture
         Reports[path] = Report();
     }
 
-    private static RepositorySnapshot Decode(IReadOnlyDictionary<string, string> files)
+    private static RepositorySnapshot Decode(
+        IReadOnlyDictionary<string, string> files,
+        bool includeProjectFiles = true)
     {
-        var raw = RawRepositorySnapshot.Create(files.Select(pair =>
+        var raw = RawRepositorySnapshot.Create(files
+            .Where(pair => includeProjectFiles
+                || !pair.Key.EndsWith(".csproj", StringComparison.Ordinal))
+            .Select(pair =>
         {
             var bytes = ImmutableArray.CreateRange(Encoding.UTF8.GetBytes(pair.Value));
             return new RawRepositoryEntry(

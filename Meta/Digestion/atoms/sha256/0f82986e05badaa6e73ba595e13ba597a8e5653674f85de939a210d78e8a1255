@@ -1,0 +1,1 @@
+**义务**:公开定理 `offLineZero_yields_negative_weil_square (Z : ZeroData) (n : ℕ) (hOff : (Z.zero n).re ≠ criticalAbscissa) : ∃ g : WeilTestFunction, ∃ hZero : SymmetricConvergent Z (convolutionSquare g), (zeroSum Z (convolutionSquare g) hZero).re < 0`。

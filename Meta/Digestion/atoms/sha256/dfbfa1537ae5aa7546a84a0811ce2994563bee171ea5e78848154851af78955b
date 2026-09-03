@@ -1,0 +1,19 @@
+## 84. 观察者塔
+
+设每一级有一个状态空间和名称空间：
+
+$$
+0
+\longrightarrow
+K_n
+\longrightarrow
+X_n
+\overset{q_n}{\longrightarrow}
+Q_n
+\longrightarrow
+0.
+$$
+
+其中：
+
+* \(X_n\)：第 \(n\) 层真实状态；

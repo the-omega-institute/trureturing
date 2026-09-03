@@ -1,0 +1,55 @@
+## 7. 所有周期的统一
+
+把所有模数一起纳入：
+
+$$
+\boxed{
+\widehat{\mathbb Z}
+=
+\varprojlim_m
+\mathbb Z/m\mathbb Z.
+}
+$$
+
+它是所有有限周期分类的统一完备化。
+
+每一种周期性“名字”：
+
+$$
+n\mapsto n\bmod m
+$$
+
+只是投影：
+
+$$
+\widehat{\mathbb Z}
+\to
+\mathbb Z/m\mathbb Z.
+$$
+
+其傅立叶对偶为：
+
+$$
+\boxed{
+\widehat{\widehat{\mathbb Z}}
+\cong
+\mathbb Q/\mathbb Z.
+}
+$$
+
+这意味着：
+
+> 所有有限周期分类，在频域中对应全部有理频率。
+
+所以你说的“周期的周期”最终不是另一个更大的有限周期，而是：
+
+$$
+\boxed{
+\text{全部有限周期组成的逆极限}
+\quad\leftrightarrow\quad
+\text{全部有理频率组成的对偶群}.
+}
+$$
+
+---
+

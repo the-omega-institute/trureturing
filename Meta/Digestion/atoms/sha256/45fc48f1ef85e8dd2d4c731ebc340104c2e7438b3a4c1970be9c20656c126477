@@ -1,0 +1,30 @@
+## 130. 两种障碍必须同时计算
+
+现在有两个独立方向：
+
+1. 每一层内部的周期／奇偶障碍：
+
+   $$
+   \widehat H^q(G_n,M_n);
+   $$
+2. 不同观察层之间的 gluing 障碍：
+
+   $$
+   \varprojlim{}^p.
+   $$
+
+因此一个自然的总障碍候选是：
+
+$$
+\boxed{
+E_2^{p,q}
+=
+\varprojlim{}^p
+\widehat H^q(G_n,M_n).
+}
+$$
+
+若满足相应同调代数前件，它应当汇聚到一个总 observer-completion cohomology。
+
+---
+

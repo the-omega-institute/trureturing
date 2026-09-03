@@ -1,0 +1,42 @@
+## 45. Prime-generated 有限系统
+
+定义 prime-generated 有限系统为由以下对象通过有限次操作生成的算子系统：
+
+$$
+\ell^2(\mathbb Z/M\mathbb Z),
+$$
+
+循环平移 \(T_h\)，
+
+von Mangoldt 乘法算子 \(D_\Lambda\)，
+
+局部 residue masks，
+
+Zeckendorf transfer matrices，
+
+admissibility automata，
+
+以及有限：
+
+$$
+\oplus,\quad
+\otimes,\quad
+(\cdot)^*,\quad
+\text{压缩},\quad
+\text{乘积}.
+$$
+
+禁止将：
+
+$$
+\rho,\quad
+\gamma_\rho,\quad
+\delta_\rho
+$$
+
+作为生成参数。
+
+这一语法定义的作用是防止先读取零点，再把零点写回“算术算子”。
+
+---
+

@@ -1,0 +1,30 @@
+## 56. 离线缺陷向量
+
+定义：
+
+$$
+d_o
+=
+2\sinh\beta_o.
+$$
+
+则：
+
+$$
+d_o=0
+\iff
+\beta_o=0
+\iff
+\delta_o=0.
+$$
+
+取正权重 \(w_o\)，定义：
+
+$$
+\mathscr H_\perp
+=
+\ell^2(\mathscr O^{\mathrm{off}},w).
+$$
+
+---
+

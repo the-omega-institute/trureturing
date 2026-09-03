@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:93d330811f841e758adff464728339b1427140a74d00e37eddc4a8c063ca13df
+  normalized_sha256: sha256:93d330811f841e758adff464728339b1427140a74d00e37eddc4a8c063ca13df
+cas_ref: sha256:93d330811f841e758adff464728339b1427140a74d00e37eddc4a8c063ca13df
+coverage_gids:
+  - D5/S3/Factorization/PrimePowers/CrtNilpotentAbelianVictory.crt_is_a_nilpotent_abelian_victory
+receipts:
+  coverage:
+    - gid: D5/S3/Factorization/PrimePowers/CrtNilpotentAbelianVictory.crt_is_a_nilpotent_abelian_victory
+      source_sha256: sha256:93d330811f841e758adff464728339b1427140a74d00e37eddc4a8c063ca13df
+      target_statement_id: sha256:bd9c83e334bcb6efe0878f7af94a2a3ca419fdc650ac7ea873d26107792d40a0
+  scribe:
+    - gid: D5/S3/Factorization/PrimePowers/CrtNilpotentAbelianVictory.crt_is_a_nilpotent_abelian_victory
+      definition_sha256: sha256:03ea80dd9c9386c2256c292b64e11b35192fb00a451fff10f031acf0e31730e3
+      emission_sha256: sha256:2d97e8b74498c155f2b5d1b5af3a44af7b54fe15c8fa9a9e50f019846a8e4ff4
+  unresolved_subitems: []

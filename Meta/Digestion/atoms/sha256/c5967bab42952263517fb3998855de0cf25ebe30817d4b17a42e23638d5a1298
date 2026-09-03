@@ -1,0 +1,58 @@
+## 123. RH 已经有一个标准热流动力学
+
+de Bruijn–Newman 理论定义一族 entire functions：
+
+$$
+H_t(z),
+$$
+
+它们是 Riemann \(\xi\) 核经过热流变形得到的函数。
+
+存在常数：
+
+$$
+\Lambda
+$$
+
+使得：
+
+$$
+\boxed{
+H_t\text{ 的全部零点为实数}
+\iff
+t\ge\Lambda.
+}
+$$
+
+而：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\Lambda\le0.
+}
+$$
+
+Rodgers 与 Tao 证明：
+
+$$
+\boxed{
+\Lambda\ge0.
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\Lambda=0.
+}
+$$
+
+([arXiv][1])
+
+---
+

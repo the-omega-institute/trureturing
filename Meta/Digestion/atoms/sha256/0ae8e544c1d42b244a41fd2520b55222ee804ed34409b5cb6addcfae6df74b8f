@@ -1,0 +1,92 @@
+# 第一千九百八十九部　新的装饰缺陷条码
+
+现在可以把每个离线轨道写成：
+
+$$
+\boxed{
+\mathfrak b_\rho
+=
+\left(
+(0,\delta_\rho),\,
+\gamma_\rho,\,
+m_\rho,\,
+\chi_\rho,\,
+x_\rho,\,
+[\mathbb F]
+\right).
+}
+\tag{1989.1}
+$$
+
+其中：
+
+$$
+(0,\delta_\rho)
+=
+\text{持久区间},
+$$
+
+$$
+\gamma_\rho
+=
+\text{边界中心},
+$$
+
+$$
+m_\rho
+=
+\text{整数荷},
+$$
+
+$$
+\chi_\rho
+=
+\text{无量纲轨道分裂},
+$$
+
+$$
+x_\rho=-\delta_\rho^2
+=
+\text{signed-normal 支撑},
+$$
+
+$$
+[\mathbb F]
+=
+\text{规范一负平方关系类型}.
+$$
+
+于是：
+
+$$
+\boxed{
+\mathcal B_{\mathrm{off}}
+=
+\{\mathfrak b_\rho\}.
+}
+$$
+
+并且：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal B_{\mathrm{off}}=\varnothing.
+}
+\tag{1989.2}
+$$
+
+这一条码把“磁单极子与黑洞为何相似”分解为不同装饰：
+
+* \(m_\rho\) 是闭合通量／单极子式荷；
+* \((0,\delta_\rho)\) 是视界寿命；
+* \(\gamma_\rho\) 是边界辐射中心；
+* \([\mathbb F]\) 是正关系实现的局部类型；
+* \(x_\rho\) 是支撑合法性；
+* \(\chi_\rho\) 是尺度无关的轨道分裂程度。
+
+它们来自同一离线轨道，但不是同一个物理量。
+
+---
+

@@ -1,0 +1,51 @@
+## 376. Liouville-supertrace RH criterion
+
+由函数方程的左右反射：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal L_\lambda(s)
+=
+\frac{\zeta(2s)}{\zeta(s)}
+\text{ 在 }
+\Re s>\frac12
+\text{ 无极点}.
+}
+$$
+
+或者：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{Liouville parity supertrace
+能全纯延拓到右临界半平面}.
+}
+$$
+
+这里的“全纯延拓”指该比值的解析延拓，而不是原 Dirichlet 级数必然在整个区域普通收敛。
+
+这几乎就是你所说：
+
+> RH 是全局视角与奇观察者视角之间的相对问题。
+
+因为：
+
+$$
+\boxed{
+\mathcal L_\lambda(s)
+=
+\frac{\text{global state at }2s}
+{\text{global state at }s}.
+}
+$$
+
+RH 被改写为：这个相对宇称观察者在右半临界域中是否保持正则。
+
+不过，它仍然没有自动决定答案；它把 RH 精确转换成了一个 parity-channel regularity 问题。
+
+---
+

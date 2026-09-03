@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:a0ea0a401a284e9aab5c1283ae2e881d63fb0e0cb7cc3d8c4358a4cb99488054
+  normalized_sha256: sha256:a0ea0a401a284e9aab5c1283ae2e881d63fb0e0cb7cc3d8c4358a4cb99488054
+cas_ref: sha256:a0ea0a401a284e9aab5c1283ae2e881d63fb0e0cb7cc3d8c4358a4cb99488054
+coverage_gids:
+  - D5/S3/Arith/Coding/ResidueCodeErrorDetection.detects_up_to_min_distance_minus_one
+receipts:
+  coverage:
+    - gid: D5/S3/Arith/Coding/ResidueCodeErrorDetection.detects_up_to_min_distance_minus_one
+      source_sha256: sha256:a0ea0a401a284e9aab5c1283ae2e881d63fb0e0cb7cc3d8c4358a4cb99488054
+      target_statement_id: sha256:6000794290d7bc4ef3fe3696f556046a1999b631deca91ad42a6c4de9e72ee39
+  scribe:
+    - gid: D5/S3/Arith/Coding/ResidueCodeErrorDetection.detects_up_to_min_distance_minus_one
+      definition_sha256: sha256:462427b00ec87cb6e93f5aa5ec35b604055c11427893dd1deadf77abc13989c4
+      emission_sha256: sha256:89216014c73ba3485c98b38ff98cd4da9a4c46aec64d6a7e7bca2818dbe70d50
+  unresolved_subitems: []

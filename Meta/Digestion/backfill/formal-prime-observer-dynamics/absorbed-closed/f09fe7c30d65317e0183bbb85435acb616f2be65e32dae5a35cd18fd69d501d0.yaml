@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:f09fe7c30d65317e0183bbb85435acb616f2be65e32dae5a35cd18fd69d501d0
+  normalized_sha256: sha256:f09fe7c30d65317e0183bbb85435acb616f2be65e32dae5a35cd18fd69d501d0
+cas_ref: sha256:f09fe7c30d65317e0183bbb85435acb616f2be65e32dae5a35cd18fd69d501d0
+coverage_gids:
+  - D5/S3/PrimeForms/Splitting/QuadraticCharacterProfileRedundancy.quadratic_characters_are_three_ring_products_and_fiber_redundant
+receipts:
+  coverage:
+    - gid: D5/S3/PrimeForms/Splitting/QuadraticCharacterProfileRedundancy.quadratic_characters_are_three_ring_products_and_fiber_redundant
+      source_sha256: sha256:f09fe7c30d65317e0183bbb85435acb616f2be65e32dae5a35cd18fd69d501d0
+      target_statement_id: sha256:25e42bb136270cf86f658194385c9b92148869ce0f7c7c9ebeedcb31d0598519
+  scribe:
+    - gid: D5/S3/PrimeForms/Splitting/QuadraticCharacterProfileRedundancy.quadratic_characters_are_three_ring_products_and_fiber_redundant
+      definition_sha256: sha256:4abfe5f93f9cb49141bf0a30608b750e4c6dd051aa1e138da36c64835eccfae3
+      emission_sha256: sha256:18d6561079383d193471b5be4a515fb54061894ac7581659af0db8ea2007c818
+  unresolved_subitems: []

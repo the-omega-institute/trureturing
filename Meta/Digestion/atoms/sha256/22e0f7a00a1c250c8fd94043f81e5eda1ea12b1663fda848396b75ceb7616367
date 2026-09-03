@@ -1,0 +1,6 @@
+## 一　W-1 预登记:Weil 平方正性 ⟹ RH(`WeilSquarePositivityCriterion`,落 `D5/S3/Weil/Separator/`)
+
+**义务**:公开定理 `weilSquarePositivity_implies_rh (Z : ZeroData) (hPos : ∀ (g : WeilTestFunction) (hZero : SymmetricConvergent Z (convolutionSquare g)), 0 ≤ (zeroSum Z (convolutionSquare g) hZero).re) : RiemannHypothesis`。
+**可证伪预测(写在跑之前)**:若正确,证明为:用 G-g-3 化归到右半带;对右半带零点 ρ(ζ ρ = 0,1/2 < Re ρ < 1)由 `Z.zero_exhaustive` 取 n 使 `Z.zero n = ρ`,`hOff` 由 1/2 < Re ρ ≠ criticalAbscissa(= 1/2,`D5/S3/Weil/Convention.lean:42`)得到,M3-f-6 给出 g、hZero 与实部 < 0,与 hPos 矛盾;标准三公理。若 `zero_exhaustive` 的形状不是 `∀ {rho}, IsNontrivialZero rho → ∃ n, zero n = rho`(与 `ZeroSum.lean` 字面矛盾),则本条为假。
+**边界**:见 §〇;不断言任何 `ZeroData` 存在。
+
