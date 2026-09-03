@@ -2344,3 +2344,30 @@ W-2 的正性陈述里带着 `SymmetricConvergent` 这个收敛义务和一个�
 一席位轮(codex-cli,独立 worktree,三条同模块,`Separator/` 第四个模块;同 PR deposit(绑 W-7 atom)+ 三条 cover)。预计 ≤ 60 分钟。
 
 后续增订继续严格追加于本节之后。
+---
+
+# 增订二十四　高度 T 的窗口判据:「半径 ≤ T 的零点全在线上」⟺「高度 T 的截断 Weil 平方正性」(W-8 / W-9 预登记)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;本节两条皆为对冻结定理的短绑定——W-8 消费 M3-e′(`Separator/OffLineZeroNegativeWeilSquare.offLineZero_negative_truncated_weil_square`)、`ConvolutionSquareCriticalLine.critical_line_truncated_sum_real_nonnegative`、`Finset.filter_true_of_mem`;W-9 消费 `zeroData_zero_on_critical_line_of_rh`、G-g-3、`zero_exhaustive`、`ZeroData.mem_symmetricIndices`。由 orchestrator(claude 主循环)撰写,不需探针。判决日:2026-09-03。lane issue:#4589。
+
+## 〇　为什么是这一节
+
+W-7 把 RH 与「一切高度 T 的截断正性」绑在一起;本节把量词拆开:**固定** T,`Z.symmetricIndices T`(谱半径 ≤ T 的零点指标,有限集)内的零点全在临界线上,当且仅当高度 T 的截断 Weil 平方零和对一切偶测试函数实部非负。这是「RH 到高度 T」的**逐高度**判据,两边都是关于有限零点集与有限和的陈述;W-9 再把「对一切 T 的逐高度线上性」与 RH 等价。**诚实边界**:相对于给定 `ZeroData`;`symmetricIndices T` 按谱半径 `‖Z.gamma n‖ ≤ T` 截断(`ZeroSum.lean:145–147`),不是按虚部;不构成 RH 证明。
+
+## 一　W-8 预登记:逐高度判据(`HeightWindowWeilSquareCriterion`,落 `D5/S3/Weil/Separator/`)
+
+**义务**:公开定理 `heightWindow_rh_iff_truncatedWeilSquarePositivity (Z : ZeroData) (T : ℝ) : (∀ n ∈ Z.symmetricIndices T, (Z.zero n).re = criticalAbscissa) ↔ ∀ g : WeilTestFunction, 0 ≤ (truncatedZeroSum Z (convolutionSquare g) T).re`。
+**可证伪预测(写在跑之前)**:若正确,⟹ 由 `Finset.filter_true_of_mem`(临界线过滤 = 全集)与 `critical_line_truncated_sum_real_nonnegative Z g T` 的第二分量,展开 `truncatedZeroSum`;⟸ 取逆否:若某 n ∈ symmetricIndices T 离线,M3-e′ 给 g 使截断和实部 < 0;标准三公理。
+**边界**:同 §〇。
+
+## 二　W-9 预登记:RH ⟺ 一切高度的线上性(同模块第二条公开定理)
+
+**义务**:公开定理 `rh_iff_forall_heightWindow (Z : ZeroData) : RiemannHypothesis ↔ ∀ T : ℝ, ∀ n ∈ Z.symmetricIndices T, (Z.zero n).re = criticalAbscissa`。
+**可证伪预测(写在跑之前)**:⟹ 由 `zeroData_zero_on_critical_line_of_rh`;⟸ 由 G-g-3:右半带零点 ρ 经 `zero_exhaustive` 为某 `Z.zero n`,取 T := ‖Z.gamma n‖ 使 n ∈ symmetricIndices T(`mem_symmetricIndices`,自反),得 Re ρ = 1/2 与 1/2 < Re ρ 矛盾;标准三公理。
+**边界**:同 §〇。
+
+## 三　预算与结算
+
+一席位轮(codex-cli,独立 worktree,两条同模块,`Separator/` 第五个模块;同 PR deposit(绑 W-8 atom)+ 两条 cover)。预计 ≤ 40 分钟。
+
+后续增订继续严格追加于本节之后。
