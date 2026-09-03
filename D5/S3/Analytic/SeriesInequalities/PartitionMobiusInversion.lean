@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/Analytic/SeriesInequalities/PartitionMobiusInversion
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Incidence-algebra inversion gives the moment-cumulant formulas
-     on a finite partition lattice. -/
+   digest: Incidence-algebra inversion gives the moment-cumulant formulas on a finite partition lattice. -/
 
 import Mathlib.Combinatorics.Enumerative.IncidenceAlgebra
 import Mathlib.Order.Partition.Finpartition
