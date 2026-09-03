@@ -1,0 +1,69 @@
+## 93. Trace pairing
+
+定义：
+
+$$
+\langle x,y\rangle_{\mathrm{Tr}}
+=
+\operatorname{Tr}_{K/\mathbb Q}(xy).
+$$
+
+在基 \((1,\varphi)\) 下：
+
+$$
+\operatorname{Tr}(1)=2,
+$$
+
+$$
+\operatorname{Tr}(\varphi)=\varphi+\psi=1,
+$$
+
+$$
+\operatorname{Tr}(\varphi^2)
+=
+\operatorname{Tr}(\varphi+1)
+=
+3.
+$$
+
+因此 Gram 矩阵是：
+
+$$
+\boxed{
+G_{\mathrm{Tr}}
+=
+\begin{pmatrix}
+2&1\\
+1&3
+\end{pmatrix}.
+}
+$$
+
+其行列式：
+
+$$
+\boxed{
+\det G_{\mathrm{Tr}}=5.
+}
+$$
+
+所以黄金整数格并不与自己的对偶格完全重合；其 codifferent 需要一个：
+
+$$
+\frac1{\sqrt5}
+$$
+
+尺度。
+
+这表明内部／外部坐标融合存在一个算术 Jacobian：
+
+$$
+\boxed{
+\text{golden self-duality defect}
+=
+5.
+}
+$$
+
+---
+

@@ -1,0 +1,15 @@
+## 58. 观察相对性
+
+以下对象是相对的：
+
+* 选择哪一种 truncation；
+* 选择哪一种周期分类；
+* 选择哪一个测试函数空间；
+* 用哪个坐标 chart；
+* 以多深的 Zeckendorf 分辨率观察；
+* 是否能由投影恢复 hidden memory。
+
+仓库已经分别证明了 projective golden image 和 scalar Euler readout 可以遗忘真实观察者 rapidity 或内部 memory。
+
+---
+

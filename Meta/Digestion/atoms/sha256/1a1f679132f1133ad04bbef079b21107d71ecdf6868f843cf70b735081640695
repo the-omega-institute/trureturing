@@ -1,0 +1,24 @@
+## 101. 零频率只读取 residue 数量
+
+当：
+
+$$
+a=0,
+$$
+
+有：
+
+$$
+\boxed{
+\widehat f_{p,H}(0)
+=
+1-\frac{\nu_p(H)}p.
+}
+$$
+
+这正是 Hardy–Littlewood 局部 survivor probability。
+
+所以 singular series 主要装配的是所有素数处的零频率读数。
+
+---
+

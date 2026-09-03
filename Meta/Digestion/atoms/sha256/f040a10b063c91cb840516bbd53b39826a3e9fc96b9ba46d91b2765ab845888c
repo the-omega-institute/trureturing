@@ -1,0 +1,52 @@
+## 105. 三元组差是纯 sine
+
+取：
+
+$$
+H_3^+=\{0,2,6\},
+$$
+
+$$
+H_3^-=\{0,4,6\}.
+$$
+
+中心均为 \(3\)。
+
+于是：
+
+$$
+S_{H_3^+}
+=
+e^{-3i\theta}+e^{-i\theta}+e^{3i\theta},
+$$
+
+$$
+S_{H_3^-}
+=
+e^{-3i\theta}+e^{i\theta}+e^{3i\theta}.
+$$
+
+二者的 even 平均为：
+
+$$
+\boxed{
+\frac{S_{H_3^+}+S_{H_3^-}}2
+=
+2\cos3\theta+\cos\theta.
+}
+$$
+
+而 odd 差为：
+
+$$
+\boxed{
+\frac{S_{H_3^+}-S_{H_3^-}}2
+=
+-i\sin\theta.
+}
+$$
+
+因此三元组 chirality 不是抽象符号；它在频域中恰好是一个纯 sine channel。
+
+---
+
