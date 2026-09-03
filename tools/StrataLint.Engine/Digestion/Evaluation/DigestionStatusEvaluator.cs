@@ -386,6 +386,7 @@ internal static partial class DigestionStatusEvaluator
         var hasProgress = edgeValidations.Values.Any(static edge => edge.IsResolved)
             || entry.Coverage.Length > 0
             || entry.Receipts.Scribe.Length > 0;
+        var hasUnresolvedCoverageTarget = edgeValidations.Values.Any(static edge => !edge.IsResolved);
         return new EntryWork(
             entry,
             alignment,
@@ -394,6 +395,7 @@ internal static partial class DigestionStatusEvaluator
             targetStates,
             localComplete,
             hasProgress,
+            hasUnresolvedCoverageTarget,
             authorityChanged);
     }
 
@@ -587,7 +589,8 @@ internal static partial class DigestionStatusEvaluator
         RepositorySnapshot snapshot,
         RawChangeSet? changes)
     {
-        if (item.TargetStates.Count == 0
+        if (item.HasUnresolvedCoverageTarget
+            || item.TargetStates.Count == 0
             || item.TargetStates.Any(static target => target.State is TruthState.Open or TruthState.Semantic))
         {
             foreach (var target in item.TargetStates.Where(static target =>
@@ -650,6 +653,7 @@ internal static partial class DigestionStatusEvaluator
         List<(string Gid, TruthState State)> targetStates,
         bool localComplete,
         bool hasProgress,
+        bool hasUnresolvedCoverageTarget,
         bool statusAuthorityChanged)
     {
         internal DigestionLedgerEntry Entry { get; } = entry;
@@ -665,6 +669,8 @@ internal static partial class DigestionStatusEvaluator
         internal bool LocalComplete { get; } = localComplete;
 
         internal bool HasProgress { get; } = hasProgress;
+
+        internal bool HasUnresolvedCoverageTarget { get; } = hasUnresolvedCoverageTarget;
 
         internal bool StatusAuthorityChanged { get; } = statusAuthorityChanged;
 

@@ -84,31 +84,13 @@ public sealed partial class BackfillInventoryLoaderTests
     }
 
     [Fact]
-    public void BaselineDirectoryAtomAllowsUnknownHistoricalKeyButStillRequiresCurrentFields()
+    public void BaselineCanonicalSchemaRejectsRetiredCoverageGidsKey()
     {
-        var currentAtomId = FixtureAtomId("theorem/delta");
-        var source = Source("delta-v0.1", "docs/delta.md", "none") with
-        {
-            Text = Source("delta-v0.1", "docs/delta.md", "none").Text
-                + "acknowledged_stale = [\"legacy-delta\"]\n",
-        };
         var atom = Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta");
-        var legacyAtomPath = $"{BackfillInventoryLoader.RootPath}delta-v0.1/residual-open/legacy-delta.yaml";
-        var document = BackfillInventoryLoader.LoadBaseline(Snapshot(
-            source,
-            (legacyAtomPath, atom.Text + "ast_path: theorem/delta\n")));
-
-        Assert.Equal(currentAtomId, Assert.Single(document.RequireDigestionEntries()).AtomId);
-        Assert.Equal([currentAtomId], Assert.Single(document.RequireDigestionSources()).AcknowledgedStale.ToArray());
-
-        var missingRequiredField = atom.Text.Replace(
-            "coverage: []\n",
-            string.Empty,
-            StringComparison.Ordinal);
         var exception = Assert.Throws<FormatException>(() =>
             BackfillInventoryLoader.LoadBaseline(Snapshot(
-                source,
-                (atom.Path, missingRequiredField))));
+                Source("delta-v0.1", "docs/delta.md", "none"),
+                (atom.Path, atom.Text + "coverage_gids: []\n"))));
 
         Assert.Equal("source delta-v0.1 entry keys are not canonical", exception.Message);
     }

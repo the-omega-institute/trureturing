@@ -436,6 +436,7 @@ internal static partial class CoverWorld
         "# Synthetic\n\n**定理 1.1(A)**。unrelated sibling atom body。\n";
     private const string OtherSourcePath = "docs/COVER_SIBLING.md";
     private const string UnrelatedSourcePath = "docs/CONTRIBUTING.md";
+    private const string GovernanceDocumentAnchor = "  - \"docs/CONTRIBUTING.md\"\n";
 
     internal static readonly string DefaultAtomId = AtomIdFor(DefaultSourceText);
     internal static readonly string OtherAtomId = AtomIdFor(OtherSourceText);
@@ -528,9 +529,15 @@ internal static partial class CoverWorld
             UnrelatedSourcePath,
             useUnrelatedBaselineCoverage: false);
         var ledger = DirectoryLedgerTestSupport.Image(document);
+        var registry = spec.OtherAtomGid is null
+            ? TestRegistry.Canonical
+            : TestRegistry.Canonical.Replace(
+                GovernanceDocumentAnchor,
+                GovernanceDocumentAnchor + $"  - \"{OtherSourcePath}\"\n",
+                StringComparison.Ordinal);
         var files = new Dictionary<string, string>(StringComparer.Ordinal)
         {
-            ["Meta/registry.yaml"] = TestRegistry.Canonical,
+            ["Meta/registry.yaml"] = registry,
             ["Meta/domains.yaml"] = TestRegistry.Domains,
             [RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(sourceBytes),
             [targetPath] = Encoding.UTF8.GetString(targetBytes),
