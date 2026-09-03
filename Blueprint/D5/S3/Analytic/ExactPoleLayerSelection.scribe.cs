@@ -18,7 +18,7 @@ internal sealed class ExactPoleLayerSelectionDocument : IScribeDocumentDefinitio
                 StatementSource.FromAuthor(Disp(Seq(
                     F.Id("K"), Open, F.Id("a"), Close, Eq,
                     Lfloor, Frac, Grp(F.Id("a")), Grp(D(4)), Rfloor,
-                    Comma, Quad,
+                    Comma, Quad, Sp,
                     F.Id("j"), Open, F.Id("a"), Close, Eq,
                     F.Id("a"), Sp, Operatorname, Grp(F.Id("mod")), Sp, D(4),
                     InMacro, Grp(D(0), Comma, D(1), Comma, D(2), Comma, D(3))))),
