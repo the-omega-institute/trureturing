@@ -15,10 +15,14 @@ import D5.S3.Analytic.EulerGerm.GoldenGermRealAxisPositivity
      regularity, golden-point zeta nonvanishing, and first-order real-axis
      positivity, but no sign theorem on the target open interval.
    * The factorization publicly exposes the summable normalized deviation used
-     below. The other frozen theorems expose only boundary or single-point
-     facts, while their useful local arguments are private; the variable
-     real-factor positivity and eta sign argument are therefore rebuilt from
-     the canonical definitions instead of hidden behind wrappers.
+     below. The second normalized regularity theorem publicly gives
+     AnalyticOnNhd on Re s > 1/phi^4 plus boundary facts, the first-order
+     real-axis positivity covers the full convergence ray, and the auxiliary
+     zeta theorem gives a single-point nonvanishing; none of these public APIs
+     supplies the second-normalized real-factor positivity or the variable
+     zeta sign on (0, 1) needed here, and their local arguments are private,
+     so those two mechanisms are rebuilt from the canonical definitions
+     instead of hidden behind wrappers.
    * Pinned Mathlib has no direct zeta-sign theorem on (0, 1). It supplies the
      eta continuation tools, positive-real zeta results above one, and the
      infinite-product positivity machinery used below.
