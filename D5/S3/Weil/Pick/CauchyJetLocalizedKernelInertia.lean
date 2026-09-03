@@ -128,25 +128,6 @@ private theorem observer_cauchy_jet_feature_det_ne_zero {n : ℕ}
   · exact observer_support_complex_injective delta gamma time hSupport
   · exact observer_support_complex_avoids_I delta gamma time
 
-/-- The canonical observer Cauchy-jet inverse is a two-sided inverse. -/
-private theorem observer_cauchy_jet_feature_inverse {n : ℕ}
-    (delta gamma : Fin n → ℝ) (time : ℝ)
-    (hSupport :
-      Function.Injective (observerSupportProfile delta gamma time)) :
-    observerCauchyJetFeatureMatrix delta gamma time *
-        cauchyJetFeatureRightInverse
-          (observerSupportComplex delta gamma time) Complex.I = 1 ∧
-      cauchyJetFeatureRightInverse
-          (observerSupportComplex delta gamma time) Complex.I *
-        observerCauchyJetFeatureMatrix delta gamma time = 1 := by
-  constructor
-  · exact cauchy_jet_feature_mul_rightInverse
-      (observer_support_complex_injective delta gamma time hSupport)
-      (observer_support_complex_avoids_I delta gamma time)
-  · exact cauchy_jet_feature_rightInverse_mul
-      (observer_support_complex_injective delta gamma time hSupport)
-      (observer_support_complex_avoids_I delta gamma time)
-
 /-- The localized Cauchy-jet Gram matrix has exactly the same positive and
 negative indices as its signed diagonal weight matrix. -/
 private theorem observer_localized_cauchy_jet_inertia_eq_sign_counts {n : ℕ}
