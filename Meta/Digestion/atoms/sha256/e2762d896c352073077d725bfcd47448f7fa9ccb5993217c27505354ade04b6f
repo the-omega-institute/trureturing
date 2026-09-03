@@ -1,0 +1,14 @@
+## 517. Successor stage
+
+在每个后继阶段加入一个新观察量：
+
+$$
+V_{\alpha+1}
+=
+\overline{
+V_\alpha+\operatorname{span}\{d_\alpha\}
+}.
+$$
+
+它切掉一部分旧 residual。
+

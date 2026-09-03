@@ -1,0 +1,49 @@
+## 537. 若 RH 为假会发生什么
+
+若存在离线零点，仓库已经保证存在：
+
+$$
+g
+$$
+
+满足：
+
+$$
+Q_Z(g)<0.
+$$
+
+因此上述因子化不可能存在，至少不能存在于正定 Hilbert 空间中。
+
+它可能退化为 Krein 因子化：
+
+$$
+Q_Z(g)
+=
+\|T_+g\|^2-\|T_-g\|^2.
+$$
+
+此时：
+
+$$
+T_-\neq0
+$$
+
+就是离线 odd sector。
+
+所以 RH 的最终二分可以写成：
+
+$$
+\boxed{
+\begin{aligned}
+\mathrm{RH}
+&\iff
+\text{Weil form admits Hilbert factorization};\\
+\neg\mathrm{RH}
+&\iff
+\text{only an indefinite Krein factorization remains}.
+\end{aligned}
+}
+$$
+
+---
+

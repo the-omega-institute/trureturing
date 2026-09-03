@@ -1,0 +1,25 @@
+## 588. 有限矩前缀紧致拼接
+
+```lean
+theorem all_finite_Hausdorff_representations_glue
+    (a : ℕ → ℝ)
+    (mass : ℝ)
+    (hFinite :
+      ∀ N, ∃ μ : Measure ℝ,
+        IsFiniteMeasure μ ∧
+        μ (Set.Icc 0 1) = mass ∧
+        ∀ n ≤ N,
+          ∫ x, x ^ n ∂μ = a n) :
+    ∃ μ : Measure ℝ,
+      IsFiniteMeasure μ ∧
+      MeasureTheory.IsProbabilityMeasure
+        (mass⁻¹ • μ) ∧
+      μ.support ⊆ Set.Icc 0 1 ∧
+      ∀ n,
+        ∫ x, x ^ n ∂μ = a n
+```
+
+实际声明需更规范地限制 support 与总质量。
+
+---
+

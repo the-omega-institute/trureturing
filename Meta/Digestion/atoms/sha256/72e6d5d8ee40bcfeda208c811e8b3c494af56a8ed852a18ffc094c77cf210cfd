@@ -1,0 +1,71 @@
+# 第两千零六十二部　建议形式化顺序
+
+```text
+D5/S3/Arithmetic/PrimeConfigurationTower/
+  PrimeValuationConfiguration.lean
+  PositiveIntegerPrimeConfigurationEquiv.lean
+  FinitePrimeProjection.lean
+  NoFinitePrimeProjectionInjective.lean
+  CompletePrimeProjectionsSeparate.lean
+  PrimeTailIsomorphicToWhole.lean
+
+D5/S3/Arithmetic/PrimeParityCompletion/
+  FiniteSupportPrimeParity.lean
+  PrimeParityPrefixTree.lean
+  ProfinitePrimeParityCompletion.lean
+  PrimorialParityPathLimit.lean
+  InfiniteSupportLimitNotInteger.lean
+  TotalParityNoContinuousProfiniteExtension.lean
+
+D5/S3/Arithmetic/PrimeFrequencyIndependence/
+  FinitePrimeLogRationalIndependence.lean
+  DistinctPrimePowerFrequencies.lean
+  PrimeEulerNonautonomousCocycle.lean
+  PrimeSkeletonStationaryMetricNonstationary.lean
+
+D5/S3/Observer/ThreeDiagonalEscapes/
+  TailCoordinateEscape.lean
+  SemanticDiagonalEscape.lean
+  MovingMassDiagonalEscape.lean
+  DiagonalEscapesPairwiseDistinct.lean
+
+D5/S3/Observer/NoDiagonalMassEscape/
+  PointwisePrimeResidualConvergence.lean
+  UniformPrimeTailTightness.lean
+  PointwisePlusTightnessImpliesL1Convergence.lean
+  MovingPrimeResidualCounterexample.lean
+
+D5/S3/Analytic/Zeta/RHVerificationTopology/
+  FiniteHeightRHStatement.lean
+  RHAsInfiniteMeet.lean
+  NotRHHasFiniteWitness.lean
+  FiniteVerificationDoesNotCertifyRH.lean
+  RHTruthClosedNotOpen.lean
+
+D5/S3/Analytic/EulerGerm/AllOrderExtraction/
+  FiniteOrderPrimeCorrection.lean
+  ResidualSupportFloor.lean
+  PointwiseAllOrderCancellation.lean
+  UniformPrimeResidualTightnessTarget.lean
+  CorrectionProductConvergenceTarget.lean
+  AllOrderExtractionNoDiagonalEscapeTarget.lean
+
+D5/S3/Weil/PrimeObserverMultiaxis/
+  PrimeDepth.lean
+  ZeroHeightDepth.lean
+  TestComplexityDepth.lean
+  RenormalizationOrderDepth.lean
+  FiniteObservationRectangle.lean
+  MultiaxisResidual.lean
+  MultiaxisUniformTightnessTarget.lean
+
+D5/S3/Weil/PrimeGammaUniformClosure/
+  PrimeFrequencyOperator.lean
+  PrimeBosonicFredholmDeterminant.lean
+  PrimeGammaCommonPositiveConeTarget.lean
+  AnalyticContinuationPreservesConeTarget.lean
+  NoDiagonalEscapeImpliesRHTarget.lean
+```
+
+---
+

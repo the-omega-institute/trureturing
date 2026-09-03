@@ -1,0 +1,42 @@
+## 453. Fibonacci 的有限状态闭合
+
+Fibonacci 数满足：
+
+$$
+\begin{pmatrix}
+F_{n+1}\\
+F_n
+\end{pmatrix}
+=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}
+\begin{pmatrix}
+F_n\\
+F_{n-1}
+\end{pmatrix}.
+$$
+
+所有未来信息由二维状态：
+
+$$
+(F_n,F_{n-1})
+$$
+
+唯一决定。
+
+仓库最新的黄金 Euler beta 定理也已经把看似复杂的跳跃压缩成：
+
+$$
+\varphi
+\quad\text{或}\quad
+\varphi^2,
+$$
+
+并证明由 Zeckendorf 最小指标奇偶精确决定。
+
+所以该黄金系统虽然非周期，却存在一个精确机械词和有限递归骨架。
+
+---
+

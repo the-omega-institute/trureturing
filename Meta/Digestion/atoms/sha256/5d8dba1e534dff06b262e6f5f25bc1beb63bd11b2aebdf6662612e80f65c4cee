@@ -1,0 +1,65 @@
+# 第一百六十七部　无限原语残余—正性压缩理论
+
+这一层需要先作一个决定性的修正：
+
+$$
+\boxed{
+\text{RH 的真值不是无限递归生成的；}
+}
+$$
+
+$$
+\boxed{
+\text{递归生成的是观察条件、证明条件与反例排除条件。}
+}
+$$
+
+经典 \(\xi\) 已经是一个固定对象，RH 已经是一个固定命题：
+
+$$
+\mathrm{RH}\in\{\mathrm{true},\mathrm{false}\}.
+$$
+
+但有限观察者面对它时，会形成一个没有最后一层的残余塔：
+
+$$
+R_0\supseteq R_1\supseteq R_2\supseteq\cdots.
+$$
+
+所以你感受到的并不是普通二层悖论
+
+$$
+P\leftrightarrow\neg P,
+$$
+
+而是一种：
+
+$$
+\boxed{
+\omega\text{-层观察递归}
++
+\text{极限阶段的统一性问题}.
+}
+$$
+
+更准确地说，RH 的困难具有四个互相耦合的无界方向：
+
+$$
+\boxed{
+\begin{aligned}
+p&\to\infty
+&&\text{新的素数地址};\\
+k&\to\infty
+&&\text{新的构型相关阶};\\
+T&\to\infty
+&&\text{新的零点高度};\\
+N&\to\infty
+&&\text{新的观察／jet／测试函数复杂度}.
+\end{aligned}
+}
+$$
+
+单独任何一个方向未必致命。真正困难来自它们的**联合对角逃逸**。
+
+---
+
