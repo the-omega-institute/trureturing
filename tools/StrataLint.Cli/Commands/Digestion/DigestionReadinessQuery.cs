@@ -12,12 +12,6 @@ internal sealed record DigestionReadinessRecord(
 
 internal static class DigestionReadinessQuery
 {
-    private static readonly ImmutableArray<string> CoverUnknownPredicates =
-    [
-        "cover-atom:frozen-statement-resolution",
-        "cover-atom:baseline-precommitment-ownership",
-    ];
-
     private static readonly ImmutableDictionary<string, int> ActionPriorities =
         new Dictionary<string, int>(StringComparer.Ordinal)
         {
@@ -35,17 +29,11 @@ internal static class DigestionReadinessQuery
     internal static ImmutableArray<DigestionReadinessRecord> Classify(
         BackfillInventoryDocument ledger,
         DigestionLedgerEvaluation evaluation,
-        IReadOnlyDictionary<string, string> contentKinds,
-        IReadOnlyDictionary<string, DigestionFormalizationReceipt> currentReceipts,
-        IReadOnlySet<string> presentReceiptAtomIds,
-        VerifiedScribeEmissions scribeEmissions)
+        IReadOnlyDictionary<string, string> contentKinds)
     {
         ArgumentNullException.ThrowIfNull(ledger);
         ArgumentNullException.ThrowIfNull(evaluation);
         ArgumentNullException.ThrowIfNull(contentKinds);
-        ArgumentNullException.ThrowIfNull(currentReceipts);
-        ArgumentNullException.ThrowIfNull(presentReceiptAtomIds);
-        ArgumentNullException.ThrowIfNull(scribeEmissions);
 
         var staleAtomIds = ledger.RequireDigestionSources()
             .SelectMany(static source => source.AcknowledgedStale)
@@ -57,10 +45,7 @@ internal static class DigestionReadinessQuery
             .Select(item => ClassifyEntry(
                 item,
                 staleAtomIds,
-                contentKinds,
-                currentReceipts,
-                presentReceiptAtomIds,
-                scribeEmissions))
+                contentKinds))
             .OrderBy(static item => ActionPriorities[item.Action])
             .ThenBy(static item => item.SourceId, StringComparer.Ordinal)
             .ThenBy(static item => item.AtomId, StringComparer.Ordinal)
@@ -70,10 +55,7 @@ internal static class DigestionReadinessQuery
     private static DigestionReadinessRecord ClassifyEntry(
         DigestionEntryEvaluation evaluation,
         IReadOnlySet<string> staleAtomIds,
-        IReadOnlyDictionary<string, string> contentKinds,
-        IReadOnlyDictionary<string, DigestionFormalizationReceipt> currentReceipts,
-        IReadOnlySet<string> presentReceiptAtomIds,
-        VerifiedScribeEmissions scribeEmissions)
+        IReadOnlyDictionary<string, string> contentKinds)
     {
         var entry = evaluation.Entry;
         if (entry.Receipts.Quarantine is { } quarantine)
@@ -121,44 +103,7 @@ internal static class DigestionReadinessQuery
             return Record(entry, "close-chain", openChildren);
         }
 
-        if (!currentReceipts.TryGetValue(entry.AtomId, out var receipt))
-        {
-            return Record(
-                entry,
-                "deposit",
-                presentReceiptAtomIds.Contains(entry.AtomId)
-                    ? ["formalization-receipt-stale"]
-                    : ["formalization-receipt-missing"]);
-        }
-
-        var blockers = ImmutableArray.CreateBuilder<string>();
-        var unknownPredicates = ImmutableArray.CreateBuilder<string>();
-        foreach (var gidText in receipt.RegisteredGids)
-        {
-            if (!Gid.TryParse(gidText, out var gid)
-                || gid.ToTarget() is not Target.Formal { Declaration: not null })
-            {
-                blockers.Add("scribe-readiness-unknown:" + gidText);
-                unknownPredicates.Add("scribe-readiness:formalization-gid-not-declaration");
-                continue;
-            }
-
-            var documentGid = ScribeEmissionAttestation.DocumentGid(gidText);
-            if (!scribeEmissions.TryGet(documentGid, out _))
-            {
-                blockers.Add("scribe-emission-missing:" + gidText);
-                continue;
-            }
-
-            if (!scribeEmissions.ReferencesDeclaration(gidText))
-            {
-                blockers.Add("scribe-declaration-reference-missing:" + gidText);
-            }
-        }
-
-        return blockers.Count == 0
-            ? Record(entry, "cover-now", [], CoverUnknownPredicates)
-            : Record(entry, "repair-scribe", blockers.ToImmutable(), unknownPredicates.ToImmutable());
+        return Record(entry, "deposit", []);
     }
 
     private static DigestionReadinessRecord Record(

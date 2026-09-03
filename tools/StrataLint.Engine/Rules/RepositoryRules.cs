@@ -162,13 +162,6 @@ internal static partial class RepositoryRules
             30,
             "Digestion atoms append only",
             new RepositoryRule(BackfillScoped, DigestionAtomsAppendOnly, DigestionAtomsAffected)),
-        Register(
-            31,
-            "Formalization receipt identity",
-            new RepositoryRule(
-                FormalizationReceiptScoped,
-                FormalizationReceiptIdentity,
-                FormalizationReceiptsAffected)),
     ];
 
     private static RuleRegistration Register(

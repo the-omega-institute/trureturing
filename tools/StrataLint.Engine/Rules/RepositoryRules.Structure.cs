@@ -83,8 +83,8 @@ internal static partial class RepositoryRules
     internal const int DirectoryToleranceLimit = 48;
 
     // SL-003 capacity exclusions: theory inputs, the Lake manifest, the backfill
-    // inventory, atomizer dialect registry, canonical CAS blobs, per-atom
-    // formalization receipts, per-test retirement declarations, and generated Blueprint
+    // inventory, atomizer dialect registry, canonical CAS blobs, per-test retirement
+    // declarations, and generated Blueprint
     // Markdown projections are not artifacts the capacity pressure rule bounds. Machine
     // inventories grow one entry per
     // admitted unit and are never navigated as content buckets; the atomizer registry
@@ -102,7 +102,6 @@ internal static partial class RepositoryRules
         || string.Equals(path, TheoryAtomizerDataLoader.DataPath, StringComparison.Ordinal)
         || DigestionCasStore.IsCanonicalPath(path)
         || FrozenLedgerChangeClassifier.IsAcceptedEventPath(path)
-        || path.StartsWith(DigestionFormalizationReceipt.RootPath, StringComparison.Ordinal)
         || (path.StartsWith("Blueprint/", StringComparison.Ordinal)
             && path.EndsWith(".md", StringComparison.Ordinal));
 
@@ -309,82 +308,6 @@ internal static partial class RepositoryRules
                 item.Key.Value,
                 "theory volumes are append-only; publish an erratum as newly appended prose"))
             .ToImmutableArray();
-
-    private static ImmutableArray<RuleFinding> FormalizationReceiptIdentity(
-        RuleEvaluationContext context)
-    {
-        var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        foreach (var (path, file) in context.Current.Files
-                     .Where(static item => item.Key.Value.StartsWith(
-                         DigestionFormalizationReceipt.RootPath,
-                         StringComparison.Ordinal))
-                     .Where(item => context.IsBaseFactAffected(item.Key.Value))
-                     .OrderBy(static item => item.Key.Value, StringComparer.Ordinal))
-        {
-            if (!TryGetFormalizationReceiptFileAtomId(path.Value, out var fileAtomId))
-            {
-                findings.Add(new RuleFinding(
-                    path.Value,
-                    "formalization receipt filename must be <64 lowercase hex>.v1.json"));
-                continue;
-            }
-
-            if (!TryGetFormalizationReceiptAtomId(file, out var receiptAtomId)
-                || !string.Equals(receiptAtomId, fileAtomId, StringComparison.Ordinal))
-            {
-                findings.Add(new RuleFinding(
-                    path.Value,
-                    $"formalization receipt atom_id must match filename atom id {fileAtomId}"));
-            }
-        }
-
-        return findings.ToImmutable();
-    }
-
-    private static bool TryGetFormalizationReceiptFileAtomId(
-        string path,
-        out string atomId)
-    {
-        atomId = string.Empty;
-        var fileName = path[DigestionFormalizationReceipt.RootPath.Length..];
-        if (!fileName.EndsWith(DigestionFormalizationReceipt.PathSuffix, StringComparison.Ordinal))
-        {
-            return false;
-        }
-
-        var stem = fileName[..^DigestionFormalizationReceipt.PathSuffix.Length];
-        if (stem.Length != 64 || stem.AsSpan().IndexOfAnyExcept("0123456789abcdef") >= 0)
-        {
-            return false;
-        }
-
-        atomId = stem;
-        return true;
-    }
-
-    private static bool TryGetFormalizationReceiptAtomId(
-        RepositoryFile file,
-        out string atomId)
-    {
-        atomId = string.Empty;
-        try
-        {
-            using var document = JsonDocument.Parse(file.Text);
-            if (document.RootElement.ValueKind != JsonValueKind.Object
-                || !document.RootElement.TryGetProperty("atom_id", out var atomIdElement)
-                || atomIdElement.ValueKind != JsonValueKind.String)
-            {
-                return false;
-            }
-
-            atomId = atomIdElement.GetString() ?? string.Empty;
-            return true;
-        }
-        catch (JsonException)
-        {
-            return false;
-        }
-    }
 
     private static ImmutableArray<RuleFinding> DigestionAtomsAppendOnly(
         RuleEvaluationContext context)

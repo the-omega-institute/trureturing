@@ -150,7 +150,6 @@ internal static partial class RepositoryPathPolicy
             || value.StartsWith("tools/", StringComparison.Ordinal)
             || DigestionCasStore.IsCanonicalPath(value)
             || BackfillInventoryLoader.IsCanonicalPath(value)
-            || DigestionFormalizationReceipt.IsCanonicalPath(value)
             || IsEchoResidualShardPath(value)
             || ProblemPoolPaths.IsCanonicalPath(value)
             || FrozenLedgerChangeClassifier.IsAcceptedEventPath(value)
