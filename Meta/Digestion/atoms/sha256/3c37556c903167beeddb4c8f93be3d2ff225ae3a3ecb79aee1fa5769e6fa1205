@@ -1,0 +1,52 @@
+## 定理 46.1　源 jet 是闭合 cyclic traces
+
+设：
+
+$$
+A=\{h_1,\ldots,h_k\}.
+$$
+
+则：
+
+$$
+\boxed{
+[\varepsilon_A]
+\bigl(
+-\log\mathcal D_H
+\bigr)
+=
+\frac1k
+\sum_{\pi\in S_k}
+\operatorname{Tr}
+\left(
+B_{\pi(1)}
+B_{\pi(2)}
+\cdots
+B_{\pi(k)}
+\right).
+}
+$$
+
+### 证明
+
+使用有限维恒等式：
+
+$$
+-\log\det(I-X)
+=
+\sum_{m\ge1}
+\frac1m\operatorname{Tr}(X^m).
+$$
+
+由于：
+
+$$
+\varepsilon_h^2=0,
+$$
+
+\(\varepsilon_A\) 系数只能来自 \(m=k\)，而且每个索引必须恰好出现一次，于是得到全部排列之和。
+
+因为 trace 在循环置换下不变，系数也可以写成循环词等价类之和。
+
+---
+
