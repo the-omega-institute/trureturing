@@ -1,0 +1,52 @@
+## 313. 单个离线四元组
+
+令：
+
+$$
+u=e^{\eta+i\theta},
+\qquad
+\eta\neq0.
+$$
+
+完整四元轨道在 Li 系数中的实贡献为：
+
+$$
+\boxed{
+L_n^{\mathrm{off}}
+=
+4-
+4\cosh(n\eta)\cos(n\theta).
+}
+$$
+
+若：
+
+$$
+\eta=0,
+$$
+
+则：
+
+$$
+L_n^{\mathrm{crit}}
+=
+4-
+4\cos(n\theta)
+\ge0.
+$$
+
+若：
+
+$$
+\eta\neq0,
+$$
+
+\(\cosh(n\eta)\) 指数增长。
+
+对任意 \(\theta\)，存在无穷多个 \(n\) 使：
+
+$$
+\cos(n\theta)>\frac12.
+$$
+
+* 若 \(\theta/2\pi\) 有理，取周期倍数；

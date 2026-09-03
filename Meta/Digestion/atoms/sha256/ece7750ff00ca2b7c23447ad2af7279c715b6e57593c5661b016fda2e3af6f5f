@@ -1,0 +1,61 @@
+## 289. 单轨道二通道
+
+对一个非实离线零点轨道，令：
+
+$$
+a=\widehat g(z_\rho),
+\qquad
+b=\widehat g(\overline{z_\rho}).
+$$
+
+仓库的离线轨道分解与 convolution-square 因子分解，把该轨道贡献归约为：
+
+$$
+4m_\rho\Re(a\overline b).
+$$
+
+利用：
+
+$$
+|a+b|^2-|a-b|^2
+=
+4\Re(a\overline b),
+$$
+
+得到：
+
+$$
+\boxed{
+Q_\rho(a,b)
+=
+m_\rho
+\left(
+|a+b|^2-|a-b|^2
+\right).
+}
+$$
+
+定义：
+
+$$
+a_+=a+b,
+\qquad
+a_-=a-b.
+$$
+
+则：
+
+$$
+\boxed{
+Q_\rho
+=
+m_\rho
+\left(
+|a_+|^2-|a_-|^2
+\right).
+}
+$$
+
+这正是一个 signature \((+,-)\) 的 Krein 平面：
+
+* even channel \(a_+\) 为正；

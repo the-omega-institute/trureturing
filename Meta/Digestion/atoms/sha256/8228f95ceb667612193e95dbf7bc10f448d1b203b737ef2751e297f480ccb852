@@ -1,0 +1,72 @@
+## 353. 宇称不能连续延伸到完成空间
+
+给：
+
+$$
+V_{\mathrm{all}}
+=
+\prod_p\mathbb F_2
+$$
+
+赋予乘积拓扑。
+
+假设存在连续线性延伸：
+
+$$
+\overline\ell:
+V_{\mathrm{all}}
+\to
+\mathbb F_2
+$$
+
+满足：
+
+$$
+\overline\ell|_{V_{\mathrm{fin}}}=\ell.
+$$
+
+因为目标 \(\mathbb F_2\) 是离散空间，连续性意味着 \(\ker\overline\ell\) 包含一个基本开邻域。
+
+因此存在有限素数集合 \(S\)，使所有在 \(S\) 上为零的配置都落在核中。
+
+于是对任何：
+
+$$
+p\notin S,
+$$
+
+都有：
+
+$$
+\overline\ell(e_p)=0.
+$$
+
+但延伸条件要求：
+
+$$
+\overline\ell(e_p)
+=
+\ell(e_p)
+=
+1.
+$$
+
+矛盾。
+
+所以：
+
+$$
+\boxed{
+\text{有限素数配置上的总宇称，不能连续延伸到全部无限配置。}
+}
+$$
+
+这可以称为：
+
+> **Prime-Parity Completion Obstruction**
+> **素数宇称完成障碍**
+
+它给你的“极限以后奇偶发生矛盾”一个完全严格的版本。
+
+---
+

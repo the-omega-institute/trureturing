@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:b0d9bc8f2fcc710dbdccb0b91708fb6136f0507e5c7c41a03360586b947d4b84
+  normalized_sha256: sha256:b0d9bc8f2fcc710dbdccb0b91708fb6136f0507e5c7c41a03360586b947d4b84
+cas_ref: sha256:b0d9bc8f2fcc710dbdccb0b91708fb6136f0507e5c7c41a03360586b947d4b84
+coverage_gids:
+  - D5/S3/Weil/ZetaLinear/OrbitVarianceRiemannCriterion.orbit_variance_rh_criterion
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/ZetaLinear/OrbitVarianceRiemannCriterion.orbit_variance_rh_criterion
+      source_sha256: sha256:b0d9bc8f2fcc710dbdccb0b91708fb6136f0507e5c7c41a03360586b947d4b84
+      target_statement_id: sha256:d6271d83350b5501279e162e1c7edd613024ba2772fbf139bb4ed1b5757bf724
+  scribe:
+    - gid: D5/S3/Weil/ZetaLinear/OrbitVarianceRiemannCriterion.orbit_variance_rh_criterion
+      definition_sha256: sha256:90e2799ea5ddd5ea1ffc431d0f42e38ab2d3025f9b267d02d5feabb5e5bd438f
+      emission_sha256: sha256:d489529c571770bec5737294c614cbdb55afaa7d267922adc69dc60fcf88a285
+  unresolved_subitems: []

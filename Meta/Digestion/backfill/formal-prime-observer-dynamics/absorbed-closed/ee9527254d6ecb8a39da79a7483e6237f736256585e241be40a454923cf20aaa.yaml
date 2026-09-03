@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:ee9527254d6ecb8a39da79a7483e6237f736256585e241be40a454923cf20aaa
+  normalized_sha256: sha256:ee9527254d6ecb8a39da79a7483e6237f736256585e241be40a454923cf20aaa
+cas_ref: sha256:ee9527254d6ecb8a39da79a7483e6237f736256585e241be40a454923cf20aaa
+coverage_gids:
+  - D5/S3/ConceptDynamics/Prediction/ConditionalExpectationZeroRiskCriterion.zero_prediction_risk_iff_ae_observation_measurable
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Prediction/ConditionalExpectationZeroRiskCriterion.zero_prediction_risk_iff_ae_observation_measurable
+      source_sha256: sha256:ee9527254d6ecb8a39da79a7483e6237f736256585e241be40a454923cf20aaa
+      target_statement_id: sha256:8a7aaa798b1bd678755c125bee6b16cd28ad8a202671ef8cb895bed01c4089e4
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Prediction/ConditionalExpectationZeroRiskCriterion.zero_prediction_risk_iff_ae_observation_measurable
+      definition_sha256: sha256:a62142cfab165dbb591f812c1d5b8ae32243b9ea04a6c08ee6c7ded3b9208121
+      emission_sha256: sha256:4669f99f03bf54b5ddb0b75307c0122c9614da46f24f7327237996c32532c88d
+  unresolved_subitems: []

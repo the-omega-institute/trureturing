@@ -1,0 +1,34 @@
+### Hard-core 占据
+
+$$
+k_p\in\{0,1\}.
+$$
+
+局部 trace：
+
+$$
+1+p^{-s}.
+$$
+
+全局 hard-core trace 为：
+
+$$
+\boxed{
+\prod_p(1+p^{-s})
+=
+\frac{\zeta(s)}{\zeta(2s)}.
+}
+$$
+
+其 supertrace 为：
+
+$$
+\boxed{
+\prod_p(1-p^{-s})
+=
+\frac1{\zeta(s)}.
+}
+$$
+
+---
+
