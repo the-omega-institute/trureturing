@@ -43,7 +43,7 @@ structure OrderedCanonicalSCM
   exogenousFintype : Fintype Exogenous
   mass : Exogenous -> ℚ
   nonnegative : forall exogenous, 0 <= mass exogenous
-  total : @Finset.univ Exogenous exogenousFintype |>.sum mass = 1
+  total : (@Finset.univ Exogenous exogenousFintype).sum mass = 1
   signatureOf : Exogenous -> CanonicalResponseSignature n Value
 
 /-- The deterministic structural equation selected by an exogenous state at a
@@ -85,7 +85,8 @@ theorem canonicalSCM_inducedSignatureMass
     {n : Nat} {Value : Type u} [Fintype Value]
     (law : SignatureProbabilityLaw n Value) :
     inducedSignatureMass (canonicalSCMOfSignatureLaw law) = law.mass := by
-  unfold inducedSignatureMass canonicalSCMOfSignatureLaw
+  change pushforwardSignatureMass law.mass
+      (fun signature => signature) = law.mass
   exact pushforwardSignatureMass_id law.mass
 
 /-- Each structural equation in the canonical witness is exactly the response
