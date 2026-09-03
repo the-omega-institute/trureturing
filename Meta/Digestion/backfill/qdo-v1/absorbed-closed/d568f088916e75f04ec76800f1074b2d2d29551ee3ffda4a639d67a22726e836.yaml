@@ -3,20 +3,9 @@ fingerprints:
   normalized_sha256: sha256:d568f088916e75f04ec76800f1074b2d2d29551ee3ffda4a639d67a22726e836
 cas_ref: sha256:d568f088916e75f04ec76800f1074b2d2d29551ee3ffda4a639d67a22726e836
 coverage_gids:
-  - D5/S3/ContinuousObservables/TransientObservableFilter.transient_observable_filter
+  - gid: D5/S3/ContinuousObservables/TransientObservableFilter.transient_observable_filter
+    target_statement_id: sha256:6945d015d2ed4acee0cc5eae1eb004bf6f28d413dfee17fc762883317fbed9c5
 receipts:
-  coverage:
-    - gid: D5/S3/ContinuousObservables/TransientObservableFilter.transient_observable_filter
-      source_sha256: sha256:d568f088916e75f04ec76800f1074b2d2d29551ee3ffda4a639d67a22726e836
-      target_statement_id: sha256:6945d015d2ed4acee0cc5eae1eb004bf6f28d413dfee17fc762883317fbed9c5
-      statement_id_history:
-        - statement_id: sha256:1d0d9087ed791d88ffcfabef98304abe43ddd764e6b4d419c9e3dda491daec26
-          environment_pin:
-            toolchain: leanprover/lean4:v4.31.0
-            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
-          superseded_by_pin:
-            toolchain: leanprover/lean4:v4.33.0
-            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ContinuousObservables/TransientObservableFilter.transient_observable_filter
       definition_sha256: sha256:e6874ff82d71a563a321b775cef258b8e652e55747d74aeb5076752c99dd809d

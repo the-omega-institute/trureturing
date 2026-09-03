@@ -1,0 +1,15 @@
+### 仅极限闭合
+
+$$
+\mathcal E_\lambda\neq\varnothing
+\quad\forall\lambda<\infty,
+$$
+
+但：
+
+$$
+\mathcal E_\infty=\varnothing.
+$$
+
+每个有限观察者都有盲区，但没有一个固定状态对能逃过全部观察者。
+

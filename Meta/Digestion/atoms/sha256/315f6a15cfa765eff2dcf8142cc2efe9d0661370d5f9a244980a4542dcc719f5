@@ -1,0 +1,40 @@
+* \(r\)：差分或 moment 阶。
+
+有限阶段位于：
+
+$$
+\mathbb N^d.
+$$
+
+可以使用对角路径：
+
+$$
+(N,N,\ldots,N)
+$$
+
+共尾访问所有方向。
+
+也可以使用黄金 Sturmian 调度，使不同轴的增长失衡保持有界。
+
+仓库的最新 β 定理已经提供了由 Zeckendorf 最小指标奇偶控制的：
+
+$$
+\varphi/\varphi^2
+$$
+
+双通道精确调度。
+
+但：
+
+$$
+\boxed{
+\text{cofinal scheduling}
+\neq
+\text{uniform proof}.
+}
+$$
+
+它只保证最终访问每一个有限条件，不保证存在停止时刻。
+
+---
+

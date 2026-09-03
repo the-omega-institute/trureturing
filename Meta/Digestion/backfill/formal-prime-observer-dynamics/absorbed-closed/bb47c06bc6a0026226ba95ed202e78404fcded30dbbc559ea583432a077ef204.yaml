@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:bb47c06bc6a0026226ba95ed202e78404fcded30dbbc559ea583432a077ef204
 cas_ref: sha256:bb47c06bc6a0026226ba95ed202e78404fcded30dbbc559ea583432a077ef204
 coverage_gids:
-  - D5/S3/Arith/Congruence/PrimePowerTowerInjective.precision_tower_injective
+  - gid: D5/S3/Arith/Congruence/PrimePowerTowerInjective.precision_tower_injective
+    target_statement_id: sha256:d2f2e6a6f386515b14855acf934dcb63a91a445672677a144b395d92bbb725da
 receipts:
-  coverage:
-    - gid: D5/S3/Arith/Congruence/PrimePowerTowerInjective.precision_tower_injective
-      source_sha256: sha256:bb47c06bc6a0026226ba95ed202e78404fcded30dbbc559ea583432a077ef204
-      target_statement_id: sha256:d2f2e6a6f386515b14855acf934dcb63a91a445672677a144b395d92bbb725da
   scribe:
     - gid: D5/S3/Arith/Congruence/PrimePowerTowerInjective.precision_tower_injective
       definition_sha256: sha256:c2a206e15aeba7ceef25a9e2450c5d26b42056da9fe2d8efa3250fdc836a4cc3

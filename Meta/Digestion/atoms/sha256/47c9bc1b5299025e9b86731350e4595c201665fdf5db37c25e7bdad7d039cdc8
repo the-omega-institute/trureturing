@@ -1,0 +1,26 @@
+### 相对相干 RH
+
+$$
+\boxed{
+\mathrm{RH}_{\mathrm{coh}}
+:
+\quad
+E_{\mathrm{coh}}=0.
+}
+$$
+
+于是：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathrm{RH}_{\mathrm{center}}
+\land
+\mathrm{RH}_{\mathrm{coh}}.
+}
+$$
+
+这两个命题在一般对称谱系统中彼此独立：
+
+* 所有零点都在 \(\Re s=0.6\)，则相干成立但中心不成立；

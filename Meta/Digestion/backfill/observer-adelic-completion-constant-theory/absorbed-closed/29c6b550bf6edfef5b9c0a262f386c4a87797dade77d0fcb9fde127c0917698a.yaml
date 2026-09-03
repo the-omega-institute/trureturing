@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:29c6b550bf6edfef5b9c0a262f386c4a87797dade77d0fcb9fde127c0917698a
 cas_ref: sha256:29c6b550bf6edfef5b9c0a262f386c4a87797dade77d0fcb9fde127c0917698a
 coverage_gids:
-  - D5/S3/ObserverMemory/Trajectories/FibonacciNearReturn.fibonacci_near_return
+  - gid: D5/S3/ObserverMemory/Trajectories/FibonacciNearReturn.fibonacci_near_return
+    target_statement_id: sha256:e69597fb578472623fa134add7498c47c2c7cfe989ff1895ac2ae3f510b96dbe
 receipts:
-  coverage:
-    - gid: D5/S3/ObserverMemory/Trajectories/FibonacciNearReturn.fibonacci_near_return
-      source_sha256: sha256:29c6b550bf6edfef5b9c0a262f386c4a87797dade77d0fcb9fde127c0917698a
-      target_statement_id: sha256:e69597fb578472623fa134add7498c47c2c7cfe989ff1895ac2ae3f510b96dbe
   scribe:
     - gid: D5/S3/ObserverMemory/Trajectories/FibonacciNearReturn.fibonacci_near_return
       definition_sha256: sha256:78efba8ebf5fb0e647ef9f573ce6274543bdaf35904fa707195f39fdd71ca36b

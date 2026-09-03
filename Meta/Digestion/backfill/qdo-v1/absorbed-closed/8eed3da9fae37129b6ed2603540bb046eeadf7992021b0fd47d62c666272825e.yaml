@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:8eed3da9fae37129b6ed2603540bb046eeadf7992021b0fd47d62c666272825e
 cas_ref: sha256:8eed3da9fae37129b6ed2603540bb046eeadf7992021b0fd47d62c666272825e
 coverage_gids:
-  - D5/S3/Quantum/Tomography/RankOneContextCommutator.aggregated_rank_one_context_commutator
+  - gid: D5/S3/Quantum/Tomography/RankOneContextCommutator.aggregated_rank_one_context_commutator
+    target_statement_id: sha256:d4db2f18f7a6f71a1d22a2a234a0374f520698fd3c3e403792c1bfc0e32f4c35
 receipts:
-  coverage:
-    - gid: D5/S3/Quantum/Tomography/RankOneContextCommutator.aggregated_rank_one_context_commutator
-      source_sha256: sha256:8eed3da9fae37129b6ed2603540bb046eeadf7992021b0fd47d62c666272825e
-      target_statement_id: sha256:d4db2f18f7a6f71a1d22a2a234a0374f520698fd3c3e403792c1bfc0e32f4c35
   scribe:
     - gid: D5/S3/Quantum/Tomography/RankOneContextCommutator.aggregated_rank_one_context_commutator
       definition_sha256: sha256:e529316a1b09a2fdbd3a689d8e089944cf31b8d22b3ed0a5153d477a22333324

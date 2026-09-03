@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:55ab22e16167a68189fa7b5a63be6ed58c926ad4e425550bce209de09ee04a8d
 cas_ref: sha256:55ab22e16167a68189fa7b5a63be6ed58c926ad4e425550bce209de09ee04a8d
 coverage_gids:
-  - D5/S3/Constants/InnerProducts/FractionalReciprocalInnerProduct.fractional_reciprocal_inner_product
+  - gid: D5/S3/Constants/InnerProducts/FractionalReciprocalInnerProduct.fractional_reciprocal_inner_product
+    target_statement_id: sha256:ac6cf06688054e855d310f833fee2adb9f4272d24fca38e5c6460474b4ff5796
 receipts:
-  coverage:
-    - gid: D5/S3/Constants/InnerProducts/FractionalReciprocalInnerProduct.fractional_reciprocal_inner_product
-      source_sha256: sha256:55ab22e16167a68189fa7b5a63be6ed58c926ad4e425550bce209de09ee04a8d
-      target_statement_id: sha256:ac6cf06688054e855d310f833fee2adb9f4272d24fca38e5c6460474b4ff5796
   scribe:
     - gid: D5/S3/Constants/InnerProducts/FractionalReciprocalInnerProduct.fractional_reciprocal_inner_product
       definition_sha256: sha256:36a8c46bdd37e34843003a6eb533da97e083f7a57cb46ed2de69c45171dcbb44

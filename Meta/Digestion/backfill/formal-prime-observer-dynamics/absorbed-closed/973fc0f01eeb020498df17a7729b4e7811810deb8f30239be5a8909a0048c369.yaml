@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:973fc0f01eeb020498df17a7729b4e7811810deb8f30239be5a8909a0048c369
 cas_ref: sha256:973fc0f01eeb020498df17a7729b4e7811810deb8f30239be5a8909a0048c369
 coverage_gids:
-  - D5/S3/ConceptDynamics/DefinitionEscapeMonotonicity/HorizontalSaturationSeparation.observation_language_insufficiency_witness
+  - gid: D5/S3/ConceptDynamics/DefinitionEscapeMonotonicity/HorizontalSaturationSeparation.observation_language_insufficiency_witness
+    target_statement_id: sha256:bb8df1366822d89b9bf51a82e3e4181f72aaf1f6fab9db9d58b39e0e94370010
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/DefinitionEscapeMonotonicity/HorizontalSaturationSeparation.observation_language_insufficiency_witness
-      source_sha256: sha256:973fc0f01eeb020498df17a7729b4e7811810deb8f30239be5a8909a0048c369
-      target_statement_id: sha256:bb8df1366822d89b9bf51a82e3e4181f72aaf1f6fab9db9d58b39e0e94370010
   scribe:
     - gid: D5/S3/ConceptDynamics/DefinitionEscapeMonotonicity/HorizontalSaturationSeparation.observation_language_insufficiency_witness
       definition_sha256: sha256:ba905b4d3c3ae51c791af766b8a14d150dc11829e42e9c2fb635208fe58feeac

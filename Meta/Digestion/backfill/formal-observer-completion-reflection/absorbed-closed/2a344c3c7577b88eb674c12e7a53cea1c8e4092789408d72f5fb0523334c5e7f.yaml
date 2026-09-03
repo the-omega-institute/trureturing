@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:2a344c3c7577b88eb674c12e7a53cea1c8e4092789408d72f5fb0523334c5e7f
 cas_ref: sha256:2a344c3c7577b88eb674c12e7a53cea1c8e4092789408d72f5fb0523334c5e7f
 coverage_gids:
-  - D5/S3/ConceptDynamics/RefinementAlgebra/ObserverStrategyFactorization.observer_strategy_factorization
+  - gid: D5/S3/ConceptDynamics/RefinementAlgebra/ObserverStrategyFactorization.observer_strategy_factorization
+    target_statement_id: sha256:4a612c38e9cc181797382c91b3a729accbc9e0f7817bbd7e84798fdbeca9d1c3
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/RefinementAlgebra/ObserverStrategyFactorization.observer_strategy_factorization
-      source_sha256: sha256:2a344c3c7577b88eb674c12e7a53cea1c8e4092789408d72f5fb0523334c5e7f
-      target_statement_id: sha256:4a612c38e9cc181797382c91b3a729accbc9e0f7817bbd7e84798fdbeca9d1c3
   scribe:
     - gid: D5/S3/ConceptDynamics/RefinementAlgebra/ObserverStrategyFactorization.observer_strategy_factorization
       definition_sha256: sha256:0927d8b37e22004e0278549a54b73f8fea9cec1272610d519b32ccc574469439

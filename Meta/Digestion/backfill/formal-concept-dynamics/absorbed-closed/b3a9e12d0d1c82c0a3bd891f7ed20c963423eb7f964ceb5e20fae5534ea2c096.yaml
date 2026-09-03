@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:b3a9e12d0d1c82c0a3bd891f7ed20c963423eb7f964ceb5e20fae5534ea2c096
 cas_ref: sha256:b3a9e12d0d1c82c0a3bd891f7ed20c963423eb7f964ceb5e20fae5534ea2c096
 coverage_gids:
-  - D5/S3/ConceptDynamics/Fibers/CanonicalAdmissibleFiberDecomposition.canonical_admissible_fiber_decomposition
+  - gid: D5/S3/ConceptDynamics/Fibers/CanonicalAdmissibleFiberDecomposition.canonical_admissible_fiber_decomposition
+    target_statement_id: sha256:01380891f2d3a4b4f6aa99bec46b82e2ab7345a25a8d8d5d6859a4feb83489b6
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Fibers/CanonicalAdmissibleFiberDecomposition.canonical_admissible_fiber_decomposition
-      source_sha256: sha256:b3a9e12d0d1c82c0a3bd891f7ed20c963423eb7f964ceb5e20fae5534ea2c096
-      target_statement_id: sha256:01380891f2d3a4b4f6aa99bec46b82e2ab7345a25a8d8d5d6859a4feb83489b6
   scribe:
     - gid: D5/S3/ConceptDynamics/Fibers/CanonicalAdmissibleFiberDecomposition.canonical_admissible_fiber_decomposition
       definition_sha256: sha256:213a062c6110a0bafe97e60e6b666cd544651968134ce66ce68281c6eaac4ccd

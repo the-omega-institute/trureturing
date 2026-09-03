@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:6c9700e6cc2e27dc78ebc9ad04d0bf4cbef158377910dc8099df1c69d8605031
 cas_ref: sha256:6c9700e6cc2e27dc78ebc9ad04d0bf4cbef158377910dc8099df1c69d8605031
 coverage_gids:
-  - D5/S3/Observer/BlockStructure/CommonDenominatorPolynomialBasis.common_denominator_polynomial_basis
+  - gid: D5/S3/Observer/BlockStructure/CommonDenominatorPolynomialBasis.common_denominator_polynomial_basis
+    target_statement_id: sha256:0aee954ba20933dcb94953a497b6d4b738e248b83eeac05caa3102eee5a0ce55
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/BlockStructure/CommonDenominatorPolynomialBasis.common_denominator_polynomial_basis
-      source_sha256: sha256:6c9700e6cc2e27dc78ebc9ad04d0bf4cbef158377910dc8099df1c69d8605031
-      target_statement_id: sha256:0aee954ba20933dcb94953a497b6d4b738e248b83eeac05caa3102eee5a0ce55
   scribe:
     - gid: D5/S3/Observer/BlockStructure/CommonDenominatorPolynomialBasis.common_denominator_polynomial_basis
       definition_sha256: sha256:7345417b29d9b97a92a8fb3e0556b9e9f47e76275612834e822d8d9e8a078ccd

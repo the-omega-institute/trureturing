@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:67e3c5ca74c604afb50fbae5f106457eacfb2b891e8e1448bcd35d8e98c722da
 cas_ref: sha256:67e3c5ca74c604afb50fbae5f106457eacfb2b891e8e1448bcd35d8e98c722da
 coverage_gids:
-  - D5/S3/ConceptDynamics/RefinementGeometry/LocalGlobalAtlasExactness.local_global_atlas_exactness
+  - gid: D5/S3/ConceptDynamics/RefinementGeometry/LocalGlobalAtlasExactness.local_global_atlas_exactness
+    target_statement_id: sha256:b4af3422035384bf8d35e8cf196eda933a36b6d4bf0d4e2361937e76a9437170
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/RefinementGeometry/LocalGlobalAtlasExactness.local_global_atlas_exactness
-      source_sha256: sha256:67e3c5ca74c604afb50fbae5f106457eacfb2b891e8e1448bcd35d8e98c722da
-      target_statement_id: sha256:b4af3422035384bf8d35e8cf196eda933a36b6d4bf0d4e2361937e76a9437170
   scribe:
     - gid: D5/S3/ConceptDynamics/RefinementGeometry/LocalGlobalAtlasExactness.local_global_atlas_exactness
       definition_sha256: sha256:df71756455f01e8e78d9d1ddfd59854e936dfb671b2e833e7596c49d8a810c40

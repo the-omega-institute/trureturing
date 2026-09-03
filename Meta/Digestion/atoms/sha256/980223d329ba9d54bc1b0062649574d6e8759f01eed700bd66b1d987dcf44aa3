@@ -1,0 +1,56 @@
+## 477. 检查全部条件不是唯一道路
+
+若 Casimir moments 可以写成：
+
+$$
+a_n
+=
+\langle
+\Omega,J^n\Omega
+\rangle,
+$$
+
+并直接证明：
+
+$$
+\boxed{
+0\le J\le I,
+}
+$$
+
+则：
+
+$$
+\begin{aligned}
+D^ka_n
+&=
+\sum_{j=0}^k
+(-1)^j\binom kj
+\langle\Omega,J^{n+j}\Omega\rangle\\
+&=
+\langle
+\Omega,
+J^n(I-J)^k\Omega
+\rangle\\
+&\ge0.
+\end{aligned}
+$$
+
+于是一个算子不等式：
+
+$$
+0\le J\le I
+$$
+
+同时压缩了全部：
+
+$$
+(n,k)\in\mathbb N^2
+$$
+
+条件。
+
+所以有限证明并不是检查了无限多个格点，而是找到了它们的共同生成机制。
+
+---
+

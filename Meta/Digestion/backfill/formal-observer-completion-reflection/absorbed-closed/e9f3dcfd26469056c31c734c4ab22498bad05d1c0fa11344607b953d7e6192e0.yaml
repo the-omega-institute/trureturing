@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:e9f3dcfd26469056c31c734c4ab22498bad05d1c0fa11344607b953d7e6192e0
 cas_ref: sha256:e9f3dcfd26469056c31c734c4ab22498bad05d1c0fa11344607b953d7e6192e0
 coverage_gids:
-  - D5/S3/PrimeForms/Splitting/QuadraticCharacterQuantumPostprocessing.quadratic_character_quantum_postprocessing_no_go
+  - gid: D5/S3/PrimeForms/Splitting/QuadraticCharacterQuantumPostprocessing.quadratic_character_quantum_postprocessing_no_go
+    target_statement_id: sha256:f57d7a2cf3f6336a2b425f52cdcd5ea4dd7e0d814dae2a6bad5687f721395743
 receipts:
-  coverage:
-    - gid: D5/S3/PrimeForms/Splitting/QuadraticCharacterQuantumPostprocessing.quadratic_character_quantum_postprocessing_no_go
-      source_sha256: sha256:e9f3dcfd26469056c31c734c4ab22498bad05d1c0fa11344607b953d7e6192e0
-      target_statement_id: sha256:f57d7a2cf3f6336a2b425f52cdcd5ea4dd7e0d814dae2a6bad5687f721395743
   scribe:
     - gid: D5/S3/PrimeForms/Splitting/QuadraticCharacterQuantumPostprocessing.quadratic_character_quantum_postprocessing_no_go
       definition_sha256: sha256:bcc0a5c7b0362595f1ce5bd76838914369c01df64beb32c1ffd8636b80ada67c

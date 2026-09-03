@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:2474c6ed0f5169cb45bd58396ba406bdc60e3c11c40f70cdbb8c078142554fff
 cas_ref: sha256:2474c6ed0f5169cb45bd58396ba406bdc60e3c11c40f70cdbb8c078142554fff
 coverage_gids:
-  - D5/S3/Estimation/DecisionRisk/FiniteBayesRiskDominanceCriterion.finite_bayes_risk_dominance_iff_postprocessing
+  - gid: D5/S3/Estimation/DecisionRisk/FiniteBayesRiskDominanceCriterion.finite_bayes_risk_dominance_iff_postprocessing
+    target_statement_id: sha256:cfb660d585b50049e8297873905ee0cc24541ae911ec6db5e5d4d03a0950a861
 receipts:
-  coverage:
-    - gid: D5/S3/Estimation/DecisionRisk/FiniteBayesRiskDominanceCriterion.finite_bayes_risk_dominance_iff_postprocessing
-      source_sha256: sha256:2474c6ed0f5169cb45bd58396ba406bdc60e3c11c40f70cdbb8c078142554fff
-      target_statement_id: sha256:cfb660d585b50049e8297873905ee0cc24541ae911ec6db5e5d4d03a0950a861
   scribe:
     - gid: D5/S3/Estimation/DecisionRisk/FiniteBayesRiskDominanceCriterion.finite_bayes_risk_dominance_iff_postprocessing
       definition_sha256: sha256:c439860a88488037606beb1c86efff12cc455d8ca1a5f858a571f0969c778ec5

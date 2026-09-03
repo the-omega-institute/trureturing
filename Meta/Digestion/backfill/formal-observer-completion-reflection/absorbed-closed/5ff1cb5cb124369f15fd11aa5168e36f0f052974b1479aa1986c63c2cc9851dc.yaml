@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:5ff1cb5cb124369f15fd11aa5168e36f0f052974b1479aa1986c63c2cc9851dc
 cas_ref: sha256:5ff1cb5cb124369f15fd11aa5168e36f0f052974b1479aa1986c63c2cc9851dc
 coverage_gids:
-  - D5/S3/Quantum/PredictionDepth/UnifiedSequentialKernel.unified_sequential_kernel
+  - gid: D5/S3/Quantum/PredictionDepth/UnifiedSequentialKernel.unified_sequential_kernel
+    target_statement_id: sha256:545a83de899be4446c5113b80aafcd214a135b33d5d07d090e882855a3e0ee89
 receipts:
-  coverage:
-    - gid: D5/S3/Quantum/PredictionDepth/UnifiedSequentialKernel.unified_sequential_kernel
-      source_sha256: sha256:5ff1cb5cb124369f15fd11aa5168e36f0f052974b1479aa1986c63c2cc9851dc
-      target_statement_id: sha256:545a83de899be4446c5113b80aafcd214a135b33d5d07d090e882855a3e0ee89
   scribe:
     - gid: D5/S3/Quantum/PredictionDepth/UnifiedSequentialKernel.unified_sequential_kernel
       definition_sha256: sha256:1ad21f46bef25aae982060092929fcc849cb973c3b4e71d9a44c1863e548a5de

@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:969d10e5165ce88227e61dd91fefa2c58272dd48355370070285b1ce5cf7a9ca
 cas_ref: sha256:969d10e5165ce88227e61dd91fefa2c58272dd48355370070285b1ce5cf7a9ca
 coverage_gids:
-  - D5/S0/Tower/OneStepMemoryUniqueNaming.one_step_memory_unique_naming
+  - gid: D5/S0/Tower/OneStepMemoryUniqueNaming.one_step_memory_unique_naming
+    target_statement_id: sha256:35b3ad37612ed56f62b2e16c0f969cc4cb77686f6c6e28e4dc4adc2b739ecdef
 receipts:
-  coverage:
-    - gid: D5/S0/Tower/OneStepMemoryUniqueNaming.one_step_memory_unique_naming
-      source_sha256: sha256:969d10e5165ce88227e61dd91fefa2c58272dd48355370070285b1ce5cf7a9ca
-      target_statement_id: sha256:35b3ad37612ed56f62b2e16c0f969cc4cb77686f6c6e28e4dc4adc2b739ecdef
   scribe:
     - gid: D5/S0/Tower/OneStepMemoryUniqueNaming.one_step_memory_unique_naming
       definition_sha256: sha256:d1e5a4637f92d89c15e0ed6024d2823703057a798cdbe1eeeeb80c3e3c655b3d

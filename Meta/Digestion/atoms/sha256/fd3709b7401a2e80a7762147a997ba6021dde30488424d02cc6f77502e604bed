@@ -1,0 +1,84 @@
+# 十二、项目中的 jump energy 正是在做这种“预测—创新分离”
+
+仓库已经把有限 prime-power 项写成：
+
+$$
+\boxed{
+\operatorname{PrimeTerm}
+=
+2W_L\|f\|_2^2
+-
+E_{\mathrm{jump},L}(f),
+}
+$$
+
+其中：
+
+$$
+E_{\mathrm{jump},L}(f)\ge0
+$$
+
+并且它是一个显式 arithmetic jump Laplacian 的二次型。
+
+这里：
+
+$$
+2W_L\|f\|^2
+$$
+
+是 coherent mass。
+
+而：
+
+$$
+E_{\mathrm{jump},L}(f)
+$$
+
+是平移以后与原状态不一致的正差分能量。
+
+这和构型创新具有同一个模式：
+
+$$
+\boxed{
+\text{原始量}
+=
+\text{可预测共同部分}
++
+\text{真正创新余量}.
+}
+$$
+
+累积量通过：
+
+$$
+\log
+$$
+
+去掉分拆乘积。
+
+正交创新通过：
+
+$$
+I-P_{\mathrm{old}}
+$$
+
+去掉旧空间预测。
+
+jump energy 通过：
+
+$$
+f(x+a)-f(x)
+$$
+
+去掉常值/coherent 模式。
+
+所以 RH 所需的最终语言，很可能不是“所有新项都消失”，而是：
+
+$$
+\boxed{
+\text{所有新项在扣除共同背景后，都进入正的差分能量。}
+}
+$$
+
+---
+

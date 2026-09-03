@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:88a1145d590cc47f9443b5b89ae05da6a27b8e1e2d87c594a1517ba66a122581
 cas_ref: sha256:88a1145d590cc47f9443b5b89ae05da6a27b8e1e2d87c594a1517ba66a122581
 coverage_gids:
-  - D5/S3/ConceptDynamics/Governance/RuleConstraintDifferenceCriterion.rule_constraint_difference_criterion
+  - gid: D5/S3/ConceptDynamics/Governance/RuleConstraintDifferenceCriterion.rule_constraint_difference_criterion
+    target_statement_id: sha256:54a6c967a52bd7c309d09ac9932755e4f5f416f2246f0063c42dadd1f33c3fc2
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Governance/RuleConstraintDifferenceCriterion.rule_constraint_difference_criterion
-      source_sha256: sha256:88a1145d590cc47f9443b5b89ae05da6a27b8e1e2d87c594a1517ba66a122581
-      target_statement_id: sha256:54a6c967a52bd7c309d09ac9932755e4f5f416f2246f0063c42dadd1f33c3fc2
   scribe:
     - gid: D5/S3/ConceptDynamics/Governance/RuleConstraintDifferenceCriterion.rule_constraint_difference_criterion
       definition_sha256: sha256:311f9d5b13953b58773c876cdd492f826356750d8157110eee6b1b4e5206d32a
