@@ -1,0 +1,45 @@
+name: phi-b4-walnut-upper
+
+on:
+  push:
+    branches:
+      - agent/research/phi-b4-upper-sanity-20260903
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  walnut:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build current Walnut
+        run: |
+          git clone --depth 1 https://github.com/Walnut-Theorem-Prover/Walnut.git /tmp/Walnut
+          cd /tmp/Walnut
+          chmod +x build.sh walnut.sh
+          ./build.sh
+      - name: Construct the base-4 golden-ratio DFAO
+        run: |
+          cd /tmp/Walnut
+          cat > 'Command Files/phi_b4_upper.txt' <<'EOF'
+          reg shift {0,1} {0,1} "([0,0]|[0,1][1,1]*[1,0])*":
+          def phin "?msd_fib (s=0 & q=0) | Ex $shift(q-1,x) & s=x+1":
+          def phid41 "?msd_fib Ex,y $phin(4*q,x) & $phin(q,y) & x=4*y+1":
+          def phid42 "?msd_fib Ex,y $phin(4*q,x) & $phin(q,y) & x=4*y+2":
+          def phid43 "?msd_fib Ex,y $phin(4*q,x) & $phin(q,y) & x=4*y+3":
+          combine FD4 phid41=1 phid42=2 phid43=3:
+          exit;
+          EOF
+          ./walnut.sh --global-session phi_b4_upper.txt | tee /tmp/walnut.log
+          find . -maxdepth 3 -type f \( -name 'FD4*' -o -name 'phid4*' -o -name 'phin*' \) -print
+          mkdir -p /tmp/result
+          cp /tmp/walnut.log /tmp/result/
+          find . -maxdepth 4 -type f \( -name 'FD4*' -o -name 'phid4*' \) -exec cp --parents {} /tmp/result/ \;
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: phi-b4-walnut-upper
+          path: /tmp/result
