@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:e70a8509ce4230d3e4f114dc51c92c1c5589a9b305ea9fada470c74b511b6600
+  normalized_sha256: sha256:e70a8509ce4230d3e4f114dc51c92c1c5589a9b305ea9fada470c74b511b6600
+cas_ref: sha256:e70a8509ce4230d3e4f114dc51c92c1c5589a9b305ea9fada470c74b511b6600
+coverage:
+  - gid: D5/S3/Observer/Naturality/ObserverWorldCovariance.observer_world_covariance
+    target_statement_id: sha256:b2444730f77a40c1a77ee502a5cde1f4dc9b4f4dcb65f58c1b9876402ef8fedc
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/Naturality/ObserverWorldCovariance.observer_world_covariance
+      definition_sha256: sha256:dbf4a21fb1b30a4538bb9c714fc26875a9d1ffbf4aaee245bc419899be10d840
+      emission_sha256: sha256:8cf4798b8ac37a0515013ad985f4cb6c144d6c2b9a53ba80e4802330cfa2208c
+  unresolved_subitems: []
