@@ -122,12 +122,35 @@ theorem signature_event_mass_pushforward
         (pushforwardSignatureMass mass signatureOf) event =
       exogenousEventMass mass signatureOf event := by
   unfold signatureEventMass pushforwardSignatureMass exogenousEventMass
-  rw [Finset.sum_comm]
-  apply Finset.sum_congr rfl
-  intro exogenous _
-  cases h : event (signatureOf exogenous)
-  · simp [h]
-  · simp [h]
+  calc
+    (∑ signature,
+        if event signature then
+          (∑ exogenous,
+            if signatureOf exogenous = signature then
+              mass exogenous else 0)
+        else 0) =
+      ∑ signature, ∑ exogenous,
+        if event signature then
+          (if signatureOf exogenous = signature then
+            mass exogenous else 0)
+        else 0 := by
+          apply Finset.sum_congr rfl
+          intro signature _
+          by_cases event_holds : event signature <;>
+            simp [event_holds]
+    _ = ∑ exogenous, ∑ signature,
+        if event signature then
+          (if signatureOf exogenous = signature then
+            mass exogenous else 0)
+        else 0 := by
+          rw [Finset.sum_comm]
+    _ = ∑ exogenous,
+        if event (signatureOf exogenous) then
+          mass exogenous else 0 := by
+          apply Finset.sum_congr rfl
+          intro exogenous _
+          by_cases event_holds : event (signatureOf exogenous) <;>
+            simp [event_holds]
 
 /-- Every rational primal witness for a finite signature law has a direct
 exogenous realization using the signature carrier itself. For event queries,
