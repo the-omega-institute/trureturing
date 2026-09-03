@@ -25,17 +25,21 @@ internal sealed class OrderUnitComplementEncodingDocument : IScribeDocumentDefin
                             + "interval from zero to u. Define c_u(x) = u - x.")),
                     Paragraph(Text(
                         "The complement sends zero to u and u to zero, is involutive at e, "
-                            + "and recovers u by evaluation at zero. These are exactly the four "
+                            + "and uniquely determines u: every candidate v inducing the same "
+                            + "complement operation equals u. These are exactly the four "
                             + "conclusion leaves of the Lean declaration.")),
                     Paragraph(Text(
                         "The declaration imports the repository's canonical complement and "
-                            + "projects the endpoint and involution laws from the frozen "
-                            + "complement-encoding theorem. The ordered carrier conditions "
+                            + "projects the endpoint, involution, and uniqueness laws from the "
+                            + "frozen complement-encoding theorem. The ordered carrier conditions "
                             + "restrict the theorem to the source effect interval."))),
                 DescribeRole.Theorem))));
 
     private static Formula Complement(Formula total, Formula argument) =>
         Seq(F.Id("c"), Underscore, total, Open, argument, Close);
+
+    private static Formula ComplementOperation(Formula total) =>
+        Seq(F.Id("c"), Underscore, total);
 
     private static Formula OrderUnit(Formula total)
     {
@@ -72,9 +76,11 @@ internal sealed class OrderUnitComplementEncodingDocument : IScribeDocumentDefin
             Complement(u, u), Sp, Eq, Sp, D(0), Sp, Land, RowBreak, Grp(),
             Complement(u, Complement(u, e)), Sp, Eq, Sp, e,
                 Sp, Land, RowBreak, Grp(),
-            u, Sp, Eq, Sp, Complement(u, D(0)), Comma, RowBreak, Grp(),
-            Complement(u, F.Id("x")), Sp, Colon, Eq, Sp,
-                u, Sp, Minus, Sp, F.Id("x"), Dot,
+            Forall, Sp, F.Id("v"), InMacro, Sp, vectorSpace, Comma, Sp,
+            ComplementOperation(F.Id("v")), Sp, Eq, Sp, ComplementOperation(u),
+                Sp, Rightarrow, Sp, F.Id("v"), Sp, Eq, Sp, u, Comma, RowBreak, Grp(),
+            Complement(F.Id("a"), F.Id("x")), Sp, Colon, Eq, Sp,
+                F.Id("a"), Sp, Minus, Sp, F.Id("x"), Dot,
             End, Grp(F.Id("gathered"))));
     }
 }

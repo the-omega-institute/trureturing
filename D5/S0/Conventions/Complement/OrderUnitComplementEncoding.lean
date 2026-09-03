@@ -7,7 +7,8 @@
 
 /- Library-search audit trail (2026-09-04):
    * The repository source of truth is `ComplementEncoding.complement`; it is imported directly.
-   * The frozen `ComplementEncoding.complement_encoding` supplies the two endpoints and involution.
+   * The frozen `ComplementEncoding.complement_encoding` supplies the endpoints, involution, and
+     quantified uniqueness of the ambient total.
    * `OrderUnitAmbientDependence` establishes the local ordered-module, order-unit-domination, and
      `Set.Icc` carrier convention used here; pinned Mathlib has no `OrderUnit` predicate.
    * Loogle found `sub_sub_self` and `const_sub_involutive`; GitHub Lean code search found no
@@ -26,7 +27,7 @@ namespace D5.S0.Conventions.Complement.OrderUnitComplementEncoding
 open D5.S0.Conventions.ComplementEncoding
 
 /-- In a real ordered vector space, subtraction complement on the effect interval has both
-endpoint values, is involutive, and recovers its order-unit total by evaluation at zero. -/
+endpoint values, is involutive, and uniquely determines its order-unit total. -/
 theorem order_unit_complement_encoding
     {V : Type*}
     [AddCommGroup V] [PartialOrder V] [IsOrderedAddMonoid V]
@@ -38,7 +39,7 @@ theorem order_unit_complement_encoding
     complement u 0 = u ∧
       complement u u = 0 ∧
         complement u (complement u e) = e ∧
-          u = complement u 0 := by
+          ∀ v : V, (fun x => complement v x) = (fun x => complement u x) → v = u := by
   let typedOrderUnit : {x : V // 0 ≤ x ∧ ∀ y : V, ∃ r : ℝ,
       0 < r ∧ (-r) • x ≤ y ∧ y ≤ r • x} := ⟨u, hOrderUnit⟩
   let typedEffect : Set.Icc (0 : V) (typedOrderUnit : V) :=
@@ -49,8 +50,11 @@ theorem order_unit_complement_encoding
       complement (typedOrderUnit : V) (typedOrderUnit : V) = 0 ∧
         complement (typedOrderUnit : V)
           (complement (typedOrderUnit : V) (typedEffect : V)) = (typedEffect : V) ∧
-          (typedOrderUnit : V) = complement (typedOrderUnit : V) 0
-  exact And.intro h.1 (And.intro h.2.1 (And.intro h.2.2.1 h.1.symm))
+          ∀ v : V,
+            (fun x => complement v x) =
+              (fun x => complement (typedOrderUnit : V) x) →
+            v = (typedOrderUnit : V)
+  exact And.intro h.1 (And.intro h.2.1 (And.intro h.2.2.1 h.2.2.2))
 
 /- The public carrier and all four conclusions are jointly inhabited at `V = ℝ`, `u = 1`,
 and the non-endpoint effect `e = 1 / 2`. -/
@@ -62,7 +66,7 @@ example :
       (complement u 0 = u ∧
         complement u u = 0 ∧
         complement u (complement u e) = e ∧
-        u = complement u 0) := by
+        ∀ v : ℝ, (fun x => complement v x) = (fun x => complement u x) → v = u) := by
   let u : ℝ := 1
   let e : ℝ := 1 / 2
   have hOrderUnit : 0 ≤ u ∧ ∀ x : ℝ, ∃ r : ℝ,
@@ -87,17 +91,19 @@ example :
           (show (1 : ℝ) ≤ 2 by norm_num))
   exact ⟨u, e, hOrderUnit, he, order_unit_complement_encoding u e hOrderUnit he⟩
 
-/- Reverse probe for A4: the public result itself exposes recovery of the total at zero. -/
+/- `uniqueness_reverse_check`: the public fourth leaf equates any two ambient totals whose
+complement operations agree. -/
 example
     {V : Type*}
     [AddCommGroup V] [PartialOrder V] [IsOrderedAddMonoid V]
     [Module ℝ V] [IsOrderedModule ℝ V]
-    (u e : V)
+    (u e v : V)
     (hOrderUnit : 0 ≤ u ∧ ∀ x : V, ∃ r : ℝ,
       0 < r ∧ (-r) • u ≤ x ∧ x ≤ r • u)
-    (he : e ∈ Set.Icc (0 : V) u) :
-    u = complement u 0 :=
-  (order_unit_complement_encoding u e hOrderUnit he).2.2.2
+    (he : e ∈ Set.Icc (0 : V) u)
+    (hFunctions : (fun x => complement v x) = (fun x => complement u x)) :
+    v = u :=
+  (order_unit_complement_encoding u e hOrderUnit he).2.2.2 v hFunctions
 
 /- The zero total is not an order unit of the nontrivial ordered vector space `ℝ`. -/
 example :
