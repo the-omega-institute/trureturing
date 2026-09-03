@@ -16,9 +16,11 @@ $$\forall x, y\in X,\\d_{J,gamma}^F(x, y) = \operatorname{sup}_{i\in J, n\in \ma
 
 For a finite observer budget J, take the real supremum over each selected index i and each nonnegative time n. The summand is the coordinate weight times gamma to the nth power times the zero-or-one discrepancy between the two readouts after n updates.
 
+Source-boundary open: the source does not define a real supremum for the empty coordinate family J = emptyset. The Lean iSup expression has a totalized empty-budget behavior supplied by its ambient order structure; that behavior is formalization-specific, not a source convention, and remains open pending an authoritative source clause.
+
 **Theorem 1.2 (Prime-time prediction distance obeys the strong triangle inequality).**
 
-$$\forall I \in \operatorname{Type}, X \in \operatorname{Type}, O \in I \to \operatorname{Type}, J \in \operatorname{Finset}\left(I\right), w \in I \to \mathbb{R}, q \in \forall i: I, X \to \operatorname{O}\left(i\right), F \in X \to X, gamma \in \mathbb{R},\; {\forall i\in J, 0 < \operatorname{w}\left(i\right)} \Rightarrow\\gamma\in (0, 1] \Rightarrow\\\forall x, y, z\in X,\\d_{J,gamma}^F(x, z) \leq \max(d_{J,gamma}^F(x, y), d_{J,gamma}^F(y, z))$$
+$$\forall I \in \operatorname{Type}, X \in \operatorname{Type}, O \in I \to \operatorname{Type}, J \in \operatorname{Finset}\left(I\right), w \in I \to \mathbb{R}, q \in \forall i: I, X \to \operatorname{O}\left(i\right), F \in X \to X, gamma \in \mathbb{R},\; {\forall i: I, 0 < \operatorname{w}\left(i\right)} \Rightarrow\\gamma\in (0, 1] \Rightarrow\\\forall x, y, z\in X,\\d_{J,gamma}^F(x, z) \leq \max(d_{J,gamma}^F(x, y), d_{J,gamma}^F(y, z))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/PrimeTimeGeometry/DiscountedPrimeTimeUltrametric.discounted_prime_time_distance_strong_triangle` (`✓ std3`). ∎
 
@@ -26,7 +28,9 @@ $$\forall I \in \operatorname{Type}, X \in \operatorname{Type}, O \in I \to \ope
 
 *Commentary.*
 
-Assume every selected weight is strictly positive and gamma belongs to (0,1]. These are exactly the standing hypotheses preceding Definition 33.1 in the source.
+The source standing carrier clause requires strictly positive weight on every coordinate i in I, while gamma belongs to (0,1]. The proof only invokes that positivity on the selected finite budget J, but the public theorem preserves the source's global premise.
+
+The source is silent on the empty-budget supremum (J = emptyset), so that case is an open source boundary rather than an added premise or an assigned source value.
 
 The finite budget, the bounded discount powers, and the zero-or-one coordinate discrepancy bound every supremum by the sum of the selected weights. The existing weighted joint strong triangle theorem supplies the pointwise law, and ciSup_sup_eq moves the maximum through the prime-time supremum.
 

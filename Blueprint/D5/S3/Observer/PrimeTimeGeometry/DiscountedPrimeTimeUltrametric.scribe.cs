@@ -24,7 +24,13 @@ internal sealed class DiscountedPrimeTimeUltrametricDocument
                     "For a finite observer budget J, take the real supremum over each selected "
                         + "index i and each nonnegative time n. The summand is the coordinate "
                         + "weight times gamma to the nth power times the zero-or-one "
-                        + "discrepancy between the two readouts after n updates."))),
+                        + "discrepancy between the two readouts after n updates.")),
+                    Paragraph(Text(
+                        "Source-boundary open: the source does not define a real supremum for "
+                            + "the empty coordinate family J = emptyset. The Lean iSup expression "
+                            + "has a totalized empty-budget behavior supplied by its ambient order "
+                            + "structure; that behavior is formalization-specific, not a source "
+                            + "convention, and remains open pending an authoritative source clause."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("discounted-prime-time-distance-strong-triangle"),
@@ -34,9 +40,14 @@ internal sealed class DiscountedPrimeTimeUltrametricDocument
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "Assume every selected weight is strictly positive and gamma belongs "
-                            + "to (0,1]. These are exactly the standing hypotheses preceding "
-                            + "Definition 33.1 in the source.")),
+                        "The source standing carrier clause requires strictly positive weight "
+                            + "on every coordinate i in I, while gamma belongs to (0,1]. The "
+                            + "proof only invokes that positivity on the selected finite budget J, "
+                            + "but the public theorem preserves the source's global premise.")),
+                    Paragraph(Text(
+                        "The source is silent on the empty-budget supremum (J = emptyset), so "
+                            + "that case is an open source boundary rather than an added premise "
+                            + "or an assigned source value.")),
                     Paragraph(Text(
                         "The finite budget, the bounded discount powers, and the zero-or-one "
                             + "coordinate discrepancy bound every supremum by the sum of the "
@@ -102,7 +113,7 @@ internal sealed class DiscountedPrimeTimeUltrametricDocument
             Forall, Sp, F.Id("i"), Colon, Sp, index, Comma, Sp,
             state, Sp, To, Sp, Call("O", F.Id("i")));
         Formula positiveWeights = Seq(
-            Forall, Sp, F.Id("i"), InMacro, Sp, selected, Comma, Sp,
+            Forall, Sp, F.Id("i"), Colon, Sp, index, Comma, Sp,
             D(0), Sp, Lt, Sp, Call("w", F.Id("i")));
         Formula gammaRange = Seq(
             gamma, InMacro, Sp, Open, D(0), Comma, Sp, D(1), CloseBracket);

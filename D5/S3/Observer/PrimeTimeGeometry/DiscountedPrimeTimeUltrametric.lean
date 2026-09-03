@@ -18,6 +18,13 @@ import Mathlib.Tactic.NormNum
    * Loogle confirmed `ciSup_sup_eq`. LeanSearch's queried API returned HTTP 404;
      GitHub repository search returned no matching Lean project, while code search
      required authentication. Full details are recorded in `/tmp/SEARCH-aj.md`.
+
+   Source-boundary open: Definition 33.1 writes a supremum over the selected
+   coordinates and nonnegative times, but the source does not define a real
+   supremum for an empty coordinate family (`J = ∅`). The Lean `iSup` expression
+   is therefore totalized by its ambient order structure; that empty-budget
+   behavior is formalization-specific and is not attributed to the source. This
+   boundary remains open pending an authoritative source clause.
 -/
 
 set_option autoImplicit false
@@ -129,19 +136,22 @@ theorem discounted_prime_time_distance_strong_triangle
     {I X : Type*} {O : I -> Type*}
     (J : Finset I) (weight : I -> Real) (readout : forall i, X -> O i)
     (update : X -> X) (gamma : Real)
-    (hpositive : ∀ i ∈ J, 0 < weight i)
+    (hpositive : ∀ i, 0 < weight i)
     (hgamma : gamma ∈ Set.Ioc 0 1)
     (x y z : X) :
     discountedPrimeTimeDistance J weight readout update gamma x z <=
       max
         (discountedPrimeTimeDistance J weight readout update gamma x y)
         (discountedPrimeTimeDistance J weight readout update gamma y z) := by
+  have hselected : ∀ i ∈ J, 0 < weight i := by
+    intro i _
+    exact hpositive i
   have hleft :=
     discounted_prime_time_terms_bddAbove
-      J weight readout update gamma hpositive hgamma x y
+      J weight readout update gamma hselected hgamma x y
   have hright :=
     discounted_prime_time_terms_bddAbove
-      J weight readout update gamma hpositive hgamma y z
+      J weight readout update gamma hselected hgamma y z
   unfold discountedPrimeTimeDistance
   calc
     (⨆ pair : {i // i ∈ J} × Nat,
@@ -161,7 +171,7 @@ theorem discounted_prime_time_distance_strong_triangle
               (readout pair.1.1 ((update^[pair.2]) z))) := by
       apply ciSup_mono (bbdAbove_range_sup hleft hright)
       exact discounted_prime_time_term_strong_triangle
-        J weight readout update gamma hpositive hgamma x y z
+        J weight readout update gamma hselected hgamma x y z
     _ = max
         (⨆ pair : {i // i ∈ J} × Nat,
           (weight pair.1.1 * gamma ^ pair.2) *
@@ -188,9 +198,8 @@ example :
         (discountedPrimeTimeDistance
           (O := fun _ : Unit => Bool) ({()} : Finset Unit) (fun _ => 1)
           (fun _ => id) id ((1 : Real) / 2) false true) := by
-  have hpositive : ∀ i ∈ ({()} : Finset Unit),
-      0 < (fun _ : Unit => (1 : Real)) i := by
-    intro i hi
+  have hpositive : ∀ i, 0 < (fun _ : Unit => (1 : Real)) i := by
+    intro i
     norm_num
   have hgamma : ((1 : Real) / 2) ∈ Set.Ioc 0 1 := by
     constructor <;> norm_num
@@ -207,13 +216,5 @@ example :
         (O := fun _ : Unit => Bool) ({()} : Finset Unit) (fun _ => 1)
         (fun _ => id) id (1 : Real) false true = 1 := by
   simp [discountedPrimeTimeDistance, discreteOutputDistance]
-
-/- Trivial-input probe for CAS-A1: the source permits an empty finite budget,
-whose indexed supremum is zero; the singleton probe above rules out collapse. -/
-example :
-    discountedPrimeTimeDistance
-        (O := fun _ : Unit => Bool) (∅ : Finset Unit) (fun _ => 1)
-        (fun _ => id) id (1 : Real) false true = 0 := by
-  simp [discountedPrimeTimeDistance]
 
 end D5.S3.Observer.PrimeTimeGeometry.DiscountedPrimeTimeUltrametric
