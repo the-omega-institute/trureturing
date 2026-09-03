@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:e88eef5ab7bea1857822be2edfee3b7fd5f3e21173201a4e9214595ceb0c5378
 cas_ref: sha256:e88eef5ab7bea1857822be2edfee3b7fd5f3e21173201a4e9214595ceb0c5378
 coverage_gids:
-  - D5/S3/Factorization/Galois/FrobeniusQuantumPostprocessingKernel.frobenius_quantum_postprocessing_kernel
+  - gid: D5/S3/Factorization/Galois/FrobeniusQuantumPostprocessingKernel.frobenius_quantum_postprocessing_kernel
+    target_statement_id: sha256:ca394de3e2fbd238d548e63def510f7c2f47158829a8538c4565f704ee925012
 receipts:
-  coverage:
-    - gid: D5/S3/Factorization/Galois/FrobeniusQuantumPostprocessingKernel.frobenius_quantum_postprocessing_kernel
-      source_sha256: sha256:e88eef5ab7bea1857822be2edfee3b7fd5f3e21173201a4e9214595ceb0c5378
-      target_statement_id: sha256:ca394de3e2fbd238d548e63def510f7c2f47158829a8538c4565f704ee925012
   scribe:
     - gid: D5/S3/Factorization/Galois/FrobeniusQuantumPostprocessingKernel.frobenius_quantum_postprocessing_kernel
       definition_sha256: sha256:a5da767b72cbca9e9a2905f5fc79e48d689f18ae0348f0444630a3457fa4deea

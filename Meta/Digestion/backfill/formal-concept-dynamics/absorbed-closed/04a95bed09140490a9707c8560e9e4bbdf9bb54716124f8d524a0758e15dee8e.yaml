@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:04a95bed09140490a9707c8560e9e4bbdf9bb54716124f8d524a0758e15dee8e
 cas_ref: sha256:04a95bed09140490a9707c8560e9e4bbdf9bb54716124f8d524a0758e15dee8e
 coverage_gids:
-  - D5/S3/ConceptDynamics/Topology/CompactClassificationPositiveMargin.compact_classification_positive_margin_and_closure_obstruction
+  - gid: D5/S3/ConceptDynamics/Topology/CompactClassificationPositiveMargin.compact_classification_positive_margin_and_closure_obstruction
+    target_statement_id: sha256:ff7842c11af211e5ef4c58248e5fa60a890b2c27e51ea57d27be47164817d62d
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Topology/CompactClassificationPositiveMargin.compact_classification_positive_margin_and_closure_obstruction
-      source_sha256: sha256:04a95bed09140490a9707c8560e9e4bbdf9bb54716124f8d524a0758e15dee8e
-      target_statement_id: sha256:ff7842c11af211e5ef4c58248e5fa60a890b2c27e51ea57d27be47164817d62d
   scribe:
     - gid: D5/S3/ConceptDynamics/Topology/CompactClassificationPositiveMargin.compact_classification_positive_margin_and_closure_obstruction
       definition_sha256: sha256:009a8e1f78f58abef06fd2d8a7b01d88794785daf4e2eb591dd92fbd8704f661

@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:a0b63888ff3e3f0e3fa7cd19269ef9bb5c9031b18c7cc35b2ecf8c303fee4fcd
 cas_ref: sha256:a0b63888ff3e3f0e3fa7cd19269ef9bb5c9031b18c7cc35b2ecf8c303fee4fcd
 coverage_gids:
-  - D5/S3/Observer/Linear/FiniteObservabilityEquivalence.finite_observability_equivalence
+  - gid: D5/S3/Observer/Linear/FiniteObservabilityEquivalence.finite_observability_equivalence
+    target_statement_id: sha256:757c8e23b55918d840ccbb6adfd3841364fb764bcc6fbd5f924f71277923e7e6
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/Linear/FiniteObservabilityEquivalence.finite_observability_equivalence
-      source_sha256: sha256:a0b63888ff3e3f0e3fa7cd19269ef9bb5c9031b18c7cc35b2ecf8c303fee4fcd
-      target_statement_id: sha256:757c8e23b55918d840ccbb6adfd3841364fb764bcc6fbd5f924f71277923e7e6
   scribe:
     - gid: D5/S3/Observer/Linear/FiniteObservabilityEquivalence.finite_observability_equivalence
       definition_sha256: sha256:dc7b3cb18f08e106826008b22b8e56770ed9cc8f500733d86906919f9ddb5e2b

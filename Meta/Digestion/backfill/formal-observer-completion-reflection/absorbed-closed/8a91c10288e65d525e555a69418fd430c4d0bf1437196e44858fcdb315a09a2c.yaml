@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:8a91c10288e65d525e555a69418fd430c4d0bf1437196e44858fcdb315a09a2c
 cas_ref: sha256:8a91c10288e65d525e555a69418fd430c4d0bf1437196e44858fcdb315a09a2c
 coverage_gids:
-  - D5/S3/Quantum/Completion/OperationalReadoutQuotientRepresentation.operational_readout_quotient_representation
+  - gid: D5/S3/Quantum/Completion/OperationalReadoutQuotientRepresentation.operational_readout_quotient_representation
+    target_statement_id: sha256:fdeb2df52eae968a89864b2df74265e8e7a56ce1ac9d01997f800843efb2466c
 receipts:
-  coverage:
-    - gid: D5/S3/Quantum/Completion/OperationalReadoutQuotientRepresentation.operational_readout_quotient_representation
-      source_sha256: sha256:8a91c10288e65d525e555a69418fd430c4d0bf1437196e44858fcdb315a09a2c
-      target_statement_id: sha256:fdeb2df52eae968a89864b2df74265e8e7a56ce1ac9d01997f800843efb2466c
   scribe:
     - gid: D5/S3/Quantum/Completion/OperationalReadoutQuotientRepresentation.operational_readout_quotient_representation
       definition_sha256: sha256:3eb1afde291ec73cb273728f36b963e099dfa48efd92e18eef46a6177cb273fc

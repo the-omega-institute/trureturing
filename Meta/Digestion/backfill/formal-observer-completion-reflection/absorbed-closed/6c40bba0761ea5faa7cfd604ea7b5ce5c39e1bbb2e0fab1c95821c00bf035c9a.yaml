@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:6c40bba0761ea5faa7cfd604ea7b5ce5c39e1bbb2e0fab1c95821c00bf035c9a
 cas_ref: sha256:6c40bba0761ea5faa7cfd604ea7b5ce5c39e1bbb2e0fab1c95821c00bf035c9a
 coverage_gids:
-  - D5/S3/ConceptDynamics/Policy/CocyclePolicySeparation.cocycle_does_not_select_policy
+  - gid: D5/S3/ConceptDynamics/Policy/CocyclePolicySeparation.cocycle_does_not_select_policy
+    target_statement_id: sha256:dba787a1714bc6b7b1c61866e1b2078aa4842f03e9a2fcd6fd4fb1f5e5a6270b
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Policy/CocyclePolicySeparation.cocycle_does_not_select_policy
-      source_sha256: sha256:6c40bba0761ea5faa7cfd604ea7b5ce5c39e1bbb2e0fab1c95821c00bf035c9a
-      target_statement_id: sha256:dba787a1714bc6b7b1c61866e1b2078aa4842f03e9a2fcd6fd4fb1f5e5a6270b
   scribe:
     - gid: D5/S3/ConceptDynamics/Policy/CocyclePolicySeparation.cocycle_does_not_select_policy
       definition_sha256: sha256:915a0d4d5876d964b2a91694b5c424ab7edb692708c3c57deb1b1b616421d5e4
