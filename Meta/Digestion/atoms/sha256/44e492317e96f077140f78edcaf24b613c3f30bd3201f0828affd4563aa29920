@@ -1,0 +1,55 @@
+## 91. 一步扭转，两步定向
+
+因为：
+
+$$
+\det F=-1,
+$$
+
+一步 Fibonacci 演化反转方向。
+
+而：
+
+$$
+\det F^2=1.
+$$
+
+所以两步恢复定向。
+
+在环面上，\(F\) 的 mapping torus：
+
+$$
+M_F
+=
+\frac{\mathbb T^2\times[0,1]}
+{(x,1)\sim(Fx,0)}
+$$
+
+是一个带 orientation-reversing monodromy 的三维空间。
+
+其双覆盖由：
+
+$$
+F^2
+$$
+
+生成，是 orientation-preserving 的 hyperbolic mapping torus。
+
+这给出一个比二维 Möbius 带更准确的黄金拓扑模型：
+
+$$
+\boxed{
+\text{one cycle twists orientation;}
+}
+$$
+
+$$
+\boxed{
+\text{double cycle restores orientation but retains hyperbolic scaling}.
+}
+$$
+
+仓库已经证明，在对应的黄金双曲观察模型中，射影边界只留下固定的黄金 null directions，而丢失 rapidity；这与“映射环保存方向、边界投影遗忘时间”完全一致。
+
+---
+

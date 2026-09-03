@@ -1,0 +1,62 @@
+## 127. 每一阶导数都有明确统计意义
+
+令：
+
+$$
+X_h(N)=\Lambda(N+h).
+$$
+
+则：
+
+$$
+\partial_{u_h}\Phi_H
+=
+\mathbb E_{\sigma,\mathbf u}[X_h].
+$$
+
+二阶：
+
+$$
+\boxed{
+\partial_{u_h}\partial_{u_{h'}}
+\Phi_H
+=
+\operatorname{Cov}_{\sigma,\mathbf u}(X_h,X_{h'}).
+}
+$$
+
+三阶：
+
+$$
+\partial_{u_{h_1}}
+\partial_{u_{h_2}}
+\partial_{u_{h_3}}
+\Phi_H
+=
+\kappa_3(X_{h_1},X_{h_2},X_{h_3}).
+$$
+
+一般：
+
+$$
+\boxed{
+\partial_{u_{h_1}}\cdots
+\partial_{u_{h_k}}
+\Phi_H
+=
+\kappa_k(X_{h_1},\ldots,X_{h_k}).
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{prime tuple size}
+=
+\text{source-space jet order}.
+}
+$$
+
+---
+

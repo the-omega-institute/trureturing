@@ -1,0 +1,42 @@
+## 123. 局部高阶排斥是 universal 的
+
+对互不相同的 indices：
+
+$$
+j_1,\ldots,j_d,
+\qquad d\ge2,
+$$
+
+有：
+
+$$
+\boxed{
+\left.
+\partial_{u_{j_1}}\cdots
+\partial_{u_{j_d}}
+K_{p,H}
+\right|_{\mathbf u=0}
+=
+-\frac{(d-1)!}{p^d}.
+}
+$$
+
+其符号与 \(d\) 无关，始终为负。
+
+所以同一个素数模空间内，不同 forbidden residues 之间不是只有二阶负相关，而是形成一条完整的负 connected-cumulant 塔：
+
+$$
+-\frac1{p^2},
+\quad
+-\frac2{p^3},
+\quad
+-\frac6{p^4},
+\quad
+-\frac{24}{p^5},
+\ldots
+$$
+
+这正是“同一个 \(A\) 不可能同时等于两个不同 residues”这一互斥约束的全部解析指纹。
+
+---
+

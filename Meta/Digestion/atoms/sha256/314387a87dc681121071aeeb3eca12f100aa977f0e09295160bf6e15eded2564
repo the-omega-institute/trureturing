@@ -1,0 +1,22 @@
+## 104. 孪生构型是纯 cosine
+
+对：
+
+$$
+H_2=\{0,2\},
+$$
+
+中心为 \(1\)，所以：
+
+$$
+S_{H_2}(\theta)
+=
+e^{-i\theta}+e^{i\theta}
+=
+\boxed{2\cos\theta}.
+$$
+
+它完全位于 even sector。
+
+---
+

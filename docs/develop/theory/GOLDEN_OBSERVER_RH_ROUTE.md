@@ -2197,3 +2197,36 @@ G-f 一席位轮、M3-f 第二级一席位轮(各 codex-cli,独立 worktree,PR-1
 原子 `cd9f047e…`(M3-d-1 原式)记为**已证伪(refuted,反例 s = 1)**,不 cover;M3-d-1′、M3-d-2、M3-d-3 由 la135 席位同模块实施(deposit 绑 M3-d-2)。
 
 后续增订继续严格追加于本节之后。
+---
+
+# 增订十九　M3-d 收口:去掉 separator 的 `hIm`(M3-d-3′ / M3-e′ / M3-f-6 预登记),并开新桶 `D5/S3/Weil/Separator/`
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;前提为 #5004(la135 席位,codex-cli)已冻结的 `AlternatingZetaContinuation.ZeroData.im_ne_zero`(M3-d-3,kernel 已证,但其带点定理名不能作 GID,`make cover` 判 `PLAYBOOK_INVALID GID does not resolve to a Lean module`——增订十六命名之误);本节由 orchestrator(claude 主循环)撰写,三条皆为对冻结定理的一行绑定,不需探针。判决日:2026-09-03。lane issue:#4589。
+
+## 〇　为什么是这一节
+
+`ZeroData` 的字段 `zero_isNontrivial : ∀ n, IsNontrivialZero (zero n)` 与已冻结的 `ZeroData.im_ne_zero` 合起来,给出每个 `Z.zero n` 的虚部非零;于是增订十一(M3-e)与增订十四(M3-f-5)两条 separator 里的 `hIm` 假设可以去掉。本节把这三件事登记为三条一行定理,同时给 M3-d-3 一个不带点、可作 GID 的别名以便消化账闭合。**容量**:`D5/S3/Weil/ZetaBridge/` 已 23/24,本节按第 8 条「裂由压力」开新桶 `D5/S3/Weil/Separator/`,随首个真实模块出生。
+
+## 一　M3-d-3′ 预登记:`ZeroData` 零点虚部非零(可寻址别名;`OffLineZeroNegativeWeilSquare`,落 `D5/S3/Weil/Separator/`)
+
+**义务**:公开定理 `zeroData_im_ne_zero (Z : ZeroData) (n : ℕ) : (Z.zero n).im ≠ 0`。
+**可证伪预测(写在跑之前)**:若正确,证明为 `ZeroData.im_ne_zero Z n (Z.zero_isNontrivial n)` 一行,标准三公理;若 `ZeroData` 无 `zero_isNontrivial` 字段(与 `D5/S3/Weil/ZeroSum.lean` 字面矛盾)则本条为假。
+**边界**:本条比 M3-d-3 少一个假设(由结构字段供给),是其别名而非重证;M3-d-3 的 atom `1087916e…` 因 GID 语法留 residual-open,本条 atom 由本模块 cover。
+
+## 二　M3-e′ 预登记:截断 separator 去掉 `hIm`(同模块第二条公开定理)
+
+**义务**:公开定理 `offLineZero_negative_truncated_weil_square (Z : ZeroData) (n : ℕ) (T : ℝ) (hn : n ∈ Z.symmetricIndices T) (hOff : (Z.zero n).re ≠ criticalAbscissa) : ∃ g : WeilTestFunction, (truncatedZeroSum Z (convolutionSquare g) T).re < 0`。
+**可证伪预测(写在跑之前)**:若正确,证明为冻结 `offLineZero_yields_negative_truncated_weil_square Z n T hn hOff (zeroData_im_ne_zero Z n)` 一行;若冻结定理的参数顺序或 `hIm` 类型与此不合,按冻结字面调整调用而非改陈述。
+**边界**:不断言零点存在;不断言 O-6 ⟹ RH。
+
+## 三　M3-f-6 预登记:完整 separator 去掉 `hIm`(同模块第三条公开定理)
+
+**义务**:公开定理 `offLineZero_yields_negative_weil_square (Z : ZeroData) (n : ℕ) (hOff : (Z.zero n).re ≠ criticalAbscissa) : ∃ g : WeilTestFunction, ∃ hZero : SymmetricConvergent Z (convolutionSquare g), (zeroSum Z (convolutionSquare g) hZero).re < 0`。
+**可证伪预测(写在跑之前)**:若正确,证明为冻结 `offLineNonrealZero_yields_negative_weil_square Z n hOff (zeroData_im_ne_zero Z n)` 一行,标准三公理。
+**边界**:这是 separator 阶梯的最终形态——**任一**离线非平凡零点(不论虚部)都给出一个偶测试函数使完整 Weil 平方零和的实部为负;它仍不构成 O-6 ⟹ RH 的证明(O-6 本身与 Weil 判据的等价未在本仓形式化)。
+
+## 四　预算与结算
+
+一席位轮(codex-cli,独立 worktree,三条一行定理同模块,新桶 `D5/S3/Weil/Separator/`;同 PR deposit(绑 M3-f-6 atom)+ 三条 cover)。预计 ≤ 40 分钟。
+
+后续增订继续严格追加于本节之后。

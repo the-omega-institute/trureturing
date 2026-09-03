@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:8c5e65b8a5dfd455312dc4db27916675bfc6e4e29ace36bb799fa731761d75c7
+  normalized_sha256: sha256:8c5e65b8a5dfd455312dc4db27916675bfc6e4e29ace36bb799fa731761d75c7
+cas_ref: sha256:8c5e65b8a5dfd455312dc4db27916675bfc6e4e29ace36bb799fa731761d75c7
+coverage_gids:
+  - D5/S3/ConceptDynamics/InstitutionalCapture/ProceduralJusticeNotOutcomeCorrect.procedural_completeness_permits_wrong_outcome
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/InstitutionalCapture/ProceduralJusticeNotOutcomeCorrect.procedural_completeness_permits_wrong_outcome
+      source_sha256: sha256:8c5e65b8a5dfd455312dc4db27916675bfc6e4e29ace36bb799fa731761d75c7
+      target_statement_id: sha256:66b57b7d5b380a33a64da8132a02d904fd6cc960afd4adc2bd07260ed467c51a
+  scribe:
+    - gid: D5/S3/ConceptDynamics/InstitutionalCapture/ProceduralJusticeNotOutcomeCorrect.procedural_completeness_permits_wrong_outcome
+      definition_sha256: sha256:63184bcdb4b82227f0a60f508ff56bac01e7afc6c11c4877504e1d091106f85e
+      emission_sha256: sha256:053be6915bcfb8ad3276943d10dee5d254a8499cf0ea6bb6cec970979b49c491
+  unresolved_subitems: []

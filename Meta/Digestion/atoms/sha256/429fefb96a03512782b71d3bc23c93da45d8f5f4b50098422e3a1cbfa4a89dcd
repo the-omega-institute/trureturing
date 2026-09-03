@@ -1,0 +1,4 @@
+## 〇　为什么是这一节
+
+`ZeroData` 的字段 `zero_isNontrivial : ∀ n, IsNontrivialZero (zero n)` 与已冻结的 `ZeroData.im_ne_zero` 合起来,给出每个 `Z.zero n` 的虚部非零;于是增订十一(M3-e)与增订十四(M3-f-5)两条 separator 里的 `hIm` 假设可以去掉。本节把这三件事登记为三条一行定理,同时给 M3-d-3 一个不带点、可作 GID 的别名以便消化账闭合。**容量**:`D5/S3/Weil/ZetaBridge/` 已 23/24,本节按第 8 条「裂由压力」开新桶 `D5/S3/Weil/Separator/`,随首个真实模块出生。
+

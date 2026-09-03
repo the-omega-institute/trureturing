@@ -1,0 +1,28 @@
+## 143. Poisson holonomy 作为二点 coupling 候选
+
+仓库现有二点能量：
+
+$$
+E_{ab}
+=
+\frac{(\gamma_b-\gamma_a)^2}
+{\pi(\delta_a+\delta_b)
+\left[
+(\delta_a+\delta_b)^2+
+(\gamma_b-\gamma_a)^2
+\right]}
+$$
+
+非负，并且共同平移全部 \(\gamma_a\) 时保持不变。
+
+可以提出模型：
+
+$$
+J_{ab}
+=
+\lambda E_{ab}.
+$$
+
+它会把：
+
+* transverse depth；
