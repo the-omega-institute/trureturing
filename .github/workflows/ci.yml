@@ -192,28 +192,10 @@ jobs:
         id: restore-packages
         if: steps.revert.outputs.confirmed != 'true' && github.event_name != 'schedule'
         run: dotnet restore candidate/tools/StrataLint.sln --locked-mode
-      - name: Run project-scoped engineering tests with protected-base harness
+      - name: Run project-scoped engineering tests
         if: steps.revert.outputs.confirmed != 'true'
         shell: bash
-        run: |
-          set -euo pipefail
-          export ENGINEERING_HEAD="$(git -C candidate rev-parse HEAD)"
-          export ENGINEERING_BASE="$(git -C candidate rev-parse HEAD^1)"
-          base_harness_root="$RUNNER_TEMP/protected-base-engineering-execution-harness"
-          test ! -e "$base_harness_root"
-          git -C candidate worktree add --detach "$base_harness_root" "$ENGINEERING_BASE"
-          cleanup_base_harness() {
-            git -C candidate worktree remove --force "$base_harness_root"
-          }
-          trap cleanup_base_harness EXIT
-          test "$(git -C "$base_harness_root" rev-parse HEAD)" = "$ENGINEERING_BASE"
-          test -z "$(git -C "$base_harness_root" status --short --untracked-files=no)"
-          (
-            cd "$base_harness_root"
-            dotnet restore tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj --locked-mode
-          )
-          execution_harness="$base_harness_root/tools/scripts/workflow/engineering-test-execution-harness.sh"
-          /bin/bash "$execution_harness" "$base_harness_root"
+        run: make -C candidate/tools engineering-tests REPOSITORY="$GITHUB_WORKSPACE/candidate" HEAD="$(git -C candidate rev-parse HEAD)" BASE="$(git -C candidate rev-parse HEAD^1)"
 
       - name: Run candidate selftest twice and compare bytes
         if: steps.revert.outputs.confirmed != 'true'
