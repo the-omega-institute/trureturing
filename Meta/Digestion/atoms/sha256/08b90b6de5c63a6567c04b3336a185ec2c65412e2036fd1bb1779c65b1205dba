@@ -1,0 +1,56 @@
+## 374. 重整化后的精确反码
+
+定义：
+
+$$
+\widehat Z_{\mathrm e}
+=
+\zeta Z_{\mathrm e}
+=
+\frac{
+\zeta(s)^2+\zeta(2s)
+}{2},
+$$
+
+$$
+\widehat Z_{\mathrm o}
+=
+\zeta Z_{\mathrm o}
+=
+\frac{
+\zeta(s)^2-\zeta(2s)
+}{2}.
+$$
+
+在零点 \(\rho\)：
+
+$$
+\boxed{
+\widehat Z_{\mathrm e}(\rho)
+=
++\frac{\zeta(2\rho)}2,
+}
+$$
+
+$$
+\boxed{
+\widehat Z_{\mathrm o}(\rho)
+=
+-\frac{\zeta(2\rho)}2.
+}
+$$
+
+所以 ζ 零点上，偶、奇两个重整化通道形成精确反码：
+
+$$
+\boxed{
+\widehat Z_{\mathrm o}(\rho)
+=
+-\widehat Z_{\mathrm e}(\rho).
+}
+$$
+
+这里的反码不是 Zeckendorf 位逐位取反，而是两个 parity channels 的等幅反相。
+
+---
+

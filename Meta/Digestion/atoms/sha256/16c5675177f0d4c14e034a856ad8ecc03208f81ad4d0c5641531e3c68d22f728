@@ -1,0 +1,25 @@
+## 确定性结果一：全局偶、观察者切面奇
+
+对非实零点的完整 Klein 轨道：
+
+$$
+|\mathcal O_G|=2\text{ 或 }4,
+$$
+
+永远为偶。
+
+选择上半平面观察者以后：
+
+$$
+|\mathcal O_G\cap\mathbb H^+|
+=
+\begin{cases}
+1,&\Re\rho=\frac12,\\
+2,&\Re\rho\neq\frac12.
+\end{cases}
+$$
+
+因此 RH 等价于所有观察者切面轨道均为奇单点。
+
+---
+

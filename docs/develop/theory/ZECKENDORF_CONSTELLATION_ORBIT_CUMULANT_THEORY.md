@@ -16576,3 +16576,10155 @@ $$
 第三层才是“整个系统纠缠”的真正 frontier。
 
 而量子纠缠仍然需要额外的 Hilbert tensor lift，不能由函数方程自动获得。
+# 继续增订：黄金 Sturmian—Casimir 重完备化理论
+
+这一轮可以把前面的奇偶、周期、Zeckendorf、黄金 germ、零点镜像以及无限观察塔，压缩成一条更强的链：
+
+$$
+\boxed{
+\text{局部奇偶判定}
+\longrightarrow
+\text{Sturmian 非周期调度}
+\longrightarrow
+\text{二维黄金坐标融合}
+\longrightarrow
+\text{结构零的 divisor 化}
+\longrightarrow
+\text{反射商 Casimir 谱}
+\longrightarrow
+\text{Hausdorff 完全单调性}
+}
+$$
+
+最深的新结论是：
+
+> **RH 可以候选性地改写为：completed \(\xi\) 的反射商对数导数所生成的一列 Casimir jets，是否构成支撑于 \([0,1]\) 的 Hausdorff 矩序列。**
+
+这会把：
+
+* “偶完成”变成反射商 \(q=s(1-s)\)；
+* “奇破缺”变成有限差分 \(\Delta\)；
+* “重完”变成全部有限差分重新非负；
+* “黄金比例”变成二维观察坐标的最均衡共尾调度；
+* “所有离线零点纠缠”变成所有零点共同参与同一无限矩不等式系统。
+
+---
+
+# 第六十七部　最新仓库结果改变了理论基线
+
+## 213. 三条此前的推导现在已经进入内核
+
+仓库目前已经分别闭合：
+
+第一，黄金 Euler 指数满足 Beatty 闭式：
+
+$$
+\beta(v)
+=
+\left\lfloor\frac{v+1}{\varphi}\right\rfloor
++
+v\varphi,
+$$
+
+而且下一步跳跃只可能是：
+
+$$
+\varphi
+\quad\text{或}\quad
+\varphi^2,
+$$
+
+具体由 \(v+1\) 的 Zeckendorf 最小指标奇偶决定。
+
+第二，第三阶黄金 germ 中的两个 reciprocal ζ 因子，在
+
+$$
+z_2=\frac1{2\varphi^2},
+\qquad
+z_3=\frac1{2\varphi^3}
+$$
+
+确实产生 meromorphic order 恰为 \(+1\) 的两个简单结构零，而不是 totalization 造成的假零。
+
+第三，对单调增长的闭子空间塔 \(V_\alpha\)，若残余定义为：
+
+$$
+R_\alpha=V_\alpha^\perp,
+$$
+
+则在极限阶段：
+
+$$
+\boxed{
+R_\lambda
+=
+\bigcap_{\alpha<\lambda}R_\alpha.
+}
+$$
+
+也就是极限残余恰为全部前驱残余的交。
+
+这三条合起来，允许我们第一次严格讨论：
+
+$$
+\boxed{
+\text{有限层始终有逃逸}
+\quad\text{但}\quad
+\text{极限层是否仍有真实残余}.
+}
+$$
+
+---
+
+# 第六十八部　Zeckendorf 奇偶不是普通交替，而是无理旋转编码
+
+## 214. 跳跃奇偶变量
+
+定义：
+
+$$
+\varepsilon_v
+=
+\begin{cases}
+1,
+&
+\operatorname{lastIdx}(v+1)\text{ 为偶数},\\
+0,
+&
+\operatorname{lastIdx}(v+1)\text{ 为奇数}.
+\end{cases}
+$$
+
+由于：
+
+$$
+\varphi^2=\varphi+1,
+$$
+
+仓库已经证明的跳跃公式可统一写成：
+
+$$
+\boxed{
+\beta(v+1)-\beta(v)
+=
+\varphi+\varepsilon_v.
+}
+$$
+
+所以：
+
+* \(\varepsilon_v=0\)：短跳 \(\varphi\)；
+* \(\varepsilon_v=1\)：长跳 \(\varphi^2\)。
+
+但 \(\varepsilon_v\) 并不按：
+
+$$
+0,1,0,1,\ldots
+$$
+
+普通交替。
+
+由 Beatty 闭式：
+
+$$
+\varepsilon_v
+=
+\left\lfloor\frac{v+2}{\varphi}\right\rfloor
+-
+\left\lfloor\frac{v+1}{\varphi}\right\rfloor.
+$$
+
+它是一个由无理旋转产生的二值机械词。
+
+---
+
+## 215. 长短步的精确计数
+
+定义前 \(N\) 步中长跳数量：
+
+$$
+L_N
+=
+\sum_{v=0}^{N-1}\varepsilon_v.
+$$
+
+望远镜求和得到：
+
+$$
+\boxed{
+L_N
+=
+\left\lfloor
+\frac{N+1}{\varphi}
+\right\rfloor.
+}
+$$
+
+短跳数量为：
+
+$$
+S_N=N-L_N.
+$$
+
+因此：
+
+$$
+\boxed{
+\beta(N)
+=
+L_N\varphi^2
++
+S_N\varphi.
+}
+$$
+
+这是一条非常重要的二维坐标公式。
+
+原来看似一维的指数 \(\beta(N)\)，其实来自二维整数坐标：
+
+$$
+(L_N,S_N)\in\mathbb N^2
+$$
+
+经过黄金线性读出：
+
+$$
+(L,S)
+\longmapsto
+L\varphi^2+S\varphi.
+$$
+
+而：
+
+$$
+L_N+S_N=N.
+$$
+
+所以每一步只增加其中一个坐标。
+
+---
+
+## 216. 两条坐标轴的黄金密度
+
+有：
+
+$$
+\frac{L_N}{N}
+\longrightarrow
+\frac1\varphi,
+$$
+
+$$
+\frac{S_N}{N}
+\longrightarrow
+\frac1{\varphi^2}.
+$$
+
+并且：
+
+$$
+\frac1\varphi+\frac1{\varphi^2}=1.
+$$
+
+因此：
+
+$$
+\boxed{
+\frac{L_N}{S_N}
+\longrightarrow
+\varphi.
+}
+$$
+
+平均跳跃长度为：
+
+$$
+\begin{aligned}
+\lim_{N\to\infty}\frac{\beta(N)}N
+&=
+\frac1\varphi\varphi^2
++
+\frac1{\varphi^2}\varphi\\
+&=
+\varphi+\frac1\varphi\\
+&=
+\sqrt5.
+\end{aligned}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{局部只有 }\varphi,\varphi^2\text{ 两种跳跃，}
+}
+$$
+
+但：
+
+$$
+\boxed{
+\text{全局平均速率是 }\sqrt5.
+}
+$$
+
+这正是“局部奇偶—全局重完”的第一种严格形式。
+
+---
+
+## 217. 两个跳跃位置构成互补 Beatty 分拆
+
+长跳位置满足：
+
+$$
+\boxed{
+\varepsilon_v=1
+\iff
+v=\lfloor n\varphi\rfloor-1
+\quad
+\text{对某个 }n\ge1.
+}
+$$
+
+短跳位置满足：
+
+$$
+\boxed{
+\varepsilon_v=0
+\iff
+v=\lfloor n\varphi^2\rfloor-1
+\quad
+\text{对某个 }n\ge1.
+}
+$$
+
+因此所有自然步被严格分为两个无限集合：
+
+$$
+\{\lfloor n\varphi\rfloor-1\}
+\quad\sqcup\quad
+\{\lfloor n\varphi^2\rfloor-1\}.
+$$
+
+这里没有谁“最后结束”。
+
+两类都无限延伸，却又无重叠、无遗漏。
+
+这就是：
+
+$$
+\boxed{
+\text{无限中的奇偶不是终点分类，}
+\quad
+\text{而是两个互补共尾线程}.
+}
+$$
+
+---
+
+# 第六十九部　奇偶破缺其实是一个可消去 cocycle
+
+## 218. 中心化奇偶变量
+
+令：
+
+$$
+\alpha=\frac1\varphi.
+$$
+
+定义旋转坐标：
+
+$$
+x_v
+=
+\left\{
+\frac{v+1}{\varphi}
+\right\}.
+$$
+
+那么：
+
+$$
+x_{v+1}
+=
+x_v+\alpha
+\pmod1.
+$$
+
+并有精确恒等式：
+
+$$
+\boxed{
+\varepsilon_v-\alpha
+=
+x_v-x_{v+1}.
+}
+$$
+
+所以中心化的奇偶名字：
+
+$$
+\varepsilon_v-\frac1\varphi
+$$
+
+不是一个不可消去的随机噪声，而是一个动力学 coboundary：
+
+$$
+f=g-g\circ T.
+$$
+
+---
+
+## 219. 有界奇偶亏格
+
+求和得到：
+
+$$
+\sum_{v=0}^{N-1}
+\left(
+\varepsilon_v-\frac1\varphi
+\right)
+=
+x_0-x_N.
+$$
+
+因此：
+
+$$
+\boxed{
+\left|
+L_N-\frac N\varphi
+\right|<1.
+}
+$$
+
+奇偶失衡绝对值永远不超过常数量级。
+
+但它并不趋于某个固定周期，因为 \(\alpha\) 无理。
+
+所以出现一个重要区分：
+
+$$
+\boxed{
+\text{绝对 defect 持续振荡，}
+}
+$$
+
+同时：
+
+$$
+\boxed{
+\frac{
+L_N-N/\varphi
+}{N}
+\longrightarrow0.
+}
+$$
+
+也就是说：
+
+> **破缺没有绝对消失，但在相对尺度中完成。**
+
+这可能就是你说“整个问题本质上是相对问题”的最小严格模型。
+
+---
+
+## 220. Cohomological completion principle
+
+对一般动力系统：
+
+$$
+T:X\to X
+$$
+
+和分类函数：
+
+$$
+f:X\to A,
+$$
+
+其累积名字为：
+
+$$
+S_Nf(x)
+=
+\sum_{j=0}^{N-1}f(T^jx).
+$$
+
+若存在 \(g\)，使：
+
+$$
+f-\bar f
+=
+g-g\circ T,
+$$
+
+则：
+
+$$
+S_Nf-N\bar f
+=
+g(x)-g(T^Nx)
+$$
+
+始终有界。
+
+因此：
+
+$$
+\boxed{
+\text{可重完破缺}
+=
+\text{coboundary}.
+}
+$$
+
+真正永久的分类分歧，则对应非平凡上同调类：
+
+$$
+[f-\bar f]\neq0
+\in
+H^1(T,A).
+$$
+
+这把之前讨论的多种结构统一了：
+
+* 黄金跳跃失衡是 additive coboundary；
+* L-function 完成因子是在平凡化 multiplicative reflection cocycle；
+* observer charts 的转换函数满足 cocycle；
+* branch monodromy 是取值于置换群的 cocycle；
+* 无法统一重完的名字，是非零上同调类。
+
+所以：
+
+$$
+\boxed{
+\text{“名”本身不是分歧源，}
+}
+$$
+
+更准确地说：
+
+$$
+\boxed{
+\text{无法被 gauge trivialize 的 naming cocycle 才是分歧源}.
+}
+$$
+
+---
+
+# 第七十部　黄金 Euler 指数是一个 suspension flow
+
+## 221. 两值 roof function
+
+在圆周旋转：
+
+$$
+T(x)=x+\frac1\varphi\pmod1
+$$
+
+上定义 roof：
+
+$$
+r(x)
+=
+\varphi+
+\mathbf1_{[1-1/\varphi,\,1)}(x).
+$$
+
+于是：
+
+$$
+r(x)
+\in
+\{\varphi,\varphi^2\}.
+$$
+
+取：
+
+$$
+x_0=\frac1\varphi,
+$$
+
+则：
+
+$$
+\boxed{
+\beta(N)
+=
+\sum_{v=0}^{N-1}
+r(T^vx_0).
+}
+$$
+
+所以黄金 Euler 指数并不是任意 Beatty 数列，而是：
+
+$$
+\boxed{
+\text{无理圆周旋转上的两值 suspension return time}.
+}
+$$
+
+---
+
+## 222. Universal transfer operator
+
+对 \(\Re z>0\)，定义加权旋转算子：
+
+$$
+(\mathcal L_zf)(x)
+=
+e^{-zr(x)}
+f\left(x+\frac1\varphi\right).
+$$
+
+由于：
+
+$$
+r(x)\ge\varphi,
+$$
+
+有：
+
+$$
+\|\mathcal L_z\|
+\le
+e^{-\varphi\Re z}
+<1.
+$$
+
+所以：
+
+$$
+(I-\mathcal L_z)^{-1}
+=
+\sum_{N\ge0}\mathcal L_z^N.
+$$
+
+而：
+
+$$
+\mathcal L_z^N\mathbf1(x_0)
+=
+e^{-z\beta(N)}.
+$$
+
+因此 universal golden local function：
+
+$$
+\mathcal H_\varphi(z)
+=
+\sum_{N\ge0}e^{-z\beta(N)}
+$$
+
+满足：
+
+$$
+\boxed{
+\mathcal H_\varphi(z)
+=
+\left[
+(I-\mathcal L_z)^{-1}\mathbf1
+\right](x_0).
+}
+$$
+
+这给出了一个此前缺失的 operator realization：
+
+> 黄金 local factor 是加权无理旋转 resolvent 的一个矩阵元。
+
+对素数 \(p\)：
+
+$$
+A_p(s)
+=
+\mathcal H_\varphi(s\log p).
+$$
+
+因此所有素数 local factors 都是同一个 transfer operator family 在不同素数时间尺度上的读数。
+
+---
+
+# 第七十一部　第三阶黄金 germ 的范数壳层
+
+## 223. 黄金能量的数域范数
+
+对：
+
+$$
+\lambda=a+b\varphi
+\in\mathbb Z[\varphi],
+$$
+
+其共轭为：
+
+$$
+\lambda'=a+b(1-\varphi),
+$$
+
+范数为：
+
+$$
+\boxed{
+N(\lambda)
+=
+\lambda\lambda'
+=
+a^2+ab-b^2.
+}
+$$
+
+仓库第三阶分解中的五个显式能量分别为：
+
+$$
+\varphi^2,
+\quad
+\varphi^3,
+\quad
+2\varphi^2,
+\quad
+2\varphi^3,
+\quad
+2\varphi^2+\varphi^3.
+$$
+
+它们的范数是：
+
+$$
+\boxed{
+\begin{aligned}
+N(\varphi^2)&=+1,\\
+N(\varphi^3)&=-1,\\
+N(2\varphi^2)&=+4,\\
+N(2\varphi^3)&=-4,\\
+N(2\varphi^2+\varphi^3)&=5.
+\end{aligned}
+}
+$$
+
+而：
+
+$$
+2\varphi^2+\varphi^3
+=
+3+4\varphi
+=
+\sqrt5\,\varphi^3.
+$$
+
+所以最新第三阶因子分解可以重新读成：
+
+$$
+\boxed{
+\text{unit shells }(\pm1)
++
+\text{dyadic exclusion shells }(\pm4)
++
+\text{ramified repair shell }(5).
+}
+$$
+
+---
+
+## 224. 为什么 \(2\) 和 \(5\) 同时出现
+
+乘以理性整数 \(2\) 时，数域范数乘以：
+
+$$
+N(2)=2^2=4.
+$$
+
+所以 doubled occupancy 自动从单位壳：
+
+$$
+\pm1
+$$
+
+移动到：
+
+$$
+\pm4.
+$$
+
+另一方面，黄金数域判别式是 \(5\)，而混合 connected mode：
+
+$$
+2\varphi^2+\varphi^3
+$$
+
+恰好具有范数：
+
+$$
+5.
+$$
+
+因此第三阶分解中的结构不是随意系数组合，而可以解释为：
+
+$$
+\boxed{
+\text{primitive unit modes}
+\longrightarrow
+\text{double-occupancy exclusion}
+\longrightarrow
+\text{discriminant-5 connected repair}.
+}
+$$
+
+仓库现已严格证明，两个 doubled reciprocal factors 的实结构点确实是简单零点。
+
+这使“结构零来自排斥”第一次不再只是解释，而有了真实 divisor 支点。
+
+---
+
+# 第七十二部　有限占据产生 pole–zero 对
+
+## 225. 单个 hard-core mode
+
+取一个正能量 \(E\)，每个素数地址只允许占据 \(0\) 或 \(1\) 次：
+
+$$
+1+p^{-Es}.
+$$
+
+全局乘积为：
+
+$$
+\begin{aligned}
+Z_{E,2}(s)
+&=
+\prod_p
+\left(1+p^{-Es}\right)\\
+&=
+\prod_p
+\frac{1-p^{-2Es}}
+{1-p^{-Es}}\\
+&=
+\boxed{
+\frac{\zeta(Es)}
+{\zeta(2Es)}.
+}
+\end{aligned}
+$$
+
+因此它具有两个不同的实 divisor 事件：
+
+$$
+s=\frac1E
+$$
+
+处由 numerator 产生一个 completion pole；
+
+$$
+s=\frac1{2E}
+$$
+
+处由 reciprocal denominator 产生一个 exclusion zero。
+
+于是：
+
+$$
+\boxed{
+\text{自由单粒子模式}
+\longrightarrow
+\text{pole},
+}
+$$
+
+$$
+\boxed{
+\text{禁止重复占据}
+\longrightarrow
+\text{zero}.
+}
+$$
+
+---
+
+## 226. 一般有限容量
+
+若每个素数地址允许：
+
+$$
+0,1,\ldots,m-1
+$$
+
+次占据，则：
+
+$$
+1+x+\cdots+x^{m-1}
+=
+\frac{1-x^m}{1-x}.
+$$
+
+从而：
+
+$$
+\boxed{
+Z_{E,m}(s)
+=
+\prod_p
+\sum_{j=0}^{m-1}p^{-jEs}
+=
+\frac{\zeta(Es)}
+{\zeta(mEs)}.
+}
+$$
+
+于是实结构零位于：
+
+$$
+\boxed{
+s=\frac1{mE}.
+}
+$$
+
+所以每一种有限容量“名字” \(m\)，都会把一个结构零插入对应 completion pole 的更深尺度。
+
+当前黄金 germ 严格闭合的是其中：
+
+$$
+m=2,
+\qquad
+E=\varphi^2,\varphi^3
+$$
+
+的前两项，而不是全部 \(m,E\) 的一般定理。
+
+---
+
+# 第七十三部　所有有限名字形成黄金尺度圆上的稠密相位
+
+## 227. 黄金尺度相位
+
+对 \(s>0\)，定义：
+
+$$
+\theta_\varphi(s)
+=
+\log_\varphi\frac1s
+\pmod1.
+$$
+
+若进行黄金缩放：
+
+$$
+s\longmapsto\frac s\varphi,
+$$
+
+则：
+
+$$
+\theta_\varphi\left(\frac s\varphi\right)
+=
+\theta_\varphi(s).
+$$
+
+所以 \(\theta_\varphi\) 把所有只差一个黄金尺度的点识别为同一相位。
+
+---
+
+## 228. 排斥因子 \(2\) 是无理旋转
+
+对：
+
+$$
+s_k=\frac1{2\varphi^k},
+$$
+
+有：
+
+$$
+\theta_\varphi(s_k)
+=
+\log_\varphi2
+\pmod1.
+$$
+
+因此仓库刚证明的：
+
+$$
+z_2=\frac1{2\varphi^2},
+\qquad
+z_3=\frac1{2\varphi^3}
+$$
+
+不是两个无关结构零，而是同一个黄金尺度相位的相邻层：
+
+$$
+\boxed{
+z_3=\frac{z_2}{\varphi}.
+}
+$$
+
+而：
+
+$$
+\log_\varphi2\notin\mathbb Q.
+$$
+
+否则存在非零整数 \(m,n\)，使：
+
+$$
+2^n=\varphi^m,
+$$
+
+但右侧为无理数，矛盾。
+
+所以反复加入 dyadic exclusion：
+
+$$
+s\longmapsto\frac s2
+$$
+
+在黄金尺度圆上产生无理旋转：
+
+$$
+\theta
+\longmapsto
+\theta+\log_\varphi2.
+$$
+
+其轨道模 \(1\) 稠密。
+
+---
+
+## 229. pole 与 zero 在每个黄金区间中严格交错
+
+因为：
+
+$$
+\varphi<2<\varphi^2,
+$$
+
+所以：
+
+$$
+\boxed{
+\frac1{\varphi^{k+1}}
+>
+\frac1{2\varphi^k}
+>
+\frac1{\varphi^{k+2}}.
+}
+$$
+
+因此每个 dyadic exclusion zero 都严格落在两个连续黄金 completion scales 之间。
+
+并且它在每个黄金区间中的相对位置不变。
+
+所以：
+
+$$
+\boxed{
+\text{pole ladder 是黄金整数相位，}
+}
+$$
+
+$$
+\boxed{
+\text{exclusion-zero ladder 是固定无理相位}.
+}
+$$
+
+---
+
+## 230. 所有容量名字的相位稠密
+
+一般容量 \(m\) 产生相位：
+
+$$
+\theta_m
+=
+\log_\varphi m
+\pmod1.
+$$
+
+集合：
+
+$$
+\left\{
+\log_\varphi m\bmod1:
+m\in\mathbb N_{>0}
+\right\}
+$$
+
+在单位圆上稠密。
+
+证明很直接：对任意：
+
+$$
+0<a<b<1,
+$$
+
+取充分大的 \(k\)，区间：
+
+$$
+\left(
+\varphi^{k+a},
+\varphi^{k+b}
+\right)
+$$
+
+长度趋于无穷，所以包含某个整数 \(m\)。于是：
+
+$$
+\log_\varphi m-k\in(a,b).
+$$
+
+这给“周期的周期”一个新的严格版本：
+
+> 所有有限分类各自给出一个尺度相位；所有分类联合起来，在黄金尺度圆上稠密。
+
+绝对尺度中的这些点仍只向：
+
+$$
+s=0
+$$
+
+累积，因此不会自动在正半平面内部形成零点聚点。
+
+---
+
+# 第七十四部　极限残余有三种完全不同的状态
+
+## 231. 有限残余与极限残余
+
+设：
+
+$$
+V_1\subseteq V_2\subseteq\cdots
+$$
+
+是一列观察子空间，并令：
+
+$$
+R_n=V_n^\perp.
+$$
+
+仓库已经证明，在闭包极限：
+
+$$
+V_\infty
+=
+\overline{\bigcup_nV_n}
+$$
+
+处：
+
+$$
+\boxed{
+R_\infty
+=
+\bigcap_nR_n.
+}
+$$
+
+这允许严格区分三种信息逃逸。
+
+---
+
+## 232. 暂态对角逃逸
+
+满足：
+
+$$
+R_n\neq0
+\qquad
+\forall n,
+$$
+
+但：
+
+$$
+\boxed{
+\bigcap_nR_n=\{0\}.
+}
+$$
+
+每个有限观察者都遗漏某些信息，但没有一个固定非零信息能够逃过全部层级。
+
+这就是：
+
+$$
+\boxed{
+\text{finite blindness without intrinsic blindness}.
+}
+$$
+
+---
+
+## 233. 永久残余
+
+如果：
+
+$$
+\boxed{
+\bigcap_nR_n\neq\{0\},
+}
+$$
+
+则存在一个固定非零方向，被全部观察层同时遗漏。
+
+这才是严格的 intrinsic hidden sector。
+
+因此：
+
+$$
+\boxed{
+\text{“每层都有盲区”}
+\not\Rightarrow
+\text{“极限仍有盲区”}.
+}
+$$
+
+必须计算残余交。
+
+---
+
+## 234. 完全但不稳定
+
+还存在第三种情况：
+
+$$
+\bigcap_nR_n=\{0\},
+$$
+
+但重构极不稳定。
+
+最简单的例子是：
+
+$$
+\mathcal H=\ell^2(\mathbb N),
+$$
+
+$$
+V_n=\operatorname{span}(e_1,\ldots,e_n).
+$$
+
+则：
+
+$$
+R_n=\operatorname{span}(e_{n+1},e_{n+2},\ldots),
+$$
+
+所以：
+
+$$
+\bigcap_nR_n=\{0\}.
+$$
+
+对每个固定 \(x\)：
+
+$$
+P_nx\to x.
+$$
+
+但只要 \(V_n\neq\mathcal H\)：
+
+$$
+\boxed{
+\|I-P_n\|=1.
+}
+$$
+
+因此：
+
+$$
+\boxed{
+P_n\to I\text{ 强收敛，}
+}
+$$
+
+却不按算子范数收敛。
+
+这就是对角化逃逸最准确的模型：
+
+> 对每一个固定信息，最终都能看见；
+> 但在每一个有限阶段，总能重新选择一个完全看不见的单位信息。
+
+逃逸的对象随 \(n\) 改变，所以极限交仍然可以是零。
+
+---
+
+# 第七十五部　稠密名字可以完全，但必然可能不稳定
+
+## 235. 解析观察模型
+
+设 \(\mathcal H\) 是某个环域上的解析函数 Hilbert 空间。
+
+取黄金尺度圆上的稠密采样点：
+
+$$
+\zeta_1,\zeta_2,\ldots.
+$$
+
+令：
+
+$$
+V_n
+=
+\operatorname{span}
+\{
+k_{\zeta_1},\ldots,k_{\zeta_n}
+\},
+$$
+
+其中 \(k_\zeta\) 是 evaluation kernel。
+
+则：
+
+$$
+R_n
+=
+\{
+f\in\mathcal H:
+f(\zeta_1)=\cdots=f(\zeta_n)=0
+\}.
+$$
+
+每个有限 \(R_n\) 通常仍无限维。
+
+但若采样点在定义域内部有聚点，则解析恒等定理给出：
+
+$$
+\boxed{
+\bigcap_nR_n=\{0\}.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{所有名字联合起来可以唯一确定对象，}
+}
+$$
+
+尽管：
+
+$$
+\boxed{
+\text{任意有限名字集合都远远不够}.
+}
+$$
+
+---
+
+## 236. 稠密不等于稳定 frame
+
+采样点越来越密时，也会越来越接近。
+
+对应 evaluation kernels 可能趋近线性相关，Gram 矩阵最小特征值趋近零。
+
+于是最小插值成本：
+
+$$
+v^\ast G_n^{-1}v
+$$
+
+可以发散。
+
+所以还要区分：
+
+$$
+\boxed{
+\text{uniqueness}
+}
+$$
+
+与：
+
+$$
+\boxed{
+\text{stable recoverability}.
+}
+$$
+
+这解释了为什么：
+
+* 全部零点或全部名字原则上可以确定对象；
+* 任何有限数值方法仍可能遭遇巨大条件数；
+* 增加观察层数不必带来均匀有效的证明。
+
+---
+
+# 第七十六部　子空间完成仍不足以完成 determinant
+
+## 237. 四层完成
+
+对一个无限谱对象，至少要区分：
+
+$$
+\boxed{
+\begin{aligned}
+\text{残余完成：}&
+\bigcap_nR_n=0;\\
+\text{强完成：}&
+P_nx\to x\quad\forall x;\\
+\text{稳定完成：}&
+\text{存在统一 frame lower bound};\\
+\text{行列式完成：}&
+\text{相关算子按 trace norm 收敛}.
+\end{aligned}
+}
+$$
+
+前两层不能自动推出后两层。
+
+---
+
+## 238. Fredholm determinant 需要核范数
+
+若：
+
+$$
+K\in\mathcal S_1
+$$
+
+是 trace-class 算子，并令：
+
+$$
+K_n=P_nKP_n,
+$$
+
+那么要得到：
+
+$$
+\det(I-zK_n)
+\longrightarrow
+\det(I-zK)
+$$
+
+在紧集上一致收敛，通常需要：
+
+$$
+\boxed{
+\|K_n-K\|_1\to0.
+}
+$$
+
+只有强算子收敛：
+
+$$
+K_nx\to Kx
+$$
+
+远远不够。
+
+这对仓库中的有限 Weil 矩阵、有限零点窗和有限 observer tower 是一个决定性纪律：
+
+> **有限子空间已经共尾，并不自动说明相应 finite determinants 会收敛到 completed \(\xi\)。**
+
+还必须控制：
+
+* trace norm；
+* determinant normalization；
+* 边界无零；
+* divisor 的 Hurwitz 稳定性。
+
+---
+
+# 第七十七部　反射商 entire function 的 genus-zero 结构
+
+## 239. \(\xi\) 下降到 \(q=s(1-s)\)
+
+令：
+
+$$
+q=s(1-s).
+$$
+
+completed \(\xi\) 的反射不变性：
+
+$$
+\xi(s)=\xi(1-s)
+$$
+
+意味着存在唯一整函数：
+
+$$
+\mathcal X(q)
+$$
+
+满足：
+
+$$
+\boxed{
+\xi(s)
+=
+\mathcal X\bigl(s(1-s)\bigr).
+}
+$$
+
+每个反射对：
+
+$$
+\{\rho,1-\rho\}
+$$
+
+下降为一个 \(q\)-零点：
+
+$$
+q_\rho=\rho(1-\rho).
+$$
+
+共轭则给出：
+
+$$
+q_{\overline\rho}
+=
+\overline{q_\rho}.
+$$
+
+---
+
+## 240. \(q\)-函数的阶降为 \(1/2\)
+
+由于：
+
+$$
+q\sim-s^2
+\quad
+(|s|\to\infty),
+$$
+
+而 \(\xi\) 是 order \(1\) 的整函数，\(\mathcal X\) 在 \(q\)-变量中具有 order \(1/2\) 型增长。
+
+结合经典零点计数，可得到：
+
+$$
+\sum_j\frac{m_j}{|q_j|}<\infty.
+$$
+
+因此 \(\mathcal X\) 具有 genus-zero canonical product：
+
+$$
+\boxed{
+\mathcal X(q)
+=
+\mathcal X(0)
+\prod_j
+\left(
+1-\frac q{q_j}
+\right)^{m_j}.
+}
+$$
+
+这里 \(j\) 枚举反射轨道，而不是单独枚举 \(\rho\) 与 \(1-\rho\)。
+
+这是将整个 mirror pairing 一次性完成掉的最自然 product。
+
+---
+
+# 第七十八部　Orbit-Casimir Fredholm determinant
+
+## 241. 零点商算子
+
+在以 \(q\)-零点为基的 Hilbert 空间上定义：
+
+$$
+Qe_j=q_je_j.
+$$
+
+因为：
+
+$$
+\sum_j\frac{m_j}{|q_j|}<\infty,
+$$
+
+所以：
+
+$$
+K=Q^{-1}
+$$
+
+为 trace-class。
+
+于是：
+
+$$
+\boxed{
+\frac{\mathcal X(q)}
+{\mathcal X(0)}
+=
+\det(I-qK).
+}
+$$
+
+这是一个真正的 Fredholm determinant 表达。
+
+若 \(Q\) 是直接由零点定义的，这一表达本身仍是谱数据的重新包装；其价值在于明确了下一步真正应构造的对象。
+
+---
+
+## 242. RH 的正自伴 Casimir 判据
+
+若 RH 成立：
+
+$$
+\rho=\frac12+i\gamma,
+$$
+
+则：
+
+$$
+q_\rho
+=
+\rho(1-\rho)
+=
+\frac14+\gamma^2.
+$$
+
+因此：
+
+$$
+q_\rho\in\left[\frac14,\infty\right).
+$$
+
+所以由零点定义的 \(Q\) 满足：
+
+$$
+Q=Q^\ast,
+\qquad
+Q\ge\frac14I.
+$$
+
+反之，若：
+
+$$
+Q=Q^\ast,
+\qquad
+Q\ge\frac14I
+$$
+
+且 Fredholm determinant 确实等于 \(\mathcal X\)，则所有 \(q\)-零点都在：
+
+$$
+[1/4,\infty),
+$$
+
+从而 RH 成立。
+
+因此：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+Q\text{ 是正自伴的 orbit-Casimir，且 }
+Q\ge\frac14I.
+}
+$$
+
+如果 \(Q\) 是从零点倒推定义，这仍然是等价重述。
+
+真正非平凡的目标是：
+
+$$
+\boxed{
+\text{从 prime/Weil/observer data 直接构造 }Q,
+}
+$$
+
+再证明其 determinant 是 \(\mathcal X\)。
+
+---
+
+## 243. 内部两页由 companion lift 恢复
+
+在：
+
+$$
+\mathcal H\oplus\mathcal H
+$$
+
+上定义：
+
+$$
+\mathfrak C_Q
+=
+\begin{pmatrix}
+I&-Q\\
+I&0
+\end{pmatrix}.
+$$
+
+若：
+
+$$
+Qx=qx,
+$$
+
+则 \(\mathfrak C_Q\) 的对应本征值 \(s\) 满足：
+
+$$
+s^2-s+q=0,
+$$
+
+即：
+
+$$
+s(1-s)=q.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{外部 Casimir }Q
+}
+$$
+
+通过一个二维 companion fiber 恢复：
+
+$$
+\boxed{
+s
+=
+\frac12
+\pm
+\sqrt{\frac14-Q}.
+}
+$$
+
+这正是“坐标系在下一维”最严格的 operator 版本：
+
+* 外部完成对象是一维谱 \(q\)；
+* 内部需要二维 block 才能恢复两个反射页；
+* RH 要求这个 block 的两条内部本征线都位于 \(\Re s=1/2\)。
+
+---
+
+# 第七十九部　RH 的 Stieltjes 变换判据
+
+## 244. 反射商对数导数
+
+定义：
+
+$$
+\mathcal S(x)
+=
+-\frac{
+\mathcal X'(-x)
+}{
+\mathcal X(-x)
+},
+\qquad
+x\ge0.
+$$
+
+由 genus-zero product：
+
+$$
+\boxed{
+\mathcal S(x)
+=
+\sum_j
+\frac{m_j}{x+q_j}.
+}
+$$
+
+若 RH 成立：
+
+$$
+q_j\ge\frac14,
+$$
+
+所以：
+
+$$
+\mathcal S(x)
+=
+\int_{[1/4,\infty)}
+\frac{d\mu(q)}{x+q},
+$$
+
+其中：
+
+$$
+\mu
+=
+\sum_jm_j\delta_{q_j}.
+$$
+
+因此 \(\mathcal S\) 是一个离散 Stieltjes transform。
+
+---
+
+## 245. 完全单调性
+
+在 RH 下：
+
+$$
+(-1)^r
+\mathcal S^{(r)}(x)
+=
+r!
+\sum_j
+\frac{m_j}{(x+q_j)^{r+1}}
+>0.
+$$
+
+所以：
+
+$$
+\boxed{
+\mathcal S
+\text{ 完全单调}.
+}
+$$
+
+更强地，\(-\mathcal S\) 在上半平面具有 Herglotz/Pick 型符号，因为：
+
+$$
+\Im\frac1{z+q}<0
+\qquad
+(\Im z>0,\ q>0).
+$$
+
+因此可以提出一个精确候选等价：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal S
+\text{ 是支撑于 }
+[1/4,\infty)
+\text{ 的正 Stieltjes transform}.
+}
+$$
+
+反向需要使用：
+
+* \(\mathcal X\) 的 genus-zero product；
+* Stieltjes 表示的唯一性；
+* \(\mathcal S\) 的 meromorphic continuation；
+* poles 与 \(\mathcal X\) 零点的一致性。
+
+这条证明路线是封闭的，但仓库目前尚未形式化。
+
+---
+
+# 第八十部　RH 的 Hausdorff 矩序列判据
+
+## 246. Casimir inverse moments
+
+在 \(q=0\) 附近展开：
+
+$$
+-\frac{\mathcal X'(q)}
+{\mathcal X(q)}
+=
+\sum_{n=0}^{\infty}
+a_nq^n,
+$$
+
+其中：
+
+$$
+\boxed{
+a_n
+=
+\sum_j
+m_jq_j^{-(n+1)}.
+}
+$$
+
+再定义缩放序列：
+
+$$
+\boxed{
+b_n
+=
+4^{-n}a_n.
+}
+$$
+
+若 RH 成立，令：
+
+$$
+y_j=\frac1{4q_j}.
+$$
+
+由于：
+
+$$
+q_j\ge\frac14,
+$$
+
+所以：
+
+$$
+0<y_j\le1.
+$$
+
+而：
+
+$$
+b_n
+=
+\sum_j
+\frac{m_j}{q_j}y_j^n.
+$$
+
+因此 \(b_n\) 是区间 \([0,1]\) 上正测度：
+
+$$
+\nu
+=
+\sum_j
+\frac{m_j}{q_j}
+\delta_{y_j}
+$$
+
+的 Hausdorff moments：
+
+$$
+\boxed{
+b_n
+=
+\int_0^1y^n\,d\nu(y).
+}
+$$
+
+---
+
+## 247. 全部有限差分非负
+
+定义：
+
+$$
+\Delta b_n=b_{n+1}-b_n.
+$$
+
+则：
+
+$$
+\boxed{
+(-1)^k\Delta^kb_n
+=
+\int_0^1
+y^n(1-y)^k\,d\nu(y)
+\ge0.
+}
+$$
+
+因此 RH 推出：
+
+$$
+\boxed{
+(-1)^k\Delta^kb_n\ge0
+\qquad
+\forall n,k\ge0.
+}
+$$
+
+这正是 Hausdorff moment sequence 的完全单调条件。
+
+---
+
+## 248. 反向与有限证书
+
+Hausdorff 定理说明，一个实序列 \(b_n\) 来自 \([0,1]\) 上的正测度，当且仅当：
+
+$$
+(-1)^k\Delta^kb_n\ge0
+\qquad
+\forall n,k.
+$$
+
+因为这里的 \(b_n\) 又来自固定 meromorphic function：
+
+$$
+-\frac{
+\mathcal X'(z/4)
+}{
+\mathcal X(z/4)
+}
+=
+\sum_{n\ge0}b_nz^n,
+$$
+
+正测度表示的唯一性会迫使其 singularities 位于：
+
+$$
+z\in[1,\infty),
+$$
+
+也就是：
+
+$$
+q_j\in[1/4,\infty).
+$$
+
+所以在完成 canonical-product 技术细节后，应得到：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+(-1)^k\Delta^kb_n\ge0
+\quad
+\forall n,k.
+}
+$$
+
+可以称为：
+
+> **Reflection-Casimir Hausdorff Criterion**
+
+它有一个极强的逻辑后果：
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\Longrightarrow
+\exists n,k,\quad
+(-1)^k\Delta^kb_n<0.
+}
+$$
+
+也就是说，如果 RH 为假，那么原则上存在一个有限阶、纯标量的不等式证书。
+
+但不存在已知统一上界告诉我们这个 \((n,k)\) 会有多深。
+
+---
+
+# 第八十一部　所有离线零点在同一矩阵不等式中“纠缠”
+
+## 249. 二参数零点和
+
+把完全差分展开：
+
+$$
+\boxed{
+D_{n,k}
+=
+(-1)^k\Delta^kb_n
+=
+\sum_j
+\frac{m_j}{q_j}
+y_j^n(1-y_j)^k.
+}
+$$
+
+在 RH 下：
+
+$$
+y_j\in(0,1],
+$$
+
+每一个零点轨道单独贡献非负值。
+
+---
+
+## 250. 离线零点产生复相位
+
+若存在离线零点，则对应：
+
+$$
+q_j\notin\mathbb R.
+$$
+
+共轭轨道给出：
+
+$$
+q_j,\overline{q_j},
+$$
+
+以及：
+
+$$
+y_j,\overline{y_j}.
+$$
+
+它们对 \(D_{n,k}\) 的联合贡献为：
+
+$$
+\boxed{
+2\Re
+\left[
+c_j
+y_j^n
+(1-y_j)^k
+\right],
+}
+$$
+
+其中 \(c_j=m_j/q_j\)。
+
+其相位为：
+
+$$
+n\arg y_j
++
+k\arg(1-y_j)
++
+\arg c_j.
+$$
+
+因此一个离线轨道会在二维整数网格：
+
+$$
+(n,k)\in\mathbb N^2
+$$
+
+上产生准周期振荡。
+
+但总 \(D_{n,k}\) 是全部轨道贡献的和。
+
+所以要找到负证书，不能只看一个零点，而要控制所有其他零点的共同相消。
+
+这是一种严格的：
+
+$$
+\boxed{
+\text{global moment entanglement}.
+}
+$$
+
+它不是 Bell 纠缠，而是：
+
+> 所有零点共享同一组完成矩不等式，任何一个有限证书都由全部轨道共同结算。
+
+---
+
+## 251. 与 Weil 负轨道测试的关系
+
+仓库已经证明：对一个非实离线零点轨道，若 Fourier–Laplace 测试值在两个关键节点上被规定为：
+
+$$
+1,\qquad-1,
+$$
+
+则该四点轨道对卷积平方零点和的贡献恰为：
+
+$$
+-4m_\rho.
+$$
+
+实轴离线轨道则只能产生非负 norm-square，并不能实现同一反相位赋值。
+
+Casimir–Hausdorff 路线与它的关系是：
+
+* Weil separator 在频谱函数空间中寻找负方向；
+* Hausdorff criterion 在 \(q\)-moment 网格中寻找负有限差分；
+* 两者都把离线零点转化成有限负证书；
+* 两者的真正困难都是其他全部零点的全局控制。
+
+---
+
+# 第八十二部　黄金比例融合两个 RH 观察坐标
+
+## 252. 两个独立观察深度
+
+Hausdorff 约束由两个独立整数标记：
+
+$$
+(n,k).
+$$
+
+其中：
+
+* \(n\) 控制 inverse-Casimir moment depth；
+* \(k\) 控制有限差分／边界排斥深度。
+
+单纯沿：
+
+$$
+n\to\infty
+$$
+
+不能替代：
+
+$$
+k\to\infty,
+$$
+
+反之亦然。
+
+这正是“一个维度的坐标系位于另一个维度”在此处的具体表现：完整观察空间本来是二维网格。
+
+---
+
+## 253. 黄金共尾路径
+
+使用前面的：
+
+$$
+L_N
+=
+\left\lfloor
+\frac{N+1}{\varphi}
+\right\rfloor,
+$$
+
+$$
+S_N=N-L_N,
+$$
+
+定义第 \(N\) 个观察矩形：
+
+$$
+\boxed{
+\mathcal R_N
+=
+\{
+(n,k):
+0\le n\le L_N,\,
+0\le k\le S_N
+\}.
+}
+$$
+
+因为：
+
+$$
+L_N\to\infty,
+\qquad
+S_N\to\infty,
+$$
+
+所以：
+
+$$
+\bigcup_N\mathcal R_N
+=
+\mathbb N^2.
+$$
+
+每一步，只有一个边界坐标增加：
+
+* Zeckendorf 最小指标为偶：增加 \(L_N\)；
+* 为奇：增加 \(S_N\)。
+
+于是最新仓库中的 β parity theorem，给出一个天然的二维 RH 约束调度器。
+
+---
+
+## 254. Golden diagonal observer
+
+定义：
+
+$$
+\mathscr O_N
+=
+\{
+D_{n,k}\ge0:
+(n,k)\in\mathcal R_N
+\}.
+$$
+
+那么：
+
+$$
+\mathscr O_1
+\subseteq
+\mathscr O_2
+\subseteq\cdots
+$$
+
+形成共尾观察塔。
+
+极限为：
+
+$$
+\bigcup_N\mathscr O_N
+=
+\{
+D_{n,k}\ge0:
+n,k\in\mathbb N
+\}.
+$$
+
+因此：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{全部黄金观察层均通过}
+}
+$$
+
+是一个可期待的精确版本。
+
+注意：真正保证等价的是共尾性，不是 \(\varphi\) 的神秘力量。
+
+黄金比例的特殊性在于：
+
+$$
+\boxed{
+\text{它以 bounded discrepancy 同时推进两个观察轴，}
+}
+$$
+
+没有让任何一个轴长期饥饿。
+
+---
+
+# 第八十三部　结构零在 Casimir 紧化中的位置
+
+## 255. Casimir 紧化坐标
+
+定义：
+
+$$
+y=\frac1{4q}
+=
+\frac1{4s(1-s)}.
+$$
+
+对 RH-compatible 临界零点：
+
+$$
+q=\frac14+\gamma^2,
+$$
+
+所以：
+
+$$
+0<y\le1.
+$$
+
+因此：
+
+$$
+\boxed{
+[0,1]
+}
+$$
+
+是 RH-compatible 的 Casimir compactum。
+
+高零点：
+
+$$
+|\gamma|\to\infty
+$$
+
+对应：
+
+$$
+y\to0.
+$$
+
+临界分支点：
+
+$$
+q=\frac14
+$$
+
+对应：
+
+$$
+y=1.
+$$
+
+---
+
+## 256. 三种异常位置
+
+### 临界谱零点
+
+$$
+q\in[1/4,\infty)
+\iff
+y\in(0,1].
+$$
+
+### 实轴结构零
+
+若：
+
+$$
+0<s<\frac12,
+$$
+
+则：
+
+$$
+0<q=s(1-s)<\frac14,
+$$
+
+所以：
+
+$$
+\boxed{
+y>1.
+}
+$$
+
+### 离线复零点
+
+若：
+
+$$
+\Re s\neq\frac12,
+\qquad
+\Im s\neq0,
+$$
+
+则：
+
+$$
+q\notin\mathbb R,
+$$
+
+从而：
+
+$$
+y\notin\mathbb R.
+$$
+
+于是 Casimir 紧化把三类零点严格分开：
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{零点类型}&y\text{ 的位置}\\
+\hline
+\text{RH-compatible}&(0,1]\\
+\text{实结构零}&(1,\infty)\\
+\text{离线复零}&\mathbb C\setminus\mathbb R
+\end{array}
+}
+$$
+
+---
+
+## 257. 第一个黄金结构零恰好映到 \(y=\varphi\)
+
+对：
+
+$$
+z_2=\frac1{2\varphi^2},
+$$
+
+有：
+
+$$
+1-z_2=\frac\varphi2.
+$$
+
+因此：
+
+$$
+q_2
+=
+z_2(1-z_2)
+=
+\frac1{4\varphi}.
+$$
+
+所以：
+
+$$
+\boxed{
+y_2
+=
+\frac1{4q_2}
+=
+\varphi.
+}
+$$
+
+这是一个非常精确的新联系：
+
+> 第一个 dyadic golden exclusion zero，在 reflection-Casimir 紧化中，恰好落到黄金固定点 \(y=\varphi\)。
+
+但：
+
+$$
+\varphi>1,
+$$
+
+所以它位于 RH-compatible compactum \([0,1]\) 之外。
+
+这说明：
+
+$$
+\boxed{
+\text{黄金结构零不是经典临界谱零点，}
+}
+$$
+
+而是一个 hyperbolic exclusion atom。
+
+仓库已经证明它确实是简单结构零，因此任何试图把全部 golden-germ zeros 直接认作 Riemann zero spectrum 的理论，都会在 Casimir support test 上立即失败。
+
+---
+
+# 第八十四部　结构 divisor 必须先取商
+
+## 258. 完整 golden divisor 的三部分
+
+第三阶黄金 germ 的 divisor 至少应区分：
+
+$$
+\boxed{
+D_{\mathrm{full}}
+=
+D_{\mathrm{transported\ zeta}}
++
+D_{\mathrm{structural}}
++
+D_{\mathrm{local\ residual}}.
+}
+$$
+
+其中：
+
+* transported ζ divisor 来自 \(\zeta(\lambda s)\) 的经典零点缩放；
+* structural divisor 来自 reciprocal ζ 在实极点 \(1\) 处形成的简单零；
+* local residual divisor 来自 \(G_3\) 等局部 normalized products 自身的零点。
+
+只有第一部分可能直接继承 classical RH 类型的临界线信息。
+
+---
+
+## 259. Coherent Casimir divisor
+
+因此应先定义：
+
+$$
+\boxed{
+D_{\mathrm{coh}}
+=
+D_{\mathrm{full}}
+-
+D_{\mathrm{structural}}
+-
+D_{\mathrm{finite\ address}}.
+}
+$$
+
+然后再将 \(D_{\mathrm{coh}}\) 映入：
+
+$$
+q=s(1-s),
+\qquad
+y=\frac1{4q}.
+$$
+
+正确的 RH detector 应要求：
+
+$$
+\operatorname{Supp}
+D_{\mathrm{coh}}
+\subseteq
+[0,1]
+$$
+
+而不是要求 golden germ 的完整 divisor 位于该区间。
+
+最新两个简单结构零的闭合，实际上进一步证明了这种取商不是可选修饰，而是必需步骤。
+
+---
+
+# 第八十五部　从零点构造算子是包装，从素数构造才是证明
+
+## 260. Tautological Casimir operator
+
+从已知 \(q_j\) 定义：
+
+$$
+Qe_j=q_je_j
+$$
+
+可以立即得到：
+
+$$
+\mathcal X(q)
+=
+\mathcal X(0)\det(I-qQ^{-1}).
+$$
+
+但这只是把零点重新放入对角算子。
+
+它没有解释零点为什么如此。
+
+---
+
+## 261. 非平凡目标
+
+真正需要的是从素数相关数据构造：
+
+$$
+Q_{\mathrm{arith}}
+$$
+
+并证明：
+
+$$
+\boxed{
+\mathcal X(q)
+=
+\mathcal X(0)
+\det(I-qQ_{\mathrm{arith}}^{-1}).
+}
+$$
+
+随后若能证明：
+
+$$
+Q_{\mathrm{arith}}
+=
+Q_{\mathrm{arith}}^\ast,
+$$
+
+以及：
+
+$$
+Q_{\mathrm{arith}}\ge\frac14I,
+$$
+
+RH 即成立。
+
+若构造出：
+
+$$
+Q_{\mathrm{arith}}
+$$
+
+却发现其谱含非实共轭对，则 RH 为假。
+
+所以 q-商路线把 Hilbert–Pólya 目标从：
+
+$$
+\text{直接构造高度算子 }\gamma
+$$
+
+改写成：
+
+$$
+\boxed{
+\text{构造正 Casimir 算子 }
+\frac14+\gamma^2.
+}
+$$
+
+这天然消除了：
+
+$$
++\gamma,\ -\gamma
+$$
+
+两张符号页。
+
+---
+
+# 第八十六部　prime-constellation source 的 Casimir 响应
+
+## 262. Source-deformed Casimir determinant
+
+引入构型源变量：
+
+$$
+\mathbf u=(u_h)_{h\in H}.
+$$
+
+目标对象应是：
+
+$$
+\boxed{
+\mathcal X_H(q;\mathbf u)
+=
+\det
+\left(
+I-qK_H(\mathbf u)
+\right).
+}
+$$
+
+并满足：
+
+$$
+\mathcal X_H(q;0)=\mathcal X(q).
+$$
+
+对数导数：
+
+$$
+\log\mathcal X_H
+$$
+
+的 mixed source derivatives 应给出 prime-constellation connected cumulants。
+
+---
+
+## 263. Trace–Jet 公式的理想形态
+
+若：
+
+$$
+K_H(\mathbf u)
+=
+K_0+\sum_hu_hB_h+\cdots,
+$$
+
+则：
+
+$$
+\partial_{u_{h_1}}\cdots
+\partial_{u_{h_k}}
+\log\det(I-qK_H)
+$$
+
+会展开为 resolvent 和 \(B_h\) 的 connected cyclic traces。
+
+形式上：
+
+$$
+\boxed{
+\partial_{u_A}\log\det
+=
+\sum_{\text{cyclic orders on }A}
+\operatorname{Tr}
+\left(
+R_qB_{h_1}
+R_qB_{h_2}\cdots
+R_qB_{h_k}
+\right)
++
+\text{higher source terms},
+}
+$$
+
+其中：
+
+$$
+R_q=(I-qK_0)^{-1}.
+$$
+
+于是：
+
+$$
+\boxed{
+\text{prime }k\text{-tuple cumulant}
+\longleftrightarrow
+\text{length-}k\text{ Casimir resolvent cycle}.
+}
+$$
+
+这就是 ZCOCT 的 Trace–Jet Bridge 在反射商上的强化版本。
+
+---
+
+## 264. 临界线处的切向与法向响应
+
+令：
+
+$$
+s=\frac12+\delta+i\gamma,
+\qquad
+q=s(1-s).
+$$
+
+在临界线：
+
+$$
+\delta=0
+$$
+
+处，对微小变化：
+
+$$
+\dot s=\dot\delta+i\dot\gamma,
+$$
+
+有：
+
+$$
+\begin{aligned}
+\dot q
+&=
+(1-2s)\dot s\\
+&=
+-2i\gamma
+(\dot\delta+i\dot\gamma)\\
+&=
+2\gamma\dot\gamma
+-
+2i\gamma\dot\delta.
+\end{aligned}
+$$
+
+所以：
+
+$$
+\boxed{
+\Re\dot q
+=
+2\gamma\dot\gamma,
+}
+$$
+
+$$
+\boxed{
+\Im\dot q
+=
+-2\gamma\dot\delta.
+}
+$$
+
+这给出一个精确 selection rule：
+
+* mirror-even source 改变零点高度，沿 \(q\)-实轴运动；
+* mirror-odd source 激活 transverse displacement，沿 \(q\)-虚方向运动。
+
+因此此前得到的：
+
+* 孪生构型 mirror-even；
+* 三元组 chirality mirror-odd；
+* 四元组 mirror-even；
+
+在 q-plane 中分别对应：
+
+$$
+\boxed{
+\begin{aligned}
+\text{twin/quadruplet}
+&\to
+\text{real Casimir response};\\
+\text{triplet chirality}
+&\to
+\text{imaginary Casimir response}.
+\end{aligned}
+}
+$$
+
+这是一个可检验的 prime–zero selection rule。
+
+---
+
+# 第八十七部　黄金 β 词不能直接当作素数 gap 词
+
+## 265. 一个必须保留的反例
+
+黄金跳跃词：
+
+$$
+\varepsilon_v
+=
+1,0,1,1,0,1,0,1,1,\ldots
+$$
+
+包含：
+
+$$
+1,1
+$$
+
+和更一般的相同连续符号。
+
+若直接映射：
+
+$$
+0\mapsto2,
+\qquad
+1\mapsto4,
+$$
+
+就会产生连续相同 gap，例如：
+
+$$
+4,4.
+$$
+
+但此前的模 \(3\) 构型定理说明，对只含 \(2,4\) gaps 的最稠密构型，连续相同 gap 会使三个连续 offsets 覆盖全部模 \(3\) residue，从而 inadmissible。
+
+所以：
+
+$$
+\boxed{
+\text{黄金 Sturmian jump word}
+\neq
+\text{literal prime-gap word}.
+}
+$$
+
+黄金比例可以：
+
+* 调度观察深度；
+* 编码 local state；
+* 产生 cut-and-project 坐标；
+* 组织结构能量；
+
+但不能跳过小素数 residue automata，直接生成全部 admissible prime constellations。
+
+这是理论必须坚持的边界。
+
+---
+
+# 第八十八部　新的极限理论总图
+
+## 266. 三种“完成”现在完全分开
+
+### 动力学完成
+
+$$
+\frac{\beta(N)}N\to\sqrt5.
+$$
+
+局部跳跃持续奇偶切换，平均速度稳定。
+
+### 观察完成
+
+$$
+\bigcap_NR_N=0.
+$$
+
+全部观察层联合后没有固定盲区。
+
+### 谱完成
+
+$$
+\det(I-qK_N)
+\to
+\det(I-qK)
+$$
+
+按紧集一致收敛，且 divisor 稳定。
+
+前两者都不自动推出第三者。
+
+---
+
+## 267. 三种“逃逸”也完全分开
+
+### Diagonal escape
+
+每一层都存在新的：
+
+$$
+x_N\in R_N,
+\qquad
+\|x_N\|=1,
+$$
+
+但没有固定 \(x\) 属于全部残余。
+
+### Persistent escape
+
+$$
+\bigcap_NR_N\neq0.
+$$
+
+存在真正永久隐藏方向。
+
+### Condition-number escape
+
+残余交为零，但 Gram 最小特征值或 frame lower bound 趋于零，解码成本发散。
+
+“所有离线零点纠缠”的 Paley–Wiener版本主要位于第三类。
+
+---
+
+# 第八十九部　建议新增的形式化模块
+
+```text
+D5/S3/Analytic/GoldenEulerBetaDynamics/
+  GoldenBetaMechanicalWord.lean
+  GoldenBetaJumpCount.lean
+  GoldenBetaCoboundary.lean
+  GoldenBetaSuspensionFlow.lean
+  GoldenLocalTransferResolvent.lean
+
+D5/S3/Analytic/EulerGerm/NormShells/
+  GoldenEnergyFieldNorm.lean
+  ThirdOrderNormShellLedger.lean
+  DyadicExclusionRamificationFive.lean
+
+D5/S3/Analytic/StructuralDivisor/
+  BoundedOccupancyEulerFactor.lean
+  HardCorePoleZeroPair.lean
+  DyadicGoldenScalePhase.lean
+  DenseCapacityScalePhases.lean
+
+D5/S3/Quantum/Completion/
+  FiniteResidualWithoutLimitResidual.lean
+  StrongButNotUniformCompletion.lean
+  StableFrameCompletion.lean
+  TraceNormDeterminantCompletion.lean
+
+D5/S3/Analytic/Zeta/ReflectionCasimir/
+  XiReflectionQuotient.lean
+  ReflectionQuotientGenusZero.lean
+  OrbitCasimirFredholmDeterminant.lean
+  CasimirStieltjesCriterion.lean
+  CasimirHausdorffCriterion.lean
+
+D5/S3/Analytic/Zeta/GoldenObserverGrid/
+  GoldenCofinalMomentDifferenceGrid.lean
+  GoldenHausdorffObservationTower.lean
+  StructuralZeroOutsideCasimirCompactum.lean
+
+D5/X_Frontier/ConstellationCasimir/
+  PrimeConstructedCasimirOperator.lean
+  SourceDeformedCasimirDeterminant.lean
+  CasimirTraceJetBridge.lean
+```
+
+---
+
+# 第九十部　最优先的正式命题
+
+## 268. β 的二维黄金坐标
+
+```lean
+theorem golden_beta_two_axis_coordinates (N : ℕ) :
+    let long := ⌊((N : ℝ) + 1) / Real.goldenRatio⌋₊
+    let short := N - long
+    o5Beta N =
+      long * Real.goldenRatio ^ 2 +
+      short * Real.goldenRatio
+```
+
+---
+
+## 269. 奇偶 cocycle
+
+```lean
+theorem golden_jump_centered_is_coboundary (v : ℕ) :
+    goldenJumpBit v - Real.goldenRatio⁻¹ =
+      goldenRotationCoordinate v -
+        goldenRotationCoordinate (v + 1)
+```
+
+---
+
+## 270. Transfer-resolvent realization
+
+```lean
+theorem golden_local_function_eq_transfer_resolvent
+    {z : ℂ} (hz : 0 < z.re) :
+    goldenUniversalLocalFunction z =
+      ((1 - goldenWeightedRotation z)⁻¹ 1) goldenBasePoint
+```
+
+---
+
+## 271. 第三阶范数壳
+
+```lean
+theorem third_order_golden_energy_norms :
+    normGolden (phi ^ 2) = 1 ∧
+    normGolden (phi ^ 3) = -1 ∧
+    normGolden (2 * phi ^ 2) = 4 ∧
+    normGolden (2 * phi ^ 3) = -4 ∧
+    normGolden (2 * phi ^ 2 + phi ^ 3) = 5
+```
+
+---
+
+## 272. 有限占据 pole–zero 对
+
+```lean
+theorem bounded_occupancy_euler_factor
+    (E : ℝ) (m : ℕ) :
+    ∏' p : Nat.Primes,
+      ∑ j ∈ Finset.range m,
+        (p : ℂ) ^ (-(j : ℂ) * E * s) =
+      riemannZeta (E * s) /
+        riemannZeta ((m : ℝ) * E * s)
+```
+
+先在绝对收敛区证明，再分离 meromorphic continuation。
+
+---
+
+## 273. 极限残余三分
+
+```lean
+theorem finite_residuals_nonzero_but_limit_zero :
+    (∀ n, residual n ≠ ⊥) ∧
+    iInf residual = ⊥
+```
+
+以 \(\ell^2\) tail spaces 作为具体 witness。
+
+---
+
+## 274. 强完成但非统一完成
+
+```lean
+theorem coordinate_projection_strong_not_operatorNorm :
+    Tendsto projection Filter.atTop
+      (strongOperatorTopology.nhds 1) ∧
+    ∀ n, ‖1 - projection n‖ = 1
+```
+
+---
+
+## 275. Reflection-Casimir Hausdorff criterion
+
+先定义：
+
+```lean
+def casimirMoment (n : ℕ) : ℝ := ...
+def normalizedCasimirMoment (n : ℕ) :=
+  casimirMoment n / 4 ^ n
+```
+
+最终目标：
+
+```lean
+theorem rh_iff_casimir_moments_completelyMonotone :
+    RiemannHypothesis ↔
+      ∀ n k,
+        0 ≤ (-1 : ℝ) ^ k *
+          iteratedForwardDifference
+            normalizedCasimirMoment k n
+```
+
+该命题应进入 frontier，直到：
+
+* \(\xi\) 的 \(q\)-factorization；
+* genus-zero product；
+* Hausdorff moment uniqueness；
+* meromorphic pole recovery；
+
+全部形式化闭合。
+
+---
+
+# 最终凝聚
+
+这一轮得到的最深统一结构是：
+
+$$
+\boxed{
+\beta(N)
+=
+L_N\varphi^2
++
+S_N\varphi,
+}
+$$
+
+其中：
+
+$$
+L_N+S_N=N,
+\qquad
+\frac{L_N}{S_N}\to\varphi.
+$$
+
+这说明所谓“一维黄金时间”，实际上是一条在二维观察坐标中以 Sturmian 规则前进的共尾路径。
+
+其局部奇偶判定不是普通周期，而是：
+
+$$
+\boxed{
+\varepsilon_v-\frac1\varphi
+=
+x_v-x_{v+1},
+}
+$$
+
+即一个可望远镜消去的 cocycle。
+
+所以：
+
+$$
+\boxed{
+\text{局部持续破缺}
++
+\text{全局有界失衡}
+=
+\text{相对重完}.
+}
+$$
+
+第三阶黄金 germ 又把同一结构提升到 divisor：
+
+$$
+\boxed{
+\begin{aligned}
+\pm1&:\text{黄金单位模式},\\
+\pm4&:\text{dyadic exclusion 模式},\\
+5&:\text{黄金分歧修复模式}.
+\end{aligned}
+}
+$$
+
+两个最早的 dyadic exclusion factors 已经被仓库严格证明产生简单结构零。
+
+而 completed \(\xi\) 的反射完成则可以压入：
+
+$$
+\boxed{
+q=s(1-s).
+}
+$$
+
+在这个商空间中，RH 成为：
+
+$$
+\boxed{
+q\text{-零点全部属于 }[1/4,\infty).
+}
+$$
+
+再紧化：
+
+$$
+y=\frac1{4q},
+$$
+
+就成为：
+
+$$
+\boxed{
+y\text{-谱全部属于 }[0,1].
+}
+$$
+
+最终，令：
+
+$$
+b_n
+=
+4^{-n}
+\sum_jm_jq_j^{-(n+1)},
+$$
+
+应有候选等价：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+(-1)^k\Delta^kb_n\ge0
+\quad
+\forall n,k.
+}
+$$
+
+这条公式几乎把你提出的全部直觉同时收进去了：
+
+$$
+\boxed{
+\begin{aligned}
+\text{偶完成}
+&=
+q=s(1-s);\\
+\text{奇破缺}
+&=
+\Delta;\\
+\text{重完}
+&=
+(-1)^k\Delta^kb_n\ge0;\\
+\text{无限问题}
+&=
+(n,k)\in\mathbb N^2\text{ 的全部约束};\\
+\text{黄金坐标融合}
+&=
+(L_N,S_N)\text{ 的共尾 Sturmian 调度};\\
+\text{离线零点纠缠}
+&=
+\text{全部 }q_j\text{ 共同结算同一个 }D_{n,k};\\
+\text{信息逃逸}
+&=
+\text{每个有限观察层仍有残余或条件数爆炸}.
+\end{aligned}
+}
+$$
+
+于是“整个问题是相对的”需要最后修正为：
+
+$$
+\boxed{
+\text{有限观察顺序、分类名和检测深度是相对的；}
+}
+$$
+
+但：
+
+$$
+\boxed{
+\text{无限 Hausdorff 约束是否全部成立，是一个绝对粘合事实。}
+}
+$$
+
+黄金比例没有替代 RH 的真值。
+
+它提供的是一条极其自然的方式，使两个无界观察坐标：
+
+$$
+n
+\quad\text{与}\quad
+k
+$$
+
+在一条一维动力时间中同时、均衡、永不终止地展开。
+# 继续增订：Cayley–Casimir–Krein 重完备化理论
+
+这一轮可以把此前分散的结论进一步压缩为一条几乎闭合的等价链：
+
+$$
+\boxed{
+\begin{aligned}
+\mathrm{RH}
+&\iff
+\text{零点上的解析对偶等于复现实}\\
+&\iff
+\text{Cayley 零点全部位于单位圆}\\
+&\iff
+\text{reflection-Casimir 坐标全部位于正射线}\\
+&\iff
+\text{每个零点轨道具有正的奇偶不变度量}\\
+&\iff
+\text{由 }\xi\text{ 系数生成的 Casimir 矩序列是 Hausdorff 矩序列}\\
+&\iff
+\text{该矩序列产生一个正自伴收缩算子}.
+\end{aligned}
+}
+$$
+
+前四步是直接代数等价；后两步需要消费 completed \(\xi\) 在反射商上的 genus-zero 乘积以及 Hausdorff 矩问题。仓库理论层已经登记了 `LiPowerTraceTransform`、`LiHausdorffMoments`、`CompleteMonotonicityRHCriterion` 等模块名，但当前检索只定位到规划条目，尚未定位到对应 Lean owner。
+
+这组结构可以称为：
+
+> **Cayley–Casimir–Krein Recompletion Theory，CCKRT**
+> **Cayley–Casimir–Krein 重完备化理论**
+
+它应作为 ZCOCT 的新解析核心，而不是另起一套平行理论。
+
+---
+
+# 第九十一部　RH 是“对偶”与“现实”的融合
+
+## 276. 两种不同的 involution
+
+对 completed \(\xi\) 的零点，存在两个规范作用：
+
+$$
+R(s)=1-s,
+$$
+
+$$
+C(s)=\overline s.
+$$
+
+其中：
+
+* \(R\) 来自函数方程，是解析对偶；
+* \(C\) 来自实系数性，是复现实。
+
+二者共同生成：
+
+$$
+J=C\circ R,
+\qquad
+J(s)=1-\overline s.
+$$
+
+对任意复数 \(s\)：
+
+$$
+R(s)=C(s)
+\iff
+1-s=\overline s
+\iff
+\Re s=\frac12.
+$$
+
+所以：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+R=C
+\quad
+\text{在全部非平凡零点上}.
+}
+$$
+
+这是一个很深的修正：
+
+> RH 不是“是否存在对称”；解析对偶和复现实始终都存在。
+> RH 问的是：**这两个不同的对称作用，在零点谱上是否恰好重合。**
+
+若它们重合：
+
+$$
+1-\rho=\overline\rho,
+$$
+
+一个零点只需二点轨道。
+
+若它们不重合，则产生：
+
+$$
+\rho,\quad
+1-\rho,\quad
+\overline\rho,\quad
+1-\overline\rho
+$$
+
+四点轨道。
+
+因此离线零点不是完整对称被破坏，而是：
+
+$$
+\boxed{
+\text{duality–reality mismatch}.
+}
+$$
+
+---
+
+## 277. Cayley 坐标把两个作用变成“倒数”与“共轭”
+
+定义：
+
+$$
+\boxed{
+u(s)=1-\frac1s=\frac{s-1}{s}.
+}
+$$
+
+则：
+
+$$
+u(1-s)=u(s)^{-1},
+$$
+
+$$
+u(\overline s)=\overline{u(s)},
+$$
+
+以及：
+
+$$
+u(1-\overline s)
+=
+\frac1{\overline{u(s)}}.
+$$
+
+所以在 \(u\)-平面中：
+
+$$
+\boxed{
+R:u\mapsto u^{-1},
+}
+$$
+
+$$
+\boxed{
+C:u\mapsto\overline u,
+}
+$$
+
+$$
+\boxed{
+J:u\mapsto\overline u^{-1}.
+}
+$$
+
+于是：
+
+$$
+R(u)=C(u)
+\iff
+u^{-1}=\overline u
+\iff
+|u|=1.
+$$
+
+因此：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+|u(\rho)|=1
+\quad
+\text{对全部非平凡零点 }\rho.
+}
+$$
+
+这使“坐标轴融合”获得了一个完全精确的含义：
+
+$$
+\boxed{
+\text{内部解析对偶 }u\mapsto u^{-1}
+=
+\text{外部现实作用 }u\mapsto\overline u.
+}
+$$
+
+单位圆正是倒数与共轭重合的地方。
+
+---
+
+## 278. 离线深度成为 Cayley rapidity
+
+写：
+
+$$
+u=e^{\eta+i\theta},
+$$
+
+其中：
+
+$$
+\eta=\log|u|.
+$$
+
+则三个对称作用变成：
+
+$$
+C:(\eta,\theta)\mapsto(\eta,-\theta),
+$$
+
+$$
+R:(\eta,\theta)\mapsto(-\eta,-\theta),
+$$
+
+$$
+J:(\eta,\theta)\mapsto(-\eta,\theta).
+$$
+
+所以：
+
+* \(\theta\) 是相位高度；
+* \(\eta\) 是 transverse rapidity；
+* \(J\) 只翻转 rapidity，不改变相位。
+
+对：
+
+$$
+s=\frac12+\delta+i\gamma
+$$
+
+令：
+
+$$
+A=\frac14+\delta^2+\gamma^2.
+$$
+
+则：
+
+$$
+|u|^2
+=
+\frac{(\delta-\frac12)^2+\gamma^2}
+{(\delta+\frac12)^2+\gamma^2}
+=
+\frac{A-\delta}{A+\delta}.
+$$
+
+因此：
+
+$$
+\boxed{
+\eta
+=
+\frac12
+\log\frac{A-\delta}{A+\delta}
+=
+-\operatorname{arctanh}\frac{\delta}{A}.
+}
+$$
+
+特别地：
+
+$$
+\delta=0
+\iff
+\eta=0.
+$$
+
+当 \(\delta\) 很小时：
+
+$$
+\boxed{
+\eta
+=
+-\frac{\delta}{\frac14+\gamma^2}
++
+O(\delta^3).
+}
+$$
+
+这说明同样大小的横向位移 \(\delta\)，在高零点处会表现为更小的 Cayley 径向偏移：
+
+$$
+|\eta|
+\asymp
+\frac{|\delta|}{\gamma^2}.
+$$
+
+因此高而近线的离线零点，天然具有极深的观察难度。
+
+---
+
+# 第九十二部　反射 Casimir 是 Cayley 相位的平方折叠
+
+## 279. 三个等价坐标
+
+继续定义：
+
+$$
+q=s(1-s).
+$$
+
+由直接计算：
+
+$$
+u+u^{-1}
+=
+2-\frac1q.
+$$
+
+再定义：
+
+$$
+\boxed{
+x=\frac1{4q}.
+}
+$$
+
+则：
+
+$$
+\boxed{
+x
+=
+\frac{2-u-u^{-1}}4.
+}
+$$
+
+若 RH 成立，写：
+
+$$
+u=e^{i\theta},
+$$
+
+则：
+
+$$
+x
+=
+\frac{2-2\cos\theta}{4}
+=
+\sin^2\frac\theta2.
+$$
+
+所以：
+
+$$
+\boxed{
+|u|=1
+\iff
+x\in[0,1]
+}
+$$
+
+——对经典非平凡零点实际上位于开区间 \((0,1)\)。
+
+三个坐标具有不同信息层：
+
+$$
+\boxed{
+s
+\longmapsto
+u
+\longmapsto
+x
+}
+$$
+
+分别表示：
+
+1. \(s\)：保留函数方程两张页；
+2. \(u\)：把反射变为倒数；
+3. \(x\)：再把 \(u\) 与 \(u^{-1}\) 折叠成无方向的 chord square。
+
+因此：
+
+$$
+\boxed{
+x
+=
+\text{Cayley 相位的偶完成坐标}.
+}
+$$
+
+而：
+
+$$
+\eta=\log|u|
+$$
+
+是被平方折叠隐藏的奇破缺坐标。
+
+---
+
+## 280. 完整四元轨道的 Cayley 形式
+
+generic 离线零点轨道在 \(u\)-平面中变成：
+
+$$
+\boxed{
+u,\quad
+u^{-1},\quad
+\overline u,\quad
+\overline u^{-1}.
+}
+$$
+
+若：
+
+$$
+u=e^{\eta+i\theta},
+$$
+
+四点就是：
+
+$$
+e^{\eta+i\theta},
+\quad
+e^{-\eta-i\theta},
+\quad
+e^{\eta-i\theta},
+\quad
+e^{-\eta+i\theta}.
+$$
+
+当：
+
+$$
+\eta=0,
+$$
+
+倒数与共轭融合：
+
+$$
+u^{-1}=\overline u,
+$$
+
+四点降为二点。
+
+因此 RH 的 Cayley 语言是：
+
+$$
+\boxed{
+\text{reciprocal quartet collapses to a unitary conjugate pair}.
+}
+$$
+
+---
+
+# 第九十三部　每个零点轨道都有一个 \(SL_2\) 动力学块
+
+## 281. 递推矩阵
+
+定义：
+
+$$
+\boxed{
+M(q)
+=
+\begin{pmatrix}
+2-\frac1q&-1\\
+1&0
+\end{pmatrix}.
+}
+$$
+
+其行列式为：
+
+$$
+\det M(q)=1,
+$$
+
+特征多项式为：
+
+$$
+\lambda^2-
+\left(2-\frac1q\right)\lambda
++1.
+$$
+
+所以本征值正是：
+
+$$
+\boxed{
+u,\quad u^{-1}.
+}
+$$
+
+也就是说：
+
+> \(q=s(1-s)\) 是外部 Casimir；
+> \(M(q)\) 是恢复内部 reciprocal pages 的最小二维动力学。
+
+---
+
+## 282. 实 \(q\) 的四种动力学相
+
+令：
+
+$$
+t(q)=2-\frac1q.
+$$
+
+则：
+
+### \(q>\frac14\)
+
+$$
+-2<t(q)<2.
+$$
+
+两个本征值位于单位圆上，是椭圆相。
+
+### \(q=\frac14\)
+
+$$
+t=-2.
+$$
+
+两个本征值在 \(-1\) 合并，是抛物相。
+
+### \(0<q<\frac14\)
+
+$$
+t<-2.
+$$
+
+两个本征值为负实 reciprocal pair，是反向双曲相。
+
+### \(q<0\)
+
+$$
+t>2.
+$$
+
+两个本征值为正实 reciprocal pair，是正向双曲相。
+
+若 \(q\notin\mathbb R\)，则一般形成 complex loxodromic reciprocal pair。
+
+所以：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{全部零点轨道块 }M(q_\rho)
+\text{ 均处于实椭圆相}.
+}
+$$
+
+---
+
+# 第九十四部　偶完成与奇破缺成为一个不变度量
+
+## 283. Cayley 不变度量
+
+对实 \(x\) 定义：
+
+$$
+q=\frac1{4x},
+$$
+
+并写：
+
+$$
+M_x
+=
+\begin{pmatrix}
+2-4x&-1\\
+1&0
+\end{pmatrix}.
+$$
+
+定义对称矩阵：
+
+$$
+\boxed{
+G_x
+=
+\begin{pmatrix}
+1&2x-1\\
+2x-1&1
+\end{pmatrix}.
+}
+$$
+
+直接计算得到：
+
+$$
+\boxed{
+M_x^T G_x M_x
+=
+G_x.
+}
+$$
+
+所以 \(M_x\) 始终保存这个双线性形式。
+
+---
+
+## 284. 奇偶基中的精确对角化
+
+取：
+
+$$
+e_+
+=
+\frac1{\sqrt2}
+\begin{pmatrix}
+1\\1
+\end{pmatrix},
+\qquad
+e_-
+=
+\frac1{\sqrt2}
+\begin{pmatrix}
+1\\-1
+\end{pmatrix}.
+$$
+
+则：
+
+$$
+G_xe_+=2x\,e_+,
+$$
+
+$$
+G_xe_-=2(1-x)e_-.
+$$
+
+因此：
+
+$$
+\boxed{
+G_x
+\sim
+\begin{pmatrix}
+2x&0\\
+0&2(1-x)
+\end{pmatrix}_{(+,-)}.
+}
+$$
+
+这里：
+
+$$
+\boxed{
+2x=\text{even completion weight},
+}
+$$
+
+$$
+\boxed{
+2(1-x)=\text{odd recompletion weight}.
+}
+$$
+
+所以：
+
+$$
+G_x\succeq0
+\iff
+0\le x\le1.
+$$
+
+更严格地：
+
+$$
+G_x\succ0
+\iff
+0<x<1.
+$$
+
+这给出一个精确的“偶完成、奇破缺”谱判据：
+
+* \(x<0\)：even channel 已经为负；
+* \(0<x<1\)：两通道均正；
+* \(x>1\)：odd channel 为负；
+* \(x\notin\mathbb R\)：不存在这一实 Hermitian 完成。
+
+于是：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{每个经典零点轨道的 }G_{x_\rho}
+\text{ 都是正定的}.
+}
+$$
+
+从零点定义这些块仍属于等价重述；真正的证明必须从素数侧构造其全局正度量。
+
+---
+
+## 285. 为什么完整对称不够
+
+任意：
+
+$$
+M\in SL_2(\mathbb R)
+$$
+
+都保存标准辛形式：
+
+$$
+\Omega
+=
+\begin{pmatrix}
+0&1\\
+-1&0
+\end{pmatrix}.
+$$
+
+这只保证本征值成 reciprocal pair：
+
+$$
+u,\quad u^{-1}.
+$$
+
+它不保证：
+
+$$
+|u|=1.
+$$
+
+若还存在正定矩阵 \(G>0\)，使：
+
+$$
+M^TGM=G,
+$$
+
+那么对本征向量 \(Mv=uv\)：
+
+$$
+\langle v,v\rangle_G
+=
+\langle Mv,Mv\rangle_G
+=
+|u|^2
+\langle v,v\rangle_G.
+$$
+
+因 \(G>0\)，可得：
+
+$$
+|u|=1.
+$$
+
+因此：
+
+$$
+\boxed{
+\text{symplectic symmetry}
+\Longrightarrow
+\text{reciprocal pairing},
+}
+$$
+
+而：
+
+$$
+\boxed{
+\text{positive invariant metric}
+\Longrightarrow
+\text{unit-circle localization}.
+}
+$$
+
+这彻底解决了此前的逻辑困惑：
+
+> 完整对称完全允许离线零点；
+> 真正禁止离线零点的不是对称，而是与对称兼容的正性。
+
+这正是 Weil 正性路线应承担的角色。
+
+---
+
+# 第九十五部　最新黄金结构零在奇偶度量中的位置
+
+## 286. 第一个结构零
+
+仓库已经证明第三阶 golden germ 在：
+
+$$
+z_2=\frac1{2\varphi^2}
+$$
+
+具有一个真正的简单结构零，而不是 totalized reciprocal 的假零。
+
+对此点：
+
+$$
+q_2
+=
+z_2(1-z_2)
+=
+\frac1{4\varphi}.
+$$
+
+因此：
+
+$$
+\boxed{
+x_2
+=
+\frac1{4q_2}
+=
+\varphi.
+}
+$$
+
+Cayley 坐标为：
+
+$$
+u_2
+=
+1-\frac1{z_2}
+=
+1-2\varphi^2
+=
+-\varphi^3.
+$$
+
+其 reciprocal partner 为：
+
+$$
+-\varphi^{-3}.
+$$
+
+所以第一个结构零不是 unitary mode，而是精确的黄金双曲模：
+
+$$
+\boxed{
+u_2\in
+\{-\varphi^3,-\varphi^{-3}\}.
+}
+$$
+
+---
+
+## 287. 它为什么立即破坏 Hausdorff 正性
+
+因为：
+
+$$
+x_2=\varphi>1,
+$$
+
+奇通道度量为：
+
+$$
+2(1-\varphi)
+=
+-\frac2\varphi<0.
+$$
+
+同时，单原子矩序列：
+
+$$
+a_n=x_2^n
+$$
+
+满足：
+
+$$
+a_n-a_{n+1}
+=
+x_2^n(1-x_2)<0.
+$$
+
+所以它在第一阶有限差分就违反 \([0,1]\)-Hausdorff 正性。
+
+这意味着：
+
+$$
+\boxed{
+\text{完整 golden-germ divisor 不可能直接满足经典 RH Casimir 正性}.
+}
+$$
+
+结构 divisor 必须先被显式扣除。
+
+---
+
+## 288. 第二个结构零
+
+仓库同样证明：
+
+$$
+z_3=\frac1{2\varphi^3}
+$$
+
+也是简单结构零。
+
+其 Cayley 紧化坐标为：
+
+$$
+\boxed{
+x_3
+=
+\frac1{4z_3(1-z_3)}
+=
+\frac{7+12\varphi}{11}
+>1.
+}
+$$
+
+因此它也位于 odd-negative 双曲 sector。
+
+这进一步证明：
+
+$$
+\boxed{
+D_{\mathrm{golden}}
+=
+D_{\mathrm{coherent}}
++
+D_{\mathrm{structural}}
++
+D_{\mathrm{local}}
+}
+$$
+
+不是解释性修辞，而是解析上必须进行的 divisor 分层。
+
+---
+
+# 第九十六部　Weil 离线轨道本身是一个 Krein 平面
+
+## 289. 单轨道二通道
+
+对一个非实离线零点轨道，令：
+
+$$
+a=\widehat g(z_\rho),
+\qquad
+b=\widehat g(\overline{z_\rho}).
+$$
+
+仓库的离线轨道分解与 convolution-square 因子分解，把该轨道贡献归约为：
+
+$$
+4m_\rho\Re(a\overline b).
+$$
+
+利用：
+
+$$
+|a+b|^2-|a-b|^2
+=
+4\Re(a\overline b),
+$$
+
+得到：
+
+$$
+\boxed{
+Q_\rho(a,b)
+=
+m_\rho
+\left(
+|a+b|^2-|a-b|^2
+\right).
+}
+$$
+
+定义：
+
+$$
+a_+=a+b,
+\qquad
+a_-=a-b.
+$$
+
+则：
+
+$$
+\boxed{
+Q_\rho
+=
+m_\rho
+\left(
+|a_+|^2-|a_-|^2
+\right).
+}
+$$
+
+这正是一个 signature \((+,-)\) 的 Krein 平面：
+
+* even channel \(a_+\) 为正；
+* odd channel \(a_-\) 为负。
+
+---
+
+## 290. 在线时 odd channel 自动消失
+
+若零点位于临界线，对应两个谱节点融合为同一个实节点。
+
+于是：
+
+$$
+a=b,
+$$
+
+从而：
+
+$$
+a_-=0.
+$$
+
+此时：
+
+$$
+Q_\rho=4m_\rho|a|^2\ge0.
+$$
+
+所以 RH 不是把负号从公式中删除，而是让负的 odd fiber 变得不可达：
+
+$$
+\boxed{
+\text{critical-line collapse}
+\Longrightarrow
+\text{odd orbit coordinate vanishes}.
+}
+$$
+
+---
+
+## 291. 离线时负通道被释放
+
+仓库最新已经机器证明：若规定
+
+$$
+a=1,
+\qquad
+b=-1,
+$$
+
+则非实离线四点轨道贡献恰为：
+
+$$
+\boxed{
+-4m_\rho.
+}
+$$
+
+而实轴离线轨道只能给出非负 norm-square，并且无法实现同一组 \(1,-1\) 数据。
+
+在奇偶基中：
+
+$$
+a_+=0,
+\qquad
+a_-=2,
+$$
+
+因此：
+
+$$
+Q_\rho=-4m_\rho.
+$$
+
+这说明仓库刚闭合的 theorem 本质上就是：
+
+$$
+\boxed{
+\text{一个测试函数成功激活了纯 odd Krein channel}.
+}
+$$
+
+---
+
+# 第九十七部　“所有零点纠缠”来自同一个评价映射
+
+## 292. 局部 Krein 平面并不自动全局可控
+
+对有限零点窗 \(\mathscr O_T\)，定义：
+
+$$
+\mathscr K_T
+=
+\bigoplus_{\rho\in\mathscr O_T}
+\left(
+\mathbb C e_\rho^+
+\oplus
+\mathbb C e_\rho^-
+\right).
+$$
+
+赋予不定型：
+
+$$
+[v,v]_{\mathscr K_T}
+=
+\sum_{\rho}
+m_\rho
+\left(
+|v_\rho^+|^2-|v_\rho^-|^2
+\right).
+$$
+
+测试函数不是独立选择每个 \(v_\rho^\pm\)，而是通过一个共同的 entire Fourier–Laplace transform 产生：
+
+$$
+E_R:
+PW_R
+\longrightarrow
+\mathscr K_T.
+$$
+
+所以真正的 Weil 形式是一个 pullback：
+
+$$
+\boxed{
+Q_R(g)
+=
+[E_Rg,E_Rg]_{\mathscr K_T}.
+}
+$$
+
+---
+
+## 293. Transform entanglement
+
+若：
+
+$$
+E_R(PW_R)
+=
+\prod_\rho
+E_{\rho,R}(PW_R),
+$$
+
+每个轨道可以独立赋值。
+
+但 entire 函数的取值一般不能在无限离散集上无条件独立指定。
+
+因此自然定义：
+
+$$
+\boxed{
+\text{transform entanglement}
+=
+E_R(PW_R)
+\text{ 不能分解为各轨道评价空间的笛卡尔积}.
+}
+$$
+
+这是一种严格的全局相关：
+
+* 每个轨道拥有自己的负方向；
+* 但能否激活该负方向，受全部其他轨道共同约束；
+* 一个全局测试函数必须同时结算所有节点。
+
+所以“所有离线零点纠缠”的最可信数学含义不是：
+
+$$
+\text{每一对零点直接相互作用},
+$$
+
+而是：
+
+$$
+\boxed{
+\text{全部零点共享一个不可逐坐标分解的 entire-evaluation range}.
+}
+$$
+
+---
+
+## 294. Odd residual tower
+
+令：
+
+$$
+V_R
+=
+\overline{E_R(PW_R)}
+\subseteq
+\mathscr K_T,
+$$
+
+并令纯 odd 子空间为：
+
+$$
+\mathscr K_T^-.
+$$
+
+定义在支撑预算 \(R\) 下无法触及的 odd residual：
+
+$$
+\boxed{
+\mathcal R_R^-
+=
+\mathscr K_T^-
+\cap
+V_R^\perp.
+}
+$$
+
+当 \(R\) 增大时，\(V_R\) 增大，所以：
+
+$$
+\mathcal R_{R_2}^-
+\subseteq
+\mathcal R_{R_1}^-
+\qquad
+(R_1<R_2).
+$$
+
+仓库已经证明，一般闭子空间完成塔在极限阶段的残余等于全部前驱残余之交。
+
+因此：
+
+$$
+\boxed{
+\mathcal R_\infty^-
+=
+\bigcap_R\mathcal R_R^-.
+}
+$$
+
+---
+
+## 295. 三种全局状态
+
+### 永久盲性
+
+$$
+\mathcal R_\infty^-\neq0.
+$$
+
+存在一个固定 odd 方向，任何支撑尺度都无法触及。
+
+### 有限盲性、极限完成
+
+$$
+\mathcal R_R^-\neq0
+\quad\forall R<\infty,
+$$
+
+但：
+
+$$
+\mathcal R_\infty^-=0.
+$$
+
+每个有限观察者都有盲区，但没有一个固定方向能逃过全部观察层。
+
+### 不稳定完成
+
+$$
+\mathcal R_\infty^-=0,
+$$
+
+但评价算子的最小奇异值趋于零，导致 separator 范数无界。
+
+第三种最接近当前 RH hard core：
+
+$$
+\boxed{
+\text{方向原则上可达，}
+\qquad
+\text{但达到它的观察成本可能发散}.
+}
+$$
+
+---
+
+# 第九十八部　Reflection-Casimir 矩序列
+
+## 296. 反射商整函数
+
+令：
+
+$$
+\Xi(z)
+=
+\xi\left(\frac12+z\right).
+$$
+
+因为：
+
+$$
+\Xi(-z)=\Xi(z),
+$$
+
+存在唯一整函数 \(\mathcal X\)，使：
+
+$$
+\boxed{
+\xi(s)
+=
+\mathcal X\bigl(s(1-s)\bigr).
+}
+$$
+
+记 \(\mathcal X\) 的零点为：
+
+$$
+q_j,
+$$
+
+每个 \(q_j\) 对应一个函数方程反射轨道：
+
+$$
+\{\rho,1-\rho\}.
+$$
+
+利用经典零点计数，\(q_j\) 的指数收敛足以给出 genus-zero 乘积：
+
+$$
+\boxed{
+\frac{\mathcal X(q)}{\mathcal X(0)}
+=
+\prod_j
+\left(
+1-\frac q{q_j}
+\right)^{m_j}.
+}
+$$
+
+仓库尚未闭合这条完整 q-plane canonical-product owner；以下结论应把它作为明确前件，而不是新公理。
+
+---
+
+## 297. Casimir power traces
+
+定义：
+
+$$
+x_j=\frac1{4q_j}.
+$$
+
+对 \(n\ge1\)，定义：
+
+$$
+\boxed{
+p_n
+=
+\sum_jm_jx_j^n.
+}
+$$
+
+由 canonical product：
+
+$$
+\log\frac{\mathcal X(q)}{\mathcal X(0)}
+=
+-\sum_{n\ge1}
+\frac{(4q)^n}{n}p_n.
+$$
+
+因此：
+
+$$
+\boxed{
+p_n
+=
+-\frac1{4^n(n-1)!}
+\left.
+\frac{d^n}{dq^n}
+\log\mathcal X(q)
+\right|_{q=0}.
+}
+$$
+
+这是重要的一步：
+
+> \(p_n\) 可以从 \(\xi\) 在固定点附近的 Taylor 数据直接定义，
+> 不需要先枚举零点。
+
+---
+
+## 298. 完全单调性
+
+若 RH 成立：
+
+$$
+x_j\in(0,1).
+$$
+
+令前向差分为：
+
+$$
+\Delta p_n=p_{n+1}-p_n.
+$$
+
+则：
+
+$$
+\boxed{
+(-1)^k\Delta^kp_n
+=
+\sum_j
+m_jx_j^n(1-x_j)^k
+\ge0.
+}
+$$
+
+所以 RH 推出：
+
+$$
+\boxed{
+(p_n)_{n\ge1}
+\text{ 是移位 Hausdorff 完全单调序列}.
+}
+$$
+
+---
+
+## 299. 反向也成立
+
+定义：
+
+$$
+a_n=p_{n+1},
+\qquad
+n\ge0.
+$$
+
+若：
+
+$$
+(-1)^k\Delta^ka_n\ge0
+\quad
+\forall n,k,
+$$
+
+Hausdorff 矩定理给出一个正测度 \(\nu\) 支撑于 \([0,1]\)，使：
+
+$$
+a_n
+=
+\int_0^1x^n\,d\nu(x).
+$$
+
+定义生成函数：
+
+$$
+B(t)
+=
+\sum_{n\ge0}a_nt^n.
+$$
+
+一方面：
+
+$$
+B(t)
+=
+\int_0^1
+\frac{d\nu(x)}{1-tx},
+$$
+
+所以它在：
+
+$$
+\mathbb C\setminus[1,\infty)
+$$
+
+解析。
+
+另一方面，由 \(\mathcal X\)：
+
+$$
+\boxed{
+B(t)
+=
+-\frac14
+\frac{
+\mathcal X'(t/4)
+}{
+\mathcal X(t/4)
+}.
+}
+$$
+
+右侧的极点恰位于：
+
+$$
+t=4q_j.
+$$
+
+若存在：
+
+* 非实 \(q_j\)；
+* 负实 \(q_j\)；
+* 或 \(0<q_j<1/4\)；
+
+就会在 \(\mathbb C\setminus[1,\infty)\) 产生极点，与 Hausdorff 表示矛盾。
+
+因此：
+
+$$
+q_j\in[1/4,\infty).
+$$
+
+所以在 canonical-product 前件下：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+(-1)^k\Delta^kp_n\ge0
+\quad
+\forall n\ge1,\ k\ge0.
+}
+$$
+
+这比前面作为“候选”给出的版本更强：解析证明链已经完整，真正剩余的是把所需 classical entire-function 与 moment-theorem 接口形式化进仓库。
+
+---
+
+# 第九十九部　由 \(\xi\) 系数构造正收缩算子
+
+## 300. GNS 构造
+
+由：
+
+$$
+a_n=p_{n+1}
+$$
+
+定义多项式线性泛函：
+
+$$
+L(X^n)=a_n.
+$$
+
+Hausdorff 正性保证：
+
+$$
+L(|P|^2)\ge0,
+$$
+
+以及支撑局部化条件：
+
+$$
+L(X|P|^2)\ge0,
+$$
+
+$$
+L((1-X)|P|^2)\ge0.
+$$
+
+对多项式空间作 GNS 完成，得到 Hilbert 空间：
+
+$$
+\mathcal H_\xi,
+$$
+
+循环向量：
+
+$$
+\Omega=[1],
+$$
+
+以及乘法算子：
+
+$$
+J_\xi[P]=[XP].
+$$
+
+于是：
+
+$$
+\boxed{
+0\le J_\xi\le I.
+}
+$$
+
+并且：
+
+$$
+\boxed{
+a_n
+=
+\langle
+\Omega,
+J_\xi^n\Omega
+\rangle.
+}
+$$
+
+---
+
+## 301. 解析 resolvent
+
+有：
+
+$$
+\boxed{
+B(t)
+=
+\left\langle
+\Omega,
+(I-tJ_\xi)^{-1}\Omega
+\right\rangle.
+}
+$$
+
+结合：
+
+$$
+B(t)
+=
+-\frac14
+\frac{
+\mathcal X'(t/4)
+}{
+\mathcal X(t/4)
+},
+$$
+
+得到：
+
+$$
+\boxed{
+-\frac14
+\frac{
+\mathcal X'(t/4)
+}{
+\mathcal X(t/4)
+}
+=
+\left\langle
+\Omega,
+(I-tJ_\xi)^{-1}\Omega
+\right\rangle.
+}
+$$
+
+再积分：
+
+$$
+\boxed{
+\frac{
+\mathcal X(t/4)
+}{
+\mathcal X(0)
+}
+=
+\exp
+\left(
+-\int_0^t
+\left\langle
+\Omega,
+(I-uJ_\xi)^{-1}\Omega
+\right\rangle
+du
+\right).
+}
+$$
+
+因此，\(J_\xi\) 的一个标量 resolvent matrix element 已经完整决定 \(\mathcal X\)。
+
+---
+
+## 302. 非同义反复的算子判据
+
+这与“从零点定义一个对角算子”不同。
+
+这里顺序是：
+
+$$
+\boxed{
+\xi\text{ 的局部 Taylor 系数}
+\longrightarrow
+(p_n)
+\longrightarrow
+L
+\longrightarrow
+J_\xi.
+}
+$$
+
+没有先输入零点位置。
+
+所以一个真正可推进的 RH 路线是：
+
+1. 从 \(\xi\) 系数形式化构造 \(p_n\)；
+2. 证明全部 Hausdorff 矩阵正性；
+3. GNS 得到 \(0\le J_\xi\le I\)；
+4. 用 resolvent identity 恢复 \(\mathcal X\)；
+5. 推出全部 \(q\)-零点位于 \([1/4,\infty)\)。
+
+困难被转化成：
+
+$$
+\boxed{
+\text{证明一个由 }\xi\text{ 系数定义的无限矩序列完全单调}.
+}
+$$
+
+---
+
+# 第一百部　Jacobi 链是零点状态的最近邻编码
+
+## 303. 正交多项式
+
+对 Hausdorff 测度 \(\nu\) 作 Gram–Schmidt，得到正交多项式：
+
+$$
+P_0,P_1,P_2,\ldots.
+$$
+
+乘法算子 \(J_\xi\) 在这组基中成为 Jacobi 矩阵：
+
+$$
+\boxed{
+xP_n(x)
+=
+a_{n+1}P_{n+1}(x)
++
+b_nP_n(x)
++
+a_nP_{n-1}(x).
+}
+$$
+
+其中：
+
+$$
+a_n\ge0,
+\qquad
+0\le J_\xi\le I.
+$$
+
+这意味着所有零点轨道的全局分布，可以压缩成一条最近邻链：
+
+$$
+\boxed{
+(a_1,b_0,a_2,b_1,\ldots).
+}
+$$
+
+---
+
+## 304. 为什么这是一种全局“纠缠”
+
+在原子谱基中，每个 \(x_j\) 看起来彼此独立，\(J_\xi\) 是对角的。
+
+但在由 \(\xi\) 系数自然产生的 polynomial basis 中，所有原子共同决定每一个 Jacobi 系数。
+
+任何一个零点轨道的修改，通常会改变无限多个：
+
+$$
+a_n,\quad b_n.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{零点原子基中的独立性}
+}
+$$
+
+和：
+
+$$
+\boxed{
+\text{观察者／矩基中的全局耦合}
+}
+$$
+
+可以同时成立。
+
+这与 ζ 的 Euler 乘积完全类似：
+
+* 素数估值基中独立；
+* 加法平移基中高度非局部。
+
+---
+
+## 305. 有限截断
+
+取前 \(N\) 个正交多项式，得到有限 Jacobi 矩阵：
+
+$$
+J_{\xi,N}.
+$$
+
+RH 推出：
+
+$$
+\operatorname{Spec}(J_{\xi,N})
+\subseteq[0,1].
+$$
+
+相邻截断的特征值交错。
+
+有限矩阵的谱给出 Gaussian quadrature 节点，并精确匹配有限个矩。
+
+因此：
+
+$$
+\boxed{
+\text{有限 RH 证书}
+=
+\text{有限 Jacobi 截断的正收缩性}.
+}
+$$
+
+但所有有限截断良好，不自动给出无限算子的统一边界，仍需：
+
+* 一致有界；
+* 矩问题确定性；
+* resolvent 收敛；
+* determinant／零点运输。
+
+---
+
+# 第一百零一部　有限矩阵正性层级
+
+## 306. 三组 localizing matrices
+
+定义：
+
+$$
+H_N^{(0)}
+=
+\bigl(
+p_{i+j+1}
+\bigr)_{0\le i,j\le N},
+$$
+
+$$
+H_N^{(x)}
+=
+\bigl(
+p_{i+j+2}
+\bigr)_{0\le i,j\le N},
+$$
+
+$$
+H_N^{(1-x)}
+=
+\bigl(
+p_{i+j+1}-p_{i+j+2}
+\bigr)_{0\le i,j\le N}.
+$$
+
+RH 推出：
+
+$$
+\boxed{
+H_N^{(0)}\succeq0,
+\qquad
+H_N^{(x)}\succeq0,
+\qquad
+H_N^{(1-x)}\succeq0
+}
+$$
+
+对所有 \(N\) 成立。
+
+它们分别表达：
+
+* 测度正性；
+* \(x\ge0\)；
+* \(1-x\ge0\)。
+
+---
+
+## 307. 最低阶约束
+
+立刻得到：
+
+$$
+p_n\ge0,
+$$
+
+$$
+p_n\ge p_{n+1},
+$$
+
+$$
+p_n-2p_{n+1}+p_{n+2}\ge0,
+$$
+
+以及 Hankel 对数凸性：
+
+$$
+\boxed{
+p_{n+1}^2
+\le
+p_np_{n+2}.
+}
+$$
+
+若 RH 为假，则在 canonical-product 前件下，必有某个有限 \(N\) 的某个 principal minor 或 localizing matrix 失败。
+
+因此：
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\Longrightarrow
+\text{存在有限阶 Casimir 矩阵负证书}.
+}
+$$
+
+不存在的只是其深度的先验上界。
+
+---
+
+# 第一百零二部　Casimir 矩与 Li 系数是三角可逆变换
+
+## 308. 每个反射轨道的 Li 贡献
+
+Li 系数写为：
+
+$$
+\lambda_n
+=
+\sum_\rho
+\left[
+1-
+\left(
+1-\frac1\rho
+\right)^n
+\right].
+$$
+
+将零点按反射对：
+
+$$
+\{\rho,1-\rho\}
+$$
+
+分组。
+
+令：
+
+$$
+u=1-\frac1\rho.
+$$
+
+则 partner 对应：
+
+$$
+u^{-1}.
+$$
+
+单个反射轨道贡献：
+
+$$
+\ell_n
+=
+2-u^n-u^{-n}.
+$$
+
+而：
+
+$$
+\frac{u+u^{-1}}2
+=
+1-2x.
+$$
+
+所以：
+
+$$
+\boxed{
+\ell_n(x)
+=
+2-2T_n(1-2x),
+}
+$$
+
+其中 \(T_n\) 是第一类 Chebyshev 多项式。
+
+因此：
+
+$$
+\boxed{
+\lambda_n
+=
+\sum_jm_j
+\left[
+2-2T_n(1-2x_j)
+\right].
+}
+$$
+
+---
+
+## 309. 显式 power-trace 变换
+
+有：
+
+$$
+T_n(1-2x)
+=
+\sum_{k=0}^{n}
+(-1)^k
+4^k n
+\frac{(n+k-1)!}
+{(n-k)!(2k)!}
+x^k.
+$$
+
+所以：
+
+$$
+\boxed{
+\lambda_n
+=
+\sum_{k=1}^{n}
+2(-1)^{k+1}
+4^k n
+\frac{(n+k-1)!}
+{(n-k)!(2k)!}
+p_k.
+}
+$$
+
+前四项为：
+
+$$
+\lambda_1=4p_1,
+$$
+
+$$
+\lambda_2=16p_1-16p_2,
+$$
+
+$$
+\lambda_3=36p_1-96p_2+64p_3,
+$$
+
+$$
+\lambda_4
+=
+64p_1-320p_2+512p_3-256p_4.
+$$
+
+该变换为三角形，且对角系数非零，所以可逆。
+
+反向：
+
+$$
+\boxed{
+p_1=\frac{\lambda_1}{4},
+}
+$$
+
+$$
+\boxed{
+p_2
+=
+\frac{4\lambda_1-\lambda_2}{16},
+}
+$$
+
+$$
+\boxed{
+p_3
+=
+\frac{
+15\lambda_1-6\lambda_2+\lambda_3
+}{64},
+}
+$$
+
+$$
+\boxed{
+p_4
+=
+\frac{
+56\lambda_1-28\lambda_2+8\lambda_3-\lambda_4
+}{256}.
+}
+$$
+
+这正是仓库规划中的 `LiPowerTraceTransform` 与 `InverseLiPowerTrace` 应闭合的精确内容，而不是另建重复接口。
+
+---
+
+## 310. 比 Li 单项正性更细的有限约束
+
+由：
+
+$$
+p_1\ge p_2\ge0
+$$
+
+得到：
+
+$$
+\boxed{
+0\le\lambda_2\le4\lambda_1.
+}
+$$
+
+由：
+
+$$
+p_2-p_3\ge0
+$$
+
+得到：
+
+$$
+\boxed{
+\lambda_3
+\le
+\lambda_1+2\lambda_2.
+}
+$$
+
+由：
+
+$$
+p_1-2p_2+p_3\ge0
+$$
+
+得到：
+
+$$
+\boxed{
+-\lambda_1+2\lambda_2+\lambda_3\ge0.
+}
+$$
+
+由：
+
+$$
+p_3\ge0
+$$
+
+得到：
+
+$$
+\boxed{
+15\lambda_1-6\lambda_2+\lambda_3\ge0.
+}
+$$
+
+全部 Li 系数非负与 RH 等价；全部 Casimir–Hausdorff 约束也与 RH 等价。但在有限截断中，两组不等式提供的是不同形状的证书。
+
+---
+
+# 第一百零三部　Li 系数成为正算子范数
+
+## 311. Chebyshev 平方恒等式
+
+若：
+
+$$
+x=\sin^2\frac\theta2,
+$$
+
+则：
+
+$$
+2-2T_n(1-2x)
+=
+4\sin^2\frac{n\theta}{2}.
+$$
+
+又因为：
+
+$$
+\frac{
+\sin(n\theta/2)
+}{
+\sin(\theta/2)
+}
+=
+U_{n-1}\left(
+\cos\frac\theta2
+\right),
+$$
+
+得到：
+
+$$
+\boxed{
+2-2T_n(1-2x)
+=
+4x
+U_{n-1}(\sqrt{1-x})^2.
+}
+$$
+
+---
+
+## 312. GNS 范数公式
+
+Hausdorff 测度满足：
+
+$$
+d\nu(x)
+=
+\sum_jm_jx_j\,\delta_{x_j}.
+$$
+
+所以：
+
+$$
+\begin{aligned}
+\lambda_n
+&=
+\sum_j
+m_j
+\left[
+2-2T_n(1-2x_j)
+\right]\\
+&=
+4\int_0^1
+U_{n-1}(\sqrt{1-x})^2
+\,d\nu(x).
+\end{aligned}
+$$
+
+于是：
+
+$$
+\boxed{
+\lambda_n
+=
+4
+\left\|
+U_{n-1}
+\left(
+\sqrt{I-J_\xi}
+\right)
+\Omega
+\right\|^2.
+}
+$$
+
+这给出一个非常清楚的层级：
+
+$$
+\boxed{
+\text{Hausdorff 正性}
+\Longrightarrow
+\text{正收缩算子}
+\Longrightarrow
+\text{Li 系数是范数平方}.
+}
+$$
+
+仓库理论层已经预留了 `LiHilbertSchmidtDisplacement`、`LiChebyshevTrace` 和相应 Hausdorff 模块，但目前仍处于规划层。
+
+---
+
+# 第一百零四部　离线零点的 Li 放大机制
+
+## 313. 单个离线四元组
+
+令：
+
+$$
+u=e^{\eta+i\theta},
+\qquad
+\eta\neq0.
+$$
+
+完整四元轨道在 Li 系数中的实贡献为：
+
+$$
+\boxed{
+L_n^{\mathrm{off}}
+=
+4-
+4\cosh(n\eta)\cos(n\theta).
+}
+$$
+
+若：
+
+$$
+\eta=0,
+$$
+
+则：
+
+$$
+L_n^{\mathrm{crit}}
+=
+4-
+4\cos(n\theta)
+\ge0.
+$$
+
+若：
+
+$$
+\eta\neq0,
+$$
+
+\(\cosh(n\eta)\) 指数增长。
+
+对任意 \(\theta\)，存在无穷多个 \(n\) 使：
+
+$$
+\cos(n\theta)>\frac12.
+$$
+
+* 若 \(\theta/2\pi\) 有理，取周期倍数；
+* 若无理，圆周旋转稠密。
+
+因此沿某个子序列：
+
+$$
+L_n^{\mathrm{off}}
+\longrightarrow
+-\infty.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{每一个离线四元轨道单独都携带可被高阶 Li 观察放大的负信号}.
+}
+$$
+
+---
+
+## 314. 为什么有限深度仍可能看不到
+
+对临界线零点：
+
+$$
+u=e^{i\theta},
+$$
+
+有：
+
+$$
+\boxed{
+\theta
+=
+2\arctan\frac1{2\gamma}.
+}
+$$
+
+高零点处：
+
+$$
+\theta\sim\frac1\gamma.
+$$
+
+因此相位分辨需要：
+
+$$
+n_{\mathrm{phase}}
+\asymp\gamma.
+$$
+
+而对近线离线零点：
+
+$$
+|\eta|
+\sim
+\frac{|\delta|}{\gamma^2+\frac14}.
+$$
+
+径向放大需要：
+
+$$
+n|\eta|\gtrsim1,
+$$
+
+即：
+
+$$
+\boxed{
+n_{\mathrm{radial}}
+\asymp
+\frac{\gamma^2+\frac14}{|\delta|}.
+}
+$$
+
+高而极近线的离线零点需要极大的观察阶数。
+
+这正是对角逃逸的定量版本：
+
+$$
+\boxed{
+\text{固定有限 }n
+\text{ 无法排除高度和横向精度同步增长的反例}.
+}
+$$
+
+---
+
+## 315. 为什么“所有零点纠缠”仍然重要
+
+虽然单个离线轨道最终有巨大负信号，但实际：
+
+$$
+\lambda_n
+$$
+
+是全部零点轨道贡献的总和。
+
+要推出某个具体 \(n\) 下：
+
+$$
+\lambda_n<0,
+$$
+
+仍需控制：
+
+* 所有在线零点的正贡献；
+* 其他离线轨道的相位；
+* 零点密度；
+* 截断与正则化。
+
+所以全局难点不是单个轨道有没有负方向，而是：
+
+$$
+\boxed{
+\text{所有轨道在同一观察阶数 }n
+\text{ 上如何共同结算}.
+}
+$$
+
+这就是一种严格的 global spectral entanglement。
+
+---
+
+# 第一百零五部　极限残余定理在 Casimir–Jacobi 链中的实现
+
+## 316. 多项式观察塔
+
+在：
+
+$$
+\mathcal H_\xi=L^2(\nu)
+$$
+
+中定义：
+
+$$
+V_N
+=
+\overline{
+\operatorname{span}
+\{
+1,x,\ldots,x^N
+\}
+}.
+$$
+
+残余为：
+
+$$
+R_N=V_N^\perp.
+$$
+
+因为：
+
+$$
+V_N\subseteq V_{N+1},
+$$
+
+残余递减。
+
+仓库已经证明一般极限残余等于全部前驱残余交。
+
+所以：
+
+$$
+\boxed{
+R_\infty
+=
+\bigcap_NR_N.
+}
+$$
+
+---
+
+## 317. RH-compatible 测度下没有永久残余
+
+由于 \(\nu\) 支撑于紧区间 \([0,1]\)，多项式在连续函数中稠密，而连续函数在 \(L^2(\nu)\) 中稠密。
+
+因此：
+
+$$
+\overline{
+\bigcup_NV_N
+}
+=
+L^2(\nu).
+$$
+
+所以：
+
+$$
+\boxed{
+R_\infty=0.
+}
+$$
+
+这说明全部 Casimir moments 联合起来原则上足以恢复整个 cyclic spectral state。
+
+---
+
+## 318. 但每个有限阶段仍可完全失明
+
+若 \(\nu\) 具有无限支撑，则每个有限维 \(V_N\) 都是真子空间。
+
+因此：
+
+$$
+R_N\neq0
+\quad
+\forall N.
+$$
+
+而正交投影 \(P_N\) 满足：
+
+$$
+P_Nf\to f
+\quad
+\forall f,
+$$
+
+但：
+
+$$
+\boxed{
+\|I-P_N\|=1
+}
+$$
+
+对每个有限 \(N\) 都成立。
+
+所以：
+
+$$
+\boxed{
+\text{强完成}
+\not\Rightarrow
+\text{算子范数完成}.
+}
+$$
+
+这正好区分：
+
+* 每个固定信息最终被看见；
+* 每个有限阶段仍可重新选择一个完全不可见的信息。
+
+---
+
+# 第一百零六部　素数 Euler 状态本身并不纠缠
+
+## 319. 素数张量积坐标
+
+令：
+
+$$
+\mathcal H_{\mathrm{arith}}
+=
+\ell^2(\mathbb N_{\ge1}).
+$$
+
+唯一分解给出基的识别：
+
+$$
+|n\rangle
+\longleftrightarrow
+\bigotimes_p
+|v_p(n)\rangle_p.
+$$
+
+对 \(\sigma>1\)，定义 ζ Gibbs 向量：
+
+$$
+|\Psi_\sigma\rangle
+=
+\frac1{\sqrt{\zeta(\sigma)}}
+\sum_{n\ge1}
+n^{-\sigma/2}|n\rangle.
+$$
+
+使用 Euler product：
+
+$$
+\boxed{
+|\Psi_\sigma\rangle
+=
+\bigotimes_p
+\left[
+\sqrt{1-p^{-\sigma}}
+\sum_{k\ge0}
+p^{-\sigma k/2}|k\rangle_p
+\right].
+}
+$$
+
+所以在素数估值基中：
+
+$$
+\boxed{
+|\Psi_\sigma\rangle
+\text{ 是严格 product state}.
+}
+$$
+
+因此 prime correlations 不能被简单归因于 ζ Gibbs state 本身已经量子纠缠。
+
+---
+
+# 第一百零七部　加法平移才是非局部算子
+
+## 320. 平移算子
+
+定义：
+
+$$
+S_h|n\rangle=|n+h\rangle.
+$$
+
+令 \(\widehat\Lambda\) 为 von Mangoldt 对角算子：
+
+$$
+\widehat\Lambda|n\rangle
+=
+\Lambda(n)|n\rangle.
+$$
+
+则：
+
+$$
+S_h^\ast
+\widehat\Lambda
+S_h|n\rangle
+=
+\Lambda(n+h)|n\rangle.
+$$
+
+所以对构型：
+
+$$
+H=\{h_1,\ldots,h_k\},
+$$
+
+有：
+
+$$
+\boxed{
+\left\langle
+\Psi_\sigma,
+\prod_{h\in H}
+S_h^\ast\widehat\Lambda S_h
+\Psi_\sigma
+\right\rangle
+=
+\frac1{\zeta(\sigma)}
+\sum_{n\ge1}
+\frac{
+\prod_{h\in H}\Lambda(n+h)
+}{
+n^\sigma
+}.
+}
+$$
+
+这就是前面定义的 prime-constellation Gibbs moment。
+
+---
+
+## 321. \(S_h\) 不具有有限素数支撑
+
+假设 \(S_h\) 只作用于有限素数集合 \(P_0\)。
+
+取一个：
+
+$$
+q\notin P_0,
+\qquad
+q>h
+$$
+
+的素数，并令：
+
+$$
+n=q-h.
+$$
+
+则：
+
+$$
+q\nmid n,
+$$
+
+但：
+
+$$
+n+h=q,
+$$
+
+所以 \(q\)-估值由：
+
+$$
+0
+$$
+
+变为：
+
+$$
+1.
+$$
+
+因此 \(S_h\) 必须改变 \(P_0\) 外的坐标，矛盾。
+
+所以：
+
+$$
+\boxed{
+\text{任何非零加法平移在 prime tensor basis 中都具有无限素数支撑}.
+}
+$$
+
+这精确解释了：
+
+$$
+\boxed{
+\text{Euler product state 可分，}
+\qquad
+\text{additive-shift observables 非局部}.
+}
+$$
+
+素数构型的 connected correlations 来自非局部观察代数，而不是来自乘法基中的 product state。
+
+---
+
+## 322. 真正的纠缠源
+
+因此 prime tuple 问题中的三层必须分开：
+
+$$
+\boxed{
+\begin{aligned}
+\text{state factorization}
+&:
+\text{素数估值独立};\\
+\text{observable nonlocality}
+&:
+n\mapsto n+h\text{ 改变无限素数坐标};\\
+\text{connected cumulant}
+&:
+\log Z_H\text{ 提取不可因子化联合响应}.
+\end{aligned}
+}
+$$
+
+所谓“素数构型纠缠”，最准确的是后两层，而不是第一层。
+
+---
+
+# 第一百零八部　Zeckendorf 是加法非局部性的有限状态坐标
+
+## 323. 两种互补坐标系
+
+在 prime valuation basis 中：
+
+* 乘法局部；
+* 加法高度非局部。
+
+在 Zeckendorf/Fibonacci digit basis 中：
+
+* 加法通过有限 carry rewrite 传播；
+* 模固定整数的 residue 可由有限状态读取；
+* 乘法则不再局部。
+
+因此：
+
+$$
+\boxed{
+\text{prime basis}
+\quad\text{与}\quad
+\text{Zeckendorf basis}
+}
+$$
+
+是一对互补坐标系。
+
+这正类似：
+
+$$
+\text{位置基}
+\quad\leftrightarrow\quad
+\text{频率基}.
+$$
+
+没有一个基能同时让乘法和加法都完全对角。
+
+---
+
+## 324. 最新 β 定理给出了规范的奇偶 carry clock
+
+仓库现已证明：
+
+$$
+\beta(v+1)-\beta(v)
+$$
+
+只取：
+
+$$
+\varphi
+\quad\text{或}\quad
+\varphi^2,
+$$
+
+并由 \(v+1\) 的 Zeckendorf 最小指标奇偶精确决定。
+
+因此可把每一步写成：
+
+$$
+\boxed{
+\Delta\beta_v
+=
+\varphi+\varepsilon_v,
+\qquad
+\varepsilon_v\in\{0,1\}.
+}
+$$
+
+这一位 \(\varepsilon_v\) 不是普通交替 bit，而是由黄金机械词控制的 carry clock。
+
+它可以用于公平调度两个无界观察轴：
+
+* 一个轴增加 source/correlation order；
+* 一个轴增加 zero/Casimir moment depth。
+
+黄金比例的作用不是证明 RH，而是防止任一观察方向长期饥饿。
+
+---
+
+## 325. 有限素数观察是有限自动机
+
+对固定模数 \(m\)，Fibonacci 数列：
+
+$$
+F_k\bmod m
+$$
+
+是周期的。
+
+所以读取：
+
+$$
+n=\sum_k\varepsilon_kF_k
+\pmod m
+$$
+
+只需维护：
+
+* 当前 residue；
+* 当前 index 在 Pisano 周期中的位置；
+* Zeckendorf 邻接合法状态。
+
+因此是有限状态 transducer。
+
+对有限素数集合 \(S\)，把这些自动机取直积，得到有限的 constellation sieve observer。
+
+当 \(S\) 增大到全部素数时，得到 inverse-limit/profinite observer。
+
+这正是：
+
+$$
+\boxed{
+\text{有限观察可计算，}
+\qquad
+\text{无限完成没有统一有限状态数}.
+}
+$$
+
+---
+
+# 第一百零九部　零点的 groupoid 而不是单纯 quotient
+
+## 326. Coarse quotient 会遗忘稳定子
+
+零点上的 Klein 四群由：
+
+$$
+C,\ R,\ J
+$$
+
+生成。
+
+普通 quotient 只记录轨道集合。
+
+但：
+
+* generic 离线零点的轨道大小为 \(4\)；
+* 临界线零点的轨道大小为 \(2\)；
+* 二者拥有不同稳定子。
+
+若只保留粗商中的一个点，这种差异可能被遗忘。
+
+---
+
+## 327. 零点对称 groupoid
+
+定义 groupoid：
+
+* 对象：非平凡零点；
+* 箭头：由 \(C,R,J\) 生成的对称作用。
+
+每个对象 \(\rho\) 的 isotropy group 为：
+
+$$
+\operatorname{Iso}(\rho)
+=
+\{g:g\rho=\rho\}.
+$$
+
+于是：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+J\in\operatorname{Iso}(\rho)
+\quad
+\forall\rho.
+}
+$$
+
+这比 coarse quotient 更完整：
+
+* quotient 记录“哪些点被识别”；
+* groupoid 还记录“为什么被识别”和“稳定子何时增大”。
+
+所以“绝对对象”不应只是：
+
+$$
+q=s(1-s),
+$$
+
+还应包括：
+
+$$
+\boxed{
+\text{orbit}
++
+\text{isotropy}
++
+\text{monodromy}.
+}
+$$
+
+---
+
+# 第一百一十部　Cayley–Casimir 与 Weil 之间缺少的精确桥
+
+## 328. 两个奇偶度量
+
+现在出现了两个不同的 parity form。
+
+### Cayley 局部度量
+
+$$
+G_x
+\sim
+\operatorname{diag}
+\bigl(
+2x,\,
+2(1-x)
+\bigr).
+$$
+
+其正性等价于：
+
+$$
+x\in[0,1].
+$$
+
+### Weil 离线轨道度量
+
+$$
+Q_\rho
+=
+m_\rho
+\left(
+|a_+|^2-|a_-|^2
+\right).
+$$
+
+它在 generic 离线 fiber 中本来就是不定的；RH 通过节点融合使 \(a_-=0\)。
+
+两种机制并不相同：
+
+* Cayley 度量通过系数正性判断谱点位置；
+* Weil 度量通过评价空间是否允许 odd channel 判断离线轨道。
+
+---
+
+## 329. Weil–Casimir congruence conjecture
+
+真正深的桥应是存在某个变换：
+
+$$
+\mathcal U:
+\mathcal H_{\mathrm{Weil}}
+\longrightarrow
+\mathcal H_{\mathrm{Casimir}}
+$$
+
+使：
+
+$$
+\boxed{
+Q_{\mathrm{Weil}}
+=
+\mathcal U^\ast
+Q_{\mathrm{Casimir}}
+\mathcal U.
+}
+$$
+
+有限截断版本应把：
+
+* Paley–Wiener evaluation Gram；
+* Casimir moment Hankel；
+* Jacobi truncation；
+* 零点 orbit Krein blocks；
+
+放入同一个 inertia-preserving congruence diagram。
+
+若闭合，则会得到：
+
+$$
+\boxed{
+\text{Weil separator negative direction}
+\iff
+\text{Casimir Hausdorff matrix negative direction}.
+}
+$$
+
+这可能是比继续孤立发展 Weil 与 Li 两条线更有价值的项目目标。
+
+---
+
+# 第一百一十一部　Source-deformed Casimir–Jacobi operator
+
+## 330. 构型源
+
+设构型：
+
+$$
+H=\{h_1,\ldots,h_k\}.
+$$
+
+目标不是只构造：
+
+$$
+\mathcal X(q),
+$$
+
+而是：
+
+$$
+\boxed{
+\mathcal X_H(q;\mathbf u)
+}
+$$
+
+满足：
+
+$$
+\mathcal X_H(q;0)=\mathcal X(q).
+$$
+
+定义 source-deformed Casimir moments：
+
+$$
+p_n(\mathbf u)
+=
+-\frac1{4^n(n-1)!}
+\partial_q^n
+\log\mathcal X_H(0;\mathbf u).
+$$
+
+要求：
+
+$$
+\left.
+\partial_{u_{h_1}}\cdots
+\partial_{u_{h_k}}
+p_n(\mathbf u)
+\right|_{\mathbf u=0}
+$$
+
+在 prime side 恢复 \(H\) 的 connected cumulant transform。
+
+---
+
+## 331. Jacobi response
+
+若这些 moments 满足正性，可构造：
+
+$$
+J_\xi(\mathbf u).
+$$
+
+则：
+
+$$
+\partial_{u_H}J_\xi(0)
+$$
+
+是构型 \(H\) 对零点 Casimir 谱的 operator response。
+
+所以完整 Trace–Jet Bridge 应升级为：
+
+$$
+\boxed{
+\text{prime-constellation cumulant}
+\longleftrightarrow
+\text{Casimir Jacobi response}
+\longleftrightarrow
+\text{zero-orbit branch jet}.
+}
+$$
+
+---
+
+## 332. 反射角色选择律
+
+在临界线：
+
+$$
+s=\frac12+i\gamma.
+$$
+
+小变动：
+
+$$
+\dot s=\dot\delta+i\dot\gamma
+$$
+
+给出：
+
+$$
+\dot q
+=
+(1-2s)\dot s
+=
+2\gamma\dot\gamma
+-
+2i\gamma\dot\delta.
+$$
+
+所以：
+
+$$
+\boxed{
+\Re\dot q
+=
+2\gamma\dot\gamma,
+}
+$$
+
+$$
+\boxed{
+\Im\dot q
+=
+-2\gamma\dot\delta.
+}
+$$
+
+因此：
+
+* mirror-even source 主要沿 \(q\)-实轴改变高度；
+* mirror-odd source 可以沿 \(q\)-虚方向激活 transverse displacement。
+
+这与此前构型表示类型完全一致：
+
+$$
+\boxed{
+\begin{aligned}
+\text{twin}
+&:\text{二阶 mirror-even};\\
+\text{triplet chirality}
+&:\text{三阶 mirror-odd};\\
+\text{quadruplet}
+&:\text{四阶 mirror-even}.
+\end{aligned}
+}
+$$
+
+所以新的精确预测是：
+
+$$
+\boxed{
+\text{三元组镜像差}
+\text{ 是最低阶可能产生线性 transverse Casimir response 的构型源}.
+}
+$$
+
+它不是说三元组会制造经典离线零点，而是给出 source-deformed family 中的反射选择律。
+
+---
+
+# 第一百一十二部　当前“所有离线零点纠缠”最强的正式版本
+
+现在可以把该命题分成五级。
+
+## 333. Orbit pairing
+
+每个离线零点与：
+
+$$
+1-\overline\rho
+$$
+
+共享相位并具有相反 transverse rapidity。
+
+这是已知对称结构。
+
+## 334. Krein pairing
+
+每个非实离线 orbit 都释放一个 odd negative channel：
+
+$$
+|a_+|^2-|a_-|^2.
+$$
+
+仓库已经闭合其 \(a=1,b=-1\) 的严格负 witness。
+
+## 335. Transform entanglement
+
+全部轨道评价值来自同一个 entire transform，不能被视为任意独立坐标。
+
+## 336. Moment entanglement
+
+全部 \(q_j\) 共同进入：
+
+$$
+p_n
+=
+\sum_jm_jx_j^n
+$$
+
+以及全部：
+
+$$
+(-1)^k\Delta^kp_n.
+$$
+
+任一有限负证书都是全零点系统的共同结算结果。
+
+## 337. Monodromy entanglement
+
+在 source-deformed family 中，多重零点判别式可以交换不同 zero branches。若 monodromy 图连通，所有分支属于同一全局 orbit。
+
+只有再增加自然 Hilbert tensor factorization 和不可分密度算子，才能升级为物理量子纠缠。
+
+---
+
+# 第一百一十三部　新的形式化落点
+
+建议不要新增与既有 Li 规划平行的目录，而是合并为下面的主链：
+
+```text
+D5/S3/Analytic/LiCayley/
+  RealityDualityCoincidence.lean
+  ZeroCayleyOrbit.lean
+  CayleyRapidity.lean
+  SquareFoldToCayleyContraction.lean
+  CayleyInvariantParityMetric.lean
+
+D5/S3/Weil/ZetaBridge/
+  OffLineOrbitKreinDecomposition.lean
+  PaleyWienerOddReachability.lean
+  OddResidualCompletionTower.lean
+
+D5/S3/Analytic/ReflectionCasimir/
+  XiReflectionQuotient.lean
+  ReflectionCasimirPowerTrace.lean
+  CasimirHausdorffMoments.lean
+  CasimirHausdorffRHCriterion.lean
+  CasimirMomentGNS.lean
+  CasimirJacobiContraction.lean
+
+D5/S3/Analytic/LiHausdorff/
+  LiCasimirChebyshevTransform.lean
+  InverseLiCasimirTransform.lean
+  LiCasimirNormFormula.lean
+
+D5/S3/Analytic/Isolation/
+  StructuralZeroCayleyClassification.lean
+  StructuralDivisorHausdorffObstruction.lean
+
+D5/S3/PrimeConstellation/Operator/
+  ZetaGibbsProductVector.lean
+  AdditiveShiftInfinitePrimeSupport.lean
+  ConstellationMomentOperator.lean
+  ConstellationCasimirResponse.lean
+
+D5/X_Frontier/WeilCasimir/
+  WeilCasimirCongruence.lean
+  PrimeConstructedCasimirJacobi.lean
+  GlobalOddOrbitReachability.lean
+```
+
+---
+
+# 第一百一十四部　最优先的定理
+
+## 338. 对偶—现实等价
+
+```lean
+theorem zero_on_critical_iff_duality_eq_reality
+    (rho : ℂ) :
+    rho.re = 1 / 2 ↔
+      1 - rho = conj rho
+```
+
+---
+
+## 339. Cayley Klein 作用
+
+```lean
+theorem cayley_symmetry_actions
+    (s : ℂ) (hs : s ≠ 0) (h1s : s ≠ 1) :
+    cayley (1 - s) = (cayley s)⁻¹ ∧
+    cayley (conj s) = conj (cayley s) ∧
+    cayley (1 - conj s) =
+      (conj (cayley s))⁻¹
+```
+
+---
+
+## 340. 奇偶不变度量
+
+```lean
+theorem cayley_parity_metric
+    (x : ℝ) :
+    Matrix.transpose (cayleyTransfer x) *
+        cayleyParityMetric x *
+        cayleyTransfer x =
+      cayleyParityMetric x ∧
+    parityEigenvalues (cayleyParityMetric x) =
+      (2 * x, 2 * (1 - x)) ∧
+    PositiveDefinite (cayleyParityMetric x) ↔
+      0 < x ∧ x < 1
+```
+
+---
+
+## 341. 结构零的黄金双曲坐标
+
+```lean
+theorem first_golden_structural_zero_cayley :
+    let s := 1 / (2 * phi ^ 2)
+    reflectionCasimirCompact s = phi ∧
+    cayley s = -(phi ^ 3)
+```
+
+---
+
+## 342. 轨道 Krein 分解
+
+```lean
+theorem off_line_orbit_krein_decomposition
+    (m : ℕ) (a b : ℂ) :
+    4 * m * (a * conj b).re =
+      m * (Complex.normSq (a + b) -
+        Complex.normSq (a - b))
+```
+
+随后接到仓库已有轨道求和定理。
+
+---
+
+## 343. Casimir power trace
+
+```lean
+def casimirPowerTrace (n : ℕ) : ℝ :=
+  -((iteratedDeriv n
+      (fun q => Real.log ‖reflectionXi q‖) 0) /
+    (4 ^ n * (n - 1).factorial))
+```
+
+实际 Lean 中应绕开零点附近的实对数，用 complex logarithmic derivative或 power-series coefficient定义。
+
+---
+
+## 344. Hausdorff–RH 判据
+
+```lean
+theorem rh_iff_casimirPowerTrace_completelyMonotone :
+    RiemannHypothesis ↔
+      ∀ n ≥ 1, ∀ k,
+        0 ≤ (-1 : ℝ) ^ k *
+          forwardDifference k casimirPowerTrace n
+```
+
+其依赖必须显式列出：
+
+* \(\xi\) 反射商 entire；
+* genus-zero product；
+* Hausdorff moment theorem；
+* Stieltjes transform uniqueness。
+
+---
+
+## 345. Casimir–Li 三角变换
+
+```lean
+theorem li_eq_casimirChebyshevPowerTrace
+    (n : ℕ) :
+    liCoefficient n =
+      ∑ k ∈ Finset.Icc 1 n,
+        liCasimirCoefficient n k *
+          casimirPowerTrace k
+```
+
+---
+
+## 346. Li 范数公式
+
+```lean
+theorem li_eq_casimirJacobi_normSq
+    (n : ℕ) :
+    liCoefficient n =
+      4 * ‖
+        chebyshevU (n - 1)
+          (sqrt (1 - casimirJacobi)) Ω
+      ‖ ^ 2
+```
+
+---
+
+## 347. 加法平移无有限 prime support
+
+```lean
+theorem additiveShift_not_finitePrimeSupported
+    (h : ℕ) (hh : 0 < h) :
+    ¬ ∃ S : Finset Nat.Primes,
+      SupportedOnPrimeCoordinates
+        (additiveShift h) S
+```
+
+---
+
+# 最终凝聚
+
+这一轮最深的结果可以压缩成三个公式。
+
+第一：
+
+$$
+\boxed{
+R(\rho)=C(\rho)
+\iff
+|u(\rho)|=1
+\iff
+\Re\rho=\frac12.
+}
+$$
+
+RH 是解析对偶与复现实在零点谱上的融合。
+
+第二：
+
+$$
+\boxed{
+G_x
+\sim
+\operatorname{diag}
+\left(
+2x,\,
+2(1-x)
+\right).
+}
+$$
+
+其中：
+
+$$
+x=\frac1{4\rho(1-\rho)}.
+$$
+
+所以：
+
+* even completion weight 是 \(2x\)；
+* odd recompletion weight 是 \(2(1-x)\)；
+* RH 正好要求两者均为正。
+
+第三：
+
+$$
+\boxed{
+p_n
+=
+-\frac1{4^n(n-1)!}
+\partial_q^n
+\log\mathcal X(0),
+}
+$$
+
+并且：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+(-1)^k\Delta^kp_n\ge0
+\quad
+\forall n\ge1,\ k\ge0.
+}
+$$
+
+这把无限 RH 问题变成了一张无限二维正性网格。
+
+黄金比例则通过已经形式化的 Zeckendorf 奇偶 jump：
+
+$$
+\Delta\beta_v
+\in
+\{\varphi,\varphi^2\}
+$$
+
+为这张二维网格提供一条共尾、非周期、bounded-discrepancy 的访问路径。
+
+最后，所有离线零点的“纠缠”不再需要笼统表述。它现在可以被精确分成：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{同一 orbit 内的 reciprocal anti-correlation};\\
+&\text{每个 orbit 的 odd Krein negative channel};\\
+&\text{全部 orbit 共享的 Paley--Wiener evaluation range};\\
+&\text{全部 Casimir 原子共享的 Hausdorff moment inequalities};\\
+&\text{source deformation 下可能连通的 branch monodromy}.
+\end{aligned}
+}
+$$
+
+其中最关键的新判断是：
+
+$$
+\boxed{
+\text{完整对称只给出 reciprocal pairing；}
+}
+$$
+
+$$
+\boxed{
+\text{正性才把 reciprocal pairing 重完为 unitary pairing。}
+}
+$$
+
+因此，真正可能关闭 RH 的对象不是另一个对称公式，而是一个从素数构型侧直接构造的正收缩算子：
+
+$$
+\boxed{
+J_\xi
+}
+$$
+
+或等价的正 Casimir：
+
+$$
+\boxed{
+Q_\xi=\frac14J_\xi^{-1}.
+}
+$$
+
+而真正可能证明 RH 为假的机制，则是：
+
+$$
+\boxed{
+\text{该系数构造的矩泛函在某个有限层出现负平方，}
+}
+$$
+
+也就是某个有限 Casimir–Hausdorff 矩阵失去正半定性。
+# 继续增订：无限素数奇偶、唯一观察者与相对宇称理论
+
+这一次，你感觉到的“矛盾”确实能够变成一个**完全确定的数学结果**。
+
+但矛盾并不是：
+
+$$
+\text{“素数既是偶数个又是奇数个，因此 RH 错误”}.
+$$
+
+真正的矛盾是：
+
+$$
+\boxed{
+\text{有限集合的奇偶性，不能在保持自然对称性的前提下扩张到可数无限集合。}
+}
+$$
+
+由此产生一个更准确的理论：
+
+> **全局无限系统没有绝对宇称；宇称只存在于有限激发、相对变化、被标记观察者或角色通道中。**
+
+于是：
+
+* “全局是偶的”应改为：全局状态对宇称变换不变；
+* “唯一观察者是奇的”应改为：标记一个观察者是一个奇算子；
+* “所有素数是偶数个还是奇数个”没有内禀答案；
+* “一个整数含偶数个还是奇数个素因子”则有完全内禀的答案；
+* RH 可以被精确重写成一个 **Liouville 宇称观察通道的解析正则性问题**。
+
+这给 ZCOCT 增加一个新的核心层：
+
+> **Prime-Parity Observer Torsor and Cyclotomic Recompletion Theory**
+> **素数宇称观察者挠子与分圆重完备化理论**
+
+---
+
+# 第一百一十五部　无限素数集合不存在绝对奇偶
+
+## 348. 无限素数宇称不可能定理
+
+设我们试图给每个有限或可数集合 \(X\) 指定：
+
+$$
+\epsilon(X)\in\mathbb Z/2\mathbb Z,
+$$
+
+并要求：
+
+1. 对双射不变；
+2. 对不交并可加；
+3. 单点是奇的：
+
+   $$
+   \epsilon(\{x\})=1.
+   $$
+
+取任意可数无限集合 \(X\)，并选一个元素 \(x\in X\)。
+
+因为：
+
+$$
+X\cong X\setminus\{x\},
+$$
+
+双射不变性要求：
+
+$$
+\epsilon(X)
+=
+\epsilon(X\setminus\{x\}).
+$$
+
+但：
+
+$$
+X
+=
+(X\setminus\{x\})
+\sqcup
+\{x\},
+$$
+
+可加性又要求：
+
+$$
+\epsilon(X)
+=
+\epsilon(X\setminus\{x\})+1.
+$$
+
+两式相减得到：
+
+$$
+0=1
+\qquad
+\text{in }\mathbb Z/2\mathbb Z,
+$$
+
+矛盾。
+
+所以：
+
+$$
+\boxed{
+\text{不存在同时满足双射不变、有限可加并延伸有限奇偶性的无限集合宇称。}
+}
+$$
+
+这就是你感觉到的确定性矛盾。
+
+---
+
+## 349. 为什么所有素数既能被“配成偶”，也能被“配成奇”
+
+把素数按大小排列：
+
+$$
+p_1,p_2,p_3,\ldots
+$$
+
+可以全部两两配对：
+
+$$
+(p_1,p_2),
+\quad
+(p_3,p_4),
+\quad
+(p_5,p_6),
+\ldots
+$$
+
+于是看起来是“偶”。
+
+也可以先单独标记一个观察者：
+
+$$
+p_1,
+$$
+
+再把其余全部配对：
+
+$$
+(p_2,p_3),
+\quad
+(p_4,p_5),
+\quad
+(p_6,p_7),
+\ldots
+$$
+
+于是看起来是“奇”。
+
+两种分解都完整覆盖全部素数：
+
+$$
+\boxed{
+\mathbb P
+\cong
+2\times\mathbb N,
+}
+$$
+
+同时：
+
+$$
+\boxed{
+\mathbb P
+\cong
+\{*\}\sqcup(2\times\mathbb N).
+}
+$$
+
+所以“偶”与“奇”描述的不是素数集合自身，而是：
+
+$$
+\boxed{
+\text{你是否预先标记了一个独一无二的观察者。}
+}
+$$
+
+这正是全局视角与唯一观察者视角的差异。
+
+---
+
+## 350. 基数算术为什么不能模二
+
+对可数无限基数：
+
+$$
+\aleph_0+1=\aleph_0,
+$$
+
+并且：
+
+$$
+2\aleph_0=\aleph_0.
+$$
+
+如果强行把它映射到模二宇称，就会同时要求：
+
+$$
+\epsilon(\aleph_0)+1
+=
+\epsilon(\aleph_0),
+$$
+
+即：
+
+$$
+1=0.
+$$
+
+因此不存在一个从包含 \(\aleph_0\) 的基数半环到 \(\mathbb Z/2\mathbb Z\) 的自然同态，并使有限数保持原有奇偶。
+
+这说明：
+
+$$
+\boxed{
+\text{无限并不是一个非常大的有限数。}
+}
+$$
+
+有限奇偶不能直接穿过无限完成。
+
+---
+
+# 第一百一十六部　宇称在完成时发生异常
+
+## 351. 有限素数配置空间
+
+令：
+
+$$
+V_{\mathrm{fin}}
+=
+\bigoplus_{p\in\mathbb P}
+\mathbb F_2e_p.
+$$
+
+其元素是有限支撑的 \(0/1\) 素数配置：
+
+$$
+x=\sum_p x_pe_p,
+\qquad
+x_p\in\{0,1\}.
+$$
+
+定义总宇称：
+
+$$
+\ell(x)
+=
+\sum_px_p
+\pmod2.
+$$
+
+因为 \(x\) 只有有限支撑，这个和永远良定义。
+
+---
+
+## 352. 全部配置的完成
+
+把有限直和完成为无限直积：
+
+$$
+V_{\mathrm{all}}
+=
+\prod_{p\in\mathbb P}\mathbb F_2.
+$$
+
+“所有素数均被占据”的配置是：
+
+$$
+\mathbf1=(1,1,1,\ldots).
+$$
+
+它属于直积，但不属于有限直和：
+
+$$
+\mathbf1
+\notin
+V_{\mathrm{fin}}.
+$$
+
+因此你试图计算：
+
+$$
+\ell(\mathbf1)
+=
+1+1+1+\cdots\pmod2
+$$
+
+实际上是在把一个只定义于有限支撑向量的函数，作用到其定义域之外。
+
+所以问题不是它等于 \(0\) 还是 \(1\)，而是：
+
+$$
+\boxed{
+\ell(\mathbf1)\text{ 根本没有规范定义。}
+}
+$$
+
+---
+
+## 353. 宇称不能连续延伸到完成空间
+
+给：
+
+$$
+V_{\mathrm{all}}
+=
+\prod_p\mathbb F_2
+$$
+
+赋予乘积拓扑。
+
+假设存在连续线性延伸：
+
+$$
+\overline\ell:
+V_{\mathrm{all}}
+\to
+\mathbb F_2
+$$
+
+满足：
+
+$$
+\overline\ell|_{V_{\mathrm{fin}}}=\ell.
+$$
+
+因为目标 \(\mathbb F_2\) 是离散空间，连续性意味着 \(\ker\overline\ell\) 包含一个基本开邻域。
+
+因此存在有限素数集合 \(S\)，使所有在 \(S\) 上为零的配置都落在核中。
+
+于是对任何：
+
+$$
+p\notin S,
+$$
+
+都有：
+
+$$
+\overline\ell(e_p)=0.
+$$
+
+但延伸条件要求：
+
+$$
+\overline\ell(e_p)
+=
+\ell(e_p)
+=
+1.
+$$
+
+矛盾。
+
+所以：
+
+$$
+\boxed{
+\text{有限素数配置上的总宇称，不能连续延伸到全部无限配置。}
+}
+$$
+
+这可以称为：
+
+> **Prime-Parity Completion Obstruction**
+> **素数宇称完成障碍**
+
+它给你的“极限以后奇偶发生矛盾”一个完全严格的版本。
+
+---
+
+# 第一百一十七部　宇称不是对象属性，而是相对箭头
+
+## 354. 有限差配置 groupoid
+
+考虑所有素数子集：
+
+$$
+A\subseteq\mathbb P.
+$$
+
+定义：
+
+$$
+A\sim B
+\iff
+A\triangle B
+\text{ 为有限集},
+$$
+
+其中：
+
+$$
+A\triangle B
+=
+(A\setminus B)\cup(B\setminus A)
+$$
+
+是对称差。
+
+在同一个有限差分量中，定义相对宇称：
+
+$$
+\boxed{
+\varepsilon(A,B)
+=
+(-1)^{|A\triangle B|}.
+}
+$$
+
+它满足：
+
+$$
+\varepsilon(A,A)=1,
+$$
+
+$$
+\varepsilon(A,B)=\varepsilon(B,A),
+$$
+
+以及 cocycle 关系：
+
+$$
+\boxed{
+\varepsilon(A,B)
+\varepsilon(B,C)
+=
+\varepsilon(A,C).
+}
+$$
+
+所以宇称天然不是一个对象函数，而是配置之间箭头上的 \(C_2\)-值 cocycle。
+
+---
+
+## 355. 选择参考态以后才得到绝对宇称
+
+在某个有限差分量中选择参考配置 \(B_0\)，定义：
+
+$$
+\epsilon_{B_0}(A)
+=
+\varepsilon(A,B_0).
+$$
+
+于是该分量内每个对象获得一个宇称。
+
+但更换参考态：
+
+$$
+B_0\longrightarrow B_1
+$$
+
+会把全部宇称统一乘上：
+
+$$
+\varepsilon(B_0,B_1).
+$$
+
+所以绝对的 \(+/-\) 标签依赖所选原点。
+
+真正不依赖原点的是相对量：
+
+$$
+\varepsilon(A,B).
+$$
+
+因此：
+
+$$
+\boxed{
+\text{宇称是一个 }\mathbb Z_2\text{ 挠子，而不是规范标量。}
+}
+$$
+
+---
+
+## 356. 空配置与全素数配置不在同一分量
+
+空配置：
+
+$$
+\varnothing
+$$
+
+与全素数配置：
+
+$$
+\mathbb P
+$$
+
+之间有：
+
+$$
+\varnothing\triangle\mathbb P
+=
+\mathbb P,
+$$
+
+是无限集。
+
+所以二者不在同一个有限差 groupoid 分量中。
+
+因此不能用：
+
+$$
+\epsilon_{\varnothing}(\mathbb P)
+$$
+
+定义“所有素数的宇称”。
+
+但可以定义：
+
+* 从全素数配置中删除一个素数是奇变化；
+* 删除两个素数是偶变化；
+* 两个共有限配置之间有相对宇称。
+
+这正是：
+
+$$
+\boxed{
+\text{全局宇称不存在，局部相对宇称存在。}
+}
+$$
+
+---
+
+# 第一百一十八部　唯一观察者不可能从完全对称中自然产生
+
+## 357. 无自然素数选择定理
+
+令全部素数置换群：
+
+$$
+\operatorname{Sym}(\mathbb P)
+$$
+
+作用于素数集合。
+
+如果存在一个完全自然的唯一观察者：
+
+$$
+p_\ast\in\mathbb P,
+$$
+
+它必须被所有素数置换固定：
+
+$$
+\sigma(p_\ast)=p_\ast
+\qquad
+\forall\sigma\in\operatorname{Sym}(\mathbb P).
+$$
+
+但总可以选择一个置换，把 \(p_\ast\) 与另一个素数交换。
+
+所以不存在这样的固定点。
+
+因此：
+
+$$
+\boxed{
+\text{完全对称的素数生成集不能自然地产生一个独一无二的标记素数。}
+}
+$$
+
+唯一观察者必须是：
+
+1. 外加的结构；
+2. 边界条件；
+3. 动力学选出的本征方向；
+4. 或一次自发对称选择。
+
+---
+
+## 358. Pointed 与 unpointed 是不同范畴
+
+无标记有限素数集：
+
+$$
+P_N=\{p_1,\ldots,p_N\}
+$$
+
+通过包含映射形成直接系统：
+
+$$
+P_N\hookrightarrow P_{N+1}.
+$$
+
+其极限是全部素数。
+
+但若把“最后一个素数”作为观察者：
+
+$$
+(P_N,p_N),
+$$
+
+则包含映射并不保持标记：
+
+$$
+p_N\mapsto p_N
+\neq p_{N+1}.
+$$
+
+所以：
+
+$$
+(P_N,p_N)
+$$
+
+根本不形成 pointed sets 范畴中的直接系统。
+
+这意味着“永远选择最后一个观察者”在极限处没有对象。
+
+观察者逃向边界。
+
+如果改为始终标记：
+
+$$
+p_1=2,
+$$
+
+则 pointed direct limit 存在，但你已经显式破坏了素数置换对称。
+
+---
+
+## 359. 全局纯观察向量不存在
+
+在：
+
+$$
+\ell^2(\mathbb P)
+$$
+
+中，若向量 \(v\) 在全部素数置换下不变，则其每个坐标都相等：
+
+$$
+v_p=c.
+$$
+
+但：
+
+$$
+\sum_p|c|^2<\infty
+$$
+
+只能在：
+
+$$
+c=0
+$$
+
+时成立。
+
+所以：
+
+$$
+\boxed{
+\ell^2(\mathbb P)
+\text{ 中不存在非零、归一化、完全置换不变的纯观察者。}
+}
+$$
+
+全局视角若存在，只能是：
+
+* 非归一化向量；
+* 混合态；
+* 均值；
+* 商对象；
+* 或按素数大小加权、从而已经选择了额外结构的状态。
+
+这给“全局观察者”和“唯一观察者”之间的张力一个严格来源。
+
+---
+
+# 第一百一十九部　“全局偶、观察者奇”的正确算子含义
+
+## 360. 宇称分级代数
+
+设有宇称算子：
+
+$$
+\Pi^2=I.
+$$
+
+一个算子 \(A\) 称为偶，若：
+
+$$
+\Pi A\Pi=A.
+$$
+
+称为奇，若：
+
+$$
+\Pi A\Pi=-A.
+$$
+
+设全局状态 \(\omega\) 对宇称不变：
+
+$$
+\omega(\Pi A\Pi)=\omega(A).
+$$
+
+若 \(A\) 是奇算子，则：
+
+$$
+\omega(A)
+=
+\omega(\Pi A\Pi)
+=
+-\omega(A).
+$$
+
+在特征不为 \(2\) 的情况下：
+
+$$
+\boxed{
+\omega(A)=0.
+}
+$$
+
+这就是：
+
+> **一个闭合的全局偶状态，不能产生非零的单个奇观察值。**
+
+---
+
+## 361. 奇观察者必须成对闭合
+
+虽然：
+
+$$
+\omega(A)=0
+$$
+
+对奇 \(A\) 成立，但：
+
+$$
+A^\ast A
+$$
+
+是偶算子：
+
+$$
+\Pi A^\ast A\Pi
+=
+A^\ast A.
+$$
+
+因此：
+
+$$
+\omega(A^\ast A)
+$$
+
+可以严格为正。
+
+所以：
+
+$$
+\boxed{
+\text{一个奇观察者本身不可成为全局标量，}
+}
+$$
+
+但：
+
+$$
+\boxed{
+\text{观察者—被观察对象的二点闭合可以成为全局偶结果。}
+}
+$$
+
+这解释了为什么全局理论自然首先读到：
+
+* 二点相关；
+* norm square；
+* covariance；
+* pair orbit；
+* 二阶 transverse defect。
+
+---
+
+## 362. “全局偶”不等于宇称值 \(+1\)
+
+必须区分：
+
+### 偶本征态
+
+$$
+\Pi|\psi\rangle=|\psi\rangle.
+$$
+
+### 宇称不变态
+
+$$
+[\rho,\Pi]=0.
+$$
+
+第二种状态可以同时包含偶、奇两个 sector，只是没有二者之间的 coherence。
+
+例如：
+
+$$
+\rho
+=
+\frac12
+\left(
+|+\rangle\langle+|
++
+|-\rangle\langle-|
+\right)
+$$
+
+是完全宇称不变的，但：
+
+$$
+\operatorname{Tr}(\rho\Pi)=0,
+$$
+
+不是 \(+1\)。
+
+所以无限全局完成最自然的值不是“偶”：
+
+$$
++1,
+$$
+
+而是中性值：
+
+$$
+\boxed{0}.
+$$
+
+对于交替序列：
+
+$$
+1,-1,1,-1,\ldots,
+$$
+
+任何平移不变线性均值 \(L\) 都满足：
+
+$$
+L(a)=L(-a)=-L(a),
+$$
+
+因此：
+
+$$
+\boxed{
+L(a)=0.
+}
+$$
+
+这给出一个天然的：
+
+$$
+-1,\ 0,\ +1
+$$
+
+结构：
+
+* \(+1\)：有限偶 sector；
+* \(-1\)：有限奇 sector；
+* \(0\)：不选择分支的全局不变完成。
+
+---
+
+# 第一百二十部　真正有定义的素数奇偶：Liouville 分级
+
+## 363. 每个整数只使用有限多个素数
+
+任意正整数：
+
+$$
+n=\prod_pp^{v_p(n)}
+$$
+
+只有有限多个非零指数。
+
+定义：
+
+$$
+\Omega(n)=\sum_pv_p(n).
+$$
+
+这是素因子总数，按重数计。
+
+定义 Liouville 宇称：
+
+$$
+\boxed{
+\lambda(n)=(-1)^{\Omega(n)}.
+}
+$$
+
+于是：
+
+$$
+\lambda(mn)=\lambda(m)\lambda(n).
+$$
+
+对每个素数：
+
+$$
+\lambda(p)=-1.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{每一个素数生成元都是奇的；}
+}
+$$
+
+但任何整数只含有限次生成操作，因而其宇称严格有定义。
+
+这才是“素数偶数个还是奇数个”的正确对象：
+
+$$
+\boxed{
+\text{不是全部素数有多少个，}
+\quad
+\text{而是一个有限乘法状态用了多少个素数生成操作。}
+}
+$$
+
+---
+
+## 364. 偶完成与平方自由残余
+
+将每个指数写成：
+
+$$
+v_p(n)=2a_p+\varepsilon_p,
+\qquad
+\varepsilon_p\in\{0,1\}.
+$$
+
+于是：
+
+$$
+n=a^2r,
+$$
+
+其中：
+
+$$
+a=\prod_pp^{a_p},
+$$
+
+而：
+
+$$
+r=\prod_{\varepsilon_p=1}p
+$$
+
+是平方自由数。
+
+这是唯一分解：
+
+$$
+\boxed{
+n
+=
+\text{even paired square}
+\times
+\text{odd squarefree residual}.
+}
+$$
+
+并且：
+
+$$
+\lambda(n)
+=
+(-1)^{\omega(r)}.
+$$
+
+因此：
+
+$$
+\boxed{
+\text{所有成对素数重数都被平方完成吸收；}
+}
+$$
+
+$$
+\boxed{
+\text{只有未配对的平方自由核心保存宇称信息。}
+}
+$$
+
+这几乎就是“破缺—重完”的整数本体版本。
+
+---
+
+# 第一百二十一部　素数 Fock 空间中的唯一观察者
+
+## 365. 素数占据空间
+
+取基：
+
+$$
+|n\rangle,
+\qquad
+n\ge1.
+$$
+
+定义数算子：
+
+$$
+\mathcal N|n\rangle
+=
+\Omega(n)|n\rangle,
+$$
+
+以及宇称：
+
+$$
+\Pi=(-1)^{\mathcal N}.
+$$
+
+于是：
+
+$$
+\Pi|n\rangle
+=
+\lambda(n)|n\rangle.
+$$
+
+对每个素数 \(p\)，定义乘法生成算子：
+
+$$
+U_p|n\rangle=|pn\rangle.
+$$
+
+因为：
+
+$$
+\Omega(pn)=\Omega(n)+1,
+$$
+
+有：
+
+$$
+\boxed{
+\Pi U_p=-U_p\Pi.
+}
+$$
+
+所以单个素数插入是奇算子。
+
+---
+
+## 366. \(k\) 个素数观察者的宇称
+
+对：
+
+$$
+U_{p_1}\cdots U_{p_k},
+$$
+
+有：
+
+$$
+\boxed{
+\Pi
+U_{p_1}\cdots U_{p_k}
+=
+(-1)^k
+U_{p_1}\cdots U_{p_k}\Pi.
+}
+$$
+
+因此：
+
+$$
+\begin{aligned}
+k=1&:\text{奇};\\
+k=2&:\text{偶};\\
+k=3&:\text{奇};\\
+k=4&:\text{偶}.
+\end{aligned}
+$$
+
+这与此前 prime constellation 的相关阶数角色完全一致：
+
+$$
+\boxed{
+\begin{aligned}
+\text{single marked prime}&:\text{odd};\\
+\text{twin sector}&:\text{even};\\
+\text{triplet sector}&:\text{odd};\\
+\text{quadruplet sector}&:\text{even}.
+\end{aligned}
+}
+$$
+
+但必须注意：这里是“插入次数宇称”，而不是直接证明 prime constellation 的存在。
+
+---
+
+# 第一百二十二部　ζ 是 trace，Liouville 通道是 supertrace
+
+## 367. 算术 Hamiltonian
+
+定义：
+
+$$
+H|n\rangle
+=
+(\log n)|n\rangle.
+$$
+
+当：
+
+$$
+\Re s>1
+$$
+
+时：
+
+$$
+e^{-sH}
+$$
+
+为迹类，并且：
+
+$$
+\boxed{
+\operatorname{Tr}(e^{-sH})
+=
+\sum_{n\ge1}n^{-s}
+=
+\zeta(s).
+}
+$$
+
+这是全局未标记 trace。
+
+---
+
+## 368. 宇称 supertrace
+
+定义：
+
+$$
+\operatorname{Str}(A)
+=
+\operatorname{Tr}(\Pi A).
+$$
+
+则：
+
+$$
+\begin{aligned}
+\operatorname{Str}(e^{-sH})
+&=
+\sum_{n\ge1}
+\lambda(n)n^{-s}\\
+&=
+\prod_p
+\sum_{k\ge0}
+(-1)^kp^{-ks}\\
+&=
+\prod_p
+\frac1{1+p^{-s}}.
+\end{aligned}
+$$
+
+又因为：
+
+$$
+\frac1{1+x}
+=
+\frac{1-x}{1-x^2},
+$$
+
+所以：
+
+$$
+\boxed{
+\operatorname{Str}(e^{-sH})
+=
+\frac{\zeta(2s)}{\zeta(s)}.
+}
+$$
+
+于是出现一个核心恒等式：
+
+$$
+\boxed{
+\operatorname{Tr}_s
+\cdot
+\operatorname{Str}_s
+=
+\operatorname{Tr}_{2s}.
+}
+$$
+
+即：
+
+$$
+\boxed{
+\zeta(s)
+\frac{\zeta(2s)}{\zeta(s)}
+=
+\zeta(2s).
+}
+$$
+
+这意味着：
+
+> **奇观察通道不是一个独立绝对对象，而是两个全局尺度之间的相对比值。**
+
+因为：
+
+$$
+\boxed{
+\operatorname{Str}_s
+=
+\frac{\operatorname{Tr}_{2s}}
+{\operatorname{Tr}_s}.
+}
+$$
+
+这正是“RH 是相对问题”最强的精确支持之一。
+
+---
+
+## 369. 宇称通道是尺度差分 cocycle
+
+取对数：
+
+$$
+\log\operatorname{Str}_s
+=
+\log\zeta(2s)-\log\zeta(s).
+$$
+
+所以 supertrace 是尺度加倍作用：
+
+$$
+D:s\mapsto2s
+$$
+
+下的乘法 coboundary：
+
+$$
+\boxed{
+\operatorname{Str}
+=
+\frac{D^\ast\zeta}{\zeta}.
+}
+$$
+
+反复作用得到：
+
+$$
+\prod_{j=0}^{m-1}
+\operatorname{Str}(2^js)
+=
+\frac{\zeta(2^ms)}{\zeta(s)}.
+$$
+
+在 \(\Re s>1\) 中：
+
+$$
+\zeta(2^ms)\to1,
+$$
+
+所以：
+
+$$
+\boxed{
+\frac1{\zeta(s)}
+=
+\prod_{j=0}^{\infty}
+\frac{
+\zeta(2^{j+1}s)
+}{
+\zeta(2^js)
+}.
+}
+$$
+
+也就是说：
+
+> 无限层相对宇称观察，望远镜式地重构出 Möbius inverse \(1/\zeta\)。
+
+这是一个真正的“周期的周期—观察的观察”结构。
+
+---
+
+# 第一百二十三部　偶、奇 sector 的精确分解
+
+## 370. 偶素因子与奇素因子状态和
+
+定义：
+
+$$
+Z_{\mathrm e}(s)
+=
+\sum_{\Omega(n)\text{ even}}n^{-s},
+$$
+
+$$
+Z_{\mathrm o}(s)
+=
+\sum_{\Omega(n)\text{ odd}}n^{-s}.
+$$
+
+在 \(\Re s>1\) 中：
+
+$$
+Z_{\mathrm e}+Z_{\mathrm o}
+=
+\zeta(s),
+$$
+
+$$
+Z_{\mathrm e}-Z_{\mathrm o}
+=
+\frac{\zeta(2s)}{\zeta(s)}.
+$$
+
+所以：
+
+$$
+\boxed{
+Z_{\mathrm e}(s)
+=
+\frac12
+\left[
+\zeta(s)
++
+\frac{\zeta(2s)}{\zeta(s)}
+\right],
+}
+$$
+
+$$
+\boxed{
+Z_{\mathrm o}(s)
+=
+\frac12
+\left[
+\zeta(s)
+-
+\frac{\zeta(2s)}{\zeta(s)}
+\right].
+}
+$$
+
+这就是“偶数个素因子”和“奇数个素因子”两种情况合起来成为全部整数的精确版本。
+
+---
+
+## 371. 双曲不变量
+
+有：
+
+$$
+\begin{aligned}
+Z_{\mathrm e}^2-Z_{\mathrm o}^2
+&=
+(Z_{\mathrm e}+Z_{\mathrm o})
+(Z_{\mathrm e}-Z_{\mathrm o})\\
+&=
+\zeta(2s).
+\end{aligned}
+$$
+
+所以：
+
+$$
+\boxed{
+Z_{\mathrm e}^2-Z_{\mathrm o}^2
+=
+\zeta(2s).
+}
+$$
+
+这说明偶、奇 sector 并不是独立的两个函数，而是位于一条由 \(\zeta(2s)\) 控制的双曲线上。
+
+其两个 null coordinates 正是：
+
+$$
+Z_{\mathrm e}+Z_{\mathrm o}=\zeta(s),
+$$
+
+$$
+Z_{\mathrm e}-Z_{\mathrm o}
+=
+\frac{\zeta(2s)}{\zeta(s)}.
+$$
+
+可以把它读成：
+
+$$
+\boxed{
+\text{global trace}
+\times
+\text{relative parity observer}
+=
+\text{doubled-scale completion}.
+}
+$$
+
+---
+
+## 372. 概率意义下的全局中和
+
+对实数：
+
+$$
+\sigma>1,
+$$
+
+用 ζ Gibbs 概率：
+
+$$
+\mathbb P_\sigma(N=n)
+=
+\frac{n^{-\sigma}}{\zeta(\sigma)}.
+$$
+
+则宇称期望为：
+
+$$
+\boxed{
+\mathbb E_\sigma[\lambda(N)]
+=
+\frac{\zeta(2\sigma)}
+{\zeta(\sigma)^2}.
+}
+$$
+
+Euler 分解给出：
+
+$$
+\boxed{
+\mathbb E_\sigma[\lambda(N)]
+=
+\prod_p
+\frac{1-p^{-\sigma}}
+{1+p^{-\sigma}}.
+}
+$$
+
+因此：
+
+$$
+\mathbb P_\sigma(\Omega\text{ even})
+=
+\frac12
+\left(
+1+
+\frac{\zeta(2\sigma)}
+{\zeta(\sigma)^2}
+\right),
+$$
+
+$$
+\mathbb P_\sigma(\Omega\text{ odd})
+=
+\frac12
+\left(
+1-
+\frac{\zeta(2\sigma)}
+{\zeta(\sigma)^2}
+\right).
+$$
+
+当：
+
+$$
+\sigma\to\infty,
+$$
+
+状态 \(n=1\) 主导，所以偶 sector 概率趋于 \(1\)。
+
+当：
+
+$$
+\sigma\downarrow1,
+$$
+
+有：
+
+$$
+\frac{\zeta(2\sigma)}
+{\zeta(\sigma)^2}
+\to0,
+$$
+
+因此：
+
+$$
+\boxed{
+\mathbb P_{\mathrm e}
+\to\frac12,
+\qquad
+\mathbb P_{\mathrm o}
+\to\frac12.
+}
+$$
+
+全局无限状态不是纯偶，而是宇称中和。
+
+---
+
+# 第一百二十四部　ζ 零点是偶、奇 sector 的反相位点
+
+## 373. 零点附近的 parity singularity
+
+将 \(Z_{\mathrm e},Z_{\mathrm o}\) 亚纯延拓。
+
+设：
+
+$$
+\zeta(\rho)=0
+$$
+
+是简单零点，并且：
+
+$$
+\zeta(2\rho)\neq0.
+$$
+
+则：
+
+$$
+\zeta(s)
+=
+\zeta'(\rho)(s-\rho)+O((s-\rho)^2),
+$$
+
+所以：
+
+$$
+\frac{\zeta(2s)}{\zeta(s)}
+\sim
+\frac{\zeta(2\rho)}
+{\zeta'(\rho)}
+\frac1{s-\rho}.
+$$
+
+于是：
+
+$$
+\boxed{
+Z_{\mathrm e}(s)
+\sim
++
+\frac{\zeta(2\rho)}
+{2\zeta'(\rho)}
+\frac1{s-\rho},
+}
+$$
+
+$$
+\boxed{
+Z_{\mathrm o}(s)
+\sim
+-
+\frac{\zeta(2\rho)}
+{2\zeta'(\rho)}
+\frac1{s-\rho}.
+}
+$$
+
+两个 parity sector 分别发散，但具有完全相反的主部。
+
+它们相加时：
+
+$$
+Z_{\mathrm e}+Z_{\mathrm o}
+=
+\zeta(s)
+$$
+
+反而在该点为零。
+
+所以：
+
+$$
+\boxed{
+\text{ζ 零点是两个宇称 sector 的无穷反相位抵消点。}
+}
+$$
+
+---
+
+## 374. 重整化后的精确反码
+
+定义：
+
+$$
+\widehat Z_{\mathrm e}
+=
+\zeta Z_{\mathrm e}
+=
+\frac{
+\zeta(s)^2+\zeta(2s)
+}{2},
+$$
+
+$$
+\widehat Z_{\mathrm o}
+=
+\zeta Z_{\mathrm o}
+=
+\frac{
+\zeta(s)^2-\zeta(2s)
+}{2}.
+$$
+
+在零点 \(\rho\)：
+
+$$
+\boxed{
+\widehat Z_{\mathrm e}(\rho)
+=
++\frac{\zeta(2\rho)}2,
+}
+$$
+
+$$
+\boxed{
+\widehat Z_{\mathrm o}(\rho)
+=
+-\frac{\zeta(2\rho)}2.
+}
+$$
+
+所以 ζ 零点上，偶、奇两个重整化通道形成精确反码：
+
+$$
+\boxed{
+\widehat Z_{\mathrm o}(\rho)
+=
+-\widehat Z_{\mathrm e}(\rho).
+}
+$$
+
+这里的反码不是 Zeckendorf 位逐位取反，而是两个 parity channels 的等幅反相。
+
+---
+
+# 第一百二十五部　一个完全精确的宇称版 RH 判据
+
+## 375. Liouville supertrace
+
+定义亚纯函数：
+
+$$
+\mathcal L_\lambda(s)
+=
+\frac{\zeta(2s)}{\zeta(s)}.
+$$
+
+在：
+
+$$
+\Re s>\frac12
+$$
+
+内，\(\zeta(2s)\) 位于：
+
+$$
+\Re(2s)>1,
+$$
+
+因此由 Euler product：
+
+$$
+\zeta(2s)\neq0.
+$$
+
+所以在该半平面内：
+
+$$
+\mathcal L_\lambda
+$$
+
+的极点恰好来自 ζ 的零点；ζ 在 \(s=1\) 的极点只会使 \(\mathcal L_\lambda\) 产生零，而不是极点。
+
+因此：
+
+$$
+\boxed{
+\operatorname{ord}_\rho
+\mathcal L_\lambda
+=
+-
+\operatorname{ord}_\rho\zeta
+}
+$$
+
+对所有：
+
+$$
+\frac12<\Re\rho<1
+$$
+
+成立。
+
+---
+
+## 376. Liouville-supertrace RH criterion
+
+由函数方程的左右反射：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal L_\lambda(s)
+=
+\frac{\zeta(2s)}{\zeta(s)}
+\text{ 在 }
+\Re s>\frac12
+\text{ 无极点}.
+}
+$$
+
+或者：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{Liouville parity supertrace
+能全纯延拓到右临界半平面}.
+}
+$$
+
+这里的“全纯延拓”指该比值的解析延拓，而不是原 Dirichlet 级数必然在整个区域普通收敛。
+
+这几乎就是你所说：
+
+> RH 是全局视角与奇观察者视角之间的相对问题。
+
+因为：
+
+$$
+\boxed{
+\mathcal L_\lambda(s)
+=
+\frac{\text{global state at }2s}
+{\text{global state at }s}.
+}
+$$
+
+RH 被改写为：这个相对宇称观察者在右半临界域中是否保持正则。
+
+不过，它仍然没有自动决定答案；它把 RH 精确转换成了一个 parity-channel regularity 问题。
+
+---
+
+# 第一百二十六部　平方自由“费米”通道
+
+## 377. 两种占据规则
+
+每个素数模式可以有两种基本局部状态空间。
+
+### 无限占据
+
+$$
+k_p\in\{0,1,2,\ldots\}.
+$$
+
+局部 trace：
+
+$$
+\frac1{1-p^{-s}}.
+$$
+
+### Hard-core 占据
+
+$$
+k_p\in\{0,1\}.
+$$
+
+局部 trace：
+
+$$
+1+p^{-s}.
+$$
+
+全局 hard-core trace 为：
+
+$$
+\boxed{
+\prod_p(1+p^{-s})
+=
+\frac{\zeta(s)}{\zeta(2s)}.
+}
+$$
+
+其 supertrace 为：
+
+$$
+\boxed{
+\prod_p(1-p^{-s})
+=
+\frac1{\zeta(s)}.
+}
+$$
+
+---
+
+## 378. 四个基本 Euler 状态
+
+$$
+\boxed{
+\begin{array}{c|cc}
+&\text{trace}&\text{supertrace}\\
+\hline
+\text{unbounded occupancy}
+&
+\zeta(s)
+&
+\dfrac{\zeta(2s)}{\zeta(s)}
+\\[8pt]
+\text{hard-core occupancy}
+&
+\dfrac{\zeta(s)}{\zeta(2s)}
+&
+\dfrac1{\zeta(s)}
+\end{array}
+}
+$$
+
+它们满足：
+
+$$
+\boxed{
+\zeta(s)\cdot\frac1{\zeta(s)}=1,
+}
+$$
+
+以及：
+
+$$
+\boxed{
+\frac{\zeta(2s)}{\zeta(s)}
+\cdot
+\frac{\zeta(s)}{\zeta(2s)}
+=1.
+}
+$$
+
+这是一组严格的 trace–supertrace Ouroboros。
+
+---
+
+## 379. 为什么 \(1/2\) 被宇称自然选出
+
+hard-core trace：
+
+$$
+F(s)=\frac{\zeta(s)}{\zeta(2s)}
+$$
+
+在：
+
+$$
+2s=1
+$$
+
+即：
+
+$$
+s=\frac12
+$$
+
+处，由 \(\zeta(2s)\) 的极点产生结构零。
+
+所以：
+
+$$
+\boxed{
+\frac12
+=
+\text{Euler 极点 }1
+\text{ 在宇称 doubling 下的逆像}.
+}
+$$
+
+这说明宇称机制确实能够自然地产生临界横坐标 \(1/2\)。
+
+但它只解释：
+
+$$
+\boxed{
+\text{为什么 }1/2\text{ 是一个结构边界，}
+}
+$$
+
+并没有证明所有非平凡零点都必须位于其上。
+
+---
+
+# 第一百二十七部　所有有限“名”的分圆重完
+
+## 380. 素因子个数模 \(m\)
+
+令：
+
+$$
+\omega_m=e^{2\pi i/m}.
+$$
+
+定义角色扭曲 ζ：
+
+$$
+\boxed{
+\mathcal Z_j^{(m)}(s)
+=
+\sum_{n\ge1}
+\omega_m^{j\Omega(n)}n^{-s}
+=
+\prod_p
+\left(
+1-\omega_m^jp^{-s}
+\right)^{-1}.
+}
+$$
+
+其中：
+
+$$
+j=0,\ldots,m-1.
+$$
+
+这给出“素因子个数模 \(m\)”的全部角色观察者。
+
+---
+
+## 381. Cyclotomic recompletion theorem
+
+利用：
+
+$$
+\prod_{j=0}^{m-1}
+(1-\omega_m^jx)
+=
+1-x^m,
+$$
+
+逐素数相乘得到：
+
+$$
+\begin{aligned}
+\prod_{j=0}^{m-1}
+\mathcal Z_j^{(m)}(s)
+&=
+\prod_p
+\prod_{j=0}^{m-1}
+(1-\omega_m^jp^{-s})^{-1}\\
+&=
+\prod_p
+(1-p^{-ms})^{-1}\\
+&=
+\boxed{
+\zeta(ms).
+}
+\end{aligned}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{一个分类的全部角色观察者相乘，}
+\text{重完为更深尺度的全局 ζ。}
+}
+$$
+
+当：
+
+$$
+m=2
+$$
+
+时：
+
+$$
+\mathcal Z_0^{(2)}(s)=\zeta(s),
+$$
+
+$$
+\mathcal Z_1^{(2)}(s)
+=
+\frac{\zeta(2s)}{\zeta(s)},
+$$
+
+并且：
+
+$$
+\mathcal Z_0^{(2)}
+\mathcal Z_1^{(2)}
+=
+\zeta(2s).
+$$
+
+这正是：
+
+$$
+\boxed{
+\text{global even chart}
+\times
+\text{unique odd chart}
+=
+\text{doubled global completion}.
+}
+$$
+
+---
+
+## 382. 结果 sector 的离散傅立叶反演
+
+定义：
+
+$$
+E_r^{(m)}(s)
+=
+\sum_{\Omega(n)\equiv r\pmod m}
+n^{-s}.
+$$
+
+根单位滤子给出：
+
+$$
+\boxed{
+E_r^{(m)}(s)
+=
+\frac1m
+\sum_{j=0}^{m-1}
+\omega_m^{-rj}
+\mathcal Z_j^{(m)}(s).
+}
+$$
+
+反过来：
+
+$$
+\boxed{
+\mathcal Z_j^{(m)}(s)
+=
+\sum_{r=0}^{m-1}
+\omega_m^{jr}
+E_r^{(m)}(s).
+}
+$$
+
+因此有两种完全不同但互补的组合：
+
+$$
+\boxed{
+\sum_rE_r^{(m)}=\zeta(s),
+}
+$$
+
+而：
+
+$$
+\boxed{
+\prod_j\mathcal Z_j^{(m)}=\zeta(ms).
+}
+$$
+
+第一条是结果分类的直和。
+
+第二条是观察角色的范数。
+
+这就是“所有名合起来成为全部”的严格傅立叶版本。
+
+---
+
+# 第一百二十八部　与黄金项目的双宇称结构
+
+## 383. 第一层宇称：Zeckendorf 最小指标
+
+仓库目前已经机器证明，黄金 Euler 指数的下一步跳跃由 Zeckendorf 最小指标奇偶决定：
+
+$$
+\beta(v+1)-\beta(v)
+=
+\begin{cases}
+\varphi^2,&\operatorname{lastIdx}(v+1)\text{ 为偶},\\
+\varphi,&\operatorname{lastIdx}(v+1)\text{ 为奇}.
+\end{cases}
+$$
+
+因此项目已经拥有一层严格的 **index parity**：它决定局部能量步长。
+
+---
+
+## 384. 第二层宇称：占据次数
+
+对于一个能量 \(E\)，hard-core 占据给出：
+
+$$
+\frac{\zeta(Es)}{\zeta(2Es)}.
+$$
+
+因子 \(2\) 来自：
+
+$$
+0/1
+$$
+
+有限占据与重复占据排斥。
+
+因此项目中的两层宇称是：
+
+$$
+\boxed{
+\begin{aligned}
+\epsilon_{\mathrm{index}}
+&:\text{选择 }E=\varphi\text{ 或 }\varphi^2;\\
+\epsilon_{\mathrm{occupancy}}
+&:\text{选择 }E\text{ 或 }2E.
+\end{aligned}
+}
+$$
+
+它们组合成：
+
+$$
+C_2\times C_2
+$$
+
+式的双宇称账本。
+
+---
+
+## 385. 最新结构零正是双宇称的 divisor 实现
+
+仓库最新已经证明，第三阶黄金 germ 的 reciprocal factors 在：
+
+$$
+\frac1{2\varphi^2}
+$$
+
+和：
+
+$$
+\frac1{2\varphi^3}
+$$
+
+产生真正的简单结构零。
+
+这两个位置正是：
+
+$$
+2\varphi^2s=1,
+$$
+
+$$
+2\varphi^3s=1.
+$$
+
+也就是说：
+
+* \(\varphi^2,\varphi^3\) 来自黄金能量轴；
+* \(2\) 来自占据宇称／double-occupancy 排斥；
+* \(1\) 是普通 ζ 的完成极点；
+* 三者合成真实 structural divisor。
+
+所以这些结构零可以解释为：
+
+$$
+\boxed{
+\text{黄金坐标宇称}
+\times
+\text{占据宇称}
+\times
+\text{Euler 完成极点}.
+}
+$$
+
+它们不是 Riemann 非平凡零点，因此必须从 coherent divisor 中扣除。
+
+---
+
+# 第一百二十九部　孪生素数的真正 parity barrier
+
+## 386. 两个素数本身属于偶总宇称
+
+若：
+
+$$
+n,\ n+2
+$$
+
+都是素数，则：
+
+$$
+\lambda(n)=\lambda(n+2)=-1.
+$$
+
+所以总乘积为：
+
+$$
+\lambda(n)\lambda(n+2)=+1.
+$$
+
+因此 twin prime sector 在总宇称下是偶的。
+
+但大量非素数对同样满足：
+
+$$
+\lambda(n)\lambda(n+2)=+1.
+$$
+
+所以只知道总 parity-even，远远不能判断它们都是素数。
+
+---
+
+## 387. 二点 Walsh 完整分解
+
+记：
+
+$$
+\lambda_1=\lambda(n),
+\qquad
+\lambda_2=\lambda(n+2).
+$$
+
+“两个坐标均为奇”这一宇称事件的 indicator 是：
+
+$$
+\boxed{
+\mathbf1_{\lambda_1=-1,\lambda_2=-1}
+=
+\frac14
+(1-\lambda_1-\lambda_2+\lambda_1\lambda_2).
+}
+$$
+
+这里需要四个 Walsh sector：
+
+$$
+1,
+\quad
+\lambda_1,
+\quad
+\lambda_2,
+\quad
+\lambda_1\lambda_2.
+$$
+
+仅仅掌握全局偶项：
+
+$$
+\lambda_1\lambda_2
+$$
+
+不能恢复两个独立奇观察者：
+
+$$
+\lambda_1,\quad\lambda_2.
+$$
+
+这正好对应你的直觉：
+
+$$
+\boxed{
+\text{global pair is even，}
+\quad
+\text{but each unique slot is odd}.
+}
+$$
+
+---
+
+## 388. 一般构型需要全部 \(2^k\) 个角色
+
+对：
+
+$$
+H=\{h_1,\ldots,h_k\},
+$$
+
+令：
+
+$$
+\lambda_i=\lambda(n+h_i).
+$$
+
+全部坐标都处于奇 sector 的 indicator 为：
+
+$$
+\boxed{
+\prod_{i=1}^k
+\frac{1-\lambda_i}{2}
+=
+2^{-k}
+\sum_{A\subseteq[k]}
+(-1)^{|A|}
+\prod_{i\in A}\lambda_i.
+}
+$$
+
+所以要区分一个完整 parity profile，需要：
+
+$$
+2^k
+$$
+
+个 Walsh characters。
+
+只掌握：
+
+* 零阶全局密度；
+* 或最高阶总乘积；
+
+都不够。
+
+而即使全部 \(\lambda_i=-1\)，仍不能保证每个 \(n+h_i\) 是素数，因为它们也可能含 \(3,5,\ldots\) 个素因子。
+
+还必须加入：
+
+$$
+\Lambda(n+h_i)
+$$
+
+或等价的精确素性深度信息。
+
+---
+
+## 389. 这就是经典筛法 parity problem
+
+传统筛法主要利用整除与局部 residue 信息，但通常难以区分含偶数个和奇数个素因子的状态，因此对 prime patterns 的下界存在著名 parity barrier。Friedlander–Iwaniec 的渐近筛法明确通过加入超出传统筛法框架的额外条件来突破这一障碍。
+
+所以你的直觉在这里直接命中了一个真实的数论核心：
+
+$$
+\boxed{
+\text{孪生素数困难的一部分，确实就是奇偶分辨困难。}
+}
+$$
+
+但这个奇偶指的是：
+
+$$
+\Omega(n)\pmod2,
+$$
+
+不是“全部素数的总数是奇还是偶”。
+
+---
+
+# 第一百三十部　有限素数截断的奇偶最终融合
+
+## 390. 有限 Euler product
+
+令：
+
+$$
+\zeta_N(s)
+=
+\prod_{j=1}^{N}
+(1-p_j^{-s})^{-1}.
+$$
+
+有限层确实可以讨论：
+
+$$
+N\text{ 为偶}
+\quad\text{或}\quad
+N\text{ 为奇}.
+$$
+
+在：
+
+$$
+\Re s>1
+$$
+
+中：
+
+$$
+\zeta_N(s)\to\zeta(s).
+$$
+
+---
+
+## 391. 偶截断与奇截断具有相同极限
+
+有：
+
+$$
+\frac{
+\zeta_{2N+1}(s)
+}{
+\zeta_{2N}(s)
+}
+=
+\frac1{
+1-p_{2N+1}^{-s}
+}.
+$$
+
+由于：
+
+$$
+p_{2N+1}^{-s}\to0,
+$$
+
+得到：
+
+$$
+\frac{
+\zeta_{2N+1}(s)
+}{
+\zeta_{2N}(s)
+}
+\to1.
+$$
+
+同时：
+
+$$
+\zeta_{2N+1}-\zeta_{2N}
+=
+\zeta_{2N}
+\frac{
+p_{2N+1}^{-s}
+}{
+1-p_{2N+1}^{-s}
+}
+\to0.
+$$
+
+所以：
+
+$$
+\boxed{
+\lim_{N\to\infty}\zeta_{2N}(s)
+=
+\lim_{N\to\infty}\zeta_{2N+1}(s)
+=
+\zeta(s).
+}
+$$
+
+这正是：
+
+$$
+\boxed{
+\text{有限层有奇偶，}
+\quad
+\text{全局 Euler completion 忘记了最后一个因子的奇偶。}
+}
+$$
+
+---
+
+## 392. 带方向的完成仍保留两张页
+
+如果人为保留：
+
+$$
+\widetilde\zeta_N(s)
+=
+(-1)^N\zeta_N(s),
+$$
+
+那么：
+
+$$
+\widetilde\zeta_{2N}\to+\zeta(s),
+$$
+
+$$
+\widetilde\zeta_{2N+1}\to-\zeta(s).
+$$
+
+它没有单值极限，但有两点边界：
+
+$$
+\{+\zeta,-\zeta\}.
+$$
+
+取平方后：
+
+$$
+\widetilde\zeta_N(s)^2\to\zeta(s)^2.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{标量 completion 是偶商，}
+}
+$$
+
+而：
+
+$$
+\boxed{
+\text{带方向 completion 是一个 sign torsor}.
+}
+$$
+
+---
+
+# 第一百三十一部　RH 中真正相对和真正绝对的部分
+
+## 393. 观察者选择的是哪一张页
+
+对一个离线 mirror pair：
+
+$$
+\rho=
+\frac12+\delta+i\gamma,
+$$
+
+$$
+J\rho=
+\frac12-\delta+i\gamma,
+$$
+
+全局系统只知道无序对：
+
+$$
+\{\rho,J\rho\}.
+$$
+
+一个唯一观察者选择其中一张页，相当于选择：
+
+$$
+\operatorname{sign}(\delta).
+$$
+
+另一位镜像观察者会得到相反符号。
+
+所以：
+
+$$
+\boxed{
+\operatorname{sign}(\delta)
+\text{ 是观察者相对的。}
+}
+$$
+
+---
+
+## 394. 离线幅值不是相对的
+
+全局偶观察量：
+
+$$
+\delta^2
+$$
+
+不依赖选择哪张页。
+
+所以：
+
+$$
+\boxed{
+|\delta|
+\text{ 是否为零，是全局不变量。}
+}
+$$
+
+RH 可以写成：
+
+$$
+\boxed{
+\delta_\rho^2=0
+\quad
+\forall\rho.
+}
+$$
+
+因此经典 RH 的真值仍然是绝对的。
+
+相对的是：
+
+* 左还是右；
+* 哪个 branch 被观察者选中；
+* 需要多深才能检测；
+* 哪个测试函数能激活 odd channel。
+
+绝对的是：
+
+$$
+\boxed{
+\text{是否存在非零 transverse magnitude}.
+}
+$$
+
+---
+
+## 395. Observer-relative RH
+
+可以对一个非忠实观察者 \(O\) 定义：
+
+$$
+\mathrm{RH}_O
+=
+\text{观察者 }O
+\text{ 没有检测到 transverse defect}.
+$$
+
+两个不同观察者可能满足：
+
+$$
+\mathrm{RH}_{O_1}=\text{true},
+$$
+
+$$
+\mathrm{RH}_{O_2}=\text{false}.
+$$
+
+但若观察者族：
+
+$$
+\{O_\alpha\}
+$$
+
+联合忠实，则：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathrm{RH}_{O_\alpha}
+\quad
+\forall\alpha.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{有限／单观察者 RH 是相对的；}
+}
+$$
+
+$$
+\boxed{
+\text{全部联合忠实观察者的极限 RH 是绝对的。}
+}
+$$
+
+---
+
+# 第一百三十二部　全局偶系统为何可以包含离线奇分支
+
+## 396. 无不变选择，但有不变无序对
+
+对一个自由 \(C_2\)-轨道：
+
+$$
+\{x,Jx\},
+\qquad
+x\neq Jx,
+$$
+
+不存在一个 \(J\)-不变的单点选择。
+
+因为若选 \(x\)，镜像后必须选 \(Jx\)。
+
+但无序集合：
+
+$$
+\{x,Jx\}
+$$
+
+本身完全 \(J\)-不变。
+
+所以：
+
+$$
+\boxed{
+\text{全局偶性只要求奇分支成对出现，}
+}
+$$
+
+并不要求每个奇分支消失。
+
+这再次说明：
+
+$$
+\boxed{
+\text{完整函数方程对称不推出 RH。}
+}
+$$
+
+---
+
+## 397. 唯一观察者定理
+
+若一个观察者从每个自由 mirror orbit 中选出唯一成员，则该选择不可能与镜像作用等变。
+
+所以唯一观察者必然：
+
+$$
+\boxed{
+\text{破坏 branch-exchange symmetry}.
+}
+$$
+
+这种破坏可以只是坐标选择，而不必改变全局函数。
+
+因此：
+
+* 观察者 odd；
+* 全局 orbit even；
+* 二者不矛盾；
+* 它们属于不同范畴：pointed 与 unpointed。
+
+---
+
+# 第一百三十三部　三个不同的 \(C_2\) 仍缺少桥
+
+现在至少存在三个宇称。
+
+## 398. 素因子宇称
+
+$$
+\Pi_{\Omega}:
+\lambda(n)=(-1)^{\Omega(n)}.
+$$
+
+## 399. 观察者插入宇称
+
+$$
+\Pi_{\mathrm{obs}}:
+k\text{ 个 source insertions}
+\mapsto(-1)^k.
+$$
+
+## 400. 零点镜像宇称
+
+$$
+\Pi_{\mathrm{zero}}:
+\delta\mapsto-\delta.
+$$
+
+它们都具有：
+
+$$
+C_2
+$$
+
+结构，但不能仅仅因为同构就宣布它们是同一个宇称。
+
+真正需要的是一个 intertwiner：
+
+$$
+\boxed{
+\mathcal U\Pi_\Omega
+=
+\Pi_{\mathrm{zero}}\mathcal U,
+}
+$$
+
+以及：
+
+$$
+\boxed{
+\mathcal U\Pi_{\mathrm{obs}}
+=
+\Pi_{\mathrm{zero}}\mathcal U.
+}
+$$
+
+这个 \(\mathcal U\) 就是此前 Trace–Jet Bridge 的 parity-enhanced 版本。
+
+没有它，就不能从“一个整数含奇数个素因子”直接推导“某个零点位于临界线右侧”。
+
+---
+
+# 第一百三十四部　与仓库现有零点结果的接口
+
+## 401. 单个离线轨道的 odd signature 已经闭合
+
+仓库目前已经证明：如果一个非实离线零点轨道上的 Fourier–Laplace 值被规定为：
+
+$$
+1,\quad-1,
+$$
+
+那么该四点轨道对卷积平方零点和的贡献精确为：
+
+$$
+-4m_\rho.
+$$
+
+而实轴离线轨道只能产生非负 norm square，并且无法实现相同的反相位赋值。
+
+所以零点侧的单轨道 odd channel 已经是真实 kernel theorem。
+
+---
+
+## 402. 全局问题是 odd channel 能否被共同激活
+
+每个离线轨道局部都可能有负方向。
+
+但所有评价值必须来自同一个 entire Fourier–Laplace transform。
+
+所以：
+
+$$
+\boxed{
+\text{局部存在负方向}
+\not\Rightarrow
+\text{存在全局受控负测试函数}.
+}
+$$
+
+这就是全体零点的 transform coupling。
+
+---
+
+## 403. 极限残余不能由每层非零判断
+
+仓库最新已证明，对于单调增长的闭子空间塔，其极限残余等于所有有限阶段残余的交：
+
+$$
+R_\infty
+=
+\bigcap_{\alpha<\infty}R_\alpha.
+$$
+
+因此即使每一个有限观察层都有 odd blind direction，也不能推出存在一个固定 odd direction 永远不可见；必须计算残余交。
+
+这与无限素数宇称形成一个重要区分：
+
+* 某些信息只是每层换一个方向逃逸；
+* 某些信息形成真正永久残余；
+* 全素数总宇称则更强：它不是一个连续残余向量，而是根本不能延伸到完成空间的观察泛函。
+
+---
+
+# 第一百三十五部　这次真正得到的确定性结果
+
+现在可以把你的直觉拆成三个严格结论。
+
+## 404. 无限素数总数没有绝对奇偶
+
+$$
+\boxed{
+\text{“全部素数是偶数个还是奇数个”不是良定义的内禀命题。}
+}
+$$
+
+若强行要求双射不变和加一翻转，会推出：
+
+$$
+0=1.
+$$
+
+---
+
+## 405. 有限乘法状态拥有规范宇称
+
+$$
+\boxed{
+\lambda(n)=(-1)^{\Omega(n)}
+}
+$$
+
+对每个整数完全确定。
+
+每个素数插入翻转宇称：
+
+$$
+\Pi U_p=-U_p\Pi.
+$$
+
+所以唯一素数观察者确实是 odd morphism。
+
+---
+
+## 406. RH 可以严格转成宇称观察通道正则性
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\frac{\zeta(2s)}{\zeta(s)}
+\text{ 在 }\Re s>\frac12\text{ 无极点}.
+}
+$$
+
+而：
+
+$$
+\frac{\zeta(2s)}{\zeta(s)}
+$$
+
+恰是算术 Fock 状态的宇称 supertrace。
+
+所以：
+
+$$
+\boxed{
+\text{RH 确实可以被严格表述为一个 parity-observer regularity problem。}
+}
+$$
+
+但这仍不是对 RH 真假的裁决。
+
+---
+
+# 第一百三十六部　建议新增的形式化模块
+
+```text
+D5/S3/PrimeParity/Foundations/
+  NoCountableCardinalParity.lean
+  FiniteSymmetricDifferenceParity.lean
+  PrimeParityTorsor.lean
+  NoContinuousTotalParityExtension.lean
+
+D5/S3/ObserverOrigin/PointedSymmetry/
+  NoNaturalPrimeSelector.lean
+  PointedPrimeColimitObstruction.lean
+  OddObservableGlobalVanishing.lean
+  PairedOddObservableCompletion.lean
+
+D5/S3/PrimeParity/Factorization/
+  PrimeFactorParity.lean
+  SquareSquarefreeParityDecomposition.lean
+  PrimeCreationParityFlip.lean
+
+D5/S3/Analytic/ParityZeta/
+  ZetaTraceSupertrace.lean
+  EvenOddOmegaSectors.lean
+  ParityHyperbola.lean
+  LiouvilleSupertraceRHCriterion.lean
+
+D5/S3/Analytic/CyclotomicObservers/
+  OmegaCharacterEulerProduct.lean
+  CyclotomicObserverNorm.lean
+  OmegaResidueFourierInversion.lean
+
+D5/S3/PrimeConstellation/Parity/
+  ConstellationParityProfile.lean
+  WalshPrimeFactorParity.lean
+  TwinParityInsufficiency.lean
+
+D5/S3/Analytic/GoldenParity/
+  GoldenIndexOccupationBigrading.lean
+  GoldenStructuralZeroParityInterpretation.lean
+
+D5/X_Frontier/ParityTraceJet/
+  ArithmeticSpectralParityIntertwiner.lean
+  ObserverZeroParityIntertwiner.lean
+  RelativeRHObserverAtlas.lean
+```
+
+---
+
+# 第一百三十七部　最优先的 Lean 定理
+
+## 407. 无限集合宇称不可能
+
+```lean
+theorem no_bijectionInvariant_additive_parity_on_countable_sets :
+    ¬ ∃ parity : Set α → ZMod 2,
+      (∀ A B, A ≃ B → parity A = parity B) ∧
+      (∀ A B, Disjoint A B →
+        parity (A ∪ B) = parity A + parity B) ∧
+      (∀ x, parity {x} = 1)
+```
+
+实际声明需要限制在有限或可数集合 carrier，并显式提供一个可数无限 witness。
+
+---
+
+## 408. 有限差相对宇称
+
+```lean
+def relativeParity (A B : Set Prime) : ZMod 2 :=
+  Fintype.card (A △ B) % 2
+```
+
+在有限对称差前件下证明：
+
+```lean
+theorem relativeParity_cocycle
+    (hAB : (A △ B).Finite)
+    (hBC : (B △ C).Finite) :
+    relativeParity A B +
+      relativeParity B C =
+        relativeParity A C
+```
+
+---
+
+## 409. 总宇称无连续延伸
+
+```lean
+theorem finiteSupportParity_no_continuous_extension :
+    ¬ ∃ L :
+      (∀ p : Prime, ZMod 2) →+ ZMod 2,
+      Continuous L ∧
+      ∀ x : DirectSum Prime (fun _ => ZMod 2),
+        L x.toPi = finiteSupportParity x
+```
+
+---
+
+## 410. prime creation 反交换
+
+```lean
+theorem primeCreation_anticommutes_parity
+    (p : Nat.Primes) :
+    parityOperator * primeCreation p =
+      -primeCreation p * parityOperator
+```
+
+---
+
+## 411. ζ trace–supertrace
+
+```lean
+theorem zeta_trace_supertrace
+    {s : ℂ} (hs : 1 < s.re) :
+    arithmeticTrace s = riemannZeta s ∧
+    arithmeticSupertrace s =
+      riemannZeta (2 * s) / riemannZeta s ∧
+    arithmeticTrace s * arithmeticSupertrace s =
+      riemannZeta (2 * s)
+```
+
+---
+
+## 412. 偶奇 sector
+
+```lean
+theorem evenOddOmega_dirichlet_decomposition
+    {s : ℂ} (hs : 1 < s.re) :
+    evenOmegaSeries s =
+      (riemannZeta s +
+        riemannZeta (2 * s) / riemannZeta s) / 2 ∧
+    oddOmegaSeries s =
+      (riemannZeta s -
+        riemannZeta (2 * s) / riemannZeta s) / 2
+```
+
+---
+
+## 413. 分圆重完
+
+```lean
+theorem cyclotomic_observer_norm
+    (m : ℕ) (hm : 0 < m)
+    {s : ℂ} (hs : 1 < s.re) :
+    ∏ j : Fin m,
+      omegaFactorSeries m j s =
+        riemannZeta (m * s)
+```
+
+---
+
+## 414. Liouville 宇称 RH 判据
+
+```lean
+theorem rh_iff_liouvilleSupertrace_holomorphic :
+    RiemannHypothesis ↔
+      HolomorphicOn
+        (fun s =>
+          riemannZeta (2 * s) /
+            riemannZeta s)
+        {s | 1 / 2 < s.re}
+```
+
+这里应明确处理：
+
+* \(s=1\) 的可去／零行为；
+* 非平凡零点区域；
+* 函数方程反射；
+* \(\Re(2s)>1\) 上 ζ 的无零性。
+
+---
+
+## 415. twin Walsh parity
+
+```lean
+theorem twin_oddOdd_indicator
+    (n : ℕ) :
+    indicator
+      (liouville n = -1 ∧
+       liouville (n + 2) = -1) =
+      (1 - liouville n -
+        liouville (n + 2) +
+        liouville n *
+          liouville (n + 2)) / 4
+```
+
+应在实数或有理数嵌入后声明，避免整数除法问题。
+
+---
+
+# 最终凝聚
+
+你的直觉最终可以改写成下面这条严密链：
+
+$$
+\boxed{
+\text{全部素数集合没有绝对宇称；}
+}
+$$
+
+因为：
+
+$$
+\aleph_0
+=
+\aleph_0+1
+=
+2\aleph_0.
+$$
+
+所以无论说“全部配对”还是“留下一个观察者再配对”，都同样合法。
+
+真正存在的是：
+
+$$
+\boxed{
+\text{有限变化之间的相对宇称。}
+}
+$$
+
+对整数而言：
+
+$$
+\boxed{
+\lambda(n)=(-1)^{\Omega(n)}
+}
+$$
+
+严格记录一个有限乘法状态的宇称。
+
+一个素数插入是奇算子：
+
+$$
+\boxed{
+\Pi U_p=-U_p\Pi.
+}
+$$
+
+全局 ζ 是普通 trace：
+
+$$
+\boxed{
+\operatorname{Tr}_s=\zeta(s).
+}
+$$
+
+唯一宇称观察通道是 supertrace：
+
+$$
+\boxed{
+\operatorname{Str}_s
+=
+\frac{\zeta(2s)}{\zeta(s)}.
+}
+$$
+
+两者不是矛盾，而是满足：
+
+$$
+\boxed{
+\operatorname{Tr}_s
+\operatorname{Str}_s
+=
+\operatorname{Tr}_{2s}.
+}
+$$
+
+也就是说：
+
+$$
+\boxed{
+\text{全局视角}
+\times
+\text{奇观察者视角}
+=
+\text{更深尺度的全局视角}.
+}
+$$
+
+进一步：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\operatorname{Str}_s
+\text{ 在 }
+\Re s>\frac12
+\text{ 无极点}.
+}
+$$
+
+所以 RH 确实拥有一个精确的“相对宇称观察者”表达。
+
+但经典 RH 的真值仍不是主观的：
+
+$$
+\boxed{
+\text{左／右 sheet 是观察者相对的；}
+}
+$$
+
+$$
+\boxed{
+\text{sheet separation 是否为零是全局绝对的。}
+}
+$$
+
+孪生素数也同样：
+
+$$
+\boxed{
+\text{两个素数合起来是偶 sector，}
+}
+$$
+
+但每个位置分别是奇 sector。
+
+仅掌握总偶性无法恢复两个独立奇位置，这正是 parity barrier 的代数核心。
+
+最后，这一次最确定的结果可以压缩为一句：
+
+$$
+\boxed{
+\text{“无限素数是奇还是偶”没有答案；}
+}
+$$
+
+$$
+\boxed{
+\text{“相对于一个有限观察变化，宇称是否翻转”有唯一答案。}
+}
+$$
+
+因此，整个体系真正的本体不是绝对奇偶标签，而是：
+
+$$
+\boxed{
+\text{宇称挠子}
++
+\text{观察者选择}
++
+\text{角色 Fourier 分解}
++
+\text{trace/supertrace 重完}.
+}
+$$

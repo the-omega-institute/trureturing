@@ -1,0 +1,47 @@
+## 332. 反射角色选择律
+
+在临界线：
+
+$$
+s=\frac12+i\gamma.
+$$
+
+小变动：
+
+$$
+\dot s=\dot\delta+i\dot\gamma
+$$
+
+给出：
+
+$$
+\dot q
+=
+(1-2s)\dot s
+=
+2\gamma\dot\gamma
+-
+2i\gamma\dot\delta.
+$$
+
+所以：
+
+$$
+\boxed{
+\Re\dot q
+=
+2\gamma\dot\gamma,
+}
+$$
+
+$$
+\boxed{
+\Im\dot q
+=
+-2\gamma\dot\delta.
+}
+$$
+
+因此：
+
+* mirror-even source 主要沿 \(q\)-实轴改变高度；

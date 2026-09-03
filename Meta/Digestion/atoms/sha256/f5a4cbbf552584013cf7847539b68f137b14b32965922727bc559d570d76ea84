@@ -1,0 +1,41 @@
+## 325. 有限素数观察是有限自动机
+
+对固定模数 \(m\)，Fibonacci 数列：
+
+$$
+F_k\bmod m
+$$
+
+是周期的。
+
+所以读取：
+
+$$
+n=\sum_k\varepsilon_kF_k
+\pmod m
+$$
+
+只需维护：
+
+* 当前 residue；
+* 当前 index 在 Pisano 周期中的位置；
+* Zeckendorf 邻接合法状态。
+
+因此是有限状态 transducer。
+
+对有限素数集合 \(S\)，把这些自动机取直积，得到有限的 constellation sieve observer。
+
+当 \(S\) 增大到全部素数时，得到 inverse-limit/profinite observer。
+
+这正是：
+
+$$
+\boxed{
+\text{有限观察可计算，}
+\qquad
+\text{无限完成没有统一有限状态数}.
+}
+$$
+
+---
+

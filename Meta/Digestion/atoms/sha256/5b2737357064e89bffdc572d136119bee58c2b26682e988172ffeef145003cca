@@ -1,0 +1,84 @@
+## 277. Cayley 坐标把两个作用变成“倒数”与“共轭”
+
+定义：
+
+$$
+\boxed{
+u(s)=1-\frac1s=\frac{s-1}{s}.
+}
+$$
+
+则：
+
+$$
+u(1-s)=u(s)^{-1},
+$$
+
+$$
+u(\overline s)=\overline{u(s)},
+$$
+
+以及：
+
+$$
+u(1-\overline s)
+=
+\frac1{\overline{u(s)}}.
+$$
+
+所以在 \(u\)-平面中：
+
+$$
+\boxed{
+R:u\mapsto u^{-1},
+}
+$$
+
+$$
+\boxed{
+C:u\mapsto\overline u,
+}
+$$
+
+$$
+\boxed{
+J:u\mapsto\overline u^{-1}.
+}
+$$
+
+于是：
+
+$$
+R(u)=C(u)
+\iff
+u^{-1}=\overline u
+\iff
+|u|=1.
+$$
+
+因此：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+|u(\rho)|=1
+\quad
+\text{对全部非平凡零点 }\rho.
+}
+$$
+
+这使“坐标轴融合”获得了一个完全精确的含义：
+
+$$
+\boxed{
+\text{内部解析对偶 }u\mapsto u^{-1}
+=
+\text{外部现实作用 }u\mapsto\overline u.
+}
+$$
+
+单位圆正是倒数与共轭重合的地方。
+
+---
+
