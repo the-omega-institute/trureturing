@@ -24,7 +24,7 @@ docs/theory(参考输入)──摄入机器──► Lean(唯一真源)◄──
 
 - **Lean = 唯一真源**:真值=声明+证明项+axiom 闭包,注释零参与;X_Frontier 的 `TASK D5-Tnnnn` 是由冻结门与 SL-016 等 fail-closed 消费者读取的治理案号,其余工单散文非数学承重;SL-013 保留为 deferred `NoFindings`,不执法散文形状。
 - **C# harness = 针对 Lean 的机器**:程序集只许程序(类型/逻辑/loader/writer);声明性数据实例住程序目录外(TOML/scribe.cs/Evidence/D5)或测试 fixture(数据居所律,第 6 条)。
-- **docs/theory = 仅参考输入**:经摄入机器(atomizer+消化账本)消化;Lean/C# 对其零知识零定位(TheoryIsolation 守卫);**卷只增不减,atom 只增不减**——atom 一经产出即**不可变**,已形式化者标记为闭合以免**重复形式化**;勘误以**追加散文 + 追加新 atom** 发布,旧 atom 与其 CAS 一个字节不动(SL-029 机器守卫候选侧 delta:base 字节须仍是候选字节的前缀)。〔**总则·atoms 不删(τ=0 owner 2026-08-30 裁决)**:**atom 不删。凡与「atoms 不删」冲突的条款,一律以「atoms 不删」为准**,无论其写在 SPEC、本文件还是任何下位文档。此处原文曾为「条目消化尽则删,历史归 git」,该表述与本意不符——**本意是 atom 不变、已形式化者不再被重复形式化,不是删卷**,现按总则勘正。**待同批勘正的已知冲突条款**:`docs/develop/spec/golden-ledger-repo-spec.md` 的「理论原子可删除当且仅当…」(可删除性合取)与「现役 ingest 不投影 `supersedes` 边」,记 **#4145**。**实现层已符合总则(2026-08-30 实测)**:`Meta/Digestion/atoms/sha256/` 的 CAS blob **零删除面**(全仓无删除它的代码);`IngestCommand.cs:493` 的删除只发生在账目条目于 `residual-open`→`absorbed-closed` 间**移动**时删旧路径,内容在新路径完整保留;`EchoVerifyCommand.cs:100` 删的是`*.md` 投影而非 atom。**故本条不是新增约束,是把已成立的实现写回规范,并撤销与之矛盾的旧表述。**旁证:近 40 个碰理论卷的提交中整卷退役 **0** 次,卷内改行 14 次——该删除路径写着但从未在用。〕
+- **docs/theory = 仅参考输入**:经摄入机器(atomizer+消化账本)消化;Lean/C# 对其零知识零定位(TheoryIsolation 守卫)。**卷与 atoms 不删仍是建设者纪律**:已形式化者不重复形式化,勘误以追加散文与新 atom 表达。**不再有只增不减的机器判官**——owner 2026-09-02 裁决「只增不减的账本就是 git 本身,只保证数据当下正确」;改删历史由 git 查证。**实现层仍无既有 CAS blob 删除面**;失败回滚只删除本次调用新建且尚未入账的 blob。
 
 - **节点** = 命题/工件(closed/open/tail/semantic 四态账目);**边** = 证明依赖。**无环**:证明不循环 → 良基 → 可归纳、可分层。
 - **冻结律(核心)**:节点一旦 **kernel-verified 为真 → 冻结,单调累积,永不解冻**(append-only;SL-008)。图只增不减、不可逆——**这就是"坐标系不动点"(GICT 7.3)的运行形式**:已冻结的真,是变换下不变的标架。
@@ -124,7 +124,7 @@ import 只许向下;**投影不当骨骼**——文档、书、论文都是图�
 第 7 条定了**方向**(理论卷只是参考输入,Lean 形式化才是唯一真源);本款把那条方向**逐环写死**,使任一 PR 都能被读者与机器同时定位在链上的哪一环。**路径→kind→producer→verifier 的映射不在此复制**——其唯一真源是 `Meta/FILEMAP.toml`(strict loader + `FileMapPolicy` 执法,`FILEMAP-DATA-VERIFIER` 判 `verified_by` 悬空);本款只定**次序、PR 形态与状态语义**,二者若冲突以 FILEMAP 为准(第 6 条一名一址)。
 
 ```
-docs/develop/theory/**                       参考输入·卷只增不减,程序对其零知识
+docs/develop/theory/**                       参考输入·当前正确,历史归 git,程序对其零知识
   │ make ingest
   ├─► Meta/Digestion/atoms/sha256/<atom_id>              atom CAS blob·一经产出不可变
   └─► Meta/Digestion/backfill/<source_id>/<态>/<atom_id>.yaml   消化账目·三态见下
