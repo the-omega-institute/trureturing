@@ -1,0 +1,36 @@
+name: build-cadical-3-research
+
+on:
+  push:
+    branches:
+      - agent/research/cadical-3-binary-20260903
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build CaDiCaL 3.0.1
+        run: |
+          git clone --depth 1 --branch rel-3.0.1 \
+            https://github.com/arminbiere/cadical.git /tmp/cadical
+          cd /tmp/cadical
+          ./configure
+          make -j2
+          mkdir -p "$GITHUB_WORKSPACE/cadical-research"
+          cp build/cadical "$GITHUB_WORKSPACE/cadical-research/"
+          cp "$GITHUB_WORKSPACE/research/phi_b4_bounds.py" \
+             "$GITHUB_WORKSPACE/cadical-research/"
+          cp "$GITHUB_WORKSPACE/research/phi_b4_bounds_v2.py" \
+             "$GITHUB_WORKSPACE/cadical-research/"
+          build/cadical --version > \
+             "$GITHUB_WORKSPACE/cadical-research/version.txt"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cadical-3-phi-b4-research
+          path: cadical-research
