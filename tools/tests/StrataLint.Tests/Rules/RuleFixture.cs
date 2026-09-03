@@ -306,11 +306,24 @@ internal sealed partial class RuleFixture
     internal RuleEvaluationContext Build(
         RawChangeSet changes,
         ValidatedPolicy? suppliedPolicy = null,
-        VerifiedScribeEmissions? verifiedScribeEmissions = null)
+        VerifiedScribeEmissions? verifiedScribeEmissions = null) =>
+        Build(changes, suppliedPolicy, verifiedScribeEmissions, includeProjectFiles: true);
+
+    internal RuleEvaluationContext BuildScopeProbe(
+        RawChangeSet changes,
+        ValidatedPolicy? suppliedPolicy = null,
+        VerifiedScribeEmissions? verifiedScribeEmissions = null) =>
+        Build(changes, suppliedPolicy, verifiedScribeEmissions, includeProjectFiles: false);
+
+    private RuleEvaluationContext Build(
+        RawChangeSet changes,
+        ValidatedPolicy? suppliedPolicy,
+        VerifiedScribeEmissions? verifiedScribeEmissions,
+        bool includeProjectFiles)
     {
-        var current = Decode(Files);
-        var baseline = Decode(Baseline);
-        var forkPoint = Decode(ForkPoint);
+        var current = Decode(Files, includeProjectFiles);
+        var baseline = Decode(Baseline, includeProjectFiles);
+        var forkPoint = Decode(ForkPoint, includeProjectFiles);
         var policy = suppliedPolicy;
         if (policy is null)
         {
@@ -589,9 +602,14 @@ internal sealed partial class RuleFixture
         Reports[path] = Report();
     }
 
-    private static RepositorySnapshot Decode(IReadOnlyDictionary<string, string> files)
+    private static RepositorySnapshot Decode(
+        IReadOnlyDictionary<string, string> files,
+        bool includeProjectFiles = true)
     {
-        var raw = RawRepositorySnapshot.Create(files.Select(pair =>
+        var raw = RawRepositorySnapshot.Create(files
+            .Where(pair => includeProjectFiles
+                || !pair.Key.EndsWith(".csproj", StringComparison.Ordinal))
+            .Select(pair =>
         {
             var bytes = ImmutableArray.CreateRange(Encoding.UTF8.GetBytes(pair.Value));
             return new RawRepositoryEntry(

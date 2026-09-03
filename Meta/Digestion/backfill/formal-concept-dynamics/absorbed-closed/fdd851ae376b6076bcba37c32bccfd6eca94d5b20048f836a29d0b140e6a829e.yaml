@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:fdd851ae376b6076bcba37c32bccfd6eca94d5b20048f836a29d0b140e6a829e
+  normalized_sha256: sha256:fdd851ae376b6076bcba37c32bccfd6eca94d5b20048f836a29d0b140e6a829e
+cas_ref: sha256:fdd851ae376b6076bcba37c32bccfd6eca94d5b20048f836a29d0b140e6a829e
+coverage_gids:
+  - D5/S3/ConceptDynamics/DecisionValue/CoordinationBestResponseNonuniqueness.local_best_responses_do_not_select_unique_outcome
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/DecisionValue/CoordinationBestResponseNonuniqueness.local_best_responses_do_not_select_unique_outcome
+      source_sha256: sha256:fdd851ae376b6076bcba37c32bccfd6eca94d5b20048f836a29d0b140e6a829e
+      target_statement_id: sha256:5f85443c71627583df3ead248924703f6cc28fc35a3387e403b1620ad984e129
+  scribe:
+    - gid: D5/S3/ConceptDynamics/DecisionValue/CoordinationBestResponseNonuniqueness.local_best_responses_do_not_select_unique_outcome
+      definition_sha256: sha256:5f05ece7f12ae2e06c5a2303922b2fc63fe9853bb18cffc8d48196bd5eb13d3a
+      emission_sha256: sha256:bdaa81adff76839f214ac9da3f976bd36e2dba097d4e4d30bff084ec85ac4890
+  unresolved_subitems: []

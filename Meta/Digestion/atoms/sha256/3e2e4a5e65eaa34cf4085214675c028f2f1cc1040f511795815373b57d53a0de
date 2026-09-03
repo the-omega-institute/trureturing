@@ -1,0 +1,112 @@
+# 第一千九百三十部　法向深度就是一个广义本征值
+
+继续设有限支撑有 \(r\) 个不同节点。
+
+令 Vandermonde 矩阵为：
+
+$$
+V_{ij}=x_j^i,
+\qquad
+0\le i\le r-1.
+$$
+
+令：
+
+$$
+W=\operatorname{diag}(w_1,\ldots,w_r),
+$$
+
+$$
+X=\operatorname{diag}(x_1,\ldots,x_r).
+$$
+
+则完整秩矩阵满足：
+
+$$
+\boxed{
+H^{(0)}
+=
+VWV^*,
+}
+\tag{1930.1}
+$$
+
+$$
+\boxed{
+H^{(1)}
+=
+VWXV^*.
+}
+\tag{1930.2}
+$$
+
+因此：
+
+$$
+H^{(1)}-\lambda H^{(0)}
+=
+VW(X-\lambda I)V^*.
+$$
+
+从而：
+
+$$
+\boxed{
+\det
+\left(
+H^{(1)}-\lambda H^{(0)}
+\right)
+=
+|\det V|^2
+\det W
+\prod_{j=1}^{r}(x_j-\lambda).
+}
+\tag{1930.3}
+$$
+
+所以广义本征值恰好是全部支撑节点：
+
+$$
+\boxed{
+\operatorname{Spec}
+\left(
+H^{(1)},H^{(0)}
+\right)
+=
+\{x_1,\ldots,x_r\}.
+}
+\tag{1930.4}
+$$
+
+等价地，白化矩阵：
+
+$$
+\boxed{
+Q_{\mathrm{supp}}
+=
+(H^{(0)})^{-1/2}
+H^{(1)}
+(H^{(0)})^{-1/2}
+}
+\tag{1930.5}
+$$
+
+的谱就是支撑坐标。
+
+因此：
+
+$$
+\boxed{
+\sup
+\left\{
+\beta:
+H^{(1)}-\beta H^{(0)}\succeq0
+\right\}
+=
+\min_jx_j.
+}
+\tag{1930.6}
+$$
+
+---
+

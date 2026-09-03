@@ -1,0 +1,63 @@
+## 定理 21.1　对称不定位
+
+令：
+
+$$
+z=s-\frac12
+$$
+
+并定义：
+
+$$
+P_{\delta,\gamma}(s)
+=
+\bigl((z-\delta)^2+\gamma^2\bigr)
+\bigl((z+\delta)^2+\gamma^2\bigr).
+$$
+
+它满足：
+
+$$
+P_{\delta,\gamma}(1-s)
+=
+P_{\delta,\gamma}(s),
+$$
+
+$$
+P_{\delta,\gamma}(\overline s)
+=
+\overline{P_{\delta,\gamma}(s)},
+$$
+
+但其零点为：
+
+$$
+\frac12\pm\delta\pm i\gamma.
+$$
+
+当 \(\delta\neq0\) 时，全部离开临界线。
+
+因此：
+
+$$
+\boxed{
+\text{完整函数方程对称}
+\not\Rightarrow
+\text{零点位于固定线}.
+}
+$$
+
+RH 不是“对称被恢复”，而是所有零点的稳定子增大：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+J\rho=\rho
+\quad
+\text{对所有非平凡零点}.
+}
+$$
+
+---
+

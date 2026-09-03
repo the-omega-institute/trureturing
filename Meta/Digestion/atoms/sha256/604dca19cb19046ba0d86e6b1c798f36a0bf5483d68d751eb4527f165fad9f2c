@@ -1,0 +1,56 @@
+## 184. 轨道判别式就是 \(q\)-虚部
+
+有：
+
+$$
+b-\frac{a^2}{4}
+=
+4\delta^2\gamma^2.
+$$
+
+而：
+
+$$
+\Im q_\rho=-2\delta\gamma.
+$$
+
+所以：
+
+$$
+\boxed{
+b-\frac{a^2}{4}
+=
+(\Im q_\rho)^2.
+}
+$$
+
+另一方面：
+
+$$
+\left|
+(\rho-\tfrac12)^2
+-
+(\overline\rho-\tfrac12)^2
+\right|
+=
+4|\delta\gamma|
+=
+2|\Im q_\rho|.
+$$
+
+因此以下三个量实际上是同一个 defect 的不同表示：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{四元轨道多项式的系数缺陷};\\
+&\text{反射商坐标的虚部};\\
+&\text{偶函数插值中两个平方节点的分离度}.
+\end{aligned}
+}
+$$
+
+这直接解释了为什么越靠近临界线的离线零点越难被 separator 分离。
+
+---
+

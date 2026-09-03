@@ -1,0 +1,29 @@
+## 1932.1 三种谱相
+
+$$
+\boxed{
+\begin{array}{c|c}
+\alpha_*>0
+&
+\text{存在严格共同 Haar 核心}
+\\
+\alpha_*=0
+&
+\text{正状态位于共同背景锥边界}
+\\
+\alpha_*<0
+&
+\text{连零共同背景都无法正实现}
+\end{array}
+}
+\tag{1932.4}
+$$
+
+第一种是 robust completion。
+
+第二种是 critical completion。
+
+第三种是 relation obstruction。
+
+---
+

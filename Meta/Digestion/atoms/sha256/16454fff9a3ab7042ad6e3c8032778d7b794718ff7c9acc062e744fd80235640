@@ -1,0 +1,12 @@
+### 150.8 Local cumulant closed form
+
+```lean
+theorem distinctResidue_survival_jointCumulant
+    (hdistinct : Set.Pairwise ...)
+    (d : ℕ) (hd : 2 ≤ d) :
+    jointCumulant ... =
+      -((d - 1).factorial : ℝ) / p ^ d
+```
+
+---
+

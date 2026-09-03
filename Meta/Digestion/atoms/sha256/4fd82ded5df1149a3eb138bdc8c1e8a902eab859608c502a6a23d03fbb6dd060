@@ -1,0 +1,35 @@
+## 117. 临界线附近的分离成本发散
+
+当：
+
+$$
+\rho=\frac12+\delta+i\gamma
+$$
+
+趋近临界线时，mirror 节点之间距离趋于零。
+
+对应 evaluation vectors 趋近线性相关，Gram 矩阵条件数恶化。
+
+因此预期：
+
+$$
+\operatorname{SepCost}(\rho)
+\to\infty
+\qquad
+(\delta\to0).
+$$
+
+这与此前得到的有限两点插值分母：
+
+$$
+|z^2-\overline z^{\,2}|
+=
+4|\gamma\delta|
+$$
+
+完全一致。
+
+所以最接近临界线的假想离线零点，正是最难被有限观察者独立分离的零点。
+
+---
+

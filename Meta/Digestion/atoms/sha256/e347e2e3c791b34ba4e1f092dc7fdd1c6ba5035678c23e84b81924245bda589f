@@ -1,0 +1,16 @@
+## 157. 筛法纠缠判据
+
+$$
+\boxed{
+p\text{-admissible}
+\iff
+\operatorname{SchmidtRank}|\Psi_{p,H}\rangle<p
+\iff
+\det C_{p,H}>0.
+}
+$$
+
+局部素数构型同时具有量子信息、协方差和筛法三种完全等价的读数。
+
+---
+

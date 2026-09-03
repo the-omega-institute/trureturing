@@ -1,0 +1,38 @@
+## 109. 二重零点产生换位生成元
+
+绕一个 generic double-zero discriminant component 一圈，局部模型
+
+$$
+w^2=\mu
+$$
+
+使两条 branch 交换。
+
+所以每个 generic 判别式分支都给出一个换位：
+
+$$
+\tau_{ab}=(a\,b)
+\in
+\operatorname{Perm}(\mathscr Z).
+$$
+
+这里 \(a,b\) 是在碰撞点合并的两条零点分支。
+
+因此，多重零点并不只是“两个零点暂时重合”；它还是零点分支 monodromy 的生成源：
+
+$$
+\boxed{
+\text{double-zero collision}
+\Longrightarrow
+\text{branch transposition}.
+}
+$$
+
+这给“离线零点对成对产生”增加了一个更强的结论：
+
+> 一对零点不仅共享同一个产生点，而且在参数空间中不能被全局连续地区分；绕产生点一圈，两者会互换身份。
+
+这是一种严格的**拓扑不可分辨性**，比一般的数值相关更强，但仍不等同于物理量子纠缠。
+
+---
+

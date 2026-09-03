@@ -1,0 +1,13 @@
+### 151.3 Pair local factor from code
+
+```lean
+theorem pairLocalFactor_of_zeckendorfGap
+    (p : Nat.Primes) (h : ℕ) :
+    pairLocalFactor p h =
+      if runResidue p (wdigits h) = 0
+      then p / (p - 1)
+      else p * (p - 2) / (p - 1)^2
+```
+
+---
+

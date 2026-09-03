@@ -1,0 +1,19 @@
+## 153. 第四优先级：有限 log-determinant Trace–Jet
+
+```lean
+theorem squareZero_logDet_mixedCoefficient
+    (L : Matrix n n ℂ)
+    (hL : IsUnit L.det)
+    (B : ι → Matrix n n ℂ)
+    (S : Finset ι) :
+    coefficient S
+      (logDetSourcePencil L B) =
+      -∑ cyclicOrdering : CyclicOrdering S,
+        Matrix.trace
+          (orderedResolventProduct L B cyclicOrdering)
+```
+
+这应当是整个理论最重要的有限代数核心之一。
+
+---
+

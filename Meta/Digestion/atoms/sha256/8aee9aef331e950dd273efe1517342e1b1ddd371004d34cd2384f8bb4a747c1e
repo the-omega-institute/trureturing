@@ -1,0 +1,55 @@
+## 15. 内部轴与外部轴融合
+
+由于 \(F\) 是对称矩阵，其左、右本征方向一致。
+
+扩张方向：
+
+$$
+v_+
+=
+\begin{pmatrix}
+\varphi\\
+1
+\end{pmatrix},
+$$
+
+收缩翻转方向：
+
+$$
+v_-
+=
+\begin{pmatrix}
+\psi\\
+1
+\end{pmatrix}.
+$$
+
+而且：
+
+$$
+v_+\cdot v_-
+=
+\varphi\psi+1
+=
+0.
+$$
+
+所以它们正交。
+
+这意味着：
+
+* 作为状态演化方向的右本征轴；
+* 作为测量坐标的左本征轴；
+
+可以取为同一组轴。
+
+这就是一个真正的：
+
+$$
+\boxed{
+\text{internal–external coordinate fusion}.
+}
+$$
+
+---
+

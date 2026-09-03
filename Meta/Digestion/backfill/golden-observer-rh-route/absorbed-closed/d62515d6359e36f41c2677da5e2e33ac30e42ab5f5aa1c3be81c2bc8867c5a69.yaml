@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:d62515d6359e36f41c2677da5e2e33ac30e42ab5f5aa1c3be81c2bc8867c5a69
+  normalized_sha256: sha256:d62515d6359e36f41c2677da5e2e33ac30e42ab5f5aa1c3be81c2bc8867c5a69
+cas_ref: sha256:d62515d6359e36f41c2677da5e2e33ac30e42ab5f5aa1c3be81c2bc8867c5a69
+coverage_gids:
+  - D5/S3/Weil/ZetaBridge/AlternatingZetaContinuation.riemannZeta_ne_zero_of_real_mem_Ioo
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/ZetaBridge/AlternatingZetaContinuation.riemannZeta_ne_zero_of_real_mem_Ioo
+      source_sha256: sha256:d62515d6359e36f41c2677da5e2e33ac30e42ab5f5aa1c3be81c2bc8867c5a69
+      target_statement_id: sha256:3765473a6590caf0c2aea4e41f7b9dff32861645b8e5bdc36614d292084ee423
+  scribe:
+    - gid: D5/S3/Weil/ZetaBridge/AlternatingZetaContinuation.riemannZeta_ne_zero_of_real_mem_Ioo
+      definition_sha256: sha256:c1c646e0fb58044c3ad41a73378232bae9a716da687788ea99aac9d60311ddbc
+      emission_sha256: sha256:e7f3d0de0badfac04b12e0f0952d089a9d5d52ddc544c2772065acd227fdf8df
+  unresolved_subitems: []

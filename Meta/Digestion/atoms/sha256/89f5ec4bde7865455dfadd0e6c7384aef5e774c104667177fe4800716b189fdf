@@ -1,0 +1,66 @@
+## 175. 一圈交换，两圈返回
+
+投影：
+
+$$
+\lambda
+\longmapsto
+q=\lambda(1-\lambda)
+$$
+
+是二重覆盖，分支点为：
+
+$$
+q=\frac14
+$$
+
+以及 Riemann sphere 上的无穷远点。
+
+单位圆：
+
+$$
+|q|=1
+$$
+
+包围有限分支点 \(1/4\)。
+
+因此，沿 \(q\)-单位圆完整绕行一次，平方根：
+
+$$
+\sqrt{\frac14-q}
+$$
+
+改变符号。
+
+所以：
+
+$$
+\lambda_+
+\longmapsto
+\lambda_-=1-\lambda_+.
+$$
+
+只有绕行两次才返回原 branch。
+
+这给出一个完全严格的：
+
+$$
+\boxed{
+\text{one name-cycle swaps internal axes;}
+}
+$$
+
+$$
+\boxed{
+\text{two name-cycles recomplete them.}
+}
+$$
+
+这比未经定义的 Klein bottle 更准确。
+
+底空间是一条角色圆；其谱 lift 是一个带非平凡 monodromy 的二重覆盖。
+
+若进一步追踪实本征线方向，才会出现 Möbius 型线丛。
+
+---
+

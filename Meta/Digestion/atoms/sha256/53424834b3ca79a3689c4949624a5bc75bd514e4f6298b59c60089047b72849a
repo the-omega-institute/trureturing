@@ -1,0 +1,27 @@
+## 142. Coupled zero-orbit gas
+
+引入 interaction：
+
+$$
+\mathbb P_J(\mathbf S)
+=
+\frac1{Z_J}
+\exp
+\left(
+\sum_{a<b}
+J_{ab}S_aS_b
++
+\sum_{a<b<c}
+J_{abc}S_aS_bS_c+\cdots
+\right).
+$$
+
+则：
+
+$$
+\partial_{u_{a_1}}\cdots\partial_{u_{a_k}}
+\log Z_J(\mathbf u)\big|_{\mathbf u=0}
+$$
+
+给出跨轨道 connected cumulants。
+
