@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:11b8e8791aca0d9e42f6dae077f99eafbb4e62ea479b4153a0104891d1837daf
 cas_ref: sha256:11b8e8791aca0d9e42f6dae077f99eafbb4e62ea479b4153a0104891d1837daf
 coverage_gids:
-  - D5/S3/Observer/Refinement/BiaxialMonotoneRefinement.biaxial_monotone
+  - gid: D5/S3/Observer/Refinement/BiaxialMonotoneRefinement.biaxial_monotone
+    target_statement_id: sha256:85f4d7c1ac627575b4f7732c0f5428f337b030a7d92b5733ab7737cf1ec63bdb
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/Refinement/BiaxialMonotoneRefinement.biaxial_monotone
-      source_sha256: sha256:11b8e8791aca0d9e42f6dae077f99eafbb4e62ea479b4153a0104891d1837daf
-      target_statement_id: sha256:85f4d7c1ac627575b4f7732c0f5428f337b030a7d92b5733ab7737cf1ec63bdb
   scribe:
     - gid: D5/S3/Observer/Refinement/BiaxialMonotoneRefinement.biaxial_monotone
       definition_sha256: sha256:8dfceae46c353ff0d4b08770c08a7cd4600b9082058ae677eaaa69c3785f0304

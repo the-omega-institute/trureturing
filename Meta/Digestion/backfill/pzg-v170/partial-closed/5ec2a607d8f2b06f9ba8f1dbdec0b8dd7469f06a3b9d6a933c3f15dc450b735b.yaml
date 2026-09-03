@@ -3,39 +3,33 @@ fingerprints:
   normalized_sha256: sha256:5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b
 cas_ref: sha256:5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b
 coverage_gids:
-  - D5/S1/Phase/Interference/FixedRayNineteenWitness.fixed_ray_nineteen_witness
-  - D5/S1/Phase/Interference/FixedRayNineteenWitness.no_fixed_ray_character
-  - D5/S1/Phase/Interference/M1728Countershot.m1728_countershot
-  - D5/S1/Phase/Interference/M468MemberTable.m468TwentyFourMemberTable
-  - D5/S1/Phase/Interference/M468MemberTable.m468_split_prime_characterization
-  - D5/S1/Phase/Interference/M468MemberTable.m468_zero_only_iff_successor_prime
-  - D5/S1/Phase/Interference/ZolotarevSelector.zolotarev_selector_congruence
-  - D5/S1/Phase/SeatTowerArithmetic.mod_twenty_four_eq_zero_or_twelve
-  - D5/S1/Phase/SeatTowerArithmetic.twenty_four_dvd_iff_even_quotient
-  - D5/S1/Phase/SeatTowerCombinatorics.full_exponent_stationing_count
-  - D5/S1/Phase/SeatTowerConsequences.jacobi_factorization_of_selector_numerator
-  - D5/S1/Phase/SeatTowerConsequences.singleton_stationing_choice_count
-  - D5/S1/Phase/SeatTowerConsequences.three_split_primes_have_three_singleton_choices
+  - gid: D5/S1/Phase/Interference/FixedRayNineteenWitness.fixed_ray_nineteen_witness
+    target_statement_id: sha256:0a2d8616b114d6e30cacab9e0f673c61b10801bfd84b0182f24e78322e1c4467
+  - gid: D5/S1/Phase/Interference/FixedRayNineteenWitness.no_fixed_ray_character
+    target_statement_id: sha256:1c82c128c6502c6f0eb11bab8925f1327965856e1ec4ec80fcdf96a6ccfa7b9a
+  - gid: D5/S1/Phase/Interference/M1728Countershot.m1728_countershot
+    target_statement_id: sha256:f5f9c9ae23e67ed5b3b8d2de56151969271f384dfd68f471b138de2d08d1c868
+  - gid: D5/S1/Phase/Interference/M468MemberTable.m468TwentyFourMemberTable
+    target_statement_id: null
+  - gid: D5/S1/Phase/Interference/M468MemberTable.m468_split_prime_characterization
+    target_statement_id: sha256:932da43eb3146675e5e36402bd3b40b137478c39bcfabae185c3645444cae5d3
+  - gid: D5/S1/Phase/Interference/M468MemberTable.m468_zero_only_iff_successor_prime
+    target_statement_id: sha256:974a5a90faf7b01913b75b04bcd941cc8f61513554e7a9c8fab84b976b9ad366
+  - gid: D5/S1/Phase/Interference/ZolotarevSelector.zolotarev_selector_congruence
+    target_statement_id: sha256:8fbba6ad6d98e070e351b756ae8b40dbb9f822958ca906e5523405be168a1e9b
+  - gid: D5/S1/Phase/SeatTowerArithmetic.mod_twenty_four_eq_zero_or_twelve
+    target_statement_id: sha256:8a50e401580b7951561cd3a1d416585460cb0ebe1811cace4b2e4aeea279d33f
+  - gid: D5/S1/Phase/SeatTowerArithmetic.twenty_four_dvd_iff_even_quotient
+    target_statement_id: sha256:e4f822db95151ad38062e097d33a6c14c5932bbb9bcab4cd31a914272a1769f1
+  - gid: D5/S1/Phase/SeatTowerCombinatorics.full_exponent_stationing_count
+    target_statement_id: sha256:380a231706a46fc14777d9f018cf192293e63d988129a7a79849cf52b5d936ac
+  - gid: D5/S1/Phase/SeatTowerConsequences.jacobi_factorization_of_selector_numerator
+    target_statement_id: sha256:f228a3a6442d3e435f1946c719e0463541f3ae817b3114ee72b05f83e269971f
+  - gid: D5/S1/Phase/SeatTowerConsequences.singleton_stationing_choice_count
+    target_statement_id: sha256:6666b90019b26c32797254ba1de6431b2ee0d16647f8893e68cc37aeee45ae00
+  - gid: D5/S1/Phase/SeatTowerConsequences.three_split_primes_have_three_singleton_choices
+    target_statement_id: sha256:38fe3a77dcf59dd28a73d24e9308519f04188987facfefc13b458f03aeb140e7
 receipts:
-  coverage:
-    - gid: D5/S1/Phase/SeatTowerArithmetic.mod_twenty_four_eq_zero_or_twelve
-      source_sha256: sha256:5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b
-      target_statement_id: sha256:8a50e401580b7951561cd3a1d416585460cb0ebe1811cace4b2e4aeea279d33f
-    - gid: D5/S1/Phase/SeatTowerArithmetic.twenty_four_dvd_iff_even_quotient
-      source_sha256: sha256:5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b
-      target_statement_id: sha256:e4f822db95151ad38062e097d33a6c14c5932bbb9bcab4cd31a914272a1769f1
-    - gid: D5/S1/Phase/SeatTowerCombinatorics.full_exponent_stationing_count
-      source_sha256: sha256:5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b
-      target_statement_id: sha256:380a231706a46fc14777d9f018cf192293e63d988129a7a79849cf52b5d936ac
-    - gid: D5/S1/Phase/SeatTowerConsequences.jacobi_factorization_of_selector_numerator
-      source_sha256: sha256:5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b
-      target_statement_id: sha256:f228a3a6442d3e435f1946c719e0463541f3ae817b3114ee72b05f83e269971f
-    - gid: D5/S1/Phase/SeatTowerConsequences.singleton_stationing_choice_count
-      source_sha256: sha256:5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b
-      target_statement_id: sha256:6666b90019b26c32797254ba1de6431b2ee0d16647f8893e68cc37aeee45ae00
-    - gid: D5/S1/Phase/SeatTowerConsequences.three_split_primes_have_three_singleton_choices
-      source_sha256: sha256:5ec2a607d8f2b06f9ba8f1dbdec0b8dd7469f06a3b9d6a933c3f15dc450b735b
-      target_statement_id: sha256:38fe3a77dcf59dd28a73d24e9308519f04188987facfefc13b458f03aeb140e7
   scribe:
     - gid: D5/S1/Phase/SeatTowerCombinatorics.full_exponent_stationing_count
       definition_sha256: sha256:466422dc735d4dc550e46a2cb24f7f1cacd0880c37ff6e8bf96af19a36db1939

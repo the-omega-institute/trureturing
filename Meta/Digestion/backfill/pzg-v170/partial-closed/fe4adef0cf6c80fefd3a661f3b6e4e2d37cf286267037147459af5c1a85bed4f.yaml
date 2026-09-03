@@ -3,17 +3,13 @@ fingerprints:
   normalized_sha256: sha256:fe4adef0cf6c80fefd3a661f3b6e4e2d37cf286267037147459af5c1a85bed4f
 cas_ref: sha256:fe4adef0cf6c80fefd3a661f3b6e4e2d37cf286267037147459af5c1a85bed4f
 coverage_gids:
-  - D5/S3/Analytic/CompletedZetaMellinReconstruction.completed_zeta_mellin_reconstruction
-  - D5/S3/Zeros/CompletedZeta.xi_reading_differentiable
-  - D5/S3/Zeros/CompletedZeta.xi_reading_reflection
+  - gid: D5/S3/Analytic/CompletedZetaMellinReconstruction.completed_zeta_mellin_reconstruction
+    target_statement_id: sha256:cb4be47b53ec7692e9fe338bec396f0683868af5131a6683f5f2e6e7d85e1579
+  - gid: D5/S3/Zeros/CompletedZeta.xi_reading_differentiable
+    target_statement_id: sha256:1d8843123ef9e020816cd0bdaea0ccc7c969e4d91d1290efb9071b2da3c356c3
+  - gid: D5/S3/Zeros/CompletedZeta.xi_reading_reflection
+    target_statement_id: sha256:5987317f7aaa874060c8599c4899fbc6e5c9b1e919fe048aa0942de850e23ba4
 receipts:
-  coverage:
-    - gid: D5/S3/Zeros/CompletedZeta.xi_reading_differentiable
-      source_sha256: sha256:fe4adef0cf6c80fefd3a661f3b6e4e2d37cf286267037147459af5c1a85bed4f
-      target_statement_id: sha256:1d8843123ef9e020816cd0bdaea0ccc7c969e4d91d1290efb9071b2da3c356c3
-    - gid: D5/S3/Zeros/CompletedZeta.xi_reading_reflection
-      source_sha256: sha256:fe4adef0cf6c80fefd3a661f3b6e4e2d37cf286267037147459af5c1a85bed4f
-      target_statement_id: sha256:5987317f7aaa874060c8599c4899fbc6e5c9b1e919fe048aa0942de850e23ba4
   scribe:
     - gid: D5/S3/Zeros/CompletedZeta.xi_reading_differentiable
       definition_sha256: sha256:7adc01d7166094417b25c9f92fa6ca76769854941c96daab523be09d629b3fa2

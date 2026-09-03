@@ -3,9 +3,9 @@ fingerprints:
   normalized_sha256: sha256:f6022a9969af7fbf656d88fa021d9238a22122f57ff7935ae4aa8434b81cf226
 cas_ref: sha256:f6022a9969af7fbf656d88fa021d9238a22122f57ff7935ae4aa8434b81cf226
 coverage_gids:
-  - D5/S3/ConceptDynamics/Prediction/ConditionalExpectationResidualDecomposition.conditional_expectation_residual_orthogonal_decomposition
+  - gid: D5/S3/ConceptDynamics/Prediction/ConditionalExpectationResidualDecomposition.conditional_expectation_residual_orthogonal_decomposition
+    target_statement_id: sha256:a8bc3d904adc85f14308856965a1b9c1bea36b05e25b2d17a68c11492fecbe00
 receipts:
-  coverage: []
   scribe:
     - gid: D5/S3/ConceptDynamics/Prediction/ConditionalExpectationResidualDecomposition.conditional_expectation_residual_orthogonal_decomposition
       definition_sha256: sha256:a452e3bdfad77ab64b4f43fc1f7c5888f0d320d22bc0d94174a86ac2aa23b362
