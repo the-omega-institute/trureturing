@@ -28,7 +28,7 @@ internal sealed class NegativeExponentPoleTransportDocument : IScribeDocumentDef
                     F.Id("ord"), Underscore, Grp(F.Id("s"), Underscore, D(0)),
                     Open, F.Id("f"), Underscore, F.Id("i"), Close,
                     Comma, Quad, Sp,
-                    Neg, F.Id("Pole"), Open, F.Id("s"), Underscore, D(0), Close,
+                    Neg, Sp, F.Id("Pole"), Open, F.Id("s"), Underscore, D(0), Close,
                     Iff, Sp, D(0), Leq, Sp,
                     F.Id("ord"), Underscore, Grp(F.Id("s"), Underscore, D(0))))),
                 AssessedProvenance.FromRepo(),
