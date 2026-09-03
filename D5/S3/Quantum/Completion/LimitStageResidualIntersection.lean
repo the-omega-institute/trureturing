@@ -22,14 +22,18 @@ open scoped InnerProductSpace
 
 namespace D5.S3.Quantum.Completion.LimitStageResidualIntersection
 
-/-- If the closed subspace at a stage is the closed supremum of all predecessor subspaces,
-then its orthogonal residual is the intersection of the predecessor residuals. -/
+/-- In a monotone tower, if each residual is the orthogonal complement of its stage and the
+limit stage is the closed supremum of its predecessors, then the limit residual is their
+intersection. -/
 theorem limit_stage_residual_intersection
     {K H I : Type*} [RCLike K] [NormedAddCommGroup H]
     [InnerProductSpace K H] [CompleteSpace H] [Preorder I]
-    (V : I -> ClosedSubmodule K H) (limit : I)
+    (V R : I -> ClosedSubmodule K H) (limit : I)
+    (hmono : Monotone V)
+    (hR : ∀ alpha, R alpha = (V alpha)ᗮ)
     (hlimit : V limit = ⨆ alpha : Set.Iio limit, V alpha.1) :
-    (V limit)ᗮ = ⨅ alpha : Set.Iio limit, (V alpha.1)ᗮ := by
+    R limit = ⨅ alpha : Set.Iio limit, R alpha.1 := by
+  simp_rw [hR]
   rw [hlimit]
   exact (ClosedSubmodule.iInf_orthogonal
     (fun alpha : Set.Iio limit => V alpha.1)).symm

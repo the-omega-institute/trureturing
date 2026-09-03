@@ -20,15 +20,17 @@ internal sealed class LimitStageResidualIntersectionDocument : IScribeDocumentDe
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "Let V be an indexed family of closed subspaces in a complete "
-                            + "real-or-complex inner-product space, and fix a stage lambda.")),
+                        "Let V be a monotone indexed tower of closed subspaces in a complete "
+                            + "real-or-complex inner-product space. Define the residual at "
+                            + "each stage alpha by R(alpha) = V(alpha)^perp, and fix a stage "
+                            + "lambda.")),
                     Paragraph(Text(
                         "The premise identifies the space at lambda with the closed supremum "
-                            + "of the spaces at all strictly earlier stages. This is the "
-                            + "closed-subspace form of the closure of their union.")),
+                            + "of the spaces at all strictly earlier stages. Equivalently, "
+                            + "this supremum is the closed linear span of their union.")),
                     Paragraph(Text(
                         "Orthogonal complementation sends that closed supremum to the "
-                            + "intersection of the orthogonal residuals at every predecessor. "
+                            + "intersection of the residuals at every predecessor. "
                             + "The proof directly applies the pinned Mathlib identity "
                             + "ClosedSubmodule.iInf_orthogonal."))),
                 DescribeRole.Theorem))));
@@ -39,6 +41,7 @@ internal sealed class LimitStageResidualIntersectionDocument : IScribeDocumentDe
         Formula space = F.Id("H");
         Formula indexType = F.Id("I");
         Formula tower = F.Id("V");
+        Formula residual = F.Id("R");
         Formula stage = F.Id("lambda");
         Formula predecessor = F.Id("alpha");
         Formula type = Seq(Operatorname, Grp(F.Id("Type")));
@@ -47,11 +50,13 @@ internal sealed class LimitStageResidualIntersectionDocument : IScribeDocumentDe
             Open, space, Close);
         Formula stageSpace = Apply(tower, stage);
         Formula predecessorSpace = Apply(tower, predecessor);
+        Formula stageResidual = Apply(residual, stage);
+        Formula predecessorResidual = Apply(residual, predecessor);
         Formula predecessorCondition = Seq(predecessor, Lt, stage);
         Formula closedSupremum = Call(
             "ClosedSup", Sub(predecessorSpace, predecessorCondition));
         Formula residualIntersection = Call(
-            "Inf", Sub(Orthogonal(predecessorSpace), predecessorCondition));
+            "Inf", Sub(predecessorResidual, predecessorCondition));
 
         return Disp(new Formula.Aligned([
             Seq(Forall, Sp, scalar, Comma, Sp, space, Comma, Sp, indexType,
@@ -61,10 +66,15 @@ internal sealed class LimitStageResidualIntersectionDocument : IScribeDocumentDe
                 Typeclass("InnerProductSpace", scalar, space), Sp, Land),
             Seq(Grp(), Typeclass("CompleteSpace", space), Sp, Land, Sp,
                 Typeclass("Preorder", indexType), Comma),
-            Seq(Forall, Sp, tower, Colon, Sp, indexType, Sp, To, Sp,
+            Seq(Forall, Sp, tower, Comma, Sp, residual, Colon, Sp,
+                indexType, Sp, To, Sp,
                 closedSubspace, Comma, Sp, stage, Colon, Sp, indexType, Comma),
+            Seq(Call("Monotone", tower), Sp, Land, Sp),
+            Seq(Open, Forall, Sp, predecessor, Colon, Sp, indexType, Comma, Sp,
+                predecessorResidual, Sp, Eq, Sp, Orthogonal(predecessorSpace), Close,
+                Sp, Land, Sp),
             Seq(stageSpace, Sp, Eq, Sp, closedSupremum, Sp, Rightarrow),
-            Seq(Orthogonal(stageSpace), Sp, Eq, Sp, residualIntersection, Dot)
+            Seq(stageResidual, Sp, Eq, Sp, residualIntersection, Dot)
         ]));
     }
 
