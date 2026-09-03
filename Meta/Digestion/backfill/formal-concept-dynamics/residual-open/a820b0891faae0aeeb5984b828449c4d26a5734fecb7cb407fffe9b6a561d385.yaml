@@ -6,3 +6,7 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Missing prerequisite in the source statement. FORMAL_CONCEPT_DYNAMICS.md lines 961-969 are the complete leased atom: they give F : X -> Y and G : Y -> Z, then name candidate macroF and macroG, but fix no domains or codomains for those macro maps, introduce no third concept E or readout q_E, define none of epsilon_F, epsilon_G, or epsilon_GF inside the atom, and end at a colon without a proposition; the boxed equation is only at source lines 971-978 outside the immutable atom boundary. D5, pinned Mathlib, and A17 third-party retrieval are not applicable because there is no proposition to match and a library result cannot supply omitted source text. Probe /private/tmp/w73a31-atom2-hollow-probe.lean exited 0 only for binder-only leasedPrefix := True and leaves F, G, macroF, and macroG unused; this confirms that the atom has no non-vacuous local proof target."
+    reentry_condition: "Re-atomize source lines 961-978 as one theorem unit and state the domains and codomains of macroF and macroG, the concepts and readouts C and q_C, D and q_D, and E and q_E, the additive carrier structures and the additivity law for macroG, and typed definitions of epsilon_F, epsilon_G, and epsilon_GF; then lease the resulting complete proposition."
+    blocker_class: missing-prerequisite
