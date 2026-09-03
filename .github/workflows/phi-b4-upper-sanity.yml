@@ -1,0 +1,50 @@
+name: phi-b4-upper-sanity
+
+on:
+  push:
+    branches:
+      - agent/research/phi-b4-upper-sanity-20260903
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sanity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      max-parallel: 12
+      matrix:
+        type0: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install CaDiCaL
+        run: |
+          sudo apt-get update
+          if ! sudo apt-get install -y cadical; then
+            git clone --depth 1 --branch rel-2.1.3 \
+              https://github.com/arminbiere/cadical.git /tmp/cadical
+            cd /tmp/cadical
+            ./configure
+            make -j2
+            sudo install -m 0755 build/cadical /usr/local/bin/cadical
+          fi
+      - name: Seek a 22-state finite-sample model
+        run: |
+          mkdir -p result
+          python3 research/phi_b4_bounds.py cegis \
+            --states 22 \
+            --type0-states ${{ matrix.type0 }} \
+            --seed 79 \
+            --validation 200 \
+            --batch 8 \
+            --max-rounds 1 \
+            --timeout 180 \
+            --output result/result.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: phi-b4-upper-t0-${{ matrix.type0 }}
+          path: result
