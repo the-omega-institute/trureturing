@@ -204,6 +204,7 @@ public sealed class TypeModelTests
     }
 
     [Theory]
+    [InlineData(5, false)]
     [InlineData(23, true)]
     [InlineData(24, false)]
     [InlineData(25, true)]

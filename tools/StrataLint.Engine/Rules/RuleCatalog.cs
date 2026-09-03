@@ -100,7 +100,7 @@ public sealed class RuleCatalog
     {
         try
         {
-            var expected = Enumerable.Range(1, 23)
+            var expected = Enumerable.Range(1, 23).Except([5])
                 .Append(25)
                 .Append(26)
                 .Append(28)

@@ -278,15 +278,6 @@ internal static partial class RepositoryRules
         return findings.ToImmutable();
     }
 
-    private static ImmutableArray<RuleFinding> Chronicle(RuleEvaluationContext context) =>
-        context.ForkPoint.Files
-            .Where(static item => item.Key.Value.StartsWith("Chronicle/", StringComparison.Ordinal))
-            .Where(item => context.IsBaseFactAffected(item.Key.Value))
-            .Where(item => !context.Current.TryGetFile(item.Key.Value, out var current)
-                || !current.RawBytes.AsSpan().SequenceEqual(item.Value.RawBytes.AsSpan()))
-            .Select(static item => new RuleFinding(item.Key.Value, "tracked Chronicle entries are append-only"))
-            .ToImmutableArray();
-
     /// <summary>
     /// A theory volume grows only at its end. Every atom the digestion ledger holds was hashed
     /// from a span of these bytes, so rewriting a span silently detaches whatever was digested
