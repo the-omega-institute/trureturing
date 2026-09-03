@@ -1,0 +1,1 @@
+**义务**:公开定理 `ZeroData.im_ne_zero (Z : ZeroData) (n : ℕ) (h : IsNontrivialZero (Z.zero n)) : (Z.zero n).im ≠ 0`(`ZeroData`、`IsNontrivialZero` 取 `D5/S3/Weil/ZeroSum.lean` 的定义:ζ ρ = 0 ∧ 0 < Re ρ ∧ Re ρ < 1)。

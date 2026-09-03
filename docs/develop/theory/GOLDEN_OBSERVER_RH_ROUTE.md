@@ -2104,3 +2104,42 @@ G-f 一席位轮、M3-f 第二级一席位轮(各 codex-cli,独立 worktree,PR-1
 两席位轮,可并行:席 A 在 `EulerGerm/GoldenGermWindowZeroCriterion.lean` 同模块证 G-g-1 与 G-g-2(deposit 绑 G-g-1 atom;G-g-2 走 PR-1b 收据后 PR-2 cover);席 B 在 `ZetaBridge/RightHalfStripRiemannReduction.lean` 证 G-g-3(deposit 绑其 atom)。二者互不依赖。
 
 后续增订继续严格追加于本节之后。
+---
+
+# 增订十六　M3-d 缺口的阶梯:ζ 在 (0,1) 无实零点(M3-d-1 / M3-d-2 / M3-d-3 / M3-d-4 预登记)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;探针一席(codex-cli,`lake env lean`,125 行,标准三公理):在钉版 Mathlib 上**未找到** Dirichlet eta / 交错 ζ 级数在 0 < Re s 上的延拓恒等式(逐条检索 `LSeries`、`HurwitzZetaEven`(`hasSum_nat_cosZeta` 等皆要求 1 < Re s)、`riemannZeta_one_sub`、`completedRiemannZeta0`),故 M3-d-1 为**本仓须自证**的新引理;探针已在该恒等式为假设的条件下整证 M3-d-2、M3-d-3,并无条件证得 M3-d-4。散文由 orchestrator(claude 主循环)撰写。判决日:2026-09-03。lane issue:#4589。
+
+## 〇　为什么是这一节
+
+增订九把「非平凡零点无实零点」记为具名缺口 M3-d;增订十一(M3-e)与增订十四(M3-f-5)的 separator 因此都带 `hIm : (Z.zero n).im ≠ 0`。经典事实是:对实 0 < x < 1,(1 − 2^{1−x}) ζ(x) = Σ (−1)^n (n+1)^{−x}(交错级数,项递减趋零,和为正),而 1 − 2^{1−x} < 0,故 ζ(x) < 0 ≠ 0。钉版 Mathlib 只在 Re s > 1 给出 ζ 的级数表示;交错级数在 0 < Re s 的**部分和极限**等于 (1 − 2^{1−s}) ζ(s) 这一延拓恒等式(M3-d-1)须在本仓证明。它不是黄金结构,是纯 Mathlib 内容;证出即可去掉两条 separator 的 `hIm`。**参考路线(非义务,供实施席选择)**:(a) Re s > 1 时由 `zeta_eq_tsum_one_div_nat_add_one_cpow` 拆偶奇项得恒等式;(b) 交错部分和在 {0 < Re s} 上局部一致收敛(配对相邻项得绝对收敛的差分级数,用 `Complex.cpow` 的 Lipschitz 型估计),故极限函数在该半平面解析;(c) 右侧 (1 − 2^{1−s}) ζ(s) 在 {0 < Re s} 解析(`differentiableAt_riemannZeta`,s = 1 处两侧皆取有限值);(d) 由 `AnalyticOnNhd.eqOn_of_preconnected_of_eventuallyEq` 从 Re s > 1 延拓到 0 < Re s。探针估计 250–450 行;若 (b) 的局部一致性在钉版 API 下不可达,本条按 open 记,不得以 `sorry` 或公理代替。
+
+## 一　M3-d-1 预登记:交错级数的延拓恒等式(`RealAxisNonvanishing`,落 `D5/S3/Weil/ZetaBridge/`)
+
+**义务**:公开定理 `tendsto_alternating_partialSums_eta (s : ℂ) (hs : 0 < s.re) : Filter.Tendsto (fun N ↦ ∑ n ∈ Finset.range N, (-1 : ℂ) ^ n * ((n + 1 : ℂ) ^ (-s))) Filter.atTop (nhds ((1 - (2 : ℂ) ^ (1 - s)) * riemannZeta s))`。落点 `D5/S3/Weil/ZetaBridge/`(origin/dev 现 21/24;若满则 `D5/S3/Weil/ZetaCore/`)。
+**可证伪预测(写在跑之前)**:若正确,定理只消费钉版 Mathlib(`riemannZeta` 的 Re s > 1 级数表示、`differentiableAt_riemannZeta`、解析延拓唯一性)与至多本仓 `ZetaCore`,公理集为标准三条;若交错部分和在 {0 < Re s} 的局部一致收敛在钉版 API 下写不出(探针标记的缺口),则本条为 open,不得降级为「Re s > 1 版」冒充。
+**边界**:不断言 `tsum`(交错级数在 Re s ≤ 1 非无条件可和,`tsum` 会取 0);极限以部分和的 `Tendsto` 陈述;s = 1 处等式两侧按 Mathlib 约定的有限值成立。
+
+## 二　M3-d-2 预登记:ζ 在 (0,1) 无实零点(同模块第二条公开定理)
+
+**义务**:公开定理 `riemannZeta_ne_zero_of_real_mem_Ioo (x : ℝ) (h0 : 0 < x) (h1 : x < 1) : riemannZeta (x : ℂ) ≠ 0`。
+**可证伪预测(写在跑之前)**:若正确,由 M3-d-1 取 s = x 实、交错级数 `Antitone.alternating_series_le_tendsto` 类引理给出极限 > 0(探针已在 M3-d-1 为假设时整证此步,43 行),1 − 2^{1−x} < 0 得 ζ(x) < 0;若 M3-d-1 为 open,本条随之 open。
+**边界**:只覆盖开区间 (0,1);x = 1 为极点;x ≤ 0 见 M3-d-4。
+
+## 三　M3-d-3 预登记:`ZeroData` 的非平凡零点虚部非零(同模块第三条公开定理)
+
+**义务**:公开定理 `ZeroData.im_ne_zero (Z : ZeroData) (n : ℕ) (h : IsNontrivialZero (Z.zero n)) : (Z.zero n).im ≠ 0`(`ZeroData`、`IsNontrivialZero` 取 `D5/S3/Weil/ZeroSum.lean` 的定义:ζ ρ = 0 ∧ 0 < Re ρ ∧ Re ρ < 1)。
+**可证伪预测(写在跑之前)**:若正确,由 M3-d-2 直接得到(虚部为零 ⟹ ρ 实 ⟹ 与 M3-d-2 矛盾;探针已整证此蕴含);此后 `OffLineZeroNegativeTruncatedWeilSquare` 与 M3-f-5 的 `hIm` 可由本条供给(推论另行增订,不在本节义务内)。
+**边界**:本条不断言 `ZeroData` 非空(M1-b 仍 open),只是类型正确的蕴含。
+
+## 四　M3-d-4 预登记:实轴上 (0,1) 之外的 ζ 零点皆平凡(同模块第四条公开定理;探针已无条件整证)
+
+**义务**:公开定理 `riemannZeta_real_zero_outside_Ioo (x : ℝ) (hout : ¬ (0 < x ∧ x < 1)) (hz : riemannZeta (x : ℂ) = 0) : ∃ n : ℕ, x = -2 * (n + 1)`。
+**可证伪预测(写在跑之前)**:若正确,只消费 `riemannZeta_ne_zero_of_one_le_re`、`riemannZeta_one_sub`、`riemannZeta_zero` 与本仓已冻结的完成 ζ 非零引理(探针用了 `ZetaRvm.CountByIntegral` 中的一条;实施席须 grep 其名并绑定,不得重证),标准三公理;若函数方程分支需要 x = 0 之外的额外侧条件而不可满足,则本条为假。
+**边界**:与 M3-d-2 合起来给出实轴零点的完整分类,但不涉及非实零点。
+
+## 五　预算与结算
+
+一席位轮(codex-cli,独立 worktree,四条公开定理同模块;deposit 绑 M3-d-2 atom,其余三条走 PR-1b 收据后 PR-2 cover)。M3-d-1 为难点,给足 3 小时;若席位以 open 归位,把它的具名缺口(哪一步在钉版 API 下写不出)追加为增订,并保留 M3-d-4 单独 deposit。
+
+后续增订继续严格追加于本节之后。
