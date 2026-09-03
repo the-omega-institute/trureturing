@@ -1,0 +1,48 @@
+## 22. Cayley 零点坐标
+
+定义：
+
+$$
+c(s)
+=
+\frac{s-1}{s}.
+$$
+
+对零点 \(\rho\)，写：
+
+$$
+c_\rho
+=
+e^{\beta_\rho+i\theta_\rho}.
+$$
+
+其中：
+
+$$
+\beta_\rho
+=
+\log|c_\rho|
+$$
+
+称为 Cayley 径向漂移，
+
+$$
+\theta_\rho
+=
+\arg c_\rho
+$$
+
+称为相位坐标。
+
+注意：
+
+$$
+\beta_\rho
+\neq
+\delta_\rho
+$$
+
+一般并不数值相等，但二者同时为零，并且都在 \(J\) 下取反。
+
+---
+

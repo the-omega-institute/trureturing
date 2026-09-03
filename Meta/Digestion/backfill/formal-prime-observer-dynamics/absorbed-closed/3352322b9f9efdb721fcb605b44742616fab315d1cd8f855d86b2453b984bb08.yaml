@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:3352322b9f9efdb721fcb605b44742616fab315d1cd8f855d86b2453b984bb08
+  normalized_sha256: sha256:3352322b9f9efdb721fcb605b44742616fab315d1cd8f855d86b2453b984bb08
+cas_ref: sha256:3352322b9f9efdb721fcb605b44742616fab315d1cd8f855d86b2453b984bb08
+coverage_gids:
+  - D5/S3/Estimation/DecisionRisk/LawRepresentationCanonicalQuotient.law_determining_representation_refines_canonical_law_quotient
+receipts:
+  coverage:
+    - gid: D5/S3/Estimation/DecisionRisk/LawRepresentationCanonicalQuotient.law_determining_representation_refines_canonical_law_quotient
+      source_sha256: sha256:3352322b9f9efdb721fcb605b44742616fab315d1cd8f855d86b2453b984bb08
+      target_statement_id: sha256:fa4431d35bd4541d779ca4f66cf33da5af2d8436321c23cee9fd2e1b91115412
+  scribe:
+    - gid: D5/S3/Estimation/DecisionRisk/LawRepresentationCanonicalQuotient.law_determining_representation_refines_canonical_law_quotient
+      definition_sha256: sha256:5c5393e1b05713cac9a5f37b90b6e13408e33b959e20edc08533aee6f7f3edad
+      emission_sha256: sha256:e4bcfa26fe281468ab98a6b3437138376e1936f4d393ea43f112529f355ac255
+  unresolved_subitems: []

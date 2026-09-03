@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:029a05b28f2c075f7d3929087566cf899de8636ea096a376d603276a406e4c42
+  normalized_sha256: sha256:029a05b28f2c075f7d3929087566cf899de8636ea096a376d603276a406e4c42
+cas_ref: sha256:029a05b28f2c075f7d3929087566cf899de8636ea096a376d603276a406e4c42
+coverage_gids:
+  - D5/S3/TotalVariation/Asymptotics/WeakPrimeEvidenceFiniteTotal.weak_prime_evidence_finite_total
+receipts:
+  coverage:
+    - gid: D5/S3/TotalVariation/Asymptotics/WeakPrimeEvidenceFiniteTotal.weak_prime_evidence_finite_total
+      source_sha256: sha256:029a05b28f2c075f7d3929087566cf899de8636ea096a376d603276a406e4c42
+      target_statement_id: sha256:09ddd8b8782a0f2e0b0ec978064bb1381b1847bb77b389a50887f4a059fd10b3
+  scribe:
+    - gid: D5/S3/TotalVariation/Asymptotics/WeakPrimeEvidenceFiniteTotal.weak_prime_evidence_finite_total
+      definition_sha256: sha256:8c13da49dcd114cd7e1f46b1b9a54d8d1b4b114d16e05cb36aa8fde701148cf8
+      emission_sha256: sha256:9ea68353ce2c7a24cd9e82535e6d7631fe8a7c6a4bdf9f2c094eb4617b95563f
+  unresolved_subitems: []
