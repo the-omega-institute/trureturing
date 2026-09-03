@@ -6,7 +6,7 @@ A negative dictionary exponent transports a positive-order zero into an exact po
 
 **Theorem 1.1 (Negative exponents transport zeros to pole debts).**
 
-$$\operatorname{ord}_{s_0}(\prod_{i\in S}f_i^{e_i})=e_dm+\sum_{i\in S\setminus{d}}e_i\operatorname{ord}_{s_0}(f_i),\quad \neg\operatorname{Pole}(s_0)\iff0\leq\operatorname{ord}_{s_0}$$
+$$\operatorname{ord}_{s_0}(\prod_{i\in S}f_i^{e_i})=e_d m+\sum_{i\in S\setminus{d}}e_i \operatorname{ord}_{s_0}(f_i),\quad \neg \operatorname{Pole}(s_0)\iff 0\leq \operatorname{ord}_{s_0}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/NegativeExponentPoleTransport.negative_exponent_pole_transport` (`✓ std3`). ∎
 
