@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:f3604293322108e6e27c9a093f82215a1ed8901d5f166280f1968f7189545d6e
 cas_ref: sha256:f3604293322108e6e27c9a093f82215a1ed8901d5f166280f1968f7189545d6e
 coverage_gids:
-  - D5/S3/Factorization/Galois/GaloisCompatibleFiberProduct.galois_compatible_fiber_product
+  - gid: D5/S3/Factorization/Galois/GaloisCompatibleFiberProduct.galois_compatible_fiber_product
+    target_statement_id: sha256:7f95fdb0f8d429adb8dff856bcf229f14342a5ec510a7981576b9ca84a710b36
 receipts:
-  coverage:
-    - gid: D5/S3/Factorization/Galois/GaloisCompatibleFiberProduct.galois_compatible_fiber_product
-      source_sha256: sha256:f3604293322108e6e27c9a093f82215a1ed8901d5f166280f1968f7189545d6e
-      target_statement_id: sha256:7f95fdb0f8d429adb8dff856bcf229f14342a5ec510a7981576b9ca84a710b36
   scribe:
     - gid: D5/S3/Factorization/Galois/GaloisCompatibleFiberProduct.galois_compatible_fiber_product
       definition_sha256: sha256:a0a66c9942d20ce4cb25bd2b493eaceb286b88b19d1318d934e3f1bd11d70ec4

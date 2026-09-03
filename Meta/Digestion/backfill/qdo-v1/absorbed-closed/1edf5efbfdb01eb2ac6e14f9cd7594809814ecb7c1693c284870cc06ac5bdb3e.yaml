@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:1edf5efbfdb01eb2ac6e14f9cd7594809814ecb7c1693c284870cc06ac5bdb3e
 cas_ref: sha256:1edf5efbfdb01eb2ac6e14f9cd7594809814ecb7c1693c284870cc06ac5bdb3e
 coverage_gids:
-  - D5/S3/Quantum/Tomography/MutuallyUnbiasedDiagonalPlanes.mutually_unbiased_diagonal_planes
+  - gid: D5/S3/Quantum/Tomography/MutuallyUnbiasedDiagonalPlanes.mutually_unbiased_diagonal_planes
+    target_statement_id: sha256:af69c4fca24170ee10ac1e851315f47a32ce53c75630f535e279f6d4baadbb7b
 receipts:
-  coverage:
-    - gid: D5/S3/Quantum/Tomography/MutuallyUnbiasedDiagonalPlanes.mutually_unbiased_diagonal_planes
-      source_sha256: sha256:1edf5efbfdb01eb2ac6e14f9cd7594809814ecb7c1693c284870cc06ac5bdb3e
-      target_statement_id: sha256:af69c4fca24170ee10ac1e851315f47a32ce53c75630f535e279f6d4baadbb7b
   scribe:
     - gid: D5/S3/Quantum/Tomography/MutuallyUnbiasedDiagonalPlanes.mutually_unbiased_diagonal_planes
       definition_sha256: sha256:1e67816023eb10c9e744a3914d54f7a2421db053a7bd3eae98206fa56ed46310

@@ -1,0 +1,18 @@
+* 支撑越过区间时，奇 sector 可以变负。
+
+仓库现有 `LiCurvatureCriterion` 已经机器验证了正圆周测度产生 Hermitian Toeplitz 矩阵和 Gram 二次型非负；其审计也明确指出完整的圆周 Herglotz 表示反向尚未由现成 Mathlib 定理直接提供。
+
+所以这条 Szegő 折叠适合作为：
+
+$$
+\boxed{
+\text{Toeplitz circle positivity}
+\longleftrightarrow
+\text{Hausdorff interval positivity}
+}
+$$
+
+之间的新正式桥。
+
+---
+

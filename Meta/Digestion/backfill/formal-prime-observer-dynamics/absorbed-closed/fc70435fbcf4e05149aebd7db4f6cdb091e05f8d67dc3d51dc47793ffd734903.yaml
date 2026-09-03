@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:fc70435fbcf4e05149aebd7db4f6cdb091e05f8d67dc3d51dc47793ffd734903
 cas_ref: sha256:fc70435fbcf4e05149aebd7db4f6cdb091e05f8d67dc3d51dc47793ffd734903
 coverage_gids:
-  - D5/S3/ObserverMemory/RefinementClosure/PredictiveCompletionMaximalInvariantQuotient.predictive_completion_maximal_invariant_quotient
+  - gid: D5/S3/ObserverMemory/RefinementClosure/PredictiveCompletionMaximalInvariantQuotient.predictive_completion_maximal_invariant_quotient
+    target_statement_id: sha256:e6bbd232d9f6aad61751436cb37d9ceee4fa624298ef9a7680a2eab2cae94dd4
 receipts:
-  coverage:
-    - gid: D5/S3/ObserverMemory/RefinementClosure/PredictiveCompletionMaximalInvariantQuotient.predictive_completion_maximal_invariant_quotient
-      source_sha256: sha256:fc70435fbcf4e05149aebd7db4f6cdb091e05f8d67dc3d51dc47793ffd734903
-      target_statement_id: sha256:e6bbd232d9f6aad61751436cb37d9ceee4fa624298ef9a7680a2eab2cae94dd4
   scribe:
     - gid: D5/S3/ObserverMemory/RefinementClosure/PredictiveCompletionMaximalInvariantQuotient.predictive_completion_maximal_invariant_quotient
       definition_sha256: sha256:162788325a073a81cc079b79c4273db96a85122ac16a9425cebc40611f2fe809

@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:4eb3837d85dfae42c96e989979f152ac94b3ddaea11729d793b80a474bd004bf
 cas_ref: sha256:4eb3837d85dfae42c96e989979f152ac94b3ddaea11729d793b80a474bd004bf
 coverage_gids:
-  - D5/S3/Weil/TestFunctions/StickyTailCompletionError.sticky_tail_completion_error
+  - gid: D5/S3/Weil/TestFunctions/StickyTailCompletionError.sticky_tail_completion_error
+    target_statement_id: sha256:e8eca2f19b0208e8e95ca18e30040350fde55f78300db1186cc844dd5ea93870
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/TestFunctions/StickyTailCompletionError.sticky_tail_completion_error
-      source_sha256: sha256:4eb3837d85dfae42c96e989979f152ac94b3ddaea11729d793b80a474bd004bf
-      target_statement_id: sha256:e8eca2f19b0208e8e95ca18e30040350fde55f78300db1186cc844dd5ea93870
   scribe:
     - gid: D5/S3/Weil/TestFunctions/StickyTailCompletionError.sticky_tail_completion_error
       definition_sha256: sha256:d55a330c139fa1346cb110810ee5344f288c299cc0602cf5f2c9358ec5fb7276

@@ -26728,3 +26728,9292 @@ $$
 \text{trace/supertrace 重完}.
 }
 $$
+# 第一百三十八部　把 RH 精确拆成两个互补命题
+
+可以，而且不能随便拆。
+
+“右侧无零点”和“左侧无零点”不是好拆分，因为函数方程会使两者互相反射，任意一半都几乎已经等价于 RH。“偶数编号零点”和“奇数编号零点”也不合法，因为零点编号只是枚举规范，不是内禀结构。
+
+真正符合你直觉的拆分应当满足：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{全局命题不依赖观察方向，因此必须是偶的；}\\
+&\text{观察者命题选择一个方向，因此允许是奇的；}\\
+&\text{两类条件没有遗漏任何有限观察阶；}\\
+&\text{二者合取严格等价于传统 RH。}
+\end{aligned}
+}
+$$
+
+下面构造：
+
+$$
+\boxed{\mathrm{E\!-\!RH}}
+$$
+
+和
+
+$$
+\boxed{\mathrm{O\!-\!RH}}
+$$
+
+分别称为：
+
+> **全局偶完备黎曼命题**
+> **指点奇观察黎曼命题**
+
+它们不是把素数无限集合强行说成“偶数个”或“奇数个”，而是把**有限观察深度**分成偶阶和奇阶。每个有限阶恰好属于其中一类，所以不会遭遇无限集合宇称不存在的问题。
+
+---
+
+# 第一百三十九部　先建立 RH 的反射商坐标
+
+## 416. Completed \(\xi\) 的偶商
+
+令：
+
+$$
+\xi(s)
+=
+\frac12s(s-1)\pi^{-s/2}
+\Gamma\left(\frac s2\right)\zeta(s).
+$$
+
+定义中心坐标：
+
+$$
+z=s-\frac12.
+$$
+
+函数方程给出：
+
+$$
+\xi\left(\frac12+z\right)
+=
+\xi\left(\frac12-z\right).
+$$
+
+因此存在唯一整函数 \(\mathcal X\)，使：
+
+$$
+\boxed{
+\xi(s)
+=
+\mathcal X\bigl(s(1-s)\bigr).
+}
+$$
+
+定义反射 Casimir：
+
+$$
+q=s(1-s).
+$$
+
+若：
+
+$$
+\rho=\frac12+\delta+i\gamma,
+$$
+
+则：
+
+$$
+q_\rho
+=
+\frac14+\gamma^2-\delta^2-2i\delta\gamma.
+$$
+
+在 RH 下：
+
+$$
+\delta=0,
+$$
+
+故：
+
+$$
+q_\rho
+=
+\frac14+\gamma^2
+\in
+\left[\frac14,\infty\right).
+$$
+
+进一步定义紧化坐标：
+
+$$
+\boxed{
+x_\rho
+=
+\frac1{4q_\rho}.
+}
+$$
+
+若 RH 成立，则：
+
+$$
+\boxed{
+x_\rho
+=
+\frac1{1+4\gamma^2}
+\in(0,1).
+}
+$$
+
+因此 RH 可以看成：
+
+$$
+\boxed{
+\text{全部反射轨道的 Casimir 紧化谱位于 }[0,1].
+}
+$$
+
+---
+
+## 417. 不用零点枚举定义矩序列
+
+在 \(q=0\) 附近定义：
+
+$$
+\mathcal G(z)
+=
+-\frac14
+\frac{
+\mathcal X'(z/4)
+}{
+\mathcal X(z/4)
+}.
+$$
+
+展开为：
+
+$$
+\boxed{
+\mathcal G(z)
+=
+\sum_{n=0}^{\infty}a_nz^n.
+}
+$$
+
+等价地：
+
+$$
+\boxed{
+a_n
+=
+-\frac1{4^{n+1}n!}
+\left.
+\frac{d^n}{dq^n}
+\frac{\mathcal X'(q)}{\mathcal X(q)}
+\right|_{q=0}.
+}
+$$
+
+这个定义只使用 completed \(\xi\) 在一个固定点附近的局部系数，不需要先枚举零点。
+
+利用 \(\mathcal X\) 的反射轨道乘积，可以把它重写成：
+
+$$
+\boxed{
+a_n
+=
+\sum_{\mathcal O}
+m_{\mathcal O}
+x_{\mathcal O}^{\,n+1},
+}
+$$
+
+其中 \(\mathcal O\) 遍历函数方程反射轨道，而不是分别重复计算 \(\rho\) 与 \(1-\rho\)。
+
+在 RH 下，令：
+
+$$
+\nu
+=
+\sum_{\mathcal O}
+m_{\mathcal O}x_{\mathcal O}
+\delta_{x_{\mathcal O}},
+$$
+
+便有：
+
+$$
+\boxed{
+a_n
+=
+\int_0^1x^n\,d\nu(x).
+}
+$$
+
+所以 \((a_n)\) 是一个 \([0,1]\) 上的 Hausdorff 矩序列。
+
+---
+
+# 第一百四十部　构造二维 Casimir 观察格
+
+## 418. 观察者差分
+
+定义向前移位：
+
+$$
+(Sa)_n=a_{n+1},
+$$
+
+以及朝向“更深矩阶”的差分：
+
+$$
+\boxed{
+D=I-S.
+}
+$$
+
+于是：
+
+$$
+(Da)_n=a_n-a_{n+1}.
+$$
+
+一般地：
+
+$$
+\boxed{
+D^ka_n
+=
+\sum_{j=0}^{k}
+(-1)^j
+\binom{k}{j}
+a_{n+j}.
+}
+$$
+
+定义二维 Casimir 观察量：
+
+$$
+\boxed{
+C_{n,k}=D^ka_n.
+}
+$$
+
+若 RH 成立，则：
+
+$$
+\begin{aligned}
+C_{n,k}
+&=
+\int_0^1
+x^n(1-x)^k\,d\nu(x)\\
+&=
+\sum_{\mathcal O}
+m_{\mathcal O}
+x_{\mathcal O}^{\,n+1}
+(1-x_{\mathcal O})^k.
+\end{aligned}
+$$
+
+所以：
+
+$$
+\boxed{
+C_{n,k}\ge0
+\qquad
+\forall n,k\ge0.
+}
+$$
+
+这里出现两个独立观察轴：
+
+$$
+n=\text{全局 Casimir 频谱深度},
+$$
+
+$$
+k=\text{观察者边界差分深度}.
+$$
+
+传统 RH 被转换成整张二维非负格：
+
+$$
+\boxed{
+\mathbb N^2
+\ni(n,k)
+\longmapsto
+C_{n,k}\ge0.
+}
+$$
+
+---
+
+# 第一百四十一部　两个新 RH 命题
+
+## 419. 全局偶完备黎曼命题
+
+定义：
+
+$$
+\boxed{
+\mathrm{E\!-\!RH}
+:
+\quad
+C_{n,2r}
+=
+D^{2r}a_n
+\ge0
+\quad
+\forall n,r\ge0.
+}
+$$
+
+它只读取偶数阶差分：
+
+$$
+0,2,4,6,\ldots
+$$
+
+因为：
+
+$$
+(-D)^{2r}=D^{2r},
+$$
+
+所以即使不知道观察方向究竟是 \(D\) 还是 \(-D\)，该命题也保持不变。
+
+它是无指点、全局、观察者无关的命题。
+
+---
+
+## 420. 指点奇观察黎曼命题
+
+定义：
+
+$$
+\boxed{
+\mathrm{O\!-\!RH}
+:
+\quad
+C_{n,2r+1}
+=
+D^{2r+1}a_n
+\ge0
+\quad
+\forall n,r\ge0.
+}
+$$
+
+它读取：
+
+$$
+1,3,5,7,\ldots
+$$
+
+阶差分。
+
+若反转观察方向：
+
+$$
+D\longmapsto-D,
+$$
+
+则：
+
+$$
+(-D)^{2r+1}
+=
+-D^{2r+1}.
+$$
+
+所以奇阶量不能在没有定向观察者时被标记为“正”或“负”。
+
+这里的唯一观察者，就是选择：
+
+$$
+D=I-S
+$$
+
+而不是：
+
+$$
+-D=S-I.
+$$
+
+更具体地，它选择的方向是：
+
+$$
+n
+\longrightarrow
+n+1,
+$$
+
+即从低矩阶朝更深矩阶前进。
+
+---
+
+# 第一百四十二部　偶奇 RH 重组定理
+
+## 421. 主定理
+
+在 completed \(\xi\) 的反射 Casimir 矩序列上：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathrm{E\!-\!RH}
+\land
+\mathrm{O\!-\!RH}.
+}
+$$
+
+这就是你要求的两个新命题。
+
+---
+
+## 422. 正向证明
+
+若 RH 成立，则：
+
+$$
+x_{\mathcal O}\in[0,1].
+$$
+
+所以对所有 \(n,k\)：
+
+$$
+x_{\mathcal O}^{\,n+1}\ge0,
+$$
+
+$$
+(1-x_{\mathcal O})^k\ge0.
+$$
+
+故：
+
+$$
+C_{n,k}
+=
+\sum_{\mathcal O}
+m_{\mathcal O}
+x_{\mathcal O}^{\,n+1}
+(1-x_{\mathcal O})^k
+\ge0.
+$$
+
+特别地，偶数 \(k\) 和奇数 \(k\) 两类都非负，因此：
+
+$$
+\mathrm{RH}
+\Longrightarrow
+\mathrm{E\!-\!RH}
+\land
+\mathrm{O\!-\!RH}.
+$$
+
+---
+
+## 423. 反向证明
+
+假设：
+
+$$
+\mathrm{E\!-\!RH}
+\land
+\mathrm{O\!-\!RH}.
+$$
+
+每个自然数 \(k\) 要么是：
+
+$$
+k=2r,
+$$
+
+要么是：
+
+$$
+k=2r+1.
+$$
+
+因此：
+
+$$
+D^ka_n\ge0
+\qquad
+\forall n,k.
+$$
+
+这说明 \((a_n)\) 是完全单调序列。
+
+由 Hausdorff 矩定理，存在唯一有限正测度：
+
+$$
+\nu
+$$
+
+支撑于 \([0,1]\)，使：
+
+$$
+a_n=\int_0^1x^n\,d\nu(x).
+$$
+
+于是生成函数满足：
+
+$$
+\sum_{n\ge0}a_nz^n
+=
+\int_0^1
+\frac{d\nu(x)}{1-zx}.
+$$
+
+右侧在：
+
+$$
+\mathbb C\setminus[1,\infty)
+$$
+
+上解析。
+
+但左侧在零点附近又等于：
+
+$$
+-\frac14
+\frac{
+\mathcal X'(z/4)
+}{
+\mathcal X(z/4)
+}.
+$$
+
+这个对数导数的极点恰好位于：
+
+$$
+z=4q_{\mathcal O}.
+$$
+
+因此所有极点都必须满足：
+
+$$
+4q_{\mathcal O}\in[1,\infty),
+$$
+
+即：
+
+$$
+q_{\mathcal O}
+\in
+\left[\frac14,\infty\right).
+$$
+
+解方程：
+
+$$
+s(1-s)=q_{\mathcal O}
+$$
+
+得到：
+
+$$
+s
+=
+\frac12
+\pm
+i\sqrt{q_{\mathcal O}-\frac14}.
+$$
+
+所以全部非平凡零点均满足：
+
+$$
+\Re s=\frac12.
+$$
+
+因此：
+
+$$
+\mathrm{E\!-\!RH}
+\land
+\mathrm{O\!-\!RH}
+\Longrightarrow
+\mathrm{RH}.
+$$
+
+---
+
+## 424. 反命题形式
+
+等价地：
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\iff
+\neg\mathrm{E\!-\!RH}
+\lor
+\neg\mathrm{O\!-\!RH}.
+}
+$$
+
+所以如果 RH 为假，一定存在一个有限证书，属于以下两种之一：
+
+$$
+\boxed{
+D^{2r}a_n<0
+}
+$$
+
+或：
+
+$$
+\boxed{
+D^{2r+1}a_n<0.
+}
+$$
+
+反例不可能躲在第三种类型中。
+
+这正是拆分的实际价值：可以建立两条独立反例搜索线。
+
+---
+
+# 第一百四十三部　为什么偶是全局，奇是观察者
+
+## 425. 方向线
+
+把观察方向看作一个一维符号线：
+
+$$
+\mathfrak o=\{D,-D\}.
+$$
+
+没有指点观察者时，我们不能区分：
+
+$$
+D
+\quad\text{和}\quad
+-D.
+$$
+
+但：
+
+$$
+D^{2r}
+$$
+
+属于：
+
+$$
+\mathfrak o^{\otimes2r}
+\cong\mathbb R,
+$$
+
+因而是一个全局标量。
+
+而：
+
+$$
+D^{2r+1}
+$$
+
+仍属于符号线：
+
+$$
+\mathfrak o^{\otimes(2r+1)}
+\cong\mathfrak o.
+$$
+
+只有选择一个观察方向以后，才可以把它与实数中的“正”比较。
+
+因此：
+
+$$
+\boxed{
+\text{偶阶条件不需要观察者，}
+}
+$$
+
+$$
+\boxed{
+\text{奇阶条件需要指点观察者。}
+}
+$$
+
+这不是哲学比喻，而是张量宇称。
+
+---
+
+## 426. 全局只知道距离平方
+
+偶阶读取：
+
+$$
+(1-x)^{2r}.
+$$
+
+它知道：
+
+$$
+|1-x|^{2r},
+$$
+
+却不知道 \(x\) 位于边界 \(1\) 的哪一侧。
+
+例如：
+
+$$
+x=1-d
+$$
+
+与：
+
+$$
+x=1+d
+$$
+
+在偶阶上都产生：
+
+$$
+d^{2r}.
+$$
+
+所以全局偶观察只知道“离边界多远”。
+
+---
+
+## 427. 唯一观察者决定边界方向
+
+奇阶读取：
+
+$$
+(1-x)^{2r+1}.
+$$
+
+它区分：
+
+$$
+x<1
+\Longrightarrow
+1-x>0,
+$$
+
+和：
+
+$$
+x>1
+\Longrightarrow
+1-x<0.
+$$
+
+因此 O-RH 的真正意义是：
+
+$$
+\boxed{
+\text{全部 Casimir 谱均位于观察者边界 }x=1
+\text{ 的完成侧。}
+}
+$$
+
+这正是“一个独一无二的观察者是奇的”的数学版本。
+
+全局对象只知道边界的无符号距离；观察者选择哪一侧是“内部”。
+
+---
+
+# 第一百四十四部　两种命题确实不是同一句话
+
+## 428. 纯 E-RH、非 O-RH 模型
+
+取：
+
+$$
+a_n=r^{n+1},
+\qquad
+r>1.
+$$
+
+则：
+
+$$
+D^ka_n
+=
+r^{n+1}(1-r)^k.
+$$
+
+所以：
+
+$$
+D^{2m}a_n>0,
+$$
+
+而：
+
+$$
+D^{2m+1}a_n<0.
+$$
+
+因此：
+
+$$
+\boxed{
+\mathrm{E\!-\!RH}\text{ 成立，}
+\qquad
+\mathrm{O\!-\!RH}\text{ 失败。}
+}
+$$
+
+这不是形式上的重复拆分。
+
+---
+
+## 429. 纯 O-RH、非 E-RH 模型
+
+取：
+
+$$
+b_n=-r^{n+1},
+\qquad
+r>1.
+$$
+
+则：
+
+$$
+D^{2m+1}b_n>0,
+$$
+
+但：
+
+$$
+D^{2m}b_n<0.
+$$
+
+所以在一般实序列空间中：
+
+$$
+\boxed{
+\mathrm{O\!-\!RH}
+\not\Rightarrow
+\mathrm{E\!-\!RH},
+}
+$$
+
+同时：
+
+$$
+\boxed{
+\mathrm{E\!-\!RH}
+\not\Rightarrow
+\mathrm{O\!-\!RH}.
+}
+$$
+
+对 classical \(\xi\) 的专属序列，某一半是否因额外解析结构而蕴含另一半，是一个需要另外证明的问题，不能在定义阶段偷入。
+
+---
+
+# 第一百四十五部　黄金结构零是最纯粹的“偶完成、奇破缺”
+
+## 430. 第一个黄金结构零
+
+仓库现已机器证明，第三阶黄金 germ 在：
+
+$$
+s_\varphi
+=
+\frac1{2\varphi^2}
+$$
+
+具有一个真正的一阶结构零；这不是 totalized reciprocal 因子制造的形式假零。
+
+计算其 Casimir 坐标：
+
+$$
+q_\varphi
+=
+s_\varphi(1-s_\varphi)
+=
+\frac1{4\varphi}.
+$$
+
+因此：
+
+$$
+\boxed{
+x_\varphi
+=
+\frac1{4q_\varphi}
+=
+\varphi.
+}
+$$
+
+而：
+
+$$
+1-x_\varphi
+=
+1-\varphi
+=
+-\frac1\varphi.
+$$
+
+所以该结构原子对观察格的贡献为：
+
+$$
+C_{n,k}^{(\varphi)}
+=
+m\varphi^{n+1}
+\left(-\frac1\varphi\right)^k.
+$$
+
+于是：
+
+$$
+\boxed{
+C_{n,2r}^{(\varphi)}
+=
+m\varphi^{n+1-2r}>0,
+}
+$$
+
+但：
+
+$$
+\boxed{
+C_{n,2r+1}^{(\varphi)}
+=
+-m\varphi^{n-2r}<0.
+}
+$$
+
+这几乎就是你一直描述的结构的精确实现：
+
+$$
+\boxed{
+\text{偶阶全部完成，奇阶全部破缺。}
+}
+$$
+
+因此第一个黄金结构零是一个规范的：
+
+$$
+\boxed{
+\mathrm{E\!-\!RH}\text{ 通过、}
+\mathrm{O\!-\!RH}\text{ 失败}
+}
+$$
+
+模式。
+
+这也进一步证明：对黄金 germ 做 RH 型检测前，必须先扣除 structural divisor；否则 O-RH 会被已知结构零立即否定，而这与 classical RH 无关。
+
+---
+
+## 431. Zeckendorf 宇称作为双通道调度器
+
+仓库还已经证明，黄金 Euler 指数的相邻跳跃只可能是：
+
+$$
+\varphi
+\quad\text{或}\quad
+\varphi^2,
+$$
+
+并由相应 Zeckendorf 展开的最小指标奇偶决定。
+
+因此可以把两个 RH 搜索队列写成：
+
+* 最小指标为偶：推进 E-RH 队列；
+* 最小指标为奇：推进 O-RH 队列。
+
+这不是等价证明的一部分；等价性来自偶数与奇数穷尽全部差分阶。
+
+黄金调度的作用是：
+
+$$
+\boxed{
+\text{使两条无限验证线都被无限次访问，且长期失衡有界。}
+}
+$$
+
+---
+
+# 第一百四十六部　Cosh 与 Sinh 两个动力学通道
+
+## 432. 偶生成函数
+
+定义：
+
+$$
+\mathcal C_n(t)
+=
+\sum_{r=0}^{\infty}
+\frac{
+D^{2r}a_n
+}{
+(2r)!
+}
+t^{2r}.
+$$
+
+在 RH 下：
+
+$$
+\boxed{
+\mathcal C_n(t)
+=
+\int_0^1
+x^n
+\cosh\bigl(t(1-x)\bigr)
+\,d\nu(x).
+}
+$$
+
+它在：
+
+$$
+t\mapsto-t
+$$
+
+下不变。
+
+所以它是全局、无方向的完成通道。
+
+仓库已有有限零点窗上的中心化双曲余弦缺陷，并证明该偶缺陷为零当且仅当全部横向偏移消失；现有 owner 正好体现了偶观察的临界检测能力。
+
+---
+
+## 433. 奇生成函数
+
+定义：
+
+$$
+\mathcal S_n(t)
+=
+\sum_{r=0}^{\infty}
+\frac{
+D^{2r+1}a_n
+}{
+(2r+1)!
+}
+t^{2r+1}.
+$$
+
+在 RH 下：
+
+$$
+\boxed{
+\mathcal S_n(t)
+=
+\int_0^1
+x^n
+\sinh\bigl(t(1-x)\bigr)
+\,d\nu(x).
+}
+$$
+
+它满足：
+
+$$
+\mathcal S_n(-t)
+=
+-\mathcal S_n(t).
+$$
+
+所以它是观察者定向的 odd current。
+
+---
+
+## 434. 两个 RH 重组为完整观察流
+
+有：
+
+$$
+\boxed{
+\mathcal C_n(t)+\mathcal S_n(t)
+=
+\int_0^1
+x^ne^{t(1-x)}\,d\nu(x),
+}
+$$
+
+以及：
+
+$$
+\boxed{
+\mathcal C_n(t)-\mathcal S_n(t)
+=
+\int_0^1
+x^ne^{-t(1-x)}\,d\nu(x).
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{even completion}
++
+\text{odd observer current}
+=
+\text{完整有向 semigroup}.
+}
+$$
+
+这给“两种 RH 拼成传统 RH”一个动力学版本：
+
+$$
+\boxed{
+\cosh+\sinh=e^{+},
+\qquad
+\cosh-\sinh=e^{-}.
+}
+$$
+
+---
+
+# 第一百四十七部　离线零点如何进入两个通道
+
+## 435. 单个复 Casimir 轨道
+
+假设一个离线零点轨道对应：
+
+$$
+x=re^{i\theta},
+\qquad
+\theta\neq0.
+$$
+
+连同共轭轨道，其对观察量的贡献为：
+
+$$
+\boxed{
+C_{n,k}^{\mathrm{orb}}
+=
+2m
+\Re
+\left[
+x^{n+1}(1-x)^k
+\right].
+}
+$$
+
+写成相位：
+
+$$
+C_{n,k}^{\mathrm{orb}}
+=
+2m
+r^{n+1}|1-x|^k
+\cos
+\left(
+(n+1)\theta
++
+k\arg(1-x)
+\right).
+$$
+
+因此：
+
+* E-RH 只采样 \(k=2r\) 的相位格；
+* O-RH 只采样 \(k=2r+1\) 的相位格；
+* 全部 RH 采样完整二维整数格。
+
+单个离线轨道倾向于在这张格上产生正负振荡。
+
+但实际：
+
+$$
+C_{n,k}
+=
+\sum_{\mathrm{all\ orbits}}
+C_{n,k}^{\mathrm{orb}}.
+$$
+
+所以一个有限负证书需要全体轨道共同结算。
+
+这就是“所有离线零点在全局系统中纠缠”的矩意义：
+
+$$
+\boxed{
+\text{每个轨道有自己的相位，}
+\quad
+\text{但所有轨道共享同一 }C_{n,k}.
+}
+$$
+
+---
+
+## 436. 两类失败
+
+现在可以把 \(\neg\mathrm{RH}\) 的证书分为：
+
+### E 型失败
+
+$$
+D^{2r}a_n<0.
+$$
+
+它表示无方向的全局完成已经出现负值，典型来源是：
+
+* 复 Casimir 谱；
+* 非 Hermitian 全局响应；
+* 不可由正全局状态解释的相位干涉。
+
+### O 型失败
+
+$$
+D^{2r+1}a_n<0.
+$$
+
+它表示全局距离平方仍可能正常，但观察者选择的完成方向错误，典型来源是：
+
+$$
+x>1.
+$$
+
+黄金结构零 \(x=\varphi\) 就是纯 O 型失败。
+
+### 混合失败
+
+同一个系统可以同时违反两类。
+
+因此：
+
+$$
+\boxed{
+\neg\mathrm{RH}
+=
+\text{全局偶失败}
+\;\lor\;
+\text{观察者奇失败}.
+}
+$$
+
+---
+
+# 第一百四十八部　与素数构型的对应拆分
+
+## 437. 有限 source 阶的真正奇偶
+
+对构型源生成元：
+
+$$
+\mathcal K(\mathbf u)
+=
+\log\mathcal M(\mathbf u),
+$$
+
+定义：
+
+$$
+\boxed{
+\mathcal K_{\mathrm E}(\mathbf u)
+=
+\frac{
+\mathcal K(\mathbf u)+
+\mathcal K(-\mathbf u)
+}{2},
+}
+$$
+
+$$
+\boxed{
+\mathcal K_{\mathrm O}(\mathbf u)
+=
+\frac{
+\mathcal K(\mathbf u)-
+\mathcal K(-\mathbf u)
+}{2}.
+}
+$$
+
+则：
+
+$$
+\mathcal K_{\mathrm E}
+$$
+
+只包含偶阶 connected cumulants，而：
+
+$$
+\mathcal K_{\mathrm O}
+$$
+
+只包含奇阶 connected cumulants。
+
+并且：
+
+$$
+\boxed{
+\mathcal K
+=
+\mathcal K_{\mathrm E}
++
+\mathcal K_{\mathrm O}.
+}
+$$
+
+这里的奇偶完全有定义，因为每个构型只包含有限多个 source insertions。
+
+---
+
+## 438. 构型角色
+
+此前得到：
+
+$$
+\begin{aligned}
+\text{孪生构型}&:\quad k=2,\text{ 偶};\\
+\text{三元组 chirality}&:\quad k=3,\text{ 奇};\\
+\text{四元组}&:\quad k=4,\text{ 偶}.
+\end{aligned}
+$$
+
+因此 prime-side 也有：
+
+$$
+\boxed{
+\text{全局偶构型 sector}
+\oplus
+\text{观察者奇构型 sector}.
+}
+$$
+
+但目前不能直接声明：
+
+$$
+\mathcal K_{\mathrm E}
+\longleftrightarrow
+\mathrm{E\!-\!RH},
+$$
+
+$$
+\mathcal K_{\mathrm O}
+\longleftrightarrow
+\mathrm{O\!-\!RH}.
+$$
+
+中间仍然缺少 parity-enhanced Trace–Jet Bridge：
+
+$$
+\boxed{
+\mathcal U
+:
+\text{prime source cumulants}
+\longrightarrow
+\text{Casimir difference lattice}.
+}
+$$
+
+理想交换关系应为：
+
+$$
+\mathcal U\circ\Pi_{\mathrm{source}}
+=
+\Pi_{\mathrm{observer}}\circ\mathcal U.
+$$
+
+也就是说，偶构型 jet 必须进入偶 Casimir 通道，奇构型 jet 必须进入奇 Casimir 通道。
+
+---
+
+## 439. 为什么不是“全部素数有偶数个或奇数个”
+
+全部素数集合是可数无限集，不能继承有限集合的自然总宇称。
+
+有效的拆分变量是：
+
+$$
+\boxed{
+\text{一个有限观察中使用了多少个 source},
+}
+$$
+
+或者：
+
+$$
+\boxed{
+\Omega(n)\pmod2.
+}
+$$
+
+所以你的原始直觉需要改写为：
+
+> 不是把“所有素数”分成总数偶、总数奇两个宇宙；
+> 而是把所有**有限素数观察过程**分成偶阶和奇阶，二者的直和构成完整观察代数。
+
+---
+
+# 第一百四十九部　最低风险的 Li 系数影子
+
+还有一个更直接、但结构信息更少的精确拆分。
+
+定义 Li 系数 \(\lambda_n\)。Li 的经典判据证明：
+
+$$
+\mathrm{RH}
+\iff
+\lambda_n\ge0
+\quad
+\forall n\ge1.
+$$
+
+该等价最初由 Xian-Jin Li 建立。([科学直通车][1])
+
+于是定义：
+
+$$
+\boxed{
+\mathrm{Li\!-\!E\!-\!RH}
+:
+\lambda_{2n}\ge0
+\quad
+\forall n\ge1,
+}
+$$
+
+以及：
+
+$$
+\boxed{
+\mathrm{Li\!-\!O\!-\!RH}
+:
+\lambda_{2n+1}\ge0
+\quad
+\forall n\ge0.
+}
+$$
+
+立即有：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathrm{Li\!-\!E\!-\!RH}
+\land
+\mathrm{Li\!-\!O\!-\!RH}.
+}
+$$
+
+但这只是把 Li 指标集合分成偶数和奇数，属于**语法拆分**。
+
+Casimir 的 E-RH/O-RH 则是**语义拆分**：
+
+* 偶阶看无方向距离；
+* 奇阶看观察方向；
+* 黄金结构零可以明确通过偶侧而失败于奇侧；
+* 两侧分别对应不同类型的谱缺陷。
+
+仓库当前已有一个 Li 曲率模块，但其公开接口把完整 `liCriterion : RH ↔ ∀ n, 0 ≤ liCoefficient n` 作为输入；与此同时，`LiHausdorffMoments` 和 `CompleteMonotonicityRHCriterion` 仍出现在规划层，而不是已找到的完整 owner。
+
+因此仓库适合同时落地：
+
+1. 低风险的 Li 偶奇重组定理；
+2. 更深的 Casimir E-RH/O-RH 主理论。
+
+---
+
+# 第一百五十部　有限验证体系
+
+## 440. 有限偶命题
+
+定义：
+
+$$
+\mathrm{E\!-\!RH}(N,R)
+:
+\quad
+D^{2r}a_n\ge0
+$$
+
+对：
+
+$$
+0\le n\le N,
+\qquad
+0\le r\le R
+$$
+
+全部成立。
+
+## 441. 有限奇命题
+
+定义：
+
+$$
+\mathrm{O\!-\!RH}(N,R)
+:
+\quad
+D^{2r+1}a_n\ge0
+$$
+
+对相同范围全部成立。
+
+任何一个有限失败：
+
+$$
+D^ka_n<0
+$$
+
+都是 RH 的严格反证证书。
+
+但所有已检查有限层通过，只说明：
+
+$$
+\mathrm{E\!-\!RH}(N,R)
+\land
+\mathrm{O\!-\!RH}(N,R),
+$$
+
+不等于全局 RH。
+
+仓库刚刚形式化的一般极限残余定理指出：极限阶段真正剩下的盲区是所有前驱残余的交，而不能由“每个有限阶段都还有残余”直接判断。
+
+因此需要区分：
+
+$$
+\boxed{
+\text{每层通过}
+}
+$$
+
+与：
+
+$$
+\boxed{
+\text{全部层有统一证明}.
+}
+$$
+
+---
+
+## 442. 矩阵增强证书
+
+定义：
+
+$$
+\mathsf C^{(n,k)}_N
+=
+\left[
+D^ka_{n+i+j}
+\right]_{0\le i,j\le N}.
+$$
+
+RH 推出：
+
+$$
+\mathsf C^{(n,k)}_N\succeq0
+$$
+
+对全部 \(n,k,N\) 成立，因为：
+
+$$
+c^\ast
+\mathsf C^{(n,k)}_Nc
+=
+\int_0^1
+x^n(1-x)^k
+\left|
+\sum_{j=0}^Nc_jx^j
+\right|^2
+d\nu(x).
+$$
+
+于是可以分别定义：
+
+$$
+\mathsf E^{(n,r)}_N
+=
+\mathsf C^{(n,2r)}_N,
+$$
+
+$$
+\mathsf O^{(n,r)}_N
+=
+\mathsf C^{(n,2r+1)}_N.
+$$
+
+若某个矩阵出现负特征值，就得到比单个标量差分更强的有限证书。
+
+---
+
+# 第一百五十一部　建议的仓库模块
+
+```text
+D5/S3/Analytic/ReflectionCasimir/
+  XiReflectionQuotient.lean
+  CasimirLogDerivativeMoments.lean
+  CasimirDifferenceLattice.lean
+  CasimirHausdorffCriterion.lean
+
+D5/S3/Analytic/ParityRH/
+  GlobalEvenRH.lean
+  PointedOddRH.lean
+  EvenOddRHRecombination.lean
+  EvenOddCasimirMatrices.lean
+
+D5/S3/Analytic/ParityRH/Examples/
+  GeometricEvenOnlySequence.lean
+  GeometricOddOnlySequence.lean
+  GoldenStructuralOddObstruction.lean
+
+D5/S3/Analytic/LiHausdorff/
+  EvenOddLiRecombination.lean
+  LiCasimirDifferenceTransform.lean
+
+D5/S3/PrimeConstellation/ParityBridge/
+  EvenOddSourceCumulants.lean
+  SourceParitySelectionRule.lean
+
+D5/X_Frontier/ParityTraceJet/
+  PrimeCasimirParityIntertwiner.lean
+  EvenSourceToGlobalCompletion.lean
+  OddSourceToPointedObserver.lean
+```
+
+---
+
+## 443. 最先可以闭合的纯逻辑定理
+
+```lean
+def GlobalEvenRH (a : ℕ → ℝ) : Prop :=
+  ∀ n r, 0 ≤ iterDifference (2 * r) a n
+
+def PointedOddRH (a : ℕ → ℝ) : Prop :=
+  ∀ n r, 0 ≤ iterDifference (2 * r + 1) a n
+
+theorem completelyMonotone_iff_even_and_odd
+    (a : ℕ → ℝ) :
+    (∀ n k, 0 ≤ iterDifference k a n) ↔
+      GlobalEvenRH a ∧ PointedOddRH a
+```
+
+这个定理只需要自然数奇偶分解，不涉及 RH，可以立即进入内核。
+
+随后再接：
+
+```lean
+theorem rh_iff_globalEven_and_pointedOdd :
+    RiemannHypothesis ↔
+      GlobalEvenRH casimirMoment ∧
+      PointedOddRH casimirMoment
+```
+
+它的真正依赖是：
+
+```text
+XiReflectionQuotient
+ReflectionQuotientLogDerivative
+HausdorffMomentCriterion
+LogDerivativePoleRecovery
+```
+
+---
+
+# 最终凝聚
+
+你提出的“两种 RH 拼成传统 RH”，最准确的实现不是：
+
+$$
+\text{素数总数为偶}
+\quad\text{或}\quad
+\text{素数总数为奇},
+$$
+
+因为无限素数集合没有自然总宇称。
+
+真正可用的分裂是：
+
+$$
+\boxed{
+\text{有限观察阶为偶}
+\quad\text{或}\quad
+\text{有限观察阶为奇}.
+}
+$$
+
+定义：
+
+$$
+C_{n,k}
+=
+D^ka_n,
+$$
+
+其中 \(a_n\) 由 completed \(\xi\) 的反射 Casimir 对数导数在 \(q=0\) 处的 Taylor 系数定义。
+
+然后：
+
+$$
+\boxed{
+\mathrm{E\!-\!RH}
+:
+C_{n,2r}\ge0
+}
+$$
+
+控制全局、无方向、偶完成；
+
+$$
+\boxed{
+\mathrm{O\!-\!RH}
+:
+C_{n,2r+1}\ge0
+}
+$$
+
+控制唯一观察者所选择的奇方向。
+
+二者严格重组为：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathrm{E\!-\!RH}
+\land
+\mathrm{O\!-\!RH}.
+}
+$$
+
+其动力学表达是：
+
+$$
+\boxed{
+\cosh
++
+\sinh
+=
+e^{+},
+}
+$$
+
+其谱表达是：
+
+$$
+\boxed{
+x^n(1-x)^{2r}
++
+x^n(1-x)^{2r+1}
+}
+$$
+
+共同确定支撑是否位于：
+
+$$
+[0,1].
+$$
+
+其观察者表达是：
+
+$$
+\boxed{
+\text{全局只知道 }|1-x|;
+}
+$$
+
+$$
+\boxed{
+\text{唯一观察者决定 }1-x\text{ 的符号}.
+}
+$$
+
+其反例表达是：
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\iff
+\exists n,r:
+D^{2r}a_n<0
+\quad\lor\quad
+\exists n,r:
+D^{2r+1}a_n<0.
+}
+$$
+
+而项目最新证明的黄金结构零：
+
+$$
+x=\varphi
+$$
+
+恰好满足：
+
+$$
+\boxed{
+\text{全部偶阶为正，全部奇阶为负}.
+}
+$$
+
+所以它成为“偶完成、奇破缺”的第一个真实 divisor 模型，而不再只是语言直觉。
+
+[1]: https://www.sciencedirect.com/science/article/pii/S0022314X97921375 "https://www.sciencedirect.com/science/article/pii/S0022314X97921375"
+# 第一百五十二部　无限 Möbius 残余塔与非均匀完备化
+
+你的直觉已经非常接近一个可以严格表述的核心，但需要把其中一句话修正：
+
+$$
+\boxed{
+\text{RH 的真值本身不是对角化过程；}
+}
+$$
+
+真正具有无限递归和对角逃逸结构的是：
+
+$$
+\boxed{
+\text{有限观察、有限条件、有限证书逼近 RH 真值的过程。}
+}
+$$
+
+经典 RH 最终仍只有一个确定真值：
+
+$$
+\operatorname{Truth}(\mathrm{RH})\in\{\mathrm{true},\mathrm{false}\}.
+$$
+
+但它的有限观察塔可能永远处于：
+
+$$
+\mathrm{unknown}.
+$$
+
+所以更准确的总判断是：
+
+$$
+\boxed{
+\text{RH 不是一个无限层悖论，而是一个 }
+\omega\text{-层非均匀完备化问题。}
+}
+$$
+
+它的困难不只是“出现了无限集合”，而是：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{每一个有限层都可能留下残余；}\\
+&\text{残余可以随着层级移动到新的方向；}\\
+&\text{没有已知统一模量阻止残余向无穷逃逸；}\\
+&\text{素数构型在每个相关阶都产生新的 connected 项；}\\
+&\text{目前没有类似 Fibonacci 二维状态那样的有限闭合律。}
+\end{aligned}
+}
+$$
+
+---
+
+# 第一百五十三部　有限层都有逃逸，不等于存在永久逃逸
+
+## 444. 观察残余塔
+
+设完整候选状态空间为 \(\mathfrak M\)，目标性质为：
+
+$$
+\tau:\mathfrak M\to\{0,1\}.
+$$
+
+这里可以把：
+
+$$
+\tau(F)=1
+$$
+
+解释为“\(F\) 满足 RH 型零点定位”。
+
+第 \(\lambda\) 层有限观察为：
+
+$$
+O_\lambda:\mathfrak M\to Y_\lambda.
+$$
+
+它可能只读取：
+
+* 前 \(P\) 个素数局部因子；
+* 高度 \(T\) 以下的零点；
+* 构型阶数不超过 \(k\) 的相关；
+* 前 \(N\) 个 Taylor jet；
+* 支撑不超过 \(L\) 的 Weil 测试函数；
+* 差分阶数不超过 \(r\) 的 Casimir 条件。
+
+定义该观察层的目标残余：
+
+$$
+\boxed{
+\mathcal E_\lambda
+=
+\left\{
+(F,G):
+O_\lambda(F)=O_\lambda(G),
+\quad
+\tau(F)\neq\tau(G)
+\right\}.
+}
+$$
+
+这就是：
+
+> 当前观察者认为两个系统相同，但 RH 目标必须区分的状态对。
+
+仓库现有的证明拓扑理论已经定义了同一形式：
+
+$$
+\mathcal E(q;T)
+=
+\ker q\setminus\ker T,
+$$
+
+并证明加入新读数 \(d\) 后：
+
+$$
+\boxed{
+\mathcal E(q\vee d;T)
+=
+\mathcal E(q;T)\cap\ker d.
+}
+$$
+
+也就是说，新条件不会凭空创造旧残余，只能切掉它能够识别的部分。
+
+---
+
+## 445. 极限残余
+
+若观察层越来越细：
+
+$$
+\lambda\le\mu
+\Longrightarrow
+\mathcal E_\mu\subseteq\mathcal E_\lambda,
+$$
+
+则极限残余是：
+
+$$
+\boxed{
+\mathcal E_\infty
+=
+\bigcap_\lambda\mathcal E_\lambda.
+}
+$$
+
+仓库刚刚机器验证了闭子空间版本：若观察空间在极限阶段是全部前驱观察空间的闭线性上确界，那么极限残余恰等于全部前驱残余的交。
+
+这产生三个完全不同的状态。
+
+### 有限闭合
+
+存在某个有限 \(\lambda_0\)：
+
+$$
+\mathcal E_{\lambda_0}=\varnothing.
+$$
+
+有限信息已经足够决定目标。
+
+### 仅极限闭合
+
+$$
+\mathcal E_\lambda\neq\varnothing
+\quad\forall\lambda<\infty,
+$$
+
+但：
+
+$$
+\mathcal E_\infty=\varnothing.
+$$
+
+每个有限观察者都有盲区，但没有一个固定状态对能逃过全部观察者。
+
+### 永久残余
+
+$$
+\mathcal E_\infty\neq\varnothing.
+$$
+
+存在真正不可由整个观察族区分的目标差异。
+
+因此：
+
+$$
+\boxed{
+\forall\lambda,\ 
+\mathcal E_\lambda\neq\varnothing
+}
+$$
+
+并不能推出：
+
+$$
+\boxed{
+\mathcal E_\infty\neq\varnothing.
+}
+$$
+
+---
+
+## 446. 最小反例
+
+在：
+
+$$
+\ell^2(\mathbb N)
+$$
+
+中令：
+
+$$
+R_N
+=
+\overline{\operatorname{span}}
+\{e_{N+1},e_{N+2},\ldots\}.
+$$
+
+则：
+
+$$
+R_N\neq\{0\}
+\qquad\forall N,
+$$
+
+但：
+
+$$
+\boxed{
+\bigcap_NR_N=\{0\}.
+}
+$$
+
+每一层都可以重新选择：
+
+$$
+e_{N+1}
+$$
+
+作为逃逸向量，但逃逸者本身随 \(N\) 改变。
+
+这就是：
+
+$$
+\boxed{
+\text{diagonal escape without persistent hidden object}.
+}
+$$
+
+如果改成：
+
+$$
+R_N
+=
+\operatorname{span}\{e_0\}
+\oplus
+\overline{\operatorname{span}}
+\{e_{N+1},e_{N+2},\ldots\},
+$$
+
+那么：
+
+$$
+\bigcap_NR_N
+=
+\operatorname{span}\{e_0\},
+$$
+
+才是真正的永久残余。
+
+---
+
+# 第一百五十四部　递归奇偶分类的极限会产生“幻影条件”
+
+## 447. E-RH/O-RH 还可以继续分
+
+前面定义了 Casimir 差分条件：
+
+$$
+C_{n,k}=D^ka_n,
+\qquad
+D=I-S.
+$$
+
+传统 RH 被写成：
+
+$$
+C_{n,k}\ge0
+\qquad
+\forall n,k\in\mathbb N.
+$$
+
+第一层拆分是：
+
+$$
+k=2r
+$$
+
+和：
+
+$$
+k=2r+1.
+$$
+
+继续递归，可以对任意 \(m\ge1\) 定义：
+
+$$
+\boxed{
+\mathrm{RH}_{m,j}:
+\quad
+C_{n,\,2^mr+j}\ge0
+\quad
+\forall n,r,
+}
+$$
+
+其中：
+
+$$
+0\le j<2^m.
+$$
+
+对每个固定 \(m\)：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\bigwedge_{j=0}^{2^m-1}
+\mathrm{RH}_{m,j}.
+}
+$$
+
+所以奇偶只是第一层：
+
+$$
+m=1.
+$$
+
+模 \(4\)、模 \(8\)、模 \(16\) 可以无限分下去。
+
+---
+
+## 448. 分类完备不等于证明完备
+
+注意，每一层分类已经覆盖全部自然数 \(k\)。
+
+例如奇偶分裂本身就是：
+
+$$
+\mathbb N
+=
+2\mathbb N
+\sqcup
+(2\mathbb N+1).
+$$
+
+所以问题不是“分类遗漏了某些 \(k\)”。
+
+问题是：
+
+$$
+\boxed{
+\text{每一个分类块本身仍然是无限的。}
+}
+$$
+
+将：
+
+$$
+\forall k\,P(k)
+$$
+
+改写为：
+
+$$
+\left(\forall r\,P(2r)\right)
+\land
+\left(\forall r\,P(2r+1)\right)
+$$
+
+在没有额外递归律时，只是重新包装同一个无限量词。
+
+一个拆分只有在存在复杂度下降时才真正有用，例如：
+
+$$
+P(2r)\Longleftarrow P(r),
+$$
+
+$$
+P(2r+1)\Longleftarrow P(r),
+$$
+
+并且映射带有统一收缩或归纳结构。
+
+否则：
+
+$$
+\boxed{
+\text{split is not compression}.
+}
+$$
+
+---
+
+## 449. \(2\)-进幻影分支
+
+考虑嵌套条件类：
+
+$$
+B_m
+=
+\left\{
+k\in\mathbb N:
+k\equiv-1\pmod{2^m}
+\right\}.
+$$
+
+即：
+
+$$
+B_m
+=
+\left\{
+2^mr+(2^m-1):r\ge0
+\right\}.
+$$
+
+每个 \(B_m\) 都是无限集，而且：
+
+$$
+B_{m+1}\subseteq B_m.
+$$
+
+但：
+
+$$
+\boxed{
+\bigcap_{m\ge1}B_m=\varnothing
+\quad
+\text{在 }\mathbb N\text{ 中}.
+}
+$$
+
+因为若自然数 \(k\) 属于全部 \(B_m\)，则：
+
+$$
+2^m\mid k+1
+\qquad\forall m,
+$$
+
+只能有：
+
+$$
+k+1=0,
+$$
+
+这在 \(\mathbb N\) 中不可能。
+
+然而在 \(2\)-进完成：
+
+$$
+\mathbb Z_2
+$$
+
+中：
+
+$$
+\boxed{
+\bigcap_mB_m=\{-1\}.
+}
+$$
+
+所以递归奇偶分类的逆极限会加入一个原定义域中不存在的边界点。
+
+这正是你的直觉所触及的结构：
+
+> 每一个有限分类层都有一条继续向下的路，但无限路径未必对应原定义域中的实际对象。
+
+因此必须区分：
+
+$$
+\boxed{
+\text{原始条件域 }\mathbb N
+}
+$$
+
+与：
+
+$$
+\boxed{
+\text{分类树的完成边界 }\mathbb Z_2.
+}
+$$
+
+否则就容易从“每层都有候选”错误推出“存在最终候选”。
+
+---
+
+# 第一百五十五部　任意有限 RH jet 都可以被对角逃逸
+
+下面可以证明一个很强的有限观察不可能定理。
+
+## 450. 有限 Casimir jet 非识别定理
+
+设：
+
+$$
+\mathcal X(q)
+$$
+
+是一个满足实共轭对称的整函数，且：
+
+$$
+\mathcal X(0)\neq0.
+$$
+
+定义其对数导数：
+
+$$
+-\frac{\mathcal X'(q)}{\mathcal X(q)}
+=
+\sum_{n\ge0}a_nq^n.
+$$
+
+给定任意有限观察深度 \(N\)，选择整数 \(M\)，使：
+
+$$
+2M-1>N,
+$$
+
+再定义：
+
+$$
+\boxed{
+\widetilde{\mathcal X}(q)
+=
+\mathcal X(q)
+\left[
+1+\left(\frac qR\right)^{2M}
+\right],
+}
+$$
+
+其中 \(R>0\)。
+
+则：
+
+$$
+-\frac{\widetilde{\mathcal X}'}
+{\widetilde{\mathcal X}}
+=
+-\frac{\mathcal X'}{\mathcal X}
+-
+\frac{
+2Mq^{2M-1}
+}{
+R^{2M}+q^{2M}
+}.
+$$
+
+第二项从：
+
+$$
+q^{2M-1}
+$$
+
+才开始出现。
+
+所以：
+
+$$
+\boxed{
+\widetilde a_n=a_n
+\qquad
+0\le n\le N.
+}
+$$
+
+因此所有只依赖前 \(N\) 个 Casimir jets 的 E-RH/O-RH 有限测试，都无法区分 \(\mathcal X\) 和 \(\widetilde{\mathcal X}\)。
+
+---
+
+## 451. 但新函数必然拥有离射线零点
+
+附加因子的零点为：
+
+$$
+q_j
+=
+R
+\exp
+\left(
+\frac{(2j+1)\pi i}{2M}
+\right),
+\qquad
+j=0,\ldots,2M-1.
+$$
+
+这些零点全部不是实数。
+
+令：
+
+$$
+\widetilde\xi(s)
+=
+\widetilde{\mathcal X}\bigl(s(1-s)\bigr).
+$$
+
+则：
+
+$$
+\widetilde\xi(1-s)=\widetilde\xi(s),
+$$
+
+并保持复共轭对称。
+
+但它的新 \(q_j\) 非实，因此其提升零点不能全部满足：
+
+$$
+\Re s=\frac12.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{任意有限个 reflection-Casimir jets，
+都不能在所有反射对称整函数中刻画 RH。}
+}
+$$
+
+这就是一个严格的 finite-jet diagonal escape theorem。
+
+它不说明经典 \(\xi\) 可以被任意修改；修改后的函数通常丢失经典 Euler、Gamma 和显式公式结构。
+
+它说明的是：
+
+$$
+\boxed{
+\text{只使用有限局部 jet，永远不够。}
+}
+$$
+
+真正的 RH 证明必须使用经典 \(\xi\) 的全局算术结构。
+
+---
+
+## 452. 有限高度同样不能决定
+
+给定任意高度 \(T\)，选择：
+
+$$
+\gamma>T,
+\qquad
+\delta\neq0.
+$$
+
+构造四元轨道多项式：
+
+$$
+P_{\delta,\gamma}(s)
+=
+\prod_{\epsilon,\eta\in\{\pm1\}}
+\left[
+s-
+\left(
+\frac12+\epsilon\delta+i\eta\gamma
+\right)
+\right].
+$$
+
+它满足：
+
+$$
+P_{\delta,\gamma}(1-s)
+=
+P_{\delta,\gamma}(s),
+$$
+
+以及共轭对称。
+
+于是：
+
+$$
+\widetilde\xi_T(s)
+=
+\xi(s)P_{\delta,\gamma}(s)
+$$
+
+保留 \(\xi\) 原有全部零点，同时在高度 \(>T\) 加入离线四元组。
+
+因此：
+
+$$
+\boxed{
+\text{任何有限高度零点核验都不能仅凭自身推出 RH。}
+}
+$$
+
+反例可以不断向更高高度移动：
+
+$$
+\gamma_T\to\infty.
+$$
+
+这就是 height-diagonal escape。
+
+---
+
+# 第一百五十六部　为什么素数不像 Fibonacci 那样有限闭合
+
+## 453. Fibonacci 的有限状态闭合
+
+Fibonacci 数满足：
+
+$$
+\begin{pmatrix}
+F_{n+1}\\
+F_n
+\end{pmatrix}
+=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}
+\begin{pmatrix}
+F_n\\
+F_{n-1}
+\end{pmatrix}.
+$$
+
+所有未来信息由二维状态：
+
+$$
+(F_n,F_{n-1})
+$$
+
+唯一决定。
+
+仓库最新的黄金 Euler beta 定理也已经把看似复杂的跳跃压缩成：
+
+$$
+\varphi
+\quad\text{或}\quad
+\varphi^2,
+$$
+
+并证明由 Zeckendorf 最小指标奇偶精确决定。
+
+所以该黄金系统虽然非周期，却存在一个精确机械词和有限递归骨架。
+
+---
+
+## 454. 素数指示序列不存在固定有限窗口递归
+
+令：
+
+$$
+a_n=
+\begin{cases}
+1,&n\text{ 是素数},\\
+0,&\text{否则}.
+\end{cases}
+$$
+
+假设存在固定 \(d\) 和函数：
+
+$$
+F:\{0,1\}^d\to\{0,1\},
+$$
+
+使充分大 \(n\) 时：
+
+$$
+a_{n+d}
+=
+F(a_n,\ldots,a_{n+d-1}).
+$$
+
+那么长度 \(d\) 的状态：
+
+$$
+(a_n,\ldots,a_{n+d-1})
+$$
+
+只有 \(2^d\) 种。
+
+确定性演化最终必然进入周期，因此素数指示序列最终周期。
+
+设最终周期为 \(m\)，选择一个足够大的素数：
+
+$$
+p\nmid m.
+$$
+
+因为：
+
+$$
+p(1+m)\equiv p\pmod m,
+$$
+
+最终周期性会要求：
+
+$$
+a_{p(1+m)}=a_p=1.
+$$
+
+但：
+
+$$
+p(1+m)
+$$
+
+是合数，矛盾。
+
+所以：
+
+$$
+\boxed{
+\text{素数指示序列不存在固定有限记忆的 Boolean 递推。}
+}
+$$
+
+更强地，对任意固定 \(d,F\)，递推误差：
+
+$$
+a_{n+d}
+-
+F(a_n,\ldots,a_{n+d-1})
+$$
+
+必然在无穷多个 \(n\) 上非零；否则递推最终成立。
+
+---
+
+## 455. 这不意味着素数不可计算
+
+素数是完全确定、可判定的。
+
+上述定理只说明：
+
+$$
+\boxed{
+\text{不能只看固定数量的前序“素／非素”比特，
+预测下一个素性比特。}
+}
+$$
+
+一个精确素数生成算法必须使用：
+
+* 当前整数 \(n\) 的大小；
+* 不断增长的除数范围；
+* 不断增长的素数表；
+* 或等价的无界状态。
+
+所以与 Fibonacci 的区别不是：
+
+$$
+\text{决定论}
+\quad\text{对}\quad
+\text{随机性},
+$$
+
+而是：
+
+$$
+\boxed{
+\text{有限维闭合}
+\quad\text{对}\quad
+\text{无界状态闭合}.
+}
+$$
+
+---
+
+# 第一百五十七部　每加入一个新素数，都增加一个不可约坐标
+
+## 456. 新素数估值不能从旧素数恢复
+
+对有限素数集合 \(S\)，观察：
+
+$$
+O_S(n)
+=
+(v_p(n))_{p\in S}.
+$$
+
+取新素数：
+
+$$
+q\notin S.
+$$
+
+比较：
+
+$$
+n=1
+$$
+
+和：
+
+$$
+n=q.
+$$
+
+对所有 \(p\in S\)：
+
+$$
+v_p(1)=v_p(q)=0.
+$$
+
+但：
+
+$$
+v_q(1)=0,
+\qquad
+v_q(q)=1.
+$$
+
+所以不存在函数 \(f\)，使：
+
+$$
+v_q=f\circ O_S.
+$$
+
+即：
+
+$$
+\boxed{
+v_q
+\notin
+\operatorname{Cl}
+\{v_p:p\in S\}.
+}
+$$
+
+每个新素数地址都切开旧观察共同核中的新状态对。
+
+这正是仓库 residual join law 的算术实例。
+
+---
+
+## 457. 乘法无限是可分解的
+
+虽然每个新素数加入独立坐标，但唯一分解使乘法结构具有：
+
+$$
+\mathbb N_{\ge1}
+\cong
+\bigoplus_p\mathbb N.
+$$
+
+因此 ζ 可以写成：
+
+$$
+\zeta(s)
+=
+\prod_p
+\sum_{k\ge0}p^{-ks}.
+$$
+
+这是一个无限系统，却具有完全局部因子化：
+
+$$
+\boxed{
+\text{multiplicative infinity is factorized}.
+}
+$$
+
+---
+
+## 458. 加法平移破坏这种因子化
+
+一旦同时观察：
+
+$$
+n+h_1,\ldots,n+h_k,
+$$
+
+同一个 \(n\) 的不同平移会共同改变无限多个素数估值坐标。
+
+于是：
+
+$$
+v_p(n+h_i)
+$$
+
+与：
+
+$$
+v_p(n+h_j)
+$$
+
+不再由独立局部状态分别决定。
+
+因此真正更难的是：
+
+$$
+\boxed{
+\text{factorized multiplicative infinity}
++
+\text{nonlocal additive shifts}.
+}
+$$
+
+这也是为什么 Euler 乘积可以完美描述整数乘法分解，却不会自动解决孪生素数等加法构型。
+
+---
+
+# 第一百五十八部　每一阶确实存在一个“约不掉”的 connected 项
+
+这部分是你的直觉最准确的地方。
+
+## 459. Moment–cumulant 分解
+
+对有限构型 \(H\)，令：
+
+$$
+M_H
+=
+\mathbb E
+\prod_{h\in H}X_h
+$$
+
+为全矩。
+
+connected cumulant 满足：
+
+$$
+M_H
+=
+\sum_{\pi\in\Pi(H)}
+\prod_{B\in\pi}\kappa_B.
+$$
+
+所以：
+
+$$
+\boxed{
+\kappa_H
+=
+M_H
+-
+\sum_{\substack{\pi\in\Pi(H)\\|\pi|\ge2}}
+\prod_{B\in\pi}\kappa_B.
+}
+$$
+
+右侧最后留下的：
+
+$$
+\kappa_H
+$$
+
+正是所有低阶分块乘积都扣除以后仍无法约去的顶层项。
+
+因此：
+
+$$
+\boxed{
+\text{每增加一个构型点，}
+}
+$$
+
+就出现一个新的候选 primitive connected residual。
+
+---
+
+## 460. 局部素数模型中，该项在所有阶都非零
+
+固定素数 \(p\)，令 \(A\) 在：
+
+$$
+\mathbb Z/p\mathbb Z
+$$
+
+上均匀分布。
+
+取互不相同的 residues：
+
+$$
+r_1,\ldots,r_k,
+$$
+
+定义：
+
+$$
+X_i=\mathbf1_{A\neq r_i}.
+$$
+
+其 cumulant generating function 为：
+
+$$
+K(\mathbf t)
+=
+\sum_{i=1}^kt_i
++
+\log
+\left[
+1+
+\frac1p
+\sum_{i=1}^k
+(e^{-t_i}-1)
+\right].
+$$
+
+对全部不同变量作 mixed derivative，得到：
+
+$$
+\boxed{
+\kappa(X_1,\ldots,X_k)
+=
+-\frac{(k-1)!}{p^k},
+\qquad
+k\ge2.
+}
+$$
+
+特别地：
+
+$$
+\kappa_2=-\frac1{p^2},
+$$
+
+$$
+\kappa_3=-\frac2{p^3},
+$$
+
+$$
+\kappa_4=-\frac6{p^4}.
+$$
+
+对任意 \(k\)，选择：
+
+$$
+p>k
+$$
+
+即可取 \(k\) 个不同 residues。
+
+所以：
+
+$$
+\boxed{
+\text{局部素数筛法的 connected cumulant 塔在任意有限阶都不截断。}
+}
+$$
+
+它不是 Gaussian 系统，因为 Gaussian 系统在二阶以后 cumulants 全部消失。
+
+---
+
+## 461. 这还不是全球素数定理
+
+上述结论严格说明：
+
+$$
+\boxed{
+\text{每个局部模 }p\text{ 世界具有无限阶 connected interaction}.
+}
+$$
+
+但不能未经证明就推出：
+
+$$
+\boxed{
+\text{全局所有 prime-constellation cumulants 均非零}.
+}
+$$
+
+不同素数、不同 archimedean 项和不同构型之间可能存在抵消。
+
+真正需要证明的强命题是：
+
+$$
+\boxed{
+\operatorname{gr}_k
+\mathcal K_{\mathrm{prime}}
+\neq0
+\quad
+\text{对无穷多个 }k.
+}
+$$
+
+这可以称为：
+
+> **Prime Cumulant Nontruncation Conjecture**
+
+局部模型为它提供强结构证据，但不是全球证明。
+
+---
+
+# 第一百五十九部　有限阶相关永远不能一般性决定下一阶
+
+## 462. 完全相同的低阶读数，相反的最高阶真值
+
+令：
+
+$$
+d=k+1.
+$$
+
+在：
+
+$$
+\{-1,+1\}^d
+$$
+
+上定义两个概率分布：
+
+$$
+\mu_d^\pm(x)
+=
+2^{-(d-1)}
+\mathbf1_{\prod_{i=1}^dx_i=\pm1}.
+$$
+
+对任意真子集：
+
+$$
+A\subsetneq\{1,\ldots,d\},
+$$
+
+都有：
+
+$$
+\mathbb E_{\mu_d^+}
+\prod_{i\in A}X_i
+=
+\mathbb E_{\mu_d^-}
+\prod_{i\in A}X_i
+=
+0.
+$$
+
+所以两个分布的所有 \(k\) 阶及以下边缘完全相同。
+
+但最高阶满足：
+
+$$
+\boxed{
+\mathbb E_{\mu_d^+}
+\prod_{i=1}^dX_i
+=
++1,
+}
+$$
+
+$$
+\boxed{
+\mathbb E_{\mu_d^-}
+\prod_{i=1}^dX_i
+=
+-1.
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{全部 proper marginals 都不能决定 global parity bit}.
+}
+$$
+
+这就是一个任意深度版本的“悖论式”结构。
+
+---
+
+## 463. 但这里的对角见证会随阶数改变
+
+对每个 \(k\)，我们构造的是一个新的维数：
+
+$$
+d=k+1.
+$$
+
+不存在一个固定的无限概率分布对，拥有完全相同的全部有限 cylinder marginals 却仍然不同；在标准可测乘积空间中，全部有限 marginals 会决定概率测度。
+
+所以这里仍然是：
+
+$$
+\boxed{
+\text{每一层都有新见证，}
+\quad
+\text{但不一定存在一个固定见证逃过所有层。}
+}
+$$
+
+这正好对应：
+
+$$
+R_k\neq0
+\quad\forall k,
+$$
+
+但可能：
+
+$$
+\bigcap_kR_k=0.
+$$
+
+---
+
+# 第一百六十部　所有“约不掉项”其实都是 Möbius 残余
+
+现在可以看见一个共同骨架。
+
+## 464. 有限差分
+
+$$
+D^ka_n
+=
+\sum_{j=0}^k
+(-1)^j
+\binom{k}{j}
+a_{n+j}.
+$$
+
+它是在长度 \(k\) 的 Boolean 平移结构上作 Möbius 反演。
+
+并且：
+
+$$
+\boxed{
+D^{k+1}a_n
+=
+D^ka_n-D^ka_{n+1}.
+}
+$$
+
+第 \(k+1\) 层不是简单重复第 \(k\) 层，而是在检查：
+
+$$
+D^ka_n
+$$
+
+是否继续单调。
+
+具体地：
+
+$$
+k=0:
+\quad
+a_n\ge0,
+$$
+
+$$
+k=1:
+\quad
+a_n\ge a_{n+1},
+$$
+
+$$
+k=2:
+\quad
+a_n-2a_{n+1}+a_{n+2}\ge0,
+$$
+
+$$
+k=3:
+\quad
+D^2a_n\ge D^2a_{n+1}.
+$$
+
+每一层都要求上一层缺陷本身再次具有正确方向。
+
+---
+
+## 465. 构型累积量
+
+$$
+\kappa_H
+=
+\sum_{\pi\in\Pi(H)}
+\mu_{\Pi}(\pi,\hat1)
+\prod_{B\in\pi}M_B.
+$$
+
+这是 partition lattice 上的 Möbius 反演。
+
+---
+
+## 466. 素数筛法
+
+$$
+\mathbf1_{\gcd(n,P)=1}
+=
+\sum_{d\mid\gcd(n,P)}
+\mu(d).
+$$
+
+这是 divisor lattice 上的 Möbius 反演。
+
+---
+
+## 467. Euler/Witt 抽取
+
+对生成函数取对数：
+
+$$
+\log Z
+$$
+
+会把所有重复结构拆成 primitive connected modes。
+
+再通过 Möbius/Witt inversion 恢复 primitive factor exponents。
+
+仓库最新的第三阶黄金 germ 已经出现了真实的新 divisor：两个 reciprocal ζ 因子分别在
+
+$$
+\frac1{2\varphi^2},
+\qquad
+\frac1{2\varphi^3}
+$$
+
+产生真正的一阶结构零，而不是可被 totalization 忽略的形式项。
+
+这支持：
+
+$$
+\boxed{
+\text{更深抽取确实可能暴露新的不可约结构项。}
+}
+$$
+
+但当前只证明到相应有限阶，不能因此直接宣布“所有阶都必有新零点”。
+
+---
+
+## 468. 无限 Möbius 深度
+
+定义第 \(k\) 层 primitive residual：
+
+$$
+\mathfrak P_k
+=
+\frac{
+\text{order }\le k\text{ information}
+}{
+\text{由 order }<k\text{ 可生成的信息}
+}.
+$$
+
+若：
+
+$$
+\mathfrak P_k\neq0
+$$
+
+对无穷多个 \(k\) 成立，则系统没有有限 arity closure。
+
+这可以称为：
+
+$$
+\boxed{
+\text{infinite Möbius depth}.
+}
+$$
+
+局部素数筛模型已经严格具有无限 Möbius 深度。
+
+---
+
+# 第一百六十一部　定义域是可数的，但没有有限共尾子集
+
+你的“条件无法分完”还需要一个重要区分。
+
+## 469. 可以列完，但不能走完
+
+所有有限素数构型：
+
+$$
+H\subset\mathbb Z,
+\qquad
+|H|<\infty
+$$
+
+构成可数集合。
+
+所有自然数阶的 Li、Casimir 或 cumulant 条件也是可数的。
+
+所以这些条件不是不可枚举的。
+
+可以排列为：
+
+$$
+C_1,C_2,C_3,\ldots.
+$$
+
+问题在于：
+
+$$
+\boxed{
+\text{没有最后一个有限条件。}
+}
+$$
+
+而且目前没有已知 \(N\)，使：
+
+$$
+C_1\land\cdots\land C_N
+\Longrightarrow
+\forall n\,C_n.
+$$
+
+所以不是 cardinality obstruction，而是：
+
+$$
+\boxed{
+\text{no finite cofinal certificate}.
+}
+$$
+
+---
+
+## 470. 多轴定义域
+
+实际证明路线通常同时具有多个无界轴：
+
+$$
+\lambda
+=
+(P,T,k,D,N,L,r,\ldots),
+$$
+
+其中：
+
+* \(P\)：素数截断；
+* \(T\)：零点高度；
+* \(k\)：构型点数；
+* \(D\)：构型直径；
+* \(N\)：jet 深度；
+* \(L\)：测试函数支撑；
+* \(r\)：差分或 moment 阶。
+
+有限阶段位于：
+
+$$
+\mathbb N^d.
+$$
+
+可以使用对角路径：
+
+$$
+(N,N,\ldots,N)
+$$
+
+共尾访问所有方向。
+
+也可以使用黄金 Sturmian 调度，使不同轴的增长失衡保持有界。
+
+仓库的最新 β 定理已经提供了由 Zeckendorf 最小指标奇偶控制的：
+
+$$
+\varphi/\varphi^2
+$$
+
+双通道精确调度。
+
+但：
+
+$$
+\boxed{
+\text{cofinal scheduling}
+\neq
+\text{uniform proof}.
+}
+$$
+
+它只保证最终访问每一个有限条件，不保证存在停止时刻。
+
+---
+
+# 第一百六十二部　真正的对角逃逸来自非紧性
+
+## 471. 嵌套非空闭集在紧空间中不能全部逃逸
+
+若：
+
+$$
+K_1\supseteq K_2\supseteq\cdots
+$$
+
+是紧空间中的非空闭集，则：
+
+$$
+\bigcap_nK_n\neq\varnothing.
+$$
+
+因此，若每个有限阶段都存在反例候选：
+
+$$
+K_n\neq\varnothing,
+$$
+
+但：
+
+$$
+\bigcap_nK_n=\varnothing,
+$$
+
+至少发生了以下一种情况：
+
+1. 候选空间不是紧的；
+2. 条件集合不是闭的；
+3. 有限阶段之间不兼容；
+4. 见证的质量在极限中退化。
+
+---
+
+## 472. RH 路线中的四种逃逸方向
+
+### 高度逃逸
+
+$$
+|\Im\rho_N|\to\infty.
+$$
+
+任何有限高度核验都看不见下一枚候选。
+
+### 横向坍缩
+
+$$
+\left|
+\Re\rho_N-\frac12
+\right|
+\to0.
+$$
+
+反例越来越靠近临界线，有限精度无法区分。
+
+### 复杂度逃逸
+
+$$
+k_N,D_N,P_N\to\infty.
+$$
+
+新缺陷只在更高构型阶、更大直径或新素数地址出现。
+
+### 条件数逃逸
+
+目标方向原则上可分离，但最小 separator 范数：
+
+$$
+\|g_N\|
+\to\infty.
+$$
+
+存在性保留，稳定可计算性消失。
+
+---
+
+## 473. Casimir 紧化中的边界逃逸
+
+在：
+
+$$
+x=\frac1{4\rho(1-\rho)}
+$$
+
+坐标中，高零点满足：
+
+$$
+x\to0.
+$$
+
+所以一个离线候选序列可以不断向：
+
+$$
+x=0
+$$
+
+边界逃逸。
+
+对任意固定 moment 阶 \(n\)：
+
+$$
+x_N^n\to0.
+$$
+
+因此有限 moments 可能完全看不到该逃逸原子。
+
+要阻止这种现象，必须证明某种：
+
+$$
+\boxed{
+\text{tightness / coercivity / uniform integrability}.
+}
+$$
+
+仅仅证明每个固定 moment 条件正确，并不提供这一统一控制。
+
+---
+
+# 第一百六十三部　RH 的真值不是递归的，证明状态才是
+
+## 474. 三值有限观察语义
+
+对每个有限观察层 \(\lambda\)，定义：
+
+$$
+v_\lambda(\mathrm{RH})
+\in
+\{\mathrm{true},\mathrm{false},\mathrm{unknown}\}.
+$$
+
+其中：
+
+* `false`：已认证一个真实离线零点；
+* `true`：已有一个覆盖全部未观察尾部的全局定理；
+* `unknown`：当前有限信息与两种可能都兼容。
+
+随着观察增加，若证书体系可靠：
+
+$$
+\mathrm{true}
+$$
+
+或：
+
+$$
+\mathrm{false}
+$$
+
+一旦出现，不应被后续推翻。
+
+但完全可能有：
+
+$$
+v_\lambda(\mathrm{RH})=\mathrm{unknown}
+\qquad
+\forall\lambda<\infty,
+$$
+
+而经典真值仍然确定。
+
+所以：
+
+$$
+\boxed{
+\text{epistemic nontermination}
+\not\Rightarrow
+\text{semantic indeterminacy}.
+}
+$$
+
+---
+
+## 475. 这不是普通悖论
+
+普通自指悖论常表现为二循环：
+
+$$
+P\leftrightarrow\neg P.
+$$
+
+这里的结构是：
+
+$$
+R_0\supseteq R_1\supseteq R_2\supseteq\cdots.
+$$
+
+它没有自动产生：
+
+$$
+P\land\neg P.
+$$
+
+它是：
+
+$$
+\boxed{
+\omega\text{-filtration}
+}
+$$
+
+而不是二层逻辑矛盾。
+
+真正需要问的是：
+
+$$
+\boxed{
+\bigcap_nR_n
+}
+$$
+
+究竟为空、非空，还是虽为空但没有有效收敛模量。
+
+---
+
+## 476. 不应提前声称 RH 独立
+
+如果 RH 在某个形式系统中独立，那么其有限证明搜索会永远无法结束。
+
+但目前不能由“条件无限”推出：
+
+$$
+\mathrm{RH}
+\text{ 独立于 ZFC}.
+$$
+
+有限证明完全可以通过一个普遍定理控制无限对象。
+
+数学归纳法、谱定理、紧致性、正算子结构都能够用有限文字覆盖无限条件。
+
+因此目前最诚实的表述是：
+
+$$
+\boxed{
+\text{RH 可能具有无限观察复杂度，}
+}
+$$
+
+但尚不能推出：
+
+$$
+\boxed{
+\text{RH 具有逻辑不可判定性。}
+}
+$$
+
+---
+
+# 第一百六十四部　真正的 RH 证明必须把无限塔压缩成一个对象
+
+## 477. 检查全部条件不是唯一道路
+
+若 Casimir moments 可以写成：
+
+$$
+a_n
+=
+\langle
+\Omega,J^n\Omega
+\rangle,
+$$
+
+并直接证明：
+
+$$
+\boxed{
+0\le J\le I,
+}
+$$
+
+则：
+
+$$
+\begin{aligned}
+D^ka_n
+&=
+\sum_{j=0}^k
+(-1)^j\binom kj
+\langle\Omega,J^{n+j}\Omega\rangle\\
+&=
+\langle
+\Omega,
+J^n(I-J)^k\Omega
+\rangle\\
+&\ge0.
+\end{aligned}
+$$
+
+于是一个算子不等式：
+
+$$
+0\le J\le I
+$$
+
+同时压缩了全部：
+
+$$
+(n,k)\in\mathbb N^2
+$$
+
+条件。
+
+所以有限证明并不是检查了无限多个格点，而是找到了它们的共同生成机制。
+
+---
+
+## 478. 这就是“有限生成化”
+
+可以把 RH 的困难描述为：
+
+$$
+\boxed{
+\text{寻找一个有限表达的全局结构，}
+}
+$$
+
+使：
+
+$$
+\boxed{
+\text{无限条件族}
+=
+\text{该结构的全部有限投影}.
+}
+$$
+
+候选结构包括：
+
+* 正自伴 Casimir 收缩算子；
+* 全局非负 Weil 二次型；
+* de Branges 空间；
+* correlation-completed determinant；
+* 具有统一下界的 Paley–Wiener frame；
+* prime-side 构造的自伴谱算子。
+
+这可以称为：
+
+$$
+\boxed{
+\text{Noetherianization of the RH observer tower}.
+}
+$$
+
+---
+
+## 479. Fibonacci 已经完成了这种压缩
+
+Fibonacci 的无限序列被压入：
+
+$$
+F=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}.
+$$
+
+所有层级来自：
+
+$$
+F^n.
+$$
+
+素数构型目前没有一个已知固定维数矩阵 \(A\)，使全部构型相关都由：
+
+$$
+A^n
+$$
+
+或有限数量的递归参数产生。
+
+尤其局部素数 cumulant 在任意阶都非零，说明任何候选压缩都不能只是有限阶 Gaussian closure。
+
+但它仍可能是：
+
+* 无限维但自伴的算子；
+* 有限类型的 transfer operator；
+* 一个 determinant；
+* 一个可控的函数方程系统。
+
+“没有简单 Fibonacci 递推”不等于“没有任何压缩结构”。
+
+---
+
+# 第一百六十五部　这一理论对 RH 难点的最终诊断
+
+现在可以给出一个比“因为它涉及无穷”更准确的公式：
+
+$$
+\boxed{
+\operatorname{HardCore}(\mathrm{RH})
+=
+\text{infinite primitive rank}
++
+\text{noncompact escape}
++
+\text{absence of a uniform positivity compressor}.
+}
+$$
+
+其中：
+
+## 无限 primitive rank
+
+每个相关阶都可能产生新的 Möbius residual：
+
+$$
+\kappa_H,
+\quad
+D^ka_n,
+\quad
+\text{Witt mode},
+\quad
+\text{new prime coordinate}.
+$$
+
+## 非紧逃逸
+
+候选缺陷可以移动到：
+
+$$
+T\to\infty,
+\qquad
+\delta\to0,
+\qquad
+k\to\infty,
+\qquad
+p\to\infty.
+$$
+
+## 缺少统一压缩器
+
+目前没有从 prime/explicit-formula 数据直接构造并证明：
+
+$$
+0\le J_\xi\le I
+$$
+
+或等价的全局结构。
+
+---
+
+# 第一百六十六部　新的可形式化定理
+
+## 480. 奇偶分类幻影
+
+```lean
+def parityCylinder (m : ℕ) : Set ℕ :=
+  {k | k % (2 ^ m) = 2 ^ m - 1}
+
+theorem parityCylinder_nonempty_nested :
+    (∀ m, (parityCylinder m).Nonempty) ∧
+    (∀ m, parityCylinder (m + 1) ⊆ parityCylinder m)
+
+theorem parityCylinder_iInter_empty :
+    ⋂ m, parityCylinder m = ∅
+```
+
+并在 \(\mathbb Z_2\) 中证明其极限点为 \(-1\)。
+
+---
+
+## 481. 有限 jet 无法刻画 RH 型定位
+
+```lean
+theorem finite_logJet_cannot_characterize_rayZeros
+    (X : EntireFunction ℂ)
+    (hreal : ConjugationCovariant X)
+    (N : ℕ) :
+    ∃ X' : EntireFunction ℂ,
+      sameLogDerivativeJets X X' N ∧
+      ConjugationCovariant X' ∧
+      HasNonrealZero X'
+```
+
+---
+
+## 482. 素数比特无固定有限记忆
+
+```lean
+theorem primeIndicator_no_eventual_fixedWindowRecurrence
+    (d : ℕ) (hd : 0 < d)
+    (F : (Fin d → Bool) → Bool) :
+    ¬ ∃ N,
+      ∀ n ≥ N,
+        primeIndicator (n + d) =
+          F (fun i => primeIndicator (n + i))
+```
+
+---
+
+## 483. 新素数估值不可由有限旧坐标恢复
+
+```lean
+theorem freshPrimeValuation_not_factor
+    (S : Finset Nat.Primes)
+    (q : Nat.Primes)
+    (hq : q ∉ S) :
+    ¬ ∃ f,
+      ∀ n,
+        padicValNat q n =
+          f (fun p : S => padicValNat p n)
+```
+
+---
+
+## 484. 不同 residue 的任意阶局部 cumulant
+
+```lean
+theorem distinctResidue_survival_cumulant
+    (p : Nat.Primes)
+    (r : Fin k → ZMod p)
+    (hr : Function.Injective r)
+    (hk : 2 ≤ k) :
+    jointCumulant
+      (fun i a => if a ≠ r i then 1 else 0)
+      =
+      -((k - 1).factorial : ℝ) / p ^ k
+```
+
+---
+
+## 485. 有限相关阶不决定下一阶
+
+```lean
+theorem properMarginals_do_not_determine_topParity
+    (d : ℕ) (hd : 1 < d) :
+    ∃ μplus μminus,
+      (∀ A : Finset (Fin d),
+        A.card < d →
+        moment μplus A = moment μminus A) ∧
+      moment μplus Finset.univ = 1 ∧
+      moment μminus Finset.univ = -1
+```
+
+---
+
+## 486. RH 观察塔三分
+
+```lean
+def FiniteClosure := ∃ n, residual n = ⊥
+
+def LimitOnlyClosure :=
+  (∀ n, residual n ≠ ⊥) ∧
+  iInf residual = ⊥
+
+def PersistentResidual :=
+  iInf residual ≠ ⊥
+```
+
+并证明三者的互斥关系。
+
+---
+
+# 最终凝聚
+
+你的判断可以被正式修正为：
+
+$$
+\boxed{
+\text{RH 中确实存在无限递归条件塔，}
+}
+$$
+
+但不是因为：
+
+$$
+\text{无限集合天然产生悖论}.
+$$
+
+真正的结构是：
+
+$$
+\boxed{
+\text{每一个有限观察层都可能留下新的 Möbius residual。}
+}
+$$
+
+这些 residual 在不同领域中分别表现为：
+
+$$
+\boxed{
+\begin{aligned}
+\text{有限差分}&:\quad D^ka_n;\\
+\text{素数构型}&:\quad\kappa_H;\\
+\text{筛法}&:\quad\text{divisor Möbius residual};\\
+\text{Euler germ}&:\quad\text{new Witt factor};\\
+\text{零点观察}&:\quad\text{odd Krein direction};\\
+\text{证明系统}&:\quad\text{unresolved target fiber}.
+\end{aligned}
+}
+$$
+
+而且局部素数模型中可以严格证明：
+
+$$
+\boxed{
+\kappa_k
+=
+-\frac{(k-1)!}{p^k}\neq0
+}
+$$
+
+对任意阶 \(k\) 都能出现。
+
+这就是“每一层都有一个约不掉的项”的准确数学版本。
+
+但是：
+
+$$
+\boxed{
+\text{每层都有逃逸}
+\not\Rightarrow
+\text{存在一个对象逃过所有层}.
+}
+$$
+
+递归奇偶分类给出的最小反例是：
+
+$$
+B_m
+=
+\{k:k\equiv-1\pmod{2^m}\}.
+$$
+
+每个 \(B_m\) 都非空，然而：
+
+$$
+\bigcap_mB_m=\varnothing
+\quad\text{在 }\mathbb N\text{ 中}.
+$$
+
+分类完成后出现的 \(-1\) 是一个 \(2\)-进边界点，不是原始自然数条件。
+
+所以你所感觉到的“定义域本身是一个对角化问题”，更准确地说是：
+
+$$
+\boxed{
+\text{定义域的有限分类塔具有边界，}
+}
+$$
+
+$$
+\boxed{
+\text{有限层的相容路径未必来自原始定义域中的实际对象。}
+}
+$$
+
+而“命题真假也是一个这样的问题”则应修正成：
+
+$$
+\boxed{
+\text{真值固定，有限证书可能永远非均匀。}
+}
+$$
+
+RH 真正可能困难于：
+
+$$
+\boxed{
+\text{每个有限 observer 都能被新的高度、精度、构型阶或素数地址对角绕过。}
+}
+$$
+
+但一个证明仍可能通过构造单一全局对象，将全部条件压缩：
+
+$$
+\boxed{
+0\le J_\xi\le I
+}
+$$
+
+便会一次性推出：
+
+$$
+\boxed{
+D^ka_n
+=
+\langle
+\Omega,
+J_\xi^n(I-J_\xi)^k\Omega
+\rangle
+\ge0
+\quad
+\forall n,k.
+}
+$$
+
+因此，RH 路线的终极目标不是“把所有条件逐个分完”，而是：
+
+$$
+\boxed{
+\text{找到那个使所有 residual 同时消失的统一生成结构。}
+}
+$$
+
+如果它存在，RH 的无限层会被一个有限结构定理重完。
+
+如果它不存在，并且可以证明任何候选压缩器都被新的 primitive residual 对角逃逸，那么才会得到真正的逻辑或结构性不可压缩结论。
+
+目前仓库最接近的下一步，应是把以下链条正式闭合：
+
+$$
+\boxed{
+\text{local all-order prime cumulants}
+\longrightarrow
+\text{global arity filtration}
+\longrightarrow
+\text{limit residual intersection}
+\longrightarrow
+\text{uniform compression obstruction or positive Casimir operator}.
+}
+$$
+# 第一百六十七部　无限原语残余—正性压缩理论
+
+这一层需要先作一个决定性的修正：
+
+$$
+\boxed{
+\text{RH 的真值不是无限递归生成的；}
+}
+$$
+
+$$
+\boxed{
+\text{递归生成的是观察条件、证明条件与反例排除条件。}
+}
+$$
+
+经典 \(\xi\) 已经是一个固定对象，RH 已经是一个固定命题：
+
+$$
+\mathrm{RH}\in\{\mathrm{true},\mathrm{false}\}.
+$$
+
+但有限观察者面对它时，会形成一个没有最后一层的残余塔：
+
+$$
+R_0\supseteq R_1\supseteq R_2\supseteq\cdots.
+$$
+
+所以你感受到的并不是普通二层悖论
+
+$$
+P\leftrightarrow\neg P,
+$$
+
+而是一种：
+
+$$
+\boxed{
+\omega\text{-层观察递归}
++
+\text{极限阶段的统一性问题}.
+}
+$$
+
+更准确地说，RH 的困难具有四个互相耦合的无界方向：
+
+$$
+\boxed{
+\begin{aligned}
+p&\to\infty
+&&\text{新的素数地址};\\
+k&\to\infty
+&&\text{新的构型相关阶};\\
+T&\to\infty
+&&\text{新的零点高度};\\
+N&\to\infty
+&&\text{新的观察／jet／测试函数复杂度}.
+\end{aligned}
+}
+$$
+
+单独任何一个方向未必致命。真正困难来自它们的**联合对角逃逸**。
+
+---
+
+# 第一百六十八部　RH 的“定义域”并不唯一
+
+## 487. 同一个命题可以有不同观察域
+
+RH 可以被表示为：
+
+### 零点域
+
+$$
+\forall\rho,\quad
+\xi(\rho)=0
+\Longrightarrow
+\Re\rho=\frac12.
+$$
+
+### Li 系数域
+
+$$
+\forall n,\quad \lambda_n\ge0.
+$$
+
+### Casimir–Hausdorff 域
+
+$$
+\forall n,k,\quad
+D^ka_n\ge0.
+$$
+
+### Weil 测试函数域
+
+$$
+\forall g,\quad Q(g)\ge0.
+$$
+
+### 整数不等式域
+
+Robin 定理把 RH 等价地写成一个对所有充分大整数成立的除数和不等式。([数字对象识别系统][1])
+
+这些定义域完全不同：
+
+$$
+\text{zeros},\quad
+\mathbb N,\quad
+\mathbb N^2,\quad
+\text{function space}.
+$$
+
+因此：
+
+$$
+\boxed{
+\text{“RH 的定义域本身就是某一个特定对角化域”}
+}
+$$
+
+并不是内禀说法。
+
+真正内禀的是：
+
+$$
+\boxed{
+\text{这些观察域最终是否区分同一个 RH 真／假商。}
+}
+$$
+
+一个观察表示可以非常难，另一个表示可能把同样的无限条件压缩进一个更统一的结构。
+
+---
+
+## 488. 仓库已经发生了一次重要压缩
+
+仓库现在已经证明，在给定 `ZeroData` 的前提下：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\forall g\in\mathrm{WeilTestFunction},
+\quad
+Q_Z(g)\ge0,
+}
+$$
+
+其中：
+
+$$
+Q_Z(g)
+=
+\Re\,
+\operatorname{zeroSum}
+\bigl(
+Z,\operatorname{convolutionSquare}(g)
+\bigr).
+$$
+
+若存在离线零点，仓库的 separator 会产生一个 \(g\)，使：
+
+$$
+Q_Z(g)<0.
+$$
+
+该结果仍相对于给定的 `ZeroData`，不自动解决 `ZeroData` 的存在义务，也不是无条件 RH 证明。
+
+这说明：
+
+> 无穷多个零点条件已经可以被统一成“一个二次型是否非负”。
+
+所以 RH 的无限性并不意味着它无法合并。
+
+它已经被语义压缩为：
+
+$$
+\boxed{
+Q_Z\succeq0.
+}
+$$
+
+尚未解决的是：
+
+> 能否从素数侧直接证明这个全局二次型为正？
+
+---
+
+# 第一百六十九部　无限条件可以是一只算子，而不是无限张清单
+
+## 489. 极化
+
+若 \(Q_Z\) 具有适当的二次型结构，可以通过极化定义 Hermitian 型：
+
+$$
+B_Z(f,g)
+=
+\frac14
+\sum_{j=0}^{3}
+i^j
+Q_Z(f+i^jg).
+$$
+
+于是：
+
+$$
+Q_Z(g)=B_Z(g,g).
+$$
+
+如果进一步能在某个 Hilbert 完成 \(\mathcal H_W\) 上证明：
+
+1. \(B_Z\) 连续；或
+2. \(Q_Z\) 稠密定义、下半有界并可闭；
+
+就可以用一个自伴算子或闭二次型 \(A_Z\) 表示：
+
+$$
+\boxed{
+Q_Z(g)
+=
+\langle g,A_Zg\rangle.
+}
+$$
+
+从而：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+A_Z\ge0.
+}
+$$
+
+这就是 RH 无限条件的**算子压缩**。
+
+---
+
+## 490. 有限矩阵压缩
+
+选择一个可数 form core：
+
+$$
+e_1,e_2,e_3,\ldots
+$$
+
+并令：
+
+$$
+V_N=\operatorname{span}\{e_1,\ldots,e_N\}.
+$$
+
+定义有限 Hermitian 矩阵：
+
+$$
+G_N
+=
+\bigl(
+B_Z(e_i,e_j)
+\bigr)_{1\le i,j\le N}.
+$$
+
+在 \(V_\infty=\bigcup_NV_N\) 是 form core 的前提下：
+
+$$
+\boxed{
+A_Z\ge0
+\iff
+G_N\succeq0
+\quad
+\forall N.
+}
+$$
+
+如果 \(A_Z\not\ge0\)，则存在 \(g\)：
+
+$$
+Q_Z(g)<0.
+$$
+
+由 core 稠密性和二次型连续性，可以找到有限线性组合 \(g_N\in V_N\)，仍满足：
+
+$$
+Q_Z(g_N)<0.
+$$
+
+所以：
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\Longrightarrow
+\exists N,\quad
+\lambda_{\min}(G_N)<0.
+}
+$$
+
+这给出一个严格的结论：
+
+> 如果 RH 为假，那么在合适的可数 form core 中，必然存在一个有限矩阵负证书。
+
+但没有任何已知统一上界告诉我们这个 \(N\) 有多大。
+
+---
+
+## 491. 观察深度是相对的，负指数是绝对的
+
+定义相对于所选基的检测深度：
+
+$$
+d_{\mathcal E}(Z)
+=
+\min
+\left\{
+N:
+\lambda_{\min}(G_N)<0
+\right\}.
+$$
+
+更换基以后：
+
+$$
+d_{\mathcal E}(Z)
+$$
+
+可能变化很大。
+
+但二次型的负指数：
+
+$$
+\operatorname{ind}_-(Q_Z)
+=
+\sup
+\left\{
+\dim W:
+Q_Z|_W<0
+\right\}
+$$
+
+不依赖坐标基。
+
+所以：
+
+$$
+\boxed{
+\text{证书出现在哪一层是相对的；}
+}
+$$
+
+$$
+\boxed{
+\text{是否存在负方向是绝对的。}
+}
+$$
+
+这与前面关于离线零点的判断完全一致：
+
+$$
+\operatorname{sign}\delta
+$$
+
+依赖观察页，而：
+
+$$
+\delta^2>0
+$$
+
+是全局事实。
+
+---
+
+# 第一百七十部　递归拆分只有在“复杂度下降”时才是真递归
+
+## 492. 奇偶拆分本身只是重新编号
+
+对于一个无限条件：
+
+$$
+\forall n,\quad P(n),
+$$
+
+写成：
+
+$$
+\left[
+\forall r,\ P(2r)
+\right]
+\land
+\left[
+\forall r,\ P(2r+1)
+\right]
+$$
+
+当然完全等价。
+
+但这一步没有减少条件数量。
+
+同样：
+
+$$
+\mathrm{RH}
+\iff
+\mathrm{E\!-\!RH}
+\land
+\mathrm{O\!-\!RH}
+$$
+
+是一个有意义的表示分解，但如果没有进一步关系，它仍然是两条无限命题。
+
+真正的递归压缩必须具有：
+
+$$
+\boxed{
+P(2r)\Leftarrow F_{\mathrm E}(P(r)),
+}
+$$
+
+$$
+\boxed{
+P(2r+1)\Leftarrow F_{\mathrm O}(P(r)),
+}
+$$
+
+并且 \(F_{\mathrm E},F_{\mathrm O}\) 让复杂度严格下降，或使残余按统一比例收缩。
+
+---
+
+## 493. Fibonacci 为什么真正闭合
+
+Fibonacci 满足：
+
+$$
+\begin{pmatrix}
+F_{n+1}\\
+F_n
+\end{pmatrix}
+=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}
+\begin{pmatrix}
+F_n\\
+F_{n-1}
+\end{pmatrix}.
+$$
+
+无限序列被二维状态完全闭合。
+
+所以 Fibonacci 的无限不是“逐项检查”：
+
+$$
+F_0,F_1,F_2,\ldots
+$$
+
+而是：
+
+$$
+\boxed{
+\text{一次验证递推算子，覆盖全部层级。}
+}
+$$
+
+若要让 RH 的奇偶拆分真正发挥类似作用，就需要找到一个 RH 重整化律：
+
+$$
+\boxed{
+\mathscr C_{2n}
+=
+\mathcal R_0(\mathscr C_n),
+\qquad
+\mathscr C_{2n+1}
+=
+\mathcal R_1(\mathscr C_n),
+}
+$$
+
+其中 \(\mathscr C_n\) 可以是：
+
+* Casimir moments；
+* Weil 矩阵；
+* prime-constellation cumulants；
+* Jacobi coefficients；
+* 或 operator blocks。
+
+目前我们还没有这样的有限维闭合律。
+
+---
+
+# 第一百七十一部　有限自动机是递归闭合的最低模型
+
+## 494. 仓库已有的有限前缀方向
+
+仓库新加入的 typed partial DFAO 框架已经证明：
+
+$$
+\boxed{
+\text{存在全局 }k\text{-状态模型}
+\Longrightarrow
+\text{它拟合每一个有限前缀}.
+}
+$$
+
+该模块明确区分了“有限前缀拟合”与“全局正确性”。
+
+---
+
+## 495. 固定状态数下的反向紧致性
+
+若：
+
+* 字母表有限；
+* 输出集有限；
+* base state 有限；
+* 状态数上界固定为 \(k\)；
+
+那么满足这些条件的机器总数是有限的。
+
+设：
+
+$$
+\mathcal M_k
+$$
+
+为全部至多 \(k\) 状态机器。
+
+令：
+
+$$
+F_N
+=
+\left\{
+M\in\mathcal M_k:
+M\text{ 拟合前 }N\text{ 项}
+\right\}.
+$$
+
+则：
+
+$$
+F_{N+1}\subseteq F_N.
+$$
+
+如果：
+
+$$
+F_N\neq\varnothing
+\qquad
+\forall N,
+$$
+
+因为 \(\mathcal M_k\) 有限，嵌套有限集必有：
+
+$$
+\bigcap_NF_N\neq\varnothing.
+$$
+
+其中的机器拟合全部前缀，因而是全局机器。
+
+所以在有限载体前提下：
+
+$$
+\boxed{
+\text{存在全局 }k\text{-状态模型}
+\iff
+\forall N,\ 
+\text{存在 }k\text{-状态前缀模型}.
+}
+$$
+
+等价地：
+
+$$
+\boxed{
+\text{不存在全局 }k\text{-状态模型}
+\Longrightarrow
+\exists N(k),\ 
+\text{前 }N(k)\text{ 项已经给出 UNSAT 证书}.
+}
+$$
+
+---
+
+## 496. 对角逃逸发生在状态数轴上
+
+可能对每个 \(N\)，都有一台拟合前 \(N\) 项的机器。
+
+但其最小状态数：
+
+$$
+s(N)
+$$
+
+满足：
+
+$$
+s(N)\to\infty.
+$$
+
+于是：
+
+$$
+\boxed{
+\forall N,\ 
+\exists\text{ 有限模型};
+}
+$$
+
+但：
+
+$$
+\boxed{
+\nexists k,\ 
+\exists\text{ 全局 }k\text{-状态模型}.
+}
+$$
+
+这就是：
+
+$$
+\text{有限层可压缩}
+\quad\text{但}\quad
+\text{压缩秩无界}.
+$$
+
+素数与 Fibonacci 的真正差别很可能首先位于这里：
+
+* Fibonacci：状态复杂度恒为 \(2\)；
+* 素数：精确预测所需状态随观察范围增长。
+
+这仍不等于“素数没有有限公式”；它只排除了固定有限状态递推。
+
+---
+
+# 第一百七十二部　“每层有新项”不等于“无法统一生成”
+
+这是当前最重要的逻辑纠偏之一。
+
+## 497. 非截断与不可压缩不是同一个概念
+
+级数：
+
+$$
+-\log(1-z)
+=
+\sum_{n\ge1}\frac{z^n}{n}
+$$
+
+每一阶系数都非零。
+
+但全部无限系数由一个有限公式：
+
+$$
+-\log(1-z)
+$$
+
+统一生成。
+
+因此：
+
+$$
+\boxed{
+\text{所有阶都有新项}
+\not\Rightarrow
+\text{不存在有限生成对象}.
+}
+$$
+
+要区分：
+
+$$
+\boxed{
+\begin{aligned}
+\text{arity nontruncation}
+&:\text{高阶系数不消失};\\
+\text{finite-state closure}
+&:\text{是否存在有限递推状态};\\
+\text{analytic compression}
+&:\text{是否存在一个生成函数};\\
+\text{operator compression}
+&:\text{是否存在一个统一算子};\\
+\text{proof compression}
+&:\text{能否用有限证明控制全部层}.
+\end{aligned}
+}
+$$
+
+---
+
+# 第一百七十三部　固定素数处的全部构型相关其实由一个有限隐藏变量生成
+
+## 498. 局部潜变量
+
+固定素数 \(p\)。
+
+令：
+
+$$
+A_p
+\sim
+\operatorname{Uniform}(\mathbb F_p).
+$$
+
+对每个 offset \(h\)，定义：
+
+$$
+X_h(A_p)
+=
+\mathbf1_{A_p\neq-h}.
+$$
+
+所有不同阶的局部素数构型读数：
+
+$$
+X_{h_1},
+\quad
+X_{h_1}X_{h_2},
+\quad
+X_{h_1}X_{h_2}X_{h_3},
+\ldots
+$$
+
+全部是同一个有限变量 \(A_p\) 的函数。
+
+因此局部可观测函数空间至多只有：
+
+$$
+\dim L^2(\mathbb F_p)=p
+$$
+
+维。
+
+所以：
+
+$$
+\boxed{
+\text{固定 }p\text{ 的全阶相关并不需要无限维局部状态。}
+}
+$$
+
+它们只是同一个 \(p\)-状态隐藏变量的不同 moments。
+
+---
+
+## 499. 全阶 cumulant 的单一生成函数
+
+对有限构型 \(H\)：
+
+$$
+K_{p,H}(\mathbf t)
+=
+\log
+\mathbb E
+\exp
+\left(
+\sum_{h\in H}t_hX_h
+\right).
+$$
+
+一个函数 \(K_{p,H}\) 同时生成全部局部 connected cumulants：
+
+$$
+\partial_{t_{h_1}}\cdots
+\partial_{t_{h_d}}
+K_{p,H}(0).
+$$
+
+当对应 forbidden residues 互不相同时：
+
+$$
+\boxed{
+\kappa_p(h_1,\ldots,h_d)
+=
+-\frac{(d-1)!}{p^d}.
+}
+$$
+
+所以局部确实在每一阶出现新的非零 connected 项。
+
+但这些项不是彼此毫无关系的“新宇宙”，而是同一个有限局部 partition function 的 Taylor 系数。
+
+---
+
+## 500. 真正的无限来自全部素数地址
+
+把所有 \(p\) 合起来，隐藏变量成为：
+
+$$
+A=(A_p)_p
+\in
+\prod_p\mathbb F_p.
+$$
+
+这接近一个 profinite residue observer。
+
+因此：
+
+$$
+\boxed{
+\text{每个 }p\text{ 局部有限，}
+\qquad
+\text{全部 }p\text{ 的乘积无限}.
+}
+$$
+
+但该 profinite 观察者只编码局部同余障碍。
+
+它仍然没有完整编码：
+
+* 数的阿基米德大小；
+* 素数密度；
+* 长区间与短区间误差；
+* additive shift 的真实全局分布。
+
+所以：
+
+$$
+\boxed{
+\text{profinite local completion}
+\neq
+\text{global prime completion}.
+}
+$$
+
+缺少的正是 archimedean/global direction。
+
+---
+
+# 第一百七十四部　固定构型阶实际上比想象中更容易闭合
+
+## 501. 大素数处只剩通用尾项
+
+设：
+
+$$
+H=\{h_1,\ldots,h_k\}
+$$
+
+且 \(p>\operatorname{diam}(H)\)。
+
+则所有 \(h_i\bmod p\) 不同，所以：
+
+$$
+\nu_p(H)=k.
+$$
+
+Hardy–Littlewood 局部因子为：
+
+$$
+L_p(H)
+=
+\frac{1-k/p}{(1-1/p)^k}.
+$$
+
+展开：
+
+$$
+\boxed{
+L_p(H)
+=
+1-
+\frac{k(k-1)}{2p^2}
++
+O_k(p^{-3}).
+}
+$$
+
+关键是 \(1/p\) 项精确消失。
+
+所以：
+
+$$
+\sum_p|L_p(H)-1|
+$$
+
+对每个固定 \(H\) 收敛。
+
+---
+
+## 502. “约不掉项”已经被推到二阶
+
+未经归一化的联合存活概率是：
+
+$$
+1-\frac kp.
+$$
+
+独立基线是：
+
+$$
+\left(1-\frac1p\right)^k.
+$$
+
+二者的 \(1/p\) 线性项相同。
+
+除掉独立基线后，首先剩下的是：
+
+$$
+-\binom{k}{2}\frac1{p^2}.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{一阶局部质量被完成掉；}
+}
+$$
+
+$$
+\boxed{
+\text{二阶 connected correlation 是首个 residual。}
+}
+$$
+
+这正是 cumulant 的作用：扣除所有低阶可分解部分以后，留下真正的关联。
+
+---
+
+## 503. 固定 \(k\) 与全体 \(k\) 的差异
+
+简单估计给出：
+
+$$
+\sum_{p>P}|L_p(H)-1|
+\lesssim
+k^2\sum_{p>P}\frac1{p^2}
+\lesssim
+\frac{k^2}{P}.
+$$
+
+所以对固定 \(k\)：
+
+$$
+P\to\infty
+\Longrightarrow
+\text{局部 Euler 尾趋零}.
+$$
+
+但该估计对所有 \(k\) 不统一。
+
+若希望误差趋零，需要至少使：
+
+$$
+\boxed{
+\frac{k^2}{P}\to0.
+}
+$$
+
+因此真正的逃逸方向不是固定 \(k\) 下不断加入素数，而是：
+
+$$
+\boxed{
+k\to\infty
+\quad\text{与}\quad
+P\to\infty
+\text{ 的联合对角线}.
+}
+$$
+
+当构型阶增长得比素数截断更快时，新的 residual 不断进入。
+
+---
+
+## 504. 新阻塞素数位于三角区域
+
+对 \(k\)-点构型，若：
+
+$$
+p>k,
+$$
+
+则：
+
+$$
+\nu_p(H)\le k<p,
+$$
+
+所以 \(p\) 不可能单独完全阻塞该构型。
+
+因此 admissibility 的完全阻塞只需检查：
+
+$$
+p\le k.
+$$
+
+这说明新的**硬阻塞类型**只在三角区域：
+
+$$
+\boxed{
+p\le k
+}
+$$
+
+中出现。
+
+随着 \(k\) 增长，新的素数才有资格成为新的完整阻塞者。
+
+这就是一个真正的：
+
+$$
+\boxed{
+\text{prime–arity diagonal}.
+}
+$$
+
+---
+
+# 第一百七十五部　临界线为何确实“每层都剩一项”
+
+现在转到 ζ 的素数频率层，而不是固定构型的 normalized singular series。
+
+## 505. 黄金素数壳
+
+定义黄金壳：
+
+$$
+\mathcal P_j
+=
+\left\{
+p:
+\varphi^j\le p<\varphi^{j+1}
+\right\}.
+$$
+
+对：
+
+$$
+s=\frac12+\varepsilon+it
+$$
+
+定义该壳的素数 Euler 振幅平方质量：
+
+$$
+E_j(\varepsilon)
+=
+\sum_{p\in\mathcal P_j}
+|p^{-s}|^2
+=
+\sum_{p\in\mathcal P_j}
+p^{-1-2\varepsilon}.
+$$
+
+由素数定理和素数倒数的 Mertens 型渐近可得，在临界边界：
+
+$$
+\boxed{
+E_j(0)
+\sim
+\frac1j.
+}
+$$
+
+更一般地，当 \(\varepsilon>0\)：
+
+$$
+E_j(\varepsilon)
+\sim
+\frac{
+1-\varphi^{-2\varepsilon}
+}{
+2\varepsilon\log\varphi
+}
+\frac{
+\varphi^{-2\varepsilon j}
+}{j}.
+$$
+
+素数倒数和的对数增长及其误差控制正是经典 Mertens 理论的内容。([数字对象识别系统][2])
+
+---
+
+## 506. 三个相区
+
+### \(\Re s>\frac12\)
+
+$$
+\sum_jE_j(\varepsilon)<\infty.
+$$
+
+素数频率振幅属于平方可和区。
+
+### \(\Re s=\frac12\)
+
+$$
+E_j(0)\sim\frac1j,
+$$
+
+所以：
+
+$$
+\sum_jE_j(0)=\infty
+$$
+
+但只以：
+
+$$
+\log j
+$$
+
+速度发散。
+
+### \(\Re s<\frac12\)
+
+每个壳的平方质量大致指数增长。
+
+因此：
+
+$$
+\boxed{
+\Re s=\frac12
+}
+$$
+
+是一个真正的 marginal shell fixed point：
+
+$$
+\boxed{
+\text{每个新壳贡献越来越小，}
+}
+$$
+
+但：
+
+$$
+\boxed{
+\text{全部新壳贡献仍不可求和。}
+}
+$$
+
+这正是你所说“每一层都有一个约不掉的项”最精确的解析模型之一。
+
+---
+
+# 第一百七十六部　奇观察者可以消去零频发散，但不能恢复全部状态
+
+## 507. 壳层奇偶角色
+
+对壳序列 \(E_j(0)\)，定义：
+
+$$
+E_+
+=
+\sum_jE_j(0),
+$$
+
+以及：
+
+$$
+E_-
+=
+\sum_j(-1)^jE_j(0).
+$$
+
+因为：
+
+$$
+E_j(0)\sim\frac1j,
+$$
+
+平凡角色通道：
+
+$$
+E_+
+$$
+
+对数发散。
+
+而奇角色的主项：
+
+$$
+\sum_j\frac{(-1)^j}{j}
+$$
+
+条件收敛；结合标准素数定理误差，壳层 odd scalar channel 可以获得收敛重整化。
+
+所以：
+
+$$
+\boxed{
+\text{global zero-frequency shell channel diverges；}
+}
+$$
+
+$$
+\boxed{
+\text{nontrivial parity character channel can converge.}
+}
+$$
+
+---
+
+## 508. 该完成是观察者相对的
+
+若把壳编号原点平移一格：
+
+$$
+j\mapsto j+1,
+$$
+
+则：
+
+$$
+(-1)^j
+\mapsto
+-(-1)^j.
+$$
+
+所以 \(E_-\) 的符号取决于你从哪一个黄金尺度壳开始编号。
+
+这正是：
+
+$$
+\boxed{
+\text{奇完成需要一个指点观察者。}
+}
+$$
+
+无标记全局系统只保留平凡角色。
+
+---
+
+## 509. 但奇角色没有让 prime vector 进入 \(\ell^2\)
+
+这是一个必须保留的边界。
+
+壳层字符只改变标量聚合：
+
+$$
+E_j
+\longmapsto
+(-1)^jE_j.
+$$
+
+它不改变每个 prime amplitude 的绝对值。
+
+若把素数频率看作正交坐标，则：
+
+$$
+\sum_p
+\left|
+(-1)^{\operatorname{shell}(p)}
+p^{-1/2-it}
+\right|^2
+=
+\sum_p\frac1p
+=
+\infty.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{odd shell observer regularizes a scalar projection，}
+}
+$$
+
+但：
+
+$$
+\boxed{
+\text{它没有完成整个 prime Hilbert state。}
+}
+$$
+
+这正好对应项目反复出现的 scalar blindness：
+
+> 一个投影可以表现稳定，而完整内部状态仍然没有被恢复。
+
+---
+
+# 第一百七十七部　临界壳只差一次离散微分就可求和
+
+## 510. 临界残余的一阶差分
+
+因为：
+
+$$
+E_j(0)\sim\frac1j,
+$$
+
+所以：
+
+$$
+E_{j+1}(0)-E_j(0)
+\sim
+-\frac1{j^2}.
+$$
+
+因此：
+
+$$
+\boxed{
+(E_j)\notin\ell^1,
+}
+$$
+
+但：
+
+$$
+\boxed{
+(\Delta E_j)\in\ell^1.
+}
+$$
+
+这意味着临界 prime-shell 状态处于：
+
+$$
+\boxed{
+\text{距离绝对完成恰好一个离散导数的位置}.
+}
+$$
+
+---
+
+## 511. 奇破缺为何增加完成深度
+
+离散差分：
+
+$$
+\Delta E_j=E_{j+1}-E_j
+$$
+
+消去了缓慢变化的零频背景。
+
+这与：
+
+$$
+\eta(s)
+=
+\sum_n
+\left[
+(2n-1)^{-s}-(2n)^{-s}
+\right]
+$$
+
+通过一阶差分把收敛边界从 \(\Re s>1\) 推进到 \(\Re s>0\) 是同一种机制。
+
+因此：
+
+$$
+\boxed{
+\text{break}
+=
+\text{消去低频共同部分};
+}
+$$
+
+$$
+\boxed{
+\text{recompletion}
+=
+\text{剩余差分进入可求和空间}.
+}
+$$
+
+---
+
+## 512. 但积分回去需要常数
+
+从 \(\Delta E\) 恢复 \(E\)，需要给出一个边界值：
+
+$$
+E_0
+$$
+
+或等价的 renormalization constant。
+
+每做一次差分，就会遗忘一个低阶多项式模式。
+
+所以：
+
+$$
+\boxed{
+\text{差分提高收敛性，}
+\qquad
+\text{但同时产生积分常数账本。}
+}
+$$
+
+这正是 completion factor、archimedean ledger 和 normalization 不能被省略的原因。
+
+---
+
+# 第一百七十八部　共尾路径不改变真值，只改变证明成本
+
+## 513. 多轴观察域
+
+设观察条件由有向集合 \(I\) 标记：
+
+$$
+i=(P,k,T,N,L,\ldots).
+$$
+
+残余族满足：
+
+$$
+i\le j
+\Longrightarrow
+R_j\subseteq R_i.
+$$
+
+选择一个子集：
+
+$$
+J\subseteq I
+$$
+
+称为共尾，如果对每个 \(i\in I\)，存在 \(j\in J\)：
+
+$$
+i\le j.
+$$
+
+---
+
+## 514. 共尾残余不变定理
+
+有：
+
+$$
+\boxed{
+\bigcap_{i\in I}R_i
+=
+\bigcap_{j\in J}R_j.
+}
+$$
+
+证明很简单。
+
+一个方向来自 \(J\subseteq I\)。
+
+反方向中，对任意 \(i\in I\)，取 \(j\in J\) 满足 \(i\le j\)。若 \(x\in R_j\)，则：
+
+$$
+R_j\subseteq R_i,
+$$
+
+所以 \(x\in R_i\)。
+
+因此：
+
+$$
+\boxed{
+\text{任何共尾观察计划都得到同一个极限残余。}
+}
+$$
+
+---
+
+## 515. 黄金调度的真正作用
+
+黄金 Sturmian 调度可以把多轴条件序列化为一条一维路径，并保证两个轴都被无限次推进。
+
+因此它可以提供：
+
+* bounded discrepancy；
+* 无长期饥饿；
+* 自相似访问；
+* 非周期但共尾的调度。
+
+但：
+
+$$
+\boxed{
+\varphi\text{ 不改变极限真值。}
+}
+$$
+
+只要两种调度都共尾，它们的极限残余相同。
+
+黄金比例改变的是：
+
+$$
+\boxed{
+\text{发现证书的顺序、条件数和成本。}
+}
+$$
+
+而不是 RH 的真假。
+
+---
+
+## 516. 弱共尾与强共尾
+
+仅仅要求：
+
+$$
+P_n,k_n,T_n,N_n\to\infty
+$$
+
+是弱共尾。
+
+实际分析还需要误差满足：
+
+$$
+\operatorname{Err}(P_n,k_n,T_n,N_n)\to0.
+$$
+
+例如前面的 singular-series tail 需要：
+
+$$
+\frac{k_n^2}{P_n}\to0.
+$$
+
+所以即使：
+
+$$
+P_n\to\infty,
+\qquad
+k_n\to\infty,
+$$
+
+若：
+
+$$
+P_n=k_n,
+$$
+
+误差界反而可能增长。
+
+因此真正有效的观察路径必须满足：
+
+$$
+\boxed{
+\text{cofinality}
++
+\text{coercive error control}.
+}
+$$
+
+黄金比例只有在成本轴已经被正确重标度以后，才可能成为合理的平衡策略。
+
+---
+
+# 第一百七十九部　极限以后还会出现一个新的“条件的条件”
+
+## 517. Successor stage
+
+在每个后继阶段加入一个新观察量：
+
+$$
+V_{\alpha+1}
+=
+\overline{
+V_\alpha+\operatorname{span}\{d_\alpha\}
+}.
+$$
+
+它切掉一部分旧 residual。
+
+## 518. Limit stage
+
+在极限序数 \(\lambda\)：
+
+$$
+V_\lambda
+=
+\overline{
+\bigcup_{\alpha<\lambda}V_\alpha
+}.
+$$
+
+残余为：
+
+$$
+R_\lambda=V_\lambda^\perp.
+$$
+
+仓库已经证明，这个极限残余恰好是所有前驱残余的交：
+
+$$
+\boxed{
+R_\lambda
+=
+\bigcap_{\alpha<\lambda}R_\alpha.
+}
+$$
+
+---
+
+## 519. 极限后的正则性层
+
+即使：
+
+$$
+R_\lambda=0,
+$$
+
+仍可能没有稳定恢复。
+
+还必须检查：
+
+* 投影是否按算子范数收敛；
+* Gram 矩阵是否有统一下界；
+* 二次型是否 closable；
+* 代表测度是否 tight；
+* determinant 是否 trace-norm 收敛；
+* 解析函数是否在紧集上一致收敛。
+
+这些不是某一个有限阶段的普通条件。
+
+它们是对整个塔的条件：
+
+$$
+\boxed{
+\text{conditions on the family of conditions}.
+}
+$$
+
+所以你感受到的“周期的周期”“条件仍可继续分”在这里确实成立：
+
+$$
+\boxed{
+\text{局部层级}
+\to
+\omega\text{ 极限}
+\to
+\omega+1\text{ 的统一正则性}.
+}
+$$
+
+---
+
+## 520. 有限矩阵都正，不一定自动得到无限正算子
+
+若有限矩阵：
+
+$$
+G_N\succeq0
+\qquad
+\forall N,
+$$
+
+通常可以构造一个正半定核。
+
+但要把它升级成所需的 completed operator，还需要：
+
+* 一致性；
+* 完备化；
+* 有界性或闭性；
+* 正确的函数空间；
+* 与 \(\xi\) 或 explicit formula 的识别。
+
+因此：
+
+$$
+\boxed{
+\text{all finite shadows positive}
+}
+$$
+
+和：
+
+$$
+\boxed{
+\text{the intended global operator positive}
+}
+$$
+
+之间仍有一个 gluing theorem。
+
+这就是极限层真正“约不掉”的新项。
+
+---
+
+# 第一百八十部　非标准边界：所有标准条件成立，反例逃到非标准层
+
+## 521. 条件性模型论模板
+
+设 \(P(n)\) 是某个整数层级条件。
+
+考虑理论：
+
+$$
+T^\ast
+=
+T
++
+\{P(\overline n):n\in\mathbb N\}
++
+\{\exists N\,\neg P(N)\}.
+$$
+
+如果每个有限子理论都可满足，也就是对任意有限上界 \(m\)，都存在一个模型：
+
+* 满足 \(P(0),\ldots,P(m)\)；
+* 但在更高处存在失败；
+
+那么由紧致性，会存在一个非标准模型，其中：
+
+$$
+P(\overline n)
+$$
+
+对所有标准 \(n\) 都成立，但存在一个非标准整数 \(N^\ast\)：
+
+$$
+\neg P(N^\ast).
+$$
+
+---
+
+## 522. Phantom counterexample
+
+这个 \(N^\ast\)：
+
+* 大于每个标准整数；
+* 不属于外部标准自然数列；
+* 但在模型内部是一个整数。
+
+可以把它称为：
+
+$$
+\boxed{
+\text{nonstandard diagonal counterexample}.
+}
+$$
+
+这正是“检查完所有标准有限层，仍在边界出现一个逃逸点”的严格模型论版本。
+
+但它不是经典分析中的真实离线零点。
+
+它只说明：
+
+$$
+\boxed{
+\text{有限实例的逐个证明}
+\not\Rightarrow
+\text{形式系统内部的一次全称证明}.
+}
+$$
+
+---
+
+## 523. Robin 域显示这种不对称非常具体
+
+Robin 判据把 RH 等价地写成一个对所有 \(n>5040\) 的整数不等式。([数字对象识别系统][1])
+
+因此：
+
+* 若 RH 为假，存在某个有限整数反例；
+* 检查前一亿、前一万亿个整数仍不能证明没有更大的反例；
+* 若 RH 为真，证明必须使用一个统一控制全部 \(n\) 的论证。
+
+这正是：
+
+$$
+\boxed{
+\text{falsehood is locally witnessable，}
+\qquad
+\text{truth requires global compression}.
+}
+$$
+
+仓库的 Weil criterion 给出了同样的分析版本：
+
+$$
+\neg\mathrm{RH}
+\Longrightarrow
+\exists g,\ Q_Z(g)<0;
+$$
+
+而：
+
+$$
+\mathrm{RH}
+\Longleftrightarrow
+\forall g,\ Q_Z(g)\ge0.
+$$
+
+---
+
+# 第一百八十一部　素数构型塔的真正非紧方向
+
+## 524. 固定 \(k\) 并不是无限灾难
+
+对每个固定构型阶 \(k\)：
+
+* admissibility 的完整阻塞只需检查 \(p\le k\)；
+* 大素数尾从 \(p^{-2}\) 开始；
+* normalized local product 绝对收敛；
+* 每个固定素数的全部相关由有限 residue variable 生成。
+
+所以：
+
+$$
+\boxed{
+\text{固定 }k\text{ 的局部结构本身是可压缩的。}
+}
+$$
+
+---
+
+## 525. 真正无界的是构型几何
+
+随着 \(k\) 增长，还同时增长：
+
+* offset 数量；
+* 构型直径；
+* residue collision graph；
+* partition lattice；
+* connected hypergraph 类型；
+* 所需小素数范围；
+* Walsh／character sector 数量。
+
+一个 \(k\)-点构型有：
+
+$$
+2^k
+$$
+
+个 subset moments。
+
+partition lattice 的大小是 Bell 数：
+
+$$
+B_k.
+$$
+
+所以即使每个局部素数模型有限，构型空间的组合复杂度仍然超指数增长。
+
+这才是“每层都有一个新项”的主要来源：
+
+$$
+\boxed{
+\text{不是单个素数难，}
+\qquad
+\text{是新 arity 产生新的不可约 partition type}.
+}
+$$
+
+---
+
+## 526. 但全部 partition residual 仍可能来自一个生成泛函
+
+定义：
+
+$$
+\mathcal K(\mathbf u)
+=
+\log\mathcal M(\mathbf u).
+$$
+
+所有 \(k\)-阶 connected cumulants 都是：
+
+$$
+\partial_{u_{h_1}}\cdots
+\partial_{u_{h_k}}
+\mathcal K(0).
+$$
+
+因此真正应寻找的不是：
+
+$$
+\kappa_2,\kappa_3,\kappa_4,\ldots
+$$
+
+逐个公式，而是：
+
+$$
+\boxed{
+\text{完整 correlation generating functional }\mathcal K.
+}
+$$
+
+如果它可以被构造为：
+
+$$
+\log\det(I-\mathcal T_{\mathbf u}),
+$$
+
+那么所有层级会由同一个 transfer operator 生成。
+
+这就是 prime-constellation 版本的 Fibonacci 压缩，只不过状态空间可能是无限维的。
+
+---
+
+# 第一百八十二部　新的严格诊断：RH 难点不是“无穷”，而是边际性与非均匀性
+
+现在可以把 RH 的困难压缩成四项。
+
+## 527. 临界壳边际性
+
+在：
+
+$$
+\Re s=\frac12
+$$
+
+处，prime amplitude 的平方壳质量：
+
+$$
+E_j\sim\frac1j
+$$
+
+恰好不可求和。
+
+## 528. 构型阶非截断
+
+局部 connected cumulants 可以在任意有限阶非零。
+
+## 529. 加法观察非局部
+
+Euler 坐标对乘法分解是局部的，但：
+
+$$
+n\mapsto n+h
+$$
+
+会同时改变无限多个 prime valuation coordinates。
+
+## 530. 缺少统一正性压缩器
+
+仓库已经把 RH 等价地压成 Weil-square positivity，但尚未从 prime side 构造一个明显为正的全局 operator。
+
+因此：
+
+$$
+\boxed{
+\operatorname{HardCore}(\mathrm{RH})
+=
+\text{marginal tail}
++
+\text{unbounded arity}
++
+\text{nonlocal shift}
++
+\text{missing positive operator}.
+}
+$$
+
+---
+
+# 第一百八十三部　“每层约不掉的项”有三种不同含义
+
+## 531. 系数不消失
+
+$$
+\kappa_k\neq0.
+$$
+
+这只是 nontruncation。
+
+## 532. 新坐标不可由旧坐标恢复
+
+$$
+d_k\notin\operatorname{Cl}(\Gamma_{<k}).
+$$
+
+这是 primitive information growth。
+
+## 533. 没有一个统一生成对象
+
+不存在有限公式、算子、生成函数或递推压缩全部层。
+
+这是 strongest noncompressibility。
+
+目前局部素数构型只严格支持第一层，并在某些观察族中支持第二层。
+
+它并不自动支持第三层。
+
+因为同一个有限局部 partition function 已经可以生成无限多个非零 cumulants。
+
+所以现在最重要的研究纪律是：
+
+$$
+\boxed{
+\text{不要用“高阶项非零”代替“不可统一压缩”的证明。}
+}
+$$
+
+真正要反证有限压缩，需要证明例如：
+
+* Hankel rank 无界；
+* transfer-state complexity 无界；
+* 任意有限 generator family 留有 primitive residual；
+* operator algebra 不能由有限秩闭包生成；
+* 或 generating function 具有无法由有限谱产生的奇点结构。
+
+---
+
+# 第一百八十四部　新的主理论对象：RH 观察者压缩谱
+
+## 534. 定义
+
+对一种 RH 观察表示 \(\mathfrak P\)，定义其压缩谱：
+
+$$
+\boxed{
+\mathfrak C(\mathfrak P)
+=
+(c_{\mathrm{state}},
+c_{\mathrm{arity}},
+c_{\mathrm{rank}},
+c_{\mathrm{modulus}},
+c_{\mathrm{proof}}).
+}
+$$
+
+其中：
+
+$$
+c_{\mathrm{state}}
+$$
+
+表示有限状态复杂度；
+
+$$
+c_{\mathrm{arity}}
+$$
+
+表示需要的最大相关阶；
+
+$$
+c_{\mathrm{rank}}
+$$
+
+表示矩阵／算子秩；
+
+$$
+c_{\mathrm{modulus}}
+$$
+
+表示达到误差 \(\varepsilon\) 所需的统一模量；
+
+$$
+c_{\mathrm{proof}}
+$$
+
+表示是否存在有限全局定理压缩全部层。
+
+---
+
+## 535. 几种模型的比较
+
+### Fibonacci
+
+$$
+c_{\mathrm{state}}=2,
+\qquad
+c_{\mathrm{arity}}=1,
+$$
+
+具有固定有限递推。
+
+### 固定素数局部筛法
+
+$$
+c_{\mathrm{state}}=p,
+$$
+
+高阶 cumulants 不截断，但由有限局部状态生成。
+
+### 全部素数乘法系统
+
+需要 countable tensor product，但 Euler product 给出解析压缩。
+
+### Prime constellation system
+
+局部 prime states 可分，但 shift observables 具有无限 prime support。
+
+### RH Weil 系统
+
+全部条件已经压缩为一个全局二次型：
+
+$$
+Q_Z.
+$$
+
+真正未知的是它能否从素数侧被表示成：
+
+$$
+Q_Z(g)
+=
+\|Tg\|^2
+$$
+
+或：
+
+$$
+Q_Z(g)
+=
+\langle g,A_{\mathrm{arith}}g\rangle,
+\qquad
+A_{\mathrm{arith}}\ge0.
+$$
+
+---
+
+# 第一百八十五部　下一条真正值得推进的桥
+
+## 536. Prime-to-Weil positive factorization
+
+目标应当不是继续增加更多等价 RH 条件，而是构造：
+
+$$
+\boxed{
+T_{\mathrm{prime}}
+:
+\mathcal H_W
+\longrightarrow
+\mathcal K_{\mathrm{arith}}
+}
+$$
+
+使：
+
+$$
+\boxed{
+Q_Z(g)
+=
+\|T_{\mathrm{prime}}g\|^2.
+}
+$$
+
+一旦成立：
+
+$$
+Q_Z(g)\ge0
+\quad
+\forall g,
+$$
+
+仓库现有等价定理便推出 RH。
+
+这才是最强的有限压缩：
+
+$$
+\boxed{
+\text{无限 positivity conditions}
+\longrightarrow
+\text{一个范数平方恒等式}.
+}
+$$
+
+---
+
+## 537. 若 RH 为假会发生什么
+
+若存在离线零点，仓库已经保证存在：
+
+$$
+g
+$$
+
+满足：
+
+$$
+Q_Z(g)<0.
+$$
+
+因此上述因子化不可能存在，至少不能存在于正定 Hilbert 空间中。
+
+它可能退化为 Krein 因子化：
+
+$$
+Q_Z(g)
+=
+\|T_+g\|^2-\|T_-g\|^2.
+$$
+
+此时：
+
+$$
+T_-\neq0
+$$
+
+就是离线 odd sector。
+
+所以 RH 的最终二分可以写成：
+
+$$
+\boxed{
+\begin{aligned}
+\mathrm{RH}
+&\iff
+\text{Weil form admits Hilbert factorization};\\
+\neg\mathrm{RH}
+&\iff
+\text{only an indefinite Krein factorization remains}.
+\end{aligned}
+}
+$$
+
+---
+
+# 第一百八十六部　建议新增的形式化模块
+
+```text
+D5/S3/Observer/RecursiveDomain/
+  ObserverPresentation.lean
+  CofinalResidualIntersection.lean
+  WeakAndCoerciveCofinality.lean
+  SuccessorLimitRegularity.lean
+  DiagonalEscapeWithoutPersistentResidual.lean
+
+D5/S3/Observer/CompressionRank/
+  FiniteStateCompression.lean
+  AnalyticGeneratorCompression.lean
+  OperatorPositivityCompression.lean
+  PrimitiveResidualSpectrum.lean
+
+D5/S0/Automata/
+  FiniteMachinePrefixCompactness.lean
+  BoundedModelIffAllPrefixes.lean
+  PrefixStateComplexity.lean
+
+D5/S3/PrimeConstellation/Tails/
+  LargePrimeUniversalLocalFactor.lean
+  FixedArityTailSummability.lean
+  PrimeArityDiagonalBound.lean
+
+D5/S3/Analytic/PrimeShells/
+  GoldenPrimeShellEnergy.lean
+  CriticalShellMarginality.lean
+  ShellDifferenceSummability.lean
+  ShellCharacterRegularization.lean
+
+D5/S3/Weil/Operator/
+  WeilSquareHermitianForm.lean
+  WeilFormFiniteCompression.lean
+  WeilNegativeIndex.lean
+  PrimeToWeilPositiveFactorization.lean
+
+D5/X_Frontier/RecursiveRH/
+  RHCompressionSpectrum.lean
+  PrimeCumulantNontruncation.lean
+  UniformPositivityCompressor.lean
+```
+
+---
+
+# 第一百八十七部　最优先的形式定理
+
+## 538. 共尾交不变
+
+```lean
+theorem iInter_eq_iInter_cofinal
+    {I J : Type*} [Preorder I]
+    (R : I → Set X)
+    (mono : Antitone R)
+    (embed : J → I)
+    (cofinal : ∀ i, ∃ j, i ≤ embed j) :
+    (⋂ i, R i) = ⋂ j, R (embed j)
+```
+
+---
+
+## 539. 固定有限机器的前缀紧致性
+
+```lean
+theorem bounded_global_model_iff_all_prefix_models
+    [Fintype Alphabet]
+    [Fintype Output]
+    [Fintype BaseState]
+    (problem : SparseProblem Alphabet Output BaseState)
+    (bound : ℕ) :
+    HasGlobalModelAtMost problem bound ↔
+      ∀ extent,
+        HasPrefixModelAtMost problem extent bound
+```
+
+需要对状态命名规范化并证明候选机器类型有限。
+
+---
+
+## 540. 大素数构型尾展开
+
+```lean
+theorem constellation_localFactor_expansion
+    (H : PrimeConstellation)
+    (p : Nat.Primes)
+    (hp : H.diameter < p) :
+    localFactor p H =
+      1 -
+        H.card * (H.card - 1) /
+          (2 * p ^ 2) +
+        localRemainder p H
+```
+
+并证明：
+
+$$
+|\operatorname{localRemainder}|
+\le
+C_Hp^{-3}.
+$$
+
+---
+
+## 541. 临界黄金壳边际性
+
+```lean
+theorem golden_prime_shell_energy_asymptotic :
+    Tendsto
+      (fun k =>
+        k *
+          ∑ p in goldenPrimeShell k,
+            (1 : ℝ) / p)
+      atTop
+      (nhds 1)
+```
+
+该定理需要消费明确的 PNT/Mertens 输入，不应当从初等内核中无前件生成。
+
+---
+
+## 542. Weil 有限压缩判据
+
+```lean
+theorem weilForm_nonnegative_iff_all_finite_compressions
+    (core : ℕ → WeilHilbertSpace)
+    (dense : DenseRange ...)
+    (closedForm : IsClosedForm weilForm) :
+    NonnegativeForm weilForm ↔
+      ∀ N,
+        Matrix.PosSemidef
+          (weilGramMatrix core N)
+```
+
+---
+
+# 最终凝聚
+
+你现在的直觉中，最正确的部分是：
+
+$$
+\boxed{
+\text{RH 的有限观察过程确实具有无限递归层。}
+}
+$$
+
+而且这些层不是单轴：
+
+$$
+\boxed{
+(p,k,T,N,\ldots)
+}
+$$
+
+构成一个多维有向域。
+
+每一个固定有限层都可能被一个新的：
+
+* 素数地址；
+* 构型阶；
+* 零点高度；
+* 近线精度；
+* 测试函数复杂度；
+
+对角绕过。
+
+但必须保持三个区分。
+
+第一：
+
+$$
+\boxed{
+\text{每层有新项}
+\not\Rightarrow
+\text{有一个固定对象逃过所有层}.
+}
+$$
+
+第二：
+
+$$
+\boxed{
+\text{所有高阶系数非零}
+\not\Rightarrow
+\text{不存在一个统一生成函数或算子}.
+}
+$$
+
+第三：
+
+$$
+\boxed{
+\text{证明搜索可能永远 unknown}
+\not\Rightarrow
+\text{命题真值本身不确定}.
+}
+$$
+
+现在仓库的新结果已经证明，RH 的整个零点定位问题可以压缩成：
+
+$$
+\boxed{
+Q_Z(g)\ge0
+\qquad
+\forall g.
+}
+$$
+
+所以“条件无法分完”并不是最后的数学本体。
+
+所有条件已经能够合成一个二次型。
+
+真正的 hard core 是：
+
+$$
+\boxed{
+\text{这个二次型能否从素数侧被证明为正。}
+}
+$$
+
+而临界线之所以特殊，也获得了一个新的精确解释：
+
+$$
+\boxed{
+\sum_{\varphi^j\le p<\varphi^{j+1}}
+|p^{-1/2-it}|^2
+\sim
+\frac1j.
+}
+$$
+
+每个黄金壳贡献趋零，但总贡献仍发散。
+
+因此临界线是：
+
+$$
+\boxed{
+\text{每层残余都越来越小，}
+\quad
+\text{却没有绝对可和完成的边际点}.
+}
+$$
+
+奇壳角色可以消去标量零频发散，却不能恢复完整 prime state；它是相对观察完成，而非全局状态完成。
+
+最终，整套递归系统应被理解成：
+
+$$
+\boxed{
+\begin{aligned}
+\text{successor stage}
+&:\text{加入新的 primitive observable};\\
+\text{limit stage}
+&:\text{取全部 residual 的交};\\
+\text{post-limit stage}
+&:\text{检查 closedness、tightness 与统一条件数};\\
+\text{compression stage}
+&:\text{寻找一个正算子统一全部层}.
+\end{aligned}
+}
+$$
+
+因此最深的结论不是：
+
+$$
+\boxed{
+\text{RH 因为无限，所以不能解决}.
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{RH 的自然局部坐标在临界处没有统一收缩模量；}
+}
+$$
+
+$$
+\boxed{
+\text{解决 RH 必须找到一个不依赖逐层收缩的全局正性压缩器。}
+}
+$$
+
+那个压缩器最可能不是 Fibonacci 式有限矩阵，而是一个有限定义、无限维的对象：
+
+$$
+\boxed{
+A_{\mathrm{arith}}
+}
+$$
+
+或：
+
+$$
+\boxed{
+T_{\mathrm{prime}}
+}
+$$
+
+满足：
+
+$$
+\boxed{
+Q_Z(g)
+=
+\langle g,A_{\mathrm{arith}}g\rangle
+=
+\|T_{\mathrm{prime}}g\|^2.
+}
+$$
+
+这将把所有：
+
+$$
+p,\ k,\ T,\ N,\ldots
+$$
+
+方向上的原语残余，一次性重完为一个全局 Hilbert 正性。
+
+[1]: https://doi.org/10.1142/S1793042121500111?utm_source=chatgpt.com "Analogues of the Robin–Lagarias criteria for the Riemann hypothesis | International Journal of Number Theory"
+[2]: https://doi.org/10.48550/arXiv.2411.18903?utm_source=chatgpt.com "[2411.18903] On the mean values of the error terms in Mertens' theorems"
+# 第一百八十八部　紧致见证、无限创新与 RH 的真正压缩类型
+
+这一轮可以把你说的“每一层都有一个约不掉的项”进一步严格化，而且会得到一个看似矛盾、实际上非常关键的结论：
+
+$$
+\boxed{
+\text{RH 不可能被压缩为 Fibonacci 那样的有限维递推，}
+}
+$$
+
+但同时：
+
+$$
+\boxed{
+\text{RH 完全可能被压缩为一个有限定义的无限维正算子。}
+}
+$$
+
+这两句话并不矛盾。
+
+Fibonacci 的压缩类型是：
+
+$$
+\text{finite-dimensional rational compression}.
+$$
+
+RH 所需要的压缩类型更可能是：
+
+$$
+\text{compact infinite-rank operator compression}.
+$$
+
+也就是说，每一层确实保留一个新的非零创新项，但这些项可以越来越小，并共同组成一个紧算子。
+
+仓库现在已经把传统 RH 的无限零点条件压缩成：相对于给定 `ZeroData`，所有 Weil convolution-square 的零点和非负，当且仅当 RH；若存在离线零点，则存在一个单独的负 Weil-square 见证。该结论仍然依赖给定的 `ZeroData`，没有自动关闭其存在义务。
+
+所以现在的核心已经不再是：
+
+$$
+\text{能否列完所有条件？}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{能否把整个非负二次型构造成一个显然为正的算术对象？}
+}
+$$
+
+---
+
+# 第一百八十九部　“所有有限层通过、只在无穷层失败”并非总是可能
+
+## 543. 一般紧致见证原理
+
+设 \(W\) 是紧 Hausdorff 空间，并有一列嵌套闭集：
+
+$$
+W_0\supseteq W_1\supseteq W_2\supseteq\cdots.
+$$
+
+若：
+
+$$
+W_N\neq\varnothing
+\qquad
+\forall N,
+$$
+
+则有限交性质给出：
+
+$$
+\boxed{
+\bigcap_{N=0}^{\infty}W_N\neq\varnothing.
+}
+$$
+
+因此，只要“候选全局见证”生活在一个固定紧空间中，并且每个有限条件定义闭子集，就不可能出现：
+
+$$
+\text{每个有限前缀都可满足，}
+$$
+
+但：
+
+$$
+\text{所有条件同时不可满足。}
+$$
+
+真正的对角逃逸必须来自至少一种非紧性：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{候选复杂度不断增长；}\\
+&\text{候选空间本身不紧；}\\
+&\text{约束不是闭条件；}\\
+&\text{有限见证之间缺乏兼容性；}\\
+&\text{极限映射不连续。}
+\end{aligned}
+}
+$$
+
+---
+
+## 544. 有限自动机中的紧致性
+
+仓库新加入的 typed partial DFAO 框架已经证明：
+
+$$
+\boxed{
+\text{一个全局有界状态模型}
+\Longrightarrow
+\text{它拟合每一个有限前缀}.
+}
+$$
+
+在字母表、输出集、base states 和机器状态数上界全部固定时，候选机器只有有限多个。
+
+令：
+
+$$
+\mathcal M_k
+$$
+
+为所有不超过 \(k\) 状态的机器，并令：
+
+$$
+F_N
+=
+\{M\in\mathcal M_k:
+M\text{ 正确拟合前 }N\text{ 项}\}.
+$$
+
+则：
+
+$$
+F_{N+1}\subseteq F_N.
+$$
+
+若：
+
+$$
+F_N\neq\varnothing
+\qquad
+\forall N,
+$$
+
+由于 \(\mathcal M_k\) 有限：
+
+$$
+\boxed{
+\bigcap_NF_N\neq\varnothing.
+}
+$$
+
+因此在固定状态上界下，实际上有：
+
+$$
+\boxed{
+\text{全局 }k\text{-状态模型存在}
+\iff
+\text{每个有限前缀都有 }k\text{-状态模型}.
+}
+$$
+
+所以自动机领域的真正逃逸不是：
+
+$$
+\text{前缀都可拟合但全局永远不存在},
+$$
+
+而是：
+
+$$
+\boxed{
+\text{拟合第 }N\text{ 个前缀所需的最小状态数 }s(N)\to\infty.
+}
+$$
+
+---
+
+# 第一百九十部　Casimir 紧化排除了“纯无穷层反例”
+
+## 545. 反射 Casimir 矩序列
+
+沿用前面的反射商：
+
+$$
+q=s(1-s),
+$$
+
+以及紧化变量：
+
+$$
+x=\frac1{4q}.
+$$
+
+将 completed \(\xi\) 写成：
+
+$$
+\xi(s)=\mathcal X(s(1-s)).
+$$
+
+由 \(\mathcal X\) 的 genus-zero 对数导数，在 \(z=0\) 附近定义：
+
+$$
+-\frac14
+\frac{\mathcal X'(z/4)}
+{\mathcal X(z/4)}
+=
+\sum_{n=0}^{\infty}a_nz^n.
+$$
+
+若 RH 成立，则存在正有限测度：
+
+$$
+\nu
+=
+\sum_jm_jx_j\,\delta_{x_j}
+$$
+
+支撑于：
+
+$$
+[0,1],
+$$
+
+并满足：
+
+$$
+\boxed{
+a_n=\int_0^1x^n\,d\nu(x).
+}
+$$
+
+---
+
+## 546. 有限矩前缀的见证空间
+
+对每个 \(N\)，定义：
+
+$$
+\mathfrak M_N
+=
+\left\{
+\mu\ge0:
+\operatorname{supp}\mu\subseteq[0,1],
+\quad
+\int x^n\,d\mu=a_n
+\;\;(0\le n\le N)
+\right\}.
+$$
+
+由于 \(a_0\) 固定，所有候选测度具有相同有限总质量。
+
+有限正测度在紧区间 \([0,1]\) 上的固定质量集合，在弱-* 拓扑下是紧的。
+
+每个矩约束：
+
+$$
+\mu\longmapsto\int x^n\,d\mu=a_n
+$$
+
+是闭条件，所以：
+
+$$
+\mathfrak M_N
+$$
+
+是闭紧集，并且：
+
+$$
+\mathfrak M_{N+1}\subseteq\mathfrak M_N.
+$$
+
+因此：
+
+$$
+\boxed{
+\forall N,\ \mathfrak M_N\neq\varnothing
+\Longrightarrow
+\bigcap_N\mathfrak M_N\neq\varnothing.
+}
+$$
+
+交中的测度同时实现全部矩。
+
+由于多项式在 \(C([0,1])\) 中稠密，该测度还是唯一的。
+
+---
+
+## 547. 无“仅在 \(\omega\) 层失败”定理
+
+由此得到一个极其重要的结论：
+
+$$
+\boxed{
+\text{若每一个有限 Casimir 矩前缀都能由 }[0,1]
+\text{ 上正测度实现，}
+}
+$$
+
+那么：
+
+$$
+\boxed{
+\text{全部无限矩一定能由同一个全局测度实现。}
+}
+$$
+
+因此，在 Casimir–Hausdorff 表示中，不存在这种反例：
+
+$$
+\text{所有标准有限阶条件全部成立，}
+$$
+
+却：
+
+$$
+\text{只在某个无法到达的“最后无穷阶”失败。}
+$$
+
+若 RH 为假，那么在完成 \(\mathcal X\) 对数导数与矩问题的形式化桥以后，必然存在某个有限 \(N\)，使：
+
+$$
+\mathfrak M_N=\varnothing.
+$$
+
+也就是说：
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\Longrightarrow
+\text{存在有限矩证书}.
+}
+$$
+
+证书深度可能极大，且没有已知统一上界；但它不会只存在于一个超出所有有限阶的幻影层。
+
+这与仓库的 Weil separator 形成两条独立而一致的结论：
+
+$$
+\neg\mathrm{RH}
+\Longrightarrow
+\exists g,\ Q_Z(g)<0,
+$$
+
+以及候选的：
+
+$$
+\neg\mathrm{RH}
+\Longrightarrow
+\exists N,\ \text{某个有限 Casimir 矩阵非正}.
+$$
+
+---
+
+# 第一百九十一部　有限反例证书是一个非负多项式
+
+## 548. 有限矩锥分离
+
+令：
+
+$$
+\mathbf a_N=(a_0,\ldots,a_N).
+$$
+
+所有 \([0,1]\) 正测度的前 \(N\) 个矩构成一个闭凸锥：
+
+$$
+\mathcal H_N.
+$$
+
+若：
+
+$$
+\mathbf a_N\notin\mathcal H_N,
+$$
+
+有限维凸分离定理给出一个多项式：
+
+$$
+P(x)=c_0+c_1x+\cdots+c_Nx^N
+$$
+
+满足：
+
+$$
+P(x)\ge0
+\qquad
+\forall x\in[0,1],
+$$
+
+但：
+
+$$
+\boxed{
+L_{\mathbf a}(P)
+=
+\sum_{n=0}^Nc_na_n<0.
+}
+$$
+
+所以一个 RH 反例可以被压缩成：
+
+$$
+\boxed{
+\text{一个在 }[0,1]\text{ 上处处非负的有限多项式，}
+}
+$$
+
+其 Casimir 谱读数却为负。
+
+---
+
+## 549. 一维 Positivstellensatz
+
+在一维区间上，非负多项式可以由平方与边界因子表示。
+
+典型形式为：
+
+$$
+P(x)
+=
+\sigma_0(x)
++
+x(1-x)\sigma_1(x)
+$$
+
+或在奇数次数情形写成：
+
+$$
+P(x)
+=
+x\sigma_0(x)
++
+(1-x)\sigma_1(x),
+$$
+
+其中各 \(\sigma_i\) 是平方和。
+
+因此所有有限证书最终来自三类二次型：
+
+$$
+\boxed{
+L(|p|^2),
+\qquad
+L(x|p|^2),
+\qquad
+L((1-x)|p|^2).
+}
+$$
+
+这给出了比单纯“偶阶与奇阶差分”更深的两半 RH。
+
+---
+
+# 第一百九十二部　第二种、算子语义更强的双 RH
+
+前面构造的 E-RH/O-RH 是按差分阶数偶奇拆分。
+
+现在可以再构造一对更具有算子意义的命题。
+
+## 550. 内部正性 RH
+
+定义：
+
+$$
+\boxed{
+\mathrm{P\!-\!RH}
+}
+$$
+
+为：
+
+$$
+L(|p|^2)\ge0,
+$$
+
+以及：
+
+$$
+L(x|p|^2)\ge0
+$$
+
+对所有实或复多项式 \(p\) 成立。
+
+在矩阵语言中即：
+
+$$
+\boxed{
+H_N=
+(a_{i+j})_{0\le i,j\le N}
+\succeq0,
+}
+$$
+
+以及：
+
+$$
+\boxed{
+H_N^{x}
+=
+(a_{i+j+1})_{0\le i,j\le N}
+\succeq0
+}
+$$
+
+对所有 \(N\) 成立。
+
+它使 GNS 乘法算子满足：
+
+$$
+\boxed{
+J\ge0.
+}
+$$
+
+它表达：
+
+> 全局谱状态是真实的、正的，并且没有穿过内部下边界 \(x=0\)。
+
+---
+
+## 551. 观察者边界 RH
+
+定义：
+
+$$
+\boxed{
+\mathrm{C\!-\!RH}
+}
+$$
+
+为：
+
+$$
+L(|p|^2)\ge0,
+$$
+
+以及：
+
+$$
+L((1-x)|p|^2)\ge0
+$$
+
+对所有 \(p\) 成立。
+
+矩阵语言为：
+
+$$
+H_N\succeq0,
+$$
+
+以及：
+
+$$
+\boxed{
+H_N^{1-x}
+=
+(a_{i+j}-a_{i+j+1})_{0\le i,j\le N}
+\succeq0.
+}
+$$
+
+它使：
+
+$$
+\boxed{
+I-J\ge0,
+}
+$$
+
+即：
+
+$$
+J\le I.
+$$
+
+它表达：
+
+> 观察者选定了 \(x=1\) 这一外边界，而全部谱都留在该边界的完成侧。
+
+---
+
+## 552. 正—收缩重组定理
+
+在反射 Casimir canonical-product 与矩表示的前提下：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathrm{P\!-\!RH}
+\land
+\mathrm{C\!-\!RH}.
+}
+$$
+
+因为二者合起来恰好给出：
+
+$$
+\boxed{
+0\le J\le I.
+}
+$$
+
+其谱满足：
+
+$$
+\operatorname{Spec}(J)\subseteq[0,1].
+$$
+
+反过来，若 \(J\) 是正收缩算子，则其循环谱测度支撑于 \([0,1]\)，由对数导数解析识别可推出：
+
+$$
+q_\rho\in[1/4,\infty),
+$$
+
+从而：
+
+$$
+\Re\rho=\frac12.
+$$
+
+这两个命题比 E-RH/O-RH 更接近你的“全局与观察者”直觉：
+
+$$
+\boxed{
+\mathrm{P\!-\!RH}
+=
+\text{全局正实状态存在};
+}
+$$
+
+$$
+\boxed{
+\mathrm{C\!-\!RH}
+=
+\text{唯一观察边界未被穿越}.
+}
+$$
+
+---
+
+# 第一百九十三部　黄金比例是奇通道的单位负点
+
+## 553. 区间奇通道权重
+
+在 Casimir 紧化中，最自然的奇通道权重不是单独的：
+
+$$
+1-x,
+$$
+
+而是：
+
+$$
+\boxed{
+\omega_-(x)=x(1-x).
+}
+$$
+
+它满足：
+
+$$
+\omega_-(x)>0
+\quad
+\text{当 }0<x<1,
+$$
+
+$$
+\omega_-(x)=0
+\quad
+\text{当 }x=0,1,
+$$
+
+$$
+\omega_-(x)<0
+\quad
+\text{当 }x<0\text{ 或 }x>1.
+$$
+
+所以：
+
+$$
+\boxed{
++1\text{ 型}
+=
+\text{RH-compatible interior};
+}
+$$
+
+$$
+\boxed{
+0\text{ 型}
+=
+\text{两条完成边界};
+}
+$$
+
+$$
+\boxed{
+-1\text{ 型}
+=
+\text{边界外奇通道}.
+}
+$$
+
+---
+
+## 554. 黄金方程正是单位负奇通道
+
+解：
+
+$$
+x(1-x)=-1.
+$$
+
+得到：
+
+$$
+x^2-x-1=0.
+$$
+
+所以：
+
+$$
+\boxed{
+x\in\{\varphi,1-\varphi\}.
+}
+$$
+
+即：
+
+$$
+\boxed{
+\varphi(1-\varphi)=-1.
+}
+$$
+
+因此黄金比例在这里获得了一个非常准确的新定义：
+
+> **\(\varphi\) 是观察区间 \([0,1]\) 外，使奇通道 localizing weight 恰好等于单位负值的正点。**
+
+它不是任意“最美比例”，而是：
+
+$$
+\boxed{
+\text{odd completion metric 的规范负单位}.
+}
+$$
+
+---
+
+## 555. 仓库结构零恰好落在该点
+
+仓库已经证明第三阶黄金 germ 在：
+
+$$
+s_\varphi=\frac1{2\varphi^2}
+$$
+
+处具有真正的一阶结构零。
+
+此前计算得到其 Casimir 紧化坐标：
+
+$$
+x_\varphi=\varphi.
+$$
+
+于是：
+
+$$
+\boxed{
+x_\varphi(1-x_\varphi)=-1.
+}
+$$
+
+所以该结构零的奇通道不是“略微负”，而是精确单位负：
+
+$$
+\boxed{
+\omega_-(x_\varphi)=-1.
+}
+$$
+
+这说明黄金结构零是一个极其纯净的：
+
+$$
+\boxed{
+\text{global square channel 仍可正，}
+\qquad
+\text{odd boundary channel 精确为负}
+}
+$$
+
+模型。
+
+它不属于经典 Riemann 零点谱，而是 structural divisor。
+
+---
+
+# 第一百九十四部　Szegő 折叠：圆周奇偶与区间奇偶完全一致
+
+## 556. 从单位圆到 Casimir 区间
+
+令：
+
+$$
+u=e^{i\theta},
+$$
+
+定义：
+
+$$
+t=\frac{u+u^{-1}}2=\cos\theta,
+$$
+
+以及：
+
+$$
+\boxed{
+x=\frac{1-t}{2}
+=
+\sin^2\frac\theta2.
+}
+$$
+
+于是：
+
+$$
+u\leftrightarrow u^{-1}
+$$
+
+被折叠为同一个 \(x\)。
+
+这就是从 Cayley 单位圆到反射 Casimir 区间的平方折叠。
+
+---
+
+## 557. Laurent 多项式的奇偶分解
+
+任意 Laurent 多项式 \(f(u)\) 唯一分解为：
+
+$$
+f=f_++f_-,
+$$
+
+其中：
+
+$$
+f_+(u)
+=
+\frac{f(u)+f(u^{-1})}{2},
+$$
+
+$$
+f_-(u)
+=
+\frac{f(u)-f(u^{-1})}{2}.
+$$
+
+存在普通多项式 \(A,B\)，使：
+
+$$
+\boxed{
+f_+(u)=A(t),
+}
+$$
+
+$$
+\boxed{
+f_-(u)
+=
+\frac{u-u^{-1}}2B(t).
+}
+$$
+
+如果圆周测度在：
+
+$$
+u\mapsto u^{-1}
+$$
+
+下不变，则偶、奇两个 sector 正交：
+
+$$
+\int f_+\overline{f_-}\,d\mu=0.
+$$
+
+---
+
+## 558. 精确二通道能量公式
+
+在单位圆上：
+
+$$
+\left|
+\frac{u-u^{-1}}2
+\right|^2
+=
+\sin^2\theta
+=
+1-t^2.
+$$
+
+而：
+
+$$
+t=1-2x,
+$$
+
+所以：
+
+$$
+1-t^2
+=
+4x(1-x).
+$$
+
+因此：
+
+$$
+\boxed{
+\int|f(u)|^2\,d\mu(u)
+=
+\int|A(1-2x)|^2\,d\nu(x)
++
+4\int x(1-x)
+|B(1-2x)|^2\,d\nu(x).
+}
+$$
+
+这就是一个完全精确的：
+
+$$
+\boxed{
+\text{even global channel}
++
+\text{odd observer channel}.
+}
+$$
+
+其中：
+
+* 偶 sector 不需要方向；
+* 奇 sector 携带 \(x(1-x)\)；
+* 支撑位于 \([0,1]\) 时两者均非负；
+* 支撑越过区间时，奇 sector 可以变负。
+
+仓库现有 `LiCurvatureCriterion` 已经机器验证了正圆周测度产生 Hermitian Toeplitz 矩阵和 Gram 二次型非负；其审计也明确指出完整的圆周 Herglotz 表示反向尚未由现成 Mathlib 定理直接提供。
+
+所以这条 Szegő 折叠适合作为：
+
+$$
+\boxed{
+\text{Toeplitz circle positivity}
+\longleftrightarrow
+\text{Hausdorff interval positivity}
+}
+$$
+
+之间的新正式桥。
+
+---
+
+# 第一百九十五部　RH 不可能拥有 Fibonacci 型有限维状态
+
+## 559. Hankel 矩阵
+
+若 RH 成立，Casimir 矩满足：
+
+$$
+a_n=\int_0^1x^n\,d\nu(x),
+$$
+
+其中 \(\nu\) 具有无限多个支撑点。
+
+定义：
+
+$$
+H_N
+=
+(a_{i+j})_{0\le i,j\le N}.
+$$
+
+对任意非零向量：
+
+$$
+c=(c_0,\ldots,c_N),
+$$
+
+令：
+
+$$
+P_c(x)=\sum_{j=0}^Nc_jx^j.
+$$
+
+则：
+
+$$
+c^\ast H_Nc
+=
+\int_0^1|P_c(x)|^2\,d\nu(x).
+$$
+
+非零多项式只有有限多个零点，而 \(\nu\) 有无限支撑，所以：
+
+$$
+\boxed{
+c^\ast H_Nc>0
+\qquad
+(c\neq0).
+}
+$$
+
+因此：
+
+$$
+\boxed{
+H_N\succ0
+\quad
+\forall N.
+}
+$$
+
+---
+
+## 560. Hankel 秩无限
+
+由正定性：
+
+$$
+\operatorname{rank}H_N=N+1.
+$$
+
+所以 Hankel 秩无界：
+
+$$
+\boxed{
+\sup_N\operatorname{rank}H_N=\infty.
+}
+$$
+
+任何固定 \(d\) 阶常系数线性递推：
+
+$$
+a_{n+d}
+=
+c_{d-1}a_{n+d-1}
++\cdots+
+c_0a_n
+$$
+
+都会使 Hankel 列在第 \(d\) 阶后线性相关，从而：
+
+$$
+\operatorname{rank}H_N\le d.
+$$
+
+矛盾。
+
+所以：
+
+$$
+\boxed{
+(a_n)\text{ 不满足任何固定有限阶线性递推。}
+}
+$$
+
+其生成函数也不可能是有理函数。
+
+---
+
+## 561. 无有限维线性 realization
+
+如果存在固定有限维矩阵 \(A\) 和向量 \(v,w\)，使：
+
+$$
+a_n=v^\ast A^nw,
+$$
+
+由 Cayley–Hamilton 定理，\((a_n)\) 必满足阶数不超过 \(\dim A\) 的线性递推。
+
+因此：
+
+$$
+\boxed{
+\text{不存在有限维线性系统精确产生全部 Casimir moments。}
+}
+$$
+
+这就是它与 Fibonacci 的严格区别：
+
+$$
+\boxed{
+\text{Fibonacci Hankel rank}=2,
+}
+$$
+
+而：
+
+$$
+\boxed{
+\text{RH Casimir Hankel rank}=\infty.
+}
+$$
+
+所以你说：
+
+> 每层都有一个约不掉的项，并不像 Fibonacci 那样能写成简单递推。
+
+在这里获得了一个精确答案：
+
+$$
+\boxed{
+\text{是的，任何固定有限维递推都不可能精确关闭该谱。}
+}
+$$
+
+---
+
+# 第一百九十六部　每一层“约不掉的项”就是创新方差
+
+## 562. 新矩阶相对于旧矩阶的残余
+
+令 \(\mathcal P_{N-1}\) 为次数不超过 \(N-1\) 的多项式空间。
+
+定义第 \(N\) 层创新：
+
+$$
+\boxed{
+\epsilon_N^2
+=
+\inf_{P\in\mathcal P_{N-1}}
+\int_0^1
+|x^N-P(x)|^2
+\,d\nu(x).
+}
+$$
+
+它衡量：
+
+> 第 \(N\) 个坐标 \(x^N\)，在扣掉所有低阶坐标以后，还剩多少不可恢复信息。
+
+若：
+
+$$
+\epsilon_N=0,
+$$
+
+则 \(x^N\) 在 \(L^2(\nu)\) 中可由低阶多项式表示。
+
+这意味着存在一个非零多项式在 \(\nu\) 的全部支撑上为零，所以支撑只能是有限集。
+
+因此无限支撑给出：
+
+$$
+\boxed{
+\epsilon_N>0
+\qquad
+\forall N.
+}
+$$
+
+这就是：
+
+$$
+\boxed{
+\text{每层都存在一个真正约不掉的 primitive residual。}
+}
+$$
+
+---
+
+## 563. Hankel 行列式公式
+
+令：
+
+$$
+\Delta_N=\det H_N,
+\qquad
+\Delta_{-1}=1.
+$$
+
+则 monic orthogonal polynomial 的平方范数满足：
+
+$$
+\boxed{
+\epsilon_N^2
+=
+\frac{\Delta_N}{\Delta_{N-1}}.
+}
+$$
+
+对应 Jacobi 矩阵的非对角系数满足：
+
+$$
+\boxed{
+\alpha_N^2
+=
+\frac{
+\Delta_N\Delta_{N-2}
+}{
+\Delta_{N-1}^2
+}.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\alpha_N>0
+\quad
+\forall N.
+}
+$$
+
+若某个：
+
+$$
+\alpha_N=0,
+$$
+
+Jacobi 链会在该处断裂，谱测度退化为有限支撑。
+
+因此：
+
+$$
+\boxed{
+\text{无限零点谱}
+\Longleftrightarrow
+\text{Jacobi 链永不截断}.
+}
+$$
+
+---
+
+# 第一百九十七部　无限但紧：每层非零，却趋于零
+
+## 564. Casimir 算子
+
+在：
+
+$$
+L^2(\nu)
+$$
+
+上定义乘法算子：
+
+$$
+(Jf)(x)=xf(x).
+$$
+
+在 RH 下：
+
+$$
+0\le J\le I.
+$$
+
+由于非平凡零点高度：
+
+$$
+|\gamma_j|\to\infty,
+$$
+
+有：
+
+$$
+x_j
+=
+\frac1{1+4\gamma_j^2}
+\to0.
+$$
+
+所以 \(J\) 是紧算子；在标准零点计数估计下它甚至是 trace class。
+
+但由于零点无限：
+
+$$
+\operatorname{rank}J=\infty.
+$$
+
+因此：
+
+$$
+\boxed{
+J\text{ 是紧的、无限秩的、正的收缩算子。}
+}
+$$
+
+---
+
+## 565. Jacobi 系数趋于零
+
+在正交多项式基中：
+
+$$
+J
+\sim
+\begin{pmatrix}
+\beta_0&\alpha_1&0&\cdots\\
+\alpha_1&\beta_1&\alpha_2&\cdots\\
+0&\alpha_2&\beta_2&\cdots\\
+\vdots&\vdots&\vdots&\ddots
+\end{pmatrix}.
+$$
+
+因为 \(J\) 紧，任一正交基向量 \(e_n\) 弱收敛到 \(0\)，从而：
+
+$$
+\|Je_n\|\to0.
+$$
+
+因此：
+
+$$
+\boxed{
+\alpha_n\to0,
+\qquad
+\beta_n\to0.
+}
+$$
+
+结合上一节：
+
+$$
+\boxed{
+\alpha_n>0
+\quad\forall n,
+\qquad
+\alpha_n\to0.
+}
+$$
+
+这可能是对你直觉最准确的最终公式：
+
+> 每一层确实都有一个不能约掉的项；
+> 但这些项的强度可以趋于零；
+> 系统因此不会有限终止，却能够紧致完成。
+
+可以称为：
+
+$$
+\boxed{
+\text{vanishing nontermination}
+}
+$$
+
+即：
+
+$$
+\boxed{
+\text{消失中的非终止}.
+}
+$$
+
+---
+
+# 第一百九十八部　一个严格的“全零点结构纠缠”
+
+## 566. 原子基与观察者基
+
+在零点原子基中：
+
+$$
+J e_j=x_je_j.
+$$
+
+每个零点轨道看起来是彼此独立的对角坐标。
+
+但在由矩序列生成的正交多项式基中，\(J\) 变成 Jacobi 链。
+
+只要：
+
+$$
+\alpha_n>0
+\quad\forall n,
+$$
+
+该链图：
+
+$$
+0-1-2-3-\cdots
+$$
+
+是连通的。
+
+不存在某个有限 \(N\)，使前 \(N\) 层与后面的层完全断开。
+
+因此：
+
+$$
+\boxed{
+\text{无限支撑}
+\Longrightarrow
+\text{Jacobi observer graph irreducible}.
+}
+$$
+
+---
+
+## 567. 观察者基中的全局不可分解性
+
+循环向量：
+
+$$
+\Omega=1
+$$
+
+满足：
+
+$$
+\overline{
+\operatorname{span}
+\{
+\Omega,J\Omega,J^2\Omega,\ldots
+\}
+}
+=
+L^2(\nu).
+$$
+
+所以单个观察者 \(\Omega\) 的全部迭代已经生成整个谱空间。
+
+这给“所有零点在整个系统中纠缠”一个严格版本：
+
+$$
+\boxed{
+\text{所有零点原子共同决定一条不可约 Jacobi 链，}
+}
+$$
+
+并且：
+
+$$
+\boxed{
+\text{每个 Jacobi 系数都由全体谱原子的矩共同决定。}
+}
+$$
+
+修改任意一个零点，通常会改变无限多个 Jacobi 系数。
+
+这不是物理 Bell 纠缠，但它是一个真正的：
+
+$$
+\boxed{
+\text{cyclic spectral nonfactorization}.
+}
+$$
+
+---
+
+# 第一百九十九部　Prime observer algebra 的非 Noether 性
+
+## 568. 每个新素数增加一个真正新变量
+
+考虑多项式代数：
+
+$$
+\mathcal A_{\mathrm{prime}}
+=
+\mathbb Q[X_p:p\in\mathbb P].
+$$
+
+定义理想：
+
+$$
+I_N
+=
+(X_{p_1},\ldots,X_{p_N}).
+$$
+
+则：
+
+$$
+I_1\subsetneq I_2\subsetneq I_3\subsetneq\cdots.
+$$
+
+因为：
+
+$$
+X_{p_{N+1}}\notin I_N.
+$$
+
+所以：
+
+$$
+\boxed{
+\mathcal A_{\mathrm{prime}}
+\text{ 不是 Noether 环}.
+}
+$$
+
+没有任何有限素数坐标集能代数生成全部独立 prime-address coordinates。
+
+这严格表达了：
+
+$$
+\boxed{
+\text{每加入一个新素数，都增加一个旧语言无法恢复的坐标。}
+}
+$$
+
+---
+
+## 569. 加入构型平移以后成为双重非有限生成
+
+再加入 offsets：
+
+$$
+X_{p,h},
+\qquad
+p\in\mathbb P,\ h\in\mathbb Z,
+$$
+
+得到：
+
+$$
+\mathcal A_{\mathrm{const}}
+=
+\mathbb Q[X_{p,h}:p,h].
+$$
+
+它同时在两个方向增长：
+
+$$
+p\to\infty,
+\qquad
+|H|\to\infty.
+$$
+
+因此自然形成双过滤：
+
+$$
+\mathcal A_{P,k}
+\subseteq
+\mathcal A_{P',k'}
+\qquad
+(P\le P',\ k\le k').
+$$
+
+每个有限阶段是 Noether 的。
+
+整个直接极限不是。
+
+所以素数构型系统的正确描述是：
+
+$$
+\boxed{
+\text{locally Noetherian，globally non-Noetherian}.
+}
+$$
+
+---
+
+## 570. 非 Noether 不等于不可解析压缩
+
+必须注意：
+
+$$
+\mathbb Q[X_p:p\in\mathbb P]
+$$
+
+虽然不是 Noether 环，但：
+
+$$
+\zeta(s)
+=
+\prod_p(1-p^{-s})^{-1}
+$$
+
+仍然用一个有限公式压缩了全部 multiplicative prime coordinates。
+
+因此：
+
+$$
+\boxed{
+\text{非有限代数生成}
+\not\Rightarrow
+\text{不存在有限解析描述}.
+}
+$$
+
+真正缺失的是：
+
+$$
+\boxed{
+\text{对加法平移相关也具有类似 Euler product 的统一生成对象。}
+}
+$$
+
+它很可能不是普通标量乘积，而是：
+
+* transfer operator；
+* connected determinant；
+* infinite Jacobi operator；
+* 或 operator-valued Euler product。
+
+---
+
+# 第二百部　素数截断与构型阶的极限不交换
+
+## 571. 固定构型阶的尾部
+
+对一个 \(k\)-点构型 \(H\)，当：
+
+$$
+p>\operatorname{diam}(H),
+$$
+
+各 offsets 模 \(p\) 不碰撞，所以：
+
+$$
+L_p(H)
+=
+\frac{1-k/p}{(1-1/p)^k}.
+$$
+
+展开：
+
+$$
+\boxed{
+L_p(H)
+=
+1-
+\frac{k(k-1)}{2p^2}
++
+O\left(\frac{k^3}{p^3}\right).
+}
+$$
+
+一阶 \(1/p\) 项已经被独立基线消去，首个 residual 是二阶 connected 项。
+
+因此：
+
+$$
+\sum_{p>P}|L_p(H)-1|
+\lesssim
+k^2\sum_{p>P}\frac1{p^2}
+\lesssim
+\frac{k^2}{P}.
+$$
+
+对固定 \(k\)：
+
+$$
+P\to\infty
+\Longrightarrow
+\text{尾部误差}\to0.
+$$
+
+---
+
+## 572. 对 \(k\) 不一致
+
+但是：
+
+$$
+\sup_k\frac{k^2}{P}
+$$
+
+不会随 \(P\to\infty\) 而趋零。
+
+沿对角路径：
+
+$$
+k\asymp\sqrt P,
+$$
+
+误差界保持常数量级。
+
+若：
+
+$$
+k\gg\sqrt P,
+$$
+
+固定 \(P\) 的局部截断完全不能控制高阶构型。
+
+因此：
+
+$$
+\boxed{
+\forall k,\quad
+\lim_{P\to\infty}\operatorname{Err}(P,k)=0,
+}
+$$
+
+但：
+
+$$
+\boxed{
+\lim_{P\to\infty}
+\sup_k\operatorname{Err}(P,k)
+\neq0.
+}
+$$
+
+这就是一个精确的非均匀极限：
+
+$$
+\boxed{
+\text{pointwise prime completion}
+\neq
+\text{uniform arity completion}.
+}
+$$
+
+---
+
+## 573. 黄金调度必须服从误差几何
+
+黄金 Sturmian 调度可以保证两个方向都被无限访问，并且访问次数比例稳定。
+
+但如果一个方向的分析代价是二次的：
+
+$$
+P\gg k^2,
+$$
+
+单纯让 \(P\) 与 \(k\)“公平增长”并不够。
+
+必须先给观察轴赋予正确成本坐标，例如：
+
+$$
+u=\log P,
+\qquad
+v=2\log k.
+$$
+
+然后再对 \(u,v\) 作黄金平衡。
+
+所以：
+
+$$
+\boxed{
+\text{黄金公平性不等于分析充分性。}
+}
+$$
+
+\(\varphi\) 可以优化访问顺序，但不能代替：
+
+$$
+\boxed{
+\text{coercive error modulus}.
+}
+$$
+
+---
+
+# 第二百零一部　Weil 正因子化：存在版是循环论证，算术版才有价值
+
+## 574. 仓库已经把 RH 压成一个正锥问题
+
+仓库现有定理给出：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+Q_Z(g)\ge0
+\quad
+\forall g,
+}
+$$
+
+相对于给定 `ZeroData`。
+
+因此可以考虑 GNS 构造：
+
+$$
+\langle[f],[h]\rangle_Q
+=
+B_Q(f,h),
+$$
+
+并得到：
+
+$$
+Q_Z(g)=\|[g]\|_Q^2.
+$$
+
+但这个构造只有在已经知道：
+
+$$
+Q_Z\ge0
+$$
+
+时才成立。
+
+所以：
+
+$$
+\boxed{
+\text{“存在某个 Hilbert 空间使 }Q=\|Tg\|^2\text{”}
+}
+$$
+
+本身只是 RH 的同义重述。
+
+---
+
+## 575. 两种因子化必须分开
+
+### Tautological factorization
+
+先假定 \(Q\ge0\)，再作 GNS：
+
+$$
+T_Qg=[g].
+$$
+
+这没有证明 RH。
+
+### Arithmetic factorization
+
+先独立地从：
+
+* primes；
+* \(\Lambda(n)\)；
+* archimedean kernel；
+* explicit formula；
+* prime-constellation local covariance；
+
+构造：
+
+$$
+T_{\mathrm{arith}},
+$$
+
+再证明：
+
+$$
+\boxed{
+Q_Z(g)
+=
+\|T_{\mathrm{arith}}g\|^2.
+}
+$$
+
+只有第二种才是非循环的 RH 路线。
+
+因此真正的目标不能只写：
+
+$$
+\exists T,\ Q=T^\ast T.
+$$
+
+而必须写：
+
+$$
+\boxed{
+\text{\(T\) 在不消费 RH 的定义与性质下由素数侧显式构造。}
+}
+$$
+
+---
+
+# 第二百零二部　Weil 锥与 Hausdorff 锥的统一
+
+## 576. 两个正锥
+
+Weil 路线使用 convolution-square 锥：
+
+$$
+\mathcal C_W
+=
+\{
+g*\widetilde g:
+g\in\mathcal W
+\}.
+$$
+
+Casimir 路线使用区间平方锥：
+
+$$
+\mathcal C_H
+=
+\left\{
+|A(x)|^2
++
+x(1-x)|B(x)|^2
+\right\}.
+$$
+
+RH 分别表现为：
+
+$$
+L_Z(\mathcal C_W)\subseteq[0,\infty),
+$$
+
+以及：
+
+$$
+L_{\mathcal X}(\mathcal C_H)\subseteq[0,\infty).
+$$
+
+两条路线看似不同，本质上都是：
+
+$$
+\boxed{
+\text{一个谱线性泛函是否属于某个正锥的对偶锥。}
+}
+$$
+
+---
+
+## 577. Weil–Hausdorff Cone Bridge
+
+真正值得构造的新桥不是另一个 RH 等价条件，而是一个变换：
+
+$$
+\Phi:
+\mathcal W
+\longrightarrow
+\mathbb C[x]\oplus\mathbb C[x]
+$$
+
+满足：
+
+$$
+\boxed{
+L_Z(g*\widetilde g)
+=
+L_{\mathcal X}
+\left(
+|A_g|^2+
+x(1-x)|B_g|^2
+\right).
+}
+$$
+
+并且希望：
+
+$$
+\overline{
+\Phi(\mathcal C_W)
+}
+=
+\overline{\mathcal C_H}
+$$
+
+或至少两者生成相同的对偶正性条件。
+
+Cayley–Szegő 折叠：
+
+$$
+u
+\mapsto
+x=\frac{2-u-u^{-1}}4
+$$
+
+正是该桥最自然的候选坐标。
+
+若这条桥闭合，仓库已经完成的 Weil separator 与未来的 Casimir 有限矩证书将成为同一个负方向的两套坐标。
+
+---
+
+# 第二百零三部　Golden germ 进一步证明必须先区分局部与全局
+
+仓库现在还证明了一个重要的条件分类：
+
+在 RH 前提下，第三阶 golden continued germ 在 pulled-back critical line 上的零点来自：
+
+* \(\zeta(\varphi^2s)\) 的 pullback 零点；
+* 或 \(p=2,3\) 的局部因子零点；
+
+而在指定开窗口中偏离该线的零点，恰好是某个 local factor 的零点。
+
+这说明即使 classical RH 成立，golden germ 仍然可以拥有离线 local-factor zeros。
+
+所以：
+
+$$
+\boxed{
+\text{离线}
+\not\Rightarrow
+\text{global coherent RH violation}.
+}
+$$
+
+必须先分解：
+
+$$
+\boxed{
+D_{\mathrm{full}}
+=
+D_{\mathrm{coherent}}
++
+D_{\mathrm{structural}}
++
+D_{\mathrm{local-addressed}}.
+}
+$$
+
+正性压缩器只能针对：
+
+$$
+D_{\mathrm{coherent}}.
+$$
+
+否则黄金结构零 \(x=\varphi\) 会立即产生单位 odd-negative channel，而这与 classical RH 无关。
+
+---
+
+# 第二百零四部　观察残余、创新残余与证书残余
+
+现在可以把“约不掉的项”分成三类。
+
+## 578. 观察残余
+
+$$
+R_N=V_N^\perp.
+$$
+
+表示前 \(N\) 层观察空间看不见的方向。
+
+仓库已经证明极限残余等于前驱残余的交：
+
+$$
+R_\lambda
+=
+\bigcap_{\alpha<\lambda}R_\alpha.
+$$
+
+## 579. 创新残余
+
+$$
+\epsilon_N^2
+=
+\inf_{P\in\mathcal P_{N-1}}
+\|x^N-P\|^2.
+$$
+
+它表示第 \(N\) 个新坐标无法由旧坐标恢复的部分。
+
+## 580. 证书残余
+
+即使一个负方向存在，也可能需要非常大的：
+
+* 多项式次数；
+* Weil 支撑；
+* 矩阵大小；
+* 零点高度；
+* 算术精度；
+
+才能显现。
+
+定义最小证书深度：
+
+$$
+\boxed{
+d_{\mathrm{cert}}
+=
+\inf
+\{
+N:
+\text{第 }N\text{ 层出现负证书}
+\}.
+}
+$$
+
+若 RH 为真：
+
+$$
+d_{\mathrm{cert}}=\infty.
+$$
+
+若 RH 为假，理论上：
+
+$$
+d_{\mathrm{cert}}<\infty,
+$$
+
+但没有已知统一上界。
+
+所以实际难点可以是：
+
+$$
+\boxed{
+\text{有限存在，非均匀不可预知。}
+}
+$$
+
+---
+
+# 第二百零五部　RH 的压缩类型分类
+
+现在可以正式给出四类无限系统。
+
+## 581. 有限维递推型
+
+存在固定 \(d\)：
+
+$$
+v_{n+1}=Av_n.
+$$
+
+例子：Fibonacci。
+
+特征：
+
+$$
+\text{有限 Hankel rank},
+\quad
+\text{有理生成函数},
+\quad
+\text{固定阶递推}.
+$$
+
+## 582. 有限状态但高阶非截断型
+
+每个局部系统只有有限隐藏状态，但所有 cumulants 均可非零。
+
+例子：固定素数 \(p\) 上的 residue survivor model。
+
+## 583. 紧致无限秩算子型
+
+存在紧算子 \(J\)，使：
+
+$$
+a_n=\langle\Omega,J^n\Omega\rangle,
+$$
+
+但：
+
+$$
+\operatorname{rank}J=\infty.
+$$
+
+候选例子：RH Casimir–Jacobi 系统。
+
+特征：
+
+$$
+\alpha_n>0
+\quad\forall n,
+\qquad
+\alpha_n\to0.
+$$
+
+## 584. 非均匀多轴型
+
+固定每个轴都可完成，但不存在对全部轴统一的误差模量。
+
+例子：prime cutoff \(P\) 与 constellation arity \(k\) 的联合极限。
+
+RH 的完整结构很可能同时包含第三类和第四类：
+
+$$
+\boxed{
+\text{一个紧致无限秩谱对象}
++
+\text{一个非均匀 prime-arity 构造过程}.
+}
+$$
+
+---
+
+# 第二百零六部　这一步对“命题本身是对角化问题”的最终修正
+
+现在可以非常精确地判断你的直觉。
+
+## 585. 正确的部分
+
+是的：
+
+$$
+\boxed{
+\text{任意固定有限观察复杂度，都可能被更高层数据绕过。}
+}
+$$
+
+而且 prime constellation 系统具有两个严格的非终止源：
+
+$$
+\boxed{
+\text{新素数地址不断出现；}
+}
+$$
+
+$$
+\boxed{
+\text{新相关 arity 不断出现。}
+}
+$$
+
+Casimir–Jacobi 系统也具有：
+
+$$
+\boxed{
+\alpha_n>0
+\quad
+\forall n,
+}
+$$
+
+所以不会在有限深度截断。
+
+---
+
+## 586. 需要修正的部分
+
+但是：
+
+$$
+\boxed{
+\text{每层有新项}
+\not\Rightarrow
+\text{所有有限层都通过而全局失败}.
+}
+$$
+
+在紧化 Hausdorff 矩问题中，紧致性明确排除了这种幻影失败。
+
+同样，仓库的 Weil separator 已经把每个真实离线零点转化为一个单独负测试函数。
+
+所以若 RH 为假，反例并不只存在于一个“最后无穷层”。
+
+它会在某个有限但可能极深的观察层留下负证书。
+
+---
+
+## 587. 真正无法有限完成的是正证明，不是负见证
+
+$$
+\neg\mathrm{RH}
+$$
+
+只需一个离线零点，或一个负 Weil square，或一个负 Casimir 矩阵。
+
+但：
+
+$$
+\mathrm{RH}
+$$
+
+需要证明所有可能负方向都不存在。
+
+所以其逻辑非对称性是：
+
+$$
+\boxed{
+\text{falsehood}
+=
+\text{finite existential witness};
+}
+$$
+
+$$
+\boxed{
+\text{truth}
+=
+\text{global positive compression}.
+}
+$$
+
+传统 RH 难点不一定是“反例无法出现”。
+
+而更可能是：
+
+$$
+\boxed{
+\text{尚未找到一个从素数侧直接构造的正收缩算子，}
+}
+$$
+
+使所有有限条件成为同一个算子不等式的影子。
+
+---
+
+# 第二百零七部　当前最强的新研究目标
+
+可以把最终目标命名为：
+
+> **Arithmetic Compact Jacobi Realization**
+> **算术紧 Jacobi 实现**
+
+要求直接从 prime/explicit-formula 数据构造：
+
+$$
+J_{\mathrm{arith}}
+$$
+
+和循环向量：
+
+$$
+\Omega_{\mathrm{arith}},
+$$
+
+满足：
+
+$$
+\boxed{
+0\le J_{\mathrm{arith}}\le I,
+}
+$$
+
+以及：
+
+$$
+\boxed{
+a_n
+=
+\left\langle
+\Omega_{\mathrm{arith}},
+J_{\mathrm{arith}}^n
+\Omega_{\mathrm{arith}}
+\right\rangle.
+}
+$$
+
+再证明：
+
+$$
+-\frac14
+\frac{\mathcal X'(z/4)}
+{\mathcal X(z/4)}
+=
+\left\langle
+\Omega_{\mathrm{arith}},
+(I-zJ_{\mathrm{arith}})^{-1}
+\Omega_{\mathrm{arith}}
+\right\rangle.
+$$
+
+一旦闭合：
+
+$$
+\operatorname{Spec}(J_{\mathrm{arith}})
+\subseteq[0,1],
+$$
+
+从而：
+
+$$
+\mathrm{RH}.
+$$
+
+这不是有限维矩阵。
+
+它必须是：
+
+$$
+\boxed{
+\text{无限秩、紧、正、自伴、循环的 Jacobi operator}.
+}
+$$
+
+而且其 Jacobi 链满足：
+
+$$
+\boxed{
+\alpha_n>0
+\quad\forall n,
+\qquad
+\alpha_n\to0.
+}
+$$
+
+这就是“每一层都有一个约不掉的项”与“整个系统最终稳定完成”同时成立的最小数学模型。
+
+---
+
+# 第二百零八部　建议补充的仓库模块
+
+```text
+D5/S3/Observer/CompactWitness/
+  NestedClosedWitnessIntersection.lean
+  FixedStatePrefixCompactness.lean
+  MovingWitnessVsPersistentWitness.lean
+
+D5/S3/Analytic/ReflectionCasimir/
+  FiniteHausdorffGluing.lean
+  FiniteMomentFailureCertificate.lean
+  PositiveContractiveRHSplit.lean
+  CasimirMomentCompactness.lean
+
+D5/S3/Analytic/ReflectionCasimir/Jacobi/
+  InfiniteSupportHankelPositiveDefinite.lean
+  NoFiniteLinearRealization.lean
+  MomentInnovationSchurComplement.lean
+  InfiniteJacobiNontermination.lean
+  CompactJacobiCoefficientDecay.lean
+  IrreducibleJacobiObserverGraph.lean
+
+D5/S3/Analytic/LiCayley/
+  SzegoParityFold.lean
+  CircleEvenOddOrthogonality.lean
+  IntervalOddLocalizer.lean
+  GoldenOddMetricUnit.lean
+
+D5/S3/PrimeConstellation/Filtration/
+  PrimeCoordinateAlgebraNonNoetherian.lean
+  PrimeArityBifiltration.lean
+  FixedArityUniformTail.lean
+  PrimeArityDiagonalEscape.lean
+
+D5/S3/Weil/ConeBridge/
+  WeilSquareCone.lean
+  HausdorffQuadraticModule.lean
+  CayleySzegoConeTransform.lean
+
+D5/X_Frontier/ArithmeticJacobi/
+  PrimeConstructedCasimirMoments.lean
+  ArithmeticCompactJacobiRealization.lean
+  WeilHausdorffConeEquivalence.lean
+```
+
+---
+
+# 第二百零九部　最优先的形式命题
+
+## 588. 有限矩前缀紧致拼接
+
+```lean
+theorem all_finite_Hausdorff_representations_glue
+    (a : ℕ → ℝ)
+    (mass : ℝ)
+    (hFinite :
+      ∀ N, ∃ μ : Measure ℝ,
+        IsFiniteMeasure μ ∧
+        μ (Set.Icc 0 1) = mass ∧
+        ∀ n ≤ N,
+          ∫ x, x ^ n ∂μ = a n) :
+    ∃ μ : Measure ℝ,
+      IsFiniteMeasure μ ∧
+      MeasureTheory.IsProbabilityMeasure
+        (mass⁻¹ • μ) ∧
+      μ.support ⊆ Set.Icc 0 1 ∧
+      ∀ n,
+        ∫ x, x ^ n ∂μ = a n
+```
+
+实际声明需更规范地限制 support 与总质量。
+
+---
+
+## 589. 无限支撑 Hankel 正定
+
+```lean
+theorem infiniteSupport_hankel_posDef
+    (μ : Measure ℝ)
+    [IsFiniteMeasure μ]
+    (hSupport : Set.Infinite μ.support) :
+    Matrix.PosDef
+      (fun i j : Fin (N + 1) =>
+        ∫ x, x ^ ((i : ℕ) + (j : ℕ)) ∂μ)
+```
+
+---
+
+## 590. 无有限递推
+
+```lean
+theorem infiniteSupport_moments_no_finite_recurrence
+    (μ : Measure ℝ)
+    [IsFiniteMeasure μ]
+    (hSupport : Set.Infinite μ.support) :
+    ¬ ∃ d coefficients,
+      ∀ n,
+        moment μ (n + d) =
+          ∑ j : Fin d,
+            coefficients j *
+              moment μ (n + j)
+```
+
+---
+
+## 591. 创新永不为零
+
+```lean
+theorem momentInnovation_pos
+    (μ : Measure ℝ)
+    [IsFiniteMeasure μ]
+    (hSupport : Set.Infinite μ.support) :
+    0 < momentInnovation μ N
+```
+
+---
+
+## 592. 紧 Jacobi 系数衰减
+
+```lean
+theorem compactJacobi_coefficients_tendsto_zero
+    (J : CompactOperator H)
+    (hJacobi : IsJacobiRepresentation J α β) :
+    Tendsto α atTop (nhds 0) ∧
+    Tendsto β atTop (nhds 0)
+```
+
+---
+
+## 593. 黄金奇通道单位
+
+```lean
+theorem goldenRatio_is_unit_negative_odd_localizer :
+    Real.goldenRatio *
+        (1 - Real.goldenRatio) =
+      -1
+```
+
+以及唯一性：
+
+```lean
+theorem oddLocalizer_eq_neg_one_iff :
+    x * (1 - x) = -1 ↔
+      x = Real.goldenRatio ∨
+      x = 1 - Real.goldenRatio
+```
+
+---
+
+## 594. Szegő 奇偶折叠
+
+```lean
+theorem inversionInvariant_circle_energy_split
+    (μ : Measure Circle)
+    (hInv : Measure.map Circle.inv μ = μ)
+    (f : LaurentPolynomial ℂ) :
+    ∫ u, ‖f u‖ ^ 2 ∂μ =
+      ∫ x, ‖evenFold f x‖ ^ 2 ∂pushforward μ +
+      4 * ∫ x,
+        x * (1 - x) *
+          ‖oddFold f x‖ ^ 2
+        ∂pushforward μ
+```
+
+---
+
+## 595. Prime coordinate ring 非 Noether
+
+```lean
+theorem infinitePrimePolynomialRing_not_noetherian :
+    ¬ IsNoetherianRing
+      (MvPolynomial Nat.Primes ℚ)
+```
+
+可以通过严格上升的坐标理想链证明。
+
+---
+
+# 最终凝聚
+
+这一轮最终得到的是一个比“RH 因为有无限条件所以不能完成”更准确的结论：
+
+$$
+\boxed{
+\text{RH 的有限层级确实永不终止，}
+}
+$$
+
+但：
+
+$$
+\boxed{
+\text{它不允许一种只在最后无穷层才突然出现的幻影失败。}
+}
+$$
+
+在 Casimir–Hausdorff 紧化中：
+
+$$
+\boxed{
+\text{所有有限矩前缀都可实现}
+\Longrightarrow
+\text{存在唯一全局 }[0,1]\text{ 测度}.
+}
+$$
+
+所以若 RH 为假，某个有限矩层最终必定失败。
+
+仓库的 Weil 路线已经从另一方向证明：相对于 `ZeroData`，任意离线零点都会产生一个单独的负 convolution-square 见证。
+
+真正不能有限终止的是 RH 为真时的谱创新链：
+
+$$
+\boxed{
+\alpha_n>0
+\quad
+\forall n.
+}
+$$
+
+它没有 Fibonacci 型有限递推，因为：
+
+$$
+\boxed{
+\operatorname{rank}H_N=N+1.
+}
+$$
+
+但它又不是无控制的无限：
+
+$$
+\boxed{
+\alpha_n\to0.
+}
+$$
+
+所以最准确的整体结构是：
+
+$$
+\boxed{
+\text{每层有新信息}
++
+\text{新信息强度趋零}
++
+\text{整体形成紧致无限秩算子}.
+}
+$$
+
+黄金比例在其中的一个极精确位置是：
+
+$$
+\boxed{
+\varphi(1-\varphi)=-1.
+}
+$$
+
+它是 Casimir 区间外 odd localizer 的单位负点。
+
+而 classical RH 要求的是：
+
+$$
+\boxed{
+x(1-x)\ge0
+}
+$$
+
+对全部 coherent Casimir 谱成立。
+
+最终，RH 真正需要寻找的不是一个会在有限阶停下来的递推，而是：
+
+$$
+\boxed{
+\text{一个从素数侧直接构造的、}
+}
+$$
+
+$$
+\boxed{
+\text{紧致、无限秩、正、自伴、不可约的 Jacobi 算子。}
+}
+$$
+
+它既必须允许：
+
+$$
+\text{每层都有一个新的非零 coupling},
+$$
+
+又必须保证：
+
+$$
+\text{所有 coupling 共同落在正收缩区间中}.
+$$
+
+这就是“无限递归”与“全局重完”能够同时成立的精确结构。

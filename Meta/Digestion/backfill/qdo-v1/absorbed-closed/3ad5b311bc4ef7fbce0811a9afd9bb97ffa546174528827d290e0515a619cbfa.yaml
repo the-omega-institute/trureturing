@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:3ad5b311bc4ef7fbce0811a9afd9bb97ffa546174528827d290e0515a619cbfa
 cas_ref: sha256:3ad5b311bc4ef7fbce0811a9afd9bb97ffa546174528827d290e0515a619cbfa
 coverage_gids:
-  - D5/S3/Quantum/Fibers/QuotientResidualTransport.quotient_residual_transport_and_zero_set_countermodel
+  - gid: D5/S3/Quantum/Fibers/QuotientResidualTransport.quotient_residual_transport_and_zero_set_countermodel
+    target_statement_id: sha256:b14ea2488f3e959bbeb961cc0694ca0f070328542aef91f0259aabeff77cdb40
 receipts:
-  coverage:
-    - gid: D5/S3/Quantum/Fibers/QuotientResidualTransport.quotient_residual_transport_and_zero_set_countermodel
-      source_sha256: sha256:3ad5b311bc4ef7fbce0811a9afd9bb97ffa546174528827d290e0515a619cbfa
-      target_statement_id: sha256:b14ea2488f3e959bbeb961cc0694ca0f070328542aef91f0259aabeff77cdb40
   scribe:
     - gid: D5/S3/Quantum/Fibers/QuotientResidualTransport.quotient_residual_transport_and_zero_set_countermodel
       definition_sha256: sha256:d8529091def9345cc009a59b2ee92e277835480528b3601a8345e9b9ef4177a3

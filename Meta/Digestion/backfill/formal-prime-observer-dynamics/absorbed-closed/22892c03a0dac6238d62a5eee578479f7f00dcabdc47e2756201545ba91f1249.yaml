@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:22892c03a0dac6238d62a5eee578479f7f00dcabdc47e2756201545ba91f1249
 cas_ref: sha256:22892c03a0dac6238d62a5eee578479f7f00dcabdc47e2756201545ba91f1249
 coverage_gids:
-  - D5/S3/ConceptDynamics/Policy/SupportGapTargetLaw.support_gap_target_law
+  - gid: D5/S3/ConceptDynamics/Policy/SupportGapTargetLaw.support_gap_target_law
+    target_statement_id: sha256:1115e68cc793ae7c9cc440f3c28f4fba745b9072ef14e4bdc521b9fc9414eb18
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Policy/SupportGapTargetLaw.support_gap_target_law
-      source_sha256: sha256:22892c03a0dac6238d62a5eee578479f7f00dcabdc47e2756201545ba91f1249
-      target_statement_id: sha256:1115e68cc793ae7c9cc440f3c28f4fba745b9072ef14e4bdc521b9fc9414eb18
   scribe:
     - gid: D5/S3/ConceptDynamics/Policy/SupportGapTargetLaw.support_gap_target_law
       definition_sha256: sha256:72b5e63448d20c866d9d86b0ee153a6ee1dc023b1e4fa82a9e333ab47b2591cd

@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:681065031b18d96227c549783bd27b6816b1b0588fb05b8c9b67ff164d607ed4
 cas_ref: sha256:681065031b18d96227c549783bd27b6816b1b0588fb05b8c9b67ff164d607ed4
 coverage_gids:
-  - D5/S3/Observer/Hilbert/NymanBeurlingTargetQuotientCriterion.nyman_beurling_target_quotient_criterion
+  - gid: D5/S3/Observer/Hilbert/NymanBeurlingTargetQuotientCriterion.nyman_beurling_target_quotient_criterion
+    target_statement_id: sha256:d61a1d5ac14ac15de04d9c0825f0245348720b41fe76e9ebbf951e344d57ebb2
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/Hilbert/NymanBeurlingTargetQuotientCriterion.nyman_beurling_target_quotient_criterion
-      source_sha256: sha256:681065031b18d96227c549783bd27b6816b1b0588fb05b8c9b67ff164d607ed4
-      target_statement_id: sha256:d61a1d5ac14ac15de04d9c0825f0245348720b41fe76e9ebbf951e344d57ebb2
   scribe:
     - gid: D5/S3/Observer/Hilbert/NymanBeurlingTargetQuotientCriterion.nyman_beurling_target_quotient_criterion
       definition_sha256: sha256:5b82a4aee5393c9fa717fcaa94e0e612a3789f0c8ef0caaee9c904bc4c4a478a

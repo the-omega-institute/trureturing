@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:7e484298ac7d72c368004c391dd59bef1e83c245f15eca4b5637cacfa1a39c79
 cas_ref: sha256:7e484298ac7d72c368004c391dd59bef1e83c245f15eca4b5637cacfa1a39c79
 coverage_gids:
-  - D5/S3/ObserverMemory/RefinementClosure/CompletionKernelGreatestFixedPoint.completion_kernel_is_greatest_fixed_point
+  - gid: D5/S3/ObserverMemory/RefinementClosure/CompletionKernelGreatestFixedPoint.completion_kernel_is_greatest_fixed_point
+    target_statement_id: sha256:f166f1eaa98c749b4a65f2b502a08e1353dc1423eb69245b1931106b3f8b30b7
 receipts:
-  coverage:
-    - gid: D5/S3/ObserverMemory/RefinementClosure/CompletionKernelGreatestFixedPoint.completion_kernel_is_greatest_fixed_point
-      source_sha256: sha256:7e484298ac7d72c368004c391dd59bef1e83c245f15eca4b5637cacfa1a39c79
-      target_statement_id: sha256:f166f1eaa98c749b4a65f2b502a08e1353dc1423eb69245b1931106b3f8b30b7
   scribe:
     - gid: D5/S3/ObserverMemory/RefinementClosure/CompletionKernelGreatestFixedPoint.completion_kernel_is_greatest_fixed_point
       definition_sha256: sha256:732c19ad9afe93b14a22f177a1a8fd662e4c33918fb916351f7b0c309ae169f8

@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:e4e5fc17075801236e223cf408d51948be8ee3f6bd9668ffdaf401eb80bd1ae6
 cas_ref: sha256:e4e5fc17075801236e223cf408d51948be8ee3f6bd9668ffdaf401eb80bd1ae6
 coverage_gids:
-  - D5/S3/Analytic/ReflectedSpectrum/ConfluentNegativeJetBlock.confluent_negative_jet_block
+  - gid: D5/S3/Analytic/ReflectedSpectrum/ConfluentNegativeJetBlock.confluent_negative_jet_block
+    target_statement_id: sha256:f1d061cc555904958f2c54fc8394c8ada676b7f58b1637755c8139f0d567fbc8
 receipts:
-  coverage:
-    - gid: D5/S3/Analytic/ReflectedSpectrum/ConfluentNegativeJetBlock.confluent_negative_jet_block
-      source_sha256: sha256:e4e5fc17075801236e223cf408d51948be8ee3f6bd9668ffdaf401eb80bd1ae6
-      target_statement_id: sha256:f1d061cc555904958f2c54fc8394c8ada676b7f58b1637755c8139f0d567fbc8
   scribe:
     - gid: D5/S3/Analytic/ReflectedSpectrum/ConfluentNegativeJetBlock.confluent_negative_jet_block
       definition_sha256: sha256:fbf6d35a8ffe8397100a8642f51d2af95bbbeeb248778bdb92bbd043f93ccecc

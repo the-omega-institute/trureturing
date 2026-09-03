@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:b6b317e51f086c7a1f576ae34bcfdc0a1cf440cb5b37a92d42f38bba2b731b18
 cas_ref: sha256:b6b317e51f086c7a1f576ae34bcfdc0a1cf440cb5b37a92d42f38bba2b731b18
 coverage_gids:
-  - D5/S3/Quantum/PredictionDepth/TargetPredictionSufficiency.target_prediction_sufficiency
+  - gid: D5/S3/Quantum/PredictionDepth/TargetPredictionSufficiency.target_prediction_sufficiency
+    target_statement_id: sha256:83e8fe3359e2a1b890e4e4f9244f99f64fc96454b65d91cbe5a0f05eb3b661bd
 receipts:
-  coverage:
-    - gid: D5/S3/Quantum/PredictionDepth/TargetPredictionSufficiency.target_prediction_sufficiency
-      source_sha256: sha256:b6b317e51f086c7a1f576ae34bcfdc0a1cf440cb5b37a92d42f38bba2b731b18
-      target_statement_id: sha256:83e8fe3359e2a1b890e4e4f9244f99f64fc96454b65d91cbe5a0f05eb3b661bd
   scribe:
     - gid: D5/S3/Quantum/PredictionDepth/TargetPredictionSufficiency.target_prediction_sufficiency
       definition_sha256: sha256:8be5ff1e45f22a167961dcb31bfbe2799d25fb3cbb888e284c5c4a65b75de4d3

@@ -1,0 +1,38 @@
+* `unknown`：当前有限信息与两种可能都兼容。
+
+随着观察增加，若证书体系可靠：
+
+$$
+\mathrm{true}
+$$
+
+或：
+
+$$
+\mathrm{false}
+$$
+
+一旦出现，不应被后续推翻。
+
+但完全可能有：
+
+$$
+v_\lambda(\mathrm{RH})=\mathrm{unknown}
+\qquad
+\forall\lambda<\infty,
+$$
+
+而经典真值仍然确定。
+
+所以：
+
+$$
+\boxed{
+\text{epistemic nontermination}
+\not\Rightarrow
+\text{semantic indeterminacy}.
+}
+$$
+
+---
+

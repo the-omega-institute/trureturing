@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:1589a2d7dd77fe556d3292055405d7b9fd3fab98b5832ee75428c59df5308ee9
 cas_ref: sha256:1589a2d7dd77fe556d3292055405d7b9fd3fab98b5832ee75428c59df5308ee9
 coverage_gids:
-  - D5/S3/Observer/Linear/RobustFrameBounds.robust_observer_frame_bounds
+  - gid: D5/S3/Observer/Linear/RobustFrameBounds.robust_observer_frame_bounds
+    target_statement_id: sha256:47fdb79491a78a91db6e861cd4b8ad8bb433d8bacace11c94f9d77d0d1ab2227
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/Linear/RobustFrameBounds.robust_observer_frame_bounds
-      source_sha256: sha256:1589a2d7dd77fe556d3292055405d7b9fd3fab98b5832ee75428c59df5308ee9
-      target_statement_id: sha256:47fdb79491a78a91db6e861cd4b8ad8bb433d8bacace11c94f9d77d0d1ab2227
   scribe:
     - gid: D5/S3/Observer/Linear/RobustFrameBounds.robust_observer_frame_bounds
       definition_sha256: sha256:0552594faf2d7596782aac7c8ae09d86f7952e17884d8f7574d4d0b74167a9ff

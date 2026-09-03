@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:58b0eb5097889dc1c9fe78234d8443e8f4abd38b63f7918fb45b45f95b0fa4dd
 cas_ref: sha256:58b0eb5097889dc1c9fe78234d8443e8f4abd38b63f7918fb45b45f95b0fa4dd
 coverage_gids:
-  - D5/S3/Estimation/DecisionRisk/BoundedRiskSimulatorTransport.bounded_loss_risk_stability_of_simulator
+  - gid: D5/S3/Estimation/DecisionRisk/BoundedRiskSimulatorTransport.bounded_loss_risk_stability_of_simulator
+    target_statement_id: sha256:65e9f70d5fa71ebe707c1acae2fb31c9f07d5c9ee8a5ee275bccc01d349ec6f3
 receipts:
-  coverage:
-    - gid: D5/S3/Estimation/DecisionRisk/BoundedRiskSimulatorTransport.bounded_loss_risk_stability_of_simulator
-      source_sha256: sha256:58b0eb5097889dc1c9fe78234d8443e8f4abd38b63f7918fb45b45f95b0fa4dd
-      target_statement_id: sha256:65e9f70d5fa71ebe707c1acae2fb31c9f07d5c9ee8a5ee275bccc01d349ec6f3
   scribe:
     - gid: D5/S3/Estimation/DecisionRisk/BoundedRiskSimulatorTransport.bounded_loss_risk_stability_of_simulator
       definition_sha256: sha256:3cd2761b1024797f7317d2ea362ec7131543d7b2c6ddf26149c0f31e39fc4a21

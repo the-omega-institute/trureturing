@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:6cebdb15c7ef0a71e54f5f2a33647ac86217c016724bc6b311b866fb32fbb8dc
 cas_ref: sha256:6cebdb15c7ef0a71e54f5f2a33647ac86217c016724bc6b311b866fb32fbb8dc
 coverage_gids:
-  - D5/S3/ConceptDynamics/ExperimentBoundary/FiniteIdentificationOutputCapacity.finite_identification_output_capacity
+  - gid: D5/S3/ConceptDynamics/ExperimentBoundary/FiniteIdentificationOutputCapacity.finite_identification_output_capacity
+    target_statement_id: sha256:a89ad57b02d14cd1ba430840846d3e9625d25ea44cd3eecaf8b8f0b8f29b9f91
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/ExperimentBoundary/FiniteIdentificationOutputCapacity.finite_identification_output_capacity
-      source_sha256: sha256:6cebdb15c7ef0a71e54f5f2a33647ac86217c016724bc6b311b866fb32fbb8dc
-      target_statement_id: sha256:a89ad57b02d14cd1ba430840846d3e9625d25ea44cd3eecaf8b8f0b8f29b9f91
   scribe:
     - gid: D5/S3/ConceptDynamics/ExperimentBoundary/FiniteIdentificationOutputCapacity.finite_identification_output_capacity
       definition_sha256: sha256:74eba7bf2ea91fb6c822f64055f5eef18d394ca5ab259aae357e2d30cfee1c28

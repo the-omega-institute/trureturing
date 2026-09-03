@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:b48db27e4f4d1c0466d3456fb23e5f8507919d48b3f635eeb364836569b12d03
 cas_ref: sha256:b48db27e4f4d1c0466d3456fb23e5f8507919d48b3f635eeb364836569b12d03
 coverage_gids:
-  - D5/S3/ObserverMemory/Fusion/SharpProductCompletionDepth.sharp_product_completion_depth
+  - gid: D5/S3/ObserverMemory/Fusion/SharpProductCompletionDepth.sharp_product_completion_depth
+    target_statement_id: sha256:53a6639f75f55bebbc5ecc7db61b4ed68d59e6c91f96dfeb466552df6deb05f8
 receipts:
-  coverage:
-    - gid: D5/S3/ObserverMemory/Fusion/SharpProductCompletionDepth.sharp_product_completion_depth
-      source_sha256: sha256:b48db27e4f4d1c0466d3456fb23e5f8507919d48b3f635eeb364836569b12d03
-      target_statement_id: sha256:53a6639f75f55bebbc5ecc7db61b4ed68d59e6c91f96dfeb466552df6deb05f8
   scribe:
     - gid: D5/S3/ObserverMemory/Fusion/SharpProductCompletionDepth.sharp_product_completion_depth
       definition_sha256: sha256:20678c2864d7a6f3a416b0578bec376da88d72de714dc6fc3c9c164f6491e8d6

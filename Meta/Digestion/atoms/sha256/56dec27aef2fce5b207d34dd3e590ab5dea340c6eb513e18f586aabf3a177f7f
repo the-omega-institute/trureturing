@@ -1,0 +1,36 @@
+# 第一百五十一部　建议的仓库模块
+
+```text
+D5/S3/Analytic/ReflectionCasimir/
+  XiReflectionQuotient.lean
+  CasimirLogDerivativeMoments.lean
+  CasimirDifferenceLattice.lean
+  CasimirHausdorffCriterion.lean
+
+D5/S3/Analytic/ParityRH/
+  GlobalEvenRH.lean
+  PointedOddRH.lean
+  EvenOddRHRecombination.lean
+  EvenOddCasimirMatrices.lean
+
+D5/S3/Analytic/ParityRH/Examples/
+  GeometricEvenOnlySequence.lean
+  GeometricOddOnlySequence.lean
+  GoldenStructuralOddObstruction.lean
+
+D5/S3/Analytic/LiHausdorff/
+  EvenOddLiRecombination.lean
+  LiCasimirDifferenceTransform.lean
+
+D5/S3/PrimeConstellation/ParityBridge/
+  EvenOddSourceCumulants.lean
+  SourceParitySelectionRule.lean
+
+D5/X_Frontier/ParityTraceJet/
+  PrimeCasimirParityIntertwiner.lean
+  EvenSourceToGlobalCompletion.lean
+  OddSourceToPointedObserver.lean
+```
+
+---
+
