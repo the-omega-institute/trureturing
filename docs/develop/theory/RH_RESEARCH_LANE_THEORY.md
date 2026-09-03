@@ -1148,270 +1148,6 @@ R_{r,N,L}\to0
 
 ---
 
-## [PR #4212] FORMAL_GOLDEN_PRIME_CIRCLE_CRITICAL_SPECTRUM
-
-# 黄金素数圆、二元电荷层析与临界谱完成
-
-**Formal Golden Prime Circle, Binary Charge Tomography, and Critical-Spectrum Completion**
-
-**版本：v0.1，2026-08-30**
-
-## 0. 文档地位
-
-本文把黄金比例、素数分裂、观察者压缩、尺度圆与 Riemann 型临界反射组织成一条严格分层的理论链。Lean 文件是机器真源。本文负责解释对象、桥梁、适用范围和仍然开放的解析义务。
-
-本文不宣称已经证明 RH、GRH、显式公式的新版本或 `L(1, chi_5)` 的解析特殊值。临界线到单位圆的变换是精确坐标重写。它的研究价值来自与黄金尺度、二元分裂电荷和 observer completion 的兼容性。
-
----
-
-## 1. 三种压缩必须分开
-
-### 1.1 阿贝尔化
-
-素数是正有理数乘法群的自由生成元：
-
-\[
-\mathbb Q_{>0}^{\times}\cong\bigoplus_p\mathbb Z[p].
-\]
-
-从有序素数观察词进入该群会删除顺序，只保留素因子指数。
-
-### 1.2 字符投影
-
-普通 zeta 对应平凡字符通道。对黄金二次域，非平凡字符 `chi_5` 读取 split/inert 电荷。联合通道
-
-\[
-(\mathbf 1,\chi_5)
-\]
-
-是群 `C_2` 上的完整 Fourier 坐标。
-
-### 1.3 反射偶化
-
-completed reflection
-
-\[
-\mathcal R(s)=1-\overline{s}
-\]
-
-把法向偏差 `delta` 变为 `-delta`。对称标量观察会消去奇通道，同时保留乘积、平方和曲率等偶不变量。
-
----
-
-## 2. 黄金尺度圆
-
-定义黄金正定向周期
-
-\[
-L_\varphi=2\log\varphi.
-\]
-
-对正尺度 `x`，定义未取商坐标
-
-\[
-\eta_\varphi(x)=\frac{\log x}{L_\varphi}.
-\]
-
-机器定理证明
-
-\[
-\eta_\varphi(xy)=\eta_\varphi(x)+\eta_\varphi(y)
-\]
-
-以及
-
-\[
-\eta_\varphi(\varphi^2x)=\eta_\varphi(x)+1.
-\]
-
-因此取模 `Z` 后得到黄金尺度圆。当前 Lean owner 保留未取商实坐标，以避免把 circle quotient 的拓扑接口与本批代数定理混在一起。
-
-其 Fourier 基频为
-
-\[
-\omega_\varphi=\frac{2\pi}{L_\varphi}=\frac{\pi}{\log\varphi}.
-\]
-
-机器闭合的精确桥为
-
-\[
-2\pi k\,\eta_\varphi(x)
-=
-(k\omega_\varphi)\log x.
-\]
-
-这解释了黄金圆的 Fourier 模式为什么对应 Mellin 变量的垂直平移。
-
----
-
-## 3. 相同电荷与不同观察者
-
-设壳层读出为
-
-\[
-q_r:X\to Y_r,
-\]
-
-并存在电荷投影
-
-\[
-c_r:Y_r\to C
-\]
-
-满足
-
-\[
-c_r\circ q_r=\chi.
-\]
-
-所有壳层读取同一个电荷 `chi`。它们仍可保留不同残余信息，因此 kernel 不必相同。机器反模型使用一个只读取 Boolean charge 的粗壳和一个同时保留 residual bit 的细壳，证明共同电荷不推出观察者相同。
-
----
-
-## 4. 黄金 `C_2` 电荷层析
-
-令 split 与 inert 信号为 `(S,I)`。定义
-
-\[
-N=S+I,
-\qquad
-C=S-I.
-\]
-
-反演为
-
-\[
-S=\frac{N+C}{2},
-\qquad
-I=\frac{N-C}{2}.
-\]
-
-这里 `N` 是中性通道，`C` 是二次电荷通道。该反演已经机器证明。
-
-对单个未分歧素数，`chi_5(p)=+1` 给 split 指示器，`chi_5(p)=-1` 给 inert 指示器。`p=5` 是分歧通道，需要单独保留。
-
----
-
-## 5. 黄金局部 Euler 三分律
-
-令形式局部变量为 `X`，定义
-
-\[
-D_\chi(X)=(1-X)(1-\chi X).
-\]
-
-机器证明
-
-\[
-\begin{aligned}
-D_{+1}(X)&=(1-X)^2,\\
-D_{-1}(X)&=1-X^2,\\
-D_0(X)&=1-X.
-\end{aligned}
-\]
-
-它们分别对应 split、inert、ramified 三种黄金局部类型。仓库已有 prime classification 证明素数的黄金分裂类型由 `p mod 5` 决定。本批新增 residue-to-charge-to-Euler-denominator 的桥接 owner。
-
----
-
-## 6. 黄金临界半径
-
-对复变量 `s` 定义
-
-\[
-b(s)=\Re(s)-\frac12
-\]
-
-和黄金临界半径
-
-\[
-R_\varphi(s)=\exp(L_\varphi b(s)).
-\]
-
-机器证明
-
-\[
-R_\varphi(s)=1
-\iff
-\Re(s)=\frac12.
-\]
-
-临界反射满足
-
-\[
-b(\mathcal R s)=-b(s)
-\]
-
-以及
-
-\[
-R_\varphi(\mathcal R s)=R_\varphi(s)^{-1}.
-\]
-
-因此每一对反射伙伴都满足
-
-\[
-R_\varphi(s)R_\varphi(\mathcal R s)=1.
-\]
-
-这只是成对平衡。逐点中性要求
-
-\[
-R_\varphi(s)=1.
-\]
-
-所以函数方程型对称提供 pairwise balance，Riemann 型临界线命题要求 pointwise neutrality。Lean 中已经给出显式反例，说明乘积为一不能推出每个因子为一。
-
----
-
-## 7. 与 RH 和 GRH 的精确边界
-
-对任意候选零点集 `Z`，机器定理证明
-
-\[
-\forall s\in Z,\ \Re(s)=\frac12
-\iff
-\forall s\in Z,\ R_\varphi(s)=1.
-\]
-
-当 `Z` 被实例化为 completed zeta 或某个 completed `L`-函数的非平凡零点集时，这成为对应 RH 或 GRH 的等价坐标表达。该实例化本身需要仓库中严格定义的 completed function、zero predicate 和 trivial-zero exclusion。
-
-本批不把坐标等价冒充为零点位置证明。
-
----
-
-## 8. 后续解析桥
-
-下列内容保留为后续形式化目标：
-
-1. 在绝对收敛半平面中建立有限或无限黄金壳测度的 Fourier 系数与 `-L'/L` 垂直采样之间的定理；
-2. 形式化 `L(1,chi_5)=2 log(phi)/sqrt(5)`，并连接黄金 Möbius Lyapunov 指数；
-3. 将 explicit formula 实现为 prime-shell test space 与 zero-spectrum distribution 之间的连续线性泛函恒等式；
-4. 构造足够完备的 golden Weil frame，并证明其正性是否等价于完整 Weil criterion；
-5. 证明任何新增传递算子的酉性或自伴随性，不能从 determinant 的成对平衡直接推出。
-
----
-
-## 9. 机器 owner
-
-```text
-D5/S3/Observer/GoldenPrimeCircle/
-  GoldenScaleCircle.lean
-  GoldenVerticalSampling.lean
-  SharedChargeDifferentShells.lean
-
-D5/S3/PrimeForms/GoldenEuler/
-  GoldenChargeTomography.lean
-  GoldenLocalEulerTrichotomy.lean
-  GoldenResidueChargeBridge.lean
-
-D5/S3/Weil/GoldenCriticalSpectrum/
-  GoldenCriticalRadius.lean
-  GoldenReflectionTransfer.lean
-```
-
----
-
 ## [PR #4221] PRIME_FREQUENCY_PHASE_FLOW_AND_OBSERVER_TIME
 
 # 素数频率相位流、傅立叶对偶与观察者时间
@@ -6397,3 +6133,265 @@ RH
 \rightarrow
 \texttt{OfflineZeroPickIndexLowerBound}.
 }
+
+---
+
+## [PR #5065] CANONICAL_ZERO_DATA_NONVACUITY
+
+# Canonical `ZeroData` inhabitant 与全称命题非空洞性
+
+**候选 GID：**
+
+- `D5/S3/Weil/ZetaBridge/RiemannVonMangoldtCountGrowth`
+- `D5/S3/Weil/ZetaBridge/CanonicalZeroDataFromRiemannVonMangoldt`
+- `D5/S3/Weil/ZetaBridge/ZeroDataSemanticNonvacuity`
+- `D5/S3/Weil/ZetaBridge/CanonicalZeroDataProvider`
+- `D5/S3/Weil/ZetaBridge/CanonicalZeroDataNonvacuityAssembly`
+
+## 1. 语义空洞位于 `ZeroData` 的外层类型
+
+仓库的 `ZeroData` 使用固定索引类型 `ℕ`。一旦存在一个值
+
+```lean
+Z : ZeroData
+```
+
+则 `Z.zero 0` 已经是由结构字段证明的非平凡 zeta 零点。因此本路线中的语义空洞风险不来自单个 `ZeroData` 的索引集为空，而来自类型 `ZeroData` 本身可能没有 inhabitant。
+
+此时一个命题
+
+\[
+\forall Z:\operatorname{ZeroData},\;P(Z)
+\]
+
+可以在没有任何零点枚举被实例化时成立。
+
+新节点定义：
+
+\[
+\boxed{
+\operatorname{RealizedZeroDataClaim}(P)
+\iff
+\exists Z:\operatorname{ZeroData},\;P(Z).
+}
+\]
+
+并形式化两条逻辑边：
+
+\[
+\neg\operatorname{Nonempty}(\operatorname{ZeroData})
+\Longrightarrow
+\forall Z:\operatorname{ZeroData},\;P(Z),
+\]
+
+\[
+\operatorname{Nonempty}(\operatorname{ZeroData})
+\land
+\bigl(\forall Z:\operatorname{ZeroData},\;P(Z)\bigr)
+\Longrightarrow
+\exists Z:\operatorname{ZeroData},\;P(Z).
+\]
+
+所以后续审计必须区分“全称条件定理已经证明”和“该定理已经在真实 zeta 零点枚举上实现”。
+
+## 2. Riemann–von Mangoldt 关闭非空洞链
+
+`RiemannVonMangoldtCountGrowth` 从仓库已有结构字段中抽取：
+
+\[
+N_Z(T,2T)
+=
+\frac{T}{2\pi}\ell_1(T)+O(\log T),
+\]
+
+并证明：
+
+\[
+\boxed{
+N_Z(T,2T)\longrightarrow+\infty.
+}
+\]
+
+将其应用于 set-level canonical source `Zeta23.zetaZeroConfig`，得到：
+
+\[
+\boxed{
+\begin{aligned}
+&\operatorname{RiemannVonMangoldt}
+  (\operatorname{zetaZeroConfig})
+\\
+&\Longrightarrow
+N(T,2T)\to\infty
+\\
+&\Longrightarrow
+\operatorname{zetaZeroConfig.carrier}\text{ infinite}
+\\
+&\Longrightarrow
+\{\rho:\operatorname{IsNontrivialZero}(\rho)\}\text{ infinite}
+\\
+&\Longrightarrow
+\operatorname{Nonempty}(\operatorname{ZeroData}).
+\end{aligned}
+}
+\]
+
+最后一箭头直接复用仓库已有的精确定理：
+
+\[
+\operatorname{Nonempty}(\operatorname{ZeroData})
+\iff
+\{\rho:\operatorname{IsNontrivialZero}(\rho)\}\text{ infinite}.
+\]
+
+因此新节点没有再次构造可数性、枚举、解析重数、反射、共轭或局部有限性证明。
+
+## 3. Canonical provider 的含义
+
+定义：
+
+```lean
+structure CanonicalZeroDataSource : Prop where
+  riemannVonMangoldt :
+    Zeta23.RiemannVonMangoldt Zeta23.zetaZeroConfig
+```
+
+由该 source 选择：
+
+\[
+\operatorname{canonicalZeroData}(S)
+:
+\operatorname{ZeroData}.
+\]
+
+该值满足：
+
+1. 每个枚举项都是真实非平凡 zeta 零点；
+2. 每个真实非平凡 zeta 零点恰有一个自然数索引；
+3. 存储的解析重数严格为正；
+4. `ρ ↦ 1 - ρ` 的函数方程反射在索引上忠实实现并保持重数；
+5. 复共轭在索引上忠实实现并保持重数；
+6. 每个对称谱半径截断是有限集。
+
+“canonical”在此表示 canonical zeta-zero object 及其不依赖枚举的观察量。自然数排序由 classical choice 选出，不声称是可计算或唯一的顺序。
+
+仓库已有枚举不变性定理被直接复用。对任何另一份 `Z : ZeroData`：
+
+\[
+\operatorname{truncatedZeroSum}
+(\operatorname{canonicalZeroData}(S),g,T)
+=
+\operatorname{truncatedZeroSum}(Z,g,T),
+\]
+
+对应的 `SymmetricConvergent` 命题等价，收敛后的 `zeroSum` 值相等。
+
+## 4. 最终 certificate 与闭合主定理
+
+`CanonicalZeroDataCertificate` 将下游消费者所需义务显式打包：
+
+```text
+actual ZeroData value
+exact representation
+unique exhaustive index
+positive analytic multiplicity
+reflection fidelity
+conjugation fidelity
+finite symmetric cutoffs
+```
+
+其精确表示定理为：
+
+\[
+\boxed{
+\operatorname{IsNontrivialZero}(\rho)
+\iff
+\exists!n\in\mathbb N,\ C.data.zero(n)=\rho.
+}
+\]
+
+主装配定理：
+
+```lean
+canonical_zeroData_closed_chain
+```
+
+证明：
+
+\[
+\boxed{
+\operatorname{RvM}(\mathcal Z_\zeta)
+\Longrightarrow
+\left[
+\mathcal Z_\zeta\text{ infinite}
+\land
+\operatorname{Nonempty}(\operatorname{ZeroData})
+\land
+\exists C:\operatorname{CanonicalZeroDataCertificate}
+\right].
+}
+\]
+
+扩展定理 `exists_faithful_zeroData_of_riemannVonMangoldt` 直接返回一个实际 `ZeroData`，以及全部表示、重数、对称和局部有限保证。
+
+## 5. 全称命题的语义实现
+
+对任意谓词：
+
+```lean
+P : ZeroData → Prop
+```
+
+如果已经证明：
+
+```lean
+h : ∀ Z : ZeroData, P Z
+```
+
+则 canonical source 给出：
+
+\[
+\boxed{
+\exists C:\operatorname{CanonicalZeroDataCertificate},
+\quad
+P(C.data)
+\land
+\exists\rho:\mathbb C,
+\operatorname{IsNontrivialZero}(\rho).
+}
+\]
+
+因此围绕 `ZeroData` 的全称定理可以被实例化到一个真实、穷尽、重数忠实的 zeta 零点枚举上。外层类型为空导致的语义空洞由该 certificate 消除。
+
+## 6. 当前 claim boundary
+
+本 PR 关闭的是以下完整逻辑链：
+
+\[
+\boxed{
+\begin{aligned}
+\operatorname{RiemannVonMangoldt}
+  (\operatorname{zetaZeroConfig})
+&\Longrightarrow
+N(T,2T)\to\infty
+\\
+&\Longrightarrow
+\text{nontrivial-zero set infinite}
+\\
+&\Longrightarrow
+\operatorname{Nonempty}(\operatorname{ZeroData})
+\\
+&\Longrightarrow
+\text{actual exhaustive multiplicity-aware enumeration}
+\\
+&\Longrightarrow
+\text{canonical provider and certificate}
+\\
+&\Longrightarrow
+\text{universal ZeroData claims are realized}.
+\end{aligned}
+}
+\]
+
+`RiemannVonMangoldt zetaZeroConfig` 在本 PR 中仍作为显式 source。把 provider 进一步升级为 hypothesis-free 常量，需要将仓库中的 global Riemann–von Mangoldt assembly 独立接入该 source。该剩余步骤属于解析数论 owner 的实例化，不再是 `ZeroData` 的枚举、重数、对称或语义逻辑缺口。
+
+本节不声明 RH，不使用 RH，也不把尚未经过 admission 的 Candidate 描述为 Frozen。
