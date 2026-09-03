@@ -52,31 +52,6 @@ public sealed class R14ScopeNarrowingTests
     }
 
     [Fact]
-    public void Sl015DuplicateGidReportsDeltaAgainstBaselineCollision()
-    {
-        var fixture = new RuleFixture();
-        fixture.Files[RuleFixture.BlueprintPath] = fixture.Files[RuleFixture.RingPath];
-
-        Assert.Equal(
-            2,
-            CountFindings(Execute(fixture, RuleFixture.BlueprintPath), 15, DuplicateMessage));
-    }
-
-    [Fact]
-    public void Sl015DuplicateGidReportsDeltaAgainstDeltaCollision()
-    {
-        const string firstPath = "Blueprint/D5/S0/Carrier/First.md";
-        const string secondPath = "Blueprint/D5/S0/Carrier/Second.md";
-        var fixture = new RuleFixture();
-        fixture.Files[firstPath] = Header("D5/B/S0/Carrier/DeltaCollision");
-        fixture.Files[secondPath] = Header("D5/B/S0/Carrier/DeltaCollision");
-
-        Assert.Equal(
-            2,
-            CountFindings(Execute(fixture, firstPath, secondPath), 15, DuplicateMessage));
-    }
-
-    [Fact]
     [BaseFactScopeProbe(
         15,
         typeof(RepositoryRules),

@@ -1,0 +1,71 @@
+## 76. “所有名”就是所有角色
+
+一个分类：
+
+$$
+n\mapsto n\bmod m
+$$
+
+给出位置基：
+
+$$
+0,1,\ldots,m-1.
+$$
+
+傅立叶变换给出角色基：
+
+$$
+1,\omega_m^n,\omega_m^{2n},\ldots.
+$$
+
+因此每一种有限周期的“名”，都可以从两个方向观察：
+
+$$
+\boxed{
+\text{residue name}
+\quad\longleftrightarrow\quad
+\text{character frequency}.
+}
+$$
+
+全部有限周期的逆极限是：
+
+$$
+\widehat{\mathbb Z}
+=
+\varprojlim_m\mathbb Z/m\mathbb Z,
+$$
+
+其角色群是：
+
+$$
+\mathbb Q/\mathbb Z.
+$$
+
+所以全部有限周期分类，在频域中就是全部有理频率。
+
+但黄金比例产生的：
+
+$$
+e^{2\pi in/\varphi}
+$$
+
+不是有限周期角色，而是无理旋转。它不属于有限周期的 torsion sector，而属于更大的 Bohr／Kronecker 相位完成。
+
+因此必须区分：
+
+$$
+\boxed{
+\begin{aligned}
+\widehat{\mathbb Z}
+&=\text{全部有限周期名字};\\
+b\mathbb Z
+&=\text{全部有限与准周期相位名字}.
+\end{aligned}
+}
+$$
+
+黄金比例位于第二层，而不是普通 profinite 周期层。
+
+---
+

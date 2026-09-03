@@ -1,0 +1,34 @@
+## 116. Transform entanglement
+
+若把零点集合分成：
+
+$$
+A\sqcup B,
+$$
+
+而 Gram 算子严格块对角：
+
+$$
+G=
+\begin{pmatrix}
+G_A&0\\
+0&G_B
+\end{pmatrix},
+$$
+
+则两个谱 sector 可以独立插值。
+
+若没有任何非平凡分拆使其块对角，并且 evaluation range 不能写成笛卡尔积，则称它们 **transform-entangled**。
+
+这是一种严格的全局纠缠：
+
+$$
+\boxed{
+\text{同一个 entire transform 无法把不同零点值当作独立坐标任意指定}.
+}
+$$
+
+它比 mirror pair 内部相关更强，又不需要宣称物理 Bell entanglement。
+
+---
+

@@ -1,0 +1,23 @@
+## 119. 局部观察的最小充分层
+
+对不同任务，所需信息层不同：
+
+$$
+\boxed{
+\begin{array}{c|c}
+\text{任务}&\text{最小局部数据}\\
+\hline
+p\text{-admissibility}&\nu_p(H)\\
+\text{Hardy--Littlewood local factor}&\nu_p(H)\\
+\text{Schmidt spectrum}&(m_r)_r\\
+\text{offset collision relation}&\pi_p(H)\\
+\text{orientation/chirality}&W_p(H)\\
+\text{exact bounded }H\text{ recovery}&W_p(H)\text{ for sufficiently large }p
+\end{array}
+}
+$$
+
+所以 singular series 不是“完整构型读取”，而是针对渐近密度问题的一种最粗充分统计量。
+
+---
+

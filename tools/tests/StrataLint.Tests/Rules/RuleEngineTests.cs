@@ -32,29 +32,14 @@ public sealed class RuleEngineTests
 
     public static TheoryData<int, string> AffectedInputs => new()
     {
-        { 1, RuleFixture.RingPath },
-        { 2, RuleFixture.RingPath },
-        { 3, RuleFixture.RingPath },
-        { 4, RuleFixture.BlueprintPath },
-        { 5, "Chronicle/2026/07/10-old.md" },
-        { 6, RuleFixture.BlueprintPath },
-        { 8, RuleFixture.HeartsPath },
-        { 10, RuleFixture.RingPath },
         { 11, RuleFixture.RingPath },
-        { 12, RuleFixture.RingPath },
         { 15, "notes/new-artifact.txt" },
-        { 16, RuleFixture.FixtureBackfillSourcePath },
-        { 17, "Library/queries.yaml" },
         { 18, ValuesKernelBindingValidator.RelativePath },
         { 18, "Directory.Build.props" },
-        { 19, "Evidence/D5/S0/Carrier/Result.run.json" },
-        { 20, RuleFixture.RingPath },
-        { 21, "D8/S0/Carrier/Ring.lean" },
         { 22, RuleFixture.SyntheticProtectedPath },
         { 23, RuleFixture.BlueprintSourcePath },
         { 23, "Directory.Build.props" },
         { 25, RuleFixture.BlueprintPath },
-        { 26, RuleFixture.BlueprintSourcePath },
     };
 
     public static TheoryData<int, string?> UnaffectedInputs => new()

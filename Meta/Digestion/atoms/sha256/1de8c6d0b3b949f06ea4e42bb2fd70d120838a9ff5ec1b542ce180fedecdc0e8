@@ -1,0 +1,14 @@
+## 159. 对称配对相原则
+
+$$
+\boxed{
+\text{全局对称可以保持，}
+\qquad
+\text{二阶 transverse pair amplitude 仍可非零}.
+}
+$$
+
+所以离线四元组不是函数方程破缺，而是 fixed-locus 之外的自由轨道。
+
+---
+

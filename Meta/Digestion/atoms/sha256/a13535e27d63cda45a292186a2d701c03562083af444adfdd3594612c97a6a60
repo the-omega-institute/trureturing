@@ -1,0 +1,59 @@
+## 117. 三元组 chirality 是第一个 transverse-odd 候选源
+
+在前述 \(2/4\)-gap 编码中：
+
+$$
+H_3^+:
+[0,1],
+\qquad
+\kappa=+1,
+$$
+
+$$
+H_3^-:
+[1,0],
+\qquad
+\kappa=-1.
+$$
+
+二者之差正好是一个三值 transverse source：
+
+$$
+\chi_{\mathrm{triplet}}
+\in\{-1,0,+1\}.
+$$
+
+其中：
+
+* \(+1\)：左短右长；
+* \(-1\)：左长右短；
+* \(0\)：不区分两个方向，或取镜像平均。
+
+所以若未来的 prime–zero bridge 确实反射协变，则最自然的预测不是：
+
+$$
+\text{孪生素数直接产生离线符号},
+$$
+
+而是：
+
+$$
+\boxed{
+\text{三元组镜像不平衡}
+\longrightarrow
+\text{零点 transverse-odd response}.
+}
+$$
+
+孪生与四元组则更自然进入：
+
+$$
+\delta^2,\delta^4,\ldots
+$$
+
+这样的偶 sector。
+
+这是一个非常具体、可被数值和形式模型检验的 selection rule。
+
+---
+

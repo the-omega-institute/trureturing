@@ -1,0 +1,32 @@
+## 114. Paley–Wiener 评价向量
+
+选择 Hilbert 型 Paley–Wiener 空间：
+
+$$
+PW_R^2.
+$$
+
+每个谱点 \(z_\rho\) 上的评价是连续线性泛函，因此存在 reproducing kernel：
+
+$$
+k_\rho
+$$
+
+满足：
+
+$$
+F(z_\rho)=\langle F,k_\rho\rangle.
+$$
+
+对有限零点集合定义 Gram 矩阵：
+
+$$
+\boxed{
+G_{\rho\rho'}
+=
+\langle k_{\rho'},k_\rho\rangle.
+}
+$$
+
+---
+

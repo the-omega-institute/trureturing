@@ -1,0 +1,33 @@
+## 129. 这就是最小“破缺—重完”动力学
+
+该算子完成四件事：
+
+$$
+\begin{aligned}
+\text{第 1 步：}&\text{内部／外部坐标交换，odd channel 翻转并收缩};\\
+\text{第 2 步：}&\text{回到原坐标空间，但 odd sign 尚未恢复};\\
+\text{第 3 步：}&\text{进入反向频率坐标};\\
+\text{第 4 步：}&\text{odd orientation 恢复，幅值缩小 }\varphi^{-8}.
+\end{aligned}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{Fourier gives the return period;}
+}
+$$
+
+$$
+\boxed{
+\varphi\text{ gives the defect contraction rate}.
+}
+$$
+
+这比单独说“黄金比例是坐标轴融合”更完整。
+
+黄金比例控制幅值，\(\pi/2\) 控制傅立叶四周期相位，\(C_2\) 控制反射奇偶。
+
+---
+

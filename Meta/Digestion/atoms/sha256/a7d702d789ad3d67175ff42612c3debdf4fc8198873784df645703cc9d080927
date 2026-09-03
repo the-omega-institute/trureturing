@@ -1,0 +1,42 @@
+### 定义：Paley–Wiener orbit nonseparability
+
+把评价映射写成：
+
+$$
+E_R:
+PW_R
+\to
+\mathbb C^{\mathscr Z},
+\qquad
+g\mapsto
+\bigl(
+\widehat g(z_\rho)
+\bigr)_\rho.
+$$
+
+若对任意非平凡分拆：
+
+$$
+\mathscr Z=A\sqcup B
+$$
+
+都有：
+
+$$
+E_R(PW_R)
+\neq
+E_A(PW_R)\times E_B(PW_R),
+$$
+
+则称零点系统在支撑尺度 \(R\) 上是 transform-entangled。
+
+这不是物理量子纠缠，而是：
+
+$$
+\boxed{
+\text{频谱坐标不能独立赋值}.
+}
+$$
+
+---
+

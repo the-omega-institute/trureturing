@@ -1,0 +1,8 @@
+## 65. Parity Boundary Completion Theorem
+
+对任意 Hausdorff 空间中的序列，只要所有奇偶子序列极限存在，则原序列收敛当且仅当二者相等。
+
+这是直接可形式化定理。
+
+---
+

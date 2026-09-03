@@ -1,0 +1,20 @@
+### 孪生构型
+
+$$
+H_2=\{0,2\}.
+$$
+
+其反射仍为自身：
+
+$$
+H_2^\vee=H_2.
+$$
+
+所以孪生构型是：
+
+$$
+\boxed{\text{二点、但 mirror-even}.}
+$$
+
+它自然对应二阶 connected amplitude，却不自然携带 transverse sign。
+
