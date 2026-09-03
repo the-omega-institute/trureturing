@@ -2,9 +2,14 @@ fingerprints:
   raw_sha256: sha256:1761bab0481845e5eff88e614a24cfb03b994030e7a6ddd03232b1decdd241a1
   normalized_sha256: sha256:1761bab0481845e5eff88e614a24cfb03b994030e7a6ddd03232b1decdd241a1
 cas_ref: sha256:1761bab0481845e5eff88e614a24cfb03b994030e7a6ddd03232b1decdd241a1
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Evidence/ActualEvidenceRefinementStability.actual_evidence_refinement_stability
+    target_statement_id: sha256:5884d0b89dde70c212bcd82fc401325a13a3ac887a26da803f28450dd4387dbd
 receipts:
-  scribe: []
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Evidence/ActualEvidenceRefinementStability.actual_evidence_refinement_stability
+      definition_sha256: sha256:54091aea8e0cb544cd1eacd73d8364026f1cdc0abfd03947d94c1ac936931df4
+      emission_sha256: sha256:702cebad1c7ee4216fe397007008c7814e1a977335192a9142dff109251bb3c5
   unresolved_subitems: []
   chain_atoms:
     - 26b9b5fa405f7d53ec6f1f6a44a4ebde6d8433694e3e5201d672290dff6d8afd
