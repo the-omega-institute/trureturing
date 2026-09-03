@@ -178,7 +178,7 @@ This sharpens the central gap. The missing bridge is no longer merely a function
 geometry -> prime labels.
 ```
 
-It must be a canonical observable that breaks the full prime-relabeling symmetry by arithmetic structure.
+It must be a canonical observable that breaks the relevant prime-relabeling symmetry by arithmetic structure. Relabeling rigidity alone does not automatically imply that a localization reaches every prime; coverage and rigidity must be established separately.
 
 ## 10. What could supply the missing arithmetic rigidity
 
@@ -190,7 +190,7 @@ Several candidate structures can now be tested without assuming their success:
 4. **adelic product formula.** Finite prime places and the infinite place are jointly constrained by a global product law, which may provide the needed canonicality;
 5. **spectral identification.** A geometric operator whose irreducible local spectral sectors are canonically indexed by prime ideals would close the bridge at operator level.
 
-Each route must prove both existence and rigidity. Merely attaching the label `p` to an already indexed family would fail the relabeling test.
+Each route must prove existence, coverage, and rigidity. Merely attaching the label `p` to an already indexed family would fail the relabeling test.
 
 ## 11. Diagonal paths
 
@@ -223,8 +223,8 @@ Each new Lean module has a matching canonical Scribe source. Existing reusable t
 The next substantive research order is:
 
 1. construct candidate arithmetic observables from valuation, norm, divisibility, or adelic data;
-2. test each candidate against `SeparatesPrimeRelabelings`;
-3. connect the surviving observable to a genuine golden cut-and-project or completion carrier;
+2. prove coverage and test rigidity separately for each candidate;
+3. connect a surviving observable to a genuine golden cut-and-project or completion carrier;
 4. define a coupled local-layer path only after the coordinate map is canonical;
 5. study its spectral readout and first-visible times;
 6. connect any resulting global determinant or Euler product to completed zeta with the infinite-place term explicit.
@@ -233,4 +233,4 @@ The first three items constitute the next hard heart. Until they are proved, the
 
 ## 13. Verification boundary
 
-The branch was written and statically audited through the GitHub connector. GitHub admission run `33736240994` has started for the current candidate head, but this note records no successful build conclusion while that run remains in progress. The source declarations are candidate formalizations and must not be described as kernel-closed until the required engineering, canonical Lean report, and protected admission checks succeed.
+The branch was written and statically audited through the GitHub connector. GitHub admission runs are authoritative for the candidate head. This note records no successful build conclusion until the required engineering, canonical Lean report, and protected admission checks succeed. The source declarations must not be described as kernel-closed before those checks pass.
