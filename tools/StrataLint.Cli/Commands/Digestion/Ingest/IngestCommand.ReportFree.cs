@@ -30,7 +30,6 @@ internal static partial class IngestCommand
             }
 
             var repositoryChanges = repository.ReadChanges(options.BaselineRevision);
-            RequireCurrentCasAppendOnly(inputs, repositoryChanges);
             var prepared = Prepare(
                 repository,
                 options.BaselineRevision,
@@ -64,7 +63,6 @@ internal static partial class IngestCommand
                 DigestionEvaluationScopes.ResolveChanges(
                     prepared.PlannedScope,
                     prepared.PlannedReceiptVerificationChanges),
-                repositoryChanges: prepared.PlannedChanges,
                 casChanges: prepared.PlannedCasChanges);
             return WriteResult(
                 repositoryRoot,
@@ -96,22 +94,6 @@ internal static partial class IngestCommand
             throw new InvalidOperationException(
                 "report-free digest status is invalid: "
                 + string.Join("; ", evaluation.Findings));
-        }
-    }
-
-    private static void RequireCurrentCasAppendOnly(
-        IngestInputs inputs,
-        RawChangeSet repositoryChanges)
-    {
-        var findings = DigestionCasStore.ValidateAppendOnly(
-            inputs.Current,
-            inputs.Baseline,
-            repositoryChanges);
-        if (findings.Length > 0)
-        {
-            throw new InvalidOperationException(
-                "report-free CAS append-only validation is invalid: "
-                + string.Join("; ", findings));
         }
     }
 

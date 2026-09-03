@@ -152,7 +152,6 @@ internal static partial class IngestCommand
                 DigestionEvaluationScopes.ResolveChanges(
                     evaluationScope,
                     receiptVerificationChanges),
-                repositoryChanges: finalChanges,
                 casChanges: finalCasChanges,
                 projectedStatusChanges: DigestionEvaluationScopes.ResolveChanges(
                     evaluationScope,

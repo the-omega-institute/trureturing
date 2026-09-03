@@ -165,19 +165,19 @@ public sealed partial class ReviewRegressionTests
     }
 
     [Fact]
-    public void Sl016RejectsDeletingABaselineCasBlob()
+    public void Sl016AllowsDeletingACasBlobAbsentFromTheCurrentLedger()
     {
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
-        fixture.Files.Remove(RuleFixture.FixtureCasPath);
+        var obsolete = DigestionCasStore.Capture(Encoding.UTF8.GetBytes("obsolete atom\n"));
+        fixture.Baseline[obsolete.RelativePath] = Encoding.UTF8.GetString(obsolete.Bytes.AsSpan());
+        fixture.ForkPoint[obsolete.RelativePath] = Encoding.UTF8.GetString(obsolete.Bytes.AsSpan());
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(16),
-            fixture.Build());
+            fixture.Build(RawChangeSet.Create([obsolete.RelativePath])));
 
-        Assert.Contains(evaluation.Diagnostics, diagnostic => diagnostic.Message.Contains(
-            $"baseline CAS blob was deleted: {RuleFixture.FixtureCasPath}",
-            StringComparison.Ordinal));
+        Assert.Empty(evaluation.Diagnostics);
     }
 
     [Fact]

@@ -53,43 +53,6 @@ internal static class DigestionCasStore
             ImmutableArray.CreateRange(bytes.ToArray()));
     }
 
-    internal static ImmutableArray<string> ValidateAppendOnly(
-        RepositorySnapshot current,
-        RepositorySnapshot baseline) =>
-        ValidateAppendOnly(current, baseline, changes: null);
-
-    internal static ImmutableArray<string> ValidateAppendOnly(
-        RepositorySnapshot current,
-        RepositorySnapshot baseline,
-        RawChangeSet? changes)
-    {
-        ArgumentNullException.ThrowIfNull(current);
-        ArgumentNullException.ThrowIfNull(baseline);
-        var findings = ImmutableArray.CreateBuilder<string>();
-        var baselineCas = baseline.Files
-            .Where(static item => IsCanonicalPath(item.Key.Value));
-        if (changes is not null)
-        {
-            var changedPaths = changes.Paths.ToImmutableHashSet();
-            baselineCas = baselineCas.Where(item => changedPaths.Contains(item.Key));
-        }
-
-        foreach (var (path, baselineBlob) in baselineCas
-                     .OrderBy(static item => item.Key.Value, StringComparer.Ordinal))
-        {
-            if (!current.Files.TryGetValue(path, out var currentBlob))
-            {
-                findings.Add($"baseline CAS blob was deleted: {path.Value}");
-            }
-            else if (!currentBlob.RawBytes.AsSpan().SequenceEqual(baselineBlob.RawBytes.AsSpan()))
-            {
-                findings.Add($"baseline CAS blob was rewritten: {path.Value}");
-            }
-        }
-
-        return findings.ToImmutable();
-    }
-
     internal static DigestionCasEvaluation Evaluate(
         BackfillInventoryDocument document,
         RepositorySnapshot snapshot) =>
