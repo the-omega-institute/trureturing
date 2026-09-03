@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:31a4e588abd1e9488a3cf8c2150da2fdcd11387be0250e25e09901fb8299a1e7
+  normalized_sha256: sha256:31a4e588abd1e9488a3cf8c2150da2fdcd11387be0250e25e09901fb8299a1e7
+cas_ref: sha256:31a4e588abd1e9488a3cf8c2150da2fdcd11387be0250e25e09901fb8299a1e7
+coverage_gids:
+  - D5/S3/ConceptDynamics/Causal/PrincipalStrata.principal_strata
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Causal/PrincipalStrata.principal_strata
+      source_sha256: sha256:31a4e588abd1e9488a3cf8c2150da2fdcd11387be0250e25e09901fb8299a1e7
+      target_statement_id: sha256:6c28baf97be2a3934a4400c0a6ca7fab4c7bb98ee4683bf209206f46183ae1a1
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Causal/PrincipalStrata.principal_strata
+      definition_sha256: sha256:04eb6e069048f01e41a46ab82dd8bfb32fb86665627911fca9cffeb557549f8d
+      emission_sha256: sha256:d0955772d7416412f52ec81b3e49c4588b4b74f4070200d40a7c012089b4d149
+  unresolved_subitems: []

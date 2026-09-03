@@ -1,0 +1,6 @@
+## 二　W-2 预登记:RH ⟺ Weil 平方正性(同模块第二条公开定理)
+
+**义务**:公开定理 `rh_iff_weilSquarePositivity (Z : ZeroData) : RiemannHypothesis ↔ ∀ (g : WeilTestFunction) (hZero : SymmetricConvergent Z (convolutionSquare g)), 0 ≤ (zeroSum Z (convolutionSquare g) hZero).re`。
+**可证伪预测(写在跑之前)**:⟹ 为冻结 `riemannHypothesis_implies_o6WeilPositivityStatement hRH Z`,⟸ 为 W-1;若 R-F 的量词顺序与此不合,按冻结字面调整调用而非改陈述。
+**边界**:同 §〇。
+
