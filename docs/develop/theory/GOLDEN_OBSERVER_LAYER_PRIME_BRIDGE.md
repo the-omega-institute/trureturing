@@ -134,7 +134,42 @@ It proves:
 
 This turns the earlier grid picture into an exact arithmetic carrier. It still does not derive the prime coordinate from cut-and-project geometry.
 
-## 8. Where zeta enters
+## 8. Zeckendorf controls prime-scaled frequency gaps
+
+`D5/S3/Analytic/EulerGerm/PrimeZeckendorfFrequencyBridge.lean`
+
+defines the real prime-local golden frequency, equivalently the golden heat energy,
+
+```text
+omega(p,v) = beta(v) * log(p).
+```
+
+This gives the exact coupling between the two coordinates. Zeckendorf controls the symbolic long/short transition in `beta(v)`, while the prime channel supplies the metric scale `log(p)`. The theorem proves:
+
+```text
+least Zeckendorf digit absent  ->  delta omega = phi^2 * log(p);
+least Zeckendorf digit present ->  delta omega = phi   * log(p).
+```
+
+Every prime channel therefore carries the same golden long/short word at a different logarithmic scale. The cross-prime balance theorem states
+
+```text
+log(q) * delta omega_p(v) = log(p) * delta omega_q(v).
+```
+
+This is a separability law. Golden depth supplies one common symbolic increment, and the prime coordinate rescales it. It does not canonically identify which abstract local channel is the arithmetic prime `p`.
+
+The file also connects this raw layer coordinate to the frozen excited `goldenSpectrum`. That spectrum omits the vacuum, so spectral index `k` represents golden layer `v = k + 1`. The first excited frequency is exactly
+
+```text
+omega(p,1) = phi^2 * log(p).
+```
+
+This is the real-energy form of the common first local mode used by the existing zeta factorization.
+
+Frequency still does not equal time. Frequency becomes temporally observable only after a dynamics or character pairs it with a time parameter, for example through powers of a modal multiplier or an exponential phase. Constructing that exact phase bridge is the next local formal target.
+
+## 9. Where zeta enters
 
 For each prime `p`, the frozen golden Euler germ sums all golden layers in that local channel. The global construction then multiplies these local towers over all primes.
 
@@ -155,7 +190,7 @@ across all primes: multiply local towers by the Euler product.
 
 Zeckendorf and zeta are structurally transverse and generatively coupled. Zeckendorf organizes depth inside each local factor. Zeta appears only after the common local mode is aggregated across prime channels.
 
-## 9. A new obstruction: prime relabeling underdetermination
+## 10. A new obstruction: prime relabeling underdetermination
 
 `D5/S3/Analytic/EulerGerm/PrimeRelabelingUnderdetermination.lean`
 
@@ -180,7 +215,7 @@ geometry -> prime labels.
 
 It must be a canonical observable that breaks the relevant prime-relabeling symmetry by arithmetic structure. Relabeling rigidity alone does not automatically imply that a localization reaches every prime; coverage and rigidity must be established separately.
 
-## 10. What could supply the missing arithmetic rigidity
+## 11. What could supply the missing arithmetic rigidity
 
 Several candidate structures can now be tested without assuming their success:
 
@@ -192,11 +227,11 @@ Several candidate structures can now be tested without assuming their success:
 
 Each route must prove existence, coverage, and rigidity. Merely attaching the label `p` to an already indexed family would fail the relabeling test.
 
-## 11. Diagonal paths
+## 12. Diagonal paths
 
 Once a product carrier `(local, layer)` is available, a diagonal is naturally a coupled path in which both coordinates change. Independent coordinate moves commute, while a chosen coupling can correlate prime locality with golden depth.
 
-The current library proves the uncoupled product geometry. It does not yet supply a canonical diagonal law. Any proposed diagonal should specify:
+The current library proves the uncoupled product geometry and the separable frequency law `beta(v) log(p)`. It does not yet supply a canonical diagonal update. Any proposed diagonal should specify:
 
 - the update on prime/local coordinates;
 - the update on golden/Zeckendorf depth;
@@ -206,7 +241,7 @@ The current library proves the uncoupled product geometry. It does not yet suppl
 
 No diagonal introduced here is identified with the Riemann critical line. Such an identification would require an analytic theorem connecting the coupled path to zeta zeros.
 
-## 12. Formalization status and next order
+## 13. Formalization status and next order
 
 Implemented on this branch as candidate source:
 
@@ -216,21 +251,23 @@ Implemented on this branch as candidate source:
 4. golden-helix parity instantiation;
 5. product-coordinate transversality;
 6. faithful prime-Zeckendorf coordinates and local-factor rewrite;
-7. prime-relabeling underdetermination and a rigidity predicate.
+7. prime-relabeling underdetermination and a rigidity predicate;
+8. prime-scaled Zeckendorf frequency gaps and cross-prime separability.
 
-Each new Lean module has a matching canonical Scribe source. Existing reusable truth sources already cover finite observation refinement, modal superposition, temporal fiber shrinkage, finite spectral reconstruction, golden cut-and-project carriers, golden local factors, and zeta factorization.
+Each new Lean module has a matching canonical Scribe source. Existing reusable truth sources already cover finite observation refinement, modal superposition, temporal fiber shrinkage, finite spectral reconstruction, golden cut-and-project carriers, golden local factors, golden heat spectra, and zeta factorization.
 
 The next substantive research order is:
 
-1. construct candidate arithmetic observables from valuation, norm, divisibility, or adelic data;
-2. prove coverage and test rigidity separately for each candidate;
-3. connect a surviving observable to a genuine golden cut-and-project or completion carrier;
-4. define a coupled local-layer path only after the coordinate map is canonical;
-5. study its spectral readout and first-visible times;
-6. connect any resulting global determinant or Euler product to completed zeta with the infinite-place term explicit.
+1. connect `beta(v) log(p)` to the existing temporal modal transport through an explicit phase or multiplier map;
+2. prove how Zeckendorf long/short steps change that phase over one observation interval;
+3. construct candidate arithmetic observables from valuation, norm, divisibility, or adelic data;
+4. prove coverage and test prime-relabeling rigidity separately for each candidate;
+5. connect a surviving observable to a genuine golden cut-and-project or completion carrier;
+6. define a coupled local-layer path only after the coordinate map is canonical;
+7. connect any resulting global determinant or Euler product to completed zeta with the infinite-place term explicit.
 
-The first three items constitute the next hard heart. Until they are proved, the geometry-to-prime bridge remains open and cannot be replaced by zeta or RH vocabulary.
+The valuation and geometric-localization steps remain the hard heart. Until they are proved, the geometry-to-prime bridge remains open and cannot be replaced by zeta or RH vocabulary.
 
-## 13. Verification boundary
+## 14. Verification boundary
 
 The branch was written and statically audited through the GitHub connector. GitHub admission runs are authoritative for the candidate head. This note records no successful build conclusion until the required engineering, canonical Lean report, and protected admission checks succeed. The source declarations must not be described as kernel-closed before those checks pass.
