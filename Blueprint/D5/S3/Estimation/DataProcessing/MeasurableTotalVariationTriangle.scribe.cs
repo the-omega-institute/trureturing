@@ -52,8 +52,9 @@ internal sealed class MeasurableTotalVariationTriangleDocument
                     + "MeasurableDeficiencyTriangle publicly names a deficiency triangle while "
                     + "keeping this measurable-total-variation triangle private.")),
             Paragraph(Text(
-                "None of that prior art subsumes this theorem. The first two results require a "
-                    + "Fintype, real-valued functions, and equal total mass, whereas this result "
+                "None of that prior art subsumes this theorem. The first two results are "
+                    + "stated for a Fintype and real-valued functions, and the event-supremum "
+                            + "one additionally assumes equal total mass, whereas this result "
                     + "admits arbitrary, possibly infinite measures.")),
             Paragraph(Text(
                 "Pinned Mathlib was searched by name and by concept. The relative used by the "

@@ -16,7 +16,7 @@ Both modules are frozen, so they cannot import this module, and this change remo
 
 Name-shaped search also misses relevant prior art. The public theorem D5/S3/TotalVariation/Metric.total_variation_triangle treats finite total variation of real vectors. The same module publicly names total_variation_eq_sup_event_gap for its event-supremum characterization, the closest concept hit. MeasurableDeficiencyTriangle publicly names a deficiency triangle while keeping this measurable-total-variation triangle private.
 
-None of that prior art subsumes this theorem. The first two results require a Fintype, real-valued functions, and equal total mass, whereas this result admits arbitrary, possibly infinite measures.
+None of that prior art subsumes this theorem. The first two results are stated for a Fintype and real-valued functions, and the event-supremum one additionally assumes equal total mass, whereas this result admits arbitrary, possibly infinite measures.
 
 Pinned Mathlib was searched by name and by concept. The relative used by the proof is tsub_le_tsub_add_tsub. The search found no upstream statement of this triangle law; that reports the search result and does not say that no upstream form can exist.
 
