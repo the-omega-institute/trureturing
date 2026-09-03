@@ -20,9 +20,9 @@ For convex finite models, exact endpoint witnesses and affine interpolation fill
 
 ## 2. Baseline repair
 
-The PR branch began at commit `2326aeaeeb898d256ac2843a1ccca6622e0ba8e8` and had diverged from the protected `dev` branch. The repair merge rebases the research tree semantically onto `dev` commit `a5ebe0428d12d75a2e29587909df910fe44f2808` while preserving all fifteen existing PR files.
+The PR branch began at commit `2326aeaeeb898d256ac2843a1ccca6622e0ba8e8` and had diverged from the protected `dev` branch. The repair merge places the research tree on `dev` commit `a5ebe0428d12d75a2e29587909df910fe44f2808` while preserving all fifteen existing PR files.
 
-Seven existing Scribe definitions had no committed Markdown projections. Their generated projections, together with the three new projections introduced below, are required before the narrative layer is fresh under `make emit --check`. The Scribe files remain the canonical narrative sources. Generated Markdown is a projection and must not be edited independently.
+Seven existing Scribe definitions had no pre-existing Markdown projection at the time of the audit. The Scribe files remain the canonical narrative sources. Generated Markdown must be produced and judged by the repository renderer rather than edited independently. Projection freshness is therefore recorded only from the protected workflow result.
 
 ## 3. Library audit
 
@@ -34,7 +34,7 @@ The audit reused the following truth sources.
 - `D5/S3/ConceptDynamics/Causal/NonconvexSharpIdentification` supplies outer-relaxation transport and records why endpoints do not determine a disconnected range.
 - `D5/S3/ConceptDynamics/Causal/StructuralEvaluationSemantics` supplies the canonical finite list-level `Before` relation.
 
-Repository searches found no existing theorem for independently combinable covariate-stratum sharp intervals, no required/forbidden-edge partial-diagram refinement object, and no counterfactual-query-to-order compiler layer.
+Repository searches found no existing theorem for independently combinable covariate-stratum sharp intervals, no shared-parameter counterexample to naive aggregation, no required/forbidden-edge partial-diagram refinement object, and no counterfactual-query-to-order compiler layer.
 
 ## 4. Existing PR truth sources
 
@@ -61,7 +61,26 @@ Under the explicit joint-selection assumption that one admissible query value ma
 
 Validity follows from pointwise order and nonnegative weighted summation. Sharpness uses one common interpolation parameter across all strata. This assumption fails when strata share unidentified structural parameters or are coupled by transport, smoothness, or other cross-stratum restrictions.
 
-## 6. New concrete truth source: partial graph information order
+## 6. New concrete truth source: shared-parameter obstruction
+
+`CovariateSharedParameterObstruction` proves that sharp projected stratum intervals do not suffice for sharp weighted aggregation.
+
+Two Boolean strata use complementary responses to one parameter:
+
+```text
+q_false(theta) = theta
+q_true(theta)  = 1 - theta.
+```
+
+If the parameter may be chosen separately for each stratum, both projected identified sets are exactly `[0, 1]`, and the independent product family can realize global value zero. If both strata must share one parameter and receive equal weights, the actual global query is
+
+```text
+(1 / 2) q_false(theta) + (1 / 2) q_true(theta) = 1 / 2
+```
+
+for every admissible `theta`. The shared-parameter identified set is therefore the singleton `{1 / 2}`. This gives a strict formal counterexample to naive endpoint aggregation under cross-stratum coupling and isolates joint combinability as a substantive causal assumption.
+
+## 7. New concrete truth source: partial graph information order
 
 `PartialGraphInformationOrder` represents a partial causal diagram by required and forbidden directed edges. A stronger diagram retains all assertions of a weaker diagram and may add more.
 
@@ -78,7 +97,7 @@ The module proves compatible-set and identified-set antitonicity. It then reuses
 
 This is an information-order theorem. It does not yet compile arbitrary graphical separation statements into response-type probability constraints.
 
-## 7. New concrete truth source: query-implied causal order
+## 8. New concrete truth source: query-implied causal order
 
 `QueryImpliedCausalOrder` formalizes one query-compiler obligation motivated by causal-order partial identification.
 
@@ -101,7 +120,7 @@ The following claims remain outside this truth source:
 
 These are the next theorem-sized research targets.
 
-## 8. Interfaces to 2026 research
+## 9. Interfaces to 2026 research
 
 The current literature interface is organized as follows.
 
@@ -112,7 +131,7 @@ The current literature interface is organized as follows.
 
 The repository claim boundary is narrower than the cited papers. This PR proves reusable logical kernels and finite concrete instances. It does not claim full reproduction of any paper's general algorithm or theorem family.
 
-## 9. Verification ledger
+## 10. Verification ledger
 
 The required machine checks after branch update are:
 
@@ -122,9 +141,9 @@ Canonical Lean report production
 Content-addressed dev baseline admission
 ```
 
-A truth source is considered repaired only after its current commit is checked by the protected-branch workflow. Scribe freshness additionally requires generated Markdown to equal the current render exactly.
+A truth source is considered repaired only after its current commit is checked by the protected-branch workflow. Scribe freshness additionally requires the renderer's generated projection to agree exactly with the checked source.
 
-## 10. Next formal research sequence
+## 11. Next formal research sequence
 
 The next sequence is deliberately compiler-centered:
 
@@ -146,4 +165,4 @@ PartialDiagramConstraintCompiler
   -> sharp endpoint witnesses.
 ```
 
-The covariate lane should next distinguish freely combinable strata from shared-parameter strata and prove a strict counterexample to naive weighted sharpness under cross-stratum coupling.
+The covariate lane should next characterize shared-parameter aggregation as the image of a joint feasible set, then give sufficient conditions weaker than a full product decomposition under which weighted endpoints remain sharp.
