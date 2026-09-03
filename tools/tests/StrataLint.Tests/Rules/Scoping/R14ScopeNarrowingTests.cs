@@ -304,7 +304,8 @@ public sealed class R14ScopeNarrowingTests
 
     private static CompletedRuleSet Execute(RuleFixture fixture, params string[] changedPaths) =>
         Assert.IsType<RuleExecutionOutcome.Completed>(
-            RuleCatalog.Default.Execute(fixture.Build(RawChangeSet.Create(changedPaths)))).Capability;
+            RuleCatalog.Default.Execute(
+                fixture.BuildScopeProbe(RawChangeSet.Create(changedPaths)))).Capability;
 
     private static int CountFindings(
         CompletedRuleSet completed,
