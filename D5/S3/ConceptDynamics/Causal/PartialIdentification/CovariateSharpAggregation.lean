@@ -10,6 +10,7 @@ import Mathlib.Data.Real.Basic
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Nlinarith
+import Mathlib.Tactic.Ring
 
 /- Library-search audit trail (2026-09-03):
    * `ConvexSharpIdentification` proves interval filling for one convex model
@@ -129,7 +130,7 @@ theorem covariate_weighted_sharp_iff
         sub_pos.mpr endpoints_lt
       have denominator_ne :
           weightedValue weight family.upper -
-              weightedValue weight family.lower != 0 :=
+              weightedValue weight family.lower ≠ 0 :=
         ne_of_gt denominator_positive
       have t_nonnegative : 0 <= t := by
         dsimp [t]
