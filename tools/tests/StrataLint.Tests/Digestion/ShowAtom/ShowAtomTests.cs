@@ -10,6 +10,52 @@ public sealed partial class ShowAtomTests
     private const string AdapterAtomizerId = AtomizerRegistry.PeriodicTreeId;
 
     [Fact]
+    public void ShowAtomPrintsSortedCoverageGidsDerivedFromCoverageEdges()
+    {
+        const string sourcePath = "fixtures/show-atom/coverage.md";
+        var rawBytes = Encoding.UTF8.GetBytes("coverage receipt\n");
+        var fingerprints = DigestionFingerprint.Compute(rawBytes);
+        var ledger = ContentLedger(
+            sourcePath,
+            fingerprints.RawSha256,
+            fingerprints.NormalizedSha256);
+        var source = Assert.Single(ledger.RequireDigestionSources());
+        var entry = Assert.Single(source.Entries);
+        ledger = ledger.WithDigestionSources(
+        [
+            source with
+            {
+                Entries =
+                [
+                    entry with
+                    {
+                        Coverage =
+                        [
+                            new DigestionCoverageEdge("D5/S0/Carrier/Zeta", null),
+                            new DigestionCoverageEdge("D5/S0/Carrier/Alpha", null),
+                        ],
+                    },
+                ],
+            },
+        ]);
+        var files = FixtureFiles(
+            ledger,
+            sourcePath,
+            rawBytes,
+            fingerprints.RawSha256,
+            rawBytes);
+
+        var result = Environment("/repo", files).ShowAtom(
+            ["--atom-id", BareAtomId(fingerprints.RawSha256)]);
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains(
+            "COVERAGE coverage_gids=[\"D5/S0/Carrier/Alpha\",\"D5/S0/Carrier/Zeta\"] source=coverage\n",
+            result.Output,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void BoundaryAtomPrintsItsByteExactParagraphNormalizedTextAndRecordedHashesWithoutWriting()
     {
         const string sourcePath = "fixtures/show-atom/boundary.md";

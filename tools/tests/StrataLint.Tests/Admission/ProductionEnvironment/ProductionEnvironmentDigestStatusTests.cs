@@ -175,6 +175,53 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
+    public void DigestStatusJsonAndTextEntriesExposeCoverageGidsDerivedFromCoverageEdges()
+    {
+        var fingerprints = new DigestionFingerprints(
+            "sha256:" + new string('a', 64),
+            "sha256:" + new string('b', 64));
+        var status = new DigestionStatus(
+            DigestionMigrationState.Partial,
+            DigestionTruthState.Open);
+        var entry = new DigestionLedgerEntry(
+            "source",
+            "synthetic/source.md",
+            AtomizerRegistry.NoAtomizerId,
+            "atom",
+            fingerprints,
+            [
+                new DigestionCoverageEdge("D5/S0/Carrier/Zeta", null),
+                new DigestionCoverageEdge("D5/S0/Carrier/Alpha", null),
+            ],
+            new DigestionReceipts([], [], [], null),
+            status,
+            fingerprints.RawSha256);
+        var evaluation = new DigestionLedgerEvaluation(
+            [new DigestionEntryEvaluation(
+                entry,
+                DigestionReceiptAlignment.Seen,
+                status,
+                false,
+                [])],
+            []);
+
+        var json = DigestStatusCommand.RenderJson(evaluation);
+        var text = DigestStatusCommand.RenderText(evaluation);
+
+        using var document = JsonDocument.Parse(json);
+        var jsonEntry = Assert.Single(document.RootElement.GetProperty("entries").EnumerateArray());
+        Assert.Equal(
+            ["D5/S0/Carrier/Alpha", "D5/S0/Carrier/Zeta"],
+            jsonEntry.GetProperty("coverage_gids")
+                .EnumerateArray()
+                .Select(static item => item.GetString()));
+        Assert.Contains(
+            "coverage_gids=[D5/S0/Carrier/Alpha,D5/S0/Carrier/Zeta]",
+            text,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void DigestStatusResidualSummaryUsesMachineDerivedUnresolvedSubitemGaps()
     {
         var fixture = new RuleFixture();

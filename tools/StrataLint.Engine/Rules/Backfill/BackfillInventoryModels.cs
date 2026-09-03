@@ -85,7 +85,9 @@ internal sealed record DigestionLedgerEntry(
     string CasRef)
 {
     internal ImmutableArray<string> CoverageGids =>
-        Coverage.Select(static edge => edge.Gid).ToImmutableArray();
+        Coverage.Select(static edge => edge.Gid)
+            .OrderBy(static gid => gid, StringComparer.Ordinal)
+            .ToImmutableArray();
 }
 
 internal sealed record GenreRegistryProjection

@@ -176,6 +176,30 @@ public sealed class DigestionReadinessQueryTests
     }
 
     [Fact]
+    public void ReadinessJsonExposesSortedCoverageGidsDerivedFromCoverageEdges()
+    {
+        var covered = Entry(
+            "source",
+            "covered",
+            "theorem/coverage-view",
+            coverageGids:
+            [
+                "D5/S0/Carrier/Zeta",
+                "D5/S0/Carrier/Alpha",
+            ]);
+
+        var jsonText = DigestStatusCommand.RenderReadiness(Classify([covered]));
+
+        using var json = JsonDocument.Parse(jsonText);
+        var entry = Assert.Single(json.RootElement.GetProperty("entries").EnumerateArray());
+        Assert.Equal(
+            ["D5/S0/Carrier/Alpha", "D5/S0/Carrier/Zeta"],
+            entry.GetProperty("coverage_gids")
+                .EnumerateArray()
+                .Select(static item => item.GetString()));
+    }
+
+    [Fact]
     public void SameActionOrderingUsesSourceIdThenAtomId()
     {
         var result = Classify(
