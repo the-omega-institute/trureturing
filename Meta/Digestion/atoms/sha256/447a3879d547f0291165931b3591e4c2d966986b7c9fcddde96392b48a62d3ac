@@ -1,0 +1,55 @@
+## 245. 完全单调性
+
+在 RH 下：
+
+$$
+(-1)^r
+\mathcal S^{(r)}(x)
+=
+r!
+\sum_j
+\frac{m_j}{(x+q_j)^{r+1}}
+>0.
+$$
+
+所以：
+
+$$
+\boxed{
+\mathcal S
+\text{ 完全单调}.
+}
+$$
+
+更强地，\(-\mathcal S\) 在上半平面具有 Herglotz/Pick 型符号，因为：
+
+$$
+\Im\frac1{z+q}<0
+\qquad
+(\Im z>0,\ q>0).
+$$
+
+因此可以提出一个精确候选等价：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal S
+\text{ 是支撑于 }
+[1/4,\infty)
+\text{ 的正 Stieltjes transform}.
+}
+$$
+
+反向需要使用：
+
+* \(\mathcal X\) 的 genus-zero product；
+* Stieltjes 表示的唯一性；
+* \(\mathcal S\) 的 meromorphic continuation；
+* poles 与 \(\mathcal X\) 零点的一致性。
+
+这条证明路线是封闭的，但仓库目前尚未形式化。
+
+---
+

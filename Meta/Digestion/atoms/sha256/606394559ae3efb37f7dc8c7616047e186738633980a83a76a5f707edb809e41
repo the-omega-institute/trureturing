@@ -1,0 +1,34 @@
+# 继续增订：黄金 Sturmian—Casimir 重完备化理论
+
+这一轮可以把前面的奇偶、周期、Zeckendorf、黄金 germ、零点镜像以及无限观察塔，压缩成一条更强的链：
+
+$$
+\boxed{
+\text{局部奇偶判定}
+\longrightarrow
+\text{Sturmian 非周期调度}
+\longrightarrow
+\text{二维黄金坐标融合}
+\longrightarrow
+\text{结构零的 divisor 化}
+\longrightarrow
+\text{反射商 Casimir 谱}
+\longrightarrow
+\text{Hausdorff 完全单调性}
+}
+$$
+
+最深的新结论是：
+
+> **RH 可以候选性地改写为：completed \(\xi\) 的反射商对数导数所生成的一列 Casimir jets，是否构成支撑于 \([0,1]\) 的 Hausdorff 矩序列。**
+
+这会把：
+
+* “偶完成”变成反射商 \(q=s(1-s)\)；
+* “奇破缺”变成有限差分 \(\Delta\)；
+* “重完”变成全部有限差分重新非负；
+* “黄金比例”变成二维观察坐标的最均衡共尾调度；
+* “所有离线零点纠缠”变成所有零点共同参与同一无限矩不等式系统。
+
+---
+

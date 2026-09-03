@@ -1,0 +1,20 @@
+## 325. 有限素数观察是有限自动机
+
+对固定模数 \(m\)，Fibonacci 数列：
+
+$$
+F_k\bmod m
+$$
+
+是周期的。
+
+所以读取：
+
+$$
+n=\sum_k\varepsilon_kF_k
+\pmod m
+$$
+
+只需维护：
+
+* 当前 residue；

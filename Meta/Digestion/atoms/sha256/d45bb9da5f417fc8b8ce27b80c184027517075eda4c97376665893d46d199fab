@@ -1,0 +1,91 @@
+# 十四、最具体的新路线：寻找正基态并做 ground-state transform
+
+设由上述正能量定义一个算子
+
+$$
+\mathcal L_L
+$$
+
+使
+
+$$
+\langle f,\mathcal L_Lf\rangle
+=
+\mathcal E_L(f).
+$$
+
+需要证明：
+
+$$
+\mathcal L_L-\Lambda_LI\ge0.
+$$
+
+一个极具体的方法是寻找严格正函数
+
+$$
+h_L(x)>0
+$$
+
+满足阈值方程：
+
+$$
+\boxed{
+\mathcal L_Lh_L
+=
+\Lambda_Lh_L.
+}
+$$
+
+在一般对称跳跃系统中，如果正函数 \(h\) 满足相应本征方程，就有 ground-state transform 形式：
+
+$$
+\boxed{
+\begin{aligned}
+\langle f,(\mathcal L-\Lambda)f\rangle
+={}&
+\frac12
+\iint
+K(x,y)h(x)h(y)\\
+&\times
+\left|
+\frac{f(x)}{h(x)}
+-
+\frac{f(y)}{h(y)}
+\right|^2
+\,dx\,dy,
+\end{aligned}
+}
+$$
+
+在适当定义域和收敛条件下成立。
+
+右边显然非负。
+
+因此真正值得寻找的，不一定先是一个神秘 Hilbert–Pólya 算子，而可能是：
+
+$$
+\boxed{
+\text{prime–Archimedean 跳跃网络的正阈值基态 }h_L.
+}
+$$
+
+一旦找到并证明完整恒等式：
+
+$$
+Q_W(f)
+=
+\frac12
+\iint
+K_L(x,y)h_L(x)h_L(y)
+\left|
+\frac{f(x)}{h_L(x)}
+-
+\frac{f(y)}{h_L(y)}
+\right|^2
+dx\,dy,
+$$
+
+就立即得到 Weil 正性，进而排除全部离线零点。
+
+---
+

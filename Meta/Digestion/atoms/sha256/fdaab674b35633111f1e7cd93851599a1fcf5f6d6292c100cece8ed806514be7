@@ -1,0 +1,52 @@
+## 221. 两值 roof function
+
+在圆周旋转：
+
+$$
+T(x)=x+\frac1\varphi\pmod1
+$$
+
+上定义 roof：
+
+$$
+r(x)
+=
+\varphi+
+\mathbf1_{[1-1/\varphi,\,1)}(x).
+$$
+
+于是：
+
+$$
+r(x)
+\in
+\{\varphi,\varphi^2\}.
+$$
+
+取：
+
+$$
+x_0=\frac1\varphi,
+$$
+
+则：
+
+$$
+\boxed{
+\beta(N)
+=
+\sum_{v=0}^{N-1}
+r(T^vx_0).
+}
+$$
+
+所以黄金 Euler 指数并不是任意 Beatty 数列，而是：
+
+$$
+\boxed{
+\text{无理圆周旋转上的两值 suspension return time}.
+}
+$$
+
+---
+

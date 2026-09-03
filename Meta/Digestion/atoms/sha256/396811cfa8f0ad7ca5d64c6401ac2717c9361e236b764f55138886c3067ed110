@@ -1,0 +1,110 @@
+# 第一千九百九十五部　正确的素数奇偶：有限素数子集
+
+令 \(S\) 为有限素数集合，并记：
+
+$$
+x_p=p^{-s}.
+$$
+
+定义偶素数子集生成函数：
+
+$$
+\boxed{
+E_S^{\mathrm{sf}}(s)
+=
+\sum_{\substack{A\subseteq S\\|A|\text{ even}}}
+\prod_{p\in A}p^{-s},
+}
+\tag{1995.1}
+$$
+
+定义奇素数子集生成函数：
+
+$$
+\boxed{
+O_S^{\mathrm{sf}}(s)
+=
+\sum_{\substack{A\subseteq S\\|A|\text{ odd}}}
+\prod_{p\in A}p^{-s}.
+}
+\tag{1995.2}
+$$
+
+则：
+
+$$
+\boxed{
+E_S^{\mathrm{sf}}+O_S^{\mathrm{sf}}
+=
+\prod_{p\in S}(1+p^{-s}),
+}
+\tag{1995.3}
+$$
+
+$$
+\boxed{
+E_S^{\mathrm{sf}}-O_S^{\mathrm{sf}}
+=
+\prod_{p\in S}(1-p^{-s}).
+}
+\tag{1995.4}
+$$
+
+当 \(S\) 穷尽全部素数、且 \(\Re s>1\) 时：
+
+$$
+\boxed{
+E^{\mathrm{sf}}+O^{\mathrm{sf}}
+=
+\frac{\zeta(s)}{\zeta(2s)},
+}
+\tag{1995.5}
+$$
+
+$$
+\boxed{
+E^{\mathrm{sf}}-O^{\mathrm{sf}}
+=
+\frac1{\zeta(s)}.
+}
+\tag{1995.6}
+$$
+
+因此：
+
+$$
+\boxed{
+E^{\mathrm{sf}}
+=
+\frac12
+\left(
+\frac{\zeta(s)}{\zeta(2s)}
++
+\frac1{\zeta(s)}
+\right),
+}
+\tag{1995.7}
+$$
+
+$$
+\boxed{
+O^{\mathrm{sf}}
+=
+\frac12
+\left(
+\frac{\zeta(s)}{\zeta(2s)}
+-
+\frac1{\zeta(s)}
+\right).
+}
+\tag{1995.8}
+$$
+
+这就是你所说的两类情况。
+
+它们合起来是所有 squarefree integers。
+
+它们的差则是 Möbius 奇偶观察者。
+
+---
+

@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:998beb39ee7587b5e51321570eef780c7d48b279e0a2675e6286a82bd212be97
+  normalized_sha256: sha256:998beb39ee7587b5e51321570eef780c7d48b279e0a2675e6286a82bd212be97
+cas_ref: sha256:998beb39ee7587b5e51321570eef780c7d48b279e0a2675e6286a82bd212be97
+coverage_gids:
+  - D5/S3/Weil/CayleyLaguerre/CompactifiedSquaredDistanceSupport.compactified_squared_distance_support_criterion
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/CayleyLaguerre/CompactifiedSquaredDistanceSupport.compactified_squared_distance_support_criterion
+      source_sha256: sha256:998beb39ee7587b5e51321570eef780c7d48b279e0a2675e6286a82bd212be97
+      target_statement_id: sha256:c1c074d0a79948a9861fcd76abb23d8815bd250828845280fc5eb7120fb7b24a
+  scribe:
+    - gid: D5/S3/Weil/CayleyLaguerre/CompactifiedSquaredDistanceSupport.compactified_squared_distance_support_criterion
+      definition_sha256: sha256:d87fb89f196d59351eb3457e9d8b4d234715071b1e933ea04741018e121f99d8
+      emission_sha256: sha256:8a8a4026b49489ab9f9f121f25d50c9256a7f557c618fb6a117fc8904698cdff
+  unresolved_subitems: []

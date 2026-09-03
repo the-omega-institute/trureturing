@@ -1,0 +1,54 @@
+# 观察者相对轨道奇偶定理
+
+对任意上半平面的非实非平凡零点：
+
+$$
+\boxed{
+\Re\rho=\frac12
+\iff
+\left|
+\mathcal O_G(\rho)
+\cap
+\{\Im s>0\}
+\right|
+\text{ 为奇数}.
+}
+$$
+
+更具体地：
+
+$$
+\boxed{
+\begin{aligned}
+\text{临界线零点}
+&\longleftrightarrow
+\text{观察者切面中的单点奇轨道};\\
+\text{离线零点}
+&\longleftrightarrow
+\text{观察者切面中的双点偶轨道}.
+\end{aligned}}
+$$
+
+因此：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{选择一个频率方向后，所有零点轨道均为奇数阶单轨道}.
+}
+$$
+
+这正是你所说：
+
+$$
+\boxed{
+\text{全局视角是偶的；
+存在一个定向观察者以后，RH 表现为奇的。}
+}
+$$
+
+这里不是比喻，而是直接来自轨道大小。
+
+---
+
