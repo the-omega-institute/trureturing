@@ -17,13 +17,19 @@ triage: anchor
 
 The August 2026 preprint proposes an exact finite-incidence classification of
 complex Hadamard matrices of order six. The matrix is dephased and partitioned
-around a `3 x 3` corner. The proof searches the finitely many positional
-corners, reconstructs candidate completions by algebraic fibres, and proves a
-routing statement: failure to obtain a finite-corner witness forces the matrix
-onto the Karlsson locus or the Tao orbit. Separate exact certificates give
-finite-corner witnesses on both exceptional loci. Completeness and soundness
-then identify the retained output with all order-six complex Hadamard matrices,
-first at matrix level and then at equivalence-class level.
+around a `3 x 3` corner. The global proof examines all 400 positional corners,
+reconstructs candidate completions by algebraic fibres, and proves a routing
+statement: failure to obtain a finite-corner witness forces the matrix onto the
+Karlsson locus or the Tao orbit. Separate exact certificates give finite-corner
+witnesses on both exceptional loci. Completeness and soundness then identify
+the retained output with all order-six complex Hadamard matrices, first at
+matrix level and then at equivalence-class level.
+
+Version 2, dated 2026-08-28, strengthens the paper-facing description. It says
+that every class can be recovered algebraically from a suitable dephased
+`3 x 3` corner, and that all classes except Tao's isolated matrix and one
+explicit Karlsson matrix admit a product-regular four-phase representative
+obtained by solving one quadratic and one cubic equation in each direction.
 
 The phrase "complete classification" therefore refers to an exact generating
 and incidence framework. It should not be read as a short finite list of all
@@ -82,8 +88,8 @@ mutual unbiasedness.
 
 ## Verification status
 
-- The preprint statement and proof architecture were checked against
-  arXiv:2608.18053v1.
+- The current preprint statement and proof architecture were checked against
+  arXiv:2608.18053v2.
 - The public Lean theorem spine was inspected at the pinned commit.
 - The upstream successful GitHub Actions build and theorem-boundary audit were
   checked.
