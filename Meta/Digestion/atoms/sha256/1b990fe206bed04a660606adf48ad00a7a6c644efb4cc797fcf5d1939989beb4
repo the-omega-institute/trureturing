@@ -1,0 +1,14 @@
+## 24. 累积量闭环
+
+$$
+\mathcal M
+\xrightarrow{\log}
+\mathcal K
+\xrightarrow{\exp}
+\mathcal M.
+$$
+
+这是分拆格 Möbius inversion 的组合闭环。
+
+---
+
