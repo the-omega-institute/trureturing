@@ -1,0 +1,36 @@
+* de Bruijn–Newman 临界刚性；
+
+把残余的：
+
+$$
+\delta\log t=O(1)
+$$
+
+区域进一步压缩到：
+
+$$
+\delta=0.
+$$
+
+所以更可能的完整证明结构是：
+
+$$
+\boxed{
+\text{Kakeya 多尺度束缚}
+\Longrightarrow
+\delta=O(1/\log t)
+}
+$$
+
+再接：
+
+$$
+\boxed{
+\text{解析正性／关系刚性}
+\Longrightarrow
+\delta=0.
+}
+$$
+
+---
+
