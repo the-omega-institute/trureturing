@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:34ba42becefb0bbe62979ff8d9ebbeecdb39a54c5007717fda082aa53a0e8c9c
+  normalized_sha256: sha256:34ba42becefb0bbe62979ff8d9ebbeecdb39a54c5007717fda082aa53a0e8c9c
+cas_ref: sha256:34ba42becefb0bbe62979ff8d9ebbeecdb39a54c5007717fda082aa53a0e8c9c
+coverage_gids:
+  - D5/S3/Estimation/SequentialDecisionRisk/BeliefMarkovUpdate.actual_next_belief_eq_posterior_update
+receipts:
+  coverage:
+    - gid: D5/S3/Estimation/SequentialDecisionRisk/BeliefMarkovUpdate.actual_next_belief_eq_posterior_update
+      source_sha256: sha256:34ba42becefb0bbe62979ff8d9ebbeecdb39a54c5007717fda082aa53a0e8c9c
+      target_statement_id: sha256:18504944ab120b4da0d18967aacdf153abb29fdca721a887b664cd2719b0b1f4
+  scribe:
+    - gid: D5/S3/Estimation/SequentialDecisionRisk/BeliefMarkovUpdate.actual_next_belief_eq_posterior_update
+      definition_sha256: sha256:d802bf64349f2b0953bf458d09801621056ac2722ecad66d299731a03f78e9ee
+      emission_sha256: sha256:749d58366ee8b41a4f5f98b98a064f814630dc3cdf5a22f385ce7c258b5cec23
+  unresolved_subitems: []
