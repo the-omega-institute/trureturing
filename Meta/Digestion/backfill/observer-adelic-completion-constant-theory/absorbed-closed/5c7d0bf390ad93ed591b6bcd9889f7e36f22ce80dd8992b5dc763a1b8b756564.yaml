@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:5c7d0bf390ad93ed591b6bcd9889f7e36f22ce80dd8992b5dc763a1b8b756564
+  normalized_sha256: sha256:5c7d0bf390ad93ed591b6bcd9889f7e36f22ce80dd8992b5dc763a1b8b756564
+cas_ref: sha256:5c7d0bf390ad93ed591b6bcd9889f7e36f22ce80dd8992b5dc763a1b8b756564
+coverage_gids:
+  - D5/S3/Weil/CayleyLaguerre/CayleyMomentTransport.budget_transport_error
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/CayleyLaguerre/CayleyMomentTransport.budget_transport_error
+      source_sha256: sha256:5c7d0bf390ad93ed591b6bcd9889f7e36f22ce80dd8992b5dc763a1b8b756564
+      target_statement_id: sha256:c7504d378bd60aabc2203f341b6aed1c40337dc4b8489ccb48dd24d8ee51b88a
+  scribe:
+    - gid: D5/S3/Weil/CayleyLaguerre/CayleyMomentTransport.budget_transport_error
+      definition_sha256: sha256:6ae096e1200c92564cb468c60821aeb0637ceb44b7856803a8f88fbe92b0e2e2
+      emission_sha256: sha256:f2c8c3605357b1d48c6329cdfccb474194661fa813c22050bdc8ba3b1a4f5d6a
+  unresolved_subitems: []

@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:497f449ba30b0fcb4a413d3f4466f5ee784f95a276c740a2bf61e7ba475d6df4
+  normalized_sha256: sha256:497f449ba30b0fcb4a413d3f4466f5ee784f95a276c740a2bf61e7ba475d6df4
+cas_ref: sha256:497f449ba30b0fcb4a413d3f4466f5ee784f95a276c740a2bf61e7ba475d6df4
+coverage_gids:
+  - D5/S3/Weil/TestFunctions/LiCurvatureCriterion.li_curvature_criterion
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/TestFunctions/LiCurvatureCriterion.li_curvature_criterion
+      source_sha256: sha256:497f449ba30b0fcb4a413d3f4466f5ee784f95a276c740a2bf61e7ba475d6df4
+      target_statement_id: sha256:e8c57d1b89c2ab62565a6bffdf55a4ca7c472fa66dd5652d4c1c3a8d25d5e3f2
+  scribe:
+    - gid: D5/S3/Weil/TestFunctions/LiCurvatureCriterion.li_curvature_criterion
+      definition_sha256: sha256:3ecf4616ceaa94ac9a5b4505d2911432d238f95ec2d3d75077b49c4cb8962dc6
+      emission_sha256: sha256:93308abdc9942f0dd7039d35daa955befbddcdb83bffae1d77fd2a16a203eaaf
+  unresolved_subitems: []
