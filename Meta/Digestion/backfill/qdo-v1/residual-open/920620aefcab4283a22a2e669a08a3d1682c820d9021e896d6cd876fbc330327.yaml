@@ -7,3 +7,7 @@ receipts:
   coverage: []
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "The source proof requires theorem 17.4, equality of the complete decorated necklace exactly when an actual relabeling conjugates arbitrary finite self-maps. D5 searches for decorated, necklace, functional graph, branchCode, depthInvariant, and Conjugates hit RootedTransientTreeClassification, DepthTruncatedClassification, and FiniteSelfMapConjugacy, but the last owner explicitly covers only permutations and no frozen declaration constructs the required global relabeling. Pinned Mathlib searches for functional graph, self-map conjugacy, decorated cycle, rooted-tree isomorphism, periodicOrbit, Cycle, and IsRotated hit only cycle and quotient primitives and no such theorem. GitHub Lean code searches for functional graph with conjugacy, decorated cycle, and periodicOrbit with rooted each returned zero results. A local assembly attempt stopped at the required Equiv: the canonical RootedTransientTreeIsomorphic and TruncatedRootedTreeIsomorphic objects are Prop-valued multiset matchings and provide no witnessed subtree maps to assemble along the component cycles."
+    reentry_condition: "Freeze the theorem-17.4 prerequisite that complete decorated-necklace equality constructs an Equiv relabeling satisfying Conjugates for arbitrary finite self-maps, or extend the canonical rooted-tree owner with witnessed subtree equivalences and a proved global cycle assembly theorem."
+    blocker_class: missing-prerequisite
