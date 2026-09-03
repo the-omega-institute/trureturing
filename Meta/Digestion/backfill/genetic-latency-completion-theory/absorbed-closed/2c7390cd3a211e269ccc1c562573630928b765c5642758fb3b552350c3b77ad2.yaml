@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:2c7390cd3a211e269ccc1c562573630928b765c5642758fb3b552350c3b77ad2
 cas_ref: sha256:2c7390cd3a211e269ccc1c562573630928b765c5642758fb3b552350c3b77ad2
 coverage_gids:
-  - D5/S3/ConceptDynamics/RefinementGeometry/FixedObservationDominanceAsymmetry.fixed_observation_dominance_asymmetric
+  - gid: D5/S3/ConceptDynamics/RefinementGeometry/FixedObservationDominanceAsymmetry.fixed_observation_dominance_asymmetric
+    target_statement_id: sha256:50847afb505bd35c8dd90921a04d0caf668b1fce7f02937cc05dd013febc039c
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/RefinementGeometry/FixedObservationDominanceAsymmetry.fixed_observation_dominance_asymmetric
-      source_sha256: sha256:2c7390cd3a211e269ccc1c562573630928b765c5642758fb3b552350c3b77ad2
-      target_statement_id: sha256:50847afb505bd35c8dd90921a04d0caf668b1fce7f02937cc05dd013febc039c
   scribe:
     - gid: D5/S3/ConceptDynamics/RefinementGeometry/FixedObservationDominanceAsymmetry.fixed_observation_dominance_asymmetric
       definition_sha256: sha256:7c2958f4d72193978834e9b4c7bcba49f2b38c5a03fc65d32706b935bf4db026

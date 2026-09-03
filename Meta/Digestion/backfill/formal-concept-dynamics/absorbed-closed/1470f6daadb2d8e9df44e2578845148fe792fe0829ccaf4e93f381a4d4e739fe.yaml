@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:1470f6daadb2d8e9df44e2578845148fe792fe0829ccaf4e93f381a4d4e739fe
 cas_ref: sha256:1470f6daadb2d8e9df44e2578845148fe792fe0829ccaf4e93f381a4d4e739fe
 coverage_gids:
-  - D5/S3/ConceptDynamics/Reporting/PublicCausalActivityCriterion.public_causal_activity_excludes_dynamic_equivalence
+  - gid: D5/S3/ConceptDynamics/Reporting/PublicCausalActivityCriterion.public_causal_activity_excludes_dynamic_equivalence
+    target_statement_id: sha256:04b17df30a9d4a2ed604e029575d83be31cdac0092e81a2f43a1bd728480d9c4
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Reporting/PublicCausalActivityCriterion.public_causal_activity_excludes_dynamic_equivalence
-      source_sha256: sha256:1470f6daadb2d8e9df44e2578845148fe792fe0829ccaf4e93f381a4d4e739fe
-      target_statement_id: sha256:04b17df30a9d4a2ed604e029575d83be31cdac0092e81a2f43a1bd728480d9c4
   scribe:
     - gid: D5/S3/ConceptDynamics/Reporting/PublicCausalActivityCriterion.public_causal_activity_excludes_dynamic_equivalence
       definition_sha256: sha256:e51498d6465ddef7ec8834c096da34d13c1b602606a25036f84c7b8d85be7f8e

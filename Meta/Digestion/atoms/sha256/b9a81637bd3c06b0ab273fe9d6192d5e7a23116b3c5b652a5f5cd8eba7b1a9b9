@@ -1,0 +1,45 @@
+# 611. 一个临界 superselection 结论
+
+定义临界素数角色空间的扩展距离：
+
+$$
+d_{\mathrm{crit}}(\delta_1,\delta_2)^2
+=
+\sum_p
+\frac{
+\left|
+p^{-(\delta_1-\delta_2)}-1
+\right|^2
+}{p}.
+$$
+
+则：
+
+$$
+\boxed{
+d_{\mathrm{crit}}(\delta_1,\delta_2)
+=
+\begin{cases}
+0,&\delta_1=\delta_2,\\
+\infty,&\delta_1\neq\delta_2.
+\end{cases}
+}
+$$
+
+所以在该全素数临界拓扑中，不同横向指数属于彼此无限远的 sector。
+
+这产生一个条件性保护原理：
+
+> 若某个 prime-side 实现要求零点参数在该临界 Hilbert 拓扑中连续，那么一个临界零点不能通过普通连续小扰动进入 \(\delta\neq0\) sector。
+
+它只能通过：
+
+* Hilbert 实现失效；
+* 范数发散；
+* 多重零点判别式；
+* 或新的 branch sector 出现。
+
+这与仓库的“对称简单零点固定轴”定理从两个完全不同的方向吻合。
+
+---
+

@@ -3,20 +3,9 @@ fingerprints:
   normalized_sha256: sha256:b2c667f64475baaf0cafacab84ee1fd2f9cba4af9c2473a59e513cc7e2651150
 cas_ref: sha256:b2c667f64475baaf0cafacab84ee1fd2f9cba4af9c2473a59e513cc7e2651150
 coverage_gids:
-  - D5/S3/Quantum/FixedAlgebra/SingletonRecordClassicality.singleton_record_classicality
+  - gid: D5/S3/Quantum/FixedAlgebra/SingletonRecordClassicality.singleton_record_classicality
+    target_statement_id: sha256:2838432f37b2818718d1986cbfd1772edd88647db455ee5b3ff44c34af7e9133
 receipts:
-  coverage:
-    - gid: D5/S3/Quantum/FixedAlgebra/SingletonRecordClassicality.singleton_record_classicality
-      source_sha256: sha256:b2c667f64475baaf0cafacab84ee1fd2f9cba4af9c2473a59e513cc7e2651150
-      target_statement_id: sha256:2838432f37b2818718d1986cbfd1772edd88647db455ee5b3ff44c34af7e9133
-      statement_id_history:
-        - statement_id: sha256:926460e3a1d9b4395ec94edaa48b6ef4fe75c6f8c23b25d2efb42486e4168b9d
-          environment_pin:
-            toolchain: leanprover/lean4:v4.31.0
-            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
-          superseded_by_pin:
-            toolchain: leanprover/lean4:v4.33.0
-            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Quantum/FixedAlgebra/SingletonRecordClassicality.singleton_record_classicality
       definition_sha256: sha256:3aa4dc2dd77971bee4d3ec8080091697a5149ed94114f0f07f9d3a1b1946fb49

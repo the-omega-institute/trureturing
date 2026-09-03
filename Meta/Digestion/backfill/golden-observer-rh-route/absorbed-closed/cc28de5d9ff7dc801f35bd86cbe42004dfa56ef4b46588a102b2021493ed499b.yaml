@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:cc28de5d9ff7dc801f35bd86cbe42004dfa56ef4b46588a102b2021493ed499b
 cas_ref: sha256:cc28de5d9ff7dc801f35bd86cbe42004dfa56ef4b46588a102b2021493ed499b
 coverage_gids:
-  - D5/S3/Analytic/EulerGerm/GoldenGermWindowZeroCriterion.golden_window_zero_right_half_strip_converse
+  - gid: D5/S3/Analytic/EulerGerm/GoldenGermWindowZeroCriterion.golden_window_zero_right_half_strip_converse
+    target_statement_id: sha256:d76c63d010430cd7f93abb0a4311c00048a83dacf3f19d48cc1d770fdf51cdae
 receipts:
-  coverage:
-    - gid: D5/S3/Analytic/EulerGerm/GoldenGermWindowZeroCriterion.golden_window_zero_right_half_strip_converse
-      source_sha256: sha256:cc28de5d9ff7dc801f35bd86cbe42004dfa56ef4b46588a102b2021493ed499b
-      target_statement_id: sha256:d76c63d010430cd7f93abb0a4311c00048a83dacf3f19d48cc1d770fdf51cdae
   scribe:
     - gid: D5/S3/Analytic/EulerGerm/GoldenGermWindowZeroCriterion.golden_window_zero_right_half_strip_converse
       definition_sha256: sha256:5c8a1eadca425849b21ccd910179ec7f3d6e295c6e2acc5f2210fe27de0a1f45

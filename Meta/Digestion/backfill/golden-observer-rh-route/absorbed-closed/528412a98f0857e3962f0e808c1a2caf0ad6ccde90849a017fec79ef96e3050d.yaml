@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:528412a98f0857e3962f0e808c1a2caf0ad6ccde90849a017fec79ef96e3050d
 cas_ref: sha256:528412a98f0857e3962f0e808c1a2caf0ad6ccde90849a017fec79ef96e3050d
 coverage_gids:
-  - D5/S3/Weil/ZetaBridge/ZeroSumEnumerationInvariance.zeroSum_enum_invariant
+  - gid: D5/S3/Weil/ZetaBridge/ZeroSumEnumerationInvariance.zeroSum_enum_invariant
+    target_statement_id: sha256:9685ee0ea979e07f18732b5e0c19c361a10b547e70b2ca3b7faa5bab2b197b0e
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/ZetaBridge/ZeroSumEnumerationInvariance.zeroSum_enum_invariant
-      source_sha256: sha256:528412a98f0857e3962f0e808c1a2caf0ad6ccde90849a017fec79ef96e3050d
-      target_statement_id: sha256:9685ee0ea979e07f18732b5e0c19c361a10b547e70b2ca3b7faa5bab2b197b0e
   scribe:
     - gid: D5/S3/Weil/ZetaBridge/ZeroSumEnumerationInvariance.zeroSum_enum_invariant
       definition_sha256: sha256:503b0b5648ddeadbc531939dec4cd52a44e7e5dd8eb33c053e70dea42c0d3398

@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:620a75a2230145d17bbc6baba89db2f7c1b36475b1ea0d2e5e825430c9d19646
 cas_ref: sha256:620a75a2230145d17bbc6baba89db2f7c1b36475b1ea0d2e5e825430c9d19646
 coverage_gids:
-  - D5/S3/Weil/Budget/FiniteWeylBudgetBounds.finite_weyl_budget_bounds
+  - gid: D5/S3/Weil/Budget/FiniteWeylBudgetBounds.finite_weyl_budget_bounds
+    target_statement_id: sha256:a8d8c3a8597fa0a552863881e0bff709d0874e6b6ae209f3674be78fbfa3ab2d
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/Budget/FiniteWeylBudgetBounds.finite_weyl_budget_bounds
-      source_sha256: sha256:620a75a2230145d17bbc6baba89db2f7c1b36475b1ea0d2e5e825430c9d19646
-      target_statement_id: sha256:a8d8c3a8597fa0a552863881e0bff709d0874e6b6ae209f3674be78fbfa3ab2d
   scribe:
     - gid: D5/S3/Weil/Budget/FiniteWeylBudgetBounds.finite_weyl_budget_bounds
       definition_sha256: sha256:f65fdf725ef085ef3e745e97124fb6c3420af3d78f06bd7842a634e340d94ce3

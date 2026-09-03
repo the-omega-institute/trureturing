@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:9086b653107cdc951635d95d6cd20cefc4f7929745bdfd3c5af9cbfc04307e3b
 cas_ref: sha256:9086b653107cdc951635d95d6cd20cefc4f7929745bdfd3c5af9cbfc04307e3b
 coverage_gids:
-  - D5/S3/Weil/TestFunctions/CayleyLaguerreMomentTomography.moment_affine_budget_law
+  - gid: D5/S3/Weil/TestFunctions/CayleyLaguerreMomentTomography.moment_affine_budget_law
+    target_statement_id: sha256:919d541dcd70776a1b9d5dc0369c06e9a5c6199d5aee6b3c1ef59b135f8d7685
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/TestFunctions/CayleyLaguerreMomentTomography.moment_affine_budget_law
-      source_sha256: sha256:9086b653107cdc951635d95d6cd20cefc4f7929745bdfd3c5af9cbfc04307e3b
-      target_statement_id: sha256:919d541dcd70776a1b9d5dc0369c06e9a5c6199d5aee6b3c1ef59b135f8d7685
   scribe:
     - gid: D5/S3/Weil/TestFunctions/CayleyLaguerreMomentTomography.moment_affine_budget_law
       definition_sha256: sha256:8fe55f32143e2fe8f962d456a07a2608ad62f3e354ad9781e1662488ed61cd4b

@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:7036227686f6d1cef9829f5f7a0202e0559bbac99e06956e625b97c5fd3bda40
 cas_ref: sha256:7036227686f6d1cef9829f5f7a0202e0559bbac99e06956e625b97c5fd3bda40
 coverage_gids:
-  - D5/S3/Observer/Budget/PrimeTimeCoverEquivalence.prime_time_budget_injective_iff_cover
+  - gid: D5/S3/Observer/Budget/PrimeTimeCoverEquivalence.prime_time_budget_injective_iff_cover
+    target_statement_id: sha256:3941ab2bfdf20338ce30c472c90c559dc4591ed46cab3771e5801de59606ef04
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/Budget/PrimeTimeCoverEquivalence.prime_time_budget_injective_iff_cover
-      source_sha256: sha256:7036227686f6d1cef9829f5f7a0202e0559bbac99e06956e625b97c5fd3bda40
-      target_statement_id: sha256:3941ab2bfdf20338ce30c472c90c559dc4591ed46cab3771e5801de59606ef04
   scribe:
     - gid: D5/S3/Observer/Budget/PrimeTimeCoverEquivalence.prime_time_budget_injective_iff_cover
       definition_sha256: sha256:752603e88cdf99b48c29d41ae3f90165ced8fd436475c6ebf9fe9480a0374f53

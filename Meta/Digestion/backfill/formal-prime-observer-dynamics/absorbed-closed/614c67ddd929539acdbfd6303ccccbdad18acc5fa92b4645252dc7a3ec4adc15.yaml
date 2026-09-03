@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:614c67ddd929539acdbfd6303ccccbdad18acc5fa92b4645252dc7a3ec4adc15
 cas_ref: sha256:614c67ddd929539acdbfd6303ccccbdad18acc5fa92b4645252dc7a3ec4adc15
 coverage_gids:
-  - D5/S3/ConceptDynamics/InterventionLaws/BlockInterventionalLawFactorization.block_interventional_law_factorization
+  - gid: D5/S3/ConceptDynamics/InterventionLaws/BlockInterventionalLawFactorization.block_interventional_law_factorization
+    target_statement_id: sha256:83df9462d02baabbbaad08114fb2336ae603ca2db780b253669a39afb49723bd
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/InterventionLaws/BlockInterventionalLawFactorization.block_interventional_law_factorization
-      source_sha256: sha256:614c67ddd929539acdbfd6303ccccbdad18acc5fa92b4645252dc7a3ec4adc15
-      target_statement_id: sha256:83df9462d02baabbbaad08114fb2336ae603ca2db780b253669a39afb49723bd
   scribe:
     - gid: D5/S3/ConceptDynamics/InterventionLaws/BlockInterventionalLawFactorization.block_interventional_law_factorization
       definition_sha256: sha256:72e7e360d5c76cbf24180ed38437bebe3a59b6b7506b8f7ccec8ef50fef0c8b3

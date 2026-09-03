@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:8f1485e77a1bf59305ad2c607538da3c74c7c5dfcb03d6c4327321a72430d370
 cas_ref: sha256:8f1485e77a1bf59305ad2c607538da3c74c7c5dfcb03d6c4327321a72430d370
 coverage_gids:
-  - D5/S3/Weil/TestFunctions/ActiveFiniteContactCompletion.active_finite_contact_completion
+  - gid: D5/S3/Weil/TestFunctions/ActiveFiniteContactCompletion.active_finite_contact_completion
+    target_statement_id: sha256:34a452dee72bf094cb0ab1b22a185db869d3955f00f5c16bbcdfcb6041ab38f9
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/TestFunctions/ActiveFiniteContactCompletion.active_finite_contact_completion
-      source_sha256: sha256:8f1485e77a1bf59305ad2c607538da3c74c7c5dfcb03d6c4327321a72430d370
-      target_statement_id: sha256:34a452dee72bf094cb0ab1b22a185db869d3955f00f5c16bbcdfcb6041ab38f9
   scribe:
     - gid: D5/S3/Weil/TestFunctions/ActiveFiniteContactCompletion.active_finite_contact_completion
       definition_sha256: sha256:e5dee8c24887db7625abf28e8d96342b20cf6c557257b8b592d473085347ec7a

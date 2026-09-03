@@ -2284,3 +2284,90 @@ G-g-6 给出 RH 下开窗口零点集 = 线上 ζ(φ²s) 回拉零点 ∪ 局部
 一席位轮(codex-cli,独立 worktree,两条同模块;同 PR deposit(绑 G-g-7 atom)+ 两条 cover)。预计 ≤ 60 分钟。
 
 后续增订继续严格追加于本节之后。
+---
+
+# 增订二十二　零点无穷 ⟹ Weil 平方正性 ⟺ RH,不再相对于具体的 `ZeroData`(W-3 / W-4 预登记)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;探针一席(codex-cli,`probe-zerodata`,533s)核出 `Nonempty ZeroData ↔ {ρ | IsNontrivialZero ρ}.Infinite` 已于 2026-09-02 由本 lane 冻结(`ZetaBridge/ZeroDataNonemptyIffInfinite.nonempty_zeroData_iff_infinite`,M1-a),Z1–Z4(可数性、离散性、重数、置换、装配)无需重做;本节两条皆为对冻结 W-2(`Separator/WeilSquarePositivityCriterion.rh_iff_weilSquarePositivity`,#5069)与 M1-a 的短绑定,由 orchestrator(claude 主循环)撰写。判决日:2026-09-03。lane issue:#4589。
+
+## 〇　为什么是这一节
+
+W-2 把 RH 与 Weil 平方正性绑在一起,但量词落在一个给定的 `Z : ZeroData` 上。M1-a 给出 `ZeroData` 恰在非平凡零点集无穷时可居;于是只要假设**零点无穷**(M1-b,本仓仍 open;另一 lane `rh-canonical-zero-data-nonvacuity-*` 由显式 Riemann–von Mangoldt 假设推它),等价就可以对**一切** `Z`(W-3)或**某个** `Z`(W-4)陈述,不再依赖谁提供了枚举。**诚实边界**:①`hInf` 未在本仓证明(M1-b);②`ZeroData` 的构造用了 `Classical.choice`(非构造性枚举),W-3/W-4 只是量词层面的收口;③右侧仍是本仓定义的正性;④不构成 RH 证明。
+
+## 一　W-3 预登记:∀-形(`WeilSquarePositivityCriterionOfInfinite`,落 `D5/S3/Weil/Separator/`)
+
+**义务**:公开定理 `rh_iff_forall_zeroData_weilSquarePositivity (hInf : {rho : ℂ | IsNontrivialZero rho}.Infinite) : RiemannHypothesis ↔ ∀ Z : ZeroData, ∀ (g : WeilTestFunction) (hZero : SymmetricConvergent Z (convolutionSquare g)), 0 ≤ (zeroSum Z (convolutionSquare g) hZero).re`。
+**可证伪预测(写在跑之前)**:若正确,⟹ 对任意 Z 用 W-2 的 ⟹;⟸ 由 `nonempty_zeroData_iff_infinite.mpr hInf` 取一个 Z,再用 W-2 的 ⟸;标准三公理。若 M1-a 的陈述不是 `Nonempty ZeroData ↔ {rho | IsNontrivialZero rho}.Infinite`(与 `ZeroDataNonemptyIffInfinite.lean:237` 字面矛盾),则本条为假。
+**边界**:见 §〇。
+
+## 二　W-4 预登记:∃-形(同模块第二条公开定理)
+
+**义务**:公开定理 `rh_iff_exists_zeroData_weilSquarePositivity (hInf : {rho : ℂ | IsNontrivialZero rho}.Infinite) : RiemannHypothesis ↔ ∃ Z : ZeroData, ∀ (g : WeilTestFunction) (hZero : SymmetricConvergent Z (convolutionSquare g)), 0 ≤ (zeroSum Z (convolutionSquare g) hZero).re`。
+**可证伪预测(写在跑之前)**:⟹ 取 M1-a 给出的 Z 与 W-2 的 ⟹;⟸ 对给定的 Z 用 W-2 的 ⟸;标准三公理。
+**边界**:同 §〇。
+
+## 三　预算与结算
+
+一席位轮(codex-cli,独立 worktree,两条同模块,`Separator/` 第三个模块;同 PR deposit(绑 W-3 atom)+ 两条 cover)。预计 ≤ 40 分钟。
+
+后续增订继续严格追加于本节之后。
+---
+
+# 增订二十三　截断 Weil 平方正性 ⟺ RH:有限对称零和版本(W-5 / W-6 / W-7 预登记)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;本节三条皆为对冻结定理的短绑定——W-5 消费 M3-e′(`Separator/OffLineZeroNegativeWeilSquare.offLineZero_negative_truncated_weil_square`,#5052)、G-g-3(`ZetaBridge/RightHalfStripRiemannReduction.golden_right_half_strip_implies_rh`)、`ZeroData.mem_symmetricIndices`(`ZeroSum.lean:145`)与 `zero_exhaustive`;W-6 消费 R-F 证明所用的两条公开冻结定理 `ConvolutionSquareCriticalLine.critical_line_truncated_sum_real_nonnegative` 与 `zeroData_zero_on_critical_line_of_rh`(R-F 内部的 `hnonneg` 步骤,那一步是证明内部的 `have`,不可寻址);W-7 合之。由 orchestrator(claude 主循环)撰写,不需探针。判决日:2026-09-03。lane issue:#4589。
+
+## 〇　为什么是这一节
+
+W-2 的正性陈述里带着 `SymmetricConvergent` 这个收敛义务和一个极限量 `zeroSum`;截断版本 `truncatedZeroSum Z g T`(`ZeroSum.lean:194`,对 `Z.symmetricIndices T` 的**有限**求和)没有收敛义务,对每个 T 是一个有限和。separator 的截断形(M3-e′)与 R-F 证明内部的截断非负步骤合起来,给出**不含极限**的等价:RH ⟺ 对一切截断高度 T 与一切偶测试函数 g,截断平方零和实部非负。这比 W-2 更接近可数值检验的形态(固定 T、固定 g 是一个有限计算),尽管仍相对于一个 `ZeroData`。**诚实边界**:同增订二十(相对于未证存在的 `ZeroData`;右侧是本仓定义;不构成 RH 证明);另外 `truncatedZeroSum` 的求和范围 `symmetricIndices T` 由 `spectralRadius ≤ T` 决定,不是按虚部截断。
+
+## 一　W-5 预登记:截断正性 ⟹ RH(`TruncatedWeilSquarePositivityCriterion`,落 `D5/S3/Weil/Separator/`)
+
+**义务**:公开定理 `truncatedWeilSquarePositivity_implies_rh (Z : ZeroData) (hPos : ∀ (T : ℝ) (g : WeilTestFunction), 0 ≤ (truncatedZeroSum Z (convolutionSquare g) T).re) : RiemannHypothesis`。
+**可证伪预测(写在跑之前)**:若正确,证明为:G-g-3 化归到右半带零点 ρ;`zero_exhaustive` 取 n;取 T := spectralRadius (Z.zero n),由 `Z.mem_symmetricIndices` 得 n ∈ Z.symmetricIndices T(≤ 自反);`hOff` 由 1/2 < Re ρ;M3-e′ 给 g 与实部 < 0,与 `hPos T g` 矛盾;标准三公理。若 `mem_symmetricIndices` 的右侧不是 `spectralRadius (Z.zero n) ≤ T` 型(与 `ZeroSum.lean:145–147` 字面不合)则按冻结字面调整证明而非改陈述。
+**边界**:见 §〇。
+
+## 二　W-6 预登记:RH ⟹ 截断正性(同模块第二条公开定理)
+
+**义务**:公开定理 `rh_implies_truncatedWeilSquarePositivity (hRH : RiemannHypothesis) (Z : ZeroData) : ∀ (T : ℝ) (g : WeilTestFunction), 0 ≤ (truncatedZeroSum Z (convolutionSquare g) T).re`。
+**可证伪预测(写在跑之前)**:若正确,证明与 R-F 内部 `hnonneg` 同形:RH 下 `zeroData_zero_on_critical_line_of_rh` 使 `symmetricIndices T` 的临界线过滤为全集(`Finset.filter_true_of_mem`),再用 `critical_line_truncated_sum_real_nonnegative Z g T` 的第二分量;标准三公理。这两条都是公开冻结定理,本条不重证它们;R-F 自身只暴露极限版,故本条不是重复。
+**边界**:同 §〇。
+
+## 三　W-7 预登记:RH ⟺ 截断正性(同模块第三条公开定理)
+
+**义务**:公开定理 `rh_iff_truncatedWeilSquarePositivity (Z : ZeroData) : RiemannHypothesis ↔ ∀ (T : ℝ) (g : WeilTestFunction), 0 ≤ (truncatedZeroSum Z (convolutionSquare g) T).re`。
+**可证伪预测(写在跑之前)**:⟹ 为 W-6,⟸ 为 W-5。
+**边界**:同 §〇。
+
+## 四　预算与结算
+
+一席位轮(codex-cli,独立 worktree,三条同模块,`Separator/` 第四个模块;同 PR deposit(绑 W-7 atom)+ 三条 cover)。预计 ≤ 60 分钟。
+
+后续增订继续严格追加于本节之后。
+---
+
+# 增订二十四　高度 T 的窗口判据:「半径 ≤ T 的零点全在线上」⟺「高度 T 的截断 Weil 平方正性」(W-8 / W-9 预登记)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;本节两条皆为对冻结定理的短绑定——W-8 消费 M3-e′(`Separator/OffLineZeroNegativeWeilSquare.offLineZero_negative_truncated_weil_square`)、`ConvolutionSquareCriticalLine.critical_line_truncated_sum_real_nonnegative`、`Finset.filter_true_of_mem`;W-9 消费 `zeroData_zero_on_critical_line_of_rh`、G-g-3、`zero_exhaustive`、`ZeroData.mem_symmetricIndices`。由 orchestrator(claude 主循环)撰写,不需探针。判决日:2026-09-03。lane issue:#4589。
+
+## 〇　为什么是这一节
+
+W-7 把 RH 与「一切高度 T 的截断正性」绑在一起;本节把量词拆开:**固定** T,`Z.symmetricIndices T`(谱半径 ≤ T 的零点指标,有限集)内的零点全在临界线上,当且仅当高度 T 的截断 Weil 平方零和对一切偶测试函数实部非负。这是「RH 到高度 T」的**逐高度**判据,两边都是关于有限零点集与有限和的陈述;W-9 再把「对一切 T 的逐高度线上性」与 RH 等价。**诚实边界**:相对于给定 `ZeroData`;`symmetricIndices T` 按谱半径 `‖Z.gamma n‖ ≤ T` 截断(`ZeroSum.lean:145–147`),不是按虚部;不构成 RH 证明。
+
+## 一　W-8 预登记:逐高度判据(`HeightWindowWeilSquareCriterion`,落 `D5/S3/Weil/Separator/`)
+
+**义务**:公开定理 `heightWindow_rh_iff_truncatedWeilSquarePositivity (Z : ZeroData) (T : ℝ) : (∀ n ∈ Z.symmetricIndices T, (Z.zero n).re = criticalAbscissa) ↔ ∀ g : WeilTestFunction, 0 ≤ (truncatedZeroSum Z (convolutionSquare g) T).re`。
+**可证伪预测(写在跑之前)**:若正确,⟹ 由 `Finset.filter_true_of_mem`(临界线过滤 = 全集)与 `critical_line_truncated_sum_real_nonnegative Z g T` 的第二分量,展开 `truncatedZeroSum`;⟸ 取逆否:若某 n ∈ symmetricIndices T 离线,M3-e′ 给 g 使截断和实部 < 0;标准三公理。
+**边界**:同 §〇。
+
+## 二　W-9 预登记:RH ⟺ 一切高度的线上性(同模块第二条公开定理)
+
+**义务**:公开定理 `rh_iff_forall_heightWindow (Z : ZeroData) : RiemannHypothesis ↔ ∀ T : ℝ, ∀ n ∈ Z.symmetricIndices T, (Z.zero n).re = criticalAbscissa`。
+**可证伪预测(写在跑之前)**:⟹ 由 `zeroData_zero_on_critical_line_of_rh`;⟸ 由 G-g-3:右半带零点 ρ 经 `zero_exhaustive` 为某 `Z.zero n`,取 T := ‖Z.gamma n‖ 使 n ∈ symmetricIndices T(`mem_symmetricIndices`,自反),得 Re ρ = 1/2 与 1/2 < Re ρ 矛盾;标准三公理。
+**边界**:同 §〇。
+
+## 三　预算与结算
+
+一席位轮(codex-cli,独立 worktree,两条同模块,`Separator/` 第五个模块;同 PR deposit(绑 W-8 atom)+ 两条 cover)。预计 ≤ 40 分钟。
+
+后续增订继续严格追加于本节之后。

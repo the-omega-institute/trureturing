@@ -1,0 +1,59 @@
+# 二、ζ 给出了更自然的“全素数逼近”问题
+
+写：
+
+$$
+s=\sigma+it.
+$$
+
+每个素数的 Euler 相位为：
+
+$$
+p^{-it}
+=
+e^{-it\log p}.
+$$
+
+因此定义全素数相位流：
+
+$$
+\boxed{
+\Theta(t)
+=
+\left(
+e^{-it\log p}
+\right)_{p\in\mathbb P}
+\in
+\mathbb T^{\mathbb P}.
+}
+$$
+
+这里每个素数是一只频率为：
+
+$$
+\omega_p=\log p
+$$
+
+的时钟。
+
+全局相干态是：
+
+$$
+\mathbf1_{\mathbb P}
+=
+(1,1,1,\ldots).
+$$
+
+也就是要求：
+
+$$
+t\log p
+\approx
+0
+\pmod{2\pi}
+\qquad
+\forall p.
+$$
+
+---
+

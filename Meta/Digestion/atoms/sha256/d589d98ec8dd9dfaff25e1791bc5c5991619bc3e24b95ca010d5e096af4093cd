@@ -1,0 +1,55 @@
+## 459. Moment–cumulant 分解
+
+对有限构型 \(H\)，令：
+
+$$
+M_H
+=
+\mathbb E
+\prod_{h\in H}X_h
+$$
+
+为全矩。
+
+connected cumulant 满足：
+
+$$
+M_H
+=
+\sum_{\pi\in\Pi(H)}
+\prod_{B\in\pi}\kappa_B.
+$$
+
+所以：
+
+$$
+\boxed{
+\kappa_H
+=
+M_H
+-
+\sum_{\substack{\pi\in\Pi(H)\\|\pi|\ge2}}
+\prod_{B\in\pi}\kappa_B.
+}
+$$
+
+右侧最后留下的：
+
+$$
+\kappa_H
+$$
+
+正是所有低阶分块乘积都扣除以后仍无法约去的顶层项。
+
+因此：
+
+$$
+\boxed{
+\text{每增加一个构型点，}
+}
+$$
+
+就出现一个新的候选 primitive connected residual。
+
+---
+

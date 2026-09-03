@@ -3,15 +3,21 @@ fingerprints:
   normalized_sha256: sha256:8bdb867fc051e5a905bf4a833e7613687d575322c0f5437ea92e2c33b1dec146
 cas_ref: sha256:8bdb867fc051e5a905bf4a833e7613687d575322c0f5437ea92e2c33b1dec146
 coverage_gids:
-  - D5/S3/Observer/Conditioning.conditionalState_isState
-  - D5/S3/Observer/Conditioning.recordWeight_sum
-  - D5/S3/Observer/Conditioning.unreadState_fixed_iff
-  - D5/S3/Observer/Conditioning.unreadState_idempotent
-  - D5/S3/Observer/Conditioning.unreadState_trace
-  - D5/S3/Observer/Conditioning.unread_eq_weighted_ensemble
-  - D5/S3/Observer/ConditioningCertificate.certificate_identity_zero_tolerance
+  - gid: D5/S3/Observer/Conditioning.conditionalState_isState
+    target_statement_id: sha256:e1759f9d54b56d254a45623c1a09d897a48b1f767c39a7809eff555a18e0cd6d
+  - gid: D5/S3/Observer/Conditioning.recordWeight_sum
+    target_statement_id: sha256:5312b03759c2cf79a2c8999423f8ca4e648ad67da3fd5eb0e7bf6e0002cca1af
+  - gid: D5/S3/Observer/Conditioning.unreadState_fixed_iff
+    target_statement_id: sha256:39e5d9432cd5657cce1cf249b9135c8562408b3b88b418941b04536a36d9bada
+  - gid: D5/S3/Observer/Conditioning.unreadState_idempotent
+    target_statement_id: sha256:40a59c00ad5c06e8478f18ec37e960d3cb0be1d483718f2bc553ac24464c1797
+  - gid: D5/S3/Observer/Conditioning.unreadState_trace
+    target_statement_id: sha256:0e84333aa70c9c65a46709e7f86b8c3069a7c68721ecf59d41f08db46c7316a2
+  - gid: D5/S3/Observer/Conditioning.unread_eq_weighted_ensemble
+    target_statement_id: sha256:023a682c92253dbd56197f032344ca5995d6e29880ffcc6c607224899369d6cc
+  - gid: D5/S3/Observer/ConditioningCertificate.certificate_identity_zero_tolerance
+    target_statement_id: sha256:e7ed69ee47284549957ac3c2848e99ccd78303b00348fba32cc4efd5c3e3af7e
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems:
     - no-third-collapse-dynamics-interpretive-premise

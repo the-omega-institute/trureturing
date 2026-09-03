@@ -1,0 +1,81 @@
+## 620. 负构型：素数空窗
+
+PrimeGaps 做的正好相反。
+
+它选择一组剩余类 \(a_p\)，使一个有限区间：
+
+$$
+\{1,\ldots,L\}
+$$
+
+中的每个 offset \(h\) 都满足：
+
+$$
+h\equiv a_p\pmod p
+$$
+
+对至少一个选定素数 \(p\) 成立。
+
+然后通过中国剩余定理选择基点 \(N\)，使：
+
+$$
+N+h\equiv0\pmod p.
+$$
+
+于是：
+
+$$
+N+1,\ldots,N+L
+$$
+
+全部为合数。
+
+因此：
+
+$$
+\boxed{
+\text{prime constellation}
+=
+\text{联合素性占据态},
+}
+$$
+
+而：
+
+$$
+\boxed{
+\text{prime gap}
+=
+\text{联合素性真空态}.
+}
+$$
+
+两者不是无关问题，而是同一套 residue automata 的正、负两个 sector。
+
+`PrimeGaps` 最终证明，对所有充分大的 \(X\)，存在相邻素数 \(p<q\le X\)，使：
+
+$$
+q-p
+\ge
+c\,
+\log X\,
+\frac{
+(\log\log X)^2
+\log\log\log\log X
+}{
+(\log\log\log X)^2
+}
+$$
+
+其中 \(c>0\) 为固定常数。仓库把右侧定义为 `gapScale X` 并完成了 `long_gap_theorem`。
+
+所以它给 D-ZCOCT 补上的不是又一个正构型，而是：
+
+$$
+\boxed{
+\text{anti-constellation sector}.
+}
+$$
+
+---
+

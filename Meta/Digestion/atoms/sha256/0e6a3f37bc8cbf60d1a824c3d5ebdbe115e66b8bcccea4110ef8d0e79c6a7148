@@ -1,0 +1,6 @@
+## 二　W-9 预登记:RH ⟺ 一切高度的线上性(同模块第二条公开定理)
+
+**义务**:公开定理 `rh_iff_forall_heightWindow (Z : ZeroData) : RiemannHypothesis ↔ ∀ T : ℝ, ∀ n ∈ Z.symmetricIndices T, (Z.zero n).re = criticalAbscissa`。
+**可证伪预测(写在跑之前)**:⟹ 由 `zeroData_zero_on_critical_line_of_rh`;⟸ 由 G-g-3:右半带零点 ρ 经 `zero_exhaustive` 为某 `Z.zero n`,取 T := ‖Z.gamma n‖ 使 n ∈ symmetricIndices T(`mem_symmetricIndices`,自反),得 Re ρ = 1/2 与 1/2 < Re ρ 矛盾;标准三公理。
+**边界**:同 §〇。
+
