@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:cdfe8593294fe6935d5f0a5964995fbcdee33e8592d62c031ea393e102dc0c08
 cas_ref: sha256:cdfe8593294fe6935d5f0a5964995fbcdee33e8592d62c031ea393e102dc0c08
 coverage_gids:
-  - D5/S3/ConceptDynamics/DecisionValueScale/StrictPreferenceReversalValueState.strict_preference_reversal_changes_value_state
+  - gid: D5/S3/ConceptDynamics/DecisionValueScale/StrictPreferenceReversalValueState.strict_preference_reversal_changes_value_state
+    target_statement_id: sha256:ec838c5e46dc2a419784732554c9862eb8bb4518f9913129fd30b61878865d22
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/DecisionValueScale/StrictPreferenceReversalValueState.strict_preference_reversal_changes_value_state
-      source_sha256: sha256:cdfe8593294fe6935d5f0a5964995fbcdee33e8592d62c031ea393e102dc0c08
-      target_statement_id: sha256:ec838c5e46dc2a419784732554c9862eb8bb4518f9913129fd30b61878865d22
   scribe:
     - gid: D5/S3/ConceptDynamics/DecisionValueScale/StrictPreferenceReversalValueState.strict_preference_reversal_changes_value_state
       definition_sha256: sha256:b55546af9bef069db398d868d2190eebdc69c16428100c6bc1c3f857d068d07f

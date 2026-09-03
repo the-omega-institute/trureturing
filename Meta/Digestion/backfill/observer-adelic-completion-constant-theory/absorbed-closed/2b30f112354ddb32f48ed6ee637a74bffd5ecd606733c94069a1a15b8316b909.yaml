@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:2b30f112354ddb32f48ed6ee637a74bffd5ecd606733c94069a1a15b8316b909
 cas_ref: sha256:2b30f112354ddb32f48ed6ee637a74bffd5ecd606733c94069a1a15b8316b909
 coverage_gids:
-  - D5/S3/Zeros/CriticalZeroTransverseGap.critical_zero_transverse_gap
+  - gid: D5/S3/Zeros/CriticalZeroTransverseGap.critical_zero_transverse_gap
+    target_statement_id: sha256:b7fd33c551b52c6b2add265971627914fa534fc034bd4968373ed7544634b6f7
 receipts:
-  coverage:
-    - gid: D5/S3/Zeros/CriticalZeroTransverseGap.critical_zero_transverse_gap
-      source_sha256: sha256:2b30f112354ddb32f48ed6ee637a74bffd5ecd606733c94069a1a15b8316b909
-      target_statement_id: sha256:b7fd33c551b52c6b2add265971627914fa534fc034bd4968373ed7544634b6f7
   scribe:
     - gid: D5/S3/Zeros/CriticalZeroTransverseGap.critical_zero_transverse_gap
       definition_sha256: sha256:0f168fbb2c4ad5de2020600eed7ebde920206e0100c4da64afba1002edc2db78

@@ -1,0 +1,31 @@
+## 278. 离线深度成为 Cayley rapidity
+
+写：
+
+$$
+u=e^{\eta+i\theta},
+$$
+
+其中：
+
+$$
+\eta=\log|u|.
+$$
+
+则三个对称作用变成：
+
+$$
+C:(\eta,\theta)\mapsto(\eta,-\theta),
+$$
+
+$$
+R:(\eta,\theta)\mapsto(-\eta,-\theta),
+$$
+
+$$
+J:(\eta,\theta)\mapsto(-\eta,\theta).
+$$
+
+所以：
+
+* \(\theta\) 是相位高度；

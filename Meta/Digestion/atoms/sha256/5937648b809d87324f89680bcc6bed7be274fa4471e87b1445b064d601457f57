@@ -1,0 +1,26 @@
+* 或 \(0<q_j<1/4\)；
+
+就会在 \(\mathbb C\setminus[1,\infty)\) 产生极点，与 Hausdorff 表示矛盾。
+
+因此：
+
+$$
+q_j\in[1/4,\infty).
+$$
+
+所以在 canonical-product 前件下：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+(-1)^k\Delta^kp_n\ge0
+\quad
+\forall n\ge1,\ k\ge0.
+}
+$$
+
+这比前面作为“候选”给出的版本更强：解析证明链已经完整，真正剩余的是把所需 classical entire-function 与 moment-theorem 接口形式化进仓库。
+
+---
+

@@ -1,0 +1,39 @@
+## 478. 这就是“有限生成化”
+
+可以把 RH 的困难描述为：
+
+$$
+\boxed{
+\text{寻找一个有限表达的全局结构，}
+}
+$$
+
+使：
+
+$$
+\boxed{
+\text{无限条件族}
+=
+\text{该结构的全部有限投影}.
+}
+$$
+
+候选结构包括：
+
+* 正自伴 Casimir 收缩算子；
+* 全局非负 Weil 二次型；
+* de Branges 空间；
+* correlation-completed determinant；
+* 具有统一下界的 Paley–Wiener frame；
+* prime-side 构造的自伴谱算子。
+
+这可以称为：
+
+$$
+\boxed{
+\text{Noetherianization of the RH observer tower}.
+}
+$$
+
+---
+

@@ -1,0 +1,47 @@
+# 第二百零八部　建议补充的仓库模块
+
+```text
+D5/S3/Observer/CompactWitness/
+  NestedClosedWitnessIntersection.lean
+  FixedStatePrefixCompactness.lean
+  MovingWitnessVsPersistentWitness.lean
+
+D5/S3/Analytic/ReflectionCasimir/
+  FiniteHausdorffGluing.lean
+  FiniteMomentFailureCertificate.lean
+  PositiveContractiveRHSplit.lean
+  CasimirMomentCompactness.lean
+
+D5/S3/Analytic/ReflectionCasimir/Jacobi/
+  InfiniteSupportHankelPositiveDefinite.lean
+  NoFiniteLinearRealization.lean
+  MomentInnovationSchurComplement.lean
+  InfiniteJacobiNontermination.lean
+  CompactJacobiCoefficientDecay.lean
+  IrreducibleJacobiObserverGraph.lean
+
+D5/S3/Analytic/LiCayley/
+  SzegoParityFold.lean
+  CircleEvenOddOrthogonality.lean
+  IntervalOddLocalizer.lean
+  GoldenOddMetricUnit.lean
+
+D5/S3/PrimeConstellation/Filtration/
+  PrimeCoordinateAlgebraNonNoetherian.lean
+  PrimeArityBifiltration.lean
+  FixedArityUniformTail.lean
+  PrimeArityDiagonalEscape.lean
+
+D5/S3/Weil/ConeBridge/
+  WeilSquareCone.lean
+  HausdorffQuadraticModule.lean
+  CayleySzegoConeTransform.lean
+
+D5/X_Frontier/ArithmeticJacobi/
+  PrimeConstructedCasimirMoments.lean
+  ArithmeticCompactJacobiRealization.lean
+  WeilHausdorffConeEquivalence.lean
+```
+
+---
+

@@ -3,20 +3,9 @@ fingerprints:
   normalized_sha256: sha256:2555be7fe592f6dc100cf7d7bbb07b7aa240a45fe4f8f4933e45e542a650d223
 cas_ref: sha256:2555be7fe592f6dc100cf7d7bbb07b7aa240a45fe4f8f4933e45e542a650d223
 coverage_gids:
-  - D5/S3/Quantum/Fibers/AllFutureStatisticsSufficiency.all_future_statistics_sufficiency
+  - gid: D5/S3/Quantum/Fibers/AllFutureStatisticsSufficiency.all_future_statistics_sufficiency
+    target_statement_id: sha256:08c3e619c36fce57b183668a57e54b62279d32f9dc8fd7874458f5af7e0d8cbe
 receipts:
-  coverage:
-    - gid: D5/S3/Quantum/Fibers/AllFutureStatisticsSufficiency.all_future_statistics_sufficiency
-      source_sha256: sha256:2555be7fe592f6dc100cf7d7bbb07b7aa240a45fe4f8f4933e45e542a650d223
-      target_statement_id: sha256:08c3e619c36fce57b183668a57e54b62279d32f9dc8fd7874458f5af7e0d8cbe
-      statement_id_history:
-        - statement_id: sha256:5702b668fa35dda9c076190d51590a216f7044322c88f39ff39872525c628d47
-          environment_pin:
-            toolchain: leanprover/lean4:v4.31.0
-            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
-          superseded_by_pin:
-            toolchain: leanprover/lean4:v4.33.0
-            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Quantum/Fibers/AllFutureStatisticsSufficiency.all_future_statistics_sufficiency
       definition_sha256: sha256:6cace15f52e35258489f68ebc088700ad49d108c3085b469123897f169e4a02a

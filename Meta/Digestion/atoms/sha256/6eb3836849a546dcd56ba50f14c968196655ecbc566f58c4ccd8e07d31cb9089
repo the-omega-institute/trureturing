@@ -1,0 +1,40 @@
+## 461. 这还不是全球素数定理
+
+上述结论严格说明：
+
+$$
+\boxed{
+\text{每个局部模 }p\text{ 世界具有无限阶 connected interaction}.
+}
+$$
+
+但不能未经证明就推出：
+
+$$
+\boxed{
+\text{全局所有 prime-constellation cumulants 均非零}.
+}
+$$
+
+不同素数、不同 archimedean 项和不同构型之间可能存在抵消。
+
+真正需要证明的强命题是：
+
+$$
+\boxed{
+\operatorname{gr}_k
+\mathcal K_{\mathrm{prime}}
+\neq0
+\quad
+\text{对无穷多个 }k.
+}
+$$
+
+这可以称为：
+
+> **Prime Cumulant Nontruncation Conjecture**
+
+局部模型为它提供强结构证据，但不是全球证明。
+
+---
+

@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:c0006675f42453f4d8109cf08a494b8d860f23fe1371a285a7609e9c88ccbf9f
+  normalized_sha256: sha256:c0006675f42453f4d8109cf08a494b8d860f23fe1371a285a7609e9c88ccbf9f
+cas_ref: sha256:c0006675f42453f4d8109cf08a494b8d860f23fe1371a285a7609e9c88ccbf9f
+coverage_gids:
+  - gid: D5/S0/Naming/ComplexityDensityExchangeRate.complexity_density_ratio_tendsto_entropy_ratio
+    target_statement_id: sha256:f20205ff3e458b7a3eced6323615ca62a74305ccec04125550d97a591aa9e861
+receipts:
+  scribe:
+    - gid: D5/S0/Naming/ComplexityDensityExchangeRate.complexity_density_ratio_tendsto_entropy_ratio
+      definition_sha256: sha256:29f018b1501e308b15ce1b39e5a415de60427690058043dd1fda4f0380448d4c
+      emission_sha256: sha256:cba92ca90025df2d44629d0ae054efb03951e45b76d4f5515e115baa257cfeec
+  unresolved_subitems: []

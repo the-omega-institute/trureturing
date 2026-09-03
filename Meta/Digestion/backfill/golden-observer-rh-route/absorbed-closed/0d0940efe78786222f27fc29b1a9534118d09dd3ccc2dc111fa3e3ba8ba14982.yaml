@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:0d0940efe78786222f27fc29b1a9534118d09dd3ccc2dc111fa3e3ba8ba14982
+  normalized_sha256: sha256:0d0940efe78786222f27fc29b1a9534118d09dd3ccc2dc111fa3e3ba8ba14982
+cas_ref: sha256:0d0940efe78786222f27fc29b1a9534118d09dd3ccc2dc111fa3e3ba8ba14982
+coverage_gids:
+  - gid: D5/S3/Analytic/GermWindow/GoldenGermWindowLineDichotomy.golden_continued_germ_line_zero_iff_of_rh
+    target_statement_id: sha256:4fc315c9a5c75f568cd6c5a89eb23a1fffa60fe8a6f958a85f2756cbcb4893ca
+receipts:
+  scribe:
+    - gid: D5/S3/Analytic/GermWindow/GoldenGermWindowLineDichotomy.golden_continued_germ_line_zero_iff_of_rh
+      definition_sha256: sha256:0318478c62ce2b640d5a6439be8997621d0e8d40b0f64b9eeb46c11653913f81
+      emission_sha256: sha256:a3b39ec97df59a27471facbad3cbe840564d738eb936c38a3b9fe8f72bb47010
+  unresolved_subitems: []

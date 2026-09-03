@@ -1,0 +1,64 @@
+## 563. Hankel 行列式公式
+
+令：
+
+$$
+\Delta_N=\det H_N,
+\qquad
+\Delta_{-1}=1.
+$$
+
+则 monic orthogonal polynomial 的平方范数满足：
+
+$$
+\boxed{
+\epsilon_N^2
+=
+\frac{\Delta_N}{\Delta_{N-1}}.
+}
+$$
+
+对应 Jacobi 矩阵的非对角系数满足：
+
+$$
+\boxed{
+\alpha_N^2
+=
+\frac{
+\Delta_N\Delta_{N-2}
+}{
+\Delta_{N-1}^2
+}.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\alpha_N>0
+\quad
+\forall N.
+}
+$$
+
+若某个：
+
+$$
+\alpha_N=0,
+$$
+
+Jacobi 链会在该处断裂，谱测度退化为有限支撑。
+
+因此：
+
+$$
+\boxed{
+\text{无限零点谱}
+\Longleftrightarrow
+\text{Jacobi 链永不截断}.
+}
+$$
+
+---
+

@@ -20,10 +20,7 @@ public sealed class CurrentEdgeValidatorTests
             {
                 ReportDeclarations = ["unrelated"],
             },
-            "ambiguous" => new CoverSpec
-            {
-                ReportDeclarations = ["probe", "Namespace.probe"],
-            },
+            "ambiguous" => new CoverSpec(),
             "non-standard-axiom" => new CoverSpec
             {
                 TargetAxioms = ["customAxiom"],
@@ -33,9 +30,34 @@ public sealed class CurrentEdgeValidatorTests
         var inputs = spec.Materialize();
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
             SnapshotDecoder.Decode(CoverWorld.Raw(inputs.Files))).Snapshot;
-        var lean = AcceptedLeanClosure.Create(inputs.Report);
+        var report = inputs.Report;
+        if (scenario == "ambiguous")
+        {
+            var files = report.Files.ToDictionary(
+                static pair => pair.Key.Value,
+                static pair => pair.Value,
+                StringComparer.Ordinal);
+            var targetPath = spec.ModuleGid + ".lean";
+            var declaration = Assert.Single(files[targetPath].Declarations);
+            files[targetPath] = files[targetPath] with
+            {
+                Declarations =
+                [
+                    declaration,
+                    declaration with { Name = "Namespace." + declaration.Name },
+                ],
+            };
+            report = LeanAxiomReport.Create(files);
+        }
+
+        var lean = AcceptedLeanClosure.Create(report);
         var states = LeanTruthStates.Resolve(snapshot, lean);
-        var result = CurrentEdgeValidator.Validate(inputs.Gid, snapshot, inputs.Report, states);
+        var result = CurrentEdgeValidator.Validate(
+            inputs.Gid,
+            snapshot,
+            report,
+            states,
+            FrozenStatementIndex.Load(snapshot));
 
         Assert.Equal(expectedResolved, result.IsResolved);
         Assert.False(result.IsClosed);

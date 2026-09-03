@@ -1,0 +1,32 @@
+## 定理 2002.3（宇称偏振判据）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\Pi(s)
+=
+\frac{\zeta(2s)}{\zeta(s)^2}
+\text{ 在 }\mathbb H_{1/2}\text{ 全纯}.
+}
+\tag{2002.3}
+$$
+
+若离线零点重数为 \(m\)，则：
+
+* Möbius observer 出现 \(m\) 阶极点；
+* Liouville observer 出现 \(m\) 阶极点；
+* normalized parity polarization 出现 \(2m\) 阶极点。
+
+所以 RH 可以被完全相对化地表述为：
+
+$$
+\boxed{
+\text{唯一的全局宇称观察通道，
+在观察半平面内部不得出现奇性；
+它的全部奇性只能停留在边界。}
+}
+$$
+
+---
+

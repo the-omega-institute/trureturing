@@ -1,0 +1,14 @@
+## 411. ζ trace–supertrace
+
+```lean
+theorem zeta_trace_supertrace
+    {s : ℂ} (hs : 1 < s.re) :
+    arithmeticTrace s = riemannZeta s ∧
+    arithmeticSupertrace s =
+      riemannZeta (2 * s) / riemannZeta s ∧
+    arithmeticTrace s * arithmeticSupertrace s =
+      riemannZeta (2 * s)
+```
+
+---
+

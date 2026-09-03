@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:a49fcb84208c24f8d21a0ffbe480ad46f3b691b5d113034d0196aa2edb9acdb1
+  normalized_sha256: sha256:a49fcb84208c24f8d21a0ffbe480ad46f3b691b5d113034d0196aa2edb9acdb1
+cas_ref: sha256:a49fcb84208c24f8d21a0ffbe480ad46f3b691b5d113034d0196aa2edb9acdb1
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Contracts/ContractRefinement.strong_contract_refines_weak
+    target_statement_id: sha256:eec00e2b3a40608744e9cb95b4082b30771f44592a6509155ff7b6f4b0c21110
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Contracts/ContractRefinement.strong_contract_refines_weak
+      definition_sha256: sha256:d8b659f8fef9e7d5fbb43eb109ca7fe1002a714c3ca5fdacf82e9e680bda968e
+      emission_sha256: sha256:0eefcb3fb2661162f72eec230122095f735d45a087337d2a2c9e1e78775b710e
+  unresolved_subitems: []

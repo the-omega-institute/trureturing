@@ -1,0 +1,23 @@
+## 237. 四层完成
+
+对一个无限谱对象，至少要区分：
+
+$$
+\boxed{
+\begin{aligned}
+\text{残余完成：}&
+\bigcap_nR_n=0;\\
+\text{强完成：}&
+P_nx\to x\quad\forall x;\\
+\text{稳定完成：}&
+\text{存在统一 frame lower bound};\\
+\text{行列式完成：}&
+\text{相关算子按 trace norm 收敛}.
+\end{aligned}
+}
+$$
+
+前两层不能自动推出后两层。
+
+---
+

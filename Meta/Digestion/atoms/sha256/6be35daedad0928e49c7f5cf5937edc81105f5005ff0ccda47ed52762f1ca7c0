@@ -1,0 +1,61 @@
+## 220. Cohomological completion principle
+
+对一般动力系统：
+
+$$
+T:X\to X
+$$
+
+和分类函数：
+
+$$
+f:X\to A,
+$$
+
+其累积名字为：
+
+$$
+S_Nf(x)
+=
+\sum_{j=0}^{N-1}f(T^jx).
+$$
+
+若存在 \(g\)，使：
+
+$$
+f-\bar f
+=
+g-g\circ T,
+$$
+
+则：
+
+$$
+S_Nf-N\bar f
+=
+g(x)-g(T^Nx)
+$$
+
+始终有界。
+
+因此：
+
+$$
+\boxed{
+\text{可重完破缺}
+=
+\text{coboundary}.
+}
+$$
+
+真正永久的分类分歧，则对应非平凡上同调类：
+
+$$
+[f-\bar f]\neq0
+\in
+H^1(T,A).
+$$
+
+这把之前讨论的多种结构统一了：
+
+* 黄金跳跃失衡是 additive coboundary；

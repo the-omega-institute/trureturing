@@ -1,0 +1,11 @@
+## 269. 奇偶 cocycle
+
+```lean
+theorem golden_jump_centered_is_coboundary (v : ℕ) :
+    goldenJumpBit v - Real.goldenRatio⁻¹ =
+      goldenRotationCoordinate v -
+        goldenRotationCoordinate (v + 1)
+```
+
+---
+

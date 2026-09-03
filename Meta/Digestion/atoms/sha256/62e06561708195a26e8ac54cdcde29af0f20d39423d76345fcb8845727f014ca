@@ -1,0 +1,80 @@
+# 二、条件化—重标度以后，原问题真的重新出现
+
+这给衔尾蛇一个精确的概率版本。
+
+假设离线备选的先验密度 \(p(\delta)\) 在零附近连续且
+
+$$
+p(0)>0.
+$$
+
+观察到
+
+$$
+|\delta|<\varepsilon
+$$
+
+以后，把剩余横向坐标重新归一化：
+
+$$
+x=\frac{\delta}{\varepsilon}\in[-1,1].
+$$
+
+条件密度是
+
+$$
+p_\varepsilon(x)
+=
+\frac{
+\varepsilon p(\varepsilon x)
+}{
+\displaystyle\int_{-\varepsilon}^{\varepsilon}p(u)\,du
+}.
+$$
+
+当 \(\varepsilon\to0\) 时，
+
+$$
+\varepsilon p(\varepsilon x)\sim\varepsilon p(0),
+$$
+
+而
+
+$$
+\int_{-\varepsilon}^{\varepsilon}p(u)\,du
+\sim2\varepsilon p(0).
+$$
+
+所以
+
+$$
+\boxed{
+p_\varepsilon(x)\longrightarrow\frac12
+\qquad(-1<x<1).
+}
+$$
+
+这意味着：
+
+> 无论原来的平滑先验长什么样，每次“没看见”以后，缩放到新的盲区单位尺度，剩余反例都会趋向同一个均匀模型。
+
+因此探测循环是：
+
+$$
+\boxed{
+\text{观察无异常}
+\to
+\text{条件化到更小区间}
+\to
+\text{把区间放大回单位大小}
+\to
+\text{重新面对几乎相同的问题}.
+}
+$$
+
+这是真正的**认识论重整化衔尾蛇**。
+
+固定缝 \(\delta=0\) 是重整化固定点；任意固定非零 \(\delta\) 在不断放大后都会离开盲区，但“条件于仍未被发现的备选”总会重新填满单位窗口。
+
+---
+
