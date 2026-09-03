@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:c6366e47d899024278096b87bf7337f415636885e7a7467ce70b89264993d04b
   normalized_sha256: sha256:c6366e47d899024278096b87bf7337f415636885e7a7467ce70b89264993d04b
 cas_ref: sha256:c6366e47d899024278096b87bf7337f415636885e7a7467ce70b89264993d04b
-coverage_gids:
-  - D5/S3/Weil/ZetaBridge/PrescribedPairNegativeOrbit.real_off_line_zero_orbit_sum_re
+coverage:
+  - gid: D5/S3/Weil/ZetaBridge/PrescribedPairNegativeOrbit.real_off_line_zero_orbit_sum_re
+    target_statement_id: sha256:6ec51deaf4b36fe8b7b576ecd0956728064870e08ce63516b350e3908fe247cf
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/ZetaBridge/PrescribedPairNegativeOrbit.real_off_line_zero_orbit_sum_re
-      source_sha256: sha256:c6366e47d899024278096b87bf7337f415636885e7a7467ce70b89264993d04b
-      target_statement_id: sha256:6ec51deaf4b36fe8b7b576ecd0956728064870e08ce63516b350e3908fe247cf
   scribe:
     - gid: D5/S3/Weil/ZetaBridge/PrescribedPairNegativeOrbit.real_off_line_zero_orbit_sum_re
       definition_sha256: sha256:33c367db5fca524696e9255844d27f8e2fe5ee88d68ccb80235a88a1b7a6ee45

@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:fae002a7ec09e37f337c2f02cd5adf303c473b8ecd17ae8410c59079ff2b0ce2
   normalized_sha256: sha256:fae002a7ec09e37f337c2f02cd5adf303c473b8ecd17ae8410c59079ff2b0ce2
 cas_ref: sha256:fae002a7ec09e37f337c2f02cd5adf303c473b8ecd17ae8410c59079ff2b0ce2
-coverage_gids:
-  - D5/S3/Observer/GoldenCoding/GoldenLorentzUpdate.golden_lorentz_update
+coverage:
+  - gid: D5/S3/Observer/GoldenCoding/GoldenLorentzUpdate.golden_lorentz_update
+    target_statement_id: sha256:42d4a852d0ee276007ede94f7aa34caa1c2129cea200a56acfefbdefcf31e06e
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/GoldenCoding/GoldenLorentzUpdate.golden_lorentz_update
-      source_sha256: sha256:fae002a7ec09e37f337c2f02cd5adf303c473b8ecd17ae8410c59079ff2b0ce2
-      target_statement_id: sha256:42d4a852d0ee276007ede94f7aa34caa1c2129cea200a56acfefbdefcf31e06e
   scribe:
     - gid: D5/S3/Observer/GoldenCoding/GoldenLorentzUpdate.golden_lorentz_update
       definition_sha256: sha256:be6fd2c052fc30369532985c9271a60baeb7aa7fa69a988e08c298587a4d5b93

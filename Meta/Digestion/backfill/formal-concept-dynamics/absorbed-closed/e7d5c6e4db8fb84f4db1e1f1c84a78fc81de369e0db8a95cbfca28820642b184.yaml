@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:e7d5c6e4db8fb84f4db1e1f1c84a78fc81de369e0db8a95cbfca28820642b184
   normalized_sha256: sha256:e7d5c6e4db8fb84f4db1e1f1c84a78fc81de369e0db8a95cbfca28820642b184
 cas_ref: sha256:e7d5c6e4db8fb84f4db1e1f1c84a78fc81de369e0db8a95cbfca28820642b184
-coverage_gids:
-  - D5/S3/ConceptDynamics/Control/InvariantConceptPrecludesOutcomeRemedy.invariant_concept_precludes_outcome_remedy
+coverage:
+  - gid: D5/S3/ConceptDynamics/Control/InvariantConceptPrecludesOutcomeRemedy.invariant_concept_precludes_outcome_remedy
+    target_statement_id: sha256:975b388d4dfada720feea23f943a2b2333584b428f34b6acfb7913518a0f3dee
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Control/InvariantConceptPrecludesOutcomeRemedy.invariant_concept_precludes_outcome_remedy
-      source_sha256: sha256:e7d5c6e4db8fb84f4db1e1f1c84a78fc81de369e0db8a95cbfca28820642b184
-      target_statement_id: sha256:975b388d4dfada720feea23f943a2b2333584b428f34b6acfb7913518a0f3dee
   scribe:
     - gid: D5/S3/ConceptDynamics/Control/InvariantConceptPrecludesOutcomeRemedy.invariant_concept_precludes_outcome_remedy
       definition_sha256: sha256:b08ca538a3bf2771aa855ac6b00ed19e2799f747fdb28925ab233c98e292da00

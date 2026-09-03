@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:d1bb7c2927cecc342a1b6dbcfbe397f3e10105b9e39947ecc23a2aae6d0f9451
   normalized_sha256: sha256:d1bb7c2927cecc342a1b6dbcfbe397f3e10105b9e39947ecc23a2aae6d0f9451
 cas_ref: sha256:d1bb7c2927cecc342a1b6dbcfbe397f3e10105b9e39947ecc23a2aae6d0f9451
-coverage_gids:
-  - D5/S3/Weil/TestFunctions/FourierLaplaceClosedStripDecay.fourierLaplace_decay_closedStrip
+coverage:
+  - gid: D5/S3/Weil/TestFunctions/FourierLaplaceClosedStripDecay.fourierLaplace_decay_closedStrip
+    target_statement_id: sha256:473225adfba0dab300ff5f42d9276dd60c234937a4df9a6667ed2ab9cd4077db
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/TestFunctions/FourierLaplaceClosedStripDecay.fourierLaplace_decay_closedStrip
-      source_sha256: sha256:d1bb7c2927cecc342a1b6dbcfbe397f3e10105b9e39947ecc23a2aae6d0f9451
-      target_statement_id: sha256:473225adfba0dab300ff5f42d9276dd60c234937a4df9a6667ed2ab9cd4077db
   scribe:
     - gid: D5/S3/Weil/TestFunctions/FourierLaplaceClosedStripDecay.fourierLaplace_decay_closedStrip
       definition_sha256: sha256:81eccec3139c871e753bce9b8538488d0eb79062993bb388d069a03fbd803765

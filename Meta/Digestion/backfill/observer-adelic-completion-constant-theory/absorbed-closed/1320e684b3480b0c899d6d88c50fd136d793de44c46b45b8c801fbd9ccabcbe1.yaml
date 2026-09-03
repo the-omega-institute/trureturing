@@ -2,21 +2,10 @@ fingerprints:
   raw_sha256: sha256:1320e684b3480b0c899d6d88c50fd136d793de44c46b45b8c801fbd9ccabcbe1
   normalized_sha256: sha256:1320e684b3480b0c899d6d88c50fd136d793de44c46b45b8c801fbd9ccabcbe1
 cas_ref: sha256:1320e684b3480b0c899d6d88c50fd136d793de44c46b45b8c801fbd9ccabcbe1
-coverage_gids:
-  - D5/S3/Analytic/Asymptotics/SpectralZetaContinuation.linear_density_spectral_zeta_continuation
+coverage:
+  - gid: D5/S3/Analytic/Asymptotics/SpectralZetaContinuation.linear_density_spectral_zeta_continuation
+    target_statement_id: sha256:293def6ddaea2c0c7cc2f5d308a87b91d75753702ad47c9d03886e83c017adbd
 receipts:
-  coverage:
-    - gid: D5/S3/Analytic/Asymptotics/SpectralZetaContinuation.linear_density_spectral_zeta_continuation
-      source_sha256: sha256:1320e684b3480b0c899d6d88c50fd136d793de44c46b45b8c801fbd9ccabcbe1
-      target_statement_id: sha256:293def6ddaea2c0c7cc2f5d308a87b91d75753702ad47c9d03886e83c017adbd
-      statement_id_history:
-        - statement_id: sha256:2a8f7e8aefe6d70d92a2b8e355906db69bb7749bd984a7fd1c69c6c6df06d8b4
-          environment_pin:
-            toolchain: leanprover/lean4:v4.31.0
-            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
-          superseded_by_pin:
-            toolchain: leanprover/lean4:v4.33.0
-            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Analytic/Asymptotics/SpectralZetaContinuation.linear_density_spectral_zeta_continuation
       definition_sha256: sha256:1f1cbf74f92c78c790fcca68b51209a5d85354c3cc628c3f83fc587124258d25

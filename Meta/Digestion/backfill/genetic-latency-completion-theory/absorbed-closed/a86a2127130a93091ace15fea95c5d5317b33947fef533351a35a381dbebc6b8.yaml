@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:a86a2127130a93091ace15fea95c5d5317b33947fef533351a35a381dbebc6b8
   normalized_sha256: sha256:a86a2127130a93091ace15fea95c5d5317b33947fef533351a35a381dbebc6b8
 cas_ref: sha256:a86a2127130a93091ace15fea95c5d5317b33947fef533351a35a381dbebc6b8
-coverage_gids:
-  - D5/S3/ConceptDynamics/ExperimentDesign/TargetSufficiencyPairCover.target_sufficiency_iff_pair_cover
+coverage:
+  - gid: D5/S3/ConceptDynamics/ExperimentDesign/TargetSufficiencyPairCover.target_sufficiency_iff_pair_cover
+    target_statement_id: sha256:c5225492ea82898de9a49d3b119ae9651c837729f8ce4786bbb663913a1b35d1
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/ExperimentDesign/TargetSufficiencyPairCover.target_sufficiency_iff_pair_cover
-      source_sha256: sha256:a86a2127130a93091ace15fea95c5d5317b33947fef533351a35a381dbebc6b8
-      target_statement_id: sha256:c5225492ea82898de9a49d3b119ae9651c837729f8ce4786bbb663913a1b35d1
   scribe:
     - gid: D5/S3/ConceptDynamics/ExperimentDesign/TargetSufficiencyPairCover.target_sufficiency_iff_pair_cover
       definition_sha256: sha256:5b891b6f3ba595c87e54822ca90631f6d61e525fd248b511b56e0231bae08b89

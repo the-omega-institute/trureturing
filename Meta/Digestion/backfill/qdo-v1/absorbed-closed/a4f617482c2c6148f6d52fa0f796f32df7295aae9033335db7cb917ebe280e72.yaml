@@ -2,21 +2,10 @@ fingerprints:
   raw_sha256: sha256:a4f617482c2c6148f6d52fa0f796f32df7295aae9033335db7cb917ebe280e72
   normalized_sha256: sha256:a4f617482c2c6148f6d52fa0f796f32df7295aae9033335db7cb917ebe280e72
 cas_ref: sha256:a4f617482c2c6148f6d52fa0f796f32df7295aae9033335db7cb917ebe280e72
-coverage_gids:
-  - D5/S3/Quantum/Tomography/CompleteContextTomography.complete_context_tomography
+coverage:
+  - gid: D5/S3/Quantum/Tomography/CompleteContextTomography.complete_context_tomography
+    target_statement_id: sha256:0b30a477bd11d6deee267e52e1cb1cab97c45f9274fd5b504a27f19265f7c4d7
 receipts:
-  coverage:
-    - gid: D5/S3/Quantum/Tomography/CompleteContextTomography.complete_context_tomography
-      source_sha256: sha256:a4f617482c2c6148f6d52fa0f796f32df7295aae9033335db7cb917ebe280e72
-      target_statement_id: sha256:0b30a477bd11d6deee267e52e1cb1cab97c45f9274fd5b504a27f19265f7c4d7
-      statement_id_history:
-        - statement_id: sha256:40dcc0afb37ebe4e6bf3f7fcd24d5ecdbfb5ba182342b3f9b3453375826b0fba
-          environment_pin:
-            toolchain: leanprover/lean4:v4.31.0
-            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
-          superseded_by_pin:
-            toolchain: leanprover/lean4:v4.33.0
-            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Quantum/Tomography/CompleteContextTomography.complete_context_tomography
       definition_sha256: sha256:a65f377f39f34b1c97102199608bbadca829276fb062563ea7d6790f5e026067

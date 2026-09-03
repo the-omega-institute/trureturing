@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:c96f807240ccfc19f98fefb204d2a12195f1fd79b259c7d5c194b2905b9e4998
   normalized_sha256: sha256:c96f807240ccfc19f98fefb204d2a12195f1fd79b259c7d5c194b2905b9e4998
 cas_ref: sha256:c96f807240ccfc19f98fefb204d2a12195f1fd79b259c7d5c194b2905b9e4998
-coverage_gids:
-  - D5/S3/ConceptDynamics/Policy/DiscretionaryOutcomeNonuniqueness.discretionary_outcome_nonuniqueness
+coverage:
+  - gid: D5/S3/ConceptDynamics/Policy/DiscretionaryOutcomeNonuniqueness.discretionary_outcome_nonuniqueness
+    target_statement_id: sha256:c590122f5b67b84a9953adef77d8fa2111fdc2100731086d5526ba972ea74d0b
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Policy/DiscretionaryOutcomeNonuniqueness.discretionary_outcome_nonuniqueness
-      source_sha256: sha256:c96f807240ccfc19f98fefb204d2a12195f1fd79b259c7d5c194b2905b9e4998
-      target_statement_id: sha256:c590122f5b67b84a9953adef77d8fa2111fdc2100731086d5526ba972ea74d0b
   scribe:
     - gid: D5/S3/ConceptDynamics/Policy/DiscretionaryOutcomeNonuniqueness.discretionary_outcome_nonuniqueness
       definition_sha256: sha256:46eeb87ab10bb1d26f1f10a0eac39344ca460ec6379fa5e304d6c218f1aab70c

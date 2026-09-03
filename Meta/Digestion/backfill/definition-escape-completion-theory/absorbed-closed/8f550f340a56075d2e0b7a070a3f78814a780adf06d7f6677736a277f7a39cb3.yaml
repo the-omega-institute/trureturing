@@ -2,21 +2,14 @@ fingerprints:
   raw_sha256: sha256:8f550f340a56075d2e0b7a070a3f78814a780adf06d7f6677736a277f7a39cb3
   normalized_sha256: sha256:8f550f340a56075d2e0b7a070a3f78814a780adf06d7f6677736a277f7a39cb3
 cas_ref: sha256:8f550f340a56075d2e0b7a070a3f78814a780adf06d7f6677736a277f7a39cb3
-coverage_gids:
-  - D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/GainDifferenceCocycle.gain_difference_self_zero_and_cocycle
-  - D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/ParetoWeakPreorder.pareto_weak_reflexive_transitive
-  - D5/S3/ConceptDynamics/Governance/CommitInterfaceSealPreservation.commit_interface_seal_and_artifact_preservation
+coverage:
+  - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/GainDifferenceCocycle.gain_difference_self_zero_and_cocycle
+    target_statement_id: sha256:8b708816711811a199192ea7077ff26d9c26167339a066abf2e570fe47732104
+  - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/ParetoWeakPreorder.pareto_weak_reflexive_transitive
+    target_statement_id: sha256:57f54dd66f8944b9f51c64a24eccba18d2cd7118ed38d48962098a346143f367
+  - gid: D5/S3/ConceptDynamics/Governance/CommitInterfaceSealPreservation.commit_interface_seal_and_artifact_preservation
+    target_statement_id: sha256:1c955a74afcebd9cfa9da234233d4b3bc4f522b76aebc0dfaa5b7872fa1ef0e1
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/GainDifferenceCocycle.gain_difference_self_zero_and_cocycle
-      source_sha256: sha256:8f550f340a56075d2e0b7a070a3f78814a780adf06d7f6677736a277f7a39cb3
-      target_statement_id: sha256:8b708816711811a199192ea7077ff26d9c26167339a066abf2e570fe47732104
-    - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/ParetoWeakPreorder.pareto_weak_reflexive_transitive
-      source_sha256: sha256:8f550f340a56075d2e0b7a070a3f78814a780adf06d7f6677736a277f7a39cb3
-      target_statement_id: sha256:57f54dd66f8944b9f51c64a24eccba18d2cd7118ed38d48962098a346143f367
-    - gid: D5/S3/ConceptDynamics/Governance/CommitInterfaceSealPreservation.commit_interface_seal_and_artifact_preservation
-      source_sha256: sha256:8f550f340a56075d2e0b7a070a3f78814a780adf06d7f6677736a277f7a39cb3
-      target_statement_id: sha256:1c955a74afcebd9cfa9da234233d4b3bc4f522b76aebc0dfaa5b7872fa1ef0e1
   scribe:
     - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/GainDifferenceCocycle.gain_difference_self_zero_and_cocycle
       definition_sha256: sha256:8edf54b0fe2177bbc69e1c3ac05750310c7f7175484bdf746534e9a18320e53c

@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:ffa80bf97d86e22e27426d8883d0751d94e9cf82f8ccf3e26cb70cce3380f692
   normalized_sha256: sha256:ffa80bf97d86e22e27426d8883d0751d94e9cf82f8ccf3e26cb70cce3380f692
 cas_ref: sha256:ffa80bf97d86e22e27426d8883d0751d94e9cf82f8ccf3e26cb70cce3380f692
-coverage_gids:
-  - D5/S3/Weil/CayleyLaguerre/CurvatureSlackPhaseBridge.curvature_slack_phase_bridge
+coverage:
+  - gid: D5/S3/Weil/CayleyLaguerre/CurvatureSlackPhaseBridge.curvature_slack_phase_bridge
+    target_statement_id: sha256:6a53132bf15d63be20230a0dd7142ee68f470580f46c51f487c9d31aef355bd2
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/CayleyLaguerre/CurvatureSlackPhaseBridge.curvature_slack_phase_bridge
-      source_sha256: sha256:ffa80bf97d86e22e27426d8883d0751d94e9cf82f8ccf3e26cb70cce3380f692
-      target_statement_id: sha256:6a53132bf15d63be20230a0dd7142ee68f470580f46c51f487c9d31aef355bd2
   scribe:
     - gid: D5/S3/Weil/CayleyLaguerre/CurvatureSlackPhaseBridge.curvature_slack_phase_bridge
       definition_sha256: sha256:65ca219836daf717725de3e043dd40b8cf656871be5f4f3391f027f856688031

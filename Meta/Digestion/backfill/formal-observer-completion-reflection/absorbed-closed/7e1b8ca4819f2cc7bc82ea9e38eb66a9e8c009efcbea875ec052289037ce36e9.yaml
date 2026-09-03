@@ -2,21 +2,10 @@ fingerprints:
   raw_sha256: sha256:7e1b8ca4819f2cc7bc82ea9e38eb66a9e8c009efcbea875ec052289037ce36e9
   normalized_sha256: sha256:7e1b8ca4819f2cc7bc82ea9e38eb66a9e8c009efcbea875ec052289037ce36e9
 cas_ref: sha256:7e1b8ca4819f2cc7bc82ea9e38eb66a9e8c009efcbea875ec052289037ce36e9
-coverage_gids:
-  - D5/S3/ObserverMemory/Dynamics/ObservableKrylovPermanentStability.observable_krylov_once_stable_permanently
+coverage:
+  - gid: D5/S3/ObserverMemory/Dynamics/ObservableKrylovPermanentStability.observable_krylov_once_stable_permanently
+    target_statement_id: sha256:84fdcc299559d74b3402799553a8ca31eddd0327b1ce1ebbea2a1d38ff758314
 receipts:
-  coverage:
-    - gid: D5/S3/ObserverMemory/Dynamics/ObservableKrylovPermanentStability.observable_krylov_once_stable_permanently
-      source_sha256: sha256:7e1b8ca4819f2cc7bc82ea9e38eb66a9e8c009efcbea875ec052289037ce36e9
-      target_statement_id: sha256:84fdcc299559d74b3402799553a8ca31eddd0327b1ce1ebbea2a1d38ff758314
-      statement_id_history:
-        - statement_id: sha256:3f68c89e4fb1dcf66ebdddf7e00aaa83cd2f18f68d82d3b49b4ebfe46e70beab
-          environment_pin:
-            toolchain: leanprover/lean4:v4.31.0
-            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
-          superseded_by_pin:
-            toolchain: leanprover/lean4:v4.33.0
-            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ObserverMemory/Dynamics/ObservableKrylovPermanentStability.observable_krylov_once_stable_permanently
       definition_sha256: sha256:a7b8c8dff077b1b2c85cd931158a7f37397eb981fad704368a69bfdc2cd2c441

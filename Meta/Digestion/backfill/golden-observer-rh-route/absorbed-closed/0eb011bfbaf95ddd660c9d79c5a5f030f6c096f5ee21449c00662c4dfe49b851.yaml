@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:0eb011bfbaf95ddd660c9d79c5a5f030f6c096f5ee21449c00662c4dfe49b851
   normalized_sha256: sha256:0eb011bfbaf95ddd660c9d79c5a5f030f6c096f5ee21449c00662c4dfe49b851
 cas_ref: sha256:0eb011bfbaf95ddd660c9d79c5a5f030f6c096f5ee21449c00662c4dfe49b851
-coverage_gids:
-  - D5/S3/Weil/TestFunctions/EvenTestFunctionFiniteInterpolation.even_weilTestFunction_finite_interpolation
+coverage:
+  - gid: D5/S3/Weil/TestFunctions/EvenTestFunctionFiniteInterpolation.even_weilTestFunction_finite_interpolation
+    target_statement_id: sha256:6c2bb8d18176a01ad5178ba56b70812b3ed5dfca1ba2abbb60711422ecf37c52
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/TestFunctions/EvenTestFunctionFiniteInterpolation.even_weilTestFunction_finite_interpolation
-      source_sha256: sha256:0eb011bfbaf95ddd660c9d79c5a5f030f6c096f5ee21449c00662c4dfe49b851
-      target_statement_id: sha256:6c2bb8d18176a01ad5178ba56b70812b3ed5dfca1ba2abbb60711422ecf37c52
   scribe:
     - gid: D5/S3/Weil/TestFunctions/EvenTestFunctionFiniteInterpolation.even_weilTestFunction_finite_interpolation
       definition_sha256: sha256:0ebc1dbdae56cbe871e387fb7d2a972f4ac3dd5a9ac2bc5d5ab748898d100d5a

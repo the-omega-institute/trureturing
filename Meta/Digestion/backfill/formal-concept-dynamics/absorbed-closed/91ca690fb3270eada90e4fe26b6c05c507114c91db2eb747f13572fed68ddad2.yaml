@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:91ca690fb3270eada90e4fe26b6c05c507114c91db2eb747f13572fed68ddad2
   normalized_sha256: sha256:91ca690fb3270eada90e4fe26b6c05c507114c91db2eb747f13572fed68ddad2
 cas_ref: sha256:91ca690fb3270eada90e4fe26b6c05c507114c91db2eb747f13572fed68ddad2
-coverage_gids:
-  - D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.target_recovery_criterion
+coverage:
+  - gid: D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.target_recovery_criterion
+    target_statement_id: sha256:410a18915874469254a738a6d25e7be1dd97b7f4f721e0a1a04b7f8ceca5af18
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.target_recovery_criterion
-      source_sha256: sha256:91ca690fb3270eada90e4fe26b6c05c507114c91db2eb747f13572fed68ddad2
-      target_statement_id: sha256:410a18915874469254a738a6d25e7be1dd97b7f4f721e0a1a04b7f8ceca5af18
   scribe:
     - gid: D5/S3/ConceptDynamics/Restoration/TargetRecoveryCriterion.target_recovery_criterion
       definition_sha256: sha256:1f51ca7a341cf1cd7ae2f493f3520c7a13e3bdc1ca1353105c7627975b5b7a10

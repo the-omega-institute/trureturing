@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:465631858989ea32618fffdcffb7a7e59e0d1ba4574a32454dcca6dd3062400d
   normalized_sha256: sha256:465631858989ea32618fffdcffb7a7e59e0d1ba4574a32454dcca6dd3062400d
 cas_ref: sha256:465631858989ea32618fffdcffb7a7e59e0d1ba4574a32454dcca6dd3062400d
-coverage_gids:
-  - D5/S3/ConceptDynamics/Experiment/PassiveAdaptiveTranscriptUpperBound.passive_adaptive_transcript_upper_bound
+coverage:
+  - gid: D5/S3/ConceptDynamics/Experiment/PassiveAdaptiveTranscriptUpperBound.passive_adaptive_transcript_upper_bound
+    target_statement_id: sha256:ccc876eda8a81804060eac093dee28d225c839eec843cf56650e868d8b794d4c
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Experiment/PassiveAdaptiveTranscriptUpperBound.passive_adaptive_transcript_upper_bound
-      source_sha256: sha256:465631858989ea32618fffdcffb7a7e59e0d1ba4574a32454dcca6dd3062400d
-      target_statement_id: sha256:ccc876eda8a81804060eac093dee28d225c839eec843cf56650e868d8b794d4c
   scribe:
     - gid: D5/S3/ConceptDynamics/Experiment/PassiveAdaptiveTranscriptUpperBound.passive_adaptive_transcript_upper_bound
       definition_sha256: sha256:d293b46d958402d03408a2ccf8eefa61ce1cc045e5dbe0569b1bd0470d83b354

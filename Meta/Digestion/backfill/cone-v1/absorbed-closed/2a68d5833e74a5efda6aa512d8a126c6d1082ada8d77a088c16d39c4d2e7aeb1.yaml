@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:2a68d5833e74a5efda6aa512d8a126c6d1082ada8d77a088c16d39c4d2e7aeb1
   normalized_sha256: sha256:2a68d5833e74a5efda6aa512d8a126c6d1082ada8d77a088c16d39c4d2e7aeb1
 cas_ref: sha256:2a68d5833e74a5efda6aa512d8a126c6d1082ada8d77a088c16d39c4d2e7aeb1
-coverage_gids:
-  - D5/S3/QuantumChannels/ContractionSpectrumOrder.contraction_spectrum_order
+coverage:
+  - gid: D5/S3/QuantumChannels/ContractionSpectrumOrder.contraction_spectrum_order
+    target_statement_id: sha256:9068fff5dd683b0233b236d14ee6c1f5bdec5b25e632f5063de0f9207dd38772
 receipts:
-  coverage:
-    - gid: D5/S3/QuantumChannels/ContractionSpectrumOrder.contraction_spectrum_order
-      source_sha256: sha256:2a68d5833e74a5efda6aa512d8a126c6d1082ada8d77a088c16d39c4d2e7aeb1
-      target_statement_id: sha256:9068fff5dd683b0233b236d14ee6c1f5bdec5b25e632f5063de0f9207dd38772
   scribe:
     - gid: D5/S3/QuantumChannels/ContractionSpectrumOrder.contraction_spectrum_order
       definition_sha256: sha256:7778505ee3dd17bc2f51e645643ad4579cea10562f2dddaa1afca0dda19ea7fb

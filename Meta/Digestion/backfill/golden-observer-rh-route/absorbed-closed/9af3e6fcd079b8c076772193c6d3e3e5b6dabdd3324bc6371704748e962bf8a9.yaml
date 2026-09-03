@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:9af3e6fcd079b8c076772193c6d3e3e5b6dabdd3324bc6371704748e962bf8a9
   normalized_sha256: sha256:9af3e6fcd079b8c076772193c6d3e3e5b6dabdd3324bc6371704748e962bf8a9
 cas_ref: sha256:9af3e6fcd079b8c076772193c6d3e3e5b6dabdd3324bc6371704748e962bf8a9
-coverage_gids:
-  - D5/S3/Analytic/Toroidal/ProjectiveJetScaleInvariance.projective_toroidal_jet_scale_invariance
+coverage:
+  - gid: D5/S3/Analytic/Toroidal/ProjectiveJetScaleInvariance.projective_toroidal_jet_scale_invariance
+    target_statement_id: sha256:327494f210231395a6934a222e9f2f4a4abee267f43910b118c46e28f3ccd296
 receipts:
-  coverage:
-    - gid: D5/S3/Analytic/Toroidal/ProjectiveJetScaleInvariance.projective_toroidal_jet_scale_invariance
-      source_sha256: sha256:9af3e6fcd079b8c076772193c6d3e3e5b6dabdd3324bc6371704748e962bf8a9
-      target_statement_id: sha256:327494f210231395a6934a222e9f2f4a4abee267f43910b118c46e28f3ccd296
   scribe:
     - gid: D5/S3/Analytic/Toroidal/ProjectiveJetScaleInvariance.projective_toroidal_jet_scale_invariance
       definition_sha256: sha256:7a3c77fe234ff22d5e0ea1a19bddb57c592710bc174ed2019290589f281201c0

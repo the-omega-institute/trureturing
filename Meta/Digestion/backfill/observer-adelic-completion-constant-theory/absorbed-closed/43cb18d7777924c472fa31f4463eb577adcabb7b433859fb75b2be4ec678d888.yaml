@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:43cb18d7777924c472fa31f4463eb577adcabb7b433859fb75b2be4ec678d888
   normalized_sha256: sha256:43cb18d7777924c472fa31f4463eb577adcabb7b433859fb75b2be4ec678d888
 cas_ref: sha256:43cb18d7777924c472fa31f4463eb577adcabb7b433859fb75b2be4ec678d888
-coverage_gids:
-  - D5/S3/PrimeForms/GoldenEuler/ModFiveLocalEulerFactor.mod_five_local_observer_determinant
+coverage:
+  - gid: D5/S3/PrimeForms/GoldenEuler/ModFiveLocalEulerFactor.mod_five_local_observer_determinant
+    target_statement_id: sha256:46d8700097c38bc32e50277f5002965a145a1e8fa707509356c20188baf5fd42
 receipts:
-  coverage:
-    - gid: D5/S3/PrimeForms/GoldenEuler/ModFiveLocalEulerFactor.mod_five_local_observer_determinant
-      source_sha256: sha256:43cb18d7777924c472fa31f4463eb577adcabb7b433859fb75b2be4ec678d888
-      target_statement_id: sha256:46d8700097c38bc32e50277f5002965a145a1e8fa707509356c20188baf5fd42
   scribe:
     - gid: D5/S3/PrimeForms/GoldenEuler/ModFiveLocalEulerFactor.mod_five_local_observer_determinant
       definition_sha256: sha256:df020d2bf48e122762444fa74f812b508b23aa25b3b56957c3da99fc3c02e80c

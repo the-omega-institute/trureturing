@@ -2,14 +2,12 @@ fingerprints:
   raw_sha256: sha256:d117b7f10eb9a9d88cefeb7441e67c250bffc12a4815266575812aa1d7b309b4
   normalized_sha256: sha256:d117b7f10eb9a9d88cefeb7441e67c250bffc12a4815266575812aa1d7b309b4
 cas_ref: sha256:d117b7f10eb9a9d88cefeb7441e67c250bffc12a4815266575812aa1d7b309b4
-coverage_gids: []
+coverage: []
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems: []
   cover_disposition:
     outcome: partial-closed
-    recorded_at_utc: 2026-08-28T02:56:01.6541450+00:00
     gids:
       - D5/S3/Quantum/Decoherence/StaticLossVersusReturnFlow.static_loss_and_return_flow_are_logically_independent
     gaps:

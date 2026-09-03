@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:28166618c88b51368fc8334444541e1804d4de96c221c07ba804f2aa450c4364
   normalized_sha256: sha256:28166618c88b51368fc8334444541e1804d4de96c221c07ba804f2aa450c4364
 cas_ref: sha256:28166618c88b51368fc8334444541e1804d4de96c221c07ba804f2aa450c4364
-coverage_gids:
-  - D5/S3/ObserverMemory/PredictionFactors/MinimalNaturality.minimal_naturality_factor
+coverage:
+  - gid: D5/S3/ObserverMemory/PredictionFactors/MinimalNaturality.minimal_naturality_factor
+    target_statement_id: sha256:bc2a54bab05b96c663d6a4932147224dab16240f5e1d4568b072d36b90516eb3
 receipts:
-  coverage:
-    - gid: D5/S3/ObserverMemory/PredictionFactors/MinimalNaturality.minimal_naturality_factor
-      source_sha256: sha256:28166618c88b51368fc8334444541e1804d4de96c221c07ba804f2aa450c4364
-      target_statement_id: sha256:bc2a54bab05b96c663d6a4932147224dab16240f5e1d4568b072d36b90516eb3
   scribe:
     - gid: D5/S3/ObserverMemory/PredictionFactors/MinimalNaturality.minimal_naturality_factor
       definition_sha256: sha256:74dd9ffd874c7aa4fd5a251122dbeda83244f0f8b4e004836b8dfefda1259720

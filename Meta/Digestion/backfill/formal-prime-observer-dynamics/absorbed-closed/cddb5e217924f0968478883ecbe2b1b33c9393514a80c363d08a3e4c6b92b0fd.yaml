@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:cddb5e217924f0968478883ecbe2b1b33c9393514a80c363d08a3e4c6b92b0fd
   normalized_sha256: sha256:cddb5e217924f0968478883ecbe2b1b33c9393514a80c363d08a3e4c6b92b0fd
 cas_ref: sha256:cddb5e217924f0968478883ecbe2b1b33c9393514a80c363d08a3e4c6b92b0fd
-coverage_gids:
-  - D5/S3/Arith/Coding/FullCRTBlindCountAndDistance.full_crt_blind_count_distance_and_detection_limit
+coverage:
+  - gid: D5/S3/Arith/Coding/FullCRTBlindCountAndDistance.full_crt_blind_count_distance_and_detection_limit
+    target_statement_id: sha256:e907915e7a23e63faac6a75f6715513857b637187c3289ad5e8a9ea4cd598d41
 receipts:
-  coverage:
-    - gid: D5/S3/Arith/Coding/FullCRTBlindCountAndDistance.full_crt_blind_count_distance_and_detection_limit
-      source_sha256: sha256:cddb5e217924f0968478883ecbe2b1b33c9393514a80c363d08a3e4c6b92b0fd
-      target_statement_id: sha256:e907915e7a23e63faac6a75f6715513857b637187c3289ad5e8a9ea4cd598d41
   scribe:
     - gid: D5/S3/Arith/Coding/FullCRTBlindCountAndDistance.full_crt_blind_count_distance_and_detection_limit
       definition_sha256: sha256:b952c87f060216b1ae240734d46fb7f75c57ca07a39101042d4df8893fc82c34

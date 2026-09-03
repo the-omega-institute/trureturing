@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:08de5cb557b0c334e708d0b43f314804bc9745fdc724f8ff191faf2cfc3f8298
   normalized_sha256: sha256:08de5cb557b0c334e708d0b43f314804bc9745fdc724f8ff191faf2cfc3f8298
 cas_ref: sha256:08de5cb557b0c334e708d0b43f314804bc9745fdc724f8ff191faf2cfc3f8298
-coverage_gids:
-  - D5/S3/ConceptDynamics/Revision/EvolutionEvidencePullbackIdentity.evolution_evidence_pullback_identity
+coverage:
+  - gid: D5/S3/ConceptDynamics/Revision/EvolutionEvidencePullbackIdentity.evolution_evidence_pullback_identity
+    target_statement_id: sha256:19e6dd06a526093274618c0bed1d7c71b064e312d9ad302489944fffd4ed06fe
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Revision/EvolutionEvidencePullbackIdentity.evolution_evidence_pullback_identity
-      source_sha256: sha256:08de5cb557b0c334e708d0b43f314804bc9745fdc724f8ff191faf2cfc3f8298
-      target_statement_id: sha256:19e6dd06a526093274618c0bed1d7c71b064e312d9ad302489944fffd4ed06fe
   scribe:
     - gid: D5/S3/ConceptDynamics/Revision/EvolutionEvidencePullbackIdentity.evolution_evidence_pullback_identity
       definition_sha256: sha256:1399632d9ea642f7ef8c306affc0a43232cb9adfe54d6f997555c0a2f0e1257e

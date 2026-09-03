@@ -2,21 +2,10 @@ fingerprints:
   raw_sha256: sha256:11ca2010b5fe590b164d87c114cae9a1b7dd59aa5fd66f9a8861f7375892d5ed
   normalized_sha256: sha256:11ca2010b5fe590b164d87c114cae9a1b7dd59aa5fd66f9a8861f7375892d5ed
 cas_ref: sha256:11ca2010b5fe590b164d87c114cae9a1b7dd59aa5fd66f9a8861f7375892d5ed
-coverage_gids:
-  - D5/S3/Quantum/Tomography/PurityPythagorasDecomposition.purity_pythagoras_decomposition
+coverage:
+  - gid: D5/S3/Quantum/Tomography/PurityPythagorasDecomposition.purity_pythagoras_decomposition
+    target_statement_id: sha256:7a640e251b1bbedf4da90c0b48ec50750ced3f10ef79f2bc9e841727aba7f05f
 receipts:
-  coverage:
-    - gid: D5/S3/Quantum/Tomography/PurityPythagorasDecomposition.purity_pythagoras_decomposition
-      source_sha256: sha256:11ca2010b5fe590b164d87c114cae9a1b7dd59aa5fd66f9a8861f7375892d5ed
-      target_statement_id: sha256:7a640e251b1bbedf4da90c0b48ec50750ced3f10ef79f2bc9e841727aba7f05f
-      statement_id_history:
-        - statement_id: sha256:e939193453fe6bad97188a14e8a6ea34192d3a3c54f247b5f5cd6156f9649ff5
-          environment_pin:
-            toolchain: leanprover/lean4:v4.31.0
-            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
-          superseded_by_pin:
-            toolchain: leanprover/lean4:v4.33.0
-            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Quantum/Tomography/PurityPythagorasDecomposition.purity_pythagoras_decomposition
       definition_sha256: sha256:af7029be50941df5aedddc4cc40f4546b335d73d377adcb9dcbe3f719e9c79bf

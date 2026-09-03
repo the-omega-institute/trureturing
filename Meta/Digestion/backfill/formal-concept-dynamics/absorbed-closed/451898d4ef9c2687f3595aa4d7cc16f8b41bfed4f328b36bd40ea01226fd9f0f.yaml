@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:451898d4ef9c2687f3595aa4d7cc16f8b41bfed4f328b36bd40ea01226fd9f0f
   normalized_sha256: sha256:451898d4ef9c2687f3595aa4d7cc16f8b41bfed4f328b36bd40ea01226fd9f0f
 cas_ref: sha256:451898d4ef9c2687f3595aa4d7cc16f8b41bfed4f328b36bd40ea01226fd9f0f
-coverage_gids:
-  - D5/S3/ConceptDynamics/Dialectics/ExactDescentNoCarry.exact_descent_has_no_carry
+coverage:
+  - gid: D5/S3/ConceptDynamics/Dialectics/ExactDescentNoCarry.exact_descent_has_no_carry
+    target_statement_id: sha256:331ec6ef1da8cfe53171dbcde9355252142ff8ddac7c2511d02fa0484feb0d28
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Dialectics/ExactDescentNoCarry.exact_descent_has_no_carry
-      source_sha256: sha256:451898d4ef9c2687f3595aa4d7cc16f8b41bfed4f328b36bd40ea01226fd9f0f
-      target_statement_id: sha256:331ec6ef1da8cfe53171dbcde9355252142ff8ddac7c2511d02fa0484feb0d28
   scribe:
     - gid: D5/S3/ConceptDynamics/Dialectics/ExactDescentNoCarry.exact_descent_has_no_carry
       definition_sha256: sha256:ea5e62b433e471b95856a40aa5b545a79055f409fb2f2081047967faf8b3e9af

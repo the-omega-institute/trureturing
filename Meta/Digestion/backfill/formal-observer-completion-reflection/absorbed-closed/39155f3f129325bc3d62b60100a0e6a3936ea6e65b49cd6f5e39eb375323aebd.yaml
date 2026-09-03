@@ -2,21 +2,10 @@ fingerprints:
   raw_sha256: sha256:39155f3f129325bc3d62b60100a0e6a3936ea6e65b49cd6f5e39eb375323aebd
   normalized_sha256: sha256:39155f3f129325bc3d62b60100a0e6a3936ea6e65b49cd6f5e39eb375323aebd
 cas_ref: sha256:39155f3f129325bc3d62b60100a0e6a3936ea6e65b49cd6f5e39eb375323aebd
-coverage_gids:
-  - D5/S3/ConceptDynamics/Decision/NonuniqueOptimalActionSelector.determined_optimal_set_can_be_nonunique
+coverage:
+  - gid: D5/S3/ConceptDynamics/Decision/NonuniqueOptimalActionSelector.determined_optimal_set_can_be_nonunique
+    target_statement_id: sha256:c911c7abb8a16c9254b341d3a28106051942b1df3c6794fbe57f8d3ee6fbf896
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Decision/NonuniqueOptimalActionSelector.determined_optimal_set_can_be_nonunique
-      source_sha256: sha256:39155f3f129325bc3d62b60100a0e6a3936ea6e65b49cd6f5e39eb375323aebd
-      target_statement_id: sha256:c911c7abb8a16c9254b341d3a28106051942b1df3c6794fbe57f8d3ee6fbf896
-      statement_id_history:
-        - statement_id: sha256:e561159fe76cdc463f5db5ce5e89d0c2752e8ee9d4f538562d21322bb934498a
-          environment_pin:
-            toolchain: leanprover/lean4:v4.31.0
-            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
-          superseded_by_pin:
-            toolchain: leanprover/lean4:v4.33.0
-            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ConceptDynamics/Decision/NonuniqueOptimalActionSelector.determined_optimal_set_can_be_nonunique
       definition_sha256: sha256:1224adb1a67fe5a9b8eec75af65793fa2b9a800b1d4912beffed4b11a1b4318e

@@ -2,21 +2,10 @@ fingerprints:
   raw_sha256: sha256:9b6f4d5acaa5ee70dbe509f4eaa725d66d15f89675cc721d87df97879d719a00
   normalized_sha256: sha256:9b6f4d5acaa5ee70dbe509f4eaa725d66d15f89675cc721d87df97879d719a00
 cas_ref: sha256:9b6f4d5acaa5ee70dbe509f4eaa725d66d15f89675cc721d87df97879d719a00
-coverage_gids:
-  - D5/S3/Quantum/Fibers/MinimalPredictiveSummary.minimal_predictive_summary
+coverage:
+  - gid: D5/S3/Quantum/Fibers/MinimalPredictiveSummary.minimal_predictive_summary
+    target_statement_id: sha256:c2e60f73fc02c69cc254fb7f4c98767ec840cd011d1bb02c7a40e7de63f05dcc
 receipts:
-  coverage:
-    - gid: D5/S3/Quantum/Fibers/MinimalPredictiveSummary.minimal_predictive_summary
-      source_sha256: sha256:9b6f4d5acaa5ee70dbe509f4eaa725d66d15f89675cc721d87df97879d719a00
-      target_statement_id: sha256:c2e60f73fc02c69cc254fb7f4c98767ec840cd011d1bb02c7a40e7de63f05dcc
-      statement_id_history:
-        - statement_id: sha256:522020f522c4602a5277fa25d8e1659d0694964649d0320d3d4619272e7a428e
-          environment_pin:
-            toolchain: leanprover/lean4:v4.31.0
-            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
-          superseded_by_pin:
-            toolchain: leanprover/lean4:v4.33.0
-            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Quantum/Fibers/MinimalPredictiveSummary.minimal_predictive_summary
       definition_sha256: sha256:408bdc257d20ef235884037a71729559ee4b2ee42d7cf44699476cb04428375f

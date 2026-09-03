@@ -2,14 +2,12 @@ fingerprints:
   raw_sha256: sha256:7b99b4f489892b56971306f2e746ae572b723bfc2a6aa862fef374f686f1fb7e
   normalized_sha256: sha256:7b99b4f489892b56971306f2e746ae572b723bfc2a6aa862fef374f686f1fb7e
 cas_ref: sha256:7b99b4f489892b56971306f2e746ae572b723bfc2a6aa862fef374f686f1fb7e
-coverage_gids: []
+coverage: []
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems: []
   cover_disposition:
     outcome: partial-closed
-    recorded_at_utc: 2026-08-28T01:39:06.0103670+00:00
     gids:
       - D5/S3/ConceptDynamics/Transport/CompactHausdorffDescent.compact_hausdorff_automatic_quotient
     gaps:

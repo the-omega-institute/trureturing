@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:a13bd93371962733a21413d2d3d732144bb6c9e5f0ecd6a1e46137d0c05abfb5
   normalized_sha256: sha256:a13bd93371962733a21413d2d3d732144bb6c9e5f0ecd6a1e46137d0c05abfb5
 cas_ref: sha256:a13bd93371962733a21413d2d3d732144bb6c9e5f0ecd6a1e46137d0c05abfb5
-coverage_gids:
-  - D5/S3/PrimeForms/Splitting/ThreeRingProfileFibers.tri_ring_image_surjective_with_fibers_of_card_two
+coverage:
+  - gid: D5/S3/PrimeForms/Splitting/ThreeRingProfileFibers.tri_ring_image_surjective_with_fibers_of_card_two
+    target_statement_id: sha256:e0f02c68f73288658935894d00037ad4b4c9ed57eb32f7808eb7d2effd1f5184
 receipts:
-  coverage:
-    - gid: D5/S3/PrimeForms/Splitting/ThreeRingProfileFibers.tri_ring_image_surjective_with_fibers_of_card_two
-      source_sha256: sha256:a13bd93371962733a21413d2d3d732144bb6c9e5f0ecd6a1e46137d0c05abfb5
-      target_statement_id: sha256:e0f02c68f73288658935894d00037ad4b4c9ed57eb32f7808eb7d2effd1f5184
   scribe:
     - gid: D5/S3/PrimeForms/Splitting/ThreeRingProfileFibers.tri_ring_image_surjective_with_fibers_of_card_two
       definition_sha256: sha256:62826b4162e227748e9458352f375e1d261582d1795cb48afe804f097c9d28d9

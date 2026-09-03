@@ -2,23 +2,18 @@ fingerprints:
   raw_sha256: sha256:a9e4073c36dcdc04163974b80a47d7884f470463b0b0bdd112c4c552bc29a607
   normalized_sha256: sha256:a9e4073c36dcdc04163974b80a47d7884f470463b0b0bdd112c4c552bc29a607
 cas_ref: sha256:a9e4073c36dcdc04163974b80a47d7884f470463b0b0bdd112c4c552bc29a607
-coverage_gids:
-  - D5/S3/Observer/HiddenFlow/ContinuousRigidity.continuous_hidden_flow_eq_zero
-  - D5/S3/Quantum/Algebra/CovariantCommutator.covariant_commutator_formula
-  - D5/S3/Quantum/ObserverAlgebra.observer_read_update_noncommutative
-  - D5/S3/Quantum/ObserverAlgebra.observer_update_covariant_group_skeleton
-  - D5/S3/Quantum/ObserverCommutator.observer_read_update_commutator_formula
+coverage:
+  - gid: D5/S3/Observer/HiddenFlow/ContinuousRigidity.continuous_hidden_flow_eq_zero
+    target_statement_id: sha256:f77b072f72dd747f65fa017c6414739473abb1344cdd5f3d4645d50e596b8d5d
+  - gid: D5/S3/Quantum/Algebra/CovariantCommutator.covariant_commutator_formula
+    target_statement_id: sha256:5fee36e3a1b2760bb618d71369afe1e0667cb610a50d9e158839a86f6cb1d747
+  - gid: D5/S3/Quantum/ObserverAlgebra.observer_read_update_noncommutative
+    target_statement_id: sha256:5dba094faf929fafe41a138d8f13ccee608eedeb5e9b32402b384a2fb4aa61de
+  - gid: D5/S3/Quantum/ObserverAlgebra.observer_update_covariant_group_skeleton
+    target_statement_id: sha256:653a60f8ac7e49aa50efd534a0bd20409e3b753a7bd6326e9b70bdf1c7e79994
+  - gid: D5/S3/Quantum/ObserverCommutator.observer_read_update_commutator_formula
+    target_statement_id: sha256:6f0180e088e545c318d5f80e305aed87dce27ae6b325b11e43f59cd885cb0d16
 receipts:
-  coverage:
-    - gid: D5/S3/Quantum/ObserverAlgebra.observer_read_update_noncommutative
-      source_sha256: sha256:a9e4073c36dcdc04163974b80a47d7884f470463b0b0bdd112c4c552bc29a607
-      target_statement_id: sha256:5dba094faf929fafe41a138d8f13ccee608eedeb5e9b32402b384a2fb4aa61de
-    - gid: D5/S3/Quantum/ObserverAlgebra.observer_update_covariant_group_skeleton
-      source_sha256: sha256:a9e4073c36dcdc04163974b80a47d7884f470463b0b0bdd112c4c552bc29a607
-      target_statement_id: sha256:653a60f8ac7e49aa50efd534a0bd20409e3b753a7bd6326e9b70bdf1c7e79994
-    - gid: D5/S3/Quantum/ObserverCommutator.observer_read_update_commutator_formula
-      source_sha256: sha256:a9e4073c36dcdc04163974b80a47d7884f470463b0b0bdd112c4c552bc29a607
-      target_statement_id: sha256:6f0180e088e545c318d5f80e305aed87dce27ae6b325b11e43f59cd885cb0d16
   scribe: []
   unresolved_subitems:
     - discrete-crossed-product-uniqueness

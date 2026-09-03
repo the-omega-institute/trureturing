@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:ee81099d91d8e53eda6998a46f5a8848dc68ae9b84b360286c04419cf7992bcf
   normalized_sha256: sha256:ee81099d91d8e53eda6998a46f5a8848dc68ae9b84b360286c04419cf7992bcf
 cas_ref: sha256:ee81099d91d8e53eda6998a46f5a8848dc68ae9b84b360286c04419cf7992bcf
-coverage_gids:
-  - D5/S3/Estimation/SequentialDecisionRisk/TaskFamilyLawKernelCriterion.task_family_law_kernel_criterion
+coverage:
+  - gid: D5/S3/Estimation/SequentialDecisionRisk/TaskFamilyLawKernelCriterion.task_family_law_kernel_criterion
+    target_statement_id: sha256:8b763d761144823df1d4134a9b76105c901634541dae4315fb1012332166019f
 receipts:
-  coverage:
-    - gid: D5/S3/Estimation/SequentialDecisionRisk/TaskFamilyLawKernelCriterion.task_family_law_kernel_criterion
-      source_sha256: sha256:ee81099d91d8e53eda6998a46f5a8848dc68ae9b84b360286c04419cf7992bcf
-      target_statement_id: sha256:8b763d761144823df1d4134a9b76105c901634541dae4315fb1012332166019f
   scribe:
     - gid: D5/S3/Estimation/SequentialDecisionRisk/TaskFamilyLawKernelCriterion.task_family_law_kernel_criterion
       definition_sha256: sha256:f0019cb384c62c830dea5bcdd7b67772b58b031aab548d68792c17f709d1e8a2

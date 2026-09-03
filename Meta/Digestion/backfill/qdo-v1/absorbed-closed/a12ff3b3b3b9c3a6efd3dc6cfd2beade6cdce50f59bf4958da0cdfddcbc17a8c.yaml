@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:a12ff3b3b3b9c3a6efd3dc6cfd2beade6cdce50f59bf4958da0cdfddcbc17a8c
   normalized_sha256: sha256:a12ff3b3b3b9c3a6efd3dc6cfd2beade6cdce50f59bf4958da0cdfddcbc17a8c
 cas_ref: sha256:a12ff3b3b3b9c3a6efd3dc6cfd2beade6cdce50f59bf4958da0cdfddcbc17a8c
-coverage_gids:
-  - D5/S3/ObserverMemory/Refinement/PredictionCompletionIdempotence.prediction_completion_idempotent
+coverage:
+  - gid: D5/S3/ObserverMemory/Refinement/PredictionCompletionIdempotence.prediction_completion_idempotent
+    target_statement_id: sha256:0bcc081d79b8ed5df5e4001519237a530e9d3c80afaaa2684b17120fcbd4c8b1
 receipts:
-  coverage:
-    - gid: D5/S3/ObserverMemory/Refinement/PredictionCompletionIdempotence.prediction_completion_idempotent
-      source_sha256: sha256:a12ff3b3b3b9c3a6efd3dc6cfd2beade6cdce50f59bf4958da0cdfddcbc17a8c
-      target_statement_id: sha256:0bcc081d79b8ed5df5e4001519237a530e9d3c80afaaa2684b17120fcbd4c8b1
   scribe:
     - gid: D5/S3/ObserverMemory/Refinement/PredictionCompletionIdempotence.prediction_completion_idempotent
       definition_sha256: sha256:46a0db0d3d30da8efe4139ce8ff9b3888dcf5a11751737315611aaeb96088059

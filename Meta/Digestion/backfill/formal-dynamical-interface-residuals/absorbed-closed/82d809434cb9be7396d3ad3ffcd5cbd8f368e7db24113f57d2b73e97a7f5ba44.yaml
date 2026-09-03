@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:82d809434cb9be7396d3ad3ffcd5cbd8f368e7db24113f57d2b73e97a7f5ba44
   normalized_sha256: sha256:82d809434cb9be7396d3ad3ffcd5cbd8f368e7db24113f57d2b73e97a7f5ba44
 cas_ref: sha256:82d809434cb9be7396d3ad3ffcd5cbd8f368e7db24113f57d2b73e97a7f5ba44
-coverage_gids:
-  - D5/S3/ConceptDynamics/SufficiencyQuotient/TargetFamilyMinimalQuotient.target_family_minimal_quotient
+coverage:
+  - gid: D5/S3/ConceptDynamics/SufficiencyQuotient/TargetFamilyMinimalQuotient.target_family_minimal_quotient
+    target_statement_id: sha256:3affb404c3b655f0559fccedb688d9ea650c33f95ddf16b076594f0a38d4b6a7
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/SufficiencyQuotient/TargetFamilyMinimalQuotient.target_family_minimal_quotient
-      source_sha256: sha256:82d809434cb9be7396d3ad3ffcd5cbd8f368e7db24113f57d2b73e97a7f5ba44
-      target_statement_id: sha256:3affb404c3b655f0559fccedb688d9ea650c33f95ddf16b076594f0a38d4b6a7
   scribe:
     - gid: D5/S3/ConceptDynamics/SufficiencyQuotient/TargetFamilyMinimalQuotient.target_family_minimal_quotient
       definition_sha256: sha256:b542d935edd6072c74c2dc9f5dc3e294e47df787b89f02f24f0ccea46d5604ec

@@ -2,21 +2,10 @@ fingerprints:
   raw_sha256: sha256:34b66cd959d4fd6d64be5cfd6b98b24ea327207f784a7fcecdfc8c65956e28ef
   normalized_sha256: sha256:34b66cd959d4fd6d64be5cfd6b98b24ea327207f784a7fcecdfc8c65956e28ef
 cas_ref: sha256:34b66cd959d4fd6d64be5cfd6b98b24ea327207f784a7fcecdfc8c65956e28ef
-coverage_gids:
-  - D5/S3/Observer/LinearMemory/MemoryDimensionFormula.memory_dimension_formula
+coverage:
+  - gid: D5/S3/Observer/LinearMemory/MemoryDimensionFormula.memory_dimension_formula
+    target_statement_id: sha256:3fd41c0dae868b4d163328d6f015fe3ea778ed5fd9cb5183f4f02f4781aaec6a
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/LinearMemory/MemoryDimensionFormula.memory_dimension_formula
-      source_sha256: sha256:34b66cd959d4fd6d64be5cfd6b98b24ea327207f784a7fcecdfc8c65956e28ef
-      target_statement_id: sha256:3fd41c0dae868b4d163328d6f015fe3ea778ed5fd9cb5183f4f02f4781aaec6a
-      statement_id_history:
-        - statement_id: sha256:54e5c957b11ea3a0eda11e0d5ea8fc3e2b70d757b48a5be64d7614ac121152d9
-          environment_pin:
-            toolchain: leanprover/lean4:v4.31.0
-            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
-          superseded_by_pin:
-            toolchain: leanprover/lean4:v4.33.0
-            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Observer/LinearMemory/MemoryDimensionFormula.memory_dimension_formula
       definition_sha256: sha256:230de5ad12454a65b60ac3bb3e0944758f1066decfa2b4371947dba15643a082

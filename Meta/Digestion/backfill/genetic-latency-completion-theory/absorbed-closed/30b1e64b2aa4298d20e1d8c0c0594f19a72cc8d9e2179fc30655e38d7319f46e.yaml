@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:30b1e64b2aa4298d20e1d8c0c0594f19a72cc8d9e2179fc30655e38d7319f46e
   normalized_sha256: sha256:30b1e64b2aa4298d20e1d8c0c0594f19a72cc8d9e2179fc30655e38d7319f46e
 cas_ref: sha256:30b1e64b2aa4298d20e1d8c0c0594f19a72cc8d9e2179fc30655e38d7319f46e
-coverage_gids:
-  - D5/S3/ConceptDynamics/RefinementAlgebra/ObservableEventComplementPersistence.observable_event_complement_persistence
+coverage:
+  - gid: D5/S3/ConceptDynamics/RefinementAlgebra/ObservableEventComplementPersistence.observable_event_complement_persistence
+    target_statement_id: sha256:6b7e9dbbae23f5bcd1e312e43d8b52ee7079d82a0b4de1e77ac794520082a16d
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/RefinementAlgebra/ObservableEventComplementPersistence.observable_event_complement_persistence
-      source_sha256: sha256:30b1e64b2aa4298d20e1d8c0c0594f19a72cc8d9e2179fc30655e38d7319f46e
-      target_statement_id: sha256:6b7e9dbbae23f5bcd1e312e43d8b52ee7079d82a0b4de1e77ac794520082a16d
   scribe:
     - gid: D5/S3/ConceptDynamics/RefinementAlgebra/ObservableEventComplementPersistence.observable_event_complement_persistence
       definition_sha256: sha256:b9edf22e77e5a6c8f3b06facbdda1479ee60b42abd407be95269627cddad9c3c

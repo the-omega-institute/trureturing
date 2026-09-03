@@ -2,21 +2,10 @@ fingerprints:
   raw_sha256: sha256:c489589ec6ddcb0c64426366493052a3fb95c886c689cede58321fe664fca8c1
   normalized_sha256: sha256:c489589ec6ddcb0c64426366493052a3fb95c886c689cede58321fe664fca8c1
 cas_ref: sha256:c489589ec6ddcb0c64426366493052a3fb95c886c689cede58321fe664fca8c1
-coverage_gids:
-  - D5/S3/Quantum/Measurement/StaticEffectSequentialSeparation.same_effects_different_two_step_joint_law
+coverage:
+  - gid: D5/S3/Quantum/Measurement/StaticEffectSequentialSeparation.same_effects_different_two_step_joint_law
+    target_statement_id: sha256:99d6da6e12fd161b217044af31c5768e53bef2a23305a2b98fc082a2cbd3cbb1
 receipts:
-  coverage:
-    - gid: D5/S3/Quantum/Measurement/StaticEffectSequentialSeparation.same_effects_different_two_step_joint_law
-      source_sha256: sha256:c489589ec6ddcb0c64426366493052a3fb95c886c689cede58321fe664fca8c1
-      target_statement_id: sha256:99d6da6e12fd161b217044af31c5768e53bef2a23305a2b98fc082a2cbd3cbb1
-      statement_id_history:
-        - statement_id: sha256:7f8dd428b15b207633217ae9bcba5782d899665da43d72b70e8cf06ede8367c1
-          environment_pin:
-            toolchain: leanprover/lean4:v4.31.0
-            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
-          superseded_by_pin:
-            toolchain: leanprover/lean4:v4.33.0
-            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Quantum/Measurement/StaticEffectSequentialSeparation.same_effects_different_two_step_joint_law
       definition_sha256: sha256:8a7bd10e5d19228d94b1bc90aeccd7df43bd8cef5e3e689c54865428beb338c8

@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:4f09b4f83540a917afd3ecc77af0885a6d2b75bc5c08d880996d12e38e70cd92
   normalized_sha256: sha256:4f09b4f83540a917afd3ecc77af0885a6d2b75bc5c08d880996d12e38e70cd92
 cas_ref: sha256:4f09b4f83540a917afd3ecc77af0885a6d2b75bc5c08d880996d12e38e70cd92
-coverage_gids:
-  - D5/S3/Weil/Budget/PositiveCayleyScaleTransport.positive_cayley_scale_transport
+coverage:
+  - gid: D5/S3/Weil/Budget/PositiveCayleyScaleTransport.positive_cayley_scale_transport
+    target_statement_id: sha256:3d9cba32d2dad91502c7d5b659197ae9091365c649a7b0768381deb87ef29a71
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/Budget/PositiveCayleyScaleTransport.positive_cayley_scale_transport
-      source_sha256: sha256:4f09b4f83540a917afd3ecc77af0885a6d2b75bc5c08d880996d12e38e70cd92
-      target_statement_id: sha256:3d9cba32d2dad91502c7d5b659197ae9091365c649a7b0768381deb87ef29a71
   scribe:
     - gid: D5/S3/Weil/Budget/PositiveCayleyScaleTransport.positive_cayley_scale_transport
       definition_sha256: sha256:23506173057277dffd778dbc9f921e11a52d795b60f40a0e018a673b9a8bf830

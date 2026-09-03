@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:70f8882948d1f3dab1609140e7d59489b311857b0e1abf7f8bd43dc47d2969c2
   normalized_sha256: sha256:70f8882948d1f3dab1609140e7d59489b311857b0e1abf7f8bd43dc47d2969c2
 cas_ref: sha256:70f8882948d1f3dab1609140e7d59489b311857b0e1abf7f8bd43dc47d2969c2
-coverage_gids:
-  - D5/S3/Observer/Separation/RootPulseSharpness.root_pulse_sharpness
+coverage:
+  - gid: D5/S3/Observer/Separation/RootPulseSharpness.root_pulse_sharpness
+    target_statement_id: sha256:2d99faa4beba032e7f750fb6a8576dbf2ffc03732472ce3467670b40b337ae27
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/Separation/RootPulseSharpness.root_pulse_sharpness
-      source_sha256: sha256:70f8882948d1f3dab1609140e7d59489b311857b0e1abf7f8bd43dc47d2969c2
-      target_statement_id: sha256:2d99faa4beba032e7f750fb6a8576dbf2ffc03732472ce3467670b40b337ae27
   scribe:
     - gid: D5/S3/Observer/Separation/RootPulseSharpness.root_pulse_sharpness
       definition_sha256: sha256:100651c45bf695e8571d4d4e8bd59253cf08f5f53e85710a80bedc1319ea003a

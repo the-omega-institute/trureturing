@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:513369a568e8fdcb22dda7f9ed1d70a637911beea4424ef48a6cea8d7ba2c41f
   normalized_sha256: sha256:513369a568e8fdcb22dda7f9ed1d70a637911beea4424ef48a6cea8d7ba2c41f
 cas_ref: sha256:513369a568e8fdcb22dda7f9ed1d70a637911beea4424ef48a6cea8d7ba2c41f
-coverage_gids:
-  - D5/S3/Quantum/Fibers/FiniteOperatorSystemStability.finite_operator_system_once_stable_permanently
+coverage:
+  - gid: D5/S3/Quantum/Fibers/FiniteOperatorSystemStability.finite_operator_system_once_stable_permanently
+    target_statement_id: sha256:ee611aff1fe1a2214517763958c873233c1b4d7a95fb47d19fdfbfd7025267cf
 receipts:
-  coverage:
-    - gid: D5/S3/Quantum/Fibers/FiniteOperatorSystemStability.finite_operator_system_once_stable_permanently
-      source_sha256: sha256:513369a568e8fdcb22dda7f9ed1d70a637911beea4424ef48a6cea8d7ba2c41f
-      target_statement_id: sha256:ee611aff1fe1a2214517763958c873233c1b4d7a95fb47d19fdfbfd7025267cf
   scribe:
     - gid: D5/S3/Quantum/Fibers/FiniteOperatorSystemStability.finite_operator_system_once_stable_permanently
       definition_sha256: sha256:e419069ac6ce6359a43488f8847302b73095ff1e2c37d209772064ee417b1ee8

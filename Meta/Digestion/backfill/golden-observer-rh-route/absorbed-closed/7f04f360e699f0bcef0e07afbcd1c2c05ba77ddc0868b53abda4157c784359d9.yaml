@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:7f04f360e699f0bcef0e07afbcd1c2c05ba77ddc0868b53abda4157c784359d9
   normalized_sha256: sha256:7f04f360e699f0bcef0e07afbcd1c2c05ba77ddc0868b53abda4157c784359d9
 cas_ref: sha256:7f04f360e699f0bcef0e07afbcd1c2c05ba77ddc0868b53abda4157c784359d9
-coverage_gids:
-  - D5/S1/Deficit/Beatty/GoldenSpectralCoordinate.golden_spectral_im_eq_zero_iff
+coverage:
+  - gid: D5/S1/Deficit/Beatty/GoldenSpectralCoordinate.golden_spectral_im_eq_zero_iff
+    target_statement_id: sha256:d38ed1f5095b555ee7e0670836d946ec70ad0ed12c0b52814e8e8103dffb369e
 receipts:
-  coverage:
-    - gid: D5/S1/Deficit/Beatty/GoldenSpectralCoordinate.golden_spectral_im_eq_zero_iff
-      source_sha256: sha256:7f04f360e699f0bcef0e07afbcd1c2c05ba77ddc0868b53abda4157c784359d9
-      target_statement_id: sha256:d38ed1f5095b555ee7e0670836d946ec70ad0ed12c0b52814e8e8103dffb369e
   scribe:
     - gid: D5/S1/Deficit/Beatty/GoldenSpectralCoordinate.golden_spectral_im_eq_zero_iff
       definition_sha256: sha256:10a183b979112525926bf34a75050108f650e5211434889b11bb7f3ebaaa5f7c

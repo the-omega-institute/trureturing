@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:f18a7a6f1a9c3864f6fe6a1225e5071be07a81cccba32192365090307677ba04
   normalized_sha256: sha256:f18a7a6f1a9c3864f6fe6a1225e5071be07a81cccba32192365090307677ba04
 cas_ref: sha256:f18a7a6f1a9c3864f6fe6a1225e5071be07a81cccba32192365090307677ba04
-coverage_gids:
-  - D5/S3/CompletionDynamics/PacketRenormalization/FibonacciDegreeCompensator.fibonacci_degree_compensator
+coverage:
+  - gid: D5/S3/CompletionDynamics/PacketRenormalization/FibonacciDegreeCompensator.fibonacci_degree_compensator
+    target_statement_id: sha256:ae0d742cf0ada131d4f143ce9fbb160955153231cfc46ba2bbdc7499b4216413
 receipts:
-  coverage:
-    - gid: D5/S3/CompletionDynamics/PacketRenormalization/FibonacciDegreeCompensator.fibonacci_degree_compensator
-      source_sha256: sha256:f18a7a6f1a9c3864f6fe6a1225e5071be07a81cccba32192365090307677ba04
-      target_statement_id: sha256:ae0d742cf0ada131d4f143ce9fbb160955153231cfc46ba2bbdc7499b4216413
   scribe:
     - gid: D5/S3/CompletionDynamics/PacketRenormalization/FibonacciDegreeCompensator.fibonacci_degree_compensator
       definition_sha256: sha256:79fcf73f1d9eae85c8b58bc9e4e3a3e4c7cd7812cde8816ccbe4399748753539

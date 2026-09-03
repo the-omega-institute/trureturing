@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:dc8ffd9f9e2fe86b108a3f4a23744e8c40ec3442b0f798ab5f9b693689bc56c3
   normalized_sha256: sha256:dc8ffd9f9e2fe86b108a3f4a23744e8c40ec3442b0f798ab5f9b693689bc56c3
 cas_ref: sha256:dc8ffd9f9e2fe86b108a3f4a23744e8c40ec3442b0f798ab5f9b693689bc56c3
-coverage_gids:
-  - D5/S3/ConceptDynamics/Disclosure/ExactTargetLeakConsequences.exact_target_leak_consequences
+coverage:
+  - gid: D5/S3/ConceptDynamics/Disclosure/ExactTargetLeakConsequences.exact_target_leak_consequences
+    target_statement_id: sha256:ad2e3e8503bd409a4b8bdba47cbb8186d5429b5708325673bc58502948109df2
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Disclosure/ExactTargetLeakConsequences.exact_target_leak_consequences
-      source_sha256: sha256:dc8ffd9f9e2fe86b108a3f4a23744e8c40ec3442b0f798ab5f9b693689bc56c3
-      target_statement_id: sha256:ad2e3e8503bd409a4b8bdba47cbb8186d5429b5708325673bc58502948109df2
   scribe:
     - gid: D5/S3/ConceptDynamics/Disclosure/ExactTargetLeakConsequences.exact_target_leak_consequences
       definition_sha256: sha256:126c2b6a4d780f9b7fa4c3c738dd18bb6bc0499cd4ee561ff20428dfe5ac4156

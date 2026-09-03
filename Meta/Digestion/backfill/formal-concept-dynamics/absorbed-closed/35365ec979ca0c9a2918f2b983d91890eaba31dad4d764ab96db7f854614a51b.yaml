@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:35365ec979ca0c9a2918f2b983d91890eaba31dad4d764ab96db7f854614a51b
   normalized_sha256: sha256:35365ec979ca0c9a2918f2b983d91890eaba31dad4d764ab96db7f854614a51b
 cas_ref: sha256:35365ec979ca0c9a2918f2b983d91890eaba31dad4d764ab96db7f854614a51b
-coverage_gids:
-  - D5/S3/ConceptDynamics/Identity/MultilayerIdentityInsufficiency.noninjective_layer_cannot_recover
+coverage:
+  - gid: D5/S3/ConceptDynamics/Identity/MultilayerIdentityInsufficiency.noninjective_layer_cannot_recover
+    target_statement_id: sha256:16c4cd6c75dc72c3b2a41d20b3944664fd8c81502a94836cdc042f4de42d62be
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Identity/MultilayerIdentityInsufficiency.noninjective_layer_cannot_recover
-      source_sha256: sha256:35365ec979ca0c9a2918f2b983d91890eaba31dad4d764ab96db7f854614a51b
-      target_statement_id: sha256:16c4cd6c75dc72c3b2a41d20b3944664fd8c81502a94836cdc042f4de42d62be
   scribe:
     - gid: D5/S3/ConceptDynamics/Identity/MultilayerIdentityInsufficiency.noninjective_layer_cannot_recover
       definition_sha256: sha256:5c88f58e42436774d1a220baa66e7b321c136d1b11120cdad983b5e73156ccc5

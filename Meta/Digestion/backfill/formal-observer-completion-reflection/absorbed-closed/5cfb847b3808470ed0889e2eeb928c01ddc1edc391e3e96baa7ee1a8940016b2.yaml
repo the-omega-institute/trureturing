@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:5cfb847b3808470ed0889e2eeb928c01ddc1edc391e3e96baa7ee1a8940016b2
   normalized_sha256: sha256:5cfb847b3808470ed0889e2eeb928c01ddc1edc391e3e96baa7ee1a8940016b2
 cas_ref: sha256:5cfb847b3808470ed0889e2eeb928c01ddc1edc391e3e96baa7ee1a8940016b2
-coverage_gids:
-  - D5/S3/ConceptDynamics/Information/MarginalActionEntropyCausalContrast.marginal_action_entropy_causal_contrast
+coverage:
+  - gid: D5/S3/ConceptDynamics/Information/MarginalActionEntropyCausalContrast.marginal_action_entropy_causal_contrast
+    target_statement_id: sha256:542764660b5a9aa8a3064f96df65c0fb96065377e9a4d203bd746f0f546976e3
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Information/MarginalActionEntropyCausalContrast.marginal_action_entropy_causal_contrast
-      source_sha256: sha256:5cfb847b3808470ed0889e2eeb928c01ddc1edc391e3e96baa7ee1a8940016b2
-      target_statement_id: sha256:542764660b5a9aa8a3064f96df65c0fb96065377e9a4d203bd746f0f546976e3
   scribe:
     - gid: D5/S3/ConceptDynamics/Information/MarginalActionEntropyCausalContrast.marginal_action_entropy_causal_contrast
       definition_sha256: sha256:0227280312a9a0006becdb1eca809618c25be488e7208866fac0ed8382d724c1

@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:36a87b42ffb1b321b5bb53cd6688fd4dd59d4dee7fad23d55c33dd85998ca826
   normalized_sha256: sha256:36a87b42ffb1b321b5bb53cd6688fd4dd59d4dee7fad23d55c33dd85998ca826
 cas_ref: sha256:36a87b42ffb1b321b5bb53cd6688fd4dd59d4dee7fad23d55c33dd85998ca826
-coverage_gids:
-  - D5/S3/ConceptDynamics/InstitutionalCapture/InjectivePolicyCoalitionThreshold.injective_policy_coalition_threshold
+coverage:
+  - gid: D5/S3/ConceptDynamics/InstitutionalCapture/InjectivePolicyCoalitionThreshold.injective_policy_coalition_threshold
+    target_statement_id: sha256:db2ba6f12419a7ff6599df32f9078c3011293c30838bdbac3e41783601048487
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/InstitutionalCapture/InjectivePolicyCoalitionThreshold.injective_policy_coalition_threshold
-      source_sha256: sha256:36a87b42ffb1b321b5bb53cd6688fd4dd59d4dee7fad23d55c33dd85998ca826
-      target_statement_id: sha256:db2ba6f12419a7ff6599df32f9078c3011293c30838bdbac3e41783601048487
   scribe:
     - gid: D5/S3/ConceptDynamics/InstitutionalCapture/InjectivePolicyCoalitionThreshold.injective_policy_coalition_threshold
       definition_sha256: sha256:c6109e406cfc35b01205327074405584c713f8d83f75190c01a8c78ee944bf8d

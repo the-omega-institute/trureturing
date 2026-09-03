@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:0a79291ed56c2c0181526e940a0752b78dffcde57950b5bd4f8ddc49001b2c76
   normalized_sha256: sha256:0a79291ed56c2c0181526e940a0752b78dffcde57950b5bd4f8ddc49001b2c76
 cas_ref: sha256:0a79291ed56c2c0181526e940a0752b78dffcde57950b5bd4f8ddc49001b2c76
-coverage_gids:
-  - D5/S3/Weil/ZetaBridge/ZeroDataNonemptyIffInfinite.nonempty_zeroData_iff_infinite
+coverage:
+  - gid: D5/S3/Weil/ZetaBridge/ZeroDataNonemptyIffInfinite.nonempty_zeroData_iff_infinite
+    target_statement_id: sha256:8320f27a30cb2650a2ec01def85ef608c92d14ce3eeed887b3e5731d6d8721d2
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/ZetaBridge/ZeroDataNonemptyIffInfinite.nonempty_zeroData_iff_infinite
-      source_sha256: sha256:0a79291ed56c2c0181526e940a0752b78dffcde57950b5bd4f8ddc49001b2c76
-      target_statement_id: sha256:8320f27a30cb2650a2ec01def85ef608c92d14ce3eeed887b3e5731d6d8721d2
   scribe:
     - gid: D5/S3/Weil/ZetaBridge/ZeroDataNonemptyIffInfinite.nonempty_zeroData_iff_infinite
       definition_sha256: sha256:ee7702a920f99685fedcc5fd45745a20ed9966dd3a47eef15befbe581b92df98

@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:010578c430a180f1a4592a69557f79694e4c86d114f5243b238d5a70098bb70a
   normalized_sha256: sha256:010578c430a180f1a4592a69557f79694e4c86d114f5243b238d5a70098bb70a
 cas_ref: sha256:010578c430a180f1a4592a69557f79694e4c86d114f5243b238d5a70098bb70a
-coverage_gids:
-  - D5/S3/ConceptDynamics/InstitutionalCapture/CommonControlApprovalCollapse.common_control_source_approval_collapse
+coverage:
+  - gid: D5/S3/ConceptDynamics/InstitutionalCapture/CommonControlApprovalCollapse.common_control_source_approval_collapse
+    target_statement_id: sha256:c817f555227bbecf29ccf4144a952126327a7cfb620dd9e9f0b65648c17b870e
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/InstitutionalCapture/CommonControlApprovalCollapse.common_control_source_approval_collapse
-      source_sha256: sha256:010578c430a180f1a4592a69557f79694e4c86d114f5243b238d5a70098bb70a
-      target_statement_id: sha256:c817f555227bbecf29ccf4144a952126327a7cfb620dd9e9f0b65648c17b870e
   scribe:
     - gid: D5/S3/ConceptDynamics/InstitutionalCapture/CommonControlApprovalCollapse.common_control_source_approval_collapse
       definition_sha256: sha256:dbe1676749083d58b2ce5ddfd1d0f9f4de136471907c757d4d57248b157f441d

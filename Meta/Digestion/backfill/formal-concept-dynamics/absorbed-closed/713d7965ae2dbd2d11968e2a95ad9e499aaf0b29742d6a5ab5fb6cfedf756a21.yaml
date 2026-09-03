@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:713d7965ae2dbd2d11968e2a95ad9e499aaf0b29742d6a5ab5fb6cfedf756a21
   normalized_sha256: sha256:713d7965ae2dbd2d11968e2a95ad9e499aaf0b29742d6a5ab5fb6cfedf756a21
 cas_ref: sha256:713d7965ae2dbd2d11968e2a95ad9e499aaf0b29742d6a5ab5fb6cfedf756a21
-coverage_gids:
-  - D5/S3/ConceptDynamics/Topology/UniversalT0QuotientComplete.universal_t0_quotient_complete
+coverage:
+  - gid: D5/S3/ConceptDynamics/Topology/UniversalT0QuotientComplete.universal_t0_quotient_complete
+    target_statement_id: sha256:1947511834eb23aa4ae6591094286762201e5d5c2036e2e13e21e135948fbd3b
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Topology/UniversalT0QuotientComplete.universal_t0_quotient_complete
-      source_sha256: sha256:713d7965ae2dbd2d11968e2a95ad9e499aaf0b29742d6a5ab5fb6cfedf756a21
-      target_statement_id: sha256:1947511834eb23aa4ae6591094286762201e5d5c2036e2e13e21e135948fbd3b
   scribe:
     - gid: D5/S3/ConceptDynamics/Topology/UniversalT0QuotientComplete.universal_t0_quotient_complete
       definition_sha256: sha256:deaac757432ac0325d0aaf5533a27593193f26c13e07b67a83ea39c82250c655

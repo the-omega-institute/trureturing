@@ -2,14 +2,12 @@ fingerprints:
   raw_sha256: sha256:1f82da4bf90b9569fee019f6856631678e6dad39fc314fcbad03d6e1678c1fd2
   normalized_sha256: sha256:1f82da4bf90b9569fee019f6856631678e6dad39fc314fcbad03d6e1678c1fd2
 cas_ref: sha256:1f82da4bf90b9569fee019f6856631678e6dad39fc314fcbad03d6e1678c1fd2
-coverage_gids: []
+coverage: []
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems: []
   cover_disposition:
     outcome: absorbed-closed
-    recorded_at_utc: 2026-09-01T06:53:27.1963350+00:00
     gids:
       - D5/S3/Quantum/Completion/UniqueMinimalTargetCompletion.unique_minimal_target_completion
     gaps:

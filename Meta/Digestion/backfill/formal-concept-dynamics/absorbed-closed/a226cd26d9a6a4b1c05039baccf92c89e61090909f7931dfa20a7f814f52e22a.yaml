@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:a226cd26d9a6a4b1c05039baccf92c89e61090909f7931dfa20a7f814f52e22a
   normalized_sha256: sha256:a226cd26d9a6a4b1c05039baccf92c89e61090909f7931dfa20a7f814f52e22a
 cas_ref: sha256:a226cd26d9a6a4b1c05039baccf92c89e61090909f7931dfa20a7f814f52e22a
-coverage_gids:
-  - D5/S1/Solenoid/Connectivity/ContinuousDiscreteRigidity.continuous_map_to_discrete_is_constant
+coverage:
+  - gid: D5/S1/Solenoid/Connectivity/ContinuousDiscreteRigidity.continuous_map_to_discrete_is_constant
+    target_statement_id: sha256:8ac06a855fb801483a2a3b7ef6b977cec6be7fcb9c9942f64505b88b9435f651
 receipts:
-  coverage:
-    - gid: D5/S1/Solenoid/Connectivity/ContinuousDiscreteRigidity.continuous_map_to_discrete_is_constant
-      source_sha256: sha256:a226cd26d9a6a4b1c05039baccf92c89e61090909f7931dfa20a7f814f52e22a
-      target_statement_id: sha256:8ac06a855fb801483a2a3b7ef6b977cec6be7fcb9c9942f64505b88b9435f651
   scribe:
     - gid: D5/S1/Solenoid/Connectivity/ContinuousDiscreteRigidity.continuous_map_to_discrete_is_constant
       definition_sha256: sha256:a02025b8aa28a73d965316164a64787a793c695b6c63f45f186a9e634c55a274

@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:3b4d72c53e059cf896532a6426f0d2c41fbccbf7ea6d19d839f31ec12c82a90f
   normalized_sha256: sha256:3b4d72c53e059cf896532a6426f0d2c41fbccbf7ea6d19d839f31ec12c82a90f
 cas_ref: sha256:3b4d72c53e059cf896532a6426f0d2c41fbccbf7ea6d19d839f31ec12c82a90f
-coverage_gids:
-  - D5/S3/ConceptDynamics/Discussion/ForgottenDistinctionPrecludesRefinement.forgotten_distinction_precludes_refinement
+coverage:
+  - gid: D5/S3/ConceptDynamics/Discussion/ForgottenDistinctionPrecludesRefinement.forgotten_distinction_precludes_refinement
+    target_statement_id: sha256:1678e56edb4da1a068b38e43477838c185972b33e345a547bfd97552a2f968bc
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Discussion/ForgottenDistinctionPrecludesRefinement.forgotten_distinction_precludes_refinement
-      source_sha256: sha256:3b4d72c53e059cf896532a6426f0d2c41fbccbf7ea6d19d839f31ec12c82a90f
-      target_statement_id: sha256:1678e56edb4da1a068b38e43477838c185972b33e345a547bfd97552a2f968bc
   scribe:
     - gid: D5/S3/ConceptDynamics/Discussion/ForgottenDistinctionPrecludesRefinement.forgotten_distinction_precludes_refinement
       definition_sha256: sha256:969bfaf5b652033baf0bcccb8736dcd9974a156983489afde8453131e6b0babf

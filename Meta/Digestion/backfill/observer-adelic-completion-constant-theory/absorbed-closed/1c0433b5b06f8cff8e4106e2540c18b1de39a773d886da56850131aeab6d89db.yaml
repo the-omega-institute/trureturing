@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:1c0433b5b06f8cff8e4106e2540c18b1de39a773d886da56850131aeab6d89db
   normalized_sha256: sha256:1c0433b5b06f8cff8e4106e2540c18b1de39a773d886da56850131aeab6d89db
 cas_ref: sha256:1c0433b5b06f8cff8e4106e2540c18b1de39a773d886da56850131aeab6d89db
-coverage_gids:
-  - D5/S1/Depth/ContinuedFractions/FiniteTerminationApproximation.finite_termination_and_infinite_approximation
+coverage:
+  - gid: D5/S1/Depth/ContinuedFractions/FiniteTerminationApproximation.finite_termination_and_infinite_approximation
+    target_statement_id: sha256:b89daf0213aca1c6c950f4cbda3cf607fa2549b9e6492f39230dd55222dfc434
 receipts:
-  coverage:
-    - gid: D5/S1/Depth/ContinuedFractions/FiniteTerminationApproximation.finite_termination_and_infinite_approximation
-      source_sha256: sha256:1c0433b5b06f8cff8e4106e2540c18b1de39a773d886da56850131aeab6d89db
-      target_statement_id: sha256:b89daf0213aca1c6c950f4cbda3cf607fa2549b9e6492f39230dd55222dfc434
   scribe:
     - gid: D5/S1/Depth/ContinuedFractions/FiniteTerminationApproximation.finite_termination_and_infinite_approximation
       definition_sha256: sha256:87fd11add72d6f0b79cbd52699ae840157ee09a6764ce7ed0cb6e2385f0bd878

@@ -2,9 +2,8 @@ fingerprints:
   raw_sha256: sha256:985334b71a2fe6e7d99b46c201acbfc0e7075e64da809b5067fecae965fe2ef2
   normalized_sha256: sha256:985334b71a2fe6e7d99b46c201acbfc0e7075e64da809b5067fecae965fe2ef2
 cas_ref: sha256:985334b71a2fe6e7d99b46c201acbfc0e7075e64da809b5067fecae965fe2ef2
-coverage_gids: []
+coverage: []
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems: []
   chain_atoms:

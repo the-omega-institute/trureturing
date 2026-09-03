@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:e586350966ebbf3dc0fafe8058892a2f8c89c7936044c038aceb165ddc5192a2
   normalized_sha256: sha256:e586350966ebbf3dc0fafe8058892a2f8c89c7936044c038aceb165ddc5192a2
 cas_ref: sha256:e586350966ebbf3dc0fafe8058892a2f8c89c7936044c038aceb165ddc5192a2
-coverage_gids:
-  - D5/S0/Rewriting/Quotients/InformedDisclosureDefect.informed_disclosure_defect
+coverage:
+  - gid: D5/S0/Rewriting/Quotients/InformedDisclosureDefect.informed_disclosure_defect
+    target_statement_id: sha256:9e1e5dcc8445342c8de82c50f19b0e501f48bda194e0ff4190cd6f2fae8bd3a3
 receipts:
-  coverage:
-    - gid: D5/S0/Rewriting/Quotients/InformedDisclosureDefect.informed_disclosure_defect
-      source_sha256: sha256:e586350966ebbf3dc0fafe8058892a2f8c89c7936044c038aceb165ddc5192a2
-      target_statement_id: sha256:9e1e5dcc8445342c8de82c50f19b0e501f48bda194e0ff4190cd6f2fae8bd3a3
   scribe:
     - gid: D5/S0/Rewriting/Quotients/InformedDisclosureDefect.informed_disclosure_defect
       definition_sha256: sha256:f9789c99e9efd65276bbaa5073c90969837ae0b456491e12598b5e331ab89dcf

@@ -2,9 +2,9 @@ fingerprints:
   raw_sha256: sha256:dcd8ea0aeb0f28ce3ed28511fbb84f9e5f795f3cde3f50eb8d1fbba3f29f7952
   normalized_sha256: sha256:dcd8ea0aeb0f28ce3ed28511fbb84f9e5f795f3cde3f50eb8d1fbba3f29f7952
 cas_ref: sha256:dcd8ea0aeb0f28ce3ed28511fbb84f9e5f795f3cde3f50eb8d1fbba3f29f7952
-coverage_gids:
-  - D5/S3/ObserverMemory/Prediction/JointPredictionRelation.joint_prediction_relation
+coverage:
+  - gid: D5/S3/ObserverMemory/Prediction/JointPredictionRelation.joint_prediction_relation
+    target_statement_id: sha256:b93b28092d2ac8e891812688cc33e6f11841e2001c8c7c363d04576c4849bc0f
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems: []

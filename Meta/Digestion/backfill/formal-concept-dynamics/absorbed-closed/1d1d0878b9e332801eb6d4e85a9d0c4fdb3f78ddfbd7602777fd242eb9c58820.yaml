@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:1d1d0878b9e332801eb6d4e85a9d0c4fdb3f78ddfbd7602777fd242eb9c58820
   normalized_sha256: sha256:1d1d0878b9e332801eb6d4e85a9d0c4fdb3f78ddfbd7602777fd242eb9c58820
 cas_ref: sha256:1d1d0878b9e332801eb6d4e85a9d0c4fdb3f78ddfbd7602777fd242eb9c58820
-coverage_gids:
-  - D5/S3/ConceptDynamics/ObservationOrder/PureReadoutOrderIndependence.pure_readout_order_independence
+coverage:
+  - gid: D5/S3/ConceptDynamics/ObservationOrder/PureReadoutOrderIndependence.pure_readout_order_independence
+    target_statement_id: sha256:0f7ec8a0b5350bde0df91e53278e45fbf1ae1dc76feaee42b62b7537f2a23f74
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/ObservationOrder/PureReadoutOrderIndependence.pure_readout_order_independence
-      source_sha256: sha256:1d1d0878b9e332801eb6d4e85a9d0c4fdb3f78ddfbd7602777fd242eb9c58820
-      target_statement_id: sha256:0f7ec8a0b5350bde0df91e53278e45fbf1ae1dc76feaee42b62b7537f2a23f74
   scribe:
     - gid: D5/S3/ConceptDynamics/ObservationOrder/PureReadoutOrderIndependence.pure_readout_order_independence
       definition_sha256: sha256:abbae07bf285bd8d6c49b081a1a9a28081b326dae8f1d00a8dc8f7267bb81a3e

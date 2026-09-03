@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:0da9a3102f5c591dc9f73c51d8d8b56cb2d3d65661a8dfee802c822e402f3cf4
   normalized_sha256: sha256:0da9a3102f5c591dc9f73c51d8d8b56cb2d3d65661a8dfee802c822e402f3cf4
 cas_ref: sha256:0da9a3102f5c591dc9f73c51d8d8b56cb2d3d65661a8dfee802c822e402f3cf4
-coverage_gids:
-  - D5/S1/Deficit/Beatty/GoldenBandOrder.golden_band_order
+coverage:
+  - gid: D5/S1/Deficit/Beatty/GoldenBandOrder.golden_band_order
+    target_statement_id: sha256:51bc3b7f020a51394111291bdf3f5f3e4eb3222b1247285490fe0aa1ca461f6d
 receipts:
-  coverage:
-    - gid: D5/S1/Deficit/Beatty/GoldenBandOrder.golden_band_order
-      source_sha256: sha256:0da9a3102f5c591dc9f73c51d8d8b56cb2d3d65661a8dfee802c822e402f3cf4
-      target_statement_id: sha256:51bc3b7f020a51394111291bdf3f5f3e4eb3222b1247285490fe0aa1ca461f6d
   scribe:
     - gid: D5/S1/Deficit/Beatty/GoldenBandOrder.golden_band_order
       definition_sha256: sha256:f97f14558c5b7b6761e2707d9a9e96b452487878a727666f2febe758d54b7f27

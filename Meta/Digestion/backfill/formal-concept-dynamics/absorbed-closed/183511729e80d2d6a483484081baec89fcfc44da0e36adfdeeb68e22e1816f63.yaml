@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:183511729e80d2d6a483484081baec89fcfc44da0e36adfdeeb68e22e1816f63
   normalized_sha256: sha256:183511729e80d2d6a483484081baec89fcfc44da0e36adfdeeb68e22e1816f63
 cas_ref: sha256:183511729e80d2d6a483484081baec89fcfc44da0e36adfdeeb68e22e1816f63
-coverage_gids:
-  - D5/S3/ConceptDynamics/InterventionLaws/ExperimentalQuotientCharacterization.experimental_quotient_characterization
+coverage:
+  - gid: D5/S3/ConceptDynamics/InterventionLaws/ExperimentalQuotientCharacterization.experimental_quotient_characterization
+    target_statement_id: sha256:d982792b4fcc8833035765252465c436b508df60a0845fbcb4b1aca4a9606bb9
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/InterventionLaws/ExperimentalQuotientCharacterization.experimental_quotient_characterization
-      source_sha256: sha256:183511729e80d2d6a483484081baec89fcfc44da0e36adfdeeb68e22e1816f63
-      target_statement_id: sha256:d982792b4fcc8833035765252465c436b508df60a0845fbcb4b1aca4a9606bb9
   scribe:
     - gid: D5/S3/ConceptDynamics/InterventionLaws/ExperimentalQuotientCharacterization.experimental_quotient_characterization
       definition_sha256: sha256:b50caf1d82ec5a85af8a4a7ab7d4f9a866b879c2a2d2f16c206eac2a20badbd6

@@ -2,21 +2,10 @@ fingerprints:
   raw_sha256: sha256:b8d9b300e7f321b6d45a4d1bf1416e2a49add9089c9551f3067774619719b66e
   normalized_sha256: sha256:b8d9b300e7f321b6d45a4d1bf1416e2a49add9089c9551f3067774619719b66e
 cas_ref: sha256:b8d9b300e7f321b6d45a4d1bf1416e2a49add9089c9551f3067774619719b66e
-coverage_gids:
-  - D5/S3/Quantum/Completion/InfiniteDimensionalProjectionSeparation.infinite_dimensional_projection_separation
+coverage:
+  - gid: D5/S3/Quantum/Completion/InfiniteDimensionalProjectionSeparation.infinite_dimensional_projection_separation
+    target_statement_id: sha256:f98e70decda196bddd26f09dfca078c402c65b642007e34701438a2c4c69e749
 receipts:
-  coverage:
-    - gid: D5/S3/Quantum/Completion/InfiniteDimensionalProjectionSeparation.infinite_dimensional_projection_separation
-      source_sha256: sha256:b8d9b300e7f321b6d45a4d1bf1416e2a49add9089c9551f3067774619719b66e
-      target_statement_id: sha256:f98e70decda196bddd26f09dfca078c402c65b642007e34701438a2c4c69e749
-      statement_id_history:
-        - statement_id: sha256:7dd0c028c9b14db2f8692cd8b1ac1b8cd82d07fe2df012b574dc85cae6cf5080
-          environment_pin:
-            toolchain: leanprover/lean4:v4.31.0
-            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
-          superseded_by_pin:
-            toolchain: leanprover/lean4:v4.33.0
-            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Quantum/Completion/InfiniteDimensionalProjectionSeparation.infinite_dimensional_projection_separation
       definition_sha256: sha256:481a11bc5195d23f3871d9dfef7c5d126001d3db4ab78d418528482b958dc5f1

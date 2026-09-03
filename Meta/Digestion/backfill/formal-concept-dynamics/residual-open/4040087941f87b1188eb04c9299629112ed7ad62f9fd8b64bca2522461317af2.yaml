@@ -2,14 +2,12 @@ fingerprints:
   raw_sha256: sha256:4040087941f87b1188eb04c9299629112ed7ad62f9fd8b64bca2522461317af2
   normalized_sha256: sha256:4040087941f87b1188eb04c9299629112ed7ad62f9fd8b64bca2522461317af2
 cas_ref: sha256:4040087941f87b1188eb04c9299629112ed7ad62f9fd8b64bca2522461317af2
-coverage_gids: []
+coverage: []
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems: []
   cover_disposition:
     outcome: partial-closed
-    recorded_at_utc: 2026-08-28T01:05:23.5545060+00:00
     gids:
       - D5/S1/FixedPoints/FiniteMonotoneTermination.finite_monotone_termination_and_nonunique_example
     gaps:

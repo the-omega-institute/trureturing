@@ -2,10 +2,11 @@ fingerprints:
   raw_sha256: sha256:c8e0d2e19b6bf9158eb39544e3e5e38f24306e71744f22ff65f2c65fe6d30337
   normalized_sha256: sha256:c8e0d2e19b6bf9158eb39544e3e5e38f24306e71744f22ff65f2c65fe6d30337
 cas_ref: sha256:c8e0d2e19b6bf9158eb39544e3e5e38f24306e71744f22ff65f2c65fe6d30337
-coverage_gids:
-  - D5/E/values--json
-  - D5/S3/Constants/Values.t0
+coverage:
+  - gid: D5/E/values--json
+    target_statement_id: null
+  - gid: D5/S3/Constants/Values.t0
+    target_statement_id: sha256:e6a2f22eff386eba80acb8d14c27a4c1972242502973cbce86c503b396d5da7c
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems: []

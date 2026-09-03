@@ -2,13 +2,17 @@ fingerprints:
   raw_sha256: sha256:272e93e2fcbab0bfc967bcfac89192c05e36972108da3c75ddab83384b717fe7
   normalized_sha256: sha256:272e93e2fcbab0bfc967bcfac89192c05e36972108da3c75ddab83384b717fe7
 cas_ref: sha256:272e93e2fcbab0bfc967bcfac89192c05e36972108da3c75ddab83384b717fe7
-coverage_gids:
-  - D5/S3/Weil/Convention
-  - D5/S3/Weil/PrimePoleTerms
-  - D5/S3/Weil/WeilIdentity
-  - D5/S3/Weil/ZeroSum
-  - D5/X_Frontier/Hearts
+coverage:
+  - gid: D5/S3/Weil/Convention
+    target_statement_id: sha256:9725184c0907f74808770ed2a1306d313ea693d25fd486ae80b11e806112b96e
+  - gid: D5/S3/Weil/PrimePoleTerms
+    target_statement_id: sha256:6334daa776cf081e15ba36266eaa9e81a0f99c1969efa993e23d68e25ecd04f3
+  - gid: D5/S3/Weil/WeilIdentity
+    target_statement_id: sha256:bed09620fec430e015869612280a9fbbd04ae4fab8d2c708c9c4d63f99be0679
+  - gid: D5/S3/Weil/ZeroSum
+    target_statement_id: sha256:154bf5eb20dafaf731874c5a333f66d46013e89637103c8b19f9b773f0bceace
+  - gid: D5/X_Frontier/Hearts
+    target_statement_id: null
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems: []

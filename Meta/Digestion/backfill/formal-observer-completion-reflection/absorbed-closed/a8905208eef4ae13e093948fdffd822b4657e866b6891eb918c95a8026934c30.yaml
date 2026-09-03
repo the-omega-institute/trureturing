@@ -2,21 +2,10 @@ fingerprints:
   raw_sha256: sha256:a8905208eef4ae13e093948fdffd822b4657e866b6891eb918c95a8026934c30
   normalized_sha256: sha256:a8905208eef4ae13e093948fdffd822b4657e866b6891eb918c95a8026934c30
 cas_ref: sha256:a8905208eef4ae13e093948fdffd822b4657e866b6891eb918c95a8026934c30
-coverage_gids:
-  - D5/S3/ObserverMemory/PredictionCertificates/FiniteDistinguishingCertificate.finite_distinguishing_certificate
+coverage:
+  - gid: D5/S3/ObserverMemory/PredictionCertificates/FiniteDistinguishingCertificate.finite_distinguishing_certificate
+    target_statement_id: sha256:e6175c85d59e97be01fbb24623edeb408d17f04a8181df89a779fb467069b033
 receipts:
-  coverage:
-    - gid: D5/S3/ObserverMemory/PredictionCertificates/FiniteDistinguishingCertificate.finite_distinguishing_certificate
-      source_sha256: sha256:a8905208eef4ae13e093948fdffd822b4657e866b6891eb918c95a8026934c30
-      target_statement_id: sha256:e6175c85d59e97be01fbb24623edeb408d17f04a8181df89a779fb467069b033
-      statement_id_history:
-        - statement_id: sha256:fefff8ec56bd1d95970114555e9a6b56fce4d1eefdf61b3fde6a74c533f37825
-          environment_pin:
-            toolchain: leanprover/lean4:v4.31.0
-            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
-          superseded_by_pin:
-            toolchain: leanprover/lean4:v4.33.0
-            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ObserverMemory/PredictionCertificates/FiniteDistinguishingCertificate.finite_distinguishing_certificate
       definition_sha256: sha256:1827e82faf7c3bbdf6422970a1590071f44628cd4ae089d2e82b8110ff79e5ee

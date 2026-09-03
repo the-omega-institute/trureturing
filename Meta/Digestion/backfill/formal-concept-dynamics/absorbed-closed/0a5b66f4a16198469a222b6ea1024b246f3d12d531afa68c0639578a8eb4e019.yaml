@@ -2,21 +2,10 @@ fingerprints:
   raw_sha256: sha256:0a5b66f4a16198469a222b6ea1024b246f3d12d531afa68c0639578a8eb4e019
   normalized_sha256: sha256:0a5b66f4a16198469a222b6ea1024b246f3d12d531afa68c0639578a8eb4e019
 cas_ref: sha256:0a5b66f4a16198469a222b6ea1024b246f3d12d531afa68c0639578a8eb4e019
-coverage_gids:
-  - D5/S3/ConceptDynamics/DecisionValueScale/StrictMonotoneObjectiveArgmaxAlignment.strict_monotone_factorization_preserves_argmax
+coverage:
+  - gid: D5/S3/ConceptDynamics/DecisionValueScale/StrictMonotoneObjectiveArgmaxAlignment.strict_monotone_factorization_preserves_argmax
+    target_statement_id: sha256:d6c76b7d18cc6de461faf33fd26feb728af4c06c20148f6a204dd460e8da9ac3
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/DecisionValueScale/StrictMonotoneObjectiveArgmaxAlignment.strict_monotone_factorization_preserves_argmax
-      source_sha256: sha256:0a5b66f4a16198469a222b6ea1024b246f3d12d531afa68c0639578a8eb4e019
-      target_statement_id: sha256:d6c76b7d18cc6de461faf33fd26feb728af4c06c20148f6a204dd460e8da9ac3
-      statement_id_history:
-        - statement_id: sha256:cc36e83c988fe25e0217986a7b8195bed06b5e76791d2e495fa6b402a7e864f1
-          environment_pin:
-            toolchain: leanprover/lean4:v4.31.0
-            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
-          superseded_by_pin:
-            toolchain: leanprover/lean4:v4.33.0
-            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ConceptDynamics/DecisionValueScale/StrictMonotoneObjectiveArgmaxAlignment.strict_monotone_factorization_preserves_argmax
       definition_sha256: sha256:c408d42cb093d93b41ce1ce4997e311a4b5d2a74eac29f9143a8c88cc4ee4199

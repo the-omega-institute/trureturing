@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:bf930312cbb7276cf33755abdc3f4642b171a1424f5f3848433e58accddb953c
   normalized_sha256: sha256:bf930312cbb7276cf33755abdc3f4642b171a1424f5f3848433e58accddb953c
 cas_ref: sha256:bf930312cbb7276cf33755abdc3f4642b171a1424f5f3848433e58accddb953c
-coverage_gids:
-  - D5/S3/ConceptDynamics/Faithfulness/FiniteFaithfulSubfamilyExtraction.finite_faithful_subfamily_extraction
+coverage:
+  - gid: D5/S3/ConceptDynamics/Faithfulness/FiniteFaithfulSubfamilyExtraction.finite_faithful_subfamily_extraction
+    target_statement_id: sha256:9e8f97ad1f43cc9c40ff2d9f4bb17a3feed343789ae183b2726795a3447397b1
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Faithfulness/FiniteFaithfulSubfamilyExtraction.finite_faithful_subfamily_extraction
-      source_sha256: sha256:bf930312cbb7276cf33755abdc3f4642b171a1424f5f3848433e58accddb953c
-      target_statement_id: sha256:9e8f97ad1f43cc9c40ff2d9f4bb17a3feed343789ae183b2726795a3447397b1
   scribe:
     - gid: D5/S3/ConceptDynamics/Faithfulness/FiniteFaithfulSubfamilyExtraction.finite_faithful_subfamily_extraction
       definition_sha256: sha256:4ee1f49ccdcae8b3af4429faac662849b1cc767e332a328e93a8049dce282a28

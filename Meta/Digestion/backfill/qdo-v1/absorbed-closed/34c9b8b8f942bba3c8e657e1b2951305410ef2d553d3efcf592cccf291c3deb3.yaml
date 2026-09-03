@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:34c9b8b8f942bba3c8e657e1b2951305410ef2d553d3efcf592cccf291c3deb3
   normalized_sha256: sha256:34c9b8b8f942bba3c8e657e1b2951305410ef2d553d3efcf592cccf291c3deb3
 cas_ref: sha256:34c9b8b8f942bba3c8e657e1b2951305410ef2d553d3efcf592cccf291c3deb3
-coverage_gids:
-  - D5/S3/Observer/Separation/FiniteDistanceInvariantSector.finite_distance_same_invariant_sector
+coverage:
+  - gid: D5/S3/Observer/Separation/FiniteDistanceInvariantSector.finite_distance_same_invariant_sector
+    target_statement_id: sha256:13748cd9f1632dc93a13895ede4ad1c02213bb43739fe08f578acb34a3275ba6
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/Separation/FiniteDistanceInvariantSector.finite_distance_same_invariant_sector
-      source_sha256: sha256:34c9b8b8f942bba3c8e657e1b2951305410ef2d553d3efcf592cccf291c3deb3
-      target_statement_id: sha256:13748cd9f1632dc93a13895ede4ad1c02213bb43739fe08f578acb34a3275ba6
   scribe:
     - gid: D5/S3/Observer/Separation/FiniteDistanceInvariantSector.finite_distance_same_invariant_sector
       definition_sha256: sha256:34a96c054f73ebb1b336323643e70e2f8405641838f4c5b15248e8319710b505

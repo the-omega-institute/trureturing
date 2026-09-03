@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:980746ca7ef3971984c6e6866da243f407d95b5d5587d62429b7fe87084cb68a
   normalized_sha256: sha256:980746ca7ef3971984c6e6866da243f407d95b5d5587d62429b7fe87084cb68a
 cas_ref: sha256:980746ca7ef3971984c6e6866da243f407d95b5d5587d62429b7fe87084cb68a
-coverage_gids:
-  - D5/S3/ObserverMemory/ProObjects/NoTerminalSelfDescription.no_terminal_self_description
+coverage:
+  - gid: D5/S3/ObserverMemory/ProObjects/NoTerminalSelfDescription.no_terminal_self_description
+    target_statement_id: sha256:d3b1789f9356f646434f0a971dcf039b9e58bb46c6aee74f9688217a686a1f0f
 receipts:
-  coverage:
-    - gid: D5/S3/ObserverMemory/ProObjects/NoTerminalSelfDescription.no_terminal_self_description
-      source_sha256: sha256:980746ca7ef3971984c6e6866da243f407d95b5d5587d62429b7fe87084cb68a
-      target_statement_id: sha256:d3b1789f9356f646434f0a971dcf039b9e58bb46c6aee74f9688217a686a1f0f
   scribe:
     - gid: D5/S3/ObserverMemory/ProObjects/NoTerminalSelfDescription.no_terminal_self_description
       definition_sha256: sha256:02315de497eabb2b0bb1d7a477266fb2dbfa945c978aa0b97b45c49ee509a677

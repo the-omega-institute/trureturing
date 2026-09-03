@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:1cf35f2ef841adcd8f4cfad4243209743dd3261d529d5394c47ba471de38108e
   normalized_sha256: sha256:1cf35f2ef841adcd8f4cfad4243209743dd3261d529d5394c47ba471de38108e
 cas_ref: sha256:1cf35f2ef841adcd8f4cfad4243209743dd3261d529d5394c47ba471de38108e
-coverage_gids:
-  - D5/S3/Observer/Completion/DiscreteCutReconstruction.discrete_cut_reconstruction
+coverage:
+  - gid: D5/S3/Observer/Completion/DiscreteCutReconstruction.discrete_cut_reconstruction
+    target_statement_id: sha256:95bbf6122ed84ac19568bb44945a2e6fa222d467f302f9c8bd2c8a9cc6f92816
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/Completion/DiscreteCutReconstruction.discrete_cut_reconstruction
-      source_sha256: sha256:1cf35f2ef841adcd8f4cfad4243209743dd3261d529d5394c47ba471de38108e
-      target_statement_id: sha256:95bbf6122ed84ac19568bb44945a2e6fa222d467f302f9c8bd2c8a9cc6f92816
   scribe:
     - gid: D5/S3/Observer/Completion/DiscreteCutReconstruction.discrete_cut_reconstruction
       definition_sha256: sha256:869d748fcd5ff545acb54aed66bdcb1e1aa4270b99e101c406f666f0433dfa62

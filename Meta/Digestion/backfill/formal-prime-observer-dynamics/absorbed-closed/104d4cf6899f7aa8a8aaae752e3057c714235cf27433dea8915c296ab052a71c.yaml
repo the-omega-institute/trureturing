@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:104d4cf6899f7aa8a8aaae752e3057c714235cf27433dea8915c296ab052a71c
   normalized_sha256: sha256:104d4cf6899f7aa8a8aaae752e3057c714235cf27433dea8915c296ab052a71c
 cas_ref: sha256:104d4cf6899f7aa8a8aaae752e3057c714235cf27433dea8915c296ab052a71c
-coverage_gids:
-  - D5/S3/ConceptDynamics/Gluing/SheafPairwiseEqualizer.sheaf_sections_equiv_pairwise_equalizer
+coverage:
+  - gid: D5/S3/ConceptDynamics/Gluing/SheafPairwiseEqualizer.sheaf_sections_equiv_pairwise_equalizer
+    target_statement_id: sha256:d3dcda4f95eaaeb34ed141478fd68208448e69795dfbfa367580f5798b4f621d
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Gluing/SheafPairwiseEqualizer.sheaf_sections_equiv_pairwise_equalizer
-      source_sha256: sha256:104d4cf6899f7aa8a8aaae752e3057c714235cf27433dea8915c296ab052a71c
-      target_statement_id: sha256:d3dcda4f95eaaeb34ed141478fd68208448e69795dfbfa367580f5798b4f621d
   scribe:
     - gid: D5/S3/ConceptDynamics/Gluing/SheafPairwiseEqualizer.sheaf_sections_equiv_pairwise_equalizer
       definition_sha256: sha256:c4470ea2bd841047c13779f1b2a8ad0eadf51863b60c7b2273fae5fa069c7fac

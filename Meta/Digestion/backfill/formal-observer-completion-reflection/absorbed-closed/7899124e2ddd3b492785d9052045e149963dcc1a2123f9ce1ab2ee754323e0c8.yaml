@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:7899124e2ddd3b492785d9052045e149963dcc1a2123f9ce1ab2ee754323e0c8
   normalized_sha256: sha256:7899124e2ddd3b492785d9052045e149963dcc1a2123f9ce1ab2ee754323e0c8
 cas_ref: sha256:7899124e2ddd3b492785d9052045e149963dcc1a2123f9ce1ab2ee754323e0c8
-coverage_gids:
-  - D5/S3/Quantum/Measurement/JointObserverVisibleResidual.joint_observer_visible_and_residual
+coverage:
+  - gid: D5/S3/Quantum/Measurement/JointObserverVisibleResidual.joint_observer_visible_and_residual
+    target_statement_id: sha256:56f93c4454653f676c36aa77aa36b09f8fc76bdd96df10189b7c3e72a925b38f
 receipts:
-  coverage:
-    - gid: D5/S3/Quantum/Measurement/JointObserverVisibleResidual.joint_observer_visible_and_residual
-      source_sha256: sha256:7899124e2ddd3b492785d9052045e149963dcc1a2123f9ce1ab2ee754323e0c8
-      target_statement_id: sha256:56f93c4454653f676c36aa77aa36b09f8fc76bdd96df10189b7c3e72a925b38f
   scribe:
     - gid: D5/S3/Quantum/Measurement/JointObserverVisibleResidual.joint_observer_visible_and_residual
       definition_sha256: sha256:4c58c9e4c5cbe7dac0b3f350157ef90513208e41dbdd22b6607294278d7405e0

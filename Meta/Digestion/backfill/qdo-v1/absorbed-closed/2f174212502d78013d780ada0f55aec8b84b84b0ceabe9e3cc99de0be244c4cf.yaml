@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:2f174212502d78013d780ada0f55aec8b84b84b0ceabe9e3cc99de0be244c4cf
   normalized_sha256: sha256:2f174212502d78013d780ada0f55aec8b84b84b0ceabe9e3cc99de0be244c4cf
 cas_ref: sha256:2f174212502d78013d780ada0f55aec8b84b84b0ceabe9e3cc99de0be244c4cf
-coverage_gids:
-  - D5/S3/ObserverMemory/InverseLimits/FactorImageStability.surjective_semiconj_iterate_ranges
+coverage:
+  - gid: D5/S3/ObserverMemory/InverseLimits/FactorImageStability.surjective_semiconj_iterate_ranges
+    target_statement_id: sha256:f8cf467b7c244fb3d4b0e974e13a5abb50cc2afe124279c74dbb215216cac84e
 receipts:
-  coverage:
-    - gid: D5/S3/ObserverMemory/InverseLimits/FactorImageStability.surjective_semiconj_iterate_ranges
-      source_sha256: sha256:2f174212502d78013d780ada0f55aec8b84b84b0ceabe9e3cc99de0be244c4cf
-      target_statement_id: sha256:f8cf467b7c244fb3d4b0e974e13a5abb50cc2afe124279c74dbb215216cac84e
   scribe:
     - gid: D5/S3/ObserverMemory/InverseLimits/FactorImageStability.surjective_semiconj_iterate_ranges
       definition_sha256: sha256:b90730a7450d5d0923214ac63533689eed61d97ad77d577d7f41e2d3c2fcb56e

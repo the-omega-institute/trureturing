@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:3c5b345e4fe7d2f4c079f4803b7789ce25bf61ed065eaf1c4333a80781aebf27
   normalized_sha256: sha256:3c5b345e4fe7d2f4c079f4803b7789ce25bf61ed065eaf1c4333a80781aebf27
 cas_ref: sha256:3c5b345e4fe7d2f4c079f4803b7789ce25bf61ed065eaf1c4333a80781aebf27
-coverage_gids:
-  - D5/S3/Quantum/Fibers/CenteredEffectTowerStability.heisenberg_tower_once_stable_permanently
+coverage:
+  - gid: D5/S3/Quantum/Fibers/CenteredEffectTowerStability.heisenberg_tower_once_stable_permanently
+    target_statement_id: sha256:8beadb728e206a3c8b09a310e574e5bb2ba4a6651cb0cacc0e29be7a29a94295
 receipts:
-  coverage:
-    - gid: D5/S3/Quantum/Fibers/CenteredEffectTowerStability.heisenberg_tower_once_stable_permanently
-      source_sha256: sha256:3c5b345e4fe7d2f4c079f4803b7789ce25bf61ed065eaf1c4333a80781aebf27
-      target_statement_id: sha256:8beadb728e206a3c8b09a310e574e5bb2ba4a6651cb0cacc0e29be7a29a94295
   scribe:
     - gid: D5/S3/Quantum/Fibers/CenteredEffectTowerStability.heisenberg_tower_once_stable_permanently
       definition_sha256: sha256:e0e6da78d70e8bc41d54daec38368bd473054e86ff0f5f4a3553dc619f3e9229

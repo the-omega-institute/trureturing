@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:8d838b4edcefe4ee3670da9532a1be7ea558c86aec352586df4f18ddfb2b1e29
   normalized_sha256: sha256:8d838b4edcefe4ee3670da9532a1be7ea558c86aec352586df4f18ddfb2b1e29
 cas_ref: sha256:8d838b4edcefe4ee3670da9532a1be7ea558c86aec352586df4f18ddfb2b1e29
-coverage_gids:
-  - D5/S3/ConceptDynamics/Refinement/InductiveSufficiency.inductive_sufficiency_criterion
+coverage:
+  - gid: D5/S3/ConceptDynamics/Refinement/InductiveSufficiency.inductive_sufficiency_criterion
+    target_statement_id: sha256:49981877cb969dce6156ddac340f96a2165b4e6f4501cef48f86892c00ad4875
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Refinement/InductiveSufficiency.inductive_sufficiency_criterion
-      source_sha256: sha256:8d838b4edcefe4ee3670da9532a1be7ea558c86aec352586df4f18ddfb2b1e29
-      target_statement_id: sha256:49981877cb969dce6156ddac340f96a2165b4e6f4501cef48f86892c00ad4875
   scribe:
     - gid: D5/S3/ConceptDynamics/Refinement/InductiveSufficiency.inductive_sufficiency_criterion
       definition_sha256: sha256:e140a2db3b2a5bfdbbfc9fd0bf8e9ae910279111e6e2d776cee62ce728ccc4ff

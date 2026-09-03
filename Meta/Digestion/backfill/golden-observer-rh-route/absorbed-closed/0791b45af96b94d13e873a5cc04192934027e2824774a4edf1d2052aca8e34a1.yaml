@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:0791b45af96b94d13e873a5cc04192934027e2824774a4edf1d2052aca8e34a1
   normalized_sha256: sha256:0791b45af96b94d13e873a5cc04192934027e2824774a4edf1d2052aca8e34a1
 cas_ref: sha256:0791b45af96b94d13e873a5cc04192934027e2824774a4edf1d2052aca8e34a1
-coverage_gids:
-  - D5/S3/Analytic/Toroidal/GoldenToroidalIndexExtension.golden_toroidal_index_extension
+coverage:
+  - gid: D5/S3/Analytic/Toroidal/GoldenToroidalIndexExtension.golden_toroidal_index_extension
+    target_statement_id: sha256:5734f8bc9c6392ebc10e77b575c787d8e56668db6325ea5acccde3c25b0fa2ff
 receipts:
-  coverage:
-    - gid: D5/S3/Analytic/Toroidal/GoldenToroidalIndexExtension.golden_toroidal_index_extension
-      source_sha256: sha256:0791b45af96b94d13e873a5cc04192934027e2824774a4edf1d2052aca8e34a1
-      target_statement_id: sha256:5734f8bc9c6392ebc10e77b575c787d8e56668db6325ea5acccde3c25b0fa2ff
   scribe:
     - gid: D5/S3/Analytic/Toroidal/GoldenToroidalIndexExtension.golden_toroidal_index_extension
       definition_sha256: sha256:73edd17616503076bed842c41cd25c6969a883df95283c945736ced18c6b5fca

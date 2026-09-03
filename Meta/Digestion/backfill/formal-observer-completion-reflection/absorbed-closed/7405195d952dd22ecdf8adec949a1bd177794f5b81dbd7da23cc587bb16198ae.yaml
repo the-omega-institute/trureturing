@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:7405195d952dd22ecdf8adec949a1bd177794f5b81dbd7da23cc587bb16198ae
   normalized_sha256: sha256:7405195d952dd22ecdf8adec949a1bd177794f5b81dbd7da23cc587bb16198ae
 cas_ref: sha256:7405195d952dd22ecdf8adec949a1bd177794f5b81dbd7da23cc587bb16198ae
-coverage_gids:
-  - D5/S3/Observer/DefectComposition/LinearPostprocessingDefectContraction.linear_postprocessing_defect_contraction
+coverage:
+  - gid: D5/S3/Observer/DefectComposition/LinearPostprocessingDefectContraction.linear_postprocessing_defect_contraction
+    target_statement_id: sha256:6321e9991c5adf1e754197e2064be136ad7f46c74fc2d141e13902e05bb3e804
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/DefectComposition/LinearPostprocessingDefectContraction.linear_postprocessing_defect_contraction
-      source_sha256: sha256:7405195d952dd22ecdf8adec949a1bd177794f5b81dbd7da23cc587bb16198ae
-      target_statement_id: sha256:6321e9991c5adf1e754197e2064be136ad7f46c74fc2d141e13902e05bb3e804
   scribe:
     - gid: D5/S3/Observer/DefectComposition/LinearPostprocessingDefectContraction.linear_postprocessing_defect_contraction
       definition_sha256: sha256:3de6629b6b4b9efafc269d97c86c0e86d96a1f6c203efa430903e9ba8d1845fd

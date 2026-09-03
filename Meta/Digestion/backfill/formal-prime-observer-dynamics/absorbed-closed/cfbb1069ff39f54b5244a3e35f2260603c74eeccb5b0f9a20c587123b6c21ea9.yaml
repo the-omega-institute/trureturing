@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:cfbb1069ff39f54b5244a3e35f2260603c74eeccb5b0f9a20c587123b6c21ea9
   normalized_sha256: sha256:cfbb1069ff39f54b5244a3e35f2260603c74eeccb5b0f9a20c587123b6c21ea9
 cas_ref: sha256:cfbb1069ff39f54b5244a3e35f2260603c74eeccb5b0f9a20c587123b6c21ea9
-coverage_gids:
-  - D5/S3/ConceptDynamics/RefinementAlgebra/ObservableEventAlgebraRepresentation.observable_event_algebra_representation
+coverage:
+  - gid: D5/S3/ConceptDynamics/RefinementAlgebra/ObservableEventAlgebraRepresentation.observable_event_algebra_representation
+    target_statement_id: sha256:93409f59467017a78bf9c58abd3f07be5bbf2a95b22811eab3dfc3511f873648
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/RefinementAlgebra/ObservableEventAlgebraRepresentation.observable_event_algebra_representation
-      source_sha256: sha256:cfbb1069ff39f54b5244a3e35f2260603c74eeccb5b0f9a20c587123b6c21ea9
-      target_statement_id: sha256:93409f59467017a78bf9c58abd3f07be5bbf2a95b22811eab3dfc3511f873648
   scribe:
     - gid: D5/S3/ConceptDynamics/RefinementAlgebra/ObservableEventAlgebraRepresentation.observable_event_algebra_representation
       definition_sha256: sha256:d00910d28bc3a6f4bc57b2fd010cf6ffbd5c998981892b9b86535aac4cd29465

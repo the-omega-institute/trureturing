@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:6b34996ea004b3f7b130104cd3fb6b42ba2e3c1b1de7cd782630e9e5daa77535
   normalized_sha256: sha256:6b34996ea004b3f7b130104cd3fb6b42ba2e3c1b1de7cd782630e9e5daa77535
 cas_ref: sha256:6b34996ea004b3f7b130104cd3fb6b42ba2e3c1b1de7cd782630e9e5daa77535
-coverage_gids:
-  - D5/S3/Arith/Coding/ArbitraryErrorCorrectionCapacity.arbitrary_error_correction_capacity_bound
+coverage:
+  - gid: D5/S3/Arith/Coding/ArbitraryErrorCorrectionCapacity.arbitrary_error_correction_capacity_bound
+    target_statement_id: sha256:b605c3212ee50336dc087426e136dedae5b6122dfc21bd07899179f104169025
 receipts:
-  coverage:
-    - gid: D5/S3/Arith/Coding/ArbitraryErrorCorrectionCapacity.arbitrary_error_correction_capacity_bound
-      source_sha256: sha256:6b34996ea004b3f7b130104cd3fb6b42ba2e3c1b1de7cd782630e9e5daa77535
-      target_statement_id: sha256:b605c3212ee50336dc087426e136dedae5b6122dfc21bd07899179f104169025
   scribe:
     - gid: D5/S3/Arith/Coding/ArbitraryErrorCorrectionCapacity.arbitrary_error_correction_capacity_bound
       definition_sha256: sha256:43dfd204466de70541a9fd86435e728395edff3cd97ad9b0a3299b2a29da2127

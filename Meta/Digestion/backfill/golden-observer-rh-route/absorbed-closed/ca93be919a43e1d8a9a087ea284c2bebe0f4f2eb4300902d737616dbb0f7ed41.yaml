@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:ca93be919a43e1d8a9a087ea284c2bebe0f4f2eb4300902d737616dbb0f7ed41
   normalized_sha256: sha256:ca93be919a43e1d8a9a087ea284c2bebe0f4f2eb4300902d737616dbb0f7ed41
 cas_ref: sha256:ca93be919a43e1d8a9a087ea284c2bebe0f4f2eb4300902d737616dbb0f7ed41
-coverage_gids:
-  - D5/S3/Analytic/EulerGerm/LocalFactorZeroDivisor.G3_eq_zero_iff_exists_local_factor_zero
+coverage:
+  - gid: D5/S3/Analytic/EulerGerm/LocalFactorZeroDivisor.G3_eq_zero_iff_exists_local_factor_zero
+    target_statement_id: sha256:1abd4faac981f7abff1e2843ba7c20f72b6fb7399027272c0b9629d6cc97bc53
 receipts:
-  coverage:
-    - gid: D5/S3/Analytic/EulerGerm/LocalFactorZeroDivisor.G3_eq_zero_iff_exists_local_factor_zero
-      source_sha256: sha256:ca93be919a43e1d8a9a087ea284c2bebe0f4f2eb4300902d737616dbb0f7ed41
-      target_statement_id: sha256:1abd4faac981f7abff1e2843ba7c20f72b6fb7399027272c0b9629d6cc97bc53
   scribe:
     - gid: D5/S3/Analytic/EulerGerm/LocalFactorZeroDivisor.G3_eq_zero_iff_exists_local_factor_zero
       definition_sha256: sha256:eccaac56234999fac41f01276bbd61207dd84047198f17f67bb15c090510045c

@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:ac3ffc65b901e8b4391f0c72ffc62a6905741162139da90e7654d07f783a3dcb
   normalized_sha256: sha256:ac3ffc65b901e8b4391f0c72ffc62a6905741162139da90e7654d07f783a3dcb
 cas_ref: sha256:ac3ffc65b901e8b4391f0c72ffc62a6905741162139da90e7654d07f783a3dcb
-coverage_gids:
-  - D5/S3/ConceptDynamics/InterventionLaws/InterventionImageDefect.image_defect_excludes_joint_model
+coverage:
+  - gid: D5/S3/ConceptDynamics/InterventionLaws/InterventionImageDefect.image_defect_excludes_joint_model
+    target_statement_id: sha256:3993179739a10921a540ea618e746bf70b69e5b69b545f07d0f3c2eb1b6903c0
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/InterventionLaws/InterventionImageDefect.image_defect_excludes_joint_model
-      source_sha256: sha256:ac3ffc65b901e8b4391f0c72ffc62a6905741162139da90e7654d07f783a3dcb
-      target_statement_id: sha256:3993179739a10921a540ea618e746bf70b69e5b69b545f07d0f3c2eb1b6903c0
   scribe:
     - gid: D5/S3/ConceptDynamics/InterventionLaws/InterventionImageDefect.image_defect_excludes_joint_model
       definition_sha256: sha256:e4868281619cad93a6087c93286d0e89da5999ec3906cf24f2d36531a5fc4883

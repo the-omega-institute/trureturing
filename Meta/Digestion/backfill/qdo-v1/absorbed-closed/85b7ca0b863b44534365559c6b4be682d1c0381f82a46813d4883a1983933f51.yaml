@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:85b7ca0b863b44534365559c6b4be682d1c0381f82a46813d4883a1983933f51
   normalized_sha256: sha256:85b7ca0b863b44534365559c6b4be682d1c0381f82a46813d4883a1983933f51
 cas_ref: sha256:85b7ca0b863b44534365559c6b4be682d1c0381f82a46813d4883a1983933f51
-coverage_gids:
-  - D5/S3/Entropy/Fusion/StateEntropy.fusion_state_entropy_identity
+coverage:
+  - gid: D5/S3/Entropy/Fusion/StateEntropy.fusion_state_entropy_identity
+    target_statement_id: sha256:9e4c53f7a9a28cb4a9ac2e7c5cf38258f8697d50cce8245ff8d31aa2af4dd788
 receipts:
-  coverage:
-    - gid: D5/S3/Entropy/Fusion/StateEntropy.fusion_state_entropy_identity
-      source_sha256: sha256:85b7ca0b863b44534365559c6b4be682d1c0381f82a46813d4883a1983933f51
-      target_statement_id: sha256:9e4c53f7a9a28cb4a9ac2e7c5cf38258f8697d50cce8245ff8d31aa2af4dd788
   scribe:
     - gid: D5/S3/Entropy/Fusion/StateEntropy.fusion_state_entropy_identity
       definition_sha256: sha256:480145eb3659e307cdd480ee07d007619c7c2a7a1971c5e608f2d9de5ecb6999

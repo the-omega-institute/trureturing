@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:2908c6060e2655559923aac22b004364257d1011495a01cad1222fa587ac2036
   normalized_sha256: sha256:2908c6060e2655559923aac22b004364257d1011495a01cad1222fa587ac2036
 cas_ref: sha256:2908c6060e2655559923aac22b004364257d1011495a01cad1222fa587ac2036
-coverage_gids:
-  - D5/S3/Zeros/Symmetry/MultiscaleFingerprintAppend.multiscale_fingerprint_append
+coverage:
+  - gid: D5/S3/Zeros/Symmetry/MultiscaleFingerprintAppend.multiscale_fingerprint_append
+    target_statement_id: sha256:901093e8335d01bd27b987571b93bcf7b968a4ca9aca261799b03d875f45e91b
 receipts:
-  coverage:
-    - gid: D5/S3/Zeros/Symmetry/MultiscaleFingerprintAppend.multiscale_fingerprint_append
-      source_sha256: sha256:2908c6060e2655559923aac22b004364257d1011495a01cad1222fa587ac2036
-      target_statement_id: sha256:901093e8335d01bd27b987571b93bcf7b968a4ca9aca261799b03d875f45e91b
   scribe:
     - gid: D5/S3/Zeros/Symmetry/MultiscaleFingerprintAppend.multiscale_fingerprint_append
       definition_sha256: sha256:eded38f12d13c8a85e1cbd254665cda144ef771eedab38b85b10921deab84154

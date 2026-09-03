@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:e1405cb8d51b0ea5760854b2384a7e01ebadc486b744d6159d97dd577b1ad6e4
   normalized_sha256: sha256:e1405cb8d51b0ea5760854b2384a7e01ebadc486b744d6159d97dd577b1ad6e4
 cas_ref: sha256:e1405cb8d51b0ea5760854b2384a7e01ebadc486b744d6159d97dd577b1ad6e4
-coverage_gids:
-  - D5/S3/ConceptDynamics/DecisionValueScale/FiniteHorizonValueFactorization.finite_horizon_value_factorization
+coverage:
+  - gid: D5/S3/ConceptDynamics/DecisionValueScale/FiniteHorizonValueFactorization.finite_horizon_value_factorization
+    target_statement_id: sha256:b850689d654ac32c1ffabc06d86637837d34fc0b84e6a233c116bb929069368d
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/DecisionValueScale/FiniteHorizonValueFactorization.finite_horizon_value_factorization
-      source_sha256: sha256:e1405cb8d51b0ea5760854b2384a7e01ebadc486b744d6159d97dd577b1ad6e4
-      target_statement_id: sha256:b850689d654ac32c1ffabc06d86637837d34fc0b84e6a233c116bb929069368d
   scribe:
     - gid: D5/S3/ConceptDynamics/DecisionValueScale/FiniteHorizonValueFactorization.finite_horizon_value_factorization
       definition_sha256: sha256:e47f01e5c92090e4ddd804eb57c8c0cb441ed5e3d1ea1d641ceae52587676e1e

@@ -2,19 +2,28 @@ fingerprints:
   raw_sha256: sha256:92312c5c0791ca42042265d47e65559acb1efa5a59e9e7db7f6e9fa6786b1a38
   normalized_sha256: sha256:92312c5c0791ca42042265d47e65559acb1efa5a59e9e7db7f6e9fa6786b1a38
 cas_ref: sha256:92312c5c0791ca42042265d47e65559acb1efa5a59e9e7db7f6e9fa6786b1a38
-coverage_gids:
-  - D5/S3/ContinuousObservables/CentralWinding.central_winding_certificate
-  - D5/S3/Observer/MatrixUnitCertificate.matrix_unit_mul
-  - D5/S3/Observer/WindowRegister.clockMatrix_pow_card
-  - D5/S3/Observer/WindowRegister.shiftMatrix_pow_card
-  - D5/S3/Observer/WindowRegister.windowRoot_isPrimitiveRoot
-  - D5/S3/Observer/WindowRegister.window_commutant_eq_scalars
-  - D5/S3/Observer/WindowRegister.window_unitary
-  - D5/S3/Observer/WindowRegister.window_weyl
-  - D5/S3/ObserverMemory/PrimePowerTensorTower.prime_power_tensor_factor_decomposition
-  - D5/S3/QuantumBounds/RobertsonSchrodinger.robertson_schrodinger
+coverage:
+  - gid: D5/S3/ContinuousObservables/CentralWinding.central_winding_certificate
+    target_statement_id: sha256:efe1d31611476f5361ce2f2b0e29dd800d888be2cb20ffe5b4513461d98da533
+  - gid: D5/S3/Observer/MatrixUnitCertificate.matrix_unit_mul
+    target_statement_id: sha256:825d35ab442c2353b86f3417fb4e8e1f3e558dd41ad1db977c3b0c7e1189d358
+  - gid: D5/S3/Observer/WindowRegister.clockMatrix_pow_card
+    target_statement_id: sha256:0108df065328376cb260c24b0b40cc598c16771f76a461495c47c031b0336ea7
+  - gid: D5/S3/Observer/WindowRegister.shiftMatrix_pow_card
+    target_statement_id: sha256:7a3fbd68d9cbc561393327c7d3ea830003b79cba0759c1d85b75ed0aa3737f9e
+  - gid: D5/S3/Observer/WindowRegister.windowRoot_isPrimitiveRoot
+    target_statement_id: sha256:4a5694e3ba62d66afbc3733205d04a2c0a2e110293dc41101bdf987ecd6eb206
+  - gid: D5/S3/Observer/WindowRegister.window_commutant_eq_scalars
+    target_statement_id: sha256:3a1c76eab0557fe2d8a156480110c42b513b487bccc94c057b951e7ad1855a61
+  - gid: D5/S3/Observer/WindowRegister.window_unitary
+    target_statement_id: sha256:ba56be5be7cb00860ccafb22469dd37bb58cfafd46ae6943699185e5223d3d10
+  - gid: D5/S3/Observer/WindowRegister.window_weyl
+    target_statement_id: sha256:ee6fa9733ac7678beb8cccda5ea46388e4020b6684b8c3c9438fd32ce69bd153
+  - gid: D5/S3/ObserverMemory/PrimePowerTensorTower.prime_power_tensor_factor_decomposition
+    target_statement_id: sha256:21ccc90ac6460735fea019b3d313e2e63d85d801ab4ec568467ad780c2806be3
+  - gid: D5/S3/QuantumBounds/RobertsonSchrodinger.robertson_schrodinger
+    target_statement_id: sha256:87657bf82c7f0b5219b0f6a5c640131cdfe10480d25dde1ea38424c886afc975
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems:
     - noncommutative-algebra-bundle-over-torus

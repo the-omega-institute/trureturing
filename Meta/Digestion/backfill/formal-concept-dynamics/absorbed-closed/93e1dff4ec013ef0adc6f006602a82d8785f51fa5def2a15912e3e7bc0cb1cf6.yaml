@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:93e1dff4ec013ef0adc6f006602a82d8785f51fa5def2a15912e3e7bc0cb1cf6
   normalized_sha256: sha256:93e1dff4ec013ef0adc6f006602a82d8785f51fa5def2a15912e3e7bc0cb1cf6
 cas_ref: sha256:93e1dff4ec013ef0adc6f006602a82d8785f51fa5def2a15912e3e7bc0cb1cf6
-coverage_gids:
-  - D5/S3/ConceptDynamics/ObservationOrder/BayesPlausibility.bayes_plausibility
+coverage:
+  - gid: D5/S3/ConceptDynamics/ObservationOrder/BayesPlausibility.bayes_plausibility
+    target_statement_id: sha256:805f593124e32327bddf582bb8faff124e67108de658dad6b2de31bf1c22f867
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/ObservationOrder/BayesPlausibility.bayes_plausibility
-      source_sha256: sha256:93e1dff4ec013ef0adc6f006602a82d8785f51fa5def2a15912e3e7bc0cb1cf6
-      target_statement_id: sha256:805f593124e32327bddf582bb8faff124e67108de658dad6b2de31bf1c22f867
   scribe:
     - gid: D5/S3/ConceptDynamics/ObservationOrder/BayesPlausibility.bayes_plausibility
       definition_sha256: sha256:24cf7c96c4fc401f8c6955bd5eb81595dbce90ceb03ef44a67ef5a3f1363e0df

@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:212e0d1a7d05d5c34a4f09a1c64d5706497e9470fd64cd486c3ac08ad3c469e2
   normalized_sha256: sha256:212e0d1a7d05d5c34a4f09a1c64d5706497e9470fd64cd486c3ac08ad3c469e2
 cas_ref: sha256:212e0d1a7d05d5c34a4f09a1c64d5706497e9470fd64cd486c3ac08ad3c469e2
-coverage_gids:
-  - D5/S3/ConceptDynamics/Information/CanonicalRefinementImpurityMonotonicity.canonical_refinement_impurity_monotone
+coverage:
+  - gid: D5/S3/ConceptDynamics/Information/CanonicalRefinementImpurityMonotonicity.canonical_refinement_impurity_monotone
+    target_statement_id: sha256:e075b4ade52bdb2abe95e05380dcbcad1fb8808b4d5fece021532638613c1007
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Information/CanonicalRefinementImpurityMonotonicity.canonical_refinement_impurity_monotone
-      source_sha256: sha256:212e0d1a7d05d5c34a4f09a1c64d5706497e9470fd64cd486c3ac08ad3c469e2
-      target_statement_id: sha256:e075b4ade52bdb2abe95e05380dcbcad1fb8808b4d5fece021532638613c1007
   scribe:
     - gid: D5/S3/ConceptDynamics/Information/CanonicalRefinementImpurityMonotonicity.canonical_refinement_impurity_monotone
       definition_sha256: sha256:bd900491fc8173f332a7e6ac3ff62d66fd32bad434b2420108f65fc3976abc37

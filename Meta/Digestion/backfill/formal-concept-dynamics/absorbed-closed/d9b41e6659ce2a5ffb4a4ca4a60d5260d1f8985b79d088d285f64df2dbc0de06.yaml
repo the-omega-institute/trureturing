@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:d9b41e6659ce2a5ffb4a4ca4a60d5260d1f8985b79d088d285f64df2dbc0de06
   normalized_sha256: sha256:d9b41e6659ce2a5ffb4a4ca4a60d5260d1f8985b79d088d285f64df2dbc0de06
 cas_ref: sha256:d9b41e6659ce2a5ffb4a4ca4a60d5260d1f8985b79d088d285f64df2dbc0de06
-coverage_gids:
-  - D5/S3/ConceptDynamics/Completion/TargetClosureOperator.target_closure_three_laws
+coverage:
+  - gid: D5/S3/ConceptDynamics/Completion/TargetClosureOperator.target_closure_three_laws
+    target_statement_id: sha256:fa97a54bc24f7ad08ad19098c4070894368f3a6b1db53817cfb327442c5890d6
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Completion/TargetClosureOperator.target_closure_three_laws
-      source_sha256: sha256:d9b41e6659ce2a5ffb4a4ca4a60d5260d1f8985b79d088d285f64df2dbc0de06
-      target_statement_id: sha256:fa97a54bc24f7ad08ad19098c4070894368f3a6b1db53817cfb327442c5890d6
   scribe:
     - gid: D5/S3/ConceptDynamics/Completion/TargetClosureOperator.target_closure_three_laws
       definition_sha256: sha256:18b6e80d9db71107057ae2874dd776343c4981157f833594994326887d1d02ed

@@ -2,17 +2,12 @@ fingerprints:
   raw_sha256: sha256:5311064dea165126272adde3b89627f20405368c73827bd4fb2eb07786d788f1
   normalized_sha256: sha256:5311064dea165126272adde3b89627f20405368c73827bd4fb2eb07786d788f1
 cas_ref: sha256:5311064dea165126272adde3b89627f20405368c73827bd4fb2eb07786d788f1
-coverage_gids:
-  - D5/S0/Computability/Diagonalization/BooleanStreamDiagonal.boolean_stream_diagonal_exceeds_every_history
-  - D5/S0/Computability/TotalOrbitEvaluator.no_computable_total_orbit_evaluator
+coverage:
+  - gid: D5/S0/Computability/Diagonalization/BooleanStreamDiagonal.boolean_stream_diagonal_exceeds_every_history
+    target_statement_id: sha256:d51820748441919ccb445a7f5c453e40530b2043886dac7664bad4d6892fd30e
+  - gid: D5/S0/Computability/TotalOrbitEvaluator.no_computable_total_orbit_evaluator
+    target_statement_id: sha256:90dab0b7a5b6bd662c43c75a05ec827caad59ad3e3fc96b82f3d3e1beac29e19
 receipts:
-  coverage:
-    - gid: D5/S0/Computability/Diagonalization/BooleanStreamDiagonal.boolean_stream_diagonal_exceeds_every_history
-      source_sha256: sha256:5311064dea165126272adde3b89627f20405368c73827bd4fb2eb07786d788f1
-      target_statement_id: sha256:d51820748441919ccb445a7f5c453e40530b2043886dac7664bad4d6892fd30e
-    - gid: D5/S0/Computability/TotalOrbitEvaluator.no_computable_total_orbit_evaluator
-      source_sha256: sha256:5311064dea165126272adde3b89627f20405368c73827bd4fb2eb07786d788f1
-      target_statement_id: sha256:90dab0b7a5b6bd662c43c75a05ec827caad59ad3e3fc96b82f3d3e1beac29e19
   scribe:
     - gid: D5/S0/Computability/Diagonalization/BooleanStreamDiagonal.boolean_stream_diagonal_exceeds_every_history
       definition_sha256: sha256:ee060a76651330803b236de9f6255e2d6e0645b08a873a0bfcf6f6862bf83a04

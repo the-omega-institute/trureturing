@@ -2,14 +2,12 @@ fingerprints:
   raw_sha256: sha256:2043c07c3957c620feff335dcedaa98631e8f970ae65c2ab5bcec69b3c5a2b74
   normalized_sha256: sha256:2043c07c3957c620feff335dcedaa98631e8f970ae65c2ab5bcec69b3c5a2b74
 cas_ref: sha256:2043c07c3957c620feff335dcedaa98631e8f970ae65c2ab5bcec69b3c5a2b74
-coverage_gids: []
+coverage: []
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems: []
   cover_disposition:
     outcome: partial-closed
-    recorded_at_utc: 2026-08-28T01:54:04.4140960+00:00
     gids:
       - D5/S3/ConceptDynamics/Refinement/SemanticResourceSeparation.semantic_sufficiency_can_exceed_finite_resources
     gaps:

@@ -2,14 +2,12 @@ fingerprints:
   raw_sha256: sha256:15c35c300c6e14ee79e3e5d8edf5d435de19a663eaf864e6e5276b2afadb8a29
   normalized_sha256: sha256:15c35c300c6e14ee79e3e5d8edf5d435de19a663eaf864e6e5276b2afadb8a29
 cas_ref: sha256:15c35c300c6e14ee79e3e5d8edf5d435de19a663eaf864e6e5276b2afadb8a29
-coverage_gids: []
+coverage: []
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems: []
   cover_disposition:
     outcome: partial-closed
-    recorded_at_utc: 2026-09-02T07:31:26.5945480+00:00
     gids:
       - D5/S1/Deficit/Beatty/GoldenSpectralCoordinate.golden_natural_scale_hits_half
     gaps:

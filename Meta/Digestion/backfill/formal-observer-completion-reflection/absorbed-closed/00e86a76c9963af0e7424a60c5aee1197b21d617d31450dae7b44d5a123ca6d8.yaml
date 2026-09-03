@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:00e86a76c9963af0e7424a60c5aee1197b21d617d31450dae7b44d5a123ca6d8
   normalized_sha256: sha256:00e86a76c9963af0e7424a60c5aee1197b21d617d31450dae7b44d5a123ca6d8
 cas_ref: sha256:00e86a76c9963af0e7424a60c5aee1197b21d617d31450dae7b44d5a123ca6d8
-coverage_gids:
-  - D5/S3/Observer/LinearMemory/GramNonzeroSpectrumMultiplicity.gram_nonzero_spectrum_with_algebraic_multiplicity
+coverage:
+  - gid: D5/S3/Observer/LinearMemory/GramNonzeroSpectrumMultiplicity.gram_nonzero_spectrum_with_algebraic_multiplicity
+    target_statement_id: sha256:7708de663f26922dea4b58a3fc16571990b2d9702cdc298afe1a6e3dea7c0de8
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/LinearMemory/GramNonzeroSpectrumMultiplicity.gram_nonzero_spectrum_with_algebraic_multiplicity
-      source_sha256: sha256:00e86a76c9963af0e7424a60c5aee1197b21d617d31450dae7b44d5a123ca6d8
-      target_statement_id: sha256:7708de663f26922dea4b58a3fc16571990b2d9702cdc298afe1a6e3dea7c0de8
   scribe:
     - gid: D5/S3/Observer/LinearMemory/GramNonzeroSpectrumMultiplicity.gram_nonzero_spectrum_with_algebraic_multiplicity
       definition_sha256: sha256:d60c759fb3b710597f65b51a1c78a3c67b5d936cc6bbed7c1a3c5d3979be2c3c

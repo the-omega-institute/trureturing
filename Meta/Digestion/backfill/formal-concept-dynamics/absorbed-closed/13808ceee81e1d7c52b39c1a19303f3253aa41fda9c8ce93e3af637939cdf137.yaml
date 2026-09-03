@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:13808ceee81e1d7c52b39c1a19303f3253aa41fda9c8ce93e3af637939cdf137
   normalized_sha256: sha256:13808ceee81e1d7c52b39c1a19303f3253aa41fda9c8ce93e3af637939cdf137
 cas_ref: sha256:13808ceee81e1d7c52b39c1a19303f3253aa41fda9c8ce93e3af637939cdf137
-coverage_gids:
-  - D5/S3/ConceptDynamics/Refinement/MultiTargetMinimalSufficiency.multi_target_minimal_sufficiency
+coverage:
+  - gid: D5/S3/ConceptDynamics/Refinement/MultiTargetMinimalSufficiency.multi_target_minimal_sufficiency
+    target_statement_id: sha256:ca3e7e2eebb5e5d4c5ae72a4863695f9fa6e227d005a6bd78a6fa884517d3f09
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Refinement/MultiTargetMinimalSufficiency.multi_target_minimal_sufficiency
-      source_sha256: sha256:13808ceee81e1d7c52b39c1a19303f3253aa41fda9c8ce93e3af637939cdf137
-      target_statement_id: sha256:ca3e7e2eebb5e5d4c5ae72a4863695f9fa6e227d005a6bd78a6fa884517d3f09
   scribe:
     - gid: D5/S3/ConceptDynamics/Refinement/MultiTargetMinimalSufficiency.multi_target_minimal_sufficiency
       definition_sha256: sha256:919f4e35757b0411cb2caa8c6a52316a24e12865ceec4393f24f55c81f17758e
