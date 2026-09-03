@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:18392694dfab86b78c1d779d78b282aa182e2f713aeb4afd934675faecfd4b0e
+  normalized_sha256: sha256:18392694dfab86b78c1d779d78b282aa182e2f713aeb4afd934675faecfd4b0e
+cas_ref: sha256:18392694dfab86b78c1d779d78b282aa182e2f713aeb4afd934675faecfd4b0e
+coverage_gids:
+  - D5/S3/ConceptDynamics/Audits/CountermodelRepairUnderdetermination.countermodel_diagnosis_is_underdetermined
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Audits/CountermodelRepairUnderdetermination.countermodel_diagnosis_is_underdetermined
+      source_sha256: sha256:18392694dfab86b78c1d779d78b282aa182e2f713aeb4afd934675faecfd4b0e
+      target_statement_id: sha256:0b37dbc1658900d16c880a1a73454ff551dcde96ee4f0fff812662c5fdfc64c2
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Audits/CountermodelRepairUnderdetermination.countermodel_diagnosis_is_underdetermined
+      definition_sha256: sha256:a8e00b73f3c82b4dbeba3ae03f710057b97aba3b2ffd10fca435805de2378c05
+      emission_sha256: sha256:9a8a6f00d96ea1c2d8dab019f0420857e63302607f103c977ed6d35df107234d
+  unresolved_subitems: []

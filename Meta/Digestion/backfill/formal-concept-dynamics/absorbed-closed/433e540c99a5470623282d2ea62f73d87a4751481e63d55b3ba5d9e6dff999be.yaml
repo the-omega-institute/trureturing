@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:433e540c99a5470623282d2ea62f73d87a4751481e63d55b3ba5d9e6dff999be
+  normalized_sha256: sha256:433e540c99a5470623282d2ea62f73d87a4751481e63d55b3ba5d9e6dff999be
+cas_ref: sha256:433e540c99a5470623282d2ea62f73d87a4751481e63d55b3ba5d9e6dff999be
+coverage_gids:
+  - D5/S3/ConceptDynamics/Decision/PredictionDecisionSufficiencyStrictness.prediction_sufficiency_implies_decision_sufficiency_strictly
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Decision/PredictionDecisionSufficiencyStrictness.prediction_sufficiency_implies_decision_sufficiency_strictly
+      source_sha256: sha256:433e540c99a5470623282d2ea62f73d87a4751481e63d55b3ba5d9e6dff999be
+      target_statement_id: sha256:50cf13d2612ea22fdf6a6175ab96a9c01bcc77d4cd41efb2f38b4464777a0bbc
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Decision/PredictionDecisionSufficiencyStrictness.prediction_sufficiency_implies_decision_sufficiency_strictly
+      definition_sha256: sha256:1f5c7f3bed1e9f8ab7aca16dec4d6b589b8c13fae0a521d128fcf07754661e2c
+      emission_sha256: sha256:a685bffd3f2a7ce031adb141225f91e730896beaa388e48dd16fa3e9bd9d7a74
+  unresolved_subitems: []

@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:0f71c848bd8a9fd85d74cb6e0f0e02648e7eac4c9596cbd90967c9273c81ec56
+  normalized_sha256: sha256:0f71c848bd8a9fd85d74cb6e0f0e02648e7eac4c9596cbd90967c9273c81ec56
+cas_ref: sha256:0f71c848bd8a9fd85d74cb6e0f0e02648e7eac4c9596cbd90967c9273c81ec56
+coverage_gids:
+  - D5/S3/ConceptDynamics/Experiment/ExperimentExpansionMonotonicity.expansion_shrinks_indistinguishability
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Experiment/ExperimentExpansionMonotonicity.expansion_shrinks_indistinguishability
+      source_sha256: sha256:0f71c848bd8a9fd85d74cb6e0f0e02648e7eac4c9596cbd90967c9273c81ec56
+      target_statement_id: sha256:6a065afde02e4172dba93ffd5163f3df0c77c83bd502ccc95e9f1183219a040d
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Experiment/ExperimentExpansionMonotonicity.expansion_shrinks_indistinguishability
+      definition_sha256: sha256:a4023974d7177b2de946bd7450762fb3ec5ee9a4d07fde6dee2fafc59c3fb827
+      emission_sha256: sha256:05d7528bec4d30a44597325301acc6d16bdc2cc57c201f9c816407ad455b21b7
+  unresolved_subitems: []
