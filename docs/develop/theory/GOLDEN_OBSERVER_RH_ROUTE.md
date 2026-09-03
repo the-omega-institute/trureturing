@@ -2145,6 +2145,35 @@ G-f 一席位轮、M3-f 第二级一席位轮(各 codex-cli,独立 worktree,PR-1
 后续增订继续严格追加于本节之后。
 ---
 
+# 增订十七　黄金 germ 线 G-g 收口:三阶残余的零点恰为局部因子零点,RH 下延拓 germ 的窗口零点集(G-g-4 / G-g-5 / G-g-6 预登记)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;探针一席(codex-cli,`lake env lean`,标准三公理,以 `golden_window_zero_on_line_of_rh` 与三阶分解的可和性为显式假设整证三条——因该两模块在探针树未编译;实施席须改为直接消费冻结定理);去重由同席执行:dev 已有 `LocalFactorZeroDivisor.G3_eq_zero_iff_exists_local_factor_zero`,但它针对**二阶**残余,三阶残余无对应;`GermProductNonvanishing.germ_product_ne_zero_of_local_factors_ne_zero` 只在 Re s > 1/φ² 且针对原始乘积。散文由 orchestrator(claude 主循环)撰写。判决日:2026-09-03。lane issue:#4589。
+
+## 〇　为什么是这一节
+
+增订十五把「窗口零点 ⟺ RH」的真实缺口定位到三阶残余 G3 在回拉点的非消失性。本节证明 G3 的零点**恰**是局部因子的零点(Mathlib 的 `tprod_one_add_ne_zero_of_summable` + `tprod_of_exists_eq_zero`,配合冻结的偏差可和性;其余四个 Kp 因子在 Re s > 0 上因 |x|,|y| < 1 而非零),于是在 RH 下,延拓 germ 在开窗口内的零点集有一个**精确**描述:ζ(φ²s) 的回拉零点(必在线上)与局部因子零点之并。这把「残余不消失」这个抽象假设换成了「s 不是任何 p 的局部因子零点」这个可数值检验的条件;而 p = 2, 3 的局部因子零点在窗口内确实存在(增订十/十二),故窗口零点集**不只**是回拉的临界线零点——这是 germ 线对 RH 等价陈述的最终修正形态。**边界**:不断言线上的每个点都是零点;不断言局部因子零点与 ζ 回拉零点不重合;不构成 RH 的证明路径。**容量**:`D5/S3/Analytic/EulerGerm/` 现 22/24,本模块落地后 23/24;此后 germ 线新模块须开分桶(第 8 条裂由压力)。
+
+## 一　G-g-4 预登记:G-g-1 对冻结三阶残余的实例化(`GoldenGermThirdOrderWindowZeroCriterion`,落 `D5/S3/Analytic/EulerGerm/`)
+
+**义务**:公开定理 `golden_continued_germ_window_zero_on_line_of_rh (hRH : RiemannHypothesis) : let Kp : Complex -> Nat.Primes -> Complex := fun s p => let x := (p : Complex) ^ (-s * ((Real.goldenRatio ^ 2 : Real) : Complex)); let y := (p : Complex) ^ (-s * ((Real.goldenRatio ^ 3 : Real) : Complex)); (1 - y ^ 2)⁻¹ * (1 - x ^ 2 * y) * (1 - y) * (1 + x)⁻¹ * germLocalFactor s p; let G3 : Complex -> Complex := fun s => ∏' p : Nat.Primes, Kp s p; ∀ continuedGerm : {s : Complex // 1 / Real.goldenRatio ^ 5 < s.re} -> Complex, ((∀ s, 1 / Real.goldenRatio ^ 2 < s.1.re -> continuedGerm s = ∏' p : Nat.Primes, germLocalFactor s.1 p) ∧ (∀ s, continuedGerm s = riemannZeta (((Real.goldenRatio ^ 2 : Real) : Complex) * s.1) * riemannZeta (((Real.goldenRatio ^ 3 : Real) : Complex) * s.1) * (riemannZeta (((2 * Real.goldenRatio ^ 2 : Real) : Complex) * s.1))⁻¹ * ((riemannZeta (((2 * Real.goldenRatio ^ 3 : Real) : Complex) * s.1))⁻¹ * riemannZeta ((((2 * Real.goldenRatio ^ 2 + Real.goldenRatio ^ 3 : Real) : Complex) * s.1)) * G3 s.1))) -> ∀ s, 1 / (2 * Real.goldenRatio ^ 3) < s.1.re -> s.1.re < 1 / Real.goldenRatio ^ 2 -> continuedGerm s = 0 -> G3 s.1 ≠ 0 -> s.1.re = 1 / (2 * Real.goldenRatio ^ 2)`。
+**可证伪预测(写在跑之前)**:若正确,证明只是把冻结 `golden_germ_third_order_factorization` 第二合取的公式改写进 `golden_window_zero_on_line_of_rh`(G := G3),标准三公理;若 `let` 绑定的 Kp/G3 与冻结定理的字面不一致导致 `rw` 失败,则本条须按冻结字面修正而非改冻结。
+**边界**:对任意满足公式的 `continuedGerm` 成立,不依赖 ∃! 的唯一性。
+
+## 二　G-g-5 预登记:三阶残余为零 ⟺ 某局部因子为零(同模块第二条公开定理)
+
+**义务**:公开定理 `golden_third_residual_eq_zero_iff_exists_local_factor_zero (s : Complex) (hs : 1 / Real.goldenRatio ^ 5 < s.re) : let Kp : Complex -> Nat.Primes -> Complex := fun s p => let x := (p : Complex) ^ (-s * ((Real.goldenRatio ^ 2 : Real) : Complex)); let y := (p : Complex) ^ (-s * ((Real.goldenRatio ^ 3 : Real) : Complex)); (1 - y ^ 2)⁻¹ * (1 - x ^ 2 * y) * (1 - y) * (1 + x)⁻¹ * germLocalFactor s p; let G3 : Complex -> Complex := fun s => ∏' p : Nat.Primes, Kp s p; G3 s = 0 ↔ ∃ p : Nat.Primes, germLocalFactor s p = 0`。
+**可证伪预测(写在跑之前)**:若正确,消费冻结三阶分解的第一合取(‖Kp − 1‖ 可和)与 Mathlib `tprod_one_add_ne_zero_of_summable`、`tprod_of_exists_eq_zero`、`multipliable_one_add_of_summable`,标准三公理;若 Kp 的四个非局部因子在 Re s > 1/φ⁵ 上有零点(即 |x| 或 |y| ≥ 1),则本条为假——实际 |x| = p^{−φ² Re s} < 1。
+**边界**:只在 Re s > 1/φ⁵ 陈述(三阶分解的定义域);不涉及零点重数。
+
+## 三　G-g-6 预登记:RH 下延拓 germ 的窗口零点集(同模块第三条公开定理)
+
+**义务**:公开定理 `golden_continued_germ_window_zero_iff_of_rh (hRH : RiemannHypothesis) : let Kp : Complex -> Nat.Primes -> Complex := fun s p => let x := (p : Complex) ^ (-s * ((Real.goldenRatio ^ 2 : Real) : Complex)); let y := (p : Complex) ^ (-s * ((Real.goldenRatio ^ 3 : Real) : Complex)); (1 - y ^ 2)⁻¹ * (1 - x ^ 2 * y) * (1 - y) * (1 + x)⁻¹ * germLocalFactor s p; let G3 : Complex -> Complex := fun s => ∏' p : Nat.Primes, Kp s p; ∀ continuedGerm : {s : Complex // 1 / Real.goldenRatio ^ 5 < s.re} -> Complex, (∀ s, continuedGerm s = riemannZeta (((Real.goldenRatio ^ 2 : Real) : Complex) * s.1) * riemannZeta (((Real.goldenRatio ^ 3 : Real) : Complex) * s.1) * (riemannZeta (((2 * Real.goldenRatio ^ 2 : Real) : Complex) * s.1))⁻¹ * ((riemannZeta (((2 * Real.goldenRatio ^ 3 : Real) : Complex) * s.1))⁻¹ * riemannZeta ((((2 * Real.goldenRatio ^ 2 + Real.goldenRatio ^ 3 : Real) : Complex) * s.1)) * G3 s.1)) -> ∀ s, 1 / (2 * Real.goldenRatio ^ 3) < s.1.re -> s.1.re < 1 / Real.goldenRatio ^ 2 -> (continuedGerm s = 0 ↔ ((riemannZeta (((Real.goldenRatio ^ 2 : Real) : Complex) * s.1) = 0 ∧ s.1.re = 1 / (2 * Real.goldenRatio ^ 2)) ∨ ∃ p : Nat.Primes, germLocalFactor s.1 p = 0))`。
+**可证伪预测(写在跑之前)**:若正确,由 G-g-4 与 G-g-5 加 RH 下其余四个 ζ 因子在窗口内非零(回拉实部 > 1/2 或 > 1)得到;若 ζ(φ³s) 在开窗口内于 RH 下仍有零点(回拉实部 = 1/(2φ³) 恰为下边界,不在开窗口),则本条为假。
+**边界**:等价式右侧的「线上」子句必须与 ζ(φ²s) = 0 合取,不得把整条线并入零点集;s = 1/(2φ²) 处 ζ(2φ²s)⁻¹ 的行为按 Mathlib 约定值处理,若该点使等价式失效须如实报 open 并附反例。
+
+## 四　预算与结算
+
+一席位轮(codex-cli,独立 worktree,三条公开定理同模块;deposit 绑 G-g-6 atom,G-g-4/5 走 PR-1b 收据后 PR-2 cover)。实施须 import 冻结的 `GoldenGermThirdOrderFactorization` 与 `GoldenGermWindowZeroCriterion` 并消费其定理,不得把探针的 `hCrit`/`hSummable` 假设留在公开陈述中。
 # 增订十八　勘误:M3-d-1 在 s = 1 处为假(Mathlib 约定值),改以 s ≠ 1 预登记(M3-d-1′)
 
 > 产地(第 9′ 条):skill=consensus-rnd:sshx;实施席 codex-cli(flight `la134-impl-m3d`)在动手前核出反例并按增订十六 §五 的回退条款只 deposit 了 M3-d-4(#4995);本节勘误由 orchestrator(claude 主循环)撰写。判决日:2026-09-03。lane issue:#4589。
