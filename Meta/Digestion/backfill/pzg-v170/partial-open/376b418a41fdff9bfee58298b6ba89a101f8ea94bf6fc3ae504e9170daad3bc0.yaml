@@ -4,7 +4,7 @@ fingerprints:
 cas_ref: sha256:376b418a41fdff9bfee58298b6ba89a101f8ea94bf6fc3ae504e9170daad3bc0
 coverage_gids:
   - gid: D5/S3/Fourier/GaussianThetaTransformation.gaussian_theta_transformation
-    target_statement_id: null
+    target_statement_id: sha256:ac943a53b55376290b3ffe14d85e17451851bbb0fa5d727c1b385fdb085f1b20
   - gid: D5/S3/Weil/EulerProduct.single_address_reading_spec
     target_statement_id: sha256:6589e0de81a2c3cfcef35b4625c008946ddaaf5ba61c45544dd41ac64ea93a10
 receipts:

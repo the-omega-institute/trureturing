@@ -4,31 +4,31 @@ fingerprints:
 cas_ref: sha256:101df483e71f9e23ee1ec13626abf3037d9a32e6f992d6b5b9485bf6c7976c77
 coverage_gids:
   - gid: D5/S3/Observer/WindowCharacter.window_algebra_has_no_character
-    target_statement_id: null
+    target_statement_id: sha256:1762dfcfbcf1b350626e711534c61da8425e1e829dfb73e4ab1b7fb74e30db39
   - gid: D5/S3/Quantum/FiniteDimensional.qubit_matrix_algebra_has_no_character
     target_statement_id: sha256:a64a7db140cf1b62437069ce3e400c326debb1675456048955a50730edd170ef
   - gid: D5/S3/Quantum/QubitWitnesses.bell_coefficients_are_not_product
     target_statement_id: sha256:0d54c32903e14d268173a993a963a82faee352eeb70f0ca1a56573c397a5eeb0
   - gid: D5/S3/QuantumBounds/CHSHWitness.bell_chsh_value
-    target_statement_id: null
+    target_statement_id: sha256:89019a365c8d3c65512995702fdcc4f90c3a21cc538a37962cd90d3a8cfaf0af
   - gid: D5/S3/QuantumBounds/CHSHWitness.bell_density_is_state
-    target_statement_id: null
+    target_statement_id: sha256:f25b7239e34182d1cdaff8dfc1f1b67e43f85b40bdfbe3e850173bf7593427d5
   - gid: D5/S3/QuantumBounds/CHSHWitness.bob_observables_are_valid
-    target_statement_id: null
+    target_statement_id: sha256:04fdaf02610d18b00f28dbb1b6a3b058bd3e61773fa16a5b30575dc1d27790a8
   - gid: D5/S3/QuantumBounds/CHSHWitness.chsh_operator_eq_lifted_chsh
-    target_statement_id: null
+    target_statement_id: sha256:ca1a691db162ef5c2def90c39385aabbce04efdba439a92dfb3e43f8dfa1b137
   - gid: D5/S3/QuantumBounds/CHSHWitness.lifted_observables_form_chsh_tuple
-    target_statement_id: null
+    target_statement_id: sha256:1577654018a5412c9492d172a9c61a5cf7b1cdde56e72cc4955625cc589078e7
   - gid: D5/S3/QuantumBounds/ClassicalFiberBound.classical_chsh_abs_le_two
-    target_statement_id: null
+    target_statement_id: sha256:4452133d5c13101de5a5eae13c32b2cc7f115f72cba4cf1088760d8884e57720
   - gid: D5/S3/QuantumBounds/ClassicalFiberBound.classical_chsh_bound_is_exact
-    target_statement_id: null
+    target_statement_id: sha256:ff74fc9166fe86cfde2fed35f2739f227eab77c0598e49868349a7ddfbd8ffbe
   - gid: D5/S3/QuantumBounds/ClassicalFiberBound.classical_chsh_eq_two_exists
-    target_statement_id: null
+    target_statement_id: sha256:860c2c13fbf31e1cf13af4d22c15426ea2a3a09e5e4ddb7385b7a474c1b4f704
   - gid: D5/S3/QuantumContext/ClassicalAddressRealismExclusion.classical_address_realism_exclusion
-    target_statement_id: null
+    target_statement_id: sha256:d35c5633f3755c18fbb9f4ad170c0d6fee8d01bfdb5a5629bbbce0ba800d46e3
   - gid: D5/S3/QuantumContext/ProjectionValuationObstruction.projection_valuation_obstruction
-    target_statement_id: null
+    target_statement_id: sha256:bed803597c697c05a5bd49384c223d18179f4172782d201487d13621e1c2a9bc
 receipts:
   scribe: []
   unresolved_subitems:

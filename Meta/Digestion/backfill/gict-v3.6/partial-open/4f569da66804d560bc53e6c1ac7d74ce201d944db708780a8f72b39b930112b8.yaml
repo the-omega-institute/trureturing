@@ -4,15 +4,15 @@ fingerprints:
 cas_ref: sha256:4f569da66804d560bc53e6c1ac7d74ce201d944db708780a8f72b39b930112b8
 coverage_gids:
   - gid: D5/S3/PrimeForms/GoldenPrimeClassification.five_is_square_mod_prime_iff_mod_five_eq_one_or_four
-    target_statement_id: null
+    target_statement_id: sha256:e2d650a2c813bee9a6beef2d8670012e71a6f8f463ba9bd6bf5fbc33ec64fd1b
   - gid: D5/S3/PrimeForms/GoldenPrimeClassification.golden_five_eq_ramified_square
-    target_statement_id: null
+    target_statement_id: sha256:c7aa9fe33a3ed4f6a2a349b14711348e15c4360d4c2fe3fc46146e659c878181
   - gid: D5/S3/PrimeForms/GoldenPrimeClassification.golden_not_prime_iff_mod_five_eq_one_or_four
-    target_statement_id: null
+    target_statement_id: sha256:6610976cc40f51b278dbd407a8e7e2e0bbf54c7daa18c03ac42dbbd9b9f25752
   - gid: D5/S3/PrimeForms/GoldenPrimeClassification.golden_prime_iff_mod_five_eq_two_or_three
-    target_statement_id: null
+    target_statement_id: sha256:83a2951cb5b5887014c5a8bdf83536daaa48db3c724e9b96551e3b960650e7ad
   - gid: D5/S3/PrimeForms/QuadraticResidueCounterexample.two_refutes_unqualified_quadratic_residue_equivalence
-    target_statement_id: null
+    target_statement_id: sha256:4d3278ab0eb000b8212c2fefbfe53dea2bcedd2abf8505f09f14cf97b9c8791e
 receipts:
   scribe: []
   unresolved_subitems: []

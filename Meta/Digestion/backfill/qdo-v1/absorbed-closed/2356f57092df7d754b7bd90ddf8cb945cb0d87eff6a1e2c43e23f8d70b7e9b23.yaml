@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:2356f57092df7d754b7bd90ddf8cb945cb0d87eff6a1e2c43e23f8d70b7e9b23
 cas_ref: sha256:2356f57092df7d754b7bd90ddf8cb945cb0d87eff6a1e2c43e23f8d70b7e9b23
 coverage_gids:
-  - D5/S3/Quantum/Completion/LimitResidualDecomposition.limit_residual_orthogonal_decomposition
+  - gid: D5/S3/Quantum/Completion/LimitResidualDecomposition.limit_residual_orthogonal_decomposition
+    target_statement_id: sha256:93db992a859b6f98c49d2646c4bc66485994fd04ea27d4daf9f952c0976c59e6
 receipts:
-  coverage:
-    - gid: D5/S3/Quantum/Completion/LimitResidualDecomposition.limit_residual_orthogonal_decomposition
-      source_sha256: sha256:2356f57092df7d754b7bd90ddf8cb945cb0d87eff6a1e2c43e23f8d70b7e9b23
-      target_statement_id: sha256:93db992a859b6f98c49d2646c4bc66485994fd04ea27d4daf9f952c0976c59e6
   scribe:
     - gid: D5/S3/Quantum/Completion/LimitResidualDecomposition.limit_residual_orthogonal_decomposition
       definition_sha256: sha256:3ad3e3bbb9109e9f94f0d09aa22fe08c2b81acb2909f4ae6466a3c635cdc6f37

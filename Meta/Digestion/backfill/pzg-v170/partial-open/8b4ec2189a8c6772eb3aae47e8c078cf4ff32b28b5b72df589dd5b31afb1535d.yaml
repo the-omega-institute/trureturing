@@ -6,7 +6,7 @@ coverage_gids:
   - gid: D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec
     target_statement_id: sha256:773d66b0555f487674ddca38ae7bcaa9d03ca98e1bc0feb168ec3c60b371ed67
   - gid: D5/S3/Zeros/Detection/DetectionRadiusCertificate.detection_radius_ten_to_the_1200_certificate
-    target_statement_id: null
+    target_statement_id: sha256:b7c1919239f3290d29997e728136d4917bb3a6742d61a8609fe31dec3e518d79
 receipts:
   scribe:
     - gid: D5/S3/Weil/SpectralDynamics.zero_quartet_resonance_spec

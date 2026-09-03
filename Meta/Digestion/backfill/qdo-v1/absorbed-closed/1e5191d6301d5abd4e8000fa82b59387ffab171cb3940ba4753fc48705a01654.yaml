@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:1e5191d6301d5abd4e8000fa82b59387ffab171cb3940ba4753fc48705a01654
 cas_ref: sha256:1e5191d6301d5abd4e8000fa82b59387ffab171cb3940ba4753fc48705a01654
 coverage_gids:
-  - D5/S3/Observer/ProbabilisticClosure/DistributionIndependentClosure.distribution_independent_closure_criterion
+  - gid: D5/S3/Observer/ProbabilisticClosure/DistributionIndependentClosure.distribution_independent_closure_criterion
+    target_statement_id: sha256:50f41ce039eb24e622c2b00e530467864f38b9fe3602f2a6a559a1055b0391ff
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/ProbabilisticClosure/DistributionIndependentClosure.distribution_independent_closure_criterion
-      source_sha256: sha256:1e5191d6301d5abd4e8000fa82b59387ffab171cb3940ba4753fc48705a01654
-      target_statement_id: sha256:50f41ce039eb24e622c2b00e530467864f38b9fe3602f2a6a559a1055b0391ff
   scribe:
     - gid: D5/S3/Observer/ProbabilisticClosure/DistributionIndependentClosure.distribution_independent_closure_criterion
       definition_sha256: sha256:e245f5696d15423097472a6bf165edc3038c20da130beffe85463907df242f0f

@@ -4,7 +4,7 @@ fingerprints:
 cas_ref: sha256:7de29f3405ccdbc2c1589a2c5c920f082cb315e5a04d741b93ff716018191994
 coverage_gids:
   - gid: D5/S3/Zeros/CompletedZeta.xi_reading_reflection
-    target_statement_id: null
+    target_statement_id: sha256:5987317f7aaa874060c8599c4899fbc6e5c9b1e919fe048aa0942de850e23ba4
   - gid: D5/S3/Zeros/CompletedZeta.zero_quartet_scaling_spec
     target_statement_id: sha256:54194a5ed453f9739fa911583246728277b4fa9d97b031a0c37dbfb7e7d82e0d
 receipts:

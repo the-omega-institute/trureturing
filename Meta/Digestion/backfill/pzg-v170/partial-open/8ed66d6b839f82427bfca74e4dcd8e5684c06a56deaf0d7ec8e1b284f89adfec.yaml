@@ -6,11 +6,11 @@ coverage_gids:
   - gid: D5/S3/Weil/SpectralDynamics.critical_line_characterizations
     target_statement_id: sha256:dc256aba0acd189a0637ceaffa25da20302027b1666cf98bb9db774029ce4bc8
   - gid: D5/S3/Zeros/CompletedZeta.xi_reading_differentiable
-    target_statement_id: null
+    target_statement_id: sha256:1d8843123ef9e020816cd0bdaea0ccc7c969e4d91d1290efb9071b2da3c356c3
   - gid: D5/S3/Zeros/CompletedZeta.xi_reading_eq_completed_zeta
-    target_statement_id: null
+    target_statement_id: sha256:4bba6e3677ef32bc07f320b8674a2fbbdb5b911427619e1138d75299d03e1fa7
   - gid: D5/S3/Zeros/Endpoints/XiEndpointValues.xi_reading_endpoint_values
-    target_statement_id: null
+    target_statement_id: sha256:666cd0e1cf4e43d59395de2fc4abfe86b62f4a7c450d9b3657110465b7863e2c
 receipts:
   scribe:
     - gid: D5/S3/Weil/SpectralDynamics.critical_line_characterizations

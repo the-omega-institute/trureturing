@@ -4,11 +4,11 @@ fingerprints:
 cas_ref: sha256:50f4e3d952443c7a0c5851f7f06145c29e437c41813c0a7217c23c768e12cbed
 coverage_gids:
   - gid: D5/S3/Divergence/ClassicalDPI.classical_dpi_identity
-    target_statement_id: null
+    target_statement_id: sha256:1b95c362ec72ae6ca8f936a3dc397aed6aa4e609f922c64b0662dab79a09558c
   - gid: D5/S3/Divergence/DpiDefect.dpi_defect_nonneg
-    target_statement_id: null
+    target_statement_id: sha256:31bdba8fc8afca6d5390e967dfbb067a34fa96b758cb0c1ff55748587be9f2b8
   - gid: D5/S3/DivergenceSupport/ZeroSupportDPI.classical_dpi_identity_zero_support
-    target_statement_id: null
+    target_statement_id: sha256:1d1f07c23fa99f741789f3cf39a6cfc04affc13728a6927107d205b5f73e5cd5
 receipts:
   scribe: []
   unresolved_subitems: []

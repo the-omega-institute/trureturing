@@ -4,7 +4,7 @@ fingerprints:
 cas_ref: sha256:25e5defd16fcc04c98a3fe4908ab1cb7bcf30dad1e57a40ede1228399deac413
 coverage_gids:
   - gid: D5/S1/Digit/PrimeAxisAddition.prime_axis_addition_spec
-    target_statement_id: null
+    target_statement_id: sha256:a23c639bb7d0b7244e8d237835a05fb4bf57833d8e54cab8f4b31cd62d7c497f
 receipts:
   scribe: []
   unresolved_subitems: []

@@ -6,9 +6,9 @@ coverage_gids:
   - gid: D5/S3/Weil/ReflectionLedger.mirror_reversal_spec
     target_statement_id: sha256:260a95bcca3f1b09a54fbb51bf365134cf33b27a35312b81694a6d476633ca87
   - gid: D5/S3/Zeros/CompletedZeta.zero_quartet_scaling_spec
-    target_statement_id: null
+    target_statement_id: sha256:54194a5ed453f9739fa911583246728277b4fa9d97b031a0c37dbfb7e7d82e0d
   - gid: D5/S3/Zeros/ZeroGeometry.mirror_pair_distinct_iff_off_line_and_cancels
-    target_statement_id: null
+    target_statement_id: sha256:269d9f52fed5f629c115ae717c4da2a08b5f80667c87db54c02a74acda647ac1
 receipts:
   scribe:
     - gid: D5/S3/Weil/ReflectionLedger.mirror_reversal_spec

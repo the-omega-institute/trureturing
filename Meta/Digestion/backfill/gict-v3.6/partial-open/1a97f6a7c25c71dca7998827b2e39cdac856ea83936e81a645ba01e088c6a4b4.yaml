@@ -4,7 +4,7 @@ fingerprints:
 cas_ref: sha256:1a97f6a7c25c71dca7998827b2e39cdac856ea83936e81a645ba01e088c6a4b4
 coverage_gids:
   - gid: D5/S1/Recurrence/GoldenPartition.fibonacci_golden_partition
-    target_statement_id: null
+    target_statement_id: sha256:3b522c177ae30ca1a8062ad38d15b46c3dd8bbff2cfde6cb02d98070d9c00dcd
 receipts:
   scribe: []
   unresolved_subitems:

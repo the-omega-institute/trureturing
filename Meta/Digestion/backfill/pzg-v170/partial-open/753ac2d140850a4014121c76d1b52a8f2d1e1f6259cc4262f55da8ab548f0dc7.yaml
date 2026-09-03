@@ -4,9 +4,9 @@ fingerprints:
 cas_ref: sha256:753ac2d140850a4014121c76d1b52a8f2d1e1f6259cc4262f55da8ab548f0dc7
 coverage_gids:
   - gid: D5/S3/Analytic/CompletedZetaMellinReconstruction.completed_zeta_mellin_reconstruction
-    target_statement_id: null
+    target_statement_id: sha256:cb4be47b53ec7692e9fe338bec396f0683868af5131a6683f5f2e6e7d85e1579
   - gid: D5/S3/Fourier/GaussianThetaTransformation.gaussian_theta_transformation
-    target_statement_id: null
+    target_statement_id: sha256:ac943a53b55376290b3ffe14d85e17451851bbb0fa5d727c1b385fdb085f1b20
   - gid: D5/S3/Weil/ReflectionLedger.mirror_reversal_spec
     target_statement_id: sha256:260a95bcca3f1b09a54fbb51bf365134cf33b27a35312b81694a6d476633ca87
 receipts:

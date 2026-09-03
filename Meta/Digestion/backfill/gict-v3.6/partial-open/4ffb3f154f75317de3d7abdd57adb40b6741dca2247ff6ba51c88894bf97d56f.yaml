@@ -4,9 +4,9 @@ fingerprints:
 cas_ref: sha256:4ffb3f154f75317de3d7abdd57adb40b6741dca2247ff6ba51c88894bf97d56f
 coverage_gids:
   - gid: D5/S1/Phase/Interference/DominantPartialQuotientGap.dominant_partial_quotient_gap
-    target_statement_id: null
+    target_statement_id: sha256:879056b63f06dfb41f08e1fc96576f5e401877fe2a805618cef70ced5a4bc748
   - gid: D5/S1/Phase/PythagoreanInputValidator.accepts_iff
-    target_statement_id: null
+    target_statement_id: sha256:585cd5c867df264934f57be9beec1b8396175b1cfdab19e2ae11d48b05eeb00c
   - gid: D5/S1/Phase/SeatTowerArithmetic.pythagorean_gate_iff_eisenstein_norm
     target_statement_id: sha256:2ba97c312fec73dc76bd861a3412922bf821a1715b6f33b59ad3b432b09a55a1
   - gid: D5/S1/Phase/SeatTowerConsequences.cosecant_peak_identity
