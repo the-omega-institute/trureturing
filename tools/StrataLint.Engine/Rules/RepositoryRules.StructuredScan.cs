@@ -236,7 +236,6 @@ internal static partial class RepositoryRules
     {
         (AddressSlot.Entry, "coverage_gids") => AddressSlot.CoverageList,
         (AddressSlot.Entry, "receipts") => AddressSlot.Receipts,
-        (AddressSlot.Receipts, "coverage") => AddressSlot.ReceiptList,
         (AddressSlot.Receipts, "scribe") => AddressSlot.ReceiptList,
         (AddressSlot.CoverageEntry, "gid") => AddressSlot.CoverageGid,
         (AddressSlot.ReceiptEntry, "gid") => AddressSlot.ReceiptGid,

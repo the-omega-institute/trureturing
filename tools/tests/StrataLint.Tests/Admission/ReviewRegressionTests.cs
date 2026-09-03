@@ -400,6 +400,7 @@ public sealed partial class ReviewRegressionTests
     {
         "coverage_" + "gids:\n  - unresolved failure without case\n",
         "receipts:\n  coverage:\n    - gid: FiniteFailure\n",
+        "receipts:\n  coverage:\n    - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/RetrospectiveLookupFailure.lookup_copy_zero_loss_and_nonanticipating_failure\n",
         "failure_gids:\n  - D5/S0/Carrier/ProbeFailure.failure_probe\n",
         "outer:\n  coverage_" + "gids:\n    - D5/S0/Carrier/ProbeFailure.failure_probe\n",
     };
