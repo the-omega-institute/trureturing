@@ -3,7 +3,7 @@
    mirror-B: none(waiver:new-observer-library-adapter)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: The canonical separation time is exactly the first dynamical readout at which a pair becomes visible. -/
+   digest: The canonical separation time is the exact boundary at which a pair leaves the finite observation fiber. -/
 
 import D5.S3.Observer.Separation.FiniteFutureCongruence
 
@@ -16,31 +16,15 @@ namespace D5.S3.ObserverMemory.FourierFibers.ObservationTime
 
 open D5.S3.Observer.Separation.FiniteFutureCongruence
 
-/-- A pair is eventually separated when some finite dynamical readout differs. -/
-def EventuallySeparated {State Readout : Type*}
-    (step : State → State) (readout : State → Readout)
-    (left right : State) : Prop :=
-  ∃ depth,
-    observedAt step readout depth left ≠
-      observedAt step readout depth right
-
-/-- A depth is first-visible when the pair differs there and agreed at every
-earlier dynamical readout. -/
-def FirstVisibleAt {State Readout : Type*}
-    (step : State → State) (readout : State → Readout)
-    (left right : State) (depth : ℕ) : Prop :=
-  observedAt step readout depth left ≠
-      observedAt step readout depth right ∧
-    ∀ earlier < depth,
-      observedAt step readout earlier left =
-        observedAt step readout earlier right
-
-/-- Never being separated is exactly membership in the all-time hidden fiber. -/
-theorem not_eventually_separated_iff_infinite_future
+/-- Having no finite separating readout is exactly membership in the canonical
+all-time hidden fiber. No second observation-time predicate is introduced. -/
+theorem no_finite_separation_iff_infinite_future
     {State Readout : Type*}
     (step : State → State) (readout : State → Readout)
     (left right : State) :
-    ¬ EventuallySeparated step readout left right ↔
+    (¬ ∃ depth,
+      observedAt step readout depth left ≠
+        observedAt step readout depth right) ↔
       (left, right) ∈ infiniteFutureRelation step readout := by
   constructor
   · intro h depth
@@ -50,13 +34,15 @@ theorem not_eventually_separated_iff_infinite_future
     rcases hseparated with ⟨depth, hdiff⟩
     exact hdiff (hfuture depth)
 
-/-- The repository's canonical `separationTime` is a visible depth whenever
-the pair is eventually separated. -/
+/-- The repository's canonical `separationTime` is visibly separating whenever
+such a finite readout exists. -/
 theorem separation_time_visible
     {State Readout : Type*}
     (step : State → State) (readout : State → Readout)
     (left right : State)
-    (hseparated : EventuallySeparated step readout left right) :
+    (hseparated : ∃ depth,
+      observedAt step readout depth left ≠
+        observedAt step readout depth right) :
     observedAt step readout
         (separationTime step readout (left, right)) left ≠
       observedAt step readout
@@ -70,7 +56,9 @@ theorem before_separation_time_hidden
     {State Readout : Type*}
     (step : State → State) (readout : State → Readout)
     (left right : State)
-    (hseparated : EventuallySeparated step readout left right)
+    (hseparated : ∃ depth,
+      observedAt step readout depth left ≠
+        observedAt step readout depth right)
     {earlier : ℕ}
     (hearlier : earlier < separationTime step readout (left, right)) :
     observedAt step readout earlier left =
@@ -81,82 +69,55 @@ theorem before_separation_time_hidden
   by_contra hdiff
   exact (Nat.find_min hseparated hearlierFind) hdiff
 
-/-- The canonical separation time satisfies the first-visible specification. -/
-theorem separation_time_is_first_visible
+/-- The canonical separation time has the exact first-visible semantics: the
+pair differs there and agrees at every earlier dynamical readout. -/
+theorem separation_time_first_visible_characterization
     {State Readout : Type*}
     (step : State → State) (readout : State → Readout)
     (left right : State)
-    (hseparated : EventuallySeparated step readout left right) :
-    FirstVisibleAt step readout left right
-      (separationTime step readout (left, right)) := by
+    (hseparated : ∃ depth,
+      observedAt step readout depth left ≠
+        observedAt step readout depth right) :
+    observedAt step readout
+        (separationTime step readout (left, right)) left ≠
+      observedAt step readout
+        (separationTime step readout (left, right)) right ∧
+    ∀ earlier < separationTime step readout (left, right),
+      observedAt step readout earlier left =
+        observedAt step readout earlier right := by
   exact ⟨separation_time_visible step readout left right hseparated,
     fun earlier hearlier =>
       before_separation_time_hidden step readout left right
         hseparated hearlier⟩
 
-/-- A first-visible depth is unique. -/
-theorem first_visible_at_unique
-    {State Readout : Type*}
-    (step : State → State) (readout : State → Readout)
-    (left right : State) {first second : ℕ}
-    (hfirst : FirstVisibleAt step readout left right first)
-    (hsecond : FirstVisibleAt step readout left right second) :
-    first = second := by
-  apply le_antisymm
-  · by_contra hnot
-    have hlt : second < first := Nat.lt_of_not_ge hnot
-    exact hsecond.1 (hfirst.2 second hlt)
-  · by_contra hnot
-    have hlt : first < second := Nat.lt_of_not_ge hnot
-    exact hfirst.1 (hsecond.2 first hlt)
-
-/-- Any independently supplied first-visible depth equals the canonical
-repository separation time. -/
-theorem separation_time_eq_of_first_visible
+/-- For an eventually separated pair, finite-future fiber membership is
+characterized exactly by horizons lying before the canonical separation time. -/
+theorem finite_future_membership_iff_before_separation
     {State Readout : Type*}
     (step : State → State) (readout : State → Readout)
     (left right : State)
-    (hseparated : EventuallySeparated step readout left right)
-    {depth : ℕ}
-    (hdepth : FirstVisibleAt step readout left right depth) :
-    separationTime step readout (left, right) = depth :=
-  first_visible_at_unique step readout left right
-    (separation_time_is_first_visible step readout left right hseparated)
-    hdepth
+    (hseparated : ∃ depth,
+      observedAt step readout depth left ≠
+        observedAt step readout depth right)
+    (horizon : ℕ) :
+    (left, right) ∈ finiteFutureRelation step readout horizon ↔
+      horizon < separationTime step readout (left, right) := by
+  constructor
+  · intro hfuture
+    by_contra hnotBefore
+    have hvisible :
+        separationTime step readout (left, right) ≤ horizon :=
+      Nat.le_of_not_gt hnotBefore
+    exact separation_time_visible step readout left right hseparated
+      (hfuture (separationTime step readout (left, right)) hvisible)
+  · intro hbefore depth hdepth
+    exact before_separation_time_hidden step readout left right hseparated
+      (lt_of_le_of_lt hdepth hbefore)
 
-/-- Before the first visible time, the pair remains in every finite observation
-fiber whose horizon is strictly earlier. -/
-theorem before_separation_in_finite_future
-    {State Readout : Type*}
-    (step : State → State) (readout : State → Readout)
-    (left right : State)
-    (hseparated : EventuallySeparated step readout left right)
-    {horizon : ℕ}
-    (hbefore : horizon < separationTime step readout (left, right)) :
-    (left, right) ∈ finiteFutureRelation step readout horizon := by
-  intro depth hdepth
-  exact before_separation_time_hidden step readout left right hseparated
-    (lt_of_le_of_lt hdepth hbefore)
-
-/-- At and beyond the first visible time, the pair is excluded from the finite
-observation fiber. -/
-theorem at_or_after_separation_not_in_finite_future
-    {State Readout : Type*}
-    (step : State → State) (readout : State → Readout)
-    (left right : State)
-    (hseparated : EventuallySeparated step readout left right)
-    {horizon : ℕ}
-    (hvisible : separationTime step readout (left, right) ≤ horizon) :
-    (left, right) ∉ finiteFutureRelation step readout horizon := by
-  intro hfuture
-  exact separation_time_visible step readout left right hseparated
-    (hfuture (separationTime step readout (left, right)) hvisible)
-
-#print axioms not_eventually_separated_iff_infinite_future
-#print axioms separation_time_is_first_visible
-#print axioms first_visible_at_unique
-#print axioms separation_time_eq_of_first_visible
-#print axioms before_separation_in_finite_future
-#print axioms at_or_after_separation_not_in_finite_future
+#print axioms no_finite_separation_iff_infinite_future
+#print axioms separation_time_visible
+#print axioms before_separation_time_hidden
+#print axioms separation_time_first_visible_characterization
+#print axioms finite_future_membership_iff_before_separation
 
 end D5.S3.ObserverMemory.FourierFibers.ObservationTime
