@@ -33,8 +33,18 @@ theorem readout_iterate
   induction steps with
   | zero => rfl
   | succ steps ih =>
-      rw [Function.iterate_succ_apply', system.readout_step, ih,
-        Function.iterate_succ_apply']
+      calc
+        system.readout ((system.step^[steps + 1]) state) =
+            system.readout (system.step ((system.step^[steps]) state)) := by
+              rw [Function.iterate_succ_apply']
+        _ = system.flip
+            (system.readout ((system.step^[steps]) state)) :=
+              system.readout_step _
+        _ = system.flip
+            ((system.flip^[steps]) (system.readout state)) := by
+              rw [ih]
+        _ = (system.flip^[steps + 1]) (system.readout state) := by
+              rw [Function.iterate_succ_apply']
 
 /-- An even number of flips restores the visible readout. -/
 theorem even_iterate_completes_readout
