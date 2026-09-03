@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:9098dec6ce32325f0d2b6e1fb3cad028b3e11379b300401bb5a137f4374117ac
+  normalized_sha256: sha256:9098dec6ce32325f0d2b6e1fb3cad028b3e11379b300401bb5a137f4374117ac
+cas_ref: sha256:9098dec6ce32325f0d2b6e1fb3cad028b3e11379b300401bb5a137f4374117ac
+coverage_gids:
+  - D5/S3/Observer/Separation/CongruenceKernel.congruence_kernel_laws
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/Separation/CongruenceKernel.congruence_kernel_laws
+      source_sha256: sha256:9098dec6ce32325f0d2b6e1fb3cad028b3e11379b300401bb5a137f4374117ac
+      target_statement_id: sha256:97f2af3004f28dcc2e83520c25f61da4cef3b5ec606876d0c20ced5ea787e514
+  scribe:
+    - gid: D5/S3/Observer/Separation/CongruenceKernel.congruence_kernel_laws
+      definition_sha256: sha256:1cfcaab8ec6c5d2e5b9ac542d21a9ca88a8b5a73d9dc438b239c08bc55c03cad
+      emission_sha256: sha256:9defb23d4681802980f692a562e7dce00695ccf20f2e2d56237d70ee5ecd11d7
+  unresolved_subitems: []

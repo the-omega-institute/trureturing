@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:8a433c72773b08b42a49a1f68dbc3a4512b76e437727075d24b442ff02e30c02
+  normalized_sha256: sha256:8a433c72773b08b42a49a1f68dbc3a4512b76e437727075d24b442ff02e30c02
+cas_ref: sha256:8a433c72773b08b42a49a1f68dbc3a4512b76e437727075d24b442ff02e30c02
+coverage_gids:
+  - D5/S3/ObserverMemory/PredictionCertificates/LocalCertificateCanonicalMinimality.local_certificate_canonical_minimality
+receipts:
+  coverage:
+    - gid: D5/S3/ObserverMemory/PredictionCertificates/LocalCertificateCanonicalMinimality.local_certificate_canonical_minimality
+      source_sha256: sha256:8a433c72773b08b42a49a1f68dbc3a4512b76e437727075d24b442ff02e30c02
+      target_statement_id: sha256:28619057760d896594af96731e8e7f4b856b4502493c577f2d418387f010a5d8
+  scribe:
+    - gid: D5/S3/ObserverMemory/PredictionCertificates/LocalCertificateCanonicalMinimality.local_certificate_canonical_minimality
+      definition_sha256: sha256:d1129255563d7cc1e403c2ad79bd383b97a0d588a18231939d74b6bfba05ed6e
+      emission_sha256: sha256:acbeb5e28dbf3a63e7ca920c5d5ce45c700e51486fd35ebe69a6eef803e1411a
+  unresolved_subitems: []

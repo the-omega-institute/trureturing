@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:935ecef2fd945d85d331f7e14e878e1eaf191be1fe585dffe0c69f8926794a85
+  normalized_sha256: sha256:935ecef2fd945d85d331f7e14e878e1eaf191be1fe585dffe0c69f8926794a85
+cas_ref: sha256:935ecef2fd945d85d331f7e14e878e1eaf191be1fe585dffe0c69f8926794a85
+coverage_gids:
+  - D5/S3/Observer/Tomography/VectorShellEnergy.vector_shell_energy_decomposition
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/Tomography/VectorShellEnergy.vector_shell_energy_decomposition
+      source_sha256: sha256:935ecef2fd945d85d331f7e14e878e1eaf191be1fe585dffe0c69f8926794a85
+      target_statement_id: sha256:7d26532880be093ee3d41789434c44692eea016a127f645ce7f24470086218f5
+  scribe:
+    - gid: D5/S3/Observer/Tomography/VectorShellEnergy.vector_shell_energy_decomposition
+      definition_sha256: sha256:056204f7916771cc7f1cd735b5c9393d8ce3599098d23d9edc5a793fe53ee63d
+      emission_sha256: sha256:504a47505bef4af06fa6ba62458fe15823537198e27f7323c0ec25d31d8b31fc
+  unresolved_subitems: []

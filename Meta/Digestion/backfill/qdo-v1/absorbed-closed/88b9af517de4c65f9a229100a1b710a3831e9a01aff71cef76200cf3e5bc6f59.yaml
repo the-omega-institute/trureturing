@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:88b9af517de4c65f9a229100a1b710a3831e9a01aff71cef76200cf3e5bc6f59
+  normalized_sha256: sha256:88b9af517de4c65f9a229100a1b710a3831e9a01aff71cef76200cf3e5bc6f59
+cas_ref: sha256:88b9af517de4c65f9a229100a1b710a3831e9a01aff71cef76200cf3e5bc6f59
+coverage_gids:
+  - D5/S3/ObserverMemory/InverseLimits/TraceRankCombinatorics.trace_rank_combinatorial_meaning
+receipts:
+  coverage:
+    - gid: D5/S3/ObserverMemory/InverseLimits/TraceRankCombinatorics.trace_rank_combinatorial_meaning
+      source_sha256: sha256:88b9af517de4c65f9a229100a1b710a3831e9a01aff71cef76200cf3e5bc6f59
+      target_statement_id: sha256:c17d9c96bf7d451e0f2eee8b304bb02b86fcc9d86b879eadfddc2f0259d9cbd0
+  scribe:
+    - gid: D5/S3/ObserverMemory/InverseLimits/TraceRankCombinatorics.trace_rank_combinatorial_meaning
+      definition_sha256: sha256:78bd8693bc5ccb81bdd72ea75cbb4d361efa83cb351a0951301f3cd423dd3a31
+      emission_sha256: sha256:a4940702819c6c6eaa05781914c7941ae163b8c5bd7589be5791c71434c0112d
+  unresolved_subitems: []

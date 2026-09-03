@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:8da9b675f08bad2288c5b5ec243b077821f5a1fb2e8a58020d8e801c04a7dd97
+  normalized_sha256: sha256:8da9b675f08bad2288c5b5ec243b077821f5a1fb2e8a58020d8e801c04a7dd97
+cas_ref: sha256:8da9b675f08bad2288c5b5ec243b077821f5a1fb2e8a58020d8e801c04a7dd97
+coverage_gids:
+  - D5/S3/ResourceOrder/PaidInformationIncentiveConflict.paid_information_full_revelation_conflict
+receipts:
+  coverage:
+    - gid: D5/S3/ResourceOrder/PaidInformationIncentiveConflict.paid_information_full_revelation_conflict
+      source_sha256: sha256:8da9b675f08bad2288c5b5ec243b077821f5a1fb2e8a58020d8e801c04a7dd97
+      target_statement_id: sha256:c3f38ab36426f8259e37225ccb37e32c76b9a3ba13398c06bef334041f4718d4
+  scribe:
+    - gid: D5/S3/ResourceOrder/PaidInformationIncentiveConflict.paid_information_full_revelation_conflict
+      definition_sha256: sha256:700052bc49d19d020037431bb2ad64777a3e9b95757f78a9778c8f153d8024f2
+      emission_sha256: sha256:946b81f3f3e0f30016f8a32084cbf52d36999d664446354b2612db01591abbe3
+  unresolved_subitems: []
