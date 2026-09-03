@@ -1,0 +1,25 @@
+fingerprints:
+  raw_sha256: sha256:3a223e1e36f56665b3c0e9be99371b69a493873f7565ce0f32908c28b4663767
+  normalized_sha256: sha256:3a223e1e36f56665b3c0e9be99371b69a493873f7565ce0f32908c28b4663767
+cas_ref: sha256:3a223e1e36f56665b3c0e9be99371b69a493873f7565ce0f32908c28b4663767
+coverage_gids:
+  - gid: D5/S3/Observer/Conditioning.conditionalState_isState
+    target_statement_id: null
+  - gid: D5/S3/Observer/Conditioning.recordWeight_sum
+    target_statement_id: null
+  - gid: D5/S3/Observer/Conditioning.unreadState_fixed_iff
+    target_statement_id: null
+  - gid: D5/S3/Observer/Conditioning.unreadState_idempotent
+    target_statement_id: null
+  - gid: D5/S3/Observer/Conditioning.unreadState_trace
+    target_statement_id: null
+  - gid: D5/S3/Observer/Conditioning.unread_eq_weighted_ensemble
+    target_statement_id: null
+  - gid: D5/S3/Observer/ConditioningCertificate.certificate_identity_zero_tolerance
+    target_statement_id: null
+receipts:
+  scribe: []
+  unresolved_subitems:
+    - global-system-record-unitarity-premise
+    - no-third-collapse-dynamics-interpretive-premise
+    - objective-collapse-model-demarcation

@@ -1,0 +1,26 @@
+fingerprints:
+  raw_sha256: sha256:a64c69d2b846d7fdf3c80468898e853257ad9a378bf7da6c74c3370ea865762c
+  normalized_sha256: sha256:a64c69d2b846d7fdf3c80468898e853257ad9a378bf7da6c74c3370ea865762c
+cas_ref: sha256:a64c69d2b846d7fdf3c80468898e853257ad9a378bf7da6c74c3370ea865762c
+coverage_gids:
+  - gid: D5/S3/Divergence/DpiDefect.dpi_defect_nonneg
+    target_statement_id: null
+  - gid: D5/S3/DivergenceSupport/ZeroSupportDefect.dpi_defect_nonneg_zero_support
+    target_statement_id: null
+  - gid: D5/S3/Observer/MeasurementMarginal.copied_record_partial_trace_eq_address_blocks
+    target_statement_id: null
+  - gid: D5/S3/Observer/MeasurementMarginal.copied_record_partial_trace_offDiagonal_eq_zero
+    target_statement_id: null
+  - gid: D5/S3/ObserverMemory/FiniteForgettingCertificate.finite_history_certificate
+    target_statement_id: null
+  - gid: D5/S3/ObserverMemory/JointCoherentReversal.joint_coherent_reversal
+    target_statement_id: null
+  - gid: D5/S3/ObserverMemory/MultiCopyErasure.multi_copy_erasure_quantifier
+    target_statement_id: null
+  - gid: D5/S3/ObserverMemory/TwoTimeKnowledge.finite_certificate_instantiates_forgot
+    target_statement_id: null
+  - gid: D5/S3/ObserverMemory/TwoTimeKnowledge.knows_of_later_readout_factors_through_earlier
+    target_statement_id: null
+receipts:
+  scribe: []
+  unresolved_subitems: []
