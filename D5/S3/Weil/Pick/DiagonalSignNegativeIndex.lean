@@ -21,7 +21,7 @@ This is finite-dimensional linear algebra. No Cauchy full-rank theorem,
 Stieltjes representation, Weil realization, or statement about RH is assumed.
 -/
 
-/- Library-search audit trail (2026-09-03):
+/- Library-first audit trail (2026-09-03):
    * `RHLinalg.posIndex` and `RHLinalg.negIndex` are reused from
      `D5/S3/Weil/ZetaLinear/PosIndex`.
    * `RHLinalg.posIndex_eq_rank_of_posSemidef` and
@@ -68,19 +68,19 @@ def nonzeroWeightCount (weight : ι → ℝ) : ℕ :=
   #{i | weight i ≠ 0}
 
 /-- The diagonal projector onto coordinates with positive weight. -/
-def positiveCoordinateProjector (weight : ι → ℝ) : Matrix ι ι ℂ :=
+private def positiveCoordinateProjector (weight : ι → ℝ) : Matrix ι ι ℂ :=
   Matrix.diagonal (fun i => if 0 < weight i then 1 else 0)
 
 /-- The diagonal projector onto coordinates with negative weight. -/
-def negativeCoordinateProjector (weight : ι → ℝ) : Matrix ι ι ℂ :=
+private def negativeCoordinateProjector (weight : ι → ℝ) : Matrix ι ι ℂ :=
   Matrix.diagonal (fun i => if weight i < 0 then 1 else 0)
 
 /-- The positive weight retained on a positive coordinate and zero elsewhere. -/
-def positiveSelectedWeight (weight : ι → ℝ) (i : ι) : ℝ :=
+private def positiveSelectedWeight (weight : ι → ℝ) (i : ι) : ℝ :=
   if 0 < weight i then weight i else 0
 
 /-- The positive magnitude of a negative coordinate and zero elsewhere. -/
-def negativeMagnitudeWeight (weight : ι → ℝ) (i : ι) : ℝ :=
+private def negativeMagnitudeWeight (weight : ι → ℝ) (i : ι) : ℝ :=
   if weight i < 0 then -weight i else 0
 
 /-- A real diagonal matrix is Hermitian. -/
@@ -137,7 +137,7 @@ private theorem negative_magnitude_diagonal_posSemidef
     (negative_magnitude_weight_nonneg weight i)
 
 /-- Positive-coordinate pullback deletes all nonpositive diagonal weights. -/
-theorem positive_coordinate_pullback
+private theorem positive_coordinate_pullback
     (weight : ι → ℝ) :
     (positiveCoordinateProjector weight)ᴴ * realDiagonal weight *
         positiveCoordinateProjector weight =
@@ -151,7 +151,7 @@ theorem positive_coordinate_pullback
 
 /-- Negative-coordinate pullback of the negated form records positive
 magnitudes exactly on negative coordinates. -/
-theorem negative_coordinate_pullback
+private theorem negative_coordinate_pullback
     (weight : ι → ℝ) :
     (negativeCoordinateProjector weight)ᴴ * (-(realDiagonal weight)) *
         negativeCoordinateProjector weight =
@@ -184,14 +184,14 @@ private theorem negative_magnitude_diagonal_rank
     Matrix.rank_diagonal]
 
 /-- The rank of a real diagonal matrix is the number of its nonzero weights. -/
-theorem real_diagonal_rank_eq_nonzero_count
+private theorem real_diagonal_rank_eq_nonzero_count
     (weight : ι → ℝ) :
     (realDiagonal weight).rank = nonzeroWeightCount weight := by
   classical
   simp [realDiagonal, nonzeroWeightCount, Matrix.rank_diagonal]
 
 /-- Positive and negative coordinates partition the nonzero coordinates. -/
-theorem positive_add_negative_count_eq_nonzero
+private theorem positive_add_negative_count_eq_nonzero
     (weight : ι → ℝ) :
     positiveWeightCount weight + negativeWeightCount weight =
       nonzeroWeightCount weight := by
@@ -221,7 +221,7 @@ theorem positive_add_negative_count_eq_nonzero
 
 /-- The positive sign count is bounded by the positive index of the full
 real diagonal form. -/
-theorem positive_weight_count_le_posIndex
+private theorem positive_weight_count_le_posIndex
     (weight : ι → ℝ) :
     positiveWeightCount weight ≤
       posIndex (real_diagonal_isHermitian weight) := by
@@ -247,7 +247,7 @@ theorem positive_weight_count_le_posIndex
 
 /-- The negative sign count is bounded by the negative index of the full
 real diagonal form. -/
-theorem negative_weight_count_le_negIndex
+private theorem negative_weight_count_le_negIndex
     (weight : ι → ℝ) :
     negativeWeightCount weight ≤
       negIndex (real_diagonal_isHermitian weight) := by
@@ -303,18 +303,14 @@ theorem real_diagonal_inertia_eq_sign_counts
   have hCounts := positive_add_negative_count_eq_nonzero weight
   omega
 
-/-- In particular, the negative index of a real diagonal matrix is exactly the
-number of negative entries. -/
+/-- The negative index of a real diagonal matrix is exactly the number of
+negative entries. -/
 theorem real_diagonal_negIndex_eq_negative_count
     (weight : ι → ℝ) :
     negIndex (real_diagonal_isHermitian weight) =
       negativeWeightCount weight :=
   (real_diagonal_inertia_eq_sign_counts weight).2
 
-#print axioms real_diagonal_rank_eq_nonzero_count
-#print axioms positive_add_negative_count_eq_nonzero
-#print axioms positive_weight_count_le_posIndex
-#print axioms negative_weight_count_le_negIndex
 #print axioms real_diagonal_inertia_eq_sign_counts
 #print axioms real_diagonal_negIndex_eq_negative_count
 
