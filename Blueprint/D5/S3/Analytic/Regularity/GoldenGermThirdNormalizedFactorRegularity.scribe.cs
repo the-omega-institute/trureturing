@@ -64,8 +64,10 @@ internal sealed class GoldenGermThirdNormalizedFactorRegularityDocument
                 "D5/S3/Analytic/EulerGerm/GermProductNonvanishingAboveThreeFifths")),
             DocumentEdge.Dependency.Create(GidRef.Create(
                 "D5/S3/Analytic/EulerGerm/LocalFactorZeroDivisor")),
-            // SL-008 split audit: orchestrator adds the Majorant document edge
-            // after that prerequisite document has landed and frozen first.
+            DocumentEdge.Dependency.Create(GidRef.Create(
+                "D5/S3/Analytic/Regularity/GoldenGermThirdNormalizedFactorMajorant")),
+            // SL-008 split audit: the Majorant document edge above was added by the
+            // orchestrator after PR #4939 landed and froze that prerequisite module.
         ]));
 
     private static Formula TheoremFormula()
