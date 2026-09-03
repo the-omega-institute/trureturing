@@ -1,0 +1,27 @@
+### \(q>1/4\)：椭圆相
+
+$$
+\lambda_\pm
+=
+\frac12
+\pm i\sqrt{q-\frac14}.
+$$
+
+它们严格位于：
+
+$$
+\Re\lambda=\frac12.
+$$
+
+所以：
+
+$$
+\boxed{
+q>\frac14
+\iff
+\mathcal C(q)\text{ 的两个本征值形成临界线对}.
+}
+$$
+
+---
+

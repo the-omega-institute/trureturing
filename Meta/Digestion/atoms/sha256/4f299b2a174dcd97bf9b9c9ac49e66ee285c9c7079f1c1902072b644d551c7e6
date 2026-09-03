@@ -1,0 +1,12 @@
+## 211. 黄金 carry 环面递归
+
+```lean
+theorem golden_floor_carry_recurrence (x : ℝ) (n : ℕ) :
+    goldenFloor x (n + 2) =
+      goldenFloor x (n + 1) +
+      goldenFloor x n +
+      goldenCarry x n
+```
+
+---
+

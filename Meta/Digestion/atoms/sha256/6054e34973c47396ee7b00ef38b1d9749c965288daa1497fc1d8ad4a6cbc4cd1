@@ -1,0 +1,45 @@
+# 第一千九百三十九部　合法负号与非法负支撑
+
+仓库最新的 golden Euler germ 结果提供了一个重要反例，说明不能把所有负号都解释为离线缺陷。
+
+它构造了一个有限 signed correction \(C_4\)，使：
+
+$$
+\boxed{
+C_4K_3=1+R_4,
+}
+\tag{1939.1}
+$$
+
+并证明所有 residual monomial weights 都位于 \(\beta_6\) 以上，prime deviation 在：
+
+$$
+\Re s>\frac1{\beta_6}
+$$
+
+时绝对可和；同时：
+
+$$
+\frac1{\beta_6}<\frac1{10}.
+$$
+
+该结果明确只是一层有限局部 cancellation certificate，不声称 RH、全局 continuation 或 all-order extraction。
+
+所以：
+
+$$
+\boxed{
+\text{中间公式含负系数}
+}
+$$
+
+并不等于：
+
+$$
+\boxed{
+\text{最终正实现含负支撑}.
+}
+$$
+
+---
+

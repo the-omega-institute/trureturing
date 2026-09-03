@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:1a5dc9c5005e06e626080bc26f8d18f19ab83ab23d917a0a1da5c0b435988a97
+  normalized_sha256: sha256:1a5dc9c5005e06e626080bc26f8d18f19ab83ab23d917a0a1da5c0b435988a97
+cas_ref: sha256:1a5dc9c5005e06e626080bc26f8d18f19ab83ab23d917a0a1da5c0b435988a97
+coverage_gids:
+  - D5/S3/Arith/Coding/ErrorErasureUniqueDecoding.error_erasure_unique_decoding
+receipts:
+  coverage:
+    - gid: D5/S3/Arith/Coding/ErrorErasureUniqueDecoding.error_erasure_unique_decoding
+      source_sha256: sha256:1a5dc9c5005e06e626080bc26f8d18f19ab83ab23d917a0a1da5c0b435988a97
+      target_statement_id: sha256:8cf6da01b5955e9bd4f01b8b9b159142c64d366fdde9f6176d614d7dc53f2fbf
+  scribe:
+    - gid: D5/S3/Arith/Coding/ErrorErasureUniqueDecoding.error_erasure_unique_decoding
+      definition_sha256: sha256:af9fabcbae9d5d527e4141b0ea1d5f664b4fd913da5fe5847d5ad898ed8c8cfd
+      emission_sha256: sha256:1b883cc685f13745b135fc44b7c947dc41eb74810b8e11f5283658744b8c28fb
+  unresolved_subitems: []
