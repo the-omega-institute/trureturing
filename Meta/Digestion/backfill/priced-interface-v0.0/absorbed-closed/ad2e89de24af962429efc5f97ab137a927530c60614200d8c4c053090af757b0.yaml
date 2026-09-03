@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:ad2e89de24af962429efc5f97ab137a927530c60614200d8c4c053090af757b0
+  normalized_sha256: sha256:ad2e89de24af962429efc5f97ab137a927530c60614200d8c4c053090af757b0
+cas_ref: sha256:ad2e89de24af962429efc5f97ab137a927530c60614200d8c4c053090af757b0
+coverage_gids:
+  - gid: D5/S0/Asymptotics/MetricGeometry/GreenClassBudgetGeometry.green_class_budget_geometry
+    target_statement_id: sha256:960c03466593d581702645de49f3df915444a6be3dad85b2be3cbeaf26c7c295
+receipts:
+  scribe:
+    - gid: D5/S0/Asymptotics/MetricGeometry/GreenClassBudgetGeometry.green_class_budget_geometry
+      definition_sha256: sha256:d44b9e6c709402c1b404fc730b897c0a9b6113cf497bf615646855a7cfa72671
+      emission_sha256: sha256:12517d4f6f061523b1b0457c4d55899b5d006ff76c2f8f572d6dd3cdd5289338
+  unresolved_subitems: []
