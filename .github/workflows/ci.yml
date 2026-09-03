@@ -110,8 +110,22 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          source_address="${{ hashFiles('candidate/tools/**', 'candidate/Blueprint/**/*.scribe.cs', 'candidate/Directory.*', 'candidate/global.json') }}"
+          source_address="${{ hashFiles('candidate/tools/**', 'candidate/Blueprint/**/*.scribe.cs', 'candidate/Directory.*', 'candidate/.editorconfig', 'candidate/global.json') }}"
+          workflow_ref=HEAD
+          if [[ "$GITHUB_EVENT_NAME" == "pull_request_target" ]]; then workflow_ref=HEAD^1; fi
+          workflow_address="$(git -C candidate show "${workflow_ref}:.github/workflows/ci.yml" | sha256sum | cut -d ' ' -f 1)"
+          source_address="$(printf 'sources=%s\nworkflow=%s\n' "$source_address" "$workflow_address" | sha256sum | cut -d ' ' -f 1)"
           candidate/tools/scripts/workflow/judge-content-address.sh "$source_address" >> "$GITHUB_OUTPUT"
+      - name: Restore judge binaries and candidate build outputs
+        id: judge-cache
+        if: steps.revert.outputs.confirmed != 'true'
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            .judge-binaries
+            candidate/tools/**/bin
+            candidate/tools/**/obj
+          key: stratalint-judge-binaries-v2-${{ runner.os }}-${{ steps.judge-address.outputs.runtime }}-${{ steps.judge-address.outputs.address }}
       - name: Resolve pinned Lean toolchain
         id: lean
         if: steps.revert.outputs.confirmed != 'true'
@@ -150,7 +164,8 @@ jobs:
           dotnet restore candidate/tools/tests/CompileFailProof/CompileFailProof.csproj --locked-mode
           dotnet restore candidate/tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj --locked-mode
       - name: Build candidate with warnings as errors
-        if: steps.revert.outputs.confirmed != 'true' && github.event_name == 'pull_request_target' && github.event.pull_request.base.ref == 'dev'
+        id: build-candidate
+        if: steps.revert.outputs.confirmed != 'true' && steps.judge-cache.outputs.cache-hit != 'true' && ((github.event_name == 'pull_request_target' && github.event.pull_request.base.ref == 'dev') || (github.event_name == 'push' && github.ref == 'refs/heads/dev'))
         run: make -C candidate/tools dotnet
       - name: Signal PR head branch grammar
         if: steps.revert.outputs.confirmed != 'true' && github.event_name == 'pull_request_target' && github.event.pull_request.base.ref == 'dev'
@@ -237,11 +252,14 @@ jobs:
             --configuration Release --output .judge-binaries/scribe
           test -s .judge-binaries/cli/StrataLint.dll
           test -s .judge-binaries/scribe/StrataLint.Scribe.dll
-      - name: Save judge binaries by content address (dev push only)
-        if: steps.revert.outputs.confirmed != 'true' && steps.stage-judge.outcome == 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
+      - name: Save judge binaries and candidate build outputs by content address (dev push only)
+        if: steps.revert.outputs.confirmed != 'true' && steps.build-candidate.outcome == 'success' && steps.stage-judge.outcome == 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
         uses: actions/cache/save@v4
         with:
-          path: .judge-binaries
+          path: |
+            .judge-binaries
+            candidate/tools/**/bin
+            candidate/tools/**/obj
           key: stratalint-judge-binaries-v2-${{ runner.os }}-${{ steps.judge-address.outputs.runtime }}-${{ steps.judge-address.outputs.address }}
       - name: Save elan toolchain for engineering checks (dev push only)
         if: steps.revert.outputs.confirmed != 'true' && always() && steps.install-elan.outcome == 'success' && github.event_name == 'push' && github.ref == 'refs/heads/dev'
@@ -333,14 +351,21 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          source_address="${{ hashFiles('candidate/tools/**', 'candidate/Blueprint/**/*.scribe.cs', 'candidate/Directory.*', 'candidate/global.json') }}"
+          source_address="${{ hashFiles('candidate/tools/**', 'candidate/Blueprint/**/*.scribe.cs', 'candidate/Directory.*', 'candidate/.editorconfig', 'candidate/global.json') }}"
+          workflow_ref=HEAD
+          if [[ "$GITHUB_EVENT_NAME" == "pull_request_target" ]]; then workflow_ref=HEAD^1; fi
+          workflow_address="$(git -C candidate show "${workflow_ref}:.github/workflows/ci.yml" | sha256sum | cut -d ' ' -f 1)"
+          source_address="$(printf 'sources=%s\nworkflow=%s\n' "$source_address" "$workflow_address" | sha256sum | cut -d ' ' -f 1)"
           candidate/tools/scripts/workflow/judge-content-address.sh "$source_address" >> "$GITHUB_OUTPUT"
-      - name: Restore judge binaries
+      - name: Restore judge binaries and candidate build outputs
         id: judge-cache
         if: steps.revert.outputs.confirmed != 'true'
         uses: actions/cache/restore@v4
         with:
-          path: .judge-binaries
+          path: |
+            .judge-binaries
+            candidate/tools/**/bin
+            candidate/tools/**/obj
           key: stratalint-judge-binaries-v2-${{ runner.os }}-${{ steps.judge-address.outputs.runtime }}-${{ steps.judge-address.outputs.address }}
       - name: Resolve checked merge result's dev parent
         id: base
@@ -646,14 +671,21 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          source_address="${{ hashFiles('candidate/tools/**', 'candidate/Blueprint/**/*.scribe.cs', 'candidate/Directory.*', 'candidate/global.json') }}"
+          source_address="${{ hashFiles('candidate/tools/**', 'candidate/Blueprint/**/*.scribe.cs', 'candidate/Directory.*', 'candidate/.editorconfig', 'candidate/global.json') }}"
+          workflow_ref=HEAD
+          if [[ "$GITHUB_EVENT_NAME" == "pull_request_target" ]]; then workflow_ref=HEAD^1; fi
+          workflow_address="$(git -C candidate show "${workflow_ref}:.github/workflows/ci.yml" | sha256sum | cut -d ' ' -f 1)"
+          source_address="$(printf 'sources=%s\nworkflow=%s\n' "$source_address" "$workflow_address" | sha256sum | cut -d ' ' -f 1)"
           candidate/tools/scripts/workflow/judge-content-address.sh "$source_address" >> "$GITHUB_OUTPUT"
-      - name: Restore judge binaries
+      - name: Restore judge binaries and candidate build outputs
         id: judge-cache
         if: steps.revert.outputs.confirmed != 'true'
         uses: actions/cache/restore@v4
         with:
-          path: .judge-binaries
+          path: |
+            .judge-binaries
+            candidate/tools/**/bin
+            candidate/tools/**/obj
           key: stratalint-judge-binaries-v2-${{ runner.os }}-${{ steps.judge-address.outputs.runtime }}-${{ steps.judge-address.outputs.address }}
       - name: Download canonical Lean reports
         if: steps.revert.outputs.confirmed != 'true'
