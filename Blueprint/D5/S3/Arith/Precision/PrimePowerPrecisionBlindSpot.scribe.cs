@@ -22,7 +22,7 @@ internal sealed class PrimePowerPrecisionBlindSpotDocument : IScribeDocumentDefi
             AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text(
-                    "Fix a prime p, a natural precision k, and distinct integers x and y. "
+                    "Fix a prime p, a positive natural precision k, and distinct integers x and y. "
                         + "The precision reading is the residue modulo p^k. The two readings "
                         + "agree exactly when k does not exceed the p-adic valuation of x - y.")),
                 Paragraph(Text(
@@ -58,7 +58,9 @@ internal sealed class PrimePowerPrecisionBlindSpotDocument : IScribeDocumentDefi
             Mathbb, Grp(F.Id("N")), Comma, RowBreak, Grp(),
             left, Comma, Sp, right, Sp, InMacro, Sp,
             Mathbb, Grp(F.Id("Z")), Comma, RowBreak, Grp(),
-            Open, Call("Prime", prime), Sp, Land, Sp, left, Sp, Neq, Sp, right, Close,
+            Open, Call("Prime", prime), Sp, Land, Sp,
+            D(1), Sp, Leq, Sp, precision, Sp, Land, Sp,
+            left, Sp, Neq, Sp, right, Close,
             Sp, Rightarrow, Sp,
             Open, agreement, Close, Sp, Land, RowBreak, Grp(),
             Open, firstPrecision, Close, Dot,

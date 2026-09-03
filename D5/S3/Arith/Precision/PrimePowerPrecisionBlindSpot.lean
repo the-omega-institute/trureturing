@@ -36,11 +36,11 @@ noncomputable def firstDistinguishingPrecision (p : Nat) (x y : Int)
     (hp : p.Prime) (hxy : x ≠ y) : Nat :=
   Nat.find (positive_distinguishing_precision_exists p x y hp hxy)
 
-/-- For a fixed prime and distinct integers, agreement lasts exactly through
-the valuation of the difference, and the first distinguishing precision is
-its successor (source lines 9073-9096). -/
+/-- For a fixed prime, positive precision, and distinct integers, agreement
+lasts exactly through the valuation of the difference, and the first
+distinguishing precision is its successor (source lines 9073-9096). -/
 theorem prime_power_precision_blind_spot (p k : Nat) (x y : Int)
-    (hp : p.Prime) (hxy : x ≠ y) :
+    (hp : p.Prime) (_hk : 1 <= k) (hxy : x ≠ y) :
     (precisionReading p k x = precisionReading p k y <->
       k <= padicValInt p (x - y)) ∧
     firstDistinguishingPrecision p x y hp hxy =
@@ -59,7 +59,7 @@ example :
       firstDistinguishingPrecision 2 4 0 (by decide) (by norm_num) = 3 := by
   have hp : Nat.Prime 2 := by decide
   have hxy : (4 : Int) ≠ 0 := by norm_num
-  have h := prime_power_precision_blind_spot 2 2 4 0 hp hxy
+  have h := prime_power_precision_blind_spot 2 2 4 0 hp (by norm_num) hxy
   have hsame : precisionReading 2 2 4 = precisionReading 2 2 0 := by
     norm_num [precisionReading]
   have hdiff : precisionReading 2 3 4 ≠ precisionReading 2 3 0 := by
@@ -76,12 +76,13 @@ example :
   · calc
       firstDistinguishingPrecision 2 4 0 (by decide) (by norm_num) =
           padicValInt 2 (4 - 0) + 1 :=
-        prime_power_precision_blind_spot 2 2 4 0 (by decide) (by norm_num) |>.2
+        prime_power_precision_blind_spot 2 2 4 0 (by decide) (by norm_num)
+          (by norm_num) |>.2
       _ = 3 := by omega
 
 /- Reverse probe: both CAS assertions are independently projected from the
 public conjunction. -/
-example (p k : Nat) (x y : Int) (hp : p.Prime) (hxy : x ≠ y)
+example (p k : Nat) (x y : Int) (hp : p.Prime) (_hk : 1 <= k) (hxy : x ≠ y)
     (h : (precisionReading p k x = precisionReading p k y <->
         k <= padicValInt p (x - y)) ∧
       firstDistinguishingPrecision p x y hp hxy =
