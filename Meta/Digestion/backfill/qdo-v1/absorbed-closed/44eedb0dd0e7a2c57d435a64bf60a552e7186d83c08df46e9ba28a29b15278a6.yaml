@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:44eedb0dd0e7a2c57d435a64bf60a552e7186d83c08df46e9ba28a29b15278a6
 cas_ref: sha256:44eedb0dd0e7a2c57d435a64bf60a552e7186d83c08df46e9ba28a29b15278a6
 coverage_gids:
-  - D5/S3/Quantum/Entanglement/LocalMarginalCorrelationBlindSpot.local_marginal_correlation_blind_spot
+  - gid: D5/S3/Quantum/Entanglement/LocalMarginalCorrelationBlindSpot.local_marginal_correlation_blind_spot
+    target_statement_id: sha256:1a35d30b3b0716c6f82052383f9416aaf391643949f05123770753fbbef48659
 receipts:
-  coverage:
-    - gid: D5/S3/Quantum/Entanglement/LocalMarginalCorrelationBlindSpot.local_marginal_correlation_blind_spot
-      source_sha256: sha256:44eedb0dd0e7a2c57d435a64bf60a552e7186d83c08df46e9ba28a29b15278a6
-      target_statement_id: sha256:1a35d30b3b0716c6f82052383f9416aaf391643949f05123770753fbbef48659
   scribe:
     - gid: D5/S3/Quantum/Entanglement/LocalMarginalCorrelationBlindSpot.local_marginal_correlation_blind_spot
       definition_sha256: sha256:d9c73036f9f366412ca3abb36bcc9e209fd400e2707b90085d25eee3f1e71d23

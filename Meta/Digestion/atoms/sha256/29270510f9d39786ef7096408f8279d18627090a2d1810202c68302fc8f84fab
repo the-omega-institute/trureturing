@@ -1,0 +1,10 @@
+## 529. 加法观察非局部
+
+Euler 坐标对乘法分解是局部的，但：
+
+$$
+n\mapsto n+h
+$$
+
+会同时改变无限多个 prime valuation coordinates。
+

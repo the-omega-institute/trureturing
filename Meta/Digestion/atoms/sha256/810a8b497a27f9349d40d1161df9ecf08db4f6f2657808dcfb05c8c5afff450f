@@ -1,0 +1,93 @@
+# 第二百零七部　当前最强的新研究目标
+
+可以把最终目标命名为：
+
+> **Arithmetic Compact Jacobi Realization**
+> **算术紧 Jacobi 实现**
+
+要求直接从 prime/explicit-formula 数据构造：
+
+$$
+J_{\mathrm{arith}}
+$$
+
+和循环向量：
+
+$$
+\Omega_{\mathrm{arith}},
+$$
+
+满足：
+
+$$
+\boxed{
+0\le J_{\mathrm{arith}}\le I,
+}
+$$
+
+以及：
+
+$$
+\boxed{
+a_n
+=
+\left\langle
+\Omega_{\mathrm{arith}},
+J_{\mathrm{arith}}^n
+\Omega_{\mathrm{arith}}
+\right\rangle.
+}
+$$
+
+再证明：
+
+$$
+-\frac14
+\frac{\mathcal X'(z/4)}
+{\mathcal X(z/4)}
+=
+\left\langle
+\Omega_{\mathrm{arith}},
+(I-zJ_{\mathrm{arith}})^{-1}
+\Omega_{\mathrm{arith}}
+\right\rangle.
+$$
+
+一旦闭合：
+
+$$
+\operatorname{Spec}(J_{\mathrm{arith}})
+\subseteq[0,1],
+$$
+
+从而：
+
+$$
+\mathrm{RH}.
+$$
+
+这不是有限维矩阵。
+
+它必须是：
+
+$$
+\boxed{
+\text{无限秩、紧、正、自伴、循环的 Jacobi operator}.
+}
+$$
+
+而且其 Jacobi 链满足：
+
+$$
+\boxed{
+\alpha_n>0
+\quad\forall n,
+\qquad
+\alpha_n\to0.
+}
+$$
+
+这就是“每一层都有一个约不掉的项”与“整个系统最终稳定完成”同时成立的最小数学模型。
+
+---
+

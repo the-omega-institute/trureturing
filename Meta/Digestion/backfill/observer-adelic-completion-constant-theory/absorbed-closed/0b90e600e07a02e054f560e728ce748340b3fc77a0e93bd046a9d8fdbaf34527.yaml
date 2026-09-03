@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:0b90e600e07a02e054f560e728ce748340b3fc77a0e93bd046a9d8fdbaf34527
 cas_ref: sha256:0b90e600e07a02e054f560e728ce748340b3fc77a0e93bd046a9d8fdbaf34527
 coverage_gids:
-  - D5/S3/Zeros/Endpoints/FirstLiCoefficientNormalization.first_li_coefficient_normalization
+  - gid: D5/S3/Zeros/Endpoints/FirstLiCoefficientNormalization.first_li_coefficient_normalization
+    target_statement_id: sha256:4383b8dce5904be1d5771d76e03ad3869b6052edd5751f960cd7f8a3fbe33ebc
 receipts:
-  coverage:
-    - gid: D5/S3/Zeros/Endpoints/FirstLiCoefficientNormalization.first_li_coefficient_normalization
-      source_sha256: sha256:0b90e600e07a02e054f560e728ce748340b3fc77a0e93bd046a9d8fdbaf34527
-      target_statement_id: sha256:4383b8dce5904be1d5771d76e03ad3869b6052edd5751f960cd7f8a3fbe33ebc
   scribe:
     - gid: D5/S3/Zeros/Endpoints/FirstLiCoefficientNormalization.first_li_coefficient_normalization
       definition_sha256: sha256:ba9bf4940e2ae90752cc399eade3397dcc34ff27fef66e9fe19a7d530d6043b8

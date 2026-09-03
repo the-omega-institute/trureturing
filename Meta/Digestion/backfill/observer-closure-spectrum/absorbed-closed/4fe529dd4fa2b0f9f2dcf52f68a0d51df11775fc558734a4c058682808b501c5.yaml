@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:4fe529dd4fa2b0f9f2dcf52f68a0d51df11775fc558734a4c058682808b501c5
 cas_ref: sha256:4fe529dd4fa2b0f9f2dcf52f68a0d51df11775fc558734a4c058682808b501c5
 coverage_gids:
-  - D5/S3/ObserverMemory/PredictionCertificates/EarliestFutureWitness.memory_is_earliest_future_witness
+  - gid: D5/S3/ObserverMemory/PredictionCertificates/EarliestFutureWitness.memory_is_earliest_future_witness
+    target_statement_id: sha256:c8e675942df0bacfe4c51e28bf78938a7b8de11c618b71bfca60c64a1cc0a03c
 receipts:
-  coverage:
-    - gid: D5/S3/ObserverMemory/PredictionCertificates/EarliestFutureWitness.memory_is_earliest_future_witness
-      source_sha256: sha256:4fe529dd4fa2b0f9f2dcf52f68a0d51df11775fc558734a4c058682808b501c5
-      target_statement_id: sha256:c8e675942df0bacfe4c51e28bf78938a7b8de11c618b71bfca60c64a1cc0a03c
   scribe:
     - gid: D5/S3/ObserverMemory/PredictionCertificates/EarliestFutureWitness.memory_is_earliest_future_witness
       definition_sha256: sha256:79f80ea314c5adc048465f59160e4a8235ee6ec9f5f89f1f2d6bf8a1a39b3b1a

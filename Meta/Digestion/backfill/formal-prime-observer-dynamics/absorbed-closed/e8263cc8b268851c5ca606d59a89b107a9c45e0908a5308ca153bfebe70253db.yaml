@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:e8263cc8b268851c5ca606d59a89b107a9c45e0908a5308ca153bfebe70253db
 cas_ref: sha256:e8263cc8b268851c5ca606d59a89b107a9c45e0908a5308ca153bfebe70253db
 coverage_gids:
-  - D5/S3/Observer/DynamicProgramming/StationaryPolicyOptimality.bellman_greedy_stationary_policy_is_optimal
+  - gid: D5/S3/Observer/DynamicProgramming/StationaryPolicyOptimality.bellman_greedy_stationary_policy_is_optimal
+    target_statement_id: sha256:d8c724a8949f6db12c88322ed4d4d1404a3619d19ff94c5205853c54fb075a93
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/DynamicProgramming/StationaryPolicyOptimality.bellman_greedy_stationary_policy_is_optimal
-      source_sha256: sha256:e8263cc8b268851c5ca606d59a89b107a9c45e0908a5308ca153bfebe70253db
-      target_statement_id: sha256:d8c724a8949f6db12c88322ed4d4d1404a3619d19ff94c5205853c54fb075a93
   scribe:
     - gid: D5/S3/Observer/DynamicProgramming/StationaryPolicyOptimality.bellman_greedy_stationary_policy_is_optimal
       definition_sha256: sha256:eb84660e1637fee841a723c40090a25e7700f478c5b31e18abf44b877e972911

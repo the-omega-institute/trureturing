@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:401c0209e6098114e90aed958cb52096301321b7b81340008de150ec504c7ead
 cas_ref: sha256:401c0209e6098114e90aed958cb52096301321b7b81340008de150ec504c7ead
 coverage_gids:
-  - D5/S3/Factorization/Solenoid/PrimeZetaWeightedMetric.prime_weighted_distance_is_metric_and_induces_product_topology
+  - gid: D5/S3/Factorization/Solenoid/PrimeZetaWeightedMetric.prime_weighted_distance_is_metric_and_induces_product_topology
+    target_statement_id: sha256:1c5d2cdb4e88c7621e236f025d5157b862863df359a236dd5583da291e5e02a0
 receipts:
-  coverage:
-    - gid: D5/S3/Factorization/Solenoid/PrimeZetaWeightedMetric.prime_weighted_distance_is_metric_and_induces_product_topology
-      source_sha256: sha256:401c0209e6098114e90aed958cb52096301321b7b81340008de150ec504c7ead
-      target_statement_id: sha256:1c5d2cdb4e88c7621e236f025d5157b862863df359a236dd5583da291e5e02a0
   scribe:
     - gid: D5/S3/Factorization/Solenoid/PrimeZetaWeightedMetric.prime_weighted_distance_is_metric_and_induces_product_topology
       definition_sha256: sha256:973cb9d18a19c400d817d63e1ee73222e7de50f6c5be9968401eb8264f0635a4

@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:acc1f556edea6a3cd7ea2f1cbb3aab9302cba763d4b02fe5304207e030b3bb3c
 cas_ref: sha256:acc1f556edea6a3cd7ea2f1cbb3aab9302cba763d4b02fe5304207e030b3bb3c
 coverage_gids:
-  - D5/S1/Solenoid/PathOrbitClassification.path_joined_iff_real_flow_orbit
+  - gid: D5/S1/Solenoid/PathOrbitClassification.path_joined_iff_real_flow_orbit
+    target_statement_id: sha256:7c770ef63ce5d24504147a7b9b86f0ccda08a52565c1024dcb460491d9bd8aec
 receipts:
-  coverage:
-    - gid: D5/S1/Solenoid/PathOrbitClassification.path_joined_iff_real_flow_orbit
-      source_sha256: sha256:acc1f556edea6a3cd7ea2f1cbb3aab9302cba763d4b02fe5304207e030b3bb3c
-      target_statement_id: sha256:7c770ef63ce5d24504147a7b9b86f0ccda08a52565c1024dcb460491d9bd8aec
   scribe:
     - gid: D5/S1/Solenoid/PathOrbitClassification.path_joined_iff_real_flow_orbit
       definition_sha256: sha256:3afdfe47ace3402df019c70cbb6ecaf1ccd1f60b22c8c0b1b81f0d4e738d1807

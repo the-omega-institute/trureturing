@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:87a16bbb01480caddd6059f2b3fd03723d021dd6d4b6a152f57e7fe14906ffa8
 cas_ref: sha256:87a16bbb01480caddd6059f2b3fd03723d021dd6d4b6a152f57e7fe14906ffa8
 coverage_gids:
-  - D5/S3/ConceptDynamics/Control/ControlIdentityRefinesPassive.control_identity_refines_passive
+  - gid: D5/S3/ConceptDynamics/Control/ControlIdentityRefinesPassive.control_identity_refines_passive
+    target_statement_id: sha256:c99131c407a0b97951626c9b8599f3ca1d0b43db473f783500c42d9dfde6bd92
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Control/ControlIdentityRefinesPassive.control_identity_refines_passive
-      source_sha256: sha256:87a16bbb01480caddd6059f2b3fd03723d021dd6d4b6a152f57e7fe14906ffa8
-      target_statement_id: sha256:c99131c407a0b97951626c9b8599f3ca1d0b43db473f783500c42d9dfde6bd92
   scribe:
     - gid: D5/S3/ConceptDynamics/Control/ControlIdentityRefinesPassive.control_identity_refines_passive
       definition_sha256: sha256:54154f4438d8254d3116237298b1776c11584091aad158baa5692d45d1fd9625

@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:9ad488bb1431e575ec4d837535daf399884955753e7466ea2f7fba2ab0fd7d98
 cas_ref: sha256:9ad488bb1431e575ec4d837535daf399884955753e7466ea2f7fba2ab0fd7d98
 coverage_gids:
-  - D5/S3/Analytic/Adelic/FiniteToroidalSpectralTomography.finite_toroidal_spectral_tomography
+  - gid: D5/S3/Analytic/Adelic/FiniteToroidalSpectralTomography.finite_toroidal_spectral_tomography
+    target_statement_id: sha256:85cd938cab68863a7bb599b66241c274556e3a5b8822286a1081dd011192aee3
 receipts:
-  coverage:
-    - gid: D5/S3/Analytic/Adelic/FiniteToroidalSpectralTomography.finite_toroidal_spectral_tomography
-      source_sha256: sha256:9ad488bb1431e575ec4d837535daf399884955753e7466ea2f7fba2ab0fd7d98
-      target_statement_id: sha256:85cd938cab68863a7bb599b66241c274556e3a5b8822286a1081dd011192aee3
   scribe:
     - gid: D5/S3/Analytic/Adelic/FiniteToroidalSpectralTomography.finite_toroidal_spectral_tomography
       definition_sha256: sha256:08949f1a7765301da53a7cce706acd38fbac185d52fad6adba5278e4af2d81c3

@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:ef596207df23625d85077229fdce15b6f6fc96bda7fe5aac825f6fda38ed9131
 cas_ref: sha256:ef596207df23625d85077229fdce15b6f6fc96bda7fe5aac825f6fda38ed9131
 coverage_gids:
-  - D5/S3/Quantum/Dynamics/AnalyticFlowGeneration.analytic_flow_generates_commutator_closure
+  - gid: D5/S3/Quantum/Dynamics/AnalyticFlowGeneration.analytic_flow_generates_commutator_closure
+    target_statement_id: sha256:7906f73d459c2569eae4b86a50cba0a6ab3279224f688704b456f62201cbfc0e
 receipts:
-  coverage:
-    - gid: D5/S3/Quantum/Dynamics/AnalyticFlowGeneration.analytic_flow_generates_commutator_closure
-      source_sha256: sha256:ef596207df23625d85077229fdce15b6f6fc96bda7fe5aac825f6fda38ed9131
-      target_statement_id: sha256:7906f73d459c2569eae4b86a50cba0a6ab3279224f688704b456f62201cbfc0e
   scribe:
     - gid: D5/S3/Quantum/Dynamics/AnalyticFlowGeneration.analytic_flow_generates_commutator_closure
       definition_sha256: sha256:d028f5d7f7bd592f17c2ab12436a275ac5b91f81dde18367ce55954c4c507a9e

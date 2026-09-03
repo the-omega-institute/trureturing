@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:dc68a658ed5722dcbd877e9b8c38fd54073a582706b71911f34daeebcf26d39d
 cas_ref: sha256:dc68a658ed5722dcbd877e9b8c38fd54073a582706b71911f34daeebcf26d39d
 coverage_gids:
-  - D5/S3/Observer/GoldenCoding/MinimalBinaryUnimodularBreak.minimal_binary_unimodular_break
+  - gid: D5/S3/Observer/GoldenCoding/MinimalBinaryUnimodularBreak.minimal_binary_unimodular_break
+    target_statement_id: sha256:9adb6d1f3583e5b5b9505d265cd2a4e2aacc8e80547bff2bf102a61cbccd2139
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/GoldenCoding/MinimalBinaryUnimodularBreak.minimal_binary_unimodular_break
-      source_sha256: sha256:dc68a658ed5722dcbd877e9b8c38fd54073a582706b71911f34daeebcf26d39d
-      target_statement_id: sha256:9adb6d1f3583e5b5b9505d265cd2a4e2aacc8e80547bff2bf102a61cbccd2139
   scribe:
     - gid: D5/S3/Observer/GoldenCoding/MinimalBinaryUnimodularBreak.minimal_binary_unimodular_break
       definition_sha256: sha256:d38bf890725e738379468ff9112e571bb453e0497d8688a3662d8c429fb90c7f

@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:2f1adbe63bec7c435b48ee08163b9cafb520056f8de057522221f67b097cddb3
 cas_ref: sha256:2f1adbe63bec7c435b48ee08163b9cafb520056f8de057522221f67b097cddb3
 coverage_gids:
-  - D5/S3/Weil/Budget/FiniteWindowHaarFloorInterval.finite_window_haar_floor_interval
+  - gid: D5/S3/Weil/Budget/FiniteWindowHaarFloorInterval.finite_window_haar_floor_interval
+    target_statement_id: sha256:73c1d82e947b2410cc27d1c54f702a5d061b4756dd4bc36f0d41429213fff9d9
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/Budget/FiniteWindowHaarFloorInterval.finite_window_haar_floor_interval
-      source_sha256: sha256:2f1adbe63bec7c435b48ee08163b9cafb520056f8de057522221f67b097cddb3
-      target_statement_id: sha256:73c1d82e947b2410cc27d1c54f702a5d061b4756dd4bc36f0d41429213fff9d9
   scribe:
     - gid: D5/S3/Weil/Budget/FiniteWindowHaarFloorInterval.finite_window_haar_floor_interval
       definition_sha256: sha256:f6b3fa6559c1d93e317e9fd1339bb1dd4586be73e49496cb7f529941c3a9e99c

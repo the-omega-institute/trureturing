@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:4449bb1c14812cdd378237183a7aa046e6acdf461583a86b73a5ce0ae59ce4cb
 cas_ref: sha256:4449bb1c14812cdd378237183a7aa046e6acdf461583a86b73a5ce0ae59ce4cb
 coverage_gids:
-  - D5/S3/ConceptDynamics/Agency/NoncanonicalAgencyCountermodels.noncanonical_and_deterministic_agency_countermodels
+  - gid: D5/S3/ConceptDynamics/Agency/NoncanonicalAgencyCountermodels.noncanonical_and_deterministic_agency_countermodels
+    target_statement_id: sha256:2e2c004c74d56a3efbefcb473d18012632a0cafb1fc654e73a90859da904806c
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Agency/NoncanonicalAgencyCountermodels.noncanonical_and_deterministic_agency_countermodels
-      source_sha256: sha256:4449bb1c14812cdd378237183a7aa046e6acdf461583a86b73a5ce0ae59ce4cb
-      target_statement_id: sha256:2e2c004c74d56a3efbefcb473d18012632a0cafb1fc654e73a90859da904806c
   scribe:
     - gid: D5/S3/ConceptDynamics/Agency/NoncanonicalAgencyCountermodels.noncanonical_and_deterministic_agency_countermodels
       definition_sha256: sha256:2950af49ed7786570b4a34ad178a0c4b6dc008e3a6c5c837542b621d179d574f

@@ -1,0 +1,14 @@
+## 482. 素数比特无固定有限记忆
+
+```lean
+theorem primeIndicator_no_eventual_fixedWindowRecurrence
+    (d : ℕ) (hd : 0 < d)
+    (F : (Fin d → Bool) → Bool) :
+    ¬ ∃ N,
+      ∀ n ≥ N,
+        primeIndicator (n + d) =
+          F (fun i => primeIndicator (n + i))
+```
+
+---
+

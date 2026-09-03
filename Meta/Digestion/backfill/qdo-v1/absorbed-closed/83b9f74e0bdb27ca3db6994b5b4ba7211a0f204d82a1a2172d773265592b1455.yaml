@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:83b9f74e0bdb27ca3db6994b5b4ba7211a0f204d82a1a2172d773265592b1455
 cas_ref: sha256:83b9f74e0bdb27ca3db6994b5b4ba7211a0f204d82a1a2172d773265592b1455
 coverage_gids:
-  - D5/S3/ObserverMemory/Algorithms/ControlledFiniteStability.controlled_finite_stability
+  - gid: D5/S3/ObserverMemory/Algorithms/ControlledFiniteStability.controlled_finite_stability
+    target_statement_id: sha256:2636af4adcf79e51c28f62b998504a0dc4ae355f066c666cc5fbcb594201e2de
 receipts:
-  coverage:
-    - gid: D5/S3/ObserverMemory/Algorithms/ControlledFiniteStability.controlled_finite_stability
-      source_sha256: sha256:83b9f74e0bdb27ca3db6994b5b4ba7211a0f204d82a1a2172d773265592b1455
-      target_statement_id: sha256:2636af4adcf79e51c28f62b998504a0dc4ae355f066c666cc5fbcb594201e2de
   scribe:
     - gid: D5/S3/ObserverMemory/Algorithms/ControlledFiniteStability.controlled_finite_stability
       definition_sha256: sha256:6f93e152ca98523c1cf62faa07e1cc5fb87ba423c043164b2a1ccb8da724808d

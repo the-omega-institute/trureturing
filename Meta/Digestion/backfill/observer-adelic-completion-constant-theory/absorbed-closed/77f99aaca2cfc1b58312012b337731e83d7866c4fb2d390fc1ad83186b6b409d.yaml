@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:77f99aaca2cfc1b58312012b337731e83d7866c4fb2d390fc1ad83186b6b409d
 cas_ref: sha256:77f99aaca2cfc1b58312012b337731e83d7866c4fb2d390fc1ad83186b6b409d
 coverage_gids:
-  - D5/S3/Observer/BlockStructure/ObserverInnovationEquation.observer_innovation_equation
+  - gid: D5/S3/Observer/BlockStructure/ObserverInnovationEquation.observer_innovation_equation
+    target_statement_id: sha256:1b6773a4712288ca270b326fd494f00288b3d3a2f2be183aa13023c46552a9d5
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/BlockStructure/ObserverInnovationEquation.observer_innovation_equation
-      source_sha256: sha256:77f99aaca2cfc1b58312012b337731e83d7866c4fb2d390fc1ad83186b6b409d
-      target_statement_id: sha256:1b6773a4712288ca270b326fd494f00288b3d3a2f2be183aa13023c46552a9d5
   scribe:
     - gid: D5/S3/Observer/BlockStructure/ObserverInnovationEquation.observer_innovation_equation
       definition_sha256: sha256:2f1749070211c170fd8943a9e525355504a589b5c052548b9db565ddbe0872bd

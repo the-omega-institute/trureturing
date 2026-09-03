@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:0ae237222d7e226608930a831c203809fe91ece52082d67c1e5f8c42ea12ec7d
 cas_ref: sha256:0ae237222d7e226608930a831c203809fe91ece52082d67c1e5f8c42ea12ec7d
 coverage_gids:
-  - D5/S3/ConceptDynamics/Evidence/ActualEvidenceRefinementStability.actual_evidence_refinement_stability
+  - gid: D5/S3/ConceptDynamics/Evidence/ActualEvidenceRefinementStability.actual_evidence_refinement_stability
+    target_statement_id: sha256:5884d0b89dde70c212bcd82fc401325a13a3ac887a26da803f28450dd4387dbd
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Evidence/ActualEvidenceRefinementStability.actual_evidence_refinement_stability
-      source_sha256: sha256:0ae237222d7e226608930a831c203809fe91ece52082d67c1e5f8c42ea12ec7d
-      target_statement_id: sha256:5884d0b89dde70c212bcd82fc401325a13a3ac887a26da803f28450dd4387dbd
   scribe:
     - gid: D5/S3/ConceptDynamics/Evidence/ActualEvidenceRefinementStability.actual_evidence_refinement_stability
       definition_sha256: sha256:54091aea8e0cb544cd1eacd73d8364026f1cdc0abfd03947d94c1ac936931df4

@@ -1,0 +1,10 @@
+## 关系正性闭合
+
+所有有限 Gram／localizer 均具有统一非负下界，或至少在极限中保持 PSD。
+
+则前两项排除 residual 向更大素数对角迁移。
+
+第三项排除 analytic continuation 在极限中生成新的负关系方向。
+
+可以称之为：
+

@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:99cc2a76bfd7563c79f8a95538fb41743f88c89f729fa3906ea73efd545a5933
 cas_ref: sha256:99cc2a76bfd7563c79f8a95538fb41743f88c89f729fa3906ea73efd545a5933
 coverage_gids:
-  - D5/S3/Observer/MeasureSeparation/WeakPrimeSignalCompletionThreshold.weak_prime_signal_completion_dichotomy
+  - gid: D5/S3/Observer/MeasureSeparation/WeakPrimeSignalCompletionThreshold.weak_prime_signal_completion_dichotomy
+    target_statement_id: sha256:2481cacfa2e628464ea065f11c8be7dc634faca5c2b39cd31ba925dd013bf250
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/MeasureSeparation/WeakPrimeSignalCompletionThreshold.weak_prime_signal_completion_dichotomy
-      source_sha256: sha256:99cc2a76bfd7563c79f8a95538fb41743f88c89f729fa3906ea73efd545a5933
-      target_statement_id: sha256:2481cacfa2e628464ea065f11c8be7dc634faca5c2b39cd31ba925dd013bf250
   scribe:
     - gid: D5/S3/Observer/MeasureSeparation/WeakPrimeSignalCompletionThreshold.weak_prime_signal_completion_dichotomy
       definition_sha256: sha256:2dd7e85c0ce928fd03d5aa276b00f710be1a7cb7b43e8711df36cf2745e3cdc6
