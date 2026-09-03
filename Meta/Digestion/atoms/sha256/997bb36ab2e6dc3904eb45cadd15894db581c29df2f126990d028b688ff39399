@@ -1,0 +1,44 @@
+* 继续下去：分支数不断翻倍。
+
+因为 dyadic roots of unity 在单位圆中稠密，且：
+
+$$
+r_{H,j}\to\varphi^{-H},
+$$
+
+所以在 Hausdorff 意义下：
+
+$$
+\boxed{
+\mathcal Z_{H,j}
+\longrightarrow
+\left\{
+z:|z|=\varphi^{-H}
+\right\}.
+}
+$$
+
+这给“周期的周期”一个严格模型：
+
+$$
+\boxed{
+\text{二元反码}
+\to
+\text{四元轨道}
+\to
+\text{八元轨道}
+\to
+\text{完整相位圆}.
+}
+$$
+
+兼容的 dyadic branch histories 则由：
+
+$$
+\varprojlim_j\mu_{2^j}
+$$
+
+描述，是一个 \(2\)-进相位地址塔。
+
+---
+

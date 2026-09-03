@@ -1,0 +1,83 @@
+# 602. 全局偶观察者必然看见任何固定非零偏移
+
+对镜像偏移：
+
+$$
++\delta,\qquad-\delta,
+$$
+
+每个素数上的平均幅值为：
+
+$$
+\frac{
+p^\delta+p^{-\delta}
+}{2}
+=
+\cosh(\delta\log p).
+$$
+
+定义有限素数偶缺陷：
+
+$$
+\boxed{
+\mathcal C_X(\delta)
+=
+2
+\sum_{p\le X}
+\frac{
+\cosh(\delta\log p)-1
+}{p}.
+}
+$$
+
+每一项都非负，并且：
+
+$$
+\mathcal C_X(\delta)=0
+\iff
+\delta=0
+$$
+
+在包含任意一个素数的有限层已经成立。
+
+当：
+
+$$
+|\delta|\log X\ll1
+$$
+
+时：
+
+$$
+2(\cosh u-1)=u^2+O(u^4),
+$$
+
+所以在素数定理尺度下：
+
+$$
+\mathcal C_X(\delta)
+\approx
+\frac12
+\delta^2(\log X)^2.
+$$
+
+自然转换点仍为：
+
+$$
+\boxed{
+|\delta|\log X\asymp1.
+}
+$$
+
+也就是：
+
+$$
+X\asymp e^{1/|\delta|}.
+$$
+
+所以固定非零偏移并不是全局不可见。
+
+它只是可能在极其长的初始素数区间内表现得近似为零。
+
+---
+

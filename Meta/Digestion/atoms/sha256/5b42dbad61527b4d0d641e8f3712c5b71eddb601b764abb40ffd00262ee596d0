@@ -1,0 +1,74 @@
+## 2105.1 你的“平方与方差变大”是精确的
+
+小 \(\delta\) 展开：
+
+$$
+\sinh^2(\delta u)
+=
+\delta^2u^2+O(\delta^4u^4),
+$$
+
+所以：
+
+$$
+\boxed{
+\lambda_{\mathrm o}(\delta)
+=
+2\delta^2
+\int u^2\,d\mu(u)
++
+O(\delta^4).
+}
+\tag{2105.6}
+$$
+
+Gram 行列式为：
+
+$$
+\begin{aligned}
+\det G_\delta
+&=
+M(2\delta)^2-M(0)^2\\
+&=
+4
+\left(
+\int\cosh^2(\delta u)\,d\mu
+\right)
+\left(
+\int\sinh^2(\delta u)\,d\mu
+\right).
+\end{aligned}
+$$
+
+因此：
+
+$$
+\boxed{
+\det G_\delta
+=
+4M(0)
+\left(
+\int u^2d\mu
+\right)
+\delta^2
++
+O(\delta^4).
+}
+\tag{2105.7}
+$$
+
+所以你说“偏离以后，方差变大，平方变大”，可以严格改写为：
+
+$$
+\boxed{
+\text{法向偏移的平方，
+就是反射双剖面所张成面积的最低阶项。}
+}
+$$
+
+当 \(\delta=0\)，两向量完全重合，面积为零。
+
+当 \(\delta\neq0\)，面积严格为正，秩从一跃迁到二。
+
+---
+
