@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:5d22acd11ab3c13bb9b8df2f091d4d0a73cc2e2e7074b6d8d7f04e9caa870857
+  normalized_sha256: sha256:5d22acd11ab3c13bb9b8df2f091d4d0a73cc2e2e7074b6d8d7f04e9caa870857
+cas_ref: sha256:5d22acd11ab3c13bb9b8df2f091d4d0a73cc2e2e7074b6d8d7f04e9caa870857
+coverage_gids:
+  - D5/S3/Fourier/CharacterSelection/BinaryCharacterProfileRankCardinality.binary_character_profile_rank_cardinality
+receipts:
+  coverage:
+    - gid: D5/S3/Fourier/CharacterSelection/BinaryCharacterProfileRankCardinality.binary_character_profile_rank_cardinality
+      source_sha256: sha256:5d22acd11ab3c13bb9b8df2f091d4d0a73cc2e2e7074b6d8d7f04e9caa870857
+      target_statement_id: sha256:65e2de54fe0d37d0995032521bdd2ab7ff808f045ec95ebd97512ea82b91dad8
+  scribe:
+    - gid: D5/S3/Fourier/CharacterSelection/BinaryCharacterProfileRankCardinality.binary_character_profile_rank_cardinality
+      definition_sha256: sha256:efc69bf833420a1e55dc632d47d84dfba8a9731164b1dfda3a4c4e4ba941a3da
+      emission_sha256: sha256:60f0a3e6fa128367b1a1e72b062cf6d462c032975488a3cb2aa10f9fb71c0223
+  unresolved_subitems: []
