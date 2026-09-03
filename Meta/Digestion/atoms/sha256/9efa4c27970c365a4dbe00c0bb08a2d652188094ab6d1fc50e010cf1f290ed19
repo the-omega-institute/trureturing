@@ -1,0 +1,1 @@
+**可证伪预测(写在跑之前)**:若正确,定理只消费钉版 Mathlib(`riemannZeta_one_sub`、`riemannZeta_ne_zero_of_one_le_re`、`riemannZeta_zero`、`Complex.cos_eq_zero_iff`),标准三公理;若 `riemannZeta_one_sub` 的侧条件 `s ≠ -n` 在 Re ρ ≤ 0 分支中不可满足(t = 1 − ρ 的实部 ≥ 1,故可满足),则本条为假。

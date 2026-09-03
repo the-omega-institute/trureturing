@@ -2071,3 +2071,36 @@ G-f 一席位轮、M3-f 第二级一席位轮(各 codex-cli,独立 worktree,PR-1
 一席位轮(同模块三条公开定理,codex-cli,独立 worktree;deposit 绑 M3-f-5 atom;M3-f-3/4 走 PR-1b 收据后 PR-2 cover);该 lane 须在增订十三的闭带衰减模块合入后开工,以绑定而非重证。
 
 后续增订继续严格追加于本节之后。
+---
+
+# 增订十五　黄金 germ 线 G-g:窗口零点除子与 RH 的修正等价(G-g-1 / G-g-2 / G-g-3 预登记)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;探针一席(codex-cli,`lake env lean`,0 sorry,标准三公理,274 行,在 `Zeta23`/钉版 Mathlib 上整证三条);去重检索由同席执行(`git grep -iE 'RiemannHypothesis' -- 'D5/**/*.lean'`:命中 `Observer/RiemannNamingStabilityReduction`、`CayleyLaguerre/CompactifiedSquaredDistanceSupport`、`TestFunctions/LiCurvatureCriterion`,均为与 germ 无关的 RH ↔ 判据,无等价或更强者);散文由 orchestrator(claude 主循环)撰写。判决日:2026-09-03。lane issue:#4589。
+
+## 〇　为什么不是「窗口内零点全在线上 ⟺ RH」
+
+冻结的三阶分解(`golden_germ_third_order_factorization`)在 Re s > 1/φ⁵ 上把唯一延拓 germ 写成 ζ(φ²s)·ζ(φ³s)·ζ(2φ²s)⁻¹·(ζ(2φ³s)⁻¹·ζ((2φ²+φ³)s)·G3(s))。在开窗口 W = {1/(2φ³) < Re s < 1/φ²} 内逐因子核算:ζ(φ²s) 的零点回拉到 Re s = β/φ²,RH 下恰在 Re s = 1/(2φ²);ζ(φ³s) 的零点回拉到 β/φ³,RH 下落在 W 的下边界 1/(2φ³)(开窗口不含);ζ(2φ²s)⁻¹ 的极点回拉到 β/(2φ²) < 1/(2φ³)(RH 下不在 W),但 ζ(2φ²s) 在 s = 1/(2φ²) 的极点使该倒数因子在线上贡献一个实零点;ζ(2φ³s)⁻¹ 与 ζ((2φ²+φ³)s) 在 W 内回拉实部 > 1,无零点;ζ(φ³s) 在 s = 1/φ³ ∈ W 有极点(Mathlib 的 `riemannZeta 1` 取有限值,故延拓 germ 作为全函数在该点取的是约定值)。剩下 G3:增订十/十二已数值证实 p = 2, 3 的局部因子在 W 内有零点,而 G3 的零点恰由局部因子零点构成,故 **G3 在 W 内确实消失**,「germ 在 W 内的零点全在线上」本身对 RH 既非必要亦非充分。修正后的三条:(1) RH ⟹ W 内 **G3 不消失处** 的 germ 零点全在 Re s = 1/(2φ²);(2) 逆向须附加「G3 在右半带零点的回拉点不消失」这一未知假设,否则一个恰与局部因子零点重合的离线 ζ 零点不产生见证;(3) 右半带无零点 ⟹ 完整 RH,由函数方程给出。三条都对任意 G : ℂ → ℂ 陈述(G-g-1/2),把冻结 G3 的实例化留作推论,以免在义务里复制 `let` 绑定的乘积表达式。
+
+## 一　G-g-1 预登记:RH ⟹ 窗口内残余无零点处的零点线约束(`GoldenGermWindowZeroCriterion`)
+
+**义务**:公开定理 `golden_window_zero_on_line_of_rh (hRH : RiemannHypothesis) (G : Complex -> Complex) (s : Complex) (hlo : 1 / (2 * Real.goldenRatio ^ 3) < s.re) (hhi : s.re < 1 / Real.goldenRatio ^ 2) (hzero : riemannZeta (((Real.goldenRatio ^ 2 : Real) : Complex) * s) * riemannZeta (((Real.goldenRatio ^ 3 : Real) : Complex) * s) * (riemannZeta (((2 * Real.goldenRatio ^ 2 : Real) : Complex) * s))⁻¹ * ((riemannZeta (((2 * Real.goldenRatio ^ 3 : Real) : Complex) * s))⁻¹ * riemannZeta ((((2 * Real.goldenRatio ^ 2 + Real.goldenRatio ^ 3 : Real) : Complex) * s)) * G s) = 0) (hG : G s ≠ 0) : s.re = 1 / (2 * Real.goldenRatio ^ 2)`。闭合路线:`mul_eq_zero`/`inv_eq_zero` 拆因子;ζ(φ²s) = 0 由冻结 `Zeta23.RH_implies_on_line`(或 Mathlib `RiemannHypothesis` 直接)得 Re(φ²s) = 1/2;ζ(φ³s) = 0 同理得 Re s = 1/(2φ³) 与 hlo 矛盾;ζ(2φ²s) = 0 时 Re(2φ²s) ∈ (1/φ, 2):≥ 1 由 `riemannZeta_ne_zero_of_one_le_re` 排除,< 1 由 RH 得 1/2 < 1/φ 矛盾,而 2φ²s = 1 恰给出结论;其余两个 ζ 因子回拉实部 > 1;G s = 0 由 hG 排除。落点 `D5/S3/Analytic/EulerGerm/`(origin/dev 现 19/24)。
+**可证伪预测(写在跑之前)**:若正确,定理只消费 `D5.S3.Weil.ZetaCore.Statement`、`Mathlib.NumberTheory.LSeries.Nonvanishing`、`Mathlib.NumberTheory.Real.GoldenRatio`,公理集为标准三条;若 Mathlib 的 `RiemannHypothesis` 定义不含 `s ≠ 1` 侧条件、或 `riemannZeta 1 = 0` 使 2φ²s = 1 情形不可判,则本条按 open 记。
+**边界**:本条对任意 G 成立,不断言 G3 的任何性质;不断言 RH;窗口是开区间,ζ(φ³s) 回拉到下边界的零点不在射程内。
+
+## 二　G-g-2 预登记:条件逆命题(右半带,同模块第二条公开定理)
+
+**义务**:公开定理 `golden_window_zero_right_half_strip_converse (G : Complex -> Complex) (hResidual : forall rho : Complex, riemannZeta rho = 0 -> (1 : Real) / 2 < rho.re -> rho.re < 1 -> G (rho / ((Real.goldenRatio ^ 2 : Real) : Complex)) ≠ 0) (hConfinement : forall s : Complex, 1 / (2 * Real.goldenRatio ^ 3) < s.re -> s.re < 1 / Real.goldenRatio ^ 2 -> riemannZeta (((Real.goldenRatio ^ 2 : Real) : Complex) * s) * riemannZeta (((Real.goldenRatio ^ 3 : Real) : Complex) * s) * (riemannZeta (((2 * Real.goldenRatio ^ 2 : Real) : Complex) * s))⁻¹ * ((riemannZeta (((2 * Real.goldenRatio ^ 3 : Real) : Complex) * s))⁻¹ * riemannZeta ((((2 * Real.goldenRatio ^ 2 + Real.goldenRatio ^ 3 : Real) : Complex) * s)) * G s) = 0 -> G s ≠ 0 -> s.re = 1 / (2 * Real.goldenRatio ^ 2)) : forall rho : Complex, riemannZeta rho = 0 -> (1 : Real) / 2 < rho.re -> rho.re < 1 -> False`。闭合路线:取 s := ρ/φ²,由 1/2 < Re ρ 得 1/(2φ) < Re ρ 故 s ∈ W;乘积首因子 ζ(φ²·ρ/φ²) = ζ ρ = 0(`mul_div_cancel_left₀`);hResidual 给 G s ≠ 0;hConfinement 得 Re s = 1/(2φ²) 即 Re ρ = 1/2,与 1/2 < Re ρ 矛盾。
+**可证伪预测(写在跑之前)**:若正确,标准三公理、零 sorry;若 W 的下边界 1/(2φ³) 与 1/(2φ) 的比较方向写反(须 1/(2φ) > 1/(2φ³)·φ²… 即 β > 1/(2φ) ≈ 0.309 蕴含 s ∈ W),则本条为假。
+**边界**:hResidual 是**未知假设**(G3 在回拉点不消失),本条不断言其成立,也不断言 G3 的零点集;结论只是右半带无零点,完整 RH 由 G-g-3 接手。
+
+## 三　G-g-3 预登记:右半带无零点 ⟹ RH(`RightHalfStripRiemannReduction`,落 `D5/S3/Weil/ZetaBridge/`)
+
+**义务**:公开定理 `golden_right_half_strip_implies_rh (hRight : forall rho : Complex, riemannZeta rho = 0 -> (1 : Real) / 2 < rho.re -> rho.re < 1 -> False) : RiemannHypothesis`。闭合路线:Re ρ ≥ 1 由 `riemannZeta_ne_zero_of_one_le_re` 排除;1/2 < Re ρ < 1 由假设排除;0 < Re ρ < 1/2 以 `riemannZeta_one_sub`(s := 1 − ρ)反射到右半带;Re ρ ≤ 0 时 ρ ≠ 0(`riemannZeta_zero`),对 t := 1 − ρ 用函数方程,ζ t、Γ t(`Complex.Gamma_ne_zero_of_re_pos`)、(2π)^(−t)(`Complex.cpow_def_of_ne_zero` + `Complex.exp_ne_zero`)皆非零,故 cos(πt/2) = 0,`Complex.cos_eq_zero_iff` 给出 ρ = −2(n+1),与 Mathlib 的非平凡性矛盾。落点 `D5/S3/Weil/ZetaBridge/`(origin/dev 现 20/24)。
+**可证伪预测(写在跑之前)**:若正确,定理只消费钉版 Mathlib(`riemannZeta_one_sub`、`riemannZeta_ne_zero_of_one_le_re`、`riemannZeta_zero`、`Complex.cos_eq_zero_iff`),标准三公理;若 `riemannZeta_one_sub` 的侧条件 `s ≠ -n` 在 Re ρ ≤ 0 分支中不可满足(t = 1 − ρ 的实部 ≥ 1,故可满足),则本条为假。
+**边界**:本条是纯 Mathlib 归约,不含黄金结构;它把 G-g-2 的结论升为完整 RH,但 G-g-2 的 hResidual 仍是未知假设,故三条合起来**不构成 RH 的证明路径**,只把「germ 窗口除子 ⟺ RH」的真实缺口定位到 G3 在回拉点的非消失性(G-c 类问题的对偶)。
+
+## 四　预算与结算
+
+两席位轮,可并行:席 A 在 `EulerGerm/GoldenGermWindowZeroCriterion.lean` 同模块证 G-g-1 与 G-g-2(deposit 绑 G-g-1 atom;G-g-2 走 PR-1b 收据后 PR-2 cover);席 B 在 `ZetaBridge/RightHalfStripRiemannReduction.lean` 证 G-g-3(deposit 绑其 atom)。二者互不依赖。
+
+后续增订继续严格追加于本节之后。
