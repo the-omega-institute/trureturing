@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:53268170fbe8cdde672b6b509b48597bd13709d77e7aec84dad94c4cffc4b2f4
+  normalized_sha256: sha256:53268170fbe8cdde672b6b509b48597bd13709d77e7aec84dad94c4cffc4b2f4
+cas_ref: sha256:53268170fbe8cdde672b6b509b48597bd13709d77e7aec84dad94c4cffc4b2f4
+coverage_gids:
+  - D5/S1/Descent/FiniteSelfMapConjugacy.permutation_cycle_type_complete
+receipts:
+  coverage:
+    - gid: D5/S1/Descent/FiniteSelfMapConjugacy.permutation_cycle_type_complete
+      source_sha256: sha256:53268170fbe8cdde672b6b509b48597bd13709d77e7aec84dad94c4cffc4b2f4
+      target_statement_id: sha256:91ada2c440dfba80014525dd9c9e871ea73c9fadb8e4b080bef9867f5b630d41
+  scribe:
+    - gid: D5/S1/Descent/FiniteSelfMapConjugacy.permutation_cycle_type_complete
+      definition_sha256: sha256:9ce459e19216b9865a2a078c684a3f387f4cea47e728df78364fa60999ab17f2
+      emission_sha256: sha256:4775988a3cf93f8a3639d85bc489b5b0c80dbdff480e72c4e129bc2be9713f07
+  unresolved_subitems: []

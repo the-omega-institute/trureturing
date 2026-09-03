@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:731bc4debb20307a5d626c3d8d42d74b9a1bfad439863a30d014d2c2245dee71
+  normalized_sha256: sha256:731bc4debb20307a5d626c3d8d42d74b9a1bfad439863a30d014d2c2245dee71
+cas_ref: sha256:731bc4debb20307a5d626c3d8d42d74b9a1bfad439863a30d014d2c2245dee71
+coverage_gids:
+  - D5/S3/Entropy/Forgetting/DeterministicOutputEntropyRate.deterministic_output_entropy_budget_and_rate
+receipts:
+  coverage:
+    - gid: D5/S3/Entropy/Forgetting/DeterministicOutputEntropyRate.deterministic_output_entropy_budget_and_rate
+      source_sha256: sha256:731bc4debb20307a5d626c3d8d42d74b9a1bfad439863a30d014d2c2245dee71
+      target_statement_id: sha256:1040c8663a93b441f41121bc53d179128142ad0a9547d83d10e54be065408d4a
+  scribe:
+    - gid: D5/S3/Entropy/Forgetting/DeterministicOutputEntropyRate.deterministic_output_entropy_budget_and_rate
+      definition_sha256: sha256:9b5af47912abe983e144ff0ec27274f31b6624d53d46efc7cba50bebab224a55
+      emission_sha256: sha256:ff08b4d7e6406f0d2ff35958dd2bef511d6aae4e2a64f0b42a8f0034d03dcb2d
+  unresolved_subitems: []
