@@ -362,6 +362,18 @@ public sealed class FileMapManifestTests
     [InlineData("D5\\**\\*.lean")]
     public void UnsafePatternIsRejectedByTheRedFixture(string pattern)
     {
+        AssertUnsafePatternRejected(pattern);
+    }
+
+    [Fact]
+    public void QuestionMarkPatternIsRejectedByTheStrictLoader()
+    {
+        AssertUnsafePatternRejected("x/?.txt");
+        AssertUnsafePatternRejected("x/??.txt");
+    }
+
+    private static void AssertUnsafePatternRejected(string pattern)
+    {
         var source = $$"""
             schema_version = 2
 
@@ -382,7 +394,7 @@ public sealed class FileMapManifestTests
             artifact_id = "none"
             """ + "\n";
 
-        var exception = Assert.Throws<FormatException>(() =>
+        var exception = Assert.ThrowsAny<FormatException>(() =>
             FileMapLoader.Parse(Encoding.UTF8.GetBytes(source), "fixture.toml"));
         Assert.Contains("unsafe FILEMAP pattern", exception.Message, StringComparison.Ordinal);
     }

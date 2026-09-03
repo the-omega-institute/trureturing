@@ -193,6 +193,13 @@ internal static class FileMapPolicy
         {
             return [new FileMapFinding(exception.Code, exception.Path, exception.Message)];
         }
+        catch (FileMapPatternException exception)
+        {
+            return [new FileMapFinding(
+                FileMapPatternException.FindingCode,
+                exception.Pattern,
+                exception.Message)];
+        }
 
         var paths = TrackedPaths(repositoryRoot);
         var trackedModes = TrackedModes(repositoryRoot);
@@ -393,7 +400,7 @@ internal static class FileMapPolicy
 
     private static bool IsDataKeyedGeneratedSet(FileMapEntry entry) =>
         string.Equals(entry.ArtifactId, "none", StringComparison.Ordinal)
-        && (entry.Pattern.Contains('*') || entry.Pattern.Contains('?'));
+        && entry.Pattern.Contains('*');
 
     internal static IReadOnlyList<FileMapFinding> InspectRegistryRootAlignment(
         IEnumerable<string> registryRootFiles,

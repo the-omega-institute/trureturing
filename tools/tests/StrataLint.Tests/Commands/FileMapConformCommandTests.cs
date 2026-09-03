@@ -40,6 +40,25 @@ public sealed class FileMapConformCommandTests
     }
 
     [Fact]
+    public void QuestionMarkPatternIsReportedAsAPolicyFinding()
+    {
+        using var fixture = new TemporaryDirectory();
+        WriteAdmissionPlaneFixture(
+            fixture.Path,
+            "admission_plane = \"content\"\n",
+            "Synthetic/?.md");
+
+        var result = FileMapConformCommand.Run([], fixture.Path);
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.StartsWith(
+            "FILEMAP-PATTERN-UNSAFE Synthetic/?.md:",
+            result.Output,
+            StringComparison.Ordinal);
+        Assert.Empty(result.Error);
+    }
+
+    [Fact]
     public void ProducerWriteSetQueryReturnsOnlyCommittedEntriesFromStrictFileMap()
     {
         using var fixture = new TemporaryDirectory();
@@ -131,7 +150,10 @@ public sealed class FileMapConformCommandTests
         Assert.Equal(string.Empty, result.Error);
     }
 
-    private static void WriteAdmissionPlaneFixture(string root, string admissionPlaneLine)
+    private static void WriteAdmissionPlaneFixture(
+        string root,
+        string admissionPlaneLine,
+        string pattern = "Synthetic/**")
     {
         var meta = Path.Combine(root, "Meta");
         Directory.CreateDirectory(meta);
@@ -147,7 +169,7 @@ public sealed class FileMapConformCommandTests
             status = "closed"
 
             [[files]]
-            pattern = "Synthetic/**"
+            pattern = "{{pattern}}"
             kind = "data"
             {{admissionPlaneLine}}produced_by = "none"
             consumed_by = ["reader"]

@@ -259,7 +259,7 @@ internal static class FileMapLoader
             && dataKeyedArtifactId is "none"
             && table.TryGetValue("pattern", out var dataKeyedPattern)
             && dataKeyedPattern is string patternValue
-            && (patternValue.Contains('*') || patternValue.Contains('?'));
+            && patternValue.Contains('*');
         var isDataKeyedRunLocal = isRunLocal && isDataKeyedGeneratedSet;
         var isGeneratedArtifact = table.TryGetValue("kind", out var rawKind)
             && rawKind is "generated"
