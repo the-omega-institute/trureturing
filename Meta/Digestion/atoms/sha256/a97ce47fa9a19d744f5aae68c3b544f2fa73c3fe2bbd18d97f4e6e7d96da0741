@@ -1,0 +1,18 @@
+* 低阶零点 responses；
+
+通过 Faà di Bruno 型递归决定。
+
+因此：
+
+$$
+\boxed{
+\text{prime }k\text{-tuple}
+\longrightarrow
+\text{zero branch 的第 }k\text{ 个 source response jet}.
+}
+$$
+
+这比把 tuple size 与零点重数直接等同更准确。
+
+---
+

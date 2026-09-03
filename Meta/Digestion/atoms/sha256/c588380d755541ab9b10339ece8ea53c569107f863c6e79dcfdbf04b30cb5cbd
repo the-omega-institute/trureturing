@@ -1,0 +1,39 @@
+## 30. 黄金乘法同时扩张与反转
+
+乘以 \(\varphi\) 时：
+
+$$
+\sigma_+(\varphi x)
+=
+\varphi\sigma_+(x),
+$$
+
+而：
+
+$$
+\sigma_-(\varphi x)
+=
+\psi\sigma_-(x)
+=
+-\varphi^{-1}\sigma_-(x).
+$$
+
+所以同一个黄金乘法在两个坐标中分别表现为：
+
+$$
+\boxed{
+\text{physical axis：扩张 }\varphi,
+}
+$$
+
+$$
+\boxed{
+\text{internal axis：收缩 }\varphi^{-1}
+\text{ 并翻转符号}.
+}
+$$
+
+这正是 Fibonacci 矩阵的两个本征通道。
+
+---
+

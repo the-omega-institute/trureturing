@@ -1,0 +1,74 @@
+## 26. 对数时间坐标
+
+Mellin 变换为：
+
+$$
+\mathcal M f(s)
+=
+\int_0^\infty
+f(t)t^{s-1}\,dt.
+$$
+
+令：
+
+$$
+t=e^u.
+$$
+
+则：
+
+$$
+dt=e^u\,du,
+$$
+
+从而：
+
+$$
+\mathcal M f(s)
+=
+\int_{-\infty}^{\infty}
+f(e^u)e^{su}\,du.
+$$
+
+令：
+
+$$
+s=\frac12+\delta+i\gamma,
+$$
+
+并定义：
+
+$$
+g(u)=f(e^u)e^{u/2}.
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal M f
+\left(
+\frac12+\delta+i\gamma
+\right)
+=
+\int_{-\infty}^{\infty}
+g(u)e^{\delta u}e^{i\gamma u}\,du.
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\gamma=\text{Fourier frequency},
+}
+$$
+
+$$
+\boxed{
+\delta=\text{exponential tilt／damping direction}.
+}
+$$
+
+---
+

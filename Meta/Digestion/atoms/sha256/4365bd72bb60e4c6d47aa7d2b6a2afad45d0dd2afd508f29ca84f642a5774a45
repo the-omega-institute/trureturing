@@ -1,0 +1,70 @@
+## 73. 傅立叶变换不是二周期，而是四周期
+
+设 \(G\) 是有限阿贝尔群，\(\mathcal F\) 是归一化傅立叶变换。在通过 Pontryagin 双对偶
+
+$$
+G\cong\widehat{\widehat G}
+$$
+
+识别以后，有：
+
+$$
+\boxed{
+\mathcal F^2f(x)=f(-x)
+}
+$$
+
+以及：
+
+$$
+\boxed{
+\mathcal F^4=I.
+}
+$$
+
+定义反射：
+
+$$
+Jf(x)=f(-x).
+$$
+
+那么：
+
+$$
+\mathcal F^2=J.
+$$
+
+所以一次傅立叶变换不是“回到自身”，而是：
+
+$$
+\text{内部坐标}
+\longrightarrow
+\text{外部频率坐标}.
+$$
+
+第二次傅立叶变换才回到原对象空间，但带有反射：
+
+$$
+x\longmapsto-x.
+$$
+
+第四次才完整返回：
+
+$$
+\boxed{
+\text{time}
+\to
+\text{frequency}
+\to
+\text{reflected time}
+\to
+\text{reflected frequency}
+\to
+\text{time}.
+}
+$$
+
+这正是一个严格的 Ouroboros 四周期。
+
+---
+

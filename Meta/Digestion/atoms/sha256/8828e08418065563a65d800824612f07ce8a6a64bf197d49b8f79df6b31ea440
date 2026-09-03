@@ -1,0 +1,41 @@
+## 114. 零点 transverse sector
+
+对零点四元轨道，左右镜像作用：
+
+$$
+J:
+\delta\longmapsto-\delta.
+$$
+
+令：
+
+$$
+\mathcal Z^+
+$$
+
+为 \(J\)-偶观察量空间，
+
+$$
+\mathcal Z^-
+$$
+
+为 \(J\)-奇观察量空间。
+
+例如：
+
+$$
+\delta^{2r}\in\mathcal Z^+,
+$$
+
+$$
+\delta^{2r+1}\in\mathcal Z^-.
+$$
+
+一个完全镜像平均的 scalar observer 只保留：
+
+$$
+\mathcal Z^+.
+$$
+
+---
+

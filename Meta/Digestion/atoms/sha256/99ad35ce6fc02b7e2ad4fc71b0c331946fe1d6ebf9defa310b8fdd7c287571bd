@@ -1,0 +1,33 @@
+* 奇 sector 必须经过四次才能完全恢复。
+
+傅立叶本征值也因此分成：
+
+$$
+\begin{array}{c|c}
+\text{反射 sector}&\mathcal F\text{ 本征值}\\
+\hline
+\mathcal H^+&+1,-1\\
+\mathcal H^-&+i,-i
+\end{array}
+$$
+
+所以“偶完成、奇破缺”更准确地写成：
+
+$$
+\boxed{
+\text{even has duality period }2,
+\qquad
+\text{odd has duality period }4.
+}
+$$
+
+你说的“周期的周期”，在这里就是：
+
+$$
+\boxed{
+\text{奇偶二周期本身嵌在傅立叶四周期中}.
+}
+$$
+
+---
+

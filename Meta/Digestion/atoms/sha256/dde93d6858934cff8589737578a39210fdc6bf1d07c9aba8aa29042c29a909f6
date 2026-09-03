@@ -1,0 +1,43 @@
+## 143. Poisson holonomy 作为二点 coupling 候选
+
+仓库现有二点能量：
+
+$$
+E_{ab}
+=
+\frac{(\gamma_b-\gamma_a)^2}
+{\pi(\delta_a+\delta_b)
+\left[
+(\delta_a+\delta_b)^2+
+(\gamma_b-\gamma_a)^2
+\right]}
+$$
+
+非负，并且共同平移全部 \(\gamma_a\) 时保持不变。
+
+可以提出模型：
+
+$$
+J_{ab}
+=
+\lambda E_{ab}.
+$$
+
+它会把：
+
+* transverse depth；
+* relative phase height；
+* pairwise holonomy；
+
+统一成一个 Ising interaction graph。
+
+但当前只能标记为：
+
+$$
+\boxed{\text{candidate coupling}}
+$$
+
+因为仓库尚未证明 \(E_{ab}\) 是经典 ξ 零点的实际联合分布耦合。
+
+---
+

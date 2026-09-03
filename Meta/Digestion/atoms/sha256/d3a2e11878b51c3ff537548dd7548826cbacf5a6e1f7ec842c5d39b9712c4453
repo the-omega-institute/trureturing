@@ -1,0 +1,73 @@
+## 112. 构型反射与 chirality
+
+设：
+
+$$
+H=\{0=h_1<h_2<\cdots<h_k=D\}.
+$$
+
+定义其反射：
+
+$$
+H^\vee
+=
+\{D-h:h\in H\}.
+$$
+
+显然：
+
+$$
+(H^\vee)^\vee=H.
+$$
+
+在以所有规范构型为基的向量空间中，定义：
+
+$$
+e_H^+
+=
+\frac12(e_H+e_{H^\vee}),
+$$
+
+$$
+e_H^-
+=
+\frac12(e_H-e_{H^\vee}).
+$$
+
+它们分别满足：
+
+$$
+R_{\mathrm{const}}e_H^+=e_H^+,
+$$
+
+$$
+R_{\mathrm{const}}e_H^-=-e_H^-.
+$$
+
+于是构型空间分为：
+
+$$
+\boxed{
+\mathcal C
+=
+\mathcal C^+
+\oplus
+\mathcal C^-.
+}
+$$
+
+其中：
+
+* \(\mathcal C^+\) 是 achiral／镜像偶 sector；
+* \(\mathcal C^-\) 是 chiral／镜像奇 sector。
+
+若：
+
+$$
+H=H^\vee,
+$$
+
+则 \(H\) 是 self-dual，只有偶 sector，没有独立的奇向量。
+
+---
+
