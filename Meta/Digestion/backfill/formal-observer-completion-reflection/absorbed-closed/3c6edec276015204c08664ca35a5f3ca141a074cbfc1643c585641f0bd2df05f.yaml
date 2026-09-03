@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:3c6edec276015204c08664ca35a5f3ca141a074cbfc1643c585641f0bd2df05f
+  normalized_sha256: sha256:3c6edec276015204c08664ca35a5f3ca141a074cbfc1643c585641f0bd2df05f
+cas_ref: sha256:3c6edec276015204c08664ca35a5f3ca141a074cbfc1643c585641f0bd2df05f
+coverage_gids:
+  - D5/S3/Observer/MeasureSeparation/FiniteExpectationTableSeparation.finite_expectation_table_separation
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/MeasureSeparation/FiniteExpectationTableSeparation.finite_expectation_table_separation
+      source_sha256: sha256:3c6edec276015204c08664ca35a5f3ca141a074cbfc1643c585641f0bd2df05f
+      target_statement_id: sha256:c226e11b82c5ce5686a7a3dc4fda281eeb9ecea99a75e668c33d26dcb520dd55
+  scribe:
+    - gid: D5/S3/Observer/MeasureSeparation/FiniteExpectationTableSeparation.finite_expectation_table_separation
+      definition_sha256: sha256:bb0530d138677e10d36bb4048f76b097564727c053e79fcd472c94aed5f82471
+      emission_sha256: sha256:a54466211d62d20fbd138494d31d61e1c23481c4d1d809d2d9cf9d2560a8605b
+  unresolved_subitems: []
