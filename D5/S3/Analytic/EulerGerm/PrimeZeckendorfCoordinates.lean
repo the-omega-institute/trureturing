@@ -47,9 +47,11 @@ theorem prime_zeckendorf_readout_injective :
     Function.Injective primeZeckendorfReadout := by
   intro left right hsame
   apply Prod.ext
-  · exact congrArg Prod.fst hsame
-  · apply wEncoding.injective
-    exact congrArg Prod.snd hsame
+  · simpa [primeZeckendorfReadout] using congrArg Prod.fst hsame
+  · have haddress : wEncoding left.2 = wEncoding right.2 := by
+      simpa [primeZeckendorfReadout] using congrArg Prod.snd hsame
+    have hdecoded := congrArg decodeWAddress haddress
+    simpa using hdecoded
 
 /-- A fixed prime fiber and a fixed golden-layer fiber intersect in the single
 address `(p,v)`. -/
