@@ -1,0 +1,39 @@
+## 定理 44.1　标量 unit dressing 不移动零点
+
+只要：
+
+$$
+\exp\mathcal K_H(s;\varepsilon)
+\neq0,
+$$
+
+就有：
+
+$$
+\widetilde\Xi_H(s;\varepsilon)=0
+\iff
+\xi(s)=0.
+$$
+
+所以其零点位置和重数不随源变量移动。
+
+因此：
+
+$$
+\boxed{
+\text{scalar multiplicative completion}
+}
+$$
+
+可以改变函数值、对数导数和权重，但不能产生真正的 zero response。
+
+这证明 Trace–Jet Bridge 不能只是：
+
+$$
+\xi\times\text{一个处处非零的相关因子}.
+$$
+
+需要 source 进入非交换算子、determinant、边界条件或其他能够实际改变谱的位置。
+
+---
+

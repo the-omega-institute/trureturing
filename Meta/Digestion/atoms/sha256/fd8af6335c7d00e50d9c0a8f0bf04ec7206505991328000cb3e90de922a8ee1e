@@ -1,0 +1,89 @@
+# 第一千九百四十六部　建议形式化顺序
+
+```text
+D5/S3/Analytic/ReflectedSpectrum/MassSupportSeparation/
+  PositiveAtomicMoment.lean
+  OrdinaryHankelPositiveAtAnyRealSupport.lean
+  ShiftedLocalizerTestsSupport.lean
+  NegativeSupportAtomHasNegativeLocalizer.lean
+  PositiveMassIsNotPositiveSupport.lean
+
+D5/S3/Analytic/ReflectedSpectrum/FiniteSupportLocalizingCompleteness/
+  FinitePositiveAtomicMeasure.lean
+  LagrangeAtomSeparator.lean
+  NegativeAtomProducesLocalizingWitness.lean
+  AllShiftedHankelPositiveIffNonnegativeSupport.lean
+
+D5/S3/Analytic/ReflectedSpectrum/NormalDepthPencil/
+  FiniteNormalVandermonde.lean
+  NormalMomentZeroMatrix.lean
+  NormalMomentShiftMatrix.lean
+  NormalPencilDeterminantFactorization.lean
+  NormalPencilSpectrumEqualsSignedDepths.lean
+  DeepestOffLineDepthFromLeastEigenvalue.lean
+
+D5/S3/Observer/GeneralizedSpectralFloor/
+  HermitianReferenceFloor.lean
+  FloorEqualsWhitenedLeastEigenvalue.lean
+  FloorCongruenceInvariant.lean
+  HaarFloorAndSupportFloorSameOrderForm.lean
+
+D5/S3/Observer/HaarCoreHairDecomposition/
+  ExactHaarCore.lean
+  PositiveResidualHair.lean
+  OptimalResidualSingular.lean
+  CommonCoreUniqueResidualMeasureNonunique.lean
+  FloorObserverPhaseTrichotomy.lean
+
+D5/S3/Weil/Pick/SignedGoldenCommonFloor/
+  UniversalPickCellSignedFloor.lean
+  GoldenIsotropicRepair.lean
+  GoldenDirectionalRepair.lean
+  IsotropicVsDirectionalRepair.lean
+  GoldenDeficitIsNotPositiveHaarMass.lean
+
+D5/S3/Weil/ZetaBridge/LocalizerSeparatorDuality/
+  FiniteLagrangeLocalizer.lean
+  InfinitePeakKillerLocalizer.lean
+  ConvolutionPowerTailSuppression.lean
+  LocalizingWitnessToWeilWitnessTarget.lean
+  WeilWitnessAsInfiniteSupportSeparator.lean
+
+D5/S3/Dynamics/SolenoidFiniteNameInfiniteHistory/
+  SolenoidCoordinateCommonProjection.lean
+  KernelCoordinateTorsion.lean
+  FiniteCoordinateLcmAnnihilator.lean
+  NoUniformFiniteAnnihilatorModel.lean
+  ExactProjectionNoninjective.lean
+
+D5/S3/ConceptDynamics/ExactNameNonExhaustion/
+  ExactNamingMap.lean
+  NamingFiber.lean
+  ExactDoesNotImplyInjective.lean
+  CommonInvariantDoesNotRecoverHistory.lean
+  ProjectionFiberLocalizerPattern.lean
+
+D5/S3/Analytic/EulerGerm/CountertermVsSupport/
+  SignedCounterterm.lean
+  ExactCancellationRaisesExponentFloor.lean
+  BenignNegativeCoefficient.lean
+  NegativeSupportSurvivesMinimalReduction.lean
+  CoefficientSignNotSupportSign.lean
+
+D5/S3/Weil/NormalSupportBifloor/
+  CanonicalNormalMassGramTarget.lean
+  CanonicalNormalLocalizingGramTarget.lean
+  CanonicalNormalSupportFloorTarget.lean
+  PositiveNormalLocalizerForcesCriticalSupport.lean
+  NormalBifloorImpliesRHTarget.lean
+
+D5/S3/Weil/CanonicalXiDistributionRepair/
+  PublicRealAxisZetaNonzeroTarget.lean
+  CanonicalCompletedXiWeilDistributionTarget.lean
+  EnumerationIndependentZeroPairingTarget.lean
+  PrimeJumpIdentificationTarget.lean
+  OffLineNegativeWeilSquareRHIffTarget.lean
+```
+
+---
+

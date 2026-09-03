@@ -1,0 +1,56 @@
+## 46. Source insertion
+
+取有限维空间上的基算子 \(A_0(s)\)，并对每个 \(h\in H\) 取 insertion：
+
+$$
+V_h(s).
+$$
+
+定义：
+
+$$
+A_H(s;\varepsilon)
+=
+A_0(s)
++
+\sum_{h\in H}
+\varepsilon_hV_h(s).
+$$
+
+当：
+
+$$
+I-A_0(s)
+$$
+
+可逆时，令：
+
+$$
+R_0(s)
+=
+(I-A_0(s))^{-1},
+$$
+
+$$
+B_h(s)
+=
+R_0(s)V_h(s).
+$$
+
+定义规范化 determinant：
+
+$$
+\boxed{
+\mathcal D_H(s;\varepsilon)
+=
+\det
+\left(
+I-
+\sum_{h\in H}
+\varepsilon_hB_h(s)
+\right).
+}
+$$
+
+---
+
