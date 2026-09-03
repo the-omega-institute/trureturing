@@ -2257,3 +2257,30 @@ separator 阶梯到 M3-f-6 为止说的是:**任一**离线非平凡零点都给
 一席位轮(codex-cli,独立 worktree,`D5/S3/Weil/Separator/` 第二个模块;须在 la141(增订十九模块)合入后开工以绑定 M3-f-6;同 PR deposit(绑 W-2 atom)+ 两条 cover)。预计 ≤ 40 分钟。
 
 后续增订继续严格追加于本节之后。
+---
+
+# 增订二十一　germ 窗口零点的线上/线外二分:线上只剩 ζ(φ²s) 回拉零点与 p = 2, 3 的局部因子(G-g-7 / G-g-8 预登记)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;本节两条皆为对冻结定理的短绑定(G-g-6 `GermWindow.golden_continued_germ_window_zero_iff_of_rh`(#5042)+ G-f `LocalFactorCriticalLineNonvanishing.germLocalFactor_critical_line_nonzero_of_five_le`(#4942)),由 orchestrator(claude 主循环)撰写,不需探针。判决日:2026-09-03。lane issue:#4589。
+
+## 〇　为什么是这一节
+
+G-g-6 给出 RH 下开窗口零点集 = 线上 ζ(φ²s) 回拉零点 ∪ 局部因子零点;G-f 给出 p ≥ 5 的局部因子在回拉临界线上不为零。合起来:**线上**的 germ 零点要么是 ζ(φ²s) 的回拉零点,要么是 p = 2 或 p = 3 的局部因子零点(这两个素数的线上取值本仓只有数值读数,G-c 类问题);**线外**(仍在开窗口内)的 germ 零点只能是局部因子零点。这把「RH 与窗口零点」的关系压到一个可数值检验的残余:若 p = 2, 3 的局部因子在线上处处非零(数值上待查),则 RH 下线上零点恰是 ζ 回拉零点。**边界**:线上点自动落在开窗口内(1/(2φ³) < 1/(2φ²) < 1/φ²),G-g-7 不再带窗口假设;两条都相对于满足冻结公式的任意 `continuedGerm`;不构成 RH 证明路径。**容量**:`D5/S3/Analytic/GermWindow/` 现 1/24。
+
+## 一　G-g-7 预登记:线上零点二分(`GoldenGermWindowLineDichotomy`,落 `D5/S3/Analytic/GermWindow/`)
+
+**义务**:公开定理 `golden_continued_germ_line_zero_iff_of_rh (hRH : RiemannHypothesis) : let Kp : Complex -> Nat.Primes -> Complex := fun s p => let x := (p : Complex) ^ (-s * ((Real.goldenRatio ^ 2 : Real) : Complex)); let y := (p : Complex) ^ (-s * ((Real.goldenRatio ^ 3 : Real) : Complex)); (1 - y ^ 2)⁻¹ * (1 - x ^ 2 * y) * (1 - y) * (1 + x)⁻¹ * germLocalFactor s p; let G3 : Complex -> Complex := fun s => ∏' p : Nat.Primes, Kp s p; ∀ continuedGerm : {s : Complex // 1 / Real.goldenRatio ^ 5 < s.re} -> Complex, (∀ s, continuedGerm s = riemannZeta (((Real.goldenRatio ^ 2 : Real) : Complex) * s.1) * riemannZeta (((Real.goldenRatio ^ 3 : Real) : Complex) * s.1) * (riemannZeta (((2 * Real.goldenRatio ^ 2 : Real) : Complex) * s.1))⁻¹ * ((riemannZeta (((2 * Real.goldenRatio ^ 3 : Real) : Complex) * s.1))⁻¹ * riemannZeta ((((2 * Real.goldenRatio ^ 2 + Real.goldenRatio ^ 3 : Real) : Complex) * s.1)) * G3 s.1)) -> ∀ s, s.1.re = 1 / (2 * Real.goldenRatio ^ 2) -> (continuedGerm s = 0 ↔ (riemannZeta (((Real.goldenRatio ^ 2 : Real) : Complex) * s.1) = 0 ∨ germLocalFactor s.1 2 = 0 ∨ germLocalFactor s.1 3 = 0))`。
+**可证伪预测(写在跑之前)**:若正确,由 G-g-6(线上点满足窗口假设)与 G-g-5/G-g-6 的局部因子分支:∃ p 局部因子为零 ⟹ p = 2 ∨ p = 3(p ≥ 5 由 G-f 排除,须把线上点写成 `((1/(2φ²) : ℝ) : ℂ) + I * t` 的形状,`Complex.re_add_im`);反向 p ∈ {2,3} 的零给出 ∃ p;标准三公理。若 G-f 的陈述不是对一切实 t 的线上点(与冻结字面矛盾),则本条为假。
+**边界**:不断言 p = 2, 3 的线上零点存在或不存在。
+
+## 二　G-g-8 预登记:线外零点只能是局部因子零点(同模块第二条公开定理)
+
+**义务**:公开定理 `golden_continued_germ_off_line_zero_iff_of_rh (hRH : RiemannHypothesis) : let Kp : Complex -> Nat.Primes -> Complex := fun s p => let x := (p : Complex) ^ (-s * ((Real.goldenRatio ^ 2 : Real) : Complex)); let y := (p : Complex) ^ (-s * ((Real.goldenRatio ^ 3 : Real) : Complex)); (1 - y ^ 2)⁻¹ * (1 - x ^ 2 * y) * (1 - y) * (1 + x)⁻¹ * germLocalFactor s p; let G3 : Complex -> Complex := fun s => ∏' p : Nat.Primes, Kp s p; ∀ continuedGerm : {s : Complex // 1 / Real.goldenRatio ^ 5 < s.re} -> Complex, (∀ s, continuedGerm s = riemannZeta (((Real.goldenRatio ^ 2 : Real) : Complex) * s.1) * riemannZeta (((Real.goldenRatio ^ 3 : Real) : Complex) * s.1) * (riemannZeta (((2 * Real.goldenRatio ^ 2 : Real) : Complex) * s.1))⁻¹ * ((riemannZeta (((2 * Real.goldenRatio ^ 3 : Real) : Complex) * s.1))⁻¹ * riemannZeta ((((2 * Real.goldenRatio ^ 2 + Real.goldenRatio ^ 3 : Real) : Complex) * s.1)) * G3 s.1)) -> ∀ s, 1 / (2 * Real.goldenRatio ^ 3) < s.1.re -> s.1.re < 1 / Real.goldenRatio ^ 2 -> s.1.re ≠ 1 / (2 * Real.goldenRatio ^ 2) -> (continuedGerm s = 0 ↔ ∃ p : Nat.Primes, germLocalFactor s.1 p = 0)`。
+**可证伪预测(写在跑之前)**:若正确,由 G-g-6 与「线上」子句被 `s.1.re ≠ 1/(2φ²)` 否定直接得到;标准三公理。
+**边界**:同 §〇。
+
+## 三　预算与结算
+
+一席位轮(codex-cli,独立 worktree,两条同模块;同 PR deposit(绑 G-g-7 atom)+ 两条 cover)。预计 ≤ 60 分钟。
+
+后续增订继续严格追加于本节之后。
