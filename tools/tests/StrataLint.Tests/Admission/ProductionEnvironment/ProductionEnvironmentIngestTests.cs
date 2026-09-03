@@ -663,7 +663,7 @@ public sealed partial class ProductionEnvironmentTests
     /// <summary>
     /// SL-003 的 conservative-unknown 判据按<b>语法</b>识别 receiver:对临时夹具变量路径的
     /// File.ReadAllText 会被记为 VariablePath。这里的包装让该读取显式归属于临时文件系统,
-    /// 与 EmitFormalizationReceiptTests / TruthReleaseBundleWriterTests 的同形处置一致。
+    /// 与 TruthReleaseBundleWriterTests 的同形处置一致。
     /// </summary>
     private static class TemporaryFileSystem
     {

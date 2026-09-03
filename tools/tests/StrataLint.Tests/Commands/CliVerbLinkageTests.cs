@@ -77,10 +77,6 @@ public sealed class CliVerbLinkageTests
     {
         var invocations = CollectInvocations(TestRepositoryLayout.FindRoot());
 
-        Assert.Contains(invocations, invocation =>
-            invocation.File == "tools/scripts/workflow/playbook-workflows.sh"
-            && invocation.Verb == "emit-formalization-receipt"
-            && invocation.Program == CommandProgram.StrataLint);
         foreach (var verb in new[] { "emit", "emit-values", "filemap" })
         {
             Assert.Contains(invocations, invocation =>
