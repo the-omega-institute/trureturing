@@ -28,7 +28,7 @@ $$\forall I \in \operatorname{Type}, X \in \operatorname{Type}, O \in I \to \ope
 
 *Commentary.*
 
-The source standing carrier clause requires strictly positive weight on every coordinate i in I, while gamma belongs to (0,1]. The proof only invokes that positivity on the selected finite budget J, but the public theorem preserves the source's global premise.
+The source standing carrier clause requires strictly positive weight on every coordinate i in I, while gamma belongs to (0,1]. Both are section-level clauses of the source volume, cited here so the claim can be checked against the source rather than taken on this document's word. Source line 2016, immediately before Definition 33.1, specifies a positive weight w_i for every coordinate; the section 33 heading, standing before both Definition 33.1 and Theorem 33.1, sets 0 < gamma <= 1; and source line 2083 restates both together as the hypothesis that all weights are positive and gamma > 0. The source states these in LaTeX; they are transcribed to plain text here because Scribe text runs carry no raw LaTeX delimiters, and the verbatim quotations are kept in the Lean docstring instead. They are therefore not premises introduced here; the atom for Theorem 33.1 is a slice that does not carry them. The proof only invokes that positivity on the selected finite budget J, but the public theorem preserves the source's global premise.
 
 The source is silent on the empty-budget supremum (J = emptyset), so that case is an open source boundary rather than an added premise or an assigned source value.
 

@@ -131,7 +131,33 @@ private theorem discounted_prime_time_term_strong_triangle
   exact mul_le_mul_of_nonneg_left hcoordinate hscalar
 
 /-- Source lines 2068-2077, Theorem 33.1: the finite weighted prime-time
-prediction distance satisfies the strong triangle inequality. -/
+prediction distance satisfies the strong triangle inequality.
+
+Carrier conditions, quoted verbatim from the source volume
+`docs/develop/theory/FORMAL_PRIME_OBSERVER_DYNAMICS.md`.  Both are
+**section-level standing clauses of the source**, not assumptions introduced
+here; the atom for Theorem 33.1 is a slice that does not carry them.
+
+* line 2016, immediately before Definition 33.1:
+  「为每个坐标指定正权重 \(w_i\)，定义：」
+  -- the weights are positive by the source's own definition, which is exactly
+  `hpositive : forall i, 0 < weight i`.
+* section 33 heading, immediately before both Definition 33.1 and Theorem 33.1:
+  「设 \(0<\gamma\le1\)。」
+  -- which is exactly `hgamma : gamma ∈ Set.Ioc 0 1`.
+* line 2083 restates both together:
+  「若全部权重正且 \(\gamma>0\)，则：」
+
+Honest boundary on the empty index set.  The source defines
+`d_{J,gamma}^F` as a supremum over `i ∈ J, n ≥ 0` and does not say what it
+means when `J = ∅`.  Lean's `iSup` totalises that case (`sSup ∅ = 0` on
+`Real`), so this statement, quantified over every `J : Finset I`, also covers a
+case the source leaves undefined.  In that case both sides are `0` and the
+inequality holds trivially, so nothing stronger than the source is claimed
+about it -- but the coverage itself is a formalisation artefact, not a source
+assertion, and is recorded as such rather than removed: excluding it would
+require adding a `J.Nonempty` hypothesis the source never states, which is the
+same defect in the opposite direction. -/
 theorem discounted_prime_time_distance_strong_triangle
     {I X : Type*} {O : I -> Type*}
     (J : Finset I) (weight : I -> Real) (readout : forall i, X -> O i)
