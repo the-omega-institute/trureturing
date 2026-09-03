@@ -23,12 +23,14 @@ internal sealed class GoldenGermFourthOrderLedgerDocument
             AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text(
-                    "The frozen fourth-order exponent census identifies x y-squared and "
-                        + "x-cubed y as the two surviving correction modes below beta six. "
-                        + "The signed factor C4 is therefore one minus x y-squared times the "
-                        + "inverse of one minus x-cubed y. The displayed twelve-term "
-                        + "polynomial H4 has no monomial below beta six; x-squared y-squared "
-                        + "is its boundary term.")),
+                    "The frozen fourth-order exponent census supplies only the candidate "
+                        + "weights below beta six; it does not determine which modes occur or "
+                        + "cancel. This module's seven-mode local expansion and the identity "
+                        + "fourth_local_identity determine x y-squared and x-cubed y as the "
+                        + "actual surviving correction modes. The signed factor C4 is therefore "
+                        + "one minus x y-squared times the inverse of one minus x-cubed y. The "
+                        + "displayed twelve-term polynomial H4 has no monomial below beta six; "
+                        + "x-squared y-squared is its boundary term.")),
                 Paragraph(Text(
                     "The theorem reuses the frozen third-order local factor K3 and records "
                         + "the exact rational identity C4 K3 equals one plus R4. Its shifted "
@@ -96,6 +98,15 @@ internal sealed class GoldenGermFourthOrderLedgerDocument
             F.D(3), F.D(1), phiSquared, phiCubed);
         Formula supportCertificate = SupportCertificate(
             betaSix, phiSquared, phiCubed);
+        Formula shiftedTailCertificate = ShiftedTailCertificate(
+            betaSix, phiSquared, phiCubed);
+        Formula oldDomainSummable = F.Seq(
+            Fraction(F.D(1), Power(F.Varphi, F.D(5))),
+            F.Sp, F.Lt, F.Sp, F.Re, F.Open, s, F.Close,
+            F.Sp, F.Rightarrow, F.Sp,
+            Call("Summable", F.Seq(
+                p, F.Colon, F.Sp, PrimeNumbers(), F.Sp, F.Mapsto, F.Sp,
+                F.Lvert, k3, F.Sp, F.Minus, F.Sp, F.D(1), F.Rvert)));
         Formula identity = F.Seq(
             F.Forall, F.Sp, p, F.InMacro, F.Sp, PrimeNumbers(), F.Comma,
             F.Sp, c4, F.Sp, F.Times, F.Sp, k3,
@@ -117,13 +128,19 @@ internal sealed class GoldenGermFourthOrderLedgerDocument
             F.Seq(c4Definition, F.Comma),
             F.Seq(h4Definition, F.Comma),
             F.Seq(r4Definition, F.Comma),
+            F.Seq(Parenthesize(oldDomainSummable), F.Sp, F.Land),
             F.Seq(
-                firstCorrectionWeight, F.Sp, F.Lt, F.Sp, betaSix,
+                F.Open, firstCorrectionWeight, F.Sp, F.Lt, F.Sp, betaSix,
                 F.Sp, F.Land, F.Sp,
                 secondCorrectionWeight, F.Sp, F.Lt, F.Sp, betaSix,
-                F.Comma),
-            F.Seq(supportCertificate, F.Comma),
-            F.Seq(identity, F.Comma, F.Sp, summable, F.Dot),
+                F.Close, F.Sp, F.Land),
+            F.Seq(Parenthesize(supportCertificate), F.Sp, F.Land),
+            F.Seq(Parenthesize(shiftedTailCertificate), F.Sp, F.Land),
+            F.Seq(Parenthesize(identity), F.Sp, F.Land),
+            F.Seq(summable, F.Sp, F.Land),
+            F.Seq(
+                Fraction(F.D(1), betaSix), F.Sp, F.Lt, F.Sp,
+                Fraction(F.D(1), F.D(10)), F.Dot),
         ]));
     }
 
@@ -235,6 +252,51 @@ internal sealed class GoldenGermFourthOrderLedgerDocument
             F.InMacro, F.Sp, support, F.Sp, F.Rightarrow, F.Sp,
             betaSix, F.Sp, F.Leq, F.Sp,
             MixedWeight(a, b, phiSquared, phiCubed));
+    }
+
+    private static Formula ShiftedTailCertificate(
+        Formula betaSix,
+        Formula phiSquared,
+        Formula phiCubed)
+    {
+        Formula k = F.Id("k");
+        Formula i = F.Id("i");
+        Formula j = F.Id("j");
+        Formula l = F.Id("l");
+        Formula m = F.Id("m");
+        Formula n = F.Id("n");
+        Formula r = F.Id("r");
+        Formula firstDenominatorWeight = Parenthesize(F.Seq(
+            phiSquared, F.Sp, F.Plus, F.Sp,
+            F.D(2), F.Sp, F.Times, F.Sp, phiCubed));
+        Formula secondDenominatorWeight = Parenthesize(F.Seq(
+            F.D(2), F.Sp, F.Times, F.Sp, phiSquared,
+            F.Sp, F.Plus, F.Sp, phiCubed));
+        Formula fourthDenominatorWeight = Parenthesize(F.Seq(
+            F.D(3), F.Sp, F.Times, F.Sp, phiSquared,
+            F.Sp, F.Plus, F.Sp, phiCubed));
+        Formula fifthDenominatorWeight = Parenthesize(F.Seq(
+            F.D(2), F.Sp, F.Times, F.Sp, phiCubed));
+
+        return F.Seq(
+            F.Forall, F.Sp,
+            k, F.Comma, F.Sp, i, F.Comma, F.Sp, j, F.Comma, F.Sp,
+            l, F.Comma, F.Sp, m, F.Comma, F.Sp, n, F.Comma, F.Sp, r,
+            F.InMacro, F.Sp, NaturalNumbers(), F.Comma, F.Sp,
+            betaSix, F.Sp, F.Leq, F.Sp,
+            Call("o5Beta", F.Seq(k, F.Sp, F.Plus, F.Sp, F.D(7))),
+            F.Sp, F.Plus, F.Sp,
+            i, F.Sp, F.Times, F.Sp, firstDenominatorWeight,
+            F.Sp, F.Plus, F.Sp,
+            j, F.Sp, F.Times, F.Sp, secondDenominatorWeight,
+            F.Sp, F.Plus, F.Sp,
+            l, F.Sp, F.Times, F.Sp, phiCubed,
+            F.Sp, F.Plus, F.Sp,
+            m, F.Sp, F.Times, F.Sp, fourthDenominatorWeight,
+            F.Sp, F.Plus, F.Sp,
+            n, F.Sp, F.Times, F.Sp, fifthDenominatorWeight,
+            F.Sp, F.Plus, F.Sp,
+            r, F.Sp, F.Times, F.Sp, phiSquared);
     }
 
     private static Formula Tail(Formula s, Formula p) =>
