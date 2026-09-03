@@ -122,24 +122,15 @@ public sealed partial class SelfLockProbeScriptTests
 
         private static void CopyDirectory(string sourcePath, string targetPath)
         {
-            foreach (var directory in Directory.EnumerateDirectories(
-                         sourcePath,
-                         "*",
-                         SearchOption.AllDirectories))
+            var result = TestProcessRunner.Run(
+                "/bin/cp",
+                ["-R", sourcePath + "/.", targetPath],
+                targetPath,
+                TestBudgets.ScriptProcessHangGuard,
+                64 * 1024);
+            if (result.ExitCode != 0)
             {
-                Directory.CreateDirectory(Path.Combine(
-                    targetPath,
-                    Path.GetRelativePath(sourcePath, directory)));
-            }
-
-            foreach (var file in Directory.EnumerateFiles(
-                         sourcePath,
-                         "*",
-                         SearchOption.AllDirectories))
-            {
-                File.Copy(
-                    file,
-                    Path.Combine(targetPath, Path.GetRelativePath(sourcePath, file)));
+                throw new InvalidOperationException(Diagnostics(result));
             }
         }
 
