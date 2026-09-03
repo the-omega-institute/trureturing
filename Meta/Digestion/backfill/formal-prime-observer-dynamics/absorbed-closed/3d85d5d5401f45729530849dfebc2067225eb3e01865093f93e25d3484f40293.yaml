@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:3d85d5d5401f45729530849dfebc2067225eb3e01865093f93e25d3484f40293
+  normalized_sha256: sha256:3d85d5d5401f45729530849dfebc2067225eb3e01865093f93e25d3484f40293
+cas_ref: sha256:3d85d5d5401f45729530849dfebc2067225eb3e01865093f93e25d3484f40293
+coverage_gids:
+  - D5/S3/Quantum/CountableSlices/SinglePrimeThermalState.modal_thermal_entropy_additive
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/CountableSlices/SinglePrimeThermalState.modal_thermal_entropy_additive
+      source_sha256: sha256:3d85d5d5401f45729530849dfebc2067225eb3e01865093f93e25d3484f40293
+      target_statement_id: sha256:7e82f773c3b144bcd5d654e5f72c5549521929e5511de06324aae4a74852e75d
+  scribe:
+    - gid: D5/S3/Quantum/CountableSlices/SinglePrimeThermalState.modal_thermal_entropy_additive
+      definition_sha256: sha256:080a03391f06b3e2d54f605507300195e07a5d0733ffdd562832ffb6406bf16a
+      emission_sha256: sha256:136a9f59f4ca8bf3e700aa7a1f3e4b410297ba19a0734433144bb601868868e2
+  unresolved_subitems: []

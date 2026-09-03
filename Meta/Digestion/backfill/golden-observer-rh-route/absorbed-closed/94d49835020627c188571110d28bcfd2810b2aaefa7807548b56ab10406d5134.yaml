@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:94d49835020627c188571110d28bcfd2810b2aaefa7807548b56ab10406d5134
+  normalized_sha256: sha256:94d49835020627c188571110d28bcfd2810b2aaefa7807548b56ab10406d5134
+cas_ref: sha256:94d49835020627c188571110d28bcfd2810b2aaefa7807548b56ab10406d5134
+coverage_gids:
+  - D5/S3/Analytic/GermWindow/GoldenGermThirdOrderWindowZeroCriterion.golden_continued_germ_window_zero_on_line_of_rh
+receipts:
+  coverage:
+    - gid: D5/S3/Analytic/GermWindow/GoldenGermThirdOrderWindowZeroCriterion.golden_continued_germ_window_zero_on_line_of_rh
+      source_sha256: sha256:94d49835020627c188571110d28bcfd2810b2aaefa7807548b56ab10406d5134
+      target_statement_id: sha256:306403741b4326bacd172cb25ef407d4ae41224a407c748961fce18117e0eb47
+  scribe:
+    - gid: D5/S3/Analytic/GermWindow/GoldenGermThirdOrderWindowZeroCriterion.golden_continued_germ_window_zero_on_line_of_rh
+      definition_sha256: sha256:64c770551bc5eddf0aa516c82eeabf3b589c54d19cfb61ecfa1c584d8e1acc42
+      emission_sha256: sha256:cff9e92fb8edf8c9787491b83684b23bb2063cece108aac6013fc5732bca7010
+  unresolved_subitems: []

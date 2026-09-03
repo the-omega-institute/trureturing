@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:23dc88635d29d363f5ce865ba092077ced7e8f89576cc73a1bcc801d122ca67d
+  normalized_sha256: sha256:23dc88635d29d363f5ce865ba092077ced7e8f89576cc73a1bcc801d122ca67d
+cas_ref: sha256:23dc88635d29d363f5ce865ba092077ced7e8f89576cc73a1bcc801d122ca67d
+coverage_gids:
+  - D5/S3/PrimeForms/CrossingCertificates/BoundedWindingPhaseZeroCertificate.bounded_winding_phase_zero_certificate
+receipts:
+  coverage:
+    - gid: D5/S3/PrimeForms/CrossingCertificates/BoundedWindingPhaseZeroCertificate.bounded_winding_phase_zero_certificate
+      source_sha256: sha256:23dc88635d29d363f5ce865ba092077ced7e8f89576cc73a1bcc801d122ca67d
+      target_statement_id: sha256:857c4f9c90e9f748772c670ce421a9c4451579d9baf542408727f22d8fc64835
+  scribe:
+    - gid: D5/S3/PrimeForms/CrossingCertificates/BoundedWindingPhaseZeroCertificate.bounded_winding_phase_zero_certificate
+      definition_sha256: sha256:de18fe2970f673a216b52a9934208c070ea394f480d010d2a9e49eda41746e3f
+      emission_sha256: sha256:5688af27749402cca85eea663af4c4e87eff39375345f504995d50e260469ffe
+  unresolved_subitems: []
