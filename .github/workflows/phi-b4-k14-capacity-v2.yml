@@ -1,0 +1,50 @@
+name: phi-b4-k14-capacity-v2
+
+on:
+  push:
+    branches:
+      - agent/research/phi-b4-k14-capacity-v2-20260903
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  capacity-cegis:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        type0: [7, 8, 9, 10]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Kissat 4.0.4
+        run: |
+          git clone --depth 1 --branch rel-4.0.4 \
+            https://github.com/arminbiere/kissat.git /tmp/kissat
+          cd /tmp/kissat
+          ./configure
+          make -j2
+          sudo install -m 0755 build/kissat /usr/local/bin/kissat
+          kissat --version
+      - name: Search the at-most-capacity branch
+        run: |
+          mkdir -p result
+          python3 research/phi_b4_bounds_v2.py \
+            --states 14 \
+            --type0-states ${{ matrix.type0 }} \
+            --seed 20 \
+            --validation 20000 \
+            --batch 3 \
+            --max-rounds 20 \
+            --timeout 600 \
+            --solver kissat \
+            --output result/result.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: phi-b4-k14-capacity-t0-${{ matrix.type0 }}
+          path: result
+          retention-days: 90
