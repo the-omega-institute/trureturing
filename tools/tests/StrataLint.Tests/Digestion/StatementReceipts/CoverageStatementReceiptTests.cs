@@ -127,6 +127,25 @@ public sealed class CoverageStatementReceiptTests
     }
 
     [Fact]
+    public void NullTargetForResolvableFrozenStatementDerivesPartialOpenWithoutIntegrityMismatch()
+    {
+        var targetSource = TargetSource("by trivial");
+        var evaluation = Evaluate(
+            DeclarationGid,
+            receiptStatementId: null,
+            FrozenStatementReceiptTestData.Id('3'),
+            FrozenStatementReceiptTestData.Id('2'),
+            targetSource);
+        var status = Assert.Single(evaluation.Entries);
+
+        Assert.Equal(DigestionMigrationState.Partial, status.DerivedStatus.Migration);
+        Assert.Equal(DigestionTruthState.Open, status.DerivedStatus.Truth);
+        Assert.DoesNotContain(
+            status.Gaps,
+            static gap => gap.Code == "coverage-target-mismatch");
+    }
+
+    [Fact]
     public void ModuleGidUsesFrozenModuleStatementId()
     {
         var targetSource = TargetSource("by trivial");
@@ -303,7 +322,7 @@ public sealed class CoverageStatementReceiptTests
 
     internal static DigestionLedgerEvaluation Evaluate(
         string gid,
-        string receiptStatementId,
+        string? receiptStatementId,
         string targetStatementId,
         string moduleStatementId,
         string targetSource,

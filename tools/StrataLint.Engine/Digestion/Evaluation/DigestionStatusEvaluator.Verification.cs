@@ -51,6 +51,12 @@ internal static partial class DigestionStatusEvaluator
         var complete = true;
         foreach (var (gid, edge) in edges)
         {
+            if (edge.TargetStatementId is null)
+            {
+                complete = false;
+                continue;
+            }
+
             var expectedTarget = validations.GetValueOrDefault(gid)?.TargetStatementId;
             if (!string.Equals(edge.TargetStatementId, expectedTarget, StringComparison.Ordinal))
             {

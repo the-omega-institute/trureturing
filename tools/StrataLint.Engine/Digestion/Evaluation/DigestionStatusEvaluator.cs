@@ -386,7 +386,8 @@ internal static partial class DigestionStatusEvaluator
         var hasProgress = edgeValidations.Values.Any(static edge => edge.IsResolved)
             || entry.Coverage.Length > 0
             || entry.Receipts.Scribe.Length > 0;
-        var hasUnresolvedCoverageTarget = edgeValidations.Values.Any(static edge => !edge.IsResolved);
+        var hasUnresolvedCoverageTarget = edgeValidations.Values.Any(static edge => !edge.IsResolved)
+            || entry.Coverage.Any(static edge => edge.TargetStatementId is null);
         return new EntryWork(
             entry,
             alignment,
