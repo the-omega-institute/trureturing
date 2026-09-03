@@ -129,8 +129,8 @@ public sealed partial class ProductionEnvironmentTests
         var existingAtomId = ExistingAtomId(fixture);
         var atomPath = DirectoryAtomPath(existingAtomId, "residual-open");
         fixture.Files[atomPath] = fixture.Files[atomPath].Replace(
-            "coverage_gids: []",
-            $"coverage_gids:\n  - {coverageGid}",
+            "coverage: []",
+            $"coverage:\n  - gid: {coverageGid}\n    target_statement_id: null",
             StringComparison.Ordinal);
         using var temporary = new TemporaryDirectory();
         WriteDirectoryLedger(temporary.Path, fixture.Files);
@@ -166,8 +166,8 @@ public sealed partial class ProductionEnvironmentTests
         var atomPath = DirectoryAtomPath(existingAtomId, "residual-open");
         fixture.Baseline[atomPath] = fixture.Baseline[atomPath]
             .Replace(
-                "coverage_gids: []",
-                $"coverage_gids:\n  - {coverageGid}",
+                "coverage: []",
+                $"coverage:\n  - gid: {coverageGid}\n    target_statement_id: null",
                 StringComparison.Ordinal)
             .Replace(
                 "  unresolved_subitems: []",
@@ -245,8 +245,8 @@ public sealed partial class ProductionEnvironmentTests
         foreach (var files in new[] { fixture.Files, fixture.Baseline })
         {
             files[oldPath] = files[oldPath].Replace(
-                "coverage_gids: []",
-                $"coverage_gids:\n  - {coverageGid}",
+                "coverage: []",
+                $"coverage:\n  - gid: {coverageGid}\n    target_statement_id: null",
                 StringComparison.Ordinal);
         }
 
@@ -268,8 +268,8 @@ public sealed partial class ProductionEnvironmentTests
         foreach (var files in new[] { fixture.Files, fixture.Baseline })
         {
             files[oldPath] = files[oldPath].Replace(
-                "coverage_gids: []",
-                $"coverage_gids:\n  - {coverageGid}",
+                "coverage: []",
+                $"coverage:\n  - gid: {coverageGid}\n    target_statement_id: null",
                 StringComparison.Ordinal);
         }
 
@@ -294,8 +294,8 @@ public sealed partial class ProductionEnvironmentTests
         foreach (var files in new[] { fixture.Files, fixture.Baseline })
         {
             files[oldPath] = files[oldPath].Replace(
-                "coverage_gids: []",
-                $"coverage_gids:\n  - {coverageGid}",
+                "coverage: []",
+                $"coverage:\n  - gid: {coverageGid}\n    target_statement_id: null",
                 StringComparison.Ordinal);
         }
 
@@ -361,7 +361,6 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Theory]
-    [InlineData("coverage")]
     [InlineData("scribe")]
     [InlineData("unresolved")]
     [InlineData("tail")]
@@ -391,13 +390,6 @@ public sealed partial class ProductionEnvironmentTests
         {
             Receipts = receiptKind switch
             {
-                "coverage" => entry.Receipts with
-                {
-                    Coverage = [new DigestionCoverageReceipt(
-                        gid,
-                        newAtom.Fingerprints.RawSha256,
-                        "sha256:" + new string('a', 64))],
-                },
                 "scribe" => entry.Receipts with
                 {
                     Scribe = [new DigestionScribeReceipt(
@@ -423,8 +415,7 @@ public sealed partial class ProductionEnvironmentTests
                             DigestionMigrationState.Residual,
                             DigestionTruthState.Open),
                         [gid],
-                        [],
-                        new DateTimeOffset(2026, 8, 28, 0, 0, 0, TimeSpan.Zero)),
+                        []),
                 },
                 _ => throw new ArgumentOutOfRangeException(nameof(receiptKind)),
             },

@@ -12,7 +12,7 @@ public sealed class CoverageStatementReceiptTests
     private const string DeclarationGid = ModuleGid + ".target";
 
     [Fact]
-    public void RepositoryCoverageReceiptsBindActiveFrozenStatements()
+    public void RepositoryCoverageEdgesMatchResolvableFrozenStatementsOrCarryNull()
     {
         var root = TestRepositoryLayout.FindRoot();
         var raw = GitRepositorySnapshotReader.ReadCurrent(root);
@@ -21,7 +21,7 @@ public sealed class CoverageStatementReceiptTests
         var frozenStatements = FrozenStatementIndex.Load(snapshot);
         var mismatches = BackfillInventoryLoader.Load(snapshot)
             .RequireDigestionEntries()
-            .SelectMany(static entry => entry.Receipts.Coverage.Select(receipt =>
+            .SelectMany(static entry => entry.Coverage.Select(receipt =>
                 (entry.AtomId, Receipt: receipt)))
             .Select(item =>
             {
@@ -30,9 +30,12 @@ public sealed class CoverageStatementReceiptTests
                     return $"{item.AtomId}:{item.Receipt.Gid}:invalid-gid";
                 }
 
-                if (!frozenStatements.TryResolve(gid, out var statementId, out var message))
+                if (!frozenStatements.TryResolve(gid, out var statementId, out _))
                 {
-                    return $"{item.AtomId}:{item.Receipt.Gid}:{message}";
+                    return item.Receipt.TargetStatementId is null
+                        ? null
+                        : $"{item.AtomId}:{item.Receipt.Gid}:unresolved target must be null:"
+                            + item.Receipt.TargetStatementId;
                 }
 
                 return item.Receipt.TargetStatementId == statementId!.Value
@@ -65,7 +68,7 @@ public sealed class CoverageStatementReceiptTests
 
         Assert.DoesNotContain(
             evaluation.Entries.Single().Gaps,
-            static gap => gap.Code == "coverage-receipt-mismatch");
+            static gap => gap.Code == "coverage-target-mismatch");
     }
 
     [Fact]
@@ -86,7 +89,7 @@ public sealed class CoverageStatementReceiptTests
 
         Assert.Contains(
             evaluation.Entries.Single().Gaps,
-            static gap => gap.Code == "coverage-receipt-mismatch");
+            static gap => gap.Code == "coverage-target-mismatch");
     }
 
     [Fact]
@@ -104,7 +107,7 @@ public sealed class CoverageStatementReceiptTests
 
         Assert.DoesNotContain(
             evaluation.Entries.Single().Gaps,
-            static gap => gap.Code == "coverage-receipt-mismatch");
+            static gap => gap.Code == "coverage-target-mismatch");
     }
 
     [Fact]
@@ -121,7 +124,7 @@ public sealed class CoverageStatementReceiptTests
 
         Assert.Contains(
             evaluation.Entries.Single().Gaps,
-            static gap => gap.Code == "coverage-receipt-mismatch");
+            static gap => gap.Code == "coverage-target-mismatch");
         Assert.Contains(
             evaluation.Findings,
             static finding => finding.Contains(
@@ -279,9 +282,8 @@ public sealed class CoverageStatementReceiptTests
             ImmutableArray.CreateRange(sourceBytes),
             DigestionFingerprint.Compute(sourceBytes),
             []);
-        var receipt = new DigestionCoverageReceipt(
+        var receipt = new DigestionCoverageEdge(
             gid,
-            atom.Fingerprints.RawSha256,
             receiptStatementId);
         var entry = Entry(
             atom,
@@ -289,8 +291,11 @@ public sealed class CoverageStatementReceiptTests
             AtomizerRegistry.NoAtomizerId,
             DigestionMigrationState.Absorbed,
             DigestionTruthState.Closed,
-            [gid],
-            new DigestionReceipts([receipt], [], [], [], null));
+            [],
+            new DigestionReceipts([], [], [], null)) with
+        {
+            Coverage = [receipt],
+        };
         var document = Document(AtomizerRegistry.NoAtomizerId, [entry]);
         var files = new Dictionary<string, string>(StringComparer.Ordinal)
         {

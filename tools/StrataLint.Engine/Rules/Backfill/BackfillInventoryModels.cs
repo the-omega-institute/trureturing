@@ -4,27 +4,7 @@ namespace StrataLint.Engine;
 
 internal sealed record BackfillTicketReference(string CaseId, string Gid);
 
-internal sealed record DigestionCoverageReceipt(
-    string Gid,
-    string SourceSha256,
-    string TargetStatementId,
-    ImmutableArray<DigestionStatementIdHistoryEntry> StatementIdHistory = default)
-{
-    internal void Deconstruct(
-        out string gid,
-        out string sourceSha256,
-        out string targetStatementId)
-    {
-        gid = Gid;
-        sourceSha256 = SourceSha256;
-        targetStatementId = TargetStatementId;
-    }
-}
-
-internal sealed record DigestionStatementIdHistoryEntry(
-    string StatementId,
-    EffectiveLeanPins EnvironmentPin,
-    EffectiveLeanPins SupersededByPin);
+internal sealed record DigestionCoverageEdge(string Gid, string? TargetStatementId);
 
 internal sealed record DigestionScribeReceipt(
     string Gid,
@@ -53,11 +33,9 @@ internal sealed record DigestionDispositionGap(string Code, string Detail);
 internal sealed record DigestionCoverDisposition(
     DigestionStatus Outcome,
     ImmutableArray<string> Gids,
-    ImmutableArray<DigestionDispositionGap> Gaps,
-    DateTimeOffset RecordedAtUtc);
+    ImmutableArray<DigestionDispositionGap> Gaps);
 
 internal sealed record DigestionReceipts(
-    ImmutableArray<DigestionCoverageReceipt> Coverage,
     ImmutableArray<DigestionScribeReceipt> Scribe,
     ImmutableArray<string> UnresolvedSubitems,
     ImmutableArray<string> ChainAtoms,
@@ -66,8 +44,7 @@ internal sealed record DigestionReceipts(
     DigestionCoverDisposition? CoverDisposition = null)
 {
     internal bool IsEmptyForSourceRevision =>
-        Coverage.IsEmpty
-        && Scribe.IsEmpty
+        Scribe.IsEmpty
         && UnresolvedSubitems.IsEmpty
         && ChainAtoms.IsEmpty
         && TailAuthorization is null
@@ -102,10 +79,14 @@ internal sealed record DigestionLedgerEntry(
     string Atomizer,
     string AtomId,
     DigestionFingerprints Fingerprints,
-    ImmutableArray<string> CoverageGids,
+    ImmutableArray<DigestionCoverageEdge> Coverage,
     DigestionReceipts Receipts,
     DigestionStatus ProjectedStatus,
-    string CasRef);
+    string CasRef)
+{
+    internal ImmutableArray<string> CoverageGids =>
+        Coverage.Select(static edge => edge.Gid).ToImmutableArray();
+}
 
 internal sealed record GenreRegistryProjection
 {

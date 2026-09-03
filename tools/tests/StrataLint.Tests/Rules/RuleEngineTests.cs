@@ -99,7 +99,7 @@ public sealed class RuleEngineTests
         Assert.Equal(RuleFixture.FixtureCasReference, entry.Fingerprints.RawSha256);
         Assert.Equal(RuleFixture.FixtureCasReference, entry.CasRef);
         Assert.Equal(DigestionMigrationState.Partial, entry.ProjectedStatus.Migration);
-        Assert.Equal(DigestionTruthState.Closed, entry.ProjectedStatus.Truth);
+        Assert.Equal(DigestionTruthState.Open, entry.ProjectedStatus.Truth);
     }
 
     [Theory]
@@ -358,8 +358,9 @@ public sealed class RuleEngineTests
         fixture.Files[RuleFixture.FixtureBackfillAtomPath] = fixture.Files[
                 RuleFixture.FixtureBackfillAtomPath]
             .Replace(
-                "coverage_gids:\n  - D5/S0/Carrier/BackfillTarget",
-                "coverage_gids:\n  - D5/S0/Carrier/BackfillTarget\n  - D5/S0/Carrier/BackfillTarget",
+                "coverage:\n  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null",
+                "coverage:\n  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null\n"
+                    + "  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null",
                 StringComparison.Ordinal);
 
         var diagnostics = RuleCatalog.Default.EvaluateSingle(
@@ -385,8 +386,9 @@ public sealed class RuleEngineTests
         fixture.Files[RuleFixture.FixtureBackfillAtomPath] = fixture.Files[
                 RuleFixture.FixtureBackfillAtomPath]
             .Replace(
-                "coverage_gids:\n  - D5/S0/Carrier/BackfillTarget",
-                "coverage_gids:\n  - D5/S0/Carrier/BackfillTarget\n  - D5/S0/Carrier/BackfillTarget",
+                "coverage:\n  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null",
+                "coverage:\n  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null\n"
+                    + "  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null",
                 StringComparison.Ordinal);
 
         var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
@@ -435,7 +437,7 @@ public sealed class RuleEngineTests
         Assert.True(BackfillInventoryRule.IsAffectedBy(context));
         Assert.Contains(
             Assert.Single(evaluation.Entries).Gaps,
-            static gap => gap.Code == "coverage-receipt-mismatch");
+            static gap => gap.Code == "coverage-target-mismatch");
     }
 
     [Fact]
@@ -465,9 +467,8 @@ public sealed class RuleEngineTests
     [Fact]
     public void Sl016DerivedStatusIsTheSameWhetherOrNotFrozenStatementDriftIsInTheCandidateDelta()
     {
-        // Skipping historical receipt replay must reuse the base verdict rather than turn a
-        // partial entry into absorbed. The stale receipt itself is reported only when its
-        // authority input is in the candidate delta.
+        // Current edges are validated regardless of whether the frozen drift itself is in
+        // the candidate delta, so both projections must report the same stale target.
         const string coverageGid = "D5/S0/Carrier/BackfillTarget";
         var (fixture, frozenChanges) = FrozenStatementDriftFixture();
 
@@ -479,8 +480,8 @@ public sealed class RuleEngineTests
             RawChangeSet.Create(["notes/unrelated.txt"]));
 
         Assert.Contains(touched.Gaps, gap =>
-            gap.Code == "coverage-receipt-mismatch" && gap.Detail == coverageGid);
-        Assert.DoesNotContain(untouched.Gaps, static gap => gap.Code == "coverage-receipt-mismatch");
+            gap.Code == "coverage-target-mismatch" && gap.Detail == coverageGid);
+        Assert.Contains(untouched.Gaps, static gap => gap.Code == "coverage-target-mismatch");
         Assert.Equal(DigestionMigrationState.Partial, untouched.DerivedStatus.Migration);
         Assert.Equal(touched.DerivedStatus, untouched.DerivedStatus);
     }
@@ -541,11 +542,8 @@ public sealed class RuleEngineTests
             files[targetPath] = fixture.Files[targetPath];
             files[RuleFixture.FixtureBackfillAtomPath] = files[RuleFixture.FixtureBackfillAtomPath]
                 .Replace(
-                    "coverage: []",
-                    "coverage:\n"
-                    + $"    - gid: {coverageGid}\n"
-                    + $"      source_sha256: {RuleFixture.FixtureCasReference}\n"
-                    + $"      target_statement_id: {baselineStatementId}",
+                    "target_statement_id: null",
+                    $"target_statement_id: {baselineStatementId}",
                     StringComparison.Ordinal);
         }
 

@@ -206,8 +206,7 @@ public sealed class DigestionReadinessQueryTests
             coverDisposition: new DigestionCoverDisposition(
                 new DigestionStatus(DigestionMigrationState.Partial, DigestionTruthState.Closed),
                 [ReadyGid],
-                [new DigestionDispositionGap("unresolved-subitem", "remaining")],
-                new DateTimeOffset(2026, 8, 30, 0, 0, 0, TestBudgets.ZeroDuration)));
+                [new DigestionDispositionGap("unresolved-subitem", "remaining")]));
 
         var result = Classify([withheld, quarantined]);
 
@@ -245,8 +244,7 @@ public sealed class DigestionReadinessQueryTests
             coverDisposition: new DigestionCoverDisposition(
                 new DigestionStatus(DigestionMigrationState.Partial, DigestionTruthState.Closed),
                 [ReadyGid],
-                [new DigestionDispositionGap("unresolved-subitem", "remaining")],
-                new DateTimeOffset(2026, 8, 30, 0, 0, 0, TestBudgets.ZeroDuration)));
+                [new DigestionDispositionGap("unresolved-subitem", "remaining")]));
 
         var result = Classify(
             [deposit, stale, closeChain, child, needsRouting, notFormalizable, quarantined, withheld],
@@ -359,9 +357,11 @@ public sealed class DigestionReadinessQueryTests
             AtomizerRegistry.GenericId,
             atomId,
             fingerprints,
-            coverageGids.IsDefault ? [] : coverageGids,
+            coverageGids.IsDefault
+                ? []
+                : coverageGids.Select(static gid => new DigestionCoverageEdge(gid, null))
+                    .ToImmutableArray(),
             new DigestionReceipts(
-                [],
                 [],
                 [],
                 chainAtoms.IsDefault ? [] : chainAtoms,

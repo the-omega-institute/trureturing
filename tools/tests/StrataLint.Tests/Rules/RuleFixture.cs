@@ -19,7 +19,7 @@ internal sealed partial class RuleFixture
     internal const string FixtureBackfillSourcePath =
         "Meta/Digestion/backfill/fixture-source/source.toml";
     internal const string FixtureBackfillAtomPath =
-        "Meta/Digestion/backfill/fixture-source/partial-closed/"
+        "Meta/Digestion/backfill/fixture-source/partial-open/"
         + FixtureAtomId
         + ".yaml";
     internal const string FixtureBackfill = """
@@ -35,17 +35,17 @@ internal sealed partial class RuleFixture
                   raw_sha256: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881
                   normalized_sha256: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881
                 cas_ref: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881
-                coverage_gids:
-                  - D5/S0/Carrier/BackfillTarget
+                coverage:
+                  - gid: D5/S0/Carrier/BackfillTarget
+                    target_statement_id: null
                 receipts:
-                  coverage: []
                   scribe: []
                   unresolved_subitems: []
                   chain_atoms: []
                   tail_authorization: null
                 status:
                   migration: partial
-                  truth: closed
+                  truth: open
         """ + "\n";
     internal const string FixtureBackfillSource = """
         source_id = "fixture-source"
@@ -59,10 +59,10 @@ internal sealed partial class RuleFixture
           raw_sha256: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881
           normalized_sha256: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881
         cas_ref: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881
-        coverage_gids:
-          - D5/S0/Carrier/BackfillTarget
+        coverage:
+          - gid: D5/S0/Carrier/BackfillTarget
+            target_statement_id: null
         receipts:
-          coverage: []
           scribe: []
           unresolved_subitems: []
           chain_atoms: []
@@ -191,9 +191,8 @@ internal sealed partial class RuleFixture
               raw_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
               normalized_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
             cas_ref: sha256:0000000000000000000000000000000000000000000000000000000000000000
-            coverage_gids: []
+            coverage: []
             receipts:
-              coverage: []
               scribe: []
               unresolved_subitems: []
               chain_atoms: []
@@ -204,7 +203,7 @@ internal sealed partial class RuleFixture
     internal void UseValidDirectoryBackfill()
     {
         const string sourcePath = "delta-v0.1/source.toml";
-        const string atomPath = "delta-v0.1/partial-closed/"
+        const string atomPath = "delta-v0.1/partial-open/"
             + "2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881.yaml";
         var source = $"source_id = \"delta-v0.1\"\npath = \"{FixtureDigestionSourcePath}\"\natomizer = \"none\"\n"
             + "genre_registry_check = \"no-registry\"\nunregistered_genres = []\n";
@@ -213,10 +212,10 @@ internal sealed partial class RuleFixture
               raw_sha256: {FixtureCasReference}
               normalized_sha256: {FixtureCasReference}
             cas_ref: {FixtureCasReference}
-            coverage_gids:
-              - D5/S0/Carrier/BackfillTarget
+            coverage:
+              - gid: D5/S0/Carrier/BackfillTarget
+                target_statement_id: null
             receipts:
-              coverage: []
               scribe: []
               unresolved_subitems: []
               chain_atoms: []

@@ -37,6 +37,8 @@ internal interface ICliEnvironment
 
     CommandResult AlignDigestionStatus(IReadOnlyList<string> arguments);
 
+    CommandResult MigrateDigestionCoverage(IReadOnlyList<string> arguments);
+
     CommandResult CoverAtom(IReadOnlyList<string> arguments);
 
     CommandResult AlignScribeReceipt(IReadOnlyList<string> arguments);
@@ -121,6 +123,8 @@ internal static class CliApplication
                 RenderCommand(environment.RevokeLedger(tail), console),
             ["ledger-reanchor-mathlib"] = static (environment, tail, console) =>
                 RenderCommand(environment.ReanchorMathlibLedger(tail), console),
+            ["migrate-digestion-coverage"] = static (environment, tail, console) =>
+                RenderCommand(environment.MigrateDigestionCoverage(tail), console),
             ["route"] = static (environment, tail, console) =>
                 RenderCommand(environment.Route(tail), console),
             ["selftest"] = static (environment, tail, console) =>

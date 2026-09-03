@@ -34,12 +34,12 @@ internal static partial class IngestCommand
             var plannedDocument = prepared.PlannedDocument;
             var report = leanReportSource.Load(current);
             var lean = ValidateLean(plannedSnapshot, report);
-            plannedDocument = MathlibUpgradeDigestionReanchor.Apply(
+            var truthStates = LeanTruthStates.Resolve(plannedSnapshot, lean);
+            plannedDocument = DigestionCoverageTargetAligner.Align(
                 plannedDocument,
-                baseline,
-                current,
-                repositoryChanges,
-                lean);
+                plannedSnapshot,
+                lean,
+                truthStates);
             var deltaImpact = BackfillDeltaImpactResolver.Resolve(
                 plannedSnapshot,
                 baseline,
@@ -48,7 +48,6 @@ internal static partial class IngestCommand
             var evaluationChanges = deltaImpact.EvaluationChanges;
             var receiptVerificationChanges = deltaImpact.ReceiptVerificationChanges;
             var evaluationScope = prepared.PlannedScope;
-            var truthStates = LeanTruthStates.Resolve(plannedSnapshot, lean);
             var verifiedScribeEmissions = scribeEmissionVerifier.Verify(
                 plannedSnapshot,
                 report,

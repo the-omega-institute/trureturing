@@ -288,30 +288,43 @@ internal static partial class DigestionStatusEvaluator
         ImmutableArray<string>.Builder findings)
     {
         var gaps = new List<DigestionGap>();
-        // Scribe retains its existing baseline-only full check. Coverage can trust a committed
-        // receipt outside a nonempty, authoritative git delta even when the
-        // query omitted --base; an empty delta retains the explicit whole-tree diagnostic.
+        // Scribe retains its existing baseline-only full check. Coverage edges are always
+        // judged against the current report and frozen statement index below.
         var verificationChanges = baselineEntryPresent ? changes : null;
-        var canReuseCoverageWithoutBaseline = changes is not null
-            && changes.Paths.Any()
-            && !DigestionCasStore.EntryChanged(entry, changes);
-        var coverageVerificationChanges = !baselineEntryPresent
-            && canReuseCoverageWithoutBaseline
-                ? changes
-                : verificationChanges;
         var structured = VerifyStructuredAlignment(entry, alignment, gaps, findings);
         var targetStates = new List<(string Gid, TruthState State)>();
-        var existingTargets = new Dictionary<string, RepositoryFile>(StringComparer.Ordinal);
+        var edgeValidations = new Dictionary<string, CurrentEdgeValidation>(StringComparer.Ordinal);
         foreach (var gidText in entry.CoverageGids.Distinct(StringComparer.Ordinal))
         {
-            var edge = CurrentEdgeValidator.Validate(gidText, snapshot, leanReport, states);
+            CurrentEdgeValidation edge;
+            try
+            {
+                edge = CurrentEdgeValidator.Validate(
+                    gidText,
+                    snapshot,
+                    leanReport,
+                    states,
+                    frozenStatements.Value);
+            }
+            catch (Exception exception) when (exception is FormatException or InvalidOperationException)
+            {
+                edge = new CurrentEdgeValidation(
+                    false,
+                    false,
+                    null,
+                    null,
+                    TruthState.Semantic,
+                    "target-statement-unresolved",
+                    gidText,
+                    $"current edge GID {gidText} has no readable frozen statement index: {exception.Message}");
+            }
+            edgeValidations.Add(gidText, edge);
             if (!edge.IsResolved)
             {
                 gaps.Add(edge.ResolutionGap!);
                 continue;
             }
 
-            existingTargets.Add(gidText, edge.Target!);
             targetStates.Add((gidText, edge.State));
         }
 
@@ -323,11 +336,9 @@ internal static partial class DigestionStatusEvaluator
                 DigestionGapSeverity.NonFatal));
         }
 
-        var coverage = VerifyCoverageReceipts(
+        var coverage = VerifyCoverageEdges(
             entry,
-            existingTargets,
-            frozenStatements,
-            coverageVerificationChanges,
+            edgeValidations,
             gaps,
             findings);
         var scribe = VerifyScribeReceipts(
@@ -366,13 +377,14 @@ internal static partial class DigestionStatusEvaluator
             && !authorityChanged;
         var localComplete = !baselineKeepsLocalIncomplete
             && structured
-            && existingTargets.Count == entry.CoverageGids.Distinct(StringComparer.Ordinal).Count()
+            && edgeValidations.Values.Count(static edge => edge.IsResolved)
+                == entry.CoverageGids.Distinct(StringComparer.Ordinal).Count()
             && entry.CoverageGids.Length > 0
             && coverage
             && scribe
             && entry.Receipts.UnresolvedSubitems.Length == 0;
-        var hasProgress = existingTargets.Count > 0
-            || entry.Receipts.Coverage.Length > 0
+        var hasProgress = edgeValidations.Values.Any(static edge => edge.IsResolved)
+            || entry.Coverage.Length > 0
             || entry.Receipts.Scribe.Length > 0;
         return new EntryWork(
             entry,

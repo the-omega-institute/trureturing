@@ -58,7 +58,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void IngestMovesDirectoryAtomWhenDerivedStatusChangesFromResidualToPartial()
+    public void AlignDigestionStatusRefreshesCoverageTargetAndSecondRunIsByteIdentical()
     {
         const string coverageGid = "D5/S0/Carrier/Ring";
         var fixture = new RuleFixture();
@@ -70,11 +70,20 @@ public sealed partial class ProductionEnvironmentTests
             DigestionTestSupport.Rules).Claims);
         fixture.Files[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(sourceBytes);
         fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(sourceBytes);
+        foreach (var files in new[] { fixture.Files, fixture.Baseline })
+        {
+            FrozenStatementReceiptTestData.AddLedger(
+                files,
+                new FrozenStatementReceiptTestData.Module(
+                    coverageGid + ".lean",
+                    FrozenStatementReceiptTestData.Id('d'),
+                    []));
+        }
         InstallDirectoryLedger(fixture, atomizerId, atom);
         var oldPath = DirectoryAtomPath(AtomId(atom), "residual-open");
         var atomText = DirectoryAtom(atom).Replace(
-            "coverage_gids: []",
-            $"coverage_gids:\n  - {coverageGid}",
+            "coverage: []",
+            $"coverage:\n  - gid: {coverageGid}\n    target_statement_id: null",
             StringComparison.Ordinal);
         fixture.Files[oldPath] = atomText;
         fixture.Baseline[oldPath] = atomText;
@@ -105,7 +114,103 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Equal(DigestionMigrationState.Partial, entry.ProjectedStatus.Migration);
         Assert.Equal(DigestionTruthState.Closed, entry.ProjectedStatus.Truth);
         Assert.Equal([coverageGid], entry.CoverageGids.ToArray());
+        Assert.Equal(
+            FrozenStatementReceiptTestData.Resolve(fixture.Files, coverageGid),
+            Assert.Single(entry.Coverage).TargetStatementId);
         Assert.Equal(BackfillInventoryWriter.WriteAtom(entry).ToArray(), File.ReadAllBytes(outputPath));
+
+        var afterFirst = DirectoryLedgerTestSupport.Image(temporary.Path);
+        var alignedFiles = DirectoryLedgerTestSupport.OverlayRepositoryFiles(temporary, fixture.Files);
+        alignedFiles.Remove(oldPath);
+        var secondEnvironment = new ProductionCliEnvironment(
+            temporary.Path,
+            new FakeRepositoryGateway(
+                RawChangeSet.Create(Array.Empty<string>()),
+                Snapshot(alignedFiles),
+                Snapshot(fixture.Baseline)),
+            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
+            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
+
+        var second = secondEnvironment.AlignDigestionStatus(["--base", "baseline"]);
+
+        Assert.True(second.Success, second.Error);
+        Assert.Contains("ledger_changed=false", second.Output, StringComparison.Ordinal);
+        Assert.Equal(afterFirst, DirectoryLedgerTestSupport.Image(temporary.Path));
+    }
+
+    [Fact]
+    public void CoverageSchemaMigrationWritesCanonicalAtomsAndSecondRunHasNoByteDiff()
+    {
+        const string coverageGid = "D5/S0/Carrier/Ring";
+        var fixture = new RuleFixture();
+        var sourceBytes = Encoding.UTF8.GetBytes("# Synthetic\n\n**定理 1.1(A)**。claim。\n");
+        var atom = Assert.Single(AtomizerRegistry.Atomize(
+            SyntheticNumberedAtomizer.Id,
+            sourceBytes,
+            DigestionTestSupport.Rules).Claims);
+        fixture.Files[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(sourceBytes);
+        fixture.Baseline[RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(sourceBytes);
+        foreach (var files in new[] { fixture.Files, fixture.Baseline })
+        {
+            FrozenStatementReceiptTestData.AddLedger(
+                files,
+                new FrozenStatementReceiptTestData.Module(
+                    coverageGid + ".lean",
+                    FrozenStatementReceiptTestData.Id('d'),
+                    []));
+        }
+        InstallDirectoryLedger(fixture, SyntheticNumberedAtomizer.Id, atom);
+        var atomPath = DirectoryAtomPath(AtomId(atom), "residual-open");
+        var relationshipKey = "coverage_" + "gids";
+        var sourceKey = "source_" + "sha256";
+        var legacyAtom = DirectoryAtom(atom)
+            .Replace(
+                "coverage: []",
+                $"{relationshipKey}:\n  - {coverageGid}",
+                StringComparison.Ordinal)
+            .Replace(
+                "receipts:\n  scribe: []",
+                "receipts:\n"
+                    + "  coverage:\n"
+                    + $"    - gid: {coverageGid}\n"
+                    + $"      {sourceKey}: {atom.Fingerprints.RawSha256}\n"
+                    + $"      target_statement_id: sha256:{new string('0', 64)}\n"
+                    + "  scribe: []",
+                StringComparison.Ordinal);
+        fixture.Files[atomPath] = legacyAtom;
+        using var temporary = new TemporaryDirectory();
+        WriteDirectoryLedger(temporary.Path, fixture.Files);
+        var firstEnvironment = new ProductionCliEnvironment(
+            temporary.Path,
+            new FakeRepositoryGateway(
+                RawChangeSet.Create(Array.Empty<string>()),
+                Snapshot(fixture.Files),
+                Snapshot(fixture.Baseline)),
+            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
+            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
+
+        var first = firstEnvironment.MigrateDigestionCoverage([]);
+
+        Assert.True(first.Success, first.Error);
+        Assert.Contains("relationships_before=1", first.Output, StringComparison.Ordinal);
+        Assert.Contains("relationships_after=1", first.Output, StringComparison.Ordinal);
+        Assert.Contains("second_pass_changed_files=0", first.Output, StringComparison.Ordinal);
+        var migratedBytes = DirectoryLedgerTestSupport.Image(temporary.Path);
+        var migratedFiles = DirectoryLedgerTestSupport.OverlayRepositoryFiles(temporary, fixture.Files);
+        var secondEnvironment = new ProductionCliEnvironment(
+            temporary.Path,
+            new FakeRepositoryGateway(
+                RawChangeSet.Create(Array.Empty<string>()),
+                Snapshot(migratedFiles),
+                Snapshot(fixture.Baseline)),
+            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
+            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
+
+        var second = secondEnvironment.MigrateDigestionCoverage([]);
+
+        Assert.True(second.Success, second.Error);
+        Assert.Contains("changed_files=0", second.Output, StringComparison.Ordinal);
+        Assert.Equal(migratedBytes, DirectoryLedgerTestSupport.Image(temporary.Path));
     }
 
     [Fact]
@@ -302,14 +407,18 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Theory]
-    [InlineData("coverage-receipt-mismatch")]
+    [InlineData("coverage-target-mismatch")]
     [InlineData("scribe-definition-mismatch")]
     [InlineData("scribe-emission-mismatch")]
-    public void IngestRejectsEachReceiptIntegrityMismatchBeforeWritingLedger(string mismatchCode)
+    public void AlignRepairsCoverageButRejectsScribeIntegrityMismatchBeforeWritingLedger(
+        string mismatchCode)
     {
         var materialized = CoverWorld.Materialize(new CoverSpec
         {
-            OtherAtomGid = "D5/S0/Carrier/Probe.probe",
+            UnrelatedSibling = new CoverUnrelatedSiblingSpec(
+                ["D5/S0/Carrier/Probe.probe"],
+                ["D5/S0/Carrier/Probe.probe"],
+                []),
         });
         var inputs = DirectoryInputs(WithSiblingReceiptMismatch(materialized, mismatchCode));
         using var temporary = new TemporaryDirectory();
@@ -319,22 +428,33 @@ public sealed partial class ProductionEnvironmentTests
 
         var result = environment.AlignDigestionStatus(["--base", "baseline"]);
 
-        Assert.False(result.Success);
-        Assert.Contains("digest status is invalid", result.Error, StringComparison.Ordinal);
-        Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
-        Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+        if (mismatchCode == "coverage-target-mismatch")
+        {
+            Assert.True(result.Success, result.Error);
+            Assert.NotEqual(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+        }
+        else
+        {
+            Assert.False(result.Success);
+            Assert.Contains("digest status is invalid", result.Error, StringComparison.Ordinal);
+            Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
+            Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+        }
     }
 
     [Theory]
-    [InlineData("coverage-receipt-mismatch")]
+    [InlineData("coverage-target-mismatch")]
     [InlineData("scribe-definition-mismatch")]
     [InlineData("scribe-emission-mismatch")]
-    public void IngestRejectsNoOpWhenReceiptIntegrityBacklogExistsAtForkPoint(string mismatchCode)
+    public void AlignRepairsCoverageButRejectsScribeBacklogAtForkPoint(string mismatchCode)
     {
         var materialized = CoverWorld.Materialize(new CoverSpec
         {
-            OtherAtomGid = "D5/S0/Carrier/Probe.sibling",
             ReportDeclarations = ImmutableArray.Create("probe", "sibling"),
+            UnrelatedSibling = new CoverUnrelatedSiblingSpec(
+                ["D5/S0/Carrier/Probe.sibling"],
+                ["D5/S0/Carrier/Probe.sibling"],
+                []),
         });
         var inputs = DirectoryInputs(WithReceiptMismatchAtForkPoint(
             materialized,
@@ -347,9 +467,17 @@ public sealed partial class ProductionEnvironmentTests
 
         var result = environment.AlignDigestionStatus(["--base", "baseline"]);
 
-        Assert.False(result.Success);
-        Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
-        Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+        if (mismatchCode == "coverage-target-mismatch")
+        {
+            Assert.True(result.Success, result.Error);
+            Assert.NotEqual(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+        }
+        else
+        {
+            Assert.False(result.Success);
+            Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
+            Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+        }
     }
 
     [Fact]
@@ -618,9 +746,8 @@ public sealed partial class ProductionEnvironmentTests
           raw_sha256: {{atom.Fingerprints.RawSha256}}
           normalized_sha256: {{atom.Fingerprints.NormalizedSha256}}
         cas_ref: {{atom.Fingerprints.RawSha256}}
-        coverage_gids: []
+        coverage: []
         receipts:
-          coverage: []
           scribe: []
           unresolved_subitems: []
         """;

@@ -166,7 +166,7 @@ public sealed partial class ProductionEnvironmentTests
             AtomId = childIds[index],
             Fingerprints = children[index].Fingerprints,
             CasRef = children[index].Fingerprints.RawSha256,
-            Receipts = new DigestionReceipts([], [], [], [], null),
+            Receipts = new DigestionReceipts([], [], [], null),
         };
         var finalDocument = currentDocument.WithDigestionSources(
         [
@@ -220,10 +220,10 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Theory]
-    [InlineData("coverage-receipt-mismatch")]
+    [InlineData("coverage-target-mismatch")]
     [InlineData("scribe-definition-mismatch")]
     [InlineData("scribe-emission-mismatch")]
-    public void IngestRejectsEachNewReceiptIntegrityMismatchBeforeWritingLedger(string mismatchCode)
+    public void AlignRepairsCoverageTargetsButRejectsScribeIntegrityMismatch(string mismatchCode)
     {
         var materialized = CoverWorld.Materialize(new CoverSpec
         {
@@ -241,10 +241,18 @@ public sealed partial class ProductionEnvironmentTests
 
         var result = environment.AlignDigestionStatus(["--base", "baseline"]);
 
-        Assert.False(result.Success);
-        Assert.Contains("digest status is invalid", result.Error, StringComparison.Ordinal);
-        Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
-        Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+        if (mismatchCode == "coverage-target-mismatch")
+        {
+            Assert.True(result.Success, result.Error);
+            Assert.NotEqual(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+        }
+        else
+        {
+            Assert.False(result.Success);
+            Assert.Contains("digest status is invalid", result.Error, StringComparison.Ordinal);
+            Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
+            Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+        }
     }
 
     [Fact]
@@ -264,7 +272,7 @@ public sealed partial class ProductionEnvironmentTests
         });
         var inputs = DirectoryInputs(WithSiblingReceiptMismatch(
             materialized,
-            "coverage-receipt-mismatch"));
+            "coverage-target-mismatch"));
         var withFrozenEvent = WithUnrelatedFrozenAcceptedEvent(inputs);
         inputs = withFrozenEvent.Inputs;
         var files = new Dictionary<string, string>(inputs.Files, StringComparer.Ordinal)
@@ -272,9 +280,6 @@ public sealed partial class ProductionEnvironmentTests
             [newSourcePath] = newSourceText,
         };
         inputs = inputs with { Files = files };
-        var backlogAtom = Assert.Single(inputs.Files, pair => pair.Key.EndsWith(
-            "/" + CoverWorld.UnrelatedAtomId + ".yaml",
-            StringComparison.Ordinal));
         using var temporary = new TemporaryDirectory();
         DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
         var environment = BuildCoverEnvironment(
@@ -287,26 +292,22 @@ public sealed partial class ProductionEnvironmentTests
 
         Assert.True(result.Success, result.Error);
         Assert.Contains("ledger_changed=true", result.Output, StringComparison.Ordinal);
-        Assert.DoesNotContain(
-            CoverWorld.UnrelatedAtomId + ":coverage-receipt-mismatch",
-            result.Output,
-            StringComparison.Ordinal);
+        Assert.DoesNotContain("coverage-target-mismatch", result.Output, StringComparison.Ordinal);
         var written = BackfillInventoryLoader.LoadRoot(temporary.Path);
         var newSource = Assert.Single(
             written.RequireDigestionSources(),
             static source => source.SourceId == "ingest-scope-new-source");
         Assert.Single(newSource.Entries);
-        Assert.Contains(
-            backlogAtom.Key
-            + "\0"
-            + Convert.ToBase64String(Encoding.UTF8.GetBytes(backlogAtom.Value))
-            + "\n",
-            DirectoryLedgerTestSupport.Image(temporary.Path),
-            StringComparison.Ordinal);
+        var repaired = Assert.Single(
+            written.RequireDigestionEntries(),
+            entry => entry.AtomId == CoverWorld.UnrelatedAtomId);
+        Assert.Equal(
+            FrozenStatementReceiptTestData.Resolve(inputs.Files, siblingGid),
+            Assert.Single(repaired.Coverage).TargetStatementId);
     }
 
     [Fact]
-    public void IngestRejectsTouchedReceiptIntegrityGapWhoseForkPointIdentityIsUnchanged()
+    public void AlignRepairsTouchedCoverageTargetWhoseForkPointIdentityIsUnchanged()
     {
         const string siblingModuleGid = "D5/S0/Carrier/CoverSibling";
         const string siblingGid = siblingModuleGid + ".sibling";
@@ -320,7 +321,7 @@ public sealed partial class ProductionEnvironmentTests
         });
         var inputs = DirectoryInputs(WithSiblingReceiptMismatch(
             materialized,
-            "coverage-receipt-mismatch"));
+            "coverage-target-mismatch"));
         using var temporary = new TemporaryDirectory();
         DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
         var before = DirectoryLedgerTestSupport.Image(temporary.Path);
@@ -332,12 +333,14 @@ public sealed partial class ProductionEnvironmentTests
 
         var result = environment.AlignDigestionStatus(["--base", "baseline"]);
 
-        Assert.False(result.Success);
-        Assert.Contains(
-            $"{CoverWorld.UnrelatedAtomId}:coverage-receipt-mismatch:{siblingGid}",
-            result.Error,
-            StringComparison.Ordinal);
-        Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+        Assert.True(result.Success, result.Error);
+        Assert.NotEqual(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+        var repaired = Assert.Single(
+            BackfillInventoryLoader.LoadRoot(temporary.Path).RequireDigestionEntries(),
+            entry => entry.AtomId == CoverWorld.UnrelatedAtomId);
+        Assert.Equal(
+            FrozenStatementReceiptTestData.Resolve(inputs.Files, siblingGid),
+            Assert.Single(repaired.Coverage).TargetStatementId);
     }
 
 }

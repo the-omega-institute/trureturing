@@ -496,9 +496,9 @@ public sealed partial class FormalizeCandidatesTests
                         atomizer,
                         entry.AtomId,
                         entry.Atom.Fingerprints,
-                        ImmutableArray.CreateRange(entry.CoverageGids),
+                        entry.CoverageGids.Select(static gid =>
+                            new DigestionCoverageEdge(gid, null)).ToImmutableArray(),
                         new DigestionReceipts(
-                            [],
                             [],
                             [],
                             [],

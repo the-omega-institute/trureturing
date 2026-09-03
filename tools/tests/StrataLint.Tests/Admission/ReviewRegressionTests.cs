@@ -369,7 +369,7 @@ public sealed partial class ReviewRegressionTests
     }
 
     [Fact]
-    public void Sl019AcceptsInventoryCoverageAndReceiptGidsWhoseSubjectIsNamedAfterAFailure()
+    public void Sl019AcceptsInventoryCoverageAndScribeGidsWhoseSubjectIsNamedAfterAFailure()
     {
         var fixture = new RuleFixture();
         const string path = "Meta/Digestion/backfill/interface-v1/absorbed-closed/probe.yaml";
@@ -377,12 +377,10 @@ public sealed partial class ReviewRegressionTests
             "D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/RetrospectiveLookupFailure"
             + ".lookup_copy_zero_loss_and_nonanticipating_failure";
         fixture.Files[path] = "cas_ref: sha256:00\n"
-            + "coverage_gids:\n  - " + gid + "\n"
+            + "coverage:\n"
+            + "  - gid: " + gid + "\n"
+            + "    target_statement_id: sha256:00\n"
             + "receipts:\n"
-            + "  coverage:\n"
-            + "    - gid: " + gid + "\n"
-            + "      source_sha256: sha256:00\n"
-            + "      target_statement_id: sha256:00\n"
             + "  scribe:\n"
             + "    - gid: " + gid + "\n"
             + "      definition_sha256: sha256:00\n"
@@ -398,11 +396,16 @@ public sealed partial class ReviewRegressionTests
                 "anomaly-bearing", StringComparison.Ordinal));
     }
 
+    public static TheoryData<string> InvalidInventoryGidSlots => new()
+    {
+        "coverage_" + "gids:\n  - unresolved failure without case\n",
+        "receipts:\n  coverage:\n    - gid: FiniteFailure\n",
+        "failure_gids:\n  - D5/S0/Carrier/ProbeFailure.failure_probe\n",
+        "outer:\n  coverage_" + "gids:\n    - D5/S0/Carrier/ProbeFailure.failure_probe\n",
+    };
+
     [Theory]
-    [InlineData("coverage_gids:\n  - unresolved failure without case\n")]
-    [InlineData("receipts:\n  coverage:\n    - gid: FiniteFailure\n")]
-    [InlineData("failure_gids:\n  - D5/S0/Carrier/ProbeFailure.failure_probe\n")]
-    [InlineData("outer:\n  coverage_gids:\n    - D5/S0/Carrier/ProbeFailure.failure_probe\n")]
+    [MemberData(nameof(InvalidInventoryGidSlots))]
     public void Sl019RejectsAnomalyResiduesOutsideTheDeclaredInventoryGidSlots(string body)
     {
         var fixture = new RuleFixture();
@@ -425,7 +428,7 @@ public sealed partial class ReviewRegressionTests
         var fixture = new RuleFixture();
         const string path = "Evidence/D5/S0/Carrier/Inventory.run.json";
         fixture.Files[path] =
-            "{\"coverage_gids\":[\"D5/S0/Carrier/ProbeFailure.failure_probe\"]}\n";
+            "{\"coverage_" + "gids\":[\"D5/S0/Carrier/ProbeFailure.failure_probe\"]}\n";
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(19),

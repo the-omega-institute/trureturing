@@ -1,5 +1,4 @@
 using System.Collections.Immutable;
-using System.Globalization;
 using System.Text.RegularExpressions;
 using Trureturing.Truth;
 
@@ -12,7 +11,7 @@ internal sealed partial class BackfillInventoryDocument
         "atom_id",
         "fingerprints",
         "cas_ref",
-        "coverage_gids",
+        "coverage",
         "receipts",
         "status",
     ];
@@ -109,23 +108,22 @@ internal sealed partial class BackfillInventoryDocument
             atomId = parsedFingerprints.RawSha256["sha256:".Length..];
         }
 
-        var coverageGids = Strings(
-            List(entry, "coverage_gids", $"entry {atomId} coverage_gids must be a list"),
-            $"entry {atomId} coverage_gids");
+        var coverage = ParseCoverage(
+            atomId,
+            List(entry, "coverage", $"entry {atomId} coverage must be a list"));
         var receipts = ParseReceipts(
             atomId,
-            entry.GetValueOrDefault("receipts"),
-            projectBaselineCoverage);
-        if (receipts.Quarantine is not null && coverageGids.Length > 0)
+            entry.GetValueOrDefault("receipts"));
+        if (receipts.Quarantine is not null && coverage.Length > 0)
         {
             throw new FormatException(
-                $"entry {atomId} cannot be quarantined because coverage_gids provides a machine-form statement");
+                $"entry {atomId} cannot be quarantined because coverage provides a machine-form statement");
         }
 
-        if (receipts.CoverDisposition is not null && coverageGids.Length > 0)
+        if (receipts.CoverDisposition is not null && coverage.Length > 0)
         {
             throw new FormatException(
-                $"entry {atomId} cover_disposition cannot coexist with coverage_gids");
+                $"entry {atomId} cover_disposition cannot coexist with coverage");
         }
 
         if (receipts.CoverDisposition is not null && receipts.Quarantine is not null)
@@ -143,7 +141,7 @@ internal sealed partial class BackfillInventoryDocument
             atomizer,
             atomId,
             parsedFingerprints,
-            coverageGids,
+            coverage,
             receipts,
             new DigestionStatus(
                 ParseMigration(Scalar(status, "migration", $"entry {atomId} migration")),
@@ -151,10 +149,29 @@ internal sealed partial class BackfillInventoryDocument
             Scalar(entry, "cas_ref", $"entry {atomId} cas_ref"));
     }
 
+    private static ImmutableArray<DigestionCoverageEdge> ParseCoverage(
+        string atomId,
+        IEnumerable<object?> rawCoverage)
+    {
+        var coverage = ImmutableArray.CreateBuilder<DigestionCoverageEdge>();
+        foreach (var rawEdge in rawCoverage)
+        {
+            var edge = Mapping(rawEdge, $"entry {atomId} coverage edge must be a mapping");
+            ExactKeys(edge, ["gid", "target_statement_id"], $"entry {atomId} coverage edge");
+            coverage.Add(new DigestionCoverageEdge(
+                Scalar(edge, "gid", $"entry {atomId} coverage gid"),
+                NullableScalar(
+                    edge,
+                    "target_statement_id",
+                    $"entry {atomId} coverage target_statement_id")));
+        }
+
+        return coverage.ToImmutable();
+    }
+
     private static DigestionReceipts ParseReceipts(
         string atomId,
-        object? rawReceipts,
-        bool projectBaselineCoverage)
+        object? rawReceipts)
     {
         var receipts = Mapping(rawReceipts, $"entry {atomId} receipts must be a mapping");
 
@@ -165,35 +182,9 @@ internal sealed partial class BackfillInventoryDocument
         // 只是尚无实例;把「当前没有实例」当成「机制已死」会削掉一条真能力。
         ExactKeys(
             receipts,
-            ["coverage", "scribe", "unresolved_subitems"],
+            ["scribe", "unresolved_subitems"],
             ["chain_atoms", "tail_authorization", "quarantine", "cover_disposition"],
             $"entry {atomId} receipts");
-        var rawCoverageReceipts = List(
-            receipts,
-            "coverage",
-            $"entry {atomId} coverage receipts must be a list");
-        var coverage = ImmutableArray.CreateBuilder<DigestionCoverageReceipt>();
-        // Baseline coverage receipts are projected away: admission only needs their
-        // coverage_gids and entry fingerprint to identify pre-existing edges. In
-        // particular, this path neither names nor interprets any historical target field.
-        foreach (var rawCoverage in projectBaselineCoverage ? [] : rawCoverageReceipts)
-        {
-            var item = Mapping(rawCoverage, $"entry {atomId} coverage receipt must be a mapping");
-            ExactKeys(
-                item,
-                ["gid", "source_sha256", "target_statement_id"],
-                ["statement_id_history"],
-                $"entry {atomId} coverage receipt");
-            coverage.Add(new DigestionCoverageReceipt(
-                Scalar(item, "gid", $"entry {atomId} coverage gid"),
-                Scalar(item, "source_sha256", $"entry {atomId} coverage source_sha256"),
-                Scalar(
-                    item,
-                    "target_statement_id",
-                    $"entry {atomId} coverage target_statement_id"),
-                ParseStatementIdHistory(atomId, item)));
-        }
-
         var scribe = ImmutableArray.CreateBuilder<DigestionScribeReceipt>();
         foreach (var rawScribe in List(receipts, "scribe", $"entry {atomId} scribe receipts must be a list"))
         {
@@ -265,7 +256,6 @@ internal sealed partial class BackfillInventoryDocument
         }
 
         return new DigestionReceipts(
-            coverage.ToImmutable(),
             scribe.ToImmutable(),
             Strings(
                 List(receipts, "unresolved_subitems", $"entry {atomId} unresolved_subitems must be a list"),
@@ -292,7 +282,7 @@ internal sealed partial class BackfillInventoryDocument
         var raw = Mapping(
             receipts.GetValueOrDefault("cover_disposition"),
             $"entry {atomId} cover_disposition must be a mapping");
-        ExactKeys(raw, ["outcome", "recorded_at_utc", "gids", "gaps"],
+        ExactKeys(raw, ["outcome", "gids", "gaps"],
             $"entry {atomId} cover_disposition");
 
         var outcomeText = Scalar(raw, "outcome", $"entry {atomId} cover_disposition outcome");
@@ -342,27 +332,7 @@ internal sealed partial class BackfillInventoryDocument
                 $"entry {atomId} cover_disposition gaps must use canonical ordinal ordering");
         }
 
-        var timestamp = Scalar(
-            raw,
-            "recorded_at_utc",
-            $"entry {atomId} cover_disposition recorded_at_utc");
-        if (!DateTimeOffset.TryParseExact(
-                timestamp,
-                "O",
-                CultureInfo.InvariantCulture,
-                DateTimeStyles.RoundtripKind,
-                out var recordedAtUtc)
-            || recordedAtUtc.Offset != TimeSpan.Zero
-            || !string.Equals(
-                timestamp,
-                recordedAtUtc.ToString("O", CultureInfo.InvariantCulture),
-                StringComparison.Ordinal))
-        {
-            throw new FormatException(
-                $"entry {atomId} cover_disposition recorded_at_utc must be canonical UTC round-trip time");
-        }
-
-        return new DigestionCoverDisposition(outcome, gids, orderedGaps, recordedAtUtc);
+        return new DigestionCoverDisposition(outcome, gids, orderedGaps);
     }
 
     private static DigestionMigrationState ParseMigration(string value) => value switch
@@ -397,6 +367,16 @@ internal sealed partial class BackfillInventoryDocument
         mapping.GetValueOrDefault(key) is string value && !string.IsNullOrWhiteSpace(value)
             ? value
             : throw new FormatException($"{context} must be a nonempty scalar");
+
+    private static string? NullableScalar(
+        IReadOnlyDictionary<string, object?> mapping,
+        string key,
+        string context) => mapping.GetValueOrDefault(key) switch
+        {
+            null => null,
+            string value when !string.IsNullOrWhiteSpace(value) => value,
+            _ => throw new FormatException($"{context} must be null or a nonempty scalar"),
+        };
 
     private static ImmutableArray<string> Strings(List<object?> values, string context)
     {
