@@ -14,9 +14,6 @@ internal static partial class RepositoryRules
         artifact.Path.Value.StartsWith("D5/", StringComparison.Ordinal)
         && artifact.Path.Value.EndsWith(".lean", StringComparison.Ordinal);
 
-    private static bool TheoryVolumeScoped(RepositoryFile artifact, RuleApplicabilityContext context) =>
-        IsTheoryVolumePath(artifact.Path.Value);
-
     private static bool StatusScoped(RepositoryFile artifact, RuleApplicabilityContext context) =>
         IsStatusScope(artifact.Path.Value);
 
