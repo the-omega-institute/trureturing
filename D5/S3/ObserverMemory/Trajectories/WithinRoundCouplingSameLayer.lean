@@ -5,18 +5,15 @@
    anchors: []
    digest: Coupled recorded rounds are same-layer, without automatic self-description closure. -/
 
-import D5.S0.Diagonal.Lawvere.QualitativeEscape
+import D5.S3.Observer.Completion.ClosureNonimplicationTriple
 import D5.S3.ObserverMemory.Trajectories.StateRecordReadoutDistinguishability
 
 /- Library-search audit trail (2026-09-03):
    * Repository search found the exact Definition 45.1 owners `AppendOnlyOps`,
      `RecordedObserver`, `AugmentedState`, and `step` in the imported trajectory module.
-   * Repository search found `closure_nonimplication_triple` for the section-level
-     three-closure countermodels; this round theorem instead uses the more general exact
-     component `escaped_of_fixedPointFree` on its own joint quotient.
-   * Repository search also found `SelfDescriptionClosure`, but that specialization
-     requires one carrier in all three evaluator positions, whereas Section 32.10 and
-     this atom have a distinct `SecondOutput` codomain.
+   * Repository search found `closure_nonimplication_triple`, whose conclusion is the
+     existing formalization of the Section 32.10 and 33.10 nonimplications. It is cited
+     directly below; no new closure predicate is selected for this module.
    * Pinned Mathlib and Loogle both found `Setoid.quotientKerEquivRange`, the exact
      quotient-to-joint-readout-range equivalence used below. No pinned or third-party
      observer theorem packages within-round coupling and same-layer evaluation.
@@ -28,10 +25,17 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.ObserverMemory.Trajectories.WithinRoundCouplingSameLayer
 
-open D5.S0.Diagonal.EscapeCount
-open D5.S0.Diagonal.Lawvere.QualitativeEscape
 open D5.S3.ConceptDynamics.ConceptFiberDecomposition
+open D5.S3.Observer.Completion.ClosureNonimplicationTriple
+open D5.S3.Observer.WindowAlgebra.OperationalClassicalSeparation
+open D5.S3.Observer.WindowAlgebra.WindowGeneration
+open D5.S3.Observer.WindowRegister
 open D5.S3.ObserverMemory.Trajectories.StateRecordReadoutDistinguishability
+open D5.S3.ObserverMemory.Prediction.ConditionalEntropyStability
+open D5.S3.Quantum.Algebra.CovariantCommutator
+open D5.S3.Quantum.Measurements.DeterministicReadoutPvm
+open D5.S3.Quantum.Tomography.ObserverDiagonalSeparation
+open D5.S3.Quantum.Tomography.RankOneContextCommutator
 
 noncomputable section
 
@@ -57,6 +61,30 @@ def WithinRoundDecoupled {State SecondOutput : Type*}
     (controlledUpdate : RoundIndex -> State × SecondOutput -> State)
     (e : RoundIndex) : Prop :=
   forall x z z', controlledUpdate e (x, z) = controlledUpdate e (x, z')
+
+/-- The round following `e`. Source: QDO lines 47042-47047. -/
+def nextRound (e : RoundIndex) : RoundIndex :=
+  ⟨e.1 + 1, Nat.zero_lt_succ e.1⟩
+
+/-- Definition 45.1's cross-round clause. The update may change between rounds,
+and the update selected for `nextRound e` is allowed to depend on `q2` applied
+to the preceding round's terminal record. Source: QDO lines 47045-47047. -/
+structure CrossRoundUpdateSchedule
+    (State Record SecondOutput : Type*)
+    (q2 : Concept Record SecondOutput) where
+  controlledUpdate : RoundIndex -> State × SecondOutput -> State
+  previousRecord : RoundIndex -> Record
+  selectNextUpdate :
+    RoundIndex -> SecondOutput -> State × SecondOutput -> State
+  select_next : forall e,
+    controlledUpdate (nextRound e) =
+      selectNextUpdate e (q2 (previousRecord e))
+
+/-- Definition 45.1's all-round predicate for a second-layer observer: the
+boxed decoupling condition holds in every round. Source: QDO lines 47047-47048. -/
+def IsSecondLayerObserver {State SecondOutput : Type*}
+    (controlledUpdate : RoundIndex -> State × SecondOutput -> State) : Prop :=
+  forall e, WithinRoundDecoupled controlledUpdate e
 
 /-- The closed-loop update of Definition 45.2 on the single augmented state
 space, with `z = q2(lambda)`. Source: QDO lines 47051-47054 and 47059-47060. -/
@@ -89,45 +117,62 @@ def quotientSecondReadout {State Record Reading SecondOutput : Type*}
     JointObservationQuotient q1 q2 -> SecondOutput :=
   fun point => ((Setoid.quotientKerEquivRange (jointReadout q1 q2)) point).1.2
 
-/-- The same-typed evaluation table on the joint quotient. Its diagonal is the
-second readout, which is Definition 45.2's same-layer self-application.
+/-- The same-typed evaluation table on the joint quotient. The evaluating
+state is the first argument, so its diagonal is the second readout rather than
+a constant-in-the-evaluator table.
 Source: QDO lines 47051-47054 and Section 32.1 lines 15311-15325. -/
 def sameLayerEvaluation {State Record Reading SecondOutput : Type*}
     (q1 : Concept State Reading) (q2 : Concept Record SecondOutput) :
     JointObservationQuotient q1 q2 ->
       JointObservationQuotient q1 q2 -> SecondOutput :=
-  fun _ target => quotientSecondReadout q1 q2 target
+  fun evaluator _target => quotientSecondReadout q1 q2 evaluator
 
-/-- Definition 45.2: after forming the exact augmented update, joint readout,
-and joint quotient above, `q2` is the diagonal of a same-typed evaluation.
-Source: QDO lines 47051-47054. -/
+/-- The coupled instance of Definition 45.2 used by Proposition 45.3. It keeps
+three source clauses visible: failure of decoupling, equality of the named
+joint update with Definition 45.1's displayed step, and the same-typed
+diagonal evaluation on the joint quotient. Source: QDO lines 47049-47060. -/
 def IsSameLayerInRound {State Record Reading SecondOutput : Type*}
     (recordOps : AppendOnlyOps Record Reading)
     (q1 : Concept State Reading)
     (controlledUpdate : RoundIndex -> State × SecondOutput -> State)
     (q2 : Concept Record SecondOutput) (e : RoundIndex) : Prop :=
-  let _update := jointRoundUpdate recordOps q1 controlledUpdate q2 e
-  forall point,
-    sameLayerEvaluation q1 q2 point point = quotientSecondReadout q1 q2 point
+  (¬WithinRoundDecoupled controlledUpdate e) ∧
+    (forall current,
+      jointRoundUpdate recordOps q1 controlledUpdate q2 e current =
+        (controlledUpdate e (current.1, q2 current.2),
+          recordOps.append current.2 (q1 current.1))) ∧
+    forall point,
+      sameLayerEvaluation q1 q2 point point = quotientSecondReadout q1 q2 point
 
-/-- Automatic same-layer self-description closure would be the universal rule
-that every same-layer recorded round has a surjective canonical evaluation on
-its own joint quotient. Its negation is the precise non-implication used in
-Proposition 45.3, not a claim that every enriched closure is impossible.
-Source: QDO lines 47056-47061; Sections 32.10 and 33.10. -/
-def SameLayerSelfDescriptionClosureAutomatic
-    (State Record Reading SecondOutput : Type*) : Prop :=
-  forall
-    (recordOps : AppendOnlyOps Record Reading)
-    (q1 : Concept State Reading)
-    (controlledUpdate : RoundIndex -> State × SecondOutput -> State)
-    (q2 : Concept Record SecondOutput) (e : RoundIndex),
-    IsSameLayerInRound recordOps q1 controlledUpdate q2 e ->
-      Function.Surjective (sameLayerEvaluation q1 q2)
+/-- The exact already-formalized conclusions of Sections 32.10 and 33.10.
+This is definitionally the proposition proved by `closure_nonimplication_triple`;
+it introduces no round-specific or canonical-evaluation semantics. -/
+abbrev EstablishedClosureNonimplications : Prop :=
+    (predictionStableAt
+        (fun state : ZMod 2 => state - 1)
+        (fun _ : ZMod 2 => ()) 0 ∧
+      Algebra.adjoin ℂ
+        ({deterministicProjection (fun _ : ZMod 2 => ()) (), shiftMatrix 2} :
+          Set (Matrix (ZMod 2) (ZMod 2) ℂ)) ≠ ⊤) ∧
+    (windowGeneratedAlgebra 2 = ⊤ ∧
+      IsEmpty (windowGeneratedAlgebra 2 →ₐ[ℂ] ℂ)) ∧
+    ∃ context : Fin 2 -> RankOneContext 1,
+      Function.Injective (contextReadout context) ∧
+      ∃ (evaluation : Matrix (Fin 1) (Fin 1) ℂ ->
+          Matrix (Fin 1) (Fin 1) ℂ -> Bool)
+        (twist : Bool -> Bool),
+        (∀ y, twist y ≠ y) ∧
+          (fun a => twist (evaluation a a)) ∉ Set.range evaluation
+
+/-- Sections 32.10 and 33.10 are reused at their already-formalized strength.
+Source: QDO lines 16191-16237, 18110-18167, and 47055-47061. -/
+theorem established_closure_nonimplications : EstablishedClosureNonimplications :=
+  closure_nonimplication_triple
 
 /-- Proposition 45.3: failure of the boxed decoupling condition puts the two
 recorded observers on one augmented layer, while same-layer typing alone does
-not automatically make every self-description table closed.
+not imply the independent closure notions already separated in Sections 32.10
+and 33.10.
 Source: QDO lines 47056-47061. -/
 theorem within_round_coupling_is_same_layer
     {State Record Reading SecondOutput : Type*}
@@ -137,34 +182,14 @@ theorem within_round_coupling_is_same_layer
     (q2 : Concept Record SecondOutput) (e : RoundIndex)
     (coupled : ¬WithinRoundDecoupled controlledUpdate e) :
     IsSameLayerInRound recordOps q1 controlledUpdate q2 e ∧
-      ¬SameLayerSelfDescriptionClosureAutomatic State Record Reading SecondOutput := by
-  classical
+      EstablishedClosureNonimplications := by
   have sameLayer : IsSameLayerInRound recordOps q1 controlledUpdate q2 e := by
-    intro point
-    rfl
-  constructor
-  · exact sameLayer
-  · intro automaticClosure
-    unfold WithinRoundDecoupled at coupled
-    push Not at coupled
-    obtain ⟨_state, firstOutput, secondOutput, updateDiffers⟩ := coupled
-    have outputsDiffer : firstOutput ≠ secondOutput := by
-      intro outputsEqual
-      subst secondOutput
-      exact updateDiffers rfl
-    let twist : SecondOutput -> SecondOutput := fun output =>
-      if output = firstOutput then secondOutput else firstOutput
-    have twistFixedPointFree : forall output, twist output ≠ output := by
-      intro output
-      by_cases outputFirst : output = firstOutput
-      · subst output
-        simpa only [twist, if_pos rfl] using outputsDiffer.symm
-      · simpa only [twist, if_neg outputFirst] using Ne.symm outputFirst
-    have escaped := escaped_of_fixedPointFree twist twistFixedPointFree
-      (sameLayerEvaluation q1 q2)
-    apply escaped
-    exact automaticClosure recordOps q1 controlledUpdate q2 e sameLayer
-      (diagonal twist (sameLayerEvaluation q1 q2))
+    refine ⟨coupled, ?_, ?_⟩
+    · intro current
+      rfl
+    · intro point
+      rfl
+  exact ⟨sameLayer, established_closure_nonimplications⟩
 
 -- P2/P3 reverse probes: replacing the whole conclusion with `True`, or deleting
 -- either public leaf, makes at least one of these projections fail to elaborate.
@@ -183,7 +208,7 @@ example {State Record Reading SecondOutput : Type*}
     (controlledUpdate : RoundIndex -> State × SecondOutput -> State)
     (q2 : Concept Record SecondOutput) (e : RoundIndex)
     (coupled : ¬WithinRoundDecoupled controlledUpdate e) :
-    ¬SameLayerSelfDescriptionClosureAutomatic State Record Reading SecondOutput :=
+    EstablishedClosureNonimplications :=
   (within_round_coupling_is_same_layer recordOps q1 controlledUpdate q2 e coupled).2
 
 -- P5a: on a one-point second-output carrier the decoupling condition always
@@ -219,9 +244,41 @@ private theorem boolControlledUpdate_isCoupled (e : RoundIndex) :
 example (e : RoundIndex) :
     IsSameLayerInRound unitRecordOps unitReading boolControlledUpdate
         constantSecondReadout e ∧
-      ¬SameLayerSelfDescriptionClosureAutomatic Bool Unit Unit Bool :=
+      EstablishedClosureNonimplications :=
   within_round_coupling_is_same_layer unitRecordOps unitReading boolControlledUpdate
     constantSecondReadout e (boolControlledUpdate_isCoupled e)
+
+-- Contract probes for the corrected public surface. These are written before
+-- the implementation so the old vacuous definitions fail to elaborate.
+example (e : RoundIndex) :
+    ¬WithinRoundDecoupled boolControlledUpdate e :=
+  (within_round_coupling_is_same_layer unitRecordOps unitReading boolControlledUpdate
+    constantSecondReadout e (boolControlledUpdate_isCoupled e)).1.1
+
+example (e : RoundIndex) (current : AugmentedState Bool Unit) :
+    jointRoundUpdate unitRecordOps unitReading boolControlledUpdate
+        constantSecondReadout e current =
+      (boolControlledUpdate e (current.1, constantSecondReadout current.2),
+        unitRecordOps.append current.2 (unitReading current.1)) :=
+  (within_round_coupling_is_same_layer unitRecordOps unitReading boolControlledUpdate
+    constantSecondReadout e (boolControlledUpdate_isCoupled e)).1.2.1 current
+
+private def decoupledBoolUpdate : RoundIndex -> Bool × Bool -> Bool :=
+  fun _ input => input.1
+
+example : IsSecondLayerObserver decoupledBoolUpdate := by
+  intro e state firstOutput secondOutput
+  rfl
+
+private def boolCrossRoundSchedule :
+    CrossRoundUpdateSchedule Bool Unit Bool constantSecondReadout where
+  controlledUpdate := boolControlledUpdate
+  previousRecord := fun _ => ()
+  selectNextUpdate := fun _ previousOutput input => input.2.xor previousOutput
+  select_next := by
+    intro e
+    funext input
+    simp [boolControlledUpdate, constantSecondReadout]
 
 #print axioms within_round_coupling_is_same_layer
 

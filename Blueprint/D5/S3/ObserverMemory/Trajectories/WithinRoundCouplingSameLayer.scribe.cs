@@ -12,8 +12,8 @@ internal sealed class WithinRoundCouplingSameLayerDocument
             + "within_round_coupling_is_same_layer";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A coupled recorded round is a same-layer augmented system, without an automatic "
-            + "self-description closure implication.",
+        "A coupled recorded round uses the displayed augmented update on one layer; "
+            + "cross-round adaptation and the established closure nonimplications remain explicit.",
         H("Within-Round Coupling and Same-Layer Evaluation"),
         Blocks(
             Describe.Lean(
@@ -33,23 +33,22 @@ internal sealed class WithinRoundCouplingSameLayerDocument
                             + "for every pair of Y2 inputs at each state. The theorem assumes "
                             + "the negation of precisely that condition.")),
                     Paragraph(Text(
-                        "The first public conjunct is IsSameLayerInRound. Its joint state is "
-                            + "X x Lambda1, its update substitutes q2(lambda) into the controlled "
-                            + "update, and its joint readout is (q1(x), q2(lambda)). On the kernel "
-                            + "quotient of that readout, the canonical q2 evaluation is indexed "
-                            + "twice by the same quotient and its diagonal is q2 itself.")),
+                        "CrossRoundUpdateSchedule records the separate inter-round clause. The "
+                            + "update at nextRound e is selected by a function receiving q2 of "
+                            + "the preceding round's terminal record. IsSecondLayerObserver is the "
+                            + "all-round predicate requiring WithinRoundDecoupled at every round.")),
                     Paragraph(Text(
-                        "The second public conjunct negates "
-                            + "SameLayerSelfDescriptionClosureAutomatic. Expanded, it says that "
-                            + "there is no universal rule taking every same-layer recorded round "
-                            + "to surjectivity of its canonical q2 evaluation. This coupled round "
-                            + "is the counterexample. Coupling supplies "
-                            + "two distinct Y2 values; swapping one with the other and sending all "
-                            + "remaining values to the first gives a fixed-point-free twist. The "
-                            + "imported Lawvere diagonal theorem then supplies the missing table.")),
+                        "The first public conjunct is IsSameLayerInRound. It retains the coupling "
+                            + "witness, equates jointRoundUpdate pointwise with Definition 45.1's "
+                            + "displayed update, and uses the first quotient argument as the "
+                            + "evaluating state. Its diagonal is the quotient second readout.")),
                     Paragraph(Text(
-                        "Thus the second conjunct is a non-implication statement. It does not "
-                            + "claim that every enriched or higher-layer closure is impossible."))),
+                        "The second conjunct is EstablishedClosureNonimplications, definitionally "
+                            + "the proposition already proved by closure_nonimplication_triple for "
+                            + "Sections 32.10 and 33.10. No universal surjectivity predicate or "
+                            + "round-specific closure semantics is introduced here. The cited "
+                            + "countermodels say only that the closures are not implied; they do "
+                            + "not say that every enriched closure is impossible."))),
                 DescribeRole.Theorem))));
 
     private static Formula TheoremFormula()
@@ -72,9 +71,7 @@ internal sealed class WithinRoundCouplingSameLayerDocument
         Formula coupled = new Formula.Not(Call("WithinRoundDecoupled", update, e));
         Formula sameLayer = Call(
             "IsSameLayerInRound", recordOps, q1, update, q2, e);
-        Formula notAutomatic = new Formula.Not(
-            Call("SameLayerSelfDescriptionClosureAutomatic",
-                state, record, reading, secondOutput));
+        Formula establishedNonimplications = F.Id("EstablishedClosureNonimplications");
 
         return Disp(Seq(
             Forall, Sp, state, Comma, Sp, record, Comma, Sp, reading, Comma, Sp,
@@ -86,7 +83,7 @@ internal sealed class WithinRoundCouplingSameLayerDocument
             e, Colon, Sp, round, Comma, Esc,
             Open, coupled, Close, Sp, Rightarrow, Esc,
             Open, sameLayer, Close, Sp, Land, Esc,
-            Open, notAutomatic, Close, Dot));
+            Open, establishedNonimplications, Close, Dot));
     }
 
     private static Formula Arrow(Formula domain, Formula codomain) =>
