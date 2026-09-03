@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:eed21db2a888d8cec7fc81a14c64558b745848bc7f97146ce35b8d898188a2fc
+  normalized_sha256: sha256:eed21db2a888d8cec7fc81a14c64558b745848bc7f97146ce35b8d898188a2fc
+cas_ref: sha256:eed21db2a888d8cec7fc81a14c64558b745848bc7f97146ce35b8d898188a2fc
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Coding/BinaryRepairCost.binary_repair_cost_is_log_of_minimal_labels
+    target_statement_id: sha256:e4daee666d62d4ea201f9b431f6f1e0a1e0939273920ca5fa18c86b00ee116ef
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Coding/BinaryRepairCost.binary_repair_cost_is_log_of_minimal_labels
+      definition_sha256: sha256:d7eb304778bf708fb0820189bae5812710f39e35cd9213c404d2415454844fd1
+      emission_sha256: sha256:e83e7fa33adbfa77e3d6615d13789aa3c7d4f19012a4de8db96abf4a2b71923c
+  unresolved_subitems: []
