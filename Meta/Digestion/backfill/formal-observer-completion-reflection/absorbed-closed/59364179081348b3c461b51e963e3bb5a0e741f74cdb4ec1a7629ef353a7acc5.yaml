@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:59364179081348b3c461b51e963e3bb5a0e741f74cdb4ec1a7629ef353a7acc5
 cas_ref: sha256:59364179081348b3c461b51e963e3bb5a0e741f74cdb4ec1a7629ef353a7acc5
 coverage_gids:
-  - D5/S3/ConceptDynamics/DefinitionEscape/DefinitionKernelGalois.definition_relation_galois
+  - gid: D5/S3/ConceptDynamics/DefinitionEscape/DefinitionKernelGalois.definition_relation_galois
+    target_statement_id: sha256:ac2bbcf78dc3db99255a9497f04ddeda1cd1b51c5d7f2375a690271f2e5bf144
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/DefinitionEscape/DefinitionKernelGalois.definition_relation_galois
-      source_sha256: sha256:59364179081348b3c461b51e963e3bb5a0e741f74cdb4ec1a7629ef353a7acc5
-      target_statement_id: sha256:ac2bbcf78dc3db99255a9497f04ddeda1cd1b51c5d7f2375a690271f2e5bf144
   scribe:
     - gid: D5/S3/ConceptDynamics/DefinitionEscape/DefinitionKernelGalois.definition_relation_galois
       definition_sha256: sha256:d1e84fff8c1210c0c8f7e686b9f09495d29c16732ee52211a3b5f99d954606e9

@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:31bc00b1fe20ee36d640055d61e163d1ca81f8e09e7b008e2e5e2a4f3e5da8d3
 cas_ref: sha256:31bc00b1fe20ee36d640055d61e163d1ca81f8e09e7b008e2e5e2a4f3e5da8d3
 coverage_gids:
-  - D5/S3/ConceptDynamics/Transport/DefinitionalConservativity.definitional_conservativity
+  - gid: D5/S3/ConceptDynamics/Transport/DefinitionalConservativity.definitional_conservativity
+    target_statement_id: sha256:1c376a51829e0c0aa8a81317806d7eb5010e961db630295ccdc095607a410581
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Transport/DefinitionalConservativity.definitional_conservativity
-      source_sha256: sha256:31bc00b1fe20ee36d640055d61e163d1ca81f8e09e7b008e2e5e2a4f3e5da8d3
-      target_statement_id: sha256:1c376a51829e0c0aa8a81317806d7eb5010e961db630295ccdc095607a410581
   scribe:
     - gid: D5/S3/ConceptDynamics/Transport/DefinitionalConservativity.definitional_conservativity
       definition_sha256: sha256:979c88dbcd7e38a2406a17d7b62dbc374440d5b50f2ff197c7ee5f00992f965d

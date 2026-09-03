@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:13eac0ca84d737e0b65f8cebe44ada6966e219a2b36414dd1669c7784196f530
 cas_ref: sha256:13eac0ca84d737e0b65f8cebe44ada6966e219a2b36414dd1669c7784196f530
 coverage_gids:
-  - D5/S3/ContinuousObservables/PermutationOrbitHorizon.permutation_observer_horizon_eq_orbit_complement
+  - gid: D5/S3/ContinuousObservables/PermutationOrbitHorizon.permutation_observer_horizon_eq_orbit_complement
+    target_statement_id: sha256:0a5f9407786e0082c361525370a766c55f3136a03a0c1a0bebf0386b660c837d
 receipts:
-  coverage:
-    - gid: D5/S3/ContinuousObservables/PermutationOrbitHorizon.permutation_observer_horizon_eq_orbit_complement
-      source_sha256: sha256:13eac0ca84d737e0b65f8cebe44ada6966e219a2b36414dd1669c7784196f530
-      target_statement_id: sha256:0a5f9407786e0082c361525370a766c55f3136a03a0c1a0bebf0386b660c837d
   scribe:
     - gid: D5/S3/ContinuousObservables/PermutationOrbitHorizon.permutation_observer_horizon_eq_orbit_complement
       definition_sha256: sha256:bc75fc4b6f138937402f11e0185a14181fdbfc009e4c5a8b3d9e6876ea3b7f64

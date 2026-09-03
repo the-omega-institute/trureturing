@@ -4,19 +4,19 @@ fingerprints:
 cas_ref: sha256:088bfe4c5cd78c2e14992a9e652ee75943ca1f696f032e1772cc4e3ce3906226
 coverage_gids:
   - gid: D5/S1/Phase/Interference/FixedRayNineteenWitness.fixed_ray_nineteen_witness
-    target_statement_id: null
+    target_statement_id: sha256:0a2d8616b114d6e30cacab9e0f673c61b10801bfd84b0182f24e78322e1c4467
   - gid: D5/S1/Phase/Interference/FixedRayNineteenWitness.no_fixed_ray_character
-    target_statement_id: null
+    target_statement_id: sha256:1c82c128c6502c6f0eb11bab8925f1327965856e1ec4ec80fcdf96a6ccfa7b9a
   - gid: D5/S1/Phase/Interference/M1728Countershot.m1728_countershot
-    target_statement_id: null
+    target_statement_id: sha256:f5f9c9ae23e67ed5b3b8d2de56151969271f384dfd68f471b138de2d08d1c868
   - gid: D5/S1/Phase/Interference/M468MemberTable.m468TwentyFourMemberTable
     target_statement_id: null
   - gid: D5/S1/Phase/Interference/M468MemberTable.m468_split_prime_characterization
-    target_statement_id: null
+    target_statement_id: sha256:932da43eb3146675e5e36402bd3b40b137478c39bcfabae185c3645444cae5d3
   - gid: D5/S1/Phase/Interference/M468MemberTable.m468_zero_only_iff_successor_prime
-    target_statement_id: null
+    target_statement_id: sha256:974a5a90faf7b01913b75b04bcd941cc8f61513554e7a9c8fab84b976b9ad366
   - gid: D5/S1/Phase/Interference/ZolotarevSelector.zolotarev_selector_congruence
-    target_statement_id: null
+    target_statement_id: sha256:8fbba6ad6d98e070e351b756ae8b40dbb9f822958ca906e5523405be168a1e9b
   - gid: D5/S1/Phase/SeatTowerArithmetic.mod_twenty_four_eq_zero_or_twelve
     target_statement_id: sha256:8a50e401580b7951561cd3a1d416585460cb0ebe1811cace4b2e4aeea279d33f
   - gid: D5/S1/Phase/SeatTowerArithmetic.twenty_four_dvd_iff_even_quotient

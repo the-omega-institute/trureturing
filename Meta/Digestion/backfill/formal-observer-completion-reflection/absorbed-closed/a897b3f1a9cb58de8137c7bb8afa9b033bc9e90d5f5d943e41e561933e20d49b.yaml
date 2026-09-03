@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:a897b3f1a9cb58de8137c7bb8afa9b033bc9e90d5f5d943e41e561933e20d49b
 cas_ref: sha256:a897b3f1a9cb58de8137c7bb8afa9b033bc9e90d5f5d943e41e561933e20d49b
 coverage_gids:
-  - D5/S3/Observer/LinearMemory/ReachableQuotientObservability.reachable_quotient_observability
+  - gid: D5/S3/Observer/LinearMemory/ReachableQuotientObservability.reachable_quotient_observability
+    target_statement_id: sha256:0333ed0cf19251c6b70ff47eee29ea22ca6d64672f5421ce1b2b20da70c25380
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/LinearMemory/ReachableQuotientObservability.reachable_quotient_observability
-      source_sha256: sha256:a897b3f1a9cb58de8137c7bb8afa9b033bc9e90d5f5d943e41e561933e20d49b
-      target_statement_id: sha256:0333ed0cf19251c6b70ff47eee29ea22ca6d64672f5421ce1b2b20da70c25380
   scribe:
     - gid: D5/S3/Observer/LinearMemory/ReachableQuotientObservability.reachable_quotient_observability
       definition_sha256: sha256:b092ec675265a38d1eef2ba36f393d2c661f13955aa69b59cce316bc443413dd

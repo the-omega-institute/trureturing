@@ -1,0 +1,18 @@
+fingerprints:
+  raw_sha256: sha256:d35e7e61edd9bb9519b7f604eedded2838b8b003cdb46b4234deb3c279cb987c
+  normalized_sha256: sha256:d35e7e61edd9bb9519b7f604eedded2838b8b003cdb46b4234deb3c279cb987c
+cas_ref: sha256:d35e7e61edd9bb9519b7f604eedded2838b8b003cdb46b4234deb3c279cb987c
+coverage_gids:
+  - gid: D5/S3/Observer/StateNotPath.classical_diagonal_iterates_off_diag_eq_zero
+    target_statement_id: sha256:1e5b6fc64c9fb037c3ba83388a0a085df6338b8dc2d4f114c8deb80eec5e7550
+  - gid: D5/S3/Observer/StateNotPath.hadamard_basis_zero_off_diag_certificate
+    target_statement_id: sha256:64bec3e254073d6d9313d8468006ac1fc296e20f3ca429ca7a13ab6ec5e08674
+  - gid: D5/S3/QuantumChannels/NumericCoherenceCertificate.biased_diagonal_hadamard_certificate
+    target_statement_id: sha256:387ff83f1a6babf672e34ddf0f79f26b28c887f698a7d8ef767a2630c93bc760
+  - gid: D5/S3/QuantumChannels/NumericCoherenceCertificate.two_hundred_channel_zero_coherence
+    target_statement_id: sha256:2adc2ec0605d2149b220be4812f72fae64544c3868fb4d5886004d6d81c05267
+  - gid: D5/S3/QuantumChannels/NumericCoherenceCertificate.two_hundred_classical_channels_and_hadamard_certificate
+    target_statement_id: sha256:fa0e195949a92b7651fefb3945be8eb7a77d38f8bde42d1426b22ad9118a2cef
+receipts:
+  scribe: []
+  unresolved_subitems: []

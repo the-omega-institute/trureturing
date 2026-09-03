@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:611714db31f57bbdc800d69d2e18c534a4b1b93b5278fff0f8be556b7e41b96a
 cas_ref: sha256:611714db31f57bbdc800d69d2e18c534a4b1b93b5278fff0f8be556b7e41b96a
 coverage_gids:
-  - D5/S3/ObserverMemory/Trajectories/FutureItineraryShift.future_itinerary_shift
+  - gid: D5/S3/ObserverMemory/Trajectories/FutureItineraryShift.future_itinerary_shift
+    target_statement_id: sha256:78e92a33352a77543701ac4de19a1fba8717ec08003964d4c885c551ba6bd6e6
 receipts:
-  coverage:
-    - gid: D5/S3/ObserverMemory/Trajectories/FutureItineraryShift.future_itinerary_shift
-      source_sha256: sha256:611714db31f57bbdc800d69d2e18c534a4b1b93b5278fff0f8be556b7e41b96a
-      target_statement_id: sha256:78e92a33352a77543701ac4de19a1fba8717ec08003964d4c885c551ba6bd6e6
   scribe:
     - gid: D5/S3/ObserverMemory/Trajectories/FutureItineraryShift.future_itinerary_shift
       definition_sha256: sha256:d412d3a3a1a20ddce18f0443370e90433b6b1577b3ffc880ae4871a15ff49414

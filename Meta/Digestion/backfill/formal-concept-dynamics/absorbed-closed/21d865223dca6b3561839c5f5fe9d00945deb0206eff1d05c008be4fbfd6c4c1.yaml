@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:21d865223dca6b3561839c5f5fe9d00945deb0206eff1d05c008be4fbfd6c4c1
 cas_ref: sha256:21d865223dca6b3561839c5f5fe9d00945deb0206eff1d05c008be4fbfd6c4c1
 coverage_gids:
-  - D5/S3/ConceptDynamics/EpistemicOperators/FiberModalOperatorLaws.fiber_knowledge_and_possibility_operator_laws
+  - gid: D5/S3/ConceptDynamics/EpistemicOperators/FiberModalOperatorLaws.fiber_knowledge_and_possibility_operator_laws
+    target_statement_id: sha256:c7179c09eee25f593229f05e70000a162f22a59d82ad2b4fd59b9735f2c84f97
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/EpistemicOperators/FiberModalOperatorLaws.fiber_knowledge_and_possibility_operator_laws
-      source_sha256: sha256:21d865223dca6b3561839c5f5fe9d00945deb0206eff1d05c008be4fbfd6c4c1
-      target_statement_id: sha256:c7179c09eee25f593229f05e70000a162f22a59d82ad2b4fd59b9735f2c84f97
   scribe:
     - gid: D5/S3/ConceptDynamics/EpistemicOperators/FiberModalOperatorLaws.fiber_knowledge_and_possibility_operator_laws
       definition_sha256: sha256:3fb2df1cb72121f438bf226d119da8292046af696444646dac3374a4ee12f961

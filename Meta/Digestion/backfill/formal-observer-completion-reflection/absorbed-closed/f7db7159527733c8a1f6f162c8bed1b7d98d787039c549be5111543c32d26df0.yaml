@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:f7db7159527733c8a1f6f162c8bed1b7d98d787039c549be5111543c32d26df0
 cas_ref: sha256:f7db7159527733c8a1f6f162c8bed1b7d98d787039c549be5111543c32d26df0
 coverage_gids:
-  - D5/S3/Quantum/Measurement/WordProbabilityTraceRepresentation.word_probability_trace_representation
+  - gid: D5/S3/Quantum/Measurement/WordProbabilityTraceRepresentation.word_probability_trace_representation
+    target_statement_id: sha256:4881f637e867fcf8e6957d0d0539d930aeab1d2769097d9a961cf08e363236f8
 receipts:
-  coverage:
-    - gid: D5/S3/Quantum/Measurement/WordProbabilityTraceRepresentation.word_probability_trace_representation
-      source_sha256: sha256:f7db7159527733c8a1f6f162c8bed1b7d98d787039c549be5111543c32d26df0
-      target_statement_id: sha256:4881f637e867fcf8e6957d0d0539d930aeab1d2769097d9a961cf08e363236f8
   scribe:
     - gid: D5/S3/Quantum/Measurement/WordProbabilityTraceRepresentation.word_probability_trace_representation
       definition_sha256: sha256:ab32da99ac97b2b571b96c6066180f59a043f829254f8a28e1c27aeaf78092ab

@@ -4,7 +4,6 @@ fingerprints:
 cas_ref: sha256:00b88fe9cb6743819d177963ec1fa55bd8e9f514e4aca99c09f3285447a92e30
 coverage_gids: []
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems:
     - forgetting-budget-monotonicity-sharpness-dpi-and-capacity-drop

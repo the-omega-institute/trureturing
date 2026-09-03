@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:b4bc2419b2c6385742275cf965ebd8d6134b58a0e26221b8c171252ecdc72338
 cas_ref: sha256:b4bc2419b2c6385742275cf965ebd8d6134b58a0e26221b8c171252ecdc72338
 coverage_gids:
-  - D5/S3/Quantum/PredictionDepth/MultiContextBudgetLowerBound.multi_context_budget_lower_bound
+  - gid: D5/S3/Quantum/PredictionDepth/MultiContextBudgetLowerBound.multi_context_budget_lower_bound
+    target_statement_id: sha256:ceb87a744e79a9c8b7fffc22eb97b5b3d3e1bdf6551270aa6d04aaa7187dcc28
 receipts:
-  coverage:
-    - gid: D5/S3/Quantum/PredictionDepth/MultiContextBudgetLowerBound.multi_context_budget_lower_bound
-      source_sha256: sha256:b4bc2419b2c6385742275cf965ebd8d6134b58a0e26221b8c171252ecdc72338
-      target_statement_id: sha256:ceb87a744e79a9c8b7fffc22eb97b5b3d3e1bdf6551270aa6d04aaa7187dcc28
   scribe:
     - gid: D5/S3/Quantum/PredictionDepth/MultiContextBudgetLowerBound.multi_context_budget_lower_bound
       definition_sha256: sha256:e888dc2a17894ba905a92943be8154ec2dcde88bceebd002c19bef28156d2dd1

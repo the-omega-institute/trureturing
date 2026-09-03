@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:517ed1aaaecf7e99d3cb8e58f22cb4ec3961a92043ee3445e2aefa0e87b8a383
 cas_ref: sha256:517ed1aaaecf7e99d3cb8e58f22cb4ec3961a92043ee3445e2aefa0e87b8a383
 coverage_gids:
-  - D5/S3/Observer/Prediction/CompactSignatureRealization.finite_compatibility_global_realization
+  - gid: D5/S3/Observer/Prediction/CompactSignatureRealization.finite_compatibility_global_realization
+    target_statement_id: sha256:ec9d3e54c279127c5741d9ba340e418271108ac49c10cc70c91fe7df747e71bc
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/Prediction/CompactSignatureRealization.finite_compatibility_global_realization
-      source_sha256: sha256:517ed1aaaecf7e99d3cb8e58f22cb4ec3961a92043ee3445e2aefa0e87b8a383
-      target_statement_id: sha256:ec9d3e54c279127c5741d9ba340e418271108ac49c10cc70c91fe7df747e71bc
   scribe:
     - gid: D5/S3/Observer/Prediction/CompactSignatureRealization.finite_compatibility_global_realization
       definition_sha256: sha256:9645667c0661582c3a111fbd342c20c94db492394d50c9095330e8a6cceedd01

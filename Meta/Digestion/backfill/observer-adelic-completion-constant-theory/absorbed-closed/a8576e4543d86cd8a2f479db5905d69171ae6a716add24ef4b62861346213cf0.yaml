@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:a8576e4543d86cd8a2f479db5905d69171ae6a716add24ef4b62861346213cf0
 cas_ref: sha256:a8576e4543d86cd8a2f479db5905d69171ae6a716add24ef4b62861346213cf0
 coverage_gids:
-  - D5/S3/Weil/Scattering/PoissonSemigroup.coarse_poisson_semigroup
+  - gid: D5/S3/Weil/Scattering/PoissonSemigroup.coarse_poisson_semigroup
+    target_statement_id: sha256:8bf3dc42703afb87808a0aacfc54394b053e965575fc2b2dac0b044e40fc14ec
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/Scattering/PoissonSemigroup.coarse_poisson_semigroup
-      source_sha256: sha256:a8576e4543d86cd8a2f479db5905d69171ae6a716add24ef4b62861346213cf0
-      target_statement_id: sha256:8bf3dc42703afb87808a0aacfc54394b053e965575fc2b2dac0b044e40fc14ec
   scribe:
     - gid: D5/S3/Weil/Scattering/PoissonSemigroup.coarse_poisson_semigroup
       definition_sha256: sha256:6a05eba058822ebf0f9358c33129267b7a47d54cfce247b56354917aaa4e6395

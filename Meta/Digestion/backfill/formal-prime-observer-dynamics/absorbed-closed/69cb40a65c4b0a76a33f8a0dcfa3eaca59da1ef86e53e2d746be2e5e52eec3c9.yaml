@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:69cb40a65c4b0a76a33f8a0dcfa3eaca59da1ef86e53e2d746be2e5e52eec3c9
 cas_ref: sha256:69cb40a65c4b0a76a33f8a0dcfa3eaca59da1ef86e53e2d746be2e5e52eec3c9
 coverage_gids:
-  - D5/S3/ConceptDynamics/Gluing/GlobalFrameCoboundaryCriterion.global_frame_iff_transition_coboundary
+  - gid: D5/S3/ConceptDynamics/Gluing/GlobalFrameCoboundaryCriterion.global_frame_iff_transition_coboundary
+    target_statement_id: sha256:551e44d881627b10e03ca7e418367cf72e323c7947fcf7d945c21147bad22203
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Gluing/GlobalFrameCoboundaryCriterion.global_frame_iff_transition_coboundary
-      source_sha256: sha256:69cb40a65c4b0a76a33f8a0dcfa3eaca59da1ef86e53e2d746be2e5e52eec3c9
-      target_statement_id: sha256:551e44d881627b10e03ca7e418367cf72e323c7947fcf7d945c21147bad22203
   scribe:
     - gid: D5/S3/ConceptDynamics/Gluing/GlobalFrameCoboundaryCriterion.global_frame_iff_transition_coboundary
       definition_sha256: sha256:3477e687ec8f67628058e05a5cf13893db6d96ccee82aef87d8c2525aee08a9c

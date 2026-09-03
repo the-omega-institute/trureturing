@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:e707775b62092016b6a360b1ae26307cc1578cb3cee75e85708ef46d59d18e22
 cas_ref: sha256:e707775b62092016b6a360b1ae26307cc1578cb3cee75e85708ef46d59d18e22
 coverage_gids:
-  - D5/S3/Observer/Budget/WorstCaseDepthInformationLowerBound.worst_case_depth_information_lower_bound
+  - gid: D5/S3/Observer/Budget/WorstCaseDepthInformationLowerBound.worst_case_depth_information_lower_bound
+    target_statement_id: sha256:8de05c7b778173d95894e07d5a670c7e4ba35702c12911ba04847f8e66c51e7d
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/Budget/WorstCaseDepthInformationLowerBound.worst_case_depth_information_lower_bound
-      source_sha256: sha256:e707775b62092016b6a360b1ae26307cc1578cb3cee75e85708ef46d59d18e22
-      target_statement_id: sha256:8de05c7b778173d95894e07d5a670c7e4ba35702c12911ba04847f8e66c51e7d
   scribe:
     - gid: D5/S3/Observer/Budget/WorstCaseDepthInformationLowerBound.worst_case_depth_information_lower_bound
       definition_sha256: sha256:6dbb3f28491c4475b2f249a559a40264e53cc77b08493ef539cb7779c9914296

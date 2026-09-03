@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:737193dfa8b2e8001086c285574a915fa4fd1f6f169147ec3c4dc920175cf17d
 cas_ref: sha256:737193dfa8b2e8001086c285574a915fa4fd1f6f169147ec3c4dc920175cf17d
 coverage_gids:
-  - D5/S3/ConceptDynamics/Causal/FiniteCausalQueryHierarchy.finite_causal_query_hierarchy
+  - gid: D5/S3/ConceptDynamics/Causal/FiniteCausalQueryHierarchy.finite_causal_query_hierarchy
+    target_statement_id: sha256:4a55efd1e36e468a51d6d6c51bfd25ea290f2a8e631a099b4ce2afdb59c57570
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Causal/FiniteCausalQueryHierarchy.finite_causal_query_hierarchy
-      source_sha256: sha256:737193dfa8b2e8001086c285574a915fa4fd1f6f169147ec3c4dc920175cf17d
-      target_statement_id: sha256:4a55efd1e36e468a51d6d6c51bfd25ea290f2a8e631a099b4ce2afdb59c57570
   scribe:
     - gid: D5/S3/ConceptDynamics/Causal/FiniteCausalQueryHierarchy.finite_causal_query_hierarchy
       definition_sha256: sha256:d1abbf557fbf2962507c699f96f5e31f42d1cfe22ac8d87aa28219b6e3611098

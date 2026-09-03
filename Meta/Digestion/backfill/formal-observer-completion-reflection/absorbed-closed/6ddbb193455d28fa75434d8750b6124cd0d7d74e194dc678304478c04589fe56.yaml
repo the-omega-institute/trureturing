@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:6ddbb193455d28fa75434d8750b6124cd0d7d74e194dc678304478c04589fe56
 cas_ref: sha256:6ddbb193455d28fa75434d8750b6124cd0d7d74e194dc678304478c04589fe56
 coverage_gids:
-  - D5/S3/Observer/Approximation/IntertwiningDefectBounds.intertwining_defect_propagation_bounds
+  - gid: D5/S3/Observer/Approximation/IntertwiningDefectBounds.intertwining_defect_propagation_bounds
+    target_statement_id: sha256:65f40d332355b068efbf437b578655c9325e0a1bf3faa10a2f7e11ded40a7fb0
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/Approximation/IntertwiningDefectBounds.intertwining_defect_propagation_bounds
-      source_sha256: sha256:6ddbb193455d28fa75434d8750b6124cd0d7d74e194dc678304478c04589fe56
-      target_statement_id: sha256:65f40d332355b068efbf437b578655c9325e0a1bf3faa10a2f7e11ded40a7fb0
   scribe:
     - gid: D5/S3/Observer/Approximation/IntertwiningDefectBounds.intertwining_defect_propagation_bounds
       definition_sha256: sha256:a1a53c7f147605d4161fc50d534a9ebd9d3ad8bfa0c63a44d1f4ef8ae52a0975

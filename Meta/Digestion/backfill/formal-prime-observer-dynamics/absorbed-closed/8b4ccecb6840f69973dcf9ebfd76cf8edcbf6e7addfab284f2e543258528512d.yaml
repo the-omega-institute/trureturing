@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:8b4ccecb6840f69973dcf9ebfd76cf8edcbf6e7addfab284f2e543258528512d
 cas_ref: sha256:8b4ccecb6840f69973dcf9ebfd76cf8edcbf6e7addfab284f2e543258528512d
 coverage_gids:
-  - D5/S3/ConceptDynamics/RefinementFactorization/IndexedKnowledgeRefinementMonotonicity.knowledge_monotone_under_indexed_refinement_with_converse_countermodel
+  - gid: D5/S3/ConceptDynamics/RefinementFactorization/IndexedKnowledgeRefinementMonotonicity.knowledge_monotone_under_indexed_refinement_with_converse_countermodel
+    target_statement_id: sha256:e4aa5cf9133c5b4cedd7c50ec3e95f58881f821532d7b5882df4f1cb331b3773
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/RefinementFactorization/IndexedKnowledgeRefinementMonotonicity.knowledge_monotone_under_indexed_refinement_with_converse_countermodel
-      source_sha256: sha256:8b4ccecb6840f69973dcf9ebfd76cf8edcbf6e7addfab284f2e543258528512d
-      target_statement_id: sha256:e4aa5cf9133c5b4cedd7c50ec3e95f58881f821532d7b5882df4f1cb331b3773
   scribe:
     - gid: D5/S3/ConceptDynamics/RefinementFactorization/IndexedKnowledgeRefinementMonotonicity.knowledge_monotone_under_indexed_refinement_with_converse_countermodel
       definition_sha256: sha256:a661e0ddc5d5a30aee251d76d74db64b5882981dada287f35823025476fc0c51

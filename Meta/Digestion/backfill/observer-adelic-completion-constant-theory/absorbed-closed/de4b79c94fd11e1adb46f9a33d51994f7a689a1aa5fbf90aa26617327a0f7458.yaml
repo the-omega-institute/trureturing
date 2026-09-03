@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:de4b79c94fd11e1adb46f9a33d51994f7a689a1aa5fbf90aa26617327a0f7458
 cas_ref: sha256:de4b79c94fd11e1adb46f9a33d51994f7a689a1aa5fbf90aa26617327a0f7458
 coverage_gids:
-  - D5/S3/Weil/ZetaAnalytic/ContactZeroLocalization.contact_zero_localization
+  - gid: D5/S3/Weil/ZetaAnalytic/ContactZeroLocalization.contact_zero_localization
+    target_statement_id: sha256:3ba5ca6c527a19651203908492bcedf09d4e5f4b45ff3f9219b40392a3d53149
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/ZetaAnalytic/ContactZeroLocalization.contact_zero_localization
-      source_sha256: sha256:de4b79c94fd11e1adb46f9a33d51994f7a689a1aa5fbf90aa26617327a0f7458
-      target_statement_id: sha256:3ba5ca6c527a19651203908492bcedf09d4e5f4b45ff3f9219b40392a3d53149
   scribe:
     - gid: D5/S3/Weil/ZetaAnalytic/ContactZeroLocalization.contact_zero_localization
       definition_sha256: sha256:2782f3bad6435f63c6d22460a81f052529dc2a6cb8ce7521caf268a93c4ead6a

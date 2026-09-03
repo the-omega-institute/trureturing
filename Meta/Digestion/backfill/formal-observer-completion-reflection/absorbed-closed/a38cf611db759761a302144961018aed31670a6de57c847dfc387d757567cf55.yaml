@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:a38cf611db759761a302144961018aed31670a6de57c847dfc387d757567cf55
 cas_ref: sha256:a38cf611db759761a302144961018aed31670a6de57c847dfc387d757567cf55
 coverage_gids:
-  - D5/S3/Quantum/Decoherence/RepeatedRecordExponentialDecay.repeated_record_exponential_decay
+  - gid: D5/S3/Quantum/Decoherence/RepeatedRecordExponentialDecay.repeated_record_exponential_decay
+    target_statement_id: sha256:e09b558b088c79fe9615f3ada9e60dc1845a0019b423b76a1b588254862f2994
 receipts:
-  coverage:
-    - gid: D5/S3/Quantum/Decoherence/RepeatedRecordExponentialDecay.repeated_record_exponential_decay
-      source_sha256: sha256:a38cf611db759761a302144961018aed31670a6de57c847dfc387d757567cf55
-      target_statement_id: sha256:e09b558b088c79fe9615f3ada9e60dc1845a0019b423b76a1b588254862f2994
   scribe:
     - gid: D5/S3/Quantum/Decoherence/RepeatedRecordExponentialDecay.repeated_record_exponential_decay
       definition_sha256: sha256:a265e08d13defc2fc0f22358947bb84d3450289b7c734b44762523f36ec1210c

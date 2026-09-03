@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:63c71f267b03b2c20d37099040f4e1c68c83c3703c1da2898bb5950a933aa901
 cas_ref: sha256:63c71f267b03b2c20d37099040f4e1c68c83c3703c1da2898bb5950a933aa901
 coverage_gids:
-  - D5/S3/Quantum/PredictionDepth/LocalDynamicsNoTomography.local_dynamics_no_tomography
+  - gid: D5/S3/Quantum/PredictionDepth/LocalDynamicsNoTomography.local_dynamics_no_tomography
+    target_statement_id: sha256:481d77492904c198a2c54ff79d43fd307a21e2361345921eb8be783eafa0314b
 receipts:
-  coverage:
-    - gid: D5/S3/Quantum/PredictionDepth/LocalDynamicsNoTomography.local_dynamics_no_tomography
-      source_sha256: sha256:63c71f267b03b2c20d37099040f4e1c68c83c3703c1da2898bb5950a933aa901
-      target_statement_id: sha256:481d77492904c198a2c54ff79d43fd307a21e2361345921eb8be783eafa0314b
   scribe:
     - gid: D5/S3/Quantum/PredictionDepth/LocalDynamicsNoTomography.local_dynamics_no_tomography
       definition_sha256: sha256:2f5b32f280267f43e07df3ddc9511538e132a21123d4b4b6628f8e05b569cff3

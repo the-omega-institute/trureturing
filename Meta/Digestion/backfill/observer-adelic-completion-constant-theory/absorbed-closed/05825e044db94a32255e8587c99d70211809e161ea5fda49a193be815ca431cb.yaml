@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:05825e044db94a32255e8587c99d70211809e161ea5fda49a193be815ca431cb
 cas_ref: sha256:05825e044db94a32255e8587c99d70211809e161ea5fda49a193be815ca431cb
 coverage_gids:
-  - D5/S3/Weil/ZetaAnalytic/RiemannPoissonDensity.riemann_poisson_density
+  - gid: D5/S3/Weil/ZetaAnalytic/RiemannPoissonDensity.riemann_poisson_density
+    target_statement_id: sha256:7a301c704f2822522966878b902b7963e3b34311906ff1fe5e92c53c8c08fe53
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/ZetaAnalytic/RiemannPoissonDensity.riemann_poisson_density
-      source_sha256: sha256:05825e044db94a32255e8587c99d70211809e161ea5fda49a193be815ca431cb
-      target_statement_id: sha256:7a301c704f2822522966878b902b7963e3b34311906ff1fe5e92c53c8c08fe53
   scribe:
     - gid: D5/S3/Weil/ZetaAnalytic/RiemannPoissonDensity.riemann_poisson_density
       definition_sha256: sha256:074d59843d32b4ba94f572282db017108cd68cd57c6db4fd3732271244aeff32

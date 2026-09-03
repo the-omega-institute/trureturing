@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:ff76e0e92c6ceebcb30d611fe7105c1a90a70815298e96a13c88fe7742626fcb
 cas_ref: sha256:ff76e0e92c6ceebcb30d611fe7105c1a90a70815298e96a13c88fe7742626fcb
 coverage_gids:
-  - D5/S3/Observer/Budget/ResponseCompletenessCardinality.response_complete_card_lower_bound
+  - gid: D5/S3/Observer/Budget/ResponseCompletenessCardinality.response_complete_card_lower_bound
+    target_statement_id: sha256:3d59f29db74c63d033fdbabeb6c55d8c8022812090317367303c409aaed094bb
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/Budget/ResponseCompletenessCardinality.response_complete_card_lower_bound
-      source_sha256: sha256:ff76e0e92c6ceebcb30d611fe7105c1a90a70815298e96a13c88fe7742626fcb
-      target_statement_id: sha256:3d59f29db74c63d033fdbabeb6c55d8c8022812090317367303c409aaed094bb
   scribe:
     - gid: D5/S3/Observer/Budget/ResponseCompletenessCardinality.response_complete_card_lower_bound
       definition_sha256: sha256:be0b5586f15c8e7f4dd1a15fa0a617f7da76599914d007a3060e4fce6d6f48e2

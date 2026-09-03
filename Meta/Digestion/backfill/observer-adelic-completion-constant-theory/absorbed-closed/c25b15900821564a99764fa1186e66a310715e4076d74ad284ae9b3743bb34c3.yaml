@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:c25b15900821564a99764fa1186e66a310715e4076d74ad284ae9b3743bb34c3
 cas_ref: sha256:c25b15900821564a99764fa1186e66a310715e4076d74ad284ae9b3743bb34c3
 coverage_gids:
-  - D5/S3/Analytic/Adelic/ToroidalInnerThresholdIdentity.toroidal_inner_threshold_identity
+  - gid: D5/S3/Analytic/Adelic/ToroidalInnerThresholdIdentity.toroidal_inner_threshold_identity
+    target_statement_id: sha256:9b0bb2af8f78c917fbda44bcaf17b32b969574d5cf86ed4eb3c5410a6c2ae922
 receipts:
-  coverage:
-    - gid: D5/S3/Analytic/Adelic/ToroidalInnerThresholdIdentity.toroidal_inner_threshold_identity
-      source_sha256: sha256:c25b15900821564a99764fa1186e66a310715e4076d74ad284ae9b3743bb34c3
-      target_statement_id: sha256:9b0bb2af8f78c917fbda44bcaf17b32b969574d5cf86ed4eb3c5410a6c2ae922
   scribe:
     - gid: D5/S3/Analytic/Adelic/ToroidalInnerThresholdIdentity.toroidal_inner_threshold_identity
       definition_sha256: sha256:f8497538fcd36121307c6d8bdb210055006d5a3e846cdfc1bc6cb3584581e7c5

@@ -4,12 +4,10 @@ fingerprints:
 cas_ref: sha256:916fed70a37e86c6ed8c7cceab1d344fc82f373fe1c4b02e32f91b9a36ab06f1
 coverage_gids: []
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems: []
   cover_disposition:
     outcome: partial-closed
-    recorded_at_utc: 2026-09-01T14:55:33.8029770+00:00
     gids:
       - D5/S3/ConceptDynamics/ConceptFiberDecomposition.Concept
     gaps:

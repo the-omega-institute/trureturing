@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:6dcedfd08587f29e3c2010e573dc9d682378f2079e0e1487a3cf4ca54c72905c
 cas_ref: sha256:6dcedfd08587f29e3c2010e573dc9d682378f2079e0e1487a3cf4ca54c72905c
 coverage_gids:
-  - D5/S3/ObserverMemory/FunctionalGraphs/TraceRankJordanRecovery.trace_rank_spectra_determine_jordan_profile
+  - gid: D5/S3/ObserverMemory/FunctionalGraphs/TraceRankJordanRecovery.trace_rank_spectra_determine_jordan_profile
+    target_statement_id: sha256:256428f26f50d77a09851e4fae718822d6b4ec34d1c96ec3bb7fe8a340d259a6
 receipts:
-  coverage:
-    - gid: D5/S3/ObserverMemory/FunctionalGraphs/TraceRankJordanRecovery.trace_rank_spectra_determine_jordan_profile
-      source_sha256: sha256:6dcedfd08587f29e3c2010e573dc9d682378f2079e0e1487a3cf4ca54c72905c
-      target_statement_id: sha256:256428f26f50d77a09851e4fae718822d6b4ec34d1c96ec3bb7fe8a340d259a6
   scribe:
     - gid: D5/S3/ObserverMemory/FunctionalGraphs/TraceRankJordanRecovery.trace_rank_spectra_determine_jordan_profile
       definition_sha256: sha256:2f65a6d1fcf2538de32c506b5335466a8de49be55a3d828399fd271a0126c72d
