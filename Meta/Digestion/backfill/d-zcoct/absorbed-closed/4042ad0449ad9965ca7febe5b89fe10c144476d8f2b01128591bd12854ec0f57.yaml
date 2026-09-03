@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:4042ad0449ad9965ca7febe5b89fe10c144476d8f2b01128591bd12854ec0f57
+  normalized_sha256: sha256:4042ad0449ad9965ca7febe5b89fe10c144476d8f2b01128591bd12854ec0f57
+cas_ref: sha256:4042ad0449ad9965ca7febe5b89fe10c144476d8f2b01128591bd12854ec0f57
+coverage_gids:
+  - gid: D5/S3/Analytic/ZetaObservation/ArithmeticStatePositivity.arithmetic_positivity
+    target_statement_id: sha256:b7c5070bb986a01ca6cde999d872ba864e3daae907da09bde08ef8087d8d1553
+receipts:
+  scribe:
+    - gid: D5/S3/Analytic/ZetaObservation/ArithmeticStatePositivity.arithmetic_positivity
+      definition_sha256: sha256:b19a458823d518ab5440c34e01621b8c0bdb2c73b05b67a0341c9bbb3145ea44
+      emission_sha256: sha256:bc48f3851d0fe6e9be78429137703ce341fc1c4a85da90fa72fd9c9a48a858b9
+  unresolved_subitems: []
