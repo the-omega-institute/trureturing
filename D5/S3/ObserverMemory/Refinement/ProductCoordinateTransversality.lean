@@ -88,6 +88,8 @@ def coordinateReadout {Local : Type u} {Layer : Type v} :
 theorem coordinate_readout_eq_id
     {Local : Type u} {Layer : Type v} :
     coordinateReadout (Local := Local) (Layer := Layer) = id := by
+  funext state
+  rcases state with ⟨local, layer⟩
   rfl
 
 /-- Its kernel is the intersection of the two coordinate kernels. -/
