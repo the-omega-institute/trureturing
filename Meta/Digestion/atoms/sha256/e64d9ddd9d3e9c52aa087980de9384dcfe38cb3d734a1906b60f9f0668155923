@@ -1,0 +1,6 @@
+## 二　M3-f 第二级预登记:测试函数变换的闭带衰减(`FourierLaplaceClosedStripDecay`)
+
+**义务**:单一公开定理 `fourierLaplace_decay_closedStrip (b : WeilTestFunction) (η : ℝ) (hη : 0 ≤ η) : ∃ C : ℝ, 0 ≤ C ∧ ∀ w : ℂ, |w.im| ≤ η → ‖fourierLaplace b w‖ ≤ C / (1 + w.re ^ 2)`。闭合路线:紧支给出 ‖exp(−I w x)‖ ≤ exp(η|x|);两次分部积分(Mathlib `integral_mul_deriv_eq_deriv_mul_of_integrable`、`ContDiff.iterate_deriv`、`HasCompactSupport.deriv`)得 ‖(I w)² B(w)‖ ≤ ∫ exp(η|x|)‖b''‖;取 C = C₀ + C₂(C_j = ∫ exp(η|x|)‖b^{(j)}‖)并用 |w|² ≥ Re w² 收尾。落点 `D5/S3/Weil/TestFunctions/`(或 `D5/S3/Weil/`,与 `FourierLaplace` 同层)。
+**可证伪预测(写在跑之前)**:若正确,定理只消费 `TestFunctions`/`FourierLaplace` 与钉版 Mathlib,公理集为标准三条;若分部积分的边界项因支撑非紧而不消失(与 `WeilTestFunction` 定义矛盾),则本条为假。
+**边界**:不涉及零点、不涉及 zeroSum;η 任意非负,极限步取 η = 1/2。
+

@@ -155,22 +155,22 @@ Postcondition: every checklist item has evidence and none is `ASSUMED-UNVERIFIED
 
 If any checklist item cannot be evidenced, end the task as `open` with no deposit, carrying the Step 8 evidence: statement echo, search trace, failed approaches with reasons, and machine diagnostics.
 
-### 7. Deposit, verify, and cover
+### 7. Deposit and cover, then early local feedback
 
 Only after Step 6 passes, run:
 
 ```sh
 make deposit ATOM_ID=<id> GID=<D5/Path/Module.theorem_name>
 make cover ATOM_ID=<id> GID=<gid>
-make preflight
+make preflight   # early feedback only; NOT a gate (CLAUDE.md 器律②)
 ```
 
 Deposit and cover operate on the same working tree and may land in the same pull request. Neither
 command creates an intermediate commit.
 
-All three commands must exit 0. Judge them only by exit code, and never pipe a judgment command: `cmd | tail -1` reports the pipe's exit status, not the command's, and three landed incidents (a merge that silently failed, validation run on a stale base, a cover failure read as success) trace to exactly this. Run the command bare, or capture `$?` on the command itself before any formatting.
+`make deposit` and `make cover` must exit 0. `make preflight` is local early feedback: report its exit code and every rejected rule verbatim, but a nonzero local preflight does not stop the lane — the three remote required checks are the only judgment (CLAUDE.md 器律②, user 2026-08-26; ②′ push and local verification run in parallel). This macOS host has known preflight noise (Perl `C.UTF-8` locale crashes in script tests, `ENGINEERING_TEST_EVIDENCE_FAILED` without TRX, an `SL-022` observation line); stop only on a content-level red you caused (Lean error, `SL-008` frozen-surface diff, `SL-010` generality, digestion coverage), and then end as `open`. Judge them only by exit code, and never pipe a judgment command: `cmd | tail -1` reports the pipe's exit status, not the command's, and three landed incidents (a merge that silently failed, validation run on a stale base, a cover failure read as success) trace to exactly this. Run the command bare, or capture `$?` on the command itself before any formatting.
 
-If any command exits nonzero, stop and end as `open`. Report the failed command and exit code, machine diagnostics, touched paths, and the actual resulting tree state; deposit and cover do not commit their changes.
+If `make deposit` or `make cover` exits nonzero, stop and end as `open`. Report the failed command and exit code, machine diagnostics, touched paths, and the actual resulting tree state; deposit and cover do not commit their changes.
 
 Before pushing, inspect the complete deposit-and-cover delta and create one builder-owned commit:
 
@@ -181,19 +181,19 @@ git add -A
 git commit -F <commit-message-file>
 ```
 
-Postcondition: deposit, cover, and preflight exited 0; the complete intended delta is in one explicit builder commit; and the worktree is clean. A failure is captured as an `open` outcome with diagnostics and no push.
+Postcondition: deposit and cover exited 0; preflight exit code and diagnostics reported; the complete intended delta is in one explicit builder commit; and the worktree is clean. A failure is captured as an `open` outcome with diagnostics and no push.
 
 ### 8. Push and open the pull request, or report `open`
 
-After Step 7 completes, push the committed current branch and use the repository door:
+After Step 7 completes (local preflight reported, not gated), push the committed current branch and use the repository door:
 
 ```sh
 git push -u origin <branch>
-make pr-open HEAD=<branch> MESSAGE=<message-file> AUTO_MERGE=1
+make pr-open HEAD=<branch> MESSAGE=<message-file>   # deposit PRs: no AUTO_MERGE — the review triplet must return first
 # The message file's first line is the PR title; the rest is the PR body.
 ```
 
-`AUTO_MERGE=1` explicitly opts this invocation into auto-merge; without that option, the door does not arm auto-merge. After it opens the pull request, do not push further changes to that branch: the pull request may already have merged, in which case a later successful push does not put that commit on `dev`. Any further change requires a new branch and a new pull request.
+`AUTO_MERGE=1` explicitly opts an invocation into auto-merge; without that option, the door does not arm auto-merge. Deposit lanes must NOT pass it: the sshx review triplet (tests / quality / architecture) runs after the PR opens and must be able to block the merge (memory `review-must-precede-automerge`, #2337 precedent). After it opens the pull request, do not push further changes to that branch: the pull request may already have merged, in which case a later successful push does not put that commit on `dev`. Any further change requires a new branch and a new pull request.
 
 If the dispatched sandbox forbids git writes, state that constraint explicitly and hand the exact `git push` and `make pr-open` invocations above, with substituted arguments, to the caller; do not report `success` as though the work landed. Otherwise report `success` only with the opened pull request, touched paths, door-produced commit subjects, every relevant exit code, and completed fidelity-gate evidence. Or report `open`, naming the stopping step and carrying every evidence class reached; mark each unreached class not run and explain why. There is no third outcome.
 
