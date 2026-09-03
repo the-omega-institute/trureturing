@@ -178,7 +178,6 @@ theorem eventCoupling_isEventCoupling
     cases left <;> cases right <;>
       simp [eventCoupling] <;> linarith
   · simp [eventCoupling]
-    ring
   · simp [eventCoupling]
   · simp [eventCoupling]
 
