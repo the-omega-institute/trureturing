@@ -67,8 +67,8 @@ internal sealed class FourierLaplaceClosedStripDecayDocument : IScribeDocumentDe
             D(0), FormulaRelationOperator.LessThanOrEqual, eta);
 
         return Disp(ForAll(
-            [Bound("b", testFunction), Bound("eta", real), Bound("heta", etaHypothesis)],
-            conclusion));
+            [Bound("b", testFunction), Bound("eta", real)],
+            Implies(etaHypothesis, conclusion)));
     }
 
     private static Formula.BoundVariable Bound(string name, Formula domain) =>

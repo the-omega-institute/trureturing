@@ -6,7 +6,7 @@ Fourier-Laplace transforms of Weil test functions decay uniformly on closed stri
 
 **Theorem 1.1 (Uniform quadratic decay on every closed strip).**
 
-$$\forall b \in WeilTestFunction, eta \in \mathbb{R}, heta \in 0 \le eta,\; \exists C \in \mathbb{R},\; 0 \le C \land \left(\forall w \in \mathbb{C},\; \left|w.im\right| \le eta \Rightarrow \left\lVert \operatorname{fourierLaplace}(b, w) \right\rVert \le \frac{C}{1+w.re^{2}}\right)$$
+$$\forall b \in WeilTestFunction, eta \in \mathbb{R},\; 0 \le eta \Rightarrow \left(\exists C \in \mathbb{R},\; 0 \le C \land \left(\forall w \in \mathbb{C},\; \left|w.im\right| \le eta \Rightarrow \left\lVert \operatorname{fourierLaplace}(b, w) \right\rVert \le \frac{C}{1+w.re^{2}}\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Weil/TestFunctions/FourierLaplaceClosedStripDecay.fourierLaplace_decay_closedStrip` (`✓ std3`). ∎
 
