@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:ccc2b4ff1c65e4ed3913969e46079eeb14214f04c05159ff2c9370f78997c823
+  normalized_sha256: sha256:ccc2b4ff1c65e4ed3913969e46079eeb14214f04c05159ff2c9370f78997c823
+cas_ref: sha256:ccc2b4ff1c65e4ed3913969e46079eeb14214f04c05159ff2c9370f78997c823
+coverage_gids:
+  - D5/S3/Observer/Residuals/FiniteShellResidual.finite_shell_check_does_not_close_residual
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/Residuals/FiniteShellResidual.finite_shell_check_does_not_close_residual
+      source_sha256: sha256:ccc2b4ff1c65e4ed3913969e46079eeb14214f04c05159ff2c9370f78997c823
+      target_statement_id: sha256:6cf8ab42abd7d198994e857476af9f0ea3f084aa2210fb1d8fc16dc6dcdc3979
+  scribe:
+    - gid: D5/S3/Observer/Residuals/FiniteShellResidual.finite_shell_check_does_not_close_residual
+      definition_sha256: sha256:b28fa1a11f553154f74c3b3833c44e9b944930095b0527a12f199276dafb4ba1
+      emission_sha256: sha256:b53e47d6a1b646afd708e7e8a40bb4c82e0398f40ff836b6aa96232364a213bc
+  unresolved_subitems: []

@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:b1c7ba1587e021cf2465091fe277bbb5a10e59b89eaf02021c60dd3e0469b570
+  normalized_sha256: sha256:b1c7ba1587e021cf2465091fe277bbb5a10e59b89eaf02021c60dd3e0469b570
+cas_ref: sha256:b1c7ba1587e021cf2465091fe277bbb5a10e59b89eaf02021c60dd3e0469b570
+coverage_gids:
+  - D5/S3/ObserverMemory/ProObjects/ConceptAnchorHomAsymmetry.concept_anchor_hom_asymmetry
+receipts:
+  coverage:
+    - gid: D5/S3/ObserverMemory/ProObjects/ConceptAnchorHomAsymmetry.concept_anchor_hom_asymmetry
+      source_sha256: sha256:b1c7ba1587e021cf2465091fe277bbb5a10e59b89eaf02021c60dd3e0469b570
+      target_statement_id: sha256:5826430c176969dabc9899e6ce1e439f16d9a3c6c2ab0ada5c10622f13045323
+  scribe:
+    - gid: D5/S3/ObserverMemory/ProObjects/ConceptAnchorHomAsymmetry.concept_anchor_hom_asymmetry
+      definition_sha256: sha256:55f19335a97dfd599bac9bfa0bf01d0697d648acd507510627a4836468759364
+      emission_sha256: sha256:d6d93c913b09e0714997e5a6889bd8e5e0d468f57521fcb374ecb7b69d60451a
+  unresolved_subitems: []

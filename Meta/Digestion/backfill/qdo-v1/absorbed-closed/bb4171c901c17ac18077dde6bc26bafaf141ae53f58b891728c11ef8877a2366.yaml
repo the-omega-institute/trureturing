@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:bb4171c901c17ac18077dde6bc26bafaf141ae53f58b891728c11ef8877a2366
+  normalized_sha256: sha256:bb4171c901c17ac18077dde6bc26bafaf141ae53f58b891728c11ef8877a2366
+cas_ref: sha256:bb4171c901c17ac18077dde6bc26bafaf141ae53f58b891728c11ef8877a2366
+coverage_gids:
+  - D5/S3/ObserverMemory/ProObjects/FiniteStageReadout.every_ordinary_readout_has_finite_stage
+receipts:
+  coverage:
+    - gid: D5/S3/ObserverMemory/ProObjects/FiniteStageReadout.every_ordinary_readout_has_finite_stage
+      source_sha256: sha256:bb4171c901c17ac18077dde6bc26bafaf141ae53f58b891728c11ef8877a2366
+      target_statement_id: sha256:df15c41c75bb5b99b8b18235237e6ce776f708a1ed98922f65e4a400008a16b1
+  scribe:
+    - gid: D5/S3/ObserverMemory/ProObjects/FiniteStageReadout.every_ordinary_readout_has_finite_stage
+      definition_sha256: sha256:e3de87874958572708ef082a318a0b2fb42e2ec53e4b55732e5f0158ad576238
+      emission_sha256: sha256:c886e19b65a7264d78a25da493a4e4a8a658e13871b6ffc48fb394803446fedc
+  unresolved_subitems: []

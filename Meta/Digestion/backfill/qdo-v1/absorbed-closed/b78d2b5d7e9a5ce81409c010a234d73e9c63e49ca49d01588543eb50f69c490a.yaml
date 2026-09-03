@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:b78d2b5d7e9a5ce81409c010a234d73e9c63e49ca49d01588543eb50f69c490a
+  normalized_sha256: sha256:b78d2b5d7e9a5ce81409c010a234d73e9c63e49ca49d01588543eb50f69c490a
+cas_ref: sha256:b78d2b5d7e9a5ce81409c010a234d73e9c63e49ca49d01588543eb50f69c490a
+coverage_gids:
+  - D5/S3/Quantum/Dynamics/LeastInvariantObservableAlgebra.least_invariant_observable_algebra
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/Dynamics/LeastInvariantObservableAlgebra.least_invariant_observable_algebra
+      source_sha256: sha256:b78d2b5d7e9a5ce81409c010a234d73e9c63e49ca49d01588543eb50f69c490a
+      target_statement_id: sha256:9473ddbef238750ddf9ff597c4e9e30a28152268b494120eff968380a3e81d9a
+  scribe:
+    - gid: D5/S3/Quantum/Dynamics/LeastInvariantObservableAlgebra.least_invariant_observable_algebra
+      definition_sha256: sha256:fd7051a9a32acf745079abf3d0ef99e159147a4b7227941a8c6d5a85eb02f817
+      emission_sha256: sha256:abd147f195bde81b288dfb8d7490dd71d6a21a724e838a4e93e4446e399d0526
+  unresolved_subitems: []
