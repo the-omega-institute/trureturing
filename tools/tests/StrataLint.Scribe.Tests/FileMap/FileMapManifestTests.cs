@@ -129,7 +129,7 @@ public sealed class FileMapManifestTests
     }
 
     [Fact]
-    public void RepositoryManifestClassifiesDigestionCasAsALedger()
+    public void RepositoryManifestClassifiesDigestionCasAsAnAppendOnlyLedger()
     {
         var manifest = FileMapLoader.LoadRepository(RepositoryAccessor.Discover(RepositoryRootCriterion.FileMapDirectoryNotFound).Root.FullPath);
         var entry = Assert.Single(manifest.Match(
