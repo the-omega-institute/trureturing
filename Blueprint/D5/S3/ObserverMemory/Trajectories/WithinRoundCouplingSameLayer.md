@@ -2,7 +2,7 @@
 
 ## Abstract
 
-A coupled recorded round uses the displayed augmented update on one layer; cross-round adaptation and the established closure nonimplications remain explicit.
+The source coupling implication is retained, while the current same-layer encoding is explicitly recorded as unconditional.
 
 **Theorem 1.1 (Coupling places both observers on one layer).**
 
@@ -20,7 +20,9 @@ WithinRoundDecoupled says that controlledUpdate e has the same value for every p
 
 CrossRoundUpdateSchedule records the separate inter-round clause. The update at nextRound e is selected by a function receiving q2 of the preceding round's terminal record. IsSecondLayerObserver is the all-round predicate requiring WithinRoundDecoupled at every round.
 
-The first public conjunct is IsSameLayerInRound. It retains the coupling witness, equates jointRoundUpdate pointwise with Definition 45.1's displayed update, and uses the first quotient argument as the evaluating state. Its diagonal is the quotient second readout.
+The first public conjunct is IsSameLayerInRound. Its definition contains exactly the two clauses in Definition 45.2: jointRoundUpdate is pointwise the displayed Definition 45.1 update, and q2 evaluation on the joint quotient is the same-typed diagonal self-application. Failure of decoupling is not part of this conclusion predicate.
+
+The current encoding proves IsSameLayerInRound for every round update, without using the coupling premise, because both clauses are definitional equalities. This fidelity boundary remains open. Re-entry requires a source-supported account of q2 evaluation as same-layer self-application that is not definitionally true for every update; no source-unsupported conjunct may be added.
 
 The second conjunct is EstablishedClosureNonimplications, definitionally the proposition already proved by closure_nonimplication_triple for Sections 32.10 and 33.10. No universal surjectivity predicate or round-specific closure semantics is introduced here. The cited countermodels say only that the closures are not implied; they do not say that every enriched closure is impossible.
 

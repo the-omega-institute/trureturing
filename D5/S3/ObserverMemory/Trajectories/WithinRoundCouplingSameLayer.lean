@@ -127,22 +127,22 @@ def sameLayerEvaluation {State Record Reading SecondOutput : Type*}
       JointObservationQuotient q1 q2 -> SecondOutput :=
   fun evaluator _target => quotientSecondReadout q1 q2 evaluator
 
-/-- The coupled instance of Definition 45.2 used by Proposition 45.3. It keeps
-three source clauses visible: failure of decoupling, equality of the named
-joint update with Definition 45.1's displayed step, and the same-typed
-diagonal evaluation on the joint quotient. Source: QDO lines 47049-47060. -/
+/-- Definition 45.2's same-layer predicate. It keeps exactly the two source
+clauses visible: equality of the named joint update with Definition 45.1's
+displayed step, and the same-typed diagonal evaluation on the joint quotient.
+Failure of decoupling belongs only to Proposition 45.3's premise.
+Source: QDO lines 47049-47058. -/
 def IsSameLayerInRound {State Record Reading SecondOutput : Type*}
     (recordOps : AppendOnlyOps Record Reading)
     (q1 : Concept State Reading)
     (controlledUpdate : RoundIndex -> State × SecondOutput -> State)
     (q2 : Concept Record SecondOutput) (e : RoundIndex) : Prop :=
-  (¬WithinRoundDecoupled controlledUpdate e) ∧
-    (forall current,
-      jointRoundUpdate recordOps q1 controlledUpdate q2 e current =
-        (controlledUpdate e (current.1, q2 current.2),
-          recordOps.append current.2 (q1 current.1))) ∧
-    forall point,
-      sameLayerEvaluation q1 q2 point point = quotientSecondReadout q1 q2 point
+  (forall current,
+    jointRoundUpdate recordOps q1 controlledUpdate q2 e current =
+      (controlledUpdate e (current.1, q2 current.2),
+        recordOps.append current.2 (q1 current.1))) ∧
+  forall point,
+    sameLayerEvaluation q1 q2 point point = quotientSecondReadout q1 q2 point
 
 /-- The exact already-formalized conclusions of Sections 32.10 and 33.10.
 This is definitionally the proposition proved by `closure_nonimplication_triple`;
@@ -169,10 +169,34 @@ Source: QDO lines 16191-16237, 18110-18167, and 47055-47061. -/
 theorem established_closure_nonimplications : EstablishedClosureNonimplications :=
   closure_nonimplication_triple
 
+/-- The current Definition 45.2 encoding is satisfied by every round update:
+both of its clauses unfold to definitional equalities. This records the actual
+logical strength rather than making Proposition 45.3's premise load-bearing by
+putting it into the conclusion predicate.
+
+Fidelity remains open. Re-entry requires a source-supported formal account of
+`q2` evaluation as same-layer self-application that is not definitionally true
+for every update; no coupling-failure conjunct may be added to Definition 45.2.
+Source: QDO lines 47049-47058. -/
+theorem same_layer_in_round_unconditional
+    {State Record Reading SecondOutput : Type*}
+    (recordOps : AppendOnlyOps Record Reading)
+    (q1 : Concept State Reading)
+    (controlledUpdate : RoundIndex -> State × SecondOutput -> State)
+    (q2 : Concept Record SecondOutput) (e : RoundIndex) :
+    IsSameLayerInRound recordOps q1 controlledUpdate q2 e := by
+  constructor
+  · intro current
+    rfl
+  · intro point
+    rfl
+
 /-- Proposition 45.3: failure of the boxed decoupling condition puts the two
 recorded observers on one augmented layer, while same-layer typing alone does
 not imply the independent closure notions already separated in Sections 32.10
-and 33.10.
+and 33.10. The source premise is retained in the public clause map, although
+the current Definition 45.2 encoding makes the same-layer conclusion
+unconditional as recorded by `same_layer_in_round_unconditional`.
 Source: QDO lines 47056-47061. -/
 theorem within_round_coupling_is_same_layer
     {State Record Reading SecondOutput : Type*}
@@ -180,16 +204,11 @@ theorem within_round_coupling_is_same_layer
     (q1 : Concept State Reading)
     (controlledUpdate : RoundIndex -> State × SecondOutput -> State)
     (q2 : Concept Record SecondOutput) (e : RoundIndex)
-    (coupled : ¬WithinRoundDecoupled controlledUpdate e) :
+    (_coupled : ¬WithinRoundDecoupled controlledUpdate e) :
     IsSameLayerInRound recordOps q1 controlledUpdate q2 e ∧
       EstablishedClosureNonimplications := by
-  have sameLayer : IsSameLayerInRound recordOps q1 controlledUpdate q2 e := by
-    refine ⟨coupled, ?_, ?_⟩
-    · intro current
-      rfl
-    · intro point
-      rfl
-  exact ⟨sameLayer, established_closure_nonimplications⟩
+  exact ⟨same_layer_in_round_unconditional recordOps q1 controlledUpdate q2 e,
+    established_closure_nonimplications⟩
 
 -- P2/P3 reverse probes: replacing the whole conclusion with `True`, or deleting
 -- either public leaf, makes at least one of these projections fail to elaborate.
@@ -248,12 +267,10 @@ example (e : RoundIndex) :
   within_round_coupling_is_same_layer unitRecordOps unitReading boolControlledUpdate
     constantSecondReadout e (boolControlledUpdate_isCoupled e)
 
--- Contract probes for the corrected public surface. These are written before
--- the implementation so the old vacuous definitions fail to elaborate.
+-- Contract probes for the corrected public surface.
 example (e : RoundIndex) :
     ¬WithinRoundDecoupled boolControlledUpdate e :=
-  (within_round_coupling_is_same_layer unitRecordOps unitReading boolControlledUpdate
-    constantSecondReadout e (boolControlledUpdate_isCoupled e)).1.1
+  boolControlledUpdate_isCoupled e
 
 example (e : RoundIndex) (current : AugmentedState Bool Unit) :
     jointRoundUpdate unitRecordOps unitReading boolControlledUpdate
@@ -261,7 +278,7 @@ example (e : RoundIndex) (current : AugmentedState Bool Unit) :
       (boolControlledUpdate e (current.1, constantSecondReadout current.2),
         unitRecordOps.append current.2 (unitReading current.1)) :=
   (within_round_coupling_is_same_layer unitRecordOps unitReading boolControlledUpdate
-    constantSecondReadout e (boolControlledUpdate_isCoupled e)).1.2.1 current
+    constantSecondReadout e (boolControlledUpdate_isCoupled e)).1.1 current
 
 private def decoupledBoolUpdate : RoundIndex -> Bool × Bool -> Bool :=
   fun _ input => input.1
@@ -269,6 +286,14 @@ private def decoupledBoolUpdate : RoundIndex -> Bool × Bool -> Bool :=
 example : IsSecondLayerObserver decoupledBoolUpdate := by
   intro e state firstOutput secondOutput
   rfl
+
+-- Definition 45.2 does not exclude a decoupled round: both structural clauses
+-- remain satisfied. This is the permanent form of the circularity counterprobe.
+example (e : RoundIndex) :
+    IsSameLayerInRound unitRecordOps unitReading decoupledBoolUpdate
+      constantSecondReadout e :=
+  same_layer_in_round_unconditional unitRecordOps unitReading decoupledBoolUpdate
+    constantSecondReadout e
 
 private def boolCrossRoundSchedule :
     CrossRoundUpdateSchedule Bool Unit Bool constantSecondReadout where
