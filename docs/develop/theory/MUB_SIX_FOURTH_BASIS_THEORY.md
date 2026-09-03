@@ -1,246 +1,271 @@
 # MUB Six Fourth-Basis Research Theory
 
-> **统一理论卷规则。** 六维四互无偏基 research lane 的新增推理统一追加到本卷。Lean 真源、Scribe 和 Blueprint 可以按节点拆分，理论叙事只维护这一份主卷。
+> **统一理论卷规则。** 六维四互无偏基 research lane 的新理论推理统一追加到本文件。Lean 节点继续拥有独立 GID、Scribe 与 Blueprint 投影，不再为每一个局部 obstruction 建立新的 theory 文档。
 >
-> **状态边界。** 本卷区分已证明恒等式、文献输入、条件归约、待证猜想和长期目标。当前没有宣称解决六维四 MUB 开放问题。
+> **状态约定。** 本卷明确区分机器已证、直接推导、文献输入、条件归约和开放猜想。任何局部分支证书都不得被表述为六维四 MUB 已经解决。
 
-## 0. 总目标与先库后证审计
+## 0. 开放目标与仓库接口
 
 目标是判断是否存在四个两两 mutually unbiased orthonormal bases in `C^6`。
 
-固定第一基为坐标基后，另外三个基可以写成六阶 complex Hadamard matrices。仓库已经建立：
+固定第一基为坐标基以后，另外三个基可表示为六阶 complex Hadamard matrices。仓库当前已经具有：
 
 ```text
 RankOneContext
-centeredProjector / centeredContextPlane
-commutator / incompatibility / tomography
-ComplexHadamard
-HadamardEquivalent
-HadamardUnbiased
-exact Hadamard atlas
-lifted four-MUB compatibility
+centeredProjector
+centeredContextPlane
+overlap / incompatibility
+rank-one commutator conservation
+tomography and purity Pythagoras
+complex Hadamard and Hadamard-unbiased transitions
+exact Hadamard atlas consumer contract
 ```
 
-本轮形式化前的库检索还确认可以直接复用：
+本研究线复用这些对象。有限 Fourier 与三循环 character 运算优先复用：
 
 ```text
-Mathlib.LinearAlgebra.Matrix.Circulant
 D5/S3/Fourier/FinitePoisson.lean
 D5/S3/Observer/WindowRegister.lean
 ```
 
-其中 `WindowRegister` 已经定义 `windowRoot M`，证明其 primitive-root 性质，并提供 cyclic shift、clock、Weyl relation 和 unitary 结论。后续三阶 Fourier mode、cube root of unity 和 circulant diagonalization 不再自行引入另一套根单位定义。
+不在 MUB 文件中重新建立一套离散 Fourier 库。
 
-2026 年 order-six Hadamard 完整分类 claim 提供单矩阵 atlas。2026 年 centered-projector SoS 结果说明正确坐标能够恢复一般 `m <= d+1` 上界，但在 `d=6,m=4` 时一般 rank certificate 严格为正。因此 fourth-basis obstruction 必须使用六阶专属代数结构。
+当前总路线是：
 
-## 1. 固定 edge 与 double-completion locus
-
-设四个 MUB 为
-
-```math
-B_0,B_1,B_2,B_3.
+```text
+order-six Hadamard atlas
+  -> fixed-edge completion fibre
+  -> two compatible completions
+  -> centered-projector / symmetry-plane sharp bound
+  -> Fourier and strict-2-circulant branch certificates
+  -> global atlas aggregation
 ```
 
-共同酉规范令 `B_0=I`，固定第二基对应六阶 Hadamard `H`。第三、第四基应视为同一 edge `(I,H)` 上的两个 completions。
+## 1. 标准 Hadamard 归约与规范边界
 
-记合法 completion fiber 为
-
-```math
-\mathfrak C(H).
-```
-
-定义
+固定 `B0 = I`，其余三个基写为无归一化 Hadamard matrices：
 
 ```math
-\mathcal E_6^{(1)}=\{H:\mathfrak C(H)\neq\varnothing\},
+H_r H_r^\dagger = 6I,
+\qquad |(H_r)_{ij}|^2=1.
 ```
 
-以及 double-completion locus
+两基互无偏等价于：
+
+```math
+|(H_r^\dagger H_s)_{ij}|^2=6.
+```
+
+单矩阵标准等价允许独立行列置换与单位相位：
+
+```math
+H\mapsto D_rP_rHP_cD_c.
+```
+
+多矩阵 compatibility 只允许一个共同 ambient left gauge。独立选择三个 Hadamard 等价类的 canonical representatives 会丢失相对左规范。仓库已经用二维精确反例机器证明 MUB compatibility 不下降到独立 Hadamard classes。
+
+因此 2026 order-six classification 的正确消费者是带显式 lifts 的 atlas compatibility，而不是 class-name triple。
+
+## 2. fixed-edge completion fibre
+
+设固定边为：
+
+```math
+(I,T).
+```
+
+定义 factor fibre：
+
+```math
+\mathcal F(T)=
+\{F\in U(6):F\text{ flat},\ FT\text{ flat}\}.
+```
+
+若 `F in F(T)`，则：
+
+```math
+W=F^\dagger
+```
+
+给出同时无偏于 `I` 与 `T` 的第三基。反过来也成立。因此 completion fibre 可以用 factor fibre 表示。
+
+若 `F,F' in F(T)` 对应两个 completions `W=F^dagger` 与 `W'=F'^dagger`，则：
+
+```math
+W^\dagger W'=FF'^\dagger.
+```
+
+所以 quartet 条件是：
+
+```math
+\boxed{
+F,F'\in\mathcal F(T),
+\qquad FF'^\dagger\text{ flat}.
+}
+```
+
+定义：
+
+```math
+\mathcal E_6^{(1)}=
+\{T:\mathcal F(T)\ne\varnothing\},
+```
+
+以及：
 
 ```math
 \mathcal E_6^{(2)}=
-\{H:\exists C,D\in\mathfrak C(H),\ C^*D=6J_6\}.
+\{T:\exists F,F'\in\mathcal F(T),\ FF'^\dagger\text{ flat}\}.
 ```
 
-六维 four-MUB 问题等价于
+四 MUB 问题等价于：
 
 ```math
 \boxed{\mathcal E_6^{(2)}=\varnothing.}
 ```
 
-这比分类所有 MUB triplets 更窄，因为 quartet 自带额外的 cross-completion 方程。
+`E_6^(2)` 比全部 MUB triplet support `E_6^(1)` 更小。quartet-specific cross condition 应当在第一步就参与消元。
 
-## 2. Hadamard cube cross-Gram
+## 3. Hadamard-cube cross Gram
 
-对固定 edge 的两个 factorized cube completions 写
+对共享底面 `H` 的两个 factorized cube slices：
 
 ```math
 C_{ijk}=H_{ij}X_{jk}Y_{ik},
-\qquad
-D_{ij\ell}=H_{ij}X'_{j\ell}Y'_{i\ell}.
 ```
 
-若 `H` entrywise unimodular，则直接展开得到
+```math
+D_{ij\ell}=H_{ij}X'_{j\ell}Y'_{i\ell},
+```
+
+entrywise unimodularity of `H` 给出：
 
 ```math
 \boxed{
-C^*D=(X^*X')\circ(Y^*Y').
+C^\dagger D=(X^\dagger X')\circ(Y^\dagger Y').
 }
 ```
 
-这里 `circ` 是 entrywise Hadamard product。这条恒等式已经进入机器真源：
+这里 `circ` 是 entrywise Hadamard product。该恒等式已经写入 Lean 真源。
 
-```text
-D5/S3/Quantum/Tomography/MUBCubeCompatibility.lean
-factorizedCube_crossGram_apply
-factorizedCube_crossGram
-```
-
-归一化
-
-```math
-U=X/\sqrt d,\quad U'=X'/\sqrt d,
-\quad V=Y/\sqrt d,\quad V'=Y'/\sqrt d
-```
-
-以后，quartet gluing 要求
+若归一化后的两个相对矩阵 `A,B` 都 unitary，且：
 
 ```math
 A\circ B=d^{-1}J,
-\qquad
-A=U^*U',\quad B=V^*V'.
 ```
 
-因为 `A,B` 都是 unitary，逐行 Cauchy-Schwarz 取等强制
+则逐行 Cauchy equality 迫使：
 
 ```math
-|A_{kl}|=|B_{kl}|=d^{-1/2},
+|A_{ij}|=|B_{ij}|=d^{-1/2},
+\qquad B=\overline A.
 ```
 
-并由 `A_{kl}B_{kl}=1/d` 得
+这说明 double completion 的两个方向不能独立变化。一个相对 transition 由另一个决定。
 
-```math
-\boxed{B=\overline A.}
-```
+## 4. cube 与 centered projector plane 的同一性
 
-所以两个 completion 的两个 relative transitions 不独立。quartet gluing 消掉了一个完整相对矩阵。
-
-## 3. cube geometry 与 centered projector plane 的统一
-
-completion slices 满足
-
-```math
-C^*C=d^2I,
-\qquad D^*D=d^2I.
-```
-
-若第四基也与第三基互无偏，则
-
-```math
-C^*D=dJ.
-```
-
-定义
+归一化写：
 
 ```math
 \widehat C=C/d,
 \qquad
 \widehat D=D/d,
 \qquad
-u=d^{-1/2}\mathbf 1.
+u=d^{-1/2}\mathbf 1_d.
 ```
 
-则
+quartet cross Gram 化为：
 
 ```math
-\widehat C^*\widehat D=uu^*.
+\widehat C^\dagger\widehat D=uu^\dagger.
 ```
 
-因此
+于是：
 
 ```math
 \widehat C(u^\perp)\perp\widehat D(u^\perp).
 ```
 
-在 `d=6`，两个空间都是五维。这正是 centered rank-one projector context planes 的正交结构。Hadamard cube 与 centered-projector SoS 共享同一个去掉全一方向后的信息几何。
+在 `d=6`，两个 image 都是五维空间。它们正是去掉 identity direction 后的 centered rank-one context planes。
 
-## 4. centered rank-one projector variety
+所以 Hadamard cube、projector-coordinate SoS 和 tomography Pythagoras 描述的是同一 geometry：
 
-对纯态投影 `P` 定义
+```text
+common all-one direction
+  + orthogonal five-dimensional information planes.
+```
+
+## 5. centered rank-one quadratic variety
+
+对 rank-one projector `P` 定义：
 
 ```math
 Q=P-I/d.
 ```
 
-由 `P^2=P` 得
+由 `P^2=P` 直接得到：
 
 ```math
 Q^2=(1-2/d)Q+(d-1)d^{-2}I.
 ```
 
-六维特化为
+在六维：
 
 ```math
-\boxed{Q^2=\frac23Q+\frac5{36}I.}
+\boxed{
+Q^2=\frac23Q+\frac5{36}I.
+}
 ```
 
-并且
+同时：
 
 ```math
-Tr(Q)=0,
-\qquad Tr(Q^2)=5/6.
-```
-
-同一基的六个 `Q_i` 构成 regular 5-simplex：
-
-```math
-Tr(Q_iQ_j)=-1/6\quad(i\neq j).
-```
-
-不同 MUB 之间：
-
-```math
-Tr(Q_iQ_j)=0.
-```
-
-所以固定两个基以后，共同无偏纯态属于
-
-```math
-\mathcal P_1\cap(V_I\oplus V_H)^\perp,
-```
-
-其中 `P_1` 是 rank-one quadratic variety。固定三个基后则属于
-
-```math
-\mathcal P_1\cap(V_I\oplus V_H\oplus V_C)^\perp.
-```
-
-一般 linear packing 只能证明 `m<=7`。第四基问题需要 quadratic rank-one variety 与 order-six branch equations 的交。
-
-## 5. 三三分割 moments 的 feature-kernel 压缩
-
-对六阶 Hadamard `H`，对三元素子集 `I` 定义
-
-```math
-\mu(I)_r=+1\ (r\in I),
+\operatorname{Tr}Q=0,
 \qquad
-\mu(I)_r=-1\ (r\notin I).
+\operatorname{Tr}(Q^2)=5/6.
 ```
 
-定义列乘积
+同一 basis 的六个 centered projectors 构成 regular `5`-simplex：
 
 ```math
-\delta_k(H)=\prod_r H_{rk}.
+\operatorname{Tr}(Q_iQ_j)=-1/6
+\quad(i\ne j).
 ```
 
-对奇数 `q` 定义 `20 x 6` feature matrix
+不同 MUB contexts 之间：
 
 ```math
-V_q(H)_{I,k}=
-\left(\prod_{r\in I}H_{rk}\right)^{2q}.
+\operatorname{Tr}(Q_iR_j)=0.
 ```
 
-unimodularity 给出
+一般 `m<=d+1` 上界只利用 plane packing。六维 `m=4` 必须进一步利用 rank-one quadratic variety 与 order-six branch equations 的交。
+
+## 6. feature kernels 与 Newton-Gram 压缩
+
+对六阶 Hadamard `H`，对三元素子集 `I subset {1,...,6}` 定义：
+
+```math
+\mu(I)_i=1\quad(i\in I),
+\qquad
+\mu(I)_i=-1\quad(i\notin I).
+```
+
+定义列乘积：
+
+```math
+\delta_k(H)=\prod_iH_{ik}.
+```
+
+对奇数 `q` 定义 square-free feature matrix：
+
+```math
+V_q(H)_{I,k}
+=
+\left(\prod_{i\in I}H_{ik}\right)^{2q}.
+```
+
+由 unimodularity：
 
 ```math
 \boxed{
@@ -249,45 +274,32 @@ g_H(q\mu(\cdot))
 }
 ```
 
-因此全部三三分割 moment vanishing 等价于 prescribed-kernel condition
+定义：
 
 ```math
-V_q(H)\overline{\delta(H)^q}=0.
+K_q(H)=V_q(H)^\dagger V_q(H).
 ```
 
-定义
+则：
 
 ```math
-K_q(H)=V_q(H)^*V_q(H).
+V_q(H)x=0
+\iff
+K_q(H)x=0.
 ```
 
-则
+令：
 
 ```math
-V_q(H)x=0\iff K_q(H)x=0.
+G_m(H)=(H^{\circ m})^\dagger H^{\circ m}.
 ```
 
-于是 20 个 feature equations 被压成 `6 x 6` PSD kernel。
-
-## 6. Newton-Gram 与 cubic square-free identities
-
-定义 entrywise-power Gram matrices
-
-```math
-G_m(H)=(H^{\circ m})^*H^{\circ m}.
-```
-
-利用三阶 Newton identity
-
-```math
-6e_3=p_1^3-3p_1p_2+2p_3
-```
-
-得到
+Newton identity `6e_3=p_1^3-3p_1p_2+2p_3` 给出：
 
 ```math
 \boxed{
-K_q(H)=\frac16\left[
+K_q(H)=\frac16
+\left[
 G_{2q}(H)^{\circ3}
 -3G_{2q}(H)\circ G_{4q}(H)
 +2G_{6q}(H)
@@ -295,556 +307,729 @@ G_{2q}(H)^{\circ3}
 }
 ```
 
-再定义
+所以 20 个三三分割 feature equations 可压缩为一个 `6 x 6` prescribed-kernel condition。
 
-```math
-T_H(I,k)=\prod_{r\in I}H_{rk},
-\qquad |I|=3.
-```
+这条路线保留为 exceptional-locus certificate。当前不把它作为 generic strict-X 分支的唯一入口。
 
-对六阶 complex Hadamard `H`：
+## 7. cubic orientation 的逻辑边界
 
-```math
-\boxed{
-T_H^*T_H
-=18I_6+\frac13(H^{\circ3})^*H^{\circ3}.
-}
-```
-
-更一般的 polarized identity 为
-
-```math
-\boxed{
-T_H^*T_K=
-\frac16\left[
-(H^*K)^{\circ3}
--3(H^*K)\circ((H^{\circ2})^*K^{\circ2})
-+2(H^{\circ3})^*K^{\circ3}
-\right].
-}
-```
-
-这些技术 lemma 独立于 MUB-six conjecture。后续应在有限子集与 elementary-symmetric polynomial 库检索后单独形式化。
-
-## 7. 2026 cubic orientation 的逻辑边界
-
-需要严格区分：
+对非负 families `a_pi,b_pi`，必须区分：
 
 ```math
 \forall\pi,\ a_\pi b_\pi=0
 ```
 
-和
+与：
 
 ```math
-(\sum_\pi a_\pi)(\sum_\pi b_\pi)=0.
+\left(\sum_\pi a_\pi\right)
+\left(\sum_\pi b_\pi\right)=0.
 ```
 
-对非负 `a,b`，第二式推出第一式。第一式允许零侧随 `pi` 改变，因此一般不能推出第二式。
+第二式推出第一式。第一式一般不推出第二式，因为零的一侧可以随 `pi` 改变。仓库已经用 `Fin 2` 非负反例机器证明这一点。
 
-机器真源已经加入一个 `Fin 2` 精确反例：
-
-```text
-pointwise_product_zero_does_not_force_global_orientation
-```
-
-以及安全的正向蕴含：
-
-```text
-pointwise_product_zero_of_global_sum_product_zero
-```
-
-后续必须显式区分：
-
-```text
-pointwise cubic product vanishing
-orientation coherence
-global one-sided cubic vanishing
-```
-
-真正缺失的 coherence 命题应写为
+因此任何依赖 global orientation 的论证都必须额外证明 orientation coherence：
 
 ```math
-supp(a)\cap supp(b)=\varnothing
+\operatorname{supp}(a)\cap\operatorname{supp}(b)=\varnothing
 \Longrightarrow
-a=0\ \text{or}\ b=0.
+a=0\text{ or }b=0.
 ```
 
-quartet 的 double-completion 条件可能提供 triplet-only 情形没有的额外刚性。
+该 coherence 当前仍是开放桥。
 
-## 8. 2-circulant seed 与 Zauner factorization 的准确文献边界
+## 8. strict 2-circulant edge 的三模式分解
 
-Szöllősi 的 2-circulant order-six seed 使用
+令 strict-X edge `T` 与 order-three shift：
 
 ```math
-H=\begin{pmatrix}A&B\\B^*&-A^*\end{pmatrix},
+S=\operatorname{diag}(P_3,P_3)
 ```
 
-其中 `A,B` 是 entrywise-unimodular `3 x 3` circulant matrices。其 Hadamard 条件收缩为
+交换。令 block Fourier unitary `Q` diagonalize `S`。则：
 
 ```math
-\frac ab+\frac bc+\frac ca+
-\frac de+\frac ef+\frac fd=0.
+D=QTQ^\dagger
+=
+T_0\oplus T_1\oplus T_2,
 ```
 
-Zauner factorization 将任意 `2m x 2m` 2-circulant unitary 写成
+其中每个：
 
 ```math
-T=Z_1^*Z_2,
+T_k\in U(2).
 ```
 
-其中
+对 factor `F in F(T)` 定义 mode-coordinate matrix：
 
 ```math
-Z_1(X)=\frac1{\sqrt2}
+U=FQ^\dagger.
+```
+
+则 fixed-edge equations 精确化为：
+
+```math
+U\text{ unitary},
+\qquad UQ\text{ flat},
+\qquad UDQ\text{ flat}.
+```
+
+对第二个 factor `F'`，令 `U'=F'Q^dagger`。两 completions 互无偏等价于：
+
+```math
+UU'^\dagger\text{ flat}.
+```
+
+这里 cross condition 不再含 `Q` 或 `D`。这是 strict-X quartet 的最小 mode-coordinate carrier。
+
+## 9. Zauner local fibre
+
+一个 mode block 可参数化为：
+
+```math
+S(u,v,x,y)
+=
+\frac12
 \begin{pmatrix}
-F_m&XF_m\\
-F_m&-XF_m
-\end{pmatrix}
-```
-
-和相应的 `Z_2(U,V,Y)` 都是 flat unitaries。对 `m=3`，这从一个 2-circulant Hadamard seed 产生 MUB triplet。
-
-需要保持文献边界：该 proposition 证明每个 2-circulant unitary 至少有一个这类 flat factorization。它没有证明固定 edge 的每个 MUB completion 都来自该 canonical factorization。因此 canonical fibre exclusion 不能直接升级为整个 strict-`X` family exclusion。
-
-## 9. 一个 Fourier mode 的 exact two-point fibre
-
-Fourier diagonalization 把 `6 x 6` 2-circulant unitary 分成三个 `2 x 2` modes
-
-```math
-S_k=\begin{pmatrix}a_k&b_k\\c_k&d_k\end{pmatrix}.
-```
-
-Zauner 的局部参数化为
-
-```math
-S=\frac12
-\begin{pmatrix}
-u+v & y(u-v)\\
-(u-v)/x & y(u+v)/x
-\end{pmatrix},
-```
-
-其中 `u,v,x,y` 为单位相位。清除除法后：
-
-```math
-u+v=2a,
-\qquad y(u-v)=2b,
-\qquad u-v=2cx,
-\qquad y(u+v)=2dx.
-```
-
-已经形式化的二次后果是
-
-```math
-\boxed{cd\,x^2=ab,}
-\qquad
-\boxed{ac\,y^2=bd.}
-```
-
-前一版理论将 `x` 与 `y` 的符号视为彼此独立。进一步消元表明它们必须同步。
-
-定义局部 involution
-
-```math
-\tau(u,v,x,y)=(v,u,-x,-y).
-```
-
-它保持四个局部 factorization equations。若 `cd\neq0` 且 `x\neq0`，那么同一 `2 x 2` mode 的任意两个 Zauner factors `z,w` 满足
-
-```math
-\boxed{w=z\quad\text{or}\quad w=\tau(z).}
-```
-
-证明结构如下：
-
-1. `cd x^2=ab` 给出 `w.x=\pm z.x`。
-2. 由 `b=ycx` 和 `cx\neq0`，`x` 的符号唯一决定 `y` 的同一符号。
-3. 固定 `u+v` 与 `u-v` 后，正号给出 `(w.u,w.v)=(z.u,z.v)`，负号给出 `(w.u,w.v)=(z.v,z.u)`。
-
-所以 local canonical fibre 是一个二点 cover，其 deck transformation 正是 `tau`。三个 Fourier modes 的 labelled canonical fibre至多为
-
-```math
-(\mathbb Z/2\mathbb Z)^3,
-```
-
-即八个点。之后还要再除以 mode relabeling、basis column gauge 和 family equivalence。
-
-## 10. fixed-edge completion 的方向修正
-
-这是上一版理论中必须修正的矩阵方向。
-
-Zauner factorization 给出
-
-```math
-T=Z_1^*Z_2.
-```
-
-原 triplet 是
-
-```math
-\{I,Z_1,Z_2\}.
-```
-
-若把 edge `(Z_1,Z_2)` 共同左乘 `Z_1^*` 固定为 `(I,T)`，第三个基变为
-
-```math
-W=Z_1^*.
-```
-
-因此两个 factorization branches `Z_1,Z_1'` 对应的 fixed-edge completions 是
-
-```math
-W=Z_1^*,
-\qquad W'=Z_1'^*.
-```
-
-它们的 relative transition 应检查
-
-```math
-W^*W'=Z_1Z_1'^*,
-```
-
-而不是 `Z_1^*Z_1'`。
-
-现有 Lean theorem 关于 `Z_1^*Z_1'` 的零 off-diagonal block 仍是正确的 factor-relative 恒等式，但不能单独作为 fixed-edge completion 结论。后续真源必须增加正确方向。
-
-## 11. canonical fixed-edge completions 的 24-zero obstruction
-
-对
-
-```math
-Z_1(X)=\frac1{\sqrt2}
-\begin{pmatrix}
-F&XF\\
-F&-XF
-\end{pmatrix}
-```
-
-和 `F F^*=I`，直接 block multiplication 得
-
-```math
-\boxed{
-Z_1(X)Z_1(X')^*
-=\frac12
-\begin{pmatrix}
-I+XX'^*&I-XX'^*\\
-I-XX'^*&I+XX'^*
+u+v&y(u-v)\\
+(u-v)/x&y(u+v)/x
 \end{pmatrix}.
-}
 ```
 
-`X,X'` 都是 diagonal。于是四个 `3 x 3` blocks 全部 diagonal。任意不同 Fourier-mode indices `i\neq j` 都给出零 entry。
-
-在 `m=3` 时，每个 `3 x 3` block 有六个 off-diagonal zeros，总计至少
+对固定 matrix entries `a,b,c,d`，直接消元得到：
 
 ```math
-4\times6=24
+\boxed{cdx^2=ab,}
 ```
-
-个精确零 entry。因此：
 
 ```math
-\boxed{
-\text{任意两个 Zauner canonical fixed-edge completions
-都不可能彼此 mutually unbiased.}
-}
+\boxed{acy^2=bd.}
 ```
 
-这个结论甚至不需要先使用 `X'=EX` 的 sign-branch 关系。只要两个 completion 都来自相同 Fourier block 的 Zauner canonical factorization，sparsity 已经足够排除 flat relative transition。
-
-## 12. 2-circulant Hadamard seed 没有退化 Fourier mode
-
-上一版理论把 local fibre jump 与 cubic discriminant `D[alpha]` 联系起来。进一步推理表明，局部 Zauner mode 在整个合法 2-circulant Hadamard seed 上都不能退化。以下是精确论证。
-
-设 `rho^3=1`，假设 circulant block `A` 的某个 Fourier coefficient 为零：
+在非零 generic locus，若两组参数表示同一 block，则：
 
 ```math
-a+\rho b+\rho^2c=0.
+x'=\pm x,
+\qquad
+y'=\pm y.
 ```
 
-三个 summands 都有单位模。三个单位圆点之和为零时，它们构成正三角形。因此存在 cube root `mu`，使三组 cyclic ratios 相等。等价地，存在 `t^3=1` 使
+继续利用 `u+v` 与 `u-v` 可得到更强的二点 fibre：
 
 ```math
-\frac ab=\frac bc=\frac ca=t.
+(u',v',x',y')=(u,v,x,y)
 ```
 
-所以
+或：
 
 ```math
-\frac ab+\frac bc+\frac ca=3t.
+(u',v',x',y')=(v,u,-x,-y).
 ```
 
-Hadamard condition 强制
+这些 local identities 已写入 Lean。它们将每个 generic mode 的 factor ambiguity 降到一个 involution。
+
+## 10. fixed-edge 方向修正与 canonical sparsity
+
+若：
 
 ```math
-\frac de+\frac ef+\frac fd=-3t.
+T=Z_1^\dagger Z_2,
 ```
 
-右侧模长为 `3`。三个单位复数之和达到 triangle inequality equality，只能三者全等：
+则固定边 `(I,T)` 的 completion 是：
 
 ```math
-\frac de=\frac ef=\frac fd=-t.
+W=Z_1^\dagger.
 ```
 
-但左侧三个 ratios 的乘积恒为 `1`，右侧乘积为
+所以两个 branches 的真实 transition 是：
 
 ```math
-(-t)^3=-1,
+W^\dagger W'=Z_1Z_1'^\dagger.
 ```
 
-矛盾。因此 `A` 的任何三阶 Fourier coefficient都非零。交换 `A,B` 得到同样结论。
+必须检查 `Z_1Z_1'^dagger`，不能误用 `Z_1^dagger Z_1'`。
 
-所以每个 `2 x 2` Fourier mode 的四个 entries 都非零。Zauner local factorization 始终处于上述二点 generic fibre，不存在由某个 block Fourier coefficient 消失所产生的连续 local phase。
-
-这条 no-degenerate-mode lemma 是新的高价值中间定理。形式化时应复用：
-
-```text
-windowRoot 3
-windowRoot_isPrimitiveRoot
-FinitePoisson.character
-Mathlib Matrix.circulant
-```
-
-并把证明拆为三个通用 lemma：
-
-```text
-three unit phases summing to zero form an equilateral triple
-three unit phases with sum of norm three are equal
-2-circulant Hadamard ratio condition forbids a zero Fourier mode
-```
-
-## 13. discriminant 路线的纠正与隔离
-
-Szöllősi parameterization 的 cubic
+对 normalized three-Fourier block `F_3` 和 diagonal phases `X,X'`：
 
 ```math
-f_\alpha(x)=x^3-\alpha x^2+\bar\alpha x-1
+Z_1(X)=
+\frac1{\sqrt2}
+\begin{pmatrix}
+F_3&XF_3\\
+F_3&-XF_3
+\end{pmatrix}.
 ```
 
-具有 discriminant
+直接计算：
 
 ```math
-D[\alpha]
-=|\alpha|^4+18|\alpha|^2-8\Re(\alpha^3)-27.
+Z_1(X)Z_1(X')^\dagger
+=
+\frac12
+\begin{pmatrix}
+I+XX'^\dagger&I-XX'^\dagger\\
+I-XX'^\dagger&I+XX'^\dagger
+\end{pmatrix}.
 ```
 
-`D[alpha]=0` 描述的是 `X_6(alpha)` 构造参数的 root collision。第 12 节说明 local Zauner Fourier modes 在该 family 上仍不会因 block coefficient 消失而退化。
+四个 `3 x 3` blocks 都 diagonal。因此所有 distinct-mode entries 为零。在 order six 中有 24 个结构零，故两个 canonical Zauner completions 不可能 mutually unbiased。
 
-因此下面的旧推测目前没有支持：
+当前 PR 已加入正确 adjoint direction 的 Lean theorem。其 admission 状态必须以最新 CI 为准。
 
-```math
-Ram(\pi_{completion})
-\subseteq\{D[\alpha]D[-\alpha]=0\}.
-```
+## 11. canonical completion 的 Fourier/Diţă 身份
 
-本卷撤回其高优先级地位，并把它隔离为未证研究猜想。parameterization discriminant 与 MUB completion-map discriminant 是不同对象。除非建立明确的 morphism、Jacobian 或 fibre comparison theorem，不能把二者等同。
+`Z_1(X)` 是 `F_2 tensor F_3` 的 Diţă deformation。对 row/column phases 与 permutations 取商以后，diagonal `X` 只留下两个独立 phase ratios，因此属于 order-six Fourier two-parameter family。
 
-## 14. 真正剩余的是 noncanonical completion locus
+fixed-edge canonical completion 是 `Z_1(X)^dagger`。pair unextendibility 在 adjoint 下保持：若 quartet 含 `I` 与 `Z_1^dagger`，左乘 `Z_1` 并交换前两基，就得到含 `I` 与 `Z_1` 的 quartet。
 
-对一个 normalized 2-circulant edge `T`，定义抽象 flat factorization fibre
-
-```math
-\mathcal F(T)=
-\{F:\ F\text{ flat unitary and }FT\text{ flat unitary}\}.
-```
-
-若 `T=F^*(FT)`，则固定 edge `(I,T)` 的 completion 为 `F^*`。
-
-Zauner construction 给出一个显式子集
-
-```math
-\mathcal Z(T)\subseteq\mathcal F(T),
-```
-
-称为 canonical factorization fibre。
-
-第 9 节与第 12 节说明，`Z(T)` 在 labelled Fourier-mode 层面是有限二进 cover。第 11 节说明，任意两个 `Z(T)` 元素对应的 fixed-edge completions不能彼此 MUB。
-
-因此若 strict-`X` edge 出现在 quartet 中，则至少一个额外 completion 必须位于
+所以已有 Fourier-family quartet exclusion 可推出：
 
 ```math
 \boxed{
-\mathcal N(T)=\mathcal F(T)\setminus\mathcal Z(T),
+\text{假想 strict-X quartet 的两个 extra completions
+都必须落在 noncanonical mode-mixing locus。}
 }
 ```
 
-即 noncanonical completion locus。
+这是文献输入与直接 gauge 推导的组合。Fourier-family exclusion 在 Lean 中仍应作为待移植外部定理，不应无证明 postulate 进入主真源。
 
-当前最准确的剩余命题是：
+## 12. mode-local 的 intrinsic characterization
+
+令：
+
+```math
+\Lambda=QSQ^\dagger,
+```
+
+其中 `Lambda` 有三个不同 eigenvalues，每个 multiplicity 为 2。
+
+对 `U=FQ^dagger`，以下条件等价：
+
+1. 每一行 `U_r` 只支持一个 Fourier mode；
+2. 在行置换后，`U=L_0 direct-sum L_1 direct-sum L_2`；
+3. `FSF^dagger=U Lambda U^dagger` 是 diagonal，且三个 eigenvalues 各出现两次。
+
+如果 `F` 与 `FT` 都 flat，则每个 `L_k` 和 `L_kT_k` 都是 flat `2 x 2` unitaries。接入第 9 节的 local two-point fibre 后，mode-local factor 正是 canonical Zauner factor，直到允许的 monomial gauges。
+
+因此真正剩余的 fibre 是：
+
+```math
+\mathcal N(T)
+=
+\mathcal F(T)\setminus\mathcal F_{mode-local}(T).
+```
+
+它由 genuinely mode-mixing solutions 构成。
+
+## 13. 三循环 DFT 的 exact row equations
+
+把 `U` 的一行写成：
+
+```math
+u_{r,a,k},
+\qquad
+a\in\{0,1\},
+\quad k\in\mathbb Z_3.
+```
+
+`UQ` flat 当且仅当每个 channel 的 length-three Fourier output 具有常模。利用 character orthogonality，这等价于：
+
+```math
+\sum_k|u_{r,a,k}|^2=1/2,
+```
+
+以及唯一独立的 nonzero cyclic autocorrelation：
 
 ```math
 \boxed{
-T\in X_6(\alpha)
-\Longrightarrow
-\mathcal N(T)=\varnothing\ ?
+\sum_k u_{r,a,k}\overline{u_{r,a,k+1}}=0.
 }
 ```
 
-这不是 Szöllősi Proposition 4.2 的直接推论。它接近 2026 triplet classification conjecture 在固定 strict-`X` edge 上的相对版本。
+令 transformed mode row：
 
-战略意义仍然很强。我们已经将此前“寻找任意两个 completions”的问题压缩为：
-
-```text
-canonical fibre: finite and internally excluded
-residual problem: prove the noncanonical locus empty,
-                  or prove every noncanonical point incompatible with the canonical fibre
+```math
+\widetilde u_{r,\cdot,k}=u_{r,\cdot,k}T_k.
 ```
 
-## 15. strict-X 的 finite symmetry fallback
+`UDQ` flat 等价于对 `tilde u` 重复同一组 energy 与 autocorrelation equations。
 
-`X` family 的 `3 x 3` circulant blocks 带有 order-three monomial symmetry，其 permutation part 是 `(3)(3)`。
+再加：
 
-固定
+```math
+\sum_{a,k}u_{r,a,k}\overline{u_{s,a,k}}=\delta_{rs},
+```
+
+以及 pair condition：
+
+```math
+\left|
+\sum_{a,k}u_{r,a,k}\overline{u'_{s,a,k}}
+\right|^2=1/6,
+```
+
+就得到 strict-X double-completion 的 compact polynomial system。
+
+这一步应通过 `FinitePoisson` 和 `WindowRegister` 的 primitive character 复用完成。只在现有库没有 constant-modulus/autocorrelation adapter 时增加薄层 theorem。
+
+## 14. mode probabilities 与 mixing energy
+
+定义 rank-two mode projections：
+
+```math
+E_0,E_1,E_2,
+\qquad
+E_0+E_1+E_2=I.
+```
+
+对 completion basis `C={P_i}`，定义：
+
+```math
+p_{ik}=\operatorname{Tr}(P_iE_k).
+```
+
+每个 `p_i=(p_i0,p_i1,p_i2)` 是 probability vector。
+
+定义 total mode mixing：
+
+```math
+M_S(C)=
+\sum_i\left(1-\sum_kp_{ik}^2\right).
+```
+
+它满足：
+
+```math
+0\le M_S(C)\le4.
+```
+
+`M_S(C)=0` 当且仅当每个 basis vector 只支持一个 mode。结合 unitarity，每个 mode 正好容纳两个 vectors，因此这正是 mode-local locus。
+
+`M_S(C)=4` 当且仅当：
+
+```math
+p_{ik}=1/3
+```
+
+对全部 `i,k` 成立。
+
+## 15. symmetry-plane affinity
+
+定义 centered mode projectors：
+
+```math
+X_k=E_k-I/3.
+```
+
+它们张成二维 symmetry plane：
+
+```math
+V_S=\operatorname{span}\{X_0,X_1,X_2\}.
+```
+
+对 completion context plane `V_C` 定义 chordal affinity：
+
+```math
+\alpha_S(C)=
+\operatorname{Tr}(\Pi_{V_C}\Pi_{V_S}).
+```
+
+由于 `{X_k}` 是 frame bound `2` 的 regular two-simplex，而 centered basis projectors 是 `V_C` 的 Parseval simplex frame，可得：
+
+```math
+\boxed{
+\alpha_S(C)
+=
+\frac12
+\sum_{i,k}
+\left(p_{ik}-\frac13\right)^2.
+}
+```
+
+展开得到：
+
+```math
+\boxed{
+\alpha_S(C)
+=
+\frac12\left(\sum_{i,k}p_{ik}^2-2\right).
+}
+```
+
+因此：
+
+```math
+\boxed{
+M_S(C)=4-2\alpha_S(C).
+}
+```
+
+`alpha=2` 是 mode-local。`alpha=0` 是对 mode PVM 完全均匀。
+
+## 16. order-three symmetry expectation 与 commutator 表达
+
+令：
+
+```math
+S=E_0+\omega E_1+\omega^2E_2,
+\qquad
+1+\omega+\omega^2=0.
+```
+
+对 probability vector `p_i`：
+
+```math
+\left|
+\operatorname{Tr}(P_iS)
+\right|^2
+=
+\frac{3\sum_kp_{ik}^2-1}{2}.
+```
+
+求和得到：
+
+```math
+\boxed{
+\alpha_S(C)
+=
+\frac13
+\sum_i
+\left|
+\operatorname{Tr}(P_iS)
+\right|^2.
+}
+```
+
+对 rank-one `P_i` 与 unitary `S`：
+
+```math
+\|[P_i,S]\|_{HS}^2
+=
+2\left(1-
+|\operatorname{Tr}(P_iS)|^2
+\right).
+```
+
+所以：
+
+```math
+\boxed{
+\alpha_S(C)
+=
+2-
+\frac16
+\sum_i\|[P_i,S]\|_{HS}^2.
+}
+```
+
+这把 symmetry affinity 直接接到仓库现有 commutator conservation 语言。
+
+## 17. 两个 MUB completions 的 symmetry budget
+
+若 completion contexts `C,D` 彼此 mutually unbiased，则：
+
+```math
+V_C\perp V_D.
+```
+
+对二维 `V_S` 使用 Bessel/Pythagoras：
+
+```math
+\boxed{
+\alpha_S(C)+\alpha_S(D)\le2.
+}
+```
+
+等价地：
+
+```math
+\boxed{
+M_S(C)+M_S(D)\ge4.
+}
+```
+
+更精确的 residual identity 是：
+
+```math
+2-\alpha_S(C)-\alpha_S(D)
+=
+\operatorname{Tr}
+\left(
+\Pi_{V_S}
+(I-\Pi_{V_C}-\Pi_{V_D})
+\right)
+\ge0.
+```
+
+如果 `C` mode-local，则 `alpha_S(C)=2`。任何与它 MUB 的 `D` 必须满足 `alpha_S(D)=0`，即所有 mode probabilities 都为 `1/3`。
+
+这一结论独立于 Fourier-family exclusion，且可以通过仓库现有 `mutually_unbiased_diagonal_planes` 与 purity Pythagoras 形式化。
+
+## 18. 新的 strict-X sharp-bound target
+
+对固定 strict-X edge `T`，定义：
+
+```math
+\alpha_{min}(T)
+=
+\inf_{C\in\mathfrak C(T)}
+\alpha_S(C).
+```
+
+若证明：
+
+```math
+\boxed{
+\alpha_{min}(T)>1,
+}
+```
+
+则任意两个 completions `C,D` 都满足：
+
+```math
+\alpha_S(C)+\alpha_S(D)>2,
+```
+
+与第 17 节的 MUB budget 矛盾。因此整个 fixed-edge branch 被排除。
+
+这个目标明显弱于“所有 completions 都 canonical”或“noncanonical fibre 为空”。它只要求一个标量下界。
+
+对闭 branch domain，还可以采用：
+
+```math
+\alpha_S(C)\ge1+\varepsilon(T)
+```
+
+或统一：
+
+```math
+\alpha_S(C)\ge1+\varepsilon
+```
+
+其中 `epsilon>0` 由 exact algebraic certificate 验证。
+
+如果只能得到 `alpha>=1`，则继续分类 equality locus，并证明两个 equality completions 不能兼容，也足以闭合。
+
+## 19. 为什么该目标适合 centered-projector SoS
+
+在 projector coordinates 中：
+
+```math
+p_{ik}=\operatorname{Tr}(P_iE_k)
+```
+
+是线性的，`alpha` 是二次多项式。rank-one 条件：
+
+```math
+P_i^2=P_i
+```
+
+也是二次。orthogonality、completeness 和 fixed-edge unbiasedness 都可以写成低次 polynomial constraints。
+
+因此 branch-specific sharp bound 可以寻找 exact certificate：
+
+```math
+\alpha_S(C)-1-\varepsilon
+=
+\sum_a s_a^2
++
+\sum_j q_jf_j
++
+\sum_kt_kg_k,
+```
+
+其中：
+
+```text
+f_j = 0
+```
+
+是 rank-one、basis、MUB 与 Hadamard branch equations，
+
+```text
+g_k >= 0
+```
+
+是 compact parameter-domain constraints。
+
+数值 SDP 负责发现 Gram matrix。最终使用 rational reconstruction、algebraic-number reduction 或 interval enclosure，把证书转成 Lean 可检查的 polynomial identity。
+
+这正是 2026 projector-coordinate SoS 结果给出的编码教训。一般 `m<=d+1` certificate 在 `m=4,d=6` 不足，branch-specific symmetry affinity 提供缺失的 order-six information。
+
+## 20. no-degenerate Fourier-mode lemma
+
+在 2-circulant construction 中，设一个 circulant row 由 unit phases `a,b,c` 给出。若某个 three-Fourier coefficient 消失：
+
+```math
+a+\rho b+\rho^2c=0,
+\qquad \rho^3=1,
+```
+
+则三个 unit numbers `a,rho b,rho^2c` 构成 equilateral triple。纯代数地，若 unit `z_0+z_1+z_2=0`，则：
+
+```math
+z_0/z_1=z_1/z_2=z_2/z_0,
+```
+
+且公共 ratio 是非平凡 cube root。
+
+因此：
+
+```math
+a/b=b/c=c/a=t,
+\qquad t^3=1.
+```
+
+结合 2-circulant ratio equation，另一组三个 unit ratios 的和被迫等于 `-3t`。triangle equality 迫使三者均为 `-t`，其乘积为 `-1`，与 cyclic ratio product `1` 矛盾。
+
+所以 generic 2-circulant Hadamard seed 的三个 Fourier modes都非零。该 lemma 可消除 local fibre quadratic 中的 denominator-degenerate cases。
+
+形式化时先检索项目和 Mathlib 是否已有：
+
+```text
+three unit vectors summing to zero
+triangle equality for unit complex numbers
+primitive cube-root ratio lemmas
+```
+
+若没有，再建立通用小 lemma。不得把它埋入 order-six 专用证明中。
+
+## 21. finite symmetry skeleton 作为备用分支
+
+strict-X edge 携带 cycle type `(3)(3)` 的 monomial symmetry。固定一个 permutation：
 
 ```text
 s=(123)(456).
 ```
 
-另一条同型 permutation 在 `s` 的 centralizer 下，40 个候选分成六个 orbit：
+另一个同 cycle type permutation 在 `s` 的 centralizer 下分成六个 orbits：
 
 ```text
-1 + 1 + 2 + 9 + 9 + 18 = 40,
+1 + 1 + 2 + 9 + 9 + 18 = 40.
 ```
 
-对应生成 permutation groups 的阶：
+相应生成群阶：
 
 ```text
 3, 3, 9, 12, 12, 60.
 ```
 
-因此如果 noncanonical completion locus 无法整体消去，仍可把其 permutation alignment 分成六个有限 skeleton。
+如果 scalar affinity bound 在某 exceptional locus 取 equality，这六个 finite permutation skeleton 提供第二层分解。aligned `Z3` 情形可降到三个 `U(2)` blocks；transitive order-12 和 order-60 情形可利用有限群 representation constraints。
 
-共同 `Z3` aligned branch 可进一步分解环境空间为三个二维 eigenspaces：
+## 22. 形式化队列与先库后证要求
+
+### M02. 正确 fixed-edge canonical sparsity
+
+目标：
+
+```text
+zaunerLeftFactor_mul_conjTranspose_offMode_zero
+zaunerCanonicalCompletion_crossGram_not_nonzero_flat
+```
+
+状态：Lean source 已写入当前 PR。最终状态以 admission CI 为准。
+
+### M03. finite three-Fourier autocorrelation adapter
+
+先复用：
+
+```text
+FinitePoisson.character
+windowRoot
+windowRoot_isPrimitiveRoot
+```
+
+证明 normalized length-three transform constant-modulus 与 nonzero cyclic autocorrelation vanishing 的等价。该 theorem 服务于第 13 节，不重建通用 DFT 理论。
+
+### M04. symmetry affinity algebra
+
+证明：
 
 ```math
-E_0\oplus E_1\oplus E_2,
-\qquad \dim E_r=2.
+\alpha_S(C)
+=\frac12(\sum p_{ik}^2-2),
 ```
-
-兼容基可参数化为三个 `U(2)` matrices `A_r`，两基 MUB 条件化为
 
 ```math
-\left|\sum_{r=0}^2
-\omega^{rn}(A_r^*B_r)_{st}\right|^2=\frac32.
+M_S(C)=4-2\alpha_S(C),
 ```
 
-这提供了 noncanonical residual 的有限对称性 fallback。
+以及 order-three expectation formula。
 
-## 16. 形式化队列，严格一模块推进
+### M05. MUB symmetry budget
 
-### M01. local two-point Zauner fibre
-
-落点：
+复用：
 
 ```text
-D5/S3/Quantum/Tomography/MUBCubeCompatibility.lean
+mutually_unbiased_diagonal_planes
+PurityPythagorasDecomposition
 ```
 
-先复用当前 `ZaunerTwoByTwoFactor`，加入：
+证明：
 
-```text
-ZaunerTwoByTwoFactor.swap
-zaunerTwoByTwo_swap_swap
-zaunerTwoByTwo_same_or_swap
+```math
+\alpha_S(C)+\alpha_S(D)\le2.
 ```
 
-目标是把两个独立 sign lemmas升级为相关符号的完整二点 fibre theorem。
+### M06. branch-specific lower bound
 
-### M02. fixed-edge completion-adjoint cross-Gram
+先进行 symbolic/numerical discovery，再提交 exact certificate。证书必须验证完整 compact branch domain，不接受 optimizer failure 或 floating-point dual 作为结论。
 
-落点：
+### M07. exceptional/equality locus
 
-```text
-D5/S3/Quantum/Tomography/ZaunerCompletionFibre.lean
-```
+只有 M06 无法得到 strict inequality 时才进入 feature kernels、Fourier seams、finite symmetry skeletons 和 exact interval covering。
 
-在现有 `zaunerLeftFactor` 上证明正确方向：
+## 23. 当前研究边界
 
-```text
-zaunerLeftFactor_mul_conjTranspose_apply
-zaunerCompletion_crossGram_offMode_zero
-zaunerCanonicalCompletions_not_unbiased
-```
-
-先用抽象 `F*F^*=I`，暂时不新建 Fourier matrix。
-
-### M03. no degenerate Fourier mode
-
-先库检索和复用：
+### 已机器化或已进入机器验证
 
 ```text
-D5/S3/Observer/WindowRegister.lean
-D5/S3/Fourier/FinitePoisson.lean
-Mathlib.LinearAlgebra.Matrix.Circulant
-```
-
-再建立三单位相位的 equilateral / triangle-equality lemmas，最后证明 order-six 2-circulant Hadamard ratio condition 排除零 mode。
-
-### M04. noncanonical completion interface
-
-只有在 M01 至 M03 machine-green 后才定义 `FlatFactorizationFibre` 与 `ZaunerCanonicalFibre`。定义前再次检索仓库和 Mathlib 的 flat matrix、unitary matrix、factorization carrier，避免重复建模。
-
-### M05. Newton-Gram truth source
-
-与 noncanonical fibre 分支并行，但仍单模块排队。先复用 finite-subset、elementary symmetric polynomial 和 Gram matrix 库，再形式化 polarized cubic identity。
-
-## 17. 当前证明链与真实边界
-
-当前路线更新为：
-
-```text
-order-six Hadamard atlas
- -> fixed-edge completion fibre
- -> Zauner canonical subfibre
- -> local exact two-point involution
- -> no degenerate Fourier mode
- -> correct completion-adjoint cross-Gram sparsity
- -> canonical subfibre cannot supply a quartet
- -> isolate noncanonical completion locus
- -> prove it empty or incompatible
- -> feature-kernel / finite-symmetry branch certificates
- -> global four-MUB exclusion
-```
-
-已证明或已有 Lean source：
-
-```text
-lifted Hadamard-atlas reduction
-independent-representative quotient obstruction
+standard complex Hadamard carrier
+Hadamard-unbiased transition
+lifted exact-atlas reduction
+independent-class quotient obstruction
 cube cross-Gram factorization
-local x^2 and y^2 equations
-pointwise/global orientation separation
-factor-relative Zauner zero blocks
+orientation-logic separation
+Zauner local quadratic fibre
+Zauner two-point involution
+correct fixed-edge canonical zero pattern
 ```
 
-本轮理论推导稳定、等待逐模块形式化：
+### 已直接推导，等待分层形式化
 
 ```text
-local factor fibre is exactly {z, swap z}
-fixed-edge completion product uses Z1 Z1'^*
-canonical completion relative matrix has 24 structural zeros in order six
-2-circulant Hadamard seeds have no zero Fourier mode
+mode-coordinate autocorrelation system
+mode-local intrinsic characterization
+canonical Fourier/Diţă identity
+symmetry affinity formulas
+commutator expression
+MUB symmetry budget
+no-degenerate Fourier-mode lemma
 ```
 
-仍开放：
+### 关键开放命题
 
 ```text
-all fixed-edge completions are canonical
-noncanonical completion locus is empty or incompatible
-quartet-specific moment kernel
-strict-X residual exclusion
-all-branch four-MUB exclusion
+strict-X completion affinity lower bound alpha > 1
+quartet-specific cubic orientation coherence
+feature-kernel zero-locus on the complete order-six atlas
+exceptional strict-X equality-locus exclusion
+global branch aggregation
 ```
 
-## 18. 可证伪边界
+## 24. 主线冻结
 
-以下任一精确对象都会推翻相应中间命题：
+下一阶段冻结为：
 
-- 同一非退化 `2 x 2` mode 的第三个 Zauner factor，不等于原 factor 或其 swap；
-- 两个 canonical Zauner fixed-edge completions，其 relative transition 没有预测的 structural zeros；
-- 一个满足 2-circulant Hadamard ratio condition 的 seed，某个 block Fourier coefficient为零；
-- 一个 strict-`X` edge，拥有可参与 quartet 的 noncanonical completion；
-- 一个 exact quartet `I,H,C,D`。
+```text
+fixed strict-X edge
+  -> mode-coordinate completion equations
+  -> symmetry-plane affinity alpha
+  -> prove alpha > 1 on each generic branch
+  -> use alpha(C)+alpha(D) <= 2
+  -> isolate equality/ramification locus
+  -> exact exceptional certificates
+```
 
-后续推理继续追加到本卷。形式化只承接已经得到稳定数学陈述的节点。
+这条路线不要求先解决所有 MUB triplets，也不要求先证明 noncanonical fibre 为空。它把 quartet-specific obstruction 压缩为一个 centered-projector sharp bound，并保留 Hadamard atlas、feature kernels 和 finite symmetry skeleton 作为 branch-complete 后端。
