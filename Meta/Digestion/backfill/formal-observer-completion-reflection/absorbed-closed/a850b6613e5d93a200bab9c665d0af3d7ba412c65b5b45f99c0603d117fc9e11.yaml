@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:a850b6613e5d93a200bab9c665d0af3d7ba412c65b5b45f99c0603d117fc9e11
+  normalized_sha256: sha256:a850b6613e5d93a200bab9c665d0af3d7ba412c65b5b45f99c0603d117fc9e11
+cas_ref: sha256:a850b6613e5d93a200bab9c665d0af3d7ba412c65b5b45f99c0603d117fc9e11
+coverage_gids:
+  - D5/S3/Quantum/Measurement/IncompleteBudgetPhysicalCertificate.incomplete_budget_physical_certificate
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/Measurement/IncompleteBudgetPhysicalCertificate.incomplete_budget_physical_certificate
+      source_sha256: sha256:a850b6613e5d93a200bab9c665d0af3d7ba412c65b5b45f99c0603d117fc9e11
+      target_statement_id: sha256:1e742d7945fbfdc87fae2d94ab64e35d3b1f1ef30d64dabc7a59bcde459b69c9
+  scribe:
+    - gid: D5/S3/Quantum/Measurement/IncompleteBudgetPhysicalCertificate.incomplete_budget_physical_certificate
+      definition_sha256: sha256:f3288a23c1d879254482b85f803cfc239364cf77289a25a69190e32cceb1a10a
+      emission_sha256: sha256:f1b1031f97474536d8ba84a07ff2246b253bc5bc41f4d288ee9377128567622f
+  unresolved_subitems: []

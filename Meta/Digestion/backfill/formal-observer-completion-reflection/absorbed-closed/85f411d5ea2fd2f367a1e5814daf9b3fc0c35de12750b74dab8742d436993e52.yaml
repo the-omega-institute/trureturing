@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:85f411d5ea2fd2f367a1e5814daf9b3fc0c35de12750b74dab8742d436993e52
+  normalized_sha256: sha256:85f411d5ea2fd2f367a1e5814daf9b3fc0c35de12750b74dab8742d436993e52
+cas_ref: sha256:85f411d5ea2fd2f367a1e5814daf9b3fc0c35de12750b74dab8742d436993e52
+coverage_gids:
+  - D5/S3/Quantum/Entanglement/LocalBReadoutResidualDimension.local_b_readout_residual_dimension
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/Entanglement/LocalBReadoutResidualDimension.local_b_readout_residual_dimension
+      source_sha256: sha256:85f411d5ea2fd2f367a1e5814daf9b3fc0c35de12750b74dab8742d436993e52
+      target_statement_id: sha256:19e2387461994aab051426bbdcbe2a775f76a0ddee6c41eb21fed3f59bf55989
+  scribe:
+    - gid: D5/S3/Quantum/Entanglement/LocalBReadoutResidualDimension.local_b_readout_residual_dimension
+      definition_sha256: sha256:c82cf9558108088cbc4a2874559f6f1ade7e7772251907d369021571190676a4
+      emission_sha256: sha256:27fe4cc0dff7840c048341f6b7f8b6286d7bec7817e7c86cc15bbe190d80d1d1
+  unresolved_subitems: []

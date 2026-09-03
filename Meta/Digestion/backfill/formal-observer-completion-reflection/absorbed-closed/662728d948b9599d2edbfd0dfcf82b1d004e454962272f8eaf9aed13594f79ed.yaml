@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:662728d948b9599d2edbfd0dfcf82b1d004e454962272f8eaf9aed13594f79ed
+  normalized_sha256: sha256:662728d948b9599d2edbfd0dfcf82b1d004e454962272f8eaf9aed13594f79ed
+cas_ref: sha256:662728d948b9599d2edbfd0dfcf82b1d004e454962272f8eaf9aed13594f79ed
+coverage_gids:
+  - D5/S3/Observer/LinearMemory/ObservabilityGramianKernelEnergy.observability_gramian_kernel_energy
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/LinearMemory/ObservabilityGramianKernelEnergy.observability_gramian_kernel_energy
+      source_sha256: sha256:662728d948b9599d2edbfd0dfcf82b1d004e454962272f8eaf9aed13594f79ed
+      target_statement_id: sha256:bb746bc34f26cf8a93188c00529e9a499b3bd1e1a119f572df2ba0e667106209
+  scribe:
+    - gid: D5/S3/Observer/LinearMemory/ObservabilityGramianKernelEnergy.observability_gramian_kernel_energy
+      definition_sha256: sha256:7ff35e4cab32d679c67c9ef13b91cc1e8efb89dde7f9b971127cd92d703504b8
+      emission_sha256: sha256:f2e471b19c93fcbbdb33b8e2bb721050867bf4530d6f451148c7199f93de7944
+  unresolved_subitems: []

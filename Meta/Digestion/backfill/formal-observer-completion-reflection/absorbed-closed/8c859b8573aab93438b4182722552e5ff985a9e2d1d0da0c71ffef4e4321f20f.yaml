@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:8c859b8573aab93438b4182722552e5ff985a9e2d1d0da0c71ffef4e4321f20f
+  normalized_sha256: sha256:8c859b8573aab93438b4182722552e5ff985a9e2d1d0da0c71ffef4e4321f20f
+cas_ref: sha256:8c859b8573aab93438b4182722552e5ff985a9e2d1d0da0c71ffef4e4321f20f
+coverage_gids:
+  - D5/S3/Quantum/Decoherence/EnvironmentMarginalChannel.environment_marginal_channel
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/Decoherence/EnvironmentMarginalChannel.environment_marginal_channel
+      source_sha256: sha256:8c859b8573aab93438b4182722552e5ff985a9e2d1d0da0c71ffef4e4321f20f
+      target_statement_id: sha256:9780c7b8425539ddee3cbf78ba060656693843f5efcb02fd3bfa89bbf2d5b1ec
+  scribe:
+    - gid: D5/S3/Quantum/Decoherence/EnvironmentMarginalChannel.environment_marginal_channel
+      definition_sha256: sha256:a2b55c01ae5fd6d9396f9d589d6bc85e6c19b205886efe678817d987055ddad0
+      emission_sha256: sha256:2f2165994a02a6f9280980debbbc93fd56d67d798627b952fc41196c092fc190
+  unresolved_subitems: []
