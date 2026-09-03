@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:5316eb6f1ce8e08c215be43390374101375b4a12fc4f67adeff9882c2bb06d88
+  normalized_sha256: sha256:5316eb6f1ce8e08c215be43390374101375b4a12fc4f67adeff9882c2bb06d88
+cas_ref: sha256:5316eb6f1ce8e08c215be43390374101375b4a12fc4f67adeff9882c2bb06d88
+coverage_gids:
+  - D5/S3/ConceptDynamics/RefinementGeometry/LocalGlobalAtlasExactness.local_global_atlas_exactness
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/RefinementGeometry/LocalGlobalAtlasExactness.local_global_atlas_exactness
+      source_sha256: sha256:5316eb6f1ce8e08c215be43390374101375b4a12fc4f67adeff9882c2bb06d88
+      target_statement_id: sha256:b4af3422035384bf8d35e8cf196eda933a36b6d4bf0d4e2361937e76a9437170
+  scribe:
+    - gid: D5/S3/ConceptDynamics/RefinementGeometry/LocalGlobalAtlasExactness.local_global_atlas_exactness
+      definition_sha256: sha256:df71756455f01e8e78d9d1ddfd59854e936dfb671b2e833e7596c49d8a810c40
+      emission_sha256: sha256:b07f9368aa57c4cb9ff0dd75c8bd151260c01291d11a0af83b3f38ae74cb4759
+  unresolved_subitems: []

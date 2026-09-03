@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:4be271e3e71b7ff415de769e4859b316051bf2bb72893e2341e924c55c7ce101
+  normalized_sha256: sha256:4be271e3e71b7ff415de769e4859b316051bf2bb72893e2341e924c55c7ce101
+cas_ref: sha256:4be271e3e71b7ff415de769e4859b316051bf2bb72893e2341e924c55c7ce101
+coverage_gids:
+  - D5/S3/ConceptDynamics/Attribution/SymmetryBreakingSourceClassification.fixed_symmetry_obstruction_and_source_classification
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Attribution/SymmetryBreakingSourceClassification.fixed_symmetry_obstruction_and_source_classification
+      source_sha256: sha256:4be271e3e71b7ff415de769e4859b316051bf2bb72893e2341e924c55c7ce101
+      target_statement_id: sha256:3796976e6fa57bebd21457e8e42a6469fcc147ea205eb5e819099529dc4f63c8
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Attribution/SymmetryBreakingSourceClassification.fixed_symmetry_obstruction_and_source_classification
+      definition_sha256: sha256:98326641acb54a320899a849ebc2abb7c492ab029eeefd1b2b09140a5f3fdd24
+      emission_sha256: sha256:2e6694e90327ba0ad555834f91762711f9461a5914fd94658c0e48a792dbe256
+  unresolved_subitems: []
