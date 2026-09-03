@@ -30,35 +30,41 @@ open D5.S3.ObserverMemory.RefinementClosure.FiniteHorizonKernelRecurrence
 universe u v w
 
 /-- A finite state space reaches the complete prediction relation at a finite
-depth. Here `jointObservation q` is the source's `q_J`; `finiteHorizonKernel`
-is `R_m^J` (source lines 1456-1470 and 1666-1672), while the kernel of
-`completeItinerary` is `R_infinity^J` (source lines 1488-1504). -/
+depth for every finite observation budget `J`. Here `J : Finset I` is the
+source's `J subset_fin I`, and `jointObservation (fun i : ↥J => q i.1)` is its
+`q_J` (source lines 52 and 476-484). `finiteHorizonKernel` is `R_m^J` (source
+lines 1666-1672), while the kernel of `completeItinerary` is `R_infinity^J`
+(source lines 1488-1504). -/
 theorem finite_state_has_stable_depth
-    {X : Type u} {J : Type v} {O : J -> Type w} [Finite X]
-    (F : X -> X) (q : (i : J) -> X -> O i) :
+    {X : Type u} {I : Type v} {O : I -> Type w} [Finite X]
+    (J : Finset I) (F : X -> X) (q : (i : I) -> X -> O i) :
     exists m : Nat,
-      finiteHorizonKernel F (jointObservation q) m =
-        Setoid.ker (completeItinerary F (jointObservation q)) := by
+      finiteHorizonKernel F (jointObservation (fun i : ↥J => q i.1)) m =
+        Setoid.ker
+          (completeItinerary F (jointObservation (fun i : ↥J => q i.1))) := by
   let _ := Fintype.ofFinite X
   exact
-    ⟨completionDepth F (jointObservation q),
-      finite_horizon_stabilizes_at_completionDepth F (jointObservation q)⟩
+    ⟨completionDepth F (jointObservation (fun i : ↥J => q i.1)),
+      finite_horizon_stabilizes_at_completionDepth F
+        (jointObservation (fun i : ↥J => q i.1))⟩
 
 /- Reverse probe for CAS-A1: the public existential equality yields a finite
 depth at which finite agreement forces every indexed future observation to
 agree. -/
 example
-    {X : Type u} {J : Type v} {O : J -> Type w} [Finite X]
-    (F : X -> X) (q : (i : J) -> X -> O i) :
+    {X : Type u} {I : Type v} {O : I -> Type w} [Finite X]
+    (J : Finset I) (F : X -> X) (q : (i : I) -> X -> O i) :
     exists m : Nat, forall x y : X,
-      finiteHorizonKernel F (jointObservation q) m x y ->
-        forall n : Nat, forall i : J,
-          q i ((F^[n]) x) = q i ((F^[n]) y) := by
-  rcases finite_state_has_stable_depth F q with ⟨m, stableAtM⟩
+      finiteHorizonKernel F
+          (jointObservation (fun i : ↥J => q i.1)) m x y ->
+        forall n : Nat, forall i : ↥J,
+          q i.1 ((F^[n]) x) = q i.1 ((F^[n]) y) := by
+  rcases finite_state_has_stable_depth J F q with ⟨m, stableAtM⟩
   refine ⟨m, ?_⟩
   intro x y sameFinite n i
   have sameComplete :
-      Setoid.ker (completeItinerary F (jointObservation q)) x y := by
+      Setoid.ker
+        (completeItinerary F (jointObservation (fun i : ↥J => q i.1))) x y := by
     rw [← stableAtM]
     exact sameFinite
   exact congrFun (congrFun sameComplete n) i
@@ -66,14 +72,18 @@ example
 /- Satisfiability probe for CAS-A1: a concrete nontrivial finite carrier has
 the promised stable depth. -/
 example :
+    let J : Finset Unit := {()}
+    let update : Bool × Bool -> Bool × Bool := fun x => (x.2, x.2)
+    let readout : Unit -> Bool × Bool -> Bool := fun _ x => x.1
     exists m : Nat,
-      finiteHorizonKernel Bool.not
-          (jointObservation (fun (_ : Unit) (x : Bool) => x)) m =
+      finiteHorizonKernel update
+          (jointObservation (fun i : ↥J => readout i.1)) m =
         Setoid.ker
-          (completeItinerary Bool.not
-            (jointObservation (fun (_ : Unit) (x : Bool) => x))) := by
-  exact finite_state_has_stable_depth Bool.not
-    (fun (_ : Unit) (x : Bool) => x)
+          (completeItinerary update
+            (jointObservation (fun i : ↥J => readout i.1))) := by
+  dsimp only
+  exact finite_state_has_stable_depth ({()} : Finset Unit)
+    (fun x : Bool × Bool => (x.2, x.2)) (fun _ x => x.1)
 
 /- Trivialization probe for CAS-A1: depth zero is not a universal witness,
 even on a four-state carrier. The second coordinate is initially hidden and

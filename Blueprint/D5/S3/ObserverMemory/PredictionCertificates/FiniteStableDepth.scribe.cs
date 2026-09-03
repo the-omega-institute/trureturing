@@ -20,9 +20,10 @@ internal sealed class FiniteStableDepthDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "Let X be a finite state type, J the type of selected local interfaces, "
-                            + "F a deterministic self-map, and q_i the readout at interface i. "
-                            + "The existing jointObservation q is the source's joint readout q_J.")),
+                        "Let X be a finite state type, I the ambient interface type, J a finite "
+                            + "subset of I, F a deterministic self-map, and q_i the readout at "
+                            + "interface i. Applying jointObservation to q restricted to J gives "
+                            + "the source's joint readout q_J.")),
                     Paragraph(Text(
                         "At depth m, finiteHorizonKernel is the equality relation induced by "
                             + "the indexed readout word through times zero to m. The relation on "
@@ -45,12 +46,14 @@ internal sealed class FiniteStableDepthDocument : IScribeDocumentDefinition
     private static Formula StableDepthFormula()
     {
         Formula states = F.Id("X");
-        Formula interfaces = F.Id("J");
+        Formula interfaces = F.Id("I");
+        Formula budget = F.Id("J");
         Formula outputs = Seq(F.Id("O"), Underscore, F.Id("i"));
         Formula update = F.Id("F");
         Formula readout = F.Id("q");
         Formula depth = F.Id("m");
-        Formula jointReadout = Call("jointObservation", readout);
+        Formula selectedReadout = new Formula.Subscript(readout, budget);
+        Formula jointReadout = Call("jointObservation", selectedReadout);
         Formula finiteRelation = Call(
             "finiteHorizonKernel", update, jointReadout, depth);
         Formula completeRelation = Call(
@@ -66,6 +69,7 @@ internal sealed class FiniteStableDepthDocument : IScribeDocumentDefinition
             Forall, Sp,
             Typed(states, F.Id("Type")), Comma, Sp,
             Typed(interfaces, F.Id("Type")), Comma, Sp,
+            Typed(budget, Call("Finset", interfaces)), Comma, Sp,
             Typed(F.Id("O"), outputFamily), Comma, RowBreak, Grp(),
             Typeclass("Finite", states), Comma, Sp,
             Typed(update, new Formula.TypeArrow(states, states)), Comma, Sp,
