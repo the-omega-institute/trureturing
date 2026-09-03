@@ -315,14 +315,20 @@ fixed ordinate, exactly encoding the functional-equation pair used to turn an
 off-line zero into a positive growth rate. -/
 theorem finite_inverse_poisson_rh_criterion {n : ℕ}
     (window : FinitePoissonWindow n) :
-    OnCriticalLine window ↔
-      PositiveDefinite (inversePoissonSum window) ∧
-      BoundedOnReal (inversePoissonSum window) := by
+    (OnCriticalLine window ↔ PositiveDefinite (inversePoissonSum window)) ∧
+      (PositiveDefinite (inversePoissonSum window) ↔
+        BoundedOnReal (inversePoissonSum window)) := by
   constructor
-  · intro hCritical
-    have hPositive := positiveDefinite_of_critical window hCritical
-    exact ⟨hPositive, boundedOnReal_of_positiveDefinite window hPositive⟩
-  · exact fun h ↦ critical_of_boundedOnReal window h.2
+  · constructor
+    · exact positiveDefinite_of_critical window
+    · intro hPositive
+      exact critical_of_boundedOnReal window
+        (boundedOnReal_of_positiveDefinite window hPositive)
+  · constructor
+    · exact boundedOnReal_of_positiveDefinite window
+    · intro hBounded
+      exact positiveDefinite_of_critical window
+        (critical_of_boundedOnReal window hBounded)
 
 /-- The empty window checks the intended degenerate case: its inverse-Poisson
 sum is zero and all three criterion conditions hold. -/
@@ -341,8 +347,9 @@ theorem empty_window_example :
       ordinate_reflect := by
         intro i
         exact Fin.elim0 i }
-  exact ⟨window, fun i ↦ Fin.elim0 i,
-    (finite_inverse_poisson_rh_criterion window).mp (fun i ↦ Fin.elim0 i)⟩
+  have hCritical : OnCriticalLine window := fun i ↦ Fin.elim0 i
+  have hPositive := positiveDefinite_of_critical window hCritical
+  exact ⟨window, hCritical, hPositive, boundedOnReal_of_positiveDefinite window hPositive⟩
 
 /-- A reflected two-point off-line window is a concrete unbounded witness. -/
 def offLinePairWindow : FinitePoissonWindow 2 where
