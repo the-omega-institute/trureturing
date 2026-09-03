@@ -138,7 +138,7 @@ public sealed partial class DigestionLedgerTests
     }
 
     [Fact]
-    public void DeclarationCoverageRejectsSelectorMissingFromLeanReport()
+    public void Sl016CallsCurrentEdgeValidatorForSelectorMissingFromLeanReport()
     {
         const string declarationGid = "D5/S0/Carrier/Probe.missing";
         var status = EvaluateDeclarationCoverage(declarationGid, [declarationGid]);

@@ -1,0 +1,6 @@
+## 一　M3-d-1 预登记:交错级数的延拓恒等式(`RealAxisNonvanishing`,落 `D5/S3/Weil/ZetaBridge/`)
+
+**义务**:公开定理 `tendsto_alternating_partialSums_eta (s : ℂ) (hs : 0 < s.re) : Filter.Tendsto (fun N ↦ ∑ n ∈ Finset.range N, (-1 : ℂ) ^ n * ((n + 1 : ℂ) ^ (-s))) Filter.atTop (nhds ((1 - (2 : ℂ) ^ (1 - s)) * riemannZeta s))`。落点 `D5/S3/Weil/ZetaBridge/`(origin/dev 现 21/24;若满则 `D5/S3/Weil/ZetaCore/`)。
+**可证伪预测(写在跑之前)**:若正确,定理只消费钉版 Mathlib(`riemannZeta` 的 Re s > 1 级数表示、`differentiableAt_riemannZeta`、解析延拓唯一性)与至多本仓 `ZetaCore`,公理集为标准三条;若交错部分和在 {0 < Re s} 的局部一致收敛在钉版 API 下写不出(探针标记的缺口),则本条为 open,不得降级为「Re s > 1 版」冒充。
+**边界**:不断言 `tsum`(交错级数在 Re s ≤ 1 非无条件可和,`tsum` 会取 0);极限以部分和的 `Tendsto` 陈述;s = 1 处等式两侧按 Mathlib 约定的有限值成立。
+

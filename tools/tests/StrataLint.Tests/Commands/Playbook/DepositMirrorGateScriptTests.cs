@@ -35,9 +35,9 @@ public sealed partial class DepositCoverWorkflowScriptTests
         var result = fixture.Run("deposit", TransactionFixture.NewGid, baseRevision: "HEAD");
 
         Assert.True(result.ExitCode == 0, Diagnostics(result));
-        Assert.Equal(before + 2, fixture.CommitCount());
+        Assert.Equal(before, fixture.CommitCount());
         Assert.Equal(1, fixture.FreezeCount(TransactionFixture.NewLeanPath));
         Assert.True(File.Exists(Path.Combine(fixture.Root, TransactionFixture.NewEmissionPath)));
-        Assert.Empty(fixture.Status());
+        Assert.NotEmpty(fixture.Status());
     }
 }

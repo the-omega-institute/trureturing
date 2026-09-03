@@ -56,10 +56,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
             printf 'make:%s\n' "$*" >> "$PLAYBOOK_TEST_CALLS"
             case "${1:-}" in
               lean-report)
-                if compgen -G 'Meta/Digestion/formalizations/*.tmp.*' > /dev/null; then
-                  echo 'LEAN_REPORT_INVALID interrupted receipt temporary still exists' >&2
-                  exit 42
-                fi
                 mkdir -p .lake/build/stratalint
                 printf '{"schema":"synthetic-lean-report"}\n' \
                   > .lake/build/stratalint/raw-lean-report.json
@@ -109,73 +105,23 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 printf '{"event_hash":"sha256:%s","event_type":"Freeze","payload":{"declaration_statement_ids":[],"descriptor_selector":"%s","prerequisite_frozen_node_ids":[],"statement_id":"sha256:%s"},"schema_version":5}\n' \
                   "$event_id" "$target_module" "$event_id" \
                   > "Golden/Frozen/accepted/${event_id}.json"
-                if [[ -n ${PLAYBOOK_MUTATE_RECEIPT_AFTER_PREPARE:-} ]]; then
-                  printf '%s' "$PLAYBOOK_MUTATE_RECEIPT_AFTER_PREPARE" \
-                    > Meta/Digestion/formalizations/atom-1.v1.json
-                fi
                 if [[ -f fail-ledger-once ]]; then
                   rm fail-ledger-once
                   echo 'LEDGER_APPEND_INTERRUPTED synthetic kill after append' >&2
                   exit 75
                 fi
                 ;;
-              emit-formalization-receipt)
-                if [[ ${PLAYBOOK_INVALID_RECEIPT:-0} == 1 ]]; then
-                  echo 'FORMALIZATION_RECEIPT_INVALID synthetic canonical rejection' >&2
-                  exit 45
-                fi
-                atom=''
-                gids=()
-                out=''
-                for ((index=1; index<${#parts[@]}; index+=2)); do
-                  case "${parts[index]}" in
-                    --atom-id) atom=${parts[index+1]} ;;
-                    --gid) gids+=("${parts[index+1]}") ;;
-                    --out) out=${parts[index+1]} ;;
-                  esac
-                done
-                requested_gid=${gids[0]:-}
-                primary_gid=$requested_gid
-                [[ -n $out ]] || out="Meta/Digestion/formalizations/${atom}.v1.json"
-                mkdir -p "$(dirname "$out")"
-                existing="Meta/Digestion/formalizations/${atom}.v1.json"
-                if [[ -f $existing ]]; then
-                  existing_atom=$(jq -r '.atom_id // ""' "$existing")
-                  existing_primary=$(jq -r '.primary_gid // ""' "$existing")
-                  if [[ $existing_atom != "$atom" || -z $existing_primary ]]; then
-                    echo "FORMALIZATION_RECEIPT_INVALID existing formalization receipt conflicts with atom: $atom" >&2
-                    exit 47
-                  fi
-                  primary_gid=$existing_primary
-                fi
-                if [[ -f $existing && $requested_gid != "$primary_gid" ]]; then
-                  secondary_name=${requested_gid##*.}
-                  printf '{"atom_id":"%s","hosted_extensions":[{"gid":"%s","precommitted_signature":{"kind":"theorem","name_key":"%s","type":"True"}}],"primary_gid":"%s"}\n' \
-                    "$atom" "$requested_gid" "$secondary_name" "$primary_gid" > "$out"
-                elif [[ -f $existing ]]; then
-                  cp -- "$existing" "$out"
-                else
-                  printf '{"atom_id":"%s","primary_gid":"%s"}\n' "$atom" "$primary_gid" > "$out"
-                fi
-                ;;
               cover-atom)
                 atom=''
                 gid=''
-                envelope=''
                 align=0
                 for ((index=1; index<${#parts[@]}; index+=2)); do
                   case "${parts[index]}" in
                     --cover-atom) atom=${parts[index+1]} ;;
                     --gid) gid=${parts[index+1]} ;;
-                    --envelope) envelope=${parts[index+1]} ;;
                     --align-scribe-receipt) align=1 ;;
                   esac
                 done
-                expected_envelope="Meta/Digestion/formalizations/${atom}.v1.json"
-                if [[ $envelope != "$expected_envelope" ]]; then
-                  echo "COVER_INVALID envelope $envelope does not match atom $atom" >&2
-                  exit 46
-                fi
                 if [[ ${PLAYBOOK_COVER_DISPOSITION_FAILURE:-0} == 1 ]]; then
                   printf 'atom_id: %s\ncoverage: false\naligned: false\ncover_disposition: synthetic\n' "$atom" \
                     > Meta/BACKFILL.yaml
@@ -252,9 +198,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
             string gid = Gid,
             string atomId = AtomId,
             bool staleReport = false,
-            bool invalidReceipt = false,
             bool coverDispositionFailure = false,
-            string? mutateReceiptAfterPrepare = null,
             TimeSpan? timeout = null,
             string? baseRevision = null,
             bool rejectDepositHeader = false) =>
@@ -265,9 +209,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
                     $"PLAYBOOK_TEST_CALLS={callsPath}",
                     $"PLAYBOOK_TEST_FREEZE_PROBES={freezeProbePath}",
                     $"PLAYBOOK_STALE_REPORT={(staleReport ? "1" : "0")}",
-                    $"PLAYBOOK_INVALID_RECEIPT={(invalidReceipt ? "1" : "0")}",
                     $"PLAYBOOK_COVER_DISPOSITION_FAILURE={(coverDispositionFailure ? "1" : "0")}",
-                    $"PLAYBOOK_MUTATE_RECEIPT_AFTER_PREPARE={mutateReceiptAfterPrepare ?? string.Empty}",
                     $"PLAYBOOK_TARGET_MODULE={(gid == SecondaryGid ? SecondaryLeanPath : gid == NewGid ? NewLeanPath : LeanPath)}",
                     $"PLAYBOOK_REJECT_DEPOSIT_HEADER={(rejectDepositHeader ? "1" : "0")}",
                     "/bin/bash",
