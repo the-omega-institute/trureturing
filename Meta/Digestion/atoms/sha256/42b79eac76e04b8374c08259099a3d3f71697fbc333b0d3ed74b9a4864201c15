@@ -1,0 +1,6 @@
+## 三　W-7 预登记:RH ⟺ 截断正性(同模块第三条公开定理)
+
+**义务**:公开定理 `rh_iff_truncatedWeilSquarePositivity (Z : ZeroData) : RiemannHypothesis ↔ ∀ (T : ℝ) (g : WeilTestFunction), 0 ≤ (truncatedZeroSum Z (convolutionSquare g) T).re`。
+**可证伪预测(写在跑之前)**:⟹ 为 W-6,⟸ 为 W-5。
+**边界**:同 §〇。
+

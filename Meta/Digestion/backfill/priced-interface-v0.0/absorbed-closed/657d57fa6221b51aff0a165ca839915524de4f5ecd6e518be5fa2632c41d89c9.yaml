@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:657d57fa6221b51aff0a165ca839915524de4f5ecd6e518be5fa2632c41d89c9
+  normalized_sha256: sha256:657d57fa6221b51aff0a165ca839915524de4f5ecd6e518be5fa2632c41d89c9
+cas_ref: sha256:657d57fa6221b51aff0a165ca839915524de4f5ecd6e518be5fa2632c41d89c9
+coverage_gids:
+  - gid: D5/S3/ResourceOrder/AtomlessFiniteAnchorImpossibility.atomless_finite_anchor_evasion
+    target_statement_id: sha256:9a58470e0683aecb61c4c69f606e798f84c1d467afe61a1baab9208dffb20df0
+receipts:
+  scribe:
+    - gid: D5/S3/ResourceOrder/AtomlessFiniteAnchorImpossibility.atomless_finite_anchor_evasion
+      definition_sha256: sha256:19c936aa86837bc57058a0c7fd555bba0b4f90cd9d00a6c677f101438c5d09d8
+      emission_sha256: sha256:dad18f4ebb0561748889ac782977849ff752ba9cab1456c5c2d59d0e0366769d
+  unresolved_subitems: []
