@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:e580d88fb9b1ff05c810be42fcd7493dc65134ee606b8a5a67ee7b243e3ef3ac
+  normalized_sha256: sha256:e580d88fb9b1ff05c810be42fcd7493dc65134ee606b8a5a67ee7b243e3ef3ac
+cas_ref: sha256:e580d88fb9b1ff05c810be42fcd7493dc65134ee606b8a5a67ee7b243e3ef3ac
+coverage_gids:
+  - D5/S3/ConceptDynamics/RefinementAlgebra/ObservableEventAlgebraDuality.observable_event_algebra_duality
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/RefinementAlgebra/ObservableEventAlgebraDuality.observable_event_algebra_duality
+      source_sha256: sha256:e580d88fb9b1ff05c810be42fcd7493dc65134ee606b8a5a67ee7b243e3ef3ac
+      target_statement_id: sha256:b7f65dfcb25345732cb31de6682f925901c478cfbdacef363d00d17652997117
+  scribe:
+    - gid: D5/S3/ConceptDynamics/RefinementAlgebra/ObservableEventAlgebraDuality.observable_event_algebra_duality
+      definition_sha256: sha256:0fce2f0184176bd1e884e526fc6cd8455d853581cf558a397d93e1fccaea6290
+      emission_sha256: sha256:057e0637dad817df5d6b824b3bb695a2d1ca0ba9be437e0e6ef8ee1a9457c64d
+  unresolved_subitems: []
