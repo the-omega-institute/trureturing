@@ -1,273 +1,387 @@
-# Golden observer layer and prime bridge
+# Golden observer, layer, prime, and phase bridge
 
-Status: research synthesis. Lean declarations remain the truth source. This note records the formal core, its interpretation, and the remaining open bridges without promoting the geometric narrative to a theorem.
+Status: research synthesis. Lean declarations are the truth source. This note separates proved library structure from geometric interpretation and open bridges.
 
-## 1. The working picture
+## 1. Working picture
 
-The discussion suggests a carrier with hidden coordinates, a family of observer readouts, and a path through progressively richer observations. A cut-and-project construction is one important source of such readouts, but the abstract observer theory does not require every readout to arise from a geometric projection.
+The discussion starts from a carrier with hidden coordinates and a family of observer readouts. A cut-and-project construction is one important source of readouts. The abstract observer theory does not require every readout to arise from a geometric projection.
 
-The key distinction is:
+Four notions must remain distinct:
 
-- projection or postprocessing may hide information;
-- refinement adds information and shrinks observation fibers;
-- symmetry breaking occurs when a pair previously lying in one observation fiber becomes distinguishable;
-- observation time is the first dynamical readout at which this happens.
+- a projection or postprocessing map can hide information;
+- a refinement adds information and shrinks observation fibers;
+- symmetry breaking occurs when two states that were previously observationally identical become distinguishable;
+- observation time is the first readout depth at which this distinction appears.
 
-A projection layer is therefore not automatically a breaking event. Breaking is a relation between a pair of hidden states and a chosen observer family.
+A projection layer is therefore not automatically a breaking event. Breaking is relative to a pair of hidden states and a chosen observer family.
 
-The statement that the physical carrier is specifically six-dimensional, or that physical time is literally motion through a projection tower, remains an open model premise. No theorem in this increment assumes either claim.
+The claim that the physical carrier is specifically six-dimensional, or that physical time is literally motion through a projection tower, remains an open model premise. No theorem in this lane assumes either claim.
 
-## 2. Frequency is a mode of variation, not a layer number
+## 2. Frequency is a mode of variation
 
-The existing Fourier-fiber library already supplies the precise finite model. Hidden amplitudes `a_j` are transported by modal multipliers `lambda_j`, and the scalar observation at time `t` is the superposition
+The existing Fourier-fiber library supplies a finite model. Hidden amplitudes are transported by modal multipliers, and a scalar observation at time `t` is a superposition of terms of the form
 
 ```text
-sum_j a_j * lambda_j^t.
+amplitude_j * multiplier_j^t.
 ```
 
-Thus the observed signal may contain contributions from several hidden modes at once. The modal multipliers determine how these contributions vary along the observation path. A Fourier or spectral frequency belongs to this variation law. It is not identical to the projection-layer index.
+Several hidden components may therefore contribute to one observation. Frequency belongs to their variation law along an orbit or scale path. It is not identical to a layer index.
 
-The existing `FiniteCrystalTimeFrequencyBridge` proves that, for finitely many distinct modes, a matching finite time window reconstructs all amplitudes by Vandermonde tomography. `SpectralFutureReadoutBridge` identifies this spectral delay word with the repository's canonical future-readout word. `TemporalFiberObserverUpgrade` proves that adding observation times can only shrink the hidden fiber.
+Existing finite spectral tomography proves that sufficiently many temporal samples recover finitely many distinct modes. Existing temporal-fiber results prove that adding observations can only shrink the hidden fiber.
 
 This supports the interpretation:
 
-> an observation is a superposition of hidden projected components; frequency describes their repeated variation under the chosen path; a time window separates modes by accumulating readouts.
+> an observation may be a superposition of hidden projected components; frequency describes how those components vary; a time window separates modes by accumulating readouts.
 
-It does not show that every geometric layer contributes one pure Fourier mode, nor that Fourier analysis creates time.
+It does not prove that every geometric projection layer is one pure Fourier mode, nor that Fourier analysis creates physical time.
 
-## 3. Observation time as the boundary of a fiber
-
-The repository already had canonical `observedAt`, `finiteFutureRelation`, `infiniteFutureRelation`, and `separationTime`. The adapter
+## 3. Observation time as a fiber boundary
 
 `D5/S3/ObserverMemory/FourierFibers/ObservationTime.lean`
 
-does not introduce a second clock. It proves the exact semantics of the existing one.
-
-For an eventually separated pair:
+reuses the repository's canonical future-readout and separation-time definitions. For an eventually separated pair:
 
 - every readout before `separationTime` agrees;
 - the readout at `separationTime` differs;
-- the pair lies in the finite observation fiber exactly for horizons strictly below `separationTime`.
+- the pair belongs to the finite observation fiber exactly for horizons below that boundary.
 
-So observation time is a boundary-crossing depth:
+Thus observation time is a first-visible depth:
 
 ```text
-same fiber  ->  first visible difference  ->  excluded from every deeper fiber.
+same fiber -> first visible difference -> excluded from every deeper fiber.
 ```
 
-Dynamical time counts applications of the update. Observation time is the least update depth required by this observer to expose a particular difference. Different pairs may have different observation times under the same dynamics.
+Dynamical time counts updates. Observation time is the least update depth required by a particular observer to expose a particular hidden difference.
 
-## 4. Zeckendorf as the discrete address of golden depth
+## 4. Zeckendorf as the address of golden depth
 
-The existing library proves:
+The frozen library proves that every natural layer has a canonical Zeckendorf representation, that decoding recovers the layer, and that its least occupied Fibonacci index controls the golden Euler beta ledger.
 
-1. every natural layer index has a unique canonical Zeckendorf representation;
-2. its occupied Fibonacci indices decode the original layer;
-3. the least Zeckendorf digit is equivalent to a shifted golden mechanical letter;
-4. consecutive golden Euler exponents differ by either `phi` or `phi^2`.
+The merged and frozen theorem
+
+```text
+D5.S3.Analytic.GoldenEulerBetaZeckendorf
+  .golden_euler_beta_zeckendorf
+```
+
+proves that
+
+```text
+beta(v + 1) - beta(v)
+```
+
+is `phi^2` when the least Zeckendorf index of `v + 1` is even and `phi` when it is odd.
 
 The adapter
 
 `D5/S3/Analytic/EulerGerm/ZeckendorfGoldenBetaGapBridge.lean`
 
-closes the missing cross-library implication:
+connects the equivalent least-digit criterion used by the golden mechanical word:
 
-- absence of the least Zeckendorf digit selects the long `phi^2` beta step;
-- presence of that digit selects the short `phi` beta step.
+- least digit absent selects the long `phi^2` step;
+- least digit present selects the short `phi` step.
 
-The exact auxiliary identity is that the golden floor increment equals one plus the shifted mechanical letter. This corrects the reversed provisional orientation in the first draft of the branch.
+Zeckendorf is therefore a lossless address and transition code for golden depth. The phrase "discrete DNA" refers to this address-and-grammar role. It does not encode prime identity, continuous phase, modal amplitude, the scale lift, or every orientation coordinate.
 
-Zeckendorf may therefore be called a discrete golden-layer address and transition code. The phrase "discrete DNA" refers to this lossless address and long/short-step role. It does not encode the prime label, complex phase, continuous scale lift, modal amplitude, or orientation sheet.
+## 5. The golden gap word is deterministic and constrained
 
-## 5. Odd breaking and even completion
+`D5/S3/Analytic/GoldenEulerGapWordConstraints.lean`
+
+uses the existing golden-word identification and desubstitution theorems to prove more than a two-value dichotomy:
+
+- a true golden letter gives a long `phi^2 log p` frequency gap;
+- a false golden letter gives a short `phi log p` frequency gap;
+- two consecutive short gaps never occur;
+- three consecutive long gaps never occur.
+
+The same forbidden-word laws are transported to the Euler phase alphabet.
+
+This is the rigorous deterministic content behind the phrase "not an independent Bernoulli step law." The repository has not yet chosen a probability measure on the orbit and proved a formal non-iid theorem. What is already proved is stronger at the symbolic-language level: the generated word belongs to a constrained Fibonacci/Sturmian language rather than the unrestricted binary full shift.
+
+## 6. Odd breaking and even completion
 
 `D5/S3/ObserverMemory/Refinement/InvolutiveReadoutCompletion.lean`
 
-abstracts the exact mathematical core of "odd breaking, even completion". Suppose each dynamical step applies an involution to one chosen readout. Then:
+abstracts the exact content of odd breaking and even completion. If each update applies an involution to a chosen readout, then:
 
-- every odd iterate leaves that readout on the flipped sheet;
+- every odd iterate places that readout on its flipped sheet;
 - every even iterate restores the original readout;
-- when the initial readout is not fixed by the involution, every odd iterate is visibly different;
-- even readout completion does not imply return of the full hidden state.
+- if the initial readout is not fixed by the involution, every odd iterate is visibly different;
+- restoration of the readout does not imply return of the full hidden state.
 
 `D5/S3/CompletionDynamics/GoldenMobius/GoldenHelixParityReadout.lean`
 
-instantiates this theorem with the orientation bit of the golden helix. Odd golden depth flips orientation. Even depth restores orientation. Two steps still increase the helix level, so the complete state has not returned.
+instantiates this law on golden-helix orientation. Two steps restore orientation while the lifted level has advanced.
 
-Accordingly, the rigorous phrase is:
+The valid phrase is therefore:
 
 > odd breaking and even completion of an involutive readout.
 
-A universal parity law for every projection coordinate would require an involution on each proposed layer and remains open.
+A universal parity law for every projection coordinate would require an involution on every proposed layer and remains open.
 
-## 6. Prime locality and golden depth as transverse coordinates
+## 7. Prime locality and golden depth are transverse coordinates
 
 `D5/S3/ObserverMemory/Refinement/ProductCoordinateTransversality.lean`
 
-formalizes the reusable product geometry. For a carrier `Local x Layer`:
+formalizes a carrier `Local x Layer`. It proves:
 
-- a fixed local fiber and fixed layer fiber meet in exactly one state;
-- a move acting only on the local coordinate commutes with a move acting only on the layer coordinate;
-- each single-coordinate observer is blind to motion in the other coordinate;
-- the paired observer has the intersection kernel and is faithful.
+- a fixed local fiber and fixed layer fiber meet in one state;
+- a local-only move commutes with a layer-only move;
+- each coordinate observer is blind to motion in the other coordinate;
+- the paired observer is faithful.
 
-This is the precise content presently justified by saying that the two directions are transverse. It is stronger than loose bookkeeping independence and weaker than Hilbert-space orthogonality. No inner product or zero-angle theorem is asserted.
-
-## 7. Prime plus Zeckendorf is a faithful `(p,v)` address
+This is the precise present meaning of transverse. No inner product or angle has been defined, so Hilbert-space orthogonality is not claimed.
 
 `D5/S3/Analytic/EulerGerm/PrimeZeckendorfCoordinates.lean`
 
 specializes the product carrier to
 
 ```text
-prime-local channel x golden layer.
+prime channel x golden layer.
 ```
 
-It proves:
+It proves that `(prime, Zeckendorf(layer))` is a lossless address for `(p,v)` and rewrites each local golden factor as a sum over Zeckendorf-addressed layers inside one fixed prime channel.
 
-- replacing `v` by its canonical Zeckendorf address loses no information;
-- `(prime, Zeckendorf(v))` faithfully reconstructs `(prime,v)`;
-- a fixed prime fiber and fixed golden layer intersect in the single address `(p,v)`;
-- the analytic weight `p^(-s beta(v))` factors exactly through the prime-Zeckendorf address;
-- the frozen golden local factor is the sum over all Zeckendorf-addressed layers inside one fixed prime channel;
-- the first excited layer has the common exponent `phi^2` at every prime.
-
-This turns the earlier grid picture into an exact arithmetic carrier. It still does not derive the prime coordinate from cut-and-project geometry.
-
-## 8. Zeckendorf controls prime-scaled frequency gaps
+## 8. Prime-scaled golden frequency
 
 `D5/S3/Analytic/EulerGerm/PrimeZeckendorfFrequencyBridge.lean`
 
-defines the real prime-local golden frequency, equivalently the golden heat energy,
+defines
 
 ```text
 omega(p,v) = beta(v) * log(p).
 ```
 
-This gives the exact coupling between the two coordinates. Zeckendorf controls the symbolic long/short transition in `beta(v)`, while the prime channel supplies the metric scale `log(p)`. The theorem proves:
+The exact consecutive increment is
 
 ```text
-least Zeckendorf digit absent  ->  delta omega = phi^2 * log(p);
-least Zeckendorf digit present ->  delta omega = phi   * log(p).
+least digit absent  -> phi^2 * log(p)
+least digit present -> phi   * log(p).
 ```
 
-Every prime channel therefore carries the same golden long/short word at a different logarithmic scale. The cross-prime balance theorem states
+Every prime channel therefore carries the same deterministic golden long-short word at its own logarithmic scale.
+
+The cross-prime balance theorem states
 
 ```text
 log(q) * delta omega_p(v) = log(p) * delta omega_q(v).
 ```
 
-This is a separability law. Golden depth supplies one common symbolic increment, and the prime coordinate rescales it. It does not canonically identify which abstract local channel is the arithmetic prime `p`.
-
-The file also connects this raw layer coordinate to the frozen excited `goldenSpectrum`. That spectrum omits the vacuum, so spectral index `k` represents golden layer `v = k + 1`. The first excited frequency is exactly
+The frozen excited heat spectrum omits the vacuum, so spectral index `k` corresponds to golden layer `v = k + 1`. Its first mode is
 
 ```text
-omega(p,1) = phi^2 * log(p).
+omega_1(p) = phi^2 * log(p).
 ```
 
-This is the real-energy form of the common first local mode used by the existing zeta factorization.
+## 9. Anonymous prime labels and calibrated prime rigidity
 
-Frequency still does not equal time. Frequency becomes temporally observable only after a dynamics or character pairs it with a time parameter, for example through powers of a modal multiplier or an exponential phase. Constructing that exact phase bridge is the next local formal target.
+`D5/S3/Analytic/EulerGerm/PrimeRelabelingUnderdetermination.lean`
 
-## 9. Where zeta enters
+proves an obstruction. Golden depth and abstract product geometry are invariant under arbitrary permutations of the prime-label type. They cannot select the arithmetic meaning of a prime coordinate by themselves.
 
-For each prime `p`, the frozen golden Euler germ sums all golden layers in that local channel. The global construction then multiplies these local towers over all primes.
+`D5/S3/Analytic/EulerGerm/PrimeZeckendorfFrequencyRigidity.lean`
 
-The existing `GoldenGermZetaFactorization` theorem proves that the result factors through
+adds the calibrated first frequency `phi^2 log p` and proves:
+
+- equality of first frequencies forces equality of prime channels;
+- first frequency plus Zeckendorf address faithfully recovers `(p,v)`;
+- a prime relabeling preserving all first frequencies is the identity;
+- the first-frequency family is linearly independent over the rationals, by rational independence of prime logarithms.
+
+Thus the gap is narrower than "why do primes appear?"
+
+1. anonymous golden geometry does not canonically label prime channels;
+2. the numerical scale `log p` does canonically distinguish them;
+3. a geometric bridge must therefore derive normalized valuation, absolute-value, norm, or spectral data equivalent to this scale.
+
+## 10. Finite prime places and the Archimedean scale
+
+`D5/S3/Factorization/Embeddings/PrimeArchimedeanGoldenFrequencyBridge.lean`
+
+connects the frequency calibration to existing rational p-adic truth sources. For prime targets `p` and finite prime places `q`:
+
+```text
+|p|_p = 1/p
+|p|_q = 1 when q != p.
+```
+
+Consequently the target prime has one nontrivial finite-place coordinate. At its own place,
+
+```text
+p * |p|_p = 1.
+```
+
+The infinite-place logarithmic scale is `log p`, and the first golden frequency is its golden modulation:
+
+```text
+omega_1(p) = phi^2 * log(p).
+```
+
+This supplies the current arithmetic explanation:
+
+> prime identity is the support location of a valuation profile; `log p` is the continuous Archimedean magnitude paired with that finite place; golden depth modulates the magnitude.
+
+It still does not derive the valuation profile from a cut-and-project carrier.
+
+## 11. Euler temporalization produces a two-letter phase alphabet
+
+`D5/S3/Observer/GoldenPrimeCircle/GoldenEulerStepPhaseLaw.lean`
+
+maps a real angle to the unit circle:
+
+```text
+U(theta) = exp(i theta) = cos(theta) + i sin(theta).
+```
+
+The two deterministic prime-local frequency letters are
+
+```text
+short(p) = phi   * log(p)
+long(p)  = phi^2 * log(p).
+```
+
+At time `t`, they become two phase letters:
+
+```text
+U_short(p,t) = exp(i t phi log p)
+U_long(p,t)  = exp(i t phi^2 log p).
+```
+
+Because `phi^2 = phi + 1`, the long phase factors exactly as
+
+```text
+U_long(p,t) = U_short(p,t) * exp(i t log p).
+```
+
+Thus a long step consists of the short golden rotation together with one additional ordinary prime-log rotation.
+
+The least Zeckendorf digit chooses one of these two phase letters at every layer. The forbidden short-short and long-long-long words remain valid before aggregation.
+
+## 12. Scalar phase endpoints forget chronology
+
+The same Euler-phase module proves
+
+```text
+U_short * U_long = U_long * U_short.
+```
+
+A scalar `U(1)` endpoint therefore records the accumulated angle while forgetting whether the path was short-then-long or long-then-short.
+
+This is a formal obstruction to recovering time order from one terminal scalar phase. Recovering chronology requires at least one of:
+
+- time-resolved intermediate readouts;
+- an ordered word or path signature;
+- matrix- or operator-valued transport;
+- a noncommutative group;
+- Magnus, Chen, or Hopf-signature data.
+
+The repository's chronological-signature and second-Magnus lanes are natural owners of this missing order information.
+
+## 13. Real and imaginary parts have different observer roles
+
+`D5/S3/ObserverMemory/FourierFibers/PrimeZeckendorfTemporalization.lean`
+
+first distinguishes two temporalizations of the same frequency:
+
+```text
+heat:  exp(-t omega)
+phase: exp(i t omega).
+```
+
+Positive heat time remains injective in the prime channel. Finite collections of phase channels have arbitrarily late near-recurrence.
+
+`D5/S3/Observer/GoldenPrimeCircle/PrimeGoldenComplexMode.lean`
+
+combines them into
+
+```text
+M_p(sigma,t)
+  = exp(-sigma omega_1(p)) * exp(i t omega_1(p)).
+```
+
+Euler decomposition gives
+
+```text
+M_p(sigma,t)
+  = exp(-sigma omega_1(p))
+      * (cos(t omega_1(p)) + i sin(t omega_1(p))).
+```
+
+The norm depends only on `sigma`:
+
+```text
+|M_p(sigma,t)| = exp(-sigma omega_1(p)).
+```
+
+For `sigma > 0`, the norm identifies the prime channel. On the imaginary axis `sigma = 0`, every norm equals one and only wrapped phase remains. Finite prime phase vectors can return arbitrarily close to coherence at arbitrarily late times.
+
+The correct observer interpretation is:
+
+```text
+real parameter      -> amplitude, scale, dissipation, prime identity
+imaginary parameter -> angle, rotation, interference, recurrence.
+```
+
+This does not identify either parameter with laboratory time.
+
+## 14. Where zeta enters
+
+For each prime `p`, the frozen golden Euler germ sums all golden layers in that local channel. The global construction then multiplies the local towers over all primes.
+
+The frozen `GoldenGermZetaFactorization` theorem factors the result through
 
 ```text
 riemannZeta(phi^2 * s)
 ```
 
-times a normalized higher-layer correction. The common first excited layer across all prime channels supplies the zeta skeleton. The remaining golden layers retain additional Sturmian and Zeckendorf structure.
+times a normalized higher-layer correction. The common first frequency `phi^2 log p` supplies the zeta skeleton. Higher golden layers retain the deterministic Sturmian and Zeckendorf grammar.
 
-The two assembly directions are therefore:
-
-```text
-inside one prime:  sum over golden / Zeckendorf depth;
-across all primes: multiply local towers by the Euler product.
-```
-
-Zeckendorf and zeta are structurally transverse and generatively coupled. Zeckendorf organizes depth inside each local factor. Zeta appears only after the common local mode is aggregated across prime channels.
-
-## 10. A new obstruction: prime relabeling underdetermination
-
-`D5/S3/Analytic/EulerGerm/PrimeRelabelingUnderdetermination.lean`
-
-records the most important negative result of this increment.
-
-Any permutation of the prime type can relabel the local coordinate while preserving:
-
-- every golden layer index;
-- every Zeckendorf address;
-- the product-coordinate form;
-- faithfulness of the joint prime-Zeckendorf address.
-
-Consequently, golden depth and abstract product geometry alone cannot select the arithmetic meaning of a prime label. They admit arbitrary prime relabelings.
-
-The file defines an exact rigidity requirement, `SeparatesPrimeRelabelings`. A candidate geometric-to-prime observable must be rich enough that invariance under a prime relabeling forces every prime to remain fixed. The explicit prime projection has this property. A layer-only observer does not.
-
-This sharpens the central gap. The missing bridge is no longer merely a function
+The two assembly directions are:
 
 ```text
-geometry -> prime labels.
+inside one prime: sum over golden depth
+across primes:    multiply local towers by the Euler product.
 ```
 
-It must be a canonical observable that breaks the relevant prime-relabeling symmetry by arithmetic structure. Relabeling rigidity alone does not automatically imply that a localization reaches every prime; coverage and rigidity must be established separately.
+Zeckendorf and zeta are transverse in role and coupled in generation. Zeckendorf organizes depth inside each local factor. Zeta appears after the common local mode is aggregated across prime channels.
 
-## 11. What could supply the missing arithmetic rigidity
+## 15. Diagonal paths
 
-Several candidate structures can now be tested without assuming their success:
+A diagonal is naturally a path on a product carrier in which local and layer coordinates change together. The current library proves the uncoupled product geometry and the separable frequency law `beta(v) log p`. It does not yet supply a canonical diagonal update.
 
-1. **valuation data.** Distinct prime valuations identify different local directions and are incompatible with arbitrary relabeling once multiplication on the rational or number-field carrier is fixed;
-2. **norm or divisibility data.** A map preserving products, units, divisibility, and normalized absolute values may force genuine prime factorization rather than an anonymous countable family;
-3. **Euler local weights.** The assignment `p -> p^(-s)` contains the numerical prime value and therefore breaks abstract relabeling, but deriving that assignment from geometry is itself part of the problem;
-4. **adelic product formula.** Finite prime places and the infinite place are jointly constrained by a global product law, which may provide the needed canonicality;
-5. **spectral identification.** A geometric operator whose irreducible local spectral sectors are canonically indexed by prime ideals would close the bridge at operator level.
+Any proposed diagonal must specify:
 
-Each route must prove existence, coverage, and rigidity. Merely attaching the label `p` to an already indexed family would fail the relabeling test.
+- the update on prime or local coordinates;
+- the update on golden or Zeckendorf depth;
+- the coupling relation;
+- the observer that distinguishes the path;
+- the chronology data retained after projection;
+- whether parity completion concerns one readout or the full state.
 
-## 12. Diagonal paths
+No diagonal here is identified with the Riemann critical line.
 
-Once a product carrier `(local, layer)` is available, a diagonal is naturally a coupled path in which both coordinates change. Independent coordinate moves commute, while a chosen coupling can correlate prime locality with golden depth.
+## 16. Central open bridge
 
-The current library proves the uncoupled product geometry and the separable frequency law `beta(v) log(p)`. It does not yet supply a canonical diagonal update. Any proposed diagonal should specify:
+The hard missing theorem is now:
 
-- the update on prime/local coordinates;
-- the update on golden/Zeckendorf depth;
-- the coupling relation between them;
-- the observer under which the path is distinguished;
-- whether parity completion applies to one readout or the full state.
+> construct a canonical map from a genuine golden cut-and-project or completion carrier to normalized valuation or absolute-value data, prove coverage of prime places, and prove rigidity against prime relabeling.
 
-No diagonal introduced here is identified with the Riemann critical line. Such an identification would require an analytic theorem connecting the coupled path to zeta zeros.
+The repository already has the target arithmetic behavior:
 
-## 13. Formalization status and next order
+```text
+geometric carrier
+    ?
+valuation support -> prime place
+infinite magnitude -> log p
+golden depth       -> beta(v)
+frequency          -> beta(v) log p
+Euler phase        -> exp(i t beta(v) log p).
+```
 
-Implemented on this branch as candidate source:
+A candidate map must prove existence, coverage, normalization, and relabeling rigidity. Merely attaching prime names to anonymous channels does not close the bridge.
 
-1. canonical first-visible semantics for repository `separationTime`;
-2. exact Zeckendorf selection of `phi` versus `phi^2` golden beta gaps;
-3. generic involutive odd/even readout law;
-4. golden-helix parity instantiation;
-5. product-coordinate transversality;
-6. faithful prime-Zeckendorf coordinates and local-factor rewrite;
-7. prime-relabeling underdetermination and a rigidity predicate;
-8. prime-scaled Zeckendorf frequency gaps and cross-prime separability.
+## 17. Verification boundary
 
-Each new Lean module has a matching canonical Scribe source. Existing reusable truth sources already cover finite observation refinement, modal superposition, temporal fiber shrinkage, finite spectral reconstruction, golden cut-and-project carriers, golden local factors, golden heat spectra, and zeta factorization.
+The branch contains candidate Lean and matching Scribe sources for observation time, involutive parity, product transversality, prime-Zeckendorf coordinates, prime-frequency rigidity, finite-place calibration, Euler phase letters, forbidden words, and real-imaginary mode separation.
 
-The next substantive research order is:
-
-1. connect `beta(v) log(p)` to the existing temporal modal transport through an explicit phase or multiplier map;
-2. prove how Zeckendorf long/short steps change that phase over one observation interval;
-3. construct candidate arithmetic observables from valuation, norm, divisibility, or adelic data;
-4. prove coverage and test prime-relabeling rigidity separately for each candidate;
-5. connect a surviving observable to a genuine golden cut-and-project or completion carrier;
-6. define a coupled local-layer path only after the coordinate map is canonical;
-7. connect any resulting global determinant or Euler product to completed zeta with the infinite-place term explicit.
-
-The valuation and geometric-localization steps remain the hard heart. Until they are proved, the geometry-to-prime bridge remains open and cannot be replaced by zeta or RH vocabulary.
-
-## 14. Verification boundary
-
-The branch was written and statically audited through the GitHub connector. GitHub admission runs are authoritative for the candidate head. This note records no successful build conclusion until the required engineering, canonical Lean report, and protected admission checks succeed. The source declarations must not be described as kernel-closed before those checks pass.
+GitHub admission is the compilation authority. No new declaration in this PR is described as kernel-closed until engineering checks, canonical Lean report production, mathematical content checks, and protected admission all succeed.
