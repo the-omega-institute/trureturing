@@ -26,7 +26,7 @@ internal sealed class GoldenGermThirdNormalizedFactorRegularityDocument
                 Paragraph(Text(
                     "This theorem is the regularity step after the third-order ledger and "
                         + "factorization in the golden Euler germ extraction ladder of OACTC "
-                        + "Parts 580 and 581, on the RH-route O-5 control line. It advances "
+                        + "Parts 580 and 581. It advances "
                         + "the previously open analytic boundary by upgrading frozen "
                         + "pointwise deviation summability to a locally uniform product.")),
                 Paragraph(Text(
