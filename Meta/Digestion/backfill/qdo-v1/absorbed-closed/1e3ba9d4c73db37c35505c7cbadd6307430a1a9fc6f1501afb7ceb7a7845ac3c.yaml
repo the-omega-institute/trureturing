@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:1e3ba9d4c73db37c35505c7cbadd6307430a1a9fc6f1501afb7ceb7a7845ac3c
+  normalized_sha256: sha256:1e3ba9d4c73db37c35505c7cbadd6307430a1a9fc6f1501afb7ceb7a7845ac3c
+cas_ref: sha256:1e3ba9d4c73db37c35505c7cbadd6307430a1a9fc6f1501afb7ceb7a7845ac3c
+coverage_gids:
+  - D5/S3/ContinuousObservables/DualObserverDistanceReadings.dual_observer_distance_readings
+receipts:
+  coverage:
+    - gid: D5/S3/ContinuousObservables/DualObserverDistanceReadings.dual_observer_distance_readings
+      source_sha256: sha256:1e3ba9d4c73db37c35505c7cbadd6307430a1a9fc6f1501afb7ceb7a7845ac3c
+      target_statement_id: sha256:fb81a0160bfa670d407d78eaec5761638d8fbe9194ba0699c0c0008700d9c6c0
+  scribe:
+    - gid: D5/S3/ContinuousObservables/DualObserverDistanceReadings.dual_observer_distance_readings
+      definition_sha256: sha256:b0de911ce90a5c79a21669a203bb30c59fedbaf61571187bf08924d7d71ea14f
+      emission_sha256: sha256:4abc16e7d0f19590d640fb8655c4e404b370c2cfb6e092efbab9def213f93f21
+  unresolved_subitems: []

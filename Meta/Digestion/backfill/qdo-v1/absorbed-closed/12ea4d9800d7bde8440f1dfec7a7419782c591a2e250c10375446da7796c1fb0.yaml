@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:12ea4d9800d7bde8440f1dfec7a7419782c591a2e250c10375446da7796c1fb0
+  normalized_sha256: sha256:12ea4d9800d7bde8440f1dfec7a7419782c591a2e250c10375446da7796c1fb0
+cas_ref: sha256:12ea4d9800d7bde8440f1dfec7a7419782c591a2e250c10375446da7796c1fb0
+coverage_gids:
+  - D5/S3/ResourceOrder/NominalDebtScale.fixed_nominal_debt_burden_scales_inversely
+receipts:
+  coverage:
+    - gid: D5/S3/ResourceOrder/NominalDebtScale.fixed_nominal_debt_burden_scales_inversely
+      source_sha256: sha256:12ea4d9800d7bde8440f1dfec7a7419782c591a2e250c10375446da7796c1fb0
+      target_statement_id: sha256:973ee0834f5e648b932c9fab62e825badefb29a80ec3ee07355500b54a6681b6
+  scribe:
+    - gid: D5/S3/ResourceOrder/NominalDebtScale.fixed_nominal_debt_burden_scales_inversely
+      definition_sha256: sha256:b06619dddbf531b6cf37bb522108139f38b3cbc1363802773ce461029f8c7f66
+      emission_sha256: sha256:6cd90ee6ece4cbf4bea296d38464c5a6a31be1a90474a17d6ec78fcb699be5e3
+  unresolved_subitems: []

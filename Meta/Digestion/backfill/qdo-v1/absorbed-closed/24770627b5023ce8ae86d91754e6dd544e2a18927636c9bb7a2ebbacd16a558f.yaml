@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:24770627b5023ce8ae86d91754e6dd544e2a18927636c9bb7a2ebbacd16a558f
+  normalized_sha256: sha256:24770627b5023ce8ae86d91754e6dd544e2a18927636c9bb7a2ebbacd16a558f
+cas_ref: sha256:24770627b5023ce8ae86d91754e6dd544e2a18927636c9bb7a2ebbacd16a558f
+coverage_gids:
+  - D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity.entropy_production_coherence_deletion_identity
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity.entropy_production_coherence_deletion_identity
+      source_sha256: sha256:24770627b5023ce8ae86d91754e6dd544e2a18927636c9bb7a2ebbacd16a558f
+      target_statement_id: sha256:dd08a6058e548162341b4da32bf0bafc5b7b406598c58016d18da2821fa77797
+  scribe:
+    - gid: D5/S3/Quantum/Dynamics/EntropyProductionCoherenceDeletionIdentity.entropy_production_coherence_deletion_identity
+      definition_sha256: sha256:c363ddfcc1ee11314fb4062b2f97fa20ea9c8b8eca0c4556870ac0f0eec7d0e1
+      emission_sha256: sha256:a5c2a2ec927a6e9ce97fb817cee466a2712ada358a0668e3fc3cf4e46da0c60b
+  unresolved_subitems: []
