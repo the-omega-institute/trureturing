@@ -18,7 +18,7 @@ For a finite orbit window T, the horizontal Casimir is the sum over T of the nat
 
 **Theorem 1.2 (The horizontal Casimir vanishes exactly coordinatewise).**
 
-$$\begin{gathered}\forall O: Type,\\T: \operatorname{Finset}\left(O\right), m: O \to \mathbb{N},\\w: O \to \mathbb{R}, delta: O \to \mathbb{R},\\(\forall o \in T, 0 < m\left(o\right)) \Rightarrow\\(\forall o \in T, 0 < w\left(o\right)) \Rightarrow\\(\operatorname{horizontalCasimir}\left(T, m, w, delta\right) = 0) \iff (\forall o \in T, delta\left(o\right) = 0).\end{gathered}$$
+$$\begin{gathered}\forall O: Type,\\T: \operatorname{Finset}\left(O\right), m: O \to \mathbb{N},\\w: O \to \mathbb{R}, delta: O \to \mathbb{R},\\(\forall o \in T, 0 < m\left(o\right)) \Rightarrow\\(\forall o \in T, 0 < w\left(o\right)) \Rightarrow\\(\forall o \in T, 0 < delta\left(o\right)) \Rightarrow\\(\operatorname{horizontalCasimir}\left(T, m, w, delta\right) = 0) \iff (\forall o \in T, delta\left(o\right) = 0).\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurements/HorizontalCasimir.horizontal_casimir_eq_zero_iff` (`✓ std3`). ∎
 
@@ -26,7 +26,7 @@ $$\begin{gathered}\forall O: Type,\\T: \operatorname{Finset}\left(O\right), m: O
 
 *Commentary.*
 
-The public statement retains the finite window and requires every selected multiplicity and every selected weight to be strictly positive.
+The public statement retains the finite window and requires every selected multiplicity, selected weight, and selected transverse displacement to be strictly positive.
 
 Its forward implication says that zero Casimir forces every selected transverse displacement to vanish. Its reverse implication says that pointwise vanishing makes the same source-defined sum zero. Thus phases, signs, or correlations cannot cancel these local squares.
 

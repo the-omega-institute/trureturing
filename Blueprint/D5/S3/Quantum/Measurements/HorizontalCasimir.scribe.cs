@@ -33,7 +33,8 @@ internal sealed class HorizontalCasimirDocument : IScribeDocumentDefinition
                 Blocks(
                     Paragraph(Text(
                         "The public statement retains the finite window and requires every "
-                            + "selected multiplicity and every selected weight to be strictly positive.")),
+                            + "selected multiplicity, selected weight, and selected transverse "
+                            + "displacement to be strictly positive.")),
                     Paragraph(Text(
                         "Its forward implication says that zero Casimir forces every selected "
                             + "transverse displacement to vanish. Its reverse implication says "
@@ -77,6 +78,7 @@ internal sealed class HorizontalCasimirDocument : IScribeDocumentDefinition
             "horizontalCasimir", window, multiplicity, weight, displacement);
         Formula multiplicityPositive = PositiveOnWindow(o, window, multiplicity);
         Formula weightPositive = PositiveOnWindow(o, window, weight);
+        Formula displacementPositive = PositiveOnWindow(o, window, displacement);
         Formula displacementZero = Seq(
             Forall, Sp, o, Sp, InMacro, Sp, window, Comma, Sp,
             Apply(displacement, o), Sp, Eq, Sp, D(0));
@@ -86,6 +88,7 @@ internal sealed class HorizontalCasimirDocument : IScribeDocumentDefinition
             Parameters(orbit, window, multiplicity, weight, displacement),
             multiplicityPositive, Sp, Rightarrow, RowBreak,
             weightPositive, Sp, Rightarrow, RowBreak,
+            displacementPositive, Sp, Rightarrow, RowBreak,
             Open, casimir, Sp, Eq, Sp, D(0), Close, Sp, Iff, Sp,
             Open, displacementZero, Close, Dot,
             End, Grp(F.Id("gathered"))));

@@ -21,13 +21,14 @@ def horizontalCasimir {Orbit : Type*} (T : Finset Orbit)
     (multiplicity : Orbit → ℕ) (weight displacement : Orbit → ℝ) : ℝ :=
   ∑ o ∈ T, (multiplicity o : ℝ) * weight o * displacement o ^ 2
 
-/-- For the source's finite orbit window and strictly positive multiplicities and weights,
-the horizontal Casimir vanishes exactly when every selected transverse displacement vanishes
-(source lines 1990-2012). -/
+/-- For the source's finite orbit window, right-side representatives, and strictly positive
+multiplicities and weights, the horizontal Casimir vanishes exactly when every selected transverse
+displacement vanishes (source lines 1556-1565 and 1990-2012). -/
 theorem horizontal_casimir_eq_zero_iff {Orbit : Type*} (T : Finset Orbit)
     (multiplicity : Orbit → ℕ) (weight displacement : Orbit → ℝ)
     (multiplicityPositive : ∀ o ∈ T, 0 < multiplicity o)
-    (weightPositive : ∀ o ∈ T, 0 < weight o) :
+    (weightPositive : ∀ o ∈ T, 0 < weight o)
+    (_displacementPositive : ∀ o ∈ T, 0 < displacement o) :
     horizontalCasimir T multiplicity weight displacement = 0 ↔
       ∀ o ∈ T, displacement o = 0 := by
   fail_if_success rfl
@@ -59,33 +60,36 @@ example {Orbit : Type*} (T : Finset Orbit)
     (multiplicity : Orbit → ℕ) (weight displacement : Orbit → ℝ)
     (multiplicityPositive : ∀ o ∈ T, 0 < multiplicity o)
     (weightPositive : ∀ o ∈ T, 0 < weight o)
+    (displacementPositive : ∀ o ∈ T, 0 < displacement o)
     (hzero : horizontalCasimir T multiplicity weight displacement = 0) :
     ∀ o ∈ T, displacement o = 0 :=
   (horizontal_casimir_eq_zero_iff T multiplicity weight displacement
-    multiplicityPositive weightPositive).mp hzero
+    multiplicityPositive weightPositive displacementPositive).mp hzero
 
 /-- Reverse probe for CAS assertion A2: pointwise vanishing gives zero horizontal Casimir. -/
 example {Orbit : Type*} (T : Finset Orbit)
     (multiplicity : Orbit → ℕ) (weight displacement : Orbit → ℝ)
     (multiplicityPositive : ∀ o ∈ T, 0 < multiplicity o)
     (weightPositive : ∀ o ∈ T, 0 < weight o)
+    (displacementPositive : ∀ o ∈ T, 0 < displacement o)
     (hzero : ∀ o ∈ T, displacement o = 0) :
     horizontalCasimir T multiplicity weight displacement = 0 :=
   (horizontal_casimir_eq_zero_iff T multiplicity weight displacement
-    multiplicityPositive weightPositive).mpr hzero
+    multiplicityPositive weightPositive displacementPositive).mpr hzero
 
 /-- A concrete nonempty window has positive carrier data and a nonzero horizontal Casimir. -/
 example :
     0 < horizontalCasimir (Finset.univ : Finset (Fin 1))
-      (fun _ => 2) (fun _ => 3) (fun _ => -4) := by
+      (fun _ => 2) (fun _ => 3) (fun _ => 4) := by
   norm_num [horizontalCasimir]
 
 /-- The same concrete nontrivial data satisfy the public equivalence. -/
 example :
     horizontalCasimir (Finset.univ : Finset (Fin 1))
-        (fun _ => 2) (fun _ => 3) (fun _ => -4) = 0 ↔
-      ∀ o ∈ (Finset.univ : Finset (Fin 1)), (-4 : ℝ) = 0 := by
+        (fun _ => 2) (fun _ => 3) (fun _ => 4) = 0 ↔
+      ∀ o ∈ (Finset.univ : Finset (Fin 1)), (4 : ℝ) = 0 := by
   apply horizontal_casimir_eq_zero_iff
+  · simp
   · simp
   · simp
 
