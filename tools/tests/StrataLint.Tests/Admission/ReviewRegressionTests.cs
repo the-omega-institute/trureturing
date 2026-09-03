@@ -396,65 +396,11 @@ public sealed partial class ReviewRegressionTests
                 "anomaly-bearing", StringComparison.Ordinal));
     }
 
-    [Theory]
-    [InlineData(false)]
-    [InlineData(true)]
-    public void Sl019AcceptsBothLegacyAndNormalizedCoverageGidElements(bool legacy)
-    {
-        var fixture = new RuleFixture();
-        const string path = "Meta/Digestion/backfill/interface-v1/absorbed-closed/elements.yaml";
-        const string gid =
-            "D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/RetrospectiveLookupFailure"
-            + ".lookup_copy_zero_loss_and_nonanticipating_failure";
-        var coverageElement = legacy
-            ? "  - " + gid + "\n"
-            : "  - gid: " + gid + "\n"
-                + "    target_statement_id: sha256:00\n";
-        fixture.Files[path] = "cas_ref: sha256:00\n"
-            + "coverage_gids:\n"
-            + coverageElement;
-
-        var evaluation = RuleCatalog.Default.EvaluateSingle(
-            RuleId.CreateKnown(19),
-            fixture.Build(RawChangeSet.Create([path])));
-
-        Assert.DoesNotContain(
-            evaluation.Diagnostics,
-            item => item.Path == path && item.Message.Contains(
-                "anomaly-bearing", StringComparison.Ordinal));
-    }
-
-    [Fact]
-    public void Sl019AcceptsLegacyInventoryCoverageAndReceiptGidsWhoseSubjectIsNamedAfterAFailure()
-    {
-        var fixture = new RuleFixture();
-        const string path = "Meta/Digestion/backfill/interface-v1/absorbed-closed/legacy.yaml";
-        const string gid =
-            "D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/RetrospectiveLookupFailure"
-            + ".lookup_copy_zero_loss_and_nonanticipating_failure";
-        fixture.Files[path] = "cas_ref: sha256:00\n"
-            + "coverage_gids:\n"
-            + "  - " + gid + "\n"
-            + "receipts:\n"
-            + "  coverage:\n"
-            + "    - gid: " + gid + "\n"
-            + "      source_sha256: sha256:00\n"
-            + "      target_statement_id: sha256:00\n";
-
-        var evaluation = RuleCatalog.Default.EvaluateSingle(
-            RuleId.CreateKnown(19),
-            fixture.Build(RawChangeSet.Create([path])));
-
-        Assert.DoesNotContain(
-            evaluation.Diagnostics,
-            item => item.Path == path && item.Message.Contains(
-                "anomaly-bearing", StringComparison.Ordinal));
-    }
-
     public static TheoryData<string> InvalidInventoryGidSlots => new()
     {
         "coverage_" + "gids:\n  - unresolved failure without case\n",
         "receipts:\n  coverage:\n    - gid: FiniteFailure\n",
+        "receipts:\n  coverage:\n    - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/RetrospectiveLookupFailure.lookup_copy_zero_loss_and_nonanticipating_failure\n",
         "failure_gids:\n  - D5/S0/Carrier/ProbeFailure.failure_probe\n",
         "outer:\n  coverage_" + "gids:\n    - D5/S0/Carrier/ProbeFailure.failure_probe\n",
     };

@@ -5,8 +5,10 @@ namespace StrataLint.Tests;
 
 public sealed partial class BackfillInventoryLoaderTests
 {
-    [Fact]
-    public void DirectoryLedgerProjectsCoverageReferences()
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void CurrentCoverageEdgeLoadsForCandidateAndBaseline(bool baseline)
     {
         var atom = Atom("delta-v0.1", "partial-open", "delta-atom", "manual/delta");
         var withCoverage = atom.Text.Replace(
@@ -14,9 +16,12 @@ public sealed partial class BackfillInventoryLoaderTests
             "coverage_gids:\n  - gid: D5/X_Frontier/SyntheticSourceTarget\n"
                 + "    target_statement_id: null",
             StringComparison.Ordinal);
-        var inventory = BackfillInventoryLoader.Load(Snapshot(
+        var snapshot = Snapshot(
             Source("delta-v0.1", "docs/delta.md", "none"),
-            (atom.Path, withCoverage)));
+            (atom.Path, withCoverage));
+        var inventory = baseline
+            ? BackfillInventoryLoader.LoadBaseline(snapshot)
+            : BackfillInventoryLoader.Load(snapshot);
 
         Assert.Equal(
             ["D5/X_Frontier/SyntheticSourceTarget"],
@@ -60,69 +65,40 @@ public sealed partial class BackfillInventoryLoaderTests
     }
 
     [Fact]
-    public void BaselineLegacyCoverageSchemaProjectsCoverageGidsAndReceiptTargets()
+    public void BaselineLegacyCoverageElementFailsClosed()
     {
         const string resolvedGid = "D5/S0/Carrier/Probe.resolved";
-        const string unresolvedGid = "D5/S0/Carrier/Probe.unresolved";
-        var target = "sha256:" + new string('1', 64);
         var atom = CanonicalCoverageAtom("coverage_gids: []");
         var legacy = atom.Text
             .Replace(
                 "coverage_gids: []\n",
-                $"coverage_gids:\n  - {resolvedGid}\n  - {unresolvedGid}\n",
-                StringComparison.Ordinal)
-            .Replace(
-                "receipts:\n",
-                "receipts:\n"
-                + "  coverage:\n"
-                + $"    - gid: {resolvedGid}\n"
-                + $"      source_sha256: {atom.Text.Split("raw_sha256: ", StringSplitOptions.None)[1].Split('\n')[0]}\n"
-                + $"      target_statement_id: {target}\n"
-                + "      statement_id_history: []\n",
+                $"coverage_gids:\n  - {resolvedGid}\n",
                 StringComparison.Ordinal);
 
-        var entry = Assert.Single(BackfillInventoryLoader.LoadBaseline(Snapshot(
-            Source("delta-v0.1", "docs/delta.md", "none"),
-            (atom.Path, legacy))).RequireDigestionEntries());
+        var exception = Assert.Throws<FormatException>(() =>
+            BackfillInventoryLoader.LoadBaseline(Snapshot(
+                Source("delta-v0.1", "docs/delta.md", "none"),
+                (atom.Path, legacy))));
 
-        Assert.Equal(
-            [resolvedGid, unresolvedGid],
-            entry.Coverage.Select(static edge => edge.Gid).ToArray());
-        Assert.Equal(target, entry.Coverage[0].TargetStatementId);
-        Assert.Null(entry.Coverage[1].TargetStatementId);
+        Assert.Contains("coverage edge must be a mapping", exception.Message, StringComparison.Ordinal);
     }
 
     [Fact]
-    public void CandidateLegacyCoverageSchemaProjectsCoverageGidsAndReceiptTargets()
+    public void CandidateLegacyCoverageElementFailsClosed()
     {
         const string resolvedGid = "D5/S0/Carrier/Probe.resolved";
-        const string unresolvedGid = "D5/S0/Carrier/Probe.unresolved";
-        var target = "sha256:" + new string('1', 64);
         var atom = CanonicalCoverageAtom("coverage_gids: []");
         var legacy = atom.Text
             .Replace(
                 "coverage_gids: []\n",
-                $"coverage_gids:\n  - {resolvedGid}\n  - {unresolvedGid}\n",
-                StringComparison.Ordinal)
-            .Replace(
-                "receipts:\n",
-                "receipts:\n"
-                + "  coverage:\n"
-                + $"    - gid: {resolvedGid}\n"
-                + $"      source_sha256: {atom.Text.Split("raw_sha256: ", StringSplitOptions.None)[1].Split('\n')[0]}\n"
-                + $"      target_statement_id: {target}\n"
-                + "      statement_id_history: []\n",
+                $"coverage_gids:\n  - {resolvedGid}\n",
                 StringComparison.Ordinal);
 
-        var entry = Assert.Single(BackfillInventoryLoader.Load(Snapshot(
+        var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(Snapshot(
             Source("delta-v0.1", "docs/delta.md", "none"),
-            (atom.Path, legacy))).RequireDigestionEntries());
+            (atom.Path, legacy))));
 
-        Assert.Equal(
-            [resolvedGid, unresolvedGid],
-            entry.Coverage.Select(static edge => edge.Gid).ToArray());
-        Assert.Equal(target, entry.Coverage[0].TargetStatementId);
-        Assert.Null(entry.Coverage[1].TargetStatementId);
+        Assert.Contains("coverage edge must be a mapping", exception.Message, StringComparison.Ordinal);
     }
 
     [Fact]

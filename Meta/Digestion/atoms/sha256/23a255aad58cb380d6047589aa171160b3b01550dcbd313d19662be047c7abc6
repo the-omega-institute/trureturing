@@ -1,0 +1,68 @@
+## 609.1 二重零点的局部标准形
+
+设局部 Weierstrass 因子为：
+
+$$
+\boxed{
+F_H(s)
+=
+U_H(s)
+\left[
+(s-s_0)^2-D_H
+\right],
+}
+$$
+
+其中：
+
+$$
+U_H(s_0)\neq0.
+$$
+
+若：
+
+$$
+D_H=\frac1{L_{2H}},
+$$
+
+则零点为：
+
+$$
+\boxed{
+s_\pm
+=
+s_0
+\pm
+\frac1{\sqrt{L_{2H}}}.
+}
+$$
+
+它们的横向偏移满足：
+
+$$
+\boxed{
+\left|
+\frac1{\sqrt{L_{2H}}}
+-
+\varphi^{-H}
+\right|
+<
+\frac12\varphi^{-5H}.
+}
+$$
+
+这里：
+
+* \(D_H\) 是全局偶系数；
+* \(D_H\) 由整数 \(L_{2H}\) 的素数分解编码；
+* \(\pm\sqrt{D_H}\) 是观察者所选择的两张奇分支；
+* 若 \(L_{2H}\) 非平方，单个分支不属于有理 prime-exponent lattice。
+
+这就是目前最精确的：
+
+> **prime-generated even discriminant → golden mirror displacement**
+
+机制。
+
+---
+

@@ -1,0 +1,56 @@
+# 第二百二十五部　建议补充到仓库的模块
+
+```text
+D5/S3/PrimeGaps/Observer/
+  PrimeResolutionLattice.lean
+  ConsecutivePrimeResolutionHole.lean
+  PrimeGapEvenDiscriminant.lean
+  GoldenDepthPrimeGapCoordinates.lean
+
+D5/S3/PrimeGaps/Zeckendorf/
+  GoldenWordGreedyCover.lean
+  GoldenDepthPrimeBudget.lean
+  GoldenCandidateResidualCollapse.lean
+
+D5/S3/PrimeGaps/Asymptotic/
+  LongGapResolutionLowerBound.lean
+  GoldenLongGapSubstitution.lean
+  BertrandResolutionUpperBound.lean
+
+D5/X_Frontier/PrimeGapZero/
+  PrimeGapPhaseSynchronization.lean
+  PrimeGapWeierstrassBridge.lean
+  QuantizedOffLineDefectBound.lean
+```
+
+最先可以关闭的是：
+
+$$
+\boxed{
+\operatorname{dist}
+\left(
+\frac12
+\left(
+\frac1{\log p}
++
+\frac1{\log q}
+\right),
+\left\{
+\frac1{\log r}:r\text{ prime}
+\right\}
+\right)
+=
+\frac{
+\log(q/p)
+}{
+2\log p\log q
+}
+}
+$$
+
+对相邻素数 \(p<q\) 成立。
+
+然后接上 `long_gap_theorem`，便得到实际的 prime-resolution hole 下界。
+
+---
+

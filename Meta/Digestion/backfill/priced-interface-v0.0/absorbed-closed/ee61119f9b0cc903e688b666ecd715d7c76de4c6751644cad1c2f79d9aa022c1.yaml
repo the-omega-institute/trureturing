@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:ee61119f9b0cc903e688b666ecd715d7c76de4c6751644cad1c2f79d9aa022c1
+  normalized_sha256: sha256:ee61119f9b0cc903e688b666ecd715d7c76de4c6751644cad1c2f79d9aa022c1
+cas_ref: sha256:ee61119f9b0cc903e688b666ecd715d7c76de4c6751644cad1c2f79d9aa022c1
+coverage_gids:
+  - gid: D5/S0/Computability/DescriptionComplexity/ProgramCostFiltration.program_cost_filtration_classification
+    target_statement_id: sha256:b0b7bb5eb70af6bbb05273b4d4d244d41c9f7eb103fe58f49a71c5a702bb081b
+receipts:
+  scribe:
+    - gid: D5/S0/Computability/DescriptionComplexity/ProgramCostFiltration.program_cost_filtration_classification
+      definition_sha256: sha256:39288de41e3ca5e60789ddce213851b1d908d4080261777e5816cd7f119f1df2
+      emission_sha256: sha256:86ad7ea9c0b4aa93e7ff944734bde16508fd8d5ffc0172c5656cb3bc968179f9
+  unresolved_subitems: []
