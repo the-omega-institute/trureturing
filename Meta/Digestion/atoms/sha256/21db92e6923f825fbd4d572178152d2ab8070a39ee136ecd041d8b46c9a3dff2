@@ -1,0 +1,22 @@
+## 47. 第一层：每对内部反相关
+
+对：
+
+$$
+\rho=
+\frac12+\delta+i\gamma
+$$
+
+及其同高度镜像：
+
+$$
+J\rho=
+\frac12-\delta+i\gamma,
+$$
+
+transverse signs 必然相反。
+
+这是确定的 orbit anti-correlation。
+
+---
+

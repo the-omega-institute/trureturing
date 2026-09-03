@@ -1,0 +1,31 @@
+## 62. 黄金完成类别
+
+黄金最小系统满足：
+
+$$
+T_{\rm norm}
+=
+P_+
+-
+\varphi^{-2}P_-.
+$$
+
+因此：
+
+$$
+T_{\rm norm}^n
+\to P_+.
+$$
+
+它是一个严格的：
+
+$$
+\boxed{
+\text{odd-contracting, even-completing observer}.
+}
+$$
+
+这可以成为仓库规划中的 `OddBreakEvenCompletion` 的精确定义，而不是只保留名称。
+
+---
+

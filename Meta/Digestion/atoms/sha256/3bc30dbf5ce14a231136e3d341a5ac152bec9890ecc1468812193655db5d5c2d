@@ -1,0 +1,39 @@
+## 155. Frontier：不可提前宣称已完成的对象
+
+以下只能作为 `def : Prop` 或 structure interface：
+
+```lean
+CorrelationCompletedXi
+TraceJetBridge
+PrimeSourceZeroMonodromy
+QuantumOrbitLift
+GlobalOrbitEntanglement
+```
+
+特别禁止把：
+
+$$
+\text{all off-line zeros are entangled}
+$$
+
+直接写成公理。
+
+应该写成至少三个相互独立的 frontier：
+
+$$
+\boxed{
+\begin{aligned}
+\text{F1: }&
+\text{跨轨道 connected cumulant 非零};\\
+\text{F2: }&
+\text{prime-source monodromy 图连通};\\
+\text{F3: }&
+\text{存在自然非可分量子 density state}.
+\end{aligned}
+}
+$$
+
+三者不能互相代替。
+
+---
+

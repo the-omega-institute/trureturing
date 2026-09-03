@@ -1,0 +1,64 @@
+## 22. 分类坐标自身会产生伪零点
+
+传递因子：
+
+$$
+T_2(s)=1-2^{1-s}
+$$
+
+在：
+
+$$
+s
+=
+1-\frac{2\pi ik}{\log2}
+$$
+
+处为零。
+
+在 \(k\neq0\) 时，若 ζ 在该点有限非零，则 eta 因观察传递因子为零而出现零点。
+
+这些不是 ζ 的非平凡零点，而是：
+
+$$
+\boxed{
+\text{parity observer chart zeros}.
+}
+$$
+
+所以定义一个观察图：
+
+$$
+O(s)=T(s)F(s)
+$$
+
+时：
+
+$$
+\operatorname{Div}(O)
+=
+\operatorname{Div}(F)
++
+\operatorname{Div}(T).
+$$
+
+分类方式本身会向观察结果加入一个 transfer divisor。
+
+这精确支持你的直觉：
+
+> “名”和分类方式确实可能成为分歧与伪奇点的来源。
+
+但必须区分：
+
+$$
+\boxed{
+\text{object divisor}
+\quad\text{与}\quad
+\text{observer-transfer divisor}.
+}
+$$
+
+仓库已经证明，删除任意有限组局部 Euler 因子不会改变临界带内经典 ζ 的非平凡零点集；因此以素数 \(2\) 为核心的奇偶坐标是一个局部观察 chart，而不是 RH 零点的来源。
+
+---
+

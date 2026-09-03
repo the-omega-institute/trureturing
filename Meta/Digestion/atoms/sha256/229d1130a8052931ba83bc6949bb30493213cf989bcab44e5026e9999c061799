@@ -1,0 +1,24 @@
+## 144. 量子 transverse-field lift
+
+若进一步定义：
+
+$$
+\mathcal H_{\mathscr O}
+=
+\bigotimes_{a=1}^N\mathbb C^2,
+$$
+
+并引入 Hamiltonian：
+
+$$
+\widehat H
+=
+-\sum_{a<b}J_{ab}Z_aZ_b
+-\sum_a h_aX_a,
+$$
+
+则其基态可能产生真正的多体量子纠缠。
+
+这里：
+
+* \(Z_a\) 读取左右 sheet；

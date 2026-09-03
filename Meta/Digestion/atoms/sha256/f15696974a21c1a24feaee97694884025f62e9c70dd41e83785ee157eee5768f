@@ -1,0 +1,62 @@
+## 25. 局部破缺最终重完为整数重数
+
+若 \(\rho\) 是 \(m\) 重零点，则局部：
+
+$$
+\xi(s)
+=
+(s-\rho)^m u(s),
+\qquad
+u(\rho)\neq0.
+$$
+
+于是：
+
+$$
+d\log\xi(s)
+=
+m\frac{ds}{s-\rho}
++
+d\log u(s).
+$$
+
+绕零点一周：
+
+$$
+\oint_\rho d\log\xi
+=
+2\pi im.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{odd local current}
+\;\xrightarrow{\text{cycle integration}}\;
+\text{even integer multiplicity}.
+}
+$$
+
+这就是最严格的“从破缺到重完”：
+
+$$
+\boxed{
+\xi
+\xrightarrow{d\log}
+\text{奇连接}
+\xrightarrow{\oint/(2\pi i)}
+m_\rho.
+}
+$$
+
+而仓库的 jet pencil 结果进一步表明：determinant 只留下
+
+$$
+(s-\rho)^m,
+$$
+
+完整 resolvent 才保存 nilpotent jet chain。这说明标量完成确实会遗忘内部微分结构。
+
+---
+
