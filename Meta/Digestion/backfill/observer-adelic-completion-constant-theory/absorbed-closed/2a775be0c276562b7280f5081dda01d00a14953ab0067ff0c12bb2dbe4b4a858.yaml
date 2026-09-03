@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:2a775be0c276562b7280f5081dda01d00a14953ab0067ff0c12bb2dbe4b4a858
+  normalized_sha256: sha256:2a775be0c276562b7280f5081dda01d00a14953ab0067ff0c12bb2dbe4b4a858
+cas_ref: sha256:2a775be0c276562b7280f5081dda01d00a14953ab0067ff0c12bb2dbe4b4a858
+coverage_gids:
+  - D5/S3/Analytic/Adelic/ToroidalTemperednessCriterion.rh_iff_all_toroidal_eisenstein_tempered
+receipts:
+  coverage:
+    - gid: D5/S3/Analytic/Adelic/ToroidalTemperednessCriterion.rh_iff_all_toroidal_eisenstein_tempered
+      source_sha256: sha256:2a775be0c276562b7280f5081dda01d00a14953ab0067ff0c12bb2dbe4b4a858
+      target_statement_id: sha256:8131f2c714d663fc6cc7438943a6e7b14fcb93ae2b5a88fd3fd0ddd321d5dc58
+  scribe:
+    - gid: D5/S3/Analytic/Adelic/ToroidalTemperednessCriterion.rh_iff_all_toroidal_eisenstein_tempered
+      definition_sha256: sha256:3b52ef9a6c5494f1933ae4bb540663f7a4a4b189da714af2944ad50b7ff27c5f
+      emission_sha256: sha256:454785c89e509e3c714a1bc7930c91f24ea84e79a89f7e6e2a6aa4eb1c16952d
+  unresolved_subitems: []
