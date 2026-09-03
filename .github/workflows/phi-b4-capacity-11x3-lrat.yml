@@ -1,0 +1,101 @@
+name: phi-b4-capacity-11x3-lrat
+
+on:
+  push:
+    branches:
+      - agent/research/phi-b4-capacity-11x3-lrat-20260903
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build CaDiCaL 3.0.1 and lrat-trim
+        run: |
+          git clone --depth 1 --branch rel-3.0.1 \
+            https://github.com/arminbiere/cadical.git /tmp/cadical
+          cd /tmp/cadical
+          ./configure
+          make -j2
+          sudo install -m 0755 build/cadical /usr/local/bin/cadical
+          git clone --depth 1 https://github.com/arminbiere/lrat-trim.git /tmp/lrat-trim
+          cd /tmp/lrat-trim
+          ./configure
+          make -j2
+          sudo install -m 0755 lrat-trim /usr/local/bin/lrat-trim
+          cadical --version
+          lrat-trim --version
+      - name: Emit the at-most-capacity 11+3 CNF
+        run: |
+          mkdir -p proof
+          PYTHONPATH=research python3 - <<'PY'
+          import json
+          from pathlib import Path
+          import phi_b4_bounds_v2 as v2
+
+          selected = list(range(79))
+          cnf, metadata = v2.build_strong_cnf(
+              selected, 14, 11, base=4
+          )
+          cnf.write_dimacs(Path('proof/phi-b4-capacity-11x3.cnf'))
+          Path('proof/metadata.json').write_text(json.dumps({
+              'base': 4,
+              'sample_indices': selected,
+              'first_capacity': 11,
+              'second_capacity': 3,
+              'variables': cnf.max_var,
+              'clauses': len(cnf.clauses),
+              'trie_nodes': len(metadata.trie.nodes),
+              'internal_conflicts': metadata.conflict_count,
+              'encoder': 'strong-rgs-v2-at-most-capacity',
+              'claim_boundary': (
+                  'UNSAT excludes every published typed machine whose reachable '
+                  'fibres inject into capacities 11 and 3, after the separate '
+                  'Lean machine-to-formula theorem is supplied.'
+              ),
+          }, indent=2, sort_keys=True) + '\n')
+          PY
+          sha256sum proof/phi-b4-capacity-11x3.cnf proof/metadata.json
+      - name: Produce LRAT proof
+        shell: bash
+        run: |
+          set +e
+          /usr/bin/time -v cadical -q --lrat \
+            proof/phi-b4-capacity-11x3.cnf \
+            proof/phi-b4-capacity-11x3.raw.lrat \
+            2>&1 | tee proof/cadical.log
+          status=${PIPESTATUS[0]}
+          set -e
+          test "$status" -eq 20
+          du -h proof/phi-b4-capacity-11x3.raw.lrat
+      - name: Independently check and trim LRAT
+        shell: bash
+        run: |
+          set +e
+          /usr/bin/time -v lrat-trim -q \
+            proof/phi-b4-capacity-11x3.cnf \
+            proof/phi-b4-capacity-11x3.raw.lrat \
+            proof/phi-b4-capacity-11x3.trimmed.lrat \
+            2>&1 | tee proof/lrat-trim.log
+          status=${PIPESTATUS[0]}
+          set -e
+          test "$status" -eq 20
+          rm proof/phi-b4-capacity-11x3.raw.lrat
+          sha256sum proof/phi-b4-capacity-11x3.cnf \
+            proof/phi-b4-capacity-11x3.trimmed.lrat \
+            proof/metadata.json > proof/SHA256SUMS
+          zstd -T0 -3 --rm proof/phi-b4-capacity-11x3.cnf
+          zstd -T0 -3 --rm proof/phi-b4-capacity-11x3.trimmed.lrat
+          cat proof/SHA256SUMS
+          du -h proof/*
+      - uses: actions/upload-artifact@v4
+        with:
+          name: phi-b4-capacity-11x3-lrat-certificate
+          path: proof
+          compression-level: 0
+          retention-days: 90
