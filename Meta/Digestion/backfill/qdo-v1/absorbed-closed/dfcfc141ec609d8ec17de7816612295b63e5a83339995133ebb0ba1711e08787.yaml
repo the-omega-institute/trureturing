@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:dfcfc141ec609d8ec17de7816612295b63e5a83339995133ebb0ba1711e08787
+  normalized_sha256: sha256:dfcfc141ec609d8ec17de7816612295b63e5a83339995133ebb0ba1711e08787
+cas_ref: sha256:dfcfc141ec609d8ec17de7816612295b63e5a83339995133ebb0ba1711e08787
+coverage_gids:
+  - D5/S3/Observer/Completion/FourTypedCompletionHierarchy.four_typed_completion_hierarchy
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/Completion/FourTypedCompletionHierarchy.four_typed_completion_hierarchy
+      source_sha256: sha256:dfcfc141ec609d8ec17de7816612295b63e5a83339995133ebb0ba1711e08787
+      target_statement_id: sha256:88658249fac5744c98a6c024df75ae5413efdf06860727f794adf4cbc59e84ba
+  scribe:
+    - gid: D5/S3/Observer/Completion/FourTypedCompletionHierarchy.four_typed_completion_hierarchy
+      definition_sha256: sha256:62a69e478d1495093817599f2ab5b6ff43e8b738f2f350a042ae00f49fd66992
+      emission_sha256: sha256:059cc30947993893f49ef62f750fde7b97ba3ea7db5c5c68c783e8cc19fbcca7
+  unresolved_subitems: []

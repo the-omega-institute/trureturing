@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:dfbef76b23b14257a57c519da77a9406ed8417f2d614c031fc7e7950598aa616
+  normalized_sha256: sha256:dfbef76b23b14257a57c519da77a9406ed8417f2d614c031fc7e7950598aa616
+cas_ref: sha256:dfbef76b23b14257a57c519da77a9406ed8417f2d614c031fc7e7950598aa616
+coverage_gids:
+  - D5/S3/QuantumStates/FiniteRuntimeReductionOnline.finite_precision_runtime_reduction_online
+receipts:
+  coverage:
+    - gid: D5/S3/QuantumStates/FiniteRuntimeReductionOnline.finite_precision_runtime_reduction_online
+      source_sha256: sha256:dfbef76b23b14257a57c519da77a9406ed8417f2d614c031fc7e7950598aa616
+      target_statement_id: sha256:9343f27dddd948adbafb0cba238b7341dc159b2a6274c49977a80c1c7ab56893
+  scribe:
+    - gid: D5/S3/QuantumStates/FiniteRuntimeReductionOnline.finite_precision_runtime_reduction_online
+      definition_sha256: sha256:ece7415cb6066242f075f1fc1f4698e265278e9d33d41990a343d49acabc07be
+      emission_sha256: sha256:f813679511b27ac29c9e9f73e6612b58e457e62b93f12f0689baf0f49a6c749d
+  unresolved_subitems: []
