@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:fc71458f61b6ab8e7aede4761a04e473a980bf4590cfb7754300e63d6a40aef4
+  normalized_sha256: sha256:fc71458f61b6ab8e7aede4761a04e473a980bf4590cfb7754300e63d6a40aef4
+cas_ref: sha256:fc71458f61b6ab8e7aede4761a04e473a980bf4590cfb7754300e63d6a40aef4
+coverage_gids:
+  - D5/S3/QuantumBounds/Designs/LocalDeterministicCHSHSeparation.local_deterministic_chsh_separation
+receipts:
+  coverage:
+    - gid: D5/S3/QuantumBounds/Designs/LocalDeterministicCHSHSeparation.local_deterministic_chsh_separation
+      source_sha256: sha256:fc71458f61b6ab8e7aede4761a04e473a980bf4590cfb7754300e63d6a40aef4
+      target_statement_id: sha256:e182a13f5ead2bb1d9a10c72bd207cef8093dc35b5875be1bd9224c08306aa32
+  scribe:
+    - gid: D5/S3/QuantumBounds/Designs/LocalDeterministicCHSHSeparation.local_deterministic_chsh_separation
+      definition_sha256: sha256:300b2338218814e2303c6dc4892d4c1bb319acc38e700e9c33ba3944ec85e67c
+      emission_sha256: sha256:413cd8c846d320bc0789dcdd255483820b6dab349bb697941682ec7c9f8ce315
+  unresolved_subitems: []
