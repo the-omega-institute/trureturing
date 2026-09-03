@@ -350,18 +350,6 @@ internal static partial class IngestCommand
 
     private sealed record ResidueSourceVote(string Residue, string SourceId);
 
-    private static string ParseArguments(IReadOnlyList<string> arguments)
-    {
-        if (arguments.Count == 2
-            && arguments[0] == "--base"
-            && !string.IsNullOrWhiteSpace(arguments[1]))
-        {
-            return arguments[1];
-        }
-
-        throw new InvalidOperationException("USAGE: StrataLint ingest --base REV");
-    }
-
     private static BackfillInventoryDocument LoadDocument(RepositorySnapshot snapshot) =>
         BackfillInventoryLoader.Load(snapshot);
 
