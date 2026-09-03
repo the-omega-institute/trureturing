@@ -111,9 +111,12 @@ theorem frequency_zeckendorf_readout_injective :
   intro left right hsame
   apply Prod.ext
   · apply first_excited_frequency_injective
-    exact congrArg Prod.fst hsame
-  · apply wEncoding.injective
-    exact congrArg Prod.snd hsame
+    simpa [frequencyZeckendorfReadout,
+      firstExcitedFrequencyReadout] using congrArg Prod.fst hsame
+  · have haddress : wEncoding left.2 = wEncoding right.2 := by
+      simpa [frequencyZeckendorfReadout] using congrArg Prod.snd hsame
+    have hdecoded := congrArg decodeWAddress haddress
+    simpa using hdecoded
 
 /-- The complete family of first excited prime frequencies is linearly
 independent over the rationals. Hence finite rational superpositions have no
