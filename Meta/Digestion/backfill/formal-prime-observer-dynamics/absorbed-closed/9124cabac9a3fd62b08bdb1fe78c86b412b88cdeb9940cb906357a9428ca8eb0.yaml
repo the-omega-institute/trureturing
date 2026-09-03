@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:9124cabac9a3fd62b08bdb1fe78c86b412b88cdeb9940cb906357a9428ca8eb0
+  normalized_sha256: sha256:9124cabac9a3fd62b08bdb1fe78c86b412b88cdeb9940cb906357a9428ca8eb0
+cas_ref: sha256:9124cabac9a3fd62b08bdb1fe78c86b412b88cdeb9940cb906357a9428ca8eb0
+coverage_gids:
+  - D5/S3/Observer/MeasureSeparation/SingularPosteriorCollapse.mutually_singular_laws_have_collapsing_posterior
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/MeasureSeparation/SingularPosteriorCollapse.mutually_singular_laws_have_collapsing_posterior
+      source_sha256: sha256:9124cabac9a3fd62b08bdb1fe78c86b412b88cdeb9940cb906357a9428ca8eb0
+      target_statement_id: sha256:60020d7d6e04df80105f90d33316e958c10f1d704a23c20b8416ec63b8f87209
+  scribe:
+    - gid: D5/S3/Observer/MeasureSeparation/SingularPosteriorCollapse.mutually_singular_laws_have_collapsing_posterior
+      definition_sha256: sha256:3ef5b984db428e1060f5935924b6955f08c3c77ed723318c99b07c5d4c8d49c5
+      emission_sha256: sha256:965c8e77f19a53bb2ccc25642675fba40782be40de162080f9234c75b1b38ed8
+  unresolved_subitems: []

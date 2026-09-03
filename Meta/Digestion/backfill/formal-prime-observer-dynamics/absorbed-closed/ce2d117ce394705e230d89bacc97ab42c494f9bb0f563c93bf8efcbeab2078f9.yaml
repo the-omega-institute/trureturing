@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:ce2d117ce394705e230d89bacc97ab42c494f9bb0f563c93bf8efcbeab2078f9
+  normalized_sha256: sha256:ce2d117ce394705e230d89bacc97ab42c494f9bb0f563c93bf8efcbeab2078f9
+cas_ref: sha256:ce2d117ce394705e230d89bacc97ab42c494f9bb0f563c93bf8efcbeab2078f9
+coverage_gids:
+  - D5/S3/ConceptDynamics/Reporting/PublicCausalActivityCriterion.public_causal_activity_excludes_dynamic_equivalence
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Reporting/PublicCausalActivityCriterion.public_causal_activity_excludes_dynamic_equivalence
+      source_sha256: sha256:ce2d117ce394705e230d89bacc97ab42c494f9bb0f563c93bf8efcbeab2078f9
+      target_statement_id: sha256:04b17df30a9d4a2ed604e029575d83be31cdac0092e81a2f43a1bd728480d9c4
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Reporting/PublicCausalActivityCriterion.public_causal_activity_excludes_dynamic_equivalence
+      definition_sha256: sha256:e51498d6465ddef7ec8834c096da34d13c1b602606a25036f84c7b8d85be7f8e
+      emission_sha256: sha256:aa7512f68a94acab8a1e6de9ca1604f724a2ef6f35ba8898b39d52d047b81e11
+  unresolved_subitems: []

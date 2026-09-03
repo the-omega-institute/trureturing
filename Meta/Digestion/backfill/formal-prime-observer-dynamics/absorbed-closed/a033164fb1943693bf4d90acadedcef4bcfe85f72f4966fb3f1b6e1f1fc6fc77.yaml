@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:a033164fb1943693bf4d90acadedcef4bcfe85f72f4966fb3f1b6e1f1fc6fc77
+  normalized_sha256: sha256:a033164fb1943693bf4d90acadedcef4bcfe85f72f4966fb3f1b6e1f1fc6fc77
+cas_ref: sha256:a033164fb1943693bf4d90acadedcef4bcfe85f72f4966fb3f1b6e1f1fc6fc77
+coverage_gids:
+  - D5/S3/ConceptDynamics/ExperimentDesign/PositiveFirstExperimentIdentification.positive_first_experiment_identifies_model
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/ExperimentDesign/PositiveFirstExperimentIdentification.positive_first_experiment_identifies_model
+      source_sha256: sha256:a033164fb1943693bf4d90acadedcef4bcfe85f72f4966fb3f1b6e1f1fc6fc77
+      target_statement_id: sha256:c4ac4be0f27dfdf4181c35a797bed3182259850da06be2afe776f5508de57c30
+  scribe:
+    - gid: D5/S3/ConceptDynamics/ExperimentDesign/PositiveFirstExperimentIdentification.positive_first_experiment_identifies_model
+      definition_sha256: sha256:3c1e8a1f9c0374624b58064b71a97caedb94699eb89cf9268910592ab325e205
+      emission_sha256: sha256:104863466810a2b55412626baceeaf87ca272eeafc330130f18099fa5274a1bb
+  unresolved_subitems: []
