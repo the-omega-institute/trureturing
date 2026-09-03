@@ -1,0 +1,36 @@
+## 188. Hankel 秩恢复不同离线深度数
+
+定义 Hankel 矩阵：
+
+$$
+H_r
+=
+\bigl(M_{i+j}\bigr)_{0\le i,j<r}.
+$$
+
+若 \(u_a\) 中恰有 \(R\) 个不同取值，则：
+
+$$
+H_r
+=
+V_r
+\operatorname{diag}(w_a)
+V_r^T,
+$$
+
+其中 \(V_r\) 是 Vandermonde 矩阵。
+
+因此：
+
+$$
+\boxed{
+\operatorname{rank}H_r
+=
+\min(r,R).
+}
+$$
+
+所以全部偶 jets 不仅能检测是否有离线零点，还能恢复离线深度分布的有限原子秩。
+
+---
+

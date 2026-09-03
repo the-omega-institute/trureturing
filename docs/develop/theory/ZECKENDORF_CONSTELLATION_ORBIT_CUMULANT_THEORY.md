@@ -12513,3 +12513,4066 @@ $$
 只有再构造自然 Hilbert tensor lift，才能把它提升为真正的量子纠缠。
 
 [1]: https://arxiv.org/abs/1801.05914 "https://arxiv.org/abs/1801.05914"
+# 继续增订：反射商、黄金伴随矩阵与“所有名字”的外围谱
+
+这一轮出现了一个真正把 **黄金比例、奇偶周期、临界线、坐标轴融合、Zeckendorf 递归和零点镜像对** 放入同一代数结构的核心对象：
+
+$$
+\boxed{
+q=s(1-s)
+}
+$$
+
+以及它的最小二维动力学实现：
+
+$$
+\boxed{
+\mathcal C(q)
+=
+\begin{pmatrix}
+1&-q\\
+1&0
+\end{pmatrix}.
+}
+$$
+
+因为：
+
+$$
+\det(\lambda I-\mathcal C(q))
+=
+\lambda^2-\lambda+q,
+$$
+
+所以它的两个本征值满足：
+
+$$
+\lambda_++\lambda_-=1,
+\qquad
+\lambda_+\lambda_-=q,
+$$
+
+即：
+
+$$
+\lambda_- = 1-\lambda_+.
+$$
+
+这意味着：
+
+> **\(q\) 是外部观察者看到的反射不变量；
+> \(\lambda\) 与 \(1-\lambda\) 是内部观察者看到的两张坐标页。**
+
+这比仅仅说“黄金比例是坐标融合”更严格：一个标量 \(q\) 需要一个二维伴随矩阵，才能恢复其内部两条本征轴。
+
+仓库目前仍只有 `OddBreakEvenCompletion`、`FibonacciMatrixMinimalPerron`、`GoldenStableUnstableDirections` 等规划名，没有发现实现这里完整反射商—伴随矩阵—扭曲传递谱的单一 owner。
+
+---
+
+# 第四十六部　ζ 的反射商坐标
+
+## 134. 函数方程的真正无符号坐标
+
+定义：
+
+$$
+\mathcal Q(s)=s(1-s).
+$$
+
+它满足：
+
+$$
+\mathcal Q(1-s)=\mathcal Q(s),
+$$
+
+以及：
+
+$$
+\mathcal Q(\overline s)
+=
+\overline{\mathcal Q(s)}.
+$$
+
+因此：
+
+$$
+s
+\quad\text{与}\quad
+1-s
+$$
+
+不是在 \(q\)-坐标中两个不同点，而是同一个点的两张内部页。
+
+反解为：
+
+$$
+\boxed{
+s
+=
+\frac12
+\pm
+\sqrt{\frac14-q}.
+}
+$$
+
+这里的 \(\pm\) 就是被函数方程商掉的奇通道：
+
+$$
+\boxed{
+\text{external coordinate}=q,
+\qquad
+\text{internal sheet}=\pm.
+}
+$$
+
+---
+
+## 135. 临界线在 \(q\)-平面中的像
+
+令：
+
+$$
+s=\frac12+\delta+i\gamma.
+$$
+
+则：
+
+$$
+\begin{aligned}
+q
+&=
+s(1-s)\\
+&=
+\frac14+\gamma^2-\delta^2-2i\delta\gamma.
+\end{aligned}
+$$
+
+因此：
+
+$$
+\boxed{
+\Re q
+=
+\frac14+\gamma^2-\delta^2,
+}
+$$
+
+$$
+\boxed{
+\Im q
+=
+-2\delta\gamma.
+}
+$$
+
+对非实零点 \(\gamma\neq0\)，有：
+
+$$
+\Im q=0
+\iff
+\delta=0.
+$$
+
+而当 \(\delta=0\) 时：
+
+$$
+q=\frac14+\gamma^2\in\left[\frac14,\infty\right).
+$$
+
+所以 RH 可以精确改写为：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{每个非平凡零点的 }q=\rho(1-\rho)
+\text{ 都位于实射线 }
+\left[\frac14,\infty\right).
+}
+$$
+
+这不是坐标依赖的近似，而是函数方程自身产生的反射商。
+
+---
+
+## 136. 四元零点轨道在 \(q\)-平面中降为二元共轭对
+
+设：
+
+$$
+\rho=\frac12+\delta+i\gamma.
+$$
+
+完整四元轨道为：
+
+$$
+\rho,\qquad
+1-\rho,\qquad
+\overline\rho,\qquad
+1-\overline\rho.
+$$
+
+映到 \(q\)-平面以后：
+
+$$
+\mathcal Q(\rho)
+=
+\mathcal Q(1-\rho)
+=
+q_\rho,
+$$
+
+$$
+\mathcal Q(\overline\rho)
+=
+\mathcal Q(1-\overline\rho)
+=
+\overline{q_\rho}.
+$$
+
+所以：
+
+$$
+\boxed{
+4\text{ 个 }s\text{-平面点}
+\longrightarrow
+2\text{ 个 }q\text{-平面共轭点}.
+}
+$$
+
+若 RH 成立：
+
+$$
+q_\rho=\overline{q_\rho},
+$$
+
+于是再降为一个实点：
+
+$$
+\boxed{
+4\longrightarrow2\longrightarrow1.
+}
+$$
+
+这就是一个严格的“重完”过程：
+
+1. 函数方程完成掉反射页；
+2. RH 再要求剩余共轭页融合为实点。
+
+---
+
+## 137. completed \(\xi\) 精确下降到 \(q\)-平面
+
+令：
+
+$$
+\Xi_c(z)
+=
+\xi\left(\frac12+z\right).
+$$
+
+函数方程给出：
+
+$$
+\Xi_c(-z)=\Xi_c(z).
+$$
+
+任何偶整函数都唯一写成另一个整函数关于 \(z^2\) 的复合。因此存在唯一整函数 \(H\)，使：
+
+$$
+\Xi_c(z)=H(z^2).
+$$
+
+由于：
+
+$$
+z^2=\frac14-q,
+$$
+
+定义：
+
+$$
+\mathfrak X(q)
+=
+H\left(\frac14-q\right).
+$$
+
+便有：
+
+$$
+\boxed{
+\xi(s)
+=
+\mathfrak X\bigl(s(1-s)\bigr).
+}
+$$
+
+因此经典 completed \(\xi\) **确实是反射商上的一个整函数**，而不只是“看起来具有反射对称”。
+
+这解决了一个关键悖论：
+
+> \(\xi\) 虽然完全遗忘 \(s\) 和 \(1-s\) 的页标签，却没有遗忘 \(q\) 是否为实数。
+> 所以完整对称不妨碍它观察离线深度。
+
+---
+
+## 138. 偶完成与奇电流的精确因子分解
+
+由链式法则：
+
+$$
+\frac{dq}{ds}=1-2s.
+$$
+
+因此：
+
+$$
+\boxed{
+\frac{\xi'(s)}{\xi(s)}
+=
+(1-2s)
+\frac{\mathfrak X'(q)}
+{\mathfrak X(q)}.
+}
+$$
+
+右侧分成：
+
+$$
+\boxed{
+1-2s
+=
+\text{反射奇通道},
+}
+$$
+
+以及：
+
+$$
+\boxed{
+\frac{\mathfrak X'(q)}{\mathfrak X(q)}
+=
+\text{反射商上的偶动力学}.
+}
+$$
+
+在 \(s\mapsto1-s\) 下：
+
+$$
+1-2(1-s)=-(1-2s),
+$$
+
+而 \(q\) 不变。
+
+所以：
+
+$$
+\boxed{
+\text{completed state 是偶的，}
+\qquad
+\text{logarithmic current 是奇的}.
+}
+$$
+
+这比“偶完成、奇破缺”更完整：
+
+$$
+\boxed{
+\text{奇电流并没有消失；
+它被分解成反射 Jacobian 与商空间电流的乘积。}
+}
+$$
+
+---
+
+# 第四十七部　统一伴随矩阵的相图
+
+## 139. 反射对的最小二维实现
+
+定义：
+
+$$
+\mathcal C(q)
+=
+\begin{pmatrix}
+1&-q\\
+1&0
+\end{pmatrix}.
+$$
+
+有：
+
+$$
+\operatorname{tr}\mathcal C(q)=1,
+\qquad
+\det\mathcal C(q)=q.
+$$
+
+其本征值为：
+
+$$
+\lambda_\pm
+=
+\frac12
+\pm
+\sqrt{\frac14-q}.
+$$
+
+所以任意反射对：
+
+$$
+s,\quad1-s
+$$
+
+都是矩阵：
+
+$$
+\mathcal C(s(1-s))
+$$
+
+的两个本征值。
+
+这给出一个严格的“下一维坐标系”：
+
+$$
+\boxed{
+\text{一维外部不变量 }q
+\quad\longrightarrow\quad
+\text{二维内部坐标矩阵 }\mathcal C(q).
+}
+$$
+
+---
+
+## 140. 实 \(q\) 的完整动力学分类
+
+### \(q<0\)：方向反转双曲相
+
+两个本征值实数且异号。
+
+### \(q=0\)：秩坍缩相
+
+本征值为：
+
+$$
+0,\quad1.
+$$
+
+矩阵不可逆。
+
+### \(0<q<1/4\)：方向保持双曲相
+
+两个本征值都在实区间 \((0,1)\)。
+
+### \(q=1/4\)：抛物／轴融合相
+
+两个本征值合并：
+
+$$
+\lambda_+=\lambda_-=\frac12.
+$$
+
+但：
+
+$$
+\mathcal C(1/4)\neq\frac12I,
+$$
+
+所以一般形成 Jordan block。
+
+### \(q>1/4\)：椭圆相
+
+$$
+\lambda_\pm
+=
+\frac12
+\pm i\sqrt{q-\frac14}.
+$$
+
+它们严格位于：
+
+$$
+\Re\lambda=\frac12.
+$$
+
+所以：
+
+$$
+\boxed{
+q>\frac14
+\iff
+\mathcal C(q)\text{ 的两个本征值形成临界线对}.
+}
+$$
+
+---
+
+## 141. RH 的矩阵相分类
+
+若 \(\rho\) 是非平凡零点，令：
+
+$$
+q_\rho=\rho(1-\rho).
+$$
+
+则：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\forall\rho,\quad
+q_\rho\in\left(\frac14,\infty\right)
+}
+$$
+
+等价于：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{每个零点轨道伴随矩阵 }
+\mathcal C(q_\rho)
+\text{ 都是实椭圆型}.
+}
+$$
+
+当 \(q>0\) 时，归一化：
+
+$$
+\widehat{\mathcal C}(q)
+=
+q^{-1/2}\mathcal C(q)
+$$
+
+满足：
+
+$$
+\det\widehat{\mathcal C}(q)=1,
+$$
+
+$$
+\operatorname{tr}\widehat{\mathcal C}(q)
+=
+\frac1{\sqrt q}.
+$$
+
+于是：
+
+$$
+q>\frac14
+\iff
+\left|
+\operatorname{tr}\widehat{\mathcal C}(q)
+\right|<2.
+$$
+
+这正是 \(SL_2(\mathbb R)\) 中的椭圆分类。
+
+所以 RH 也可以写成：
+
+$$
+\boxed{
+\text{所有零点轨道的 determinant-normalized companion 均为 elliptic}.
+}
+$$
+
+这不是 Hilbert–Pólya 证明，因为它只是把每个零点轨道逐个放入一个二维伴随块；尚未构造一个统一的自伴全局算子。
+
+---
+
+# 第四十八部　\(-1,0,+1\) 的统一三相
+
+## 142. \(q=-1\)：黄金双轴
+
+令：
+
+$$
+q=-1.
+$$
+
+则：
+
+$$
+\mathcal C(-1)
+=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}
+=
+F.
+$$
+
+其本征值为：
+
+$$
+\boxed{
+\varphi,
+\qquad
+1-\varphi=-\varphi^{-1}.
+}
+$$
+
+所以黄金比例不是孤立常数，而是反射商纤维：
+
+$$
+\boxed{
+s(1-s)=-1
+}
+$$
+
+的两个内部坐标之一。
+
+---
+
+## 143. \(q=0\)：边界端点
+
+当：
+
+$$
+q=0,
+$$
+
+反解为：
+
+$$
+s=0,\quad1.
+$$
+
+这正是函数方程交换的两个端点。
+
+矩阵：
+
+$$
+\mathcal C(0)
+=
+\begin{pmatrix}
+1&0\\
+1&0
+\end{pmatrix}
+$$
+
+秩为 \(1\)。
+
+所以 \(0\) 表示：
+
+$$
+\boxed{
+\text{内部双轴退化成一个可见通道和一个消失通道}.
+}
+$$
+
+---
+
+## 144. \(q=+1\)：临界六周期
+
+当：
+
+$$
+q=1,
+$$
+
+有：
+
+$$
+s
+=
+\frac12
+\pm
+i\frac{\sqrt3}{2}.
+$$
+
+同时：
+
+$$
+\mathcal C(1)
+=
+\begin{pmatrix}
+1&-1\\
+1&0
+\end{pmatrix}.
+$$
+
+直接计算：
+
+$$
+\mathcal C(1)^3=-I,
+$$
+
+$$
+\boxed{
+\mathcal C(1)^6=I.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+q=-1
+\longleftrightarrow
+\text{黄金双曲扩张},
+}
+$$
+
+$$
+\boxed{
+q=0
+\longleftrightarrow
+\text{秩坍缩},
+}
+$$
+
+$$
+\boxed{
+q=+1
+\longleftrightarrow
+\text{临界线六周期}.
+}
+$$
+
+这可能就是你一直感受到的 \(-1,0,+1\) 三分结构的最简代数核。
+
+---
+
+# 第四十九部　黄金自坐标递归
+
+## 145. 取倒数再加一
+
+定义：
+
+$$
+I(x)=\frac1x,
+$$
+
+$$
+A(x)=1+x.
+$$
+
+复合：
+
+$$
+G=A\circ I,
+$$
+
+即：
+
+$$
+\boxed{
+G(x)=1+\frac1x.
+}
+$$
+
+其矩阵正是：
+
+$$
+F=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}.
+$$
+
+固定点满足：
+
+$$
+x=1+\frac1x,
+$$
+
+即：
+
+$$
+x^2-x-1=0.
+$$
+
+所以：
+
+$$
+x=\varphi
+\quad\text{或}\quad
+x=\psi.
+$$
+
+这说明黄金比例的真正生成操作是：
+
+$$
+\boxed{
+\text{internal/external swap}
++
+\text{one-unit update}.
+}
+$$
+
+---
+
+## 146. 黄金递归的精确线性化
+
+定义 projective cross-ratio 坐标：
+
+$$
+\chi(x)
+=
+\frac{x-\varphi}{x-\psi}.
+$$
+
+则：
+
+$$
+\boxed{
+\chi(G(x))
+=
+-\varphi^{-2}\chi(x).
+}
+$$
+
+证明只需：
+
+$$
+G(x)-\varphi
+=
+\frac{\psi(x-\varphi)}x,
+$$
+
+$$
+G(x)-\psi
+=
+\frac{\varphi(x-\psi)}x.
+$$
+
+因此：
+
+$$
+\frac{G(x)-\varphi}{G(x)-\psi}
+=
+\frac{\psi}{\varphi}
+\frac{x-\varphi}{x-\psi}
+=
+-\varphi^{-2}\chi(x).
+$$
+
+这条等式极其重要：
+
+> 非线性的“倒数再加一”，在正确的 projective 坐标中，恰好变成一个负倍率收缩。
+
+---
+
+## 147. 一步破缺，两步重完
+
+由上一式：
+
+$$
+\chi_{n+1}
+=
+-\varphi^{-2}\chi_n.
+$$
+
+所以：
+
+$$
+\chi_{n+2}
+=
+\varphi^{-4}\chi_n.
+$$
+
+于是：
+
+$$
+\boxed{
+\text{一步：符号翻转并收缩};
+}
+$$
+
+$$
+\boxed{
+\text{两步：方向恢复并继续收缩}.
+}
+$$
+
+若外部观察者只读取偶不变量：
+
+$$
+u=\chi^2,
+$$
+
+则：
+
+$$
+\boxed{
+u_{n+1}
+=
+\varphi^{-4}u_n.
+}
+$$
+
+内部观察者看到：
+
+$$
++\,-\,+\,-\,\cdots
+$$
+
+的持续破缺。
+
+外部商观察者只看到：
+
+$$
+u_n\downarrow0.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{internal dynamics breaks every step,}
+}
+$$
+
+$$
+\boxed{
+\text{external quotient recompletes monotonically.}
+}
+$$
+
+---
+
+## 148. 从 projective infinity 产生第一次有限坐标
+
+在射影直线上：
+
+$$
+\infty=[1:0].
+$$
+
+Fibonacci 矩阵作用给出：
+
+$$
+\infty
+\longmapsto
+1
+\longmapsto
+2
+\longmapsto
+\frac32
+\longmapsto
+\frac53
+\longmapsto
+\frac85
+\longmapsto\cdots.
+$$
+
+一般：
+
+$$
+\boxed{
+G^n(\infty)
+=
+\frac{F_{n+1}}{F_n}.
+}
+$$
+
+这可以解释为：
+
+> 第一次观察并不需要预先给出有限坐标；
+> 从“纯方向” \(\infty\) 出发，内部／外部交换算子会自动产生有理坐标线程。
+
+且：
+
+$$
+\frac{F_{n+1}}{F_n}-\varphi
+=
+\frac{\psi^n}{F_n}.
+$$
+
+因此奇偶两条逼近支分别从两侧逼近同一个 \(\varphi\)。
+
+这正是你所说的：
+
+> 不是最后以奇结束或以偶结束，而是奇、偶两条路径在重完点融合。
+
+---
+
+## 149. 为什么不总是黄金比例
+
+更一般地：
+
+$$
+G_a(x)=a+\frac1x
+$$
+
+的正固定点为：
+
+$$
+\frac{a+\sqrt{a^2+4}}2.
+$$
+
+而一个有限周期继续分数：
+
+$$
+[a_0;\overline{a_1,\ldots,a_r}]
+$$
+
+由相应 Möbius 矩阵周期的固定点给出，通常是其他二次无理数。
+
+所以：
+
+$$
+\boxed{
+\varphi
+=
+\text{最小的 period-one、unit-shift 自坐标固定点}.
+}
+$$
+
+并不是所有坐标融合都必然产生 \(\varphi\)。
+
+但若要求：
+
+* 一个最小二通道；
+* 一次交换；
+* 一次单位更新；
+* 整数矩阵；
+* 对称状态／观察轴；
+
+那么 Fibonacci 矩阵及 \(\varphi\) 才被强制出来。
+
+---
+
+# 第五十部　Zeckendorf 奇偶扭曲传递谱
+
+## 150. 合法数位词的带源计数
+
+令 \(\mathcal W_n\) 是长度 \(n\)、不含相邻 \(11\) 的二进制词。
+
+定义：
+
+$$
+P_n(y)
+=
+\sum_{w\in\mathcal W_n}
+y^{|w|_1},
+$$
+
+其中 \(|w|_1\) 是数位 \(1\) 的个数。
+
+按最后一位分类：
+
+$$
+\boxed{
+P_n(y)
+=
+P_{n-1}(y)
++
+yP_{n-2}(y).
+}
+$$
+
+初值为：
+
+$$
+P_0(y)=1,
+\qquad
+P_1(y)=1+y.
+$$
+
+其传递矩阵为：
+
+$$
+\boxed{
+M(y)
+=
+\begin{pmatrix}
+1&y\\
+1&0
+\end{pmatrix}.
+}
+$$
+
+注意：
+
+$$
+\boxed{
+M(y)=\mathcal C(-y).
+}
+$$
+
+因此 Zeckendorf 带源传递谱与 ζ 的反射伴随矩阵不是类比，而是同一个矩阵族。
+
+---
+
+## 151. 无扭曲通道产生黄金增长
+
+当：
+
+$$
+y=1,
+$$
+
+有：
+
+$$
+P_n(1)=|\mathcal W_n|=F_{n+2}.
+$$
+
+同时：
+
+$$
+M(1)=F,
+$$
+
+本征值为：
+
+$$
+\varphi,\quad\psi.
+$$
+
+所以无扭曲的“把所有合法词相加”，产生黄金指数增长。
+
+---
+
+## 152. 奇偶扭曲产生六周期
+
+当：
+
+$$
+y=-1,
+$$
+
+有：
+
+$$
+P_n(-1)
+=
+\#\{\text{偶数个 }1\}
+-
+\#\{\text{奇数个 }1\}.
+$$
+
+递归变成：
+
+$$
+P_n(-1)
+=
+P_{n-1}(-1)-P_{n-2}(-1).
+$$
+
+初值：
+
+$$
+1,0
+$$
+
+产生：
+
+$$
+\boxed{
+1,0,-1,-1,0,1,1,0,-1,-1,0,1,\ldots
+}
+$$
+
+周期恰为 \(6\)。
+
+这是因为：
+
+$$
+M(-1)=\mathcal C(1),
+$$
+
+且：
+
+$$
+M(-1)^6=I.
+$$
+
+所以一个二值奇偶名字：
+
+$$
+y=-1
+$$
+
+在内部传递系统中产生的不是二周期，而是六周期。
+
+这就是一个严格的：
+
+$$
+\boxed{
+\text{period of a period}.
+}
+$$
+
+---
+
+## 153. 偶数位数与奇数位数最终等比例，但差值不消失
+
+令：
+
+$$
+E_n
+=
+\#\{w\in\mathcal W_n:|w|_1\text{ 为偶}\},
+$$
+
+$$
+O_n
+=
+\#\{w\in\mathcal W_n:|w|_1\text{ 为奇}\}.
+$$
+
+则：
+
+$$
+E_n+O_n=F_{n+2},
+$$
+
+$$
+E_n-O_n=P_n(-1).
+$$
+
+所以：
+
+$$
+E_n
+=
+\frac{F_{n+2}+P_n(-1)}2,
+$$
+
+$$
+O_n
+=
+\frac{F_{n+2}-P_n(-1)}2.
+$$
+
+由于：
+
+$$
+|P_n(-1)|\le1,
+$$
+
+得到：
+
+$$
+\boxed{
+\left|
+\frac{E_n}{F_{n+2}}-\frac12
+\right|
+\le
+\frac1{2F_{n+2}}.
+}
+$$
+
+同样：
+
+$$
+\boxed{
+\frac{E_n}{F_{n+2}},
+\frac{O_n}{F_{n+2}}
+\longrightarrow
+\frac12.
+}
+$$
+
+因此发生的是：
+
+$$
+\boxed{
+\text{绝对奇偶残差保持六周期，}
+}
+$$
+
+但：
+
+$$
+\boxed{
+\text{相对奇偶残差按 }\varphi^{-n}\text{ 消失}.
+}
+$$
+
+这可能是“整个问题是相对而不是绝对”的最小精确实例。
+
+---
+
+# 第五十一部　所有有限名字的角色分解
+
+## 154. 数位个数模 \(m\)
+
+定义：
+
+$$
+C_{n,r}^{(m)}
+=
+\#\left\{
+w\in\mathcal W_n:
+|w|_1\equiv r\pmod m
+\right\}.
+$$
+
+令：
+
+$$
+\omega_m=e^{2\pi i/m}.
+$$
+
+根单位滤子给出：
+
+$$
+\boxed{
+C_{n,r}^{(m)}
+=
+\frac1m
+\sum_{j=0}^{m-1}
+\omega_m^{-rj}
+P_n(\omega_m^j).
+}
+$$
+
+所以每一个有限名字：
+
+$$
+|w|_1\bmod m
+$$
+
+都分解为 \(m\) 个角色通道。
+
+---
+
+## 155. 每个固定有限名字最终被黄金完成洗平
+
+对非平凡角色：
+
+$$
+y=\omega_m^j\neq1,
+$$
+
+矩阵：
+
+$$
+M(y)
+$$
+
+的谱半径严格小于：
+
+$$
+\varphi=\rho(M(1)).
+$$
+
+因此存在：
+
+$$
+\rho_m<\varphi
+$$
+
+使：
+
+$$
+\boxed{
+C_{n,r}^{(m)}
+=
+\frac{F_{n+2}}m
++
+O_m(\rho_m^n).
+}
+$$
+
+从而：
+
+$$
+\boxed{
+\frac{C_{n,r}^{(m)}}{F_{n+2}}
+\longrightarrow
+\frac1m.
+}
+$$
+
+所以对任意固定有限分类：
+
+$$
+\boxed{
+\text{全部名字最终等比例出现}.
+}
+$$
+
+平凡角色保存总增长。
+
+非平凡角色只保存次级振荡。
+
+---
+
+## 156. 但是所有名字联合起来没有统一谱隙
+
+令：
+
+$$
+y=e^{i\theta}
+$$
+
+并取靠近 \(\varphi\) 的本征值分支：
+
+$$
+\lambda(\theta)
+=
+\frac{1+\sqrt{1+4e^{i\theta}}}{2}.
+$$
+
+在 \(\theta=0\) 附近，Taylor 展开给出：
+
+$$
+\boxed{
+\log|\lambda(\theta)|
+=
+\log\varphi
+-
+\frac{\sqrt5}{50}\theta^2
++
+O(\theta^4).
+}
+$$
+
+若：
+
+$$
+\theta=\frac{2\pi}{m},
+$$
+
+则：
+
+$$
+\left(
+\frac{|\lambda(2\pi/m)|}{\varphi}
+\right)^n
+\approx
+\exp
+\left(
+-\frac{2\pi^2\sqrt5}{25}
+\frac{n}{m^2}
+\right).
+$$
+
+因此第 \(m\) 层名字的重完时间尺度约为：
+
+$$
+\boxed{
+n_{\mathrm{mix}}\asymp m^2.
+}
+$$
+
+---
+
+## 157. 对角化逃逸的严格谱版本
+
+对每个固定 \(m\)：
+
+$$
+\frac{|\lambda(2\pi/m)|}{\varphi}<1.
+$$
+
+但：
+
+$$
+\lim_{m\to\infty}
+\frac{|\lambda(2\pi/m)|}{\varphi}
+=
+1.
+$$
+
+因此：
+
+$$
+\boxed{
+\sup_{\substack{m\ge2\\1\le j<m}}
+\rho\left(
+\varphi^{-1}M(\omega_m^j)
+\right)
+=
+1,
+}
+$$
+
+虽然没有任何固定非平凡角色真正达到 \(1\)。
+
+这意味着：
+
+* 每一个固定名字最终重完；
+* 但不存在对所有名字统一有效的重完速率；
+* 在观察时间 \(n\) 增长时，可以同时选择复杂度 \(m\gg\sqrt n\)，使该名字仍未被洗平。
+
+这正是：
+
+$$
+\boxed{
+\text{pointwise completion}
+\quad\text{but not uniform completion}.
+}
+$$
+
+在所有非平凡角色的直和上，\(1\) 不是实际本征值，却属于 approximate point spectrum。
+
+这就是“对角化能够无限逃逸信息”的一个非常精确的模型：
+
+> 每一个固定观察者都看见完成；
+> 但观察者复杂度也随时间增长时，总能找到几乎不衰减的新通道。
+
+---
+
+# 第五十二部　“所有名”的外围谱判据
+
+## 158. 一般有限自动机
+
+设一个 primitive 有限状态自动机的无扭曲转移矩阵为：
+
+$$
+A\ge0,
+$$
+
+Perron 根为：
+
+$$
+\lambda_0>0.
+$$
+
+边上带有限阿贝尔群标签：
+
+$$
+\ell(e)\in G.
+$$
+
+对角色：
+
+$$
+\chi\in\widehat G
+$$
+
+定义扭曲转移矩阵：
+
+$$
+A_\chi(i,j)
+=
+\sum_{e:i\to j}
+w(e)\chi(\ell(e)).
+$$
+
+有：
+
+$$
+\rho(A_\chi)\le\lambda_0.
+$$
+
+---
+
+## 159. 名称是否永久分歧，由外围谱决定
+
+在 primitive 前件下，等号：
+
+$$
+\rho(A_\chi)=\lambda_0
+$$
+
+只有在标签相位为一个 coboundary 时才可能发生，即存在：
+
+$$
+u_i\in S^1,
+\qquad
+\zeta_\chi\in S^1
+$$
+
+使每条允许边满足：
+
+$$
+\boxed{
+\chi(\ell(i\to j))
+=
+\zeta_\chi
+u_i^{-1}u_j.
+}
+$$
+
+此时：
+
+$$
+A_\chi
+=
+\zeta_\chi
+D^{-1}AD.
+$$
+
+所以非平凡名字与主完成通道拥有同样增长率，分歧永久存在。
+
+若不存在这种 coboundary：
+
+$$
+\boxed{
+\rho(A_\chi)<\lambda_0,
+}
+$$
+
+名称信息只作为次级振荡存在，并在相对尺度下消失。
+
+因此：
+
+$$
+\boxed{
+\text{不是每一个“名”都永久造成分歧；}
+}
+$$
+
+真正的永久分歧源是：
+
+$$
+\boxed{
+\text{nontrivial peripheral character}.
+}
+$$
+
+---
+
+## 160. 三种分类相
+
+一个名字 \(\chi\) 可处于：
+
+### 次外围相
+
+$$
+\rho(A_\chi)<\lambda_0.
+$$
+
+名称最终被相对完成洗平。
+
+### 外围周期相
+
+$$
+\rho(A_\chi)=\lambda_0,
+$$
+
+且外围本征值为根单位。
+
+名称形成永久有限周期。
+
+### 外围准周期相
+
+$$
+\rho(A_\chi)=\lambda_0,
+$$
+
+但相位不是根单位。
+
+名称形成永久准周期。
+
+若外围出现 Jordan block，还会叠加多项式增长，成为临界相。
+
+所以：
+
+$$
+\boxed{
+\text{破缺、重完和永久记忆}
+}
+$$
+
+最终是一个 transfer-spectrum 分类，而不是语言上的绝对二分。
+
+---
+
+# 第五十三部　黄金最大熵观察者
+
+## 161. 从 Fibonacci 矩阵得到概率动力学
+
+取：
+
+$$
+F=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix},
+\qquad
+h=
+\begin{pmatrix}
+\varphi\\
+1
+\end{pmatrix}.
+$$
+
+满足：
+
+$$
+Fh=\varphi h.
+$$
+
+用 Perron–Doob 归一化定义 Markov 矩阵：
+
+$$
+P_{ij}
+=
+\frac{F_{ij}h_j}{\varphi h_i}.
+$$
+
+得到：
+
+$$
+\boxed{
+P=
+\begin{pmatrix}
+\varphi^{-1}&\varphi^{-2}\\
+1&0
+\end{pmatrix}.
+}
+$$
+
+其平稳分布为：
+
+$$
+\boxed{
+\pi
+=
+\frac1{\varphi^2+1}
+\left(
+\varphi^2,1
+\right).
+}
+$$
+
+---
+
+## 162. 内部增长轴与外部观察轴真正融合
+
+一般非对称矩阵有不同的左、右 Perron 本征向量：
+
+* 右本征向量控制未来增长；
+* 左本征向量控制长期观察权重。
+
+但：
+
+$$
+F^T=F.
+$$
+
+所以左右 Perron 轴相同。
+
+这意味着：
+
+$$
+\boxed{
+\text{状态演化使用的轴}
+=
+\text{观察统计使用的轴}.
+}
+$$
+
+平稳权重由同一个本征向量的平方给出：
+
+$$
+\pi_i\propto h_i^2.
+$$
+
+这是“内部观察与外部观察坐标轴一致”的严格实现。
+
+---
+
+## 163. 奇步反相关，偶步重完相关
+
+矩阵 \(P\) 的本征值为：
+
+$$
+1,
+\qquad
+-\varphi^{-2}.
+$$
+
+两状态空间的均值零函数空间是一维的。因此对任意：
+
+$$
+\mathbb E_\pi[f]=0,
+$$
+
+都有精确相关公式：
+
+$$
+\boxed{
+\operatorname{Cov}
+\bigl(
+f(X_0),f(X_n)
+\bigr)
+=
+(-\varphi^{-2})^n
+\operatorname{Var}_\pi(f).
+}
+$$
+
+因此：
+
+$$
+\boxed{
+n\text{ 为奇数}
+\Longrightarrow
+\text{反相关},
+}
+$$
+
+$$
+\boxed{
+n\text{ 为偶数}
+\Longrightarrow
+\text{正相关},
+}
+$$
+
+且幅值按：
+
+$$
+\varphi^{-2n}
+$$
+
+衰减。
+
+这就是一个概率论版本的：
+
+$$
+\boxed{
+\text{odd break}
+\longrightarrow
+\text{even recompletion}.
+}
+$$
+
+---
+
+## 164. 信息率正好是 \(\log\varphi\)
+
+该 Markov 链的熵率为：
+
+$$
+\begin{aligned}
+h
+&=
+-\sum_i\pi_i\sum_jP_{ij}\log P_{ij}\\
+&=
+\log\varphi.
+\end{aligned}
+$$
+
+所以：
+
+$$
+\boxed{
+\log\varphi
+=
+\text{合法 Zeckendorf 语言的单位深度信息增长率}.
+}
+$$
+
+这给黄金比例一个不依赖美学的含义：
+
+> \(\varphi\) 控制状态数增长；
+> \(-\varphi^{-2}\) 控制隐藏奇通道的记忆衰减。
+
+---
+
+## 165. 与仓库 scalar blindness 的关系
+
+仓库已经证明，在其 `scalarMemoryUpdate` 模型中，内部 memory 按 Fibonacci substitution 更新，而标量 Euler 坐标不读取该 memory；不同隐藏状态可以在所有有限 prime words 后给出相同标量读数。
+
+这里的黄金 Markov 分解给出了一个最小解释：
+
+$$
+\boxed{
+\text{Perron channel}
+=
+\text{标量长期稳定读数},
+}
+$$
+
+$$
+\boxed{
+\text{conjugate channel}
+=
+\text{会翻转并衰减的隐藏 detail}.
+}
+$$
+
+保留两个投影：
+
+$$
+P_+x,\qquad P_-x
+$$
+
+可以完美重构 \(x\)。
+
+只保留 \(P_+x\)，便产生 scalar blindness。
+
+---
+
+# 第五十四部　黄金量化的 carry 动力学
+
+## 166. 实数线程不是任意序列
+
+对 \(x\ge0\)，定义：
+
+$$
+a_N(x)=\lfloor\varphi^Nx\rfloor,
+$$
+
+$$
+u_N(x)=\{\varphi^Nx\}.
+$$
+
+由于：
+
+$$
+\varphi^{N+2}
+=
+\varphi^{N+1}+\varphi^N,
+$$
+
+有：
+
+$$
+\boxed{
+a_{N+2}
+=
+a_{N+1}+a_N+c_N,
+}
+$$
+
+其中：
+
+$$
+\boxed{
+c_N
+=
+\left\lfloor
+u_{N+1}+u_N
+\right\rfloor
+\in\{0,1\}.
+}
+$$
+
+同时：
+
+$$
+\boxed{
+u_{N+2}
+=
+u_{N+1}+u_N-c_N
+=
+\{u_{N+1}+u_N\}.
+}
+$$
+
+所以黄金量化线程是：
+
+$$
+\boxed{
+\text{Fibonacci 齐次递归}
++
+\text{二值 carry forcing}.
+}
+$$
+
+---
+
+## 167. carry 是黄金环面动力学的符号编码
+
+令：
+
+$$
+v_N=
+\begin{pmatrix}
+u_{N+1}\\
+u_N
+\end{pmatrix}.
+$$
+
+则模 \(1\)：
+
+$$
+\boxed{
+v_{N+1}
+=
+Fv_N
+\pmod{\mathbb Z^2}.
+}
+$$
+
+carry \(c_N\) 记录轨道是否跨过单位方形中的对角线：
+
+$$
+u_N+u_{N+1}=1.
+$$
+
+所以任意实数 \(x\) 产生一条黄金 torus orbit，而：
+
+$$
+(c_0,c_1,c_2,\ldots)
+$$
+
+是该轨道相对于二分 Markov partition 的符号 itinerary。
+
+这给出一个新的严格解释：
+
+$$
+\boxed{
+\text{实数的黄金 completion thread}
+=
+\text{Fibonacci toral dynamics 的 carry code}.
+}
+$$
+
+---
+
+## 168. 镜像实数的 carry 反码
+
+若：
+
+$$
+u_N(x)\neq0,
+$$
+
+则：
+
+$$
+\boxed{
+a_N(-x)
+=
+-a_N(x)-1,
+}
+$$
+
+并且：
+
+$$
+\boxed{
+u_N(-x)
+=
+1-u_N(x).
+}
+$$
+
+在非边界情形：
+
+$$
+u_N+u_{N+1}\neq1,
+$$
+
+进一步有：
+
+$$
+\boxed{
+c_N(-x)
+=
+1-c_N(x).
+}
+$$
+
+所以正负镜像不是“使用完全不同的 Zeckendorf 信息”，而是：
+
+$$
+\boxed{
+\text{同一个黄金 torus 轨道的互补 partition itinerary}.
+}
+$$
+
+这比直接把规范 Zeckendorf 数位逐位取反更准确，因为它保留了 carry 规范。
+
+对于离线零点对：
+
+$$
++\delta,\quad-\delta,
+$$
+
+其 transverse carry histories 在 generic 层级上构成严格反码。
+
+---
+
+## 169. 有限零点窗的黄金 defect recurrence
+
+对有限零点窗定义：
+
+$$
+A_N(T)
+=
+\sum_{|\gamma_\rho|\le T}
+m_\rho
+\left\lfloor
+\varphi^N
+\left|
+\Re\rho-\frac12
+\right|
+\right\rfloor.
+$$
+
+则：
+
+$$
+A_{N+2}(T)
+=
+A_{N+1}(T)
++
+A_N(T)
++
+C_N(T),
+$$
+
+其中：
+
+$$
+C_N(T)
+=
+\sum_{|\gamma_\rho|\le T}
+m_\rho c_{\rho,N}.
+$$
+
+因此：
+
+$$
+\boxed{
+\text{全局 transverse defect}
+=
+\text{Fibonacci recurrence}
++
+\text{所有零点 carry sources 的总和}.
+}
+$$
+
+而：
+
+$$
+\boxed{
+A_N(T)=0
+\quad\forall N
+}
+$$
+
+当且仅当该有限窗内所有零点都位于临界线。
+
+仓库规划中已经出现 `GoldenTransverseRecurrence`、`GoldenDefectClosedForm`、`PersistentDefectForcing` 等名称，但尚未发现实现这一 floor-carry 环面递归的 owner。
+
+---
+
+# 第五十五部　黄金动力系统自己的 ζ
+
+## 170. Fibonacci torus map 的周期点
+
+令：
+
+$$
+\overline F:\mathbb T^2\to\mathbb T^2
+$$
+
+为 Fibonacci 矩阵模整数格诱导的 torus automorphism。
+
+其 \(n\) 周期固定点数为：
+
+$$
+N_n
+=
+\left|
+\det(F^n-I)
+\right|.
+$$
+
+令 \(L_n\) 为 Lucas 数：
+
+$$
+L_n=\varphi^n+\psi^n.
+$$
+
+由于：
+
+$$
+\det F^n=(-1)^n,
+$$
+
+得到：
+
+$$
+\boxed{
+N_n
+=
+L_n-1-(-1)^n.
+}
+$$
+
+即：
+
+$$
+N_n=
+\begin{cases}
+L_n,&n\text{ 奇},\\
+L_n-2,&n\text{ 偶}.
+\end{cases}
+$$
+
+---
+
+## 171. Artin–Mazur dynamical ζ
+
+定义：
+
+$$
+\zeta_F^{\mathrm{AM}}(z)
+=
+\exp
+\left(
+\sum_{n\ge1}
+\frac{N_n}{n}z^n
+\right).
+$$
+
+利用：
+
+$$
+\sum_{n\ge1}\frac{L_n}{n}z^n
+=
+-\log(1-z-z^2),
+$$
+
+得到：
+
+$$
+\boxed{
+\zeta_F^{\mathrm{AM}}(z)
+=
+\frac{1-z^2}{1-z-z^2}.
+}
+$$
+
+这一个公式同时包含：
+
+$$
+1-z-z^2
+=
+\text{黄金增长 denominator},
+$$
+
+以及：
+
+$$
+1-z^2
+=
+\text{奇偶方向修正 numerator}.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{黄金动力学的周期 ζ}
+=
+\frac{\text{偶重完修正}}
+{\text{黄金递归完成}}.
+}
+$$
+
+它不是 Riemann ζ，而是一个真正的 dynamical zeta。
+
+---
+
+## 172. 周期的周期：primitive orbit
+
+若 \(P_n\) 表示长度恰为 \(n\) 的 primitive 周期轨道数，则：
+
+$$
+N_n
+=
+\sum_{d\mid n}dP_d.
+$$
+
+Möbius 反演给出：
+
+$$
+\boxed{
+P_n
+=
+\frac1n
+\sum_{d\mid n}
+\mu(d)N_{n/d}.
+}
+$$
+
+所以所谓“周期的周期”，严格对象不是继续命名一个更大周期，而是：
+
+$$
+\boxed{
+\text{把全部 fixed cycles 分解成 primitive cycles 及其重复}.
+}
+$$
+
+这与：
+
+* Euler product 中素数和素数幂；
+* dynamical zeta 中 primitive orbit 和重复 orbit；
+* moment–cumulant 中 connected block 和 partition；
+
+是同一个范畴骨架。
+
+---
+
+## 173. 带名字的 Zeckendorf dynamical ζ
+
+合法词的扭曲传递矩阵为：
+
+$$
+M(y)=
+\begin{pmatrix}
+1&y\\
+1&0
+\end{pmatrix}.
+$$
+
+定义：
+
+$$
+\zeta_{\mathrm{word}}(z,y)
+=
+\det(I-zM(y))^{-1}.
+$$
+
+直接计算：
+
+$$
+\boxed{
+\zeta_{\mathrm{word}}(z,y)
+=
+\frac1{1-z-yz^2}.
+}
+$$
+
+于是：
+
+$$
+y=1
+\Longrightarrow
+\frac1{1-z-z^2},
+$$
+
+$$
+y=-1
+\Longrightarrow
+\frac1{1-z+z^2}.
+$$
+
+后者的极点为六次单位根方向。
+
+所以：
+
+$$
+\boxed{
+\text{一个 character twist 可以把黄金双曲极点变成有限周期极点}.
+}
+$$
+
+---
+
+# 第五十六部　分类相位的 Cassini 谱覆盖
+
+## 174. 所有有限名字采样同一条代数曲线
+
+令：
+
+$$
+|y|=1.
+$$
+
+因为：
+
+$$
+q=-y,
+$$
+
+故：
+
+$$
+|q|=1.
+$$
+
+本征值满足：
+
+$$
+q=\lambda(1-\lambda).
+$$
+
+因此它们位于：
+
+$$
+\boxed{
+|\lambda(1-\lambda)|=1.
+}
+$$
+
+这是以 \(0\) 和 \(1\) 为焦点的 Cassini oval。
+
+它同时经过：
+
+$$
+\lambda=\varphi,\psi
+$$
+
+以及：
+
+$$
+\lambda=
+\frac12\pm i\frac{\sqrt3}{2}.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{黄金双轴}
+\quad\text{与}\quad
+\text{奇偶临界六周期}
+}
+$$
+
+是同一条角色谱覆盖上的两个特殊纤维。
+
+---
+
+## 175. 一圈交换，两圈返回
+
+投影：
+
+$$
+\lambda
+\longmapsto
+q=\lambda(1-\lambda)
+$$
+
+是二重覆盖，分支点为：
+
+$$
+q=\frac14
+$$
+
+以及 Riemann sphere 上的无穷远点。
+
+单位圆：
+
+$$
+|q|=1
+$$
+
+包围有限分支点 \(1/4\)。
+
+因此，沿 \(q\)-单位圆完整绕行一次，平方根：
+
+$$
+\sqrt{\frac14-q}
+$$
+
+改变符号。
+
+所以：
+
+$$
+\lambda_+
+\longmapsto
+\lambda_-=1-\lambda_+.
+$$
+
+只有绕行两次才返回原 branch。
+
+这给出一个完全严格的：
+
+$$
+\boxed{
+\text{one name-cycle swaps internal axes;}
+}
+$$
+
+$$
+\boxed{
+\text{two name-cycles recomplete them.}
+}
+$$
+
+这比未经定义的 Klein bottle 更准确。
+
+底空间是一条角色圆；其谱 lift 是一个带非平凡 monodromy 的二重覆盖。
+
+若进一步追踪实本征线方向，才会出现 Möbius 型线丛。
+
+---
+
+## 176. 分类周期与响应周期并不相同
+
+输入角色：
+
+$$
+y=-1
+$$
+
+只有二阶：
+
+$$
+y^2=1.
+$$
+
+但传递矩阵满足：
+
+$$
+M(-1)^6=I.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{classification period}=2,
+\qquad
+\text{response period}=6.
+}
+$$
+
+一般根单位角色 \(y\) 的内部本征值未必是根单位，因此有限分类甚至可以产生准周期响应。
+
+所以“周期的周期”的真正问题是：
+
+$$
+\boxed{
+\text{输入角色的阶}
+\quad\text{如何映射为}\quad
+\text{传递谱的相位阶}.
+}
+$$
+
+---
+
+# 第五十七部　所有周期名字的 Dirichlet–Fourier 图册
+
+## 177. 模 \(m\) residue charts
+
+定义：
+
+$$
+Z_{m,a}(s)
+=
+\sum_{\substack{n\ge1\\n\equiv a\pmod m}}
+n^{-s}.
+$$
+
+将 residue charts 作离散傅立叶变换：
+
+$$
+D_{m,r}(s)
+=
+\sum_{a\bmod m}
+e^{2\pi ira/m}Z_{m,a}(s).
+$$
+
+于是：
+
+$$
+\boxed{
+D_{m,r}(s)
+=
+\sum_{n\ge1}
+e^{2\pi irn/m}n^{-s}.
+}
+$$
+
+反变换为：
+
+$$
+Z_{m,a}(s)
+=
+\frac1m
+\sum_{r\bmod m}
+e^{-2\pi ira/m}D_{m,r}(s).
+$$
+
+---
+
+## 178. 零频率携带 ζ 的发散
+
+当：
+
+$$
+r=0,
+$$
+
+有：
+
+$$
+D_{m,0}(s)=\zeta(s).
+$$
+
+当：
+
+$$
+r\neq0,
+$$
+
+系数：
+
+$$
+e^{2\pi irn/m}
+$$
+
+的部分和有界。
+
+因此 Dirichlet 判别给出：
+
+$$
+\boxed{
+D_{m,r}(s)
+\text{ 在 }\Re s>0\text{ 收敛}
+\qquad(r\neq0).
+}
+$$
+
+而 ζ 的原始级数需要：
+
+$$
+\Re s>1.
+$$
+
+所以对所有有限周期分类都有同一个规律：
+
+$$
+\boxed{
+\text{平凡角色承担共同发散；}
+}
+$$
+
+$$
+\boxed{
+\text{非平凡角色因相消而获得更深完成}.
+}
+$$
+
+eta 只是：
+
+$$
+m=2
+$$
+
+的实例。
+
+---
+
+## 179. 任意周期名字都分成平均与破缺
+
+设 \(c_n\) 是周期 \(m\) 的序列，平均值为：
+
+$$
+\bar c
+=
+\frac1m
+\sum_{r=0}^{m-1}c_r.
+$$
+
+写成：
+
+$$
+c_n=\bar c+c_n^\circ,
+$$
+
+其中：
+
+$$
+\sum_{r=0}^{m-1}c_r^\circ=0.
+$$
+
+则：
+
+$$
+\boxed{
+\sum_{n\ge1}\frac{c_n}{n^s}
+=
+\bar c\,\zeta(s)
++
+\sum_{n\ge1}\frac{c_n^\circ}{n^s}.
+}
+$$
+
+第一项是完成／零模。
+
+第二项是破缺／非零模，并在更大的半平面内收敛。
+
+因此“所有名字”的普遍结构为：
+
+$$
+\boxed{
+\text{name}
+=
+\text{mean completion}
++
+\text{oscillatory defect}.
+}
+$$
+
+---
+
+# 第五十八部　高阶破缺就是高阶消去
+
+## 180. 一阶差分把收敛边界向左移动一格
+
+定义：
+
+$$
+\Delta f(n)=f(n)-f(n+1).
+$$
+
+对：
+
+$$
+f_s(n)=n^{-s},
+$$
+
+有：
+
+$$
+\Delta f_s(n)
+=
+s\int_0^1(n+t)^{-s-1}\,dt.
+$$
+
+因此：
+
+$$
+\Delta f_s(n)
+=
+O\left(n^{-\Re s-1}\right).
+$$
+
+所以：
+
+$$
+\sum_n\Delta f_s(n)
+$$
+
+在：
+
+$$
+\Re s>0
+$$
+
+收敛。
+
+---
+
+## 181. \(r\) 阶破缺获得 \(r\) 阶完成深度
+
+反复差分：
+
+$$
+\Delta^r f_s(n)
+=
+(s)_r
+\int_{[0,1]^r}
+\left(
+n+t_1+\cdots+t_r
+\right)^{-s-r}
+dt_1\cdots dt_r,
+$$
+
+其中：
+
+$$
+(s)_r=s(s+1)\cdots(s+r-1).
+$$
+
+所以：
+
+$$
+\boxed{
+\Delta^r n^{-s}
+=
+O\left(n^{-\Re s-r}\right).
+}
+$$
+
+相应级数在：
+
+$$
+\boxed{
+\Re s>1-r
+}
+$$
+
+收敛。
+
+因此：
+
+$$
+\boxed{
+\text{每增加一个 vanishing moment，}
+\text{就消去一层共同渐近信息}.
+}
+$$
+
+这给“jet 深度”新增一个精确解释：
+
+$$
+\boxed{
+\text{observer jet order}
+=
+\text{低频零点的阶数}
+=
+\text{额外完成深度}.
+}
+$$
+
+---
+
+## 182. Wavelet 意义
+
+偶奇分解：
+
+$$
+a_n=\frac{x_{2n}+x_{2n+1}}2,
+$$
+
+$$
+d_n=\frac{x_{2n}-x_{2n+1}}2
+$$
+
+是最小 Haar filter bank。
+
+保留：
+
+$$
+(a_n,d_n)
+$$
+
+时变换完全可逆。
+
+只保留 \(a_n\) 时，detail \(d_n\) 逃逸。
+
+反复对 \(a_n\) 再分解，就是：
+
+$$
+\text{周期的周期}
+$$
+
+或多尺度观察塔。
+
+黄金版本用：
+
+$$
+P_+,\quad P_-
+$$
+
+替代等长 Haar 通道：
+
+* \(P_+\) 是 Perron low-pass；
+* \(P_-\) 是符号翻转的 golden detail。
+
+---
+
+# 第五十九部　反射轨道的完整不变量
+
+## 183. 四元轨道多项式
+
+令中心坐标：
+
+$$
+z=s-\frac12.
+$$
+
+一个 generic 四元轨道的 centered roots 为：
+
+$$
+\pm\delta\pm i\gamma.
+$$
+
+其轨道多项式为：
+
+$$
+\begin{aligned}
+P_{\delta,\gamma}(z)
+&=
+\bigl((z-\delta)^2+\gamma^2\bigr)
+\bigl((z+\delta)^2+\gamma^2\bigr)\\
+&=
+\boxed{
+z^4
++
+2(\gamma^2-\delta^2)z^2
++
+(\delta^2+\gamma^2)^2.
+}
+\end{aligned}
+$$
+
+所以完整对称的 scalar polynomial 虽然丢失：
+
+$$
+\operatorname{sign}\delta,
+\qquad
+\operatorname{sign}\gamma,
+$$
+
+却保留：
+
+$$
+\delta^2,\qquad\gamma^2.
+$$
+
+事实上由两个系数可以恢复：
+
+$$
+\delta^2
+=
+\frac12
+\left(
+\sqrt b-\frac a2
+\right),
+$$
+
+$$
+\gamma^2
+=
+\frac12
+\left(
+\sqrt b+\frac a2
+\right),
+$$
+
+其中：
+
+$$
+a=2(\gamma^2-\delta^2),
+\qquad
+b=(\delta^2+\gamma^2)^2.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{对称 quotient 并没有抹掉离线幅值；}
+}
+$$
+
+它只抹掉了内部页标签。
+
+---
+
+## 184. 轨道判别式就是 \(q\)-虚部
+
+有：
+
+$$
+b-\frac{a^2}{4}
+=
+4\delta^2\gamma^2.
+$$
+
+而：
+
+$$
+\Im q_\rho=-2\delta\gamma.
+$$
+
+所以：
+
+$$
+\boxed{
+b-\frac{a^2}{4}
+=
+(\Im q_\rho)^2.
+}
+$$
+
+另一方面：
+
+$$
+\left|
+(\rho-\tfrac12)^2
+-
+(\overline\rho-\tfrac12)^2
+\right|
+=
+4|\delta\gamma|
+=
+2|\Im q_\rho|.
+$$
+
+因此以下三个量实际上是同一个 defect 的不同表示：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{四元轨道多项式的系数缺陷};\\
+&\text{反射商坐标的虚部};\\
+&\text{偶函数插值中两个平方节点的分离度}.
+\end{aligned}
+}
+$$
+
+这直接解释了为什么越靠近临界线的离线零点越难被 separator 分离。
+
+---
+
+## 185. 真正的 branch locus
+
+映射：
+
+$$
+\delta\longmapsto u=\delta^2
+$$
+
+是：
+
+$$
+\delta\sim-\delta
+$$
+
+的商。
+
+外部观察者看到 \(u\)，内部观察者看到 \(\pm\sqrt u\)。
+
+在 \(u=0\)：
+
+$$
++\sqrt u
+\quad\text{与}\quad
+-\sqrt u
+$$
+
+融合。
+
+绕复 \(u\)-平面原点一圈：
+
+$$
+\sqrt u\longmapsto-\sqrt u.
+$$
+
+所以 mirror pair 的最小拓扑不是先验 Klein bottle，而是：
+
+$$
+\boxed{
+\text{平方根二重覆盖及其 branch monodromy}.
+}
+$$
+
+Möbius 型行为来自该二重覆盖沿参数环的非平凡 monodromy。
+
+---
+
+## 186. 黄金破缺—重完半共轭
+
+令内部 transverse 坐标演化：
+
+$$
+\delta_{n+1}
+=
+-\varphi^{-2}\delta_n.
+$$
+
+外部不变量：
+
+$$
+u_n=\delta_n^2.
+$$
+
+则：
+
+$$
+u_{n+1}
+=
+\varphi^{-4}u_n.
+$$
+
+记：
+
+$$
+\pi(\delta)=\delta^2.
+$$
+
+便有交换图：
+
+$$
+\boxed{
+\pi\circ
+(-\varphi^{-2})
+=
+(\varphi^{-4})\circ\pi.
+}
+$$
+
+所以：
+
+$$
+\begin{array}{ccc}
+\delta
+&\xrightarrow{-\varphi^{-2}}&
+-\varphi^{-2}\delta\\
+\downarrow\pi&&\downarrow\pi\\
+u
+&\xrightarrow{\varphi^{-4}}&
+\varphi^{-4}u
+\end{array}
+$$
+
+严格交换。
+
+这就是本理论目前最简洁的“奇破缺、偶重完”图。
+
+---
+
+# 第六十部　有限 jet 为什么无法恢复无限零点系统
+
+## 187. 横向缺陷矩
+
+对有限零点轨道窗，令：
+
+$$
+u_a=\delta_a^2,
+\qquad
+w_a>0.
+$$
+
+定义：
+
+$$
+M_k
+=
+\sum_a w_au_a^k.
+$$
+
+这些正是双曲缺陷生成函数的偶阶 jets。
+
+---
+
+## 188. Hankel 秩恢复不同离线深度数
+
+定义 Hankel 矩阵：
+
+$$
+H_r
+=
+\bigl(M_{i+j}\bigr)_{0\le i,j<r}.
+$$
+
+若 \(u_a\) 中恰有 \(R\) 个不同取值，则：
+
+$$
+H_r
+=
+V_r
+\operatorname{diag}(w_a)
+V_r^T,
+$$
+
+其中 \(V_r\) 是 Vandermonde 矩阵。
+
+因此：
+
+$$
+\boxed{
+\operatorname{rank}H_r
+=
+\min(r,R).
+}
+$$
+
+所以全部偶 jets 不仅能检测是否有离线零点，还能恢复离线深度分布的有限原子秩。
+
+---
+
+## 189. 有限 moment map 必然留下纤维
+
+若有 \(R\) 个未知深度和权重，仅观察前 \(K\) 个矩：
+
+$$
+M_1,\ldots,M_K,
+$$
+
+当参数自由度大于 \(K\) 时，moment map 一般具有正维纤维。
+
+因此：
+
+$$
+\boxed{
+\text{任意固定 jet 深度都不能恢复任意大的零点窗}.
+}
+$$
+
+只有让 jet 阶数随零点数量增长，或读取完整生成函数，才能恢复。
+
+这就是另一个严格的对角化逃逸：
+
+$$
+\boxed{
+\text{window size 增长}
+>
+\text{observer jet depth 增长}.
+}
+$$
+
+仓库的 multiscale fingerprint 已经给出了一个有限实例：一个两点构型和一个四点构型可以在第一尺度发生碰撞，而在第二尺度才分离。
+
+---
+
+## 190. 零点系统的 recurrence
+
+若离线深度支撑为有限集合：
+
+$$
+u_1,\ldots,u_R,
+$$
+
+定义消去多项式：
+
+$$
+p(t)
+=
+\prod_{a=1}^R(t-u_a)
+=
+t^R+c_{R-1}t^{R-1}+\cdots+c_0.
+$$
+
+则 moments 满足：
+
+$$
+\boxed{
+M_{n+R}
++
+c_{R-1}M_{n+R-1}
++\cdots+
+c_0M_n
+=
+0.
+}
+$$
+
+所以：
+
+* 有限种离线深度产生有限递归；
+* 无限深度谱一般产生无限递归；
+* recurrence order 是隐藏构型复杂度。
+
+这与 Zeckendorf/Fibonacci recurrence 形成第二层对应。
+
+---
+
+# 第六十一部　模五角色的伴随矩阵提升
+
+## 191. 仓库已有的标量角色层
+
+仓库已经证明黄金局部观察算子分解为 even channel 和 odd channel，并且 odd channel 的本征值是：
+
+$$
+\chi_5(p)\in\{-1,0,+1\}.
+$$
+
+其 inverse determinant 分解为：
+
+$$
+(1-p^{-s})^{-1}
+(1-\chi_5(p)p^{-s})^{-1}.
+$$
+
+这提供的是单素数的标量角色分类。
+
+---
+
+## 192. 新的 companion lift
+
+定义：
+
+$$
+\boxed{
+K_p
+=
+\mathcal C(\chi_5(p))
+=
+\begin{pmatrix}
+1&-\chi_5(p)\\
+1&0
+\end{pmatrix}.
+}
+$$
+
+于是：
+
+$$
+\det K_p=\chi_5(p).
+$$
+
+三个局部相变成：
+
+$$
+\chi_5(p)=-1
+\Longrightarrow
+K_p=F
+$$
+
+——黄金双曲相；
+
+$$
+\chi_5(p)=0
+\Longrightarrow
+K_p\text{ 秩坍缩};
+$$
+
+$$
+\chi_5(p)=+1
+\Longrightarrow
+K_p^6=I
+$$
+
+——临界六周期相。
+
+这不是仓库当前 `goldenLocalBranchOperator` 的重命名，而是一个新的 trace-one companion lift。
+
+---
+
+## 193. 有序素数词的非交换 holonomy
+
+对有序 prime word：
+
+$$
+w=(p_1,\ldots,p_n)
+$$
+
+定义：
+
+$$
+K(w)=K_{p_1}\cdots K_{p_n}.
+$$
+
+则：
+
+$$
+\boxed{
+\det K(w)
+=
+\prod_j\chi_5(p_j).
+}
+$$
+
+右侧正是仓库已有黄金字符 quotient 所保留的标量。
+
+但是对两个标量 \(a,b\)：
+
+$$
+\mathcal C(a)\mathcal C(b)
+-
+\mathcal C(b)\mathcal C(a)
+=
+(b-a)
+\begin{pmatrix}
+1&-1\\
+0&-1
+\end{pmatrix}.
+$$
+
+所以 split 与 inert 类型的顺序通常不可交换。
+
+例如：
+
+$$
+\mathcal C(-1)\mathcal C(1)
+=
+\begin{pmatrix}
+2&-1\\
+1&-1
+\end{pmatrix},
+$$
+
+而：
+
+$$
+\mathcal C(1)\mathcal C(-1)
+=
+\begin{pmatrix}
+0&1\\
+1&1
+\end{pmatrix}.
+$$
+
+二者 determinant 相同，trace 也相同，但完整矩阵不同。
+
+因此：
+
+$$
+\boxed{
+\text{character product}
+\quad\text{与}\quad
+\text{ordered companion holonomy}
+}
+$$
+
+之间存在严格的信息层级。
+
+这与仓库已经证明的 scalar memory blindness 和 ordered-prime holonomy 结构一致：标量完成可能完全丢失内部有序 memory。
+
+---
+
+## 194. 孪生素数模五方向被矩阵恢复
+
+大于 \(5\) 的孪生素数对可能具有角色词：
+
+$$
+(+1,-1),
+$$
+
+$$
+(-1,+1),
+$$
+
+或：
+
+$$
+(+1,+1).
+$$
+
+前两个词的标量乘积都为：
+
+$$
+-1.
+$$
+
+所以标量黄金字符 quotient 无法区分它们。
+
+但 companion holonomies：
+
+$$
+\mathcal C(1)\mathcal C(-1)
+$$
+
+与：
+
+$$
+\mathcal C(-1)\mathcal C(1)
+$$
+
+不同。
+
+因此：
+
+$$
+\boxed{
+\text{矩阵 lift 恢复了孪生构型的方向信息}.
+}
+$$
+
+这给“Euler 标量不够，需要有序 holonomy”一个非常具体的二点模型。
+
+---
+
+# 第六十二部　所有离线零点的“纠缠”现在可以再分五层
+
+## 195. 第一层：共同反射商
+
+每个零点和其反射 partner 共享同一个：
+
+$$
+q=\rho(1-\rho).
+$$
+
+这是严格的内部页相关。
+
+---
+
+## 196. 第二层：共同整函数
+
+全部 \(q\)-零点共同属于同一个：
+
+$$
+\mathfrak X(q).
+$$
+
+因此任一中心 jet 都是全部 \(q\)-零点的全局对称函数，而不是单个零点的局部数据。
+
+这是 collective spectral coupling。
+
+---
+
+## 197. 第三层：无限素数支持
+
+仓库已经证明，删除任意有限组 Euler 局部因子不会改变经典 ζ 的非平凡零点集。
+
+因此每个经典 ζ 零点都不是有限 prime-address effect，而具有：
+
+$$
+\boxed{
+\text{cofinite-stable arithmetic support}.
+}
+$$
+
+这意味着每个零点都依赖无限素数账本，但尚不意味着不同零点之间存在量子纠缠。
+
+---
+
+## 198. 第四层：Paley–Wiener 变换不可独立赋值
+
+仓库现在已经证明：若某个非实离线轨道上的 Fourier–Laplace 值被规定为：
+
+$$
+1,\quad-1,
+$$
+
+则该轨道贡献精确为：
+
+$$
+-4m_\rho.
+$$
+
+实轴离线轨道则只能给出非负 norm-square，并且无法实现同一反相位赋值。
+
+这关闭了单轨道的 odd signature。
+
+但全局问题要求同一个 entire transform 同时控制所有零点。
+
+因此真正的全局纠缠量是评价 Gram 算子：
+
+$$
+G_{\rho\rho'}
+=
+\langle k_{\rho'},k_\rho\rangle.
+$$
+
+若它不能按任何非平凡零点分区块对角化，则零点系统在 transform 意义下不可分。
+
+---
+
+## 199. 第五层：branch monodromy
+
+在 source-deformed family 中，多重零点附近的平方根分支会交换零点 identities。
+
+仓库的 jet pencil 已经严格显示：determinant 只读出：
+
+$$
+(s-\rho)^m,
+$$
+
+而完整 resolvent 才保存 nilpotent jet chain。
+
+所以：
+
+$$
+\boxed{
+\text{scalar determinant}
+=
+\text{完成后的无标号谱},
+}
+$$
+
+$$
+\boxed{
+\text{resolvent/monodromy}
+=
+\text{内部 branch memory}.
+}
+$$
+
+若所有零点 branch 的 monodromy 图连通，才能说所有零点在 branch 动力学意义下属于同一个整体。
+
+---
+
+# 第六十三部　一个新的 RH 商空间正性路线
+
+## 200. \(q\)-零点的 Stieltjes 型 moments
+
+若 RH 成立，\(\mathfrak X(q)\) 的零点可写为：
+
+$$
+q_n=\frac14+\gamma_n^2>0.
+$$
+
+定义：
+
+$$
+x_n=q_n^{-1}\in(0,4).
+$$
+
+对 \(k\ge1\) 定义：
+
+$$
+m_k
+=
+\sum_n
+\frac{\mu_n}{q_n^k}
+=
+\sum_n\mu_nx_n^k.
+$$
+
+则对任意有限系数 \(c_0,\ldots,c_r\)：
+
+$$
+\sum_{i,j}
+c_ic_jm_{i+j}
+=
+\sum_n\mu_n
+\left(
+\sum_i c_ix_n^i
+\right)^2
+\ge0.
+$$
+
+因此所有适当 Hankel 矩阵都应半正定。
+
+---
+
+## 201. Quotient-Hankel 条件
+
+RH 推出：
+
+$$
+\boxed{
+H_r^{(0)}
+=
+(m_{i+j})_{1\le i,j\le r}
+\succeq0,
+}
+$$
+
+以及：
+
+$$
+\boxed{
+H_r^{(1)}
+=
+(m_{i+j+1})_{0\le i,j<r}
+\succeq0.
+}
+$$
+
+这是因为 \((m_k)\) 来自正实轴上的原子测度。
+
+离线零点会使 \(q_n\) 形成非实共轭对，moment 仍为实数，但不再自动具有 Stieltjes 正性。
+
+因此可以提出：
+
+$$
+\boxed{
+\text{Reflection-Quotient Stieltjes Criterion}.
+}
+$$
+
+其反向仍需额外证明：
+
+* moment problem 的确定性；
+* moments 与 \(\mathfrak X\) canonical product 的完整一致；
+* 不存在非实零点通过相消伪造全部 Hankel 正性。
+
+这是一条新的 frontier，不是已完成 RH 判据。
+
+---
+
+# 第六十四部　真正的“绝对”是什么
+
+## 202. 页标签是相对的
+
+在：
+
+$$
+s=\frac12\pm\sqrt{\frac14-q}
+$$
+
+中，\(\pm\) 的选择依赖内部 branch。
+
+函数方程把它们视为同一个外部状态。
+
+所以：
+
+$$
+\boxed{
+\text{sheet identity 是相对的}.
+}
+$$
+
+---
+
+## 203. \(q\) 是否为实数不是相对的
+
+$$
+\Im q=-2\delta\gamma.
+$$
+
+它是反射商上的不变量。
+
+所以：
+
+$$
+\boxed{
+\text{零点是否离开临界线是外部商空间中仍可检测的绝对事实}.
+}
+$$
+
+这正是为什么：
+
+* scalar completion 可以遗忘内部 memory；
+* projective golden boundary 可以遗忘 rapidity；
+* 但 RH 仍然不是任意观察者可自行决定的命题。
+
+仓库已经分别证明了标量 memory blindness 和黄金射影边界无法恢复 rapidity；这些结果说明观察映射非单射，却没有改变被观察函数自身的 divisor。
+
+---
+
+## 204. 绝对对象是所有相对 chart 的相容粘合
+
+不是某一个名字给出绝对对象。
+
+而是所有 chart：
+
+$$
+O_\alpha=T_\alpha F
+$$
+
+以及重叠区转换：
+
+$$
+g_{\beta\alpha}
+=
+T_\beta T_\alpha^{-1}
+$$
+
+满足 cocycle 后，共同确定一个全局 section。
+
+所以：
+
+$$
+\boxed{
+\text{绝对}
+=
+\text{全部相对观察的相容类}.
+}
+$$
+
+对 ζ 而言：
+
+* Dirichlet chart；
+* Euler chart；
+* eta chart；
+* theta–Mellin chart；
+* \(q=s(1-s)\) 反射商 chart；
+
+共同粘合为同一个 meromorphic/entire 对象。
+
+---
+
+# 第六十五部　建议新增的形式化模块
+
+```text
+D5/S3/Analytic/Zeta/ReflectionQuotient/
+  ReflectionCasimirCoordinate.lean
+  XiDescendsToCasimirPlane.lean
+  CasimirZeroRayCriterion.lean
+  LogDerivativeOddEvenFactorization.lean
+  ZeroQuartetCasimirDiscriminant.lean
+
+D5/S3/ObserverOrigin/GoldenSelfCoordinate/
+  ReciprocalUnitMöbiusMap.lean
+  GoldenCrossRatioLinearization.lean
+  FibonacciProjectiveInfinity.lean
+  GoldenBreakRecompletionSemiconjugacy.lean
+
+D5/S1/Words/ZeckendorfTwist/
+  LegalWordWeightPolynomial.lean
+  ParityTwistPeriodSix.lean
+  ResidueClassEquidistribution.lean
+  NonuniformCharacterSpectralGap.lean
+
+D5/S3/ObserverOrigin/GoldenMarkov/
+  FibonacciDoobTransform.lean
+  GoldenStationaryMeasure.lean
+  OddLagNegativeEvenLagPositive.lean
+  GoldenEntropyRate.lean
+
+D5/S1/Depth/GoldenCarryDynamics/
+  GoldenFloorCarryRecurrence.lean
+  FibonacciTorusItinerary.lean
+  MirrorCarryComplement.lean
+  FiniteZeroWindowCarryDefect.lean
+
+D5/S3/Dynamics/GoldenTorusZeta/
+  FibonacciTorusFixedPointCount.lean
+  FibonacciArtinMazurZeta.lean
+  PrimitiveGoldenOrbitCount.lean
+
+D5/S3/PrimeForms/GoldenEuler/
+  CharacterCompanionLift.lean
+  OrderedCharacterCompanionHolonomy.lean
+  TwinCharacterOrderSeparation.lean
+
+D5/S3/Zeros/Moments/
+  TransverseHankelRank.lean
+  FiniteDepthMomentRecurrence.lean
+  CasimirStieltjesNecessaryCondition.lean
+```
+
+---
+
+# 第六十六部　最优先的公开定理
+
+## 205. \(\xi\) 的反射商下降
+
+```lean
+theorem xi_factors_through_reflectionCasimir :
+    ∃! Xq : EntireFunction ℂ,
+      ∀ s : ℂ, completedXi s = Xq (s * (1 - s))
+```
+
+---
+
+## 206. RH 的 \(q\)-射线等价
+
+```lean
+theorem rh_iff_casimirZeros_on_real_ray :
+    RiemannHypothesis ↔
+      ∀ q, Xq q = 0 → (q.im = 0 ∧ 1 / 4 ≤ q.re)
+```
+
+---
+
+## 207. companion phase classification
+
+```lean
+theorem reflectionCompanion_phase_classification (q : ℝ) :
+    q < 0 → OrientationReversingHyperbolic (companion q) ∧
+    q = 0 → Matrix.rank (companion q) = 1 ∧
+    0 < q → q < 1 / 4 →
+      Hyperbolic (normalizedCompanion q) ∧
+    q = 1 / 4 → NontrivialJordan (companion q) ∧
+    1 / 4 < q → Elliptic (normalizedCompanion q)
+```
+
+---
+
+## 208. \(-1,0,+1\) 三相
+
+```lean
+theorem companion_trichotomy :
+    spectrum (companion (-1)) = {phi, goldenConj} ∧
+    spectrum (companion 0) = {0, 1} ∧
+    (companion 1) ^ 6 = 1
+```
+
+---
+
+## 209. Zeckendorf parity 六周期
+
+```lean
+theorem signedLegalWordCount_period_six :
+    ∀ n, signedLegalWordCount (n + 6) =
+      signedLegalWordCount n
+```
+
+---
+
+## 210. 固定名字完成、全名字不一致完成
+
+```lean
+theorem fixed_modulus_digitCount_equidistribution ...
+```
+
+以及：
+
+```lean
+theorem no_uniform_nontrivial_character_gap :
+    (∀ χ ≠ 1, spectralRadius (twistedTransfer χ) < phi) ∧
+    sup {spectralRadius (twistedTransfer χ) | χ ≠ 1} = phi
+```
+
+这会成为对角逃逸最重要的有限维模型。
+
+---
+
+## 211. 黄金 carry 环面递归
+
+```lean
+theorem golden_floor_carry_recurrence (x : ℝ) (n : ℕ) :
+    goldenFloor x (n + 2) =
+      goldenFloor x (n + 1) +
+      goldenFloor x n +
+      goldenCarry x n
+```
+
+---
+
+## 212. companion holonomy 恢复词序
+
+```lean
+theorem twin_character_companion_order_separates :
+    companion 1 * companion (-1) ≠
+      companion (-1) * companion 1
+```
+
+同时：
+
+```lean
+theorem companionWord_det_eq_holFive :
+    Matrix.det (companionWord w) = holFive w
+```
+
+---
+
+# 最终凝聚
+
+这一轮真正得到的，不只是更多类比，而是一个统一代数曲面：
+
+$$
+\boxed{
+q=s(1-s)
+}
+$$
+
+以及：
+
+$$
+\boxed{
+\mathcal C(q)
+=
+\begin{pmatrix}
+1&-q\\
+1&0
+\end{pmatrix}.
+}
+$$
+
+它同时容纳：
+
+$$
+\boxed{
+q=-1
+\Longrightarrow
+\{\varphi,1-\varphi\},
+}
+$$
+
+$$
+\boxed{
+q=0
+\Longrightarrow
+\{0,1\},
+}
+$$
+
+$$
+\boxed{
+q=1
+\Longrightarrow
+\left\{
+\frac12\pm i\frac{\sqrt3}{2}
+\right\}.
+}
+$$
+
+而 Zeckendorf 带源传递矩阵正好是：
+
+$$
+\boxed{
+M(y)=\mathcal C(-y).
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{黄金无扭曲计数}
+\quad\text{与}\quad
+\text{奇偶六周期计数}
+}
+$$
+
+确实位于同一个反射谱覆盖上。
+
+completed \(\xi\) 又精确下降为：
+
+$$
+\boxed{
+\xi(s)
+=
+\mathfrak X(s(1-s)).
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{函数方程不是单纯让两点相等，}
+}
+$$
+
+而是表明 \(\xi\) 本来就是定义在反射商坐标 \(q\) 上的整函数。
+
+RH 随之成为：
+
+$$
+\boxed{
+\text{该 quotient entire function 的全部零点是否位于 }
+[1/4,\infty).
+}
+$$
+
+“偶完成、奇破缺”则精确分解为：
+
+$$
+\boxed{
+\begin{aligned}
+q&=\text{偶商坐标},\\
+\pm\sqrt{1/4-q}&=\text{奇内部页},\\
+\mathfrak X(q)&=\text{完成状态},\\
+(1-2s)\mathfrak X'(q)/\mathfrak X(q)
+&=\text{奇缺陷电流}.
+\end{aligned}
+}
+$$
+
+“所有名字造成分歧”的最终修正是：
+
+$$
+\boxed{
+\text{每个固定有限名字都可能被黄金 Perron 通道重完，}
+}
+$$
+
+但：
+
+$$
+\boxed{
+\text{全部名字的谱隙没有统一下界}.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{每一层都完成}
+\not\Rightarrow
+\text{整个无限观察者塔一致完成}.
+}
+$$
+
+这正是对角逃逸的来源：
+
+$$
+\boxed{
+\text{nontrivial characters individually decay,}
+\qquad
+\text{but their spectral radii accumulate at the completed mode}.
+}
+$$
+
+最后，“所有离线零点共同纠缠”现在可以被压缩成三个逐层增强的命题：
+
+$$
+\boxed{
+\text{每个 mirror pair 共享同一个 }q;
+}
+$$
+
+$$
+\boxed{
+\text{全部 }q\text{-零点共同属于同一个整函数 }\mathfrak X;
+}
+$$
+
+$$
+\boxed{
+\text{其 Paley--Wiener Gram 算子和 source monodromy 是否不可分块}.
+}
+$$
+
+前两层已经有严格数学内容。
+
+第三层才是“整个系统纠缠”的真正 frontier。
+
+而量子纠缠仍然需要额外的 Hilbert tensor lift，不能由函数方程自动获得。
