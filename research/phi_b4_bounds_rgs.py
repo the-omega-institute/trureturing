@@ -14,9 +14,9 @@ import argparse
 import json
 import tempfile
 from pathlib import Path
-from typing import Dict, List, Sequence
+from typing import Dict, List
 
-import research.phi_b4_bounds as core
+import phi_b4_bounds as core
 
 
 def add_first_use_symmetry(
