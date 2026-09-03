@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:598acdc77971e6fc5589b52a6acc4f95eb02cf9fb688c7e8811c6521a5e8025c
+  normalized_sha256: sha256:598acdc77971e6fc5589b52a6acc4f95eb02cf9fb688c7e8811c6521a5e8025c
+cas_ref: sha256:598acdc77971e6fc5589b52a6acc4f95eb02cf9fb688c7e8811c6521a5e8025c
+coverage_gids:
+  - D5/S3/Quantum/Bogoliubov/HankelBogoliubovLift.hankel_bogoliubov_lift
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/Bogoliubov/HankelBogoliubovLift.hankel_bogoliubov_lift
+      source_sha256: sha256:598acdc77971e6fc5589b52a6acc4f95eb02cf9fb688c7e8811c6521a5e8025c
+      target_statement_id: sha256:9eb3156bd1be71821f733691b4ffe401e90cd5c59fcf20f7e691207df758650b
+  scribe:
+    - gid: D5/S3/Quantum/Bogoliubov/HankelBogoliubovLift.hankel_bogoliubov_lift
+      definition_sha256: sha256:5100e7e5212dbef453757f4b3b948a27a6b10e1dcecd61c9bf9815e9b44b11b7
+      emission_sha256: sha256:7a8303e68d7642001f0a6560f64f435ce5b4838ac6ba4476252ddbe578eed532
+  unresolved_subitems: []
