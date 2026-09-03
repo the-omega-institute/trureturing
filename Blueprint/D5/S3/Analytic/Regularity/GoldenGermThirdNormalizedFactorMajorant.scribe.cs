@@ -60,12 +60,18 @@ internal sealed class GoldenGermThirdNormalizedFactorMajorantDocument
         Formula y = Call("y", s, p);
         Formula kp = Call("Kp", s, p);
         Formula xDefinition = F.Seq(
+            F.Forall, F.Sp, s, F.InMacro, F.Sp, ComplexNumbers(), F.Comma, F.Sp,
+            F.Forall, F.Sp, p, F.InMacro, F.Sp, primes, F.Comma, F.Sp,
             x, F.Sp, F.Colon, F.Eq, F.Sp,
             Power(p, F.Seq(F.Minus, s, F.Sp, F.Times, F.Sp, phiSquared)));
         Formula yDefinition = F.Seq(
+            F.Forall, F.Sp, s, F.InMacro, F.Sp, ComplexNumbers(), F.Comma, F.Sp,
+            F.Forall, F.Sp, p, F.InMacro, F.Sp, primes, F.Comma, F.Sp,
             y, F.Sp, F.Colon, F.Eq, F.Sp,
             Power(p, F.Seq(F.Minus, s, F.Sp, F.Times, F.Sp, phiCubed)));
         Formula kpDefinition = F.Seq(
+            F.Forall, F.Sp, s, F.InMacro, F.Sp, ComplexNumbers(), F.Comma, F.Sp,
+            F.Forall, F.Sp, p, F.InMacro, F.Sp, primes, F.Comma, F.Sp,
             kp, F.Sp, F.Colon, F.Eq, F.Sp,
             NormalizedFactor(LocalFactor(s, p), x, y));
         Formula fDefinition = F.Seq(
@@ -89,8 +95,11 @@ internal sealed class GoldenGermThirdNormalizedFactorMajorantDocument
         Formula differentiable = F.Seq(
             F.Forall, F.Sp, p, F.InMacro, F.Sp, primes, F.Comma, F.Sp,
             Call("DifferentiableOn", ComplexNumbers(), Call("f", p), region));
+        Formula onePlusF = F.Seq(
+            F.Open, p, F.Comma, F.Sp, s, F.Close, F.Sp, F.Mapsto, F.Sp,
+            F.D(1), F.Sp, F.Plus, F.Sp, Call("f", p, s));
         Formula locallyUniform = Call(
-            "HasProdLocallyUniformlyOn", F.Id("onePlusF"), g, region);
+            "HasProdLocallyUniformlyOn", onePlusF, g, region);
 
         return F.Disp(new Formula.Aligned([
             F.Seq(
