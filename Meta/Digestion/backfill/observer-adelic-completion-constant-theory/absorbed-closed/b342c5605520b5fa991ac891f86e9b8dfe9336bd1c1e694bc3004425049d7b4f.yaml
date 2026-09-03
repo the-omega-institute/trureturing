@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:b342c5605520b5fa991ac891f86e9b8dfe9336bd1c1e694bc3004425049d7b4f
+  normalized_sha256: sha256:b342c5605520b5fa991ac891f86e9b8dfe9336bd1c1e694bc3004425049d7b4f
+cas_ref: sha256:b342c5605520b5fa991ac891f86e9b8dfe9336bd1c1e694bc3004425049d7b4f
+coverage_gids:
+  - D5/S3/Observer/BlockStructure/ExactCommonSpectrumFloor.exact_common_spectrum_floor
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/BlockStructure/ExactCommonSpectrumFloor.exact_common_spectrum_floor
+      source_sha256: sha256:b342c5605520b5fa991ac891f86e9b8dfe9336bd1c1e694bc3004425049d7b4f
+      target_statement_id: sha256:cea2d8005f8d9fb5ca90690bc031bd9e3c0041ba45a92a0247cd0c5744c59043
+  scribe:
+    - gid: D5/S3/Observer/BlockStructure/ExactCommonSpectrumFloor.exact_common_spectrum_floor
+      definition_sha256: sha256:e22a3b968b705f390d00db857b30b1b353cbf333dbf0a4d4cdd291dfe6f657a0
+      emission_sha256: sha256:c6834ef3fd80a035ff8b1ece980211f493faa05bc3f5b7aaf7b3b6f502cd7ad5
+  unresolved_subitems: []
