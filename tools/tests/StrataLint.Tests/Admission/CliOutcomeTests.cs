@@ -194,9 +194,6 @@ internal sealed class StubCliEnvironment(
     public CommandResult AlignDigestionStatus(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "align digestion status is not configured in this fixture");
 
-    public CommandResult MigrateDigestionCoverage(IReadOnlyList<string> arguments) =>
-        new(false, string.Empty, "coverage migration is not configured in this fixture");
-
     public CommandResult CoverAtom(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "cover-atom is not configured in this fixture");
 

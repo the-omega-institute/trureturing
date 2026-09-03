@@ -81,11 +81,9 @@ internal sealed partial class BackfillInventoryDocument
         string sourcePath,
         string atomizer,
         object? rawEntry,
-        bool projectBaselineCoverage = false)
+        bool projectBaselineReferences = false)
     {
         var entry = Mapping(rawEntry, $"source {sourceId} entries must be mappings");
-        // expand phase (L2a): candidate legacy projection; removed in L2c after the L2b data migration
-        entry = ProjectLegacyCoverage(entry, sourceId);
 
         ExactKeys(entry, EntryFieldUniverse, $"source {sourceId} entry");
 
@@ -98,7 +96,7 @@ internal sealed partial class BackfillInventoryDocument
         var parsedFingerprints = new DigestionFingerprints(
             Scalar(fingerprints, "raw_sha256", $"entry {atomId} raw_sha256"),
             Scalar(fingerprints, "normalized_sha256", $"entry {atomId} normalized_sha256"));
-        if (projectBaselineCoverage && DigestionFingerprint.IsCanonicalSha256(parsedFingerprints.RawSha256))
+        if (projectBaselineReferences && DigestionFingerprint.IsCanonicalSha256(parsedFingerprints.RawSha256))
         {
             atomId = parsedFingerprints.RawSha256["sha256:".Length..];
         }
@@ -609,12 +607,12 @@ internal static partial class BackfillInventoryLoader
         LoadDirectorySnapshot(
             snapshot,
             ParseBaselineSourceMetadata,
-            projectBaselineCoverage: true);
+            projectBaselineReferences: true);
 
     private static BackfillInventoryDocument LoadDirectorySnapshot(
         RepositorySnapshot snapshot,
         Func<string, string, ParsedSourceMetadata> parseSourceMetadata,
-        bool projectBaselineCoverage = false)
+        bool projectBaselineReferences = false)
     {
         var metadata = snapshot.Files
             .Where(static pair => pair.Key.Value.StartsWith(RootPath, StringComparison.Ordinal)
@@ -670,8 +668,8 @@ internal static partial class BackfillInventoryLoader
                     fields["path"].Single(),
                     fields["atomizer"].Single(),
                     entry,
-                    projectBaselineCoverage);
-                if (projectBaselineCoverage)
+                    projectBaselineReferences);
+                if (projectBaselineReferences)
                 {
                     baselineAtomIds.Add(atomId, parsedEntry.AtomId);
                 }
@@ -705,7 +703,7 @@ internal static partial class BackfillInventoryLoader
 
         var loadedSources = sources.ToImmutable();
         return BackfillInventoryDocument.Create(
-            projectBaselineCoverage
+            projectBaselineReferences
                 ? ProjectBaselineReferences(loadedSources, baselineAtomIds)
                 : loadedSources,
             DeriveTickets(snapshot));
