@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:26db9ac4b3d5355adb9b793fe90315e135f6536cb77c60f4acb224372441816f
+  normalized_sha256: sha256:26db9ac4b3d5355adb9b793fe90315e135f6536cb77c60f4acb224372441816f
+cas_ref: sha256:26db9ac4b3d5355adb9b793fe90315e135f6536cb77c60f4acb224372441816f
+coverage_gids:
+  - D5/S3/Observer/MeasureSeparation/CountableSingularPartition.countable_pairwise_singular_common_partition
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/MeasureSeparation/CountableSingularPartition.countable_pairwise_singular_common_partition
+      source_sha256: sha256:26db9ac4b3d5355adb9b793fe90315e135f6536cb77c60f4acb224372441816f
+      target_statement_id: sha256:8a1cc6c0941b1beb05716f226192e3fdc833c8b1ca396961b54a8ca387038d47
+  scribe:
+    - gid: D5/S3/Observer/MeasureSeparation/CountableSingularPartition.countable_pairwise_singular_common_partition
+      definition_sha256: sha256:e5225ea58b64c6b187f05c9bbdac31a170ac5a45a32e4406b1af73bd6a8177a9
+      emission_sha256: sha256:71ffcd7143b19533f22d5e5f53b6f299878711a9567f7ea2217d045b94db46c5
+  unresolved_subitems: []
