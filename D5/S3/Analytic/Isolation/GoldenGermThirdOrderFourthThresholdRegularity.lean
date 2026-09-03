@@ -161,9 +161,6 @@ private theorem one_lt_one_plus_one_over_phi_squared :
     (1 : Real) < 1 + 1 / Real.goldenRatio ^ 2 := by
   linarith [one_over_phi_squared_pos]
 
-private theorem three_negative_factors_numeric_check :
-    Odd 3 ∧ ((-1 : Real) ^ 3 < 0) := by norm_num
-
 private theorem zeta_real_negative {x : Real}
     (hx : 0 < x) (hx1 : x < 1) :
     (riemannZeta (x : Complex)).im = 0 ∧
