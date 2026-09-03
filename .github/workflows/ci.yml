@@ -165,7 +165,7 @@ jobs:
           dotnet restore candidate/tools/tests/BannedApiCompileFailProof/BannedApiCompileFailProof.csproj --locked-mode
       - name: Build candidate with warnings as errors
         id: build-candidate
-        if: steps.revert.outputs.confirmed != 'true' && steps.judge-cache.outputs.cache-hit != 'true' && ((github.event_name == 'pull_request_target' && github.event.pull_request.base.ref == 'dev') || (github.event_name == 'push' && github.ref == 'refs/heads/dev'))
+        if: steps.revert.outputs.confirmed != 'true' && steps.judge-cache.outputs.cache-hit != 'true' && github.event_name != 'schedule'
         run: make -C candidate/tools dotnet
       - name: Signal PR head branch grammar
         if: steps.revert.outputs.confirmed != 'true' && github.event_name == 'pull_request_target' && github.event.pull_request.base.ref == 'dev'
