@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:d897dd9fce5b8055af5b85cacd5af87e0682157bbba4ee5e293cb22834ce201c
+  normalized_sha256: sha256:d897dd9fce5b8055af5b85cacd5af87e0682157bbba4ee5e293cb22834ce201c
+cas_ref: sha256:d897dd9fce5b8055af5b85cacd5af87e0682157bbba4ee5e293cb22834ce201c
+coverage_gids:
+  - D5/S3/Fourier/CharacterSelection/BinaryCharacterSemanticRedundancy.binary_character_semantic_redundancy
+receipts:
+  coverage:
+    - gid: D5/S3/Fourier/CharacterSelection/BinaryCharacterSemanticRedundancy.binary_character_semantic_redundancy
+      source_sha256: sha256:d897dd9fce5b8055af5b85cacd5af87e0682157bbba4ee5e293cb22834ce201c
+      target_statement_id: sha256:7bd50901c32ba2e34e830b27b473d5718f0c5f6f17ee81cc8354bdf4e78883bf
+  scribe:
+    - gid: D5/S3/Fourier/CharacterSelection/BinaryCharacterSemanticRedundancy.binary_character_semantic_redundancy
+      definition_sha256: sha256:542e18ab32a68bf68de1e13fece062dd9386663012dc48a87ef224770911d637
+      emission_sha256: sha256:93a4ea87b39e4361529befb12a76d5bb9abd0873c37b4d1dfc31bc7dad5afd39
+  unresolved_subitems: []
