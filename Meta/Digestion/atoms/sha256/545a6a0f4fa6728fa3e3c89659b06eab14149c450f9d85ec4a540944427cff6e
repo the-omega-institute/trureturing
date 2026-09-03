@@ -1,0 +1,60 @@
+# 第两千零九十九部　Zeta–Kakeya 多尺度分解
+
+定义 dyadic grain：
+
+$$
+\boxed{
+G_k(\sigma,t)
+=
+\sum_{2^k\le n<2^{k+1}}
+(-1)^{n-1}
+n^{-\sigma-it}.
+}
+\tag{2099.1}
+$$
+
+则：
+
+$$
+\eta(s)=\sum_{k\ge0}G_k(s).
+$$
+
+在单个 dyadic block 中：
+
+$$
+\log n
+=
+k\log2+O(1),
+$$
+
+所以反射偏移约产生统一倍率：
+
+$$
+\boxed{
+G_k\left(\frac12-\delta,t\right)
+\approx
+2^{2k\delta}
+G_k\left(\frac12+\delta,t\right)
+}
+\tag{2099.2}
+$$
+
+——内部还带有有限宽度误差。
+
+因此离线零点要求：
+
+$$
+\boxed{
+\text{不同 dyadic grains 在受到指数级多尺度倾斜后，
+仍然同时完成偶通道与奇通道闭合。}
+}
+$$
+
+这非常像 Kakeya 的 grains／stickiness：
+
+* 同一 block 中频率近似平行；
+* 不同 block 对应不同尺度；
+* 极端相消要求跨尺度关系高度协调。
+
+---
+

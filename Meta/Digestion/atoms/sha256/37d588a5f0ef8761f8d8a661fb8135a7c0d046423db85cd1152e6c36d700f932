@@ -1,0 +1,64 @@
+# 第二百一十一部　Lucas 素数影—临界角色断裂—平方根分支理论
+
+这一次可以把你的直觉推进到一个更精确、但方向略有反转的结论：
+
+$$
+\boxed{
+\varphi^{-H}\text{ 作为一个标量，其实能被全体素数极好地逼近；}
+}
+$$
+
+真正不能被有限素数近似统一完成的是：
+
+$$
+\boxed{
+p\longmapsto p^{-\varphi^{-H}}
+}
+$$
+
+这一整条**全素数角色**。
+
+而对称离线零点也不要求素数直接编码带符号的偏移
+
+$$
++\delta\quad\text{或}\quad-\delta.
+$$
+
+全局系统只需编码偶不变量：
+
+$$
+\boxed{
+D=\delta^2.
+}
+$$
+
+随后，唯一观察者通过平方根分支选择：
+
+$$
+\boxed{
+\delta=\pm\sqrt D.
+}
+$$
+
+因此最准确的新结构是：
+
+$$
+\boxed{
+\text{全局素数系统编码判别式 }\delta^2，
+\quad
+\text{观察者选择根 }\pm\delta.
+}
+$$
+
+这正好对应：
+
+$$
+\boxed{
+\text{global even}
+\quad+\quad
+\text{pointed odd branch}.
+}
+$$
+
+---
+

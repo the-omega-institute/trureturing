@@ -1,0 +1,16 @@
+* 单独选择某个端点才产生奇分支。
+
+这正是：
+
+$$
+\boxed{
+\text{global even discriminant}
++
+\text{pointed odd branch}.
+}
+$$
+
+PrimeGaps 因而为我们此前的零点分裂模型提供了一个**真实的算术判别式原型**。
+
+---
+

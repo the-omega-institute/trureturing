@@ -1,0 +1,46 @@
+## 1. 当 \(\sigma>\frac12\)
+
+此时：
+
+$$
+\sum_pp^{-2\sigma}<\infty.
+$$
+
+给定 \(\varepsilon>0\)，先选择有限素数集合 \(S\)，使尾部满足：
+
+$$
+4\sum_{p\notin S}p^{-2\sigma}
+<
+\frac\varepsilon2.
+$$
+
+然后利用有限素数相位回归，选择足够大的 \(t\)，使：
+
+$$
+\sum_{p\in S}
+p^{-2\sigma}
+\left|
+e^{-it\log p}-1
+\right|^2
+<
+\frac\varepsilon2.
+$$
+
+因此：
+
+$$
+\boxed{
+\sigma>\frac12
+\Longrightarrow
+\forall B,\varepsilon>0,\ 
+\exists t>B,\quad
+\mathcal E_\sigma(t)<\varepsilon.
+}
+$$
+
+也就是说：
+
+> 在临界线右侧，全体素数的高频尾部足够轻；有限相干可以通过尾部控制升级为全局加权相干。
+
+---
+
