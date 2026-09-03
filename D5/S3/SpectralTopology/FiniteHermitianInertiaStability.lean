@@ -8,7 +8,6 @@
 import D5.S3.SpectralTopology.PointGapExactInertia
 import D5.S3.Weil.ZetaLinear.Weyl
 import Mathlib.Tactic.Abel
-import Mathlib.Tactic.Omega
 
 /-!
 # Quantitative stability of finite Hermitian inertia
@@ -40,8 +39,8 @@ an unformalized general eigenvalue-continuity theorem.
      nonzero Hermitian eigenvalues into positive and negative inertia.
    * `FiniteSpectralLocalizer.posIndex_neg_eq_negIndex` owns the conversion of
      negative inertia into the positive index of the negated matrix.
-   * Pinned Mathlib supplies full rank of a unit matrix and Presburger
-     arithmetic through `omega`.
+   * Pinned Mathlib supplies full rank of a unit matrix and cancellative
+     arithmetic for natural-number sums.
    * Repository search found no existing owner combining these ingredients
      into a two-sided finite inertia stability theorem. -/
 
@@ -158,7 +157,26 @@ theorem inertia_eq_of_two_sided_weyl_certificate
       posIndex (hA.add hE) + negIndex (hA.add hE) = (A + E).rank :=
         posIndex_add_negIndex_eq_rank (hA.add hE)
       _ = Fintype.card m := Matrix.rank_of_isUnit (A + E) hAddUnit
-  constructor <;> omega
+  have hPositiveReverse :
+      posIndex (hA.add hE) ≤ posIndex hA := by
+    apply Nat.le_of_add_le_add_right
+    calc
+      posIndex (hA.add hE) + negIndex hA ≤
+          posIndex (hA.add hE) + negIndex (hA.add hE) :=
+        Nat.add_le_add_left hNegative _
+      _ = Fintype.card m := hTotalAdd
+      _ = posIndex hA + negIndex hA := hTotalA.symm
+  have hNegativeReverse :
+      negIndex (hA.add hE) ≤ negIndex hA := by
+    apply Nat.le_of_add_le_add_left
+    calc
+      posIndex hA + negIndex (hA.add hE) ≤
+          posIndex (hA.add hE) + negIndex (hA.add hE) :=
+        Nat.add_le_add_right hPositive _
+      _ = Fintype.card m := hTotalAdd
+      _ = posIndex hA + negIndex hA := hTotalA.symm
+  exact ⟨Nat.le_antisymm hPositiveReverse hPositive,
+    Nat.le_antisymm hNegativeReverse hNegative⟩
 
 /-- Over the complex numbers, the same certificate preserves the repository's
 existing Hermitian signature coordinate. -/
