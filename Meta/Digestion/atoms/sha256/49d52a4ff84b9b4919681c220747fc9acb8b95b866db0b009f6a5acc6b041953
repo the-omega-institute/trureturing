@@ -1,0 +1,17 @@
+* 偶阶 cumulant tensor 具有形式：
+
+$$
+\boxed{
+\boldsymbol\kappa_{2r}
+=
+c_{2r}
+\boldsymbol\delta^{\otimes2r},
+}
+$$
+
+其中 \(c_{2r}\) 是 Rademacher 变量的第 \(2r\) 阶 cumulant。
+
+因此该全局横向状态的 connected 结构虽然跨越全部轨道，却是对称秩一。
+
+---
+

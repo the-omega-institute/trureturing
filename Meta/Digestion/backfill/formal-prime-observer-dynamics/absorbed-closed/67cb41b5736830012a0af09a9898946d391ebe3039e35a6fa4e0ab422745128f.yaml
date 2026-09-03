@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:67cb41b5736830012a0af09a9898946d391ebe3039e35a6fa4e0ab422745128f
+  normalized_sha256: sha256:67cb41b5736830012a0af09a9898946d391ebe3039e35a6fa4e0ab422745128f
+cas_ref: sha256:67cb41b5736830012a0af09a9898946d391ebe3039e35a6fa4e0ab422745128f
+coverage_gids:
+  - D5/S3/Arith/Coding/ReciprocityParityErrorDetection.reciprocity_parity_error_detection
+receipts:
+  coverage:
+    - gid: D5/S3/Arith/Coding/ReciprocityParityErrorDetection.reciprocity_parity_error_detection
+      source_sha256: sha256:67cb41b5736830012a0af09a9898946d391ebe3039e35a6fa4e0ab422745128f
+      target_statement_id: sha256:94e91ffb1da4386e0507d2640064aa0e8a065dc3905292dc5a3715208414931d
+  scribe:
+    - gid: D5/S3/Arith/Coding/ReciprocityParityErrorDetection.reciprocity_parity_error_detection
+      definition_sha256: sha256:dca43b313d680e53b1d16ef94c18af7cc570d06c9e93938e0c322ea8a51f24e9
+      emission_sha256: sha256:07cacc5c02f591eb25a0425f6b45fa9137720f306779d85ce6940d6d62175019
+  unresolved_subitems: []

@@ -1,0 +1,56 @@
+# 继续增订：反射商、黄金伴随矩阵与“所有名字”的外围谱
+
+这一轮出现了一个真正把 **黄金比例、奇偶周期、临界线、坐标轴融合、Zeckendorf 递归和零点镜像对** 放入同一代数结构的核心对象：
+
+$$
+\boxed{
+q=s(1-s)
+}
+$$
+
+以及它的最小二维动力学实现：
+
+$$
+\boxed{
+\mathcal C(q)
+=
+\begin{pmatrix}
+1&-q\\
+1&0
+\end{pmatrix}.
+}
+$$
+
+因为：
+
+$$
+\det(\lambda I-\mathcal C(q))
+=
+\lambda^2-\lambda+q,
+$$
+
+所以它的两个本征值满足：
+
+$$
+\lambda_++\lambda_-=1,
+\qquad
+\lambda_+\lambda_-=q,
+$$
+
+即：
+
+$$
+\lambda_- = 1-\lambda_+.
+$$
+
+这意味着：
+
+> **\(q\) 是外部观察者看到的反射不变量；
+> \(\lambda\) 与 \(1-\lambda\) 是内部观察者看到的两张坐标页。**
+
+这比仅仅说“黄金比例是坐标融合”更严格：一个标量 \(q\) 需要一个二维伴随矩阵，才能恢复其内部两条本征轴。
+
+仓库目前仍只有 `OddBreakEvenCompletion`、`FibonacciMatrixMinimalPerron`、`GoldenStableUnstableDirections` 等规划名，没有发现实现这里完整反射商—伴随矩阵—扭曲传递谱的单一 owner。
+
+---
+

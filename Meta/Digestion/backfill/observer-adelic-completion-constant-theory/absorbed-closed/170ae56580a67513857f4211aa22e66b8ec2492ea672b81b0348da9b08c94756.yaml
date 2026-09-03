@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:170ae56580a67513857f4211aa22e66b8ec2492ea672b81b0348da9b08c94756
+  normalized_sha256: sha256:170ae56580a67513857f4211aa22e66b8ec2492ea672b81b0348da9b08c94756
+cas_ref: sha256:170ae56580a67513857f4211aa22e66b8ec2492ea672b81b0348da9b08c94756
+coverage_gids:
+  - D5/S3/Observer/Tomography/PureWhiteInnovationDirection.pure_white_innovation_direction
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/Tomography/PureWhiteInnovationDirection.pure_white_innovation_direction
+      source_sha256: sha256:170ae56580a67513857f4211aa22e66b8ec2492ea672b81b0348da9b08c94756
+      target_statement_id: sha256:b48ded3d38096d72510baccd99c2318ed7d895d573ca572bc0e08699c89febe4
+  scribe:
+    - gid: D5/S3/Observer/Tomography/PureWhiteInnovationDirection.pure_white_innovation_direction
+      definition_sha256: sha256:cc3d29df234363631e729c30307985fef54067f8e71017b95f9e6a95c99a7d4f
+      emission_sha256: sha256:90f69c78bbed42321f3665721c9ab9a3207cc85868f0c5ec8899dabba230ac33
+  unresolved_subitems: []

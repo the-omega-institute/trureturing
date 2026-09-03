@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:1798510a7ffd337203122ce61979bcb8bf790bba93f6b013f118ed868eb5a7c0
+  normalized_sha256: sha256:1798510a7ffd337203122ce61979bcb8bf790bba93f6b013f118ed868eb5a7c0
+cas_ref: sha256:1798510a7ffd337203122ce61979bcb8bf790bba93f6b013f118ed868eb5a7c0
+coverage_gids:
+  - D5/S3/Factorization/QuadraticIdeals/NormTwoIdealLocalGlobalGap.norm_two_ideal_local_global_gap
+receipts:
+  coverage:
+    - gid: D5/S3/Factorization/QuadraticIdeals/NormTwoIdealLocalGlobalGap.norm_two_ideal_local_global_gap
+      source_sha256: sha256:1798510a7ffd337203122ce61979bcb8bf790bba93f6b013f118ed868eb5a7c0
+      target_statement_id: sha256:2e4c1c8070c55b858d31600ab6e4ab3861ced8148eccfdd90b4f5c31480b25a0
+  scribe:
+    - gid: D5/S3/Factorization/QuadraticIdeals/NormTwoIdealLocalGlobalGap.norm_two_ideal_local_global_gap
+      definition_sha256: sha256:4aabbdb75770e63a4579327250e250c69137f7f0ce2095dc22901c55d1c711af
+      emission_sha256: sha256:c1fd9a2c33a29c7e8027a20bc5d6d15a6a1101b9d48605654b0dffe12ed7bec2
+  unresolved_subitems: []

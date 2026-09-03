@@ -1,0 +1,45 @@
+## 11. 构型矩生成元
+
+定义：
+
+$$
+\boxed{
+\mathcal M_H(\sigma)
+=
+\mathbb E_\sigma
+\prod_{h\in H}
+\bigl(1+\varepsilon_h\Lambda(N+h)\bigr).
+}
+$$
+
+展开为：
+
+$$
+\mathcal M_H(\sigma)
+=
+\sum_{A\subseteq H}
+M_A(\sigma)\varepsilon_A,
+$$
+
+其中：
+
+$$
+\boxed{
+M_A(\sigma)
+=
+\frac1{\zeta(\sigma)}
+\sum_{n\ge1}
+\frac{
+\prod_{h\in A}\Lambda(n+h)
+}{n^\sigma}.
+}
+$$
+
+对 \(\sigma>1\)，该级数绝对收敛，因为：
+
+$$
+\Lambda(n+h)=O(\log n).
+$$
+
+---
+

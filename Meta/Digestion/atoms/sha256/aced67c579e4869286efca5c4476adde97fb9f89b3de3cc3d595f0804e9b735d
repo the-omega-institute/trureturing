@@ -1,0 +1,41 @@
+# 第二十四部　项目形式化结构
+
+建议将整理后的理论拆为：
+
+```text
+D5/S1/Depth/ZeckendorfRealThread.lean
+D5/S1/PrimeConstellation/Core.lean
+D5/S1/PrimeConstellation/GoldenGapCurvature.lean
+
+D5/S3/PrimeConstellation/LocalCorrelationFactor.lean
+D5/S3/PrimeConstellation/CorrelationSourceAlgebra.lean
+D5/S3/PrimeConstellation/PartitionCumulant.lean
+D5/S3/PrimeConstellation/CorrelationInverseLimit.lean
+D5/S3/PrimeConstellation/FiniteTraceLoop.lean
+D5/S3/PrimeConstellation/BoundaryJetHierarchy.lean
+
+D5/S3/Zeros/OrbitJet/KleinOrbitGeometry.lean
+D5/S3/Zeros/OrbitJet/CayleyRadialCoordinate.lean
+D5/S3/Zeros/OrbitJet/DiagonalReflectionState.lean
+D5/S3/Zeros/OrbitJet/DiagonalOrbitCumulants.lean
+D5/S3/Zeros/OrbitJet/GHZReflectionPurification.lean
+D5/S3/Zeros/OrbitJet/TransverseCasimir.lean
+D5/S3/Zeros/OrbitJet/ZeckendorfFiniteCasimir.lean
+
+D5/S3/Analytic/TraceJet/ScalarDressingDivisorNoGo.lean
+D5/S3/Analytic/TraceJet/FiniteDeterminantSourceJet.lean
+D5/S3/Analytic/TraceJet/SimpleZeroSourceResponse.lean
+D5/S3/Analytic/TraceJet/SourceOrbitCharge.lean
+
+D5/X_Frontier/ConstellationZero/PrimeGeneratedSystem.lean
+D5/X_Frontier/ConstellationZero/TraceJetDefectLedger.lean
+D5/X_Frontier/ConstellationZero/ExactPositiveRealizationFiber.lean
+D5/X_Frontier/ConstellationZero/ConstellationFrameConstant.lean
+```
+
+其中前面的有限代数、概率、Zeckendorf、GHZ 和 determinant source-jet 模块原则上都不要求 RH。
+
+Frontier 层只定义候选空间、缺陷账本和零缺陷纤维，不创建虚假 inhabitant。
+
+---
+

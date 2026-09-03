@@ -1,0 +1,51 @@
+## 37. 双曲正缺陷
+
+定义：
+
+$$
+\boxed{
+\mathfrak D_T(\tau)
+=
+\sum_{o\in T}
+m_ow_o
+\bigl(
+\cosh(2\tau\delta_o)-1
+\bigr).
+}
+$$
+
+因为：
+
+$$
+\cosh x-1\ge0
+$$
+
+并且仅在 \(x=0\) 时为零，所以对 \(\tau\neq0\)：
+
+$$
+\boxed{
+\mathfrak D_T(\tau)=0
+\iff
+\delta_o=0
+\quad
+\forall o.
+}
+$$
+
+其展开为：
+
+$$
+\mathfrak D_T(\tau)
+=
+\sum_{r\ge1}
+\frac{(2\tau)^{2r}}{(2r)!}
+\sum_o
+m_ow_o\delta_o^{2r}.
+$$
+
+完整镜像对称消去所有奇阶 transverse jets，却保留全部偶阶正信息。
+
+仓库的 `CriticalDampingFlatness` 已经机器证明了有限零点窗中的这一零缺陷判据。
+
+---
+

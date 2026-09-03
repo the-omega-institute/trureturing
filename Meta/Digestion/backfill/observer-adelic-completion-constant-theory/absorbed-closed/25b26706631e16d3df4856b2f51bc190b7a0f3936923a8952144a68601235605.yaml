@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:25b26706631e16d3df4856b2f51bc190b7a0f3936923a8952144a68601235605
+  normalized_sha256: sha256:25b26706631e16d3df4856b2f51bc190b7a0f3936923a8952144a68601235605
+cas_ref: sha256:25b26706631e16d3df4856b2f51bc190b7a0f3936923a8952144a68601235605
+coverage_gids:
+  - D5/S3/Arith/Lattices/GoldenMaximalOrderCompletion.golden_maximal_order_completion
+receipts:
+  coverage:
+    - gid: D5/S3/Arith/Lattices/GoldenMaximalOrderCompletion.golden_maximal_order_completion
+      source_sha256: sha256:25b26706631e16d3df4856b2f51bc190b7a0f3936923a8952144a68601235605
+      target_statement_id: sha256:18864e6631eb6e43224ea3ec9475f78ffa620bf086b187b4d822278492776b54
+  scribe:
+    - gid: D5/S3/Arith/Lattices/GoldenMaximalOrderCompletion.golden_maximal_order_completion
+      definition_sha256: sha256:fb1e41776348dfbc1c3284055b9a45624d20cc56719634d578e7a2a0c86f6609
+      emission_sha256: sha256:d417f1fcd363f2d86a7bfec0d142ed85eeb22d0c2f36fa96224d9ed4405c630a
+  unresolved_subitems: []

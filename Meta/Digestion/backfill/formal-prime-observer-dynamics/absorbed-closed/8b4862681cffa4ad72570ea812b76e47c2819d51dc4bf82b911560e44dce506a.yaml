@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:8b4862681cffa4ad72570ea812b76e47c2819d51dc4bf82b911560e44dce506a
+  normalized_sha256: sha256:8b4862681cffa4ad72570ea812b76e47c2819d51dc4bf82b911560e44dce506a
+cas_ref: sha256:8b4862681cffa4ad72570ea812b76e47c2819d51dc4bf82b911560e44dce506a
+coverage_gids:
+  - D5/S3/Analytic/ZetaObservation/RestrictedZetaPosterior.single_prime_restricted_zeta_posterior
+receipts:
+  coverage:
+    - gid: D5/S3/Analytic/ZetaObservation/RestrictedZetaPosterior.single_prime_restricted_zeta_posterior
+      source_sha256: sha256:8b4862681cffa4ad72570ea812b76e47c2819d51dc4bf82b911560e44dce506a
+      target_statement_id: sha256:aae688d327abe97248b56d3f1835b57817037831b6d6c6d07a9d7cdfd57642e6
+  scribe:
+    - gid: D5/S3/Analytic/ZetaObservation/RestrictedZetaPosterior.single_prime_restricted_zeta_posterior
+      definition_sha256: sha256:e46f3508392fa9c8fa45e36e453b9da78bd83be9838c9f248a9ec9e92fd6cdc4
+      emission_sha256: sha256:4ce3aae93a485e5b817d4913a0bcddb1ff0dfff1e302cafecf285af71bed66c3
+  unresolved_subitems: []

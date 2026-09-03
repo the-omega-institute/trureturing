@@ -1,0 +1,34 @@
+## 165. 与仓库 scalar blindness 的关系
+
+仓库已经证明，在其 `scalarMemoryUpdate` 模型中，内部 memory 按 Fibonacci substitution 更新，而标量 Euler 坐标不读取该 memory；不同隐藏状态可以在所有有限 prime words 后给出相同标量读数。
+
+这里的黄金 Markov 分解给出了一个最小解释：
+
+$$
+\boxed{
+\text{Perron channel}
+=
+\text{标量长期稳定读数},
+}
+$$
+
+$$
+\boxed{
+\text{conjugate channel}
+=
+\text{会翻转并衰减的隐藏 detail}.
+}
+$$
+
+保留两个投影：
+
+$$
+P_+x,\qquad P_-x
+$$
+
+可以完美重构 \(x\)。
+
+只保留 \(P_+x\)，便产生 scalar blindness。
+
+---
+
