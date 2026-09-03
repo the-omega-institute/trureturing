@@ -290,16 +290,6 @@ public sealed partial class ProductionEnvironmentTests
             currentBytes,
             DigestionTestSupport.Rules).Claims);
         var currentAtomId = AtomId(currentAtom);
-        var receipt = new DigestionFormalizationReceipt(
-            currentAtomId,
-            coverageGid,
-            new DigestionFormalizationSignature("goldenRing", "def", "Nat"),
-            currentAtom.Fingerprints.RawSha256,
-            currentAtom.Fingerprints.RawSha256);
-        var receiptPath = DigestionFormalizationReceipt.PathForAtom(currentAtomId);
-        var receiptText = Encoding.UTF8.GetString(DigestionFormalizationReceipt.Write(receipt).AsSpan());
-        fixture.Files[receiptPath] = receiptText;
-        fixture.Baseline[receiptPath] = receiptText;
         var oldPath = DirectoryAtomPath(ExistingAtomId(fixture), "residual-open");
         foreach (var files in new[] { fixture.Files, fixture.Baseline })
         {

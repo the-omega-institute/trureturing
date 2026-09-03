@@ -131,33 +131,31 @@ Blueprint/D5/<同一 GID 路径>.scribe.cs
   ▼
 Blueprint/D5/<同一 GID 路径>.md              投影·禁手改
   │ make deposit ATOM_ID=x GID=g
-  ├─► Golden/Frozen/accepted/<event_hash>.json           冻结事件·append-only
-  └─► Meta/Digestion/formalizations/<atom_id>.v1.json    覆盖收据(预登记签名)
+  └─► Golden/Frozen/accepted/<event_hash>.json           冻结事件·append-only
   │ make cover / cover-batch
   ▼
 backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 ```
 **GID 路径在三处逐段同形**(`D5/….lean` ↔ `Blueprint/D5/….scribe.cs` ↔ `Blueprint/D5/….md`),这是第 6 条"地址由算法算出"的落点:三处对不齐即地址错,不是文件少写了一个。
 
-**三类 PR,面集合封闭(2026-09-02 实测最近 370 个已合并 PR,窗口 08-30..09-02,8 个驱动者)**:
-- **deposit(178/370)**:`D5/*.lean` + `Blueprint/*.scribe.cs` + `Blueprint/*.md` + `Golden/Frozen/accepted/*` [+ `Meta/Digestion/formalizations/*`]。**文件数中位 5**,最常见签名恰为该五件(116/178);另 31 件不带收据(收据另行 cover)。
-- **cover**:同一 `atom_id` 的账目条目由 `residual-open/` 迁入 `absorbed-closed/`,并对齐收据。**最小形两个文件**(实测 #4649)。
+**三类改动形态,面集合封闭;deposit 与 cover 可在同一 PR、同一工作树顺序执行**:
+- **deposit**:`D5/*.lean` + `Blueprint/*.scribe.cs` + `Blueprint/*.md` + `Golden/Frozen/accepted/*`。
+- **cover**:同一 `atom_id` 的账目条目写入 coverage 边,并由 residual-open 迁入机器派生的目标状态。
 - **ingest**:`docs/develop/theory/**` + `atoms/sha256/*` + `backfill/**/residual-open/*`。
 
-**deposit 与 cover 必是两个 PR——这是机器判,不是惯例。** `DigestionFormalizationPrecommitmentValidator` 要求新增的每条 coverage edge `(atom_id, gid)` 在 **baseline 快照**里已有注册该 gid 的预登记收据,否则判 `coverage pair (…) has no valid base-owned formalization precommitment`。收据须先随 deposit 落进 base,下一个 PR 才能加覆盖边。**实测佐证:178 个 deposit PR 中同时做 `residual-open`→`absorbed-closed` 迁移的,0 个。**
-**为什么必须取自 base,而非"当前状态自洽 + delta 合法"即可(2026-09-02 用户提问,查证后记此)**:收据里的 `precommitted_signature` **字面就是从 lean report 里读出来的**(`DigestionFormalizationReceipt.ResolveSignature(gid, report)`;`EmitFormalizationReceiptCommand` 注释原话 *Resolve signatures from the current report*),而判据是 `deposited(candidate report) != pinned(收据)`。**故收据一旦也来自候选,两侧即同一次 `make lean-report` 的两个副本,比对恒真**——这条检查会退化成一个什么都不守的钉子(与第 20 条守护第六项所记的空钉子同形:用被测函数本身算期望值,变异后期望与实际一起变)。**base-owned 不是多一道仪式,是让该比对非恒真的唯一办法**:参照物必须取自候选改不动的地方,而 base 快照(merge ref 的 `HEAD^1`)是唯一这样的地方。**这不违反第 20‴ 条**——那条要求的是**判定面**限于变更闭包,不是要求判据的**参照物**也来自候选;`base→candidate` 的 delta 本就有两端,base 就是另一端。同一模式亦见于冻结面:`LeanPropositionSourceComparer.AreEquivalent(protectedBase, candidate, …)`。**可命名的失效**:mathlib pin 升级会使类型签名漂移(收据的 `statement_id_history` 带 `environment_pin` / `superseded_by_pin` 二字段即为此设),deposit 在旧 pin 下冻结、cover 在新 pin 下跑,签名不等即红,强制走 reanchor,而不是**悄悄按新签名销账**——漂移后的状态恰恰是完全自洽的,故"当前状态合法"在此正是最危险的判据。**诚实边界(不冒领)**:base-owned 只保证"cover 落地时那条声明仍是 deposit 冻结时的那条声明";它**不**保证该 GID 在数学上真的覆盖了那条 atom——`pinned` 由 deposit 当时的 report 算得,不由 atom 的内容推出,故"预登记"只在 deposit→cover 区间内成立。语义覆盖性机器判不了,靠评审。**要去掉 base-owned,唯一的路不是放宽成 delta 自洽(那是退化成恒真),而是给 `pinned` 一个独立于候选 lean report 的来源**(如从 atom 内容派生期望签名)——那是另一个设计,且更贵,不是简化。
+**两 PR 律、预登记 formalization 收据及其机器已退役(owner 2026-09-02:边即数据,不记动作)。**
 
 **冻结态与消化态是两个正交状态机,禁互相冒充**:
-- **冻结态(真值侧,二值)**:`Golden/Frozen/accepted/` 中存在该 `statement_id` 的 `Freeze` 事件 ⟺ 已冻结,**永不解冻**(第〇节冻结律;SL-008 append-only diff 守卫)。实测 2,946 条,`event_type` 全为 `Freeze`、`schema_version` 全为 5;payload 承重四项(以 writer 为准):`statement_id`(节点身份)、`declaration_statement_ids`、`descriptor_selector`(指回 `.lean` 路径)、`prerequisite_frozen_node_ids`——**末项就是真值 DAG 的边**,不是元数据。
-- **消化态(账目侧,三值)**:`residual-open`(尚无 GID 覆盖)/ `partial-closed`(子项部分覆盖)/ `absorbed-closed`(覆盖 GID 与收据齐备)。实测 18,291 / 127 / 1,105,atom CAS 19,542,source 28(27 卷 md + 1 个 `.jsonl` 注册表)。
+- **冻结态(真值侧,二值)**:`Golden/Frozen/accepted/` 中存在该 `statement_id` 的 `Freeze` 事件 ⟺ 已冻结,**永不解冻**(第〇节冻结律;SL-008 append-only diff 守卫)。在 commit `572cd43587f120a379cf83871b68c249be36cd5e` 实测 3,013 条,`event_type` 全为 `Freeze`、`schema_version` 全为 5;payload 承重四项(以 writer 为准):`statement_id`(节点身份)、`declaration_statement_ids`、`descriptor_selector`(指回 `.lean` 路径)、`prerequisite_frozen_node_ids`——**末项就是真值 DAG 的边**,不是元数据。
+- **消化态(账目侧,三值)**:`residual-open`(尚无 GID 覆盖)/ `partial-closed`(子项部分覆盖)/ `absorbed-closed`(覆盖 GID 与 coverage 数据齐备)。在 commit `572cd43587f120a379cf83871b68c249be36cd5e` 实测 18,234 / 127 / 1,201,atom CAS 19,581,source 28(27 卷 md + 1 个 `.jsonl` 注册表)。
 - **两者不同构,故是两句话**:定理已冻结 **⇏** 其 atom 已 `absorbed-closed`(还差 cover 那一步);atom `absorbed-closed` **⟹** 其 `coverage_gids` 所指声明已冻结。汇报与 PR 说明里把"冻结了"写成"消化了"(或反之)即第 4 条冒领。
 
-**每个理论 PR 的说明须写清三项(承第 9′ 条产地,不另立格式)**:①**形态**(deposit / cover / ingest);②**链上这一环**——哪个 `source_id` 的哪个 `atom_id` → 哪个 GID;③**落地后的状态**——冻结事件的 `event_hash`(deposit),或 atom 由哪态迁到哪态(cover)。判据是"读者能否据此在链上定位这次改动",不是"提没提这几个词"。
+**每个理论 PR 的说明须写清三项(承第 9′ 条产地,不另立格式)**:①**形态**(deposit / cover / deposit+cover / ingest);②**链上这一环**——哪个 `source_id` 的哪个 `atom_id` → 哪个 GID;③**落地后的状态**——冻结事件的 `event_hash`(deposit),或 atom 由哪态迁到哪态(cover)。判据是"读者能否据此在链上定位这次改动",不是"提没提这几个词"。
 
-**反面即病(如何自查)**:①手改 `Blueprint/**/*.md` —— 它是 `ScribeEmitter` 的投影,改它即造第二真源(第 6 条),正解是改 `.scribe.cs` 后 `make emit`;②手改 `atoms/sha256/*` —— atom 一经产出不可变(第〇节总则「atoms 不删」),勘误走"追加散文 + 追加新 atom";③冻结后原地编辑 `.lean` 想修补 —— 必撞 SL-008,正解是弃分支重做一次 deposit;④deposit PR 里"顺手"把 atom 迁到 `absorbed-closed` —— 见上,`0/178` 是正形而非巧合。
+**反面即病(如何自查)**:①手改 `Blueprint/**/*.md` —— 它是 `ScribeEmitter` 的投影,改它即造第二真源(第 6 条),正解是改 `.scribe.cs` 后 `make emit`;②手改 `atoms/sha256/*` —— atom 一经产出不可变(第〇节总则「atoms 不删」),勘误走"追加散文 + 追加新 atom";③冻结后原地编辑 `.lean` 想修补 —— 必撞 SL-008,正解是弃分支重做一次 deposit。
 **多驱动者并行不必分配领域**:地址由 GID 代数算出,天然不撞(第 6 条);同窗口 8 个驱动者、370 个 PR 未见路径争抢。**真正的撞车是两人各证同一命题——那个机器不会红**,故开工前与开 PR 前各查一次本仓已有声明(第 11 条先库后证含搜本仓)。
 *成熟锚*:构建图的产者唯一性(Bazel 每个输出恰有一个 rule)、数据血缘(data lineage)、事件溯源之"事件是真源、读模型可重建"、工作流状态与领域状态分离(workflow state ≠ domain state)、生成物标明产者。
-〔守护:**硬 + 硬投影 + 软,诚实分栏**·**硬**——路径→kind→producer 由 FILEMAP strict loader 与 `FileMapPolicy` 执法;冻结面 append-only 由 SL-008 判;deposit 与 cover 分 PR 由 `DigestionFormalizationPrecommitmentValidator` 的 base-owned 预登记判红(上引判词即其输出)。**硬投影(尚未 lint,记 `open`)**——三类 PR 的面集合可由 changed-path 交集机器判,当前**无此规则**,不得称已执法。**软**——PR 说明三项**不可 lint**,且与第 9′ 条同一个数学:正文在检查后、合并前可编辑,任何 check-time 读取只证明"那一刻有";故**不为它造门**(第 20″ 条),靠对手官评审与第 12 条尸检。按器律⑤,"不可 lint"不构成豁免〕
+〔守护:**硬 + 硬投影 + 软,诚实分栏**·**硬**——路径→kind→producer 由 FILEMAP strict loader 与 `FileMapPolicy` 执法;冻结面 append-only 由 SL-008 判;coverage 边的 GID 唯一存在、Closed 与当前 statement identity 由 cover 写前门和 SL-016 判。**硬投影(尚未 lint,记 `open`)**——三类改动形态的面集合可由 changed-path 交集机器判,当前**无此规则**,不得称已执法。**软**——PR 说明三项**不可 lint**,且与第 9′ 条同一个数学:正文在检查后、合并前可编辑,任何 check-time 读取只证明"那一刻有";故**不为它造门**(第 20″ 条),靠对手官评审与第 12 条尸检。按器律⑤,"不可 lint"不构成豁免〕
 
 **8. 生长自相似,裂由压力。**
 **不预建空壳**;抽象只在第二个实例或已证实的压力出现时才上收(通用证明成立才归 `Metallic/`,跨族定理出现才归 `Moduli/`,桶超限才 split)。目录随首个真实工件出生。
@@ -257,14 +255,14 @@ worker 的搜索能力是宿主产品默认,仓库无法强制;agent 派发时�
 
 **16. 实施在独立 worktree,主干保持可发布;主检出常驻 dev,merge 才算完成。**
 代码实施与大改在**独立 git worktree**(各自分支)进行,不在主工作树/主干直接堆——这样多路实施可**并行推进**,各自一个 PR,互不污染;主干任何时刻可发布。并行安全由 harness 保证:地址算出(不撞)+ CI required-check(对错机器判)+ SL-022 元层门控。合并回主干走 PR + required-check,不自并。
-**在 worktree 的工作及时提交并同步远程(push),不留长期未提交改动。** 未提交的工作树改动是脆的、无地址的:`git stash` 跨 worktree 全局共享会误叠外来改动;冻结账本 provenance 要求被冻结模块的 blob 已提交可达(未提交 blob 无法 attest);未提交改动易与 rebase/新提交失配、易丢失。故:一个逻辑单元完成即 commit(而非攒一大堆散改动),推分支到远程留痕(工件化,第9条),让 CI/协作/后续 rebase 有确定的内容寻址锚点。
+**在 worktree 的工作及时提交并同步远程(push),不留长期未提交改动。** 工具契约不要求先提交:`ledger-append` 默认经 `repository.ReadCurrentChanges()` 读取相对 HEAD 的未提交工作树 delta,`deposit` / `cover` 只改工作树、不自动提交。未提交的工作树改动仍是脆的、无地址的:`git stash` 跨 worktree 全局共享会误叠外来改动;未提交改动易与 rebase/新提交失配、易丢失。故:一个逻辑单元完成即 commit(而非攒一大堆散改动),推分支到远程留痕(工件化,第9条),让 CI/协作/后续 rebase 有确定的内容寻址锚点。
 **主检出常驻 `dev` 且及时同步;一切工作在 worktree;merge 才算完成(用户 2026-08-15 定)。**
 - **主检出(主工作树)永远停在 `dev`**:不在其上建分支、不改文件、不 checkout 别的分支;它只有一个动作——**及时 `git pull --ff-only origin dev` 同步**(开工前、合并后、派席前各一次)。主检出是**活的基线**(远端 auto-merge 持续推进 dev,主检出随每次同步移动;先例 2026-08-13:据主仓半小时的读数报告了一个 upstream 已删掉的模块),故凡取读数、改文件、写报告都在钉住的 worktree 里做,主检出只用来同步与看 dev。
 - **所有工作——不分大小、不分代码/文档/元层(含改本文件)——一律在独立 worktree 实施**,经 `make worktree`(器律③)。「只改一行」不是例外:例外就是在主检出上堆脏改动的第一步。
 - **worktree 及时清理或复用**:PR 合并即回收该 worktree,或复用它开下一单;不留僵尸 worktree(工具层门 `make -C tools clean-lanes` 列出/回收已可回收的 lane,以 `make -C tools help` 为准)。回收前查两样:分支已 MERGED、树无未提交改动——二者任缺即不回收,回到「及时提交推送」那一款。
 - **走 PR merge 流程,merge 后才算完成**:push → `make pr-open [AUTO_MERGE=1]` → 三 required check 绿 → 显式选择 auto-merge 时自动合入 dev(缺省不 arm,否则由后续显式合并动作落地)→ 同步主检出 → 回收 worktree。**「完成」的唯一判据是该 PR 状态为 MERGED**——PR 已开、CI 已绿、「只差合并」都不是完成,汇报里不得把它们说成完成(第 4 条不冒领);未合并即仍是 open。CLOSED ≠ MERGED:见 CLOSED 须复查 dev 的真实状态,不得当成已合、也不得当成没修。
 *成熟锚*:feature branch / worktree 隔离、trunk-based 的可发布主干、并行开发的冲突避免、频繁提交与推送(small commits, push early)、内容寻址 provenance、definition of done(合并即完成,非「代码写好」)。
-〔守护:**半硬**·并行不撞由 GID 地址代数 + required-check 机器保证;"在 worktree 做 + 及时提交推送"靠 agent 遵此条 + 本授权(本轮先例:全局 stash 误叠、冻结账本未提交 blob 不可达,皆因未及时提交);「主检出常驻 dev」「merge 才算完成」不可 lint,靠对手官评审与本条,硬投影=完成声明须引用 PR 的 MERGED 状态与合入 dev 的提交 SHA〕
+〔守护:**半硬**·并行不撞由 GID 地址代数 + required-check 机器保证;"在 worktree 做 + 及时提交推送"靠 agent 遵此条 + 本授权(本轮先例:全局 stash 因未及时提交而误叠);「主检出常驻 dev」「merge 才算完成」不可 lint,靠对手官评审与本条,硬投影=完成声明须引用 PR 的 MERGED 状态与合入 dev 的提交 SHA〕
 
 **16′. 剥洋葱:一次 PR 只剥一层,层层落地;禁把一个改造攒成一个大 PR(用户 2026-08-29 定)。**
 第 16 条说「merge 才算完成」;本款补上**一次该 merge 多少**。**一个需要多步才能到位的改造,不得攒成一个大 PR,而应剥成有序的层,每层一个 PR 独立落地。** 这不是风格偏好,是与第 19 条禁 `strict` **同一个数学**:dev 在动,大 PR 追不上。**实测(2026-08-29)**:`origin/dev` 近 24h **835 个提交**、近 6h **135 个**、近 1h **11 个**;而本仓近 60 个已合并 PR 的文件数分布是 `min=1 p25=2 中位=5 p75=13 max=233`。一个 65 文件的 PR 在这样的漂移下,从开工到评审结束期间 base 会前进上百个提交,**冲突不是偶然而是必然**。

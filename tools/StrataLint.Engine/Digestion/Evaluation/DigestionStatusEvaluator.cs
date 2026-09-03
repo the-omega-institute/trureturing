@@ -304,25 +304,15 @@ internal static partial class DigestionStatusEvaluator
         var existingTargets = new Dictionary<string, RepositoryFile>(StringComparer.Ordinal);
         foreach (var gidText in entry.CoverageGids.Distinct(StringComparer.Ordinal))
         {
-            if (!Gid.TryParse(gidText, out var gid)
-                || !snapshot.TryGetFile(gid.Path.Value, out var target))
+            var edge = CurrentEdgeValidator.Validate(gidText, snapshot, leanReport, states);
+            if (!edge.IsResolved)
             {
-                gaps.Add(new DigestionGap(
-                    "target-gid-missing",
-                    gidText,
-                    DigestionGapSeverity.NonFatal));
+                gaps.Add(edge.ResolutionGap!);
                 continue;
             }
 
-            if (!DeclarationExists(gid, leanReport, gaps))
-            {
-                continue;
-            }
-
-            existingTargets.Add(gidText, target);
-            targetStates.Add((
-                gidText,
-                states.TryGetValue(target.Path, out var state) ? state : TruthState.Semantic));
+            existingTargets.Add(gidText, edge.Target!);
+            targetStates.Add((gidText, edge.State));
         }
 
         if (entry.CoverageGids.Length == 0)
@@ -513,42 +503,6 @@ internal static partial class DigestionStatusEvaluator
         }
 
         return changedAtomIds.ToImmutableHashSet(StringComparer.Ordinal);
-    }
-
-    private static bool DeclarationExists(
-        Gid gid,
-        LeanAxiomReport leanReport,
-        ICollection<DigestionGap> gaps)
-    {
-        if (gid.ToTarget() is not Target.Formal { Declaration: { } declaration } formal)
-        {
-            return true;
-        }
-
-        if (!leanReport.Files.TryGetValue(formal.Path, out var module)
-            || !string.IsNullOrEmpty(module.Error))
-        {
-            gaps.Add(new DigestionGap(
-                "target-declaration-missing",
-                gid.Value,
-                DigestionGapSeverity.NonFatal));
-            return false;
-        }
-
-        var suffix = "." + declaration;
-        var matches = module.Declarations.Count(candidate =>
-            string.Equals(candidate.Name, declaration, StringComparison.Ordinal)
-            || candidate.Name.EndsWith(suffix, StringComparison.Ordinal));
-        if (matches == 1)
-        {
-            return true;
-        }
-
-        gaps.Add(new DigestionGap(
-            matches == 0 ? "target-declaration-missing" : "target-declaration-ambiguous",
-            gid.Value,
-            DigestionGapSeverity.NonFatal));
-        return false;
     }
 
     private static Dictionary<string, T> UniqueByGid<T>(

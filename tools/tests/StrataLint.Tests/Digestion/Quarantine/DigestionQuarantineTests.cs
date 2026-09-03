@@ -62,53 +62,6 @@ public sealed partial class DigestionQuarantineTests
     }
 
     [Fact]
-    public void DirectoryLoaderRejectsQuarantineWhenFormalizationMarkerExists()
-    {
-        var marker = FormalizationMarker();
-        var snapshot = DirectorySnapshot(
-            Atom(AtomId, Quarantine),
-            (DigestionFormalizationReceipt.RootPath + AtomId
-                + DigestionFormalizationReceipt.PathSuffix, marker.ToArray()));
-
-        var error = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(snapshot));
-
-        Assert.Contains("machine-form", error.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void SnapshotLoaderRejectsLegacyStorageBeforeInspectingFormalizationMarkers()
-    {
-        var snapshot = DigestionTestSupport.Snapshot(
-        [
-            (BackfillInventoryLoader.RelativePath,
-                Encoding.UTF8.GetBytes("schema_version: 3\n")),
-            (DigestionFormalizationReceipt.RootPath + AtomId
-                + DigestionFormalizationReceipt.PathSuffix,
-                FormalizationMarker()),
-        ]);
-
-        var error = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(snapshot));
-
-        Assert.Contains("legacy digestion ledger is unsupported", error.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void DiskRootLoaderRejectsQuarantineWhenFormalizationMarkerExists()
-    {
-        using var temporary = new TemporaryDirectory();
-        WriteSnapshot(temporary.Path, DirectorySnapshot(
-            Atom(AtomId, Quarantine),
-            (DigestionFormalizationReceipt.RootPath + AtomId
-                + DigestionFormalizationReceipt.PathSuffix,
-                FormalizationMarker())));
-
-        var error = Assert.Throws<FormatException>(() =>
-            BackfillInventoryLoader.LoadRoot(temporary.Path));
-
-        Assert.Contains("machine-form", error.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
     public void ResidualSummaryListsQuarantinedItemsOutsideMainCounts()
     {
         var ledger = BackfillInventoryDocument.Create(
@@ -233,24 +186,6 @@ public sealed partial class DigestionQuarantineTests
         };
         files.AddRange(additional);
         return DigestionTestSupport.Snapshot([.. files]);
-    }
-
-    private static byte[] FormalizationMarker() =>
-        DigestionFormalizationReceipt.Write(new DigestionFormalizationReceipt(
-            AtomId,
-            "D5/S0/Carrier/Probe.probe",
-            new DigestionFormalizationSignature("probe", "theorem", "True"),
-            Digest,
-            Digest)).ToArray();
-
-    private static void WriteSnapshot(string root, RepositorySnapshot snapshot)
-    {
-        foreach (var (path, file) in snapshot.Files)
-        {
-            var outputPath = Path.Combine(root, path.Value.Replace('/', Path.DirectorySeparatorChar));
-            Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
-            File.WriteAllBytes(outputPath, file.RawBytes.AsSpan());
-        }
     }
 
     private static DigestionLedgerEntry TypedAtom(
