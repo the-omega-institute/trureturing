@@ -1,0 +1,1 @@
+**可证伪预测(写在跑之前)**:若正确,定理只消费 `D5.S3.Weil.ZetaCore.Statement`、`Mathlib.NumberTheory.LSeries.Nonvanishing`、`Mathlib.NumberTheory.Real.GoldenRatio`,公理集为标准三条;若 Mathlib 的 `RiemannHypothesis` 定义不含 `s ≠ 1` 侧条件、或 `riemannZeta 1 = 0` 使 2φ²s = 1 情形不可判,则本条按 open 记。
