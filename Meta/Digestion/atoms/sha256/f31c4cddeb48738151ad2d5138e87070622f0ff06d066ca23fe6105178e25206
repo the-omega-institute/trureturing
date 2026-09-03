@@ -1,0 +1,4 @@
+## 〇　为什么是这一节
+
+增订二十五把素数侧判据 W-10 挂在 `hArch : ∀ g, ArchimedeanConvergent (g⋆g)` 上。探针证明该可积性对**每个**测试函数无条件成立:Fourier–Laplace 变换在实轴 O(1/(1+t²)) 衰减(M3-f-2,η=0),digamma 在竖线上至多对数增长(本仓 Zeta23 层),乘积可积。于是 W-13 把 W-10 的假设去掉:RH ⟺ 素数侧表达式对一切卷积平方非负,**只剩** `ZeroData`(M1-b)这一个相对项。**诚实边界**:①仍相对于 `ZeroData`;②测试函数类为本仓 `WeilTestFunction`;③不构成 RH 证明。
+

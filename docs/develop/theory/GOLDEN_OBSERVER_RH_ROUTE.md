@@ -2371,3 +2371,57 @@ W-7 把 RH 与「一切高度 T 的截断正性」绑在一起;本节把量词�
 一席位轮(codex-cli,独立 worktree,两条同模块,`Separator/` 第五个模块;同 PR deposit(绑 W-8 atom)+ 两条 cover)。预计 ≤ 40 分钟。
 
 后续增订继续严格追加于本节之后。
+---
+
+# 增订二十五　素数侧的 Weil 判据:RH ⟺ 显式公式右侧(极点项 − 素数项 + 阿基米德项)对一切卷积平方非负(W-10 / W-11 预登记)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;本节两条皆为对冻结定理的短绑定——冻结显式公式 `ZetaBridge/ClassicExplicitFormula.weil_explicit_formula (Z) (g) (hZero) (hArch) : zeroSum Z g hZero = poleTerm g - primeTerm g + archimedeanTerm g hArch`、M2-c `ZetaBridge/SymmetricConvergentOfZetaSummable.symmetricConvergent_of_zeroData (Z) (g) : SymmetricConvergent Z g`、W-2 `Separator/WeilSquarePositivityCriterion.rh_iff_weilSquarePositivity`;`poleTerm`/`primeTerm`/`archimedeanTerm`/`ArchimedeanConvergent` 定义于 `D5/S3/Weil/PrimePoleTerms.lean`(素数项为 Λ(n)/√n 加权的 g(±log n) 级数,阿基米德项为 digamma 加权的 Fourier–Laplace 积分)。由 orchestrator(claude 主循环)撰写,不需探针。判决日:2026-09-04。lane issue:#4589。
+
+## 〇　为什么是这一节
+
+W-2 的正性陈述在零点侧;冻结的显式公式把零点和搬到素数侧:`zeroSum Z g = poleTerm g − primeTerm g + archimedeanTerm g`。对卷积平方 g⋆g,零点侧的 `SymmetricConvergent` 由 M2-c 无条件供给,于是 RH 与**素数侧**表达式的非负性等价——这才是文献中 Weil 判据的形状(零点信息完全消失,只剩极点、素数幂与 Γ 因子)。**诚实边界**:①阿基米德积分的可积性 `ArchimedeanConvergent (g⋆g)` 在本仓尚无冻结定理供给(W-11 探针另查;钉版 Mathlib 未见 digamma 增长界),故 W-10 以 `hArch` 为显式假设;②仍相对于一个 `ZeroData`(M1-b);③定义域为本仓 `WeilTestFunction`(偶、C^∞、紧支),不冒充文献中更宽的测试函数类;④不构成 RH 证明。
+
+## 一　W-11 预登记:卷积平方的显式公式(`ExplicitFormulaWeilCriterion`,落 `D5/S3/Weil/Separator/`)
+
+**义务**:公开定理 `explicitFormula_weilSquare (Z : ZeroData) (g : WeilTestFunction) (hArch : ArchimedeanConvergent (convolutionSquare g)) : zeroSum Z (convolutionSquare g) (symmetricConvergent_of_zeroData Z (convolutionSquare g)) = poleTerm (convolutionSquare g) - primeTerm (convolutionSquare g) + archimedeanTerm (convolutionSquare g) hArch`。
+**可证伪预测(写在跑之前)**:若正确,证明为冻结 `weil_explicit_formula Z (convolutionSquare g) (symmetricConvergent_of_zeroData Z (convolutionSquare g)) hArch` 一行;若 `zeroSum` 的 `hZero` 参数为 proof-irrelevant 使两侧按定义相等,则 `rfl`/`exact` 即闭合;标准三公理。
+**边界**:见 §〇。
+
+## 二　W-10 预登记:素数侧判据(同模块第二条公开定理)
+
+**义务**:公开定理 `rh_iff_explicitFormulaPositivity (Z : ZeroData) (hArch : ∀ g : WeilTestFunction, ArchimedeanConvergent (convolutionSquare g)) : RiemannHypothesis ↔ ∀ g : WeilTestFunction, 0 ≤ (poleTerm (convolutionSquare g) - primeTerm (convolutionSquare g) + archimedeanTerm (convolutionSquare g) (hArch g)).re`。
+**可证伪预测(写在跑之前)**:若正确,由 W-2 与 W-11 逐 g 改写:`(rh_iff_weilSquarePositivity Z)` 的右侧在 `hZero := symmetricConvergent_of_zeroData Z (convolutionSquare g)` 下与素数侧表达式相等(需说明 `∀ hZero` 与取特定 `hZero` 的等价——`SymmetricConvergent` 是 Prop,proof-irrelevance 使 `zeroSum Z g hZero` 不依赖 hZero 的具体证明);标准三公理。
+**边界**:见 §〇;`hArch` 为假设,不断言其成立。
+
+## 三　预算与结算
+
+一席位轮(codex-cli,独立 worktree,两条同模块,`Separator/` 第六个模块;同 PR deposit(绑 W-10 atom)+ 两条 cover)。预计 ≤ 40 分钟。W-11′(`ArchimedeanConvergent (g⋆g)` 无条件成立)由探针评估可行性后另行增订。
+
+后续增订继续严格追加于本节之后。
+---
+
+# 增订二十六　阿基米德可积性无条件成立,素数侧 Weil 判据去掉 `hArch`(W-12 / W-13 预登记)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;探针一席(codex-cli,`probe-arch`,`lake env lean` exit 0,标准三公理)在暖树上整证 W-12,消费冻结的闭带衰减 `FourierLaplaceClosedStripDecay.fourierLaplace_decay_closedStrip`(η = 0)、`FourierLaplaceEntire.fourierLaplace_entire`(实轴连续性)、以及本仓 `Zeta23` 层已冻结的 digamma 竖线增长界与可积性(`ZetaExplicit/FullLine.integrable_mul_logDeriv_Gammaℝ_of_decay`、`ZetaExplicit/GammaRBracket.gammaR_bracket`、`ZetaGamma/GammaStirlingVert.digamma_stirling`、`ZetaExplicit/VerticalLine.digamma_growth_strip`);钉版 Mathlib 无 digamma 连续性/增长界(仅定义与特殊值,`Digamma.lean:31` 留有 TODO),故 W-12 是本仓自证。散文由 orchestrator(claude 主循环)撰写。判决日:2026-09-04。lane issue:#4589。探针 import:`D5.S3.Fourier.FourierLaplaceEntire`, `D5.S3.Weil.PrimePoleTerms`, `D5.S3.Weil.TestFunctions.FourierLaplaceClosedStripDecay`, `D5.S3.Weil.ZetaExplicit.FullLine`。
+
+## 〇　为什么是这一节
+
+增订二十五把素数侧判据 W-10 挂在 `hArch : ∀ g, ArchimedeanConvergent (g⋆g)` 上。探针证明该可积性对**每个**测试函数无条件成立:Fourier–Laplace 变换在实轴 O(1/(1+t²)) 衰减(M3-f-2,η=0),digamma 在竖线上至多对数增长(本仓 Zeta23 层),乘积可积。于是 W-13 把 W-10 的假设去掉:RH ⟺ 素数侧表达式对一切卷积平方非负,**只剩** `ZeroData`(M1-b)这一个相对项。**诚实边界**:①仍相对于 `ZeroData`;②测试函数类为本仓 `WeilTestFunction`;③不构成 RH 证明。
+
+## 一　W-12 预登记:每个 Weil 测试函数的阿基米德积分可积(`ArchimedeanConvergence`,落 `D5/S3/Weil/Separator/`)
+
+**义务**:公开定理 `archimedeanConvergent_of_weilTestFunction (g : WeilTestFunction) : ArchimedeanConvergent g`。
+**可证伪预测(写在跑之前)**:若正确,证明为探针路线(连续 + 二次衰减 + digamma 竖线界 ⟹ `Integrable`),消费上列冻结定理,标准三公理;若 `gammaR_bracket` 给出的恒等式与 `archimedeanIntegrand` 的 digamma 形状(`(digamma (1/4 + I t/2)).re − log π`)不一致,则按冻结字面调整证明而非改陈述。
+**边界**:对一切 `g : WeilTestFunction`(不只卷积平方)。
+
+## 二　W-13 预登记:无条件素数侧判据(同模块第二条公开定理)
+
+**义务**:公开定理 `rh_iff_primeSidePositivity (Z : ZeroData) : RiemannHypothesis ↔ ∀ g : WeilTestFunction, 0 ≤ (poleTerm (convolutionSquare g) - primeTerm (convolutionSquare g) + archimedeanTerm (convolutionSquare g) (archimedeanConvergent_of_weilTestFunction (convolutionSquare g))).re`。
+**可证伪预测(写在跑之前)**:由 W-10(`rh_iff_explicitFormulaPositivity Z (fun g => archimedeanConvergent_of_weilTestFunction (convolutionSquare g))`)一行得到;`archimedeanTerm` 对其可积性证明参数 proof-irrelevant。
+**边界**:同 §〇。
+
+## 三　预算与结算
+
+一席位轮(codex-cli,独立 worktree,两条同模块,`Separator/` 第七个模块;同 PR deposit(绑 W-13 atom)+ 两条 cover;须在增订二十五的 la153 模块合入后开工以绑定 W-10)。预计 ≤ 60 分钟(W-12 约 100 行,探针证明可复用)。
+
+后续增订继续严格追加于本节之后。
