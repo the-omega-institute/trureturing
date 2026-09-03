@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/ObserverMemory/Trajectories/WithinRoundCouplingSameLayer
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Coupled recorded rounds are same-layer, without automatic self-description closure. -/
+   digest: Definition 45.2 is typed explicitly; Proposition 45.3 remains open. -/
 
 import D5.S3.Observer.Completion.ClosureNonimplicationTriple
 import D5.S3.ObserverMemory.Trajectories.StateRecordReadoutDistinguishability
@@ -14,9 +14,9 @@ import D5.S3.ObserverMemory.Trajectories.StateRecordReadoutDistinguishability
    * Repository search found `closure_nonimplication_triple`, whose conclusion is the
      existing formalization of the Section 32.10 and 33.10 nonimplications. It is cited
      directly below; no new closure predicate is selected for this module.
-   * Pinned Mathlib and Loogle both found `Setoid.quotientKerEquivRange`, the exact
-     quotient-to-joint-readout-range equivalence used below. No pinned or third-party
-     observer theorem packages within-round coupling and same-layer evaluation.
+   * Pinned Mathlib and Loogle found the quotient APIs used to descend the second
+     component of the joint readout. No pinned or third-party observer theorem
+     packages within-round coupling and same-layer evaluation.
    * LeanSearch and Reservoir endpoints returned 404, while GitHub code search returned
      401 without authentication. The ordered receipt is `/tmp/SEARCH-ag.md`. -/
 
@@ -86,8 +86,18 @@ def IsSecondLayerObserver {State SecondOutput : Type*}
     (controlledUpdate : RoundIndex -> State × SecondOutput -> State) : Prop :=
   forall e, WithinRoundDecoupled controlledUpdate e
 
-/-- The closed-loop update of Definition 45.2 on the single augmented state
-space, with `z = q2(lambda)`. Source: QDO lines 47051-47054 and 47059-47060. -/
+/-- The independently supplied positions of the augmented single-system interface.
+The carrier, joint-readout codomain, quotient, and evaluation codomain are separate
+type parameters; in particular, `deltaEvaluation` is data rather than a definition
+derived from a second readout. Source: QDO lines 15263-15326 and 47049-47054. -/
+structure AugmentedSingleSystem
+    (Carrier JointReading QuotientState Evaluation : Type*) where
+  dynamics : Carrier -> Carrier
+  readout : Carrier -> JointReading
+  deltaEvaluation : QuotientState -> QuotientState -> Evaluation
+
+/-- Definition 45.1's closed-loop update on `X x Lambda`, with
+`z = q2(lambda)`. Source: QDO lines 47031-47046 and 47059. -/
 def jointRoundUpdate {State Record Reading SecondOutput : Type*}
     (recordOps : AppendOnlyOps Record Reading)
     (q1 : Concept State Reading)
@@ -96,6 +106,20 @@ def jointRoundUpdate {State Record Reading SecondOutput : Type*}
     AugmentedState State Record -> AugmentedState State Record :=
   fun current =>
     step recordOps (observerAt recordOps q1 controlledUpdate q2 e) current (q2 current.2)
+
+/-- The named closed-loop update is exactly Definition 45.1's displayed step.
+This equation keeps the locally named update accountable to the source formula. -/
+theorem jointRoundUpdate_eq_definition451_step
+    {State Record Reading SecondOutput : Type*}
+    (recordOps : AppendOnlyOps Record Reading)
+    (q1 : Concept State Reading)
+    (controlledUpdate : RoundIndex -> State × SecondOutput -> State)
+    (q2 : Concept Record SecondOutput) (e : RoundIndex)
+    (current : AugmentedState State Record) :
+    jointRoundUpdate recordOps q1 controlledUpdate q2 e current =
+      (controlledUpdate e (current.1, q2 current.2),
+        recordOps.append current.2 (q1 current.1)) := by
+  rfl
 
 /-- Definition 45.2's joint readout `(q1 o pi_X, q2 o pi_Lambda)`.
 Source: QDO lines 47051-47054. -/
@@ -115,34 +139,29 @@ the second component of the joint readout. Source: QDO lines 47051-47054. -/
 def quotientSecondReadout {State Record Reading SecondOutput : Type*}
     (q1 : Concept State Reading) (q2 : Concept Record SecondOutput) :
     JointObservationQuotient q1 q2 -> SecondOutput :=
-  fun point => ((Setoid.quotientKerEquivRange (jointReadout q1 q2)) point).1.2
+  Quotient.lift (fun current => q2 current.2) fun _ _ sameJointReadout =>
+    congrArg Prod.snd sameJointReadout
 
-/-- The same-typed evaluation table on the joint quotient. The evaluating
-state is the first argument, so its diagonal is the second readout rather than
-a constant-in-the-evaluator table.
-Source: QDO lines 47051-47054 and Section 32.1 lines 15311-15325. -/
-def sameLayerEvaluation {State Record Reading SecondOutput : Type*}
-    (q1 : Concept State Reading) (q2 : Concept Record SecondOutput) :
-    JointObservationQuotient q1 q2 ->
-      JointObservationQuotient q1 q2 -> SecondOutput :=
-  fun evaluator _target => quotientSecondReadout q1 q2 evaluator
-
-/-- Definition 45.2's same-layer predicate. It keeps exactly the two source
-clauses visible: equality of the named joint update with Definition 45.1's
-displayed step, and the same-typed diagonal evaluation on the joint quotient.
-Failure of decoupling belongs only to Proposition 45.3's premise.
-Source: QDO lines 47049-47058. -/
+/-- Definition 45.2's same-layer predicate for an independently given augmented
+single system. Its types identify the carrier with `X x Lambda`, the readout
+codomain with the joint codomain, and the quotient with the kernel quotient of
+`jointReadout`. The three clauses then require the given readout and dynamics to
+be the source objects and the given Delta/evaluation diagonal to agree with the
+descended `q2`. Source: QDO lines 47049-47054 and 15263-15326. -/
 def IsSameLayerInRound {State Record Reading SecondOutput : Type*}
     (recordOps : AppendOnlyOps Record Reading)
     (q1 : Concept State Reading)
     (controlledUpdate : RoundIndex -> State × SecondOutput -> State)
-    (q2 : Concept Record SecondOutput) (e : RoundIndex) : Prop :=
-  (forall current,
-    jointRoundUpdate recordOps q1 controlledUpdate q2 e current =
-      (controlledUpdate e (current.1, q2 current.2),
-        recordOps.append current.2 (q1 current.1))) ∧
+    (q2 : Concept Record SecondOutput) (e : RoundIndex)
+    (system : AugmentedSingleSystem
+      (AugmentedState State Record)
+      (Reading × SecondOutput)
+      (JointObservationQuotient q1 q2)
+      SecondOutput) : Prop :=
+  system.readout = jointReadout q1 q2 ∧
+  system.dynamics = jointRoundUpdate recordOps q1 controlledUpdate q2 e ∧
   forall point,
-    sameLayerEvaluation q1 q2 point point = quotientSecondReadout q1 q2 point
+    system.deltaEvaluation point point = quotientSecondReadout q1 q2 point
 
 /-- The exact already-formalized conclusions of Sections 32.10 and 33.10.
 This is definitionally the proposition proved by `closure_nonimplication_triple`;
@@ -168,67 +187,6 @@ abbrev EstablishedClosureNonimplications : Prop :=
 Source: QDO lines 16191-16237, 18110-18167, and 47055-47061. -/
 theorem established_closure_nonimplications : EstablishedClosureNonimplications :=
   closure_nonimplication_triple
-
-/-- The current Definition 45.2 encoding is satisfied by every round update:
-both of its clauses unfold to definitional equalities. This records the actual
-logical strength rather than making Proposition 45.3's premise load-bearing by
-putting it into the conclusion predicate.
-
-Fidelity remains open. Re-entry requires a source-supported formal account of
-`q2` evaluation as same-layer self-application that is not definitionally true
-for every update; no coupling-failure conjunct may be added to Definition 45.2.
-Source: QDO lines 47049-47058. -/
-theorem same_layer_in_round_unconditional
-    {State Record Reading SecondOutput : Type*}
-    (recordOps : AppendOnlyOps Record Reading)
-    (q1 : Concept State Reading)
-    (controlledUpdate : RoundIndex -> State × SecondOutput -> State)
-    (q2 : Concept Record SecondOutput) (e : RoundIndex) :
-    IsSameLayerInRound recordOps q1 controlledUpdate q2 e := by
-  constructor
-  · intro current
-    rfl
-  · intro point
-    rfl
-
-/-- Proposition 45.3: failure of the boxed decoupling condition puts the two
-recorded observers on one augmented layer, while same-layer typing alone does
-not imply the independent closure notions already separated in Sections 32.10
-and 33.10. The source premise is retained in the public clause map, although
-the current Definition 45.2 encoding makes the same-layer conclusion
-unconditional as recorded by `same_layer_in_round_unconditional`.
-Source: QDO lines 47056-47061. -/
-theorem within_round_coupling_is_same_layer
-    {State Record Reading SecondOutput : Type*}
-    (recordOps : AppendOnlyOps Record Reading)
-    (q1 : Concept State Reading)
-    (controlledUpdate : RoundIndex -> State × SecondOutput -> State)
-    (q2 : Concept Record SecondOutput) (e : RoundIndex)
-    (_coupled : ¬WithinRoundDecoupled controlledUpdate e) :
-    IsSameLayerInRound recordOps q1 controlledUpdate q2 e ∧
-      EstablishedClosureNonimplications := by
-  exact ⟨same_layer_in_round_unconditional recordOps q1 controlledUpdate q2 e,
-    established_closure_nonimplications⟩
-
--- P2/P3 reverse probes: replacing the whole conclusion with `True`, or deleting
--- either public leaf, makes at least one of these projections fail to elaborate.
-example {State Record Reading SecondOutput : Type*}
-    (recordOps : AppendOnlyOps Record Reading)
-    (q1 : Concept State Reading)
-    (controlledUpdate : RoundIndex -> State × SecondOutput -> State)
-    (q2 : Concept Record SecondOutput) (e : RoundIndex)
-    (coupled : ¬WithinRoundDecoupled controlledUpdate e) :
-    IsSameLayerInRound recordOps q1 controlledUpdate q2 e :=
-  (within_round_coupling_is_same_layer recordOps q1 controlledUpdate q2 e coupled).1
-
-example {State Record Reading SecondOutput : Type*}
-    (recordOps : AppendOnlyOps Record Reading)
-    (q1 : Concept State Reading)
-    (controlledUpdate : RoundIndex -> State × SecondOutput -> State)
-    (q2 : Concept Record SecondOutput) (e : RoundIndex)
-    (coupled : ¬WithinRoundDecoupled controlledUpdate e) :
-    EstablishedClosureNonimplications :=
-  (within_round_coupling_is_same_layer recordOps q1 controlledUpdate q2 e coupled).2
 
 -- P5a: on a one-point second-output carrier the decoupling condition always
 -- holds, so the proposition's coupling premise cannot be inhabited.
@@ -258,27 +216,70 @@ private theorem boolControlledUpdate_isCoupled (e : RoundIndex) :
   have impossible := decoupled false false true
   simp [boolControlledUpdate] at impossible
 
--- P5b: a trivial record carrier does not make the public implication vacuous.
--- The controlled update can still distinguish two second-output values.
-example (e : RoundIndex) :
-    IsSameLayerInRound unitRecordOps unitReading boolControlledUpdate
-        constantSecondReadout e ∧
-      EstablishedClosureNonimplications :=
-  within_round_coupling_is_same_layer unitRecordOps unitReading boolControlledUpdate
-    constantSecondReadout e (boolControlledUpdate_isCoupled e)
-
--- Contract probes for the corrected public surface.
+-- A trivial record carrier does not make the coupling premise vacuous: the
+-- controlled update still distinguishes two second-output values.
 example (e : RoundIndex) :
     ¬WithinRoundDecoupled boolControlledUpdate e :=
   boolControlledUpdate_isCoupled e
+
+private def boolAugmentedSystem
+    (deltaEvaluation : JointObservationQuotient unitReading constantSecondReadout ->
+      JointObservationQuotient unitReading constantSecondReadout -> Bool)
+    (e : RoundIndex) :
+    AugmentedSingleSystem
+      (AugmentedState Bool Unit)
+      (Unit × Bool)
+      (JointObservationQuotient unitReading constantSecondReadout)
+      Bool where
+  dynamics := fun current =>
+    (boolControlledUpdate e (current.1, constantSecondReadout current.2),
+      unitRecordOps.append current.2 (unitReading current.1))
+  readout := fun current =>
+    (unitReading current.1, constantSecondReadout current.2)
+  deltaEvaluation := deltaEvaluation
+
+private def matchingBoolAugmentedSystem (e : RoundIndex) :=
+  boolAugmentedSystem (fun _ _ => false) e
+
+private def mismatchingBoolAugmentedSystem (e : RoundIndex) :=
+  boolAugmentedSystem (fun _ _ => true) e
+
+-- Definition 45.2 is satisfiable when independently supplied interface data
+-- meet all three source clauses. The Delta field is the explicit first argument
+-- of `boolAugmentedSystem`; it is not constructed from `q2`.
+example (e : RoundIndex) :
+    IsSameLayerInRound unitRecordOps unitReading boolControlledUpdate
+      constantSecondReadout e (matchingBoolAugmentedSystem e) := by
+  refine ⟨rfl, rfl, ?_⟩
+  intro point
+  refine Quotient.inductionOn point ?_
+  intro current
+  rfl
 
 example (e : RoundIndex) (current : AugmentedState Bool Unit) :
     jointRoundUpdate unitRecordOps unitReading boolControlledUpdate
         constantSecondReadout e current =
       (boolControlledUpdate e (current.1, constantSecondReadout current.2),
         unitRecordOps.append current.2 (unitReading current.1)) :=
-  (within_round_coupling_is_same_layer unitRecordOps unitReading boolControlledUpdate
-    constantSecondReadout e (boolControlledUpdate_isCoupled e)).1.1 current
+  jointRoundUpdate_eq_definition451_step unitRecordOps unitReading
+    boolControlledUpdate constantSecondReadout e current
+
+/-- Coupling failure does not constrain the separately supplied Delta/evaluation.
+The system below has the exact joint readout and Definition 45.1 dynamics, but
+its Boolean diagonal disagrees with the descended constant-false `q2`.
+This is the formal obstruction to proving Proposition 45.3 from its source
+premise alone. -/
+theorem coupling_does_not_force_delta_diagonal (e : RoundIndex) :
+    ¬WithinRoundDecoupled boolControlledUpdate e ∧
+      ¬IsSameLayerInRound unitRecordOps unitReading boolControlledUpdate
+        constantSecondReadout e (mismatchingBoolAugmentedSystem e) := by
+  refine ⟨boolControlledUpdate_isCoupled e, ?_⟩
+  intro sameLayer
+  let point : JointObservationQuotient unitReading constantSecondReadout :=
+    Quotient.mk _ (false, ())
+  have diagonal := sameLayer.2.2 point
+  simp [mismatchingBoolAugmentedSystem, boolAugmentedSystem,
+    quotientSecondReadout, constantSecondReadout, point] at diagonal
 
 private def decoupledBoolUpdate : RoundIndex -> Bool × Bool -> Bool :=
   fun _ input => input.1
@@ -286,14 +287,6 @@ private def decoupledBoolUpdate : RoundIndex -> Bool × Bool -> Bool :=
 example : IsSecondLayerObserver decoupledBoolUpdate := by
   intro e state firstOutput secondOutput
   rfl
-
--- Definition 45.2 does not exclude a decoupled round: both structural clauses
--- remain satisfied. This is the permanent form of the circularity counterprobe.
-example (e : RoundIndex) :
-    IsSameLayerInRound unitRecordOps unitReading decoupledBoolUpdate
-      constantSecondReadout e :=
-  same_layer_in_round_unconditional unitRecordOps unitReading decoupledBoolUpdate
-    constantSecondReadout e
 
 private def boolCrossRoundSchedule :
     CrossRoundUpdateSchedule Bool Unit Bool constantSecondReadout where
@@ -305,7 +298,23 @@ private def boolCrossRoundSchedule :
     funext input
     simp [boolControlledUpdate, constantSecondReadout]
 
-#print axioms within_round_coupling_is_same_layer
+example : CrossRoundUpdateSchedule Bool Unit Bool constantSecondReadout :=
+  boolCrossRoundSchedule
+
+/- Proposition 45.3 remains open in this module. Its only premise says that
+`controlledUpdate e` depends on its second input. Definition 32.1, however,
+makes Delta an independently typed part of the observer interface, and that
+premise supplies no relation between `system.deltaEvaluation` and `q2` on the
+joint quotient. The theorem `coupling_does_not_force_delta_diagonal` gives a
+countermodel to precisely that missing implication.
+
+Re-entry requires additional source support that makes coupling failure imply
+the diagonal agreement of the already-given Delta/evaluation with descended
+`q2`, or an independently stated construction of Delta carrying that law. It
+must not define Delta from `q2` merely to make the equality reflexive. Source:
+QDO lines 15263-15326 and 47049-47059. -/
+
+#print axioms coupling_does_not_force_delta_diagonal
 
 end
 

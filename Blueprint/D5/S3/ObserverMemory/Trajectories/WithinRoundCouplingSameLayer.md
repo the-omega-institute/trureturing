@@ -2,13 +2,13 @@
 
 ## Abstract
 
-The source coupling implication is retained, while the current same-layer encoding is explicitly recorded as unconditional.
+Definition 45.2 has an explicit augmented-system interface; Proposition 45.3 remains open at its independent Delta condition.
 
-**Theorem 1.1 (Coupling places both observers on one layer).**
+**Definition 1.1 (Same-layer data for an augmented recorded system).**
 
-$$\forall X, Lambda_{1}, A, Y_{2}: \operatorname{Type},\ R: \operatorname{AppendOnlyOps}\left(Lambda_{1}, A\right),\ q1: X \to A,\ controlledUpdate: RoundIndex \to \left(\operatorname{Prod}\left(X, Y_{2}\right) \to X\right),\ q2: Lambda_{1} \to Y_{2},\ e: RoundIndex,\ (\neg \operatorname{WithinRoundDecoupled}\left(controlledUpdate, e\right)) \Rightarrow\ (\operatorname{IsSameLayerInRound}\left(R, q1, controlledUpdate, q2, e\right)) \land\ (EstablishedClosureNonimplications).$$
+Lean statement: `D5/S3/ObserverMemory/Trajectories/WithinRoundCouplingSameLayer.IsSameLayerInRound`
 
-*Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/Trajectories/WithinRoundCouplingSameLayer.within_round_coupling_is_same_layer` (`✓ std3`). ∎
+*Formalization.* `D5/S3/ObserverMemory/Trajectories/WithinRoundCouplingSameLayer.IsSameLayerInRound` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -16,18 +16,20 @@ $$\forall X, Lambda_{1}, A, Y_{2}: \operatorname{Type},\ R: \operatorname{Append
 
 Let e be a positive round index. The append-only operations R and the maps q1 : X -> A, controlledUpdate : RoundIndex -> X x Y2 -> X, and q2 : Lambda1 -> Y2 are exactly the data of the recorded observer at that round.
 
-WithinRoundDecoupled says that controlledUpdate e has the same value for every pair of Y2 inputs at each state. The theorem assumes the negation of precisely that condition.
+WithinRoundDecoupled says that controlledUpdate e has the same value for every pair of Y2 inputs at each state. Proposition 45.3 assumes the negation of precisely that condition.
 
 CrossRoundUpdateSchedule records the separate inter-round clause. The update at nextRound e is selected by a function receiving q2 of the preceding round's terminal record. IsSecondLayerObserver is the all-round predicate requiring WithinRoundDecoupled at every round.
 
-The first public conjunct is IsSameLayerInRound. Its definition contains exactly the two clauses in Definition 45.2: jointRoundUpdate is pointwise the displayed Definition 45.1 update, and q2 evaluation on the joint quotient is the same-typed diagonal self-application. Failure of decoupling is not part of this conclusion predicate.
+AugmentedSingleSystem gives dynamics, readout, and deltaEvaluation as separate fields. At Definition 45.2 the carrier is typed as X x Lambda1, the readout codomain as A x Y2, and the quotient as the kernel quotient of jointReadout. No constructor derives deltaEvaluation from q2.
 
-The current encoding proves IsSameLayerInRound for every round update, without using the coupling premise, because both clauses are definitional equalities. This fidelity boundary remains open. Re-entry requires a source-supported account of q2 evaluation as same-layer self-application that is not definitionally true for every update; no source-unsupported conjunct may be added.
+IsSameLayerInRound requires three independent facts: the supplied readout equals jointReadout, the supplied dynamics equals Definition 45.1's closed-loop jointRoundUpdate, and the supplied Delta/evaluation diagonal agrees with q2 descended to the joint quotient.
 
-The second conjunct is EstablishedClosureNonimplications, definitionally the proposition already proved by closure_nonimplication_triple for Sections 32.10 and 33.10. No universal surjectivity predicate or round-specific closure semantics is introduced here. The cited countermodels say only that the closures are not implied; they do not say that every enriched closure is impossible.
+Proposition 45.3 is intentionally not declared as proved. The coupling premise constrains controlledUpdate but supplies no relation for the independently given deltaEvaluation; coupling_does_not_force_delta_diagonal formalizes this obstruction. Re-entry requires source support deriving the already-given Delta diagonal law from coupling, or an independently specified Delta construction carrying that law. Defining Delta from q2 solely to make the equality reflexive is not a valid re-entry.
+
+EstablishedClosureNonimplications remains the exact proposition already proved by closure_nonimplication_triple for Sections 32.10 and 33.10. That theorem does not provide the missing Delta relation.
 
 ## References
 
-- Truth anchor: `D5/S3/ObserverMemory/Trajectories/WithinRoundCouplingSameLayer.within_round_coupling_is_same_layer`
+- Truth anchor: `D5/S3/ObserverMemory/Trajectories/WithinRoundCouplingSameLayer.IsSameLayerInRound`
 - Dependency: [D5/S3/Observer/Completion/ClosureNonimplicationTriple](../../Observer/Completion/ClosureNonimplicationTriple.md)
 - Dependency: [D5/S3/ObserverMemory/Trajectories/StateRecordReadoutDistinguishability](StateRecordReadoutDistinguishability.md)
