@@ -1,0 +1,10 @@
+## 206. RH 的 \(q\)-射线等价
+
+```lean
+theorem rh_iff_casimirZeros_on_real_ray :
+    RiemannHypothesis ↔
+      ∀ q, Xq q = 0 → (q.im = 0 ∧ 1 / 4 ≤ q.re)
+```
+
+---
+

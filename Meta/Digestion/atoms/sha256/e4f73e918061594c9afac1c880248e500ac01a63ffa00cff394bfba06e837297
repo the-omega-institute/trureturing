@@ -1,0 +1,76 @@
+## 1930.1 应用于离线法向深度
+
+若：
+
+$$
+x_j=-\delta_j^2,
+$$
+
+则：
+
+$$
+\boxed{
+\lambda_{\min}
+(Q_{\mathrm{supp}})
+=
+-\max_j\delta_j^2.
+}
+\tag{1930.7}
+$$
+
+因此最深离线距离可直接恢复为：
+
+$$
+\boxed{
+\delta_{\max}
+=
+\sqrt{
+-\lambda_{\min}
+(Q_{\mathrm{supp}})
+}.
+}
+\tag{1930.8}
+$$
+
+若全部 signed-normal 节点本来已知满足：
+
+$$
+x_j\le0,
+$$
+
+那么：
+
+$$
+\lambda_{\min}(Q_{\mathrm{supp}})\ge0
+$$
+
+只能意味着：
+
+$$
+x_j=0
+\qquad
+\forall j.
+$$
+
+也就是：
+
+$$
+\delta_j=0
+\qquad
+\forall j.
+$$
+
+这给出一个非常简洁的有限窗口 RH 诊断原型：
+
+$$
+\boxed{
+\text{法向支撑底线为零}
+\iff
+\text{该窗口没有离线分裂}.
+}
+$$
+
+真正困难不是这一线性代数，而是从 prime–Gamma 数据中构造出规范的 signed-normal moments。
+
+---
+

@@ -1,0 +1,35 @@
+## 32. 全部轨道 cumulant
+
+其生成函数为：
+
+$$
+\mathcal Z_T(\mathbf u)
+=
+\mathbb E
+\exp
+\left(
+\sum_{o\in T}u_oX_o
+\right)
+=
+\cosh
+\left(
+\sum_{o\in T}u_o\delta_o
+\right).
+$$
+
+connected 生成元为：
+
+$$
+\boxed{
+\mathcal K_T(\mathbf u)
+=
+\log\cosh
+\left(
+\sum_{o\in T}u_o\delta_o
+\right).
+}
+$$
+
+于是：
+
+* 所有总阶数为奇数的 cumulant 为零；
