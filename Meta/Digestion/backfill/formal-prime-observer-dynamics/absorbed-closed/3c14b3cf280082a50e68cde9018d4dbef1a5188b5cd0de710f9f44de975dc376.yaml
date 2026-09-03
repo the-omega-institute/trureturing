@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:3c14b3cf280082a50e68cde9018d4dbef1a5188b5cd0de710f9f44de975dc376
+  normalized_sha256: sha256:3c14b3cf280082a50e68cde9018d4dbef1a5188b5cd0de710f9f44de975dc376
+cas_ref: sha256:3c14b3cf280082a50e68cde9018d4dbef1a5188b5cd0de710f9f44de975dc376
+coverage_gids:
+  - D5/S3/Analytic/ZetaObservation/FinitePrimeObservationPosterior.finite_prime_observation_posterior
+receipts:
+  coverage:
+    - gid: D5/S3/Analytic/ZetaObservation/FinitePrimeObservationPosterior.finite_prime_observation_posterior
+      source_sha256: sha256:3c14b3cf280082a50e68cde9018d4dbef1a5188b5cd0de710f9f44de975dc376
+      target_statement_id: sha256:d9a3ef6e119fef9309e95adc3883f809eec00c5e0cac48a3654b37ff35285861
+  scribe:
+    - gid: D5/S3/Analytic/ZetaObservation/FinitePrimeObservationPosterior.finite_prime_observation_posterior
+      definition_sha256: sha256:47f65dc5a1e1ae78f32862a1ee86228c04a17647330b52ec57a281846e997fea
+      emission_sha256: sha256:880b3838af83c25e4ed07429fcabb4058e3f207ee0e17d65edb8305edc41fb36
+  unresolved_subitems: []
