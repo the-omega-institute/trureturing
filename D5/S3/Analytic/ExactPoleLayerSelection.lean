@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/Analytic/ExactPoleLayerSelection
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Fourth-order pole layers select quotient and remainder,
-     with nine exact row certificates. -/
+   digest: Fourth-order pole layers select quotient and remainder, with nine exact row certificates. -/
 
 /- Library-search audit (2026-09-04):
    * `Nat.mod_add_div` and `Nat.mod_lt` provide the exact quotient-remainder
