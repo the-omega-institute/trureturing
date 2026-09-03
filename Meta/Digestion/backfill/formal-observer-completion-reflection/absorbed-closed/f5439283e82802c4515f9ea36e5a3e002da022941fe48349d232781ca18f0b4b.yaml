@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:f5439283e82802c4515f9ea36e5a3e002da022941fe48349d232781ca18f0b4b
+  normalized_sha256: sha256:f5439283e82802c4515f9ea36e5a3e002da022941fe48349d232781ca18f0b4b
+cas_ref: sha256:f5439283e82802c4515f9ea36e5a3e002da022941fe48349d232781ca18f0b4b
+coverage_gids:
+  - D5/S3/Quantum/Measurement/SharpMeasurementCompatibility.sharp_measurement_compatibility
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/Measurement/SharpMeasurementCompatibility.sharp_measurement_compatibility
+      source_sha256: sha256:f5439283e82802c4515f9ea36e5a3e002da022941fe48349d232781ca18f0b4b
+      target_statement_id: sha256:893cbf4b720c4fa185bb5917dd325d3bccb2883aa3f8bfa66af4506afde09a16
+  scribe:
+    - gid: D5/S3/Quantum/Measurement/SharpMeasurementCompatibility.sharp_measurement_compatibility
+      definition_sha256: sha256:9d1bb464e13d6398d178ea1a8d0370c9aa7878c06ed6cfc256454ce90a76ee80
+      emission_sha256: sha256:64022c6516aef92cc1bb0a592da1361c03c3d673366f8110ee53964fc20551b1
+  unresolved_subitems: []

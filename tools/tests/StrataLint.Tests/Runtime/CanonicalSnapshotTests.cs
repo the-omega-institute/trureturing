@@ -185,4 +185,13 @@ public sealed class CanonicalSnapshotTests
         Assert.Empty(entries);
     }
 
+    [Fact]
+    public void YamlSubsetParserDecodesCanonicalDoubleQuotedEscapes()
+    {
+        var parsed = Assert.IsType<Dictionary<string, object?>>(
+            YamlSubsetParser.Parse("value: \"atom's \\\"quoted\\\" path\\\\leaf\"\n"));
+
+        Assert.Equal("atom's \"quoted\" path\\leaf", parsed["value"]);
+    }
+
 }

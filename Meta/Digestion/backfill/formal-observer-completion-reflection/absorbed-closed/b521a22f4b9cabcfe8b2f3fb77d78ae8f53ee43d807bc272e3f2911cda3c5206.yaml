@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:b521a22f4b9cabcfe8b2f3fb77d78ae8f53ee43d807bc272e3f2911cda3c5206
+  normalized_sha256: sha256:b521a22f4b9cabcfe8b2f3fb77d78ae8f53ee43d807bc272e3f2911cda3c5206
+cas_ref: sha256:b521a22f4b9cabcfe8b2f3fb77d78ae8f53ee43d807bc272e3f2911cda3c5206
+coverage_gids:
+  - D5/S3/ConceptDynamics/Agency/BoundaryRelativeAgency.boundary_relative_agency
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Agency/BoundaryRelativeAgency.boundary_relative_agency
+      source_sha256: sha256:b521a22f4b9cabcfe8b2f3fb77d78ae8f53ee43d807bc272e3f2911cda3c5206
+      target_statement_id: sha256:2350ec668c19d6b778130c59c136170468f59d887a18adb579f12859df288009
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Agency/BoundaryRelativeAgency.boundary_relative_agency
+      definition_sha256: sha256:ba7f0e2d696ac7e6c9fc69259f8d650c80a5866bb32edf8ffba66a758df70ac2
+      emission_sha256: sha256:aac1307045881211f3335dc1f2fccdbbaa3a3cce536321c1d5dfd389556fa407
+  unresolved_subitems: []

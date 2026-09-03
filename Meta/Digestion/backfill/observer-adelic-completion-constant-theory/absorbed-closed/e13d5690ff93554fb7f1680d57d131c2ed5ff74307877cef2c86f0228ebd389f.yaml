@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:e13d5690ff93554fb7f1680d57d131c2ed5ff74307877cef2c86f0228ebd389f
+  normalized_sha256: sha256:e13d5690ff93554fb7f1680d57d131c2ed5ff74307877cef2c86f0228ebd389f
+cas_ref: sha256:e13d5690ff93554fb7f1680d57d131c2ed5ff74307877cef2c86f0228ebd389f
+coverage_gids:
+  - D5/S3/Weil/CayleyLaguerre/CayleyMomentTransport.chebyshev_stieltjes_jet
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/CayleyLaguerre/CayleyMomentTransport.chebyshev_stieltjes_jet
+      source_sha256: sha256:e13d5690ff93554fb7f1680d57d131c2ed5ff74307877cef2c86f0228ebd389f
+      target_statement_id: sha256:a2792ca04c7eb3c8f0a0bcca90e45c87e8df5438837f10ed2fd679ea18096488
+  scribe:
+    - gid: D5/S3/Weil/CayleyLaguerre/CayleyMomentTransport.chebyshev_stieltjes_jet
+      definition_sha256: sha256:6ae096e1200c92564cb468c60821aeb0637ceb44b7856803a8f88fbe92b0e2e2
+      emission_sha256: sha256:f2c8c3605357b1d48c6329cdfccb474194661fa813c22050bdc8ba3b1a4f5d6a
+  unresolved_subitems: []

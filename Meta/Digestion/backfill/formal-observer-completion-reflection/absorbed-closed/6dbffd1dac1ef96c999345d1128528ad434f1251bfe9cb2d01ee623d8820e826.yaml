@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:6dbffd1dac1ef96c999345d1128528ad434f1251bfe9cb2d01ee623d8820e826
+  normalized_sha256: sha256:6dbffd1dac1ef96c999345d1128528ad434f1251bfe9cb2d01ee623d8820e826
+cas_ref: sha256:6dbffd1dac1ef96c999345d1128528ad434f1251bfe9cb2d01ee623d8820e826
+coverage_gids:
+  - D5/S3/Quantum/Measurements/DeterministicReadoutPvm.deterministic_readout_pvm
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/Measurements/DeterministicReadoutPvm.deterministic_readout_pvm
+      source_sha256: sha256:6dbffd1dac1ef96c999345d1128528ad434f1251bfe9cb2d01ee623d8820e826
+      target_statement_id: sha256:b9b39ff0667361546b6dac6b09e2caafba7caaec745f63f6bdca5dca586081c3
+  scribe:
+    - gid: D5/S3/Quantum/Measurements/DeterministicReadoutPvm.deterministic_readout_pvm
+      definition_sha256: sha256:a127b7a20c8021ed5c590f869b86fb493cef37d822289faa44949a2d19e33c0f
+      emission_sha256: sha256:f2232df096cf8bcc70d8ee7f36090f33a1f61d22f2c5641f3ad821ca6250ef4e
+  unresolved_subitems: []

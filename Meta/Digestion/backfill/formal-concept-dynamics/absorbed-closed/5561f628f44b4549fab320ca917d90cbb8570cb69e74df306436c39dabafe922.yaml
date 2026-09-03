@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:5561f628f44b4549fab320ca917d90cbb8570cb69e74df306436c39dabafe922
+  normalized_sha256: sha256:5561f628f44b4549fab320ca917d90cbb8570cb69e74df306436c39dabafe922
+cas_ref: sha256:5561f628f44b4549fab320ca917d90cbb8570cb69e74df306436c39dabafe922
+coverage_gids:
+  - D5/S0/Rewriting/Quotients/AnswerabilityCriterion.answerability_criterion
+receipts:
+  coverage:
+    - gid: D5/S0/Rewriting/Quotients/AnswerabilityCriterion.answerability_criterion
+      source_sha256: sha256:5561f628f44b4549fab320ca917d90cbb8570cb69e74df306436c39dabafe922
+      target_statement_id: sha256:c25a483d28a48b64da187a0b3305e7b1be8abc16b223703bca7b9a8abbdcbfe1
+  scribe:
+    - gid: D5/S0/Rewriting/Quotients/AnswerabilityCriterion.answerability_criterion
+      definition_sha256: sha256:306ceaef1d218812facd1b10e7187c3da958d38e0bedaef531cd1c2458753ff9
+      emission_sha256: sha256:1e918da7b3dbb61eb470f820d00ea112c74525c980daeb54a394a4de3a385e11
+  unresolved_subitems: []

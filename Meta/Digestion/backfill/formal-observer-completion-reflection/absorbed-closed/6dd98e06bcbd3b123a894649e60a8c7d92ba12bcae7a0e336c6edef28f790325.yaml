@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:6dd98e06bcbd3b123a894649e60a8c7d92ba12bcae7a0e336c6edef28f790325
+  normalized_sha256: sha256:6dd98e06bcbd3b123a894649e60a8c7d92ba12bcae7a0e336c6edef28f790325
+cas_ref: sha256:6dd98e06bcbd3b123a894649e60a8c7d92ba12bcae7a0e336c6edef28f790325
+coverage_gids:
+  - D5/S3/Estimation/SequentialDecisionRisk/DistinctRiskSharedOptimizer.distinct_risk_profiles_can_share_optimizer_profile
+receipts:
+  coverage:
+    - gid: D5/S3/Estimation/SequentialDecisionRisk/DistinctRiskSharedOptimizer.distinct_risk_profiles_can_share_optimizer_profile
+      source_sha256: sha256:6dd98e06bcbd3b123a894649e60a8c7d92ba12bcae7a0e336c6edef28f790325
+      target_statement_id: sha256:d67c71ecefeb5f0225cf972728a13f390a93c244afe0c2642ab1afce9c682ef4
+  scribe:
+    - gid: D5/S3/Estimation/SequentialDecisionRisk/DistinctRiskSharedOptimizer.distinct_risk_profiles_can_share_optimizer_profile
+      definition_sha256: sha256:e9218a16b98ac2bae8f33fe1b7447908a4dea38ce50c5ea6a91b3692184a5740
+      emission_sha256: sha256:d811f449ce2a8a442dff89cb13de47eaa935bed2f11148db00521300ee3027bc
+  unresolved_subitems: []

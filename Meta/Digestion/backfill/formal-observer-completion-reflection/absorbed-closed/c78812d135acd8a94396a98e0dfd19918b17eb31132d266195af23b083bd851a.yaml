@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:c78812d135acd8a94396a98e0dfd19918b17eb31132d266195af23b083bd851a
+  normalized_sha256: sha256:c78812d135acd8a94396a98e0dfd19918b17eb31132d266195af23b083bd851a
+cas_ref: sha256:c78812d135acd8a94396a98e0dfd19918b17eb31132d266195af23b083bd851a
+coverage_gids:
+  - D5/S3/Observer/Linear/DiscountedObservabilityEnergyIdentity.discounted_observability_energy_identity
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/Linear/DiscountedObservabilityEnergyIdentity.discounted_observability_energy_identity
+      source_sha256: sha256:c78812d135acd8a94396a98e0dfd19918b17eb31132d266195af23b083bd851a
+      target_statement_id: sha256:6e1de69341a1129884192072c1f8be7026dce84dc5cd57a508634f8fb82b0712
+  scribe:
+    - gid: D5/S3/Observer/Linear/DiscountedObservabilityEnergyIdentity.discounted_observability_energy_identity
+      definition_sha256: sha256:9e30f8a77b251a56db80e9ee0b02c0f3239766bc3f51cb3cd55b68304fe5ac1c
+      emission_sha256: sha256:4c9279212547df55f977899d0adabed2698613b7b2b93b0aa7cb097f77f2a6f6
+  unresolved_subitems: []

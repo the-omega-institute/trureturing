@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:65ea89ad368c016d07ff7934af217c89a224e7d4f9d53226dee3b8ddef615b3a
+  normalized_sha256: sha256:65ea89ad368c016d07ff7934af217c89a224e7d4f9d53226dee3b8ddef615b3a
+cas_ref: sha256:65ea89ad368c016d07ff7934af217c89a224e7d4f9d53226dee3b8ddef615b3a
+coverage_gids:
+  - D5/S3/Quantum/Measurements/DeterministicReadoutCommutativity.deterministic_readout_commutes_and_quantum_counterexample
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/Measurements/DeterministicReadoutCommutativity.deterministic_readout_commutes_and_quantum_counterexample
+      source_sha256: sha256:65ea89ad368c016d07ff7934af217c89a224e7d4f9d53226dee3b8ddef615b3a
+      target_statement_id: sha256:37ea301e907f28a6f57d28d3b9e5fe419f0deabf2e22540e952d424815882cd9
+  scribe:
+    - gid: D5/S3/Quantum/Measurements/DeterministicReadoutCommutativity.deterministic_readout_commutes_and_quantum_counterexample
+      definition_sha256: sha256:047b71a38e74aaf36566e4fe3be6317a2ef0e1a51c54456936489719f42b97f2
+      emission_sha256: sha256:e21970f84c60f8fd3e3625b9c85a2044c3a2955499e7d75b5a6ccbd849ed0d1d
+  unresolved_subitems: []

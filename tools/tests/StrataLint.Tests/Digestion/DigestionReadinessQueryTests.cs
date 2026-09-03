@@ -176,6 +176,30 @@ public sealed class DigestionReadinessQueryTests
     }
 
     [Fact]
+    public void ReadinessJsonExposesSortedCoverageGidsDerivedFromCoverageEdges()
+    {
+        var covered = Entry(
+            "source",
+            "covered",
+            "theorem/coverage-view",
+            coverageGids:
+            [
+                "D5/S0/Carrier/Zeta",
+                "D5/S0/Carrier/Alpha",
+            ]);
+
+        var jsonText = DigestStatusCommand.RenderReadiness(Classify([covered]));
+
+        using var json = JsonDocument.Parse(jsonText);
+        var entry = Assert.Single(json.RootElement.GetProperty("entries").EnumerateArray());
+        Assert.Equal(
+            ["D5/S0/Carrier/Alpha", "D5/S0/Carrier/Zeta"],
+            entry.GetProperty("coverage_gids")
+                .EnumerateArray()
+                .Select(static item => item.GetString()));
+    }
+
+    [Fact]
     public void SameActionOrderingUsesSourceIdThenAtomId()
     {
         var result = Classify(
@@ -206,8 +230,7 @@ public sealed class DigestionReadinessQueryTests
             coverDisposition: new DigestionCoverDisposition(
                 new DigestionStatus(DigestionMigrationState.Partial, DigestionTruthState.Closed),
                 [ReadyGid],
-                [new DigestionDispositionGap("unresolved-subitem", "remaining")],
-                new DateTimeOffset(2026, 8, 30, 0, 0, 0, TestBudgets.ZeroDuration)));
+                [new DigestionDispositionGap("unresolved-subitem", "remaining")]));
 
         var result = Classify([withheld, quarantined]);
 
@@ -245,8 +268,7 @@ public sealed class DigestionReadinessQueryTests
             coverDisposition: new DigestionCoverDisposition(
                 new DigestionStatus(DigestionMigrationState.Partial, DigestionTruthState.Closed),
                 [ReadyGid],
-                [new DigestionDispositionGap("unresolved-subitem", "remaining")],
-                new DateTimeOffset(2026, 8, 30, 0, 0, 0, TestBudgets.ZeroDuration)));
+                [new DigestionDispositionGap("unresolved-subitem", "remaining")]));
 
         var result = Classify(
             [deposit, stale, closeChain, child, needsRouting, notFormalizable, quarantined, withheld],
@@ -359,9 +381,11 @@ public sealed class DigestionReadinessQueryTests
             AtomizerRegistry.GenericId,
             atomId,
             fingerprints,
-            coverageGids.IsDefault ? [] : coverageGids,
+            coverageGids.IsDefault
+                ? []
+                : coverageGids.Select(static gid => new DigestionCoverageEdge(gid, null))
+                    .ToImmutableArray(),
             new DigestionReceipts(
-                [],
                 [],
                 [],
                 chainAtoms.IsDefault ? [] : chainAtoms,

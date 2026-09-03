@@ -167,7 +167,7 @@ public sealed partial class DigestionLedgerTests
         Assert.Equal(originalEntry.ProjectedStatus, preserved.ProjectedStatus);
         Assert.Equal(originalEntry.CasRef, preserved.CasRef);
         Assert.Empty(preserved.CoverageGids);
-        Assert.Empty(preserved.Receipts.Coverage);
+        Assert.Empty(preserved.Coverage);
         Assert.Empty(preserved.Receipts.Scribe);
         Assert.Empty(preserved.Receipts.UnresolvedSubitems);
         Assert.Empty(preserved.Receipts.ChainAtoms);
@@ -205,7 +205,7 @@ public sealed partial class DigestionLedgerTests
         {
             Assert.Equal(entry.Fingerprints.RawSha256, entry.CasRef);
             Assert.Empty(entry.CoverageGids);
-            Assert.Empty(entry.Receipts.Coverage);
+            Assert.Empty(entry.Coverage);
             Assert.Equal(DigestionMigrationState.Residual, entry.ProjectedStatus.Migration);
             Assert.Equal(DigestionTruthState.Open, entry.ProjectedStatus.Truth);
         });
@@ -299,9 +299,8 @@ public sealed partial class DigestionLedgerTests
             DigestionMigrationState.Absorbed,
             DigestionTruthState.Closed,
             gid,
-            new DigestionCoverageReceipt(
+            new DigestionCoverageEdge(
                 gid,
-                atom.Fingerprints.RawSha256,
                 TestModuleStatementId),
             new DigestionScribeReceipt(gid, definitionHash, emissionHash),
             atomizer: AtomizerRegistry.NoAtomizerId);
@@ -357,7 +356,7 @@ public sealed partial class DigestionLedgerTests
         Assert.Equal(3, evaluation.Entries.Length);
         Assert.DoesNotContain(
             evaluation.Entries.SelectMany(static item => item.Gaps),
-            static gap => gap.Code == "coverage-receipt-mismatch");
+            static gap => gap.Code == "coverage-target-mismatch");
         Assert.All(evaluation.Entries, static item => Assert.Equal(
             DigestionMigrationState.Absorbed,
             item.DerivedStatus.Migration));
@@ -411,7 +410,7 @@ public sealed partial class DigestionLedgerTests
     }
 
     [Fact]
-    public void DerivationRejectsHandwrittenStatusThatClaimsMoreThanReceiptsProve()
+    public void NullTargetForUnfrozenCoverageDerivesPartialOpen()
     {
         var source = Encoding.UTF8.GetBytes("# GICT\n\n**定理 1.1(Test)**。claim。\n");
         var atom = Assert.Single(GictAtomizer.Atomize(source, DigestionTestSupport.Rules).Claims);
@@ -435,7 +434,8 @@ public sealed partial class DigestionLedgerTests
         Assert.Equal(DigestionMigrationState.Partial, status.DerivedStatus.Migration);
         Assert.Equal(DigestionTruthState.Open, status.DerivedStatus.Truth);
         Assert.False(status.Deletable);
-        Assert.Contains(status.Gaps, gap => gap.Code == "coverage-receipt-missing");
+        Assert.Contains(status.Gaps, gap => gap.Code == "target-statement-unresolved");
+        Assert.DoesNotContain(status.Gaps, gap => gap.Code == "coverage-target-mismatch");
         Assert.Contains(evaluation.Findings, finding =>
             finding.Contains("handwritten status", StringComparison.Ordinal));
     }
@@ -486,9 +486,8 @@ public sealed partial class DigestionLedgerTests
             DigestionMigrationState.Absorbed,
             DigestionTruthState.Closed,
             gid,
-            new DigestionCoverageReceipt(
+            new DigestionCoverageEdge(
                 gid,
-                atom.Fingerprints.RawSha256,
                 TestModuleStatementId),
             new DigestionScribeReceipt(gid, definitionHash, emissionHash),
             atomizer: AtomizerRegistry.ObserverId);
@@ -590,9 +589,8 @@ public sealed partial class DigestionLedgerTests
             DigestionMigrationState.Absorbed,
             DigestionTruthState.Closed,
             declarationGid,
-            new DigestionCoverageReceipt(
+            new DigestionCoverageEdge(
                 declarationGid,
-                atom.Fingerprints.RawSha256,
                 TestDeclarationStatementId),
             new DigestionScribeReceipt(declarationGid, definitionHash, emissionHash));
         var snapshotFiles = new List<(string Path, byte[] Bytes)>
@@ -639,9 +637,8 @@ public sealed partial class DigestionLedgerTests
             DigestionMigrationState.Absorbed,
             DigestionTruthState.Tail,
             gid,
-            new DigestionCoverageReceipt(
+            new DigestionCoverageEdge(
                 gid,
-                atom.Fingerprints.RawSha256,
                 TestModuleStatementId),
             new DigestionScribeReceipt(gid, definitionHash, emissionHash),
             tailAuthorization: new DigestionExternalReceipt(
@@ -701,14 +698,13 @@ public sealed partial class DigestionLedgerTests
         DigestionMigrationState migration,
         DigestionTruthState truth,
         string coverageGid = "D5/X_Frontier/Probe",
-        DigestionCoverageReceipt? coverageReceipt = null,
+        DigestionCoverageEdge? coverageReceipt = null,
         DigestionScribeReceipt? scribeReceipt = null,
         string atomizer = AtomizerRegistry.GictId,
         bool includeCoverageGid = true,
         DigestionExternalReceipt? tailAuthorization = null)
     {
         var receipts = new DigestionReceipts(
-            coverageReceipt is null ? [] : [coverageReceipt],
             scribeReceipt is null ? [] : [scribeReceipt],
             [],
             [],
@@ -719,9 +715,16 @@ public sealed partial class DigestionLedgerTests
             atomizer,
             migration,
             truth,
-            includeCoverageGid ? [coverageGid] : [],
+            [],
             receipts,
-            AtomizerRegistry.GictId);
+            AtomizerRegistry.GictId) with
+        {
+            Coverage = coverageReceipt is not null
+                ? [coverageReceipt]
+                : includeCoverageGid
+                    ? [new DigestionCoverageEdge(coverageGid, null)]
+                    : [],
+        };
         return DigestionTestSupport.Document(
             atomizer,
             [entry],

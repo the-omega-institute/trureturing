@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:073389a3150f856cd4d4f3031c66ecce0866532467a1677ca57817de0bbe04eb
+  normalized_sha256: sha256:073389a3150f856cd4d4f3031c66ecce0866532467a1677ca57817de0bbe04eb
+cas_ref: sha256:073389a3150f856cd4d4f3031c66ecce0866532467a1677ca57817de0bbe04eb
+coverage_gids:
+  - D5/S3/Quantum/Matrix/MatrixSelfPairing.matrix_self_pairing_and_nonnegative
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/Matrix/MatrixSelfPairing.matrix_self_pairing_and_nonnegative
+      source_sha256: sha256:073389a3150f856cd4d4f3031c66ecce0866532467a1677ca57817de0bbe04eb
+      target_statement_id: sha256:ec39b2644754919d1775f5d25d25bdc34a79a2c8c8f298bbccf7d57d34a99652
+  scribe:
+    - gid: D5/S3/Quantum/Matrix/MatrixSelfPairing.matrix_self_pairing_and_nonnegative
+      definition_sha256: sha256:c4f886130c7f7f764c6c499b53a6d98f1de64602c3c4237ff076158eb2d381fb
+      emission_sha256: sha256:6abf0a754fd6d7580b0fb6e8c306a4827ee7bf761b996770adbc7765567ec0f1
+  unresolved_subitems: []
