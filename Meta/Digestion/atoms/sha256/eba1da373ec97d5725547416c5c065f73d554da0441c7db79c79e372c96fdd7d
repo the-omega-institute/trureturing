@@ -1,0 +1,14 @@
+## 342. 轨道 Krein 分解
+
+```lean
+theorem off_line_orbit_krein_decomposition
+    (m : ℕ) (a b : ℂ) :
+    4 * m * (a * conj b).re =
+      m * (Complex.normSq (a + b) -
+        Complex.normSq (a - b))
+```
+
+随后接到仓库已有轨道求和定理。
+
+---
+

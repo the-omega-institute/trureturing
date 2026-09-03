@@ -316,6 +316,7 @@ public sealed partial class ProductionEnvironmentTests
         fixture.Files["Meta/domains.yaml"] = TestRegistry.Domains;
         fixture.Baseline["Meta/domains.yaml"] = TestRegistry.Domains;
         AddFrozenLedger(fixture);
+        SettleCurrentCoverage(fixture);
         fixture.Files[loopPath] = "def loop : Nat := 0\n";
         fixture.Reports[RuleFixture.RingPath] = new LeanFileReport(
             ImmutableArray.Create("D5.S0.Carrier.Loop"),
@@ -476,6 +477,10 @@ public sealed partial class ProductionEnvironmentTests
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
         _ = AddFrozenLedger(fixture);
+        SettleCurrentCoverage(fixture);
+        var settled = BackfillInventoryLoader.Load(Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+            SnapshotDecoder.Decode(Snapshot(fixture.Files))).Snapshot);
+        DirectoryLedgerTestSupport.ReplaceWithProjection(fixture.Baseline, settled);
         foreach (var item in fixture.Files)
         {
             fixture.Baseline[item.Key] = item.Value;
@@ -487,6 +492,39 @@ public sealed partial class ProductionEnvironmentTests
         }
 
         return fixture;
+    }
+
+    private static void SettleCurrentCoverage(RuleFixture fixture)
+    {
+        var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
+            SnapshotDecoder.Decode(Snapshot(fixture.Files))).Snapshot;
+        var lean = AcceptedLeanClosure.Create(LeanAxiomReport.Create(fixture.Reports));
+        var truthStates = LeanTruthStates.Resolve(snapshot, lean);
+        var aligned = DigestionCoverageTargetAligner.Align(
+            BackfillInventoryLoader.Load(snapshot),
+            snapshot,
+            lean,
+            truthStates);
+        var statusByAtomId = DigestionStatusEvaluator.Evaluate(
+                DigestionEvaluationScope.FullScan,
+                aligned,
+                snapshot,
+                lean,
+                truthStates: truthStates)
+            .Entries
+            .ToDictionary(
+                static entry => entry.Entry.AtomId,
+                static entry => entry.DerivedStatus,
+                StringComparer.Ordinal);
+        var settled = aligned.WithDigestionSources(aligned.RequireDigestionSources()
+            .Select(source => source with
+            {
+                Entries = source.Entries.Select(entry => entry with
+                {
+                    ProjectedStatus = statusByAtomId[entry.AtomId],
+                }).ToImmutableArray(),
+            }).ToImmutableArray());
+        DirectoryLedgerTestSupport.ReplaceWithProjection(fixture.Files, settled);
     }
 
 }

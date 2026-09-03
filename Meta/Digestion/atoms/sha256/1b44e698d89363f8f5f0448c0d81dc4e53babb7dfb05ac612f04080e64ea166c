@@ -1,0 +1,51 @@
+## 567. 观察者基中的全局不可分解性
+
+循环向量：
+
+$$
+\Omega=1
+$$
+
+满足：
+
+$$
+\overline{
+\operatorname{span}
+\{
+\Omega,J\Omega,J^2\Omega,\ldots
+\}
+}
+=
+L^2(\nu).
+$$
+
+所以单个观察者 \(\Omega\) 的全部迭代已经生成整个谱空间。
+
+这给“所有零点在整个系统中纠缠”一个严格版本：
+
+$$
+\boxed{
+\text{所有零点原子共同决定一条不可约 Jacobi 链，}
+}
+$$
+
+并且：
+
+$$
+\boxed{
+\text{每个 Jacobi 系数都由全体谱原子的矩共同决定。}
+}
+$$
+
+修改任意一个零点，通常会改变无限多个 Jacobi 系数。
+
+这不是物理 Bell 纠缠，但它是一个真正的：
+
+$$
+\boxed{
+\text{cyclic spectral nonfactorization}.
+}
+$$
+
+---
+

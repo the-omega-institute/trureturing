@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:77bac617e60615fb2104e4b3119996cbcff5b94d32c917d7e5225892c8585445
+  normalized_sha256: sha256:77bac617e60615fb2104e4b3119996cbcff5b94d32c917d7e5225892c8585445
+cas_ref: sha256:77bac617e60615fb2104e4b3119996cbcff5b94d32c917d7e5225892c8585445
+coverage_gids:
+  - gid: D5/S3/PrimeForms/Splitting/ModFiveOrientationBit.mod_five_orientation_separates_fibers_but_is_not_homomorphic
+    target_statement_id: sha256:efdace5747d30ca7c678a9f92568f38584a7c6efa2cc182c8cc25b061944e358
+receipts:
+  scribe:
+    - gid: D5/S3/PrimeForms/Splitting/ModFiveOrientationBit.mod_five_orientation_separates_fibers_but_is_not_homomorphic
+      definition_sha256: sha256:4d1d2fddae247ea1da45378bb92dcb2a6932afa70b2a79ff7403776d899e35db
+      emission_sha256: sha256:328d8147769c8c9db562034965754b45a98e3576859a96250236b48fd35f5dfb
+  unresolved_subitems: []

@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:f4c2971cd1105cf6c41a28688369b4453760a3640d786d3ab4c8979fdbde69ec
+  normalized_sha256: sha256:f4c2971cd1105cf6c41a28688369b4453760a3640d786d3ab4c8979fdbde69ec
+cas_ref: sha256:f4c2971cd1105cf6c41a28688369b4453760a3640d786d3ab4c8979fdbde69ec
+coverage_gids:
+  - gid: D5/S3/Observer/Completion/ResidualProgressMeasure.bare_dimension_not_progress
+    target_statement_id: sha256:00ac8b1d6977f372c0e9da8c6a6efb34f9fcdd9dc7980fea6b92736e60d74f82
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/Completion/ResidualProgressMeasure.bare_dimension_not_progress
+      definition_sha256: sha256:654ab91c26dd68b77eecbc6591fc1e7791175d35b8b93089540984eef6667656
+      emission_sha256: sha256:97e0ec97be0da06185645d6b4b583bef68480da6f76faca432d871e72bf8ca17
+  unresolved_subitems: []

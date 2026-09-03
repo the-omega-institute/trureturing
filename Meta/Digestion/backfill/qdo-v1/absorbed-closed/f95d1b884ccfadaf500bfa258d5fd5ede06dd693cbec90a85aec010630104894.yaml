@@ -3,20 +3,9 @@ fingerprints:
   normalized_sha256: sha256:f95d1b884ccfadaf500bfa258d5fd5ede06dd693cbec90a85aec010630104894
 cas_ref: sha256:f95d1b884ccfadaf500bfa258d5fd5ede06dd693cbec90a85aec010630104894
 coverage_gids:
-  - D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow.projection_probability_flow
+  - gid: D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow.projection_probability_flow
+    target_statement_id: sha256:827994fa2aa5551e8a535a8d381935357a7d674497c5e69de853a54ff8db344f
 receipts:
-  coverage:
-    - gid: D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow.projection_probability_flow
-      source_sha256: sha256:f95d1b884ccfadaf500bfa258d5fd5ede06dd693cbec90a85aec010630104894
-      target_statement_id: sha256:827994fa2aa5551e8a535a8d381935357a7d674497c5e69de853a54ff8db344f
-      statement_id_history:
-        - statement_id: sha256:b7b22c217f549c3e618c828b4f5a7feef8570609244ee8cea2c6ce1a875c0fda
-          environment_pin:
-            toolchain: leanprover/lean4:v4.31.0
-            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
-          superseded_by_pin:
-            toolchain: leanprover/lean4:v4.33.0
-            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow.projection_probability_flow
       definition_sha256: sha256:8346dd6da2d89463e7e86d85158a3c26ecdb1b25e633030272140cccfd3d61e6

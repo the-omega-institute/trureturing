@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:0d1e47543f3d1010bd84493e84f4ac00e3f8c43612e27c186d33f5dbf1374b44
+  normalized_sha256: sha256:0d1e47543f3d1010bd84493e84f4ac00e3f8c43612e27c186d33f5dbf1374b44
+cas_ref: sha256:0d1e47543f3d1010bd84493e84f4ac00e3f8c43612e27c186d33f5dbf1374b44
+coverage_gids:
+  - gid: D5/S3/Weil/TestFunctions/LaguerreLiBridge.laguerre_li_bridge
+    target_statement_id: sha256:bf309ccd6a61cc3a056df9abba57d1c336d4b06f4f87c07a7f7598db456616d7
+receipts:
+  scribe:
+    - gid: D5/S3/Weil/TestFunctions/LaguerreLiBridge.laguerre_li_bridge
+      definition_sha256: sha256:404df88861f07e1cb2e78929b385163982d7d3bd04bfb674776402ee8f513a53
+      emission_sha256: sha256:3ceb427315a9faa4414f195d2c74c29b45f7057fdd7325b2c70c2444a1a4e66e
+  unresolved_subitems: []

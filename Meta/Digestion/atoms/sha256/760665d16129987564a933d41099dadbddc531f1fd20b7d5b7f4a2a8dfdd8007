@@ -1,0 +1,41 @@
+# 第一千九百九十三部　无限素数集合不存在全局奇偶
+
+假设试图定义一个奇偶值：
+
+$$
+\varepsilon(\mathbb P)\in\mathbb Z_2,
+$$
+
+同时要求：
+
+1. 对双射保持不变；
+2. 加入一个新素数翻转奇偶。
+
+但因为：
+
+$$
+\mathbb P
+\cong
+\mathbb P\sqcup\{p_*\},
+$$
+
+第一条要求：
+
+$$
+\varepsilon(\mathbb P)
+=
+\varepsilon(\mathbb P\sqcup\{p_*\}),
+$$
+
+第二条却要求：
+
+$$
+\varepsilon(\mathbb P\sqcup\{p_*\})
+=
+\varepsilon(\mathbb P)+1.
+$$
+
+矛盾。
+
+所以：
+

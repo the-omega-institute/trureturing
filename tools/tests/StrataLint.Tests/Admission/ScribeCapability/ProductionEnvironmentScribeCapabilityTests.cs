@@ -97,16 +97,9 @@ public sealed partial class ProductionEnvironmentTests
             emissionHash);
         var ledger = MapOnlyEntry(IngestLedger(atomizerId, atom), entry => entry with
         {
-            CoverageGids = [coveredGid],
+            Coverage = [new DigestionCoverageEdge(coveredGid, targetStatementId)],
             Receipts = entry.Receipts with
             {
-                Coverage =
-                [
-                    new DigestionCoverageReceipt(
-                        coveredGid,
-                        atom.Fingerprints.RawSha256,
-                        targetStatementId),
-                ],
                 Scribe =
                 [
                     new DigestionScribeReceipt(
@@ -259,7 +252,7 @@ public sealed partial class ProductionEnvironmentTests
     {
         using var temporary = new TemporaryDirectory();
         const string atomPath =
-            "Meta/Digestion/backfill/delta-v0.1/partial-closed/"
+            "Meta/Digestion/backfill/delta-v0.1/partial-open/"
             + RuleFixture.FixtureAtomId
             + ".yaml";
         const string documentGid = "D5/S0/Carrier/BackfillTarget";
@@ -365,16 +358,14 @@ public sealed partial class ProductionEnvironmentTests
             var document = BackfillInventoryLoader.Load(Decode(Snapshot(files)));
             document = MapOnlyEntry(document, entry => entry with
             {
-                CoverageGids = [coverageGid],
+                Coverage =
+                [
+                    new DigestionCoverageEdge(
+                        coverageGid,
+                        FrozenStatementReceiptTestData.Id('b')),
+                ],
                 Receipts = entry.Receipts with
                 {
-                    Coverage =
-                    [
-                        new DigestionCoverageReceipt(
-                            coverageGid,
-                            entry.Fingerprints.RawSha256,
-                            FrozenStatementReceiptTestData.Id('b')),
-                    ],
                     Scribe =
                     [
                         new DigestionScribeReceipt(

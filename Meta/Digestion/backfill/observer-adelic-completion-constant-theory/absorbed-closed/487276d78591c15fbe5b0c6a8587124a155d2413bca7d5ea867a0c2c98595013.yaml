@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:487276d78591c15fbe5b0c6a8587124a155d2413bca7d5ea867a0c2c98595013
+  normalized_sha256: sha256:487276d78591c15fbe5b0c6a8587124a155d2413bca7d5ea867a0c2c98595013
+cas_ref: sha256:487276d78591c15fbe5b0c6a8587124a155d2413bca7d5ea867a0c2c98595013
+coverage_gids:
+  - gid: D5/S3/Analytic/Characterizations/VisibleGaussianMass.visible_gaussian_mass
+    target_statement_id: sha256:93dc47b705594805d383de52304a069458bcc087b3ac87fe1f5375f261cf0454
+receipts:
+  scribe:
+    - gid: D5/S3/Analytic/Characterizations/VisibleGaussianMass.visible_gaussian_mass
+      definition_sha256: sha256:6b12e964c8f9d1ee4f1c41769f6f95e045a61a1becf6c94104a43447e52737cf
+      emission_sha256: sha256:e45cb38dc3452480a746fdde796205ee0eeef2cc9e7c544c9f135e4849e29887
+  unresolved_subitems: []

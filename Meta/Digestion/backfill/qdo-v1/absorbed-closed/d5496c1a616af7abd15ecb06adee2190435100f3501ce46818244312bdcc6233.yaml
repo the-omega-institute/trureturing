@@ -3,20 +3,9 @@ fingerprints:
   normalized_sha256: sha256:d5496c1a616af7abd15ecb06adee2190435100f3501ce46818244312bdcc6233
 cas_ref: sha256:d5496c1a616af7abd15ecb06adee2190435100f3501ce46818244312bdcc6233
 coverage_gids:
-  - D5/S3/Quantum/Entanglement/BellPureStateMixedMarginal.bell_pure_state_has_maximally_mixed_marginal
+  - gid: D5/S3/Quantum/Entanglement/BellPureStateMixedMarginal.bell_pure_state_has_maximally_mixed_marginal
+    target_statement_id: sha256:1852b851afdab783a70de9ace3043539b2e971391762da4b9ce2cab933c3ccea
 receipts:
-  coverage:
-    - gid: D5/S3/Quantum/Entanglement/BellPureStateMixedMarginal.bell_pure_state_has_maximally_mixed_marginal
-      source_sha256: sha256:d5496c1a616af7abd15ecb06adee2190435100f3501ce46818244312bdcc6233
-      target_statement_id: sha256:1852b851afdab783a70de9ace3043539b2e971391762da4b9ce2cab933c3ccea
-      statement_id_history:
-        - statement_id: sha256:292dfcd6befb4533253d72dec708e2b55aa6bcc1deaaa739d6ae017d765a7d1a
-          environment_pin:
-            toolchain: leanprover/lean4:v4.31.0
-            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
-          superseded_by_pin:
-            toolchain: leanprover/lean4:v4.33.0
-            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Quantum/Entanglement/BellPureStateMixedMarginal.bell_pure_state_has_maximally_mixed_marginal
       definition_sha256: sha256:030583f6e14442d4c2bb999f272eb49bdbf68525e5064eb07ba712d18a8ea737

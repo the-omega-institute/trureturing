@@ -1,0 +1,35 @@
+## 6.2 相对相干能量
+
+$$
+\boxed{
+E_{\mathrm{coh}}
+=
+\sum_\rho
+w_\rho
+\left(
+\Re\rho-\bar\sigma
+\right)^2.
+}
+$$
+
+它不关心公共竖直线在哪里，只检测不同零点之间是否存在横向分歧。
+
+还有纯粹的成对形式：
+
+$$
+\boxed{
+E_{\mathrm{coh}}
+=
+\frac1{2W}
+\sum_{\rho,\sigma}
+w_\rho w_\sigma
+\left(
+\Re\rho-\Re\sigma
+\right)^2.
+}
+$$
+
+所以这是一个真正的相对量。
+
+---
+

@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:9b725bdd02a4695767502a69eb623c76f7d7d668e0ac4773e733adbeff847e0c
 cas_ref: sha256:9b725bdd02a4695767502a69eb623c76f7d7d668e0ac4773e733adbeff847e0c
 coverage_gids:
-  - D5/S3/Analytic/GermWindow/GoldenGermThirdOrderWindowZeroCriterion.golden_third_residual_eq_zero_iff_exists_local_factor_zero
+  - gid: D5/S3/Analytic/GermWindow/GoldenGermThirdOrderWindowZeroCriterion.golden_third_residual_eq_zero_iff_exists_local_factor_zero
+    target_statement_id: sha256:65de851699180c59f62ea9b253b4d09a2d861928ceba59f800c2b452243207ca
 receipts:
-  coverage:
-    - gid: D5/S3/Analytic/GermWindow/GoldenGermThirdOrderWindowZeroCriterion.golden_third_residual_eq_zero_iff_exists_local_factor_zero
-      source_sha256: sha256:9b725bdd02a4695767502a69eb623c76f7d7d668e0ac4773e733adbeff847e0c
-      target_statement_id: sha256:65de851699180c59f62ea9b253b4d09a2d861928ceba59f800c2b452243207ca
   scribe:
     - gid: D5/S3/Analytic/GermWindow/GoldenGermThirdOrderWindowZeroCriterion.golden_third_residual_eq_zero_iff_exists_local_factor_zero
       definition_sha256: sha256:64c770551bc5eddf0aa516c82eeabf3b589c54d19cfb61ecfa1c584d8e1acc42

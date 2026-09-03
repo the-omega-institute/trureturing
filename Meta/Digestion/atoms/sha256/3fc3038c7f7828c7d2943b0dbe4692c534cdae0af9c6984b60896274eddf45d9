@@ -1,0 +1,13 @@
+## 466. 素数筛法
+
+$$
+\mathbf1_{\gcd(n,P)=1}
+=
+\sum_{d\mid\gcd(n,P)}
+\mu(d).
+$$
+
+这是 divisor lattice 上的 Möbius 反演。
+
+---
+

@@ -1,0 +1,32 @@
+## 522. Phantom counterexample
+
+这个 \(N^\ast\)：
+
+* 大于每个标准整数；
+* 不属于外部标准自然数列；
+* 但在模型内部是一个整数。
+
+可以把它称为：
+
+$$
+\boxed{
+\text{nonstandard diagonal counterexample}.
+}
+$$
+
+这正是“检查完所有标准有限层，仍在边界出现一个逃逸点”的严格模型论版本。
+
+但它不是经典分析中的真实离线零点。
+
+它只说明：
+
+$$
+\boxed{
+\text{有限实例的逐个证明}
+\not\Rightarrow
+\text{形式系统内部的一次全称证明}.
+}
+$$
+
+---
+

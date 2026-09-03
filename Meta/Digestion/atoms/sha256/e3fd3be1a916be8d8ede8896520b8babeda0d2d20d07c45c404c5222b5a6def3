@@ -1,0 +1,13 @@
+## 268. β 的二维黄金坐标
+
+```lean
+theorem golden_beta_two_axis_coordinates (N : ℕ) :
+    let long := ⌊((N : ℝ) + 1) / Real.goldenRatio⌋₊
+    let short := N - long
+    o5Beta N =
+      long * Real.goldenRatio ^ 2 +
+      short * Real.goldenRatio
+```
+
+---
+

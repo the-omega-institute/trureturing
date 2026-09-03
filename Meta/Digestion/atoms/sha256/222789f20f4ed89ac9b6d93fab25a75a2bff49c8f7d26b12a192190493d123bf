@@ -1,0 +1,44 @@
+## 526. 但全部 partition residual 仍可能来自一个生成泛函
+
+定义：
+
+$$
+\mathcal K(\mathbf u)
+=
+\log\mathcal M(\mathbf u).
+$$
+
+所有 \(k\)-阶 connected cumulants 都是：
+
+$$
+\partial_{u_{h_1}}\cdots
+\partial_{u_{h_k}}
+\mathcal K(0).
+$$
+
+因此真正应寻找的不是：
+
+$$
+\kappa_2,\kappa_3,\kappa_4,\ldots
+$$
+
+逐个公式，而是：
+
+$$
+\boxed{
+\text{完整 correlation generating functional }\mathcal K.
+}
+$$
+
+如果它可以被构造为：
+
+$$
+\log\det(I-\mathcal T_{\mathbf u}),
+$$
+
+那么所有层级会由同一个 transfer operator 生成。
+
+这就是 prime-constellation 版本的 Fibonacci 压缩，只不过状态空间可能是无限维的。
+
+---
+
