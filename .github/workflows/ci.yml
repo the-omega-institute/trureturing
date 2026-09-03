@@ -36,23 +36,15 @@ concurrency:
 # base is the checked merge commit's first-parent SHA passed to the gate. The
 # workflow itself retains an unfiltered floor for engineering and root inputs.
 jobs:
-  candidate-engineering:
-    name: Candidate harness engineering checks
+  admission-plane-partition:
+    name: Admission plane partition
     runs-on: ubuntu-latest
-    # 20 分钟对本 job 已结构性不足:凡改动命中 tools/** 者,EngineeringScope 的测试选择器
-    # 选中 0 个、回退 full,跑满全部测试套件,实测 20–21 分钟(#3940)。
-    # 证据:PR #3943(生产 +4/-4、新增测试实测 221ms)连续五次 CANCELLED
-    # (20m04 / 20m15 / ~21m / ~21m / ~21m);同期 dev 上 13–19 分钟通过的 run 全部 0 行
-    # tools/ 改动,选择器能裁剪。dev 自身亦出现过一次 CANCELLED(50a319d9c,20m13s)。
-    # 30 分钟给 full scope 留约 50% 余量;同文件的 Lean report job 预算已是 45 分钟。
-    timeout-minutes: 30
     steps:
       - name: Wait for the GitHub merge ref
         if: github.event_name == 'pull_request_target'
         run: "set -euo pipefail\nfor attempt in {1..25}; do\n  timestamp=\"$(date -u +'%Y-%m-%dT%H:%M:%SZ')\"\n  printf '%s poll=%s/25\\n' \"$timestamp\" \"$attempt\"\n  if git ls-remote --exit-code \"https://github.com/${{ github.repository }}.git\" \"refs/pull/${{ github.event.pull_request.number }}/merge\" >/dev/null 2>&1; then exit 0; fi\n  sleep 5\ndone\nprintf '%s\\n' \"merge ref absent after 125s (conflicted PR or still computing)\"\nexit 0"
-      - name: Check out candidate
+      - name: Check out merge result
         id: checkout-merge
-        continue-on-error: ${{ github.event_name == 'pull_request_target' }}
         uses: actions/checkout@v4
         with: { ref: "${{ github.event_name == 'pull_request_target' && format('refs/pull/{0}/merge', github.event.pull_request.number) || github.sha }}", fetch-depth: 0, persist-credentials: false, path: candidate }
       - name: Strip checkout remote state
@@ -144,18 +136,31 @@ jobs:
               )
               raise SystemExit(1)
 
+          if not changed_paths:
+              print("ADMISSION_PLANE_PARTITION status=empty judge=0 content=0")
+              raise SystemExit(0)
+
           is_repair = set(changed_paths).issubset(repair_paths)
 
-          def policy_unavailable(reason, detail=None, allow_repair=True):
+          def policy_unavailable(reason, detail=None):
               suffix = "" if detail is None else f" detail={json.dumps(detail)}"
-              if allow_repair and is_repair:
+              if is_repair:
                   print(
                       "ADMISSION_PLANE_PARTITION status=policy-unavailable "
-                      f"reason={reason} self-repair=true{suffix}"
+                      f"reason={reason} self-repair=bootstrap{suffix}"
                   )
                   raise SystemExit(0)
               print(
                   "ADMISSION_PLANE_PARTITION status=policy-unavailable "
+                  f"reason={reason}{suffix}",
+                  file=sys.stderr,
+              )
+              raise SystemExit(1)
+
+          def policy_invalid(reason, detail=None):
+              suffix = "" if detail is None else f" detail={json.dumps(detail)}"
+              print(
+                  "ADMISSION_PLANE_PARTITION status=policy-invalid "
                   f"reason={reason}{suffix}",
                   file=sys.stderr,
               )
@@ -173,22 +178,22 @@ jobs:
               policy_unavailable("base-filemap-parse-failed", str(exception))
 
           if document.get("schema_version") != 2:
-              policy_unavailable("base-filemap-schema-invalid")
+              policy_invalid("base-filemap-schema-invalid")
           entries = document.get("files")
           if not isinstance(entries, list) or not entries:
-              policy_unavailable("base-filemap-files-invalid")
+              policy_invalid("base-filemap-files-invalid")
 
           compiled_entries = []
           patterns = []
           for index, entry in enumerate(entries):
               if not isinstance(entry, dict):
-                  policy_unavailable("base-filemap-entry-invalid", f"files[{index}]")
+                  policy_invalid("base-filemap-entry-invalid", f"files[{index}]")
               pattern = entry.get("pattern")
               plane = entry.get("admission_plane")
               if not isinstance(pattern, str) or not pattern or pattern != pattern.strip():
-                  policy_unavailable("base-filemap-pattern-invalid", f"files[{index}]")
+                  policy_invalid("base-filemap-pattern-invalid", f"files[{index}]")
               if plane not in {"judge", "content"}:
-                  policy_unavailable(
+                  policy_invalid(
                       "base-filemap-admission-plane-invalid",
                       f"files[{index}] pattern={pattern}",
                   )
@@ -199,7 +204,7 @@ jobs:
                   or any(ord(character) < 32 or ord(character) > 126 for character in pattern)
                   or any(segment in {"", ".", ".."} for segment in pattern.split("/"))
               ):
-                  policy_unavailable("base-filemap-pattern-unsafe", pattern)
+                  policy_invalid("base-filemap-pattern-unsafe", pattern)
 
               expression = [r"\A"]
               cursor = 0
@@ -224,12 +229,12 @@ jobs:
               try:
                   matcher = re.compile("".join(expression))
               except re.error as exception:
-                  policy_unavailable("base-filemap-pattern-invalid", str(exception))
+                  policy_invalid("base-filemap-pattern-invalid", str(exception))
               patterns.append(pattern)
               compiled_entries.append((pattern, plane, matcher))
 
           if patterns != sorted(patterns) or len(patterns) != len(set(patterns)):
-              policy_unavailable("base-filemap-pattern-order-invalid")
+              policy_invalid("base-filemap-pattern-order-invalid")
 
           def matches(path):
               return [entry for entry in compiled_entries if entry[2].match(path)]
@@ -237,20 +242,18 @@ jobs:
           for repair_path in sorted(repair_paths):
               repair_matches = matches(repair_path)
               if len(repair_matches) != 1 or repair_matches[0][1] != "judge":
-                  policy_unavailable(
+                  policy_invalid(
                       "self-repair-path-not-judge",
                       f"path={repair_path} matches={len(repair_matches)}",
-                      allow_repair=False,
                   )
 
           by_plane = {"judge": [], "content": []}
           for path in changed_paths:
               path_matches = matches(path)
               if len(path_matches) != 1:
-                  policy_unavailable(
+                  policy_invalid(
                       "path-match-count-invalid",
                       f"path={path} matches={len(path_matches)}",
-                      allow_repair=False,
                   )
               by_plane[path_matches[0][1]].append(path)
 
@@ -268,18 +271,71 @@ jobs:
                   print(f"content_path={json.dumps(path)}", file=sys.stderr)
               raise SystemExit(1)
           if judge_paths:
+              repair_suffix = " self-repair=proven" if is_repair else ""
               print(
                   "ADMISSION_PLANE_PARTITION status=judge-only "
-                  f"judge={len(judge_paths)} content=0"
+                  f"judge={len(judge_paths)} content=0{repair_suffix}"
               )
           elif content_paths:
               print(
                   "ADMISSION_PLANE_PARTITION status=content-only "
                   f"judge=0 content={len(content_paths)}"
               )
-          else:
-              print("ADMISSION_PLANE_PARTITION status=empty judge=0 content=0")
           PY
+
+  candidate-engineering:
+    name: Candidate harness engineering checks
+    needs: admission-plane-partition
+    if: always()
+    runs-on: ubuntu-latest
+    # 20 分钟对本 job 已结构性不足:凡改动命中 tools/** 者,EngineeringScope 的测试选择器
+    # 选中 0 个、回退 full,跑满全部测试套件,实测 20–21 分钟(#3940)。
+    # 证据:PR #3943(生产 +4/-4、新增测试实测 221ms)连续五次 CANCELLED
+    # (20m04 / 20m15 / ~21m / ~21m / ~21m);同期 dev 上 13–19 分钟通过的 run 全部 0 行
+    # tools/ 改动,选择器能裁剪。dev 自身亦出现过一次 CANCELLED(50a319d9c,20m13s)。
+    # 30 分钟给 full scope 留约 50% 余量;同文件的 Lean report job 预算已是 45 分钟。
+    timeout-minutes: 30
+    steps:
+      - name: Require successful admission plane partition
+        if: always()
+        shell: bash
+        env:
+          ADMISSION_PLANE_PARTITION_RESULT: ${{ needs.admission-plane-partition.result }}
+        run: |
+          set -euo pipefail
+          if [[ "$ADMISSION_PLANE_PARTITION_RESULT" != "success" ]]; then
+            printf 'ADMISSION_PLANE_PARTITION_DEPENDENCY status=failed dependency=admission-plane-partition result=%s\n' "$ADMISSION_PLANE_PARTITION_RESULT" >&2
+            exit 1
+          fi
+          printf '%s\n' 'ADMISSION_PLANE_PARTITION_DEPENDENCY status=passed dependency=admission-plane-partition result=success'
+      - name: Wait for the GitHub merge ref
+        if: github.event_name == 'pull_request_target'
+        run: "set -euo pipefail\nfor attempt in {1..25}; do\n  timestamp=\"$(date -u +'%Y-%m-%dT%H:%M:%SZ')\"\n  printf '%s poll=%s/25\\n' \"$timestamp\" \"$attempt\"\n  if git ls-remote --exit-code \"https://github.com/${{ github.repository }}.git\" \"refs/pull/${{ github.event.pull_request.number }}/merge\" >/dev/null 2>&1; then exit 0; fi\n  sleep 5\ndone\nprintf '%s\\n' \"merge ref absent after 125s (conflicted PR or still computing)\"\nexit 0"
+      - name: Check out candidate
+        id: checkout-merge
+        continue-on-error: ${{ github.event_name == 'pull_request_target' }}
+        uses: actions/checkout@v4
+        with: { ref: "${{ github.event_name == 'pull_request_target' && format('refs/pull/{0}/merge', github.event.pull_request.number) || github.sha }}", fetch-depth: 0, persist-credentials: false, path: candidate }
+      - name: Strip checkout remote state
+        if: steps.checkout-merge.outcome == 'success'
+        shell: bash
+        env:
+          CHECKOUT_PATH: candidate
+        run: |
+          set -euo pipefail
+          git -C "$CHECKOUT_PATH" remote remove origin
+          git -C "$CHECKOUT_PATH" for-each-ref --format='delete %(refname)' refs/remotes/ |
+            git -C "$CHECKOUT_PATH" update-ref --stdin
+          remote_count="$(git -C "$CHECKOUT_PATH" remote | wc -l)"
+          remote_ref_count="$(git -C "$CHECKOUT_PATH" for-each-ref --format='%(refname)' refs/remotes/ | wc -l)"
+          if [[ "$remote_count" -ne 0 || "$remote_ref_count" -ne 0 ]]; then
+            printf '%s\n' "checkout still exposes remotes or remote-tracking refs" >&2
+            exit 1
+          fi
+          head_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD)"
+          base_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD^1)"
+          test -n "$head_sha"
+          test -n "$base_sha"
       - name: Classify exact revert
         id: revert
         if: github.event_name == 'pull_request_target' && steps.checkout-merge.outcome == 'success'
@@ -492,11 +548,25 @@ jobs:
 
   lean-inspect:
     name: Canonical Lean report production
+    needs: admission-plane-partition
+    if: always()
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 45
     outputs:
       baseline_sha: ${{ steps.base.outputs.sha }}
     steps:
+      - name: Require successful admission plane partition
+        if: always()
+        shell: bash
+        env:
+          ADMISSION_PLANE_PARTITION_RESULT: ${{ needs.admission-plane-partition.result }}
+        run: |
+          set -euo pipefail
+          if [[ "$ADMISSION_PLANE_PARTITION_RESULT" != "success" ]]; then
+            printf 'ADMISSION_PLANE_PARTITION_DEPENDENCY status=failed dependency=admission-plane-partition result=%s\n' "$ADMISSION_PLANE_PARTITION_RESULT" >&2
+            exit 1
+          fi
+          printf '%s\n' 'ADMISSION_PLANE_PARTITION_DEPENDENCY status=passed dependency=admission-plane-partition result=success'
       - name: Wait for the GitHub merge ref
         if: github.event_name == 'pull_request_target'
         run: "set -euo pipefail\nfor attempt in {1..25}; do\n  timestamp=\"$(date -u +'%Y-%m-%dT%H:%M:%SZ')\"\n  printf '%s poll=%s/25\\n' \"$timestamp\" \"$attempt\"\n  if git ls-remote --exit-code \"https://github.com/${{ github.repository }}.git\" \"refs/pull/${{ github.event.pull_request.number }}/merge\" >/dev/null 2>&1; then exit 0; fi\n  sleep 5\ndone\nprintf '%s\\n' \"merge ref absent after 125s (conflicted PR or still computing)\"\nexit 0"
@@ -812,11 +882,24 @@ jobs:
   baseline-admission:
     name: Content-addressed dev baseline admission
     needs: lean-inspect
+    if: always()
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
       DEV_BASELINE_SHA: ${{ needs.lean-inspect.outputs.baseline_sha }}
     steps:
+      - name: Require successful canonical Lean report production
+        if: always()
+        shell: bash
+        env:
+          LEAN_INSPECT_RESULT: ${{ needs.lean-inspect.result }}
+        run: |
+          set -euo pipefail
+          if [[ "$LEAN_INSPECT_RESULT" != "success" ]]; then
+            printf 'LEAN_INSPECT_DEPENDENCY status=failed dependency=lean-inspect result=%s\n' "$LEAN_INSPECT_RESULT" >&2
+            exit 1
+          fi
+          printf '%s\n' 'LEAN_INSPECT_DEPENDENCY status=passed dependency=lean-inspect result=success'
       - name: Wait for the GitHub merge ref
         if: github.event_name == 'pull_request_target'
         run: "set -euo pipefail\nfor attempt in {1..25}; do\n  timestamp=\"$(date -u +'%Y-%m-%dT%H:%M:%SZ')\"\n  printf '%s poll=%s/25\\n' \"$timestamp\" \"$attempt\"\n  if git ls-remote --exit-code \"https://github.com/${{ github.repository }}.git\" \"refs/pull/${{ github.event.pull_request.number }}/merge\" >/dev/null 2>&1; then exit 0; fi\n  sleep 5\ndone\nprintf '%s\\n' \"merge ref absent after 125s (conflicted PR or still computing)\"\nexit 0"
