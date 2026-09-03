@@ -5,7 +5,7 @@ namespace StrataLint.Tests;
 public sealed partial class ProductionEnvironmentTests
 {
     [Fact]
-    public void CoverAtomRewritesLegacyCoverageGidsEntryToObjectEdges()
+    public void CoverAtomWritesCoverageGidsEntryAsObjectEdge()
     {
         var inputs = DirectoryInputs(CoverWorld.Materialize(new CoverSpec()));
         var atom = Assert.Single(inputs.Files, pair =>
