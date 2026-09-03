@@ -1,0 +1,80 @@
+# 第两千一百零六部　Riemann–Siegel packet 中的普适分离律
+
+临界线高度 \(t\) 的有效 Riemann–Siegel 长度为：
+
+$$
+\boxed{
+N(t)
+\sim
+\sqrt{\frac{t}{2\pi}}.
+}
+\tag{2106.1}
+$$
+
+Riemann–Siegel 公式确实使用大约前 \(\sqrt{t/(2\pi)}\) 个模式。([DLMF][2])
+
+为了量化反射两侧长度剖面的分离，定义：
+
+$$
+H_N=\sum_{n\le N}\frac1n,
+$$
+
+$$
+x_n=\frac{\log n}{\log N}\in[0,1],
+$$
+
+并在 harmonic probability：
+
+$$
+\mathbb P_N(n)=\frac1{nH_N}
+$$
+
+下考虑：
+
+$$
+f_{N,+}(n)=e^{a x_n},
+\qquad
+f_{N,-}(n)=e^{-a x_n}.
+$$
+
+这对应法向偏移：
+
+$$
+\boxed{
+\delta_N=\frac{a}{\log N}.
+}
+\tag{2106.2}
+$$
+
+因为：
+
+$$
+\frac1{H_N}
+\sum_{n\le N}
+\frac{F(\log n/\log N)}n
+\longrightarrow
+\int_0^1F(x)\,dx,
+$$
+
+有：
+
+$$
+\|f_{N,+}\|^2
+\longrightarrow
+\frac{e^{2a}-1}{2a},
+$$
+
+$$
+\|f_{N,-}\|^2
+\longrightarrow
+\frac{1-e^{-2a}}{2a},
+$$
+
+而：
+
+$$
+\langle f_{N,+},f_{N,-}\rangle=1.
+$$
+
+所以归一化重叠满足：
+

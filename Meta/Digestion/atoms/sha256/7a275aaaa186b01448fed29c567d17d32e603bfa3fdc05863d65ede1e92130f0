@@ -1,0 +1,42 @@
+# 608. square-class rank 给出离线零点“纠缠”的精确等级
+
+假设在某个系数域 \(K\) 中，有 \(m\) 个镜像对：
+
+$$
+\delta_i=\pm\sqrt{D_i},
+\qquad
+D_i\in K^\times.
+$$
+
+考虑平方类：
+
+$$
+[D_i]
+\in
+K^\times/(K^\times)^2.
+$$
+
+令：
+
+$$
+r
+=
+\dim_{\mathbb F_2}
+\operatorname{span}
+\{
+[D_1],\ldots,[D_m]
+\}.
+$$
+
+则在通常的非退化条件下：
+
+$$
+\boxed{
+[K(\sqrt{D_1},\ldots,\sqrt{D_m}):K]
+=
+2^r.
+}
+$$
+
+因此：
+

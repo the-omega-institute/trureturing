@@ -1,0 +1,84 @@
+# 600. 标量可以逼近，素数角色不能统一逼近
+
+这是整件事最关键的区分。
+
+定义指数 \(a\) 在素数上的角色：
+
+$$
+\boxed{
+\chi_a(p)=p^{-a}.
+}
+$$
+
+假设有理素数影：
+
+$$
+r_M\to\delta.
+$$
+
+对每一个固定素数 \(p\)：
+
+$$
+p^{-r_M}\to p^{-\delta}.
+$$
+
+所以在任意有限素数集合上：
+
+$$
+\chi_{r_M}\to\chi_\delta.
+$$
+
+但是在所有素数上取统一相对误差：
+
+$$
+\frac{\chi_{r_M}(p)}{\chi_\delta(p)}
+=
+p^{\delta-r_M}.
+$$
+
+只要：
+
+$$
+r_M\neq\delta,
+$$
+
+就有：
+
+$$
+\sup_p
+\left|
+\log
+\frac{
+\chi_{r_M}(p)
+}{
+\chi_\delta(p)
+}
+\right|
+=
+|\delta-r_M|
+\sup_p\log p
+=
+\infty.
+$$
+
+所以：
+
+$$
+\boxed{
+r_M\to\delta\text{ 作为实数，}
+}
+$$
+
+并不推出：
+
+$$
+\boxed{
+\chi_{r_M}\to\chi_\delta
+\text{ 在全素数统一拓扑中成立。}
+}
+$$
+
+任何非零指数误差，都会被足够大的素数放大。
+
+---
+

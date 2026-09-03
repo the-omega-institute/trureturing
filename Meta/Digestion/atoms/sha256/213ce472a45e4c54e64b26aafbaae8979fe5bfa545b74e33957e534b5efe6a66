@@ -1,0 +1,52 @@
+# 八、对仓库最值得新增的三个定理
+
+可以正式建立：
+
+```text
+D5/S3/Weil/PrimeAddress/WeightedAllPrimePhaseRecurrence.lean
+D5/S3/Weil/PrimeAddress/CriticalPrimePhaseMismatch.lean
+D5/S3/Weil/PrimeAddress/PrimeCoherenceThreshold.lean
+```
+
+核心声明应是：
+
+$$
+\boxed{
+\sigma>\frac12
+\Longrightarrow
+\forall B,\varepsilon>0,\
+\exists t>B,\
+\sum_p
+p^{-2\sigma}
+|p^{-it}-1|^2
+<
+\varepsilon.
+}
+$$
+
+以及在消费素数定理输入后：
+
+$$
+\boxed{
+\sigma\le\frac12,\ t\neq0
+\Longrightarrow
+\sum_p
+p^{-2\sigma}
+|p^{-it}-1|^2
+=
+\infty.
+}
+$$
+
+合起来：
+
+$$
+\boxed{
+\frac12
+=
+\text{全素数相位流从全局可重现到仅有限可重现的精确阈值}.
+}
+$$
+
+---
+
