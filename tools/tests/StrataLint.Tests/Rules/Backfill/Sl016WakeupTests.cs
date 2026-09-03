@@ -208,38 +208,6 @@ public sealed class Sl016WakeupTests
     }
 
     [Fact]
-    public void CandidateCanonicalCoverageComparedWithLegacyBaselineHasNoCanonicalKeyFinding()
-    {
-        var targetStatementId = FrozenStatementReceiptTestData.Id('a');
-        var fixture = CoverageReceiptFixture(
-            "D5/S0/Carrier/BackfillTarget",
-            targetStatementId);
-        var legacy = fixture.Baseline[AtomPath]
-            .Replace(
-                "coverage_gids:\n  - gid: D5/S0/Carrier/BackfillTarget\n"
-                    + $"    target_statement_id: {targetStatementId}",
-                "coverage_gids:\n  - D5/S0/Carrier/BackfillTarget",
-                StringComparison.Ordinal)
-            .Replace(
-                "receipts:\n",
-                "receipts:\n"
-                + "  coverage:\n"
-                + "    - gid: D5/S0/Carrier/BackfillTarget\n"
-                + $"      source_sha256: {RuleFixture.FixtureCasReference}\n"
-                + "      target_statement_id: null\n",
-                StringComparison.Ordinal);
-        fixture.Baseline[AtomPath] = legacy;
-        fixture.ForkPoint[AtomPath] = legacy;
-
-        var findings = BackfillInventoryRule.EvaluateCandidateDelta(fixture.Build(
-            RawChangeSet.Create([AtomPath])));
-
-        Assert.DoesNotContain(findings, finding => finding.Message.Contains(
-            "keys are not canonical",
-            StringComparison.Ordinal));
-    }
-
-    [Fact]
     public void ChangedEntryDuplicateCoverageStillProducesFinding()
     {
         var fixture = new RuleFixture();

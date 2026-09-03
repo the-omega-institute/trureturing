@@ -104,7 +104,7 @@ internal static partial class RepositoryRules
                     path,
                     child,
                     $"{location}[{index++}]",
-                    ArrayElementSlot(slot),
+                    ArrayElementSlot(slot, child.ValueKind),
                     tasks,
                     findings,
                     scanAnomalies,
@@ -243,9 +243,9 @@ internal static partial class RepositoryRules
         _ => AddressSlot.None,
     };
 
-    private static AddressSlot ArrayElementSlot(AddressSlot slot) => slot switch
+    private static AddressSlot ArrayElementSlot(AddressSlot slot, JsonValueKind elementKind) => slot switch
     {
-        AddressSlot.CoverageList => AddressSlot.CoverageEntry,
+        AddressSlot.CoverageList when elementKind == JsonValueKind.Object => AddressSlot.CoverageEntry,
         AddressSlot.ReceiptList => AddressSlot.ReceiptEntry,
         _ => AddressSlot.None,
     };
