@@ -167,17 +167,91 @@ public sealed partial class ReviewRegressionTests
     [Fact]
     public void Sl016AllowsDeletingACasBlobAbsentFromTheCurrentLedger()
     {
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        var obsolete = DigestionCasStore.Capture(Encoding.UTF8.GetBytes("obsolete atom\n"));
-        fixture.Baseline[obsolete.RelativePath] = Encoding.UTF8.GetString(obsolete.Bytes.AsSpan());
-        fixture.ForkPoint[obsolete.RelativePath] = Encoding.UTF8.GetString(obsolete.Bytes.AsSpan());
+        var (fixture, deletedCasPath) = UnreferencedCasDeletionFixture();
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(16),
-            fixture.Build(RawChangeSet.Create([obsolete.RelativePath])));
+            fixture.Build(RawChangeSet.Create([deletedCasPath])));
 
         Assert.Empty(evaluation.Diagnostics);
+    }
+
+    [Fact]
+    public void Sl016StillChecksDerivedStatusWhenDeletingAnUnreferencedCasBlob()
+    {
+        var (fixture, deletedCasPath) = UnreferencedCasDeletionFixture();
+        var atom = fixture.Files[RuleFixture.FixtureBackfillAtomPath];
+        fixture.Files.Remove(RuleFixture.FixtureBackfillAtomPath);
+        var mismatchedStatusPath = RuleFixture.FixtureBackfillAtomPath.Replace(
+            "/partial-open/",
+            "/absorbed-closed/",
+            StringComparison.Ordinal);
+        fixture.Files[mismatchedStatusPath] = atom;
+
+        var evaluation = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(16),
+            fixture.Build(RawChangeSet.Create([
+                deletedCasPath,
+                RuleFixture.FixtureBackfillAtomPath,
+                mismatchedStatusPath,
+            ])));
+
+        Assert.Contains(evaluation.Diagnostics, diagnostic => diagnostic.Message.Contains(
+            "handwritten status absorbed-closed differs from derived partial-open",
+            StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void Sl016StillChecksClosedEntryKeysWhenDeletingAnUnreferencedCasBlob()
+    {
+        var (fixture, deletedCasPath) = UnreferencedCasDeletionFixture();
+        fixture.Files[RuleFixture.FixtureBackfillAtomPath] += "unexpected: value\n";
+
+        var evaluation = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(16),
+            fixture.Build(RawChangeSet.Create([
+                deletedCasPath,
+                RuleFixture.FixtureBackfillAtomPath,
+            ])));
+
+        Assert.Contains(evaluation.Diagnostics, diagnostic => diagnostic.Message.Contains(
+            "source fixture-source entry keys are not canonical",
+            StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void Sl016StillChecksCoverageTargetsWhenDeletingAnUnreferencedCasBlob()
+    {
+        const string missingGid = "D5/S0/Carrier/MissingCoverageTarget";
+        var (fixture, deletedCasPath) = UnreferencedCasDeletionFixture();
+        fixture.Files[RuleFixture.FixtureBackfillAtomPath] = fixture.Files[
+                RuleFixture.FixtureBackfillAtomPath]
+            .Replace(
+                "D5/S0/Carrier/BackfillTarget",
+                missingGid,
+                StringComparison.Ordinal);
+
+        var evaluation = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(16),
+            fixture.Build(RawChangeSet.Create([
+                deletedCasPath,
+                RuleFixture.FixtureBackfillAtomPath,
+            ])));
+
+        Assert.Contains(evaluation.Diagnostics, diagnostic => diagnostic.Message.Contains(
+            $"entry {RuleFixture.FixtureAtomId} coverage target is absent: {missingGid}",
+            StringComparison.Ordinal));
+    }
+
+    private static (RuleFixture Fixture, string DeletedCasPath) UnreferencedCasDeletionFixture()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        var obsolete = DigestionCasStore.Capture(Encoding.UTF8.GetBytes("obsolete atom\n"));
+        var obsoleteText = Encoding.UTF8.GetString(obsolete.Bytes.AsSpan());
+        fixture.Baseline[obsolete.RelativePath] = obsoleteText;
+        fixture.ForkPoint[obsolete.RelativePath] = obsoleteText;
+        return (fixture, obsolete.RelativePath);
     }
 
     [Fact]

@@ -560,6 +560,20 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
+    public void IngestReportFreeRejectsMissingReferencedCasBlobBeforeTruthOrWrites()
+    {
+        var fixture = UncoveredOnlyIngestFixture(addNewAtom: false);
+        var casPath = Assert.Single(fixture.Files.Keys, DigestionCasStore.IsCanonicalPath);
+        Assert.True(fixture.Files.Remove(casPath));
+
+        AssertReportFreeRejectedWithoutTruthOrWrites(
+            fixture,
+            RawChangeSet.Create([casPath]),
+            "INGEST_INVALID",
+            $"entry {ExistingAtomId(fixture)} CAS blob is missing: {casPath}");
+    }
+
+    [Fact]
     public void IngestReportFreeRejectsHashMismatchedCasBlobBeforeTruthOrWrites()
     {
         var fixture = UncoveredOnlyIngestFixture();
