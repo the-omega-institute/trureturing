@@ -146,6 +146,21 @@ public sealed class CoverageStatementReceiptTests
     }
 
     [Fact]
+    public void Sl016NullTargetForResolvableFrozenStatementKeepsTruthOpen()
+    {
+        var evaluation = Evaluate(
+            DeclarationGid,
+            receiptStatementId: null,
+            FrozenStatementReceiptTestData.Id('3'),
+            FrozenStatementReceiptTestData.Id('2'),
+            TargetSource("by trivial"));
+
+        Assert.Equal(
+            DigestionTruthState.Open,
+            Assert.Single(evaluation.Entries).DerivedStatus.Truth);
+    }
+
+    [Fact]
     public void ModuleGidUsesFrozenModuleStatementId()
     {
         var targetSource = TargetSource("by trivial");
