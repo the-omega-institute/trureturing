@@ -10,10 +10,12 @@ import D5.S3.Weil.TestFunctions.LiCurvatureCriterion
 import D5.S3.Weil.CayleyLaguerre.TruncatedCircleMomentBridge
 
 /- Library-search audit trail (2026-09-04):
-   * D5 name and body-shape searches found no exact owner for the inverse-
-     congruence criterion. RationalToeplitzCollapse owns the forward rational
-     Gram congruence, while TruncatedCircleMomentBridge owns the finite
-     representing-measure converse; both are applied below.
+   * ExactCommonSpectrumFloor already freezes private family owners for the
+     weighted reflected Gram congruence and inverse congruence cancellation.
+     Private names are not source-level APIs, so the corresponding obligations
+     below are theorem-local and do not create competing frozen declarations.
+     RationalToeplitzCollapse and TruncatedCircleMomentBridge remain the public
+     owners applied for the substantive forward and converse steps.
    * Pinned Mathlib supplies reciprocal withDensity cancellation and
      nonsingular matrix inverse identities, but no truncated Toeplitz moment
      representation theorem.
@@ -35,101 +37,6 @@ namespace D5.S3.Observer.BlockStructure.FiniteCommonSpectrumCriterion
 
 noncomputable local instance circleMeasurableSpace : MeasurableSpace Circle := borel Circle
 local instance circleBorelSpace : BorelSpace Circle := ⟨rfl⟩
-
-private theorem rational_gram_eq_reflected_moment_congruence
-    (N : Nat) (mu : FiniteMeasure Circle)
-    (coefficient : Matrix (Fin (N + 1)) (Fin (N + 1)) Complex)
-    (denominator : Polynomial Complex)
-    (denominatorNonzero : forall z : Circle,
-      denominator.eval (z : Complex) ≠ 0) :
-    let monomial : Circle -> Fin (N + 1) -> Complex := fun z j =>
-      (z : Complex) ^ (j : Nat)
-    let feature : Circle -> Fin (N + 1) -> Complex := fun z i =>
-      (coefficient *ᵥ monomial z) i / denominator.eval (z : Complex)
-    let rationalGram : Matrix (Fin (N + 1)) (Fin (N + 1)) Complex := fun i j =>
-      ∫ z, feature z i * star (feature z j) ∂(mu : Measure Circle)
-    let density : Circle -> ENNReal := fun z =>
-      ENNReal.ofReal
-        (Complex.normSq (denominator.eval (z : Complex)))⁻¹
-    let weightedReflected : Measure Circle :=
-      ((mu : Measure Circle).withDensity density).map Inv.inv
-    rationalGram = coefficient *
-      toeplitzMatrix (circleMoment weightedReflected) N * coefficientᴴ := by
-  classical
-  dsimp only
-  have collapse := rational_toeplitz_collapse (N + 1) mu coefficient
-    denominator denominatorNonzero
-  dsimp only at collapse
-  rw [collapse]
-  congr 1
-  congr 1
-  ext i j
-  let weighted : Measure Circle :=
-    (mu : Measure Circle).withDensity fun z =>
-      ENNReal.ofReal
-        (Complex.normSq (denominator.eval (z : Complex)))⁻¹
-  have circleMomentMapInv (k : Int) :
-      circleMoment (weighted.map Inv.inv) k = circleMoment weighted (-k) := by
-    simp only [circleMoment]
-    have integrandContinuous : Continuous fun z : Circle =>
-        (z : Complex) ^ (-k) :=
-      continuous_subtype_val.zpow₀ (-k) fun z => Or.inl (Circle.coe_ne_zero z)
-    rw [integral_map measurable_inv.aemeasurable
-      integrandContinuous.aestronglyMeasurable]
-    apply integral_congr_ae
-    filter_upwards [] with z
-    rw [show ((↑(z⁻¹) : Complex)) = (z : Complex)⁻¹ by exact Circle.coe_inv z]
-    rw [_root_.inv_zpow']
-  simp only [toeplitzMatrix]
-  change (∫ z : Circle, (z : Complex) ^ (i : Nat) *
-      star ((z : Complex) ^ (j : Nat)) ∂weighted) =
-    circleMoment (weighted.map Inv.inv)
-      (((i : Nat) : Int) - ((j : Nat) : Int))
-  rw [circleMomentMapInv]
-  apply integral_congr_ae
-  filter_upwards [] with z
-  simp only [neg_sub]
-  rw [zpow_sub₀ (Circle.coe_ne_zero z)]
-  rw [zpow_natCast, zpow_natCast, div_eq_mul_inv]
-  congr 1
-  rw [← Circle.coe_pow, ← Circle.coe_inv, Circle.coe_inv_eq_conj]
-  rfl
-
-private theorem circle_moment_hermitian
-    (mu : Measure Circle) [IsFiniteMeasure mu] (k : Int) :
-    circleMoment mu (-k) = star (circleMoment mu k) := by
-  have hHermitian := circle_moment_toeplitz_isHermitian mu k.natAbs
-  cases k with
-  | ofNat n =>
-      let j : Fin (n + 1) := ⟨n, by simp⟩
-      have h := hHermitian.apply (0 : Fin (n + 1)) j
-      simpa [toeplitzMatrix, j, Int.negSucc_eq] using h.symm
-  | negSucc n =>
-      let j : Fin (n + 2) := ⟨n + 1, by simp⟩
-      have h := hHermitian.apply j (0 : Fin (n + 2))
-      simpa [toeplitzMatrix, j, Int.negSucc_eq] using h.symm
-
-private theorem inverse_congruence_cancel
-    {N : Nat}
-    (A M : Matrix (Fin (N + 1)) (Fin (N + 1)) Complex)
-    (hA : IsUnit A) :
-    A⁻¹ * (A * M * Aᴴ) * (A⁻¹)ᴴ = M := by
-  let _ := hA.invertible
-  rw [Matrix.conjTranspose_nonsing_inv]
-  have hAstar : IsUnit Aᴴ := hA.star
-  let _ := hAstar.invertible
-  simp [Matrix.mul_assoc]
-
-private theorem congruence_inverse_cancel
-    {N : Nat}
-    (A M : Matrix (Fin (N + 1)) (Fin (N + 1)) Complex)
-    (hA : IsUnit A) :
-    A * (A⁻¹ * M * (A⁻¹)ᴴ) * Aᴴ = M := by
-  let _ := hA.invertible
-  rw [Matrix.conjTranspose_nonsing_inv]
-  have hAstar : IsUnit Aᴴ := hA.star
-  let _ := hAstar.invertible
-  simp [Matrix.mul_assoc]
 
 /-- A matrix is the Gram matrix of the full common-denominator rational feature
 family exactly when its inverse coefficient congruence is a positive
@@ -171,6 +78,85 @@ theorem finite_common_spectrum_criterion
       exists moment : Int -> Complex,
         (forall k, moment (-k) = star (moment k)) ∧
         transformed = toeplitzMatrix moment N
+  have rationalGramCongruence (mu : FiniteMeasure Circle) :
+      let density : Circle -> ENNReal := fun z =>
+        ENNReal.ofReal
+          (Complex.normSq (denominator.eval (z : Complex)))⁻¹
+      let weightedReflected : Measure Circle :=
+        ((mu : Measure Circle).withDensity density).map Inv.inv
+      rationalGram mu = coefficient *
+        toeplitzMatrix (circleMoment weightedReflected) N * coefficientᴴ := by
+    dsimp only [rationalGram, feature, monomial]
+    have collapse := rational_toeplitz_collapse (N + 1) mu coefficient
+      denominator denominatorNonzero
+    dsimp only at collapse
+    rw [collapse]
+    congr 1
+    congr 1
+    ext i j
+    let weighted : Measure Circle :=
+      (mu : Measure Circle).withDensity fun z =>
+        ENNReal.ofReal
+          (Complex.normSq (denominator.eval (z : Complex)))⁻¹
+    have circleMomentMapInv (k : Int) :
+        circleMoment (weighted.map Inv.inv) k = circleMoment weighted (-k) := by
+      simp only [circleMoment]
+      have integrandContinuous : Continuous fun z : Circle =>
+          (z : Complex) ^ (-k) :=
+        continuous_subtype_val.zpow₀ (-k) fun z =>
+          Or.inl (Circle.coe_ne_zero z)
+      rw [integral_map measurable_inv.aemeasurable
+        integrandContinuous.aestronglyMeasurable]
+      apply integral_congr_ae
+      filter_upwards [] with z
+      rw [show ((↑(z⁻¹) : Complex)) = (z : Complex)⁻¹ by
+        exact Circle.coe_inv z]
+      rw [_root_.inv_zpow']
+    simp only [toeplitzMatrix]
+    change (∫ z : Circle, (z : Complex) ^ (i : Nat) *
+        star ((z : Complex) ^ (j : Nat)) ∂weighted) =
+      circleMoment (weighted.map Inv.inv)
+        (((i : Nat) : Int) - ((j : Nat) : Int))
+    rw [circleMomentMapInv]
+    apply integral_congr_ae
+    filter_upwards [] with z
+    simp only [neg_sub]
+    rw [zpow_sub₀ (Circle.coe_ne_zero z)]
+    rw [zpow_natCast, zpow_natCast, div_eq_mul_inv]
+    congr 1
+    rw [← Circle.coe_pow, ← Circle.coe_inv, Circle.coe_inv_eq_conj]
+    rfl
+  have circleMomentHermitian
+      (mu : Measure Circle) [IsFiniteMeasure mu] (k : Int) :
+      circleMoment mu (-k) = star (circleMoment mu k) := by
+    have hHermitian := circle_moment_toeplitz_isHermitian mu k.natAbs
+    cases k with
+    | ofNat n =>
+        let j : Fin (n + 1) := ⟨n, by simp⟩
+        have h := hHermitian.apply (0 : Fin (n + 1)) j
+        simpa [toeplitzMatrix, j, Int.negSucc_eq] using h.symm
+    | negSucc n =>
+        let j : Fin (n + 2) := ⟨n + 1, by simp⟩
+        have h := hHermitian.apply j (0 : Fin (n + 2))
+        simpa [toeplitzMatrix, j, Int.negSucc_eq] using h.symm
+  have inverseCongruenceCancel
+      (M : Matrix (Fin (N + 1)) (Fin (N + 1)) Complex) :
+      coefficient⁻¹ * (coefficient * M * coefficientᴴ) *
+          (coefficient⁻¹)ᴴ = M := by
+    let _ := coefficientUnit.invertible
+    rw [Matrix.conjTranspose_nonsing_inv]
+    have hCoefficientStar : IsUnit coefficientᴴ := coefficientUnit.star
+    let _ := hCoefficientStar.invertible
+    simp [Matrix.mul_assoc]
+  have congruenceInverseCancel
+      (M : Matrix (Fin (N + 1)) (Fin (N + 1)) Complex) :
+      coefficient * (coefficient⁻¹ * M * (coefficient⁻¹)ᴴ) *
+          coefficientᴴ = M := by
+    let _ := coefficientUnit.invertible
+    rw [Matrix.conjTranspose_nonsing_inv]
+    have hCoefficientStar : IsUnit coefficientᴴ := coefficientUnit.star
+    let _ := hCoefficientStar.invertible
+    simp [Matrix.mul_assoc]
   constructor
   · rintro ⟨mu, gramIdentity⟩
     let densityReal : Circle -> Real := fun z =>
@@ -203,20 +189,19 @@ theorem finite_common_spectrum_criterion
         rationalGram mu = coefficient * momentMatrix * coefficientᴴ := by
       simpa only [rationalGram, feature, monomial, momentMatrix,
         weightedReflected, density, densityReal] using
-        rational_gram_eq_reflected_moment_congruence N mu coefficient
-          denominator denominatorNonzero
+        rationalGramCongruence mu
     have GCongruence : G = coefficient * momentMatrix * coefficientᴴ :=
       gramIdentity.trans gramCongruence
     have transformedMoment : transformed = momentMatrix := by
       dsimp only [transformed]
       rw [GCongruence]
-      exact inverse_congruence_cancel coefficient momentMatrix coefficientUnit
+      exact inverseCongruenceCancel momentMatrix
     have momentPositive : momentMatrix.PosSemidef := by
       dsimp only [momentMatrix]
       exact circle_moment_toeplitz_posSemidef weightedReflected N
     refine ⟨?_, circleMoment weightedReflected, ?_, ?_⟩
     · rwa [transformedMoment]
-    · exact circle_moment_hermitian weightedReflected
+    · exact circleMomentHermitian weightedReflected
     · exact transformedMoment
   · rintro ⟨transformedPositive, moment, momentHermitian, transformedToeplitz⟩
     have toeplitzPositive : (toeplitzMatrix moment N).PosSemidef := by
@@ -285,14 +270,13 @@ theorem finite_common_spectrum_criterion
           toeplitzMatrix (circleMoment weightedReflected) N * coefficientᴴ := by
       simpa only [rationalGram, feature, monomial, weightedReflected,
         density, densityReal] using
-        rational_gram_eq_reflected_moment_congruence N rho coefficient
-          denominator denominatorNonzero
+        rationalGramCongruence rho
     refine ⟨rho, ?_⟩
     calc
       G = coefficient * transformed * coefficientᴴ := by
         symm
         dsimp only [transformed]
-        exact congruence_inverse_cancel coefficient G coefficientUnit
+        exact congruenceInverseCancel G
       _ = coefficient * toeplitzMatrix moment N * coefficientᴴ := by
         rw [transformedToeplitz]
       _ = coefficient *
