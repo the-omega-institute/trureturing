@@ -1,0 +1,21 @@
+## 414. Liouville 宇称 RH 判据
+
+```lean
+theorem rh_iff_liouvilleSupertrace_holomorphic :
+    RiemannHypothesis ↔
+      HolomorphicOn
+        (fun s =>
+          riemannZeta (2 * s) /
+            riemannZeta s)
+        {s | 1 / 2 < s.re}
+```
+
+这里应明确处理：
+
+* \(s=1\) 的可去／零行为；
+* 非平凡零点区域；
+* 函数方程反射；
+* \(\Re(2s)>1\) 上 ζ 的无零性。
+
+---
+

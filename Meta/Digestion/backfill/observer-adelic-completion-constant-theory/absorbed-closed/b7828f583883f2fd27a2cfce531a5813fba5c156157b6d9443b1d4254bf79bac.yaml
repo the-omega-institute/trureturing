@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:b7828f583883f2fd27a2cfce531a5813fba5c156157b6d9443b1d4254bf79bac
+  normalized_sha256: sha256:b7828f583883f2fd27a2cfce531a5813fba5c156157b6d9443b1d4254bf79bac
+cas_ref: sha256:b7828f583883f2fd27a2cfce531a5813fba5c156157b6d9443b1d4254bf79bac
+coverage_gids:
+  - D5/S3/Analytic/Adelic/PrimeObserverCasimirCompleteMonotonicity.prime_observer_casimir_complete_monotonicity
+receipts:
+  coverage:
+    - gid: D5/S3/Analytic/Adelic/PrimeObserverCasimirCompleteMonotonicity.prime_observer_casimir_complete_monotonicity
+      source_sha256: sha256:b7828f583883f2fd27a2cfce531a5813fba5c156157b6d9443b1d4254bf79bac
+      target_statement_id: sha256:b0c035539b8c27832aa282f413abb83bda454ffff279b324d53f2e88dfabac0c
+  scribe:
+    - gid: D5/S3/Analytic/Adelic/PrimeObserverCasimirCompleteMonotonicity.prime_observer_casimir_complete_monotonicity
+      definition_sha256: sha256:0ce44163fffae3ae7fa139a4d50d1a14ad0b5f9b86c4d9c34098d51fd07e9fb1
+      emission_sha256: sha256:d599b42d0502cd719cc6956312cd749eea7c8b14e39e232e72ca77f57d9775e2
+  unresolved_subitems: []

@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:73e0131ecfdefde55a5f8d63e3ece43aecc3ecb053ecddb8e04f3939b1e1d7c7
+  normalized_sha256: sha256:73e0131ecfdefde55a5f8d63e3ece43aecc3ecb053ecddb8e04f3939b1e1d7c7
+cas_ref: sha256:73e0131ecfdefde55a5f8d63e3ece43aecc3ecb053ecddb8e04f3939b1e1d7c7
+coverage_gids:
+  - D5/S3/Observer/MeasureSeparation/EquivalentMeasuresExcludePerfectSeparator.equivalent_probability_laws_exclude_perfect_separator
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/MeasureSeparation/EquivalentMeasuresExcludePerfectSeparator.equivalent_probability_laws_exclude_perfect_separator
+      source_sha256: sha256:73e0131ecfdefde55a5f8d63e3ece43aecc3ecb053ecddb8e04f3939b1e1d7c7
+      target_statement_id: sha256:48d5392cab7f4579279bbe16459ed981be83641b312af8edd487b9b9bc3177fc
+  scribe:
+    - gid: D5/S3/Observer/MeasureSeparation/EquivalentMeasuresExcludePerfectSeparator.equivalent_probability_laws_exclude_perfect_separator
+      definition_sha256: sha256:da2f8939e94d83cc2e897b0bdedeb34c25c42108e5bed20933e971aa515aa5f2
+      emission_sha256: sha256:5486c226042143bc326ec9c232aa45b31d107ce29d006f2c02c10ac73e864497
+  unresolved_subitems: []

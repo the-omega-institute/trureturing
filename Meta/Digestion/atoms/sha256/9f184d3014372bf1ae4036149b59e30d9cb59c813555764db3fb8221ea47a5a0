@@ -1,0 +1,91 @@
+* RH 正好要求两者均为正。
+
+第三：
+
+$$
+\boxed{
+p_n
+=
+-\frac1{4^n(n-1)!}
+\partial_q^n
+\log\mathcal X(0),
+}
+$$
+
+并且：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+(-1)^k\Delta^kp_n\ge0
+\quad
+\forall n\ge1,\ k\ge0.
+}
+$$
+
+这把无限 RH 问题变成了一张无限二维正性网格。
+
+黄金比例则通过已经形式化的 Zeckendorf 奇偶 jump：
+
+$$
+\Delta\beta_v
+\in
+\{\varphi,\varphi^2\}
+$$
+
+为这张二维网格提供一条共尾、非周期、bounded-discrepancy 的访问路径。
+
+最后，所有离线零点的“纠缠”不再需要笼统表述。它现在可以被精确分成：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{同一 orbit 内的 reciprocal anti-correlation};\\
+&\text{每个 orbit 的 odd Krein negative channel};\\
+&\text{全部 orbit 共享的 Paley--Wiener evaluation range};\\
+&\text{全部 Casimir 原子共享的 Hausdorff moment inequalities};\\
+&\text{source deformation 下可能连通的 branch monodromy}.
+\end{aligned}
+}
+$$
+
+其中最关键的新判断是：
+
+$$
+\boxed{
+\text{完整对称只给出 reciprocal pairing；}
+}
+$$
+
+$$
+\boxed{
+\text{正性才把 reciprocal pairing 重完为 unitary pairing。}
+}
+$$
+
+因此，真正可能关闭 RH 的对象不是另一个对称公式，而是一个从素数构型侧直接构造的正收缩算子：
+
+$$
+\boxed{
+J_\xi
+}
+$$
+
+或等价的正 Casimir：
+
+$$
+\boxed{
+Q_\xi=\frac14J_\xi^{-1}.
+}
+$$
+
+而真正可能证明 RH 为假的机制，则是：
+
+$$
+\boxed{
+\text{该系数构造的矩泛函在某个有限层出现负平方，}
+}
+$$
+
+也就是某个有限 Casimir–Hausdorff 矩阵失去正半定性。

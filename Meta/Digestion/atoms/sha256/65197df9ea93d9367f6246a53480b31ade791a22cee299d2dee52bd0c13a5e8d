@@ -1,0 +1,75 @@
+# 九、发现反例与证明不存在反例有根本不对称
+
+非 RH 的逻辑形式是：
+
+$$
+\exists\rho,\quad
+\xi(\rho)=0,\quad
+\Re\rho\neq\frac12.
+$$
+
+一旦给出这样的精确 \(\rho\)，项目已经能构造负 Weil 测试。
+
+RH 的逻辑形式则是：
+
+$$
+\forall\rho,\quad
+\xi(\rho)=0
+\Longrightarrow
+\Re\rho=\frac12.
+$$
+
+所以：
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\text{ 有局部见证，}
+}
+$$
+
+而：
+
+$$
+\boxed{
+\mathrm{RH}
+\text{ 要求全局封闭定律。}
+}
+$$
+
+数值搜索适合前者：
+
+> 找到一个反例即可停止。
+
+数值搜索不适合单独完成后者：
+
+> 没找到只意味着反例可能更高或更贴线。
+
+因此真正的 RH 证明必须改变问题，而不是继续增加搜索深度：
+
+$$
+\boxed{
+\text{从“逐个查找零点”}
+\quad\longrightarrow\quad
+\text{“证明离线零点必然造成系统禁止的结构”.}
+}
+$$
+
+项目已经完成前半：
+
+$$
+\text{离线零点}
+\Longrightarrow
+\text{负 Weil 方向}.
+$$
+
+剩下的是：
+
+$$
+\text{算术系统}
+\Longrightarrow
+\text{所有 Weil 方向非负}.
+$$
+
+---
+

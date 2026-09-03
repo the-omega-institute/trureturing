@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:2996e5294e3048ab9e724bf8678aa05b0114f8db4e994e94de238241ab9a5732
+  normalized_sha256: sha256:2996e5294e3048ab9e724bf8678aa05b0114f8db4e994e94de238241ab9a5732
+cas_ref: sha256:2996e5294e3048ab9e724bf8678aa05b0114f8db4e994e94de238241ab9a5732
+coverage_gids:
+  - D5/S3/Weil/Pick/UniversalOffLinePickObstruction.universal_off_line_pick_obstruction
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/Pick/UniversalOffLinePickObstruction.universal_off_line_pick_obstruction
+      source_sha256: sha256:2996e5294e3048ab9e724bf8678aa05b0114f8db4e994e94de238241ab9a5732
+      target_statement_id: sha256:ce4f4e456e6f6c09e553265085b4902f83cc7051a27712f41e744c4954677a8e
+  scribe:
+    - gid: D5/S3/Weil/Pick/UniversalOffLinePickObstruction.universal_off_line_pick_obstruction
+      definition_sha256: sha256:ac40bd25ab66dd98e681fb0f6e5b961d3668435a04b708c26eda28f71bbe49fc
+      emission_sha256: sha256:02b9d435b3d2df50250f13aa1ad787d938632c28d1b3338d21447b1c000de736
+  unresolved_subitems: []

@@ -1,0 +1,65 @@
+## 228. 排斥因子 \(2\) 是无理旋转
+
+对：
+
+$$
+s_k=\frac1{2\varphi^k},
+$$
+
+有：
+
+$$
+\theta_\varphi(s_k)
+=
+\log_\varphi2
+\pmod1.
+$$
+
+因此仓库刚证明的：
+
+$$
+z_2=\frac1{2\varphi^2},
+\qquad
+z_3=\frac1{2\varphi^3}
+$$
+
+不是两个无关结构零，而是同一个黄金尺度相位的相邻层：
+
+$$
+\boxed{
+z_3=\frac{z_2}{\varphi}.
+}
+$$
+
+而：
+
+$$
+\log_\varphi2\notin\mathbb Q.
+$$
+
+否则存在非零整数 \(m,n\)，使：
+
+$$
+2^n=\varphi^m,
+$$
+
+但右侧为无理数，矛盾。
+
+所以反复加入 dyadic exclusion：
+
+$$
+s\longmapsto\frac s2
+$$
+
+在黄金尺度圆上产生无理旋转：
+
+$$
+\theta
+\longmapsto
+\theta+\log_\varphi2.
+$$
+
+其轨道模 \(1\) 稠密。
+
+---
+

@@ -1,0 +1,62 @@
+## 225. 单个 hard-core mode
+
+取一个正能量 \(E\)，每个素数地址只允许占据 \(0\) 或 \(1\) 次：
+
+$$
+1+p^{-Es}.
+$$
+
+全局乘积为：
+
+$$
+\begin{aligned}
+Z_{E,2}(s)
+&=
+\prod_p
+\left(1+p^{-Es}\right)\\
+&=
+\prod_p
+\frac{1-p^{-2Es}}
+{1-p^{-Es}}\\
+&=
+\boxed{
+\frac{\zeta(Es)}
+{\zeta(2Es)}.
+}
+\end{aligned}
+$$
+
+因此它具有两个不同的实 divisor 事件：
+
+$$
+s=\frac1E
+$$
+
+处由 numerator 产生一个 completion pole；
+
+$$
+s=\frac1{2E}
+$$
+
+处由 reciprocal denominator 产生一个 exclusion zero。
+
+于是：
+
+$$
+\boxed{
+\text{自由单粒子模式}
+\longrightarrow
+\text{pole},
+}
+$$
+
+$$
+\boxed{
+\text{禁止重复占据}
+\longrightarrow
+\text{zero}.
+}
+$$
+
+---
+

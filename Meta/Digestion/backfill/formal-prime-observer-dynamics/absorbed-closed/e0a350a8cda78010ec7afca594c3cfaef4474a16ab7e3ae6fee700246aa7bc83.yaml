@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:e0a350a8cda78010ec7afca594c3cfaef4474a16ab7e3ae6fee700246aa7bc83
+  normalized_sha256: sha256:e0a350a8cda78010ec7afca594c3cfaef4474a16ab7e3ae6fee700246aa7bc83
+cas_ref: sha256:e0a350a8cda78010ec7afca594c3cfaef4474a16ab7e3ae6fee700246aa7bc83
+coverage_gids:
+  - D5/S3/ConceptDynamics/Interventions/CounterfactualKernelStrictlyFiner.counterfactual_kernel_strictly_finer
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Interventions/CounterfactualKernelStrictlyFiner.counterfactual_kernel_strictly_finer
+      source_sha256: sha256:e0a350a8cda78010ec7afca594c3cfaef4474a16ab7e3ae6fee700246aa7bc83
+      target_statement_id: sha256:1eb98ae02f32e30a29eca31e26f2b94b1fa4ffa69baf915bf086c07c9c1974a0
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Interventions/CounterfactualKernelStrictlyFiner.counterfactual_kernel_strictly_finer
+      definition_sha256: sha256:22547ad640dd9c47e5a2871801bf08352ae5849e9a900ddd8b273737d19242b1
+      emission_sha256: sha256:1dbc4e547a1b916370f896843754d901e0709502db873d5aa5d5822336c715b5
+  unresolved_subitems: []

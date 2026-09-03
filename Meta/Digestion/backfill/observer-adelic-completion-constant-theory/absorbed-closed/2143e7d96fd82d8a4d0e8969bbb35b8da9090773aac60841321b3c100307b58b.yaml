@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:2143e7d96fd82d8a4d0e8969bbb35b8da9090773aac60841321b3c100307b58b
+  normalized_sha256: sha256:2143e7d96fd82d8a4d0e8969bbb35b8da9090773aac60841321b3c100307b58b
+cas_ref: sha256:2143e7d96fd82d8a4d0e8969bbb35b8da9090773aac60841321b3c100307b58b
+coverage_gids:
+  - D5/S3/Weil/ZetaGamma/ObserverModeConfinement.two_direction_archimedean_confinement
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/ZetaGamma/ObserverModeConfinement.two_direction_archimedean_confinement
+      source_sha256: sha256:2143e7d96fd82d8a4d0e8969bbb35b8da9090773aac60841321b3c100307b58b
+      target_statement_id: sha256:b14253b57cc4a8fe5974088342bbf39e91887b83f662f9df260b2d6a254b8c4e
+  scribe:
+    - gid: D5/S3/Weil/ZetaGamma/ObserverModeConfinement.two_direction_archimedean_confinement
+      definition_sha256: sha256:ec5da345ae54760db0972019952a614ed2c9951b1cb635a17514197547111280
+      emission_sha256: sha256:88f531dc54d2d14165c45d3f404e1cf6bb539ae92533c563a72d58a8c36d8d76
+  unresolved_subitems: []
