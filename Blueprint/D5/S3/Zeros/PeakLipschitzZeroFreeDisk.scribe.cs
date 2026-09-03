@@ -48,19 +48,22 @@ internal sealed class PeakLipschitzZeroFreeDiskDocument : IScribeDocumentDefinit
                 DescribeRole.Theorem))));
 
     private static Formula ZeroFreeFormula() => Disp(Seq(
-        F.Id("r"), Gt, D(0), Comma, Sp, F.Id("L"), Geq, D(0), Comma, Sp,
-        F.Id("Lr"), Lt, F.Id("A"), Comma, Quad,
-        Vert, Sp, F.Id("f"), Open, F.Id("w"), Close, Sp, Vert, Geq, F.Id("A"), Comma, Quad,
+        F.Id("r"), Gt, Sp, D(0), Comma, Sp, F.Id("L"), Geq, Sp, D(0), Comma, Sp,
+        F.Id("Lr"), Lt, Sp, F.Id("A"), Comma, Quad, Sp,
+        Vert, Sp, F.Id("f"), Open, F.Id("w"), Close, Sp, Vert,
+        Geq, Sp, F.Id("A"), Comma, Quad, Sp,
         Vert, Sp, F.Id("f"), Open, F.Id("z"), Close, Minus,
-        F.Id("f"), Open, F.Id("w"), Close, Sp, Vert, Leq,
+        F.Id("f"), Open, F.Id("w"), Close, Sp, Vert, Leq, Sp,
         F.Id("L"), Operatorname, Grp(F.Id("dist")), Open, F.Id("z"), Comma, Sp, F.Id("w"), Close,
-        Quad, Rightarrow, Quad,
+        Quad, Sp, Rightarrow, Quad, Sp,
         Operatorname, Grp(F.Id("dist")), Open, F.Id("z"), Comma, Sp, F.Id("w"), Close,
-        Lt, F.Id("r"), Quad, Rightarrow, Quad, F.Id("f"), Open, F.Id("z"), Close, Neq, D(0)));
+        Lt, Sp, F.Id("r"), Quad, Sp, Rightarrow, Quad, Sp,
+        F.Id("f"), Open, F.Id("z"), Close, Neq, Sp, D(0)));
 
     private static Formula SharpFormula() => Disp(Seq(
-        F.Id("A"), Gt, D(0), Comma, Sp, F.Id("L"), Gt, D(0), Quad, Rightarrow, Quad,
-        F.Id("f"), Open, F.Id("z"), Close, Eq, F.Id("A"), Minus, F.Id("Lz"), Comma, Quad,
-        Vert, Sp, F.Id("f"), Open, D(0), Close, Sp, Vert, Eq, F.Id("A"), Comma, Quad,
+        F.Id("A"), Gt, Sp, D(0), Comma, Sp, F.Id("L"), Gt, Sp, D(0), Quad, Sp,
+        Rightarrow, Quad, Sp,
+        F.Id("f"), Open, F.Id("z"), Close, Eq, F.Id("A"), Minus, F.Id("Lz"), Comma, Quad, Sp,
+        Vert, Sp, F.Id("f"), Open, D(0), Close, Sp, Vert, Eq, F.Id("A"), Comma, Quad, Sp,
         F.Id("f"), Open, Frac, Grp(F.Id("A")), Grp(F.Id("L")), Close, Eq, D(0)));
 }

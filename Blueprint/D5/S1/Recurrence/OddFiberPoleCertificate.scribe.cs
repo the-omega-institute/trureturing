@@ -35,15 +35,18 @@ internal sealed class OddFiberPoleCertificateDocument : IScribeDocumentDefinitio
             DescribeRole.Theorem))));
 
     private static Formula TheoremFormula() => Disp(Seq(
-        F.Id("c"), F.Text, Grp(Sp, F.Id("odd")), Comma, Quad,
-        F.Id("r"), Underscore, Grp(F.Id("m,c")), Open, F.Id("v"), Close, Eq,
+        F.Id("c"), F.Text, Grp(Sp, F.Id("odd")), Comma, Quad, Sp,
+        F.Id("r"), Underscore, Grp(F.Id("m"), Comma, F.Id("c")),
+        Open, F.Id("v"), Close, Eq,
         Frac,
         Grp(F.Id("v"), Caret, Grp(F.Id("m")), Open, D(1), Minus,
             F.Id("v"), Caret, Grp(F.Id("c")), Close),
-        Grp(D(1), Minus, F.Id("v"), Caret, Grp(D(2))), Comma, Quad,
-        Operatorname, Grp(F.Id("reg")), Underscore, Grp(F.Id("v=-1")),
+        Grp(D(1), Minus, F.Id("v"), Caret, Grp(D(2))), Comma, Quad, Sp,
+        Operatorname, Grp(F.Id("reg")), Underscore,
+        Grp(F.Id("v"), Eq, Minus, D(1)),
         Open, F.Id("r"), Close, Eq, Open, Minus, D(1), Close,
-        Caret, Grp(F.Id("m")), Comma, Quad,
-        Vert, Sp, Operatorname, Grp(F.Id("reg")), Underscore, Grp(F.Id("v=-1")),
+        Caret, Grp(F.Id("m")), Comma, Quad, Sp,
+        Vert, Sp, Operatorname, Grp(F.Id("reg")), Underscore,
+        Grp(F.Id("v"), Eq, Minus, D(1)),
         Open, F.Id("r"), Close, Sp, Vert, Eq, D(1)));
 }

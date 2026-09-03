@@ -49,20 +49,23 @@ internal sealed class MetricExponentReductionDocument : IScribeDocumentDefinitio
                 DescribeRole.Theorem))));
 
     private static Formula ReductionFormula() => Disp(Seq(
-        F.Id("lambda w"), Open, F.Id("lambda"), Close, To, F.Id("m"), Comma, Quad,
+        F.Id("lambda"), F.Id("w"), Open, F.Id("lambda"), Close,
+        To, Sp, F.Id("m"), Comma, Quad, Sp,
         Frac, Grp(F.Id("d"), Open, F.Id("lambda"), Close),
-        Grp(F.Id("lambda"), Caret, Grp(D(2))), To, F.Id("c"), Comma, Quad,
-        F.Id("m"), Gt, D(0), Comma, Sp, F.Id("c"), Gt, D(0), Quad, Rightarrow, Quad,
+        Grp(F.Id("lambda"), Caret, Grp(D(2))), To, Sp,
+        F.Id("c"), Comma, Quad, Sp,
+        F.Id("m"), Gt, Sp, D(0), Comma, Sp, F.Id("c"), Gt, Sp, D(0), Quad, Sp,
+        Rightarrow, Quad, Sp,
         Frac,
         Grp(F.Id("w"), Open, F.Id("lambda"), Close,
             F.Id("d"), Open, F.Id("lambda"), Close),
-        Grp(F.Id("lambda")), To, F.Id("mc")));
+        Grp(F.Id("lambda")), To, Sp, F.Id("mc")));
 
     private static Formula SharpFormula() => Disp(Seq(
         F.Id("w"), Open, F.Id("lambda"), Close, Eq,
-        Frac, Grp(F.Id("m")), Grp(F.Id("lambda")), Comma, Quad,
+        Frac, Grp(F.Id("m")), Grp(F.Id("lambda")), Comma, Quad, Sp,
         F.Id("d"), Open, F.Id("lambda"), Close, Eq,
-        F.Id("c"), F.Id("lambda"), Caret, Grp(D(2)), Comma, Quad,
+        F.Id("c"), F.Id("lambda"), Caret, Grp(D(2)), Comma, Quad, Sp,
         F.Id("w"), Open, F.Id("lambda"), Close,
         F.Id("d"), Open, F.Id("lambda"), Close, Eq, F.Id("mc"), F.Id("lambda")));
 }

@@ -49,14 +49,15 @@ internal sealed class PullbackReflectionCoordinateDocument : IScribeDocumentDefi
                 DescribeRole.Theorem))));
 
     private static Formula TheoremFormula() => Disp(Seq(
-        Forall, Sp, F.Id("s"), InMacro, Mathbb, Grp(F.Id("C")), Comma, Quad,
+        Forall, Sp, F.Id("s"), InMacro, Mathbb, Grp(F.Id("C")), Comma, Quad, Sp,
         F.Id("phi"), Caret, Grp(D(2)), F.Id("J"), Underscore, Grp(F.Id("qc")),
         Open, F.Id("s"), Close, Eq, D(1), Minus, F.Id("phi"), Caret, Grp(D(2)), F.Id("s"),
-        Quad, Land, Quad,
+        Quad, Sp, Land, Quad, Sp,
         Open, Re, Open, F.Id("J"), Underscore, Grp(F.Id("qc")), Open, F.Id("s"), Close,
         Close, Eq, F.Id("s"), Underscore, Grp(F.Id("star")), Iff,
         Re, Open, F.Id("s"), Close, Eq, F.Id("s"), Underscore, Grp(F.Id("star")), Close,
-        Quad, Land, Quad,
+        Quad, Sp, Land, Quad, Sp,
         Open, F.Id("J"), Underscore, Grp(F.Id("qc")), Open, F.Id("s"), Close,
-        Eq, F.Id("s"), Iff, F.Id("s"), Eq, F.Id("s"), Underscore, Grp(F.Id("star")), Close));
+        Eq, F.Id("s"), Iff, Sp, F.Id("s"), Eq, F.Id("s"),
+        Underscore, Grp(F.Id("star")), Close));
 }

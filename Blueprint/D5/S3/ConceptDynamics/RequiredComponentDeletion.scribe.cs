@@ -48,16 +48,17 @@ internal sealed class RequiredComponentDeletionDocument : IScribeDocumentDefinit
     private static Formula DeletionFormula() => Disp(Seq(
         Operatorname, Grp(F.Id("Eligible")), Open,
         F.Id("present"), Sp, Setminus, Sp, OpenBrace, F.Id("c"), CloseBrace, Comma, Sp,
-        F.Id("t"), Close, Quad, Iff, Quad,
+        F.Id("t"), Close, Quad, Sp, Iff, Quad, Sp,
         Operatorname, Grp(F.Id("Eligible")), Open, F.Id("present"), Comma, Sp, F.Id("t"), Close,
-        Quad, Land, Quad, Neg, F.Id("requires"), Open, F.Id("t"), Comma, Sp, F.Id("c"), Close));
+        Quad, Sp, Land, Quad, Sp, Neg, Sp,
+        F.Id("requires"), Open, F.Id("t"), Comma, Sp, F.Id("c"), Close));
 
     private static Formula StrictWitnessFormula() => Disp(Seq(
         Exists, Sp, F.Id("requires"), Comma, Sp, F.Id("present"), Comma, Sp,
-        F.Id("t"), Comma, Sp, F.Id("c"), Comma, Quad,
+        F.Id("t"), Comma, Sp, F.Id("c"), Comma, Quad, Sp,
         Operatorname, Grp(F.Id("Eligible")), Open, F.Id("present"), Comma, Sp, F.Id("t"), Close,
-        Quad, Land, Quad, F.Id("requires"), Open, F.Id("t"), Comma, Sp, F.Id("c"), Close,
-        Quad, Land, Quad, Neg, Operatorname, Grp(F.Id("Eligible")), Open,
+        Quad, Sp, Land, Quad, Sp, F.Id("requires"), Open, F.Id("t"), Comma, Sp, F.Id("c"), Close,
+        Quad, Sp, Land, Quad, Sp, Neg, Operatorname, Grp(F.Id("Eligible")), Open,
         F.Id("present"), Sp, Setminus, Sp, OpenBrace, F.Id("c"), CloseBrace,
         Comma, Sp, F.Id("t"), Close));
 }
