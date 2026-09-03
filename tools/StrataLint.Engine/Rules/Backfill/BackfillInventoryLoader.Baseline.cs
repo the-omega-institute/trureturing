@@ -4,40 +4,38 @@ namespace StrataLint.Engine;
 
 internal sealed partial class BackfillInventoryDocument
 {
-    private static readonly string[] LegacyEntryFields =
-    [
-        "atom_id",
-        "fingerprints",
-        "cas_ref",
-        "coverage_gids",
-        "receipts",
-        "status",
-    ];
-
-    private static Dictionary<string, object?> ProjectLegacyBaselineCoverage(
+    private static Dictionary<string, object?> ProjectLegacyCoverage(
         Dictionary<string, object?> entry,
         string sourceId)
     {
-        if (entry.Keys.ToHashSet(StringComparer.Ordinal).SetEquals(
-                BackfillInventoryDocument.EntryFieldUniverse))
+        ExactKeys(entry, EntryFieldUniverse, $"source {sourceId} entry");
+        var atomId = Scalar(entry, "atom_id", $"source {sourceId} atom_id");
+        var rawCoverage = List(
+            entry,
+            "coverage_gids",
+            $"entry {atomId} coverage_gids must be a list");
+        var containsLegacyGid = rawCoverage.Any(static item => item is string);
+        var containsCurrentEdge = rawCoverage.Any(static item => item is Dictionary<string, object?>);
+        if (containsLegacyGid && containsCurrentEdge)
+        {
+            throw new FormatException(
+                $"entry {atomId} coverage_gids cannot mix legacy scalars and current edges");
+        }
+
+        var receipts = Mapping(
+            entry.GetValueOrDefault("receipts"),
+            $"entry {atomId} receipts must be a mapping");
+        var hasLegacyCoverageReceipts = receipts.ContainsKey("coverage");
+        var hasLegacyRecordedAt = receipts.GetValueOrDefault("cover_disposition")
+            is Dictionary<string, object?> rawLegacyDisposition
+            && rawLegacyDisposition.ContainsKey("recorded_at_utc");
+        if (!containsLegacyGid
+            && (containsCurrentEdge || (!hasLegacyCoverageReceipts && !hasLegacyRecordedAt)))
         {
             return entry;
         }
 
-        if (!entry.Keys.ToHashSet(StringComparer.Ordinal).SetEquals(LegacyEntryFields))
-        {
-            var schema = entry.ContainsKey("coverage") ? "entry" : "legacy entry";
-            throw new FormatException($"source {sourceId} {schema} keys are not canonical");
-        }
-
-        // expand phase of the L2 coverage-edge migration (#5018); contract in L2b: delete once dev's base is canonical
-        var atomId = Scalar(entry, "atom_id", $"source {sourceId} atom_id");
-        var legacyGids = Strings(
-            List(entry, "coverage_gids", $"entry {atomId} coverage_gids must be a list"),
-            $"entry {atomId} coverage_gids");
-        var receipts = Mapping(
-            entry.GetValueOrDefault("receipts"),
-            $"entry {atomId} receipts must be a mapping");
+        var legacyGids = Strings(rawCoverage, $"entry {atomId} coverage_gids");
         ExactKeys(
             receipts,
             ["scribe", "unresolved_subitems"],
@@ -121,13 +119,11 @@ internal sealed partial class BackfillInventoryDocument
             }
         }
 
-        var projectedEntry = new Dictionary<string, object?>(entry, StringComparer.Ordinal)
+        return new Dictionary<string, object?>(entry, StringComparer.Ordinal)
         {
-            ["coverage"] = coverage,
+            ["coverage_gids"] = coverage,
             ["receipts"] = projectedReceipts,
         };
-        projectedEntry.Remove("coverage_gids");
-        return projectedEntry;
     }
 }
 

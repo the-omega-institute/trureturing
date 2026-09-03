@@ -9,7 +9,7 @@ public sealed partial class BackfillInventoryLoaderTests
     {
         const string gid = "D5/S0/Carrier/Probe.probe";
         var atom = CanonicalCoverageAtom($$"""
-            coverage:
+            coverage_gids:
               - gid: {{gid}}
                 target_statement_id: null
             """);
@@ -25,7 +25,7 @@ public sealed partial class BackfillInventoryLoaderTests
     }
 
     [Theory]
-    [InlineData("coverage-gids")]
+    [InlineData("coverage-key")]
     [InlineData("receipts-coverage")]
     [InlineData("source-sha")]
     [InlineData("statement-history")]
@@ -34,30 +34,35 @@ public sealed partial class BackfillInventoryLoaderTests
     {
         var sourceKey = "source_" + "sha256";
         var historyKey = "statement_id_" + "history";
-        var relationshipKey = "coverage_" + "gids";
+        const string retiredRelationshipKey = "coverage";
         var recordedKey = "recorded_at_" + "utc";
         var coverage = retiredField switch
         {
             "source-sha" => $$"""
-                coverage:
+                coverage_gids:
                   - gid: D5/S0/Carrier/Probe.probe
                     target_statement_id: null
                     {{sourceKey}}: sha256:0000000000000000000000000000000000000000000000000000000000000000
                 """,
             "statement-history" => $$"""
-                coverage:
+                coverage_gids:
                   - gid: D5/S0/Carrier/Probe.probe
                     target_statement_id: null
                     {{historyKey}}: []
                 """,
-            _ => "coverage: []",
+            "receipts-coverage" or "recorded-at" => """
+                coverage_gids:
+                  - gid: D5/S0/Carrier/Probe.probe
+                    target_statement_id: null
+                """,
+            _ => "coverage_gids: []",
         };
         var atom = CanonicalCoverageAtom(coverage);
         atom = retiredField switch
         {
-            "coverage-gids" => (atom.Path, atom.Text.Replace(
-                "coverage: []\n",
-                $"coverage: []\n{relationshipKey}: []\n",
+            "coverage-key" => (atom.Path, atom.Text.Replace(
+                "coverage_gids: []\n",
+                $"coverage_gids: []\n{retiredRelationshipKey}: []\n",
                 StringComparison.Ordinal)),
             "receipts-coverage" => (atom.Path, atom.Text.Replace(
                 "receipts:\n",
@@ -84,13 +89,13 @@ public sealed partial class BackfillInventoryLoaderTests
     }
 
     [Fact]
-    public void BaselineCanonicalSchemaRejectsRetiredCoverageGidsKey()
+    public void BaselineCanonicalSchemaRejectsRetiredCoverageKey()
     {
         var atom = Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta");
         var exception = Assert.Throws<FormatException>(() =>
             BackfillInventoryLoader.LoadBaseline(Snapshot(
                 Source("delta-v0.1", "docs/delta.md", "none"),
-                (atom.Path, atom.Text + "coverage_gids: []\n"))));
+                (atom.Path, atom.Text + "coverage: []\n"))));
 
         Assert.Equal("source delta-v0.1 entry keys are not canonical", exception.Message);
     }

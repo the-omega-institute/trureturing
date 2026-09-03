@@ -140,11 +140,11 @@ internal static class BackfillInventoryWriter
     {
         if (edges.Length == 0)
         {
-            Line(builder, "        coverage: []");
+            Line(builder, "        coverage_gids: []");
             return;
         }
 
-        Line(builder, "        coverage:");
+        Line(builder, "        coverage_gids:");
         foreach (var edge in edges)
         {
             Line(builder, $"          - gid: {Scalar(edge.Gid)}");
@@ -177,11 +177,11 @@ internal static class BackfillInventoryWriter
     {
         if (edges.Length == 0)
         {
-            Line(builder, "coverage: []");
+            Line(builder, "coverage_gids: []");
             return;
         }
 
-        Line(builder, "coverage:");
+        Line(builder, "coverage_gids:");
         foreach (var edge in edges)
         {
             Line(builder, $"  - gid: {Scalar(edge.Gid)}");

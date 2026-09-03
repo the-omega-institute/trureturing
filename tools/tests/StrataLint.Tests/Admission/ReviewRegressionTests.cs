@@ -377,7 +377,7 @@ public sealed partial class ReviewRegressionTests
             "D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/RetrospectiveLookupFailure"
             + ".lookup_copy_zero_loss_and_nonanticipating_failure";
         fixture.Files[path] = "cas_ref: sha256:00\n"
-            + "coverage:\n"
+            + "coverage_gids:\n"
             + "  - gid: " + gid + "\n"
             + "    target_statement_id: sha256:00\n"
             + "receipts:\n"

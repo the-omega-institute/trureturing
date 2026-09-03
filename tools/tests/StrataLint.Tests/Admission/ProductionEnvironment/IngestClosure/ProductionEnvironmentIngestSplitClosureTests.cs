@@ -100,8 +100,8 @@ public sealed partial class ProductionEnvironmentTests
         foreach (var files in new[] { fixture.Files, fixture.Baseline })
         {
             files[coveredPath] = files[coveredPath].Replace(
-                "coverage: []",
-                $"coverage:\n  - gid: {coverageGid}\n    target_statement_id: null",
+                "coverage_gids: []",
+                $"coverage_gids:\n  - gid: {coverageGid}\n    target_statement_id: null",
                 StringComparison.Ordinal);
         }
 

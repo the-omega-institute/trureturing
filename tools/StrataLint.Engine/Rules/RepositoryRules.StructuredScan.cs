@@ -234,7 +234,7 @@ internal static partial class RepositoryRules
     /// <summary>Advances the structural position by one property name.</summary>
     private static AddressSlot ChildSlot(AddressSlot slot, string name) => (slot, name) switch
     {
-        (AddressSlot.Entry, "coverage") => AddressSlot.CoverageList,
+        (AddressSlot.Entry, "coverage_gids") => AddressSlot.CoverageList,
         (AddressSlot.Entry, "receipts") => AddressSlot.Receipts,
         (AddressSlot.Receipts, "scribe") => AddressSlot.ReceiptList,
         (AddressSlot.CoverageEntry, "gid") => AddressSlot.CoverageGid,

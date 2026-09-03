@@ -343,8 +343,8 @@ public sealed class RuleEngineTests
         fixture.Files[RuleFixture.FixtureBackfillAtomPath] = fixture.Files[
                 RuleFixture.FixtureBackfillAtomPath]
             .Replace(
-                "coverage:\n  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null",
-                "coverage:\n  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null\n"
+                "coverage_gids:\n  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null",
+                "coverage_gids:\n  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null\n"
                     + "  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null",
                 StringComparison.Ordinal);
 
@@ -371,8 +371,8 @@ public sealed class RuleEngineTests
         fixture.Files[RuleFixture.FixtureBackfillAtomPath] = fixture.Files[
                 RuleFixture.FixtureBackfillAtomPath]
             .Replace(
-                "coverage:\n  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null",
-                "coverage:\n  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null\n"
+                "coverage_gids:\n  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null",
+                "coverage_gids:\n  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null\n"
                     + "  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null",
                 StringComparison.Ordinal);
 

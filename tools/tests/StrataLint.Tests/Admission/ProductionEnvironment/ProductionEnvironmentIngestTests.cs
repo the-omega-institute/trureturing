@@ -82,8 +82,8 @@ public sealed partial class ProductionEnvironmentTests
         InstallDirectoryLedger(fixture, atomizerId, atom);
         var oldPath = DirectoryAtomPath(AtomId(atom), "residual-open");
         var atomText = DirectoryAtom(atom).Replace(
-            "coverage: []",
-            $"coverage:\n  - gid: {coverageGid}\n    target_statement_id: null",
+            "coverage_gids: []",
+            $"coverage_gids:\n  - gid: {coverageGid}\n    target_statement_id: null",
             StringComparison.Ordinal);
         fixture.Files[oldPath] = atomText;
         fixture.Baseline[oldPath] = atomText;
@@ -829,7 +829,7 @@ public sealed partial class ProductionEnvironmentTests
           raw_sha256: {{atom.Fingerprints.RawSha256}}
           normalized_sha256: {{atom.Fingerprints.NormalizedSha256}}
         cas_ref: {{atom.Fingerprints.RawSha256}}
-        coverage: []
+        coverage_gids: []
         receipts:
           scribe: []
           unresolved_subitems: []

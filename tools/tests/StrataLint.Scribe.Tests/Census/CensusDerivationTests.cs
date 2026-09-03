@@ -47,7 +47,7 @@ public sealed class CensusDerivationTests
                   raw_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
                   normalized_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
                 cas_ref: sha256:0000000000000000000000000000000000000000000000000000000000000000
-                coverage: []
+                coverage_gids: []
                 receipts:
                   scribe:
                     - gid: {{receiptBoundGid}}.formalized

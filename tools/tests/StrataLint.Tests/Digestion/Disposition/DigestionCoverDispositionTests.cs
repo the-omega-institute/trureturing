@@ -86,8 +86,8 @@ public sealed partial class DigestionQuarantineTests
     public void LoaderRejectsCoverDispositionWithAdmittedCoverage()
     {
         var atom = Atom(AtomId, CoverDisposition).Replace(
-            "coverage: []",
-            "coverage:\n  - gid: D5/S0/Carrier/Probe.probe\n    target_statement_id: null",
+            "coverage_gids: []",
+            "coverage_gids:\n  - gid: D5/S0/Carrier/Probe.probe\n    target_statement_id: null",
             StringComparison.Ordinal);
 
         var error = Assert.Throws<FormatException>(() =>

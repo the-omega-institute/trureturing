@@ -10,8 +10,8 @@ public sealed partial class BackfillInventoryLoaderTests
     {
         var atom = Atom("delta-v0.1", "partial-open", "delta-atom", "manual/delta");
         var withCoverage = atom.Text.Replace(
-            "coverage: []",
-            "coverage:\n  - gid: D5/X_Frontier/SyntheticSourceTarget\n"
+            "coverage_gids: []",
+            "coverage_gids:\n  - gid: D5/X_Frontier/SyntheticSourceTarget\n"
                 + "    target_statement_id: null",
             StringComparison.Ordinal);
         var inventory = BackfillInventoryLoader.Load(Snapshot(
@@ -28,8 +28,8 @@ public sealed partial class BackfillInventoryLoaderTests
     {
         var atom = Atom("delta-v0.1", "partial-open", "delta-atom", "manual/delta");
         var legacy = atom.Text.Replace(
-            "coverage: []",
-            "coverage:\n"
+            "coverage_gids: []",
+            "coverage_gids:\n"
                 + "  - gid: D5/S0/Carrier/Probe.probe\n"
                 + "    target_sha256: sha256:1111111111111111111111111111111111111111111111111111111111111111",
             StringComparison.Ordinal);
@@ -46,8 +46,8 @@ public sealed partial class BackfillInventoryLoaderTests
     {
         var atom = Atom("delta-v0.1", "partial-open", "delta-atom", "manual/delta");
         var historical = atom.Text.Replace(
-            "coverage: []",
-            "coverage:\n"
+            "coverage_gids: []",
+            "coverage_gids:\n"
                 + "  - gid: D5/S0/Carrier/Probe.probe\n"
                 + "    historical_target_field: not-a-statement-identity",
             StringComparison.Ordinal);
@@ -65,10 +65,10 @@ public sealed partial class BackfillInventoryLoaderTests
         const string resolvedGid = "D5/S0/Carrier/Probe.resolved";
         const string unresolvedGid = "D5/S0/Carrier/Probe.unresolved";
         var target = "sha256:" + new string('1', 64);
-        var atom = CanonicalCoverageAtom("coverage: []");
+        var atom = CanonicalCoverageAtom("coverage_gids: []");
         var legacy = atom.Text
             .Replace(
-                "coverage: []\n",
+                "coverage_gids: []\n",
                 $"coverage_gids:\n  - {resolvedGid}\n  - {unresolvedGid}\n",
                 StringComparison.Ordinal)
             .Replace(
@@ -93,19 +93,50 @@ public sealed partial class BackfillInventoryLoaderTests
     }
 
     [Fact]
+    public void CandidateLegacyCoverageSchemaProjectsCoverageGidsAndReceiptTargets()
+    {
+        const string resolvedGid = "D5/S0/Carrier/Probe.resolved";
+        const string unresolvedGid = "D5/S0/Carrier/Probe.unresolved";
+        var target = "sha256:" + new string('1', 64);
+        var atom = CanonicalCoverageAtom("coverage_gids: []");
+        var legacy = atom.Text
+            .Replace(
+                "coverage_gids: []\n",
+                $"coverage_gids:\n  - {resolvedGid}\n  - {unresolvedGid}\n",
+                StringComparison.Ordinal)
+            .Replace(
+                "receipts:\n",
+                "receipts:\n"
+                + "  coverage:\n"
+                + $"    - gid: {resolvedGid}\n"
+                + $"      source_sha256: {atom.Text.Split("raw_sha256: ", StringSplitOptions.None)[1].Split('\n')[0]}\n"
+                + $"      target_statement_id: {target}\n"
+                + "      statement_id_history: []\n",
+                StringComparison.Ordinal);
+
+        var entry = Assert.Single(BackfillInventoryLoader.Load(Snapshot(
+            Source("delta-v0.1", "docs/delta.md", "none"),
+            (atom.Path, legacy))).RequireDigestionEntries());
+
+        Assert.Equal(
+            [resolvedGid, unresolvedGid],
+            entry.Coverage.Select(static edge => edge.Gid).ToArray());
+        Assert.Equal(target, entry.Coverage[0].TargetStatementId);
+        Assert.Null(entry.Coverage[1].TargetStatementId);
+    }
+
+    [Fact]
     public void BaselineLegacyCoverageSchemaRejectsAdditionalUnknownEntryKey()
     {
-        var atom = CanonicalCoverageAtom("coverage: []");
-        var legacy = atom.Text
-            .Replace("coverage: []\n", "coverage_gids: []\n", StringComparison.Ordinal)
-            + "historical_extra: ignored-by-old-reader\n";
+        var atom = CanonicalCoverageAtom("coverage_gids: []");
+        var legacy = atom.Text + "historical_extra: ignored-by-old-reader\n";
 
         var exception = Assert.Throws<FormatException>(() =>
             BackfillInventoryLoader.LoadBaseline(Snapshot(
                 Source("delta-v0.1", "docs/delta.md", "none"),
                 (atom.Path, legacy))));
 
-        Assert.Equal("source delta-v0.1 legacy entry keys are not canonical", exception.Message);
+        Assert.Equal("source delta-v0.1 entry keys are not canonical", exception.Message);
     }
 
     [Fact]

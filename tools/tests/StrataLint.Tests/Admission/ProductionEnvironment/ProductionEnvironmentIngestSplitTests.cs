@@ -129,8 +129,8 @@ public sealed partial class ProductionEnvironmentTests
         var existingAtomId = ExistingAtomId(fixture);
         var atomPath = DirectoryAtomPath(existingAtomId, "residual-open");
         fixture.Files[atomPath] = fixture.Files[atomPath].Replace(
-            "coverage: []",
-            $"coverage:\n  - gid: {coverageGid}\n    target_statement_id: null",
+            "coverage_gids: []",
+            $"coverage_gids:\n  - gid: {coverageGid}\n    target_statement_id: null",
             StringComparison.Ordinal);
         using var temporary = new TemporaryDirectory();
         WriteDirectoryLedger(temporary.Path, fixture.Files);
@@ -166,8 +166,8 @@ public sealed partial class ProductionEnvironmentTests
         var atomPath = DirectoryAtomPath(existingAtomId, "residual-open");
         fixture.Baseline[atomPath] = fixture.Baseline[atomPath]
             .Replace(
-                "coverage: []",
-                $"coverage:\n  - gid: {coverageGid}\n    target_statement_id: null",
+                "coverage_gids: []",
+                $"coverage_gids:\n  - gid: {coverageGid}\n    target_statement_id: null",
                 StringComparison.Ordinal)
             .Replace(
                 "  unresolved_subitems: []",
@@ -245,8 +245,8 @@ public sealed partial class ProductionEnvironmentTests
         foreach (var files in new[] { fixture.Files, fixture.Baseline })
         {
             files[oldPath] = files[oldPath].Replace(
-                "coverage: []",
-                $"coverage:\n  - gid: {coverageGid}\n    target_statement_id: null",
+                "coverage_gids: []",
+                $"coverage_gids:\n  - gid: {coverageGid}\n    target_statement_id: null",
                 StringComparison.Ordinal);
         }
 
@@ -268,8 +268,8 @@ public sealed partial class ProductionEnvironmentTests
         foreach (var files in new[] { fixture.Files, fixture.Baseline })
         {
             files[oldPath] = files[oldPath].Replace(
-                "coverage: []",
-                $"coverage:\n  - gid: {coverageGid}\n    target_statement_id: null",
+                "coverage_gids: []",
+                $"coverage_gids:\n  - gid: {coverageGid}\n    target_statement_id: null",
                 StringComparison.Ordinal);
         }
 
@@ -294,8 +294,8 @@ public sealed partial class ProductionEnvironmentTests
         foreach (var files in new[] { fixture.Files, fixture.Baseline })
         {
             files[oldPath] = files[oldPath].Replace(
-                "coverage: []",
-                $"coverage:\n  - gid: {coverageGid}\n    target_statement_id: null",
+                "coverage_gids: []",
+                $"coverage_gids:\n  - gid: {coverageGid}\n    target_statement_id: null",
                 StringComparison.Ordinal);
         }
 

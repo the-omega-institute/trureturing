@@ -11,7 +11,7 @@ internal sealed partial class BackfillInventoryDocument
         "atom_id",
         "fingerprints",
         "cas_ref",
-        "coverage",
+        "coverage_gids",
         "receipts",
         "status",
     ];
@@ -84,10 +84,8 @@ internal sealed partial class BackfillInventoryDocument
         bool projectBaselineCoverage = false)
     {
         var entry = Mapping(rawEntry, $"source {sourceId} entries must be mappings");
-        if (projectBaselineCoverage)
-        {
-            entry = ProjectLegacyBaselineCoverage(entry, sourceId);
-        }
+        // expand phase (L2a): candidate legacy projection; removed in L2c after the L2b data migration
+        entry = ProjectLegacyCoverage(entry, sourceId);
 
         ExactKeys(entry, EntryFieldUniverse, $"source {sourceId} entry");
 
@@ -107,7 +105,7 @@ internal sealed partial class BackfillInventoryDocument
 
         var coverage = ParseCoverage(
             atomId,
-            List(entry, "coverage", $"entry {atomId} coverage must be a list"));
+            List(entry, "coverage_gids", $"entry {atomId} coverage_gids must be a list"));
         var receipts = ParseReceipts(
             atomId,
             entry.GetValueOrDefault("receipts"));

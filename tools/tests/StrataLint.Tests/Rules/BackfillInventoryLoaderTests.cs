@@ -676,7 +676,7 @@ public sealed partial class BackfillInventoryLoaderTests
               raw_sha256: {{fingerprint}}
               normalized_sha256: {{fingerprint}}
             cas_ref: {{fingerprint}}
-            coverage: []
+            coverage_gids: []
             receipts:
               scribe: []
               unresolved_subitems: []
@@ -730,7 +730,7 @@ public sealed partial class BackfillInventoryLoaderTests
 
         if (fields.Contains("coverage"))
         {
-            entry.AppendLine("        coverage: []");
+            entry.AppendLine("        coverage_gids: []");
         }
 
         if (fields.Contains("receipts"))

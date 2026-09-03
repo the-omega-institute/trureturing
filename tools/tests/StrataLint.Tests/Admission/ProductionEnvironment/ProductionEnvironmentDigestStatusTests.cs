@@ -107,7 +107,7 @@ public sealed partial class ProductionEnvironmentTests
               raw_sha256: {{atom.Fingerprints.RawSha256}}
               normalized_sha256: {{atom.Fingerprints.NormalizedSha256}}
             cas_ref: {{captured.Reference}}
-            coverage: []
+            coverage_gids: []
             receipts:
               scribe: []
               unresolved_subitems: []

@@ -51,8 +51,8 @@ public sealed partial class DigestionQuarantineTests
     public void LoaderRejectsQuarantineWhenCoverageGidsContainAMachineFormStatement()
     {
         var atom = Atom(AtomId, Quarantine).Replace(
-            "coverage: []",
-            "coverage:\n  - gid: D5/S0/Carrier/Probe.probe\n    target_statement_id: null",
+            "coverage_gids: []",
+            "coverage_gids:\n  - gid: D5/S0/Carrier/Probe.probe\n    target_statement_id: null",
             StringComparison.Ordinal);
 
         var error = Assert.Throws<FormatException>(() =>
@@ -157,7 +157,7 @@ public sealed partial class DigestionQuarantineTests
             + $"  raw_sha256: {Digest}\n"
             + $"  normalized_sha256: {Digest}\n"
             + $"cas_ref: {Digest}\n"
-            + "coverage: []\n"
+            + "coverage_gids: []\n"
             + "receipts:\n"
             + "  scribe: []\n"
             + Indent(unresolved, 2)

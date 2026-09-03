@@ -35,7 +35,7 @@ internal sealed partial class RuleFixture
                   raw_sha256: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881
                   normalized_sha256: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881
                 cas_ref: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881
-                coverage:
+                coverage_gids:
                   - gid: D5/S0/Carrier/BackfillTarget
                     target_statement_id: null
                 receipts:
@@ -59,7 +59,7 @@ internal sealed partial class RuleFixture
           raw_sha256: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881
           normalized_sha256: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881
         cas_ref: sha256:2d711642b726b04401627ca9fbac32f5c8530fb1903cc4db02258717921a4881
-        coverage:
+        coverage_gids:
           - gid: D5/S0/Carrier/BackfillTarget
             target_statement_id: null
         receipts:
@@ -193,7 +193,7 @@ internal sealed partial class RuleFixture
               raw_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
               normalized_sha256: sha256:0000000000000000000000000000000000000000000000000000000000000000
             cas_ref: sha256:0000000000000000000000000000000000000000000000000000000000000000
-            coverage: []
+            coverage_gids: []
             receipts:
               scribe: []
               unresolved_subitems: []
@@ -214,7 +214,7 @@ internal sealed partial class RuleFixture
               raw_sha256: {FixtureCasReference}
               normalized_sha256: {FixtureCasReference}
             cas_ref: {FixtureCasReference}
-            coverage:
+            coverage_gids:
               - gid: D5/S0/Carrier/BackfillTarget
                 target_statement_id: null
             receipts:

@@ -193,8 +193,8 @@ public sealed class Sl016WakeupTests
         foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
         {
             files[AtomPath] = files[AtomPath].Replace(
-                "coverage:\n  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null",
-                "coverage:\n  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null\n"
+                "coverage_gids:\n  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null",
+                "coverage_gids:\n  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null\n"
                     + "  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null",
                 StringComparison.Ordinal);
         }
@@ -216,7 +216,7 @@ public sealed class Sl016WakeupTests
             targetStatementId);
         var legacy = fixture.Baseline[AtomPath]
             .Replace(
-                "coverage:\n  - gid: D5/S0/Carrier/BackfillTarget\n"
+                "coverage_gids:\n  - gid: D5/S0/Carrier/BackfillTarget\n"
                     + $"    target_statement_id: {targetStatementId}",
                 "coverage_gids:\n  - D5/S0/Carrier/BackfillTarget",
                 StringComparison.Ordinal)
@@ -245,8 +245,8 @@ public sealed class Sl016WakeupTests
         var fixture = new RuleFixture();
         fixture.UseValidDirectoryBackfill();
         fixture.Files[AtomPath] = fixture.Files[AtomPath].Replace(
-            "coverage:\n  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null",
-            "coverage:\n  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null\n"
+            "coverage_gids:\n  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null",
+            "coverage_gids:\n  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null\n"
                 + "  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null",
             StringComparison.Ordinal);
 
@@ -430,7 +430,7 @@ public sealed class Sl016WakeupTests
         fixture.Files[definitionPath] = candidateDefinition;
         fixture.Files[emissionPath] = candidateEmission;
 
-        var receiptProjection = "coverage:\n"
+        var receiptProjection = "coverage_gids:\n"
             + $"  - gid: {coverageGid}\n"
             + $"    target_statement_id: {(mismatchCode == "coverage-target-mismatch" ? mismatchSha256 : targetStatementId)}\n"
             + "receipts:\n"
@@ -492,7 +492,7 @@ public sealed class Sl016WakeupTests
     }
 
     private static string AddReceipts(string atom, string receiptProjection) => atom.Replace(
-        "coverage:\n"
+        "coverage_gids:\n"
             + "  - gid: D5/S0/Carrier/BackfillTarget\n"
             + "    target_statement_id: null\n"
             + "receipts:\n"
@@ -529,7 +529,7 @@ public sealed class Sl016WakeupTests
     private static RuleFixture CoverageReceiptFixture(string targetGid, string targetStatementId)
     {
         var fixture = PreparedCoverageFixture();
-        var receipt = "coverage:\n"
+        var receipt = "coverage_gids:\n"
             + $"  - gid: {targetGid}\n"
             + $"    target_statement_id: {targetStatementId}\n"
             + "receipts:\n"
