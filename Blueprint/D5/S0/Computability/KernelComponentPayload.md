@@ -8,7 +8,7 @@ Each of the twenty-one kernel components indexes its own payload theorem type.
 
 $$\forall c\in \mathcal{K},\quad \operatorname{Nonempty}(\operatorname{PayloadTheorem}(c))$$
 
-*Proof.* Machine-checked in Lean as `D5/S0/Computability/KernelComponentPayload.every_kernel_component_carries_a_payload` (`✓ std0`). ∎
+*Proof.* Machine-checked in Lean as `D5/S0/Computability/KernelComponentPayload.every_kernel_component_carries_a_payload` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
