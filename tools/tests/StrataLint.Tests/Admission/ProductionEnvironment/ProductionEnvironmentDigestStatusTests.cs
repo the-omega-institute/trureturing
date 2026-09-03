@@ -8,19 +8,19 @@ namespace StrataLint.Tests;
 public sealed partial class ProductionEnvironmentTests
 {
     [Fact]
-    public void DigestStatusUnrelatedDeltaDoesNotReplayHistoricalCoverageReceipt()
+    public void DigestStatusUnrelatedDeltaStillValidatesCurrentCoverageEdge()
     {
         var environment = DigestStatusHistoricalCoverageEnvironment(
             RawChangeSet.Create(["notes/r16-unrelated.txt"]));
 
         var result = environment.DigestStatus(["--json", "--base", "baseline"]);
 
-        Assert.True(result.Success, result.Error);
-        Assert.DoesNotContain("coverage-receipt-mismatch", result.Output, StringComparison.Ordinal);
+        Assert.False(result.Success);
+        Assert.Contains("coverage-target-mismatch", result.Error, StringComparison.Ordinal);
     }
 
     [Fact]
-    public void DigestStatusChangedTargetStillValidatesHistoricalCoverageReceipt()
+    public void DigestStatusChangedTargetValidatesCurrentCoverageEdge()
     {
         var environment = DigestStatusHistoricalCoverageEnvironment(
             RawChangeSet.Create(["D5/S0/Carrier/BackfillTarget.lean"]));
@@ -28,11 +28,11 @@ public sealed partial class ProductionEnvironmentTests
         var result = environment.DigestStatus(["--json", "--base", "baseline"]);
 
         Assert.False(result.Success);
-        Assert.Contains("coverage-receipt-mismatch", result.Error, StringComparison.Ordinal);
+        Assert.Contains("coverage-target-mismatch", result.Error, StringComparison.Ordinal);
     }
 
     [Fact]
-    public void DigestStatusImplementationChangeStillValidatesHistoricalCoverageReceipt()
+    public void DigestStatusImplementationChangeValidatesCurrentCoverageEdge()
     {
         var environment = DigestStatusHistoricalCoverageEnvironment(
             RawChangeSet.Create(
@@ -41,23 +41,23 @@ public sealed partial class ProductionEnvironmentTests
         var result = environment.DigestStatus(["--json", "--base", "baseline"]);
 
         Assert.False(result.Success);
-        Assert.Contains("coverage-receipt-mismatch", result.Error, StringComparison.Ordinal);
+        Assert.Contains("coverage-target-mismatch", result.Error, StringComparison.Ordinal);
     }
 
     [Fact]
-    public void DigestStatusWithoutBaseUnrelatedDeltaDoesNotReplayHistoricalCoverageReceipt()
+    public void DigestStatusWithoutBaseUnrelatedDeltaValidatesCurrentCoverageEdge()
     {
         var environment = DigestStatusHistoricalCoverageEnvironment(
             RawChangeSet.Create(["notes/r17-unrelated-coverage.txt"]));
 
         var result = environment.DigestStatus(["--json"]);
 
-        Assert.True(result.Success, result.Error);
-        Assert.DoesNotContain("coverage-receipt-mismatch", result.Output, StringComparison.Ordinal);
+        Assert.False(result.Success);
+        Assert.Contains("coverage-target-mismatch", result.Error, StringComparison.Ordinal);
     }
 
     [Fact]
-    public void DigestStatusWithoutBaseChangedTargetStillValidatesHistoricalCoverageReceipt()
+    public void DigestStatusWithoutBaseChangedTargetValidatesCurrentCoverageEdge()
     {
         var environment = DigestStatusHistoricalCoverageEnvironment(
             RawChangeSet.Create(["D5/S0/Carrier/BackfillTarget.lean"]));
@@ -65,11 +65,11 @@ public sealed partial class ProductionEnvironmentTests
         var result = environment.DigestStatus(["--json"]);
 
         Assert.False(result.Success);
-        Assert.Contains("coverage-receipt-mismatch", result.Error, StringComparison.Ordinal);
+        Assert.Contains("coverage-target-mismatch", result.Error, StringComparison.Ordinal);
     }
 
     [Fact]
-    public void DigestStatusWithoutBaseImplementationChangeStillValidatesHistoricalCoverageReceipt()
+    public void DigestStatusWithoutBaseImplementationChangeValidatesCurrentCoverageEdge()
     {
         var environment = DigestStatusHistoricalCoverageEnvironment(
             RawChangeSet.Create(
@@ -78,7 +78,7 @@ public sealed partial class ProductionEnvironmentTests
         var result = environment.DigestStatus(["--json"]);
 
         Assert.False(result.Success);
-        Assert.Contains("coverage-receipt-mismatch", result.Error, StringComparison.Ordinal);
+        Assert.Contains("coverage-target-mismatch", result.Error, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -107,9 +107,8 @@ public sealed partial class ProductionEnvironmentTests
               raw_sha256: {{atom.Fingerprints.RawSha256}}
               normalized_sha256: {{atom.Fingerprints.NormalizedSha256}}
             cas_ref: {{captured.Reference}}
-            coverage_gids: []
+            coverage: []
             receipts:
-              coverage: []
               scribe: []
               unresolved_subitems: []
               chain_atoms: []
@@ -173,6 +172,53 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Contains("\"entries_total\": 1", result.Output, StringComparison.Ordinal);
         Assert.Contains("\"deletable_now\": 0", result.Output, StringComparison.Ordinal);
         Assert.Contains($"\"atom_id\": \"{RuleFixture.FixtureAtomId}\"", result.Output, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void DigestStatusJsonAndTextEntriesExposeCoverageGidsDerivedFromCoverageEdges()
+    {
+        var fingerprints = new DigestionFingerprints(
+            "sha256:" + new string('a', 64),
+            "sha256:" + new string('b', 64));
+        var status = new DigestionStatus(
+            DigestionMigrationState.Partial,
+            DigestionTruthState.Open);
+        var entry = new DigestionLedgerEntry(
+            "source",
+            "synthetic/source.md",
+            AtomizerRegistry.NoAtomizerId,
+            "atom",
+            fingerprints,
+            [
+                new DigestionCoverageEdge("D5/S0/Carrier/Zeta", null),
+                new DigestionCoverageEdge("D5/S0/Carrier/Alpha", null),
+            ],
+            new DigestionReceipts([], [], [], null),
+            status,
+            fingerprints.RawSha256);
+        var evaluation = new DigestionLedgerEvaluation(
+            [new DigestionEntryEvaluation(
+                entry,
+                DigestionReceiptAlignment.Seen,
+                status,
+                false,
+                [])],
+            []);
+
+        var json = DigestStatusCommand.RenderJson(evaluation);
+        var text = DigestStatusCommand.RenderText(evaluation);
+
+        using var document = JsonDocument.Parse(json);
+        var jsonEntry = Assert.Single(document.RootElement.GetProperty("entries").EnumerateArray());
+        Assert.Equal(
+            ["D5/S0/Carrier/Alpha", "D5/S0/Carrier/Zeta"],
+            jsonEntry.GetProperty("coverage_gids")
+                .EnumerateArray()
+                .Select(static item => item.GetString()));
+        Assert.Contains(
+            "coverage_gids=[D5/S0/Carrier/Alpha,D5/S0/Carrier/Zeta]",
+            text,
+            StringComparison.Ordinal);
     }
 
     [Fact]
@@ -457,11 +503,8 @@ public sealed partial class ProductionEnvironmentTests
             Encoding.UTF8.GetBytes(emission)).RawSha256;
         var atom = fixture.Files[RuleFixture.FixtureBackfillAtomPath]
             .Replace(
-                "coverage: []",
-                "coverage:\n"
-                + $"    - gid: {gid}\n"
-                + $"      source_sha256: {RuleFixture.FixtureCasReference}\n"
-                + "      target_statement_id: sha256:0000000000000000000000000000000000000000000000000000000000000000",
+                "target_statement_id: null",
+                "target_statement_id: sha256:0000000000000000000000000000000000000000000000000000000000000000",
                 StringComparison.Ordinal)
             .Replace(
                 "scribe: []",
@@ -578,7 +621,7 @@ public sealed partial class ProductionEnvironmentTests
             OtherMigration = "absorbed",
         });
         var inputs = DirectoryInputs(
-            WithSiblingReceiptMismatch(materialized, "coverage-receipt-mismatch"));
+            WithSiblingReceiptMismatch(materialized, "coverage-target-mismatch"));
         using var temporary = new TemporaryDirectory();
         DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
         var before = DirectoryLedgerTestSupport.Image(temporary.Path);
@@ -592,7 +635,7 @@ public sealed partial class ProductionEnvironmentTests
         ]);
 
         Assert.False(result.Success);
-        Assert.Contains("coverage-receipt-mismatch", result.Error, StringComparison.Ordinal);
+        Assert.Contains("coverage-target-mismatch", result.Error, StringComparison.Ordinal);
         Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
     }
 

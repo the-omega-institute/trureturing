@@ -27,9 +27,8 @@ internal static class BackfillInventoryWriter
         Line(builder, $"  raw_sha256: {Scalar(entry.Fingerprints.RawSha256)}");
         Line(builder, $"  normalized_sha256: {Scalar(entry.Fingerprints.NormalizedSha256)}");
         Line(builder, $"cas_ref: {Scalar(entry.CasRef)}");
-        Strings(builder, "coverage_gids", entry.CoverageGids, 2);
+        AtomCoverage(builder, entry.Coverage);
         Line(builder, "receipts:");
-        AtomCoverageReceipts(builder, entry.Receipts.Coverage);
         AtomScribeReceipts(builder, entry.Receipts.Scribe);
         Strings(builder, "  unresolved_subitems", entry.Receipts.UnresolvedSubitems, 4);
         AtomQuarantine(builder, entry.Receipts.Quarantine);
@@ -110,9 +109,8 @@ internal static class BackfillInventoryWriter
         Line(builder, $"          normalized_sha256: {Scalar(entry.Fingerprints.NormalizedSha256)}");
         Line(builder, $"        cas_ref: {Scalar(entry.CasRef)}");
 
-        Strings(builder, "        coverage_gids", entry.CoverageGids, 10);
+        Coverage(builder, entry.Coverage);
         Line(builder, "        receipts:");
-        CoverageReceipts(builder, entry.Receipts.Coverage);
         ScribeReceipts(builder, entry.Receipts.Scribe);
         Strings(builder, "          unresolved_subitems", entry.Receipts.UnresolvedSubitems, 12);
         Quarantine(builder, entry.Receipts.Quarantine);
@@ -136,23 +134,21 @@ internal static class BackfillInventoryWriter
         Line(builder, $"          truth: {DigestionStatusNames.Truth(entry.ProjectedStatus.Truth)}");
     }
 
-    private static void CoverageReceipts(
+    private static void Coverage(
         StringBuilder builder,
-        ImmutableArray<DigestionCoverageReceipt> receipts)
+        ImmutableArray<DigestionCoverageEdge> edges)
     {
-        if (receipts.Length == 0)
+        if (edges.Length == 0)
         {
-            Line(builder, "          coverage: []");
+            Line(builder, "        coverage: []");
             return;
         }
 
-        Line(builder, "          coverage:");
-        foreach (var receipt in receipts)
+        Line(builder, "        coverage:");
+        foreach (var edge in edges)
         {
-            Line(builder, $"            - gid: {Scalar(receipt.Gid)}");
-            Line(builder, $"              source_sha256: {Scalar(receipt.SourceSha256)}");
-            Line(builder, $"              target_statement_id: {Scalar(receipt.TargetStatementId)}");
-            StatementIdHistory(builder, receipt.StatementIdHistory, "              ");
+            Line(builder, $"          - gid: {Scalar(edge.Gid)}");
+            Line(builder, "            target_statement_id: " + NullableScalar(edge.TargetStatementId));
         }
     }
 
@@ -175,54 +171,22 @@ internal static class BackfillInventoryWriter
         }
     }
 
-    private static void AtomCoverageReceipts(
+    private static void AtomCoverage(
         StringBuilder builder,
-        ImmutableArray<DigestionCoverageReceipt> receipts)
+        ImmutableArray<DigestionCoverageEdge> edges)
     {
-        if (receipts.Length == 0)
+        if (edges.Length == 0)
         {
-            Line(builder, "  coverage: []");
+            Line(builder, "coverage: []");
             return;
         }
 
-        Line(builder, "  coverage:");
-        foreach (var receipt in receipts)
+        Line(builder, "coverage:");
+        foreach (var edge in edges)
         {
-            Line(builder, $"    - gid: {Scalar(receipt.Gid)}");
-            Line(builder, $"      source_sha256: {Scalar(receipt.SourceSha256)}");
-            Line(builder, $"      target_statement_id: {Scalar(receipt.TargetStatementId)}");
-            StatementIdHistory(builder, receipt.StatementIdHistory, "      ");
+            Line(builder, $"  - gid: {Scalar(edge.Gid)}");
+            Line(builder, "    target_statement_id: " + NullableScalar(edge.TargetStatementId));
         }
-    }
-
-    private static void StatementIdHistory(
-        StringBuilder builder,
-        ImmutableArray<DigestionStatementIdHistoryEntry> history,
-        string indent)
-    {
-        if (history.IsDefaultOrEmpty)
-        {
-            return;
-        }
-
-        Line(builder, indent + "statement_id_history:");
-        foreach (var item in history)
-        {
-            Line(builder, indent + "  - statement_id: " + Scalar(item.StatementId));
-            EffectiveLeanPins(builder, "environment_pin", item.EnvironmentPin, indent + "    ");
-            EffectiveLeanPins(builder, "superseded_by_pin", item.SupersededByPin, indent + "    ");
-        }
-    }
-
-    private static void EffectiveLeanPins(
-        StringBuilder builder,
-        string key,
-        EffectiveLeanPins pins,
-        string indent)
-    {
-        Line(builder, indent + key + ":");
-        Line(builder, indent + "  toolchain: " + Scalar(pins.Toolchain));
-        Line(builder, indent + "  mathlib_revision: " + Scalar(pins.MathlibRevision));
     }
 
     private static void AtomScribeReceipts(
@@ -295,10 +259,6 @@ internal static class BackfillInventoryWriter
                 DigestionStatusNames.Migration(disposition.Outcome.Migration)
                 + "-"
                 + DigestionStatusNames.Truth(disposition.Outcome.Truth)));
-        Line(
-            builder,
-            indent + "  recorded_at_utc: "
-            + Scalar(disposition.RecordedAtUtc.ToString("O", CultureInfo.InvariantCulture)));
         Line(builder, indent + "  gids:");
         foreach (var gid in disposition.Gids)
         {
@@ -362,6 +322,8 @@ internal static class BackfillInventoryWriter
 
         return value;
     }
+
+    private static string NullableScalar(string? value) => value is null ? "null" : Scalar(value);
 
     private static string TomlScalar(string value)
     {

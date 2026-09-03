@@ -7,31 +7,20 @@ internal static class DigestionTestSupport
 {
     private static readonly Lazy<TheoryAtomizerRules> CanonicalRules = new(() =>
     {
-        var root = AppContext.BaseDirectory;
-        while (!File.Exists(Path.Combine(root, TheoryAtomizerDataLoader.DataPath)))
-        {
-            root = Directory.GetParent(root)?.FullName
-                ?? throw new InvalidOperationException("repository root not found");
-        }
         return TheoryAtomizerDataLoader.Load(Snapshot((
             TheoryAtomizerDataLoader.DataPath,
-            File.ReadAllBytes(Path.Combine(root, TheoryAtomizerDataLoader.DataPath)))));
+            File.ReadAllBytes(Path.Combine(
+                TestRepositoryLayout.FindRoot(),
+                "Meta/Digestion/atomizers.toml")))));
     });
 
     internal static TheoryAtomizerRules Rules => CanonicalRules.Value;
 
     internal static byte[] RulesBytes
     {
-        get
-        {
-            var root = AppContext.BaseDirectory;
-            while (!File.Exists(Path.Combine(root, TheoryAtomizerDataLoader.DataPath)))
-            {
-                root = Directory.GetParent(root)?.FullName
-                    ?? throw new InvalidOperationException("repository root not found");
-            }
-            return File.ReadAllBytes(Path.Combine(root, TheoryAtomizerDataLoader.DataPath));
-        }
+        get => File.ReadAllBytes(Path.Combine(
+            TestRepositoryLayout.FindRoot(),
+            "Meta/Digestion/atomizers.toml"));
     }
 
     internal static BackfillInventoryDocument EmptyDocument(string atomizerId) =>
@@ -74,8 +63,11 @@ internal static class DigestionTestSupport
             atomizerId,
             atomId,
             atom.Fingerprints,
-            coverageGids.IsDefault ? [] : coverageGids,
-            receipts ?? new DigestionReceipts([], [], [], [], null),
+            coverageGids.IsDefault
+                ? []
+                : coverageGids.Select(static gid => new DigestionCoverageEdge(gid, null))
+                    .ToImmutableArray(),
+            receipts ?? new DigestionReceipts([], [], [], null),
             new DigestionStatus(migration, truth),
             casRef ?? atom.Fingerprints.RawSha256);
 

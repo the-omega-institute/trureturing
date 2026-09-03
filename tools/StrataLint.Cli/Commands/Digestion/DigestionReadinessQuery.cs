@@ -6,6 +6,7 @@ namespace StrataLint.Cli;
 internal sealed record DigestionReadinessRecord(
     string SourceId,
     string AtomId,
+    ImmutableArray<string> CoverageGids,
     string Action,
     ImmutableArray<string> OrderedBlockers,
     ImmutableArray<string> UnknownPredicates);
@@ -113,6 +114,7 @@ internal static class DigestionReadinessQuery
         ImmutableArray<string> unknownPredicates = default) => new(
             entry.SourceId,
             entry.AtomId,
+            entry.CoverageGids,
             action,
             orderedBlockers,
             unknownPredicates.IsDefault ? [] : unknownPredicates);

@@ -184,12 +184,9 @@ internal static partial class CoverWorld
         string? emissionSha256,
         ImmutableArray<string> unresolvedSubitems)
     {
-        var coverageReceipts = coverage.Length == 1 && targetStatementId is not null
-            ? ImmutableArray.Create(new DigestionCoverageReceipt(
-                coverage[0],
-                fingerprints.RawSha256,
-                targetStatementId))
-            : [];
+        var coverageEdges = coverage
+            .Select(gid => new DigestionCoverageEdge(gid, targetStatementId))
+            .ToImmutableArray();
         var scribeReceipts = coverage.Length == 1
             && definitionSha256 is not null
             && emissionSha256 is not null
@@ -207,9 +204,8 @@ internal static partial class CoverWorld
             SyntheticNumberedAtomizer.Id,
             atomId,
             fingerprints,
-            coverage,
+            coverageEdges,
             new DigestionReceipts(
-                coverageReceipts,
                 scribeReceipts,
                 unresolvedSubitems,
                 [],
