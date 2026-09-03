@@ -1,0 +1,31 @@
+fingerprints:
+  raw_sha256: sha256:7232ebf337ed10c1fb71b90c1f3b3438d2dbddf1261035e4a757c3f8b6124511
+  normalized_sha256: sha256:7232ebf337ed10c1fb71b90c1f3b3438d2dbddf1261035e4a757c3f8b6124511
+cas_ref: sha256:7232ebf337ed10c1fb71b90c1f3b3438d2dbddf1261035e4a757c3f8b6124511
+coverage_gids:
+  - gid: D5/S3/Observer/ClassicalAnswerTableExclusion.noncontextual_and_local_double_exclusion
+    target_statement_id: null
+  - gid: D5/S3/Observer/WindowCharacter.window_algebra_has_no_character
+    target_statement_id: null
+  - gid: D5/S3/QuantumBounds/CHSHWitness.bell_chsh_value
+    target_statement_id: null
+  - gid: D5/S3/QuantumBounds/CHSHWitness.bell_density_is_state
+    target_statement_id: null
+  - gid: D5/S3/QuantumBounds/CHSHWitness.bob_observables_are_valid
+    target_statement_id: null
+  - gid: D5/S3/QuantumBounds/CHSHWitness.chsh_operator_eq_lifted_chsh
+    target_statement_id: null
+  - gid: D5/S3/QuantumBounds/CHSHWitness.lifted_observables_form_chsh_tuple
+    target_statement_id: null
+  - gid: D5/S3/QuantumBounds/ClassicalFiberBound.classical_chsh_abs_le_two
+    target_statement_id: null
+  - gid: D5/S3/QuantumBounds/ClassicalFiberBound.classical_chsh_bound_is_exact
+    target_statement_id: null
+  - gid: D5/S3/QuantumBounds/ClassicalFiberBound.classical_chsh_eq_two_exists
+    target_statement_id: null
+  - gid: D5/S3/QuantumContext/ProjectionValuationObstruction.projection_valuation_obstruction
+    target_statement_id: null
+receipts:
+  scribe: []
+  unresolved_subitems:
+    - kochen-specker-projection-valuation-obstruction

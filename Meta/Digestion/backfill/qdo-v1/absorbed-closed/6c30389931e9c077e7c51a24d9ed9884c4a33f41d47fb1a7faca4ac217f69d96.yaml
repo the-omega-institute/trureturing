@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:6c30389931e9c077e7c51a24d9ed9884c4a33f41d47fb1a7faca4ac217f69d96
+  normalized_sha256: sha256:6c30389931e9c077e7c51a24d9ed9884c4a33f41d47fb1a7faca4ac217f69d96
+cas_ref: sha256:6c30389931e9c077e7c51a24d9ed9884c4a33f41d47fb1a7faca4ac217f69d96
+coverage_gids:
+  - D5/S0/Diagonal/Naturality/CompatibleCandidateSection.compatible_candidate_section_nonempty
+receipts:
+  coverage:
+    - gid: D5/S0/Diagonal/Naturality/CompatibleCandidateSection.compatible_candidate_section_nonempty
+      source_sha256: sha256:6c30389931e9c077e7c51a24d9ed9884c4a33f41d47fb1a7faca4ac217f69d96
+      target_statement_id: sha256:a1cd803a0b2a8a78ddf674849bf8b4a5a5edebd499b027c29d4957023b8b8b8a
+  scribe:
+    - gid: D5/S0/Diagonal/Naturality/CompatibleCandidateSection.compatible_candidate_section_nonempty
+      definition_sha256: sha256:746c84a6d10e1d98fd48c3726755aaae91a74090e5a5614ddafe08c64b49ffea
+      emission_sha256: sha256:ad32f22b74a929a9e1b6af5e47deb168c1c4901740b7045b6ae908ea19790f07
+  unresolved_subitems: []

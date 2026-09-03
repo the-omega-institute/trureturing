@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:48806e31858bcf64306c86565493a0f6ab6527493d27b9b18b9ba98fd5c8ada2
+  normalized_sha256: sha256:48806e31858bcf64306c86565493a0f6ab6527493d27b9b18b9ba98fd5c8ada2
+cas_ref: sha256:48806e31858bcf64306c86565493a0f6ab6527493d27b9b18b9ba98fd5c8ada2
+coverage_gids:
+  - D5/S3/Quantum/Decoherence/CanonicalRecordAccessRecovery.reduced_irreversibility_is_canonical_record_access_defect
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/Decoherence/CanonicalRecordAccessRecovery.reduced_irreversibility_is_canonical_record_access_defect
+      source_sha256: sha256:48806e31858bcf64306c86565493a0f6ab6527493d27b9b18b9ba98fd5c8ada2
+      target_statement_id: sha256:8ef6963c90949e70eca04be0140c7c0db870bc06003f78cf5cecc63cb455cd73
+  scribe:
+    - gid: D5/S3/Quantum/Decoherence/CanonicalRecordAccessRecovery.reduced_irreversibility_is_canonical_record_access_defect
+      definition_sha256: sha256:76600887cabf94455f813023198c82fb6001d7cd1dd8205e76d5e7c9e782f97a
+      emission_sha256: sha256:4335e5aa22ec948de5dec1ef101e0c76701af701dc703ee228f09f6d2eab64e9
+  unresolved_subitems: []
