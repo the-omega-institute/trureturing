@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:4124386f27a44b5e66091300ab96c0712638f96888993e27dfa4bc77bdaf443e
+  normalized_sha256: sha256:4124386f27a44b5e66091300ab96c0712638f96888993e27dfa4bc77bdaf443e
+cas_ref: sha256:4124386f27a44b5e66091300ab96c0712638f96888993e27dfa4bc77bdaf443e
+coverage_gids:
+  - D5/S3/ConceptDynamics/Experiment/ExperimentValueIsKernelReduction.experiment_value_is_kernel_reduction
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Experiment/ExperimentValueIsKernelReduction.experiment_value_is_kernel_reduction
+      source_sha256: sha256:4124386f27a44b5e66091300ab96c0712638f96888993e27dfa4bc77bdaf443e
+      target_statement_id: sha256:b910469f2f331e1ceeaef28253ba37116e632c76b52162faab0dd38ec175733e
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Experiment/ExperimentValueIsKernelReduction.experiment_value_is_kernel_reduction
+      definition_sha256: sha256:387f6c75c8d267b98da323afa08cfd5f435dc6990b2924847df3e6efab36e712
+      emission_sha256: sha256:bc812d84782c94c35fa488fad060145613e9eb2f05e1a984279beec8d6049efc
+  unresolved_subitems: []
