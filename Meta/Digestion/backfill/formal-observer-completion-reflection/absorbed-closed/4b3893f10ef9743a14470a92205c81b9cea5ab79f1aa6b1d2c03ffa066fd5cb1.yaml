@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:4b3893f10ef9743a14470a92205c81b9cea5ab79f1aa6b1d2c03ffa066fd5cb1
+  normalized_sha256: sha256:4b3893f10ef9743a14470a92205c81b9cea5ab79f1aa6b1d2c03ffa066fd5cb1
+cas_ref: sha256:4b3893f10ef9743a14470a92205c81b9cea5ab79f1aa6b1d2c03ffa066fd5cb1
+coverage_gids:
+  - D5/S3/Quantum/Entanglement/LocalObservationPartialTraceEquivalence.local_observation_partial_trace_equivalence
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/Entanglement/LocalObservationPartialTraceEquivalence.local_observation_partial_trace_equivalence
+      source_sha256: sha256:4b3893f10ef9743a14470a92205c81b9cea5ab79f1aa6b1d2c03ffa066fd5cb1
+      target_statement_id: sha256:2de3a24c72cab4a2fa357c2b4c6e9ab90c84eeaa21d0aed6052bc89890d3fa87
+  scribe:
+    - gid: D5/S3/Quantum/Entanglement/LocalObservationPartialTraceEquivalence.local_observation_partial_trace_equivalence
+      definition_sha256: sha256:bc85f9c01ffd3208958572b1d6cef178bbde5be67c14ebf092a376cbe6ef8f0a
+      emission_sha256: sha256:2db724bae10d71bdc3a7d55386cf66cc62f4f4c8f5bc2532ff03fa61092fd987
+  unresolved_subitems: []
