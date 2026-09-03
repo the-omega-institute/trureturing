@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:c59c4fc915aa2701f4001504db90fe8ea5046a536f41eb64b0f66cf4e5f55d8f
+  normalized_sha256: sha256:c59c4fc915aa2701f4001504db90fe8ea5046a536f41eb64b0f66cf4e5f55d8f
+cas_ref: sha256:c59c4fc915aa2701f4001504db90fe8ea5046a536f41eb64b0f66cf4e5f55d8f
+coverage_gids:
+  - D5/S3/Weil/Budget/ExponentialFiniteMomentTransfer.exponential_finite_moment_transfer
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/Budget/ExponentialFiniteMomentTransfer.exponential_finite_moment_transfer
+      source_sha256: sha256:c59c4fc915aa2701f4001504db90fe8ea5046a536f41eb64b0f66cf4e5f55d8f
+      target_statement_id: sha256:584b70275bebf5716d9f7a507a327117de67787de5dc944637344ac9897a4f38
+  scribe:
+    - gid: D5/S3/Weil/Budget/ExponentialFiniteMomentTransfer.exponential_finite_moment_transfer
+      definition_sha256: sha256:e258b71607445d464089ea847589ef23f7d62f8777fc32892da997ec4da14fb4
+      emission_sha256: sha256:90c047e5c288a2d7b7920ea1c230403a632a42b93adedd68c689a7001e71abaf
+  unresolved_subitems: []

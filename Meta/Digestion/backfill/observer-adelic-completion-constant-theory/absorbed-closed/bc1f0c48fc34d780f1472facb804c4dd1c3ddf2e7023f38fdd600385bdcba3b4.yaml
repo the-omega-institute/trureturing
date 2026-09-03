@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:bc1f0c48fc34d780f1472facb804c4dd1c3ddf2e7023f38fdd600385bdcba3b4
+  normalized_sha256: sha256:bc1f0c48fc34d780f1472facb804c4dd1c3ddf2e7023f38fdd600385bdcba3b4
+cas_ref: sha256:bc1f0c48fc34d780f1472facb804c4dd1c3ddf2e7023f38fdd600385bdcba3b4
+coverage_gids:
+  - D5/S3/Weil/ZetaGamma/MasslessTangentConeLimit.massless_tangent_cone_limit
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/ZetaGamma/MasslessTangentConeLimit.massless_tangent_cone_limit
+      source_sha256: sha256:bc1f0c48fc34d780f1472facb804c4dd1c3ddf2e7023f38fdd600385bdcba3b4
+      target_statement_id: sha256:8c8b5eca81abdf46550e81229d61503f1b68ff6abfa5fbf4b9b240a4f40d659d
+  scribe:
+    - gid: D5/S3/Weil/ZetaGamma/MasslessTangentConeLimit.massless_tangent_cone_limit
+      definition_sha256: sha256:a335e6cb452d0a91c89520396419f895df903fd1e238ee8f700c5d06507a29e8
+      emission_sha256: sha256:786aa91d02e2fdb2349777fc9b8fa88328f941c0ad14276240adf73c2da9b1bf
+  unresolved_subitems: []

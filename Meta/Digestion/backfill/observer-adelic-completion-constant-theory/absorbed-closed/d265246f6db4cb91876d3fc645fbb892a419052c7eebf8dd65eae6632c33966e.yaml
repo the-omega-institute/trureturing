@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:d265246f6db4cb91876d3fc645fbb892a419052c7eebf8dd65eae6632c33966e
+  normalized_sha256: sha256:d265246f6db4cb91876d3fc645fbb892a419052c7eebf8dd65eae6632c33966e
+cas_ref: sha256:d265246f6db4cb91876d3fc645fbb892a419052c7eebf8dd65eae6632c33966e
+coverage_gids:
+  - D5/S3/Weil/Budget/OddTestBudgetUpperBound.odd_test_budget_at_most_upper
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/Budget/OddTestBudgetUpperBound.odd_test_budget_at_most_upper
+      source_sha256: sha256:d265246f6db4cb91876d3fc645fbb892a419052c7eebf8dd65eae6632c33966e
+      target_statement_id: sha256:65db1159ae463d55ade2a01208ad83fdd7ab200935b4e8563351eb7aaa6eb411
+  scribe:
+    - gid: D5/S3/Weil/Budget/OddTestBudgetUpperBound.odd_test_budget_at_most_upper
+      definition_sha256: sha256:903d9f64d272b4ad325d2b63a98c759e42379033d4afca816b964059c594f77a
+      emission_sha256: sha256:29a48644e350266201401f1dc78e16de738ccdd722f3cc0d4d6f90b03e1b96c9
+  unresolved_subitems: []
