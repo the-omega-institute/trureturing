@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:55bbd828daed6f6c3b88af9880abc6266277d37e4946d7074562aca424af5c0a
+  normalized_sha256: sha256:55bbd828daed6f6c3b88af9880abc6266277d37e4946d7074562aca424af5c0a
+cas_ref: sha256:55bbd828daed6f6c3b88af9880abc6266277d37e4946d7074562aca424af5c0a
+coverage_gids:
+  - D5/S3/ConceptDynamics/RefinementAlgebra/PullbackAlgebraFiberAtoms.nonzero_pullback_atoms_are_effective_fibers
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/RefinementAlgebra/PullbackAlgebraFiberAtoms.nonzero_pullback_atoms_are_effective_fibers
+      source_sha256: sha256:55bbd828daed6f6c3b88af9880abc6266277d37e4946d7074562aca424af5c0a
+      target_statement_id: sha256:d432df8896d1a07fd0783f1858d6ef5bc591a48402f84fb14703871c7e29a713
+  scribe:
+    - gid: D5/S3/ConceptDynamics/RefinementAlgebra/PullbackAlgebraFiberAtoms.nonzero_pullback_atoms_are_effective_fibers
+      definition_sha256: sha256:a82a2f59048bc97aad5ce4fdb2286893cc9ca4688307a92db871d3304f87b29d
+      emission_sha256: sha256:2b2e8eea0ee4c1d805912ede7b512e9d1bb81927823162b0e2e8e1066a37f547
+  unresolved_subitems: []
