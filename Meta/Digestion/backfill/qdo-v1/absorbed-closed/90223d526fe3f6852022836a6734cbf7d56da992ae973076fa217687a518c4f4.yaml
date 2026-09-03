@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:90223d526fe3f6852022836a6734cbf7d56da992ae973076fa217687a518c4f4
+  normalized_sha256: sha256:90223d526fe3f6852022836a6734cbf7d56da992ae973076fa217687a518c4f4
+cas_ref: sha256:90223d526fe3f6852022836a6734cbf7d56da992ae973076fa217687a518c4f4
+coverage_gids:
+  - gid: D5/S3/Observer/SymbolicStability/NoUniformInfiniteFutureRadius.no_uniform_infinite_future_stability_radius
+    target_statement_id: sha256:3ca4f506c40bf1d9ff5a28e70a4f651be69bfbe79499aa5218f3a6cbf51e9eac
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/SymbolicStability/NoUniformInfiniteFutureRadius.no_uniform_infinite_future_stability_radius
+      definition_sha256: sha256:1cf054a2210fdef144dfe1473c8e43ca1252f11b964753b9845807e8c0d51b64
+      emission_sha256: sha256:3c483eebcb9881c909884d4e014f6c9ac829137afc14007654aec4e781569e9e
+  unresolved_subitems: []
