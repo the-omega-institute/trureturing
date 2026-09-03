@@ -159,6 +159,30 @@ private lemma arithmetic_state_self_real (s : ℝ) (hs : 1 < s)
       change ‖F n‖ ^ 2 = ‖F n‖ ^ 2
       rfl
 
+private lemma arithmetic_state_self_eq_ofReal (s : ℝ) (hs : 1 < s)
+    (F : ArithmeticObservable) :
+    arithmeticState s hs (star F * F) =
+      ((∫ n, ‖F n‖ ^ 2 ∂(zetaDist s hs).toMeasure : ℝ) : ℂ) := by
+  have hIntegrable := arithmetic_product_integrable s hs F F
+  apply Complex.ext
+  · simpa using arithmetic_state_self_real s hs F
+  · rw [arithmeticState]
+    calc
+      (∫ n, conj (F n) * F n ∂(zetaDist s hs).toMeasure).im =
+          ∫ n, (conj (F n) * F n).im ∂(zetaDist s hs).toMeasure :=
+        (integral_im hIntegrable).symm
+      _ = ∫ n, (((‖F n‖ ^ 2 : ℝ) : ℂ)).im
+          ∂(zetaDist s hs).toMeasure := by
+        apply integral_congr_ae
+        filter_upwards with n
+        rw [Complex.conj_mul', ← Complex.ofReal_pow]
+      _ = ∫ _n : ℕ, (0 : ℝ) ∂(zetaDist s hs).toMeasure := by
+        apply integral_congr_ae
+        filter_upwards with n
+        exact Complex.ofReal_im _
+      _ = 0 := by simp
+      _ = ((∫ n, ‖F n‖ ^ 2 ∂(zetaDist s hs).toMeasure : ℝ) : ℂ).im := by simp
+
 private lemma arithmetic_square_integrable (s : ℝ) (hs : 1 < s)
     (F : ArithmeticObservable) :
     Integrable (fun n => ‖F n‖ ^ 2) (zetaDist s hs).toMeasure := by
@@ -173,12 +197,13 @@ private lemma partition_toReal_eq_zeta_re (s : ℝ) (hs : 1 < s) :
 arithmetic seminorm, identifies precisely its zero-norm observations in the completion, and
 has a dense complete inner-product completion. -/
 theorem arithmetic_positivity (s : ℝ) (hs : 1 < s) (F : ArithmeticObservable) :
-    0 ≤ (arithmeticState s hs (star F * F)).re ∧
-      (arithmeticState s hs (star F * F)).re =
-        (1 / (riemannZeta (s : ℂ)).re) *
-          ∑' n : ℕ, ‖F n‖ ^ 2 * (n : ℝ) ^ (-s) ∧
-      ‖toArithmeticPreHilbert s hs F‖ ^ 2 =
-        (arithmeticState s hs (star F * F)).re ∧
+    0 ≤ (1 / (riemannZeta (s : ℂ)).re) *
+        ∑' n : ℕ, ‖F n‖ ^ 2 * (n : ℝ) ^ (-s) ∧
+      arithmeticState s hs (star F * F) =
+        (((1 / (riemannZeta (s : ℂ)).re) *
+          ∑' n : ℕ, ‖F n‖ ^ 2 * (n : ℝ) ^ (-s) : ℝ) : ℂ) ∧
+      ((‖toArithmeticPreHilbert s hs F‖ ^ 2 : ℝ) : ℂ) =
+        arithmeticState s hs (star F * F) ∧
       (((toArithmeticPreHilbert s hs F : ArithmeticPreHilbert s hs) :
           ArithmeticHilbertSpace s hs) = 0 ↔
         ‖toArithmeticPreHilbert s hs F‖ = 0) ∧
@@ -187,11 +212,12 @@ theorem arithmetic_positivity (s : ℝ) (hs : 1 < s) (F : ArithmeticObservable) 
       ∀ x : ArithmeticHilbertSpace s hs,
         ‖x‖ ^ 2 = (inner ℂ x x).re := by
   have hReal := arithmetic_state_self_real s hs F
-  constructor
-  · rw [hReal]
-    exact integral_nonneg fun n => sq_nonneg ‖F n‖
-  constructor
-  · rw [hReal, PMF.integral_eq_tsum _ _ (arithmetic_square_integrable s hs F)]
+  have hState := arithmetic_state_self_eq_ofReal s hs F
+  have hExpansion :
+      (∫ n, ‖F n‖ ^ 2 ∂(zetaDist s hs).toMeasure : ℝ) =
+        (1 / (riemannZeta (s : ℂ)).re) *
+          ∑' n : ℕ, ‖F n‖ ^ 2 * (n : ℝ) ^ (-s) := by
+    rw [PMF.integral_eq_tsum _ _ (arithmetic_square_integrable s hs F)]
     simp only [smul_eq_mul]
     change (∑' n : ℕ, pmfReal (zetaDist s hs) n * ‖F n‖ ^ 2) = _
     rw [← tsum_mul_left]
@@ -199,13 +225,23 @@ theorem arithmetic_positivity (s : ℝ) (hs : 1 < s) (F : ArithmeticObservable) 
     intro n
     rw [zeta_real_apply, partition_toReal_eq_zeta_re s hs]
     ring
-  constructor
-  · calc
+  have hSeminormReal :
+      ‖toArithmeticPreHilbert s hs F‖ ^ 2 =
+        ∫ n, ‖F n‖ ^ 2 ∂(zetaDist s hs).toMeasure := by
+    calc
       ‖toArithmeticPreHilbert s hs F‖ ^ 2 =
           (inner ℂ (toArithmeticPreHilbert s hs F)
             (toArithmeticPreHilbert s hs F)).re :=
         norm_sq_eq_re_inner (𝕜 := ℂ) _
       _ = (arithmeticState s hs (star F * F)).re := rfl
+      _ = ∫ n, ‖F n‖ ^ 2 ∂(zetaDist s hs).toMeasure := hReal
+  constructor
+  · rw [← hExpansion]
+    exact integral_nonneg fun n => sq_nonneg ‖F n‖
+  constructor
+  · rw [hState, hExpansion]
+  constructor
+  · exact (congrArg (fun r : ℝ => (r : ℂ)) hSeminormReal).trans hState.symm
   constructor
   · rw [← norm_eq_zero, UniformSpace.Completion.norm_coe]
   constructor

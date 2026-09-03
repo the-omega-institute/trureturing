@@ -29,8 +29,9 @@ internal sealed class ArithmeticStatePositivityDocument
                     Paragraph(Text(
                         "The first three conjuncts state positivity, the exact normalized "
                             + "weighted integer expansion, and the induced seminorm-square "
-                            + "identity. The state value is displayed through its real part, "
-                            + "which equals the real nonnegative weighted series.")),
+                            + "identity. The normalized series is nonnegative, the full complex "
+                            + "state value equals its real coercion, and the real seminorm square "
+                            + "equals that complex state value after coercion.")),
                     Paragraph(Text(
                         "The remaining conjuncts expose the canonical separation and completion: "
                             + "an observable maps to zero exactly when its seminorm vanishes, "
@@ -86,8 +87,7 @@ internal sealed class ArithmeticStatePositivityDocument
         Formula preObservable = Call("toArithmeticPreHilbert", s, observable);
         Formula selfProduct = Seq(
             Overline, Grp(observable), Sp, Times, Sp, observable);
-        Formula stateValue = Seq(
-            Re, Open, Call("arithmeticState", s, selfProduct), Close);
+        Formula stateValue = Call("arithmeticState", s, selfProduct);
         Formula observableNormSquare = Power(new Formula.Norm(Apply(observable, n)), D(2));
         Formula weightedTerm = Seq(
             observableNormSquare, Sp, Times, Sp, Power(n, Seq(Minus, s)));
@@ -96,12 +96,13 @@ internal sealed class ArithmeticStatePositivityDocument
         Formula normalizedSum = Seq(
             new Formula.Fraction(D(1), Seq(Re, Open, Call("riemannZeta", s), Close)),
             Sp, Times, Sp, weightedSum);
+        Formula normalizedComplex = Call("ofReal", normalizedSum);
 
         Formula positivity = new Formula.Relation(
-            D(0), FormulaRelationOperator.LessThanOrEqual, stateValue);
-        Formula exactExpansion = Equal(stateValue, normalizedSum);
+            D(0), FormulaRelationOperator.LessThanOrEqual, normalizedSum);
+        Formula exactExpansion = Equal(stateValue, normalizedComplex);
         Formula seminormIdentity = Equal(
-            Power(new Formula.Norm(preObservable), D(2)),
+            Call("ofReal", Power(new Formula.Norm(preObservable), D(2))),
             stateValue);
         Formula zeroSeparation = Iff(
             Equal(Call("CompletionCoe", preObservable), D(0)),
