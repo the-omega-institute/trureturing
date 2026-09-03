@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:430d4a1fb29389c0081999d05b8801bd234108d80aeefe2dafe87531a66487ff
+  normalized_sha256: sha256:430d4a1fb29389c0081999d05b8801bd234108d80aeefe2dafe87531a66487ff
+cas_ref: sha256:430d4a1fb29389c0081999d05b8801bd234108d80aeefe2dafe87531a66487ff
+coverage_gids:
+  - D5/S3/Quantum/Measurement/ObserverRefinementVisibleResidualEquivalence.observer_refinement_visible_residual_equivalence
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/Measurement/ObserverRefinementVisibleResidualEquivalence.observer_refinement_visible_residual_equivalence
+      source_sha256: sha256:430d4a1fb29389c0081999d05b8801bd234108d80aeefe2dafe87531a66487ff
+      target_statement_id: sha256:fe1622dbd0d37d681e8b79ffda6ddd568b08d94a84b3d0df407336d50a4f8e36
+  scribe:
+    - gid: D5/S3/Quantum/Measurement/ObserverRefinementVisibleResidualEquivalence.observer_refinement_visible_residual_equivalence
+      definition_sha256: sha256:ad8c7b2ac51dbff0be4275aefa3fb69592a4c4d2efc6e86f2ce328a584b881a5
+      emission_sha256: sha256:508ab0faaad4af8a846092e79b3d203a747fb1c728b974cf7b9d783f7513897b
+  unresolved_subitems: []

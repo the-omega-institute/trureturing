@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:192bac676d9adada087f235e7ac0e2f8568cf53beead404dbab19fb5d9596b6d
+  normalized_sha256: sha256:192bac676d9adada087f235e7ac0e2f8568cf53beead404dbab19fb5d9596b6d
+cas_ref: sha256:192bac676d9adada087f235e7ac0e2f8568cf53beead404dbab19fb5d9596b6d
+coverage_gids:
+  - D5/S3/Quantum/PureState/PerfectEffectDiscriminationOrthogonality.perfect_effect_discrimination_orthogonal
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/PureState/PerfectEffectDiscriminationOrthogonality.perfect_effect_discrimination_orthogonal
+      source_sha256: sha256:192bac676d9adada087f235e7ac0e2f8568cf53beead404dbab19fb5d9596b6d
+      target_statement_id: sha256:2938f867968d209c61e26c18db3924b304e5dfc46aa91cb06ba16d79134675c9
+  scribe:
+    - gid: D5/S3/Quantum/PureState/PerfectEffectDiscriminationOrthogonality.perfect_effect_discrimination_orthogonal
+      definition_sha256: sha256:704205ce8f62a45ac17fe5e6fac99b7cf9284b9c715a1234a9f890379f0abbab
+      emission_sha256: sha256:4e72db44afe15305b10087cbec82cb3083d42c59143b71c5ca494d65dc929e4d
+  unresolved_subitems: []
