@@ -1,0 +1,27 @@
+### 50.6 谱完备盲区
+
+定义：
+
+$$
+\boxed{
+\mathscr B_C
+=
+\left(
+\overline{
+\operatorname{span}
+\{\Psi(\rho):\xi(\rho)=0\}
+}
+\right)^\perp.
+}
+$$
+
+如果：
+
+$$
+\mathscr B_C\neq\{0\},
+$$
+
+则候选谱空间中仍有零点模式账本看不到的隐藏部分。
+
+---
+
