@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:c1af4c472b5586625878226a2cb0ef47a93634e2363a0171209946ea608a7dec
 cas_ref: sha256:c1af4c472b5586625878226a2cb0ef47a93634e2363a0171209946ea608a7dec
 coverage_gids:
-  - D5/S3/ConceptDynamics/Sufficiency/FiniteWindowMinimalSufficiency.finite_window_minimal_sufficiency
+  - gid: D5/S3/ConceptDynamics/Sufficiency/FiniteWindowMinimalSufficiency.finite_window_minimal_sufficiency
+    target_statement_id: sha256:af48f8cc7b7d4381e0aaf4d3f9670e83144fe21776eeae61199c873a0ff19198
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Sufficiency/FiniteWindowMinimalSufficiency.finite_window_minimal_sufficiency
-      source_sha256: sha256:c1af4c472b5586625878226a2cb0ef47a93634e2363a0171209946ea608a7dec
-      target_statement_id: sha256:af48f8cc7b7d4381e0aaf4d3f9670e83144fe21776eeae61199c873a0ff19198
   scribe:
     - gid: D5/S3/ConceptDynamics/Sufficiency/FiniteWindowMinimalSufficiency.finite_window_minimal_sufficiency
       definition_sha256: sha256:38019b6370991e3b13878530abcc26a8c8a76da1f9fab0fcb556d5e25c9d4954

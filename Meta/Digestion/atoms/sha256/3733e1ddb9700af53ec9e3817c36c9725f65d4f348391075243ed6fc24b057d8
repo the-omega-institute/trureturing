@@ -1,0 +1,19 @@
+# Prime–Observer No-Diagonal-Escape Principle
+
+$$
+\boxed{
+\text{局部逐层闭合}
++
+\text{统一尾紧性}
++
+\text{关系正性闭合}
+\Longrightarrow
+\text{全局完成无信息逃逸}.
+}
+\tag{2060.3}
+$$
+
+这比“继续增加更多条件”更接近真正的 RH 主桥。
+
+---
+

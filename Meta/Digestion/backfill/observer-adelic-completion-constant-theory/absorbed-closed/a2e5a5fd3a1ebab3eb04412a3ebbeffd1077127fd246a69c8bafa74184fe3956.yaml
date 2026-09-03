@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:a2e5a5fd3a1ebab3eb04412a3ebbeffd1077127fd246a69c8bafa74184fe3956
 cas_ref: sha256:a2e5a5fd3a1ebab3eb04412a3ebbeffd1077127fd246a69c8bafa74184fe3956
 coverage_gids:
-  - D5/S3/Weil/ZetaLinear/CriticalDampingGenerator.normalized_generator_skew_iff_critical_line
+  - gid: D5/S3/Weil/ZetaLinear/CriticalDampingGenerator.normalized_generator_skew_iff_critical_line
+    target_statement_id: sha256:d1ea6948cf4894d62b11295feff9aa3f0ba5d74cb799b0ff0dbc4f75ae41bdae
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/ZetaLinear/CriticalDampingGenerator.normalized_generator_skew_iff_critical_line
-      source_sha256: sha256:a2e5a5fd3a1ebab3eb04412a3ebbeffd1077127fd246a69c8bafa74184fe3956
-      target_statement_id: sha256:d1ea6948cf4894d62b11295feff9aa3f0ba5d74cb799b0ff0dbc4f75ae41bdae
   scribe:
     - gid: D5/S3/Weil/ZetaLinear/CriticalDampingGenerator.normalized_generator_skew_iff_critical_line
       definition_sha256: sha256:484b21f698cf58ca9cafac63246d1c2d72b83489fd6fd425097b247cd2b8dbc5

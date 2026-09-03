@@ -1,0 +1,28 @@
+## 6.3 Pythagoras 分解
+
+定义传统 RH 的总平方缺陷：
+
+$$
+E_{\mathrm{RH}}
+=
+\sum_\rho
+w_\rho
+\left(
+\Re\rho-\frac12
+\right)^2.
+$$
+
+则有严格恒等式：
+
+$$
+\boxed{
+E_{\mathrm{RH}}
+=
+E_{\mathrm{coh}}
++
+E_{\mathrm{center}}.
+}
+$$
+
+因此可以再定义两个版本。
+

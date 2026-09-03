@@ -1,0 +1,51 @@
+## 571. 固定构型阶的尾部
+
+对一个 \(k\)-点构型 \(H\)，当：
+
+$$
+p>\operatorname{diam}(H),
+$$
+
+各 offsets 模 \(p\) 不碰撞，所以：
+
+$$
+L_p(H)
+=
+\frac{1-k/p}{(1-1/p)^k}.
+$$
+
+展开：
+
+$$
+\boxed{
+L_p(H)
+=
+1-
+\frac{k(k-1)}{2p^2}
++
+O\left(\frac{k^3}{p^3}\right).
+}
+$$
+
+一阶 \(1/p\) 项已经被独立基线消去，首个 residual 是二阶 connected 项。
+
+因此：
+
+$$
+\sum_{p>P}|L_p(H)-1|
+\lesssim
+k^2\sum_{p>P}\frac1{p^2}
+\lesssim
+\frac{k^2}{P}.
+$$
+
+对固定 \(k\)：
+
+$$
+P\to\infty
+\Longrightarrow
+\text{尾部误差}\to0.
+$$
+
+---
+

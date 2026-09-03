@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:81e97689dced01c9867505a370021ffc2fca904f74e0a67000258398a99ccb5f
 cas_ref: sha256:81e97689dced01c9867505a370021ffc2fca904f74e0a67000258398a99ccb5f
 coverage_gids:
-  - D5/S3/Quantum/Decoherence/RecordActionCoherenceSurvival.record_action_controls_coherence_survival
+  - gid: D5/S3/Quantum/Decoherence/RecordActionCoherenceSurvival.record_action_controls_coherence_survival
+    target_statement_id: sha256:a21f0b5f90ae6f379f36aeadf3465faee9f399eaa5f461fa85082073d9df5eee
 receipts:
-  coverage:
-    - gid: D5/S3/Quantum/Decoherence/RecordActionCoherenceSurvival.record_action_controls_coherence_survival
-      source_sha256: sha256:81e97689dced01c9867505a370021ffc2fca904f74e0a67000258398a99ccb5f
-      target_statement_id: sha256:a21f0b5f90ae6f379f36aeadf3465faee9f399eaa5f461fa85082073d9df5eee
   scribe:
     - gid: D5/S3/Quantum/Decoherence/RecordActionCoherenceSurvival.record_action_controls_coherence_survival
       definition_sha256: sha256:f8fe55feecc7fc1b03632fda482ec81a25823fe770874139161f45270a56ecc5

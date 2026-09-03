@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:5a4e80589c7317174e001e1e1accb06044f58536e9b6d7382b7242b12ba1f049
 cas_ref: sha256:5a4e80589c7317174e001e1e1accb06044f58536e9b6d7382b7242b12ba1f049
 coverage_gids:
-  - D5/S3/Analytic/ZetaEntropyPlane/PrimeRelativeDensityEvidenceDivergence.prime_relative_density_does_not_determine_evidence_summability
+  - gid: D5/S3/Analytic/ZetaEntropyPlane/PrimeRelativeDensityEvidenceDivergence.prime_relative_density_does_not_determine_evidence_summability
+    target_statement_id: sha256:01caa8f1dcfbef30cc3bbaa6ccc0bc308f6249f6da8375791e50555b8843b008
 receipts:
-  coverage:
-    - gid: D5/S3/Analytic/ZetaEntropyPlane/PrimeRelativeDensityEvidenceDivergence.prime_relative_density_does_not_determine_evidence_summability
-      source_sha256: sha256:5a4e80589c7317174e001e1e1accb06044f58536e9b6d7382b7242b12ba1f049
-      target_statement_id: sha256:01caa8f1dcfbef30cc3bbaa6ccc0bc308f6249f6da8375791e50555b8843b008
   scribe:
     - gid: D5/S3/Analytic/ZetaEntropyPlane/PrimeRelativeDensityEvidenceDivergence.prime_relative_density_does_not_determine_evidence_summability
       definition_sha256: sha256:4afb12fe467cfeddf5f6ded04308f2c6aff971eb7f1394559edc3432276afc61

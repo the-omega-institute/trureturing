@@ -1,0 +1,26 @@
+* 解析函数是否在紧集上一致收敛。
+
+这些不是某一个有限阶段的普通条件。
+
+它们是对整个塔的条件：
+
+$$
+\boxed{
+\text{conditions on the family of conditions}.
+}
+$$
+
+所以你感受到的“周期的周期”“条件仍可继续分”在这里确实成立：
+
+$$
+\boxed{
+\text{局部层级}
+\to
+\omega\text{ 极限}
+\to
+\omega+1\text{ 的统一正则性}.
+}
+$$
+
+---
+

@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:46e0969ae8f414d7196788c2e14e065b54ec6cee82046bf862a5fd84424b7e37
 cas_ref: sha256:46e0969ae8f414d7196788c2e14e065b54ec6cee82046bf862a5fd84424b7e37
 coverage_gids:
-  - D5/S3/Factorization/Embeddings/FractionalIdealPrimeValuationFaithfulness.prime_valuation_observers_faithful
+  - gid: D5/S3/Factorization/Embeddings/FractionalIdealPrimeValuationFaithfulness.prime_valuation_observers_faithful
+    target_statement_id: sha256:d9dd0515e96a60df184bec2ae32c4d63c788e5c6e7b8c4ee420a175d42c945d0
 receipts:
-  coverage:
-    - gid: D5/S3/Factorization/Embeddings/FractionalIdealPrimeValuationFaithfulness.prime_valuation_observers_faithful
-      source_sha256: sha256:46e0969ae8f414d7196788c2e14e065b54ec6cee82046bf862a5fd84424b7e37
-      target_statement_id: sha256:d9dd0515e96a60df184bec2ae32c4d63c788e5c6e7b8c4ee420a175d42c945d0
   scribe:
     - gid: D5/S3/Factorization/Embeddings/FractionalIdealPrimeValuationFaithfulness.prime_valuation_observers_faithful
       definition_sha256: sha256:52d2cb7b0e4eae4e235f2d91e9b8883c783b8b7ee5fb3451e834192cdaf1f7fc

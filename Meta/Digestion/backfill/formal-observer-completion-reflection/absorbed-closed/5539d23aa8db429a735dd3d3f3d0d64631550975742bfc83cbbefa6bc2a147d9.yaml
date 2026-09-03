@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:5539d23aa8db429a735dd3d3f3d0d64631550975742bfc83cbbefa6bc2a147d9
 cas_ref: sha256:5539d23aa8db429a735dd3d3f3d0d64631550975742bfc83cbbefa6bc2a147d9
 coverage_gids:
-  - D5/S3/Quantum/PureState/NoCloningInnerProductCriterion.no_cloning_inner_product_criterion
+  - gid: D5/S3/Quantum/PureState/NoCloningInnerProductCriterion.no_cloning_inner_product_criterion
+    target_statement_id: sha256:b649fc0db4b229a1f8e84d279bacfb3c245a692c52c2d2d3ec0da1d1c1c6840c
 receipts:
-  coverage:
-    - gid: D5/S3/Quantum/PureState/NoCloningInnerProductCriterion.no_cloning_inner_product_criterion
-      source_sha256: sha256:5539d23aa8db429a735dd3d3f3d0d64631550975742bfc83cbbefa6bc2a147d9
-      target_statement_id: sha256:b649fc0db4b229a1f8e84d279bacfb3c245a692c52c2d2d3ec0da1d1c1c6840c
   scribe:
     - gid: D5/S3/Quantum/PureState/NoCloningInnerProductCriterion.no_cloning_inner_product_criterion
       definition_sha256: sha256:1218ec06676e7423b48eab3e43adbbb38565e342ad1edeecfa08059107c6b276

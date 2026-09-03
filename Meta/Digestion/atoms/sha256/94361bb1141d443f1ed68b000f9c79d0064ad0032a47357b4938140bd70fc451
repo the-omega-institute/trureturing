@@ -1,0 +1,51 @@
+## 497. 非截断与不可压缩不是同一个概念
+
+级数：
+
+$$
+-\log(1-z)
+=
+\sum_{n\ge1}\frac{z^n}{n}
+$$
+
+每一阶系数都非零。
+
+但全部无限系数由一个有限公式：
+
+$$
+-\log(1-z)
+$$
+
+统一生成。
+
+因此：
+
+$$
+\boxed{
+\text{所有阶都有新项}
+\not\Rightarrow
+\text{不存在有限生成对象}.
+}
+$$
+
+要区分：
+
+$$
+\boxed{
+\begin{aligned}
+\text{arity nontruncation}
+&:\text{高阶系数不消失};\\
+\text{finite-state closure}
+&:\text{是否存在有限递推状态};\\
+\text{analytic compression}
+&:\text{是否存在一个生成函数};\\
+\text{operator compression}
+&:\text{是否存在一个统一算子};\\
+\text{proof compression}
+&:\text{能否用有限证明控制全部层}.
+\end{aligned}
+}
+$$
+
+---
+

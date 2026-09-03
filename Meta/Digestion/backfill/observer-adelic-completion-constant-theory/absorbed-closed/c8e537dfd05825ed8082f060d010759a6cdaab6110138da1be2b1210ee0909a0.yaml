@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:c8e537dfd05825ed8082f060d010759a6cdaab6110138da1be2b1210ee0909a0
 cas_ref: sha256:c8e537dfd05825ed8082f060d010759a6cdaab6110138da1be2b1210ee0909a0
 coverage_gids:
-  - D5/S3/Observer/BlockStructure/RationalToeplitzCollapse.rational_toeplitz_collapse
+  - gid: D5/S3/Observer/BlockStructure/RationalToeplitzCollapse.rational_toeplitz_collapse
+    target_statement_id: sha256:202d707054e6230b49a19794b348729d4c8f455c993b6cafe1837ce4bee8b063
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/BlockStructure/RationalToeplitzCollapse.rational_toeplitz_collapse
-      source_sha256: sha256:c8e537dfd05825ed8082f060d010759a6cdaab6110138da1be2b1210ee0909a0
-      target_statement_id: sha256:202d707054e6230b49a19794b348729d4c8f455c993b6cafe1837ce4bee8b063
   scribe:
     - gid: D5/S3/Observer/BlockStructure/RationalToeplitzCollapse.rational_toeplitz_collapse
       definition_sha256: sha256:64d40c4c8fb00c430d98f85e77b072b24db3344b86e258ac739a324635b465fb

@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:b0d08173ec9012f5e8047c25e567f28ab010b6f1c660b17f7e1cedecb7b5941c
 cas_ref: sha256:b0d08173ec9012f5e8047c25e567f28ab010b6f1c660b17f7e1cedecb7b5941c
 coverage_gids:
-  - D5/S3/Observer/LinearMemory/DualGramConditionNumber.dual_gram_condition_number
+  - gid: D5/S3/Observer/LinearMemory/DualGramConditionNumber.dual_gram_condition_number
+    target_statement_id: sha256:9006910c20386c2e181964d85da8e142eeb4ff818b2630373d9b3abdf56e182f
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/LinearMemory/DualGramConditionNumber.dual_gram_condition_number
-      source_sha256: sha256:b0d08173ec9012f5e8047c25e567f28ab010b6f1c660b17f7e1cedecb7b5941c
-      target_statement_id: sha256:9006910c20386c2e181964d85da8e142eeb4ff818b2630373d9b3abdf56e182f
   scribe:
     - gid: D5/S3/Observer/LinearMemory/DualGramConditionNumber.dual_gram_condition_number
       definition_sha256: sha256:e2ff0193538d981b2e5d4a59f2b8de759ea0ab26c6b37d26cb512eb62d4d8004

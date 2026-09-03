@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:1df447338096ea76e6cfaeecc10dc5df84e0fe8e7fe623eaa7e6661203920bd6
 cas_ref: sha256:1df447338096ea76e6cfaeecc10dc5df84e0fe8e7fe623eaa7e6661203920bd6
 coverage_gids:
-  - D5/S3/ConceptDynamics/ExperimentBoundary/ProtocolInnovationCriterion.protocol_innovation_iff_separates_current_fiber
+  - gid: D5/S3/ConceptDynamics/ExperimentBoundary/ProtocolInnovationCriterion.protocol_innovation_iff_separates_current_fiber
+    target_statement_id: sha256:15a92d1945d837a7efaf4ad1f07fbf8aaa48e5e1c995e403a3690bffb872c161
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/ExperimentBoundary/ProtocolInnovationCriterion.protocol_innovation_iff_separates_current_fiber
-      source_sha256: sha256:1df447338096ea76e6cfaeecc10dc5df84e0fe8e7fe623eaa7e6661203920bd6
-      target_statement_id: sha256:15a92d1945d837a7efaf4ad1f07fbf8aaa48e5e1c995e403a3690bffb872c161
   scribe:
     - gid: D5/S3/ConceptDynamics/ExperimentBoundary/ProtocolInnovationCriterion.protocol_innovation_iff_separates_current_fiber
       definition_sha256: sha256:7a609e1b7ba0925cb385c04e7c1c1f4b8e0175d7103c44e55f55a8cfd2bb6edd

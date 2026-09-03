@@ -1,0 +1,34 @@
+fingerprints:
+  raw_sha256: sha256:735b1de95a92d627f7b786f4057931534c910317ef85684289e944e322cb4659
+  normalized_sha256: sha256:735b1de95a92d627f7b786f4057931534c910317ef85684289e944e322cb4659
+cas_ref: sha256:735b1de95a92d627f7b786f4057931534c910317ef85684289e944e322cb4659
+coverage_gids:
+  - gid: D5/S3/Weil/EulerProduct.finite_euler_zero_free_and_pole_locus
+    target_statement_id: sha256:c8292c52963f1ae54dcfbc9c3ca4a31de24bf18bd7f06ad9839b898e60028afa
+  - gid: D5/S3/Weil/PrimeAddress/PrimeAddress.dirichlet_l_functions_silence_ramified_primes
+    target_statement_id: sha256:445da14e477e98ccf1daaa46d89608e36e7969f552b1d7851813bdbc3466f46f
+  - gid: D5/S3/Weil/PrimeAddress/PrimeAddress.finite_prime_modification_preserves_global_zero_set
+    target_statement_id: sha256:05225d1cc9ab938b63ac7331dcb9294c24601d4881636791fb9d34e504948168
+  - gid: D5/S3/Weil/PrimeAddress/PrimeAddress.prime_seven_deletion_preserves_nontrivial_zeta_zeros
+    target_statement_id: sha256:d3be8e0a638cdde5f24ef27b5aecd2ee7ab8166bad4e64edb5e717aeefdd9978
+  - gid: D5/S3/Weil/PrimeAddress/PrimeAddress.zero_contribution_amplitude_x_beta_cos_gamma_log_x
+    target_statement_id: sha256:ad1450909403cdce8bf7206657ba916bcae4c9cf09f320ea78d54c248ac737ed
+  - gid: D5/S3/Weil/PrimeAddress/PrimeAddress.zeta_has_no_silent_prime_address
+    target_statement_id: sha256:4f55ae053330177ad3797d75165ff7754524f8636ddb7b5ac25f0d8418dbd899
+  - gid: D5/S3/Weil/PrimeAddress/PrimeLogIndependence.prime_log_rational_independence
+    target_statement_id: sha256:0b4c1f8eda640edc0759040e622f93d5993d4d5ad3422d4d340cb19413b0d39b
+  - gid: D5/S3/Zeros/CompletedZeta.zero_quartet_scaling_spec
+    target_statement_id: sha256:54194a5ed453f9739fa911583246728277b4fa9d97b031a0c37dbfb7e7d82e0d
+receipts:
+  scribe:
+    - gid: D5/S3/Weil/EulerProduct.finite_euler_zero_free_and_pole_locus
+      definition_sha256: sha256:7c42f364cffc731328d1c66c59da12ca61ccf5d6797838678b81eda30edf196f
+      emission_sha256: sha256:58246a826a1958e8f0839acfd952a24e91ba52d5babac98f92e567a76417226c
+  unresolved_subitems:
+    - bragg-peaks-invariant-under-finite-modification
+    - dirichlet-l-functions-silence-ramified-primes
+    - finite-euler-window-at-first-zero-numerical-certificate
+    - prime-deletion-numerical-invariance-certificate
+    - rh-equal-loudness-square-root-x-bound
+    - weyl-dense-winding-of-zero-prime-phases
+    - zero-as-infinite-dimensional-kronecker-torus-orbit

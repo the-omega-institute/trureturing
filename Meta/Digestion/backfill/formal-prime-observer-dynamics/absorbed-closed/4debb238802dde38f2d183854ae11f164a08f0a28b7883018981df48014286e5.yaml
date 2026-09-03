@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:4debb238802dde38f2d183854ae11f164a08f0a28b7883018981df48014286e5
 cas_ref: sha256:4debb238802dde38f2d183854ae11f164a08f0a28b7883018981df48014286e5
 coverage_gids:
-  - D5/S3/Arith/Coding/HorizontalCompletenessDepth.residue_reading_injOn_iff_primorial_gt
+  - gid: D5/S3/Arith/Coding/HorizontalCompletenessDepth.residue_reading_injOn_iff_primorial_gt
+    target_statement_id: sha256:ac219cefc57454b0a087ba8c5ae3708ef4b9769b13a2f58037e619edb224d630
 receipts:
-  coverage:
-    - gid: D5/S3/Arith/Coding/HorizontalCompletenessDepth.residue_reading_injOn_iff_primorial_gt
-      source_sha256: sha256:4debb238802dde38f2d183854ae11f164a08f0a28b7883018981df48014286e5
-      target_statement_id: sha256:ac219cefc57454b0a087ba8c5ae3708ef4b9769b13a2f58037e619edb224d630
   scribe:
     - gid: D5/S3/Arith/Coding/HorizontalCompletenessDepth.residue_reading_injOn_iff_primorial_gt
       definition_sha256: sha256:27f4dfa5589b87f8a19b6615f226e7a89c7bca6a67902ba85c89bec297e68b2f

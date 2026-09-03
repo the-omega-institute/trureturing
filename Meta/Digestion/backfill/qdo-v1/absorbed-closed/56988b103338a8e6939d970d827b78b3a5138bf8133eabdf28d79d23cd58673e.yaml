@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:56988b103338a8e6939d970d827b78b3a5138bf8133eabdf28d79d23cd58673e
 cas_ref: sha256:56988b103338a8e6939d970d827b78b3a5138bf8133eabdf28d79d23cd58673e
 coverage_gids:
-  - D5/S3/Quantum/Divergence/QuantumRelativeEntropyDefectComposition.relative_entropy_defect_composition
+  - gid: D5/S3/Quantum/Divergence/QuantumRelativeEntropyDefectComposition.relative_entropy_defect_composition
+    target_statement_id: sha256:ff956a915e0d0f51a9121b68581bac8d8071ef63682ff2bbb374287537a6286e
 receipts:
-  coverage:
-    - gid: D5/S3/Quantum/Divergence/QuantumRelativeEntropyDefectComposition.relative_entropy_defect_composition
-      source_sha256: sha256:56988b103338a8e6939d970d827b78b3a5138bf8133eabdf28d79d23cd58673e
-      target_statement_id: sha256:ff956a915e0d0f51a9121b68581bac8d8071ef63682ff2bbb374287537a6286e
   scribe:
     - gid: D5/S3/Quantum/Divergence/QuantumRelativeEntropyDefectComposition.relative_entropy_defect_composition
       definition_sha256: sha256:44bf8cd7033cada89b06ce8d9c6fd4407fa36dcfa79823840caf535959506dfa

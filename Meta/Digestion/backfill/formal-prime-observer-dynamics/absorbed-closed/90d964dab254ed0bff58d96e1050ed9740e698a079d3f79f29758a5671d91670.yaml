@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:90d964dab254ed0bff58d96e1050ed9740e698a079d3f79f29758a5671d91670
 cas_ref: sha256:90d964dab254ed0bff58d96e1050ed9740e698a079d3f79f29758a5671d91670
 coverage_gids:
-  - D5/S3/ConceptDynamics/Refinement/LeastCommonReadoutRefinement.least_common_readout_refinement
+  - gid: D5/S3/ConceptDynamics/Refinement/LeastCommonReadoutRefinement.least_common_readout_refinement
+    target_statement_id: sha256:b67d46e9ac4e611ebfdd9180ef41a0d639423c6d96604d4a1e2fd7ffefaaf574
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Refinement/LeastCommonReadoutRefinement.least_common_readout_refinement
-      source_sha256: sha256:90d964dab254ed0bff58d96e1050ed9740e698a079d3f79f29758a5671d91670
-      target_statement_id: sha256:b67d46e9ac4e611ebfdd9180ef41a0d639423c6d96604d4a1e2fd7ffefaaf574
   scribe:
     - gid: D5/S3/ConceptDynamics/Refinement/LeastCommonReadoutRefinement.least_common_readout_refinement
       definition_sha256: sha256:21073437d340a1af9d7fe47cd6b8eeb735fa44fa04a1d48a83378d06be5bcec5

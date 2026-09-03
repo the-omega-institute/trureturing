@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:55b70a3ed1c0f176b16d8bd127c3169b3f7b86dd72d57ce203e49f4af41ca14c
 cas_ref: sha256:55b70a3ed1c0f176b16d8bd127c3169b3f7b86dd72d57ce203e49f4af41ca14c
 coverage_gids:
-  - D5/S3/Quantum/Entanglement/BipartiteSectorDecomposition.bipartite_sector_decomposition
+  - gid: D5/S3/Quantum/Entanglement/BipartiteSectorDecomposition.bipartite_sector_decomposition
+    target_statement_id: sha256:f7ca8052ca4fba67107046a5c5d05699d1debd2725a154f9655de3f50855697c
 receipts:
-  coverage:
-    - gid: D5/S3/Quantum/Entanglement/BipartiteSectorDecomposition.bipartite_sector_decomposition
-      source_sha256: sha256:55b70a3ed1c0f176b16d8bd127c3169b3f7b86dd72d57ce203e49f4af41ca14c
-      target_statement_id: sha256:f7ca8052ca4fba67107046a5c5d05699d1debd2725a154f9655de3f50855697c
   scribe:
     - gid: D5/S3/Quantum/Entanglement/BipartiteSectorDecomposition.bipartite_sector_decomposition
       definition_sha256: sha256:680975b71fe38e4f11de1e8e5f14943cf0b2a867319cb9f52c7bcc26d5d6ebe5

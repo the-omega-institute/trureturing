@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:d045cf08ecb5818dcfb87254f5079fbe700ca2f9b99cb7044c14697ab45e7472
 cas_ref: sha256:d045cf08ecb5818dcfb87254f5079fbe700ca2f9b99cb7044c14697ab45e7472
 coverage_gids:
-  - D5/S3/Observer/MeasureSeparation/RobustMinimaxKernelBound.common_kernel_minimax_lower_bounds
+  - gid: D5/S3/Observer/MeasureSeparation/RobustMinimaxKernelBound.common_kernel_minimax_lower_bounds
+    target_statement_id: sha256:f4d78163fb8d9a09132468cb78f683e136cb5079a6d51c98ee18279cd237609f
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/MeasureSeparation/RobustMinimaxKernelBound.common_kernel_minimax_lower_bounds
-      source_sha256: sha256:d045cf08ecb5818dcfb87254f5079fbe700ca2f9b99cb7044c14697ab45e7472
-      target_statement_id: sha256:f4d78163fb8d9a09132468cb78f683e136cb5079a6d51c98ee18279cd237609f
   scribe:
     - gid: D5/S3/Observer/MeasureSeparation/RobustMinimaxKernelBound.common_kernel_minimax_lower_bounds
       definition_sha256: sha256:2af98d39d1ebfdf9ecb6341c7b77c8ab72dcd2727e69b6d85c60426d9692de54

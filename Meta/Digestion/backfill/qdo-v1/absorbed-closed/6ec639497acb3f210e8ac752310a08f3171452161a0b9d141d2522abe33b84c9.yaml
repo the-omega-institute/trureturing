@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:6ec639497acb3f210e8ac752310a08f3171452161a0b9d141d2522abe33b84c9
 cas_ref: sha256:6ec639497acb3f210e8ac752310a08f3171452161a0b9d141d2522abe33b84c9
 coverage_gids:
-  - D5/S3/Midline/Cayley/ZeroHilbertCayleyUnitarity.cayley_unitarity_defect_formula_on_zero_hilbert_space
+  - gid: D5/S3/Midline/Cayley/ZeroHilbertCayleyUnitarity.cayley_unitarity_defect_formula_on_zero_hilbert_space
+    target_statement_id: sha256:ffeb197357868a9eb9c8e45cdc75130f4950632ee1a3a2385d709b1ce8cd6114
 receipts:
-  coverage:
-    - gid: D5/S3/Midline/Cayley/ZeroHilbertCayleyUnitarity.cayley_unitarity_defect_formula_on_zero_hilbert_space
-      source_sha256: sha256:6ec639497acb3f210e8ac752310a08f3171452161a0b9d141d2522abe33b84c9
-      target_statement_id: sha256:ffeb197357868a9eb9c8e45cdc75130f4950632ee1a3a2385d709b1ce8cd6114
   scribe:
     - gid: D5/S3/Midline/Cayley/ZeroHilbertCayleyUnitarity.cayley_unitarity_defect_formula_on_zero_hilbert_space
       definition_sha256: sha256:0d0860e225d1a2cfc8cfb89eb88265629f3485f91b421aea744906330535bfd6

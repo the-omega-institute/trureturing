@@ -1,0 +1,60 @@
+## 559. Hankel 矩阵
+
+若 RH 成立，Casimir 矩满足：
+
+$$
+a_n=\int_0^1x^n\,d\nu(x),
+$$
+
+其中 \(\nu\) 具有无限多个支撑点。
+
+定义：
+
+$$
+H_N
+=
+(a_{i+j})_{0\le i,j\le N}.
+$$
+
+对任意非零向量：
+
+$$
+c=(c_0,\ldots,c_N),
+$$
+
+令：
+
+$$
+P_c(x)=\sum_{j=0}^Nc_jx^j.
+$$
+
+则：
+
+$$
+c^\ast H_Nc
+=
+\int_0^1|P_c(x)|^2\,d\nu(x).
+$$
+
+非零多项式只有有限多个零点，而 \(\nu\) 有无限支撑，所以：
+
+$$
+\boxed{
+c^\ast H_Nc>0
+\qquad
+(c\neq0).
+}
+$$
+
+因此：
+
+$$
+\boxed{
+H_N\succ0
+\quad
+\forall N.
+}
+$$
+
+---
+
