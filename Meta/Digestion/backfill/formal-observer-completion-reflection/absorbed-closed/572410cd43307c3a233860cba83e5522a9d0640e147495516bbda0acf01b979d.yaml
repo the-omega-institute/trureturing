@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:572410cd43307c3a233860cba83e5522a9d0640e147495516bbda0acf01b979d
+  normalized_sha256: sha256:572410cd43307c3a233860cba83e5522a9d0640e147495516bbda0acf01b979d
+cas_ref: sha256:572410cd43307c3a233860cba83e5522a9d0640e147495516bbda0acf01b979d
+coverage_gids:
+  - D5/S3/Observer/Linear/GramianBehaviorQuotientMetric.gramian_behavior_quotient_metric
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/Linear/GramianBehaviorQuotientMetric.gramian_behavior_quotient_metric
+      source_sha256: sha256:572410cd43307c3a233860cba83e5522a9d0640e147495516bbda0acf01b979d
+      target_statement_id: sha256:1192cc54e124b9ca560817b354d4b4817a49613ef79c43bfe29bec18087fd7c1
+  scribe:
+    - gid: D5/S3/Observer/Linear/GramianBehaviorQuotientMetric.gramian_behavior_quotient_metric
+      definition_sha256: sha256:f0b7e29672fb840256afdfef52943e0b071613395573741b7ecffc3b312eb653
+      emission_sha256: sha256:51dffc150e9842c9a2fb04bb24b38edf63b2249fbdacea6464f5ccaebc758287
+  unresolved_subitems: []

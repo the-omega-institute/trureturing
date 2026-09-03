@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:cf83efd6c4fb313fe5c7c9d3c2a40c7ef38c3459e0337b5911826c2f11a77128
+  normalized_sha256: sha256:cf83efd6c4fb313fe5c7c9d3c2a40c7ef38c3459e0337b5911826c2f11a77128
+cas_ref: sha256:cf83efd6c4fb313fe5c7c9d3c2a40c7ef38c3459e0337b5911826c2f11a77128
+coverage_gids:
+  - D5/S3/ConceptDynamics/ExperimentDesign/WeakestTargetDirectionValue.weakest_target_direction_experiment_value
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/ExperimentDesign/WeakestTargetDirectionValue.weakest_target_direction_experiment_value
+      source_sha256: sha256:cf83efd6c4fb313fe5c7c9d3c2a40c7ef38c3459e0337b5911826c2f11a77128
+      target_statement_id: sha256:55910c69bd52810458ff21e6ffad6ab4929e0c76aee701494a46fc2cf0b7b2d5
+  scribe:
+    - gid: D5/S3/ConceptDynamics/ExperimentDesign/WeakestTargetDirectionValue.weakest_target_direction_experiment_value
+      definition_sha256: sha256:f82668f76ddb95890e132a65dd1d7f51ca171290a30761baa24ec88d0d578b7b
+      emission_sha256: sha256:670a7f4695496e1704ce2f075c3cbb0e2dc760b82ca72fd67ed8c40bf0c7e807
+  unresolved_subitems: []

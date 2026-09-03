@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:dc7acab1fb1594bdf758b603da8114a9d5f6f1b341debf45d583a15e07e21353
+  normalized_sha256: sha256:dc7acab1fb1594bdf758b603da8114a9d5f6f1b341debf45d583a15e07e21353
+cas_ref: sha256:dc7acab1fb1594bdf758b603da8114a9d5f6f1b341debf45d583a15e07e21353
+coverage_gids:
+  - D5/S3/Quantum/Tomography/InformationalCompletenessEquivalence.informational_completeness_four_way
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/Tomography/InformationalCompletenessEquivalence.informational_completeness_four_way
+      source_sha256: sha256:dc7acab1fb1594bdf758b603da8114a9d5f6f1b341debf45d583a15e07e21353
+      target_statement_id: sha256:9fc98c0c8346e4b328cea3877e4cd05022a2979509bca16c45365a1714ac8395
+  scribe:
+    - gid: D5/S3/Quantum/Tomography/InformationalCompletenessEquivalence.informational_completeness_four_way
+      definition_sha256: sha256:fea6c6d5e7b7a5ff74626a4b1ad0cb3f0c038c31e99eb56f60f6873c1c7dedf5
+      emission_sha256: sha256:26677a880fd4957b01eef3b2186b8d4223c77d55dce72e94b84f13120e1a785b
+  unresolved_subitems: []

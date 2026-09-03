@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:918e7bd42e048f0293d095cc3c13eac5e0a452f738cf775f9bfea367730e658f
+  normalized_sha256: sha256:918e7bd42e048f0293d095cc3c13eac5e0a452f738cf775f9bfea367730e658f
+cas_ref: sha256:918e7bd42e048f0293d095cc3c13eac5e0a452f738cf775f9bfea367730e658f
+coverage_gids:
+  - D5/S3/ObserverMemory/PredictionFactors/ReachableBehaviorClassSurjectivity.every_reachable_behavior_class_is_reachable
+receipts:
+  coverage:
+    - gid: D5/S3/ObserverMemory/PredictionFactors/ReachableBehaviorClassSurjectivity.every_reachable_behavior_class_is_reachable
+      source_sha256: sha256:918e7bd42e048f0293d095cc3c13eac5e0a452f738cf775f9bfea367730e658f
+      target_statement_id: sha256:a24083a26e870c592a4faf02c5e9ed1056e5f8994095cde9d0b3a9f586f94c7b
+  scribe:
+    - gid: D5/S3/ObserverMemory/PredictionFactors/ReachableBehaviorClassSurjectivity.every_reachable_behavior_class_is_reachable
+      definition_sha256: sha256:673a46869f36b6a442dc59da55f32b897a7a6081dac396d7e0d02a7622be2b9e
+      emission_sha256: sha256:246dd94e086b1b1c7e239803fd814640c951993d4aecc9b614516429c03bb88e
+  unresolved_subitems: []

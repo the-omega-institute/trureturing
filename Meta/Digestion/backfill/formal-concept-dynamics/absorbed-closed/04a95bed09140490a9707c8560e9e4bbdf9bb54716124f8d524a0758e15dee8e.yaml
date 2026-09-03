@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:04a95bed09140490a9707c8560e9e4bbdf9bb54716124f8d524a0758e15dee8e
+  normalized_sha256: sha256:04a95bed09140490a9707c8560e9e4bbdf9bb54716124f8d524a0758e15dee8e
+cas_ref: sha256:04a95bed09140490a9707c8560e9e4bbdf9bb54716124f8d524a0758e15dee8e
+coverage_gids:
+  - D5/S3/ConceptDynamics/Topology/CompactClassificationPositiveMargin.compact_classification_positive_margin_and_closure_obstruction
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Topology/CompactClassificationPositiveMargin.compact_classification_positive_margin_and_closure_obstruction
+      source_sha256: sha256:04a95bed09140490a9707c8560e9e4bbdf9bb54716124f8d524a0758e15dee8e
+      target_statement_id: sha256:ff7842c11af211e5ef4c58248e5fa60a890b2c27e51ea57d27be47164817d62d
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Topology/CompactClassificationPositiveMargin.compact_classification_positive_margin_and_closure_obstruction
+      definition_sha256: sha256:009a8e1f78f58abef06fd2d8a7b01d88794785daf4e2eb591dd92fbd8704f661
+      emission_sha256: sha256:2f14a8591e30bb9bd174580d22b1b1da4b96933fb1b52b6478a75ed8dfa4b7d4
+  unresolved_subitems: []

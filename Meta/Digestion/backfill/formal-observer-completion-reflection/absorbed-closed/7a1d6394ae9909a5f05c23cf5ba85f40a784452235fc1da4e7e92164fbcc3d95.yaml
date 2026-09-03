@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:7a1d6394ae9909a5f05c23cf5ba85f40a784452235fc1da4e7e92164fbcc3d95
+  normalized_sha256: sha256:7a1d6394ae9909a5f05c23cf5ba85f40a784452235fc1da4e7e92164fbcc3d95
+cas_ref: sha256:7a1d6394ae9909a5f05c23cf5ba85f40a784452235fc1da4e7e92164fbcc3d95
+coverage_gids:
+  - D5/S3/QuantumBounds/Designs/MixedStateRobertson.mixed_state_robertson_uncertainty
+receipts:
+  coverage:
+    - gid: D5/S3/QuantumBounds/Designs/MixedStateRobertson.mixed_state_robertson_uncertainty
+      source_sha256: sha256:7a1d6394ae9909a5f05c23cf5ba85f40a784452235fc1da4e7e92164fbcc3d95
+      target_statement_id: sha256:03bfd4b5055d29ed409450974b1ebb81eb7f21f4b7b1308ef5b1ef15abfc2338
+  scribe:
+    - gid: D5/S3/QuantumBounds/Designs/MixedStateRobertson.mixed_state_robertson_uncertainty
+      definition_sha256: sha256:448a542b617daceccfa084f68cdfebf04a3e31eb836b7f03266dfa6ca0df8c1d
+      emission_sha256: sha256:7c5a838c4dba3b2ba54d48140ed7c9287804d230e71b99eaa212e86e9d9b90b8
+  unresolved_subitems: []
