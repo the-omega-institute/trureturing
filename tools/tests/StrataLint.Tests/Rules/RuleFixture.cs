@@ -100,14 +100,16 @@ internal sealed partial class RuleFixture
 
     internal RuleFixture()
     {
-        var repositoryRoot = TestRepositoryLayout.FindRoot();
         Files = new Dictionary<string, string>(StringComparer.Ordinal)
         {
             ["Meta/domains.yaml"] = TestRegistry.Domains,
             [FixtureBackfillSourcePath] = FixtureBackfillSource,
             [FixtureBackfillAtomPath] = FixtureBackfillAtom,
             [TheoryAtomizerDataLoader.DataPath] = File.ReadAllText(
-                Path.Combine(repositoryRoot, TheoryAtomizerDataLoader.DataPath), Encoding.UTF8),
+                Path.Combine(
+                    TestRepositoryLayout.FindRoot(),
+                    "Meta/Digestion/atomizers.toml"),
+                Encoding.UTF8),
             ["Meta/registry.yaml"] = TestRegistry.Canonical,
             ["Library/queries.yaml"] = "schema_version: 1\nqueries: []\n",
             [RingPath] = Header + "def goldenRing : Nat := 0\n",
@@ -570,9 +572,8 @@ internal sealed partial class RuleFixture
 
     internal void AddValuesProjection()
     {
-        var repositoryRoot = TestRepositoryLayout.FindRoot();
         Files[ValuesProjectionPath] = File.ReadAllText(
-            Path.Combine(repositoryRoot, ValuesProjectionPath),
+            Path.Combine(TestRepositoryLayout.FindRoot(), "Evidence/D5/values.json"),
             Encoding.UTF8);
     }
 

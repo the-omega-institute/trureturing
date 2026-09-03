@@ -232,7 +232,7 @@ public sealed partial class ProductionEnvironmentTests
         var inputs = DirectoryInputs(WithSiblingReceiptMismatch(materialized, mismatchCode));
         using var temporary = new TemporaryDirectory();
         DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
-        var before = DirectoryLedgerTestSupport.Image(temporary.Path);
+        var before = DirectoryLedgerTestSupport.RepositoryImage(temporary);
         var environment = BuildCoverEnvironment(
             temporary.Path,
             inputs,
@@ -244,14 +244,14 @@ public sealed partial class ProductionEnvironmentTests
         if (mismatchCode == "coverage-target-mismatch")
         {
             Assert.True(result.Success, result.Error);
-            Assert.NotEqual(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+            Assert.NotEqual(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
         }
         else
         {
             Assert.False(result.Success);
             Assert.Contains("digest status is invalid", result.Error, StringComparison.Ordinal);
             Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
-            Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+            Assert.Equal(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
         }
     }
 
@@ -324,7 +324,7 @@ public sealed partial class ProductionEnvironmentTests
             "coverage-target-mismatch"));
         using var temporary = new TemporaryDirectory();
         DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
-        var before = DirectoryLedgerTestSupport.Image(temporary.Path);
+        var before = DirectoryLedgerTestSupport.RepositoryImage(temporary);
         var environment = BuildCoverEnvironment(
             temporary.Path,
             inputs,
@@ -334,7 +334,7 @@ public sealed partial class ProductionEnvironmentTests
         var result = environment.AlignDigestionStatus(["--base", "baseline"]);
 
         Assert.True(result.Success, result.Error);
-        Assert.NotEqual(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+        Assert.NotEqual(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
         var repaired = Assert.Single(
             BackfillInventoryLoader.LoadRoot(temporary.Path).RequireDigestionEntries(),
             entry => entry.AtomId == CoverWorld.UnrelatedAtomId);

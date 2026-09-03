@@ -19,12 +19,9 @@ public sealed partial class BackfillInventoryLoaderTests
             atom)).RequireDigestionEntries());
 
         Assert.Equal([gid], entry.CoverageGids.ToArray());
-        var coverageProperty = entry.GetType().GetProperty("Coverage");
-        Assert.NotNull(coverageProperty);
-        var edge = Assert.Single(Assert.IsAssignableFrom<System.Collections.IEnumerable>(
-            coverageProperty!.GetValue(entry)).Cast<object>());
-        Assert.Equal(gid, edge.GetType().GetProperty("Gid")?.GetValue(edge));
-        Assert.Null(edge.GetType().GetProperty("TargetStatementId")?.GetValue(edge));
+        var edge = Assert.Single(entry.Coverage);
+        Assert.Equal(gid, edge.Gid);
+        Assert.Null(edge.TargetStatementId);
     }
 
     [Theory]

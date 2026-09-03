@@ -14,8 +14,42 @@ public sealed class CoverageStatementReceiptTests
     [Fact]
     public void RepositoryCoverageEdgesMatchResolvableFrozenStatementsOrCarryNull()
     {
-        var root = TestRepositoryLayout.FindRoot();
-        var raw = GitRepositorySnapshotReader.ReadCurrent(root);
+        const string unresolvedGid = "D5/S0/Carrier/Missing.target";
+        var targetStatementId = FrozenStatementReceiptTestData.Id('6');
+        var fingerprints = new DigestionFingerprints(
+            "sha256:" + new string('a', 64),
+            "sha256:" + new string('b', 64));
+        var entry = new DigestionLedgerEntry(
+            "source",
+            "docs/source.md",
+            AtomizerRegistry.NoAtomizerId,
+            new string('a', 64),
+            fingerprints,
+            [
+                new DigestionCoverageEdge(DeclarationGid, targetStatementId),
+                new DigestionCoverageEdge(unresolvedGid, null),
+            ],
+            new DigestionReceipts([], [], [], null),
+            new DigestionStatus(DigestionMigrationState.Partial, DigestionTruthState.Closed),
+            fingerprints.RawSha256);
+        var document = Document(AtomizerRegistry.NoAtomizerId, [entry]);
+        var source = Assert.Single(document.RequireDigestionSources());
+        var files = new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            [$"{BackfillInventoryLoader.RootPath}source/source.toml"] = Encoding.UTF8.GetString(
+                BackfillInventoryWriter.WriteSourceMetadata(source).AsSpan()),
+            [$"{BackfillInventoryLoader.RootPath}source/partial-closed/{entry.AtomId}.yaml"] =
+                Encoding.UTF8.GetString(BackfillInventoryWriter.WriteAtom(entry).AsSpan()),
+            [ModulePath] = TargetSource("by trivial"),
+        };
+        FrozenStatementReceiptTestData.AddLedger(
+            files,
+            new FrozenStatementReceiptTestData.Module(
+                ModulePath,
+                FrozenStatementReceiptTestData.Id('2'),
+                [new FrozenStatementReceiptTestData.Declaration("target", targetStatementId)]));
+        var raw = RawRepositorySnapshot.Create(files.Select(static item =>
+            RawRepositoryEntry.FromText(item.Key, item.Value)));
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
             SnapshotDecoder.Decode(raw)).Snapshot;
         var frozenStatements = FrozenStatementIndex.Load(snapshot);

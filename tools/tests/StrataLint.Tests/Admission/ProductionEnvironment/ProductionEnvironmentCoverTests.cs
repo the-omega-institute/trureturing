@@ -451,7 +451,7 @@ public sealed partial class ProductionEnvironmentTests
         var inputs = DirectoryInputs(WithSiblingReceiptMismatch(materialized, mismatchCode));
         using var temporary = new TemporaryDirectory();
         DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
-        var before = DirectoryLedgerTestSupport.Image(temporary.Path);
+        var before = DirectoryLedgerTestSupport.RepositoryImage(temporary);
         var environment = BuildCoverEnvironment(
             temporary.Path,
             inputs,
@@ -464,7 +464,7 @@ public sealed partial class ProductionEnvironmentTests
         {
             Assert.False(result.Success);
             Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
-            Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+            Assert.Equal(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
         }
         else
         {
@@ -472,7 +472,7 @@ public sealed partial class ProductionEnvironmentTests
                 result.Success,
                 $"unrelated-scribe-drift-must-not-block-cover ({mismatchCode}): {result.Error}");
             Assert.Contains("ledger_changed=true", result.Output, StringComparison.Ordinal);
-            Assert.NotEqual(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+            Assert.NotEqual(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
         }
     }
 

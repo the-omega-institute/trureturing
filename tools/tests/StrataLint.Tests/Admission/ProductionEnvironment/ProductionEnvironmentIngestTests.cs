@@ -117,11 +117,18 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Equal(
             FrozenStatementReceiptTestData.Resolve(fixture.Files, coverageGid),
             Assert.Single(entry.Coverage).TargetStatementId);
-        Assert.Equal(BackfillInventoryWriter.WriteAtom(entry).ToArray(), File.ReadAllBytes(outputPath));
-
-        var afterFirst = DirectoryLedgerTestSupport.Image(temporary.Path);
-        var alignedFiles = DirectoryLedgerTestSupport.OverlayRepositoryFiles(temporary, fixture.Files);
+        var afterFirst = DirectoryLedgerTestSupport.RepositoryImage(temporary);
+        Assert.Contains(
+            newPath
+                + "\0"
+                + Convert.ToBase64String(BackfillInventoryWriter.WriteAtom(entry).AsSpan())
+                + "\n",
+            afterFirst,
+            StringComparison.Ordinal);
+        var alignedFiles = new Dictionary<string, string>(fixture.Files, StringComparer.Ordinal);
         alignedFiles.Remove(oldPath);
+        alignedFiles[newPath] = Encoding.UTF8.GetString(
+            BackfillInventoryWriter.WriteAtom(entry).AsSpan());
         var secondEnvironment = new ProductionCliEnvironment(
             temporary.Path,
             new FakeRepositoryGateway(
@@ -135,7 +142,7 @@ public sealed partial class ProductionEnvironmentTests
 
         Assert.True(second.Success, second.Error);
         Assert.Contains("ledger_changed=false", second.Output, StringComparison.Ordinal);
-        Assert.Equal(afterFirst, DirectoryLedgerTestSupport.Image(temporary.Path));
+        Assert.Equal(afterFirst, DirectoryLedgerTestSupport.RepositoryImage(temporary));
     }
 
     [Fact]
@@ -348,7 +355,7 @@ public sealed partial class ProductionEnvironmentTests
         var inputs = DirectoryInputs(WithSiblingReceiptMismatch(materialized, mismatchCode));
         using var temporary = new TemporaryDirectory();
         DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
-        var before = DirectoryLedgerTestSupport.Image(temporary.Path);
+        var before = DirectoryLedgerTestSupport.RepositoryImage(temporary);
         var environment = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files);
 
         var result = environment.AlignDigestionStatus(["--base", "baseline"]);
@@ -356,14 +363,14 @@ public sealed partial class ProductionEnvironmentTests
         if (mismatchCode == "coverage-target-mismatch")
         {
             Assert.True(result.Success, result.Error);
-            Assert.NotEqual(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+            Assert.NotEqual(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
         }
         else
         {
             Assert.False(result.Success);
             Assert.Contains("digest status is invalid", result.Error, StringComparison.Ordinal);
             Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
-            Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+            Assert.Equal(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
         }
     }
 
@@ -387,7 +394,7 @@ public sealed partial class ProductionEnvironmentTests
             byteIdenticalBaseline: true));
         using var temporary = new TemporaryDirectory();
         DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
-        var before = DirectoryLedgerTestSupport.Image(temporary.Path);
+        var before = DirectoryLedgerTestSupport.RepositoryImage(temporary);
         var environment = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files);
 
         var result = environment.AlignDigestionStatus(["--base", "baseline"]);
@@ -395,13 +402,13 @@ public sealed partial class ProductionEnvironmentTests
         if (mismatchCode == "coverage-target-mismatch")
         {
             Assert.True(result.Success, result.Error);
-            Assert.NotEqual(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+            Assert.NotEqual(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
         }
         else
         {
             Assert.False(result.Success);
             Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
-            Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+            Assert.Equal(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
         }
     }
 
