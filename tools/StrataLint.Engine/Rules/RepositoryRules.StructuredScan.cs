@@ -19,7 +19,8 @@ internal static partial class RepositoryRules
     {
         None,
         Entry,
-        CoverageGids,
+        CoverageList,
+        CoverageEntry,
         CoverageGid,
         Receipts,
         ReceiptList,
@@ -103,7 +104,7 @@ internal static partial class RepositoryRules
                     path,
                     child,
                     $"{location}[{index++}]",
-                    ArrayElementSlot(slot),
+                    ArrayElementSlot(slot, child.ValueKind),
                     tasks,
                     findings,
                     scanAnomalies,
@@ -233,17 +234,17 @@ internal static partial class RepositoryRules
     /// <summary>Advances the structural position by one property name.</summary>
     private static AddressSlot ChildSlot(AddressSlot slot, string name) => (slot, name) switch
     {
-        (AddressSlot.Entry, "coverage_gids") => AddressSlot.CoverageGids,
+        (AddressSlot.Entry, "coverage_gids") => AddressSlot.CoverageList,
         (AddressSlot.Entry, "receipts") => AddressSlot.Receipts,
-        (AddressSlot.Receipts, "coverage") => AddressSlot.ReceiptList,
         (AddressSlot.Receipts, "scribe") => AddressSlot.ReceiptList,
+        (AddressSlot.CoverageEntry, "gid") => AddressSlot.CoverageGid,
         (AddressSlot.ReceiptEntry, "gid") => AddressSlot.ReceiptGid,
         _ => AddressSlot.None,
     };
 
-    private static AddressSlot ArrayElementSlot(AddressSlot slot) => slot switch
+    private static AddressSlot ArrayElementSlot(AddressSlot slot, JsonValueKind elementKind) => slot switch
     {
-        AddressSlot.CoverageGids => AddressSlot.CoverageGid,
+        AddressSlot.CoverageList when elementKind == JsonValueKind.Object => AddressSlot.CoverageEntry,
         AddressSlot.ReceiptList => AddressSlot.ReceiptEntry,
         _ => AddressSlot.None,
     };
@@ -253,7 +254,7 @@ internal static partial class RepositoryRules
         AddressSlot slot,
         string residue)
     {
-        var declared = slot is AddressSlot.CoverageGid or AddressSlot.ReceiptGid
+        var declared = slot is AddressSlot.CoverageEntry or AddressSlot.CoverageGid or AddressSlot.ReceiptGid
             && BackfillInventoryLoader.IsCanonicalPath(path);
         return declared
             && Gid.TryParse(residue, out var gid)

@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:20761c2ccb8187e0bddb45becc43fc85c0542598ac5da525bab41f9e6f47861d
 cas_ref: sha256:20761c2ccb8187e0bddb45becc43fc85c0542598ac5da525bab41f9e6f47861d
 coverage_gids:
-  - D5/S3/Quantum/PredictionDepth/IncompleteObserverPhysicalCounterexample.incomplete_observer_physical_counterexample
+  - gid: D5/S3/Quantum/PredictionDepth/IncompleteObserverPhysicalCounterexample.incomplete_observer_physical_counterexample
+    target_statement_id: sha256:e4e4e43c09aa1990696271b873f1f436b43f378cb31a2294975cdd93641ade61
 receipts:
-  coverage:
-    - gid: D5/S3/Quantum/PredictionDepth/IncompleteObserverPhysicalCounterexample.incomplete_observer_physical_counterexample
-      source_sha256: sha256:20761c2ccb8187e0bddb45becc43fc85c0542598ac5da525bab41f9e6f47861d
-      target_statement_id: sha256:e4e4e43c09aa1990696271b873f1f436b43f378cb31a2294975cdd93641ade61
   scribe:
     - gid: D5/S3/Quantum/PredictionDepth/IncompleteObserverPhysicalCounterexample.incomplete_observer_physical_counterexample
       definition_sha256: sha256:ec184c9530992db1dffdcd4d51125b5ea15a90e6d0f8cce0d2c531aea74a922d

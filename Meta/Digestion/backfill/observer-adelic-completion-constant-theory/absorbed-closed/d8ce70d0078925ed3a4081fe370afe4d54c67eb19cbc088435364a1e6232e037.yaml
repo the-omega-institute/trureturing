@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:d8ce70d0078925ed3a4081fe370afe4d54c67eb19cbc088435364a1e6232e037
 cas_ref: sha256:d8ce70d0078925ed3a4081fe370afe4d54c67eb19cbc088435364a1e6232e037
 coverage_gids:
-  - D5/S3/Weil/ZetaPntBounds/SupportRayleighMonotonicity.support_rayleigh_monotonicity
+  - gid: D5/S3/Weil/ZetaPntBounds/SupportRayleighMonotonicity.support_rayleigh_monotonicity
+    target_statement_id: sha256:6199a33a2066e190a38558b3874a8f9d8800c85ae245c9626355a300d5aa74ef
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/ZetaPntBounds/SupportRayleighMonotonicity.support_rayleigh_monotonicity
-      source_sha256: sha256:d8ce70d0078925ed3a4081fe370afe4d54c67eb19cbc088435364a1e6232e037
-      target_statement_id: sha256:6199a33a2066e190a38558b3874a8f9d8800c85ae245c9626355a300d5aa74ef
   scribe:
     - gid: D5/S3/Weil/ZetaPntBounds/SupportRayleighMonotonicity.support_rayleigh_monotonicity
       definition_sha256: sha256:ecf6ccbb0a28e9dda0d6fd9216096d8b822441ae6d09ccbc178c4ced689f25c1

@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:ffe188ef1071b6acd4954a62b229a1de4c9fb5d63a43d140bc81bc22442fd0ca
 cas_ref: sha256:ffe188ef1071b6acd4954a62b229a1de4c9fb5d63a43d140bc81bc22442fd0ca
 coverage_gids:
-  - D5/S3/Analytic/Adelic/ToroidalCommonZeroLocus.toroidal_common_zero_locus
+  - gid: D5/S3/Analytic/Adelic/ToroidalCommonZeroLocus.toroidal_common_zero_locus
+    target_statement_id: sha256:ce0647d7986890c912c46d9121dcaef07175fdcb0a04468495ffca53827276f6
 receipts:
-  coverage:
-    - gid: D5/S3/Analytic/Adelic/ToroidalCommonZeroLocus.toroidal_common_zero_locus
-      source_sha256: sha256:ffe188ef1071b6acd4954a62b229a1de4c9fb5d63a43d140bc81bc22442fd0ca
-      target_statement_id: sha256:ce0647d7986890c912c46d9121dcaef07175fdcb0a04468495ffca53827276f6
   scribe:
     - gid: D5/S3/Analytic/Adelic/ToroidalCommonZeroLocus.toroidal_common_zero_locus
       definition_sha256: sha256:a4ec9f51a8bff520bf84d85f46ff46f0c860d43735323e8cddef4d7b58bf1e1f

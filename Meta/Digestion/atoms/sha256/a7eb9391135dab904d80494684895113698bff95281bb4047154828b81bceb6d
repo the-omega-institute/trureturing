@@ -1,0 +1,72 @@
+## 444. 观察残余塔
+
+设完整候选状态空间为 \(\mathfrak M\)，目标性质为：
+
+$$
+\tau:\mathfrak M\to\{0,1\}.
+$$
+
+这里可以把：
+
+$$
+\tau(F)=1
+$$
+
+解释为“\(F\) 满足 RH 型零点定位”。
+
+第 \(\lambda\) 层有限观察为：
+
+$$
+O_\lambda:\mathfrak M\to Y_\lambda.
+$$
+
+它可能只读取：
+
+* 前 \(P\) 个素数局部因子；
+* 高度 \(T\) 以下的零点；
+* 构型阶数不超过 \(k\) 的相关；
+* 前 \(N\) 个 Taylor jet；
+* 支撑不超过 \(L\) 的 Weil 测试函数；
+* 差分阶数不超过 \(r\) 的 Casimir 条件。
+
+定义该观察层的目标残余：
+
+$$
+\boxed{
+\mathcal E_\lambda
+=
+\left\{
+(F,G):
+O_\lambda(F)=O_\lambda(G),
+\quad
+\tau(F)\neq\tau(G)
+\right\}.
+}
+$$
+
+这就是：
+
+> 当前观察者认为两个系统相同，但 RH 目标必须区分的状态对。
+
+仓库现有的证明拓扑理论已经定义了同一形式：
+
+$$
+\mathcal E(q;T)
+=
+\ker q\setminus\ker T,
+$$
+
+并证明加入新读数 \(d\) 后：
+
+$$
+\boxed{
+\mathcal E(q\vee d;T)
+=
+\mathcal E(q;T)\cap\ker d.
+}
+$$
+
+也就是说，新条件不会凭空创造旧残余，只能切掉它能够识别的部分。
+
+---
+

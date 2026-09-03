@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:de508978d7d8d589e73f0b08a3308e9681f82a48d8a49017ceb84f7b8536f12f
 cas_ref: sha256:de508978d7d8d589e73f0b08a3308e9681f82a48d8a49017ceb84f7b8536f12f
 coverage_gids:
-  - D5/S3/Observer/Budget/MinimumCompleteSetCover.finite_budget_injective_iff_cover
+  - gid: D5/S3/Observer/Budget/MinimumCompleteSetCover.finite_budget_injective_iff_cover
+    target_statement_id: sha256:093ef812cc6e68c36f1af55a601d2e9f296174b20458dea89ed517cb616bc8a3
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/Budget/MinimumCompleteSetCover.finite_budget_injective_iff_cover
-      source_sha256: sha256:de508978d7d8d589e73f0b08a3308e9681f82a48d8a49017ceb84f7b8536f12f
-      target_statement_id: sha256:093ef812cc6e68c36f1af55a601d2e9f296174b20458dea89ed517cb616bc8a3
   scribe:
     - gid: D5/S3/Observer/Budget/MinimumCompleteSetCover.finite_budget_injective_iff_cover
       definition_sha256: sha256:b7ac646021c6257ece71f73a1b45ce07a576975b82ddaa6e2dcc4c955ad42df4

@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:431a32c050e8f39d1bad8acd5f8b74e29efb9a0ddfd541646500ce273248300e
 cas_ref: sha256:431a32c050e8f39d1bad8acd5f8b74e29efb9a0ddfd541646500ce273248300e
 coverage_gids:
-  - D5/S3/Weil/TestFunctions/ExternalSupportInvisibility.external_support_invisibility
+  - gid: D5/S3/Weil/TestFunctions/ExternalSupportInvisibility.external_support_invisibility
+    target_statement_id: sha256:93290cf947957036f908688a31a5dd6319d814c311f4f81243291a677091709d
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/TestFunctions/ExternalSupportInvisibility.external_support_invisibility
-      source_sha256: sha256:431a32c050e8f39d1bad8acd5f8b74e29efb9a0ddfd541646500ce273248300e
-      target_statement_id: sha256:93290cf947957036f908688a31a5dd6319d814c311f4f81243291a677091709d
   scribe:
     - gid: D5/S3/Weil/TestFunctions/ExternalSupportInvisibility.external_support_invisibility
       definition_sha256: sha256:be2b61c8a1cd1a1154a6da3fe38a7cc748021098f25264fa67a9dceec6195f8e

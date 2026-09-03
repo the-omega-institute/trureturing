@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:2ce5b7239f3149eaec8861ccdaf8eef6015313a8890dc4c42f66be161f40f2fe
 cas_ref: sha256:2ce5b7239f3149eaec8861ccdaf8eef6015313a8890dc4c42f66be161f40f2fe
 coverage_gids:
-  - D5/S3/ConceptDynamics/Policy/DeterministicPolicySectionCount.deterministic_policy_sections_lower_bound
+  - gid: D5/S3/ConceptDynamics/Policy/DeterministicPolicySectionCount.deterministic_policy_sections_lower_bound
+    target_statement_id: sha256:d77c69faf1030c9a600cee65fe6e8b535cfa171f84c55fe9b7dd85bd18c201e6
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Policy/DeterministicPolicySectionCount.deterministic_policy_sections_lower_bound
-      source_sha256: sha256:2ce5b7239f3149eaec8861ccdaf8eef6015313a8890dc4c42f66be161f40f2fe
-      target_statement_id: sha256:d77c69faf1030c9a600cee65fe6e8b535cfa171f84c55fe9b7dd85bd18c201e6
   scribe:
     - gid: D5/S3/ConceptDynamics/Policy/DeterministicPolicySectionCount.deterministic_policy_sections_lower_bound
       definition_sha256: sha256:52c61cc0753cc79c55f1b6ddf99df8b838864896dc1af40a872afc7fcf9b1899

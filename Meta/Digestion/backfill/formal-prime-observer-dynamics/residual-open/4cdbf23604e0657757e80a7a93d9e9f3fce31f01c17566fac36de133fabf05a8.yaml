@@ -4,12 +4,10 @@ fingerprints:
 cas_ref: sha256:4cdbf23604e0657757e80a7a93d9e9f3fce31f01c17566fac36de133fabf05a8
 coverage_gids: []
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems: []
   cover_disposition:
     outcome: partial-closed
-    recorded_at_utc: 2026-08-31T13:36:21.2885330+00:00
     gids:
       - D5/S3/Analytic/PrimeProducts/FormalFactorTableCounterexamples.absolute_convergence_admission_gives_multipliable
     gaps:

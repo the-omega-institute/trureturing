@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:6c5e78680a0d76f0afbdf8366a29a78be3b19ed577cf5882d63e9948ebea4a4f
+  normalized_sha256: sha256:6c5e78680a0d76f0afbdf8366a29a78be3b19ed577cf5882d63e9948ebea4a4f
+cas_ref: sha256:6c5e78680a0d76f0afbdf8366a29a78be3b19ed577cf5882d63e9948ebea4a4f
+coverage_gids:
+  - gid: D5/S3/Quantum/Completion/RelativeQuotientDecomposition.relative_quotient_orthogonal_decomposition
+    target_statement_id: sha256:edf31f2e1ec4a56a127525e81284d7d6a421e096515acd2eafe95dbd3a7bbd31
+receipts:
+  scribe:
+    - gid: D5/S3/Quantum/Completion/RelativeQuotientDecomposition.relative_quotient_orthogonal_decomposition
+      definition_sha256: sha256:d73bab57bc02f652e39b204c1c902a22193bc994aceac488fac996f16d259361
+      emission_sha256: sha256:233590508ff1f289291315da120cc6036b234586aeb67e1086373434367b6bfc
+  unresolved_subitems: []

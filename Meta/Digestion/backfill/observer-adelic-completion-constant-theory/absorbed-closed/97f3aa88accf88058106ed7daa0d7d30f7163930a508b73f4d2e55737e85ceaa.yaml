@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:97f3aa88accf88058106ed7daa0d7d30f7163930a508b73f4d2e55737e85ceaa
 cas_ref: sha256:97f3aa88accf88058106ed7daa0d7d30f7163930a508b73f4d2e55737e85ceaa
 coverage_gids:
-  - D5/S3/Observer/Budget/ProjectiveStrongDuality.projective_strong_duality
+  - gid: D5/S3/Observer/Budget/ProjectiveStrongDuality.projective_strong_duality
+    target_statement_id: sha256:5620ea4fb7e105ec84bb60a1155cf1852bf2cec23569bac5c7d9484b64fa43eb
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/Budget/ProjectiveStrongDuality.projective_strong_duality
-      source_sha256: sha256:97f3aa88accf88058106ed7daa0d7d30f7163930a508b73f4d2e55737e85ceaa
-      target_statement_id: sha256:5620ea4fb7e105ec84bb60a1155cf1852bf2cec23569bac5c7d9484b64fa43eb
   scribe:
     - gid: D5/S3/Observer/Budget/ProjectiveStrongDuality.projective_strong_duality
       definition_sha256: sha256:caaa6351bd4e8aba7d169e69fdaaf79551cbf83a7d63ed414b5780f56ec51ba3

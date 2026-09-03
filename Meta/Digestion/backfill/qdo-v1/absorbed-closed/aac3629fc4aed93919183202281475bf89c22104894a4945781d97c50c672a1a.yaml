@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:aac3629fc4aed93919183202281475bf89c22104894a4945781d97c50c672a1a
 cas_ref: sha256:aac3629fc4aed93919183202281475bf89c22104894a4945781d97c50c672a1a
 coverage_gids:
-  - D5/S3/Quantum/Dynamics/ObserverOrbitClosure.observer_closure_is_least_invariant
+  - gid: D5/S3/Quantum/Dynamics/ObserverOrbitClosure.observer_closure_is_least_invariant
+    target_statement_id: sha256:8a30a8e0eb46f16a931a3746458793457b29cd8f4a79f2214dffcc71047edd65
 receipts:
-  coverage:
-    - gid: D5/S3/Quantum/Dynamics/ObserverOrbitClosure.observer_closure_is_least_invariant
-      source_sha256: sha256:aac3629fc4aed93919183202281475bf89c22104894a4945781d97c50c672a1a
-      target_statement_id: sha256:8a30a8e0eb46f16a931a3746458793457b29cd8f4a79f2214dffcc71047edd65
   scribe:
     - gid: D5/S3/Quantum/Dynamics/ObserverOrbitClosure.observer_closure_is_least_invariant
       definition_sha256: sha256:426caeddcb30dc30266f79a16c9f567f887d9a4ad657164c61dc41a45f26bc58

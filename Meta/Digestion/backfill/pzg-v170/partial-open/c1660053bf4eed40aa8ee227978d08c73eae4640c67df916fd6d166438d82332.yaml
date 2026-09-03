@@ -3,15 +3,22 @@ fingerprints:
   normalized_sha256: sha256:c1660053bf4eed40aa8ee227978d08c73eae4640c67df916fd6d166438d82332
 cas_ref: sha256:c1660053bf4eed40aa8ee227978d08c73eae4640c67df916fd6d166438d82332
 coverage_gids:
-  - D5/S3/Fourier/FourierLaplaceEntire
-  - D5/S3/Weil/Convention
-  - D5/S3/Weil/FourierLaplace
-  - D5/S3/Weil/PrimePoleTerms
-  - D5/S3/Weil/TestFunctions
-  - D5/S3/Weil/WeilIdentity
-  - D5/S3/Weil/ZeroSum
-  - D5/X_Frontier/Hearts
+  - gid: D5/S3/Fourier/FourierLaplaceEntire
+    target_statement_id: sha256:d50d85ac1c34c816c26a704105973d86f80936c6d7024406eb15f657b95468d2
+  - gid: D5/S3/Weil/Convention
+    target_statement_id: sha256:9725184c0907f74808770ed2a1306d313ea693d25fd486ae80b11e806112b96e
+  - gid: D5/S3/Weil/FourierLaplace
+    target_statement_id: sha256:819fec5ff570d8406356c56f8d04a9796eb139488014b64304fde8e30a18461d
+  - gid: D5/S3/Weil/PrimePoleTerms
+    target_statement_id: sha256:6334daa776cf081e15ba36266eaa9e81a0f99c1969efa993e23d68e25ecd04f3
+  - gid: D5/S3/Weil/TestFunctions
+    target_statement_id: sha256:0c3a6d66e424bfd2ece7fbe17534730309d58d45550c5d078126918797104f4a
+  - gid: D5/S3/Weil/WeilIdentity
+    target_statement_id: sha256:bed09620fec430e015869612280a9fbbd04ae4fab8d2c708c9c4d63f99be0679
+  - gid: D5/S3/Weil/ZeroSum
+    target_statement_id: sha256:154bf5eb20dafaf731874c5a333f66d46013e89637103c8b19f9b773f0bceace
+  - gid: D5/X_Frontier/Hearts
+    target_statement_id: null
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems: []

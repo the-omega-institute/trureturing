@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:4e1b76d6594db13d8f40e6fb6ec57c2a7cfd56f8d5228116ba8489d26704962c
 cas_ref: sha256:4e1b76d6594db13d8f40e6fb6ec57c2a7cfd56f8d5228116ba8489d26704962c
 coverage_gids:
-  - D5/S3/ConceptDynamics/Faithfulness/FiniteQuotientJointKernel.finite_quotient_joint_kernel
+  - gid: D5/S3/ConceptDynamics/Faithfulness/FiniteQuotientJointKernel.finite_quotient_joint_kernel
+    target_statement_id: sha256:487137682a33cfee167c041b3d1e07ef024f5a4055103f074d2c159542ae31ce
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Faithfulness/FiniteQuotientJointKernel.finite_quotient_joint_kernel
-      source_sha256: sha256:4e1b76d6594db13d8f40e6fb6ec57c2a7cfd56f8d5228116ba8489d26704962c
-      target_statement_id: sha256:487137682a33cfee167c041b3d1e07ef024f5a4055103f074d2c159542ae31ce
   scribe:
     - gid: D5/S3/ConceptDynamics/Faithfulness/FiniteQuotientJointKernel.finite_quotient_joint_kernel
       definition_sha256: sha256:9e62967b5cf2b25d68cac9b97596e77ad53458d283ee1003a320337315191667

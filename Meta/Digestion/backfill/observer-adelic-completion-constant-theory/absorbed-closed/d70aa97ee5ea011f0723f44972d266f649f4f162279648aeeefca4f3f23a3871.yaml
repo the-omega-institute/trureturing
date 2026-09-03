@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:d70aa97ee5ea011f0723f44972d266f649f4f162279648aeeefca4f3f23a3871
 cas_ref: sha256:d70aa97ee5ea011f0723f44972d266f649f4f162279648aeeefca4f3f23a3871
 coverage_gids:
-  - D5/S3/Weil/Scattering/ScatteringRatioCompletion.scattering_ratio_completion
+  - gid: D5/S3/Weil/Scattering/ScatteringRatioCompletion.scattering_ratio_completion
+    target_statement_id: sha256:772cf53976f24bcd3019cf62cb51062f59412f37f80764949dc1f15a321eeea3
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/Scattering/ScatteringRatioCompletion.scattering_ratio_completion
-      source_sha256: sha256:d70aa97ee5ea011f0723f44972d266f649f4f162279648aeeefca4f3f23a3871
-      target_statement_id: sha256:772cf53976f24bcd3019cf62cb51062f59412f37f80764949dc1f15a321eeea3
   scribe:
     - gid: D5/S3/Weil/Scattering/ScatteringRatioCompletion.scattering_ratio_completion
       definition_sha256: sha256:9da59666173c259b144b27df6093a5332b3b0966f0352863eec9790762ad67ee

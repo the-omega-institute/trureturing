@@ -1,0 +1,27 @@
+## 500. 真正的无限来自全部素数地址
+
+把所有 \(p\) 合起来，隐藏变量成为：
+
+$$
+A=(A_p)_p
+\in
+\prod_p\mathbb F_p.
+$$
+
+这接近一个 profinite residue observer。
+
+因此：
+
+$$
+\boxed{
+\text{每个 }p\text{ 局部有限，}
+\qquad
+\text{全部 }p\text{ 的乘积无限}.
+}
+$$
+
+但该 profinite 观察者只编码局部同余障碍。
+
+它仍然没有完整编码：
+
+* 数的阿基米德大小；

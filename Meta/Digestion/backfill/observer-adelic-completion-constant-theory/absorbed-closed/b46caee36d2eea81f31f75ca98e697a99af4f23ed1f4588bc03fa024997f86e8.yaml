@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:b46caee36d2eea81f31f75ca98e697a99af4f23ed1f4588bc03fa024997f86e8
 cas_ref: sha256:b46caee36d2eea81f31f75ca98e697a99af4f23ed1f4588bc03fa024997f86e8
 coverage_gids:
-  - D5/S3/Weil/TestFunctions/ComplementaryContactSupport.complementary_contact_support
+  - gid: D5/S3/Weil/TestFunctions/ComplementaryContactSupport.complementary_contact_support
+    target_statement_id: sha256:9b9a8ea5353ae7cb5ecc736090ee8fb54054a7c74e638b6c4be038b7521fd4b5
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/TestFunctions/ComplementaryContactSupport.complementary_contact_support
-      source_sha256: sha256:b46caee36d2eea81f31f75ca98e697a99af4f23ed1f4588bc03fa024997f86e8
-      target_statement_id: sha256:9b9a8ea5353ae7cb5ecc736090ee8fb54054a7c74e638b6c4be038b7521fd4b5
   scribe:
     - gid: D5/S3/Weil/TestFunctions/ComplementaryContactSupport.complementary_contact_support
       definition_sha256: sha256:f47816c471d4b7119874700c0ae8dee38714767884ac20bf336d3580ba3362e6

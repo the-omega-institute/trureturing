@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:fdfe26e3cf8a09f67410a910f6c22cbdff98617484392d8df6e22efcda10352b
 cas_ref: sha256:fdfe26e3cf8a09f67410a910f6c22cbdff98617484392d8df6e22efcda10352b
 coverage_gids:
-  - D5/S1/Recurrence/Witt/PrimitiveEulerLedger.unique_primitive_euler_ledger
+  - gid: D5/S1/Recurrence/Witt/PrimitiveEulerLedger.unique_primitive_euler_ledger
+    target_statement_id: sha256:d165385fc17ed8b6f40903b9a54d714049fa6c69196e3426b06a84e1c43430a7
 receipts:
-  coverage:
-    - gid: D5/S1/Recurrence/Witt/PrimitiveEulerLedger.unique_primitive_euler_ledger
-      source_sha256: sha256:fdfe26e3cf8a09f67410a910f6c22cbdff98617484392d8df6e22efcda10352b
-      target_statement_id: sha256:d165385fc17ed8b6f40903b9a54d714049fa6c69196e3426b06a84e1c43430a7
   scribe:
     - gid: D5/S1/Recurrence/Witt/PrimitiveEulerLedger.unique_primitive_euler_ledger
       definition_sha256: sha256:920f2dadc6f4e90c575272fb6f8338182cb7199994f79bb5a00ff306775c8621

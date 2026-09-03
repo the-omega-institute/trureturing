@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:2edcbd414388c1861dd6b5ec29c6123f3f7fb58d0eaab2a4fea58e856e4a9c2e
 cas_ref: sha256:2edcbd414388c1861dd6b5ec29c6123f3f7fb58d0eaab2a4fea58e856e4a9c2e
 coverage_gids:
-  - D5/S3/Weil/TestFunctions/LiCaratheodoryIdentity.li_caratheodory_identity
+  - gid: D5/S3/Weil/TestFunctions/LiCaratheodoryIdentity.li_caratheodory_identity
+    target_statement_id: sha256:6d2f09474b610801c0526d7012015ae2973f4ba5c43479ce5a1e7a70f46a60ac
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/TestFunctions/LiCaratheodoryIdentity.li_caratheodory_identity
-      source_sha256: sha256:2edcbd414388c1861dd6b5ec29c6123f3f7fb58d0eaab2a4fea58e856e4a9c2e
-      target_statement_id: sha256:6d2f09474b610801c0526d7012015ae2973f4ba5c43479ce5a1e7a70f46a60ac
   scribe:
     - gid: D5/S3/Weil/TestFunctions/LiCaratheodoryIdentity.li_caratheodory_identity
       definition_sha256: sha256:eafe1b0d9521874a79556414fe44647ab4ef9690b94769e787f64a0e6ba14be3

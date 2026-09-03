@@ -47,7 +47,7 @@ public sealed partial class CoverAtomTests
             afterDocument.RequireDigestionEntries(),
             candidate => candidate.AtomId == spec.AtomId);
         Assert.Equal([inputs.Gid], entry.CoverageGids.ToArray());
-        Assert.Single(entry.Receipts.Coverage);
+        Assert.Single(entry.Coverage);
         DirectoryLedgerTestSupport.ReplaceWithProjection(currentFiles, afterDocument);
 
         var fixture = new RuleFixture();
@@ -162,9 +162,8 @@ public sealed partial class CoverAtomTests
         var entry = Assert.Single(
             execution.AfterDocument.RequireDigestionEntries(),
             candidate => candidate.AtomId == spec.AtomId);
-        var receipt = Assert.Single(entry.Receipts.Coverage);
-        var (_, _, targetBinding) = receipt;
-        Assert.Equal(spec.TargetStatementId, targetBinding);
+        var receipt = Assert.Single(entry.Coverage);
+        Assert.Equal(spec.TargetStatementId, receipt.TargetStatementId);
     }
 
     [Fact]
@@ -200,8 +199,8 @@ public sealed partial class CoverAtomTests
         var sibling = Assert.Single(entries, candidate => candidate.AtomId == CoverWorld.OtherAtomId);
         Assert.Equal([gid], target.CoverageGids.ToArray());
         Assert.Equal([gid], sibling.CoverageGids.ToArray());
-        Assert.Equal([gid], target.Receipts.Coverage.Select(static receipt => receipt.Gid).ToArray());
-        Assert.Equal([gid], sibling.Receipts.Coverage.Select(static receipt => receipt.Gid).ToArray());
+        Assert.Equal([gid], target.Coverage.Select(static receipt => receipt.Gid).ToArray());
+        Assert.Equal([gid], sibling.Coverage.Select(static receipt => receipt.Gid).ToArray());
         Assert.Equal([gid], target.Receipts.Scribe.Select(static receipt => receipt.Gid).ToArray());
         Assert.Equal([gid], sibling.Receipts.Scribe.Select(static receipt => receipt.Gid).ToArray());
     }

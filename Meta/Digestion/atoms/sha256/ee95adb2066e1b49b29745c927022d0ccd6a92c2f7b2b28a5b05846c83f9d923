@@ -1,0 +1,69 @@
+* 状态数上界固定为 \(k\)；
+
+那么满足这些条件的机器总数是有限的。
+
+设：
+
+$$
+\mathcal M_k
+$$
+
+为全部至多 \(k\) 状态机器。
+
+令：
+
+$$
+F_N
+=
+\left\{
+M\in\mathcal M_k:
+M\text{ 拟合前 }N\text{ 项}
+\right\}.
+$$
+
+则：
+
+$$
+F_{N+1}\subseteq F_N.
+$$
+
+如果：
+
+$$
+F_N\neq\varnothing
+\qquad
+\forall N,
+$$
+
+因为 \(\mathcal M_k\) 有限，嵌套有限集必有：
+
+$$
+\bigcap_NF_N\neq\varnothing.
+$$
+
+其中的机器拟合全部前缀，因而是全局机器。
+
+所以在有限载体前提下：
+
+$$
+\boxed{
+\text{存在全局 }k\text{-状态模型}
+\iff
+\forall N,\ 
+\text{存在 }k\text{-状态前缀模型}.
+}
+$$
+
+等价地：
+
+$$
+\boxed{
+\text{不存在全局 }k\text{-状态模型}
+\Longrightarrow
+\exists N(k),\ 
+\text{前 }N(k)\text{ 项已经给出 UNSAT 证书}.
+}
+$$
+
+---
+

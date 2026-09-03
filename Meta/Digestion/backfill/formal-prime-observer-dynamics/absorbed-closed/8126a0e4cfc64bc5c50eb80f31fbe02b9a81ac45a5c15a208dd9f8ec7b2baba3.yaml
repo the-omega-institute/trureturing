@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:8126a0e4cfc64bc5c50eb80f31fbe02b9a81ac45a5c15a208dd9f8ec7b2baba3
 cas_ref: sha256:8126a0e4cfc64bc5c50eb80f31fbe02b9a81ac45a5c15a208dd9f8ec7b2baba3
 coverage_gids:
-  - D5/S3/Analytic/ZetaObservation/ZetaSampleInformationAdditivity.zeta_sample_information_additive
+  - gid: D5/S3/Analytic/ZetaObservation/ZetaSampleInformationAdditivity.zeta_sample_information_additive
+    target_statement_id: sha256:926c80310f9fbd762175ad43413eaac2c8ba9de579977032742431d4af67b296
 receipts:
-  coverage:
-    - gid: D5/S3/Analytic/ZetaObservation/ZetaSampleInformationAdditivity.zeta_sample_information_additive
-      source_sha256: sha256:8126a0e4cfc64bc5c50eb80f31fbe02b9a81ac45a5c15a208dd9f8ec7b2baba3
-      target_statement_id: sha256:926c80310f9fbd762175ad43413eaac2c8ba9de579977032742431d4af67b296
   scribe:
     - gid: D5/S3/Analytic/ZetaObservation/ZetaSampleInformationAdditivity.zeta_sample_information_additive
       definition_sha256: sha256:4837b6d552000a3f7c93a19e12adf100f2078146a4935ae29bad72d5b869e956

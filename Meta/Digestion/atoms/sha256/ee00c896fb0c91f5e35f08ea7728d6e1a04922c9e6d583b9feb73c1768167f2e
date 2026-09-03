@@ -1,0 +1,59 @@
+## 有限盲区的精确区间
+
+固定容许误差 \(\varepsilon>0\)，定义：
+
+$$
+\mathcal B_N(\varepsilon)
+=
+\left\{
+\delta:
+U_N(\delta)\le\varepsilon
+\right\}.
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal B_N(\varepsilon)
+=
+\left[
+-\frac{\varepsilon}{\log p_N},
+\frac{\varepsilon}{\log p_N}
+\right].
+}
+$$
+
+每一个有限 \(N\) 都有非零盲区：
+
+$$
+\mathcal B_N(\varepsilon)
+\neq\{0\}.
+$$
+
+但：
+
+$$
+\boxed{
+\bigcap_{N=1}^{\infty}
+\mathcal B_N(\varepsilon)
+=
+\{0\}.
+}
+$$
+
+所以：
+
+> 每个有限素数观察者都无法排除一个足够小的离线偏移；
+> 但没有一个固定的标准非零偏移，能逃过全体素数。
+
+这正是仓库残余理论中的：
+
+$$
+\boxed{
+\text{finite blindness without persistent standard residual}.
+}
+$$
+
+---
+
