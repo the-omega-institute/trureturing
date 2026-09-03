@@ -1,0 +1,16 @@
+### 关于离线零点对
+
+它们可以具有三种不同的“纠缠”：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{mirror anti-correlation};\\
+&\text{double-zero branch monodromy};\\
+&\text{cross-orbit connected determinant cycles}.
+\end{aligned}
+}
+$$
+
+其中前两种可以在明确前件下严格建立；第三种需要 correlation-completed operator。
+

@@ -1,0 +1,39 @@
+## 27. 临界线与纯频率轴
+
+当：
+
+$$
+\delta=0,
+$$
+
+Mellin 变换退化为纯 Fourier 读数：
+
+$$
+\int g(u)e^{i\gamma u}\,du.
+$$
+
+当：
+
+$$
+\delta\neq0,
+$$
+
+则成为带指数权的 bilateral Laplace–Fourier 变换。
+
+因此 RH 可以被解释为：
+
+$$
+\boxed{
+\text{completed transform 的全部非平凡零点只出现在无指数倾斜的纯频率轴}.
+}
+$$
+
+离线镜像对：
+
+$$
++\delta,\quad-\delta
+$$
+
+则对应同一频率 \(\gamma\) 下：
+
+* 一个增长倾斜；

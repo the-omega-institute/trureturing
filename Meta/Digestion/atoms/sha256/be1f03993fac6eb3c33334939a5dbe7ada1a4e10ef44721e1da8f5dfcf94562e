@@ -1,0 +1,75 @@
+## 74. 偶 sector 两步完成，奇 sector 四步重完
+
+将函数空间按反射分解：
+
+$$
+\mathcal H=\mathcal H^+\oplus\mathcal H^-,
+$$
+
+其中：
+
+$$
+Jf_+=f_+,
+\qquad
+Jf_-=-f_-.
+$$
+
+由于：
+
+$$
+\mathcal F^2=J,
+$$
+
+所以：
+
+$$
+\boxed{
+\mathcal F^2|_{\mathcal H^+}=I,
+}
+$$
+
+而：
+
+$$
+\boxed{
+\mathcal F^2|_{\mathcal H^-}=-I.
+}
+$$
+
+因此：
+
+* 偶 sector 经过两次坐标互换已经返回；
+* 奇 sector 经过两次只返回到反码；
+* 奇 sector 必须经过四次才能完全恢复。
+
+傅立叶本征值也因此分成：
+
+$$
+\begin{array}{c|c}
+\text{反射 sector}&\mathcal F\text{ 本征值}\\
+\hline
+\mathcal H^+&+1,-1\\
+\mathcal H^-&+i,-i
+\end{array}
+$$
+
+所以“偶完成、奇破缺”更准确地写成：
+
+$$
+\boxed{
+\text{even has duality period }2,
+\qquad
+\text{odd has duality period }4.
+}
+$$
+
+你说的“周期的周期”，在这里就是：
+
+$$
+\boxed{
+\text{奇偶二周期本身嵌在傅立叶四周期中}.
+}
+$$
+
+---
+

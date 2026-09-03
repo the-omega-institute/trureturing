@@ -1,0 +1,11 @@
+### 150.6 Local covariance spectrum
+
+```lean
+theorem localSieveCovariance_spectrum :
+    eigenvalues (localSieveCovariance p H) =
+      {1 / p with multiplicity ν - 1,
+       (p - ν) / p^2 with multiplicity 1}
+```
+
+---
+

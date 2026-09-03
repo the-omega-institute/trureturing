@@ -1,0 +1,60 @@
+### 关于 RH 可能为假
+
+现在已经有一个逻辑上完整的候选机制：
+
+$$
+\boxed{
+\text{在线简单零点}
+\to
+\text{临界二重碰撞}
+\to
+\text{离线镜像对}
+}
+$$
+
+并且该机制保持完整函数方程对称。
+
+但它只是**允许 RH 为假的动力学机制**，并不是经典 \(\xi\) 已经实际发生该机制的证据。
+
+因此，真正的分界问题被压缩为：
+
+$$
+\boxed{
+\text{从可控 anchor 到经典 }\xi
+\text{ 的自然路径，是否穿过多重零点判别式？}
+}
+$$
+
+而整套 ZCOCT 最深的未闭合对象则是：
+
+$$
+\boxed{
+\text{一个同时拥有 prime-constellation source jets、}
+}
+$$
+
+$$
+\boxed{
+\text{zero-orbit divisor、nilpotent jet blocks 与 monodromy 的}
+}
+$$
+
+$$
+\boxed{
+\text{correlation-completed determinant } \Xi(s;\mathbf u).
+}
+$$
+
+一旦它被构造，用户所说的“整个零点状态是所有素数构型的统一频谱编码”就不再只是一句哲学判断，而会被拆成可以逐项验证的：
+
+$$
+\boxed{
+\text{source cumulant}
+\longleftrightarrow
+\text{closed operator cycle}
+\longleftrightarrow
+\text{zero response jet}
+\longleftrightarrow
+\text{monodromy orbit}.
+}
+$$

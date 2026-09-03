@@ -1,0 +1,37 @@
+## 140. Determinantal 模型的可证伪面
+
+如果 prime correlations 恰好由 determinant 模型控制，那么 connected \(k\)-point functions 必须满足 cycle-trace 恒等式。
+
+例如三阶只能由两种方向循环组成：
+
+$$
+\operatorname{tr}(A_1A_2A_3)
++
+\operatorname{tr}(A_1A_3A_2).
+$$
+
+四阶则只由六个循环类组成。
+
+若实际 prime cumulants 显示出无法由任何此类 cyclic traces 表示的 connected hypergraph invariant，则：
+
+$$
+\boxed{
+\text{determinantal Trace--Jet hypothesis 为假}.
+}
+$$
+
+届时应使用更一般的：
+
+$$
+\log Z
+=
+\sum_{\Gamma\ \mathrm{connected}}
+w(\Gamma)
+$$
+
+而不是单一 determinant。
+
+所以 determinant 不是信仰，而是一个非常具体的低复杂度候选。
+
+---
+

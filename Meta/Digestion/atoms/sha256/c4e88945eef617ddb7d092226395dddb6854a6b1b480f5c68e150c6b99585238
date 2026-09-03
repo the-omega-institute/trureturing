@@ -1,0 +1,40 @@
+## 127. 合并黄金收缩和傅立叶四周期
+
+设：
+
+$$
+P_+,\quad P_-
+$$
+
+分别是反射偶、奇投影。
+
+定义黄金 parity 算子：
+
+$$
+G_\varphi
+=
+P_+
+-
+\varphi^{-2}P_-.
+$$
+
+再令：
+
+$$
+\mathcal F^2=P_+-P_-,
+\qquad
+\mathcal F^4=I.
+$$
+
+假设 \(G_\varphi\) 与 \(\mathcal F\) 交换，定义：
+
+$$
+\boxed{
+\mathcal T_\varphi
+=
+G_\varphi\mathcal F.
+}
+$$
+
+---
+

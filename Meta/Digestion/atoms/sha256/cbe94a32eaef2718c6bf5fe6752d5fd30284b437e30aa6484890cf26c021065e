@@ -1,0 +1,26 @@
+## 136. 有限 Configuration–Orbit response matrix
+
+取有限构型族：
+
+$$
+\mathscr C_K=\{H_1,\ldots,H_M\}
+$$
+
+和有限零点轨道窗：
+
+$$
+\mathscr O_T=\{O_1,\ldots,O_N\}.
+$$
+
+定义 response matrix：
+
+$$
+\boxed{
+Q_{ia}
+=
+q_{H_i}(O_a).
+}
+$$
+
+则：
+

@@ -1,0 +1,53 @@
+## 61. 相对完成
+
+定义 even projection：
+
+$$
+P_+=\frac{I+P}{2},
+$$
+
+odd projection：
+
+$$
+P_-=\frac{I-P}{2}.
+$$
+
+若：
+
+$$
+OT^nx
+\to y_\infty
+$$
+
+但：
+
+$$
+T^nx
+$$
+
+本身不收敛，则称 \(x\) 在观察者 \(O\) 下相对完成。
+
+其 hidden residual 为：
+
+$$
+r_n=P_-T^nx.
+$$
+
+如果：
+
+$$
+r_n\to0,
+$$
+
+称为真正重完。
+
+如果：
+
+$$
+r_{n+1}\sim-r_n
+$$
+
+且不趋零，则称为 stable broken cycle。
+
+---
+

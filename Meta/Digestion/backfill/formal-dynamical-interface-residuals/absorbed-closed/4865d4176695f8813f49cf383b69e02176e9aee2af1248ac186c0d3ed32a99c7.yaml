@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:4865d4176695f8813f49cf383b69e02176e9aee2af1248ac186c0d3ed32a99c7
+  normalized_sha256: sha256:4865d4176695f8813f49cf383b69e02176e9aee2af1248ac186c0d3ed32a99c7
+cas_ref: sha256:4865d4176695f8813f49cf383b69e02176e9aee2af1248ac186c0d3ed32a99c7
+coverage_gids:
+  - D5/S3/ConceptDynamics/Dialectics/DeterministicInterfaceEquivalence.deterministic_interface_sixfold_equivalence
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Dialectics/DeterministicInterfaceEquivalence.deterministic_interface_sixfold_equivalence
+      source_sha256: sha256:4865d4176695f8813f49cf383b69e02176e9aee2af1248ac186c0d3ed32a99c7
+      target_statement_id: sha256:dcd39aeb46b42e210fa91c3204ee59071a5b4e02a51218f3dda27d23039a5363
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Dialectics/DeterministicInterfaceEquivalence.deterministic_interface_sixfold_equivalence
+      definition_sha256: sha256:4acf064f5fb8cdd33477c44fd0aa000cd9b652c7a40735a6d5750fad7000b50a
+      emission_sha256: sha256:90495be9a556a5afbe91f7d383e7dc5fb2687d51cffd562f8d5eed73199c97a3
+  unresolved_subitems: []
