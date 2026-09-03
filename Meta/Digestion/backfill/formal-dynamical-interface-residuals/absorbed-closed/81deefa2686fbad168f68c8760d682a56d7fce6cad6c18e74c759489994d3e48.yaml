@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:81deefa2686fbad168f68c8760d682a56d7fce6cad6c18e74c759489994d3e48
   normalized_sha256: sha256:81deefa2686fbad168f68c8760d682a56d7fce6cad6c18e74c759489994d3e48
 cas_ref: sha256:81deefa2686fbad168f68c8760d682a56d7fce6cad6c18e74c759489994d3e48
-coverage_gids:
-  - D5/S3/ConceptDynamics/Sufficiency/SufficiencyIsTargetRelative.sufficiency_is_target_relative
+coverage:
+  - gid: D5/S3/ConceptDynamics/Sufficiency/SufficiencyIsTargetRelative.sufficiency_is_target_relative
+    target_statement_id: sha256:b3b230f2fd817a185ad586afeb7c7f2cbb4acfe452ac77cd557ee9782f9275f0
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Sufficiency/SufficiencyIsTargetRelative.sufficiency_is_target_relative
-      source_sha256: sha256:81deefa2686fbad168f68c8760d682a56d7fce6cad6c18e74c759489994d3e48
-      target_statement_id: sha256:b3b230f2fd817a185ad586afeb7c7f2cbb4acfe452ac77cd557ee9782f9275f0
   scribe:
     - gid: D5/S3/ConceptDynamics/Sufficiency/SufficiencyIsTargetRelative.sufficiency_is_target_relative
       definition_sha256: sha256:28a60427863323b6cc4150059ce519381f0707b03e538862ee6b84f0ee4ca86b

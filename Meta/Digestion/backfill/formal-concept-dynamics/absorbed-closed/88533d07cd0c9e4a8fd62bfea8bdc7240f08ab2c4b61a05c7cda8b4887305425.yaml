@@ -2,13 +2,10 @@ fingerprints:
   raw_sha256: sha256:88533d07cd0c9e4a8fd62bfea8bdc7240f08ab2c4b61a05c7cda8b4887305425
   normalized_sha256: sha256:88533d07cd0c9e4a8fd62bfea8bdc7240f08ab2c4b61a05c7cda8b4887305425
 cas_ref: sha256:88533d07cd0c9e4a8fd62bfea8bdc7240f08ab2c4b61a05c7cda8b4887305425
-coverage_gids:
-  - D5/S3/ConceptDynamics/Policy/StrictPolicyPowerGrowth.strict_policy_power_growth
+coverage:
+  - gid: D5/S3/ConceptDynamics/Policy/StrictPolicyPowerGrowth.strict_policy_power_growth
+    target_statement_id: sha256:895869ab0360b743b0d53c5fcd8c80769e79d579b636975ed1068cd9a8263069
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Policy/StrictPolicyPowerGrowth.strict_policy_power_growth
-      source_sha256: sha256:88533d07cd0c9e4a8fd62bfea8bdc7240f08ab2c4b61a05c7cda8b4887305425
-      target_statement_id: sha256:895869ab0360b743b0d53c5fcd8c80769e79d579b636975ed1068cd9a8263069
   scribe:
     - gid: D5/S3/ConceptDynamics/Policy/StrictPolicyPowerGrowth.strict_policy_power_growth
       definition_sha256: sha256:ecf5ff1ad3502be0e4e14148f535f4c2412795817120cd5b8dd39a03f44f4cea
