@@ -116,6 +116,9 @@ domains:
   PrimeForms:
     stratum: S3
     definition: Representations of prime numbers by integral quadratic forms.
+  PrimeGaps:
+    stratum: S3
+    definition: Lower bounds for gaps between consecutive primes via sieve weights, Euler-product moment estimates, and greedy residue covers.
   PrimeObserver:
     stratum: S3
     definition: Prime-indexed observer memory structures with projective golden-mode multipliers.
