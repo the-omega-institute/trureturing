@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:cce88fc1d43b66d8d10581eb63d327f0614aeea57ff89e942fecd525a7b1cb44
+  normalized_sha256: sha256:cce88fc1d43b66d8d10581eb63d327f0614aeea57ff89e942fecd525a7b1cb44
+cas_ref: sha256:cce88fc1d43b66d8d10581eb63d327f0614aeea57ff89e942fecd525a7b1cb44
+coverage_gids:
+  - D5/S3/Observer/VisibleDescent/TargetObservabilityFourWayEquivalence.target_observability_four_way_equivalence
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/VisibleDescent/TargetObservabilityFourWayEquivalence.target_observability_four_way_equivalence
+      source_sha256: sha256:cce88fc1d43b66d8d10581eb63d327f0614aeea57ff89e942fecd525a7b1cb44
+      target_statement_id: sha256:479612ee6e82bc58748e469a4da882397b8a58dc67637cbbe02a4fb41bd640cd
+  scribe:
+    - gid: D5/S3/Observer/VisibleDescent/TargetObservabilityFourWayEquivalence.target_observability_four_way_equivalence
+      definition_sha256: sha256:4759262a44c17d65998ce26e6745982c9b7851268fbb070a05c64af27db4331d
+      emission_sha256: sha256:fac50828c63619a95f9070a8d3c4c2fcd55acea57def5275e5292e178f21566b
+  unresolved_subitems: []
