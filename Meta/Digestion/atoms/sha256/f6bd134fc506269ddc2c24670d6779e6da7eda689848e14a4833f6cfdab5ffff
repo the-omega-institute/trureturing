@@ -1,0 +1,28 @@
+## 43. Jet 三元组
+
+定义：
+
+$$
+\boxed{
+\operatorname{grade}
+=
+(k,m,2r).
+}
+$$
+
+其三项分别表示：
+
+$$
+\boxed{
+\begin{aligned}
+k&=\text{加法联合相关阶数};\\
+m&=\text{解析零点重数};\\
+2r&=\text{镜像商中 transverse defect 的可见阶数}.
+\end{aligned}
+}
+$$
+
+这三个数字即使偶然相同，也不作用于同一个变量，不能互相替代。
+
+---
+

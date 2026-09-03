@@ -1,0 +1,65 @@
+## 169. 有限零点窗的黄金 defect recurrence
+
+对有限零点窗定义：
+
+$$
+A_N(T)
+=
+\sum_{|\gamma_\rho|\le T}
+m_\rho
+\left\lfloor
+\varphi^N
+\left|
+\Re\rho-\frac12
+\right|
+\right\rfloor.
+$$
+
+则：
+
+$$
+A_{N+2}(T)
+=
+A_{N+1}(T)
++
+A_N(T)
++
+C_N(T),
+$$
+
+其中：
+
+$$
+C_N(T)
+=
+\sum_{|\gamma_\rho|\le T}
+m_\rho c_{\rho,N}.
+$$
+
+因此：
+
+$$
+\boxed{
+\text{全局 transverse defect}
+=
+\text{Fibonacci recurrence}
++
+\text{所有零点 carry sources 的总和}.
+}
+$$
+
+而：
+
+$$
+\boxed{
+A_N(T)=0
+\quad\forall N
+}
+$$
+
+当且仅当该有限窗内所有零点都位于临界线。
+
+仓库规划中已经出现 `GoldenTransverseRecurrence`、`GoldenDefectClosedForm`、`PersistentDefectForcing` 等名称，但尚未发现实现这一 floor-carry 环面递归的 owner。
+
+---
+

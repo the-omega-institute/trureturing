@@ -1,0 +1,63 @@
+## 171. Artin–Mazur dynamical ζ
+
+定义：
+
+$$
+\zeta_F^{\mathrm{AM}}(z)
+=
+\exp
+\left(
+\sum_{n\ge1}
+\frac{N_n}{n}z^n
+\right).
+$$
+
+利用：
+
+$$
+\sum_{n\ge1}\frac{L_n}{n}z^n
+=
+-\log(1-z-z^2),
+$$
+
+得到：
+
+$$
+\boxed{
+\zeta_F^{\mathrm{AM}}(z)
+=
+\frac{1-z^2}{1-z-z^2}.
+}
+$$
+
+这一个公式同时包含：
+
+$$
+1-z-z^2
+=
+\text{黄金增长 denominator},
+$$
+
+以及：
+
+$$
+1-z^2
+=
+\text{奇偶方向修正 numerator}.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{黄金动力学的周期 ζ}
+=
+\frac{\text{偶重完修正}}
+{\text{黄金递归完成}}.
+}
+$$
+
+它不是 Riemann ζ，而是一个真正的 dynamical zeta。
+
+---
+

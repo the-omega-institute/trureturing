@@ -1,0 +1,38 @@
+## 路线三：全局完全正胶合
+
+构造 arithmetic feature family：
+
+$$
+V_s
+$$
+
+使：
+
+$$
+\boxed{
+\frac{
+L_\xi(s)+\overline{L_\xi(t)}
+}{
+s+\overline t-1
+}
+=
+\langle V_t,V_s\rangle.
+}
+\tag{1945.1}
+$$
+
+或构造完全正映射：
+
+$$
+\Phi_\xi:
+\mathcal A_{\mathrm{prime}}
+\to
+B(\mathcal H_{\mathrm{arith}}).
+$$
+
+这是最强的生成性证明。
+
+它不仅证明没有离线支撑，还解释全部局部 prime 名字为什么能进入同一个正关系世界。
+
+---
+
