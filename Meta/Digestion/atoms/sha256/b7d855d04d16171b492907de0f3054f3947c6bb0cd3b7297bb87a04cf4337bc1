@@ -1,0 +1,87 @@
+## 264. 临界线处的切向与法向响应
+
+令：
+
+$$
+s=\frac12+\delta+i\gamma,
+\qquad
+q=s(1-s).
+$$
+
+在临界线：
+
+$$
+\delta=0
+$$
+
+处，对微小变化：
+
+$$
+\dot s=\dot\delta+i\dot\gamma,
+$$
+
+有：
+
+$$
+\begin{aligned}
+\dot q
+&=
+(1-2s)\dot s\\
+&=
+-2i\gamma
+(\dot\delta+i\dot\gamma)\\
+&=
+2\gamma\dot\gamma
+-
+2i\gamma\dot\delta.
+\end{aligned}
+$$
+
+所以：
+
+$$
+\boxed{
+\Re\dot q
+=
+2\gamma\dot\gamma,
+}
+$$
+
+$$
+\boxed{
+\Im\dot q
+=
+-2\gamma\dot\delta.
+}
+$$
+
+这给出一个精确 selection rule：
+
+* mirror-even source 改变零点高度，沿 \(q\)-实轴运动；
+* mirror-odd source 激活 transverse displacement，沿 \(q\)-虚方向运动。
+
+因此此前得到的：
+
+* 孪生构型 mirror-even；
+* 三元组 chirality mirror-odd；
+* 四元组 mirror-even；
+
+在 q-plane 中分别对应：
+
+$$
+\boxed{
+\begin{aligned}
+\text{twin/quadruplet}
+&\to
+\text{real Casimir response};\\
+\text{triplet chirality}
+&\to
+\text{imaginary Casimir response}.
+\end{aligned}
+}
+$$
+
+这是一个可检验的 prime–zero selection rule。
+
+---
+

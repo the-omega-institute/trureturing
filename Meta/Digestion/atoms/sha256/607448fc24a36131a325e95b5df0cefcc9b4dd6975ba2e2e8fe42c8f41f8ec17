@@ -1,0 +1,50 @@
+## 217. 两个跳跃位置构成互补 Beatty 分拆
+
+长跳位置满足：
+
+$$
+\boxed{
+\varepsilon_v=1
+\iff
+v=\lfloor n\varphi\rfloor-1
+\quad
+\text{对某个 }n\ge1.
+}
+$$
+
+短跳位置满足：
+
+$$
+\boxed{
+\varepsilon_v=0
+\iff
+v=\lfloor n\varphi^2\rfloor-1
+\quad
+\text{对某个 }n\ge1.
+}
+$$
+
+因此所有自然步被严格分为两个无限集合：
+
+$$
+\{\lfloor n\varphi\rfloor-1\}
+\quad\sqcup\quad
+\{\lfloor n\varphi^2\rfloor-1\}.
+$$
+
+这里没有谁“最后结束”。
+
+两类都无限延伸，却又无重叠、无遗漏。
+
+这就是：
+
+$$
+\boxed{
+\text{无限中的奇偶不是终点分类，}
+\quad
+\text{而是两个互补共尾线程}.
+}
+$$
+
+---
+

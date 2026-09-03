@@ -1,0 +1,20 @@
+## 402. 全局问题是 odd channel 能否被共同激活
+
+每个离线轨道局部都可能有负方向。
+
+但所有评价值必须来自同一个 entire Fourier–Laplace transform。
+
+所以：
+
+$$
+\boxed{
+\text{局部存在负方向}
+\not\Rightarrow
+\text{存在全局受控负测试函数}.
+}
+$$
+
+这就是全体零点的 transform coupling。
+
+---
+

@@ -1,0 +1,20 @@
+## 408. 有限差相对宇称
+
+```lean
+def relativeParity (A B : Set Prime) : ZMod 2 :=
+  Fintype.card (A △ B) % 2
+```
+
+在有限对称差前件下证明：
+
+```lean
+theorem relativeParity_cocycle
+    (hAB : (A △ B).Finite)
+    (hBC : (B △ C).Finite) :
+    relativeParity A B +
+      relativeParity B C =
+        relativeParity A C
+```
+
+---
+

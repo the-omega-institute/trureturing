@@ -1,0 +1,60 @@
+## 382. 结果 sector 的离散傅立叶反演
+
+定义：
+
+$$
+E_r^{(m)}(s)
+=
+\sum_{\Omega(n)\equiv r\pmod m}
+n^{-s}.
+$$
+
+根单位滤子给出：
+
+$$
+\boxed{
+E_r^{(m)}(s)
+=
+\frac1m
+\sum_{j=0}^{m-1}
+\omega_m^{-rj}
+\mathcal Z_j^{(m)}(s).
+}
+$$
+
+反过来：
+
+$$
+\boxed{
+\mathcal Z_j^{(m)}(s)
+=
+\sum_{r=0}^{m-1}
+\omega_m^{jr}
+E_r^{(m)}(s).
+}
+$$
+
+因此有两种完全不同但互补的组合：
+
+$$
+\boxed{
+\sum_rE_r^{(m)}=\zeta(s),
+}
+$$
+
+而：
+
+$$
+\boxed{
+\prod_j\mathcal Z_j^{(m)}=\zeta(ms).
+}
+$$
+
+第一条是结果分类的直和。
+
+第二条是观察角色的范数。
+
+这就是“所有名合起来成为全部”的严格傅立叶版本。
+
+---
+

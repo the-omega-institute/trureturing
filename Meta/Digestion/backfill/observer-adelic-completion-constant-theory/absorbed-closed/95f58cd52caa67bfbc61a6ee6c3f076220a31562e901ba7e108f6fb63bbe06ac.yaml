@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:95f58cd52caa67bfbc61a6ee6c3f076220a31562e901ba7e108f6fb63bbe06ac
+  normalized_sha256: sha256:95f58cd52caa67bfbc61a6ee6c3f076220a31562e901ba7e108f6fb63bbe06ac
+cas_ref: sha256:95f58cd52caa67bfbc61a6ee6c3f076220a31562e901ba7e108f6fb63bbe06ac
+coverage_gids:
+  - D5/S3/Weil/PrimeAddress/FinitePrimePhaseRecurrence.finite_prime_phase_recurrence
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/PrimeAddress/FinitePrimePhaseRecurrence.finite_prime_phase_recurrence
+      source_sha256: sha256:95f58cd52caa67bfbc61a6ee6c3f076220a31562e901ba7e108f6fb63bbe06ac
+      target_statement_id: sha256:8db8dea0fa0da85cc1b1ec545237b34cad71856812e4f229c53f518e6a3c7e10
+  scribe:
+    - gid: D5/S3/Weil/PrimeAddress/FinitePrimePhaseRecurrence.finite_prime_phase_recurrence
+      definition_sha256: sha256:f797b23695f0880fcb2f5ac5249ff35446e28f929ea40c32ebd5ee101931a87f
+      emission_sha256: sha256:86cb967793aa7260079ac7adfbfe6b72cf0090c63101c038da5b31c1eaf1a6c5
+  unresolved_subitems: []

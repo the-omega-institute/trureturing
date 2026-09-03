@@ -1,0 +1,38 @@
+## 302. 非同义反复的算子判据
+
+这与“从零点定义一个对角算子”不同。
+
+这里顺序是：
+
+$$
+\boxed{
+\xi\text{ 的局部 Taylor 系数}
+\longrightarrow
+(p_n)
+\longrightarrow
+L
+\longrightarrow
+J_\xi.
+}
+$$
+
+没有先输入零点位置。
+
+所以一个真正可推进的 RH 路线是：
+
+1. 从 \(\xi\) 系数形式化构造 \(p_n\)；
+2. 证明全部 Hausdorff 矩阵正性；
+3. GNS 得到 \(0\le J_\xi\le I\)；
+4. 用 resolvent identity 恢复 \(\mathcal X\)；
+5. 推出全部 \(q\)-零点位于 \([1/4,\infty)\)。
+
+困难被转化成：
+
+$$
+\boxed{
+\text{证明一个由 }\xi\text{ 系数定义的无限矩序列完全单调}.
+}
+$$
+
+---
+

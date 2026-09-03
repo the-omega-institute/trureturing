@@ -1,0 +1,47 @@
+## 265. 一个必须保留的反例
+
+黄金跳跃词：
+
+$$
+\varepsilon_v
+=
+1,0,1,1,0,1,0,1,1,\ldots
+$$
+
+包含：
+
+$$
+1,1
+$$
+
+和更一般的相同连续符号。
+
+若直接映射：
+
+$$
+0\mapsto2,
+\qquad
+1\mapsto4,
+$$
+
+就会产生连续相同 gap，例如：
+
+$$
+4,4.
+$$
+
+但此前的模 \(3\) 构型定理说明，对只含 \(2,4\) gaps 的最稠密构型，连续相同 gap 会使三个连续 offsets 覆盖全部模 \(3\) residue，从而 inadmissible。
+
+所以：
+
+$$
+\boxed{
+\text{黄金 Sturmian jump word}
+\neq
+\text{literal prime-gap word}.
+}
+$$
+
+黄金比例可以：
+
+* 调度观察深度；
