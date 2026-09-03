@@ -54,7 +54,14 @@ theorem even_iterate_completes_readout
     (system : InvolutiveReadoutSystem State Readout)
     (state : State) {steps : ℕ} (heven : Even steps) :
     system.readout ((system.step^[steps]) state) = system.readout state := by
-  rw [readout_iterate, system.flip_involutive.iterate_even heven]
+  calc
+    system.readout ((system.step^[steps]) state) =
+        (system.flip^[steps]) (system.readout state) :=
+      readout_iterate system state steps
+    _ = id (system.readout state) :=
+      congrFun (system.flip_involutive.iterate_even heven)
+        (system.readout state)
+    _ = system.readout state := rfl
 
 /-- An odd number of flips leaves the readout on the opposite involutive sheet. -/
 theorem odd_iterate_flips_readout
@@ -63,7 +70,13 @@ theorem odd_iterate_flips_readout
     (state : State) {steps : ℕ} (hodd : Odd steps) :
     system.readout ((system.step^[steps]) state) =
       system.flip (system.readout state) := by
-  rw [readout_iterate, system.flip_involutive.iterate_odd hodd]
+  calc
+    system.readout ((system.step^[steps]) state) =
+        (system.flip^[steps]) (system.readout state) :=
+      readout_iterate system state steps
+    _ = system.flip (system.readout state) :=
+      congrFun (system.flip_involutive.iterate_odd hodd)
+        (system.readout state)
 
 /-- If the current readout is not fixed by the involution, every odd iterate is
 visibly different from the starting readout. -/
