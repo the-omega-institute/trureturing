@@ -3,7 +3,7 @@
    mirror-B: none(waiver:new-observer-library-node)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: A readout flipped by an involution is broken at odd iterates and completed at even iterates. -/
+   digest: Involutive readouts break at odd iterates and complete at even iterates. -/
 
 import Mathlib.Algebra.Ring.Parity
 import Mathlib.Logic.Function.Iterate
@@ -44,7 +44,9 @@ theorem readout_iterate
             ((system.flip^[steps]) (system.readout state)) := by
               rw [ih]
         _ = (system.flip^[steps + 1]) (system.readout state) := by
-              rw [Function.iterate_succ_apply']
+              simpa [Nat.succ_eq_add_one] using
+                (Function.iterate_succ_apply'
+                  (f := system.flip) steps (system.readout state)).symm
 
 /-- An even number of flips restores the visible readout. -/
 theorem even_iterate_completes_readout
