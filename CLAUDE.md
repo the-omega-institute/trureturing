@@ -96,6 +96,13 @@ docs/theory(参考输入)──摄入机器──► Lean(唯一真源)◄──
 *成熟锚*:预登记(preregistration,临床试验/心理学复制危机的解法)、过拟合与泛化之别(统计学习)、不可约误差 vs 可约误差(Bayes error)、边际收益递减、法不溯及既往、多目标优化之 Pareto 前沿、利益回避递进制。
 〔守护:**软(罗盘)+硬锚**·八条所锚定理是 kernel 冻结的硬真值(SL-008),引用名机械可查;「思考时是否用了」不可 lint,靠对手官评审、第 12 条尸检与反思循环;硬投影=前视承诺与结算两条已有既存机器(六元组第六项、预测留底、GoalArtifact 判据)〕
 
+**5‴. 觉得贵,先查数据;查完是真贵就照做,不降质;没查清不开干(用户 2026-09-03 定)。**
+「感觉成本很高」是一个信号,不是一个读数。它触发的唯一合法动作是**再查一次**,而且查的对象必须是**数据**——仓内的实测计数、diff 规模、日志、判词原文——不是上下文里的记忆或前几轮的结论:记忆是被前一次判断筛过的,它只会把你带回同一个感觉。查完只有两种结果:①**确实贵**——那就按原质量做,**成本不是降质的理由**(不缩范围、不跳测试、不绕门、不留垫层;第 4 条不冒领、第 6 条禁垫层、第 20 条检测不降级在此全部有效);②**不是贵,是形态错**——改形态,再量一次。**没查清之前不开干**:在感觉与数据对齐之前动手,要么白做,要么做出一个便宜的错东西;两者都比多花十分钟量一次贵。
+**本库判例(2026-09-03)**:L2「coverage 边归一」按面板决策把 backfill 条目的键 `coverage_gids` 改名为 `coverage`,导致重写全部 20,529 个条目,两次在合并窗口与并发 cover 写入撞车(dev 约每 12 分钟合入一个 PR);orchestrator 据上下文记忆把这当作「schema 迁移必有的代价」继续推进,直到 owner 问「主要需要做什么要重写 2 万条?」。一条 `git grep` 给出答案:dev 上 **21,257** 个条目中 **19,688** 个是 `coverage_gids: []`,只有 **1,569** 个真有边——93% 的重写只是删掉一行空列表,是**命名选择**而非迁移必然。键名不改、只把元素由字符串换成 `{gid, target_statement_id}` 之后,空列表条目字节零改动,迁移面缩为 1,569 个文件。**成本感是对的,归因是错的;归因只能靠数据纠正。**
+**反面即病(如何自查)**:①见到自己写「这本来就要这么多」「迁移就是这样」而手边没有一个数;②见到自己为一个贵的形态设计补偿机制(分批、重试、抢窗口)而没先问「贵在哪一项、那一项是不是必须」——第Ⅵ节买椟还珠的另一入口;③见到自己用「上一轮面板/席位已经定了」代替重新测量——面板定的是当时读数下的形态,读数变了形态就该重估(第 5″ 条追加目标不改旧结算,但允许在新读数下开新结算)。
+*成熟锚*:实事求是(第Ⅵ节)、先测量再优化(measure before you optimize)、Amdahl 定律(先找真正占大头的那一项)、前提核对(premise check)、根因分析而非症状缓解、Toyota 的「现地现物」(去现场看实物,不在会议室里推断)。
+〔守护:**软 + 硬投影**·「觉得贵时有没有去量」不可 lint,靠对手官评审与第 12 条尸检;硬投影=凡以「成本高」为由改变计划(拆层、改序、缩规模、加补偿机制)的 PR 说明或 issue 评论,**必须附该成本的实测读数与采集命令**(第Ⅵ节计数须带索引/窗口/口径),只写「很大 / 很慢 / 很多」者按第Ⅵ节禁模糊措辞判无效〕
+
 ---
 
 ## Ⅱ. 坐标系不动点 —— 结构的形状
@@ -145,10 +152,12 @@ backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 
 **两 PR 律、预登记 formalization 收据及其机器已退役(owner 2026-09-02:边即数据,不记动作)。**
 
+**coverage 边 schema 的 L2 三步迁移(owner 2026-09-03 定)**:持久化键名始终为 `coverage_gids`;旧形元素是 GID 字符串,新形元素是 `{gid,target_statement_id}` 对象(`target_statement_id` 可为 `null`),空列表两形逐字节相同。**L2a expand(本 PR)** 同时在 candidate 与 protected-base 读取面按元素类型严格识别两形,将旧 `coverage_gids` 及可选 `receipts.coverage` 投影为新边,writer 只写对象形,并暂留一次性 `migrate-digestion-coverage` 工具;**L2b migrate** 只迁移非空旧形条目,空 `coverage_gids: []` 条目零字节改动;**L2c contract** 在迁移清零后删除 candidate/base 旧形投影、迁移器、CLI 动词及迁移专用测试,loader 只接受对象形。L2a 的双读是有终点的 schema expand,不是永久兼容层;未完成 L2c 即迁移未收口。
+
 **冻结态与消化态是两个正交状态机,禁互相冒充**:
 - **冻结态(真值侧,二值)**:`Golden/Frozen/accepted/` 中存在该 `statement_id` 的 `Freeze` 事件 ⟺ 已冻结,**永不解冻**(第〇节冻结律;SL-008 append-only diff 守卫)。在 commit `572cd43587f120a379cf83871b68c249be36cd5e` 实测 3,013 条,`event_type` 全为 `Freeze`、`schema_version` 全为 5;payload 承重四项(以 writer 为准):`statement_id`(节点身份)、`declaration_statement_ids`、`descriptor_selector`(指回 `.lean` 路径)、`prerequisite_frozen_node_ids`——**末项就是真值 DAG 的边**,不是元数据。
 - **消化态(账目侧,三值)**:`residual-open`(尚无 GID 覆盖)/ `partial-closed`(子项部分覆盖)/ `absorbed-closed`(覆盖 GID 与 coverage 数据齐备)。在 commit `572cd43587f120a379cf83871b68c249be36cd5e` 实测 18,234 / 127 / 1,201,atom CAS 19,581,source 28(27 卷 md + 1 个 `.jsonl` 注册表)。
-- **两者不同构,故是两句话**:定理已冻结 **⇏** 其 atom 已 `absorbed-closed`(还差 cover 那一步);atom `absorbed-closed` **⟹** 其 `coverage_gids` 所指声明已冻结。汇报与 PR 说明里把"冻结了"写成"消化了"(或反之)即第 4 条冒领。
+- **两者不同构,故是两句话**:定理已冻结 **⇏** 其 atom 已 `absorbed-closed`(还差 cover 那一步);atom `absorbed-closed` **⟹** 其 `coverage_gids[].gid` 所指声明已冻结。汇报与 PR 说明里把"冻结了"写成"消化了"(或反之)即第 4 条冒领。
 
 **每个理论 PR 的说明须写清三项(承第 9′ 条产地,不另立格式)**:①**形态**(deposit / cover / deposit+cover / ingest);②**链上这一环**——哪个 `source_id` 的哪个 `atom_id` → 哪个 GID;③**落地后的状态**——冻结事件的 `event_hash`(deposit),或 atom 由哪态迁到哪态(cover)。判据是"读者能否据此在链上定位这次改动",不是"提没提这几个词"。
 

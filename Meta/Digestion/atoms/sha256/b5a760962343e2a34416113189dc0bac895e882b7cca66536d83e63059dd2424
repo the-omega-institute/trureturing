@@ -1,0 +1,1 @@
+**可证伪预测(写在跑之前)**:若正确,证明为冻结 `offLineNonrealZero_yields_negative_weil_square Z n hOff (zeroData_im_ne_zero Z n)` 一行,标准三公理。

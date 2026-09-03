@@ -1,0 +1,67 @@
+# 第两千零六部　奇偶本身并不强迫黄金比例
+
+自然的素数 parity transfer 是：
+
+$$
+\begin{pmatrix}
+a&b\\
+b&a
+\end{pmatrix}.
+$$
+
+它的本征方向是：
+
+$$
+(1,1),
+\qquad
+(1,-1).
+$$
+
+这是 Hadamard 宇称结构，不是 Fibonacci 结构。
+
+所以：
+
+$$
+\boxed{
+\text{纯奇偶只产生 }\pm\text{ 分解，
+不会自动产生 }\varphi.
+}
+$$
+
+黄金比例需要额外结构，例如：
+
+1. 禁止连续两次选择同一分支；
+2. 一步记忆的 Fibonacci grammar；
+3. 一个 observer state 的范数塌缩为 \(0\)，但与 global state 的交叉关系仍被规范成 \(1\)；
+4. 由此产生普适 Pick 单胞：
+
+   $$
+   \begin{pmatrix}
+   1&1\\
+   1&0
+   \end{pmatrix}.
+   $$
+
+所以正确依赖顺序是：
+
+$$
+\boxed{
+\text{宇称}
+\longrightarrow
+\text{偶／奇两个关系通道}
+\longrightarrow
+\text{某一通道发生内部饱和失败}
+\longrightarrow
+\text{Fibonacci 正规形}
+\longrightarrow
+\varphi.
+}
+\tag{2006.1}
+$$
+
+黄金不是奇偶本身。
+
+黄金是奇偶关系第一次无法保持正兼容时的规范谱。
+
+---
+

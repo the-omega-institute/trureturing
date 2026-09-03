@@ -1,0 +1,64 @@
+## 213. 三条此前的推导现在已经进入内核
+
+仓库目前已经分别闭合：
+
+第一，黄金 Euler 指数满足 Beatty 闭式：
+
+$$
+\beta(v)
+=
+\left\lfloor\frac{v+1}{\varphi}\right\rfloor
++
+v\varphi,
+$$
+
+而且下一步跳跃只可能是：
+
+$$
+\varphi
+\quad\text{或}\quad
+\varphi^2,
+$$
+
+具体由 \(v+1\) 的 Zeckendorf 最小指标奇偶决定。
+
+第二，第三阶黄金 germ 中的两个 reciprocal ζ 因子，在
+
+$$
+z_2=\frac1{2\varphi^2},
+\qquad
+z_3=\frac1{2\varphi^3}
+$$
+
+确实产生 meromorphic order 恰为 \(+1\) 的两个简单结构零，而不是 totalization 造成的假零。
+
+第三，对单调增长的闭子空间塔 \(V_\alpha\)，若残余定义为：
+
+$$
+R_\alpha=V_\alpha^\perp,
+$$
+
+则在极限阶段：
+
+$$
+\boxed{
+R_\lambda
+=
+\bigcap_{\alpha<\lambda}R_\alpha.
+}
+$$
+
+也就是极限残余恰为全部前驱残余的交。
+
+这三条合起来，允许我们第一次严格讨论：
+
+$$
+\boxed{
+\text{有限层始终有逃逸}
+\quad\text{但}\quad
+\text{极限层是否仍有真实残余}.
+}
+$$
+
+---
+

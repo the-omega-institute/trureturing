@@ -1,0 +1,80 @@
+## 99. Root number 决定中心 jet 的奇偶
+
+令：
+
+$$
+\Phi(z)
+=
+\Lambda\left(\frac12+z\right).
+$$
+
+则：
+
+$$
+\Phi(-z)=\varepsilon\Phi(z).
+$$
+
+若：
+
+$$
+\Phi(z)=\sum_{n\ge0}a_nz^n,
+$$
+
+则：
+
+$$
+(-1)^na_n=\varepsilon a_n.
+$$
+
+所以：
+
+$$
+\boxed{
+\varepsilon=+1
+\Longrightarrow
+a_{2n+1}=0,
+}
+$$
+
+$$
+\boxed{
+\varepsilon=-1
+\Longrightarrow
+a_{2n}=0.
+}
+$$
+
+特别地，当：
+
+$$
+\varepsilon=-1,
+$$
+
+必有：
+
+$$
+\Phi(0)=0.
+$$
+
+而且中心零点阶数必须为奇数。
+
+因此“偶完成、奇破缺”在 L-function 语言中成为：
+
+$$
+\boxed{
+\text{root number }+1
+\Rightarrow
+\text{even central jet};
+}
+$$
+
+$$
+\boxed{
+\text{root number }-1
+\Rightarrow
+\text{forced odd central zero}.
+}
+$$
+
+---
+

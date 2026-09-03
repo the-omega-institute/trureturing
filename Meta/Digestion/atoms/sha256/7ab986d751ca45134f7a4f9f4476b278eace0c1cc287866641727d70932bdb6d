@@ -1,0 +1,39 @@
+## 384. 第二层宇称：占据次数
+
+对于一个能量 \(E\)，hard-core 占据给出：
+
+$$
+\frac{\zeta(Es)}{\zeta(2Es)}.
+$$
+
+因子 \(2\) 来自：
+
+$$
+0/1
+$$
+
+有限占据与重复占据排斥。
+
+因此项目中的两层宇称是：
+
+$$
+\boxed{
+\begin{aligned}
+\epsilon_{\mathrm{index}}
+&:\text{选择 }E=\varphi\text{ 或 }\varphi^2;\\
+\epsilon_{\mathrm{occupancy}}
+&:\text{选择 }E\text{ 或 }2E.
+\end{aligned}
+}
+$$
+
+它们组合成：
+
+$$
+C_2\times C_2
+$$
+
+式的双宇称账本。
+
+---
+

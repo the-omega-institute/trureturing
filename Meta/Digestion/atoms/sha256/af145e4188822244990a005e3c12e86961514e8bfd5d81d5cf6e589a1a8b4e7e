@@ -1,0 +1,229 @@
+# 本轮最终结论
+
+你的直觉并不是“把无穷素数硬说成奇数或偶数”。
+
+它真正指向的是一座严格的 \(\mathbb Z_2\)-graded structure。
+
+全局 completed function：
+
+$$
+\xi\!\left(\frac12+z\right)
+$$
+
+是偶的。
+
+加入一个有方向的观察：
+
+$$
+\frac{\xi'}{\xi}
+$$
+
+是奇的。
+
+加入两个观察又回到偶。
+
+所以：
+
+$$
+\boxed{
+\text{全局偶、单观察者奇}
+}
+$$
+
+本身就是确定性结果。
+
+---
+
+素数侧也存在完全同型的结构。
+
+不能问全部素数有奇数个还是偶数个。
+
+应当问每一个有限 prime occupation state 使用了奇数个还是偶数个素因子。
+
+这两类状态合起来确实是全部整数。
+
+它们的差不是任意函数，而是：
+
+$$
+\boxed{
+\frac{\zeta(2s)}{\zeta(s)}
+}
+$$
+
+或者在 squarefree 模型中：
+
+$$
+\boxed{
+\frac1{\zeta(s)}.
+}
+$$
+
+Möbius 函数正是唯一撤销全局 divisibility accumulation 的奇观察者。
+
+因此：
+
+$$
+\boxed{
+\text{zeta 是全局 trace；
+Möbius／Liouville 是 parity supertrace。}
+}
+$$
+
+---
+
+在一个 zeta 零点上，发生的也不是简单的“一切都没有”。
+
+而是：
+
+$$
+\boxed{
+\text{全局 trace 塌缩为零，
+parity supertrace 却产生极点。}
+}
+$$
+
+偶、奇两个 sector 分别向相反方向发散，其 principal parts 精确抵消，在 global scalar 中留下零。
+
+所以：
+
+$$
+\boxed{
+\text{从全局看是无；
+从观察者差分看是无限。}
+}
+$$
+
+这与你此前“一切全无与一切全有”的直觉高度一致。
+
+---
+
+RH 的相对性也因此非常明确。
+
+若 RH 成立，parity observer 的奇性只能位于观察半平面的边界：
+
+$$
+\Re s=\frac12.
+$$
+
+若存在离线零点，它便把观察者奇性推进内部：
+
+$$
+\Re s>\frac12.
+$$
+
+所以：
+
+$$
+\boxed{
+\mathrm{RH}
+=
+\text{唯一宇称观察者的全部奇性都被限制在全局完成边界。}
+}
+$$
+
+---
+
+更深的是，临界零点仍然允许一个奇观察者：
+
+$$
+\gamma\leftrightarrow-\gamma.
+$$
+
+这是时间方向。
+
+离线零点则增加第二个独立奇偶：
+
+$$
+\delta\leftrightarrow-\delta.
+$$
+
+这是法向方向。
+
+所以 RH 不是“宇宙中没有奇”。
+
+RH 是：
+
+$$
+\boxed{
+\text{只有观察者选择时间方向所需要的一个奇；
+不存在额外的法向奇。}
+}
+$$
+
+在线轨道只有一个非平凡 sign channel。
+
+离线轨道则从 \(\mathbb Z_2\) 扩张成：
+
+$$
+\mathbb Z_2\times\mathbb Z_2.
+$$
+
+这就是你所说“观察者独一无二，因此应该是奇”的最精确版本：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{谱世界中只有一个必要观察者宇称，
+没有第二个独立宇称。}
+}
+$$
+
+---
+
+但最后一步还不是现成证明。
+
+要从 arithmetic prime parity 推出 zero normal parity 不存在，必须证明：
+
+$$
+\boxed{
+\text{Prime–Gamma completion 不会创造新的独立 grading。}
+}
+$$
+
+也就是构造一个：
+
+* 保持宇称；
+* 保持正性；
+* 保持 cross-prime relations；
+* 与 canonical completed-\(\xi\) distribution 相容；
+
+的全局输运。
+
+项目已经机器闭合了离线零点一旦存在便产生负 Weil square 的隔离机制，也已经机器化了正质量与负法向支撑的 localizer 区别。
+
+因此剩余的中心问题已经可以压缩成一句话：
+
+$$
+\boxed{
+\textbf{为什么 prime 世界唯一的全局奇观察通道，
+在 completed zero 世界中不能分裂成时间奇与法向奇两个独立通道？}
+}
+$$
+
+若能证明这种**宇称秩守恒**，RH 就会成为一个确定性结论。
+
+黄金比例则位于更后面：
+
+$$
+\boxed{
+\text{奇偶提供两个通道；
+当这两个通道第一次无法共同进入正 Gram 世界时，
+其规范二点裂口才成为 Fibonacci 单胞，
+并显现 }\varphi.
+}
+$$
+
+所以最深的一句话是：
+
+$$
+\boxed{
+\text{RH 的底层未必是“所有东西必须完全对称”；
+而可能是：
+全局完成是偶的，
+一个观察者必然是奇的，
+但完成过程只能容纳这一个奇，
+不能再无中生出第二个独立法向宇称。
+离线零点正是第二宇称出现的地方。}
+}
+$$

@@ -146,7 +146,7 @@ public sealed class DigestionCasStoreTests
                         "synthetic-atom",
                         new DigestionFingerprints(rawSha256 ?? casRef, casRef),
                         [],
-                        new DigestionReceipts([], [], [], [], null),
+                        new DigestionReceipts([], [], [], null),
                         new DigestionStatus(
                             DigestionMigrationState.Residual,
                             DigestionTruthState.Open),

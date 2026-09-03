@@ -1,0 +1,22 @@
+### 关于 Zeckendorf 反码
+
+真正的反码不是把 \(0\) 与 \(1\) 全部取反，而是：
+
+$$
+\boxed{
+\text{相同 magnitude thread}
++
+\text{相反 sign sheet}.
+}
+$$
+
+黄金共轭本身则满足：
+
+$$
+\boxed{
+\psi^n=\varphi^{-n}e^{in\pi},
+}
+$$
+
+给出逆尺度与反相位的精确统一。
+

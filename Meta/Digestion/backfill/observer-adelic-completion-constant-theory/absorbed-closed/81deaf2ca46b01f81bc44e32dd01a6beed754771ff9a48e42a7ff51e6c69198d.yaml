@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:81deaf2ca46b01f81bc44e32dd01a6beed754771ff9a48e42a7ff51e6c69198d
+  normalized_sha256: sha256:81deaf2ca46b01f81bc44e32dd01a6beed754771ff9a48e42a7ff51e6c69198d
+cas_ref: sha256:81deaf2ca46b01f81bc44e32dd01a6beed754771ff9a48e42a7ff51e6c69198d
+coverage_gids:
+  - D5/S3/CompletionDynamics/EulerBoundaryExactDispersion.euler_boundary_exact_dispersion
+receipts:
+  coverage:
+    - gid: D5/S3/CompletionDynamics/EulerBoundaryExactDispersion.euler_boundary_exact_dispersion
+      source_sha256: sha256:81deaf2ca46b01f81bc44e32dd01a6beed754771ff9a48e42a7ff51e6c69198d
+      target_statement_id: sha256:63ab8bca5f2a919e67df8797ee286b83a8e1f975ac7788f3ae7d270fafdd1970
+  scribe:
+    - gid: D5/S3/CompletionDynamics/EulerBoundaryExactDispersion.euler_boundary_exact_dispersion
+      definition_sha256: sha256:f6fa5d5f08f217735cc51151dd2f714e13a02bdcc2e2562ad8633657959b48b6
+      emission_sha256: sha256:444ebb263c2d709116ca800fe7ff46e2aa5fc0a2cae50e466f446f8b7ffa78cf
+  unresolved_subitems: []

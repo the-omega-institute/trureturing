@@ -1,0 +1,43 @@
+## 288. 第二个结构零
+
+仓库同样证明：
+
+$$
+z_3=\frac1{2\varphi^3}
+$$
+
+也是简单结构零。
+
+其 Cayley 紧化坐标为：
+
+$$
+\boxed{
+x_3
+=
+\frac1{4z_3(1-z_3)}
+=
+\frac{7+12\varphi}{11}
+>1.
+}
+$$
+
+因此它也位于 odd-negative 双曲 sector。
+
+这进一步证明：
+
+$$
+\boxed{
+D_{\mathrm{golden}}
+=
+D_{\mathrm{coherent}}
++
+D_{\mathrm{structural}}
++
+D_{\mathrm{local}}
+}
+$$
+
+不是解释性修辞，而是解析上必须进行的 divisor 分层。
+
+---
+

@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:be296ffb5f74a4d14e894c01b9e496fb61f46c75dc5093ada916f04fc6dbc88a
+  normalized_sha256: sha256:be296ffb5f74a4d14e894c01b9e496fb61f46c75dc5093ada916f04fc6dbc88a
+cas_ref: sha256:be296ffb5f74a4d14e894c01b9e496fb61f46c75dc5093ada916f04fc6dbc88a
+coverage_gids:
+  - D5/S3/ConceptDynamics/ExperimentOptimization/MinimumCostTargetCover.minimum_cost_target_sufficient_design_iff_pair_cover
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/ExperimentOptimization/MinimumCostTargetCover.minimum_cost_target_sufficient_design_iff_pair_cover
+      source_sha256: sha256:be296ffb5f74a4d14e894c01b9e496fb61f46c75dc5093ada916f04fc6dbc88a
+      target_statement_id: sha256:06da493cc6fabadba8dad3059d3775e2849e5b70e559a8869ddeb608e5e15af4
+  scribe:
+    - gid: D5/S3/ConceptDynamics/ExperimentOptimization/MinimumCostTargetCover.minimum_cost_target_sufficient_design_iff_pair_cover
+      definition_sha256: sha256:6180fe63a26c4a50d5d409ff64154f44c273d56d11d1dddb7f8e85650277acb3
+      emission_sha256: sha256:b04597bf9786f4bf8f53cec410f5039997ed47b1f473fa281f932c4ecd75400c
+  unresolved_subitems: []

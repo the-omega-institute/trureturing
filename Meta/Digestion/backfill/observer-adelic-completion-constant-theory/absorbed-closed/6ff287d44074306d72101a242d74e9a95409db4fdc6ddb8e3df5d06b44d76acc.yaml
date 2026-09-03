@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:6ff287d44074306d72101a242d74e9a95409db4fdc6ddb8e3df5d06b44d76acc
+  normalized_sha256: sha256:6ff287d44074306d72101a242d74e9a95409db4fdc6ddb8e3df5d06b44d76acc
+cas_ref: sha256:6ff287d44074306d72101a242d74e9a95409db4fdc6ddb8e3df5d06b44d76acc
+coverage_gids:
+  - D5/S3/Weil/TestFunctions/CayleyLaguerreMomentTomography.finite_window_moment_tube
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/TestFunctions/CayleyLaguerreMomentTomography.finite_window_moment_tube
+      source_sha256: sha256:6ff287d44074306d72101a242d74e9a95409db4fdc6ddb8e3df5d06b44d76acc
+      target_statement_id: sha256:c40911bc64af54f44b0658f0a2f4ca3e69fc58e7edf7d593d9f52407317b672b
+  scribe:
+    - gid: D5/S3/Weil/TestFunctions/CayleyLaguerreMomentTomography.finite_window_moment_tube
+      definition_sha256: sha256:8fe55f32143e2fe8f962d456a07a2608ad62f3e354ad9781e1662488ed61cd4b
+      emission_sha256: sha256:7be896bd88ec5d85eb962b56d876e6b39137550acc8efbbaccdc851360411420
+  unresolved_subitems: []

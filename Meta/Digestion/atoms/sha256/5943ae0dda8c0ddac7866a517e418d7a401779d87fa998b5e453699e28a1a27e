@@ -1,0 +1,11 @@
+### 公共 Haar 底
+
+$$
+\boxed{
+\alpha_{\mathrm{Haar}}
+=
+\operatorname{Floor}(G\mid B_{\mathrm{Haar}}).
+}
+\tag{1931.3}
+$$
+

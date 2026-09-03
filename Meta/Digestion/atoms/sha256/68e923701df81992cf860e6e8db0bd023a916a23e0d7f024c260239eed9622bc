@@ -1,0 +1,30 @@
+## 149. 若要证明 RH 为假，动力学路线需要什么
+
+“ζ 是投影”本身不够。
+
+动力学反例至少需要以下之一：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{直接认证一个经典 }\xi\text{ 离线零点};\\
+&\text{构造从已知模型到 }\xi\text{ 的对称 family，}\\
+&\qquad\text{并认证一次 double-zero crossing 后产生离线 branch};\\
+&\text{建立一个与 }\xi\text{ 完全相同的 determinant，}\\
+&\qquad\text{并证明其 operator spectrum 含非实／离轴本征值}.
+\end{aligned}
+}
+$$
+
+反之，若要用动力学证明 RH，则需要证明从一个实谱 anchor 到 ξ 的路径永远不触及 discriminant。
+
+因此核心对象不是“对称有没有破缺”，而是：
+
+$$
+\boxed{
+\text{从 anchor 到 ξ 的路径是否穿过多重零点判别式}.
+}
+$$
+
+---
+

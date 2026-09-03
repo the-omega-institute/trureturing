@@ -1,0 +1,57 @@
+## 113. Singular series 对构型 chirality 完全盲
+
+对任意素数 \(p\)，映射：
+
+$$
+x\longmapsto D-x
+$$
+
+是 \(\mathbb Z/p\mathbb Z\) 上的双射，所以：
+
+$$
+\nu_p(H^\vee)=\nu_p(H).
+$$
+
+因此每个 Hardy–Littlewood 局部因子满足：
+
+$$
+L_p(H^\vee)=L_p(H).
+$$
+
+从而：
+
+$$
+\boxed{
+\mathfrak S(H^\vee)
+=
+\mathfrak S(H).
+}
+$$
+
+所以奇异级数映射：
+
+$$
+\mathfrak S:\mathcal C\to\mathbb R
+$$
+
+满足：
+
+$$
+\mathfrak S(e_H^-)=0.
+$$
+
+换言之：
+
+$$
+\boxed{
+\text{singular series 因式通过构型反射商 }
+\mathcal C/\mathcal C^-.
+}
+$$
+
+它知道构型的局部 residue support 大小，却不知道构型的左右方向。
+
+这与仓库的黄金字符商极其相似：模 \(5\) 特征的乘积保留 \(\pm1\) 总值，但对 prime word 的置换不敏感；进一步的 scalar completion 还可遗忘有序 holonomy。
+
+---
+

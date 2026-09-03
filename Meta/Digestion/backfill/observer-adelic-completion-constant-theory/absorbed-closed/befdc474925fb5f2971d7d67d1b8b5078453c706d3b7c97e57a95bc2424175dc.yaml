@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:befdc474925fb5f2971d7d67d1b8b5078453c706d3b7c97e57a95bc2424175dc
+  normalized_sha256: sha256:befdc474925fb5f2971d7d67d1b8b5078453c706d3b7c97e57a95bc2424175dc
+cas_ref: sha256:befdc474925fb5f2971d7d67d1b8b5078453c706d3b7c97e57a95bc2424175dc
+coverage_gids:
+  - D5/S3/Analytic/Asymptotics/PrimeDeletedLambertMellin.prime_deleted_lambert_mellin
+receipts:
+  coverage:
+    - gid: D5/S3/Analytic/Asymptotics/PrimeDeletedLambertMellin.prime_deleted_lambert_mellin
+      source_sha256: sha256:befdc474925fb5f2971d7d67d1b8b5078453c706d3b7c97e57a95bc2424175dc
+      target_statement_id: sha256:09c89020922a69ad4fb4ca857834991cbf84dc53dfa28ab716de4b979bfba94a
+  scribe:
+    - gid: D5/S3/Analytic/Asymptotics/PrimeDeletedLambertMellin.prime_deleted_lambert_mellin
+      definition_sha256: sha256:a1d37cc81c80950ae2b963556829f7c806ededfadca6a87e615b0ec0be0cfc90
+      emission_sha256: sha256:06e5bf78970cedd9c585d97382a4d61968d4cbbb65eda367f2d3985cc640271b
+  unresolved_subitems: []

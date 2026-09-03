@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:7e71e0bb81c2d1830241b1aee3012d61c7dce41784d8ed3fdc77ddef725f1fb4
+  normalized_sha256: sha256:7e71e0bb81c2d1830241b1aee3012d61c7dce41784d8ed3fdc77ddef725f1fb4
+cas_ref: sha256:7e71e0bb81c2d1830241b1aee3012d61c7dce41784d8ed3fdc77ddef725f1fb4
+coverage_gids:
+  - D5/S3/Analytic/ZetaObservation/GlobalCodeLengthAdditivity.global_code_length_additive
+receipts:
+  coverage:
+    - gid: D5/S3/Analytic/ZetaObservation/GlobalCodeLengthAdditivity.global_code_length_additive
+      source_sha256: sha256:7e71e0bb81c2d1830241b1aee3012d61c7dce41784d8ed3fdc77ddef725f1fb4
+      target_statement_id: sha256:a6bb8e7f5edf27f08c8846ed286f9f592af0aff83bac2485dc686e2eb1e4e0f0
+  scribe:
+    - gid: D5/S3/Analytic/ZetaObservation/GlobalCodeLengthAdditivity.global_code_length_additive
+      definition_sha256: sha256:ad96b026c14370c24583a7c042981560ef1588958da305b96731003424776bd0
+      emission_sha256: sha256:d8c1ce2e36c45dacb96281ec5765995c39880c4ea3cbb8d4ab6a8964e559f8b2
+  unresolved_subitems: []

@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:3b98710fa8ff2caa0b382bdfe230d952bec8c8900f6998fceb0aad2c2c0c4fda
+  normalized_sha256: sha256:3b98710fa8ff2caa0b382bdfe230d952bec8c8900f6998fceb0aad2c2c0c4fda
+cas_ref: sha256:3b98710fa8ff2caa0b382bdfe230d952bec8c8900f6998fceb0aad2c2c0c4fda
+coverage_gids:
+  - D5/S3/Quantum/Measurements/VisibleStateSpaceDimension.visible_state_space_compact_convex_dimension
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/Measurements/VisibleStateSpaceDimension.visible_state_space_compact_convex_dimension
+      source_sha256: sha256:3b98710fa8ff2caa0b382bdfe230d952bec8c8900f6998fceb0aad2c2c0c4fda
+      target_statement_id: sha256:552a44c7b0d627b590011770e921bbdded043a15d322a0b3f51d5924ad04c766
+  scribe:
+    - gid: D5/S3/Quantum/Measurements/VisibleStateSpaceDimension.visible_state_space_compact_convex_dimension
+      definition_sha256: sha256:75ce4922c6030a9ed592ffd5c7a89131a56a97b34e1bc80bb897c56a197e039a
+      emission_sha256: sha256:bb8b17b4a1e8cfbbfe66fda194e76dccb2360949268316e238fc24dc20b5afd6
+  unresolved_subitems: []

@@ -1,0 +1,39 @@
+## 29. 两个黄金嵌入
+
+令：
+
+$$
+x=a+b\varphi
+\in
+\mathbb Z[\varphi].
+$$
+
+定义 physical embedding：
+
+$$
+\sigma_+(x)=a+b\varphi,
+$$
+
+以及 internal embedding：
+
+$$
+\sigma_-(x)=a+b\psi.
+$$
+
+得到 Minkowski 嵌入：
+
+$$
+\boxed{
+x
+\longmapsto
+\bigl(
+\sigma_+(x),\sigma_-(x)
+\bigr)
+\in\mathbb R^2.
+}
+$$
+
+仓库已经形式化了这一 physical/internal 二坐标格、窗口模型集以及标签模型集。
+
+---
+

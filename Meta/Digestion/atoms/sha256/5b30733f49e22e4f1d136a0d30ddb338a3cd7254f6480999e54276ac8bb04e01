@@ -1,0 +1,15 @@
+## 407. 无限集合宇称不可能
+
+```lean
+theorem no_bijectionInvariant_additive_parity_on_countable_sets :
+    ¬ ∃ parity : Set α → ZMod 2,
+      (∀ A B, A ≃ B → parity A = parity B) ∧
+      (∀ A B, Disjoint A B →
+        parity (A ∪ B) = parity A + parity B) ∧
+      (∀ x, parity {x} = 1)
+```
+
+实际声明需要限制在有限或可数集合 carrier，并显式提供一个可数无限 witness。
+
+---
+

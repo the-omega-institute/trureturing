@@ -1,0 +1,14 @@
+## 346. Li 范数公式
+
+```lean
+theorem li_eq_casimirJacobi_normSq
+    (n : ℕ) :
+    liCoefficient n =
+      4 * ‖
+        chebyshevU (n - 1)
+          (sqrt (1 - casimirJacobi)) Ω
+      ‖ ^ 2
+```
+
+---
+

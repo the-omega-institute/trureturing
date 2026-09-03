@@ -1,0 +1,39 @@
+## 51. 分离成本
+
+对高度窗 \(\mathscr Z_T\)，定义：
+
+$$
+\operatorname{SepCost}_{R,T}(\rho)
+=
+\inf
+\left\{
+\|g\|_{PW_R}:
+\begin{array}{l}
+\widehat g(z_\rho)=1,\\
+\widehat g(\overline z_\rho)=-1,\\
+\widehat g(z_{\rho'})=0
+\text{ for selected }\rho'\neq\rho
+\end{array}
+\right\}.
+$$
+
+如果每个有限窗都可以分离，但：
+
+$$
+\operatorname{SepCost}_{R,T}(\rho)
+\to\infty,
+$$
+
+那么：
+
+$$
+\boxed{
+\text{有限层可分离}
+\not\Rightarrow
+\text{无限层可分离}.
+}
+$$
+
+这就是对角化逃逸的一个具体解析版本：
+
+* 每个有限名字系统都能工作；

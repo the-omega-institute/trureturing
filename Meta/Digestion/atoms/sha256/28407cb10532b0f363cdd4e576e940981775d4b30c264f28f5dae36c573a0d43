@@ -1,0 +1,10 @@
+### 150.4 Mirror-pair cumulants
+
+```lean
+theorem mirrorPair_odd_cumulant_zero ...
+theorem mirrorPair_second_cumulant ...
+theorem mirrorPair_fourth_cumulant ...
+```
+
+---
+

@@ -1,0 +1,11 @@
+## 341. 结构零的黄金双曲坐标
+
+```lean
+theorem first_golden_structural_zero_cayley :
+    let s := 1 / (2 * phi ^ 2)
+    reflectionCasimirCompact s = phi ∧
+    cayley s = -(phi ^ 3)
+```
+
+---
+

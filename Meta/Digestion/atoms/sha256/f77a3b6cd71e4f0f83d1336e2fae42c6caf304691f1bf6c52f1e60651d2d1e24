@@ -1,0 +1,23 @@
+## 109. 黄金无理尺度与有限名字由同一递归连接
+
+这给出一个真正统一的图：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Zeckendorf digits}
+&\xrightarrow{\text{real embedding}}
+\sum\varepsilon_k\varphi^k;\\
+\text{Zeckendorf digits}
+&\xrightarrow{\bmod p}
+\sum\varepsilon_kF_k\bmod p;\\
+\text{residue}
+&\xrightarrow{\text{character}}
+e_p(ah).
+\end{aligned}
+}
+$$
+
+所以：
+
+* 实观察者看到黄金尺度；

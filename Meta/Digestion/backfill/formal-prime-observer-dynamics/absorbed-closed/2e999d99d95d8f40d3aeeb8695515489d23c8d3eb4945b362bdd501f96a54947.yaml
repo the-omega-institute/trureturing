@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:2e999d99d95d8f40d3aeeb8695515489d23c8d3eb4945b362bdd501f96a54947
+  normalized_sha256: sha256:2e999d99d95d8f40d3aeeb8695515489d23c8d3eb4945b362bdd501f96a54947
+cas_ref: sha256:2e999d99d95d8f40d3aeeb8695515489d23c8d3eb4945b362bdd501f96a54947
+coverage_gids:
+  - D5/S3/ConceptDynamics/Interventions/BlockCausalQuotientDecomposition.causal_equivalence_block_decomposition
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Interventions/BlockCausalQuotientDecomposition.causal_equivalence_block_decomposition
+      source_sha256: sha256:2e999d99d95d8f40d3aeeb8695515489d23c8d3eb4945b362bdd501f96a54947
+      target_statement_id: sha256:3bfa62f85b0bdf7f2810e0cb2facfcfa40fa089d3bf5cb9d5a059b677caeca49
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Interventions/BlockCausalQuotientDecomposition.causal_equivalence_block_decomposition
+      definition_sha256: sha256:046a5c1d6bffb8279dea779e8b2143931b43c9545891a31b568759acee9cc19d
+      emission_sha256: sha256:f94c3a5571f7a9e4f608007017dbd2cd19ebee630d29cef6256ce80c6877eb21
+  unresolved_subitems: []

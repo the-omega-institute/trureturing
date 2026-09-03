@@ -1,0 +1,1 @@
+**可证伪预测(写在跑之前)**:若正确,证明为冻结 `offLineZero_yields_negative_truncated_weil_square Z n T hn hOff (zeroData_im_ne_zero Z n)` 一行;若冻结定理的参数顺序或 `hIm` 类型与此不合,按冻结字面调整调用而非改陈述。

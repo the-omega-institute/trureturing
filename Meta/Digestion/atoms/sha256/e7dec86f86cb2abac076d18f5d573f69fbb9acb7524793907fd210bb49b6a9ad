@@ -1,0 +1,19 @@
+## 139. 双重 primitive decomposition
+
+理想的 correlation-completed ζ 应具有双重分解：
+
+$$
+\boxed{
+\mathfrak Z(s,\mathbf u)
+=
+\prod_p
+\prod_{[c]\in\mathcal P_p}
+\left(
+1-w_{p,c}(s,\mathbf u)
+\right)^{-1}.
+}
+$$
+
+这里：
+
+* \(p\) 标记不同局部模通道；

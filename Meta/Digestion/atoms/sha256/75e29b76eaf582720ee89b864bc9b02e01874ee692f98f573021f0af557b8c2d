@@ -1,0 +1,76 @@
+## 构型生成元也能按奇偶拆开
+
+此前定义：
+
+$$
+\mathcal K_H(\varepsilon)
+=
+\sum_{\varnothing\neq A\subseteq H}
+\kappa_A\varepsilon_A.
+$$
+
+定义源变量全反号：
+
+$$
+\varepsilon_h\mapsto-\varepsilon_h.
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal K_{\mathrm{even}}(\varepsilon)
+=
+\frac{
+\mathcal K(\varepsilon)
++
+\mathcal K(-\varepsilon)
+}{2},
+}
+$$
+
+只保留：
+
+$$
+|A|\text{ 为偶数}
+$$
+
+的构型 cumulants。
+
+而：
+
+$$
+\boxed{
+\mathcal K_{\mathrm{odd}}(\varepsilon)
+=
+\frac{
+\mathcal K(\varepsilon)
+-
+\mathcal K(-\varepsilon)
+}{2},
+}
+$$
+
+只保留：
+
+$$
+|A|\text{ 为奇数}
+$$
+
+的构型 cumulants。
+
+于是：
+
+$$
+\boxed{
+\mathcal K
+=
+\mathcal K_{\mathrm{even}}
++
+\mathcal K_{\mathrm{odd}}.
+}
+$$
+
+所以所有素数构型确实被拆成：
+
+* 偶点构型通道；

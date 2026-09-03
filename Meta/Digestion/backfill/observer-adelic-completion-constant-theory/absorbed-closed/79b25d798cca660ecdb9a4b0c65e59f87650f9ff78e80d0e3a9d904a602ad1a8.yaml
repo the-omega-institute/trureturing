@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:79b25d798cca660ecdb9a4b0c65e59f87650f9ff78e80d0e3a9d904a602ad1a8
+  normalized_sha256: sha256:79b25d798cca660ecdb9a4b0c65e59f87650f9ff78e80d0e3a9d904a602ad1a8
+cas_ref: sha256:79b25d798cca660ecdb9a4b0c65e59f87650f9ff78e80d0e3a9d904a602ad1a8
+coverage_gids:
+  - D5/S3/Weil/TestFunctions/FinitePaleyWienerInterpolation.finite_exact_paley_wiener_interpolation
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/TestFunctions/FinitePaleyWienerInterpolation.finite_exact_paley_wiener_interpolation
+      source_sha256: sha256:79b25d798cca660ecdb9a4b0c65e59f87650f9ff78e80d0e3a9d904a602ad1a8
+      target_statement_id: sha256:12a4a4b58448615678ad09e6040a69967526f34b23fe49feaa21b60310547f16
+  scribe:
+    - gid: D5/S3/Weil/TestFunctions/FinitePaleyWienerInterpolation.finite_exact_paley_wiener_interpolation
+      definition_sha256: sha256:046f591cec2c70d4d2a8d3a51901c595485d7d350875e19e0bf27028ae27c59c
+      emission_sha256: sha256:59a88082df6779f01b5dea2310e4ef1deea4a5c0b2c4caba43cc163e1c1b6063
+  unresolved_subitems: []

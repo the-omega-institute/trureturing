@@ -1,0 +1,34 @@
+## 290. 在线时 odd channel 自动消失
+
+若零点位于临界线，对应两个谱节点融合为同一个实节点。
+
+于是：
+
+$$
+a=b,
+$$
+
+从而：
+
+$$
+a_-=0.
+$$
+
+此时：
+
+$$
+Q_\rho=4m_\rho|a|^2\ge0.
+$$
+
+所以 RH 不是把负号从公式中删除，而是让负的 odd fiber 变得不可达：
+
+$$
+\boxed{
+\text{critical-line collapse}
+\Longrightarrow
+\text{odd orbit coordinate vanishes}.
+}
+$$
+
+---
+

@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:11b7d71821b58a5d01e197aa4e5936443e938b4d3b186fd2dc9348d642f07afa
+  normalized_sha256: sha256:11b7d71821b58a5d01e197aa4e5936443e938b4d3b186fd2dc9348d642f07afa
+cas_ref: sha256:11b7d71821b58a5d01e197aa4e5936443e938b4d3b186fd2dc9348d642f07afa
+coverage_gids:
+  - D5/S3/Weil/CayleyLaguerre/ChebyshevTransferTrace.chebyshev_transfer_trace
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/CayleyLaguerre/ChebyshevTransferTrace.chebyshev_transfer_trace
+      source_sha256: sha256:11b7d71821b58a5d01e197aa4e5936443e938b4d3b186fd2dc9348d642f07afa
+      target_statement_id: sha256:c80bbc75f06516df96e1b53ca66bec075ae663c0210b23dee6c199e7f9fe4fe2
+  scribe:
+    - gid: D5/S3/Weil/CayleyLaguerre/ChebyshevTransferTrace.chebyshev_transfer_trace
+      definition_sha256: sha256:613bce96ae2bdc4e1e0bfc57ac04ddbf8e730329208822b0d1bb5ee00a29438d
+      emission_sha256: sha256:4456c7afe2372e2ac1b391237561738d4c62e576e7d78dcde664660ac130b214
+  unresolved_subitems: []
