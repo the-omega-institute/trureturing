@@ -140,7 +140,7 @@ internal sealed class GoldenGermFourthOrderLedgerDocument
             F.Seq(summable, F.Sp, F.Land),
             F.Seq(
                 Fraction(F.D(1), betaSix), F.Sp, F.Lt, F.Sp,
-                Fraction(F.D(1), F.D(10)), F.Dot),
+                Fraction(F.D(1), F.D(1, 0)), F.Dot),
         ]));
     }
 
