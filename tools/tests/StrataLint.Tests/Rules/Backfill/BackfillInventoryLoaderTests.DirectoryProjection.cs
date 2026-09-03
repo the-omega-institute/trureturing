@@ -60,6 +60,55 @@ public sealed partial class BackfillInventoryLoaderTests
     }
 
     [Fact]
+    public void BaselineLegacyCoverageSchemaProjectsCoverageGidsAndReceiptTargets()
+    {
+        const string resolvedGid = "D5/S0/Carrier/Probe.resolved";
+        const string unresolvedGid = "D5/S0/Carrier/Probe.unresolved";
+        var target = "sha256:" + new string('1', 64);
+        var atom = CanonicalCoverageAtom("coverage: []");
+        var legacy = atom.Text
+            .Replace(
+                "coverage: []\n",
+                $"coverage_gids:\n  - {resolvedGid}\n  - {unresolvedGid}\n",
+                StringComparison.Ordinal)
+            .Replace(
+                "receipts:\n",
+                "receipts:\n"
+                + "  coverage:\n"
+                + $"    - gid: {resolvedGid}\n"
+                + $"      source_sha256: {atom.Text.Split("raw_sha256: ", StringSplitOptions.None)[1].Split('\n')[0]}\n"
+                + $"      target_statement_id: {target}\n"
+                + "      statement_id_history: []\n",
+                StringComparison.Ordinal);
+
+        var entry = Assert.Single(BackfillInventoryLoader.LoadBaseline(Snapshot(
+            Source("delta-v0.1", "docs/delta.md", "none"),
+            (atom.Path, legacy))).RequireDigestionEntries());
+
+        Assert.Equal(
+            [resolvedGid, unresolvedGid],
+            entry.Coverage.Select(static edge => edge.Gid).ToArray());
+        Assert.Equal(target, entry.Coverage[0].TargetStatementId);
+        Assert.Null(entry.Coverage[1].TargetStatementId);
+    }
+
+    [Fact]
+    public void BaselineLegacyCoverageSchemaRejectsAdditionalUnknownEntryKey()
+    {
+        var atom = CanonicalCoverageAtom("coverage: []");
+        var legacy = atom.Text
+            .Replace("coverage: []\n", "coverage_gids: []\n", StringComparison.Ordinal)
+            + "historical_extra: ignored-by-old-reader\n";
+
+        var exception = Assert.Throws<FormatException>(() =>
+            BackfillInventoryLoader.LoadBaseline(Snapshot(
+                Source("delta-v0.1", "docs/delta.md", "none"),
+                (atom.Path, legacy))));
+
+        Assert.Equal("source delta-v0.1 legacy entry keys are not canonical", exception.Message);
+    }
+
+    [Fact]
     public void DirectorySourceProjectsIdentityAndStaleAcknowledgments()
     {
         var source = Source("delta-v0.1", "docs/delta.md", "pzg-v1");

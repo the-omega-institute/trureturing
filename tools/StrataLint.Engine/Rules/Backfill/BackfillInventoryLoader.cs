@@ -81,18 +81,15 @@ internal sealed partial class BackfillInventoryDocument
         string sourcePath,
         string atomizer,
         object? rawEntry,
-        bool projectBaselineCoverage = false,
-        bool allowUnknownFields = false)
+        bool projectBaselineCoverage = false)
     {
         var entry = Mapping(rawEntry, $"source {sourceId} entries must be mappings");
-        if (allowUnknownFields)
+        if (projectBaselineCoverage)
         {
-            RequiredKeys(entry, EntryFieldUniverse, $"source {sourceId} entry");
+            entry = ProjectLegacyBaselineCoverage(entry, sourceId);
         }
-        else
-        {
-            ExactKeys(entry, EntryFieldUniverse, $"source {sourceId} entry");
-        }
+
+        ExactKeys(entry, EntryFieldUniverse, $"source {sourceId} entry");
 
         var atomId = Scalar(entry, "atom_id", $"source {sourceId} atom_id");
 
@@ -405,17 +402,6 @@ internal sealed partial class BackfillInventoryDocument
         }
     }
 
-    private static void RequiredKeys(
-        IReadOnlyDictionary<string, object?> mapping,
-        IReadOnlyCollection<string> required,
-        string context)
-    {
-        if (!mapping.Keys.ToHashSet(StringComparer.Ordinal).IsSupersetOf(required))
-        {
-            throw new FormatException($"{context} keys are not canonical");
-        }
-    }
-
     // 必需键必须全在;可选键可有可无,但除此以外一个多余键都不许有。
     private static void ExactKeys(
         IReadOnlyDictionary<string, object?> mapping,
@@ -625,14 +611,12 @@ internal static partial class BackfillInventoryLoader
         LoadDirectorySnapshot(
             snapshot,
             ParseBaselineSourceMetadata,
-            projectBaselineCoverage: true,
-            allowUnknownEntryFields: true);
+            projectBaselineCoverage: true);
 
     private static BackfillInventoryDocument LoadDirectorySnapshot(
         RepositorySnapshot snapshot,
         Func<string, string, ParsedSourceMetadata> parseSourceMetadata,
-        bool projectBaselineCoverage = false,
-        bool allowUnknownEntryFields = false)
+        bool projectBaselineCoverage = false)
     {
         var metadata = snapshot.Files
             .Where(static pair => pair.Key.Value.StartsWith(RootPath, StringComparison.Ordinal)
@@ -688,8 +672,7 @@ internal static partial class BackfillInventoryLoader
                     fields["path"].Single(),
                     fields["atomizer"].Single(),
                     entry,
-                    projectBaselineCoverage,
-                    allowUnknownEntryFields);
+                    projectBaselineCoverage);
                 if (projectBaselineCoverage)
                 {
                     baselineAtomIds.Add(atomId, parsedEntry.AtomId);
