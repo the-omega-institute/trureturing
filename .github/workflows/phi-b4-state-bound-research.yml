@@ -1,4 +1,4 @@
-name: phi-b4-adaptive-state-bound-research
+name: phi-b4-exact-state-bound-research
 
 on:
   push:
@@ -10,14 +10,23 @@ permissions:
   contents: read
 
 jobs:
-  cegis:
+  exact:
     runs-on: ubuntu-latest
     timeout-minutes: 75
     strategy:
       fail-fast: false
-      max-parallel: 5
+      max-parallel: 9
       matrix:
-        type0: [7, 8, 9, 10, 11]
+        include:
+          - { states: 14, type0: 7 }
+          - { states: 14, type0: 8 }
+          - { states: 14, type0: 9 }
+          - { states: 14, type0: 10 }
+          - { states: 15, type0: 7 }
+          - { states: 15, type0: 8 }
+          - { states: 15, type0: 9 }
+          - { states: 15, type0: 10 }
+          - { states: 15, type0: 11 }
     steps:
       - uses: actions/checkout@v4
       - name: Build CaDiCaL 3.0.1
@@ -29,21 +38,21 @@ jobs:
           make -j2
           sudo install -m 0755 build/cadical /usr/local/bin/cadical
           cadical --version
-      - name: Run adaptive exact typed DFAO search
+      - name: Run exact reachable-state search
         run: |
           mkdir -p result
-          python3 research/phi_b4_bounds_v2.py \
-            --states 15 \
+          python3 research/phi_b4_bounds_v3.py \
+            --states ${{ matrix.states }} \
             --type0-states ${{ matrix.type0 }} \
-            --seed 30 \
+            --seed 79 \
             --validation 1000 \
             --batch 4 \
-            --max-rounds 10 \
-            --timeout 300 \
+            --max-rounds 6 \
+            --timeout 900 \
             --solver cadical \
             --output result/result.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: phi-b4-adaptive-k15-t0-${{ matrix.type0 }}
+          name: phi-b4-exact-k${{ matrix.states }}-t0-${{ matrix.type0 }}
           path: result
