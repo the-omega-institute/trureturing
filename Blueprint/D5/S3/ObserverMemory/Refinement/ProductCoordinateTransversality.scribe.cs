@@ -40,11 +40,11 @@ internal sealed class ProductCoordinateTransversalityDocument : IScribeDocumentD
                 H("Independent coordinate moves commute"),
                 StatementSource.FromAuthor(Disp(Seq(
                     Operatorname, Grp(F.Id("localMove")),
-                    Sp, Compose, Sp,
+                    Sp, Circ, Sp,
                     Operatorname, Grp(F.Id("layerMove")),
                     Sp, Eq, Sp,
                     Operatorname, Grp(F.Id("layerMove")),
-                    Sp, Compose, Sp,
+                    Sp, Circ, Sp,
                     Operatorname, Grp(F.Id("localMove")), Dot))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
