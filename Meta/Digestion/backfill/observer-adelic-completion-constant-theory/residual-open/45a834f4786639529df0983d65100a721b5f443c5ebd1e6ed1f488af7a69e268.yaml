@@ -6,3 +6,7 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Source definitions at docs/develop/theory/OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY.md:195125-195153 introduce the unrestricted real parameter a through the two profiles and give no a != 0 hypothesis; theorem lines 195190-195215 state the overlap target |a| / sinh |a| and the corresponding Gram target. At a = 0 the stated profiles are both identically 1, so the normalized overlap is 1 and the normalized Gram determinant is 0, while |0| / sinh |0| has no ordinary real value and Lean total division makes the two displayed targets 0 and 1. Retrieval receipts: D5 patterns `Real.sinh`, `normalized overlap`, `Gram`, `harmonic probability`, and `abs/sinh` -> exact-owner miss; pinned Mathlib patterns `sinh_zero`, `sinh_ne_zero`, constant-sequence convergence, finite sums, and inner products -> hits `Real.sinh_zero`, `Real.sinh_ne_zero`, and generic APIs but harmonic-profile limit miss; third-party ecosystem -> `wait-for-capability` because the spec A17 dependency-admission predicates remain open; local construction `/private/tmp/w73a30-atom1-probe.lean` -> exit 0 with no unsolved goal, proving both endpoint disagreements."
+    reentry_condition: "A corrected source statement must either add an a != 0 hypothesis to both displayed clauses or supply corrected endpoint values at a = 0: normalized overlap 1 and normalized Gram determinant 0, with the preceding norm-limit endpoints corrected consistently."
+    blocker_class: missing-prerequisite
