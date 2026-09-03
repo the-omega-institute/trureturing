@@ -208,7 +208,7 @@ No diagonal introduced here is identified with the Riemann critical line. Such a
 
 ## 12. Formalization status and next order
 
-Completed on this branch at source level:
+Implemented on this branch as candidate source:
 
 1. canonical first-visible semantics for repository `separationTime`;
 2. exact Zeckendorf selection of `phi` versus `phi^2` golden beta gaps;
@@ -218,7 +218,7 @@ Completed on this branch at source level:
 6. faithful prime-Zeckendorf coordinates and local-factor rewrite;
 7. prime-relabeling underdetermination and a rigidity predicate.
 
-Existing reusable truth sources already cover finite observation refinement, modal superposition, temporal fiber shrinkage, finite spectral reconstruction, golden cut-and-project carriers, golden local factors, and zeta factorization.
+Each new Lean module has a matching canonical Scribe source. Existing reusable truth sources already cover finite observation refinement, modal superposition, temporal fiber shrinkage, finite spectral reconstruction, golden cut-and-project carriers, golden local factors, and zeta factorization.
 
 The next substantive research order is:
 
@@ -233,4 +233,4 @@ The first three items constitute the next hard heart. Until they are proved, the
 
 ## 13. Verification boundary
 
-The branch was written and statically audited through the GitHub connector. At the time of this note, no visible GitHub Actions run or local `make lean` result is available for the branch. The source declarations are proposed formalizations and must not be described as kernel-closed until the repository build and canonical-report checks succeed.
+The branch was written and statically audited through the GitHub connector. GitHub admission run `33736240994` has started for the current candidate head, but this note records no successful build conclusion while that run remains in progress. The source declarations are candidate formalizations and must not be described as kernel-closed until the required engineering, canonical Lean report, and protected admission checks succeed.
