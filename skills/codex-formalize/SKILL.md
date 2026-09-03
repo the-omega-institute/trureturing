@@ -150,46 +150,34 @@ Postcondition: every checklist item has evidence and none is `ASSUMED-UNVERIFIED
 
 If any checklist item cannot be evidenced, end the task as `open` with no deposit, carrying the Step 8 evidence: statement echo, search trace, failed approaches with reasons, and machine diagnostics.
 
-### 7. Deposit, verify, and cover
+### 7. Deposit, then early local feedback (cover is a separate PR)
 
 Only after Step 6 passes, run:
 
 ```sh
 make deposit ATOM_ID=<id> GID=<D5/Path/Module.theorem_name>
-make preflight
+make preflight   # early feedback only; NOT a gate (CLAUDE.md 器律②)
 ```
 
-Both commands must exit 0. Judge them only by exit code, and never pipe a judgment command: `cmd | tail -1` reports the pipe's exit status, not the command's, and three landed incidents (a merge that silently failed, a ceremony run on a stale base, a cover failure read as success) trace to exactly this. Run the command bare, or capture `$?` on the command itself before any formatting.
+`make deposit` must exit 0. `make preflight` is local early feedback: report its exit code and every rejected rule verbatim, but a nonzero local preflight does not stop the lane — the three remote required checks are the only judgment (CLAUDE.md 器律②, user 2026-08-26; ②′ push and local verification run in parallel). This macOS host has known preflight noise (Perl `C.UTF-8` locale crashes in script tests, `ENGINEERING_TEST_EVIDENCE_FAILED` without TRX, an `SL-022` observation line); stop only on a content-level red you caused (Lean error, `SL-008` frozen-surface diff, `SL-010` generality, digestion coverage), and then end as `open`. Judge them only by exit code, and never pipe a judgment command: `cmd | tail -1` reports the pipe's exit status, not the command's, and three landed incidents (a merge that silently failed, a ceremony run on a stale base, a cover failure read as success) trace to exactly this. Run the command bare, or capture `$?` on the command itself before any formatting.
 
-If `make deposit` or `make preflight` exits nonzero, stop before `cover` and end as `open`. Report the failed command and exit code, machine diagnostics, touched paths, and the actual resulting tree and commit state; `deposit` may already have produced commits before failing.
+If `make deposit` exits nonzero, end as `open`. Report the failed command and exit code, machine diagnostics, touched paths, and the actual resulting tree and commit state; `deposit` may already have produced commits before failing.
 
-To close the atom, run:
+Do NOT run `make cover` in the deposit lane. Deposit (PR-1) and cover (PR-2) are two pull requests by machine rule: `DigestionFormalizationPrecommitmentValidator` requires the formalization receipt to be base-owned before a coverage edge may be added, so a same-PR cover is rejected (`coverage pair … has no valid base-owned formalization precommitment`; CLAUDE.md 第 7′ 条, 0/178 landed deposit PRs cover in the same PR). The cover is run by the dispatcher after PR-1 is MERGED, from a fresh branch off `origin/dev`.
 
-```sh
-make cover ATOM_ID=<id> GID=<gid>
-```
-
-Before reporting commit structure, inspect:
-
-```sh
-git log --no-merges --grep='^formalize: cover'
-```
-
-Recheck the live history and report what it actually shows; do not turn this observation into a permanent rule.
-
-Postcondition: deposit and preflight exited 0, and cover either exited 0 or its failure is captured as an `open` outcome with diagnostics.
+Postcondition: deposit exited 0; preflight exit code and diagnostics reported; no cover commit in this branch.
 
 ### 8. Push and open the pull request, or report `open`
 
-After `make deposit` and `make preflight` both exit 0 and Step 7 completes, push the current branch and use the repository door:
+After `make deposit` exits 0 and Step 7 completes (local preflight reported, not gated), push the current branch and use the repository door:
 
 ```sh
 git push -u origin <branch>
-make pr-open HEAD=<branch> MESSAGE=<message-file> AUTO_MERGE=1
+make pr-open HEAD=<branch> MESSAGE=<message-file>   # deposit PRs: no AUTO_MERGE — the review triplet must return first
 # The message file's first line is the PR title; the rest is the PR body.
 ```
 
-`AUTO_MERGE=1` explicitly opts this invocation into auto-merge; without that option, the door does not arm auto-merge. After it opens the pull request, do not push further changes to that branch: the pull request may already have merged, in which case a later successful push does not put that commit on `dev`. Any further change requires a new branch and a new pull request.
+`AUTO_MERGE=1` explicitly opts an invocation into auto-merge; without that option, the door does not arm auto-merge. Deposit lanes must NOT pass it: the sshx review triplet (tests / quality / architecture) runs after the PR opens and must be able to block the merge (memory `review-must-precede-automerge`, #2337 precedent). After it opens the pull request, do not push further changes to that branch: the pull request may already have merged, in which case a later successful push does not put that commit on `dev`. Any further change requires a new branch and a new pull request.
 
 If the dispatched sandbox forbids git writes, state that constraint explicitly and hand the exact `git push` and `make pr-open` invocations above, with substituted arguments, to the caller; do not report `success` as though the work landed. Otherwise report `success` only with the opened pull request, touched paths, door-produced commit subjects, every relevant exit code, and completed fidelity-gate evidence. Or report `open`, naming the stopping step and carrying every evidence class reached; mark each unreached class not run and explain why. There is no third outcome.
 
