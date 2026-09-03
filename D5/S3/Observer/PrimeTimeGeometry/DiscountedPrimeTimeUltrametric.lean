@@ -138,15 +138,18 @@ Carrier conditions, quoted verbatim from the source volume
 **section-level standing clauses of the source**, not assumptions introduced
 here; the atom for Theorem 33.1 is a slice that does not carry them.
 
-* line 2016, immediately before Definition 33.1:
-  「为每个坐标指定正权重 \(w_i\)，定义：」
-  -- the weights are positive by the source's own definition, which is exactly
-  `hpositive : forall i, 0 < weight i`.
-* section 33 heading, immediately before both Definition 33.1 and Theorem 33.1:
-  「设 \(0<\gamma\le1\)。」
-  -- which is exactly `hgamma : gamma ∈ Set.Ioc 0 1`.
-* line 2083 restates both together:
-  「若全部权重正且 \(\gamma>0\)，则：」
+* Section 32 opens (line 2016) by assigning a positive weight to every coordinate:
+  「为每个坐标指定正权重 \\(w_i\\)，定义：」
+  Definition 33.1 reuses that same weight family, so `hpositive : forall i, 0 < weight i`
+  is that setup, not a premise introduced here.  (Note it is Section 32's opening setup,
+  with Theorems 32.1 and 32.2 in between -- it is inherited by Definition 33.1 rather
+  than standing immediately before it.)
+* Section 33's own opening clause, standing before both Definition 33.1 and Theorem 33.1:
+  「设 \\(0<\\gamma\\le1\\)。」
+  -- this is the sole source of `hgamma : gamma ∈ Set.Ioc 0 1`, and in particular the
+  only place the upper bound `gamma ≤ 1` is stated.
+* The preamble to Theorem 33.2 (line 2083) separately reiterates positive weights and the
+  lower bound only: 「若全部权重正且 \\(\\gamma>0\\)，则:」  It does not restate `gamma ≤ 1`.
 
 Honest boundary on the empty index set.  The source defines
 `d_{J,gamma}^F` as a supremum over `i ∈ J, n ≥ 0` and does not say what it
