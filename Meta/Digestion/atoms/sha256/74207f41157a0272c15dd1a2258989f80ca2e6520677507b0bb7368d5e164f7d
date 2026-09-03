@@ -1,0 +1,14 @@
+## 207. companion phase classification
+
+```lean
+theorem reflectionCompanion_phase_classification (q : ℝ) :
+    q < 0 → OrientationReversingHyperbolic (companion q) ∧
+    q = 0 → Matrix.rank (companion q) = 1 ∧
+    0 < q → q < 1 / 4 →
+      Hyperbolic (normalizedCompanion q) ∧
+    q = 1 / 4 → NontrivialJordan (companion q) ∧
+    1 / 4 < q → Elliptic (normalizedCompanion q)
+```
+
+---
+
