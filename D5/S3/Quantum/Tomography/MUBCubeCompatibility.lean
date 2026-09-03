@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Tomography/MUBCubeCompatibility
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Fixed-edge MUB completions factor through an exact cube cross-Gram identity; pointwise cubic orientation does not imply a global orientation. -/
+   digest: Fixed-edge MUB completions factor through an exact cube cross-Gram identity; local Zauner factors form a two-point swap fibre; pointwise cubic orientation does not imply a global orientation. -/
 
 import D5.S3.Quantum.Tomography.MUBHadamardCompatibility
 import Mathlib.Tactic
@@ -100,12 +100,13 @@ theorem factorizedCube_crossGram
 
 After Fourier diagonalizing the `3 × 3` circulant blocks of a `2`-circulant
 unitary, Zauner's construction decomposes the problem into three `2 × 2`
-unitaries.  For one such block
+unitaries. For one such block
 
 `M = 1/2 [[u+v, y(u-v)], [(u-v)/x, y(u+v)/x]]`,
 
-the apparent phase variables `x` and `y` already satisfy quadratic equations
-determined by the entries of `M`.  Thus the generic local fibre is discrete.
+the apparent phase variables satisfy quadratic equations determined by the
+entries of `M`. Their signs are correlated by one involution, so the generic
+local factor fibre contains exactly the original factor and its swap.
 -/
 
 /-- Polynomial form of the local Zauner parameterization. Division is cleared
@@ -120,16 +121,67 @@ structure ZaunerTwoByTwoFactor (a b c d : ℂ) where
   diff_eq : u - v = 2 * c * x
   y_sum_eq : y * (u + v) = 2 * d * x
 
+namespace ZaunerTwoByTwoFactor
+
+/-- The deck transformation that exchanges the two phase roots of one local
+Zauner factorization. -/
+def swap {a b c d : ℂ} (z : ZaunerTwoByTwoFactor a b c d) :
+    ZaunerTwoByTwoFactor a b c d where
+  u := z.v
+  v := z.u
+  x := -z.x
+  y := -z.y
+  sum_eq := by
+    simpa [add_comm] using z.sum_eq
+  y_diff_eq := by
+    calc
+      (-z.y) * (z.v - z.u) = z.y * (z.u - z.v) := by ring
+      _ = 2 * b := z.y_diff_eq
+  diff_eq := by
+    calc
+      z.v - z.u = -(z.u - z.v) := by ring
+      _ = -(2 * c * z.x) := by rw [z.diff_eq]
+      _ = 2 * c * (-z.x) := by ring
+  y_sum_eq := by
+    calc
+      (-z.y) * (z.v + z.u) = -(z.y * (z.u + z.v)) := by ring
+      _ = -(2 * d * z.x) := by rw [z.y_sum_eq]
+      _ = 2 * d * (-z.x) := by ring
+
+@[simp] theorem swap_u {a b c d : ℂ} (z : ZaunerTwoByTwoFactor a b c d) :
+    z.swap.u = z.v := rfl
+
+@[simp] theorem swap_v {a b c d : ℂ} (z : ZaunerTwoByTwoFactor a b c d) :
+    z.swap.v = z.u := rfl
+
+@[simp] theorem swap_x {a b c d : ℂ} (z : ZaunerTwoByTwoFactor a b c d) :
+    z.swap.x = -z.x := rfl
+
+@[simp] theorem swap_y {a b c d : ℂ} (z : ZaunerTwoByTwoFactor a b c d) :
+    z.swap.y = -z.y := rfl
+
+/-- The local deck transformation is an involution. -/
+@[simp] theorem swap_swap {a b c d : ℂ} (z : ZaunerTwoByTwoFactor a b c d) :
+    z.swap.swap = z := by
+  apply ZaunerTwoByTwoFactor.ext <;> rfl
+
+end ZaunerTwoByTwoFactor
+
+/-- The upper-right entry can be recovered as `b = y c x`. -/
+theorem zaunerTwoByTwo_b_eq_y_mul_c_mul_x
+    {a b c d : ℂ} (z : ZaunerTwoByTwoFactor a b c d) :
+    b = z.y * c * z.x := by
+  calc
+    b = (2 : ℂ)⁻¹ * (2 * b) := by ring
+    _ = (2 : ℂ)⁻¹ * (z.y * (z.u - z.v)) := by rw [z.y_diff_eq]
+    _ = z.y * c * z.x := by rw [z.diff_eq]; ring
+
 /-- In every local Zauner factorization, `x²` is fixed by the matrix entries:
 `c d x² = a b`. -/
 theorem zaunerTwoByTwo_x_quadratic
     {a b c d : ℂ} (z : ZaunerTwoByTwoFactor a b c d) :
     c * d * z.x ^ 2 = a * b := by
-  have hb : b = z.y * c * z.x := by
-    calc
-      b = (2 : ℂ)⁻¹ * (2 * b) := by ring
-      _ = (2 : ℂ)⁻¹ * (z.y * (z.u - z.v)) := by rw [z.y_diff_eq]
-      _ = z.y * c * z.x := by rw [z.diff_eq]; ring
+  have hb : b = z.y * c * z.x := zaunerTwoByTwo_b_eq_y_mul_c_mul_x z
   have hdy : d * z.x = a * z.y := by
     have h := z.y_sum_eq
     rw [z.sum_eq] at h
@@ -145,11 +197,7 @@ theorem zaunerTwoByTwo_x_quadratic
 theorem zaunerTwoByTwo_y_quadratic
     {a b c d : ℂ} (z : ZaunerTwoByTwoFactor a b c d) :
     a * c * z.y ^ 2 = b * d := by
-  have hb : b = z.y * c * z.x := by
-    calc
-      b = (2 : ℂ)⁻¹ * (2 * b) := by ring
-      _ = (2 : ℂ)⁻¹ * (z.y * (z.u - z.v)) := by rw [z.y_diff_eq]
-      _ = z.y * c * z.x := by rw [z.diff_eq]; ring
+  have hb : b = z.y * c * z.x := zaunerTwoByTwo_b_eq_y_mul_c_mul_x z
   have hdy : d * z.x = a * z.y := by
     have h := z.y_sum_eq
     rw [z.sum_eq] at h
@@ -161,7 +209,7 @@ theorem zaunerTwoByTwo_y_quadratic
     _ = (z.y * c * z.x) * d := by ring
 
 /-- Two local factorizations of the same generic block can differ in `x` only
-by sign.  Nonvanishing of `c*d` lets us cancel the common coefficient. -/
+by sign. Nonvanishing of `c*d` lets us cancel the common coefficient. -/
 theorem zaunerTwoByTwo_x_eq_or_eq_neg
     {a b c d : ℂ}
     (z w : ZaunerTwoByTwoFactor a b c d)
@@ -186,6 +234,87 @@ theorem zaunerTwoByTwo_y_eq_or_eq_neg
       a * c * w.y ^ 2 = b * d := zaunerTwoByTwo_y_quadratic w
       _ = a * c * z.y ^ 2 := (zaunerTwoByTwo_y_quadratic z).symm
   exact (sq_eq_sq_iff_eq_or_eq_neg).mp hy2
+
+/-- On the nondegenerate locus the apparent signs of `x` and `y` are
+correlated. Every local factor is either the original factor or its swap
+`(u,v,x,y) ↦ (v,u,-x,-y)`. -/
+theorem zaunerTwoByTwo_same_or_swap
+    {a b c d : ℂ}
+    (z w : ZaunerTwoByTwoFactor a b c d)
+    (hcd : c * d ≠ 0)
+    (hzx : z.x ≠ 0) :
+    w = z ∨ w = z.swap := by
+  have hc : c ≠ 0 := by
+    intro hc
+    apply hcd
+    simp [hc]
+  have hcx : c * z.x ≠ 0 := mul_ne_zero hc hzx
+  have hbz : b = z.y * c * z.x := zaunerTwoByTwo_b_eq_y_mul_c_mul_x z
+  have hbw : b = w.y * c * w.x := zaunerTwoByTwo_b_eq_y_mul_c_mul_x w
+  have hsum : w.u + w.v = z.u + z.v := by
+    calc
+      w.u + w.v = 2 * a := w.sum_eq
+      _ = z.u + z.v := z.sum_eq.symm
+  rcases zaunerTwoByTwo_x_eq_or_eq_neg z w hcd with hx | hx
+  · have hy : w.y = z.y := by
+      apply mul_right_cancel₀ hcx
+      calc
+        w.y * (c * z.x) = w.y * c * w.x := by rw [hx]; ring
+        _ = b := hbw.symm
+        _ = z.y * c * z.x := hbz
+        _ = z.y * (c * z.x) := by ring
+    have hdiff : w.u - w.v = z.u - z.v := by
+      calc
+        w.u - w.v = 2 * c * w.x := w.diff_eq
+        _ = 2 * c * z.x := by rw [hx]
+        _ = z.u - z.v := z.diff_eq.symm
+    have hu : w.u = z.u := by
+      calc
+        w.u = (2 : ℂ)⁻¹ * ((w.u + w.v) + (w.u - w.v)) := by ring
+        _ = (2 : ℂ)⁻¹ * ((z.u + z.v) + (z.u - z.v)) := by rw [hsum, hdiff]
+        _ = z.u := by ring
+    have hv : w.v = z.v := by
+      calc
+        w.v = (2 : ℂ)⁻¹ * ((w.u + w.v) - (w.u - w.v)) := by ring
+        _ = (2 : ℂ)⁻¹ * ((z.u + z.v) - (z.u - z.v)) := by rw [hsum, hdiff]
+        _ = z.v := by ring
+    left
+    apply ZaunerTwoByTwoFactor.ext
+    · exact hu
+    · exact hv
+    · exact hx
+    · exact hy
+  · have hnegY : -w.y = z.y := by
+      apply mul_right_cancel₀ hcx
+      calc
+        (-w.y) * (c * z.x) = w.y * c * (-z.x) := by ring
+        _ = w.y * c * w.x := by rw [hx]
+        _ = b := hbw.symm
+        _ = z.y * c * z.x := hbz
+        _ = z.y * (c * z.x) := by ring
+    have hy : w.y = -z.y := (neg_eq_iff_eq_neg).mp hnegY
+    have hdiff : w.u - w.v = -(z.u - z.v) := by
+      calc
+        w.u - w.v = 2 * c * w.x := w.diff_eq
+        _ = 2 * c * (-z.x) := by rw [hx]
+        _ = -(2 * c * z.x) := by ring
+        _ = -(z.u - z.v) := by rw [z.diff_eq]
+    have hu : w.u = z.v := by
+      calc
+        w.u = (2 : ℂ)⁻¹ * ((w.u + w.v) + (w.u - w.v)) := by ring
+        _ = (2 : ℂ)⁻¹ * ((z.u + z.v) - (z.u - z.v)) := by rw [hsum, hdiff]; ring
+        _ = z.v := by ring
+    have hv : w.v = z.u := by
+      calc
+        w.v = (2 : ℂ)⁻¹ * ((w.u + w.v) - (w.u - w.v)) := by ring
+        _ = (2 : ℂ)⁻¹ * ((z.u + z.v) + (z.u - z.v)) := by rw [hsum, hdiff]; ring
+        _ = z.u := by ring
+    right
+    apply ZaunerTwoByTwoFactor.ext
+    · simpa using hu
+    · simpa using hv
+    · simpa using hx
+    · simpa using hy
 
 /-! ## Orientation logic boundary
 
@@ -241,10 +370,12 @@ theorem pointwise_product_zero_of_global_sum_product_zero
 
 #print axioms factorizedCube_crossGram_apply
 #print axioms factorizedCube_crossGram
+#print axioms ZaunerTwoByTwoFactor.swap_swap
 #print axioms zaunerTwoByTwo_x_quadratic
 #print axioms zaunerTwoByTwo_y_quadratic
 #print axioms zaunerTwoByTwo_x_eq_or_eq_neg
 #print axioms zaunerTwoByTwo_y_eq_or_eq_neg
+#print axioms zaunerTwoByTwo_same_or_swap
 #print axioms pointwise_product_zero_does_not_force_global_orientation
 #print axioms pointwise_product_zero_of_global_sum_product_zero
 
