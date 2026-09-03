@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:719df9db8601ec5a05c0753b2e2882f8893423ad24ffd2f885babe117bb8dd8d
+  normalized_sha256: sha256:719df9db8601ec5a05c0753b2e2882f8893423ad24ffd2f885babe117bb8dd8d
+cas_ref: sha256:719df9db8601ec5a05c0753b2e2882f8893423ad24ffd2f885babe117bb8dd8d
+coverage_gids:
+  - gid: D5/S3/Analytic/ZetaEntropyPlane/PrimeRelativeDensityEvidenceDivergence.prime_relative_density_does_not_determine_evidence_summability
+    target_statement_id: sha256:01caa8f1dcfbef30cc3bbaa6ccc0bc308f6249f6da8375791e50555b8843b008
+receipts:
+  scribe:
+    - gid: D5/S3/Analytic/ZetaEntropyPlane/PrimeRelativeDensityEvidenceDivergence.prime_relative_density_does_not_determine_evidence_summability
+      definition_sha256: sha256:4afb12fe467cfeddf5f6ded04308f2c6aff971eb7f1394559edc3432276afc61
+      emission_sha256: sha256:bcfde78b2094f8149cb07826b5182cad17c943f3b1c8b11bcc5d7baf977b4a76
+  unresolved_subitems: []
+  chain_atoms:
+    - 029a05b28f2c075f7d3929087566cf899de8636ea096a376d603276a406e4c42
+    - 8d21426abb7513ec0e0ce1da981dfcb70eccfa0c8d56f1452470eceb1c6f7409
+    - 5a4e80589c7317174e001e1e1accb06044f58536e9b6d7382b7242b12ba1f049
