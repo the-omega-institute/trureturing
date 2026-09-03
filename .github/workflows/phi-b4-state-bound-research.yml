@@ -1,9 +1,9 @@
-name: phi-b4-adaptive-state-bound-research
+name: phi-b4-k16-candidate-research
 
 on:
   push:
     branches:
-      - agent/research/phi-b4-state-bounds-20260903
+      - agent/research/phi-b4-k16-candidates-20260903
   workflow_dispatch:
 
 permissions:
@@ -15,35 +15,35 @@ jobs:
     timeout-minutes: 75
     strategy:
       fail-fast: false
-      max-parallel: 5
+      max-parallel: 6
       matrix:
-        type0: [7, 8, 9, 10, 11]
+        type0: [8, 9, 10, 11, 12, 13]
     steps:
       - uses: actions/checkout@v4
-      - name: Build CaDiCaL 3.0.1
+      - name: Build Kissat 4.0.4
         run: |
-          git clone --depth 1 --branch rel-3.0.1 \
-            https://github.com/arminbiere/cadical.git /tmp/cadical
-          cd /tmp/cadical
+          git clone --depth 1 --branch rel-4.0.4 \
+            https://github.com/arminbiere/kissat.git /tmp/kissat
+          cd /tmp/kissat
           ./configure
           make -j2
-          sudo install -m 0755 build/cadical /usr/local/bin/cadical
-          cadical --version
-      - name: Run adaptive exact typed DFAO search
+          sudo install -m 0755 build/kissat /usr/local/bin/kissat
+          kissat --version
+      - name: Search exact 16-state typed candidates
         run: |
           mkdir -p result
           python3 research/phi_b4_bounds_v2.py \
-            --states 15 \
+            --states 16 \
             --type0-states ${{ matrix.type0 }} \
             --seed 30 \
-            --validation 1000 \
+            --validation 10000 \
             --batch 4 \
             --max-rounds 10 \
             --timeout 300 \
-            --solver cadical \
+            --solver kissat \
             --output result/result.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: phi-b4-adaptive-k15-t0-${{ matrix.type0 }}
+          name: phi-b4-k16-t0-${{ matrix.type0 }}
           path: result
