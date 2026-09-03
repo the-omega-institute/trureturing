@@ -1,0 +1,23 @@
+### \(q<0\)
+
+$$
+t>2.
+$$
+
+两个本征值为正实 reciprocal pair，是正向双曲相。
+
+若 \(q\notin\mathbb R\)，则一般形成 complex loxodromic reciprocal pair。
+
+所以：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{全部零点轨道块 }M(q_\rho)
+\text{ 均处于实椭圆相}.
+}
+$$
+
+---
+

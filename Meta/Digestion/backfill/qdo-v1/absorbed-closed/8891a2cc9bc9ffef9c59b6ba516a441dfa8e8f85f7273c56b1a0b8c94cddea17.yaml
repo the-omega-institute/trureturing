@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:8891a2cc9bc9ffef9c59b6ba516a441dfa8e8f85f7273c56b1a0b8c94cddea17
 cas_ref: sha256:8891a2cc9bc9ffef9c59b6ba516a441dfa8e8f85f7273c56b1a0b8c94cddea17
 coverage_gids:
-  - D5/S3/ObserverMemory/DiagonalEscape/DiagonalCompletionEscape.diagonal_completion_escape
+  - gid: D5/S3/ObserverMemory/DiagonalEscape/DiagonalCompletionEscape.diagonal_completion_escape
+    target_statement_id: sha256:137fab7f22d0584b19ba2c6711695fedacfd3e5ed646cb94240a834866f92093
 receipts:
-  coverage:
-    - gid: D5/S3/ObserverMemory/DiagonalEscape/DiagonalCompletionEscape.diagonal_completion_escape
-      source_sha256: sha256:8891a2cc9bc9ffef9c59b6ba516a441dfa8e8f85f7273c56b1a0b8c94cddea17
-      target_statement_id: sha256:137fab7f22d0584b19ba2c6711695fedacfd3e5ed646cb94240a834866f92093
   scribe:
     - gid: D5/S3/ObserverMemory/DiagonalEscape/DiagonalCompletionEscape.diagonal_completion_escape
       definition_sha256: sha256:7dd2011316e01769cc9042ff7b64137d85f0b689dcb7747f8e4462ef9f764842

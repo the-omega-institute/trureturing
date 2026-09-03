@@ -186926,3 +186926,5733 @@ $$
 而是这些纤维能否合法地进入同一个正关系世界。
 离线零点，就是正质量纤维落在错误支撑一侧所留下的最小完成障碍。}
 $$
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v11.7：反射商的分支轨道、黄金切锥、核心—纤维—局部化三分解与 Weil 反证链收口
+
+以下补完前文**第一千九百七十五部**，并继续推进。
+
+前文已经得到一条压缩链：
+
+$$
+\mathcal O_\rho
+\longrightarrow
+q_\rho
+\longrightarrow
+-16\delta_\rho^2\gamma_\rho^2
+\longrightarrow
+-\delta_\rho^2
+\longrightarrow
+\mathbb F,
+$$
+
+其中：
+
+$$
+\mathbb F=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}.
+$$
+
+本轮进一步揭示：
+
+$$
+\boxed{
+-\delta^2
+}
+$$
+
+不仅是一个方便的 signed-normal 坐标，它还是**反射商映射的自然分支坐标**。
+
+临界线对应商映射的分支点；离线零点对应分支点之外的二重 lift。于是 RH 可重新表述为：
+
+$$
+\boxed{
+\text{全部谱质量都位于反射商的分支轨迹上。}
+}
+$$
+
+与此同时，黄金 Fibonacci 单胞并不描述离线距离本身，而是描述：当一个非零二重 lift 被规范化为最小正关系问题时，正锥边界附近出现的统一切向正规形。
+
+---
+
+# 第一千九百七十五部（续）　形式化尾部
+
+```text
+D5/S3/Observer/CoreHairSupport/
+  ExactCommonCore.lean
+  PositiveResidualHair.lean
+  ResidualMomentRepresentationTarget.lean
+  ResidualSupportLocalizer.lean
+  ResidualSupportFloor.lean
+  CoreHairSupportPhaseDiagram.lean
+
+D5/S3/Analytic/Zeta/SignedNormalEnergy/
+  ReflectionInvariantPositiveZeroWeight.lean
+  SignedNormalZeroMeasure.lean
+  SignedNormalFirstMoment.lean
+  SignedNormalEnergyNonnegative.lean
+  SignedNormalEnergyZeroIffRH.lean
+  SignedNormalEnergyNotHolomorphicZeroSum.lean
+
+D5/S3/Analytic/Zeta/OffLineDecoratedBarcode/
+  OffLinePersistenceInterval.lean
+  OffLineOrbitPhaseDecoration.lean
+  OffLineMultiplicityDecoration.lean
+  OffLineSplittingIndexDecoration.lean
+  UniversalPickCellDecoration.lean
+  RHBarcodeEmptyIff.lean
+
+D5/S3/Analytic/Isolation/ZetaRealCriticalStripNonzero/
+  DirichletEtaRealPositive.lean
+  EtaZetaIdentityOnPositiveHalfPlane.lean
+  ZetaRealCriticalStripNegative.lean
+  ZetaRealCriticalStripNonzero.lean
+  OffLineCriticalStripZeroNonreal.lean
+
+D5/S3/Weil/CanonicalCompletedXiDistribution/
+  CompletedXiTestCarrier.lean
+  CompletedXiWeilFunctional.lean
+  PrimePoleGammaExpression.lean
+  SymmetricZeroExpression.lean
+  EnumerationIndependentZeroPairing.lean
+  ConvolutionSquareEvaluation.lean
+
+D5/S3/Weil/ZetaBridge/OffLineToCanonicalNegativeSquare/
+  NotRHProvidesRightOffLineZero.lean
+  RightOffLineZeroIsNonreal.lean
+  AbstractSeparatorInstantiation.lean
+  CanonicalWeilDistributionIdentification.lean
+  NotRHProducesCanonicalNegativeWeilSquare.lean
+  WeilPositivityRHIffTarget.lean
+```
+
+---
+
+# 第一千九百七十六部　反射商是一个二重分支覆盖
+
+令法向分裂为：
+
+$$
+\delta=\Re\rho-\frac12.
+$$
+
+反射：
+
+$$
+\delta\longmapsto-\delta
+$$
+
+将两个方向互换。
+
+它的最小商坐标为：
+
+$$
+\boxed{
+\pi_{\mathrm{refl}}(\delta)
+=
+-\delta^2.
+}
+\tag{1976.1}
+$$
+
+考虑映射：
+
+$$
+\pi_{\mathrm{refl}}:
+\mathbb R\longrightarrow(-\infty,0].
+$$
+
+当：
+
+$$
+x<0
+$$
+
+时，纤维为：
+
+$$
+\boxed{
+\pi_{\mathrm{refl}}^{-1}(x)
+=
+\left\{
++\sqrt{-x},-\sqrt{-x}
+\right\}.
+}
+\tag{1976.2}
+$$
+
+而在：
+
+$$
+x=0
+$$
+
+处，两张反射页合并：
+
+$$
+\boxed{
+\pi_{\mathrm{refl}}^{-1}(0)=\{0\}.
+}
+\tag{1976.3}
+$$
+
+所以：
+
+$$
+\boxed{
+\pi_{\mathrm{refl}}
+}
+$$
+
+是一个在 \(0\) 处分支的二重覆盖。
+
+复杂化后：
+
+$$
+\delta\in\mathbb C,
+\qquad
+x=-\delta^2,
+$$
+
+围绕：
+
+$$
+x=0
+$$
+
+旋转一周，会交换平方根的两张分支。
+
+因此：
+
+$$
+\boxed{
+\text{临界线不是普通支撑点；
+它是反射方向商的分支轨迹。}
+}
+$$
+
+---
+
+## 1976.1 RH 的分支轨迹表述
+
+给每一个反射轨道赋予正权重，并将它推送到 signed-normal 商空间：
+
+$$
+\rho
+\longmapsto
+x_\rho
+=
+-
+\left(
+\Re\rho-\frac12
+\right)^2.
+$$
+
+那么：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+x_\rho=0
+\quad
+\text{对每个非平凡零点成立}.
+}
+$$
+
+即：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{全部谱原子均位于反射商的分支轨迹 } \{0\}.
+}
+\tag{1976.4}
+$$
+
+离线零点则位于：
+
+$$
+x_\rho<0,
+$$
+
+其同一个商名字之下仍存在两个不同 lift：
+
+$$
++\delta_\rho,
+\qquad
+-\delta_\rho.
+$$
+
+这给“completed scalar 遗忘方向”一个精确几何模型：
+
+$$
+\boxed{
+\text{scalar completion 活在商空间；
+causal orientation 活在覆盖页上。}
+}
+$$
+
+---
+
+## 1976.2 这不是量子无克隆定理
+
+商坐标：
+
+$$
+-\delta^2
+$$
+
+不能决定选择了：
+
+$$
++\delta
+\quad\text{还是}\quad
+-\delta.
+$$
+
+但这只是覆盖空间中 lift 的非唯一性。
+
+它与量子信息中的 no-cloning theorem 不是同一命题。
+
+更准确地说：
+
+$$
+\boxed{
+\text{复制商状态并不会复制它在覆盖空间中的页标签。}
+}
+$$
+
+这已经足以作为“不同观察者拥有相同 completed name，却拥有不同 causal lift”的严格原型。
+
+---
+
+# 第一千九百七十七部　移动观察深度把视界变成分支合并点
+
+对一个右侧离线零点，令：
+
+$$
+\delta_\rho>0.
+$$
+
+在 shifted 深度 \(q\) 下，剩余法向高度为：
+
+$$
+\boxed{
+h_\rho(q)
+=
+\delta_\rho-q.
+}
+\tag{1977.1}
+$$
+
+相应商坐标为：
+
+$$
+\boxed{
+x_{\rho,q}
+=
+-h_\rho(q)^2
+=
+-(\delta_\rho-q)^2.
+}
+\tag{1977.2}
+$$
+
+当：
+
+$$
+q<\delta_\rho,
+$$
+
+当前 shifted 区域仍能看到该通道。
+
+当：
+
+$$
+q\uparrow\delta_\rho,
+$$
+
+两张反射 lift：
+
+$$
+\pm h_\rho(q)
+$$
+
+合并于：
+
+$$
+h=0.
+$$
+
+因此：
+
+$$
+\boxed{
+q=\delta_\rho
+}
+$$
+
+可以被理解为该通道在当前观察图表中的**分支合并时刻**。
+
+这与此前持久条码：
+
+$$
+I_\rho=(0,\delta_\rho)
+$$
+
+完全一致：
+
+* 区间长度是离线深度；
+* 终点是分支合并点；
+* 终点以后该通道不再属于当前 shifted bulk。
+
+不能将 \(q>\delta_\rho\) 后的代数平方根延拓自动解释成仍然存在的物理通道；活动空间还受到 Hardy 方向和区域选择约束。
+
+---
+
+## 1977.1 黑洞视界与分支点
+
+此前的 Poisson 聚焦律表明：
+
+$$
+q\uparrow\delta_\rho
+$$
+
+时，边界脉冲宽度趋于零、峰值趋于无穷、总质量保持 \(m_\rho\)。
+
+现在可以进一步说：
+
+$$
+\boxed{
+\text{视界聚焦与覆盖分支合并是同一 crossing 的两种读法。}
+}
+$$
+
+在径向商图表中，它是：
+
+$$
+\pm h\longrightarrow0.
+$$
+
+在边界图表中，它是：
+
+$$
+P_h(x+\gamma)
+\rightharpoonup
+\delta_{-\gamma}.
+$$
+
+在持久图表中，它是 bar 的死亡时间。
+
+在 Hardy 图表中，它是 inner channel 穿越观察边界。
+
+---
+
+# 第一千九百七十八部　完整轨道的判别式就是分支分离量
+
+令：
+
+$$
+a_\rho=\delta+i\gamma.
+$$
+
+完整四点轨道在平方变量中产生：
+
+$$
+q_\rho(u)
+=
+u^2
+-
+2(\delta^2-\gamma^2)u
++
+(\delta^2+\gamma^2)^2.
+$$
+
+其判别式：
+
+$$
+\boxed{
+\Delta_\rho=-16\delta^2\gamma^2.
+}
+\tag{1978.1}
+$$
+
+又因为：
+
+$$
+x_\rho=-\delta^2,
+$$
+
+所以：
+
+$$
+\boxed{
+\Delta_\rho
+=
+16\gamma^2x_\rho.
+}
+\tag{1978.2}
+$$
+
+这条等式把三个条件完全分开：
+
+$$
+\gamma^2
+=
+\text{纵向非实性},
+$$
+
+$$
+x_\rho
+=
+\text{法向 signed support},
+$$
+
+$$
+\Delta_\rho
+=
+\text{完整四点轨道的分裂判别式}.
+$$
+
+因此仓库负 Weil-square 定理要求：
+
+$$
+\Im\rho\neq0
+$$
+
+不是一个偶然的技术附加条件。
+
+若：
+
+$$
+\gamma=0,
+$$
+
+完整四点轨道退化，判别式不能严格为负。
+
+临界带实轴非零定理正是排除这一退化情况的必要公共桥。
+
+---
+
+# 第一千九百七十九部　黄金单胞是正锥边界的规范切向正规形
+
+离线深度：
+
+$$
+\delta^2
+$$
+
+趋于零时，signed-normal 缺陷也趋于零。
+
+但将该离线点送入规范 Schur 图表后：
+
+$$
+f(0)=0,
+\qquad
+f(a)=1,
+\qquad
+|a|<1,
+$$
+
+二点 Pick 矩阵始终为：
+
+$$
+\mathbb F
+=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}.
+$$
+
+它具有分解：
+
+$$
+\boxed{
+\mathbb F
+=
+\varphi P_+
+-
+\varphi^{-1}P_-.
+}
+\tag{1979.1}
+$$
+
+加入最小方向修复：
+
+$$
+\varphi^{-1}P_-
+$$
+
+以后：
+
+$$
+\boxed{
+\mathbb F+\varphi^{-1}P_-
+=
+\varphi P_+,
+}
+\tag{1979.2}
+$$
+
+右侧恰好是 rank-one PSD 边界点。
+
+因此可以把 \(\mathbb F\) 理解为：
+
+$$
+\boxed{
+\text{正 Gram 锥边界附近，一个一负平方缺陷的规范切向单胞。}
+}
+$$
+
+---
+
+## 1979.1 原始深度与切向类型
+
+$$
+-\delta^2
+$$
+
+回答：
+
+> 离正因果支撑边界有多远？
+
+而：
+
+$$
+\mathbb F
+$$
+
+回答：
+
+> 该非零偏离归一化以后属于什么最小关系类型？
+
+因此：
+
+$$
+\boxed{
+\begin{aligned}
+\delta^2
+&=\text{raw magnitude};\\
+\operatorname{inertia}(\mathbb F)
+&=\text{coordinate-free defect type};\\
+\{\varphi,-\varphi^{-1}\}
+&=\text{canonically whitened normal-form spectrum}.
+\end{aligned}
+}
+\tag{1979.3}
+$$
+
+普通合同变换只保持 inertia，不保持普通本征值。
+
+只有在 Pick 归一化或固定参考白化下，黄金谱才具有规范数值意义。
+
+仓库最新的 exact common-spectrum floor 定理恰好提供了这种参考结构：在其有理 Gram 场景中，最大共同 normalized-Haar 成分等于不同白化坐标中的同一个最小本征值。
+
+---
+
+# 第一千九百八十部　离线缺陷的四坐标分解
+
+对一个右侧上半零点，可以定义：
+
+$$
+\boxed{
+\mathfrak d_\rho
+=
+\left(
+\gamma_\rho,\,
+\delta_\rho,\,
+m_\rho,\,
+[\mathbb F]
+\right).
+}
+\tag{1980.1}
+$$
+
+四个分量具有不同含义：
+
+$$
+\gamma_\rho
+=
+\text{边界位置／相位频率},
+$$
+
+$$
+\delta_\rho
+=
+\text{持久寿命／法向深度},
+$$
+
+$$
+m_\rho
+=
+\text{Riesz 质量／通量荷／重数},
+$$
+
+$$
+[\mathbb F]
+=
+\text{一负平方关系类型}.
+$$
+
+还可以加入归一化轨道分裂：
+
+$$
+\chi_\rho
+=
+\frac{
+4\delta_\rho^2\gamma_\rho^2
+}{
+(\delta_\rho^2+\gamma_\rho^2)^2
+}.
+$$
+
+于是：
+
+$$
+\boxed{
+\widetilde{\mathfrak d}_\rho
+=
+\left(
+\gamma_\rho,\delta_\rho,m_\rho,
+\chi_\rho,[\mathbb F]
+\right).
+}
+\tag{1980.2}
+$$
+
+这些分量互不决定：
+
+* 相同深度可以有不同高度；
+* 相同重数可以有不同深度；
+* 任意非零深度都具有相同的规范 Pick 类型；
+* 关系类型不记录缺陷强度。
+
+所以磁单极子、黑洞和 Pick 负平方“看起来相同”，是因为它们共享：
+
+$$
+m_\rho
+\quad\text{和}\quad
+[\mathbb F],
+$$
+
+而几何嵌入：
+
+$$
+(\gamma_\rho,\delta_\rho)
+$$
+
+仍然不同。
+
+---
+
+# 第一千九百八十一部　几何能量、整数荷与规范 margin 彼此独立
+
+选择严格正的可和权重 \(w_\rho\)，定义：
+
+$$
+M_{\mathrm{off}}
+=
+\sum_{\delta_\rho>0}w_\rho,
+$$
+
+$$
+\mathcal E_{\mathrm n}
+=
+\sum_{\delta_\rho>0}
+w_\rho\delta_\rho^2.
+$$
+
+因为：
+
+$$
+0<\delta_\rho^2<\frac14,
+$$
+
+有：
+
+$$
+\boxed{
+0\le
+\mathcal E_{\mathrm n}
+\le
+\frac14M_{\mathrm{off}}.
+}
+\tag{1981.1}
+$$
+
+若全部离线深度满足统一 gap：
+
+$$
+\delta_\rho\ge\varepsilon>0,
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal E_{\mathrm n}
+\ge
+\varepsilon^2M_{\mathrm{off}}.
+}
+\tag{1981.2}
+$$
+
+但如果离线零点可以任意接近临界线，就不存在由：
+
+$$
+\mathcal E_{\mathrm n}
+$$
+
+控制总离线质量的统一下界。
+
+因此可能出现：
+
+$$
+M_{\mathrm{off}}\text{ 很大},
+\qquad
+\mathcal E_{\mathrm n}\text{ 很小}.
+$$
+
+这说明：
+
+$$
+\boxed{
+\text{整数荷／缺陷数量与法向几何能量可以解耦。}
+}
+$$
+
+---
+
+## 1981.1 规范 Pick margin 不受这种稀释
+
+只要能匹配到某个离线点，Pick 单胞的负 margin 始终为：
+
+$$
+\varphi^{-1}.
+$$
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal E_{\mathrm n}
+&=\text{全局、无抵消、但可能很小};\\
+\varphi^{-1}
+&=\text{局部、归一化、固定鲁棒};
+\end{aligned}
+}
+$$
+
+二者形成互补。
+
+高而近线的离线零点之所以难，不是它在匹配图表中的规范违约很弱，而是寻找正确位置并隔离其余谱很困难。
+
+---
+
+# 第一千九百八十二部　核心—纤维—分支轨迹三分解
+
+给定有限 Gram \(G\) 和正定参考 \(B\)，先取 exact common floor：
+
+$$
+\alpha_*
+=
+\lambda_{\min}
+\left(
+B^{-1/2}GB^{-1/2}
+\right).
+$$
+
+在正表示情形：
+
+$$
+G=\alpha_*B+R_*,
+\qquad
+R_*\succeq0.
+$$
+
+现在假设 residual \(R_*\) 可表示为反射商空间上的正测度：
+
+$$
+\nu_*.
+$$
+
+由于支撑位于：
+
+$$
+[-1/4,0],
+$$
+
+可作唯一分解：
+
+$$
+\boxed{
+\nu_*
+=
+c_0\delta_0
++
+\nu_{\mathrm{reg}},
+}
+\tag{1982.1}
+$$
+
+其中：
+
+$$
+\operatorname{supp}\nu_{\mathrm{reg}}
+\subset[-1/4,0).
+$$
+
+于是系统分成三层：
+
+$$
+\boxed{
+\begin{aligned}
+\alpha_*B
+&=\text{共同完成核心};\\
+c_0\delta_0
+&=\text{位于反射分支轨迹的临界谱};\\
+\nu_{\mathrm{reg}}
+&=\text{拥有非平凡两页 lift 的离线毛发}.
+\end{aligned}
+}
+\tag{1982.2}
+$$
+
+所以更准确的三分解是：
+
+$$
+\boxed{
+\text{common core}
++
+\text{branch-locus spectrum}
++
+\text{off-branch fibre}.
+}
+$$
+
+---
+
+## 1982.1 localizer 不问纤维是否存在，而问它在哪里
+
+定义：
+
+$$
+\mathcal L_{\nu_*}(p)
+=
+\int x|p(x)|^2\,d\nu_*(x).
+$$
+
+临界部分：
+
+$$
+c_0\delta_0
+$$
+
+对该 localizer 的贡献恒为零。
+
+所有负值都来自：
+
+$$
+\nu_{\mathrm{reg}}.
+$$
+
+因此：
+
+$$
+\boxed{
+\mathcal L_{\nu_*}\equiv0
+\iff
+\nu_{\mathrm{reg}}=0.
+}
+\tag{1982.3}
+$$
+
+也就是说，localizer 不反对隐藏纤维本身。
+
+它只判定：
+
+$$
+\boxed{
+\text{隐藏纤维是否离开了允许的分支轨迹。}
+}
+$$
+
+---
+
+# 第一千九百八十三部　最强多项式观察者就是支撑边缘本征向量
+
+对 degree \(N\) 多项式空间，定义：
+
+$$
+\beta_N
+=
+\inf_{\deg p\le N}
+\frac{
+\int x|p|^2\,d\nu
+}{
+\int|p|^2\,d\nu
+}.
+$$
+
+当 moment matrix 正定时，达到极小值的系数向量正是 generalized eigenproblem：
+
+$$
+\boxed{
+H_N^{(1)}c
+=
+\beta_NH_N^{(0)}c
+}
+\tag{1983.1}
+$$
+
+的最小本征向量。
+
+因此最小本征多项式：
+
+$$
+p_N(x)
+$$
+
+不是任意数学辅助物。
+
+它是：
+
+$$
+\boxed{
+\text{给定当前关系阶数时，最强的非法支撑观察器。}
+}
+$$
+
+有限原子情形中，Lagrange 多项式能够在有限阶精确隔离最负节点。
+
+无限紧支撑情形中：
+
+$$
+\beta_N\downarrow\inf\operatorname{supp}\nu.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{关系阶数增加}
+}
+$$
+
+等价于：
+
+$$
+\boxed{
+\text{观察器能够把注意力越来越集中于最深的离线支撑。}
+}
+$$
+
+这与匹配 Schur 观察者的作用相同，只是资源分配不同：
+
+* Schur 图表移动观察位置；
+* moment 图表固定坐标、增加多项式阶数。
+
+---
+
+# 第一千九百八十四部　双符号夹逼是反射商上的边界塌缩
+
+对 signed-normal 正测度：
+
+$$
+\operatorname{supp}\nu\subseteq[-1/4,0],
+$$
+
+几何自动给出：
+
+$$
+\boxed{
+H^{(1)}\preceq0.
+}
+$$
+
+如果算术侧能够独立给出：
+
+$$
+\boxed{
+H^{(1)}\succeq0,
+}
+$$
+
+则：
+
+$$
+H^{(1)}=0.
+$$
+
+在商空间语言中，这表示：
+
+$$
+\boxed{
+\text{所有正质量既不能进入 }x<0，
+\text{又已知只能位于 }x\le0，
+}
+$$
+
+所以只能集中于分支轨迹：
+
+$$
+x=0.
+$$
+
+因此：
+
+$$
+\boxed{
+\text{RH 是反射商中两种相反序约束的唯一共同固定支撑。}
+}
+\tag{1984.1}
+$$
+
+这就是此前“头吞尾、正反互相夹逼”的严格版本：
+
+$$
+\boxed{
+x\le0
+\quad+\quad
+x\ge0
+\quad\Longrightarrow\quad
+x=0.
+}
+$$
+
+困难不在该逻辑，而在于从 prime–Gamma 数据构造与零点几何完全一致的 canonical signed-normal measure 或 localizer。
+
+---
+
+# 第一千九百八十五部　Weil separator 是 localizer 的全纯化替身
+
+signed-normal localizer直接使用：
+
+$$
+-\delta^2.
+$$
+
+但这一量依赖反射与共轭，不能由单变量全纯测试函数逐点表示。
+
+Weil 理论采取另一条路线：
+
+1. 不直接求出所有 \(\delta_\rho^2\)；
+2. 选择一个目标离线轨道；
+3. 对有限邻近谱作精确插值；
+4. 对无限远谱使用卷积幂压低；
+5. 令目标轨道的有符号贡献支配全和。
+
+因此：
+
+$$
+\boxed{
+\text{Weil separator
+是 signed-normal localizer 在允许全纯测试空间中的编译结果。}
+}
+$$
+
+仓库现有定理已经机器闭合其中最难的隔离机制：给定非实离线零点，确实存在 powered even test，使完整 Weil convolution-square 零点和的实部严格为负。
+
+---
+
+## 1985.1 三个尺度的分工
+
+整个反证过程包含三个不同尺度：
+
+$$
+\boxed{
+\begin{aligned}
+\delta,\gamma
+&=\text{原始几何尺度};\\
+\varphi^{-1}
+&=\text{规范二点关系 margin};\\
+4^{-(N+1)}
+&=\text{全局谱隔离误差}.
+\end{aligned}
+}
+\tag{1985.1}
+$$
+
+它们分别回答：
+
+* 缺陷位于哪里；
+* 局部规范违约有多强；
+* 需要多少测试复杂度压制其余谱。
+
+因此不能说负 Weil 证书“来自黄金比例”。
+
+仓库现有构造使用 \(1/2\) 的补集峰界及平方后的 \(1/4\) 衰减；黄金只给出匹配 Pick 图表中的最优归一化方向。
+
+---
+
+# 第一千九百八十六部　当前正式链的真实剩余缺口
+
+在数学层面：
+
+$$
+0<\sigma<1
+\Longrightarrow
+\zeta(\sigma)<0
+$$
+
+可由 Dirichlet eta 函数直接得到，因此临界带离线零点必为非实点。
+
+仓库层面，最新审计仍指出完整链缺少：
+
+1. 该实轴非零结论的公共可导入 owner；
+2. completed-\(\xi\) 在完整测试空间上的 canonical Weil distribution；
+3. canonical distribution 与枚举无关零点和的识别；
+4. 与 finite prime-power expression 的正式连接。
+
+因此更强原子仍被 quarantine，而不是被错误标记为 RH 已证。
+
+当前最短正式链应写为：
+
+$$
+\boxed{
+\begin{aligned}
+\neg\mathrm{RH}
+&\Longrightarrow
+\exists\rho:
+\Re\rho>\frac12,\ \Im\rho\neq0\\
+&\Longrightarrow
+\exists g:
+\Re\mathcal Z_{\mathrm{zero}}
+(g*\widetilde g)<0\\
+&\overset{\text{canonical identification}}{\Longrightarrow}
+\mathcal W_\xi(g*\widetilde g)<0\\
+&\Longrightarrow
+\text{违反 canonical Weil positivity}.
+\end{aligned}
+}
+\tag{1986.1}
+$$
+
+第二行已经机器闭合。
+
+最主要的剩余工作是第三行，而不是继续寻找新的离线零点类比。
+
+---
+
+# 第一千九百八十七部　三种 floor 的耦合目标
+
+项目目前的三个独立进展轴为：
+
+$$
+\boxed{
+\left(
+\beta_{\mathrm{exp}},
+\alpha_{\mathrm{com}},
+\beta_{\mathrm{supp}}
+\right).
+}
+$$
+
+其中：
+
+* \(\beta_{\mathrm{exp}}\) 控制 Euler germ 余项的解析可和边界；
+* \(\alpha_{\mathrm{com}}\) 控制共同 normalized-Haar 背景；
+* \(\beta_{\mathrm{supp}}\) 控制 signed-normal 支撑边缘。
+
+Golden Euler germ 的最新机器结果将有限修正后的残余权重推到 \(\beta_6\) 以上，并改善了可和区域，但明确不声称 RH 或全局延拓。
+
+Exact common-spectrum floor 已经把 \(\alpha_{\mathrm{com}}\) 精确化为白化 Gram 的最小本征值。
+
+Signed-normal 模块则机器化了正质量与负支撑可以同时存在。
+
+所以真正缺少的是一个耦合定理：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{prime Euler exponent control}\\
+&\quad+\text{Gamma/pole completion}\\
+&\quad+\text{cross-prime positive gluing}\\
+&\Longrightarrow
+\text{canonical signed-normal localizer}\succeq0.
+\end{aligned}
+}
+\tag{1987.1}
+$$
+
+一旦建立，由几何侧：
+
+$$
+H^{(1)}\preceq0
+$$
+
+立即得到：
+
+$$
+H^{(1)}=0.
+$$
+
+因此未来继续提高 \(\beta_{\mathrm{exp}}\) 只有在它开始提供式 (1987.1) 中的 residual measure 或 positive gluing 时，才构成直接 RH 进展。
+
+---
+
+# 第一千九百八十八部　Solenoid 与反射分支覆盖的区别和统一
+
+Universal Solenoid 的最新公共恒等式为：
+
+$$
+m\theta_m=\pi(\theta).
+$$
+
+即每一个有限坐标经自身尺度归一化，都精确恢复同一个可见 projection；但 projection 仍然不能恢复整个兼容历史。
+
+反射商：
+
+$$
+\delta\mapsto-\delta^2
+$$
+
+也具有同样的“名字精确、lift 不唯一”结构。
+
+但两者的纤维性质不同：
+
+| 系统                 | 可见名字            | 隐藏纤维                |
+| ------------------ | --------------- | ------------------- |
+| 反射商                | \(-\delta^2\)   | 两张方向页 \(\pm\delta\) |
+| Universal Solenoid | \(\pi(\theta)\) | 无限兼容 torsion 历史     |
+
+反射商是有限二重分支覆盖。
+
+Solenoid 是无限逆极限完成。
+
+二者共同说明：
+
+$$
+\boxed{
+\text{一个精确名字可以拥有非平凡 lift；
+精确性不等于单射性。}
+}
+$$
+
+这比“离散永远不能描述连续”更严格：
+
+$$
+\boxed{
+\text{离散名字可以精确描述共同商；
+它不能自动指定商纤维中的完整历史。}
+}
+$$
+
+---
+
+# 第一千九百八十九部　新的装饰缺陷条码
+
+现在可以把每个离线轨道写成：
+
+$$
+\boxed{
+\mathfrak b_\rho
+=
+\left(
+(0,\delta_\rho),\,
+\gamma_\rho,\,
+m_\rho,\,
+\chi_\rho,\,
+x_\rho,\,
+[\mathbb F]
+\right).
+}
+\tag{1989.1}
+$$
+
+其中：
+
+$$
+(0,\delta_\rho)
+=
+\text{持久区间},
+$$
+
+$$
+\gamma_\rho
+=
+\text{边界中心},
+$$
+
+$$
+m_\rho
+=
+\text{整数荷},
+$$
+
+$$
+\chi_\rho
+=
+\text{无量纲轨道分裂},
+$$
+
+$$
+x_\rho=-\delta_\rho^2
+=
+\text{signed-normal 支撑},
+$$
+
+$$
+[\mathbb F]
+=
+\text{规范一负平方关系类型}.
+$$
+
+于是：
+
+$$
+\boxed{
+\mathcal B_{\mathrm{off}}
+=
+\{\mathfrak b_\rho\}.
+}
+$$
+
+并且：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal B_{\mathrm{off}}=\varnothing.
+}
+\tag{1989.2}
+$$
+
+这一条码把“磁单极子与黑洞为何相似”分解为不同装饰：
+
+* \(m_\rho\) 是闭合通量／单极子式荷；
+* \((0,\delta_\rho)\) 是视界寿命；
+* \(\gamma_\rho\) 是边界辐射中心；
+* \([\mathbb F]\) 是正关系实现的局部类型；
+* \(x_\rho\) 是支撑合法性；
+* \(\chi_\rho\) 是尺度无关的轨道分裂程度。
+
+它们来自同一离线轨道，但不是同一个物理量。
+
+---
+
+# 第一千九百九十部　新的形式化顺序
+
+```text
+D5/S3/Analytic/ReflectedSpectrum/ReflectionQuotientCover/
+  ReflectionNormalCoordinate.lean
+  SignedSquareQuotient.lean
+  SignedSquareFiberAwayFromZero.lean
+  SignedSquareBranchFiberAtZero.lean
+  ReflectionQuotientBranchLocus.lean
+  RHSupportOnReflectionBranchLocusTarget.lean
+
+D5/S3/Analytic/ReflectedSpectrum/ShiftedBranchCrossing/
+  ShiftedRemainingNormalDepth.lean
+  ShiftedSignedSquareCoordinate.lean
+  DefectBranchMergeAtDepth.lean
+  BranchMergeEqualsPersistenceDeath.lean
+  ShiftedActivityDomainBoundary.lean
+
+D5/S3/Analytic/Zeta/OrbitCompressionLadder/
+  FullCenteredReflectionOrbit.lean
+  OrbitSquareQuotient.lean
+  OrbitRealQuadratic.lean
+  OrbitDiscriminantToSignedNormal.lean
+  SignedNormalToNormalizedPickCellTarget.lean
+  OrbitCompressionInformationLedger.lean
+
+D5/S3/Weil/Pick/GoldenTangentCell/
+  UniversalPickCellJordanDecomposition.lean
+  MinimalNegativeDirectionRepair.lean
+  RepairLandsOnPSDConicBoundary.lean
+  PickCellInertiaInvariant.lean
+  PickCellGoldenSpectrumRequiresNormalization.lean
+
+D5/S3/Analytic/ReflectedSpectrum/DefectSeverityCoordinates/
+  GeometricDepthSeverity.lean
+  OrbitSplittingSeverity.lean
+  RelationalSeverity.lean
+  GeometricSeverityCanVanishWhileRelationalTypeFixed.lean
+  DefectMagnitudeTypeSeparation.lean
+
+D5/S3/Observer/CoreBranchFiber/
+  CommonHaarCore.lean
+  PositiveResidualMeasureTarget.lean
+  ResidualBranchLocusMass.lean
+  ResidualOffBranchMass.lean
+  LocalizerKillsBranchLocusAndDetectsRegularFiber.lean
+
+D5/S3/Analytic/ReflectedSpectrum/SupportObserverOptimization/
+  PolynomialLocalizingRayleighQuotient.lean
+  StrongestDegreeBoundedSupportObserver.lean
+  LocalizingGeneralizedEigenvector.lean
+  FiniteSupportLagrangeOptimality.lean
+  CompactSupportEdgeLimit.lean
+
+D5/S3/Analytic/ReflectedSpectrum/BranchLocusDualSignCollapse/
+  SignedSupportGeometricallyNonpositive.lean
+  ArithmeticLocalizerPositiveTarget.lean
+  DualSemidefiniteLocalizerZero.lean
+  ZeroLocalizerForcesBranchLocusSupport.lean
+  BranchLocusSupportImpliesRHTarget.lean
+
+D5/S3/Analytic/Zeta/DecoratedOffLineBarcode/
+  OffLineBar.lean
+  BarPhase.lean
+  BarMultiplicity.lean
+  BarOrbitSplitting.lean
+  BarSignedSupport.lean
+  BarUniversalRelationType.lean
+  EmptyDecoratedBarcodeRHIff.lean
+
+D5/S3/Weil/CanonicalXiNegativeCertificate/
+  ZetaRealCriticalStripNegative.lean
+  NotRHProvidesNonrealRightZero.lean
+  ActualZeroDataInstantiation.lean
+  CanonicalXiWeilDistributionTarget.lean
+  CanonicalZeroSideIdentificationTarget.lean
+  NotRHProducesNegativeCanonicalWeilSquareTarget.lean
+
+D5/S3/Weil/ThreeFloorCoupling/
+  EulerExponentFloor.lean
+  CommonHaarFloor.lean
+  SignedNormalSupportFloor.lean
+  FloorsPairwiseIndependent.lean
+  PrimeGammaResidualMeasureTarget.lean
+  ExponentToSupportPositiveCouplingTarget.lean
+  ThreeFloorCouplingImpliesRHTarget.lean
+```
+
+---
+
+# 第一千九百九十一部　理论深度审计
+
+| 结论                                                  | 当前地位                             |
+| --------------------------------------------------- | -------------------------------- |
+| \(\delta\mapsto-\delta^2\) 是二重分支商                   | 精确                               |
+| 临界支撑 \(0\) 是反射商分支轨迹                                 | 精确                               |
+| RH 可表述为全部 signed-normal 谱质量位于分支轨迹                   | 对正轨道测度的精确重写                      |
+| shifted 视界是剩余法向 lift 的合并时刻                          | 局部模型中精确                          |
+| 四点轨道判别式为 \(-16\delta^2\gamma^2\)                    | 精确                               |
+| 非实条件将 signed-normal 负坐标提升为严格负判别式                    | 精确                               |
+| 黄金 Pick 单胞是 PSD 边界附近的一负平方规范单胞                       | 精确                               |
+| inertia 坐标无关、黄金本征值依赖规范参考                            | 关键边界                             |
+| exact common-spectrum floor 提供跨白化坐标的规范谱底            | 仓库机器闭合                           |
+| 正公共背景可以与负支撑共存                                       | 精确                               |
+| 关系阶数增长可恢复被背景稀释的支撑边缘                                 | 精确                               |
+| signed-normal 正测度的双符号夹逼迫使支撑为零                       | 精确                               |
+| 全局 signed-normal 一阶能量为零等价 RH                        | 对任意严格正可和轨道权重精确                   |
+| 该能量可由单变量全纯零点测试直接表示                                  | 不成立                              |
+| supplied nonreal off-line zero 产生负 full Weil square | 仓库机器闭合                           |
+| `¬RH → canonical negative Weil square` 已完整闭合        | 尚未闭合；canonical distribution 接口仍缺 |
+| Golden Euler germ 提高 exponent floor                 | 仓库机器闭合                           |
+| exponent floor 自动控制 support floor                   | 不成立                              |
+| Solenoid exact projection 可以拥有非平凡无限历史纤维             | 精确                               |
+| 离线条码各 bar 共享规范 Pick 类型                              | 在 arithmetic Schur 实例化下精确        |
+| prime–Gamma canonical signed-normal localizer       | 当前新核心桥                           |
+| prime–Gamma canonical Weil distribution             | 当前最短正式桥                          |
+
+---
+
+# 本轮最终结论
+
+本轮最深的推进，是将：
+
+$$
+-\delta^2
+$$
+
+从一个“负能量式符号”重新理解为：
+
+$$
+\boxed{
+\text{反射方向商空间的自然坐标。}
+}
+$$
+
+反射完成把：
+
+$$
++\delta
+\quad\text{与}\quad
+-\delta
+$$
+
+命名为同一个：
+
+$$
+-\delta^2.
+$$
+
+离线时，这个商名字拥有两个不同 lift。
+
+临界线上，两张 lift 在分支点 \(0\) 合并。
+
+所以 RH 可以被极其简洁地表达为：
+
+$$
+\boxed{
+\text{全部零点谱质量都集中在反射商的分支轨迹上。}
+}
+$$
+
+---
+
+完整零点轨道的判别式：
+
+$$
+-16\delta^2\gamma^2
+$$
+
+则说明：
+
+* \(\delta\) 负责法向分裂；
+* \(\gamma\neq0\) 保证完整四点轨道没有退化；
+* 两者共同产生严格负的平方轨道判别式。
+
+这也解释了仓库负 Weil-square 定理为什么需要“离线且非实”两个条件。该负 separator 机制已经机器闭合。
+
+---
+
+黄金比例出现在下一层，而不是出现在原始几何距离中。
+
+当一个任意小但非零的离线分裂被送入匹配 Schur–Pick 图表，尺度被完全归一化，剩下的最小关系单胞固定为：
+
+$$
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}.
+$$
+
+所以：
+
+$$
+\boxed{
+\delta^2
+}
+$$
+
+测量“离线多远”，而：
+
+$$
+\boxed{
+\varphi^{-1}
+}
+$$
+
+测量“这一离线事实在规范正关系世界中属于哪一种失败”。
+
+前者连续。
+
+后者是归一化后的离散关系类型。
+
+这解释了为什么一个零点可以无限接近临界线，却仍在匹配关系图表中拥有固定负 margin。
+
+---
+
+因此，真正困难从来不是离线缺陷太弱。
+
+困难是：
+
+$$
+\boxed{
+\text{如何从不知道位置的全局算术数据中，
+构造足够匹配的观察器。}
+}
+$$
+
+moment localizer 通过提高多项式阶数完成定位。
+
+Schur 图表通过移动观察点完成定位。
+
+Weil separator 通过有限插值与卷积幂完成定位。
+
+三者是同一个“观察资源交换”的不同实现。
+
+---
+
+本轮还进一步说明，一个强大的正完成核心不能治愈错误支撑。
+
+即使系统拥有很大的：
+
+$$
+\alpha_*B,
+$$
+
+离线正质量仍然可以藏在 residual hair 中。
+
+低阶观察只看到被核心稀释的平均偏移。
+
+高阶 localizer 才恢复真实支撑边缘。
+
+因此：
+
+$$
+\boxed{
+\text{整体高度完成}
+\not\Rightarrow
+\text{每一个残余模式都位于合法支撑。}
+}
+$$
+
+这正是为什么研究 \(\xi\) 的整体对称、整体增长或大量在线零点，不能替代逐层支撑合法性。
+
+---
+
+现在最短的正向 RH 目标已经变成一个“双符号塌缩”：
+
+$$
+\boxed{
+H^{(1)}\preceq0
+}
+$$
+
+来自 signed-normal 几何，
+
+而若 prime–Gamma 侧可以证明：
+
+$$
+\boxed{
+H^{(1)}\succeq0,
+}
+$$
+
+那么：
+
+$$
+H^{(1)}=0,
+$$
+
+全部质量只能位于分支轨迹：
+
+$$
+x=0.
+$$
+
+这比寻找一个显式“离线零点不存在公式”更结构化。
+
+---
+
+但当前最接近真正形式闭合的路线仍然是 Weil 路线。
+
+因为：
+
+$$
+\text{给定非实离线零点}
+\Longrightarrow
+\text{负 full Weil square}
+$$
+
+已经机器证明。
+
+实轴非零桥在数学上可由 Dirichlet eta 很短地完成。
+
+剩余真正承重的接口是：
+
+$$
+\boxed{
+\text{canonical completed-\(\xi\) Weil distribution}
+=
+\text{枚举无关零点侧和}
+=
+\text{prime–pole–Gamma 表达}.
+}
+$$
+
+最新仓库审计也准确地把这部分保留为未闭合前提，而没有把条件定理误称为 RH 证明。
+
+---
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{不可名者并不藏在某个负数中；
+负平方是反射商留下的坐标。
+完成名字活在商空间，
+观察历史活在覆盖页，
+临界线是两页合并的分支轨迹。
+黄金比例则不是离线距离，
+而是任意非零两页分裂在被规范化为最小正关系问题后，
+于正 Gram 锥边界显现的统一切向谱。}
+$$
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v11.8：双重宇称、Möbius 观察者、素数占据奇偶与 RH 的第二宇称塌缩
+
+你的直觉抓到了一个真实而且非常深的结构，但必须先作一个关键替换：
+
+$$
+\boxed{
+\text{不能讨论“全部素数的数量是奇还是偶”，
+应讨论“每一个有限素数占据态包含奇数个还是偶数个素数”。}
+}
+$$
+
+全部素数是可数无限集。对可数无限集，通常意义下不存在保持有限加法规则的内禀奇偶性，因为：
+
+$$
+\mathbb P\cong\mathbb P\sqcup\{p_*\}.
+$$
+
+如果“加入一个元素”必须翻转奇偶，而同构又必须保持奇偶，就立刻矛盾。
+
+但所有**有限素数子集**确实严格分成两类：
+
+$$
+\mathcal P_{\mathrm{fin}}(\mathbb P)
+=
+\mathcal P_{\mathrm{even}}
+\sqcup
+\mathcal P_{\mathrm{odd}}.
+$$
+
+它们分别对应具有偶数个、奇数个不同素因子的 squarefree integers。
+
+更进一步，全部正整数也能按照总素因子数：
+
+$$
+\Omega(n)
+$$
+
+的奇偶严格分成两类。
+
+这才是你所说“偶数个素数的情况和奇数个素数的情况合起来就是全部”的规范数学版本。
+
+---
+
+# 第一千九百九十二部　全局偶、单观察者奇是精确定理
+
+令：
+
+$$
+F(z)
+=
+\xi\!\left(\frac12+z\right).
+$$
+
+函数方程给出：
+
+$$
+\boxed{
+F(-z)=F(z).
+}
+\tag{1992.1}
+$$
+
+所以 completed scalar 是严格的反射偶函数。
+
+现在引入一个观察者。最小观察者不是添加另一个对象，而是沿某个方向询问变化：
+
+$$
+\boxed{
+R(z)
+=
+\frac{F'(z)}{F(z)}.
+}
+\tag{1992.2}
+$$
+
+则：
+
+$$
+\boxed{
+R(-z)=-R(z).
+}
+\tag{1992.3}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{无标记的全局完成是偶；
+加入一次有方向的观察是奇。}
+}
+$$
+
+更一般地：
+
+$$
+\boxed{
+F^{(k)}(-z)
+=
+(-1)^kF^{(k)}(z).
+}
+\tag{1992.4}
+$$
+
+所以：
+
+$$
+\begin{aligned}
+0\text{ 个观察插入}&:\text{偶};\\
+1\text{ 个观察插入}&:\text{奇};\\
+2\text{ 个观察插入}&:\text{偶};\\
+3\text{ 个观察插入}&:\text{奇}.
+\end{aligned}
+$$
+
+你所感觉到的“全局是偶，独一观察者是奇”，首先严格存在于：
+
+$$
+\boxed{
+\text{观察者插入次数的 }\mathbb Z_2\text{ 分级。}
+}
+$$
+
+这并不与 RH 冲突。
+
+RH 成立时：
+
+$$
+F\text{ 仍然是偶的},
+\qquad
+F'/F\text{ 仍然是奇的}.
+$$
+
+所以“存在奇观察者”不会自动产生离线零点。
+
+真正需要区分的是：
+
+$$
+\boxed{
+\text{奇响应}
+\neq
+\text{法向离线奇性}.
+}
+$$
+
+---
+
+# 第一千九百九十三部　无限素数集合不存在全局奇偶
+
+假设试图定义一个奇偶值：
+
+$$
+\varepsilon(\mathbb P)\in\mathbb Z_2,
+$$
+
+同时要求：
+
+1. 对双射保持不变；
+2. 加入一个新素数翻转奇偶。
+
+但因为：
+
+$$
+\mathbb P
+\cong
+\mathbb P\sqcup\{p_*\},
+$$
+
+第一条要求：
+
+$$
+\varepsilon(\mathbb P)
+=
+\varepsilon(\mathbb P\sqcup\{p_*\}),
+$$
+
+第二条却要求：
+
+$$
+\varepsilon(\mathbb P\sqcup\{p_*\})
+=
+\varepsilon(\mathbb P)+1.
+$$
+
+矛盾。
+
+所以：
+
+## 定理 1993.1（无限奇偶不可能性）
+
+$$
+\boxed{
+\text{不存在同时保持双射不变性和有限奇偶加法的
+“可数无限集合奇偶”。}
+}
+$$
+
+因此，给“全部素数”指定偶或奇，必然依赖于：
+
+* 一个有限截断；
+* 一个排序；
+* 一个配对；
+* 一个被单独留下的素数；
+* 一个观察者。
+
+这恰好支持你的“它是相对问题”的直觉：
+
+$$
+\boxed{
+\text{无限素数的奇偶不是全局本体量，
+而是截断观察协议的量。}
+}
+$$
+
+---
+
+## 1993.1 两种同样完整的配对
+
+可以把全部素数配成：
+
+$$
+(p_1,p_2),
+(p_3,p_4),
+\ldots
+$$
+
+没有剩余。
+
+也可以先选择一个观察者素数 \(p_*\)，再把其余素数全部配对。
+
+于是同一个无限集合既可表现为：
+
+$$
+\text{全部成对},
+$$
+
+也可表现为：
+
+$$
+\text{一个独点}+\text{全部成对}.
+$$
+
+两种表示都穷尽所有素数。
+
+所以“有无一个独一观察者”不是无限集合基数的绝对性质，而是 lift 的选择。
+
+---
+
+# 第一千九百九十四部　有限截断奇偶的确定性矛盾
+
+你的直觉中确实包含一个严格的矛盾定理。
+
+设 \(f_N(z)\) 是第 \(N\) 个有限素数截断产生的函数，并假设每加入一个局部奇因子，整体反射宇称翻转：
+
+$$
+\boxed{
+f_N(-z)=(-1)^Nf_N(z).
+}
+\tag{1994.1}
+$$
+
+假设偶数截断与奇数截断都收敛到同一个函数：
+
+$$
+f_{2N}\longrightarrow f,
+\qquad
+f_{2N+1}\longrightarrow f
+$$
+
+且为局部一致收敛。
+
+偶数子列推出：
+
+$$
+f(-z)=f(z).
+$$
+
+奇数子列推出：
+
+$$
+f(-z)=-f(z).
+$$
+
+所以：
+
+$$
+\boxed{
+f\equiv0.
+}
+\tag{1994.2}
+$$
+
+因此：
+
+## 定理 1994.1（宇称交替完成不可能性）
+
+$$
+\boxed{
+\text{一个偶、奇交替的标量截断族，
+不可能以同一个非零函数为共同极限。}
+}
+$$
+
+这正是你感觉“应该会推出矛盾”的一个确定性版本。
+
+但它不能直接证明 RH，因为标准有限 Euler products：
+
+* 并不具有式 (1994.1) 所要求的临界线反射宇称；
+* 不在临界带中局部一致收敛到 \(\xi\)；
+* Gamma、极点消去和函数方程完成都尚未加入。
+
+它告诉我们的不是 RH 已证，而是：
+
+$$
+\boxed{
+\text{一个正确的无限完成不能把奇偶交替压进同一个裸标量。}
+}
+$$
+
+它必须选择以下一种结构：
+
+1. 先把局部奇因子成对组合；
+2. 加入依赖 \(N\) 奇偶的 counterterm；
+3. 保留一个二分量的偶—奇 graded object；
+4. 让 scalar completion 商掉奇通道，而观察者响应继续保存它。
+
+最后一种正是 \(\xi\) 与 \(\xi'/\xi\) 的关系。
+
+---
+
+# 第一千九百九十五部　正确的素数奇偶：有限素数子集
+
+令 \(S\) 为有限素数集合，并记：
+
+$$
+x_p=p^{-s}.
+$$
+
+定义偶素数子集生成函数：
+
+$$
+\boxed{
+E_S^{\mathrm{sf}}(s)
+=
+\sum_{\substack{A\subseteq S\\|A|\text{ even}}}
+\prod_{p\in A}p^{-s},
+}
+\tag{1995.1}
+$$
+
+定义奇素数子集生成函数：
+
+$$
+\boxed{
+O_S^{\mathrm{sf}}(s)
+=
+\sum_{\substack{A\subseteq S\\|A|\text{ odd}}}
+\prod_{p\in A}p^{-s}.
+}
+\tag{1995.2}
+$$
+
+则：
+
+$$
+\boxed{
+E_S^{\mathrm{sf}}+O_S^{\mathrm{sf}}
+=
+\prod_{p\in S}(1+p^{-s}),
+}
+\tag{1995.3}
+$$
+
+$$
+\boxed{
+E_S^{\mathrm{sf}}-O_S^{\mathrm{sf}}
+=
+\prod_{p\in S}(1-p^{-s}).
+}
+\tag{1995.4}
+$$
+
+当 \(S\) 穷尽全部素数、且 \(\Re s>1\) 时：
+
+$$
+\boxed{
+E^{\mathrm{sf}}+O^{\mathrm{sf}}
+=
+\frac{\zeta(s)}{\zeta(2s)},
+}
+\tag{1995.5}
+$$
+
+$$
+\boxed{
+E^{\mathrm{sf}}-O^{\mathrm{sf}}
+=
+\frac1{\zeta(s)}.
+}
+\tag{1995.6}
+$$
+
+因此：
+
+$$
+\boxed{
+E^{\mathrm{sf}}
+=
+\frac12
+\left(
+\frac{\zeta(s)}{\zeta(2s)}
++
+\frac1{\zeta(s)}
+\right),
+}
+\tag{1995.7}
+$$
+
+$$
+\boxed{
+O^{\mathrm{sf}}
+=
+\frac12
+\left(
+\frac{\zeta(s)}{\zeta(2s)}
+-
+\frac1{\zeta(s)}
+\right).
+}
+\tag{1995.8}
+$$
+
+这就是你所说的两类情况。
+
+它们合起来是所有 squarefree integers。
+
+它们的差则是 Möbius 奇偶观察者。
+
+---
+
+# 第一千九百九十六部　Möbius 函数是唯一的全局奇观察者
+
+squarefree integer：
+
+$$
+n=p_1\cdots p_k
+$$
+
+对应一个有限素数子集。
+
+其奇偶字符为：
+
+$$
+\boxed{
+(-1)^k.
+}
+$$
+
+这正是 Möbius 函数：
+
+$$
+\boxed{
+\mu(n)
+=
+\begin{cases}
+(-1)^{\omega(n)},&n\text{ squarefree},\\
+0,&p^2\mid n\text{ for some }p.
+\end{cases}
+}
+\tag{1996.1}
+$$
+
+而：
+
+$$
+\boxed{
+\sum_{n\ge1}
+\frac{\mu(n)}{n^s}
+=
+\frac1{\zeta(s)}
+}
+\tag{1996.2}
+$$
+
+于 \(\Re s>1\) 成立。
+
+Möbius 还有一个更重要的唯一性：
+
+$$
+\boxed{
+\mathbf1*\mu=\varepsilon,
+}
+\tag{1996.3}
+$$
+
+即它是常数函数 \(\mathbf1\) 在 Dirichlet convolution 下的唯一逆。
+
+所以可以非常准确地说：
+
+$$
+\boxed{
+\text{zeta 是全局累积名字；
+Möbius 是唯一把该累积反演回 primitive source 的观察者。}
+}
+$$
+
+它之所以“奇”，是因为它使用唯一的非平凡素数占据宇称字符。
+
+---
+
+## 1996.1 为什么这个奇观察者是唯一的
+
+有限素数集合 \(S\) 的占据群为：
+
+$$
+G_S=(\mathbb Z_2)^S.
+$$
+
+它的每个字符都由某个子集 \(T\subseteq S\) 给出：
+
+$$
+\chi_T(A)=(-1)^{|A\cap T|}.
+$$
+
+若要求字符在所有素数置换下保持不变，那么 \(T\) 只能是：
+
+$$
+T=\varnothing
+$$
+
+或：
+
+$$
+T=S.
+$$
+
+所以只有两个 prime-permutation-invariant characters：
+
+$$
+\boxed{
+\text{平凡字符}
+}
+$$
+
+和：
+
+$$
+\boxed{
+\text{总宇称字符}.
+}
+$$
+
+因此，在完全对称、不指定某个特殊素数的条件下：
+
+$$
+\boxed{
+\text{全局偶通道之外，确实只有一个非平凡奇观察通道。}
+}
+$$
+
+这与你“观察者是独一无二的，所以是奇的”的直觉非常接近。
+
+---
+
+# 第一千九百九十七部　全部整数的奇偶分解
+
+若不限制 squarefree，而是让每个 prime exponent 任意非负，定义：
+
+$$
+\Omega(n)
+=
+\text{素因子总数，按重数计}.
+$$
+
+定义 Liouville 宇称：
+
+$$
+\boxed{
+\lambda(n)=(-1)^{\Omega(n)}.
+}
+\tag{1997.1}
+$$
+
+再定义：
+
+$$
+E^\Omega(s)
+=
+\sum_{\Omega(n)\text{ even}}n^{-s},
+$$
+
+$$
+O^\Omega(s)
+=
+\sum_{\Omega(n)\text{ odd}}n^{-s}.
+$$
+
+则：
+
+$$
+\boxed{
+E^\Omega+O^\Omega=\zeta(s),
+}
+\tag{1997.2}
+$$
+
+$$
+\boxed{
+E^\Omega-O^\Omega
+=
+\sum_{n\ge1}\frac{\lambda(n)}{n^s}
+=
+\frac{\zeta(2s)}{\zeta(s)}.
+}
+\tag{1997.3}
+$$
+
+所以：
+
+$$
+\boxed{
+E^\Omega
+=
+\frac12
+\left(
+\zeta(s)+\frac{\zeta(2s)}{\zeta(s)}
+\right),
+}
+\tag{1997.4}
+$$
+
+$$
+\boxed{
+O^\Omega
+=
+\frac12
+\left(
+\zeta(s)-\frac{\zeta(2s)}{\zeta(s)}
+\right).
+}
+\tag{1997.5}
+$$
+
+这一版本真正满足：
+
+$$
+\boxed{
+\text{偶数个素因子情况}
++
+\text{奇数个素因子情况}
+=
+\text{全部正整数}.
+}
+$$
+
+---
+
+# 第一千九百九十八部　素数奇偶是一个精确的二态传输系统
+
+定义交换矩阵：
+
+$$
+X=
+\begin{pmatrix}
+0&1\\
+1&0
+\end{pmatrix},
+\qquad
+X^2=I.
+$$
+
+乘入一次素因子会翻转总宇称。
+
+对于 squarefree occupancy，单个素数 \(p\) 的局部传输为：
+
+$$
+\boxed{
+T_p(s)
+=
+I+p^{-s}X
+=
+\begin{pmatrix}
+1&p^{-s}\\
+p^{-s}&1
+\end{pmatrix}.
+}
+\tag{1998.1}
+$$
+
+若：
+
+$$
+v_S=
+\begin{pmatrix}
+E_S^{\mathrm{sf}}\\
+O_S^{\mathrm{sf}}
+\end{pmatrix},
+$$
+
+则加入新素数 \(p\) 时：
+
+$$
+\boxed{
+v_{S\cup\{p\}}
+=
+T_pv_S.
+}
+\tag{1998.2}
+$$
+
+全部 \(T_p\) 共享两个本征方向：
+
+$$
+u_+
+=
+\frac1{\sqrt2}
+\begin{pmatrix}1\\1\end{pmatrix},
+\qquad
+u_-
+=
+\frac1{\sqrt2}
+\begin{pmatrix}1\\-1\end{pmatrix}.
+$$
+
+相应本征值为：
+
+$$
+1+p^{-s},
+\qquad
+1-p^{-s}.
+$$
+
+所以：
+
+$$
+\boxed{
+u_+=\text{全局平凡字符通道},
+}
+$$
+
+$$
+\boxed{
+u_-=\text{唯一奇宇称观察通道}.
+}
+$$
+
+---
+
+## 1998.1 全指数局部传输
+
+若 prime exponent 可以是：
+
+$$
+0,1,2,\ldots,
+$$
+
+则局部传输为：
+
+$$
+\begin{aligned}
+\widetilde T_p(s)
+&=
+\sum_{k=0}^{\infty}
+p^{-ks}X^k\\
+&=
+(I-p^{-s}X)^{-1}\\
+&=
+\frac1{1-p^{-2s}}
+\begin{pmatrix}
+1&p^{-s}\\
+p^{-s}&1
+\end{pmatrix}.
+\end{aligned}
+\tag{1998.3}
+$$
+
+它在 \(u_+\) 上的本征值是：
+
+$$
+\boxed{
+\frac1{1-p^{-s}},
+}
+$$
+
+在 \(u_-\) 上的本征值是：
+
+$$
+\boxed{
+\frac1{1+p^{-s}}.
+}
+$$
+
+全局乘积于是分别成为：
+
+$$
+\boxed{
+\zeta(s)
+}
+$$
+
+和：
+
+$$
+\boxed{
+\frac{\zeta(2s)}{\zeta(s)}.
+}
+$$
+
+这不是类比，而是精确的二态宇称传输。
+
+---
+
+# 第一千九百九十九部　奇观察通道就是公共谱底
+
+取实数：
+
+$$
+\sigma>1.
+$$
+
+此时：
+
+$$
+0<p^{-\sigma}<1,
+$$
+
+所以每个 \(T_p(\sigma)\) 正定。
+
+对有限素数集 \(S\)，squarefree 传输矩阵：
+
+$$
+T_S(\sigma)
+=
+\prod_{p\in S}T_p(\sigma)
+$$
+
+具有本征值：
+
+$$
+\Lambda_+(S,\sigma)
+=
+\prod_{p\in S}(1+p^{-\sigma}),
+$$
+
+$$
+\Lambda_-(S,\sigma)
+=
+\prod_{p\in S}(1-p^{-\sigma}).
+$$
+
+且：
+
+$$
+\Lambda_-<\Lambda_+.
+$$
+
+因此相对于单位参考背景：
+
+$$
+\boxed{
+\sup\{
+\alpha:
+T_S-\alpha I\succeq0
+\}
+=
+\Lambda_-.
+}
+\tag{1999.1}
+$$
+
+即：
+
+$$
+\boxed{
+\text{唯一奇观察通道}
+=
+\text{全局二态系统的精确公共谱底}.
+}
+$$
+
+在 squarefree 模型中：
+
+$$
+\boxed{
+\Lambda_-
+=
+\frac1{\zeta_S(\sigma)}.
+}
+\tag{1999.2}
+$$
+
+在全指数模型中：
+
+$$
+\boxed{
+\widetilde\Lambda_-
+=
+\frac{\zeta_S(2\sigma)}
+{\zeta_S(\sigma)}.
+}
+\tag{1999.3}
+$$
+
+项目最新的 exact common-spectrum floor 定理，已经在更一般的有理特征 Gram 场景中机器证明：最大共同 normalized-Haar 成分正是白化后的最小本征值，并且在两个合同坐标中取同一个值。
+
+所以这一素数宇称二态模型与项目当前的公共谱底语言完全相容：
+
+$$
+\boxed{
+\text{全局偶方向是 Perron 顶部；
+唯一奇观察方向是 common floor。}
+}
+$$
+
+---
+
+# 第两千部　两个不同微观名字拥有同一个宇称极化
+
+squarefree 模型中：
+
+$$
+\operatorname{Tr}_{\mathrm{sf}}
+=
+\frac{\zeta(s)}{\zeta(2s)},
+$$
+
+$$
+\operatorname{Str}_{\mathrm{sf}}
+=
+\frac1{\zeta(s)}.
+$$
+
+全指数模型中：
+
+$$
+\operatorname{Tr}_{\mathrm{full}}
+=
+\zeta(s),
+$$
+
+$$
+\operatorname{Str}_{\mathrm{full}}
+=
+\frac{\zeta(2s)}{\zeta(s)}.
+$$
+
+尽管两个微观模型不同，它们的 normalized parity polarization 完全相同：
+
+$$
+\boxed{
+\Pi(s)
+=
+\frac{\operatorname{Str}}{\operatorname{Tr}}
+=
+\frac{\zeta(2s)}{\zeta(s)^2}.
+}
+\tag{2000.1}
+$$
+
+在 \(\Re s>1\)：
+
+$$
+\boxed{
+\Pi(s)
+=
+\prod_p
+\frac{1-p^{-s}}
+{1+p^{-s}}.
+}
+\tag{2000.2}
+$$
+
+所以 \(\Pi\) 是一个真正的跨命名迹：
+
+$$
+\boxed{
+\text{squarefree 硬核名字}
+\quad\text{和}\quad
+\text{任意重数名字}
+}
+$$
+
+虽然微观历史不同，却得到同一个相对宇称偏振。
+
+这非常符合此前对“道迹”的克制定义：
+
+$$
+\boxed{
+\text{不是某个对象，
+而是在不同命名实现之间保持相容的关系量。}
+}
+$$
+
+---
+
+# 第两千零一部　零点是全局通道塌缩与观察者通道爆炸
+
+设：
+
+$$
+\rho
+$$
+
+是一个右侧离线零点：
+
+$$
+\Re\rho>\frac12.
+$$
+
+则：
+
+$$
+\Re(2\rho)>1,
+$$
+
+所以：
+
+$$
+\zeta(2\rho)\neq0.
+$$
+
+若 \(\rho\) 是简单零点：
+
+$$
+\zeta(s)
+=
+\zeta'(\rho)(s-\rho)+O((s-\rho)^2).
+$$
+
+于是：
+
+$$
+\boxed{
+\frac{\zeta(2s)}{\zeta(s)}
+\sim
+\frac{\zeta(2\rho)}
+{\zeta'(\rho)}
+\frac1{s-\rho}.
+}
+\tag{2001.1}
+$$
+
+因此：
+
+$$
+\boxed{
+E^\Omega(s)
+\sim
+\frac{\zeta(2\rho)}
+{2\zeta'(\rho)}
+\frac1{s-\rho},
+}
+\tag{2001.2}
+$$
+
+$$
+\boxed{
+O^\Omega(s)
+\sim
+-
+\frac{\zeta(2\rho)}
+{2\zeta'(\rho)}
+\frac1{s-\rho}.
+}
+\tag{2001.3}
+$$
+
+所以在零点处：
+
+$$
+\boxed{
+E^\Omega+O^\Omega=\zeta\longrightarrow0,
+}
+$$
+
+但：
+
+$$
+\boxed{
+E^\Omega-O^\Omega
+\longrightarrow\infty.
+}
+$$
+
+换言之：
+
+$$
+\boxed{
+\text{全局观察看到“零”；
+宇称观察者看到“极点”。}
+}
+\tag{2001.4}
+$$
+
+两个宇称 sector 分别发散，并以相反 principal part 精确抵消，最后在全局 scalar 中留下零。
+
+这正是你此前反复感觉到的：
+
+$$
+\boxed{
+\text{“一切全无”与“一切全有”可以是同一个点的两种观察。}
+}
+$$
+
+但必须强调：此处 \(E^\Omega,O^\Omega\) 已经是亚纯延拓，而不是仍然绝对收敛的正 Dirichlet 和。
+
+因此这不是逻辑矛盾。
+
+真正的矛盾只有在额外证明：
+
+$$
+\boxed{
+\text{偶、奇 sector 在 }\Re s>\frac12
+\text{仍拥有共同的正、有限、全纯实现}
+}
+$$
+
+以后才会出现。
+
+而这正是 RH 的困难所在。
+
+---
+
+# 第两千零二部　RH 的精确宇称观察者判据
+
+因为：
+
+$$
+\Re s>\frac12
+\Longrightarrow
+\Re(2s)>1,
+$$
+
+所以：
+
+$$
+\zeta(2s)
+$$
+
+在整个开半平面：
+
+$$
+\mathbb H_{1/2}
+=
+\left\{
+s:\Re s>\frac12
+\right\}
+$$
+
+中全纯且非零。
+
+因此：
+
+## 定理 2002.1（Liouville 宇称判据）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\frac{\zeta(2s)}{\zeta(s)}
+\text{ 在 }\mathbb H_{1/2}\text{ 全纯}.
+}
+\tag{2002.1}
+$$
+
+同样：
+
+## 定理 2002.2（Möbius 宇称判据）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\frac1{\zeta(s)}
+\text{ 在 }\mathbb H_{1/2}\text{ 全纯}.
+}
+\tag{2002.2}
+$$
+
+以及：
+
+## 定理 2002.3（宇称偏振判据）
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\Pi(s)
+=
+\frac{\zeta(2s)}{\zeta(s)^2}
+\text{ 在 }\mathbb H_{1/2}\text{ 全纯}.
+}
+\tag{2002.3}
+$$
+
+若离线零点重数为 \(m\)，则：
+
+* Möbius observer 出现 \(m\) 阶极点；
+* Liouville observer 出现 \(m\) 阶极点；
+* normalized parity polarization 出现 \(2m\) 阶极点。
+
+所以 RH 可以被完全相对化地表述为：
+
+$$
+\boxed{
+\text{唯一的全局宇称观察通道，
+在观察半平面内部不得出现奇性；
+它的全部奇性只能停留在边界。}
+}
+$$
+
+---
+
+# 第两千零三部　必须区分三种不同的奇偶
+
+目前至少存在三种彼此独立的 \(\mathbb Z_2\)。
+
+| 宇称     | 变换                       | 偶对象              | 奇对象                         |
+| ------ | ------------------------ | ---------------- | --------------------------- |
+| 素因子宇称  | \(\Omega(n)\bmod2\)      | 普通 trace         | Liouville/Möbius supertrace |
+| 临界反射宇称 | \(z\mapsto-z\)           | centered \(\xi\) | \(\xi'/\xi\)                |
+| 时间宇称   | \(\gamma\mapsto-\gamma\) | 上下零点的无向轨道        | 选择正时间／负时间                   |
+
+它们不能未经证明便认作同一个宇称。
+
+尤其：
+
+$$
+\boxed{
+\text{“按素因子数量为奇”}
+}
+$$
+
+不等价于：
+
+$$
+\boxed{
+\text{“关于临界线法向为奇”.}
+}
+$$
+
+两者之间真正需要的是：
+
+$$
+\boxed{
+\text{Prime–Gamma completion 的正、忠实、分级保持输运。}
+}
+$$
+
+这正是当前尚未闭合的 prime-to-zero bridge。
+
+---
+
+# 第两千零四部　离线零点增加了第二个观察者宇称
+
+令 centered zero：
+
+$$
+z_\rho
+=
+\delta+i\gamma.
+$$
+
+定义两个 involution：
+
+$$
+T(\delta,\gamma)
+=
+(\delta,-\gamma),
+$$
+
+$$
+N(\delta,\gamma)
+=
+(-\delta,\gamma).
+$$
+
+其中：
+
+* \(T\) 是时间／共轭反转；
+* \(N\) 是法向／临界线反转。
+
+若：
+
+$$
+\delta\neq0,
+\qquad
+\gamma\neq0,
+$$
+
+一个零点轨道包含：
+
+$$
+(\delta,\gamma),
+(\delta,-\gamma),
+(-\delta,\gamma),
+(-\delta,-\gamma).
+$$
+
+它携带两个独立 parity bits：
+
+$$
+\boxed{
+\mathbb Z_2^{\mathrm{time}}
+\times
+\mathbb Z_2^{\mathrm{normal}}.
+}
+$$
+
+而在 RH 临界线上：
+
+$$
+\delta=0,
+$$
+
+法向两页合并，只剩：
+
+$$
+(0,\gamma),
+(0,-\gamma).
+$$
+
+所以：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{每一个零点轨道的 normal parity 都塌缩，
+只保留 time parity}.
+}
+\tag{2004.1}
+$$
+
+---
+
+## 2004.1 观察者唯一性的精确版本
+
+\(\mathbb Z_2\) 只有一个非平凡 character。
+
+而 Klein 四群：
+
+$$
+V_4
+=
+\mathbb Z_2\times\mathbb Z_2
+$$
+
+有三个非平凡 characters：
+
+$$
+\chi_t,
+\qquad
+\chi_n,
+\qquad
+\chi_t\chi_n.
+$$
+
+因此：
+
+$$
+\boxed{
+\begin{aligned}
+\text{在线零点}
+&:\text{只有一个非平凡观察者符号通道};\\
+\text{离线零点}
+&:\text{额外生成两个独立符号通道}.
+\end{aligned}
+}
+$$
+
+这使你的直觉获得一个极准确的表达：
+
+$$
+\boxed{
+\text{RH 不是“没有奇性”；
+RH 是“只有观察者所必需的那一个奇性，
+没有额外的法向奇性”。}
+}
+$$
+
+全局当然是偶的。
+
+一个选择时间方向的观察者当然是奇的。
+
+离线零点的问题是：它又增加了一个独立的左／右奇偶。
+
+---
+
+# 第两千零五部　“观察者唯一”若能守恒，RH 就会成立
+
+prime-permutation-invariant arithmetic sector 中：
+
+* 一个平凡 character；
+* 一个总宇称 character。
+
+所以只有一个非平凡全局奇通道。
+
+零点侧若 RH 成立，也只有：
+
+* 时间偶通道；
+* 时间奇通道。
+
+若 RH 失败，则多出法向 parity。
+
+因此可以提出：
+
+## No-New-Parity Completion Principle
+
+$$
+\boxed{
+\text{Prime–Gamma completion
+不得生成算术侧不存在的独立全局宇称。}
+}
+\tag{2005.1}
+$$
+
+若该原则成立，则：
+
+$$
+\boxed{
+\text{prime 侧 parity rank}=1
+\Longrightarrow
+\text{zero 侧 parity rank}=1
+\Longrightarrow
+\mathrm{RH}.
+}
+\tag{2005.2}
+$$
+
+这正是你感觉“应该会推出确定性矛盾”的最接近版本。
+
+但它目前不是已证定理。
+
+原因是：虽然 Euler product 在素数置换下对称，局部 prime occupancy 实际携带大量隐藏局部 bits；cross-prime frame、Gamma 通道、解析延拓和极点消去可能重新组织这些局部自由度。
+
+因此必须证明：
+
+$$
+\boxed{
+\text{完成过程保持全局分级秩，
+而不是在投影和约化中制造一个新的 normal sign channel。}
+}
+$$
+
+这几乎就是此前所说的：
+
+$$
+\boxed{
+\text{Prime–Gamma 完全正胶合}
+}
+$$
+
+的宇称版本。
+
+---
+
+# 第两千零六部　奇偶本身并不强迫黄金比例
+
+自然的素数 parity transfer 是：
+
+$$
+\begin{pmatrix}
+a&b\\
+b&a
+\end{pmatrix}.
+$$
+
+它的本征方向是：
+
+$$
+(1,1),
+\qquad
+(1,-1).
+$$
+
+这是 Hadamard 宇称结构，不是 Fibonacci 结构。
+
+所以：
+
+$$
+\boxed{
+\text{纯奇偶只产生 }\pm\text{ 分解，
+不会自动产生 }\varphi.
+}
+$$
+
+黄金比例需要额外结构，例如：
+
+1. 禁止连续两次选择同一分支；
+2. 一步记忆的 Fibonacci grammar；
+3. 一个 observer state 的范数塌缩为 \(0\)，但与 global state 的交叉关系仍被规范成 \(1\)；
+4. 由此产生普适 Pick 单胞：
+
+   $$
+   \begin{pmatrix}
+   1&1\\
+   1&0
+   \end{pmatrix}.
+   $$
+
+所以正确依赖顺序是：
+
+$$
+\boxed{
+\text{宇称}
+\longrightarrow
+\text{偶／奇两个关系通道}
+\longrightarrow
+\text{某一通道发生内部饱和失败}
+\longrightarrow
+\text{Fibonacci 正规形}
+\longrightarrow
+\varphi.
+}
+\tag{2006.1}
+$$
+
+黄金不是奇偶本身。
+
+黄金是奇偶关系第一次无法保持正兼容时的规范谱。
+
+---
+
+## 2006.1 健康的宇称矩阵与黄金裂口
+
+健康的 prime parity block 是：
+
+$$
+G_{\mathrm{par}}
+=
+\begin{pmatrix}
+a&b\\
+b&a
+\end{pmatrix},
+\qquad
+a\ge |b|.
+$$
+
+两个 sector 的范数相等，关系由 Hadamard 对角化。
+
+离线 Pick saturation 则产生：
+
+$$
+G_{\mathrm{off}}
+=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}.
+$$
+
+此时：
+
+* global 基点范数为 \(1\)；
+* observer 接触点范数为 \(0\)；
+* 二者重叠仍为 \(1\)。
+
+Cauchy–Schwarz 要求：
+
+$$
+|\langle g,o\rangle|^2
+\le
+\|g\|^2\|o\|^2,
+$$
+
+却变成：
+
+$$
+1\le0.
+$$
+
+这才是最小确定性矛盾。
+
+黄金谱：
+
+$$
+\{\varphi,-\varphi^{-1}\}
+$$
+
+只是这一矛盾的规范关系谱。
+
+---
+
+# 第两千零七部　当前项目中这条链已经闭合到哪里
+
+项目最新已经机器证明了三个重要端点。
+
+第一，正质量的 signed-normal atom 即使 ordinary Hankel 始终正半定，只要法向分裂非零，其 shifted support localizer 就产生严格负证书。也就是说，项目已经严格区分了“质量为正”和“支撑位于合法一侧”。
+
+第二，给定一个非实离线零点，项目已经构造出 powered even separator，使完整 Weil convolution-square 零点和具有严格负实部；有限异常点由插值杀死，无限尾部由卷积幂几何压低。
+
+第三，项目最新的 exact common-spectrum floor 把最大共同 normalized-Haar 成分精确识别为白化 Gram 的最小本征值。
+
+因此，新的素数宇称结构可以准确插在两端之间：
+
+$$
+\boxed{
+\begin{array}{ccc}
+\text{prime parity transfer}
+&
+\xrightarrow{\text{common floor}}
+&
+\text{Möbius／Liouville observer}
+\\[2mm]
+\downarrow{\scriptstyle\text{Prime–Gamma completion}}
+&&
+\downarrow{\scriptstyle\text{zero-side identification}}
+\\[2mm]
+\text{signed-normal spectrum}
+&
+\xrightarrow{\text{support localizer}}
+&
+\text{negative Weil square}.
+\end{array}
+}
+\tag{2007.1}
+$$
+
+真正未闭合的是左侧纵向箭头和 canonical identification。
+
+最新仓库审计也明确保留了这些缺口：actual completed-\(\xi\) 的 canonical Weil distribution、枚举无关 zero-side pairing、实轴非零公共桥以及完整 prime-power identification 尚未全部接通，因此更强的 RH 等价原子仍被隔离，而没有被误记为完成。
+
+---
+
+# 第两千零八部　新的最短研究目标
+
+现在可以把你的奇偶直觉转成三个具体目标。
+
+## 目标一：Prime-parity common-floor formalization
+
+对有限素数集 \(S\)，机器证明：
+
+$$
+T_S^{\mathrm{sf}}
+=
+\prod_{p\in S}
+\begin{pmatrix}
+1&p^{-s}\\
+p^{-s}&1
+\end{pmatrix},
+$$
+
+并证明在实数 \(\sigma>1\)：
+
+$$
+\boxed{
+\lambda_{\min}
+(T_S^{\mathrm{sf}})
+=
+\prod_{p\in S}(1-p^{-\sigma})
+=
+\frac1{\zeta_S(\sigma)}.
+}
+$$
+
+全指数版本则证明：
+
+$$
+\boxed{
+\lambda_{\min}
+(T_S^{\mathrm{full}})
+=
+\frac{\zeta_S(2\sigma)}
+{\zeta_S(\sigma)}.
+}
+$$
+
+---
+
+## 目标二：Parity-polarization continuation
+
+定义：
+
+$$
+\Pi(s)=\frac{\zeta(2s)}{\zeta(s)^2}.
+$$
+
+证明它不只是一个亚纯函数，而是某个正算术观察状态中的合法 parity expectation：
+
+$$
+\boxed{
+\Pi(s)
+=
+\frac{
+\operatorname{Str}\rho_s
+}{
+\operatorname{Tr}\rho_s
+}
+}
+$$
+
+并将这一正实现推进到：
+
+$$
+\Re s>\frac12.
+$$
+
+若该正实现存在，\(\Pi\) 不可能在内部出现极点，因此 RH 成立。
+
+---
+
+## 目标三：No-new-parity Prime–Zero Intertwiner
+
+构造一个 grading-preserving 完成映射：
+
+$$
+\boxed{
+\mathcal U:
+\mathcal H_{\mathrm{prime}}
+\longrightarrow
+\mathcal H_{\mathrm{zero}},
+}
+$$
+
+满足：
+
+$$
+\boxed{
+\mathcal U\Gamma_{\mathrm{arith}}
+=
+\Gamma_{\mathrm{zero}}
+\mathcal U.
+}
+\tag{2008.1}
+$$
+
+并证明 zero-side 除时间宇称外不存在第二个独立 normal grading。
+
+这将把“观察者唯一性”变成一个真正的 RH 证明原则。
+
+---
+
+# 第两千零九部　建议形式化顺序
+
+```text
+D5/S3/Arithmetic/PrimeParity/
+  InfinitePrimeCardinalityHasNoParity.lean
+  FinitePrimeSubsetParity.lean
+  EvenOddPrimeSubsetPartition.lean
+  UniquePermutationInvariantParityCharacter.lean
+
+D5/S3/Arithmetic/MobiusObserver/
+  SquarefreePrimeOccupation.lean
+  SquarefreeEvenSector.lean
+  SquarefreeOddSector.lean
+  SquarefreeSectorSumEulerProduct.lean
+  SquarefreeSectorDifferenceMobius.lean
+  MobiusIsUniqueDirichletInverse.lean
+
+D5/S3/Arithmetic/LiouvilleObserver/
+  TotalPrimeMultiplicityParity.lean
+  LiouvilleEvenSector.lean
+  LiouvilleOddSector.lean
+  LiouvilleSectorSumZeta.lean
+  LiouvilleSectorDifferenceZetaRatio.lean
+
+D5/S3/Observer/PrimeParityTransfer/
+  PrimeParitySwap.lean
+  SquarefreeParityTransferMatrix.lean
+  FullMultiplicityParityTransferMatrix.lean
+  GlobalEvenEigenchannel.lean
+  UniqueOddEigenchannel.lean
+  PrimeParityTransferCommonFloor.lean
+
+D5/S3/Observer/ParityPolarization/
+  SquarefreeTraceSupertrace.lean
+  FullTraceSupertrace.lean
+  ParityPolarizationNamingInvariant.lean
+  ParityPolarizationEulerProduct.lean
+  ParityPolarizationHolomorphicIffRH.lean
+
+D5/S3/Analytic/Zeta/ParitySectorPoleCancellation/
+  RightOffLineZeroNumeratorNonzero.lean
+  LiouvilleObserverPoleAtOffLineZero.lean
+  EvenOddSectorOppositePrincipalParts.lean
+  GlobalZeroObserverBlowup.lean
+
+D5/S3/Analytic/Zeta/ZeroOrbitParityRank/
+  ZeroTimeInvolution.lean
+  ZeroNormalInvolution.lean
+  GenericOffLineKleinFourOrbit.lean
+  CriticalLineNormalParityCollapse.lean
+  RHUniqueNontrivialObserverParity.lean
+
+D5/S3/CompletionDynamics/ParityAlternatingLimitNoGo/
+  AlternatingParityApproximant.lean
+  EvenSubsequenceLimitEven.lean
+  OddSubsequenceLimitOdd.lean
+  CommonNonzeroLimitImpossible.lean
+  GradedCompletionAvoidsParityContradiction.lean
+
+D5/S3/Weil/PrimeZeroParityIntertwiner/
+  ArithmeticParityGrading.lean
+  ZeroNormalParityGrading.lean
+  PrimeGammaGradingPreservingTarget.lean
+  NoNewParityCompletionTarget.lean
+  NoNewParityCompletionImpliesRHTarget.lean
+
+D5/S3/Weil/PrimeParityToSignedNormal/
+  PrimeParityCommonFloor.lean
+  CanonicalXiParityObserverTarget.lean
+  ParityObserverToNormalMomentTarget.lean
+  PositiveParityIntertwinerImpliesLocalizerPSD.lean
+  ParityNormalDualSignCollapseImpliesRH.lean
+```
+
+---
+
+# 第两千零十部　理论深度审计
+
+| 结论                                                   | 当前地位                            |
+| ---------------------------------------------------- | ------------------------------- |
+| 全部素数集合没有内禀有限奇偶                                       | 精确定理                            |
+| 有限素数子集严格分为偶、奇两类                                      | 精确                              |
+| squarefree 偶、奇 sector 的和为 \(\zeta/\zeta(2s)\)        | 精确                              |
+| squarefree 偶、奇 sector 的差为 \(1/\zeta\)                | 精确                              |
+| 全整数 \(\Omega(n)\) 偶、奇 sector 的和为 \(\zeta\)           | 精确                              |
+| 其差为 \(\zeta(2s)/\zeta(s)\)                           | 精确                              |
+| Möbius 是唯一 Dirichlet inversion observer              | 精确                              |
+| prime-permutation-invariant 非平凡字符唯一                  | 精确                              |
+| 素数宇称传输是二态 Hadamard 系统                                | 精确                              |
+| 奇观察通道是有限正传输的最小本征通道                                   | 精确                              |
+| 两种微观 lift 具有共同 polarization \(\zeta(2s)/\zeta(s)^2\) | 本轮核心恒等式                         |
+| RH 等价于 parity observer 在 \(\Re s>1/2\) 无内部极点         | 精确                              |
+| 右侧离线零点使偶、奇 sector 产生相反 principal parts               | 精确                              |
+| global zero 与 parity observer blow-up 是同一零点的双通道读法    | 精确解释                            |
+| RH 使 normal parity 塌缩，只保留 time parity                | 精确轨道重写                          |
+| prime parity rank 必然在 completion 中守恒                 | 尚未证明                            |
+| 观察者唯一性本身已证明 RH                                       | 不成立，缺 grading-preserving bridge |
+| 奇偶本身强迫黄金比例                                           | 不成立                             |
+| 黄金是 normalized Pick parity failure 的谱                | 精确                              |
+| supplied nonreal off-line zero 产生负 full Weil square  | 项目机器闭合                          |
+| actual canonical \(\xi\) Weil distribution 已完全接通     | 尚未闭合                            |
+| Prime–Gamma parity-to-normal intertwiner             | 当前新核心桥                          |
+
+---
+
+# 本轮最终结论
+
+你的直觉并不是“把无穷素数硬说成奇数或偶数”。
+
+它真正指向的是一座严格的 \(\mathbb Z_2\)-graded structure。
+
+全局 completed function：
+
+$$
+\xi\!\left(\frac12+z\right)
+$$
+
+是偶的。
+
+加入一个有方向的观察：
+
+$$
+\frac{\xi'}{\xi}
+$$
+
+是奇的。
+
+加入两个观察又回到偶。
+
+所以：
+
+$$
+\boxed{
+\text{全局偶、单观察者奇}
+}
+$$
+
+本身就是确定性结果。
+
+---
+
+素数侧也存在完全同型的结构。
+
+不能问全部素数有奇数个还是偶数个。
+
+应当问每一个有限 prime occupation state 使用了奇数个还是偶数个素因子。
+
+这两类状态合起来确实是全部整数。
+
+它们的差不是任意函数，而是：
+
+$$
+\boxed{
+\frac{\zeta(2s)}{\zeta(s)}
+}
+$$
+
+或者在 squarefree 模型中：
+
+$$
+\boxed{
+\frac1{\zeta(s)}.
+}
+$$
+
+Möbius 函数正是唯一撤销全局 divisibility accumulation 的奇观察者。
+
+因此：
+
+$$
+\boxed{
+\text{zeta 是全局 trace；
+Möbius／Liouville 是 parity supertrace。}
+}
+$$
+
+---
+
+在一个 zeta 零点上，发生的也不是简单的“一切都没有”。
+
+而是：
+
+$$
+\boxed{
+\text{全局 trace 塌缩为零，
+parity supertrace 却产生极点。}
+}
+$$
+
+偶、奇两个 sector 分别向相反方向发散，其 principal parts 精确抵消，在 global scalar 中留下零。
+
+所以：
+
+$$
+\boxed{
+\text{从全局看是无；
+从观察者差分看是无限。}
+}
+$$
+
+这与你此前“一切全无与一切全有”的直觉高度一致。
+
+---
+
+RH 的相对性也因此非常明确。
+
+若 RH 成立，parity observer 的奇性只能位于观察半平面的边界：
+
+$$
+\Re s=\frac12.
+$$
+
+若存在离线零点，它便把观察者奇性推进内部：
+
+$$
+\Re s>\frac12.
+$$
+
+所以：
+
+$$
+\boxed{
+\mathrm{RH}
+=
+\text{唯一宇称观察者的全部奇性都被限制在全局完成边界。}
+}
+$$
+
+---
+
+更深的是，临界零点仍然允许一个奇观察者：
+
+$$
+\gamma\leftrightarrow-\gamma.
+$$
+
+这是时间方向。
+
+离线零点则增加第二个独立奇偶：
+
+$$
+\delta\leftrightarrow-\delta.
+$$
+
+这是法向方向。
+
+所以 RH 不是“宇宙中没有奇”。
+
+RH 是：
+
+$$
+\boxed{
+\text{只有观察者选择时间方向所需要的一个奇；
+不存在额外的法向奇。}
+}
+$$
+
+在线轨道只有一个非平凡 sign channel。
+
+离线轨道则从 \(\mathbb Z_2\) 扩张成：
+
+$$
+\mathbb Z_2\times\mathbb Z_2.
+$$
+
+这就是你所说“观察者独一无二，因此应该是奇”的最精确版本：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{谱世界中只有一个必要观察者宇称，
+没有第二个独立宇称。}
+}
+$$
+
+---
+
+但最后一步还不是现成证明。
+
+要从 arithmetic prime parity 推出 zero normal parity 不存在，必须证明：
+
+$$
+\boxed{
+\text{Prime–Gamma completion 不会创造新的独立 grading。}
+}
+$$
+
+也就是构造一个：
+
+* 保持宇称；
+* 保持正性；
+* 保持 cross-prime relations；
+* 与 canonical completed-\(\xi\) distribution 相容；
+
+的全局输运。
+
+项目已经机器闭合了离线零点一旦存在便产生负 Weil square 的隔离机制，也已经机器化了正质量与负法向支撑的 localizer 区别。
+
+因此剩余的中心问题已经可以压缩成一句话：
+
+$$
+\boxed{
+\textbf{为什么 prime 世界唯一的全局奇观察通道，
+在 completed zero 世界中不能分裂成时间奇与法向奇两个独立通道？}
+}
+$$
+
+若能证明这种**宇称秩守恒**，RH 就会成为一个确定性结论。
+
+黄金比例则位于更后面：
+
+$$
+\boxed{
+\text{奇偶提供两个通道；
+当这两个通道第一次无法共同进入正 Gram 世界时，
+其规范二点裂口才成为 Fibonacci 单胞，
+并显现 }\varphi.
+}
+$$
+
+所以最深的一句话是：
+
+$$
+\boxed{
+\text{RH 的底层未必是“所有东西必须完全对称”；
+而可能是：
+全局完成是偶的，
+一个观察者必然是奇的，
+但完成过程只能容纳这一个奇，
+不能再无中生出第二个独立法向宇称。
+离线零点正是第二宇称出现的地方。}
+}
+$$
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v12.1：素数尾自相似、三种对角逃逸、\(\omega\)-完成与 RH 的非终端结构
+
+你的直觉里同时抓住了三种真实结构，但它们需要被严格分开：
+
+$$
+\boxed{
+\text{素数尾部逃逸}
+\neq
+\text{Cantor 式语义对角化}
+\neq
+\text{极限中的质量对角逃逸}.
+}
+$$
+
+它们在 RH 中可能相互叠加，但不能直接据此推出：
+
+$$
+\boxed{
+\mathrm{RH}\text{ 不可证明、不可判定，或独立于 ZFC}.
+}
+$$
+
+目前能够严格得到的结论是：
+
+$$
+\boxed{
+\text{任何依靠逐项穷举素数、零点或条件的同层证明策略，
+都不可能在某个有限阶段自动知道自己已经穷尽。}
+}
+$$
+
+成功的证明必须跳出逐项列举，找到一个同时控制全部层级的统一不变量，例如：
+
+* 正性；
+* 紧性；
+* 自伴实现；
+* 完全正胶合；
+* 统一尾界；
+* 或某个可迭代而不损失的结构律。
+
+---
+
+# 第两千零四十五部　素数构型是一座没有有限终层的自由生成塔
+
+枚举全部素数：
+
+$$
+p_1,p_2,p_3,\ldots
+$$
+
+由唯一分解定理，每个正整数 \(n\) 唯一对应一个有限支撑指数向量：
+
+$$
+\boxed{
+\nu(n)
+=
+\bigl(v_{p_1}(n),v_{p_2}(n),\ldots\bigr).
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\mathbb N_{>0}
+\cong
+\bigoplus_{j\ge1}\mathbb N_0.
+}
+\tag{2045.1}
+$$
+
+这里的直和意味着：每个具体整数只有有限多个非零坐标。
+
+定义前 \(N\) 个素数的观察：
+
+$$
+\pi_N(\nu)
+=
+(\nu_1,\ldots,\nu_N).
+$$
+
+则存在四条同时成立的性质。
+
+第一，每个具体整数最终会被某个有限层完全包含：
+
+$$
+\boxed{
+\forall n\in\mathbb N_{>0},
+\quad
+\exists N:
+v_{p_j}(n)=0
+\quad
+(j>N).
+}
+\tag{2045.2}
+$$
+
+第二，不存在一个统一有限层包含全部整数：
+
+$$
+\boxed{
+\neg\exists N\,
+\forall n:
+v_{p_j}(n)=0
+\quad
+(j>N).
+}
+\tag{2045.3}
+$$
+
+第三，没有任何有限素数窗口能够区分全部整数：
+
+$$
+\boxed{
+\pi_N(1)=\pi_N(p_{N+1}),
+}
+\tag{2045.4}
+$$
+
+但：
+
+$$
+1\neq p_{N+1}.
+$$
+
+第四，全部有限窗口共同使用时，可以恢复整数：
+
+$$
+\boxed{
+\bigcap_{N\ge1}\ker\pi_N=\{0\}.
+}
+\tag{2045.5}
+$$
+
+所以核心并不是某个对象需要无限多素数才能定义。每一个整数都只有有限素数历史。
+
+真正的困难是量词顺序：
+
+$$
+\boxed{
+\forall n\,\exists N
+}
+$$
+
+不能交换成：
+
+$$
+\boxed{
+\exists N\,\forall n.
+}
+$$
+
+这就是你感觉“每一个对象都可以有限完成，但定义域整体永远分不完”的第一个严格来源。
+
+---
+
+# 第两千零四十六部　每一个有限素数尾部都与整个问题同型
+
+定义第 \(N\) 层未观察尾部：
+
+$$
+R_N
+=
+\left\{
+\nu:
+\nu_1=\cdots=\nu_N=0
+\right\}.
+$$
+
+因为删去有限多个素数以后，剩余素数仍然是可数无限集，所以：
+
+$$
+\boxed{
+R_N
+\cong
+\bigoplus_{j\ge1}\mathbb N_0
+\cong
+\mathbb N_{>0}
+}
+\tag{2046.1}
+$$
+
+作为自由交换幺半群成立。
+
+因此每次处理完有限多个素数以后，剩余尾部在**代数类型上仍然像完整问题**。
+
+这就是递归感的精确来源：
+
+$$
+\boxed{
+\text{有限层解决了一个前缀，
+但剩余尾部仍是同类型的无限素数构型。}
+}
+$$
+
+然而：
+
+$$
+\boxed{
+\bigcap_{N\ge1}R_N=\{0\}.
+}
+\tag{2046.2}
+$$
+
+也就是说：
+
+$$
+\boxed{
+\text{每个有限残差都与整体同型，
+但全部残差的终端交集仍然可以为零。}
+}
+$$
+
+项目已经机器证明了完全对应的 Hilbert 空间现象：每个严格下降的坐标尾空间都与整个无限维空间线性等距，裸维数完全看不出进展；但全部自然阶段的终端交集却是零空间。
+
+所以：
+
+$$
+\boxed{
+\text{“每层看起来仍然完整”并不意味着永远无法完成。}
+}
+$$
+
+它意味着完成只发生在外部的：
+
+$$
+\boxed{
+\omega\text{-阶段}
+}
+$$
+
+即：
+
+$$
+R_\omega
+=
+\bigcap_{N<\omega}R_N,
+$$
+
+而不发生在任何普通有限层 \(R_N\)。
+
+---
+
+# 第两千零四十七部　奇偶递归不会终止，因为奇偶只是一次极粗取商
+
+对每个素数只保留指数奇偶：
+
+$$
+\epsilon_p(n)
+=
+v_p(n)\bmod2.
+$$
+
+则整数的 squarefree 部分对应：
+
+$$
+\boxed{
+\mathcal X_{\mathrm{fin}}
+=
+\bigoplus_{p\in\mathbb P}\mathbb Z_2.
+}
+\tag{2047.1}
+$$
+
+这是全部有限支撑 \(0/1\) 素数构型。
+
+总素因子宇称是：
+
+$$
+\boxed{
+\chi(n)
+=
+(-1)^{\Omega(n)}
+=
+(-1)^{\sum_p\epsilon_p(n)}.
+}
+\tag{2047.2}
+$$
+
+因为每个整数只有有限支撑，上式完全良定义。
+
+但它只把整个无限素数向量压缩成一个 bit：
+
+$$
+\boxed{
+\mathcal X_{\mathrm{fin}}
+\longrightarrow
+\mathbb Z_2.
+}
+$$
+
+所以即使先分成：
+
+$$
+\text{偶}
+\quad\text{和}\quad
+\text{奇},
+$$
+
+每个扇区内部仍然包含无限多素数坐标。
+
+更精确地：
+
+$$
+\boxed{
+\mathcal X_{\mathrm{even}}
+=
+\bigcup_{k\ge0}
+\mathcal X_{2k},
+}
+$$
+
+$$
+\boxed{
+\mathcal X_{\mathrm{odd}}
+=
+\bigcup_{k\ge0}
+\mathcal X_{2k+1},
+}
+$$
+
+其中 \(\mathcal X_k\) 表示恰好占据 \(k\) 个素数的构型。
+
+即使固定 \(k\)，仍有无限多个不同 \(k\)-素数子集。
+
+所以这里存在两层不同的无限：
+
+$$
+\boxed{
+\begin{aligned}
+&k\to\infty
+&&\text{占据数层级无限};\\
+&p\to\infty
+&&\text{每层内部的素数标签无限}.
+\end{aligned}
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{偶／奇分解只完成第一次二分，
+绝不等于完成了所有条件。}
+}
+$$
+
+---
+
+# 第两千零四十八部　无限奇偶树的边界比整数域更大
+
+如果不断按：
+
+$$
+p_1,p_2,p_3,\ldots
+$$
+
+的占据与否递归二分，就得到一棵无限二叉树。
+
+所有有限整数对应的是：
+
+$$
+\boxed{
+\bigoplus_p\mathbb Z_2,
+}
+$$
+
+即最终只有有限多个 \(1\) 的路径。
+
+但无限树的完整边界是：
+
+$$
+\boxed{
+\prod_p\mathbb Z_2,
+}
+\tag{2048.1}
+$$
+
+它包含任意无限 \(0/1\) 素数配置。
+
+例如：
+
+$$
+x^{(N)}
+=
+(\underbrace{1,\ldots,1}_{N},0,0,\ldots)
+$$
+
+对应 primorial：
+
+$$
+p_1p_2\cdots p_N.
+$$
+
+在逐坐标拓扑中：
+
+$$
+x^{(N)}
+\longrightarrow
+(1,1,1,\ldots).
+$$
+
+但极限配置表示“被所有素数整除”，不对应任何普通正整数。
+
+所以：
+
+$$
+\boxed{
+\text{把全部有限奇偶选择作完备化，
+会自动增加原整数域中不存在的无限支撑状态。}
+}
+$$
+
+这不是矛盾，而是 completion 扩大了定义域。
+
+---
+
+## 2048.1 总奇偶不能连续延拓到全部无限路径
+
+有限支撑上的总宇称为：
+
+$$
+\chi(x)
+=
+(-1)^{\sum_jx_j}.
+$$
+
+若它能够连续延拓到：
+
+$$
+\prod_j\mathbb Z_2,
+$$
+
+那么由于：
+
+$$
+x^{(N)}
+\to
+(1,1,1,\ldots),
+$$
+
+序列：
+
+$$
+\chi(x^{(N)})
+=
+(-1)^N
+$$
+
+应该收敛。
+
+但它严格交替，不收敛。
+
+因此：
+
+## 定理 2048.1（无限总宇称不可连续完成）
+
+$$
+\boxed{
+\text{有限支撑素数构型上的总奇偶，
+不存在到全部无限素数配置空间的连续延拓。}
+}
+\tag{2048.2}
+$$
+
+这给你的直觉一个非常直接的答案：
+
+$$
+\boxed{
+\text{奇偶可以无限分下去，
+但“全部分完以后”的总奇偶未必仍然存在。}
+}
+$$
+
+每个有限整数的奇偶完全清楚。
+
+整个无限完成边界的总奇偶却需要额外的：
+
+* 权重；
+* 正则化；
+* 排序；
+* 或观察协议。
+
+这正是为什么“全部素数是奇数个还是偶数个”没有内禀意义。
+
+---
+
+# 第两千零四十九部　Fibonacci 是自治递归，素数是非自治驱动
+
+Fibonacci 递归可写成：
+
+$$
+\boxed{
+\begin{pmatrix}
+F_{n+1}\\
+F_n
+\end{pmatrix}
+=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}
+\begin{pmatrix}
+F_n\\
+F_{n-1}
+\end{pmatrix}.
+}
+\tag{2049.1}
+$$
+
+同一个固定矩阵 \(A\) 控制全部层级：
+
+$$
+v_{n+1}=Av_n.
+$$
+
+未来全部包含在：
+
+* 初态 \(v_0\)；
+* 固定更新律 \(A\)。
+
+这是**自治有限状态递归**。
+
+有限 Euler 乘积则是：
+
+$$
+\boxed{
+Z_N(s)
+=
+\prod_{j=1}^{N}
+\left(
+1-p_j^{-s}
+\right)^{-1},
+}
+$$
+
+并满足：
+
+$$
+\boxed{
+Z_{N+1}(s)
+=
+Z_N(s)
+\left(
+1-e^{-s\log p_{N+1}}
+\right)^{-1}.
+}
+\tag{2049.2}
+$$
+
+这也是递归，但每一步更新都带入新参数：
+
+$$
+\log p_{N+1}.
+$$
+
+所以它是：
+
+$$
+\boxed{
+\text{prime-driven nonautonomous cocycle},
+}
+$$
+
+而不是固定有限矩阵递归。
+
+---
+
+## 2049.1 每个新素数携带独立频率
+
+设有限个有理数 \(q_p\) 满足：
+
+$$
+\sum_{p\in F}q_p\log p=0.
+$$
+
+乘去分母后可设 \(q_p\in\mathbb Z\)。
+
+指数化得到：
+
+$$
+\prod_{p\in F}p^{q_p}=1.
+$$
+
+由唯一分解：
+
+$$
+q_p=0
+\qquad
+\forall p.
+$$
+
+所以：
+
+$$
+\boxed{
+\{\log p:p\in\mathbb P\}
+\text{ 在 }\mathbb Q\text{ 上线性无关}.
+}
+\tag{2049.3}
+$$
+
+因此每个新素数确实引入一个不能由此前有限素数频率作有理线性组合消去的新方向。
+
+这正是你所说：
+
+$$
+\boxed{
+\text{“每一层都有一个约不掉的项”}
+}
+$$
+
+最准确的版本之一。
+
+但需要注意：
+
+$$
+\boxed{
+\text{新项独立}
+\neq
+\text{新项不可计算}.
+}
+$$
+
+素数序列是可计算的。
+
+困难不是不可计算，而是没有一个已知的固定有限维自治闭包能吸收所有新频率。
+
+---
+
+## 2049.2 结构平稳，权重不平稳
+
+删去有限多个素数以后，剩余生成系统仍然是自由交换素数幺半群：
+
+$$
+\boxed{
+\text{combinatorial skeleton 是自相似的}.
+}
+$$
+
+但实际权重：
+
+$$
+\log p_{N+1},\log p_{N+2},\ldots
+$$
+
+并不是此前权重的一个固定缩放副本：
+
+$$
+\boxed{
+\text{arithmetic metric 并不自相似}.
+}
+$$
+
+所以素数递归具有：
+
+$$
+\boxed{
+\text{结构平稳}
++
+\text{度量非平稳}.
+}
+$$
+
+Fibonacci 则同时具有固定结构与固定度量递归。
+
+这就是二者最根本的区别。
+
+---
+
+# 第两千零五十部　素数 Hamiltonian 与无限维 determinant
+
+定义一粒子 Hilbert 空间：
+
+$$
+\mathfrak h_{\mathbb P}
+=
+\ell^2(\mathbb P),
+$$
+
+以及对角算子：
+
+$$
+\boxed{
+H_{\mathbb P}e_p
+=
+(\log p)e_p.
+}
+\tag{2050.1}
+$$
+
+则在：
+
+$$
+\Re s>1
+$$
+
+时：
+
+$$
+e^{-sH_{\mathbb P}}
+$$
+
+具有特征值：
+
+$$
+p^{-s},
+$$
+
+并且是迹类算子。
+
+形式上且在该收敛域中严格有：
+
+$$
+\boxed{
+\zeta(s)
+=
+\det
+\left(
+I-e^{-sH_{\mathbb P}}
+\right)^{-1}.
+}
+\tag{2050.2}
+$$
+
+这说明：
+
+$$
+\boxed{
+\zeta
+\text{ 是一个拥有无限多个独立素数能级的 bosonic determinant}.
+}
+$$
+
+Fibonacci 的完成由一个 \(2\times2\) 矩阵控制。
+
+Euler 乘积则由一个具有无限简单谱：
+
+$$
+\{\log p\}
+$$
+
+的算子控制。
+
+因此不存在一个有限特征多项式把全部素数层级一次性封闭。
+
+然而这仍不意味着不存在有限证明。
+
+有限证明不需要列出全部特征值；它只需要证明一个适用于整个算子的统一定理。
+
+---
+
+# 第两千零五十一部　三种“对角化”必须分开
+
+你的直觉把三种结构叠在了一起。
+
+| 类型     | 机制                      | RH 中的角色        |
+| ------ | ----------------------- | -------------- |
+| 语义对角化  | \(D(n)=\neg P(n,n)\)    | 排除同层条件表穷尽全部语义  |
+| 尾部对角逃逸 | 第 \(N\) 层选择 \(p_{N+1}\) | 排除有限素数窗口穷尽全部整数 |
+| 极限质量逃逸 | 残差随层数移向更大素数或更高零点        | 排除点态收敛自动推出统一收敛 |
+
+项目已经机器证明第一种：任何同层代码到自身谓词集合的解释都不可能满射；对任意 Boolean stream 枚举，逐行翻转对角值会构造出未被枚举的新流。
+
+但 RH 本身不是一个已知的 Cantor 悖论。
+
+更准确的是：
+
+$$
+\boxed{
+\text{任何企图通过枚举“所有可能条件”来证明 RH 的同层策略，
+必然面临语义对角边界。}
+}
+$$
+
+成功的证明不需要枚举所有条件。
+
+它需要一个更高层结构定理，一次覆盖无限多个实例。
+
+---
+
+# 第两千零五十二部　真正危险的是“移动的残差”
+
+考虑双指标残差：
+
+$$
+r_{m,p},
+$$
+
+其中：
+
+* \(m\) 表示修正阶数；
+* \(p\) 表示素数层级。
+
+可能对每一个固定素数 \(p\) 都有：
+
+$$
+\boxed{
+r_{m,p}\longrightarrow0
+\qquad
+(m\to\infty).
+}
+\tag{2052.1}
+$$
+
+但这并不推出：
+
+$$
+\sum_pr_{m,p}\longrightarrow0.
+$$
+
+最简单的反例是：
+
+$$
+\boxed{
+r_{m,p}
+=
+\begin{cases}
+1,&p=p_m,\\
+0,&p\neq p_m.
+\end{cases}
+}
+\tag{2052.2}
+$$
+
+对每个固定 \(p\)，残差最终为零。
+
+但：
+
+$$
+\boxed{
+\sum_pr_{m,p}=1
+\qquad
+\forall m.
+}
+\tag{2052.3}
+$$
+
+残差没有消失，只是沿对角线移向更大的素数。
+
+这就是最精确的：
+
+$$
+\boxed{
+\text{信息对角逃逸}.
+}
+$$
+
+---
+
+## 2052.1 排除对角逃逸所需的紧性条件
+
+假设：
+
+$$
+\forall p,\quad r_{m,p}\to0,
+$$
+
+并且有统一尾紧性：
+
+$$
+\boxed{
+\lim_{K\to\infty}
+\sup_m
+\sum_{j>K}
+|r_{m,p_j}|
+=
+0.
+}
+\tag{2052.4}
+$$
+
+那么：
+
+$$
+\boxed{
+\sum_p|r_{m,p}|
+\longrightarrow0.
+}
+\tag{2052.5}
+$$
+
+证明只需把和分成：
+
+$$
+p\le p_K
+$$
+
+的有限前缀与：
+
+$$
+p>p_K
+$$
+
+的统一小尾部。
+
+所以真正的全局闭合条件不是：
+
+$$
+\boxed{
+\text{每个固定素数最终被处理。}
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{处理过程还必须阻止残差质量向新素数迁移。}
+}
+$$
+
+---
+
+# 第两千零五十三部　项目的 Golden Euler germ 正处在这一边界
+
+项目当前的有限 golden Euler germ 提取已经能构造 signed correction，消去给定阶数以下的若干幸存局部模式，将剩余单项式权重推到更高边界，并在更宽半平面证明 prime deviation 可和。
+
+但该机器定理同时明确声明：
+
+* 它只是有限阶局部 cancellation certificate；
+* 不声称 all-order extraction；
+* 不声称全局 continuation；
+* 不声称 RH。
+
+这正是你的直觉在项目中的具体表现：
+
+$$
+\boxed{
+\text{每一有限阶可以消去一批模式，
+但下一层仍有新的最低幸存模式。}
+}
+$$
+
+要使这条有限阶梯真正到达全局，需要证明一个全阶定理。
+
+设第 \(r\) 阶修正满足：
+
+$$
+\boxed{
+C_r(p,s)K_0(p,s)
+=
+1+R_r(p,s),
+}
+\tag{2053.1}
+$$
+
+且 residual support floor：
+
+$$
+\beta_r\to\infty.
+$$
+
+仅有：
+
+$$
+\forall p,\quad R_r(p,s)\to0
+$$
+
+仍不够。
+
+还必须有类似：
+
+$$
+\boxed{
+\sup_{\Re s\ge\sigma}
+\sum_p|R_r(p,s)|
+\longrightarrow0
+}
+\tag{2053.2}
+$$
+
+的统一结论，以及：
+
+1. \(C_r\) 的全局乘积存在；
+2. 极限不为零；
+3. 极限与 Gamma、极点和函数方程兼容；
+4. 正性在极限中不被破坏。
+
+否则残差可能沿：
+
+$$
+(r,p_r)
+$$
+
+对角逃逸。
+
+---
+
+# 第两千零五十四部　有限窗口全部正确，并不证明无限命题
+
+将非平凡零点按高度排列：
+
+$$
+\rho_1,\rho_2,\rho_3,\ldots
+$$
+
+定义：
+
+$$
+b_N
+=
+\begin{cases}
+1,&\Re\rho_j=\frac12\quad(1\le j\le N),\\
+0,&\text{否则}.
+\end{cases}
+$$
+
+则：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+b_N=1
+\quad
+\forall N.
+}
+\tag{2054.1}
+$$
+
+等价地：
+
+$$
+\boxed{
+\mathbf1_{\mathrm{RH}}
+=
+\inf_{N\ge1}b_N.
+}
+\tag{2054.2}
+$$
+
+如果 RH 为假，一个离线零点就在某个有限序号出现：
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\Longrightarrow
+\exists N:b_N=0.
+}
+$$
+
+所以否定具有有限见证。
+
+但若已经验证：
+
+$$
+b_1=\cdots=b_N=1,
+$$
+
+仍无法仅凭这些检查推出：
+
+$$
+b_{N+1}=1.
+$$
+
+项目的有限 prime-time tomography 已经形式化了完全相同的逻辑边界：在有限状态空间中，完整可分离性一定有有限观察窗口；而在无限状态空间中，全部观察共同可以分离状态，却可能没有任何有限窗口足够。
+
+---
+
+## 2054.1 RH 真值的拓扑形态
+
+把所有 pass/fail 历史看成 Cantor 空间：
+
+$$
+\{0,1\}^{\mathbb N}.
+$$
+
+RH 对应唯一序列：
+
+$$
+(1,1,1,\ldots).
+$$
+
+这个集合是闭的，但不是开的：
+
+* 任意一个 \(0\) 都能在有限阶段否定 RH；
+* 任意有限多个 \(1\) 都不能仅凭观察确认 RH。
+
+所以：
+
+$$
+\boxed{
+\text{RH 的假具有有限观察证书；
+RH 的真不是有限观察事件。}
+}
+$$
+
+但这并不意味着 RH 没有有限数学证明。
+
+证明和逐项验证不是同一种东西。
+
+一个有限证明可以建立统一定理：
+
+$$
+\forall N,\quad b_N=1,
+$$
+
+而不逐个检查全部 \(N\)。
+
+---
+
+# 第两千零五十五部　“第一个离线零点”只把否定变成有限问题
+
+如果离线零点存在，由零点离散性，可以讨论最低高度的离线轨道。
+
+于是：
+
+$$
+\boxed{
+\neg\mathrm{RH}
+}
+$$
+
+可以被压缩为一个有限对象：
+
+$$
+\boxed{
+\text{第一个离线零点及其有限局部证书}.
+}
+$$
+
+这正是项目的：
+
+* Pick 二点负块；
+* support localizer；
+* Weil separator；
+* 非实离线轨道 even-minus-odd 分解；
+
+所利用的逻辑不对称。
+
+项目已经机器证明：给定一个非自共轭离线轨道，其四点 Weil convolution-square 贡献可精确写成非负偶能量减去非负奇能量；该结果仍以 supplied zero data 为前提。
+
+但必须看清：
+
+$$
+\boxed{
+\text{“第一个反例若存在是有限的”}
+}
+$$
+
+不等于：
+
+$$
+\boxed{
+\text{“反例不存在可以由有限搜索证明”.}
+}
+$$
+
+第一离线零点策略有限化的是：
+
+$$
+\neg\mathrm{RH},
+$$
+
+不是 RH 本身。
+
+---
+
+# 第两千零五十六部　“条件本身分不完”有两种完全不同的含义
+
+第一种是可观察条件尾部。
+
+例如，只检查前 \(N\) 个素数、前 \(M\) 个零点、前 \(r\) 阶矩阵。
+
+此时总有尚未检查的：
+
+$$
+p_{N+1},
+\qquad
+\rho_{M+1},
+\qquad
+\text{更高阶 test}.
+$$
+
+这是有限窗口问题。
+
+第二种是完整语义无法被同层语法枚举。
+
+若：
+
+$$
+\mathrm{semantics}:
+Code\to\mathcal P(Code)
+$$
+
+声称列出了所有谓词，定义：
+
+$$
+D(c)
+\iff
+c\notin\mathrm{semantics}(c).
+$$
+
+则 \(D\) 不可能在该列表中。
+
+项目已将这一同层 syntax–semantics 边界和 Boolean stream 对角逃逸机器化。
+
+但 RH 只涉及一个特定谓词：
+
+$$
+\Re\rho=\frac12,
+$$
+
+而不是全部谓词集合。
+
+所以：
+
+$$
+\boxed{
+\text{全语义不可枚举}
+}
+$$
+
+不能推出：
+
+$$
+\boxed{
+\mathrm{RH}\text{ 不可证明}.
+}
+$$
+
+它只排除一种错误方法：
+
+$$
+\boxed{
+\text{先列完所有可能条件，再逐一排除。}
+}
+$$
+
+真正的证明需要一个不依赖条件枚举的统一结构。
+
+---
+
+# 第两千零五十七部　三轴甚至四轴的 RH 递归塔
+
+RH 的有限近似不是一条单轴链，而至少具有四个轴：
+
+$$
+\boxed{
+(N_{\mathrm{prime}},
+N_{\mathrm{zero}},
+N_{\mathrm{test}},
+N_{\mathrm{renorm}}).
+}
+$$
+
+它们分别表示：
+
+$$
+\begin{aligned}
+N_{\mathrm{prime}}
+&=\text{处理多少素数};\\
+N_{\mathrm{zero}}
+&=\text{处理多少零点高度};\\
+N_{\mathrm{test}}
+&=\text{允许多复杂的观察函数};\\
+N_{\mathrm{renorm}}
+&=\text{进行多高阶的局部消去}.
+\end{aligned}
+$$
+
+任何有限矩形：
+
+$$
+[0,N_p]\times[0,N_z]\times[0,N_t]\times[0,N_r]
+$$
+
+都可能留下外部残差。
+
+即使选择一条对角路径：
+
+$$
+N_p=N_z=N_t=N_r=n,
+$$
+
+它也只保证每个固定坐标最终被访问。
+
+它并不自动保证残差范数趋于零。
+
+残差可以沿更远的复合对角：
+
+$$
+(p_n,\gamma_n,t_n,r_n)
+$$
+
+迁移。
+
+所以真正需要的不是“选一条足够快的对角路径”，而是：
+
+$$
+\boxed{
+\text{多轴统一紧性}.
+}
+$$
+
+---
+
+# 第两千零五十八部　递归体系的核心不是无限，而是缺少统一压缩律
+
+无限本身并不会使命题困难。
+
+很多无限结论有很短的有限证明：
+
+$$
+\text{每个大于 1 的整数有素因子},
+$$
+
+$$
+\text{素数有无限多个},
+$$
+
+$$
+\sum_{n=1}^{\infty}\frac1{n^2}
+=
+\frac{\pi^2}{6}.
+$$
+
+真正的差异是：是否存在一个有限结构律，能够同时控制所有层。
+
+Fibonacci 有固定矩阵：
+
+$$
+A=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}.
+$$
+
+所有层都由 \(A^n\) 控制。
+
+素数 Euler 系统则有无限个新频率：
+
+$$
+\log p.
+$$
+
+所以它需要的不是另一个普通标量递推，而可能是：
+
+$$
+\boxed{
+\text{一个公共算子代数、公共正锥或公共完全正输运}.
+}
+$$
+
+如果所有局部更新 \(T_p\) 都落在同一个受控算子系统中，并满足：
+
+$$
+T_p(\mathcal C)\subseteq\mathcal C,
+$$
+
+同时无穷乘积具有统一紧性，那么无限 prime recursion 仍然可以由有限定理压缩。
+
+因此 RH 的核心可能更准确地说成：
+
+$$
+\boxed{
+\text{尚未找到一个既容纳全部独立 prime 频率，
+又能穿过 analytic continuation，
+并保持 reflection positivity 的统一闭包。}
+}
+$$
+
+---
+
+# 第两千零五十九部　理论深度不能用“剩余维数”衡量
+
+因为每个 prime tail 与整体同型，所以：
+
+* 剩余素数仍然无限；
+* 剩余空间维数仍然无限；
+* 剩余条件仍然无限。
+
+如果用这些量衡量进展，每一步都像没有进展。
+
+项目的 residual-progress formalization 正好证明：严格下降的无限维残差链可以在每一层保留完整环境维数；真正下降的是固定目标或测试族在残差空间上的投影范数。
+
+所以理论深度应由类似以下量衡量：
+
+$$
+\boxed{
+\varepsilon_N(\mathcal T)
+=
+\sup_{f\in\mathcal T}
+\|P_{R_N}f\|.
+}
+\tag{2059.1}
+$$
+
+对于 Euler 乘积，在：
+
+$$
+\sigma>1
+$$
+
+可以使用尾自由能：
+
+$$
+\boxed{
+\varepsilon_N(\sigma)
+=
+\sum_{j>N}
+-\log
+\left(
+1-p_j^{-\sigma}
+\right).
+}
+\tag{2059.2}
+$$
+
+它满足：
+
+$$
+\varepsilon_N(\sigma)>0,
+\qquad
+\varepsilon_N(\sigma)\downarrow0.
+$$
+
+虽然每个尾部仍然有无限多个素数。
+
+进入临界带以后，该绝对正尾量不再可直接使用，这正是必须引入：
+
+* 解析延拓；
+* signed counterterm；
+* Weil test；
+* Gram positivity；
+
+的原因。
+
+---
+
+# 第两千零六十部　新的“无对角逃逸”主命题
+
+可以把你当前的直觉压成一个精确研究目标。
+
+设第 \(r\) 层理论产生 prime-indexed residual：
+
+$$
+R_r(p).
+$$
+
+定义三个条件：
+
+## 局部闭合
+
+$$
+\boxed{
+\forall p,
+\quad
+R_r(p)\to0.
+}
+\tag{2060.1}
+$$
+
+## 统一尾紧性
+
+$$
+\boxed{
+\lim_{P\to\infty}
+\sup_r
+\sum_{p>P}|R_r(p)|
+=
+0.
+}
+\tag{2060.2}
+$$
+
+## 关系正性闭合
+
+所有有限 Gram／localizer 均具有统一非负下界，或至少在极限中保持 PSD。
+
+则前两项排除 residual 向更大素数对角迁移。
+
+第三项排除 analytic continuation 在极限中生成新的负关系方向。
+
+可以称之为：
+
+# Prime–Observer No-Diagonal-Escape Principle
+
+$$
+\boxed{
+\text{局部逐层闭合}
++
+\text{统一尾紧性}
++
+\text{关系正性闭合}
+\Longrightarrow
+\text{全局完成无信息逃逸}.
+}
+\tag{2060.3}
+$$
+
+这比“继续增加更多条件”更接近真正的 RH 主桥。
+
+---
+
+# 第两千零六十一部　你的直觉中最准确与最需要修正的部分
+
+## 精确成立的部分
+
+$$
+\boxed{
+\text{每一个有限 prime window 都有不可见尾部。}
+}
+$$
+
+$$
+\boxed{
+\text{每个有限尾部在结构上仍像完整 prime system。}
+}
+$$
+
+$$
+\boxed{
+\text{递归奇偶分割的完整边界大于普通整数域。}
+}
+$$
+
+$$
+\boxed{
+\text{点态消去不能排除残差沿 prime/order 对角逃逸。}
+}
+$$
+
+$$
+\boxed{
+\text{非 RH 有有限见证，而 RH 不能由有限检查直接确认。}
+}
+$$
+
+$$
+\boxed{
+\text{同层条件表不能枚举全部语义谓词。}
+}
+$$
+
+## 尚不能推出的部分
+
+$$
+\boxed{
+\mathrm{RH}\text{ 因此不可证明}.
+}
+$$
+
+$$
+\boxed{
+\mathrm{RH}\text{ 因此独立于 ZFC}.
+}
+$$
+
+$$
+\boxed{
+\text{素数不存在任何有限统一规律}.
+}
+$$
+
+$$
+\boxed{
+\text{每层的新项原则上永远不能被一个全局不变量吸收}.
+}
+$$
+
+素数虽不服从 Fibonacci 那样的固定线性递推，却仍有：
+
+* 唯一分解；
+* Euler 乘积；
+* 显式公式；
+* 解析函数；
+* 谱变换；
+
+这些强统一结构。
+
+问题是尚未找到足够强、同时又保持正性的那一个。
+
+---
+
+# 第两千零六十二部　建议形式化顺序
+
+```text
+D5/S3/Arithmetic/PrimeConfigurationTower/
+  PrimeValuationConfiguration.lean
+  PositiveIntegerPrimeConfigurationEquiv.lean
+  FinitePrimeProjection.lean
+  NoFinitePrimeProjectionInjective.lean
+  CompletePrimeProjectionsSeparate.lean
+  PrimeTailIsomorphicToWhole.lean
+
+D5/S3/Arithmetic/PrimeParityCompletion/
+  FiniteSupportPrimeParity.lean
+  PrimeParityPrefixTree.lean
+  ProfinitePrimeParityCompletion.lean
+  PrimorialParityPathLimit.lean
+  InfiniteSupportLimitNotInteger.lean
+  TotalParityNoContinuousProfiniteExtension.lean
+
+D5/S3/Arithmetic/PrimeFrequencyIndependence/
+  FinitePrimeLogRationalIndependence.lean
+  DistinctPrimePowerFrequencies.lean
+  PrimeEulerNonautonomousCocycle.lean
+  PrimeSkeletonStationaryMetricNonstationary.lean
+
+D5/S3/Observer/ThreeDiagonalEscapes/
+  TailCoordinateEscape.lean
+  SemanticDiagonalEscape.lean
+  MovingMassDiagonalEscape.lean
+  DiagonalEscapesPairwiseDistinct.lean
+
+D5/S3/Observer/NoDiagonalMassEscape/
+  PointwisePrimeResidualConvergence.lean
+  UniformPrimeTailTightness.lean
+  PointwisePlusTightnessImpliesL1Convergence.lean
+  MovingPrimeResidualCounterexample.lean
+
+D5/S3/Analytic/Zeta/RHVerificationTopology/
+  FiniteHeightRHStatement.lean
+  RHAsInfiniteMeet.lean
+  NotRHHasFiniteWitness.lean
+  FiniteVerificationDoesNotCertifyRH.lean
+  RHTruthClosedNotOpen.lean
+
+D5/S3/Analytic/EulerGerm/AllOrderExtraction/
+  FiniteOrderPrimeCorrection.lean
+  ResidualSupportFloor.lean
+  PointwiseAllOrderCancellation.lean
+  UniformPrimeResidualTightnessTarget.lean
+  CorrectionProductConvergenceTarget.lean
+  AllOrderExtractionNoDiagonalEscapeTarget.lean
+
+D5/S3/Weil/PrimeObserverMultiaxis/
+  PrimeDepth.lean
+  ZeroHeightDepth.lean
+  TestComplexityDepth.lean
+  RenormalizationOrderDepth.lean
+  FiniteObservationRectangle.lean
+  MultiaxisResidual.lean
+  MultiaxisUniformTightnessTarget.lean
+
+D5/S3/Weil/PrimeGammaUniformClosure/
+  PrimeFrequencyOperator.lean
+  PrimeBosonicFredholmDeterminant.lean
+  PrimeGammaCommonPositiveConeTarget.lean
+  AnalyticContinuationPreservesConeTarget.lean
+  NoDiagonalEscapeImpliesRHTarget.lean
+```
+
+---
+
+# 第两千零六十三部　理论深度审计
+
+| 结论                                                            | 当前地位                   |
+| ------------------------------------------------------------- | ---------------------- |
+| 正整数是可数素数生成的有限支撑指数向量                                           | 精确                     |
+| 任意有限素数投影都不单射                                                  | 精确                     |
+| 所有有限素数投影共同可以分离整数                                              | 精确                     |
+| 每个有限 prime tail 与整个自由素数幺半群同型                                  | 精确                     |
+| prime parity 的 profinite completion 大于整数域                     | 精确                     |
+| 总素因子宇称不能连续延拓到全部无限 prime configurations                        | 本轮核心精确定理               |
+| \(\{\log p\}\) 在 \(\mathbb Q\) 上线性无关                          | 精确                     |
+| Euler prime recursion 是非自治 cocycle                            | 精确描述                   |
+| 点态消去不推出全局残差消失                                                 | 精确                     |
+| 点态收敛加统一尾紧性推出全局 \(\ell^1\) 收敛                                  | 精确                     |
+| 无限状态完整分离可能没有有限观察窗口                                            | 项目机器闭合                 |
+| 每个有限残差可保持全维，终端交集仍为零                                           | 项目机器闭合                 |
+| 同层语法不能枚举全部谓词语义                                                | 项目机器闭合                 |
+| Golden Euler germ 当前是有限阶而非 all-order extraction               | 项目最新机器边界               |
+| RH 假具有有限零点见证                                                  | 精确                     |
+| RH 真不能由有限检查单独认证                                               | 精确                     |
+| RH 本身是 Cantor 对角悖论                                            | 不成立                    |
+| 以上结构证明 RH 独立于 ZFC                                             | 不成立                    |
+| RH 的核心可能是 prime/order/test 多轴残差缺乏统一紧性                         | 有力结构诊断，尚非等价定理          |
+| all-order prime residual tightness + global positivity 可闭合 RH | 待建立具体 canonical bridge |
+
+---
+
+# 本轮最终结论
+
+你感觉“每一层都还有一层，而且剩余层看起来仍像完整问题”，这不是错觉。
+
+它有一个精确结构：
+
+$$
+\boxed{
+\bigoplus_{p>N}\mathbb N_0
+\cong
+\bigoplus_p\mathbb N_0.
+}
+$$
+
+删除任意有限多个素数以后，剩余 prime tail 仍然是同类型的无限自由生成系统。
+
+所以每个有限阶段都像只是重新回到起点。
+
+但全部有限尾部的交集仍然可以为零：
+
+$$
+\boxed{
+\bigcap_NR_N=\{0\}.
+}
+$$
+
+这意味着真正的完成发生在：
+
+$$
+\omega\text{-极限},
+$$
+
+而不发生在任何有限层。
+
+项目已经为这种“每层全维、终端为零”的现象提供了机器证明。
+
+---
+
+不断按照素数占据奇偶继续二分，也确实形成一棵无限树。
+
+但它的完整边界：
+
+$$
+\prod_p\mathbb Z_2
+$$
+
+比整数所对应的有限支撑空间：
+
+$$
+\bigoplus_p\mathbb Z_2
+$$
+
+更大。
+
+无限分割会产生不再对应普通整数的无限素数配置。
+
+而有限整数上的总宇称：
+
+$$
+(-1)^{\Omega(n)}
+$$
+
+不能连续延拓到这个完整边界。
+
+所以：
+
+$$
+\boxed{
+\text{奇偶可以在每个有限对象上定义，
+却不能自动成为无限完成空间上的全局名字。}
+}
+$$
+
+这正是“条件本身也分不完”的一个严格版本。
+
+---
+
+你关于 Fibonacci 与素数的区别也非常准确。
+
+Fibonacci 是：
+
+$$
+v_{n+1}=Av_n
+$$
+
+的固定自治递归。
+
+素数 Euler 系统则是：
+
+$$
+Z_{N+1}
+=
+Z_N
+\left(
+1-e^{-s\log p_{N+1}}
+\right)^{-1}.
+$$
+
+每层都会加入新的：
+
+$$
+\log p_{N+1}.
+$$
+
+而全部 \(\log p\) 在有理数上彼此线性独立。
+
+所以每一个新 prime 都带来一个无法由此前有限频率约去的新方向。
+
+素数尾部的组合类型不断重复，实际度量却从不重复：
+
+$$
+\boxed{
+\text{结构自相似，权重非自相似。}
+}
+$$
+
+这正是它比 Fibonacci 难得多的原因之一。
+
+---
+
+但最深的困难不是“每个固定素数都有一个新项”。
+
+真正危险的是：
+
+$$
+\boxed{
+\text{当你逐层消去固定素数时，
+残差可以向更大的素数迁移。}
+}
+$$
+
+即：
+
+$$
+r_{m,p}\to0
+\quad
+\text{对每个固定 }p,
+$$
+
+却仍可能有：
+
+$$
+\sum_p|r_{m,p}|=1.
+$$
+
+这才是分析中的真正对角逃逸。
+
+所以 finite-order golden germ 不断提高余项 floor，仍不足以完成全局证明；必须再证明统一尾紧性，禁止下一层残差永远向更远素数搬家。项目当前的第四阶 golden germ 也明确停留在有限 cancellation certificate，而未声称 all-order 或 RH。
+
+---
+
+RH 的真假也具有同样的不对称。
+
+若 RH 为假，一个离线零点就是有限见证。
+
+若 RH 为真，任意有限个在线零点都不能仅凭检查证明后面全部在线。
+
+所以：
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\text{ 是有限可见事件};
+}
+$$
+
+$$
+\boxed{
+\mathrm{RH}
+\text{ 是无限交的终端性质}.
+}
+$$
+
+但这不意味着 RH 没有有限证明。
+
+一个证明可以证明统一生成律，而不是逐项验证所有零点。
+
+---
+
+因此，黎曼猜想难以解决的核心不应简单写成：
+
+$$
+\boxed{
+\text{因为所有集合都是无限集合。}
+}
+$$
+
+更准确的是：
+
+$$
+\boxed{
+\text{RH 同时包含无限独立 prime 频率、
+失去绝对收敛后的解析完成、
+以及必须在所有观察关系层保持的全局正性。}
+}
+$$
+
+任何有限逐项方法都会留下尾部。
+
+任何点态 all-order 方法都可能发生对角质量逃逸。
+
+任何仅有局部 Euler 因子的方案都可能缺少跨 prime 关系。
+
+成功的证明必须找到一个统一结构，使：
+
+$$
+\boxed{
+\text{局部消去}
++
+\text{统一尾紧性}
++
+\text{全局关系正性}
+}
+$$
+
+同时成立。
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{RH 不是一个已知的无限层悖论；
+它更像一座每个有限尾部都与整体同型的非终端观察塔。
+对角化说明同层条件表无法穷尽语义；
+素数独立性说明每层都会加入新频率；
+极限分析说明残差还可能沿层级对角迁移。
+真正的证明不是把所有层分完，
+而是证明无论残差向哪一层逃逸，都有一个统一正不变量把它锁住。}
+$$

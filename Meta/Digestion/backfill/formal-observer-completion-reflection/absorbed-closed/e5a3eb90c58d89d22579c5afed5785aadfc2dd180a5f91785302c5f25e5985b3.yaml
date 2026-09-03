@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:e5a3eb90c58d89d22579c5afed5785aadfc2dd180a5f91785302c5f25e5985b3
+  normalized_sha256: sha256:e5a3eb90c58d89d22579c5afed5785aadfc2dd180a5f91785302c5f25e5985b3
+cas_ref: sha256:e5a3eb90c58d89d22579c5afed5785aadfc2dd180a5f91785302c5f25e5985b3
+coverage_gids:
+  - gid: D5/S3/Entropy/Forgetting/ConditionalInformationForgetting.conditional_information_forgetting
+    target_statement_id: sha256:28d60c077fcddc0ba36a793872499b3f409ceedbb95a33a41f4cf1ccdc84db03
+receipts:
+  scribe:
+    - gid: D5/S3/Entropy/Forgetting/ConditionalInformationForgetting.conditional_information_forgetting
+      definition_sha256: sha256:6099613b11e139acc65a169f11fe0c81edbd0b2e358da2cccba92d3d4bfd0001
+      emission_sha256: sha256:cbf027e4eb13068c5228e83b65460acb816611b495b6aec254e59923654e3817
+  unresolved_subitems: []

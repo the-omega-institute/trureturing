@@ -101,7 +101,7 @@ public sealed partial class ProductionEnvironmentTests
         {
             files[coveredPath] = files[coveredPath].Replace(
                 "coverage_gids: []",
-                $"coverage_gids:\n  - {coverageGid}",
+                $"coverage_gids:\n  - gid: {coverageGid}\n    target_statement_id: null",
                 StringComparison.Ordinal);
         }
 
@@ -245,7 +245,7 @@ public sealed partial class ProductionEnvironmentTests
         var planned = current.WithDigestionSources([
             source with
             {
-                Entries = retainEntry ? [entry with { CoverageGids = [] }] : [],
+                Entries = retainEntry ? [entry with { Coverage = [] }] : [],
             },
         ]);
         var alignment = new DigestionLedgerAlignment(
@@ -281,8 +281,8 @@ public sealed partial class ProductionEnvironmentTests
     {
         var entry = StatusAuthorityClosureEntry() with
         {
-            CoverageGids = [],
-            Receipts = new DigestionReceipts([], [], [], ["chain-child"], null),
+            Coverage = [],
+            Receipts = new DigestionReceipts([], [], ["chain-child"], null),
         };
 
         var classification = ClassifyCurrentOnlyNewEntry(entry);
@@ -305,8 +305,8 @@ public sealed partial class ProductionEnvironmentTests
     {
         var entry = StatusAuthorityClosureEntry() with
         {
-            CoverageGids = [],
-            Receipts = new DigestionReceipts([], [], [], [], null),
+            Coverage = [],
+            Receipts = new DigestionReceipts([], [], [], null),
             ProjectedStatus = new DigestionStatus(
                 DigestionMigrationState.Partial,
                 DigestionTruthState.Open),
@@ -427,13 +427,13 @@ public sealed partial class ProductionEnvironmentTests
         var child = StatusAuthorityClosureEntry() with
         {
             AtomId = "closure-child",
-            CoverageGids = [],
-            Receipts = new DigestionReceipts([], [], [], [], null),
+            Coverage = [],
+            Receipts = new DigestionReceipts([], [], [], null),
         };
         var parent = StatusAuthorityClosureEntry() with
         {
             AtomId = "closure-parent",
-            Receipts = new DigestionReceipts([], [], [], [child.AtomId], null),
+            Receipts = new DigestionReceipts([], [], [child.AtomId], null),
         };
         var document = DigestionTestSupport.Document(
             parent.Atomizer,
@@ -481,7 +481,6 @@ public sealed partial class ProductionEnvironmentTests
             SyntheticNumberedAtomizer.Id,
             coverageGids: [coverageGid],
             receipts: new DigestionReceipts(
-                [],
                 [],
                 [],
                 [],

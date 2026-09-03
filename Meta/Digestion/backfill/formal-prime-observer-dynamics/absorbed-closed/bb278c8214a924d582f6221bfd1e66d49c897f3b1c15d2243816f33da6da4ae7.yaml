@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:bb278c8214a924d582f6221bfd1e66d49c897f3b1c15d2243816f33da6da4ae7
+  normalized_sha256: sha256:bb278c8214a924d582f6221bfd1e66d49c897f3b1c15d2243816f33da6da4ae7
+cas_ref: sha256:bb278c8214a924d582f6221bfd1e66d49c897f3b1c15d2243816f33da6da4ae7
+coverage_gids:
+  - gid: D5/S3/Observer/ProbabilisticClosure/ConullImageProbabilityIsomorphism.conull_measurable_injection_probability_isomorphism
+    target_statement_id: sha256:257c3f1de8ed3bc1218c0401ac5e195d3fef9acb86834943b200eeadd72cf83d
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/ProbabilisticClosure/ConullImageProbabilityIsomorphism.conull_measurable_injection_probability_isomorphism
+      definition_sha256: sha256:4b4aa6c0d409dd2d928c8b86bfa3b344e9a7d7dc03f6811bfc0708e9b1cb1ded
+      emission_sha256: sha256:70561d11e8c3f8cec8cf52c3b2fc6a030c8d7d28e978c487f1ce4bc9f318656e
+  unresolved_subitems: []

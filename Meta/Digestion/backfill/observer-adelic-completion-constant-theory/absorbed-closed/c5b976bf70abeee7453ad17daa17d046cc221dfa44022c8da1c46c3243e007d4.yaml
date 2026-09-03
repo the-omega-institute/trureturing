@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:c5b976bf70abeee7453ad17daa17d046cc221dfa44022c8da1c46c3243e007d4
+  normalized_sha256: sha256:c5b976bf70abeee7453ad17daa17d046cc221dfa44022c8da1c46c3243e007d4
+cas_ref: sha256:c5b976bf70abeee7453ad17daa17d046cc221dfa44022c8da1c46c3243e007d4
+coverage_gids:
+  - gid: D5/S3/Weil/ZetaBridge/PrimeArchimedeanEnergyIdentity.prime_archimedean_energy_identity
+    target_statement_id: sha256:1fe6c8f5cb6a937df99a3e273695a8734677a218ead6eb080135be70f5dcb1ba
+receipts:
+  scribe:
+    - gid: D5/S3/Weil/ZetaBridge/PrimeArchimedeanEnergyIdentity.prime_archimedean_energy_identity
+      definition_sha256: sha256:82bfb15bd668460c06971feae8f406684648bc5a93dd9ae2a5d45234033947f5
+      emission_sha256: sha256:72a36346f48e558d48f0a3275e99e0fe6e39502c4456b3c26adf7cb247e53c92
+  unresolved_subitems: []

@@ -4,12 +4,10 @@ fingerprints:
 cas_ref: sha256:988e65447ebf808cda2493366bd9cd7cba19f66fb441b9f5508334bd6f38fe71
 coverage_gids: []
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems: []
   cover_disposition:
     outcome: partial-closed
-    recorded_at_utc: 2026-08-28T00:55:15.8281740+00:00
     gids:
       - D5/S3/ConceptDynamics/Refinement/ResourceAsymmetricConceptEquivalence.ordinary_equivalence_does_not_imply_resource_equivalence
     gaps:

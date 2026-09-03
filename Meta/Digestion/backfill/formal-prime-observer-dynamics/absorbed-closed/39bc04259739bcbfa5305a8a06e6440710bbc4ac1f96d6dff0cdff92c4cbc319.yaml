@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:39bc04259739bcbfa5305a8a06e6440710bbc4ac1f96d6dff0cdff92c4cbc319
 cas_ref: sha256:39bc04259739bcbfa5305a8a06e6440710bbc4ac1f96d6dff0cdff92c4cbc319
 coverage_gids:
-  - D5/S3/ConceptDynamics/ExperimentDesign/MinimumCompleteObserverSetCover.minimum_complete_observer_is_set_cover
+  - gid: D5/S3/ConceptDynamics/ExperimentDesign/MinimumCompleteObserverSetCover.minimum_complete_observer_is_set_cover
+    target_statement_id: sha256:189c0be21e6ef5ef492183a3a110371d0de1f63e7e4b6e91202b668ade9911aa
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/ExperimentDesign/MinimumCompleteObserverSetCover.minimum_complete_observer_is_set_cover
-      source_sha256: sha256:39bc04259739bcbfa5305a8a06e6440710bbc4ac1f96d6dff0cdff92c4cbc319
-      target_statement_id: sha256:189c0be21e6ef5ef492183a3a110371d0de1f63e7e4b6e91202b668ade9911aa
   scribe:
     - gid: D5/S3/ConceptDynamics/ExperimentDesign/MinimumCompleteObserverSetCover.minimum_complete_observer_is_set_cover
       definition_sha256: sha256:26dc32cfab8e6c41995350a9b427b6cb7d39613852832c470350ff0d1d4d4f6e

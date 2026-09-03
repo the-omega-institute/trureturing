@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:82f0fef42842fe19cced93758566da734f913ecb11929dd7e2c55c0ec5cfec7a
+  normalized_sha256: sha256:82f0fef42842fe19cced93758566da734f913ecb11929dd7e2c55c0ec5cfec7a
+cas_ref: sha256:82f0fef42842fe19cced93758566da734f913ecb11929dd7e2c55c0ec5cfec7a
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Attribution/ClassicalChoiceNonnaturality.classical_choice_family_is_nonnatural
+    target_statement_id: sha256:3bd962f00f0d73f5705b0bc3acfc22220c9619ae520212268c8dc0df528c08c8
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Attribution/ClassicalChoiceNonnaturality.classical_choice_family_is_nonnatural
+      definition_sha256: sha256:ec80ded4b46a9ddcc90d83c902557c08c3509c29937f1d84150beb413153746c
+      emission_sha256: sha256:2449df0c4d55519018f42e2f5595d36ef1467b0251af6b2d403aa1083a1d397e
+  unresolved_subitems: []

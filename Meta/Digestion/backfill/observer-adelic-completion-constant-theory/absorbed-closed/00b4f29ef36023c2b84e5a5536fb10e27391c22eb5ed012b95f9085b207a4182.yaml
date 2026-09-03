@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:00b4f29ef36023c2b84e5a5536fb10e27391c22eb5ed012b95f9085b207a4182
 cas_ref: sha256:00b4f29ef36023c2b84e5a5536fb10e27391c22eb5ed012b95f9085b207a4182
 coverage_gids:
-  - D5/S3/Zeros/NormalJetFormula.normal_jet_formula
+  - gid: D5/S3/Zeros/NormalJetFormula.normal_jet_formula
+    target_statement_id: sha256:078942e75c8e3015839a965647a403f7a30f5023c3e67cc53c67f61c9215bf7e
 receipts:
-  coverage:
-    - gid: D5/S3/Zeros/NormalJetFormula.normal_jet_formula
-      source_sha256: sha256:00b4f29ef36023c2b84e5a5536fb10e27391c22eb5ed012b95f9085b207a4182
-      target_statement_id: sha256:078942e75c8e3015839a965647a403f7a30f5023c3e67cc53c67f61c9215bf7e
   scribe:
     - gid: D5/S3/Zeros/NormalJetFormula.normal_jet_formula
       definition_sha256: sha256:89ad49ec7cfe16530a8013f15f569bba2e72019567b7415b4c87438df0e789bb

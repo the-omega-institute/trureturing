@@ -192,6 +192,7 @@ internal static partial class IngestCommand
 
     private sealed record IngestInputs(
         RawRepositorySnapshot CurrentRaw,
+        RawRepositorySnapshot BaselineRaw,
         RepositorySnapshot Current,
         RepositorySnapshot Baseline,
         BackfillInventoryDocument CurrentDocument,
@@ -199,6 +200,7 @@ internal static partial class IngestCommand
 
     private sealed record IngestPreparation(
         RawRepositorySnapshot CurrentRaw,
+        RawRepositorySnapshot BaselineRaw,
         RepositorySnapshot Current,
         RepositorySnapshot Baseline,
         BackfillInventoryDocument CurrentDocument,

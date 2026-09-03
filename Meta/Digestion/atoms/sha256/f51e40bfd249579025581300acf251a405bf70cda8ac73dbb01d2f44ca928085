@@ -1,0 +1,60 @@
+## 505. 黄金素数壳
+
+定义黄金壳：
+
+$$
+\mathcal P_j
+=
+\left\{
+p:
+\varphi^j\le p<\varphi^{j+1}
+\right\}.
+$$
+
+对：
+
+$$
+s=\frac12+\varepsilon+it
+$$
+
+定义该壳的素数 Euler 振幅平方质量：
+
+$$
+E_j(\varepsilon)
+=
+\sum_{p\in\mathcal P_j}
+|p^{-s}|^2
+=
+\sum_{p\in\mathcal P_j}
+p^{-1-2\varepsilon}.
+$$
+
+由素数定理和素数倒数的 Mertens 型渐近可得，在临界边界：
+
+$$
+\boxed{
+E_j(0)
+\sim
+\frac1j.
+}
+$$
+
+更一般地，当 \(\varepsilon>0\)：
+
+$$
+E_j(\varepsilon)
+\sim
+\frac{
+1-\varphi^{-2\varepsilon}
+}{
+2\varepsilon\log\varphi
+}
+\frac{
+\varphi^{-2\varepsilon j}
+}{j}.
+$$
+
+素数倒数和的对数增长及其误差控制正是经典 Mertens 理论的内容。([数字对象识别系统][2])
+
+---
+

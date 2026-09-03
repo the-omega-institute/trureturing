@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:e534a210fbc69d018f97e5579232b4ece0c99c55ad71665c2892957af4e78a71
 cas_ref: sha256:e534a210fbc69d018f97e5579232b4ece0c99c55ad71665c2892957af4e78a71
 coverage_gids:
-  - D5/S3/Observer/Hankel/HankelMinimalStateDimension.hankel_rank_lower_bound_and_quotient_attainment
+  - gid: D5/S3/Observer/Hankel/HankelMinimalStateDimension.hankel_rank_lower_bound_and_quotient_attainment
+    target_statement_id: sha256:8fecfb9751f9e3a2e94c104b34da37d8c3d340472a63a360def24088f3415a99
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/Hankel/HankelMinimalStateDimension.hankel_rank_lower_bound_and_quotient_attainment
-      source_sha256: sha256:e534a210fbc69d018f97e5579232b4ece0c99c55ad71665c2892957af4e78a71
-      target_statement_id: sha256:8fecfb9751f9e3a2e94c104b34da37d8c3d340472a63a360def24088f3415a99
   scribe:
     - gid: D5/S3/Observer/Hankel/HankelMinimalStateDimension.hankel_rank_lower_bound_and_quotient_attainment
       definition_sha256: sha256:5ecdc5d9e70835d2eeed94b013b02f971e1842ad7f3675dd873fd89553809115

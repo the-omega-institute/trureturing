@@ -3,9 +3,10 @@ fingerprints:
   normalized_sha256: sha256:1af557f45a43b0badf08cd58f93d645311985374247be50c671b915f6efc1a18
 cas_ref: sha256:1af557f45a43b0badf08cd58f93d645311985374247be50c671b915f6efc1a18
 coverage_gids:
-  - D5/E/values--json
-  - D5/S3/Constants/Values.deltaMean
+  - gid: D5/E/values--json
+    target_statement_id: null
+  - gid: D5/S3/Constants/Values.deltaMean
+    target_statement_id: sha256:09a77f9d2a015ce70ba843403a383d703d0854c02f0d5ce58ef5bf378b172ba0
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems: []

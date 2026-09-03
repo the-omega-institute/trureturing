@@ -1,0 +1,74 @@
+## 558. 精确二通道能量公式
+
+在单位圆上：
+
+$$
+\left|
+\frac{u-u^{-1}}2
+\right|^2
+=
+\sin^2\theta
+=
+1-t^2.
+$$
+
+而：
+
+$$
+t=1-2x,
+$$
+
+所以：
+
+$$
+1-t^2
+=
+4x(1-x).
+$$
+
+因此：
+
+$$
+\boxed{
+\int|f(u)|^2\,d\mu(u)
+=
+\int|A(1-2x)|^2\,d\nu(x)
++
+4\int x(1-x)
+|B(1-2x)|^2\,d\nu(x).
+}
+$$
+
+这就是一个完全精确的：
+
+$$
+\boxed{
+\text{even global channel}
++
+\text{odd observer channel}.
+}
+$$
+
+其中：
+
+* 偶 sector 不需要方向；
+* 奇 sector 携带 \(x(1-x)\)；
+* 支撑位于 \([0,1]\) 时两者均非负；
+* 支撑越过区间时，奇 sector 可以变负。
+
+仓库现有 `LiCurvatureCriterion` 已经机器验证了正圆周测度产生 Hermitian Toeplitz 矩阵和 Gram 二次型非负；其审计也明确指出完整的圆周 Herglotz 表示反向尚未由现成 Mathlib 定理直接提供。
+
+所以这条 Szegő 折叠适合作为：
+
+$$
+\boxed{
+\text{Toeplitz circle positivity}
+\longleftrightarrow
+\text{Hausdorff interval positivity}
+}
+$$
+
+之间的新正式桥。
+
+---
+

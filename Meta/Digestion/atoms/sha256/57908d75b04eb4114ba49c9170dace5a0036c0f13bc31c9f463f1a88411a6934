@@ -1,0 +1,32 @@
+## 目标二：Parity-polarization continuation
+
+定义：
+
+$$
+\Pi(s)=\frac{\zeta(2s)}{\zeta(s)^2}.
+$$
+
+证明它不只是一个亚纯函数，而是某个正算术观察状态中的合法 parity expectation：
+
+$$
+\boxed{
+\Pi(s)
+=
+\frac{
+\operatorname{Str}\rho_s
+}{
+\operatorname{Tr}\rho_s
+}
+}
+$$
+
+并将这一正实现推进到：
+
+$$
+\Re s>\frac12.
+$$
+
+若该正实现存在，\(\Pi\) 不可能在内部出现极点，因此 RH 成立。
+
+---
+

@@ -1,0 +1,78 @@
+# 二、但加入平移动力以后，无限名字可以由有限语法生成
+
+定义平移算子：
+
+$$
+U\varepsilon_h=\varepsilon_{h+1}.
+$$
+
+于是：
+
+$$
+\varepsilon_h=U^h\varepsilon_0.
+$$
+
+所以作为一个带平移作用的 **difference algebra**，全部源变量由：
+
+$$
+\boxed{
+\varepsilon_0
+\quad\text{和}\quad
+U
+}
+$$
+
+生成。
+
+同样，在算术函数空间上定义：
+
+$$
+(Uf)(n)=f(n+1),
+$$
+
+$$
+(Af)(n)=\Lambda(n)f(n).
+$$
+
+则偏移后的 von Mangoldt 观察量为：
+
+$$
+A_h=U^{-h}AU^h.
+$$
+
+任意构型：
+
+$$
+H=\{h_1,\ldots,h_k\}
+$$
+
+对应算子词：
+
+$$
+A_{h_1}\cdots A_{h_k}.
+$$
+
+因此：
+
+$$
+\boxed{
+\text{静态坐标无限生成，}
+\qquad
+\text{动力语法却可能只需 }U,A\text{ 两个生成元。}
+}
+$$
+
+这就是：
+
+$$
+\boxed{
+\text{finite grammar}
++
+\text{infinite semantics}.
+}
+$$
+
+它正好解释为何不能只从“每层都有新名字”推出“绝无有限理论”。
+
+---
+

@@ -102,7 +102,7 @@ public sealed class TruthReleaseCommandTests
 
         Assert.Equal(2, exitCode);
         Assert.Contains("TRUTH_RELEASE_INVALID", console.Error, StringComparison.Ordinal);
-        Assert.Contains("coverage-receipt-mismatch", console.Error, StringComparison.Ordinal);
+        Assert.Contains("coverage-target-mismatch", console.Error, StringComparison.Ordinal);
         Assert.Empty(Directory.GetFileSystemEntries(output.Path));
     }
 
@@ -269,14 +269,11 @@ public sealed class TruthReleaseCommandTests
             AtomizerRegistry.NoAtomizerId,
             "receipt-mismatch",
             fingerprints,
-            [BlueprintGid + ".golden_spectral_marker"],
+            [new DigestionCoverageEdge(
+                BlueprintGid + ".golden_spectral_marker",
+                "sha256:" + new string('0', 64))],
             new DigestionReceipts(
-            [
-                new DigestionCoverageReceipt(
-                    BlueprintGid + ".golden_spectral_marker",
-                    fingerprints.RawSha256,
-                    "sha256:" + new string('0', 64)),
-            ], [], [], [], null),
+                [], [], [], null),
             status,
             captured.Reference);
         var document = DigestionTestSupport.Document(

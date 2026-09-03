@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:18593e23e5f9dbe82590a77864f09745c0c9f00aaedb5e66c2f7b77a428cdd27
 cas_ref: sha256:18593e23e5f9dbe82590a77864f09745c0c9f00aaedb5e66c2f7b77a428cdd27
 coverage_gids:
-  - D5/S3/Factorization/IdealClassGroups/ClassGroupQuotientUniversality.class_group_quotient_universality
+  - gid: D5/S3/Factorization/IdealClassGroups/ClassGroupQuotientUniversality.class_group_quotient_universality
+    target_statement_id: sha256:5dcc54516eff34785c75fc99f53e80607daa8d2ff1941f9c5fc3541fc46bbe6d
 receipts:
-  coverage:
-    - gid: D5/S3/Factorization/IdealClassGroups/ClassGroupQuotientUniversality.class_group_quotient_universality
-      source_sha256: sha256:18593e23e5f9dbe82590a77864f09745c0c9f00aaedb5e66c2f7b77a428cdd27
-      target_statement_id: sha256:5dcc54516eff34785c75fc99f53e80607daa8d2ff1941f9c5fc3541fc46bbe6d
   scribe:
     - gid: D5/S3/Factorization/IdealClassGroups/ClassGroupQuotientUniversality.class_group_quotient_universality
       definition_sha256: sha256:5932b3d5db388a700a78d959d354e3088ec34a8ea88582273b5ce6c6be7c4029
