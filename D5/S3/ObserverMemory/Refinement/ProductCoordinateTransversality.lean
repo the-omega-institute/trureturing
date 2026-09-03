@@ -22,9 +22,9 @@ universe u v
 abbrev ProductCoordinate (Local : Type u) (Layer : Type v) := Local × Layer
 
 /-- States lying over one local channel. -/
-def localFiber {Local : Type u} {Layer : Type v} (local : Local) :
+def localFiber {Local : Type u} {Layer : Type v} (channel : Local) :
     Set (ProductCoordinate Local Layer) :=
-  {state | state.1 = local}
+  {state | state.1 = channel}
 
 /-- States lying in one layer. -/
 def layerFiber {Local : Type u} {Layer : Type v} (layer : Layer) :
@@ -34,10 +34,10 @@ def layerFiber {Local : Type u} {Layer : Type v} (layer : Layer) :
 /-- A local fiber and a layer fiber meet in exactly one coordinate pair. -/
 theorem local_fiber_inter_layer_fiber
     {Local : Type u} {Layer : Type v}
-    (local : Local) (layer : Layer) :
-    localFiber (Layer := Layer) local ∩
+    (channel : Local) (layer : Layer) :
+    localFiber (Layer := Layer) channel ∩
         layerFiber (Local := Local) layer =
-      {(local, layer)} := by
+      {(channel, layer)} := by
   ext state
   constructor
   · intro hstate
@@ -89,7 +89,7 @@ theorem coordinate_readout_eq_id
     {Local : Type u} {Layer : Type v} :
     coordinateReadout (Local := Local) (Layer := Layer) = id := by
   funext state
-  rcases state with ⟨local, layer⟩
+  rcases state with ⟨channel, layer⟩
   rfl
 
 /-- Its kernel is the intersection of the two coordinate kernels. -/
