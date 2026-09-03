@@ -6,7 +6,7 @@ Fourth-order pole layers select quotient and remainder, with nine exact row cert
 
 **Theorem 1.1 (Fourth-order layers give nine exact selections).**
 
-$$K(a)=\lfloor\frac{a}{4}\rfloor,\quad j(a)=a\operatorname{mod}4\in{0,1,2,3}$$
+$$K(a)=\lfloor\frac{a}{4}\rfloor,\quad j(a)=a \operatorname{mod} 4\in{0,1,2,3}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/ExactPoleLayerSelection.exact_pole_layer_selection` (`✓ std3`). ∎
 
@@ -23,3 +23,4 @@ Repository and pinned-Mathlib searches found no theorem combining this source-sp
 ## References
 
 - Truth anchor: `D5/S3/Analytic/ExactPoleLayerSelection.exact_pole_layer_selection`
+- Dependency: [D5/S3/Analytic/PoleLayerSelection](PoleLayerSelection.md)
