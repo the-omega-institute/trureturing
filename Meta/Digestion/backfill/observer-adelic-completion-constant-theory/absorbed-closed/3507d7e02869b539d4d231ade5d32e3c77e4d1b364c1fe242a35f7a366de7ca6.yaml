@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:3507d7e02869b539d4d231ade5d32e3c77e4d1b364c1fe242a35f7a366de7ca6
+  normalized_sha256: sha256:3507d7e02869b539d4d231ade5d32e3c77e4d1b364c1fe242a35f7a366de7ca6
+cas_ref: sha256:3507d7e02869b539d4d231ade5d32e3c77e4d1b364c1fe242a35f7a366de7ca6
+coverage_gids:
+  - D5/S3/Weil/ZetaGamma/ShiftFiberPoincareInequality.shift_fiber_poincare_inequality
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/ZetaGamma/ShiftFiberPoincareInequality.shift_fiber_poincare_inequality
+      source_sha256: sha256:3507d7e02869b539d4d231ade5d32e3c77e4d1b364c1fe242a35f7a366de7ca6
+      target_statement_id: sha256:65c51b1c46797951f5eb6e195c2ebac8a05e944379723c5ce367032a8933afa5
+  scribe:
+    - gid: D5/S3/Weil/ZetaGamma/ShiftFiberPoincareInequality.shift_fiber_poincare_inequality
+      definition_sha256: sha256:8f35b5a4f08371ea430e8dccbb5c2aa1b0e8b4290ef9004dcf76751a402a806c
+      emission_sha256: sha256:900e3252747fa0b68d809d7428a0c125b15f2508605d79601c1d95889d32a7e8
+  unresolved_subitems: []

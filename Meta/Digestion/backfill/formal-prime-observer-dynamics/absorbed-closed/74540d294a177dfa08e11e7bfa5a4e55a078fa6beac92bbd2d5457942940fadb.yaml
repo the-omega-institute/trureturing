@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:74540d294a177dfa08e11e7bfa5a4e55a078fa6beac92bbd2d5457942940fadb
+  normalized_sha256: sha256:74540d294a177dfa08e11e7bfa5a4e55a078fa6beac92bbd2d5457942940fadb
+cas_ref: sha256:74540d294a177dfa08e11e7bfa5a4e55a078fa6beac92bbd2d5457942940fadb
+coverage_gids:
+  - D5/S3/Factorization/IdealClassGroups/IdealIdentityPrincipalityGeneratorLayers.ideal_and_unit_coordinate_recover_generator
+receipts:
+  coverage:
+    - gid: D5/S3/Factorization/IdealClassGroups/IdealIdentityPrincipalityGeneratorLayers.ideal_and_unit_coordinate_recover_generator
+      source_sha256: sha256:74540d294a177dfa08e11e7bfa5a4e55a078fa6beac92bbd2d5457942940fadb
+      target_statement_id: sha256:1d1b9a379296fa06ca386995e4d34b7f7e5f23e1a863478658fe0a02eabd75d4
+  scribe:
+    - gid: D5/S3/Factorization/IdealClassGroups/IdealIdentityPrincipalityGeneratorLayers.ideal_and_unit_coordinate_recover_generator
+      definition_sha256: sha256:00e8d724d2c9bbb82006b3e6331617956c933ec497c37eb8ba690b9f1841e5ea
+      emission_sha256: sha256:a97f5064d066007b38719361fe98d495b6f9ecdba53282fbd1c27d2c218671a9
+  unresolved_subitems: []

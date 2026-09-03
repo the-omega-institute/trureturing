@@ -1,0 +1,18 @@
+## 415. twin Walsh parity
+
+```lean
+theorem twin_oddOdd_indicator
+    (n : ℕ) :
+    indicator
+      (liouville n = -1 ∧
+       liouville (n + 2) = -1) =
+      (1 - liouville n -
+        liouville (n + 2) +
+        liouville n *
+          liouville (n + 2)) / 4
+```
+
+应在实数或有理数嵌入后声明，避免整数除法问题。
+
+---
+

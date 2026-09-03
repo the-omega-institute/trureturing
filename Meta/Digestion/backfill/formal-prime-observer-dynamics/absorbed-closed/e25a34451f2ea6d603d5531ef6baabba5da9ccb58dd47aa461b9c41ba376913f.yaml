@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:e25a34451f2ea6d603d5531ef6baabba5da9ccb58dd47aa461b9c41ba376913f
+  normalized_sha256: sha256:e25a34451f2ea6d603d5531ef6baabba5da9ccb58dd47aa461b9c41ba376913f
+cas_ref: sha256:e25a34451f2ea6d603d5531ef6baabba5da9ccb58dd47aa461b9c41ba376913f
+coverage_gids:
+  - D5/S3/Factorization/Galois/GeneralPowerCharacterLayer.power_character_joint_kernel_eq_power_subgroup
+receipts:
+  coverage:
+    - gid: D5/S3/Factorization/Galois/GeneralPowerCharacterLayer.power_character_joint_kernel_eq_power_subgroup
+      source_sha256: sha256:e25a34451f2ea6d603d5531ef6baabba5da9ccb58dd47aa461b9c41ba376913f
+      target_statement_id: sha256:a44c069339fb942aeedd8004d17cea829b5f604b3117cfda0c19d67d75fa4f92
+  scribe:
+    - gid: D5/S3/Factorization/Galois/GeneralPowerCharacterLayer.power_character_joint_kernel_eq_power_subgroup
+      definition_sha256: sha256:53a3ee3dbe5eebd3fe66cc644d2abc183fbe39415e8da73ec56adc72eb551f3a
+      emission_sha256: sha256:91001dc2e4d2827e38a2064b66d399269daa540c738d7d3cf111b8bae1fb1daa
+  unresolved_subitems: []

@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:7e91ee441a5fe32224a08bc1fc3ca35574b093eba72321f59ea43ce40d93730e
+  normalized_sha256: sha256:7e91ee441a5fe32224a08bc1fc3ca35574b093eba72321f59ea43ce40d93730e
+cas_ref: sha256:7e91ee441a5fe32224a08bc1fc3ca35574b093eba72321f59ea43ce40d93730e
+coverage_gids:
+  - D5/S3/Observer/AgencyHolonomy/LocalEulerTransitionNonreconstruction.local_euler_determinants_do_not_determine_transition
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/AgencyHolonomy/LocalEulerTransitionNonreconstruction.local_euler_determinants_do_not_determine_transition
+      source_sha256: sha256:7e91ee441a5fe32224a08bc1fc3ca35574b093eba72321f59ea43ce40d93730e
+      target_statement_id: sha256:7842d04aa6582a268df755bf3d1d28e38398fa88e5f514a6b13bb02e103c3ded
+  scribe:
+    - gid: D5/S3/Observer/AgencyHolonomy/LocalEulerTransitionNonreconstruction.local_euler_determinants_do_not_determine_transition
+      definition_sha256: sha256:101df2521332d6dfb1996b9dd8ea33d96812f22c0c1a8b55c3c8ce5e9b0da5f4
+      emission_sha256: sha256:d2eebe28037f64d1914b237efe6bb2cbc0771f182bb9235915a767fa432451bc
+  unresolved_subitems: []

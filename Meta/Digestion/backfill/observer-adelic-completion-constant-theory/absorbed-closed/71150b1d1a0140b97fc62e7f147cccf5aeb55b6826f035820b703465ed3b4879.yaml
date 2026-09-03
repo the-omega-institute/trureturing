@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:71150b1d1a0140b97fc62e7f147cccf5aeb55b6826f035820b703465ed3b4879
+  normalized_sha256: sha256:71150b1d1a0140b97fc62e7f147cccf5aeb55b6826f035820b703465ed3b4879
+cas_ref: sha256:71150b1d1a0140b97fc62e7f147cccf5aeb55b6826f035820b703465ed3b4879
+coverage_gids:
+  - D5/S3/Weil/ZetaAnalytic/ParityWeylInterval.parity_weyl_interval
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/ZetaAnalytic/ParityWeylInterval.parity_weyl_interval
+      source_sha256: sha256:71150b1d1a0140b97fc62e7f147cccf5aeb55b6826f035820b703465ed3b4879
+      target_statement_id: sha256:da94072cf889e1a101ac474c08b485b8449d734eb3d12ccf65d2a4f6c690b541
+  scribe:
+    - gid: D5/S3/Weil/ZetaAnalytic/ParityWeylInterval.parity_weyl_interval
+      definition_sha256: sha256:7edcc45ef1460e0a0bc166d2d1adab04b3654cd2ad10e41aede6fc3752c8ce6e
+      emission_sha256: sha256:c27ba72fed43cf7bb41a4887e6ee65ceea79396efc69bf0857b19b43002a0fbb
+  unresolved_subitems: []

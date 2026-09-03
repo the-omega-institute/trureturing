@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:3a3590cda5cce4d18e111c5aeb0db3b8e1e515dd7aabb25b8288f2319b247749
+  normalized_sha256: sha256:3a3590cda5cce4d18e111c5aeb0db3b8e1e515dd7aabb25b8288f2319b247749
+cas_ref: sha256:3a3590cda5cce4d18e111c5aeb0db3b8e1e515dd7aabb25b8288f2319b247749
+coverage_gids:
+  - D5/S3/Zeros/Symmetry/SymmetricSimpleZeroFixedAxis.symmetric_simple_zero_fixed_axis
+receipts:
+  coverage:
+    - gid: D5/S3/Zeros/Symmetry/SymmetricSimpleZeroFixedAxis.symmetric_simple_zero_fixed_axis
+      source_sha256: sha256:3a3590cda5cce4d18e111c5aeb0db3b8e1e515dd7aabb25b8288f2319b247749
+      target_statement_id: sha256:c987f96b8bed85d9560b901e9068b55b3e0dc68e758bcf233b458dd25851b8ba
+  scribe:
+    - gid: D5/S3/Zeros/Symmetry/SymmetricSimpleZeroFixedAxis.symmetric_simple_zero_fixed_axis
+      definition_sha256: sha256:7b2fb03d824bb245d274b3f5962750cfc5059d6b61fea51de764651603597d6d
+      emission_sha256: sha256:c417bbe0ce8a9429111e1bdb2f63cedd281a9cd5e2a395c3aa1093aebe1713a1
+  unresolved_subitems: []

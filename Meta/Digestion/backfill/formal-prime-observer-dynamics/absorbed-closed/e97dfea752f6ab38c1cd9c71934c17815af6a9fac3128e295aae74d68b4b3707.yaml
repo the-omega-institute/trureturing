@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:e97dfea752f6ab38c1cd9c71934c17815af6a9fac3128e295aae74d68b4b3707
+  normalized_sha256: sha256:e97dfea752f6ab38c1cd9c71934c17815af6a9fac3128e295aae74d68b4b3707
+cas_ref: sha256:e97dfea752f6ab38c1cd9c71934c17815af6a9fac3128e295aae74d68b4b3707
+coverage_gids:
+  - D5/S3/Observer/ArithmeticTomography/PrimeObservationDepthGeometry.horizontal_vertical_bit_cost_lower_bounds
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/ArithmeticTomography/PrimeObservationDepthGeometry.horizontal_vertical_bit_cost_lower_bounds
+      source_sha256: sha256:e97dfea752f6ab38c1cd9c71934c17815af6a9fac3128e295aae74d68b4b3707
+      target_statement_id: sha256:75737bb835d97f67451cd6fd16b077a5b9501c5b809cf82b45052b8931bc2115
+  scribe:
+    - gid: D5/S3/Observer/ArithmeticTomography/PrimeObservationDepthGeometry.horizontal_vertical_bit_cost_lower_bounds
+      definition_sha256: sha256:7384008870d1ced0cdb690e68ac825ac18332d6c00acbbfe58ee920d88d389a4
+      emission_sha256: sha256:091de010fd2ede9cdf26b84765d5ff4343a61aa9a6b8df6ca62a4975a497557e
+  unresolved_subitems: []

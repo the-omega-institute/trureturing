@@ -1,0 +1,73 @@
+## 242. RH 的正自伴 Casimir 判据
+
+若 RH 成立：
+
+$$
+\rho=\frac12+i\gamma,
+$$
+
+则：
+
+$$
+q_\rho
+=
+\rho(1-\rho)
+=
+\frac14+\gamma^2.
+$$
+
+因此：
+
+$$
+q_\rho\in\left[\frac14,\infty\right).
+$$
+
+所以由零点定义的 \(Q\) 满足：
+
+$$
+Q=Q^\ast,
+\qquad
+Q\ge\frac14I.
+$$
+
+反之，若：
+
+$$
+Q=Q^\ast,
+\qquad
+Q\ge\frac14I
+$$
+
+且 Fredholm determinant 确实等于 \(\mathcal X\)，则所有 \(q\)-零点都在：
+
+$$
+[1/4,\infty),
+$$
+
+从而 RH 成立。
+
+因此：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+Q\text{ 是正自伴的 orbit-Casimir，且 }
+Q\ge\frac14I.
+}
+$$
+
+如果 \(Q\) 是从零点倒推定义，这仍然是等价重述。
+
+真正非平凡的目标是：
+
+$$
+\boxed{
+\text{从 prime/Weil/observer data 直接构造 }Q,
+}
+$$
+
+再证明其 determinant 是 \(\mathcal X\)。
+
+---
+
