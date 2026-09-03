@@ -1,0 +1,1 @@
+**可证伪预测(写在跑之前)**:若正确,消费冻结三阶分解的第一合取(‖Kp − 1‖ 可和)与 Mathlib `tprod_one_add_ne_zero_of_summable`、`tprod_of_exists_eq_zero`、`multipliable_one_add_of_summable`,标准三公理;若 Kp 的四个非局部因子在 Re s > 1/φ⁵ 上有零点(即 |x| 或 |y| ≥ 1),则本条为假——实际 |x| = p^{−φ² Re s} < 1。
