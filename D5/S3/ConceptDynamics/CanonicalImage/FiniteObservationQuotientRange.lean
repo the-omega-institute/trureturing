@@ -13,7 +13,8 @@ import Mathlib.Data.Setoid.Basic
    * The current-tree `jointReadout` is the canonical dependent product readout
      and is imported rather than redeclared.
    * Pinned Mathlib and live Loogle both return the exact arbitrary-function
-     theorem `Setoid.quotientKerEquivRange`; the main theorem applies it directly.
+     theorem `Setoid.quotientKerEquivRange`; the public equivalence applies it
+     directly, and the `Nonempty` theorem is its corollary.
    * The current-tree linear `FiniteReadoutKernel` and the stronger
      `CompletionCriterion` do not carry this atom's finite dependent budget
      with exactly its single equivalence conclusion. -/
@@ -50,13 +51,30 @@ abbrev EffectiveObservationQuotient {I : Type u} {X : Type v}
 
 /-- The effective observation quotient is canonically equivalent to the
 realized image of the finite-budget joint readout (source lines 522-530). -/
+noncomputable def finiteObservationQuotientEquivRange
+    {I : Type u} {X : Type v} {O : I -> Type w}
+    (q : forall i, X -> O i) (J : Finset I) :
+    EffectiveObservationQuotient q J ≃
+      Set.range (finiteObservationReadout q J) :=
+  Setoid.quotientKerEquivRange (finiteObservationReadout q J)
+
+/-- The canonical quotient-range equivalence sends a quotient representative
+to its realized finite-budget readout. -/
+@[simp] theorem finiteObservationQuotientEquivRange_apply_mk
+    {I : Type u} {X : Type v} {O : I -> Type w}
+    (q : forall i, X -> O i) (J : Finset I) (x : X) :
+    finiteObservationQuotientEquivRange q J (Quotient.mk'' x) =
+      ⟨finiteObservationReadout q J x, ⟨x, rfl⟩⟩ := by
+  rfl
+
+/-- The propositional existence corollary of the canonical equivalence. -/
 theorem finite_observation_quotient_equiv_range
     {I : Type u} {X : Type v} {O : I -> Type w}
     (q : forall i, X -> O i) (J : Finset I) :
     Nonempty
       (EffectiveObservationQuotient q J ≃
         Set.range (finiteObservationReadout q J)) :=
-  ⟨Setoid.quotientKerEquivRange (finiteObservationReadout q J)⟩
+  ⟨finiteObservationQuotientEquivRange q J⟩
 
 -- Satisfiability: a singleton budget with a constant readout is non-injective.
 example :
@@ -80,8 +98,7 @@ example {I : Type u} {X : Type v} {O : I -> Type w}
     (q : forall i, X -> O i) (J : Finset I) :
     Nonempty (EffectiveObservationQuotient q J) <->
       Nonempty (Set.range (finiteObservationReadout q J)) := by
-  rcases finite_observation_quotient_equiv_range q J with ⟨equiv⟩
-  exact equiv.nonempty_congr
+  exact (finiteObservationQuotientEquivRange q J).nonempty_congr
 
 -- The empty budget on `Unit` is intentionally legal: the source covers every function.
 example :
@@ -93,6 +110,18 @@ example :
             (fun _ : Empty => fun _ : Unit => ()) (∅ : Finset Empty))) :=
   finite_observation_quotient_equiv_range _ _
 
+-- Canonicality probe: the public equivalence computes on a concrete quotient representative.
+example (x : Bool) :
+    finiteObservationQuotientEquivRange
+        (fun _ : Unit => fun b : Bool => b) ({()} : Finset Unit)
+        (Quotient.mk'' x) =
+      ⟨finiteObservationReadout
+          (fun _ : Unit => fun b : Bool => b) ({()} : Finset Unit) x,
+        ⟨x, rfl⟩⟩ := by
+  exact finiteObservationQuotientEquivRange_apply_mk _ _ x
+
+#print axioms finiteObservationQuotientEquivRange
+#print axioms finiteObservationQuotientEquivRange_apply_mk
 #print axioms finite_observation_quotient_equiv_range
 
 end D5.S3.ConceptDynamics.CanonicalImage.FiniteObservationQuotientRange
