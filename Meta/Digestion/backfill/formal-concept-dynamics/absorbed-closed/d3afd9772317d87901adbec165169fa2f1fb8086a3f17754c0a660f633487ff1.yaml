@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:d3afd9772317d87901adbec165169fa2f1fb8086a3f17754c0a660f633487ff1
+  normalized_sha256: sha256:d3afd9772317d87901adbec165169fa2f1fb8086a3f17754c0a660f633487ff1
+cas_ref: sha256:d3afd9772317d87901adbec165169fa2f1fb8086a3f17754c0a660f633487ff1
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Audits/TargetConditionedAdmissionAudit.target_conditioned_admission_audit
+    target_statement_id: sha256:dfd36ba2c099742c4fbaf2b6401bfafe8bbafe2a3163e02f29175244d8f267ec
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Audits/TargetConditionedAdmissionAudit.target_conditioned_admission_audit
+      definition_sha256: sha256:963292cbba30170c655dab85d935ba2390d81ab33d2f05de6be237bfdde51d7f
+      emission_sha256: sha256:ade2df3226cc05dc0c8e5a434ce0b4f7c7f2dcd8e1bf031e8812020d5f1955ec
+  unresolved_subitems: []

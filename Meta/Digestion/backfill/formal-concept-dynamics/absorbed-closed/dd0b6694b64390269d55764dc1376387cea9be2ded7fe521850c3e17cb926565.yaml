@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:dd0b6694b64390269d55764dc1376387cea9be2ded7fe521850c3e17cb926565
+  normalized_sha256: sha256:dd0b6694b64390269d55764dc1376387cea9be2ded7fe521850c3e17cb926565
+cas_ref: sha256:dd0b6694b64390269d55764dc1376387cea9be2ded7fe521850c3e17cb926565
+coverage_gids:
+  - gid: D5/S1/FixedPoints/Reachability/SafetyDichotomy.reachability_safety_and_bad_path
+    target_statement_id: sha256:853668409c786461b76d639da0f884d166c8db1d78ed7a3cd6f313e465b76736
+receipts:
+  scribe:
+    - gid: D5/S1/FixedPoints/Reachability/SafetyDichotomy.reachability_safety_and_bad_path
+      definition_sha256: sha256:614e286017bce6eaa737e7acd9bf96f06a3a72341d56ba3ed9bba72fee30d978
+      emission_sha256: sha256:670c98272c87e5b7ed35f12b02a7eb6a2c5ac8c5d3d86b94ee11c038f3697547
+  unresolved_subitems: []
