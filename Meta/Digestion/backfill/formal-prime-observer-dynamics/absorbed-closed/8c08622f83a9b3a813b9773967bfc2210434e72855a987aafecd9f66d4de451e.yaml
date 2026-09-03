@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:8c08622f83a9b3a813b9773967bfc2210434e72855a987aafecd9f66d4de451e
+  normalized_sha256: sha256:8c08622f83a9b3a813b9773967bfc2210434e72855a987aafecd9f66d4de451e
+cas_ref: sha256:8c08622f83a9b3a813b9773967bfc2210434e72855a987aafecd9f66d4de451e
+coverage_gids:
+  - D5/S3/Estimation/DecisionRisk/CausalPosteriorSufficiency.causal_posterior_determines_predictions_and_bayes_decisions
+receipts:
+  coverage:
+    - gid: D5/S3/Estimation/DecisionRisk/CausalPosteriorSufficiency.causal_posterior_determines_predictions_and_bayes_decisions
+      source_sha256: sha256:8c08622f83a9b3a813b9773967bfc2210434e72855a987aafecd9f66d4de451e
+      target_statement_id: sha256:5da9148ec6a7fe85c83826ad8b0a0983cb71ecfa8f3474ce91012c0e55e3fb74
+  scribe:
+    - gid: D5/S3/Estimation/DecisionRisk/CausalPosteriorSufficiency.causal_posterior_determines_predictions_and_bayes_decisions
+      definition_sha256: sha256:e558566a63e60b034689182cb16c1d7022d79cb271cb2d0050292e54710b7cba
+      emission_sha256: sha256:59cfa511839ff5aed972902a3c9bc9e9e7bb93d7be4099918c4e575822cc5167
+  unresolved_subitems: []
