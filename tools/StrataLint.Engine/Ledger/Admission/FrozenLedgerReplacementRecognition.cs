@@ -74,11 +74,17 @@ internal sealed class FrozenLedgerIncrementalReplacementRecognition
         ImmutableHashSet<RepoPath> deletedAcceptedPaths,
         ImmutableHashSet<RepoPath> retainedModulePaths,
         RepoPath witnessPath,
-        ImmutableHashSet<RepoPath> reanchoredModulePaths)
-        : base(deletedAcceptedPaths, retainedModulePaths, witnessPath) =>
+        ImmutableHashSet<RepoPath> reanchoredModulePaths,
+        ImmutableHashSet<RepoPath> changedStatementModulePaths)
+        : base(deletedAcceptedPaths, retainedModulePaths, witnessPath)
+    {
         ReanchoredModulePaths = reanchoredModulePaths;
+        ChangedStatementModulePaths = changedStatementModulePaths;
+    }
 
     internal ImmutableHashSet<RepoPath> ReanchoredModulePaths { get; }
+
+    internal ImmutableHashSet<RepoPath> ChangedStatementModulePaths { get; }
 
     internal static FrozenLedgerIncrementalReplacementRecognition? Recognize(
         FrozenLedgerBaseView baseView,
@@ -113,6 +119,9 @@ internal sealed class FrozenLedgerIncrementalReplacementRecognition
                 || candidate.StatementId != item.Value.Material.StatementId)
             .Select(static item => item.Key)
             .ToImmutableHashSet();
+        var expectedReplacementPaths = FrozenLedgerReplacementClosure.DescendantsFrom(
+            baseView,
+            changedStatementPaths);
         var deletedEventsResolvedExactly = baseView.Events.Count(item =>
                 item.FreezePayload is not null && deletedAcceptedPaths.Contains(item.SourcePath))
             == deletedAcceptedPaths.Count;
@@ -143,19 +152,93 @@ internal sealed class FrozenLedgerIncrementalReplacementRecognition
 
         return !baseModulePaths.IsEmpty
             && !deletedModulePaths.IsEmpty
-            && deletedModulePaths.Count < baseModulePaths.Count
             && witnessPath is not null
             && deletedEventsResolvedExactly
             && retainedEventsUnchanged
             && acceptedChangesAreReplacementOnly
             && currentAcceptedPaths.SetEquals(expectedAcceptedPaths)
             && newModulePaths.SetEquals(deletedModulePaths)
-            && changedStatementPaths.SetEquals(deletedModulePaths)
+            && !changedStatementPaths.IsEmpty
+            && deletedModulePaths.SetEquals(expectedReplacementPaths)
                 ? new FrozenLedgerIncrementalReplacementRecognition(
                     deletedAcceptedPaths,
                     retainedModulePaths,
                     witnessPath,
-                    deletedModulePaths)
+                    deletedModulePaths,
+                    changedStatementPaths)
                 : null;
+    }
+}
+
+internal static class FrozenLedgerReplacementClosure
+{
+    internal static ImmutableHashSet<RepoPath> DescendantsFrom(
+        FrozenLedgerBaseView baseView,
+        IEnumerable<RepoPath> seedPaths)
+    {
+        ArgumentNullException.ThrowIfNull(baseView);
+        ArgumentNullException.ThrowIfNull(seedPaths);
+
+        var pathByIdentity = new Dictionary<string, RepoPath>(StringComparer.Ordinal);
+        foreach (var (path, entry) in baseView.ActiveByPath)
+        {
+            AddIdentity(entry.EventHash, path);
+            AddIdentity(entry.Material.FrozenNodeId.Value, path);
+        }
+
+        var dependents = new Dictionary<RepoPath, HashSet<RepoPath>>();
+        foreach (var (path, entry) in baseView.ActiveByPath)
+        {
+            foreach (var prerequisite in entry.Material.PrerequisiteFrozenNodeIds)
+            {
+                if (!pathByIdentity.TryGetValue(prerequisite.Value, out var dependencyPath))
+                {
+                    continue;
+                }
+
+                if (!dependents.TryGetValue(dependencyPath, out var directDependents))
+                {
+                    directDependents = [];
+                    dependents.Add(dependencyPath, directDependents);
+                }
+
+                directDependents.Add(path);
+            }
+        }
+
+        var closure = seedPaths.ToHashSet();
+        var pending = new Queue<RepoPath>(closure.OrderBy(
+            static path => path.Value,
+            StringComparer.Ordinal));
+        while (pending.TryDequeue(out var path))
+        {
+            if (!dependents.TryGetValue(path, out var directDependents))
+            {
+                continue;
+            }
+
+            foreach (var dependent in directDependents.OrderBy(
+                static item => item.Value,
+                StringComparer.Ordinal))
+            {
+                if (closure.Add(dependent))
+                {
+                    pending.Enqueue(dependent);
+                }
+            }
+        }
+
+        return closure.ToImmutableHashSet();
+
+        void AddIdentity(string identity, RepoPath path)
+        {
+            if (pathByIdentity.TryGetValue(identity, out var existing) && existing != path)
+            {
+                throw new FormatException(
+                    $"trusted frozen ledger identity {identity} resolves to multiple modules");
+            }
+
+            pathByIdentity[identity] = path;
+        }
     }
 }

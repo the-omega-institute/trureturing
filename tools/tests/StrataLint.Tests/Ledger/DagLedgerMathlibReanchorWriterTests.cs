@@ -161,13 +161,53 @@ public sealed class DagLedgerMathlibReanchorWriterTests
         Assert.Contains(persisted, file => file.Path == EventFor(fixture.BaseEvents, "C").Path);
     }
 
+    [Fact]
+    public void CanonicalProducerReanchorsTheCompleteTransitiveDependentClosure()
+    {
+        using var fixture = CreateFixture(
+            ModuleASource,
+            ModuleASource,
+            candidateAStatement: "compiler-reanchored A",
+            bImportsA: true,
+            includeStableC: true,
+            cImportsB: true);
+
+        var result = DagLedgerMathlibReanchorWriter.Reanchor(
+            fixture.RepositoryRoot,
+            fixture.Repository,
+            fixture.ReportSource,
+            ["--base", BaseRevision]);
+
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("MATHLIB_REANCHOR replacement_modules=3", result.Output, StringComparison.Ordinal);
+        Assert.Contains("MATHLIB_REANCHOR drift_seed_modules=1", result.Output, StringComparison.Ordinal);
+        var persisted = DagLedgerCommandPreparation.ReadLedgerDirectoryFiles(fixture.LedgerPath);
+        Assert.Equal(3, persisted.Length);
+        var events = LoadEvents(persisted);
+        var eventA = Assert.Single(events, item => item.DescriptorPath == RepoPathFor("A"));
+        var eventB = Assert.Single(events, item => item.DescriptorPath == RepoPathFor("B"));
+        var eventC = Assert.Single(events, item => item.DescriptorPath == RepoPathFor("C"));
+        Assert.Contains(
+            eventA.EventHash,
+            eventB.Payload.GetProperty("prerequisite_frozen_node_ids")
+                .EnumerateArray().Select(static item => item.GetString()));
+        Assert.Contains(
+            eventB.EventHash,
+            eventC.Payload.GetProperty("prerequisite_frozen_node_ids")
+                .EnumerateArray().Select(static item => item.GetString()));
+        Assert.DoesNotContain(persisted, file => fixture.BaseEvents.Any(
+            baseline => baseline.Path == file.Path));
+    }
+
     private static ReanchorFixture CreateFixture(
         string baseASource,
         string candidateASource,
         string candidateAStatement,
         string candidateBStatement = "True",
         bool aImportsB = false,
+        bool bImportsA = false,
         bool includeStableC = false,
+        bool cImportsB = false,
         bool includePriorCandidateAEvent = false,
         bool includeCoverageReceipt = false)
     {
@@ -179,9 +219,15 @@ public sealed class DagLedgerMathlibReanchorWriterTests
             {
                 Imports = aImportsB ? ["B"] : [],
             },
-            ModuleWithReport("B", ModuleBSource, "True"),
+            ModuleWithReport("B", ModuleBSource, "True") with
+            {
+                Imports = bImportsA ? ["A"] : [],
+            },
         }.Concat(includeStableC
-            ? [ModuleWithReport("C", "theorem c : True := by trivial\n", "True")]
+            ? [ModuleWithReport("C", "theorem c : True := by trivial\n", "True") with
+                {
+                    Imports = cImportsB ? ["B"] : [],
+                }]
             : []).ToArray();
         var candidateModules = new[]
         {
@@ -189,9 +235,15 @@ public sealed class DagLedgerMathlibReanchorWriterTests
             {
                 Imports = aImportsB ? ["B"] : [],
             },
-            ModuleWithReport("B", ModuleBSource, candidateBStatement),
+            ModuleWithReport("B", ModuleBSource, candidateBStatement) with
+            {
+                Imports = bImportsA ? ["A"] : [],
+            },
         }.Concat(includeStableC
-            ? [ModuleWithReport("C", "theorem c : True := by trivial\n", "True")]
+            ? [ModuleWithReport("C", "theorem c : True := by trivial\n", "True") with
+                {
+                    Imports = cImportsB ? ["B"] : [],
+                }]
             : []).ToArray();
         var baseCatalog = BuildCatalogWithEnvironment(
             BaseToolchain,

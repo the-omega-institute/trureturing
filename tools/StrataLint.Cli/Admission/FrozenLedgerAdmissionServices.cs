@@ -146,15 +146,50 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
                 "candidate frozen-ledger delta does not extend the protected-base dependency DAG");
         }
 
+        var recognition = FrozenLedgerReplacementRecognition.Recognize(
+            baseView,
+            current,
+            changes,
+            ordered);
+        if (recognition is not null && !recognition.DeletedAcceptedPaths.IsEmpty)
+        {
+            // A mathlib reanchor rewrites frozen modules in place, so the whole
+            // candidate ledger must still close as a DAG: an old prerequisite
+            // identity dropped by a reanchored dependency (an incompletely
+            // propagated closure) is only visible when the retained base and the
+            // delta are ordered together, not by the incremental delta check.
+            var candidateAcceptedFiles = current.Files
+                .Where(entry => FrozenLedgerChangeClassifier.IsAcceptedEventPath(entry.Key.Value))
+                .Select(static entry => entry.Value)
+                .ToImmutableArray();
+            var reanchoredCandidate = DagLedgerLoader.LoadTrustedFiles(candidateAcceptedFiles) switch
+            {
+                DagLedgerFilesLoadOutcome.Loaded accepted => accepted.Events,
+                DagLedgerFilesLoadOutcome.Invalid invalid => throw new FrozenLedgerAdmissionPreparationException(
+                    ImmutableArray<RepoPath>.Empty,
+                    "candidate frozen-ledger reanchor is invalid: " + invalid.Message),
+                _ => throw new InvalidOperationException("unknown frozen-ledger load outcome"),
+            };
+            if (!DagLedgerLoader.TryOrderClosedDag(
+                reanchoredCandidate,
+                ImmutableArray<string>.Empty,
+                out _,
+                out var failure))
+            {
+                throw new FrozenLedgerAdmissionPreparationException(
+                    failure?.SourcePath is { } unresolvedSource
+                        ? [unresolvedSource]
+                        : ImmutableArray<RepoPath>.Empty,
+                    "candidate frozen-ledger reanchor leaves an unresolved dependent identity: "
+                        + (failure?.Render() ?? "unknown ordering failure"));
+            }
+        }
+
         return new FrozenLedgerAdmissionPreparation(
             baseView,
             ordered,
             producerPaths.Value,
-            FrozenLedgerReplacementRecognition.Recognize(
-                baseView,
-                current,
-                changes,
-                ordered))
+            recognition)
         {
             ProtectedBaseSnapshot = protectedBase,
             CandidateSnapshot = current,
@@ -303,7 +338,7 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
         var propositionFailures = MathlibUpgradePropositionSourceDiagnostics.FindFailures(
             protectedBase,
             candidate,
-            recognition.ReanchoredModulePaths,
+            recognition.ChangedStatementModulePaths,
             baseView,
             catalog);
         if (!propositionFailures.IsEmpty)
@@ -312,6 +347,21 @@ internal sealed class ProductionFrozenLedgerAdmissionServices : IFrozenLedgerAdm
                 propositionFailures,
                 "Mathlib upgrade frozen-ledger replacement authorization failed: "
                     + "proposition-source-equivalent.");
+        }
+
+        var context = new FrozenLedgerReplacementAuthorizationContext(
+            recognition,
+            baseView,
+            catalog);
+        var closureStatementFailures =
+            MathlibUpgradeFrozenLedgerReplacementAuthorization
+                .FindChangedClosureOnlyStatements(context, recognition);
+        if (!closureStatementFailures.IsEmpty)
+        {
+            return RuleRejection(
+                closureStatementFailures,
+                "Mathlib upgrade frozen-ledger replacement authorization failed: "
+                    + "closure-statement-identity-unchanged.");
         }
 
         var axiomFailures = affected

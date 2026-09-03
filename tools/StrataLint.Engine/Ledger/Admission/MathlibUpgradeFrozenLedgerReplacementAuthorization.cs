@@ -25,13 +25,36 @@ internal sealed class MathlibUpgradeFrozenLedgerReplacementAuthorization
             && LeanPropositionSourceComparer.AreEquivalent(
                 protectedBase,
                 candidate,
-                incremental.ReanchoredModulePaths,
+                incremental.ChangedStatementModulePaths,
                 context.BaseView,
                 context.CandidateCatalog)
+            && ClosureOnlyStatementsUnchanged(context, incremental)
             && incremental.ReanchoredModulePaths.All(path =>
                 context.CandidateCatalog.ByPath.TryGetValue(path, out var material)
                 && material.AxiomClosure.All(LeanAxiomFacts.IsStandard));
     }
+
+    internal static ImmutableArray<RepoPath> FindChangedClosureOnlyStatements(
+        FrozenLedgerReplacementAuthorizationContext context,
+        FrozenLedgerIncrementalReplacementRecognition recognition)
+    {
+        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(recognition);
+        return recognition.ReanchoredModulePaths
+            .Except(recognition.ChangedStatementModulePaths)
+            .Where(path => !context.BaseView.ActiveByPath.TryGetValue(path, out var recorded)
+                || !context.CandidateCatalog.ByPath.TryGetValue(path, out var current)
+                || recorded.Material.StatementId != current.StatementId
+                || !recorded.Material.DeclarationStatementIds.SequenceEqual(
+                    current.DeclarationStatementIds))
+            .OrderBy(static path => path.Value, StringComparer.Ordinal)
+            .ToImmutableArray();
+    }
+
+    private static bool ClosureOnlyStatementsUnchanged(
+        FrozenLedgerReplacementAuthorizationContext context,
+        FrozenLedgerIncrementalReplacementRecognition recognition) =>
+        FindChangedClosureOnlyStatements(context, recognition).IsEmpty;
 
     private static bool EffectiveLeanPinsChanged(
         RepositorySnapshot protectedBase,

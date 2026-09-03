@@ -1,10 +1,40 @@
 using StrataLint.Engine;
+using StrataLint.Cli;
 using static StrataLint.Tests.FrozenLedgerTestData;
 
 namespace StrataLint.Tests;
 
 public sealed partial class FrozenLedgerTests
 {
+    [Fact]
+    public void ProductionAdmissionRejectsAReplacementThatLeavesAnOldDependentIdentity()
+    {
+        var exception = Assert.Throws<FrozenLedgerAdmissionPreparationException>(() =>
+            ValidateMathlibReanchor(
+                baseModules: [Module("A"), Module("B", imports: ["A"])],
+                candidateModules:
+                [
+                    ModuleWithReport(
+                        "A",
+                        "theorem a : True := by trivial\n",
+                        statementMaterial: "drifted A"),
+                    Module("B", imports: ["A"]),
+                ],
+                replacedModules: ["A"],
+                environment: ReanchorEnvironment.PinUpgrade));
+
+        var baseCatalog = BuildCatalog(Module("A"), Module("B", imports: ["A"]));
+        var baseEvents = EventFiles(baseCatalog);
+        var oldA = Assert.Single(LoadEvents(baseEvents), item =>
+            item.DescriptorPath == RepoPathFor("A"));
+        var oldB = Assert.Single(LoadEvents(baseEvents), item =>
+            item.DescriptorPath == RepoPathFor("B"));
+        Assert.Contains(oldA.FrozenNodeId.Value, exception.Message, StringComparison.Ordinal);
+        Assert.Contains(oldB.EventHash, exception.Message, StringComparison.Ordinal);
+        Assert.Contains(RepoPathFor("B").Value, exception.Message, StringComparison.Ordinal);
+        Assert.Contains(oldB.SourcePath.Value, exception.Message, StringComparison.Ordinal);
+    }
+
     [Fact]
     public void MathlibReanchorProductionServiceReportsPropositionSourceAuthorizationFailure()
     {

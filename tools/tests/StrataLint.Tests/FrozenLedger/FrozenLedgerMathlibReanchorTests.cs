@@ -408,7 +408,7 @@ public sealed partial class FrozenLedgerTests
     }
 
     [Fact]
-    public void MathlibReanchorRejectsReplacementSetWithUnchangedExtraModule()
+    public void MathlibReanchorAllowsClosureDescendantWithUnchangedStatementIdentity()
     {
         var result = ValidateMathlibReanchor(
             baseModules: [Module("A"), Module("B", imports: ["A"])],
@@ -423,8 +423,16 @@ public sealed partial class FrozenLedgerTests
             replacedModules: ["A", "B"],
             environment: ReanchorEnvironment.PinUpgrade);
 
-        Assert.Null(result.Recognition);
-        AssertReuseRejected(result.Failure);
+        var recognition = Assert.IsType<FrozenLedgerIncrementalReplacementRecognition>(
+            result.Recognition);
+        Assert.Equal(
+            [RepoPathFor("A")],
+            recognition.ChangedStatementModulePaths.OrderBy(static path => path.Value));
+        Assert.Equal(
+            [RepoPathFor("A"), RepoPathFor("B")],
+            recognition.ReanchoredModulePaths.OrderBy(static path => path.Value));
+        Assert.True(result.Authorized);
+        Assert.Null(result.Failure);
     }
 
     [Fact]
