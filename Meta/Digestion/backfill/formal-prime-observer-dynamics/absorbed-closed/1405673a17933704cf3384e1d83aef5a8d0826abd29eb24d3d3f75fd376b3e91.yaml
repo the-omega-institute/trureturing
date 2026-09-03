@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:1405673a17933704cf3384e1d83aef5a8d0826abd29eb24d3d3f75fd376b3e91
+  normalized_sha256: sha256:1405673a17933704cf3384e1d83aef5a8d0826abd29eb24d3d3f75fd376b3e91
+cas_ref: sha256:1405673a17933704cf3384e1d83aef5a8d0826abd29eb24d3d3f75fd376b3e91
+coverage_gids:
+  - D5/S3/Analytic/ZetaObservation/PrimeFactorCountMoments.prime_factor_count_expectation
+receipts:
+  coverage:
+    - gid: D5/S3/Analytic/ZetaObservation/PrimeFactorCountMoments.prime_factor_count_expectation
+      source_sha256: sha256:1405673a17933704cf3384e1d83aef5a8d0826abd29eb24d3d3f75fd376b3e91
+      target_statement_id: sha256:0b00b7897e4c6c32b18bed50919d6046c7bfeca822a65f2681cc5da3fc581005
+  scribe:
+    - gid: D5/S3/Analytic/ZetaObservation/PrimeFactorCountMoments.prime_factor_count_expectation
+      definition_sha256: sha256:b9e185317df92231b500858883f9636d54383bbe7e36120046b7d8777d249e9e
+      emission_sha256: sha256:e5251f655093dac725186838ca46a2bec077f6fcb104377d8925119d92007a42
+  unresolved_subitems: []

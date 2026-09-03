@@ -83,8 +83,7 @@ internal static partial class RepositoryRules
     internal const int DirectoryToleranceLimit = 48;
 
     // SL-003 capacity exclusions: theory inputs, the Lake manifest, the backfill
-    // inventory, atomizer dialect registry, canonical CAS blobs, per-test retirement
-    // declarations, and generated Blueprint
+    // inventory, atomizer dialect registry, canonical CAS blobs, and generated Blueprint
     // Markdown projections are not artifacts the capacity pressure rule bounds. Machine
     // inventories grow one entry per
     // admitted unit and are never navigated as content buckets; the atomizer registry
