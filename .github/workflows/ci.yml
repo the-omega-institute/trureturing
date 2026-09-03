@@ -38,83 +38,8 @@ concurrency:
 # base is the checked merge commit's first-parent SHA passed to the gate. The
 # workflow itself retains an unfiltered floor for engineering and root inputs.
 jobs:
-  admission-plane-partition:
-    name: Admission plane partition
-    runs-on: ubuntu-latest
-    steps:
-      - name: Wait for the GitHub merge ref
-        if: github.event_name == 'pull_request_target'
-        run: "set -euo pipefail\nfor attempt in {1..25}; do\n  timestamp=\"$(date -u +'%Y-%m-%dT%H:%M:%SZ')\"\n  printf '%s poll=%s/25\\n' \"$timestamp\" \"$attempt\"\n  if git ls-remote --exit-code \"https://github.com/${{ github.repository }}.git\" \"refs/pull/${{ github.event.pull_request.number }}/merge\" >/dev/null 2>&1; then exit 0; fi\n  sleep 5\ndone\nprintf '%s\\n' \"merge ref absent after 125s (conflicted PR or still computing)\"\nexit 0"
-      - name: Check out merge result
-        id: checkout-merge
-        uses: actions/checkout@v4
-        with: { ref: "${{ github.event_name == 'pull_request_target' && format('refs/pull/{0}/merge', github.event.pull_request.number) || github.sha }}", fetch-depth: 0, persist-credentials: false, path: candidate }
-      - name: Strip checkout remote state
-        if: steps.checkout-merge.outcome == 'success'
-        shell: bash
-        env:
-          CHECKOUT_PATH: candidate
-        run: |
-          set -euo pipefail
-          git -C "$CHECKOUT_PATH" remote remove origin
-          git -C "$CHECKOUT_PATH" for-each-ref --format='delete %(refname)' refs/remotes/ |
-            git -C "$CHECKOUT_PATH" update-ref --stdin
-          remote_count="$(git -C "$CHECKOUT_PATH" remote | wc -l)"
-          remote_ref_count="$(git -C "$CHECKOUT_PATH" for-each-ref --format='%(refname)' refs/remotes/ | wc -l)"
-          if [[ "$remote_count" -ne 0 || "$remote_ref_count" -ne 0 ]]; then
-            printf '%s\n' "checkout still exposes remotes or remote-tracking refs" >&2
-            exit 1
-          fi
-          head_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD)"
-          base_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD^1)"
-          test -n "$head_sha"
-          test -n "$base_sha"
-      - name: Enforce admission plane partition
-        if: steps.checkout-merge.outcome == 'success'
-        shell: bash
-        env:
-          ADMISSION_EVENT_NAME: ${{ github.event_name }}
-          ADMISSION_BASE_REF: ${{ github.event.pull_request.base.ref || '' }}
-        run: |
-          set -euo pipefail
-          if [[ "$ADMISSION_EVENT_NAME" == "push" ]]; then
-            printf '%s\n' 'ADMISSION_PLANE_PARTITION status=n/a reason=event-is-push'
-            exit 0
-          fi
-          if [[ "$ADMISSION_EVENT_NAME" != "pull_request_target" ]]; then
-            printf 'ADMISSION_PLANE_PARTITION status=n/a reason=event-is-%s\n' "$ADMISSION_EVENT_NAME"
-            exit 0
-          fi
-          if [[ "$ADMISSION_BASE_REF" != "dev" && "$ADMISSION_BASE_REF" != integration-* ]]; then
-            printf 'ADMISSION_PLANE_PARTITION status=n/a reason=base-is-%s\n' "$ADMISSION_BASE_REF"
-            exit 0
-          fi
-
-          classifier="$RUNNER_TEMP/admission-plane-classify.py"
-          delta_file="$RUNNER_TEMP/admission-plane-delta.z"
-          policy_file="$RUNNER_TEMP/admission-plane-base.toml"
-          if ! git -C candidate show "HEAD^1:${ADMISSION_PLANE_CLASSIFIER_PATH}" > "$classifier" 2>/dev/null; then
-            printf '%s\n' 'ADMISSION_PLANE_PARTITION status=classifier-unavailable reason=base-classifier-unavailable' >&2
-            exit 1
-          fi
-          if ! git -C candidate diff --name-only -z --no-renames HEAD^1 HEAD > "$delta_file"; then
-            printf '%s\n' 'ADMISSION_PLANE_PARTITION status=policy-unavailable reason=delta-unavailable' >&2
-            exit 1
-          fi
-          policy_fetched=true
-          if ! git -C candidate show HEAD^1:Meta/FILEMAP.toml > "$policy_file"; then
-            policy_fetched=false
-          fi
-
-          exec python3 "$classifier" \
-            --delta-file "$delta_file" \
-            --filemap "$policy_file" \
-            --filemap-fetched "$policy_fetched"
-
   candidate-engineering:
     name: Candidate harness engineering checks
-    needs: admission-plane-partition
-    if: always()
     runs-on: ubuntu-latest
     # 20 分钟对本 job 已结构性不足:凡改动命中 tools/** 者,EngineeringScope 的测试选择器
     # 选中 0 个、回退 full,跑满全部测试套件,实测 20–21 分钟(#3940)。
@@ -124,18 +49,6 @@ jobs:
     # 30 分钟给 full scope 留约 50% 余量;同文件的 Lean report job 预算已是 45 分钟。
     timeout-minutes: 30
     steps:
-      - name: Require successful admission plane partition
-        if: always()
-        shell: bash
-        env:
-          ADMISSION_PLANE_PARTITION_RESULT: ${{ needs.admission-plane-partition.result }}
-        run: |
-          set -euo pipefail
-          if [[ "$ADMISSION_PLANE_PARTITION_RESULT" != "success" ]]; then
-            printf 'ADMISSION_PLANE_PARTITION_DEPENDENCY status=failed dependency=admission-plane-partition result=%s\n' "$ADMISSION_PLANE_PARTITION_RESULT" >&2
-            exit 1
-          fi
-          printf '%s\n' 'ADMISSION_PLANE_PARTITION_DEPENDENCY status=passed dependency=admission-plane-partition result=success'
       - name: Wait for the GitHub merge ref
         if: github.event_name == 'pull_request_target'
         run: "set -euo pipefail\nfor attempt in {1..25}; do\n  timestamp=\"$(date -u +'%Y-%m-%dT%H:%M:%SZ')\"\n  printf '%s poll=%s/25\\n' \"$timestamp\" \"$attempt\"\n  if git ls-remote --exit-code \"https://github.com/${{ github.repository }}.git\" \"refs/pull/${{ github.event.pull_request.number }}/merge\" >/dev/null 2>&1; then exit 0; fi\n  sleep 5\ndone\nprintf '%s\\n' \"merge ref absent after 125s (conflicted PR or still computing)\"\nexit 0"
@@ -164,6 +77,19 @@ jobs:
           base_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD^1)"
           test -n "$head_sha"
           test -n "$base_sha"
+      - name: Enforce admission plane partition
+        if: github.event_name == 'pull_request_target' && steps.checkout-merge.outcome == 'success'
+        shell: bash
+        run: |
+          set -euo pipefail
+          classifier="$RUNNER_TEMP/admission-plane-classify.py"
+          delta="$RUNNER_TEMP/admission-plane-delta.z"
+          filemap="$RUNNER_TEMP/admission-plane-base.toml"
+          git -C candidate show "HEAD^1:${ADMISSION_PLANE_CLASSIFIER_PATH}" > "$classifier"
+          git -C candidate diff --name-only -z --no-renames HEAD^1 HEAD > "$delta"
+          fetched=true
+          if ! git -C candidate show HEAD^1:Meta/FILEMAP.toml > "$filemap"; then fetched=false; fi
+          exec python3 "$classifier" --delta-file "$delta" --filemap "$filemap" --filemap-fetched "$fetched"
       - name: Classify exact revert
         id: revert
         if: github.event_name == 'pull_request_target' && steps.checkout-merge.outcome == 'success'
@@ -376,25 +302,11 @@ jobs:
 
   lean-inspect:
     name: Canonical Lean report production
-    needs: admission-plane-partition
-    if: always()
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 45
     outputs:
       baseline_sha: ${{ steps.base.outputs.sha }}
     steps:
-      - name: Require successful admission plane partition
-        if: always()
-        shell: bash
-        env:
-          ADMISSION_PLANE_PARTITION_RESULT: ${{ needs.admission-plane-partition.result }}
-        run: |
-          set -euo pipefail
-          if [[ "$ADMISSION_PLANE_PARTITION_RESULT" != "success" ]]; then
-            printf 'ADMISSION_PLANE_PARTITION_DEPENDENCY status=failed dependency=admission-plane-partition result=%s\n' "$ADMISSION_PLANE_PARTITION_RESULT" >&2
-            exit 1
-          fi
-          printf '%s\n' 'ADMISSION_PLANE_PARTITION_DEPENDENCY status=passed dependency=admission-plane-partition result=success'
       - name: Wait for the GitHub merge ref
         if: github.event_name == 'pull_request_target'
         run: "set -euo pipefail\nfor attempt in {1..25}; do\n  timestamp=\"$(date -u +'%Y-%m-%dT%H:%M:%SZ')\"\n  printf '%s poll=%s/25\\n' \"$timestamp\" \"$attempt\"\n  if git ls-remote --exit-code \"https://github.com/${{ github.repository }}.git\" \"refs/pull/${{ github.event.pull_request.number }}/merge\" >/dev/null 2>&1; then exit 0; fi\n  sleep 5\ndone\nprintf '%s\\n' \"merge ref absent after 125s (conflicted PR or still computing)\"\nexit 0"
@@ -423,6 +335,19 @@ jobs:
           base_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD^1)"
           test -n "$head_sha"
           test -n "$base_sha"
+      - name: Enforce admission plane partition
+        if: github.event_name == 'pull_request_target' && steps.checkout-merge.outcome == 'success'
+        shell: bash
+        run: |
+          set -euo pipefail
+          classifier="$RUNNER_TEMP/admission-plane-classify.py"
+          delta="$RUNNER_TEMP/admission-plane-delta.z"
+          filemap="$RUNNER_TEMP/admission-plane-base.toml"
+          git -C candidate show "HEAD^1:${ADMISSION_PLANE_CLASSIFIER_PATH}" > "$classifier"
+          git -C candidate diff --name-only -z --no-renames HEAD^1 HEAD > "$delta"
+          fetched=true
+          if ! git -C candidate show HEAD^1:Meta/FILEMAP.toml > "$filemap"; then fetched=false; fi
+          exec python3 "$classifier" --delta-file "$delta" --filemap "$filemap" --filemap-fetched "$fetched"
       - name: Classify exact revert
         id: revert
         if: github.event_name == 'pull_request_target' && steps.checkout-merge.outcome == 'success'
@@ -710,24 +635,11 @@ jobs:
   baseline-admission:
     name: Content-addressed dev baseline admission
     needs: lean-inspect
-    if: always()
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
       DEV_BASELINE_SHA: ${{ needs.lean-inspect.outputs.baseline_sha }}
     steps:
-      - name: Require successful canonical Lean report production
-        if: always()
-        shell: bash
-        env:
-          LEAN_INSPECT_RESULT: ${{ needs.lean-inspect.result }}
-        run: |
-          set -euo pipefail
-          if [[ "$LEAN_INSPECT_RESULT" != "success" ]]; then
-            printf 'LEAN_INSPECT_DEPENDENCY status=failed dependency=lean-inspect result=%s\n' "$LEAN_INSPECT_RESULT" >&2
-            exit 1
-          fi
-          printf '%s\n' 'LEAN_INSPECT_DEPENDENCY status=passed dependency=lean-inspect result=success'
       - name: Wait for the GitHub merge ref
         if: github.event_name == 'pull_request_target'
         run: "set -euo pipefail\nfor attempt in {1..25}; do\n  timestamp=\"$(date -u +'%Y-%m-%dT%H:%M:%SZ')\"\n  printf '%s poll=%s/25\\n' \"$timestamp\" \"$attempt\"\n  if git ls-remote --exit-code \"https://github.com/${{ github.repository }}.git\" \"refs/pull/${{ github.event.pull_request.number }}/merge\" >/dev/null 2>&1; then exit 0; fi\n  sleep 5\ndone\nprintf '%s\\n' \"merge ref absent after 125s (conflicted PR or still computing)\"\nexit 0"
@@ -756,6 +668,19 @@ jobs:
           base_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD^1)"
           test -n "$head_sha"
           test -n "$base_sha"
+      - name: Enforce admission plane partition
+        if: github.event_name == 'pull_request_target' && steps.checkout-merge.outcome == 'success'
+        shell: bash
+        run: |
+          set -euo pipefail
+          classifier="$RUNNER_TEMP/admission-plane-classify.py"
+          delta="$RUNNER_TEMP/admission-plane-delta.z"
+          filemap="$RUNNER_TEMP/admission-plane-base.toml"
+          git -C candidate show "HEAD^1:${ADMISSION_PLANE_CLASSIFIER_PATH}" > "$classifier"
+          git -C candidate diff --name-only -z --no-renames HEAD^1 HEAD > "$delta"
+          fetched=true
+          if ! git -C candidate show HEAD^1:Meta/FILEMAP.toml > "$filemap"; then fetched=false; fi
+          exec python3 "$classifier" --delta-file "$delta" --filemap "$filemap" --filemap-fetched "$fetched"
       - name: Classify exact revert
         id: revert
         if: github.event_name == 'pull_request_target' && steps.checkout-merge.outcome == 'success'
