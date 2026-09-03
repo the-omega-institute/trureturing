@@ -1,0 +1,94 @@
+# 十七、一个更合理的离线零点猜想形式
+
+精确要求：
+
+$$
+\delta_n=\varphi^{-H_n}
+$$
+
+过于刚性。
+
+更自然的是只要求黄金深度渐近：
+
+$$
+\boxed{
+-\log_\varphi|\delta_n|
+=
+H_n+O(1).
+}
+$$
+
+也就是：
+
+$$
+|\delta_n|
+=
+C_n\varphi^{-H_n},
+$$
+
+其中：
+
+$$
+0<c_-\le|C_n|\le c_+<\infty.
+$$
+
+可以提出一个纯模型性猜想：
+
+> 存在一列离线零点
+>
+> $$
+> \rho_n
+> =
+> \frac12\pm\delta_n+i\gamma_n
+> $$
+>
+> 满足
+>
+> $$
+> \gamma_n\to\infty,
+> \qquad
+> \delta_n\to0,
+> $$
+>
+> 且其黄金深度增长快于给定自然 prime-observer schedule 的分辨深度。
+
+形式上：
+
+$$
+\boxed{
+H_n-
+\log_\varphi\log X(\gamma_n)
+\longrightarrow+\infty.
+}
+$$
+
+那么：
+
+$$
+|\delta_n|\log X(\gamma_n)\to0.
+$$
+
+这种系统会满足：
+
+$$
+\boxed{
+\text{观察意义下越来越像 RH，}
+}
+$$
+
+但：
+
+$$
+\boxed{
+\text{精确 RH 仍然为假。}
+}
+$$
+
+这可以称为：
+
+> **Asymptotically Critical but Exactly Off-Line Phase**
+
+不过，目前没有证据表明经典 ζ 存在这样的零点序列。
+
+---
+

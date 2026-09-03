@@ -1,0 +1,56 @@
+## 624. Prime-gap discriminant
+
+两个端点是方程：
+
+$$
+\boxed{
+\left(
+z-\varphi^{-H_{p,q}}
+\right)^2
+-
+D_{p,q}
+=
+0
+}
+$$
+
+的两个根，其中：
+
+$$
+\boxed{
+D_{p,q}
+=
+h_{p,q}^2
+=
+\varphi^{-2H_{p,q}}
+\eta_{p,q}^2.
+}
+$$
+
+因此：
+
+* 全局无指向系统只需保存 \(D_{p,q}\)；
+* 唯一观察者选择：
+
+  $$
+  +\sqrt{D_{p,q}}
+  \quad\text{或}\quad
+  -\sqrt{D_{p,q}};
+  $$
+* 交换 \(p,q\) 不改变 \(D_{p,q}\)；
+* 单独选择某个端点才产生奇分支。
+
+这正是：
+
+$$
+\boxed{
+\text{global even discriminant}
++
+\text{pointed odd branch}.
+}
+$$
+
+PrimeGaps 因而为我们此前的零点分裂模型提供了一个**真实的算术判别式原型**。
+
+---
+

@@ -30,6 +30,12 @@ representative can be changed at one point without changing its meromorphy or
 agreement on the right sub-half-plane, while destroying analyticity at that
 point. -/
 
+/-! Frontier case: D5-T0018, the O-5 independence heart bound in
+`D5.X_Frontier.Hearts`.  This module records normal-form obstruction results
+toward that open heart -- it localizes the O-5 window obstruction under
+normal-form candidates and exhibits the bare-meromorphic evasion -- but does
+not close the heart. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 

@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:d0373be5f644e654eb5aaa6637c00bf3244619fd8e4f3e63ce1f6a0fbb8c00c2
+  normalized_sha256: sha256:d0373be5f644e654eb5aaa6637c00bf3244619fd8e4f3e63ce1f6a0fbb8c00c2
+cas_ref: sha256:d0373be5f644e654eb5aaa6637c00bf3244619fd8e4f3e63ce1f6a0fbb8c00c2
+coverage_gids:
+  - gid: D5/S0/Naming/TestingTowerStructureMembership.testing_tower_has_multi_filtration_membership
+    target_statement_id: sha256:85c2e852c0ad7918d6590a1d4930fe4bf0d2524ccc55f0e6d0585f963f8c786e
+receipts:
+  scribe:
+    - gid: D5/S0/Naming/TestingTowerStructureMembership.testing_tower_has_multi_filtration_membership
+      definition_sha256: sha256:428c77a3c8b5c9c0297608ebfe723eb08ab00a49a0ab540697ea6f944680fa0f
+      emission_sha256: sha256:eb7eeef1cfcab08f3441a94c6e55f520a97f94121d3fbaadfe4127524c9da162
+  unresolved_subitems: []

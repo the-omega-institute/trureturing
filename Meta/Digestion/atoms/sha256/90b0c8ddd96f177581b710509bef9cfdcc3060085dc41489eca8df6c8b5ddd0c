@@ -1,0 +1,26 @@
+## 非粘滞情形
+
+若 log-frequency packets 在所有相关尺度上满足反聚集，则：
+
+$$
+\boxed{
+\int_I
+\mathcal Q_{N,\delta}(t)\,dt
+\ge
+c\,
+|I|\,
+\lambda_{\min}(G_{N,\delta})
+-
+\operatorname{Err}_{N,I}.
+}
+\tag{2113.2}
+$$
+
+其中：
+
+$$
+G_{N,\delta}
+$$
+
+正是两张反射长度剖面的 coefficient Gram。
+
