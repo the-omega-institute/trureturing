@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:2acf48d18cbdc6eb8ee9092e10368e146542cea26236badb5f9bad21f3d3a8c6
+  normalized_sha256: sha256:2acf48d18cbdc6eb8ee9092e10368e146542cea26236badb5f9bad21f3d3a8c6
+cas_ref: sha256:2acf48d18cbdc6eb8ee9092e10368e146542cea26236badb5f9bad21f3d3a8c6
+coverage_gids:
+  - D5/S3/Weil/ZetaBridge/RightHalfStripRiemannReduction.golden_right_half_strip_implies_rh
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/ZetaBridge/RightHalfStripRiemannReduction.golden_right_half_strip_implies_rh
+      source_sha256: sha256:2acf48d18cbdc6eb8ee9092e10368e146542cea26236badb5f9bad21f3d3a8c6
+      target_statement_id: sha256:27d6324531990ba914ee99400c11ab271580a233807c1cd397d580a4be5fe2f9
+  scribe:
+    - gid: D5/S3/Weil/ZetaBridge/RightHalfStripRiemannReduction.golden_right_half_strip_implies_rh
+      definition_sha256: sha256:8f1258d3241ae46020604caa1181fad6ad4992b2c707ee386b0fbcf33ecdcddc
+      emission_sha256: sha256:5a9d08ddda68ddf9248597f26b2a218462435c2f7d07f513fd64db70ca748e1b
+  unresolved_subitems: []

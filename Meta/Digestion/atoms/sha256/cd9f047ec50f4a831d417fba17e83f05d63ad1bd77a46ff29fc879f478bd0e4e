@@ -1,0 +1,1 @@
+**义务**:公开定理 `tendsto_alternating_partialSums_eta (s : ℂ) (hs : 0 < s.re) : Filter.Tendsto (fun N ↦ ∑ n ∈ Finset.range N, (-1 : ℂ) ^ n * ((n + 1 : ℂ) ^ (-s))) Filter.atTop (nhds ((1 - (2 : ℂ) ^ (1 - s)) * riemannZeta s))`。落点 `D5/S3/Weil/ZetaBridge/`(origin/dev 现 21/24;若满则 `D5/S3/Weil/ZetaCore/`)。
