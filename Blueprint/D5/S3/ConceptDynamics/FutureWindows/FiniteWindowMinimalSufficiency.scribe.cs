@@ -12,7 +12,8 @@ internal sealed class FiniteWindowMinimalSufficiencyDocument
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The realized finite orbit window is sufficient for every target in the window, "
-            + "and every simultaneously sufficient interface determines the entire window.",
+            + "and every simultaneously sufficient effective-image interface determines "
+            + "the entire realized window.",
         H("Finite-Window Minimal Sufficiency"),
         Blocks(
             Describe.Lean(
@@ -30,11 +31,11 @@ internal sealed class FiniteWindowMinimalSufficiencyDocument
                             + "whole finite window. This is target sufficiency with both "
                             + "interfaces restricted to their effective images.")),
                     Paragraph(Text(
-                        "Conversely, let r be any interface through which every raw orbit "
-                            + "target in the window factors. The raw finite-window readout "
-                            + "then factors through r. With Refines(coarse, fine) meaning that "
-                            + "coarse factors through fine, this is exactly the coarsest "
-                            + "factor-through property.")),
+                        "Conversely, let r be any interface whose realized image is sufficient "
+                            + "for every orbit target in the window. The realized finite-window "
+                            + "readout then factors through the realized image of r. With "
+                            + "Refines(coarse, fine) meaning that coarse factors through fine, "
+                            + "this is exactly the coarsest factor-through property.")),
                     Paragraph(Text(
                         "No inhabitedness, finiteness, or dynamical hypothesis is assumed. "
                             + "The finite dependent product includes horizon zero, and the "
@@ -71,12 +72,12 @@ internal sealed class FiniteWindowMinimalSufficiencyDocument
             Call("Refines", effectiveTarget, effectiveWindow));
         Formula candidateSufficiency = Seq(
             Forall, Sp, Typed(index, indexType), Comma, Sp,
-            Call("Refines", target, candidate));
+            Call("Refines", effectiveTarget, Call("canonicalTargetReadout", candidate)));
         Formula coarseness = Seq(
             Forall, Sp, Typed(candidateType, TypeUniverse()), Comma, Sp,
             Typed(candidate, Arrow(state, candidateType)), Comma, RowBreak, Grp(),
             Open, candidateSufficiency, Close, Sp, Rightarrow, Sp,
-            Call("Refines", window, candidate));
+            Call("Refines", effectiveWindow, Call("canonicalTargetReadout", candidate)));
 
         return Disp(Seq(
             Begin, Grp(F.Id("gathered")),

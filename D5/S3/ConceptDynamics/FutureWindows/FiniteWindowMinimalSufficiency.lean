@@ -7,17 +7,16 @@
 
 import D5.S3.ConceptDynamics.Sufficiency.FiniteWindowMinimalSufficiency
 
-/- Library-search audit trail (2026-09-03):
+/- Library-search audit trail (2026-09-04):
    * Repository searches found the exact existing owners `Refines`, `orbitTarget`,
      `finiteWindow`, and `multi_target_minimal_sufficiency`; all are imported and
      reused. The older frozen finite-window theorem adds `[Nonempty X]` because it
      maps into target images from the raw window carrier, whereas source Definition
      1.2 restricts both interfaces to their realized images.
-   * The effective-image bridge
-     `realized_image_unique_factorization_iff_reverse_kernel` was inspected, but
-     its state and both coordinate types share one universe. Restricting the source
-     theorem to that universe would be unsourced, so the imported raw projection is
-     restricted to the realized window image directly below.
+   * The second clause stays on the same effective-image carrier as the first:
+     applying `multi_target_minimal_sufficiency` to canonical target readouts
+     gives a dependent-product factor through `canonicalTargetReadout r`, and the
+     final factor into the window image is constructed on `TargetImage r`.
    * Pinned Mathlib searches found `Function.FactorsThrough`,
      `Function.factorsThrough_iff`, and `Function.iterate`. Loogle returned adjacent
      factor-through declarations but no result more exact than the repository
@@ -36,10 +35,10 @@ open D5.S3.ConceptDynamics.Sufficiency.FiniteWindowMinimalSufficiency
 open D5.S3.ConceptDynamics.Sufficiency.UniversalSufficiencyFactorization
 
 /-- The realized finite orbit window is sufficient for every observation through
-time `n`. Moreover, any interface through which all those observations factor also
-determines the whole window, so the window is coarsest in the source's factor-through
-order. This is source Theorem 3.2, using the effective-image convention of Definition
-1.2 for sufficiency and the explicit universal property of Theorem 3.1 for coarseness. -/
+time `n`. Moreover, every interface whose realized image is sufficient for all
+those observations determines the realized window, so the window is coarsest in
+the source's factor-through order. This is source Theorem 3.2, using the
+effective-image convention of Definition 1.2 for both clauses. -/
 theorem finite_future_window_minimal_sufficiency
     {X O : Type _} (q : Concept X O) (F : X -> X) (n : Nat) :
     (forall i : Fin (n + 1),
@@ -47,8 +46,13 @@ theorem finite_future_window_minimal_sufficiency
         (canonicalTargetReadout (orbitTarget q F i.1))
         (canonicalTargetReadout (finiteWindow q F n))) /\
     (forall {C : Type _} (r : Concept X C),
-      (forall i : Fin (n + 1), Refines (orbitTarget q F i.1) r) ->
-      Refines (finiteWindow q F n) r) := by
+      (forall i : Fin (n + 1),
+        Refines
+          (canonicalTargetReadout (orbitTarget q F i.1))
+          (canonicalTargetReadout r)) ->
+      Refines
+        (canonicalTargetReadout (finiteWindow q F n))
+        (canonicalTargetReadout r)) := by
   let targets : Fin (n + 1) -> Concept X O :=
     fun i => orbitTarget q F i.1
   have projections : forall i, Refines (targets i) (finiteWindow q F n) := by
@@ -71,28 +75,86 @@ theorem finite_future_window_minimal_sufficiency
     apply Subtype.ext
     exact congrFun rawFactorization state
   · intro C r sufficient
-    simpa only [targets, finiteWindow] using
-      (multi_target_minimal_sufficiency targets r).2.2 r sufficient
+    let effectiveTargets : forall i : Fin (n + 1),
+        Concept X (TargetImage (targets i)) :=
+      fun i => canonicalTargetReadout (targets i)
+    obtain ⟨factor, factorization⟩ :=
+      (multi_target_minimal_sufficiency effectiveTargets
+        (canonicalTargetReadout r)).2.2 (canonicalTargetReadout r) sufficient
+    let imageFactor : TargetImage r -> TargetImage (finiteWindow q F n) :=
+      fun rValue =>
+        ⟨fun i => (factor rValue i).1, by
+          obtain ⟨state, represents⟩ := rValue.2
+          have represented : canonicalTargetReadout r state = rValue := by
+            apply Subtype.ext
+            exact represents
+          refine ⟨state, ?_⟩
+          funext i
+          have coordinate := congrFun (congrFun factorization state) i
+          have representedCoordinate := congrArg (fun value => (value i).1)
+            (congrArg factor represented)
+          change finiteWindow q F n state i = (factor rValue i).1
+          calc
+            finiteWindow q F n state i = targets i state := rfl
+            _ = (factor (canonicalTargetReadout r state) i).1 :=
+              congrArg Subtype.val coordinate
+            _ = (factor rValue i).1 := representedCoordinate⟩
+    refine ⟨imageFactor, ?_⟩
+    funext state
+    apply Subtype.ext
+    funext i
+    have coordinate := congrFun (congrFun factorization state) i
+    change finiteWindow q F n state i = (factor (canonicalTargetReadout r state) i).1
+    calc
+      finiteWindow q F n state i = targets i state := rfl
+    _ = (factor (canonicalTargetReadout r state) i).1 :=
+        congrArg Subtype.val coordinate
 
 /- At `n = 1`, the second clause expands to the source's Theorem 3.1:
-if `q = a after r` and `q after F = b after r`, the two-entry window factors
-through `r` (the factor is the dependent-product form of `(a, b)`). -/
+if `q = a after r` and `q after F = b after r`, the two-entry window's
+realized image factors through the realized image of `r`. -/
 example {X O C : Type} (q : Concept X O) (F : X -> X) (r : Concept X C)
     (a b : C -> O) (current : q = a ∘ r)
     (next : orbitTarget q F 1 = b ∘ r) :
-    Refines (finiteWindow q F 1) r /\
+    Refines
+        (canonicalTargetReadout (finiteWindow q F 1))
+        (canonicalTargetReadout r) /\
       finiteWindow q F 1 =
         (fun value i => Fin.cases (a value) (fun _ => b value) i) ∘ r := by
   constructor
   · apply (finite_future_window_minimal_sufficiency q F 1).2 r
     intro i
     refine Fin.cases ?_ (fun j => ?_) i
-    · change Refines q r
-      exact ⟨a, current⟩
+    · change Refines (canonicalTargetReadout q) (canonicalTargetReadout r)
+      refine ⟨fun value => ⟨a value.1, ?_⟩, ?_⟩
+      · obtain ⟨state, represents⟩ := value.2
+        refine ⟨state, ?_⟩
+        calc
+          q state = a (r state) := by
+            have h := congrFun current state
+            change q state = a (r state) at h
+            exact h
+          _ = a value.1 := congrArg a represents
+      · funext state
+        apply Subtype.ext
+        exact congrFun current state
     · have hj : j = 0 := Subsingleton.elim _ _
       subst j
-      change Refines (orbitTarget q F 1) r
-      exact ⟨b, next⟩
+      change Refines
+        (canonicalTargetReadout (orbitTarget q F 1))
+        (canonicalTargetReadout r)
+      refine ⟨fun value => ⟨b value.1, ?_⟩, ?_⟩
+      · obtain ⟨state, represents⟩ := value.2
+        refine ⟨state, ?_⟩
+        calc
+          orbitTarget q F 1 state = b (r state) := by
+            have h := congrFun next state
+            change orbitTarget q F 1 state = b (r state) at h
+            exact h
+          _ = b value.1 := congrArg b represents
+      · funext state
+        apply Subtype.ext
+        exact congrFun next state
   · funext state i
     refine Fin.cases ?_ (fun j => ?_) i
     · change q state = a (r state)
@@ -102,6 +164,30 @@ example {X O C : Type} (q : Concept X O) (F : X -> X) (r : Concept X C)
       change orbitTarget q F 1 state = b (r state)
       exact congrFun next state
 
+/- The source's effective-image carrier admits the Empty/Unit edge case even
+when the raw codomain factor does not exist: the only interface
+`r : Empty -> Unit` is sufficient through its empty realized image, while
+the old raw universal premise would require a function `Unit -> Empty`. -/
+example :
+    let q : Concept Empty Empty := fun x => Empty.elim x
+    let r : Concept Empty Unit := fun x => Empty.elim x
+    (forall i : Fin (0 + 1),
+      Refines
+        (canonicalTargetReadout (orbitTarget q id i.1))
+        (canonicalTargetReadout r)) /\
+    (Not (forall i : Fin (0 + 1), Refines (orbitTarget q id i.1) r)) := by
+  classical
+  dsimp
+  constructor
+  · intro i
+    refine ⟨fun value => ?_, ?_⟩
+    · exact Empty.elim (Classical.choose value.2)
+    · funext state
+      exact Empty.elim state
+  · intro rawPremise
+    rcases rawPremise 0 with ⟨factor, _⟩
+    exact Empty.elim (factor ())
+
 /- Concrete witnesses exercise both clauses at horizons one and two. -/
 example :
     (forall i : Fin 2,
@@ -109,8 +195,13 @@ example :
         (canonicalTargetReadout (orbitTarget (id : Bool -> Bool) Bool.not i.1))
         (canonicalTargetReadout (finiteWindow (id : Bool -> Bool) Bool.not 1))) /\
     (forall {C : Type} (r : Concept Bool C),
-      (forall i : Fin 2, Refines (orbitTarget (id : Bool -> Bool) Bool.not i.1) r) ->
-      Refines (finiteWindow (id : Bool -> Bool) Bool.not 1) r) :=
+      (forall i : Fin 2,
+        Refines
+          (canonicalTargetReadout (orbitTarget (id : Bool -> Bool) Bool.not i.1))
+          (canonicalTargetReadout r)) ->
+      Refines
+        (canonicalTargetReadout (finiteWindow (id : Bool -> Bool) Bool.not 1))
+        (canonicalTargetReadout r)) :=
   finite_future_window_minimal_sufficiency (id : Bool -> Bool) Bool.not 1
 
 example :
@@ -119,8 +210,13 @@ example :
         (canonicalTargetReadout (orbitTarget (id : Bool -> Bool) Bool.not i.1))
         (canonicalTargetReadout (finiteWindow (id : Bool -> Bool) Bool.not 2))) /\
     (forall {C : Type} (r : Concept Bool C),
-      (forall i : Fin 3, Refines (orbitTarget (id : Bool -> Bool) Bool.not i.1) r) ->
-      Refines (finiteWindow (id : Bool -> Bool) Bool.not 2) r) :=
+      (forall i : Fin 3,
+        Refines
+          (canonicalTargetReadout (orbitTarget (id : Bool -> Bool) Bool.not i.1))
+          (canonicalTargetReadout r)) ->
+      Refines
+        (canonicalTargetReadout (finiteWindow (id : Bool -> Bool) Bool.not 2))
+        (canonicalTargetReadout r)) :=
   finite_future_window_minimal_sufficiency (id : Bool -> Bool) Bool.not 2
 
 /- The concrete horizon-one carrier is not collapsed: its time-zero coordinate
