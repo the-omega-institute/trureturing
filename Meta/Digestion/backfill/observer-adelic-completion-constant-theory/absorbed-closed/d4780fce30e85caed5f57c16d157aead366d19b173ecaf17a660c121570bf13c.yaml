@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:d4780fce30e85caed5f57c16d157aead366d19b173ecaf17a660c121570bf13c
+  normalized_sha256: sha256:d4780fce30e85caed5f57c16d157aead366d19b173ecaf17a660c121570bf13c
+cas_ref: sha256:d4780fce30e85caed5f57c16d157aead366d19b173ecaf17a660c121570bf13c
+coverage_gids:
+  - D5/S3/ConceptDynamics/Attribution/SingletonAxisSelectionObstruction.no_equivariant_singleton_axis_selector
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Attribution/SingletonAxisSelectionObstruction.no_equivariant_singleton_axis_selector
+      source_sha256: sha256:d4780fce30e85caed5f57c16d157aead366d19b173ecaf17a660c121570bf13c
+      target_statement_id: sha256:7bdd7de4013bfd7545e1bcf1dc4aa66903b019fd467ff3aab1bea1b9a9499d0c
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Attribution/SingletonAxisSelectionObstruction.no_equivariant_singleton_axis_selector
+      definition_sha256: sha256:ce7e2522b9c40031a5432a71e16b7371b076b08d113b7732c5d5d5b012806c66
+      emission_sha256: sha256:88100c7acda37ca0db9941d417dd4d7d43ec7d227e0f5948f5e0b43e82ccf745
+  unresolved_subitems: []
