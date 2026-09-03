@@ -209,7 +209,7 @@ Apply this authoring contract:
 - Give unverified claims explicit `open` or `conjecture` language. A source may
   faithfully say that it contains a paper argument, but it must not say
   `Lean-verified`, `closed`, `frozen`, or equivalent unless the current ledger
-  supplies that receipt.
+  supplies that evidence.
 - Treat theory and claim numbers only as local provenance. Never derive a Lean
   name, GID, dependency, or structural address from them.
 - Preserve every authorial claim sentence. Structural normalization may add
@@ -381,7 +381,7 @@ does not perform that work.
   specification and `Meta/registry.yaml` consumers.
 - Source discovery, source-id derivation, atom boundaries, CAS writes, and
   digestion status are owned by the live ingestion engine and canonical doors.
-- Claim truth, Lean declarations, freezing, coverage, and receipts are owned by
+- Claim truth, Lean declarations, freezing, and coverage edges are owned by
   Lean, `skills/codex-formalize`, and the deposit/cover doors.
 - Routing for non-theory inputs is owned by `agents/CONTEXT.md` and the live
   route harness.

@@ -446,15 +446,6 @@ internal static class BackfillInventoryRule
                 }
             }
 
-            foreach (var finding in DigestionFormalizationPrecommitmentValidator.ValidateNewEdges(
-                         baselineDocument,
-                         document,
-                         context.Baseline,
-                         context.Lean!.Report))
-            {
-                findings.Add(new RuleFinding(BackfillPath, finding, AdmissionEffect.Block));
-            }
-
             var evaluation = DigestionStatusEvaluator.Evaluate(
                 context.Changes is null
                     ? DigestionEvaluationScope.FullScan

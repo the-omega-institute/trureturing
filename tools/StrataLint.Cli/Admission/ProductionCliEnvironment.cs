@@ -508,13 +508,6 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
         }
     }
 
-    public CommandResult EmitFormalizationReceipt(IReadOnlyList<string> arguments) =>
-        EmitFormalizationReceiptCommand.Run(
-            repositoryRoot,
-            repository,
-            leanReportSource,
-            arguments);
-
     public CommandResult Route(IReadOnlyList<string> arguments)
     {
         try
@@ -600,7 +593,7 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
             if (route is not RouteOutcome.Routed routed
                 || routed.Result.Gid.Value != "D5/S0/Carrier/Probe"
                 || routed.Result.Path.Value != "D5/S0/Carrier/Probe.lean"
-                || RuleCatalog.Default.Descriptors.Length != 29)
+                || RuleCatalog.Default.Descriptors.Length != 28)
             {
                 return new CommandResult(false, string.Empty, "SELFTEST FAIL invariant mismatch\n");
             }
