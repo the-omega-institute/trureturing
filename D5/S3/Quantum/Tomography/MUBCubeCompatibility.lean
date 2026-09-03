@@ -96,6 +96,97 @@ theorem factorizedCube_crossGram
   ext k l
   exact factorizedCube_crossGram_apply H X X' Y Y' hH k l
 
+/-! ## Local rigidity in Zauner's `2 × 2` Fourier-mode factorization
+
+After Fourier diagonalizing the `3 × 3` circulant blocks of a `2`-circulant
+unitary, Zauner's construction decomposes the problem into three `2 × 2`
+unitaries.  For one such block
+
+`M = 1/2 [[u+v, y(u-v)], [(u-v)/x, y(u+v)/x]]`,
+
+the apparent phase variables `x` and `y` already satisfy quadratic equations
+determined by the entries of `M`.  Thus the generic local fibre is discrete.
+-/
+
+/-- Polynomial form of the local Zauner parameterization. Division is cleared
+so that the statement remains valid without nonzero side conditions. -/
+structure ZaunerTwoByTwoFactor (a b c d : ℂ) where
+  u : ℂ
+  v : ℂ
+  x : ℂ
+  y : ℂ
+  sum_eq : u + v = 2 * a
+  y_diff_eq : y * (u - v) = 2 * b
+  diff_eq : u - v = 2 * c * x
+  y_sum_eq : y * (u + v) = 2 * d * x
+
+/-- In every local Zauner factorization, `x²` is fixed by the matrix entries:
+`c d x² = a b`. -/
+theorem zaunerTwoByTwo_x_quadratic
+    {a b c d : ℂ} (z : ZaunerTwoByTwoFactor a b c d) :
+    c * d * z.x ^ 2 = a * b := by
+  have hb : b = z.y * c * z.x := by
+    calc
+      b = (2 : ℂ)⁻¹ * (2 * b) := by ring
+      _ = (2 : ℂ)⁻¹ * (z.y * (z.u - z.v)) := by rw [z.y_diff_eq]
+      _ = z.y * c * z.x := by rw [z.diff_eq]; ring
+  have hdy : d * z.x = a * z.y := by
+    have h := z.y_sum_eq
+    rw [z.sum_eq] at h
+    linarith
+  rw [hb]
+  calc
+    c * d * z.x ^ 2 = c * (d * z.x) * z.x := by ring
+    _ = c * (a * z.y) * z.x := by rw [hdy]
+    _ = a * (z.y * c * z.x) := by ring
+
+/-- Symmetrically, `y²` is fixed by the matrix entries:
+`a c y² = b d`. -/
+theorem zaunerTwoByTwo_y_quadratic
+    {a b c d : ℂ} (z : ZaunerTwoByTwoFactor a b c d) :
+    a * c * z.y ^ 2 = b * d := by
+  have hb : b = z.y * c * z.x := by
+    calc
+      b = (2 : ℂ)⁻¹ * (2 * b) := by ring
+      _ = (2 : ℂ)⁻¹ * (z.y * (z.u - z.v)) := by rw [z.y_diff_eq]
+      _ = z.y * c * z.x := by rw [z.diff_eq]; ring
+  have hdy : d * z.x = a * z.y := by
+    have h := z.y_sum_eq
+    rw [z.sum_eq] at h
+    linarith
+  rw [hb]
+  calc
+    a * c * z.y ^ 2 = c * z.y * (a * z.y) := by ring
+    _ = c * z.y * (d * z.x) := by rw [← hdy]
+    _ = (z.y * c * z.x) * d := by ring
+
+/-- Two local factorizations of the same generic block can differ in `x` only
+by sign.  Nonvanishing of `c*d` lets us cancel the common coefficient. -/
+theorem zaunerTwoByTwo_x_eq_or_eq_neg
+    {a b c d : ℂ}
+    (z w : ZaunerTwoByTwoFactor a b c d)
+    (hcd : c * d ≠ 0) :
+    w.x = z.x ∨ w.x = -z.x := by
+  have hx2 : w.x ^ 2 = z.x ^ 2 := by
+    apply (mul_left_cancel₀ hcd)
+    calc
+      c * d * w.x ^ 2 = a * b := zaunerTwoByTwo_x_quadratic w
+      _ = c * d * z.x ^ 2 := (zaunerTwoByTwo_x_quadratic z).symm
+  exact (sq_eq_sq_iff_eq_or_eq_neg).mp hx2
+
+/-- The same binary ambiguity holds for `y` when `a*c` is nonzero. -/
+theorem zaunerTwoByTwo_y_eq_or_eq_neg
+    {a b c d : ℂ}
+    (z w : ZaunerTwoByTwoFactor a b c d)
+    (hac : a * c ≠ 0) :
+    w.y = z.y ∨ w.y = -z.y := by
+  have hy2 : w.y ^ 2 = z.y ^ 2 := by
+    apply (mul_left_cancel₀ hac)
+    calc
+      a * c * w.y ^ 2 = b * d := zaunerTwoByTwo_y_quadratic w
+      _ = a * c * z.y ^ 2 := (zaunerTwoByTwo_y_quadratic z).symm
+  exact (sq_eq_sq_iff_eq_or_eq_neg).mp hy2
+
 /-! ## Orientation logic boundary
 
 The 2026 triplet conjecture gives pointwise products of nonnegative cubic
@@ -135,23 +226,25 @@ theorem pointwise_product_zero_of_global_sum_product_zero
   rcases mul_eq_zero.mp hglobal with haSum | hbSum
   · have hzero : ∀ i, a i = 0 := by
       intro i
-      apply le_antisymm
-      · exact (Finset.sum_eq_zero_iff_of_nonneg fun j _ ↦ ha j).mp haSum i
-          (Finset.mem_univ i)
-      · exact ha i
+      have hle : a i ≤ ∑ j, a j :=
+        Finset.single_le_sum (fun j _ ↦ ha j) (Finset.mem_univ i)
+      exact le_antisymm (by simpa [haSum] using hle) (ha i)
     intro i
     simp [hzero i]
   · have hzero : ∀ i, b i = 0 := by
       intro i
-      apply le_antisymm
-      · exact (Finset.sum_eq_zero_iff_of_nonneg fun j _ ↦ hb j).mp hbSum i
-          (Finset.mem_univ i)
-      · exact hb i
+      have hle : b i ≤ ∑ j, b j :=
+        Finset.single_le_sum (fun j _ ↦ hb j) (Finset.mem_univ i)
+      exact le_antisymm (by simpa [hbSum] using hle) (hb i)
     intro i
     simp [hzero i]
 
 #print axioms factorizedCube_crossGram_apply
 #print axioms factorizedCube_crossGram
+#print axioms zaunerTwoByTwo_x_quadratic
+#print axioms zaunerTwoByTwo_y_quadratic
+#print axioms zaunerTwoByTwo_x_eq_or_eq_neg
+#print axioms zaunerTwoByTwo_y_eq_or_eq_neg
 #print axioms pointwise_product_zero_does_not_force_global_orientation
 #print axioms pointwise_product_zero_of_global_sum_product_zero
 
