@@ -1,0 +1,1 @@
+**义务**:公开定理 `zeroData_im_ne_zero (Z : ZeroData) (n : ℕ) : (Z.zero n).im ≠ 0`。
