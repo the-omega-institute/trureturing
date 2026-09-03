@@ -1,0 +1,6 @@
+## 四　M3-d-4 预登记:实轴上 (0,1) 之外的 ζ 零点皆平凡(同模块第四条公开定理;探针已无条件整证)
+
+**义务**:公开定理 `riemannZeta_real_zero_outside_Ioo (x : ℝ) (hout : ¬ (0 < x ∧ x < 1)) (hz : riemannZeta (x : ℂ) = 0) : ∃ n : ℕ, x = -2 * (n + 1)`。
+**可证伪预测(写在跑之前)**:若正确,只消费 `riemannZeta_ne_zero_of_one_le_re`、`riemannZeta_one_sub`、`riemannZeta_zero` 与本仓已冻结的完成 ζ 非零引理(探针用了 `ZetaRvm.CountByIntegral` 中的一条;实施席须 grep 其名并绑定,不得重证),标准三公理;若函数方程分支需要 x = 0 之外的额外侧条件而不可满足,则本条为假。
+**边界**:与 M3-d-2 合起来给出实轴零点的完整分类,但不涉及非实零点。
+

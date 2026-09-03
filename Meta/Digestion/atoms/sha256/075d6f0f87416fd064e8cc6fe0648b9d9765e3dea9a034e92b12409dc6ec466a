@@ -1,0 +1,10 @@
+\[
+\prod_{h\in A}\Lambda(n+h)
+=
+O((\log n)^{|A|}).
+\]
+
+因此 \(\mathcal M_H\) 与 \(\mathcal K_H\) 是无条件定义的相关完备化 germ。
+
+---
+

@@ -1,0 +1,11 @@
+### ZC-D　Klein 符号作用
+
+```lean
+theorem zeroOrbitCode_symmetry_actions :
+    code (conj rho) = flipHeight (code rho) ∧
+    code (1 - conj rho) = flipTransverse (code rho) ∧
+    code (1 - rho) = flipBoth (code rho)
+```
+
+---
+

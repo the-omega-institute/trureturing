@@ -1,0 +1,4 @@
+## 〇　为什么是这一节
+
+增订十二把「p ≥ 5 时局部因子在拉回临界线上非零」列为具名目标 G-f;探针以精确陈述整证(前四模精确 + 冻结 √5 斜率增长界,有理包络 599/600),故本节预登记为义务。增订十一把完整 separator 记为具名目标 M3-f;研究席给出的阶梯第一级(卷积幂的变换公式)经探针核实**已在冻结模块 `D5/S3/Fourier/ConvolutionPowerAmplification` 中**(`fourierLaplace_convolve_complex`、`convolutionSuccPower`、`fourierLaplace_convolutionSuccPower`),不另立义务、只绑定;第二级——测试函数变换在闭带 |Im w| ≤ η 上的一致衰减 C/(1+Re w²)——探针整证,本节预登记。研究席特别指出:极限步所需的是**闭带**一致估计,只在更小带成立的引理不够(零点频率可逼近带边)。
+

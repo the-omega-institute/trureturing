@@ -1,0 +1,15 @@
+\[
+\boxed{
+\beta(v)
+=
+\sum_{k\in\operatorname{wdigits}(v)}
+\varphi^k.
+}
+\]
+
+所以 O-5 的 local spectrum 是所有有限、无相邻占据的黄金能量和。
+
+它是 Zeckendorf hard-core language 的精确 partition spectrum，而不是“在有理数上随意加入一个黄金缩放”。
+
+---
+

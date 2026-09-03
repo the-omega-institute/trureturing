@@ -1,0 +1,12 @@
+\[
+A(\theta)
+=
+\sum_n a(n)e^{-in\theta}.
+\]
+
+则：
+
+- \(k=2\) 的 Fourier 变换是 power spectrum：
+  \[
+  |A(\theta)|^2;
+  \]

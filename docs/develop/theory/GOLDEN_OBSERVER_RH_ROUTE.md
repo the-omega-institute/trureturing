@@ -1948,3 +1948,231 @@ M3-a/M3-c 一席位轮(同模块,codex-cli,独立 worktree,PR-1 deposit 绑 M3-a
 G-a/G-b 一席位轮(同模块,codex-cli,独立 worktree,PR-1 deposit 绑 G-a atom;G-b 两 atom 以 PR-1b 收据后 PR-2 cover);G-c 不占预算,待认证基础设施或 owner 裁决。
 
 后续增订继续严格追加于本节之后。
+
+---
+
+# 增订十一　M3 separator 阶梯第四级:截断 separator(M3-e 预登记)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;探针一席(codex-cli,`lake env lean`,0 sorry,标准三公理,在 dev 新增量上整证)后由 orchestrator(claude 主循环)撰写;证明文件存 orchestrator scratchpad,不入库。判决日:2026-09-03。lane issue:#4589。
+
+## 〇　为什么是这一节
+
+增订九预登记的 M3-a(指定谱值对 ⇒ 离线轨道贡献 = −4·重数)、M3-b(偶测试函数变换的有限插值)、M3-c(实轴离线零点轨道恒非负)已全部冻结并消化闭合。研究席给出的阶梯第四级——以对称截断 `symmetricIndices T` 为界的 separator——探针在冻结栈上以精确陈述整证:用反射类代表点 rep(k)=min(k, reflection k) 构造符号分离的频率集,在目标轨道代表点插值 1/−1、其余轨道 0,由 M3-b 得 g;偶性把值传输到整个轨道,γ 的单射性使非零值只出现在目标四点;截断的反射/共轭封闭引理把四点全放进截断;M3-a 给出 −4·重数。**此级不含任何新的解析输入**;它把「离线零点 ⇒ 负 Weil 平方和」在有限截断内彻底闭合,剩下的只是极限(M3-f,重型:需 Burnol 式卷积幂与余项估计)。
+
+## 一　M3-e 预登记:截断 separator(`OffLineZeroNegativeTruncatedWeilSquare`)
+
+**义务**:单一公开定理 `offLineZero_yields_negative_truncated_weil_square (Z : ZeroData) (n : ℕ) (T : ℝ) (hn : n ∈ Z.symmetricIndices T) (hOff : (Z.zero n).re ≠ criticalAbscissa) (hIm : (Z.zero n).im ≠ 0) : ∃ g : WeilTestFunction, (truncatedZeroSum Z (convolutionSquare g) T).re < 0`。闭合路线:反射类代表点集 S 的符号分离性由代表点的极小性证得;冻结 `even_weilTestFunction_finite_interpolation` 给出 g;冻结 `fourierLaplace_convolutionSquare_complex`、`gamma_reflection`/`gamma_conjugation`、`reflection_mem_symmetricIndices`/`conjugation_mem_symmetricIndices`、`zero_symmetries_commute`、`mirror_index_fixed_iff_critical`、`multiplicity_pos` 与冻结 `prescribed_pair_gives_negative_zero_orbit` 收尾。落点 `D5/S3/Weil/ZetaBridge/`。
+**可证伪预测(写在跑之前)**:若正确,定理只消费上列冻结声明与钉版 Mathlib 的有限和引理,公理集为标准三条;若某 `ZeroData` 的截断不在反射/共轭下封闭(与冻结封闭引理矛盾)或 γ 非单射,则本条为假并须修正前提。
+**边界**:本条不涉及极限、不断言 `SymmetricConvergent`、不给出 `zeroSum` 的符号;`hIm` 是 M3-d 具名缺口(实轴排除)的显式替身,不得省略。
+
+## 二　M3-f 具名目标(不在本节预登记):完整 separator
+
+`offLineZero_yields_negative_weil_square (Z) (hOff : ∃ n, (Z.zero n).re ≠ criticalAbscissa) : ∃ g, ∃ hZero, (zeroSum Z (convolutionSquare g) hZero).re < 0`——由 M2-c 知 `hZero` 对所有 g 成立,故只差极限:须控制截断外零点的贡献(Burnol 式卷积幂 g^{⋆N} 使目标轨道贡献 −4·重数·1 而其余衰减为 O(4^{−N}))。所需解析输入:有界带上变换的衰减估计与卷积幂的变换公式;记为下一增订的探针对象,成本重型。
+
+## 三　预算与结算
+
+M3-e 一席位轮(codex-cli,独立 worktree,PR-1 deposit;cover 另开 PR-2);M3-f 不占本节预算。
+
+后续增订继续严格追加于本节之后。
+
+---
+
+# 增订十二　黄金 germ 线:局部因子的通用缩放与 G3 的 sharp 横坐标(G-d、G-e 预登记;G-f、G-g 具名目标)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;研究席一席(GPT PRO,advisory:给出分解与文献)+ 探针一席(codex-cli,`lake env lean`,0 sorry,标准三公理,含 β 值的 kernel 证书),关键代数由 orchestrator 独立验算(β(3)=2+3φ=φ⁴、β(4)=3+4φ=2φ³+1、β(5)=φ⁵;缩放检验 f₅((log2/log5)·s₀)≈0);由 orchestrator(claude 主循环)撰写。判决日:2026-09-03。lane issue:#4589。
+
+## 〇　为什么是这一节
+
+增订十把 G3 的零集化为局部因子零集之并,并以数值证据指出 p=2、3 的局部因子在窗口内有零点。本节记录两条把这一现象**结构化**的初等事实:①所有局部因子是同一个整函数 Φ(z)=Σ_v e^{−β(v)z} 沿 z=(log p)s 的截取,故各 p 的零点集互为相似像(这解释了为何 p=5 在窗口内无零点:缩放因子 log 2/log 5 把 p=2 的零点压到窗口下方);②β(3)=φ⁴=φ²+φ³ 使前四项精确因子化为 (1+x)(1+y),φ⁴ 处的广义 Euler 系数恰为 0,G3 的领头修正项是 −p^{−2φ³s},其绝对收敛横坐标**恰为 1/(2φ³)——黄金窗口的下沿**(冻结的 1/φ⁴ 只是充分界)。这使第二阶因子分解精确覆盖整个严格窗口,补上了增订十指出的下切片缺口。
+
+## 一　G-d 预登记:局部因子的通用缩放(`LocalFactorUniversalScaling`)
+
+**义务**:公开定理 `germLocalFactor_prime_scaling (p q : Nat.Primes) (s : ℂ) : germLocalFactor s p = germLocalFactor ((((Real.log p / Real.log q : ℝ)) : ℂ) * s) q`。闭合路线:正实底 `cpow` 的主支恒等式 `(p:ℂ)^w = exp(w·log p)`(Mathlib `Complex.cpow_def_of_ne_zero`、`Complex.natCast_log`),逐项相等后 `tsum_congr`。落点 `D5/S3/Analytic/EulerGerm/`。
+**可证伪预测(写在跑之前)**:若正确,定理只消费 `GoldenLocalFactor` 与钉版 Mathlib,公理集为标准三条;推论:任一 p 的零点 s₀ 给出 f_q 在 (log p/log q)·s₀ 的零点(数值已验)。若 `cpow` 对自然数底出现非主支相位,则本条为假并须改写为显式 `exp` 形。
+**边界**:不断言任何零点存在。
+
+## 二　G-e 预登记:次模展开与 G3 的 sharp 横坐标(同模块)
+
+**义务**:同模块两条公开定理 `germLocalFactor_next_mode_expansion (s : ℂ) (p : Nat.Primes) (hs : 0 < s.re) : let x := (p:ℂ)^(-s·φ²); let y := (p:ℂ)^(-s·φ³); (1 - y) * (1 + x)⁻¹ * germLocalFactor s p - 1 = -y^2 + (1 - y) * (1 + x)⁻¹ * ∑' k : ℕ, (p:ℂ)^(-s * (o5Beta (k+4) : ℂ))` 与 `second_normalized_factor_deviation_norm_summable_sharp (s : ℂ) (hs : 1 / (2 * Real.goldenRatio ^ 3) < s.re) : Summable (fun p : Nat.Primes => ‖(1 - (p:ℂ)^(-s·φ³)) * (1 + (p:ℂ)^(-s·φ²))⁻¹ * germLocalFactor s p - 1‖)`(表达式与冻结 `let G3` 的因子逐字相同)。闭合路线:o5Beta 0..3 = 0, φ², φ³, φ⁴ 与 (1+x)(1+y)=1+x+y+xy;Re s>0 上 ‖x‖<1;四模 tsum 拆分;尾项由冻结 `o5_beta_growth`/`o5_beta_power_law` 与不等式 2φ³+1+k ≤ o5Beta(k+4) 控制;`Nat.Primes.summable_rpow` 以指数 2φ³·Re s > 1 收尾。
+**可证伪预测(写在跑之前)**:若正确,G3 在 Re s > 1/(2φ³) 绝对收敛,第二阶因子分解可延拓至整个严格窗口;若 o5Beta 4 ≠ 2φ³+1 或尾项下界不成立,则 sharp 横坐标不同于 1/(2φ³),须以实际值改写。
+**边界**:本条不重做冻结的第二阶因子分解本身,只给出其收敛域的精确边界;将因子分解延拓到 Re s > 1/(2φ³) 的定理另立义务。
+
+## 三　具名目标(不在本节预登记)
+
+- **G-f**:p ≥ 5 时局部因子在拉回临界线 σ = 1/(2φ²) 上非零(三角界:前三模精确 + 增长界,中等);数值:p=2、3 在 σ=1/(2φ²)、|t|≤60 的最小模分别 0.0144、0.0102(非零,但无 kernel 界)。
+- **G-g**:修正的 RH 等价形:令 D_primary := D_cg − D_3 + D_22 − D_loc(divisor 记号,`MeromorphicOn.divisor`),则 D_primary = D_2,且 RH ⟺ U 上所有 D_primary>0 的点实部 = 1/(2φ²)。重型;须先冻结 divisor 恒等式。
+- **G-c**(增订十)仍 open。
+
+## 四　预算与结算
+
+G-d/G-e 一席位轮(同模块,codex-cli,独立 worktree,PR-1 deposit 绑 G-d atom;G-e 两 atom 以 PR-1b 收据后 PR-2 cover)。具名目标不占预算。
+
+后续增订继续严格追加于本节之后。
+
+---
+
+# 增订十三　G-f 与 M3-f 第二级预登记(临界线上 p ≥ 5 局部因子非零;测试函数变换的闭带衰减)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;研究席一席(GPT PRO 公司池,advisory,M3-f 极限步阶梯)+ 探针两席(codex-cli,`lake env lean`,0 sorry,标准三公理:G-f 探针 522 行、M3-f 前两级探针),由 orchestrator(claude 主循环)撰写。判决日:2026-09-03。lane issue:#4589。
+
+## 〇　为什么是这一节
+
+增订十二把「p ≥ 5 时局部因子在拉回临界线上非零」列为具名目标 G-f;探针以精确陈述整证(前四模精确 + 冻结 √5 斜率增长界,有理包络 599/600),故本节预登记为义务。增订十一把完整 separator 记为具名目标 M3-f;研究席给出的阶梯第一级(卷积幂的变换公式)经探针核实**已在冻结模块 `D5/S3/Fourier/ConvolutionPowerAmplification` 中**(`fourierLaplace_convolve_complex`、`convolutionSuccPower`、`fourierLaplace_convolutionSuccPower`),不另立义务、只绑定;第二级——测试函数变换在闭带 |Im w| ≤ η 上的一致衰减 C/(1+Re w²)——探针整证,本节预登记。研究席特别指出:极限步所需的是**闭带**一致估计,只在更小带成立的引理不够(零点频率可逼近带边)。
+
+## 一　G-f 预登记:p ≥ 5 时局部因子在拉回临界线上非零(`LocalFactorCriticalLineNonvanishing`)
+
+**义务**:单一公开定理 `germLocalFactor_critical_line_nonzero_of_five_le {p : ℕ} (hp : p.Prime) (h5 : 5 ≤ p) (t : ℝ) : germLocalFactor ((((1 / (2 * Real.goldenRatio ^ 2) : ℝ) : ℂ) + Complex.I * (t : ℂ))) p ≠ 0`。闭合路线:三角不等式 ‖f_p‖ ≥ 1 − Σ_{v≥1} p^{−σ₀β(v)},σ₀=1/(2φ²);前四模用冻结 `o5_beta_closed_form` 精确求值(p^{−1/2}, p^{−φ/2}, p^{−φ²/2}, …),v ≥ 4 的尾项由冻结 `o5_beta_growth`(√5 斜率)化为几何级数;p=5 时总和 < 1 的有理证书 599/600;更大素数单调更好。落点 `D5/S3/Analytic/EulerGerm/`。
+**可证伪预测(写在跑之前)**:若正确,定理只消费 `GoldenLocalFactor`/`GoldenEulerBeta` 与钉版 Mathlib 的 rpow 单调性,公理集为标准三条;数值余量 p=5: 0.040、p=7: 0.279、p=11: 0.489。若某 t 使 p=5 局部因子在该线上为零,则本条为假且三角界的某一项估计必错。
+**边界**:不对 p=2、3 作任何断言(二者在 |t| ≤ 60 数值非零,最小模 0.0144 / 0.0102,无 kernel 界);h-only 的三角引理在 s=0 处为假(两个发散 tsum 均取 0),故任何通用三角引理须带 0 < Re s。
+
+## 二　M3-f 第二级预登记:测试函数变换的闭带衰减(`FourierLaplaceClosedStripDecay`)
+
+**义务**:单一公开定理 `fourierLaplace_decay_closedStrip (b : WeilTestFunction) (η : ℝ) (hη : 0 ≤ η) : ∃ C : ℝ, 0 ≤ C ∧ ∀ w : ℂ, |w.im| ≤ η → ‖fourierLaplace b w‖ ≤ C / (1 + w.re ^ 2)`。闭合路线:紧支给出 ‖exp(−I w x)‖ ≤ exp(η|x|);两次分部积分(Mathlib `integral_mul_deriv_eq_deriv_mul_of_integrable`、`ContDiff.iterate_deriv`、`HasCompactSupport.deriv`)得 ‖(I w)² B(w)‖ ≤ ∫ exp(η|x|)‖b''‖;取 C = C₀ + C₂(C_j = ∫ exp(η|x|)‖b^{(j)}‖)并用 |w|² ≥ Re w² 收尾。落点 `D5/S3/Weil/TestFunctions/`(或 `D5/S3/Weil/`,与 `FourierLaplace` 同层)。
+**可证伪预测(写在跑之前)**:若正确,定理只消费 `TestFunctions`/`FourierLaplace` 与钉版 Mathlib,公理集为标准三条;若分部积分的边界项因支撑非紧而不消失(与 `WeilTestFunction` 定义矛盾),则本条为假。
+**边界**:不涉及零点、不涉及 zeroSum;η 任意非负,极限步取 η = 1/2。
+
+## 三　具名目标(不在本节预登记)
+
+- **M3-f-3**:峰函数 b 与有限例外 killer k 的存在(`exists_peak_and_finite_exception_killer`):B(γ_n)=B(conj γ_n)=1,K(γ_n)=1,K(conj γ_n)=−1,K 在有限例外轨道上为 0,且例外集外 ‖B‖ ≤ 1/2(由第二级衰减 + 局部有限)。中等。
+- **M3-f-4**:`burnol_power_tail_bound`——g_N = b^{⋆N} ⋆ k 的轨道外 tsum ≤ 4^{−N}·(convolutionSquare k 的绝对可和 majorant,来自冻结 `EF_zero_sum_summable`)。**承重引理,重型**。
+- **M3-f-5**:完整 separator(取 N 使 4^{−N}S < 4·重数,严格)。重型。
+- **G-g**(增订十二)、**G-c**(增订十)、**M3-d**(增订九)仍 open。
+
+## 四　预算与结算
+
+G-f 一席位轮、M3-f 第二级一席位轮(各 codex-cli,独立 worktree,PR-1 deposit;cover 另开 PR-2);具名目标不占预算。
+
+后续增订继续严格追加于本节之后。
+
+---
+
+# 增订十四　M3 separator 阶梯收口:完整 separator(M3-f-3、M3-f-4、M3-f-5 预登记)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;研究席一席(GPT PRO 公司池,advisory,阶梯设计)+ 探针一席(codex-cli,`lake env lean`,0 sorry,标准三公理,828 行,在 dev 新增量上整证第 3–5 级);由 orchestrator(claude 主循环)撰写。判决日:2026-09-03。lane issue:#4589。
+
+## 〇　为什么是这一节
+
+增订十一预登记的截断 separator(M3-e)与增订十三预登记的闭带衰减(M3-f 第二级)之后,只剩极限步。探针按研究席的路线 A 在冻结栈上一次整证了第 3–5 级:峰函数 b 与有限例外 killer k 的存在;Burnol 卷积幂的轨道外尾项界 4^{−(N+1)}·majorant(majorant 由冻结 `EF_lit_zetaZeroConfig` 的绝对可和性传输到任意 `ZeroData`,与 M2-c 同一机制);以及**完整 separator**:离线非实零点 ⇒ 存在偶测试函数使 `zeroSum` 实部严格为负。与冻结的 R-F(RH ⇒ 本仓 O-6 正性)合起来,对本仓测试类而言,「偶测试类上的 Weil 正性 ⟺ 所有非实零点在临界线」只差 M3-d(实轴零点排除)这一条经典事实——本节**不**断言该等价,只预登记三条定理。
+
+## 一　M3-f-5 预登记:完整 separator(`OffLineNonrealZeroNegativeWeilSquare`)
+
+**义务**:公开定理 `offLineNonrealZero_yields_negative_weil_square (Z : ZeroData) (n : ℕ) (hOff : (Z.zero n).re ≠ criticalAbscissa) (hIm : (Z.zero n).im ≠ 0) : ∃ g : WeilTestFunction, ∃ hZero : SymmetricConvergent Z (convolutionSquare g), (zeroSum Z (convolutionSquare g) hZero).re < 0`。闭合路线:M3-f-3 给出 b、k、E;令 S := Σ'_j ‖zeroSummand Z (convolutionSquare k) j‖(由冻结 EF 可和性有限);取 N 使 (1/4)^{N+1}·S < 4·重数;g := convolve (convolutionSuccPower b N) k;`SymmetricConvergent` 由冻结 M2-c 给出;把绝对收敛的全和拆为轨道 + 补集:轨道贡献 = −4·重数(冻结 M3-a 与卷积幂变换公式),补集由 M3-f-4 界住;实部严格为负。落点 `D5/S3/Weil/ZetaBridge/`(或按容量规则分桶)。
+**可证伪预测(写在跑之前)**:若正确,定理只消费冻结的 `ConvolutionPowerAmplification`、`EvenTestFunctionFiniteInterpolation`、`PrescribedPairNegativeOrbit`、`SymmetricConvergentOfZetaSummable`、闭带衰减(增订十三)与钉版 Mathlib,公理集为标准三条;若卷积幂在本仓测试类中不封闭、或 EF 可和性不能传输到任意 `ZeroData` 的 `zeroSummand`,则本条为假并须记所缺引理。
+**边界**:`hIm` 不可省略(M3-d 具名缺口);本条不断言 O-6 ⟹ RH,不断言任何零点存在。
+
+## 二　M3-f-3 与 M3-f-4 预登记(同模块两条公开定理)
+
+**义务**:`exists_peak_and_finite_exception_killer (Z : ZeroData) (n : ℕ) (hOff : (Z.zero n).re ≠ criticalAbscissa) (hIm : (Z.zero n).im ≠ 0) : ∃ b k : WeilTestFunction, ∃ E : Finset ℕ, (∀ j, j ∈ E ↔ Z.reflection j ∈ E) ∧ (∀ j, j ∈ E ↔ Z.conjugation j ∈ E) ∧ zeroOrbit Z n ⊆ E ∧ fourierLaplace b (Z.gamma n) = 1 ∧ fourierLaplace b (conj (Z.gamma n)) = 1 ∧ fourierLaplace k (Z.gamma n) = 1 ∧ fourierLaplace k (conj (Z.gamma n)) = -1 ∧ (∀ j ∉ E, ‖fourierLaplace b (Z.gamma j)‖ ≤ 1 / 2 ∧ ‖fourierLaplace b (conj (Z.gamma j))‖ ≤ 1 / 2) ∧ (∀ j ∈ E, j ∉ zeroOrbit Z n → fourierLaplace k (Z.gamma j) = 0 ∧ fourierLaplace k (conj (Z.gamma j)) = 0)` 与 `burnol_power_tail_bound (Z : ZeroData) (n : ℕ) (b k : WeilTestFunction) (E : Finset ℕ) (N : ℕ) (hB : ∀ i ∉ E, ‖fourierLaplace b (Z.gamma i)‖ ≤ 1 / 2 ∧ ‖fourierLaplace b (conj (Z.gamma i))‖ ≤ 1 / 2) (hK : ∀ i ∈ E, i ∉ zeroOrbit Z n → fourierLaplace k (Z.gamma i) = 0 ∧ fourierLaplace k (conj (Z.gamma i)) = 0) : Summable (fun j : {j : ℕ // j ∉ zeroOrbit Z n} => zeroSummand Z (convolutionSquare (convolve (convolutionSuccPower b N) k)) j.1) ∧ ‖∑' j : {j : ℕ // j ∉ zeroOrbit Z n}, zeroSummand Z (convolutionSquare (convolve (convolutionSuccPower b N) k)) j.1‖ ≤ (1 / 4 : ℝ) ^ (N + 1) * ∑' j : ℕ, ‖zeroSummand Z (convolutionSquare k) j‖`(`zeroOrbit` 为本仓已有或本模块定义的四点轨道 Finset;若为本模块新定义,须在同模块以消费它的定理使其 earn its freeze)。
+**可证伪预测(写在跑之前)**:若正确,二者在钉版工具链闭合且公理集为标准三条;若 E = symmetricIndices R 的反射/共轭封闭性不成立(与冻结封闭引理矛盾),或闭带衰减的常数依赖于 t,则本条为假。
+**边界**:M3-f-3 的 E 是有限例外集,不断言其大小;M3-f-4 的界对每个 N 成立,不断言最优常数。
+
+## 三　预算与结算
+
+一席位轮(同模块三条公开定理,codex-cli,独立 worktree;deposit 绑 M3-f-5 atom;M3-f-3/4 走 PR-1b 收据后 PR-2 cover);该 lane 须在增订十三的闭带衰减模块合入后开工,以绑定而非重证。
+
+后续增订继续严格追加于本节之后。
+---
+
+# 增订十五　黄金 germ 线 G-g:窗口零点除子与 RH 的修正等价(G-g-1 / G-g-2 / G-g-3 预登记)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;探针一席(codex-cli,`lake env lean`,0 sorry,标准三公理,274 行,在 `Zeta23`/钉版 Mathlib 上整证三条);去重检索由同席执行(`git grep -iE 'RiemannHypothesis' -- 'D5/**/*.lean'`:命中 `Observer/RiemannNamingStabilityReduction`、`CayleyLaguerre/CompactifiedSquaredDistanceSupport`、`TestFunctions/LiCurvatureCriterion`,均为与 germ 无关的 RH ↔ 判据,无等价或更强者);散文由 orchestrator(claude 主循环)撰写。判决日:2026-09-03。lane issue:#4589。
+
+## 〇　为什么不是「窗口内零点全在线上 ⟺ RH」
+
+冻结的三阶分解(`golden_germ_third_order_factorization`)在 Re s > 1/φ⁵ 上把唯一延拓 germ 写成 ζ(φ²s)·ζ(φ³s)·ζ(2φ²s)⁻¹·(ζ(2φ³s)⁻¹·ζ((2φ²+φ³)s)·G3(s))。在开窗口 W = {1/(2φ³) < Re s < 1/φ²} 内逐因子核算:ζ(φ²s) 的零点回拉到 Re s = β/φ²,RH 下恰在 Re s = 1/(2φ²);ζ(φ³s) 的零点回拉到 β/φ³,RH 下落在 W 的下边界 1/(2φ³)(开窗口不含);ζ(2φ²s)⁻¹ 的极点回拉到 β/(2φ²) < 1/(2φ³)(RH 下不在 W),但 ζ(2φ²s) 在 s = 1/(2φ²) 的极点使该倒数因子在线上贡献一个实零点;ζ(2φ³s)⁻¹ 与 ζ((2φ²+φ³)s) 在 W 内回拉实部 > 1,无零点;ζ(φ³s) 在 s = 1/φ³ ∈ W 有极点(Mathlib 的 `riemannZeta 1` 取有限值,故延拓 germ 作为全函数在该点取的是约定值)。剩下 G3:增订十/十二已数值证实 p = 2, 3 的局部因子在 W 内有零点,而 G3 的零点恰由局部因子零点构成,故 **G3 在 W 内确实消失**,「germ 在 W 内的零点全在线上」本身对 RH 既非必要亦非充分。修正后的三条:(1) RH ⟹ W 内 **G3 不消失处** 的 germ 零点全在 Re s = 1/(2φ²);(2) 逆向须附加「G3 在右半带零点的回拉点不消失」这一未知假设,否则一个恰与局部因子零点重合的离线 ζ 零点不产生见证;(3) 右半带无零点 ⟹ 完整 RH,由函数方程给出。三条都对任意 G : ℂ → ℂ 陈述(G-g-1/2),把冻结 G3 的实例化留作推论,以免在义务里复制 `let` 绑定的乘积表达式。
+
+## 一　G-g-1 预登记:RH ⟹ 窗口内残余无零点处的零点线约束(`GoldenGermWindowZeroCriterion`)
+
+**义务**:公开定理 `golden_window_zero_on_line_of_rh (hRH : RiemannHypothesis) (G : Complex -> Complex) (s : Complex) (hlo : 1 / (2 * Real.goldenRatio ^ 3) < s.re) (hhi : s.re < 1 / Real.goldenRatio ^ 2) (hzero : riemannZeta (((Real.goldenRatio ^ 2 : Real) : Complex) * s) * riemannZeta (((Real.goldenRatio ^ 3 : Real) : Complex) * s) * (riemannZeta (((2 * Real.goldenRatio ^ 2 : Real) : Complex) * s))⁻¹ * ((riemannZeta (((2 * Real.goldenRatio ^ 3 : Real) : Complex) * s))⁻¹ * riemannZeta ((((2 * Real.goldenRatio ^ 2 + Real.goldenRatio ^ 3 : Real) : Complex) * s)) * G s) = 0) (hG : G s ≠ 0) : s.re = 1 / (2 * Real.goldenRatio ^ 2)`。闭合路线:`mul_eq_zero`/`inv_eq_zero` 拆因子;ζ(φ²s) = 0 由冻结 `Zeta23.RH_implies_on_line`(或 Mathlib `RiemannHypothesis` 直接)得 Re(φ²s) = 1/2;ζ(φ³s) = 0 同理得 Re s = 1/(2φ³) 与 hlo 矛盾;ζ(2φ²s) = 0 时 Re(2φ²s) ∈ (1/φ, 2):≥ 1 由 `riemannZeta_ne_zero_of_one_le_re` 排除,< 1 由 RH 得 1/2 < 1/φ 矛盾,而 2φ²s = 1 恰给出结论;其余两个 ζ 因子回拉实部 > 1;G s = 0 由 hG 排除。落点 `D5/S3/Analytic/EulerGerm/`(origin/dev 现 19/24)。
+**可证伪预测(写在跑之前)**:若正确,定理只消费 `D5.S3.Weil.ZetaCore.Statement`、`Mathlib.NumberTheory.LSeries.Nonvanishing`、`Mathlib.NumberTheory.Real.GoldenRatio`,公理集为标准三条;若 Mathlib 的 `RiemannHypothesis` 定义不含 `s ≠ 1` 侧条件、或 `riemannZeta 1 = 0` 使 2φ²s = 1 情形不可判,则本条按 open 记。
+**边界**:本条对任意 G 成立,不断言 G3 的任何性质;不断言 RH;窗口是开区间,ζ(φ³s) 回拉到下边界的零点不在射程内。
+
+## 二　G-g-2 预登记:条件逆命题(右半带,同模块第二条公开定理)
+
+**义务**:公开定理 `golden_window_zero_right_half_strip_converse (G : Complex -> Complex) (hResidual : forall rho : Complex, riemannZeta rho = 0 -> (1 : Real) / 2 < rho.re -> rho.re < 1 -> G (rho / ((Real.goldenRatio ^ 2 : Real) : Complex)) ≠ 0) (hConfinement : forall s : Complex, 1 / (2 * Real.goldenRatio ^ 3) < s.re -> s.re < 1 / Real.goldenRatio ^ 2 -> riemannZeta (((Real.goldenRatio ^ 2 : Real) : Complex) * s) * riemannZeta (((Real.goldenRatio ^ 3 : Real) : Complex) * s) * (riemannZeta (((2 * Real.goldenRatio ^ 2 : Real) : Complex) * s))⁻¹ * ((riemannZeta (((2 * Real.goldenRatio ^ 3 : Real) : Complex) * s))⁻¹ * riemannZeta ((((2 * Real.goldenRatio ^ 2 + Real.goldenRatio ^ 3 : Real) : Complex) * s)) * G s) = 0 -> G s ≠ 0 -> s.re = 1 / (2 * Real.goldenRatio ^ 2)) : forall rho : Complex, riemannZeta rho = 0 -> (1 : Real) / 2 < rho.re -> rho.re < 1 -> False`。闭合路线:取 s := ρ/φ²,由 1/2 < Re ρ 得 1/(2φ) < Re ρ 故 s ∈ W;乘积首因子 ζ(φ²·ρ/φ²) = ζ ρ = 0(`mul_div_cancel_left₀`);hResidual 给 G s ≠ 0;hConfinement 得 Re s = 1/(2φ²) 即 Re ρ = 1/2,与 1/2 < Re ρ 矛盾。
+**可证伪预测(写在跑之前)**:若正确,标准三公理、零 sorry;若 W 的下边界 1/(2φ³) 与 1/(2φ) 的比较方向写反(须 1/(2φ) > 1/(2φ³)·φ²… 即 β > 1/(2φ) ≈ 0.309 蕴含 s ∈ W),则本条为假。
+**边界**:hResidual 是**未知假设**(G3 在回拉点不消失),本条不断言其成立,也不断言 G3 的零点集;结论只是右半带无零点,完整 RH 由 G-g-3 接手。
+
+## 三　G-g-3 预登记:右半带无零点 ⟹ RH(`RightHalfStripRiemannReduction`,落 `D5/S3/Weil/ZetaBridge/`)
+
+**义务**:公开定理 `golden_right_half_strip_implies_rh (hRight : forall rho : Complex, riemannZeta rho = 0 -> (1 : Real) / 2 < rho.re -> rho.re < 1 -> False) : RiemannHypothesis`。闭合路线:Re ρ ≥ 1 由 `riemannZeta_ne_zero_of_one_le_re` 排除;1/2 < Re ρ < 1 由假设排除;0 < Re ρ < 1/2 以 `riemannZeta_one_sub`(s := 1 − ρ)反射到右半带;Re ρ ≤ 0 时 ρ ≠ 0(`riemannZeta_zero`),对 t := 1 − ρ 用函数方程,ζ t、Γ t(`Complex.Gamma_ne_zero_of_re_pos`)、(2π)^(−t)(`Complex.cpow_def_of_ne_zero` + `Complex.exp_ne_zero`)皆非零,故 cos(πt/2) = 0,`Complex.cos_eq_zero_iff` 给出 ρ = −2(n+1),与 Mathlib 的非平凡性矛盾。落点 `D5/S3/Weil/ZetaBridge/`(origin/dev 现 20/24)。
+**可证伪预测(写在跑之前)**:若正确,定理只消费钉版 Mathlib(`riemannZeta_one_sub`、`riemannZeta_ne_zero_of_one_le_re`、`riemannZeta_zero`、`Complex.cos_eq_zero_iff`),标准三公理;若 `riemannZeta_one_sub` 的侧条件 `s ≠ -n` 在 Re ρ ≤ 0 分支中不可满足(t = 1 − ρ 的实部 ≥ 1,故可满足),则本条为假。
+**边界**:本条是纯 Mathlib 归约,不含黄金结构;它把 G-g-2 的结论升为完整 RH,但 G-g-2 的 hResidual 仍是未知假设,故三条合起来**不构成 RH 的证明路径**,只把「germ 窗口除子 ⟺ RH」的真实缺口定位到 G3 在回拉点的非消失性(G-c 类问题的对偶)。
+
+## 四　预算与结算
+
+两席位轮,可并行:席 A 在 `EulerGerm/GoldenGermWindowZeroCriterion.lean` 同模块证 G-g-1 与 G-g-2(deposit 绑 G-g-1 atom;G-g-2 走 PR-1b 收据后 PR-2 cover);席 B 在 `ZetaBridge/RightHalfStripRiemannReduction.lean` 证 G-g-3(deposit 绑其 atom)。二者互不依赖。
+
+后续增订继续严格追加于本节之后。
+---
+
+# 增订十六　M3-d 缺口的阶梯:ζ 在 (0,1) 无实零点(M3-d-1 / M3-d-2 / M3-d-3 / M3-d-4 预登记)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;探针一席(codex-cli,`lake env lean`,125 行,标准三公理):在钉版 Mathlib 上**未找到** Dirichlet eta / 交错 ζ 级数在 0 < Re s 上的延拓恒等式(逐条检索 `LSeries`、`HurwitzZetaEven`(`hasSum_nat_cosZeta` 等皆要求 1 < Re s)、`riemannZeta_one_sub`、`completedRiemannZeta0`),故 M3-d-1 为**本仓须自证**的新引理;探针已在该恒等式为假设的条件下整证 M3-d-2、M3-d-3,并无条件证得 M3-d-4。散文由 orchestrator(claude 主循环)撰写。判决日:2026-09-03。lane issue:#4589。
+
+## 〇　为什么是这一节
+
+增订九把「非平凡零点无实零点」记为具名缺口 M3-d;增订十一(M3-e)与增订十四(M3-f-5)的 separator 因此都带 `hIm : (Z.zero n).im ≠ 0`。经典事实是:对实 0 < x < 1,(1 − 2^{1−x}) ζ(x) = Σ (−1)^n (n+1)^{−x}(交错级数,项递减趋零,和为正),而 1 − 2^{1−x} < 0,故 ζ(x) < 0 ≠ 0。钉版 Mathlib 只在 Re s > 1 给出 ζ 的级数表示;交错级数在 0 < Re s 的**部分和极限**等于 (1 − 2^{1−s}) ζ(s) 这一延拓恒等式(M3-d-1)须在本仓证明。它不是黄金结构,是纯 Mathlib 内容;证出即可去掉两条 separator 的 `hIm`。**参考路线(非义务,供实施席选择)**:(a) Re s > 1 时由 `zeta_eq_tsum_one_div_nat_add_one_cpow` 拆偶奇项得恒等式;(b) 交错部分和在 {0 < Re s} 上局部一致收敛(配对相邻项得绝对收敛的差分级数,用 `Complex.cpow` 的 Lipschitz 型估计),故极限函数在该半平面解析;(c) 右侧 (1 − 2^{1−s}) ζ(s) 在 {0 < Re s} 解析(`differentiableAt_riemannZeta`,s = 1 处两侧皆取有限值);(d) 由 `AnalyticOnNhd.eqOn_of_preconnected_of_eventuallyEq` 从 Re s > 1 延拓到 0 < Re s。探针估计 250–450 行;若 (b) 的局部一致性在钉版 API 下不可达,本条按 open 记,不得以 `sorry` 或公理代替。
+
+## 一　M3-d-1 预登记:交错级数的延拓恒等式(`RealAxisNonvanishing`,落 `D5/S3/Weil/ZetaBridge/`)
+
+**义务**:公开定理 `tendsto_alternating_partialSums_eta (s : ℂ) (hs : 0 < s.re) : Filter.Tendsto (fun N ↦ ∑ n ∈ Finset.range N, (-1 : ℂ) ^ n * ((n + 1 : ℂ) ^ (-s))) Filter.atTop (nhds ((1 - (2 : ℂ) ^ (1 - s)) * riemannZeta s))`。落点 `D5/S3/Weil/ZetaBridge/`(origin/dev 现 21/24;若满则 `D5/S3/Weil/ZetaCore/`)。
+**可证伪预测(写在跑之前)**:若正确,定理只消费钉版 Mathlib(`riemannZeta` 的 Re s > 1 级数表示、`differentiableAt_riemannZeta`、解析延拓唯一性)与至多本仓 `ZetaCore`,公理集为标准三条;若交错部分和在 {0 < Re s} 的局部一致收敛在钉版 API 下写不出(探针标记的缺口),则本条为 open,不得降级为「Re s > 1 版」冒充。
+**边界**:不断言 `tsum`(交错级数在 Re s ≤ 1 非无条件可和,`tsum` 会取 0);极限以部分和的 `Tendsto` 陈述;s = 1 处等式两侧按 Mathlib 约定的有限值成立。
+
+## 二　M3-d-2 预登记:ζ 在 (0,1) 无实零点(同模块第二条公开定理)
+
+**义务**:公开定理 `riemannZeta_ne_zero_of_real_mem_Ioo (x : ℝ) (h0 : 0 < x) (h1 : x < 1) : riemannZeta (x : ℂ) ≠ 0`。
+**可证伪预测(写在跑之前)**:若正确,由 M3-d-1 取 s = x 实、交错级数 `Antitone.alternating_series_le_tendsto` 类引理给出极限 > 0(探针已在 M3-d-1 为假设时整证此步,43 行),1 − 2^{1−x} < 0 得 ζ(x) < 0;若 M3-d-1 为 open,本条随之 open。
+**边界**:只覆盖开区间 (0,1);x = 1 为极点;x ≤ 0 见 M3-d-4。
+
+## 三　M3-d-3 预登记:`ZeroData` 的非平凡零点虚部非零(同模块第三条公开定理)
+
+**义务**:公开定理 `ZeroData.im_ne_zero (Z : ZeroData) (n : ℕ) (h : IsNontrivialZero (Z.zero n)) : (Z.zero n).im ≠ 0`(`ZeroData`、`IsNontrivialZero` 取 `D5/S3/Weil/ZeroSum.lean` 的定义:ζ ρ = 0 ∧ 0 < Re ρ ∧ Re ρ < 1)。
+**可证伪预测(写在跑之前)**:若正确,由 M3-d-2 直接得到(虚部为零 ⟹ ρ 实 ⟹ 与 M3-d-2 矛盾;探针已整证此蕴含);此后 `OffLineZeroNegativeTruncatedWeilSquare` 与 M3-f-5 的 `hIm` 可由本条供给(推论另行增订,不在本节义务内)。
+**边界**:本条不断言 `ZeroData` 非空(M1-b 仍 open),只是类型正确的蕴含。
+
+## 四　M3-d-4 预登记:实轴上 (0,1) 之外的 ζ 零点皆平凡(同模块第四条公开定理;探针已无条件整证)
+
+**义务**:公开定理 `riemannZeta_real_zero_outside_Ioo (x : ℝ) (hout : ¬ (0 < x ∧ x < 1)) (hz : riemannZeta (x : ℂ) = 0) : ∃ n : ℕ, x = -2 * (n + 1)`。
+**可证伪预测(写在跑之前)**:若正确,只消费 `riemannZeta_ne_zero_of_one_le_re`、`riemannZeta_one_sub`、`riemannZeta_zero` 与本仓已冻结的完成 ζ 非零引理(探针用了 `ZetaRvm.CountByIntegral` 中的一条;实施席须 grep 其名并绑定,不得重证),标准三公理;若函数方程分支需要 x = 0 之外的额外侧条件而不可满足,则本条为假。
+**边界**:与 M3-d-2 合起来给出实轴零点的完整分类,但不涉及非实零点。
+
+## 五　预算与结算
+
+一席位轮(codex-cli,独立 worktree,四条公开定理同模块;deposit 绑 M3-d-2 atom,其余三条走 PR-1b 收据后 PR-2 cover)。M3-d-1 为难点,给足 3 小时;若席位以 open 归位,把它的具名缺口(哪一步在钉版 API 下写不出)追加为增订,并保留 M3-d-4 单独 deposit。
+
+后续增订继续严格追加于本节之后。
+---
+
+# 增订十七　黄金 germ 线 G-g 收口:三阶残余的零点恰为局部因子零点,RH 下延拓 germ 的窗口零点集(G-g-4 / G-g-5 / G-g-6 预登记)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;探针一席(codex-cli,`lake env lean`,标准三公理,以 `golden_window_zero_on_line_of_rh` 与三阶分解的可和性为显式假设整证三条——因该两模块在探针树未编译;实施席须改为直接消费冻结定理);去重由同席执行:dev 已有 `LocalFactorZeroDivisor.G3_eq_zero_iff_exists_local_factor_zero`,但它针对**二阶**残余,三阶残余无对应;`GermProductNonvanishing.germ_product_ne_zero_of_local_factors_ne_zero` 只在 Re s > 1/φ² 且针对原始乘积。散文由 orchestrator(claude 主循环)撰写。判决日:2026-09-03。lane issue:#4589。
+
+## 〇　为什么是这一节
+
+增订十五把「窗口零点 ⟺ RH」的真实缺口定位到三阶残余 G3 在回拉点的非消失性。本节证明 G3 的零点**恰**是局部因子的零点(Mathlib 的 `tprod_one_add_ne_zero_of_summable` + `tprod_of_exists_eq_zero`,配合冻结的偏差可和性;其余四个 Kp 因子在 Re s > 0 上因 |x|,|y| < 1 而非零),于是在 RH 下,延拓 germ 在开窗口内的零点集有一个**精确**描述:ζ(φ²s) 的回拉零点(必在线上)与局部因子零点之并。这把「残余不消失」这个抽象假设换成了「s 不是任何 p 的局部因子零点」这个可数值检验的条件;而 p = 2, 3 的局部因子零点在窗口内确实存在(增订十/十二),故窗口零点集**不只**是回拉的临界线零点——这是 germ 线对 RH 等价陈述的最终修正形态。**边界**:不断言线上的每个点都是零点;不断言局部因子零点与 ζ 回拉零点不重合;不构成 RH 的证明路径。**容量**:`D5/S3/Analytic/EulerGerm/` 现 22/24,本模块落地后 23/24;此后 germ 线新模块须开分桶(第 8 条裂由压力)。
+
+## 一　G-g-4 预登记:G-g-1 对冻结三阶残余的实例化(`GoldenGermThirdOrderWindowZeroCriterion`,落 `D5/S3/Analytic/EulerGerm/`)
+
+**义务**:公开定理 `golden_continued_germ_window_zero_on_line_of_rh (hRH : RiemannHypothesis) : let Kp : Complex -> Nat.Primes -> Complex := fun s p => let x := (p : Complex) ^ (-s * ((Real.goldenRatio ^ 2 : Real) : Complex)); let y := (p : Complex) ^ (-s * ((Real.goldenRatio ^ 3 : Real) : Complex)); (1 - y ^ 2)⁻¹ * (1 - x ^ 2 * y) * (1 - y) * (1 + x)⁻¹ * germLocalFactor s p; let G3 : Complex -> Complex := fun s => ∏' p : Nat.Primes, Kp s p; ∀ continuedGerm : {s : Complex // 1 / Real.goldenRatio ^ 5 < s.re} -> Complex, ((∀ s, 1 / Real.goldenRatio ^ 2 < s.1.re -> continuedGerm s = ∏' p : Nat.Primes, germLocalFactor s.1 p) ∧ (∀ s, continuedGerm s = riemannZeta (((Real.goldenRatio ^ 2 : Real) : Complex) * s.1) * riemannZeta (((Real.goldenRatio ^ 3 : Real) : Complex) * s.1) * (riemannZeta (((2 * Real.goldenRatio ^ 2 : Real) : Complex) * s.1))⁻¹ * ((riemannZeta (((2 * Real.goldenRatio ^ 3 : Real) : Complex) * s.1))⁻¹ * riemannZeta ((((2 * Real.goldenRatio ^ 2 + Real.goldenRatio ^ 3 : Real) : Complex) * s.1)) * G3 s.1))) -> ∀ s, 1 / (2 * Real.goldenRatio ^ 3) < s.1.re -> s.1.re < 1 / Real.goldenRatio ^ 2 -> continuedGerm s = 0 -> G3 s.1 ≠ 0 -> s.1.re = 1 / (2 * Real.goldenRatio ^ 2)`。
+**可证伪预测(写在跑之前)**:若正确,证明只是把冻结 `golden_germ_third_order_factorization` 第二合取的公式改写进 `golden_window_zero_on_line_of_rh`(G := G3),标准三公理;若 `let` 绑定的 Kp/G3 与冻结定理的字面不一致导致 `rw` 失败,则本条须按冻结字面修正而非改冻结。
+**边界**:对任意满足公式的 `continuedGerm` 成立,不依赖 ∃! 的唯一性。
+
+## 二　G-g-5 预登记:三阶残余为零 ⟺ 某局部因子为零(同模块第二条公开定理)
+
+**义务**:公开定理 `golden_third_residual_eq_zero_iff_exists_local_factor_zero (s : Complex) (hs : 1 / Real.goldenRatio ^ 5 < s.re) : let Kp : Complex -> Nat.Primes -> Complex := fun s p => let x := (p : Complex) ^ (-s * ((Real.goldenRatio ^ 2 : Real) : Complex)); let y := (p : Complex) ^ (-s * ((Real.goldenRatio ^ 3 : Real) : Complex)); (1 - y ^ 2)⁻¹ * (1 - x ^ 2 * y) * (1 - y) * (1 + x)⁻¹ * germLocalFactor s p; let G3 : Complex -> Complex := fun s => ∏' p : Nat.Primes, Kp s p; G3 s = 0 ↔ ∃ p : Nat.Primes, germLocalFactor s p = 0`。
+**可证伪预测(写在跑之前)**:若正确,消费冻结三阶分解的第一合取(‖Kp − 1‖ 可和)与 Mathlib `tprod_one_add_ne_zero_of_summable`、`tprod_of_exists_eq_zero`、`multipliable_one_add_of_summable`,标准三公理;若 Kp 的四个非局部因子在 Re s > 1/φ⁵ 上有零点(即 |x| 或 |y| ≥ 1),则本条为假——实际 |x| = p^{−φ² Re s} < 1。
+**边界**:只在 Re s > 1/φ⁵ 陈述(三阶分解的定义域);不涉及零点重数。
+
+## 三　G-g-6 预登记:RH 下延拓 germ 的窗口零点集(同模块第三条公开定理)
+
+**义务**:公开定理 `golden_continued_germ_window_zero_iff_of_rh (hRH : RiemannHypothesis) : let Kp : Complex -> Nat.Primes -> Complex := fun s p => let x := (p : Complex) ^ (-s * ((Real.goldenRatio ^ 2 : Real) : Complex)); let y := (p : Complex) ^ (-s * ((Real.goldenRatio ^ 3 : Real) : Complex)); (1 - y ^ 2)⁻¹ * (1 - x ^ 2 * y) * (1 - y) * (1 + x)⁻¹ * germLocalFactor s p; let G3 : Complex -> Complex := fun s => ∏' p : Nat.Primes, Kp s p; ∀ continuedGerm : {s : Complex // 1 / Real.goldenRatio ^ 5 < s.re} -> Complex, (∀ s, continuedGerm s = riemannZeta (((Real.goldenRatio ^ 2 : Real) : Complex) * s.1) * riemannZeta (((Real.goldenRatio ^ 3 : Real) : Complex) * s.1) * (riemannZeta (((2 * Real.goldenRatio ^ 2 : Real) : Complex) * s.1))⁻¹ * ((riemannZeta (((2 * Real.goldenRatio ^ 3 : Real) : Complex) * s.1))⁻¹ * riemannZeta ((((2 * Real.goldenRatio ^ 2 + Real.goldenRatio ^ 3 : Real) : Complex) * s.1)) * G3 s.1)) -> ∀ s, 1 / (2 * Real.goldenRatio ^ 3) < s.1.re -> s.1.re < 1 / Real.goldenRatio ^ 2 -> (continuedGerm s = 0 ↔ ((riemannZeta (((Real.goldenRatio ^ 2 : Real) : Complex) * s.1) = 0 ∧ s.1.re = 1 / (2 * Real.goldenRatio ^ 2)) ∨ ∃ p : Nat.Primes, germLocalFactor s.1 p = 0))`。
+**可证伪预测(写在跑之前)**:若正确,由 G-g-4 与 G-g-5 加 RH 下其余四个 ζ 因子在窗口内非零(回拉实部 > 1/2 或 > 1)得到;若 ζ(φ³s) 在开窗口内于 RH 下仍有零点(回拉实部 = 1/(2φ³) 恰为下边界,不在开窗口),则本条为假。
+**边界**:等价式右侧的「线上」子句必须与 ζ(φ²s) = 0 合取,不得把整条线并入零点集;s = 1/(2φ²) 处 ζ(2φ²s)⁻¹ 的行为按 Mathlib 约定值处理,若该点使等价式失效须如实报 open 并附反例。
+
+## 四　预算与结算
+
+一席位轮(codex-cli,独立 worktree,三条公开定理同模块;deposit 绑 G-g-6 atom,G-g-4/5 走 PR-1b 收据后 PR-2 cover)。实施须 import 冻结的 `GoldenGermThirdOrderFactorization` 与 `GoldenGermWindowZeroCriterion` 并消费其定理,不得把探针的 `hCrit`/`hSummable` 假设留在公开陈述中。
+
+后续增订继续严格追加于本节之后。

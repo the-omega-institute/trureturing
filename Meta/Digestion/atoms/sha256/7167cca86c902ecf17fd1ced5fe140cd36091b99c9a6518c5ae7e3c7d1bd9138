@@ -1,0 +1,12 @@
+### ZC-L　二阶缺陷判据
+
+```lean
+theorem transverseSecondMoment_eq_zero_iff
+    (window : Finset ZeroOrbit)
+    (hweight : ∀ z ∈ window, 0 < weight z) :
+    transverseSecondMoment window = 0 ↔
+      ∀ z ∈ window, transverseDepth z = 0
+```
+
+---
+

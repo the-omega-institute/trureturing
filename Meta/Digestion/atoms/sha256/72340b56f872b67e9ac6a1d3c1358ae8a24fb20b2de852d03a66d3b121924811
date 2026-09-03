@@ -1,0 +1,6 @@
+## 一　G-d 预登记:局部因子的通用缩放(`LocalFactorUniversalScaling`)
+
+**义务**:公开定理 `germLocalFactor_prime_scaling (p q : Nat.Primes) (s : ℂ) : germLocalFactor s p = germLocalFactor ((((Real.log p / Real.log q : ℝ)) : ℂ) * s) q`。闭合路线:正实底 `cpow` 的主支恒等式 `(p:ℂ)^w = exp(w·log p)`(Mathlib `Complex.cpow_def_of_ne_zero`、`Complex.natCast_log`),逐项相等后 `tsum_congr`。落点 `D5/S3/Analytic/EulerGerm/`。
+**可证伪预测(写在跑之前)**:若正确,定理只消费 `GoldenLocalFactor` 与钉版 Mathlib,公理集为标准三条;推论:任一 p 的零点 s₀ 给出 f_q 在 (log p/log q)·s₀ 的零点(数值已验)。若 `cpow` 对自然数底出现非主支相位,则本条为假并须改写为显式 `exp` 形。
+**边界**:不断言任何零点存在。
+

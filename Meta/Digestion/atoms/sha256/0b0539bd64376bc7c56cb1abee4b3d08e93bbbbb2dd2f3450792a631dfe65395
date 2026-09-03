@@ -1,0 +1,24 @@
+## 31. 三轴示例
+
+\[
+\begin{array}{c|c|c|c}
+\text{对象}&k&m&2r\\
+\hline
+\text{twin connected sector}&2&\text{未指定}&\text{未指定}\\
+\text{prime triplet sector}&3&\text{未指定}&\text{未指定}\\
+\text{simple critical zero}&\text{未指定}&1&2\\
+\text{double critical zero}&\text{未指定}&2&4\\
+\text{generic simple off-line orbit}&\text{由源决定}&1&2
+\end{array}
+\]
+
+本理论的长期对象不是把三轴压成一维，而是构造：
+
+\[
+\mathfrak J^{(k,m,2r)}
+\]
+
+三重分级谱。
+
+---
+

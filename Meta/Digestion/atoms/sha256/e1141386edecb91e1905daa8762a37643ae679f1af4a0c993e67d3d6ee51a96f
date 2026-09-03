@@ -1,0 +1,9 @@
+\[
+\sum_{n\le X}
+\prod_{h\in A}\Lambda(n+h)
+=
+\mathfrak S(A)X+o(X).
+\]
+
+则标准 Abelian 运输给出：
+

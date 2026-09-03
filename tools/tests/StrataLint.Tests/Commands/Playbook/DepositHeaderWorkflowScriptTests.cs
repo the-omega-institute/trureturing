@@ -58,15 +58,13 @@ public sealed partial class DepositCoverWorkflowScriptTests
             StringComparison.Ordinal);
         Assert.Equal(commitsBefore, fixture.CommitCount());
         Assert.Equal(0, fixture.FreezeCount());
-        Assert.Empty(fixture.ReceiptArtifacts());
         Assert.Equal(blueprintBefore, fixture.BlueprintState());
         Assert.DoesNotContain("make:emit", fixture.CallKinds());
-        Assert.DoesNotContain("dotnet:emit-formalization-receipt", fixture.CallKinds());
         Assert.DoesNotContain("dotnet:ledger-append", fixture.CallKinds());
     }
 
     [Fact]
-    public void DepositRejectsSevenLineWrappedDigestWithExistingFreezeBeforeReceiptWrite()
+    public void DepositRejectsSevenLineWrappedDigestWithExistingFreezeBeforeEmission()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
@@ -86,12 +84,10 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Equal(commitsBefore, fixture.CommitCount());
         Assert.Equal(blueprintBefore, fixture.BlueprintState());
         Assert.Equal(ledgerBefore, fixture.LedgerState());
-        Assert.Empty(fixture.ReceiptArtifacts());
         Assert.Equal(
-            ["dotnet:deposit-header-check"],
+            ["make:lean-report", "dotnet:deposit-header-check"],
             fixture.CallKinds());
         Assert.DoesNotContain("make:emit", fixture.CallKinds());
-        Assert.DoesNotContain("dotnet:emit-formalization-receipt", fixture.CallKinds());
         Assert.DoesNotContain("dotnet:ledger-append", fixture.CallKinds());
     }
 
@@ -134,17 +130,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 Gid[..Gid.LastIndexOf('.')],
                 "theorem probe : True := by trivial\n"));
             WriteFile(DefinitionPath, "definition deposited\n");
-        }
-
-        internal string[] ReceiptArtifacts()
-        {
-            var directory = Path.Combine(Root, "Meta", "Digestion", "formalizations");
-            return Directory.Exists(directory)
-                ? Directory.EnumerateFiles(directory)
-                    .Select(path => Path.GetRelativePath(Root, path))
-                    .Order(StringComparer.Ordinal)
-                    .ToArray()
-                : [];
         }
 
         internal string[] BlueprintState()

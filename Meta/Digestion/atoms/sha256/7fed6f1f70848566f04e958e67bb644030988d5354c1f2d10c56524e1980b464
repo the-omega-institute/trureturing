@@ -1,0 +1,23 @@
+\[
+\boxed{
+M_A
+=
+\sum_{\pi\in\Pi(A)}
+\prod_{B\in\pi}\kappa_B.
+}
+\]
+
+这里 \(\Pi(A)\) 是集合分拆格。
+
+这给出了一个真正严格的 Möbius 结构：
+
+\[
+\boxed{
+\text{full moments}
+\overset{\log}{\longrightarrow}
+\text{connected cumulants}
+\overset{\exp}{\longrightarrow}
+\text{full moments}.
+}
+\]
+

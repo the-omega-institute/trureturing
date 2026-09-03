@@ -1,0 +1,14 @@
+\[
+\operatorname{Addr}(s)
+=
+\{p:g_p(s)=0\}.
+\]
+
+若：
+
+\[
+\sum_p|g_p(s)-1|<\infty,
+\]
+
+则 \(\operatorname{Addr}(s)\) 必为有限集；否则每个零因子都贡献大小 \(1\) 的 deviation。
+

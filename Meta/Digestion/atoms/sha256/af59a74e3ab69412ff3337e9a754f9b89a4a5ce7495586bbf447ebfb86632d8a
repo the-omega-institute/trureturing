@@ -1,0 +1,6 @@
+## 三　M3-d-3 预登记:`ZeroData` 的非平凡零点虚部非零(同模块第三条公开定理)
+
+**义务**:公开定理 `ZeroData.im_ne_zero (Z : ZeroData) (n : ℕ) (h : IsNontrivialZero (Z.zero n)) : (Z.zero n).im ≠ 0`(`ZeroData`、`IsNontrivialZero` 取 `D5/S3/Weil/ZeroSum.lean` 的定义:ζ ρ = 0 ∧ 0 < Re ρ ∧ Re ρ < 1)。
+**可证伪预测(写在跑之前)**:若正确,由 M3-d-2 直接得到(虚部为零 ⟹ ρ 实 ⟹ 与 M3-d-2 矛盾;探针已整证此蕴含);此后 `OffLineZeroNegativeTruncatedWeilSquare` 与 M3-f-5 的 `hIm` 可由本条供给(推论另行增订,不在本节义务内)。
+**边界**:本条不断言 `ZeroData` 非空(M1-b 仍 open),只是类型正确的蕴含。
+

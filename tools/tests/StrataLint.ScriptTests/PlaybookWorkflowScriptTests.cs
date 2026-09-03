@@ -8,7 +8,7 @@ public sealed class PlaybookWorkflowScriptTests
     private const string ScriptPath = "tools/scripts/workflow/playbook-workflows.sh";
 
     [Fact]
-    public void DeliverCheckFreezesAfterReceiptsAndBeforeReadOnlyChecks()
+    public void DeliverCheckAlignsBeforeReadOnlyChecks()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new PlaybookFixture();
@@ -33,50 +33,8 @@ public sealed class PlaybookWorkflowScriptTests
             fixture.Calls());
     }
 
-    [Fact]
-    public void ReceiptsStagePropagatesHandwrittenStatusFailure()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new PlaybookFixture();
-
-        var result = fixture.Run(
-            "receipts-stage",
-            "synthetic-base",
-            dotnetFailure: "digest-status",
-            dotnetDiagnostic: "RECEIPTS_STAGE_INVALID handwritten status differs from derived");
-
-        Assert.NotEqual(0, result.ExitCode);
-        Assert.Contains(
-            "handwritten status differs from derived",
-            Encoding.UTF8.GetString(result.StandardError),
-            StringComparison.Ordinal);
-        Assert.Equal(
-            ["make:align-digestion-status BASE=synthetic-base", "dotnet:digest-status --base synthetic-base"],
-            fixture.Calls());
-    }
-
-    [Fact]
-    public void ReceiptsStageRejectsAbsorbedMultiClauseAtomWithoutDecomposition()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new PlaybookFixture();
-
-        var result = fixture.Run(
-            "receipts-stage",
-            "synthetic-base",
-            dotnetFailure: "digest-status",
-            dotnetDiagnostic:
-                "RECEIPTS_STAGE_INVALID atom verdict has multiple clauses, migration=absorbed, unresolved_subitems=[]");
-
-        Assert.NotEqual(0, result.ExitCode);
-        var error = Encoding.UTF8.GetString(result.StandardError);
-        Assert.Contains("multiple clauses", error, StringComparison.Ordinal);
-        Assert.Contains("unresolved_subitems=[]", error, StringComparison.Ordinal);
-    }
-
     [Theory]
     [InlineData("deliver-check")]
-    [InlineData("receipts-stage")]
     [InlineData("deposit")]
     [InlineData("cover")]
     public void CanonicalPlaybookVerbNeverExecutesBranchMerge(string command)

@@ -1,0 +1,14 @@
+\[
+\boxed{
+\mathcal M_H(\sigma)
+=
+\mathbb E_\sigma
+\prod_{h\in H}
+\left(
+1+\varepsilon_h\Lambda(N+h)
+\right).
+}
+\]
+
+展开：
+

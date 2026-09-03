@@ -1,0 +1,5 @@
+source_id = "zeckendorf-constellation-orbit-cumulant-theory"
+path = "docs/develop/theory/ZECKENDORF_CONSTELLATION_ORBIT_CUMULANT_THEORY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

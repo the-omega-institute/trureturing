@@ -1,0 +1,11 @@
+## Zeckendorf–Constellation Orbit-Cumulant Theory（ZCOCT）
+
+**副标题：加法素数构型、镜像零点“纠缠”、三轴喷射深度与相关完备化 ζ**
+
+**理论状态：** 仓库专属综合理论；包含可立即形式化的定理、条件定理、开放桥与可证伪猜想。  
+**取阅截点：** 2026-09-03，Asia/Singapore；仓库 `the-omega-institute/trureturing`，`dev` 分支。  
+**建议落点：** `docs/develop/theory/ZECKENDORF_CONSTELLATION_ORBIT_CUMULANT_THEORY.md`  
+**重要声明：** 本卷既不是黎曼猜想的证明，也不是黎曼猜想为假的证明；“量子纠缠”只在给出张量分解、状态和非可分离性判据以后才按量子意义使用。
+
+---
+

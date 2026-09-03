@@ -15,7 +15,7 @@ This file is Codex-specific packaging of repository obligations; it has no autho
 
 This skill produces two things. An internal assertion record for the current run always exists, including when no Lean is written. The default public product is an ordinary conversational answer rendered from that record; the user sees only that answer unless they ask for the record (see the conversation contract). The internal record carries the clause inventory, `P`/`G`/`S` bridge, premise map, evidence, outcomes, conditions, and derivation; Step 7 directs the public answer to be drafted only from that record and subjects it to a bounded worker audit. That audit reduces leakage but cannot guarantee that natural-language strength never exceeds the register.
 
-codex-formalize owns digestion atoms and their deposit and coverage workflow. This skill owns the user's clause-complete `P`/`G`/`S` bridge, inferential completion, assertion register, and renderer. Do not import freezing, deposit, coverage, receipt-ledger, or truth-DAG publication machinery. Leave a repository mutation only when Step 2 selects a new-`G` compile route and Step 6 retains substantive canonical source.
+codex-formalize owns digestion atoms and their deposit and coverage workflow. This skill owns the user's clause-complete `P`/`G`/`S` bridge, inferential completion, assertion register, and renderer. Do not import freezing, deposit, coverage, or truth-DAG publication machinery. Leave a repository mutation only when Step 2 selects a new-`G` compile route and Step 6 retains substantive canonical source.
 
 ## Conversation contract
 
@@ -36,7 +36,7 @@ The three clauses are one theorem chain in the self anchors below: the answer's 
 
 ## Method anchors
 
-`CLAUDE.md` item 5-double-prime solely owns the meanings of the eight disciplines and marks their use as agent reasoning as analogical. The registry below supplies only grep-resolvable frozen declaration addresses; it does not restate theorem content or assert a one-to-one discipline/declaration mapping. The pre-commitment discipline has no single frozen declaration and is carried by the existing machinery named in `CLAUDE.md`. The Pareto discipline has two anchors.
+`CLAUDE.md` item 5-double-prime solely owns the meanings of the eight disciplines and marks their use as agent reasoning as analogical. The registry below supplies only grep-resolvable frozen declaration addresses; it does not restate theorem content or assert a one-to-one discipline/declaration mapping. The forward-commitment discipline has no single frozen declaration and is carried by the existing machinery named in `CLAUDE.md`. The Pareto discipline has two anchors.
 
 - `lookup_copy_zero_loss_and_nonanticipating_failure` - `D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/RetrospectiveLookupFailure.lean`
 - `blind_residual_charge_decomposition` - `D5/S3/ConceptDynamics/EscapeSpectrum/BlindResidualChargeDecomposition.lean`
@@ -73,7 +73,7 @@ Follow the steps in order. Do not pass a step until its postcondition holds.
 
 ### 0. Fix the answer commitment
 
-Before searching, record the candidate answer propositions, what would count as answering each one, what would refute each one, and the bounded stopping and settlement criteria. Apply the pre-commitment discipline from `CLAUDE.md` item 5-double-prime; do not revise the criteria to fit evidence already seen.
+Before searching, record the candidate answer propositions, what would count as answering each one, what would refute each one, and the bounded stopping and settlement criteria. Apply the forward-commitment discipline from `CLAUDE.md` item 5-double-prime; do not revise the criteria to fit evidence already seen.
 
 Postcondition: the answer, refutation, and stop conditions are fixed before evidence collection.
 

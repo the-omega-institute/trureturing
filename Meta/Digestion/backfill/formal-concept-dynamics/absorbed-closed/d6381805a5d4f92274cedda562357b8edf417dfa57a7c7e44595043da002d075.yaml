@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:d6381805a5d4f92274cedda562357b8edf417dfa57a7c7e44595043da002d075
+  normalized_sha256: sha256:d6381805a5d4f92274cedda562357b8edf417dfa57a7c7e44595043da002d075
+cas_ref: sha256:d6381805a5d4f92274cedda562357b8edf417dfa57a7c7e44595043da002d075
+coverage_gids:
+  - D5/S3/ConceptDynamics/Coding/BinaryProtocolDepthLowerBound.adaptive_binary_protocol_depth_lower_bound
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Coding/BinaryProtocolDepthLowerBound.adaptive_binary_protocol_depth_lower_bound
+      source_sha256: sha256:d6381805a5d4f92274cedda562357b8edf417dfa57a7c7e44595043da002d075
+      target_statement_id: sha256:9fac4ba33c8c5fad720c4635909bd7b9d4aa079f07a06f74d029985c3b5426c3
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Coding/BinaryProtocolDepthLowerBound.adaptive_binary_protocol_depth_lower_bound
+      definition_sha256: sha256:566a7818ea3e6bcb367fee8c1ab6bb9b4a547002f26f8598e87e662c12967e97
+      emission_sha256: sha256:de2233a7415747f5c643453b71249d899f08e2840d312abb2bddea280d7b66d8
+  unresolved_subitems: []

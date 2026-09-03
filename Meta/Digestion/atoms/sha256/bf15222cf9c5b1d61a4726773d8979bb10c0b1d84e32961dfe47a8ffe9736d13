@@ -1,0 +1,13 @@
+\[
+\boxed{
+A_p(s)
+=
+A_q
+\left(
+\frac{\log p}{\log q}s
+\right).
+}
+\]
+
+局部 zero set 若存在，也按：
+

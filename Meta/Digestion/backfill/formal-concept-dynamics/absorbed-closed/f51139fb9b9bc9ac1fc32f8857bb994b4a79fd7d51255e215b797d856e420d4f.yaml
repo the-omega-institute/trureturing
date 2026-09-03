@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:f51139fb9b9bc9ac1fc32f8857bb994b4a79fd7d51255e215b797d856e420d4f
+  normalized_sha256: sha256:f51139fb9b9bc9ac1fc32f8857bb994b4a79fd7d51255e215b797d856e420d4f
+cas_ref: sha256:f51139fb9b9bc9ac1fc32f8857bb994b4a79fd7d51255e215b797d856e420d4f
+coverage_gids:
+  - D5/S3/ConceptDynamics/Agency/ExternalPredictionReflectiveAutonomy.external_prediction_compatible_with_reflective_autonomy
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Agency/ExternalPredictionReflectiveAutonomy.external_prediction_compatible_with_reflective_autonomy
+      source_sha256: sha256:f51139fb9b9bc9ac1fc32f8857bb994b4a79fd7d51255e215b797d856e420d4f
+      target_statement_id: sha256:39e0f61e0b0a3430201f6bc6280f12130d5bb50bd9dd8e971b3ca8848b17d2b9
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Agency/ExternalPredictionReflectiveAutonomy.external_prediction_compatible_with_reflective_autonomy
+      definition_sha256: sha256:a3d91152afc81436c1cb2f2911f59a37b34146a3cdd4ef35c4ddcdc3ac0838e4
+      emission_sha256: sha256:1f9d87993da8a8a61781450ad15776eaf5305f2a8a533c75d0dbf14cb6fd9791
+  unresolved_subitems: []
