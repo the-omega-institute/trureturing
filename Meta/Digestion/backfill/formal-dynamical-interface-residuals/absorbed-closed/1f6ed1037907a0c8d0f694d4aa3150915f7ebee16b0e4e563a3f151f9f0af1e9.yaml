@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:1f6ed1037907a0c8d0f694d4aa3150915f7ebee16b0e4e563a3f151f9f0af1e9
+  normalized_sha256: sha256:1f6ed1037907a0c8d0f694d4aa3150915f7ebee16b0e4e563a3f151f9f0af1e9
+cas_ref: sha256:1f6ed1037907a0c8d0f694d4aa3150915f7ebee16b0e4e563a3f151f9f0af1e9
+coverage_gids:
+  - D5/S3/Observer/Dynamics/LinearProjectionDescentCriterion.linear_projection_descent_criterion
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/Dynamics/LinearProjectionDescentCriterion.linear_projection_descent_criterion
+      source_sha256: sha256:1f6ed1037907a0c8d0f694d4aa3150915f7ebee16b0e4e563a3f151f9f0af1e9
+      target_statement_id: sha256:9787445c977950022af34b53f0a7f6dda35dd25b34c081adecebfe3eff4cdc7d
+  scribe:
+    - gid: D5/S3/Observer/Dynamics/LinearProjectionDescentCriterion.linear_projection_descent_criterion
+      definition_sha256: sha256:670e1ac62b8fe91815c98cba64b93076887de81355d4391630f8d0076d7eac93
+      emission_sha256: sha256:1ea246e51be9cda1572eb4bf122a08d4a947e25cf07ba388f4fee82d36f477c9
+  unresolved_subitems: []
