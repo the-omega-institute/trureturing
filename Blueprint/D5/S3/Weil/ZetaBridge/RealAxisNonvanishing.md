@@ -18,7 +18,7 @@ For a positive real input outside the open unit interval, Mathlib's nonvanishing
 
 For a nonpositive input, the completed-zeta quotient and its frozen nonvanishing on the closed left half-plane force the real gamma factor to vanish. Mathlib's gamma-zero classification then gives a negative even integer, with zero excluded by the value of zeta at zero.
 
-This is Mathlib content plus one frozen completed-zeta lemma. It neither constructs zeta zeros nor makes a claim about the Riemann hypothesis.
+This is pure Mathlib content. It neither constructs zeta zeros nor makes a claim about the Riemann hypothesis.
 
 ## References
 

@@ -31,7 +31,7 @@ internal sealed class RealAxisNonvanishingDocument
                         + "negative even integer, with zero excluded by the value of zeta at "
                         + "zero.")),
                 Paragraph(Text(
-                    "This is Mathlib content plus one frozen completed-zeta lemma. It neither constructs zeta zeros nor makes "
+                    "This is pure Mathlib content. It neither constructs zeta zeros nor makes "
                         + "a claim about the Riemann hypothesis."))),
             DescribeRole.Theorem))));
 
