@@ -340,7 +340,13 @@ public sealed class EmissionTests
         {
             var report = LeanReportFixture.ForDocuments(
                 DocumentDefinitions.All.Select(static definition => definition.Document));
-            PrepareEmittedRepository(root, report);
+            var victim = DocumentDefinitions.All.Single(static definition =>
+                definition.Document.Header.Gid.Value == "D5/S1/Scale/CarrierFoundations");
+            var retained = DocumentDefinitions.All.Where(static definition =>
+                definition.Document.Header.Gid.Value is "D5/S0/Carrier/GoldenRatio"
+                    or "D5/S1/Scale/FibonacciEigen").ToArray();
+            var definitions = IncludeDocumentDependencyClosure(report, [victim, .. retained]);
+            PrepareEmittedRepository(root, report, definitions);
 
             // The candidate harness compiles a newer document set than the baseline tree it
             // replays during conservative verification. A compiled document whose .scribe.cs
@@ -351,8 +357,6 @@ public sealed class EmissionTests
             // base-owned source cannot launder a forgery through this skip: receipts that
             // reference the absent document gap out downstream and the deletion itself is a
             // protected-surface change.
-            var victim = DocumentDefinitions.All.Single(static definition =>
-                definition.Document.Header.Gid.Value == "D5/S1/Scale/CarrierFoundations");
             var victimSourcePath = Path.Combine(root, victim.RelativePath.Value[..^3] + ".scribe.cs");
             var victimEmissionPath = Path.Combine(root, victim.RelativePath.Value);
             var victimEntry =
@@ -399,7 +403,9 @@ public sealed class EmissionTests
         {
             var report = LeanReportFixture.ForDocuments(
                 DocumentDefinitions.All.Select(static definition => definition.Document));
-            PrepareEmittedRepository(root, report);
+            var target = DocumentDefinitions.All[0];
+            var definitions = IncludeDocumentDependencyClosure(report, [target]);
+            PrepareEmittedRepository(root, report, definitions);
 
             // Forge both a reader snapshot and its run-local attestation, then splice in a candidate-only
             // entry. Verification must ignore both forged byte sources and issue the capability from the
@@ -420,7 +426,8 @@ public sealed class EmissionTests
                 check: true,
                 TextWriter.Null,
                 emitError,
-                report);
+                report,
+                definitions);
             var verifyError = new StringWriter();
             var verification = ScribeEmitter.Verify(root, verifyError, report);
 
@@ -570,18 +577,31 @@ public sealed class EmissionTests
         DocumentDefinition definition) =>
         SyntheticScribeRepository.WriteInputs(root, definition);
 
-    private static void PrepareEmittedRepository(string root, LeanAxiomReport report)
+    private static void PrepareEmittedRepository(
+        string root,
+        LeanAxiomReport report,
+        IReadOnlyList<DocumentDefinition>? definitions = null)
     {
         var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintInvalidOperation);
         CopyProjectionFixtures(root);
-        foreach (var definition in DocumentDefinitions.All)
+        if (definitions is null)
         {
-            var relativeSource = definition.RelativePath.Value[..^3] + ".scribe.cs";
-            var destination = Path.Combine(root, relativeSource);
-            TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
-            // Deterministic CI builds map [CallerFilePath] to the /_/ source root,
-            // so fixture copies must resolve through the runtime repository root.
-            repository.CopyTo(RepositoryRelativePath.Create(relativeSource), destination);
+            foreach (var definition in DocumentDefinitions.All)
+            {
+                var relativeSource = definition.RelativePath.Value[..^3] + ".scribe.cs";
+                var destination = Path.Combine(root, relativeSource);
+                TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+                // Deterministic CI builds map [CallerFilePath] to the /_/ source root,
+                // so fixture copies must resolve through the runtime repository root.
+                repository.CopyTo(RepositoryRelativePath.Create(relativeSource), destination);
+            }
+        }
+        else
+        {
+            foreach (var definition in definitions)
+            {
+                SyntheticScribeRepository.WriteInputs(root, definition);
+            }
         }
 
         foreach (var source in repository.EnumerateFiles(
@@ -592,10 +612,13 @@ public sealed class EmissionTests
             repository.CopyTo(source, destination);
         }
 
-        CopyRepositoryLibrary(root);
+        CopyRepositoryLibrary(root, includeBackfill: definitions is null);
 
         var error = new StringWriter();
-        if (ScribeEmitter.Emit(root, check: false, TextWriter.Null, error, report) != 0)
+        var exit = definitions is null
+            ? ScribeEmitter.Emit(root, check: false, TextWriter.Null, error, report)
+            : ScribeEmitter.Emit(root, check: false, TextWriter.Null, error, report, definitions);
+        if (exit != 0)
         {
             throw new InvalidOperationException(
                 $"fixture emission was not clean: {error.ToString().TrimEnd()}");
@@ -613,16 +636,58 @@ public sealed class EmissionTests
         return attestation.Replace("\"entries\": [", "\"entries\": [" + entry, StringComparison.Ordinal);
     }
 
-    private static void CopyRepositoryLibrary(string destinationRoot)
+    private static IReadOnlyList<DocumentDefinition> IncludeDocumentDependencyClosure(
+        LeanAxiomReport report,
+        IReadOnlyList<DocumentDefinition> roots)
+    {
+        var byGid = DocumentDefinitions.All.ToDictionary(
+            static definition => definition.Document.Header.Gid.Value,
+            StringComparer.Ordinal);
+        var graph = DocumentGraphAssembler.Assemble(
+            byGid.Values.Select(static definition => definition.Document),
+            DeclarationCatalog.Create(report));
+        var selected = roots.ToDictionary(
+            static definition => definition.Document.Header.Gid.Value,
+            StringComparer.Ordinal);
+        var pending = new Queue<DocumentDefinition>(roots);
+        while (pending.TryDequeue(out var definition))
+        {
+            foreach (var target in graph.For(definition.Document).Select(static edge => edge switch
+                     {
+                         DocumentEdge.Dependency dependency => dependency.Target.Value,
+                         DocumentEdge.NarrativeReference { Target: NarrativeTarget.Document document } =>
+                             document.DocumentGid.Value,
+                         DocumentEdge.NarrativeReference { Target: NarrativeTarget.Describe describe } =>
+                             describe.DocumentGid.Value,
+                         _ => null,
+                     }).Where(static target => target is not null))
+            {
+                var dependency = byGid[target!];
+                if (selected.TryAdd(target!, dependency))
+                {
+                    pending.Enqueue(dependency);
+                }
+            }
+        }
+
+        return selected.Values.ToArray();
+    }
+
+    private static void CopyRepositoryLibrary(
+        string destinationRoot,
+        bool includeBackfill = true)
     {
         var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.GlobalJsonAndBlueprintInvalidOperation);
-        var ledgerSources = repository.EnumerateFiles(
-            RepositoryRelativePath.Create("Meta/Digestion/backfill"), "*");
-        foreach (var source in ledgerSources)
+        if (includeBackfill)
         {
-            var destination = Path.Combine(destinationRoot, source.Value);
-            TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
-            repository.CopyTo(source, destination);
+            var ledgerSources = repository.EnumerateFiles(
+                RepositoryRelativePath.Create("Meta/Digestion/backfill"), "*");
+            foreach (var source in ledgerSources)
+            {
+                var destination = Path.Combine(destinationRoot, source.Value);
+                TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+                repository.CopyTo(source, destination);
+            }
         }
 
         foreach (var source in repository.EnumerateFiles(
