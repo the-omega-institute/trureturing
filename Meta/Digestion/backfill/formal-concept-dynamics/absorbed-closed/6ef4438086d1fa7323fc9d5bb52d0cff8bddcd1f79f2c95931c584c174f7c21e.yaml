@@ -2,9 +2,14 @@ fingerprints:
   raw_sha256: sha256:6ef4438086d1fa7323fc9d5bb52d0cff8bddcd1f79f2c95931c584c174f7c21e
   normalized_sha256: sha256:6ef4438086d1fa7323fc9d5bb52d0cff8bddcd1f79f2c95931c584c174f7c21e
 cas_ref: sha256:6ef4438086d1fa7323fc9d5bb52d0cff8bddcd1f79f2c95931c584c174f7c21e
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Termination/FiniteDefectTermination.finite_defect_repairs_terminate
+    target_statement_id: sha256:42656eb56bf70150d344c88f118d372bd24c1d6b243486088b8a39fc0f3afb43
 receipts:
-  scribe: []
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Termination/FiniteDefectTermination.finite_defect_repairs_terminate
+      definition_sha256: sha256:5bde3e8ff2eb9ae5f3b2e16d1e78a09a7f7f32363888946974df4a73f598d7d3
+      emission_sha256: sha256:eaeda6a2c5fabf2b2240ee3198e135e143f0cc911424423b935f3d060b86d095
   unresolved_subitems: []
   chain_atoms:
     - fa01d7e9f043ff49e26145b2b4f58dc2dc5262f2fda0ff39cef14dbee0eee16a
