@@ -795,6 +795,5 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     private static string[] CoverArgs(CoverInputs inputs) =>
-        ["--cover-atom", CoverWorld.DefaultAtomId, "--gid", inputs.Gid, "--base", "baseline",
-            "--envelope", inputs.EnvelopePath];
+        ["--cover-atom", CoverWorld.DefaultAtomId, "--gid", inputs.Gid, "--base", "baseline"];
 }

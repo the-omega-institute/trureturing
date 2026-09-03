@@ -1,0 +1,1 @@
+**可证伪预测(写在跑之前)**:若正确,由 M3-d-1 取 s = x 实、交错级数 `Antitone.alternating_series_le_tendsto` 类引理给出极限 > 0(探针已在 M3-d-1 为假设时整证此步,43 行),1 − 2^{1−x} < 0 得 ζ(x) < 0;若 M3-d-1 为 open,本条随之 open。

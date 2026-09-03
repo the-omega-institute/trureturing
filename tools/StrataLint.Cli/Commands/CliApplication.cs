@@ -41,8 +41,6 @@ internal interface ICliEnvironment
 
     CommandResult AlignScribeReceipt(IReadOnlyList<string> arguments);
 
-    CommandResult EmitFormalizationReceipt(IReadOnlyList<string> arguments);
-
     CommandResult Route(IReadOnlyList<string> arguments);
 
     CommandResult SelfTest(IReadOnlyList<string> arguments);
@@ -111,8 +109,6 @@ internal static class CliApplication
                 RenderCommand(environment.DigestStatus(tail), console),
             ["echo-verify"] = static (environment, tail, console) =>
                 RenderExplicit(environment.EchoVerify(tail), console),
-            ["emit-formalization-receipt"] = static (environment, tail, console) =>
-                RenderCommand(environment.EmitFormalizationReceipt(tail), console),
             ["gate-authority"] = static (environment, tail, console) =>
                 RenderExplicit(environment.GateAuthority(tail), console),
             ["filemap-conform"] = static (environment, tail, console) =>
