@@ -1,0 +1,31 @@
+name: build-kissat-4-research
+
+on:
+  push:
+    branches:
+      - agent/research/kissat-4-binary-20260903
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Kissat 4.0.4
+        run: |
+          git clone --depth 1 --branch rel-4.0.4 \
+            https://github.com/arminbiere/kissat.git /tmp/kissat
+          cd /tmp/kissat
+          ./configure
+          make -j2
+          mkdir -p "$GITHUB_WORKSPACE/kissat-research"
+          cp build/kissat "$GITHUB_WORKSPACE/kissat-research/"
+          build/kissat --version > "$GITHUB_WORKSPACE/kissat-research/version.txt"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kissat-4-research
+          path: kissat-research
