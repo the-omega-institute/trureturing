@@ -1,0 +1,66 @@
+* 随后分裂到复平面；
+
+必须引入一个额外形变参数 \(\lambda\)。
+
+de Bruijn–Newman 族 \(H_\lambda\) 正是这样的标准模型：存在常数 \(\Lambda\)，使 \(H_\lambda\) 的全部零点为实数当且仅当 \(\lambda\ge\Lambda\)；RH 等价于 \(\Lambda\le0\)。Rodgers 与 Tao 证明了 \(\Lambda\ge0\)，所以 RH 等价于：
+
+$$
+\boxed{
+\Lambda=0.
+}
+\tag{2093.1}
+$$
+
+([arXiv][3])
+
+在一个反射对称的一参数解析族中，典型局部正规形是：
+
+$$
+\boxed{
+H_\lambda(z)
+\approx
+A
+\left[
+(z-\gamma_c)^2
+-c(\lambda-\lambda_c)
+\right].
+}
+\tag{2093.2}
+$$
+
+当参数位于一侧，两个根为实：
+
+$$
+\gamma_c\pm
+\sqrt{c(\lambda-\lambda_c)}.
+$$
+
+穿过临界点后，根变成共轭复对：
+
+$$
+\gamma_c
+\pm
+i\sqrt{c(\lambda_c-\lambda)}.
+$$
+
+这才是你所说：
+
+$$
+\boxed{
+\text{“达到临界值以后起飞”}
+}
+$$
+
+的严格数学版本。
+
+关键是：
+
+$$
+\boxed{
+\text{临界参数是外部形变 }\lambda，
+不是零点高度 }t.
+}
+$$
+
+---
+

@@ -1,0 +1,146 @@
+# 第两千一百零四部　\(\Xi\) 的精确 Fourier–Laplace 双通道
+
+定义：
+
+$$
+\Xi(z)
+=
+\xi\!\left(\frac12+iz\right).
+$$
+
+经固定线性缩放积分变量以后，存在一个正的、偶的、超指数衰减核 \(\Phi(u)\)，使：
+
+$$
+\boxed{
+\Xi(z)
+=
+\int_0^\infty
+\Phi(u)\cos(zu)\,du.
+}
+\tag{2104.1}
+$$
+
+Rodgers–Tao 所使用的规范为：
+
+$$
+H_0(z)
+=
+\frac18
+\xi\!\left(\frac12+\frac{iz}{2}\right)
+=
+\int_0^\infty
+\Phi(u)\cos(zu)\,du,
+$$
+
+并把它扩展为 de Bruijn–Newman 热形变族。该核为偶函数并超指数衰减。([arXiv][1])
+
+设存在右侧离线零点：
+
+$$
+\rho
+=
+\frac12+\delta+i\gamma,
+\qquad
+\delta>0.
+$$
+
+在 \(\Xi\)-变量中对应：
+
+$$
+z_\rho=\gamma-i\delta.
+$$
+
+函数方程和实结构还给出伙伴：
+
+$$
+\gamma+i\delta.
+$$
+
+因此：
+
+$$
+\Xi(\gamma-i\delta)=0,
+\qquad
+\Xi(\gamma+i\delta)=0.
+$$
+
+展开余弦：
+
+$$
+\cos((\gamma-i\delta)u)
+=
+\cos(\gamma u)\cosh(\delta u)
++
+i\sin(\gamma u)\sinh(\delta u).
+$$
+
+于是离线零点严格等价于两个实条件：
+
+$$
+\boxed{
+\int_0^\infty
+\Phi(u)
+\cosh(\delta u)
+\cos(\gamma u)\,du
+=
+0,
+}
+\tag{2104.2}
+$$
+
+$$
+\boxed{
+\int_0^\infty
+\Phi(u)
+\sinh(\delta u)
+\sin(\gamma u)\,du
+=
+0.
+}
+\tag{2104.3}
+$$
+
+这两式极其重要。
+
+当：
+
+$$
+\delta=0
+$$
+
+时，第二式逐点退化为零，只剩：
+
+$$
+\int_0^\infty
+\Phi(u)\cos(\gamma u)\,du=0.
+$$
+
+也就是说，在线零点只需关闭一个**偶通道**。
+
+离线零点则必须同时关闭：
+
+$$
+\boxed{
+\text{cosh–cos 偶通道}
+}
+$$
+
+和：
+
+$$
+\boxed{
+\text{sinh–sin 法向奇通道}.
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{离线零点不是在线零点的普通横向平移；
+它必须完成一个新增的非平凡奇通道抵消。}
+}
+$$
+
+---
+

@@ -1,0 +1,24 @@
+* 或 Weil 的精确负证书。
+
+所以最合理的组合是：
+
+$$
+\boxed{
+\text{Kakeya 多尺度非集中}
+\Longrightarrow
+\text{离线 boost 被强烈限制}
+}
+$$
+
+再接：
+
+$$
+\boxed{
+\text{解析正性／分支刚性}
+\Longrightarrow
+\delta=0.
+}
+$$
+
+---
+

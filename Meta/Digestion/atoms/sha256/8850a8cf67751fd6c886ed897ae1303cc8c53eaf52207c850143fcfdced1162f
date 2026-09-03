@@ -1,0 +1,34 @@
+## 621. 单素数分辨率格
+
+定义单素数横向分辨率：
+
+$$
+\boxed{
+r_p=\frac1{\log p}.
+}
+$$
+
+原因是：
+
+$$
+p^{-\delta}=e^{-1}
+\iff
+\delta\log p=1
+\iff
+\delta=\frac1{\log p}.
+$$
+
+所以集合：
+
+$$
+\mathscr R_{\mathbb P}
+=
+\left\{
+\frac1{\log p}:p\text{ prime}
+\right\}
+$$
+
+是一个自然的单素数偏移分辨率格。
+
+---
+

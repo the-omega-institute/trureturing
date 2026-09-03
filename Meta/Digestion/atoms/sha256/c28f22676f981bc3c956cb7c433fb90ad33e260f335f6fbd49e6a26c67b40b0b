@@ -1,0 +1,14 @@
+## 613.1 Lucas 素数影
+
+```lean
+theorem inverse_phi_pow_lucas_shadow
+    (H : ℕ) :
+    (Real.goldenRatio : ℝ) ^ (-(H : ℤ)) =
+      1 / goldenLucas H +
+      (-1 : ℝ) ^ H *
+        (Real.goldenRatio : ℝ) ^ (-(2 * H : ℤ)) /
+          goldenLucas H
+```
+
+---
+

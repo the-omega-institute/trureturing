@@ -1,0 +1,36 @@
+## 粘滞情形
+
+若这一强制下界接近失败，则大量频率必须在一座嵌套的 log-frequency cluster tree 中保持相干：
+
+$$
+\boxed{
+\text{small joint energy}
+\Longrightarrow
+\text{multiscale arithmetic stickiness}.
+}
+\tag{2113.3}
+$$
+
+随后再证明这种 stickiness 与：
+
+* 素数对数频率的算术结构；
+* Gamma 反射平衡；
+* 或全局正 kernel；
+
+不相容。
+
+这才是王虹 Kakeya 工具可能真正进入 RH 的位置。
+
+不是直接研究零点。
+
+而是研究：
+
+$$
+\boxed{
+\text{两张已分离的长度剖面，
+是否能被同一条一维算术相位流同时隐藏。}
+}
+$$
+
+---
+
