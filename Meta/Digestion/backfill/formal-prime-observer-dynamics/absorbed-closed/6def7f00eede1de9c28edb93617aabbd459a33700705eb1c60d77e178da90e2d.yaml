@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:6def7f00eede1de9c28edb93617aabbd459a33700705eb1c60d77e178da90e2d
+  normalized_sha256: sha256:6def7f00eede1de9c28edb93617aabbd459a33700705eb1c60d77e178da90e2d
+cas_ref: sha256:6def7f00eede1de9c28edb93617aabbd459a33700705eb1c60d77e178da90e2d
+coverage_gids:
+  - D5/S3/Quantum/FixedAlgebra/PrimeDephasingRefinementAbsorption.prime_dephasing_refinement_absorption
+receipts:
+  coverage:
+    - gid: D5/S3/Quantum/FixedAlgebra/PrimeDephasingRefinementAbsorption.prime_dephasing_refinement_absorption
+      source_sha256: sha256:6def7f00eede1de9c28edb93617aabbd459a33700705eb1c60d77e178da90e2d
+      target_statement_id: sha256:28a2fcbb12e0cb387c6e229db2c909c9261957e3bbfba7a02aafa10a0782581c
+  scribe:
+    - gid: D5/S3/Quantum/FixedAlgebra/PrimeDephasingRefinementAbsorption.prime_dephasing_refinement_absorption
+      definition_sha256: sha256:bd0f64a54b886f9b28fedefa7530df03b9b7f75e4a0ba852846f223cf78a0bba
+      emission_sha256: sha256:d06158f3cf33a02e1a6d9ef4653760812e4b9306f5af61b1428362b9921da81d
+  unresolved_subitems: []

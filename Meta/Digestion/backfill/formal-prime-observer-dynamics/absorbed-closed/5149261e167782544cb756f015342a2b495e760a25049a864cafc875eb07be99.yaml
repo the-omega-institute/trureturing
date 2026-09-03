@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:5149261e167782544cb756f015342a2b495e760a25049a864cafc875eb07be99
+  normalized_sha256: sha256:5149261e167782544cb756f015342a2b495e760a25049a864cafc875eb07be99
+cas_ref: sha256:5149261e167782544cb756f015342a2b495e760a25049a864cafc875eb07be99
+coverage_gids:
+  - D5/S3/Entropy/Observation/ExpectedPosteriorEntropyReduction.information_gain_eq_expected_entropy_reduction
+receipts:
+  coverage:
+    - gid: D5/S3/Entropy/Observation/ExpectedPosteriorEntropyReduction.information_gain_eq_expected_entropy_reduction
+      source_sha256: sha256:5149261e167782544cb756f015342a2b495e760a25049a864cafc875eb07be99
+      target_statement_id: sha256:f9ed4f8563d80f353a2786d77108a801fdae47732beaea980ed7c33154f6c6ec
+  scribe:
+    - gid: D5/S3/Entropy/Observation/ExpectedPosteriorEntropyReduction.information_gain_eq_expected_entropy_reduction
+      definition_sha256: sha256:8b53d81778b71a3cd630e83f9fcc0dc4a49826ab875df99f238171a318462d4d
+      emission_sha256: sha256:8da4fb3c76b34368888557d58c7a061d5c44e0022ed163e8a88dee5b2d83a32d
+  unresolved_subitems: []

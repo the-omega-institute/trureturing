@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:15ee562628f0ae21e0bcc04ef96e4f06f52571e0301b6355cb057e79bcb14570
+  normalized_sha256: sha256:15ee562628f0ae21e0bcc04ef96e4f06f52571e0301b6355cb057e79bcb14570
+cas_ref: sha256:15ee562628f0ae21e0bcc04ef96e4f06f52571e0301b6355cb057e79bcb14570
+coverage_gids:
+  - D5/S3/Weil/Scattering/ShiftedResonanceCriterion.horizontal_resonance_line_iff_critical_line
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/Scattering/ShiftedResonanceCriterion.horizontal_resonance_line_iff_critical_line
+      source_sha256: sha256:15ee562628f0ae21e0bcc04ef96e4f06f52571e0301b6355cb057e79bcb14570
+      target_statement_id: sha256:80d9bdbd3929e2d8701ea643ff364ba2a98e79e27ad9f1f5c7666695b8342624
+  scribe:
+    - gid: D5/S3/Weil/Scattering/ShiftedResonanceCriterion.horizontal_resonance_line_iff_critical_line
+      definition_sha256: sha256:5aa1456947ce6fd14f0718fcc1543fd7c712f14c780bc0433d3585be631180eb
+      emission_sha256: sha256:f9b8d849fd556e121d3b80f5f2457bd19469118dd34f94081e31969108911951
+  unresolved_subitems: []

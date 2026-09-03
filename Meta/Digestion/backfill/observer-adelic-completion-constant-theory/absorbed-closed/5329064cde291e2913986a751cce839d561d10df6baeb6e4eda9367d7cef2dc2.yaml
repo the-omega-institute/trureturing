@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:5329064cde291e2913986a751cce839d561d10df6baeb6e4eda9367d7cef2dc2
+  normalized_sha256: sha256:5329064cde291e2913986a751cce839d561d10df6baeb6e4eda9367d7cef2dc2
+cas_ref: sha256:5329064cde291e2913986a751cce839d561d10df6baeb6e4eda9367d7cef2dc2
+coverage_gids:
+  - D5/S3/Observer/Hankel/GoldenTwoShadowBound.golden_two_shadow_bound
+receipts:
+  coverage:
+    - gid: D5/S3/Observer/Hankel/GoldenTwoShadowBound.golden_two_shadow_bound
+      source_sha256: sha256:5329064cde291e2913986a751cce839d561d10df6baeb6e4eda9367d7cef2dc2
+      target_statement_id: sha256:966da8c840ae1400dada8b75a84c93a1685d88251211741188cdf20b9eefde51
+  scribe:
+    - gid: D5/S3/Observer/Hankel/GoldenTwoShadowBound.golden_two_shadow_bound
+      definition_sha256: sha256:18dd42a2a6ee1ab50da8963bc57425aea3d74cfcf6db814001f506b1bb46f285
+      emission_sha256: sha256:a47e5380bc1c3f176a73ed32a3ff996b2ed23913acd5ed1e8452a805e3b26689
+  unresolved_subitems: []

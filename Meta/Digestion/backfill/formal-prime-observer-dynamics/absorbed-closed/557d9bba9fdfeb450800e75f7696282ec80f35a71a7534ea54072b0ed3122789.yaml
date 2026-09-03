@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:557d9bba9fdfeb450800e75f7696282ec80f35a71a7534ea54072b0ed3122789
+  normalized_sha256: sha256:557d9bba9fdfeb450800e75f7696282ec80f35a71a7534ea54072b0ed3122789
+cas_ref: sha256:557d9bba9fdfeb450800e75f7696282ec80f35a71a7534ea54072b0ed3122789
+coverage_gids:
+  - D5/S3/TotalVariation/Asymptotics/SymmetricBernoulliSecondOrder.symmetric_bernoulli_second_order
+receipts:
+  coverage:
+    - gid: D5/S3/TotalVariation/Asymptotics/SymmetricBernoulliSecondOrder.symmetric_bernoulli_second_order
+      source_sha256: sha256:557d9bba9fdfeb450800e75f7696282ec80f35a71a7534ea54072b0ed3122789
+      target_statement_id: sha256:57dbf318c4e25c748167b2cf654978172f218af9a3a21f5dcde81895c8172249
+  scribe:
+    - gid: D5/S3/TotalVariation/Asymptotics/SymmetricBernoulliSecondOrder.symmetric_bernoulli_second_order
+      definition_sha256: sha256:fe667e8c14b4dc7bcf6c813de99657380c024d5ea032dd200641222ed2a8f509
+      emission_sha256: sha256:6469766480007e8237afe2bd1eb3488b9fb553ac73bac3adcfca11a1c3e36b90
+  unresolved_subitems: []

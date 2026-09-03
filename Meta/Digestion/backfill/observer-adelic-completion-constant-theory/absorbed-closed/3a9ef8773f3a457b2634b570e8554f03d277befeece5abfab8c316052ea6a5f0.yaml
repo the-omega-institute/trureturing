@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:3a9ef8773f3a457b2634b570e8554f03d277befeece5abfab8c316052ea6a5f0
+  normalized_sha256: sha256:3a9ef8773f3a457b2634b570e8554f03d277befeece5abfab8c316052ea6a5f0
+cas_ref: sha256:3a9ef8773f3a457b2634b570e8554f03d277befeece5abfab8c316052ea6a5f0
+coverage_gids:
+  - D5/S3/ConceptDynamics/Algebra/PositiveInvariantMetricSelection.positive_invariant_metric_selection
+receipts:
+  coverage:
+    - gid: D5/S3/ConceptDynamics/Algebra/PositiveInvariantMetricSelection.positive_invariant_metric_selection
+      source_sha256: sha256:3a9ef8773f3a457b2634b570e8554f03d277befeece5abfab8c316052ea6a5f0
+      target_statement_id: sha256:00211549531388035deffbb156bdfdeadf37e07bf817baac8be375fe187b5fb5
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Algebra/PositiveInvariantMetricSelection.positive_invariant_metric_selection
+      definition_sha256: sha256:bbbadc104263ecbd30363b025da9ed13ee4fca5a1a308daac5521e7ef8084227
+      emission_sha256: sha256:90e4a3a816b0dd36e51add4ace452ed3606c8eaed84b972e103a6e2791adad88
+  unresolved_subitems: []

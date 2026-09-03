@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:608a30044d80bbcd9d5414af098c30914a8b8ecf02b87d28f6083d30c52f9915
+  normalized_sha256: sha256:608a30044d80bbcd9d5414af098c30914a8b8ecf02b87d28f6083d30c52f9915
+cas_ref: sha256:608a30044d80bbcd9d5414af098c30914a8b8ecf02b87d28f6083d30c52f9915
+coverage_gids:
+  - D5/S3/Weil/TestFunctions/LiCurvatureFourierRepresentation.li_curvature_fourier_representation
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/TestFunctions/LiCurvatureFourierRepresentation.li_curvature_fourier_representation
+      source_sha256: sha256:608a30044d80bbcd9d5414af098c30914a8b8ecf02b87d28f6083d30c52f9915
+      target_statement_id: sha256:e0296a5b73488389255814b3835feb05f3d85dab433d3b8e2af5df1e0bcda2b1
+  scribe:
+    - gid: D5/S3/Weil/TestFunctions/LiCurvatureFourierRepresentation.li_curvature_fourier_representation
+      definition_sha256: sha256:737214674474d60055c878f81abfe26440e73313b7a28d6325f02c2dab2881c3
+      emission_sha256: sha256:7682ad188673a31c22887b0e8c4922e16fa98ebaa9e1d3a6d7c38055cc7601db
+  unresolved_subitems: []
