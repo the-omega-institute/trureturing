@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:8afab70cf817b6fc687945e530a9109ef9e6a804426e432df0a14d6d55c6868d
+  normalized_sha256: sha256:8afab70cf817b6fc687945e530a9109ef9e6a804426e432df0a14d6d55c6868d
+cas_ref: sha256:8afab70cf817b6fc687945e530a9109ef9e6a804426e432df0a14d6d55c6868d
+coverage_gids:
+  - gid: D5/S3/Analytic/FiniteRitzChristoffelBounds.finite_ritz_christoffel_bounds
+    target_statement_id: sha256:da07716d5760090f20460c28a88efb8d727ba7ed5938644ca20deafe209d2982
+receipts:
+  scribe:
+    - gid: D5/S3/Analytic/FiniteRitzChristoffelBounds.finite_ritz_christoffel_bounds
+      definition_sha256: sha256:1a2d444fe6fcf78458c2b6fcb6d17c1f6ce5c9040d584715abf760494073ca69
+      emission_sha256: sha256:380cec9f8d99ec73aede10961718f0de0e95e509df7eaef8235820d5e4aeb4c7
+  unresolved_subitems: []
