@@ -35,6 +35,7 @@ public sealed class EngineeringScopeProgramTests
         Assert.Equal(
             [NewProductTestsProject, ProductTestsProject],
             result.SelectedProjects);
+        Assert.Equal(2, result.RetryCount);
     }
 
     [Fact]
@@ -82,9 +83,45 @@ public sealed class EngineeringScopeProgramTests
             StringComparison.Ordinal);
     }
 
+    [Fact]
+    public void MissingBuildOutputRetriesOnce() =>
+        AssertRunTestsScenario(
+            "RunsAfterFallback", "Assert.True(true);", prebuild: false, expectedExitCode: 0, expectedRetryCount: 1);
+
+    [Fact]
+    public void PrebuiltTestProjectDoesNotRetry() =>
+        AssertRunTestsScenario(
+            "RunsPrebuilt", "Assert.True(true);", prebuild: true, expectedExitCode: 0, expectedRetryCount: 0);
+
+    [Fact]
+    public void RealTestFailureDoesNotRetry() =>
+        AssertRunTestsScenario(
+            "Fails", "Assert.True(false, \"intentional\");", prebuild: true, expectedExitCode: 1, expectedRetryCount: 0);
+
+    private static void AssertRunTestsScenario(
+        string testName,
+        string testBody,
+        bool prebuild,
+        int expectedExitCode,
+        int expectedRetryCount)
+    {
+        var result = RunBoundary(
+            WriteProductProjects,
+            root => WriteSmokeTest(root, testName, testBody),
+            prebuild
+                ? root => RunDotNet(
+                    root, "build", ProductTestsProject, "--configuration", "Release", "--nologo")
+                : null);
+
+        Assert.True(result.ExitCode == expectedExitCode, result.Diagnostic);
+        Assert.Equal([ProductTestsProject], result.SelectedProjects);
+        Assert.Equal(expectedRetryCount, result.RetryCount);
+    }
+
     private static BoundaryResult RunBoundary(
         Action<string> writeBase,
-        Action<string> writeCandidate)
+        Action<string> writeCandidate,
+        Action<string>? prepareExecution = null)
     {
         var root = TemporaryFileSystem.Directory.CreateTempSubdirectory(
             "stratalint-engineering-scope-").FullName;
@@ -102,6 +139,7 @@ public sealed class EngineeringScopeProgramTests
             writeCandidate(root);
             RunGit(root, "add", ".");
             RunGit(root, "commit", "--quiet", "-m", "candidate");
+            prepareExecution?.Invoke(root);
 
             Environment.SetEnvironmentVariable("FULL", null);
 
@@ -206,6 +244,18 @@ public sealed class EngineeringScopeProgramTests
             "using Xunit; public sealed class SmokeTests { [Fact] public void Runs() { } }\n");
     }
 
+    private static void WriteSmokeTest(string root, string name, string body) =>
+        WriteFile(
+            root,
+            Path.Combine(Path.GetDirectoryName(ProductTestsProject)!, "SmokeTests.cs"),
+            $"using Xunit; public sealed class SmokeTests {{ [Fact] public void {name}() {{ {body} }} }}\n");
+
+    private static void WriteProductProjects(string root)
+    {
+        WriteProject(root, ProductProject, isTest: false);
+        WriteProject(root, ProductTestsProject, isTest: true, ProductProject);
+    }
+
     private static void WriteFile(string root, string path, string content)
     {
         var fullPath = Path.Combine(root, path);
@@ -217,10 +267,16 @@ public sealed class EngineeringScopeProgramTests
         RunGit(root, arguments).Trim();
 
     private static string RunGit(string root, params string[] arguments)
+        => RunProcess("git", root, arguments);
+
+    private static string RunDotNet(string root, params string[] arguments)
+        => RunProcess("dotnet", root, arguments);
+
+    private static string RunProcess(string fileName, string root, params string[] arguments)
     {
         var startInfo = new ProcessStartInfo
         {
-            FileName = "git",
+            FileName = fileName,
             WorkingDirectory = root,
             RedirectStandardOutput = true,
             RedirectStandardError = true,
@@ -235,7 +291,7 @@ public sealed class EngineeringScopeProgramTests
         if (process.ExitCode != 0)
         {
             throw new InvalidOperationException(
-                $"git {string.Join(' ', arguments)} failed ({process.ExitCode}): {error}");
+                $"{fileName} {string.Join(' ', arguments)} failed ({process.ExitCode}): {error}");
         }
 
         return output;
@@ -247,6 +303,9 @@ public sealed class EngineeringScopeProgramTests
         string Output,
         string Error)
     {
+        internal int RetryCount => Output.Split('\n').Count(static line =>
+            line.StartsWith("ENGINEERING_TEST_RETRY ", StringComparison.Ordinal));
+
         internal string Diagnostic =>
             $"exit={ExitCode}; selected=[{string.Join(", ", SelectedProjects)}]; "
             + $"stdout={Output}; stderr={Error}";
