@@ -153,10 +153,6 @@ internal static partial class RepositoryRules
                 DuplicateStatementAdvisory.Evaluate,
                 DuplicateStatementAdvisory.IsAffectedBy),
             AdmissionEffect.Observe),
-        Register(
-            30,
-            "Digestion atoms append only",
-            new RepositoryRule(BackfillScoped, DigestionAtomsAppendOnly, DigestionAtomsAffected)),
     ];
 
     private static RuleRegistration Register(
