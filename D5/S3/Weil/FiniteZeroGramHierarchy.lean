@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/Weil/FiniteZeroGramHierarchy
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: A finite weighted zero-resolvent Gram matrix has an exact
-     nonnegative determinant-square contribution. -/
+   digest: Finite weighted zero-resolvent Gram determinants are nonnegative squares. -/
 
 import Mathlib.Analysis.Matrix.PosDef
 import Mathlib.Tactic
