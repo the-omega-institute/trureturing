@@ -3,7 +3,7 @@
    mirror-B: none(waiver:new-cross-library-adapter)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: The least Zeckendorf digit selects the phi versus phi-squared consecutive golden beta gap. -/
+   digest: The least Zeckendorf digit selects the two consecutive golden beta gaps. -/
 
 import D5.S1.Words.ZeckendorfBeattyBridge
 import D5.S3.Analytic.EulerGerm.GoldenGermNextExponentPattern
@@ -32,7 +32,9 @@ private theorem floor_increment_eq_one_add_mechanical (v : ℕ) :
   have hfloor (n : ℕ) :
       ⌊((n : ℝ) * (Real.goldenRatio - 1))⌋ =
         ⌊((n : ℝ) * Real.goldenRatio)⌋ - (n : ℤ) := by
-    rw [mul_sub, mul_one, Int.floor_sub_intCast]
+    rw [mul_sub, mul_one]
+    convert Int.floor_sub_intCast
+      ((n : ℝ) * Real.goldenRatio) (n : ℤ) using 1 <;> norm_num
   rw [hfloor, hfloor]
   push_cast
   ring
@@ -49,9 +51,19 @@ private theorem beta_gap_eq_golden_add_mechanical (v : ℕ) :
           ((⌊(((v + 1 : ℕ) : ℝ) * Real.goldenRatio)⌋ : ℤ) : ℝ) =
         1 + (D5.S1.Words.goldenMechanicalLetter (v + 1) : ℝ) := by
     exact_mod_cast hinc
-  rw [o5Beta, o5Beta]
-  push_cast
-  nlinarith
+  calc
+    o5Beta (v + 1) - o5Beta v =
+        ((⌊(((v + 2 : ℕ) : ℝ) * Real.goldenRatio)⌋ : ℤ) : ℝ) -
+          ((⌊(((v + 1 : ℕ) : ℝ) * Real.goldenRatio)⌋ : ℤ) : ℝ) +
+            (Real.goldenRatio - 1) := by
+              rw [o5Beta, o5Beta]
+              push_cast
+              ring
+    _ = (1 +
+          (D5.S1.Words.goldenMechanicalLetter (v + 1) : ℝ)) +
+            (Real.goldenRatio - 1) := by rw [hincReal]
+    _ = Real.goldenRatio +
+          (D5.S1.Words.goldenMechanicalLetter (v + 1) : ℝ) := by ring
 
 /-- The least Zeckendorf digit gives an exact discrete address for the next
 golden Euler-layer gap: absence selects the long phi-squared step, presence
@@ -70,7 +82,9 @@ theorem zeckendorf_selects_golden_beta_gap (v : ℕ) :
   · intro hpresent
     have hnotLetter : D5.S1.Words.goldenMechanicalLetter (v + 1) ≠ 1 := by
       intro hletter
-      exact hpresent ((D5.S1.Words.zeckendorf_beatty_bridge v).mpr hletter)
+      have habsent : 2 ∉ wdigits v :=
+        (D5.S1.Words.zeckendorf_beatty_bridge v).mpr hletter
+      exact habsent hpresent
     rcases golden_germ_next_exponent_pattern.1 v with hshort | hlong
     · exact hshort
     · have hformula := beta_gap_eq_golden_add_mechanical v
