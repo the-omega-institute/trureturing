@@ -676,6 +676,7 @@ public sealed partial class FileMapPolicyTests
         [[files]]
         pattern = "{{pattern}}"
         kind = "data"
+        admission_plane = "content"
         produced_by = "none"
         consumed_by = ["reader"]
         verified_by = [{{string.Join(", ", verifiedBy.Select(static name => $"\"{name}\""))}}]
@@ -692,6 +693,7 @@ public sealed partial class FileMapPolicyTests
         [[files]]
         pattern = "{{pattern}}"
         kind = "{{kind}}"
+        admission_plane = "judge"
         produced_by = "{{producedBy}}"
         consumed_by = ["{{consumedBy}}"]
         verified_by = ["{{verifiedBy}}"]
@@ -710,6 +712,7 @@ public sealed partial class FileMapPolicyTests
         [[files]]
         pattern = "{{pattern}}"
         kind = "{{kind}}"
+        admission_plane = "judge"
         produced_by = "{{producedBy}}"
         consumed_by = ["{{consumedBy}}"]
         verified_by = ["{{verifiedBy}}"]

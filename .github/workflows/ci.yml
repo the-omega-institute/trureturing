@@ -10,7 +10,9 @@ on:
 
 permissions:
   contents: read
-env: { PURE_REVERT_CLASSIFIER_PATH: tools/scripts/workflow/pure-revert-detect.sh }
+env:
+  ADMISSION_PLANE_CLASSIFIER_PATH: tools/scripts/workflow/admission-plane-classify.py
+  PURE_REVERT_CLASSIFIER_PATH: tools/scripts/workflow/pure-revert-detect.sh
 
 # PR 侧按 PR 号分组并取消在途:同一 PR 连续推送时,旧 run 的结论已无意义。
 #
@@ -75,6 +77,19 @@ jobs:
           base_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD^1)"
           test -n "$head_sha"
           test -n "$base_sha"
+      - name: Enforce admission plane partition
+        if: github.event_name == 'pull_request_target' && steps.checkout-merge.outcome == 'success'
+        shell: bash
+        run: |
+          set -euo pipefail
+          classifier="$RUNNER_TEMP/admission-plane-classify.py"
+          delta="$RUNNER_TEMP/admission-plane-delta.z"
+          filemap="$RUNNER_TEMP/admission-plane-base.toml"
+          git -C candidate show "HEAD^1:${ADMISSION_PLANE_CLASSIFIER_PATH}" > "$classifier"
+          git -C candidate diff --name-only -z --no-renames HEAD^1 HEAD > "$delta"
+          fetched=true
+          if ! git -C candidate show HEAD^1:Meta/FILEMAP.toml > "$filemap"; then fetched=false; fi
+          exec python3 "$classifier" --delta-file "$delta" --filemap "$filemap" --filemap-fetched "$fetched"
       - name: Classify exact revert
         id: revert
         if: github.event_name == 'pull_request_target' && steps.checkout-merge.outcome == 'success'
@@ -320,6 +335,19 @@ jobs:
           base_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD^1)"
           test -n "$head_sha"
           test -n "$base_sha"
+      - name: Enforce admission plane partition
+        if: github.event_name == 'pull_request_target' && steps.checkout-merge.outcome == 'success'
+        shell: bash
+        run: |
+          set -euo pipefail
+          classifier="$RUNNER_TEMP/admission-plane-classify.py"
+          delta="$RUNNER_TEMP/admission-plane-delta.z"
+          filemap="$RUNNER_TEMP/admission-plane-base.toml"
+          git -C candidate show "HEAD^1:${ADMISSION_PLANE_CLASSIFIER_PATH}" > "$classifier"
+          git -C candidate diff --name-only -z --no-renames HEAD^1 HEAD > "$delta"
+          fetched=true
+          if ! git -C candidate show HEAD^1:Meta/FILEMAP.toml > "$filemap"; then fetched=false; fi
+          exec python3 "$classifier" --delta-file "$delta" --filemap "$filemap" --filemap-fetched "$fetched"
       - name: Classify exact revert
         id: revert
         if: github.event_name == 'pull_request_target' && steps.checkout-merge.outcome == 'success'
@@ -640,6 +668,19 @@ jobs:
           base_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD^1)"
           test -n "$head_sha"
           test -n "$base_sha"
+      - name: Enforce admission plane partition
+        if: github.event_name == 'pull_request_target' && steps.checkout-merge.outcome == 'success'
+        shell: bash
+        run: |
+          set -euo pipefail
+          classifier="$RUNNER_TEMP/admission-plane-classify.py"
+          delta="$RUNNER_TEMP/admission-plane-delta.z"
+          filemap="$RUNNER_TEMP/admission-plane-base.toml"
+          git -C candidate show "HEAD^1:${ADMISSION_PLANE_CLASSIFIER_PATH}" > "$classifier"
+          git -C candidate diff --name-only -z --no-renames HEAD^1 HEAD > "$delta"
+          fetched=true
+          if ! git -C candidate show HEAD^1:Meta/FILEMAP.toml > "$filemap"; then fetched=false; fi
+          exec python3 "$classifier" --delta-file "$delta" --filemap "$filemap" --filemap-fetched "$fetched"
       - name: Classify exact revert
         id: revert
         if: github.event_name == 'pull_request_target' && steps.checkout-merge.outcome == 'success'
