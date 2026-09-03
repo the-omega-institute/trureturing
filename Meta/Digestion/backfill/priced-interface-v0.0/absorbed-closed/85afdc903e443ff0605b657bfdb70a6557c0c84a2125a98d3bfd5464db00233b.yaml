@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:85afdc903e443ff0605b657bfdb70a6557c0c84a2125a98d3bfd5464db00233b
+  normalized_sha256: sha256:85afdc903e443ff0605b657bfdb70a6557c0c84a2125a98d3bfd5464db00233b
+cas_ref: sha256:85afdc903e443ff0605b657bfdb70a6557c0c84a2125a98d3bfd5464db00233b
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Interpretation/PartySimulationFreshBeaconCertification.party_simulation_and_fresh_beacon_certification
+    target_statement_id: sha256:85c3f5cf51b2251f7ebe06989b5e5a33abb8fbf3fa35ccb33b6b731220c2f34e
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Interpretation/PartySimulationFreshBeaconCertification.party_simulation_and_fresh_beacon_certification
+      definition_sha256: sha256:4dc47cd1974492d8aa3235289e3dde4d7c32e070c8022ba92cc796885ce81ca9
+      emission_sha256: sha256:823debf5276d2590051df81461075c76249ce4ef048047276aa01a77c312c233
+  unresolved_subitems: []

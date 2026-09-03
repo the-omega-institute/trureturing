@@ -1,0 +1,8 @@
+fingerprints:
+  raw_sha256: sha256:0c60a8086903dff357804afe92ac0c7150f5970f62a9f44a5a8c337bb4165128
+  normalized_sha256: sha256:0c60a8086903dff357804afe92ac0c7150f5970f62a9f44a5a8c337bb4165128
+cas_ref: sha256:0c60a8086903dff357804afe92ac0c7150f5970f62a9f44a5a8c337bb4165128
+coverage_gids: []
+receipts:
+  scribe: []
+  unresolved_subitems: []

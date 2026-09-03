@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:ebe66323199c0de199d57c352220b14176a0479879bb259ff27c4830281f0156
+  normalized_sha256: sha256:ebe66323199c0de199d57c352220b14176a0479879bb259ff27c4830281f0156
+cas_ref: sha256:ebe66323199c0de199d57c352220b14176a0479879bb259ff27c4830281f0156
+coverage_gids:
+  - gid: D5/S3/Quantum/Measurements/HorizontalCasimir.horizontal_casimir_eq_zero_iff
+    target_statement_id: sha256:6b1c21ea8e7ab91cc00396e41e50ee497cd6bc39f2593fb8727af3df7dd0f231
+receipts:
+  scribe:
+    - gid: D5/S3/Quantum/Measurements/HorizontalCasimir.horizontal_casimir_eq_zero_iff
+      definition_sha256: sha256:665ac354fb6283ff2c340dfaaed944d44df7833046df5f42a40d9f1239d88a42
+      emission_sha256: sha256:7c8753e799c7d26cf86e7f1ff81ec8dd7b5df0044d20617691b2ad7d96d5edf0
+  unresolved_subitems: []
