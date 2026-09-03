@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Analytic/Isolation/RealUnitIntervalZetaNonvanishing
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Riemann zeta is nonzero at every real point strictly between zero and one. -/
+   digest: Public positive-real zeta nonvanishing away from one and its unit-interval corollary. -/
 
 import Mathlib.Analysis.Complex.LocallyUniformLimit
 import Mathlib.Analysis.Complex.Convex
@@ -16,11 +16,13 @@ import Mathlib.NumberTheory.LSeries.RiemannZeta
 * Pinned Mathlib searches for `riemannZeta_ne_zero`, `riemannZeta_neg`,
   `dirichletEta`, `LSeries`, and the zeta series identities found the public
   half-plane nonvanishing theorems and the Dirichlet series for `re s > 1`,
-  but no theorem excluding real zeros for `0 < s < 1`.
-* The D5 tree has a private generic proof inside
-  `GoldenAuxiliaryZetaNonzero`; its only public theorem is the specialization
-  at the golden auxiliary point. To avoid a second named eta API, all eta
-  objects and supporting facts below are local to the one public theorem.
+  but no theorem excluding real zeros for every positive real `s != 1`.
+* This module is the canonical public owner of that real-axis nonvanishing
+  family. The frozen `GoldenAuxiliaryZetaNonzero` module carries an earlier
+  private, non-importable proof of the same fact and exposes only its public
+  golden-point specialization.
+* No second named eta API is introduced: all eta objects and supporting facts
+  below remain local to the generic public theorem.
 * The proof pairs adjacent terms of the alternating Dirichlet series, proves
   local uniform convergence for positive real part, identifies the series
   with the eta multiple of zeta by analytic continuation, and uses strict
@@ -33,9 +35,9 @@ namespace D5.S3.Analytic.Isolation.RealUnitIntervalZetaNonvanishing
 
 noncomputable section
 
-/-- Riemann zeta has no real zero in the open unit interval. -/
-theorem riemannZeta_ne_zero_on_real_unit_interval :
-    ∀ sigma : ℝ, 0 < sigma → sigma < 1 → riemannZeta sigma ≠ 0 := by
+/-- Riemann zeta has no positive real zero away from one. -/
+theorem riemannZeta_ne_zero_of_real_pos_ne_one (x : ℝ) (hx : 0 < x) (hx1 : x ≠ 1) :
+    riemannZeta (x : ℂ) ≠ 0 := by
   let etaPairTerm : ℕ → ℂ → ℂ := fun n s =>
     (((2 * n + 1 : ℕ) : ℝ) : ℂ) ^ (-s) -
       (((2 * n + 2 : ℕ) : ℝ) : ℂ) ^ (-s)
@@ -338,17 +340,24 @@ theorem riemannZeta_ne_zero_on_real_unit_interval :
           (Complex.ofReal_tsum _).symm
     rw [hpair]
     simpa using hsum
-  intro sigma hsigma hsigma_one
-  have heta_pos := pairedEta_re_pos_of_real hsigma
-  have heta_ne : pairedEta (sigma : ℂ) ≠ 0 := by
+  have heta_pos := pairedEta_re_pos_of_real hx
+  have heta_ne : pairedEta (x : ℂ) ≠ 0 := by
     intro heta_zero
     rw [heta_zero] at heta_pos
     norm_num at heta_pos
   intro hzeta
   apply heta_ne
-  rw [pairedEta_eq_zetaEtaFactor_of_real hsigma (ne_of_lt hsigma_one)]
+  rw [pairedEta_eq_zetaEtaFactor_of_real hx hx1]
   dsimp [zetaEtaFactor]
   rw [hzeta, mul_zero]
+
+#print axioms riemannZeta_ne_zero_of_real_pos_ne_one
+
+/-- Riemann zeta has no real zero in the open unit interval. -/
+theorem riemannZeta_ne_zero_on_real_unit_interval :
+    ∀ sigma : ℝ, 0 < sigma → sigma < 1 → riemannZeta sigma ≠ 0 := by
+  intro sigma hsigma hsigma_one
+  exact riemannZeta_ne_zero_of_real_pos_ne_one sigma hsigma (ne_of_lt hsigma_one)
 
 #print axioms riemannZeta_ne_zero_on_real_unit_interval
 
