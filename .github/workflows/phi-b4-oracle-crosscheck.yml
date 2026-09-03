@@ -1,0 +1,81 @@
+name: phi-b4-oracle-crosscheck
+
+on:
+  push:
+    branches:
+      - agent/research/phi-b4-oracle-crosscheck-20260903
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  crosscheck:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compare all 200 public samples
+        run: |
+          curl --fail --location --silent --show-error \
+            https://raw.githubusercontent.com/aaronbarnoff/tcs_digits/main/DFA-Inductor/myFiles/dict/dict_phi_b4_200.txt \
+            --output /tmp/dict_phi_b4_200.txt
+          mkdir -p result
+          PYTHONPATH=research python3 - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+          import phi_b4_bounds as research
+
+          path = Path('/tmp/dict_phi_b4_200.txt')
+          lines = [line.split() for line in path.read_text().splitlines() if line.strip()]
+          declared_rows, alphabet = map(int, lines[0])
+          rows = []
+          for tokens in lines[1:]:
+              label = int(tokens[0])
+              length = int(tokens[1])
+              word = tuple(map(int, tokens[2:]))
+              assert len(word) == length
+              rows.append((label, word))
+
+          dummy = rows[0]
+          published = rows[1:]
+          mismatches = []
+          for index, (label, word) in enumerate(published):
+              expected_word = research.zeckendorf_word(4 ** index)
+              expected_label = research.golden_digit(4, index)
+              if word != expected_word or label != expected_label:
+                  mismatches.append({
+                      'index': index,
+                      'published_label': label,
+                      'generated_label': expected_label,
+                      'published_word': list(word),
+                      'generated_word': list(expected_word),
+                  })
+
+          result = {
+              'declared_rows': declared_rows,
+              'alphabet_size': alphabet,
+              'parsed_rows': len(rows),
+              'dummy_row': {'label': dummy[0], 'word': list(dummy[1])},
+              'compared_power_samples': len(published),
+              'mismatch_count': len(mismatches),
+              'mismatches': mismatches,
+              'public_dictionary_sha256': hashlib.sha256(path.read_bytes()).hexdigest(),
+              'generator_commit': '${{ github.sha }}',
+          }
+          Path('result/oracle-crosscheck.json').write_text(
+              json.dumps(result, indent=2, sort_keys=True) + '\n'
+          )
+          print(json.dumps(result, indent=2, sort_keys=True))
+          assert declared_rows == 201
+          assert alphabet == 2
+          assert len(rows) == 201
+          assert dummy == (0, (0,))
+          assert len(published) == 200
+          assert not mismatches
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: phi-b4-oracle-crosscheck
+          path: result/oracle-crosscheck.json
