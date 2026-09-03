@@ -1,0 +1,17 @@
+### 150.1 Golden conjugate phase
+
+```lean
+theorem goldenConj_eq_inv_mul_exp_pi :
+    (Real.goldenConj : ℂ) =
+      Real.goldenRatio⁻¹ * Complex.exp (Complex.I * Real.pi)
+```
+
+更容易先证明实数版本：
+
+```lean
+theorem goldenConj_eq_neg_inv :
+    Real.goldenConj = -Real.goldenRatio⁻¹
+```
+
+---
+

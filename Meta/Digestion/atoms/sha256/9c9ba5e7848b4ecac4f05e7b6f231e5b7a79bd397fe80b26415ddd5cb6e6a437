@@ -1,0 +1,39 @@
+## 44. Möbius 结构
+
+把：
+
+$$
+(\tau,d)
+$$
+
+按：
+
+$$
+(\tau+L,d)
+\sim
+(\tau,-d)
+$$
+
+识别，得到一个实 Möbius line bundle。
+
+因此：
+
+$$
+\boxed{
+\text{even channel}
+=
+\text{平凡线丛},
+}
+$$
+
+$$
+\boxed{
+\text{odd channel}
+=
+\text{Möbius 符号线丛}.
+}
+$$
+
+它解释了：
+
+* 一圈以后符号翻转；

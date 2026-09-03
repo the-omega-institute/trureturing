@@ -1,0 +1,30 @@
+### 猜想 111.1（Prime-source monodromy connectivity）
+
+若存在自然的 prime-constellation source family：
+
+$$
+\Xi(s;\mathbf u),
+$$
+
+并且允许所有有限 admissible prime-constellation sources 作为参数方向，那么对应零点 branch 的 monodromy 图在适当完成后是连通的。
+
+其严格含义不是：
+
+$$
+\text{每一对零点直接相互作用},
+$$
+
+而是：
+
+$$
+\boxed{
+\text{任意两条零点分支都通过有限碰撞链属于同一 monodromy orbit}.
+}
+$$
+
+这是“所有离线零点共同纠缠”目前最强、同时仍可证伪的几何版本。
+
+反例条件也很清楚：若参数空间的判别式始终分成两个互不连接的 branch families，则 monodromy 群分解，强纠缠猜想为假。
+
+---
+

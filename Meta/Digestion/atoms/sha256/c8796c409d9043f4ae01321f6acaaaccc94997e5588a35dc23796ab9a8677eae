@@ -1,0 +1,39 @@
+## 137. 从 trace loops 到 primitive cycles
+
+对一个有限转移算子 \(A\)，有形式恒等式：
+
+$$
+-\log\det(I-zA)
+=
+\sum_{n\ge1}
+\frac{z^n}{n}
+\operatorname{tr}(A^n).
+$$
+
+其中：
+
+$$
+\operatorname{tr}(A^n)
+$$
+
+是长度 \(n\) 的全部闭合 walks 权重和。
+
+每个闭合 walk 都是某个 primitive cycle 的重复。
+
+因此在合适的有限图设置中：
+
+$$
+\boxed{
+\det(I-zA)^{-1}
+=
+\prod_{[c]\ \mathrm{primitive}}
+\left(
+1-z^{\ell(c)}w(c)
+\right)^{-1}.
+}
+$$
+
+这是一种 dynamical Euler product。
+
+---
+

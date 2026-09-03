@@ -1,0 +1,44 @@
+## 131. Correlation-completed determinant 的强化定义
+
+此前定义的：
+
+$$
+\Xi_H(s;\boldsymbol\varepsilon)
+$$
+
+可以进一步要求它来自一个 operator pencil：
+
+$$
+\Xi_H(s;\boldsymbol\varepsilon)
+=
+\det\nolimits_{\mathrm{reg}}
+\mathcal L_H(s;\boldsymbol\varepsilon).
+$$
+
+其中：
+
+$$
+\mathcal L_H(s;\boldsymbol\varepsilon)
+=
+\mathcal L_0(s)
+-
+\sum_{h\in H}
+\varepsilon_hB_h.
+$$
+
+要求：
+
+$$
+\Xi_H(s;0)=\xi(s).
+$$
+
+在右半平面，其 source jets 应恢复：
+
+$$
+\prod_{h\in A}\Lambda(n+h)
+$$
+
+的 connected Mellin 数据。
+
+---
+

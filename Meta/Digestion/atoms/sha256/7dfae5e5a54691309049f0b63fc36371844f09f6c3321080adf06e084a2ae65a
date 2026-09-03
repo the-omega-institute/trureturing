@@ -1,0 +1,19 @@
+## 115. 构型—零点 selection rule
+
+设一个候选 Trace–Jet Bridge：
+
+$$
+\mathcal B:
+\mathcal C
+\longrightarrow
+\mathcal Z
+$$
+
+满足反射协变：
+
+$$
+\mathcal B\circ R_{\mathrm{const}}
+=
+J\circ\mathcal B.
+$$
+

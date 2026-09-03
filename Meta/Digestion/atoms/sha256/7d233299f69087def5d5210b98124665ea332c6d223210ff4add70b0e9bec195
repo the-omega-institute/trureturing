@@ -1,0 +1,73 @@
+## 39. 所有局部分类同时存在
+
+对构型：
+
+$$
+H=\{h_1,\ldots,h_k\},
+$$
+
+在每个素数 \(p\) 上定义允许 residue 集：
+
+$$
+A_p(H)
+=
+\mathbb Z/p\mathbb Z
+\setminus
+\{-h:h\in H\}.
+$$
+
+局部存活率为：
+
+$$
+\frac{|A_p(H)|}{p}
+=
+1-\frac{\nu_p(H)}p.
+$$
+
+对有限素数集合 \(S\)，定义：
+
+$$
+\Omega_{H,S}
+=
+\prod_{p\in S}A_p(H).
+$$
+
+这是：
+
+$$
+\prod_{p\in S}\mathbb Z/p\mathbb Z
+$$
+
+中的 cylinder set。
+
+其 Haar 概率为：
+
+$$
+\prod_{p\in S}
+\left(
+1-\frac{\nu_p(H)}p
+\right).
+$$
+
+相对于 \(k\) 个独立单点存活率的比为：
+
+$$
+\prod_{p\in S}
+\frac{1-\nu_p(H)/p}
+{(1-1/p)^k}.
+$$
+
+极限正是 singular-series 结构。
+
+所以：
+
+$$
+\boxed{
+\text{素数构型}
+=
+\text{所有素数 residue 名字的兼容 cylinder condition}.
+}
+$$
+
+---
+

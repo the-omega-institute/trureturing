@@ -1,0 +1,18 @@
+## 72. Möbius Recompletion Theorem
+
+在 source family 中，若 transverse defect 具有：
+
+$$
+\delta(\tau+L)=-\delta(\tau),
+$$
+
+则每个 regulator 周期内存在：
+
+$$
+\delta(\tau_\ast)=0.
+$$
+
+若零点分支成对存在，再研究该零点是否必为多重零点和 branch-exchange point。
+
+---
+

@@ -1,0 +1,48 @@
+## 135. 多重零点处 response 公式失效
+
+若：
+
+$$
+\xi'(\rho)=0,
+$$
+
+则简单零点公式分母消失。
+
+这不是技术事故，而是分岔信号。
+
+此时应把 scalar branch response 替换为 jet pencil：
+
+$$
+P_m(s)
+=
+(s-\rho)I-N_m.
+$$
+
+仓库已证明该 pencil 的 determinant 只给出：
+
+$$
+(s-\rho)^m,
+$$
+
+而完整 resolvent 才保留 nilpotent jet 层。
+
+因此：
+
+$$
+\boxed{
+\text{simple zero}
+\Rightarrow
+\text{单值 response},
+}
+$$
+
+$$
+\boxed{
+\text{multiple zero}
+\Rightarrow
+\text{matrix-valued jet response 与 branch monodromy}.
+}
+$$
+
+---
+
