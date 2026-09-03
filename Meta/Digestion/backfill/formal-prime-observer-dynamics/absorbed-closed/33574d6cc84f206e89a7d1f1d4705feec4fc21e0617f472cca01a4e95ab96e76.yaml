@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:33574d6cc84f206e89a7d1f1d4705feec4fc21e0617f472cca01a4e95ab96e76
+  normalized_sha256: sha256:33574d6cc84f206e89a7d1f1d4705feec4fc21e0617f472cca01a4e95ab96e76
+cas_ref: sha256:33574d6cc84f206e89a7d1f1d4705feec4fc21e0617f472cca01a4e95ab96e76
+coverage_gids:
+  - D5/S3/Arith/PrimeIdeals/FinitelyBlindPrimeIdeals.finite_blind_prime_ideals
+receipts:
+  coverage:
+    - gid: D5/S3/Arith/PrimeIdeals/FinitelyBlindPrimeIdeals.finite_blind_prime_ideals
+      source_sha256: sha256:33574d6cc84f206e89a7d1f1d4705feec4fc21e0617f472cca01a4e95ab96e76
+      target_statement_id: sha256:8457cabd8e352e25726474e4e37963a6493e728a4e94555e0f2041dd7a7239ce
+  scribe:
+    - gid: D5/S3/Arith/PrimeIdeals/FinitelyBlindPrimeIdeals.finite_blind_prime_ideals
+      definition_sha256: sha256:c712192223cdeae5b45004cae55b423af365fc5319294c90f1a6bc3f0f64232f
+      emission_sha256: sha256:5ac604ee8546f2d8d166d495590af29354e54258f95756a402c4ac459885ecd5
+  unresolved_subitems: []
