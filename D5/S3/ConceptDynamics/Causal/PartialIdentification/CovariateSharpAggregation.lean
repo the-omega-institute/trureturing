@@ -81,10 +81,26 @@ theorem weightedValue_blend
       (1 - t) * weightedValue weight left +
         t * weightedValue weight right := by
   unfold weightedValue
-  rw [← Finset.mul_sum, ← Finset.mul_sum, ← Finset.sum_add_distrib]
-  apply Finset.sum_congr rfl
-  intro covariate _
-  ring
+  calc
+    (∑ covariate,
+        weight covariate *
+          ((1 - t) * left covariate + t * right covariate)) =
+        ∑ covariate,
+          ((1 - t) * (weight covariate * left covariate) +
+            t * (weight covariate * right covariate)) := by
+      apply Finset.sum_congr rfl
+      intro covariate _
+      ring
+    _ =
+        (∑ covariate,
+          (1 - t) * (weight covariate * left covariate)) +
+          ∑ covariate,
+            t * (weight covariate * right covariate) := by
+      rw [Finset.sum_add_distrib]
+    _ =
+        (1 - t) * (∑ covariate, weight covariate * left covariate) +
+          t * (∑ covariate, weight covariate * right covariate) := by
+      rw [Finset.mul_sum, Finset.mul_sum]
 
 /-- If every stratum interval is sharp and stratum witnesses can be selected
 jointly, then the weighted covariate-adjusted query has the exact interval
