@@ -98,11 +98,35 @@ def sharedWeightedQuery (parameter : Real) : Real :=
   (1 / 2) * localQuery false parameter +
     (1 / 2) * localQuery true parameter
 
+/-- Any fixed point of the affine complement involution `x ↦ 1 - x` is one
+half. This is pure affine algebra. It carries no statement about the Riemann
+zeta function or the location of its zeros. -/
+theorem complement_fixed_point_eq_half
+    (value : Real)
+    (fixed : value = 1 - value) :
+    value = 1 / 2 := by
+  linarith
+
+/-- Equal weighting sends every complementary pair whose sum is one to one
+half. -/
+theorem equal_weight_complementary_pair_eq_half
+    (left right : Real)
+    (complementary : left + right = 1) :
+    (1 / 2) * left + (1 / 2) * right = 1 / 2 := by
+  linarith
+
+/-- The two local responses form a complementary pair for every shared
+parameter. -/
+theorem localQuery_complementary (parameter : Real) :
+    localQuery false parameter + localQuery true parameter = 1 := by
+  simp [localQuery]
+
 /-- Complementary responses cancel the shared parameter exactly. -/
 theorem sharedWeightedQuery_eq_half (parameter : Real) :
     sharedWeightedQuery parameter = 1 / 2 := by
-  simp [sharedWeightedQuery, localQuery]
-  ring
+  exact equal_weight_complementary_pair_eq_half
+    (localQuery false parameter) (localQuery true parameter)
+    (localQuery_complementary parameter)
 
 /-- Global attainability after imposing the cross-stratum shared-parameter
 constraint. -/
@@ -135,6 +159,8 @@ theorem shared_parameter_invalidates_naive_weighted_sharpness :
     norm_num
 
 #print axioms local_attainable_iff
+#print axioms complement_fixed_point_eq_half
+#print axioms equal_weight_complementary_pair_eq_half
 #print axioms shared_parameter_attainable_iff
 #print axioms shared_parameter_invalidates_naive_weighted_sharpness
 
