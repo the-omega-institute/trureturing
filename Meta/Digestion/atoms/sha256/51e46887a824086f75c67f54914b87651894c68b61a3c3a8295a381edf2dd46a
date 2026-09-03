@@ -1,0 +1,66 @@
+## 134. 反射选择律对零点速度的约束
+
+若 source deformation 保持：
+
+$$
+\Xi(1-\overline s;\mathbf u)
+=
+\overline{\Xi(s;\mathbf u)}
+$$
+
+且 \(\rho\) 位于临界线，则简单零点 branch 必须继续位于临界线。
+
+所以对 mirror-even source：
+
+$$
+\boxed{
+\Re\partial_{u_h}\rho(0)=0.
+}
+$$
+
+也就是说，它只能在线的切向方向改变高度，不能产生一阶 transverse velocity。
+
+若 source 本身是 mirror-odd，并满足联合协变：
+
+$$
+\Xi(1-\overline s;-u)
+=
+\overline{\Xi(s;u)},
+$$
+
+则：
+
+$$
+\rho(-u)
+=
+J\rho(u).
+$$
+
+于是 transverse displacement：
+
+$$
+\delta(u)
+=
+\Re\rho(u)-\frac12
+$$
+
+满足：
+
+$$
+\delta(-u)=-\delta(u).
+$$
+
+此时一阶 transverse response 可以非零。
+
+所以：
+
+$$
+\boxed{
+\text{只有 mirror-odd source 才能在线性阶激活 transverse sign channel}.
+}
+$$
+
+这与三元组 chiral difference 的选择律完全吻合。
+
+---
+

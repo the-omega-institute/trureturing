@@ -1,0 +1,32 @@
+## 23. 中心化 completed xi
+
+定义：
+
+$$
+\widetilde\Xi(z)
+=
+\xi\left(\frac12+z\right).
+$$
+
+函数方程给出：
+
+$$
+\boxed{
+\widetilde\Xi(-z)
+=
+\widetilde\Xi(z).
+}
+$$
+
+所以 completed xi 在中心坐标中是严格的偶函数。
+
+这比“ζ 是偶的”更准确：
+
+$$
+\boxed{
+\xi\text{ 是完成后的偶状态}.
+}
+$$
+
+---
+

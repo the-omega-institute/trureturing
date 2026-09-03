@@ -1,0 +1,59 @@
+## 141. 独立 mirror-pair gas
+
+对有限离线轨道集合 \(a=1,\ldots,N\)，令：
+
+$$
+S_a\in\{-1,+1\}
+$$
+
+表示每个 transverse pair 的 sheet。
+
+若各 pair 独立，则：
+
+$$
+\mathbb P(\mathbf S)=2^{-N}.
+$$
+
+定义：
+
+$$
+X_a=\delta_aS_a.
+$$
+
+生成函数为：
+
+$$
+Z_0(\mathbf u)
+=
+\prod_{a=1}^N
+\cosh(u_a\delta_a).
+$$
+
+所以：
+
+$$
+\log Z_0
+=
+\sum_a\log\cosh(u_a\delta_a).
+$$
+
+所有跨轨道 cumulants 都为零：
+
+$$
+\kappa(X_{a_1},\ldots,X_{a_k})=0
+$$
+
+只要至少包含两个不同轨道且每个只出现一次。
+
+这表示：
+
+$$
+\boxed{
+\text{每对内部反相关}
+\not\Rightarrow
+\text{不同 pairs 共同纠缠}.
+}
+$$
+
+---
+

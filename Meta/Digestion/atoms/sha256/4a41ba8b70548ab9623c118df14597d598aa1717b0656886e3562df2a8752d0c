@@ -1,0 +1,34 @@
+## 107. 字符相位可以逐位读取
+
+若：
+
+$$
+h
+=
+\sum_k\varepsilon_kF_k
+$$
+
+是 Zeckendorf 表示，则：
+
+$$
+e^{2\pi iah/p}
+=
+\prod_k
+e^{2\pi ia\varepsilon_kF_k/p}.
+$$
+
+即：
+
+$$
+\boxed{
+e_p(ah)
+=
+\prod_{k:\varepsilon_k=1}
+e_p(aF_k).
+}
+$$
+
+所以构型的局部 Fourier phase 可以直接从 Zeckendorf 数位流读取。
+
+---
+

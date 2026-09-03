@@ -1,0 +1,75 @@
+## 128. 两步与四步公式
+
+因为二者交换：
+
+$$
+\mathcal T_\varphi^2
+=
+G_\varphi^2\mathcal F^2.
+$$
+
+在偶 sector：
+
+$$
+G_\varphi^2=1,
+\qquad
+\mathcal F^2=1.
+$$
+
+在奇 sector：
+
+$$
+G_\varphi^2=\varphi^{-4},
+\qquad
+\mathcal F^2=-1.
+$$
+
+所以：
+
+$$
+\boxed{
+\mathcal T_\varphi^2
+=
+P_+
+-
+\varphi^{-4}P_-.
+}
+$$
+
+再平方：
+
+$$
+\boxed{
+\mathcal T_\varphi^4
+=
+P_+
++
+\varphi^{-8}P_-.
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\mathcal T_\varphi^{4n}
+=
+P_+
++
+\varphi^{-8n}P_-.
+}
+$$
+
+取极限：
+
+$$
+\boxed{
+\lim_{n\to\infty}
+\mathcal T_\varphi^{4n}
+=
+P_+.
+}
+$$
+
+---
+

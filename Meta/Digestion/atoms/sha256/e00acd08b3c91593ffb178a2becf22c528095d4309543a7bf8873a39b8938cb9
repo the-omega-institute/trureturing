@@ -1,0 +1,33 @@
+## 119. 这是一种全局 arithmetic coherence
+
+黄金 germ 中的某些 local-factor 零点可能具有有限 prime address。
+
+经典 ζ 零点则不同：
+
+$$
+\boxed{
+\text{它不是某一个素数局部因子制造的零点}.
+}
+$$
+
+它是全部素数 Euler 数据与 archimedean completion 共同形成的全局 coherent feature。
+
+所以：
+
+$$
+\boxed{
+\text{每个 ζ 零点都与无限素数通道相关}.
+}
+$$
+
+但这仍不能直接推出：
+
+$$
+\boxed{
+\text{不同 ζ 零点之间具有非零量子纠缠}.
+}
+$$
+
+需要继续区分：
+
+* zero–prime global coherence；

@@ -1,0 +1,46 @@
+## 32. 一维对象为何需要二维完成
+
+Fibonacci／黄金准晶的 physical object 是一维的，但其规范坐标来自二维格：
+
+$$
+\mathbb Z[\varphi]
+\hookrightarrow
+\mathbb R_{\mathrm{physical}}
+\times
+\mathbb R_{\mathrm{internal}}.
+$$
+
+physical coordinate 决定对象出现在哪里。
+
+internal coordinate 决定该格点是否落入接受窗口。
+
+所以：
+
+$$
+\boxed{
+\text{一维可见世界}
+=
+\text{二维格经过 internal window 的投影}.
+}
+$$
+
+在这个具体模型里，你所说的：
+
+> 每个维度的坐标系在下一个维度中
+
+是完全准确的。
+
+不过，投影到 projective golden axis 后，尺度信息又会丢失。仓库已经证明不同 rapidity 状态具有完全相同的 golden projective boundary image，因此稳定轴并不能恢复完整观察历史。
+
+这说明：
+
+$$
+\boxed{
+\text{坐标融合可以稳定方向，}
+\qquad
+\text{但同时可能抹去沿该方向的位置与速度}.
+}
+$$
+
+---
+

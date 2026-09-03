@@ -104,17 +104,25 @@ public sealed class MsBuildCompileOracleReviewTests
 
         var previous = Environment.GetEnvironmentVariable("TMPDIR");
         var inaccessibleRoot = Directory.CreateTempSubdirectory("stratalint-msbuild-denied-").FullName;
+        var snapshot = Snapshot(("App.csproj", SdkProject));
+        Assert.Empty(ScribeTestMapDeriver.DeriveSnapshot(snapshot).CompileQueryFindings);
+
         File.SetUnixFileMode(inaccessibleRoot, UnixFileMode.None);
         Environment.SetEnvironmentVariable("TMPDIR", inaccessibleRoot);
         try
         {
-            var map = ScribeTestMapDeriver.DeriveSnapshot(Snapshot(("App.csproj", SdkProject)));
+            var map = ScribeTestMapDeriver.DeriveSnapshot(snapshot);
             var finding = Assert.Single(map.CompileQueryFindings);
 
             Assert.Equal("App.csproj", finding.Path);
             Assert.Contains(
                 ScribeUnknownDebtPolicy.InspectCurrent(map),
                 candidate => candidate.Path == finding.Path && candidate.Effect == AdmissionEffect.Block);
+
+            File.SetUnixFileMode(
+                inaccessibleRoot,
+                UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+            Assert.Empty(ScribeTestMapDeriver.DeriveSnapshot(snapshot).CompileQueryFindings);
         }
         finally
         {
@@ -123,6 +131,43 @@ public sealed class MsBuildCompileOracleReviewTests
                 inaccessibleRoot,
                 UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
             Directory.Delete(inaccessibleRoot, recursive: true);
+        }
+    }
+
+    [Fact]
+    public void DeriveSnapshotMemoizesSuccessfulSnapshotContent()
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        var root = Directory.CreateTempSubdirectory("stratalint-msbuild-memo-").FullName;
+        var previous = Environment.GetEnvironmentVariable("DOTNET_HOST_PATH");
+        try
+        {
+            var counter = Path.Combine(root, "invocations.txt");
+            var output = Path.Combine(root, "compile.json");
+            var executable = Path.Combine(root, "fake-dotnet");
+            File.WriteAllText(output, "{\"Items\":{\"Compile\":[]}}");
+            File.WriteAllText(
+                executable,
+                $"#!/bin/sh\necho invoked >> '{counter}'\n/bin/cat '{output}'\nexit 0\n");
+            File.SetUnixFileMode(
+                executable,
+                UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+            Environment.SetEnvironmentVariable("DOTNET_HOST_PATH", executable);
+
+            var first = Snapshot(("App.csproj", SdkProject), ("input.bin", "same"));
+            var reordered = Snapshot(("input.bin", "same"), ("App.csproj", SdkProject));
+            var changed = Snapshot(("App.csproj", SdkProject), ("input.bin", "changed"));
+
+            Assert.Empty(ScribeTestMapDeriver.DeriveSnapshot(first).CompileQueryFindings);
+            Assert.Empty(ScribeTestMapDeriver.DeriveSnapshot(reordered).CompileQueryFindings);
+            Assert.Empty(ScribeTestMapDeriver.DeriveSnapshot(changed).CompileQueryFindings);
+            Assert.Equal(2, File.ReadAllLines(counter).Length);
+        }
+        finally
+        {
+            Environment.SetEnvironmentVariable("DOTNET_HOST_PATH", previous);
+            Directory.Delete(root, recursive: true);
         }
     }
 

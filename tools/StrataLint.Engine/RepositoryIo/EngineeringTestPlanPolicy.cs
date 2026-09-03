@@ -225,12 +225,19 @@ internal static class EngineeringTestExecutor
         EngineeringTestPlan plan,
         Func<EngineeringTestInvocation, int> run)
     {
-        foreach (var project in plan.Projects)
-        {
-            var exitCode = run(new EngineeringTestInvocation(project));
-            if (exitCode != 0) return exitCode;
-        }
+        if (plan.Projects.Length == 0) return 0;
 
-        return 0;
+        var exitCodes = new int[plan.Projects.Length];
+        var options = new ParallelOptions
+        {
+            MaxDegreeOfParallelism = Math.Min(
+                Environment.ProcessorCount,
+                plan.Projects.Length),
+        };
+        Parallel.For(0, plan.Projects.Length, options, projectIndex =>
+            exitCodes[projectIndex] = run(
+                new EngineeringTestInvocation(plan.Projects[projectIndex])));
+
+        return exitCodes.FirstOrDefault(static exitCode => exitCode != 0);
     }
 }

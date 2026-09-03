@@ -1,0 +1,66 @@
+## 96. 黄金完整 ζ 不是单独的 Riemann ζ
+
+把：
+
+$$
+x=p^{-s}
+$$
+
+代入并对全部素数取积：
+
+$$
+\prod_pD_p(p^{-s})
+=
+\prod_p
+(1-p^{-s})^{-1}
+(1-\chi_5(p)p^{-s})^{-1}.
+$$
+
+因此：
+
+$$
+\boxed{
+\prod_pD_p(p^{-s})
+=
+\zeta(s)L(s,\chi_5).
+}
+$$
+
+这正是：
+
+$$
+\boxed{
+\zeta_{\mathbb Q(\sqrt5)}(s),
+}
+$$
+
+即黄金二次数域的 Dedekind ζ。
+
+因此，在黄金坐标融合问题中，更自然的“完整状态”是：
+
+$$
+\boxed{
+\zeta_{\mathbb Q(\sqrt5)}
+=
+\text{trivial Galois channel}
+\times
+\text{quadratic odd channel}.
+}
+$$
+
+Riemann ζ 只是其中的平凡角色投影。
+
+这支持“ζ 是投影”的一个严格版本：
+
+$$
+\boxed{
+\zeta(s)
+=
+\text{golden field arithmetic 的 trivial-character sector}.
+}
+$$
+
+但它仍不意味着 Riemann ζ 的零点不是其自身的内禀 divisor。
+
+---
+

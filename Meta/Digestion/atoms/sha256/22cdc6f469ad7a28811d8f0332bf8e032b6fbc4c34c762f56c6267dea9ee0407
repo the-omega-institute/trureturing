@@ -1,0 +1,65 @@
+# 第二十二部　新理论最核心的交换图
+
+整个体系可以压缩成下面的图：
+
+$$
+\begin{array}{ccc}
+\text{finite histories}
+&
+\xrightarrow{\text{completion}}
+&
+\text{stable state}
+\\[4pt]
+\downarrow\text{parity/Fibonacci coding}
+&&
+\downarrow\text{completed }\xi
+\\[4pt]
+\text{even/odd channels}
+&
+\xrightarrow{\text{Fourier--Mellin}}
+&
+\text{mirror zero orbits}
+\\[4pt]
+\downarrow\text{discard odd memory}
+&&
+\downarrow\text{take invariant divisor}
+\\[4pt]
+\text{scalar observer}
+&
+\xrightarrow{\text{explicit formula}}
+&
+\text{prime-power ledger}.
+\end{array}
+$$
+
+真正缺失的是一个使该图严格交换的算子：
+
+$$
+\boxed{
+U:
+\text{Zeckendorf/prime correlation dynamics}
+\longrightarrow
+\text{zero-orbit spectral dynamics}.
+}
+$$
+
+并要求：
+
+$$
+UP_{\rm parity}
+=
+J_{\rm zero}U,
+$$
+
+$$
+UT_{\varphi}
+=
+\mathcal R_{\rm spectral}U.
+$$
+
+这就是此前 `Trace–Jet Bridge` 的进一步强化：
+
+> 它不仅要匹配构型阶数与零点 response，还必须匹配内部奇偶、外部镜像和黄金重整化。
+
+---
+

@@ -83,16 +83,18 @@ public sealed class EngineeringPathFilterTests
             [],
             [ScribeTestsProject, ArchitectureTestsProject],
             "selected protected-base reverse closure");
-        var calls = new List<string>();
+        var calls = new HashSet<string>(StringComparer.Ordinal);
 
         var exitCode = EngineeringTestExecutor.Execute(plan, invocation =>
         {
-            calls.Add(invocation.ProjectPath);
-            return 17;
+            lock (calls) calls.Add(invocation.ProjectPath);
+            return invocation.ProjectPath == ScribeTestsProject ? 17 : 23;
         });
 
         Assert.Equal(17, exitCode);
-        Assert.Equal([ScribeTestsProject], calls);
+        Assert.Equal(
+            [ArchitectureTestsProject, ScribeTestsProject],
+            calls.Order(StringComparer.Ordinal));
     }
 
     private static TestProjectTopologySnapshot Topology(

@@ -1,0 +1,50 @@
+## 121. 模 \(5\) even/odd channel 的位置
+
+仓库现有黄金局部算子把二维观察空间分为互补的：
+
+$$
+\text{evenChannel}
+\oplus
+\text{oddChannel},
+$$
+
+并使局部算子在 even channel 上本征值为 \(1\)，在 odd channel 上本征值为：
+
+$$
+\chi_5(p)\in\{-1,0,+1\}.
+$$
+
+其 inverse determinant 分解为：
+
+$$
+(1-p^{-s})^{-1}
+(1-\chi_5(p)p^{-s})^{-1}.
+$$
+
+这已经给出了“平凡密度通道 + 黄金二次字符通道”的严格 operator realization。
+
+将它与本理论结合，得到：
+
+$$
+\boxed{
+\begin{aligned}
+\text{even channel}
+&=\text{不区分黄金共轭分支的标量密度};\\
+\text{odd channel}
+&=\text{记录 split/inert 符号的反相位读数};\\
+\chi_5=0
+&=\text{分歧点，二通道分类退化}.
+\end{aligned}
+}
+$$
+
+但该算子目前只分类单素数 branch，尚未读取一个完整加法构型：
+
+$$
+(n+h_1,\ldots,n+h_k).
+$$
+
+下一步应把局部空间从 \(2\) 维扩张为 offset–residue incidence space。
+
+---
+
