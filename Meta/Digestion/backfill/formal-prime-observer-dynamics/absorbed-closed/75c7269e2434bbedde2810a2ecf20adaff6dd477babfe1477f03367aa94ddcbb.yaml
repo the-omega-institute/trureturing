@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:75c7269e2434bbedde2810a2ecf20adaff6dd477babfe1477f03367aa94ddcbb
+  normalized_sha256: sha256:75c7269e2434bbedde2810a2ecf20adaff6dd477babfe1477f03367aa94ddcbb
+cas_ref: sha256:75c7269e2434bbedde2810a2ecf20adaff6dd477babfe1477f03367aa94ddcbb
+coverage_gids:
+  - D5/S3/PrimeForms/Splitting/AllPrimeSplittingProfileNoninjectivity.all_prime_splitting_profile_not_injective
+receipts:
+  coverage:
+    - gid: D5/S3/PrimeForms/Splitting/AllPrimeSplittingProfileNoninjectivity.all_prime_splitting_profile_not_injective
+      source_sha256: sha256:75c7269e2434bbedde2810a2ecf20adaff6dd477babfe1477f03367aa94ddcbb
+      target_statement_id: sha256:4cea9a831a5bf8275ff4d78681a72c0ac01d200fe837a8d3ed6dca67ea8e3a19
+  scribe:
+    - gid: D5/S3/PrimeForms/Splitting/AllPrimeSplittingProfileNoninjectivity.all_prime_splitting_profile_not_injective
+      definition_sha256: sha256:d6e99dc89b1fdd218cbe6a9264e3bdc173f45018e416210d23161f35556e8f65
+      emission_sha256: sha256:a4ca5a6b6b00904ef3d8aa75392dd69e9c697059586b66ba47fc9523467992a3
+  unresolved_subitems: []

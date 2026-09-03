@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:77800f18375f50fa3c9d42b9c13e91841e4117a81b0bc41b878bb24a17a3fe6c
+  normalized_sha256: sha256:77800f18375f50fa3c9d42b9c13e91841e4117a81b0bc41b878bb24a17a3fe6c
+cas_ref: sha256:77800f18375f50fa3c9d42b9c13e91841e4117a81b0bc41b878bb24a17a3fe6c
+coverage_gids:
+  - D5/S3/Analytic/ZetaGibbs.partition_function_toReal_eq_riemannZeta
+receipts:
+  coverage:
+    - gid: D5/S3/Analytic/ZetaGibbs.partition_function_toReal_eq_riemannZeta
+      source_sha256: sha256:77800f18375f50fa3c9d42b9c13e91841e4117a81b0bc41b878bb24a17a3fe6c
+      target_statement_id: sha256:83931fe5bcd58f9f846c93abfaa6a4b10ef6fabbb2686df1eee892a44fd034f0
+  scribe:
+    - gid: D5/S3/Analytic/ZetaGibbs.partition_function_toReal_eq_riemannZeta
+      definition_sha256: sha256:e0befa357e696d4c8b3bbceb88faffe5c445f488b15821522339df6c8b2a36af
+      emission_sha256: sha256:b149836167305e816eb196b6b88cfd58d26aaf80b7cc08fc2be0d796d6625f25
+  unresolved_subitems: []

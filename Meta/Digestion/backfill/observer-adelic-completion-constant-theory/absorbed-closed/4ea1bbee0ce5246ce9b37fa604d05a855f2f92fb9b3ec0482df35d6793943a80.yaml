@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:4ea1bbee0ce5246ce9b37fa604d05a855f2f92fb9b3ec0482df35d6793943a80
+  normalized_sha256: sha256:4ea1bbee0ce5246ce9b37fa604d05a855f2f92fb9b3ec0482df35d6793943a80
+cas_ref: sha256:4ea1bbee0ce5246ce9b37fa604d05a855f2f92fb9b3ec0482df35d6793943a80
+coverage_gids:
+  - D5/S3/Weil/TestFunctions/GoldenPositivityInduction.golden_positivity_induction
+receipts:
+  coverage:
+    - gid: D5/S3/Weil/TestFunctions/GoldenPositivityInduction.golden_positivity_induction
+      source_sha256: sha256:4ea1bbee0ce5246ce9b37fa604d05a855f2f92fb9b3ec0482df35d6793943a80
+      target_statement_id: sha256:0597a593f4fea141b34066f64aca0e95af4536cf67edc6ce559968ecd0bf52b4
+  scribe:
+    - gid: D5/S3/Weil/TestFunctions/GoldenPositivityInduction.golden_positivity_induction
+      definition_sha256: sha256:dc3acc3aadb0c8947fc0b0c665d2dd6d3fd02292076f3ba3cf6c12ff650229b2
+      emission_sha256: sha256:f6d6284ba228be92ae2e0d6258df17cbc88e2915a823b46abf1875c69f7f514d
+  unresolved_subitems: []
