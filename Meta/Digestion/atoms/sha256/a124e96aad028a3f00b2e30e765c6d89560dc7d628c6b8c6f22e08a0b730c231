@@ -1,0 +1,25 @@
+## 583. 紧致无限秩算子型
+
+存在紧算子 \(J\)，使：
+
+$$
+a_n=\langle\Omega,J^n\Omega\rangle,
+$$
+
+但：
+
+$$
+\operatorname{rank}J=\infty.
+$$
+
+候选例子：RH Casimir–Jacobi 系统。
+
+特征：
+
+$$
+\alpha_n>0
+\quad\forall n,
+\qquad
+\alpha_n\to0.
+$$
+

@@ -1,0 +1,70 @@
+# 第一百四十九部　最低风险的 Li 系数影子
+
+还有一个更直接、但结构信息更少的精确拆分。
+
+定义 Li 系数 \(\lambda_n\)。Li 的经典判据证明：
+
+$$
+\mathrm{RH}
+\iff
+\lambda_n\ge0
+\quad
+\forall n\ge1.
+$$
+
+该等价最初由 Xian-Jin Li 建立。([科学直通车][1])
+
+于是定义：
+
+$$
+\boxed{
+\mathrm{Li\!-\!E\!-\!RH}
+:
+\lambda_{2n}\ge0
+\quad
+\forall n\ge1,
+}
+$$
+
+以及：
+
+$$
+\boxed{
+\mathrm{Li\!-\!O\!-\!RH}
+:
+\lambda_{2n+1}\ge0
+\quad
+\forall n\ge0.
+}
+$$
+
+立即有：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathrm{Li\!-\!E\!-\!RH}
+\land
+\mathrm{Li\!-\!O\!-\!RH}.
+}
+$$
+
+但这只是把 Li 指标集合分成偶数和奇数，属于**语法拆分**。
+
+Casimir 的 E-RH/O-RH 则是**语义拆分**：
+
+* 偶阶看无方向距离；
+* 奇阶看观察方向；
+* 黄金结构零可以明确通过偶侧而失败于奇侧；
+* 两侧分别对应不同类型的谱缺陷。
+
+仓库当前已有一个 Li 曲率模块，但其公开接口把完整 `liCriterion : RH ↔ ∀ n, 0 ≤ liCoefficient n` 作为输入；与此同时，`LiHausdorffMoments` 和 `CompleteMonotonicityRHCriterion` 仍出现在规划层，而不是已找到的完整 owner。
+
+因此仓库适合同时落地：
+
+1. 低风险的 Li 偶奇重组定理；
+2. 更深的 Casimir E-RH/O-RH 主理论。
+
+---
+

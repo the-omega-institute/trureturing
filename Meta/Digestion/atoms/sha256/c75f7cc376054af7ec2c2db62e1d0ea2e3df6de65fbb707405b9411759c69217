@@ -1,0 +1,160 @@
+* 测试函数复杂度；
+
+对角绕过。
+
+但必须保持三个区分。
+
+第一：
+
+$$
+\boxed{
+\text{每层有新项}
+\not\Rightarrow
+\text{有一个固定对象逃过所有层}.
+}
+$$
+
+第二：
+
+$$
+\boxed{
+\text{所有高阶系数非零}
+\not\Rightarrow
+\text{不存在一个统一生成函数或算子}.
+}
+$$
+
+第三：
+
+$$
+\boxed{
+\text{证明搜索可能永远 unknown}
+\not\Rightarrow
+\text{命题真值本身不确定}.
+}
+$$
+
+现在仓库的新结果已经证明，RH 的整个零点定位问题可以压缩成：
+
+$$
+\boxed{
+Q_Z(g)\ge0
+\qquad
+\forall g.
+}
+$$
+
+所以“条件无法分完”并不是最后的数学本体。
+
+所有条件已经能够合成一个二次型。
+
+真正的 hard core 是：
+
+$$
+\boxed{
+\text{这个二次型能否从素数侧被证明为正。}
+}
+$$
+
+而临界线之所以特殊，也获得了一个新的精确解释：
+
+$$
+\boxed{
+\sum_{\varphi^j\le p<\varphi^{j+1}}
+|p^{-1/2-it}|^2
+\sim
+\frac1j.
+}
+$$
+
+每个黄金壳贡献趋零，但总贡献仍发散。
+
+因此临界线是：
+
+$$
+\boxed{
+\text{每层残余都越来越小，}
+\quad
+\text{却没有绝对可和完成的边际点}.
+}
+$$
+
+奇壳角色可以消去标量零频发散，却不能恢复完整 prime state；它是相对观察完成，而非全局状态完成。
+
+最终，整套递归系统应被理解成：
+
+$$
+\boxed{
+\begin{aligned}
+\text{successor stage}
+&:\text{加入新的 primitive observable};\\
+\text{limit stage}
+&:\text{取全部 residual 的交};\\
+\text{post-limit stage}
+&:\text{检查 closedness、tightness 与统一条件数};\\
+\text{compression stage}
+&:\text{寻找一个正算子统一全部层}.
+\end{aligned}
+}
+$$
+
+因此最深的结论不是：
+
+$$
+\boxed{
+\text{RH 因为无限，所以不能解决}.
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{RH 的自然局部坐标在临界处没有统一收缩模量；}
+}
+$$
+
+$$
+\boxed{
+\text{解决 RH 必须找到一个不依赖逐层收缩的全局正性压缩器。}
+}
+$$
+
+那个压缩器最可能不是 Fibonacci 式有限矩阵，而是一个有限定义、无限维的对象：
+
+$$
+\boxed{
+A_{\mathrm{arith}}
+}
+$$
+
+或：
+
+$$
+\boxed{
+T_{\mathrm{prime}}
+}
+$$
+
+满足：
+
+$$
+\boxed{
+Q_Z(g)
+=
+\langle g,A_{\mathrm{arith}}g\rangle
+=
+\|T_{\mathrm{prime}}g\|^2.
+}
+$$
+
+这将把所有：
+
+$$
+p,\ k,\ T,\ N,\ldots
+$$
+
+方向上的原语残余，一次性重完为一个全局 Hilbert 正性。
+
+[1]: https://doi.org/10.1142/S1793042121500111?utm_source=chatgpt.com "Analogues of the Robin–Lagarias criteria for the Riemann hypothesis | International Journal of Number Theory"
+[2]: https://doi.org/10.48550/arXiv.2411.18903?utm_source=chatgpt.com "[2411.18903] On the mean values of the error terms in Mertens' theorems"

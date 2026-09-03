@@ -1,0 +1,48 @@
+## 555. 仓库结构零恰好落在该点
+
+仓库已经证明第三阶黄金 germ 在：
+
+$$
+s_\varphi=\frac1{2\varphi^2}
+$$
+
+处具有真正的一阶结构零。
+
+此前计算得到其 Casimir 紧化坐标：
+
+$$
+x_\varphi=\varphi.
+$$
+
+于是：
+
+$$
+\boxed{
+x_\varphi(1-x_\varphi)=-1.
+}
+$$
+
+所以该结构零的奇通道不是“略微负”，而是精确单位负：
+
+$$
+\boxed{
+\omega_-(x_\varphi)=-1.
+}
+$$
+
+这说明黄金结构零是一个极其纯净的：
+
+$$
+\boxed{
+\text{global square channel 仍可正，}
+\qquad
+\text{odd boundary channel 精确为负}
+}
+$$
+
+模型。
+
+它不属于经典 Riemann 零点谱，而是 structural divisor。
+
+---
+

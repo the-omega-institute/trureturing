@@ -1,0 +1,58 @@
+## 定理：Prime-Constellation Uniform Positive Innovation Completion
+
+设存在：
+
+1. 算术 Hilbert 空间 \(\mathscr H_{\mathrm A}\)；
+2. 由有限 prime addresses 与有限 constellations 生成的递增投影 \(P_\alpha\)；
+3. prime-generated 映射：
+
+   $$
+   \mathcal S:\mathcal W\to\mathscr H_{\mathrm A};
+   $$
+4. 非负基项：
+
+   $$
+   B(g)\ge0;
+   $$
+5. Weil 恒等式：
+
+   $$
+   \boxed{
+   Q_W(g)
+   =
+   B(g)
+   +
+   \|\mathcal Sg\|^2;
+   }
+   $$
+6. 有限层创新分解：
+
+   $$
+   \|\mathcal Sg\|^2
+   =
+   \sum_\alpha
+   \|(P_\alpha-P_{\alpha^-})\mathcal Sg\|^2;
+   $$
+7. 该展开在 Weil form 单位球上统一收敛；
+8. \(\mathcal S\) 和 \(B\) 的构造不读取零点位置。
+
+则：
+
+$$
+Q_W(g)\ge0
+\qquad
+\forall g.
+$$
+
+而项目已经证明，一个非实离线零点会产生一个 \(Q_W(g)<0\) 的完整 Weil 平方见证。
+
+因此结合经典实轴排除：
+
+$$
+\boxed{
+\mathrm{RH}.
+}
+$$
+
+---
+
