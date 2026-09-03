@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:ba49672cf00f681ea5fca99d9353675be7e5185ecb63aae078c17c20191e02b5
+  normalized_sha256: sha256:ba49672cf00f681ea5fca99d9353675be7e5185ecb63aae078c17c20191e02b5
+cas_ref: sha256:ba49672cf00f681ea5fca99d9353675be7e5185ecb63aae078c17c20191e02b5
+coverage_gids:
+  - gid: D5/S3/Analytic/Boundary/ConditionalNaturalBoundary.conditional_natural_boundary_and_gate
+    target_statement_id: sha256:ed540586f90da7f145e66ea8b59a5858e2d7e8a3dcc91cb7d0839c022c39c583
+receipts:
+  scribe:
+    - gid: D5/S3/Analytic/Boundary/ConditionalNaturalBoundary.conditional_natural_boundary_and_gate
+      definition_sha256: sha256:6ead707d6ad945cc9d31ebb93d43bf979a52455be2e9fb216a522fa8d112a237
+      emission_sha256: sha256:9d89c9354ab1024092dc204025481a2505a68b6d3e053f485627910ccd24eeee
+  unresolved_subitems: []

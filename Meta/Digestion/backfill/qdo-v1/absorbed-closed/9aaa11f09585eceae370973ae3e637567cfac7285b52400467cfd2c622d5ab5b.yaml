@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:9aaa11f09585eceae370973ae3e637567cfac7285b52400467cfd2c622d5ab5b
+  normalized_sha256: sha256:9aaa11f09585eceae370973ae3e637567cfac7285b52400467cfd2c622d5ab5b
+cas_ref: sha256:9aaa11f09585eceae370973ae3e637567cfac7285b52400467cfd2c622d5ab5b
+coverage_gids:
+  - gid: D5/S3/Quantum/Tomography/FutureProbabilityResidualCorrelation.future_probability_residual_correlation
+    target_statement_id: sha256:baa44535051bdbd067c5612d9e24a09ac863b7d8bce63470a356a1afd9843cc2
+receipts:
+  scribe:
+    - gid: D5/S3/Quantum/Tomography/FutureProbabilityResidualCorrelation.future_probability_residual_correlation
+      definition_sha256: sha256:edf1c0bdc5fd6adec98a862990441d928f4408df129c29ad5eeffe75c1918f31
+      emission_sha256: sha256:d8180066db9230f8b4cf314695f5acadb919c27af0eccb1883f9c33ce7379f88
+  unresolved_subitems: []
