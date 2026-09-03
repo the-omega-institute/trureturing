@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:f73e1ed229c69380a7ae9e42dfcd7cbdfe57a1509c297d16dbdbd171462c9e43
+  normalized_sha256: sha256:f73e1ed229c69380a7ae9e42dfcd7cbdfe57a1509c297d16dbdbd171462c9e43
+cas_ref: sha256:f73e1ed229c69380a7ae9e42dfcd7cbdfe57a1509c297d16dbdbd171462c9e43
+coverage_gids:
+  - gid: D5/S3/Quantum/Completion/TransfiniteBasisResidualTower.transfinite_basis_residual_tower
+    target_statement_id: sha256:8aeea3c27bf1afa488dbf0f8f7e092a618b698bd97209f32bcb3fcc2da7b59a2
+receipts:
+  scribe:
+    - gid: D5/S3/Quantum/Completion/TransfiniteBasisResidualTower.transfinite_basis_residual_tower
+      definition_sha256: sha256:0724f6923630df6e27964a9e7fc8f8920e83a5a73368fccff79df0222cbeccba
+      emission_sha256: sha256:ff15997c125700f04d48dad82c3437a6143fa908ac4f67a8820ef4b635cdf7a2
+  unresolved_subitems: []

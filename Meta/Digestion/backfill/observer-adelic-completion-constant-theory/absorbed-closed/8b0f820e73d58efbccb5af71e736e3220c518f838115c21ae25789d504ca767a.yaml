@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:8b0f820e73d58efbccb5af71e736e3220c518f838115c21ae25789d504ca767a
 cas_ref: sha256:8b0f820e73d58efbccb5af71e736e3220c518f838115c21ae25789d504ca767a
 coverage_gids:
-  - D5/S3/Observer/HilbertGeometry/GoldenAntiIsometry.golden_anti_isometry
+  - gid: D5/S3/Observer/HilbertGeometry/GoldenAntiIsometry.golden_anti_isometry
+    target_statement_id: sha256:1bc24e47deb7bf6ac96e190f133c8aef3f35a9c63cd3972d511aa20b79672867
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/HilbertGeometry/GoldenAntiIsometry.golden_anti_isometry
-      source_sha256: sha256:8b0f820e73d58efbccb5af71e736e3220c518f838115c21ae25789d504ca767a
-      target_statement_id: sha256:1bc24e47deb7bf6ac96e190f133c8aef3f35a9c63cd3972d511aa20b79672867
   scribe:
     - gid: D5/S3/Observer/HilbertGeometry/GoldenAntiIsometry.golden_anti_isometry
       definition_sha256: sha256:ddb5f5d462bc56a1c4b6796ee5c41128475f82af42e97e7f28141d98c08b448c

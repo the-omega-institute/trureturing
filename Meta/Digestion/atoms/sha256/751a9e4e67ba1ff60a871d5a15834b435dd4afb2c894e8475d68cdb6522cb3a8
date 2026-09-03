@@ -1,0 +1,28 @@
+### RH Weil 系统
+
+全部条件已经压缩为一个全局二次型：
+
+$$
+Q_Z.
+$$
+
+真正未知的是它能否从素数侧被表示成：
+
+$$
+Q_Z(g)
+=
+\|Tg\|^2
+$$
+
+或：
+
+$$
+Q_Z(g)
+=
+\langle g,A_{\mathrm{arith}}g\rangle,
+\qquad
+A_{\mathrm{arith}}\ge0.
+$$
+
+---
+

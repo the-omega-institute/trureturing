@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:b1ff63216f62e678a0ff8f38f8f26c084f04eb99984b2dce35e1badf2f789440
 cas_ref: sha256:b1ff63216f62e678a0ff8f38f8f26c084f04eb99984b2dce35e1badf2f789440
 coverage_gids:
-  - D5/S3/ConceptDynamics/Aggregation/AgendaPower.agenda_power
+  - gid: D5/S3/ConceptDynamics/Aggregation/AgendaPower.agenda_power
+    target_statement_id: sha256:132334b6eeeebb99711ea762fa8e3e958169f6e895120c4267c260f204e82ea3
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Aggregation/AgendaPower.agenda_power
-      source_sha256: sha256:b1ff63216f62e678a0ff8f38f8f26c084f04eb99984b2dce35e1badf2f789440
-      target_statement_id: sha256:132334b6eeeebb99711ea762fa8e3e958169f6e895120c4267c260f204e82ea3
   scribe:
     - gid: D5/S3/ConceptDynamics/Aggregation/AgendaPower.agenda_power
       definition_sha256: sha256:d3c36b3bada1066adb802690977966e65e5a390b6d45857b6c8157a2a8fdbb0c

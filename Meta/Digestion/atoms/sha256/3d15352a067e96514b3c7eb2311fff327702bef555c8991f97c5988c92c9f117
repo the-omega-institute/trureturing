@@ -1,0 +1,4 @@
+## 〇　为什么是这一节
+
+W-2 的正性陈述里带着 `SymmetricConvergent` 这个收敛义务和一个极限量 `zeroSum`;截断版本 `truncatedZeroSum Z g T`(`ZeroSum.lean:194`,对 `Z.symmetricIndices T` 的**有限**求和)没有收敛义务,对每个 T 是一个有限和。separator 的截断形(M3-e′)与 R-F 证明内部的截断非负步骤合起来,给出**不含极限**的等价:RH ⟺ 对一切截断高度 T 与一切偶测试函数 g,截断平方零和实部非负。这比 W-2 更接近可数值检验的形态(固定 T、固定 g 是一个有限计算),尽管仍相对于一个 `ZeroData`。**诚实边界**:同增订二十(相对于未证存在的 `ZeroData`;右侧是本仓定义;不构成 RH 证明);另外 `truncatedZeroSum` 的求和范围 `symmetricIndices T` 由 `spectralRadius ≤ T` 决定,不是按虚部截断。
+

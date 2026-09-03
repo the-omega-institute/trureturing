@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:c226d297440a576e79f2410876190d00ed73ad3673388d913e740a9fc25a85b7
 cas_ref: sha256:c226d297440a576e79f2410876190d00ed73ad3673388d913e740a9fc25a85b7
 coverage_gids:
-  - D5/S3/Observer/MeasureSeparation/CountableSingularPartition.countable_pairwise_singular_common_partition
+  - gid: D5/S3/Observer/MeasureSeparation/CountableSingularPartition.countable_pairwise_singular_common_partition
+    target_statement_id: sha256:8a1cc6c0941b1beb05716f226192e3fdc833c8b1ca396961b54a8ca387038d47
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/MeasureSeparation/CountableSingularPartition.countable_pairwise_singular_common_partition
-      source_sha256: sha256:c226d297440a576e79f2410876190d00ed73ad3673388d913e740a9fc25a85b7
-      target_statement_id: sha256:8a1cc6c0941b1beb05716f226192e3fdc833c8b1ca396961b54a8ca387038d47
   scribe:
     - gid: D5/S3/Observer/MeasureSeparation/CountableSingularPartition.countable_pairwise_singular_common_partition
       definition_sha256: sha256:e5225ea58b64c6b187f05c9bbdac31a170ac5a45a32e4406b1af73bd6a8177a9

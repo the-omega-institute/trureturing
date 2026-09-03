@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:8d21426abb7513ec0e0ce1da981dfcb70eccfa0c8d56f1452470eceb1c6f7409
 cas_ref: sha256:8d21426abb7513ec0e0ce1da981dfcb70eccfa0c8d56f1452470eceb1c6f7409
 coverage_gids:
-  - D5/S3/Analytic/ZetaEntropyPlane/PrimeRelativeDensityEvidenceDivergence.zero_relative_prime_density_with_divergent_evidence
+  - gid: D5/S3/Analytic/ZetaEntropyPlane/PrimeRelativeDensityEvidenceDivergence.zero_relative_prime_density_with_divergent_evidence
+    target_statement_id: sha256:666e8176bc7dbe0b6580118c629c85fbc3c5bf835c37dd2c78adf2e2a710bbe5
 receipts:
-  coverage:
-    - gid: D5/S3/Analytic/ZetaEntropyPlane/PrimeRelativeDensityEvidenceDivergence.zero_relative_prime_density_with_divergent_evidence
-      source_sha256: sha256:8d21426abb7513ec0e0ce1da981dfcb70eccfa0c8d56f1452470eceb1c6f7409
-      target_statement_id: sha256:666e8176bc7dbe0b6580118c629c85fbc3c5bf835c37dd2c78adf2e2a710bbe5
   scribe:
     - gid: D5/S3/Analytic/ZetaEntropyPlane/PrimeRelativeDensityEvidenceDivergence.zero_relative_prime_density_with_divergent_evidence
       definition_sha256: sha256:4afb12fe467cfeddf5f6ded04308f2c6aff971eb7f1394559edc3432276afc61

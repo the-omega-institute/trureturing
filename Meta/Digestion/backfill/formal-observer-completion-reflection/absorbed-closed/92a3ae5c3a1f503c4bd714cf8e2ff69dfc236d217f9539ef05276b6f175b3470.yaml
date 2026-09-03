@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:92a3ae5c3a1f503c4bd714cf8e2ff69dfc236d217f9539ef05276b6f175b3470
+  normalized_sha256: sha256:92a3ae5c3a1f503c4bd714cf8e2ff69dfc236d217f9539ef05276b6f175b3470
+cas_ref: sha256:92a3ae5c3a1f503c4bd714cf8e2ff69dfc236d217f9539ef05276b6f175b3470
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/Dynamics/FiniteTimeTomographySaturation.finite_time_tomography_saturation
+    target_statement_id: sha256:df5644c5fbac7d22e2c221ff462640c1e9075a343914e110c6122b35b3282e1b
+receipts:
+  scribe:
+    - gid: D5/S3/ObserverMemory/Dynamics/FiniteTimeTomographySaturation.finite_time_tomography_saturation
+      definition_sha256: sha256:2929d356f1370c7379c9fbb90f39eccb714d451e7f4a04a339297992f9198de8
+      emission_sha256: sha256:6c4a780697daf2f8b8b8a381e2a73f4afec95e5644fde075c0fc1e6f863a7b3c
+  unresolved_subitems: []

@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:b7c54897daf266d5d6741a7551c4e7f02d0a037c124021c2f0339bff98d4697f
 cas_ref: sha256:b7c54897daf266d5d6741a7551c4e7f02d0a037c124021c2f0339bff98d4697f
 coverage_gids:
-  - D5/S3/ConceptDynamics/Prediction/MacroscopicPredictiveEfficiencyIncrease.macroscopic_predictive_efficiency_strictly_increases
+  - gid: D5/S3/ConceptDynamics/Prediction/MacroscopicPredictiveEfficiencyIncrease.macroscopic_predictive_efficiency_strictly_increases
+    target_statement_id: sha256:3d7b3b84ef3b3631b349fecfaec2ced2155c3feb09d2427655ce102c8e0b32fa
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Prediction/MacroscopicPredictiveEfficiencyIncrease.macroscopic_predictive_efficiency_strictly_increases
-      source_sha256: sha256:b7c54897daf266d5d6741a7551c4e7f02d0a037c124021c2f0339bff98d4697f
-      target_statement_id: sha256:3d7b3b84ef3b3631b349fecfaec2ced2155c3feb09d2427655ce102c8e0b32fa
   scribe:
     - gid: D5/S3/ConceptDynamics/Prediction/MacroscopicPredictiveEfficiencyIncrease.macroscopic_predictive_efficiency_strictly_increases
       definition_sha256: sha256:0ee7834afbbd8e1f410cba0bb2466ced53f948535140fc86ef506bd7c2c2adce

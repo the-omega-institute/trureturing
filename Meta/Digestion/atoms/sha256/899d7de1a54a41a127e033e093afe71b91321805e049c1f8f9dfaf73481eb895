@@ -1,0 +1,51 @@
+## 568. 每个新素数增加一个真正新变量
+
+考虑多项式代数：
+
+$$
+\mathcal A_{\mathrm{prime}}
+=
+\mathbb Q[X_p:p\in\mathbb P].
+$$
+
+定义理想：
+
+$$
+I_N
+=
+(X_{p_1},\ldots,X_{p_N}).
+$$
+
+则：
+
+$$
+I_1\subsetneq I_2\subsetneq I_3\subsetneq\cdots.
+$$
+
+因为：
+
+$$
+X_{p_{N+1}}\notin I_N.
+$$
+
+所以：
+
+$$
+\boxed{
+\mathcal A_{\mathrm{prime}}
+\text{ 不是 Noether 环}.
+}
+$$
+
+没有任何有限素数坐标集能代数生成全部独立 prime-address coordinates。
+
+这严格表达了：
+
+$$
+\boxed{
+\text{每加入一个新素数，都增加一个旧语言无法恢复的坐标。}
+}
+$$
+
+---
+

@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:c5c2c3155ddef6747800224ac2e9b396c6c07a6b611be2bb44162522e248dcf6
 cas_ref: sha256:c5c2c3155ddef6747800224ac2e9b396c6c07a6b611be2bb44162522e248dcf6
 coverage_gids:
-  - D5/S3/Weil/Scattering/VerticalAttenuation.vertical_attenuation_tomography
+  - gid: D5/S3/Weil/Scattering/VerticalAttenuation.vertical_attenuation_tomography
+    target_statement_id: sha256:95ffaf946a24c87c7e814036afa1d4b621f62e2cd4240b5b8e8c93a258196c4c
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/Scattering/VerticalAttenuation.vertical_attenuation_tomography
-      source_sha256: sha256:c5c2c3155ddef6747800224ac2e9b396c6c07a6b611be2bb44162522e248dcf6
-      target_statement_id: sha256:95ffaf946a24c87c7e814036afa1d4b621f62e2cd4240b5b8e8c93a258196c4c
   scribe:
     - gid: D5/S3/Weil/Scattering/VerticalAttenuation.vertical_attenuation_tomography
       definition_sha256: sha256:aee7bb6f1b44af8d3ec5460989bf301500a94863d206940e24de657a8ef27c08

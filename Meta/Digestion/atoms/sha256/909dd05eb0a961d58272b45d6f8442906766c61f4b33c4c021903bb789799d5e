@@ -1,0 +1,35 @@
+# 一、素数构型的静态定义代数确实不是有限生成的
+
+ZCOCT 使用平方零源变量：
+
+$$
+\varepsilon_h^2=0,
+\qquad h\in\mathbb Z,
+$$
+
+来标记各个加法偏移。
+
+考虑无限源代数：
+
+$$
+\mathcal R_\infty
+=
+\mathbb C[\varepsilon_h:h\in\mathbb Z]
+\Big/
+(\varepsilon_h^2:h\in\mathbb Z).
+$$
+
+定义其增广理想：
+
+$$
+\mathfrak m
+=
+(\varepsilon_h:h\in\mathbb Z).
+$$
+
+它包含所有非空构型单项式：
+
+$$
+\varepsilon_{h_1}\cdots\varepsilon_{h_k}.
+$$
+

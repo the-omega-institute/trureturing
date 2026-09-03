@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:976d8999dd6efa9c8922d1625cf3d5166c1c8433ce1ee253572ca385ca3a02ff
 cas_ref: sha256:976d8999dd6efa9c8922d1625cf3d5166c1c8433ce1ee253572ca385ca3a02ff
 coverage_gids:
-  - D5/S3/ConceptDynamics/Coding/AdaptiveResidueIdentification.two_step_adaptive_residue_identification
+  - gid: D5/S3/ConceptDynamics/Coding/AdaptiveResidueIdentification.two_step_adaptive_residue_identification
+    target_statement_id: sha256:f9ba922bc1baa225ff2a91cfe643391ab3b4f270c3c4a37bd6f4be6fd4956b7a
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Coding/AdaptiveResidueIdentification.two_step_adaptive_residue_identification
-      source_sha256: sha256:976d8999dd6efa9c8922d1625cf3d5166c1c8433ce1ee253572ca385ca3a02ff
-      target_statement_id: sha256:f9ba922bc1baa225ff2a91cfe643391ab3b4f270c3c4a37bd6f4be6fd4956b7a
   scribe:
     - gid: D5/S3/ConceptDynamics/Coding/AdaptiveResidueIdentification.two_step_adaptive_residue_identification
       definition_sha256: sha256:e836d86e9b70897b869ffa9c581d4b311bbf76a054209c1f793a9f4423b63805

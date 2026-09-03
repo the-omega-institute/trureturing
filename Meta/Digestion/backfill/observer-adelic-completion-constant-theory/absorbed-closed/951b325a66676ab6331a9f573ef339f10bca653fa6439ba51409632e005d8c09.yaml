@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:951b325a66676ab6331a9f573ef339f10bca653fa6439ba51409632e005d8c09
 cas_ref: sha256:951b325a66676ab6331a9f573ef339f10bca653fa6439ba51409632e005d8c09
 coverage_gids:
-  - D5/S3/Weil/ZetaLinear/CompactCharacterMellinObstruction.compact_character_modulus_and_mellin_obstruction
+  - gid: D5/S3/Weil/ZetaLinear/CompactCharacterMellinObstruction.compact_character_modulus_and_mellin_obstruction
+    target_statement_id: sha256:7161c25573285d765611032ffec09b1864beb057e3d8eff9176765d6cd23849b
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/ZetaLinear/CompactCharacterMellinObstruction.compact_character_modulus_and_mellin_obstruction
-      source_sha256: sha256:951b325a66676ab6331a9f573ef339f10bca653fa6439ba51409632e005d8c09
-      target_statement_id: sha256:7161c25573285d765611032ffec09b1864beb057e3d8eff9176765d6cd23849b
   scribe:
     - gid: D5/S3/Weil/ZetaLinear/CompactCharacterMellinObstruction.compact_character_modulus_and_mellin_obstruction
       definition_sha256: sha256:b8229b0613d7e7d36b56ee27da8dfb219f85c06e16ae82b72c014b4d599eb436

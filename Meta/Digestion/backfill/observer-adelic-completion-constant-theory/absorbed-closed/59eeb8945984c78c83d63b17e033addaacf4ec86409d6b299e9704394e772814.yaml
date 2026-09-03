@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:59eeb8945984c78c83d63b17e033addaacf4ec86409d6b299e9704394e772814
 cas_ref: sha256:59eeb8945984c78c83d63b17e033addaacf4ec86409d6b299e9704394e772814
 coverage_gids:
-  - D5/S3/Weil/ZetaAnalytic/CountableRationalFluxCriterion.countable_rational_flux_criterion
+  - gid: D5/S3/Weil/ZetaAnalytic/CountableRationalFluxCriterion.countable_rational_flux_criterion
+    target_statement_id: sha256:377fe6edd6cbb4e0b6a3e6c188ee9fd2529dc47dd04972285cab5745742f0027
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/ZetaAnalytic/CountableRationalFluxCriterion.countable_rational_flux_criterion
-      source_sha256: sha256:59eeb8945984c78c83d63b17e033addaacf4ec86409d6b299e9704394e772814
-      target_statement_id: sha256:377fe6edd6cbb4e0b6a3e6c188ee9fd2529dc47dd04972285cab5745742f0027
   scribe:
     - gid: D5/S3/Weil/ZetaAnalytic/CountableRationalFluxCriterion.countable_rational_flux_criterion
       definition_sha256: sha256:487275c619aa9ae410c50d248329595fe10206e962fb4fdb6aff017feea23f42
