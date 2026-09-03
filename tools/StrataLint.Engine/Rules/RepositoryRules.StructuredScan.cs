@@ -236,6 +236,7 @@ internal static partial class RepositoryRules
     {
         (AddressSlot.Entry, "coverage_gids") => AddressSlot.CoverageList,
         (AddressSlot.Entry, "receipts") => AddressSlot.Receipts,
+        (AddressSlot.Receipts, "coverage") => AddressSlot.ReceiptList,
         (AddressSlot.Receipts, "scribe") => AddressSlot.ReceiptList,
         (AddressSlot.CoverageEntry, "gid") => AddressSlot.CoverageGid,
         (AddressSlot.ReceiptEntry, "gid") => AddressSlot.ReceiptGid,
@@ -254,7 +255,7 @@ internal static partial class RepositoryRules
         AddressSlot slot,
         string residue)
     {
-        var declared = slot is AddressSlot.CoverageGid or AddressSlot.ReceiptGid
+        var declared = slot is AddressSlot.CoverageEntry or AddressSlot.CoverageGid or AddressSlot.ReceiptGid
             && BackfillInventoryLoader.IsCanonicalPath(path);
         return declared
             && Gid.TryParse(residue, out var gid)
