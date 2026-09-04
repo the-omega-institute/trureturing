@@ -1,0 +1,88 @@
+# 第两千一百二十六部　加法 prime gap 的局部近似
+
+令：
+
+$$
+q=p+g.
+$$
+
+若：
+
+$$
+g\ll p,
+$$
+
+则：
+
+$$
+\boxed{
+\log\frac qp
+=
+\log\left(1+\frac gp\right)
+=
+\frac gp
++
+O\left(\frac{g^2}{p^2}\right).
+}
+\tag{2126.1}
+$$
+
+所以在小尺度：
+
+$$
+\boxed{
+\mathcal E_{p,q}^{\perp}
+=
+\delta^2
+\frac{g^2}{p^2}
++
+O\left(
+\delta^2\frac{g^3}{p^3}
++
+\delta^4\frac{g^4}{p^4}
+\right).
+}
+\tag{2126.2}
+$$
+
+时间方向则是：
+
+$$
+\boxed{
+\mathcal E_{p,q}^{\parallel}
+=
+\frac{\tau^2}{4}
+\frac{g^2}{p^2}
++
+O\left(
+\tau^2\frac{g^3}{p^3}
++
+\tau^4\frac{g^4}{p^4}
+\right).
+}
+\tag{2126.3}
+$$
+
+因此在局部线性层：
+
+$$
+\boxed{
+\mathcal E_{p,q}
+\sim
+\left(
+\delta^2+\frac{\tau^2}{4}
+\right)
+\frac{g^2}{p^2}.
+}
+\tag{2126.4}
+$$
+
+这是一张非常清楚的局部度量：
+
+* \(g/p\) 是归一化 prime gap；
+* \(\delta\) 是法向坐标；
+* \(\tau/2\) 是切向观察时间；
+* 二者在最低阶形成正交平方和。
+
+---
+

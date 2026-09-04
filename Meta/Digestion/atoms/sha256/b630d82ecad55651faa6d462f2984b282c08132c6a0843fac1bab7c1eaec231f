@@ -1,0 +1,30 @@
+\[
+\boxed{
+\widetilde F(b,r)
+=
+\bigl(
+\overline F(b),
+F_b(r)
+\bigr)
+}
+\]
+
+对某个依赖纤维映射：
+
+\[
+F_b:
+R_{q_X}(b)
+\to
+R_{q_Y}(\overline F(b)).
+\]
+
+因此，精确下降并不消灭余量；它只保证：
+
+\[
+\boxed{
+\text{未来显坐标由当前显坐标决定，隐藏余量在纤维内部输运。}
+}
+\]
+
+---
+

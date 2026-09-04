@@ -1,0 +1,30 @@
+## 84. ∞ 的派生类型
+
+\[
+\begin{aligned}
+\infty_{\mathrm{object}}
+&:\ X\text{ 是无限类型};\\
+\infty_{\mathrm{flow}}
+&:\ FLOW\text{ 可任意长迭代};\\
+\infty_{\mathrm{cover}}
+&:\ \text{没有有限 CUT 族覆盖全部残差};\\
+\infty_{\mathrm{model}}
+&:\ \text{最小充分模型复杂度无有限上界};\\
+\infty_{\mathrm{reflection}}
+&:\ \text{阶段序没有最大元}.
+\end{aligned}
+\]
+
+这些都从四角色与元层结构派生。
+
+所以：
+
+\[
+\boxed{
+\infty
+\text{不是第五原语。}
+}
+\]
+
+---
+

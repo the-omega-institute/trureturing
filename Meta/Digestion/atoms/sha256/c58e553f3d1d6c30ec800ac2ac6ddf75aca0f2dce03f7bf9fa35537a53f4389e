@@ -1,0 +1,28 @@
+\[
+\Sigma
+=
+(\mathsf{CUT},\mathsf{FLOW},\mathsf{ADMIT},\mathsf{ANCHOR},
+\mathsf{Ledger}).
+\]
+
+定义四类阶段更新：
+
+\[
+U_{\mathsf C},
+\quad
+U_{\mathsf F},
+\quad
+U_{\mathsf A},
+\quad
+U_{\mathsf H}.
+\]
+
+它们分别改变：
+
+- 分类界面；
+- 过程或干预模型；
+- 准入 doctrine；
+- 数据、实际状态或历史锚。
+
+---
+

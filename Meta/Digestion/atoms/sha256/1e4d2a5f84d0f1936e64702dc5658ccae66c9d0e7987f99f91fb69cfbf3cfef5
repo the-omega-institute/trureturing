@@ -1,0 +1,14 @@
+## 12. FLOW 正规形 `[D]`
+
+给定：
+
+\[
+F:X\to Y,
+\qquad
+q_X:X\to B,
+\qquad
+q_Y:Y\to C,
+\]
+
+定义共轭后的 FLOW：
+
