@@ -153,10 +153,7 @@ internal static class BackfillDeltaImpactResolver
         var reverseIndex = BuildCoverageReverseIndex(document);
         var changedModules = ChangedStatementModules(repositoryChanges);
         var candidates = reverseIndex
-            .Where(item =>
-                changedModules.Contains(item.Value[0].HostModule)
-                || item.Value.Any(dependency =>
-                    affectedEntryPaths.Contains(dependency.EntryPath)))
+            .Where(item => changedModules.Contains(item.Value[0].HostModule))
             .ToArray();
         if (candidates.Length == 0)
         {

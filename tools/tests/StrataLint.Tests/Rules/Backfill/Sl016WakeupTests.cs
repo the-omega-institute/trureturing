@@ -315,6 +315,58 @@ public sealed class Sl016WakeupTests
     }
 
     [Fact]
+    public void EntryLocalChangeDoesNotDeriveSharedCoverageGidOrWakePeer()
+    {
+        const string targetGid = "D5/S0/Carrier/BackfillTarget";
+        var fixture = CoverageReceiptFixture(
+            targetGid,
+            FrozenStatementReceiptTestData.Id('a'));
+        var otherFingerprint = DigestionFingerprint.Compute(
+            Encoding.UTF8.GetBytes("shared coverage peer\n"));
+        var otherAtomPath = BackfillInventoryLoader.RootPath
+            + "delta-v0.1/partial-open/"
+            + otherFingerprint.RawSha256["sha256:".Length..]
+            + ".yaml";
+        var otherCasPath = DigestionCasStore.RootPath
+            + otherFingerprint.RawSha256["sha256:".Length..];
+        foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
+        {
+            files[otherAtomPath] = files[AtomPath]
+                .Replace(
+                    RuleFixture.FixtureCasReference,
+                    otherFingerprint.RawSha256,
+                    StringComparison.Ordinal)
+                .Replace(
+                    "target_statement_id: " + FrozenStatementReceiptTestData.Id('a'),
+                    "target_statement_id: " + FrozenStatementReceiptTestData.Id('c'),
+                    StringComparison.Ordinal);
+            files[otherCasPath] = "shared coverage peer\n";
+        }
+        fixture.Files[AtomPath] = fixture.Files[AtomPath].Replace(
+            "unresolved_subitems: []",
+            "unresolved_subitems:\n    - entry-local-change",
+            StringComparison.Ordinal);
+        var context = fixture.Build(RawChangeSet.Create([AtomPath]));
+        var document = BackfillInventoryLoader.LoadCandidateDelta(
+            context.Current,
+            context.Baseline,
+            context.Changes);
+        var derivations = 0;
+
+        var impact = BackfillDeltaImpactResolver.Resolve(
+            context.Current,
+            context.Baseline,
+            context.Lean.Report,
+            document,
+            context.Changes,
+            _ => derivations++);
+
+        Assert.Equal(0, derivations);
+        Assert.Contains(impact.EvaluationChanges.Paths, path => path.Value == AtomPath);
+        Assert.DoesNotContain(impact.EvaluationChanges.Paths, path => path.Value == otherAtomPath);
+    }
+
+    [Fact]
     public void UnchangedBaseEntryDuplicateCoverageIsNotRepublishedForUnrelatedDelta()
     {
         var fixture = new RuleFixture();
