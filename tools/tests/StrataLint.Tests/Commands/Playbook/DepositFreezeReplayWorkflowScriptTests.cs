@@ -34,7 +34,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
 
         Assert.NotEqual(0, result.ExitCode);
         Assert.Contains(
-            "matching shard is not a canonical v5 Freeze",
+            "LEDGER_FROZEN_INVALID",
             Encoding.UTF8.GetString(result.StandardError),
             StringComparison.Ordinal);
         Assert.DoesNotContain("dotnet:ledger-align", fixture.CallKinds());
@@ -42,7 +42,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
     }
 
     [Fact]
-    public void DepositDoesNotReplayAnUnrelatedMalformedFrozenLedgerShard()
+    public void DepositFailsClosedWhenAnyFrozenLedgerShardIsMalformed()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
@@ -51,9 +51,9 @@ public sealed partial class DepositCoverWorkflowScriptTests
 
         var result = fixture.Run("deposit");
 
-        Assert.True(result.ExitCode == 0, Diagnostics(result));
+        Assert.Equal(2, result.ExitCode);
         Assert.Contains(
-            "module-already-frozen",
+            "LEDGER_FROZEN_INVALID",
             Encoding.UTF8.GetString(result.StandardError),
             StringComparison.Ordinal);
         Assert.DoesNotContain("dotnet:ledger-align", fixture.CallKinds());

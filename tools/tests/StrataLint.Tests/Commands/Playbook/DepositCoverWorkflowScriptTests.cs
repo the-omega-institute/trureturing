@@ -27,7 +27,9 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 "make:lean-report",
                 "dotnet:deposit-header-check",
                 "make:emit",
+                "dotnet:ledger-frozen",
                 "dotnet:ledger-align",
+                "dotnet:ledger-frozen",
             ],
             fixture.CallKinds());
     }

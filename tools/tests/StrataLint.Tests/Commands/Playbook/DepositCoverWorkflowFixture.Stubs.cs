@@ -98,6 +98,29 @@ public sealed partial class DepositCoverWorkflowScriptTests
                   exit 1
                 fi
                 ;;
+              ledger-frozen)
+                if [[ ${parts[1]:-} != --target \
+                    || ${parts[2]:-} != "${PLAYBOOK_TARGET_MODULE:-}" ]]; then
+                  echo 'LEDGER_FROZEN_INVALID synthetic target transport mismatch' >&2
+                  exit 96
+                fi
+                target_module=${parts[2]}
+                ledger_files=(Golden/Frozen/accepted/*.json)
+                if [[ ! -e ${ledger_files[0]} ]]; then
+                  exit 1
+                fi
+                active=1
+                for ledger_file in "${ledger_files[@]}"; do
+                  if ! descriptor=$(jq -er \
+                      'select(.event_type == "Freeze" and .schema_version == 5) | .payload.descriptor_selector' \
+                      "$ledger_file"); then
+                    echo 'LEDGER_FROZEN_INVALID synthetic non-canonical ledger' >&2
+                    exit 2
+                  fi
+                  [[ $descriptor != "$target_module" ]] || active=0
+                done
+                exit "$active"
+                ;;
               ledger-align)
                 if [[ ${parts[1]:-} == --add ]]; then
                   if [[ ${parts[2]:-} != "${PLAYBOOK_TARGET_MODULE:-}" \
