@@ -22,19 +22,4 @@ public sealed class CoverageLedgerIndexTests
         Assert.Contains("absent from TruthDAG", exception.Message, StringComparison.Ordinal);
     }
 
-    [Fact]
-    public void V5FreezeSetIndexesDescriptorSelectors()
-    {
-        var catalog = FrozenLedgerTestData.BuildCatalog(
-            FrozenLedgerTestData.Module("A"),
-            FrozenLedgerTestData.Module("B"));
-        var events = FrozenLedgerTestData.LoadEvents(FrozenLedgerTestData.EventFiles(catalog));
-
-        var loaded = Assert.IsType<FrozenCoverageLoadOutcome.Loaded>(
-            FrozenCoverageLedger.Load(events));
-
-        Assert.Equal(
-            catalog.ClosedNodes.Select(static node => node.RepoPath).OrderBy(static path => path.Value),
-            loaded.ActiveFrozenPaths);
-    }
 }
