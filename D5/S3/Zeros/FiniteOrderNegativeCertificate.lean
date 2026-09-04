@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/Zeros/FiniteOrderNegativeCertificate
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: A nontrivial positive-order family with positive weights and zero
-   weighted sum has a negative coefficient; a two-term model is sharp. -/
+   digest: A zero weighted positive-order sum has a negative coefficient and a sharp witness. -/
 
 import Mathlib
 
