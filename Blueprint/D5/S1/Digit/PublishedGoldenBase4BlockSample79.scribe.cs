@@ -2,6 +2,7 @@ using static StrataLint.Scribe.DefinitionDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S1.Digit;
 
+// Source-bound projection for the M19.1 finite block-sample transport.
 internal sealed class PublishedGoldenBase4BlockSample79Document : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
