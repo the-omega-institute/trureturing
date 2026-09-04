@@ -1,0 +1,22 @@
+## B9.6 short gaps 的 fidelity 解释
+
+若 cluster 位于 $[P,P+D]$ 且 $D\ll P$，则
+
+$$
+\operatorname{Var}(\log p)
+=O(D^2/P^2).
+\tag{B9.19}
+$$
+
+从而固定 $\delta$ 下：
+
+$$
+1-\mathcal F_{\mathcal C}(\delta)
+=O(\delta^2D^2/P^2).
+\tag{B9.20}
+$$
+
+所以 short-gap cluster 是高 fidelity 的反射通道：代数上已经秩二，有限精度下却几乎仍像同一状态。这与 sticky grain 的解释完全一致。
+
+---
+

@@ -1,0 +1,33 @@
+## B9.2 exterior determinant
+
+记
+
+$$
+W=\sum_jw_j.
+\tag{B9.5}
+$$
+
+则
+
+$$
+G(\delta)=
+\begin{pmatrix}
+\sum_jw_je^{2\delta\omega_j}&W\\
+W&\sum_jw_je^{-2\delta\omega_j}
+\end{pmatrix}.
+\tag{B9.6}
+$$
+
+直接展开得到
+
+$$
+\boxed{
+\det G(\delta)
+=4\sum_{i<j}
+w_iw_j
+\sinh^2(\delta(\omega_i-\omega_j)).}
+\tag{B9.7}
+$$
+
+这正是 finite prime exterior energy。
+
