@@ -267,7 +267,41 @@ P(Y0 = false, Y1 = true)
 
 This restriction is not derived from the standard Markovian SCM definition. It splits two coordinates produced by one structural disturbance into separate independent components. The distinction supplies a formal claim boundary for future PoC analyses.
 
-## 12. Semantic boundary: mixture versus one global graph
+## 12. Sharp joint benefit across independent mechanisms
+
+`MarkovianJointMechanismBenefitSharpBounds` gives the first concrete query in this lane for which standard Markovian separation between two outcome mechanisms genuinely tightens a probability-of-causation range.
+
+Each mechanism has its own complete response pair
+
+```text
+(Y0_first, Y1_first)
+(Y0_second, Y1_second).
+```
+
+The internal coupling between control and treated potential outcomes remains arbitrary inside each mechanism. Define one Boolean benefit indicator per mechanism by the response cell `(false, true)`.
+
+If the two benefit indicators are allowed an unrestricted coupling with marginal probabilities `b1` and `b2`, simultaneous benefit has the exact identified interval
+
+```text
+[max(0, b1 + b2 - 1), min(b1, b2)].
+```
+
+The module proves necessity from the four cell masses and supplies an explicit normalized coupling for every point in the interval.
+
+A Markovian two-mechanism model instead factorizes the complete first and second mechanism response laws. Deterministic projection to benefit status preserves that factorization. Consequently,
+
+```text
+P(first mechanism benefits and second mechanism benefits)
+  = P(first mechanism benefits) * P(second mechanism benefits).
+```
+
+The resulting identified set is the sharp singleton `{b1 * b2}`. Explicit complete mechanism laws attain the value while retaining arbitrary within-mechanism interpretation outside the nominated benefit cell.
+
+At `b1 = b2 = 1 / 2`, unrestricted coupling gives the full interval `[0, 1 / 2]`. Independent Markovian mechanisms give the singleton `{1 / 4}`. The formal theorem exhibits zero as an unrestricted feasible target and proves one quarter for every Markovian model with the same marginal benefit probabilities.
+
+This comparison clarifies where Markovianity has identifying power. Separating assignment noise from one outcome mechanism leaves the within-mechanism cross-world coupling free. Separating two complete outcome mechanisms constrains queries that jointly cross those mechanisms.
+
+## 13. Semantic boundary: mixture versus one global graph
 
 The support and event-row compilers have latent-completion mixture semantics. Different units may receive mass from different admissible completions.
 
@@ -281,7 +315,7 @@ Convexifying that union silently changes the causal model by introducing a laten
 
 A similar warning applies to Markovian response laws. Mixing two product-factorized laws can create dependence between components. A latent mixture index must therefore be represented explicitly and cannot be silently absorbed into a claim of exogenous independence.
 
-## 13. Interfaces to current research
+## 14. Interfaces to current research
 
 The current literature interface is organized as follows.
 
@@ -296,7 +330,7 @@ The current literature interface is organized as follows.
 
 The repository claim boundary is narrower than these papers. The PR proves reusable logical kernels and finite concrete instances. It does not claim a complete reproduction of any paper's general algorithm or theorem family.
 
-## 14. Verification ledger
+## 15. Verification ledger
 
 Required protected-branch checks are:
 
@@ -308,13 +342,14 @@ Content-addressed dev baseline admission
 
 A truth source is considered machine-verified only after the current PR head passes the protected workflow. Scribe freshness is likewise determined by the repository renderer rather than by hand-edited Markdown.
 
-## 15. Next formal research sequence
+## 16. Next formal research sequence
 
 The Markovian lane now advances through:
 
 ```text
 MarkovianResponseLawFactorization
   -> MarkovianBenefitIdentificationBoundary
+  -> MarkovianJointMechanismBenefitSharpBounds
   -> finite component decomposition from a causal graph
   -> componentwise observational and interventional likelihood rows
   -> multilinear event polynomial semantics
@@ -324,17 +359,9 @@ MarkovianResponseLawFactorization
   -> sharp PoC bounds.
 ```
 
-The next high-value instance should use a small quasi-Markovian graph with two confounded components and one probability-of-causation query. It should compare:
+The next high-value compiler theorem should derive the independent response components from a finite causal graph or an explicit confounded-component partition. It must prove that every generated event polynomial has one factor per independent component and that fixing all but one component produces exactly the linear slice already accepted by `LinearObjectiveDual`.
 
-```text
-unrestricted response-law coupling bound
-versus
-component-factorized Markovian or quasi-Markovian bound,
-```
-
-and provide either a closed-form sharp interval or a finite exact branch certificate.
-
-A second target is to characterize which additional assumptions on the outcome response component genuinely reduce the Boolean benefit interval. Candidate restrictions include monotonicity, response-coordinate independence, bounded disagreement, and shared latent-rank models. Each restriction must be stated separately from standard Markovian assignment-outcome independence.
+A second target is an exact finite certificate for a two-component bilinear problem. Candidate payloads are a finite branch decomposition with one rational dual certificate per branch, or a verified alternating bound whose global validity is discharged by a separate envelope theorem. Local stationary-point evidence alone is insufficient for a sharpness claim.
 
 The partial-diagram lane continues with:
 
