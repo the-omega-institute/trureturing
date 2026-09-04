@@ -1,0 +1,1 @@
+**可证伪预测(写在跑之前)**:`obtain ⟨Z⟩ := nonempty_zeroData_iff_infinite.mpr hInf` 后即 W-14 `Z`;标准三公理。探针已整证。

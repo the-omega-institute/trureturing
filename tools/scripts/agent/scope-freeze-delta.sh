@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # scope-freeze-delta.sh BASE -- 把 accepted 目录收窄到「本分支真正新增的冻结条目」
 #
-# 背景(issue #3888):base 含 legacy(v4)分片时,ledger-append 走 ReplaceEventFiles,
+# 背景(issue #3888):base 含 legacy(v4)分片时,ledger-align 走 ReplaceEventFiles,
 # 把 legacy 排除出最终集合并为其重新生成 v5 条目 ⟹ 全量重写;
 # 而 admission 的 Legacy 授权器要求 base 全为 legacy ⟹ 混合态必然被拒。
 # 先例:PR #3696「ledger: scope the freeze delta to this branch's twenty-four events」。

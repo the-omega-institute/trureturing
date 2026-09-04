@@ -161,9 +161,7 @@ public static class FrozenContentAddress
         var declarationStatementIds = CanonicalStatementWriter.DeclarationStatementIds(
             path,
             report);
-        var statement = StatementId.Create(FrozenContentHash.Compute(
-            FrozenHashDomains.Statement,
-            CanonicalStatementWriter.WriteModule(path, declarationStatementIds).AsSpan()));
+        var statement = ComputeModuleStatementId(path, declarationStatementIds);
         var axiomClosure = report.Declarations
             .SelectMany(static declaration => declaration.Axioms)
             .Distinct(StringComparer.Ordinal)
@@ -182,6 +180,24 @@ public static class FrozenContentAddress
             prerequisites,
             axiomClosure);
     }
+
+    internal static StatementId ComputeModuleStatementId(
+        RepoPath path,
+        LeanFileReport report)
+    {
+        ArgumentNullException.ThrowIfNull(path);
+        ArgumentNullException.ThrowIfNull(report);
+        return ComputeModuleStatementId(
+            path,
+            CanonicalStatementWriter.DeclarationStatementIds(path, report));
+    }
+
+    private static StatementId ComputeModuleStatementId(
+        RepoPath path,
+        ImmutableArray<FrozenDeclarationStatement> declarations) =>
+        StatementId.Create(FrozenContentHash.Compute(
+            FrozenHashDomains.Statement,
+            CanonicalStatementWriter.WriteModule(path, declarations).AsSpan()));
 
     private static (
         ImmutableDictionary<RepoPath, ImmutableArray<CaseId>> OpenCases,

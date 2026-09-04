@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
@@ -25,7 +26,7 @@ public sealed class PlaybookWorkflowScriptTests
                 "dotnet:digest-status --base synthetic-base",
                 "git:diff --diff-filter=A --name-only -z synthetic-base...HEAD -- Golden/Frozen/accepted/*.json",
                 "git:ls-files --others --exclude-standard -z -- Golden/Frozen/accepted/*.json",
-                "dotnet:ledger-append --candidate-lean-report .lake/build/stratalint/raw-lean-report.json",
+                "dotnet:ledger-align --candidate-lean-report .lake/build/stratalint/raw-lean-report.json",
                 "dotnet:digest-status --base synthetic-base",
                 $"git:rev-parse HEAD^1",
                 $"make:preflight BASE={SyntheticBaseSha}",
@@ -33,6 +34,25 @@ public sealed class PlaybookWorkflowScriptTests
                 "git:ls-files --others --exclude-standard -z -- Golden/Frozen/accepted/*.json",
             ],
             fixture.Calls());
+    }
+
+    [Fact]
+    public void DeliverCheckRegistersClosedModuleAbsentFromStateAndAccepted()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new PlaybookFixture();
+        const string module = "D5/S0/Carrier/NewClosed.lean";
+        WriteTruthGraph(fixture, module);
+
+        var result = fixture.Run("deliver-check", "synthetic-base");
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Contains(
+            $"dotnet:ledger-align --add {module} --candidate-lean-report "
+                + ".lake/build/stratalint/raw-lean-report.json",
+            fixture.Calls());
+        Assert.True(StateFragmentExists(fixture, module));
+        Assert.True(AcceptedEventMentions(fixture, module));
     }
 
     [Theory]
@@ -78,6 +98,58 @@ public sealed class PlaybookWorkflowScriptTests
         "stdout:\n" + Encoding.UTF8.GetString(result.StandardOutput)
         + "\nstderr:\n" + Encoding.UTF8.GetString(result.StandardError);
 
+    private static void WriteTruthGraph(PlaybookFixture fixture, string module) =>
+        WriteTruthGraphContent(
+            fixture,
+            JsonSerializer.Serialize(new
+            {
+                truth = new
+                {
+                    nodes = new[] { new { repo_path = module, state = "closed" } },
+                },
+            }));
+
+    private static void WriteEmptyTruthGraph(PlaybookFixture fixture) =>
+        WriteTruthGraphContent(
+            fixture,
+            JsonSerializer.Serialize(new
+            {
+                truth = new
+                {
+                    nodes = Array.Empty<object>(),
+                },
+            }));
+
+    private static void WriteTruthGraphContent(PlaybookFixture fixture, string content)
+    {
+        var path = Path.Combine(fixture.Temporary.Path, "Generated", "truth-graph.v1.json");
+        ScriptHarnessScratch.EnsureDirectory(Path.GetDirectoryName(path)!);
+        ScriptHarnessScratch.WriteScratchText(path, content);
+    }
+
+    private static bool StateFragmentExists(PlaybookFixture fixture, string module) =>
+        new FileInfo(Path.Combine(
+            fixture.Temporary.Path,
+            "Golden",
+            "Frozen",
+            "state",
+            module + ".json")).Exists;
+
+    private static bool AcceptedEventMentions(PlaybookFixture fixture, string module) =>
+        new DirectoryInfo(Path.Combine(
+                fixture.Temporary.Path,
+                "Golden",
+                "Frozen",
+                "accepted"))
+            .GetFiles("*.json")
+            .Any(file => ReadAcceptedEvent(file).Contains(module, StringComparison.Ordinal));
+
+    private static string ReadAcceptedEvent(FileInfo file)
+    {
+        using var reader = file.OpenText();
+        return reader.ReadToEnd();
+    }
+
     private sealed class PlaybookFixture : IDisposable
     {
         private readonly TemporaryDirectory temporary = new();
@@ -92,6 +164,8 @@ public sealed class PlaybookWorkflowScriptTests
             ScriptHarnessScratch.EnsureDirectory(binPath);
             var scriptTarget = Path.Combine(temporary.Path, ScriptPath);
             ScriptHarnessScratch.CopyScriptInto(Path.Combine(root, ScriptPath), scriptTarget);
+            Directory.CreateDirectory(Path.Combine(temporary.Path, "Golden", "Frozen", "accepted"));
+            WriteEmptyTruthGraph(this);
             WriteExecutable("make", "printf 'make:%s\\n' \"$*\" >> \"$PLAYBOOK_TEST_CALLS\"");
             WriteExecutable(
                 "git",
@@ -132,8 +206,18 @@ public sealed class PlaybookWorkflowScriptTests
                 "dotnet",
                 "args=\"$*\"; command=${args##* -- }; printf 'dotnet:%s\\n' \"$command\" >> \"$PLAYBOOK_TEST_CALLS\"; "
                 + "if [[ -n ${PLAYBOOK_DOTNET_FAILURE:-} && $command == $PLAYBOOK_DOTNET_FAILURE* ]]; then "
-                + "printf '%s\\n' \"$PLAYBOOK_DOTNET_DIAGNOSTIC\" >&2; exit 1; fi");
+                + "printf '%s\\n' \"$PLAYBOOK_DOTNET_DIAGNOSTIC\" >&2; exit 1; fi; "
+                + "read -r -a parts <<< \"$command\"; "
+                + "for ((i=1; i<${#parts[@]}; i++)); do "
+                + "if [[ ${parts[i]} == --add ]]; then module=${parts[i+1]}; "
+                + "state=Golden/Frozen/state/${module}.json; mkdir -p \"$(dirname \"$state\")\"; "
+                + "printf '{\"statement_id\":\"sha256:%064d\"}\\n' 1 > \"$state\"; "
+                + "event=Golden/Frozen/accepted/$(printf '%064d' 2).json; "
+                + "printf '{\"event_hash\":\"sha256:%064d\",\"event_type\":\"Freeze\",\"payload\":{\"declaration_statement_ids\":[],\"descriptor_selector\":\"%s\",\"prerequisite_frozen_node_ids\":[],\"statement_id\":\"sha256:%064d\"},\"schema_version\":5}\\n' 2 \"$module\" 1 > \"$event\"; "
+                + "fi; done");
         }
+
+        internal TemporaryDirectory Temporary => temporary;
 
         internal ProcessOutput Run(
             string command,

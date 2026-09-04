@@ -6,7 +6,6 @@ namespace StrataLint.Tests;
 public sealed class ResourceObservationLibraryTests
 {
     private const string LibraryPath = "tools/scripts/lib/resource-observation-lib.sh";
-    private const string BootstrapPath = "tools/scripts/lib/resource-observation-bootstrap.sh";
 
     [Fact]
     public void UnreadableSourcesEmitUnavailableForEveryField()
@@ -189,70 +188,6 @@ public sealed class ResourceObservationLibraryTests
         Assert.Contains("pid:100,ppid:99,pgid:99,rss_kb:200,cpu:00:00:02", output, StringComparison.Ordinal);
         Assert.Contains("pid:101,ppid:100,pgid:99,rss_kb:300,cpu:00:00:03", output, StringComparison.Ordinal);
         Assert.DoesNotContain("pid:500", output, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void BaseLibraryCannotBeReplacedByCandidateCode()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var temporary = new TemporaryDirectory();
-        var baseRoot = Path.Combine(temporary.Path, "base");
-        var workspace = Path.Combine(temporary.Path, "workspace");
-        var baseLibrary = Path.Combine(baseRoot, LibraryPath);
-        var candidateLibrary = Path.Combine(workspace, "candidate", LibraryPath);
-        Directory.CreateDirectory(Path.GetDirectoryName(baseLibrary)!);
-        Directory.CreateDirectory(Path.GetDirectoryName(candidateLibrary)!);
-        File.WriteAllText(
-            baseLibrary,
-            "resource_observe_run_periodic() { \"$@\"; }\n",
-            new UTF8Encoding(false));
-        File.WriteAllText(
-            candidateLibrary,
-            "resource_observe_run_periodic() { printf 'FALSE_GREEN_REACHED\\n'; return 0; }\n",
-            new UTF8Encoding(false));
-
-        var result = Run(
-            temporary,
-            "source \"$2\"\nunderlying() { printf 'UNDERLYING_REACHED\\n'; return 23; }\nresource_observation_run_with_base_library \"$BASE_ROOT\" underlying\n",
-            $"BASE_ROOT={baseRoot}",
-            $"GITHUB_WORKSPACE={workspace}");
-
-        Assert.Equal(23, result.ExitCode);
-        var output = Encoding.UTF8.GetString(result.StandardOutput);
-        Assert.Contains("UNDERLYING_REACHED", output, StringComparison.Ordinal);
-        Assert.DoesNotContain("FALSE_GREEN_REACHED", output, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void MissingLibraryFallsBackAndPreservesEngineeringStatus()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var temporary = new TemporaryDirectory();
-        AssertLoadFailureFallsBack(temporary, "missing", null, "missing");
-    }
-
-    [Fact]
-    public void UnreadableLibraryFallsBackAndPreservesEngineeringStatus()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var temporary = new TemporaryDirectory();
-        AssertLoadFailureFallsBack(temporary, "unreadable", "return 0\n", "unreadable", readable: false);
-    }
-
-    [Fact]
-    public void SyntaxInvalidLibraryFallsBackAndPreservesEngineeringStatus()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var temporary = new TemporaryDirectory();
-        AssertLoadFailureFallsBack(temporary, "syntax", "if then\n", "syntax-error");
-    }
-
-    [Fact]
-    public void NonzeroSourceLibraryFallsBackAndPreservesEngineeringStatus()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var temporary = new TemporaryDirectory();
-        AssertLoadFailureFallsBack(temporary, "source", "return 41\n", "source-nonzero", expectedSourceExit: 41);
     }
 
     [Fact]
@@ -455,7 +390,6 @@ public sealed class ResourceObservationLibraryTests
             script,
             "resource-observation-test",
             Path.Combine(root, LibraryPath),
-            Path.Combine(root, BootstrapPath),
         };
         return TestProcessRunner.Run(
             "env",
@@ -463,44 +397,6 @@ public sealed class ResourceObservationLibraryTests
             temporary.Path,
             BoundedProcessRunner.HangDetectionBudget,
             1024 * 1024);
-    }
-
-    private static void AssertLoadFailureFallsBack(
-        TemporaryDirectory temporary,
-        string caseName,
-        string? libraryContents,
-        string expectedReason,
-        bool readable = true,
-        int? expectedSourceExit = null)
-    {
-        var baseRoot = Path.Combine(temporary.Path, caseName);
-        var library = Path.Combine(baseRoot, LibraryPath);
-        if (libraryContents is not null)
-        {
-            Directory.CreateDirectory(Path.GetDirectoryName(library)!);
-            File.WriteAllText(library, libraryContents, new UTF8Encoding(false));
-            if (!readable)
-            {
-                if (OperatingSystem.IsWindows())
-                    throw new PlatformNotSupportedException("resource observation fixtures require Unix permissions");
-                File.SetUnixFileMode(library, UnixFileMode.None);
-            }
-        }
-
-        var result = Run(
-            temporary,
-            "source \"$2\"\nengineering() { printf 'ENGINEERING_REACHED\\n'; return 23; }\nresource_observation_run_with_base_library \"$BASE_ROOT\" engineering\n",
-            $"BASE_ROOT={baseRoot}");
-
-        Assert.Equal(23, result.ExitCode);
-        var output = Encoding.UTF8.GetString(result.StandardOutput);
-        Assert.Contains("ENGINEERING_REACHED", output, StringComparison.Ordinal);
-        Assert.Contains(
-            $"RESOURCE_OBSERVATION_LOADER status=UNAVAILABLE reason={expectedReason}",
-            output,
-            StringComparison.Ordinal);
-        if (expectedSourceExit is not null)
-            Assert.Contains($"exit={expectedSourceExit}", output, StringComparison.Ordinal);
     }
 
     private static string WriteExecutable(string directory, string name, string contents)

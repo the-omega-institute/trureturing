@@ -353,6 +353,7 @@ public sealed class TruthReleaseCommandTests
         [[files]]
         pattern = "Blueprint/**/*.md"
         kind = "generated"
+        admission_plane = "content"
         produced_by = "ScribeEmitter"
         consumed_by = ["ScribeEmitter", "reader"]
         verified_by = ["ScribeEmitter"]
@@ -362,6 +363,7 @@ public sealed class TruthReleaseCommandTests
         [[files]]
         pattern = "Blueprint/**/*.scribe.cs"
         kind = "data"
+        admission_plane = "content"
         produced_by = "none"
         consumed_by = ["ScribeEmitter"]
         verified_by = ["ScribeCompiler"]

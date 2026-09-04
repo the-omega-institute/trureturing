@@ -21,12 +21,14 @@ public sealed partial class PureRevertDetectScriptTests
         var path = executablePath is null
             ? DefaultExecutablePath
             : executablePath + ":" + DefaultExecutablePath;
-        var commandArguments = IsolatedEnvironmentArguments(
-            ["/bin/bash", script, .. arguments],
-            path);
         return TestProcessRunner.Run(
             "/usr/bin/env",
-            commandArguments,
+            [
+                .. IsolatedEnvironmentArguments([], path),
+                "/bin/bash",
+                script,
+                .. arguments,
+            ],
             root,
             TestBudgets.ScriptProcessHangGuard,
             64 * 1024);

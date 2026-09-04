@@ -3,6 +3,14 @@ using System.Text.RegularExpressions;
 
 namespace StrataLint.Scribe;
 
+internal sealed class FileMapPatternException(string pattern)
+    : FormatException($"unsafe FILEMAP pattern: {pattern}")
+{
+    internal const string FindingCode = "FILEMAP-PATTERN-UNSAFE";
+
+    internal string Pattern { get; } = pattern;
+}
+
 internal sealed class FileMapGlob
 {
     private readonly Regex regex;
@@ -23,11 +31,12 @@ internal sealed class FileMapGlob
             || !string.Equals(pattern, pattern.Trim(), StringComparison.Ordinal)
             || pattern[0] == '/'
             || pattern.Contains('\\')
+            || pattern.Contains('?')
             || pattern.Contains("//", StringComparison.Ordinal)
             || pattern.Any(static character => character is < ' ' or > '~')
             || pattern.Split('/').Any(static segment => segment is "." or ".." or ""))
         {
-            throw new FormatException($"unsafe FILEMAP pattern: {pattern}");
+            throw new FileMapPatternException(pattern);
         }
 
         var expression = new StringBuilder("\\A");
@@ -53,7 +62,6 @@ internal sealed class FileMapGlob
             expression.Append(character switch
             {
                 '*' => "[^/]*",
-                '?' => "[^/]",
                 _ => Regex.Escape(character.ToString()),
             });
         }

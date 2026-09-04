@@ -282,7 +282,7 @@ internal static class DagLedgerCommandPreparation
     internal sealed class LeanReportUnusableException(Exception inner)
         : Exception("raw Lean report is unusable", inner);
 
-    private sealed class FileLeanReportSource(string path) : ILeanReportSource
+    internal sealed class FileLeanReportSource(string path) : ILeanReportSource
     {
         public LeanAxiomReport Load(RepositorySnapshot snapshot) =>
             RawLeanReportArtifact.ReadFile(path, snapshot);
