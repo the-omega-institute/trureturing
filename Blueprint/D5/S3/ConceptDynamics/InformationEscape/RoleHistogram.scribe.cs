@@ -11,7 +11,7 @@ internal sealed class RoleHistogramDocument : IScribeDocumentDefinition
         H("Unique Capture Role Histogram"),
         Blocks(
             Describe.Lean(
-                DescribeId.Create("without-kernel"), Handle("Catalog.withoutKernel"),
+                DescribeId.Create("without-kernel"), Handle("withoutKernel"),
                 H("Leave-one-out catalog kernel"),
                 StatementSource.FromAuthor(Disp(Eq(
                     Call("relation", Call("withoutKernel", C, I)),
@@ -20,7 +20,7 @@ internal sealed class RoleHistogramDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("The other theorem bundles form one decidable equivalence kernel."))),
                 DescribeRole.Definition),
             Describe.Lean(
-                DescribeId.Create("role-histogram"), Handle("Catalog.roleHistogram"),
+                DescribeId.Create("role-histogram"), Handle("roleHistogram"),
                 H("Residual role-signature multiplicity"),
                 StatementSource.FromAuthor(Disp(Eq(Call("roleHistogram", C, I, S),
                     Call("residualSignatureHistogram", Call("withoutKernel", C, I), S)))),
@@ -29,7 +29,7 @@ internal sealed class RoleHistogramDocument : IScribeDocumentDefinition
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("unique-capture-role-signature-nonzero"),
-                Handle("Catalog.uniqueCapture_roleSignature_nonzero"),
+                Handle("uniqueCapture_roleSignature_nonzero"),
                 H("Unique capture has nonzero role signature"),
                 StatementSource.FromAuthor(Disp(Implies(Call("Member", P, Call("uniqueCapturePairs", C, I)),
                     Call("NotEqual", Call("residualRoleSignature", C, I, P), Z)))),
@@ -38,7 +38,7 @@ internal sealed class RoleHistogramDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("role-histogram-sum-eq-unique-capture-count"),
-                Handle("Catalog.roleHistogram_sum_eq_uniqueCaptureCount"),
+                Handle("roleHistogram_sum_eq_uniqueCaptureCount"),
                 H("Nonzero buckets sum to unique capture"),
                 StatementSource.FromAuthor(Disp(Eq(Call("sumNonzero", Call("roleHistogram", C, I)),
                     Call("uniqueCaptureCount", C, I)))),
