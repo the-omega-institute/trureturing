@@ -1,0 +1,4 @@
+# 增订三十四　G-c 第二层拆分:已 kernel 化的曲率界与 log 2 精度(L2a),任意阶 sin/cos 包络与相位约简基础设施(L2b),生成式 jet 证书(L2c)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;探针一席(codex-cli,`probe-gc-layer2`,`make lean` exit 0、`lake env lean` exit 0,已证声明全为标准三公理;数值部分以 mpmath 100 位计算,标 `ASSUMED-UNVERIFIED`)在含增订三十三第一层 scratch 的暖树上,按「最廉者先」顺序尝试三条中心 jet 不等式的 kernel 证书。读数:‖g₆₀(c)‖ ≈ 2.755·10⁻¹⁰、Re g₆₀′(c) ≈ 1.87734、sup_Q ‖g₆₀″‖ ≈ 95.55——增订三十三预登记的三个阈值(4·10⁻¹⁰、1.87、400)全部成立,无需重新预登记;已 kernel 化 T3(曲率 ≤ 118 ⇒ ≤ 400,纯有理几何优函数)、`log_two_binary_60`(|log 2 − r₆₀| ≤ 2⁻⁶⁰,由 Mathlib `Real.abs_log_sub_add_sum_range_le` 级数包络得,消除 β(60) = 134.08 处 3.5·10⁻⁷ 的相位误差瓶颈)与 T2 的 v ≤ 1 前缀;T2 全 61 项与 T1 阻塞于四项缺失基础设施(见 L2b)。实测成本:每模约 30 条标量不等式、约 13 s 阐释(v = 1 模)。散文由 orchestrator(claude 主循环)撰写。判决日:2026-09-05。lane issue:#4589。
+

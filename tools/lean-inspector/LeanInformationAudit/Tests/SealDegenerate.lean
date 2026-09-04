@@ -37,4 +37,20 @@ LeanInformationAudit.Tests.SealDegenerate.arena -/
 #guard_msgs (error) in
 #seal_information_theory
 
+/-- error: Invalid field `__information_catalog`: The environment does not contain
+`D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.__information_catalog`, so it is
+not possible to project the field `__information_catalog` from an expression
+  arena
+of type `PrimitiveLawArena` -/
+#guard_msgs (error) in
+#check @LeanInformationAudit.Tests.SealDegenerate.arena.__information_catalog
+
+/-- error: Invalid field `__lowers_escape`: The environment does not contain
+`True.__lowers_escape`, so it is not possible to project the field `__lowers_escape` from an
+expression
+  degenerateTheorem
+of type `True` -/
+#guard_msgs (error) in
+#check @LeanInformationAudit.Tests.SealDegenerate.degenerateTheorem.__lowers_escape
+
 end LeanInformationAudit.Tests.SealDegenerate
