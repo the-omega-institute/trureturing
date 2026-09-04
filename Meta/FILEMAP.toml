@@ -267,6 +267,16 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
+pattern = "LICENSE"
+kind = "program"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["reader"]
+verified_by = ["repository-policy"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
 pattern = "Library/**/*.yaml"
 kind = "data"
 admission_plane = "judge"
