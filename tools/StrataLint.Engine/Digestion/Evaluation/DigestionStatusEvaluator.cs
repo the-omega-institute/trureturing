@@ -42,7 +42,9 @@ internal static partial class DigestionStatusEvaluator
                 static source => source.SourceId,
                 static source => source.GenreRegistryCheck,
                 StringComparer.Ordinal);
-        var frozenStatements = new Lazy<FrozenStatementIndex>(() => FrozenStatementIndex.Load(snapshot));
+        var frozenStatements = new Lazy<FrozenStatementIndex>(() => FrozenStatementIndex.Create(
+            FrozenStateCatalog.Load(snapshot),
+            emptyLeanReport));
         var statusAuthorityChangedAtomIds = ResolveStatusAuthorityChangedAtomIds(
             entries,
             baselineAtomIds: ImmutableHashSet<string>.Empty,
@@ -139,7 +141,9 @@ internal static partial class DigestionStatusEvaluator
                 static source => source.SourceId,
                 static source => source.GenreRegistryCheck,
                 StringComparer.Ordinal);
-        var frozenStatements = new Lazy<FrozenStatementIndex>(() => FrozenStatementIndex.Load(snapshot));
+        var frozenStatements = new Lazy<FrozenStatementIndex>(() => FrozenStatementIndex.Create(
+            FrozenStateCatalog.Load(snapshot),
+            lean.Report));
         var statusAuthorityChangedAtomIds = ResolveStatusAuthorityChangedAtomIds(
             entries,
             baselineEntries.Keys.ToHashSet(StringComparer.Ordinal),
