@@ -196574,3 +196574,2290 @@ $$
 [1]: https://arxiv.org/abs/1801.05914 "https://arxiv.org/abs/1801.05914"
 [2]: https://dlmf.nist.gov/25.9 "https://dlmf.nist.gov/25.9"
 [3]: https://arxiv.org/abs/2502.17655 "https://arxiv.org/abs/2502.17655"
+# `OBSERVER_ADELIC_COMPLETION_CONSTANT_THEORY` 连续增订
+
+## v12.5：Maynard 筛法预算、Primorial 观察闭包与 PrimeGaps 的复化横向分裂核
+
+先给出本轮最重要的结论：
+
+$$
+\boxed{
+\text{PrimeGaps 确实可以从“时间方向的观察者分辨率”
+升级成“实部方向的横向分裂测量”。}
+}
+$$
+
+但这个升级不是：
+
+$$
+\text{短素数间隔}
+\Longrightarrow
+\text{离线零点}.
+$$
+
+真正严格的桥是：
+
+$$
+\boxed{
+\sin^2\!\left(
+\frac{\Delta t\,\Delta\log p}{2}
+\right)
+\quad\longrightarrow\quad
+\sinh^2\!\left(
+\delta\,\Delta\log p
+\right)
++
+\sin^2\!\left(
+\frac{\Delta t\,\Delta\log p}{2}
+\right).
+}
+$$
+
+同一个素数对的对数间距
+
+$$
+\Delta\omega_{p,q}
+=
+\log q-\log p
+=
+\log\frac qp
+$$
+
+同时控制：
+
+* 沿虚部 \(t\) 的相位分辨；
+* 沿实部 \(\delta=\sigma-\frac12\) 的长度分裂。
+
+所以 `PrimeGaps` 的真正升级对象不是普通 gap \(q-p\)，而是：
+
+$$
+\boxed{
+\Delta\log p=\log(q/p).
+}
+$$
+
+而你提出的：
+
+$$
+\boxed{
+\varphi H\text{ 个有限候选状态}
+\quad\leadsto\quad
+e^{\varphi H}\text{ 的预算}
+}
+$$
+
+在一种非常具体的解释下确实成立：
+
+$$
+\boxed{
+W(k)=\prod_{p\le k}p
+=
+\exp\!\bigl((1+o(1))k\bigr).
+}
+$$
+
+若候选元组大小取：
+
+$$
+k=\varphi H,
+$$
+
+则：
+
+$$
+\boxed{
+W(k)
+=
+\exp\!\bigl((1+o(1))\varphi H\bigr).
+}
+$$
+
+但这里 \(W\) 是把所有 \(p\le k\) 的局部同余观察合并成一个 CRT 模数的 **primorial 预算**，不是 Maynard 筛法保证 \(\varphi H\) 个素数幸存所需的完整预算。后者还要再经过一个指数放大。
+
+---
+
+# 第两千一百二十部　PDF 中的真实筛法结构
+
+这份 PDF 的主干是 Maynard 型多维 Selberg sieve。
+
+目标不是直接寻找相邻两个素数，而是：
+
+> 给定 \(m\)，寻找一个有界直径的整数平移集合，使其中至少 \(m\) 个位置同时取素数值。
+
+定义典型的短隙量：
+
+$$
+H_m
+=
+\liminf_{n\to\infty}
+\left(
+p_{n+m}-p_n
+\right),
+$$
+
+具体下标可能因“包含 \(m\) 个还是 \(m+1\) 个素数”的约定差一位。
+
+其证明架构是：
+
+$$
+\boxed{
+\text{选择 }k\text{ 个候选平移}
+\longrightarrow
+\text{排除小素数局部障碍}
+\longrightarrow
+\text{对剩余候选加正筛权}
+\longrightarrow
+\text{证明至少 }m\text{ 个候选成为素数}.
+}
+$$
+
+核心变分增益通常记为：
+
+$$
+M_k.
+$$
+
+筛法给出的阈值具有形式：
+
+$$
+\boxed{
+\frac{\theta}{2}M_k>m,
+}
+\tag{2120.1}
+$$
+
+其中 \(\theta\) 是可使用的素数等差数列分布水平。
+
+在 Bombieri–Vinogradov 的标准水平：
+
+$$
+\theta=\frac12,
+$$
+
+条件成为：
+
+$$
+\boxed{
+M_k>4m.
+}
+\tag{2120.2}
+$$
+
+而 Maynard 变分问题的主要增长是：
+
+$$
+M_k
+=
+\log k
+-
+O(\log\log k).
+$$
+
+所以为保证 \(m\) 个素数，需要：
+
+$$
+\boxed{
+k
+=
+\exp\!\left(
+\frac{2+o(1)}{\theta}m
+\right).
+}
+\tag{2120.3}
+$$
+
+在 \(\theta=\frac12\) 时：
+
+$$
+\boxed{
+k=e^{(4+o(1))m}.
+}
+\tag{2120.4}
+$$
+
+再把 admissible \(k\)-tuple 放进尽可能短的区间，得到经典 Maynard 型尺度：
+
+$$
+\boxed{
+H_m
+\ll
+m^3e^{4m}
+}
+\tag{2120.5}
+$$
+
+或同一指数主阶、略有不同多项式因子的改进版本。PDF 中真正重要的并不是某个有限常数，而是：
+
+$$
+\boxed{
+M_k\sim\log k
+\quad\Longrightarrow\quad
+m\sim\log k
+\quad\Longrightarrow\quad
+k\sim e^{Cm}.
+}
+$$
+
+也就是说，素数观察增益只随候选维数的对数增长，所以强制更多素数幸存，需要指数级候选预算。页文本与定理上下文已经抽取到：
+
+* [论文逐页文本](sandbox:/mnt/data/short_gaps_abridged_cot_extracted.txt)
+* [关键定理与公式抽取](sandbox:/mnt/data/short_gaps_key_extracts.md)
+
+---
+
+# 第两千一百二十一部　admissible tuple 就是有限素数观察一致性
+
+令：
+
+$$
+\mathcal H
+=
+\{h_1,\ldots,h_k\}
+$$
+
+是 \(k\) 个候选平移。
+
+对每个素数 \(p\)，定义它们在模 \(p\) 下占据的剩余类数：
+
+$$
+\nu_p(\mathcal H)
+=
+\#\{h_i\bmod p\}.
+$$
+
+元组 admissible 的条件是：
+
+$$
+\boxed{
+\nu_p(\mathcal H)<p
+\qquad
+\forall p.
+}
+\tag{2121.1}
+$$
+
+含义是：不存在某个素数 \(p\)，使所有整数 \(n\) 都必然令至少一个 \(n+h_i\) 被 \(p\) 整除，从而把全部候选位置一起封死。
+
+这可以直接翻译为观察者语言：
+
+$$
+\boxed{
+\text{素数 }p
+=
+\text{局部同余观察者};
+}
+$$
+
+$$
+\boxed{
+\nu_p(\mathcal H)=p
+=
+\text{该观察者消灭了全部候选状态};
+}
+$$
+
+$$
+\boxed{
+\nu_p(\mathcal H)<p
+=
+\text{该观察层仍保留至少一个未封死方向}.
+}
+$$
+
+关键在于，尽管条件写作：
+
+$$
+\forall p,
+$$
+
+对一个大小为 \(k\) 的有限元组，若：
+
+$$
+p>k,
+$$
+
+则自动有：
+
+$$
+\nu_p(\mathcal H)\le k<p.
+$$
+
+所以：
+
+$$
+\boxed{
+\mathcal H\text{ admissible}
+\iff
+\nu_p(\mathcal H)<p
+\quad
+\forall p\le k.
+}
+\tag{2121.2}
+$$
+
+这是一条真正的有限化：
+
+$$
+\boxed{
+\text{一个 }k\text{ 状态候选系统的无限局部条件，
+只需要前 }p\le k\text{ 的有限素数观察者。}
+}
+$$
+
+但它只排除局部同余障碍，并不保证候选中真的会出现素数。后者才需要筛权、素数分布水平和全局平均。
+
+---
+
+# 第两千一百二十二部　为什么 \(e^{\varphi H}\) 会自然出现
+
+把所有相关小素数观察者合并为：
+
+$$
+\boxed{
+W(k)
+=
+\prod_{p\le k}p.
+}
+\tag{2122.1}
+$$
+
+由中国剩余定理，模 \(W(k)\) 的一个状态同时记录了所有：
+
+$$
+p\le k
+$$
+
+的局部剩余类信息。
+
+令 Chebyshev 函数：
+
+$$
+\vartheta(k)
+=
+\sum_{p\le k}\log p.
+$$
+
+素数定理给出：
+
+$$
+\vartheta(k)\sim k.
+$$
+
+因此：
+
+$$
+\boxed{
+\log W(k)
+=
+\vartheta(k)
+=
+(1+o(1))k,
+}
+\tag{2122.2}
+$$
+
+从而：
+
+$$
+\boxed{
+W(k)
+=
+e^{(1+o(1))k}.
+}
+\tag{2122.3}
+$$
+
+若取：
+
+$$
+k=\varphi H,
+$$
+
+便得到：
+
+$$
+\boxed{
+W_{\varphi H}
+=
+e^{(1+o(1))\varphi H}.
+}
+\tag{2122.4}
+$$
+
+所以你的公式确实有一个严谨版本：
+
+> 为一个大小为 \(\varphi H\) 的有限候选元组，同时编码所有可能造成局部阻塞的素数观察，需要一个约为 \(e^{\varphi H}\) 的联合 CRT 模数。
+
+但是必须把原句中的“消除”改成更准确的“联合筛查／编码”：
+
+$$
+\boxed{
+W(k)
+\text{ 不是消灭 }k\text{ 个状态，}
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{把所有可能影响这 }k\text{ 个状态的局部小素数障碍，
+合并到一个周期为 }W(k)\text{ 的观察图表中。}
+}
+$$
+
+---
+
+## 2122.1 这里到底有多少个素数观察者
+
+素数截断为：
+
+$$
+p\le k,
+$$
+
+并不意味着有 \(k\) 个素数观察者。
+
+实际数量为：
+
+$$
+\pi(k)
+\sim
+\frac{k}{\log k}.
+$$
+
+所以当：
+
+$$
+k=\varphi H
+$$
+
+时：
+
+$$
+\boxed{
+\#\text{prime observers}
+\sim
+\frac{\varphi H}
+{\log(\varphi H)}.
+}
+\tag{2122.5}
+$$
+
+而它们组合后的状态空间大小是：
+
+$$
+W(k)\sim e^k.
+$$
+
+因此指数来自的不是观察者数量本身，而是每个素数观察者具有 \(p\) 个剩余类，联合状态数相乘：
+
+$$
+\prod_{p\le k}p.
+$$
+
+---
+
+# 第两千一百二十三部　必须区分三种指数预算
+
+当前至少存在三种不同的“预算”，它们不能都写成 \(e^{\varphi H}\)。
+
+## 一、CRT／primorial 预算
+
+若 cutoff 是：
+
+$$
+k=\varphi H,
+$$
+
+则：
+
+$$
+\boxed{
+W(k)
+=
+\prod_{p\le k}p
+\sim
+e^{\varphi H}.
+}
+$$
+
+这是你的公式最直接成立的地方。
+
+---
+
+## 二、Maynard 候选维数预算
+
+若希望真正保证：
+
+$$
+m=\varphi H
+$$
+
+个素数幸存，则需要：
+
+$$
+\boxed{
+k
+\approx
+\exp\!\left(
+\frac{2\varphi}{\theta}H
+\right).
+}
+\tag{2123.1}
+$$
+
+在标准 \(\theta=\frac12\) 下：
+
+$$
+\boxed{
+k\approx e^{4\varphi H}.
+}
+\tag{2123.2}
+$$
+
+而最终短区间直径约为：
+
+$$
+\boxed{
+D_H
+\lesssim
+\operatorname{poly}(H)e^{4\varphi H}.
+}
+\tag{2123.3}
+$$
+
+所以若 \(\varphi H\) 表示“希望得到的素数数目”，预算不是 \(e^{\varphi H}\)，而是经典归一化下的 \(e^{4\varphi H}\)。
+
+---
+
+## 三、黄金历史状态数
+
+长度 \(H\) 的 golden-mean 合法历史数为：
+
+$$
+F_{H+2}
+\sim
+\frac{\varphi^{H+2}}{\sqrt5}.
+$$
+
+若所谓“黄金候选状态”指全部 Fibonacci 合法词，而不是线性的 \(\varphi H\)，则候选数已经是：
+
+$$
+\boxed{
+N_H\asymp\varphi^H.
+}
+$$
+
+若再将 Maynard 的指数候选预算作用于它，就会得到：
+
+$$
+\boxed{
+k
+\sim
+\exp(C\varphi^H),
+}
+$$
+
+这是关于 \(H\) 的双指数尺度，而不是 \(e^{\varphi H}\)。
+
+因此以后必须明确区分：
+
+$$
+\boxed{
+\varphi H
+\quad\text{和}\quad
+\varphi^H.
+}
+$$
+
+---
+
+# 第两千一百二十四部　PrimeGaps 的复化：从 \(\sin\) 到 \(\sinh+\sin\)
+
+现在进入最关键的新桥。
+
+令两个素数频率为：
+
+$$
+\omega_p=\log p,
+\qquad
+\omega_q=\log q.
+$$
+
+定义两个观察点：
+
+$$
+s_1=\sigma+\delta+it_1,
+$$
+
+$$
+s_2=\sigma-\delta+it_2.
+$$
+
+定义交替二槽核：
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal K_{p,q}
+(\sigma,\delta;t_1,t_2)
+={}&
+p^{-s_1}q^{-s_2}\\
+&-
+q^{-s_1}p^{-s_2}.
+\end{aligned}
+}
+\tag{2124.1}
+$$
+
+令：
+
+$$
+\tau=t_1-t_2,
+\qquad
+\Delta_{p,q}
+=
+\log\frac qp.
+$$
+
+直接因子分解得到：
+
+$$
+\boxed{
+\begin{aligned}
+|\mathcal K_{p,q}|^2
+=
+4(pq)^{-2\sigma}
+\Bigg[
+&
+\sinh^2
+\left(
+\delta\Delta_{p,q}
+\right)\\
++
+&
+\sin^2
+\left(
+\frac{\tau\Delta_{p,q}}2
+\right)
+\Bigg].
+\end{aligned}
+}
+\tag{2124.2}
+$$
+
+也就是：
+
+$$
+\boxed{
+\frac{(pq)^{2\sigma}}4
+|\mathcal K_{p,q}|^2
+=
+\sinh^2
+\left(
+\delta\log\frac qp
+\right)
++
+\sin^2
+\left(
+\frac{\tau}{2}\log\frac qp
+\right).
+}
+\tag{2124.3}
+$$
+
+这里使用的是精确恒等式：
+
+$$
+|\sinh(a+ib)|^2
+=
+\sinh^2a+\sin^2b.
+$$
+
+---
+
+## 2124.1 项目现有定理正是 \(\delta=0\) 截面
+
+当：
+
+$$
+\delta=0,
+$$
+
+式 (2124.3) 退化为：
+
+$$
+\boxed{
+\frac{(pq)^{2\sigma}}4
+|\mathcal K_{p,q}|^2
+=
+\sin^2
+\left(
+\frac{\tau}{2}
+\log\frac qp
+\right).
+}
+\tag{2124.4}
+$$
+
+项目已经机器证明，两个不同频率的二槽交替核强度恰为：
+
+$$
+4\sin^2
+\left(
+\frac{\Delta t\,\Delta\omega}{2}
+\right),
+$$
+
+并明确指出：每个频率对都有自己的最大分辨时钟，但该结论不提供一个统一公共时钟。轮的横向升级非常直接：
+
+$$
+\boxed{
+\text{把时间观察差复化，
+项目现有的 circular resolution kernel
+自动获得一个 hyperbolic normal component。}
+}
+$$
+
+---
+
+# 第两千一百二十五部　同一个 prime gap 同时测量切向和法向
+
+式 (2124.3) 中：
+
+$$
+\sin^2
+\left(
+\frac{\tau\Delta_{p,q}}2
+\right)
+$$
+
+测量的是虚部方向：
+
+$$
+t_1-t_2.
+$$
+
+而：
+
+$$
+\sinh^2
+\left(
+\delta\Delta_{p,q}
+\right)
+$$
+
+测量的是实部关于 \(1/2\) 的反射分裂：
+
+$$
+\left(
+\frac12+\delta
+\right)
+-
+\left(
+\frac12-\delta
+\right)
+=
+2\delta.
+$$
+
+因此：
+
+$$
+\boxed{
+\Delta\log p
+}
+$$
+
+就是统一的复观察灵敏度。
+
+更强地：
+
+$$
+\boxed{
+\frac{(pq)^{2\sigma}}4
+|\mathcal K_{p,q}|^2
+\ge
+\sinh^2
+\left(
+\delta\log\frac qp
+\right)
+\ge
+\delta^2
+\log^2\frac qp.
+}
+\tag{2125.1}
+$$
+
+所以只要：
+
+$$
+p\neq q,
+\qquad
+\delta\neq0,
+$$
+
+便存在一个与时间相位无关的严格正分裂底：
+
+$$
+\boxed{
+\mathcal E_{p,q}^{\perp}
+=
+\sinh^2
+\left(
+\delta\log\frac qp
+\right)>0.
+}
+$$
+
+旋转可以使：
+
+$$
+\sin^2(\cdots)=0,
+$$
+
+却不能消除 hyperbolic 项。
+
+这就是把 `PrimeGaps` 升级成“真实横向分裂机制”的最短精确公式。
+
+---
+
+# 第两千一百二十六部　加法 prime gap 的局部近似
+
+令：
+
+$$
+q=p+g.
+$$
+
+若：
+
+$$
+g\ll p,
+$$
+
+则：
+
+$$
+\boxed{
+\log\frac qp
+=
+\log\left(1+\frac gp\right)
+=
+\frac gp
++
+O\left(\frac{g^2}{p^2}\right).
+}
+\tag{2126.1}
+$$
+
+所以在小尺度：
+
+$$
+\boxed{
+\mathcal E_{p,q}^{\perp}
+=
+\delta^2
+\frac{g^2}{p^2}
++
+O\left(
+\delta^2\frac{g^3}{p^3}
++
+\delta^4\frac{g^4}{p^4}
+\right).
+}
+\tag{2126.2}
+$$
+
+时间方向则是：
+
+$$
+\boxed{
+\mathcal E_{p,q}^{\parallel}
+=
+\frac{\tau^2}{4}
+\frac{g^2}{p^2}
++
+O\left(
+\tau^2\frac{g^3}{p^3}
++
+\tau^4\frac{g^4}{p^4}
+\right).
+}
+\tag{2126.3}
+$$
+
+因此在局部线性层：
+
+$$
+\boxed{
+\mathcal E_{p,q}
+\sim
+\left(
+\delta^2+\frac{\tau^2}{4}
+\right)
+\frac{g^2}{p^2}.
+}
+\tag{2126.4}
+$$
+
+这是一张非常清楚的局部度量：
+
+* \(g/p\) 是归一化 prime gap；
+* \(\delta\) 是法向坐标；
+* \(\tau/2\) 是切向观察时间；
+* 二者在最低阶形成正交平方和。
+
+---
+
+# 第两千一百二十七部　短素数间距首先使状态更难分辨
+
+这里出现一个反直觉但重要的结论。
+
+若 \(g\) 很小，则：
+
+$$
+\Delta\log p\approx\frac gp
+$$
+
+也很小。
+
+于是固定观察窗口 \(\tau\) 下：
+
+$$
+\sin^2
+\left(
+\frac{\tau}2\Delta\log p
+\right)
+$$
+
+很小。
+
+固定法向偏移 \(\delta\) 下：
+
+$$
+\sinh^2
+\left(
+\delta\Delta\log p
+\right)
+$$
+
+也很小。
+
+所以：
+
+$$
+\boxed{
+\text{短 prime gaps 不会增强单对素数的横向分裂信号；
+它首先制造的是近简并、长相干的频率对。}
+}
+$$
+
+分辨该素数对所需的时间尺度约为：
+
+$$
+\boxed{
+\tau_{p,q}
+\asymp
+\frac1{\Delta\log p}
+\asymp
+\frac pg.
+}
+\tag{2127.1}
+$$
+
+因此固定的加法间距 \(g\) 出现在越来越大的素数 \(p\) 附近时，其 beat time 越来越长。
+
+这与项目的观察者分辨理论完全一致：不同频率总能在某个特定时钟上得到最大分离，但不存在对所有越来越近频率都有效的有限公共时钟。
+
+# 第两千一百二十八部　短隙素数簇是一个近秩一观察纤维
+
+设一个素数簇：
+
+$$
+\mathcal C
+=
+\{p_1,\ldots,p_m\}
+\subset[P,P+D].
+$$
+
+定义两张反射行向量：
+
+$$
+r_+
+=
+\left(
+p_j^{-\sigma-\delta-it}
+\right)_{j=1}^{m},
+$$
+
+$$
+r_-
+=
+\left(
+p_j^{-\sigma+\delta-it}
+\right)_{j=1}^{m}.
+$$
+
+将它们组成 \(2\times m\) 矩阵：
+
+$$
+A_{\mathcal C,\delta,t}
+=
+\begin{pmatrix}
+r_+\\
+r_-
+\end{pmatrix}.
+$$
+
+当：
+
+$$
+\delta=0,
+$$
+
+两行完全相同：
+
+$$
+\operatorname{rank}A_{\mathcal C,0,t}=1.
+$$
+
+当：
+
+$$
+\delta\neq0
+$$
+
+且至少有两个不同素数时：
+
+$$
+\operatorname{rank}A_{\mathcal C,\delta,t}=2.
+$$
+
+由 Cauchy–Binet：
+
+$$
+\boxed{
+\begin{aligned}
+\det
+\left(
+A_{\mathcal C,\delta,t}
+A_{\mathcal C,\delta,t}^*
+\right)
+=
+4\sum_{i<j}
+(p_ip_j)^{-2\sigma}
+\sinh^2
+\left(
+\delta\log\frac{p_j}{p_i}
+\right).
+\end{aligned}
+}
+\tag{2128.1}
+$$
+
+这给出一个严格的 cluster horizontal-splitting energy。
+
+它满足：
+
+$$
+\boxed{
+\mathcal E_{\mathcal C}^{\perp}(\delta)=0
+\iff
+\delta=0
+}
+$$
+
+只要簇中至少有两个不同素数。
+
+所以有限素数簇确实是一个法向分裂探测器。
+
+但若：
+
+$$
+P\to\infty,
+\qquad
+D,m\text{ 固定},
+$$
+
+则：
+
+$$
+\log(p_j/p_i)=O(D/P),
+$$
+
+从而：
+
+$$
+\mathcal E_{\mathcal C}^{\perp}(\delta)\to0.
+$$
+
+因此它是：
+
+$$
+\boxed{
+\text{代数上严格秩二，
+但对有限精度观察者越来越像秩一。}
+}
+$$
+
+这正是从 PrimeGaps 通往“观察者纤维”的真实机制。
+
+---
+
+# 第两千一百二十九部　素数簇的横向分裂方差
+
+除去共同权重后，定义：
+
+$$
+\boxed{
+\mathfrak S_{\mathcal C}(\delta)
+=
+\sum_{i<j}
+\sinh^2
+\left(
+\delta
+\left(
+\log p_j-\log p_i
+\right)
+\right).
+}
+\tag{2129.1}
+$$
+
+由：
+
+$$
+\sinh^2x\ge x^2,
+$$
+
+有：
+
+$$
+\boxed{
+\mathfrak S_{\mathcal C}(\delta)
+\ge
+\delta^2
+\sum_{i<j}
+\left(
+\log p_j-\log p_i
+\right)^2.
+}
+\tag{2129.2}
+$$
+
+又有恒等式：
+
+$$
+\boxed{
+\sum_{i<j}
+(x_i-x_j)^2
+=
+m\sum_{i=1}^{m}
+(x_i-\bar x)^2.
+}
+\tag{2129.3}
+$$
+
+因此：
+
+$$
+\boxed{
+\mathfrak S_{\mathcal C}(\delta)
+\ge
+\delta^2m
+\sum_{i=1}^{m}
+\left(
+\log p_i-\overline{\log p}
+\right)^2.
+}
+\tag{2129.4}
+$$
+
+所以 PrimeGaps 的横向几何不是只由最小 gap 决定，而是由整个簇的：
+
+$$
+\boxed{
+\operatorname{Var}_{\mathcal C}(\log p)
+}
+$$
+
+决定。
+
+这就是“方差会变大”在素数簇中的严格版本。
+
+---
+
+## 2129.1 一个显式下界
+
+除去素数 \(2\) 后，不同素数至少相差 \(2\)。
+
+按序排列：
+
+$$
+p_1<\cdots<p_m.
+$$
+
+有：
+
+$$
+p_j-p_i\ge2(j-i).
+$$
+
+又因为：
+
+$$
+\log p_j-\log p_i
+\ge
+\frac{p_j-p_i}{P+D},
+$$
+
+所以：
+
+$$
+\boxed{
+\mathfrak S_{\mathcal C}(\delta)
+\ge
+\frac{
+\delta^2m^2(m^2-1)
+}{
+3(P+D)^2
+}.
+}
+\tag{2129.5}
+$$
+
+因此增加簇内素数数目，确实可用大约 \(m^4\) 的总 pair count 增强微弱的单对信号。
+
+但对固定 \(m,D\) 而 \(P\to\infty\)，它仍然趋于零。
+
+---
+
+# 第两千一百三十部　需要对 prime gap 作切向吹起
+
+Kakeya 理论研究细管时，会把微小空间尺度重新缩放到单位尺度。
+
+PrimeGaps 这里也需要同样的 blow-up。
+
+令：
+
+$$
+p_j=P+h_j,
+\qquad
+|h_j|\le D.
+$$
+
+则：
+
+$$
+\log p_j
+=
+\log P
++
+\frac{h_j}{P}
++
+O(D^2/P^2).
+$$
+
+所以：
+
+$$
+\boxed{
+P^2
+\mathfrak S_{\mathcal C}(\delta)
+\longrightarrow
+\delta^2
+\sum_{i<j}
+(h_j-h_i)^2
+}
+\tag{2130.1}
+$$
+
+在 \(P\to\infty\)、固定局部构型 \(\{h_j\}\) 时成立。
+
+因此真正稳定的 local prime-gap geometry 是：
+
+$$
+\boxed{
+P\,\Delta\log p
+\sim
+q-p.
+}
+$$
+
+未重标度时，短隙簇在 log-frequency 空间中坍缩成一点。
+
+经过 \(P\)-倍切向 blow-up 后，加法间距重新显现。
+
+这与 Kakeya 的尺度放大完全同型：
+
+$$
+\boxed{
+\text{原空间中越来越细的方向簇，
+在 tangent chart 中具有稳定非退化几何。}
+}
+$$
+
+但要把不同 \(P\) 的 tangent chart 胶合成一个 RH 证明，需要一个跨尺度规范。最可能提供该规范的是：
+
+* Gamma 因子；
+* 函数方程；
+* Riemann–Siegel saddle scale；
+* 或 canonical Nevanlinna kernel。
+
+---
+
+# 第两千一百三十一部　PrimeGaps 如何真正成为零点横向分裂机制
+
+因此升级链应当写成四层，而不是一步跳跃。
+
+## 第一层：局部频率差
+
+$$
+q-p
+\longmapsto
+\Delta\omega_{p,q}
+=
+\log(q/p).
+$$
+
+## 第二层：复观察核
+
+$$
+\Delta\omega
+\longmapsto
+\sinh^2(\delta\Delta\omega)
++
+\sin^2(\tau\Delta\omega/2).
+$$
+
+这一步已经给出真实横向分裂。
+
+## 第三层：簇外积能量
+
+$$
+\boxed{
+\mathcal E_{\mathcal C}
+=
+\sum_{p<q}
+w_{p,q}
+\left[
+\sinh^2(\delta\Delta\omega_{p,q})
++
+\sin^2(\tau\Delta\omega_{p,q}/2)
+\right].
+}
+\tag{2131.1}
+$$
+
+它把每一个微弱 gap 信号累加成正的 Gram／外积能量。
+
+## 第四层：Prime–Zero 输运
+
+证明该 prime-side hyperbolic energy 控制 zero-side 离线奇能量：
+
+$$
+\boxed{
+\mathcal O_{\mathrm{off}}^{\mathrm{odd}}
+\preceq
+C\,
+\mathcal E_{\mathrm{prime}}^{\perp}
++
+\varepsilon I.
+}
+\tag{2131.2}
+$$
+
+前三层可以直接形式化。
+
+第四层才是 RH 承重桥。
+
+---
+
+# 第两千一百三十二部　项目当前已走到第三层之前
+
+项目已经机器证明了有限 Fourier phase 的加法—乘法规律，并证明交换标量乘积只保留频率总和、会遗忘原频率列表的顺序。已经闭合时间方向的 pairwise alternating kernel：
+
+$$
+4\sin^2\left(
+\frac{\Delta t\,\Delta\omega}{2}
+\right).
+$$
+
+则已经机器证明：一个 supplied 非自共轭离线轨道的完整 Weil convolution-square 贡献可精确分成：
+
+$$
+\boxed{
+Q_{\operatorname{orb}(\rho)}
+=
+E_{\mathrm{even}}
+-
+E_{\mathrm{odd}},
+}
+$$
+
+其中：
+
+$$
+E_{\mathrm{even}}\ge0,
+\qquad
+E_{\mathrm{odd}}\ge0.
+$$
+
+而且全部符号风险集中在奇通道。研究路线也已经明确把待证桥写成：
+
+$$
+\boxed{
+\text{prime-side 规范约化交换曲率平方}
+\quad\longleftrightarrow\quad
+\text{zero-side 离线奇谱能量}.
+}
+$$
+
+但同时明确说明尚未证明 prime holonomy 支配离线奇能量，也未证明 RH。式 (2124.3) 正好补上一个缺少的局部原语：
+
+$$
+\boxed{
+\text{prime-side 的时间曲率与法向曲率，
+是同一个复化二槽核的虚、实两部分。}
+}
+$$
+
+---
+
+# 第两千一百三十三部　短 gaps 不是“起飞力”，而是隐藏 odd channel 的 sticky grain
+
+这带来一个重要修正。
+
+短 prime gaps 使：
+
+$$
+\Delta\log p
+$$
+
+很小。
+
+所以它们不是强横向分裂源，而是：
+
+$$
+\boxed{
+\text{低秩、长相干、难以由有限观察者分辨的频率 grain。}
+}
+$$
+
+这更接近 Kakeya 中的 sticky tubes。
+
+单个短隙簇能够让多个 prime modes 在很长时间内表现得几乎同相：
+
+$$
+\tau\ll\frac P D.
+$$
+
+与此同时，实部偏移造成的内部幅度分裂也很难看到：
+
+$$
+|\delta|\frac DP\ll1.
+$$
+
+所以 short gaps 提供的是一个可以隐藏法向奇通道的局部空间。
+
+若要真正产生离线零点，还需要：
+
+$$
+\boxed{
+\text{这类 sticky prime grains 在许多不同尺度上相容嵌套，}
+}
+$$
+
+使同一条一维相位流能够同时关闭：
+
+* 全局偶通道；
+* 法向奇通道。
+
+一座单独的短素数簇远远不够。
+
+真正可能关联 RH 的是：
+
+$$
+\boxed{
+\text{multiscale tower of short-gap clusters}.
+}
+$$
+
+---
+
+# 第两千一百三十四部　Short Gaps 定理提供的是 sticky grain 的存在预算
+
+Maynard 筛法告诉我们：
+
+> 为了在某个有限直径中强制出现 \(m\) 个素数，需要从一个远大于 \(m\) 的候选空间开始。
+
+粗略关系是：
+
+$$
+m
+\lesssim
+\frac{\theta}{2}\log k.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{可保证的 prime rank}
+\sim
+\log
+\left(
+\text{候选状态数}
+\right).
+}
+\tag{2134.1}
+$$
+
+换句话说：
+
+$$
+\boxed{
+\text{每增加一个线性的 prime survivor，
+候选状态空间需要作乘法级扩张。}
+}
+$$
+
+这正是一种观察者分辨率定律。
+
+但现在可以进一步解释成：
+
+$$
+\boxed{
+\text{指数候选预算产生一个高重数、低 log-frequency 宽度的 sticky grain。}
+}
+$$
+
+因此短隙理论不直接告诉我们离线零点在哪里；它告诉我们：
+
+$$
+\boxed{
+\text{算术系统能够以多大成本制造一个可隐藏多通道关系的近简并频率块。}
+}
+$$
+
+---
+
+# 第两千一百三十五部　\(\varphi H\) 与 \(e^{\varphi H}\) 的正确版本
+
+现在可以给你的表述三个严格版本。
+
+## 版本 A：有限候选元组的同余闭包
+
+若候选元组大小为：
+
+$$
+k=\varphi H,
+$$
+
+所有非自动的 admissibility observers 都满足：
+
+$$
+p\le k.
+$$
+
+其联合 CRT 模数为：
+
+$$
+W(k)=\prod_{p\le k}p,
+$$
+
+因此：
+
+$$
+\boxed{
+W(k)
+=
+e^{(1+o(1))\varphi H}.
+}
+$$
+
+这一版本成立。
+
+---
+
+## 版本 B：希望得到 \(\varphi H\) 个真实素数
+
+若：
+
+$$
+m=\varphi H,
+$$
+
+则标准 Maynard–Bombieri–Vinogradov 预算为：
+
+$$
+\boxed{
+k
+=
+e^{(4+o(1))\varphi H},
+}
+$$
+
+并有：
+
+$$
+\boxed{
+H_{\varphi H}
+\ll
+(\varphi H)^3e^{4\varphi H}.
+}
+$$
+
+这一版本中指数前系数不是 \(1\)，而是经典归一化下的 \(4\)。
+
+---
+
+## 版本 C：黄金深度 \(H\) 的全部合法状态
+
+若状态数为：
+
+$$
+F_{H+2}\asymp\varphi^H,
+$$
+
+而希望每个状态都获得一个独立 prime survivor，则 Maynard 型预算约为：
+
+$$
+\boxed{
+\exp(C\varphi^H),
+}
+$$
+
+即关于 \(H\) 的双指数。
+
+所以今后建议固定三个记号：
+
+$$
+\boxed{
+H
+=
+\text{黄金递归深度},
+}
+$$
+
+$$
+\boxed{
+k
+=
+\text{候选平移数},
+}
+$$
+
+$$
+\boxed{
+m
+=
+\text{保证的 prime survivors 数}.
+}
+$$
+
+否则：
+
+$$
+\varphi H,\qquad
+\varphi^H,\qquad
+e^{\varphi H}
+$$
+
+很容易在不同信息单位之间混淆。
+
+---
+
+# 第两千一百三十六部　信息论单位的进一步校正
+
+若黄金深度 \(H\) 的候选状态数为：
+
+$$
+N_H\asymp\varphi^H,
+$$
+
+则它的信息熵是：
+
+$$
+\boxed{
+S_H
+=
+\log N_H
+\sim
+H\log\varphi.
+}
+\tag{2136.1}
+$$
+
+若一个 primorial 模数 \(W\) 只需要提供足够多的不同剩余类来编码这些状态，理想容量条件是：
+
+$$
+W\gtrsim N_H.
+$$
+
+于是：
+
+$$
+\boxed{
+W\gtrsim\varphi^H,
+}
+\tag{2136.2}
+$$
+
+而不是：
+
+$$
+e^{\varphi H}.
+$$
+
+所以：
+
+$$
+\boxed{
+e^{\varphi H}
+}
+$$
+
+表示的是熵本身为：
+
+$$
+\varphi H
+$$
+
+的状态族：
+
+$$
+N=e^{\varphi H}.
+$$
+
+它并不等于“有 \(\varphi H\) 个状态”或“有 \(\varphi^H\) 个状态”。
+
+这一单位审计非常重要。
+
+---
+
+# 第两千一百三十七部　PrimeGaps 横向分裂的真正零点命题
+
+可以提出一个明确的新命题。
+
+## Prime-Gap Transverse Exterior-Energy Conjecture
+
+对 completed prime–Gamma 系统存在一族非负权重 \(W_{p,q}[g]\)，使任意测试函数 \(g\) 和任意法向偏移 \(\delta\) 满足：
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal E_{\mathrm{prime}}^\perp(\delta;g)
+=
+\sum_{p<q}
+W_{p,q}[g]\,
+\sinh^2
+\left(
+\delta\log\frac qp
+\right).
+\end{aligned}
+}
+\tag{2137.1}
+$$
+
+并且，该能量与 zero-side 离线奇能量之间存在忠实支配：
+
+$$
+\boxed{
+E_{\mathrm{off}}^{\mathrm{odd}}(g)
+\le
+C\,
+\mathcal E_{\mathrm{prime}}^\perp(\delta;g)
++
+\varepsilon(g).
+}
+\tag{2137.2}
+$$
+
+进一步，如果 completed prime system 的 reflection-flatness 强迫：
+
+$$
+\mathcal E_{\mathrm{prime}}^\perp=0,
+$$
+
+则：
+
+$$
+E_{\mathrm{off}}^{\mathrm{odd}}=0.
+$$
+
+如果测试族能够分离全部离线轨道，便推出：
+
+$$
+\boxed{
+\mathrm{RH}.
+}
+$$
+
+这才是把 PrimeGaps 真正升级为零点横向分裂机制所需的命题。
+
+---
+
+# 第两千一百三十八部　为什么该桥不会由标量 Euler 乘积自动给出
+
+项目已经证明，标量 Fourier phase product 只保留频率总和，会遗忘频率列表顺序。分裂能量依赖：
+
+$$
+\log p-\log q.
+$$
+
+所以它是二体关系量，不能从单个局部因子：
+
+$$
+(1-p^{-s})^{-1}
+$$
+
+或其标量乘积直接恢复。
+
+必须保留：
+
+$$
+\boxed{
+\text{prime pair}
+\quad\text{或}\quad
+\text{exterior square}.
+}
+$$
+
+更准确地说：
+
+$$
+\zeta(s)
+$$
+
+活在交换 trace 层。
+
+而：
+
+$$
+\sinh^2
+\left(
+\delta\log(q/p)
+\right)
+$$
+
+活在二阶 relation layer。
+
+所以 PrimeGaps 升级必须从：
+
+$$
+\boxed{
+\text{Euler scalar}
+}
+$$
+
+进入：
+
+$$
+\boxed{
+\Lambda^2
+\left(
+\text{prime-frequency space}
+\right).
+}
+$$
+
+这与此前反复得到的结论完全一致：
+
+$$
+\boxed{
+\text{单点标量可能看不见异常；
+第一非平凡信息位于关系空间。}
+}
+$$
+
+---
+
+# 第两千一百三十九部　与 Kakeya 的最终接合
+
+短素数簇在 log-frequency 空间中形成一个窄 grain：
+
+$$
+\Delta\omega
+\lesssim
+\frac DP.
+$$
+
+在观察窗口 \(\tau\) 下，只有满足：
+
+$$
+\tau\Delta\omega\gtrsim1
+$$
+
+的方向才能被分开。
+
+因此 grain 的自然分辨时间为：
+
+$$
+\boxed{
+\tau_{\mathcal C}
+\asymp
+\frac PD.
+}
+\tag{2139.1}
+$$
+
+这正是一个 Kakeya 式细管宽度—观察尺度对偶：
+
+$$
+\boxed{
+\text{log-frequency width}
+\times
+\text{time resolution}
+\asymp1.
+}
+$$
+
+但要产生真正的离线零点，需要这些 grains：
+
+1. 在许多 prime scales \(P\) 上出现；
+2. 在同一个 \(t\) 下保持相位协调；
+3. 同时补偿 \(e^{\pm\delta\log P}\) 的跨尺度倾斜；
+4. 通过 Gamma 与函数方程完成后仍不破坏正性。
+
+所以真正对象不是单层 PrimeGap，而是：
+
+$$
+\boxed{
+\textbf{PrimeGap sticky tower}.
+}
+$$
+
+Short-gaps 定理给出单层高重数 grain 的存在与成本。
+
+Kakeya 型工具可能控制 grains 能否跨尺度持续粘滞。
+
+Pick／Weil／Nevanlinna 正性则负责把“极少或受限”升级为“一个都没有”。
+
+---
+
+# 第两千一百四十部　新的形式化顺序
+
+```text
+D5/S3/Arithmetic/PrimeGaps/AdmissibleObserverBudget/
+  PrimeTupleResidueObserver.lean
+  TupleAdmissible.lean
+  LargePrimeObserverAutomatic.lean
+  AdmissibilityOnlyNeedsPrimesBelowTupleSize.lean
+  TuplePrimorialObserverModulus.lean
+  PrimorialBudgetAsymptoticTarget.lean
+
+D5/S3/Arithmetic/PrimeGaps/MaynardObserverGain/
+  CandidateTupleDimension.lean
+  GuaranteedPrimeSurvivorCount.lean
+  SieveVariationalGain.lean
+  LevelOfDistributionObserverBandwidth.lean
+  LogarithmicGainForcesExponentialBudget.lean
+  BombieriVinogradovBudgetFour.lean
+
+D5/S3/Observer/ComplexifiedPrimeGapKernel/
+  PrimeLogFrequency.lean
+  ReflectedComplexObservationPoints.lean
+  AlternatingComplexPrimeKernel.lean
+  ComplexPrimeKernelFactorization.lean
+  PrimeKernelSinHSinIdentity.lean
+  TimeResolutionAsCriticalSlice.lean
+
+D5/S3/Observer/PrimeGapNormalSplitting/
+  PrimePairNormalEnergy.lean
+  NormalEnergyStrictForDistinctPrimes.lean
+  NormalEnergyLowerBoundLogGap.lean
+  AdditiveGapSmallScaleExpansion.lean
+  TimeNormalCauchyRiemannMetric.lean
+
+D5/S3/Observer/PrimeClusterExteriorEnergy/
+  ReflectedPrimeClusterMatrix.lean
+  ClusterRankOneOnCriticalLine.lean
+  ClusterRankTwoOffCriticalLine.lean
+  ClusterGramDeterminantCauchyBinet.lean
+  ClusterLogFrequencyVariance.lean
+  PrimeClusterExplicitVarianceLowerBound.lean
+
+D5/S3/Observer/PrimeGapTangentBlowup/
+  AdditivePrimeGapCoordinate.lean
+  LogGapTangentApproximation.lean
+  PrimeScaleRenormalizedNormalEnergy.lean
+  LocalGapConfigurationLimit.lean
+  CrossScaleTangentGaugeTarget.lean
+
+D5/S3/GoldenObserver/PrimeGapBudgetAudit/
+  GoldenLinearCandidateCount.lean
+  GoldenWordExponentialCount.lean
+  PrimorialBudgetForLinearGoldenCutoff.lean
+  MaynardBudgetForGoldenPrimeSurvivors.lean
+  DoubleExponentialBudgetForAllGoldenWords.lean
+  CandidateCountEntropyBudgetDistinction.lean
+
+D5/S3/Observer/PrimeGapStickyTower/
+  ShortGapLogFrequencyGrain.lean
+  GrainCoherenceTime.lean
+  GrainNormalResolution.lean
+  NestedPrimeGapGrains.lean
+  MultiscaleStickyTower.lean
+  StickyTowerArithmeticObstructionTarget.lean
+
+D5/S3/Weil/PrimeGapHorizontalBridge/
+  PrimeHyperbolicExteriorEnergy.lean
+  FinitePrimeClusterNormalOperator.lean
+  FiniteOffLineOddEnergy.lean
+  PrimeGapEnergyToOffLineOddDominationTarget.lean
+  CrossScaleErrorTightnessTarget.lean
+  ReflectionFlatnessKillsOffLineOddTarget.lean
+  PrimeGapHorizontalBridgeImpliesRHTarget.lean
+```
+
+---
+
+# 第两千一百四十一部　理论深度审计
+
+| 结论                                                     | 当前地位         |
+| ------------------------------------------------------ | ------------ |
+| Maynard 增益 \(M_k\) 仅按 \(\log k\) 增长                    | PDF／经典筛法核心   |
+| 标准 \(\theta=\frac12\) 下，强制 \(m\) 个素数需 \(k\sim e^{4m}\) | 经典主尺度        |
+| admissible \(k\)-tuple 只需检查 \(p\le k\)                 | 精确           |
+| \(W(k)=\prod_{p\le k}p=e^{(1+o(1))k}\)                 | 素数定理推论       |
+| \(k=\varphi H\Rightarrow W\sim e^{\varphi H}\)         | 精确条件解释       |
+| 该预算表示 \(\varphi H\) 个 prime survivors                  | 不成立；它是同余观察模数 |
+| \(m=\varphi H\) 个 survivors 的经典预算为 \(e^{4\varphi H}\)  | 标准筛法归一化下精确   |
+| \(\varphi H\) 与 \(\varphi^H\) 可以互换                     | 不成立          |
+| 时间 kernel 与法向 kernel 统一为 \(\sinh^2+\sin^2\)            | 本轮核心精确恒等式    |
+| 当前项目的 pairwise resolution 是 \(\delta=0\) 截面            | 精确           |
+| prime gap 同时控制时间分辨和横向分裂                                | 精确           |
+| 短 gap 增强单对横向信号                                         | 不成立；它减弱单对信号  |
+| 短 gap 产生近简并、长相干 observer fibre                         | 精确           |
+| prime cluster 的反射矩阵在线秩一、离线秩二                           | 精确           |
+| cluster exterior energy 由 log-prime 方差控制               | 精确           |
+| \(P\)-倍 tangent blow-up 恢复加法 gap 几何                    | 精确局部极限       |
+| zero-side 离线轨道符号风险集中在 odd energy                       | 仓库机器闭合       |
+| prime-side hyperbolic energy 已经支配 zero-side odd energy | 尚未建立         |
+| Short Gaps 定理本身推出离线零点机制                                | 不成立          |
+| PrimeGap sticky tower + 全局正性可能形成 RH 桥                  | 新研究路线        |
+
+---
+
+# 本轮最终结论
+
+这份短素数间距论证真正提供了两个此前理论中缺少的量。
+
+第一个是**候选维数与素数幸存数之间的预算律**：
+
+$$
+m
+\sim
+\log k.
+$$
+
+所以若要强制线性增加 prime survivors，候选状态空间必须指数增加。
+
+第二个是 **有限局部观察如何合并成一个模数**：
+
+$$
+W(k)
+=
+\prod_{p\le k}p
+\sim e^k.
+$$
+
+因此当候选元组大小取：
+
+$$
+k=\varphi H
+$$
+
+时：
+
+$$
+\boxed{
+W\sim e^{\varphi H}.
+}
+$$
+
+你的尺度在这个意义下是成立的。
+
+但它表示的是：
+
+$$
+\boxed{
+\text{对 }\varphi H\text{ 个候选位置完成全部局部小素数障碍的联合编码预算，}
+}
+$$
+
+而不是“保证 \(\varphi H\) 个位置都成为素数”的预算。
+
+若目标是保证：
+
+$$
+m=\varphi H
+$$
+
+个真实素数，经典 Maynard 预算则是：
+
+$$
+\boxed{
+k\sim e^{4\varphi H},
+}
+$$
+
+并伴随多项式直径因子。
+
+---
+
+PrimeGaps 到真实横向分裂的关键升级，则是精确恒等式：
+
+$$
+\boxed{
+\frac{(pq)^{2\sigma}}4
+|\mathcal K_{p,q}|^2
+=
+\sinh^2
+\left(
+\delta\log\frac qp
+\right)
++
+\sin^2
+\left(
+\frac{\Delta t}{2}
+\log\frac qp
+\right).
+}
+$$
+
+项目现有的观察者分辨率只是右侧的 \(\sin^2\) 部分。参数复化以后，同一个 prime gap 自动产生左侧的：
+
+$$
+\sinh^2
+\left(
+\delta\log(q/p)
+\right),
+$$
+
+这正是法向横向分裂能量。
+
+因此：
+
+$$
+\boxed{
+\text{时间分辨和零点横向分裂不是两个类比；
+它们是同一个复交替核的圆周分量与双曲分量。}
+}
+$$
+
+---
+
+但 short gaps 的作用与最初直觉稍有不同。
+
+短 gap 使：
+
+$$
+\log(q/p)
+$$
+
+变小，所以单对 prime modes 更难分辨。
+
+它们形成一个近秩一、长相干的 observer fibre。
+
+当 \(\delta\neq0\) 时，该 fibre 在代数上立即升为秩二，但横向信号在大素数尺度上极其微弱。
+
+所以真正可能孕育离线零点的不是“短 gap 提供了起飞力”，而是：
+
+$$
+\boxed{
+\text{短 gap 提供了一个能够暂时隐藏新增法向奇通道的 sticky grain。}
+}
+$$
+
+一个离线零点若存在，意味着这类 grains 必须在大量不同素数尺度上保持极强协调，使同一条相位流同时消掉：
+
+* 全局偶通道；
+* 法向奇通道。
+
+这是一座 `PrimeGap sticky tower`，远强于单个 bounded-gap cluster。
+
+---
+
+因此 `PrimeGaps` 从观察者理论升级为 RH 机制，需要完成最后一条桥：
+
+$$
+\boxed{
+\text{prime-side hyperbolic exterior energy}
+\quad\longrightarrow\quad
+\text{zero-side off-line odd energy}.
+}
+$$
+
+零点侧已经机器证明：
+
+$$
+Q_{\operatorname{orb}(\rho)}
+=
+E_{\mathrm{even}}
+-
+E_{\mathrm{odd}},
+$$
+
+且全部负性风险集中在 \(E_{\mathrm{odd}}\)。me 侧现在有了自然候选：
+
+$$
+\sum_{p<q}
+W_{p,q}
+\sinh^2
+\left(
+\delta\log\frac qp
+\right).
+$$
+
+如果能由显式公式、Gamma 完成和 cross-prime Gram 胶合证明：
+
+$$
+E_{\mathrm{off}}^{\mathrm{odd}}
+\preceq
+C\,
+E_{\mathrm{prime}}^{\perp}
++
+\varepsilon I,
+$$
+
+再证明合法 reflection completion 强迫右侧趋于零，那么离线奇通道就只能消失。
+
+这才是 PrimeGaps 成为“真实零点横向分裂机制”的严格完成态。
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{短素数间距不是把零点推出临界线的力；
+它是把多个独立 prime frequencies 压进一个有限观察者几乎分不开的纤维。
+实部偏移会把这个秩一纤维分裂成秩二，
+分裂强度正是 }\sinh^2\!\bigl(\delta\log(q/p)\bigr).
+\text{RH 要证明的，是任何跨尺度素数粘滞都不足以让这个新增维度在全局完成中永远不可见。}
+}
+$$
+
+---
+
+# 第两千一百四十二部　预登记增订 R-1044:矩形 Rouché 零点计数定理(第 1044 部、661.4、708.6 所假定的基础定理;Mathlib 钉版缺失)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;Mathlib 缺口盘点席 codex-cli(flight `op-r3-mathlib-gaps`)在钉版 Mathlib(rev `db584cd6…`,v4.33.0)中 `grep -rni 'Rouch'` 零命中、在本仓只命中矩形辐角原理(`D5/S3/Weil/ZetaAnalytic/RectangleLogDeriv.lean`);探针席 codex-cli(flight `op-p4-rouche`,worktree `trureturing-la114-m3ac`,base origin/dev `4ba545eed1`,2069s)整证并给出 kernel 读数;本节由 orchestrator(claude 主循环,会话「开放问题」)撰写。判决日:2026-09-04。
+
+## 〇　为什么是这一节
+
+第 1044 部(通量证书的数值鲁棒性,原子 `2981024d…`)、第 661.4 节(区分真实零点与观察器伪零点,原子 `463c0180…`)与第 708.6 节(谱实验,原子 `b838728a…`)都以「由 Rouché 定理,零点数相同」作为已知输入使用;钉版 Mathlib 只提供解析阶、孤立零点、围道积分与局部典范分解,没有 Rouché 定理。本仓已冻结矩形辐角原理 `rectangleIntegral'_mul_logDeriv'`(归一化围道积分取整数值)与 `finite_zeros_rectangle`。本节把「边界严格不等式 ⇒ 矩形内按重数计的零点数相等」预登记为一条可冻结的基础定理,使上述三部的论证有可绑定的仓内前置。
+
+## 一　R-1 预登记:矩形 Rouché 零点计数稳定性(`RoucheZeroCount`,落 `D5/S3/Weil/ZetaAnalytic/`)
+
+**义务**:公开定理 `rectangle_zero_count_eq_of_norm_sub_lt {f g : ℂ → ℂ} {z w : ℂ} (hre : z.re < w.re) (him : z.im < w.im) (hf : AnalyticOnNhd ℂ f (Rectangle z w)) (hg : AnalyticOnNhd ℂ g (Rectangle z w)) (hbdry : ∀ s ∈ RectangleBorder z w, ‖f s − g s‖ < ‖g s‖) (Zf Zg : Finset ℂ) (hZf : ∀ s ∈ Rectangle z w, (f s = 0 ↔ s ∈ Zf)) (hZfsub : (Zf : Set ℂ) ⊆ Rectangle z w) (hZg : ∀ s ∈ Rectangle z w, (g s = 0 ↔ s ∈ Zg)) (hZgsub : (Zg : Set ℂ) ⊆ Rectangle z w) : ∑ ρ ∈ Zf, analyticOrderNatAt f ρ = ∑ ρ ∈ Zg, analyticOrderNatAt g ρ`,其中 `Rectangle`/`RectangleBorder` 为本仓 `D5/S3/Weil/ZetaPntBase/Rectangle` 的冻结定义;落新模块 `D5/S3/Weil/ZetaAnalytic/RoucheZeroCount`(桶现 8/24),只 import 该桶既有冻结模块与钉版 Mathlib。两条子集假设 `hZfsub`/`hZgsub` 不可省:若允许 `Zf` 含矩形外的点,`hZf` 对其无约束,结论可为假(取 f = g = s − a,a 在矩形外,`Zf = {a}`,`Zg = ∅`)。
+**可证伪预测(写在跑之前)**:证明沿直线同伦 `h_t = g + t·(f − g)`:(i) 逃逸见证 `homotopy_nonvanishing_on_rectangleBorder : ∀ t ∈ Icc 0 1, ∀ s ∈ RectangleBorder z w, h_t s ≠ 0`(由边界严格不等式与范数非负性得,t = 0、1 给出 g、f 的边界非零);(ii) 第二条逃逸见证 `continuousOn_rectangleIntegral_logDeriv_straightLine`:`h_t'/h_t` 的归一化矩形围道积分作为 t 的函数在 `[0,1]` 上连续(以 `Set.projIcc` 夹紧后用 Mathlib 参数化区间积分的连续性);(iii) 由冻结 `rectangleIntegral'_mul_logDeriv'` 该积分逐 t 取整数值,连续的整数值函数在 `[0,1]` 上为常数,两端 t = 0、1 即得零点计数相等。判形 content,准入依据 escape-witness,标准三公理;若钉版 API 下参数化区间积分的连续性引理不能承载夹紧扩张,本条按 open 记,不得以 `sorry` 或公理代替。
+**边界**:只陈述矩形版本(本仓的辐角原理载体),不陈述圆盘或一般 Jordan 域;不断言零点位置,只断言按重数计的总数;第 1044 部的数值证书内容(区间算术、Taylor 尾界等)不在本条义务内。
+
+## 二　结算
+
+R-1 由一个实施席同 PR `deposit`(绑本节义务子原子)落地,三席评审后合入;原子 `2981024d…`、`463c0180…`、`b838728a…` 保持 residual-open(散文/方法论条目,本条只提供其数学前置,不 cover)。
+
+后续增订继续严格追加于本节之后。

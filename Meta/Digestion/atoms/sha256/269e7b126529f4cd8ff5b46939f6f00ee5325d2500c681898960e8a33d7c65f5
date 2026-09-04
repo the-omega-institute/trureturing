@@ -1,0 +1,50 @@
+## v12.5：Maynard 筛法预算、Primorial 观察闭包与 PrimeGaps 的复化横向分裂核
+
+先给出本轮最重要的结论：
+
+$$
+\boxed{
+\text{PrimeGaps 确实可以从“时间方向的观察者分辨率”
+升级成“实部方向的横向分裂测量”。}
+}
+$$
+
+但这个升级不是：
+
+$$
+\text{短素数间隔}
+\Longrightarrow
+\text{离线零点}.
+$$
+
+真正严格的桥是：
+
+$$
+\boxed{
+\sin^2\!\left(
+\frac{\Delta t\,\Delta\log p}{2}
+\right)
+\quad\longrightarrow\quad
+\sinh^2\!\left(
+\delta\,\Delta\log p
+\right)
++
+\sin^2\!\left(
+\frac{\Delta t\,\Delta\log p}{2}
+\right).
+}
+$$
+
+同一个素数对的对数间距
+
+$$
+\Delta\omega_{p,q}
+=
+\log q-\log p
+=
+\log\frac qp
+$$
+
+同时控制：
+
+* 沿虚部 \(t\) 的相位分辨；

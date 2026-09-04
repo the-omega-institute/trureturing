@@ -1,0 +1,58 @@
+## Prime-Gap Transverse Exterior-Energy Conjecture
+
+对 completed prime–Gamma 系统存在一族非负权重 \(W_{p,q}[g]\)，使任意测试函数 \(g\) 和任意法向偏移 \(\delta\) 满足：
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal E_{\mathrm{prime}}^\perp(\delta;g)
+=
+\sum_{p<q}
+W_{p,q}[g]\,
+\sinh^2
+\left(
+\delta\log\frac qp
+\right).
+\end{aligned}
+}
+\tag{2137.1}
+$$
+
+并且，该能量与 zero-side 离线奇能量之间存在忠实支配：
+
+$$
+\boxed{
+E_{\mathrm{off}}^{\mathrm{odd}}(g)
+\le
+C\,
+\mathcal E_{\mathrm{prime}}^\perp(\delta;g)
++
+\varepsilon(g).
+}
+\tag{2137.2}
+$$
+
+进一步，如果 completed prime system 的 reflection-flatness 强迫：
+
+$$
+\mathcal E_{\mathrm{prime}}^\perp=0,
+$$
+
+则：
+
+$$
+E_{\mathrm{off}}^{\mathrm{odd}}=0.
+$$
+
+如果测试族能够分离全部离线轨道，便推出：
+
+$$
+\boxed{
+\mathrm{RH}.
+}
+$$
+
+这才是把 PrimeGaps 真正升级为零点横向分裂机制所需的命题。
+
+---
+

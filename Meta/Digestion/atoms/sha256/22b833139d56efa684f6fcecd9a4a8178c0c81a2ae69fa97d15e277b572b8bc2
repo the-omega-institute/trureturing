@@ -1,0 +1,26 @@
+## 67. 责任与道德运气
+
+设：
+
+\[
+E:\mathrm{Path}\to\mathrm{Evaluation}
+\]
+
+为规范评价，控制—知识 CUT 为：
+
+\[
+q_{\mathrm{ck}}:\mathrm{Path}\to C.
+\]
+
+若：
+
+\[
+E=\overline E\circ q_{\mathrm{ck}},
+\]
+
+则评价只依赖控制与知识。
+
+若同一控制—知识纤维内评价不同，则责任下降失败，形成道德运气残差。
+
+---
+

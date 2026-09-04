@@ -1,0 +1,1 @@
+**义务**:公开构造 `packetSeed : WeilTestFunction` 与 `packetSquare := convolutionSquare packetSeed`,并公开定理 `packetTransform_ge_half_near_zero : ∃ δ : ℝ, 0 < δ ∧ ∀ t : ℝ, |t| ≤ δ → 1/2 ≤ (Zeta23.paperFT (packetSquare : ℝ → ℂ) t).re`,连同 `packetTransform_real_nonneg`、`packetTransform_zero : Zeta23.paperFT packetSquare 0 = 1`、`packetTransform_integrable`。

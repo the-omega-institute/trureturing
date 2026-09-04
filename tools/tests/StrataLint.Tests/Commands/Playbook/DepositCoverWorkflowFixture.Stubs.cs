@@ -68,6 +68,9 @@ public sealed partial class DepositCoverWorkflowScriptTests
                   echo 'STALE_LEAN_REPORT emit refused stale input' >&2
                   exit 41
                 fi
+                mkdir -p Generated
+                printf '{"truth":{"nodes":[{"repo_path":"D5/S0/Carrier/Probe.lean","state":"closed"}]}}\n' \
+                  > Generated/truth-graph.v1.json
                 if grep -q '^coverage: true$' Meta/BACKFILL.yaml; then
                   printf 'emission: covered\n' > Blueprint/D5/S0/Carrier/Probe.md
                 else
@@ -95,7 +98,17 @@ public sealed partial class DepositCoverWorkflowScriptTests
                   exit 1
                 fi
                 ;;
-              ledger-append)
+              ledger-align)
+                if [[ ${parts[1]:-} == --add ]]; then
+                  if [[ ${parts[2]:-} != "${PLAYBOOK_TARGET_MODULE:-}" \
+                      || ${parts[3]:-} != --candidate-lean-report ]]; then
+                    echo 'LEDGER_ALIGN_INVALID synthetic target transport mismatch' >&2
+                    exit 97
+                  fi
+                elif [[ ${parts[1]:-} != --candidate-lean-report ]]; then
+                  echo 'LEDGER_ALIGN_INVALID synthetic target transport mismatch' >&2
+                  exit 97
+                fi
                 target_module=${PLAYBOOK_TARGET_MODULE:-D5/S0/Carrier/Probe.lean}
                 if [[ $target_module == D5/S0/Carrier/Probe.lean ]]; then
                   event_id=2222222222222222222222222222222222222222222222222222222222222222
@@ -107,7 +120,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
                   > "Golden/Frozen/accepted/${event_id}.json"
                 if [[ -f fail-ledger-once ]]; then
                   rm fail-ledger-once
-                  echo 'LEDGER_APPEND_INTERRUPTED synthetic kill after append' >&2
+                  echo 'LEDGER_ALIGN_INTERRUPTED synthetic kill after align' >&2
                   exit 75
                 fi
                 ;;

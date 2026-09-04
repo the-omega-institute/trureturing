@@ -22,7 +22,7 @@ internal static partial class RepositoryRules
             {
                 findings.Add(new RuleFinding(
                     displayPath,
-                    "path does not decode to a canonical D5 Lean selector"));
+                    "path must encode exactly one canonical repository Lean module"));
                 continue;
             }
 
@@ -102,9 +102,8 @@ internal static partial class RepositoryRules
             .Where(path => FrozenStatePath.IsUnderRoot(path.Value)
                 && context.Current.Files.ContainsKey(path))
             .ToHashSet();
-        foreach (var modulePath in context.Changes.Paths.Where(static path =>
-            path.Value.StartsWith("D5/", StringComparison.Ordinal)
-            && path.Value.EndsWith(".lean", StringComparison.Ordinal)))
+        foreach (var modulePath in context.Changes.Paths.Where(
+            FrozenStatePath.IsCanonicalModulePath))
         {
             try
             {

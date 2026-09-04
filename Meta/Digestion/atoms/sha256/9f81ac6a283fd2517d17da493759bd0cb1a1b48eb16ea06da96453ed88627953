@@ -1,0 +1,32 @@
+## 版本 B：希望得到 \(\varphi H\) 个真实素数
+
+若：
+
+$$
+m=\varphi H,
+$$
+
+则标准 Maynard–Bombieri–Vinogradov 预算为：
+
+$$
+\boxed{
+k
+=
+e^{(4+o(1))\varphi H},
+}
+$$
+
+并有：
+
+$$
+\boxed{
+H_{\varphi H}
+\ll
+(\varphi H)^3e^{4\varphi H}.
+}
+$$
+
+这一版本中指数前系数不是 \(1\)，而是经典归一化下的 \(4\)。
+
+---
+

@@ -1,0 +1,21 @@
+## 18.1 已经得到的两端对象
+
+zero side 已有离线奇能量：
+
+$$
+E_{\mathrm{off}}^{\mathrm{odd}}(g)\ge0.
+$$
+
+prime relation side 现在有自然横向能量：
+
+$$
+\mathcal E_{\mathrm{prime}}^\perp(\delta;g)
+=
+\sum_{p<q}
+W_{p,q}[g]
+\sinh^2\!\left(
+\delta\log\frac qp
+\right).
+\tag{18.1}
+$$
+

@@ -1,0 +1,24 @@
+## 3.2 有限 Zeckendorf–Euler 多项式
+
+取 $a(v)=x^v$，定义
+
+$$
+Z_Q^{\mathrm{exp}}(x)
+=
+\sum_{\eta\in\Omega_Q}x^{E_Q(\eta)}.
+\tag{A3.2}
+$$
+
+则
+
+$$
+\boxed{
+Z_Q^{\mathrm{exp}}(x)
+=
+1+x+\cdots+x^{M_Q-1}
+=
+\frac{1-x^{M_Q}}{1-x}.
+}
+\tag{A3.3}
+$$
+

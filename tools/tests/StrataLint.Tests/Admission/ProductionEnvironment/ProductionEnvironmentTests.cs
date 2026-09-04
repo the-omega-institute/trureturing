@@ -449,10 +449,7 @@ public sealed partial class ProductionEnvironmentTests
         var currentCatalog = Catalog(fixture.Files, fixture.Reports);
         var baselineEvents = FrozenLedgerTestData.EventFiles(baselineCatalog);
         var baselineCapability = FrozenLedgerTestData.Baseline(baselineCatalog);
-        var currentEvents = baselineEvents.AddRange(DagLedgerAppendWriter.BuildNewEventFiles(
-            FrozenLedgerGenerator.MissingFreezes(
-            baselineCapability,
-            currentCatalog)));
+        var currentEvents = FrozenLedgerTestData.EventFiles(currentCatalog);
         SetLedger(fixture.Files, currentEvents);
         SetLedger(fixture.Baseline, baselineEvents);
         return baselineCapability;

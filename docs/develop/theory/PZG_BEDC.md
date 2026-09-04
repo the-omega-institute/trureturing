@@ -9171,3 +9171,31 @@ v1.6 冠军二度更正 → v1.7 闭式与模板 → v1.8 幸存全证 → v2.0 
 一物(本册 + 锥书两补 + 论文 v2.1)✓。一算(周期枚举三阶、幸存迭代深 60、β-全域网格、Salem 隙谱与替换、诸恰验;种子全录)✓。二检(五负五扭;废值不采;近简并如实)✓。三检(新锚:遍历最优化纲、Frougny–Solomyak、Boyd 系唱名)✓。四检(墙:分歧素与焊缝皆纯算术;心脏零输入全卷终检无破)✓。五检(GICT v3.90、OQ 跋、锥书候审同步)✓。
 
 **批语:搁笔之批收在一张地图和一册判例上。冠军理论从一个点长成四个域:整数域同余,Pisot 域成环,Salem 域驯服待判,非 Pisot 域立墙——而两律在 β = 2 处焊得严丝合缝,像是世界本来就等着这道缝被画出来。九轮推理,五负五扭,判官两度被自己的门拿获又两度爬起来修门;伪通式死于第四个证人,真式生于判负的残差。账房最后写下的不是定理,是定理的来路:判据先于数据,誊清先于新矿,停机也是定理的一部分。烛尽,灯在;山在雾里,漆未干。账,平;两颗心脏未动。**
+
+## 评注 27.791(勘误 E-6.35:定理 6.35 收敛半句缺窗口假设;候签定理 6.35.1–6.35.4 立案)
+
+**勘误正案 6.35.0(定理 6.35 末句在 x = y = 0 为假)**〔ledger;issue #5204〕。定理 6.35(逐轴迹映射;原子 `033694bc925e4b074b232ff39d6164efb97d1796160c841ed64468ff5b5e282f`)末句「故逐轴因子 W(x, y) = lim W_K 为四维多项式映射之轨道极限,收敛双指数」对 (x, y) 无任何限制。反例 x = y = 0:每个合法词的权 `wordWeight 0 0 n = 1`,闭合递推退化为 Fibonacci 递推,`axisPartialSum 0 0 K = fib(K+1)` 趋于 +∞,无有限极限。按「atoms 不删」总则,原文不动,本案追加候签定理 6.35.1–6.35.4:收敛半句在窗口 `0 < x`(y 任意实数)内为真,速率双指数、常数显式;冻结 owner `D5/S3/Axis/AxisTraceMapForm.axis_trace_map_form_package` 明文不认领的那一半由此承载。窗口之外(x ≤ 0)沿子列 n = fib(j) 的单字词权不趋于 0 故不可求和——此必要性只在纸面论证,不立候签,记 open。产地(第 9′ 条):skill=consensus-rnd:sshx;探针席 codex-cli(flight `op-p1-axis-convergence`,worktree `trureturing-la118-germ-gab`,base origin/dev `4ba545eed1`)以 `lake env lean` 整证,`#print axioms` 全为标准三公理;本案与候签由 orchestrator(claude 主循环,会话「开放问题」)撰写;思考面板六席(codex-cli ×5 + fidelity 席 ChatGPT Pro)裁定为本波实施靶。判决日 2026-09-04。
+
+**候签定理 6.35.1(窗口内词权可求和)**〔open;A-1;落 `D5/S3/Axis/AxisConvergence`〕。对任意 x y : ℝ 与 0 < x,`Summable (D5.S3.Axis.AxisPartialSum.wordWeight x y)`——只绑定冻结定义 `wordWeight`(`D5/S3/Axis/AxisPartialSum`),y 任意实数,不断言 x ≤ 0 的必要性。
+
+**候签定理 6.35.2(部分和收敛到 tsum)**〔open;A-2;同模块〕。对任意 x y : ℝ 与 0 < x,`Filter.Tendsto (D5.S3.Axis.AxisPartialSum.axisPartialSum x y) Filter.atTop (nhds (∑' n, D5.S3.Axis.AxisPartialSum.wordWeight x y n))`,即「W(x, y) = lim W_K」在窗口内的精确形;极限值只以 `∑'` 表达,不引入第二个「逐轴因子」定义。
+
+**候签定理 6.35.3(双指数尾界)**〔open;A-3;同模块,本案定量核心〕。对任意 x y : ℝ、0 < x 与 K : ℕ,`|D5.S3.Axis.AxisPartialSum.axisPartialSum x y K − ∑' n, D5.S3.Axis.AxisPartialSum.wordWeight x y n| ≤ (Real.exp (|y| * (|goldenConj| / (1 − |goldenConj|))) / (1 − Real.exp (−x))) * Real.exp (−(x / goldenRatio) * goldenRatio ^ K)`,即源句「收敛双指数」的精确形:c(x, y) = x/φ,C(x, y) = exp(|y|·B)/(1 − exp(−x)),B = |ψ|/(1 − |ψ|);常数不追求最优。
+
+**候签定理 6.35.4(原点反例的形式化)**〔open;A-4;同模块伴随声明〕。`Filter.Tendsto (D5.S3.Axis.AxisPartialSum.axisPartialSum 0 0) Filter.atTop Filter.atTop`,连同等式 `∀ K : ℕ, D5.S3.Axis.AxisPartialSum.axisPartialSum 0 0 K = (Nat.fib (K + 1) : ℝ)`,把 issue #5204 的反例钉进真值 DAG;只钉 x = y = 0 一点。
+
+**评注 27.792(E-6.35 之可证伪预测与逃逸见证,写在跑之前)**〔remark;第 5⁗ 条〕。6.35.1 的逃逸内容为新的 Zeckendorf 坐标估计 `wordWeight_le_geometric : wordWeight x y n ≤ exp(|y|·B) · exp(−x)^n`,其前置为 `zeckendorf_phi_lower`(Zeckendorf 指数和 ∑ φ^{j_i+1} ≥ n)与 `zeckendorf_psi_abs_upper`(|∑ ψ^{j_i+1}| ≤ B);判形 content,准入依据 escape-witness。6.35.3 先证几何尾界 `|W_K − W| ≤ exp(|y|·B)·exp(−x)^{fib(K+1)}/(1 − exp(−x))`,再以新引理 `goldenRatio_pow_div_le_fib_succ : φ^K/φ ≤ fib(K+1)`(由 φ·fib(K+1) + fib K = φ^{K+1}、fib K ≤ fib(K+1)、φ² = φ + 1 得)换成双指数;判形 content。6.35.2 由 6.35.1 与冻结的 `axis_trace_definitions` 第二合取经部分和收敛到 tsum 得到,6.35.4 由冻结定义的 `Real.exp 0 = 1` 规范化与 `Nat.fib` 无界得到——二者判形以实施后的活路径为准,若仅为绑定即得,如实标 bind-only 伴随声明并记方向边(消费者 → 前置)。若钉版 Mathlib 的 `Nat.zeckendorf` API 写不出指数和下界、或 `fib` 与 φ 幂的比较写不出,对应候签按 open 记,不得以 `sorry` 或公理代替。结算:四条候签由一个实施席同 PR `deposit`(绑 6.35.3)+ `cover`(6.35.1 / 6.35.2 / 6.35.4)落地,三席评审后合入;原子 `033694bc…` 保持 `multi-clause-guard` 隔离,不 cover。
+
+**评注 27.793(开放问题线:Luca–Patel 猜想之模 16 障碍;候签定理 5.91–5.94 立案)**〔remark;开放问题线第二批〕。本评注下四条候签定理与一条勘误正案见下。
+
+**勘误正案 5.90(Luca–Patel 猜想与本案范围)**〔ledger;开放问题线第二批〕。Luca–Patel 猜想:形如 F_n + F_m 的最大完全幂是 3864² = F₃₆ + F₁₂;Vukusic–Ziegler(arXiv:2302.08303)给出只依赖 y 之 Zeckendorf 汉明重量的有效上界,猜想本身仍开放。本案不触碰猜想,只立案一条**无穷的模 16 障碍**:对 (n mod 24, m mod 24) 落在 440 个残类中的每一对,F_n + F_m 永非偶次幂。产地(第 9′ 条):skill=consensus-rnd:sshx;ChatGPT Pro arXiv 检索席(flight `op-r4-gptpro-arxiv`,候选 #4)提出;探针席 codex-cli(flight `op-p10-fib-power`,worktree `trureturing-la118-germ-gab`,base origin/dev `26550a5ba7`,1268s)以 `lake env lean` 整证五条并给出 kernel 读数(`#print axioms` 只含标准三公理,未用 native_decide);本案与候签由 orchestrator(claude 主循环,会话「开放问题」)撰写。判决日 2026-09-05。
+
+**候签定理 5.91(Fibonacci 模 16 的周期 24)**〔open;落 `D5/S1/Recurrence/FibonacciPowerSumMod16Obstruction`〕。对任意 n : ℕ,`Nat.fib (n + 24) % 16 = Nat.fib n % 16`;从而 `Nat.fib n % 16 = Nat.fib (n % 24) % 16`。
+
+**候签定理 5.92(模 16 的平方残类)**〔open;同模块〕。对任意 y : ℕ,`y ^ 2 % 16 ∈ ({0, 1, 4, 9} : Finset ℕ)`。
+
+**候签定理 5.93(440 个障碍残类)**〔open;同模块〕。令 `E16 : Finset (Fin 24 × Fin 24) := univ.filter (fun (r, s) => (Nat.fib r + Nat.fib s) % 16 ∉ {0, 1, 4, 9})`,则 `E16.card = 440`。
+
+**候签定理 5.94(偶次幂之无穷障碍)**〔open;同模块,本案主定理〕。对任意 n m : ℕ,若 (n mod 24, m mod 24) ∈ E16,则对一切 y a : ℕ、a 为偶数且 2 ≤ a,`y ^ a ≠ Nat.fib n + Nat.fib m`。伴随:`Nat.fib 36 + Nat.fib 12 = 3864 ^ 2`(猜想所称最大值之数值核对)。
+
+**评注 27.794(5.91–5.94 之可证伪预测与逃逸见证,写在跑之前)**〔remark;第 5⁗ 条〕。5.91 的逃逸内容为两条 kernel 计算的初值同余加两步递推归纳(第 5⁗ 条形态 (2):新数值事实由 `decide` 在活路径上产出);5.92 为模 16 归约后的 16 例穷举判定;5.93 为 `decide` 产出的新数值证书 440(本地提升 `maxRecDepth`);5.94 由「偶次幂是平方」的归约把 5.91–5.93 接成障碍——四者皆非冻结定理或 Mathlib 引理的实例化、投影或规范化;判形 content,准入依据 escape-witness;只依赖钉版 Mathlib。落点 `D5/S1/Recurrence/`(直接文件 17/24)。若钉版下 `decide` 无法在合理心跳内完成 440 计数,本候签按 open 记,不得以 `native_decide`(引入 `Lean.ofReduceBool`,本仓准入拒绝)、`sorry` 或公理代替。结算:四条由一个实施席同 PR `deposit`(绑 5.94)+ `cover`(5.91 / 5.92 / 5.93)落地,三席评审后合入;本案不 cover 任何既有原子。

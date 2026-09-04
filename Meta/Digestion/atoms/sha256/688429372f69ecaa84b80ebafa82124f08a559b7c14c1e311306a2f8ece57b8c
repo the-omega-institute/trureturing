@@ -1,0 +1,19 @@
+# 增订一·0　理论地位与真源边界
+
+本增订是纯数学理论，不是工程规范，也不新增 Lean 声明。
+
+下列事实已经由仓库 Lean 真源承担：
+
+1. `D5/S0/Tower/GoldenNames`：长度 $Q$ 的合法黄金名字与初始 Fibonacci 区间双射，基数为 $F_{Q+2}$，并具有实值注入读出；
+2. `D5/S3/Observer/GoldenCoding/FiniteZeckendorfEulerIdentity`：Zeckendorf Fibonacci 和给出初始整数区间，并把有限 Euler 和精确运输为几何级数；
+3. `D5/S3/Analytic/GoldenEulerBetaZeckendorf`：黄金指数账户的闭式、最小 Zeckendorf 指标奇偶读出和 $\varphi/\varphi^2$ 跳跃律；
+4. `D5/S1/Deficit/ZeckendorfDisplacementReading`：Fibonacci 指标上移之和等于黄金 Beatty 读数；
+5. `D5/S3/Weil/ZetaBridge/PrimeJumpDecomposition`：有限 prime-power 项等于 coherent mass 减去非负 arithmetic jump energy；
+6. `D5/S3/Observer/Hankel/HankelRankMinimality` 与 `HankelMinimalStateDimension`：稳定 Hankel rank 计算可见可达维数，并等于同一行为的最小实现维数；
+7. `D5/S3/Observer/AgencyHolonomy/GoldenScalarDihedralBlindness`：完整标量黄金世界不能恢复有序 prime-word dihedral holonomy；
+8. `D5/S3/Observer/AgencyHolonomy/OrderedPrimeHolonomyCasimir`：一阶有序响应消失，负二阶响应成为平方 winding 的非负加权和；
+9. `D5/S3/Weil/HolonomyBridge/OffLineOrbitParityDecomposition`：一个 supplied 离线轨道的 Weil 贡献分解成偶能量减奇能量，且两种能量分别非负。
+
+本增订从这些真源出发作有限代数、组合、谱和能量推导。以下内容明确不作为既有 Lean 定理冒充：
+
+- canonical prime–Zeckendorf–Gamma transfer 已经存在；

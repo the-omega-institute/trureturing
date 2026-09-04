@@ -1,0 +1,25 @@
+## 77. 六种变化分量 `[P]`
+
+项目区分：
+
+\[
+\begin{aligned}
+\Delta\mathsf{CUT}
+&=\text{对象与变量定义变化};\\
+\Delta\mathsf{FLOW}
+&=\text{动力学定义变化};\\
+\Delta\mathsf{ADMIT}
+&=\text{模型或轨迹准入变化};\\
+\Delta\mathsf{ANCHOR}
+&=\text{操作、仪器与记录接口变化};\\
+\Delta\mathsf{CERTIFY}
+&=\text{证明和误差证书变化};\\
+\Delta\mathsf{REFLECT}
+&=\text{方法和元方法变化}.
+\end{aligned}
+\]
+
+前四个改变基础模型；后两个是证明相关和元层变化。
+
+---
+

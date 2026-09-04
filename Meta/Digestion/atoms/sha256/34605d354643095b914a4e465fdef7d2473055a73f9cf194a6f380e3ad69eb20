@@ -1,0 +1,1 @@
+**义务**:公开定理 `carrier_infinite_of_EF_lit (Z : Zeta23.EF.ZeroConfig) (hEF : Zeta23.EF.EF_lit Z) : Z.carrier.Infinite` 与 `isNontrivialZero_infinite : {ρ : ℂ | IsNontrivialZero ρ}.Infinite`(经 `EF_lit_zetaZeroConfig` 与 `zetaZeroConfig.carrier` 的字面);伴随(bind-only,同模块):`nonempty_zeroData : Nonempty ZeroData`(M1-a 桥)。

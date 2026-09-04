@@ -1,0 +1,45 @@
+## 7.3 Lee–Yang 缺陷原子测度
+
+定义正测度
+
+$$
+\boxed{
+\mu_a^{\mathrm{LY}}
+=
+\frac12
+\sum_{\substack{\rho:\Im\rho>0}}
+ m_\rho
+\left|\log|w_\rho|\right|
+\delta_{\Im\rho}.
+}
+\tag{7.11}
+$$
+
+则
+
+$$
+\mathcal F_a(T)
+=
+\mu_a^{\mathrm{LY}}((0,T]).
+\tag{7.12}
+$$
+
+因此：
+
+$$
+\boxed{
+\mathrm{RH}
+\Longleftrightarrow
+\mu_a^{\mathrm{LY}}=0
+\Longleftrightarrow
+\mathcal F_a(T)=0\quad\forall T>0.
+}
+\tag{7.13}
+$$
+
+若 RH 为假，$T_{\mathrm{off}}$ 正是该正原子测度的第一个支撑点。
+
+有限分辨率观察者对 $\mu_a^{\mathrm{LY}}$ 作时间卷积，原子脉冲便被展宽为第 5 节的 phase bubble。这把“离线的那个时刻”写成了一个精确的正测度原子。
+
+---
+

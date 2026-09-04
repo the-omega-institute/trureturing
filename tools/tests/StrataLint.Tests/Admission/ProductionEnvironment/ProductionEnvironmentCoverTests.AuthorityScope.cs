@@ -92,7 +92,9 @@ public sealed partial class ProductionEnvironmentTests
                 "D5/S9/Unrelated/FrozenBacklog.lean",
                 FrozenStatementReceiptTestData.Id('9'),
                 []));
-        var eventPath = Assert.Single(files.Keys.Except(existingPaths, StringComparer.Ordinal));
+        var eventPath = Assert.Single(
+            files.Keys.Except(existingPaths, StringComparer.Ordinal),
+            FrozenLedgerChangeClassifier.IsAcceptedEventPath);
         return (inputs with { Files = files }, eventPath);
     }
 }
