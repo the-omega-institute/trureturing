@@ -1,0 +1,12 @@
+fingerprints:
+  raw_sha256: sha256:293e31f8b4ffd507a25d6eda3952e067e5e0f8b0105190750762c8f6e56a7f0f
+  normalized_sha256: sha256:293e31f8b4ffd507a25d6eda3952e067e5e0f8b0105190750762c8f6e56a7f0f
+cas_ref: sha256:293e31f8b4ffd507a25d6eda3952e067e5e0f8b0105190750762c8f6e56a7f0f
+coverage_gids: []
+receipts:
+  scribe: []
+  unresolved_subitems: []
+  quarantine:
+    justification: "定义 7.1 states ‘𝒮_t 为可数语句集’, so Sem_t and a tick's migration set may be countably infinite. The frozen owner D5/S0/History/Accounting/ClerkInequality.lean:34,38 instead fixes semanticAt and migrationsAt as Finset Statement; its two finite-cardinality conjuncts therefore do not cover the source carrier."
+    reentry_condition: "Deposit a frozen general-carrier clerk-inequality owner whose semantic snapshots and migration sets admit countable sets, for example Set Statement with Set.encard or Cardinal, prove both source clauses, and show that it specializes to D5/S0/History/Accounting/ClerkInequality.clerk_inequality on finite snapshots; then bind this atom to that owner."
+    blocker_class: missing-prerequisite
