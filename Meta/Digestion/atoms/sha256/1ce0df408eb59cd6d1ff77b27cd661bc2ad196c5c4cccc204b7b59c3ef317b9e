@@ -1,0 +1,20 @@
+## 19. 概念格 `[L]`
+
+项目已经证明：
+
+\[
+\boxed{
+\text{有效概念的互相精化类}
+\cong
+\operatorname{OrderDual}(\operatorname{Setoid}(X)).
+}
+\]
+
+因此概念联合：
+
+\[
+(q\vee r)(x)=(q(x),r(x))
+\]
+
+对应 kernel 交：
+

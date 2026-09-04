@@ -1,0 +1,28 @@
+\[
+\boxed{
+\operatorname{Blind}(\Gamma,q,T)
+=
+\operatorname{Residual}(q,T)
+\cap
+K_\Gamma.
+}
+\]
+
+若该集合非空，则存在一对状态：
+
+- 当前 CUT 看不见其差异；
+- 当前语言中所有定义也看不见；
+- 目标却必须区分。
+
+于是：
+
+\[
+\boxed{
+\text{无限增加旧语言搜索预算也不能切开该对。}
+}
+\]
+
+必须加入一个不在旧语义闭包内的新 CUT。
+
+---
+

@@ -1,0 +1,100 @@
+## v12.5：Maynard 筛法预算、Primorial 观察闭包与 PrimeGaps 的复化横向分裂核
+
+先给出本轮最重要的结论：
+
+$$
+\boxed{
+\text{PrimeGaps 确实可以从“时间方向的观察者分辨率”
+升级成“实部方向的横向分裂测量”。}
+}
+$$
+
+但这个升级不是：
+
+$$
+\text{短素数间隔}
+\Longrightarrow
+\text{离线零点}.
+$$
+
+真正严格的桥是：
+
+$$
+\boxed{
+\sin^2\!\left(
+\frac{\Delta t\,\Delta\log p}{2}
+\right)
+\quad\longrightarrow\quad
+\sinh^2\!\left(
+\delta\,\Delta\log p
+\right)
++
+\sin^2\!\left(
+\frac{\Delta t\,\Delta\log p}{2}
+\right).
+}
+$$
+
+同一个素数对的对数间距
+
+$$
+\Delta\omega_{p,q}
+=
+\log q-\log p
+=
+\log\frac qp
+$$
+
+同时控制：
+
+* 沿虚部 \(t\) 的相位分辨；
+* 沿实部 \(\delta=\sigma-\frac12\) 的长度分裂。
+
+所以 `PrimeGaps` 的真正升级对象不是普通 gap \(q-p\)，而是：
+
+$$
+\boxed{
+\Delta\log p=\log(q/p).
+}
+$$
+
+而你提出的：
+
+$$
+\boxed{
+\varphi H\text{ 个有限候选状态}
+\quad\leadsto\quad
+e^{\varphi H}\text{ 的预算}
+}
+$$
+
+在一种非常具体的解释下确实成立：
+
+$$
+\boxed{
+W(k)=\prod_{p\le k}p
+=
+\exp\!\bigl((1+o(1))k\bigr).
+}
+$$
+
+若候选元组大小取：
+
+$$
+k=\varphi H,
+$$
+
+则：
+
+$$
+\boxed{
+W(k)
+=
+\exp\!\bigl((1+o(1))\varphi H\bigr).
+}
+$$
+
+但这里 \(W\) 是把所有 \(p\le k\) 的局部同余观察合并成一个 CRT 模数的 **primorial 预算**，不是 Maynard 筛法保证 \(\varphi H\) 个素数幸存所需的完整预算。后者还要再经过一个指数放大。
+
+---
+

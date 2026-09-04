@@ -1,0 +1,13 @@
+\[
+\boxed{
+D_{\mathsf C}(q,T)
+=
+\{(x,y):
+q(x)=q(y)
+\land
+T(x)\ne T(y)\}.
+}
+\]
+
+---
+
