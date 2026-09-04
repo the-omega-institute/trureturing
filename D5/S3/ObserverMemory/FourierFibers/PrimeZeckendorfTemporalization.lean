@@ -82,14 +82,9 @@ theorem finite_first_excited_phase_recurrence
           ξ * Real.log (prime : ℕ) := by
       rw [first_excited_prime_frequency]
       field_simp [ne_of_gt hscale]
-    unfold firstExcitedPhaseMultiplier
-    change
-      ‖Complex.exp
-          (Complex.I *
-            (((ξ / Real.goldenRatio ^ 2) *
-              goldenSpectrum (prime, 0) : ℝ) : ℂ)) - 1‖ < ε
-    rw [hargument]
-    exact hclose prime hprime
+    have hclosePrime := hclose prime hprime
+    rw [← hargument] at hclosePrime
+    simpa [firstExcitedPhaseMultiplier] using hclosePrime
 
 /-- A positive heat observer and a wrapped phase observer therefore have
 opposite finite-channel behavior: the first is pointwise prime-faithful, while
