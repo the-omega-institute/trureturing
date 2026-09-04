@@ -87,9 +87,12 @@ jobs:
           filemap="$RUNNER_TEMP/admission-plane-base.toml"
           git -C candidate show "HEAD^1:${ADMISSION_PLANE_CLASSIFIER_PATH}" > "$classifier"
           git -C candidate diff --name-only -z --no-renames HEAD^1 HEAD > "$delta"
+          candidate_filemap="$RUNNER_TEMP/admission-plane-candidate.toml"
           fetched=true
           if ! git -C candidate show HEAD^1:Meta/FILEMAP.toml > "$filemap"; then fetched=false; fi
-          exec python3 "$classifier" --delta-file "$delta" --filemap "$filemap" --filemap-fetched "$fetched" --github-output "$GITHUB_OUTPUT"
+          candidate_fetched=true
+          if ! git -C candidate show HEAD:Meta/FILEMAP.toml > "$candidate_filemap"; then candidate_fetched=false; fi
+          exec python3 "$classifier" --delta-file "$delta" --filemap "$filemap" --filemap-fetched "$fetched" --candidate-filemap "$candidate_filemap" --candidate-filemap-fetched "$candidate_fetched" --github-output "$GITHUB_OUTPUT"
       - name: Derive protected-base engineering execution floor
         id: engineering-floor
         if: github.event_name == 'pull_request_target' && steps.checkout-merge.outcome == 'success'
@@ -317,9 +320,12 @@ jobs:
           filemap="$RUNNER_TEMP/admission-plane-base.toml"
           git -C candidate show "HEAD^1:${ADMISSION_PLANE_CLASSIFIER_PATH}" > "$classifier"
           git -C candidate diff --name-only -z --no-renames HEAD^1 HEAD > "$delta"
+          candidate_filemap="$RUNNER_TEMP/admission-plane-candidate.toml"
           fetched=true
           if ! git -C candidate show HEAD^1:Meta/FILEMAP.toml > "$filemap"; then fetched=false; fi
-          exec python3 "$classifier" --delta-file "$delta" --filemap "$filemap" --filemap-fetched "$fetched" --github-output "$GITHUB_OUTPUT"
+          candidate_fetched=true
+          if ! git -C candidate show HEAD:Meta/FILEMAP.toml > "$candidate_filemap"; then candidate_fetched=false; fi
+          exec python3 "$classifier" --delta-file "$delta" --filemap "$filemap" --filemap-fetched "$fetched" --candidate-filemap "$candidate_filemap" --candidate-filemap-fetched "$candidate_fetched" --github-output "$GITHUB_OUTPUT"
       - name: Fail closed when merge result is unavailable
         if: always() && steps.checkout-merge.outcome != 'success'
         shell: bash
@@ -630,9 +636,12 @@ jobs:
           filemap="$RUNNER_TEMP/admission-plane-base.toml"
           git -C candidate show "HEAD^1:${ADMISSION_PLANE_CLASSIFIER_PATH}" > "$classifier"
           git -C candidate diff --name-only -z --no-renames HEAD^1 HEAD > "$delta"
+          candidate_filemap="$RUNNER_TEMP/admission-plane-candidate.toml"
           fetched=true
           if ! git -C candidate show HEAD^1:Meta/FILEMAP.toml > "$filemap"; then fetched=false; fi
-          exec python3 "$classifier" --delta-file "$delta" --filemap "$filemap" --filemap-fetched "$fetched" --github-output "$GITHUB_OUTPUT"
+          candidate_fetched=true
+          if ! git -C candidate show HEAD:Meta/FILEMAP.toml > "$candidate_filemap"; then candidate_fetched=false; fi
+          exec python3 "$classifier" --delta-file "$delta" --filemap "$filemap" --filemap-fetched "$fetched" --candidate-filemap "$candidate_filemap" --candidate-filemap-fetched "$candidate_fetched" --github-output "$GITHUB_OUTPUT"
       - name: Fail closed when merge result is unavailable
         if: always() && steps.checkout-merge.outcome != 'success'
         shell: bash

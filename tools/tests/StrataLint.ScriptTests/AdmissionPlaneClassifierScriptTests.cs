@@ -8,6 +8,7 @@ public sealed class AdmissionPlaneClassifierScriptTests
 {
     private static readonly UTF8Encoding Utf8 = new(false);
     private static string CiPath => ".github/" + "work" + "flows/ci.yml";
+    private const string FileMapPath = "Meta/FILEMAP.toml";
 
     [Fact]
     public void JudgeOnlyDeltaIsAccepted()
@@ -194,6 +195,77 @@ public sealed class AdmissionPlaneClassifierScriptTests
         Assert.Equal(canonicalMatch ? 0 : 1, result.ExitCode);
     }
 
+    [Fact]
+    public void BaseUnmatchedPathTakesItsPlaneFromANewCandidateEntry()
+    {
+        var result = RunClassifier(
+            Manifest(("tools/**", "judge"), (FileMapPath, "judge")),
+            Manifest(("tools/**", "judge"), (FileMapPath, "judge"), ("LICENSE", "judge")),
+            fileMapFetched: true,
+            FileMapPath,
+            "LICENSE");
+
+        AssertAccepted(result, "status=judge-only judge=2 content=0");
+    }
+
+    [Fact]
+    public void BaseUnmatchedPathIsRejectedWhenTheManifestIsNotInTheDelta()
+    {
+        var result = RunClassifier(
+            Manifest(("tools/**", "judge"), (FileMapPath, "judge")),
+            Manifest(("tools/**", "judge"), (FileMapPath, "judge"), ("LICENSE", "judge")),
+            fileMapFetched: true,
+            "LICENSE");
+
+        AssertRejected(result, "reason=path-match-count-not-one");
+        Assert.Contains("path=LICENSE matches=0", StandardError(result), StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void BaseUnmatchedPathIsRejectedWhenTheCandidateAlsoLacksAnEntry()
+    {
+        var result = RunClassifier(
+            Manifest(("tools/**", "judge"), (FileMapPath, "judge")),
+            Manifest(("tools/**", "judge"), (FileMapPath, "judge")),
+            fileMapFetched: true,
+            FileMapPath,
+            "LICENSE");
+
+        AssertRejected(result, "reason=candidate-path-match-count-not-one");
+        Assert.Contains("candidate_matches=0", StandardError(result), StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void BaseUnmatchedPathIsRejectedWhenTheCandidateMatchesSeveralEntries()
+    {
+        var result = RunClassifier(
+            Manifest(("tools/**", "judge"), (FileMapPath, "judge")),
+            Manifest(
+                ("tools/**", "judge"),
+                (FileMapPath, "judge"),
+                ("LICENSE", "judge"),
+                ("LICENS*", "judge")),
+            fileMapFetched: true,
+            FileMapPath,
+            "LICENSE");
+
+        AssertRejected(result, "reason=candidate-path-match-count-not-one");
+        Assert.Contains("candidate_matches=2", StandardError(result), StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void CandidateCannotRelabelAPathTheBaseAlreadyGoverns()
+    {
+        var result = RunClassifier(
+            Manifest(("docs/**", "content"), (FileMapPath, "judge")),
+            Manifest(("docs/**", "judge"), (FileMapPath, "judge")),
+            fileMapFetched: true,
+            FileMapPath,
+            "docs/change.md");
+
+        AssertRejected(result, "status=mixed judge=1 content=1");
+    }
+
     private static ClassifierResult RunClassifier(string manifest, params string[] changedPaths)
     {
         return RunClassifier(manifest, fileMapFetched: true, changedPaths);
@@ -201,6 +273,15 @@ public sealed class AdmissionPlaneClassifierScriptTests
 
     private static ClassifierResult RunClassifier(
         string manifest,
+        bool fileMapFetched,
+        params string[] changedPaths)
+    {
+        return RunClassifier(manifest, null, fileMapFetched, changedPaths);
+    }
+
+    private static ClassifierResult RunClassifier(
+        string manifest,
+        string? candidateManifest,
         bool fileMapFetched,
         params string[] changedPaths)
     {
@@ -214,22 +295,32 @@ public sealed class AdmissionPlaneClassifierScriptTests
         File.WriteAllBytes(deltaPath, delta);
         File.WriteAllText(manifestPath, manifest, Utf8);
 
+        List<string> invocation =
+        [
+            "LC_ALL=C",
+            "PYTHONHASHSEED=0",
+            "python3.12",
+            Path.Combine(AppContext.BaseDirectory, "admission-plane-classify.py"),
+            "--delta-file",
+            deltaPath,
+            "--filemap",
+            manifestPath,
+            "--filemap-fetched",
+            fileMapFetched ? "true" : "false",
+            "--github-output",
+            githubOutputPath,
+        ];
+        if (candidateManifest is not null)
+        {
+            var candidatePath = Path.Combine(temporary.Path, "CANDIDATE-FILEMAP.toml");
+            File.WriteAllText(candidatePath, candidateManifest, Utf8);
+            invocation.AddRange(
+                ["--candidate-filemap", candidatePath, "--candidate-filemap-fetched", "true"]);
+        }
+
         var process = TestProcessRunner.Run(
             "/usr/bin/env",
-            [
-                "LC_ALL=C",
-                "PYTHONHASHSEED=0",
-                "python3.12",
-                Path.Combine(AppContext.BaseDirectory, "admission-plane-classify.py"),
-                "--delta-file",
-                deltaPath,
-                "--filemap",
-                manifestPath,
-                "--filemap-fetched",
-                fileMapFetched ? "true" : "false",
-                "--github-output",
-                githubOutputPath,
-            ],
+            [.. invocation],
             temporary.Path,
             TestBudgets.ScriptProcessHangGuard,
             64 * 1024);

@@ -11,10 +11,12 @@ except ImportError:
     tomllib = None
 
 
+FILEMAP_PATH = "Meta/FILEMAP.toml"
+
 REPAIR_PATHS = frozenset(
     {
         ".github/workflows/ci.yml",
-        "Meta/FILEMAP.toml",
+        FILEMAP_PATH,
     }
 )
 
@@ -24,6 +26,10 @@ def parse_arguments():
     parser.add_argument("--delta-file", required=True)
     parser.add_argument("--filemap", required=True)
     parser.add_argument("--filemap-fetched", choices=("true", "false"), required=True)
+    parser.add_argument("--candidate-filemap")
+    parser.add_argument(
+        "--candidate-filemap-fetched", choices=("true", "false"), default="false"
+    )
     parser.add_argument("--github-output")
     return parser.parse_args()
 
@@ -96,37 +102,37 @@ def compile_glob(pattern):
     return re.compile("".join(expression))
 
 
-def load_entries(path, fetched, is_repair, github_output):
+def load_entries(path, fetched, unavailable, label="base"):
     if not fetched:
-        policy_unavailable("base-filemap-unavailable", is_repair, github_output)
+        unavailable(f"{label}-filemap-unavailable")
     if tomllib is None:
-        policy_unavailable("tomllib-unavailable", is_repair, github_output)
+        unavailable("tomllib-unavailable")
 
     try:
         with Path(path).open("rb") as stream:
             document = tomllib.load(stream)
     except (OSError, UnicodeError, tomllib.TOMLDecodeError) as exception:
-        policy_unavailable(
-            "base-filemap-parse-failed", is_repair, github_output, str(exception)
-        )
+        unavailable(f"{label}-filemap-parse-failed", str(exception))
 
     entries = document.get("files", [])
     if not isinstance(entries, list):
-        classification_failed("base-filemap-entries-unavailable")
+        classification_failed(f"{label}-filemap-entries-unavailable")
 
     compiled = []
     for index, entry in enumerate(entries):
         if not isinstance(entry, dict):
-            classification_failed("base-filemap-entry-unavailable", f"files[{index}]")
+            classification_failed(f"{label}-filemap-entry-unavailable", f"files[{index}]")
         pattern = entry.get("pattern")
         plane = entry.get("admission_plane")
         if not isinstance(pattern, str):
-            classification_failed("base-filemap-pattern-unavailable", f"files[{index}]")
+            classification_failed(
+                f"{label}-filemap-pattern-unavailable", f"files[{index}]"
+            )
         if "?" in pattern:
-            classification_failed("base-filemap-pattern-unsafe", pattern)
+            classification_failed(f"{label}-filemap-pattern-unsafe", pattern)
         if plane not in {"judge", "content"}:
             classification_failed(
-                "base-filemap-admission-plane-unavailable",
+                f"{label}-filemap-admission-plane-unavailable",
                 f"files[{index}] pattern={pattern}",
             )
         compiled.append((pattern, plane, compile_glob(pattern)))
@@ -158,19 +164,45 @@ def main():
     entries = load_entries(
         arguments.filemap,
         arguments.filemap_fetched == "true",
-        is_repair,
-        arguments.github_output,
+        lambda reason, detail=None: policy_unavailable(
+            reason, is_repair, arguments.github_output, detail
+        ),
     )
+
+    # A path the base manifest does not govern cannot be classified from the base
+    # alone, which makes every new path family unlandable: entry-first is refused
+    # by filemap-conform (empty pattern), entry-and-file-together is refused here.
+    # The candidate manifest breaks that tie, but only for paths the base leaves
+    # entirely unmatched, and only when this delta actually edits the manifest.
+    # A path the base already governs keeps the base plane, so a candidate can
+    # never relabel what the base has classified.
+    candidate_entries = None
+    if arguments.candidate_filemap is not None and FILEMAP_PATH in changed_paths:
+        candidate_entries = load_entries(
+            arguments.candidate_filemap,
+            arguments.candidate_filemap_fetched == "true",
+            classification_failed,
+            "candidate",
+        )
 
     by_plane = {"judge": [], "content": []}
     for path in changed_paths:
         matches = matching_entries(entries, path)
-        if len(matches) != 1:
+        if len(matches) == 1:
+            by_plane[matches[0][1]].append(path)
+            continue
+        if len(matches) > 1 or candidate_entries is None:
             classification_failed(
                 "path-match-count-not-one",
                 f"path={path} matches={len(matches)}",
             )
-        by_plane[matches[0][1]].append(path)
+        candidate_matches = matching_entries(candidate_entries, path)
+        if len(candidate_matches) != 1:
+            classification_failed(
+                "candidate-path-match-count-not-one",
+                f"path={path} candidate_matches={len(candidate_matches)}",
+            )
+        by_plane[candidate_matches[0][1]].append(path)
 
     if is_repair:
         for repair_path in sorted(REPAIR_PATHS):
