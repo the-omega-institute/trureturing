@@ -176,6 +176,7 @@ jobs:
         shell: bash
         env:
           FULL: ${{ (steps.admission-plane.outputs.plane == 'judge-only' || steps.admission-plane.outputs.plane == 'bootstrap') && '1' || '' }}
+          ENGINEERING_TRX_DIRECTORY: ${{ runner.temp }}/engineering-trx
         run: /bin/bash candidate/tools/scripts/workflow/engineering-test-execution-harness.sh "$GITHUB_WORKSPACE/candidate"
 
       - name: Run candidate selftest twice and compare bytes

@@ -1,4 +1,6 @@
 using System.Diagnostics;
+using System.Security.Cryptography;
+using System.Text;
 using System.Text.Json;
 using StrataLint.EngineeringScope;
 using StrataLint.TestSupport;
@@ -113,6 +115,33 @@ public sealed class EngineeringScopeProgramTests
     public void RealTestFailureDoesNotRetry() =>
         AssertRunTestsScenario(
             "Fails", "Assert.True(false, \"intentional\");", prebuild: true, expectedExitCode: 1, expectedRetryCount: 0);
+
+    [Fact]
+    public void ConfiguredEvidenceDirectoryRetainsTrxAfterExecution()
+    {
+        var evidence = TemporaryFileSystem.Directory.CreateTempSubdirectory(
+            "stratalint-engineering-evidence-").FullName;
+        var projectDirectory = Path.Combine(
+            evidence,
+            Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(ProductTestsProject)))
+                .ToLowerInvariant());
+        var original = Environment.GetEnvironmentVariable("ENGINEERING_TRX_DIRECTORY");
+        try
+        {
+            Environment.SetEnvironmentVariable("ENGINEERING_TRX_DIRECTORY", evidence);
+            var result = RunBoundary(
+                WriteProductProjects,
+                root => WriteSmokeTest(root, "ExportsEvidence", "Assert.True(true);"));
+
+            Assert.True(result.ExitCode == 0, result.Diagnostic);
+            Assert.NotEmpty(Directory.GetFiles(projectDirectory, "*.trx", SearchOption.TopDirectoryOnly));
+        }
+        finally
+        {
+            Environment.SetEnvironmentVariable("ENGINEERING_TRX_DIRECTORY", original);
+            TemporaryFileSystem.Directory.Delete(evidence, recursive: true);
+        }
+    }
 
     private static void AssertRunTestsScenario(
         string testName,
