@@ -9,6 +9,7 @@ status = "closed"
 [[files]]
 pattern = "**/*.props"
 kind = "program"
+admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["dotnet"]
 verified_by = ["make-gate"]
@@ -18,6 +19,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "*.json"
 kind = "program"
+admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["automation"]
 verified_by = ["make-gate"]
@@ -27,6 +29,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "*.lean"
 kind = "truth"
+admission_plane = "content"
 produced_by = "none"
 consumed_by = ["Lean", "Scribe", "StrataLint"]
 verified_by = ["lean-build", "lean-inspector"]
@@ -36,6 +39,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "*.toml"
 kind = "program"
+admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["Lean"]
 verified_by = ["make-gate"]
@@ -45,6 +49,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = ".editorconfig"
 kind = "program"
+admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["dotnet"]
 verified_by = ["make-gate"]
@@ -54,6 +59,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = ".github/**"
 kind = "program"
+admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["GitHub-Actions"]
 verified_by = ["make-gate"]
@@ -63,6 +69,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = ".gitignore"
 kind = "program"
+admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["git"]
 verified_by = ["repository-policy"]
@@ -72,6 +79,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "AGENTS.md"
 kind = "program"
+admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["agent"]
 verified_by = ["repository-policy"]
@@ -81,6 +89,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "Blueprint/**/*.md"
 kind = "generated"
+admission_plane = "content"
 produced_by = "ScribeEmitter"
 consumed_by = ["ScribeEmitter", "reader"]
 verified_by = ["ScribeEmitter"]
@@ -90,6 +99,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "Blueprint/**/*.scribe.cs"
 kind = "data"
+admission_plane = "content"
 produced_by = "none"
 consumed_by = ["ScribeEmitter"]
 verified_by = ["ScribeCompiler"]
@@ -99,6 +109,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "CLAUDE.md"
 kind = "program"
+admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["agent"]
 verified_by = ["repository-policy"]
@@ -108,6 +119,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "D5/**/*.lean"
 kind = "truth"
+admission_plane = "content"
 produced_by = "none"
 consumed_by = ["Lean", "Scribe", "StrataLint"]
 verified_by = ["lean-build", "lean-inspector"]
@@ -117,6 +129,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "D5/**/*.md"
 kind = "ledger"
+admission_plane = "content"
 produced_by = "none"
 consumed_by = ["FrozenContentAddress", "HeartsAuthorizationLedger"]
 verified_by = ["FrozenContentAddress", "SL-008"]
@@ -126,6 +139,7 @@ runtime_disposition = "committed-ledger"
 [[files]]
 pattern = "Evidence/D5/**/*.result.json"
 kind = "data"
+admission_plane = "content"
 produced_by = "none"
 consumed_by = ["reader"]
 verified_by = ["SnapshotDecoder"]
@@ -135,6 +149,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "Evidence/D5/values.json"
 kind = "generated"
+admission_plane = "content"
 produced_by = "ValuesEmitter"
 consumed_by = ["reader"]
 verified_by = ["ValuesEmitter"]
@@ -149,6 +164,7 @@ artifact_id = "A-DAG"
 mode = "100644"
 history_requirement = "not-required"
 kind = "generated"
+admission_plane = "content"
 produced_by = "DagEmitter"
 consumed_by = ["reader"]
 runtime_disposition = "run-local"
@@ -160,6 +176,7 @@ artifact_id = "A-FILEMAP"
 mode = "100644"
 history_requirement = "not-required"
 kind = "generated"
+admission_plane = "content"
 produced_by = "FileMapEmitter"
 consumed_by = ["reader"]
 runtime_disposition = "run-local"
@@ -168,6 +185,7 @@ verified_by = ["FileMapEmitter"]
 [[files]]
 pattern = "Generated/echo-residuals/*.md"
 kind = "generated"
+admission_plane = "content"
 produced_by = "EchoVerifyCommand"
 consumed_by = ["reader"]
 verified_by = ["EchoVerifyCommand"]
@@ -177,6 +195,7 @@ runtime_disposition = "run-local"
 [[files]]
 pattern = "Generated/truth-export.v1.json"
 kind = "generated"
+admission_plane = "content"
 produced_by = "TruthExportCommand"
 consumed_by = ["TruthExportJsonReader"]
 verified_by = ["TruthExportCommand"]
@@ -188,6 +207,7 @@ history_requirement = "not-required"
 [[files]]
 pattern = "Generated/truth-graph.v1.json"
 kind = "generated"
+admission_plane = "content"
 produced_by = "DagEmitter"
 consumed_by = ["TruthGraphJsonReader"]
 verified_by = ["DagEmitter"]
@@ -199,6 +219,7 @@ history_requirement = "not-required"
 [[files]]
 pattern = "Golden/Frozen/accepted/*.json"
 kind = "ledger"
+admission_plane = "content"
 produced_by = "FrozenLedgerCanonicalWriter"
 consumed_by = ["FrozenLedger"]
 verified_by = ["SL-008"]
@@ -208,6 +229,7 @@ runtime_disposition = "committed-ledger"
 [[files]]
 pattern = "Golden/Frozen/state/**/*.json"
 kind = "data"
+admission_plane = "content"
 produced_by = "FrozenStateWriter"
 consumed_by = ["FrozenStateCatalog"]
 verified_by = ["FrozenStateRecordLoader", "SL-008"]
@@ -217,6 +239,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "Golden/Projection/*.json"
 kind = "data"
+admission_plane = "content"
 produced_by = "none"
 consumed_by = ["StatementProjectionFixtureLoader"]
 verified_by = ["StatementProjectionFixtureLoader"]
@@ -226,6 +249,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "Golden/gate-authority-roots.toml"
 kind = "data"
+admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["GateAuthorityRootCatalogLoader"]
 verified_by = ["GateAuthorityRootCatalogLoader"]
@@ -235,6 +259,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "Golden/values-kernels.toml"
 kind = "data"
+admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["SL-018", "ValuesKernelDataLoader"]
 verified_by = ["SL-018", "ValuesKernelDataLoader"]
@@ -244,6 +269,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "Library/**/*.yaml"
 kind = "data"
+admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["AnchorReferenceRule"]
 verified_by = ["SL-017", "YamlSubsetParser"]
@@ -253,6 +279,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "Library/*/*.md"
 kind = "data"
+admission_plane = "content"
 produced_by = "none"
 consumed_by = ["DescribeRepositoryValidator", "ScribeEmitter"]
 verified_by = ["LibraryNoteCatalog"]
@@ -262,6 +289,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "Makefile"
 kind = "program"
+admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["developer"]
 verified_by = ["make-gate"]
@@ -271,6 +299,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "Meta/Digestion/atomizers.toml"
 kind = "data"
+admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["TheoryAtomizerDataLoader"]
 verified_by = ["TheoryAtomizerDataLoader"]
@@ -280,6 +309,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "Meta/Digestion/atoms/sha256/*"
 kind = "ledger"
+admission_plane = "content"
 produced_by = "IngestCommand"
 consumed_by = ["DigestionCasStore"]
 verified_by = ["DigestionCasStore"]
@@ -289,6 +319,7 @@ runtime_disposition = "committed-ledger"
 [[files]]
 pattern = "Meta/Digestion/backfill/**"
 kind = "data"
+admission_plane = "content"
 produced_by = "IngestCommand"
 consumed_by = ["BackfillInventoryLoader"]
 verified_by = ["BackfillInventoryLoader"]
@@ -298,6 +329,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "Meta/FILEMAP.toml"
 kind = "data"
+admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["FileMapEmitter", "FileMapLoader", "FileMapPolicy"]
 verified_by = ["FileMapLoader"]
@@ -307,6 +339,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "Meta/domains.yaml"
 kind = "data"
+admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["RegistryLoader"]
 verified_by = ["RegistryLoader"]
@@ -316,6 +349,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "Meta/registry.yaml"
 kind = "data"
+admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["RegistryLoader"]
 verified_by = ["RegistryLoader"]
@@ -325,6 +359,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "Problems/*.md"
 kind = "data"
+admission_plane = "content"
 produced_by = "none"
 consumed_by = ["DescribeRepositoryValidator", "agent"]
 verified_by = ["ProblemCandidateCatalog"]
@@ -334,6 +369,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "README.md"
 kind = "data"
+admission_plane = "content"
 produced_by = "none"
 consumed_by = ["reader"]
 verified_by = ["SnapshotDecoder"]
@@ -343,6 +379,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "agents/**"
 kind = "program"
+admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["agent"]
 verified_by = ["repository-policy"]
@@ -352,6 +389,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "docs/CONTRIBUTING.md"
 kind = "program"
+admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["developer"]
 verified_by = ["repository-policy"]
@@ -361,6 +399,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "docs/GOVERNANCE.md"
 kind = "program"
+admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["developer"]
 verified_by = ["repository-policy"]
@@ -370,6 +409,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "docs/develop/spec/**"
 kind = "data"
+admission_plane = "content"
 produced_by = "none"
 consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
@@ -379,6 +419,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "docs/develop/theory/**"
 kind = "data"
+admission_plane = "content"
 produced_by = "none"
 consumed_by = ["IngestCommand"]
 verified_by = ["SnapshotDecoder"]
@@ -388,6 +429,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "docs/reports/**"
 kind = "data"
+admission_plane = "content"
 produced_by = "none"
 consumed_by = ["agent"]
 verified_by = ["SnapshotDecoder"]
@@ -397,6 +439,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "lean-toolchain"
 kind = "program"
+admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["Lean"]
 verified_by = ["make-gate"]
@@ -406,6 +449,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "skills/**"
 kind = "program"
+admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["agent"]
 verified_by = ["repository-policy"]
@@ -415,6 +459,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "tools/ARCHITECTURE.md"
 kind = "program"
+admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["developer"]
 verified_by = ["architecture-tests"]
@@ -424,6 +469,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "tools/Architecture/*.txt"
 kind = "program"
+admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["BannedApiAnalyzers"]
 verified_by = ["architecture-tests"]
@@ -433,6 +479,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "tools/Architecture/HARDCODE-LEDGER.md"
 kind = "ledger"
+admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["developer"]
 verified_by = ["developer"]
@@ -442,6 +489,7 @@ runtime_disposition = "committed-ledger"
 [[files]]
 pattern = "tools/Generated/scribe-emissions.v1.json"
 kind = "generated"
+admission_plane = "judge"
 produced_by = "ScribeEmitter"
 consumed_by = ["ScribeEmitter"]
 verified_by = ["ScribeEmitter"]
@@ -453,6 +501,7 @@ history_requirement = "not-required"
 [[files]]
 pattern = "tools/Makefile"
 kind = "program"
+admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["developer"]
 verified_by = ["make-gate"]
@@ -462,6 +511,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "tools/StrataLint.*/**"
 kind = "program"
+admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["dotnet"]
 verified_by = ["dotnet-test"]
@@ -471,6 +521,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "tools/StrataLint.sln"
 kind = "program"
+admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["dotnet"]
 verified_by = ["dotnet-test"]
@@ -480,6 +531,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "tools/TOWER.yaml"
 kind = "program"
+admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["CoverageAnalyzer"]
 verified_by = ["make-gate"]
@@ -489,6 +541,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "tools/TestSupport/**"
 kind = "program"
+admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["dotnet"]
 verified_by = ["dotnet-test"]
@@ -498,6 +551,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "tools/Trureturing.Truth/**"
 kind = "program"
+admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["dotnet"]
 verified_by = ["dotnet-test"]
@@ -507,6 +561,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "tools/lean-inspector/**"
 kind = "program"
+admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["Lean"]
 verified_by = ["lean-inspector"]
@@ -516,6 +571,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "tools/scripts/**"
 kind = "program"
+admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["automation"]
 verified_by = ["make-gate"]
@@ -525,6 +581,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "tools/tests/BannedApiCompileFailProof/**"
 kind = "program"
+admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["dotnet"]
 verified_by = ["dotnet-build"]
@@ -534,6 +591,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "tools/tests/CompileFailProof/**"
 kind = "program"
+admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["dotnet"]
 verified_by = ["dotnet-build"]
@@ -543,6 +601,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "tools/tests/StrataLint.*/**/*.cs"
 kind = "program"
+admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["dotnet"]
 verified_by = ["dotnet-test"]
@@ -552,6 +611,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "tools/tests/StrataLint.*/**/*.csproj"
 kind = "program"
+admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["dotnet"]
 verified_by = ["dotnet-test"]
@@ -561,6 +621,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "tools/tests/StrataLint.*/**/*.json"
 kind = "program"
+admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["dotnet"]
 verified_by = ["dotnet-test"]
@@ -570,6 +631,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "tools/tests/StrataLint.*/**/*.trx"
 kind = "program"
+admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["dotnet"]
 verified_by = ["dotnet-test"]
@@ -579,6 +641,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml"
 kind = "data"
+admission_plane = "content"
 produced_by = "none"
 consumed_by = ["TestRegistry"]
 verified_by = ["TestRegistry"]
@@ -588,6 +651,7 @@ runtime_disposition = "committed-source"
 [[files]]
 pattern = "tools/tests/Trureturing.Truth.Tests/**"
 kind = "program"
+admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["dotnet"]
 verified_by = ["dotnet-test"]
