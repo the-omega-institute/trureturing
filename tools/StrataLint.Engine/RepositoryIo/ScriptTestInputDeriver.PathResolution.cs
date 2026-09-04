@@ -10,6 +10,25 @@ namespace StrataLint.Engine;
 
 internal static partial class ScriptTestInputDeriver
 {
+    // 判官须指名这几个测试脚手架类型,但 Engine 在依赖偏序的下方、引用不到测试程序集,
+    // 故只能以名字指代。**按类型名而非全限定名匹配**:脚手架在程序集之间迁移
+    // (`StrataLint.Tests` → `StrataLint.TestSupport`)时,判据不应随之失效。
+    //
+    // 案由(第 20″ 条):PR #5324 把 TestRepositoryLayout / RepositoryRelativePath
+    // 迁入 StrataLint.TestSupport,此处 6 处硬编码的 "StrataLint.Tests.*" 未同步,
+    // 而 ScribeTestSymbolBinder.IsRepositoryRootExpression 按方法名 FindRoot 判定、
+    // 与 namespace 无关 ⟹ 两个判官对同一表达式分歧:
+    // 「认得出是仓库根、却解析不出路径」→ AddResolved 的 default 分支 fail-closed throw
+    // ⟹ dev 由绿转红(run 33910501229),经 #5331 撤因。
+    // 字符串常量指向类型时编译器不红,故 #5324 自身三门全绿。
+    //
+    // 悬空由 ScriptTestGateClosureTests.JudgeNamedHelperTypesResolveToDeclaredTypes
+    // 以 typeof(...) 钉住:这些类型被改名或删除即**编译期**红。
+    internal const string RepositoryLayoutTypeName = "TestRepositoryLayout";
+    internal const string RepositoryRelativePathTypeName = "RepositoryRelativePath";
+    internal const string ScriptHarnessScratchTypeName = "ScriptHarnessScratch";
+    internal const string ProcessRunnerTypeName = "TestProcessRunner";
+
     private static void AddResolved(
         ExpressionSyntax? expression,
         ScribeBoundCallable callable,
@@ -69,7 +88,7 @@ internal static partial class ScriptTestInputDeriver
             && BoundMethod(invocation, model) is { } method)
         {
             var owner = method.ContainingType.ToDisplayString();
-            if (owner == "StrataLint.Tests.TestRepositoryLayout" && method.Name == "FindRoot")
+            if (method.ContainingType.Name == RepositoryLayoutTypeName && method.Name == "FindRoot")
                 return PathValue.RepositoryRoot;
             if (owner == "System.IO.Path" && method.Name == "Combine")
                 return ResolveCombine(invocation, model, models, visited);
@@ -77,7 +96,7 @@ internal static partial class ScriptTestInputDeriver
                 return invocation.ArgumentList.Arguments.FirstOrDefault()?.Expression is { } argument
                     ? ResolvePath(argument, model, models, visited)
                     : PathValue.Unknown;
-            if (owner == "StrataLint.Tests.RepositoryRelativePath" && method.Name == "Create")
+            if (method.ContainingType.Name == RepositoryRelativePathTypeName && method.Name == "Create")
             {
                 var relative = invocation.ArgumentList.Arguments.SingleOrDefault()?.Expression;
                 return relative is not null
@@ -273,13 +292,13 @@ internal static partial class ScriptTestInputDeriver
     {
         if (method is null) return false;
         var owner = method.ContainingType.ToDisplayString();
-        return owner == "StrataLint.Tests.ScriptHarnessScratch"
+        return method.ContainingType.Name == ScriptHarnessScratchTypeName
                 && method.Name == "CopyScriptInto" && parameterOrdinal == 0
-            || owner == "StrataLint.Tests.TestProcessRunner"
+            || method.ContainingType.Name == ProcessRunnerTypeName
                 && method.Name == "Run" && parameterOrdinal is 0 or 1
             || IsProcessStartInfoArgumentListAdd(invocation, method, model)
                 && parameterOrdinal == 0
-            || owner == "StrataLint.Tests.TestRepositoryLayout"
+            || method.ContainingType.Name == RepositoryLayoutTypeName
                 && method.Name == "ReadAllText" && parameterOrdinal == 0
             || owner == "System.IO.File"
                 && method.Name is "ReadAllText" or "ReadAllBytes" or "ReadAllLines"
@@ -288,7 +307,7 @@ internal static partial class ScriptTestInputDeriver
     }
 
     private static bool IsTestProcessRunner(IMethodSymbol? method) =>
-        method?.ContainingType.ToDisplayString() == "StrataLint.Tests.TestProcessRunner"
+        method?.ContainingType.Name == ProcessRunnerTypeName
         && method.Name == "Run";
 
     private static IEnumerable<ExpressionSyntax> StringCollectionOperands(

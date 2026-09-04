@@ -179,6 +179,76 @@ register_information_theorem generated.__lowers_escape
   primitives fixtureBundle
   realization generatedRealization
 
+set_option linter.style.nameCheck false in
+theorem generated.__information_catalog : True :=
+  trivial
+
+set_option linter.style.nameCheck false in
+theorem generated.__catalog_irredundant : True :=
+  trivial
+
+/-- error: IE-C011 GeneratedCertificateRegistered:
+LeanInformationAudit.Tests.RegistrationErrors.generated.__information_catalog -/
+#guard_msgs (error) in
+register_information_theorem generated.__information_catalog
+  in fixtureLawArena
+  primitives fixtureBundle
+  realization generatedRealization
+
+/-- error: IE-C011 GeneratedCertificateRegistered:
+LeanInformationAudit.Tests.RegistrationErrors.generated.__catalog_irredundant -/
+#guard_msgs (error) in
+register_information_theorem generated.__catalog_irredundant
+  in fixtureLawArena
+  primitives fixtureBundle
+  realization generatedRealization
+
+/-- error: IE-C011 GeneratedCertificateRegistered:
+LeanInformationAudit.Tests.RegistrationErrors.authored.__information_catalog -/
+#guard_msgs (error) in
+information_theorem authored.__information_catalog
+  in fixtureLawArena
+  primitives fixtureRealization
+  : fixtureLawArena.Law fixtureRealization := by trivial
+
+/-- error: IE-C011 GeneratedCertificateRegistered:
+LeanInformationAudit.Tests.RegistrationErrors.authored.__catalog_irredundant -/
+#guard_msgs (error) in
+information_theorem authored.__catalog_irredundant
+  in fixtureLawArena
+  primitives fixtureRealization
+  : fixtureLawArena.Law fixtureRealization := by trivial
+
+/-- info: IE-C011 GeneratedCertificateRegistered:
+LeanInformationAudit.Tests.RegistrationErrors.generated.__information_catalog -/
+#guard_msgs in
+run_cmd do
+  try
+    registerValidatedEntry {
+      theoremName :=
+        `LeanInformationAudit.Tests.RegistrationErrors.generated.__information_catalog
+      unitName := `LeanInformationAudit.Tests.RegistrationErrors.mismatchedUnit
+      arenaName := `LeanInformationAudit.Tests.RegistrationErrors.fixtureLawArena
+      realizationName := `LeanInformationAudit.Tests.RegistrationErrors.generatedRealization
+    }
+    throwError "reserved catalog name passed low-level registration"
+  catch error => logInfo error.toMessageData
+
+/-- info: IE-C011 GeneratedCertificateRegistered:
+LeanInformationAudit.Tests.RegistrationErrors.generated.__catalog_irredundant -/
+#guard_msgs in
+run_cmd do
+  try
+    registerValidatedEntry {
+      theoremName :=
+        `LeanInformationAudit.Tests.RegistrationErrors.generated.__catalog_irredundant
+      unitName := `LeanInformationAudit.Tests.RegistrationErrors.mismatchedUnit
+      arenaName := `LeanInformationAudit.Tests.RegistrationErrors.fixtureLawArena
+      realizationName := `LeanInformationAudit.Tests.RegistrationErrors.generatedRealization
+    }
+    throwError "reserved irredundancy name passed low-level registration"
+  catch error => logInfo error.toMessageData
+
 theorem differentStatement : 1 = 1 :=
   rfl
 
