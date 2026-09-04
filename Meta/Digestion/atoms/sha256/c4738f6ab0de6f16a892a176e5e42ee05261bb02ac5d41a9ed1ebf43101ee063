@@ -1,0 +1,22 @@
+## 第四层：Prime–Zero 输运
+
+证明该 prime-side hyperbolic energy 控制 zero-side 离线奇能量：
+
+$$
+\boxed{
+\mathcal O_{\mathrm{off}}^{\mathrm{odd}}
+\preceq
+C\,
+\mathcal E_{\mathrm{prime}}^{\perp}
++
+\varepsilon I.
+}
+\tag{2131.2}
+$$
+
+前三层可以直接形式化。
+
+第四层才是 RH 承重桥。
+
+---
+

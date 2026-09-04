@@ -24,9 +24,7 @@ internal static class FrozenStatePath
 
         var candidate = statePath[Root.Length..^suffix.Length];
         if (!RepoPath.TryCreate(candidate, out var path)
-            || !RepositoryPathPolicy.TryResolve(path, out var gid)
-            || gid?.ToTarget() is not Target.Formal
-            || gid.Path != path)
+            || !IsCanonicalModulePath(path))
         {
             return false;
         }
@@ -38,12 +36,10 @@ internal static class FrozenStatePath
     internal static RepoPath FromModulePath(RepoPath modulePath)
     {
         ArgumentNullException.ThrowIfNull(modulePath);
-        if (!RepositoryPathPolicy.TryResolve(modulePath, out var gid)
-            || gid?.ToTarget() is not Target.Formal
-            || gid.Path != modulePath)
+        if (!IsCanonicalModulePath(modulePath))
         {
             throw new ArgumentException(
-                $"Module path is not a canonical D5 Lean selector: {modulePath.Value}.",
+                $"Module path is not a canonical repository Lean module: {modulePath.Value}.",
                 nameof(modulePath));
         }
 
@@ -55,4 +51,26 @@ internal static class FrozenStatePath
 
         return statePath;
     }
+
+    internal static bool IsCanonicalModulePath(RepoPath path)
+    {
+        ArgumentNullException.ThrowIfNull(path);
+        const string suffix = ".lean";
+        if (!path.Value.EndsWith(suffix, StringComparison.Ordinal))
+        {
+            return false;
+        }
+
+        var moduleName = path.Value[..^suffix.Length];
+        return moduleName.Split('/').All(IsCanonicalModuleSegment);
+    }
+
+    private static bool IsCanonicalModuleSegment(string segment) =>
+        segment.Length > 0
+        && segment[0] is >= 'A' and <= 'Z'
+        && segment.Skip(1).All(static character =>
+            character is >= 'A' and <= 'Z'
+                or >= 'a' and <= 'z'
+                or >= '0' and <= '9'
+                or '_');
 }

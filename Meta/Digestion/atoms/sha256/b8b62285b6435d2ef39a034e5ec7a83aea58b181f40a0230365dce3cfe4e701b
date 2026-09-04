@@ -1,0 +1,41 @@
+## 5.1 near-zero 可见相
+
+有限观察者不能判定精确等式 $X=0$，只能读取阈值事件
+
+$$
+|X(t,\delta)|\le\varepsilon.
+\tag{5.1}
+$$
+
+定义
+
+$$
+\mathcal B_\varepsilon(t)
+=
+\left\{
+\delta:
+|X(t,\delta)|\le\varepsilon
+\right\}.
+\tag{5.2}
+$$
+
+在 $m$ 重零点附近，存在正常数 $c_-,c_+$，使充分小时
+
+$$
+c_-r^m
+\le
+|X|
+\le
+c_+r^m,
+\qquad
+r=\sqrt{(\delta-\delta_*)^2+(t-t_*)^2}.
+\tag{5.3}
+$$
+
+因此 near-zero 区域被两个圆盘夹住，其尺度为
+
+$$
+\boxed{r_\varepsilon\asymp\varepsilon^{1/m}.}
+\tag{5.4}
+$$
+

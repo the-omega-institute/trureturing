@@ -1,0 +1,74 @@
+# 第两千一百三十部　需要对 prime gap 作切向吹起
+
+Kakeya 理论研究细管时，会把微小空间尺度重新缩放到单位尺度。
+
+PrimeGaps 这里也需要同样的 blow-up。
+
+令：
+
+$$
+p_j=P+h_j,
+\qquad
+|h_j|\le D.
+$$
+
+则：
+
+$$
+\log p_j
+=
+\log P
++
+\frac{h_j}{P}
++
+O(D^2/P^2).
+$$
+
+所以：
+
+$$
+\boxed{
+P^2
+\mathfrak S_{\mathcal C}(\delta)
+\longrightarrow
+\delta^2
+\sum_{i<j}
+(h_j-h_i)^2
+}
+\tag{2130.1}
+$$
+
+在 \(P\to\infty\)、固定局部构型 \(\{h_j\}\) 时成立。
+
+因此真正稳定的 local prime-gap geometry 是：
+
+$$
+\boxed{
+P\,\Delta\log p
+\sim
+q-p.
+}
+$$
+
+未重标度时，短隙簇在 log-frequency 空间中坍缩成一点。
+
+经过 \(P\)-倍切向 blow-up 后，加法间距重新显现。
+
+这与 Kakeya 的尺度放大完全同型：
+
+$$
+\boxed{
+\text{原空间中越来越细的方向簇，
+在 tangent chart 中具有稳定非退化几何。}
+}
+$$
+
+但要把不同 \(P\) 的 tangent chart 胶合成一个 RH 证明，需要一个跨尺度规范。最可能提供该规范的是：
+
+* Gamma 因子；
+* 函数方程；
+* Riemann–Siegel saddle scale；
+* 或 canonical Nevanlinna kernel。
+
+---
+

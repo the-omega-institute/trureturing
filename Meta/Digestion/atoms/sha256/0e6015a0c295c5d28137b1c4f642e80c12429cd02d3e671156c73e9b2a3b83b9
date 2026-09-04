@@ -1,0 +1,32 @@
+\[
+\boxed{
+\widehat X_{\mathrm{real}}
+=
+\sum_{x:\widehat X_{\mathrm{form}}}
+\operatorname{Realizable}(x).
+}
+\]
+
+该类型仍可能为空。
+
+所以：
+
+\[
+\boxed{
+\text{形式逆极限}
+\neq
+\text{现实实现}
+\neq
+\text{实际锚定}.
+}
+\]
+
+一个实际实现还需要：
+
+\[
+a:\widehat X_{\mathrm{real}}.
+\]
+
+这里：
+
+- 形式极限由 CUT/FLOW 兼容条件构造；

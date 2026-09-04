@@ -92,8 +92,11 @@ public sealed partial class CoverAtomTests
             ["--cover-atom", spec.AtomId, "--gid", spec.Gid, "--base", "baseline"]);
 
         Assert.False(execution.Result.Success);
-        Assert.Contains("current edge GID", execution.Result.Error, StringComparison.Ordinal);
-        Assert.Contains("resolves to 0 report declarations", execution.Result.Error, StringComparison.Ordinal);
+        Assert.Equal(
+            "COVER_INVALID current edge GID D5/S0/Carrier/Probe.probe has no unique active "
+                + "frozen statement: coverage GID resolves to 0 current report declarations: "
+                + "D5/S0/Carrier/Probe.probe\n",
+            execution.Result.Error);
         Assert.Equal(execution.Before, execution.After);
     }
 
@@ -125,9 +128,11 @@ public sealed partial class CoverAtomTests
             currentReport: ambiguousReport);
 
         Assert.False(execution.Result.Success);
-        Assert.Contains("COVER_INVALID", execution.Result.Error, StringComparison.Ordinal);
-        Assert.Contains("current edge GID", execution.Result.Error, StringComparison.Ordinal);
-        Assert.Contains("resolves to 2 report declarations", execution.Result.Error, StringComparison.Ordinal);
+        Assert.Equal(
+            "COVER_INVALID current edge GID D5/S0/Carrier/Probe.probe has no unique active "
+                + "frozen statement: coverage GID resolves to 2 current report declarations: "
+                + "D5/S0/Carrier/Probe.probe\n",
+            execution.Result.Error);
         Assert.Equal(execution.Before, execution.After);
     }
 

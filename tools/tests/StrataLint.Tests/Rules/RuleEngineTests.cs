@@ -547,13 +547,20 @@ public sealed class RuleEngineTests
         InstallFrozenStatement(fixture.Files, targetPath, FrozenStatementReceiptTestData.Id('b'));
         InstallFrozenStatement(fixture.Baseline, targetPath, baselineStatementId);
         InstallFrozenStatement(fixture.ForkPoint, targetPath, baselineStatementId);
-        var currentEvents = fixture.Files.Keys
-            .Where(static path => FrozenLedgerChangeClassifier.IsAcceptedEventPath(path));
-        var baselineEvents = fixture.Baseline.Keys
-            .Where(static path => FrozenLedgerChangeClassifier.IsAcceptedEventPath(path));
-        var frozenChanges = currentEvents
-            .Except(baselineEvents, StringComparer.Ordinal)
-            .Concat(baselineEvents.Except(currentEvents, StringComparer.Ordinal))
+        var currentFrozenPaths = fixture.Files.Keys
+            .Where(static path => FrozenLedgerChangeClassifier.IsAcceptedEventPath(path)
+                || FrozenStatePath.IsUnderRoot(path));
+        var baselineFrozenPaths = fixture.Baseline.Keys
+            .Where(static path => FrozenLedgerChangeClassifier.IsAcceptedEventPath(path)
+                || FrozenStatePath.IsUnderRoot(path));
+        var frozenChanges = currentFrozenPaths
+            .Except(baselineFrozenPaths, StringComparer.Ordinal)
+            .Concat(baselineFrozenPaths.Except(currentFrozenPaths, StringComparer.Ordinal))
+            .Concat(currentFrozenPaths.Intersect(baselineFrozenPaths, StringComparer.Ordinal).Where(path =>
+                !string.Equals(
+                    fixture.Files[path],
+                    fixture.Baseline[path],
+                    StringComparison.Ordinal)))
             .ToArray();
         Assert.NotEmpty(frozenChanges);
         return (fixture, frozenChanges);

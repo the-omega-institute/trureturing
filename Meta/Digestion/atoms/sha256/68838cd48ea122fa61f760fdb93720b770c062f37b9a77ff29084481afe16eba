@@ -1,0 +1,18 @@
+\[
+\operatorname{Refines}(q',q)
+=
+\sum_{p:B'\to B}
+\prod_{x:X}
+q(x)=p(q'(x)).
+\]
+
+对有效读数，精化等价于反向 kernel 包含：
+
+\[
+q'\text{ 精化 }q
+\quad\Longleftrightarrow\quad
+\ker q'\subseteq\ker q.
+\]
+
+---
+

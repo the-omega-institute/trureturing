@@ -33,6 +33,11 @@ internal static class BackfillInventoryRule
 
     internal static bool IsAffectedBy(RuleEvaluationContext context)
     {
+        if (context.Changes.Paths.IsDefaultOrEmpty)
+        {
+            return false;
+        }
+
         foreach (var path in context.Changes.Paths)
         {
             if (BackfillInventoryLoader.IsCanonicalPath(path.Value)
@@ -62,11 +67,9 @@ internal static class BackfillInventoryRule
             context.Current,
             context.Baseline,
             context.Changes);
-        return BackfillDeltaImpactResolver.Resolve(
-            context.Current,
-            context.Baseline,
+        return BackfillDeltaImpactResolver.HasPotentialStatementDependants(
             document,
-            context.Changes).HasAffectedEdges;
+            context.Changes);
     }
 
     private static ImmutableArray<RuleFinding> Evaluate(
@@ -90,6 +93,7 @@ internal static class BackfillInventoryRule
                 var impact = BackfillDeltaImpactResolver.Resolve(
                     context.Current,
                     context.Baseline,
+                    context.Lean.Report,
                     document,
                     changes);
                 evaluationChanges = impact.EvaluationChanges;

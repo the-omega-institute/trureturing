@@ -1,0 +1,53 @@
+# 13. prime 加权的离线缺陷测度
+
+定义有限 cluster 对一个零点 $\rho=\tfrac12+\delta_\rho+i\gamma_\rho$ 的关系权
+
+$$
+\mathcal R_{\mathcal C}(\rho)
+:=
+R_{\mathcal C}(\delta_\rho).
+\tag{13.1}
+$$
+
+并定义正原子测度
+
+$$
+\boxed{
+\nu_{\mathcal C}
+=
+\frac12
+\sum_{\substack{\rho:\Im\rho>0}}
+ m_\rho
+R_{\mathcal C}(\delta_\rho)
+\delta_{\Im\rho}.
+}
+\tag{13.2}
+$$
+
+由于
+
+$$
+R_{\mathcal C}(\delta)=0
+\Longleftrightarrow
+\delta=0,
+$$
+
+有
+
+$$
+\boxed{
+\mathrm{RH}
+\Longleftrightarrow
+\nu_{\mathcal C}=0.
+}
+\tag{13.3}
+$$
+
+并且若第一离线高度存在，则它也是 $\nu_{\mathcal C}$ 的第一个支撑点。
+
+$\mu_a^{\mathrm{LY}}$ 用 Cayley 径向长度加权，$\nu_{\mathcal C}$ 用 prime-frequency 双曲关系能量加权。第 11 节说明两者在有限谱窗内测量同一法向缺陷，但一个来自圆坐标，一个来自 prime 关系度量。
+
+真正开放的问题不是定义 $\nu_{\mathcal C}$，而是：能否不读取零点坐标，仅从 completed prime–Gamma side 构造或控制同一个正测度。
+
+---
+

@@ -1,0 +1,17 @@
+### 推论 5.1　可见时间宽度
+
+固定 $\delta=\delta_*$，observer 看见该 near-zero 相的时间宽度满足
+
+$$
+|t-t_*|\asymp\varepsilon^{1/m}.
+\tag{5.5}
+$$
+
+简单零点时，
+
+$$
+|t-t_*|\approx
+\frac{\varepsilon}{|\Xi'(\rho_*)|}.
+\tag{5.6}
+$$
+

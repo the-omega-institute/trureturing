@@ -1,0 +1,12 @@
+### 2.3 ADMIT：准入谓词
+
+一个 ADMIT 是：
+
+\[
+\boxed{
+A:X\to\mathsf{Prop}.
+}
+\]
+
+其合法对象类型为：
+

@@ -1,0 +1,77 @@
+# 第两千一百四十部　新的形式化顺序
+
+```text
+D5/S3/Arithmetic/PrimeGaps/AdmissibleObserverBudget/
+  PrimeTupleResidueObserver.lean
+  TupleAdmissible.lean
+  LargePrimeObserverAutomatic.lean
+  AdmissibilityOnlyNeedsPrimesBelowTupleSize.lean
+  TuplePrimorialObserverModulus.lean
+  PrimorialBudgetAsymptoticTarget.lean
+
+D5/S3/Arithmetic/PrimeGaps/MaynardObserverGain/
+  CandidateTupleDimension.lean
+  GuaranteedPrimeSurvivorCount.lean
+  SieveVariationalGain.lean
+  LevelOfDistributionObserverBandwidth.lean
+  LogarithmicGainForcesExponentialBudget.lean
+  BombieriVinogradovBudgetFour.lean
+
+D5/S3/Observer/ComplexifiedPrimeGapKernel/
+  PrimeLogFrequency.lean
+  ReflectedComplexObservationPoints.lean
+  AlternatingComplexPrimeKernel.lean
+  ComplexPrimeKernelFactorization.lean
+  PrimeKernelSinHSinIdentity.lean
+  TimeResolutionAsCriticalSlice.lean
+
+D5/S3/Observer/PrimeGapNormalSplitting/
+  PrimePairNormalEnergy.lean
+  NormalEnergyStrictForDistinctPrimes.lean
+  NormalEnergyLowerBoundLogGap.lean
+  AdditiveGapSmallScaleExpansion.lean
+  TimeNormalCauchyRiemannMetric.lean
+
+D5/S3/Observer/PrimeClusterExteriorEnergy/
+  ReflectedPrimeClusterMatrix.lean
+  ClusterRankOneOnCriticalLine.lean
+  ClusterRankTwoOffCriticalLine.lean
+  ClusterGramDeterminantCauchyBinet.lean
+  ClusterLogFrequencyVariance.lean
+  PrimeClusterExplicitVarianceLowerBound.lean
+
+D5/S3/Observer/PrimeGapTangentBlowup/
+  AdditivePrimeGapCoordinate.lean
+  LogGapTangentApproximation.lean
+  PrimeScaleRenormalizedNormalEnergy.lean
+  LocalGapConfigurationLimit.lean
+  CrossScaleTangentGaugeTarget.lean
+
+D5/S3/GoldenObserver/PrimeGapBudgetAudit/
+  GoldenLinearCandidateCount.lean
+  GoldenWordExponentialCount.lean
+  PrimorialBudgetForLinearGoldenCutoff.lean
+  MaynardBudgetForGoldenPrimeSurvivors.lean
+  DoubleExponentialBudgetForAllGoldenWords.lean
+  CandidateCountEntropyBudgetDistinction.lean
+
+D5/S3/Observer/PrimeGapStickyTower/
+  ShortGapLogFrequencyGrain.lean
+  GrainCoherenceTime.lean
+  GrainNormalResolution.lean
+  NestedPrimeGapGrains.lean
+  MultiscaleStickyTower.lean
+  StickyTowerArithmeticObstructionTarget.lean
+
+D5/S3/Weil/PrimeGapHorizontalBridge/
+  PrimeHyperbolicExteriorEnergy.lean
+  FinitePrimeClusterNormalOperator.lean
+  FiniteOffLineOddEnergy.lean
+  PrimeGapEnergyToOffLineOddDominationTarget.lean
+  CrossScaleErrorTightnessTarget.lean
+  ReflectionFlatnessKillsOffLineOddTarget.lean
+  PrimeGapHorizontalBridgeImpliesRHTarget.lean
+```
+
+---
+

@@ -15,7 +15,9 @@ internal static class DigestionCoverageTargetAligner
         ArgumentNullException.ThrowIfNull(lean);
 
         var states = truthStates ?? LeanTruthStates.Resolve(snapshot, lean);
-        var frozenStatements = FrozenStatementIndex.Load(snapshot);
+        var frozenStatements = FrozenStatementIndex.Create(
+            FrozenStateCatalog.Load(snapshot),
+            lean.Report);
         return document.WithDigestionSources(document.RequireDigestionSources()
             .Select(source => source with
             {

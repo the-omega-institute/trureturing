@@ -2489,3 +2489,125 @@ W-12 使阿基米德可积性对每个测试函数无条件成立,M2-c 使零点
 一席位轮(codex-cli,独立 worktree,`Separator/` 第八个模块;同 PR deposit(绑 W-16 atom)+ 三条 cover)。预计 ≤ 40 分钟(探针证明可复用)。
 
 后续增订继续严格追加于本节之后。
+---
+
+# 增订二十九　零点无穷假设下不含 `ZeroData` 的 Weil 判据(W-19 / W-20 / W-21 预登记)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;探针一席(codex-cli,`probe-w19-zfree`,`make lean` exit 0、`lake env lean` exit 0,三条声明全为标准三公理)在 `origin/dev` = `1b0cb4fed6`(增订二十七之 la156 模块已合入)的暖树上整证,消费冻结的 M1-a 桥 `ZetaBridge.ZeroDataNonemptyIffInfinite.nonempty_zeroData_iff_infinite`、W-13 `Separator.ArchimedeanConvergence.rh_iff_primeSidePositivity`、W-14/W-15 `Separator.PrimeArchimedeanPoincareCriterion.{rh_iff_primeArchimedeanPoincare, rh_iff_exists_supportRadius_primeArchimedeanPoincare}`;`IsNontrivialZero` 取 `D5.S3.Weil.ZeroSum` 命名空间(与 `WeilSquarePositivityCriterionOfInfinite` 同)。检索留痕:`git grep -n 'of_infinite\|hInf : {rho' -- 'D5/**/*.lean'` 命中仅 `WeilSquarePositivityCriterionOfInfinite.lean:40,59,80` 与 `ZeroDataNonemptyIffInfinite.lean:191,239`(零点侧判据的 ∀Z/∃Z 形),素数侧与 Poincaré 形无 Z-free 陈述;三个候选名零命中。散文由 orchestrator(claude 主循环)撰写。判决日:2026-09-04。lane issue:#4589。
+
+## 〇　为什么是这一节
+
+W-13、W-14、W-15 的右端**不含 `Z`**:素数侧表达式与 Poincaré 不等式只涉及测试函数、素数幂权、边界读数与 digamma 常数;`Z` 只在证明中经显式公式出现。于是任意一个 `ZeroData` 都足以建立等价,而 M1-a 桥说 `ZeroData` 非空 ⟺ 非平凡零点无穷。合起来:**在零点无穷这一个经典假设下(Hardy 1914;钉版 Mathlib 无此定理,故留作显式假设),RH 等价于一条完全不提零点、不提 ζ、不提零点枚举的实不等式**。这是本路线判据阶梯的收口形式;`ZeroDataFreeCriteria` 落 `D5/S3/Weil/Separator/`。**诚实边界**:①`hInf` 是假设,本仓未证;②测试函数类为本仓 `WeilTestFunction`;③不构成 RH 证明。
+
+## 一　W-19 预登记:Z-free 的 Poincaré 判据(`ZeroDataFreeCriteria`,落 `D5/S3/Weil/Separator/`)
+
+**义务**:公开定理 `rh_iff_primeArchimedeanPoincare_of_infinite (hInf : {rho : ℂ | IsNontrivialZero rho}.Infinite) : RiemannHypothesis ↔ ∀ (f : WeilTestFunction) (L : ℝ), tsupport (f : ℝ → ℂ) ⊆ Set.Icc (-L) L → (2 * totalPrimeWeight L - archimedeanConstant) * l2Mass f ≤ 2 * Complex.normSq (∫ x : ℝ, Complex.exp ((x : ℂ) / 2) * f x) + archimedeanJumpEnergy f + arithmeticJumpEnergy L f`。
+**可证伪预测(写在跑之前)**:`obtain ⟨Z⟩ := nonempty_zeroData_iff_infinite.mpr hInf` 后即 W-14 `Z`;标准三公理。探针已整证。
+**边界**:同 §〇。
+
+## 二　W-20 预登记:Z-free 的素数侧判据(同模块第二条公开定理)
+
+**义务**:公开定理 `rh_iff_primeSidePositivity_of_infinite (hInf : {rho : ℂ | IsNontrivialZero rho}.Infinite) : RiemannHypothesis ↔ ∀ g : WeilTestFunction, 0 ≤ (poleTerm (convolutionSquare g) - primeTerm (convolutionSquare g) + archimedeanTerm (convolutionSquare g) (archimedeanConvergent_of_weilTestFunction (convolutionSquare g))).re`。
+**可证伪预测(写在跑之前)**:同上,经 W-13;标准三公理。探针已整证。
+**边界**:同 §〇。
+
+## 三　W-21 预登记:Z-free 的 ∃-半径形(同模块第三条公开定理)
+
+**义务**:公开定理 `rh_iff_exists_supportRadius_primeArchimedeanPoincare_of_infinite (hInf : {rho : ℂ | IsNontrivialZero rho}.Infinite) : RiemannHypothesis ↔ ∀ f : WeilTestFunction, ∃ L : ℝ, tsupport (f : ℝ → ℂ) ⊆ Set.Icc (-L) L ∧ (2 * totalPrimeWeight L - archimedeanConstant) * l2Mass f ≤ 2 * Complex.normSq (∫ x : ℝ, Complex.exp ((x : ℂ) / 2) * f x) + archimedeanJumpEnergy f + arithmeticJumpEnergy L f`。
+**可证伪预测(写在跑之前)**:同上,经 W-15;标准三公理。探针已整证。
+**边界**:同 §〇。
+
+## 四　预算与结算
+
+一席位轮(codex-cli,独立 worktree,`Separator/` 第十个模块;同 PR deposit(绑 W-19 atom)+ 三条 cover)。预计 ≤ 30 分钟(探针证明可复用)。
+
+后续增订继续严格追加于本节之后。
+---
+
+# 增订三十　零点无穷:显式公式沿余弦调制波包的反证(Z-1 … Z-5 预登记;第一条按第 5⁗ 条选出的靶)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;思考面板三席并发盲评——analytic-route(GPT PRO,nyxid `company-chatgpt-pro`,client-ref `panel-hinf-analytic-a1`)/ machinery-inventory(codex-cli,`panel-hinf-machinery`)/ route-adversary(codex-cli,`panel-hinf-adversary`),只读 `origin/dev`=`baad9bda0b`;元裁判为 orchestrator(claude 主循环):取 GPT PRO 的余弦调制固定支撑波包路线为主(固定支撑正好回应对手席「收缩支撑下阿基米德振荡积分不受逐点 Stirling 控制」的反对),machinery 席的「log 2 素数尖峰 + Gamma 项 x-空间局部化」为备选,对手席的 Hadamard-lite(R2)因三条重引理搁置。两个探针席(codex-cli,`probe-z13-packet`、`probe-z4-archimedean`)在暖树整证:`probe-z13-packet`(`make lean` exit 0、`lake env lean` exit 0,304 行,13 条声明全为标准三公理)整证 Z-1、Z-2、Z-3 全部子项,自报判形 content 者 9 条(含 `H_ge_half_near_zero`、`paperFT_cosineModulation`、`paperFT_cosineModulation_tendsto_zero`、`modulated_prime_tsum_uniformly_bounded`、`finite_zero_side_tendsto_zero`),bind-only 者 4 条(`H_real_nonneg`、`H_integrable`、两条极点特化);`probe-z4-archimedean`(`lake env lean` exit 0,428 行,全部标准三公理)以抽象 H 整证 Z-4:可积性(由 |H| ≤ K/(1+x²))、量化下界 `archimedean_lower_bound`(δ ≤ T 时 δ/2·(μ(T−δ)+1) − ∫H ≤ ∫packet·μ)、实/复两形发散与 `gamma_term` 改写;两探针消费的冻结名:`standardBump.normed`、`fourierLaplace_convolutionSquare_real(_nonnegative)`、`paperFT_eq_fourierLaplace`、`fourierLaplace_entire`、`fourierLaplace_decay_closedStrip`、`Zeta23.WeilEF.abs_gammaOf_im_le`、`primeSummand_hasFiniteSupport`、`mu_stirling`、`mu_monotoneOn`、`mu_zero_le`、`neg_one_lt_mu_zero`、`mu_smooth`、`Zeta23.EF.gamma_term` 及 Mathlib 平移不变积分引理。orchestrator 亲验的仓内事实:`Zeta23.EF.EF_lit`(`D5/S3/Weil/ZetaCore/ExplicitFormula.lean:90`)对任意基数的 `ZeroConfig.carrier` 成立且由 `EF_lit_zetaZeroConfig`(`ZetaExplicit/Main.lean:279`)无条件实例化;`literatureRHS`(`:79-83`)= 两极点项 − 素数 tsum + (1/2π)∫paperFT·gammaBracket,`gamma_term`(`:273`)把末项写成 ∫paperFT·μ;`fourierLaplace_convolutionSquare_real`(`TestFunctions/ConvolutionSquarePositivity.lean:29`)、`paperFT_eq_fourierLaplace`(`ZetaBridge/ClassicExplicitFormula.lean:55`)、`norm_paperFT_le`(`ZetaCore/PaperFT.lean:89`)、`mu_monotoneOn`/`mu_zero_le`/`neg_one_lt_mu_zero`(`ZetaGamma/GammaMu.lean:149-171`)、`mu_stirling`(`ZetaGamma/GammaStirlingVert.lean:625`:|τ| ≥ 1 时 |μ(τ) − (1/2π)log(|τ|/2π)| ≤ C/τ²)均存在。检索留痕:`rg` 钉版 Mathlib 无零点无穷定理(`LSeries/ZetaZeros.lean` 只有零点集闭、离散、紧集内有限),`Analysis/Complex/Hadamard.lean` 为三线定理而非因子分解;仓内 `D5/S3/Weil/ZetaRvm/**` 的 RvM 主项与计数为他驱动者活线(卷 L2295),本路线不依赖。判决日:2026-09-04。lane issue:#4589。
+
+## 〇　为什么是这一节
+
+本路线所有 Z-free 判据(增订二十九)挂在 `hInf : {ρ | IsNontrivialZero ρ}.Infinite` 上;M1-a 桥说它等价于 `Nonempty ZeroData`。本仓已无条件冻结了文献形显式公式 `EF_lit zetaZeroConfig`,而它对**任意基数**的零点载体成立。于是零点无穷可以由显式公式本身反证:若零点有限,则沿一族测试函数零点侧趋于零而右端发散。选取偶的归一化 `ψ`,`q = ψ⋆ψ`,`H = paperFT q` 在实轴上等于 |ψ̂|² ≥ 0、H(0)=1、连续故在 [−δ,δ] 上 ≥ 1/2;调制 `k_T(x) = cos(Tx)·q(x)` 使 `paperFT k_T(z) = (H(z+T)+H(z−T))/2`,支撑不随 T 变。则:①素数项一致有界(固定支撑,只有 n ≤ e^L 参与,|cos| ≤ 1;**不需要** Chebyshev 或素数定理);②两极点项与有限零点侧趋于零(闭带衰减);③阿基米德项 ∫F_T·μ ≥ (δ/2)(μ(T−δ)+1) − M → +∞(F_T ≥ 0,在 [T−δ,T+δ] 上 ≥ 1/4,μ 在 [0,∞) 单调且 μ+1 > 0,`mu_stirling` 给 (1/2π)log T 增长)。矛盾。**逃逸内容**:③的量化下界是本仓从未有过的新命题,证明用到的非冻结输入是「非负平移波包限制在 [T−δ,T+δ] 上的质量下界与 μ 的 Stirling 增长的合成」;①的一致界与②的有限和衰减是新的中间命题。**诚实边界**:①本节证的是「非平凡零点集无穷」,不是 Hardy 的「临界线上无穷多零点」;②不构成 RH 证明;③`Nonempty ZeroData` 只作 bind-only 伴随结果与 Z-5 同模块落地。
+
+## 一　Z-1 预登记:正波包种子(`ZeroInfinitude/CosinePacket`,新桶 `D5/S3/Weil/ZeroInfinitude/`,`ZetaBridge/` 已满 24)
+
+**义务**:公开构造 `packetSeed : WeilTestFunction` 与 `packetSquare := convolutionSquare packetSeed`,并公开定理 `packetTransform_ge_half_near_zero : ∃ δ : ℝ, 0 < δ ∧ ∀ t : ℝ, |t| ≤ δ → 1/2 ≤ (Zeta23.paperFT (packetSquare : ℝ → ℂ) t).re`,连同 `packetTransform_real_nonneg`、`packetTransform_zero : Zeta23.paperFT packetSquare 0 = 1`、`packetTransform_integrable`。
+**拟议逃逸见证(写在探针之前)**:`∃ δ > 0, ∀ |t| ≤ δ, 1/2 ≤ H t`——由 H(0)=1、H 连续(整函数限制)与 |ψ̂|² 非负合成;非冻结输入是归一化 bump 的积分计算与连续性论证。
+**边界**:ψ 的具体形状不承重,只用其归一化与偶性。
+
+## 二　Z-2:余弦调制(同模块伴随声明,不列义务)
+
+`cosineModulation (q : WeilTestFunction) (T : ℝ) : WeilTestFunction`(值 cos(Tx)·q(x))与 `paperFT_cosineModulation : paperFT (cosineModulation q T) z = (paperFT q (z+T) + paperFT q (z−T))/2`。判形预期 bind-only(积分线性 + 余弦指数恒等式),作为 Z-1/Z-3 内容模块的具名伴随结果落地,不单独预登记。
+
+## 三　Z-3 预登记:有限侧控制(同模块第二组公开定理)
+
+**义务**:公开定理 `primeTerm_cosineModulation_bounded : ∃ B : ℝ, ∀ T : ℝ, ‖∑' n : ℕ, ((ArithmeticFunction.vonMangoldt n / Real.sqrt n : ℝ) : ℂ) * (cosineModulation packetSquare T (Real.log n) + cosineModulation packetSquare T (-Real.log n))‖ ≤ B`;`paperFT_cosineModulation_tendsto_zero (z : ℂ) (hz : |z.im| ≤ 1) : Tendsto (fun T => Zeta23.paperFT (cosineModulation packetSquare T) z) atTop (nhds 0)`;`finiteCarrier_zeroSide_tendsto_zero (Z : Zeta23.EF.ZeroConfig) (hZ : Z.carrier.Finite) : Tendsto (fun T => ∑' ρ : Z.carrier, (Z.mult ρ : ℂ) * Zeta23.paperFT (cosineModulation packetSquare T) (Zeta23.gammaOf ρ)) atTop (nhds 0)`。
+**拟议逃逸见证**:T-无关的素数界(由固定支撑 + 有限和)与「闭带 O(1/(1+Re²)) 衰减经平移 z±T 传递到固定点的极限」——后者是非冻结的分析步骤。
+**边界**:只对有限载体断言零点侧趋零;对无限载体不作断言。
+
+## 四　Z-4 预登记:阿基米德项发散(`ZeroInfinitude/ArchimedeanDivergence`,抽象 H 形,不绑 Z-1,可与 Z-1 并行)
+
+**义务**:对 `H : ℝ → ℝ` 与 `packet H T r := (H (r + T) + H (r - T)) / 2`,在假设 `Integrable H`、`∀ r, 0 ≤ H r`、`∃ δ > 0, ∀ t, |t| ≤ δ → 1/2 ≤ H t`、`∃ K ≥ 0, ∀ x, |H x| ≤ K / (1 + x ^ 2)` 下,公开定理 `archimedean_lower_bound`(δ ≤ T 时 `δ / 2 * (Zeta23.mu (T - δ) + 1) - ∫ r, H r ≤ ∫ r, packet H T r * Zeta23.mu r`)、`archimedean_divergence_of_decay : Tendsto (fun T => ∫ r, packet H T r * Zeta23.mu r) atTop atTop`,以及复形 `archimedean_divergence_complex_of_decay : Tendsto (fun T => (∫ r, (packet H T r : ℂ) * (Zeta23.mu r : ℂ)).re) atTop atTop`;伴随:`mu_add_one_pos`、`mu_tendsto_atTop`、`packet_weighted_integrable_of_decay`。
+**逃逸见证(探针已证,写在实施之前)**:`archimedean_lower_bound` 这条量化不等式——非冻结输入为「非负平移波包在 [T−δ,T+δ] 上 ≥ 1/4 的质量下界、μ+1 > 0 丢弃余集、μ 在 Ici 0 单调」的合成;`mu_tendsto_atTop` 由 `mu_stirling` 得。
+**边界**:抽象 H;与具体波包的对接在 Z-5。可积性用 |H| ≤ K/(1+x²)(由冻结闭带衰减供给)。
+
+## 五　Z-5 预登记:反证收口(`ZeroInfinitude/ExplicitFormulaObstruction`,绑 Z-1/2/3 与 Z-4)
+
+**义务**:公开定理 `carrier_infinite_of_EF_lit (Z : Zeta23.EF.ZeroConfig) (hEF : Zeta23.EF.EF_lit Z) : Z.carrier.Infinite` 与 `isNontrivialZero_infinite : {ρ : ℂ | IsNontrivialZero ρ}.Infinite`(经 `EF_lit_zetaZeroConfig` 与 `zetaZeroConfig.carrier` 的字面);伴随(bind-only,同模块):`nonempty_zeroData : Nonempty ZeroData`(M1-a 桥)。
+**拟议逃逸见证(写在探针之前;Z-5 尚无探针)**:对接引理 `re_paperFT_cosineModulation_eq_packet : (Zeta23.paperFT (cosineModulation packet T) r).re = packet (fun t => (H t).re) T r`(由 `paperFT_cosineModulation` 与 H 在实轴取实值)与闭带衰减给出的 `|Re H| ≤ K/(1+t²)`,再把 `literatureRHS (cosineModulation packet T)` 的实部拆成「两极点 → 0、素数项有界、阿基米德项 → +∞」,与「有限载体时零点侧 → 0」矛盾;矛盾组装本身是新命题。预测:若正确,Z-5 用 Z-1/2/3/4 的公开定理与 `Zeta23.EF.gamma_term` 一次组装闭合,标准三公理;若 `literatureRHS` 的 Gamma 项与 `gamma_term` 的常数约定不合,按冻结字面调整证明而非改陈述。
+**边界**:同 §〇。
+
+## 六　预算与结算
+
+三席位轮(codex-cli,各自独立 worktree):Z-1+Z-2+Z-3 一模块与 Z-4 一模块**并行**(互不绑定),Z-5 在两者合入后串行;每模块同 PR deposit + cover,三席评审,报告须按第 5⁗ 条列 `proof_shape` / 直接冻结依赖 / `escape_witness` / `admission_basis`。预计 Z-1/2/3 与 Z-4 各 ≤ 2 小时(探针证明可复用),Z-5 ≤ 3 小时。
+
+后续增订继续严格追加于本节之后。
+---
+
+# 增订三十一　每个大高度的固定宽度窗内必有零点(Z-6 预登记;附增订三十勘误)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;探针一席(codex-cli,`probe-z6-window`,`make lean` exit 0、`lake env lean` exit 0,16 条声明全为标准三公理)在 `origin/dev` ≥ `68ccfa1365`(增订三十的 Z-1/2/3 模块 `ZeroInfinitude/CosinePacket` 与 Z-4 模块 `ZeroInfinitude/ArchimedeanDivergence` 已合入)的暖树上整证 Z-6;消费冻结的两模块全部公开定理、`Zeta23.WeilEF.EF_lit_zetaZeroConfig`、`Zeta23.EF.gamma_term`、`fourierLaplace_decay_closedStrip`、`paperFT_eq_fourierLaplace`、`Zeta23.WeilEF.abs_gammaOf_im_le`、`gammaOf_re`、`mu_stirling`,以及 AuricStudio lane 冻结的局部零点计数上界 `Zeta23.RvM.zetaZeroConfig_local_count`(`D5/S3/Weil/ZetaRvm/LocalCount.lean:303`:`∃ A₀ ≥ 1, ∀ t, zetaZeroConfig.N t (t+1) ≤ A₀·log(|t|+3)`,`N` 按重数计)。散文由 orchestrator(claude 主循环)撰写。判决日:2026-09-04。lane issue:#4589。
+
+## 〇　为什么是这一节
+
+增订三十的反证只用了「零点侧沿波包 k_T 趋零 vs 右端发散」的定性矛盾。同一波包给出的其实是**定量**信息:右端实部 ≥ c·log(T+3) − M(极点项 → 0、素数项有界、阿基米德项由 `archimedean_lower_bound` + `mu_stirling` 给对数增长),而零点侧的每一项由闭带衰减控制为 ≤ K·mult(ρ)/(1+(Im ρ ∓ T)²)。若高度 T 附近宽 2R 的窗内**没有**零点,零点侧就是一条纯尾项:按单位窗分组、用冻结的局部计数上界 A₀·log(|t|+3),尾项 ≤ 4A₀K·(ε·log(T+3) + W)(ε 可由 R 压小);取 ε = c/(8KA₀)、R 为 Σ 1/(1+n²) 的 Cauchy 尾半径,则零点侧 ≤ (c/2)log(T+3) + C_tail < c·log(T+3) − M,与显式公式矛盾。共轭对称把 −T 处的窗一并处理。结论:**存在绝对常数 R 与 T₀,使每个 T ≥ T₀ 的窗 |Im ρ − T| ≤ R 内至少有一个非平凡零点**。这是本路线第一个零点分布的**定量**结果(弱于 Littlewood 的 O(1/log log T) 间隙,但完全在本仓的显式公式与局部计数机器内闭合)。**诚实边界**:①R、T₀ 由证明中的常数(c、K、A₀、M)决定,存在性陈述,不给数值;②不涉及零点是否在临界线上;③不构成 RH 证明。
+
+## 一　Z-6 预登记:固定宽度窗零点(`ZeroInfinitude/WindowZero`,同桶第四个模块)
+
+**义务**:公开定理 `exists_zero_near_every_large_height : ∃ R T₀ : ℝ, 0 < R ∧ ∀ T : ℝ, T₀ ≤ T → ∃ ρ ∈ Zeta23.zetaZeroConfig.carrier, |ρ.im - T| ≤ R`,连同公开的中间定理 `literatureRHS_re_lower_log : ∃ c M T₁ : ℝ, 0 < c ∧ ∀ T ≥ T₁, c * Real.log (T + 3) - M ≤ (Zeta23.EF.literatureRHS (cosineModulation packetSquare T : ℝ → ℂ)).re` 与 `exists_radius_shifted_inv_sq_tsum`(对每个 ε > 0 存在 R ≥ 2,使在 R-间隙下按重数加权的平移逆平方 tsum ≤ 4A₀(ε·log(|T|+3) + W))。
+**逃逸见证(探针已证,写在实施之前)**:尾项估计 `exists_radius_shifted_inv_sq_tsum`(把载体上的 tsum 按单位窗分组、逐窗用冻结局部计数、再用整数核 Σ 1/(1+n²) 的 Cauchy 尾)与 ε = c/(8KA₀) 的配平——两者都不由冻结前置经实例化得到;`literatureRHS_re_lower_log` 是右端的对数下界,比增订三十的定性发散更强。
+**边界**:同 §〇;`Zeta23.zetaZeroConfig.carrier` 经增订三十的 `zetaZeroConfig_carrier_identification` 即 `{ρ | IsNontrivialZero ρ}`,可作伴随推论,不另列义务。
+
+## 二　勘误:增订三十的类型名笔误
+
+增订三十 §三与 §五的义务文本写作 `Zeta23.EF.ZeroConfig`;本仓的实际类型是 `Zeta23.ZeroConfig`(`D5/S3/Weil/ZetaCore/Defs.lean:361`),`Zeta23.EF` 命名空间下无此结构。la160/la162 实施席均按实际类型实现且未改任何数学 binder(评审席已核实并记入 PR 正文)。按第〇节「atoms 不删、勘误以追加散文表达」,此处只追加勘误,不改原 atom;后续引用一律写 `Zeta23.ZeroConfig`。
+
+## 三　预算与结算
+
+一席位轮(codex-cli,独立 worktree,绑 CosinePacket、ArchimedeanDivergence 两冻结模块与 `zetaZeroConfig_local_count`;同 PR deposit(绑 Z-6 atom)+ cover;三席评审,报告按第 5⁗ 条列 `proof_shape` / 直接冻结依赖 / `escape_witness` / `admission_basis`)。预计 ≤ 3 小时(探针 16 条声明可复用)。
+
+后续增订继续严格追加于本节之后。
+---
+
+# 增订三十二　固定宽度窗内零点数的对数下界(Z-7 预登记)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;探针一席(codex-cli,`probe-z7-density`,`make lean` exit 0、`lake env lean` exit 0,新增声明全为标准三公理)在 `origin/dev` ≥ `68ccfa1365` 的暖树上、以增订三十一的 Z-6 探针文件为起点整证 Z-7;消费冻结的 `ZeroInfinitude/CosinePacket`、`ZeroInfinitude/ArchimedeanDivergence`、`Zeta23.WeilEF.EF_lit_zetaZeroConfig`、`Zeta23.EF.gamma_term`、`fourierLaplace_decay_closedStrip`、`Zeta23.RvM.zetaZeroConfig_local_count`(AuricStudio lane)与 Z-6 模块 `ZeroInfinitude/WindowZero`(la163 在飞)的公开中间定理。`ZeroConfig.N T₁ T₂` 为载体上满足 T₁ < Im ρ ≤ T₂ 的点按重数的有限和(`D5/S3/Weil/ZetaCore/Defs.lean`)。散文由 orchestrator(claude 主循环)撰写。判决日:2026-09-05。lane issue:#4589。
+
+## 〇　为什么是这一节
+
+增订三十一只用了零点侧「非零」这一位信息。同一分解还给出**计数**:零点侧的范数 ≤ (K/2)·N(T−R, T+R)·2 + 尾项(窗内每一项由闭带衰减界 ≤ mult·K,窗外两侧尾项各由固定半径估计压到 (c/4)·log(T+3) 量级),而右端 ≥ c·log(T+3) − M,于是 K·N(T−R, T+R) ≥ (c/2)·log(T+3) − M − C_tail,即 **N(T−R, T+R) ≥ c′·log(T+3)**,c′ = c/(4K),对一切 T ≥ T₀。与冻结的局部计数上界 A₀·log(|t|+3)(每单位窗)合起来,固定宽度窗内的零点数在本仓内被夹在 c′·log T 与 2R·A₀·log T 之间——**真实阶 log T 的上下界都已冻结**。**诚实边界**:①常数存在性,不给数值;②不涉及零点实部;③不构成 RH 证明。
+
+## 一　Z-7 预登记:窗内零点数对数下界(`ZeroInfinitude/WindowCount`,同桶第五个模块,绑 Z-6 模块)
+
+**义务**:公开定理 `window_count_lower_log : ∃ R T₀ c' : ℝ, 0 < R ∧ 0 < c' ∧ ∀ T : ℝ, T₀ ≤ T → c' * Real.log (T + 3) ≤ (Zeta23.zetaZeroConfig.N (T - R) (T + R) : ℝ)`,连同公开的分解引理 `zero_side_norm_le_window_count`(零点侧范数 ≤ K·N(T−R, T+R) + 对数尾项)与 `exists_radius_shifted_inv_sq_tsum_compl`(窗外补集上的固定半径尾项估计)。
+**逃逸见证(探针已证,写在实施之前)**:零点侧 tsum 按窗 (T−R, T+R] 及其共轭像的**直接分解**——中心部分逐项 ≤ mult·K/2、两侧补集各用固定半径尾项估计——与常数配平 c′ = c/(4K)、T₀ = max(T_R, exp(4D/c));不由 Z-6 的存在性陈述实例化得到(探针明确未用 Z-6 结论)。
+**边界**:同 §〇;`exists_zero_near_every_large_height` 可由 N ≥ 1 与窗内有限非空推出,作伴随推论,不另列义务。
+
+## 二　预算与结算
+
+一席位轮(codex-cli,独立 worktree,绑 CosinePacket / ArchimedeanDivergence / WindowZero 三冻结模块与 `zetaZeroConfig_local_count`;同 PR deposit(绑 Z-7 atom)+ cover;三席评审,报告按第 5⁗ 条)。须在 Z-6 模块合入后开工。预计 ≤ 2 小时(探针证明可复用)。
+
+后续增订继续严格追加于本节之后。

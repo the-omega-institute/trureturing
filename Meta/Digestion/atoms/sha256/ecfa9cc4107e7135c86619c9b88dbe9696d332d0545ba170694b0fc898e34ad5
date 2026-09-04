@@ -1,0 +1,15 @@
+## 11.1 共同零集
+
+对固定 $a>1/2$、有限非平凡 prime cluster $\mathcal C$，有
+
+$$
+\eta_a(t,\delta)=0
+\Longleftrightarrow
+\delta=0
+\Longleftrightarrow
+R_{\mathcal C}(\delta)=0.
+\tag{11.1}
+$$
+
+因此 Cayley 径向缺陷与 prime 双曲关系能量具有完全相同的相边界。
+

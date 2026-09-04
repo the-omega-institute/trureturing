@@ -60,7 +60,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Equal(0, fixture.FreezeCount());
         Assert.Equal(blueprintBefore, fixture.BlueprintState());
         Assert.DoesNotContain("make:emit", fixture.CallKinds());
-        Assert.DoesNotContain("dotnet:ledger-append", fixture.CallKinds());
+        Assert.DoesNotContain("dotnet:ledger-align", fixture.CallKinds());
     }
 
     [Fact]
@@ -88,7 +88,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
             ["make:lean-report", "dotnet:deposit-header-check"],
             fixture.CallKinds());
         Assert.DoesNotContain("make:emit", fixture.CallKinds());
-        Assert.DoesNotContain("dotnet:ledger-append", fixture.CallKinds());
+        Assert.DoesNotContain("dotnet:ledger-align", fixture.CallKinds());
     }
 
     [Fact]

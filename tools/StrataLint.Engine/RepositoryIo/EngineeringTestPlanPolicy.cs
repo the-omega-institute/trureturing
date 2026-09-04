@@ -20,6 +20,38 @@ internal static class EngineeringTestPlanPolicy
 
     internal static EngineeringTestPlan Evaluate(
         IReadOnlyList<string> changedPaths,
+        RepositorySnapshot protectedBase,
+        RepositorySnapshot candidate,
+        IReadOnlyCollection<string> protectedBaseControllerInputs,
+        IReadOnlyCollection<string> candidateControllerInputs,
+        bool full = false)
+    {
+        ArgumentNullException.ThrowIfNull(protectedBase);
+        ArgumentNullException.ThrowIfNull(candidate);
+        ArgumentNullException.ThrowIfNull(protectedBaseControllerInputs);
+        ArgumentNullException.ThrowIfNull(candidateControllerInputs);
+
+        var plan = EvaluateOrdinary(
+            changedPaths,
+            RepositoryRules.ReadSnapshotProjects(protectedBase),
+            RepositoryRules.ReadSnapshotProjects(candidate),
+            full);
+        if (full) return plan;
+
+        var protectedClosure = ScriptTestGateClosurePolicy.Derive(
+            protectedBase,
+            protectedBaseControllerInputs);
+        var candidateClosure = ScriptTestGateClosurePolicy.Derive(
+            candidate,
+            candidateControllerInputs);
+        return ApplyScriptTestGate(
+            plan,
+            plan.ChangedPaths.Any(path => protectedClosure.Covers(path)
+                || candidateClosure.Covers(path)));
+    }
+
+    internal static EngineeringTestPlan EvaluateOrdinary(
+        IReadOnlyList<string> changedPaths,
         TestProjectTopologySnapshot protectedBase,
         TestProjectTopologySnapshot candidate,
         bool full = false)
@@ -107,6 +139,37 @@ internal static class EngineeringTestPlanPolicy
                 changed,
                 selected,
                 $"selected {selected.Length} protected-base reverse-dependent or candidate-added test projects");
+    }
+
+    private static EngineeringTestPlan ApplyScriptTestGate(
+        EngineeringTestPlan plan,
+        bool include)
+    {
+        var projects = plan.Projects.ToHashSet(StringComparer.Ordinal);
+        if (include)
+        {
+            projects.Add(ScriptTestGateClosurePolicy.ProjectPath);
+            var includedProjects = projects.Order(StringComparer.Ordinal).ToImmutableArray();
+            return plan with
+            {
+                Kind = plan.Kind == EngineeringTestPlanKind.Full
+                    ? EngineeringTestPlanKind.Full
+                    : EngineeringTestPlanKind.Selected,
+                Projects = includedProjects,
+                Reason = plan.Reason + "; ScriptTests gate included by derived closure intersection",
+            };
+        }
+
+        projects.Remove(ScriptTestGateClosurePolicy.ProjectPath);
+        var selected = projects.Order(StringComparer.Ordinal).ToImmutableArray();
+        return plan with
+        {
+            Kind = selected.Length == 0
+                ? EngineeringTestPlanKind.None
+                : EngineeringTestPlanKind.Selected,
+            Projects = selected,
+            Reason = plan.Reason + "; ScriptTests gate excluded because the candidate delta misses the derived closure",
+        };
     }
 
     private static ProjectNode? FindOwner(IEnumerable<ProjectNode> projects, string changedPath) =>

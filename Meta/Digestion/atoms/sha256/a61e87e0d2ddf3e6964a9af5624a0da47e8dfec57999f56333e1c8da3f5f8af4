@@ -1,0 +1,6 @@
+## 五　Z-5 预登记:反证收口(`ZeroInfinitude/ExplicitFormulaObstruction`,绑 Z-1/2/3 与 Z-4)
+
+**义务**:公开定理 `carrier_infinite_of_EF_lit (Z : Zeta23.EF.ZeroConfig) (hEF : Zeta23.EF.EF_lit Z) : Z.carrier.Infinite` 与 `isNontrivialZero_infinite : {ρ : ℂ | IsNontrivialZero ρ}.Infinite`(经 `EF_lit_zetaZeroConfig` 与 `zetaZeroConfig.carrier` 的字面);伴随(bind-only,同模块):`nonempty_zeroData : Nonempty ZeroData`(M1-a 桥)。
+**拟议逃逸见证(写在探针之前;Z-5 尚无探针)**:对接引理 `re_paperFT_cosineModulation_eq_packet : (Zeta23.paperFT (cosineModulation packet T) r).re = packet (fun t => (H t).re) T r`(由 `paperFT_cosineModulation` 与 H 在实轴取实值)与闭带衰减给出的 `|Re H| ≤ K/(1+t²)`,再把 `literatureRHS (cosineModulation packet T)` 的实部拆成「两极点 → 0、素数项有界、阿基米德项 → +∞」,与「有限载体时零点侧 → 0」矛盾;矛盾组装本身是新命题。预测:若正确,Z-5 用 Z-1/2/3/4 的公开定理与 `Zeta23.EF.gamma_term` 一次组装闭合,标准三公理;若 `literatureRHS` 的 Gamma 项与 `gamma_term` 的常数约定不合,按冻结字面调整证明而非改陈述。
+**边界**:同 §〇。
+

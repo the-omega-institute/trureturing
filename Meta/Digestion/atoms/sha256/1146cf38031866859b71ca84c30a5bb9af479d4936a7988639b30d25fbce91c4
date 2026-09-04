@@ -1,0 +1,65 @@
+## 1. 更高点 cluster 才产生更高几何 jet
+
+若有 \(m\) 个素数
+
+$$
+p_0<\cdots<p_{m-1}
+$$
+
+位于固定长度区间内，则在变量
+
+$$
+x_j=\log p_j
+$$
+
+上可以构造 \(m-1\) 阶 divided difference：
+
+$$
+[f;x_0,\ldots,x_{m-1}].
+$$
+
+当所有 \(x_j\) 合并时：
+
+$$
+[f;x_0,\ldots,x_{m-1}]
+\longrightarrow
+\frac{f^{(m-1)}(x_0)}{(m-1)!}.
+$$
+
+所以：
+
+$$
+\boxed{
+m\text{ 个近邻素数}
+\longrightarrow
+(m-1)\text{ 阶 log-frequency jet}.
+}
+$$
+
+但是其 Vandermonde 分母包含：
+
+$$
+\prod_{i<j}(x_j-x_i),
+$$
+
+当 \(p_i\) 很大、间隔有界时，该乘积迅速趋零，反演条件数随之爆炸。
+
+因此：
+
+$$
+\boxed{
+\text{更高 jet 可被离散 cluster 编码，}
+$$
+
+同时：
+
+$$
+\boxed{
+\text{jet 阶越高，稳定恢复越困难。}
+}
+$$
+
+这正是“更多构型点带来更深 jet，但每层都有新的不可约条件数”的严格版本。
+
+---
+
