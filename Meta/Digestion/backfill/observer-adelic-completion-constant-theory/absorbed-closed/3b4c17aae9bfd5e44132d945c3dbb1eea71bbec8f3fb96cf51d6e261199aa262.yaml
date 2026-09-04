@@ -4,7 +4,7 @@ fingerprints:
 cas_ref: sha256:3b4c17aae9bfd5e44132d945c3dbb1eea71bbec8f3fb96cf51d6e261199aa262
 coverage_gids:
   - gid: D5/S3/Observer/BlockStructure/FiniteCommonSpectrumCriterion.finite_common_spectrum_criterion
-    target_statement_id: sha256:c89329c4e48bf43fc951ebd1c4918eb4098698771385b77a39ec447230e86e01
+    target_statement_id: sha256:bf020fbdb21a9c69235e0741437617e876b42d04f88c072760b5599b8dabeab3
 receipts:
   scribe:
     - gid: D5/S3/Observer/BlockStructure/FiniteCommonSpectrumCriterion.finite_common_spectrum_criterion
