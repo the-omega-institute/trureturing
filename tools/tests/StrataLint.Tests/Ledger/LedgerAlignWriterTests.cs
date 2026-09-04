@@ -144,6 +144,53 @@ public sealed class LedgerAlignWriterTests
     }
 
     [Fact]
+    public void FromAcceptedMaterializesPinsWhenPrerequisiteIdsDoNotResolve()
+    {
+        var catalog = BuildCatalog(Module("A"), Module("B"));
+        var unresolvedPrerequisite = FrozenNodeId.Create(Sha256("not-an-accepted-event"));
+        var events = catalog.ClosedNodes
+            .Select(material => material.RepoPath == RepoPathFor("B")
+                ? material with
+                {
+                    PrerequisiteFrozenNodeIds = [unresolvedPrerequisite],
+                }
+                : material)
+            .Select(static material => EventFile(
+                "Freeze",
+                FrozenLedgerCanonicalWriter.FreezeElement(
+                    FrozenLedgerCanonicalWriter.FreezePayload(material))))
+            .ToImmutableArray();
+        using var fixture = new AlignFixture();
+        fixture.InstallAccepted(events);
+
+        var exitCode = RunFromAcceptedCli(fixture);
+
+        Assert.Equal(0, exitCode);
+        Assert.Equal(2, fixture.StateFileCount());
+        foreach (var name in new[] { "A", "B" })
+        {
+            Assert.Equal(fixture.EventPin(name), fixture.StatePin(name));
+        }
+    }
+
+    [Fact]
+    public void FromAcceptedNamesContradictoryDuplicateSelectorAndWritesNothing()
+    {
+        var first = BuildCatalog(ModuleWithReport("A", Source("A"), "True"));
+        var second = BuildCatalog(ModuleWithReport("A", Source("A"), "True = True"));
+        using var fixture = new AlignFixture();
+        fixture.InstallAccepted(EventFiles(first).Concat(EventFiles(second)));
+        var acceptedBefore = fixture.AllPublishedBytes();
+
+        var result = fixture.FromAccepted();
+
+        Assert.False(result.Success);
+        Assert.Contains(PathFor("A"), result.Error, StringComparison.Ordinal);
+        Assert.False(fixture.StateExists("A"));
+        Assert.Equal(acceptedBefore, fixture.AllPublishedBytes());
+    }
+
+    [Fact]
     public void FromAcceptedConflictFailsBeforeWritingAnyMissingFragment()
     {
         var catalog = BuildCatalog(Module("A"), Module("B"));
@@ -356,6 +403,9 @@ public sealed class LedgerAlignWriterTests
         internal void InstallAccepted(FrozenMaterialCatalog catalog) =>
             WriteLedgerDirectory(AcceptedPath, EventFiles(catalog));
 
+        internal void InstallAccepted(IEnumerable<RepositoryFile> events) =>
+            WriteLedgerDirectory(AcceptedPath, events);
+
         internal void InstallState(string name, StatementId pin) =>
             Assert.True(FrozenStateWriter.Write(temporary.Path, RepoPathFor(name), pin));
 
@@ -363,6 +413,14 @@ public sealed class LedgerAlignWriterTests
             DagLedgerCommandPreparation.ReadLedgerDirectoryFiles(AcceptedPath);
 
         internal bool StateExists(string name) => File.Exists(StateFile(name));
+
+        internal int StateFileCount()
+        {
+            var stateRoot = Path.Combine(temporary.Path, "Golden", "Frozen", "state");
+            return Directory.Exists(stateRoot)
+                ? Directory.EnumerateFiles(stateRoot, "*.json", SearchOption.AllDirectories).Count()
+                : 0;
+        }
 
         internal string StatePin(string name)
         {
@@ -398,9 +456,14 @@ public sealed class LedgerAlignWriterTests
                 : [])
             .ToArray();
 
-        private DagLedgerFileEvent Event(string name) => Assert.Single(
-            LoadEvents(AcceptedFiles()),
-            item => item.DescriptorPath == RepoPathFor(name));
+        private DagLedgerFileEvent Event(string name)
+        {
+            var loaded = Assert.IsType<DagLedgerFilesLoadOutcome.Loaded>(
+                FrozenAcceptedEventLoader.LoadFiles(AcceptedFiles()));
+            return Assert.Single(
+                loaded.Events,
+                item => item.DescriptorPath == RepoPathFor(name));
+        }
 
         private string StateFile(string name) => Path.Combine(
             temporary.Path,

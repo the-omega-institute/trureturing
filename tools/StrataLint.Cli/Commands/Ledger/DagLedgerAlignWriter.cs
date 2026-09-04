@@ -60,46 +60,42 @@ internal static class DagLedgerAlignWriter
     {
         var ledgerPath = LedgerPath(repositoryRoot);
         var acceptedFiles = DagLedgerCommandPreparation.ReadLedgerDirectoryFiles(ledgerPath);
-        var events = LoadOrderedEvents(acceptedFiles, "accepted frozen ledger");
-        var baseView = ReadView(acceptedFiles);
+        var accepted = LoadAcceptedPins(
+            LoadEvents(acceptedFiles, "accepted frozen ledger"));
         var state = ReadStateCatalog(repositoryRoot);
-        var active = baseView.ActiveByPath.Values
-            .OrderBy(static entry => entry.Material.RepoPath.Value, StringComparer.Ordinal)
-            .ToImmutableArray();
-        var conflicts = active
-            .Where(entry => state.Records.TryGetValue(entry.Material.RepoPath, out var record)
-                && record.StatementId != entry.Material.StatementId)
+        var conflicts = accepted
+            .Where(entry => state.Records.TryGetValue(entry.DescriptorPath, out var record)
+                && record.StatementId != entry.StatementId)
             .ToImmutableArray();
         var stateBefore = state.Records.Count;
         if (!conflicts.IsEmpty)
         {
             var output = RenderAcceptedCounts(
-                    active.Length,
+                    accepted.Length,
                     stateBefore,
                     stateBefore,
                     written: 0,
                     conflicts.Length)
                 + RenderSummary(
-                    active.Length,
+                    accepted.Length,
                     changed: 0,
                     added: 0,
-                    unchanged: active.Count(entry =>
-                        state.Records.TryGetValue(entry.Material.RepoPath, out var record)
-                        && record.StatementId == entry.Material.StatementId),
+                    unchanged: accepted.Count(entry =>
+                        state.Records.TryGetValue(entry.DescriptorPath, out var record)
+                        && record.StatementId == entry.StatementId),
                     conflicts.Length);
             var names = string.Join(
                 ", ",
-                conflicts.Select(static entry => entry.Material.RepoPath.Value));
+                conflicts.Select(static entry => entry.DescriptorPath.Value));
             return new CommandResult(
                 false,
                 output,
                 $"LEDGER_ALIGN_FAILED state/event statement_id conflicts: {names}\n");
         }
 
-        var eventsByPath = events.ToImmutableDictionary(static item => item.DescriptorPath);
-        var missing = active
-            .Where(entry => !state.Records.ContainsKey(entry.Material.RepoPath))
-            .Select(entry => eventsByPath[entry.Material.RepoPath])
+        var missing = accepted
+            .Where(entry => !state.Records.ContainsKey(entry.DescriptorPath))
+            .Select(static entry => entry.Event)
             .ToImmutableArray();
         if (!missing.IsEmpty)
         {
@@ -116,16 +112,16 @@ internal static class DagLedgerAlignWriter
         return new CommandResult(
             true,
             RenderAcceptedCounts(
-                active.Length,
+                accepted.Length,
                 stateBefore,
                 stateBefore + missing.Length,
                 missing.Length,
                 conflicts: 0)
             + RenderSummary(
-                active.Length,
+                accepted.Length,
                 changed: 0,
                 added: missing.Length,
-                unchanged: active.Length - missing.Length,
+                unchanged: accepted.Length - missing.Length,
                 conflicts: 0),
             string.Empty);
     }
@@ -156,7 +152,7 @@ internal static class DagLedgerAlignWriter
         };
         var ledgerPath = LedgerPath(repositoryRoot);
         var acceptedFiles = DagLedgerCommandPreparation.ReadLedgerDirectoryFiles(ledgerPath);
-        _ = LoadOrderedEvents(acceptedFiles, "accepted frozen ledger");
+        _ = LoadEvents(acceptedFiles, "accepted frozen ledger");
         var baseView = ReadView(acceptedFiles);
         var state = ReadStateCatalog(repositoryRoot);
 
@@ -224,7 +220,7 @@ internal static class DagLedgerAlignWriter
             baseView,
             regeneration,
             newEventFiles);
-        var replacementEvents = LoadOrderedEvents(
+        var replacementEvents = LoadEvents(
             replacementFiles,
             "aligned frozen ledger");
         _ = ReadView(replacementFiles);
@@ -392,26 +388,55 @@ internal static class DagLedgerAlignWriter
         FrozenLedgerBaseViewReader.Read(RepositorySnapshot.Create(
             files.ToImmutableDictionary(static file => file.Path)));
 
-    private static ImmutableArray<DagLedgerFileEvent> LoadOrderedEvents(
+    private static ImmutableArray<DagLedgerFileEvent> LoadEvents(
         IEnumerable<RepositoryFile> files,
         string label)
     {
-        var loaded = FrozenAcceptedEventLoader.LoadFiles(files) switch
+        return FrozenAcceptedEventLoader.LoadFiles(files) switch
         {
             DagLedgerFilesLoadOutcome.Loaded accepted => accepted.Events,
             DagLedgerFilesLoadOutcome.Invalid invalid => throw new FormatException(
                 $"{label} is invalid: {invalid.Message}"),
             _ => throw new InvalidOperationException("unknown frozen event load outcome"),
         };
-        if (!DagLedgerLoader.TryOrderClosedDag(
-            loaded,
-            ImmutableArray<string>.Empty,
-            out var ordered))
+    }
+
+    private static ImmutableArray<AcceptedPin> LoadAcceptedPins(
+        ImmutableArray<DagLedgerFileEvent> events)
+    {
+        var bySelector = new Dictionary<RepoPath, AcceptedPin>();
+        var contradictions = new HashSet<RepoPath>();
+        foreach (var item in events)
         {
-            throw new FormatException($"{label} is not a closed dependency DAG");
+            var statementId = StatementId.Create(
+                item.Payload.GetProperty("statement_id").GetString()
+                    ?? throw new FormatException("Freeze statement_id is null."));
+            var pin = new AcceptedPin(item.DescriptorPath, statementId, item);
+            if (bySelector.TryGetValue(pin.DescriptorPath, out var previous))
+            {
+                if (previous.StatementId != pin.StatementId)
+                {
+                    contradictions.Add(pin.DescriptorPath);
+                }
+
+                continue;
+            }
+
+            bySelector.Add(pin.DescriptorPath, pin);
         }
 
-        return ordered;
+        if (contradictions.Count > 0)
+        {
+            var names = string.Join(
+                ", ",
+                contradictions.Select(static path => path.Value).Order(StringComparer.Ordinal));
+            throw new FormatException(
+                $"accepted frozen ledger has contradictory statement_id pins for selectors: {names}");
+        }
+
+        return bySelector.Values
+            .OrderBy(static pin => pin.DescriptorPath.Value, StringComparer.Ordinal)
+            .ToImmutableArray();
     }
 
     private static FrozenStateCatalog ReadStateCatalog(string repositoryRoot)
@@ -444,6 +469,11 @@ internal static class DagLedgerAlignWriter
             .ToImmutableDictionary(static file => file.Path);
         return FrozenStateCatalog.Load(RepositorySnapshot.Create(files));
     }
+
+    private sealed record AcceptedPin(
+        RepoPath DescriptorPath,
+        StatementId StatementId,
+        DagLedgerFileEvent Event);
 
     private static AlignOptions ParseArguments(
         IReadOnlyList<string> arguments,
