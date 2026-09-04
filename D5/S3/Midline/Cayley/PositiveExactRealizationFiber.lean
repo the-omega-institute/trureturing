@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/Midline/Cayley/PositiveExactRealizationFiber
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: A positive exact Cayley realization exists exactly when every
-   nontrivial zeta zero lies on the critical line. -/
+   digest: Positive exact Cayley realization fibers characterize RH under exhaustive zero data. -/
 
 import D5.S3.Midline.Cayley.ZeroHilbertCayleyUnitarity
 
