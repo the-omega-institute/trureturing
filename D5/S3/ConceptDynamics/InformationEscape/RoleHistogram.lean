@@ -5,8 +5,7 @@
    anchors: []
    digest: Nonzero residual role signatures partition exactly one theorem's unique capture pairs. -/
 
-import D5.S3.ConceptDynamics.CIRPT.RoleSignature
-import D5.S3.ConceptDynamics.InformationEscape.ExactRate
+import D5.S3.ConceptDynamics.InformationEscape.Laws
 
 /- Library-search audit trail (2026-09-04):
    * Repository searches found the exact reusable CIRPT declarations
@@ -25,7 +24,7 @@ namespace D5.S3.ConceptDynamics.InformationEscape
 
 open D5.S3.ConceptDynamics.CIRPT
 
-universe u v w
+universe u v w z
 
 attribute [local instance] Arena.stateFintype Arena.stateDecidableEq
 attribute [local instance] Catalog.indexFintype Catalog.indexDecidableEq
@@ -39,6 +38,33 @@ def withoutKernel {arena : Arena.{u}} (catalog : Catalog.{u, v, w} arena)
   equivalence := catalog.indistinguishable_equivalence (catalog.without index)
   decidableRelation := fun left right =>
     catalog.indistinguishableDecidable (catalog.without index) left right
+
+/-- CIRPT-IE-015: unique capture is the residual of the other theorem kernels
+against the selected theorem's primitive kernel. -/
+theorem uniqueCapturePairs_eq_kernelResidual
+    {arena : Arena.{u}} (catalog : Catalog.{u, v, w} arena)
+    (index : catalog.Index) :
+    (catalog.uniqueCapturePairs index : Set (arena.State × arena.State)) =
+      kernelResidual (catalog.withoutKernel index)
+        (catalog.theoremAt index).primitives.toKernel := by
+  ext pair
+  change pair ∈ catalog.uniqueCapturePairs index ↔
+    catalog.indistinguishable (catalog.without index) pair.1 pair.2 ∧
+      ¬(catalog.theoremAt index).primitives.agrees pair.1 pair.2
+  constructor
+  · intro captured
+    have uniqueParts := Finset.mem_filter.mp captured
+    have escapeParts := Finset.mem_filter.mp uniqueParts.1
+    exact ⟨escapeParts.2, uniqueParts.2⟩
+  · rintro ⟨otherAgreement, selectedSeparation⟩
+    have distinct : pair.1 ≠ pair.2 := by
+      intro same
+      apply selectedSeparation
+      rw [same]
+      exact (catalog.theoremAt index).primitives.agrees_equivalence.refl pair.2
+    apply Finset.mem_filter.mpr
+    refine ⟨Finset.mem_filter.mpr ⟨?_, otherAgreement⟩, selectedSeparation⟩
+    simpa [offDiagonalPairs] using distinct
 
 /-- Multiplicity of one four-role signature relative to a unit's leave-one-out kernel. -/
 def roleHistogram {arena : Arena.{u}} (catalog : Catalog.{u, v, w} arena)
@@ -55,9 +81,40 @@ theorem uniqueCapture_roleSignature_nonzero
         (catalog.withoutKernel index) pair.1 pair.2 ≠ fun _ => false := by
   apply (PrimitiveBundle.mem_kernelResidual_iff_residualRoleSignature_ne_zero
     (catalog.withoutKernel index) (catalog.theoremAt index).primitives pair).1
-  have uniqueParts := Finset.mem_filter.mp captured
-  have escapeParts := Finset.mem_filter.mp uniqueParts.1
-  exact ⟨escapeParts.2, uniqueParts.2⟩
+  rw [← catalog.uniqueCapturePairs_eq_kernelResidual index]
+  exact captured
+
+/-- CIRPT-IE-017: unique capture is the union of its four active-role fibers. -/
+theorem uniqueCapturePairs_eq_biUnion_roleFibers
+    {arena : Arena.{u}} (catalog : Catalog.{u, v, w} arena)
+    (index : catalog.Index) :
+    catalog.uniqueCapturePairs index =
+      Finset.univ.biUnion fun coordinate : Fin 4 =>
+        (catalog.uniqueCapturePairs index).filter fun pair =>
+          (catalog.theoremAt index).primitives.residualRoleSignature
+            (catalog.withoutKernel index) pair.1 pair.2 coordinate = true := by
+  classical
+  apply Finset.ext
+  intro pair
+  constructor
+  · intro captured
+    have nonzero := catalog.uniqueCapture_roleSignature_nonzero index pair captured
+    have existsActive : ∃ coordinate,
+        (catalog.theoremAt index).primitives.residualRoleSignature
+          (catalog.withoutKernel index) pair.1 pair.2 coordinate = true := by
+      by_contra noneActive
+      apply nonzero
+      funext coordinate
+      apply Bool.eq_false_of_not_eq_true
+      intro active
+      exact noneActive ⟨coordinate, active⟩
+    obtain ⟨coordinate, active⟩ := existsActive
+    apply Finset.mem_biUnion.mpr
+    exact ⟨coordinate, Finset.mem_univ coordinate,
+      Finset.mem_filter.mpr ⟨captured, active⟩⟩
+  · intro covered
+    obtain ⟨coordinate, _, pairMem⟩ := Finset.mem_biUnion.mp covered
+    exact (Finset.mem_filter.mp pairMem).1
 
 /-- The nonzero role-signature buckets sum to the theorem's exact unique-capture count. -/
 theorem roleHistogram_sum_eq_uniqueCaptureCount
@@ -105,7 +162,57 @@ theorem roleHistogram_sum_eq_uniqueCaptureCount
   unfold roleHistogram uniqueCaptureCount
   simpa [bundle, current, capturedPairs] using histogramSum
 
+/-- CIRPT-IE-018: exact theorem gain depends only on the pointwise family of
+primitive agreement kernels. -/
+theorem theoremGain_depends_only_on_primitive_kernel
+    {arena : Arena.{u}} (catalog : Catalog.{u, v, w} arena)
+    (units : catalog.Index -> TheoremUnit.{u, z} arena)
+    (sameKernel : ∀ candidate left right,
+      (catalog.theoremAt candidate).primitives.toKernel.relation left right ↔
+        (units candidate).primitives.toKernel.relation left right)
+    (index : catalog.Index) :
+    (catalog.withTheoremAt units).theoremGainRate index =
+      catalog.theoremGainRate index := by
+  unfold theoremGainRate
+  rw [catalog.uniqueCaptureCount_congr_kernel units sameKernel index]
+
+/-- CIRPT-IE-021: a theorem unit carrying only the closed-truth kernel has no
+unique object-level capture. -/
+theorem closed_truth_uniqueCaptureCount_zero
+    {arena : Arena.{u}} (catalog : Catalog.{u, v, w} arena)
+    (index : catalog.Index)
+    (closedTruthKernel : ∀ left right,
+      (catalog.theoremAt index).primitives.toKernel.relation left right ↔
+        (cutKernel (fun _ : arena.State => true)).relation left right) :
+    catalog.uniqueCaptureCount index = 0 := by
+  unfold uniqueCaptureCount
+  rw [Finset.card_eq_zero]
+  apply Finset.eq_empty_iff_forall_notMem.mpr
+  intro pair captured
+  have separated := (Finset.mem_filter.mp captured).2
+  exact separated (closedTruthKernel pair.1 pair.2 |>.2 rfl)
+
+/-- CIRPT-IE-019: theorem statements and proof certificates do not affect
+unique capture when every object-level primitive bundle is unchanged. -/
+theorem theoremAt_proof_irrelevant
+    {arena : Arena.{u}} (catalog : Catalog.{u, v, w} arena)
+    (units : catalog.Index -> TheoremUnit.{u, v} arena)
+    (samePrimitives : ∀ candidate,
+      (catalog.theoremAt candidate).primitives = (units candidate).primitives)
+    (index : catalog.Index) :
+    (catalog.withTheoremAt units).uniqueCaptureCount index =
+      catalog.uniqueCaptureCount index := by
+  apply catalog.uniqueCaptureCount_congr_kernel units
+  intro candidate left right
+  rw [samePrimitives candidate]
+
 end Catalog
+
+/-- CIRPT-IE-021: the constant closed-truth readout has the universal kernel. -/
+theorem closed_truth_cut_kernel_universal (X : Type u) :
+    (cutKernel (fun _ : X => true)).relation = fun _ _ => True := by
+  funext left right
+  simp [cutKernel]
 
 private abbrev histogramFixtureArena : Arena :=
   Arena.ofFintype (Bool × Bool)
