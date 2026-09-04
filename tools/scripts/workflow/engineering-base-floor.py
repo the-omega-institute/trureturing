@@ -159,6 +159,14 @@ def required_projects(repository: Path, base: str, head: str, full: bool) -> lis
     return [project for project in tests if project.path in affected]
 
 
+def require_nonempty_floor(required: list[object]) -> None:
+    if not required:
+        raise RuntimeError(
+            "ENGINEERING_BASE_FLOOR_EMPTY protected-base has test projects; "
+            "an empty required set must be explicitly declared rather than silently admitted"
+        )
+
+
 def prepare(arguments: argparse.Namespace) -> int:
     repository = Path(arguments.repository).resolve(strict=True)
     projects = required_projects(
@@ -167,6 +175,7 @@ def prepare(arguments: argparse.Namespace) -> int:
         arguments.head,
         arguments.full == "1",
     )
+    require_nonempty_floor(projects)
     results_directory = Path(arguments.results_directory).resolve()
     if results_directory.exists():
         shutil.rmtree(results_directory)
@@ -218,9 +227,7 @@ def verify(arguments: argparse.Namespace) -> int:
         not isinstance(item, str) or not item.strip() for item in required
     ):
         raise RuntimeError("required assembly output is not a string array")
-    if not required:
-        print("ENGINEERING_BASE_FLOOR_VERIFIED assemblies=0 evidence=not-required")
-        return 0
+    require_nonempty_floor(required)
     evidence = executed_assemblies(Path(arguments.results_directory).resolve(strict=True))
     for assembly in required:
         count = evidence[assembly.casefold()]

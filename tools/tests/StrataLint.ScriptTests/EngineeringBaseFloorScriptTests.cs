@@ -8,6 +8,18 @@ public sealed class EngineeringBaseFloorScriptTests
     private static readonly UTF8Encoding Utf8 = new(false);
 
     [Fact]
+    public void RejectsEmptyRequiredAssemblySet()
+    {
+        using var run = RunVerifier("[]");
+
+        Assert.Equal(2, run.Process.ExitCode);
+        Assert.Contains(
+            "ENGINEERING_BASE_FLOOR_EMPTY",
+            run.StandardError,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void RejectsMissingRequiredAssembly()
     {
         using var run = RunVerifier("[\"Missing.Tests\"]");
