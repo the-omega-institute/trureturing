@@ -35,16 +35,30 @@ private def finValue (index size : Nat) : MetaM Expr := do
 private def natValue (expr : Expr) : MetaM Nat :=
   reduceEval expr
 
-private def theoremProofs (record : CatalogRecord) : MetaM
+private def mkDecideProofWith (proposition decidable : Expr) : MetaM Expr := do
+  let decision := mkApp2 (mkConst ``Decidable.decide) proposition decidable
+  let decisionTrue ← mkEq decision (mkConst ``Bool.true)
+  let reflexivity ← mkEqRefl (mkConst ``Bool.true)
+  let reduction := mkExpectedPropHint reflexivity decisionTrue
+  pure <| mkApp3 (mkConst ``of_decide_eq_true) proposition decidable reduction
+
+private def theoremProofs (record : CatalogRecord) : Lean.Elab.Term.TermElabM
     (Array PendingTheorem × SealArenaRecord) := do
   let catalog := mkConst record.catalogName
-  let arena ← mkAppM `PrimitiveLawArena.toArena #[mkConst record.arenaName]
-  let nondegenerateType ← mkAppM `Arena.Nondegenerate #[arena]
+  let arena ← mkAppM
+    `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.toArena
+    #[mkConst record.arenaName]
+  let nondegenerateType ← mkAppM
+    `D5.S3.ConceptDynamics.InformationEscape.Arena.Nondegenerate #[arena]
   let nondegenerateProof ← mkDecideProof nondegenerateType
-  let stateCardExpr ← mkAppM `Arena.card #[arena]
+  let stateCardExpr ← mkAppM
+    `D5.S3.ConceptDynamics.InformationEscape.Arena.card #[arena]
   let stateCard ← natValue stateCardExpr
-  let fullSet ← mkAppM `Catalog.fullIndexSet #[catalog]
-  let fullExpr ← mkAppM `Catalog.escapeNumerator #[catalog, fullSet]
+  let fullSet ← mkAppM
+    `D5.S3.ConceptDynamics.InformationEscape.Catalog.fullIndexSet #[catalog]
+  let fullExpr ← mkAppM
+    `D5.S3.ConceptDynamics.InformationEscape.Catalog.escapeNumerator
+    #[catalog, fullSet]
   let fullCount ← natValue fullExpr
   let mut declarations := #[]
   let mut theoremRecords := #[]
@@ -52,10 +66,15 @@ private def theoremProofs (record : CatalogRecord) : MetaM
     let theoremName := unit.1
     let indexNat := unit.2
     let index ← finValue indexNat record.units.size
-    let uniqueExpr ← mkAppM `Catalog.uniqueCaptureCount #[catalog, index]
+    let uniqueExpr ← mkAppM
+      `D5.S3.ConceptDynamics.InformationEscape.Catalog.uniqueCaptureCount
+      #[catalog, index]
     let uniqueCount ← natValue uniqueExpr
-    let withoutSet ← mkAppM `Catalog.without #[catalog, index]
-    let withoutExpr ← mkAppM `Catalog.escapeNumerator #[catalog, withoutSet]
+    let withoutSet ← mkAppM
+      `D5.S3.ConceptDynamics.InformationEscape.Catalog.without #[catalog, index]
+    let withoutExpr ← mkAppM
+      `D5.S3.ConceptDynamics.InformationEscape.Catalog.escapeNumerator
+      #[catalog, withoutSet]
     let withoutCount ← natValue withoutExpr
     if uniqueCount == 0 then
       throwError
@@ -64,7 +83,7 @@ full {fullCount} without {withoutCount}"
     let positiveType ← mkLT (mkNatLit 0) uniqueExpr
     let positiveProof ← mkDecideProof positiveType
     let characterization ← mkAppM
-      `Catalog.lowersEscape_iff_uniqueCaptureCount_pos
+      `D5.S3.ConceptDynamics.InformationEscape.Catalog.lowersEscape_iff_uniqueCaptureCount_pos
       #[catalog, index, nondegenerateProof]
     let lowersProof ← mkAppM ``Iff.mpr #[characterization, positiveProof]
     let lowersType ← inferType lowersProof
@@ -92,10 +111,39 @@ full {fullCount} without {withoutCount}"
       proofMethod := "decide"
     }
   let finType := mkApp (mkConst ``Fin) (mkNatLit record.units.size)
-  let irredundantType ← withLocalDeclD `index finType fun index => do
-    let lowers ← mkAppM `Catalog.LowersEscape #[catalog, index]
-    mkForallFVars #[index] lowers
-  let irredundantProof ← mkDecideProof irredundantType
+  let allPositiveType ← withLocalDeclD `index finType fun index => do
+    let count ← mkAppM
+      `D5.S3.ConceptDynamics.InformationEscape.Catalog.uniqueCaptureCount
+      #[catalog, index]
+    let positive ← mkLT (mkNatLit 0) count
+    mkForallFVars #[index] positive
+  let positivePredicate ← withLocalDeclD `index finType fun index => do
+    let count ← mkAppM
+      `D5.S3.ConceptDynamics.InformationEscape.Catalog.uniqueCaptureCount
+      #[catalog, index]
+    let positive ← mkLT (mkNatLit 0) count
+    mkLambdaFVars #[index] positive
+  let decidablePredicate ← withLocalDeclD `index finType fun index => do
+    let count ← mkAppM
+      `D5.S3.ConceptDynamics.InformationEscape.Catalog.uniqueCaptureCount
+      #[catalog, index]
+    let decision := mkApp2 (mkConst ``Nat.decLt) (mkNatLit 0) count
+    mkLambdaFVars #[index] decision
+  let finFintypeType ← mkAppM ``Fintype #[finType]
+  let finFintype ← synthInstance finFintypeType
+  let allPositiveDecidable := mkAppN
+    (mkConst ``Fintype.decidableForallFintype [0])
+    #[finType, positivePredicate, decidablePredicate, finFintype]
+  let allPositiveProof ←
+    mkDecideProofWith allPositiveType allPositiveDecidable
+  let irredundantProof ← withLocalDeclD `index finType fun index => do
+    let positiveProof := mkApp allPositiveProof index
+    let characterization ← mkAppM
+      `D5.S3.ConceptDynamics.InformationEscape.Catalog.lowersEscape_iff_uniqueCaptureCount_pos
+      #[catalog, index, nondegenerateProof]
+    let lowersProof ← mkAppM ``Iff.mpr #[characterization, positiveProof]
+    mkLambdaFVars #[index] lowersProof
+  let irredundantType ← inferType irredundantProof
   declarations := declarations.push {
     name := record.arenaName.str "__catalog_irredundant"
     type := irredundantType
@@ -109,7 +157,7 @@ def buildProofs (catalogs : Array CatalogRecord) :
   let results ← liftTermElabM <| catalogs.mapM theoremProofs
   for result in results do
     for declaration in result.1 do
-      addDecl <| .thmDecl {
+      liftCoreM <| addDecl <| .thmDecl {
         name := declaration.name
         levelParams := []
         type := declaration.type

@@ -1,4 +1,5 @@
 import LeanInformationAudit.ProofBuilder
+import LeanInformationAudit.Syntax
 
 namespace LeanInformationAudit
 
@@ -31,11 +32,11 @@ private def artifactJson (records : Array SealArenaRecord) : Json :=
   ]
 
 private def logSummary (record : SealArenaRecord) : CommandElabM Unit := do
-  for theorem in record.theorems do
-    logInfo
+  for theoremRecord in record.theorems do
+    logInfo <| s!
       "information seal: arena={record.catalog.arenaName} \
-theorem={theorem.theoremName} unique={theorem.uniqueCaptureCount} \
-method={theorem.proofMethod}"
+theorem={theoremRecord.theoremName} unique={theoremRecord.uniqueCaptureCount} \
+method={theoremRecord.proofMethod}"
 
 syntax (name := sealInformationTheoryCmd)
   "#seal_information_theory" (" output " str)? : command

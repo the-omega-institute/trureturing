@@ -1,5 +1,6 @@
 import LeanInformationAudit.Registry
 import D5.S3.ConceptDynamics.InformationEscape.ExactRate
+import Mathlib.Data.Fin.VecNotation
 
 namespace LeanInformationAudit
 
@@ -27,7 +28,9 @@ private def catalogNameFor (arenaName : Name) : Name :=
   arenaName.str "__information_catalog"
 
 private def arenaValue (arenaName : Name) : MetaM Expr := do
-  mkAppM `PrimitiveLawArena.toArena #[mkConst arenaName]
+  mkAppM
+    `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.toArena
+    #[mkConst arenaName]
 
 private def validateEntry (env : Environment) (entry : InformationRegistryEntry) :
     Lean.Elab.Term.TermElabM Unit := do
@@ -35,8 +38,11 @@ private def validateEntry (env : Environment) (entry : InformationRegistryEntry)
   | .ok () => pure ()
   | .error message => throwError message
   let unitExpr := mkConst entry.unitName
-  let primitives ← mkAppM `TheoremUnit.primitives #[unitExpr]
-  let nonempty ← mkAppM `PrimitiveBundle.Nonempty #[primitives]
+  let primitives ← mkAppM
+    `D5.S3.ConceptDynamics.InformationEscape.TheoremUnit.primitives
+    #[unitExpr]
+  let nonempty ← mkAppM
+    `D5.S3.ConceptDynamics.CIRPT.PrimitiveBundle.Nonempty #[primitives]
   try
     let _ ← mkDecideProof nonempty
     pure ()
@@ -48,7 +54,7 @@ private def makeUnitVector (units : Array Expr) : Lean.Elab.Term.TermElabM Expr 
   let mut vector ← withLocalDeclD `impossible finZero fun impossible => do
     mkLambdaFVars #[impossible] units[0]!
   for unit in units.reverse do
-    vector ← mkAppM ``Fin.cons #[unit, vector]
+    vector ← mkAppM ``Matrix.vecCons #[unit, vector]
   pure vector
 
 private def prepareCatalog (arenaName : Name)
@@ -56,7 +62,8 @@ private def prepareCatalog (arenaName : Name)
     Lean.Elab.Term.TermElabM PendingCatalog := do
   let sorted := entries.qsort fun left right => nameLess left.theoremName right.theoremName
   let arena ← arenaValue arenaName
-  let nondegenerate ← mkAppM `Arena.Nondegenerate #[arena]
+  let nondegenerate ← mkAppM
+    `D5.S3.ConceptDynamics.InformationEscape.Arena.Nondegenerate #[arena]
   try
     let _ ← mkDecideProof nondegenerate
     pure ()
@@ -64,7 +71,8 @@ private def prepareCatalog (arenaName : Name)
     throwError "IE-C004 DegenerateArena: {arenaName}"
   let unitExprs := sorted.map fun entry => mkConst entry.unitName
   let vector ← makeUnitVector unitExprs
-  let value ← mkAppM `Catalog.ofVector #[vector]
+  let value ← mkAppM
+    `D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector #[vector]
   let type ← inferType value
   let units := sorted.mapIdx fun index entry => (entry.theoremName, index)
   pure {
