@@ -30,6 +30,7 @@ public sealed class FrozenStateTests
     [InlineData("Golden/Frozen/state/D5/S0/Carrier/Ring.json")]
     [InlineData("Golden/Frozen/state/d5/S0/Carrier/Ring.lean.json")]
     [InlineData("Golden/Frozen/other/D5/S0/Carrier/Ring.lean.json")]
+    [InlineData("Golden/Frozen/state/D5/S0/Carrier/Ring.lean.json/Extra.json")]
     public void StatePathRejectsNonCanonicalAddresses(string path) =>
         Assert.False(FrozenStatePath.TryToModulePath(path, out _));
 
