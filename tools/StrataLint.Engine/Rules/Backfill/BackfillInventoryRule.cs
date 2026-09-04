@@ -11,7 +11,6 @@ internal sealed record BackfillInventoryValidationContext(
     VerifiedScribeEmissions? VerifiedScribeEmissions,
     RawChangeSet? Changes = null,
     Func<string, bool>? IsBaseFactAffected = null,
-    RawChangeSet? RepositoryChanges = null,
     RawChangeSet? CasChanges = null,
     RawChangeSet? ProjectedStatusChanges = null);
 
@@ -119,7 +118,6 @@ internal static class BackfillInventoryRule
                 context.VerifiedScribeEmissions,
                 receiptVerificationChanges,
                 isBaseFactAffected,
-                RepositoryChanges: changes,
                 ProjectedStatusChanges: evaluationChanges),
             document);
     }
@@ -136,7 +134,6 @@ internal static class BackfillInventoryRule
         BackfillInventoryDocument document,
         RawChangeSet? changes = null,
         Func<string, bool>? isBaseFactAffected = null,
-        RawChangeSet? repositoryChanges = null,
         RawChangeSet? casChanges = null) =>
         EvaluateDocument(
             new BackfillInventoryValidationContext(
@@ -147,7 +144,6 @@ internal static class BackfillInventoryRule
                 VerifiedScribeEmissions: null,
                 changes,
                 isBaseFactAffected,
-                repositoryChanges,
                 casChanges),
             document,
             validateTruthAlignment: false);
@@ -160,14 +156,6 @@ internal static class BackfillInventoryRule
         ArgumentNullException.ThrowIfNull(context);
         ArgumentNullException.ThrowIfNull(document);
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        foreach (var finding in DigestionCasStore.ValidateAppendOnly(
-                     context.Current,
-                     context.Baseline,
-                     context.RepositoryChanges ?? context.Changes))
-        {
-            findings.Add(new RuleFinding(BackfillPath, finding));
-        }
-
         var root = document.Root;
         if (!root.Keys.ToHashSet(StringComparer.Ordinal).SetEquals(
                 ["schema_version", "ledger", "sources"]))

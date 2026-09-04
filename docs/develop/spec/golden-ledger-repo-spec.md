@@ -13,7 +13,7 @@
 ## 1.1 三定律(一百五十余轮之结构经验)
 ①**骨骼 = 依赖偏序**:import 只许向下,编译器与 Lint 双层强制;
 ②**投影不当骨骼**:疆域、文档、书、论文皆为投影,不得反向决定结构;
-③**生长自相似**:地址由算法算出(不开会);桶满则裂、只裂不迁;历史只追加。
+③**生长自相似**:地址由算法算出(不开会);桶满则裂、只裂不迁;历史归 git。
 
 ## 1.2 平面总览(六平面二端口)
 | 平面 | 目录 | 性质 |
@@ -21,14 +21,14 @@
 | F 形式层 | `Metallic/ + D<disc>/ + Moduli/` | Lean;**唯一承重层**(模空间结构,v7.4) |
 | B 散文层 | `Blueprint/` | 人读叙事;**镜像 F 之地址** |
 | E 证据层 | `Evidence/` | 数值+实验;**镜像 F 之地址** |
-| C 编年层 | `Chronicle/` | 评注/判词/史;**append-only,按时间索引** |
+| C 编年层 | `Chronicle/` | 评注/判词/史;**按时间索引,历史归 git** |
 | L 摄入端口 | `Library/` | 文献进 |
 | P 产出端口 | `Papers/` | 论文出 |
 | Meta | `Meta/` | harness 本体(Lint/split/papergen/sweep/词表) |
 | agents | `agents/` | 八官宪章与上下文包 |
 
 **镜像律**:B/E 不拥有自己的分类学——借用 F 层地址(未形式化者借其*未来*地址);一个数学单元 = 一个地址 × 至多三平面。
-**编年律**:凡按时间发生者进 C 层按日期追加、永不按主题重排——历史不参与分类,所以历史不会乱。
+**编年律**:凡按时间发生者进 C 层按日期组织、不按主题重排;条目只保证当下正确,改删历史由 git 查证。
 
 ## 1.3 内容路由总表(任何产物一查定址)
 定义/定理/证明→F(地层算法);开放问题→`X_Frontier/`;命名假设→`X_Assumptions/`;条件定理→`X_Certificates/`;数学叙事→B(镜像);数值/实验→E(镜像);常数表→`Evidence/values.json`;评注/判词→C(日期);文献→L(bibkey);论文→P(recipe-id);工具词表→Meta;宪章→agents;治理文件→`docs/`;旧卷→`docs/history/`(只读)。
@@ -128,7 +128,7 @@ golden-ledger/
 
 **A12 文献码** bibkey `<姓><年><首词>`;根桶 `Library/notes/<bibkey>.md` 或容量分裂后的受控疆域桶 `Library/<Domain>/<bibkey>.md` 之 canonical YAML front matter schema 为 `{bibkey,authors,year,title,doi:DOI|null,claim,strata_touched:[GID],license,triage:anchor|task(GID)|rejected(理由)}`。`authors` 是非空规范署名串,`year` 是四位整数;文件名、`bibkey` 必须逐字一致,bibkey 在全 L 平面唯一,分裂桶名必须已入 `Meta/domains.yaml`;DOI 用统一 typed parser 验语法并按大小写无关键全 L 平面唯一;`task(GID)` 必须解析 canonical GID 并参与悬空检查。authors/year/title/DOI 只在该 note 定义,Describe 与发射投影只携对应的 `D5/L/<bibkey>` 或 `D5/L/<Domain>/<bibkey>` typed 引用及 `lit/<bibkey>` 锚,禁内联复制文献元数据。`literature-attested` provenance 必携可解析 note 的 `LibraryNoteRef`,其学术发射须有非空 DOI 并由 note 投影 author-year-title-DOI citation;悬空 L/GID 或 citation 元数据缺位即红;硬门全程离线,DOI 在线解析与标题一致性只列 Observe。
 
-**A13 编年码** `D5/C/<YYYY-MM-DD>/<slug>`;物理路径由 A2 双射至 `Chronicle/<YYYY>/<MM>/<DD>-<slug>.md`;LEGACY.md 存旧评注号(27.x)映射;过去条目不可改(H5),勘误以新条目引旧。
+**A13 编年码** `D5/C/<YYYY-MM-DD>/<slug>`;物理路径由 A2 双射至 `Chronicle/<YYYY>/<MM>/<DD>-<slug>.md`;LEGACY.md 存旧评注号(27.x)映射;当前条目只保证当下正确,改删历史由 git 查证。
 
 **A14 现状勘正(2026-08-28,#3686/#3338)** A14 下方旧文中,版辑 tag、三 pin 同 PR 原子更新政策及「强制无缓存 clean build 尚非现役机器谓词」仍为现行规范;从「冻结账本现役第五事件」起至 A14.8 止的 Supersede/Reattest 写协议、writer/admission、五型联合、v1 replay 与合成测试陈述,统一降格为**当时的 spec 修订审计记录**,其中「现役」「现行」「当前」只描述各条落款时的机器,不得解释为今日能力。owner 合并裁决 #3686(`dbc940c56`)已删除 `ledger-reattest`/`ledger-sync`/`ledger-supersede`、Supersede 协议与 v1 replay;candidate accepted event 现只接受 `Freeze|Revoke`,受信历史读侧仍严格消费已提交的 Reattest v2/v3/v4,这是 append-only 审计链读取,不恢复任何写动词;Supersede 持久事件为 0 且读侧拒绝。环境 pin bump 的冻结账本处置目前无现役写面,保持 `open(#3338)`;任何替代协议须另立 SPEC 与机器后方可改报现役。
 
@@ -217,14 +217,14 @@ golden-ledger/
 
 # 第四部:harness 执法(不变量·状态机)
 
-## 4.1 十二不变量(全部机器可判,违者 CI 红)
+## 4.1 十二不变量(执法栏为「—」者为纪律,不由机器判)
 | # | 律 | 执法 |
 |---|---|---|
 | H1 | 向下 import(地层单调) | SL-001 |
 | H2 | sorry 仅居 X_Frontier | SL-002 |
 | H3 | 容量阈(目录≤12 文件、文件≤400 行)⟹ 分裂协议 | SL-003 |
 | H4 | 镜像律(B/E 存在或显式 waiver) | SL-004 |
-| H5 | 编年只追加(历史 diff 拒收) | SL-005 |
+| H5 | 编年历史归 git(无机器判官;2026-09-02 owner 裁决,SL-005 已退役) | — |
 | H6 | 徽章由语法生成,禁手写状态 | SL-006 |
 | H7 | 利益回避(同 PR 禁改 X_A 又用之;对手≠证师;禁自并) | 门官 |
 | H8 | Hearts 冻结(可增证明不可改删陈述) | SL-008 |
@@ -417,7 +417,7 @@ recipe(A11)→ `Meta/papergen`(决定论):拉 Blueprint 散文 + **语法生成�
 Frontier 靶的诊断卷宗现住 `docs/reports/**`(`Meta/FILEMAP.toml` 记 `kind=data`、`consumed_by=["agent"]`),逐份为一次具名诊断的完整记录,其结论不在别处留副本。〔勘注 2026-08-17·open〕原表述称每个 Frontier 靶获 `Blueprint/X_Frontier/<靶>/DOSSIER.md` 自动聚合卷宗(CI 生成),按 GID 汇总尝试、失败战史、数值、收据、文献锚与相关 Chronicle 条目。实测该聚合器不存在:`Blueprint/X_Frontier/` 零条目、全仓无任何 DOSSIER 生成器、`docs/reports/**` 亦无索引。聚合尚属 open;在它建成前,下条义务以 `docs/reports/**` 全文检索履行。**审计协议增义务步:立新案前必先全文检索卷宗与编年**("先翻卷宗后立新案"——第 149 轮主犯居第 122 轮旧卷之教训法典化)。
 
 ## 11.14 判词可诉制(当庭勘正为荣誉事件)
-任何在册评注/判词/裁决可经问答轮挑战;挑战成立 ⟹ 原判条目加删除线注 + 勘正条目(Chronicle 新条引旧条,H5 不破)——**勘正入荣誉榜非耻辱柱**(本账先例:27.79 第二层经对手反击当庭撤销,为全程最佳轮次之一);对手官宪章增:定期抽查在册判词之可攻性。
+任何在册评注/判词/裁决可经问答轮挑战;挑战成立 ⟹ 直接勘正当前记录或新增勘正条目,改删历史由 git 保存——**勘正入荣誉榜非耻辱柱**(本账先例:27.79 第二层经对手反击当庭撤销,为全程最佳轮次之一);对手官宪章增:定期抽查在册判词之可攻性。
 
 ## 11.15 质询协议(自应用探针)
 cron 探针清单(演绎官执行,季度):把理论用于理论自身(自分类、自编码、自坐标化——本账产出 G/I/E 分解、编码律之路);把仓库用于仓库(spec 过自家验收);意义之问轮换("X 有什么用/X 到底是什么"对当季新成果发问)。**探针产出照 11.2 问答轮协议裁决——自指是本库最高产的矿脉,排班开采。**
@@ -568,7 +568,7 @@ receipts:
 
 `digest-status --formalize-candidates` 与 `theory-candidates` 消费同一个 `DigestionCoverDispositionSelector` 判据；未显式重试的 disposition atom 在两者中均优先投影到 `withheld[]`,`withhold_reason="cover-disposition"`,不得把它投影到 candidate 后交回批处理。重试是显式单通道：`--retry-dispositions` 只在 `digest-status --formalize-candidates` 下合法,仅对带 disposition 的 atom 绕过该 withhold,使其重新进入 `candidates`;`theory-candidates` 不接受 retry 参数。residual summary 与 echo shard 默认同样排除 disposition atom。由此,各机 `mk-coverable` / `known-fail` 第五层影子清单在消费者切到 canonical selector 后退役:先确认 selector 输出不再含对应 atom,再删除本机影子数据;不把影子数据回灌成另一真源,也不由本变更跨机修改脚本。
 
-**atoms 不删。** SL-029 保证理论卷只可追加且旧前缀字节不变;SL-030 以 delta-only 方式保证 base 账本的每个 atom 内容哈希仍出现在 candidate 账本。已形式化只改变 entry 的状态与收据,不得删除 atom 或 CAS blob;勘误以追加新散文、新 atom 表达,旧内容永久保留。
+**atom 与理论卷不删、勘误以追加表达,是建设者纪律。**历史与任何删除均由 git 记录可查;不设对应的机器判官(2026-09-02 owner 裁决:「只增不减的账本就是 git 本身,只保证数据当下正确」)。SL-016 仍守派生状态以及 CAS 当前引用与哈希的正确性。
 
 理论切分的现役 adapter 平台由 `generic-v1`、内建 `cone-v1`/`gict-v1`/`observer-v1`/`periodic-tree-v1`/`pzg-v1`/`wm-v1`,以及 `Meta/Digestion/atomizers.toml` 声明的 dialect 组成。带 genre registry 的 adapter 对每个可识别 claim 作全函数分类 `Known(kind) | Open(token)`;该分类只决定 atom 是否为可识别 claim 以及 source 的 `unregistered_genres` 投影,不参与 atom identity。每个 source 的 `source.toml` 必填 `genre_registry_check ∈ {collected,no-registry}` 与排序去重的 `unregistered_genres`;admission 每次重算并逐字比对,伪空、漏报、多报与二态错均 fail-closed。所有 adapter 均以确定性 Markdown AST 产生 claim atom + heading context scaffold,分片可 byte-exact 重组;字节缺口、非法 UTF-8 等结构错误直接失败。同一 raw 内容无论由何方言、kind、source 或重复出现位置产出,其 `atom_id` 都是同一个裸 SHA-256,账目全局合并且 coverage 边按 GID 取并集。摄入协议固定为 **extract → identify → subtract digested → admit residual**:按 raw 内容哈希识别既有 atom,纯追加不会改变任何既有 ID;新内容以其完整 raw SHA-256 入 `residual-open`,全量重跑不使用增量水位线。
 
@@ -902,13 +902,13 @@ Blueprint markdown 已证有仓内语义 consumer，移出 PR-A；只有独立 P
 
 ---
 
-# CHANGELOG(原位演进史;只追加)
+# CHANGELOG(原位演进史;历史归 git)
 
 - **v7.20**(2026-09-04):coverage 边进入终态 contract:candidate 与 protected-base 只接受 `coverage_gids` 的 `{gid,target_statement_id}` 对象元素;writer 只产该形;align 直接刷新 target;未解析 target 令 truth 为 `Open`;迁移命令、双读投影和迁移专用测试全部退役。
 
 - **v7.19**(2026-09-03):L2 三步迁移的已完成历史判例:持久键保持 `coverage_gids`,非空元素归一为 `{gid,target_statement_id}`,空列表零字节改动,最终收口为对象形单读。
 
-- **v7.18**(2026-08-29,#4028/#4029/本 PR):按 τ=0 owner 裁决,退役针对本文档的 harness,分层落地。**#4028(判官)**:删除 `.github/CODEOWNERS` 的本文档人审门——实测 `dev` 分支保护不含 `required_pull_request_reviews`,故 CODEOWNERS 无执法路径,该行自称现役而零执法,且「需人审门」违反 CLAUDE.md 第 22 条永久铁律;同时修正 `Meta/FILEMAP.toml` 中 `docs/develop/spec/**` 的 `consumed_by`/`verified_by`——`BackfillInventoryLoader` 只解析 `Meta/Digestion/backfill` 记录、从不读本文档字节,该标签是 proxy-over-truth,改用 `docs/reports/**` 的既有先例 `["agent"]`/`["SnapshotDecoder"]`。**#4029(消化系统)**:删除 `Meta/Digestion/backfill/golden-ledger-spec-v7.11/` 全部 13 文件。其 12 个原子以绝对 `start_byte`/`end_byte` 绑定本文档,是全仓仅有的嵌套 `boundary` 形态,也是「改本文档须同 PR 跑 `make ingest` 重算边界」这一经常性开销的机器来源;十条长期停在 `partial-open`,其覆盖目标出自本文档中的**举例**(如 atom-01 覆盖「样例 1|定义」并指向 `D5/S0/Carrier/Ring`)。**保留项与理由**:`Meta/registry.yaml` 的 `governance_documents` 条目保留——它是本文档唯一的 SL-000 准入凭据(`RepositoryPathPolicy.cs:123`),删它需改 `RepositoryPathPolicy.cs`,而该路径属 rule-implementation 闭包(`StrataLintEngineBuildInputs.cs:40`),会使 `BackfillInventoryRule.cs:30` 传 `changes=null` 而令 CAS 检查退化为全量,进而把 12 个已无引用的 blob 判为 `orphan CAS blob`;`Meta/Digestion/atoms/sha256/` 的 12 个 CAS blob 保留,受 append-only 约束。**本 PR**:11.21 的 entry 计数改述为结构不变量,并为第十二部 12.3 R1 追加失效勘注(原文不改写)。
+- **v7.18**(2026-08-29,#4028/#4029/本 PR):按 τ=0 owner 裁决,退役针对本文档的 harness,分层落地。**#4028(判官)**:删除 `.github/CODEOWNERS` 的本文档人审门——实测 `dev` 分支保护不含 `required_pull_request_reviews`,故 CODEOWNERS 无执法路径,该行自称现役而零执法,且「需人审门」违反 CLAUDE.md 第 22 条永久铁律;同时修正 `Meta/FILEMAP.toml` 中 `docs/develop/spec/**` 的 `consumed_by`/`verified_by`——`BackfillInventoryLoader` 只解析 `Meta/Digestion/backfill` 记录、从不读本文档字节,该标签是 proxy-over-truth,改用 `docs/reports/**` 的既有先例 `["agent"]`/`["SnapshotDecoder"]`。**#4029(消化系统)**:删除 `Meta/Digestion/backfill/golden-ledger-spec-v7.11/` 全部 13 文件。其 12 个原子以绝对 `start_byte`/`end_byte` 绑定本文档,是全仓仅有的嵌套 `boundary` 形态,也是「改本文档须同 PR 跑 `make ingest` 重算边界」这一经常性开销的机器来源;十条长期停在 `partial-open`,其覆盖目标出自本文档中的**举例**(如 atom-01 覆盖「样例 1|定义」并指向 `D5/S0/Carrier/Ring`)。**保留项与理由**:`Meta/registry.yaml` 的 `governance_documents` 条目保留——它是本文档唯一的 SL-000 准入凭据(`RepositoryPathPolicy.cs:123`),删它需改 `RepositoryPathPolicy.cs`,而该路径属 rule-implementation 闭包(`StrataLintEngineBuildInputs.cs:40`),会使 `BackfillInventoryRule.cs:30` 传 `changes=null` 而令 CAS 检查退化为全量,进而把 12 个已无引用的 blob 判为 `orphan CAS blob`;`Meta/Digestion/atoms/sha256/` 的 12 个 CAS blob 当时因基线保留检查而留下,该检查已于 2026-09-02 退役,现只校验当前账本的引用与哈希正确性。**本 PR**:11.21 的 entry 计数改述为结构不变量,并为第十二部 12.3 R1 追加失效勘注(原文不改写)。
 
 - **v7.17 R2**(2026-08-28,#3686/#3338):同步 #3686 后的冻结账本现状。A14.1-A14.8 的 Supersede/Reattest writer、五型 union、v1 replay 与测试细节保留为带明确时域的修订审计记录,不再冒充现役;现役 candidate event 仅 `Freeze|Revoke`,Reattest 仅作受信历史读取,Supersede 持久事件为 0 且读侧拒绝,环境升级路径记 `open(#3338)`。第十二部 PR-A/B/C 选处置 (a):保留退役提案并加勘正,PR-C「不得把第五型丢失」由 owner 裁决明确作废;冻结面条款同步删除 Reattest/Supersede 对 source 修改或 pin bump 的授权。12 个 `spec-acceptance` 原子原文与 raw SHA-256 均不改,只由 `make ingest` 重对齐自由区插入导致的 byte boundary。
 

@@ -13,7 +13,7 @@ Required-check configuration is also performed by a human operator; the reposito
 
 ## Meta-Layer Self-Modification
 
-Changes to StrataLint, controlled vocabularies, agent charters, or the single repository specification require human approval and an append-only Chronicle record. The classifier does not classify its own authority: semantic classification and mathematical truth remain above the automated Gödel boundary.
+Changes to StrataLint, controlled vocabularies, agent charters, or the single repository specification require human approval and a dated Chronicle record. Chronicle history belongs to Git. The classifier does not classify its own authority: semantic classification and mathematical truth remain above the automated Gödel boundary.
 
 ## GROWTH-AUDIT: 性能候选队列
 
