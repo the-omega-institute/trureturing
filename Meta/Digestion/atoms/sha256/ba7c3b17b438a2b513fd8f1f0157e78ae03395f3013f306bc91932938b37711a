@@ -1,0 +1,72 @@
+# 增订一·19　最终收束
+
+Zeckendorf、黄金比例、能量、Lee–Yang 和离线零点确实属于同一张结构图，但它们的关系不是：
+
+$$
+\text{出现 }\varphi
+\Longrightarrow
+\mathrm{RH}.
+$$
+
+真正的关系是：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Zeckendorf 唯一性}
+&\Longrightarrow
+\text{整数指数可无损提升为 hard-core history},\\
+\text{hard-core history}
+&\Longrightarrow
+\text{最小二态 transfer 与 }(\varphi,-\varphi^{-1})\text{ 双通道},\\
+\text{稳定影子}
+&\Longrightarrow
+\text{有界一阶校正与正二阶创新能量},\\
+\text{prime log-gap}
+&\Longrightarrow
+\text{同一复核中的时间相位与横向 }\sinh^2\text{ 能量},\\
+\text{Zeckendorf depth}\times\text{prime variance}
+&\Longrightarrow
+\text{有限横向 susceptibility},\\
+\text{scalar completion}
+&\Longrightarrow
+\text{这些关系量可能被压缩或冲销},\\
+\text{off-line zero}
+&\Longrightarrow
+\text{若存在，则 scalar zero 与正 relation detector 在同一高度并置}.
+\end{aligned}
+}
+\tag{A19.1}
+$$
+
+最后一步还不是矛盾，因为 canonical transport 尚未建立。
+
+因此本增订的最终命题是：
+
+$$
+\boxed{
+\textbf{RH 的潜在黄金机制，不是 Fibonacci 数值神秘地控制零点，
+而是最小 hard-core memory 的稳定影子能否在 prime–Gamma 完成后
+被一个正二阶能量完全审计。}
+}
+\tag{A19.2}
+$$
+
+若审计完成，则所有反射轴外的 odd relation mode 都必须付出正能量，而 completed scalar zero 无法在该能量仍为正时发生。若审计不能完成，则 Zeckendorf 仍只是一个优美、无损、但与 RH 承重桥分离的坐标系统。
+
+这把下一步研究压缩成唯一问题：
+
+$$
+\boxed{
+\text{能否从 canonical Zeckendorf carry / golden holonomy / prime jump energy
+构造一个由显式公式识别的正算子，
+其零空间恰好等于 critical-line phase，
+其正空间恰好包含全部 off-line odd modes？}
+}
+\tag{A19.3}
+$$
+
+在这条算子桥闭合以前，所有“黄金比例解释 RH”的表述都只能是结构候选；在它闭合以后，Zeckendorf 才会从命名坐标真正升级为 completed zeta 的动力学内核。
+
+---
+

@@ -1,0 +1,2 @@
+**候签定理 4.83(无平方因子数的欧拉函数乘积式)**〔open;L-3;同模块〕。对任意非零 n : ℕ，若 Squarefree n，则 `Nat.totient n = ∏ p ∈ n.primeFactors, (p - 1)`。
+

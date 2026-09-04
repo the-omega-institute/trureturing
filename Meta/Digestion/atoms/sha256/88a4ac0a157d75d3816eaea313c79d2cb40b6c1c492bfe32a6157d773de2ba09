@@ -1,0 +1,36 @@
+## B10.1 一般二通道振幅
+
+考虑
+
+$$
+\boxed{
+Z_N(s)
+=a_+(s)\lambda_+(s)^N
++a_-(s)\lambda_-(s)^N,}
+\tag{B10.1}
+$$
+
+其中在所讨论点两系数与两通道均非零。
+
+若 $Z_N(s)=0$，取模得到：
+
+$$
+|a_+||\lambda_+|^N
+=|a_-||\lambda_-|^N.
+\tag{B10.2}
+$$
+
+因此：
+
+### 定理 B10.1　zero-balance identity
+
+$$
+\boxed{
+N\log\frac{|\lambda_+|}{|\lambda_-|}
+=
+\log\frac{|a_-|}{|a_+|}.}
+\tag{B10.3}
+$$
+
+零点要求 bulk Lyapunov imbalance 恰好由 boundary coefficient imbalance 抵消。
+
