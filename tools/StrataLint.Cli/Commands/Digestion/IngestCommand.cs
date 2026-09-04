@@ -152,7 +152,6 @@ internal static partial class IngestCommand
                 DigestionEvaluationScopes.ResolveChanges(
                     evaluationScope,
                     receiptVerificationChanges),
-                repositoryChanges: finalChanges,
                 casChanges: finalCasChanges,
                 projectedStatusChanges: DigestionEvaluationScopes.ResolveChanges(
                     evaluationScope,
@@ -373,9 +372,8 @@ internal static partial class IngestCommand
             static source => source.SourceId,
             StringComparer.Ordinal);
         // Adding is how a theory document nobody declared enters the ledger, so it is
-        // allowed and writes the source metadata below. Removing is not: a source that
-        // disappears would take its receipts with it, which is the one direction the
-        // append-only ledger does not have.
+        // allowed and writes the source metadata below. The current writer does not
+        // remove a source because that would also discard its receipts.
         var removed = currentSources.Keys.Except(replacementSources.Keys, StringComparer.Ordinal).ToArray();
         if (removed.Length > 0)
         {

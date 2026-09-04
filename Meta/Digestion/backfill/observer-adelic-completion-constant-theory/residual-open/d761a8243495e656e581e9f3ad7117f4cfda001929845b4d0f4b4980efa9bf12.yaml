@@ -6,6 +6,13 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    gids:
+      - D5/S3/Analytic/ZetaObservation/ParityPolarizationPoleOrders.parity_polarization_holomorphy_and_pole_orders
+    gaps:
+      - code: chain-migration-incomplete
+        detail: 4e7aa057a784e4532ac33d65f567e8cd45a2edd95fca4741c0db73c292b1263a
   chain_atoms:
     - 3e50492d1a0acb3d287aecfb9883eddf875dbfb500ad77c7929a27be370aa9d9
     - 3a546a97b583421f9df2f244d7984a2a53b901a4398a478a0bd227be5d36ebf2

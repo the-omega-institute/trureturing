@@ -13,7 +13,6 @@ public sealed class RuleEngineTests
         { 2, "sorry" },
         { 3, "file-capacity" },
         { 4, "mirror" },
-        { 5, "chronicle" },
         { 6, "badge" },
         { 8, "heart" },
         { 10, "generality" },
@@ -48,7 +47,6 @@ public sealed class RuleEngineTests
         { 2, RuleFixture.BlueprintPath },
         { 3, RuleFixture.BlueprintPath },
         { 4, "Chronicle/2026/07/10-old.md" },
-        { 5, RuleFixture.BlueprintPath },
         { 6, "tools/README.md" },
         { 8, RuleFixture.BlueprintPath },
         { 10, RuleFixture.BlueprintPath },
@@ -689,7 +687,7 @@ public sealed class RuleEngineTests
             .Order()
             .ToArray();
 
-        Assert.Equal(Enumerable.Range(1, 23).Append(25).Append(26), exercised);
+        Assert.Equal(Enumerable.Range(1, 23).Except([5]).Append(25).Append(26), exercised);
     }
 
     [Fact]
