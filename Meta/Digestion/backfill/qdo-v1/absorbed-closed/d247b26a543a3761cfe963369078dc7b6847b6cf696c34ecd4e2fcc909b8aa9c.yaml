@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:d247b26a543a3761cfe963369078dc7b6847b6cf696c34ecd4e2fcc909b8aa9c
+  normalized_sha256: sha256:d247b26a543a3761cfe963369078dc7b6847b6cf696c34ecd4e2fcc909b8aa9c
+cas_ref: sha256:d247b26a543a3761cfe963369078dc7b6847b6cf696c34ecd4e2fcc909b8aa9c
+coverage_gids:
+  - gid: D5/S3/Quantum/Tomography/ResidualControlsNaturality.residual_controls_naturality
+    target_statement_id: sha256:1c7787fb29dea75fc3772578588a043148a81e94a2bb504f5ac03271fd11158d
+receipts:
+  scribe:
+    - gid: D5/S3/Quantum/Tomography/ResidualControlsNaturality.residual_controls_naturality
+      definition_sha256: sha256:80c309aa41a1b81e666c3d891cbfce7376aa2a75a7ab984f9610b652a62065a2
+      emission_sha256: sha256:a4a4fa260b866883868bd67e71f485aea8db6e54870dfaf46faf2b6743ce2c5c
+  unresolved_subitems: []

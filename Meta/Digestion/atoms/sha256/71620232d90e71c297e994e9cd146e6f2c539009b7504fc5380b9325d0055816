@@ -1,0 +1,47 @@
+# 第二百零三部　Golden germ 进一步证明必须先区分局部与全局
+
+仓库现在还证明了一个重要的条件分类：
+
+在 RH 前提下，第三阶 golden continued germ 在 pulled-back critical line 上的零点来自：
+
+* \(\zeta(\varphi^2s)\) 的 pullback 零点；
+* 或 \(p=2,3\) 的局部因子零点；
+
+而在指定开窗口中偏离该线的零点，恰好是某个 local factor 的零点。
+
+这说明即使 classical RH 成立，golden germ 仍然可以拥有离线 local-factor zeros。
+
+所以：
+
+$$
+\boxed{
+\text{离线}
+\not\Rightarrow
+\text{global coherent RH violation}.
+}
+$$
+
+必须先分解：
+
+$$
+\boxed{
+D_{\mathrm{full}}
+=
+D_{\mathrm{coherent}}
++
+D_{\mathrm{structural}}
++
+D_{\mathrm{local-addressed}}.
+}
+$$
+
+正性压缩器只能针对：
+
+$$
+D_{\mathrm{coherent}}.
+$$
+
+否则黄金结构零 \(x=\varphi\) 会立即产生单位 odd-negative channel，而这与 classical RH 无关。
+
+---
+

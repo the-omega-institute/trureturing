@@ -215,6 +215,19 @@ public sealed partial class FileMapPolicyTests
     }
 
     [Fact]
+    public void EmptyFrozenStatePatternIsAcceptedDuringTheExpandPhase()
+    {
+        var manifest = Parse(Entry(
+            "Golden/Frozen/state/**/*.json",
+            "data",
+            "FrozenStateWriter",
+            "FrozenStateCatalog",
+            "FrozenStateRecordLoader"));
+
+        Assert.Empty(FileMapPolicy.InspectPatternPopulation(manifest, []));
+    }
+
+    [Fact]
     public void DanglingGeneratedAndDataActorsAreRejectedByTheRedFixture()
     {
         const string pattern = "Generated/output.json";

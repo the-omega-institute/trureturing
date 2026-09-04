@@ -1,0 +1,68 @@
+# 612. 你的直觉最终应该改写为什么
+
+不是：
+
+$$
+\boxed{
+\varphi^{-H}\text{ 是素数无法逼近的数。}
+}
+$$
+
+因为：
+
+$$
+\boxed{
+\varphi^{-H}
+=
+\lim_{m\to\infty}
+\left(
+\prod_p
+p^{-v_p(L_{mH})}
+\right)^{1/m}.
+}
+$$
+
+它甚至是全体素数因子压力的规范极限。
+
+真正正确的是：
+
+$$
+\boxed{
+\text{任意有限 prime shadow 都能逼近偏移的标量，}
+}
+$$
+
+但：
+
+$$
+\boxed{
+\text{只要误差仍非零，全体素数角色就在临界范数中完全分离它们。}
+}
+$$
+
+同时，离线零点对并不要求素数直接产生单根：
+
+$$
+\delta.
+$$
+
+它只要求全局 determinant 产生：
+
+$$
+\boxed{
+D=\delta^2.
+}
+$$
+
+随后：
+
+$$
+\boxed{
+\text{global even equation}
+\quad\longrightarrow\quad
+\text{observer-selected odd roots } \pm\sqrt D.
+}
+$$
+
+---
+

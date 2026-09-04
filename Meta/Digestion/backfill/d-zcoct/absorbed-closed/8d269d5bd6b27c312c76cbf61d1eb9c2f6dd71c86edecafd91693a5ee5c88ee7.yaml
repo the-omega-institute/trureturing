@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:8d269d5bd6b27c312c76cbf61d1eb9c2f6dd71c86edecafd91693a5ee5c88ee7
+  normalized_sha256: sha256:8d269d5bd6b27c312c76cbf61d1eb9c2f6dd71c86edecafd91693a5ee5c88ee7
+cas_ref: sha256:8d269d5bd6b27c312c76cbf61d1eb9c2f6dd71c86edecafd91693a5ee5c88ee7
+coverage_gids:
+  - gid: D5/S3/Analytic/Boundary/CarrierDecayThreshold.carrier_decay_threshold
+    target_statement_id: sha256:f7c41aae5a9d8588febf08d21e1943ae0854bdb38e618ec31f006747fe2de5af
+receipts:
+  scribe:
+    - gid: D5/S3/Analytic/Boundary/CarrierDecayThreshold.carrier_decay_threshold
+      definition_sha256: sha256:d38e2466b103897a3f70a6794b3394235505534d6c16cd805e3bede0f8e6e636
+      emission_sha256: sha256:8458c595ddd81b8691dbf4d35e97a13d17a229038bd6f76e67c396427a2bf755
+  unresolved_subitems: []

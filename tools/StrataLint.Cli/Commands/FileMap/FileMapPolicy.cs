@@ -18,6 +18,8 @@ internal static class FileMapPolicy
         "tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryLoader.cs";
     private const string FileMapLoaderPath =
         "tools/StrataLint.Scribe/FileMap/FileMapManifest.cs";
+    private const string FrozenStateRecordLoaderPath =
+        "tools/StrataLint.Engine/FrozenState/FrozenStateRecord.cs";
     private const string LibraryNoteCatalogPath =
         "tools/StrataLint.Scribe/Library/LibraryNoteCatalog.cs";
     private const string ProblemCandidateCatalogPath =
@@ -52,6 +54,7 @@ internal static class FileMapPolicy
         {
             ["BackfillInventoryLoader"] = BackfillLoaderPath,
             ["FileMapLoader"] = FileMapLoaderPath,
+            ["FrozenStateRecordLoader"] = FrozenStateRecordLoaderPath,
             ["GateAuthorityRootCatalogLoader"] = GateAuthorityRootCatalogLoaderPath,
             ["LibraryNoteCatalog"] = LibraryNoteCatalogPath,
             ["ProblemCandidateCatalog"] = ProblemCandidateCatalogPath,
@@ -537,6 +540,8 @@ internal static class FileMapPolicy
         var trackedPaths = paths.ToArray();
         return manifest.Entries
             .Where(static entry => entry.RuntimeDisposition != "run-local")
+            // L3 expand starts with no state shards; ledger-append populates this exact set.
+            .Where(static entry => entry.Pattern != "Golden/Frozen/state/**/*.json")
             .Where(entry => !trackedPaths.Any(entry.Matches))
             .Select(static entry => new FileMapFinding(
                 "FILEMAP-PATTERN-EMPTY",
@@ -612,7 +617,9 @@ internal static class FileMapPolicy
                 || path.StartsWith("Golden/Projection/", StringComparison.Ordinal)
                     && kind is not FileMapKind.Data
                 || FrozenLedgerChangeClassifier.IsAcceptedEventPath(path)
-                    && kind is not FileMapKind.Ledger)
+                    && kind is not FileMapKind.Ledger
+                || FrozenStatePath.IsUnderRoot(path)
+                    && kind is not FileMapKind.Data)
             {
                 findings.Add(new FileMapFinding(
                     "FILEMAP-DIRECTORY-KIND",

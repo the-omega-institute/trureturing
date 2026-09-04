@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:154f820bffa368cb4b563175549c5b777d44237b0b7ef8ff9352d87e9782292d
+  normalized_sha256: sha256:154f820bffa368cb4b563175549c5b777d44237b0b7ef8ff9352d87e9782292d
+cas_ref: sha256:154f820bffa368cb4b563175549c5b777d44237b0b7ef8ff9352d87e9782292d
+coverage_gids:
+  - gid: D5/S1/Deficit/TerminalShellParityLaw.terminal_shell_defect_iff_odd
+    target_statement_id: sha256:6ed9d822eeb2bf63f66137a782809cd1c515d95fb197c7ea755fb92c9c781f33
+receipts:
+  scribe:
+    - gid: D5/S1/Deficit/TerminalShellParityLaw.terminal_shell_defect_iff_odd
+      definition_sha256: sha256:cfdaa65ceb32b645879f489187e0da1d7b47bf8e0c74b1bb32a3e7a4eba20980
+      emission_sha256: sha256:e2da5296f6356f7d00b73a3d64ade23bb2009096f406ae4c6240d5f696292f80
+  unresolved_subitems: []

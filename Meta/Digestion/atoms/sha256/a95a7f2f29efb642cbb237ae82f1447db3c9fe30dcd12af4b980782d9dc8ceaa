@@ -1,0 +1,42 @@
+# 三、真正的临界点出现在加权距离中
+
+ζ 自身给出最自然的权重：
+
+$$
+p^{-\sigma}.
+$$
+
+定义全素数相干误差：
+
+$$
+\boxed{
+\mathcal E_\sigma(t)
+=
+\sum_{p}
+p^{-2\sigma}
+\left|
+e^{-it\log p}-1
+\right|^2.
+}
+$$
+
+也就是：
+
+$$
+\mathcal E_\sigma(t)
+=
+2\sum_p
+p^{-2\sigma}
+\left(
+1-\cos(t\log p)
+\right).
+$$
+
+这不是随意定义。因为 \(p^{-\sigma}\) 正是 Euler 模式振幅，而平方以后自然出现：
+
+$$
+p^{-2\sigma}.
+$$
+
+---
+

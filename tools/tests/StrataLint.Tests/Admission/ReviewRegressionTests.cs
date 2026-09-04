@@ -165,19 +165,93 @@ public sealed partial class ReviewRegressionTests
     }
 
     [Fact]
-    public void Sl016RejectsDeletingABaselineCasBlob()
+    public void Sl016AllowsDeletingACasBlobAbsentFromTheCurrentLedger()
     {
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        fixture.Files.Remove(RuleFixture.FixtureCasPath);
+        var (fixture, deletedCasPath) = UnreferencedCasDeletionFixture();
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(16),
-            fixture.Build());
+            fixture.Build(RawChangeSet.Create([deletedCasPath])));
+
+        Assert.Empty(evaluation.Diagnostics);
+    }
+
+    [Fact]
+    public void Sl016StillChecksDerivedStatusWhenDeletingAnUnreferencedCasBlob()
+    {
+        var (fixture, deletedCasPath) = UnreferencedCasDeletionFixture();
+        var atom = fixture.Files[RuleFixture.FixtureBackfillAtomPath];
+        fixture.Files.Remove(RuleFixture.FixtureBackfillAtomPath);
+        var mismatchedStatusPath = RuleFixture.FixtureBackfillAtomPath.Replace(
+            "/partial-open/",
+            "/absorbed-closed/",
+            StringComparison.Ordinal);
+        fixture.Files[mismatchedStatusPath] = atom;
+
+        var evaluation = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(16),
+            fixture.Build(RawChangeSet.Create([
+                deletedCasPath,
+                RuleFixture.FixtureBackfillAtomPath,
+                mismatchedStatusPath,
+            ])));
 
         Assert.Contains(evaluation.Diagnostics, diagnostic => diagnostic.Message.Contains(
-            $"baseline CAS blob was deleted: {RuleFixture.FixtureCasPath}",
+            "handwritten status absorbed-closed differs from derived partial-open",
             StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void Sl016StillChecksClosedEntryKeysWhenDeletingAnUnreferencedCasBlob()
+    {
+        var (fixture, deletedCasPath) = UnreferencedCasDeletionFixture();
+        fixture.Files[RuleFixture.FixtureBackfillAtomPath] += "unexpected: value\n";
+
+        var evaluation = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(16),
+            fixture.Build(RawChangeSet.Create([
+                deletedCasPath,
+                RuleFixture.FixtureBackfillAtomPath,
+            ])));
+
+        Assert.Contains(evaluation.Diagnostics, diagnostic => diagnostic.Message.Contains(
+            "source fixture-source entry keys are not canonical",
+            StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void Sl016StillChecksCoverageTargetsWhenDeletingAnUnreferencedCasBlob()
+    {
+        const string missingGid = "D5/S0/Carrier/MissingCoverageTarget";
+        var (fixture, deletedCasPath) = UnreferencedCasDeletionFixture();
+        fixture.Files[RuleFixture.FixtureBackfillAtomPath] = fixture.Files[
+                RuleFixture.FixtureBackfillAtomPath]
+            .Replace(
+                "D5/S0/Carrier/BackfillTarget",
+                missingGid,
+                StringComparison.Ordinal);
+
+        var evaluation = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(16),
+            fixture.Build(RawChangeSet.Create([
+                deletedCasPath,
+                RuleFixture.FixtureBackfillAtomPath,
+            ])));
+
+        Assert.Contains(evaluation.Diagnostics, diagnostic => diagnostic.Message.Contains(
+            $"entry {RuleFixture.FixtureAtomId} coverage target is absent: {missingGid}",
+            StringComparison.Ordinal));
+    }
+
+    private static (RuleFixture Fixture, string DeletedCasPath) UnreferencedCasDeletionFixture()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        var obsolete = DigestionCasStore.Capture(Encoding.UTF8.GetBytes("obsolete atom\n"));
+        var obsoleteText = Encoding.UTF8.GetString(obsolete.Bytes.AsSpan());
+        fixture.Baseline[obsolete.RelativePath] = obsoleteText;
+        fixture.ForkPoint[obsolete.RelativePath] = obsoleteText;
+        return (fixture, obsolete.RelativePath);
     }
 
     [Fact]
@@ -396,65 +470,11 @@ public sealed partial class ReviewRegressionTests
                 "anomaly-bearing", StringComparison.Ordinal));
     }
 
-    [Theory]
-    [InlineData(false)]
-    [InlineData(true)]
-    public void Sl019AcceptsBothLegacyAndNormalizedCoverageGidElements(bool legacy)
-    {
-        var fixture = new RuleFixture();
-        const string path = "Meta/Digestion/backfill/interface-v1/absorbed-closed/elements.yaml";
-        const string gid =
-            "D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/RetrospectiveLookupFailure"
-            + ".lookup_copy_zero_loss_and_nonanticipating_failure";
-        var coverageElement = legacy
-            ? "  - " + gid + "\n"
-            : "  - gid: " + gid + "\n"
-                + "    target_statement_id: sha256:00\n";
-        fixture.Files[path] = "cas_ref: sha256:00\n"
-            + "coverage_gids:\n"
-            + coverageElement;
-
-        var evaluation = RuleCatalog.Default.EvaluateSingle(
-            RuleId.CreateKnown(19),
-            fixture.Build(RawChangeSet.Create([path])));
-
-        Assert.DoesNotContain(
-            evaluation.Diagnostics,
-            item => item.Path == path && item.Message.Contains(
-                "anomaly-bearing", StringComparison.Ordinal));
-    }
-
-    [Fact]
-    public void Sl019AcceptsLegacyInventoryCoverageAndReceiptGidsWhoseSubjectIsNamedAfterAFailure()
-    {
-        var fixture = new RuleFixture();
-        const string path = "Meta/Digestion/backfill/interface-v1/absorbed-closed/legacy.yaml";
-        const string gid =
-            "D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/RetrospectiveLookupFailure"
-            + ".lookup_copy_zero_loss_and_nonanticipating_failure";
-        fixture.Files[path] = "cas_ref: sha256:00\n"
-            + "coverage_gids:\n"
-            + "  - " + gid + "\n"
-            + "receipts:\n"
-            + "  coverage:\n"
-            + "    - gid: " + gid + "\n"
-            + "      source_sha256: sha256:00\n"
-            + "      target_statement_id: sha256:00\n";
-
-        var evaluation = RuleCatalog.Default.EvaluateSingle(
-            RuleId.CreateKnown(19),
-            fixture.Build(RawChangeSet.Create([path])));
-
-        Assert.DoesNotContain(
-            evaluation.Diagnostics,
-            item => item.Path == path && item.Message.Contains(
-                "anomaly-bearing", StringComparison.Ordinal));
-    }
-
     public static TheoryData<string> InvalidInventoryGidSlots => new()
     {
         "coverage_" + "gids:\n  - unresolved failure without case\n",
         "receipts:\n  coverage:\n    - gid: FiniteFailure\n",
+        "receipts:\n  coverage:\n    - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/RetrospectiveLookupFailure.lookup_copy_zero_loss_and_nonanticipating_failure\n",
         "failure_gids:\n  - D5/S0/Carrier/ProbeFailure.failure_probe\n",
         "outer:\n  coverage_" + "gids:\n    - D5/S0/Carrier/ProbeFailure.failure_probe\n",
     };

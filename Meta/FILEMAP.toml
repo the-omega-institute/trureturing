@@ -227,6 +227,15 @@ artifact_id = "none"
 runtime_disposition = "committed-ledger"
 
 [[files]]
+pattern = "Golden/Frozen/state/**/*.json"
+kind = "data"
+produced_by = "FrozenStateWriter"
+consumed_by = ["FrozenStateCatalog"]
+verified_by = ["FrozenStateRecordLoader", "SL-008"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
 pattern = "Golden/Projection/*.json"
 kind = "data"
 admission_plane = "content"

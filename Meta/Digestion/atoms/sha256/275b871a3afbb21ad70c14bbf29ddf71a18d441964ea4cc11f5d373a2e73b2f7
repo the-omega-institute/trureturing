@@ -1,0 +1,47 @@
+* \(\mathcal E_{N+1}\subseteq\mathcal E_N\)；
+
+那么：
+
+$$
+\left(
+\forall N,\ \mathcal E_N\neq\varnothing
+\right)
+\Longrightarrow
+\bigcap_N\mathcal E_N\neq\varnothing.
+$$
+
+因此反过来：
+
+$$
+\boxed{
+\bigcap_N\mathcal E_N=\varnothing
+\Longrightarrow
+\exists N,\quad
+\mathcal E_N=\varnothing.
+}
+$$
+
+项目已经形式化了相邻的紧致有限交性质：连续局部记录的闭纤维若每个有限交非空，则紧致性保证全交非空。
+
+这说明：
+
+$$
+\boxed{
+\text{“每个有限层都有反例，但整个无限塔没有反例”}
+}
+$$
+
+只有在以下某种失败下才可能发生：
+
+$$
+\boxed{
+\text{空间非紧}
+\quad\text{或}\quad
+\text{残差非闭}
+\quad\text{或}\quad
+\text{极限离开原载体}.
+}
+$$
+
+---
+

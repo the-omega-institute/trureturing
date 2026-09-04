@@ -6,3 +6,7 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: The clause names self-produced and frozen-external verdict channels and adds empirical multi-version context, but defines neither a typed origin classifier nor an exhaustive provenance law and does not elevate the observation to a universal theorem.
+    reentry_condition: Reenter when the source defines a typed verdict-origin classifier with an exhaustive law and separately supplies formal premises for any empirical claim retained as theorem content.
+    blocker_class: multi-clause-guard

@@ -7940,3 +7940,4797 @@ $$
 [1]: https://doi.org/10.1147/RD.53.0183 "https://doi.org/10.1147/RD.53.0183"
 [2]: https://colab.ws/articles/10.1147%2Frd.176.0525 "https://colab.ws/articles/10.1147%2Frd.176.0525"
 [3]: https://www.nature.com/articles/ncomms14538 "https://www.nature.com/articles/ncomms14538"
+# D-ZCOCT 2.4：双 RH 分解理论
+
+## 全局偶闭合与单观察者相干
+
+可以，而且存在一种非常自然、严格且与项目现有结构完全对齐的拆分。
+
+关键不是把“无穷多个素数”硬分成总数为奇或偶，而是考察：
+
+$$
+\boxed{
+\text{零点的横向位置究竟有多少种不同的观察读数。}
+}
+$$
+
+对每个非平凡零点
+
+$$
+\rho=\frac12+\delta_\rho+i\gamma_\rho,
+$$
+
+定义其横向读数：
+
+$$
+\delta_\rho=\Re\rho-\frac12.
+$$
+
+再定义整个零点系统的横向读数集合：
+
+$$
+\boxed{
+\Delta_\zeta
+=
+\left\{
+\delta_\rho:
+\rho\text{ 是非平凡零点}
+\right\}.
+}
+$$
+
+传统 RH 就是：
+
+$$
+\Delta_\zeta\subseteq\{0\}.
+$$
+
+现在可以把它拆成两个性质。
+
+---
+
+# 一、第一个新命题：全局偶闭合 RH
+
+定义：
+
+$$
+\boxed{
+\mathrm{RH}_{\mathrm{even}}
+:
+\quad
+\Delta_\zeta=-\Delta_\zeta.
+}
+$$
+
+也就是：
+
+$$
+\delta\in\Delta_\zeta
+\Longrightarrow
+-\delta\in\Delta_\zeta.
+$$
+
+大白话是：
+
+> 全局视角不允许只有右边而没有左边；任何横向偏移都必须拥有取反伙伴。
+
+它来自 completed zeta 的反射：
+
+$$
+J(s)=1-\overline s.
+$$
+
+因为：
+
+$$
+\rho=\frac12+\delta+i\gamma
+$$
+
+经过 \(J\) 后变成：
+
+$$
+J\rho
+=
+\frac12-\delta+i\gamma.
+$$
+
+所以：
+
+$$
+\delta_{J\rho}=-\delta_\rho.
+$$
+
+项目已经机器证明了零点上的共轭反射作用，以及镜像指标固定当且仅当零点位于临界线；非实离线零点则形成四点自由 Klein 轨道。
+
+因此，对经典 ζ 来说：
+
+$$
+\boxed{
+\mathrm{RH}_{\mathrm{even}}
+\text{ 已经成立。}
+}
+$$
+
+它不是尚未解决的部分，而是函数方程已经给出的全局偶性。
+
+---
+
+# 二、第二个新命题：单观察者相干 RH
+
+定义：
+
+$$
+\boxed{
+\mathrm{RH}_{\mathrm{one}}
+:
+\quad
+\Delta_\zeta
+\text{ 至多只含一个数。}
+}
+$$
+
+等价地：
+
+$$
+\boxed{
+\forall\rho,\sigma,\qquad
+\Re\rho=\Re\sigma.
+}
+$$
+
+这句话没有说这个共同实部必须是 \(1/2\)。
+
+它只说：
+
+> 所有零点虽然高度不同，但在横向方向上给出同一个观察读数。
+
+也就是所有零点都位于某一条共同的竖直线上：
+
+$$
+\Re s=a,
+$$
+
+其中 \(a\) 暂时未知。
+
+因此，\(\mathrm{RH}_{\mathrm{one}}\) 是一个纯粹的**相对命题**：
+
+$$
+\boxed{
+\Re\rho-\Re\sigma=0
+\qquad
+\forall\rho,\sigma.
+}
+$$
+
+它完全不需要预先写入临界值 \(1/2\)。
+
+这就是你所说“RH 本质上可能是相对问题”的严格版本。
+
+---
+
+# 三、双 RH 精确分解定理
+
+## 定理 3.1
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathrm{RH}_{\mathrm{even}}
+\land
+\mathrm{RH}_{\mathrm{one}}.
+}
+$$
+
+## 证明
+
+### RH 推出两个子命题
+
+若 RH 成立：
+
+$$
+\delta_\rho=0
+\qquad
+\forall\rho.
+$$
+
+因此：
+
+$$
+\Delta_\zeta=\{0\}.
+$$
+
+它显然满足：
+
+$$
+\Delta_\zeta=-\Delta_\zeta,
+$$
+
+并且只含一个值。
+
+---
+
+### 两个子命题推出 RH
+
+假设：
+
+$$
+\Delta_\zeta=-\Delta_\zeta
+$$
+
+且 \(\Delta_\zeta\) 至多只有一个值。
+
+取任意：
+
+$$
+\delta\in\Delta_\zeta.
+$$
+
+全局偶闭合给出：
+
+$$
+-\delta\in\Delta_\zeta.
+$$
+
+单观察者相干又说集合中所有值相同，所以：
+
+$$
+\delta=-\delta.
+$$
+
+于是：
+
+$$
+2\delta=0,
+$$
+
+即：
+
+$$
+\delta=0.
+$$
+
+因此：
+
+$$
+\Re\rho=\frac12
+$$
+
+对所有非平凡零点成立。证毕。
+
+---
+
+这条定理的最简形式就是：
+
+$$
+\boxed{
+\text{取反闭合}
++
+\text{只有一个值}
+\Longrightarrow
+\text{该值是取反固定点 }0.
+}
+$$
+
+这里的确定性矛盾正是：
+
+$$
+d\neq0
+\Longrightarrow
+d\neq-d,
+$$
+
+于是全局偶性要求出现两个观察读数；而单观察者命题只允许一个观察读数。二者只能在：
+
+$$
+d=0
+$$
+
+处兼容。
+
+---
+
+# 四、为什么这是你所说的“全局偶、观察者奇”
+
+全局零点数本身仍然是无限的，不能用普通有限整数意义讨论“总数奇偶”。
+
+真正具有奇偶意义的是：
+
+$$
+\boxed{
+\text{横向观察类别的数量。}
+}
+$$
+
+离线情况下：
+
+$$
+\Delta_\zeta
+\supseteq
+\{+\delta,-\delta\}.
+$$
+
+横向至少有两个类别，是一个偶配对。
+
+RH 情况下：
+
+$$
+\Delta_\zeta=\{0\}.
+$$
+
+只剩一个取反固定类别，是一个单点。
+
+所以应当说：
+
+$$
+\boxed{
+\begin{aligned}
+\text{全局离线结构}
+&=
+\text{两个互为取反的横向类别};\\
+\text{RH 结构}
+&=
+\text{一个自身等于其反面的横向类别}.
+\end{aligned}
+}
+$$
+
+“观察者独一无二”不是：
+
+$$
+\#\mathbb P+1,
+$$
+
+而是：
+
+$$
+\boxed{
+\text{所有局部观察都属于同一个横向参考系。}
+}
+$$
+
+---
+
+# 五、RH 可以完全改写成纯相对距离为零
+
+定义绝对 RH 缺陷：
+
+$$
+D_{\mathrm{abs}}
+=
+\sup_\rho
+\left|
+\Re\rho-\frac12
+\right|.
+$$
+
+定义相对 RH 缺陷：
+
+$$
+D_{\mathrm{rel}}
+=
+\sup_{\rho,\sigma}
+\left|
+\Re\rho-\Re\sigma
+\right|.
+$$
+
+由于函数方程已经保证：
+
+$$
+\Delta_\zeta=-\Delta_\zeta,
+$$
+
+可以证明：
+
+$$
+\boxed{
+D_{\mathrm{rel}}
+=
+2D_{\mathrm{abs}}.
+}
+$$
+
+证明很简单。
+
+一方面，对任意 \(\delta_1,\delta_2\)：
+
+$$
+|\delta_1-\delta_2|
+\le
+|\delta_1|+|\delta_2|
+\le
+2D_{\mathrm{abs}}.
+$$
+
+所以：
+
+$$
+D_{\mathrm{rel}}
+\le2D_{\mathrm{abs}}.
+$$
+
+另一方面，对任意 \(\delta\in\Delta_\zeta\)，因为 \(-\delta\) 也存在：
+
+$$
+|\delta-(-\delta)|
+=
+2|\delta|.
+$$
+
+因此：
+
+$$
+D_{\mathrm{rel}}
+\ge2D_{\mathrm{abs}}.
+$$
+
+故二者相等。
+
+于是：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+D_{\mathrm{rel}}=0.
+}
+$$
+
+这是一条很重要的重写：
+
+$$
+\boxed{
+\text{在已知函数方程以后，
+证明 RH 不必直接证明每个零点距离 }1/2\text{ 为零；}
+}
+$$
+
+只需要证明：
+
+$$
+\boxed{
+\text{任意两个非平凡零点的实部都相同。}
+}
+$$
+
+临界值 \(1/2\) 会由全局取反对称自动出现。
+
+---
+
+# 六、均值—方差版本：两个 RH 的正能量分解
+
+为了与项目的正性、热力学和累积量语言连接，取一组严格正、反射不变且可和的权重：
+
+$$
+w_\rho>0,
+\qquad
+w_{J\rho}=w_\rho,
+\qquad
+\sum_\rho w_\rho<\infty.
+$$
+
+项目已经证明了类似
+
+$$
+\sum_\rho
+\frac{m_\rho}{1+|\gamma_\rho|^2}
+<\infty
+$$
+
+的零点加权可和性，因此可以选取自然的 faithful 高度权重。
+
+令：
+
+$$
+W=\sum_\rho w_\rho,
+$$
+
+$$
+\bar\sigma
+=
+\frac1W
+\sum_\rho
+w_\rho\Re\rho.
+$$
+
+定义两个非负能量。
+
+## 6.1 全局中心能量
+
+$$
+\boxed{
+E_{\mathrm{center}}
+=
+W
+\left(
+\bar\sigma-\frac12
+\right)^2.
+}
+$$
+
+它检测整个零点云的中心是否偏离临界线。
+
+---
+
+## 6.2 相对相干能量
+
+$$
+\boxed{
+E_{\mathrm{coh}}
+=
+\sum_\rho
+w_\rho
+\left(
+\Re\rho-\bar\sigma
+\right)^2.
+}
+$$
+
+它不关心公共竖直线在哪里，只检测不同零点之间是否存在横向分歧。
+
+还有纯粹的成对形式：
+
+$$
+\boxed{
+E_{\mathrm{coh}}
+=
+\frac1{2W}
+\sum_{\rho,\sigma}
+w_\rho w_\sigma
+\left(
+\Re\rho-\Re\sigma
+\right)^2.
+}
+$$
+
+所以这是一个真正的相对量。
+
+---
+
+## 6.3 Pythagoras 分解
+
+定义传统 RH 的总平方缺陷：
+
+$$
+E_{\mathrm{RH}}
+=
+\sum_\rho
+w_\rho
+\left(
+\Re\rho-\frac12
+\right)^2.
+$$
+
+则有严格恒等式：
+
+$$
+\boxed{
+E_{\mathrm{RH}}
+=
+E_{\mathrm{coh}}
++
+E_{\mathrm{center}}.
+}
+$$
+
+因此可以再定义两个版本。
+
+### 全局中心 RH
+
+$$
+\boxed{
+\mathrm{RH}_{\mathrm{center}}
+:
+\quad
+E_{\mathrm{center}}=0.
+}
+$$
+
+### 相对相干 RH
+
+$$
+\boxed{
+\mathrm{RH}_{\mathrm{coh}}
+:
+\quad
+E_{\mathrm{coh}}=0.
+}
+$$
+
+于是：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathrm{RH}_{\mathrm{center}}
+\land
+\mathrm{RH}_{\mathrm{coh}}.
+}
+$$
+
+这两个命题在一般对称谱系统中彼此独立：
+
+* 所有零点都在 \(\Re s=0.6\)，则相干成立但中心不成立；
+* 零点位于 \(1/2\pm\delta\)，则中心成立但相干不成立。
+
+只有二者同时成立，才能得到 RH。
+
+---
+
+# 七、对经典 ζ，第一个 RH 已经由函数方程解决
+
+由于：
+
+$$
+\Re(J\rho)=1-\Re\rho
+$$
+
+且：
+
+$$
+w_{J\rho}=w_\rho,
+$$
+
+有：
+
+$$
+\begin{aligned}
+\bar\sigma
+&=
+\frac1W
+\sum_\rho
+w_\rho\Re(J\rho)\\
+&=
+\frac1W
+\sum_\rho
+w_\rho(1-\Re\rho)\\
+&=
+1-\bar\sigma.
+\end{aligned}
+$$
+
+所以：
+
+$$
+\boxed{
+\bar\sigma=\frac12.
+}
+$$
+
+即：
+
+$$
+\boxed{
+E_{\mathrm{center}}=0.
+}
+$$
+
+因此，对于经典 ζ：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+E_{\mathrm{coh}}=0.
+}
+$$
+
+这句话非常重要：
+
+> 函数方程已经解决了“零点云中心在哪里”的问题；RH 真正未解决的是“零点云是否具有任何横向内部宽度”。
+
+所以传统 RH 的核心不是中心定位，而是：
+
+$$
+\boxed{
+\text{横向方差是否为零。}
+}
+$$
+
+---
+
+# 八、观察者语言：RH 是平坦性加定中心
+
+设每个零点给出一个局部观察读数：
+
+$$
+x_\rho=\Re\rho.
+$$
+
+所有读数可以同时平移：
+
+$$
+x_\rho\mapsto x_\rho+a.
+$$
+
+任意成对差：
+
+$$
+x_\rho-x_\sigma
+$$
+
+在这种平移下不变。
+
+因此：
+
+$$
+E_{\mathrm{coh}}
+$$
+
+是一个 gauge-invariant 相对量。
+
+它能告诉我们：
+
+> 所有观察者是否彼此一致。
+
+但它不能告诉我们：
+
+> 共同的观察原点究竟在哪里。
+
+如果：
+
+$$
+E_{\mathrm{coh}}=0,
+$$
+
+只能得到：
+
+$$
+x_\rho=a
+\qquad
+\forall\rho
+$$
+
+对某个未知 \(a\)。
+
+然后必须使用另一个全局结构，把这个共同原点固定下来：
+
+$$
+a=1-a.
+$$
+
+因此：
+
+$$
+a=\frac12.
+$$
+
+所以 RH 可以写成：
+
+$$
+\boxed{
+\mathrm{RH}
+=
+\text{relative flatness}
++
+\text{global gauge fixing}.
+}
+$$
+
+中文就是：
+
+$$
+\boxed{
+\text{相对平坦}
++
+\text{全局定中心}.
+}
+$$
+
+这并非任意拆分，而是由 gauge blindness 强制出来的：任何只测量差值的理论都不可能独自恢复绝对中心。
+
+---
+
+# 九、这与项目的 prime observer origin 完全对齐
+
+项目当前的 prime-side 局部更新给每个素数通道一个观察起源：
+
+$$
+c_p.
+$$
+
+相邻交换曲率满足因子分解：
+
+$$
+\boxed{
+C_{p,q}
+=
+(a-\lambda_p)(a-\lambda_q)
+(c_p-c_q).
+}
+$$
+
+因此，在非共振条件下：
+
+$$
+C_{p,q}=0
+\iff
+c_p=c_q.
+$$
+
+而共同平移：
+
+$$
+c_p\mapsto c_p+c
+$$
+
+不会改变所有差值 \(c_p-c_q\)。项目已经把这一观察起源因子分解、共同 archive 的 gauge 性和交换曲率判据放入当前 RH research lane。
+
+这说明 prime swap curvature 天然只能解决：
+
+$$
+\boxed{
+\text{相对 RH：所有局部素数观察起源是否一致。}
+}
+$$
+
+它不能独自解决：
+
+$$
+\boxed{
+\text{这个共同起源是不是零。}
+}
+$$
+
+所以对项目而言，双 RH 拆分不是哲学装饰，而是结构上不可避免：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Prime coherence}
+&:\quad c_p=c_q\quad\forall p,q;\\
+\text{Global centering}
+&:\quad c_{\mathrm{common}}=0.
+\end{aligned}
+}
+$$
+
+第一个由 holonomy／交换曲率处理。
+
+第二个必须由函数方程、Archimedean completion、reciprocity 或 parity interval 处理。
+
+---
+
+# 十、一个更干净的 Prime–Zero 桥
+
+此前最强的设想，是直接证明：
+
+$$
+\text{prime-side absolute defect}
+\longrightarrow
+\text{zero distance from }1/2.
+$$
+
+双 RH 分解以后，不必如此。
+
+只需建立一个完全相对的桥：
+
+$$
+\boxed{
+E_{\mathrm{coh}}^{\mathrm{zero}}
+\le
+C
+E_{\mathrm{hol}}^{\mathrm{prime}}
++
+\varepsilon.
+}
+$$
+
+其中：
+
+$$
+E_{\mathrm{hol}}^{\mathrm{prime}}
+\sim
+\sum_{p,q}
+\omega_{p,q}
+|c_p-c_q|^2,
+$$
+
+而：
+
+$$
+E_{\mathrm{coh}}^{\mathrm{zero}}
+\sim
+\sum_{\rho,\sigma}
+w_{\rho,\sigma}
+|\Re\rho-\Re\sigma|^2.
+$$
+
+两边都是：
+
+* 成对差；
+* gauge invariant；
+* 非负；
+* 为零当且仅当所有局部起源一致。
+
+若项目进一步证明：
+
+$$
+E_{\mathrm{hol}}^{\mathrm{prime}}\to0,
+\qquad
+\varepsilon\to0,
+$$
+
+则：
+
+$$
+E_{\mathrm{coh}}^{\mathrm{zero}}=0.
+$$
+
+于是所有零点拥有共同实部 \(a\)。
+
+函数方程再给出：
+
+$$
+a=1-a,
+$$
+
+所以：
+
+$$
+a=\frac12.
+$$
+
+这条路线不再要求 prime-side 桥直接“知道”临界线 \(1/2\)。它只需知道**相对差异如何消失**。
+
+---
+
+# 十一、零点奇通道正是相干缺陷的观察接口
+
+项目已经证明，对一个非实离线轨道，Weil 贡献可以写成：
+
+$$
+\boxed{
+Q_{\operatorname{orb}(\rho)}(g)
+=
+E_\rho^{\mathrm{even}}(g)
+-
+E_\rho^{\mathrm{odd}}(g),
+}
+$$
+
+其中：
+
+$$
+E_\rho^{\mathrm{even}}\ge0,
+\qquad
+E_\rho^{\mathrm{odd}}\ge0.
+$$
+
+奇通道由两个镜像评价之差产生：
+
+$$
+A_{\mathrm{odd}}
+=
+\frac{
+\widehat g(z)
+-
+\widehat g(\overline z)
+}{2}.
+$$
+
+所有符号风险都被隔离在这个奇能量中。
+
+而且项目已经证明，只要存在一个非实离线零点，就能构造测试函数，使整个完整 Weil 零点和严格为负；其余所有零点无法永久抵消目标轨道。
+
+所以零点侧已经有：
+
+$$
+\boxed{
+\text{离线相对差异}
+\Longrightarrow
+\text{可被奇观察者检测的能量}.
+}
+$$
+
+真正缺少的是 prime-side 的忠实支配：
+
+$$
+\boxed{
+E_{\mathrm{zero}}^{\mathrm{odd}}
+\preceq
+C
+E_{\mathrm{prime}}^{\mathrm{hol}}
++
+\varepsilon I.
+}
+$$
+
+这正是双 RH 理论所指出的相对桥。
+
+---
+
+# 十二、Parity Weyl Interval 可以负责第二个“定中心”通道
+
+项目的 `ParityWeylInterval` 已经形式化了一个抽象结构：
+
+* 偶通道给参数下界；
+* 奇通道给参数上界；
+* 两者共同决定允许的谱区间；
+* 平移坐标后区间本身保持不变。
+
+在当前理论中，可以把共同横向原点记为 \(R\)。
+
+相对相干只证明：
+
+$$
+\delta_\rho=R
+\qquad
+\forall\rho.
+$$
+
+然后偶、奇两端可以给出：
+
+$$
+R\ge0,
+$$
+
+以及：
+
+$$
+R\le0.
+$$
+
+于是：
+
+$$
+R=0.
+$$
+
+因此可以有两种定中心路线。
+
+第一种，直接消费函数方程：
+
+$$
+R=-R
+\Longrightarrow
+R=0.
+$$
+
+第二种，消费 parity interval collapse：
+
+$$
+R\in[0,0]
+\Longrightarrow
+R=0.
+$$
+
+前者对经典 ζ 已经足够。
+
+后者可能更适合从 prime-side positive completion 独立生成中心。
+
+---
+
+# 十三、素数“奇数个／偶数个”应该放在哪里
+
+你的素数奇偶直觉可以保留，但对象必须是有限配置，而不是全体素数的无限基数。
+
+对整数 \(n\)，定义：
+
+$$
+\Omega(n)=\sum_pv_p(n).
+$$
+
+则：
+
+$$
+(-1)^{\Omega(n)}
+$$
+
+严格区分：
+
+* 使用偶数个素因子的配置；
+* 使用奇数个素因子的配置。
+
+对有限素数构型 \(H\)，也可按：
+
+$$
+|H|\bmod2
+$$
+
+拆成偶阶和奇阶 source cumulants：
+
+$$
+\mathcal K_{\mathrm{even}}(\varepsilon)
+=
+\frac{
+\mathcal K(\varepsilon)
++
+\mathcal K(-\varepsilon)
+}{2},
+$$
+
+$$
+\mathcal K_{\mathrm{odd}}(\varepsilon)
+=
+\frac{
+\mathcal K(\varepsilon)
+-
+\mathcal K(-\varepsilon)
+}{2}.
+$$
+
+项目已经在稠密 \(2/4\)-gap 构型中机器证明：
+
+* 偶数点构型反射后 gap code 不变；
+* 奇数点构型反射后 gap code 取补。
+
+所以 prime constellation 确实天然具有偶／奇 source sector。
+
+但必须保留层级：
+
+$$
+\boxed{
+\text{prime-factor parity}
+\neq
+\text{constellation-degree parity}
+\neq
+\text{zero-reflection parity}.
+}
+$$
+
+它们需要 Trace–Jet Bridge 才能被证明是同一个全局分级的不同表示。
+
+---
+
+# 十四、最深的新结论：桥只需传输“差”，不必传输“绝对位置”
+
+这是此次拆分最实际的价值。
+
+原来的目标像是：
+
+$$
+\text{素数数据}
+\longrightarrow
+\Re\rho=\frac12.
+$$
+
+这要求桥同时完成两件很不同的工作：
+
+1. 消除所有零点之间的横向差异；
+2. 把共同位置定在 \(1/2\)。
+
+现在可以分开：
+
+$$
+\boxed{
+\text{Relative Bridge}:
+\quad
+c_p-c_q
+\longrightarrow
+\Re\rho-\Re\sigma.
+}
+$$
+
+以及：
+
+$$
+\boxed{
+\text{Global Centering}:
+\quad
+J\rho\text{ 仍为零}
+\longrightarrow
+a=1-a.
+}
+$$
+
+第二条已经由函数方程提供。
+
+因此中央开放桥可以缩小为：
+
+# Prime–Zero Relative Coherence Theorem
+
+$$
+\boxed{
+\text{若所有 prime-local observer origins 相干，
+则所有非平凡零点的实部相同。}
+}
+$$
+
+形式上：
+
+$$
+\boxed{
+\left(
+C_{p,q}=0
+\quad
+\forall p,q
+\right)
+\Longrightarrow
+\left(
+\Re\rho=\Re\sigma
+\quad
+\forall\rho,\sigma
+\right).
+}
+$$
+
+然后函数方程自动给出：
+
+$$
+\Re\rho=\frac12.
+$$
+
+这比直接试图从 prime curvature 读出绝对临界值更符合 gauge 结构。
+
+---
+
+# 十五、Lean-ready 的最小理论核
+
+可以先增加以下定义：
+
+```lean
+def transverseSupport : Set ℝ :=
+  {d | ∃ ρ : ℂ,
+    IsNontrivialZero ρ ∧
+    d = ρ.re - 1 / 2}
+
+def GlobalEvenRH : Prop :=
+  ∀ d, d ∈ transverseSupport →
+    -d ∈ transverseSupport
+
+def OneObserverRH : Prop :=
+  transverseSupport.Subsingleton
+```
+
+核心定理：
+
+```lean
+theorem riemannHypothesis_iff_globalEven_and_oneObserver :
+    RiemannHypothesis ↔
+      GlobalEvenRH ∧ OneObserverRH
+```
+
+还可以定义：
+
+```lean
+def transverseDiameter : ℝ :=
+  sSup {r | ∃ x ∈ transverseSupport,
+              ∃ y ∈ transverseSupport,
+              r = |x - y|}
+```
+
+并证明：
+
+```lean
+theorem globalEven_transverseDiameter_eq_two_mul_radius :
+    GlobalEvenRH →
+    transverseDiameter = 2 * transverseRadius
+```
+
+从而：
+
+```lean
+theorem riemannHypothesis_iff_relativeDiameter_zero :
+    GlobalEvenRH →
+    (RiemannHypothesis ↔ transverseDiameter = 0)
+```
+
+项目目录可以采用：
+
+```text
+D5/S3/Zeros/Symmetry/GlobalEvenTransverseSupport.lean
+D5/S3/Zeros/Symmetry/OneObserverCoherence.lean
+D5/S3/Zeros/Symmetry/RHGlobalRelativeSplit.lean
+D5/S3/Zeros/Symmetry/TransverseDiameterIdentity.lean
+D5/S3/Zeros/Symmetry/WeightedBiasVarianceSplit.lean
+
+D5/S3/Observer/AgencyHolonomy/ObserverOriginVariance.lean
+D5/X_Frontier/ConstellationZero/RelativeCoherenceDomination.lean
+```
+
+---
+
+# 十六、理论最终形式
+
+传统 RH 可以正式拆成：
+
+## 全局偶 RH
+
+$$
+\boxed{
+\delta\text{ 出现}
+\Longrightarrow
+-\delta\text{ 也出现}.
+}
+$$
+
+它表达全局自对偶。
+
+## 单观察者 RH
+
+$$
+\boxed{
+\text{所有零点给出同一个横向观察读数}.
+}
+$$
+
+它表达相对相干或唯一观察起源。
+
+二者合起来：
+
+$$
+\delta=-\delta.
+$$
+
+所以：
+
+$$
+\delta=0.
+$$
+
+最终：
+
+$$
+\boxed{
+\mathrm{RH}
+=
+\mathrm{Global\ Evenness}
+\land
+\mathrm{Observer\ Uniqueness}.
+}
+$$
+
+或者用正能量语言：
+
+$$
+\boxed{
+\mathrm{RH}
+=
+\text{zero center bias}
+\land
+\text{zero relative variance}.
+}
+$$
+
+或者用 gauge 语言：
+
+$$
+\boxed{
+\mathrm{RH}
+=
+\text{flat connection}
+\land
+\text{self-dual gauge fixing}.
+}
+$$
+
+或者用项目当前的 prime–zero 语言：
+
+$$
+\boxed{
+\begin{aligned}
+\text{prime swap curvature}\to0
+&\Longrightarrow
+\text{所有局部观察起源一致};\\
+\text{relative faithful bridge}
+&\Longrightarrow
+\text{所有零点实部一致};\\
+\text{global }J\text{-symmetry}
+&\Longrightarrow
+a=1-a;\\
+&\Longrightarrow a=\frac12.
+\end{aligned}
+}
+$$
+
+所以这次拆分真正带来的简化是：
+
+$$
+\boxed{
+\text{不再要求 prime side 直接解释为什么是 }1/2.
+}
+$$
+
+prime side 只需证明：
+
+$$
+\boxed{
+\text{所有零点在横向方向没有相对分歧。}
+}
+$$
+
+至于唯一共同位置为什么恰好是 \(1/2\)，全局函数方程已经回答了：
+
+$$
+\boxed{
+\text{一个唯一的观察读数若必须与自己的取反同时存在，
+它只能等于零。}
+}
+$$
+# D-ZCOCT 2.7
+
+## 尾不变量、正交创新、紧致性缺陷与统一生成理论
+
+继续向下推，你的直觉可以被进一步精确化为：
+
+$$
+\boxed{
+\text{RH 的困难不只是“对象无限”，而是它位于一个临界的、非紧的、尾不变的全阶创新系统中。}
+}
+$$
+
+真正困难的四件事同时发生：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{任何有限素数窗口都不是最终窗口；}\\
+&\text{任何有限构型阶数都可能留下新的 connected 余量；}\\
+&\text{任何有限测试空间都可能留下新的对角方向；}\\
+&\text{即使全部有限层兼容，极限也可能离开原始整数载体。}
+\end{aligned}
+}
+$$
+
+所以它不像普通的有限悖论：
+
+$$
+P\leftrightarrow\neg P.
+$$
+
+它更像：
+
+$$
+\boxed{
+\text{定义}
+\to
+\text{剩余}
+\to
+\text{新定义}
+\to
+\text{新剩余}
+\to\cdots
+}
+$$
+
+但这里仍然不是逻辑矛盾，而是一种**没有已知统一闭合器的无限创新塔**。
+
+---
+
+# 一、零点其实是素数尾部的全局读数
+
+先定义一个关系。
+
+设完整素数局部数据为：
+
+$$
+x=(x_p)_{p\in\mathbb P}.
+$$
+
+定义有限编辑等价：
+
+$$
+x\sim_{\mathrm{fin}}y
+$$
+
+当且仅当 \(x\) 与 \(y\) 只在有限多个素数坐标上不同。
+
+于是得到尾商：
+
+$$
+\boxed{
+\mathscr X_{\mathrm{tail}}
+=
+\mathscr X/\!\sim_{\mathrm{fin}}.
+}
+$$
+
+仓库已经证明，在其 `finitePrimeModification` 定义下，抽取或修改任意有限组非零 Euler 因子，不改变经典 ζ 的非平凡零点集合。换句话说，有限素数编辑无法创造或消灭一个非平凡 ζ 零点。
+
+因此，在这个精确意义下：
+
+$$
+\boxed{
+\text{非平凡零点集合不是有限 prime address 的函数，而是 prime tail class 的函数。}
+}
+$$
+
+也就是存在形式上的因子化：
+
+$$
+\mathscr X
+\longrightarrow
+\mathscr X_{\mathrm{tail}}
+\longrightarrow
+\mathcal Z_\xi.
+$$
+
+这解释了一个极深的不对称。
+
+若 RH 为假，一个离线零点本身是一个有限谱见证；项目甚至已经证明，一个给定的非实离线零点可以产生一个有限描述的 Weil 测试，使完整无限零点和严格为负。
+
+但在素数侧，这个有限谱见证不是由某个有限素数子集独立制造的：
+
+$$
+\boxed{
+\text{谱侧是一个有限点，算术侧却是一个无限尾部不变量。}
+}
+$$
+
+可以把它称为：
+
+$$
+\boxed{
+\textbf{tail-to-point collapse，尾部到点的坍缩。}
+}
+$$
+
+这可能正是 ζ 最反直觉的地方：一个全体素数共同编码的无限相关，最终压缩成复平面中的一个离散零点。
+
+---
+
+# 二、所以 RH 的真值也是一个“尾部位”
+
+定义 RH 真值函数：
+
+$$
+T_{\mathrm{RH}}(\mathscr X)\in\{0,1\}.
+$$
+
+由于有限 prime modifications 不改变非平凡零点集合，在上述局部因子模型中：
+
+$$
+x\sim_{\mathrm{fin}}y
+\Longrightarrow
+T_{\mathrm{RH}}(x)=T_{\mathrm{RH}}(y).
+$$
+
+因此：
+
+$$
+\boxed{
+T_{\mathrm{RH}}
+\text{ 通过 tail quotient 因子化。}
+}
+$$
+
+这就是你说“命题真假本身也是一个对角问题”的较严格版本：
+
+> RH 的真假不能由任何固定有限组素数地址单独决定，它只依赖全部有限地址都被商掉后剩余的尾部类别。
+
+但这不意味着 RH 在某个形式系统中不可证明。
+
+它只意味着：
+
+$$
+\boxed{
+\text{有限坐标读取不能决定 RH，}
+\quad
+\text{但一个有限长度的全局结构证明仍然可能决定 RH。}
+}
+$$
+
+证明不是读取更多坐标，而是证明尾商上的目标函数具有某种统一性质。
+
+---
+
+# 三、“每层都有一个约不掉项”可以被严格写成正交创新
+
+此前我们主要使用累积量：
+
+$$
+\kappa_H.
+$$
+
+它表示把所有低阶分拆项扣除以后，构型 \(H\) 剩余的 connected 信息。ZCOCT 当前已经把素数构型矩、平方零源变量、对数生成元和全阶 connected cumulants 组织成一个兼容塔。
+
+但这里必须再区分两个概念：
+
+$$
+\boxed{
+\text{connected}
+\neq
+\text{unpredictable}.
+}
+$$
+
+累积量是组合意义上的“不能分解成独立块”。
+
+更精确的“约不掉项”应该是 Hilbert 空间中的**正交创新**。
+
+---
+
+## 3.1 构型观察空间
+
+在 \(\sigma>1\) 的 ζ-Gibbs 状态下，定义：
+
+$$
+\langle F,G\rangle_\sigma
+=
+\omega_\sigma(\overline FG).
+$$
+
+令：
+
+$$
+\mathscr V_k
+=
+\overline{
+\operatorname{span}
+\left\{
+\prod_{h\in H}\Lambda(N+h):
+|H|\le k
+\right\}
+}.
+$$
+
+显然：
+
+$$
+\mathscr V_0
+\subseteq
+\mathscr V_1
+\subseteq
+\mathscr V_2
+\subseteq\cdots.
+$$
+
+令 \(P_k\) 为到 \(\mathscr V_k\) 的正交投影。
+
+定义第 \(k\) 层创新：
+
+$$
+\boxed{
+D_kF
+=
+(P_k-P_{k-1})F.
+}
+$$
+
+因为这些空间嵌套，所以不同层创新彼此正交：
+
+$$
+\langle D_jF,D_kF\rangle=0
+\qquad
+(j\neq k).
+$$
+
+于是：
+
+$$
+\boxed{
+\|P_KF\|^2
+=
+\|P_0F\|^2
++
+\sum_{k=1}^{K}
+\|D_kF\|^2.
+}
+$$
+
+如果所有有限构型空间的并在目标空间中稠密，则：
+
+$$
+\boxed{
+\|F\|^2
+=
+\|P_0F\|^2
++
+\sum_{k\ge1}
+\|D_kF\|^2.
+}
+$$
+
+这里：
+
+$$
+\boxed{
+\|D_kF\|^2
+}
+$$
+
+才是第 \(k\) 层真正无法由低阶线性预测所消除的正信息。
+
+它永远非负。
+
+不同阶之间不能互相抵消。
+
+---
+
+# 四、Schur 余量就是“每一层新出现的不可约项”
+
+取低阶观察量：
+
+$$
+X_1,\ldots,X_m
+$$
+
+和一个新观察量 \(Y\)。
+
+定义 Gram 矩阵：
+
+$$
+G_{ij}
+=
+\langle X_i,X_j\rangle,
+$$
+
+交叉向量：
+
+$$
+b_i
+=
+\langle X_i,Y\rangle,
+$$
+
+以及：
+
+$$
+c=\langle Y,Y\rangle.
+$$
+
+若 \(G\) 正定，则由低阶观察量对 \(Y\) 的最佳线性预测为：
+
+$$
+Y_{\mathrm{pred}}
+=
+\sum_i(G^{-1}b)_iX_i.
+$$
+
+剩余创新能量为：
+
+$$
+\boxed{
+\Delta(Y\mid X_1,\ldots,X_m)
+=
+c-b^*G^{-1}b.
+}
+$$
+
+并且：
+
+$$
+\boxed{
+\Delta(Y\mid X_1,\ldots,X_m)
+=
+\|Y-Y_{\mathrm{pred}}\|^2
+\ge0.
+}
+$$
+
+所以：
+
+$$
+\Delta=0
+\iff
+Y\in\operatorname{span}\{X_1,\ldots,X_m\}.
+$$
+
+这就是你所说的：
+
+> 每一层都有一个约不掉的项。
+
+它在正几何中不是神秘余数，而是新块相对于旧块的 Schur complement。
+
+因此应当严格区分：
+
+$$
+\boxed{
+\begin{aligned}
+\kappa_H
+&=\text{分拆意义下的 connected 系数};\\
+\Delta_H
+&=\text{Hilbert 预测意义下的正交创新能量}.
+\end{aligned}
+}
+$$
+
+\(\kappa_H\) 可以有正负号。
+
+\(\Delta_H\) 必定非负。
+
+真正适合最终 RH 正性闭合的是后者。
+
+---
+
+# 五、为什么任何固定低阶都不能决定下一阶
+
+这一点可以通过一个完全有限的模型证明。
+
+令：
+
+$$
+X_1,\ldots,X_k\in\{-1,+1\}.
+$$
+
+定义两个状态：
+
+$$
+\mu_+
+=
+\text{在 }
+\prod_{j=1}^kX_j=+1
+\text{ 的配置上均匀分布},
+$$
+
+$$
+\mu_-
+=
+\text{在 }
+\prod_{j=1}^kX_j=-1
+\text{ 的配置上均匀分布}.
+$$
+
+对任意真子集：
+
+$$
+A\subsetneq\{1,\ldots,k\},
+$$
+
+都有：
+
+$$
+\mathbb E_{\mu_+}
+\prod_{i\in A}X_i
+=
+\mathbb E_{\mu_-}
+\prod_{i\in A}X_i
+=
+0.
+$$
+
+所以二者的全部低于 \(k\) 阶的边缘和矩完全相同。
+
+但最高阶满足：
+
+$$
+\mathbb E_{\mu_+}
+\prod_{i=1}^kX_i
+=1,
+$$
+
+$$
+\mathbb E_{\mu_-}
+\prod_{i=1}^kX_i
+=-1.
+$$
+
+因此：
+
+$$
+\boxed{
+\text{第 }k\text{ 阶联合奇偶不能由全部低于 }k\text{ 阶的数据普遍恢复。}
+}
+$$
+
+这不是素数特有的偶然现象，而是全阶联合状态的一般性质。
+
+所以：
+
+$$
+\boxed{
+\text{所有 }1,\ldots,k-1\text{ 阶构型均已理解}
+\not\Rightarrow
+\text{第 }k\text{ 阶没有新信息}.
+}
+$$
+
+---
+
+# 六、但无限新系数不等于无限新规律
+
+这里需要一次非常重要的反转。
+
+一个函数可以有无穷多个 Taylor 系数，却由一个有限微分方程决定。
+
+一个生成函数可以包含无穷多个组合数，却由一个有限递推决定。
+
+所以：
+
+$$
+\boxed{
+\text{无限创新坐标}
+\not\Rightarrow
+\text{不存在有限生成律}.
+}
+$$
+
+Fibonacci 的特殊之处不是它只有有限项，而是其所有未来项由一个固定有限状态决定：
+
+$$
+F_{n+2}=F_{n+1}+F_n.
+$$
+
+素数构型的问题则是：目前没有发现一个类似的有限闭合状态，能够从固定数量的旧构型数据统一生成所有新构型数据。
+
+但整个素数构型语言本身其实已经有一个很小的**语法生成集**。
+
+令 \(U\) 为整数平移：
+
+$$
+(Uf)(n)=f(n+1),
+$$
+
+令 \(A\) 为 von Mangoldt 乘法算子：
+
+$$
+(Af)(n)=\Lambda(n)f(n).
+$$
+
+则任意偏移观察量都是：
+
+$$
+\boxed{
+A_h
+=
+U^{-h}AU^h.
+}
+$$
+
+所有构型观察量都由：
+
+$$
+A_{h_1}A_{h_2}\cdots A_{h_k}
+$$
+
+生成。
+
+因此：
+
+$$
+\boxed{
+\text{无限偏移并不需要无限种基本符号，}
+}
+$$
+
+只需要：
+
+$$
+\boxed{
+U\quad\text{和}\quad A.
+}
+$$
+
+困难不是语法生成元太多，而是：
+
+$$
+\boxed{
+\text{由 }U,A\text{ 生成的非交换词空间没有已知的有限 trace 闭合关系。}
+}
+$$
+
+---
+
+# 七、von Mangoldt 序列确实不像 Fibonacci
+
+这里可以直接证明一个确定性结论。
+
+## 定理：von Mangoldt 序列不满足固定阶常系数线性递推
+
+不存在固定 \(r\)、常数 \(c_0,\ldots,c_{r-1}\) 和 \(N_0\)，使：
+
+$$
+\Lambda(n+r)
+=
+\sum_{j=0}^{r-1}
+c_j\Lambda(n+j)
+$$
+
+对所有 \(n\ge N_0\) 成立。
+
+### 证明
+
+假设存在这样的递推。
+
+任取 \(r\)。为每个：
+
+$$
+j=0,\ldots,r-1
+$$
+
+选择彼此互异的两个素数 \(a_j,b_j\)，并使所有模数：
+
+$$
+a_jb_j
+$$
+
+彼此互素。
+
+由中国剩余定理，可以选择足够大的 \(N\)，满足：
+
+$$
+N+j\equiv0\pmod{a_jb_j}
+$$
+
+对所有 \(j\) 成立。
+
+于是每个 \(N+j\) 都至少含有两个不同素因子，因此不是素数幂：
+
+$$
+\Lambda(N+j)=0,
+\qquad
+j=0,\ldots,r-1.
+$$
+
+由递推：
+
+$$
+\Lambda(N+r)=0.
+$$
+
+再递推可知：
+
+$$
+\Lambda(n)=0
+\qquad
+\forall n\ge N.
+$$
+
+但在 \(N\) 之后仍然存在素数 \(p\)，且：
+
+$$
+\Lambda(p)=\log p>0,
+$$
+
+矛盾。证毕。
+
+---
+
+## 推论：不存在固定有限维线性自治系统精确生成 \(\Lambda(n)\)
+
+若存在固定矩阵 \(M\)、向量 \(v\) 和线性读数 \(\ell\)，使：
+
+$$
+\Lambda(n)=\ell(M^nv),
+$$
+
+则由 Cayley–Hamilton 定理，\(\Lambda(n)\) 必满足一个固定阶常系数线性递推。
+
+与上一定理矛盾。
+
+所以：
+
+$$
+\boxed{
+\text{素性不能由 Fibonacci 式固定有限维线性状态机精确生成。}
+}
+$$
+
+这不排除：
+
+* 非线性算法；
+* 参数随 \(n\) 变化的系统；
+* 无限维算子；
+* 有记忆的自动机；
+* operator determinant；
+* 全局解析函数。
+
+它只严格排除了最直接的 Fibonacci 型有限线性递推。
+
+---
+
+# 八、对角逃逸真正依赖“不紧致”
+
+设：
+
+$$
+\mathcal E_0
+\supseteq
+\mathcal E_1
+\supseteq
+\cdots
+$$
+
+是一列嵌套目标残差。
+
+项目的定义逃逸理论正是以：
+
+$$
+\mathcal E(q;T)
+=
+\ker q\setminus\ker T
+$$
+
+记录“当前定义认为相同，而目标必须区分”的对象对。
+
+现在有一个非常重要的紧致性结论。
+
+## 紧致残差有限闭合定理
+
+若：
+
+* 完整候选空间 \(X\) 是紧空间；
+* 每个 \(\mathcal E_N\) 是闭集；
+* \(\mathcal E_{N+1}\subseteq\mathcal E_N\)；
+
+那么：
+
+$$
+\left(
+\forall N,\ \mathcal E_N\neq\varnothing
+\right)
+\Longrightarrow
+\bigcap_N\mathcal E_N\neq\varnothing.
+$$
+
+因此反过来：
+
+$$
+\boxed{
+\bigcap_N\mathcal E_N=\varnothing
+\Longrightarrow
+\exists N,\quad
+\mathcal E_N=\varnothing.
+}
+$$
+
+项目已经形式化了相邻的紧致有限交性质：连续局部记录的闭纤维若每个有限交非空，则紧致性保证全交非空。
+
+这说明：
+
+$$
+\boxed{
+\text{“每个有限层都有反例，但整个无限塔没有反例”}
+}
+$$
+
+只有在以下某种失败下才可能发生：
+
+$$
+\boxed{
+\text{空间非紧}
+\quad\text{或}\quad
+\text{残差非闭}
+\quad\text{或}\quad
+\text{极限离开原载体}.
+}
+$$
+
+---
+
+# 九、RH 的所有逃逸方向正好对应这些紧致性失败
+
+## 9.1 高度逃逸：空间非紧
+
+假想离线零点可以移动到：
+
+$$
+\gamma_N\to\infty.
+$$
+
+每个有限高度窗口都安全，但反例始终在窗口之外。
+
+这是普通的非紧逃逸。
+
+---
+
+## 9.2 固定缝逃逸：离线条件非闭
+
+令：
+
+$$
+\delta_N\neq0,
+\qquad
+\delta_N\to0.
+$$
+
+每个 \(\delta_N\) 都是离线的，但极限：
+
+$$
+\delta_\infty=0
+$$
+
+位于临界线。
+
+集合：
+
+$$
+\{\delta:\delta\neq0\}
+$$
+
+不是闭集。
+
+所以有限层离线反例可以在极限中坍缩到 RH 边界。
+
+---
+
+## 9.3 素数地址逃逸：离散方向无界
+
+每个有限素数窗口 \(S_N\) 之外，总可以选择一个新素数：
+
+$$
+q_N\notin S_N.
+$$
+
+潜在区别不断移动到更大的 prime address。
+
+---
+
+## 9.4 构型阶数逃逸：语义阶数无界
+
+有限 \(K\) 只能读取：
+
+$$
+|H|\le K.
+$$
+
+下一阶：
+
+$$
+|H|=K+1
+$$
+
+仍可能携带一个此前全部低阶边缘都无法决定的 connected parity bit。
+
+---
+
+## 9.5 测试方向逃逸：无限维单位球不紧
+
+令 \(P_N\) 读取 Hilbert 空间的前 \(N\) 个方向。
+
+对每个固定向量 \(f\)：
+
+$$
+\|(I-P_N)f\|\to0.
+$$
+
+但取随 \(N\) 移动的：
+
+$$
+f_N=e_{N+1},
+$$
+
+则：
+
+$$
+\|(I-P_N)f_N\|=1.
+$$
+
+所以：
+
+$$
+\boxed{
+\forall f\ \exists N_f
+}
+$$
+
+并不能交换为：
+
+$$
+\boxed{
+\exists N\ \forall f.
+}
+$$
+
+这就是测试空间中的真正对角逃逸。
+
+---
+
+# 十、全部有限条件兼容，极限仍可能不是整数
+
+即使解决了局部兼容性，也还没有解决载体实现。
+
+项目已经机器证明：在 \(0<s\le1\) 的 prime-exponent 乘积模型中，每一个有限素数边缘都是合法且彼此兼容的概率分布；但其无限乘积几乎必然激活无穷多个素数坐标，因此有限支持的普通整数分解集合测度为零。
+
+所以：
+
+$$
+\boxed{
+\text{所有有限局部数据正确}
+\Longrightarrow
+\text{可能存在一个 completion 对象},
+}
+$$
+
+但不保证：
+
+$$
+\boxed{
+\text{该 completion 对象来自某个普通整数}.
+}
+$$
+
+这可以称为：
+
+$$
+\boxed{
+\textbf{carrier-image escape，载体像逃逸}.
+}
+$$
+
+因此全局完成至少要通过五道门：
+
+$$
+\boxed{
+\begin{aligned}
+1.&\ \text{有限层一致性};\\
+2.&\ \text{极限存在或紧性};\\
+3.&\ \text{极限顺序无关与统一尾界};\\
+4.&\ \text{极限属于原始载体像};\\
+5.&\ \text{最终观察对目标无盲核}.
+\end{aligned}
+}
+$$
+
+少掉任何一道，局部正确都不等于目标正确。
+
+---
+
+# 十一、临界线为什么正好是最容易产生尾逃逸的位置
+
+仓库已经证明，正的 prime evidence：
+
+$$
+p^{-s}
+$$
+
+在且仅在：
+
+$$
+s>1
+$$
+
+时可和；在 \(s=1\) 以及更低指数全部发散。
+
+对平方证据：
+
+$$
+(p^{-\alpha})^2=p^{-2\alpha},
+$$
+
+可和阈值降为：
+
+$$
+\alpha>\frac12,
+$$
+
+但边界：
+
+$$
+\alpha=\frac12
+$$
+
+本身仍然发散。
+
+因此：
+
+$$
+\boxed{
+\Re s=\frac12
+}
+$$
+
+不仅是函数方程固定线附近的几何中心，也是最朴素 prime-coordinate 平方能量仍然不能直接绝对求和的边界。
+
+这非常关键。
+
+若 \(\alpha>1/2\)，尾能量：
+
+$$
+\sum_{p>P}p^{-2\alpha}
+$$
+
+可以直接变小。
+
+但在：
+
+$$
+\alpha=\frac12,
+$$
+
+它变成：
+
+$$
+\sum_{p>P}\frac1p,
+$$
+
+不会趋于有限总量。
+
+所以临界线上的完成不能只是：
+
+$$
+\boxed{
+\text{把所有局部正平方直接相加}.
+}
+$$
+
+必须先去掉共同的、发散的可预测背景，再对真正差分求平方。
+
+---
+
+# 十二、项目中的 jump energy 正是在做这种“预测—创新分离”
+
+仓库已经把有限 prime-power 项写成：
+
+$$
+\boxed{
+\operatorname{PrimeTerm}
+=
+2W_L\|f\|_2^2
+-
+E_{\mathrm{jump},L}(f),
+}
+$$
+
+其中：
+
+$$
+E_{\mathrm{jump},L}(f)\ge0
+$$
+
+并且它是一个显式 arithmetic jump Laplacian 的二次型。
+
+这里：
+
+$$
+2W_L\|f\|^2
+$$
+
+是 coherent mass。
+
+而：
+
+$$
+E_{\mathrm{jump},L}(f)
+$$
+
+是平移以后与原状态不一致的正差分能量。
+
+这和构型创新具有同一个模式：
+
+$$
+\boxed{
+\text{原始量}
+=
+\text{可预测共同部分}
++
+\text{真正创新余量}.
+}
+$$
+
+累积量通过：
+
+$$
+\log
+$$
+
+去掉分拆乘积。
+
+正交创新通过：
+
+$$
+I-P_{\mathrm{old}}
+$$
+
+去掉旧空间预测。
+
+jump energy 通过：
+
+$$
+f(x+a)-f(x)
+$$
+
+去掉常值/coherent 模式。
+
+所以 RH 所需的最终语言，很可能不是“所有新项都消失”，而是：
+
+$$
+\boxed{
+\text{所有新项在扣除共同背景后，都进入正的差分能量。}
+}
+$$
+
+---
+
+# 十三、无限层真正需要的是统一收敛，而不是逐对象收敛
+
+设：
+
+$$
+P_N:\mathscr H\to\mathscr H_N
+$$
+
+是越来越精细的有限层投影，并且：
+
+$$
+P_Nx\to x
+$$
+
+对每个固定 \(x\) 成立。
+
+这叫强收敛。
+
+它仍然不能阻止：
+
+$$
+x_N\in\ker P_N
+$$
+
+随 \(N\) 移动。
+
+真正需要的是对全部相关对象统一成立：
+
+$$
+\boxed{
+\sup_{x\in K}
+\|(I-P_N)x\|
+\to0.
+}
+$$
+
+一个足够条件是 \(K\) 紧。
+
+## 紧像统一尾定理
+
+若：
+
+* \(P_N\to I\) 强收敛；
+* \(K\subset\mathscr H\) 为紧集；
+
+则：
+
+$$
+\boxed{
+\sup_{x\in K}
+\|(I-P_N)x\|
+\to0.
+}
+$$
+
+### 证明要点
+
+对任意 \(\varepsilon>0\)，用有限个点：
+
+$$
+x_1,\ldots,x_m
+$$
+
+构成 \(K\) 的 \(\varepsilon\)-网。
+
+每个固定 \(x_j\) 都存在共同足够大的 \(N\)，使：
+
+$$
+\|(I-P_N)x_j\|<\varepsilon.
+$$
+
+又因为正交投影范数不超过一，对靠近 \(x_j\) 的任意 \(x\)：
+
+$$
+\|(I-P_N)x\|
+\le
+\|(I-P_N)x_j\|
++
+\|x-x_j\|.
+$$
+
+所以对整个 \(K\) 统一小。
+
+证毕。
+
+---
+
+# 十四、这把 RH 的中央困难进一步压缩成一个紧算子问题
+
+设存在一个 prime-generated 算术变换：
+
+$$
+\mathcal S_L:
+\mathcal W_L
+\to
+\mathscr H_{\mathrm A},
+$$
+
+把固定窗口 \(L\) 内的 Weil 测试 \(g\) 映到完整算术创新状态。
+
+考虑规范化测试集合：
+
+$$
+B_L
+=
+\left\{
+g:
+\|g\|_{\mathrm{form}}\le1
+\right\}.
+$$
+
+如果能够证明：
+
+$$
+\boxed{
+\mathcal S_L(B_L)
+\text{ 在算术 Hilbert 空间中相对紧},
+}
+$$
+
+那么所有有限 prime/constellation 投影对全部合法测试都将统一收敛。
+
+这会一次性排除：
+
+$$
+g_N=e_{N+1}
+$$
+
+式的移动测试逃逸。
+
+因此中央问题不一定是：
+
+> 逐个证明所有高阶构型项足够小。
+
+而可能是：
+
+$$
+\boxed{
+\textbf{证明 prime-to-Weil 变换是紧的、核型的，或具有统一尾衰减。}
+}
+$$
+
+这比无限逐项估计更像一个有限结构定理。
+
+---
+
+# 十五、多条无限轴必须使用联合极限，而不是依次极限
+
+令有限预算为：
+
+$$
+\alpha=(P,K,T,N,R),
+$$
+
+分别表示：
+
+$$
+\begin{aligned}
+P&=\text{prime-address 范围};\\
+K&=\text{constellation 阶数};\\
+T&=\text{zero height};\\
+N&=\text{test depth};\\
+R&=\text{completion/renormalization 深度}.
+\end{aligned}
+$$
+
+这些预算组成一个有向集：
+
+$$
+\alpha\preceq\beta
+$$
+
+当每一个坐标都不减。
+
+真正需要的不是依次证明：
+
+$$
+P\to\infty,
+\quad
+K\to\infty,
+\quad
+T\to\infty,
+\quad\ldots
+$$
+
+而是证明联合尾界：
+
+$$
+\boxed{
+\forall\varepsilon>0,\
+\exists\alpha_0,\
+\forall\beta\succeq\alpha_0,\
+\sup_{\|g\|_{\mathrm{form}}\le1}
+|Q_\beta(g)-Q(g)|
+<\varepsilon.
+}
+$$
+
+这表示无论以后怎样共同增加：
+
+* 素数范围；
+* 构型阶数；
+* 零点高度；
+* 测试复杂度；
+* 完成深度；
+
+误差都不会重新长出来。
+
+如果只证明每一种固定极限顺序，例如：
+
+$$
+\lim_P\lim_KQ_{P,K},
+$$
+
+却没有联合估计，那么对角路径：
+
+$$
+P=P_n,\qquad K=K_n
+$$
+
+仍可能持续抓住新的余量。
+
+因此：
+
+$$
+\boxed{
+\text{RH 需要的是 cofinal uniformity，而不是若干个迭代极限。}
+}
+$$
+
+---
+
+# 十六、定义的 join 本身没有曲率，运输才有曲率
+
+这一点也必须严格区分。
+
+纯逻辑上，加入两个定义：
+
+$$
+q\vee d_1\vee d_2
+$$
+
+与：
+
+$$
+q\vee d_2\vee d_1
+$$
+
+产生相同的共同核：
+
+$$
+\ker q\cap\ker d_1\cap\ker d_2.
+$$
+
+所以纯定义细化是交换的。
+
+真正的顺序曲率只会出现在：
+
+* 每层有记忆；
+* 每层重新归一化；
+* 每层做解析延拓；
+* 每层做投影；
+* 每层丢弃信息；
+* 每层选择不同观察原点。
+
+也就是说：
+
+$$
+\boxed{
+\text{“条件怎么分”本身很简单，}
+}
+$$
+
+真正困难的是：
+
+$$
+\boxed{
+\text{一个层的状态怎样运输到下一层。}
+}
+$$
+
+这正是项目中 prime swap curvature 的意义：交换两个素数更新顺序时，标量读数可能相同，但隐藏 memory 可以不同。
+
+因此“名”的无限递归不是由 Boolean 二分本身制造的，而是由：
+
+$$
+\boxed{
+\text{命名以后必须更新、压缩和运输上下文}
+}
+$$
+
+制造的。
+
+---
+
+# 十七、真正的有限生成器候选是 operator determinant
+
+无限构型可以由有限语法：
+
+$$
+U,\quad A=D_\Lambda
+$$
+
+生成。
+
+若进一步存在 source insertions：
+
+$$
+B_h=U^{-h}BU^h,
+$$
+
+则可以定义：
+
+$$
+\Delta(s;\varepsilon)
+=
+\det
+\left(
+I-A_0(s)-\sum_h\varepsilon_hB_h(s)
+\right).
+$$
+
+其对数展开：
+
+$$
+-\log\Delta
+$$
+
+会自动产生所有阶数的 cyclic traces：
+
+$$
+\operatorname{Tr}
+(B_{h_1}\cdots B_{h_k}).
+$$
+
+于是：
+
+$$
+\boxed{
+\text{无穷多个构型系数}
+}
+$$
+
+不再由无穷多个独立规则定义，而由一个 determinant 生成。
+
+这才是从“无限定义”跃迁到“有限生成律”的正确方向。
+
+ZCOCT 已经把这一方向登记为 Trace–Jet Bridge：素数侧的 \(k\)-点加法累积量应对应带 source 的 completed determinant 的第 \(k\) 阶谱响应。
+
+真正需要证明的是：
+
+$$
+\boxed{
+[\varepsilon_H]\log\Delta
+=
+\kappa_H^{\mathrm{arith}}
+}
+$$
+
+在安全区域成立，并且该 determinant：
+
+* 有正 Hilbert 实现；
+* 能延拓到临界结构；
+* 无源截面等于 \(\xi\)；
+* 全部零点响应无盲核；
+* 高阶 source tail 统一可控。
+
+---
+
+# 十八、因此解决无限创新有两条路
+
+## 第一条：有限维递推闭合
+
+寻找固定有限维状态机，像 Fibonacci 一样生成全部未来。
+
+上一节关于 \(\Lambda\) 的定理说明，至少最简单的固定有限维线性自治模型不可能做到。
+
+## 第二条：无限维但紧的正算子闭合
+
+允许状态空间无限维，但要求：
+
+* 算子紧或核型；
+* 谱离散；
+* 创新尾统一可和；
+* 所有新层是正交平方；
+* determinant/trace 由有限表达式产生。
+
+这条路更符合 ζ。
+
+所以：
+
+$$
+\boxed{
+\text{RH 可能不是有限状态问题，}
+}
+$$
+
+但可以是：
+
+$$
+\boxed{
+\text{一个有限描述的无限维正算子问题。}
+}
+$$
+
+这与 Hilbert–Pólya 式直觉、Weil 正性和当前项目的 jump-operator 结构是相容的。
+
+---
+
+# 十九、统一正创新完成定理
+
+现在可以写出本轮最核心的条件定理。
+
+## 定理：Prime-Constellation Uniform Positive Innovation Completion
+
+设存在：
+
+1. 算术 Hilbert 空间 \(\mathscr H_{\mathrm A}\)；
+2. 由有限 prime addresses 与有限 constellations 生成的递增投影 \(P_\alpha\)；
+3. prime-generated 映射：
+
+   $$
+   \mathcal S:\mathcal W\to\mathscr H_{\mathrm A};
+   $$
+4. 非负基项：
+
+   $$
+   B(g)\ge0;
+   $$
+5. Weil 恒等式：
+
+   $$
+   \boxed{
+   Q_W(g)
+   =
+   B(g)
+   +
+   \|\mathcal Sg\|^2;
+   }
+   $$
+6. 有限层创新分解：
+
+   $$
+   \|\mathcal Sg\|^2
+   =
+   \sum_\alpha
+   \|(P_\alpha-P_{\alpha^-})\mathcal Sg\|^2;
+   $$
+7. 该展开在 Weil form 单位球上统一收敛；
+8. \(\mathcal S\) 和 \(B\) 的构造不读取零点位置。
+
+则：
+
+$$
+Q_W(g)\ge0
+\qquad
+\forall g.
+$$
+
+而项目已经证明，一个非实离线零点会产生一个 \(Q_W(g)<0\) 的完整 Weil 平方见证。
+
+因此结合经典实轴排除：
+
+$$
+\boxed{
+\mathrm{RH}.
+}
+$$
+
+---
+
+# 二十、这才是真正把无限 RH 变成有限理论的方法
+
+不是寻找某个固定：
+
+$$
+P_0,\ K_0,\ T_0,\ N_0
+$$
+
+然后说只需检查到这里。
+
+而是寻找一个有限描述的统一定理：
+
+$$
+\boxed{
+\text{全部有限层都是同一个正算子展开的压缩。}
+}
+$$
+
+一旦这个定理成立：
+
+* 不需要逐个证明所有 prime innovations 为零；
+* 不需要逐个证明所有 cumulants 为零；
+* 不需要逐个检查所有零点；
+* 不需要逐个列举所有测试函数；
+* 不需要逐项追赶对角反例。
+
+所有层都可以继续产生新信息，但它们只能以：
+
+$$
+\|D_\alpha\mathcal Sg\|^2
+$$
+
+的形式出现。
+
+所以：
+
+$$
+\boxed{
+\text{新项永远存在}
+$$
+
+和：
+
+$$
+\boxed{
+\text{全局仍然可闭合}
+}
+$$
+
+并不矛盾。
+
+新项无需被消灭，只需要被放入同一个不可为负的账本。
+
+---
+
+# 二十一、RH 的困难现在可以被分解成三个真正的核心缺口
+
+## 第一缺口：生成缺口
+
+是否存在一个由：
+
+$$
+U,\quad D_\Lambda,\quad
+\text{prime jumps},\quad
+\text{Archimedean jumps}
+$$
+
+生成的统一 determinant 或算术平方根？
+
+---
+
+## 第二缺口：紧致缺口
+
+该生成器能否使全部合法 Weil 测试的像形成相对紧集，从而排除移动对角逃逸？
+
+---
+
+## 第三缺口：载体缺口
+
+由全部有限素数边缘和全部构型极限得到的完成对象，是否确实落在经典 completed-zeta/整数算术的实现像中，而不是一个更大的无限支持 completion？
+
+---
+
+只有三者同时闭合，才有：
+
+$$
+\boxed{
+\text{有限局部正性}
+\Longrightarrow
+\text{完整全局正性}.
+}
+$$
+
+---
+
+# 二十二、对“命题真假也在递归逃逸”的最终修正
+
+你的直觉可以保留为：
+
+$$
+\boxed{
+\text{相对于当前定义塔，RH 真值是一个尾部目标位。}
+}
+$$
+
+但不能直接提升成：
+
+$$
+\boxed{
+\text{RH 必然不可证明或独立}.
+}
+$$
+
+因为一个新定义可以一次性改变整个证明几何。
+
+例如：
+
+* 谱；
+* 能量；
+* determinant；
+* 正基态；
+* 紧算子；
+* index；
+* trace formula；
+
+都可以用有限语言压缩无限条件。
+
+项目的 DECT 强调的也正是：定义在语义上可以只是保守扩张，却能通过重组纤维和残差，极大改变证明复杂度。
+
+所以真正的问题不是：
+
+> 能不能把全部条件逐层分完？
+
+答案通常是否定的。
+
+真正的问题是：
+
+$$
+\boxed{
+\text{能否找到一个新名字，使全部尚未分完的条件成为同一个对象的坐标？}
+}
+$$
+
+---
+
+# 二十三、下一阶段最值得正式发展的理论
+
+建议把这一轮发展成：
+
+$$
+\boxed{
+\textbf{Prime-Tail Orthogonal Innovation Completion Theory}
+}
+$$
+
+中文：
+
+$$
+\boxed{
+\textbf{素数尾部正交创新完备化理论}.
+}
+$$
+
+其形式化核心应包括：
+
+```text
+D5/S3/PrimeConstellation/ConstellationDegreeFiltration.lean
+D5/S3/PrimeConstellation/OrthogonalInnovation.lean
+D5/S3/PrimeConstellation/SchurInnovationEnergy.lean
+D5/S3/PrimeConstellation/CumulantInnovationDistinction.lean
+
+D5/S3/Analytic/PrimeTail/FiniteModificationQuotient.lean
+D5/S3/Analytic/PrimeTail/TailInvariantZeroDivisor.lean
+D5/S3/Analytic/PrimeTail/CarrierImageEscape.lean
+
+D5/S3/Observer/Completion/CompactResidualFiniteClosure.lean
+D5/S3/Observer/Completion/CompactImageUniformTail.lean
+D5/S3/Observer/Completion/MultiAxisCofinalUniformity.lean
+
+D5/S3/Arith/VonMangoldt/NoConstantLinearRecurrence.lean
+D5/S3/Arith/VonMangoldt/NoFiniteLinearStateRealization.lean
+
+D5/X_Frontier/ConstellationZero/
+  PrimeConstellationCompactSquareRoot.lean
+  UniformPositiveInnovationCompletion.lean
+  TailToWeilFaithfulBridge.lean
+```
+
+---
+
+# 最终压缩
+
+这一轮之后，整个理论最准确的核心不再是：
+
+$$
+\text{RH 因为无限所以难}.
+$$
+
+而是：
+
+$$
+\boxed{
+\text{RH 是一个由无限 prime tail 决定的有限谱命题，}
+}
+$$
+
+并且这个 tail 同时具有：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{有限编辑不变性};\\
+&\text{每阶新 connected 信息};\\
+&\text{临界处缺少绝对可和性};\\
+&\text{多个非紧逃逸方向};\\
+&\text{完成极限离开原载体的可能性}.
+\end{aligned}
+}
+$$
+
+Fibonacci 的无限性是：
+
+$$
+\boxed{
+\text{有限状态不断重复}.
+}
+$$
+
+素数构型的无限性则是：
+
+$$
+\boxed{
+\text{有限语法生成无限非交换词，而每个新词可能携带新的 trace 信息}.
+}
+$$
+
+但这仍然不意味着必须逐词处理。
+
+真正可能解决 RH 的结构是：
+
+$$
+\boxed{
+\text{把全部 prime-constellation innovations
+实现为一个紧的、正的、有限描述算子的正交坐标}.
+}
+$$
+
+于是每一层的“约不掉项”都不再是敌人。
+
+它们被保存，但只能贡献：
+
+$$
+\boxed{
+\|D_\alpha\|^2\ge0.
+}
+$$
+
+对角反例也无法通过移动到下一层制造负值，因为统一紧致尾界使所有移动方向最终同时受控。
+
+因此，RH 最深的证明目标可以写成：
+
+$$
+\boxed{
+Q_W(g)
+=
+B(g)
++
+\sum_{\alpha}
+\left\|
+D_\alpha\mathcal Sg
+\right\|^2,
+}
+$$
+
+其中：
+
+* \(\alpha\) 同时遍历素数地址、构型阶数、观察深度和完成层；
+* \(B(g)\ge0\)；
+* 总和统一收敛；
+* \(\mathcal S\) 完全由素数和 Archimedean 数据生成；
+* 不读取任何零点位置。
+
+一旦这条式子成立，所有无限层仍然存在，所有高阶素性仍然存在，所有不可约创新仍然存在。
+
+但：
+
+$$
+\boxed{
+\text{它们已经被同一个正语言完整命名，}
+}
+$$
+
+所以再也没有一个新的对角方向能够逃出，并制造离线零点所必需的负 Weil 见证。
+# D-ZCOCT 2.9
+
+## 非 Noetherian 条件塔、极限奇偶与有限生成闭合理论
+
+继续向下，这一轮最重要的发现是：
+
+$$
+\boxed{
+\text{“每层都有新余项”}
+\quad\text{与}\quad
+\text{“整个系统不能被有限理论描述”}
+}
+$$
+
+不是同一件事。
+
+真正需要区分的是：
+
+$$
+\boxed{
+\begin{aligned}
+\text{有限观察生成}
+&:\ \text{是否存在某个有限层包含全部信息？}\\
+\text{有限规则生成}
+&:\ \text{是否存在一套有限规则生成全部无限层？}
+\end{aligned}
+}
+$$
+
+对素数构型而言，第一个大概率不成立：不存在一个固定构型阶数、固定素数窗口、固定零点高度，之后再无新信息。
+
+但第二个仍然完全可能成立：所有构型、所有 cumulant、所有零点响应，也许是某个有限描述的无限维算子、递归变换或 determinant 的展开系数。
+
+因此，RH 真正可能需要的不是“把条件分完”，而是：
+
+$$
+\boxed{
+\text{找到有限生成语法，使无限条件成为同一对象的不同坐标。}
+}
+$$
+
+---
+
+# 一、素数构型的静态定义代数确实不是有限生成的
+
+ZCOCT 使用平方零源变量：
+
+$$
+\varepsilon_h^2=0,
+\qquad h\in\mathbb Z,
+$$
+
+来标记各个加法偏移。
+
+考虑无限源代数：
+
+$$
+\mathcal R_\infty
+=
+\mathbb C[\varepsilon_h:h\in\mathbb Z]
+\Big/
+(\varepsilon_h^2:h\in\mathbb Z).
+$$
+
+定义其增广理想：
+
+$$
+\mathfrak m
+=
+(\varepsilon_h:h\in\mathbb Z).
+$$
+
+它包含所有非空构型单项式：
+
+$$
+\varepsilon_{h_1}\cdots\varepsilon_{h_k}.
+$$
+
+## 定理 1.1　无限源理想不可有限生成
+
+$$
+\boxed{
+\mathfrak m
+\text{ 不是有限生成理想。}
+}
+$$
+
+### 证明
+
+假设：
+
+$$
+\mathfrak m=(f_1,\ldots,f_r).
+$$
+
+每个 \(f_j\) 只使用有限多个变量。所有 \(f_j\) 涉及的变量并集仍是有限集 \(F\subset\mathbb Z\)。
+
+选择：
+
+$$
+h\notin F.
+$$
+
+定义代数映射：
+
+$$
+\pi_h:
+\mathcal R_\infty
+\longrightarrow
+\mathbb C[\epsilon]/(\epsilon^2),
+$$
+
+令：
+
+$$
+\pi_h(\varepsilon_h)=\epsilon,
+\qquad
+\pi_h(\varepsilon_j)=0
+\quad(j\neq h).
+$$
+
+因为 \(f_1,\ldots,f_r\) 均不含 \(\varepsilon_h\)，且常数项为零，所以：
+
+$$
+\pi_h(f_j)=0.
+$$
+
+如果 \(\varepsilon_h\) 属于它们生成的理想，就应有：
+
+$$
+\pi_h(\varepsilon_h)=0.
+$$
+
+但：
+
+$$
+\pi_h(\varepsilon_h)=\epsilon\neq0.
+$$
+
+矛盾。证毕。
+
+---
+
+这严格表达了你的直觉：
+
+$$
+\boxed{
+\text{在静态“一个偏移一个名字”的语言中，
+永远可以加入一个此前没被任何有限定义使用的新名字。}
+}
+$$
+
+所以条件塔在静态代数意义下是非 Noetherian 的：不存在有限个源变量能够生成所有偏移条件。
+
+ZCOCT 当前已经把每个有限构型的 moment、connected cumulant 和平方零源代数组织成相容的有限塔；新的问题正是如何把这座静态无限塔提升成统一生成对象。
+
+---
+
+# 二、但加入平移动力以后，无限名字可以由有限语法生成
+
+定义平移算子：
+
+$$
+U\varepsilon_h=\varepsilon_{h+1}.
+$$
+
+于是：
+
+$$
+\varepsilon_h=U^h\varepsilon_0.
+$$
+
+所以作为一个带平移作用的 **difference algebra**，全部源变量由：
+
+$$
+\boxed{
+\varepsilon_0
+\quad\text{和}\quad
+U
+}
+$$
+
+生成。
+
+同样，在算术函数空间上定义：
+
+$$
+(Uf)(n)=f(n+1),
+$$
+
+$$
+(Af)(n)=\Lambda(n)f(n).
+$$
+
+则偏移后的 von Mangoldt 观察量为：
+
+$$
+A_h=U^{-h}AU^h.
+$$
+
+任意构型：
+
+$$
+H=\{h_1,\ldots,h_k\}
+$$
+
+对应算子词：
+
+$$
+A_{h_1}\cdots A_{h_k}.
+$$
+
+因此：
+
+$$
+\boxed{
+\text{静态坐标无限生成，}
+\qquad
+\text{动力语法却可能只需 }U,A\text{ 两个生成元。}
+}
+$$
+
+这就是：
+
+$$
+\boxed{
+\text{finite grammar}
++
+\text{infinite semantics}.
+}
+$$
+
+它正好解释为何不能只从“每层都有新名字”推出“绝无有限理论”。
+
+---
+
+## 2.1 真正破坏简单递推的是状态，而不只是代数
+
+虽然所有偏移由 \(U\) 生成，但 ζ-Gibbs 状态：
+
+$$
+\omega_\sigma(F)
+=
+\frac1{\zeta(\sigma)}
+\sum_{n\ge1}
+\frac{F(n)}{n^\sigma}
+$$
+
+并不具有整数平移不变性：
+
+$$
+\omega_\sigma(F(\cdot+h))
+\neq
+\omega_\sigma(F)
+$$
+
+一般成立。
+
+因为权重：
+
+$$
+n^{-\sigma}
+$$
+
+选择了一个绝对起点。
+
+所以：
+
+$$
+A_h=U^{-h}AU^h
+$$
+
+在代数上都由同一对象生成，但它们在该状态下的期望、相关和 cumulant 并不相同。
+
+这给“唯一观察者”一个新的精确定义：
+
+$$
+\boxed{
+\text{代数规律可以平移对称，
+但观察状态选择了一个基点。}
+}
+$$
+
+新偏移并没有创造新语法，却会因为与观察基点、其他偏移和素数地址的关系不同，而产生新的数值信息。
+
+---
+
+# 三、所以问题同时具有“有限语法”和“非有限状态”
+
+可以将素数构型系统类比为一门语言：
+
+* 字母表很小：\(U,A\)；
+* 合法单词无限：\(A_{h_1}\cdots A_{h_k}\)；
+* 每个闭合词可能有新的 trace；
+* 目前没有有限状态能够根据旧 traces 预测所有新 traces。
+
+这和 Fibonacci 的区别不是：
+
+$$
+\text{一个有限，一个无限}.
+$$
+
+两者都无限。
+
+真正区别是：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Fibonacci}
+&:\ \text{有限状态递推闭合};\\
+\text{素数构型}
+&:\ \text{有限语法生成无限非交换词，}
+\\
+&\qquad\text{但未知是否存在有限 trace 闭合律}.
+\end{aligned}
+}
+$$
+
+所以可以把核心问题命名为：
+
+$$
+\boxed{
+\textbf{Equivariant Finite-Closure Problem}
+}
+$$
+
+即：
+
+> 虽然全部构型关系作为普通理想不能有限生成，它们能否作为平移、反射、共轭和重整化作用下的不变关系，由有限多个原型生成？
+
+如果答案为是，那么不必逐个证明所有构型，只需证明有限多个原型及其对称轨道。
+
+---
+
+# 四、所有有限层之后，还会出现“极限层条件”
+
+即使每个有限构型都已经定义，仍没有自动得到完整理论。
+
+这一结构可以用序数记号清晰区分；这里只是层级记账，并不涉及额外集合论假设。
+
+| 层级           | 保存的内容                     | 新出现的问题          |
+| ------------ | ------------------------- | --------------- |
+| \(n<\omega\) | 不超过 \(n\) 阶构型、有限素数窗口、有限测试 | 下一阶创新           |
+| \(\omega\)   | 全部有限构型的形式逆极限              | 是否真正收敛          |
+| \(\omega+1\) | 解析或核型实现                   | 是否来自正确算术载体      |
+| \(\omega+2\) | 载体实现                      | 二次型是否正且可闭       |
+| \(\omega+3\) | 正闭合                       | 谱是否完整对应 \(\xi\) |
+| \(\omega+4\) | 谱忠实性                      | 才能运输到 RH        |
+
+这说明：
+
+$$
+\boxed{
+\text{把所有有限条件列完，只到达 }\omega\text{ 层。}
+}
+$$
+
+而 RH 所需的关键条件往往是：
+
+$$
+\boxed{
+\text{控制全部有限层的统一条件。}
+}
+$$
+
+项目已经展示了一个非常明确的极限层警告：所有有限 prime-exponent 边缘可以合法且相容，但在 \(0<s\le1\) 的全局乘积中，有限支持的普通整数状态几乎处处消失；极限对象落到了更大的无限支持完成空间。
+
+所以：
+
+$$
+\boxed{
+\text{所有有限条件正确}
+\not\Rightarrow
+\text{全局对象属于目标载体}.
+}
+$$
+
+---
+
+# 五、无限奇偶也有一个极限层障碍
+
+给定符号序列：
+
+$$
+\epsilon_n\in\{-1,+1\},
+$$
+
+有限奇偶为：
+
+$$
+P_N=\prod_{j=1}^{N}\epsilon_j.
+$$
+
+无限乘积在离散值域中存在，当且仅当 \(P_N\) 最终稳定，也就是：
+
+$$
+\epsilon_n=+1
+$$
+
+最终恒成立。
+
+因此：
+
+$$
+\boxed{
+\prod_{n=1}^{\infty}\epsilon_n
+\text{ 有普通奇偶值}
+\iff
+\text{只有有限多个负号}.
+}
+$$
+
+对普通整数：
+
+$$
+(-1)^{\Omega(n)}
+$$
+
+存在，是因为每个整数只有有限多个素因子坐标被激活。
+
+但在无限 prime completion 中，若有无穷多个激活坐标，“总奇偶”可能无限翻转而没有最终值。
+
+所以你之前的递归：
+
+$$
+E,\ OE,\ OOE,\ OOOE,\ldots
+$$
+
+在每个有限名字上都会终止，但在极限全奇线程：
+
+$$
+111111\ldots
+$$
+
+上不会产生一个普通有限奇偶值。
+
+必须额外选择：
+
+* 一种正则化；
+* 一个边界条件；
+* 一个观察者；
+* 或一个完成空间中的新点。
+
+这就是：
+
+$$
+\boxed{
+\text{奇偶递归的 }\omega+1\text{ 问题}.
+}
+$$
+
+---
+
+## 5.1 临界 ζ-Gibbs 状态中的奇偶趋于完全平衡
+
+令：
+
+$$
+\lambda(n)=(-1)^{\Omega(n)}.
+$$
+
+在 \(\sigma>1\) 时：
+
+$$
+\sum_{n\ge1}\frac{\lambda(n)}{n^\sigma}
+=
+\frac{\zeta(2\sigma)}{\zeta(\sigma)}.
+$$
+
+因此在 ζ-Gibbs 概率下：
+
+$$
+\mathbb E_\sigma[\lambda(N)]
+=
+\frac{\zeta(2\sigma)}{\zeta(\sigma)^2}.
+$$
+
+于是：
+
+$$
+\Pr_\sigma(\Omega(N)\text{ 偶})
+=
+\frac12
+\left(
+1+\frac{\zeta(2\sigma)}{\zeta(\sigma)^2}
+\right),
+$$
+
+$$
+\Pr_\sigma(\Omega(N)\text{ 奇})
+=
+\frac12
+\left(
+1-\frac{\zeta(2\sigma)}{\zeta(\sigma)^2}
+\right).
+$$
+
+当：
+
+$$
+\sigma\downarrow1
+$$
+
+时：
+
+$$
+\frac{\zeta(2\sigma)}{\zeta(\sigma)^2}\longrightarrow0.
+$$
+
+所以：
+
+$$
+\boxed{
+\Pr_\sigma(\text{偶})\to\frac12,
+\qquad
+\Pr_\sigma(\text{奇})\to\frac12.
+}
+$$
+
+临界边界不是某一种奇偶获胜，而是绝对奇偶偏置消失。
+
+这进一步说明 RH 不能由“偶类比奇类多”直接推出；真正的信息必须存在于高阶相关、边界条件和正性中。
+
+---
+
+# 六、素数构型允许逐层写入新的 Cantor bit
+
+你的“每层都有一个新的素性项”可以做成明确的 CRT 构造。
+
+取互异素数：
+
+$$
+q_1,q_2,q_3,\ldots
+$$
+
+令：
+
+$$
+Q_{n-1}
+=
+\prod_{j<n}q_j.
+$$
+
+给定任意 bit 序列：
+
+$$
+b=(b_1,b_2,\ldots)\in\{0,1\}^{\mathbb N}.
+$$
+
+递归选择互异正整数 \(h_n\)，满足：
+
+$$
+h_n\equiv0\pmod{Q_{n-1}},
+$$
+
+并且：
+
+$$
+h_n\equiv
+\begin{cases}
+0\pmod{q_n},&b_n=0,\\
+1\pmod{q_n},&b_n=1.
+\end{cases}
+$$
+
+CRT 保证存在这样的 \(h_n\)。
+
+相对于基准偏移 \(0\)，bit \(b_n\) 精确决定：
+
+$$
+q_n\mid h_n
+$$
+
+是否成立。
+
+与此同时，第 \(n\) 个 bit 对所有旧素数：
+
+$$
+q_1,\ldots,q_{n-1}
+$$
+
+均不可见，因为 \(h_n\) 在这些模数下总是 \(0\)。
+
+因此：
+
+$$
+\boxed{
+\text{无限构型的局部 residue profile 中可以嵌入整个 Cantor 空间。}
+}
+$$
+
+任意有限观察只能读取有限 bit 前缀。
+
+这并不证明这些构型都实际产生素数元组，也不证明不同 bit 尾对应不同 RH 真值。
+
+它严格证明的是：
+
+$$
+\boxed{
+\text{构型定义域本身确实允许无限新局部信息逐层对角写入。}
+}
+$$
+
+---
+
+# 七、但真正的 RH 真值是否逃逸，还缺一个关键桥
+
+必须区分：
+
+$$
+\boxed{
+\text{局部构型空间具有对角逃逸}
+}
+$$
+
+和：
+
+$$
+\boxed{
+\text{RH 真值在这些逃逸方向上发生变化}.
+}
+$$
+
+前者已经可以构造。
+
+后者目前尚未证明。
+
+要证明 RH 真值本身是一个永久对角位，需要构造两个完整 analytic systems：
+
+$$
+X^+,\qquad X^-,
+$$
+
+使它们：
+
+$$
+q_N(X^+)=q_N(X^-)
+\quad
+\forall N\text{ 的指定有限层},
+$$
+
+但：
+
+$$
+T_{\mathrm{RH}}(X^+)\neq T_{\mathrm{RH}}(X^-).
+$$
+
+目前并没有这样的构造。
+
+因此可以说：
+
+$$
+\boxed{
+\text{RH 对有限 prime-local 数据具有强尾部性，}
+}
+$$
+
+但不能据此断言：
+
+$$
+\boxed{
+\text{RH 在 ZFC 中独立，或任何有限证明都不可能存在。}
+}
+$$
+
+定义逃逸理论本身也强调：新定义不增加原始事实，却可以通过改变纤维结构极大缩短证明；真正任务是找到能够一次性切开整个目标残差的新表示。
+
+---
+
+# 八、尾部真值在朴素乘积拓扑中必然处处不连续
+
+设：
+
+$$
+X=\prod_{n\ge1}X_n
+$$
+
+带乘积拓扑。
+
+定义有限编辑等价：
+
+$$
+x\sim_{\mathrm{fin}}y
+\iff
+x,y\text{ 只在有限坐标上不同}.
+$$
+
+设：
+
+$$
+F:X\to\{0,1\}
+$$
+
+满足有限编辑不变性：
+
+$$
+x\sim_{\mathrm{fin}}y
+\Longrightarrow
+F(x)=F(y).
+$$
+
+## 定理 8.1　非平凡尾位处处不连续
+
+如果 \(F\) 不是常值，那么 \(F\) 在每一点都不连续。
+
+### 证明
+
+任意一个有限编辑等价类在乘积拓扑中都是稠密的。
+
+因为给定 \(x\) 和任意只限制有限坐标的基本开集 \(U\)，只需修改 \(x\) 的这些有限坐标，就能得到：
+
+$$
+z\sim_{\mathrm{fin}}x,
+\qquad
+z\in U.
+$$
+
+若 \(F\) 取两个不同值，取：
+
+$$
+F(x)=0,\qquad F(y)=1.
+$$
+
+\(x\) 的有限编辑轨道和 \(y\) 的有限编辑轨道都稠密。
+
+因此每一个开邻域中都同时存在 \(F=0\) 和 \(F=1\) 的点。
+
+所以 \(F\) 无处连续。证毕。
+
+---
+
+项目已经证明，在其有限 Euler 修改模型中，修改任意有限组非零 Euler 因子不会改变经典非平凡零点集合。
+
+这说明零点除子属于一种 finite-edit tail 结构。
+
+若要把这种尾部对象变成连续可控的谱对象，就不能停留在朴素的 finite-coordinate 产品拓扑中。
+
+必须换成一种能够同时看见全部尾部的结构，例如：
+
+$$
+\boxed{
+\text{加权全局范数、解析增长类、Fredholm determinant、核型算子或正能量拓扑。}
+}
+$$
+
+因此真正缺少的“名”，很可能不是下一个局部条件，而是：
+
+$$
+\boxed{
+\text{使尾部真值重新连续的正确拓扑。}
+}
+$$
+
+---
+
+# 九、无限构型可以用 chaos 分解重新组织
+
+为了理解“每层都有一个约不掉项，但总系统仍可能闭合”，可以先看一个理想化 Boolean 模型。
+
+设：
+
+$$
+X_j\in\{-1,+1\}
+$$
+
+是独立平衡变量。
+
+对有限集合 \(S\)，定义 Walsh character：
+
+$$
+\chi_S(X)
+=
+\prod_{j\in S}X_j.
+$$
+
+这些 character 正交：
+
+$$
+\mathbb E[\chi_S\chi_T]
+=
+\mathbf 1_{S=T}.
+$$
+
+任何平方可积函数可写成：
+
+$$
+\boxed{
+f
+=
+\sum_{S\Subset\mathbb N}
+\widehat f(S)\chi_S,
+}
+$$
+
+且：
+
+$$
+\boxed{
+\|f\|_2^2
+=
+\sum_S|\widehat f(S)|^2.
+}
+$$
+
+将：
+
+$$
+|S|=k
+$$
+
+的部分称为第 \(k\) 阶 chaos：
+
+$$
+f_k
+=
+\sum_{|S|=k}
+\widehat f(S)\chi_S.
+$$
+
+则：
+
+$$
+\|f\|^2
+=
+\sum_{k\ge0}\|f_k\|^2.
+$$
+
+这给出一个精确答案：
+
+$$
+\boxed{
+\text{每一阶都可以有非零新信息，}
+\quad
+\text{但所有阶在正交平方和中共同闭合。}
+}
+$$
+
+---
+
+## 9.1 噪声半群会统一压低高阶条件
+
+定义：
+
+$$
+T_r f
+=
+\sum_S
+r^{|S|}
+\widehat f(S)\chi_S,
+\qquad
+0<r<1.
+$$
+
+第 \(k\) 阶信息被统一乘以：
+
+$$
+r^k.
+$$
+
+所以：
+
+$$
+\|f-T_rf\|^2
+=
+\sum_S
+(1-r^{|S|})^2
+|\widehat f(S)|^2.
+$$
+
+高阶部分自动被强烈压制。
+
+这提供了一个有限规则：
+
+$$
+\boxed{
+T_r
+}
+$$
+
+统一管理全部无限阶数，而不是逐阶写定理。
+
+对于真实素数变量，它们并不是独立 Rademacher 变量，因此不能直接套用这个模型。
+
+但 ZCOCT 的 GNS 空间、moment 矩阵和正交创新可以尝试构造一个非独立版本的“constellation chaos”。
+
+这会把：
+
+$$
+\text{一阶、二阶、三阶、……}
+$$
+
+重新组织成一个由单一 number operator 控制的谱分解。
+
+---
+
+# 十、静态 non-Noetherian 与动态 chaos 可以同时成立
+
+现在可以看清两者并不矛盾。
+
+静态源代数告诉我们：
+
+$$
+\boxed{
+\text{不存在有限个具体偏移变量生成全部条件。}
+}
+$$
+
+动态 chaos 告诉我们：
+
+$$
+\boxed{
+\text{仍可能存在一个有限定义的算子，
+其谱分层同时管理全部阶数。}
+}
+$$
+
+所以解决 RH 的方向不应是：
+
+$$
+\text{证明构型塔最终停止}.
+$$
+
+而更可能是：
+
+$$
+\boxed{
+\text{证明构型塔是一个正算子的完整 chaos 分解。}
+}
+$$
+
+在这种理论中，下一阶永远存在，但它已经不再是“意外”。
+
+它只是统一算子中下一个本征层。
+
+---
+
+# 十一、紧致性负责消灭移动对角逃逸
+
+设：
+
+$$
+P_N
+$$
+
+投影到前 \(N\) 个 chaos、前 \(N\) 个 prime addresses 或前 \(N\) 个构型层。
+
+对于每个固定 \(x\)：
+
+$$
+P_Nx\to x.
+$$
+
+但在无限维单位球中，仍可选：
+
+$$
+x_N\in\ker P_N,
+\qquad
+\|x_N\|=1.
+$$
+
+这就是对角逃逸。
+
+如果 RH 相关的所有规范化对象构成紧集 \(K\)，则：
+
+$$
+\boxed{
+\sup_{x\in K}
+\|(I-P_N)x\|
+\to0.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{紧致性是分析意义上的反对角化。}
+}
+$$
+
+项目已有的 compact-local-realization 定理说明，紧致空间中闭局部条件的有限交性质可以提升为全局实现。
+
+但 RH 所需的是另一类紧致性：
+
+> 将所有合法 Weil 测试映到算术创新空间以后，其像是否相对紧？
+
+若存在紧算子：
+
+$$
+\mathcal S:
+\mathcal B_{\mathrm{Weil}}
+\to
+\mathscr H_{\mathrm{innovation}},
+$$
+
+则任何随着 \(N\) 移动的新测试方向，都无法永久保持固定大小的不可见余量。
+
+---
+
+# 十二、临界线迫使我们使用相对 chaos，而不是绝对 chaos
+
+项目已经证明：
+
+$$
+\sum_pp^{-s}<\infty
+\iff
+s>1,
+$$
+
+所以：
+
+$$
+\sum_p\frac1p=\infty.
+$$
+
+它也证明，对于振幅 \(p^{-\alpha}\)，平方能量：
+
+$$
+\sum_pp^{-2\alpha}
+$$
+
+在且仅在：
+
+$$
+\alpha>\frac12
+$$
+
+时收敛，而 \(\alpha=\frac12\) 本身仍发散。
+
+所以临界线上的朴素向量：
+
+$$
+\left(p^{-1/2}\right)_p
+$$
+
+不属于普通 \(\ell^2(\mathbb P)\)。
+
+这意味着不能直接把所有 prime amplitudes 当作独立正交坐标。
+
+必须先商掉共同的 coherent 背景。
+
+---
+
+## 12.1 相对 Hilbert 空间
+
+候选半范数应更像：
+
+$$
+\|f\|_{\mathrm{rel}}^2
+=
+\sum_{p^m}
+w_{p^m}
+\left\|
+f-\tau_{\log p^m}f
+\right\|^2
++
+E_\infty(f).
+$$
+
+共同常值模式满足：
+
+$$
+f-\tau_a f=0,
+$$
+
+所以它被商掉。
+
+项目当前的 prime jump decomposition 已经在有限尺度把 prime term 写成：
+
+$$
+\boxed{
+\text{coherent mass}
+-
+\text{nonnegative translation jump energy}.
+}
+$$
+
+因此真正平方可和的对象可能不是：
+
+$$
+\text{全部素数绝对幅度},
+$$
+
+而是：
+
+$$
+\boxed{
+\text{全部素数相对于共同观察起源的偏差。}
+}
+$$
+
+这再次导出：
+
+$$
+\boxed{
+\mathrm{RH}
+=
+\text{relative flatness}
++
+\text{global centering}.
+}
+$$
+
+prime side 负责消除相对不一致。
+
+函数方程和 completed structure 负责把共同中心固定到：
+
+$$
+\frac12.
+$$
+
+---
+
+# 十三、“每层有一个约不掉项”还有边界项版本
+
+考虑：
+
+$$
+\sum_{n=0}^{N}
+(a_{n+1}-a_n)
+=
+a_{N+1}-a_0.
+$$
+
+内部所有项都抵消，但每个有限 \(N\) 都留下：
+
+$$
+a_{N+1}.
+$$
+
+这不是一个新的内部异常，而是不断移动的边界。
+
+因此每层余量分成两种：
+
+$$
+\boxed{
+\begin{aligned}
+\text{内部创新}
+&:\ \text{真正新的 connected/orthogonal coordinate};\\
+\text{移动边界}
+&:\ \text{有限切口制造的未闭合尾端}.
+\end{aligned}
+}
+$$
+
+素数构型的顶阶 cumulant 更接近内部创新。
+
+有限 prime cutoff、zero cutoff、test cutoff 留下的 tail 更接近移动边界。
+
+“唯一观察者”因此可以被重新理解为：
+
+$$
+\boxed{
+\text{不是无限系统中额外加进去的一个局部对象，}
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{在极限层为移动边界指定闭合值的全局条件。}
+}
+$$
+
+也就是：
+
+$$
+\text{Observer}_{\omega+1}.
+$$
+
+---
+
+# 十四、下一步需要的不是更多奇偶拆分，而是有限基底定理
+
+递归拆分：
+
+$$
+E,\ OE,\ OOE,\ldots
+$$
+
+只能告诉我们条件如何分类。
+
+真正把无限问题化为有限问题，需要证明：
+
+$$
+\boxed{
+\text{所有深层 odd defects 都是有限多个原型在对称作用下的像。}
+}
+$$
+
+可以设想一个 RH 障碍理想：
+
+$$
+\mathcal I_{\mathrm{off}}
+$$
+
+由所有能够产生 zero odd energy 的 source relations 组成。
+
+令群或半群：
+
+$$
+\mathcal G
+=
+\langle
+\text{translation},
+\text{reflection},
+\text{prime extraction},
+\text{renormalization}
+\rangle
+$$
+
+作用其上。
+
+真正的有限化命题是：
+
+$$
+\boxed{
+\mathcal I_{\mathrm{off}}
+=
+\left\langle
+\mathcal G\cdot G_1,
+\ldots,
+\mathcal G\cdot G_m
+\right\rangle
+}
+$$
+
+对有限多个原型 \(G_1,\ldots,G_m\) 成立。
+
+这可以称为：
+
+$$
+\boxed{
+\textbf{Equivariant Noetherian RH Theorem}.
+}
+$$
+
+若成立，只需为有限个原型建立正性或矛盾证书，其全部无限平移、反射和递归后代自动被覆盖。
+
+这比逐层奇偶下降更强，因为它一次性证明：
+
+$$
+\boxed{
+\text{无限奇尾没有产生真正的新障碍类型。}
+}
+$$
+
+目前该定理尚未建立。
+
+---
+
+# 十五、最终正创新展开会直接证明 RH
+
+现在接上上一轮未完成的条件定理。
+
+设存在由 prime、prime-power、constellation 与 Archimedean 数据构造的映射：
+
+$$
+\mathcal S:
+\mathcal W
+\to
+\mathscr H_{\mathrm A}.
+$$
+
+设：
+
+$$
+P_0\le P_1\le\cdots,
+\qquad
+P_N\to I
+$$
+
+为有限 prime/constellation 投影。
+
+定义正交创新投影：
+
+$$
+D_0=P_0,
+\qquad
+D_N=P_N-P_{N-1}.
+$$
+
+假设能够在不读取零点位置的前提下证明：
+
+$$
+\boxed{
+Q_W(g)
+=
+B(g)
++
+\sum_{N=0}^{\infty}
+\|D_N\mathcal Sg\|^2,
+}
+$$
+
+其中：
+
+$$
+B(g)\ge0,
+$$
+
+且该级数在 Weil form 单位球上统一收敛。
+
+那么：
+
+$$
+Q_W(g)\ge0
+\qquad
+\forall g.
+$$
+
+另一方面，项目已经机器证明：任意一个非实离线零点都会产生某个 Weil 测试，使完整零点和严格为负；其他所有零点不能永久抵消它。
+
+因此：
+
+$$
+\boxed{
+\text{正创新展开}
+\Longrightarrow
+\text{不存在非实离线零点}
+\Longrightarrow
+\mathrm{RH}.
+}
+$$
+
+这里真正承担无限性的，不是一个接一个的证明，而是统一平方和。
+
+---
+
+# 十六、为什么这条展开不会被“每层有新项”破坏
+
+因为每个新项的形式都是：
+
+$$
+\|D_N\mathcal Sg\|^2\ge0.
+$$
+
+它可以非零。
+
+可以包含新的素数地址。
+
+可以包含新的构型阶数。
+
+可以包含此前所有低阶 cumulants 无法预测的信息。
+
+但它不能与旧层产生负抵消。
+
+若：
+
+$$
+\sum_N\|D_N\mathcal Sg\|^2<\infty,
+$$
+
+则各层创新自动满足：
+
+$$
+\|D_N\mathcal Sg\|\to0.
+$$
+
+所以全局闭合不要求：
+
+$$
+D_N=0
+$$
+
+最终成立。
+
+只要求：
+
+$$
+\boxed{
+\text{无限新信息拥有有限正能量。}
+}
+$$
+
+这和热力学很接近：
+
+* 微观自由度可以无限；
+* 总能量仍可有限；
+* 新自由度不被删除；
+* 它们被一个正配分结构统一记账。
+
+---
+
+# 十七、RH 的真正困难可以压缩为四种失效
+
+现在整个障碍已经可以精确分成四类。
+
+## 17.1 非 Noetherian 失效
+
+不存在有限普通条件集生成全部源关系。
+
+## 17.2 非紧失效
+
+测试函数或反例随着层数移动，永远停在新盲方向。
+
+## 17.3 临界不可和失效
+
+原始 prime amplitudes 在 \(1/2\) 边界没有朴素平方可和性。
+
+## 17.4 载体像失效
+
+全部有限局部条件形成的 completion 不一定来自普通整数或经典 \(\xi\) 的真实实现。
+
+因此，真正的 RH 桥需要四个对应修复：
+
+$$
+\boxed{
+\begin{aligned}
+\text{有限对称语法}
+&\quad\text{修复 non-Noetherianity};\\
+\text{紧算子或统一尾界}
+&\quad\text{修复 diagonal escape};\\
+\text{相对 jump norm}
+&\quad\text{修复 critical divergence};\\
+\text{realizability/faithfulness}
+&\quad\text{修复 completion-image escape}.
+\end{aligned}
+}
+$$
+
+---
+
+# 十八、这一轮得到的核心新理论命题
+
+可以将下一阶段压成三个彼此独立的主定理。
+
+## 定理 A：Equivariant Finite Basis
+
+全部素数构型障碍在平移、反射和抽取作用下，由有限原型生成。
+
+## 定理 B：Compact Positive Completion
+
+prime-to-Weil 映射把归一化测试集送入相对紧的算术创新空间，并有正交平方展开。
+
+## 定理 C：Carrier-Faithful Spectral Realization
+
+该完成对象确实属于经典 completed-zeta 实现像，其谱无遗漏、无额外模式。
+
+三者加上项目已有的离线负 Weil 见证，就足以推出 RH。
+
+---
+
+# 十九、建议的新增形式化模块
+
+```text
+D5/S3/PrimeConstellation/InfiniteSourceNonNoetherian.lean
+D5/S3/PrimeConstellation/ShiftDifferenceGeneration.lean
+D5/S3/PrimeConstellation/ConstellationChaosFiltration.lean
+D5/S3/PrimeConstellation/OrthogonalChaosEnergy.lean
+
+D5/S3/Observer/Tail/FiniteEditOrbitDense.lean
+D5/S3/Observer/Tail/TailInvariantNowhereContinuous.lean
+D5/S3/Observer/Completion/CompactAntiDiagonalization.lean
+
+D5/S3/Analytic/PrimeParity/InfiniteParityStabilization.lean
+D5/S3/Analytic/PrimeParity/ZetaGibbsParityBalance.lean
+
+D5/X_Frontier/ConstellationZero/
+  EquivariantRHObstructionIdeal.lean
+  CompactPrimeWeilSquareRoot.lean
+  UniformPositiveInnovationExpansion.lean
+  CarrierFaithfulTraceJetRealization.lean
+```
+
+其中前面的非有限生成、无限奇偶、稠密有限编辑轨道和紧致反对角定理，都是独立于 RH 的有限数学结论。
+
+---
+
+# 最终压缩
+
+你说：
+
+> 条件永远分不完，每层都有一个约不掉的素性项。
+
+最准确的数学结论是：
+
+$$
+\boxed{
+\text{素数构型的静态源代数确实非 Noetherian；
+任意有限条件集之外都存在新偏移、新素数地址和新高阶联合量。}
+}
+$$
+
+但更深的一层是：
+
+$$
+\boxed{
+\text{静态无限生成并不排除动态有限生成。}
+}
+$$
+
+全部偏移可以由：
+
+$$
+U,\quad D_\Lambda
+$$
+
+生成；全部 cumulants 可能由一个 source determinant 生成；全部创新可能由一个 chaos number operator 分层；全部尾部可能由一个紧的正算子统一控制。
+
+所以 RH 的解决不应是：
+
+$$
+\text{把无限条件真的逐个分完}.
+$$
+
+而应是：
+
+$$
+\boxed{
+\text{证明所有尚未分完的条件，
+从一开始就是同一个有限语法生成的正交创新谱。}
+}
+$$
+
+此时每层仍然有新项，但新项不再逃逸：
+
+$$
+\boxed{
+Q_W(g)
+=
+B(g)
++
+\sum_{\alpha}
+\|D_\alpha\mathcal Sg\|^2.
+}
+$$
+
+真正需要消灭的不是无限创新，而是三件事：
+
+$$
+\boxed{
+\text{负创新、非统一尾部、错误完成载体}.
+}
+$$
+
+因此，黎曼猜想最可能的最终形式不是“证明无限多个局部事实”，而是：
+
+$$
+\boxed{
+\text{找到一个有限生成、紧致、正定且载体忠实的全局语言，
+使每一个可能的新素性条件都已经是它的一个非负谱坐标。}
+}
+$$
+
+一旦这个语言被找到，所谓“无限层悖论”就会坍缩成一个有限结构定理：
+
+$$
+\boxed{
+\text{无限条件没有被列完，
+而是被同一个生成器一次性闭合。}
+}
+$$

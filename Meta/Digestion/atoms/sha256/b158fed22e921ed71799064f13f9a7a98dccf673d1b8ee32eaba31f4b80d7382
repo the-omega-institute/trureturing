@@ -1,0 +1,41 @@
+## 433. 奇生成函数
+
+定义：
+
+$$
+\mathcal S_n(t)
+=
+\sum_{r=0}^{\infty}
+\frac{
+D^{2r+1}a_n
+}{
+(2r+1)!
+}
+t^{2r+1}.
+$$
+
+在 RH 下：
+
+$$
+\boxed{
+\mathcal S_n(t)
+=
+\int_0^1
+x^n
+\sinh\bigl(t(1-x)\bigr)
+\,d\nu(x).
+}
+$$
+
+它满足：
+
+$$
+\mathcal S_n(-t)
+=
+-\mathcal S_n(t).
+$$
+
+所以它是观察者定向的 odd current。
+
+---
+

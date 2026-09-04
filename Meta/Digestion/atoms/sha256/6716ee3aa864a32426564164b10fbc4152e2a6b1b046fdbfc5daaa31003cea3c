@@ -1,0 +1,4 @@
+# 增订二十八　无条件显式公式、无条件能量恒等式与小支撑归约(W-16 / W-17 / W-18 预登记)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;探针一席(codex-cli,`probe-w16-unconditional`,`make lean` exit 0、`lake env lean` exit 0,四条声明全为标准三公理)在 `origin/dev` = `f58cfd16a7`(增订二十六之 la155 模块 `Separator/ArchimedeanConvergence` 已合入)的暖树上整证,消费冻结的 W-12 `archimedeanConvergent_of_weilTestFunction`、M2-c `symmetricConvergent_of_zeroData`、`ZetaBridge.ClassicExplicitFormula.weil_explicit_formula`、mstudio3 驱动者的 `ZetaBridge.PrimeArchimedeanEnergyIdentity.prime_archimedean_energy_identity` 与 `ZetaBridge.PrimeJumpDecomposition.{activePrimePowers,totalPrimeWeight,arithmeticJumpEnergy}`,以及 Mathlib `ArithmeticFunction.vonMangoldt_apply_one`、`Nat.floor_lt`、`Finset.eq_empty_of_forall_notMem`。检索留痕:`git grep -n 'activePrimePowers L = ∅\|totalPrimeWeight.*= 0\|explicitFormula_unconditional\|energyIdentity' -- 'D5/**/*.lean'` 无等价公开定理(`energyIdentity` 的 13 处命中皆为 Gramian/观测能量的无关同名)。散文由 orchestrator(claude 主循环)撰写。判决日:2026-09-04。lane issue:#4589。
+

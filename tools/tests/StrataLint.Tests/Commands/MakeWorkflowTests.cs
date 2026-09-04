@@ -156,7 +156,7 @@ public sealed partial class MakeWorkflowTests
     }
 
     [Fact]
-    public void AdmissionEntrypointsDelegateForkResolutionToOneLibrary()
+    public void PreflightOwnsExplicitBaseValidationWhileLocalGateDelegatesForkResolution()
     {
         var root = TestRepositoryLayout.FindRoot();
         var preflight = File.ReadAllText(Path.Combine(root, PreflightScriptPath));
@@ -164,10 +164,15 @@ public sealed partial class MakeWorkflowTests
         var admissionBase = File.ReadAllText(Path.Combine(root, AdmissionBaseScriptPath));
 
         const string source = "source \"$ROOT/tools/scripts/lib/admission-base-lib.sh\"";
-        const string preflightResolve = "admission_resolve_base \"$ROOT\" \"$BASE_REF\"";
         const string localResolve =
             "admission_resolve_base \"$CANDIDATE_ROOT\" \"$BASE_REF\"";
-        string[] ordered = ["ROOT=\"$(git rev-parse --show-toplevel)\"", source, "fetch --prune", preflightResolve, "CI=true make -C tools dotnet"];
+        string[] ordered =
+        [
+            "ROOT=\"$(git rev-parse --show-toplevel)\"",
+            "git cat-file -t \"$BASE\"",
+            "git merge-base --is-ancestor \"$BASE\" HEAD",
+            "CI=true make -C tools dotnet",
+        ];
         var cursor = -1;
         foreach (var fragment in ordered)
         {
@@ -176,18 +181,19 @@ public sealed partial class MakeWorkflowTests
         }
         Assert.Contains(source, localGate, StringComparison.Ordinal);
         Assert.Contains(localResolve, localGate, StringComparison.Ordinal);
+        Assert.DoesNotContain(source, preflight, StringComparison.Ordinal);
+        Assert.DoesNotContain("admission_resolve_base", preflight, StringComparison.Ordinal);
+        Assert.DoesNotContain("fetch --prune", preflight, StringComparison.Ordinal);
         Assert.DoesNotContain("BASE_RESOLUTION_FAILED", preflight, StringComparison.Ordinal);
         Assert.DoesNotContain("BASE_RESOLUTION_FAILED", localGate, StringComparison.Ordinal);
         Assert.Single(Regex.Matches(admissionBase, "BASE_RESOLUTION_FAILED").Cast<Match>());
         Assert.Single(Regex.Matches(
             admissionBase,
             "\\bgit\\s+-C\\s+\"\\$repository_root\"\\s+merge-base\\b").Cast<Match>());
-        Assert.DoesNotContain("git merge-base", preflight, StringComparison.Ordinal);
         Assert.DoesNotContain("git -C \"$CANDIDATE_ROOT\" merge-base", localGate, StringComparison.Ordinal);
-        Assert.DoesNotContain("merge-base --is-ancestor", preflight, StringComparison.Ordinal);
+        Assert.Contains("merge-base --is-ancestor", preflight, StringComparison.Ordinal);
         Assert.Contains("make gate BASE=\"$BASE_SHA\"", preflight, StringComparison.Ordinal);
-        Assert.Contains("\"$observed_base\" != \"$BASE_TIP_SHA\"", preflight, StringComparison.Ordinal);
-        Assert.Contains("|| true", preflight[preflight.IndexOf("BASE_ADVANCED", StringComparison.Ordinal)..], StringComparison.Ordinal);
+        Assert.DoesNotContain("BASE_ADVANCED", preflight, StringComparison.Ordinal);
         Assert.DoesNotContain("merge-base --is-ancestor", localGate, StringComparison.Ordinal);
         Assert.DoesNotContain("pinned base is not a strict ancestor", localGate, StringComparison.Ordinal);
     }
