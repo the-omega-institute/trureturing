@@ -1,0 +1,24 @@
+- 非共振条件下，零曲率等价于局部观察者原点估计一致。
+
+该结果明确是代数定理，不自动等同于 Zeta Euler factor，也不自动推出零点位置。
+
+它为 C-IRPT 提供了一个严格实例：
+
+\[
+\boxed{
+\begin{aligned}
+\text{标量 CUT}
+&=\text{底空间},\\
+\text{隐藏记忆}
+&=\text{余纤维},\\
+\text{prime FLOW}
+&=\text{纤维输运},\\
+\text{交换缺陷}
+&=\text{曲率},\\
+\text{闭路残余}
+&=\text{holonomy}.
+\end{aligned}}
+\]
+
+---
+

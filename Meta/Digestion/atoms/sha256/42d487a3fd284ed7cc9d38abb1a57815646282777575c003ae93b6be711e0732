@@ -1,0 +1,5 @@
+## 45. 为什么不能只保存 kernel quotient `[L]`
+
+项目 `ObserverConceptReadoutCorrespondence` 已证明：联合 CUT 的 kernel quotient 精确保留不可区分关系，但会遗忘：
+
+- ADMIT；

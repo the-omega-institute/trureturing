@@ -1,0 +1,29 @@
+## 定理 16.1　统一下降判据 `[L]`
+
+在仓库定理所需的非空条件下，以下等价：
+
+\[
+\exists\overline T:B\to Z,
+\quad
+T=\overline T\circ q;
+\]
+
+\[
+\forall x,y,\quad
+q(x)=q(y)\Rightarrow T(x)=T(y);
+\]
+
+\[
+\operatorname{Residual}(q,T)=\varnothing.
+\]
+
+因此几乎全部概念动力学问题都可归约为：
+
+\[
+\boxed{
+\text{某个目标是否在当前 CUT 的每个余纤维上保持常值。}
+}
+\]
+
+---
+
