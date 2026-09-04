@@ -1,0 +1,48 @@
+* `trialIH` 与若干 \(J\)-型 source integrals。
+
+这可被理解为一个经典 Poisson-chaos/Fock 类模型：
+
+$$
+\boxed{
+\text{随机 fragment state}
+\longrightarrow
+\text{有限 chaos basis}
+\longrightarrow
+\text{quadratic variational inequality}.
+}
+$$
+
+但它仍然是经典概率测度和积分，不应直接称为量子纠缠。
+
+真正值得吸收的是其**压缩方式**：
+
+$$
+\boxed{
+\text{无限算术问题}
+\longrightarrow
+\text{有限 trial basis}
+\longrightarrow
+\text{有限数值证书}
+\longrightarrow
+\text{条件性 Lean 结论}.
+}
+$$
+
+公开证书冻结了 104 个 outer、45 个 inner 积分上界以及三个 cap bounds；这些数据仍被封装为一个 Lean 输入，而不是已在内核中从分析定义自动算出。
+
+所以该项目最值得 `trureturing` 学习的不是某个 CoT 句子，而是严格的证据分层：
+
+$$
+\boxed{
+\begin{aligned}
+\text{CoT}&=\text{搜索轨迹};\\
+\text{trial coefficients}&=\text{精确候选};\\
+\text{Python receipt}&=\text{计算证据};\\
+\text{Lean theorem}&=\text{条件推导};\\
+\text{three inputs}&=\text{明确残余边界}.
+\end{aligned}
+}
+$$
+
+---
+

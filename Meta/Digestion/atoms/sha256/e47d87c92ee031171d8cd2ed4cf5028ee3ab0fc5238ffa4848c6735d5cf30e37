@@ -1,0 +1,10 @@
+\[
+\operatorname{Blind}(J_T)
+=
+\bigcup_i\operatorname{Blind}(T_i).
+\]
+
+因此同时完成整个问题族，严格等价于完成每个分量问题。
+
+---
+

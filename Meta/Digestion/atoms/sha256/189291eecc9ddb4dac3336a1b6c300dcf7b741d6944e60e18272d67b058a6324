@@ -1,0 +1,21 @@
+## 17. 统一实例
+
+令一般目标 \(T\) 分别取为：
+
+\[
+\begin{array}{c|c}
+T & \text{所得问题}\\ \hline
+\text{性质读数} & \text{该性质是否可由概念回答}\\
+q_Y\circ F & \text{FLOW 是否沿 CUT 下降}\\
+A:X\to\mathsf{Prop} & \text{ADMIT 是否可由界面执行}\\
+\pi:X\to U & \text{政策是否可由概念实现}\\
+\text{history evaluation} & \text{历史评价是否可约为端点}\\
+\text{counterfactual target} & \text{反事实是否可由实验数据恢复}\\
+\operatorname{id}_X & \text{CUT 是否忠实／单射}
+\end{array}
+\]
+
+所以“知识、预测、因果、规范执行、责任、解释”并非各自需要一套新的数学原语；它们是同一下降判据在不同目标类型上的实例。
+
+---
+

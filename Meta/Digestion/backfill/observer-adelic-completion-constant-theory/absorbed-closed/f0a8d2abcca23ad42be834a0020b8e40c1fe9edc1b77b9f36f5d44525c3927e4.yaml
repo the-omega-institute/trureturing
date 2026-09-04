@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:f0a8d2abcca23ad42be834a0020b8e40c1fe9edc1b77b9f36f5d44525c3927e4
+  normalized_sha256: sha256:f0a8d2abcca23ad42be834a0020b8e40c1fe9edc1b77b9f36f5d44525c3927e4
+cas_ref: sha256:f0a8d2abcca23ad42be834a0020b8e40c1fe9edc1b77b9f36f5d44525c3927e4
+coverage_gids:
+  - gid: D5/S3/Analytic/Hardy/PhaseFibreClarkBasis.phase_fibre_is_orthonormal_basis
+    target_statement_id: sha256:590a29f46bafdc64a0459c526d4a1282903bd8ccc1d982122e3abe6db9d26b1f
+receipts:
+  scribe:
+    - gid: D5/S3/Analytic/Hardy/PhaseFibreClarkBasis.phase_fibre_is_orthonormal_basis
+      definition_sha256: sha256:d2d4b0d1f082070acd014859c12780375c1026db12c43169dd417808002af089
+      emission_sha256: sha256:e4be178c725921732071a6197c006222849b9d985c0141c02b2c81f7e61293f9
+  unresolved_subitems: []

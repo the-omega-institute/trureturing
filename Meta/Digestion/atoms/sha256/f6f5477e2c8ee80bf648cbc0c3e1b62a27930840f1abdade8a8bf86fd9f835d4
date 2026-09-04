@@ -1,0 +1,31 @@
+\[
+\widehat q_F(x)(w)
+=
+q(\operatorname{runWord}(F,w,x)),
+\qquad
+w\in U^*.
+\]
+
+项目的 `DynClosure` 正是：
+
+\[
+\operatorname{controlledBehavior}(F,q).
+\]
+
+项目已证明：
+
+1. \(\widehat q_F\) 精化 \(q\)；
+2. \(\widehat q_F\) 对所有干预闭合；
+3. 任意精化 \(q\) 且干预闭合的候选概念，都进一步精化 \(\widehat q_F\)。
+
+所以：
+
+\[
+\boxed{
+\widehat q_F
+\text{ 是包含原 CUT 的最小动态闭合精化。}
+}
+\]
+
+---
+

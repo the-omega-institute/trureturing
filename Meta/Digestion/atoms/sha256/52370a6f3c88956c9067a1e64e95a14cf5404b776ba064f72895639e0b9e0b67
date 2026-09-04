@@ -1,0 +1,28 @@
+### 函数方程反射
+
+$$
+s\mapsto1-s
+$$
+
+把 jet spinor 送到另一个解析页。
+
+因此，若未来存在 prime-to-zero intertwiner，它至少应满足：
+
+$$
+\boxed{
+\mathcal U
+\begin{pmatrix}
+1\\-s
+\end{pmatrix}
+=
+\begin{pmatrix}
+\text{zero-orbit even amplitude}\\
+\text{zero-orbit odd transverse jet}
+\end{pmatrix}.
+}
+$$
+
+这比从 prime gap 的数值大小直接构造 \(\delta\) 更自然。
+
+---
+

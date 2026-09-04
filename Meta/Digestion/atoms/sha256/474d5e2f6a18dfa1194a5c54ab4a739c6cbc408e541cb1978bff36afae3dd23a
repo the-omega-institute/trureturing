@@ -1,0 +1,135 @@
+# 第两千一百二十八部　短隙素数簇是一个近秩一观察纤维
+
+设一个素数簇：
+
+$$
+\mathcal C
+=
+\{p_1,\ldots,p_m\}
+\subset[P,P+D].
+$$
+
+定义两张反射行向量：
+
+$$
+r_+
+=
+\left(
+p_j^{-\sigma-\delta-it}
+\right)_{j=1}^{m},
+$$
+
+$$
+r_-
+=
+\left(
+p_j^{-\sigma+\delta-it}
+\right)_{j=1}^{m}.
+$$
+
+将它们组成 \(2\times m\) 矩阵：
+
+$$
+A_{\mathcal C,\delta,t}
+=
+\begin{pmatrix}
+r_+\\
+r_-
+\end{pmatrix}.
+$$
+
+当：
+
+$$
+\delta=0,
+$$
+
+两行完全相同：
+
+$$
+\operatorname{rank}A_{\mathcal C,0,t}=1.
+$$
+
+当：
+
+$$
+\delta\neq0
+$$
+
+且至少有两个不同素数时：
+
+$$
+\operatorname{rank}A_{\mathcal C,\delta,t}=2.
+$$
+
+由 Cauchy–Binet：
+
+$$
+\boxed{
+\begin{aligned}
+\det
+\left(
+A_{\mathcal C,\delta,t}
+A_{\mathcal C,\delta,t}^*
+\right)
+=
+4\sum_{i<j}
+(p_ip_j)^{-2\sigma}
+\sinh^2
+\left(
+\delta\log\frac{p_j}{p_i}
+\right).
+\end{aligned}
+}
+\tag{2128.1}
+$$
+
+这给出一个严格的 cluster horizontal-splitting energy。
+
+它满足：
+
+$$
+\boxed{
+\mathcal E_{\mathcal C}^{\perp}(\delta)=0
+\iff
+\delta=0
+}
+$$
+
+只要簇中至少有两个不同素数。
+
+所以有限素数簇确实是一个法向分裂探测器。
+
+但若：
+
+$$
+P\to\infty,
+\qquad
+D,m\text{ 固定},
+$$
+
+则：
+
+$$
+\log(p_j/p_i)=O(D/P),
+$$
+
+从而：
+
+$$
+\mathcal E_{\mathcal C}^{\perp}(\delta)\to0.
+$$
+
+因此它是：
+
+$$
+\boxed{
+\text{代数上严格秩二，
+但对有限精度观察者越来越像秩一。}
+}
+$$
+
+这正是从 PrimeGaps 通往“观察者纤维”的真实机制。
+
+---
+
