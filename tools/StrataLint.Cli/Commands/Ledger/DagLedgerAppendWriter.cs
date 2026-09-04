@@ -60,11 +60,18 @@ internal static class DagLedgerAppendWriter
                     "generated frozen ledger is invalid: " + rejected.Message),
                 _ => throw new InvalidOperationException("unknown ledger validation outcome"),
             };
-            RequireUnchangedBaseline(context.LedgerPath, context.BaselineFiles, "ledger-append");
-            WriteEventFiles(context.LedgerPath, pending, context.BaselineFiles);
             var freezes = prospective
                 .Where(static item => item.EventType == "Freeze")
                 .ToImmutableArray();
+            FrozenLedgerPublication.PublishSnapshot(
+                repositoryRoot,
+                context.LedgerPath,
+                context.BaselineFiles.Concat(pending),
+                context.BaselineFiles,
+                freezes,
+                [],
+                "ledger-append");
+
             var output = $"LEDGER_APPEND appended_freezes={freezes.Length} "
                 + $"events={candidate.EventCount} "
                 + $"head={context.BaseView.EventSetRoot(prospective.Select(static item => item.EventHash))}\n"
@@ -119,232 +126,6 @@ internal static class DagLedgerAppendWriter
         return files.ToImmutable();
     }
 
-    internal static void WriteEventFiles(
-        string directory,
-        IEnumerable<RepositoryFile> files,
-        ImmutableArray<RepositoryFile> expectedBaselineFiles = default)
-    {
-        var lockPath = Path.Combine(directory, ".ledger-write.lock");
-        using var publicationLock = AcquirePublicationLock(lockPath);
-        if (!expectedBaselineFiles.IsDefault
-            && !LedgerDirectoryMatches(directory, expectedBaselineFiles))
-        {
-            throw new InvalidOperationException(
-                "accepted event files changed while the ledger command was validating them");
-        }
-
-        ReapStaleStagingDirectories(directory);
-        var planned = files.ToImmutableArray();
-        if (planned.IsEmpty)
-        {
-            return;
-        }
-
-        var stagingDirectory = Path.Combine(directory, $".ledger-stage-{Guid.NewGuid():N}");
-        var createdPaths = new Stack<string>();
-        try
-        {
-            Directory.CreateDirectory(stagingDirectory);
-            foreach (var file in planned)
-            {
-                var stagedPath = Path.Combine(stagingDirectory, Path.GetFileName(file.Path.Value));
-                using var stream = new FileStream(
-                    stagedPath,
-                    FileMode.CreateNew,
-                    FileAccess.Write,
-                    FileShare.None);
-                stream.Write(file.RawBytes.AsSpan());
-                stream.Flush(flushToDisk: true);
-            }
-
-            foreach (var file in planned)
-            {
-                var fileName = Path.GetFileName(file.Path.Value);
-                var stagedPath = Path.Combine(stagingDirectory, fileName);
-                var finalPath = Path.Combine(directory, fileName);
-                File.Move(stagedPath, finalPath);
-                createdPaths.Push(finalPath);
-            }
-
-            Directory.Delete(stagingDirectory);
-        }
-        catch
-        {
-            RollbackCreatedFiles(createdPaths);
-            CleanupStagingDirectory(stagingDirectory);
-            throw;
-        }
-    }
-
-    internal static void DeleteEventFiles(
-        string directory,
-        ImmutableArray<RepositoryFile> files,
-        ImmutableArray<RepositoryFile> expectedBaselineFiles)
-    {
-        var lockPath = Path.Combine(directory, ".ledger-write.lock");
-        using var publicationLock = AcquirePublicationLock(lockPath);
-        if (!LedgerDirectoryMatches(directory, expectedBaselineFiles))
-        {
-            throw new InvalidOperationException(
-                "accepted event files changed while ledger-revoke was validating them");
-        }
-
-        ReapStaleStagingDirectories(directory);
-        if (files.IsEmpty)
-        {
-            return;
-        }
-
-        var stagingDirectory = Path.Combine(directory, $".ledger-stage-{Guid.NewGuid():N}");
-        var moved = new Stack<(string Staged, string Original)>();
-        try
-        {
-            Directory.CreateDirectory(stagingDirectory);
-            foreach (var file in files.OrderBy(static file => file.Path.Value, StringComparer.Ordinal))
-            {
-                var original = Path.Combine(directory, Path.GetFileName(file.Path.Value));
-                var staged = Path.Combine(stagingDirectory, Path.GetFileName(file.Path.Value));
-                File.Move(original, staged);
-                moved.Push((staged, original));
-            }
-
-            Directory.Delete(stagingDirectory, recursive: true);
-        }
-        catch
-        {
-            while (moved.TryPop(out var item))
-            {
-                if (File.Exists(item.Staged))
-                {
-                    File.Move(item.Staged, item.Original);
-                }
-            }
-
-            CleanupStagingDirectory(stagingDirectory);
-            throw;
-        }
-    }
-
-    internal static void ReplaceEventFiles(
-        string directory,
-        ImmutableArray<RepositoryFile> files,
-        ImmutableArray<RepositoryFile> expectedBaselineFiles)
-    {
-        var lockPath = Path.Combine(directory, ".ledger-write.lock");
-        using var publicationLock = AcquirePublicationLock(lockPath);
-        if (!LedgerDirectoryMatches(directory, expectedBaselineFiles))
-        {
-            throw new InvalidOperationException(
-                "accepted event files changed while ledger-append was replacing the snapshot");
-        }
-
-        ReapStaleStagingDirectories(directory);
-        var planned = files.OrderBy(static file => file.Path.Value, StringComparer.Ordinal).ToImmutableArray();
-        if (planned.Select(static file => file.Path).Distinct().Count() != planned.Length)
-        {
-            throw new InvalidOperationException("replacement frozen ledger contains duplicate paths");
-        }
-
-        var stagingDirectory = Path.Combine(directory, $".ledger-stage-{Guid.NewGuid():N}");
-        var newDirectory = Path.Combine(stagingDirectory, "new");
-        var oldDirectory = Path.Combine(stagingDirectory, "old");
-        var published = new Stack<string>();
-        var displaced = new Stack<(string Staged, string Original)>();
-        try
-        {
-            Directory.CreateDirectory(newDirectory);
-            Directory.CreateDirectory(oldDirectory);
-            foreach (var file in planned)
-            {
-                var stagedPath = Path.Combine(newDirectory, Path.GetFileName(file.Path.Value));
-                using var stream = new FileStream(
-                    stagedPath,
-                    FileMode.CreateNew,
-                    FileAccess.Write,
-                    FileShare.None);
-                stream.Write(file.RawBytes.AsSpan());
-                stream.Flush(flushToDisk: true);
-            }
-
-            foreach (var file in expectedBaselineFiles)
-            {
-                var original = Path.Combine(directory, Path.GetFileName(file.Path.Value));
-                var staged = Path.Combine(oldDirectory, Path.GetFileName(file.Path.Value));
-                File.Move(original, staged);
-                displaced.Push((staged, original));
-            }
-
-            foreach (var file in planned)
-            {
-                var fileName = Path.GetFileName(file.Path.Value);
-                var staged = Path.Combine(newDirectory, fileName);
-                var final = Path.Combine(directory, fileName);
-                File.Move(staged, final);
-                published.Push(final);
-            }
-
-            Directory.Delete(stagingDirectory, recursive: true);
-        }
-        catch
-        {
-            RollbackCreatedFiles(published);
-            while (displaced.TryPop(out var item))
-            {
-                if (File.Exists(item.Staged))
-                {
-                    File.Move(item.Staged, item.Original);
-                }
-            }
-
-            CleanupStagingDirectory(stagingDirectory);
-            throw;
-        }
-    }
-
-    internal static void RequireUnchangedBaseline(
-        string directory,
-        ImmutableArray<RepositoryFile> expectedFiles,
-        string command)
-    {
-        if (!LedgerDirectoryMatches(directory, expectedFiles))
-        {
-            throw new InvalidOperationException(
-                $"accepted event files changed while {command} was validating them");
-        }
-    }
-
-    private static bool LedgerDirectoryMatches(
-        string directory,
-        ImmutableArray<RepositoryFile> expectedFiles)
-    {
-        var actual = DagLedgerCommandPreparation.ReadLedgerDirectoryFiles(directory);
-        if (actual.Length != expectedFiles.Length)
-        {
-            return false;
-        }
-
-        var expectedByPath = expectedFiles.ToDictionary(static file => file.Path);
-        return actual.All(file => expectedByPath.TryGetValue(file.Path, out var expected)
-            && file.RawBytes.AsSpan().SequenceEqual(expected.RawBytes.AsSpan()));
-    }
-
-    internal static void RollbackCreatedFiles(IEnumerable<string> createdPaths)
-    {
-        foreach (var path in createdPaths)
-        {
-            try
-            {
-                File.Delete(path);
-            }
-            catch (IOException)
-            {
-            }
-            catch (UnauthorizedAccessException)
-            {
-            }
-        }
-    }
-
     internal static string RenderFailure(string marker, Exception exception)
     {
         var detail = exception.InnerException is null
@@ -353,49 +134,4 @@ internal static class DagLedgerAppendWriter
         return marker + " " + detail + "\n";
     }
 
-    internal static FileStream AcquirePublicationLock(string lockPath)
-    {
-        try
-        {
-            return new FileStream(
-                lockPath,
-                FileMode.OpenOrCreate,
-                FileAccess.ReadWrite,
-                FileShare.None);
-        }
-        catch (Exception failure) when (failure is IOException or UnauthorizedAccessException)
-        {
-            throw new IOException(
-                $"Another frozen-ledger publication owns the writer lock {lockPath}.",
-                failure);
-        }
-    }
-
-    private static void ReapStaleStagingDirectories(string directory)
-    {
-        foreach (var stagingDirectory in Directory.EnumerateDirectories(
-            directory,
-            ".ledger-stage-*",
-            SearchOption.TopDirectoryOnly))
-        {
-            Directory.Delete(stagingDirectory, recursive: true);
-        }
-    }
-
-    private static void CleanupStagingDirectory(string stagingDirectory)
-    {
-        try
-        {
-            if (Directory.Exists(stagingDirectory))
-            {
-                Directory.Delete(stagingDirectory, recursive: true);
-            }
-        }
-        catch (IOException)
-        {
-        }
-        catch (UnauthorizedAccessException)
-        {
-        }
-    }
 }
