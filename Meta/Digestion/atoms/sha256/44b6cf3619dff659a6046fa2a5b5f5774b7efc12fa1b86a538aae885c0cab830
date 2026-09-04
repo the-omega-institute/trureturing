@@ -1,0 +1,29 @@
+- $\mu$ 是状态权或所选 ensemble。
+
+相应配分函数为
+
+$$
+Z_{\mathfrak S}(\beta)
+=
+\sum_{\eta\in\Omega}
+\mu(\eta)e^{-\beta H(\eta)}.
+\tag{A1.2}
+$$
+
+仅知道 $Z_{\mathfrak S}$，一般不能恢复 $\mathcal R$。甚至当 $H$ 对状态是单射时，$Z$ 仍只读取能级及其权重，不读取这些能级是通过何种局部记忆、carry 或 holonomy 连接起来的。
+
+这正是本文所有“看似相关”对象的共同位置：
+
+$$
+\boxed{
+\text{Zeckendorf 给出 }\Omega\text{ 与 }\mathcal R,
+\quad
+\text{Euler 给出 }H\text{ 与 }\mu,
+\quad
+\text{Lee–Yang 读取 }Z\text{ 的复零点},
+\quad
+\text{信息逃逸检测 }\mathfrak S\mapsto Z\text{ 遗忘了什么}.
+}
+\tag{A1.3}
+$$
+
