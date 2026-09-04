@@ -29,7 +29,7 @@ The causal lane reuses the following repository truth sources.
 - `D5/S3/ConceptDynamics/Causal/FiniteLinearCausalIdentification` packages finite causal LP rows with data, structural, and sensitivity provenance.
 - `D5/S3/ConceptDynamics/Causal/StructuralEvaluationSemantics` supplies the canonical finite order semantics used by causal evaluation.
 
-The library audit found no pre-existing exact compiler from required edges, forbidden edges, and query-order admissibility to a finite support polytope.
+The library audit found no pre-existing exact compiler from required edges, forbidden edges, query-order admissibility, and finite causal-event marginals to one joint completion-signature polytope.
 
 ## 3. Finite sharp-bounds layer
 
@@ -100,18 +100,11 @@ Valid weaker-family bounds survive refinement. Exact lower endpoints can only ri
 
 A remaining combinatorial obligation is to construct a certified adjacent-incomparable swap path between arbitrary finite linear extensions of the same partial order. A remaining compiler obligation is to show that each concrete row and query event is equivariant under those swaps.
 
-## 8. Partial-diagram constraint compiler soundness
+## 8. Partial-diagram support compiler
 
-`PartialDiagramConstraintCompilerSoundness` is the next concrete compiler truth source.
+`PartialDiagramConstraintCompilerSoundness` compiles a finite candidate-completion carrier with a directed-edge table and query-order compatibility judgment.
 
-A finite candidate completion supplies:
-
-```text
-a directed-edge table
-+ a query-order compatibility judgment.
-```
-
-The compiler generates:
+It generates:
 
 ```text
 one nonnegativity row per completion
@@ -129,13 +122,64 @@ iff
 mu is normalized, nonnegative, and supported only on admissible completions.
 ```
 
-This gives both compiler soundness and compiler completeness. The point-mass theorem proves that a deterministic completion witness is feasible exactly when it is admissible. The nonemptiness theorem proves that the support polytope is inhabited exactly when at least one admissible completion exists.
+The point-mass theorem proves that a deterministic completion witness is feasible exactly when it is admissible. The nonemptiness theorem proves that the support polytope is inhabited exactly when at least one admissible completion exists.
 
 The refinement theorem reuses partial-graph antitonicity. A mass feasible for a stronger diagram remains feasible for every weaker diagram with the same candidate completions and query-order predicate. Rational lower and upper certificates proved on the weaker feasible family therefore remain valid after adding graph information.
 
-## 9. Semantic boundary: mixture versus one global graph
+## 9. Partial-diagram event-row compiler
 
-The support compiler has latent-completion mixture semantics. Different units may receive mass from different admissible completions.
+`PartialDiagramEventRowCompilerSoundness` lifts the completion carrier to joint atoms:
+
+```text
+candidate graph completion x deterministic response signature.
+```
+
+This is the first truth source in the lane that places graph uncertainty and response-event probabilities in one exact rational program.
+
+Each supplied event has two independent audit labels:
+
+```text
+semantic kind: observational | interventional | counterfactual
+provenance layer: data | structural | sensitivity.
+```
+
+The distinction is substantive. An interventional event may be supplied as experimental data, derived structurally in a special model, or imposed as a sensitivity condition. Event meaning and justification must therefore remain separate fields.
+
+The compiler emits:
+
+```text
+one nonnegativity row per completion-signature atom
++ paired normalization rows
++ atomwise zero-support rows for every graph or query-order violation
++ paired upper and lower rows for every supplied causal-event probability.
+```
+
+For event `e`, the two statistical rows are exactly
+
+```text
+sum_atom 1[e holds on atom] mu_atom <= target_e
+-sum_atom 1[e holds on atom] mu_atom <= -target_e.
+```
+
+Together they enforce equality. The central theorem is:
+
+```text
+mu is feasible for every generated row
+iff
+mu is a normalized nonnegative joint law,
+its support uses only admissible graph completions,
+and every supplied event mass equals its exact rational target.
+```
+
+The theorem gives compiler soundness and completeness. It applies uniformly to observational, interventional, and counterfactual events because all three become finite Boolean predicates on completion-signature atoms after semantic evaluation.
+
+The module also proves a finite exogenous pushforward identity. Mapping each exogenous state to its graph completion and response signature preserves total mass, nonnegativity, and every Boolean event probability. Conversely, the joint atom carrier itself gives a canonical identity exogenous realization of every feasible event law.
+
+Diagram refinement preserves all event rows and removes admissible support. Consequently, every mass feasible under stronger graph information is feasible under the weaker event compiler, and rational lower or upper certificates for the weaker problem remain valid on the refined problem.
+
+## 10. Semantic boundary: mixture versus one global graph
+
+The support and event-row compilers have latent-completion mixture semantics. Different units may receive mass from different admissible completions.
 
 That object must be distinguished from epistemic uncertainty about one fixed complete graph. For one global unknown graph, the correct range is:
 
@@ -145,18 +189,18 @@ union over admissible completions of completion-specific identified ranges.
 
 Convexifying that union silently changes the causal model by introducing a latent graph index. Future compilers must expose this choice in their type and certificate payload.
 
-## 10. Interfaces to 2026 research
+## 11. Interfaces to 2026 research
 
 The current literature interface is organized as follows.
 
-- Partial causal diagrams: Xie and Li, arXiv:2602.14503. Structural and auxiliary statistical information is represented as constraints on counterfactual distributions.
+- Partial causal diagrams: Xie and Li, arXiv:2602.14503. Structural and auxiliary statistical information is represented as constraints on counterfactual distributions. The event-row compiler formalizes the finite zero-one-row kernel of those statistical constraints, without claiming completeness for the paper's full language.
 - Causal orders: Rossetto and Antonucci, arXiv:2608.24427. Counterfactual queries induce precedence constraints, compatible total orders support canonical response-function programs, and tightness is tied to constructing attaining structural models.
 - Covariates and mediators: Shu, Lei, and Li, arXiv:2608.12657. Additional causal knowledge can tighten multivalued probabilities of causation. Mediator factorization may leave the polyhedral lane and enter polynomial feasibility.
 - Continuous outcomes: Chaoge et al., arXiv:2605.01883. Copula restrictions constrain infinite-dimensional counterfactual coupling families.
 
 The repository claim boundary is narrower than these papers. The PR proves reusable logical kernels and finite concrete instances. It does not claim a complete reproduction of any paper's general algorithm or theorem family.
 
-## 11. Verification ledger
+## 12. Verification ledger
 
 Required protected-branch checks are:
 
@@ -168,19 +212,31 @@ Content-addressed dev baseline admission
 
 A truth source is considered machine-verified only after the current PR head passes the protected workflow. Scribe freshness is likewise determined by the repository renderer rather than by hand-edited Markdown.
 
-## 12. Next formal research sequence
+## 13. Next formal research sequence
 
 The partial-diagram lane now advances to:
 
 ```text
-PartialDiagramConstraintCompilerSoundness
-  -> graphical ancestry and non-ancestry semantics
-  -> observational and interventional event-row compiler
-  -> compiler soundness against finite SCM evaluation
+PartialDiagramEventRowCompilerSoundness
+  -> event-language interpretation against finite SCM evaluation
+  -> observational consistency rows
+  -> intervention consistency rows
+  -> counterfactual conjunction and nesting rows
   -> rational primal-dual payload
   -> completion-specific sharp endpoints
-  -> exact interval-union normalization across global graph completions.
+  -> exact interval-union normalization across one-global-graph completions.
 ```
+
+The immediate next truth source should separate three related statements:
+
+```text
+syntactic event expression
+  -> Boolean evaluation on one completion-signature atom
+  -> exact zero-one row
+  -> equality with finite SCM event probability.
+```
+
+This will prevent the compiler from accepting arbitrary Boolean tables without proving that they correspond to valid observational, interventional, or nested-counterfactual semantics.
 
 The causal-order lane continues in parallel:
 
