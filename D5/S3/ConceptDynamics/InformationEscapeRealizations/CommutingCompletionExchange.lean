@@ -43,14 +43,7 @@ theorem commutativity_hypothesis_is_necessary_partition_count :
 
 /-- The private census pair `a,b` is separated by the compiled bundle. -/
 theorem commutativity_hypothesis_is_necessary_private_pair :
-    ¬ commutingCompletionRealization.toPrimitiveBundle.agrees FourState.a FourState.b := by
-  intro h
-  have hreadouts :=
-    (PrimitiveRealization.toPrimitiveBundle_agrees_iff
-      commutingCompletionRealization FourState.a FourState.b).1 h |>.1
-  have hflowG := hreadouts CompletionReadout.flowG
-  change FourState.b = FourState.c at hflowG
-  exact FourState.noConfusion hflowG
+    ¬ commutingCompletionRealization.toPrimitiveBundle.agrees FourState.a FourState.b := by decide
 
 example : commutingCompletionArena.toArena.Nondegenerate := by decide
 

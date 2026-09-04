@@ -85,4 +85,8 @@ def observationInterventionArena : PrimitiveLawArena where
     r.readout .observation M = r.readout .observation N /\
       r.readout .intervention M ≠ r.readout .intervention N
 
+/-- The observation-intervention arena has at least two source models. -/
+theorem observationInterventionArena_nondegenerate :
+    observationInterventionArena.toArena.Nondegenerate := by decide
+
 end D5.S3.ConceptDynamics.InformationEscapeArenas.ObservationIntervention

@@ -77,6 +77,23 @@ internal static partial class RepositoryRules
             "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj",
             "tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj");
 
+    // 共享测试支持项目:不含 xUnit、不被任何 `X.Tests` 拥有、也不拥有任何生产项目,
+    // 故不参与 `X` ↔ `X.Tests` 的拥有关系,亦不计入受管测试项目的 `ProdRefs`。
+    //
+    // 与 CrossCuttingHarnessPaths 同形:**具名精确路径**,不是
+    // `tools/TestSupport/<x>/<x>.csproj` 这样的目录文法 —— 后者会让任意新建的
+    // 嵌套项目自动取得豁免身份,而具名一条是保守扩展。相应地,
+    // NestedProjectOutsideTestsIsProductionAndNeedsItsOwnedDual 钉住:
+    // 第二个**未具名**的嵌套项目仍按生产项目判,须有其对偶测试项目。
+    //
+    // 案由(第 20″ 条):该项目 2026-08-30 曾以 tools/tests/ 下的路径被具名进
+    // CrossCuttingHarnessPaths(dbaef43a43),其后条目被删(4288ac913c)、项目于
+    // 2026-09-02 迁至 tools/TestSupport/(6f4cb2d501)。迁移后路径为四段,而彼时
+    // IsProductionProject 要求恰三段 ⟹ 该节点与其全部入边静默脱离债务代数。
+    // 2026-09-05 实测:向它新增三条入边(PR #5324)产生零拓扑债。
+    internal const string TestSupportProjectPath =
+        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj";
+
     private static readonly Uri RepositoryUri = new("https://repository.invalid/");
 
     // Boundary: runnable identity stays a runtime concern. Static detection would reimplement C#
@@ -362,14 +379,13 @@ internal static partial class RepositoryRules
             directReferences);
     }
 
-    private static bool IsProductionProject(string path)
-    {
-        var parts = path.Split('/');
-        return parts.Length == 3
-            && parts[0] == "tools"
-            && parts[1] != "tests"
-            && parts[2].EndsWith(".csproj", StringComparison.Ordinal);
-    }
+    // 作用域是 tools/ 下、tests/ 之外的**任意深度** csproj:早先的「恰三段」写法
+    // 让多嵌一层的项目整个逃出双射与引用债务计算。
+    private static bool IsProductionProject(string path) =>
+        path.StartsWith("tools/", StringComparison.Ordinal)
+        && !path.StartsWith("tools/tests/", StringComparison.Ordinal)
+        && path.EndsWith(".csproj", StringComparison.Ordinal)
+        && !string.Equals(path, TestSupportProjectPath, StringComparison.Ordinal);
 
     private static bool IsOwnedTestProject(string path, bool isXunit) =>
         isXunit
