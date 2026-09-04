@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/SpectralTopology/LocalPositiveSquareCompletion
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: An off-observer finite real spectrum has a positive
-     inverse-square determinant completion. -/
+   digest: Off-spectrum finite data admit a positive inverse-square determinant completion. -/
 
 import Mathlib.Analysis.Matrix.PosDef
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
