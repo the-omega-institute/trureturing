@@ -7,13 +7,13 @@
 
 import Mathlib.Data.List.GetD
 import Mathlib.Data.Nat.Log
-import Mathlib.Topology.MetricSpace.HausdorffDistance
 import Mathlib.Tactic
+import D5.S0.Asymptotics.NameSetDistanceSandwich
 
 /- Library-search and duplication audit (2026-09-04):
-   * Repository keyword, symbol-variant, and generalized searches found the testing-name
-     filtration and generic transformation bounds, but no three-tower distance sandwich or
-     either explicit exponential separation below.
+   * Repository keyword, symbol-variant, and generalized searches found the generic nested-set
+     distance sandwich imported below, plus testing-name filtrations and transformation bounds,
+     but neither explicit exponential separation below.
    * The source atom remains residual-open. The retired formalization-receipt directory was not
      inspected. `origin/dev` has no module at this routed path.
    * The in-flight scan covered 465 modules and 269 absorbed atoms; neither this module nor the
@@ -155,10 +155,10 @@ theorem three_tower_cost_sandwich_and_double_separation
       testTower.affordable (budget + prefixTestOverhead) <=
         programTower.affordable (budget + prefixTestOverhead + testProgramOverhead) :=
     affordable_subset_of_compiler testToProgram
-  have hTestNonempty : (testTower.affordable (budget + prefixTestOverhead)).Nonempty :=
-    hPrefixNonempty.mono hPrefixTest
-  refine ⟨⟨Metric.infDist_le_infDist_of_subset hTestProgram hTestNonempty,
-    Metric.infDist_le_infDist_of_subset hPrefixTest hPrefixNonempty⟩, ?_, ?_⟩
+  have hSandwich :=
+    D5.S0.Asymptotics.NameSetDistanceSandwich.nested_name_set_infDist_sandwich
+      x hPrefixTest hTestProgram hPrefixNonempty
+  refine ⟨⟨hSandwich.2, hSandwich.1⟩, ?_, ?_⟩
   · intro j
     refine ⟨rfl, ?_, ?_, ?_⟩
     · simp [indexedSpikeCost, Nat.log_pow Nat.one_lt_two]
