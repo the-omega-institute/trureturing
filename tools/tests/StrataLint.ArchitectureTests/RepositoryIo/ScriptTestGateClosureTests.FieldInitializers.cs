@@ -50,16 +50,21 @@ public sealed partial class ScriptTestGateClosureTests
         }
         """;
 
+    // 照真实链的形状写,不用内联字面量:真实的 TestRegistry 经一个 const 字段
+    // RelativePath 间接给出路径(tools/tests/StrataLint.Tests/Rules/TestRegistry.cs),
+    // 那多出的一跳与字段初始化器这条边一起,才是本层要覆盖的形态。
     private static string TestRegistrySource() => $$"""
         namespace StrataLint.Tests;
 
         internal static class TestRegistry
         {
+            internal const string RelativePath = "{{RegistryFixture}}";
+
             internal static readonly string Canonical = LoadRepository();
 
             private static string LoadRepository() => File.ReadAllText(Path.Combine(
                 TestRepositoryLayout.FindRoot(),
-                "{{RegistryFixture}}"));
+                RelativePath));
         }
         """;
 }
