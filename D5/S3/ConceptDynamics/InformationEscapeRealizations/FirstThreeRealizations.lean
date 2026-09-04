@@ -77,17 +77,7 @@ example :
 
 example : letI : DecidableEq Agenda := inferInstance
     ¬agendaPowerRealization.toPrimitiveBundle.agrees
-    (⟨1, 2, 0⟩ : Agenda) (⟨0, 0, 0⟩ : Agenda) := by
-  rw [PrimitiveRealization.toPrimitiveBundle_agrees_iff]
-  intro agreement
-  have validAgreement := agreement.1 AgendaReadout.valid
-  have leftAdmitted : ValidAgenda (⟨1, 2, 0⟩ : Agenda) := by decide
-  have rightRejected : ¬ValidAgenda (⟨0, 0, 0⟩ : Agenda) := by decide
-  have rightTrue : agendaPowerRealization.readout AgendaReadout.valid
-      (⟨0, 0, 0⟩ : Agenda) = true := by
-    rw [← validAgreement]
-    exact (admit_readout_eq_true_iff ValidAgenda _).2 leftAdmitted
-  exact rightRejected ((admit_readout_eq_true_iff ValidAgenda _).1 rightTrue)
+    (⟨1, 2, 0⟩ : Agenda) (⟨0, 0, 0⟩ : Agenda) := by decide
 
 example : agendaPowerArena.toArena.Nondegenerate := by decide
 
@@ -204,10 +194,7 @@ example :
   decide
 
 example : ¬spectrumRealization.toPrimitiveBundle.agrees SpectrumAtom.t1 SpectrumAtom.t2 := by
-  rw [PrimitiveRealization.toPrimitiveBundle_agrees_iff]
-  intro agreement
-  have indexAgreement := agreement.1 ()
-  exact Fin.zero_ne_one indexAgreement
+  decide
 
 example : spectrumArena.toArena.Nondegenerate := by decide
 

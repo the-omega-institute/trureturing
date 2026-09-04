@@ -39,6 +39,7 @@ private def agendaEquiv : Agenda ≃ Fin 3 × Fin 3 × Fin 3 where
   left_inv := by rintro ⟨first, second, final⟩; rfl
   right_inv := by rintro ⟨first, second, final⟩; rfl
 
+@[instance_reducible]
 def agendaFintype : Fintype Agenda := Fintype.ofEquiv _ agendaEquiv.symm
 
 inductive AgendaReadout

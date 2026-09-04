@@ -43,9 +43,11 @@ private def contextEquiv :
   left_inv := by rintro ⟨⟨⟩, admission, background, goal, ⟨⟩⟩; rfl
   right_inv := by rintro ⟨admission, background, goal⟩; rfl
 
+@[instance_reducible]
 def contextFintype : Fintype BinaryInterpretationContext :=
   Fintype.ofEquiv _ contextEquiv.symm
 
+@[instance_reducible]
 def contextDecidableEq : DecidableEq BinaryInterpretationContext :=
   fun left right =>
     decidable_of_iff (contextEquiv left = contextEquiv right) contextEquiv.injective.eq_iff
@@ -126,9 +128,11 @@ private def modelEquiv :
     cases e <;> cases t <;> rfl
   right_inv := by rintro ⟨a, b, c, d⟩; simp
 
+@[instance_reducible]
 def modelFintype : Fintype DeterministicBoolSCM :=
   Fintype.ofEquiv _ modelEquiv.symm
 
+@[instance_reducible]
 def modelDecidableEq : DecidableEq DeterministicBoolSCM :=
   fun left right =>
     decidable_of_iff (modelEquiv left = modelEquiv right) modelEquiv.injective.eq_iff

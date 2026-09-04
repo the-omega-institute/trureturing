@@ -99,13 +99,7 @@ example :
   decide
 
 example : letI : DecidableEq BinaryInterpretationContext := contextDecidableEq
-    ¬contextRealization.toPrimitiveBundle.agrees baselineContext alternateContext := by
-  letI : DecidableEq BinaryInterpretationContext := contextDecidableEq
-  change ¬contextRealization.toPrimitiveBundle.agrees baselineContext alternateContext
-  rw [PrimitiveRealization.toPrimitiveBundle_agrees_iff]
-  intro agreement
-  have admissionAgreement := agreement.1 ContextReadout.readerAdmission
-  exact Bool.false_ne_true admissionAgreement
+    ¬contextRealization.toPrimitiveBundle.agrees baselineContext alternateContext := by decide
 
 example : contextArena.toArena.Nondegenerate := by decide
 
@@ -140,14 +134,7 @@ example :
   decide
 
 example : letI : DecidableEq DeterministicBoolSCM := modelDecidableEq
-    ¬interventionRealization.toPrimitiveBundle.agrees noEffectModel flipEffectModel := by
-  letI : DecidableEq DeterministicBoolSCM := modelDecidableEq
-  change ¬interventionRealization.toPrimitiveBundle.agrees noEffectModel flipEffectModel
-  rw [PrimitiveRealization.toPrimitiveBundle_agrees_iff]
-  intro agreement
-  have cfAgreement := agreement.1 ModelReadout.counterfactual
-  have pointAgreement := congrFun (congrFun (congrFun cfAgreement false) false) true
-  exact Bool.false_ne_true pointAgreement
+    ¬interventionRealization.toPrimitiveBundle.agrees noEffectModel flipEffectModel := by decide
 
 example : interventionArena.toArena.Nondegenerate := by decide
 

@@ -1,6 +1,4 @@
 using static StrataLint.Scribe.DefinitionDsl;
-using static StrataLint.Scribe.FormulaDsl;
-using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.InformationEscapeArenas;
 
@@ -13,33 +11,40 @@ internal sealed class FourthFifthArenasDocument : IScribeDocumentDefinition
         "Finite typed arenas for contextual meanings and causal models.",
         H("Fourth and Fifth Information-Escape Arenas"),
         Blocks(
-            Arena("context-fixed-meaning-arena", "contextArena",
-                "Context-selected fixed-meaning arena", "BinaryContext", "ContextLaw"),
-            Arena("intervention-counterfactual-arena", "interventionArena",
-                "Intervention and counterfactual arena", "BooleanSCM", "CausalLaw"))));
+            DefinitionNode("context-fintype", "contextFintype", "Context finite instance",
+                "A finite instance obtained through a private equivalence."),
+            DefinitionNode("context-decidable-equality", "contextDecidableEq",
+                "Context decidable equality",
+                "A decidable-equality instance obtained through a private equivalence."),
+            DefinitionNode("context-readout", "ContextReadout", "Context readout indices",
+                "The readout index type names the context fields, the two fixed-meaning admissions, and their typed axes."),
+            DefinitionNode("context-signature", "contextSignature", "Context signature",
+                "The typed signature exposes the five context parameters as CUT readouts and the two fixed meanings as ADMIT readouts."),
+            DefinitionNode("context-arena", "contextArena",
+                "Context-selected fixed-meaning arena",
+                "The arena packages BinaryInterpretationContext, contextSignature, and the anchor law separating the selected parameters and meanings."),
+            DefinitionNode("model-fintype", "modelFintype", "Causal-model finite instance",
+                "A finite instance obtained through a private equivalence."),
+            DefinitionNode("model-decidable-equality", "modelDecidableEq",
+                "Causal-model decidable equality",
+                "A decidable-equality instance obtained through a private equivalence."),
+            DefinitionNode("model-readout", "ModelReadout", "Causal-model readout indices",
+                "The readout index type separates intervention behavior from counterfactual behavior."),
+            DefinitionNode("intervention-signature", "interventionSignature",
+                "Intervention signature",
+                "The typed signature assigns the Int and CF function types to the two CUT readouts on DeterministicBoolSCM."),
+            DefinitionNode("intervention-arena", "interventionArena",
+                "Intervention and counterfactual arena",
+                "The arena packages DeterministicBoolSCM and requires two models with equal intervention readouts and unequal counterfactual readouts."))));
 
-    private static DocumentBlock Arena(
-        string id, string declaration, string title, string state, string law) =>
+    private static DocumentBlock.Describe DefinitionNode(
+        string id, string declaration, string title, string paragraph) =>
         Describe.Lean(
             DescribeId.Create(id),
             DeclarationHandle.Create(Prefix + declaration),
             H(title),
-            StatementSource.FromAuthor(Disp(Call("PrimitiveLawArena", F.Id(state), F.Id(law)))),
+            StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text(
-                "An explicit finite equivalence supplies the executable carrier while the Law "
-                    + "is stated through typed readouts and named anchors."))),
+            Blocks(Paragraph(Text(paragraph))),
             DescribeRole.Definition);
-
-    private static Formula Call(string name, params Formula[] arguments)
-    {
-        var items = new List<Formula> { Operatorname, Grp(F.Id(name)), Open };
-        for (var index = 0; index < arguments.Length; index++)
-        {
-            if (index > 0) items.AddRange([Comma, Sp]);
-            items.Add(arguments[index]);
-        }
-        items.Add(Close);
-        return Seq([.. items]);
-    }
 }

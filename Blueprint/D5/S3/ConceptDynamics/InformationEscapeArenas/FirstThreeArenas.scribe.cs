@@ -1,6 +1,4 @@
 using static StrataLint.Scribe.DefinitionDsl;
-using static StrataLint.Scribe.FormulaDsl;
-using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.InformationEscapeArenas;
 
@@ -13,35 +11,36 @@ internal sealed class FirstThreeArenasDocument : IScribeDocumentDefinition
         "Finite typed arenas for agenda power, adaptive residues, and spectrum atoms.",
         H("First Three Information-Escape Arenas"),
         Blocks(
-            Arena("agenda-power-arena", "agendaPowerArena",
-                "Agenda power arena", "Agenda", "AgendaPowerLaw"),
-            Arena("adaptive-residue-arena", "residueArena",
-                "Adaptive residue arena", "ResidueState", "ResidueLaw"),
-            Arena("spectrum-atom-arena", "spectrumArena",
-                "Spectrum atom arena", "SpectrumAtom", "BijectiveIndexLaw"))));
+            DefinitionNode("agenda-fintype", "agendaFintype", "Agenda finite instance",
+                "A finite instance obtained through a private equivalence."),
+            DefinitionNode("agenda-readout", "AgendaReadout", "Agenda readout indices",
+                "The readout index type separates the sequential winner from agenda validity."),
+            DefinitionNode("agenda-power-signature", "agendaPowerSignature",
+                "Agenda power signature",
+                "The typed signature assigns a three-valued winner output and a Boolean validity output to the agenda carrier."),
+            DefinitionNode("agenda-power-arena", "agendaPowerArena", "Agenda power arena",
+                "The arena packages the finite Agenda state, agendaPowerSignature, and the realization law asserting all winners plus a separating valid pair."),
+            DefinitionNode("adaptive-depth-for", "adaptiveDepthFor", "Adaptive depth",
+                "The noncomputable depth helper selects the least exact adaptive depth when one exists and returns zero otherwise."),
+            DefinitionNode("static-depth-for", "staticDepthFor", "Static depth",
+                "The noncomputable depth helper selects the least exact static cardinality when one exists and returns zero otherwise."),
+            DefinitionNode("residue-signature", "residueSignature", "Residue signature",
+                "The typed signature exposes each residue sensor as a Boolean CUT readout on ResidueState."),
+            DefinitionNode("residue-arena", "residueArena", "Adaptive residue arena",
+                "The arena packages the residue readouts, their exact fibers, an injective two-step protocol, the lower bounds, and the adaptive-versus-static depth comparison."),
+            DefinitionNode("spectrum-signature", "spectrumSignature", "Spectrum signature",
+                "The typed signature exposes the spectrum atom index as one five-valued CUT readout."),
+            DefinitionNode("spectrum-arena", "spectrumArena", "Spectrum atom arena",
+                "The arena packages SpectrumAtom with the signature and requires the sole readout to be bijective."))));
 
-    private static DocumentBlock Arena(
-        string id, string declaration, string title, string state, string law) =>
+    private static DocumentBlock.Describe DefinitionNode(
+        string id, string declaration, string title, string paragraph) =>
         Describe.Lean(
             DescribeId.Create(id),
             DeclarationHandle.Create(Prefix + declaration),
             H(title),
-            StatementSource.FromAuthor(Disp(Call("PrimitiveLawArena", F.Id(state), F.Id(law)))),
+            StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text(
-                "The finite carrier, typed primitive signature, and realization-dependent law "
-                    + "are packaged for the information-escape engine."))),
+            Blocks(Paragraph(Text(paragraph))),
             DescribeRole.Definition);
-
-    private static Formula Call(string name, params Formula[] arguments)
-    {
-        var items = new List<Formula> { Operatorname, Grp(F.Id(name)), Open };
-        for (var index = 0; index < arguments.Length; index++)
-        {
-            if (index > 0) items.AddRange([Comma, Sp]);
-            items.Add(arguments[index]);
-        }
-        items.Add(Close);
-        return Seq([.. items]);
-    }
 }
