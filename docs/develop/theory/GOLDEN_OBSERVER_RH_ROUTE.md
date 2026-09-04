@@ -2638,3 +2638,36 @@ W-13、W-14、W-15 的右端**不含 `Z`**:素数侧表达式与 Poincaré 不�
 第一层一席位轮(codex-cli,独立 worktree,`GermWindow/` 桶;同 PR deposit(绑 G-c-L1 atom)+ cover;三席评审)。第二层在第一层合入后以探针开始(预算 2 小时),按探针读数决定实施或 `open`。
 
 后续增订继续严格追加于本节之后。
+---
+
+# 增订三十四　G-c 第二层拆分:已 kernel 化的曲率界与 log 2 精度(L2a),任意阶 sin/cos 包络与相位约简基础设施(L2b),生成式 jet 证书(L2c)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;探针一席(codex-cli,`probe-gc-layer2`,`make lean` exit 0、`lake env lean` exit 0,已证声明全为标准三公理;数值部分以 mpmath 100 位计算,标 `ASSUMED-UNVERIFIED`)在含增订三十三第一层 scratch 的暖树上,按「最廉者先」顺序尝试三条中心 jet 不等式的 kernel 证书。读数:‖g₆₀(c)‖ ≈ 2.755·10⁻¹⁰、Re g₆₀′(c) ≈ 1.87734、sup_Q ‖g₆₀″‖ ≈ 95.55——增订三十三预登记的三个阈值(4·10⁻¹⁰、1.87、400)全部成立,无需重新预登记;已 kernel 化 T3(曲率 ≤ 118 ⇒ ≤ 400,纯有理几何优函数)、`log_two_binary_60`(|log 2 − r₆₀| ≤ 2⁻⁶⁰,由 Mathlib `Real.abs_log_sub_add_sum_range_le` 级数包络得,消除 β(60) = 134.08 处 3.5·10⁻⁷ 的相位误差瓶颈)与 T2 的 v ≤ 1 前缀;T2 全 61 项与 T1 阻塞于四项缺失基础设施(见 L2b)。实测成本:每模约 30 条标量不等式、约 13 s 阐释(v = 1 模)。散文由 orchestrator(claude 主循环)撰写。判决日:2026-09-05。lane issue:#4589。
+
+## 〇　为什么是这一节
+
+增订三十三把 G-c 归约为三条有限数值不等式。探针证明其中曲率界可以直接 kernel 化,而另两条(导数实部 > 1.87、中心值 < 4·10⁻¹⁰)需要对 61 个相位 θ_v = c.im·β(v)·log 2 作认证的 cos/sin 求值:Mathlib 只提供固定低阶的 `Real.cos_bound`/`Real.sin_bound`,没有任意阶包络、没有认证的 π/2 区间约简、没有 ⌊(v+1)φ⌋ 的精确值引理族、没有混合符号有限和的区间累加。这四项是**可复用的数学基础设施**,各自有独立的逃逸见证(新的 Taylor 余项估计、由 √5 有理界判定的整数部分、周期性下的区间传播),不是 G-c 专用的搭车。故第二层再拆三段:L2a 直接落地;L2b 建包络库;L2c 用生成器产出 61 模证书并绑 L2a/L2b 闭合 G-c。**诚实边界**:①L2b 的引理本身与 RH 无关,是认证数值分析;②L2c 的规模(预计 61 × 30 条不等式、总阐释约 15 分钟)为估计;③G-c 闭合证的是「窗口内有 p = 2 局部因子零点」,不涉及 RH 真伪。
+
+## 一　G-c-L2a 预登记:曲率界与 log 2 精度(`GermWindow/GermZeroCertificateJet`,绑第一层)
+
+**义务**:公开定理 `g60_curvature_le : ∀ s ∈ Q, ‖deriv (deriv (g 60)) s‖ ≤ 400`(经中间公开定理 `g60_curvature_le_118 : ∀ s ∈ Q, ‖deriv (deriv (g 60)) s‖ ≤ 118`),`log_two_binary_60 : |Real.log 2 - r| ≤ 1 / 2 ^ 60`(r 为模块内公开的有理常数,由 60 项级数 `Real.abs_log_sub_add_sum_range_le` 包络得出),以及前缀定理 `g1_deriv_re_gt_one : 1 < (deriv (g 1) c).re`。
+**逃逸见证(探针已证,写在实施之前)**:曲率界的几何优函数 (log 2)² Σ β(v)² 2^{−σ₋β(v)} 的闭式有理上界 117.79;log 2 的 2⁻⁶⁰ 级数包络;v ≤ 1 前缀的显式相位估计。
+**边界**:T3 是 `germ_zero_of_center_jet` 三条假设之一,落地后该归约只剩两条假设。
+
+## 二　G-c-L2b 预登记:任意阶 sin/cos 包络、精确 floor 引理族、相位约简(`D5/S3/Analytic/Certified/` 新桶)
+
+**义务**:①`Real.cos`/`Real.sin` 在 |x| ≤ 1 上的任意阶 Taylor 包络:`abs_cos_sub_partial_le (x : ℝ) (hx : |x| ≤ 1) (n : ℕ) : |Real.cos x - ∑ k ∈ Finset.range n, (-1) ^ k * x ^ (2 * k) / (2 * k).factorial| ≤ |x| ^ (2 * n) / (2 * n).factorial` 及 sin 对应式(由 `Complex.exp_bound` 经 Euler 公式或直接由交错级数余项得);②`o5Beta_floor_table : ∀ v ≤ 60, ⌊((v + 1 : ℕ) : ℝ) * Real.goldenRatio⌋ = f v`(f 为显式整数表,证由 √5 的有理界逐项判定);③认证相位约简:`cos_of_sub_int_mul_two_pi (θ r : ℝ) (k : ℤ) (h : θ = r + k * (2 * Real.pi)) : Real.cos θ = Real.cos r` 一类的重写与由有理区间 [θ₋, θ₊] 产出 k 与 |r| ≤ 1 的判定引理(依赖 `Real.pi_gt_d20`/`pi_lt_d20`);④混合符号有限和的区间累加引理(实部与虚部分别以上下界逐项累加)。
+**拟议逃逸见证**:①的余项估计是 Mathlib 未提供的新命题(固定阶 `cos_bound` 不覆盖);②是 61 条由 √5 有理界判定的新整数事实;③④是区间传播的新组合引理。
+**边界**:通用于任何认证数值任务,不专属 G-c;不在此断言 G-c 的任何数值。
+
+## 三　G-c-L2c 预登记:生成式 jet 证书与 G-c 闭合(`GermWindow/GermZeroCertificate`,绑 L1、L2a、L2b)
+
+**义务**:公开定理 `g60_center_deriv_re_gt : 187 / 100 < (deriv (g 60) c).re`、`g60_center_norm_lt : ‖g 60 c‖ < 4 / 10 ^ 10`,与最终 `germLocalFactor_two_has_zero_near_candidate : ∃ z ∈ Metric.ball c (1 / 10 ^ 8), germLocalFactor z 2 = 0`(经 `germ_zero_of_center_jet`)。证书由入仓生成器(`tools/scripts/agent/germ_jet_certificate.py`,器律⑨)产出、kernel 检查。
+**可证伪预测(写在跑之前)**:每模约 30 条不等式、61 模共约 1800 条,阐释约 15 分钟(`ASSUMED-UNVERIFIED`);若 T1 的每模误差预算 2·10⁻¹² 需要的阶数使阐释超 1 小时,则改分两模块落地或提高截断 V 并重新预登记;若任一生成证书 kernel 拒绝,登记具名缺口 `open`,不得放宽阈值。
+**边界**:同 §〇 ③。
+
+## 四　预算与结算
+
+L2a 一席位轮(codex-cli,独立 worktree,`GermWindow/`;同 PR deposit(绑 L2a atom)+ cover;三席评审),须在第一层 la165 合入后开工。L2b 一席位轮(新桶 `Analytic/Certified/`,可与 L2a 并行;同 PR deposit + cover)。L2c 在 L2a、L2b 合入后开工,探针先行(预算 2 小时)。
+
+后续增订继续严格追加于本节之后。
