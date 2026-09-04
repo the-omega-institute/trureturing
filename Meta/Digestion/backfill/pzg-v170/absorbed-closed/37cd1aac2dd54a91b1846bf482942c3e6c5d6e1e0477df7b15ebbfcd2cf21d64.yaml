@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:37cd1aac2dd54a91b1846bf482942c3e6c5d6e1e0477df7b15ebbfcd2cf21d64
+  normalized_sha256: sha256:37cd1aac2dd54a91b1846bf482942c3e6c5d6e1e0477df7b15ebbfcd2cf21d64
+cas_ref: sha256:37cd1aac2dd54a91b1846bf482942c3e6c5d6e1e0477df7b15ebbfcd2cf21d64
+coverage_gids:
+  - gid: D5/S3/PrimeForms/PrimaryPseudoperfectPorts.isPPN_companions
+    target_statement_id: sha256:d4c75c0af0738ec23a45ab15003381fe66cbf3c6a2b08e180c020ffe1e0d6cbd
+receipts:
+  scribe:
+    - gid: D5/S3/PrimeForms/PrimaryPseudoperfectPorts.isPPN_companions
+      definition_sha256: sha256:4e79012c9b030df8cdd28f4a2f8e4d4f6eeeca5e73f7b759dea3a517e3a736dd
+      emission_sha256: sha256:51e4bb4d18b184831463e9a77efdb27ba72f49f9bb9ad781a73f8ea43b7db7d4
+  unresolved_subitems: []
