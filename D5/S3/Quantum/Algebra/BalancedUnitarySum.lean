@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Algebra/BalancedUnitarySum
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: If a unitary matrix is the sum of two half-unitary summands, their cross terms cancel and the relative product is skew-adjoint. -/
+   digest: If a unitary is a sum of half-unitary terms, their cross terms cancel and the relative product is skew-adjoint. -/
 
 import Mathlib.LinearAlgebra.Matrix.Hermitian
 import Mathlib.Tactic
@@ -44,7 +44,10 @@ theorem crossTerms_eq_zero
       rw [hUnitary, hA, hB]
     _ = 0 := by
       ext i j
-      simp [halfIdentity, Matrix.one_apply]
+      by_cases hij : i = j
+      · subst j
+        norm_num [halfIdentity, Matrix.one_apply]
+      · simp [halfIdentity, Matrix.one_apply, hij]
 
 /-- Cross cancellation says that one mixed product is the negative adjoint of
 the other. -/
@@ -53,7 +56,8 @@ theorem secondCross_eq_neg_first
     (A B : Matrix n n ℂ)
     (hCross : A * Bᴴ + B * Aᴴ = 0) :
     B * Aᴴ = -(A * Bᴴ) := by
-  exact eq_neg_of_add_eq_zero_left hCross
+  apply eq_neg_of_add_eq_zero_left
+  simpa [add_comm] using hCross
 
 /-- The relative cross product of a balanced unitary sum is skew-adjoint. -/
 theorem crossProduct_is_skewAdjoint
