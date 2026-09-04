@@ -1,0 +1,97 @@
+using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.InformationEscape;
+
+internal sealed class LawsDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Finite catalog laws for labels, primitive kernels, irredundancy, and augmentation.",
+        H("Information Escape Catalog Laws"),
+        Blocks(
+            Def("catalog-reindex", "Catalog.reindex", "Catalog reindexing",
+                Eq(Call("Index", Call("reindex", C, E)), J)),
+            Def("catalog-with-theorem-at", "Catalog.withTheoremAt", "Catalog theorem-family replacement",
+                Eq(Call("Index", Call("withTheoremAt", C, U)), Call("Index", C))),
+            Thm("unique-capture-count-reindex", "Catalog.uniqueCaptureCount_reindex",
+                "Unique capture is invariant under reindexing",
+                Eq(Call("uniqueCaptureCount", Call("reindex", C, E), Call("apply", E, I)),
+                    Call("uniqueCaptureCount", C, I))),
+            Thm("theorem-gain-rate-reindex", "Catalog.theoremGainRate_reindex",
+                "Exact theorem gain is invariant under reindexing",
+                Eq(Call("theoremGainRate", Call("reindex", C, E), Call("apply", E, I)),
+                    Call("theoremGainRate", C, I))),
+            Thm("unique-capture-count-congr-kernel", "Catalog.uniqueCaptureCount_congr_kernel",
+                "Pointwise kernel equality preserves every unique capture count",
+                Implies(Call("PointwiseKernelEqual", C, U),
+                    Eq(Call("uniqueCaptureCount", Call("withTheoremAt", C, U), I),
+                        Call("uniqueCaptureCount", C, I)))),
+            Thm("unique-capture-count-congr-primitive-realization",
+                "Catalog.uniqueCaptureCount_congr_primitiveRealization",
+                "Kernel-equivalent primitive realizations have identical counts",
+                Implies(Call("AgreementEqual", R, S),
+                    Eq(Call("uniqueCaptureCount", Call("replace", C, R), I),
+                        Call("uniqueCaptureCount", Call("replace", C, S), I)))),
+            Def("catalog-irredundant", "CatalogIrredundant", "Catalog irredundancy",
+                Eq(Call("CatalogIrredundant", C),
+                    Seq(Forall, Sp, I, Comma, Sp, Call("LowersEscape", C, I)))),
+            Thm("catalog-irredundant-iff-forall-pos", "catalogIrredundant_iff_forall_pos",
+                "Irredundancy is positivity of all unique captures",
+                Seq(Call("CatalogIrredundant", C), Sp, Leftrightarrow, Sp,
+                    Forall, Sp, I, Comma, Sp,
+                    Lt(D(0), Call("uniqueCaptureCount", C, I)))),
+            Def("augmented-statement", "AugmentedStatement", "Augmented theorem statement",
+                Eq(Call("AugmentedStatement", C, I),
+                    Call("And", Call("Statement", C, I), Call("LowersEscape", C, I)))),
+            Def("augmented-proof", "augmentedProof", "Augmented theorem proof constructor",
+                Implies(Call("LowersEscape", C, I), Call("AugmentedStatement", C, I))),
+            Thm("catalog-all-augmented", "catalog_all_augmented",
+                "Every theorem in an irredundant catalog is augmented",
+                Implies(Call("CatalogIrredundant", C),
+                    Seq(Forall, Sp, I, Comma, Sp, Call("AugmentedStatement", C, I)))))));
+
+    private static readonly Formula C = F.Id("C");
+    private static readonly Formula E = F.Id("e");
+    private static readonly Formula I = F.Id("i");
+    private static readonly Formula J = F.Id("J");
+    private static readonly Formula R = F.Id("R");
+    private static readonly Formula S = F.Id("S");
+    private static readonly Formula U = F.Id("U");
+
+    private static DocumentBlock Def(string id, string declaration, string title, Formula formula) =>
+        Describe.Lean(
+            DescribeId.Create(id), Handle(declaration), H(title),
+            StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("This definition is computed from the finite catalog and its canonical primitive kernels."))),
+            DescribeRole.Definition);
+
+    private static DocumentBlock Thm(string id, string declaration, string title, Formula formula) =>
+        Describe.Lean(
+            DescribeId.Create(id), Handle(declaration), H(title),
+            StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text("The proof uses the frozen finite-kernel and exact-count APIs."))),
+            DescribeRole.Theorem);
+
+    private static DeclarationHandle Handle(string declaration) =>
+        DeclarationHandle.Create(
+            "D5/S3/ConceptDynamics/InformationEscape/Laws." + declaration);
+
+    private static Formula Call(string name, params Formula[] arguments)
+    {
+        var items = new List<Formula> { Operatorname, Grp(F.Id(name)), Open };
+        for (var index = 0; index < arguments.Length; index++)
+        {
+            if (index > 0) items.AddRange([Comma, Sp]);
+            items.Add(arguments[index]);
+        }
+        items.Add(Close);
+        return Seq([.. items]);
+    }
+
+    private static Formula Eq(Formula left, Formula right) => Seq(left, Sp, F.Eq, Sp, right);
+    private static Formula Lt(Formula left, Formula right) =>
+        new Formula.Relation(left, FormulaRelationOperator.LessThan, right);
+    private static Formula Implies(Formula left, Formula right) =>
+        new Formula.Logic(left, FormulaLogicOperator.Implies, right);
+}
