@@ -132,11 +132,7 @@ internal static partial class RepositoryRules
 
     private static bool AllFrozenStatesAffected(RuleEvaluationContext context) =>
         context.RuleImplementationChanged
-        || context.Changes.Paths.Any(static path =>
-            path.Value == "Trureturing.lean"
-            || FrozenLedgerDeltaPredicate.IsEnvironmentInput(path.Value)
-            || FrozenLedgerDeltaPredicate.IsDeltaDefinitionInput(path.Value)
-            || StrataLintEngineBuildInputs.Contains(path.Value));
+        || LeanReportAffected(context);
 
     private static ImmutableArray<RepositoryFile> AllCurrentFrozenStateFiles(
         RuleEvaluationContext context) =>

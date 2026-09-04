@@ -111,7 +111,8 @@ internal static partial class RepositoryRules
     private static bool IsLeanReportInput(string path) =>
         FrozenLedgerDeltaPredicate.IsManagedLeanSource(path)
         || FrozenLedgerDeltaPredicate.IsEnvironmentInput(path)
-        || FrozenLedgerDeltaPredicate.IsDeltaDefinitionInput(path);
+        || FrozenLedgerDeltaPredicate.IsDeltaDefinitionInput(path)
+        || path.StartsWith("tools/lean-inspector/", StringComparison.Ordinal);
 
     internal static bool IsLeanClosureFactAffected(
         RuleEvaluationContext context,

@@ -281,9 +281,14 @@ public sealed class FrozenSurfaceRuleTests
     }
 
     [Theory]
-    [InlineData("lean-toolchain")]
+    [InlineData("tools/lean-inspector/inspect.sh")]
+    [InlineData("tools/lean-inspector/materials.py")]
     [InlineData("tools/scripts/report/lean-report-input.sh")]
-    public void Sl008RechecksEveryCurrentStateForReportEnvironmentOrProducerChanges(string changedPath)
+    [InlineData("lean-toolchain")]
+    [InlineData("lakefile.toml")]
+    [InlineData("lake-manifest.json")]
+    [InlineData("tools/StrataLint.Engine/Rules/RepositoryRules.FrozenState.cs")]
+    public void Sl008RechecksEveryCurrentStateForEachReportInputCategory(string changedPath)
     {
         var fixture = new RuleFixture();
         var modules = new[] { FrozenPath, RuleFixture.ValuesBindingPath };
@@ -301,6 +306,23 @@ public sealed class FrozenSurfaceRuleTests
         Assert.Equal(
             modules.Order(StringComparer.Ordinal),
             diagnostics.Select(static diagnostic => diagnostic.Message.Split(' ')[1]));
+    }
+
+    [Fact]
+    public void Sl008DoesNotRecheckCurrentStatesForAnUnrelatedPath()
+    {
+        var fixture = new RuleFixture();
+        foreach (var module in new[] { FrozenPath, RuleFixture.ValuesBindingPath })
+        {
+            AddState(
+                fixture,
+                module,
+                StatementId.Create("sha256:" + new string('f', 64)));
+        }
+
+        var evaluation = Evaluate(fixture, ("README.md", RawChangeKind.Modified));
+
+        Assert.Empty(evaluation.Diagnostics);
     }
 
     private static RuleFixture FrozenFixture(out string eventPath)
