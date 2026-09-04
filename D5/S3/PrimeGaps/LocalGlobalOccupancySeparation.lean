@@ -43,8 +43,9 @@ theorem twinOffsets_natural_admissible : NaturalTupleAdmissible twinOffsets := b
   obtain ⟨a, ha⟩ := twinOffsetsInt_direct_admissible p hp
   refine ⟨a, ?_⟩
   intro h hh
-  interval_cases h <;>
-    simp [twinOffsets, twinOffsetsInt] at hh ⊢
+  have hh' : h = 0 ∨ h = 2 := by
+    simpa [twinOffsets] using hh
+  rcases hh' with rfl | rfl
   · simpa using ha 0 (by simp [twinOffsetsInt])
   · simpa using ha 2 (by simp [twinOffsetsInt])
 
