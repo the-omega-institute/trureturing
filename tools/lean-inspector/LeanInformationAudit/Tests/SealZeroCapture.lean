@@ -7,7 +7,7 @@ open D5.S3.ConceptDynamics.InformationEscape
 namespace LeanInformationAudit.Tests.SealZeroCapture
 
 def arena : PrimitiveLawArena where
-  toArena := Arena.ofFintype (Bool × Bool)
+  toArena := Arena.ofFintype Bool
   signature :=
     { Index := Fin 1
       indexFintype := inferInstance
@@ -34,7 +34,7 @@ information_theorem constantTheorem
 
 /-- error: IE-C007 ZeroUniqueCapture: theorem
 LeanInformationAudit.Tests.SealZeroCapture.constantTheorem arena
-LeanInformationAudit.Tests.SealZeroCapture.arena full 12 without 12 -/
+LeanInformationAudit.Tests.SealZeroCapture.arena full 2 without 2 -/
 #guard_msgs (error) in
 #seal_information_theory
 

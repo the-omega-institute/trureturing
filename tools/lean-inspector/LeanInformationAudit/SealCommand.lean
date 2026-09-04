@@ -16,6 +16,7 @@ private def theoremJson (denominator : Nat) (record : SealTheoremRecord) : Json 
     ("index", record.index),
     ("primitive_count", record.primitiveCount),
     ("primitive_axes", Json.arr <| record.primitiveAxes.map Json.str),
+    ("primitive_kernel_address", record.primitiveKernelAddress),
     ("unique_capture_count", record.uniqueCaptureCount),
     ("full_escape_count", record.fullEscapeCount),
     ("without_escape_count", record.withoutEscapeCount),
@@ -58,15 +59,50 @@ method={theoremRecord.proofMethod}"
 syntax (name := sealInformationTheoryCmd)
   "#seal_information_theory" (" output " str)? : command
 
+private def declarationNames (declarations : Array Declaration) : List Name :=
+  declarations.toList.foldl (init := []) fun names declaration =>
+    names ++ declaration.getNames
+
+private def preflightNames (env : Environment) (declarations : Array Declaration) :
+    CommandElabM Unit := do
+  let mut seen : Array Name := #[]
+  for name in declarationNames declarations do
+    if env.contains name || seen.contains name then
+      throwError "IE-C009 ProofConstructionFailed: {name}\ngenerated name collision"
+    seen := seen.push name
+
+private def stageDeclarations (env : Environment) (declarations : Array Declaration) :
+    CommandElabM Environment := do
+  let options ← getOptions
+  let mut stagedEnv := env
+  for declaration in declarations do
+    match stagedEnv.addDeclCore (Core.getMaxHeartbeats options).toUSize
+        (maxRecDepth.get options).toUSize declaration none true with
+    | .ok nextEnv => stagedEnv := nextEnv
+    | .error error =>
+        let name := declaration.getNames[0]!
+        throwError "IE-C009 ProofConstructionFailed: {name}\n{error.toMessageData options}"
+  pure stagedEnv
+
+/-! The seal has four phases: validate and prepare catalogs; compute counts and
+proof declarations; preflight and kernel-check every declaration in a local persistent
+environment; then publish that environment with one `setEnv`. The optional JSON is
+written before publication and is output-only: no seal decision reads it back. -/
+
 @[command_elab sealInformationTheoryCmd]
 private def elabSealInformationTheory : CommandElab := fun stx => do
-  let catalogs ← buildCatalogs
-  let records ← buildProofs catalogs
-  records.forM logSummary
+  let baseEnv ← getEnv
+  let catalogs ← prepareCatalogs
+  let proofs ← prepareProofs catalogs
+  let declarations := catalogs.map (·.declaration) ++ proofs.declarations
+  preflightNames baseEnv declarations
+  let stagedEnv ← stageDeclarations baseEnv declarations
   match stx with
   | `(#seal_information_theory output $path:str) =>
       liftIO <| IO.FS.writeFile path.raw.isStrLit?.get!
-        (artifactJson records).pretty
+        (artifactJson proofs.records).pretty
   | _ => pure ()
+  setEnv stagedEnv
+  proofs.records.forM logSummary
 
 end LeanInformationAudit

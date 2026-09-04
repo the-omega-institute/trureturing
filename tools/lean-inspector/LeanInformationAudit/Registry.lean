@@ -22,6 +22,15 @@ def theoremUnitSuffix := "__information_unit"
 
 def primitiveRealizationSuffix := "__primitive_realization"
 
+def generatedCompanionSuffixes : Array String := #[
+  theoremUnitSuffix,
+  primitiveRealizationSuffix,
+  "__lowers_escape",
+  "__escape_enriched",
+  "__information_catalog",
+  "__catalog_irredundant"
+]
+
 structure InformationRegistryEntry where
   theoremName : Name
   unitName : Name
@@ -53,10 +62,7 @@ def InformationRegistry.hasUnit (env : Environment) (n : Name) : Bool :=
 
 def isCompanionName : Name -> Bool
   | .str _ suffix =>
-      suffix == "__lowers_escape" ||
-        suffix == "__escape_enriched" ||
-        suffix == theoremUnitSuffix ||
-        suffix == primitiveRealizationSuffix
+      generatedCompanionSuffixes.contains suffix
   | _ => false
 
 private def duplicateError (name : Name) : String :=

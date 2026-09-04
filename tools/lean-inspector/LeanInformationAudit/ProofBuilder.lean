@@ -17,6 +17,7 @@ structure SealTheoremRecord where
   index : Nat
   primitiveCount : Nat
   primitiveAxes : Array String
+  primitiveKernelAddress : String
   uniqueCaptureCount : Nat
   fullEscapeCount : Nat
   withoutEscapeCount : Nat
@@ -31,10 +32,9 @@ structure SealArenaRecord where
   fullEscapeCount : Nat
   theorems : Array SealTheoremRecord
 
-private structure PendingTheorem where
-  name : Name
-  type : Expr
-  value : Expr
+structure PreparedProofs where
+  declarations : Array Declaration
+  records : Array SealArenaRecord
 
 private def finValue (index size : Nat) : MetaM Expr := do
   let bound ← mkLT (mkNatLit index) (mkNatLit size)
@@ -60,6 +60,24 @@ private def primitiveAxisCount {X : Type u} (bundle : PrimitiveBundle X)
   letI := bundle.indexDecidableEq
   exact (Finset.univ.filter fun index => (bundle.atom index).axis = axis).card
 
+/-- Hash the canonical ordinal partition induced by the compiled primitive kernel. -/
+private unsafe def primitiveKernelAddress {X : Type u} (stateFintype : Fintype X)
+    (bundle : PrimitiveBundle X) : String := by
+  letI := stateFintype
+  let states := (unsafe stateFintype.elems.val.unquot).toArray
+  let ordinals := List.range states.size
+  let classes := ordinals.foldl (init := #[]) fun classes ordinal =>
+    match classes.findIdx? fun candidate =>
+        match states[ordinal]?, candidate[0]? with
+        | some state, some representative =>
+            match states[representative]? with
+            | some representativeState => bundle.agreesB state representativeState
+            | none => false
+        | _, _ => false with
+    | some index => classes.modify index fun candidate => candidate.push ordinal
+    | none => classes.push #[ordinal]
+  exact toString (hash classes)
+
 private def uniqueCaptureSignatureCount {arena : Arena.{u}}
     (catalog : Catalog.{u, v, w} arena) (index : catalog.Index)
     (cutBit flowBit admitBit anchorBit : Bool) : Nat :=
@@ -74,9 +92,15 @@ private def signatureLabel (mask : Nat) : String :=
   String.ofList <| (List.range 4).map fun coordinate =>
     if signatureBit mask coordinate then '1' else '0'
 
-private def theoremProofs (record : CatalogRecord) : Lean.Elab.Term.TermElabM
-    (Array PendingTheorem × SealArenaRecord) := do
-  let catalog := mkConst record.catalogName
+private def proofConstruction (theoremName : Name)
+    (action : Lean.Elab.Term.TermElabM α) : Lean.Elab.Term.TermElabM α := do
+  try action catch error =>
+    throwError "IE-C009 ProofConstructionFailed: {theoremName}\n{error.toMessageData}"
+
+private def theoremProofs (prepared : PreparedCatalog) : Lean.Elab.Term.TermElabM
+    (Array Declaration × SealArenaRecord) := do
+  let record := prepared.record
+  let catalog := prepared.value
   let arena ← mkAppM
     `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.toArena
     #[mkConst record.arenaName]
@@ -95,9 +119,9 @@ private def theoremProofs (record : CatalogRecord) : Lean.Elab.Term.TermElabM
   let mut declarations := #[]
   let mut theoremRecords := #[]
   for unit in record.units do
-    let theoremName := unit.1
-    let unitName := theoremName.str theoremUnitSuffix
-    let indexNat := unit.2
+    let theoremName := unit.theoremName
+    let unitName := unit.unitName
+    let indexNat := unit.index
     let index ← finValue indexNat record.units.size
     let unitExpr := mkConst unitName
     let primitives ← mkAppM
@@ -105,6 +129,11 @@ private def theoremProofs (record : CatalogRecord) : Lean.Elab.Term.TermElabM
       #[unitExpr]
     let primitiveCountExpr ← mkAppM ``primitiveCount #[primitives]
     let primitiveCount ← natValue primitiveCountExpr
+    let stateFintype ← mkAppM
+      `D5.S3.ConceptDynamics.InformationEscape.Arena.stateFintype #[arena]
+    let kernelAddressExpr ← mkAppM ``primitiveKernelAddress #[stateFintype, primitives]
+    let primitiveKernelAddress ← unsafe evalExpr String (mkConst ``String)
+      kernelAddressExpr (safety := .unsafe)
     let mut primitiveAxes := #[]
     for (axisName, label) in
         #[( ``PrimitiveAxis.cut, "cut"), (``PrimitiveAxis.flow, "flow"),
@@ -129,7 +158,7 @@ private def theoremProofs (record : CatalogRecord) : Lean.Elab.Term.TermElabM
         "IE-C007 ZeroUniqueCapture: theorem {theoremName} arena {record.arenaName} \
 full {fullCount} without {withoutCount}"
     let positiveType ← mkLT (mkNatLit 0) uniqueExpr
-    let positiveProof ← mkDecideProof positiveType
+    let positiveProof ← proofConstruction theoremName <| mkDecideProof positiveType
     let mut roleSignatureHistogram := #[]
     for mask in [1:16] do
       let signatureCountExpr ← mkAppM ``uniqueCaptureSignatureCount
@@ -145,15 +174,17 @@ full {fullCount} without {withoutCount}"
     let histogramTotal := roleSignatureHistogram.foldl (init := 0)
       fun total entry => total + entry.2
     unless histogramTotal == uniqueCount do
-      throwError "IE-C009 ProofConstructionFailed: role histogram {theoremName}"
-    let characterization ← mkAppM
-      `D5.S3.ConceptDynamics.InformationEscape.Catalog.lowersEscape_iff_uniqueCaptureCount_pos
-      #[catalog, index, nondegenerateProof]
-    let lowersProof ← mkAppM ``Iff.mpr #[characterization, positiveProof]
-    let lowersType ← inferType lowersProof
+      throwError "IE-C009 ProofConstructionFailed: {theoremName}\nrole histogram mismatch"
+    let (lowersProof, lowersType) ← proofConstruction theoremName do
+      let characterization ← mkAppM
+        `D5.S3.ConceptDynamics.InformationEscape.Catalog.lowersEscape_iff_uniqueCaptureCount_pos
+        #[catalog, index, nondegenerateProof]
+      let lowersProof ← mkAppM ``Iff.mpr #[characterization, positiveProof]
+      pure (lowersProof, ← inferType lowersProof)
     let lowersName := theoremName.str "__lowers_escape"
-    declarations := declarations.push {
+    declarations := declarations.push <| .thmDecl {
       name := lowersName
+      levelParams := []
       type := lowersType
       value := lowersProof
     }
@@ -161,8 +192,9 @@ full {fullCount} without {withoutCount}"
     let theoremType ← inferType theoremExpr
     let enrichedType ← mkAppM ``And #[theoremType, lowersType]
     let enrichedProof ← mkAppM ``And.intro #[theoremExpr, lowersProof]
-    declarations := declarations.push {
+    declarations := declarations.push <| .thmDecl {
       name := theoremName.str "__escape_enriched"
+      levelParams := []
       type := enrichedType
       value := enrichedProof
     }
@@ -172,6 +204,7 @@ full {fullCount} without {withoutCount}"
       index := indexNat
       primitiveCount
       primitiveAxes
+      primitiveKernelAddress
       uniqueCaptureCount := uniqueCount
       fullEscapeCount := fullCount
       withoutEscapeCount := withoutCount
@@ -212,8 +245,9 @@ full {fullCount} without {withoutCount}"
     let lowersProof ← mkAppM ``Iff.mpr #[characterization, positiveProof]
     mkLambdaFVars #[index] lowersProof
   let irredundantType ← inferType irredundantProof
-  declarations := declarations.push {
+  declarations := declarations.push <| .thmDecl {
     name := record.arenaName.str "__catalog_irredundant"
+    levelParams := []
     type := irredundantType
     value := irredundantProof
   }
@@ -225,18 +259,12 @@ full {fullCount} without {withoutCount}"
     theorems := theoremRecords
   })
 
-/-- Construct every proof first, then atomically expose all theorem declarations. -/
-def buildProofs (catalogs : Array CatalogRecord) :
-    CommandElabM (Array SealArenaRecord) := do
+/-- Construct all theorem declarations without changing the environment. -/
+def prepareProofs (catalogs : Array PreparedCatalog) : CommandElabM PreparedProofs := do
   let results ← liftTermElabM <| catalogs.mapM theoremProofs
-  for result in results do
-    for declaration in result.1 do
-      liftCoreM <| addDecl <| .thmDecl {
-        name := declaration.name
-        levelParams := []
-        type := declaration.type
-        value := declaration.value
-      }
-  pure <| results.map (·.2)
+  pure {
+    declarations := results.foldl (init := #[]) fun all result => all ++ result.1
+    records := results.map (·.2)
+  }
 
 end LeanInformationAudit

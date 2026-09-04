@@ -11,18 +11,24 @@ open D5.S3.ConceptDynamics.CIRPT
 open D5.S3.ConceptDynamics.InformationEscape
 
 /-- A closed catalog and the canonical theorem-to-index assignment used by the seal. -/
+structure CatalogUnitRecord where
+  theoremName : Name
+  unitName : Name
+  index : Nat
+
 structure CatalogRecord where
   arenaName : Name
   catalogName : Name
-  units : Array (Name × Nat)
+  units : Array CatalogUnitRecord
 
-private structure PendingCatalog where
+structure PreparedCatalog where
   record : CatalogRecord
   type : Expr
   value : Expr
+  declaration : Declaration
 
 private def nameLess (left right : Name) : Bool :=
-  left.toString < right.toString
+  left.lt right
 
 private def catalogNameFor (arenaName : Name) : Name :=
   arenaName.str "__information_catalog"
@@ -60,7 +66,7 @@ private def makeUnitVector (units : Array Expr) : Lean.Elab.Term.TermElabM Expr 
 
 private def prepareCatalog (arenaName : Name)
     (entries : Array InformationRegistryEntry) :
-    Lean.Elab.Term.TermElabM PendingCatalog := do
+    Lean.Elab.Term.TermElabM PreparedCatalog := do
   let sorted := entries.qsort fun left right => nameLess left.theoremName right.theoremName
   let arena ← arenaValue arenaName
   let nondegenerate ← mkAppM
@@ -72,11 +78,25 @@ private def prepareCatalog (arenaName : Name)
   let value ← mkAppM
     `D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector #[vector]
   let type ← inferType value
-  let units := sorted.mapIdx fun index entry => (entry.theoremName, index)
-  pure {
-    record := { arenaName, catalogName := catalogNameFor arenaName, units }
+  let units := sorted.mapIdx fun index entry => {
+    theoremName := entry.theoremName
+    unitName := entry.unitName
+    index
+  }
+  let catalogName := catalogNameFor arenaName
+  let declaration := .defnDecl {
+    name := catalogName
+    levelParams := []
     type
     value
+    hints := .abbrev
+    safety := .safe
+  }
+  pure {
+    record := { arenaName, catalogName, units }
+    type
+    value
+    declaration
   }
 
 private def groupEntries (entries : Array InformationRegistryEntry) :
@@ -86,25 +106,15 @@ private def groupEntries (entries : Array InformationRegistryEntry) :
     | some index => groups.modify index fun group => (group.1, group.2.push entry)
     | none => groups.push (entry.arenaName, #[entry])
 
-/-- Validate the registry, construct canonical catalogs, and add their reducible definitions. -/
-def buildCatalogs : CommandElabM (Array CatalogRecord) := do
+/-- Validate the registry and prepare catalogs without changing the environment. -/
+def prepareCatalogs : CommandElabM (Array PreparedCatalog) := do
   let env ← getEnv
   let entries := InformationRegistry.entries env
   if entries.isEmpty then
     throwError "IE-C001 UnregisteredTheoremUnit: registry is empty"
   liftTermElabM <| entries.forM (validateEntry env)
   let groups := (groupEntries entries).qsort fun left right => nameLess left.1 right.1
-  let pending ← liftTermElabM <| groups.mapM fun group =>
+  liftTermElabM <| groups.mapM fun group =>
     prepareCatalog group.1 group.2
-  for catalog in pending do
-    liftCoreM <| addAndCompile <| .defnDecl {
-      name := catalog.record.catalogName
-      levelParams := []
-      type := catalog.type
-      value := catalog.value
-      hints := .abbrev
-      safety := .safe
-    }
-  pure <| pending.map (·.record)
 
 end LeanInformationAudit
