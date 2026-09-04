@@ -123,11 +123,6 @@ internal static partial class RepositoryRules
         if (record.TryGetProperty("kind", out var kindElement) && kindElement.ValueKind == JsonValueKind.String)
         {
             var kind = kindElement.GetString() ?? string.Empty;
-            if (kind == "revocation-receipt")
-            {
-                return "closed";
-            }
-
             if (AnomalyKindPattern.IsMatch(kind))
             {
                 var state = record.TryGetProperty("state", out var stateElement) ? stateElement.GetString() : null;

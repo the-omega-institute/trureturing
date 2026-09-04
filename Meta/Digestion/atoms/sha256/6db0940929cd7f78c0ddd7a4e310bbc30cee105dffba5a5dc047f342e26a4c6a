@@ -1,0 +1,14 @@
+## B8.3 精确交错协方差
+
+二态链的非平凡谱只有 $-\varphi^{-2}$，所以
+
+$$
+\boxed{
+\operatorname{Cov}(\eta_0,\eta_n)
+=
+\frac15(-\varphi^{-2})^n.}
+\tag{B8.5}
+$$
+
+这说明 hard-core memory 不是单调衰减，而是带奇偶翻转的指数衰减。
+
