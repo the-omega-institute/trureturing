@@ -1,0 +1,84 @@
+name: Daily full-test backstop
+
+on:
+  schedule:
+    # 02:37 UTC is in the least-active UTC hour over the preceding 14 days on dev
+    # (22 first-parent commits, versus a 35.7/hour mean); :37 avoids hourly :17 publishers.
+    - cron: '37 2 * * *'
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  # Serialize scheduled and manual reporters so two failed runs cannot both observe
+  # an absent incident and open duplicates before either creation becomes visible.
+  group: daily-full-test-backstop
+  cancel-in-progress: false
+
+# This workflow is deliberately NOT a required check. It is an after-the-fact detector
+# for reversible whitelist omissions; requiring a schedule-only check would leave PRs
+# permanently pending and turn the recovery path into another merge deadlock.
+jobs:
+  full-test:
+    name: Run both full test layers
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    permissions:
+      contents: read
+    steps:
+      - name: Check out the tested commit
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up the pinned .NET SDK
+        uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4.3.1
+        with:
+          global-json-file: global.json
+
+      - name: Install the pinned Lean toolchain
+        run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
+
+      - name: Run the daily full-test backstop
+        run: tools/scripts/workflow/daily-full-test.sh run "$RUNNER_TEMP/daily-full-test"
+
+      - name: Retain full-test logs
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: daily-full-test-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/daily-full-test
+          if-no-files-found: warn
+          retention-days: 14
+
+  report-failure:
+    name: Open an owned test issue
+    needs: full-test
+    if: ${{ always() && needs.full-test.result != 'success' }}
+    runs-on: ubuntu-latest
+    permissions:
+      # Required only to check out the repository-owned reporting script.
+      contents: read
+      # Required to create/comment on the incident and keep its owner assigned.
+      issues: write
+    steps:
+      - name: Check out the issue reporter
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Retrieve full-test logs
+        continue-on-error: true
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: daily-full-test-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/daily-full-test
+
+      - name: Open or reuse the owned test issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DAILY_FAILURE_ASSIGNEE: loning
+        run: tools/scripts/workflow/daily-full-test.sh report "$RUNNER_TEMP/daily-full-test"

@@ -21,6 +21,8 @@ internal static partial class RepositoryPathPolicy
     // Persistent truth-release publisher. `.github` remains an explicit allowlist.
     internal const string TruthReleasePublicationWorkflowPath =
         ".github/workflows/truth-release-publish.yml";
+    internal const string DailyFullTestWorkflowPath =
+        ".github/workflows/daily-full-test.yml";
     internal const string HarnessGatePath = ".github/scripts/harness-gate.sh";
     internal const string RepositoryCoordinate = "the-omega-institute/trureturing";
 
@@ -145,6 +147,7 @@ internal static partial class RepositoryPathPolicy
             or IntegrationCachePublicationWorkflowPath
             or IntegrationCacheSeedManualWorkflowPath
             or TruthReleasePublicationWorkflowPath
+            or DailyFullTestWorkflowPath
             or ".github/CODEOWNERS"
             or HarnessGatePath
             || value.StartsWith("tools/", StringComparison.Ordinal)
