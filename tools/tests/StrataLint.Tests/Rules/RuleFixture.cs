@@ -248,11 +248,6 @@ internal sealed partial class RuleFixture
             case "sorry": SetRingDeclaration("unfinished", "theorem", "sorryAx"); break;
             case "file-capacity": Files[RingPath] += string.Concat(Enumerable.Repeat("-- pad\n", 801)); break;
             case "mirror": Files.Remove(BlueprintPath); break;
-            case "chronicle":
-                RewriteChronicle();
-                Changes.Clear();
-                Changes.Add("Chronicle/2026/07/10-old.md");
-                break;
             case "badge": Files[BlueprintPath] = "status: proven\n"; break;
             case "heart": ChangeHeartSignature(); break;
             case "generality": AddInstanceImport(); break;
@@ -283,7 +278,6 @@ internal sealed partial class RuleFixture
     {
         "upward-import" or "sorry" or "file-capacity" or "generality" or "header" or "axiom" => RingPath,
         "mirror" or "badge" => BlueprintPath,
-        "chronicle" => "Chronicle/2026/07/10-old.md",
         "heart" => HeartsPath,
         "domain" => "D5/S0/Unknown/Bad.lean",
         "formula" => "Evidence/D5/S0/Carrier/Formula.check.json",
@@ -434,14 +428,6 @@ internal sealed partial class RuleFixture
         {
             new LeanDeclaration(name, kind, "False", ImmutableArray.Create(axiom)),
         });
-    }
-
-    internal void RewriteChronicle()
-    {
-        const string path = "Chronicle/2026/07/10-old.md";
-        Baseline[path] = "old\n";
-        ForkPoint[path] = "old\n";
-        Files[path] = "changed\n";
     }
 
     internal void ChangeHeartSignature()

@@ -114,7 +114,8 @@ public sealed class CliOutcomeTests
         var admitted = Assert.IsType<AdmissionOutcome.Admitted>(Admitted());
         var bootstrap = Assert.IsType<BootstrapOutcome.ProtectedSurfaceVerificationRequired>(
             BootstrapGate.Evaluate(RawChangeSet.Create(new[] { path })));
-        var descriptor = RuleCatalog.Default.Descriptors[21];
+        var descriptor = RuleCatalog.Default.Descriptors.Single(item =>
+            item.Id == RuleId.CreateKnown(22));
         return new AdmissionOutcome.ProtectedSurfaceChange(
             admitted.Certificate,
             bootstrap.ChangeSet,
