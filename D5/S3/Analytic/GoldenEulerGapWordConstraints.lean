@@ -21,6 +21,35 @@ open D5.S1.Words.Powers
 open D5.S3.Analytic.EulerGerm.PrimeZeckendorfFrequencyBridge
 open D5.S3.Observer.GoldenPrimeCircle.GoldenEulerStepPhaseLaw
 
+/-- Compatibility name for the phase of the consecutive golden layer gap. -/
+def layerGapPhase
+    (time : ℝ) (prime : Nat.Primes) (layer : ℕ) : ℂ :=
+  primeStepPhase time prime layer
+
+/-- The short member of the deterministic prime-scaled phase alphabet. -/
+def shortStepPhase (time : ℝ) (prime : Nat.Primes) : ℂ :=
+  Complex.exp
+    (((time * (Real.goldenRatio * Real.log (prime : ℝ)) : ℝ) : ℂ) *
+      Complex.I)
+
+/-- The long member of the deterministic prime-scaled phase alphabet. -/
+def longStepPhase (time : ℝ) (prime : Nat.Primes) : ℂ :=
+  Complex.exp
+    (((time *
+      (Real.goldenRatio ^ 2 * Real.log (prime : ℝ)) : ℝ) : ℂ) *
+      Complex.I)
+
+/-- The current Euler phase law supplies the compatibility bridge used by the
+forbidden-word statements below. -/
+theorem zeckendorf_selects_layer_gap_phase
+    (time : ℝ) (prime : Nat.Primes) (layer : ℕ) :
+    (2 ∉ wdigits layer →
+      layerGapPhase time prime layer = longStepPhase time prime) ∧
+    (2 ∈ wdigits layer →
+      layerGapPhase time prime layer = shortStepPhase time prime) := by
+  simpa [layerGapPhase, longStepPhase, shortStepPhase] using
+    zeckendorf_selects_prime_step_phase time prime layer
+
 /-- A true golden-word letter selects the long `phi^2 log p` frequency gap. -/
 theorem golden_true_selects_long_frequency
     (prime : Nat.Primes) {layer : ℕ}
