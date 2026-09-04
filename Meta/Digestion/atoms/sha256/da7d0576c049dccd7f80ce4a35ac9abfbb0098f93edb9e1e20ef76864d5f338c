@@ -1,0 +1,23 @@
+#### 证明
+
+因为
+
+$$
+\left.
+\frac{d^2}{d\delta^2}
+\sinh^2(a\delta)
+\right|_{\delta=0}
+=2a^2,
+$$
+
+而
+
+$$
+\frac1{M_Q}
+\sum_{v=0}^{M_Q-1}v^2
+=
+\frac{(M_Q-1)(2M_Q-1)}6.
+$$
+
+故得结论。
+

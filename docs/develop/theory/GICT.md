@@ -1334,3 +1334,15 @@ $$H(t_i)=\tfrac14\arctan\tfrac{a-d}{2b}$$
 **三档同步**:[价界] v2.7(注记 3.5′ + §11.14,薄注);INTERFACE_PAPER 开放问题 8.9(候审,另块);OQ 以指针接口,不增块。
 
 **收束五判**:一物(本条)✓;一算(无新数;判据引 [价界] 在册证书)✓;二检(P3 半驳如实)✓;三检(SvN/GvH/IW/Varičak/Fock/Penrose 线/Zurek 七锚)✓;四检(四墙 + 被推翻方式)✓;五检(三档同步指针齐)✓。
+
+## 附录 E 增订六十七(v3.92 候审):有界余项之显式转移函数——Hecke–Ostrowski 上同调恒等式(定理 3.4.1–3.4.3 候签;开放问题线第一批)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;ChatGPT Pro 文献检索席(flight `op-r1-gptpro-search`,候选 #7「Hecke–Ostrowski bounded-remainder interval with an explicit transfer function」,folklore-unformalized;文献 arXiv:1404.0165、GAFA 2015 doi:10.1007/s00039-015-0313-z、arXiv:1602.00529)提出;探针席 codex-cli(flight `op-p8-hecke-ostrowski`,worktree `trureturing-op-probe-g`,base origin/dev `0e0e991da4`,1104s)以 `lake env lean` 整证三条并给出 kernel 读数(`#print axioms` 全为标准三公理);本节候签由 orchestrator(claude 主循环,会话「开放问题」)撰写。判决日 2026-09-05。落点:卷 III §III.2 定理 3.4「DK 给有界余项」之显式机制;卷 VIII 开放清单第 5 项「方向律之 Ostrowski 全理论」之构造方向子义务。
+
+**定理 3.4.1(Hecke–Ostrowski 上同调恒等式)**〔候签;open;落 `D5/S1/Phase/HeckeOstrowskiCoboundary`〕。对任意实数 α、自然数 q 与实数 x,令转移函数 `transferFunction α q x := ∑_{j<q} Int.fract (x − (j+1)·α)`,则 `(if Int.fract x < Int.fract (q·α) then 1 else 0) − Int.fract (q·α) = transferFunction α q x − transferFunction α q (x + α)`——区间 [0, {qα}) 之指示函数减其长度,是转移函数在旋转 x ↦ x + α 下的上边缘(coboundary);不需要 α 无理。
+
+**推论 3.4.2(偏差的望远镜和)**〔候签;open;同模块伴随声明〕。对任意实数 α、自然数 q、N 与实数 x,`∑_{n<N} ((if Int.fract (x + n·α) < Int.fract (q·α) then 1 else 0) − Int.fract (q·α)) = transferFunction α q x − transferFunction α q (x + N·α)`。
+
+**推论 3.4.3(一致有界余项)**〔候签;open;同模块伴随声明〕。对任意实数 α、自然数 q ≥ 1、N 与实数 x,`|∑_{n<N} ((if Int.fract (x + n·α) < Int.fract (q·α) then 1 else 0) − Int.fract (q·α))| < q`——长度为 {qα} 的区间是旋转 α 的有界余项集,余项界为 q,对一切 x 与 N 一致。
+
+**注 3.4.4(可证伪预测与逃逸见证,写在跑之前)**〔第 5⁗ 条〕。定理 3.4.1 的逃逸内容为新的分数部分两分支等式 `fract_sub_eq_ite : Int.fract (x − t) = if Int.fract x < Int.fract t then Int.fract x + 1 − Int.fract t else Int.fract x − Int.fract t`(在 `Int.fract_eq_iff` 两分支各构造整数),它位于活证明路径上,不是冻结定理或 Mathlib 引理的实例化;判形 content,准入依据 escape-witness。推论 3.4.2 由 3.4.1 逐项求和望远镜得到,推论 3.4.3 由 3.4.2 与 0 ≤ transferFunction < q 得到——二者为伴随声明,方向边 3.4.3 → 3.4.2 → 3.4.1(消费者 → 前置)。只依赖钉版 Mathlib,不引入冻结 D5 依赖;落点 `D5/S1/Phase/`(直接文件 12/24)。若钉版 API 下 `Int.fract_eq_iff` 的两分支整数构造写不出,本候签按 open 记,不得以 `sorry` 或公理代替。结算:三条由一个实施席同 PR `deposit`(绑 3.4.1)+ `cover`(3.4.2 / 3.4.3)落地,三席评审后合入。

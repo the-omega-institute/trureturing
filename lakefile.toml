@@ -1,7 +1,7 @@
 name = "trureturing"
 version = "0.1.0"
 keywords = ["mathematics", "formalization"]
-defaultTargets = ["Trureturing"]
+defaultTargets = ["Trureturing", "LeanInformationAudit"]
 
 [leanOptions]
 pp.unicode.fun = true
@@ -18,3 +18,9 @@ rev = "v4.33.0"
 name = "Trureturing"
 roots = ["Trureturing", "D5"]
 globs = ["Trureturing", "D5.+"]
+
+[[lean_lib]]
+name = "LeanInformationAudit"
+srcDir = "tools/lean-inspector"
+roots = ["LeanInformationAudit"]
+globs = ["LeanInformationAudit.+"]

@@ -1,0 +1,55 @@
+## 10.1 有限加权簇
+
+取有限不同 prime-frequency 集合
+
+$$
+\mathcal C=\{p_1,\ldots,p_m\}
+$$
+
+及非负权重 $W_{ij}\ge0$。定义
+
+$$
+\boxed{
+R_{\mathcal C}(\delta)
+=
+\sum_{i<j}
+W_{ij}
+\sinh^2\!\left(
+\delta(\log p_j-\log p_i)
+\right).
+}
+\tag{10.1}
+$$
+
+若至少一个连接不同频率的权重严格为正，则
+
+$$
+R_{\mathcal C}(\delta)=0
+\Longleftrightarrow
+\delta=0,
+\tag{10.2}
+$$
+
+且 $R_{\mathcal C}$ 严格凸。
+
+其临界线二次刚度为
+
+$$
+\boxed{
+\mathfrak m_{\mathcal C}^2
+=
+\sum_{i<j}
+W_{ij}(\log p_j-\log p_i)^2.
+}
+\tag{10.3}
+$$
+
+并有
+
+$$
+R_{\mathcal C}(\delta)
+\ge
+\mathfrak m_{\mathcal C}^2\delta^2.
+\tag{10.4}
+$$
+

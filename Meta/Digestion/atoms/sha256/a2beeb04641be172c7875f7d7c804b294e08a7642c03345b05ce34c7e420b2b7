@@ -1,0 +1,2 @@
+**推论 3.4.2(偏差的望远镜和)**〔候签;open;同模块伴随声明〕。对任意实数 α、自然数 q、N 与实数 x,`∑_{n<N} ((if Int.fract (x + n·α) < Int.fract (q·α) then 1 else 0) − Int.fract (q·α)) = transferFunction α q x − transferFunction α q (x + N·α)`。
+
