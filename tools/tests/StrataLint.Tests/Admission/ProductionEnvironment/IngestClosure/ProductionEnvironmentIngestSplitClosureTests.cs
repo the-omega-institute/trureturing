@@ -101,7 +101,7 @@ public sealed partial class ProductionEnvironmentTests
         {
             files[coveredPath] = files[coveredPath].Replace(
                 "coverage_gids: []",
-                $"coverage_gids:\n  - gid: {coverageGid}\n    target_statement_id: null",
+                $"coverage_gids:\n  - gid: {coverageGid}\n    target_statement_id: sha256:{new string('a', 64)}",
                 StringComparison.Ordinal);
         }
 

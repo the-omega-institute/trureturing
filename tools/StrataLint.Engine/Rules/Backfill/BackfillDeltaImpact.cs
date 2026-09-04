@@ -7,11 +7,19 @@ internal sealed record BackfillDeltaImpact(
 
 internal static class BackfillDeltaImpactResolver
 {
+    private sealed record CoverageTargetDependency(
+        Gid Gid,
+        RepoPath HostModule,
+        string EntryPath,
+        string? TargetStatementId);
+
     internal static BackfillDeltaImpact Resolve(
         RepositorySnapshot current,
         RepositorySnapshot baseline,
+        LeanAxiomReport? report,
         BackfillInventoryDocument document,
-        RawChangeSet repositoryChanges)
+        RawChangeSet repositoryChanges,
+        Action<string>? statementResolutionObserved = null)
     {
         ArgumentNullException.ThrowIfNull(current);
         ArgumentNullException.ThrowIfNull(baseline);
@@ -30,18 +38,20 @@ internal static class BackfillDeltaImpactResolver
             .Select(EntryPath)
             .ToHashSet(StringComparer.Ordinal);
 
-        AddFrozenStatementDependants(
+        AddCurrentResolutionDependants(
             current,
-            baseline,
+            report,
             document,
             repositoryChanges,
-            affectedEntryPaths);
+            affectedEntryPaths,
+            statementResolutionObserved);
 
         // Raw frozen and Lean paths have historically widened one dependency change to every
         // edge. Their value changes are represented by the affected entry paths above instead.
         var evaluationEntries = repositoryChanges.Entries
             .Where(static change =>
                 !FrozenLedgerChangeClassifier.IsAcceptedEventPath(change.Path.Value)
+                && !FrozenStatePath.IsUnderRoot(change.Path.Value)
                 && !(change.Path.Value.StartsWith("D5/", StringComparison.Ordinal)
                     && change.Path.Value.EndsWith(".lean", StringComparison.Ordinal)))
             .ToDictionary(static change => change.Path.Value, StringComparer.Ordinal);
@@ -97,16 +107,6 @@ internal static class BackfillDeltaImpactResolver
 
         foreach (var gid in entry.CoverageGids)
         {
-            if (Gid.TryParse(gid, out var parsedGid)
-                && FileValueChanged(
-                    parsedGid.Path.Value,
-                    current,
-                    baseline,
-                    changedPaths))
-            {
-                return true;
-            }
-
             var documentGid = ScribeEmissionAttestation.DocumentGid(gid);
             if (FileValueChanged(
                     ScribeEmissionAttestation.DefinitionPath(documentGid),
@@ -126,77 +126,149 @@ internal static class BackfillDeltaImpactResolver
         return false;
     }
 
-    private static void AddFrozenStatementDependants(
+    internal static bool HasPotentialStatementDependants(
+        BackfillInventoryDocument document,
+        RawChangeSet repositoryChanges)
+    {
+        ArgumentNullException.ThrowIfNull(document);
+        ArgumentNullException.ThrowIfNull(repositoryChanges);
+        var changedModules = ChangedStatementModules(repositoryChanges);
+        if (changedModules.Count == 0)
+        {
+            return false;
+        }
+
+        return BuildCoverageReverseIndex(document).Values.Any(dependencies =>
+            changedModules.Contains(dependencies[0].HostModule));
+    }
+
+    private static void AddCurrentResolutionDependants(
         RepositorySnapshot current,
-        RepositorySnapshot baseline,
+        LeanAxiomReport? report,
         BackfillInventoryDocument document,
         RawChangeSet repositoryChanges,
-        ISet<string> affectedEntryPaths)
+        ISet<string> affectedEntryPaths,
+        Action<string>? statementResolutionObserved)
     {
-        if (!repositoryChanges.Paths.Any(static path =>
-                FrozenLedgerChangeClassifier.IsAcceptedEventPath(path.Value)))
+        var reverseIndex = BuildCoverageReverseIndex(document);
+        var changedModules = ChangedStatementModules(repositoryChanges);
+        var candidates = reverseIndex
+            .Where(item => changedModules.Contains(item.Value[0].HostModule))
+            .ToArray();
+        if (candidates.Length == 0)
         {
             return;
         }
 
-        var reverseIndex = BuildCoverageReverseIndex(document);
-        FrozenStatementIndex currentStatements;
-        FrozenStatementIndex baselineStatements;
+        FrozenStateCatalog frozenState;
+        FrozenStatementIndex? currentStatements;
         try
         {
-            currentStatements = FrozenStatementIndex.Load(current);
-            baselineStatements = FrozenStatementIndex.Load(baseline);
+            frozenState = FrozenStateCatalog.Load(current);
+            currentStatements = report is null
+                ? null
+                : FrozenStatementIndex.Create(frozenState, report);
         }
         catch (Exception exception) when (
             exception is FormatException or InvalidOperationException)
         {
-            // Frozen-ledger shape and history have their own admission owner. An invalid
-            // projection has no comparable statement value for SL-016 to propagate.
+            // Frozen-state shape and the Lean report have their own admission owners. An
+            // invalid authority has no comparable statement value for SL-016 to propagate.
             return;
         }
 
-        foreach (var (gidText, entryPaths) in reverseIndex)
+        foreach (var (gidText, dependencies) in candidates)
         {
-            if (!Gid.TryParse(gidText, out var gid)
-                || FrozenStatementValue(currentStatements, gid)
-                    == FrozenStatementValue(baselineStatements, gid))
+            var gid = dependencies[0].Gid;
+            string? currentResolution;
+            if (gid.ToTarget() is Target.Formal { Declaration: null } formal)
             {
+                currentResolution = frozenState.Records.TryGetValue(formal.Path, out var frozen)
+                    ? frozen.StatementId.Value
+                    : null;
+            }
+            else if (currentStatements is null)
+            {
+                // Declaration statement identity is report-derived. A report-free caller has no
+                // current declaration value to compare, so absence must not mean unresolved.
                 continue;
             }
-
-            foreach (var entryPath in entryPaths)
+            else
             {
-                affectedEntryPaths.Add(entryPath);
+                currentResolution = currentStatements.TryResolve(
+                    gid,
+                    out var statementId,
+                    out _)
+                        ? statementId!.Value
+                        : null;
+            }
+
+            statementResolutionObserved?.Invoke(gidText);
+            foreach (var dependency in dependencies)
+            {
+                if (string.Equals(
+                        dependency.TargetStatementId,
+                        currentResolution,
+                        StringComparison.Ordinal))
+                {
+                    continue;
+                }
+
+                affectedEntryPaths.Add(dependency.EntryPath);
             }
         }
     }
 
-    private static Dictionary<string, HashSet<string>> BuildCoverageReverseIndex(
+    private static Dictionary<string, List<CoverageTargetDependency>> BuildCoverageReverseIndex(
         BackfillInventoryDocument document)
     {
-        var result = new Dictionary<string, HashSet<string>>(StringComparer.Ordinal);
+        var result = new Dictionary<string, List<CoverageTargetDependency>>(StringComparer.Ordinal);
         foreach (var entry in document.RequireDigestionEntries())
         {
             var entryPath = EntryPath(entry);
-            foreach (var gid in entry.CoverageGids.Distinct(StringComparer.Ordinal))
+            foreach (var edge in entry.Coverage)
             {
-                if (!result.TryGetValue(gid, out var paths))
+                if (!Gid.TryParse(edge.Gid, out var gid)
+                    || gid.ToTarget() is not Target.Formal formal)
                 {
-                    paths = new HashSet<string>(StringComparer.Ordinal);
-                    result.Add(gid, paths);
+                    continue;
                 }
 
-                paths.Add(entryPath);
+                if (!result.TryGetValue(edge.Gid, out var dependencies))
+                {
+                    dependencies = [];
+                    result.Add(edge.Gid, dependencies);
+                }
+
+                dependencies.Add(new CoverageTargetDependency(
+                    gid,
+                    formal.Path,
+                    entryPath,
+                    edge.TargetStatementId));
             }
         }
 
         return result;
     }
 
-    private static string FrozenStatementValue(FrozenStatementIndex index, Gid gid) =>
-        index.TryResolve(gid, out var statementId, out var message)
-            ? "resolved:" + statementId!.Value
-            : "unresolved:" + message;
+    private static HashSet<RepoPath> ChangedStatementModules(RawChangeSet repositoryChanges)
+    {
+        var result = new HashSet<RepoPath>();
+        foreach (var path in repositoryChanges.Paths)
+        {
+            if (FrozenStatePath.TryToModulePath(path.Value, out var stateModule))
+            {
+                result.Add(stateModule);
+            }
+            else if (path.Value.StartsWith("D5/", StringComparison.Ordinal)
+                && path.Value.EndsWith(".lean", StringComparison.Ordinal))
+            {
+                result.Add(path);
+            }
+        }
+
+        return result;
+    }
 
     private static bool EntryPathIsInDelta(
         DigestionLedgerEntry entry,
