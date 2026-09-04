@@ -5,7 +5,8 @@ namespace StrataLint.Engine;
 internal static partial class RepositoryRules
 {
     private static bool LeanReportAffected(RuleEvaluationContext context) =>
-        Changed(context, IsLeanReportInput);
+        Changed(context, static path =>
+            IsManagedLeanPath(path) || IsLeanReportProducerInput(path));
 
     private static bool SorryAffected(RuleEvaluationContext context) =>
         LeanReportAffected(context)
@@ -108,21 +109,19 @@ internal static partial class RepositoryRules
         || path.StartsWith("D5/", StringComparison.Ordinal)
             && path.EndsWith(".lean", StringComparison.Ordinal);
 
-    private static bool IsLeanReportInput(string path) =>
-        FrozenLedgerDeltaPredicate.IsManagedLeanSource(path)
-        || FrozenLedgerDeltaPredicate.IsEnvironmentInput(path)
-        || FrozenLedgerDeltaPredicate.IsDeltaDefinitionInput(path)
-        || path.StartsWith("tools/lean-inspector/", StringComparison.Ordinal);
-
-    private static bool IsNonSourceLeanReportInput(string path) =>
-        IsLeanReportInput(path) && !IsManagedLeanPath(path);
+    internal static bool IsLeanReportProducerInput(string path) =>
+        path.StartsWith("tools/", StringComparison.Ordinal)
+            && !path.StartsWith("tools/tests/", StringComparison.Ordinal)
+        || StrataLintEngineBuildInputs.IsInheritedBuildInput(path)
+        || path.StartsWith(".github/workflows/", StringComparison.Ordinal)
+        || FrozenLedgerDeltaPredicate.IsEnvironmentInput(path);
 
     internal static bool IsLeanClosureFactAffected(
         RuleEvaluationContext context,
         RepoPath source) =>
         LeanImportClosure.RepositoryPaths(context.Lean.Report, source)
             .Any(path => context.IsBaseFactAffected(path.Value))
-        || Changed(context, IsNonSourceLeanReportInput);
+        || Changed(context, IsLeanReportProducerInput);
 
     private static bool LiteratureReferenceChanged(RuleEvaluationContext context)
     {

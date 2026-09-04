@@ -17,6 +17,49 @@ public sealed class FrozenSurfaceRuleTests
         "sha256:410bb522f539e28e4d11d468ba910476da9a0462246fc575d54526b3c57d0a2e";
     private static readonly string FrozenStatePathValue =
         FrozenStatePath.FromModulePath(RepoPath.CreateKnown(FrozenPath)).Value;
+
+    public static TheoryData<string> LeanReportProducerInputCategories => new()
+    {
+        "tools/StrataLint.Cli/Program.cs",
+        "tools/StrataLint.Engine/Rules/RepositoryRules.FrozenState.cs",
+        "tools/StrataLint.Scribe/ScribeEmitter.cs",
+        "tools/Trureturing.Truth/Truth.cs",
+        "tools/Trureturing.Truth/Trureturing.Truth.csproj",
+        "tools/lean-inspector/Inspector.lean",
+        "tools/scripts/report/lean-report-input.sh",
+        "tools/scripts/workflow/ci-engineering.sh",
+        "tools/scripts/worktree/lean-cache-ensure.sh",
+        "tools/scripts/lib/resource-observation-lib.sh",
+        "tools/scripts/lean-report-pair.sh",
+        ".github/workflows/ci.yml",
+        "Directory.Build.props",
+        "Directory.Build.targets",
+        "Directory.Packages.props",
+        "global.json",
+        "lean-toolchain",
+        "lakefile.toml",
+        "lakefile.lean",
+        "lake-manifest.json",
+    };
+
+    public static TheoryData<string> IndependentlyWakingLeanReportProducerInputs => new()
+    {
+        "tools/StrataLint.Cli/Program.cs",
+        "tools/StrataLint.Scribe/ScribeEmitter.cs",
+        "tools/Trureturing.Truth/Truth.cs",
+        "tools/Trureturing.Truth/Trureturing.Truth.csproj",
+        "tools/lean-inspector/Inspector.lean",
+        "tools/scripts/report/lean-report-input.sh",
+        "tools/scripts/workflow/ci-engineering.sh",
+        "tools/scripts/worktree/lean-cache-ensure.sh",
+        "tools/scripts/lib/resource-observation-lib.sh",
+        "tools/scripts/lean-report-pair.sh",
+        ".github/workflows/ci.yml",
+        "lean-toolchain",
+        "lakefile.toml",
+        "lakefile.lean",
+        "lake-manifest.json",
+    };
     [Theory]
     [InlineData(RawChangeKind.Modified)]
     [InlineData(RawChangeKind.Deleted)]
@@ -331,14 +374,27 @@ public sealed class FrozenSurfaceRuleTests
     }
 
     [Theory]
-    [InlineData("tools/lean-inspector/inspect.sh")]
-    [InlineData("tools/lean-inspector/materials.py")]
-    [InlineData("tools/scripts/report/lean-report-input.sh")]
-    [InlineData("lean-toolchain")]
-    [InlineData("lakefile.toml")]
-    [InlineData("lake-manifest.json")]
-    [InlineData("tools/StrataLint.Engine/Rules/RepositoryRules.FrozenState.cs")]
-    public void Sl008RechecksEveryCurrentStateForEachReportInputCategory(string changedPath)
+    [MemberData(nameof(LeanReportProducerInputCategories))]
+    public void LeanReportProducerInputPredicateCoversEachCanonicalCategory(string path)
+    {
+        Assert.True(RepositoryRules.IsLeanReportProducerInput(path));
+    }
+
+    [Theory]
+    [InlineData("D5/X.lean")]
+    [InlineData("Blueprint/D5/X.scribe.cs")]
+    [InlineData("Golden/Frozen/state/X.lean.json")]
+    [InlineData("Meta/Digestion/atoms/sha256/abc")]
+    [InlineData("docs/develop/theory/X.md")]
+    [InlineData("tools/tests/StrataLint.Tests/X.cs")]
+    public void LeanReportProducerInputPredicateExcludesContentProjectionAndTestPaths(string path)
+    {
+        Assert.False(RepositoryRules.IsLeanReportProducerInput(path));
+    }
+
+    [Theory]
+    [MemberData(nameof(IndependentlyWakingLeanReportProducerInputs))]
+    public void Sl008RechecksEveryCurrentStateForEachIndependentProducerInput(string changedPath)
     {
         var fixture = new RuleFixture();
         var modules = new[] { FrozenPath, RuleFixture.ValuesBindingPath };
