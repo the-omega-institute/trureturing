@@ -21,16 +21,18 @@ internal static partial class IngestCommand
         try
         {
             var baselineRevision = ParseArguments(arguments);
-            var prepared = Prepare(repository, baselineRevision);
+            var inputs = ReadInputs(repository, baselineRevision);
+            var repositoryChanges = repository.ReadChanges(baselineRevision);
+            var plan = Plan(inputs, repositoryChanges);
+            var report = leanReportSource.Load(inputs.Current);
+            var prepared = Prepare(inputs, repositoryChanges, plan, report);
             var currentRaw = prepared.CurrentRaw;
             var current = prepared.Current;
             var baseline = prepared.Baseline;
             var document = prepared.CurrentDocument;
             var baselineDocument = prepared.BaselineDocument;
-            var plan = prepared.Plan;
             var plannedSnapshot = prepared.PlannedSnapshot;
             var plannedDocument = prepared.PlannedDocument;
-            var report = leanReportSource.Load(current);
             var lean = ValidateLean(plannedSnapshot, report);
             var truthStates = LeanTruthStates.Resolve(plannedSnapshot, lean);
             plannedDocument = DigestionCoverageTargetAligner.Align(
@@ -46,6 +48,7 @@ internal static partial class IngestCommand
             var deltaImpact = BackfillDeltaImpactResolver.Resolve(
                 fixedPointSnapshot,
                 baseline,
+                report,
                 plannedDocument,
                 fixedPointChanges);
             var verifiedScribeEmissions = scribeEmissionVerifier.Verify(
@@ -117,6 +120,7 @@ internal static partial class IngestCommand
                 deltaImpact = BackfillDeltaImpactResolver.Resolve(
                     fixedPointSnapshot,
                     baseline,
+                    report,
                     plannedDocument,
                     fixedPointChanges);
             }
@@ -171,12 +175,6 @@ internal static partial class IngestCommand
         }
     }
 
-    private static IngestPreparation Prepare(IRepositoryGateway repository, string baselineRevision)
-    {
-        var inputs = ReadInputs(repository, baselineRevision);
-        return Prepare(repository, baselineRevision, inputs);
-    }
-
     private static IngestInputs ReadInputs(
         IRepositoryGateway repository,
         string baselineRevision,
@@ -197,33 +195,27 @@ internal static partial class IngestCommand
                 : BackfillInventoryLoader.LoadBaseline(baseline));
     }
 
-    private static IngestPreparation Prepare(
-        IRepositoryGateway repository,
-        string baselineRevision,
-        IngestInputs inputs) =>
-        Prepare(
-            repository,
-            baselineRevision,
-            inputs,
-            repository.ReadChanges(baselineRevision));
+    private static DigestionIngestPlan Plan(
+        IngestInputs inputs,
+        RawChangeSet repositoryChanges) =>
+        DigestionIngestor.Plan(
+            inputs.CurrentDocument,
+            inputs.Current,
+            inputs.BaselineDocument,
+            inputs.Baseline,
+            changes: repositoryChanges);
 
     private static IngestPreparation Prepare(
-        IRepositoryGateway repository,
-        string baselineRevision,
         IngestInputs inputs,
-        RawChangeSet repositoryChanges)
+        RawChangeSet repositoryChanges,
+        DigestionIngestPlan plan,
+        LeanAxiomReport? report)
     {
         var currentRaw = inputs.CurrentRaw;
         var current = inputs.Current;
         var baseline = inputs.Baseline;
         var currentDocument = inputs.CurrentDocument;
         var baselineDocument = inputs.BaselineDocument;
-        var plan = DigestionIngestor.Plan(
-            currentDocument,
-            current,
-            baselineDocument,
-            baseline,
-            changes: repositoryChanges);
         var plannedRaw = AddCasObjects(
             ReplaceLedger(currentRaw, currentDocument, plan.Document),
             plan.CasObjects);
@@ -238,6 +230,7 @@ internal static partial class IngestCommand
         var plannedDeltaImpact = BackfillDeltaImpactResolver.Resolve(
             plannedSnapshot,
             baseline,
+            report,
             plannedDocument,
             plannedChanges);
         var plannedScope = DigestionEvaluationScopes.ForChanges(

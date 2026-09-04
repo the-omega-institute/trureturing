@@ -43,6 +43,8 @@ internal static partial class CoverAtomCommand
             var baseline = Decode(baselineRaw);
             var document = LoadDocument(current);
             var baselineDocument = BackfillInventoryLoader.LoadBaseline(baseline);
+            var report = leanReportSource.Load(current);
+            var lean = ValidateLean(current, report);
 
             // Gate ②(a): every cover GID must select a Lean declaration, not just a
             // module (module-level coverage is ingest's residual boundary, not a
@@ -58,10 +60,10 @@ internal static partial class CoverAtomCommand
 
                 return gid;
             }).ToImmutableArray();
-            FrozenStatementIndex frozenStatements;
+            FrozenStateCatalog frozenState;
             try
             {
-                frozenStatements = FrozenStatementIndex.Load(current);
+                frozenState = FrozenStateCatalog.Load(current);
             }
             catch (Exception exception) when (exception is FormatException or InvalidOperationException)
             {
@@ -72,13 +74,14 @@ internal static partial class CoverAtomCommand
 
             foreach (var gid in gids)
             {
-                if (!frozenStatements.ContainsModule(gid.Path))
+                if (!frozenState.Records.ContainsKey(gid.Path))
                 {
                     throw new InvalidOperationException(
                         $"cover target module {gid.Path.Value} is not frozen; "
                         + "run make deposit before cover");
                 }
             }
+            var frozenStatements = FrozenStatementIndex.Create(frozenState, report);
 
             // Gate ①: locate the single target atom. An initial cover requires an
             // open atom; a hosted extension adds at least one declaration while
@@ -174,6 +177,7 @@ internal static partial class CoverAtomCommand
             var authorityImpact = BackfillDeltaImpactResolver.Resolve(
                 current,
                 baseline,
+                report,
                 document,
                 authorityChanges);
             var authorityPaths = authorityChanges.Paths
@@ -189,6 +193,7 @@ internal static partial class CoverAtomCommand
             var receiptImpact = BackfillDeltaImpactResolver.Resolve(
                 current,
                 baseline,
+                report,
                 document,
                 receiptSeedChanges);
             var evaluationChanges = authorityImpact.EvaluationChanges;
@@ -206,8 +211,6 @@ internal static partial class CoverAtomCommand
                     && !currentFile!.RawBytes.AsSpan().SequenceEqual(
                         baselineFile!.RawBytes.AsSpan());
             }
-            var report = leanReportSource.Load(current);
-            var lean = ValidateLean(current, report);
             var truthStates = LeanTruthStates.Resolve(current, lean);
             foreach (var gid in gids)
             {

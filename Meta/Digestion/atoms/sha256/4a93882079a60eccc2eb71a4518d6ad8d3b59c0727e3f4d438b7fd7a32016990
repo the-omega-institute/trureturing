@@ -1,0 +1,4 @@
+# 增订三十一　每个大高度的固定宽度窗内必有零点(Z-6 预登记;附增订三十勘误)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;探针一席(codex-cli,`probe-z6-window`,`make lean` exit 0、`lake env lean` exit 0,16 条声明全为标准三公理)在 `origin/dev` ≥ `68ccfa1365`(增订三十的 Z-1/2/3 模块 `ZeroInfinitude/CosinePacket` 与 Z-4 模块 `ZeroInfinitude/ArchimedeanDivergence` 已合入)的暖树上整证 Z-6;消费冻结的两模块全部公开定理、`Zeta23.WeilEF.EF_lit_zetaZeroConfig`、`Zeta23.EF.gamma_term`、`fourierLaplace_decay_closedStrip`、`paperFT_eq_fourierLaplace`、`Zeta23.WeilEF.abs_gammaOf_im_le`、`gammaOf_re`、`mu_stirling`,以及 AuricStudio lane 冻结的局部零点计数上界 `Zeta23.RvM.zetaZeroConfig_local_count`(`D5/S3/Weil/ZetaRvm/LocalCount.lean:303`:`∃ A₀ ≥ 1, ∀ t, zetaZeroConfig.N t (t+1) ≤ A₀·log(|t|+3)`,`N` 按重数计)。散文由 orchestrator(claude 主循环)撰写。判决日:2026-09-04。lane issue:#4589。
+
