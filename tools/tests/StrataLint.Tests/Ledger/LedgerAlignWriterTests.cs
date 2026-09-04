@@ -176,24 +176,12 @@ public sealed class LedgerAlignWriterTests
         var catalog = BuildCatalog(Module("A"), Module("B"));
         using var successful = new AlignFixture();
         successful.InstallAccepted(catalog);
-        var successConsole = new BufferedConsole();
-        var success = CliApplication.Run(
-            ["ledger-align", "--from-accepted"],
-            new StubCliEnvironment(
-                new AdmissionOutcome.InfrastructureFailure("unused"),
-                alignLedger: successful.Invoke),
-            successConsole);
+        var success = RunFromAcceptedCli(successful);
 
         using var conflicted = new AlignFixture();
         conflicted.InstallAccepted(catalog);
         conflicted.InstallState("A", StatementId.Create(Sha256("conflict")));
-        var conflictConsole = new BufferedConsole();
-        var conflict = CliApplication.Run(
-            ["ledger-align", "--from-accepted"],
-            new StubCliEnvironment(
-                new AdmissionOutcome.InfrastructureFailure("unused"),
-                alignLedger: conflicted.Invoke),
-            conflictConsole);
+        var conflict = RunFromAcceptedCli(conflicted);
 
         Assert.Equal(0, success);
         Assert.NotEqual(0, conflict);
@@ -221,6 +209,53 @@ public sealed class LedgerAlignWriterTests
 
     private static string Source(string name) =>
         $"theorem {name.ToLowerInvariant()} : True := by trivial\n";
+
+    private static int RunFromAcceptedCli(AlignFixture fixture)
+    {
+        return CliApplication.Run(
+            ["ledger-align", "--from-accepted"],
+            new LedgerAlignCliEnvironment(fixture),
+            new BufferedConsole());
+    }
+
+    private sealed class LedgerAlignCliEnvironment : ICliEnvironment
+    {
+        private readonly AlignFixture fixture;
+
+        internal LedgerAlignCliEnvironment(AlignFixture fixture)
+        {
+            this.fixture = fixture;
+        }
+
+        public CommandResult AlignLedger(IReadOnlyList<string> arguments) => fixture.Invoke(arguments);
+
+        public ExplicitCommandResult CapacityAudit(IReadOnlyList<string> arguments) => throw Unsupported();
+        public AdmissionOutcome Check(IReadOnlyList<string> arguments) => throw Unsupported();
+        public AdmissionTopologyOutcome Topology(IReadOnlyList<string> arguments) => throw Unsupported();
+        public CommandResult Coverage(IReadOnlyList<string> arguments) => throw Unsupported();
+        public CommandResult DigestStatus(IReadOnlyList<string> arguments) => throw Unsupported();
+        public CommandResult ShowAtom(IReadOnlyList<string> arguments) => throw Unsupported();
+        public ExplicitCommandResult EchoVerify(IReadOnlyList<string> arguments) => throw Unsupported();
+        public ExplicitCommandResult GateAuthority(IReadOnlyList<string> arguments) => throw Unsupported();
+        public ExplicitCommandResult FileMapConform(IReadOnlyList<string> arguments) => throw Unsupported();
+        public ExplicitCommandResult DepositHeaderCheck(IReadOnlyList<string> arguments) => throw Unsupported();
+        public CommandResult Ingest(IReadOnlyList<string> arguments) => throw Unsupported();
+        public CommandResult AlignDigestionStatus(IReadOnlyList<string> arguments) => throw Unsupported();
+        public CommandResult CoverAtom(IReadOnlyList<string> arguments) => throw Unsupported();
+        public CommandResult AlignScribeReceipt(IReadOnlyList<string> arguments) => throw Unsupported();
+        public CommandResult Route(IReadOnlyList<string> arguments) => throw Unsupported();
+        public CommandResult SelfTest(IReadOnlyList<string> arguments) => throw Unsupported();
+        public CommandResult RenderDag(IReadOnlyList<string> arguments) => throw Unsupported();
+        public CommandResult AppendLedger(IReadOnlyList<string> arguments) => throw Unsupported();
+        public CommandResult RevokeLedger(IReadOnlyList<string> arguments) => throw Unsupported();
+        public CommandResult ReanchorMathlibLedger(IReadOnlyList<string> arguments) => throw Unsupported();
+        public ExplicitCommandResult TruthExport(IReadOnlyList<string> arguments) => throw Unsupported();
+        public ExplicitCommandResult TruthRelease(IReadOnlyList<string> arguments) => throw Unsupported();
+        public CommandResult CleanLanes(IReadOnlyList<string> arguments) => throw Unsupported();
+        public CommandResult Worktree(IReadOnlyList<string> arguments) => throw Unsupported();
+
+        private static NotSupportedException Unsupported() => new();
+    }
 
     private sealed class AlignFixture : IDisposable
     {
