@@ -16,12 +16,12 @@ import Mathlib.Tactic
 # Prime-word antipode, factor parity, and golden step reversal
 
 A chronological prime-step event carries two independent discrete coordinates:
-a prime channel and a golden layer.  The prime word can be read in three ways.
+a prime channel and a golden layer. The prime word can be read in three ways.
 
-* The step-two chronological signature keeps the ordered word.  Its antipode
+* The step-two chronological signature keeps the ordered word. Its antipode
   reverses the word and negates every observed increment, and its logarithmic
   Magnus coordinates change sign.
-* A commutative integer readout forgets the reversal.  Negating every prime
+* A commutative integer readout forgets the reversal. Negating every prime
   letter leaves only the degree sign `(-1)^word.length`; for the product of the
   prime letters this is exactly the Liouville function.
 * The golden step readout is selected by the least Zeckendorf-index parity.
@@ -31,11 +31,11 @@ a prime channel and a golden layer.  The prime word can be read in three ways.
 
 The Möbius function is recorded as a second projection: it agrees with the
 Liouville sign on squarefree prime products and vanishes when squarefreeness
-fails.  Thus Möbius is factor parity together with a collision filter, whereas
+fails. Thus Möbius is factor parity together with a collision filter, whereas
 Liouville keeps multiplicity parity.
 
 The factor-count parity and the Zeckendorf least-index parity are not
-identified.  They are separate `Z/2` coordinates on the same event stream.
+identified. They are separate `Z/2` coordinates on the same event stream.
 This finite bridge makes no infinite-signature, analytic-continuation,
 zeta-zero, physical arrow-of-time, or Riemann-hypothesis claim.
 -/
@@ -97,7 +97,7 @@ def scalarStepEndpoint
   (events.map fun event => stepPhase time event).prod
 
 private theorem reverse_negated_product
-    {Event : Type*} (weight : Event -> Int) (events : List Event) :
+    {Event : Type*} (weight : Event → Int) (events : List Event) :
     (events.reverse.map fun event => -weight event).prod =
       (-1 : Int) ^ events.length * (events.map weight).prod := by
   induction events with
@@ -112,11 +112,11 @@ private theorem reverse_negated_product
 /-- A product of prime events is never zero. -/
 theorem prime_word_product_ne_zero
     (events : List PrimeGoldenStepEvent) :
-    primeWordProduct events != 0 := by
+    primeWordProduct events ≠ 0 := by
   induction events with
   | nil => simp [primeWordProduct]
   | cons event events inductionHypothesis =>
-      change (event.prime : Nat) * primeWordProduct events != 0
+      change (event.prime : Nat) * primeWordProduct events ≠ 0
       exact mul_ne_zero event.prime.property.ne_zero inductionHypothesis
 
 /-- The integer readout is the integer cast of the natural prime product. -/
@@ -129,11 +129,10 @@ theorem commutative_prime_word_readout_eq_nat_cast
       change
         ((event.prime : Nat) : Int) * commutativePrimeWordReadout events =
           (((event.prime : Nat) * primeWordProduct events : Nat) : Int)
-      rw [inductionHypothesis]
-      norm_num
+      rw [inductionHypothesis, Nat.cast_mul]
 
 /-- The antipode's commutative prime readout factors into the word-length sign
-and the unsigned prime readout.  Word reversal itself disappears because the
+and the unsigned prime readout. Word reversal itself disappears because the
 target multiplication is commutative. -/
 theorem antipode_prime_word_readout_factorization
     (events : List PrimeGoldenStepEvent) :
@@ -167,7 +166,7 @@ theorem liouville_prime_word_product
       rw [primeValue, inductionHypothesis, pow_succ]
       ring
 
-/-- Liouville is the scalar parity shadow of prime-word time reversal.  The
+/-- Liouville is the scalar parity shadow of prime-word time reversal. The
 ordered reversal is absent from the commutative target, while its degree sign
 remains. -/
 theorem antipode_prime_word_readout_eq_liouville
@@ -188,23 +187,25 @@ theorem moebius_eq_liouville_of_squarefree_prime_word
   rw [ArithmeticFunction.moebius_apply_of_squarefree hSquarefree,
     ArithmeticFunction.liouville_apply (prime_word_product_ne_zero events)]
 
-/-- Failure of squarefreeness sends the Möbius channel to zero.  This is the
+/-- Failure of squarefreeness sends the Möbius channel to zero. This is the
 collision-filter component absent from Liouville parity. -/
 theorem moebius_eq_zero_of_nonsquarefree_prime_word
     (events : List PrimeGoldenStepEvent)
-    (hNotSquarefree : not (Squarefree (primeWordProduct events))) :
+    (hNotSquarefree : ¬Squarefree (primeWordProduct events)) :
     ArithmeticFunction.moebius (primeWordProduct events) = 0 := by
   exact ArithmeticFunction.moebius_eq_zero_of_not_squarefree hNotSquarefree
 
 /-- The parity of the least occupied Zeckendorf index selects the long or
-short prime-local step.  This parity is independent of prime-factor count. -/
+short prime-local step. This parity is independent of prime-factor count. -/
 theorem step_frequency_zeckendorf_parity
     (event : PrimeGoldenStepEvent) :
     stepFrequency event =
       if Even ((Nat.zeckendorf (event.layer + 1)).getLastD 0) then
-        Real.goldenRatio ^ 2 * Real.log (event.prime : Real)
+        Real.goldenRatio ^ 2 *
+          Real.log ((event.prime : Nat) : Real)
       else
-        Real.goldenRatio * Real.log (event.prime : Real) := by
+        Real.goldenRatio *
+          Real.log ((event.prime : Nat) : Real) := by
   have gapLaw :=
     (golden_euler_beta_zeckendorf).2.2 event.layer
   unfold stepFrequency
@@ -222,12 +223,14 @@ theorem step_phase_zeckendorf_parity
       if Even ((Nat.zeckendorf (event.layer + 1)).getLastD 0) then
         Complex.exp
           (((time *
-            (Real.goldenRatio ^ 2 * Real.log (event.prime : Real)) : Real) : Complex) *
+            (Real.goldenRatio ^ 2 *
+              Real.log ((event.prime : Nat) : Real)) : Real) : Complex) *
             Complex.I)
       else
         Complex.exp
           (((time *
-            (Real.goldenRatio * Real.log (event.prime : Real)) : Real) : Complex) *
+            (Real.goldenRatio *
+              Real.log ((event.prime : Nat) : Real)) : Real) : Complex) *
             Complex.I) := by
   unfold stepPhase
   rw [step_frequency_zeckendorf_parity]
@@ -285,18 +288,18 @@ theorem scalar_step_endpoint_time_reversal_mul
 words. -/
 theorem chronological_prime_step_time_reversal
     {A : Type u} [Ring A]
-    (observe : PrimeGoldenStepEvent -> A)
+    (observe : PrimeGoldenStepEvent → A)
     (events : List PrimeGoldenStepEvent) :
     chronologicalSignature (fun event => -observe event) events.reverse =
       signatureAntipode (chronologicalSignature observe events) := by
   exact chronological_signature_reverse_neg observe events
 
 /-- Every step-two Magnus coordinate changes sign under chronological time
-reversal.  This primitive-coordinate sign is present for every word length;
+reversal. This primitive-coordinate sign is present for every word length;
 it is distinct from the even/odd scalar factor sign. -/
 theorem doubled_magnus_prime_step_time_reversal
     {A : Type u} [Ring A]
-    (observe : PrimeGoldenStepEvent -> A)
+    (observe : PrimeGoldenStepEvent → A)
     (events : List PrimeGoldenStepEvent) :
     doubledMagnusDegreeTwo
         (chronologicalSignature (fun event => -observe event) events.reverse) =
@@ -307,18 +310,18 @@ theorem doubled_magnus_prime_step_time_reversal
     logarithmLaw
   simpa [chronologicalLog, StepTwoLogarithm.inverse] using degreeTwoLaw
 
-/-- Headline trichotomy for one prime-step event stream.  Commutative prime
+/-- Headline trichotomy for one prime-step event stream. Commutative prime
 readout retains only Liouville degree parity, scalar golden readout forgets
 word reversal, and the noncommutative Magnus lift retains oriented chronology. -/
 theorem prime_word_time_reversal_readout_trichotomy
     {A : Type u} [Ring A]
-    (observe : PrimeGoldenStepEvent -> A)
+    (observe : PrimeGoldenStepEvent → A)
     (time : Real) (events : List PrimeGoldenStepEvent) :
     antipodePrimeWordReadout events =
         ArithmeticFunction.liouville (primeWordProduct events) *
-          commutativePrimeWordReadout events and
-      totalStepFrequency events.reverse = totalStepFrequency events and
-      scalarStepEndpoint time events.reverse = scalarStepEndpoint time events and
+          commutativePrimeWordReadout events ∧
+      totalStepFrequency events.reverse = totalStepFrequency events ∧
+      scalarStepEndpoint time events.reverse = scalarStepEndpoint time events ∧
       doubledMagnusDegreeTwo
           (chronologicalSignature (fun event => -observe event) events.reverse) =
         -doubledMagnusDegreeTwo (chronologicalSignature observe events) := by
