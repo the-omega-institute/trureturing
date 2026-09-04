@@ -46,7 +46,6 @@ internal static class BackfillInventoryRule
                 || path.Value == TheoryAtomizerDataLoader.DataPath
                 || DigestionLedgerAligner.IsAtomizerImplementationPath(path.Value)
                 || path.Value is "Meta/registry.yaml" or "Meta/domains.yaml"
-                || FrozenLedgerChangeClassifier.IsAcceptedEventPath(path.Value)
                 || FrozenLedgerDeltaPredicate.IsEnvironmentInput(path.Value)
                 // 理论卷按路径规则治理后,`GovernanceDocuments` 里已无理论路径;
                 // 若此处仍只靠那张清单,只改理论卷的候选就**整条规则不触发**
