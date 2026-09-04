@@ -6,10 +6,6 @@ coverage_gids:
   - gid: D5/S3/Fourier/CenterFiberMomentRepresentation.center_fiber_moment_representation
     target_statement_id: sha256:fbc8018fed002f0aff7e75087b357abaff171c11deb337554f8a8090b242f680
 receipts:
-  coverage:
-    - gid: D5/S3/Fourier/CenterFiberMomentRepresentation.center_fiber_moment_representation
-      source_sha256: sha256:8befaf1c0222d3f1201d90f99c09ce25ee4be71b2c8291db1cb11e77afd71933
-      target_statement_id: sha256:fbc8018fed002f0aff7e75087b357abaff171c11deb337554f8a8090b242f680
   scribe:
     - gid: D5/S3/Fourier/CenterFiberMomentRepresentation.center_fiber_moment_representation
       definition_sha256: sha256:40e19af8a6dfa520eaef7b86df3d6a90ada282c3446d90e016a02f63600c8b2d
