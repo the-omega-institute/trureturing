@@ -1,12 +1,16 @@
-using System.Collections.Concurrent;
 using System.Formats.Tar;
 using System.Text;
 using System.Xml.Linq;
+using StrataLint.Engine;
 
 namespace StrataLint.EngineeringScope;
 
 internal sealed record ControllerClosureSnapshot(
     string Commit,
+    IReadOnlyList<string> EvaluatorPaths,
+    IReadOnlySet<string> OwnerPaths);
+
+internal sealed record ControllerClosurePaths(
     IReadOnlyList<string> EvaluatorPaths,
     IReadOnlySet<string> OwnerPaths);
 
@@ -16,16 +20,30 @@ internal static class ControllerClosure
         "tools/StrataLint.EngineeringScope/SelfLockProbe/StrictArtifacts.cs";
     private const string EntryProject =
         "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj";
-    private static readonly UTF8Encoding StrictUtf8 = new(false, true);
-    private static readonly ConcurrentDictionary<(string Root, string Commit), ControllerClosureSnapshot>
-        Cache = new();
+    internal static IReadOnlyList<string> RuntimePaths { get; } =
+    [
+        "tools/scripts/workflow/pure-revert-detect.sh",
+        "tools/scripts/workflow/self-lock-probe.sh",
+        "tools/scripts/report/report-supervisor.sh",
+    ];
 
     internal static ControllerClosureSnapshot Derive(string controllerRoot)
     {
         var root = ProcessTools.RequireRepositoryRoot(controllerRoot);
         var commit = ProcessTools.GitText(root, "rev-parse", "HEAD");
-        return Cache.GetOrAdd((root, commit), static key => DeriveCore(key.Root, key.Commit));
+        var snapshot = SnapshotDecoder.Decode(GitRepositorySnapshotReader.ReadRevision(root, commit)) switch
+        {
+            SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,
+            SnapshotDecodeOutcome.InfrastructureFailure failure =>
+                throw new InvalidDataException($"controller snapshot is invalid: {failure.Message}"),
+            _ => throw new InvalidDataException("controller snapshot decode returned an unknown outcome"),
+        };
+        var paths = DeriveCore(snapshot);
+        return new ControllerClosureSnapshot(commit, paths.EvaluatorPaths, paths.OwnerPaths);
     }
+
+    internal static ControllerClosurePaths Derive(RepositorySnapshot snapshot) =>
+        DeriveCore(snapshot);
 
     internal static byte[] ReadAtHead(string controllerRoot, string relativePath)
     {
@@ -77,10 +95,13 @@ internal static class ControllerClosure
         return files;
     }
 
-    private static ControllerClosureSnapshot DeriveCore(string root, string commit)
+    private static ControllerClosurePaths DeriveCore(RepositorySnapshot snapshot)
     {
-        var tracked = TrackedPaths(root);
-        var projects = ProjectClosure(root, tracked);
+        ArgumentNullException.ThrowIfNull(snapshot);
+        var tracked = snapshot.Files.Values
+            .Select(static file => file.Path.Value)
+            .ToHashSet(StringComparer.Ordinal);
+        var projects = ProjectClosure(snapshot, tracked);
         var evaluator = new HashSet<string>(StringComparer.Ordinal);
         foreach (var project in projects)
         {
@@ -93,14 +114,12 @@ internal static class ControllerClosure
                 && !path.Contains("/obj/", StringComparison.Ordinal)));
             var lockFile = directory + "/packages.lock.json";
             if (tracked.Contains(lockFile)) evaluator.Add(lockFile);
-            AddProjectInputs(root, project, evaluator, tracked);
+            AddProjectInputs(snapshot, project, evaluator, tracked);
         }
 
         AddIfTracked(evaluator, tracked, "Directory.Build.props");
         AddIfTracked(evaluator, tracked, "Directory.Packages.props");
-        AddIfTracked(evaluator, tracked, "tools/scripts/workflow/pure-revert-detect.sh");
-        AddIfTracked(evaluator, tracked, "tools/scripts/workflow/self-lock-probe.sh");
-        AddIfTracked(evaluator, tracked, "tools/scripts/report/report-supervisor.sh");
+        foreach (var path in RuntimePaths) AddIfTracked(evaluator, tracked, path);
 
         var owners = new HashSet<string>(evaluator, StringComparer.Ordinal);
         owners.Add("tools/self-lock-probe-result.json");
@@ -108,41 +127,14 @@ internal static class ControllerClosure
         owners.UnionWith(tracked.Where(static path => path.StartsWith(
             "tools/tests/StrataLint.ScriptTests/SelfLockProbeScriptTests.",
             StringComparison.Ordinal)));
-        return new ControllerClosureSnapshot(
-            commit,
+        return new ControllerClosurePaths(
             evaluator.Order(StringComparer.Ordinal).ToArray(),
             owners);
     }
 
-    private static HashSet<string> TrackedPaths(string root)
-    {
-        var output = ProcessTools.Run(
-            "/usr/bin/git",
-            ["-C", root, "ls-tree", "-r", "--name-only", "-z", "HEAD"],
-            root);
-        if (output.ExitCode != 0 || output.StandardError.Length != 0)
-        {
-            throw new InvalidDataException("controller tree enumeration failed");
-        }
-        var result = new HashSet<string>(StringComparer.Ordinal);
-        foreach (var bytes in SplitNul(output.StandardOutput))
-        {
-            string path;
-            try
-            {
-                path = StrictUtf8.GetString(bytes);
-            }
-            catch (DecoderFallbackException exception)
-            {
-                throw new InvalidDataException("controller path is not strict UTF-8", exception);
-            }
-            EnsureCanonical(path);
-            result.Add(path);
-        }
-        return result;
-    }
-
-    private static HashSet<string> ProjectClosure(string root, IReadOnlySet<string> tracked)
+    private static HashSet<string> ProjectClosure(
+        RepositorySnapshot snapshot,
+        IReadOnlySet<string> tracked)
     {
         var pending = new Stack<string>();
         var projects = new HashSet<string>(StringComparer.Ordinal);
@@ -155,7 +147,7 @@ internal static class ControllerClosure
                     throw new InvalidDataException("controller project reference is absent from base");
                 continue;
             }
-            var document = ReadProject(root, project);
+            var document = ReadProject(snapshot, project);
             foreach (var reference in document.Descendants()
                          .Where(static element => element.Name.LocalName == "ProjectReference"))
             {
@@ -166,12 +158,12 @@ internal static class ControllerClosure
     }
 
     private static void AddProjectInputs(
-        string root,
+        RepositorySnapshot snapshot,
         string project,
         HashSet<string> evaluator,
         IReadOnlySet<string> tracked)
     {
-        var document = ReadProject(root, project);
+        var document = ReadProject(snapshot, project);
         foreach (var input in document.Descendants().Where(static element =>
                      element.Name.LocalName is "AdditionalFiles" or "Compile"))
         {
@@ -190,11 +182,13 @@ internal static class ControllerClosure
         }
     }
 
-    private static XDocument ReadProject(string root, string project)
+    private static XDocument ReadProject(RepositorySnapshot snapshot, string project)
     {
         try
         {
-            return XDocument.Parse(StrictUtf8.GetString(ReadAtHead(root, project)), LoadOptions.None);
+            if (!snapshot.TryGetFile(project, out var file))
+                throw new InvalidDataException("controller project reference is absent from base");
+            return XDocument.Parse(file.Text, LoadOptions.None);
         }
         catch (Exception exception) when (exception is DecoderFallbackException or System.Xml.XmlException)
         {
@@ -246,22 +240,9 @@ internal static class ControllerClosure
         string path)
     {
         if (!tracked.Contains(path))
-            throw new InvalidDataException("controller runtime dependency is absent from base");
+            throw new InvalidDataException(
+                $"controller runtime dependency is absent from base: {path}");
         paths.Add(path);
-    }
-
-    private static IEnumerable<byte[]> SplitNul(byte[] bytes)
-    {
-        var start = 0;
-        for (var index = 0; index < bytes.Length; index++)
-        {
-            if (bytes[index] != 0) continue;
-            if (index == start) throw new InvalidDataException("controller path record is empty");
-            yield return bytes[start..index];
-            start = index + 1;
-        }
-        if (start != bytes.Length)
-            throw new InvalidDataException("controller path record is partial");
     }
 
     private static void EnsureCanonical(string path)

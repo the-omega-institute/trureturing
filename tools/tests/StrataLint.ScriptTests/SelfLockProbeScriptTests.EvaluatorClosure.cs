@@ -71,7 +71,7 @@ public sealed partial class SelfLockProbeScriptTests
                 "--controller-root",
                 controller,
             ],
-            root,
+            TestScratchRoot.Current.Path,
             TestBudgets.ScriptProcessHangGuard,
             64 * 1024);
         Assert.True(result.ExitCode == 0, Diagnostics(result));

@@ -67,7 +67,7 @@ public sealed partial class SelfLockProbeScriptTests
                 "--j0-bundle", fixture.J0Bundle.Path,
                 .. gateArguments,
             ],
-            TestRepositoryLayout.FindRoot(),
+            TestScratchRoot.Current.Path,
             TestBudgets.ScriptProcessHangGuard,
             256 * 1024);
 
@@ -97,7 +97,7 @@ public sealed partial class SelfLockProbeScriptTests
                 "--required-gate", "engineering",
                 "--red-gate", "engineering",
             ],
-            TestRepositoryLayout.FindRoot(),
+            TestScratchRoot.Current.Path,
             TestBudgets.ScriptProcessHangGuard,
             256 * 1024);
 
@@ -119,7 +119,7 @@ public sealed partial class SelfLockProbeScriptTests
                 "--controller-root",
                 TestRepositoryLayout.FindRoot(),
             ],
-            TestRepositoryLayout.FindRoot(),
+            TestScratchRoot.Current.Path,
             TestBudgets.ScriptProcessHangGuard,
             64 * 1024);
         Assert.True(result.ExitCode == 0, Diagnostics(result));
@@ -146,7 +146,7 @@ public sealed partial class SelfLockProbeScriptTests
                 "--bundle-root", bundleRoot,
                 "--staging-bundle", stagingBundle,
             ],
-            TestRepositoryLayout.FindRoot(),
+            TestScratchRoot.Current.Path,
             TestBudgets.ScriptProcessHangGuard,
             64 * 1024);
         Assert.True(result.ExitCode == 0, Diagnostics(result));
@@ -173,7 +173,7 @@ public sealed partial class SelfLockProbeScriptTests
                 "artifact-digest",
                 "--path", path,
             ],
-            TestRepositoryLayout.FindRoot(),
+            TestScratchRoot.Current.Path,
             TestBudgets.ScriptProcessHangGuard,
             64 * 1024);
         Assert.True(result.ExitCode == 0, Diagnostics(result));
