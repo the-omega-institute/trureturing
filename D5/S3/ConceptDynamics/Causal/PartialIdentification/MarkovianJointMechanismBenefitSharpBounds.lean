@@ -28,6 +28,7 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.ConceptDynamics.Causal.PartialIdentification.MarkovianJointMechanismBenefitSharpBounds
 
 open scoped BigOperators
+open D5.S3.ConceptDynamics.Causal.PartialIdentification.CanonicalResponseSignature
 open D5.S3.ConceptDynamics.Causal.PartialIdentification.MarkovianResponseLawFactorization
 open D5.S3.ConceptDynamics.Causal.PartialIdentification.MarkovianBenefitIdentificationBoundary
 
@@ -80,7 +81,9 @@ def benefitIndicatorCouplingLaw
     rcases response with ⟨first, second⟩
     cases first <;> cases second <;>
       simp [benefitIndicatorCouplingVector] <;> linarith
-  · simp [benefitIndicatorCouplingVector]
+  · simp only [Fintype.sum_prod_type, Fintype.sum_bool,
+      benefitIndicatorCouplingVector]
+    ring
 
 @[simp] theorem benefitIndicatorCouplingLaw_firstMarginal
     (firstBenefit secondBenefit jointBenefit : ℚ)
@@ -334,9 +337,9 @@ theorem half_unrestricted_joint_benefit_target_feasible_iff
         firstBenefitIndicatorMarginal law.mass = 1 / 2 ∧
           secondBenefitIndicatorMarginal law.mass = 1 / 2 ∧
           jointBenefitIndicatorMass law.mass = target := by
-  simpa using
+  convert
     (unrestricted_joint_benefit_target_feasible_iff
-      (1 / 2 : ℚ) (1 / 2 : ℚ) target)
+      (1 / 2 : ℚ) (1 / 2 : ℚ) target) using 1 <;> norm_num
 
 /-- With both marginal mechanism benefit probabilities equal to one half,
 Markovian independence point identifies simultaneous benefit at one quarter. -/
@@ -348,10 +351,11 @@ theorem half_markovian_joint_benefit_target_feasible_iff
           benefitResponseMass model.secondLaw.mass = 1 / 2 ∧
           jointMechanismBenefitMass
               (markovianJointResponseMass model) = target := by
-  simpa using
+  convert
     (markovian_joint_benefit_sharp_singleton_iff
       (1 / 2 : ℚ) (1 / 2 : ℚ) target
-      (by norm_num) (by norm_num) (by norm_num) (by norm_num))
+      (by norm_num) (by norm_num) (by norm_num) (by norm_num)) using 1 <;>
+    norm_num
 
 /-- The half-marginal example exhibits strict tightening. Zero simultaneous
 benefit is attainable under unrestricted cross-mechanism coupling, while every
