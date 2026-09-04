@@ -1,4 +1,5 @@
 import LeanInformationAudit.CatalogBuilder
+import LeanInformationAudit.Sha256
 
 namespace LeanInformationAudit
 
@@ -60,7 +61,11 @@ private def primitiveAxisCount {X : Type u} (bundle : PrimitiveBundle X)
   letI := bundle.indexDecidableEq
   exact (Finset.univ.filter fun index => (bundle.atom index).axis = axis).card
 
-/-- Hash the canonical ordinal partition induced by the compiled primitive kernel. -/
+/--
+Serialize classes in first-representative order as
+`class_count;class_1_ordinals;...`, then SHA-256 those ASCII bytes. The address is
+an output-only projection and is never read as seal decision input.
+-/
 private unsafe def primitiveKernelAddress {X : Type u} (stateFintype : Fintype X)
     (bundle : PrimitiveBundle X) : String := by
   letI := stateFintype
@@ -76,7 +81,10 @@ private unsafe def primitiveKernelAddress {X : Type u} (stateFintype : Fintype X
         | _, _ => false with
     | some index => classes.modify index fun candidate => candidate.push ordinal
     | none => classes.push #[ordinal]
-  exact toString (hash classes)
+  let encodedClasses := classes.toList.map fun candidate =>
+    String.intercalate "," (candidate.toList.map toString)
+  let serialization := String.intercalate ";" (toString classes.size :: encodedClasses)
+  exact "sha256:" ++ Sha256.hex serialization.toUTF8
 
 private def uniqueCaptureSignatureCount {arena : Arena.{u}}
     (catalog : Catalog.{u, v, w} arena) (index : catalog.Index)
