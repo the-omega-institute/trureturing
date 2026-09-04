@@ -6,6 +6,10 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Whole-atom partial-coverage guard after source, frozen-owner statement, proof, and Scribe projection audit. The frozen owner D5/S3/ConceptDynamics/Interpretation/FixedPointMultiplicity.fixed_point_multiplicity_and_actuality_gap publicly carries the zero, exactly-one, multiple, and all-state fixed-point regimes, proves that self-consistency does not imply uniqueness, and gives a uniqueness-versus-actuality countermodel. The following source clause remains uncarried verbatim: '要从固定点集合中选出实际对象，还需要：最小性；最大性；稳定性；锚点；可达性；能量或价值极小；历史选择；现实准入。' The phrase '还需要' asserts a requirement involving those listed principles, but the source provides no typed predicates or logical relation specifying whether they are necessary, sufficient, jointly required, or alternatives, and the frozen owner deliberately makes no such claim."
+    reentry_condition: Provide source-sanctioned typed predicates for minimality, maximality, stability, anchoring, reachability, energy-or-value minimization, historical selection, and reality admission on the fixed-point carrier, together with an exact typed theorem specifying whether those principles are necessary, sufficient, jointly required, or alternatives for selecting an actual fixed point; then package that theorem with the clauses already carried by D5/S3/ConceptDynamics/Interpretation/FixedPointMultiplicity.fixed_point_multiplicity_and_actuality_gap.
+    blocker_class: multi-clause-guard
   chain_atoms:
     - 45de0694ded9be943c4f31b8e9d8aea7e9f17628e4432c8781a778798576fd7f
     - 70a647e621e39744b4121aec1e04f052ace83e49db2a9eea8ae6f3ae51fd47f6
