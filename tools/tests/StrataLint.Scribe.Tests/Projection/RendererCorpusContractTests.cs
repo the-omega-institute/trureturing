@@ -9,7 +9,7 @@ namespace StrataLint.Scribe.Tests;
 public sealed partial class FormulaCorpusInventoryTests
 {
     private const string CanonicalRendererSha256 =
-        "aeeebbf949ecdc165321ffff21a7207685cf9744efeeb0a6331a312fa462af07";
+        "ac81e0dc33e565c52c9071161ce85666c1775b2f530b98ee74bac82a75e61f68";
     private const string UpdateCommand = "make -C tools update-renderer-contract";
 
     [Fact]
@@ -443,6 +443,14 @@ public sealed partial class FormulaCorpusInventoryTests
         formulas.Add(new Formula.Power(digits, additive));
         formulas.Add(new Formula.Power(new Formula.Power(x, one), word));
         formulas.Add(new Formula.Subscript(macroPhi, subscript));
+        // 2026-09-04 第二批判词（四项，一次补齐）：
+        //   Power(Base=LatexGroup,Exponent=LatexSequence) / Power(Base=LatexGroup,Exponent=LatexWord)
+        //   Subscript(Base=LatexSequence,Index=LatexWord)
+        //   LatexGroup.Items=precedence:multiplicative
+        formulas.Add(new Formula.Power(group, sequence));
+        formulas.Add(new Formula.Power(group, word));
+        formulas.Add(new Formula.Subscript(sequence, word));
+        formulas.Add(new Formula.LatexGroup([multiplicative]));
         // 2026-09-02 判词逐字: formula-context:LatexGroup.Items=precedence:logic;
         //   produces-script:false;starts-with-negation:false
         // precedence:logic 只由 Formula.Logic 产生(LatexWriter.WriteLogic 的 LogicPrecedence)。
