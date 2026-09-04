@@ -74,7 +74,7 @@ theorem two_event_swapped_bidegree_eq
     (first second : PrimeGoldenStepEvent) :
     primeGoldenBidegree [first, second] =
       primeGoldenBidegree [second, first] := by
-  simpa using prime_golden_bidegree_reverse [first, second]
+  simpa using (prime_golden_bidegree_reverse [first, second]).symm
 
 /-- A two-event word and its reversal have the same complete scalar phase
 trajectory. -/
@@ -82,7 +82,7 @@ theorem two_event_swapped_scalar_trajectory
     (first second : PrimeGoldenStepEvent) :
     SameScalarTrajectory [first, second] [second, first] := by
   intro time
-  simpa using scalar_step_endpoint_reverse time [first, second]
+  simpa using (scalar_step_endpoint_reverse time [first, second]).symm
 
 /-- If both events use one prime channel, the word and its reversal lie in the
 same fixed-prime bidegree fiber. -/
@@ -97,14 +97,14 @@ theorem swapped_two_event_words_in_same_prime_bidegree_fiber
   constructor
   · constructor
     · intro event hmem
-      simp only [List.mem_cons, List.mem_singleton] at hmem
+      simp only [List.mem_cons, List.not_mem_nil, or_false] at hmem
       rcases hmem with rfl | rfl
       · exact hFirst
       · exact hSecond
     · rfl
   · constructor
     · intro event hmem
-      simp only [List.mem_cons, List.mem_singleton] at hmem
+      simp only [List.mem_cons, List.not_mem_nil, or_false] at hmem
       rcases hmem with rfl | rfl
       · exact hSecond
       · exact hFirst
