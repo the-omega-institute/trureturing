@@ -231,7 +231,43 @@ all but one component law fixed -> linear program.
 
 The module does not infer confounded components from a graph, compile observational distributions to component-law constraints, or solve the general multilinear optimization problem.
 
-## 11. Semantic boundary: mixture versus one global graph
+## 11. Markovian benefit identification boundary
+
+`MarkovianBenefitIdentificationBoundary` separates two assumptions that are often conflated in probability-of-causation arguments.
+
+A standard Markovian treatment-outcome SCM separates the treatment-assignment disturbance from the outcome-mechanism disturbance. The two potential outcomes remain coordinates of one outcome response type. Markovianity therefore permits an arbitrary joint law on
+
+```text
+(Y0, Y1).
+```
+
+The module constructs, for every target `b` satisfying
+
+```text
+max(0, p1 - p0) <= b <= min(p1, 1 - p0),
+```
+
+an explicit normalized four-cell outcome-response law with control success `p0`, treated success `p1`, and benefit mass `b`. Pairing this law with a normalized independent assignment law gives a Markovian assignment-outcome response model. Conversely, every such model obeys the same bounds. The ordinary Boolean Frechet interval remains exactly sharp under assignment-outcome exogenous independence.
+
+The concrete theorem with `p0 = p1 = 1 / 2` constructs two Markovian models. One has benefit probability zero and the other has benefit probability one half. Their observed interventional marginals agree. Standard Markovianity therefore does not point identify probability of benefit.
+
+The module then imposes the stronger response-coordinate factorization
+
+```text
+P(Y0 = y0, Y1 = y1)
+  = P(Y0 = y0) P(Y1 = y1).
+```
+
+Under this extra cross-world restriction, benefit is point identified as
+
+```text
+P(Y0 = false, Y1 = true)
+  = (1 - p0) * p1.
+```
+
+This restriction is not derived from the standard Markovian SCM definition. It splits two coordinates produced by one structural disturbance into separate independent components. The distinction supplies a formal claim boundary for future PoC analyses.
+
+## 12. Semantic boundary: mixture versus one global graph
 
 The support and event-row compilers have latent-completion mixture semantics. Different units may receive mass from different admissible completions.
 
@@ -245,7 +281,7 @@ Convexifying that union silently changes the causal model by introducing a laten
 
 A similar warning applies to Markovian response laws. Mixing two product-factorized laws can create dependence between components. A latent mixture index must therefore be represented explicitly and cannot be silently absorbed into a claim of exogenous independence.
 
-## 12. Interfaces to current research
+## 13. Interfaces to current research
 
 The current literature interface is organized as follows.
 
@@ -260,7 +296,7 @@ The current literature interface is organized as follows.
 
 The repository claim boundary is narrower than these papers. The PR proves reusable logical kernels and finite concrete instances. It does not claim a complete reproduction of any paper's general algorithm or theorem family.
 
-## 13. Verification ledger
+## 14. Verification ledger
 
 Required protected-branch checks are:
 
@@ -272,12 +308,13 @@ Content-addressed dev baseline admission
 
 A truth source is considered machine-verified only after the current PR head passes the protected workflow. Scribe freshness is likewise determined by the repository renderer rather than by hand-edited Markdown.
 
-## 14. Next formal research sequence
+## 15. Next formal research sequence
 
 The Markovian lane now advances through:
 
 ```text
 MarkovianResponseLawFactorization
+  -> MarkovianBenefitIdentificationBoundary
   -> finite component decomposition from a causal graph
   -> componentwise observational and interventional likelihood rows
   -> multilinear event polynomial semantics
@@ -296,6 +333,8 @@ component-factorized Markovian or quasi-Markovian bound,
 ```
 
 and provide either a closed-form sharp interval or a finite exact branch certificate.
+
+A second target is to characterize which additional assumptions on the outcome response component genuinely reduce the Boolean benefit interval. Candidate restrictions include monotonicity, response-coordinate independence, bounded disagreement, and shared latent-rank models. Each restriction must be stated separately from standard Markovian assignment-outcome independence.
 
 The partial-diagram lane continues with:
 
