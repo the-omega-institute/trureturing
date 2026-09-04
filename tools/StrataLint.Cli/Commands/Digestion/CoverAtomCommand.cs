@@ -322,7 +322,6 @@ internal static partial class CoverAtomCommand
                 DigestionEvaluationScopes.ResolveChanges(
                     evaluationScope,
                     receiptVerificationChanges),
-                repositoryChanges: coverChanges,
                 projectedStatusChanges: DigestionEvaluationScopes.ResolveChanges(
                     evaluationScope,
                     evaluationChanges));
