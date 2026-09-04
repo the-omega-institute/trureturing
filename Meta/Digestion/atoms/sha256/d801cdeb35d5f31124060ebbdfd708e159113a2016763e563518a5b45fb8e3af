@@ -1,0 +1,54 @@
+## 244. 反射商对数导数
+
+定义：
+
+$$
+\mathcal S(x)
+=
+-\frac{
+\mathcal X'(-x)
+}{
+\mathcal X(-x)
+},
+\qquad
+x\ge0.
+$$
+
+由 genus-zero product：
+
+$$
+\boxed{
+\mathcal S(x)
+=
+\sum_j
+\frac{m_j}{x+q_j}.
+}
+$$
+
+若 RH 成立：
+
+$$
+q_j\ge\frac14,
+$$
+
+所以：
+
+$$
+\mathcal S(x)
+=
+\int_{[1/4,\infty)}
+\frac{d\mu(q)}{x+q},
+$$
+
+其中：
+
+$$
+\mu
+=
+\sum_jm_j\delta_{q_j}.
+$$
+
+因此 \(\mathcal S\) 是一个离散 Stieltjes transform。
+
+---
+

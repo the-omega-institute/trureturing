@@ -1,0 +1,14 @@
+## 465. 构型累积量
+
+$$
+\kappa_H
+=
+\sum_{\pi\in\Pi(H)}
+\mu_{\Pi}(\pi,\hat1)
+\prod_{B\in\pi}M_B.
+$$
+
+这是 partition lattice 上的 Möbius 反演。
+
+---
+

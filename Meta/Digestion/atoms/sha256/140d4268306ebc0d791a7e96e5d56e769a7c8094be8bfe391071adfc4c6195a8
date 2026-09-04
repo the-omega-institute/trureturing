@@ -1,0 +1,66 @@
+## 136. 四元零点轨道在 \(q\)-平面中降为二元共轭对
+
+设：
+
+$$
+\rho=\frac12+\delta+i\gamma.
+$$
+
+完整四元轨道为：
+
+$$
+\rho,\qquad
+1-\rho,\qquad
+\overline\rho,\qquad
+1-\overline\rho.
+$$
+
+映到 \(q\)-平面以后：
+
+$$
+\mathcal Q(\rho)
+=
+\mathcal Q(1-\rho)
+=
+q_\rho,
+$$
+
+$$
+\mathcal Q(\overline\rho)
+=
+\mathcal Q(1-\overline\rho)
+=
+\overline{q_\rho}.
+$$
+
+所以：
+
+$$
+\boxed{
+4\text{ 个 }s\text{-平面点}
+\longrightarrow
+2\text{ 个 }q\text{-平面共轭点}.
+}
+$$
+
+若 RH 成立：
+
+$$
+q_\rho=\overline{q_\rho},
+$$
+
+于是再降为一个实点：
+
+$$
+\boxed{
+4\longrightarrow2\longrightarrow1.
+}
+$$
+
+这就是一个严格的“重完”过程：
+
+1. 函数方程完成掉反射页；
+2. RH 再要求剩余共轭页融合为实点。
+
+---
+

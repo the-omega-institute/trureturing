@@ -1,0 +1,12 @@
+* \(K\subset\mathscr H\) 为紧集；
+
+则：
+
+$$
+\boxed{
+\sup_{x\in K}
+\|(I-P_N)x\|
+\to0.
+}
+$$
+

@@ -1,0 +1,40 @@
+## 132. 旧的六层结构需要增加三个层
+
+原有结构是：
+
+$$
+\text{构型}
+\to
+\text{局部 residue}
+\to
+\text{累积量}
+\to
+\text{多谱}
+\to
+\text{零点轨道}
+\to
+\text{Trace--Jet bridge}.
+$$
+
+现在应升级为：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Layer 0：}&\text{observer quotient / naming group};\\
+\text{Layer 1：}&\text{character decomposition};\\
+\text{Layer 2：}&\text{Tate break--norm complex};\\
+\text{Layer 3：}&\text{Zeckendorf/Fibonacci adelic dynamics};\\
+\text{Layer 4：}&\text{prime-constellation Fourier state};\\
+\text{Layer 5：}&\text{connected source cumulants};\\
+\text{Layer 6：}&\text{completed cocycle and root number};\\
+\text{Layer 7：}&\text{zero sign-isotypic representation};\\
+\text{Layer 8：}&\text{Paley--Wiener Gram entanglement};\\
+\text{Layer 9：}&\text{inverse-limit / }\varprojlim^1\text{ obstruction};\\
+\text{Layer 10：}&\text{correlation-completed adelic determinant}.
+\end{aligned}
+}
+$$
+
+---
+

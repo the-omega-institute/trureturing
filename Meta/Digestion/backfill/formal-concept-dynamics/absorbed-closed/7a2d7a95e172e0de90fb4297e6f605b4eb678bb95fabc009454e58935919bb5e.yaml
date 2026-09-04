@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:7a2d7a95e172e0de90fb4297e6f605b4eb678bb95fabc009454e58935919bb5e
 cas_ref: sha256:7a2d7a95e172e0de90fb4297e6f605b4eb678bb95fabc009454e58935919bb5e
 coverage_gids:
-  - D5/S3/ConceptDynamics/Dialectics/MinimalDialecticalRepair.minimal_dialectical_repair
+  - gid: D5/S3/ConceptDynamics/Dialectics/MinimalDialecticalRepair.minimal_dialectical_repair
+    target_statement_id: sha256:3e2a0ac27518fae7d7a3d7d2bc69b4efe969294739e3ad95ab4d3d895fdc502a
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Dialectics/MinimalDialecticalRepair.minimal_dialectical_repair
-      source_sha256: sha256:7a2d7a95e172e0de90fb4297e6f605b4eb678bb95fabc009454e58935919bb5e
-      target_statement_id: sha256:3e2a0ac27518fae7d7a3d7d2bc69b4efe969294739e3ad95ab4d3d895fdc502a
   scribe:
     - gid: D5/S3/ConceptDynamics/Dialectics/MinimalDialecticalRepair.minimal_dialectical_repair
       definition_sha256: sha256:dd624fdd5f3312271ac5e344ec8c2470e80d75cce287682d5bda1a0567a0193b

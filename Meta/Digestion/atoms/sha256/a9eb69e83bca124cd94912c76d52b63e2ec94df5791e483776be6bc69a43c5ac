@@ -1,0 +1,43 @@
+## 128. Fisher metric
+
+定义：
+
+$$
+g_{hh'}(\sigma,\mathbf u)
+=
+\partial_{u_h}\partial_{u_{h'}}
+\Phi_H.
+$$
+
+则：
+
+$$
+g_{hh'}
+=
+\operatorname{Cov}(X_h,X_{h'}).
+$$
+
+对任意实向量 \(c_h\)：
+
+$$
+\sum_{h,h'}c_hg_{hh'}c_{h'}
+=
+\operatorname{Var}
+\left(
+\sum_hc_hX_h
+\right)
+\ge0.
+$$
+
+所以：
+
+$$
+\boxed{
+g_H\succeq0.
+}
+$$
+
+其核空间恰由当前分布下无法区分的 source directions 构成。
+
+---
+

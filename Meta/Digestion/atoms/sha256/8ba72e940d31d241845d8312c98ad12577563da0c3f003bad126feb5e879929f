@@ -1,0 +1,55 @@
+## 395. Observer-relative RH
+
+可以对一个非忠实观察者 \(O\) 定义：
+
+$$
+\mathrm{RH}_O
+=
+\text{观察者 }O
+\text{ 没有检测到 transverse defect}.
+$$
+
+两个不同观察者可能满足：
+
+$$
+\mathrm{RH}_{O_1}=\text{true},
+$$
+
+$$
+\mathrm{RH}_{O_2}=\text{false}.
+$$
+
+但若观察者族：
+
+$$
+\{O_\alpha\}
+$$
+
+联合忠实，则：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathrm{RH}_{O_\alpha}
+\quad
+\forall\alpha.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{有限／单观察者 RH 是相对的；}
+}
+$$
+
+$$
+\boxed{
+\text{全部联合忠实观察者的极限 RH 是绝对的。}
+}
+$$
+
+---
+

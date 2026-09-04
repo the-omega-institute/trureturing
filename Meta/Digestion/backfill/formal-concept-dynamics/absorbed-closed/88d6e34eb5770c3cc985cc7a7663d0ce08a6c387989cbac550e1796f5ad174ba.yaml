@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:88d6e34eb5770c3cc985cc7a7663d0ce08a6c387989cbac550e1796f5ad174ba
 cas_ref: sha256:88d6e34eb5770c3cc985cc7a7663d0ce08a6c387989cbac550e1796f5ad174ba
 coverage_gids:
-  - D5/S3/ConceptDynamics/Refinement/SeparatingJoinEliminatesMerge.separating_join_eliminates_merge
+  - gid: D5/S3/ConceptDynamics/Refinement/SeparatingJoinEliminatesMerge.separating_join_eliminates_merge
+    target_statement_id: sha256:8163ca9c677bc9d0bb991d6d212298f6c66363e9a6d38fa2c7b881596688ecf5
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Refinement/SeparatingJoinEliminatesMerge.separating_join_eliminates_merge
-      source_sha256: sha256:88d6e34eb5770c3cc985cc7a7663d0ce08a6c387989cbac550e1796f5ad174ba
-      target_statement_id: sha256:8163ca9c677bc9d0bb991d6d212298f6c66363e9a6d38fa2c7b881596688ecf5
   scribe:
     - gid: D5/S3/ConceptDynamics/Refinement/SeparatingJoinEliminatesMerge.separating_join_eliminates_merge
       definition_sha256: sha256:08127796d6b6de317bd04348746739000ef30d035db956b9842fd34cb00cdcba

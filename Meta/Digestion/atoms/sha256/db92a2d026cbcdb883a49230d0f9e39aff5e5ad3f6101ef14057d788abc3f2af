@@ -1,0 +1,53 @@
+## 13. 全阶构型完成
+
+若 \(H\subseteq K\)，令：
+
+$$
+\operatorname{res}_{K\to H}
+$$
+
+把所有 \(h\in K\setminus H\) 的源变量置零。
+
+则：
+
+$$
+\operatorname{res}_{K\to H}\mathcal M_K
+=
+\mathcal M_H,
+$$
+
+并且：
+
+$$
+\operatorname{res}_{K\to H}\mathcal K_K
+=
+\mathcal K_H.
+$$
+
+因此对每个 \(\sigma>1\)，定义：
+
+$$
+\boxed{
+\mathbf K_\sigma
+=
+\bigl(\mathcal K_H(\sigma)\bigr)_
+{H\subset_{\mathrm{fin}}\mathbb Z}.
+}
+$$
+
+这是一族实际存在、彼此兼容的有限源读数。
+
+它可以写成逆极限：
+
+$$
+\boxed{
+\mathbf K_\sigma
+\in
+\varprojlim_H\mathcal N_H.
+}
+$$
+
+所以“全部素数构型源状态”在安全半平面上不需要存在公理。
+
+---
+

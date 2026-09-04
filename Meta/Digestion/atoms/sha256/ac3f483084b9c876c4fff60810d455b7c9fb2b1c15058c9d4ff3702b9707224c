@@ -1,0 +1,1 @@
+**可证伪预测(写在跑之前)**:若正确,定理只消费钉版 Mathlib(`riemannZeta` 的 Re s > 1 级数表示、`differentiableAt_riemannZeta`、解析延拓唯一性)与至多本仓 `ZetaCore`,公理集为标准三条;若交错部分和在 {0 < Re s} 的局部一致收敛在钉版 API 下写不出(探针标记的缺口),则本条为 open,不得降级为「Re s > 1 版」冒充。

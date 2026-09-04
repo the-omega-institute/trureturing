@@ -1,0 +1,70 @@
+# 第一千九百九十六部　Möbius 函数是唯一的全局奇观察者
+
+squarefree integer：
+
+$$
+n=p_1\cdots p_k
+$$
+
+对应一个有限素数子集。
+
+其奇偶字符为：
+
+$$
+\boxed{
+(-1)^k.
+}
+$$
+
+这正是 Möbius 函数：
+
+$$
+\boxed{
+\mu(n)
+=
+\begin{cases}
+(-1)^{\omega(n)},&n\text{ squarefree},\\
+0,&p^2\mid n\text{ for some }p.
+\end{cases}
+}
+\tag{1996.1}
+$$
+
+而：
+
+$$
+\boxed{
+\sum_{n\ge1}
+\frac{\mu(n)}{n^s}
+=
+\frac1{\zeta(s)}
+}
+\tag{1996.2}
+$$
+
+于 \(\Re s>1\) 成立。
+
+Möbius 还有一个更重要的唯一性：
+
+$$
+\boxed{
+\mathbf1*\mu=\varepsilon,
+}
+\tag{1996.3}
+$$
+
+即它是常数函数 \(\mathbf1\) 在 Dirichlet convolution 下的唯一逆。
+
+所以可以非常准确地说：
+
+$$
+\boxed{
+\text{zeta 是全局累积名字；
+Möbius 是唯一把该累积反演回 primitive source 的观察者。}
+}
+$$
+
+它之所以“奇”，是因为它使用唯一的非平凡素数占据宇称字符。
+
+---
+

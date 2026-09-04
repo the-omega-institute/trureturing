@@ -1,0 +1,67 @@
+## 248. 反向与有限证书
+
+Hausdorff 定理说明，一个实序列 \(b_n\) 来自 \([0,1]\) 上的正测度，当且仅当：
+
+$$
+(-1)^k\Delta^kb_n\ge0
+\qquad
+\forall n,k.
+$$
+
+因为这里的 \(b_n\) 又来自固定 meromorphic function：
+
+$$
+-\frac{
+\mathcal X'(z/4)
+}{
+\mathcal X(z/4)
+}
+=
+\sum_{n\ge0}b_nz^n,
+$$
+
+正测度表示的唯一性会迫使其 singularities 位于：
+
+$$
+z\in[1,\infty),
+$$
+
+也就是：
+
+$$
+q_j\in[1/4,\infty).
+$$
+
+所以在完成 canonical-product 技术细节后，应得到：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+(-1)^k\Delta^kb_n\ge0
+\quad
+\forall n,k.
+}
+$$
+
+可以称为：
+
+> **Reflection-Casimir Hausdorff Criterion**
+
+它有一个极强的逻辑后果：
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\Longrightarrow
+\exists n,k,\quad
+(-1)^k\Delta^kb_n<0.
+}
+$$
+
+也就是说，如果 RH 为假，那么原则上存在一个有限阶、纯标量的不等式证书。
+
+但不存在已知统一上界告诉我们这个 \((n,k)\) 会有多深。
+
+---
+

@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:661c5a2d7dc7d6cc68fd30965571d42640929c5bd27588ef9b5ca8c16208e056
+  normalized_sha256: sha256:661c5a2d7dc7d6cc68fd30965571d42640929c5bd27588ef9b5ca8c16208e056
+cas_ref: sha256:661c5a2d7dc7d6cc68fd30965571d42640929c5bd27588ef9b5ca8c16208e056
+coverage_gids:
+  - gid: D5/S3/Weil/ZetaBridge/RealAxisNonvanishing.riemannZeta_real_zero_outside_Ioo
+    target_statement_id: sha256:b8b1da8624c06b78cbc35c984f75c049128b27537e648a6f95f85d1e29564e1e
+receipts:
+  scribe:
+    - gid: D5/S3/Weil/ZetaBridge/RealAxisNonvanishing.riemannZeta_real_zero_outside_Ioo
+      definition_sha256: sha256:d7b60da5af75ad0a031c461d24dbb15416e13a2b9cb9b9254819ac7fdb40805a
+      emission_sha256: sha256:57b4036d07f16b4b128f5db06342e6fbe00feac6d28d4a6aa61c261da9971ab2
+  unresolved_subitems: []

@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:46a905c051f0bda4303936ea9e3cc6d591aa1d2d0e5f3babc9cf674acaa0a9eb
+  normalized_sha256: sha256:46a905c051f0bda4303936ea9e3cc6d591aa1d2d0e5f3babc9cf674acaa0a9eb
+cas_ref: sha256:46a905c051f0bda4303936ea9e3cc6d591aa1d2d0e5f3babc9cf674acaa0a9eb
+coverage_gids:
+  - gid: D5/S3/Observer/MeasureSeparation/ZeroBayesResidualCriterion.statistical_residual_eq_zero_iff_mutually_singular
+    target_statement_id: sha256:c1e819c3ba00359f44654ee37a52c1825a5fa3777efddbf5b70aee960af32e67
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/MeasureSeparation/ZeroBayesResidualCriterion.statistical_residual_eq_zero_iff_mutually_singular
+      definition_sha256: sha256:9c4b2ecc79f5dc302865c0b88679bf6c250635e7395350e8e02c6be22ca30951
+      emission_sha256: sha256:f2fdab6c8625eff5596d2f186748599bfe0973a9027c3e5dbce9c32c597eb2bf
+  unresolved_subitems: []

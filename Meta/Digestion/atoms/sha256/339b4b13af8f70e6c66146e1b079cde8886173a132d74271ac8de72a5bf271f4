@@ -1,0 +1,32 @@
+## 100. 局部 survivor function
+
+对构型 \(H\) 和素数 \(p\)，定义：
+
+$$
+R_p(H)
+=
+\{-h\bmod p:h\in H\}.
+$$
+
+令：
+
+$$
+f_{p,H}(x)
+=
+\mathbf1_{x\notin R_p(H)},
+\qquad
+x\in\mathbb F_p.
+$$
+
+其归一化加法傅立叶变换为：
+
+$$
+\widehat f_{p,H}(a)
+=
+\frac1p
+\sum_{x\bmod p}
+f_{p,H}(x)e^{-2\pi iax/p}.
+$$
+
+---
+

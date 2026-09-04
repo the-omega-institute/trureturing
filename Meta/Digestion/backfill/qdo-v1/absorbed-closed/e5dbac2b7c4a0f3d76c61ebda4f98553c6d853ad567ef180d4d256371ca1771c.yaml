@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:e5dbac2b7c4a0f3d76c61ebda4f98553c6d853ad567ef180d4d256371ca1771c
+  normalized_sha256: sha256:e5dbac2b7c4a0f3d76c61ebda4f98553c6d853ad567ef180d4d256371ca1771c
+cas_ref: sha256:e5dbac2b7c4a0f3d76c61ebda4f98553c6d853ad567ef180d4d256371ca1771c
+coverage_gids:
+  - gid: D5/S3/Observer/Tomography/InnovationCountBound.large_innovation_count_le_budget_div
+    target_statement_id: sha256:86647310172d761072a4eb8a90a068ce893f387c98e63dd522a68ed8da4657dd
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/Tomography/InnovationCountBound.large_innovation_count_le_budget_div
+      definition_sha256: sha256:cd9e5ac933f2b3c17338ccfd77f5ccc2ad67149d143aa5d050d27d2a57f5eb0d
+      emission_sha256: sha256:68dfd217db27dba9813fb0c70e88dfdd9b9c8e1a87b446cc567e3631eeba7dd5
+  unresolved_subitems: []

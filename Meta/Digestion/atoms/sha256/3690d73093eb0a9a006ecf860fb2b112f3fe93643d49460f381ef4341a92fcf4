@@ -1,0 +1,11 @@
+### 150.5 Sieve incidence Schmidt decomposition
+
+```lean
+theorem sieveIncidence_schmidtRank
+    (p : Nat.Primes) (H : PrimeConstellation) :
+    schmidtRank (sieveIncidenceState p H) =
+      residueSupportCard p H
+```
+
+---
+

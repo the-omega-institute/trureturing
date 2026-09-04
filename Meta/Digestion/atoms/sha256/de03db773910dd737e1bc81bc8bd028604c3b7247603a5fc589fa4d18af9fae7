@@ -1,0 +1,74 @@
+# 八、如果指数真的大于所有标准素数
+
+这必须进入非标准数、超实数或 transseries/Hahn 场。
+
+设：
+
+$$
+H\in{}^\ast\mathbb N
+$$
+
+是一个无限超整数：
+
+$$
+H>n
+\qquad
+\forall n\in\mathbb N.
+$$
+
+定义：
+
+$$
+\varepsilon_H=\varphi^{-H}.
+$$
+
+那么：
+
+$$
+\varepsilon_H>0,
+$$
+
+但：
+
+$$
+\varepsilon_H<r
+\qquad
+\forall r>0,\ r\in\mathbb R.
+$$
+
+它是一个正无穷小。
+
+对任意标准素数 \(p\)：
+
+$$
+\varepsilon_H\log p
+$$
+
+仍是无穷小，所以：
+
+$$
+p^{-\varepsilon_H}
+=
+e^{-\varepsilon_H\log p}
+\approx1.
+$$
+
+因此：
+
+$$
+\boxed{
+\varepsilon_H
+\text{ 对所有标准有限素数观察者都不可见。}
+}
+$$
+
+但一个大约满足：
+
+$$
+\log p_H\asymp\varphi^H
+$$
+
+的超大素数坐标仍然可以看见它。
+
+---
+

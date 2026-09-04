@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:1af9114aad5514c525c71e338c1ccb4f142b4afe6fedc0d198daa73a4e456caa
+  normalized_sha256: sha256:1af9114aad5514c525c71e338c1ccb4f142b4afe6fedc0d198daa73a4e456caa
+cas_ref: sha256:1af9114aad5514c525c71e338c1ccb4f142b4afe6fedc0d198daa73a4e456caa
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Faithfulness/BundledFiniteQuotientResidualHierarchy.bundled_finite_quotient_residual_hierarchy
+    target_statement_id: sha256:bc04625f1f4b01b8fdbb18c921ebb23567a4e0c9cac2b1100399500aed979fb4
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Faithfulness/BundledFiniteQuotientResidualHierarchy.bundled_finite_quotient_residual_hierarchy
+      definition_sha256: sha256:c0543f9fd4923b99e0b580f79f7c5df4fb98672a6165a3bbaf527e63c6bdae5e
+      emission_sha256: sha256:3fd4a0550e02a0a2cad968aa5379ae852b658e838f3bdef52e6241661103c889
+  unresolved_subitems: []

@@ -83,8 +83,7 @@ internal static partial class RepositoryRules
     internal const int DirectoryToleranceLimit = 48;
 
     // SL-003 capacity exclusions: theory inputs, the Lake manifest, the backfill
-    // inventory, atomizer dialect registry, canonical CAS blobs, per-atom
-    // formalization receipts, per-test retirement declarations, and generated Blueprint
+    // inventory, atomizer dialect registry, canonical CAS blobs, and generated Blueprint
     // Markdown projections are not artifacts the capacity pressure rule bounds. Machine
     // inventories grow one entry per
     // admitted unit and are never navigated as content buckets; the atomizer registry
@@ -102,7 +101,6 @@ internal static partial class RepositoryRules
         || string.Equals(path, TheoryAtomizerDataLoader.DataPath, StringComparison.Ordinal)
         || DigestionCasStore.IsCanonicalPath(path)
         || FrozenLedgerChangeClassifier.IsAcceptedEventPath(path)
-        || path.StartsWith(DigestionFormalizationReceipt.RootPath, StringComparison.Ordinal)
         || (path.StartsWith("Blueprint/", StringComparison.Ordinal)
             && path.EndsWith(".md", StringComparison.Ordinal));
 
@@ -279,163 +277,6 @@ internal static partial class RepositoryRules
 
         return findings.ToImmutable();
     }
-
-    private static ImmutableArray<RuleFinding> Chronicle(RuleEvaluationContext context) =>
-        context.ForkPoint.Files
-            .Where(static item => item.Key.Value.StartsWith("Chronicle/", StringComparison.Ordinal))
-            .Where(item => context.IsBaseFactAffected(item.Key.Value))
-            .Where(item => !context.Current.TryGetFile(item.Key.Value, out var current)
-                || !current.RawBytes.AsSpan().SequenceEqual(item.Value.RawBytes.AsSpan()))
-            .Select(static item => new RuleFinding(item.Key.Value, "tracked Chronicle entries are append-only"))
-            .ToImmutableArray();
-
-    /// <summary>
-    /// A theory volume grows only at its end. Every atom the digestion ledger holds was hashed
-    /// from a span of these bytes, so rewriting a span silently detaches whatever was digested
-    /// from it — and an atom that carries a Lean coverage GID would lose that link with no
-    /// signal at all. An erratum is therefore published the way everything else in this
-    /// repository is published: as new text appended after the old, leaving the earlier bytes
-    /// exactly as they were digested. Admitting a change means the base bytes are still a
-    /// prefix of the candidate bytes, which rejects in-place edits, truncation, and deletion
-    /// with one predicate rather than three.
-    /// </summary>
-    private static ImmutableArray<RuleFinding> TheoryAppendOnly(RuleEvaluationContext context) =>
-        context.ForkPoint.Files
-            .Where(static item => IsTheoryVolumePath(item.Key.Value))
-            .Where(item => context.IsBaseFactAffected(item.Key.Value))
-            .Where(item => !context.Current.TryGetFile(item.Key.Value, out var current)
-                || !current.RawBytes.AsSpan().StartsWith(item.Value.RawBytes.AsSpan()))
-            .Select(static item => new RuleFinding(
-                item.Key.Value,
-                "theory volumes are append-only; publish an erratum as newly appended prose"))
-            .ToImmutableArray();
-
-    private static ImmutableArray<RuleFinding> FormalizationReceiptIdentity(
-        RuleEvaluationContext context)
-    {
-        var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        foreach (var (path, file) in context.Current.Files
-                     .Where(static item => item.Key.Value.StartsWith(
-                         DigestionFormalizationReceipt.RootPath,
-                         StringComparison.Ordinal))
-                     .Where(item => context.IsBaseFactAffected(item.Key.Value))
-                     .OrderBy(static item => item.Key.Value, StringComparer.Ordinal))
-        {
-            if (!TryGetFormalizationReceiptFileAtomId(path.Value, out var fileAtomId))
-            {
-                findings.Add(new RuleFinding(
-                    path.Value,
-                    "formalization receipt filename must be <64 lowercase hex>.v1.json"));
-                continue;
-            }
-
-            if (!TryGetFormalizationReceiptAtomId(file, out var receiptAtomId)
-                || !string.Equals(receiptAtomId, fileAtomId, StringComparison.Ordinal))
-            {
-                findings.Add(new RuleFinding(
-                    path.Value,
-                    $"formalization receipt atom_id must match filename atom id {fileAtomId}"));
-            }
-        }
-
-        return findings.ToImmutable();
-    }
-
-    private static bool TryGetFormalizationReceiptFileAtomId(
-        string path,
-        out string atomId)
-    {
-        atomId = string.Empty;
-        var fileName = path[DigestionFormalizationReceipt.RootPath.Length..];
-        if (!fileName.EndsWith(DigestionFormalizationReceipt.PathSuffix, StringComparison.Ordinal))
-        {
-            return false;
-        }
-
-        var stem = fileName[..^DigestionFormalizationReceipt.PathSuffix.Length];
-        if (stem.Length != 64 || stem.AsSpan().IndexOfAnyExcept("0123456789abcdef") >= 0)
-        {
-            return false;
-        }
-
-        atomId = stem;
-        return true;
-    }
-
-    private static bool TryGetFormalizationReceiptAtomId(
-        RepositoryFile file,
-        out string atomId)
-    {
-        atomId = string.Empty;
-        try
-        {
-            using var document = JsonDocument.Parse(file.Text);
-            if (document.RootElement.ValueKind != JsonValueKind.Object
-                || !document.RootElement.TryGetProperty("atom_id", out var atomIdElement)
-                || atomIdElement.ValueKind != JsonValueKind.String)
-            {
-                return false;
-            }
-
-            atomId = atomIdElement.GetString() ?? string.Empty;
-            return true;
-        }
-        catch (JsonException)
-        {
-            return false;
-        }
-    }
-
-    private static ImmutableArray<RuleFinding> DigestionAtomsAppendOnly(
-        RuleEvaluationContext context)
-    {
-        var candidateHashes = DigestionAtomHashFacts(context.Current)
-            .Select(static fact => fact.Hash)
-            .ToHashSet(StringComparer.Ordinal);
-        return DigestionAtomHashFacts(context.ForkPoint)
-            .Where(fact => context.IsBaseFactAffected(fact.Path))
-            .Where(fact => !candidateHashes.Contains(fact.Hash))
-            .Select(static fact => new RuleFinding(
-                fact.Path,
-                $"digestion atoms are append-only; candidate dropped base content hash {fact.Hash}"))
-            .ToImmutableArray();
-    }
-
-    private static ImmutableArray<DigestionAtomHashFact> DigestionAtomHashFacts(
-        RepositorySnapshot snapshot)
-    {
-        var facts = ImmutableArray.CreateBuilder<DigestionAtomHashFact>();
-        foreach (var (path, file) in snapshot.Files
-                     .Where(static pair => IsBackfillAtomEntryPath(pair.Key.Value))
-                     .OrderBy(static pair => pair.Key.Value, StringComparer.Ordinal))
-        {
-            if (YamlSubsetParser.Parse(file.Text) is not Dictionary<string, object?> root
-                || root.GetValueOrDefault("fingerprints") is not Dictionary<string, object?> fingerprints
-                || fingerprints.GetValueOrDefault("raw_sha256") is not string raw
-                || !DigestionFingerprint.IsCanonicalSha256(raw))
-            {
-                throw new FormatException(
-                    $"backfill atom content hash projection is invalid: {path.Value}");
-            }
-
-            facts.Add(new DigestionAtomHashFact(path.Value, raw["sha256:".Length..]));
-        }
-
-        return facts.ToImmutable();
-    }
-
-    private static bool IsBackfillAtomEntryPath(string path)
-    {
-        if (!path.StartsWith(BackfillInventoryLoader.RootPath, StringComparison.Ordinal)
-            || !path.EndsWith(".yaml", StringComparison.Ordinal))
-        {
-            return false;
-        }
-
-        return path[BackfillInventoryLoader.RootPath.Length..].Split('/').Length == 3;
-    }
-
-    private sealed record DigestionAtomHashFact(string Path, string Hash);
 
     private static ImmutableArray<RuleFinding> Badges(RuleEvaluationContext context) =>
         context.Current.Files

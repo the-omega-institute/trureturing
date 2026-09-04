@@ -1,0 +1,61 @@
+## 254. Golden diagonal observer
+
+定义：
+
+$$
+\mathscr O_N
+=
+\{
+D_{n,k}\ge0:
+(n,k)\in\mathcal R_N
+\}.
+$$
+
+那么：
+
+$$
+\mathscr O_1
+\subseteq
+\mathscr O_2
+\subseteq\cdots
+$$
+
+形成共尾观察塔。
+
+极限为：
+
+$$
+\bigcup_N\mathscr O_N
+=
+\{
+D_{n,k}\ge0:
+n,k\in\mathbb N
+\}.
+$$
+
+因此：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\text{全部黄金观察层均通过}
+}
+$$
+
+是一个可期待的精确版本。
+
+注意：真正保证等价的是共尾性，不是 \(\varphi\) 的神秘力量。
+
+黄金比例的特殊性在于：
+
+$$
+\boxed{
+\text{它以 bounded discrepancy 同时推进两个观察轴，}
+}
+$$
+
+没有让任何一个轴长期饥饿。
+
+---
+

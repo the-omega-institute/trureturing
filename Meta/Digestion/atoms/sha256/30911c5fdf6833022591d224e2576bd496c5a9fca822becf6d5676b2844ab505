@@ -1,0 +1,67 @@
+# 第四十五部　新的最小形式化序列
+
+当前最适合先落地的不是直接构造上述终极 determinant，而是依次关闭下面九个有限定理：
+
+```text
+D5/S3/ObserverOrigin/ParityCompletion/
+  FourierParityFourCycle.lean
+  CyclicCharacterCompletion.lean
+  TateNormDifferenceComplex.lean
+  PeriodicInvariantMean.lean
+
+D5/S3/ObserverOrigin/GoldenAdelic/
+  FibonacciRealProfiniteDynamics.lean
+  GoldenTracePairingDiscriminant.lean
+  GoldenFourierRecompletion.lean
+
+D5/S3/PrimeConstellation/Fourier/
+  LocalSurvivorFourierTransform.lean
+  ZeckendorfCharacterTransducer.lean
+
+D5/S3/Zeros/Representation/
+  ZeroOrbitSignIsotypicCriterion.lean
+  PaleyWienerOrbitGram.lean
+```
+
+其中最优先的四条公开定理应是：
+
+$$
+\boxed{
+\mathcal F^2=J,\qquad\mathcal F^4=I;
+}
+$$
+
+$$
+\boxed{
+\ker(I-P)=\operatorname{im}(I+P)
+}
+$$
+
+在 \(2\) 可逆的空间中成立；
+
+$$
+\boxed{
+\det
+\begin{pmatrix}
+2&1\\
+1&3
+\end{pmatrix}
+=5;
+}
+$$
+
+以及：
+
+$$
+\boxed{
+\widehat f_{p,H}(a)
+=
+-\frac1p
+\sum_{r\in R_p(H)}
+e^{-2\pi iar/p}
+\quad(a\neq0).
+}
+$$
+
+---
+

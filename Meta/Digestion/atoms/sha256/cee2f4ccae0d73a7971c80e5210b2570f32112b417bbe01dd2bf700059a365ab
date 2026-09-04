@@ -1,0 +1,48 @@
+# 十、一个更干净的 Prime–Zero 桥
+
+此前最强的设想，是直接证明：
+
+$$
+\text{prime-side absolute defect}
+\longrightarrow
+\text{zero distance from }1/2.
+$$
+
+双 RH 分解以后，不必如此。
+
+只需建立一个完全相对的桥：
+
+$$
+\boxed{
+E_{\mathrm{coh}}^{\mathrm{zero}}
+\le
+C
+E_{\mathrm{hol}}^{\mathrm{prime}}
++
+\varepsilon.
+}
+$$
+
+其中：
+
+$$
+E_{\mathrm{hol}}^{\mathrm{prime}}
+\sim
+\sum_{p,q}
+\omega_{p,q}
+|c_p-c_q|^2,
+$$
+
+而：
+
+$$
+E_{\mathrm{coh}}^{\mathrm{zero}}
+\sim
+\sum_{\rho,\sigma}
+w_{\rho,\sigma}
+|\Re\rho-\Re\sigma|^2.
+$$
+
+两边都是：
+
+* 成对差；

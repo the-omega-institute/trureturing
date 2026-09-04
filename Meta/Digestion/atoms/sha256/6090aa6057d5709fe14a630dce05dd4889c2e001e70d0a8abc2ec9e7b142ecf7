@@ -1,0 +1,66 @@
+* \(C\) 来自实系数性，是复现实。
+
+二者共同生成：
+
+$$
+J=C\circ R,
+\qquad
+J(s)=1-\overline s.
+$$
+
+对任意复数 \(s\)：
+
+$$
+R(s)=C(s)
+\iff
+1-s=\overline s
+\iff
+\Re s=\frac12.
+$$
+
+所以：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+R=C
+\quad
+\text{在全部非平凡零点上}.
+}
+$$
+
+这是一个很深的修正：
+
+> RH 不是“是否存在对称”；解析对偶和复现实始终都存在。
+> RH 问的是：**这两个不同的对称作用，在零点谱上是否恰好重合。**
+
+若它们重合：
+
+$$
+1-\rho=\overline\rho,
+$$
+
+一个零点只需二点轨道。
+
+若它们不重合，则产生：
+
+$$
+\rho,\quad
+1-\rho,\quad
+\overline\rho,\quad
+1-\overline\rho
+$$
+
+四点轨道。
+
+因此离线零点不是完整对称被破坏，而是：
+
+$$
+\boxed{
+\text{duality–reality mismatch}.
+}
+$$
+
+---
+

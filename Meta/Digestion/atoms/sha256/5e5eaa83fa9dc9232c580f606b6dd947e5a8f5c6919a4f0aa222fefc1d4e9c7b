@@ -1,0 +1,57 @@
+# 第一千九百二十九部　有限支撑的 localizing 完备性
+
+设：
+
+$$
+\mu
+=
+\sum_{j=1}^{r}
+w_j\delta_{x_j},
+\qquad
+w_j>0,
+$$
+
+其中 \(x_j\) 互异。
+
+普通 Hankel 矩阵永远满足：
+
+$$
+H_N^{(0)}\succeq0,
+$$
+
+无论 \(x_j\) 正负。
+
+但若某个：
+
+$$
+x_k<0,
+$$
+
+取 Lagrange 多项式 \(p_k\)，满足：
+
+$$
+p_k(x_k)=1,
+$$
+
+$$
+p_k(x_j)=0
+\qquad
+(j\neq k).
+$$
+
+则：
+
+$$
+\begin{aligned}
+\int x|p_k(x)|^2\,d\mu(x)
+&=
+\sum_j
+w_jx_j|p_k(x_j)|^2\\
+&=
+w_kx_k\\
+&<0.
+\end{aligned}
+$$
+
+因此：
+

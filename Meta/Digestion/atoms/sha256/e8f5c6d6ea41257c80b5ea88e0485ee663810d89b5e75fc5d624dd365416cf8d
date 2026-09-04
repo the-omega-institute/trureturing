@@ -1,0 +1,32 @@
+## 57. 量子纠缠
+
+需要真正的：
+
+$$
+\mathcal H_L\otimes\mathcal H_R
+$$
+
+和不可分密度算子。
+
+因此最诚实的当前判断是：
+
+$$
+\boxed{
+\text{函数方程已经给出轨道内反相关；}
+}
+$$
+
+$$
+\boxed{
+\text{显式公式和 Paley--Wiener 约束给出全局 transform coupling；}
+}
+$$
+
+$$
+\boxed{
+\text{全体零点的 connected 或量子纠缠仍是待构造的更强命题}.
+}
+$$
+
+---
+

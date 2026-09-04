@@ -143,6 +143,22 @@ public sealed class TypeModelTests
         Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
     }
 
+    [Fact]
+    public void RetiredFormalizationReceiptResidenceIsRejected()
+    {
+        const string value =
+            "Meta/Digestion/formalizations/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.v1.json";
+        var path = RepoPath.CreateKnown(value);
+
+        var issue = Assert.IsType<RepositoryPathIssue>(
+            RepositoryPathPolicy.Validate(path, Policy()));
+
+        Assert.Equal("SL-000", issue.RuleId.Value);
+        Assert.Equal(value, issue.Path);
+        Assert.Equal("unknown Meta artifact", issue.Message);
+        Assert.False(RepositoryPathPolicy.TryResolve(path, out _));
+    }
+
     [Theory]
     [InlineData("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
     [InlineData("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")]
@@ -181,22 +197,21 @@ public sealed class TypeModelTests
         Assert.True(RuleId.TryCreate("SL-025", out _));
         Assert.False(RuleId.TryCreate("SL-027", out _));
         Assert.True(RuleId.TryCreate("SL-028", out _));
-        Assert.True(RuleId.TryCreate("SL-029", out _));
-        Assert.True(RuleId.TryCreate("SL-030", out _));
-        Assert.True(RuleId.TryCreate("SL-031", out _));
+        Assert.False(RuleId.TryCreate("SL-031", out _));
         Assert.True(CaseId.TryCreate("D5-T0016", out _));
     }
 
     [Theory]
+    [InlineData(5, false)]
     [InlineData(23, true)]
     [InlineData(24, false)]
     [InlineData(25, true)]
     [InlineData(26, true)]
     [InlineData(27, false)]
     [InlineData(28, true)]
-    [InlineData(29, true)]
-    [InlineData(30, true)]
-    [InlineData(31, true)]
+    [InlineData(29, false)]
+    [InlineData(30, false)]
+    [InlineData(31, false)]
     public void RuleIdKnownDomainPreservesTheIntentionalGapAndUpperBoundary(
         int number,
         bool expected)
@@ -353,10 +368,6 @@ public sealed class TypeModelTests
 
     [Theory]
     [InlineData("Golden/other.toml")]
-    [InlineData("Golden/EngineeringTestRetirements/example.json")]
-    [InlineData("Golden/EngineeringTestRetirements/.json")]
-    [InlineData("Golden/EngineeringTestRetirements/example.toml")]
-    [InlineData("Golden/EngineeringTestRetirements/nested/example.json")]
     [InlineData("Golden/Other/x.json")]
     [InlineData("Golden/Projection/nested/x.json")]
     [InlineData("Golden/Projection/x.toml")]

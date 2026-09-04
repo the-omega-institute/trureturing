@@ -1,0 +1,120 @@
+# 第两千一百零五部　方差真正产生的是一个新维度
+
+把 \(\Phi\) 偶延拓到整个实轴，并写成有限正测度：
+
+$$
+d\mu(u)=\frac12\Phi(|u|)\,du.
+$$
+
+定义两张反射长度剖面：
+
+$$
+\boxed{
+h_+(u)=e^{\delta u},
+\qquad
+h_-(u)=e^{-\delta u}.
+}
+\tag{2105.1}
+$$
+
+其 Gram 矩阵为：
+
+$$
+\boxed{
+G_\delta
+=
+\begin{pmatrix}
+M(2\delta)&M(0)\\
+M(0)&M(2\delta)
+\end{pmatrix},
+}
+\tag{2105.2}
+$$
+
+其中：
+
+$$
+M(a)=\int_{\mathbb R}e^{au}\,d\mu(u).
+$$
+
+由于 \(\mu\) 为偶测度：
+
+$$
+M(-a)=M(a).
+$$
+
+矩阵的两个本征方向正是偶、奇方向：
+
+$$
+h_{\mathrm e}
+=
+\frac{h_++h_-}{2}
+=
+\cosh(\delta u),
+$$
+
+$$
+h_{\mathrm o}
+=
+\frac{h_+-h_-}{2}
+=
+\sinh(\delta u).
+$$
+
+对应本征值为：
+
+$$
+\boxed{
+\lambda_{\mathrm e}
+=
+M(2\delta)+M(0)
+=
+2\int\cosh^2(\delta u)\,d\mu(u),
+}
+\tag{2105.3}
+$$
+
+$$
+\boxed{
+\lambda_{\mathrm o}
+=
+M(2\delta)-M(0)
+=
+2\int\sinh^2(\delta u)\,d\mu(u).
+}
+\tag{2105.4}
+$$
+
+因此：
+
+$$
+\boxed{
+\lambda_{\mathrm o}(0)=0,
+}
+$$
+
+而对任何：
+
+$$
+\delta\neq0
+$$
+
+都有：
+
+$$
+\boxed{
+\lambda_{\mathrm o}(\delta)>0.
+}
+\tag{2105.5}
+$$
+
+这就是最精确的“起飞”：
+
+$$
+\boxed{
+\text{法向奇空间从零维出生为一维。}
+}
+$$
+
+---
+

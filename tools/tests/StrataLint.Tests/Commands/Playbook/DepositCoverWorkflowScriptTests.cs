@@ -8,7 +8,7 @@ namespace StrataLint.Tests;
 public sealed partial class DepositCoverWorkflowScriptTests
 {
     [Fact]
-    public void DepositWithExactSixLineHeaderRunsPhaseAEmissionWithoutRecomputingAfterFreezeAndReceipt()
+    public void DepositBuildsEmitsAndFreezesWithoutCommitting()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
@@ -18,86 +18,18 @@ public sealed partial class DepositCoverWorkflowScriptTests
         var result = fixture.Run("deposit");
 
         Assert.True(result.ExitCode == 0, Diagnostics(result));
-        Assert.Equal(before + 2, fixture.CommitCount());
+        Assert.Equal(before, fixture.CommitCount());
         Assert.Equal(1, fixture.FreezeCount());
         Assert.Equal(0, fixture.FreezeProbeCount());
-        Assert.True(File.Exists(fixture.ReceiptPath));
-        Assert.Empty(fixture.Status());
+        Assert.NotEmpty(fixture.Status());
         Assert.Equal(
             [
                 "make:lean-report",
                 "dotnet:deposit-header-check",
                 "make:emit",
-                "dotnet:emit-formalization-receipt",
                 "dotnet:ledger-append",
             ],
             fixture.CallKinds());
-
-        var phaseA = fixture.CommitPaths("HEAD~1");
-        Assert.Contains(TransactionFixture.LeanPath, phaseA);
-        Assert.Contains(TransactionFixture.DefinitionPath, phaseA);
-        Assert.Contains(TransactionFixture.EmissionPath, phaseA);
-        Assert.DoesNotContain(TransactionFixture.LedgerPath, phaseA);
-        Assert.DoesNotContain(TransactionFixture.ReceiptRelativePath, phaseA);
-
-        var phaseB = fixture.CommitPaths("HEAD");
-        Assert.Contains(
-            phaseB,
-            path => path.StartsWith(TransactionFixture.LedgerPath + "/", StringComparison.Ordinal));
-        Assert.Contains(TransactionFixture.ReceiptRelativePath, phaseB);
-    }
-
-    [Fact]
-    public void DepositReentryWithExistingFreezeAndMissingReceiptRecoversWithoutLeanReport()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new TransactionFixture();
-        fixture.ChangeFormalization();
-        fixture.FailAfterNextFreeze();
-        var before = fixture.CommitCount();
-
-        var interrupted = fixture.Run("deposit");
-        Assert.NotEqual(0, interrupted.ExitCode);
-        Assert.Equal(before + 1, fixture.CommitCount());
-        Assert.Equal(1, fixture.FreezeCount());
-        Assert.False(File.Exists(fixture.ReceiptPath));
-        fixture.ClearCalls();
-
-        var resumed = fixture.Run("deposit");
-
-        Assert.True(resumed.ExitCode == 0, Diagnostics(resumed));
-        Assert.Equal(before + 2, fixture.CommitCount());
-        Assert.Equal(1, fixture.FreezeCount());
-        Assert.DoesNotContain("dotnet:ledger-append", fixture.CallKinds());
-        Assert.Equal(
-            ["dotnet:deposit-header-check", "dotnet:emit-formalization-receipt"],
-            fixture.CallKinds());
-        Assert.True(File.Exists(fixture.ReceiptPath));
-        Assert.Empty(fixture.Status());
-    }
-
-    [Fact]
-    public void DepositReentryWithAlignedReceiptKeepsTheOriginalTwoCommitBoundary()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new TransactionFixture();
-        fixture.ChangeFormalization();
-        fixture.FailAfterNextFreeze();
-        var before = fixture.CommitCount();
-        Assert.NotEqual(0, fixture.Run("deposit").ExitCode);
-        fixture.WriteAlignedReceipt();
-        fixture.ClearCalls();
-
-        var resumed = fixture.Run("deposit");
-
-        Assert.True(resumed.ExitCode == 0, Diagnostics(resumed));
-        Assert.Equal(before + 2, fixture.CommitCount());
-        Assert.Equal(1, fixture.FreezeCount());
-        Assert.DoesNotContain("dotnet:ledger-append", fixture.CallKinds());
-        Assert.Equal(
-            ["dotnet:deposit-header-check", "dotnet:emit-formalization-receipt"],
-            fixture.CallKinds());
-        Assert.Empty(fixture.Status());
     }
 
     [Fact]
@@ -131,22 +63,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
     }
 
     [Fact]
-    public void DepositRemovesInterruptedTemporaryFilesBeforeStaging()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new TransactionFixture();
-        fixture.ChangeFormalization();
-        fixture.LeaveInterruptedTemporaryFiles();
-
-        var result = fixture.Run("deposit");
-
-        Assert.True(result.ExitCode == 0, Diagnostics(result));
-        Assert.DoesNotContain(fixture.TrackedPaths(), path =>
-            path.Contains(".tmp.", StringComparison.Ordinal));
-        Assert.Empty(fixture.Status());
-    }
-
-    [Fact]
     public void DepositFailsClosedWhenLeanReportRemainsStale()
     {
         if (OperatingSystem.IsWindows()) return;
@@ -164,141 +80,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
     }
 
     [Fact]
-    public void DepositValidatesTheCanonicalReceiptBeforeAppendingFreeze()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new TransactionFixture();
-        fixture.ChangeFormalization();
-
-        var result = fixture.Run("deposit", invalidReceipt: true);
-
-        Assert.NotEqual(0, result.ExitCode);
-        Assert.Contains(
-            "FORMALIZATION_RECEIPT_INVALID synthetic canonical rejection",
-            Encoding.UTF8.GetString(result.StandardError),
-            StringComparison.Ordinal);
-        Assert.DoesNotContain("dotnet:ledger-append", fixture.CallKinds());
-        Assert.Equal(0, fixture.FreezeCount());
-    }
-
-    [Fact]
-    public void DepositRejectsInvalidExistingHostReceiptBeforeAppendingSecondaryFreeze()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new TransactionFixture();
-        fixture.ChangeFormalization();
-        var primary = fixture.Run("deposit");
-        Assert.True(primary.ExitCode == 0, Diagnostics(primary));
-        fixture.WriteHostReceipt(atomId: "wrong-atom");
-        fixture.AddSecondaryFormalization();
-
-        var secondary = fixture.Run("deposit", TransactionFixture.SecondaryGid);
-
-        Assert.NotEqual(0, secondary.ExitCode);
-        Assert.Contains(
-            "existing formalization receipt conflicts",
-            Encoding.UTF8.GetString(secondary.StandardError),
-            StringComparison.Ordinal);
-        Assert.Equal(1, fixture.FreezeCount(TransactionFixture.LeanPath));
-        Assert.Equal(0, fixture.FreezeCount(TransactionFixture.SecondaryLeanPath));
-    }
-
-    [Fact]
-    public void DepositFreezesASecondModuleUnderTheExistingAtomReceiptHost()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new TransactionFixture();
-        fixture.ChangeFormalization();
-        var primary = fixture.Run("deposit");
-        Assert.True(primary.ExitCode == 0, Diagnostics(primary));
-        var receipt = File.ReadAllBytes(fixture.ReceiptPath);
-        fixture.AddSecondaryFormalization();
-        fixture.ClearCalls();
-
-        var secondary = fixture.Run("deposit", TransactionFixture.SecondaryGid);
-
-        Assert.True(secondary.ExitCode == 0, Diagnostics(secondary));
-        Assert.Contains(fixture.Calls(), call => call.StartsWith(
-            "dotnet:emit-formalization-receipt"
-                + $" --atom-id {TransactionFixture.AtomId}"
-                + $" --gid {TransactionFixture.SecondaryGid}",
-            StringComparison.Ordinal));
-        Assert.DoesNotContain(fixture.Calls(), call =>
-            call.Contains("--require-existing-coverage", StringComparison.Ordinal));
-        Assert.Equal(1, fixture.FreezeCount(TransactionFixture.LeanPath));
-        Assert.Equal(1, fixture.FreezeCount(TransactionFixture.SecondaryLeanPath));
-        Assert.NotEqual(receipt, File.ReadAllBytes(fixture.ReceiptPath));
-        using var document = JsonDocument.Parse(File.ReadAllBytes(fixture.ReceiptPath));
-        Assert.Equal(TransactionFixture.Gid,
-            document.RootElement.GetProperty("primary_gid").GetString());
-        var extension = Assert.Single(
-            document.RootElement.GetProperty("hosted_extensions").EnumerateArray());
-        Assert.Equal(TransactionFixture.SecondaryGid, extension.GetProperty("gid").GetString());
-        var signature = extension.GetProperty("precommitted_signature");
-        Assert.Equal("window_register_crt_decomposition",
-            signature.GetProperty("name_key").GetString());
-        Assert.Equal("theorem", signature.GetProperty("kind").GetString());
-        Assert.Equal("True", signature.GetProperty("type").GetString());
-        Assert.Single(Directory.EnumerateFiles(
-            Path.GetDirectoryName(fixture.ReceiptPath)!, "*.v1.json"));
-        Assert.Empty(fixture.Status());
-    }
-
-    [Fact]
-    public void DepositRejectsAHostReceiptChangedAfterExtensionValidation()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new TransactionFixture();
-        fixture.ChangeFormalization();
-        var primary = fixture.Run("deposit");
-        Assert.True(primary.ExitCode == 0, Diagnostics(primary));
-        fixture.AddSecondaryFormalization();
-        var concurrentReceipt =
-            $"{{\"atom_id\":\"{TransactionFixture.AtomId}\","
-            + $"\"primary_gid\":\"{TransactionFixture.Gid}\",\"concurrent\":true}}\n";
-
-        var secondary = fixture.Run(
-            "deposit",
-            TransactionFixture.SecondaryGid,
-            mutateReceiptAfterPrepare: concurrentReceipt);
-
-        Assert.NotEqual(0, secondary.ExitCode);
-        Assert.Contains(
-            "changed after extension validation",
-            Encoding.UTF8.GetString(secondary.StandardError),
-            StringComparison.Ordinal);
-        Assert.Equal(concurrentReceipt, File.ReadAllText(fixture.ReceiptPath));
-    }
-
-    [Fact]
-    public void DepositAndCoverHostArchivedWindowRegisterCrtUnderTheExistingAtomReceipt()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new TransactionFixture();
-        fixture.ChangeFormalization();
-        var primaryDeposit = fixture.Run("deposit");
-        Assert.True(primaryDeposit.ExitCode == 0, Diagnostics(primaryDeposit));
-        var primaryCover = fixture.Run("cover");
-        Assert.True(primaryCover.ExitCode == 0, Diagnostics(primaryCover));
-        fixture.AddSecondaryFormalization();
-        var deposit = fixture.Run("deposit", TransactionFixture.SecondaryGid);
-        Assert.True(deposit.ExitCode == 0, Diagnostics(deposit));
-        fixture.ClearCalls();
-
-        var cover = fixture.Run("cover", TransactionFixture.SecondaryGid);
-
-        Assert.True(cover.ExitCode == 0, Diagnostics(cover));
-        Assert.Contains(
-            "dotnet:cover-atom --cover-atom atom-1"
-                + $" --gid {TransactionFixture.SecondaryGid}"
-                + " --base synthetic-base"
-                + $" --envelope {TransactionFixture.ReceiptRelativePath}",
-            fixture.Calls());
-        Assert.Empty(fixture.Status());
-    }
-
-    [Fact]
-    public void CoverAlignsThenReemitsAndCommitsOnce()
+    public void CoverWritesEdgeAndReemitsWithoutCommitting()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
@@ -311,22 +93,21 @@ public sealed partial class DepositCoverWorkflowScriptTests
         var result = fixture.Run("cover");
 
         Assert.True(result.ExitCode == 0, Diagnostics(result));
-        Assert.Equal(before + 1, fixture.CommitCount());
+        Assert.Equal(before, fixture.CommitCount());
         Assert.Equal(
             [
                 "make:lean-report",
                 "dotnet:cover-atom",
-                "dotnet:align-scribe-receipt",
                 "make:emit",
             ],
             fixture.CallKinds());
-        Assert.Contains("aligned: covered", fixture.BackfillContents(), StringComparison.Ordinal);
+        Assert.Contains("coverage: true", fixture.BackfillContents(), StringComparison.Ordinal);
         Assert.Equal("emission: covered\n", fixture.EmissionContents());
-        Assert.Empty(fixture.Status());
+        Assert.NotEmpty(fixture.Status());
     }
 
     [Fact]
-    public void FailedCoverCommitsDispositionBeforeReturningFailure()
+    public void FailedCoverLeavesDispositionUncommittedBeforeReturningFailure()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
@@ -339,10 +120,10 @@ public sealed partial class DepositCoverWorkflowScriptTests
             "COVER_INVALID synthetic disposition",
             Encoding.UTF8.GetString(result.StandardError),
             StringComparison.Ordinal);
-        Assert.Equal(before + 1, fixture.CommitCount());
+        Assert.Equal(before, fixture.CommitCount());
         Assert.Contains("cover_disposition:", fixture.BackfillContents(), StringComparison.Ordinal);
         Assert.Equal(["make:lean-report", "dotnet:cover-atom"], fixture.CallKinds());
-        Assert.Empty(fixture.Status());
+        Assert.NotEmpty(fixture.Status());
     }
 
     private static string Diagnostics(ProcessOutput result) =>
@@ -365,10 +146,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
         internal const string EmissionPath = "Blueprint/D5/S0/Carrier/Probe.md";
         internal const string LedgerPath = FrozenLedgerChangeClassifier.AcceptedRoot;
         internal const string BackfillPath = "Meta/BACKFILL.yaml";
-        internal const string ReceiptRelativePath = "Meta/Digestion/formalizations/atom-1.v1.json";
-        internal const string SecondaryReceiptRelativePath =
-            "Meta/Digestion/formalizations/atom-2.v1.json";
-
         private const string ScriptPath = "tools/scripts/workflow/playbook-workflows.sh";
         private readonly TemporaryDirectory temporary = new();
         private readonly string binPath;
@@ -408,8 +185,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
 
         internal string Root { get; }
 
-        internal string ReceiptPath => Path.Combine(Root, ReceiptRelativePath);
-
         internal string BackfillContents() => File.ReadAllText(Path.Combine(Root, BackfillPath));
 
         internal string EmissionContents() => File.ReadAllText(Path.Combine(Root, EmissionPath));
@@ -445,14 +220,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
 
         internal void FailAfterNextFreeze() => WriteFile("fail-ledger-once", "1\n");
 
-        internal void WriteAlignedReceipt() => WriteFile(
-            ReceiptRelativePath,
-            $"{{\"atom_id\":\"{AtomId}\",\"primary_gid\":\"{Gid}\"}}\n");
-
-        internal void WriteHostReceipt(string atomId = AtomId, string primaryGid = Gid) => WriteFile(
-            ReceiptRelativePath,
-            $"{{\"atom_id\":\"{atomId}\",\"primary_gid\":\"{primaryGid}\"}}\n");
-
         internal void WriteRevokedSnapshot()
         {
             WriteLedger(Array.Empty<string>());
@@ -476,12 +243,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 schema_version = 5,
             });
             WriteLedger(freeze);
-        }
-
-        internal void LeaveInterruptedTemporaryFiles(
-            string receiptRelativePath = ReceiptRelativePath)
-        {
-            WriteFile(receiptRelativePath + ".tmp.abandoned", "partial receipt\n");
         }
 
         internal int CommitCount() => int.Parse(Git("rev-list", "--count", "HEAD").Trim());
@@ -526,10 +287,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
         }
 
         internal string[] Status() => Git("status", "--porcelain=v1")
-            .Split('\n', StringSplitOptions.RemoveEmptyEntries);
-
-        internal string[] CommitPaths(string revision) => Git(
-                "show", "--pretty=format:", "--name-only", revision)
             .Split('\n', StringSplitOptions.RemoveEmptyEntries);
 
         internal string[] TrackedPaths() => Git("ls-files")

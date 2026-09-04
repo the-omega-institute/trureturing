@@ -4,7 +4,7 @@ using StrataLint.Engine;
 namespace StrataLint.Cli;
 
 // Phase 1 cover transaction: bind one or more already-proven Lean declarations to an
-// existing open residual atom by writing coverage_gids + coverage/scribe
+// existing open residual atom by writing a coverage edge plus its Scribe receipt
 // receipts. cover is the narrow sibling of ingest — it reuses
 // DigestionStatusEvaluator for the structural gates and never adds residual
 // atoms or rebinds boundaries. The write is all-or-nothing with a fail-closed
@@ -15,38 +15,7 @@ namespace StrataLint.Cli;
 // (serialized manual/CI invocation makes it sufficient; an OS file lock for a
 // hard guarantee is deferred).
 //
-// Gate ②(c) (§11.21, implemented): cover pins the deposit against a pre-committed
-// digestion-formalization-v1 receipt supplied by --envelope. The receipt is loaded
-// from the BASELINE snapshot (repository.ReadRevision(--base)), never the candidate,
-// so "pre-committed" is a machine invariant rather than an honesty convention: the
-// receipt must already be committed to the baseline (PR-1 of the two-phase flow),
-// and a candidate PR cannot fabricate or alter the receipt it is judged against from
-// inside its own diff. Under the admission gate --base is the pull_request_target-
-// fixed baseline (dev), so a receipt introduced by the candidate is not yet in the
-// baseline and the deposit is rejected. The receipt binds atom_id + the ordered
-// registered GID set + the atom's content fingerprint (cas_ref/raw_sha256), and each
-// deposited declaration's *current* signature (name_key/kind/type, read from the
-// candidate raw Lean report) must equal its pin in the base-owned receipt. This
-// replaces the old file-level newness
-// heuristic: no declaration file bytes are compared, so the honest two-phase deposit
-// (declaration frozen/base-owned in PR-1) is still accepted, while a post-proof
-// statement swap is machine-rejected because the deposited signature then diverges
-// from the base-owned pinned signature — even if the attacker co-tampers the
-// candidate copy of the receipt in the same PR (the co-tampered copy is not read).
-//
-// Deferred (recorded, not silent):
-//  - Hollow-fidelity attestation (§11.21 open): signature-match proves deposited ==
-//    pre-committed, but not that the pre-committed signature is itself a faithful,
-//    non-hollow rendering of the natural-language atom. base-ownership does NOT close
-//    this: a hollow pre-commitment landed in PR-1 (both the `theorem t : True`
-//    declaration and its matching receipt base-owned) then deposited unchanged still
-//    passes signature-match. That needs the separate digestion-fidelity-
-//    attestation-v1 receipt + /sshx multi-model consensus.
-//  - Receipt emission + residence: the formalizer/workflow (step 1) is responsible
-//    for producing and committing the receipt at a digestion data path; this
-//    command only consumes it. Receipt lifecycle (deletion after absorption) is a
-//    workflow concern.
-//  - kind exclusion gate (spec §5): a producer responsibility, not cover's.
+// kind exclusion remains a producer responsibility (spec section 5), not cover's.
 internal static partial class CoverAtomCommand
 {
     private const string ImplementationPath =
@@ -119,10 +88,7 @@ internal static partial class CoverAtomCommand
             var existingGids = target.CoverageGids.ToImmutableHashSet(StringComparer.Ordinal);
             var addedGids = options.Gids.Where(gid => !existingGids.Contains(gid)).ToImmutableArray();
             var repositoryChanges = repository.ReadChanges(options.BaselineRevision);
-            var inputPaths = new HashSet<string>(StringComparer.Ordinal)
-            {
-                options.EnvelopePath,
-            };
+            var inputPaths = new HashSet<string>(StringComparer.Ordinal);
             var authorityEntryPaths = new HashSet<string>(StringComparer.Ordinal);
             var entriesByAtomId = document.RequireDigestionEntries()
                 .GroupBy(static entry => entry.AtomId, StringComparer.Ordinal)
@@ -243,6 +209,20 @@ internal static partial class CoverAtomCommand
             var report = leanReportSource.Load(current);
             var lean = ValidateLean(current, report);
             var truthStates = LeanTruthStates.Resolve(current, lean);
+            foreach (var gid in gids)
+            {
+                var edge = CurrentEdgeValidator.Validate(
+                    gid.Value,
+                    current,
+                    report,
+                    truthStates,
+                    frozenStatements);
+                if (!edge.IsClosed)
+                {
+                    throw new InvalidOperationException(edge.Diagnostic);
+                }
+            }
+
             var verifiedScribeEmissions = scribeEmissionVerifier.Verify(
                 current,
                 report,
@@ -271,22 +251,15 @@ internal static partial class CoverAtomCommand
                 .ToImmutableArray();
             var covered = target with
             {
-                CoverageGids = target.CoverageGids.AddRange(addedGids),
+                Coverage = target.Coverage.AddRange(
+                    addedReceipts.Select(static receipt => receipt.Coverage)),
                 Receipts = target.Receipts with
                 {
-                    Coverage = target.Receipts.Coverage.AddRange(
-                        addedReceipts.Select(static receipt => receipt.Coverage)),
                     Scribe = target.Receipts.Scribe.AddRange(
                         addedReceipts.Select(static receipt => receipt.Scribe)),
                     CoverDisposition = null,
                 },
             };
-            DigestionFormalizationPrecommitmentValidator.RequireBaseOwnedEdges(
-                baseline,
-                options.EnvelopePath,
-                covered,
-                covered.CoverageGids,
-                report);
             var plannedDocument = ReplaceEntry(document, options.AtomId, covered);
 
             var derived = DigestionStatusEvaluator.Evaluate(
@@ -349,7 +322,6 @@ internal static partial class CoverAtomCommand
                 DigestionEvaluationScopes.ResolveChanges(
                     evaluationScope,
                     receiptVerificationChanges),
-                repositoryChanges: coverChanges,
                 projectedStatusChanges: DigestionEvaluationScopes.ResolveChanges(
                     evaluationScope,
                     evaluationChanges));
@@ -386,34 +358,6 @@ internal static partial class CoverAtomCommand
                     truthStates);
             }
 
-            // Gate ②(c): base-owned pre-committed formalization receipt +
-            // declaration-signature match (spec §11.21). Replaces the old file-level
-            // newness gate. The receipt is loaded from the BASELINE snapshot, so the
-            // anti-swap property is now a machine invariant rather than honesty-only:
-            // the formalizer pins each atom/declaration signature
-            // (name_key/kind/type) in a receipt committed to the baseline (PR-1)
-            // before the proof lands; cover admits the declaration only when its
-            // *current* signature in the candidate raw Lean report equals the
-            // base-owned pinned signature. No file-byte comparison is made, so the
-            // honest two-phase deposit (freeze in PR-1, cover in PR-2 with --base the
-            // fixed baseline) is accepted, while a post-proof statement swap (e.g. to
-            // `True`) is machine-rejected because the deposited signature diverges
-            // from the base-owned pin — and, crucially, the candidate cannot launder
-            // the swap by co-forging its own copy of the receipt in the same PR, since
-            // the co-tampered candidate copy is never read (only the baseline receipt
-            // is). The receipt also binds atom_id + registered GIDs + the atom's content
-            // fingerprint, so a receipt pinned for one atom cannot cover another
-            // (anti-Goodhart).
-            //
-            // Deferred (§11.21 hollow-fidelity open, recorded not silent):
-            // base-ownership closes the same-PR
-            // fabrication/swap, but does NOT attest that the pre-committed signature is
-            // itself a faithful, non-hollow rendering of the natural-language atom. A
-            // hollow pre-commitment landed together in PR-1 (both the `True`
-            // declaration and its matching receipt base-owned) then deposited unchanged
-            // still passes signature-match. That is the separate
-            // digestion-fidelity-attestation-v1 / multi-model consensus gate, out of
-            // scope for this block.
             var ledgerUpdates = IngestCommand.LedgerUpdates(currentRaw, finalRaw);
             var changed = ledgerUpdates.Length > 0;
             IngestCommand.ApplyLedgerUpdatesAtomically(repositoryRoot, currentRaw, ledgerUpdates);
@@ -471,7 +415,7 @@ internal static partial class CoverAtomCommand
         return entry;
     }
 
-    private static (DigestionCoverageReceipt Coverage, DigestionScribeReceipt Scribe) BuildReceipts(
+    private static (DigestionCoverageEdge Coverage, DigestionScribeReceipt Scribe) BuildReceipts(
         DigestionLedgerEntry entry,
         Gid gid,
         RepositorySnapshot snapshot,
@@ -503,10 +447,7 @@ internal static partial class CoverAtomCommand
             throw new InvalidOperationException($"cover Scribe definition is absent: {definitionPath}");
         }
 
-        var coverage = new DigestionCoverageReceipt(
-            gid.Value,
-            entry.Fingerprints.RawSha256,
-            targetStatementId!.Value);
+        var coverage = new DigestionCoverageEdge(gid.Value, targetStatementId!.Value);
         var scribe = new DigestionScribeReceipt(
             gid.Value,
             DigestionFingerprint.Compute(definition.RawBytes.AsSpan()).RawSha256,
@@ -570,8 +511,7 @@ internal static partial class CoverAtomCommand
                 .Select(static gap => new DigestionDispositionGap(gap.Code, gap.Detail))
                 .OrderBy(static gap => gap.Code, StringComparer.Ordinal)
                 .ThenBy(static gap => gap.Detail, StringComparer.Ordinal)
-                .ToImmutableArray(),
-            recordedAtUtc.ToUniversalTime());
+                .ToImmutableArray());
         var dispositionDocument = ReplaceEntry(
             document,
             target.AtomId,
@@ -587,8 +527,7 @@ internal static partial class CoverAtomCommand
     private sealed record CoverArguments(
         string AtomId,
         ImmutableArray<string> Gids,
-        string BaselineRevision,
-        string EnvelopePath);
+        string BaselineRevision);
 
     private sealed record AlignPair(string AtomId, string Gid);
 
@@ -601,7 +540,6 @@ internal static partial class CoverAtomCommand
         string? atomId = null;
         var gids = ImmutableArray.CreateBuilder<string>();
         string? baselineRevision = null;
-        string? envelopePath = null;
         for (var index = 0; index < arguments.Count; index += 2)
         {
             if (index + 1 >= arguments.Count)
@@ -620,9 +558,6 @@ internal static partial class CoverAtomCommand
                 case "--base" when baselineRevision is null:
                     baselineRevision = arguments[index + 1];
                     break;
-                case "--envelope" when envelopePath is null:
-                    envelopePath = arguments[index + 1];
-                    break;
                 default:
                     throw Usage();
             }
@@ -632,18 +567,16 @@ internal static partial class CoverAtomCommand
             || gids.Count == 0
             || gids.Any(string.IsNullOrWhiteSpace)
             || gids.Distinct(StringComparer.Ordinal).Count() != gids.Count
-            || string.IsNullOrWhiteSpace(baselineRevision)
-            || string.IsNullOrWhiteSpace(envelopePath))
+            || string.IsNullOrWhiteSpace(baselineRevision))
         {
             throw Usage();
         }
 
-        return new CoverArguments(atomId, gids.ToImmutable(), baselineRevision, envelopePath);
+        return new CoverArguments(atomId, gids.ToImmutable(), baselineRevision);
     }
 
     private static InvalidOperationException Usage() => new(
-        "USAGE: StrataLint cover-atom --cover-atom ATOM_ID --gid DECL_GID [--gid DECL_GID ...] --base REV "
-        + "--envelope RECEIPT_PATH");
+        "USAGE: StrataLint cover-atom --cover-atom ATOM_ID --gid DECL_GID [--gid DECL_GID ...] --base REV");
 
     private static BackfillInventoryDocument LoadDocument(RepositorySnapshot snapshot) =>
         BackfillInventoryLoader.Load(snapshot);

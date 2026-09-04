@@ -1,0 +1,9 @@
+### 151.1 Mod-\(p\) transducer correctness
+
+```lean
+theorem zeckendorfResidueTransducer_correct
+    (p : Nat.Primes) (n : ℕ) :
+    runZeckendorfResidueTransducer p (wdigits n) =
+      n % p
+```
+

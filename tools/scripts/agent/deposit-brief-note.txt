@@ -5,7 +5,7 @@
   **若你发现 brief 任何一处描述与 `show-atom` 正文不符,以正文为准并在 conclusion 里写明分歧。**
 
 - **查重(责任在你,走完 cover 查重五路)**:
-  · 账目侧:`Meta/Digestion/formalizations/<atom>.v1.json` 在 `origin/dev` 上是否存在;
+  · 账目侧:用 `make show-atom ATOM_ID=<atom>` 读取当前 coverage GID 派生视图;
   · Lean 侧:按正文的数学对象取关键词搜 `D5/**/*.lean`;
   · **同名 0 命中不等于没被覆盖** —— 本轮多次实测异名覆盖
     (`Nerode` 0 命中却被 `ReachableBehaviorClassSurjectivity` 覆盖;

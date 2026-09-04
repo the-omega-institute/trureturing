@@ -1,0 +1,50 @@
+## 534. 定义
+
+对一种 RH 观察表示 \(\mathfrak P\)，定义其压缩谱：
+
+$$
+\boxed{
+\mathfrak C(\mathfrak P)
+=
+(c_{\mathrm{state}},
+c_{\mathrm{arity}},
+c_{\mathrm{rank}},
+c_{\mathrm{modulus}},
+c_{\mathrm{proof}}).
+}
+$$
+
+其中：
+
+$$
+c_{\mathrm{state}}
+$$
+
+表示有限状态复杂度；
+
+$$
+c_{\mathrm{arity}}
+$$
+
+表示需要的最大相关阶；
+
+$$
+c_{\mathrm{rank}}
+$$
+
+表示矩阵／算子秩；
+
+$$
+c_{\mathrm{modulus}}
+$$
+
+表示达到误差 \(\varepsilon\) 所需的统一模量；
+
+$$
+c_{\mathrm{proof}}
+$$
+
+表示是否存在有限全局定理压缩全部层。
+
+---
+

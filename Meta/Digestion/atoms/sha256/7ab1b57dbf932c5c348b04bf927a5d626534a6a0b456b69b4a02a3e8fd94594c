@@ -1,0 +1,49 @@
+## 167. carry 是黄金环面动力学的符号编码
+
+令：
+
+$$
+v_N=
+\begin{pmatrix}
+u_{N+1}\\
+u_N
+\end{pmatrix}.
+$$
+
+则模 \(1\)：
+
+$$
+\boxed{
+v_{N+1}
+=
+Fv_N
+\pmod{\mathbb Z^2}.
+}
+$$
+
+carry \(c_N\) 记录轨道是否跨过单位方形中的对角线：
+
+$$
+u_N+u_{N+1}=1.
+$$
+
+所以任意实数 \(x\) 产生一条黄金 torus orbit，而：
+
+$$
+(c_0,c_1,c_2,\ldots)
+$$
+
+是该轨道相对于二分 Markov partition 的符号 itinerary。
+
+这给出一个新的严格解释：
+
+$$
+\boxed{
+\text{实数的黄金 completion thread}
+=
+\text{Fibonacci toral dynamics 的 carry code}.
+}
+$$
+
+---
+

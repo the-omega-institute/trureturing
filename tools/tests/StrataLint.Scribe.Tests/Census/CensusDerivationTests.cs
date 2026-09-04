@@ -49,7 +49,6 @@ public sealed class CensusDerivationTests
                 cas_ref: sha256:0000000000000000000000000000000000000000000000000000000000000000
                 coverage_gids: []
                 receipts:
-                  coverage: []
                   scribe:
                     - gid: {{receiptBoundGid}}.formalized
                       definition_sha256: sha256:1111111111111111111111111111111111111111111111111111111111111111
