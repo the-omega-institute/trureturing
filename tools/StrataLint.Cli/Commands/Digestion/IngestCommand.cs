@@ -31,7 +31,6 @@ internal static partial class IngestCommand
             var baseline = prepared.Baseline;
             var document = prepared.CurrentDocument;
             var baselineDocument = prepared.BaselineDocument;
-            var plan = prepared.Plan;
             var plannedSnapshot = prepared.PlannedSnapshot;
             var plannedDocument = prepared.PlannedDocument;
             var lean = ValidateLean(plannedSnapshot, report);
