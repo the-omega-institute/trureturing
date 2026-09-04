@@ -1,6 +1,7 @@
 import LeanInformationAudit.Tests.RegistryProducer
 
 open Lean
+open LeanInformationAudit
 
 /-- info: 1 [LeanInformationAudit.Tests.probeTheorem] -/
 #guard_msgs in
@@ -11,20 +12,20 @@ run_cmd do
 #guard_msgs in
 run_cmd do
   let env ← getEnv
-  unless InformationRegistry.containsTheoremName env
+  unless InformationRegistry.hasTheorem env
       `LeanInformationAudit.Tests.probeTheorem do
     throwError "missing producer theorem name"
 
 #guard_msgs in
 run_cmd do
   let env ← getEnv
-  unless InformationRegistry.containsUnitName env
+  unless InformationRegistry.hasUnit env
       `LeanInformationAudit.Tests.probeTheorem.__information_unit do
     throwError "missing producer unit name"
 
 #guard_msgs in
 run_cmd do
   let env ← getEnv
-  if InformationRegistry.containsTheoremName env
+  if InformationRegistry.hasTheorem env
       `LeanInformationAudit.Tests.freshTheorem then
     throwError "fresh theorem name unexpectedly present"

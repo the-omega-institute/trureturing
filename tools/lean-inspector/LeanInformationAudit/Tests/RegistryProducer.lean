@@ -1,6 +1,7 @@
 import LeanInformationAudit.Registry
 
 open Lean
+open LeanInformationAudit
 
 run_cmd
   Lean.Elab.Command.liftCoreM do

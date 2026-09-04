@@ -28,8 +28,11 @@ def fixtureLawArena : PrimitiveLawArena where
   signature := fixtureSignature
   Law := fun _ => True
 
+local instance : DecidableEq fixtureLawArena.State :=
+  fixtureLawArena.toArena.stateDecidableEq
+
 def fixtureRealization : PrimitiveRealization fixtureLawArena.signature where
-  readout := fun i x => if i then x.2 else x.1
+  readout := fun i x => bif i then x.2 else x.1
   anchor := Fin.elim0
 
 def fixtureBundle :=
@@ -44,7 +47,7 @@ information_theorem nativeExample
 theorem legacyExample : True :=
   trivial
 
-def legacyRealization :
+theorem legacyRealization :
     LegacyPrimitiveRealization fixtureLawArena True fixtureRealization where
   equivalence := Iff.rfl
 
@@ -63,8 +66,8 @@ register_information_theorem legacyExample
 theorem generated.__lowers_escape : True :=
   trivial
 
-def generatedRealization :
-    LegacyPrimitiveRealization fixtureLawArena generated.__lowers_escape fixtureRealization where
+theorem generatedRealization :
+    LegacyPrimitiveRealization fixtureLawArena True fixtureRealization where
   equivalence := Iff.rfl
 
 /-- error: IE-C011 GeneratedCertificateRegistered: LeanInformationAudit.Tests.RegistrationErrors.generated.__lowers_escape -/
@@ -77,13 +80,16 @@ register_information_theorem generated.__lowers_escape
 theorem differentStatement : 1 = 1 :=
   rfl
 
-def mismatchedRealization :
-    LegacyPrimitiveRealization fixtureLawArena differentStatement fixtureRealization where
-  equivalence := Iff.rfl
+theorem mismatchTarget : True :=
+  trivial
 
-/-- error: IE-C006 StatementProofMismatch: LeanInformationAudit.Tests.RegistrationErrors.legacyExample -/
+theorem mismatchedRealization :
+    LegacyPrimitiveRealization fixtureLawArena (1 = 1) fixtureRealization where
+  equivalence := by simp [fixtureLawArena]
+
+/-- error: IE-C006 StatementProofMismatch: LeanInformationAudit.Tests.RegistrationErrors.mismatchTarget -/
 #guard_msgs (error) in
-register_information_theorem legacyExample
+register_information_theorem mismatchTarget
   in fixtureLawArena
   primitives fixtureBundle
   realization mismatchedRealization
