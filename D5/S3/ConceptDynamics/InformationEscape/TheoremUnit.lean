@@ -41,6 +41,7 @@ structure PrimitiveSignature (X : Type u) where
   Output : Index -> Type w
   outputDecidableEq : forall i, DecidableEq (Output i)
   axis : Index -> PrimitiveAxis
+  readoutAxisNotAnchor : forall i, axis i ≠ .anchor
   AnchorIndex : Type v
   anchorFintype : Fintype AnchorIndex
   anchorDecidableEq : DecidableEq AnchorIndex
@@ -162,7 +163,7 @@ structure Catalog (arena : Arena.{u}) where
 namespace Catalog
 
 /-- Construct a catalog from a finite vector of theorem units. -/
-def ofVector {arena : Arena.{u}} {n : Nat}
+abbrev ofVector {arena : Arena.{u}} {n : Nat}
     (units : Fin n -> TheoremUnit.{u, v} arena) : Catalog.{u, v, 0} arena where
   Index := Fin n
   indexFintype := inferInstance
@@ -217,6 +218,7 @@ private abbrev fixtureSignature : PrimitiveSignature fixtureArena.State where
   Output := fun _ => Bool
   outputDecidableEq := fun _ => inferInstance
   axis := fun _ => .cut
+  readoutAxisNotAnchor := by simp
   AnchorIndex := Fin 0
   anchorFintype := inferInstance
   anchorDecidableEq := inferInstance
