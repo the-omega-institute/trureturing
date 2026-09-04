@@ -19,5 +19,11 @@ run_cmd do
   unless InformationRegistry.hasTheorem env
       `LeanInformationAudit.Tests.RegistrationErrors.legacyExample do
     throwError "missing persisted legacy registration"
+  let some legacyEntry := InformationRegistry.find? env
+      `LeanInformationAudit.Tests.RegistrationErrors.legacyExample
+    | throwError "legacy registration lookup failed"
+  unless legacyEntry.unitName ==
+      `LeanInformationAudit.Tests.RegistrationErrors.legacyExample.__information_unit do
+    throwError "legacy registration lookup returned the wrong unit"
 
 end LeanInformationAudit.Tests.RegistrationPersistence

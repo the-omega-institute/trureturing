@@ -63,8 +63,9 @@ register_information_theorem legacyExample
   primitives fixtureBundle
   realization legacyRealization
 
-theorem generated.__lowers_escape : True :=
-  trivial
+set_option linter.style.nameCheck false in
+  theorem generated.__lowers_escape : True :=
+    trivial
 
 theorem generatedRealization :
     LegacyPrimitiveRealization fixtureLawArena True fixtureRealization where
@@ -93,6 +94,70 @@ register_information_theorem mismatchTarget
   in fixtureLawArena
   primitives fixtureBundle
   realization mismatchedRealization
+
+def mismatchedUnit : TheoremUnit (fixtureLawArena.toArena) :=
+  { «primitives» := fixtureBundle
+    Statement := 1 = 1
+    proof := rfl }
+
+/-- info: IE-C006 StatementProofMismatch: LeanInformationAudit.Tests.RegistrationErrors.mismatchTarget -/
+#guard_msgs in
+run_cmd do
+  let result ← Lean.Elab.Command.liftTermElabM <|
+    validateEntryTypes (← getEnv) {
+      theoremName := `LeanInformationAudit.Tests.RegistrationErrors.mismatchTarget
+      unitName := `LeanInformationAudit.Tests.RegistrationErrors.mismatchedUnit
+      arenaName := `LeanInformationAudit.Tests.RegistrationErrors.fixtureLawArena
+      realizationName := .anonymous
+    }
+  match result with
+  | .error message => logInfo message
+  | .ok () => throwError "mismatched theorem unit passed validation"
+
+def notATheorem : Prop :=
+  True
+
+/-- info: IE-C001 UnregisteredTheoremUnit: LeanInformationAudit.Tests.RegistrationErrors.notATheorem -/
+#guard_msgs in
+run_cmd do
+  let result := validateEntry (← getEnv) {
+    theoremName := `LeanInformationAudit.Tests.RegistrationErrors.notATheorem
+    unitName := `LeanInformationAudit.Tests.RegistrationErrors.mismatchedUnit
+    arenaName := `LeanInformationAudit.Tests.RegistrationErrors.fixtureLawArena
+    realizationName := .anonymous
+  }
+  match result with
+  | .error message => logInfo message
+  | .ok () => throwError "non-theorem declaration passed validation"
+
+/-- info: IE-C003 ArenaResolutionFailed: LeanInformationAudit.Tests.RegistrationErrors.missingArena -/
+#guard_msgs in
+run_cmd do
+  let result := validateEntry (← getEnv) {
+    theoremName := `LeanInformationAudit.Tests.RegistrationErrors.mismatchTarget
+    unitName := `LeanInformationAudit.Tests.RegistrationErrors.mismatchedUnit
+    arenaName := `LeanInformationAudit.Tests.RegistrationErrors.missingArena
+    realizationName := .anonymous
+  }
+  match result with
+  | .error message => logInfo message
+  | .ok () => throwError "missing arena passed validation"
+
+theorem wrongUnitHead : True :=
+  trivial
+
+/-- info: IE-C006 StatementProofMismatch: LeanInformationAudit.Tests.RegistrationErrors.mismatchTarget -/
+#guard_msgs in
+run_cmd do
+  let result := validateEntry (← getEnv) {
+    theoremName := `LeanInformationAudit.Tests.RegistrationErrors.mismatchTarget
+    unitName := `LeanInformationAudit.Tests.RegistrationErrors.wrongUnitHead
+    arenaName := `LeanInformationAudit.Tests.RegistrationErrors.fixtureLawArena
+    realizationName := .anonymous
+  }
+  match result with
+  | .error message => logInfo message
+  | .ok () => throwError "wrong theorem-unit type passed validation"
 
 /-- error: IE-C001 UnregisteredTheoremUnit: LeanInformationAudit.Tests.RegistrationErrors.unknownTheorem -/
 #guard_msgs (error) in
