@@ -146,7 +146,6 @@ theorem first_excited_frequency_rational_independence :
         apply Finset.sum_congr rfl
         intro p _
         rw [Algebra.smul_def, first_excited_prime_frequency]
-        ring
       _ = 0 := hsum
   have hscale : Real.goldenRatio ^ 2 ≠ 0 :=
     ne_of_gt (sq_pos_of_pos Real.goldenRatio_pos)
