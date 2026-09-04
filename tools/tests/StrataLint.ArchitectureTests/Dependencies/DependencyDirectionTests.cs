@@ -17,10 +17,10 @@ public sealed class DependencyDirectionTests
     /// against it adds exactly one name here and nothing beneath it.
     /// </summary>
     [Fact]
-    public void EngineReferencesExactlyBclDunetMarkdigPidginRoslynAndTruth()
+    public void EngineReferencesExactlyBclDunetMarkdigPidginRoslynTomlynAndTruth()
     {
         Assert.Equal(
-            ["Dunet", "Markdig", "Microsoft.CodeAnalysis", "Microsoft.CodeAnalysis.CSharp", "Pidgin", "Trureturing.Truth"],
+            ["Dunet", "Markdig", "Microsoft.CodeAnalysis", "Microsoft.CodeAnalysis.CSharp", "Pidgin", "Tomlyn", "Trureturing.Truth"],
             AssemblyReferencePolicy.NonPlatformReferences(typeof(AdmissionPipeline).Assembly));
     }
 

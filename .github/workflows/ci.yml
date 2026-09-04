@@ -10,9 +10,6 @@ on:
 
 permissions:
   contents: read
-env:
-  ADMISSION_PLANE_CLASSIFIER_PATH: tools/scripts/workflow/admission-plane-classify.py
-
 # PR 侧按 PR 号分组并取消在途:同一 PR 连续推送时,旧 run 的结论已无意义。
 #
 # dev push 侧不同:它的必查早已在 PR 上跑过,这一趟**存在的理由就是把缓存写进去**
@@ -76,20 +73,6 @@ jobs:
           base_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD^1)"
           test -n "$head_sha"
           test -n "$base_sha"
-      - name: Enforce admission plane partition
-        id: admission-plane
-        if: github.event_name == 'pull_request_target' && steps.checkout-merge.outcome == 'success'
-        shell: bash
-        run: |
-          set -euo pipefail
-          classifier="$RUNNER_TEMP/admission-plane-classify.py"
-          delta="$RUNNER_TEMP/admission-plane-delta.z"
-          filemap="$RUNNER_TEMP/admission-plane-base.toml"
-          git -C candidate show "HEAD^1:${ADMISSION_PLANE_CLASSIFIER_PATH}" > "$classifier"
-          git -C candidate diff --name-only -z --no-renames HEAD^1 HEAD > "$delta"
-          fetched=true
-          if ! git -C candidate show HEAD^1:Meta/FILEMAP.toml > "$filemap"; then fetched=false; fi
-          exec python3 "$classifier" --delta-file "$delta" --filemap "$filemap" --filemap-fetched "$fetched" --github-output "$GITHUB_OUTPUT"
       - name: Derive protected-base engineering execution floor
         id: engineering-floor
         if: github.event_name == 'pull_request_target' && steps.checkout-merge.outcome == 'success'
@@ -179,7 +162,6 @@ jobs:
       - name: Run candidate engineering tests with resource observation
         shell: bash
         env:
-          FULL: ${{ (steps.admission-plane.outputs.plane == 'judge-only' || steps.admission-plane.outputs.plane == 'bootstrap') && '1' || '' }}
           ENGINEERING_TRX_DIRECTORY: ${{ runner.temp }}/engineering-trx
         run: /bin/bash candidate/tools/scripts/workflow/engineering-test-execution-harness.sh "$GITHUB_WORKSPACE/candidate"
 
@@ -306,20 +288,6 @@ jobs:
           base_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD^1)"
           test -n "$head_sha"
           test -n "$base_sha"
-      - name: Enforce admission plane partition
-        id: admission-plane
-        if: github.event_name == 'pull_request_target' && steps.checkout-merge.outcome == 'success'
-        shell: bash
-        run: |
-          set -euo pipefail
-          classifier="$RUNNER_TEMP/admission-plane-classify.py"
-          delta="$RUNNER_TEMP/admission-plane-delta.z"
-          filemap="$RUNNER_TEMP/admission-plane-base.toml"
-          git -C candidate show "HEAD^1:${ADMISSION_PLANE_CLASSIFIER_PATH}" > "$classifier"
-          git -C candidate diff --name-only -z --no-renames HEAD^1 HEAD > "$delta"
-          fetched=true
-          if ! git -C candidate show HEAD^1:Meta/FILEMAP.toml > "$filemap"; then fetched=false; fi
-          exec python3 "$classifier" --delta-file "$delta" --filemap "$filemap" --filemap-fetched "$fetched" --github-output "$GITHUB_OUTPUT"
       - name: Fail closed when merge result is unavailable
         if: always() && steps.checkout-merge.outcome != 'success'
         shell: bash
@@ -619,20 +587,6 @@ jobs:
           base_sha="$(git -C "$CHECKOUT_PATH" rev-parse HEAD^1)"
           test -n "$head_sha"
           test -n "$base_sha"
-      - name: Enforce admission plane partition
-        id: admission-plane
-        if: github.event_name == 'pull_request_target' && steps.checkout-merge.outcome == 'success'
-        shell: bash
-        run: |
-          set -euo pipefail
-          classifier="$RUNNER_TEMP/admission-plane-classify.py"
-          delta="$RUNNER_TEMP/admission-plane-delta.z"
-          filemap="$RUNNER_TEMP/admission-plane-base.toml"
-          git -C candidate show "HEAD^1:${ADMISSION_PLANE_CLASSIFIER_PATH}" > "$classifier"
-          git -C candidate diff --name-only -z --no-renames HEAD^1 HEAD > "$delta"
-          fetched=true
-          if ! git -C candidate show HEAD^1:Meta/FILEMAP.toml > "$filemap"; then fetched=false; fi
-          exec python3 "$classifier" --delta-file "$delta" --filemap "$filemap" --filemap-fetched "$fetched" --github-output "$GITHUB_OUTPUT"
       - name: Fail closed when merge result is unavailable
         if: always() && steps.checkout-merge.outcome != 'success'
         shell: bash

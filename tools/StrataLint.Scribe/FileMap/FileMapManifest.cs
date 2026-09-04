@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using System.Text;
 using System.Text.RegularExpressions;
+using StrataLint.Engine;
 using Tomlyn;
 using Tomlyn.Model;
 
@@ -15,31 +16,11 @@ internal enum FileMapKind
     Ledger,
 }
 
-internal enum FileMapAdmissionPlane
-{
-    Judge,
-    Content,
-}
-
 internal sealed record FileMapResidencePolicy(
     string CaseId,
     string Desired,
     int KnownViolationCount,
     string Status);
-
-internal sealed class FileMapAdmissionPlaneException(
-    string code,
-    string path,
-    string location,
-    string message) : FormatException($"Invalid FILEMAP at {location}: {code}: {message}.")
-{
-    internal string Code { get; } = code;
-
-    internal string Path { get; } = path;
-}
-
-internal sealed class FileMapParseException(string location, string message, Exception? inner = null)
-    : FormatException($"Invalid FILEMAP at {location}: {message}.", inner);
 
 internal sealed record FileMapEntry
 {
@@ -117,7 +98,7 @@ internal sealed class FileMapManifest
 
 internal static class FileMapLoader
 {
-    internal const string RelativePath = "Meta/FILEMAP.toml";
+    internal const string RelativePath = AdmissionPlanePolicy.FileMapPath;
 
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
     private static readonly Regex NamePattern = new(

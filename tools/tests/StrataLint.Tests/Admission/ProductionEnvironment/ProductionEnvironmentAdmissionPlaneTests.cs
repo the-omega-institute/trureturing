@@ -339,6 +339,18 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
+    public void InlineTableFileArrayIsClassified()
+    {
+        var outcome = EvaluateAdmissionPlane(
+            "files = [{ pattern = \"docs/**\", admission_plane = \"content\" }]\n",
+            out var usedBootstrap,
+            "docs/change.md");
+
+        Assert.Null(outcome);
+        Assert.False(usedBootstrap);
+    }
+
+    [Fact]
     public void ReservedRepairPathNotOnJudgePlaneFailsClosed()
     {
         var outcome = EvaluateAdmissionPlane(

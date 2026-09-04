@@ -1,7 +1,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace StrataLint.Scribe;
+namespace StrataLint.Engine;
 
 internal sealed class FileMapPatternException(string pattern)
     : FormatException($"unsafe FILEMAP pattern: {pattern}")
