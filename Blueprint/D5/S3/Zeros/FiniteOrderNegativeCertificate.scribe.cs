@@ -11,8 +11,7 @@ internal sealed class FiniteOrderNegativeCertificateDocument : IScribeDocumentDe
             + "exists_finite_order_negative_certificate";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A nontrivial positive-order family with positive weights and zero weighted sum "
-            + "has a negative finite-order coefficient.",
+        "A zero weighted positive-order sum has a negative coefficient and a sharp witness.",
         H("Finite-Order Negative Certificate"),
         Blocks(Describe.Lean(
             DescribeId.Create("a-zero-weighted-sum-has-a-negative-finite-order-certificate"),

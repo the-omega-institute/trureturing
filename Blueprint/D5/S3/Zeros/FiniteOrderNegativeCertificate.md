@@ -2,7 +2,7 @@
 
 ## Abstract
 
-A nontrivial positive-order family with positive weights and zero weighted sum has a negative finite-order coefficient.
+A zero weighted positive-order sum has a negative coefficient and a sharp witness.
 
 **Theorem 1.1 (A zero weighted sum has a negative finite-order certificate).**
 
