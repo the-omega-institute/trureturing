@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:c5c287b312bdc7472e773122a959f90694baa798a18b4c030051705db43fff60
+  normalized_sha256: sha256:c5c287b312bdc7472e773122a959f90694baa798a18b4c030051705db43fff60
+cas_ref: sha256:c5c287b312bdc7472e773122a959f90694baa798a18b4c030051705db43fff60
+coverage_gids:
+  - gid: D5/S0/Diagonal/Probability/LinearMarginConcentration.linear_margin_concentration
+    target_statement_id: sha256:933b8f76c4595c2911594cc8c062dc0c9783b0349d63196d41f8fa4227872726
+receipts:
+  scribe:
+    - gid: D5/S0/Diagonal/Probability/LinearMarginConcentration.linear_margin_concentration
+      definition_sha256: sha256:100073cb4a6ef684924e6d3d7bfe29fbbf659b36594b28a3afe3fb8d7acfa5bc
+      emission_sha256: sha256:725577c1206212e711c43be7c7b66622c32f1eb799c9abc0b2b9ca99b037b5b7
+  unresolved_subitems: []
