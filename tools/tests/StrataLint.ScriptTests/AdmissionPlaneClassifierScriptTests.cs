@@ -17,6 +17,7 @@ public sealed class AdmissionPlaneClassifierScriptTests
             "tools/change.cs");
 
         AssertAccepted(result, "status=judge-only judge=1 content=0");
+        Assert.Equal("plane=judge-only\n", result.GitHubOutput);
     }
 
     [Fact]
@@ -27,6 +28,7 @@ public sealed class AdmissionPlaneClassifierScriptTests
             "docs/change.md");
 
         AssertAccepted(result, "status=content-only judge=0 content=1");
+        Assert.Equal("plane=content-only\n", result.GitHubOutput);
     }
 
     [Fact]
@@ -35,6 +37,7 @@ public sealed class AdmissionPlaneClassifierScriptTests
         var result = RunClassifier("this is not TOML");
 
         AssertAccepted(result, "status=empty judge=0 content=0");
+        Assert.Equal("plane=empty\n", result.GitHubOutput);
     }
 
     [Fact]
@@ -119,6 +122,19 @@ public sealed class AdmissionPlaneClassifierScriptTests
         var result = RunClassifier("[", "Meta/FILEMAP.toml");
 
         AssertAccepted(result, "reason=base-filemap-parse-failed self-repair=bootstrap");
+        Assert.Equal("plane=bootstrap\n", result.GitHubOutput);
+    }
+
+    [Fact]
+    public void MissingBaseFileMapRepairDeltaBootstraps()
+    {
+        var result = RunClassifier(
+            "unused",
+            fileMapFetched: false,
+            "Meta/FILEMAP.toml");
+
+        AssertAccepted(result, "reason=base-filemap-unavailable self-repair=bootstrap");
+        Assert.Equal("plane=bootstrap\n", result.GitHubOutput);
     }
 
     [Fact]
@@ -178,18 +194,27 @@ public sealed class AdmissionPlaneClassifierScriptTests
         Assert.Equal(canonicalMatch ? 0 : 1, result.ExitCode);
     }
 
-    private static ProcessOutput RunClassifier(string manifest, params string[] changedPaths)
+    private static ClassifierResult RunClassifier(string manifest, params string[] changedPaths)
+    {
+        return RunClassifier(manifest, fileMapFetched: true, changedPaths);
+    }
+
+    private static ClassifierResult RunClassifier(
+        string manifest,
+        bool fileMapFetched,
+        params string[] changedPaths)
     {
         using var temporary = new TemporaryDirectory();
         var deltaPath = Path.Combine(temporary.Path, "delta.z");
         var manifestPath = Path.Combine(temporary.Path, "FILEMAP.toml");
+        var githubOutputPath = Path.Combine(temporary.Path, "github-output");
         var delta = changedPaths.Length == 0
             ? []
             : Utf8.GetBytes(string.Join('\0', changedPaths) + "\0");
         File.WriteAllBytes(deltaPath, delta);
         File.WriteAllText(manifestPath, manifest, Utf8);
 
-        return TestProcessRunner.Run(
+        var process = TestProcessRunner.Run(
             "/usr/bin/env",
             [
                 "LC_ALL=C",
@@ -201,24 +226,29 @@ public sealed class AdmissionPlaneClassifierScriptTests
                 "--filemap",
                 manifestPath,
                 "--filemap-fetched",
-                "true",
+                fileMapFetched ? "true" : "false",
+                "--github-output",
+                githubOutputPath,
             ],
             temporary.Path,
             TestBudgets.ScriptProcessHangGuard,
             64 * 1024);
+        var githubOutput = ScriptHarnessScratch.ReadScratchText(temporary, "github-output");
+        return new ClassifierResult(process, githubOutput);
     }
 
-    private static void AssertAccepted(ProcessOutput result, string outputFragment)
+    private static void AssertAccepted(ClassifierResult result, string outputFragment)
     {
         Assert.True(result.ExitCode == 0, Diagnostics(result));
         Assert.Empty(result.StandardError);
         Assert.Contains(outputFragment, StandardOutput(result), StringComparison.Ordinal);
     }
 
-    private static void AssertRejected(ProcessOutput result, string errorFragment)
+    private static void AssertRejected(ClassifierResult result, string errorFragment)
     {
         Assert.True(result.ExitCode != 0, Diagnostics(result));
         Assert.Empty(result.StandardOutput);
+        Assert.Empty(result.GitHubOutput);
         Assert.Contains(errorFragment, StandardError(result), StringComparison.Ordinal);
     }
 
@@ -237,12 +267,19 @@ public sealed class AdmissionPlaneClassifierScriptTests
         return builder.ToString();
     }
 
-    private static string StandardOutput(ProcessOutput result) =>
+    private static string StandardOutput(ClassifierResult result) =>
         Utf8.GetString(result.StandardOutput);
 
-    private static string StandardError(ProcessOutput result) =>
+    private static string StandardError(ClassifierResult result) =>
         Utf8.GetString(result.StandardError);
 
-    private static string Diagnostics(ProcessOutput result) =>
+    private static string Diagnostics(ClassifierResult result) =>
         "stdout:\n" + StandardOutput(result) + "\nstderr:\n" + StandardError(result);
+
+    private sealed record ClassifierResult(ProcessOutput Process, string GitHubOutput)
+    {
+        internal int ExitCode => Process.ExitCode;
+        internal byte[] StandardOutput => Process.StandardOutput;
+        internal byte[] StandardError => Process.StandardError;
+    }
 }

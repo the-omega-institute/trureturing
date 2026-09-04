@@ -78,6 +78,7 @@ jobs:
           test -n "$head_sha"
           test -n "$base_sha"
       - name: Enforce admission plane partition
+        id: admission-plane
         if: github.event_name == 'pull_request_target' && steps.checkout-merge.outcome == 'success'
         shell: bash
         run: |
@@ -89,7 +90,11 @@ jobs:
           git -C candidate diff --name-only -z --no-renames HEAD^1 HEAD > "$delta"
           fetched=true
           if ! git -C candidate show HEAD^1:Meta/FILEMAP.toml > "$filemap"; then fetched=false; fi
-          exec python3 "$classifier" --delta-file "$delta" --filemap "$filemap" --filemap-fetched "$fetched"
+          exec python3 "$classifier" --delta-file "$delta" --filemap "$filemap" --filemap-fetched "$fetched" --github-output "$GITHUB_OUTPUT"
+      - name: Derive protected-base engineering execution floor
+        id: engineering-floor
+        if: github.event_name == 'pull_request_target' && steps.checkout-merge.outcome == 'success'
+        run: git -C candidate show "HEAD^1:tools/scripts/workflow/engineering-base-floor.py" > "$RUNNER_TEMP/engineering-base-floor.py" && python3 "$RUNNER_TEMP/engineering-base-floor.py" prepare --repository candidate --base HEAD^1 --head HEAD --full "${{ (steps.admission-plane.outputs.plane == 'judge-only' || steps.admission-plane.outputs.plane == 'bootstrap') && '1' || '0' }}" --github-output "$GITHUB_OUTPUT" --results-directory "$RUNNER_TEMP/engineering-trx"
       - name: Classify exact revert
         id: revert
         if: github.event_name == 'pull_request_target' && steps.checkout-merge.outcome == 'success'
@@ -192,28 +197,19 @@ jobs:
         id: restore-packages
         if: steps.revert.outputs.confirmed != 'true' && github.event_name != 'schedule'
         run: dotnet restore candidate/tools/StrataLint.sln --locked-mode
-      - name: Run project-scoped engineering tests with protected-base harness
+      - name: Run candidate engineering tests with resource observation
         if: steps.revert.outputs.confirmed != 'true'
         shell: bash
-        run: |
-          set -euo pipefail
-          export ENGINEERING_HEAD="$(git -C candidate rev-parse HEAD)"
-          export ENGINEERING_BASE="$(git -C candidate rev-parse HEAD^1)"
-          base_harness_root="$RUNNER_TEMP/protected-base-engineering-execution-harness"
-          test ! -e "$base_harness_root"
-          git -C candidate worktree add --detach "$base_harness_root" "$ENGINEERING_BASE"
-          cleanup_base_harness() {
-            git -C candidate worktree remove --force "$base_harness_root"
-          }
-          trap cleanup_base_harness EXIT
-          test "$(git -C "$base_harness_root" rev-parse HEAD)" = "$ENGINEERING_BASE"
-          test -z "$(git -C "$base_harness_root" status --short --untracked-files=no)"
-          (
-            cd "$base_harness_root"
-            dotnet restore tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj --locked-mode
-          )
-          execution_harness="$base_harness_root/tools/scripts/workflow/engineering-test-execution-harness.sh"
-          /bin/bash "$execution_harness" "$base_harness_root"
+        env:
+          FULL: ${{ (steps.admission-plane.outputs.plane == 'judge-only' || steps.admission-plane.outputs.plane == 'bootstrap') && '1' || '' }}
+          ENGINEERING_TRX_DIRECTORY: ${{ runner.temp }}/engineering-trx
+        run: /bin/bash candidate/tools/scripts/workflow/engineering-test-execution-harness.sh "$GITHUB_WORKSPACE/candidate"
+
+      - name: Verify protected-base engineering execution floor
+        if: github.event_name == 'pull_request_target' && steps.revert.outputs.confirmed != 'true'
+        env:
+          REQUIRED_ASSEMBLIES_JSON: ${{ steps.engineering-floor.outputs.required_assemblies_json }}
+        run: python3 "$RUNNER_TEMP/engineering-base-floor.py" verify --required-assemblies-json "$REQUIRED_ASSEMBLIES_JSON" --results-directory "$RUNNER_TEMP/engineering-trx"
 
       - name: Run candidate selftest twice and compare bytes
         if: steps.revert.outputs.confirmed != 'true'
@@ -336,6 +332,7 @@ jobs:
           test -n "$head_sha"
           test -n "$base_sha"
       - name: Enforce admission plane partition
+        id: admission-plane
         if: github.event_name == 'pull_request_target' && steps.checkout-merge.outcome == 'success'
         shell: bash
         run: |
@@ -347,7 +344,7 @@ jobs:
           git -C candidate diff --name-only -z --no-renames HEAD^1 HEAD > "$delta"
           fetched=true
           if ! git -C candidate show HEAD^1:Meta/FILEMAP.toml > "$filemap"; then fetched=false; fi
-          exec python3 "$classifier" --delta-file "$delta" --filemap "$filemap" --filemap-fetched "$fetched"
+          exec python3 "$classifier" --delta-file "$delta" --filemap "$filemap" --filemap-fetched "$fetched" --github-output "$GITHUB_OUTPUT"
       - name: Classify exact revert
         id: revert
         if: github.event_name == 'pull_request_target' && steps.checkout-merge.outcome == 'success'
@@ -669,6 +666,7 @@ jobs:
           test -n "$head_sha"
           test -n "$base_sha"
       - name: Enforce admission plane partition
+        id: admission-plane
         if: github.event_name == 'pull_request_target' && steps.checkout-merge.outcome == 'success'
         shell: bash
         run: |
@@ -680,7 +678,7 @@ jobs:
           git -C candidate diff --name-only -z --no-renames HEAD^1 HEAD > "$delta"
           fetched=true
           if ! git -C candidate show HEAD^1:Meta/FILEMAP.toml > "$filemap"; then fetched=false; fi
-          exec python3 "$classifier" --delta-file "$delta" --filemap "$filemap" --filemap-fetched "$fetched"
+          exec python3 "$classifier" --delta-file "$delta" --filemap "$filemap" --filemap-fetched "$fetched" --github-output "$GITHUB_OUTPUT"
       - name: Classify exact revert
         id: revert
         if: github.event_name == 'pull_request_target' && steps.checkout-merge.outcome == 'success'
