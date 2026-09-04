@@ -1,0 +1,20 @@
+## B6.5 与离线 phase bubble 的尺度区别
+
+若一个简单零点附近
+
+$$
+V\asymp r^2,
+\tag{B6.17}
+$$
+
+并把有限参考系 tax $\tau_N$ 用作能量分辨阈值，则可见半径满足
+
+$$
+r_N\asymp\sqrt{\tau_N}\asymp N^{-1}.
+\tag{B6.18}
+$$
+
+而 hard-core fugacity edge 的 zero pinching 是 $N^{-2}$。二者不是冲突：前者是二次能量到坐标距离的开方，后者是二次分支相位量子化后的参数距离。
+
+---
+

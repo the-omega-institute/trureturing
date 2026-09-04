@@ -1,0 +1,2 @@
+**候签定理 6.209(Barker 自相关的二模与四模边界同余)**〔open;落 `D5/S1/Words/BarkerEvenLengthModFourObstruction`〕。设 a : ℕ → ℤ 的前 n 项皆为 ±1,非周期自相关 `C_k := ∑_{i<n−k} a_i · a_{i+k}`。则 (i) 对 k ≤ n,`C_k ≡ n − k [ZMOD 2]`;(ii) 对 2 ≤ n,`C₂ + C_{n−2} ≡ n [ZMOD 4]`——逐项同余 `x·y ≡ x − y + 1 [ZMOD 4]`(x, y ∈ {±1})经步长二望远镜求和得到的边界分解。
+

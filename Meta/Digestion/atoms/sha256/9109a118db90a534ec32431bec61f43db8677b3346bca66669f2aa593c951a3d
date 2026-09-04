@@ -1,0 +1,24 @@
+## B15.3 boundary transversality
+
+若 transformed determinant 或 matrix coefficient 写成
+
+$$
+Z_L(s)=
+\langle \ell_L(s),
+\mathcal M_L(s)r_L(s)\rangle,
+\tag{B15.6}
+$$
+
+还必须证明 $\ell_L,r_L$ 对 dominant singular directions 的耦合不以指数速度消失。
+
+可写成：存在次指数 $c_L>0$，使
+
+$$
+|\langle \ell_L,u_{1,L}\rangle|
+\,|\langle v_{1,L},r_L\rangle|
+\ge c_L,
+\qquad
+\frac1{N_L}\log c_L\to0.
+\tag{B15.7}
+$$
+

@@ -1,0 +1,21 @@
+## B12.1 两个有限 Hilbert 空间
+
+取有限 exponent 空间
+
+$$
+\mathcal H_Z
+=\ell^2(\{0,\ldots,M_Q-1\},\mu),
+\tag{B12.1}
+$$
+
+其中 $\mu(v)>0$ 且总质量归一化为 $1$。
+
+取有限 prime graph $\mathcal C$ 的 vertex space
+
+$$
+\mathcal H_P=\ell^2(V_{\mathcal C},\nu),
+\tag{B12.2}
+$$
+
+以及 edge space $\mathcal H_E$。
+
