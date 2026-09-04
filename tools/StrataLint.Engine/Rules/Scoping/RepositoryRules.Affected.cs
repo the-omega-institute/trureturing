@@ -24,16 +24,6 @@ internal static partial class RepositoryRules
             || path.StartsWith("Blueprint/", StringComparison.Ordinal)
             || path.StartsWith("Evidence/", StringComparison.Ordinal));
 
-    private static bool ChronicleAffected(RuleEvaluationContext context) =>
-        Changed(context, static path => path.StartsWith("Chronicle/", StringComparison.Ordinal));
-
-    private static bool TheoryVolumeAffected(RuleEvaluationContext context) =>
-        Changed(context, IsTheoryVolumePath);
-
-    private static bool DigestionAtomsAffected(RuleEvaluationContext context) =>
-        Changed(context, static path =>
-            path.StartsWith(BackfillInventoryLoader.RootPath, StringComparison.Ordinal));
-
     private static bool StatusAffected(RuleEvaluationContext context) =>
         Changed(context, IsStatusScope);
 
