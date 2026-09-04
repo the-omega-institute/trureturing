@@ -113,6 +113,21 @@ public sealed class FrozenSurfaceRuleTests
     }
 
     [Fact]
+    public void Sl008C1RequiresACanonicalRepositoryLeanModulePath()
+    {
+        var fixture = new RuleFixture();
+        const string statePath = "Golden/Frozen/state/d5/S0/Carrier/Ring.lean.json";
+        fixture.Files[statePath] = StateText(StatementId.Create("sha256:" + new string('1', 64)));
+
+        var diagnostic = Assert.Single(
+            Evaluate(fixture, (statePath, RawChangeKind.Added)).Diagnostics);
+
+        Assert.Equal(
+            $"SL-008 frozen state {statePath}: path must encode exactly one canonical repository Lean module",
+            diagnostic.Render());
+    }
+
+    [Fact]
     public void Sl008RejectsStateWhoseModuleIsNotClosed()
     {
         var fixture = new RuleFixture();
