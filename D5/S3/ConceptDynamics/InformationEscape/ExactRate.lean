@@ -176,15 +176,20 @@ theorem uniqueCaptureCount_pos_iff_witness
     have distinct : left ≠ right := by
       simpa [offDiagonalPairs] using escapeParts.1
     refine ⟨left, right, distinct, ?_, uniqueParts.2⟩
+    have leaveAgreement :=
+      (catalog.indistinguishable_iff_forall
+        (catalog.without index) left right).mp escapeParts.2
     intro candidate candidateNe
-    exact escapeParts.2 candidate
+    exact leaveAgreement candidate
       ((catalog.mem_without_iff index candidate).mpr candidateNe)
   · rintro ⟨left, right, distinct, otherAgreement, indexSeparation⟩
     refine ⟨(left, right), Finset.mem_filter.mpr ⟨?_, indexSeparation⟩⟩
     apply Finset.mem_filter.mpr
     refine ⟨?_, ?_⟩
     · simp [offDiagonalPairs, distinct]
-    · intro candidate candidateInWithout
+    · apply (catalog.indistinguishable_iff_forall
+        (catalog.without index) left right).mpr
+      intro candidate candidateInWithout
       exact otherAgreement candidate
         ((catalog.mem_without_iff index candidate).mp candidateInWithout)
 
