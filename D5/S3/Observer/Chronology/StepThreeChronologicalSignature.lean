@@ -82,12 +82,16 @@ instance [Semiring A] : Monoid (StepThreeSignature A) where
   one := identity
   mul := compose
   one_mul signature := by
+    change compose identity signature = signature
     rcases signature with ⟨degreeOne, degreeTwo, degreeThree⟩
     ext <;> simp [compose, identity]
   mul_one signature := by
+    change compose signature identity = signature
     rcases signature with ⟨degreeOne, degreeTwo, degreeThree⟩
     ext <;> simp [compose, identity]
   mul_assoc left middle right := by
+    change compose (compose left middle) right =
+      compose left (compose middle right)
     rcases left with ⟨leftOne, leftTwo, leftThree⟩
     rcases middle with ⟨middleOne, middleTwo, middleThree⟩
     rcases right with ⟨rightOne, rightTwo, rightThree⟩
