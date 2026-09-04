@@ -17,6 +17,9 @@ public sealed partial class ScriptTestGateClosureTests
     public void JudgeNamedHelperTypesResolveToDeclaredTypes()
     {
         Assert.Equal(
+            ScriptTestInputDeriver.RepositoryLayoutAssemblyName,
+            typeof(StrataLint.Tests.TestRepositoryLayout).Assembly.GetName().Name);
+        Assert.Equal(
             ScriptTestInputDeriver.RepositoryLayoutTypeName,
             typeof(StrataLint.Tests.TestRepositoryLayout).Name);
         Assert.Equal(
@@ -248,6 +251,36 @@ public sealed partial class ScriptTestGateClosureTests
         var error = Assert.ThrowsAny<Exception>(() => Derive(snapshot, []));
 
         Assert.Contains("InstanceRootLookalikeProbe", Flatten(error), StringComparison.Ordinal);
+        Assert.Contains(
+            "unresolved repository-rooted path expression",
+            Flatten(error),
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ForeignAssemblyTestRepositoryLayoutFindRootFailsClosedByOwnerIdentity()
+    {
+        const string script = "tools/scripts/workflow/foreign-root-lookalike.sh";
+        var snapshot = AppendTestMethod(
+            CurrentSnapshot(),
+            $$"""
+
+                [Fact]
+                public void ForeignRootLookalikeProbe()
+                {
+                    _ = File.ReadAllText(Path.Combine(
+                        StrataLint.Lookalike.TestRepositoryLayout.FindRoot(),
+                        "{{script}}"));
+                }
+            """,
+            ("tools/tests/StrataLint.ScriptTests/LookalikeRepositoryLayout.cs",
+                "namespace StrataLint.Lookalike; public static class TestRepositoryLayout "
+                + "{ public static string FindRoot() => string.Empty; }\n"),
+            (script, "#!/usr/bin/env bash\nexit 0\n"));
+
+        var error = Assert.ThrowsAny<Exception>(() => Derive(snapshot, []));
+
+        Assert.Contains("ForeignRootLookalikeProbe", Flatten(error), StringComparison.Ordinal);
         Assert.Contains(
             "unresolved repository-rooted path expression",
             Flatten(error),
