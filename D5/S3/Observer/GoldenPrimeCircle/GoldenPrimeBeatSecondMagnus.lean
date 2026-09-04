@@ -80,8 +80,7 @@ ordinary prime-log frequency. -/
 theorem long_frequency_eq_short_add_log (prime : Nat.Primes) :
     longGoldenPrimeFrequency prime =
       shortGoldenPrimeFrequency prime + Real.log (prime : ℝ) := by
-  rw [← sub_eq_iff_eq_add]
-  exact long_sub_short_frequency prime
+  linarith [long_sub_short_frequency prime]
 
 /-- Every prime channel has a positive half-beat observation time. -/
 theorem golden_prime_half_beat_time_pos (prime : Nat.Primes) :
