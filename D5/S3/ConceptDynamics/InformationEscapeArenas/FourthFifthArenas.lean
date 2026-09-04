@@ -25,7 +25,7 @@ namespace D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas
 
 open D5.S3.ConceptDynamics.InformationEscape
 
-namespace ContextSource
+section ContextSource
 open D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint
 
 section
@@ -104,7 +104,7 @@ def contextArena : PrimitiveLawArena where
 
 end ContextSource
 
-namespace InterventionSource
+section InterventionSource
 open D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation
 
 section

@@ -24,9 +24,8 @@ namespace D5.S3.ConceptDynamics.InformationEscapeRealizations.FourthFifthRealiza
 open D5.S3.ConceptDynamics.InformationEscape
 open D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas
 
-namespace ContextRealization
+section ContextRealization
 open D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint
-open D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.ContextSource
 
 private instance falseMeaningDecidable :
     DecidablePred (fun context : BinaryInterpretationContext =>
@@ -112,9 +111,8 @@ example : contextArena.toArena.Nondegenerate := by decide
 
 end ContextRealization
 
-namespace InterventionRealization
+section InterventionRealization
 open D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation
-open D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.InterventionSource
 
 def interventionRealization : PrimitiveRealization interventionSignature where
   readout

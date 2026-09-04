@@ -25,10 +25,9 @@ namespace D5.S3.ConceptDynamics.InformationEscapeRealizations.FirstThreeRealizat
 open D5.S3.ConceptDynamics.InformationEscape
 open D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas
 
-namespace AgendaRealization
+section AgendaRealization
 open D5.S3.ConceptDynamics.Aggregation.AgendaPower
 open D5.S3.ConceptDynamics.Aggregation.MajorityCycleNotScalarOrder
-open D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.AgendaSource
 
 private instance validAgendaDecidable : DecidablePred ValidAgenda := fun agenda => by
   unfold ValidAgenda
@@ -94,10 +93,9 @@ example : agendaPowerArena.toArena.Nondegenerate := by decide
 
 end AgendaRealization
 
-namespace ResidueRealization
+section ResidueRealization
 open D5.S3.ConceptDynamics.Coding.AdaptiveResidueIdentification
 open D5.S3.ConceptDynamics.Coding.FiberBinaryIdentification
-open D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.ResidueSource
 
 def residueRealization : PrimitiveRealization residueSignature where
   readout := residueReadout
@@ -182,9 +180,8 @@ example : residueArena.toArena.Nondegenerate := by decide
 
 end ResidueRealization
 
-namespace SpectrumRealization
+section SpectrumRealization
 open D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope
-open D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.SpectrumSource
 
 def spectrumRealization : PrimitiveRealization spectrumSignature where
   readout := fun _ => SpectrumAtom.index

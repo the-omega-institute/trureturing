@@ -26,7 +26,7 @@ namespace D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas
 
 open D5.S3.ConceptDynamics.InformationEscape
 
-namespace AgendaSource
+section AgendaSource
 open D5.S3.ConceptDynamics.Aggregation.AgendaPower
 open D5.S3.ConceptDynamics.Aggregation.MajorityCycleNotScalarOrder
 
@@ -81,7 +81,7 @@ def agendaPowerArena : PrimitiveLawArena where
 
 end AgendaSource
 
-namespace ResidueSource
+section ResidueSource
 open D5.S3.ConceptDynamics.Coding.AdaptiveResidueIdentification
 open D5.S3.ConceptDynamics.Coding.FiberBinaryIdentification
 
@@ -132,7 +132,7 @@ def residueArena : PrimitiveLawArena where
 
 end ResidueSource
 
-namespace SpectrumSource
+section SpectrumSource
 open D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope
 
 def spectrumSignature : PrimitiveSignature SpectrumAtom where
