@@ -126,17 +126,20 @@ theorem three_tower_cost_sandwich_and_double_separation
     (prefixTower : BudgetedNaming X PrefixName)
     (testTower : BudgetedNaming X TestName)
     (programTower : BudgetedNaming X ProgramName)
-    (prefixToTest : CostCompiler prefixTower testTower 0)
-    (testToProgram : CostCompiler testTower programTower 0)
+    (prefixTestOverhead testProgramOverhead : Nat)
+    (prefixToTest : CostCompiler prefixTower testTower prefixTestOverhead)
+    (testToProgram : CostCompiler testTower programTower testProgramOverhead)
     (x : X) (budget : Nat)
     (hPrefixNonempty : (prefixTower.affordable budget).Nonempty) :
-    (Metric.infDist x (programTower.affordable budget) <=
-        Metric.infDist x (testTower.affordable budget) /\
-      Metric.infDist x (testTower.affordable budget) <=
+    (Metric.infDist x
+          (programTower.affordable (budget + prefixTestOverhead + testProgramOverhead)) <=
+        Metric.infDist x (testTower.affordable (budget + prefixTestOverhead)) /\
+      Metric.infDist x (testTower.affordable (budget + prefixTestOverhead)) <=
         Metric.infDist x (prefixTower.affordable budget)) /\
     (forall j : Nat,
       indexedSpikeValue (2 ^ j) = spike (2 ^ j) /\
       indexedSpikeCost (2 ^ j) = j + 1 /\
+      indexedSpikeCost (2 ^ j) < 2 ^ j + 1 /\
       (forall bits : List Bool,
         prefixValue bits = spike (2 ^ j) -> 2 ^ j + 1 <= bits.length)) /\
     (forall j : Nat, 2 <= j ->
@@ -144,17 +147,23 @@ theorem three_tower_cost_sandwich_and_double_separation
       explicitTableCost (Finset.range (2 ^ j)) = 2 ^ j /\
       rangeProgramCost (2 ^ j) = j + 1 /\
       rangeProgramCost (2 ^ j) < explicitTableCost (Finset.range (2 ^ j))) := by
-  have hPrefixTest : prefixTower.affordable budget <= testTower.affordable budget := by
-    simpa using affordable_subset_of_compiler prefixToTest
-  have hTestProgram : testTower.affordable budget <= programTower.affordable budget := by
-    simpa using affordable_subset_of_compiler testToProgram
-  have hTestNonempty : (testTower.affordable budget).Nonempty :=
+  have hPrefixTest :
+      prefixTower.affordable budget <=
+        testTower.affordable (budget + prefixTestOverhead) :=
+    affordable_subset_of_compiler prefixToTest
+  have hTestProgram :
+      testTower.affordable (budget + prefixTestOverhead) <=
+        programTower.affordable (budget + prefixTestOverhead + testProgramOverhead) :=
+    affordable_subset_of_compiler testToProgram
+  have hTestNonempty : (testTower.affordable (budget + prefixTestOverhead)).Nonempty :=
     hPrefixNonempty.mono hPrefixTest
   refine ⟨⟨Metric.infDist_le_infDist_of_subset hTestProgram hTestNonempty,
     Metric.infDist_le_infDist_of_subset hPrefixTest hPrefixNonempty⟩, ?_, ?_⟩
   · intro j
-    refine ⟨rfl, ?_, ?_⟩
+    refine ⟨rfl, ?_, ?_, ?_⟩
     · simp [indexedSpikeCost, Nat.log_pow Nat.one_lt_two]
+    · simp only [indexedSpikeCost, Nat.log_pow Nat.one_lt_two]
+      exact Nat.add_lt_add_right j.lt_two_pow_self 1
     · intro bits hvalue
       exact prefix_spike_length_lower_bound (2 ^ j) bits hvalue
   · intro j hj
