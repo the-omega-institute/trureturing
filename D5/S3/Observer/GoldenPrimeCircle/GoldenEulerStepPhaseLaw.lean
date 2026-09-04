@@ -47,7 +47,9 @@ theorem prime_step_phase_euler
     primeStepPhase time prime layer =
       (Real.cos (time * primeStepFrequency prime layer) : ℂ) +
         (Real.sin (time * primeStepFrequency prime layer) : ℂ) * Complex.I := by
-  simp [primeStepPhase, Complex.exp_ofReal_mul_I]
+  unfold primeStepPhase
+  exact Complex.exp_ofReal_mul_I
+    (time * primeStepFrequency prime layer)
 
 /-- Every step phase lies on the complex unit circle. -/
 @[simp] theorem prime_step_phase_norm
