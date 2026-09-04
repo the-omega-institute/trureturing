@@ -245,15 +245,17 @@ public sealed partial class MakeWorkflowTests
             exit 0
             """);
 
+        var explicitBase = RunScenarioGitForOutput(root, "rev-parse", "HEAD^1").Trim();
         var result = TestProcessRunner.Run(
             "/bin/bash",
             [
                 "-c",
-                "PREFLIGHT_SCENARIO=\"$1\" BASE=HEAD^ PATH=\"$2:/usr/bin:/bin\" exec /bin/bash \"$3\"",
+                "PREFLIGHT_SCENARIO=\"$1\" BASE=\"$4\" PATH=\"$2:/usr/bin:/bin\" exec /bin/bash \"$3\"",
                 "preflight-contract",
                 scenario,
                 binDirectory,
                 preflight,
+                explicitBase,
             ],
             root,
             BoundedProcessRunner.HangDetectionBudget,

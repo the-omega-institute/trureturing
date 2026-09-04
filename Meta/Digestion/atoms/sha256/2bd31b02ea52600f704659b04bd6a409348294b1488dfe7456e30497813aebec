@@ -1,0 +1,6 @@
+## 二　W-17 预登记:无条件能量恒等式(同模块第二条公开定理)
+
+**义务**:公开定理 `energyIdentity_unconditional (Z : ZeroData) (f : WeilTestFunction) (L : ℝ) (hSupport : tsupport (f : ℝ → ℂ) ⊆ Set.Icc (-L) L) : zeroSum Z (convolutionSquare f) (symmetricConvergent_of_zeroData Z (convolutionSquare f)) = ((2 * Complex.normSq (∫ x : ℝ, Complex.exp ((x : ℂ) / 2) * f x) + archimedeanJumpEnergy f + arithmeticJumpEnergy L f - (2 * totalPrimeWeight L - archimedeanConstant) * l2Mass f : ℝ) : ℂ)`。
+**可证伪预测(写在跑之前)**:冻结 `prime_archimedean_energy_identity Z f L hSupport (symmetricConvergent_of_zeroData …) (archimedeanConvergent_of_weilTestFunction …)` 的第一分量;标准三公理。探针已整证。
+**边界**:同 §〇;能量恒等式属他驱动者冻结节点,只绑定不复证。
+
