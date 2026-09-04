@@ -2,6 +2,13 @@ using System.Collections.Immutable;
 
 namespace StrataLint.Engine;
 
+internal enum FrozenStatementResolutionFailure
+{
+    Unresolved,
+    MissingDeclaration,
+    AmbiguousDeclaration,
+}
+
 internal sealed class FrozenStatementIndex
 {
     private readonly FrozenStateCatalog state;
@@ -23,9 +30,17 @@ internal sealed class FrozenStatementIndex
     internal bool ContainsModule(RepoPath path) => state.Records.ContainsKey(path);
 
     internal bool TryResolve(Gid gid, out StatementId? statementId, out string message)
+        => TryResolve(gid, out statementId, out message, out _);
+
+    internal bool TryResolve(
+        Gid gid,
+        out StatementId? statementId,
+        out string message,
+        out FrozenStatementResolutionFailure failure)
     {
         ArgumentNullException.ThrowIfNull(gid);
         statementId = null;
+        failure = FrozenStatementResolutionFailure.Unresolved;
         if (gid.ToTarget() is not Target.Formal formal)
         {
             message = $"coverage GID is not a formal target: {gid.Value}";
@@ -95,6 +110,9 @@ internal sealed class FrozenStatementIndex
 
         if (matches.Count != 1)
         {
+            failure = matches.Count == 0
+                ? FrozenStatementResolutionFailure.MissingDeclaration
+                : FrozenStatementResolutionFailure.AmbiguousDeclaration;
             message = $"coverage GID resolves to {matches.Count} current report declarations: {gid.Value}";
             return false;
         }
