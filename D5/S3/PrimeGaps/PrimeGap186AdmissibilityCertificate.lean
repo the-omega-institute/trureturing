@@ -12,7 +12,6 @@ namespace D5.S3.PrimeGaps.PrimeGap186AdmissibilityCertificate
 
 open D5.S3.PrimeGaps.PrimeGap186FiniteFrontEnd
 open D5.S3.PrimeGaps.PrimeGapAdmissibilityContractBridge
-open D5.S3.PrimeGaps.PrimeGap186SourceContract
 open D5.S3.Analytic.PrimeProducts.FiniteLocalResidueBlockingCriterion
 
 /-- An explicit omitted residue for each possible prime modulus at most forty.
@@ -41,12 +40,12 @@ theorem omittedResidue186_is_missing
   interval_cases p <;>
     norm_num [omittedResidue186, admissibleTuple186Int, admissibleTuple186] at hp ⊢
 
-/-- The explicit forty-tuple satisfies the exact direct admissibility contract used by the
-upstream `DHL[40,2]` theorem. Large primes are discharged generically by cardinality; the
-small-prime residue witnesses are certified above. -/
+/-- The explicit forty-tuple satisfies the exact direct admissibility contract used by
+`DHL[40,2]`. Large primes are discharged generically by cardinality; the small-prime residue
+witnesses are certified above. -/
 theorem admissibleTuple186_is_admissible :
-    AdmissibleIntegerTuple admissibleTuple186Int := by
-  rw [admissibleIntegerTuple_iff_local_residue]
+    DirectTupleAdmissible admissibleTuple186Int := by
+  rw [directTupleAdmissible_iff_local_residue]
   intro p hp
   by_cases hle : p ≤ 40
   · have hdirect : ∃ a : ZMod p, ∀ h ∈ admissibleTuple186Int, (h : ZMod p) ≠ a :=
@@ -66,7 +65,7 @@ theorem admissibleTuple186_is_admissible :
 /-- The local-residue formulation is therefore closed unconditionally for the explicit tuple. -/
 theorem admissibleTuple186_all_local_residue_counts :
     ∀ p : Nat, p.Prime → localResidueCount admissibleTuple186Int p < p :=
-  (admissibleIntegerTuple_iff_local_residue admissibleTuple186Int).1
+  (directTupleAdmissible_iff_local_residue admissibleTuple186Int).1
     admissibleTuple186_is_admissible
 
 #print axioms omittedResidue186
