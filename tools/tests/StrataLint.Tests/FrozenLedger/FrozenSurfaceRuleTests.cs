@@ -280,6 +280,39 @@ public sealed class FrozenSurfaceRuleTests
         Assert.Contains($"actual={actual.Value}", diagnostic.Message, StringComparison.Ordinal);
     }
 
+    [Fact]
+    public void Sl008RechecksFrozenDependentThroughBaselineOnlyImportEdge()
+    {
+        var fixture = new RuleFixture();
+        var dependent = RuleFixture.ValuesBindingPath;
+        var actual = ModuleStatementId(fixture, dependent);
+        var stored = StatementId.Create("sha256:" + new string('f', 64));
+        Assert.NotEqual(stored, actual);
+        AddState(fixture, dependent, stored, includeInBaseline: true);
+        var baselineSource = fixture.Baseline[dependent].Replace(
+            "def fixtureValue",
+            "\nimport D5.S0.Carrier.Ring\n\ndef fixtureValue",
+            StringComparison.Ordinal);
+        fixture.Baseline[dependent] = baselineSource;
+        fixture.ForkPoint[dependent] = baselineSource;
+        fixture.BaselineReports[dependent] = fixture.BaselineReports[dependent] with
+        {
+            Imports = ["D5.S0.Carrier.Ring"],
+        };
+        fixture.Files[FrozenPath] = fixture.Files[FrozenPath].Replace(
+            "def goldenRing : Nat := 0",
+            "def goldenRing : Int := 0",
+            StringComparison.Ordinal);
+        ChangeStatement(fixture, FrozenPath, "Int");
+
+        var diagnostic = Assert.Single(
+            Evaluate(fixture, (FrozenPath, RawChangeKind.Modified)).Diagnostics);
+
+        Assert.Contains($"selector {dependent}", diagnostic.Message, StringComparison.Ordinal);
+        Assert.Contains($"stored={stored.Value}", diagnostic.Message, StringComparison.Ordinal);
+        Assert.Contains($"actual={actual.Value}", diagnostic.Message, StringComparison.Ordinal);
+    }
+
     [Theory]
     [InlineData("tools/lean-inspector/inspect.sh")]
     [InlineData("tools/lean-inspector/materials.py")]

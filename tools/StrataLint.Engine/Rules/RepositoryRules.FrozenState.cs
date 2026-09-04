@@ -95,7 +95,7 @@ internal static partial class RepositoryRules
         if (!changedModules.IsEmpty)
         {
             var currentAdjacency = LeanImportAdjacency.Build(context.Current, context.Lean);
-            var baselineAdjacency = LeanImportAdjacency.Build(context.Baseline, context.Lean);
+            var baselineAdjacency = LeanImportAdjacency.BuildFromSources(context.Baseline);
             var currentDependents = ReverseDependencies(currentAdjacency);
             var baselineDependents = ReverseDependencies(baselineAdjacency);
             var affectedModules = changedModules.ToHashSet();
