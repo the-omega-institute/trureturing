@@ -136,17 +136,21 @@ public sealed class CoverageCommandTests
     }
 
     [Fact]
-    public void AcceptedEventImplementationChangeTrustsStoredEventWithoutReplayingWriteGate()
+    public void AcceptedEventImplementationChangeDoesNotReplayStoredSemanticValidation()
     {
         var decoded = Assert.IsType<SnapshotDecodeOutcome.Decoded>(
-            SnapshotDecoder.Decode(Snapshot(terminateAcceptedEvent: false))).Snapshot;
+            SnapshotDecoder.Decode(Snapshot())).Snapshot;
         var accepted = Assert.Single(
             decoded.Files.Values,
             file => FrozenLedgerChangeClassifier.IsAcceptedEventPath(file.Path.Value));
+        var storedEvent = accepted.Text.Replace(
+            "sha256:" + new string('d', 64),
+            "not-a-statement-id",
+            StringComparison.Ordinal);
         var fixture = new RuleFixture();
-        fixture.Files[accepted.Path.Value] = accepted.Text;
-        fixture.Baseline[accepted.Path.Value] = accepted.Text;
-        fixture.ForkPoint[accepted.Path.Value] = accepted.Text;
+        fixture.Files[accepted.Path.Value] = storedEvent;
+        fixture.Baseline[accepted.Path.Value] = storedEvent;
+        fixture.ForkPoint[accepted.Path.Value] = storedEvent;
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(19),
