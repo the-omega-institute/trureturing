@@ -57,29 +57,6 @@ private theorem medianCutQuestion_antitone {n : ℕ} :
   · have hj : ¬j.val < (n + 2) / 2 := by omega
     rw [if_neg hi, if_neg hj]
 
-private theorem spectralPairingCapacity_eq_signedPairing {n : ℕ}
-    (r a : Fin n → ℝ) :
-    spectralPairingCapacity r a =
-      (1 / 2 : ℝ) * ∑ i, (r i - r (Fin.rev i)) * a i := by
-  unfold spectralPairingCapacity
-  congr 1
-  calc
-    ∑ i, r i * (a i - a (Fin.rev i)) =
-        ∑ i, (r i * a i - r i * a (Fin.rev i)) := by
-      apply Finset.sum_congr rfl
-      intro i _
-      ring
-    _ = (∑ i, r i * a i) - ∑ i, r i * a (Fin.rev i) := by
-      rw [Finset.sum_sub_distrib]
-    _ = (∑ i, r i * a i) - ∑ i, r (Fin.rev i) * a i := by
-      congr 1
-      simpa using (Equiv.sum_comp Fin.revPerm (fun i => r (Fin.rev i) * a i))
-    _ = ∑ i, (r i - r (Fin.rev i)) * a i := by
-      rw [← Finset.sum_sub_distrib]
-      apply Finset.sum_congr rfl
-      intro i _
-      ring
-
 private theorem medianCutQuestion_signed_gap {n : ℕ} (r : Fin (n + 2) → ℝ)
     (hmono : Antitone r) (i : Fin (n + 2)) :
     (r i - r (Fin.rev i)) * medianCutQuestion i = |r i - r (Fin.rev i)| := by
@@ -100,11 +77,42 @@ private theorem medianCutQuestion_signed_gap {n : ℕ} (r : Fin (n + 2) → ℝ)
 private theorem medianCutQuestion_attains {n : ℕ} (r : Fin (n + 2) → ℝ)
     (hmono : Antitone r) :
     spectralPairingCapacity r medianCutQuestion = spectralSharpness r := by
-  rw [spectralPairingCapacity_eq_signedPairing, spectralSharpness]
-  congr 1
-  apply Finset.sum_congr rfl
-  intro i _
-  exact medianCutQuestion_signed_gap r hmono i
+  apply le_antisymm
+  · apply
+      (SpectralSharpnessDuality.spectral_sharpness_isGreatest_bounded_pairing r).2
+    refine ⟨medianCutQuestion, ?_, rfl⟩
+    intro i
+    unfold medianCutQuestion
+    split <;> norm_num
+  · rw [spectralPairingCapacity, spectralSharpness]
+    apply le_of_eq
+    congr 1
+    symm
+    calc
+      ∑ i, r i * (medianCutQuestion i - medianCutQuestion (Fin.rev i)) =
+          ∑ i, (r i * medianCutQuestion i -
+            r i * medianCutQuestion (Fin.rev i)) := by
+        apply Finset.sum_congr rfl
+        intro i _
+        ring
+      _ = (∑ i, r i * medianCutQuestion i) -
+          ∑ i, r i * medianCutQuestion (Fin.rev i) := by
+        rw [Finset.sum_sub_distrib]
+      _ = (∑ i, r i * medianCutQuestion i) -
+          ∑ i, r (Fin.rev i) * medianCutQuestion i := by
+        congr 1
+        simpa using
+          (Equiv.sum_comp Fin.revPerm
+            (fun i => r (Fin.rev i) * medianCutQuestion i))
+      _ = ∑ i, (r i - r (Fin.rev i)) * medianCutQuestion i := by
+        rw [← Finset.sum_sub_distrib]
+        apply Finset.sum_congr rfl
+        intro i _
+        ring
+      _ = ∑ i, |r i - r (Fin.rev i)| := by
+        apply Finset.sum_congr rfl
+        intro i _
+        exact medianCutQuestion_signed_gap r hmono i
 
 private theorem medianCutQuestion_distance {n : ℕ} :
     spectralCenterDistance (medianCutQuestion (n := n)) = 1 := by
