@@ -1,0 +1,58 @@
+name: One-shot check mirror Krein second layer
+
+on:
+  push:
+    branches:
+      - lane/math/rh-canonical-zero-data-nonvacuity-20260903
+
+permissions:
+  contents: write
+
+concurrency:
+  group: one-shot-check-mirror-krein-second-layer
+  cancel-in-progress: false
+
+jobs:
+  check-and-remove:
+    if: github.repository == 'the-omega-institute/trureturing'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: lane/math/rh-canonical-zero-data-nonvacuity-20260903
+
+      - name: Check second-layer Lean and Scribe sources
+        id: check
+        continue-on-error: true
+        run: |
+          set +e
+          status=0
+          dotnet build tools/StrataLint.Scribe/StrataLint.Scribe.csproj || status=1
+          for file in \
+            D5/S3/Midline/Cayley/ZeroDataHilbertPresentationTransport.lean \
+            D5/S3/Midline/Cayley/CanonicalZetaMirrorEvenOddDecomposition.lean \
+            D5/S3/Midline/Cayley/CanonicalZetaCayleyKreinInverse.lean \
+            D5/S3/Midline/Cayley/FiniteMirrorKreinGramInertia.lean
+          do
+            echo "===== $file ====="
+            lake env lean "$file" || status=1
+          done
+          echo "status=$status" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Remove one-shot workflow
+        run: |
+          rm -f .github/workflows/one-shot-check-krein-second-layer.yml
+          git config user.name Lexa
+          git config user.email 50111876+AlyciaBHZ@users.noreply.github.com
+          git add .github/workflows/one-shot-check-krein-second-layer.yml
+          if ! git diff --cached --quiet; then
+            git commit -m 'automation: remove mirror Krein second-layer checker'
+            git push origin HEAD:lane/math/rh-canonical-zero-data-nonvacuity-20260903
+          fi
+
+      - name: Enforce check result
+        if: always()
+        run: |
+          test "${{ steps.check.outputs.status }}" = "0"
