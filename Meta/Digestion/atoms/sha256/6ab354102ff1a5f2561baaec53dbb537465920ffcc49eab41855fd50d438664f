@@ -1,0 +1,30 @@
+## 9.2 Zeckendorf 平均横向能量
+
+定义
+
+$$
+\boxed{
+\mathscr E_{Q,\mathcal C}^{\perp}(\delta)
+=
+\frac1{M_Q}
+\sum_{\eta\in\Omega_Q}
+\sum_{i<j}W_{ij}
+\sinh^2\!\left(
+\delta E_Q(\eta)\Delta\omega_{ij}
+\right).
+}
+\tag{A9.5}
+$$
+
+由能量双射，也可写为
+
+$$
+\mathscr E_{Q,\mathcal C}^{\perp}(\delta)
+=
+\frac1{M_Q}
+\sum_{v=0}^{M_Q-1}
+\sum_{i<j}W_{ij}
+\sinh^2(\delta v\Delta\omega_{ij}).
+\tag{A9.6}
+$$
+

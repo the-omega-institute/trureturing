@@ -1,0 +1,1 @@
+**义务**:公开定理 `window_count_lower_log : ∃ R T₀ c' : ℝ, 0 < R ∧ 0 < c' ∧ ∀ T : ℝ, T₀ ≤ T → c' * Real.log (T + 3) ≤ (Zeta23.zetaZeroConfig.N (T - R) (T + R) : ℝ)`,连同公开的分解引理 `zero_side_norm_le_window_count`(零点侧范数 ≤ K·N(T−R, T+R) + 对数尾项)与 `exists_radius_shifted_inv_sq_tsum_compl`(窗外补集上的固定半径尾项估计)。
