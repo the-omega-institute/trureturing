@@ -1,0 +1,34 @@
+## 8.1 已有 prime jump decomposition
+
+项目已经构造
+
+$$
+\operatorname{PrimeTerm}
+=
+2W_L\|f\|_2^2
+-
+E_{\mathrm{jump},L}(f),
+\tag{A8.1}
+$$
+
+其中
+
+$$
+E_{\mathrm{jump},L}(f)
+=
+\sum_{n\in\mathcal P_L}
+\frac{\Lambda(n)}{\sqrt n}
+\left\|f-\mathsf T_{\log n}f\right\|_2^2
+\ge0.
+\tag{A8.2}
+$$
+
+这里
+
+$$
+(\mathsf T_a f)(y)=f(y-a)
+\tag{A8.3}
+$$
+
+是 unitary translation。
+

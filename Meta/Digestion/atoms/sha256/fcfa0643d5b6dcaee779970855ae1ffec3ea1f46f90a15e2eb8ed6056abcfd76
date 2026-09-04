@@ -1,0 +1,21 @@
+## 12.1 log-gap 与 Fibonacci shell 的互补缩放
+
+固定 $P_0>0$ 和 additive gap $g>0$，令
+
+$$
+P_Q=P_0\varphi^Q.
+\tag{A12.1}
+$$
+
+则
+
+$$
+\boxed{
+\lim_{Q\to\infty}
+F_Q\log\left(1+\frac g{P_Q}\right)
+=
+\frac g{\sqrt5P_0}.
+}
+\tag{A12.2}
+$$
+
