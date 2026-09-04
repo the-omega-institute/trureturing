@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/ContinuousObservables/FreePermutationObserverDistance
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Free update orbits have exact integer distance;
-     both off-orbit sectors are infinitely far. -/
+   digest: Free orbits have exact integer distance; off-orbit sectors are infinitely far. -/
 
 import D5.S3.ContinuousObservables.PermutationOrbitHorizon
 
