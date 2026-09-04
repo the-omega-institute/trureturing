@@ -52,11 +52,24 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeArenas/StaticExactExperi
 
 The law reproduces individual failure, joint injectivity, and minimal selection using the two realization slots.
 
+**Theorem 1.5 (Static exact-experiment arena is nondegenerate).**
+
+$$\operatorname{Nondegenerate}(\operatorname{toArena}(staticExactExperimentArena))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeArenas/StaticExactExperimentDesign.staticExactExperimentArena_nondegenerate` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The three-element source carrier contains a pair of distinct models.
+
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/StaticExactExperimentDesign.StaticExactDesignStatement`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/StaticExactExperimentDesign.StaticReadout`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/StaticExactExperimentDesign.staticExactExperimentArena`
+- Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/StaticExactExperimentDesign.staticExactExperimentArena_nondegenerate`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/StaticExactExperimentDesign.staticSignature`
 - Dependency: [D5/S3/ConceptDynamics/ExperimentDesign/StaticExactExperimentDesign](../ExperimentDesign/StaticExactExperimentDesign.md)
 - Dependency: [D5/S3/ConceptDynamics/InformationEscape/TheoremUnit](../InformationEscape/TheoremUnit.md)

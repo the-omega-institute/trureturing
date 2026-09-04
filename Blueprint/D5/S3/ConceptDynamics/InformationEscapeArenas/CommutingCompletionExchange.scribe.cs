@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.InformationEscapeArenas;
 
@@ -34,7 +36,19 @@ internal sealed class CommutingCompletionExchangeDocument : IScribeDocumentDefin
                 "This alias is definitionally the type of the frozen theorem D5/S3/ConceptDynamics/Completion/CommutingCompletionExchange.commutativity_hypothesis_is_necessary."),
             Definition("commuting-completion-arena", "commutingCompletionArena",
                 "Completion countermodel arena",
-                "Both completion orders are formed directly from realization FLOW and CUT slots."))));
+                "Both completion orders are formed directly from realization FLOW and CUT slots."),
+            Describe.Lean(
+                DescribeId.Create("commuting-completion-arena-nondegenerate"),
+                DeclarationHandle.Create(Prefix + "commutingCompletionArena_nondegenerate"),
+                H("Commuting-completion arena is nondegenerate"),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Operatorname, Grp(F.Id("Nondegenerate")), Open,
+                    Operatorname, Grp(F.Id("toArena")), Open,
+                    F.Id("commutingCompletionArena"), Close, Close))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The four-state source carrier contains a pair of distinct states."))),
+                DescribeRole.Theorem))));
 
     private static DocumentBlock.Describe Definition(
         string id, string declaration, string title, string explanation) => Describe.Lean(

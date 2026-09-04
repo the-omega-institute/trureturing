@@ -77,4 +77,8 @@ def staticExactExperimentArena : PrimitiveLawArena where
                   else r.readout (0 : StaticReadout))) ->
           selected = {false, true}
 
+/-- The static exact-experiment arena has at least two source models. -/
+theorem staticExactExperimentArena_nondegenerate :
+    staticExactExperimentArena.toArena.Nondegenerate := by decide
+
 end D5.S3.ConceptDynamics.InformationEscapeArenas.StaticExactExperimentDesign

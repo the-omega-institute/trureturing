@@ -124,11 +124,24 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeArenas/CommutingCompleti
 
 Both completion orders are formed directly from realization FLOW and CUT slots.
 
+**Theorem 1.11 (Commuting-completion arena is nondegenerate).**
+
+$$\operatorname{Nondegenerate}(\operatorname{toArena}(commutingCompletionArena))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeArenas/CommutingCompletionExchange.commutingCompletionArena_nondegenerate` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The four-state source carrier contains a pair of distinct states.
+
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/CommutingCompletionExchange.CommutativityNecessaryStatement`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/CommutingCompletionExchange.CompletionReadout`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/CommutingCompletionExchange.commutingCompletionArena`
+- Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/CommutingCompletionExchange.commutingCompletionArena_nondegenerate`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/CommutingCompletionExchange.completionSignature`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/CommutingCompletionExchange.fourStateCode`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/CommutingCompletionExchange.fourStateEquiv`

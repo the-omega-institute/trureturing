@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.InformationEscapeArenas;
 
@@ -37,7 +39,19 @@ internal sealed class ObservationInterventionDocument : IScribeDocumentDefinitio
                 "This alias is definitionally the type of the frozen theorem D5/S3/ConceptDynamics/Interventions/ObservationInterventionSeparation.observation_strictly_weaker_than_intervention."),
             Definition("observation-intervention-arena", "observationInterventionArena",
                 "Observation-intervention arena",
-                "The law asks for two source models with equal observation CUTs and unequal intervention CUTs."))));
+                "The law asks for two source models with equal observation CUTs and unequal intervention CUTs."),
+            Describe.Lean(
+                DescribeId.Create("observation-intervention-arena-nondegenerate"),
+                DeclarationHandle.Create(Prefix + "observationInterventionArena_nondegenerate"),
+                H("Observation-intervention arena is nondegenerate"),
+                StatementSource.FromAuthor(Disp(Seq(
+                    Operatorname, Grp(F.Id("Nondegenerate")), Open,
+                    Operatorname, Grp(F.Id("toArena")), Open,
+                    F.Id("observationInterventionArena"), Close, Close))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The finite source carrier contains a pair of distinct models."))),
+                DescribeRole.Theorem))));
 
     private static DocumentBlock.Describe Definition(
         string id, string declaration, string title, string explanation) => Describe.Lean(

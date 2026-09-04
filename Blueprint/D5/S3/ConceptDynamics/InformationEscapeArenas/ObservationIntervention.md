@@ -124,6 +124,18 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeArenas/ObservationInterv
 
 The law asks for two source models with equal observation CUTs and unequal intervention CUTs.
 
+**Theorem 1.11 (Observation-intervention arena is nondegenerate).**
+
+$$\operatorname{Nondegenerate}(\operatorname{toArena}(observationInterventionArena))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeArenas/ObservationIntervention.observationInterventionArena_nondegenerate` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The finite source carrier contains a pair of distinct models.
+
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/ObservationIntervention.ObservationInterventionStatement`
@@ -134,6 +146,7 @@ The law asks for two source models with equal observation CUTs and unequal inter
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/ObservationIntervention.instFintypeDeterministicBoolSCM`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/ObservationIntervention.instFintypeObservationReadout`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/ObservationIntervention.observationInterventionArena`
+- Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/ObservationIntervention.observationInterventionArena_nondegenerate`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/ObservationIntervention.observationInterventionSignature`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/ObservationIntervention.scmEquiv`
 - Dependency: [D5/S3/ConceptDynamics/InformationEscape/TheoremUnit](../InformationEscape/TheoremUnit.md)
