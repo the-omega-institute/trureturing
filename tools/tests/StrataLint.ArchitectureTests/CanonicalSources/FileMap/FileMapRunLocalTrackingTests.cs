@@ -57,6 +57,7 @@ public sealed class FileMapRunLocalTrackingTests
         [[files]]
         pattern = "Generated/partitions/*.md"
         kind = "generated"
+        admission_plane = "content"
         produced_by = "PartitionEmitter"
         consumed_by = ["reader"]
         verified_by = ["PartitionEmitter"]
@@ -69,6 +70,7 @@ public sealed class FileMapRunLocalTrackingTests
         [[files]]
         pattern = "Blueprint/**/*.md"
         kind = "generated"
+        admission_plane = "content"
         produced_by = "ScribeEmitter"
         consumed_by = ["reader"]
         verified_by = ["ScribeEmitter"]

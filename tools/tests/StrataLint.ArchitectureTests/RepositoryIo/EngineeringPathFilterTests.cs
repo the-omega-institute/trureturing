@@ -12,12 +12,14 @@ public sealed class EngineeringPathFilterTests
         "tools/tests/StrataLint.Engine.Tests/StrataLint.Engine.Tests.csproj";
     private const string ArchitectureTestsProject =
         "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj";
+    private const string ScriptTestsProject =
+        "tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj";
 
     [Fact]
     public void ScribeChangeSelectsBaseReverseTestProjectClosure()
     {
         var topology = Topology(scribeTestsReferenceScribe: true);
-        var plan = EngineeringTestPlanPolicy.Evaluate(
+        var plan = EngineeringTestPlanPolicy.EvaluateOrdinary(
             ["tools/StrataLint.Scribe/DocumentEmitter.cs"],
             topology,
             topology);
@@ -32,7 +34,7 @@ public sealed class EngineeringPathFilterTests
     public void TestProjectChangeSelectsItselfAndItsBaseReverseDependents()
     {
         var topology = Topology(scribeTestsReferenceScribe: true);
-        var plan = EngineeringTestPlanPolicy.Evaluate(
+        var plan = EngineeringTestPlanPolicy.EvaluateOrdinary(
             ["tools/tests/StrataLint.Engine.Tests/EngineTests.cs"],
             topology,
             topology);
@@ -47,14 +49,14 @@ public sealed class EngineeringPathFilterTests
     public void UnownedChangedPathSelectsAllBaseTestProjects()
     {
         var topology = Topology(scribeTestsReferenceScribe: true);
-        var plan = EngineeringTestPlanPolicy.Evaluate(
+        var plan = EngineeringTestPlanPolicy.EvaluateOrdinary(
             ["D5/S3/UnownedChange.lean"],
             topology,
             topology);
 
         Assert.Equal(EngineeringTestPlanKind.Full, plan.Kind);
         Assert.Equal(
-            [ArchitectureTestsProject, EngineTestsProject, ScribeTestsProject],
+            [ArchitectureTestsProject, EngineTestsProject, ScribeTestsProject, ScriptTestsProject],
             plan.Projects.ToArray());
     }
 
@@ -64,7 +66,7 @@ public sealed class EngineeringPathFilterTests
         var topology = Topology(
             scribeTestsReferenceScribe: true,
             scribeCompilesBlueprints: true);
-        var plan = EngineeringTestPlanPolicy.Evaluate(
+        var plan = EngineeringTestPlanPolicy.EvaluateOrdinary(
             ["Blueprint/D5/S3/NewDefinition.scribe.cs"],
             topology,
             topology);
@@ -113,6 +115,7 @@ public sealed class EngineeringPathFilterTests
             isTest: true,
             scribeTestsReferenceScribe ? [ScribeProject] : []),
         Project(EngineTestsProject, isTest: true, EngineProject),
+        Project(ScriptTestsProject, isTest: true, EngineProject),
         Project(
             ArchitectureTestsProject,
             isTest: true,

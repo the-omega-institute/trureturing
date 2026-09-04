@@ -19,7 +19,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
             "module-already-frozen",
             Encoding.UTF8.GetString(result.StandardError),
             StringComparison.Ordinal);
-        Assert.DoesNotContain("dotnet:ledger-append", fixture.CallKinds());
+        Assert.DoesNotContain("dotnet:ledger-align", fixture.CallKinds());
         Assert.Equal(1, fixture.FreezeCount());
     }
 
@@ -37,7 +37,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
             "matching shard is not a canonical v5 Freeze",
             Encoding.UTF8.GetString(result.StandardError),
             StringComparison.Ordinal);
-        Assert.DoesNotContain("dotnet:ledger-append", fixture.CallKinds());
+        Assert.DoesNotContain("dotnet:ledger-align", fixture.CallKinds());
         Assert.Equal(0, fixture.FreezeCount());
     }
 
@@ -56,7 +56,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
             "module-already-frozen",
             Encoding.UTF8.GetString(result.StandardError),
             StringComparison.Ordinal);
-        Assert.DoesNotContain("dotnet:ledger-append", fixture.CallKinds());
+        Assert.DoesNotContain("dotnet:ledger-align", fixture.CallKinds());
     }
 
     internal sealed partial class TransactionFixture

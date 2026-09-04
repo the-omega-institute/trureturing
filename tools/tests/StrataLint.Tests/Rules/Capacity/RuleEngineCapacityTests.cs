@@ -105,6 +105,25 @@ public sealed class RuleEngineCapacityTests
     }
 
     [Fact]
+    public void Sl003DoesNotTreatTwentyFiveFrozenStateFragmentsAsASplittableModules()
+    {
+        var fixture = new RuleFixture();
+        const string directory = "Golden/Frozen/state/D5/S3/Analytic/EulerGerm";
+        for (var index = 0; index < 25; index++)
+        {
+            var path = $"{directory}/Module{index:00}.lean.json";
+            fixture.Files[path] = $"{{\"statement_id\":\"sha256:{index:x64}\"}}\n";
+            fixture.Changes.Add(path);
+        }
+
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(3),
+            fixture.Build()).Diagnostics;
+
+        Assert.DoesNotContain(diagnostics, diagnostic => diagnostic.Path == directory);
+    }
+
+    [Fact]
     public void Sl003RefusesNetGrowthOfAnOverfullBucket()
     {
         var fixture = OverfullBucket(forkPointCount: (L - 1), currentCount: (L + 1));

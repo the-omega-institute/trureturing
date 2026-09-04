@@ -1,0 +1,6 @@
+## 一　Z-1 预登记:正波包种子(`ZeroInfinitude/CosinePacket`,新桶 `D5/S3/Weil/ZeroInfinitude/`,`ZetaBridge/` 已满 24)
+
+**义务**:公开构造 `packetSeed : WeilTestFunction` 与 `packetSquare := convolutionSquare packetSeed`,并公开定理 `packetTransform_ge_half_near_zero : ∃ δ : ℝ, 0 < δ ∧ ∀ t : ℝ, |t| ≤ δ → 1/2 ≤ (Zeta23.paperFT (packetSquare : ℝ → ℂ) t).re`,连同 `packetTransform_real_nonneg`、`packetTransform_zero : Zeta23.paperFT packetSquare 0 = 1`、`packetTransform_integrable`。
+**拟议逃逸见证(写在探针之前)**:`∃ δ > 0, ∀ |t| ≤ δ, 1/2 ≤ H t`——由 H(0)=1、H 连续(整函数限制)与 |ψ̂|² 非负合成;非冻结输入是归一化 bump 的积分计算与连续性论证。
+**边界**:ψ 的具体形状不承重,只用其归一化与偶性。
+
