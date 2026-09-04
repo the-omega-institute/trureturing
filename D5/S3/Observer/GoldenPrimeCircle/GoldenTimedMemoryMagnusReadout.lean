@@ -150,8 +150,7 @@ theorem golden_timed_memory_magnus_readout_swap
             [eventP, eventQ])) 0 1 := by
     simpa using congrArg (fun matrix => matrix 0 1)
       (timed_matrix_two_event_doubled_magnus_swap stable eventP eventQ)
-  rw [hSwapEntry]
-  ring
+  rw [hSwapEntry, mul_neg]
 
 /-- Headline contrast: the scalar short/long endpoint is order-blind, while a
 nonzero matrix-memory curvature yields a nonzero sign-oriented chronology
