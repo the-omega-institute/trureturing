@@ -32,38 +32,126 @@ theorem compatible_local_laws_can_lack_global_state_realization :
     LegacyPrimitiveRealization localLawGluingArena LocalLawGluingStatement
       localLawGluingRealization := by
   refine ⟨?_⟩
+  have h01_snd (b : Bool) :
+      (∃ state : Bool × Bool × Bool,
+        localLawGluingRealization.readout .admit01 state = true /\ state.2.1 = b) ↔
+        b ∈ Prod.snd '' sameLaw := by
+    constructor
+    · rintro ⟨state, h01, rfl⟩
+      refine ⟨(state.1, state.2.1), ?_, rfl⟩
+      exact (admit_readout_eq_true_iff
+        (fun s : Bool × Bool × Bool => s.1 = s.2.1) state).1 h01
+    · rintro ⟨pair, hpair, rfl⟩
+      refine ⟨(pair.1, pair.2, false), ?_, rfl⟩
+      exact (admit_readout_eq_true_iff
+        (fun s : Bool × Bool × Bool => s.1 = s.2.1)
+        (pair.1, pair.2, false)).2 hpair
+  have h01_fst (b : Bool) :
+      (∃ state : Bool × Bool × Bool,
+        localLawGluingRealization.readout .admit01 state = true /\ state.1 = b) ↔
+        b ∈ Prod.fst '' sameLaw := by
+    constructor
+    · rintro ⟨state, h01, rfl⟩
+      refine ⟨(state.1, state.2.1), ?_, rfl⟩
+      exact (admit_readout_eq_true_iff
+        (fun s : Bool × Bool × Bool => s.1 = s.2.1) state).1 h01
+    · rintro ⟨pair, hpair, rfl⟩
+      refine ⟨(pair.1, pair.2, false), ?_, rfl⟩
+      exact (admit_readout_eq_true_iff
+        (fun s : Bool × Bool × Bool => s.1 = s.2.1)
+        (pair.1, pair.2, false)).2 hpair
+  have h12_fst (b : Bool) :
+      (∃ state : Bool × Bool × Bool,
+        localLawGluingRealization.readout .admit12 state = true /\ state.2.1 = b) ↔
+        b ∈ Prod.fst '' sameLaw := by
+    constructor
+    · rintro ⟨state, h12, rfl⟩
+      refine ⟨(state.2.1, state.2.2), ?_, rfl⟩
+      exact (admit_readout_eq_true_iff
+        (fun s : Bool × Bool × Bool => s.2.1 = s.2.2) state).1 h12
+    · rintro ⟨pair, hpair, rfl⟩
+      refine ⟨(false, pair.1, pair.2), ?_, rfl⟩
+      exact (admit_readout_eq_true_iff
+        (fun s : Bool × Bool × Bool => s.2.1 = s.2.2)
+        (false, pair.1, pair.2)).2 hpair
+  have h12_snd (b : Bool) :
+      (∃ state : Bool × Bool × Bool,
+        localLawGluingRealization.readout .admit12 state = true /\ state.2.2 = b) ↔
+        b ∈ Prod.snd '' sameLaw := by
+    constructor
+    · rintro ⟨state, h12, rfl⟩
+      refine ⟨(state.2.1, state.2.2), ?_, rfl⟩
+      exact (admit_readout_eq_true_iff
+        (fun s : Bool × Bool × Bool => s.2.1 = s.2.2) state).1 h12
+    · rintro ⟨pair, hpair, rfl⟩
+      refine ⟨(false, pair.1, pair.2), ?_, rfl⟩
+      exact (admit_readout_eq_true_iff
+        (fun s : Bool × Bool × Bool => s.2.1 = s.2.2)
+        (false, pair.1, pair.2)).2 hpair
+  have h02_fst (b : Bool) :
+      (∃ state : Bool × Bool × Bool,
+        localLawGluingRealization.readout .admit02 state = true /\ state.1 = b) ↔
+        b ∈ Prod.fst '' differentLaw := by
+    constructor
+    · rintro ⟨state, h02, rfl⟩
+      refine ⟨(state.1, state.2.2), ?_, rfl⟩
+      exact (admit_readout_eq_true_iff
+        (fun s : Bool × Bool × Bool => s.1 ≠ s.2.2) state).1 h02
+    · rintro ⟨pair, hpair, rfl⟩
+      refine ⟨(pair.1, false, pair.2), ?_, rfl⟩
+      exact (admit_readout_eq_true_iff
+        (fun s : Bool × Bool × Bool => s.1 ≠ s.2.2)
+        (pair.1, false, pair.2)).2 hpair
+  have h02_snd (b : Bool) :
+      (∃ state : Bool × Bool × Bool,
+        localLawGluingRealization.readout .admit02 state = true /\ state.2.2 = b) ↔
+        b ∈ Prod.snd '' differentLaw := by
+    constructor
+    · rintro ⟨state, h02, rfl⟩
+      refine ⟨(state.1, state.2.2), ?_, rfl⟩
+      exact (admit_readout_eq_true_iff
+        (fun s : Bool × Bool × Bool => s.1 ≠ s.2.2) state).1 h02
+    · rintro ⟨pair, hpair, rfl⟩
+      refine ⟨(pair.1, false, pair.2), ?_, rfl⟩
+      exact (admit_readout_eq_true_iff
+        (fun s : Bool × Bool × Bool => s.1 ≠ s.2.2)
+        (pair.1, false, pair.2)).2 hpair
   constructor
-  · intro _source
-    change
-      (forall b : Bool,
-        (∃ state : Bool × Bool × Bool,
-          decide (state.1 = state.2.1) = true /\ state.2.1 = b) <->
-        (∃ state : Bool × Bool × Bool,
-          decide (state.2.1 = state.2.2) = true /\ state.2.1 = b)) /\
-      (forall b : Bool,
-        (∃ state : Bool × Bool × Bool,
-          decide (state.1 = state.2.1) = true /\ state.1 = b) <->
-        (∃ state : Bool × Bool × Bool,
-          decide (state.1 ≠ state.2.2) = true /\ state.1 = b)) /\
-      (forall b : Bool,
-        (∃ state : Bool × Bool × Bool,
-          decide (state.2.1 = state.2.2) = true /\ state.2.2 = b) <->
-        (∃ state : Bool × Bool × Bool,
-          decide (state.1 ≠ state.2.2) = true /\ state.2.2 = b)) /\
-      ¬ ∃ state : Bool × Bool × Bool,
-        decide (state.1 = state.2.1) = true /\
-        decide (state.2.1 = state.2.2) = true /\
-        decide (state.1 ≠ state.2.2) = true
-    decide
+  · rintro ⟨⟨hSndSame, hFstOuter, hSndOuter⟩, hNoGlobal⟩
+    refine ⟨?_, ?_, ?_, ?_⟩
+    · intro b
+      calc
+        _ ↔ b ∈ Prod.snd '' sameLaw := h01_snd b
+        _ ↔ b ∈ Prod.fst '' sameLaw := by rw [hSndSame]
+        _ ↔ _ := (h12_fst b).symm
+    · intro b
+      calc
+        _ ↔ b ∈ Prod.fst '' sameLaw := h01_fst b
+        _ ↔ b ∈ Prod.fst '' differentLaw := by rw [hFstOuter]
+        _ ↔ _ := (h02_fst b).symm
+    · intro b
+      calc
+        _ ↔ b ∈ Prod.snd '' sameLaw := h12_snd b
+        _ ↔ b ∈ Prod.snd '' differentLaw := by rw [hSndOuter]
+        _ ↔ _ := (h02_snd b).symm
+    · rintro ⟨state, h01, h12, h02⟩
+      apply hNoGlobal
+      refine ⟨state, ?_, ?_, ?_⟩
+      · exact (admit_readout_eq_true_iff
+          (fun s : Bool × Bool × Bool => s.1 = s.2.1) state).1 h01
+      · exact (admit_readout_eq_true_iff
+          (fun s : Bool × Bool × Bool => s.2.1 = s.2.2) state).1 h12
+      · exact (admit_readout_eq_true_iff
+          (fun s : Bool × Bool × Bool => s.1 ≠ s.2.2) state).1 h02
   · intro hLaw
     constructor
-    · refine ⟨?_, ?_, ?_⟩
-      · ext bit
-        cases bit <;> simp [sameLaw]
-      · ext bit
-        cases bit <;> simp [sameLaw, differentLaw]
-      · ext bit
-        cases bit <;> simp [sameLaw, differentLaw]
+    · refine ⟨Set.ext ?_, Set.ext ?_, Set.ext ?_⟩
+      · intro b
+        exact (h01_snd b).symm.trans (hLaw.1 b) |>.trans (h12_fst b)
+      · intro b
+        exact (h01_fst b).symm.trans (hLaw.2.1 b) |>.trans (h02_fst b)
+      · intro b
+        exact (h12_snd b).symm.trans (hLaw.2.2.1 b) |>.trans (h02_snd b)
     · rintro ⟨state, h01, h12, h02⟩
       apply hLaw.2.2.2
       refine ⟨state, ?_, ?_, ?_⟩

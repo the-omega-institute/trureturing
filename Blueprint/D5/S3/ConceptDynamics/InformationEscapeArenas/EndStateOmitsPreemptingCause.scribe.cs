@@ -48,8 +48,7 @@ internal sealed class EndStateOmitsPreemptingCauseDocument : IScribeDocumentDefi
                 DescribeId.Create("end-state-preemption-arena-nondegenerate"),
                 DeclarationHandle.Create(Prefix + "endStateOmitsPreemptingCauseArena_nondegenerate"),
                 H("Preemption trace arena is nondegenerate"),
-                StatementSource.FromAuthor(NondegenerateFormula(
-                    "endStateOmitsPreemptingCauseArena")),
+                StatementSource.FromAuthor(NondegenerateFormula(F.Id("endStateOmitsPreemptingCauseArena"))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The finite arena has at least two distinct preemption traces."))),
@@ -65,7 +64,7 @@ internal sealed class EndStateOmitsPreemptingCauseDocument : IScribeDocumentDefi
             Blocks(Paragraph(Text(explanation))),
             DescribeRole.Definition);
 
-    private static Formula NondegenerateFormula(string arena) => Disp(Seq(
+    private static Formula NondegenerateFormula(Formula arena) => Disp(Seq(
         Operatorname, Grp(F.Id("Nondegenerate")), Open,
-        Operatorname, Grp(F.Id("toArena")), Open, F.Id(arena), Close, Close));
+        Operatorname, Grp(F.Id("toArena")), Open, arena, Close, Close));
 }

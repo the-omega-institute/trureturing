@@ -37,7 +37,7 @@ internal sealed class LocalLawGluingObstructionDocument : IScribeDocumentDefinit
                 DescribeId.Create("local-law-gluing-arena-nondegenerate"),
                 DeclarationHandle.Create(Prefix + "localLawGluingArena_nondegenerate"),
                 H("Local-law gluing arena is nondegenerate"),
-                StatementSource.FromAuthor(NondegenerateFormula("localLawGluingArena")),
+                StatementSource.FromAuthor(NondegenerateFormula(F.Id("localLawGluingArena"))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The finite arena has at least two distinct attempted global states."))),
@@ -53,7 +53,7 @@ internal sealed class LocalLawGluingObstructionDocument : IScribeDocumentDefinit
             Blocks(Paragraph(Text(explanation))),
             DescribeRole.Definition);
 
-    private static Formula NondegenerateFormula(string arena) => Disp(Seq(
+    private static Formula NondegenerateFormula(Formula arena) => Disp(Seq(
         Operatorname, Grp(F.Id("Nondegenerate")), Open,
-        Operatorname, Grp(F.Id("toArena")), Open, F.Id(arena), Close, Close));
+        Operatorname, Grp(F.Id("toArena")), Open, arena, Close, Close));
 }
