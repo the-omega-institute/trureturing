@@ -37,7 +37,6 @@ public sealed class RetiredLedgerSurfaceTests(
         Assert.Equal(
             [
                 "tools/StrataLint.Engine/Ledger/Admission/FrozenLedgerAdmission.cs",
-                "tools/StrataLint.Engine/Ledger/FrozenLedgerCanonicalWriter.cs",
                 "tools/StrataLint.Engine/Ledger/Validation/FrozenLedgerCandidateValidation.cs",
                 "tools/StrataLint.Engine/Ledger/Validation/FrozenLedgerHistoryValidation.cs",
             ],
