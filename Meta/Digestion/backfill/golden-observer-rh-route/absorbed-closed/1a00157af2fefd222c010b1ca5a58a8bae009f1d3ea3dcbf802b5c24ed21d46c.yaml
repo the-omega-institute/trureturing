@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:1a00157af2fefd222c010b1ca5a58a8bae009f1d3ea3dcbf802b5c24ed21d46c
+  normalized_sha256: sha256:1a00157af2fefd222c010b1ca5a58a8bae009f1d3ea3dcbf802b5c24ed21d46c
+cas_ref: sha256:1a00157af2fefd222c010b1ca5a58a8bae009f1d3ea3dcbf802b5c24ed21d46c
+coverage_gids:
+  - gid: D5/S3/Weil/Separator/ExplicitFormulaWeilCriterion.explicitFormula_weilSquare
+    target_statement_id: sha256:fddf15661b31f337acbe6bf6ad4953879860cb7603b8b9277d6e1086d2a3f16b
+receipts:
+  scribe:
+    - gid: D5/S3/Weil/Separator/ExplicitFormulaWeilCriterion.explicitFormula_weilSquare
+      definition_sha256: sha256:63071260a54f70b6fd1cadea697e7572b06668c878de86eeeefa81405c739826
+      emission_sha256: sha256:726de34322f0c0fb6c16a6d287a59512df5a88bf1eed83d791c62ca7f6c3a604
+  unresolved_subitems: []

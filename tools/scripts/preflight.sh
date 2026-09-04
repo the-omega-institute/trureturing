@@ -7,11 +7,18 @@ set -euo pipefail
 
 ROOT=""
 PREFLIGHT_STARTED=0
-BASE_REF="${BASE:-origin/dev}"
-BASE_TIP_SHA=""
-BASE_SHA=""
+BASE_SHA="${BASE-}"
 CANDIDATE_SHA=""
 PREFLIGHT_DEADLINE_AT="${PREFLIGHT_DEADLINE_AT:-}"
+
+preflight_base_invalid() {
+  printf 'PREFLIGHT_BASE_INVALID reason=%s\n' "$1" >&2
+  exit 2
+}
+
+[[ -n "$BASE_SHA" ]] || preflight_base_invalid missing
+[[ "$BASE_SHA" =~ ^[0-9a-f]{40}$ ]] || preflight_base_invalid not-40-hex
+BASE_SHA="$BASE"
 
 # Remaining seconds of preflight's optional absolute deadline, or empty when unbounded.
 remaining_deadline_seconds() {
@@ -45,16 +52,21 @@ lake --version >/dev/null
 
 ROOT="$(git rev-parse --show-toplevel)"
 cd "$ROOT"
-source "$ROOT/tools/scripts/lib/admission-base-lib.sh"
+if ! base_type="$(git cat-file -t "$BASE" 2>/dev/null)"; then
+  preflight_base_invalid object-missing
+fi
+[[ "$base_type" == commit ]] || preflight_base_invalid not-commit
+set +e
+git merge-base --is-ancestor "$BASE" HEAD
+ancestor_rc=$?
+set -e
+case "$ancestor_rc" in
+  0) ;;
+  1) preflight_base_invalid not-ancestor ;;
+  *) preflight_base_invalid ancestor-check-failed ;;
+esac
+CANDIDATE_SHA="$(git rev-parse HEAD)"
 source "$ROOT/tools/scripts/lib/resource-observation-lib.sh"
-
-remote="${BASE_REF%%/*}"
-if [[ "$remote" != "$BASE_REF" ]] && git remote | grep -Fxq "$remote"; then
-  git fetch --prune "$remote"
-fi
-if ! admission_resolve_base "$ROOT" "$BASE_REF"; then
-  exit 1
-fi
 
 PREFLIGHT_STARTED="$(date +%s)"
 resource_observe preflight-start "$ROOT" || true
@@ -82,7 +94,7 @@ STRATALINT_SCRIBE_BASE="$BASE_SHA" \
   "$ROOT/.lake/build/stratalint/raw-lean-report.json"
 record_timing scribe-content-checks
 
-ENGINEERING_HEAD="$(git rev-parse HEAD)"
+ENGINEERING_HEAD="$CANDIDATE_SHA"
 ENGINEERING_BASE="$(git rev-parse HEAD^1)"
 CI=true STRATALINT_REQUIRE_LIVE_REPORT=1 make -C tools engineering-tests HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE"
 record_timing test
@@ -166,10 +178,6 @@ gate_rc=$?
 set -e
 record_timing gate
 
-observed_base="$(git rev-parse --verify "${BASE_REF}^{commit}" 2>/dev/null || true)"
-if [[ -n "$observed_base" && "$observed_base" != "$BASE_TIP_SHA" ]]; then
-  printf 'BASE_ADVANCED pinned=%s observed=%s\n' "$BASE_TIP_SHA" "$observed_base" || true
-fi
 if [[ "$gate_rc" -ne 0 ]]; then exit "$gate_rc"; fi
 
 echo "[preflight] PASS — CI 三 required check 预证绿"
