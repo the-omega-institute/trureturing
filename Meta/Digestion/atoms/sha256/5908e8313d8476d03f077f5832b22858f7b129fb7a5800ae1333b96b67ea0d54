@@ -1,0 +1,28 @@
+### 推论 9.1　横向刚度下界
+
+由 $|\sinh x|\ge|x|$，
+
+$$
+\boxed{
+R_{p,q}(\delta)
+\ge
+\delta^2\log^2\frac qp.
+}
+\tag{9.7}
+$$
+
+临界线附近，
+
+$$
+R_{p,q}(\delta)
+=
+\delta^2\log^2\frac qp
++
+\frac13\delta^4\log^4\frac qp
++
+O(\delta^6).
+\tag{9.8}
+$$
+
+因此 prime pair 自身提供的是恢复临界线的正刚度，不是把零点推出临界线的负质量。
+
