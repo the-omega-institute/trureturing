@@ -1,0 +1,1 @@
+**义务**:公开定理 `parity_conditioned_probability_form (k : ℕ)`:以 `parityLaw d ε x := if x ∈ parityFiber d ε then 2^{-(d-1)} else 0`(ℚ 值)为两条件律,断言 (i) 两律各自总质量为 1;(ii) 对每个非空真子集 A,两律下 ∏_{i∈A} paritySign (x i) 的期望皆为 0;(iii) 对**每个**真子集 A(含 A = ∅),两律在 A 上的边缘质量函数相等;(iv) 全积的期望在 μ^− 下为 −1、在 μ^+ 下为 +1。

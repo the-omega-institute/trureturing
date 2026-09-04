@@ -1,0 +1,4 @@
+## 二　勘误:增订三十的类型名笔误
+
+增订三十 §三与 §五的义务文本写作 `Zeta23.EF.ZeroConfig`;本仓的实际类型是 `Zeta23.ZeroConfig`(`D5/S3/Weil/ZetaCore/Defs.lean:361`),`Zeta23.EF` 命名空间下无此结构。la160/la162 实施席均按实际类型实现且未改任何数学 binder(评审席已核实并记入 PR 正文)。按第〇节「atoms 不删、勘误以追加散文表达」,此处只追加勘误,不改原 atom;后续引用一律写 `Zeta23.ZeroConfig`。
+

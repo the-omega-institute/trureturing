@@ -198839,3 +198839,25 @@ $$
 \text{RH 要证明的，是任何跨尺度素数粘滞都不足以让这个新增维度在全局完成中永远不可见。}
 }
 $$
+
+---
+
+# 第两千一百四十二部　预登记增订 R-1044:矩形 Rouché 零点计数定理(第 1044 部、661.4、708.6 所假定的基础定理;Mathlib 钉版缺失)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;Mathlib 缺口盘点席 codex-cli(flight `op-r3-mathlib-gaps`)在钉版 Mathlib(rev `db584cd6…`,v4.33.0)中 `grep -rni 'Rouch'` 零命中、在本仓只命中矩形辐角原理(`D5/S3/Weil/ZetaAnalytic/RectangleLogDeriv.lean`);探针席 codex-cli(flight `op-p4-rouche`,worktree `trureturing-la114-m3ac`,base origin/dev `4ba545eed1`,2069s)整证并给出 kernel 读数;本节由 orchestrator(claude 主循环,会话「开放问题」)撰写。判决日:2026-09-04。
+
+## 〇　为什么是这一节
+
+第 1044 部(通量证书的数值鲁棒性,原子 `2981024d…`)、第 661.4 节(区分真实零点与观察器伪零点,原子 `463c0180…`)与第 708.6 节(谱实验,原子 `b838728a…`)都以「由 Rouché 定理,零点数相同」作为已知输入使用;钉版 Mathlib 只提供解析阶、孤立零点、围道积分与局部典范分解,没有 Rouché 定理。本仓已冻结矩形辐角原理 `rectangleIntegral'_mul_logDeriv'`(归一化围道积分取整数值)与 `finite_zeros_rectangle`。本节把「边界严格不等式 ⇒ 矩形内按重数计的零点数相等」预登记为一条可冻结的基础定理,使上述三部的论证有可绑定的仓内前置。
+
+## 一　R-1 预登记:矩形 Rouché 零点计数稳定性(`RoucheZeroCount`,落 `D5/S3/Weil/ZetaAnalytic/`)
+
+**义务**:公开定理 `rectangle_zero_count_eq_of_norm_sub_lt {f g : ℂ → ℂ} {z w : ℂ} (hre : z.re < w.re) (him : z.im < w.im) (hf : AnalyticOnNhd ℂ f (Rectangle z w)) (hg : AnalyticOnNhd ℂ g (Rectangle z w)) (hbdry : ∀ s ∈ RectangleBorder z w, ‖f s − g s‖ < ‖g s‖) (Zf Zg : Finset ℂ) (hZf : ∀ s ∈ Rectangle z w, (f s = 0 ↔ s ∈ Zf)) (hZfsub : (Zf : Set ℂ) ⊆ Rectangle z w) (hZg : ∀ s ∈ Rectangle z w, (g s = 0 ↔ s ∈ Zg)) (hZgsub : (Zg : Set ℂ) ⊆ Rectangle z w) : ∑ ρ ∈ Zf, analyticOrderNatAt f ρ = ∑ ρ ∈ Zg, analyticOrderNatAt g ρ`,其中 `Rectangle`/`RectangleBorder` 为本仓 `D5/S3/Weil/ZetaPntBase/Rectangle` 的冻结定义;落新模块 `D5/S3/Weil/ZetaAnalytic/RoucheZeroCount`(桶现 8/24),只 import 该桶既有冻结模块与钉版 Mathlib。两条子集假设 `hZfsub`/`hZgsub` 不可省:若允许 `Zf` 含矩形外的点,`hZf` 对其无约束,结论可为假(取 f = g = s − a,a 在矩形外,`Zf = {a}`,`Zg = ∅`)。
+**可证伪预测(写在跑之前)**:证明沿直线同伦 `h_t = g + t·(f − g)`:(i) 逃逸见证 `homotopy_nonvanishing_on_rectangleBorder : ∀ t ∈ Icc 0 1, ∀ s ∈ RectangleBorder z w, h_t s ≠ 0`(由边界严格不等式与范数非负性得,t = 0、1 给出 g、f 的边界非零);(ii) 第二条逃逸见证 `continuousOn_rectangleIntegral_logDeriv_straightLine`:`h_t'/h_t` 的归一化矩形围道积分作为 t 的函数在 `[0,1]` 上连续(以 `Set.projIcc` 夹紧后用 Mathlib 参数化区间积分的连续性);(iii) 由冻结 `rectangleIntegral'_mul_logDeriv'` 该积分逐 t 取整数值,连续的整数值函数在 `[0,1]` 上为常数,两端 t = 0、1 即得零点计数相等。判形 content,准入依据 escape-witness,标准三公理;若钉版 API 下参数化区间积分的连续性引理不能承载夹紧扩张,本条按 open 记,不得以 `sorry` 或公理代替。
+**边界**:只陈述矩形版本(本仓的辐角原理载体),不陈述圆盘或一般 Jordan 域;不断言零点位置,只断言按重数计的总数;第 1044 部的数值证书内容(区间算术、Taylor 尾界等)不在本条义务内。
+
+## 二　结算
+
+R-1 由一个实施席同 PR `deposit`(绑本节义务子原子)落地,三席评审后合入;原子 `2981024d…`、`463c0180…`、`b838728a…` 保持 residual-open(散文/方法论条目,本条只提供其数学前置,不 cover)。
+
+后续增订继续严格追加于本节之后。

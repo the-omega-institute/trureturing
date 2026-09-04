@@ -30,11 +30,12 @@ internal static partial class IngestCommand
             }
 
             var repositoryChanges = repository.ReadChanges(options.BaselineRevision);
+            var plan = Plan(inputs, repositoryChanges);
             var prepared = Prepare(
-                repository,
-                options.BaselineRevision,
                 inputs,
-                repositoryChanges);
+                repositoryChanges,
+                plan,
+                report: null);
             classification = IngestTruthAlignmentClassifier.ClassifyPlanned(
                 prepared.CurrentDocument,
                 prepared.BaselineDocument,
