@@ -22,6 +22,37 @@ public sealed class RuleCatalog
 {
     private static readonly Lazy<RuleCatalog> DefaultCatalog = new(CreateDefault);
 
+    // Measurement window: 19 admission runs for median gate_stage_timing and 120 failed runs
+    // for rejection frequency, using the caller-provided observations from this change.
+    // Active rules only: Deferred rules never execute and therefore have no execution priority.
+    // Selection key: median duration ascending, rejection frequency descending, RuleId ascending.
+    // These measurements explain this explicit order; runtime measurements do not derive or
+    // validate it, so later timing drift cannot change execution or make the catalog fail.
+    private static readonly ImmutableArray<RuleId> PriorityExecutionOrder =
+    [
+        RuleId.CreateKnown(22),
+        RuleId.CreateKnown(23),
+        RuleId.CreateKnown(2),
+        RuleId.CreateKnown(18),
+        RuleId.CreateKnown(12),
+        RuleId.CreateKnown(26),
+        RuleId.CreateKnown(6),
+        RuleId.CreateKnown(25),
+        RuleId.CreateKnown(4),
+        RuleId.CreateKnown(10),
+        RuleId.CreateKnown(11),
+        RuleId.CreateKnown(21),
+        RuleId.CreateKnown(28),
+        RuleId.CreateKnown(15),
+        RuleId.CreateKnown(19),
+        RuleId.CreateKnown(8),
+        RuleId.CreateKnown(20),
+        RuleId.CreateKnown(1),
+        RuleId.CreateKnown(17),
+        RuleId.CreateKnown(16),
+        RuleId.CreateKnown(3),
+    ];
+
     private readonly ImmutableArray<RuleRegistration> registrations;
 
     private RuleCatalog(ImmutableArray<RuleRegistration> registrations)
@@ -50,6 +81,8 @@ public sealed class RuleCatalog
     public ImmutableArray<RuleDescriptor> Descriptors { get; }
 
     public string RootSha256 { get; }
+
+    internal static ImmutableArray<RuleId> ExecutionOrder => PriorityExecutionOrder;
 
     internal ImmutableArray<RegisteredFindingEdge> FindingEdges =>
         registrations
@@ -96,7 +129,19 @@ public sealed class RuleCatalog
 
     internal RuleExecutionOutcome Execute(
         RuleEvaluationContext context,
-        RuleEvaluationMeasure? measureRule = null)
+        RuleEvaluationMeasure? measureRule = null) =>
+        ExecuteInOrder(context, ExecutionOrder, measureRule);
+
+    internal RuleExecutionOutcome ExecuteInOrderForTesting(
+        RuleEvaluationContext context,
+        ImmutableArray<RuleId> executionOrder,
+        RuleEvaluationMeasure? measureRule = null) =>
+        ExecuteInOrder(context, executionOrder, measureRule);
+
+    private RuleExecutionOutcome ExecuteInOrder(
+        RuleEvaluationContext context,
+        ImmutableArray<RuleId> executionOrder,
+        RuleEvaluationMeasure? measureRule)
     {
         try
         {
@@ -106,30 +151,61 @@ public sealed class RuleCatalog
                 .Append(28)
                 .Select(RuleId.CreateKnown)
                 .ToImmutableArray();
-            if (registrations.Length != expected.Length
-                || !Descriptors.Select(item => item.Id).SequenceEqual(expected))
+            var registeredIds = Descriptors.Select(static item => item.Id).ToImmutableArray();
+            var registeredIdSet = registeredIds.ToImmutableHashSet();
+            var expectedIdSet = expected.ToImmutableHashSet();
+            var missing = expected.Where(id => !registeredIdSet.Contains(id)).ToImmutableArray();
+            var duplicated = registeredIds
+                .GroupBy(static id => id)
+                .Where(static group => group.Count() > 1)
+                .Select(static group => group.Key)
+                .ToImmutableArray();
+            var unexpected = registeredIds
+                .Where(id => !expectedIdSet.Contains(id))
+                .Distinct()
+                .ToImmutableArray();
+            if (!missing.IsEmpty || !duplicated.IsEmpty || !unexpected.IsEmpty)
             {
-                throw new InvalidOperationException("Rule catalog is incomplete, duplicated, or out of order.");
+                throw new InvalidOperationException(
+                    "Rule catalog is incomplete or duplicated:"
+                    + $" missing=[{string.Join(',', missing.Select(static id => id.Value))}]"
+                    + $" duplicated=[{string.Join(',', duplicated.Select(static id => id.Value))}]"
+                    + $" unexpected=[{string.Join(',', unexpected.Select(static id => id.Value))}].");
+            }
+
+            var activeIds = registrations
+                .Where(static registration => registration.Descriptor.Lifecycle is RuleLifecycle.Active)
+                .Select(static registration => registration.Descriptor.Id)
+                .ToImmutableArray();
+            var executionOrderSet = executionOrder.ToImmutableHashSet();
+            if (executionOrder.Length != executionOrderSet.Count
+                || activeIds.Any(id => !executionOrderSet.Contains(id))
+                || executionOrder.Any(id => !activeIds.Contains(id)))
+            {
+                throw new InvalidOperationException(
+                    "Rule execution order is not an exact, non-duplicated permutation of active rules.");
             }
 
             var diagnostics = ImmutableArray.CreateBuilder<Diagnostic>();
             var deferred = ImmutableArray.CreateBuilder<DeferredRule>();
             var executed = ImmutableArray.CreateBuilder<RuleId>();
             var skipped = ImmutableArray.CreateBuilder<RuleId>();
-            foreach (var registration in registrations)
+            foreach (var registration in registrations.Where(static registration =>
+                registration.Descriptor.Lifecycle is RuleLifecycle.Deferred))
             {
                 var descriptor = registration.Descriptor;
-                if (descriptor.Lifecycle is RuleLifecycle.Deferred)
+                if (descriptor.DeferredCase is null)
                 {
-                    if (descriptor.DeferredCase is null)
-                    {
-                        throw new InvalidOperationException($"Deferred rule {descriptor.Id} has no case id.");
-                    }
-
-                    deferred.Add(new DeferredRule(descriptor.Id, descriptor.DeferredCase, descriptor.Title));
-                    continue;
+                    throw new InvalidOperationException($"Deferred rule {descriptor.Id} has no case id.");
                 }
 
+                deferred.Add(new DeferredRule(descriptor.Id, descriptor.DeferredCase, descriptor.Title));
+            }
+
+            foreach (var ruleId in executionOrder)
+            {
+                var registration = RegistrationFor(ruleId);
+                var descriptor = registration.Descriptor;
                 if (!context.RuleImplementationChanged && !registration.Rule.IsAffectedBy(context))
                 {
                     skipped.Add(descriptor.Id);
@@ -169,9 +245,9 @@ public sealed class RuleCatalog
                     .ThenBy(item => item.Path, StringComparer.Ordinal)
                     .ThenBy(item => item.Message, StringComparer.Ordinal)
                     .ToImmutableArray(),
-                deferred.ToImmutable(),
-                executed.ToImmutable(),
-                skipped.ToImmutable()));
+                deferred.OrderBy(static item => item.RuleId.Value, StringComparer.Ordinal).ToImmutableArray(),
+                executed.OrderBy(static id => id.Value, StringComparer.Ordinal).ToImmutableArray(),
+                skipped.OrderBy(static id => id.Value, StringComparer.Ordinal).ToImmutableArray()));
         }
         catch (Exception exception)
         {
