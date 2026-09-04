@@ -54,48 +54,12 @@ public sealed partial class SelfLockProbeScriptTests
                 "self-lock-probe",
                 "evaluate",
                 "--controller-root", TestRepositoryLayout.FindRoot(),
-                "--pure-revert-script", Path.Combine(
-                    TestRepositoryLayout.FindRoot(),
-                    "tools",
-                    "scripts",
-                    "workflow",
-                    "pure-revert-detect.sh"),
                 "--candidate-repository", fixture.CandidateRepository,
                 "--j1-repository", fixture.J1Repository,
                 "--j1-bundle", fixture.J1Bundle.Path,
                 "--j0-repository", fixture.J0Repository,
                 "--j0-bundle", fixture.J0Bundle.Path,
                 .. gateArguments,
-            ],
-            TestRepositoryLayout.FindRoot(),
-            TestBudgets.ScriptProcessHangGuard,
-            256 * 1024);
-
-    private static ProcessOutput RunControllerWithClassifier(
-        ProbeFixture fixture,
-        string classifier) =>
-        TestProcessRunner.Run(
-            "dotnet",
-            [
-                Path.Combine(
-                    TestRepositoryLayout.FindRoot(),
-                    "tools",
-                    "StrataLint.EngineeringScope",
-                    "bin",
-                    "Release",
-                    "net10.0",
-                    "StrataLint.EngineeringScope.dll"),
-                "self-lock-probe",
-                "evaluate",
-                "--controller-root", TestRepositoryLayout.FindRoot(),
-                "--pure-revert-script", classifier,
-                "--candidate-repository", fixture.CandidateRepository,
-                "--j1-repository", fixture.J1Repository,
-                "--j1-bundle", fixture.J1Bundle.Path,
-                "--j0-repository", fixture.J0Repository,
-                "--j0-bundle", fixture.J0Bundle.Path,
-                "--required-gate", "engineering",
-                "--red-gate", "engineering",
             ],
             TestRepositoryLayout.FindRoot(),
             TestBudgets.ScriptProcessHangGuard,
