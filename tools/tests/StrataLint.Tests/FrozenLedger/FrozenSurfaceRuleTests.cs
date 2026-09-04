@@ -226,14 +226,28 @@ public sealed class FrozenSurfaceRuleTests
         var pin = StatementId.Create(ExpectedFrozenModuleStatementPin);
         AddState(fixture, FrozenPath, pin, includeInBaseline: true);
         _ = AddFreeze(fixture, FrozenPath, pin);
+        var baselineSource = fixture.Baseline[FrozenPath];
         fixture.Files[FrozenPath] = fixture.Files[FrozenPath].Replace(
             "anchors: []",
             "anchors: [mathlib/module/Nat]",
             StringComparison.Ordinal);
+        var currentSource = fixture.Files[FrozenPath];
+        var (baselineHeader, baselineStatements) = SplitSixLineHeader(baselineSource);
+        var (currentHeader, currentStatements) = SplitSixLineHeader(currentSource);
+        var baselineAnchors = HeaderField(baselineHeader, "anchors");
+        var currentAnchors = HeaderField(currentHeader, "anchors");
+
+        Assert.NotEqual(baselineSource, currentSource);
+        Assert.Equal("anchors: []", baselineAnchors);
+        Assert.Equal("anchors: [mathlib/module/Nat]", currentAnchors);
+        Assert.NotEqual(baselineAnchors, currentAnchors);
+        Assert.Equal(
+            Encoding.UTF8.GetBytes(baselineStatements),
+            Encoding.UTF8.GetBytes(currentStatements));
         var freshPin = ModuleStatementId(fixture, FrozenPath);
         Assert.Equal(pin, freshPin);
 
-        var evaluation = Evaluate(fixture, (FrozenPath, RawChangeKind.Modified));
+        var evaluation = Evaluate(fixture, (FrozenPath, ChangeKindBetween(fixture, FrozenPath)));
 
         Assert.Empty(evaluation.Diagnostics);
     }
@@ -543,6 +557,39 @@ public sealed class FrozenSurfaceRuleTests
 
     private static string StateText(StatementId statementId) =>
         $"{{\"statement_id\":\"{statementId.Value}\"}}\n";
+
+    private static (string Header, string Statements) SplitSixLineHeader(string source)
+    {
+        var statementStart = 0;
+        for (var line = 0; line < 6; line++)
+        {
+            var lineEnd = source.IndexOf('\n', statementStart);
+            Assert.True(lineEnd >= 0, "fixture source must contain a complete six-line header");
+            statementStart = lineEnd + 1;
+        }
+
+        return (source[..statementStart], source[statementStart..]);
+    }
+
+    private static string HeaderField(string header, string fieldName) =>
+        Assert.Single(
+            header.Split('\n', StringSplitOptions.RemoveEmptyEntries)
+                .Select(static line => line.Trim()),
+            line => line.StartsWith($"{fieldName}:", StringComparison.Ordinal));
+
+    private static RawChangeKind ChangeKindBetween(RuleFixture fixture, string path)
+    {
+        var baselineExists = fixture.Baseline.TryGetValue(path, out var baseline);
+        var currentExists = fixture.Files.TryGetValue(path, out var current);
+        return (baselineExists, currentExists) switch
+        {
+            (false, true) => RawChangeKind.Added,
+            (true, false) => RawChangeKind.Deleted,
+            (true, true) when !string.Equals(baseline, current, StringComparison.Ordinal) =>
+                RawChangeKind.Modified,
+            _ => throw new InvalidOperationException($"{path} is unchanged between fixture snapshots"),
+        };
+    }
 
     private static SingleRuleEvaluation Evaluate(
         RuleFixture fixture,
