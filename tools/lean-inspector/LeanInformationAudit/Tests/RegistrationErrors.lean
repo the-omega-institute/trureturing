@@ -19,6 +19,7 @@ def fixtureSignature : PrimitiveSignature fixtureArena.State where
   Output := fun _ => Bool
   outputDecidableEq := fun _ => inferInstance
   axis := fun _ => .cut
+  readoutAxisNotAnchor := by simp
   AnchorIndex := Fin 0
   anchorFintype := inferInstance
   anchorDecidableEq := inferInstance
