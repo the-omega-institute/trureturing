@@ -44,9 +44,21 @@ internal static partial class CoverWorld
         string targetPath,
         ImmutableArray<LeanDeclaration> primaryDeclarations)
     {
+        var declarations = primaryDeclarations
+            .Select(declaration => declaration with
+            {
+                NameKey = NameKey(declaration.Name),
+                PrecomputedStatementId = string.Equals(
+                    ShortName(declaration.Name),
+                    spec.Declaration,
+                    StringComparison.Ordinal)
+                        ? spec.TargetStatementId
+                        : FrozenStatementReceiptTestData.Id('c'),
+            })
+            .ToImmutableArray();
         var reportFiles = new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
         {
-            [targetPath] = new LeanFileReport(ImmutableArray<string>.Empty, primaryDeclarations),
+            [targetPath] = new LeanFileReport(ImmutableArray<string>.Empty, declarations),
         };
         if (spec.SecondaryTarget is { } secondary)
         {
@@ -56,11 +68,24 @@ internal static partial class CoverWorld
                     secondary.Declaration,
                     "theorem",
                     "True",
-                    ImmutableArray<string>.Empty)]);
+                    ImmutableArray<string>.Empty)
+                {
+                    NameKey = NameKey(secondary.Declaration),
+                    PrecomputedStatementId = FrozenStatementReceiptTestData.Id('c'),
+                }]);
         }
 
         return LeanAxiomReport.Create(reportFiles);
     }
+
+    private static string NameKey(string name) => name
+        .Split('.')
+        .Aggregate(
+            "n0",
+            static (parent, part) =>
+                $"ns({parent},{System.Text.Encoding.UTF8.GetByteCount(part)}:{part})");
+
+    private static string ShortName(string name) => name[(name.LastIndexOf('.') + 1)..];
 
     private static IEnumerable<string> MaterializeVerifiedGids(CoverSpec spec) =>
         (spec.Declaration is null ? [] : new[] { spec.Gid })
