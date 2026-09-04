@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/Zeros/FirstOffLineHeight
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: A nonzero entire function with strip-bounded off-line zeros has a first positive
-   off-line height. -/
+   digest: A nonzero entire function with strip-bounded off-line zeros has a first positive off-line height. -/
 
 import Mathlib.Analysis.Analytic.Order
 import Mathlib.Analysis.Complex.Basic
