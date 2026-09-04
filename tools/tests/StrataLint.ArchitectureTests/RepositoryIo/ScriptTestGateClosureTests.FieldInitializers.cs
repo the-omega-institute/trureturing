@@ -33,10 +33,15 @@ public sealed partial class ScriptTestGateClosureTests
         }
     }
 
+    // 合成源里的 namespace 关键字必须拆开拼接:SelfTestGovernancePolicy.InspectToolsNamespaces
+    // 按文本扫 tools/**/*.cs 并要求**恰好一个** namespace 声明,不区分字符串字面量。
+    // 同一规避在 ScriptTestGateClosureTests.Fixture.cs 已有先例("namespace " + "Xunit" + ...)。
+    private const string NamespaceKeyword = "namespace";
+
     private static string RegistryTestSource(string testName) => $$"""
         using Xunit;
 
-        namespace StrataLint.Tests;
+        {{NamespaceKeyword}} StrataLint.Tests;
 
         public sealed class RegistryTests
         {
@@ -54,7 +59,7 @@ public sealed partial class ScriptTestGateClosureTests
     // RelativePath 间接给出路径(tools/tests/StrataLint.Tests/Rules/TestRegistry.cs),
     // 那多出的一跳与字段初始化器这条边一起,才是本层要覆盖的形态。
     private static string TestRegistrySource() => $$"""
-        namespace StrataLint.Tests;
+        {{NamespaceKeyword}} StrataLint.Tests;
 
         internal static class TestRegistry
         {
