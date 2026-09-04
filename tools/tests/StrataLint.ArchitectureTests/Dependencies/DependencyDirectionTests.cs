@@ -51,13 +51,16 @@ public sealed class DependencyDirectionTests
     public void FunctionalTestsReferenceOnlyCliEngineAndScribe()
     {
         Assert.Equal(
-            ["StrataLint", "StrataLint.Engine", "StrataLint.Scribe"],
+            ["StrataLint", "StrataLint.Engine", "StrataLint.Scribe", "StrataLint.TestSupport"],
             AssemblyReferencePolicy.ApplicationReferences(
                 typeof(StrataLint.Tests.AdmissionTests).Assembly));
         Assert.Equal(
             // Engine 经 Cli 传递可得,故这条直接引用是多余的 extra-production-reference 存量债;
             // 本 PR 顺手还掉它(拓扑棘轮要求碰债务面即严格减债)。程序集级引用集不变。
-            ["../../StrataLint.Cli/StrataLint.Cli.csproj"],
+            [
+                "../../StrataLint.Cli/StrataLint.Cli.csproj",
+                "../../TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",
+            ],
             ProjectReferences(XDocument.Load(Path.Combine(
                 RepositoryLayout.FindRoot(),
                 "tools",
@@ -106,6 +109,7 @@ public sealed class DependencyDirectionTests
                 "../../StrataLint.Engine/StrataLint.Engine.csproj",
                 "../../StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
                 "../../StrataLint.Scribe/StrataLint.Scribe.csproj",
+                "../../TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",
                 "../StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj",
                 "../StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
                 "../StrataLint.Tests/StrataLint.Tests.csproj",

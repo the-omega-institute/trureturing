@@ -1,12 +1,12 @@
-namespace StrataLint.Tests;
+namespace StrataLint.TestSupport;
 
-internal readonly record struct RepositoryRelativePath
+public readonly record struct RepositoryRelativePath
 {
     private RepositoryRelativePath(string value) => Value = value;
 
-    internal string Value { get; }
+    public string Value { get; }
 
-    internal static RepositoryRelativePath Create(string value)
+    public static RepositoryRelativePath Create(string value)
     {
         if (string.IsNullOrWhiteSpace(value)
             || Path.IsPathRooted(value)
@@ -21,12 +21,12 @@ internal readonly record struct RepositoryRelativePath
     }
 }
 
-internal static class TestRepositoryLayout
+public static class TestRepositoryLayout
 {
-    internal static string ReadAllText(RepositoryRelativePath path) => File.ReadAllText(
+    public static string ReadAllText(RepositoryRelativePath path) => File.ReadAllText(
         Path.Combine(FindRoot(), path.Value.Replace('/', Path.DirectorySeparatorChar)));
 
-    internal static string FindRoot()
+    public static string FindRoot()
     {
         for (var current = new DirectoryInfo(AppContext.BaseDirectory);
              current is not null;
