@@ -32,7 +32,7 @@ internal sealed class ObservationInterventionDocument : IScribeDocumentDefinitio
                     F.Id("xCausesYModel"), F.Id("yCausesXModel"))),
                 "The named opposite-direction models disagree under intervention."))));
 
-    private static ScribeNode Node(string id, string declaration, string title,
+    private static DocumentBlock.Describe Node(string id, string declaration, string title,
         Formula statement, string explanation) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.FromAuthor(Disp(Seq(statement, Dot))),

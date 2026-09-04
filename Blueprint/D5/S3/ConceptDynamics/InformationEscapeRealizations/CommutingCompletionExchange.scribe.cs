@@ -31,7 +31,7 @@ internal sealed class CommutingCompletionExchangeDocument : IScribeDocumentDefin
                     F.Id("a"), F.Id("b"))),
                 "The second flow sends a and b to different states."))));
 
-    private static ScribeNode Node(string id, string declaration, string title,
+    private static DocumentBlock.Describe Node(string id, string declaration, string title,
         Formula statement, string explanation) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.FromAuthor(Disp(Seq(statement, Dot))),

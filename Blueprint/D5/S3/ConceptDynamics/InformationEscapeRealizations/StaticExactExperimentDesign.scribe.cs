@@ -27,7 +27,7 @@ internal sealed class StaticExactExperimentDesignDocument : IScribeDocumentDefin
                 Call("Not", Call("agrees", F.Id("staticExactExperimentRealization"), D(0), D(1))),
                 "The change-X readout separates model zero from model one."))));
 
-    private static ScribeNode Node(string id, string declaration, string title,
+    private static DocumentBlock.Describe Node(string id, string declaration, string title,
         Formula statement, string explanation) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
             StatementSource.FromAuthor(Disp(Seq(statement, Dot))),
