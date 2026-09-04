@@ -47,14 +47,14 @@ internal sealed class InverseBlaschkeHistoryDeletionDocument : IScribeDocumentDe
         Formula forward = F.Id("V");
         Formula inverse = F.Id("T");
         Formula model = F.Id("K");
-        Formula projection = F.Id("P_K");
+        Formula projection = Seq(F.Id("P"), Underscore, Grp(F.Id("K")));
         Formula adjointForward = Seq(forward, Caret, Grp(Star));
         Formula adjointInverse = Seq(inverse, Caret, Grp(Star));
         Formula rangeForward = Call("ran", forward);
 
         return Disp(Seq(
-            inverse, Sp, Colon, Eq, Sp, adjointForward, Comma, Quad,
-            model, Sp, Colon, Eq, Sp, Open, rangeForward, Close, Caret, Grp(Perp), Comma, Quad,
+            inverse, Sp, Colon, Eq, Sp, adjointForward, Comma, Quad, Sp,
+            model, Sp, Colon, Eq, Sp, Open, rangeForward, Close, Caret, Grp(Perp), Comma, Quad, Sp,
             projection, Sp, Colon, Eq, Sp, F.Id("I"), Sp, Minus, Sp,
             forward, Sp, adjointForward, Comma, RowBreak, Grp(),
             Operatorname, Grp(F.Id("Isometry")), Open, forward, Close, Sp, Land, Sp,
