@@ -42,7 +42,7 @@ public sealed class PlaybookWorkflowScriptTests
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new PlaybookFixture();
         const string module = "D5/S0/Carrier/NewClosed.lean";
-        fixture.InstallClosedTruthProjection(module);
+        WriteTruthGraph(fixture, module);
 
         var result = fixture.Run("deliver-check", "synthetic-base");
 
@@ -51,8 +51,8 @@ public sealed class PlaybookWorkflowScriptTests
             $"dotnet:ledger-align --add {module} --candidate-lean-report "
                 + ".lake/build/stratalint/raw-lean-report.json",
             fixture.Calls());
-        Assert.True(fixture.StateExists(module));
-        Assert.True(fixture.AcceptedEventExists(module));
+        Assert.True(StateFragmentExists(fixture, module));
+        Assert.True(AcceptedEventMentions(fixture, module));
     }
 
     [Theory]
@@ -98,6 +98,58 @@ public sealed class PlaybookWorkflowScriptTests
         "stdout:\n" + Encoding.UTF8.GetString(result.StandardOutput)
         + "\nstderr:\n" + Encoding.UTF8.GetString(result.StandardError);
 
+    private static void WriteTruthGraph(PlaybookFixture fixture, string module) =>
+        WriteTruthGraphContent(
+            fixture,
+            JsonSerializer.Serialize(new
+            {
+                truth = new
+                {
+                    nodes = new[] { new { repo_path = module, state = "closed" } },
+                },
+            }));
+
+    private static void WriteEmptyTruthGraph(PlaybookFixture fixture) =>
+        WriteTruthGraphContent(
+            fixture,
+            JsonSerializer.Serialize(new
+            {
+                truth = new
+                {
+                    nodes = Array.Empty<object>(),
+                },
+            }));
+
+    private static void WriteTruthGraphContent(PlaybookFixture fixture, string content)
+    {
+        var path = Path.Combine(fixture.Temporary.Path, "Generated", "truth-graph.v1.json");
+        ScriptHarnessScratch.EnsureDirectory(Path.GetDirectoryName(path)!);
+        ScriptHarnessScratch.WriteScratchText(path, content);
+    }
+
+    private static bool StateFragmentExists(PlaybookFixture fixture, string module) =>
+        new FileInfo(Path.Combine(
+            fixture.Temporary.Path,
+            "Golden",
+            "Frozen",
+            "state",
+            module + ".json")).Exists;
+
+    private static bool AcceptedEventMentions(PlaybookFixture fixture, string module) =>
+        new DirectoryInfo(Path.Combine(
+                fixture.Temporary.Path,
+                "Golden",
+                "Frozen",
+                "accepted"))
+            .GetFiles("*.json")
+            .Any(file => ReadAcceptedEvent(file).Contains(module, StringComparison.Ordinal));
+
+    private static string ReadAcceptedEvent(FileInfo file)
+    {
+        using var reader = file.OpenText();
+        return reader.ReadToEnd();
+    }
+
     private sealed class PlaybookFixture : IDisposable
     {
         private readonly TemporaryDirectory temporary = new();
@@ -113,7 +165,7 @@ public sealed class PlaybookWorkflowScriptTests
             var scriptTarget = Path.Combine(temporary.Path, ScriptPath);
             ScriptHarnessScratch.CopyScriptInto(Path.Combine(root, ScriptPath), scriptTarget);
             Directory.CreateDirectory(Path.Combine(temporary.Path, "Golden", "Frozen", "accepted"));
-            InstallTruthProjection(Array.Empty<object>());
+            WriteEmptyTruthGraph(this);
             WriteExecutable("make", "printf 'make:%s\\n' \"$*\" >> \"$PLAYBOOK_TEST_CALLS\"");
             WriteExecutable(
                 "git",
@@ -165,35 +217,7 @@ public sealed class PlaybookWorkflowScriptTests
                 + "fi; done");
         }
 
-        internal void InstallClosedTruthProjection(string module)
-            => InstallTruthProjection([new { repo_path = module, state = "closed" }]);
-
-        private void InstallTruthProjection<T>(T[] nodes)
-        {
-            var path = Path.Combine(temporary.Path, "Generated", "truth-graph.v1.json");
-            Directory.CreateDirectory(Path.GetDirectoryName(path)!);
-            File.WriteAllText(
-                path,
-                JsonSerializer.Serialize(new
-                {
-                    truth = new
-                    {
-                        nodes,
-                    },
-                }),
-                Encoding.UTF8);
-        }
-
-        internal bool StateExists(string module) => File.Exists(Path.Combine(
-            temporary.Path,
-            "Golden",
-            "Frozen",
-            "state",
-            module + ".json"));
-
-        internal bool AcceptedEventExists(string module) => Directory
-            .EnumerateFiles(Path.Combine(temporary.Path, "Golden", "Frozen", "accepted"), "*.json")
-            .Any(path => File.ReadAllText(path, Encoding.UTF8).Contains(module, StringComparison.Ordinal));
+        internal TemporaryDirectory Temporary => temporary;
 
         internal ProcessOutput Run(
             string command,
