@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.InformationEscape;
 internal sealed class CatalogKernelDocument : IScribeDocumentDefinition
 {
     private const string Prefix =
-        "D5/S3/ConceptDynamics/InformationEscape/CatalogKernel.Catalog.";
+        "D5/S3/ConceptDynamics/InformationEscape/CatalogKernel.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Finite theorem selections compute executable and structural joint kernels.",
@@ -110,12 +110,21 @@ internal sealed class CatalogKernelDocument : IScribeDocumentDefinition
         Call("jointKernel", F.Id("catalog"), F.Id("T")), Sp, Subseteq, Sp,
         Call("jointKernel", F.Id("catalog"), F.Id("S")), Dot));
 
-    private static Formula KernelInsertFormula() => Disp(Seq(
-        Call("jointKernel", F.Id("catalog"), Call("insert", F.Id("i"), F.Id("S"))),
-        Sp, Eq, Sp,
-        Call("intersection", Call("jointKernel", F.Id("catalog"), F.Id("S")),
-            Call("kernel", Call("primitives", Call("theoremAt", F.Id("catalog"), F.Id("i"))))),
-        Dot));
+    private static Formula KernelInsertFormula()
+    {
+        Formula pair = F.Id("p");
+        Formula agreementSet = Seq(
+            OpenBrace, pair, Sp, Mid, Sp,
+            Call("agrees",
+                Call("primitives", Call("theoremAt", F.Id("catalog"), F.Id("i"))),
+                Call("fst", pair), Call("snd", pair)),
+            CloseBrace);
+        return Disp(Seq(
+            Call("jointKernel", F.Id("catalog"), Call("insert", F.Id("i"), F.Id("S"))),
+            Sp, Eq, Sp,
+            Call("intersection", Call("jointKernel", F.Id("catalog"), F.Id("S")), agreementSet),
+            Dot));
+    }
 
     private static Formula FiniteMonoFormula() => Disp(Seq(
         F.Id("S"), Sp, Subseteq, Sp, F.Id("T"), Sp, Rightarrow, Sp,
