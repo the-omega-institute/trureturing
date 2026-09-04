@@ -12,170 +12,231 @@ internal sealed class ThreeRuleActorDecidabilityDocument
             + "three_rule_actor_decidability";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Actor-visible desires are preserved exactly by readout-compatible transitions, "
-            + "while a recipient's desire requires descent through the actor's readout.",
+        "All three actor-relative rule forms descend on the full action-input carrier.",
         H("Three Rule Forms and Actor Readout"),
         Blocks(Describe.Lean(
             DescribeId.Create("three-rule-actor-decidability"),
             DeclarationHandle.Create(Declaration),
-            H("Compatibility separates actor-local and recipient-dependent rules"),
+            H("Compatibility, separation, and recipient descent"),
             StatementSource.FromAuthor(TheoremFormula()),
             AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text(
-                    "The observation family may vary with the agent. The actor readout, "
-                        + "mirrored transition, and actual transition are constructed from "
-                        + "the displayed source primitives before any rule predicate is stated.")),
+                    "The actor-visible input retains the action and recipient coordinates "
+                        + "while replacing the state by the actor's readout.")),
                 Paragraph(Text(
-                    "Compatibility preserves every desire already constant on actor-readout "
-                        + "fibers. Conversely, two equal-readout states whose mirrored "
-                        + "successors have different readouts define a separating desire, so "
-                        + "compatibility is necessary for preservation of every such desire.")),
+                    "The frozen observer-action criterion supplies compatibility, universal "
+                        + "preservation, and the positive desire-and-ability rule on this "
+                        + "carrier. Its contrapositive yields the separating desire.")),
                 Paragraph(Text(
-                    "The positive rule additionally uses the actor's ability predicate. The "
-                        + "structural rule uses the recipient's desire after the actual action; "
-                        + "Mathlib's factorization criterion constructs its descended predicate.")),
+                    "For the actual transition evaluated by the recipient's desire, Mathlib's "
+                        + "factorization criterion exposes the descended predicate explicitly.")),
                 Paragraph(Text(
-                    "Repository searches found an adjacent answerability criterion but no "
-                        + "theorem with the transition converse and all three rule forms. "
-                        + "Pinned Mathlib supplies the fiber-constancy and descent primitives."))),
+                    "Repository search found the frozen full-carrier owner but no declaration "
+                        + "that publicly states both the separating witness and descended "
+                        + "predicate. Pinned Mathlib supplies the latter factorization step."))),
             DescribeRole.Theorem))));
 
     private static Formula TheoremFormula()
     {
-        Formula stateType = F.Id("State");
-        Formula actionType = F.Id("Action");
-        Formula agentType = F.Id("Agent");
-        Formula observation = F.Id("Observation");
-        Formula readout = F.Id("readout");
-        Formula transition = F.Id("transition");
-        Formula desire = F.Id("desire");
-        Formula ability = F.Id("ability");
-        Formula action = F.Id("action");
-        Formula actor = F.Id("actor");
-        Formula recipient = F.Id("recipient");
-        Formula agent = F.Id("agent");
-        Formula state = F.Id("state");
-        Formula selfDesire = F.Id("selfDesire");
-        Formula descended = F.Id("descended");
-        Formula q = F.Id("q");
-        Formula mirrored = F.Id("mirrored");
-        Formula actual = F.Id("actual");
-        Formula compatible = F.Id("compatible");
         Formula type = Seq(Operatorname, Grp(F.Id("Type")));
         Formula prop = Seq(Operatorname, Grp(F.Id("Prop")));
-        Formula observationAtActor = Apply(observation, actor);
+        Formula stateType = F.Id("X");
+        Formula actionType = F.Id("U");
+        Formula agentType = F.Id("I");
+        Formula observation = F.Id("B");
+        Formula readout = F.Id("readout");
+        Formula transition = F.Id("transition");
+        Formula actor = F.Id("actor");
+        Formula agent = F.Id("agent");
+        Formula input = F.Id("input");
+        Formula wish = F.Id("wish");
+        Formula capable = F.Id("capable");
+        Formula otherWish = F.Id("otherWish");
+        Formula recipient = F.Id("recipient");
+        Formula descended = F.Id("descended");
+        Formula actorInputReadout = F.Id("actorInputReadout");
+        Formula mirroredTransition = F.Id("mirroredTransition");
+        Formula actualTransition = F.Id("actualTransition");
+        Formula compatible = F.Id("compatible");
+        Formula inputType = Product(stateType, actionType, agentType);
+        Formula visibleInputType = Product(
+            Apply(observation, actor), actionType, agentType);
         Formula statePredicate = Arrow(stateType, prop);
+        Formula inputPredicate = Arrow(inputType, prop);
 
-        Formula actorDesire = Apply(desire, actor);
-        Formula actorAbility = Lambda(
-            Typed(state, stateType),
-            Apply(ability, actor, state, action, recipient));
-        Formula mirroredActorDesire = Lambda(
-            Typed(state, stateType),
-            Apply(desire, actor, Apply(mirrored, state)));
-        Formula negativeMirroredActorDesire = Lambda(
-            Typed(state, stateType),
-            Negate(Apply(desire, actor, Apply(mirrored, state))));
-        Formula negativeMirroredSelfDesire = Lambda(
-            Typed(state, stateType),
-            Negate(Apply(selfDesire, Apply(mirrored, state))));
+        Formula readableWish = Factor(wish, Apply(readout, actor));
+        Formula readableCapability = Factor(capable, actorInputReadout);
+        Formula negativeMirroredWish = Lambda(
+            Typed(input, inputType),
+            Negate(Apply(wish, Apply(mirroredTransition, input))));
         Formula positiveMirroredRule = Lambda(
-            Typed(state, stateType),
+            Typed(input, inputType),
             Seq(
-                Apply(desire, actor, Apply(mirrored, state)),
+                Apply(wish, Apply(mirroredTransition, input)),
                 Sp, Land, Sp,
-                Apply(ability, actor, state, action, recipient)));
-        Formula actualRecipientDesire = Lambda(
-            Typed(state, stateType),
-            Apply(desire, recipient, Apply(actual, state)));
-        Formula negativeActualRecipientDesire = Lambda(
-            Typed(state, stateType),
-            Negate(Apply(desire, recipient, Apply(actual, state))));
+                Apply(capable, input)));
+        Formula positiveActualWish = Lambda(
+            Typed(input, inputType),
+            Apply(
+                otherWish,
+                Call("recipient", input),
+                Apply(actualTransition, input)));
+        Formula negativeActualWish = Lambda(
+            Typed(input, inputType),
+            Negate(Apply(
+                otherWish,
+                Call("recipient", input),
+                Apply(actualTransition, input))));
 
-        Formula forward = Seq(
-            Factor(actorDesire, q), Sp, Rightarrow, Sp,
+        Formula preservation = Seq(
+            readableWish, Sp, Rightarrow, Sp,
             compatible, Sp, Rightarrow, Sp,
-            Factor(negativeMirroredActorDesire, q));
-        Formula separatingConverse = Seq(
+            Factor(negativeMirroredWish, actorInputReadout));
+        Formula forwardClause = Bind(
+            FormulaQuantifier.ForAll, "wish", statePredicate, preservation);
+        Formula separatingClause = Seq(
             Negate(compatible), Sp, Rightarrow, Sp,
-            Exists, Sp, Typed(selfDesire, statePredicate), Comma, Sp,
-            Open,
-            Factor(selfDesire, q), Sp, Land, Sp,
-            Negate(Factor(negativeMirroredSelfDesire, q)),
-            Close);
-        Formula universalPreservation = Seq(
-            Forall, Sp, Typed(selfDesire, statePredicate), Comma, Sp,
-            Factor(selfDesire, q), Sp, Rightarrow, Sp,
-            Factor(negativeMirroredSelfDesire, q));
-        Formula universalCriterion = Seq(
+            Bind(
+                FormulaQuantifier.Exists,
+                "wish",
+                statePredicate,
+                Seq(
+                    readableWish, Sp, Land, Sp,
+                    Negate(Factor(negativeMirroredWish, actorInputReadout)))));
+        Formula universalPreservation = Bind(
+            FormulaQuantifier.ForAll,
+            "wish",
+            statePredicate,
+            Seq(
+                readableWish, Sp, Rightarrow, Sp,
+                Factor(negativeMirroredWish, actorInputReadout)));
+        Formula criterionClause = Seq(
             compatible, Sp, Leftrightarrow, Sp,
             Open, universalPreservation, Close);
-        Formula positive = Seq(
-            Factor(actorDesire, q), Sp, Rightarrow, Sp,
-            Factor(actorAbility, q), Sp, Rightarrow, Sp,
-            compatible, Sp, Rightarrow, Sp,
-            Factor(positiveMirroredRule, q));
-        Formula structural = Seq(
-            Factor(negativeActualRecipientDesire, q), Sp, Leftrightarrow, Sp,
-            Exists, Sp,
-            Typed(descended, Arrow(observationAtActor, prop)), Comma, Sp,
-            actualRecipientDesire, Sp, Eq, Sp,
-            descended, Sp, Circ, Sp, q);
+        Formula positiveClause = BindMany(
+            FormulaQuantifier.ForAll,
+            [("wish", statePredicate), ("capable", inputPredicate)],
+            Seq(
+                readableWish, Sp, Rightarrow, Sp,
+                readableCapability, Sp, Rightarrow, Sp,
+                compatible, Sp, Rightarrow, Sp,
+                Factor(positiveMirroredRule, actorInputReadout)));
+        Formula otherWishType = Seq(
+            Forall, Sp, Typed(recipient, agentType), Comma, Sp,
+            Arrow(stateType, prop));
+        Formula descendedPredicate = Seq(
+            positiveActualWish, Sp, Eq, Sp,
+            Call("compose", descended, actorInputReadout));
+        Formula structuralClause = Bind(
+            FormulaQuantifier.ForAll,
+            "otherWish",
+            otherWishType,
+            Seq(
+                Factor(negativeActualWish, actorInputReadout),
+                Sp, Leftrightarrow, Sp,
+                Bind(
+                    FormulaQuantifier.Exists,
+                    "descended",
+                    Arrow(visibleInputType, prop),
+                    descendedPredicate)));
 
         return Disp(new Formula.Aligned([
             Seq(
                 Forall, Sp,
-                Typed(Seq(stateType, Comma, Sp, actionType, Comma, Sp, agentType), type),
+                Typed(
+                    Seq(stateType, Comma, Sp, actionType, Comma, Sp, agentType),
+                    type),
+                Comma),
+            Seq(Typed(observation, Arrow(agentType, type)), Comma),
+            Seq(
+                Typed(
+                    readout,
+                    Seq(
+                        Open, Typed(agent, agentType), Close,
+                        Sp, To, Sp,
+                        Arrow(stateType, Apply(observation, agent)))),
                 Comma),
             Seq(
-                Typed(observation, Arrow(agentType, type)), Comma),
-            Seq(
-                Typed(readout, Seq(
-                    Open, Typed(agent, agentType), Close, Sp, To, Sp,
-                    Arrow(stateType, Apply(observation, agent)))),
+                Typed(
+                    transition,
+                    Arrow(
+                        stateType,
+                        Arrow(actionType, Arrow(agentType, Arrow(agentType, stateType))))),
                 Comma),
-            Seq(
-                Typed(transition,
-                    Arrow(stateType,
-                        Arrow(actionType,
-                            Arrow(agentType, Arrow(agentType, stateType))))),
-                Comma),
-            Seq(
-                Typed(desire, Arrow(agentType, statePredicate)), Comma),
-            Seq(
-                Typed(ability,
-                    Arrow(agentType,
-                        Arrow(stateType,
-                            Arrow(actionType, Arrow(agentType, prop))))),
-                Comma),
-            Seq(
-                Typed(action, actionType), Comma, Sp,
-                Typed(actor, agentType), Comma, Sp,
-                Typed(recipient, agentType), Comma),
+            Seq(Typed(actor, agentType), Comma),
             Seq(
                 Operatorname, Grp(F.Id("let")), Sp,
-                q, Colon, Sp, Arrow(stateType, observationAtActor), Sp, Colon, Eq, Sp,
-                Apply(readout, actor), Comma),
+                actorInputReadout, Colon, Sp,
+                Arrow(inputType, visibleInputType),
+                Sp, Colon, Eq, Sp,
+                Lambda(
+                    Typed(input, inputType),
+                    Call(
+                        "triple",
+                        Apply(Apply(readout, actor), Call("state", input)),
+                        Call("action", input),
+                        Call("recipient", input))),
+                Comma),
             Seq(
-                mirrored, Colon, Sp, Arrow(stateType, stateType), Sp, Colon, Eq, Sp,
-                Lambda(Typed(state, stateType),
-                    Apply(transition, state, action, recipient, actor)), Comma),
+                mirroredTransition, Colon, Sp, Arrow(inputType, stateType),
+                Sp, Colon, Eq, Sp,
+                Lambda(
+                    Typed(input, inputType),
+                    Apply(
+                        transition,
+                        Call("state", input),
+                        Call("action", input),
+                        Call("recipient", input),
+                        actor)),
+                Comma),
             Seq(
-                actual, Colon, Sp, Arrow(stateType, stateType), Sp, Colon, Eq, Sp,
-                Lambda(Typed(state, stateType),
-                    Apply(transition, state, action, actor, recipient)), Comma),
+                actualTransition, Colon, Sp, Arrow(inputType, stateType),
+                Sp, Colon, Eq, Sp,
+                Lambda(
+                    Typed(input, inputType),
+                    Apply(
+                        transition,
+                        Call("state", input),
+                        Call("action", input),
+                        actor,
+                        Call("recipient", input))),
+                Comma),
             Seq(
                 compatible, Colon, Sp, prop, Sp, Colon, Eq, Sp,
-                Factor(Seq(q, Sp, Circ, Sp, mirrored), q), Sp,
-                Operatorname, Grp(F.Id("in"))),
-            Seq(Open, forward, Close, Sp, Land),
-            Seq(Open, separatingConverse, Close, Sp, Land),
-            Seq(Open, universalCriterion, Close, Sp, Land),
-            Seq(Open, positive, Close, Sp, Land),
-            Seq(Open, structural, Close, Dot),
+                Factor(
+                    Call("compose", Apply(readout, actor), mirroredTransition),
+                    actorInputReadout),
+                Sp, Operatorname, Grp(F.Id("in"))),
+            Seq(Open, forwardClause, Close, Sp, Land),
+            Seq(Open, separatingClause, Close, Sp, Land),
+            Seq(Open, criterionClause, Close, Sp, Land),
+            Seq(Open, positiveClause, Close, Sp, Land),
+            Seq(Open, structuralClause, Close, Dot),
         ]));
     }
+
+    private static Formula Bind(
+        FormulaQuantifier quantifier,
+        string variable,
+        Formula type,
+        Formula body) =>
+        new Formula.BindMany(
+            quantifier,
+            [new Formula.BoundVariable(
+                FormulaIdentifier.Create(variable), type)],
+            body);
+
+    private static Formula BindMany(
+        FormulaQuantifier quantifier,
+        (string Variable, Formula Type)[] binders,
+        Formula body) =>
+        new Formula.BindMany(
+            quantifier,
+            [.. binders.Select(binder => new Formula.BoundVariable(
+                FormulaIdentifier.Create(binder.Variable),
+                binder.Type))],
+            body);
 
     private static Formula Factor(Formula function, Formula through) =>
         Call("FactorsThrough", function, through);
@@ -217,4 +278,16 @@ internal sealed class ThreeRuleActorDecidabilityDocument
 
     private static Formula Arrow(Formula domain, Formula codomain) =>
         new Formula.TypeArrow(domain, codomain);
+
+    private static Formula Product(params Formula[] factors)
+    {
+        var items = new List<Formula>();
+        for (var index = 0; index < factors.Length; index++)
+        {
+            if (index > 0) items.AddRange([Sp, Times, Sp]);
+            items.Add(factors[index]);
+        }
+
+        return Seq([.. items]);
+    }
 }
