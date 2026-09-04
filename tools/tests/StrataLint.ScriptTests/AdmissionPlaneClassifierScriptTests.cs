@@ -233,9 +233,7 @@ public sealed class AdmissionPlaneClassifierScriptTests
             temporary.Path,
             TestBudgets.ScriptProcessHangGuard,
             64 * 1024);
-        var githubOutput = File.Exists(githubOutputPath)
-            ? File.ReadAllText(githubOutputPath, Utf8)
-            : string.Empty;
+        var githubOutput = ScriptHarnessScratch.ReadScratchText(temporary, "github-output");
         return new ClassifierResult(process, githubOutput);
     }
 

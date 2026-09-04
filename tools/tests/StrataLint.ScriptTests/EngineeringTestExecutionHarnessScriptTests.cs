@@ -335,7 +335,7 @@ public sealed class EngineeringTestExecutionHarnessScriptTests
             ScriptHarnessScratch.ReadRecordedCalls(MakeArgumentsPath);
 
         internal string MakeEnvironment =>
-            ScriptHarnessScratch.ReadScratchText(MakeEnvironmentPath);
+            ScriptHarnessScratch.ReadScratchText(Temporary, "make-environment");
 
         public void Dispose() => Temporary.Dispose();
     }
