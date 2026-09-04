@@ -70,19 +70,37 @@ internal static class Program
             throw new InvalidOperationException("FULL must be unset or exactly 1");
         }
 
-        var protectedBase = RepositoryRules.ReadSnapshotProjects(
-            RevisionSnapshot(options.RepositoryRoot, @base, "protected base"));
-        var candidate = RepositoryRules.ReadSnapshotProjects(
-            RevisionSnapshot(options.RepositoryRoot, head, "candidate"));
+        var protectedBase = RevisionSnapshot(options.RepositoryRoot, @base, "protected base");
+        var candidate = RevisionSnapshot(options.RepositoryRoot, head, "candidate");
+        var changedPaths = GitPaths(options.RepositoryRoot, @base, head);
+        if (full == "1")
+        {
+            return ExecutePlan(
+                options.RepositoryRoot,
+                EngineeringTestPlanPolicy.EvaluateOrdinary(
+                    changedPaths,
+                    RepositoryRules.ReadSnapshotProjects(protectedBase),
+                    RepositoryRules.ReadSnapshotProjects(candidate),
+                    full: true));
+        }
+
+        var protectedBaseController = ControllerClosure.Derive(protectedBase);
+        var candidateController = ControllerClosure.Derive(candidate);
         var plan = EngineeringTestPlanPolicy.Evaluate(
-            GitPaths(options.RepositoryRoot, @base, head),
+            changedPaths,
             protectedBase,
             candidate,
-            full == "1");
+            protectedBaseController.EvaluatorPaths,
+            candidateController.EvaluatorPaths);
+        return ExecutePlan(options.RepositoryRoot, plan);
+    }
+
+    private static int ExecutePlan(string repositoryRoot, EngineeringTestPlan plan)
+    {
         WritePlan(plan);
         return EngineeringTestExecutor.Execute(
             plan,
-            invocation => RunTests(options.RepositoryRoot, invocation));
+            invocation => RunTests(repositoryRoot, invocation));
     }
 
     private static int RunTests(
