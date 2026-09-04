@@ -1,0 +1,14 @@
+## 158. 素数独立—构型纠缠二层原则
+
+$$
+\boxed{
+\text{不同素数之间独立，}
+\qquad
+\text{同一素数内部的 offsets 相关}.
+}
+$$
+
+Euler product 处理第一层；prime tuple 问题位于第二层。
+
+---
+

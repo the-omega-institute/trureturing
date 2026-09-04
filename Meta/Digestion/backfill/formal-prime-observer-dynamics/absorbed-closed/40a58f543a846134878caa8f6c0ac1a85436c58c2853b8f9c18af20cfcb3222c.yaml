@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:40a58f543a846134878caa8f6c0ac1a85436c58c2853b8f9c18af20cfcb3222c
+  normalized_sha256: sha256:40a58f543a846134878caa8f6c0ac1a85436c58c2853b8f9c18af20cfcb3222c
+cas_ref: sha256:40a58f543a846134878caa8f6c0ac1a85436c58c2853b8f9c18af20cfcb3222c
+coverage_gids:
+  - gid: D5/S3/Quantum/FixedAlgebra/ChannelFixedBlockDecomposition.channel_fixed_block_decomposition
+    target_statement_id: sha256:1519f4bf84d3b6a4ed3cb80b9a351bd58f173c7245aa95630c2eb49c3d8acc9b
+receipts:
+  scribe:
+    - gid: D5/S3/Quantum/FixedAlgebra/ChannelFixedBlockDecomposition.channel_fixed_block_decomposition
+      definition_sha256: sha256:52a7111bd2141165bcbd2a2aa6bc3d9e3bf7ffcaaebdb28cae23f5b516a52982
+      emission_sha256: sha256:24107b5014ac47d51f83b01445879af696c81626a686a243ffedefe2ca95f830
+  unresolved_subitems: []

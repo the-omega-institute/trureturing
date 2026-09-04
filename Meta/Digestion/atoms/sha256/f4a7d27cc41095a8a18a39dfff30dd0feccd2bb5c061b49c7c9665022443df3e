@@ -1,0 +1,1 @@
+**义务**:公开定理 `tendsto_alternating_partialSums_eta_of_ne_one (s : ℂ) (hs : 0 < s.re) (hs1 : s ≠ 1) : Filter.Tendsto (fun N ↦ ∑ n ∈ Finset.range N, (-1 : ℂ) ^ n * ((n + 1 : ℂ) ^ (-s))) Filter.atTop (nhds ((1 - (2 : ℂ) ^ (1 - s)) * riemannZeta s))`。落点 `D5/S3/Weil/ZetaBridge/`(模块 `AlternatingZetaContinuation`,与 M3-d-2、M3-d-3 同模块;M3-d-4 已于 `RealAxisNonvanishing` 单独 deposit)。

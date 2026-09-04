@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:975a1b2fa4d524667348d35f94b1fbd9bb1c263208c1fe65a45676001ee6b43f
 cas_ref: sha256:975a1b2fa4d524667348d35f94b1fbd9bb1c263208c1fe65a45676001ee6b43f
 coverage_gids:
-  - D5/S3/Observer/Refinement/DependentFinitePrimeTimeTomography.dependent_finite_prime_time_tomography
+  - gid: D5/S3/Observer/Refinement/DependentFinitePrimeTimeTomography.dependent_finite_prime_time_tomography
+    target_statement_id: sha256:7b5d8e1c64010965eb6cb67eef736697949452a4075ec0505722195db05a3e83
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/Refinement/DependentFinitePrimeTimeTomography.dependent_finite_prime_time_tomography
-      source_sha256: sha256:975a1b2fa4d524667348d35f94b1fbd9bb1c263208c1fe65a45676001ee6b43f
-      target_statement_id: sha256:7b5d8e1c64010965eb6cb67eef736697949452a4075ec0505722195db05a3e83
   scribe:
     - gid: D5/S3/Observer/Refinement/DependentFinitePrimeTimeTomography.dependent_finite_prime_time_tomography
       definition_sha256: sha256:dceec778ef2f49252a81fe7eadff47269ab1ea7576766485b13e49e183b3b15f

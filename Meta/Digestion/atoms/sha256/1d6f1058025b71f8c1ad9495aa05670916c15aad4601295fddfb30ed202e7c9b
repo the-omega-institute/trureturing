@@ -1,0 +1,56 @@
+## 134. 函数方程的真正无符号坐标
+
+定义：
+
+$$
+\mathcal Q(s)=s(1-s).
+$$
+
+它满足：
+
+$$
+\mathcal Q(1-s)=\mathcal Q(s),
+$$
+
+以及：
+
+$$
+\mathcal Q(\overline s)
+=
+\overline{\mathcal Q(s)}.
+$$
+
+因此：
+
+$$
+s
+\quad\text{与}\quad
+1-s
+$$
+
+不是在 \(q\)-坐标中两个不同点，而是同一个点的两张内部页。
+
+反解为：
+
+$$
+\boxed{
+s
+=
+\frac12
+\pm
+\sqrt{\frac14-q}.
+}
+$$
+
+这里的 \(\pm\) 就是被函数方程商掉的奇通道：
+
+$$
+\boxed{
+\text{external coordinate}=q,
+\qquad
+\text{internal sheet}=\pm.
+}
+$$
+
+---
+

@@ -1,0 +1,96 @@
+## 四、偶扇区与奇扇区的精确公式
+
+定义：
+
+$$
+Z_{\mathrm e}(s)
+=
+\sum_{\Omega(n)\text{ 偶}}
+\frac1{n^s},
+$$
+
+$$
+Z_{\mathrm o}(s)
+=
+\sum_{\Omega(n)\text{ 奇}}
+\frac1{n^s}.
+$$
+
+那么：
+
+$$
+Z_{\mathrm e}+Z_{\mathrm o}
+=
+\zeta(s),
+$$
+
+而：
+
+$$
+Z_{\mathrm e}-Z_{\mathrm o}
+=
+\frac{\zeta(2s)}{\zeta(s)}.
+$$
+
+解得：
+
+$$
+\boxed{
+Z_{\mathrm e}(s)
+=
+\frac12
+\left(
+\zeta(s)+\frac{\zeta(2s)}{\zeta(s)}
+\right),
+}
+$$
+
+$$
+\boxed{
+Z_{\mathrm o}(s)
+=
+\frac12
+\left(
+\zeta(s)-\frac{\zeta(2s)}{\zeta(s)}
+\right).
+}
+$$
+
+这正是你提出的“两类合起来成为全部”的严格解析形式。
+
+可以把它写成量子／算子语言：
+
+$$
+\operatorname{Trace}
+=
+Z_{\mathrm e}+Z_{\mathrm o},
+$$
+
+$$
+\operatorname{Supertrace}
+=
+Z_{\mathrm e}-Z_{\mathrm o}.
+$$
+
+因此：
+
+$$
+\boxed{
+\zeta
+=
+\text{不插入观察者奇偶标记的普通迹},
+}
+$$
+
+$$
+\boxed{
+\frac{\zeta(2s)}{\zeta(s)}
+=
+\text{插入奇偶观察者后的超迹}.
+}
+$$
+
+这可能是你寻找的“ζ 的反面”之一。
+
+---
+

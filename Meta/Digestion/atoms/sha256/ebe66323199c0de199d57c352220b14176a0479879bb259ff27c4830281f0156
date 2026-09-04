@@ -1,0 +1,16 @@
+## 定理 36.1　不可抵消判据
+
+$$
+\boxed{
+\mathcal C_T^\perp=0
+\iff
+\delta_o=0
+\quad
+\forall o\in T.
+}
+$$
+
+纠缠、相位和符号相关均不能抵消局部平方。
+
+---
+

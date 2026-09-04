@@ -1,0 +1,13 @@
+## 345. Casimir–Li 三角变换
+
+```lean
+theorem li_eq_casimirChebyshevPowerTrace
+    (n : ℕ) :
+    liCoefficient n =
+      ∑ k ∈ Finset.Icc 1 n,
+        liCasimirCoefficient n k *
+          casimirPowerTrace k
+```
+
+---
+

@@ -1,0 +1,4 @@
+## 〇　为什么是这一节
+
+增订九把「非平凡零点无实零点」记为具名缺口 M3-d;增订十一(M3-e)与增订十四(M3-f-5)的 separator 因此都带 `hIm : (Z.zero n).im ≠ 0`。经典事实是:对实 0 < x < 1,(1 − 2^{1−x}) ζ(x) = Σ (−1)^n (n+1)^{−x}(交错级数,项递减趋零,和为正),而 1 − 2^{1−x} < 0,故 ζ(x) < 0 ≠ 0。钉版 Mathlib 只在 Re s > 1 给出 ζ 的级数表示;交错级数在 0 < Re s 的**部分和极限**等于 (1 − 2^{1−s}) ζ(s) 这一延拓恒等式(M3-d-1)须在本仓证明。它不是黄金结构,是纯 Mathlib 内容;证出即可去掉两条 separator 的 `hIm`。**参考路线(非义务,供实施席选择)**:(a) Re s > 1 时由 `zeta_eq_tsum_one_div_nat_add_one_cpow` 拆偶奇项得恒等式;(b) 交错部分和在 {0 < Re s} 上局部一致收敛(配对相邻项得绝对收敛的差分级数,用 `Complex.cpow` 的 Lipschitz 型估计),故极限函数在该半平面解析;(c) 右侧 (1 − 2^{1−s}) ζ(s) 在 {0 < Re s} 解析(`differentiableAt_riemannZeta`,s = 1 处两侧皆取有限值);(d) 由 `AnalyticOnNhd.eqOn_of_preconnected_of_eventuallyEq` 从 Re s > 1 延拓到 0 < Re s。探针估计 250–450 行;若 (b) 的局部一致性在钉版 API 下不可达,本条按 open 记,不得以 `sorry` 或公理代替。
+

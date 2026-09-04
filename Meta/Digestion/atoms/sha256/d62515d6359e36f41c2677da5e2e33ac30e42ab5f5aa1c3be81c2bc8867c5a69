@@ -1,0 +1,1 @@
+**义务**:公开定理 `riemannZeta_ne_zero_of_real_mem_Ioo (x : ℝ) (h0 : 0 < x) (h1 : x < 1) : riemannZeta (x : ℂ) ≠ 0`。

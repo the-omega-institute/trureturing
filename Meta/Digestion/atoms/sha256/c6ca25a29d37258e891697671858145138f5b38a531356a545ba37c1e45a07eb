@@ -1,0 +1,78 @@
+# 第一千九百八十一部　几何能量、整数荷与规范 margin 彼此独立
+
+选择严格正的可和权重 \(w_\rho\)，定义：
+
+$$
+M_{\mathrm{off}}
+=
+\sum_{\delta_\rho>0}w_\rho,
+$$
+
+$$
+\mathcal E_{\mathrm n}
+=
+\sum_{\delta_\rho>0}
+w_\rho\delta_\rho^2.
+$$
+
+因为：
+
+$$
+0<\delta_\rho^2<\frac14,
+$$
+
+有：
+
+$$
+\boxed{
+0\le
+\mathcal E_{\mathrm n}
+\le
+\frac14M_{\mathrm{off}}.
+}
+\tag{1981.1}
+$$
+
+若全部离线深度满足统一 gap：
+
+$$
+\delta_\rho\ge\varepsilon>0,
+$$
+
+则：
+
+$$
+\boxed{
+\mathcal E_{\mathrm n}
+\ge
+\varepsilon^2M_{\mathrm{off}}.
+}
+\tag{1981.2}
+$$
+
+但如果离线零点可以任意接近临界线，就不存在由：
+
+$$
+\mathcal E_{\mathrm n}
+$$
+
+控制总离线质量的统一下界。
+
+因此可能出现：
+
+$$
+M_{\mathrm{off}}\text{ 很大},
+\qquad
+\mathcal E_{\mathrm n}\text{ 很小}.
+$$
+
+这说明：
+
+$$
+\boxed{
+\text{整数荷／缺陷数量与法向几何能量可以解耦。}
+}
+$$
+
+---
+

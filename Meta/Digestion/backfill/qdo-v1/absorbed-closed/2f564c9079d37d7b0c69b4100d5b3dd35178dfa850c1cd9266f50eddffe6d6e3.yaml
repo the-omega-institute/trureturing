@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:2f564c9079d37d7b0c69b4100d5b3dd35178dfa850c1cd9266f50eddffe6d6e3
+  normalized_sha256: sha256:2f564c9079d37d7b0c69b4100d5b3dd35178dfa850c1cd9266f50eddffe6d6e3
+cas_ref: sha256:2f564c9079d37d7b0c69b4100d5b3dd35178dfa850c1cd9266f50eddffe6d6e3
+coverage_gids:
+  - gid: D5/S3/Observer/Tomography/RecursiveCompletenessCriterion.recursive_completeness_criterion
+    target_statement_id: sha256:ccfd406ee09b850ce035d8259a8c630ab9747564e9ae3cfbc9cce292f3c2206d
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/Tomography/RecursiveCompletenessCriterion.recursive_completeness_criterion
+      definition_sha256: sha256:9a3117e4c02f756a863a0eeadb4f923828403595677ba0fa719d41994089d694
+      emission_sha256: sha256:87f0fc40025020cecdc187d82f590242f0e3d8166ab3b002c381c09558155f3a
+  unresolved_subitems: []

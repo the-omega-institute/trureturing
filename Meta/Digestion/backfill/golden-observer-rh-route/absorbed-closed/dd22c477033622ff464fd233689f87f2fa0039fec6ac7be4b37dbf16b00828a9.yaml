@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:dd22c477033622ff464fd233689f87f2fa0039fec6ac7be4b37dbf16b00828a9
+  normalized_sha256: sha256:dd22c477033622ff464fd233689f87f2fa0039fec6ac7be4b37dbf16b00828a9
+cas_ref: sha256:dd22c477033622ff464fd233689f87f2fa0039fec6ac7be4b37dbf16b00828a9
+coverage_gids:
+  - gid: D5/S3/Analytic/EulerGerm/GoldenGermWindowZeroCriterion.golden_window_zero_on_line_of_rh
+    target_statement_id: sha256:af0bfd97fa215ffec61561f1b4b1632a460bd5d72afbb84ece01c4eaa40e557d
+receipts:
+  scribe:
+    - gid: D5/S3/Analytic/EulerGerm/GoldenGermWindowZeroCriterion.golden_window_zero_on_line_of_rh
+      definition_sha256: sha256:5c8a1eadca425849b21ccd910179ec7f3d6e295c6e2acc5f2210fe27de0a1f45
+      emission_sha256: sha256:d0b464595e97c767df1164490a7f9adb892100fb9eefbd5459943df676d18c18
+  unresolved_subitems: []

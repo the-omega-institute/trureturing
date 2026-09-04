@@ -5,7 +5,7 @@ namespace StrataLint.Tests;
 public sealed partial class DepositCoverWorkflowScriptTests
 {
     [Fact]
-    public void CoverBatchRederivesEachDistinctAtomsEnvelopeAndReemitsOnceAtEnd()
+    public void CoverBatchWritesEachEdgeAndReemitsOnceWithoutCommitting()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
@@ -27,7 +27,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         var result = fixture.RunBatch(atoms);
 
         Assert.True(result.ExitCode == 0, Diagnostics(result));
-        Assert.Equal(before + 3, fixture.CommitCount());
+        Assert.Equal(before, fixture.CommitCount());
         Assert.Equal(
             [
                 "make:lean-report",
@@ -41,19 +41,15 @@ public sealed partial class DepositCoverWorkflowScriptTests
             "dotnet:cover-atom"
                 + $" --cover-atom {TransactionFixture.AtomId}"
                 + $" --gid {TransactionFixture.Gid}"
-                + " --base synthetic-base"
-                + $" --envelope {TransactionFixture.ReceiptRelativePath}"
-                + " --align-scribe-receipt",
+                + " --base synthetic-base",
             fixture.Calls());
         Assert.Contains(
             "dotnet:cover-atom"
                 + $" --cover-atom {TransactionFixture.SecondaryAtomId}"
                 + $" --gid {TransactionFixture.SecondaryGid}"
-                + " --base synthetic-base"
-                + $" --envelope {TransactionFixture.SecondaryReceiptRelativePath}"
-                + " --align-scribe-receipt",
+                + " --base synthetic-base",
             fixture.Calls());
-        Assert.Empty(fixture.Status());
+        Assert.NotEmpty(fixture.Status());
 
         using var failedFixture = new TransactionFixture();
         var failedAtoms = failedFixture.WriteBatchFile(
@@ -61,39 +57,13 @@ public sealed partial class DepositCoverWorkflowScriptTests
         var failedBefore = failedFixture.CommitCount();
         var failed = failedFixture.RunBatch(failedAtoms, coverDispositionFailure: true);
         Assert.NotEqual(0, failed.ExitCode);
-        Assert.Equal(failedBefore + 1, failedFixture.CommitCount());
+        Assert.Equal(failedBefore, failedFixture.CommitCount());
         Assert.Contains("cover_disposition:", failedFixture.BackfillContents(), StringComparison.Ordinal);
         Assert.Equal(
             ["make:lean-report", "dotnet:cover-atom"],
             failedFixture.CallKinds());
-        Assert.Empty(failedFixture.Status());
+        Assert.NotEmpty(failedFixture.Status());
     }
-
-    [Fact]
-    public void CoverBatchCleansEachDistinctAtomsInterruptedReceiptBeforeSharedLeanReport()
-    {
-        if (OperatingSystem.IsWindows()) return;
-        using var fixture = new TransactionFixture();
-        fixture.AddSecondaryFormalization();
-        fixture.LeaveInterruptedTemporaryFiles(TransactionFixture.ReceiptRelativePath);
-        fixture.LeaveInterruptedTemporaryFiles(TransactionFixture.SecondaryReceiptRelativePath);
-        var atoms = fixture.WriteBatchFile(
-            $"{TransactionFixture.AtomId}\t{TransactionFixture.Gid}\n"
-            + $"{TransactionFixture.SecondaryAtomId}\t{TransactionFixture.SecondaryGid}\n");
-
-        var result = fixture.RunBatch(atoms);
-
-        Assert.True(result.ExitCode == 0, Diagnostics(result));
-        Assert.Equal("make:lean-report", fixture.CallKinds()[0]);
-        Assert.False(File.Exists(Path.Combine(
-            fixture.Root,
-            TransactionFixture.ReceiptRelativePath + ".tmp.abandoned")));
-        Assert.False(File.Exists(Path.Combine(
-            fixture.Root,
-            TransactionFixture.SecondaryReceiptRelativePath + ".tmp.abandoned")));
-        Assert.Empty(fixture.Status());
-    }
-
     [Theory]
     [InlineData("")]
     [InlineData("atom-1 D5/S0/Carrier/Probe.probe\n")]
@@ -130,9 +100,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
                     $"PATH={binPath}{Path.PathSeparator}{Environment.GetEnvironmentVariable("PATH")}",
                     $"PLAYBOOK_TEST_CALLS={callsPath}",
                     "PLAYBOOK_STALE_REPORT=0",
-                    "PLAYBOOK_INVALID_RECEIPT=0",
                     $"PLAYBOOK_COVER_DISPOSITION_FAILURE={(coverDispositionFailure ? "1" : "0")}",
-                    "PLAYBOOK_MUTATE_RECEIPT_AFTER_PREPARE=",
                     "/bin/bash",
                     Path.Combine(Root, ScriptPath),
                     "cover-batch",

@@ -1,0 +1,69 @@
+## 138. 偶完成与奇电流的精确因子分解
+
+由链式法则：
+
+$$
+\frac{dq}{ds}=1-2s.
+$$
+
+因此：
+
+$$
+\boxed{
+\frac{\xi'(s)}{\xi(s)}
+=
+(1-2s)
+\frac{\mathfrak X'(q)}
+{\mathfrak X(q)}.
+}
+$$
+
+右侧分成：
+
+$$
+\boxed{
+1-2s
+=
+\text{反射奇通道},
+}
+$$
+
+以及：
+
+$$
+\boxed{
+\frac{\mathfrak X'(q)}{\mathfrak X(q)}
+=
+\text{反射商上的偶动力学}.
+}
+$$
+
+在 \(s\mapsto1-s\) 下：
+
+$$
+1-2(1-s)=-(1-2s),
+$$
+
+而 \(q\) 不变。
+
+所以：
+
+$$
+\boxed{
+\text{completed state 是偶的，}
+\qquad
+\text{logarithmic current 是奇的}.
+}
+$$
+
+这比“偶完成、奇破缺”更完整：
+
+$$
+\boxed{
+\text{奇电流并没有消失；
+它被分解成反射 Jacobian 与商空间电流的乘积。}
+}
+$$
+
+---
+

@@ -1,0 +1,20 @@
+* \(c\) 标记同一个 \(p\)-sector 内 offsets 之间的 primitive correlation cycle。
+
+这给出一个非常清楚的局部—全局图景：
+
+$$
+\boxed{
+\text{不同 }p\text{ 之间取 tensor/Euler product，}
+}
+$$
+
+$$
+\boxed{
+\text{同一个 }p\text{ 内部取 cycle/cluster expansion}.
+}
+$$
+
+这正是 ordinary Euler independence 缺少的第二层。
+
+---
+

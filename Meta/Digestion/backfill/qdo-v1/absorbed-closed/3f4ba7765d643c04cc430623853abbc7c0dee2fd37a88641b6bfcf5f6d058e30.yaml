@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:3f4ba7765d643c04cc430623853abbc7c0dee2fd37a88641b6bfcf5f6d058e30
 cas_ref: sha256:3f4ba7765d643c04cc430623853abbc7c0dee2fd37a88641b6bfcf5f6d058e30
 coverage_gids:
-  - D5/S3/ObserverMemory/Linearization/DiagonalAlgebraSimilarityObstruction.same_linear_class_without_diagonal_algebra_similarity
+  - gid: D5/S3/ObserverMemory/Linearization/DiagonalAlgebraSimilarityObstruction.same_linear_class_without_diagonal_algebra_similarity
+    target_statement_id: sha256:edf0b33a2de57247fbc476bd4ec26de7d4951222fc315dcbdbfc37cb71d7d5fc
 receipts:
-  coverage:
-    - gid: D5/S3/ObserverMemory/Linearization/DiagonalAlgebraSimilarityObstruction.same_linear_class_without_diagonal_algebra_similarity
-      source_sha256: sha256:3f4ba7765d643c04cc430623853abbc7c0dee2fd37a88641b6bfcf5f6d058e30
-      target_statement_id: sha256:edf0b33a2de57247fbc476bd4ec26de7d4951222fc315dcbdbfc37cb71d7d5fc
   scribe:
     - gid: D5/S3/ObserverMemory/Linearization/DiagonalAlgebraSimilarityObstruction.same_linear_class_without_diagonal_algebra_similarity
       definition_sha256: sha256:b844a4eabb2fde95712414ed10d704ff5d92254803452c16733ed63bb15657cd

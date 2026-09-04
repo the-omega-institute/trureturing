@@ -1,0 +1,29 @@
+## 98. 完成就是把 cocycle 降为常数
+
+寻找 \(a(s)\)，使：
+
+$$
+c^a(s)=\varepsilon,
+\qquad
+\varepsilon\in\{+1,-1\}.
+$$
+
+令：
+
+$$
+\Lambda(s)=a(s)F(s),
+$$
+
+则：
+
+$$
+\boxed{
+\Lambda(1-s)
+=
+\varepsilon\Lambda(s).
+}
+$$
+
+这里：
+
+* \(\varepsilon=+1\)：even completion；

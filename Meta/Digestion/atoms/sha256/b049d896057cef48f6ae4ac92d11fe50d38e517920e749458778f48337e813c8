@@ -1,0 +1,30 @@
+* 若 RH 为真，证明必须使用一个统一控制全部 \(n\) 的论证。
+
+这正是：
+
+$$
+\boxed{
+\text{falsehood is locally witnessable，}
+\qquad
+\text{truth requires global compression}.
+}
+$$
+
+仓库的 Weil criterion 给出了同样的分析版本：
+
+$$
+\neg\mathrm{RH}
+\Longrightarrow
+\exists g,\ Q_Z(g)<0;
+$$
+
+而：
+
+$$
+\mathrm{RH}
+\Longleftrightarrow
+\forall g,\ Q_Z(g)\ge0.
+$$
+
+---
+

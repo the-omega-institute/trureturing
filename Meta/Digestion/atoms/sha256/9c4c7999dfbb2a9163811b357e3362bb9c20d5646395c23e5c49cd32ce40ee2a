@@ -1,0 +1,46 @@
+## 283. Cayley 不变度量
+
+对实 \(x\) 定义：
+
+$$
+q=\frac1{4x},
+$$
+
+并写：
+
+$$
+M_x
+=
+\begin{pmatrix}
+2-4x&-1\\
+1&0
+\end{pmatrix}.
+$$
+
+定义对称矩阵：
+
+$$
+\boxed{
+G_x
+=
+\begin{pmatrix}
+1&2x-1\\
+2x-1&1
+\end{pmatrix}.
+}
+$$
+
+直接计算得到：
+
+$$
+\boxed{
+M_x^T G_x M_x
+=
+G_x.
+}
+$$
+
+所以 \(M_x\) 始终保存这个双线性形式。
+
+---
+

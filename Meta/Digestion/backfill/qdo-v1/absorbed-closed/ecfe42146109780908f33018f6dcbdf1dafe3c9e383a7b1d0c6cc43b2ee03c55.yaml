@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:ecfe42146109780908f33018f6dcbdf1dafe3c9e383a7b1d0c6cc43b2ee03c55
+  normalized_sha256: sha256:ecfe42146109780908f33018f6dcbdf1dafe3c9e383a7b1d0c6cc43b2ee03c55
+cas_ref: sha256:ecfe42146109780908f33018f6dcbdf1dafe3c9e383a7b1d0c6cc43b2ee03c55
+coverage_gids:
+  - gid: D5/S3/Entropy/Submodularity/RefinementInformationDecomposition.deterministic_refinement_information_decomposition
+    target_statement_id: sha256:39983d9b8e320ada38907f1a70229c7c934927632f72b5aa3454137721bf90b9
+receipts:
+  scribe:
+    - gid: D5/S3/Entropy/Submodularity/RefinementInformationDecomposition.deterministic_refinement_information_decomposition
+      definition_sha256: sha256:af3dcbe9d23e67155ae53259a3f7b077789c4183e4b18c5ed5fac5d22604eb90
+      emission_sha256: sha256:bcc82847b6a46d6fd0f128c83c8bf4c8bdce65e9edfa2d05734c32a5996ac350
+  unresolved_subitems: []

@@ -1,0 +1,40 @@
+## 84. 观察者塔
+
+设每一级有一个状态空间和名称空间：
+
+$$
+0
+\longrightarrow
+K_n
+\longrightarrow
+X_n
+\overset{q_n}{\longrightarrow}
+Q_n
+\longrightarrow
+0.
+$$
+
+其中：
+
+* \(X_n\)：第 \(n\) 层真实状态；
+* \(Q_n\)：第 \(n\) 层可见名字；
+* \(K_n\)：这一层看不见的信息。
+
+假设各层之间有兼容的降阶映射。
+
+取逆极限后得到长正合序列的一部分：
+
+$$
+0
+\to
+\varprojlim K_n
+\to
+\varprojlim X_n
+\to
+\varprojlim Q_n
+\overset{\partial}{\longrightarrow}
+\varprojlim{}^{1}K_n.
+$$
+
+---
+

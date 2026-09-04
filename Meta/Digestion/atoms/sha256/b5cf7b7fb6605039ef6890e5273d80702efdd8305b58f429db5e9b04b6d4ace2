@@ -1,0 +1,20 @@
+## 8. Spectral detailed-balance criterion
+
+定义亲和
+
+$$
+a_\rho=\log|c_\rho|^2.
+$$
+
+函数方程给出
+
+$$
+a_{J\rho}=-a_\rho,
+$$
+
+RH 则等价于逐模态详细平衡：
+
+$$
+a_\rho=0.
+$$
+

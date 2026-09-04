@@ -1,0 +1,75 @@
+# 第两千零九十七部　Kakeya 的管交能量与 \(\zeta\) 的相位交叉能量
+
+对 Kakeya 管族，令：
+
+$$
+M(x)=\sum_T1_T(x).
+$$
+
+则：
+
+$$
+\boxed{
+\int M(x)^2\,dx
+=
+\sum_T|T|
++
+\sum_{T\neq T'}
+|T\cap T'|.
+}
+\tag{2097.1}
+$$
+
+两根夹角为 \(\theta\) 的细管，其交叠规模由 \(\theta^{-1}\) 控制；这正是经典 \(L^2\) 管方法的重要输入。([arXiv][5])
+
+对 \(\zeta\) 向量链：
+
+$$
+\boxed{
+|S_N|^2
+=
+\sum_n|v_n|^2
++
+\sum_{m\neq n}
+v_m\overline{v_n}.
+}
+\tag{2097.2}
+$$
+
+其中：
+
+$$
+\boxed{
+v_m\overline{v_n}
+=
+(-1)^{m+n}
+(mn)^{-\sigma}
+e^{it\log(n/m)}.
+}
+\tag{2097.3}
+$$
+
+所以 Kakeya 的几何夹角，对应到这里的是：
+
+$$
+\boxed{
+\log\frac nm
+}
+$$
+
+这一频率差。
+
+但 Kakeya 交叠项非负，\(\zeta\) 交叉项带有余弦符号。
+
+因此需要的不是普通 Kakeya，而是：
+
+$$
+\boxed{
+\textbf{signed／oscillatory Kakeya coercivity}.
+}
+$$
+
+即证明：除非相位 packet 在所有尺度上形成极端 sticky 结构，否则负交叉项不足以完全吃掉正对角能量。
+
+---
+

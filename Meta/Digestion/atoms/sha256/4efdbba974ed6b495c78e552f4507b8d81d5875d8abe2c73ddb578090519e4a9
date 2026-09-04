@@ -1,0 +1,97 @@
+# 十三、项目现有结果已经接近一张“算术跳跃网络”
+
+项目已经分别证明：
+
+素数项可以写成
+
+$$
+\operatorname{PrimeTerm}
+=
+2W_L\|f\|^2
+-
+E_{\mathrm p,L}(f),
+$$
+
+其中
+
+$$
+E_{\mathrm p,L}(f)\ge0
+$$
+
+是素数幂平移的跳跃能量。
+
+Archimedean 项可以写成
+
+$$
+\operatorname{ArchTerm}
+=
+a_\infty\|f\|^2
++
+E_\infty(f),
+$$
+
+其中
+
+$$
+E_\infty(f)\ge0
+$$
+
+是连续平移跳跃能量。
+
+极点项是 rank-one 正能量：
+
+$$
+\operatorname{PoleTerm}
+=
+2\left|
+\int e^{x/2}f(x)\,dx
+\right|^2.
+$$
+
+因此 Weil form 可以整理成：
+
+$$
+\boxed{
+Q_W(f)
+=
+\mathcal E_L(f)
+-
+\Lambda_L\|f\|^2,
+}
+$$
+
+其中
+
+$$
+\mathcal E_L(f)
+=
+E_{\mathrm p,L}(f)
++
+E_\infty(f)
++
+2\left|
+\int e^{x/2}f(x)\,dx
+\right|^2
+\ge0.
+$$
+
+所以 RH 的真正困难不是“有没有正能量”。
+
+正能量块已经存在。
+
+困难是证明：
+
+$$
+\boxed{
+\mathcal E_L(f)
+\ge
+\Lambda_L\|f\|^2
+\qquad
+\forall f.
+}
+$$
+
+即算术—Archimedean 跳跃网络拥有足够大的最低恢复刚度。
+
+---
+

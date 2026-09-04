@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:00fb23ca5baa428e90c918711e11ac951d785e4224cdba15051e3f4e0f143b9b
+  normalized_sha256: sha256:00fb23ca5baa428e90c918711e11ac951d785e4224cdba15051e3f4e0f143b9b
+cas_ref: sha256:00fb23ca5baa428e90c918711e11ac951d785e4224cdba15051e3f4e0f143b9b
+coverage_gids:
+  - gid: D5/S3/ResourceOrder/MarginalTradeAmplification.marginal_trade_mark_amplification
+    target_statement_id: sha256:422c08955123522ce58b413700388d2a53b85bb8f55b992f828be828d0dceff8
+receipts:
+  scribe:
+    - gid: D5/S3/ResourceOrder/MarginalTradeAmplification.marginal_trade_mark_amplification
+      definition_sha256: sha256:89cadf724d8318dc4489009440c3bfaaba6860b4c40c122d85190d09b8e06c51
+      emission_sha256: sha256:70e714bbd1029c8a8875a803e2baeb4baf705adb4b17fd348777ce3dfea0e6b1
+  unresolved_subitems: []

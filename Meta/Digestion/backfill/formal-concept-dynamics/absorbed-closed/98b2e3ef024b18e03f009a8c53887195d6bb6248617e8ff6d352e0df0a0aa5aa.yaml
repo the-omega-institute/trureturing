@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:98b2e3ef024b18e03f009a8c53887195d6bb6248617e8ff6d352e0df0a0aa5aa
+  normalized_sha256: sha256:98b2e3ef024b18e03f009a8c53887195d6bb6248617e8ff6d352e0df0a0aa5aa
+cas_ref: sha256:98b2e3ef024b18e03f009a8c53887195d6bb6248617e8ff6d352e0df0a0aa5aa
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Control/MonotoneOptionValue.monotone_option_value
+    target_statement_id: sha256:a8e87b75fe5edfa98156b4985ff89e5e27229d073f180b842a927c0f6c27469a
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Control/MonotoneOptionValue.monotone_option_value
+      definition_sha256: sha256:0ab9cda6c13c6b306a18f2621037cb500100058a038210533392ad3e03e49d26
+      emission_sha256: sha256:f2bbeb4231dc623108dd85a7d2b1ad927a557a59a669990eb22d7609a8e227d4
+  unresolved_subitems: []

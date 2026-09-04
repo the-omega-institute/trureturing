@@ -1,0 +1,21 @@
+## 145. Fixed-locus phase
+
+定义：
+
+$$
+\delta_a=0
+\qquad\forall a.
+$$
+
+则：
+
+$$
+Q_2(T)=0,
+$$
+
+全部 transverse Zeckendorf threads 为零，所有零点轨道都具有额外 \(J\)-稳定子。
+
+这是 RH phase。
+
+---
+

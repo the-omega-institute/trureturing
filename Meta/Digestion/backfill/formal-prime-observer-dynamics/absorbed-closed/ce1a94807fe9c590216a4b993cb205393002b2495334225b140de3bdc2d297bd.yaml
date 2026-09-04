@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:ce1a94807fe9c590216a4b993cb205393002b2495334225b140de3bdc2d297bd
+  normalized_sha256: sha256:ce1a94807fe9c590216a4b993cb205393002b2495334225b140de3bdc2d297bd
+cas_ref: sha256:ce1a94807fe9c590216a4b993cb205393002b2495334225b140de3bdc2d297bd
+coverage_gids:
+  - gid: D5/S3/Factorization/Galois/GaloisFusion.trivial_intersection_galois_product
+    target_statement_id: sha256:9c08f3f02ed5d58da3df8add8df271bb7b5930f857e253a7b62841246cdd42ee
+receipts:
+  scribe:
+    - gid: D5/S3/Factorization/Galois/GaloisFusion.trivial_intersection_galois_product
+      definition_sha256: sha256:1d9b5a1a3d629378009a6477dfe57dfaeb9512b9e67f59ae6a7272a0c02403b0
+      emission_sha256: sha256:b1e3e70c7a705e969113cb0e2c429df432c3e36faab14e7574edbd045f799d4f
+  unresolved_subitems: []

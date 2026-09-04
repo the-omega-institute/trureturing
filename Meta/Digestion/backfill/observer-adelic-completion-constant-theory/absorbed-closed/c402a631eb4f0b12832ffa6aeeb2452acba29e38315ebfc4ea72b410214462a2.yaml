@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:c402a631eb4f0b12832ffa6aeeb2452acba29e38315ebfc4ea72b410214462a2
+  normalized_sha256: sha256:c402a631eb4f0b12832ffa6aeeb2452acba29e38315ebfc4ea72b410214462a2
+cas_ref: sha256:c402a631eb4f0b12832ffa6aeeb2452acba29e38315ebfc4ea72b410214462a2
+coverage_gids:
+  - gid: D5/S3/Weil/ZetaLinear/ExactStickyReduction.exact_sticky_reduction
+    target_statement_id: sha256:2aa18f7c41e8824177fc3ff8c12414a78a0add89e6a1af4ad1cf671999db7a51
+receipts:
+  scribe:
+    - gid: D5/S3/Weil/ZetaLinear/ExactStickyReduction.exact_sticky_reduction
+      definition_sha256: sha256:97cade0e19b432ce94aee54a24cae816fc7c8ca44d909154123253c51c5ab0a5
+      emission_sha256: sha256:769ae2ec04fb698398eafa5db9e6487be4f19f896f7d85d35bf84304cf72aa56
+  unresolved_subitems: []

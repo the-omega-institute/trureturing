@@ -1,0 +1,37 @@
+## 356. 空配置与全素数配置不在同一分量
+
+空配置：
+
+$$
+\varnothing
+$$
+
+与全素数配置：
+
+$$
+\mathbb P
+$$
+
+之间有：
+
+$$
+\varnothing\triangle\mathbb P
+=
+\mathbb P,
+$$
+
+是无限集。
+
+所以二者不在同一个有限差 groupoid 分量中。
+
+因此不能用：
+
+$$
+\epsilon_{\varnothing}(\mathbb P)
+$$
+
+定义“所有素数的宇称”。
+
+但可以定义：
+
+* 从全素数配置中删除一个素数是奇变化；

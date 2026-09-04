@@ -1,0 +1,11 @@
+### 150.3 Uniform orbit is separable
+
+```lean
+theorem uniformQuartet_amplitude_det_zero :
+    Matrix.det uniformQuartetAmplitude = 0
+```
+
+该定理明确阻止“完整对称自动等于量子纠缠”的误写。
+
+---
+

@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:214ccf057d4d39cdb1bae1355a692101e1d33d9d1f18754c0232d0c9f8f7ec0d
 cas_ref: sha256:214ccf057d4d39cdb1bae1355a692101e1d33d9d1f18754c0232d0c9f8f7ec0d
 coverage_gids:
-  - D5/S3/ObserverMemory/PredictionFactors/ConditionalProbabilityProfileMinimality.conditional_probability_profile_is_minimal
+  - gid: D5/S3/ObserverMemory/PredictionFactors/ConditionalProbabilityProfileMinimality.conditional_probability_profile_is_minimal
+    target_statement_id: sha256:1d0b92d1f1b8425d0e59f962b7457adbdcd4dfee6ae434b43781763fae9bbcf1
 receipts:
-  coverage:
-    - gid: D5/S3/ObserverMemory/PredictionFactors/ConditionalProbabilityProfileMinimality.conditional_probability_profile_is_minimal
-      source_sha256: sha256:214ccf057d4d39cdb1bae1355a692101e1d33d9d1f18754c0232d0c9f8f7ec0d
-      target_statement_id: sha256:1d0b92d1f1b8425d0e59f962b7457adbdcd4dfee6ae434b43781763fae9bbcf1
   scribe:
     - gid: D5/S3/ObserverMemory/PredictionFactors/ConditionalProbabilityProfileMinimality.conditional_probability_profile_is_minimal
       definition_sha256: sha256:01e8c6482170c957ff2445018af5d6642800406a2bbe52629260691acc5f95e8

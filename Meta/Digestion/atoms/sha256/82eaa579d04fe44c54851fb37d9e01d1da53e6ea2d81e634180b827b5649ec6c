@@ -1,0 +1,45 @@
+## 148. RH 的 homotopy transport criterion
+
+设：
+
+$$
+F_\tau(s),
+\qquad
+0\le\tau\le1,
+$$
+
+满足：
+
+$$
+F_\tau(1-\overline s)
+=
+\overline{F_\tau(s)}.
+$$
+
+固定有限区域 \(\Omega\)，并假设：
+
+1. \(F_0\) 在 \(\Omega\) 内所有零点都位于临界线；
+2. 全部这些零点沿 \(\tau\) 保持简单；
+3. 没有零点穿过 \(\partial\Omega\)；
+4. 零点总数按重数保持不变；
+5. family 对 \((\tau,s)\) 连续并对 \(s\) 解析。
+
+则每个零点 branch 都始终位于临界线，所以：
+
+$$
+F_1
+$$
+
+在 \(\Omega\) 内也满足 RH 型定位。
+
+仓库的 simple-zero fixed-axis theorem已经关闭了这一准则的局部核心：反射协变的简单固定零点局部不能离开固定轴。
+
+全局化真正缺少的是：
+
+* branch continuation；
+* 边界零点控制；
+* uniform simplicity；
+* 无限高度极限。
+
+---
+

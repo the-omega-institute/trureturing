@@ -1,0 +1,11 @@
+* 两侧分别对应不同类型的谱缺陷。
+
+仓库当前已有一个 Li 曲率模块，但其公开接口把完整 `liCriterion : RH ↔ ∀ n, 0 ≤ liCoefficient n` 作为输入；与此同时，`LiHausdorffMoments` 和 `CompleteMonotonicityRHCriterion` 仍出现在规划层，而不是已找到的完整 owner。
+
+因此仓库适合同时落地：
+
+1. 低风险的 Li 偶奇重组定理；
+2. 更深的 Casimir E-RH/O-RH 主理论。
+
+---
+

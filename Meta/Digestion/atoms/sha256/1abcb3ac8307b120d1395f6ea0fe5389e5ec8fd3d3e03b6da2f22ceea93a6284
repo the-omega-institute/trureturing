@@ -1,0 +1,13 @@
+## 271. 第三阶范数壳
+
+```lean
+theorem third_order_golden_energy_norms :
+    normGolden (phi ^ 2) = 1 ∧
+    normGolden (phi ^ 3) = -1 ∧
+    normGolden (2 * phi ^ 2) = 4 ∧
+    normGolden (2 * phi ^ 3) = -4 ∧
+    normGolden (2 * phi ^ 2 + phi ^ 3) = 5
+```
+
+---
+

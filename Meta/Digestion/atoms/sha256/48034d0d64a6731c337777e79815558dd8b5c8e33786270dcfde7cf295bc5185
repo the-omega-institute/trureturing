@@ -1,0 +1,45 @@
+## 238. Fredholm determinant 需要核范数
+
+若：
+
+$$
+K\in\mathcal S_1
+$$
+
+是 trace-class 算子，并令：
+
+$$
+K_n=P_nKP_n,
+$$
+
+那么要得到：
+
+$$
+\det(I-zK_n)
+\longrightarrow
+\det(I-zK)
+$$
+
+在紧集上一致收敛，通常需要：
+
+$$
+\boxed{
+\|K_n-K\|_1\to0.
+}
+$$
+
+只有强算子收敛：
+
+$$
+K_nx\to Kx
+$$
+
+远远不够。
+
+这对仓库中的有限 Weil 矩阵、有限零点窗和有限 observer tower 是一个决定性纪律：
+
+> **有限子空间已经共尾，并不自动说明相应 finite determinants 会收敛到 completed \(\xi\)。**
+
+还必须控制：
+
+* trace norm；

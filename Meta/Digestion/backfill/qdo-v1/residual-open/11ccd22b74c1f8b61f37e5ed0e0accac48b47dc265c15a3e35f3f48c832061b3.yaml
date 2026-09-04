@@ -4,6 +4,9 @@ fingerprints:
 cas_ref: sha256:11ccd22b74c1f8b61f37e5ed0e0accac48b47dc265c15a3e35f3f48c832061b3
 coverage_gids: []
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: Whole-clause coverage is blocked after partial retrieval. The canonical general observerDistance in RefinementDistanceMonotonicity constructs distance only from the observable family, cost, and evaluation; frozen D5 owners AnchoredObserverDistanceInvariance, ObserverHorizonRefinement, PermutationOrbitHorizon, and AsymmetricPermutationDistances cover nearby structural and permutation-orbit facts, but none gives formal predicates for the source clauses verbatim `同一载体上两个观察者的视界一般不同`, `流线型 / 中心型无穷远`, and `此路径语言不外推到一般模型`. D5 searches for observer horizon, topology independence, unequal horizons, finite distance, path bounds, and Connes hit those partial owners and no whole theorem. Pinned Mathlib searches for Connes, observerDistance, horizonSet, observer horizon, signed orbit, and orbit complement hit only a generic permutation-orbit complement lemma. GitHub Lean code searches for `observer horizon`, `Connes distance` with horizon, and observerDistance with topology returned zero results. A local statement decomposition can apply PermutationOrbitHorizon to the signed bookkeeping-step bound, but cannot state or prove the three quoted clauses without inventing meanings the source does not define. The later erratum at section 43.2 records that section 42.10's displayed telescope does not join the stated endpoints when n < 0; swapping endpoints repairs the proof and leaves its conclusion unchanged.
+    reentry_condition: Define source-sanctioned predicates for the qualitative two-observer comparison, the two named kinds of Connes infinity, and the boundary between permutation path language and general models; then prove them together with the observable-family dependence and signed-orbit bound as public clauses of one theorem.
+    blocker_class: multi-clause-guard

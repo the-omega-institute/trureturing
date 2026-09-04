@@ -1,0 +1,36 @@
+## 121. 精确 RH 是逆极限命题
+
+对固定有限窗：
+
+$$
+\forall N,\quad
+\mathrm{RH}_{T,N}
+$$
+
+当且仅当该窗内所有零点精确在线。
+
+进一步：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\forall T>0,\forall N,\quad
+\mathrm{RH}_{T,N}.
+}
+$$
+
+所以绝对 RH 是全部高度和全部分辨率观察的逆极限。
+
+这解释了：
+
+$$
+\boxed{
+\text{RH 的真值是内禀的，}
+\qquad
+\text{任何有限 RH 判断都是相对的}.
+}
+$$
+
+---
+

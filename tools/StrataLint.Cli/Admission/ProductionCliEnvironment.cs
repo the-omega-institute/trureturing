@@ -259,7 +259,7 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 {
                     var current = Decode(repository.ReadCurrent());
                     var baseline = Decode(repository.ReadRevision(prepared.Revision));
-                    // fork point 只需树,不需要 Lean report:append-only 保留性检查比的是文件字节。
+                    // Fork-point consumers compare repository structure and ledger bytes, not Lean facts.
                     var forkPoint = string.Equals(
                         prepared.ChangeBase,
                         prepared.Revision,
@@ -508,13 +508,6 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
         }
     }
 
-    public CommandResult EmitFormalizationReceipt(IReadOnlyList<string> arguments) =>
-        EmitFormalizationReceiptCommand.Run(
-            repositoryRoot,
-            repository,
-            leanReportSource,
-            arguments);
-
     public CommandResult Route(IReadOnlyList<string> arguments)
     {
         try
@@ -600,7 +593,7 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
             if (route is not RouteOutcome.Routed routed
                 || routed.Result.Gid.Value != "D5/S0/Carrier/Probe"
                 || routed.Result.Path.Value != "D5/S0/Carrier/Probe.lean"
-                || RuleCatalog.Default.Descriptors.Length != 29)
+                || RuleCatalog.Default.Descriptors.Length != 25)
             {
                 return new CommandResult(false, string.Empty, "SELFTEST FAIL invariant mismatch\n");
             }

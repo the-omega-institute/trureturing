@@ -1,0 +1,58 @@
+## 92. Minkowski 坐标变换
+
+令：
+
+$$
+K=\mathbb Q(\sqrt5),
+\qquad
+\mathcal O_K=\mathbb Z[\varphi].
+$$
+
+在基：
+
+$$
+1,\varphi
+$$
+
+下，两个实嵌入的矩阵为：
+
+$$
+B=
+\begin{pmatrix}
+1&\varphi\\
+1&\psi
+\end{pmatrix}.
+$$
+
+其行列式：
+
+$$
+\det B
+=
+\psi-\varphi
+=
+-\sqrt5.
+$$
+
+所以从整数系数坐标：
+
+$$
+(a,b)
+$$
+
+变到：
+
+$$
+(a+b\varphi,\ a+b\psi)
+$$
+
+时，坐标体积改变：
+
+$$
+\boxed{
+|\det B|=\sqrt5.
+}
+$$
+
+---
+

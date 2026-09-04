@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:47492521d8f7db327f09fa2fbd1d52cbfcad14117e94d5e5ebc0c482c917735a
 cas_ref: sha256:47492521d8f7db327f09fa2fbd1d52cbfcad14117e94d5e5ebc0c482c917735a
 coverage_gids:
-  - D5/S3/ConceptDynamics/Aggregation/SymmetricTieImpossibility.symmetric_tie_impossibility
+  - gid: D5/S3/ConceptDynamics/Aggregation/SymmetricTieImpossibility.symmetric_tie_impossibility
+    target_statement_id: sha256:f007f8a8fd2e1185a87c7c09f13b60b3a5734349697a3235be03c7c6e39ab347
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Aggregation/SymmetricTieImpossibility.symmetric_tie_impossibility
-      source_sha256: sha256:47492521d8f7db327f09fa2fbd1d52cbfcad14117e94d5e5ebc0c482c917735a
-      target_statement_id: sha256:f007f8a8fd2e1185a87c7c09f13b60b3a5734349697a3235be03c7c6e39ab347
   scribe:
     - gid: D5/S3/ConceptDynamics/Aggregation/SymmetricTieImpossibility.symmetric_tie_impossibility
       definition_sha256: sha256:bada443d425144e9cc26a1fe65bc9930e08fbaf9d87dfc4e1a5096a0531d1afa

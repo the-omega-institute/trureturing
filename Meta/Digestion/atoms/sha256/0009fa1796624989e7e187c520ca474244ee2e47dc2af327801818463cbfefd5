@@ -1,0 +1,22 @@
+* 或等价的无界状态。
+
+所以与 Fibonacci 的区别不是：
+
+$$
+\text{决定论}
+\quad\text{对}\quad
+\text{随机性},
+$$
+
+而是：
+
+$$
+\boxed{
+\text{有限维闭合}
+\quad\text{对}\quad
+\text{无界状态闭合}.
+}
+$$
+
+---
+

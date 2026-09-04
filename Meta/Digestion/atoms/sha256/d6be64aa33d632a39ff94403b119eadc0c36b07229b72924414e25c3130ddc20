@@ -1,0 +1,30 @@
+## 37. Zeckendorf index 奇偶
+
+$$
+\psi^k=(-1)^k\varphi^{-k}.
+$$
+
+这来自黄金共轭。
+
+这些都是 \(C_2\) 表示，但它们并不自动是同一个对象。
+
+真正的统一需要构造一个 intertwiner：
+
+$$
+U
+$$
+
+使：
+
+$$
+\boxed{
+U P_{\mathrm{internal}}
+=
+J_{\mathrm{external}}U.
+}
+$$
+
+只有证明这个交换图，才能说一种奇偶编码真正对应另一种奇偶结构。
+
+---
+

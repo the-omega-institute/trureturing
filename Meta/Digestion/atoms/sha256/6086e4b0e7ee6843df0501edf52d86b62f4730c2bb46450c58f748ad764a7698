@@ -1,0 +1,50 @@
+## 106. 四元组又回到纯 cosine
+
+对：
+
+$$
+H_4=\{0,2,6,8\},
+$$
+
+中心为 \(4\)，有：
+
+$$
+S_{H_4}(\theta)
+=
+e^{-4i\theta}
++
+e^{-2i\theta}
++
+e^{2i\theta}
++
+e^{4i\theta}.
+$$
+
+所以：
+
+$$
+\boxed{
+S_{H_4}(\theta)
+=
+2\cos4\theta+2\cos2\theta.
+}
+$$
+
+因此得到严格的构型角色表：
+
+$$
+\boxed{
+\begin{array}{c|c|c}
+\text{构型}&\text{connected order}&\text{Fourier parity}\\
+\hline
+\text{twin}&2&\text{even/cosine}\\
+\text{triplet chirality}&3&\text{odd/sine}\\
+\text{quadruplet}&4&\text{even/cosine}
+\end{array}
+}
+$$
+
+这比单纯说“二点、三点、四点”更完整：还必须给出其反射角色。
+
+---
+
