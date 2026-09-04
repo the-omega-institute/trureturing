@@ -1,0 +1,550 @@
+name: One-shot append mirror Krein theory
+
+on:
+  push:
+    branches:
+      - lane/math/rh-canonical-zero-data-nonvacuity-20260903
+
+permissions:
+  contents: write
+
+concurrency:
+  group: one-shot-append-mirror-krein-theory
+  cancel-in-progress: false
+
+jobs:
+  append-and-remove:
+    if: github.repository == 'the-omega-institute/trureturing'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: lane/math/rh-canonical-zero-data-nonvacuity-20260903
+
+      - name: Append theory section idempotently
+        run: |
+          set -euo pipefail
+          python3 <<'PY'
+          from pathlib import Path
+
+          path = Path('docs/develop/theory/RH_RESEARCH_LANE_THEORY.md')
+          marker = '## [PR #5065] MIRROR_KREIN_OPERATOR_GEOMETRY'
+          appendix = r'''
+
+---
+
+## [PR #5065] MIRROR_KREIN_OPERATOR_GEOMETRY
+
+# 真实 zeta 零点的镜像 Krein 几何
+
+**候选 GID：**
+
+```text
+D5/S3/Weil/ZetaBridge/ZeroDataPresentationEquiv
+D5/S3/Midline/Cayley/CanonicalZetaMirrorFundamentalSymmetry
+D5/S3/Midline/Cayley/CanonicalZetaCayleyJUnitary
+D5/S3/Midline/Cayley/FiniteMirrorKreinIndex
+```
+
+本增补建立在同一 PR 已构造的无参数 `zetaZeroData : ZeroData` 上。新节点把真实非平凡 zeta 零点的函数方程反射、复共轭、解析重数、Cayley 坐标和有限窗口组织成一套不定内积几何。
+
+在 admission 完成以前，本节结论属于 Candidate。Lean 文件仍是唯一承重真源。
+
+## 1. `ZeroData` 是 canonical-up-to-reindexing 的 presentation
+
+任意 `ZeroData` 值 `Z` 都是全部非平凡 zeta 零点的无重复、穷尽、重数忠实自然数 presentation。已有 `zeroEquiv Z` 将它与真实零点子类型等价。
+
+新节点公开定义唯一的零点保持重标号：
+
+\[
+e_{Z,Z'}:\mathbb N\simeq\mathbb N,
+\qquad
+Z'.\operatorname{zero}(e_{Z,Z'}n)=Z.\operatorname{zero}(n).
+\]
+
+如果另一等价 `e` 满足同一个零点保持条件，则：
+
+\[
+\boxed{e=e_{Z,Z'}.}
+\]
+
+该重标号同时保持：
+
+\[
+\begin{aligned}
+&\text{analytic multiplicity},\\
+&\text{spectral parameter},\\
+&\text{functional-equation reflection},\\
+&\text{complex conjugation},\\
+&\text{same-height mirror}.
+\end{aligned}
+\]
+
+并满足 identity、inverse 与 composition laws。因此 `zetaZeroData` 的自然数编号属于 presentation 选择，而零点、重数、对称作用以及沿唯一重标号运输的观察量具有 canonical 内容。
+
+## 2. 同高度镜像是临界线的内在 involution
+
+令：
+
+\[
+R_Z(n)=\operatorname{reflection}(n),
+\qquad
+C_Z(n)=\operatorname{conjugation}(n),
+\]
+
+并定义：
+
+\[
+\boxed{M_Z=C_Z\circ R_Z.}
+\]
+
+其复平面作用为：
+
+\[
+\boxed{
+Z.\operatorname{zero}(M_Zn)
+=1-\overline{Z.\operatorname{zero}(n)}.
+}
+\]
+
+机器节点证明：
+
+\[
+M_Z^2=I,
+\qquad
+m_{M_Zn}=m_n,
+\qquad
+\gamma_{M_Zn}=\overline{\gamma_n}.
+\]
+
+最重要的固定点判据是：
+
+\[
+\boxed{
+M_Zn=n
+\iff
+\operatorname{Re}\rho_n=\frac12.
+}
+\]
+
+所以 RH 的局部几何对象不是任意选择的“对角线”。它是函数方程和实结构预先确定的 involution 之固定集合。
+
+## 3. multiplicity-expanded 镜像 fundamental symmetry
+
+定义零点坐标类型：
+
+\[
+\mathcal I_Z
+=
+\sum_{n:\mathbb N}\operatorname{Fin}(m_n).
+\]
+
+因为镜像保持解析重数，`M_Z` 提升为：
+
+\[
+\widetilde M_Z:\mathcal I_Z\simeq\mathcal I_Z.
+\]
+
+在：
+
+\[
+\mathcal H_Z=\ell^2(\mathcal I_Z)
+\]
+
+上，利用仓库已有的可逆地址更新构造：
+
+\[
+\boxed{
+J_Z\psi(v)=\psi(\widetilde M_Zv).
+}
+\]
+
+机器节点证明：
+
+\[
+\boxed{J_Z^2=I,}
+\]
+
+以及内积形式的自伴随性：
+
+\[
+\boxed{
+\langle J_Z\psi,\phi\rangle
+=
+\langle\psi,J_Z\phi\rangle.
+}
+\]
+
+`J_Z` 本身由 `LinearIsometryEquiv` 给出，因此同时是酉、self-adjoint 和 involutive。它是该零点空间上的 fundamental symmetry。
+
+由此定义 Krein 型不定内积：
+
+\[
+\boxed{
+[\psi,\phi]_{J_Z}
+=
+\langle\psi,J_Z\phi\rangle.
+}
+\]
+
+## 4. 每个非固定镜像坐标产生严格负方向
+
+对一个被镜像移动的坐标 `v`，定义其奇向量：
+
+\[
+v_-
+=e_v-J_Ze_v.
+\]
+
+机器节点证明：
+
+\[
+J_Zv_-=-v_-,
+\qquad
+v_-\ne0,
+\]
+
+并且：
+
+\[
+\boxed{
+[v_-,v_-]_{J_Z}
+=-\lVert v_-\rVert^2<0.
+}
+\]
+
+所以非固定镜像轨道不是抽象的“离线标签”。它在实际 multiplicity-expanded Hilbert presentation 中给出一个显式的负方向。
+
+临界线固定点只进入镜像偶扇区。离线二元镜像轨道同时产生偶、奇扇区，奇扇区承担负号。
+
+## 5. Cayley 算子无条件保持镜像 Krein 内积
+
+现有 Cayley 系数为：
+
+\[
+c(\rho)=\frac{\rho-1}{\rho}.
+\]
+
+已有镜像坐标真源给出：
+
+\[
+\boxed{
+c(1-\overline\rho)=\overline{c(\rho)}^{-1}.}
+\]
+
+设 `U_Z` 是 multiplicity-expanded 零点空间上的对角 Cayley 算子。新节点首先证明逐坐标关系：
+
+\[
+\overline{c(\rho_n)}\,c(\rho_{M_Zn})=1.
+\]
+
+随后把该关系沿 `lp.inner_eq_tsum` 求和，得到：
+
+\[
+\boxed{
+[U_Z\psi,U_Z\phi]_{J_Z}
+=[\psi,\phi]_{J_Z}.
+}
+\]
+
+等价的算子恒等式为：
+
+\[
+\boxed{
+U_Z^*J_ZU_Z=J_Z.
+}
+\]
+
+对无参数真实实例得到：
+
+\[
+\boxed{
+U_\zeta^*J_\zeta U_\zeta=J_\zeta.
+}
+\]
+
+这给出新的结构分层：
+
+\[
+\boxed{
+\begin{aligned}
+\text{函数方程与共轭对称}
+&\Longrightarrow J\text{-unitarity},\\
+\text{全部镜像轨道固定}
+&\Longrightarrow J=I,\\
+J=I
+&\Longrightarrow \text{ordinary unitarity}.
+\end{aligned}
+}
+\]
+
+第一行无条件成立。后两行描述临界退化。不能从 `J`-unitarity 单独推出 RH。
+
+## 6. 有限镜像 Krein 指数
+
+对有限对称谱窗口：
+
+\[
+S_T=Z.\operatorname{symmetricIndices}(T),
+\]
+
+镜像保持 `S_T`。每个非固定二元轨道选取较小的自然数代表：
+
+\[
+\mathcal R_T
+=
+\{n\in S_T:n<M_Zn\}.
+\]
+
+定义：
+
+\[
+\boxed{
+\kappa_T
+=
+\sum_{n\in\mathcal R_T}m_n.
+}
+\]
+
+并定义有限奇坐标类型：
+
+\[
+\mathcal I_T^-
+=
+\sum_{n\in\mathcal R_T}\operatorname{Fin}(m_n).
+\]
+
+机器节点证明：
+
+\[
+\boxed{
+\#\mathcal I_T^-=\kappa_T.
+}
+\]
+
+在该坐标空间上定义标准负型：
+
+\[
+Q_T^-(v)
+=-\sum_{i\in\mathcal I_T^-}|v_i|^2.
+\]
+
+于是：
+
+\[
+\boxed{
+v\ne0\Longrightarrow Q_T^-(v)<0.}
+\]
+
+所以 `kappa_T` 是一个已经显式构造的严格负扇区维数。
+
+## 7. 有限窗口的临界线等价
+
+新节点闭合：
+
+\[
+\boxed{
+\begin{aligned}
+\kappa_T=0
+&\iff \mathcal R_T=\varnothing\\
+&\iff M_Zn=n\quad\forall n\in S_T\\
+&\iff \operatorname{Re}\rho_n=\frac12
+       \quad\forall n\in S_T.
+\end{aligned}
+}
+\]
+
+同时：
+
+\[
+\boxed{
+\kappa_T>0
+\iff
+\exists n\in S_T,
+\quad\operatorname{Re}\rho_n\ne\frac12.
+}
+\]
+
+因此有限镜像指数是离线零点在该窗口中的 faithful detector。它不会因为镜像两端的符号抵消而消失，因为每个二元轨道只选一次，并对 multiplicity 求和。
+
+## 8. 与“反射负平方”的关系
+
+在一个非固定镜像对的原始基中，反射径向生成元具有标准形：
+
+\[
+A_a=
+\begin{pmatrix}
+a&0\\0&-a
+\end{pmatrix}.
+\]
+
+在偶奇基中，同一个生成元变成：
+
+\[
+A_a^{\mathrm{parity}}
+=
+\begin{pmatrix}
+0&a\\a&0
+\end{pmatrix}.
+\]
+
+所以一阶破缺表现为偶、奇扇区之间的 coupling，而：
+
+\[
+-A_a^2=-a^2I
+\]
+
+给出二阶负平方记账。本轮 `J` 与奇扇区形式化，使此前通用的 reflected-growth 模型第一次接到无参数真实 zeta 零点 presentation。
+
+完整 `CayleyRadialBlockIntertwiner` 仍应作为独立下一节点证明，不在本轮借定义冒充。
+
+## 9. 当前严格边界
+
+本轮已经形式化：
+
+1. 任意两个 `ZeroData` presentation 之间唯一的零点保持重标号；
+2. 该重标号对解析重数、反射、共轭和镜像等变；
+3. 镜像在 multiplicity-expanded `ell^2` 上的 involutive self-adjoint isometry；
+4. 每个非固定坐标产生显式严格负奇向量；
+5. 零点 Cayley 算子的无条件 `J`-unitarity；
+6. 每个有限窗口中显式负扇区的精确维数；
+7. 有限指数为零与窗口内全部零点临界的等价。
+
+本轮没有证明：
+
+- 当前自然数枚举按高度排序或可计算；
+- `kappa_T` 已经等于任意外部 Pick、Weil 或 sampled-Gram 矩阵的负特征值数；
+- `J`-unitarity 蕴含普通 unitarity；
+- prime-side 构造已经收敛到 `U_zeta` 或 `J_zeta`；
+- 全局无限维负指标已经定义为 Fredholm/Krein 指标；
+- RH。
+
+## 10. 下一批承重节点
+
+### P0. `CanonicalZetaMirrorFiniteMatrix`
+
+在 `S_T` 的 multiplicity-expanded 有限坐标上构造实际 permutation matrix `J_T`，证明：
+
+\[
+J_T^*=J_T,
+\qquad
+J_T^2=I,
+\]
+
+以及其 `RHLinalg.negIndex` 精确等于本轮 `kappa_T`。
+
+### P0. `CayleyRadialBlockIntertwiner`
+
+对每个镜像对，把 Cayley block 精确变换到 parity 基：
+
+\[
+U_{\mathrm{pair}}
+=e^{i\theta}
+\begin{pmatrix}
+\cosh a&\sinh a\\
+\sinh a&\cosh a
+\end{pmatrix}.
+\]
+
+该节点将 `logarithmicRadialDefect`、reflected growth、负平方和 `J`-unitarity 接成同一个 block theorem。
+
+### P1. `FiniteMirrorOddChannelInterpolationSurjective`
+
+把允许的 Weil 测试函数评价映射证明为对有限奇扇区满秩，从而将：
+
+\[
+\kappa_T
+\]
+
+运输成真实有限 Weil Gram 的 negative-square index。
+
+### P1. `CanonicalZeroOperatorPresentationInvariance`
+
+利用 `zeroDataPresentationEquiv` 构造 Hilbert-space 线性等距等价，证明 `J_Z`、Cayley operator、有限指数和后续谱对象在重标号下酉等价。
+
+### P2. `CayleyRapidityTraceClassDefect`
+
+证明 Cayley radial rapidity 的加权可和性或平方可和性，并构造全局正破缺能量：
+
+\[
+\mathcal E_{\mathrm{rad}}
+=
+\sum_nm_na_n^2.
+\]
+
+其目标判据为：
+
+\[
+\mathrm{RH}
+\iff
+\mathcal E_{\mathrm{rad}}=0.
+\]
+
+## 11. 更新后的主结构
+
+```text
+Unconditional zetaZeroData
+        |
+        v
+ZeroDataPresentationEquiv
+        |
+        v
+Same-height mirror involution
+        |
+        +------------------------------+
+        |                              |
+        v                              v
+Mirror fundamental symmetry J     Finite pair representatives
+        |                              |
+        v                              v
+Explicit odd negative vectors      finite kappa_T
+        |                              |
+        +---------------+--------------+
+                        |
+                        v
+              finite negative sector
+                        |
+                        v
+Zero Cayley operator U* J U = J
+                        |
+             +----------+----------+
+             |                     |
+             v                     v
+Cayley radial block          Weil/Pick odd-channel transport
+             |                     |
+             +----------+----------+
+                        |
+                        v
+      prime-side construction and coercive comparison
+```
+
+本轮最凝练的理论结论是：
+
+\[
+\boxed{
+\text{函数方程无条件给出不定度量中的守恒，}
+\quad
+\text{临界线条件要求该不定几何的负扇区逐层消失。}
+}
+'''
+
+          text = path.read_text(encoding='utf-8')
+          if marker not in text:
+              if not text.endswith('\n'):
+                  text += '\n'
+              path.write_text(text + appendix.lstrip('\n'), encoding='utf-8')
+          PY
+
+      - name: Commit theory and remove one-shot workflow
+        run: |
+          set -euo pipefail
+          git config user.name "Lexa"
+          git config user.email "50111876+AlyciaBHZ@users.noreply.github.com"
+          git rm .github/workflows/one-shot-append-mirror-krein-theory.yml
+          git add docs/develop/theory/RH_RESEARCH_LANE_THEORY.md
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "theory: append mirror Krein operator geometry"
+          git push origin HEAD:lane/math/rh-canonical-zero-data-nonvacuity-20260903
