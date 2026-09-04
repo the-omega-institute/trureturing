@@ -64,7 +64,19 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeArenas/FourthFifthArenas
 
 The arena packages BinaryInterpretationContext, contextSignature, and the anchor law separating the selected parameters and meanings.
 
-**Definition 1.6 (Causal-model finite instance).**
+**Theorem 1.6 (The contextArena state space is nondegenerate).**
+
+$$\operatorname{Nondegenerate}(\operatorname{toArena}(contextArena))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeArenas/FourthFifthArenas.contextArena_nondegenerate` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The finite arena contains at least two distinct states.
+
+**Definition 1.7 (Causal-model finite instance).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscapeArenas/FourthFifthArenas.modelFintype`
 
@@ -76,7 +88,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeArenas/FourthFifthArenas
 
 A finite instance obtained through a private equivalence.
 
-**Definition 1.7 (Causal-model decidable equality).**
+**Definition 1.8 (Causal-model decidable equality).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscapeArenas/FourthFifthArenas.modelDecidableEq`
 
@@ -88,7 +100,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeArenas/FourthFifthArenas
 
 A decidable-equality instance obtained through a private equivalence.
 
-**Definition 1.8 (Causal-model readout indices).**
+**Definition 1.9 (Causal-model readout indices).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscapeArenas/FourthFifthArenas.ModelReadout`
 
@@ -100,7 +112,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeArenas/FourthFifthArenas
 
 The readout index type separates intervention behavior from counterfactual behavior.
 
-**Definition 1.9 (Intervention signature).**
+**Definition 1.10 (Intervention signature).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscapeArenas/FourthFifthArenas.interventionSignature`
 
@@ -112,7 +124,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeArenas/FourthFifthArenas
 
 The typed signature assigns the Int and CF function types to the two CUT readouts on DeterministicBoolSCM.
 
-**Definition 1.10 (Intervention and counterfactual arena).**
+**Definition 1.11 (Intervention and counterfactual arena).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscapeArenas/FourthFifthArenas.interventionArena`
 
@@ -124,15 +136,29 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeArenas/FourthFifthArenas
 
 The arena packages DeterministicBoolSCM and requires two models with equal intervention readouts and unequal counterfactual readouts.
 
+**Theorem 1.12 (The interventionArena state space is nondegenerate).**
+
+$$\operatorname{Nondegenerate}(\operatorname{toArena}(interventionArena))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeArenas/FourthFifthArenas.interventionArena_nondegenerate` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The finite arena contains at least two distinct states.
+
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/FourthFifthArenas.ContextReadout`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/FourthFifthArenas.ModelReadout`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/FourthFifthArenas.contextArena`
+- Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/FourthFifthArenas.contextArena_nondegenerate`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/FourthFifthArenas.contextDecidableEq`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/FourthFifthArenas.contextFintype`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/FourthFifthArenas.contextSignature`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/FourthFifthArenas.interventionArena`
+- Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/FourthFifthArenas.interventionArena_nondegenerate`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/FourthFifthArenas.interventionSignature`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/FourthFifthArenas.modelDecidableEq`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/FourthFifthArenas.modelFintype`

@@ -80,6 +80,9 @@ def agendaPowerArena : PrimitiveLawArena where
       r.readout .valid agenda = true ∧ r.readout .valid agenda' = true ∧
         agenda ≠ agenda' ∧ r.readout .winner agenda ≠ r.readout .winner agenda'
 
+theorem agendaPowerArena_nondegenerate : agendaPowerArena.toArena.Nondegenerate := by
+  decide
+
 end AgendaSource
 
 section ResidueSource
@@ -131,6 +134,9 @@ def residueArena : PrimitiveLawArena where
     adaptiveDepthFor r = 2 ∧ staticDepthFor r = 3 ∧
     adaptiveDepthFor r < staticDepthFor r
 
+theorem residueArena_nondegenerate : residueArena.toArena.Nondegenerate := by
+  decide
+
 end ResidueSource
 
 section SpectrumSource
@@ -152,6 +158,9 @@ def spectrumArena : PrimitiveLawArena where
   toArena := Arena.ofFintype SpectrumAtom
   signature := spectrumSignature
   Law := fun r => Function.Bijective (r.readout ())
+
+theorem spectrumArena_nondegenerate : spectrumArena.toArena.Nondegenerate := by
+  decide
 
 end SpectrumSource
 

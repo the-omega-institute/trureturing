@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.InformationEscapeArenas;
 
@@ -23,6 +25,7 @@ internal sealed class FourthFifthArenasDocument : IScribeDocumentDefinition
             DefinitionNode("context-arena", "contextArena",
                 "Context-selected fixed-meaning arena",
                 "The arena packages BinaryInterpretationContext, contextSignature, and the anchor law separating the selected parameters and meanings."),
+            NondegenerateNode("context-arena-nondegenerate", "contextArena"),
             DefinitionNode("model-fintype", "modelFintype", "Causal-model finite instance",
                 "A finite instance obtained through a private equivalence."),
             DefinitionNode("model-decidable-equality", "modelDecidableEq",
@@ -35,7 +38,8 @@ internal sealed class FourthFifthArenasDocument : IScribeDocumentDefinition
                 "The typed signature assigns the Int and CF function types to the two CUT readouts on DeterministicBoolSCM."),
             DefinitionNode("intervention-arena", "interventionArena",
                 "Intervention and counterfactual arena",
-                "The arena packages DeterministicBoolSCM and requires two models with equal intervention readouts and unequal counterfactual readouts."))));
+                "The arena packages DeterministicBoolSCM and requires two models with equal intervention readouts and unequal counterfactual readouts."),
+            NondegenerateNode("intervention-arena-nondegenerate", "interventionArena"))));
 
     private static DocumentBlock.Describe DefinitionNode(
         string id, string declaration, string title, string paragraph) =>
@@ -47,4 +51,18 @@ internal sealed class FourthFifthArenasDocument : IScribeDocumentDefinition
             AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(paragraph))),
             DescribeRole.Definition);
+
+    private static DocumentBlock.Describe NondegenerateNode(string id, string arena) =>
+        Describe.Lean(
+            DescribeId.Create(id),
+            DeclarationHandle.Create(Prefix + arena + "_nondegenerate"),
+            H("The " + arena + " state space is nondegenerate"),
+            StatementSource.FromAuthor(Disp(Seq(
+                Operatorname, Grp(F.Id("Nondegenerate")), Open,
+                Operatorname, Grp(F.Id("toArena")), Open, F.Id(arena), Close,
+                Close))),
+            AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(
+                "The finite arena contains at least two distinct states."))),
+            DescribeRole.Theorem);
 }

@@ -52,7 +52,19 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeArenas/FirstThreeArenas.
 
 The arena packages the finite Agenda state, agendaPowerSignature, and the realization law asserting all winners plus a separating valid pair.
 
-**Definition 1.5 (Adaptive depth).**
+**Theorem 1.5 (The agendaPowerArena state space is nondegenerate).**
+
+$$\operatorname{Nondegenerate}(\operatorname{toArena}(agendaPowerArena))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeArenas/FirstThreeArenas.agendaPowerArena_nondegenerate` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The finite arena contains at least two distinct states.
+
+**Definition 1.6 (Adaptive depth).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscapeArenas/FirstThreeArenas.adaptiveDepthFor`
 
@@ -64,7 +76,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeArenas/FirstThreeArenas.
 
 The noncomputable depth helper selects the least exact adaptive depth when one exists and returns zero otherwise.
 
-**Definition 1.6 (Static depth).**
+**Definition 1.7 (Static depth).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscapeArenas/FirstThreeArenas.staticDepthFor`
 
@@ -76,7 +88,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeArenas/FirstThreeArenas.
 
 The noncomputable depth helper selects the least exact static cardinality when one exists and returns zero otherwise.
 
-**Definition 1.7 (Residue signature).**
+**Definition 1.8 (Residue signature).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscapeArenas/FirstThreeArenas.residueSignature`
 
@@ -88,7 +100,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeArenas/FirstThreeArenas.
 
 The typed signature exposes each residue sensor as a Boolean CUT readout on ResidueState.
 
-**Definition 1.8 (Adaptive residue arena).**
+**Definition 1.9 (Adaptive residue arena).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscapeArenas/FirstThreeArenas.residueArena`
 
@@ -100,7 +112,19 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeArenas/FirstThreeArenas.
 
 The arena packages the residue readouts, their exact fibers, an injective two-step protocol, the lower bounds, and the adaptive-versus-static depth comparison.
 
-**Definition 1.9 (Spectrum signature).**
+**Theorem 1.10 (The residueArena state space is nondegenerate).**
+
+$$\operatorname{Nondegenerate}(\operatorname{toArena}(residueArena))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeArenas/FirstThreeArenas.residueArena_nondegenerate` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The finite arena contains at least two distinct states.
+
+**Definition 1.11 (Spectrum signature).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscapeArenas/FirstThreeArenas.spectrumSignature`
 
@@ -112,7 +136,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeArenas/FirstThreeArenas.
 
 The typed signature exposes the spectrum atom index as one five-valued CUT readout.
 
-**Definition 1.10 (Spectrum atom arena).**
+**Definition 1.12 (Spectrum atom arena).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscapeArenas/FirstThreeArenas.spectrumArena`
 
@@ -124,16 +148,31 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeArenas/FirstThreeArenas.
 
 The arena packages SpectrumAtom with the signature and requires the sole readout to be bijective.
 
+**Theorem 1.13 (The spectrumArena state space is nondegenerate).**
+
+$$\operatorname{Nondegenerate}(\operatorname{toArena}(spectrumArena))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeArenas/FirstThreeArenas.spectrumArena_nondegenerate` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The finite arena contains at least two distinct states.
+
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/FirstThreeArenas.AgendaReadout`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/FirstThreeArenas.adaptiveDepthFor`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/FirstThreeArenas.agendaFintype`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/FirstThreeArenas.agendaPowerArena`
+- Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/FirstThreeArenas.agendaPowerArena_nondegenerate`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/FirstThreeArenas.agendaPowerSignature`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/FirstThreeArenas.residueArena`
+- Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/FirstThreeArenas.residueArena_nondegenerate`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/FirstThreeArenas.residueSignature`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/FirstThreeArenas.spectrumArena`
+- Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/FirstThreeArenas.spectrumArena_nondegenerate`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/FirstThreeArenas.spectrumSignature`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/FirstThreeArenas.staticDepthFor`
 - Dependency: [D5/S3/ConceptDynamics/Aggregation/AgendaPower](../Aggregation/AgendaPower.md)

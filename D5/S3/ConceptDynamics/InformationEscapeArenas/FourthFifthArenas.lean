@@ -104,6 +104,9 @@ def contextArena : PrimitiveLawArena where
       r.readout .background (r.anchor true),
       r.readout .evaluationGoal (r.anchor true))
 
+theorem contextArena_nondegenerate : contextArena.toArena.Nondegenerate := by
+  decide
+
 end ContextSource
 
 section InterventionSource
@@ -167,6 +170,9 @@ def interventionArena : PrimitiveLawArena where
   Law := fun r => exists M N : DeterministicBoolSCM,
     r.readout .intervention M = r.readout .intervention N ∧
       r.readout .counterfactual M ≠ r.readout .counterfactual N
+
+theorem interventionArena_nondegenerate : interventionArena.toArena.Nondegenerate := by
+  decide
 
 end InterventionSource
 
