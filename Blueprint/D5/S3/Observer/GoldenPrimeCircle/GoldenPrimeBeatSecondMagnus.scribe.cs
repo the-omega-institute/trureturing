@@ -20,9 +20,9 @@ internal sealed class GoldenPrimeBeatSecondMagnusDocument
                     Prefix + "prime_beat_separation_recurrence"),
                 H("Half-beat separation and full-beat recurrence"),
                 StatementSource.FromAuthor(Disp(Seq(
-                    Norm, Open,
+                    Lvert,
                     Operatorname, Grp(F.Id("secondMagnusSwapKernel")),
-                    Close, Sp, Eq, Sp, D(2), Comma, Sp,
+                    Rvert, Sp, Eq, Sp, D(2), Comma, Sp,
                     Operatorname, Grp(F.Id("fullBeatKernel")), Sp,
                     Eq, Sp, D(0), Dot))),
                 AssessedProvenance.FromRepo(),
