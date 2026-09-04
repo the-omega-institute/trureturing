@@ -105,7 +105,8 @@ private theorem reverse_negated_product
   | cons event events inductionHypothesis =>
       rw [List.reverse_cons, List.map_append, List.prod_append]
       simp only [List.map_singleton, List.prod_singleton,
-        List.length_cons, List.map_cons, List.prod_cons]
+        List.length_cons, List.map_cons, List.prod_cons,
+        List.map_nil, List.prod_nil, mul_one]
       rw [inductionHypothesis, pow_succ]
       ring
 
@@ -235,8 +236,8 @@ theorem step_phase_zeckendorf_parity
   unfold stepPhase
   rw [step_frequency_zeckendorf_parity]
   by_cases hEven : Even ((Nat.zeckendorf (event.layer + 1)).getLastD 0)
-  · simp [hEven]
-  · simp [hEven]
+  · simp only [if_pos hEven]
+  · simp only [if_neg hEven]
 
 /-- Reversing the event word preserves its additive golden frequency total. -/
 theorem total_step_frequency_reverse
