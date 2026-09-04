@@ -3,7 +3,7 @@
    mirror-B: none(waiver:new-golden-observer-adapter)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Golden helix orientation is flipped at odd depth and restored at even depth without full state return. -/
+   digest: Golden helix orientation flips at odd depth and returns at even depth while the hidden level advances. -/
 
 import D5.S3.CompletionDynamics.GoldenMobius.GoldenScaleHelix
 import D5.S3.ObserverMemory.Refinement.InvolutiveReadoutCompletion
@@ -24,13 +24,13 @@ def goldenOrientationSystem :
     InvolutiveReadoutSystem GoldenHelixState Bool where
   step := goldenHelixStep
   readout := GoldenHelixState.orientation
-  flip := fun orientation => !orientation
+  flip := Bool.not
   flip_involutive := by
     intro orientation
     cases orientation <;> rfl
   readout_step := goldenHelixStep_orientation
 
-private theorem bool_not_ne_self (value : Bool) : !value ≠ value := by
+private theorem bool_not_ne_self (value : Bool) : Bool.not value ≠ value := by
   cases value <;> decide
 
 /-- Every even number of golden helix steps restores the orientation readout. -/
@@ -44,7 +44,8 @@ theorem golden_helix_even_orientation_completion
 sheet. -/
 theorem golden_helix_odd_orientation_flip
     (state : GoldenHelixState) {steps : ℕ} (hodd : Odd steps) :
-    ((goldenHelixStep^[steps]) state).orientation = !state.orientation := by
+    ((goldenHelixStep^[steps]) state).orientation =
+      Bool.not state.orientation := by
   simpa [goldenOrientationSystem] using
     odd_iterate_flips_readout goldenOrientationSystem state hodd
 
@@ -52,9 +53,8 @@ theorem golden_helix_odd_orientation_flip
 theorem golden_helix_odd_orientation_breaking
     (state : GoldenHelixState) {steps : ℕ} (hodd : Odd steps) :
     ((goldenHelixStep^[steps]) state).orientation ≠ state.orientation := by
-  simpa [goldenOrientationSystem] using
-    odd_iterate_breaks_readout goldenOrientationSystem state hodd
-      (bool_not_ne_self state.orientation)
+  rw [golden_helix_odd_orientation_flip state hodd]
+  exact bool_not_ne_self state.orientation
 
 /-- Two steps complete the orientation pair while the full helix state remains
 at a different level. This is the exact boundary of the phrase "even
