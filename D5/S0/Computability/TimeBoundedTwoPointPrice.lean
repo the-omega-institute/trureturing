@@ -130,7 +130,7 @@ private theorem diagonal_word_escapes_short_codes
 are total functions. Endpoint codes are data, while `compileFast` is the fixed-overhead
 interpreter that turns any description of a fast valid witness into a description of its target
 word. -/
-structure TimePricedMachine (Witness : Type*) where
+structure TimePricedMachine (Witness : Type*) [DecidableEq Witness] where
   timeBound : Nat -> Nat
   witnessBudgetConstant : Nat
   wordBudgetConstant : Nat
@@ -184,51 +184,51 @@ structure TimePricedMachine (Witness : Type*) where
 namespace TimePricedMachine
 
 /-- The source's `B(length) = c_0 * t(length)` witness-description budget. -/
-def witnessBudget {Witness : Type*} (machine : TimePricedMachine Witness) (length : Nat) : Nat :=
+def witnessBudget {Witness : Type*} [DecidableEq Witness]
+    (machine : TimePricedMachine Witness) (length : Nat) : Nat :=
   machine.witnessBudgetConstant * machine.timeBound length
 
 /-- The strengthened finite-search budget, with a positive totalized binary logarithm. -/
-def wordBudget {Witness : Type*} (machine : TimePricedMachine Witness) (length : Nat) : Nat :=
+def wordBudget {Witness : Type*} [DecidableEq Witness]
+    (machine : TimePricedMachine Witness) (length : Nat) : Nat :=
   machine.wordBudgetConstant * machine.timeBound length *
     Nat.log 2 (machine.timeBound length + 1)
 
-private theorem witness_cost_exists {Witness : Type*}
+private theorem witness_cost_exists {Witness : Type*} [DecidableEq Witness]
     (machine : TimePricedMachine Witness) (length : Nat) (witness : Witness) :
-    exists cost, exists code,
-      machine.runWitness length code (machine.witnessBudget length) = some witness /\
-        code.length = cost :=
-  ⟨(machine.encodeWitness witness).length, machine.encodeWitness witness,
-    machine.encodeWitness_runs length witness, rfl⟩
+    exists cost, exists code : Fin cost -> Fin 2,
+      machine.runWitness length (List.ofFn code) (machine.witnessBudget length) =
+        some witness :=
+  ⟨(machine.encodeWitness witness).length, (machine.encodeWitness witness).get, by
+    simpa [witnessBudget] using machine.encodeWitness_runs length witness⟩
 
 /-- The shortest description length of a witness within `B(length)` steps. -/
-noncomputable def boundedWitnessComplexity {Witness : Type*}
-    (machine : TimePricedMachine Witness) (length : Nat) (witness : Witness) : Nat := by
-  classical
-  exact Nat.find (witness_cost_exists machine length witness)
+def boundedWitnessComplexity {Witness : Type*} [DecidableEq Witness]
+    (machine : TimePricedMachine Witness) (length : Nat) (witness : Witness) : Nat :=
+  Nat.find (witness_cost_exists machine length witness)
 
-private theorem shortest_witness_code {Witness : Type*}
+private theorem shortest_witness_code {Witness : Type*} [DecidableEq Witness]
     (machine : TimePricedMachine Witness) (length : Nat) (witness : Witness) :
     exists code,
       machine.runWitness length code (machine.witnessBudget length) = some witness /\
         code.length = machine.boundedWitnessComplexity length witness := by
-  classical
-  simpa [boundedWitnessComplexity] using Nat.find_spec (witness_cost_exists machine length witness)
+  obtain ⟨code, hruns⟩ := Nat.find_spec (witness_cost_exists machine length witness)
+  exact ⟨List.ofFn code, hruns, by simp [boundedWitnessComplexity]⟩
 
-private theorem bounded_witness_complexity_le {Witness : Type*}
+private theorem bounded_witness_complexity_le {Witness : Type*} [DecidableEq Witness]
     (machine : TimePricedMachine Witness) (length : Nat) (witness : Witness)
     (code : List (Fin 2))
     (hruns : machine.runWitness length code (machine.witnessBudget length) = some witness) :
     machine.boundedWitnessComplexity length witness <= code.length := by
-  classical
   unfold boundedWitnessComplexity
   apply Nat.find_min'
-  exact ⟨code, hruns, rfl⟩
+  exact ⟨code.get, by simpa using hruns⟩
 
 /-- Finite bounded diagonalization gives a uniformly defined target family. Every fast witness
 has a half-length price up to the explicit compiler overhead; every eventually quarter-short
 witness is slow. The literal table and bounded-code enumerator are concrete witnesses, and at
 large lengths their price-time pairs are strictly incomparable. -/
-theorem time_bounded_two_point_price_frontier {Witness : Type*}
+theorem time_bounded_two_point_price_frontier {Witness : Type*} [DecidableEq Witness]
     (machine : TimePricedMachine Witness) :
     (forall length, 2 <= length -> forall code,
       machine.runWord length code (machine.wordBudget length) =
