@@ -1,0 +1,37 @@
+- 若 $5$ 不是平方，则 $\chi_1$ 在 $\mathbb F_p$ 上不可约，并只在 $\mathbb F_{p^2}$ 上分裂。
+
+因此：
+
+$$
+\boxed{
+\chi_1\text{ 在 }\mathbb F_p\text{ 上分裂}
+\Longleftrightarrow
+\left(\frac5p\right)=+1.
+}
+\tag{B2.3}
+$$
+
+而
+
+$$
+\boxed{
+\chi_1\text{ 在 }\mathbb F_p\text{ 上惰性}
+\Longleftrightarrow
+\left(\frac5p\right)=-1.
+}
+\tag{B2.4}
+$$
+
+由于 $5\equiv1\pmod4$，二次互反律给出
+
+$$
+\boxed{
+\left(\frac5p\right)
+=
+\left(\frac p5\right).
+}
+\tag{B2.5}
+$$
+
+右侧正是项目 `GoldenCharacterQuotient` 使用的黄金二次特征。
+

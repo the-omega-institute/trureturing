@@ -1,0 +1,33 @@
+## B11.2 Fibonacci shell index
+
+$$
+k=\text{Zeckendorf 原子 }F_k\text{ 的指标},
+\tag{B11.2}
+$$
+
+且
+
+$$
+F_k\asymp\varphi^k.
+\tag{B11.3}
+$$
+
+它控制：
+
+- prime rapidity 的放大 $F_k\delta\Delta\omega$；
+- 分辨小 $|\delta\Delta\omega|$ 所需的黄金 memory depth；
+- prime-power exponent 的稀疏 shell factorization。
+
+因此：
+
+$$
+\boxed{N\ne k,
+\qquad
+N\ne F_k.}
+\tag{B11.4}
+$$
+
+把 $N^{-2}$ finite-size law 与 $\varphi^{-2k}$ shell decay 未经映射地识别，会产生错误的尺度结论。只有在另行定义 renormalization relation $N=N(k)$ 后才能比较。
+
+---
+
