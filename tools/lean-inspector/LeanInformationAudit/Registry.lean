@@ -143,7 +143,7 @@ private def validateEntryCore (env : Environment) (entry : InformationRegistryEn
     let proofType <- instantiateMVars (← whnfR (← inferType proofExpr))
     unless ← isDefEq statementType theoremType do
       return .error (statementMismatchError entry.theoremName)
-    unless ← isDefEq proofType theoremType do
+    unless ← isDefEq proofType statementType do
       return .error (statementMismatchError entry.theoremName)
     let realizationExpr <- mkConstWithFreshMVarLevels entry.realizationName
     let realizationType <- instantiateMVars (← whnfR (← inferType realizationExpr))
