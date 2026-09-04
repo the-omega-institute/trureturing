@@ -52,7 +52,8 @@ theorem first_excited_heat_multiplier_eq_iff
         firstExcitedHeatMultiplier time second ↔
       first = second := by
   constructor
-  · exact first_excited_heat_multiplier_injective time htime
+  · intro hmultiplier
+    exact first_excited_heat_multiplier_injective time htime hmultiplier
   · rintro rfl
     rfl
 
@@ -81,8 +82,9 @@ theorem finite_first_excited_phase_recurrence
             (Real.goldenRatio ^ 2 * Real.log (prime : ℕ)) =
           ξ * Real.log (prime : ℕ) := by
       field_simp [ne_of_gt hscale]
-    simpa [firstExcitedPhaseMultiplier, first_excited_prime_frequency,
-      hargument] using hclose prime hprime
+    unfold firstExcitedPhaseMultiplier
+    rw [first_excited_prime_frequency, hargument]
+    exact hclose prime hprime
 
 /-- A positive heat observer and a wrapped phase observer therefore have
 opposite finite-channel behavior: the first is pointwise prime-faithful, while
