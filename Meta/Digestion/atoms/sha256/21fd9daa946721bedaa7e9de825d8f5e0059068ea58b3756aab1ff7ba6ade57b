@@ -1,0 +1,34 @@
+## 12.2 累积 coercivity
+
+定义
+
+$$
+\boxed{
+\mathfrak C_{\mathcal C}(T;\varepsilon,\eta)
+=
+\min_{0\le t\le T}
+\mathfrak c_{\mathcal C}(t;\varepsilon,\eta).
+}
+\tag{12.3}
+$$
+
+则 $\mathfrak C_{\mathcal C}$ 关于 $T$ 单调不增，并且
+
+$$
+\mathfrak C_{\mathcal C}(T;\varepsilon,\eta)>0
+$$
+
+当且仅当矩形
+
+$$
+0\le t\le T,
+\qquad
+\varepsilon\le|\delta|\le\frac12-\eta
+$$
+
+中没有离线零点。
+
+于是 RH 等价于：对任意有限 $T$ 和任意有理 $\varepsilon,\eta>0$，所有这些有限窗 coercivity 常数都严格为正。
+
+这只是等价重述，不是证明；但它把 RH 精确改写为一族有限紧窗强制性命题。
+

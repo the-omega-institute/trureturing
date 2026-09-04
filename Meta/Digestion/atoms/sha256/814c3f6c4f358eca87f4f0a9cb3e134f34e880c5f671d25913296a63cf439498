@@ -1,0 +1,43 @@
+## 1.1 基本函数类
+
+固定一个非零整函数
+
+$$
+\Xi:\mathbb C\to\mathbb C
+$$
+
+满足两条对称律：
+
+$$
+\boxed{\Xi(s)=\Xi(1-s),}
+\tag{1.1}
+$$
+
+$$
+\boxed{\Xi(\overline s)=\overline{\Xi(s)}.}
+\tag{1.2}
+$$
+
+Riemann completed xi 函数属于这一类。令中心化变量
+
+$$
+u=s-\frac12,
+$$
+
+并定义
+
+$$
+F(u):=\Xi\!\left(\frac12+u\right).
+$$
+
+则
+
+$$
+F(-u)=F(u),
+\qquad
+F(\overline u)=\overline{F(u)}.
+\tag{1.3}
+$$
+
+第一条是关于中心的偶对称，第二条是实结构。
+
