@@ -23,7 +23,7 @@ internal sealed class GoldenTimedMemoryMagnusReadoutDocument
                     Operatorname, Grp(F.Id("scalarEndpoint")), Sp,
                     Eq, Sp, Operatorname, Grp(F.Id("swappedScalarEndpoint")),
                     Comma, Sp, Operatorname, Grp(F.Id("MagnusReadout")), Sp,
-                    Ne, Sp, D(0), Dot))),
+                    Neq, Sp, D(0), Dot))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
