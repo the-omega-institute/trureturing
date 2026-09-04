@@ -6,3 +6,7 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: 'Evidence: PRICED_INTERFACE_PAPER.md:37-38 fixes a universal prefix machine U and defines K relative to U; PRICED_INTERFACE_PAPER.md:214 specifies prefix complexity; PRICED_INTERFACE_PAPER.md:327-331 defines finite functional tables and proves the stump bound min K(P) <= K(T) + O(1). Thus the source-defined K-bound is formalizable in principle, but current D5 has no frozen carrier owning a universal prefix machine, machine-relative prefix K, or conditional K; the existing PrefixFreeCode, KraftConverse, LevinUpperBound, and ConditionalComplexityFloor modules provide only coding, counting, or abstract numeric bounds.'
+    reentry_condition: "Reentry: first freeze a D5 universal prefix machine, machine-relative prefix K, conditional K, and the finite-table stump lemma min K(P) <= K(T) + O(1); then formalize the co-adaptation clause on that carrier, retaining the source's joint suite-selection, near-optimality, no-extra-regularization, and unconstrained deployment-loss conditions."
+    blocker_class: missing-prerequisite
