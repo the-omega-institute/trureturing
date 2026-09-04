@@ -39,29 +39,21 @@ internal static class CurrentEdgeValidator
                 $"current edge GID {gidText} does not resolve to a current repository target");
         }
 
-        if (gid.ToTarget() is Target.Formal { Declaration: { } declaration } formal)
-        {
-            var matches = report.Files.TryGetValue(formal.Path, out var module)
-                && string.IsNullOrEmpty(module.Error)
-                    ? module.Declarations.Count(candidate =>
-                        string.Equals(candidate.Name, declaration, StringComparison.Ordinal)
-                        || candidate.Name.EndsWith("." + declaration, StringComparison.Ordinal))
-                    : 0;
-            if (matches != 1)
-            {
-                return Rejected(
-                    matches == 0
-                        ? "target-declaration-missing"
-                        : "target-declaration-ambiguous",
-                    gidText,
-                    $"current edge GID {gidText} resolves to {matches} report declarations");
-            }
-        }
-
-        if (!frozenStatements.TryResolve(gid, out var statementId, out var resolutionError))
+        if (!frozenStatements.TryResolve(
+                gid,
+                out var statementId,
+                out var resolutionError,
+                out var resolutionFailure))
         {
             return Rejected(
-                "target-statement-unresolved",
+                resolutionFailure switch
+                {
+                    FrozenStatementResolutionFailure.MissingDeclaration =>
+                        "target-declaration-missing",
+                    FrozenStatementResolutionFailure.AmbiguousDeclaration =>
+                        "target-declaration-ambiguous",
+                    _ => "target-statement-unresolved",
+                },
                 gidText,
                 $"current edge GID {gidText} has no unique active frozen statement: {resolutionError}");
         }

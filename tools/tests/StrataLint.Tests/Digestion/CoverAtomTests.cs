@@ -115,7 +115,11 @@ public sealed partial class CoverAtomTests
         });
 
         Assert.False(result.Success);
-        Assert.Contains("resolves to 0 report declarations", result.Error, StringComparison.Ordinal);
+        Assert.Equal(
+            "COVER_INVALID current edge GID D5/S0/Carrier/Probe.probe has no unique active "
+                + "frozen statement: coverage GID resolves to 0 current report declarations: "
+                + "D5/S0/Carrier/Probe.probe\n",
+            result.Error);
         Assert.DoesNotContain("coverage-target-mismatch", result.Error, StringComparison.Ordinal);
         Assert.DoesNotContain("target-declaration-missing", result.Error, StringComparison.Ordinal);
         Assert.Equal(before, after);

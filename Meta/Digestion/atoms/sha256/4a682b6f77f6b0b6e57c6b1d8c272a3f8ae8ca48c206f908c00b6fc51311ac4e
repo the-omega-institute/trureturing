@@ -1,0 +1,2 @@
+**定理 3.4.1(Hecke–Ostrowski 上同调恒等式)**〔候签;open;落 `D5/S1/Phase/HeckeOstrowskiCoboundary`〕。对任意实数 α、自然数 q 与实数 x,令转移函数 `transferFunction α q x := ∑_{j<q} Int.fract (x − (j+1)·α)`,则 `(if Int.fract x < Int.fract (q·α) then 1 else 0) − Int.fract (q·α) = transferFunction α q x − transferFunction α q (x + α)`——区间 [0, {qα}) 之指示函数减其长度,是转移函数在旋转 x ↦ x + α 下的上边缘(coboundary);不需要 α 无理。
+
