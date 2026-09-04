@@ -154,6 +154,9 @@ theorem single_prime_phase_trajectory_recovers_bidegree
     primeGoldenBidegree left = primeGoldenBidegree right := by
   apply bidegree_phase_trajectory_injective prime
   funext time
+  change
+    bidegreePhase time prime (primeGoldenBidegree left) =
+      bidegreePhase time prime (primeGoldenBidegree right)
   rw [← scalar_step_endpoint_eq_bidegree_phase_of_single_prime
       time prime left hLeft,
     ← scalar_step_endpoint_eq_bidegree_phase_of_single_prime
