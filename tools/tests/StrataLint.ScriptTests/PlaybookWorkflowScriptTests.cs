@@ -6,6 +6,7 @@ namespace StrataLint.Tests;
 public sealed class PlaybookWorkflowScriptTests
 {
     private const string ScriptPath = "tools/scripts/workflow/playbook-workflows.sh";
+    private const string SyntheticBaseSha = "0000000000000000000000000000000000000001";
 
     [Fact]
     public void DeliverCheckAlignsBeforeReadOnlyChecks()
@@ -26,7 +27,8 @@ public sealed class PlaybookWorkflowScriptTests
                 "git:ls-files --others --exclude-standard -z -- Golden/Frozen/accepted/*.json",
                 "dotnet:ledger-append --candidate-lean-report .lake/build/stratalint/raw-lean-report.json",
                 "dotnet:digest-status --base synthetic-base",
-                "make:preflight BASE=synthetic-base",
+                $"git:rev-parse HEAD^1",
+                $"make:preflight BASE={SyntheticBaseSha}",
                 "git:diff --diff-filter=A --name-only -z synthetic-base...HEAD -- Golden/Frozen/accepted/*.json",
                 "git:ls-files --others --exclude-standard -z -- Golden/Frozen/accepted/*.json",
             ],
@@ -93,7 +95,7 @@ public sealed class PlaybookWorkflowScriptTests
             WriteExecutable("make", "printf 'make:%s\\n' \"$*\" >> \"$PLAYBOOK_TEST_CALLS\"");
             WriteExecutable(
                 "git",
-                """
+                $$"""
                 arguments=("$@")
                 index=0
                 while [[ $index -lt ${#arguments[@]} ]]; do
@@ -122,6 +124,9 @@ public sealed class PlaybookWorkflowScriptTests
                   exit 97
                 fi
                 printf 'git:%s\n' "${arguments[*]}" >> "$PLAYBOOK_TEST_CALLS"
+                if [[ $subcommand == rev-parse && "${arguments[index+1]:-}" == HEAD^1 ]]; then
+                  printf '%s\n' '{{SyntheticBaseSha}}'
+                fi
                 """);
             WriteExecutable(
                 "dotnet",

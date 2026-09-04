@@ -560,7 +560,7 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void IngestReportFreeRejectsDeletedBaselineCasBlobBeforeTruthOrWrites()
+    public void IngestReportFreeRejectsMissingReferencedCasBlobBeforeTruthOrWrites()
     {
         var fixture = UncoveredOnlyIngestFixture(addNewAtom: false);
         var casPath = Assert.Single(fixture.Files.Keys, DigestionCasStore.IsCanonicalPath);
@@ -570,7 +570,7 @@ public sealed partial class ProductionEnvironmentTests
             fixture,
             RawChangeSet.Create([casPath]),
             "INGEST_INVALID",
-            $"baseline CAS blob was deleted: {casPath}");
+            $"entry {ExistingAtomId(fixture)} CAS blob is missing: {casPath}");
     }
 
     [Fact]
