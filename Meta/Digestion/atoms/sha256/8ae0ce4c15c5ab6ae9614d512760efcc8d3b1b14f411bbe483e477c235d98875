@@ -1,0 +1,18 @@
+### 定理 9.1　严格横向可分离性
+
+若 $p\ne q$，则
+
+$$
+R_{p,q}(\delta)=0
+\Longleftrightarrow
+\delta=0.
+\tag{9.4}
+$$
+
+特别地，任何离线位移 $\delta_*\ne0$ 都给出
+
+$$
+\boxed{R_{p,q}(\delta_*)>0.}
+\tag{9.5}
+$$
+
