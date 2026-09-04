@@ -31,8 +31,10 @@ run_cmd do
   let some importedEntry := InformationRegistry.find? env
       `LeanInformationAudit.Tests.RegistrationErrors.ImportedFixture.importedExample
     | throwError "imported registration lookup failed"
-  unless importedEntry.unitName ==
-      `LeanInformationAudit.Tests.RegistrationErrors.ImportedFixture.importedExample.__information_unit do
+  let importedUnitName :=
+    `LeanInformationAudit.Tests.RegistrationErrors.ImportedFixture.importedExample
+      |>.str "__information_unit"
+  unless importedEntry.unitName == importedUnitName do
     throwError "imported registration lookup returned the wrong unit"
   unless env.contains importedEntry.unitName do
     throwError "resolved companion declaration is missing"

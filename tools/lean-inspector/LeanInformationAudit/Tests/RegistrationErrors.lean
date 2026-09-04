@@ -74,7 +74,8 @@ register_information_theorem importedExample
   primitives fixtureBundle
   realization importedRealization
 
-/-- error: IE-C002 DuplicateRegistration: LeanInformationAudit.Tests.RegistrationErrors.legacyExample -/
+/-- error: IE-C002 DuplicateRegistration:
+LeanInformationAudit.Tests.RegistrationErrors.legacyExample -/
 #guard_msgs (error) in
 register_information_theorem legacyExample
   in fixtureLawArena
@@ -89,7 +90,8 @@ theorem generatedRealization :
     LegacyPrimitiveRealization fixtureLawArena True fixtureRealization where
   equivalence := Iff.rfl
 
-/-- error: IE-C011 GeneratedCertificateRegistered: LeanInformationAudit.Tests.RegistrationErrors.generated.__lowers_escape -/
+/-- error: IE-C011 GeneratedCertificateRegistered:
+LeanInformationAudit.Tests.RegistrationErrors.generated.__lowers_escape -/
 #guard_msgs (error) in
 register_information_theorem generated.__lowers_escape
   in fixtureLawArena
@@ -106,7 +108,8 @@ theorem mismatchedRealization :
     LegacyPrimitiveRealization fixtureLawArena (1 = 1) fixtureRealization where
   equivalence := by simp [fixtureLawArena]
 
-/-- error: IE-C006 StatementProofMismatch: LeanInformationAudit.Tests.RegistrationErrors.mismatchTarget -/
+/-- error: IE-C006 StatementProofMismatch:
+LeanInformationAudit.Tests.RegistrationErrors.mismatchTarget -/
 #guard_msgs (error) in
 register_information_theorem mismatchTarget
   in fixtureLawArena
@@ -118,7 +121,8 @@ def mismatchedUnit : TheoremUnit (fixtureLawArena.toArena) :=
     Statement := 1 = 1
     proof := rfl }
 
-/-- info: IE-C006 StatementProofMismatch: LeanInformationAudit.Tests.RegistrationErrors.mismatchTarget -/
+/-- info: IE-C006 StatementProofMismatch:
+LeanInformationAudit.Tests.RegistrationErrors.mismatchTarget -/
 #guard_msgs in
 run_cmd do
   let result ← Lean.Elab.Command.liftTermElabM <|
@@ -135,7 +139,8 @@ run_cmd do
 def notATheorem : Prop :=
   True
 
-/-- info: IE-C001 UnregisteredTheoremUnit: LeanInformationAudit.Tests.RegistrationErrors.notATheorem -/
+/-- info: IE-C001 UnregisteredTheoremUnit:
+LeanInformationAudit.Tests.RegistrationErrors.notATheorem -/
 #guard_msgs in
 run_cmd do
   let result := validateEntry (← getEnv) {
@@ -148,7 +153,8 @@ run_cmd do
   | .error message => logInfo message
   | .ok () => throwError "non-theorem declaration passed validation"
 
-/-- info: IE-C003 ArenaResolutionFailed: LeanInformationAudit.Tests.RegistrationErrors.missingArena -/
+/-- info: IE-C003 ArenaResolutionFailed:
+LeanInformationAudit.Tests.RegistrationErrors.missingArena -/
 #guard_msgs in
 run_cmd do
   let result := validateEntry (← getEnv) {
@@ -164,7 +170,8 @@ run_cmd do
 theorem wrongUnitHead : True :=
   trivial
 
-/-- info: IE-C006 StatementProofMismatch: LeanInformationAudit.Tests.RegistrationErrors.mismatchTarget -/
+/-- info: IE-C006 StatementProofMismatch:
+LeanInformationAudit.Tests.RegistrationErrors.mismatchTarget -/
 #guard_msgs in
 run_cmd do
   let result := validateEntry (← getEnv) {
@@ -177,7 +184,8 @@ run_cmd do
   | .error message => logInfo message
   | .ok () => throwError "wrong theorem-unit type passed validation"
 
-/-- error: IE-C001 UnregisteredTheoremUnit: LeanInformationAudit.Tests.RegistrationErrors.unknownTheorem -/
+/-- error: IE-C001 UnregisteredTheoremUnit:
+LeanInformationAudit.Tests.RegistrationErrors.unknownTheorem -/
 #guard_msgs (error) in
 register_information_theorem unknownTheorem
   in fixtureLawArena

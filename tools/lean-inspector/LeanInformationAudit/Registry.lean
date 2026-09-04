@@ -16,7 +16,9 @@ structure InformationRegistryEntry where
   theoremName : Name
   unitName : Name
   arenaName : Name
-  /-- realizationName = Name.anonymous iff the unit is native; deviation from spec §25.1 three-field entry, required by §§24.2/24.4/26.4 realization validation. -/
+  /-- `realizationName = Name.anonymous` iff the unit is native. This deviation
+  from the spec section 25.1 three-field entry is required by the realization
+  validation in sections 24.2, 24.4, and 26.4. -/
   realizationName : Name
 
 initialize informationRegistryExt :
