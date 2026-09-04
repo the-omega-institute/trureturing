@@ -17,7 +17,7 @@ public sealed class DependencyDirectionTests
     /// against it adds exactly one name here and nothing beneath it.
     /// </summary>
     [Fact]
-    public void EngineReferencesExactlyBclDunetMarkdigPidginRoslynTomlynAndTruth()
+    public void EngineReferencesExactlyBclDunetMarkdigPidginRoslynAndTruth()
     {
         Assert.Equal(
             ["Dunet", "Markdig", "Microsoft.CodeAnalysis", "Microsoft.CodeAnalysis.CSharp", "Pidgin", "Tomlyn", "Trureturing.Truth"],
