@@ -251,6 +251,73 @@ theorem finite_fourier_modes_do_not_determine_measure (modes : Finset Int) :
   intro equality
   exact differsAtUnusedMode (congrArg (fun measure => fourierMoment measure (-k)) equality)
 
+/-- The complete integer Fourier profile uniquely determines every finite
+regulator measure on the circle. -/
+theorem all_fourier_modes_determine_measure
+    (mu nu : Measure RegulatorCircle)
+    [IsFiniteMeasure mu] [IsFiniteMeasure nu]
+    (momentsEqual : forall n : Int,
+      fourierMoment mu n = fourierMoment nu n) :
+    mu = nu := by
+  let A : StarSubalgebra Complex
+      (BoundedContinuousFunction RegulatorCircle Complex) :=
+    fourierSubalgebra.comap (toContinuousMapStarₐ Complex)
+  have mappedAlgebra :
+      A.map (toContinuousMapStarₐ Complex) = fourierSubalgebra := by
+    ext f
+    constructor
+    · rintro ⟨g, hg, rfl⟩
+      exact hg
+    · intro hf
+      refine ⟨ContinuousMap.equivBoundedOfCompact _ _ f, ?_, ?_⟩
+      · exact hf
+      · ext theta
+        rfl
+  apply ext_of_forall_mem_subalgebra_integral_eq_of_pseudoEMetric_complete_countable
+    (𝕜 := Complex)
+  · rw [mappedAlgebra]
+    exact fourierSubalgebra_separatesPoints
+  · intro g hg
+    have spanMembership :
+        g.toContinuousMap ∈
+          Submodule.span Complex (Set.range (@fourier (2 * Real.pi))) := by
+      change (toContinuousMapStarₐ Complex) g ∈ fourierSubalgebra at hg
+      have hg' :
+          g.toContinuousMap ∈ fourierSubalgebra.toSubalgebra.toSubmodule := hg
+      rw [fourierSubalgebra_coe] at hg'
+      exact hg'
+    refine Submodule.span_induction (p := fun f _ =>
+        (∫ theta, f theta ∂mu) = ∫ theta, f theta ∂nu) ?_ ?_ ?_ ?_
+      spanMembership
+    · intro f hf
+      obtain ⟨n, rfl⟩ := hf
+      exact momentsEqual n
+    · simp
+    · intro f g hf hg fEquality gEquality
+      have fIntegrableMu : Integrable f mu := by
+        exact (BoundedContinuousFunction.integrable mu
+          (ContinuousMap.equivBoundedOfCompact _ _ f)).congr
+            (ae_of_all _ fun _ => rfl)
+      have gIntegrableMu : Integrable g mu := by
+        exact (BoundedContinuousFunction.integrable mu
+          (ContinuousMap.equivBoundedOfCompact _ _ g)).congr
+            (ae_of_all _ fun _ => rfl)
+      have fIntegrableNu : Integrable f nu := by
+        exact (BoundedContinuousFunction.integrable nu
+          (ContinuousMap.equivBoundedOfCompact _ _ f)).congr
+            (ae_of_all _ fun _ => rfl)
+      have gIntegrableNu : Integrable g nu := by
+        exact (BoundedContinuousFunction.integrable nu
+          (ContinuousMap.equivBoundedOfCompact _ _ g)).congr
+            (ae_of_all _ fun _ => rfl)
+      simp only [ContinuousMap.add_apply]
+      rw [integral_add fIntegrableMu gIntegrableMu,
+        integral_add fIntegrableNu gIntegrableNu, fEquality, gEquality]
+    · intro scalar f hf fEquality
+      simpa only [ContinuousMap.coe_smul, Pi.smul_apply, integral_smul] using
+        congrArg (fun value => scalar • value) fEquality
+
 #print axioms finite_fourier_modes_do_not_determine_measure
+#print axioms all_fourier_modes_determine_measure
 
 end D5.S3.Observer.MeasureSeparation.FourierModeDetermination
