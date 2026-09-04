@@ -231,7 +231,7 @@ pattern = "Golden/Frozen/state/**/*.json"
 kind = "data"
 admission_plane = "content"
 produced_by = "FrozenStateWriter"
-consumed_by = ["FrozenStateCatalog"]
+consumed_by = ["BackfillDeltaImpactResolver", "CoverAtomCommand", "CurrentEdgeValidator", "DagLedgerAlignWriter", "DigestionCoverageTargetAligner", "DigestionStatusEvaluator", "FrozenStateCatalog", "FrozenStatementIndex", "SL-008"]
 verified_by = ["FrozenStateRecordLoader", "SL-008"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
@@ -555,16 +555,6 @@ admission_plane = "judge"
 produced_by = "none"
 consumed_by = ["dotnet"]
 verified_by = ["dotnet-test"]
-artifact_id = "none"
-runtime_disposition = "committed-source"
-
-[[files]]
-pattern = "tools/lean-information-audit/**"
-kind = "program"
-admission_plane = "judge"
-produced_by = "none"
-consumed_by = ["Lean"]
-verified_by = ["lean-build"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
 
