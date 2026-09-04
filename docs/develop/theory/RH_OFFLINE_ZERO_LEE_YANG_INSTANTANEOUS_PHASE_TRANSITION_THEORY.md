@@ -6741,3 +6741,2825 @@ $$
 $$
 
 若答案为是，则 Lee--Yang 圆定位、Weil odd-energy 正性、transfer equimodular confinement 与 Hilbert--Polya unitary localization 将成为同一结构的四种坐标表达。若答案为否，则已经建立的黄金、Zeckendorf、path fidelity 与 prime-gap 恒等式仍是彼此严格关联的有限理论，但不能被提升为 RH 的动力学解释。
+
+---
+
+# 增订三　复幂 Solenoid 荷—相位分解、深度—宽度忠实性与 Rouché 有理证书
+
+> 本增订继续追加于同一纯理论主卷。公式编号使用 `C` 前缀，与主卷、增订一和增订二相互独立。本文不新增 Lean 声明，不把条件证书写成 RH 证明。
+
+## 摘要
+
+增订二已经把假想离线零点收紧为一个 visible–hidden Schur margin 的饱和事件，并区分了 holomorphic transfer 与 Hermitian energy。本增订进一步接入项目最新闭合的三个真源：
+
+1. `D5/S1/Solenoid/ComplexPowerSolenoidDecomposition`：任意非零 compatible complex power thread 构造性地分解为一个实对数荷与一个 universal-solenoid phase thread；
+2. `D5/S3/Weil/ZetaAnalytic/RoucheZeroCount`：矩形边界上的严格扰动不等式保持解析零点计数；
+3. `D5/S3/Zeros/RationalNegativeCountCertificate`：一旦负径向计数区域非空且开放，必存在有理参数证书。
+
+同时使用：
+
+- `D5/S3/ConceptDynamics/InformationEscape/EscapePairs`；
+- `D5/S3/ConceptDynamics/InformationEscape/StructuralNovelty`；
+- `D5/S3/Observer/Hankel/HankelRankMinimality`；
+- 本卷已有 prime-pair 复核、Zeckendorf 二态 transfer 与 Schur 临界理论。
+
+本增订得到六个新的理论核心。
+
+第一，对每个素数 $p$ 和中心化谱参数
+
+$$
+u=\delta+it,
+$$
+
+存在 canonical complex power thread
+
+$$
+Z_{p,u}(m)
+=
+\exp\!\left(
+-\frac{u\log p}{m}
+\right).
+$$
+
+其守恒对数荷与相位分别为
+
+$$
+Q_p(u)=-\delta\log p,
+\qquad
+\theta_{p,t}(m)
+=
+-\frac{t\log p}{2\pi m}
+\pmod 1.
+$$
+
+所以临界线并不是“相位消失”的地方，而是全部 centered prime threads 的非紧对数荷同时归零的切片；$t$ 仍完整存在于 solenoid phase 中。
+
+第二，本卷的 prime-pair 横向项具有精确荷梯度解释：
+
+$$
+\boxed{
+\sinh^2\!\left(
+\delta\log\frac qp
+\right)
+=
+\sinh^2\!\left(
+Q_p(u)-Q_q(u)
+\right).
+}
+$$
+
+时间项则是同一对 threads 的 compact phase difference。由此，原有的
+
+$$
+\sinh^2+\sin^2
+$$
+
+不是两个相似的能量，而是
+
+$$
+\mathbb R_{\rm charge}\times\mathcal S_{\rm phase}
+$$
+
+上非紧方向与紧方向的两个关系读出。
+
+第三，phase faithfulness 存在一条此前未显化的深度—宽度对偶：
+
+- 一个固定素数的全部 power levels 可以无歧义恢复 $t$；
+- 任意有限 levels 只在有限高度窗内忠实，并在全轴上保留周期 alias；
+- 两个带标签的不同素数在 level one 已足以全局恢复 $t$，因为 $\log p/\log q$ 不可能为有理数。
+
+所以 observer 可以用“沿一个素数向深层取根”换取 phase faithfulness，也可以用“在同一层横向保留两个乘法独立的素数标签”换取 phase faithfulness。标量 Euler 完成之所以危险，不是局部信息不足，而是它把这些标签与关系重新压入交换标量。
+
+第四，对 universal solenoid 的有限 level observer family，可以给出精确的 structural novelty 判据。设 $S$ 是已观察 levels，$m$ 是候选新 level，令
+
+$$
+N=\operatorname{lcm}(S\cup\{m\}),
+\qquad
+d_S=\gcd_{s\in S}\frac Ns.
+$$
+
+则 level-$m$ phase readout 可由 $S$ 中 readouts 恢复，当且仅当
+
+$$
+d_S\mid\frac Nm.
+$$
+
+否则存在一个显式 solenoid phase thread，在全部 $S$-levels 上与零 thread 相同，却在 level $m$ 上不同。由项目的 exact escape/structural novelty 语言，这正是一个 leave-one-out unique-capture witness。
+
+第五，假如存在离线零点，则 Cayley 圆外对应零点的内侧径向邻域必出现严格负的 scale-weighted radial log derivative。该区域自动开放，因此项目的 rational negative-count theorem 的两个抽象前提，在这一具体 profile 上可由离线零点局部解析正常形条件性地提供。于是 RH 失败不仅有一个不可见的复零点，还必有：
+
+$$
+\boxed{
+q,r\in\mathbb Q,\quad
+r>0,\quad
+\mathscr Q(q,r)>0,\quad
+r\partial_r\log\mathscr Q(q,r)<0
+}
+$$
+
+这样的有理径向先兆证书。
+
+第六，Rouché 稳定性把 RH 转化为一族有限有理矩形证书。若 canonical analytic approximant
+
+$$
+D_N(s)=U_N(s)\det T_N(s)
+$$
+
+在某个离轴有理矩形上无零，并满足严格边界误差小于 determinant floor，则 $\Xi$ 在该矩形中也无零。若 Hermitianization
+
+$$
+E_N=T_N^*T_N
+$$
+
+具有正 hidden block 和正 Schur margin，则可以显式推出 singular-value floor、determinant floor 与 Rouché 预算。该预算含有维数因子
+
+$$
+\mu_N^{d_N/2}.
+$$
+
+所以 Zeckendorf/Hankel 的真正证明论价值进一步显现：不是把 $F_{Q+2}$ 个历史全部展开，而是把它们压缩到最小二态 transfer，从而避免 determinant certificate 的维数指数税。
+
+最终，RH 的候选有限证书架构不再是“完整重构全部 solenoid phase”，而是：
+
+$$
+\boxed{
+\text{有限高度窗的 phase faithfulness}
++
+\text{grounded charge coercivity}
++
+\text{Schur determinant floor}
++
+\text{Rouché strict boundary stability}.
+}
+$$
+
+这条架构仍缺 canonical prime–Zeckendorf–Gamma transfer、其与 $\Xi$ 的 locally uniform determinant approximation，以及所有离轴有理矩形上的 uniform certificate。本文只把缺口压缩到这些明确位置。
+
+---
+
+# 增订三·0　理论地位与信息逃逸边界
+
+## C0.1 已闭合真源
+
+本增订使用下列仓库定理作为已闭合输入。
+
+### （一）complex power thread 的荷—相位分解
+
+项目已经机器证明：
+
+$$
+m\log\|z_m\|=Q(z),
+\tag{C0.1}
+$$
+
+并构造等价：
+
+$$
+\boxed{
+\operatorname{ComplexPowerThread}
+\simeq
+\mathbb R\times\mathcal S,
+}
+\tag{C0.2}
+$$
+
+其中 $\mathcal S$ 是项目已有的 universal solenoid。项目还证明：
+
+$$
+Q(z)=0
+\Longleftrightarrow
+\|z_m\|=1\quad\forall m.
+\tag{C0.3}
+$$
+
+该真源明确删除了原来源中未由 power-thread 数据支持的 RH、Gamma、maximal compact、zero-thread 与 trivial-zero 子句。因此本增订也不恢复这些已被审计删除的陈述。
+
+### （二）矩形 Rouché 零点计数
+
+项目已经机器证明：若 $f,g$ 在闭矩形邻域解析，并且边界上
+
+$$
+|f-g|<|g|,
+\tag{C0.4}
+$$
+
+则二者在矩形中的零点数按解析重数相同。严格不等式不可弱化为非严格不等式。
+
+### （三）有理负径向证书
+
+项目已经机器证明：若某个二参数 profile 的 negative-count region 开放，并且 $\neg\mathrm{RH}$ 使该区域非空，则存在正有理半径和有理角参数落在该区域中。
+
+该定理本身不证明区域开放，也不证明 RH 失败产生真实点。本增订只对 Cayley 拉回的局部零点 profile 条件性地补出这两个解析前件。
+
+### （四）exact information escape 与 structural novelty
+
+项目已经机器化：
+
+- finite escape pairs；
+- leave-one-out unique capture pairs；
+- exact escape rate；
+- 结构 kernel 严格缩小；
+- semantic closure；
+- “降低逃逸率”等价于 canonical quotient CUT 的严格 kernel novelty。
+
+所以本增订不把“加入一个 readout 看起来更丰富”当作信息增益。只有给出 kernel 严格缩小或 unique-capture witness，才能声称该 readout 是结构新信息。
+
+### （五）Hankel visible rank
+
+项目已经机器证明，有限维线性系统在足够大 horizon 上的 Hankel rank 等于 reachable dimension 减去 reachable-unobservable dimension。结合项目已有最小实现结果，Hankel rank 是可见行为所需的最小记忆维数，而不是任意 chosen state-space dimension。
+
+## C0.2 本增订新推导的地位
+
+以下是本增订中的纯数学推导，但尚未作为新的 Lean 真源登记：
+
+- centered prime power thread 的显式构造；
+- prime transverse energy 的 charge-gradient 恒等式；
+- finite level phase aliasing 周期；
+- finite solenoid level structural novelty 的 $\gcd/\operatorname{lcm}$ 判据；
+- one-prime depth / two-prime width faithfulness；
+- charge graph 加 anchor 后的有限 coercivity；
+- off-circle zero 产生 open negative radial precursor；
+- rational rectangle RH 等价族；
+- Schur margin 到 determinant floor 的显式下界；
+- determinant dimension tax；
+- countable Rouché certificate reformulation。
+
+以下仍是开放承重桥：
+
+- canonical prime–Zeckendorf–Gamma analytic transfer；
+- 其 determinant 与 completed $\Xi$ 只差无零 analytic unit；
+- locally uniform、带显式误差界的 approximation；
+- Gamma/pole block 对 ambient common charge mode 的 canonical anchor；
+- finite phase/charge observables 到 zero-side odd orbit energy 的 faithful intertwining；
+- 所有离轴有理矩形上的统一证书。
+
+---
+
+# 增订三·1　centered prime complex power thread
+
+## C1.1 定义
+
+固定素数 $p$，令
+
+$$
+u=\delta+it\in\mathbb C.
+\tag{C1.1}
+$$
+
+对每个正整数 $m$，定义：
+
+$$
+\boxed{
+Z_{p,u}(m)
+=
+\exp\!\left(
+-\frac{u\log p}{m}
+\right).
+}
+\tag{C1.2}
+$$
+
+所有坐标均非零。
+
+### 定理 C1.1　power-thread compatibility
+
+对任意正整数 $m,n$：
+
+$$
+\boxed{
+Z_{p,u}(mn)^n
+=
+Z_{p,u}(m).
+}
+\tag{C1.3}
+$$
+
+#### 证明
+
+直接计算：
+
+$$
+Z_{p,u}(mn)^n
+=
+\exp\!\left(
+-\frac{nu\log p}{mn}
+\right)
+=
+\exp\!\left(
+-\frac{u\log p}{m}
+\right).
+$$
+
+所以 $Z_{p,u}$ 是项目 `ComplexPowerThread` 的一个 canonical 元素。
+
+## C1.2 守恒对数荷
+
+由定义：
+
+$$
+\|Z_{p,u}(m)\|
+=
+\exp\!\left(
+-\frac{\delta\log p}{m}
+\right).
+\tag{C1.4}
+$$
+
+因此：
+
+$$
+m\log\|Z_{p,u}(m)\|
+=
+-\delta\log p.
+\tag{C1.5}
+$$
+
+### 定义 C1.2　prime logarithmic charge
+
+$$
+\boxed{
+Q_p(u)
+:=
+Q(Z_{p,u})
+=
+-\delta\log p.
+}
+\tag{C1.6}
+$$
+
+这个量与 power level $m$ 无关，正是项目 charge-conservation theorem 在 canonical prime thread 上的实例。
+
+## C1.3 solenoid phase
+
+归一化坐标为：
+
+$$
+\frac{Z_{p,u}(m)}{\|Z_{p,u}(m)\|}
+=
+\exp\!\left(
+-\frac{it\log p}{m}
+\right).
+\tag{C1.7}
+$$
+
+在 additive circle 坐标中定义：
+
+$$
+\boxed{
+\theta_{p,t}(m)
+=
+-\frac{t\log p}{2\pi m}
+\pmod 1.
+}
+\tag{C1.8}
+$$
+
+它满足：
+
+$$
+n\theta_{p,t}(mn)
+=
+\theta_{p,t}(m),
+\tag{C1.9}
+$$
+
+所以确实给出一个 universal-solenoid phase thread。
+
+于是 canonical prime thread 的荷—相位分解是：
+
+$$
+\boxed{
+Z_{p,u}
+\longleftrightarrow
+\left(
+-\delta\log p,\,
+\theta_{p,t}
+\right).
+}
+\tag{C1.10}
+$$
+
+## C1.4 局部信息完整性
+
+对固定素数 $p$：
+
+- 任一单个 level 的 norm 已经恢复 $\delta$：
+
+$$
+\boxed{
+\delta
+=
+-\frac{m\log\|Z_{p,u}(m)\|}{\log p};
+}
+\tag{C1.11}
+$$
+
+- 全部 phase levels 恢复 $t$，见增订三·5；
+- 所以完整的一个 prime thread 已经忠实编码中心化谱参数 $u$。
+
+因此 zeta 困难不来自单个 prime thread 缺少 $\delta$ 或 $t$；困难来自 scalar multiplication、symmetrization、completion 与 analytic continuation 如何压缩这些局部关系数据。
+
+---
+
+# 增订三·2　反射、临界线与零荷切片
+
+## C2.1 同高度反射
+
+中心化变量的同高度反射为：
+
+$$
+u^\sharp=-\overline u=-\delta+it.
+\tag{C2.1}
+$$
+
+对应 thread 满足：
+
+$$
+\boxed{
+Z_{p,u^\sharp}(m)
+=
+\frac1{\overline{Z_{p,u}(m)}}.
+}
+\tag{C2.2}
+$$
+
+所以：
+
+$$
+Q_p(u^\sharp)=-Q_p(u),
+\tag{C2.3}
+$$
+
+而：
+
+$$
+\theta_{p,t}^{\sharp}(m)
+=
+\theta_{p,t}(m).
+\tag{C2.4}
+$$
+
+反射只翻转非紧 charge，不改变同高度 compact phase。
+
+## C2.2 临界线的精确 thread 表述
+
+由项目的 zero-charge/unit-norm theorem：
+
+$$
+Q_p(u)=0
+\Longleftrightarrow
+\|Z_{p,u}(m)\|=1\quad\forall m.
+\tag{C2.5}
+$$
+
+而 $Q_p(u)=-\delta\log p$，故对任意素数 $p$：
+
+$$
+\boxed{
+\Re s=\frac12
+\Longleftrightarrow
+\delta=0
+\Longleftrightarrow
+Q_p(u)=0
+\Longleftrightarrow
+\|Z_{p,u}(m)\|=1\quad\forall m.
+}
+\tag{C2.6}
+$$
+
+所以 RH 的 thread 几何不是：
+
+$$
+\text{all phases are trivial}.
+$$
+
+在线零点一般仍具有非平凡 $t$，所以其 solenoid phase 非平凡。正确命题是：
+
+$$
+\boxed{
+\text{所有零点所对应的 centered prime threads 都落在 zero-charge phase locus。}
+}
+\tag{C2.7}
+$$
+
+## C2.3 Cayley radial coordinate 与 prime charge
+
+本卷前文定义：
+
+$$
+\eta_a(t,\delta)
+=
+\log\left|
+\frac{a+\delta+it}{a-\delta-it}
+\right|.
+\tag{C2.8}
+$$
+
+它满足：
+
+$$
+\eta_a(t,\delta)=0
+\Longleftrightarrow
+\delta=0
+\Longleftrightarrow
+Q_p(u)=0.
+\tag{C2.9}
+$$
+
+临界线附近：
+
+$$
+\eta_a(t,\delta)
+=
+\frac{2a}{a^2+t^2}\delta
++
+O(\delta^3).
+\tag{C2.10}
+$$
+
+代入 $\delta=-Q_p/\log p$：
+
+$$
+\boxed{
+\eta_a(t,\delta)
+=
+-\frac{2a}{(a^2+t^2)\log p}
+Q_p(u)
++
+O(Q_p(u)^3).
+}
+\tag{C2.11}
+$$
+
+所以 Lee–Yang 径向序参量与 complex-power logarithmic charge 在每个有限高度窗内局部线性等价。
+
+---
+
+# 增订三·3　prime-pair 复核是 charge–phase 关系度量
+
+## C3.1 charge gradient
+
+对不同素数 $p,q$：
+
+$$
+Q_p(u)-Q_q(u)
+=
+-\delta\log p+\delta\log q
+=
+\delta\log\frac qp.
+\tag{C3.1}
+$$
+
+因此本卷已有横向关系能量可重写为：
+
+$$
+\boxed{
+\sinh^2\!\left(
+\delta\log\frac qp
+\right)
+=
+\sinh^2\!\left(
+Q_p(u)-Q_q(u)
+\right).
+}
+\tag{C3.2}
+$$
+
+它不是一个附加比喻，而是 complex-power thread 的 real-charge gradient energy。
+
+## C3.2 compact phase gradient
+
+记：
+
+$$
+\tau=t_1-t_2,
+\qquad
+\Phi_{p,q}(\tau)
+=
+\frac{\tau}{2\pi}
+\log\frac qp.
+\tag{C3.3}
+$$
+
+则：
+
+$$
+\sin^2\!\left(
+\frac{\tau}{2}\log\frac qp
+\right)
+=
+\sin^2\!\left(
+\pi\Phi_{p,q}(\tau)
+\right).
+\tag{C3.4}
+$$
+
+$\Phi_{p,q}$ 是两个 labelled prime phase flows 的相对 compact coordinate。
+
+## C3.3 荷—相位统一式
+
+本卷 prime-pair identity 因而成为：
+
+$$
+\boxed{
+\frac{(pq)^{2\sigma}}4
+|\mathcal K_{p,q}|^2
+=
+\sinh^2(Q_p-Q_q)
++
+\sin^2(\pi\Phi_{p,q}).
+}
+\tag{C3.5}
+$$
+
+所以：
+
+- $\sinh^2$ 读取 $\mathbb R$-charge difference；
+- $\sin^2$ 读取 circle/solenoid phase difference；
+- 两者来自同一个 complex determinant；
+- 前者在 $\delta\ne0$ 时提供与 phase 无关的正底；
+- 后者可以因 compact recurrence 反复归零。
+
+这给出一个新的概念压缩：
+
+$$
+\boxed{
+\text{PrimeGaps 的复核是 }
+\mathbb R_{\rm charge}\times\mathcal S_{\rm phase}
+\text{ 上的二槽关系 observer。}
+}
+\tag{C3.6}
+$$
+
+## C3.4 不可错误归一化
+
+canonical charges 满足：
+
+$$
+\frac{Q_p(u)}{\log p}
+=
+-\delta
+\qquad
+\forall p.
+\tag{C3.7}
+$$
+
+因此若错误地定义“归一化一致性能量”：
+
+$$
+\sum_{p<q}
+W_{p,q}
+\left(
+\frac{Q_p}{\log p}
+-
+\frac{Q_q}{\log q}
+\right)^2,
+\tag{C3.8}
+$$
+
+它对所有 $\delta$ 都恒为零，完全删除离线信号。
+
+真正的横向能量必须保留 raw logarithmic weights：
+
+$$
+Q_p-Q_q
+=
+\delta(\log q-\log p).
+\tag{C3.9}
+$$
+
+所以 prime labels 与 $\log p$ 不是可约掉的单位选择，而是横向几何本身。
+
+---
+
+# 增订三·4　一个素数的有限 level phase aliasing
+
+## C4.1 有限 level family
+
+固定素数 $p$，取非空有限正整数集合 $S$。令：
+
+$$
+L_S=\operatorname{lcm}\{m:m\in S\}.
+\tag{C4.1}
+$$
+
+只观察：
+
+$$
+\left(
+\theta_{p,t}(m)
+\right)_{m\in S}.
+\tag{C4.2}
+$$
+
+### 定理 C4.1　有限 level aliasing 周期
+
+两个实参数 $t,t'$ 在全部 $S$-levels 上不可区分，当且仅当：
+
+$$
+\boxed{
+t-t'
+\in
+\frac{2\pi L_S}{\log p}\mathbb Z.
+}
+\tag{C4.3}
+$$
+
+#### 证明
+
+令：
+
+$$
+x=\frac{(t-t')\log p}{2\pi}.
+$$
+
+在 level $m$ 上 phase 相等，当且仅当 $x/m\in\mathbb Z$，即 $x\in m\mathbb Z$。对所有 $m\in S$ 同时成立，当且仅当：
+
+$$
+x\in\bigcap_{m\in S}m\mathbb Z
+=
+L_S\mathbb Z.
+$$
+
+## C4.2 finite-window faithfulness
+
+设观察高度区间 $I$ 的长度为 $T$。若：
+
+$$
+\frac{2\pi L_S}{\log p}>T,
+\tag{C4.4}
+$$
+
+则有限 phase readout 在 $I$ 上单射。
+
+特别地，只取一个 level $m$，只要：
+
+$$
+\boxed{
+m>\frac{T\log p}{2\pi},
+}
+\tag{C4.5}
+$$
+
+level-$m$ phase observer 就足以在长度 $T$ 的任意高度窗中消除时间 alias。
+
+所以：
+
+$$
+\boxed{
+\text{无限 solenoid depth 只对无界高度轴必需；
+每个有限谱窗都只需有限 level。}
+}
+\tag{C4.6}
+$$
+
+## C4.3 Fibonacci shell 深度
+
+若选择 Fibonacci level $F_n$，条件成为：
+
+$$
+F_n>\frac{T\log p}{2\pi}.
+\tag{C4.7}
+$$
+
+由 Binet 渐近：
+
+$$
+\boxed{
+n_{\rm phase}(T,p)
+=
+\log_\varphi
+\left(
+\frac{\sqrt5\,T\log p}{2\pi}
+\right)
++
+O(1).
+}
+\tag{C4.8}
+$$
+
+这是一条不同于横向分辨深度的定律：
+
+- 横向分辨深度由 $|\delta|\log(q/p)$ 控制；
+- 纵向 phase de-aliasing 深度由 $T\log p$ 控制。
+
+二者共同决定一个有限 RH observer 所需的 Zeckendorf depth。
+
+---
+
+# 增订三·5　完整 single-prime thread 与 phase inverse limit
+
+## C5.1 全 level phase faithfulness
+
+### 定理 C5.1　完整 one-prime phase thread 恢复 $t$
+
+若：
+
+$$
+\theta_{p,t}(m)
+=
+\theta_{p,t'}(m)
+\qquad
+\forall m\ge1,
+\tag{C5.1}
+$$
+
+则：
+
+$$
+\boxed{t=t'.}
+\tag{C5.2}
+$$
+
+#### 证明
+
+令：
+
+$$
+x=\frac{(t-t')\log p}{2\pi}.
+$$
+
+前件意味着 $x/m\in\mathbb Z$ 对所有正整数 $m$。取 $m>|x|$，则 $|x/m|<1$。它又是整数，只能为零，所以 $x=0$，继而 $t=t'$。
+
+结合 norm charge：
+
+### 推论 C5.2　一个完整 prime thread 忠实编码 $u$
+
+$$
+\boxed{
+Z_{p,u}=Z_{p,v}
+\Longrightarrow
+u=v.
+}
+\tag{C5.3}
+$$
+
+## C5.2 charge 与 phase 的观察非对称
+
+charge 具有 finite-coordinate recovery：
+
+$$
+Q_p(u)
+=
+m\log\|Z_{p,u}(m)\|
+\tag{C5.4}
+$$
+
+对任意一个 $m$ 成立。
+
+phase 则是 inverse-limit data：任意有限 levels 在全实轴上都保留非平凡 alias period。
+
+所以 complex-power equivalence：
+
+$$
+\operatorname{ComplexPowerThread}
+\simeq
+\mathbb R\times\mathcal S
+\tag{C5.5}
+$$
+
+在观察论上是不对称的：
+
+$$
+\boxed{
+\mathbb R\text{-charge 是有限层可见的，}
+\qquad
+\mathcal S\text{-phase 的全局忠实性需要逆极限。}
+}
+\tag{C5.6}
+$$
+
+这解释了为什么 off-line displacement 产生 phase-independent hyperbolic floor，而 tangential time phase 可以具有任意深的 recurrence。
+
+---
+
+# 增订三·6　有限 solenoid observer 的 structural novelty 判据
+
+## C6.1 问题设置
+
+令 $\mathcal S$ 为 universal solenoid。对每个正整数 $m$，定义 coordinate observer：
+
+$$
+\pi_m:\mathcal S\to\mathbb R/\mathbb Z,
+\qquad
+\pi_m(\theta)=\theta_m.
+\tag{C6.1}
+$$
+
+给定非空有限已观察集合 $S$ 与候选新 level $m$，令：
+
+$$
+N=\operatorname{lcm}(S\cup\{m\}),
+\tag{C6.2}
+$$
+
+$$
+a_s=\frac Ns
+\qquad(s\in S),
+\tag{C6.3}
+$$
+
+$$
+b=\frac Nm,
+\tag{C6.4}
+$$
+
+$$
+d_S=\gcd\{a_s:s\in S\}.
+\tag{C6.5}
+$$
+
+由 compatibility：
+
+$$
+\theta_s=a_s\theta_N,
+\qquad
+\theta_m=b\theta_N.
+\tag{C6.6}
+$$
+
+### 定理 C6.1　finite-level semantic closure criterion
+
+$$
+\boxed{
+\pi_m
+\text{ 可由 }
+\{\pi_s:s\in S\}
+\text{ 恢复}
+\Longleftrightarrow
+d_S\mid b.
+}
+\tag{C6.7}
+$$
+
+#### 证明：充分性
+
+若 $d_S\mid b$，由 Bézout 存在整数 $k_s$ 使：
+
+$$
+d_S=\sum_{s\in S}k_sa_s.
+$$
+
+写 $b=hd_S$，则：
+
+$$
+\theta_m
+=
+b\theta_N
+=
+\sum_{s\in S}hk_sa_s\theta_N
+=
+\sum_{s\in S}hk_s\theta_s.
+\tag{C6.8}
+$$
+
+所以新 coordinate 是已有 coordinates 的整数线性组合。
+
+#### 证明：必要性与显式 witness
+
+若 $d_S\nmid b$，令：
+
+$$
+T=\frac N{d_S},
+\tag{C6.9}
+$$
+
+并取 real-generated solenoid thread：
+
+$$
+\vartheta^{(T)}_r
+=
+\frac Tr
+\pmod1.
+\tag{C6.10}
+$$
+
+对任意 $s\in S$：
+
+$$
+\vartheta_s^{(T)}
+=
+\frac{N/s}{d_S}
+=
+\frac{a_s}{d_S}
+=0\pmod1.
+\tag{C6.11}
+$$
+
+但：
+
+$$
+\vartheta_m^{(T)}
+=
+\frac b{d_S}
+\ne0\pmod1
+\tag{C6.12}
+$$
+
+因为 $d_S\nmid b$。
+
+所以零 phase thread 与 $\vartheta^{(T)}$ 在全部旧 observers 上碰撞，却被 $\pi_m$ 分离。
+
+## C6.2 信息逃逸解释
+
+项目的 structural novelty 语言因而给出：
+
+$$
+\boxed{
+d_S\nmid\frac Nm
+\Longleftrightarrow
+\pi_m
+\text{ 对 finite level catalog 具有严格 kernel novelty。}
+}
+\tag{C6.13}
+$$
+
+这比“更深 level 一定更有信息”精确得多。
+
+一个 numerically 更大的 level 可能已经在旧 coordinates 的 semantic closure 中；一个较小但 divisibility-independent 的 level 也可能提供 unique capture。
+
+因此 solenoid phase 的信息层级不是线性深度序，而是：
+
+$$
+\boxed{
+\text{由 divisibility lattice、gcd 与 lcm 控制的部分序。}
+}
+\tag{C6.14}
+$$
+
+---
+
+# 增订三·7　phase faithfulness 的深度—宽度对偶
+
+## C7.1 两个 labelled primes 在 level one 已全局忠实
+
+取不同素数 $p\ne q$，定义：
+
+$$
+\iota_{p,q}(u)
+=
+\left(
+p^{-u},
+q^{-u}
+\right).
+\tag{C7.1}
+$$
+
+### 定理 C7.1　two-prime level-one embedding
+
+$$
+\boxed{
+\iota_{p,q}(u)=\iota_{p,q}(v)
+\Longrightarrow
+u=v.
+}
+\tag{C7.2}
+$$
+
+#### 证明
+
+取模长，从：
+
+$$
+|p^{-u}|=|p^{-v}|
+$$
+
+得到 $\Re u=\Re v$。
+
+令 $\tau=\Im u-\Im v$。相位相等给出整数 $k,\ell$：
+
+$$
+\tau\log p=2\pi k,
+\qquad
+\tau\log q=2\pi\ell.
+\tag{C7.3}
+$$
+
+若 $\tau\ne0$，则：
+
+$$
+\frac{\log p}{\log q}
+=
+\frac{k}{\ell}
+\in\mathbb Q.
+\tag{C7.4}
+$$
+
+于是存在非零整数关系：
+
+$$
+p^{\ell}=q^{k},
+$$
+
+与不同素数的唯一分解矛盾。故 $\tau=0$。
+
+## C7.2 深度—宽度对偶
+
+于是有两种完全不同的 phase 完备方式：
+
+$$
+\boxed{
+\begin{aligned}
+\text{one prime + all power levels}
+&\Longrightarrow
+\text{phase faithful},\\
+\text{two distinct labelled primes + level one}
+&\Longrightarrow
+\text{phase faithful}.
+\end{aligned}
+}
+\tag{C7.5}
+$$
+
+前者使用 vertical root depth，后者使用 horizontal prime width。
+
+这说明：
+
+$$
+\boxed{
+\text{Zeckendorf/power depth 与 prime-pair relation width
+是两种可互补的 observer resource。}
+}
+\tag{C7.6}
+$$
+
+## C7.3 scalar product 重新制造 alias
+
+若只保留 scalar product：
+
+$$
+p^{-u}q^{-u}
+=
+(pq)^{-u},
+\tag{C7.7}
+$$
+
+则虚部只按周期：
+
+$$
+\frac{2\pi}{\log(pq)}
+\tag{C7.8}
+$$
+
+可见。
+
+所以 labelled pair 是单射，而 commutative product 不是单射。
+
+这是一个最小关系信息逃逸模型：
+
+$$
+\boxed{
+\text{两个 prime labels 已足以恢复 }t,
+\quad
+\text{但把它们乘成一个 scalar 会再次遗失 }t.
+}
+\tag{C7.9}
+$$
+
+prime-pair alternating determinant、ratio、exterior square 或 ordered holonomy 的作用，正是阻止这一横向标签被 scalarization 删除。
+
+---
+
+# 增订三·8　charge graph、共同模与 anchor
+
+## C8.1 非线性 charge graph energy
+
+取连通有限 prime graph $G=(V,E)$，正边权 $W_e>0$。对任意 real charge vector：
+
+$$
+q=(q_v)_{v\in V},
+$$
+
+定义：
+
+$$
+\boxed{
+\mathcal E_G^{\rm ch}(q)
+=
+\sum_{\{i,j\}\in E}
+W_{ij}\sinh^2(q_i-q_j).
+}
+\tag{C8.1}
+$$
+
+则：
+
+$$
+\mathcal E_G^{\rm ch}(q)=0
+\Longleftrightarrow
+q_i=q_j\quad\forall i,j,
+\tag{C8.2}
+$$
+
+即：
+
+$$
+\boxed{
+\ker\mathcal E_G^{\rm ch}
+=
+\operatorname{span}\{\mathbf1\}.
+}
+\tag{C8.3}
+$$
+
+在小 charge 区：
+
+$$
+\mathcal E_G^{\rm ch}(q)
+=
+q^TL_Gq
++
+O(\|B^Tq\|^4),
+\tag{C8.4}
+$$
+
+其中 $L_G$ 是加权 graph Laplacian。
+
+## C8.2 physical spectral charge ray
+
+对 canonical prime threads：
+
+$$
+q_p=Q_p(u)=-\delta\log p.
+\tag{C8.5}
+$$
+
+令：
+
+$$
+\ell=(\log p)_{p\in V}.
+$$
+
+则：
+
+$$
+q=-\delta\ell.
+\tag{C8.6}
+$$
+
+只要 graph 至少连接两个不同素数，$\ell$ 不是常向量，因此：
+
+$$
+\mathcal E_G^{\rm ch}(-\delta\ell)=0
+\Longleftrightarrow
+\delta=0.
+\tag{C8.7}
+$$
+
+所以在 canonical 一维 spectral manifold 上，pair charge differences 已足以定位临界线。
+
+## C8.3 ambient charge space 仍有共同模
+
+若为了 Schur elimination 把 charge 扩张到一般 ambient state space，则 constant charge mode 不再被 edge energy 看见。
+
+因此必须区分：
+
+$$
+\boxed{
+\text{restricted physical charge ray 上的 faithful detection}
+}
+\tag{C8.8}
+$$
+
+与：
+
+$$
+\boxed{
+\text{ambient charge Hilbert space 上的 full coercivity}.
+}
+\tag{C8.9}
+$$
+
+前者不需要额外 anchor；后者必须控制共同模。
+
+## C8.4 grounded Laplacian
+
+定义平均 charge：
+
+$$
+\bar q=\frac1{|V|}\sum_{v\in V}q_v.
+\tag{C8.10}
+$$
+
+对 $\kappa>0$，定义：
+
+$$
+\boxed{
+\mathcal E_{G,\kappa}^{\rm grounded}(q)
+=
+q^TL_Gq
++
+\kappa|V|\,|\bar q|^2.
+}
+\tag{C8.11}
+$$
+
+把：
+
+$$
+q=\bar q\,\mathbf1+q_\perp,
+\qquad
+q_\perp\perp\mathbf1,
+\tag{C8.12}
+$$
+
+并令 $\lambda_2(L_G)>0$ 为第一非零 Laplacian eigenvalue，则：
+
+$$
+\boxed{
+\mathcal E_{G,\kappa}^{\rm grounded}(q)
+\ge
+\min\{\lambda_2(L_G),\kappa\}\|q\|^2.
+}
+\tag{C8.13}
+$$
+
+这给出 full ambient coercivity。
+
+Gamma/pole completion 是否 canonical 地提供式 (C8.11) 中的共同模 anchor，目前仍是开放桥；不能因为 completed function 具有 Gamma factor 就直接认定该项已经存在。
+
+---
+
+# 增订三·9　荷—相位乘积 arena 的 exact escape rate
+
+## C9.1 finite product arena
+
+取有限 charge set $C$，$|C|=c$，有限 phase set $P$，$|P|=p$。状态空间为：
+
+$$
+\Omega=C\times P.
+\tag{C9.1}
+$$
+
+假设 charge observer 完全区分 $C$。某个有限 phase observer family 将 $P$ 分成等价类：
+
+$$
+P=P_1\sqcup\cdots\sqcup P_r,
+\qquad
+|P_j|=n_j.
+\tag{C9.2}
+$$
+
+联合 observers 下，两个状态不可区分，当且仅当：
+
+- charge 相同；
+- phase 落在同一个 $P_j$。
+
+所以有序非对角 escape pair 数为：
+
+$$
+\boxed{
+|\operatorname{EscapePairs}|
+=
+c\sum_{j=1}^{r}n_j(n_j-1).
+}
+\tag{C9.3}
+$$
+
+总有序非对角 pair 数为：
+
+$$
+cp(cp-1).
+\tag{C9.4}
+$$
+
+因此 exact escape rate 为：
+
+$$
+\boxed{
+\varepsilon
+=
+\frac{
+\sum_jn_j(n_j-1)
+}{
+p(cp-1)
+}.
+}
+\tag{C9.5}
+$$
+
+## C9.2 两个极端
+
+只观察 charge、不观察 phase 时，只有一个 phase class $n_1=p$：
+
+$$
+\boxed{
+\varepsilon_{\rm charge}
+=
+\frac{p-1}{cp-1}.
+}
+\tag{C9.6}
+$$
+
+phase 也被完全分离时，所有 $n_j=1$：
+
+$$
+\boxed{
+\varepsilon_{\rm charge+phase}=0.
+}
+\tag{C9.7}
+$$
+
+## C9.3 structural novelty 等价于严格降率
+
+加入一个新 phase coordinate 后：
+
+- 若它在已有 semantic closure 中，partition 不变，escape rate 不变；
+- 若它分裂至少一个旧 class，则：
+
+$$
+\sum_jn_j(n_j-1)
+$$
+
+严格下降，因而 exact escape rate 严格下降。
+
+结合定理 C6.1：
+
+$$
+\boxed{
+d_S\nmid\frac Nm
+\Longrightarrow
+\pi_m
+\text{ 具有显式 unique-capture pair，并严格降低有限 arena 的逃逸率。}
+}
+\tag{C9.8}
+$$
+
+这把 abstract structural novelty 与 universal-solenoid divisibility geometry 接成一个可计算判据。
+
+---
+
+# 增订三·10　离圆零点必产生负径向先兆区域
+
+## C10.1 Cayley 拉回
+
+固定 $a>1/2$。令：
+
+$$
+u=C_a^{-1}(w)
+=
+a\frac{w-1}{w+1},
+\tag{C10.1}
+$$
+
+并定义：
+
+$$
+G_a(w)
+=
+\Xi\!\left(
+\frac12+C_a^{-1}(w)
+\right),
+\qquad
+w\ne-1.
+\tag{C10.2}
+$$
+
+若 $\rho_*$ 是离线零点，则其 Cayley 像 $w_*$ 满足：
+
+$$
+G_a(w_*)=0,
+\qquad
+|w_*|\ne1.
+\tag{C10.3}
+$$
+
+利用 reciprocal reflection，可选择圆外伙伴：
+
+$$
+w_*=r_*e^{iq_*},
+\qquad
+r_*>1.
+\tag{C10.4}
+$$
+
+## C10.2 radial counting profile
+
+定义：
+
+$$
+\boxed{
+\mathscr Q_a(q,r)
+=
+|G_a(re^{iq})|^2.
+}
+\tag{C10.5}
+$$
+
+在 $\mathscr Q_a>0$ 的位置定义 scale-weighted radial log derivative：
+
+$$
+\boxed{
+\mathscr R_a(q,r)
+=
+r\partial_r\log\mathscr Q_a(q,r).
+}
+\tag{C10.6}
+$$
+
+## C10.3 局部正常形
+
+设 $w_*$ 是 $m$ 重零点。局部有：
+
+$$
+G_a(w)
+=
+(w-w_*)^mH(w),
+\qquad
+H(w_*)\ne0.
+\tag{C10.7}
+$$
+
+沿同一径向射线 $q=q_*$：
+
+$$
+\mathscr Q_a(q_*,r)
+=
+|r-r_*|^{2m}|H(re^{iq_*})|^2.
+\tag{C10.8}
+$$
+
+因此：
+
+$$
+\boxed{
+\mathscr R_a(q_*,r)
+=
+\frac{2mr}{r-r_*}
++
+r\partial_r
+\log|H(re^{iq_*})|^2.
+}
+\tag{C10.9}
+$$
+
+当 $r\uparrow r_*$ 且 $r<r_*$ 时，第一项趋向 $-\infty$，第二项保持有界。
+
+### 定理 C10.1　off-circle zero forces a negative radial precursor
+
+存在 $r_0<r_*$，使：
+
+$$
+r_0<r<r_*
+\Longrightarrow
+\mathscr Q_a(q_*,r)>0,
+\qquad
+\mathscr R_a(q_*,r)<0.
+\tag{C10.10}
+$$
+
+由于 $\mathscr Q_a$ 与 $\mathscr R_a$ 在避开零点的局部区域连续，存在一个非空开集：
+
+$$
+\boxed{
+\mathcal N_a
+=
+\left\{
+(q,r):
+r>0,\,
+\mathscr Q_a(q,r)>0,\,
+\mathscr R_a(q,r)<0
+\right\}
+}
+\tag{C10.11}
+$$
+
+包含这些内侧点。
+
+这正好为项目 `RationalNegativeCountCertificate` 的“开放”和“RH 失败时非空”两个前件提供一个具体条件性来源。
+
+---
+
+# 增订三·11　有理 radial precursor certificate
+
+由 $\mathbb Q^2$ 在 $\mathbb R^2$ 中稠密以及定理 C10.1：
+
+### 定理 C11.1　离线零点蕴含有理负径向先兆
+
+若 completed $\Xi$ 存在离线零点，则对任意固定 $a>1/2$，存在：
+
+$$
+q\in\mathbb Q,
+\qquad
+r\in\mathbb Q_{>0},
+\tag{C11.1}
+$$
+
+使：
+
+$$
+\boxed{
+\mathscr Q_a(q,r)>0,
+\qquad
+r\partial_r\log\mathscr Q_a(q,r)<0.
+}
+\tag{C11.2}
+$$
+
+这里的 $q$ 是角度的一个实代表，不要求是 $\pi$ 的有理倍数。
+
+## C11.2 证书边界
+
+式 (C11.2) 是有限参数 witness，但它还不是完全离散的 machine certificate。要验证它，仍需要：
+
+- 对 $G_a$ 在有理点的可认证求值或区间界；
+- 对 radial derivative 的可认证严格负上界；
+- 对 branch、Cayley inverse 与远离 $w=-1$ 的域控制。
+
+所以该定理证明的是：
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\Longrightarrow
+\text{存在有限有理参数的严格不等式先兆}.
+}
+\tag{C11.3}
+$$
+
+它没有证明该先兆在当前工程中已经可执行枚举。
+
+---
+
+# 增订三·12　有理矩形是全部离线零点的可数观察基
+
+## C12.1 离轴有理矩形
+
+令 $\mathfrak R_{\mathbb Q}^{\rm off}$ 为所有闭矩形：
+
+$$
+R=[x_0,x_1]+i[y_0,y_1],
+\tag{C12.1}
+$$
+
+其中：
+
+$$
+x_0,x_1,y_0,y_1\in\mathbb Q,
+\qquad
+x_0<x_1,
+\qquad
+y_0<y_1,
+\tag{C12.2}
+$$
+
+且整个矩形位于 critical strip 内并与临界线保持正距离：
+
+$$
+\overline R
+\subset
+\left\{
+s:
+0<\Re s<1,\,
+\Re s\ne\frac12
+\right\}.
+\tag{C12.3}
+$$
+
+该 family 可数。
+
+## C12.2 RH 的 rational rectangle 等价
+
+记 $N_\Xi(R)$ 为 $\Xi$ 在 $R$ 内按解析重数的零点数，边界零点通过选择更小矩形避开。
+
+### 定理 C12.1　countable off-axis zero-count criterion
+
+$$
+\boxed{
+\mathrm{RH}
+\Longleftrightarrow
+N_\Xi(R)=0
+\quad
+\forall R\in\mathfrak R_{\mathbb Q}^{\rm off}.
+}
+\tag{C12.4}
+$$
+
+#### 证明
+
+若 RH 成立，离轴矩形中显然没有零点。
+
+反之，若存在离线零点 $\rho_*$，由零点离散性与 $\rho_*$ 到临界线的正距离，可以选择一个足够小的开邻域，只包含有限零点且边界无零。再由有理数稠密性，在该邻域中选择一个有理矩形包含 $\rho_*$、边界不经过零点且仍完全离轴，于是：
+
+$$
+N_\Xi(R)>0.
+$$
+
+## C12.3 真与假的证书非对称
+
+因此：
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\Longrightarrow
+\exists R\in\mathfrak R_{\mathbb Q}^{\rm off},
+\quad
+N_\Xi(R)>0.
+}
+\tag{C12.5}
+$$
+
+RH 失败有一个有限几何窗口 witness。
+
+但 RH 本身是：
+
+$$
+\forall R\in\mathfrak R_{\mathbb Q}^{\rm off},
+\quad
+N_\Xi(R)=0,
+\tag{C12.6}
+$$
+
+仍是一个可数全称命题。
+
+所以“把无限 RH 改成有限问题”的严格版本不是单个有限问题，而是：
+
+$$
+\boxed{
+\text{失败由一个有限窗口见证；
+成立需要一族可数有限窗口证书或一个统一全局 coercivity theorem。}
+}
+\tag{C12.7}
+$$
+
+---
+
+# 增订三·13　Rouché 将 analytic approximation 变成零点证书
+
+## C13.1 边界误差与 determinant floor
+
+对 $R\in\mathfrak R_{\mathbb Q}^{\rm off}$，设 $D_N$ 在 $R$ 的邻域解析。定义：
+
+$$
+\operatorname{Err}_N(R)
+=
+\sup_{s\in\partial R}
+|\Xi(s)-D_N(s)|,
+\tag{C13.1}
+$$
+
+$$
+\operatorname{Floor}_N(R)
+=
+\inf_{s\in\partial R}
+|D_N(s)|.
+\tag{C13.2}
+$$
+
+若：
+
+$$
+\boxed{
+\operatorname{Err}_N(R)
+<
+\operatorname{Floor}_N(R),
+}
+\tag{C13.3}
+$$
+
+则项目的 Rouché theorem 给出：
+
+$$
+\boxed{
+N_\Xi(R)=N_{D_N}(R).
+}
+\tag{C13.4}
+$$
+
+## C13.2 两种 finite certificate
+
+### 排除证书
+
+若：
+
+$$
+N_{D_N}(R)=0
+\tag{C13.5}
+$$
+
+且式 (C13.3) 成立，则：
+
+$$
+N_\Xi(R)=0.
+\tag{C13.6}
+$$
+
+### 反例证书
+
+若：
+
+$$
+N_{D_N}(R)>0
+\tag{C13.7}
+$$
+
+且式 (C13.3) 成立，则：
+
+$$
+N_\Xi(R)>0,
+\tag{C13.8}
+$$
+
+从而 RH 失败。
+
+## C13.3 locally uniform convergence 的固定窗口稳定性
+
+假设：
+
+$$
+D_N\longrightarrow\Xi
+\tag{C13.9}
+$$
+
+在 compact sets 上局部一致收敛。
+
+若 $\partial R$ 无 $\Xi$ 零点，则：
+
+$$
+m_R
+=
+\inf_{\partial R}|\Xi|>0.
+\tag{C13.10}
+$$
+
+对充分大 $N$：
+
+$$
+\sup_{\partial R}|D_N-\Xi|<\frac{m_R}{3}.
+\tag{C13.11}
+$$
+
+于是：
+
+$$
+|D_N|
+\ge
+|\Xi|-|D_N-\Xi|
+>
+\frac{2m_R}{3},
+\tag{C13.12}
+$$
+
+所以：
+
+$$
+|D_N-\Xi|<|D_N|
+\tag{C13.13}
+$$
+
+并得到 zero-count stability。
+
+因此每个固定有理矩形的零点计数最终稳定。
+
+但 $N$ 可以依赖 $R$；局部一致收敛本身不提供一个覆盖全部高度的统一有限 $N$。
+
+---
+
+# 增订三·14　Schur margin 到 determinant floor 的定量桥
+
+## C14.1 analytic transfer 与 Hermitianization
+
+设：
+
+$$
+T_N(s)\in M_{d_N}(\mathbb C)
+\tag{C14.1}
+$$
+
+在矩形邻域逐项 holomorphic。定义：
+
+$$
+E_N(s)
+=
+T_N(s)^*T_N(s)
+\succeq0.
+\tag{C14.2}
+$$
+
+$E_N$ 不 holomorphic，但：
+
+$$
+\ker E_N(s)=\ker T_N(s),
+\tag{C14.3}
+$$
+
+并且：
+
+$$
+|\det T_N(s)|^2
+=
+\det E_N(s).
+\tag{C14.4}
+$$
+
+## C14.2 hidden block 与 Schur complement
+
+把：
+
+$$
+E_N
+=
+\begin{pmatrix}
+A&B\\
+B^*&D
+\end{pmatrix},
+\tag{C14.5}
+$$
+
+并假设在某个集合上：
+
+$$
+D\succeq dI,
+\qquad
+d>0,
+\tag{C14.6}
+$$
+
+$$
+S
+:=
+A-BD^{-1}B^*
+\succeq\kappa I,
+\qquad
+\kappa>0,
+\tag{C14.7}
+$$
+
+$$
+\|B\|\le b.
+\tag{C14.8}
+$$
+
+令：
+
+$$
+C=D^{-1}B^*.
+\tag{C14.9}
+$$
+
+完成平方给出：
+
+$$
+\langle E_N(x,y),(x,y)\rangle
+=
+\langle Sx,x\rangle
++
+\langle D(y+Cx),y+Cx\rangle.
+\tag{C14.10}
+$$
+
+定义 triangular map：
+
+$$
+L(x,y)=(x,y+Cx).
+\tag{C14.11}
+$$
+
+则：
+
+$$
+E_N
+=
+L^*
+\begin{pmatrix}
+S&0\\
+0&D
+\end{pmatrix}
+L.
+\tag{C14.12}
+$$
+
+又有：
+
+$$
+\|L^{-1}\|
+\le
+1+\|C\|
+\le
+1+\frac bd.
+\tag{C14.13}
+$$
+
+### 定理 C14.1　Schur-to-singular-value floor
+
+$$
+\boxed{
+E_N
+\succeq
+\mu I,
+\qquad
+\mu
+=
+\frac{
+\min\{\kappa,d\}
+}{
+(1+b/d)^2
+}.
+}
+\tag{C14.14}
+$$
+
+#### 证明
+
+由式 (C14.12)：
+
+$$
+\langle E_Nv,v\rangle
+\ge
+\min\{\kappa,d\}\|Lv\|^2.
+$$
+
+而：
+
+$$
+\|Lv\|
+\ge
+\frac{\|v\|}{\|L^{-1}\|}.
+$$
+
+代入式 (C14.13) 即得。
+
+所以：
+
+$$
+\sigma_{\min}(T_N)
+\ge
+\sqrt\mu.
+\tag{C14.15}
+$$
+
+## C14.3 determinant floor
+
+所有 singular values 都不小于 $\sqrt\mu$，所以：
+
+$$
+\boxed{
+|\det T_N|
+\ge
+\mu^{d_N/2}.
+}
+\tag{C14.16}
+$$
+
+若：
+
+$$
+D_N(s)
+=
+U_N(s)\det T_N(s),
+\tag{C14.17}
+$$
+
+且边界上：
+
+$$
+|U_N(s)|\ge u_N>0,
+\tag{C14.18}
+$$
+
+则：
+
+$$
+\boxed{
+\operatorname{Floor}_N(R)
+\ge
+u_N\mu_N^{d_N/2}.
+}
+\tag{C14.19}
+$$
+
+因此一个足够的 Rouché 条件是：
+
+$$
+\boxed{
+\operatorname{Err}_N(R)
+<
+u_N\mu_N^{d_N/2}.
+}
+\tag{C14.20}
+$$
+
+这就是 Schur margin 到 analytic zero-count stability 的定量桥。
+
+---
+
+# 增订三·15　determinant entropy tax 与 Hankel 最小记忆
+
+## C15.1 证书精度预算
+
+由式 (C14.20)，所需误差精度至少满足：
+
+$$
+-\log\operatorname{Err}_N(R)
+>
+-\log u_N
++
+\frac{d_N}{2}\log\frac1{\mu_N}.
+\tag{C15.1}
+$$
+
+定义：
+
+$$
+\boxed{
+\mathfrak B_N(R)
+=
+-\log u_N
++
+\frac{d_N}{2}\log\frac1{\mu_N}.
+}
+\tag{C15.2}
+$$
+
+它是由 unit floor、operator gap 与 realization dimension 共同决定的 determinant certificate budget。
+
+即使 $\mu_N$ 保持正，只要：
+
+$$
+0<\mu_N<1
+$$
+
+且 $d_N\to\infty$，determinant floor 仍可能指数趋零。
+
+所以：
+
+$$
+\boxed{
+\text{positive-definite}
+\not\Longrightarrow
+\text{Rouché-certifiable with a useful uniform margin}.
+}
+\tag{C15.3}
+$$
+
+## C15.2 naive state enumeration 的代价
+
+Zeckendorf 深度 $Q$ 的合法历史数为：
+
+$$
+M_Q=F_{Q+2}\asymp\varphi^Q.
+\tag{C15.4}
+$$
+
+若把每个历史当作独立 matrix state，则 generic determinant floor 的维数项可能具有尺度：
+
+$$
+\mu^{M_Q/2}
+=
+\exp\!\left(
+-\Theta(\varphi^Q)
+\right).
+\tag{C15.5}
+$$
+
+相应误差预算关于 $Q$ 指数增长。
+
+## C15.3 minimal transfer 的代价
+
+同一 hard-core count behavior 具有二阶递推和 $2\times2$ transfer。其 Hankel rank 恰为 $2$，所以可见行为只需二态记忆。
+
+若 analytic determinant representation 可以在不改变目标 scalar 零集的前提下压缩到 minimal realization rank $r_N$，则维数税从：
+
+$$
+\frac{d_N}{2}\log\frac1\mu
+$$
+
+降为：
+
+$$
+\frac{r_N}{2}\log\frac1\mu.
+\tag{C15.6}
+$$
+
+在 Zeckendorf hard-core 原型中：
+
+$$
+r_N=2.
+\tag{C15.7}
+$$
+
+于是本轮得到一个新的解释：
+
+$$
+\boxed{
+\text{Zeckendorf/Hankel 的证明论价值，
+不是制造指数多状态，
+而是把指数多历史压缩成最小二态 memory，
+从而降低 determinant zero certificate 的维数税。}
+}
+\tag{C15.8}
+$$
+
+这里仍需保留一个前件：state-space 压缩必须保持 analytic determinant，至多乘以无零 unit。Hankel 行为等价本身不自动保证任意 chosen determinant 不变。
+
+---
+
+# 增订三·16　有限高度 observer 的双重深度预算
+
+## C16.1 phase budget
+
+由式 (C4.8)，覆盖高度窗 $|t|\le T$ 的 single-prime Fibonacci phase depth 为：
+
+$$
+n_{\rm phase}
+=
+\log_\varphi(T\log p)+O(1).
+\tag{C16.1}
+$$
+
+## C16.2 transverse budget
+
+由增订一的 Fibonacci–Lorentz scaling，分辨 prime pair $(p,q)$ 上横向位移 $\delta$ 需要：
+
+$$
+n_{\perp}
+=
+\log_\varphi
+\frac1{
+|\delta|\,|\log(q/p)|
+}
++
+O(1).
+\tag{C16.2}
+$$
+
+## C16.3 joint observer depth
+
+所以一个同时在有限高度窗中解除 phase alias、又能分辨给定 transverse scale 的 observer，可取：
+
+$$
+\boxed{
+n_{\rm obs}
+=
+\max\left\{
+n_{\rm phase},
+n_{\perp}
+\right\}.
+}
+\tag{C16.3}
+$$
+
+对假想第一离线零点：
+
+$$
+\rho_*
+=
+\frac12+\delta_*+it_*,
+\tag{C16.4}
+$$
+
+存在有限 $n$，使：
+
+- level $F_n$ 在 $[0,t_*]$ 中对 single-prime phase 无 alias；
+- pair shell $F_n$ 对 $\delta_*$ 达到非微扰横向尺度；
+- 一个围绕 $\rho_*$ 的有理矩形可由有限 phase/charge coordinates 区分。
+
+所以：
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\text{ 的第一个离线缺陷在 observer geometry 上具有有限深度 witness。}
+}
+\tag{C16.5}
+$$
+
+这仍不意味着当前工程已能从 prime side 算出该 witness；它只说明一旦缺陷存在，不需要无限深度才能在它所在的有限高度窗中分辨它。
+
+---
+
+# 增订三·17　四类不同的信息逃逸及其唯一修复
+
+当前理论至少出现四种不可混同的 kernel enlargement。
+
+## C17.1 label scalarization escape
+
+两个 labelled primes：
+
+$$
+(p^{-u},q^{-u})
+$$
+
+忠实，但乘积：
+
+$$
+(pq)^{-u}
+$$
+
+重新产生 phase alias。
+
+修复对象是：
+
+$$
+\boxed{
+\text{pair / ratio / exterior / ordered holonomy readout}.
+}
+\tag{C17.1}
+$$
+
+## C17.2 common-charge escape
+
+edge differences 看不见：
+
+$$
+q\mapsto q+c\mathbf1.
+$$
+
+修复对象是：
+
+$$
+\boxed{
+\text{one independent charge ANCHOR}.
+}
+\tag{C17.2}
+$$
+
+## C17.3 finite-root-depth escape
+
+有限 solenoid coordinates 看不见某些 deeper root choices。其 novelty 由定理 C6.1 的 divisibility criterion 决定。
+
+修复对象是：
+
+$$
+\boxed{
+\text{structurally novel deeper level
+或 multiplicatively independent prime width}.
+}
+\tag{C17.3}
+$$
+
+## C17.4 determinant-boundary escape
+
+pointwise positive Schur margin 若没有 uniform lower floor，可能不足以压过 analytic approximation error；高维 determinant 还会把 singular floor 乘成极小量。
+
+修复对象是：
+
+$$
+\boxed{
+\text{Hankel-minimal realization
++
+uniform Schur floor
++
+strict Rouché inequality}.
+}
+\tag{C17.4}
+$$
+
+## C17.5 不可互换性
+
+四种修复分别作用于不同 kernel：
+
+- pair observer 不能 grounding common charge；
+- anchor 不能恢复 deep phase；
+- deep phase 不能提供 determinant boundary floor；
+- positive determinant floor 不能重构 prime ordering。
+
+所以最终低逃逸理论必须是它们的 joint kernel，而不是用一个“能量”概念替代全部层。
+
+---
+
+# 增订三·18　Rouché–Schur rational certificate stack
+
+## C18.1 单矩形证书
+
+对每个离轴有理矩形 $R$，一个完整 finite certificate 可由下列数据组成：
+
+1. 一个有限维 holomorphic transfer $T_N(s)$；
+2. 一个无零 analytic unit $U_N(s)$；
+3. scalar approximant：
+
+$$
+D_N(s)=U_N(s)\det T_N(s);
+\tag{C18.1}
+$$
+
+4. $E_N=T_N^*T_N$ 的 visible–hidden block decomposition；
+5. 整个 $\overline R$ 上：
+
+$$
+D\succeq dI,
+\qquad
+S\succeq\kappa I,
+\qquad
+\|B\|\le b;
+\tag{C18.2}
+$$
+
+6. unit floor：
+
+$$
+|U_N|\ge u>0;
+\tag{C18.3}
+$$
+
+7. certified analytic error：
+
+$$
+\sup_{\partial R}|\Xi-D_N|
+<
+u
+\left(
+\frac{\min\{\kappa,d\}}{(1+b/d)^2}
+\right)^{d_N/2}.
+\tag{C18.4}
+$$
+
+由式 (C18.2)，$T_N$ 在整个矩形内可逆，所以：
+
+$$
+N_{D_N}(R)=0.
+\tag{C18.5}
+$$
+
+由式 (C18.4) 和 Rouché：
+
+$$
+N_\Xi(R)=0.
+\tag{C18.6}
+$$
+
+### 条件定理 C18.1　countable rational certificate criterion implies RH
+
+若每个：
+
+$$
+R\in\mathfrak R_{\mathbb Q}^{\rm off}
+$$
+
+都具有上述某个 finite certificate，则：
+
+$$
+\boxed{\mathrm{RH}.}
+\tag{C18.7}
+$$
+
+#### 证明
+
+每个离轴有理矩形都无零，再用定理 C12.1。
+
+## C18.2 failure taxonomy
+
+反过来，若存在离线零点，则包含它的某个有理矩形必使 certificate stack 的至少一层失败：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{不存在 canonical finite transfer；或}\\
+&\det T_N\text{ 与 }\Xi\text{ 的 unit relation 不忠实；或}\\
+&\text{hidden block 失去正 gap；或}\\
+&\text{Schur margin 在矩形内闭合；或}\\
+&\text{unit amplitude 消失；或}\\
+&\text{approximation error 不足以跨过 determinant floor；或}\\
+&\text{dimension growth 使 floor 比误差更快坍缩。}
+\end{aligned}
+}
+\tag{C18.8}
+$$
+
+这把“离线相变原因”从单一比喻改写成一组互斥程度未定、但逐项可验证的 failure modes。
+
+---
+
+# 增订三·19　从 prime–zero 输运到 finite certificate 的新研究顺序
+
+此前路线直接追求：
+
+$$
+E_{\rm prime}^{\perp}
+\longrightarrow
+E_{\rm off}^{\rm odd}.
+\tag{C19.1}
+$$
+
+本增订表明，可以把该桥拆成更细的七层。
+
+## 第一层：canonical prime threads
+
+构造并闭合：
+
+$$
+Z_{p,u}(m)
+=
+e^{-u\log p/m},
+\qquad
+Q_p=-\delta\log p.
+\tag{C19.2}
+$$
+
+## 第二层：labelled relation geometry
+
+证明：
+
+$$
+\sinh^2(\delta\log(q/p))
+=
+\sinh^2(Q_p-Q_q),
+\tag{C19.3}
+$$
+
+并保留 compact phase difference。
+
+## 第三层：finite structural novelty
+
+用 $\gcd/\operatorname{lcm}$ 判据识别哪些 solenoid level readouts 真正缩小 kernel；用 two-prime embedding识别横向 prime width 的 phase faithfulness。
+
+## 第四层：grounded relation coercivity
+
+在 ambient charge/phase Galerkin space 上加入最小 ANCHOR，使 graph differential 没有共同模 escape。
+
+## 第五层：analytic transfer
+
+构造：
+
+$$
+T_N(s),
+\qquad
+D_N(s)=U_N(s)\det T_N(s),
+\tag{C19.4}
+$$
+
+并证明 $D_N\to\Xi$ locally uniformly，带可计算误差。
+
+## 第六层：Hermitian Schur certificate
+
+对：
+
+$$
+E_N=T_N^*T_N
+$$
+
+证明 hidden block、cycle block、charge anchor 与 visible block 的 uniform Schur lower bounds。
+
+## 第七层：Rouché exhaustion
+
+在所有离轴有理矩形上证明：
+
+$$
+\operatorname{Err}_N(R)
+<
+\operatorname{Floor}_N(R).
+\tag{C19.5}
+$$
+
+这七层中，前四层主要是有限关系几何；第五层是 prime–Gamma analytic heart；第六层是 positive completion heart；第七层是从 finite approximation 到 global zero exclusion 的 limit heart。
+
+---
+
+# 增订三·20　建议形式化节点
+
+以下是本增订自然产生的节点名称。它们是理论分解，不表示已经创建文件。
+
+```text
+D5/S3/Observer/PrimePowerThread/
+  CenteredPrimePowerThread.lean
+  PrimeThreadCompatibility.lean
+  PrimeThreadLogarithmicCharge.lean
+  PrimeThreadSolenoidPhase.lean
+  ReflectedPrimeThreadInverseConjugate.lean
+  CriticalLineIffZeroPrimeCharge.lean
+
+D5/S3/Observer/PrimeThreadRelation/
+  PrimePairChargeGradient.lean
+  PrimePairKernelChargePhaseIdentity.lean
+  RawChargeWeightCannotNormalizeAway.lean
+  TwoPrimeLevelOneEmbedding.lean
+  ScalarPrimeProductPhaseAliasing.lean
+
+D5/S3/Observer/SolenoidInformationEscape/
+  FiniteLevelAliasingPeriod.lean
+  FiniteWindowSingleLevelFaithfulness.lean
+  FullThreadPhaseFaithfulness.lean
+  FiniteLevelSemanticClosureCriterion.lean
+  LevelObserverUniqueCaptureWitness.lean
+  SolenoidLevelStructuralNovelty.lean
+
+D5/S3/Observer/ChargeGraph/
+  NonlinearChargeGraphEnergy.lean
+  ChargeGraphConstantKernel.lean
+  PhysicalPrimeChargeRayFaithful.lean
+  GroundedChargeLaplacian.lean
+  GroundedChargeCoercivity.lean
+  PrimeGammaCommonChargeAnchorTarget.lean
+
+D5/S3/Zeros/CayleyRadialCertificate/
+  CayleyPulledBackZeroProfile.lean
+  OffCircleZeroRadialLogDerivative.lean
+  OffCircleZeroNegativeRegionOpen.lean
+  OffLineZeroRationalRadialPrecursor.lean
+
+D5/S3/Weil/ZetaAnalytic/RationalRectangleCertificate/
+  OffAxisRationalRectangleBasis.lean
+  RhIffAllRationalRectangleCountsZero.lean
+  LocallyUniformZeroCountStability.lean
+  RoucheZeroFreeApproximantCertificate.lean
+
+D5/S3/Weil/ZetaLinear/SchurRoucheBridge/
+  BlockEnergyTriangularFactorization.lean
+  SchurMarginSingularValueFloor.lean
+  SingularValueDeterminantFloor.lean
+  SchurMarginRoucheBoundaryFloor.lean
+  DeterminantDimensionTax.lean
+  HankelMinimalCertificateDimensionTarget.lean
+
+D5/S3/Weil/PrimeGammaCertificate/
+  CanonicalPrimeZeckendorfGammaTransferTarget.lean
+  TransferDeterminantXiUnitTarget.lean
+  LocallyUniformTransferApproximationTarget.lean
+  RationalRectangleCertificateExhaustionTarget.lean
+  RationalCertificateStackImpliesRhTarget.lean
+```
+
+其中以下节点可以纯有限地闭合：
+
+- prime thread compatibility；
+- charge formula；
+- reflection formula；
+- finite aliasing period；
+- full thread faithfulness；
+- two-prime embedding；
+- solenoid $\gcd/\operatorname{lcm}$ novelty criterion；
+- graph constant kernel；
+- grounded Laplacian coercivity；
+- local radial precursor；
+- Schur-to-singular floor；
+- singular-to-determinant floor；
+- rational rectangle count equivalence。
+
+所有带 `Target` 的节点都不得通过把结论写入 structure field 来伪闭合。
+
+---
+
+# 增订三·21　结论地位总表
+
+| 结论 | 地位 |
+|---|---|
+| complex power thread 分解为 $\mathbb R\times\mathcal S$ | 仓库机器闭合 |
+| zero charge 当且仅当全部 levels unit norm | 仓库机器闭合 |
+| centered prime thread $Z_{p,u}(m)=e^{-u\log p/m}$ compatible | 本增订直接有限推论 |
+| prime charge 为 $-\delta\log p$ | 本增订直接计算 |
+| 同高度反射翻转 charge、保持 phase | 本增订直接计算 |
+| 临界线等价于任意 prime thread 的 zero-charge locus | 本增订直接推论 |
+| prime transverse $\sinh^2$ 等于 raw charge-gradient energy | 本增订精确恒等式 |
+| finite single-prime levels 在全轴 phase faithful | 不成立；存在 lcm alias |
+| finite single-prime level 在充分短高度窗 faithful | 本增订有限定理 |
+| full single-prime thread phase faithful | 本增订有限论证 |
+| two distinct labelled primes 的 level-one readout faithful | 本增订有限定理 |
+| scalar product 保持该 faithfulness | 不成立 |
+| 任意更深 solenoid level 都 structurally novel | 不成立 |
+| level novelty 由 gcd/lcm divisibility 判据决定 | 本增订有限定理 |
+| charge graph edge energy 在 ambient space 正定 | 不成立；常向量是 kernel |
+| restricted canonical prime charge ray 上 pair energy faithful | 本增订有限定理 |
+| mean anchor + connected graph 给出 full coercivity | 本增订有限定理 |
+| Gamma completion 已提供该 anchor | 尚未建立 |
+| 离圆零点产生 open negative radial precursor | 本增订条件解析定理 |
+| RH 失败产生有理 radial precursor | 本增订 + 仓库 rational-certificate theorem |
+| RH 等价于全部离轴有理矩形零点计数为零 | 本增订精确等价 |
+| strict Rouché boundary inequality 保持矩形零点数 | 仓库机器闭合 |
+| pointwise Schur 正性自动给出统一 Rouché floor | 不成立 |
+| uniform hidden/Schur bounds 给出显式 determinant floor | 本增订有限算子定理 |
+| determinant floor 支付 $d_N/2$ 的维数税 | 本增订直接推论 |
+| Zeckendorf raw state count 是最佳 transfer dimension | 不成立 |
+| Hankel-minimal two-state memory 可降低 local certificate dimension | 条件于 determinant-preserving realization |
+| 每个有理离轴矩形都有 certificate stack 蕴含 RH | 本增订条件定理 |
+| canonical prime–Gamma transfer 已完成该 stack | 尚未建立 |
+| 本增订证明 RH | 不成立 |
+
+---
+
+# 增订三·22　最终收束
+
+本增订把项目中此前分散的四种对象接成一条严格链：
+
+$$
+\boxed{
+\begin{aligned}
+\text{complex power thread}
+&\simeq
+\text{logarithmic charge}
+\times
+\text{solenoid phase},\\
+\text{critical line}
+&=
+\text{zero-charge slice},\\
+\text{prime-pair complex kernel}
+&=
+\text{charge-gradient hyperbolic energy}
++
+\text{phase-gradient circular energy},\\
+\text{Zeckendorf depth}
+&=
+\text{finite-height phase de-aliasing resource},\\
+\text{prime width}
+&=
+\text{multiplicatively independent phase de-aliasing resource},\\
+\text{Hankel minimal rank}
+&=
+\text{determinant certificate 的最小记忆维数},\\
+\text{Schur margin}
+&=
+\text{finite transfer 的 singular-value floor},\\
+\text{Rouché strictness}
+&=
+\text{finite certificate 到真实零点计数的 analytic transport}.
+\end{aligned}
+}
+\tag{C22.1}
+$$
+
+所以假想离线零点的最新精确含义是：
+
+$$
+\boxed{
+\textbf{completed analytic transfer 在一个非零 logarithmic-charge 点产生 kernel，
+而任何试图排除它的 finite Schur–Rouché certificate
+必在 charge anchor、phase faithfulness、Schur floor、boundary unit、
+approximation error 或 dimension budget 中至少一处失效。}
+}
+\tag{C22.2}
+$$
+
+这也进一步校正“信息逃逸”的位置。
+
+信息并不从 canonical prime thread 中逃逸：
+
+- charge 在任一 level 可见；
+- phase 可由完整 root tower 或两个 labelled primes 恢复。
+
+信息真正逃逸于：
+
+$$
+\boxed{
+\text{labelled thread family}
+\longrightarrow
+\text{commutative scalar completion}
+}
+\tag{C22.3}
+$$
+
+以及：
+
+$$
+\boxed{
+\text{finite positive operator}
+\longrightarrow
+\text{没有统一 boundary floor 的无限极限}.
+}
+\tag{C22.4}
+$$
+
+因此下一承重点不应继续增加新的“黄金能量”名称，而应建立以下两个 canonical 对象：
+
+$$
+\boxed{
+T_N(s)
+=
+\text{保留 prime labels、power-thread charge、solenoid phase、
+Zeckendorf carry 与 Gamma anchor 的 holomorphic finite transfer},
+}
+\tag{C22.5}
+$$
+
+以及：
+
+$$
+\boxed{
+\mathfrak C_N(R)
+=
+\frac{
+\operatorname{Err}_N(R)
+}{
+u_N(R)\mu_N(R)^{d_N/2}
+}.
+}
+\tag{C22.6}
+$$
+
+其中 $\mathfrak C_N(R)$ 是 dimension-aware Rouché certificate ratio。
+
+最终目标可写成：
+
+$$
+\boxed{
+\forall R\in\mathfrak R_{\mathbb Q}^{\rm off},
+\quad
+\exists N,
+\quad
+\mathfrak C_N(R)<1.
+}
+\tag{C22.7}
+$$
+
+一旦式 (C22.7) 由 canonical prime–Gamma construction 无条件建立，定理 C18.1 便推出 RH。
+
+所以本轮最深的一句话是：
+
+$$
+\boxed{
+\textbf{RH 可以被重写为：completed prime-thread system 的所有非零 charge 窗口，
+都能被某个 Hankel-minimal、Schur-coercive、Rouché-stable 的有限 observer certificate 排除。}
+}
+\tag{C22.8}
+$$
+
+它仍不是证明，但已把“离线相变不可能发生”压缩成一个可数、有限窗口化、带精确误差—维数预算的单一证书纲领。
