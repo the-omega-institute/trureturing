@@ -3,8 +3,7 @@
    mirror-B: D5/B/S1/Solenoid/ComplexPowerSolenoidDecomposition
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Compatible nonzero complex power threads split into a conserved real charge
-     and a universal-solenoid phase. -/
+   digest: Nonzero complex power threads split into a real charge and solenoid phase. -/
 
 /- Library-search audit trail (2026-09-05):
    * Repository keyword and symbol searches found the additive `UniversalSolenoid`, its
