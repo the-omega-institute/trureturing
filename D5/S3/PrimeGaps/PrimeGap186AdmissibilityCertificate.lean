@@ -56,8 +56,9 @@ theorem admissibleTuple186_is_admissible :
     have hpos := admissibleTuple186_large_modulus_survives p hgt
     have hcount : localResidueCount admissibleTuple186Int p ≤ p := by
       calc
-        localResidueCount admissibleTuple186Int p ≤ admissibleTuple186Int.card :=
-          Finset.card_image_le
+        localResidueCount admissibleTuple186Int p =
+            (admissibleTuple186Int.image fun h : Int => -(h : ZMod p)).card := rfl
+        _ ≤ admissibleTuple186Int.card := Finset.card_image_le
         _ = 40 := admissibleTuple186Int_card
         _ ≤ p := hgt.le
     exact (localSurvivorCount_pos_iff admissibleTuple186Int p hcount).1 hpos
