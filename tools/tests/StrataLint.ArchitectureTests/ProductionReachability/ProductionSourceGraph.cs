@@ -169,9 +169,10 @@ internal sealed class ProductionSourceGraph
         foreach (var tree in paths.Keys)
         {
             var model = compilation.GetSemanticModel(tree);
-            foreach (var invocation in tree.GetRoot().DescendantNodes().OfType<InvocationExpressionSyntax>())
+            foreach (var reference in tree.GetRoot().DescendantNodes().Where(static node =>
+                node is IdentifierNameSyntax or MemberAccessExpressionSyntax))
             {
-                if (BoundMethods(model, invocation).Any(method =>
+                if (BoundMethods(model, reference).Any(method =>
                     SymbolEqualityComparer.Default.Equals(Normalize(method), target)))
                 {
                     result.Add(paths[tree]);
