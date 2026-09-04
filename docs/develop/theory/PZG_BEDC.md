@@ -9289,3 +9289,17 @@ v1.6 冠军二度更正 → v1.7 闭式与模板 → v1.8 幸存全证 → v2.0 
 **候签定理 4.98(Erdős–Straus 模 24 剩余类归约)**〔open;同模块〕。证明对 `n≥2`，若 `n mod 24 ≠ 1`，则 `ESSolvable n`；同时证明余数 1 不属于本模块使用的五个恒等式族。此结论不声称处理 Mordell 的六个模 840 例外类。
 
 **评注 27.805(可证伪预测与逃逸见证,写在跑之前)**〔第 5⁗ 条;开放问题线第四批〕。逃逸内容:n = 3k+2、4k+3、8k+5 三族的参数化分母构造及其正性边条件(`ring` 闭合的三次恒等式)、伸缩构造 (x,y,z) ↦ (xm,ym,zm),以及模 24 的有限 Presburger 分派事实 `residue_dispatch_24`(非 1 剩余类必落入 n%2=0 ∨ n%3=0 ∨ n%3=2 ∨ n%4=3 ∨ n%8=5 之一);皆在 4.98 的活推导路径上,无冻结前置;n = 2, 3, 5, 7 的显式见证为计算产出的内容。判形 content,准入依据 escape-witness。只依赖钉版 Mathlib。若钉版 API 下有理—整数等价的分母清除不能闭合,本候签按 open 记,不得以 `sorry` 或公理代替;禁 native_decide。结算:三条由一个实施席同 PR `deposit`(绑 4.98)+ `cover`(4.96 / 4.97)落地,三席评审后合入;模 840 完整分派另立探针。
+
+**评注 27.806(开放问题线:Schur 数的宽十移位模板递推 S(k+2) ≥ 10·S(k) + 2 之构造性提升;候签定理 6.212–6.216 立案)**〔remark;开放问题线第四批〕。Schur 数 S(k)(使 {1..n} 存在无同色 x+y=z 之 k 着色的最大 n):S(1..5) = 1, 4, 13, 44, 160(S(5) = 160 为 Heule 2017 的 SAT 证明),S(6) 及以上至今开放(536 ≤ S(6) ≤ 1836)。Bengone 等(arXiv:2607.15034,2026)以宽 10 的「移位模板」证 S(k+2) ≥ 10·S(k) + 2。本评注下五条候签把该递推立为**任意 k、n** 的构造性着色提升:`HasSchurColoring k n → HasSchurColoring (k+2) (10n+2)`,连同经典三倍提升与有限相容性证书;不触碰 S(6) 的任何具体值。产地(第 9′ 条):skill=consensus-rnd:sshx;ChatGPT Pro 全领域检索席(flight `op-r5-gptpro-open-any`,候选 #3)提出;探针席 codex-cli(flight `op-p21-schur-template`,worktree `trureturing-op-rev-axis`,base origin/dev)逐字核对论文表 II 模板(F、M=L 两行与尾 Q=(A,B)),以 `lake env lean` 整证十三条声明,`#print axioms` 均为标准三公理之子集;本案与候签由 orchestrator(claude 主循环,会话「开放问题」)撰写。判决日 2026-09-05。落点 `D5/S3/Arith/SchurShiftedTemplateLift`(Arith 桶直接文件 14/24,落地后 15/24;探针原议之子桶 AdditiveCombinatorics 不新建,以免无注册的目录出生)。
+
+**候签定理 6.212(Schur 着色与小值忠实性)**〔open;落 `D5/S3/Arith/SchurShiftedTemplateLift`〕。定义 `SchurColoring k n c` 为区间 1 至 n 上不存在同色的 x+y=z，定义 `HasSchurColoring k n := ∃ c, SchurColoring k n c`；则 `HasSchurColoring 1 1`、`HasSchurColoring 2 4`，且 `¬ HasSchurColoring 1 2`。
+
+**候签定理 6.213(Schur 着色的经典三倍提升)**〔open;同模块〕。对任意 k n : ℕ，`HasSchurColoring k n → HasSchurColoring (k+1) (3*n+1)`；构造取左右两份旧着色，中段 n+1 至 2n+1 取新色。
+
+**候签定理 6.214(宽十移位模板的有限相容性证书)**〔open;同模块;本案逃逸〕。对 arXiv:2607.15034 表 II 的逐字模板 F=`B,A,P0,P0,B,A,A,B,P0,P0`、M=L=`P-1,B,P0,P0,B,A,A,B,P0,P0` 与尾 Q=`A,B`，以 kernel `decide` 验证两种新色、旧色移位进位及两枚尾元的全部有限相容表；并证明正整数宽十分块在 x+y=z 下的行进位与列余数分解。
+
+**候签定理 6.215(宽十移位模板提升)**〔open;同模块;本案主定理〕。对任意 k n : ℕ，`HasSchurColoring k n → HasSchurColoring (k+2) (10*n+2)`；6.214 的分块进位与有限相容证书必须位于任意 n 证明的活路径，准入依据为 `escape-witness`。
+
+**候签定理 6.216(Schur 提升的数值忠实性)**〔open;同模块伴随声明〕。由 6.212 与 6.213 得 `HasSchurColoring 3 13`，由 6.212 与 6.215 得 `HasSchurColoring 4 42`；判形 bind-only，方向边 `6.216 → 6.213/6.215 → 6.212`（消费者 → 前置）。
+
+**评注 27.807(可证伪预测与逃逸见证,写在跑之前)**〔第 5⁗ 条;开放问题线第四批〕。逃逸内容:宽十分块的商余加法律 `block_add_coordinates`(结果行进位 ε 与结果列 (u+v+1) mod 10),与表 II 的四条有限相容性证书(新色对、旧色移位进位、尾 A、尾 B;kernel `decide`)——它们全部位于 6.215 任意 n 证明的活路径上,删任一条即主定理不成;经典提升 6.213 的三段区间构造亦为内容;6.216 为伴随声明(bind-only)。判形 content,准入依据 escape-witness。只依赖钉版 Mathlib,不引入冻结 D5 依赖;禁 native_decide。若钉版 API 下分块商余律不能闭合,本候签按 open 记,不得以 `sorry` 或公理代替。结算:五条由一个实施席同 PR `deposit`(绑 6.215)+ `cover`(6.212 / 6.213 / 6.214 / 6.216)落地,三席评审后合入。

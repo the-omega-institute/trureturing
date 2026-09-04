@@ -1,0 +1,2 @@
+**候签定理 6.213(Schur 着色的经典三倍提升)**〔open;同模块〕。对任意 k n : ℕ，`HasSchurColoring k n → HasSchurColoring (k+1) (3*n+1)`；构造取左右两份旧着色，中段 n+1 至 2n+1 取新色。
+
