@@ -54,6 +54,18 @@ theorem complementary_patching_mass_mono
     supportMass weight base ≤ supportMass weight (patchedSupport base patch) :=
   supportMass_mono weight hweight (base_subset_patchedSupport base patch)
 
+private theorem supportMass_patched_split
+    (weight : α → ℝ) (base : Finset α) (patch : ι → Finset α) :
+    supportMass weight (patchedSupport base patch) =
+      supportMass weight base +
+        supportMass weight ((patchedSupport base patch) \ base) := by
+  have hsubset := base_subset_patchedSupport base patch
+  have raw := Finset.sum_union
+    (f := weight)
+    (Finset.disjoint_sdiff : Disjoint base ((patchedSupport base patch) \ base))
+  rw [Finset.union_sdiff_of_subset hsubset] at raw
+  simpa [supportMass] using raw
+
 /-- Exact escape witness: if one complementary certification region exposes a genuinely new
 point carrying positive mass, the patched objective is strictly larger than the base objective.
 This is the finite structural reason complementary factorization conditions can improve an
@@ -64,26 +76,8 @@ theorem complementary_patching_mass_strict
     (i : ι) (x : α) (hxpatch : x ∈ patch i) (hxbase : x ∉ base)
     (hxpos : 0 < weight x) :
     supportMass weight base < supportMass weight (patchedSupport base patch) := by
-  have hsubset := base_subset_patchedSupport base patch
   have hxpatched : x ∈ patchedSupport base patch :=
     patch_subset_patchedSupport base patch i hxpatch
-  have hproper : base ⊂ patchedSupport base patch :=
-    Finset.ssubset_iff_subset_ne.mpr ⟨hsubset, by
-      intro heq
-      exact hxbase (heq ▸ hxpatched)⟩
-  have hsplit :
-      supportMass weight (patchedSupport base patch) =
-        supportMass weight base +
-          supportMass weight ((patchedSupport base patch) \ base) := by
-    unfold supportMass
-    rw [← Finset.sum_union]
-    · congr 1
-      exact (Finset.union_sdiff_of_subset hsubset).symm
-    · exact Finset.disjoint_sdiff_left
-  have hnew_nonneg :
-      0 ≤ supportMass weight ((patchedSupport base patch) \ base) := by
-    unfold supportMass
-    positivity
   have hxnew : x ∈ (patchedSupport base patch) \ base :=
     Finset.mem_sdiff.mpr ⟨hxpatched, hxbase⟩
   have hnew_pos : 0 < supportMass weight ((patchedSupport base patch) \ base) := by
@@ -92,7 +86,7 @@ theorem complementary_patching_mass_strict
     · intro y hy
       exact hweight y
     · exact ⟨x, hxnew, hxpos⟩
-  rw [hsplit]
+  rw [supportMass_patched_split]
   linarith
 
 /-- A complementary patch whose newly certified mass exceeds the remaining margin crosses any
@@ -104,17 +98,7 @@ theorem complementary_patching_crosses_threshold
     (hgain : threshold - supportMass weight base <
       supportMass weight ((patchedSupport base patch) \ base)) :
     threshold < supportMass weight (patchedSupport base patch) := by
-  have hsubset := base_subset_patchedSupport base patch
-  have hsplit :
-      supportMass weight (patchedSupport base patch) =
-        supportMass weight base +
-          supportMass weight ((patchedSupport base patch) \ base) := by
-    unfold supportMass
-    rw [← Finset.sum_union]
-    · congr 1
-      exact (Finset.union_sdiff_of_subset hsubset).symm
-    · exact Finset.disjoint_sdiff_left
-  rw [hsplit]
+  rw [supportMass_patched_split]
   linarith
 
 #print axioms patchedSupport
