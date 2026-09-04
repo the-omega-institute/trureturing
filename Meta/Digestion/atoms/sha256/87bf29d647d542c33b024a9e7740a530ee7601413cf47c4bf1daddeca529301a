@@ -1,0 +1,2 @@
+**候签定理 9.15(模 157 倍增不变集的基数剩余)**〔open;落 `D5/S3/ArithUnits/CyclicPlaneTwelveMultiplierObstruction`〕。若 `S.image (fun x => 2*x)=S`，则 `S.card % 52` 属于 `{0,1}`。
+
