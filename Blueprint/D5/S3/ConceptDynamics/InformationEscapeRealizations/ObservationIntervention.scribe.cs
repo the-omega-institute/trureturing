@@ -23,7 +23,7 @@ internal sealed class ObservationInterventionDocument : IScribeDocumentDefinitio
             Node("observation-intervention-partition-count",
                 "observation_strictly_weaker_than_intervention_partition_count",
                 "Twenty-four kernel classes",
-                Seq(Call("card", F.Id("signatureClasses")), Sp, Eq, Sp, D(24)),
+                Seq(Call("card", F.Id("signatureClasses")), Sp, Eq, Sp, D(2, 4)),
                 "Exhaustive evaluation of all 32 source models yields 24 joint signatures."),
             Node("observation-intervention-private-pair",
                 "observation_strictly_weaker_than_intervention_private_pair",
