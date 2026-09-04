@@ -1,0 +1,4 @@
+# 增订十六　M3-d 缺口的阶梯:ζ 在 (0,1) 无实零点(M3-d-1 / M3-d-2 / M3-d-3 / M3-d-4 预登记)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;探针一席(codex-cli,`lake env lean`,125 行,标准三公理):在钉版 Mathlib 上**未找到** Dirichlet eta / 交错 ζ 级数在 0 < Re s 上的延拓恒等式(逐条检索 `LSeries`、`HurwitzZetaEven`(`hasSum_nat_cosZeta` 等皆要求 1 < Re s)、`riemannZeta_one_sub`、`completedRiemannZeta0`),故 M3-d-1 为**本仓须自证**的新引理;探针已在该恒等式为假设的条件下整证 M3-d-2、M3-d-3,并无条件证得 M3-d-4。散文由 orchestrator(claude 主循环)撰写。判决日:2026-09-03。lane issue:#4589。
+

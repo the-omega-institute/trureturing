@@ -1,0 +1,78 @@
+## 定理 53.1　正实现纤维非空推出 RH
+
+$$
+\boxed{
+\mathfrak R_{\mathrm{exact}}^+
+\neq\varnothing
+\Longrightarrow
+\mathrm{RH}.
+}
+$$
+
+### 证明
+
+取：
+
+$$
+\mathcal R
+\in
+\mathfrak R_{\mathrm{exact}}^+.
+$$
+
+对任意非平凡零点 \(\rho\)，零点模式缺陷为零，所以：
+
+$$
+C\Psi(\rho)
+=
+\frac{\rho-1}{\rho}\Psi(\rho).
+$$
+
+正度量缺陷为零，所以：
+
+$$
+C^*C=I.
+$$
+
+于是：
+
+$$
+\|C\Psi(\rho)\|
+=
+\|\Psi(\rho)\|.
+$$
+
+另一方面：
+
+$$
+\|C\Psi(\rho)\|
+=
+\left|
+\frac{\rho-1}{\rho}
+\right|
+\|\Psi(\rho)\|.
+$$
+
+因为：
+
+$$
+\Psi(\rho)\neq0,
+$$
+
+所以：
+
+$$
+\left|
+\frac{\rho-1}{\rho}
+\right|=1.
+$$
+
+由定理 22.2：
+
+$$
+\Re\rho=\frac12.
+$$
+
+该结论对全部非平凡零点成立，因此 RH 成立。证毕。
+
+---
+

@@ -1,0 +1,34 @@
+## 15. 实数 Zeckendorf 线程
+
+对 \(x\ge0\) 和 \(N\in\mathbb N\)，定义：
+
+$$
+q_N(x)
+=
+\lfloor\varphi^N x\rfloor.
+$$
+
+令：
+
+$$
+\mathsf Z_N(x)
+=
+\operatorname{wdigits}(q_N(x))
+$$
+
+为整数 \(q_N(x)\) 的规范 Zeckendorf 数位。
+
+由 floor 定义：
+
+$$
+\boxed{
+0
+\le
+x-\frac{q_N(x)}{\varphi^N}
+<
+\varphi^{-N}.
+}
+$$
+
+---
+

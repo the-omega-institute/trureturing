@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:9f311bb36f2a675a7c7c56959be666ac001bb48101a26c0227152421c06e1c20
+  normalized_sha256: sha256:9f311bb36f2a675a7c7c56959be666ac001bb48101a26c0227152421c06e1c20
+cas_ref: sha256:9f311bb36f2a675a7c7c56959be666ac001bb48101a26c0227152421c06e1c20
+coverage_gids:
+  - gid: D5/S1/Recurrence/BilateralLiftUniqueness.bilateral_lift_uniqueness
+    target_statement_id: sha256:868589c2ae201fa4bb804c9acfeff4025ba8cd0d40615c44b30a75b5a459c8a4
+receipts:
+  scribe:
+    - gid: D5/S1/Recurrence/BilateralLiftUniqueness.bilateral_lift_uniqueness
+      definition_sha256: sha256:ba1dd47a2bfc5f91c3572bb1be227f84f2b6aba8b0d3165a8b713356d5b2b8b1
+      emission_sha256: sha256:36f3116e9b049ab42bceed9beb931a375328e49a1324b829a473c6822b5aef56
+  unresolved_subitems: []
+  chain_atoms:
+    - ae5b5b78f9891112aa19ff8e0b2417ebfc4fd4552f59cb12d90db63657adfdf1
+    - f1a0cb0a9505786b7897d29bcbc2ab061cd495f279440f0673860607a9bb19bb

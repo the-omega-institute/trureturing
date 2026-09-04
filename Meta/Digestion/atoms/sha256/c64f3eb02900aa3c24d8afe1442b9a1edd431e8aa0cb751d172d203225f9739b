@@ -1,0 +1,52 @@
+## 124. 碰撞改变 cumulant 类型
+
+若：
+
+$$
+h_i\equiv h_j\pmod p,
+$$
+
+那么：
+
+$$
+X_i=X_j.
+$$
+
+此时二阶 cumulant 变成：
+
+$$
+\operatorname{Var}(X_i)
+=
+\frac{p-1}{p^2}>0.
+$$
+
+所以同一素数对两个 offsets 给出两种相反关系：
+
+$$
+\boxed{
+\begin{aligned}
+h_i\equiv h_j\pmod p
+&\Longrightarrow
+\text{正相关：共享同一 survival channel},\\
+h_i\not\equiv h_j\pmod p
+&\Longrightarrow
+\text{负相关：竞争不同 forbidden residues}.
+\end{aligned}
+}
+$$
+
+这使局部 prime geometry 成为一个 signed complete graph：
+
+$$
+J_{ij}^{(p)}
+=
+\begin{cases}
+(p-1)/p^2,&h_i\equiv h_j\pmod p,\\
+-1/p^2,&h_i\not\equiv h_j\pmod p.
+\end{cases}
+$$
+
+不同素数上的 signed graphs 取 CRT 张量积，形成构型的局部—全局 fingerprint。
+
+---
+

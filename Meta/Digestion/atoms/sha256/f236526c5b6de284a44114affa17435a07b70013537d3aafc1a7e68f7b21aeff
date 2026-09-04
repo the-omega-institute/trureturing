@@ -1,0 +1,38 @@
+## 112. RH 的 sign-isotypic 判据
+
+在每个有限零点窗中：
+
+$$
+V_T^-
+=
+\{v:Jv=-v\}.
+$$
+
+则：
+
+$$
+\boxed{
+V_T^-=0
+}
+$$
+
+当且仅当该窗内每个零点均被 \(J\) 固定。
+
+因此：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+V_T^-=0
+\quad
+\text{对所有有限高度窗 }T.
+}
+$$
+
+这是一条新的表示论 RH 等价表达：
+
+> RH 不是“总 divisor 是否对称”，而是零点 permutation representation 中是否存在隐藏 sign-isotypic sector。
+
+---
+

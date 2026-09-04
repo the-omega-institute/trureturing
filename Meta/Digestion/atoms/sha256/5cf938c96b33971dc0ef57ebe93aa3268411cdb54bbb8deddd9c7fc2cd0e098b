@@ -1,0 +1,79 @@
+## 417. 不用零点枚举定义矩序列
+
+在 \(q=0\) 附近定义：
+
+$$
+\mathcal G(z)
+=
+-\frac14
+\frac{
+\mathcal X'(z/4)
+}{
+\mathcal X(z/4)
+}.
+$$
+
+展开为：
+
+$$
+\boxed{
+\mathcal G(z)
+=
+\sum_{n=0}^{\infty}a_nz^n.
+}
+$$
+
+等价地：
+
+$$
+\boxed{
+a_n
+=
+-\frac1{4^{n+1}n!}
+\left.
+\frac{d^n}{dq^n}
+\frac{\mathcal X'(q)}{\mathcal X(q)}
+\right|_{q=0}.
+}
+$$
+
+这个定义只使用 completed \(\xi\) 在一个固定点附近的局部系数，不需要先枚举零点。
+
+利用 \(\mathcal X\) 的反射轨道乘积，可以把它重写成：
+
+$$
+\boxed{
+a_n
+=
+\sum_{\mathcal O}
+m_{\mathcal O}
+x_{\mathcal O}^{\,n+1},
+}
+$$
+
+其中 \(\mathcal O\) 遍历函数方程反射轨道，而不是分别重复计算 \(\rho\) 与 \(1-\rho\)。
+
+在 RH 下，令：
+
+$$
+\nu
+=
+\sum_{\mathcal O}
+m_{\mathcal O}x_{\mathcal O}
+\delta_{x_{\mathcal O}},
+$$
+
+便有：
+
+$$
+\boxed{
+a_n
+=
+\int_0^1x^n\,d\nu(x).
+}
+$$
+
+所以 \((a_n)\) 是一个 \([0,1]\) 上的 Hausdorff 矩序列。
+
+---
+

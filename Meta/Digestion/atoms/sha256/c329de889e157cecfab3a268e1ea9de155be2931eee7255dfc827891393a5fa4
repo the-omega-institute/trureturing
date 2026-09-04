@@ -1,0 +1,23 @@
+## 133. 高阶构型的零点响应
+
+对：
+
+$$
+A=\{h_1,\ldots,h_k\},
+$$
+
+定义：
+
+$$
+q_A(\rho)
+=
+\left.
+\partial_{u_{h_1}}\cdots
+\partial_{u_{h_k}}
+\rho(\mathbf u)
+\right|_{\mathbf u=0}.
+$$
+
+它由：
+
+* \(\Xi_H\) 的 mixed source derivatives；

@@ -1,0 +1,62 @@
+## 257. 第一个黄金结构零恰好映到 \(y=\varphi\)
+
+对：
+
+$$
+z_2=\frac1{2\varphi^2},
+$$
+
+有：
+
+$$
+1-z_2=\frac\varphi2.
+$$
+
+因此：
+
+$$
+q_2
+=
+z_2(1-z_2)
+=
+\frac1{4\varphi}.
+$$
+
+所以：
+
+$$
+\boxed{
+y_2
+=
+\frac1{4q_2}
+=
+\varphi.
+}
+$$
+
+这是一个非常精确的新联系：
+
+> 第一个 dyadic golden exclusion zero，在 reflection-Casimir 紧化中，恰好落到黄金固定点 \(y=\varphi\)。
+
+但：
+
+$$
+\varphi>1,
+$$
+
+所以它位于 RH-compatible compactum \([0,1]\) 之外。
+
+这说明：
+
+$$
+\boxed{
+\text{黄金结构零不是经典临界谱零点，}
+}
+$$
+
+而是一个 hyperbolic exclusion atom。
+
+仓库已经证明它确实是简单结构零，因此任何试图把全部 golden-germ zeros 直接认作 Riemann zero spectrum 的理论，都会在 Casimir support test 上立即失败。
+
+---
+

@@ -1,0 +1,56 @@
+## 110. 零点轨道空间
+
+取一个在 \(J(s)=1-\overline s\) 下封闭的有限零点窗。
+
+令：
+
+$$
+V_T
+=
+\mathbb C[\mathscr Z_T]
+$$
+
+为以零点标签为基的向量空间。
+
+对每个非固定 mirror pair：
+
+$$
+\{\rho,J\rho\},
+$$
+
+定义：
+
+$$
+e_\rho^+
+=
+[\rho]+[J\rho],
+$$
+
+$$
+e_\rho^-
+=
+[\rho]-[J\rho].
+$$
+
+则：
+
+$$
+Je_\rho^+=e_\rho^+,
+$$
+
+$$
+Je_\rho^-=-e_\rho^-.
+$$
+
+所以每个离线 pair 都贡献：
+
+$$
+\boxed{
+\text{一个 trivial line}
++
+\text{一个 sign line}.
+}
+$$
+
+---
+

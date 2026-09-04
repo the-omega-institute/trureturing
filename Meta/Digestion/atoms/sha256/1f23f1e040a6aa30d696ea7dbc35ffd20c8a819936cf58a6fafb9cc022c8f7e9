@@ -1,0 +1,38 @@
+# 六、均值—方差版本：两个 RH 的正能量分解
+
+为了与项目的正性、热力学和累积量语言连接，取一组严格正、反射不变且可和的权重：
+
+$$
+w_\rho>0,
+\qquad
+w_{J\rho}=w_\rho,
+\qquad
+\sum_\rho w_\rho<\infty.
+$$
+
+项目已经证明了类似
+
+$$
+\sum_\rho
+\frac{m_\rho}{1+|\gamma_\rho|^2}
+<\infty
+$$
+
+的零点加权可和性，因此可以选取自然的 faithful 高度权重。
+
+令：
+
+$$
+W=\sum_\rho w_\rho,
+$$
+
+$$
+\bar\sigma
+=
+\frac1W
+\sum_\rho
+w_\rho\Re\rho.
+$$
+
+定义两个非负能量。
+

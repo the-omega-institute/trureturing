@@ -1,0 +1,32 @@
+## 161. 衔尾蛇 Trace–Jet 原理
+
+$$
+\boxed{
+k\text{-point mixed source jet}
+=
+\text{长度 }k\text{ 的 connected closed trace cycles}.
+}
+$$
+
+在一般非 determinantal 系统中，右侧升级为全部 connected hypergraphs。
+
+因此：
+
+$$
+\boxed{
+\text{孪生是二阶闭环，}
+\quad
+\text{三元组是三阶有向闭环，}
+\quad
+\text{四元组是四阶闭环}.
+}
+$$
+
+这里的“闭环”终于不再是比喻，而是：
+
+$$
+\operatorname{tr}(A_1A_2\cdots A_k).
+$$
+
+---
+

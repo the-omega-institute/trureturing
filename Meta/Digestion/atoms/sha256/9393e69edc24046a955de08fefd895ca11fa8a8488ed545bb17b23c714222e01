@@ -1,0 +1,58 @@
+## 122. 局部 source partition function
+
+对 \(\nu\) 个不同 forbidden residues \(r_1,\ldots,r_\nu\)，令：
+
+$$
+X_j(A)=\mathbf1_{A\ne r_j},
+\qquad
+A\sim\operatorname{Uniform}(\mathbb F_p).
+$$
+
+引入实源变量：
+
+$$
+u_1,\ldots,u_\nu.
+$$
+
+则：
+
+$$
+\begin{aligned}
+Z_{p,H}(\mathbf u)
+&=
+\mathbb E
+\exp\left(
+\sum_{j=1}^{\nu}u_jX_j
+\right)\\
+&=
+e^{u_1+\cdots+u_\nu}
+\left[
+1+
+\frac1p
+\sum_{j=1}^{\nu}
+(e^{-u_j}-1)
+\right].
+\end{aligned}
+$$
+
+因此：
+
+$$
+\boxed{
+K_{p,H}(\mathbf u)
+=
+\log Z_{p,H}(\mathbf u)
+=
+\sum_ju_j
++
+\log
+\left[
+1+\frac1p\sum_j(e^{-u_j}-1)
+\right].
+}
+$$
+
+这一个有限函数包含了全部局部 connected cumulants。
+
+---
+

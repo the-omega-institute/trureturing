@@ -1,0 +1,31 @@
+## 406. RH 可以严格转成宇称观察通道正则性
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\frac{\zeta(2s)}{\zeta(s)}
+\text{ 在 }\Re s>\frac12\text{ 无极点}.
+}
+$$
+
+而：
+
+$$
+\frac{\zeta(2s)}{\zeta(s)}
+$$
+
+恰是算术 Fock 状态的宇称 supertrace。
+
+所以：
+
+$$
+\boxed{
+\text{RH 确实可以被严格表述为一个 parity-observer regularity problem。}
+}
+$$
+
+但这仍不是对 RH 真假的裁决。
+
+---
+

@@ -1,0 +1,18 @@
+## 48. 第二层：所有零点共享同一个显式公式账本
+
+任意合适测试函数都给出：
+
+$$
+\text{zero sum}
+=
+\text{prime-power term}
++
+\text{archimedean term}.
+$$
+
+因此所有零点并不是被逐个读取，而是共同参与一个 transform ledger。
+
+这是全局线性约束，但还不是 connected entanglement。
+
+---
+

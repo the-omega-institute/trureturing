@@ -1,0 +1,19 @@
+## 152. 第三优先级：reflection selection
+
+```lean
+theorem singularSeries_reflection_invariant
+    (H : PrimeConstellation) :
+    singularSeries H.mirror = singularSeries H
+```
+
+```lean
+theorem equivariantBridge_preserves_character
+    (B : ConstellationSpace →ₗ[ℂ] ZeroOrbitObservable)
+    (hEq : B.comp constellationReflection =
+      zeroReflection.comp B) :
+    B '' evenConstellationSector ⊆ evenZeroSector ∧
+    B '' oddConstellationSector ⊆ oddZeroSector
+```
+
+---
+

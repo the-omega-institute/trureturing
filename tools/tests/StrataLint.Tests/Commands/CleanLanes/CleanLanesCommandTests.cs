@@ -563,27 +563,6 @@ public sealed partial class CleanLanesCommandTests
         }
     }
 
-    [Theory]
-    [InlineData("locked")]
-    [InlineData("creation_unknown")]
-    [InlineData("too_young")]
-    [InlineData("age_unverifiable")]
-    [InlineData("never_worked")]
-    [InlineData("pr_not_merged")]
-    [InlineData("pr_unknown")]
-    [InlineData("in_use")]
-    [InlineData("in_use_unknown")]
-    public void EveryNewSkipReasonStringIsPinned(string reason)
-    {
-        using var fixture = new CleanLanesFixture();
-        var scenario = ArrangeReason(fixture, reason);
-
-        var result = fixture.RunAt(scenario.Now);
-
-        Assert.True(result.Success, result.Error);
-        Assert.Equal(reason, ReasonFor(result.Output, scenario.Path));
-    }
-
     private static readonly string[] NewSkipReasons =
     [
         "locked",

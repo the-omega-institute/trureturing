@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:215b098de87188cb9d775e4d0f4fdd87262a83796ac80972fad818d021102d7c
+  normalized_sha256: sha256:215b098de87188cb9d775e4d0f4fdd87262a83796ac80972fad818d021102d7c
+cas_ref: sha256:215b098de87188cb9d775e4d0f4fdd87262a83796ac80972fad818d021102d7c
+coverage_gids:
+  - gid: D5/S3/Observer/Tomography/RationalContactSupport.rational_contact_support
+    target_statement_id: sha256:f9fc5e770d46a6011ebb01af1521fde3e2de7ba4a099cf2e90ea9648ecb1a09c
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/Tomography/RationalContactSupport.rational_contact_support
+      definition_sha256: sha256:6cf670f1057ecddd3bd061e3bd89bcb312e0965dd5df4fdc60f86e5d27cc9e7a
+      emission_sha256: sha256:d573247eb75e43b14cc8650f28a1be2e5ccc46717e385d3d6acab7292a5612cf
+  unresolved_subitems: []

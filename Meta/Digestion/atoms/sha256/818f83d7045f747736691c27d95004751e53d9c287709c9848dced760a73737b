@@ -1,0 +1,70 @@
+# 九、这与项目的 prime observer origin 完全对齐
+
+项目当前的 prime-side 局部更新给每个素数通道一个观察起源：
+
+$$
+c_p.
+$$
+
+相邻交换曲率满足因子分解：
+
+$$
+\boxed{
+C_{p,q}
+=
+(a-\lambda_p)(a-\lambda_q)
+(c_p-c_q).
+}
+$$
+
+因此，在非共振条件下：
+
+$$
+C_{p,q}=0
+\iff
+c_p=c_q.
+$$
+
+而共同平移：
+
+$$
+c_p\mapsto c_p+c
+$$
+
+不会改变所有差值 \(c_p-c_q\)。项目已经把这一观察起源因子分解、共同 archive 的 gauge 性和交换曲率判据放入当前 RH research lane。
+
+这说明 prime swap curvature 天然只能解决：
+
+$$
+\boxed{
+\text{相对 RH：所有局部素数观察起源是否一致。}
+}
+$$
+
+它不能独自解决：
+
+$$
+\boxed{
+\text{这个共同起源是不是零。}
+}
+$$
+
+所以对项目而言，双 RH 拆分不是哲学装饰，而是结构上不可避免：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Prime coherence}
+&:\quad c_p=c_q\quad\forall p,q;\\
+\text{Global centering}
+&:\quad c_{\mathrm{common}}=0.
+\end{aligned}
+}
+$$
+
+第一个由 holonomy／交换曲率处理。
+
+第二个必须由函数方程、Archimedean completion、reciprocity 或 parity interval 处理。
+
+---
+

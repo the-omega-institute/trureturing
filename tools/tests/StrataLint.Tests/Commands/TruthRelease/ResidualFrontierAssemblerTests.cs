@@ -99,9 +99,12 @@ public sealed class ResidualFrontierAssemblerTests
             AtomizerRegistry.NoAtomizerId,
             DigestionMigrationState.Partial,
             DigestionTruthState.Closed,
-            [TargetGid],
+            [],
             sourceId: SourceId,
-            sourcePath: SourcePath));
+            sourcePath: SourcePath) with
+        {
+            Coverage = [new DigestionCoverageEdge(TargetGid, targetStatementId)],
+        });
         casFiles.Add(CasFile(stablePartial));
 
         var stableResidual = Atom("stable residual atom\n");
@@ -177,15 +180,17 @@ public sealed class ResidualFrontierAssemblerTests
         AtomizerRegistry.NoAtomizerId,
         DigestionMigrationState.Absorbed,
         DigestionTruthState.Closed,
-        [TargetGid],
+        [],
         new DigestionReceipts(
-            [new DigestionCoverageReceipt(TargetGid, atom.Fingerprints.RawSha256, targetStatementId)],
             [new DigestionScribeReceipt(TargetGid, definitionHash, emissionHash)],
             [],
             [],
             null),
         SourceId,
-        SourcePath);
+        SourcePath) with
+    {
+        Coverage = [new DigestionCoverageEdge(TargetGid, targetStatementId)],
+    };
 
     private static DigestionAtom Atom(string text)
     {

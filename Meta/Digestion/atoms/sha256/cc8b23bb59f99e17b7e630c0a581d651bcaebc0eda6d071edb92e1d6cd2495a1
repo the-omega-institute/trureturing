@@ -1,0 +1,28 @@
+### 关于 ζ 为什么不能直接解决孪生素数
+
+不是因为 ζ 不包含素数信息。完整 ζ 通过：
+
+$$
+-\zeta'/\zeta
+$$
+
+确定 \(\Lambda(n)\)，从而原则上确定全部构型。
+
+真正困难是：
+
+$$
+\boxed{
+\text{multiplicative information is diagonal in prime coordinates,}
+}
+$$
+
+而：
+
+$$
+\boxed{
+\text{additive correlations are diagonal in shift/Fourier coordinates.}
+}
+$$
+
+需要的不是再重复 Euler product，而是构造第二重的 correlation-cycle／cluster decomposition。
+

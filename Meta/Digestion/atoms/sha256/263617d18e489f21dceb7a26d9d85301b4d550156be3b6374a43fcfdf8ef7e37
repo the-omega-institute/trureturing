@@ -1,0 +1,17 @@
+# 第一千九百八十七部　三种 floor 的耦合目标
+
+项目目前的三个独立进展轴为：
+
+$$
+\boxed{
+\left(
+\beta_{\mathrm{exp}},
+\alpha_{\mathrm{com}},
+\beta_{\mathrm{supp}}
+\right).
+}
+$$
+
+其中：
+
+* \(\beta_{\mathrm{exp}}\) 控制 Euler germ 余项的解析可和边界；

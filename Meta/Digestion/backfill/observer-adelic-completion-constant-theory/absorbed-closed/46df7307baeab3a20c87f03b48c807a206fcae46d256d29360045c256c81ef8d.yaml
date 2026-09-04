@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:46df7307baeab3a20c87f03b48c807a206fcae46d256d29360045c256c81ef8d
+  normalized_sha256: sha256:46df7307baeab3a20c87f03b48c807a206fcae46d256d29360045c256c81ef8d
+cas_ref: sha256:46df7307baeab3a20c87f03b48c807a206fcae46d256d29360045c256c81ef8d
+coverage_gids:
+  - gid: D5/S3/Observer/GoldenCoding/GoldenFactorCancellation.golden_factor_cancellation
+    target_statement_id: sha256:d898d6e353a82771e931fb8d7ac3454428b2eb3b2b1780a27b64634cb72933e9
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/GoldenCoding/GoldenFactorCancellation.golden_factor_cancellation
+      definition_sha256: sha256:ed59dbcbd2c5b44a09c56d093c104c37436d47b0cb7f17fcf64c90c673c51342
+      emission_sha256: sha256:5808140501b70ae04a93aa25f1851d8296d13e10a42208990c591a02d08857c1
+  unresolved_subitems: []

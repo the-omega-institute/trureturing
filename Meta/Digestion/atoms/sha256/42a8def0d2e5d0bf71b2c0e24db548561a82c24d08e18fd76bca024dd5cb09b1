@@ -1,0 +1,8 @@
+## 399. 观察者插入宇称
+
+$$
+\Pi_{\mathrm{obs}}:
+k\text{ 个 source insertions}
+\mapsto(-1)^k.
+$$
+

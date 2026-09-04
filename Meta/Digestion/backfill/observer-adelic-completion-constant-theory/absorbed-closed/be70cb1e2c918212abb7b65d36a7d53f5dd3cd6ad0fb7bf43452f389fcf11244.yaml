@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:be70cb1e2c918212abb7b65d36a7d53f5dd3cd6ad0fb7bf43452f389fcf11244
 cas_ref: sha256:be70cb1e2c918212abb7b65d36a7d53f5dd3cd6ad0fb7bf43452f389fcf11244
 coverage_gids:
-  - D5/S3/Weil/Scattering/FiniteScatteringCascade.finite_scattering_cascade
+  - gid: D5/S3/Weil/Scattering/FiniteScatteringCascade.finite_scattering_cascade
+    target_statement_id: sha256:8303d1345e4e443204dcb6839743b8c61e5491a615fa82e7c3b95ff6d130462b
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/Scattering/FiniteScatteringCascade.finite_scattering_cascade
-      source_sha256: sha256:be70cb1e2c918212abb7b65d36a7d53f5dd3cd6ad0fb7bf43452f389fcf11244
-      target_statement_id: sha256:8303d1345e4e443204dcb6839743b8c61e5491a615fa82e7c3b95ff6d130462b
   scribe:
     - gid: D5/S3/Weil/Scattering/FiniteScatteringCascade.finite_scattering_cascade
       definition_sha256: sha256:9d96c74462f72dff01e1c89b0efbe7c0ff1b3771eee258e7973e63bbaed56465

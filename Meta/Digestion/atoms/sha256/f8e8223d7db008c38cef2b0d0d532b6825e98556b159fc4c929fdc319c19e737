@@ -1,0 +1,58 @@
+## 263. Trace–Jet 公式的理想形态
+
+若：
+
+$$
+K_H(\mathbf u)
+=
+K_0+\sum_hu_hB_h+\cdots,
+$$
+
+则：
+
+$$
+\partial_{u_{h_1}}\cdots
+\partial_{u_{h_k}}
+\log\det(I-qK_H)
+$$
+
+会展开为 resolvent 和 \(B_h\) 的 connected cyclic traces。
+
+形式上：
+
+$$
+\boxed{
+\partial_{u_A}\log\det
+=
+\sum_{\text{cyclic orders on }A}
+\operatorname{Tr}
+\left(
+R_qB_{h_1}
+R_qB_{h_2}\cdots
+R_qB_{h_k}
+\right)
++
+\text{higher source terms},
+}
+$$
+
+其中：
+
+$$
+R_q=(I-qK_0)^{-1}.
+$$
+
+于是：
+
+$$
+\boxed{
+\text{prime }k\text{-tuple cumulant}
+\longleftrightarrow
+\text{length-}k\text{ Casimir resolvent cycle}.
+}
+$$
+
+这就是 ZCOCT 的 Trace–Jet Bridge 在反射商上的强化版本。
+
+---
+

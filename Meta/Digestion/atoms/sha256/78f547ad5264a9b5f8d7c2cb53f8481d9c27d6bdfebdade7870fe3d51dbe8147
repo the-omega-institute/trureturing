@@ -1,0 +1,56 @@
+## 147. Generic 局部相变
+
+双零点模型：
+
+$$
+w^2-\mu=0
+$$
+
+给出：
+
+$$
+\begin{array}{c|c}
+\mu<0&\text{两个在线零点}\\
+\mu=0&\text{一个二重临界零点}\\
+\mu>0&\text{一个离线镜像对}
+\end{array}
+$$
+
+因此 discriminant：
+
+$$
+\mu=0
+$$
+
+是两种相的局部边界。
+
+可以定义 Landau 型偶势：
+
+$$
+V_\mu(\delta)
+=
+-\mu\delta^2+\delta^4.
+$$
+
+其 stationary points 满足：
+
+$$
+2\delta(-\mu+2\delta^2)=0.
+$$
+
+当 \(\mu\le0\)，稳定点在：
+
+$$
+\delta=0.
+$$
+
+当 \(\mu>0\)，产生：
+
+$$
+\delta=\pm\sqrt{\mu/2}.
+$$
+
+这只是双零点分岔的有效模型，不是 ξ 已被证明满足的物理势函数。
+
+---
+

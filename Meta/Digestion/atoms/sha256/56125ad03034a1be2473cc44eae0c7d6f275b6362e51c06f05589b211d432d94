@@ -1,0 +1,32 @@
+### Inert：\(\chi_5(p)=-1\)
+
+$$
+D_p(x)
+=
+\frac1{(1-x)(1+x)}
+=
+\frac1{1-x^2}.
+$$
+
+因此：
+
+$$
+\boxed{
+D_p(x)
+=
+1+x^2+x^4+\cdots.
+}
+$$
+
+所有奇次局部项完全消失，只保留偶次项。
+
+这就是一个精确、非比喻的：
+
+$$
+\boxed{
+\text{odd cancellation}
+\longrightarrow
+\text{even completion}.
+}
+$$
+

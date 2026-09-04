@@ -1,0 +1,49 @@
+# 第一千九百八十六部　当前正式链的真实剩余缺口
+
+在数学层面：
+
+$$
+0<\sigma<1
+\Longrightarrow
+\zeta(\sigma)<0
+$$
+
+可由 Dirichlet eta 函数直接得到，因此临界带离线零点必为非实点。
+
+仓库层面，最新审计仍指出完整链缺少：
+
+1. 该实轴非零结论的公共可导入 owner；
+2. completed-\(\xi\) 在完整测试空间上的 canonical Weil distribution；
+3. canonical distribution 与枚举无关零点和的识别；
+4. 与 finite prime-power expression 的正式连接。
+
+因此更强原子仍被 quarantine，而不是被错误标记为 RH 已证。
+
+当前最短正式链应写为：
+
+$$
+\boxed{
+\begin{aligned}
+\neg\mathrm{RH}
+&\Longrightarrow
+\exists\rho:
+\Re\rho>\frac12,\ \Im\rho\neq0\\
+&\Longrightarrow
+\exists g:
+\Re\mathcal Z_{\mathrm{zero}}
+(g*\widetilde g)<0\\
+&\overset{\text{canonical identification}}{\Longrightarrow}
+\mathcal W_\xi(g*\widetilde g)<0\\
+&\Longrightarrow
+\text{违反 canonical Weil positivity}.
+\end{aligned}
+}
+\tag{1986.1}
+$$
+
+第二行已经机器闭合。
+
+最主要的剩余工作是第三行，而不是继续寻找新的离线零点类比。
+
+---
+

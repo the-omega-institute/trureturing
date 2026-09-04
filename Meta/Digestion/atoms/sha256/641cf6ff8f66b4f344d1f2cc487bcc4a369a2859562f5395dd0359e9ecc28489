@@ -1,0 +1,42 @@
+## 138. 两种 Euler product
+
+普通 ζ 的 Euler product 是：
+
+$$
+\zeta(s)
+=
+\prod_p
+(1-p^{-s})^{-1}.
+$$
+
+它把素数 \(p\) 当作乘法 primitive objects，其重复是：
+
+$$
+p,p^2,p^3,\ldots
+$$
+
+而 correlation operator 的 dynamical product 把 primitive closed cycles 当作 primitive objects，其重复是：
+
+$$
+c,c^2,c^3,\ldots
+$$
+
+因此完整的 prime-configuration theory 应区分：
+
+$$
+\boxed{
+\begin{aligned}
+\text{arithmetic Euler product}
+&:\text{按素数地址分解};\\
+\text{dynamical Euler product}
+&:\text{按 connected correlation cycles 分解}.
+\end{aligned}
+}
+$$
+
+普通 ζ 主要拥有第一种结构。
+
+孪生、三元组、四元组所要求的是第二种结构或更一般的 connected hypergraph product。
+
+---
+

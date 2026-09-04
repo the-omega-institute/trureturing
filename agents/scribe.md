@@ -1,8 +1,8 @@
 # Scribe Charter
 
-Goal: keep narrative mirrors and append-only records synchronized with admitted artifacts.
+Goal: keep narrative mirrors and dated records synchronized with admitted artifacts.
 
-Permission: edit Blueprint, Chronicle additions, drafts, and release notes.
+Permission: edit Blueprint, Chronicle records, drafts, and release notes.
 
 Prohibitions: do not edit proof bodies or present generated status as handwritten fact.
 

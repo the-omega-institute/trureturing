@@ -10,7 +10,6 @@ public sealed partial class DigestionQuarantineTests
     private const string CoverDisposition = """
         cover_disposition:
           outcome: partial-closed
-          recorded_at_utc: 2026-08-25T04:03:02.0000000+00:00
           gids:
             - D5/S0/Carrier/Probe.probe
           gaps:
@@ -24,7 +23,6 @@ public sealed partial class DigestionQuarantineTests
             "  gaps:",
             "  unexpected: value\n  gaps:",
             StringComparison.Ordinal),
-        CoverDisposition.Replace("+00:00", "+08:00", StringComparison.Ordinal),
         CoverDisposition.Replace(
             "    - D5/S0/Carrier/Probe.probe",
             "    - D5/S0/Carrier/Probe.zeta\n    - D5/S0/Carrier/Probe.alpha",
@@ -52,17 +50,12 @@ public sealed partial class DigestionQuarantineTests
             new DigestionStatus(DigestionMigrationState.Partial, DigestionTruthState.Closed),
             disposition.Outcome);
         Assert.Equal(["D5/S0/Carrier/Probe.probe"], disposition.Gids.ToArray());
-        Assert.Equal(
-            new DateTimeOffset(2026, 8, 25, 4, 3, 2, TestBudgets.ZeroDuration),
-            disposition.RecordedAtUtc);
-
         var first = BackfillInventoryWriter.WriteAtom(entry);
         var firstText = Encoding.UTF8.GetString(first.AsSpan());
         Assert.Contains(
             """
               cover_disposition:
                 outcome: partial-closed
-                recorded_at_utc: 2026-08-25T04:03:02.0000000+00:00
                 gids:
                   - D5/S0/Carrier/Probe.probe
                 gaps:
@@ -94,14 +87,14 @@ public sealed partial class DigestionQuarantineTests
     {
         var atom = Atom(AtomId, CoverDisposition).Replace(
             "coverage_gids: []",
-            "coverage_gids:\n  - D5/S0/Carrier/Probe.probe",
+            "coverage_gids:\n  - gid: D5/S0/Carrier/Probe.probe\n    target_statement_id: null",
             StringComparison.Ordinal);
 
         var error = Assert.Throws<FormatException>(() =>
             BackfillInventoryLoader.Load(DirectorySnapshot(atom)));
 
         Assert.Contains("cover_disposition", error.Message, StringComparison.Ordinal);
-        Assert.Contains("coverage_gids", error.Message, StringComparison.Ordinal);
+        Assert.Contains("coverage", error.Message, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -127,7 +120,6 @@ public sealed partial class DigestionQuarantineTests
             [],
             new DigestionReceipts(
                 [],
-                [],
                 ["remaining theorem clause"],
                 [],
                 null,
@@ -138,8 +130,7 @@ public sealed partial class DigestionQuarantineTests
                     ["D5/S0/Carrier/Probe.probe"],
                     [new DigestionDispositionGap(
                         "unresolved-subitem",
-                        "remaining theorem clause")],
-                    new DateTimeOffset(2026, 8, 25, 4, 3, 2, TestBudgets.ZeroDuration))),
+                        "remaining theorem clause")])),
             new DigestionStatus(DigestionMigrationState.Residual, DigestionTruthState.Open),
             Digest);
         var evaluated = new DigestionEntryEvaluation(

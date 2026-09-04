@@ -1,0 +1,8 @@
+### 151.2 Fixed-\(k\) regularity
+
+```lean
+theorem fixedCardinalityAdmissibleZeckendorfLanguage_regular
+    (k : ℕ) :
+    RegularLanguage (admissibleGapEncodings k)
+```
+

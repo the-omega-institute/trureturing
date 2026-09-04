@@ -1,0 +1,38 @@
+## 131. 各位置的含义
+
+$$
+E_2^{0,0}
+$$
+
+表示可以在所有层兼容保存的 invariant completion。
+
+$$
+E_2^{0,-1}
+$$
+
+表示每一层都存在、并在极限中持续的 odd defect。
+
+$$
+E_2^{1,0}
+$$
+
+表示所有有限名字相容，但无法选择全局 invariant lift 的 phantom thread。
+
+$$
+E_2^{1,-1}
+$$
+
+表示 odd defect 在每个有限阶段都可局部处理，却在无限 gluing 中逃逸。
+
+这正是“周期的周期导致对角化逃逸”的最精确候选结构。
+
+目前它应被标记为：
+
+$$
+\boxed{\text{Observer Completion Spectral Sequence conjectural framework}}
+$$
+
+而不是已经存在于仓库中的定理。
+
+---
+

@@ -1,0 +1,14 @@
+## 非紧逃逸
+
+候选缺陷可以移动到：
+
+$$
+T\to\infty,
+\qquad
+\delta\to0,
+\qquad
+k\to\infty,
+\qquad
+p\to\infty.
+$$
+

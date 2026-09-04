@@ -1,0 +1,20 @@
+## 47. 结构含义
+
+构型 source cumulant 是分拆格上的 connected 对象。
+
+operator determinant source jet 是闭合算子词的 cyclic trace。
+
+所以真正的 Trace–Jet Bridge 应当建立：
+
+$$
+\boxed{
+\text{partition-connected additive cumulant}
+\longleftrightarrow
+\text{cyclic-connected operator trace}.
+}
+$$
+
+两种“闭合”不是同义，但它们具有相同的去除可分解部分的作用。
+
+---
+

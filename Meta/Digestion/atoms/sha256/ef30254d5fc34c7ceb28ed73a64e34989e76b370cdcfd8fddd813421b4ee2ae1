@@ -1,0 +1,14 @@
+## 71. Paley–Wiener Orbit Nonseparability
+
+定义零点评价映射的有限 Gram 矩阵和 separation cost，并研究：
+
+$$
+T\to\infty
+$$
+
+时右逆范数是否爆炸。
+
+这将把“所有离线零点在整个系统纠缠”转化为一个可计算、可证伪的函数空间命题。
+
+---
+

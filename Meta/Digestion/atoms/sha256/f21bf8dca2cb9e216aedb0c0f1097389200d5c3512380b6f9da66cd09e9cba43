@@ -1,0 +1,53 @@
+## 371. 双曲不变量
+
+有：
+
+$$
+\begin{aligned}
+Z_{\mathrm e}^2-Z_{\mathrm o}^2
+&=
+(Z_{\mathrm e}+Z_{\mathrm o})
+(Z_{\mathrm e}-Z_{\mathrm o})\\
+&=
+\zeta(2s).
+\end{aligned}
+$$
+
+所以：
+
+$$
+\boxed{
+Z_{\mathrm e}^2-Z_{\mathrm o}^2
+=
+\zeta(2s).
+}
+$$
+
+这说明偶、奇 sector 并不是独立的两个函数，而是位于一条由 \(\zeta(2s)\) 控制的双曲线上。
+
+其两个 null coordinates 正是：
+
+$$
+Z_{\mathrm e}+Z_{\mathrm o}=\zeta(s),
+$$
+
+$$
+Z_{\mathrm e}-Z_{\mathrm o}
+=
+\frac{\zeta(2s)}{\zeta(s)}.
+$$
+
+可以把它读成：
+
+$$
+\boxed{
+\text{global trace}
+\times
+\text{relative parity observer}
+=
+\text{doubled-scale completion}.
+}
+$$
+
+---
+

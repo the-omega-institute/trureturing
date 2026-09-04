@@ -1,0 +1,28 @@
+## 117. 三元组 chirality 是第一个 transverse-odd 候选源
+
+在前述 \(2/4\)-gap 编码中：
+
+$$
+H_3^+:
+[0,1],
+\qquad
+\kappa=+1,
+$$
+
+$$
+H_3^-:
+[1,0],
+\qquad
+\kappa=-1.
+$$
+
+二者之差正好是一个三值 transverse source：
+
+$$
+\chi_{\mathrm{triplet}}
+\in\{-1,0,+1\}.
+$$
+
+其中：
+
+* \(+1\)：左短右长；

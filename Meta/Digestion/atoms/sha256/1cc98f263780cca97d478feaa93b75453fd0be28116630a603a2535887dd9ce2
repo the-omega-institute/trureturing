@@ -1,0 +1,24 @@
+## 49. 第三层：Paley–Wiener 非可分离性
+
+Weil 测试函数在时间域紧支撑时，其 Fourier–Laplace 变换是整个复平面上的 entire function。
+
+因此不能把：
+
+$$
+\widehat g(z_{\rho_0})=1
+$$
+
+和：
+
+$$
+\widehat g(z_\rho)=0
+\quad
+(\rho\neq\rho_0)
+$$
+
+当作彼此独立的无限坐标任意指定。
+
+整个零点集合上的取值必须共同来自同一个 entire function。
+
+这提供了一个非常严格的“全体纠缠”概念：
+

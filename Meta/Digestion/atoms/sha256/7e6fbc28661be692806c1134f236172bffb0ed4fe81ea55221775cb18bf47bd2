@@ -1,0 +1,27 @@
+# 观察者奇偶 Weyl 区间坍缩定理
+
+目标形式是：
+
+$$
+\boxed{
+\text{global-even lower bound}
++
+\text{observer-odd upper bound}
+\Longrightarrow
+\text{transverse interval collapses to }0.
+}
+$$
+
+这可能就是你感觉到“应该会推出确定性矛盾”的最接近的数学版本：
+
+$$
+R\ge0,
+\qquad
+R\le0
+\quad\Longrightarrow\quad
+R=0.
+$$
+
+但当前真正缺少的是把：
+
+* prime-factor parity；

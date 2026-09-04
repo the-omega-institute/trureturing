@@ -326,15 +326,7 @@ public sealed partial class DigestionAlignmentTests
                                 ["D5/S0/Synthetic/Receipt.coarse_generation"],
                                 [new DigestionDispositionGap(
                                     "unresolved-subitem",
-                                    "remaining coarse clause")],
-                                new DateTimeOffset(
-                                    2026,
-                                    8,
-                                    25,
-                                    4,
-                                    3,
-                                    2,
-                                    TestBudgets.ZeroDuration)),
+                                    "remaining coarse clause")]),
                         },
                     }
                     : entry).ToImmutableArray(),

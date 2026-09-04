@@ -1,0 +1,12 @@
+## 66. Golden Minimal Fusion Theorem
+
+满足对称、非负整数、trace \(1\)、determinant \(-1\) 的非平凡二通道算子必与 Fibonacci 矩阵置换共轭，因此谱为：
+
+$$
+\{\varphi,-\varphi^{-1}\}.
+$$
+
+这是直接可形式化定理。
+
+---
+

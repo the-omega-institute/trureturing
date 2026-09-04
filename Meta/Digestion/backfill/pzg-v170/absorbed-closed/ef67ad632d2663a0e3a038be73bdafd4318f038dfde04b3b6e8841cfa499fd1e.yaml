@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:ef67ad632d2663a0e3a038be73bdafd4318f038dfde04b3b6e8841cfa499fd1e
+  normalized_sha256: sha256:ef67ad632d2663a0e3a038be73bdafd4318f038dfde04b3b6e8841cfa499fd1e
+cas_ref: sha256:ef67ad632d2663a0e3a038be73bdafd4318f038dfde04b3b6e8841cfa499fd1e
+coverage_gids:
+  - gid: D5/S1/Deficit/GoldenHeckeMahlerFunctionalEquation.golden_hecke_mahler_functional_equation
+    target_statement_id: sha256:4a1e4974de8bcee7c77d337c90a94c7121542d0d7e250f01b4446a0116355cfc
+receipts:
+  scribe:
+    - gid: D5/S1/Deficit/GoldenHeckeMahlerFunctionalEquation.golden_hecke_mahler_functional_equation
+      definition_sha256: sha256:a64434ebcc7c5e78696704c7d441411dd8c7eee5f468bd35afc9fc6ec12f68dd
+      emission_sha256: sha256:9a6174dd01e48716febe468ece8d8e9c9fc5918d1fec7c82414163673f621cf8
+  unresolved_subitems: []

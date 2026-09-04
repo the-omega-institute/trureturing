@@ -1,0 +1,62 @@
+## 82. 在整数系统中，破缺可能留下 \(2\)-torsion
+
+若 \(M\) 是整数模，不能任意除以 \(2\)。
+
+例如 \(P=I\) 作用在：
+
+$$
+M=\mathbb Z
+$$
+
+上，则：
+
+$$
+N=2,
+\qquad
+\Delta=0.
+$$
+
+于是：
+
+$$
+\frac{\ker\Delta}{\operatorname{im}N}
+=
+\frac{\mathbb Z}{2\mathbb Z}.
+$$
+
+这就是一个永久的 parity obstruction。
+
+一般 \(C_2\) Tate 上同调为：
+
+$$
+\widehat H^0(C_2,M)
+=
+\frac{M^{C_2}}{NM},
+$$
+
+$$
+\widehat H^{-1}(C_2,M)
+=
+\frac{\ker N}{(I-P)M}.
+$$
+
+所以真正不能重完的信息不是“奇数”本身，而是：
+
+$$
+\boxed{
+\text{不能被范数映射吸收的奇偶上同调类}.
+}
+$$
+
+这给“分歧源泉”一个严格定义：
+
+$$
+\boxed{
+\text{persistent break}
+=
+\text{nonzero Tate cohomology}.
+}
+$$
+
+---
+

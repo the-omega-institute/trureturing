@@ -1,3 +1,8 @@
+using System.Buffers.Binary;
+using System.Collections;
+using System.Collections.Concurrent;
+using System.Security.Cryptography;
+using System.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -7,6 +12,9 @@ namespace StrataLint.Engine;
 internal static class ScribeTestMapDeriver
 {
     private const string ManagedTestProjectPrefix = "tools/tests/";
+    private static readonly ConcurrentDictionary<string, Lazy<ScribeTestMap>> SnapshotDerivations =
+        new(StringComparer.Ordinal);
+    private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
     // These projects are deliberately compiled to fail by preflight. Keep this declaration
     // removal-only: a new non-xUnit project must first establish its own governed class rather
@@ -42,6 +50,29 @@ internal static class ScribeTestMapDeriver
 
     internal static ScribeTestMap DeriveSnapshot(RepositorySnapshot snapshot)
     {
+        var key = SnapshotDerivationKey(snapshot);
+        var candidate = new Lazy<ScribeTestMap>(
+            () => DeriveSnapshotUncached(snapshot),
+            LazyThreadSafetyMode.ExecutionAndPublication);
+        var derivation = SnapshotDerivations.GetOrAdd(key, candidate);
+        try
+        {
+            var map = derivation.Value;
+            if (map.CompileQueryFindings.Count != 0)
+            {
+                RemoveSnapshotDerivation(key, derivation);
+            }
+            return map;
+        }
+        catch
+        {
+            RemoveSnapshotDerivation(key, derivation);
+            throw;
+        }
+    }
+
+    private static ScribeTestMap DeriveSnapshotUncached(RepositorySnapshot snapshot)
+    {
         var tracked = snapshot.Files.Values
             .Where(static file => file.Path.Value.EndsWith(".cs", StringComparison.Ordinal)
                 || file.Path.Value.EndsWith(".csproj", StringComparison.Ordinal)
@@ -74,6 +105,62 @@ internal static class ScribeTestMapDeriver
                     .ToArray()));
         }
     }
+
+    private static string SnapshotDerivationKey(RepositorySnapshot snapshot)
+    {
+        using var hash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
+        AppendHashString(hash, "snapshot-files");
+        AppendHashInt32(hash, snapshot.Files.Count);
+        foreach (var file in snapshot.Files.Values.OrderBy(
+                     static file => file.Path.Value,
+                     StringComparer.Ordinal))
+        {
+            AppendHashString(hash, file.Path.Value);
+            AppendHashBytes(hash, file.RawBytes.AsSpan());
+        }
+
+        // MSBuild inherits every process environment variable, including its executable,
+        // SDK, NuGet, and temporary-directory selectors.
+        var environment = Environment.GetEnvironmentVariables()
+            .Cast<DictionaryEntry>()
+            .OrderBy(static entry => (string)entry.Key, StringComparer.Ordinal)
+            .ToArray();
+        AppendHashString(hash, "process-environment");
+        AppendHashInt32(hash, environment.Length);
+        foreach (var entry in environment)
+        {
+            AppendHashString(hash, (string)entry.Key);
+            AppendHashString(hash, (string?)entry.Value ?? string.Empty);
+        }
+        AppendHashString(hash, "resolved-temp-path");
+        AppendHashString(hash, Path.GetTempPath());
+        AppendHashString(hash, "resolved-user-profile");
+        AppendHashString(hash, Environment.GetFolderPath(Environment.SpecialFolder.UserProfile));
+
+        return Convert.ToHexStringLower(hash.GetHashAndReset());
+    }
+
+    private static void AppendHashString(IncrementalHash hash, string value) =>
+        AppendHashBytes(hash, StrictUtf8.GetBytes(value));
+
+    private static void AppendHashBytes(IncrementalHash hash, ReadOnlySpan<byte> value)
+    {
+        AppendHashInt32(hash, value.Length);
+        hash.AppendData(value);
+    }
+
+    private static void AppendHashInt32(IncrementalHash hash, int value)
+    {
+        Span<byte> bytes = stackalloc byte[sizeof(int)];
+        BinaryPrimitives.WriteInt32BigEndian(bytes, value);
+        hash.AppendData(bytes);
+    }
+
+    private static void RemoveSnapshotDerivation(
+        string key,
+        Lazy<ScribeTestMap> derivation) =>
+        ((ICollection<KeyValuePair<string, Lazy<ScribeTestMap>>>)SnapshotDerivations)
+            .Remove(new KeyValuePair<string, Lazy<ScribeTestMap>>(key, derivation));
 
     internal static IReadOnlyList<ScribeTestProjectPartition> DeriveProjectPartitions(
         IEnumerable<(string Path, string Content)> projectFiles) => projectFiles

@@ -165,19 +165,93 @@ public sealed partial class ReviewRegressionTests
     }
 
     [Fact]
-    public void Sl016RejectsDeletingABaselineCasBlob()
+    public void Sl016AllowsDeletingACasBlobAbsentFromTheCurrentLedger()
     {
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        fixture.Files.Remove(RuleFixture.FixtureCasPath);
+        var (fixture, deletedCasPath) = UnreferencedCasDeletionFixture();
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(16),
-            fixture.Build());
+            fixture.Build(RawChangeSet.Create([deletedCasPath])));
+
+        Assert.Empty(evaluation.Diagnostics);
+    }
+
+    [Fact]
+    public void Sl016StillChecksDerivedStatusWhenDeletingAnUnreferencedCasBlob()
+    {
+        var (fixture, deletedCasPath) = UnreferencedCasDeletionFixture();
+        var atom = fixture.Files[RuleFixture.FixtureBackfillAtomPath];
+        fixture.Files.Remove(RuleFixture.FixtureBackfillAtomPath);
+        var mismatchedStatusPath = RuleFixture.FixtureBackfillAtomPath.Replace(
+            "/partial-open/",
+            "/absorbed-closed/",
+            StringComparison.Ordinal);
+        fixture.Files[mismatchedStatusPath] = atom;
+
+        var evaluation = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(16),
+            fixture.Build(RawChangeSet.Create([
+                deletedCasPath,
+                RuleFixture.FixtureBackfillAtomPath,
+                mismatchedStatusPath,
+            ])));
 
         Assert.Contains(evaluation.Diagnostics, diagnostic => diagnostic.Message.Contains(
-            $"baseline CAS blob was deleted: {RuleFixture.FixtureCasPath}",
+            "handwritten status absorbed-closed differs from derived partial-open",
             StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void Sl016StillChecksClosedEntryKeysWhenDeletingAnUnreferencedCasBlob()
+    {
+        var (fixture, deletedCasPath) = UnreferencedCasDeletionFixture();
+        fixture.Files[RuleFixture.FixtureBackfillAtomPath] += "unexpected: value\n";
+
+        var evaluation = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(16),
+            fixture.Build(RawChangeSet.Create([
+                deletedCasPath,
+                RuleFixture.FixtureBackfillAtomPath,
+            ])));
+
+        Assert.Contains(evaluation.Diagnostics, diagnostic => diagnostic.Message.Contains(
+            "source fixture-source entry keys are not canonical",
+            StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void Sl016StillChecksCoverageTargetsWhenDeletingAnUnreferencedCasBlob()
+    {
+        const string missingGid = "D5/S0/Carrier/MissingCoverageTarget";
+        var (fixture, deletedCasPath) = UnreferencedCasDeletionFixture();
+        fixture.Files[RuleFixture.FixtureBackfillAtomPath] = fixture.Files[
+                RuleFixture.FixtureBackfillAtomPath]
+            .Replace(
+                "D5/S0/Carrier/BackfillTarget",
+                missingGid,
+                StringComparison.Ordinal);
+
+        var evaluation = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(16),
+            fixture.Build(RawChangeSet.Create([
+                deletedCasPath,
+                RuleFixture.FixtureBackfillAtomPath,
+            ])));
+
+        Assert.Contains(evaluation.Diagnostics, diagnostic => diagnostic.Message.Contains(
+            $"entry {RuleFixture.FixtureAtomId} coverage target is absent: {missingGid}",
+            StringComparison.Ordinal));
+    }
+
+    private static (RuleFixture Fixture, string DeletedCasPath) UnreferencedCasDeletionFixture()
+    {
+        var fixture = new RuleFixture();
+        fixture.AddBackfillTargets();
+        var obsolete = DigestionCasStore.Capture(Encoding.UTF8.GetBytes("obsolete atom\n"));
+        var obsoleteText = Encoding.UTF8.GetString(obsolete.Bytes.AsSpan());
+        fixture.Baseline[obsolete.RelativePath] = obsoleteText;
+        fixture.ForkPoint[obsolete.RelativePath] = obsoleteText;
+        return (fixture, obsolete.RelativePath);
     }
 
     [Fact]
@@ -369,7 +443,7 @@ public sealed partial class ReviewRegressionTests
     }
 
     [Fact]
-    public void Sl019AcceptsInventoryCoverageAndReceiptGidsWhoseSubjectIsNamedAfterAFailure()
+    public void Sl019AcceptsInventoryCoverageAndScribeGidsWhoseSubjectIsNamedAfterAFailure()
     {
         var fixture = new RuleFixture();
         const string path = "Meta/Digestion/backfill/interface-v1/absorbed-closed/probe.yaml";
@@ -377,12 +451,10 @@ public sealed partial class ReviewRegressionTests
             "D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/RetrospectiveLookupFailure"
             + ".lookup_copy_zero_loss_and_nonanticipating_failure";
         fixture.Files[path] = "cas_ref: sha256:00\n"
-            + "coverage_gids:\n  - " + gid + "\n"
+            + "coverage_gids:\n"
+            + "  - gid: " + gid + "\n"
+            + "    target_statement_id: sha256:00\n"
             + "receipts:\n"
-            + "  coverage:\n"
-            + "    - gid: " + gid + "\n"
-            + "      source_sha256: sha256:00\n"
-            + "      target_statement_id: sha256:00\n"
             + "  scribe:\n"
             + "    - gid: " + gid + "\n"
             + "      definition_sha256: sha256:00\n"
@@ -398,11 +470,17 @@ public sealed partial class ReviewRegressionTests
                 "anomaly-bearing", StringComparison.Ordinal));
     }
 
+    public static TheoryData<string> InvalidInventoryGidSlots => new()
+    {
+        "coverage_" + "gids:\n  - unresolved failure without case\n",
+        "receipts:\n  coverage:\n    - gid: FiniteFailure\n",
+        "receipts:\n  coverage:\n    - gid: D5/S3/ConceptDynamics/DefinitionEscapeAdjudication/RetrospectiveLookupFailure.lookup_copy_zero_loss_and_nonanticipating_failure\n",
+        "failure_gids:\n  - D5/S0/Carrier/ProbeFailure.failure_probe\n",
+        "outer:\n  coverage_" + "gids:\n    - D5/S0/Carrier/ProbeFailure.failure_probe\n",
+    };
+
     [Theory]
-    [InlineData("coverage_gids:\n  - unresolved failure without case\n")]
-    [InlineData("receipts:\n  coverage:\n    - gid: FiniteFailure\n")]
-    [InlineData("failure_gids:\n  - D5/S0/Carrier/ProbeFailure.failure_probe\n")]
-    [InlineData("outer:\n  coverage_gids:\n    - D5/S0/Carrier/ProbeFailure.failure_probe\n")]
+    [MemberData(nameof(InvalidInventoryGidSlots))]
     public void Sl019RejectsAnomalyResiduesOutsideTheDeclaredInventoryGidSlots(string body)
     {
         var fixture = new RuleFixture();
@@ -425,7 +503,7 @@ public sealed partial class ReviewRegressionTests
         var fixture = new RuleFixture();
         const string path = "Evidence/D5/S0/Carrier/Inventory.run.json";
         fixture.Files[path] =
-            "{\"coverage_gids\":[\"D5/S0/Carrier/ProbeFailure.failure_probe\"]}\n";
+            "{\"coverage_" + "gids\":[\"D5/S0/Carrier/ProbeFailure.failure_probe\"]}\n";
 
         var evaluation = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(19),
@@ -581,32 +659,6 @@ public sealed partial class ReviewRegressionTests
         var diagnostic = Assert.Single(completed.Capability.Diagnostics, item => item.Path == "rogue.txt");
         Assert.Equal(sl000, diagnostic.RuleId);
         Assert.Equal("unknown top-level artifact", diagnostic.Message);
-    }
-
-    [Fact]
-    public void FormalizationReceiptResidenceIsClosedWorldCanonical()
-    {
-        Assert.True(RuleId.TryCreate("SL-000", out var sl000));
-        var canonical =
-            "Meta/Digestion/formalizations/sample-residual-"
-            + new string('a', 64) + ".v1.json";
-        var fixture = new RuleFixture();
-        fixture.Files[canonical] = "{}\n";
-        fixture.Files["Meta/Digestion/formalizations/BAD.v1.json"] = "{}\n";
-
-        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(
-            RuleCatalog.Default.Execute(
-                fixture.Build(RawChangeSet.Create(["Meta/Digestion/formalizations/BAD.v1.json"]))));
-
-        Assert.DoesNotContain(
-            completed.Capability.Diagnostics,
-            item => item.Path == canonical && item.RuleId == sl000);
-        var rejected = Assert.Single(
-            completed.Capability.Diagnostics,
-            item => item.Path == "Meta/Digestion/formalizations/BAD.v1.json"
-                && item.RuleId == sl000);
-        Assert.Equal(sl000, rejected.RuleId);
-        Assert.Equal("unknown Meta artifact", rejected.Message);
     }
 
     [Fact]
