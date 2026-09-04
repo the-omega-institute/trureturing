@@ -264,7 +264,7 @@ worker 的搜索能力是宿主产品默认,仓库无法强制;agent 派发时�
 
 **16. 实施在独立 worktree,主干保持可发布;主检出常驻 dev,merge 才算完成。**
 代码实施与大改在**独立 git worktree**(各自分支)进行,不在主工作树/主干直接堆——这样多路实施可**并行推进**,各自一个 PR,互不污染;主干任何时刻可发布。并行安全由 harness 保证:地址算出(不撞)+ CI required-check(对错机器判)+ SL-022 元层门控。合并回主干走 PR + required-check,不自并。
-**在 worktree 的工作及时提交并同步远程(push),不留长期未提交改动。** 工具契约不要求先提交:`ledger-append` 默认经 `repository.ReadCurrentChanges()` 读取相对 HEAD 的未提交工作树 delta,`deposit` / `cover` 只改工作树、不自动提交。未提交的工作树改动仍是脆的、无地址的:`git stash` 跨 worktree 全局共享会误叠外来改动;未提交改动易与 rebase/新提交失配、易丢失。故:一个逻辑单元完成即 commit(而非攒一大堆散改动),推分支到远程留痕(工件化,第9条),让 CI/协作/后续 rebase 有确定的内容寻址锚点。
+**在 worktree 的工作及时提交并同步远程(push),不留长期未提交改动。** 工具契约不要求先提交:`ledger-align` 默认经 `repository.ReadCurrentChanges()` 读取相对 HEAD 的未提交工作树 delta,`deposit` / `cover` 只改工作树、不自动提交。未提交的工作树改动仍是脆的、无地址的:`git stash` 跨 worktree 全局共享会误叠外来改动;未提交改动易与 rebase/新提交失配、易丢失。故:一个逻辑单元完成即 commit(而非攒一大堆散改动),推分支到远程留痕(工件化,第9条),让 CI/协作/后续 rebase 有确定的内容寻址锚点。
 **主检出常驻 `dev` 且及时同步;一切工作在 worktree;merge 才算完成(用户 2026-08-15 定)。**
 - **主检出(主工作树)永远停在 `dev`**:不在其上建分支、不改文件、不 checkout 别的分支;它只有一个动作——**及时 `git pull --ff-only origin dev` 同步**(开工前、合并后、派席前各一次)。主检出是**活的基线**(远端 auto-merge 持续推进 dev,主检出随每次同步移动;先例 2026-08-13:据主仓半小时的读数报告了一个 upstream 已删掉的模块),故凡取读数、改文件、写报告都在钉住的 worktree 里做,主检出只用来同步与看 dev。
 - **所有工作——不分大小、不分代码/文档/元层(含改本文件)——一律在独立 worktree 实施**,经 `make worktree`(器律③)。「只改一行」不是例外:例外就是在主检出上堆脏改动的第一步。

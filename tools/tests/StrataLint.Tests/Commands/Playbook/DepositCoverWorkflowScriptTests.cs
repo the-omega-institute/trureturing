@@ -27,7 +27,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 "make:lean-report",
                 "dotnet:deposit-header-check",
                 "make:emit",
-                "dotnet:ledger-append",
+                "dotnet:ledger-align",
             ],
             fixture.CallKinds());
     }
@@ -43,7 +43,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         var result = fixture.Run("deposit");
 
         Assert.True(result.ExitCode == 0, Diagnostics(result));
-        Assert.Equal(1, fixture.CallKinds().Count(call => call == "dotnet:ledger-append"));
+        Assert.Equal(1, fixture.CallKinds().Count(call => call == "dotnet:ledger-align"));
         Assert.Equal(1, fixture.FreezeCount());
     }
 
@@ -58,7 +58,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         var result = fixture.Run("deposit");
 
         Assert.True(result.ExitCode == 0, Diagnostics(result));
-        Assert.DoesNotContain("dotnet:ledger-append", fixture.CallKinds());
+        Assert.DoesNotContain("dotnet:ledger-align", fixture.CallKinds());
         Assert.Equal(1, fixture.FreezeCount());
     }
 

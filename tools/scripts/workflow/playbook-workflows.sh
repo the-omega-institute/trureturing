@@ -189,10 +189,10 @@ freeze_module_if_needed() {
     return
   fi
 
-  step "ledger-append $MODULE_PATH" run_cli \
-    ledger-append --candidate-lean-report "$REPORT"
+  step "ledger-align --add $MODULE_PATH" run_cli \
+    ledger-align --add "$MODULE_PATH" --candidate-lean-report "$REPORT"
   if ! freeze_exists; then
-    echo "PLAYBOOK_INVALID ledger append did not freeze target module: $MODULE_PATH" >&2
+    echo "PLAYBOOK_INVALID ledger align did not freeze target module: $MODULE_PATH" >&2
     return 1
   fi
 }
@@ -315,7 +315,7 @@ case "$COMMAND" in
     run_digest_status
     # Freeze last among all mutating derivations so the proposition snapshot is current.
     verify_added_frozen_events_v5
-    run_cli ledger-append --candidate-lean-report "$REPORT"
+    run_cli ledger-align --candidate-lean-report "$REPORT"
     run_digest_status
     make preflight BASE="$(git rev-parse HEAD^1)"
     verify_added_frozen_events_v5

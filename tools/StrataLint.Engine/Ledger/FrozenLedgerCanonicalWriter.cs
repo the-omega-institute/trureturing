@@ -55,11 +55,11 @@ internal static class FrozenLedgerGenerator
                     candidate.DeclarationStatementIds))
             {
                 throw new InvalidOperationException(
-                    $"Active module {path.Value} statement identity changed; append Revoke before rerunning ledger-append.");
+                    $"Active module {path.Value} statement identity changed; append Revoke before rerunning ledger-align.");
             }
 
             throw new InvalidOperationException(
-                $"Active module {path.Value} changed identity; append Revoke before rerunning ledger-append.");
+                $"Active module {path.Value} changed identity; append Revoke before rerunning ledger-align.");
         }
 
         var payloads = candidateCatalog.ClosedNodes

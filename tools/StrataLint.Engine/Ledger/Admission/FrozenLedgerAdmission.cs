@@ -298,7 +298,7 @@ public static partial class FrozenLedger
                     return Failure(
                         [path],
                         scope.WitnessesFor(path),
-                        $"Closed module {path.Value} is missing a Freeze event; run ledger-append.");
+                        $"Closed module {path.Value} is missing a Freeze event; run ledger-align --add {path.Value}.");
                 }
 
                 if (!hasExpected && hasActual)
@@ -340,7 +340,7 @@ public static partial class FrozenLedger
                 return Failure(
                     [path],
                     scope.WitnessesFor(path),
-                    $"Active module {path.Value} changed identity; append Revoke before rerunning ledger-append; field differences: {differenceMessage}");
+                    $"Active module {path.Value} changed identity; append Revoke before rerunning ledger-align; field differences: {differenceMessage}");
             }
 
             return null;

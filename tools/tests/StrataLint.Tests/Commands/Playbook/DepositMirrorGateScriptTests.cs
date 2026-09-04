@@ -19,7 +19,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
             Encoding.UTF8.GetString(result.StandardError),
             StringComparison.Ordinal);
         Assert.DoesNotContain("make:lean-report", fixture.CallKinds());
-        Assert.DoesNotContain("dotnet:ledger-append", fixture.CallKinds());
+        Assert.DoesNotContain("dotnet:ledger-align", fixture.CallKinds());
         Assert.Equal(1, fixture.CommitCount());
         Assert.Equal(0, fixture.FreezeCount(TransactionFixture.NewLeanPath));
     }

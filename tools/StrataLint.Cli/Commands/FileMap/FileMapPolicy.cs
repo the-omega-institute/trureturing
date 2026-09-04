@@ -524,7 +524,7 @@ internal static class FileMapPolicy
         var trackedPaths = paths.ToArray();
         return manifest.Entries
             .Where(static entry => entry.RuntimeDisposition != "run-local")
-            // L3 expand starts with no state shards; ledger-append populates this exact set.
+            // L3 expand starts with no state shards; ledger-align populates this exact set.
             .Where(static entry => entry.Pattern != "Golden/Frozen/state/**/*.json")
             .Where(entry => !trackedPaths.Any(entry.Matches))
             .Select(static entry => new FileMapFinding(

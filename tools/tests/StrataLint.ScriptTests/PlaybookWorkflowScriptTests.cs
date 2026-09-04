@@ -25,7 +25,7 @@ public sealed class PlaybookWorkflowScriptTests
                 "dotnet:digest-status --base synthetic-base",
                 "git:diff --diff-filter=A --name-only -z synthetic-base...HEAD -- Golden/Frozen/accepted/*.json",
                 "git:ls-files --others --exclude-standard -z -- Golden/Frozen/accepted/*.json",
-                "dotnet:ledger-append --candidate-lean-report .lake/build/stratalint/raw-lean-report.json",
+                "dotnet:ledger-align --candidate-lean-report .lake/build/stratalint/raw-lean-report.json",
                 "dotnet:digest-status --base synthetic-base",
                 $"git:rev-parse HEAD^1",
                 $"make:preflight BASE={SyntheticBaseSha}",
