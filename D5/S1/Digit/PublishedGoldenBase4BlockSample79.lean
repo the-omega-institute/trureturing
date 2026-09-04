@@ -106,7 +106,7 @@ theorem publishedBlockSample79_base_accepts
     (i : Fin publishedPowerExtent) :
     binaryZeckendorfBase.eval (base4PowerWord i.val) =
       some (terminalBaseState (publishedBlockSample79.code i).terminal) := by
-  rw [<- publishedBlockSample79_expand i]
+  rw [← publishedBlockSample79_expand i]
   exact binaryBase_eval_expandCode (publishedBlockSample79.code i)
 
 /-- A typed partial DFAO fits the 79 exact power records. -/
