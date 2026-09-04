@@ -113,6 +113,7 @@ public sealed class PlaybookWorkflowScriptTests
             var scriptTarget = Path.Combine(temporary.Path, ScriptPath);
             ScriptHarnessScratch.CopyScriptInto(Path.Combine(root, ScriptPath), scriptTarget);
             Directory.CreateDirectory(Path.Combine(temporary.Path, "Golden", "Frozen", "accepted"));
+            InstallTruthProjection(Array.Empty<object>());
             WriteExecutable("make", "printf 'make:%s\\n' \"$*\" >> \"$PLAYBOOK_TEST_CALLS\"");
             WriteExecutable(
                 "git",
@@ -165,6 +166,9 @@ public sealed class PlaybookWorkflowScriptTests
         }
 
         internal void InstallClosedTruthProjection(string module)
+            => InstallTruthProjection([new { repo_path = module, state = "closed" }]);
+
+        private void InstallTruthProjection<T>(T[] nodes)
         {
             var path = Path.Combine(temporary.Path, "Generated", "truth-graph.v1.json");
             Directory.CreateDirectory(Path.GetDirectoryName(path)!);
@@ -174,7 +178,7 @@ public sealed class PlaybookWorkflowScriptTests
                 {
                     truth = new
                     {
-                        nodes = new[] { new { repo_path = module, state = "closed" } },
+                        nodes,
                     },
                 }),
                 Encoding.UTF8);

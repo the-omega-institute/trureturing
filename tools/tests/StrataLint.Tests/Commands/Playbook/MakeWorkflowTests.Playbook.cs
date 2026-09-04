@@ -38,7 +38,7 @@ public sealed partial class MakeWorkflowTests
             script,
             StringComparison.Ordinal);
         Assert.Contains(
-            "ledger-align --candidate-lean-report \"$REPORT\"",
+            "align_args+=(--candidate-lean-report \"$REPORT\")",
             script,
             StringComparison.Ordinal);
         Assert.Contains("digest-status --base", script, StringComparison.Ordinal);
