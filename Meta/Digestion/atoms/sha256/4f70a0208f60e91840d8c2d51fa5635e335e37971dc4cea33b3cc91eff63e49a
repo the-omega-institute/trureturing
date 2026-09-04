@@ -1,0 +1,4 @@
+# 第两千一百四十二部　预登记增订 R-1044:矩形 Rouché 零点计数定理(第 1044 部、661.4、708.6 所假定的基础定理;Mathlib 钉版缺失)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;Mathlib 缺口盘点席 codex-cli(flight `op-r3-mathlib-gaps`)在钉版 Mathlib(rev `db584cd6…`,v4.33.0)中 `grep -rni 'Rouch'` 零命中、在本仓只命中矩形辐角原理(`D5/S3/Weil/ZetaAnalytic/RectangleLogDeriv.lean`);探针席 codex-cli(flight `op-p4-rouche`,worktree `trureturing-la114-m3ac`,base origin/dev `4ba545eed1`,2069s)整证并给出 kernel 读数;本节由 orchestrator(claude 主循环,会话「开放问题」)撰写。判决日:2026-09-04。
+

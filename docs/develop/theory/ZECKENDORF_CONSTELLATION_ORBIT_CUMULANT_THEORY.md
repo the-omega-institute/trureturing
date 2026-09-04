@@ -43606,3 +43606,31 @@ $$
 这条桥若不存在，短间隔只解释“为什么难以观察”。
 
 这条桥若被构造，并且能够进入 completed \(\xi\) 的多重零点判别式，它才可能解释“为什么发生偏移”。
+
+---
+
+# 第二百五十六部　勘误增订 E-462:奇偶条件矩之「真子集」须为非空(B-1 / B-2 预登记)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;探针席 codex-cli(flight `op-p5-parity-moments`,worktree `trureturing-la120-m3e`,base origin/dev `4ba545eed1`,1732s)整证并给出 kernel 读数;思考面板六席(codex-cli ×5 + fidelity 席 ChatGPT Pro)中 worth / natural-ownership 两席独立指出原句在 A = ∅ 处为假;本部勘误与预登记由 orchestrator(claude 主循环,会话「开放问题」)撰写。判决日:2026-09-04。
+
+## 465. 勘误:第 462 节的「任意真子集」包含空集,而空积之期望为 1
+
+第 462 节(原子 `7dfa40c541deb61583d19b24d29c4c835090d3e2d0539285f6b6e94c29326dc0`)断言对任意真子集 A ⊊ {1,…,d},两条件律 μ_d^± 下 ∏_{i∈A} X_i 的期望皆为 0。**反例 A = ∅**:空积恒为 1,期望为 1 而非 0。按「atoms 不删」总则,原文不动,本部追加新原子:结论对**非空**真子集成立;A = ∅ 时两律的期望同为 1,故「所有真边缘分布相同」的读数(含 A = ∅)仍然成立——即第 462 节的两句「低阶读数完全相同」与「最高阶真值相反」在修正后的量化域上皆真。
+
+## 466. B-1 预登记:非空真子集的条件矩为零、纤维基数与最高阶符号(`ParityConditionedMoments`,落 `D5/S3/Analytic/ReflectedSpectrum/`)
+
+**义务**:公开定理 `parity_conditioned_moments (k : ℕ) (ε : ℤ) (hε : ε = -1 ∨ ε = 1) : (parityFiber (k + 1) ε).card = 2 ^ k ∧ (∀ A : Finset (Fin (k + 1)), A.Nonempty → A ≠ Finset.univ → (∑ x ∈ parityFiber (k + 1) ε, ∏ i ∈ A, paritySign (x i)) = 0) ∧ (∑ x ∈ parityFiber (k + 1) ε, ∏ i : Fin (k + 1), paritySign (x i)) = ε * ((parityFiber (k + 1) ε).card : ℤ)`,其中 `paritySign : Fin 2 → ℤ` 取值 ±1(0 ↦ −1,1 ↦ +1),`parityFiber d ε := Finset.univ.filter (fun x => ∏ i, paritySign (x i) = ε)` 为 {−1,+1}^d 上总积等于 ε 的纤维;d = k + 1 与原文一致。落新模块 `D5/S3/Analytic/ReflectedSpectrum/ParityConditionedMoments`(桶现 8/24),只依赖钉版 Mathlib。
+**可证伪预测(写在跑之前)**:逃逸内容为「双坐标翻转」——对非空真子集 A 取 i ∈ A、j ∉ A,同时翻转 x_i 与 x_j 是 ε-纤维上的无不动点对合,且把 A-积换号,故 A-积在纤维上的和为零(`Finset.sum_involution` 型配对);纤维基数由单坐标翻转在 ± 两纤维之间的双射给出。判形 content,准入依据 escape-witness;若 `Finset.sum_involution` 在钉版 API 下的形状不能直接承载「无不动点 + 换号」两个条件,本条按 open 记,不得以 `sorry` 或公理代替。
+**边界**:不断言 A = ∅ 的矩为零;不涉及 d = 0。
+
+## 467. B-2 预登记:概率形式与真边缘分布相等(同模块第二条公开定理)
+
+**义务**:公开定理 `parity_conditioned_probability_form (k : ℕ)`:以 `parityLaw d ε x := if x ∈ parityFiber d ε then 2^{-(d-1)} else 0`(ℚ 值)为两条件律,断言 (i) 两律各自总质量为 1;(ii) 对每个非空真子集 A,两律下 ∏_{i∈A} paritySign (x i) 的期望皆为 0;(iii) 对**每个**真子集 A(含 A = ∅),两律在 A 上的边缘质量函数相等;(iv) 全积的期望在 μ^− 下为 −1、在 μ^+ 下为 +1。
+**可证伪预测(写在跑之前)**:(i)(ii)(iv) 由 B-1 经 `parityLaw` 的规范化得到(伴随,判形依活路径而定);(iii) 的逃逸内容为「A 外翻转」——对 j ∉ A 翻转 x_j 把 μ^− 与 μ^+ 互换而保持 A-限制事件,故边缘质量相等;这是 B-1 之外的新命题,判形 content。
+**边界**:边缘分布以 A-限制的质量函数表达(`parityMarginalMass`),不引入测度论对象。
+
+## 468. 结算
+
+原子 `7dfa40c5…`(第 462 节原式)记为**在 A = ∅ 处为假(refuted at the empty subset)**,不 cover;B-1 / B-2 由一个实施席同 PR `deposit`(绑 B-1)+ `cover`(B-2)落地,三席评审后合入。
+
+后续增订继续严格追加于本部之后。
