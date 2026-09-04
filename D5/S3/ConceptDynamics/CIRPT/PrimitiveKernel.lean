@@ -1,6 +1,6 @@
-/- GID: D5/S3/ConceptDynamics/CIRPT/InformationEscape/PrimitiveKernel
+/- GID: D5/S3/ConceptDynamics/CIRPT/PrimitiveKernel
    generality: G
-   mirror-B: D5/B/S3/ConceptDynamics/CIRPT/InformationEscape/PrimitiveKernel
+   mirror-B: D5/B/S3/ConceptDynamics/CIRPT/PrimitiveKernel
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Four decidable primitive roles expose equivalent relations and canonical Boolean readouts. -/
@@ -22,7 +22,7 @@ import Mathlib.Data.Setoid.Basic
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.ConceptDynamics.CIRPT.InformationEscape
+namespace D5.S3.ConceptDynamics.CIRPT
 
 open D5.S3.ConceptDynamics.Faithfulness.JointFaithfulnessLeibnizCriterion
 
@@ -140,4 +140,4 @@ theorem anchorKernel_relation_iff_bool_readout
   change ((x = a) <-> (y = a)) <-> decide (x = a) = decide (y = a)
   exact decide_eq_decide.symm
 
-end D5.S3.ConceptDynamics.CIRPT.InformationEscape
+end D5.S3.ConceptDynamics.CIRPT

@@ -1,11 +1,11 @@
-/- GID: D5/S3/ConceptDynamics/CIRPT/InformationEscape/QuotientCutNormalForm
+/- GID: D5/S3/ConceptDynamics/CIRPT/QuotientCutNormalForm
    generality: G
-   mirror-B: D5/B/S3/ConceptDynamics/CIRPT/InformationEscape/QuotientCutNormalForm
+   mirror-B: D5/B/S3/ConceptDynamics/CIRPT/QuotientCutNormalForm
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Every decidable primitive kernel is recovered by its canonical quotient CUT. -/
 
-import D5.S3.ConceptDynamics.CIRPT.InformationEscape.PrimitiveKernel
+import D5.S3.ConceptDynamics.CIRPT.PrimitiveKernel
 import Mathlib.Data.Quot
 
 /- Library-search audit trail (2026-09-04):
@@ -23,7 +23,7 @@ import Mathlib.Data.Quot
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.ConceptDynamics.CIRPT.InformationEscape
+namespace D5.S3.ConceptDynamics.CIRPT
 
 universe u
 
@@ -62,4 +62,4 @@ theorem cutKernel_quotientCut_relation_iff {X : Type u} (K : DecidableKernel X)
     (cutKernel K.quotientCut).relation x y <-> K.relation x y :=
   (quotient_cut_kernel_normal_form K x y).symm
 
-end D5.S3.ConceptDynamics.CIRPT.InformationEscape
+end D5.S3.ConceptDynamics.CIRPT

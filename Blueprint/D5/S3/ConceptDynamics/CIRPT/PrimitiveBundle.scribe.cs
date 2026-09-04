@@ -2,12 +2,12 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.CIRPT.InformationEscape;
+namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.CIRPT;
 
 internal sealed class PrimitiveBundleDocument : IScribeDocumentDefinition
 {
     private const string Prefix =
-        "D5/S3/ConceptDynamics/CIRPT/InformationEscape/PrimitiveBundle.";
+        "D5/S3/ConceptDynamics/CIRPT/PrimitiveBundle.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Finite role-labelled primitive families compute one joint observational kernel.",
@@ -86,19 +86,30 @@ internal sealed class PrimitiveBundleDocument : IScribeDocumentDefinition
         Forall, Sp, F.Id("b"), Colon, Sp, Call("PrimitiveBundle", F.Id("X")), Comma, Sp,
         Call("Equivalence", Call("agrees", F.Id("b"))), Dot));
 
-    private static Formula JointKernelFormula() => Disp(Seq(
-        OpenBrace, F.Id("(x,y)"), Sp, Mid, Sp,
-        Call("agrees", F.Id("b"), F.Id("x"), F.Id("y")), CloseBrace,
-        Sp, Eq, Sp, F.Id("intersection over i"), Sp,
-        OpenBrace, F.Id("(x,y)"), Sp, Mid, Sp,
-        Call("relation", Call("kernel", Call("atom", F.Id("b"), F.Id("i"))),
-            F.Id("x"), F.Id("y")), CloseBrace, Dot));
+    private static Formula JointKernelFormula()
+    {
+        Formula pair = Seq(Open, F.Id("x"), Comma, F.Id("y"), Close);
+        Formula intersection = Seq(Operatorname, Grp(F.Id("bigcap")), F.Id("i"));
+        return Disp(Seq(
+            OpenBrace, pair, Sp, Mid, Sp,
+            Call("agrees", F.Id("b"), F.Id("x"), F.Id("y")), CloseBrace,
+            Sp, Eq, Sp, intersection, Sp,
+            OpenBrace, pair, Sp, Mid, Sp,
+            Call("relation", Call("kernel", Call("atom", F.Id("b"), F.Id("i"))),
+                F.Id("x"), F.Id("y")), CloseBrace, Dot));
+    }
 
-    private static Formula QuotientBridgeFormula() => Disp(Seq(
-        Forall, Sp, F.Id("x"), Comma, Sp, F.Id("y"), Comma, Sp,
-        Call("agrees", F.Id("b"), F.Id("x"), F.Id("y")), Sp, Iff, Sp,
-        F.Id("(x,y)"), Sp, InMacro, Sp,
-        Call("jointKernel", F.Id("fun i => quotientCut((b.atom i).kernel)")), Dot));
+    private static Formula QuotientBridgeFormula()
+    {
+        Formula pair = Seq(Open, F.Id("x"), Comma, F.Id("y"), Close);
+        Formula quotientCuts = Seq(
+            LambdaLower, Sp, F.Id("i"), Comma, Sp,
+            Call("quotientCut", Call("kernel", Call("atom", F.Id("b"), F.Id("i")))));
+        return Disp(Seq(
+            Forall, Sp, F.Id("x"), Comma, Sp, F.Id("y"), Comma, Sp,
+            Call("agrees", F.Id("b"), F.Id("x"), F.Id("y")), Sp, Iff, Sp,
+            pair, Sp, InMacro, Sp, Call("jointKernel", quotientCuts), Dot));
+    }
 
     private static Formula InvarianceFormula() => Disp(Seq(
         Open, Forall, Sp, F.Id("x"), Comma, Sp, F.Id("y"), Comma, Sp,

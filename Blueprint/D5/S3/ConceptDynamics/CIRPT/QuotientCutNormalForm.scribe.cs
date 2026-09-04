@@ -2,12 +2,12 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.CIRPT.InformationEscape;
+namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.CIRPT;
 
 internal sealed class QuotientCutNormalFormDocument : IScribeDocumentDefinition
 {
     private const string Prefix =
-        "D5/S3/ConceptDynamics/CIRPT/InformationEscape/QuotientCutNormalForm.";
+        "D5/S3/ConceptDynamics/CIRPT/QuotientCutNormalForm.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A decidable kernel supplies a computable quotient whose projection is a canonical CUT.",

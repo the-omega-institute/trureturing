@@ -1,11 +1,11 @@
-/- GID: D5/S3/ConceptDynamics/CIRPT/InformationEscape/PrimitiveBundle
+/- GID: D5/S3/ConceptDynamics/CIRPT/PrimitiveBundle
    generality: G
-   mirror-B: D5/B/S3/ConceptDynamics/CIRPT/InformationEscape/PrimitiveBundle
+   mirror-B: D5/B/S3/ConceptDynamics/CIRPT/PrimitiveBundle
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Finite primitive bundles compute their canonical joint kernel. -/
 
-import D5.S3.ConceptDynamics.CIRPT.InformationEscape.QuotientCutNormalForm
+import D5.S3.ConceptDynamics.CIRPT.QuotientCutNormalForm
 import Mathlib.Data.Fintype.Basic
 import Mathlib.Data.Finset.Fold
 
@@ -24,7 +24,7 @@ import Mathlib.Data.Finset.Fold
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.ConceptDynamics.CIRPT.InformationEscape
+namespace D5.S3.ConceptDynamics.CIRPT
 
 open D5.S3.ConceptDynamics.Faithfulness.JointFaithfulnessLeibnizCriterion
 
@@ -172,4 +172,4 @@ theorem toPrimitiveAtom_relation_iff {X : Type u} (axis : PrimitiveAxis)
 
 end PackedObserver
 
-end D5.S3.ConceptDynamics.CIRPT.InformationEscape
+end D5.S3.ConceptDynamics.CIRPT
