@@ -1,0 +1,33 @@
+## B15.2 singular-value Lyapunov gap
+
+定义
+
+$$
+\Gamma_L(s)
+=
+\frac1{N_L}
+\log\frac{\sigma_1(\mathcal M_L(s))}
+{\sigma_2(\mathcal M_L(s))}
+\ge0.
+\tag{B15.3}
+$$
+
+反射对称应给出
+
+$$
+\Gamma_L(1-\bar s)=\Gamma_L(s).
+\tag{B15.4}
+$$
+
+而目标禁闭性质是：对任意避开临界线的紧集 $K$，
+
+$$
+\boxed{
+\liminf_{L\to\infty}
+\inf_{s\in K}
+\Gamma_L(s)>0.}
+\tag{B15.5}
+$$
+
+这就是 completed dominated splitting。
+

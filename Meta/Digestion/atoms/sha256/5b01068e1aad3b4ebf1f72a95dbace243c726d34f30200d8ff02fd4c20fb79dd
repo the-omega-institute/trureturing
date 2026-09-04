@@ -1,0 +1,40 @@
+## B13.2 intertwining-with-error
+
+假设存在有界算子 $B_L$ 与误差 $R_L$，使
+
+$$
+\boxed{
+D_{Z,L}U_L
+=B_LD_{P,L}+R_L.}
+\tag{B13.1}
+$$
+
+则对任意 $f$：
+
+$$
+\begin{aligned}
+\|D_{Z,L}U_Lf\|^2
+&\le
+\left(\|B_LD_{P,L}f\|+\|R_Lf\|\right)^2\\
+&\le
+2\|B_L\|^2\|D_{P,L}f\|^2
++2\|R_Lf\|^2.
+\end{aligned}
+\tag{B13.2}
+$$
+
+因此：
+
+### 定理 B13.1　有限能量输运准则
+
+$$
+\boxed{
+E_{Z,L}^{\mathrm{odd}}(U_Lf)
+\le
+2\|B_L\|^2E_{P,L}^{\mathrm{rel}}(f)
++2\|R_Lf\|^2.}
+\tag{B13.3}
+$$
+
+这就是此前开放 domination 式的最小 operator-theoretic 来源。
+

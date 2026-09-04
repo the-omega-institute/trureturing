@@ -1,0 +1,2 @@
+**评注 27.797(开放问题线:Lehmer 欧拉函数问题之可见证析取;勘误正案 4.80 与候签定理 4.81–4.89 立案)**〔remark;开放问题线第四批〕。Lehmer(1932)问是否存在合数 n 使 φ(n) ∣ n−1,至今开放。本评注下的勘误正案与九条候签定理不触碰合数存在性,只把「φ(n) ∣ n−1 ⟹ n 为素数或具合数侧结构包」写成可见证的析取(见证 n=2、n=7;n=15 证伪前件),产地(第 9′ 条):skill=consensus-rnd:sshx;ChatGPT Pro arXiv 检索席(flight `op-r1-gptpro-arxiv`,Lehmer 候选)提出;探针席 codex-cli(flight `op-p14-lehmer-dichotomy`,worktree `trureturing-la120-m3e`,base origin/dev)以 `lake env lean` 整证并给出 kernel 读数(`#print axioms` 只含标准三公理,无 native_decide);本案与候签由 orchestrator(claude 主循环,会话「开放问题」)撰写。判决日 2026-09-05。
+
