@@ -1,6 +1,10 @@
 import LeanInformationAudit.SealCommand
 
-/-! T-013: a stage readout computes the engine's own leave-one-out census. -/
+/-! T-013: a stage readout computes the engine's own leave-one-out census.
+
+The seal consumes only primitive kernels (`CatalogBuilder.lean:50-53`), not `Law`.
+A direct `Law := True` mutation is therefore caught by the literal statement-shape
+check, not by the seal. -/
 
 open D5.S3.ConceptDynamics.CIRPT
 open D5.S3.ConceptDynamics.InformationEscape
@@ -69,8 +73,17 @@ information_theorem systemTheorem
       (censusCatalog stage) (0 : Fin 1) (by decide)
 
 #check (systemTheorem :
-  (∀ stage : Bool, systemReadout stage = systemReadout stage) ∧
-    SystemCharacterization)
+  (∀ stage : Bool, systemReadout stage =
+    (censusCatalog stage).uniqueCaptureCount (0 : Fin 1)) ∧
+  ∀ stage : Bool,
+    (censusCatalog stage).LowersEscape (0 : Fin 1) ↔
+      0 < (censusCatalog stage).uniqueCaptureCount (0 : Fin 1))
+
+example : SystemCharacterization ↔
+    (∀ stage : Bool,
+      (censusCatalog stage).LowersEscape (0 : Fin 1) ↔
+        0 < (censusCatalog stage).uniqueCaptureCount (0 : Fin 1)) :=
+  Iff.rfl
 
 example : systemReadout false = 0 := by decide
 example : systemReadout true = 2 := by decide

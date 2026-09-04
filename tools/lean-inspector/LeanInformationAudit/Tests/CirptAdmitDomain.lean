@@ -2,9 +2,11 @@ import D5.S3.ConceptDynamics.CIRPT.SemanticIntegrity
 import LeanInformationAudit.SealCommand
 
 /-! T-CIRPT-003: a mixed Bool CUT fiber has an exact nonempty ADMIT defect.
-`rg -n "IE-C017" tools/lean-inspector/LeanInformationAudit -g '*.lean'`
-finds only this fixture, so the judge has no IE-C017 diagnostic path. The
-B2 assertions below pin the required full-domain replacement semantics. -/
+
+IE-C017 AdmitDomainRestrictionAttempt: open gap — the judge has no such diagnostic
+path (`rg 'IE-C017'` finds only this comment); this module pins
+`flowKernel F = cutKernel F` pointwise (spec :3563) and the concrete mixed-fiber row
+T-CIRPT-003 only. -/
 
 open D5.S3.ConceptDynamics.CIRPT
 open D5.S3.ConceptDynamics.InformationEscape

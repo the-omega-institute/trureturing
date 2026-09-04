@@ -1,48 +1,11 @@
-import LeanInformationAudit.SealCommand
+import LeanInformationAudit.Tests.Seal.SystemContentSensitivity.ConstantReadout
+import LeanInformationAudit.Tests.Seal.SystemContentSensitivity.FixedStage
 
-/-! T-013 mutation: replacing the SYSTEM census readout by a constant is red. -/
+/-! T-013 primitive-content mutations.
 
-open D5.S3.ConceptDynamics.InformationEscape
+The two imported fixtures isolate the erasures the seal can see: an all-constant census
+and a census fixed at one stage. Each is exactly IE-C007 `full 2 without 2`.
 
-namespace LeanInformationAudit.Tests.Seal.SystemContentSensitivity
-
-def arena : PrimitiveLawArena where
-  toArena := Arena.ofFintype Bool
-  signature :=
-    { Index := Fin 1
-      indexFintype := inferInstance
-      indexDecidableEq := inferInstance
-      Output := fun _ => Nat
-      outputDecidableEq := fun _ => inferInstance
-      axis := fun _ => .cut
-      readoutAxisNotAnchor := by simp
-      AnchorIndex := Fin 0
-      anchorFintype := inferInstance
-      anchorDecidableEq := inferInstance }
-  Law := fun _ => True
-
-local instance : DecidableEq arena.State := arena.toArena.stateDecidableEq
-
-def constantRealization : PrimitiveRealization arena.signature where
-  readout := fun (_ : Fin 1) (_ : Bool) => (0 : Nat)
-  anchor := Fin.elim0
-
-information_theorem constantSystemTheorem
-  in arena
-  primitives constantRealization
-  : arena.Law constantRealization := by trivial
-
-private def fixtureCatalog : Catalog arena.toArena :=
-  Catalog.ofVector ![constantSystemTheorem.__information_unit]
-
-example :
-    fixtureCatalog.uniqueCaptureCount (0 : Fin 1) = 0 := by
-  decide
-
-/-- error: IE-C007 ZeroUniqueCapture: theorem
-LeanInformationAudit.Tests.Seal.SystemContentSensitivity.constantSystemTheorem arena
-LeanInformationAudit.Tests.Seal.SystemContentSensitivity.arena full 2 without 2 -/
-#guard_msgs (error) in
-#seal_information_theory
-
-end LeanInformationAudit.Tests.Seal.SystemContentSensitivity
+Law-level erasure is instead pinned by the literal type checks in
+`SealSystemTheorem.lean`; by the A2 design the seal reads the registered bundle at
+`CatalogBuilder.lean:50-53`, never its `Law`. -/

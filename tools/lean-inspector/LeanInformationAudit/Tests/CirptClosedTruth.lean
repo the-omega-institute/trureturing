@@ -34,8 +34,10 @@ information_theorem closedTruthTheorem
   primitives closedTruthRealization
   : arena.Law closedTruthRealization := by trivial
 
-example (x y : arena.State) :
-    (cutKernel (fun _ : arena.State => true)).relation x y := by
+example (readout : arena.State -> Bool)
+    (closedTruth : readout = fun _ => true) (x y : arena.State) :
+    (cutKernel readout).relation x y := by
+  rw [closedTruth]
   exact closed_truth_readout_has_universal_kernel true x y
 
 private def fixtureCatalog : Catalog arena.toArena :=
