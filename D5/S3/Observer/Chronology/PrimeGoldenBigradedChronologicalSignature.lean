@@ -19,21 +19,18 @@ A finite prime-golden event word carries two additive discrete degrees.
   the short golden step. Its parity character is the product of the local
   long/short signs.
 
-The two degrees are packaged beside the existing step-two chronological
-signature. Concatenation obeys Chen multiplication in the chronological
-component and coordinatewise addition in the bidegree. Reverse-and-negate acts
-by the Hopf antipode on the chronological component while preserving both
-unsigned degrees.
+The degrees form a count ledger beside the step-two chronological signature.
+Concatenation obeys Chen multiplication and coordinatewise degree addition.
+Reverse-and-negate acts by the Hopf antipode while preserving both unsigned
+degrees.
 
-For a word contained in one prime channel, the complete scalar frequency is
-recovered from the bidegree as
+For a word in one prime channel, the complete scalar frequency is
 
 `(factorDegree * phi^2 - shortStepDegree) * log p`.
 
-Thus the bidegree records the abelian counting information, while the Magnus
-coordinate records oriented order. The module does not identify factor parity
-with Zeckendorf parity, construct an infinite signature, transport the finite
-characters to a zeta quotient, or assert a physical arrow of time.
+Thus frequency recovers the count ledger while Magnus data retains oriented
+order. This module does not identify the two parity coordinates, construct an
+infinite signature, or transport the finite characters to a zeta quotient.
 -/
 
 set_option autoImplicit false
@@ -284,15 +281,20 @@ theorem step_frequency_eq_bidegree_letter
     stepFrequency event =
       (Real.goldenRatio ^ 2 - (shortStepIndicator event : Real)) *
         Real.log ((event.prime : Nat) : Real) := by
-  rw [step_frequency_zeckendorf_parity]
   by_cases hEven : Even ((Nat.zeckendorf (event.layer + 1)).getLastD 0)
-  · have hIndicator : shortStepIndicator event = 0 := by
-      simp only [shortStepIndicator, if_pos hEven]
-    rw [if_pos hEven, hIndicator]
+  · have hFrequency := step_frequency_zeckendorf_parity event
+    rw [if_pos hEven] at hFrequency
+    have hIndicator : shortStepIndicator event = 0 := by
+      unfold shortStepIndicator
+      rw [if_pos hEven]
+    rw [hFrequency, hIndicator]
     ring
-  · have hIndicator : shortStepIndicator event = 1 := by
-      simp only [shortStepIndicator, if_neg hEven]
-    rw [if_neg hEven, hIndicator, Real.goldenRatio_sq]
+  · have hFrequency := step_frequency_zeckendorf_parity event
+    rw [if_neg hEven] at hFrequency
+    have hIndicator : shortStepIndicator event = 1 := by
+      unfold shortStepIndicator
+      rw [if_neg hEven]
+    rw [hFrequency, hIndicator, Real.goldenRatio_sq]
     ring
 
 /-- All events in the word use one fixed prime channel. -/
