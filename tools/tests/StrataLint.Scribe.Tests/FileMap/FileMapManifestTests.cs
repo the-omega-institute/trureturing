@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Tests;
 public sealed class FileMapManifestTests
 {
     [Fact]
-    public void DataKeyedGeneratedRunLocalSetUsesTheEightKeyShape()
+    public void DataKeyedGeneratedRunLocalSetUsesTheNineKeyShape()
     {
         var manifest = FileMapLoader.Parse(Encoding.UTF8.GetBytes(DataKeyedRunLocalEntry()), "fixture.toml");
 
@@ -41,7 +41,7 @@ public sealed class FileMapManifestTests
     }
 
     [Fact]
-    public void InventoryBackedRunLocalEntryRetainsTheTenKeyShape()
+    public void InventoryBackedRunLocalEntryRetainsTheElevenKeyShape()
     {
         var source = DataKeyedRunLocalEntry()
             .Replace("Generated/partitions/*.md", "Generated/output.md", StringComparison.Ordinal)
@@ -74,6 +74,7 @@ public sealed class FileMapManifestTests
             [[files]]
             pattern = "Generated/output.md"
             kind = "generated"
+            admission_plane = "content"
             produced_by = "OutputEmitter"
             consumed_by = ["reader"]
             verified_by = ["OutputEmitter"]
@@ -102,6 +103,7 @@ public sealed class FileMapManifestTests
             [[files]]
             pattern = "Generated/a.md"
             kind = "generated"
+            admission_plane = "content"
             produced_by = "OutputEmitter"
             consumed_by = ["reader"]
             verified_by = ["OutputEmitter"]
@@ -113,6 +115,7 @@ public sealed class FileMapManifestTests
             [[files]]
             pattern = "Generated/b.md"
             kind = "generated"
+            admission_plane = "content"
             produced_by = "OutputEmitter"
             consumed_by = ["reader"]
             verified_by = ["OutputEmitter"]
@@ -164,6 +167,7 @@ public sealed class FileMapManifestTests
             [[files]]
             pattern = "Artifacts/**/*.md"
             kind = "generated"
+            admission_plane = "content"
             produced_by = "ScribeEmitter"
             consumed_by = ["reader"]
             verified_by = ["ScribeEmitter"]
@@ -173,6 +177,7 @@ public sealed class FileMapManifestTests
             [[files]]
             pattern = "D5/**/*.lean"
             kind = "truth"
+            admission_plane = "content"
             produced_by = "none"
             consumed_by = ["lake"]
             verified_by = ["lean-build"]
@@ -182,6 +187,7 @@ public sealed class FileMapManifestTests
             [[files]]
             pattern = "Golden/Frozen/accepted/*.json"
             kind = "ledger"
+            admission_plane = "content"
             produced_by = "FrozenLedgerCanonicalWriter"
             consumed_by = ["FrozenLedger"]
             verified_by = ["SL-008"]
@@ -191,6 +197,7 @@ public sealed class FileMapManifestTests
             [[files]]
             pattern = "tools/FixtureData/*.toml"
             kind = "data"
+            admission_plane = "judge"
             produced_by = "none"
             consumed_by = ["TomlGoldenLoader"]
             verified_by = ["TomlGoldenLoader"]
@@ -201,6 +208,7 @@ public sealed class FileMapManifestTests
             [[files]]
             pattern = "tools/StrataLint.*/**"
             kind = "program"
+            admission_plane = "judge"
             produced_by = "none"
             consumed_by = ["dotnet"]
             verified_by = ["dotnet-test"]
@@ -242,6 +250,7 @@ public sealed class FileMapManifestTests
         [[files]]
         pattern = "Generated/partitions/*.md"
         kind = "generated"
+        admission_plane = "content"
         produced_by = "PartitionEmitter"
         consumed_by = ["reader"]
         verified_by = ["PartitionEmitter"]
@@ -269,6 +278,7 @@ public sealed class FileMapManifestTests
             [[files]]
             pattern = "Generated/**/*.md"
             kind = "generated"
+            admission_plane = "content"
             produced_by = "{{producedBy}}"
             consumed_by = ["reader"]
             verified_by = ["ScribeEmitter"]
@@ -297,6 +307,7 @@ public sealed class FileMapManifestTests
             [[files]]
             pattern = "Generated/**/*.md"
             kind = "generated"
+            admission_plane = "content"
             produced_by = "FileMapEmitter"
             consumed_by = ["reader"]
             verified_by = ["dotnet-test"]
@@ -330,6 +341,7 @@ public sealed class FileMapManifestTests
             [[files]]
             pattern = "tools/fixture.toml"
             kind = "{{kind}}"
+            admission_plane = "judge"
             residence_violation = {{marker}}
             produced_by = "none"
             consumed_by = ["reader"]
@@ -350,6 +362,18 @@ public sealed class FileMapManifestTests
     [InlineData("D5\\**\\*.lean")]
     public void UnsafePatternIsRejectedByTheRedFixture(string pattern)
     {
+        AssertUnsafePatternRejected(pattern);
+    }
+
+    [Fact]
+    public void QuestionMarkPatternIsRejectedByTheStrictLoader()
+    {
+        AssertUnsafePatternRejected("x/?.txt");
+        AssertUnsafePatternRejected("x/??.txt");
+    }
+
+    private static void AssertUnsafePatternRejected(string pattern)
+    {
         var source = $$"""
             schema_version = 2
 
@@ -362,6 +386,7 @@ public sealed class FileMapManifestTests
             [[files]]
             pattern = "{{pattern.Replace("\\", "\\\\", StringComparison.Ordinal)}}"
             kind = "truth"
+            admission_plane = "content"
             produced_by = "none"
             consumed_by = ["lake"]
             verified_by = ["lean-build"]
@@ -369,7 +394,7 @@ public sealed class FileMapManifestTests
             artifact_id = "none"
             """ + "\n";
 
-        var exception = Assert.Throws<FormatException>(() =>
+        var exception = Assert.ThrowsAny<FormatException>(() =>
             FileMapLoader.Parse(Encoding.UTF8.GetBytes(source), "fixture.toml"));
         Assert.Contains("unsafe FILEMAP pattern", exception.Message, StringComparison.Ordinal);
     }
