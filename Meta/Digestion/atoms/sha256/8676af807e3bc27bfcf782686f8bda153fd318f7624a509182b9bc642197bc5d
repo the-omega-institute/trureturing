@@ -1,0 +1,29 @@
+## 8.4 为什么没有自动反向界
+
+式 (A8.8) 只有一个方向。多个 shell displacement 可能在总 translation 中相互抵消，因此一般不能由
+
+$$
+\|(I-\mathsf T_{v\log p})f\|_2
+$$
+
+恢复所有
+
+$$
+\|(I-\mathsf T_{F_k\log p})f\|_2.
+$$
+
+这又是一次结构信息逃逸：总位移只看见 Fibonacci 原子之和，而 shell energy 读取分解历史。
+
+Zeckendorf normal form 通过“无相邻指标”消除了
+
+$$
+F_k+F_{k+1}=F_{k+2}
+\tag{A8.10}
+$$
+
+造成的局部命名冗余，但标量 translation 仍不保留原子分解。
+
+真正的 reverse coercivity 必须加入至少一种额外结构：shell orthogonality、disjoint frequency support、positive Gram completion、ordered carry cocycle 或 prime–Gamma 全局约束。
+
+---
+

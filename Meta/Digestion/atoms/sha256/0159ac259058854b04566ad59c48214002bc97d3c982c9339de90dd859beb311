@@ -1,0 +1,46 @@
+#### 证明
+
+使用
+
+$$
+F_Q\varphi^{-Q}\to\frac1{\sqrt5}
+$$
+
+与
+
+$$
+\log(1+g/P_Q)\sim g/P_Q.
+$$
+
+因此若 prime scale 约乘 $\varphi$，同时 Zeckendorf shell 深度增加一层，则
+
+$$
+F_Q\Delta\log p
+$$
+
+可以保持非退化。
+
+于是归一化横向能量具有有限极限：
+
+$$
+\sinh^2\!\left(
+\delta F_Q\log(1+g/P_Q)
+\right)
+\longrightarrow
+\sinh^2\!\left(
+\frac{\delta g}{\sqrt5P_0}
+\right).
+\tag{A12.3}
+$$
+
+这给出一个真正的 golden tangent fixed scale：
+
+$$
+\boxed{
+\text{Fibonacci shell 增长 }\varphi^Q
+\quad\text{抵消}\quad
+\text{固定 additive gap 的 log-frequency 收缩 }\varphi^{-Q}.
+}
+\tag{A12.4}
+$$
+

@@ -1,0 +1,12 @@
+### （四）跳跃／carry 能量
+
+$$
+\mathcal D(f)
+=
+\sum_{\eta\to\eta'}
+\left|f(\eta')-f(\eta)\right|^2.
+\tag{A1.7}
+$$
+
+它读取状态之间的变化，而不是单个状态的值。
+
