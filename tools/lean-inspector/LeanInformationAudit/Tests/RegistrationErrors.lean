@@ -1,0 +1,98 @@
+import LeanInformationAudit.Syntax
+
+open Lean
+open D5.S3.ConceptDynamics.CIRPT
+open D5.S3.ConceptDynamics.InformationEscape
+
+namespace LeanInformationAudit.Tests.RegistrationErrors
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+
+def fixtureArena : Arena :=
+  Arena.ofFintype (Bool × Bool)
+
+def fixtureSignature : PrimitiveSignature fixtureArena.State where
+  Index := Bool
+  indexFintype := inferInstance
+  indexDecidableEq := inferInstance
+  Output := fun _ => Bool
+  outputDecidableEq := fun _ => inferInstance
+  axis := fun _ => .cut
+  AnchorIndex := Fin 0
+  anchorFintype := inferInstance
+  anchorDecidableEq := inferInstance
+
+def fixtureLawArena : PrimitiveLawArena where
+  toArena := fixtureArena
+  signature := fixtureSignature
+  Law := fun _ => True
+
+def fixtureRealization : PrimitiveRealization fixtureLawArena.signature where
+  readout := fun i x => if i then x.2 else x.1
+  anchor := Fin.elim0
+
+def fixtureBundle :=
+  fixtureRealization.toPrimitiveBundle
+
+information_theorem nativeExample
+  in fixtureLawArena
+  primitives fixtureBundle
+  : fixtureLawArena.Law fixtureRealization := by
+    trivial
+
+theorem legacyExample : True :=
+  trivial
+
+def legacyRealization :
+    LegacyPrimitiveRealization fixtureLawArena True fixtureRealization where
+  equivalence := Iff.rfl
+
+register_information_theorem legacyExample
+  in fixtureLawArena
+  primitives fixtureBundle
+  realization legacyRealization
+
+/-- error: IE-C002 DuplicateRegistration: LeanInformationAudit.Tests.RegistrationErrors.legacyExample -/
+#guard_msgs (error) in
+register_information_theorem legacyExample
+  in fixtureLawArena
+  primitives fixtureBundle
+  realization legacyRealization
+
+theorem generated.__lowers_escape : True :=
+  trivial
+
+def generatedRealization :
+    LegacyPrimitiveRealization fixtureLawArena generated.__lowers_escape fixtureRealization where
+  equivalence := Iff.rfl
+
+/-- error: IE-C011 GeneratedCertificateRegistered: LeanInformationAudit.Tests.RegistrationErrors.generated.__lowers_escape -/
+#guard_msgs (error) in
+register_information_theorem generated.__lowers_escape
+  in fixtureLawArena
+  primitives fixtureBundle
+  realization generatedRealization
+
+theorem differentStatement : 1 = 1 :=
+  rfl
+
+def mismatchedRealization :
+    LegacyPrimitiveRealization fixtureLawArena differentStatement fixtureRealization where
+  equivalence := Iff.rfl
+
+/-- error: IE-C006 StatementProofMismatch: LeanInformationAudit.Tests.RegistrationErrors.legacyExample -/
+#guard_msgs (error) in
+register_information_theorem legacyExample
+  in fixtureLawArena
+  primitives fixtureBundle
+  realization mismatchedRealization
+
+/-- error: IE-C001 UnregisteredTheoremUnit: LeanInformationAudit.Tests.RegistrationErrors.unknownTheorem -/
+#guard_msgs (error) in
+register_information_theorem unknownTheorem
+  in fixtureLawArena
+  primitives fixtureBundle
+  realization legacyRealization
+
+end LeanInformationAudit.Tests.RegistrationErrors
