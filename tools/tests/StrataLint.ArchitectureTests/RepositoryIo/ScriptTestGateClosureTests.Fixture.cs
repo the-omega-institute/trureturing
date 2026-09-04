@@ -63,9 +63,6 @@ public sealed partial class ScriptTestGateClosureTests
             "{\"sdk\":{\"version\":\"10.0.103\",\"rollForward\":\"latestMinor\"}}\n"),
         RawRepositoryEntry.FromText(PlaybookScript, "#!/usr/bin/env bash\nexit 0\n"),
         RawRepositoryEntry.FromText(
-            "tools/scripts/workflow/pure-revert-detect.sh",
-            "#!/usr/bin/env bash\nexit 0\n"),
-        RawRepositoryEntry.FromText(
             "tools/scripts/workflow/self-lock-probe.sh",
             "#!/usr/bin/env bash\nexit 0\n"),
         RawRepositoryEntry.FromText(
