@@ -6,3 +6,7 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: 'Frozen owner `D5/S0/Tower/GoldenFixedPoint.golden_ratio_reciprocal_fixed_point` carries the arithmetic fixed-point identity for phi; the Y, diagonal, Yoneda, and fixed-point name list and the 裸核与墙 paragraph add no further proposition. The unrestricted convergence clause is false: the non-phi fixed point `Real.goldenConj` of x ↦ 1 + 1/x has a constant orbit, so its iterates do not tend to `Real.goldenRatio` (checked by `/private/tmp/w73e28-atom1-probe.lean`, exit 0).'
+    reentry_condition: Obtain source errata restricting or withdrawing the false convergence clause, for example by restricting starting points to x > 0; prove convergence on that source-authorized domain, then cover the carried identity and any surviving clauses in source order.
+    blocker_class: multi-clause-guard
