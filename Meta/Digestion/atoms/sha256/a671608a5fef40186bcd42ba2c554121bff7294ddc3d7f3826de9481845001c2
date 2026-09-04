@@ -1,0 +1,30 @@
+## B4.3 三种 rapidity 是同型坐标而非相同数值
+
+本理论中出现三类 reciprocal pairs：
+
+1. Cayley 零点对：$e^{\pm\eta_a(t,\delta)}$；
+2. prime reflected pair：$e^{\pm\delta\Delta\omega_{p,q}}$；
+3. golden transfer 两步通道：$e^{\pm2\log\varphi}$。
+
+去掉共同复相位以后，它们都属于同一个 split Cartan 形式
+
+$$
+\operatorname{diag}(e^u,e^{-u}).
+\tag{B4.10}
+$$
+
+所以：
+
+$$
+\boxed{
+\eta_a(t,\delta),
+\quad
+\delta\log(q/p),
+\quad
+2\log\varphi
+}
+\tag{B4.11}
+$$
+
+是同一种 rank-one Lorentz 坐标的三个实例，但没有任何理由把它们数值相等。
+

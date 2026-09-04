@@ -1,0 +1,26 @@
+## B13.4 square-late principle
+
+局部正能量不能在完成以前盲目相加，因为
+
+$$
+\left|\sum_j a_j\right|^2
+\ne
+\sum_j|a_j|^2
+\tag{B13.4}
+$$
+
+且差异正是 cross-phase terms。
+
+因此正确顺序是：
+
+$$
+\boxed{
+\text{先把 amplitude / carry / holonomy 输运到同一空间，
+再取 exterior norm 或 odd square。}}
+\tag{B13.5}
+$$
+
+若过早把每个 local channel 平方，顺序、相位和 destructive interference 会永久丢失。正能量是最终证书，不一定是可直接逐局部组合的原始状态。
+
+---
+

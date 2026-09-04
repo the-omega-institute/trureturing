@@ -1,0 +1,53 @@
+## B4.4 Weyl reflection 与有序乘法
+
+令 $W$ 满足
+
+$$
+W^2=I,
+\qquad
+WB(u)W=B(-u).
+\tag{B4.12}
+$$
+
+则 boost torus 与 $W$ 生成无限二面体型 normalizer。
+
+把一个局部因子写成
+
+$$
+g_j=B(u_j)W^{e_j},
+\qquad e_j\in\{0,1\},
+\tag{B4.13}
+$$
+
+并记
+
+$$
+\epsilon_j=(-1)^{e_j}.
+\tag{B4.14}
+$$
+
+则有序乘积的总 rapidity 为
+
+$$
+\boxed{
+U_n
+=u_1+
+\epsilon_1u_2+
+\epsilon_1\epsilon_2u_3+
+\cdots+
+\left(\prod_{j=1}^{n-1}\epsilon_j\right)u_n.
+}
+\tag{B4.15}
+$$
+
+而最终 Weyl parity 仅为
+
+$$
+\epsilon_{\mathrm{tot}}
+=
+\prod_{j=1}^n\epsilon_j.
+\tag{B4.16}
+$$
+
+所以模 $5$ 黄金 character quotient 只记录最终通道交换奇偶；它一般不能恢复有序 rapidity $U_n$。这正解释了为什么 permutation-invariant character 与 ordered dihedral holonomy 必须分层。
+
