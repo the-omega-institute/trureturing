@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Algebra/FlatPhaseConjugation
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Conjugating a zero-sum diagonal phase profile through an entrywise-unit matrix gives a matrix with zero diagonal after normalized flat averaging. -/
+   digest: A zero-sum phase profile has zero diagonal after normalized conjugation through an entrywise-unit matrix. -/
 
 import Mathlib.LinearAlgebra.Matrix.Hermitian
 import Mathlib.Tactic
@@ -18,8 +18,7 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Quantum.Algebra.FlatPhaseConjugation
 
 /-- The normalized kernel of `diag(c) H diag(star d) Hᴴ`, written entrywise so
-that the flat-diagonal cancellation can be consumed without a separate diagonal
-matrix API. -/
+that flat-diagonal cancellation is available without a second diagonal API. -/
 def flatPhaseConjugation
     {ι κ : Type*} [Fintype κ]
     (H : Matrix ι κ ℂ) (c : ι → ℂ) (d : κ → ℂ) : Matrix ι ι ℂ :=
@@ -44,7 +43,8 @@ theorem flatPhaseConjugation_diagonal
     flatPhaseConjugation H c d i i =
       (Fintype.card κ : ℂ)⁻¹ * c i * ∑ j, star (d j) := by
   unfold flatPhaseConjugation
-  congr 2
+  apply congrArg
+    (fun z : ℂ ↦ (Fintype.card κ : ℂ)⁻¹ * c i * z)
   apply Finset.sum_congr rfl
   intro j hj
   calc
