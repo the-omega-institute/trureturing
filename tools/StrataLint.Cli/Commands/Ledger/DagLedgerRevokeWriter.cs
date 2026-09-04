@@ -49,38 +49,15 @@ internal static class DagLedgerRevokeWriter
                         entry.EventHash[7..] + ".json",
                         StringComparison.Ordinal)))
                 .ToImmutableArray();
-            var stateBackups = affectedEntries.ToDictionary(
-                static entry => entry.Material.RepoPath,
-                entry => FrozenStateWriter.ReadCurrentBytes(
-                    repositoryRoot,
-                    entry.Material.RepoPath));
-            var eventsDeleted = false;
-            try
-            {
-                DagLedgerAppendWriter.DeleteEventFiles(
-                    context.LedgerPath,
-                    eventFiles,
-                    context.BaselineFiles);
-                eventsDeleted = true;
-                foreach (var entry in affectedEntries)
-                {
-                    _ = FrozenStateWriter.Delete(repositoryRoot, entry.Material.RepoPath);
-                }
-            }
-            catch
-            {
-                if (eventsDeleted)
-                {
-                    DagLedgerAppendWriter.WriteEventFiles(context.LedgerPath, eventFiles);
-                }
-
-                foreach (var (path, previousBytes) in stateBackups)
-                {
-                    FrozenStateWriter.Restore(repositoryRoot, path, previousBytes);
-                }
-
-                throw;
-            }
+            var removedPaths = eventFiles.Select(static file => file.Path).ToHashSet();
+            FrozenLedgerPublication.PublishSnapshot(
+                repositoryRoot,
+                context.LedgerPath,
+                context.BaselineFiles.Where(file => !removedPaths.Contains(file.Path)),
+                context.BaselineFiles,
+                [],
+                affectedEntries.Select(static entry => entry.Material.RepoPath),
+                "ledger-revoke");
 
             return new CommandResult(
                 true,

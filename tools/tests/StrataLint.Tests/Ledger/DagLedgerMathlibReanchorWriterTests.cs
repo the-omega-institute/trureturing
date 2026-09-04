@@ -46,6 +46,46 @@ public sealed class DagLedgerMathlibReanchorWriterTests
     }
 
     [Fact]
+    public void CanonicalProducerReanchorsExistingStateFragmentWithReplacementEvent()
+    {
+        using var fixture = CreateFixture(
+            ModuleASource,
+            ModuleASource,
+            candidateAStatement: "compiler-reanchored True");
+        var modulePath = RepoPathFor("A");
+        var basePin = StatementId.Create(LoadEvents(fixture.BaseEvents)
+            .Single(item => item.DescriptorPath == modulePath)
+            .Payload.GetProperty("statement_id").GetString()!);
+        var candidatePin = StatementId.Create(LoadEvents(fixture.CandidateEvents)
+            .Single(item => item.DescriptorPath == modulePath)
+            .Payload.GetProperty("statement_id").GetString()!);
+        Assert.NotEqual(basePin, candidatePin);
+        Assert.True(FrozenStateWriter.Write(fixture.RepositoryRoot, modulePath, basePin));
+
+        var result = DagLedgerMathlibReanchorWriter.Reanchor(
+            fixture.RepositoryRoot,
+            fixture.Repository,
+            fixture.ReportSource,
+            ["--base", BaseRevision]);
+
+        Assert.True(result.Success, result.Error);
+        var replacement = Assert.Single(
+            LoadEvents(DagLedgerCommandPreparation.ReadLedgerDirectoryFiles(fixture.LedgerPath)),
+            item => item.DescriptorPath == modulePath);
+        var statePath = FrozenStatePath.FromModulePath(modulePath);
+        var stateBytes = File.ReadAllBytes(Path.Combine(
+            fixture.RepositoryRoot,
+            statePath.Value.Replace('/', Path.DirectorySeparatorChar)));
+        var state = FrozenStateRecordLoader.Load(new RepositoryFile(
+            statePath,
+            ImmutableArray.CreateRange(stateBytes),
+            Encoding.UTF8.GetString(stateBytes)));
+        Assert.Equal(candidatePin.Value, replacement.Payload.GetProperty("statement_id").GetString());
+        Assert.Equal(candidatePin, state.StatementId);
+        Assert.Equal(replacement.Payload.GetProperty("statement_id").GetString(), state.StatementId.Value);
+    }
+
+    [Fact]
     public void FrozenProducerLeavesDigestionCoverageForItsOwnAligner()
     {
         using var fixture = CreateFixture(

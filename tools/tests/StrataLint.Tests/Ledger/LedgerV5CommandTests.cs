@@ -66,18 +66,36 @@ public sealed class LedgerV5CommandTests
     }
 
     [Fact]
-    public void SnapshotReplacementRemovesRevokedFreezeFiles()
+    public void SnapshotPublicationRemovesRevokedFreezeAndStateFragment()
     {
         using var temporary = new TemporaryDirectory();
         var files = EventFiles(BuildCatalog(Module("A"), Module("B", imports: ["A"])));
         var ledgerPath = Path.Combine(temporary.Path, "accepted");
         WriteLedgerDirectory(ledgerPath, files);
+        var removed = LoadEvents(files).Single(item => item.SourcePath == files[0].Path);
+        var statementId = StatementId.Create(
+            removed.Payload.GetProperty("statement_id").GetString()!);
+        Assert.True(FrozenStateWriter.Write(
+            temporary.Path,
+            removed.DescriptorPath,
+            statementId));
 
-        DagLedgerAppendWriter.ReplaceEventFiles(ledgerPath, [files[1]], files);
+        FrozenLedgerPublication.PublishSnapshot(
+            temporary.Path,
+            ledgerPath,
+            [files[1]],
+            files,
+            [],
+            [removed.DescriptorPath],
+            "test-revoke");
 
         var persisted = DagLedgerCommandPreparation.ReadLedgerDirectoryFiles(ledgerPath);
         Assert.Single(persisted);
         Assert.Equal(files[1].Path, persisted[0].Path);
+        var statePath = FrozenStatePath.FromModulePath(removed.DescriptorPath).Value;
+        Assert.False(File.Exists(Path.Combine(
+            temporary.Path,
+            statePath.Replace('/', Path.DirectorySeparatorChar))));
     }
 
     [Fact]
@@ -94,7 +112,14 @@ public sealed class LedgerV5CommandTests
             "\u0001");
 
         Assert.Throws<IOException>(() =>
-            DagLedgerAppendWriter.ReplaceEventFiles(ledgerPath, [colliding], files));
+            FrozenLedgerPublication.PublishSnapshot(
+                temporary.Path,
+                ledgerPath,
+                [colliding],
+                files,
+                [],
+                [],
+                "test-replacement"));
 
         var persisted = DagLedgerCommandPreparation.ReadLedgerDirectoryFiles(ledgerPath)
             .OrderBy(static file => file.Path.Value, StringComparer.Ordinal)
