@@ -78,7 +78,7 @@ Every pair accepted by the extended bundle still satisfies every old atom.
 
 **Theorem 1.7 (ADMIT preserves the carrier domain).**
 
-$$\operatorname{offDiagonalPairs}(X) = \operatorname{offDiagonalPairs}(X) \land\\\operatorname{agrees}(\operatorname{bundleWithAtom}(b, \operatorname{admitAtom}(A)), x, y) \Rightarrow \operatorname{agrees}(b, x, y).$$
+$$\operatorname{offDiagonalPairs}(X) = \operatorname{offDiagonalPairs}(X) \land\\\forall p, p \in \operatorname{offDiagonalPairs}(X) \Rightarrow \left(\operatorname{agrees}(\operatorname{bundleWithAtom}(b, \operatorname{admitAtom}(A)), \operatorname{fst}(p), \operatorname{snd}(p)) \Rightarrow \operatorname{agrees}(b, \operatorname{fst}(p), \operatorname{snd}(p))\right).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/CIRPT/SemanticIntegrity.admit_atom_preserves_offDiagonalPairs` (`✓ std3`). ∎
 

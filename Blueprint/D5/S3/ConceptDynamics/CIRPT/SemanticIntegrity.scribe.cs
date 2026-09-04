@@ -96,10 +96,30 @@ internal sealed class SemanticIntegrityDocument : IScribeDocumentDefinition
     private static Formula AdmitAntitoneFormula() =>
         Disp(Seq(AdmitAntitoneBody(), Dot));
 
-    private static Formula AdmitDomainFormula() => Disp(Seq(
-        Call("offDiagonalPairs", F.Id("X")), Sp, Eq, Sp,
-        Call("offDiagonalPairs", F.Id("X")), Sp, Land, RowBreak,
-        AdmitAntitoneBody(), Dot));
+    private static Formula AdmitDomainFormula()
+    {
+        Formula pair = F.Id("p");
+        Formula inDomain = Seq(pair, Sp, InMacro, Sp,
+            Call("offDiagonalPairs", F.Id("X")));
+        Formula extendedAgreement = Call(
+            "agrees",
+            Call("bundleWithAtom", F.Id("b"), Call("admitAtom", F.Id("A"))),
+            Call("fst", pair),
+            Call("snd", pair));
+        Formula oldAgreement = Call(
+            "agrees", F.Id("b"), Call("fst", pair), Call("snd", pair));
+        Formula pairClause = new Formula.Logic(
+            inDomain,
+            FormulaLogicOperator.Implies,
+            new Formula.Logic(
+                extendedAgreement,
+                FormulaLogicOperator.Implies,
+                oldAgreement));
+        return Disp(Seq(
+            Call("offDiagonalPairs", F.Id("X")), Sp, Eq, Sp,
+            Call("offDiagonalPairs", F.Id("X")), Sp, Land, RowBreak,
+            Forall, Sp, pair, Comma, Sp, pairClause, Dot));
+    }
 
     private static Formula AnchorFormula() => Disp(Seq(
         Call("relation", Call("anchorKernel", F.Id("a"))), Sp, Eq, Sp,
