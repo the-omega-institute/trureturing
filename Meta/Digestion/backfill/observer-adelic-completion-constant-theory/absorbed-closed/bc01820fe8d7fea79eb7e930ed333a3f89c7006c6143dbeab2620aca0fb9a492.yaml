@@ -6,10 +6,6 @@ coverage_gids:
   - gid: D5/S3/Weil/Fredholm/NewmanDeterminantThreshold.newman_determinant_threshold
     target_statement_id: sha256:faa3bd1092845530253dec880cf6d5d7389e3399e8aa10304d9f4ffcaf0b6025
 receipts:
-  coverage:
-    - gid: D5/S3/Weil/Fredholm/NewmanDeterminantThreshold.newman_determinant_threshold
-      source_sha256: sha256:bc01820fe8d7fea79eb7e930ed333a3f89c7006c6143dbeab2620aca0fb9a492
-      target_statement_id: sha256:faa3bd1092845530253dec880cf6d5d7389e3399e8aa10304d9f4ffcaf0b6025
   scribe:
     - gid: D5/S3/Weil/Fredholm/NewmanDeterminantThreshold.newman_determinant_threshold
       definition_sha256: sha256:7133b4fece7dfc174b236220721816dfa1cbc86f8d0f661010c699124a5b1d24
