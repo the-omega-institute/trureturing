@@ -1,0 +1,41 @@
+## 15.2 发生在结构到标量配分的投影
+
+考虑带关系的模型类
+
+$$
+\mathfrak M=(\Omega_Q,E_Q,\mathcal R).
+\tag{A15.2}
+$$
+
+定义 scalar readout
+
+$$
+\Pi_{\mathrm{sc}}(\mathfrak M)
+=
+\sum_{\eta\in\Omega_Q}x^{E_Q(\eta)}.
+\tag{A15.3}
+$$
+
+它与 $\mathcal R$ 无关。于是任意两个不同关系结构 $\mathcal R_1\ne\mathcal R_2$，只要共享同一个能量标号，就满足
+
+$$
+\Pi_{\mathrm{sc}}(\Omega_Q,E_Q,\mathcal R_1)
+=
+\Pi_{\mathrm{sc}}(\Omega_Q,E_Q,\mathcal R_2).
+\tag{A15.4}
+$$
+
+这就是一个非平凡 model-level kernel。
+
+若模型空间只含这两个模型，则 scalar readout 对唯一非对角有序 pair 全部碰撞，信息逃逸率为 $1$。若再加入一个能区分 $\mathcal R_1,\mathcal R_2$ 的 Laplacian、Hankel、carry 或 holonomy readout，联合 kernel 退化为对角线，逃逸率降为 $0$。
+
+因此：
+
+$$
+\boxed{
+\text{Zeckendorf 的信息价值不在重新命名整数，
+而在把被 scalar partition 遗忘的 CUT/FLOW 关系重新对象化。}
+}
+\tag{A15.5}
+$$
+

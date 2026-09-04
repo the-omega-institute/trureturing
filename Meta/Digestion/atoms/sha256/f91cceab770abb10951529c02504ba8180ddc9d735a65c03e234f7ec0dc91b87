@@ -1,0 +1,54 @@
+## 5.4 hard-core 零点与 equimodular locus
+
+由式 (A5.7)，若 $H_Q(z)=0$ 且 $z\ne-1/4$，则
+
+$$
+\left(
+\frac{\lambda_+(z)}{\lambda_-(z)}
+\right)^{Q+2}=1.
+\tag{A5.14}
+$$
+
+因此必有
+
+$$
+|\lambda_+(z)|=|\lambda_-(z)|.
+\tag{A5.15}
+$$
+
+全部根可写为
+
+$$
+\boxed{
+z_j
+=-\frac1{4\cos^2\!\left(\frac{j\pi}{Q+2}\right)},
+\qquad
+1\le j\le\left\lfloor\frac{Q+1}{2}\right\rfloor.
+}
+\tag{A5.16}
+$$
+
+它们全在负实轴，并在 $Q\to\infty$ 时向边缘
+
+$$
+z_c=-\frac14
+\tag{A5.17}
+$$
+
+聚积。在 $z_c$，两个 transfer eigenvalues 合并。
+
+这给出一个严格的有限 Lee–Yang／Fisher 型原型：
+
+$$
+\boxed{
+\text{零点}
+=
+\text{两个 transfer channels 等模并满足相位量子化}.
+}
+\tag{A5.18}
+$$
+
+它是 Zeckendorf hard-core system 的定理，不是 zeta 的定理。
+
+---
+
