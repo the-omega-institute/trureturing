@@ -72,6 +72,21 @@ def polymorphicArena (X : Type u) [Fintype X] [DecidableEq X] :
       anchorDecidableEq := inferInstance }
   Law := fun _ => True
 
+/-! Preserve the non-identity Bool CUT fixture in its own catalog. -/
+def notArena := polymorphicArena Bool
+
+local instance : DecidableEq notArena.State :=
+  notArena.toArena.stateDecidableEq
+
+def notRealization : PrimitiveRealization notArena.signature where
+  readout := fun _ state => !state
+  anchor := Fin.elim0
+
+information_theorem notTheorem
+  in notArena
+  primitives notRealization
+  : notArena.Law notRealization := by trivial
+
 /-! T-001: instantiate a universe-polymorphic arena with the identity Bool CUT. -/
 def t001Arena := polymorphicArena Bool
 
@@ -137,6 +152,8 @@ run_cmd do
 #check sndTheorem.__escape_enriched
 #check arena.__information_catalog
 #check arena.__catalog_irredundant
+#check notTheorem.__lowers_escape
+#check notArena.__catalog_irredundant
 #check idTheorem.__lowers_escape
 #check t001Arena.__catalog_irredundant
 
@@ -145,6 +162,9 @@ run_cmd do
 #print axioms sndTheorem.__lowers_escape
 #print axioms sndTheorem.__escape_enriched
 #print axioms arena.__catalog_irredundant
+#print axioms notTheorem.__lowers_escape
+#print axioms notTheorem.__escape_enriched
+#print axioms notArena.__catalog_irredundant
 #print axioms idTheorem.__lowers_escape
 #print axioms idTheorem.__escape_enriched
 #print axioms t001Arena.__catalog_irredundant
