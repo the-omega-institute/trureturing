@@ -180,7 +180,12 @@ public sealed class FrozenSurfaceRuleTests
         var pin = StatementId.Create(ExpectedFrozenModuleStatementPin);
         AddState(fixture, FrozenPath, pin, includeInBaseline: true);
         _ = AddFreeze(fixture, FrozenPath, pin);
-        fixture.Files[FrozenPath] += "-- comment-only candidate change\n";
+        fixture.Files[FrozenPath] = fixture.Files[FrozenPath].Replace(
+            "anchors: []",
+            "anchors: [mathlib/module/Nat]",
+            StringComparison.Ordinal);
+        var freshPin = ModuleStatementId(fixture, FrozenPath);
+        Assert.Equal(pin, freshPin);
 
         var evaluation = Evaluate(fixture, (FrozenPath, RawChangeKind.Modified));
 
@@ -193,6 +198,10 @@ public sealed class FrozenSurfaceRuleTests
         var fixture = new RuleFixture();
         var stored = ModuleStatementId(fixture, FrozenPath);
         AddState(fixture, FrozenPath, stored, includeInBaseline: true);
+        fixture.Files[FrozenPath] = fixture.Files[FrozenPath].Replace(
+            "def goldenRing : Nat := 0",
+            "def goldenRing : Int := 0",
+            StringComparison.Ordinal);
         ChangeStatement(fixture, FrozenPath, "Int");
         var actual = ModuleStatementId(fixture, FrozenPath);
         Assert.NotEqual(stored, actual);
