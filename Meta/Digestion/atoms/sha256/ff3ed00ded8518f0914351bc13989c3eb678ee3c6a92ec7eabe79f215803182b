@@ -1,0 +1,2 @@
+**候签定理 6.212(Schur 着色与小值忠实性)**〔open;落 `D5/S3/Arith/SchurShiftedTemplateLift`〕。定义 `SchurColoring k n c` 为区间 1 至 n 上不存在同色的 x+y=z，定义 `HasSchurColoring k n := ∃ c, SchurColoring k n c`；则 `HasSchurColoring 1 1`、`HasSchurColoring 2 4`，且 `¬ HasSchurColoring 1 2`。
+

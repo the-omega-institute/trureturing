@@ -1,13 +1,14 @@
 import LeanInformationAudit.SealCommand
 
-/-! This negative fixture is isolated because registry entries persist through imports. -/
+/-! T-017 empty-state companion: `Fin 0` is constructible as an arena, but
+the seal rejects it as degenerate before publishing any generated declaration. -/
 
 open D5.S3.ConceptDynamics.InformationEscape
 
-namespace LeanInformationAudit.Tests.SealDegenerate
+namespace LeanInformationAudit.Tests.SealEmptyState
 
 def arena : PrimitiveLawArena.{0, 0, 0} where
-  toArena := Arena.ofFintype PUnit
+  toArena := Arena.ofFintype (Fin 0)
   signature :=
     { Index := Fin 1
       indexFintype := inferInstance
@@ -23,17 +24,20 @@ def arena : PrimitiveLawArena.{0, 0, 0} where
 
 local instance : DecidableEq arena.State := arena.toArena.stateDecidableEq
 
-def unitRealization : PrimitiveRealization arena.signature where
-  readout := fun _ _ => PUnit.unit
+private def emptyReadout : Fin 1 -> Fin 0 -> PUnit :=
+  fun _ state => Fin.elim0 state
+
+def emptyRealization : PrimitiveRealization arena.signature where
+  readout := emptyReadout
   anchor := Fin.elim0
 
-information_theorem degenerateTheorem
+information_theorem emptyTheorem
   in arena
-  primitives unitRealization
-  : arena.Law unitRealization := by trivial
+  primitives emptyRealization
+  : arena.Law emptyRealization := by trivial
 
 /-- error: IE-C004 DegenerateArena:
-LeanInformationAudit.Tests.SealDegenerate.arena -/
+LeanInformationAudit.Tests.SealEmptyState.arena -/
 #guard_msgs (error) in
 #seal_information_theory
 
@@ -43,14 +47,14 @@ not possible to project the field `__information_catalog` from an expression
   arena
 of type `PrimitiveLawArena` -/
 #guard_msgs (error) in
-#check @LeanInformationAudit.Tests.SealDegenerate.arena.__information_catalog
+#check @LeanInformationAudit.Tests.SealEmptyState.arena.__information_catalog
 
 /-- error: Invalid field `__lowers_escape`: The environment does not contain
 `True.__lowers_escape`, so it is not possible to project the field `__lowers_escape` from an
 expression
-  degenerateTheorem
+  emptyTheorem
 of type `True` -/
 #guard_msgs (error) in
-#check @LeanInformationAudit.Tests.SealDegenerate.degenerateTheorem.__lowers_escape
+#check @LeanInformationAudit.Tests.SealEmptyState.emptyTheorem.__lowers_escape
 
-end LeanInformationAudit.Tests.SealDegenerate
+end LeanInformationAudit.Tests.SealEmptyState
