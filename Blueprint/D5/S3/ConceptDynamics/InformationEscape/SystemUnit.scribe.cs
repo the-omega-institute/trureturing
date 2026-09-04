@@ -10,29 +10,37 @@ internal sealed class SystemUnitDocument : IScribeDocumentDefinition
         "D5/S3/ConceptDynamics/InformationEscape/SystemUnit.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Two Boolean coordinate CUTs give a concrete irredundant system unit.",
-        H("Boolean Pair System Unit"),
+        "The escape engine characterizes its own census on a two-stage arena.",
+        H("Engine Census Self-Application"),
         Blocks(
-            Definition("bool-pair-fst-snd-signature", "boolPairFstSndSignature",
-                "Boolean-pair primitive signature",
-                "The signature contains two CUT slots and an empty anchor family."),
-            Definition("bool-pair-fst-snd-arena", "boolPairFstSndArena",
-                "Boolean-pair primitive-law arena",
-                "The arena has four states and two CUT slots, with no anchor slots."),
-            Definition("bool-pair-fst-snd-realization", "boolPairFstSndRealization",
-                "Coordinate projection realization",
-                "The two primitive readouts are the first and second Boolean projections."),
-            Definition("bool-pair-fst-snd-statement", "BoolPairFstSndStatement",
-                "Concrete system-unit statement",
-                "The statement combines discrete joint agreement, positive empty-catalog capture, and the prescribed private pair."),
-            Theorem("bool-pair-fst-snd-catalog-irredundant",
-                "bool_pair_fst_snd_catalog_irredundant",
-                "The coordinate system unit is irredundant", LawFormula(),
-                "Finite kernel evaluation proves discrete agreement, positive capture against the empty leave-one-out family, and separation of 00 from 10."),
-            Theorem("bool-pair-fst-snd-catalog-irredundant-realization",
-                "bool_pair_fst_snd_catalog_irredundant_realization",
-                "System-unit realization certificate", CertificateFormula(),
-                "The concrete system theorem uses the same legacy-realization interface as the ten frozen applications."))));
+            Definition("stage", "Stage", "Stage type",
+                "The finite meta-arena has a before and an after stage."),
+            Definition("census-arena", "censusArena", "Census arena",
+                "The engine census ranges over the two Boolean states."),
+            Definition("census-catalog", "censusCatalog", "Stage-indexed catalog",
+                "Its lone CUT is constant before separation and identity afterward."),
+            Definition("system-readout", "systemReadout", "SYSTEM readout",
+                "The readout is the canonical leave-one-out unique-capture count."),
+            Definition("system-characterization", "SystemCharacterization",
+                "Engine characterization",
+                "Every stage specializes the canonical exact-rate criterion."),
+            Definition("arena", "arena", "Primitive-law Stage arena",
+                "One CUT slot reads a natural-valued engine census at each stage."),
+            Definition("system-realization", "systemRealization",
+                "Census realization",
+                "The realization calls the catalog's unique-capture census directly."),
+            Definition("system-statement", "SystemStatement", "SYSTEM statement",
+                "The law joins readout identity, exact-rate characterization, and " +
+                "true-stage irredundancy."),
+            Theorem("engine-census-self-application", "engine_census_self_application",
+                "The engine census self-applies", SelfApplicationFormula(),
+                "The canonical exact-rate theorem proves the characterization; " +
+                "the stage census changes from zero to two."),
+            Theorem("system-self-application-realization",
+                "system_self_application_realization",
+                "Self-application realization certificate", CertificateFormula(),
+                "The SYSTEM theorem uses the same legacy registration interface as " +
+                "the ten frozen applications."))));
 
     private static DocumentBlock.Describe Definition(
         string id, string declaration, string title, string explanation) => Describe.Lean(
@@ -48,13 +56,28 @@ internal sealed class SystemUnitDocument : IScribeDocumentDefinition
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(explanation))),
             DescribeRole.Theorem);
 
-    private static Formula LawFormula() => F.Id("BoolPairFstSndStatement");
+    private static Formula SelfApplicationFormula()
+    {
+        Formula stage = F.Id("stage");
+        Formula catalog = Call("censusCatalog", stage);
+        Formula count = Call("uniqueCaptureCount", catalog, D(0));
+        Formula readout = Call("readout", F.Id("systemRealization"), D(0), stage);
+        Formula characterization = Seq(
+            Forall, Sp, stage, Colon, Sp, F.Id("Stage"), Comma, RowBreak,
+            Call("LowersEscape", catalog, D(0)), Sp, Iff, Sp,
+            D(0), Sp, Lt, Sp, count);
+        return Seq(
+            Open, Forall, Sp, stage, Colon, Sp, F.Id("Stage"), Comma, RowBreak,
+            readout, Sp, Eq, Sp, count, Close, Sp, Land, RowBreak,
+            Open, characterization, Close, Sp, Land, RowBreak,
+            Call("CatalogIrredundant", Call("censusCatalog", F.Id("true"))));
+    }
 
     private static Formula CertificateFormula() => Call(
         "LegacyPrimitiveRealization",
-        F.Id("boolPairFstSndArena"),
-        F.Id("BoolPairFstSndStatement"),
-        F.Id("boolPairFstSndRealization"));
+        F.Id("arena"),
+        F.Id("SystemStatement"),
+        F.Id("systemRealization"));
 
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.Apply(F.Id(name), [.. arguments]);
