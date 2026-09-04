@@ -1,0 +1,1 @@
+**候签定理 4.89(欧拉函数整除前驱之析取结构包)**〔open;L-9;同模块,本案主定理〕。对任意 n : ℕ，若 1 < n 且 Nat.totient n ∣ n - 1，则 `n.Prime ∨ (Odd n ∧ Squarefree n ∧ IsKorselt n ∧ (∏ p ∈ n.primeFactors, (p - 1)) ∣ n - 1 ∧ 2 ^ n.primeFactors.card ∣ n - 1 ∧ 3 ≤ n.primeFactors.card)`。

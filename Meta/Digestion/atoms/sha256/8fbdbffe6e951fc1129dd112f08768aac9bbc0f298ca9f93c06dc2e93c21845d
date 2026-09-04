@@ -1,0 +1,12 @@
+## B13.3 排除离线 mode 还需要什么
+
+式 (B13.3) 本身仍不足以排除离线 mode。还必须有：
+
+1. **覆盖性**：每个候选 zero odd mode 位于 $U_L$ 的像或受其 frame 控制；
+2. **prime reflection flatness**：目标 preimage 上 $E_{P,L}^{\mathrm{rel}}\to0$；
+3. **误差相对 gap 消失**：$\|R_L\|^2=o(\gamma_{Z,L})$；
+4. **zero odd coercivity**：真实离线 mode 满足 $E_{Z,L}^{\mathrm{odd}}\ge\gamma_{Z,L}\|h\|^2$；
+5. **极限紧性**：有限 Galerkin 结论不在 $L\to\infty$ 时失去质量。
+
+缺少任一项，都可能出现能量估计成立但离线 mode 逃到 kernel、像空间之外或极限无穷远的情形。
+
