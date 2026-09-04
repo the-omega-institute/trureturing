@@ -157,6 +157,11 @@ run_cmd do
 #check idTheorem.__lowers_escape
 #check t001Arena.__catalog_irredundant
 
+example :
+    arena.__information_catalog.escapePairs
+      arena.__information_catalog.fullIndexSet = ∅ := by
+  decide
+
 #print axioms fstTheorem.__lowers_escape
 #print axioms fstTheorem.__escape_enriched
 #print axioms sndTheorem.__lowers_escape
