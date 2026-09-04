@@ -13,16 +13,10 @@ internal static class AssemblyReferencePolicy
             .ToArray();
 
     internal static string[] ApplicationReferences(Assembly assembly) =>
-        ApplicationReferenceNames(assembly.GetReferencedAssemblies());
-
-    internal static string[] ApplicationReferenceNames(IEnumerable<AssemblyName> references) =>
-        references
-            .Select(static reference => reference.Name
-                ?? throw new InvalidOperationException("Assembly reference has no name."))
+        NonPlatformReferences(assembly)
             .Where(static name =>
                 name == "StrataLint"
                 || name.StartsWith("StrataLint.", StringComparison.Ordinal))
-            .Order(StringComparer.Ordinal)
             .ToArray();
 
     // Platform means "ships inside the Microsoft.NETCore.App shared framework", not

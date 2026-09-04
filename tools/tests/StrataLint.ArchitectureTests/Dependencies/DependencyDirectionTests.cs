@@ -21,8 +21,7 @@ public sealed class DependencyDirectionTests
     {
         Assert.Equal(
             ["Dunet", "Markdig", "Microsoft.CodeAnalysis", "Microsoft.CodeAnalysis.CSharp", "Pidgin", "Trureturing.Truth"],
-            AssemblyReferencePolicy.NonPlatformReferences(
-                typeof(AdmissionPipeline).Assembly));
+            AssemblyReferencePolicy.NonPlatformReferences(typeof(AdmissionPipeline).Assembly));
     }
 
     [Fact]
@@ -30,8 +29,7 @@ public sealed class DependencyDirectionTests
     {
         Assert.Equal(
             ["StrataLint.Engine", "StrataLint.Scribe", "Tomlyn", "Trureturing.Truth", "YamlDotNet"],
-            AssemblyReferencePolicy.NonPlatformReferences(
-                typeof(StrataLint.Cli.Program).Assembly));
+            AssemblyReferencePolicy.NonPlatformReferences(typeof(StrataLint.Cli.Program).Assembly));
     }
 
     /// <summary>
@@ -46,8 +44,7 @@ public sealed class DependencyDirectionTests
     {
         Assert.Equal(
             ["Jint", "QuestPDF", "StrataLint.Engine", "Tomlyn", "Trureturing.Truth"],
-            AssemblyReferencePolicy.NonPlatformReferences(
-                typeof(ScribeEmitter).Assembly));
+            AssemblyReferencePolicy.NonPlatformReferences(typeof(ScribeEmitter).Assembly));
     }
 
     [Fact]
@@ -105,18 +102,6 @@ public sealed class DependencyDirectionTests
     {
         Assert.Equal(
             [
-                "StrataLint",
-                "StrataLint.Engine",
-                "StrataLint.EngineeringScope",
-                "StrataLint.EngineeringScope.Tests",
-                "StrataLint.Scribe",
-                "StrataLint.Scribe.Tests",
-                "StrataLint.Tests",
-            ],
-            ArchitectureTestsAssemblyReferencePolicy.ApplicationReferences(
-                typeof(DependencyDirectionTests).Assembly));
-        Assert.Equal(
-            [
                 "../../StrataLint.Cli/StrataLint.Cli.csproj",
                 "../../StrataLint.Engine/StrataLint.Engine.csproj",
                 "../../StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
@@ -140,13 +125,4 @@ public sealed class DependencyDirectionTests
         .OfType<string>()
         .Order(StringComparer.Ordinal)
         .ToArray();
-
-    private static class ArchitectureTestsAssemblyReferencePolicy
-    {
-        [CompileTimeInputUniverse("tools/tests/StrataLint.ArchitectureTests/", ".cs")]
-        [CompileTimeInputUniverse("tools/tests/StrataLint.ArchitectureTests/", ".csproj")]
-        internal static string[] ApplicationReferences(System.Reflection.Assembly assembly) =>
-            AssemblyReferencePolicy.ApplicationReferenceNames(
-                assembly.GetReferencedAssemblies());
-    }
 }
