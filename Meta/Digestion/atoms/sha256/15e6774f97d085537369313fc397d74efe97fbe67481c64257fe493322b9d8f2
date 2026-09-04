@@ -1,0 +1,54 @@
+- 围绕解析分歧点的 monodromy 与惰性素数的 Frobenius 都执行同一个 deck involution：交换两条谱支。
+
+这给出本轮最重要的精确结论：
+
+$$
+\boxed{
+\text{Zeckendorf 的黄金双通道、模 }5\text{ 的 split/inert 素数、}
+\text{以及 Lee--Yang 等模分支，来自同一二次谱覆盖的解析与算术作用。}
+}
+\tag{B0.1}
+$$
+
+本增订还建立一条此前隐藏的有限恒等式。令 $J_N$ 为长度 $N$、零边界的最近邻平均算子，则
+
+$$
+\boxed{
+\det(I_N+4zJ_N^2)=H_{N-1}(z)^2,
+}
+\tag{B0.2}
+$$
+
+其中 $H_{N-1}$ 是 Zeckendorf hard-core occupation polynomial。项目已经机器证明，参考系交换通道的 entanglement fidelity 正是 $\|J_Nc\|_2^2$，其最优值为
+
+$$
+F_N^*=\cos^2\frac{\pi}{N+1}.
+$$
+
+而当 $N\ge2$ 时，hard-core 配分函数离临界边缘最近的零点精确满足
+
+$$
+\boxed{
+z_{N-1}^{\mathrm{near}}=-\frac1{4F_N^*}.}
+\tag{B0.3}
+$$
+
+因此有限参考系的最优 fidelity tax 与有限配分零点离热力学边缘的距离，是同一条 path spectrum 的两个精确读出，而不是数值巧合。
+
+最后，本增订把 prime-pair 横向能量提升为三种等价的有限局部几何：
+
+$$
+\boxed{
+\text{外积 Gram 能量}
+\quad\Longleftrightarrow\quad
+\text{最小奇异值打开}
+\quad\Longleftrightarrow\quad
+\text{反射通道 fidelity 损失}.
+}
+\tag{B0.4}
+$$
+
+这三者在临界线附近都由 weighted variance of $\log p$ 控制。于是 RH 的承重问题可以进一步收紧为：能否从 completed prime--Zeckendorf--Gamma cocycle 构造一个保持边界横截性、在临界线外具有 dominated splitting、并与 zero-side odd channel 互 intertwine 的正算子。
+
+---
+

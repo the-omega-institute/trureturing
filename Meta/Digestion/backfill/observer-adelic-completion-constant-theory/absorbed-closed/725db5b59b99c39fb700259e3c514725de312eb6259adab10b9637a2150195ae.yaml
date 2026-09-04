@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:725db5b59b99c39fb700259e3c514725de312eb6259adab10b9637a2150195ae
+  normalized_sha256: sha256:725db5b59b99c39fb700259e3c514725de312eb6259adab10b9637a2150195ae
+cas_ref: sha256:725db5b59b99c39fb700259e3c514725de312eb6259adab10b9637a2150195ae
+coverage_gids:
+  - gid: D5/S3/Weil/ZetaAnalytic/RoucheZeroCount.rectangle_zero_count_eq_of_norm_sub_lt
+    target_statement_id: sha256:4836e4fa1bba1475544554361b2e0ab59d5b21d6166da8c8efca95bf4a5ee442
+receipts:
+  scribe:
+    - gid: D5/S3/Weil/ZetaAnalytic/RoucheZeroCount.rectangle_zero_count_eq_of_norm_sub_lt
+      definition_sha256: sha256:dfa5386ea742b60b91a3794421f975659a2e8c31855fc12b1a94f84b89384c6e
+      emission_sha256: sha256:2a71a72ddfba8ba556f9b3d2d4bf7dbe846d0abe239e9e660371cd9fa8610124
+  unresolved_subitems: []

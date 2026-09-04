@@ -1,0 +1,2 @@
+**候签定理 5.93(440 个障碍残类)**〔open;同模块〕。令 `E16 : Finset (Fin 24 × Fin 24) := univ.filter (fun (r, s) => (Nat.fib r + Nat.fib s) % 16 ∉ {0, 1, 4, 9})`,则 `E16.card = 440`。
+

@@ -1,0 +1,20 @@
+### 定理 A9.1　严格正性与唯一零相
+
+若 $Q\ge1$ 且 $\mathcal V_{\mathcal C}>0$，则
+
+$$
+\mathscr E_{Q,\mathcal C}^{\perp}(\delta)\ge0,
+\tag{A9.7}
+$$
+
+并且
+
+$$
+\boxed{
+\mathscr E_{Q,\mathcal C}^{\perp}(\delta)=0
+\Longleftrightarrow
+\delta=0.
+}
+\tag{A9.8}
+$$
+

@@ -1,0 +1,42 @@
+## B15.4 completed determinant fidelity
+
+最后需要局部一致收敛
+
+$$
+\boxed{
+Z_L(s)\longrightarrow C(s)\Xi(s),}
+\tag{B15.8}
+$$
+
+其中 $C(s)$ 在临界条带内无零。
+
+只有式 (B15.5)、(B15.7)、(B15.8) 同时成立，二通道 zero-balance theorem 才能排除临界线外零点。
+
+### 猜想 B15.1　Arithmetic golden-discriminant confinement
+
+存在满足上述条件的 canonical completed cocycle，并且其等模集合在极限中被限制为
+
+$$
+\boxed{
+\Gamma(s)=0
+\Longrightarrow
+\Re s=\frac12.}
+\tag{B15.9}
+$$
+
+若再有式 (B15.8)，则 RH 成立。
+
+该猜想比“存在一个 Hilbert--Polya 算子”更具分解性，因为它明确列出：
+
+- local quadratic cover；
+- mod-$5$ Weyl/Frobenius projection；
+- ordered normalizer product；
+- Gamma completion；
+- bulk dominated splitting；
+- boundary transversality；
+- determinant convergence。
+
+任何一个环节都不能由其名称自动提供。
+
+---
+

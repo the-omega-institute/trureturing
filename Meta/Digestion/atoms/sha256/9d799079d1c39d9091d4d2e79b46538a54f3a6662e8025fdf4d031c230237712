@@ -1,0 +1,29 @@
+## 16.1 能量支配形式
+
+需要构造 canonical 权重和完成映射，使
+
+$$
+\boxed{
+E_{\mathrm{off}}^{\mathrm{odd}}(g)
+\le
+C\Bigl(
+E_{\mathrm{jump}}^{\mathrm{Zeck}}(g)
++
+E_{\mathrm{hol}}^{\mathrm{gold}}(g)
++
+E_{\mathrm{prime}}^{\perp}(g)
+\Bigr)
++\varepsilon(g).
+}
+\tag{A16.1}
+$$
+
+并在受控极限中证明
+
+$$
+\varepsilon(g)\to0.
+\tag{A16.2}
+$$
+
+式 (A16.1) 目前是目标，不是定理。三种 prime-side energy 也不能在未给出共同 Hilbert space 和嵌入以前直接相加；严格版本必须先把它们运输到同一有限 Galerkin 空间。
+
