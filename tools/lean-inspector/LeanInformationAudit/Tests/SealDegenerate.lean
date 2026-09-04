@@ -6,7 +6,7 @@ open D5.S3.ConceptDynamics.InformationEscape
 
 namespace LeanInformationAudit.Tests.SealDegenerate
 
-def arena : PrimitiveLawArena where
+def arena : PrimitiveLawArena.{0, 0, 0} where
   toArena := Arena.ofFintype PUnit
   signature :=
     { Index := Fin 1
@@ -23,14 +23,14 @@ def arena : PrimitiveLawArena where
 
 local instance : DecidableEq arena.State := arena.toArena.stateDecidableEq
 
-def realization : PrimitiveRealization arena.signature where
+def unitRealization : PrimitiveRealization arena.signature where
   readout := fun _ _ => PUnit.unit
   anchor := Fin.elim0
 
-information_theorem theorem
+information_theorem degenerateTheorem
   in arena
-  primitives realization
-  : arena.Law realization := by trivial
+  primitives unitRealization
+  : arena.Law unitRealization := by trivial
 
 /-- error: IE-C004 DegenerateArena:
 LeanInformationAudit.Tests.SealDegenerate.arena -/

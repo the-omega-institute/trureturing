@@ -23,14 +23,14 @@ def arena : PrimitiveLawArena where
 
 local instance : DecidableEq arena.State := arena.toArena.stateDecidableEq
 
-def realization : PrimitiveRealization arena.signature where
+def constantRealization : PrimitiveRealization arena.signature where
   readout := fun _ _ => false
   anchor := Fin.elim0
 
 information_theorem constantTheorem
   in arena
-  primitives realization
-  : arena.Law realization := by trivial
+  primitives constantRealization
+  : arena.Law constantRealization := by trivial
 
 /-- error: IE-C007 ZeroUniqueCapture: theorem
 LeanInformationAudit.Tests.SealZeroCapture.constantTheorem arena

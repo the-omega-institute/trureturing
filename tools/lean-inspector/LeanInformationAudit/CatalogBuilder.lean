@@ -32,6 +32,10 @@ private def arenaValue (arenaName : Name) : MetaM Expr := do
     `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.toArena
     #[mkConst arenaName]
 
+private def propositionIsTrue (proposition : Expr) : MetaM Bool := do
+  let decision ← mkDecide proposition
+  reduceEval decision
+
 private def validateEntry (env : Environment) (entry : InformationRegistryEntry) :
     Lean.Elab.Term.TermElabM Unit := do
   match ← validatePersistedEntry env entry with
@@ -43,10 +47,7 @@ private def validateEntry (env : Environment) (entry : InformationRegistryEntry)
     #[unitExpr]
   let nonempty ← mkAppM
     `D5.S3.ConceptDynamics.CIRPT.PrimitiveBundle.Nonempty #[primitives]
-  try
-    let _ ← mkDecideProof nonempty
-    pure ()
-  catch _ =>
+  unless ← propositionIsTrue nonempty do
     throwError "IE-C013 MissingPrimitiveBundle: {entry.theoremName}"
 
 private def makeUnitVector (units : Array Expr) : Lean.Elab.Term.TermElabM Expr := do
@@ -64,10 +65,7 @@ private def prepareCatalog (arenaName : Name)
   let arena ← arenaValue arenaName
   let nondegenerate ← mkAppM
     `D5.S3.ConceptDynamics.InformationEscape.Arena.Nondegenerate #[arena]
-  try
-    let _ ← mkDecideProof nondegenerate
-    pure ()
-  catch _ =>
+  unless ← propositionIsTrue nondegenerate do
     throwError "IE-C004 DegenerateArena: {arenaName}"
   let unitExprs := sorted.map fun entry => mkConst entry.unitName
   let vector ← makeUnitVector unitExprs
