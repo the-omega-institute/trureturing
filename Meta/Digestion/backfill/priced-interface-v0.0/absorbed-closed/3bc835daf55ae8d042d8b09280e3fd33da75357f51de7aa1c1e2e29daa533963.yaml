@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:3bc835daf55ae8d042d8b09280e3fd33da75357f51de7aa1c1e2e29daa533963
+  normalized_sha256: sha256:3bc835daf55ae8d042d8b09280e3fd33da75357f51de7aa1c1e2e29daa533963
+cas_ref: sha256:3bc835daf55ae8d042d8b09280e3fd33da75357f51de7aa1c1e2e29daa533963
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Interpretation/VisibleSuiteFreshCheckpointDichotomy.visible_suite_and_fresh_checkpoint_dichotomy
+    target_statement_id: sha256:0395a14f2efc61df30394565d862093407ea829acd76621a7e54ead37794a618
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Interpretation/VisibleSuiteFreshCheckpointDichotomy.visible_suite_and_fresh_checkpoint_dichotomy
+      definition_sha256: sha256:2dfb44ef121b92cd49c4063362b3b34d98213ef01ace83b60208aa22658996eb
+      emission_sha256: sha256:83eef940f59442dcb91c6609a70d48d7063e66cdaea59380c98c5a77cb008d44
+  unresolved_subitems: []

@@ -12,11 +12,7 @@ receipts:
       - D5/S3/ConceptDynamics/Interpretation/VisibleSuiteFreshCheckpointDichotomy.visible_suite_and_fresh_checkpoint_dichotomy
     gaps:
       - code: chain-migration-incomplete
-        detail: 3bc835daf55ae8d042d8b09280e3fd33da75357f51de7aa1c1e2e29daa533963
-      - code: chain-migration-incomplete
         detail: 4d669d0c544f7c0e1aa4734e03944da3ed2fb2449473051c01ac5c944db2b1bc
-      - code: chain-migration-incomplete
-        detail: ce93410ee647cf2d87fa430f6bfa48aa90e5c823f43a70b68f3c136cdbae5069
   chain_atoms:
     - 3bc835daf55ae8d042d8b09280e3fd33da75357f51de7aa1c1e2e29daa533963
     - ce93410ee647cf2d87fa430f6bfa48aa90e5c823f43a70b68f3c136cdbae5069
