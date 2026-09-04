@@ -1,0 +1,12 @@
+fingerprints:
+  raw_sha256: sha256:ce93410ee647cf2d87fa430f6bfa48aa90e5c823f43a70b68f3c136cdbae5069
+  normalized_sha256: sha256:ce93410ee647cf2d87fa430f6bfa48aa90e5c823f43a70b68f3c136cdbae5069
+cas_ref: sha256:ce93410ee647cf2d87fa430f6bfa48aa90e5c823f43a70b68f3c136cdbae5069
+coverage_gids: []
+receipts:
+  scribe: []
+  unresolved_subitems: []
+  quarantine:
+    justification: The clause combines joint suite selection, an approximate K bound, unconstrained deployment loss, qualitative generic optimality, and a compressibility claim without source-defined complexity semantics sufficient to prove the conjunction.
+    reentry_condition: Reenter when the source replaces the approximate and qualitative language with typed complexity, optimization, regularization, and deployment-loss premises that determine each clause.
+    blocker_class: multi-clause-guard

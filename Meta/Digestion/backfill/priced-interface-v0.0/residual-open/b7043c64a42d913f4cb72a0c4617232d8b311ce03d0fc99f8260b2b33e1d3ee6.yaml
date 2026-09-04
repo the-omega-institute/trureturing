@@ -6,13 +6,10 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
-  cover_disposition:
-    outcome: partial-closed
-    gids:
-      - D5/S3/ConceptDynamics/Interpretation/VisibleSuiteFreshCheckpointDichotomy.visible_suite_and_fresh_checkpoint_dichotomy
-    gaps:
-      - code: chain-migration-incomplete
-        detail: 4d669d0c544f7c0e1aa4734e03944da3ed2fb2449473051c01ac5c944db2b1bc
+  quarantine:
+    justification: The source joins a visible-suite phase, a fresh-checkpoint phase, a quantitative complexity clause, and verdict-origin phase selection, but supplies no typed origin classifier, exhaustive split, or structural derivation of the complexity bound.
+    reentry_condition: Reenter when a canonical source revision defines the verdict-channel carrier and exhaustive origin classifier and gives structural premises that derive every quantitative complexity clause.
+    blocker_class: multi-clause-guard
   chain_atoms:
     - 3bc835daf55ae8d042d8b09280e3fd33da75357f51de7aa1c1e2e29daa533963
     - ce93410ee647cf2d87fa430f6bfa48aa90e5c823f43a70b68f3c136cdbae5069
