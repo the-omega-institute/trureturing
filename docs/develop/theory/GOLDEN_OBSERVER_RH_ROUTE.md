@@ -2425,3 +2425,34 @@ W-2 的正性陈述在零点侧;冻结的显式公式把零点和搬到素数侧
 一席位轮(codex-cli,独立 worktree,两条同模块,`Separator/` 第七个模块;同 PR deposit(绑 W-13 atom)+ 两条 cover;须在增订二十五的 la153 模块合入后开工以绑定 W-10)。预计 ≤ 60 分钟(W-12 约 100 行,探针证明可复用)。
 
 后续增订继续严格追加于本节之后。
+---
+
+# 增订二十七　素数–阿基米德 Poincaré 不等式形式的黎曼猜想(W-14 / W-15 预登记)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;探针一席(codex-cli,`probe-w14-poincare`,`make lean` exit 0、`lake env lean` exit 0,三条声明全为标准三公理)在 `origin/dev` = `065be208e2`(增订二十五之 la153 模块已合入)的暖树上整证 W-14 / W-15,消费冻结的 `ZetaBridge.PrimeArchimedeanEnergyIdentity.prime_archimedean_energy_identity`(mstudio3 驱动者的能量分解,`ZetaBridge/PrimeJumpDecomposition`、`ZetaGamma/ArchimedeanJumpDecomposition`、`ZetaBridge/PoleRankOneDecomposition` 三条冻结分解之合成)、W-2 `Separator.WeilSquarePositivityCriterion.rh_iff_weilSquarePositivity`、M2-c `ZetaBridge.SymmetricConvergentOfZetaSummable.symmetricConvergent_of_zeroData`,以及 Mathlib `IsCompact.isBounded`、`Bornology.IsBounded.subset_closedBall`、`Real.closedBall_eq_Icc`。探针以显式假设 `hArchAll : ∀ g, ArchimedeanConvergent (g⋆g)` 代替尚未合入的 W-12;落地时改绑冻结的 W-12。检索留痕:`git grep -n -E 'tsupport.*Icc|supportRadius|exists_L|bounded_support' origin/dev -- D5` 无支撑半径存在性定理(命中者皆消费给定 `Icc` 界);`RiemannHypothesis` 在 `ZetaBridge/**`、`ZetaGamma/**` 中与 `Poincare|energy|totalPrimeWeight|Jump` 零交集,即能量恒等式尚未与 RH 等价挂钩。散文由 orchestrator(claude 主循环)撰写。判决日:2026-09-04。lane issue:#4589。
+
+## 〇　为什么是这一节
+
+增订二十六(W-13)把 RH 写成「素数侧表达式 pole − prime + arch 对一切卷积平方非负」。mstudio3 驱动者已冻结的能量恒等式把同一个零点侧形式**逐项实化**:极点项 = 2·|∫ e^{x/2} f|²(秩一边界读数),素数项 = 2·totalPrimeWeight(L)·‖f‖² − arithmeticJumpEnergy(L, f)(有限素数幂平移能量),阿基米德项 = archimedeanJumpEnergy(f) − archimedeanConstant·‖f‖²(连续跳跃能量),其中 L 为任一包含 tsupport f 的支撑半径。合成后,RH 等价于**素数–阿基米德 Poincaré 不等式**:
+
+$$(2\,\mathrm{totalPrimeWeight}(L) - \mathrm{archimedeanConstant})\,\|f\|_2^2 \;\le\; 2\Big|\int e^{x/2} f\Big|^2 + \mathrm{archimedeanJumpEnergy}(f) + \mathrm{arithmeticJumpEnergy}(L, f)$$
+
+对一切 `f : WeilTestFunction` 与一切支撑半径 L 成立。右端三项皆非负(冻结:`prime_jump_decomposition` 的 `0 ≤ arithmeticJumpEnergy`),左端是「相干素数质量减阿基米德常数」乘 L² 质量——这是本路线第一次把 RH 写成**无零点、无 ζ、只含素数幂权、平移能量与一个 digamma 常数**的实不等式。**诚实边界**:①仍相对于 `ZeroData`(M1-b);②测试函数类为本仓 `WeilTestFunction`(偶、C∞、紧支);③不构成 RH 证明;④能量恒等式属他驱动者的冻结节点,本节只做绑定,不复证。
+
+## 一　W-14 预登记:RH ⟺ 素数–阿基米德 Poincaré 不等式对一切支撑半径(`PrimeArchimedeanPoincareCriterion`,落 `D5/S3/Weil/Separator/`)
+
+**义务**:公开定理 `rh_iff_primeArchimedeanPoincare (Z : ZeroData) : RiemannHypothesis ↔ ∀ (f : WeilTestFunction) (L : ℝ), tsupport (f : ℝ → ℂ) ⊆ Set.Icc (-L) L → (2 * totalPrimeWeight L - archimedeanConstant) * l2Mass f ≤ 2 * Complex.normSq (∫ x : ℝ, Complex.exp ((x : ℂ) / 2) * f x) + archimedeanJumpEnergy f + arithmeticJumpEnergy L f`。
+**可证伪预测(写在跑之前)**:→ 由 W-2 取 g := f、见证 M2-c,再经 `prime_archimedean_energy_identity Z f L hSupport _ (archimedeanConvergent_of_weilTestFunction (convolutionSquare f))` 的第二分量;← 对每个 g 由紧支撑取支撑半径 L(`hasCompactSupport → IsCompact.isBounded → subset_closedBall → Real.closedBall_eq_Icc`),同一恒等式反向。探针已在显式 `hArchAll` 下整证,标准三公理;落地绑 W-12 后陈述中不再出现任何可积性假设。若落地时 W-12 的名称或 `archimedeanTerm` 的证明参数形状与增订二十六所记不同,按冻结字面调整证明而非改陈述。
+**边界**:支撑半径 L 任意实数(L < 0 时 `Icc` 为空,前提蕴含 f = 0,不等式退化为 0 ≤ 0 + 非负项);不断言不等式对某个具体 f 成立,只断言其全称形式与 RH 等价。
+
+## 二　W-15 预登记:∃-半径形与半径无关性(同模块第二条公开定理)
+
+**义务**:公开定理 `rh_iff_exists_supportRadius_primeArchimedeanPoincare (Z : ZeroData) : RiemannHypothesis ↔ ∀ f : WeilTestFunction, ∃ L : ℝ, tsupport (f : ℝ → ℂ) ⊆ Set.Icc (-L) L ∧ (2 * totalPrimeWeight L - archimedeanConstant) * l2Mass f ≤ 2 * Complex.normSq (∫ x : ℝ, Complex.exp ((x : ℂ) / 2) * f x) + archimedeanJumpEnergy f + arithmeticJumpEnergy L f`。
+**可证伪预测(写在跑之前)**:→ 由 W-14 与支撑半径存在性;← 对每个 f 取见证的 L,经恒等式第二分量回到 0 ≤ Re zeroSum,再由 W-2。内容在于:给定恒等式,Poincaré 不等式对某一合法半径成立即对一切合法半径成立(素数项 primeTerm 不依赖 L)。探针已整证,标准三公理。支撑半径存在性作为同模块的公开辅助引理 `exists_supportRadius (f : WeilTestFunction) : ∃ L : ℝ, tsupport (f : ℝ → ℂ) ⊆ Set.Icc (-L) L`(dev 上无等价物,检索见产地),不另列义务。
+**边界**:同 §一。
+
+## 三　预算与结算
+
+一席位轮(codex-cli,独立 worktree,`Separator/` 第八个模块;同 PR deposit(绑 W-14 atom)+ 两条 cover;须在增订二十六的 la155 模块合入后开工以绑定 W-12)。预计 ≤ 45 分钟(探针证明 74 行可复用)。
+
+后续增订继续严格追加于本节之后。
