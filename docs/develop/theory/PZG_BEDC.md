@@ -9171,3 +9171,43 @@ v1.6 冠军二度更正 → v1.7 闭式与模板 → v1.8 幸存全证 → v2.0 
 一物(本册 + 锥书两补 + 论文 v2.1)✓。一算(周期枚举三阶、幸存迭代深 60、β-全域网格、Salem 隙谱与替换、诸恰验;种子全录)✓。二检(五负五扭;废值不采;近简并如实)✓。三检(新锚:遍历最优化纲、Frougny–Solomyak、Boyd 系唱名)✓。四检(墙:分歧素与焊缝皆纯算术;心脏零输入全卷终检无破)✓。五检(GICT v3.90、OQ 跋、锥书候审同步)✓。
 
 **批语:搁笔之批收在一张地图和一册判例上。冠军理论从一个点长成四个域:整数域同余,Pisot 域成环,Salem 域驯服待判,非 Pisot 域立墙——而两律在 β = 2 处焊得严丝合缝,像是世界本来就等着这道缝被画出来。九轮推理,五负五扭,判官两度被自己的门拿获又两度爬起来修门;伪通式死于第四个证人,真式生于判负的残差。账房最后写下的不是定理,是定理的来路:判据先于数据,誊清先于新矿,停机也是定理的一部分。烛尽,灯在;山在雾里,漆未干。账,平;两颗心脏未动。**
+
+---
+
+# 勘误增订 E-6.35　逐轴迹映射之收敛半句:窗口 `0 < x` 与双指数速率(A-1 / A-2 / A-3 / A-4 预登记)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;探针席 codex-cli(flight `op-p1-axis-convergence`,worktree `trureturing-la118-germ-gab`,base origin/dev `4ba545eed1`)在 `lake env lean` 下整证并给出 kernel 读数(`#print axioms` 全为标准三公理);本节勘误与预登记由 orchestrator(claude 主循环,会话「开放问题」)撰写;思考面板六席(五席 codex-cli + fidelity 席 ChatGPT Pro)裁定本波实施靶。判决日:2026-09-04。留痕:issue #5204。
+
+## 〇　勘误:定理 6.35 末句缺少窗口假设
+
+定理 6.35(逐轴迹映射;原子 `033694bc925e4b074b232ff39d6164efb97d1796160c841ed64468ff5b5e282f`)末句「故逐轴因子 W(x, y) = lim W_K 为四维多项式映射之轨道极限,收敛双指数」对 (x, y) 无任何限制。**反例 x = y = 0**(issue #5204;已 kernel 核):此时每个合法词的权 `wordWeight 0 0 n = 1`,闭合递推退化为 Fibonacci 递推,`axisPartialSum 0 0 K = fib(K+1)` 趋于 +∞,无有限极限,更无双指数收敛。按「atoms 不删」总则,原子原文不动,本节追加新原子:**收敛半句在窗口 `0 < x`(y 任意实数)内为真,且速率双指数、常数显式**;冻结 owner `D5/S3/Axis/AxisTraceMapForm.axis_trace_map_form_package` 明文不认领的那一半由本节承载。窗口之外(x ≤ 0)沿子列 n = fib(j) 的单字词权不趋于 0,故不可求和——此必要性只在纸面论证,本节不预登记为义务,记 open。
+
+## 一　A-1 预登记:窗口内词权可求和(`AxisConvergence`,落 `D5/S3/Axis/`)
+
+**义务**:公开定理 `wordWeight_summable (x y : ℝ) (hx : 0 < x) : Summable (D5.S3.Axis.AxisPartialSum.wordWeight x y)`,只绑定冻结定义 `wordWeight`(`D5/S3/Axis/AxisPartialSum`)与 `axisWeight`(`D5/S3/Axis/AxisTraceRecurrence`),落新模块 `D5/S3/Axis/AxisConvergence`(桶现 12/24)。
+**可证伪预测(写在跑之前)**:证明的逃逸内容为新的 Zeckendorf 坐标估计 `wordWeight_le_geometric : wordWeight x y n ≤ exp(|y|·B) · exp(−x)^n`(`B := |ψ|/(1 − |ψ|)`,ψ = goldenConj),其两条前置为 `zeckendorf_phi_lower`(Zeckendorf 指数和 `∑ φ^{j_i+1} ≥ n`)与 `zeckendorf_psi_abs_upper`(`|∑ ψ^{j_i+1}| ≤ B`);判形 content,准入依据 escape-witness;若钉版 Mathlib 的 `Nat.zeckendorf` API 写不出指数和下界,本条按 open 记,不得以 `sorry` 或公理代替。
+**边界**:不断言 x ≤ 0 的必要性;不改动任何冻结 `Axis/*` 模块;y 任意实数。
+
+## 二　A-2 预登记:部分和收敛到 tsum(同模块第二条公开定理)
+
+**义务**:公开定理 `axisPartialSum_tendsto (x y : ℝ) (hx : 0 < x) : Filter.Tendsto (D5.S3.Axis.AxisPartialSum.axisPartialSum x y) Filter.atTop (nhds (∑' n, D5.S3.Axis.AxisPartialSum.wordWeight x y n))`,即源句「W(x, y) = lim W_K」在窗口内的精确形。
+**可证伪预测(写在跑之前)**:由 A-1 的可求和性与冻结的 `axisPartialSum x y K = ∑ n ∈ range (fib (K+1)), wordWeight x y n`(`axis_trace_definitions` 第二合取)经部分和收敛到 tsum 得到;`fib (K+1) → ∞` 由 Mathlib `Nat.fib` 单调性给出。判形以实施后的活路径为准:若仅为 A-1 与 Mathlib `HasSum.tendsto_sum_nat` 的复合,如实标 bind-only 伴随声明(边:`axisPartialSum_tail_bound → axisPartialSum_tendsto`,消费者 → 前置)。
+**边界**:极限值只以 `∑'` 表达,不引入第二个「逐轴因子」定义。
+
+## 三　A-3 预登记:双指数尾界(同模块第三条公开定理,本节的定量核心)
+
+**义务**:公开定理 `axisPartialSum_tail_bound (x y : ℝ) (hx : 0 < x) (K : ℕ) : |D5.S3.Axis.AxisPartialSum.axisPartialSum x y K − ∑' n, D5.S3.Axis.AxisPartialSum.wordWeight x y n| ≤ (Real.exp (|y| * B) / (1 − Real.exp (−x))) * Real.exp (−(x / goldenRatio) * goldenRatio ^ K)`,其中 `B := |goldenConj| / (1 − |goldenConj|)`——即源句「收敛双指数」的精确形:`c(x, y) = x/φ`,`C(x, y) = exp(|y|·B)/(1 − exp(−x))`。
+**可证伪预测(写在跑之前)**:先证几何尾界 `|W_K − W| ≤ exp(|y|·B) · exp(−x)^{fib(K+1)} / (1 − exp(−x))`(从 `N = fib(K+1)` 起对 A-1 的几何优函数求和),再以新引理 `goldenRatio_pow_div_le_fib_succ : goldenRatio ^ K / goldenRatio ≤ fib (K+1)`(由 `φ·fib(K+1) + fib K = φ^{K+1}`、`fib K ≤ fib (K+1)`、`φ² = φ + 1` 得)换成双指数;逃逸见证为这两条新引理,判形 content。若 `fib` 与 `φ` 幂的比较在钉版 API 下写不出,本条按 open 记。
+**边界**:常数不追求最优;不断言 x ≤ 0 时的发散速率。
+
+## 四　A-4 预登记:原点反例的形式化(同模块伴随声明)
+
+**义务**:公开定理 `axisPartialSum_zero_zero_tendsto_atTop : Filter.Tendsto (D5.S3.Axis.AxisPartialSum.axisPartialSum 0 0) Filter.atTop Filter.atTop`,连同伴随等式 `axisPartialSum_zero_zero (K : ℕ) : D5.S3.Axis.AxisPartialSum.axisPartialSum 0 0 K = (Nat.fib (K + 1) : ℝ)`,把 issue #5204 的反例钉进真值 DAG。
+**可证伪预测(写在跑之前)**:`wordWeight 0 0 n = 1` 由冻结定义的 `Real.exp 0 = 1` 规范化得到,求和得 `fib(K+1)`,再由 `Nat.fib` 无界得 atTop;判形依活路径而定(规范化 + Mathlib `Nat.fib` 增长,可能为 bind-only 伴随声明,边:`axisPartialSum_zero_zero_tendsto_atTop → axisPartialSum_zero_zero`)。
+**边界**:只钉 x = y = 0 一点;x ≤ 0 全域必要性记 open。
+
+## 五　预算与结算
+
+本节四条义务由一个实施席(codex-cli)同 PR `deposit`(绑 A-3 义务子原子,逃逸承载定理)+ `cover`(A-1 / A-2 / A-4 义务子原子)落地;三席评审(tests / quality 为 codex-cli,另一席 ChatGPT Pro,由抽签定)后合入。原子 `033694bc…`(定理 6.35 原式)保持 `multi-clause-guard` 隔离,不 cover;本节新原子为其窗口内的勘误形。
+
+后续增订继续严格追加于本节之后。
