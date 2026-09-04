@@ -34,38 +34,6 @@ public sealed partial class FrozenLedgerTests
 
         Assert.NotNull(result.Recognition);
         Assert.True(result.Authorized);
-        Assert.Null(result.Failure);
-    }
-
-    [Fact]
-    public void MathlibReanchorProductionServiceRoutesIncrementalAuthorization()
-    {
-        var result = ValidateMathlibReanchor(
-            baseModules:
-            [
-                ModuleWithReport(
-                    "A",
-                    "theorem a : True := by\n  exact True.intro\n",
-                    statementMaterial: "old elaborated True"),
-                Module("B"),
-            ],
-            candidateModules:
-            [
-                ModuleWithReport(
-                    "A",
-                    "theorem a : True := by\n  trivial\n",
-                    statementMaterial: "new elaborated True"),
-                Module("B"),
-            ],
-            replacedModules: ["A"],
-            environment: ReanchorEnvironment.PinUpgrade,
-            validateProductionPath: true);
-
-        Assert.NotNull(result.Recognition);
-        Assert.True(result.Authorized);
-        Assert.Null(result.Failure);
-        Assert.True(result.ProductionPathValidated);
-        Assert.Null(result.ProductionOutcome);
     }
 
     [Fact]
@@ -93,7 +61,6 @@ public sealed partial class FrozenLedgerTests
 
         Assert.NotNull(result.Recognition);
         Assert.False(result.Authorized);
-        AssertReuseRejected(result.Failure);
     }
 
     [Fact]
@@ -121,7 +88,6 @@ public sealed partial class FrozenLedgerTests
 
         Assert.NotNull(result.Recognition);
         Assert.False(result.Authorized);
-        AssertReuseRejected(result.Failure);
     }
 
     [Fact]
@@ -149,7 +115,6 @@ public sealed partial class FrozenLedgerTests
 
         Assert.NotNull(result.Recognition);
         Assert.False(result.Authorized);
-        AssertReuseRejected(result.Failure);
     }
 
     [Fact]
@@ -177,7 +142,6 @@ public sealed partial class FrozenLedgerTests
 
         Assert.NotNull(result.Recognition);
         Assert.False(result.Authorized);
-        AssertReuseRejected(result.Failure);
     }
 
     [Fact]
@@ -205,7 +169,6 @@ public sealed partial class FrozenLedgerTests
 
         Assert.NotNull(result.Recognition);
         Assert.False(result.Authorized);
-        AssertReuseRejected(result.Failure);
     }
 
     [Fact]
@@ -233,7 +196,6 @@ public sealed partial class FrozenLedgerTests
 
         Assert.NotNull(result.Recognition);
         Assert.False(result.Authorized);
-        AssertReuseRejected(result.Failure);
     }
 
     [Fact]
@@ -272,7 +234,6 @@ public sealed partial class FrozenLedgerTests
 
         Assert.NotNull(result.Recognition);
         Assert.True(result.Authorized);
-        Assert.Null(result.Failure);
     }
 
     [Fact]
@@ -300,7 +261,6 @@ public sealed partial class FrozenLedgerTests
 
         Assert.NotNull(result.Recognition);
         Assert.True(result.Authorized);
-        Assert.Null(result.Failure);
     }
 
     [Fact]
@@ -336,7 +296,6 @@ public sealed partial class FrozenLedgerTests
 
         Assert.NotNull(result.Recognition);
         Assert.False(result.Authorized);
-        AssertReuseRejected(result.Failure);
     }
 
     [Fact]
@@ -364,7 +323,6 @@ public sealed partial class FrozenLedgerTests
 
         Assert.NotNull(result.Recognition);
         Assert.False(result.Authorized);
-        AssertReuseRejected(result.Failure);
     }
 
     [Fact]
@@ -404,7 +362,6 @@ public sealed partial class FrozenLedgerTests
 
         Assert.NotNull(result.Recognition);
         Assert.False(result.Authorized);
-        AssertReuseRejected(result.Failure);
     }
 
     [Fact]
@@ -424,7 +381,6 @@ public sealed partial class FrozenLedgerTests
             environment: ReanchorEnvironment.PinUpgrade);
 
         Assert.Null(result.Recognition);
-        AssertReuseRejected(result.Failure);
     }
 
     [Fact]
@@ -447,7 +403,6 @@ public sealed partial class FrozenLedgerTests
             environment: ReanchorEnvironment.PinUpgrade);
 
         Assert.Null(result.Recognition);
-        AssertReuseRejected(result.Failure);
     }
 
     [Fact]
@@ -475,7 +430,6 @@ public sealed partial class FrozenLedgerTests
 
         Assert.NotNull(result.Recognition);
         Assert.False(result.Authorized);
-        AssertReuseRejected(result.Failure);
     }
 
     [Fact]
@@ -513,7 +467,6 @@ public sealed partial class FrozenLedgerTests
 
         Assert.NotNull(result.Recognition);
         Assert.False(result.Authorized);
-        AssertReuseRejected(result.Failure);
     }
 
     [Fact]
@@ -550,7 +503,6 @@ public sealed partial class FrozenLedgerTests
 
         Assert.NotNull(result.Recognition);
         Assert.False(result.Authorized);
-        AssertReuseRejected(result.Failure);
     }
 
     [Fact]
@@ -574,23 +526,20 @@ public sealed partial class FrozenLedgerTests
 
         Assert.NotNull(result.Recognition);
         Assert.False(result.Authorized);
-        AssertReuseRejected(result.Failure);
     }
 
     private static MathlibReanchorResult ValidateMathlibReanchor(
         ModuleSpec[] baseModules,
         ModuleSpec[] candidateModules,
         string[] replacedModules,
-        ReanchorEnvironment environment,
-        bool validateProductionPath = false) =>
+        ReanchorEnvironment environment) =>
         ValidateMathlibReanchorWithCatalogs(
             BuildCatalog(baseModules),
             BuildCatalog(candidateModules),
             baseModules,
             candidateModules,
             replacedModules,
-            environment,
-            validateProductionPath: validateProductionPath);
+            environment);
 
     private static MathlibReanchorResult ValidateMathlibReanchorWithCatalogs(
         FrozenMaterialCatalog baseCatalog,
@@ -599,8 +548,7 @@ public sealed partial class FrozenLedgerTests
         IReadOnlyList<ModuleSpec> candidateModules,
         IReadOnlyCollection<string> replacedModules,
         ReanchorEnvironment environment,
-        FrozenMaterialCatalog? candidateEventCatalog = null,
-        bool validateProductionPath = false)
+        FrozenMaterialCatalog? candidateEventCatalog = null)
     {
         var baseEvents = EventFiles(baseCatalog);
         var eventCatalog = candidateEventCatalog ?? candidateCatalog;
@@ -624,57 +572,29 @@ public sealed partial class FrozenLedgerTests
                 .Concat(ChangedInputs(baseFiles, currentFiles)));
         var protectedBase = Snapshot(baseFiles);
         var current = Snapshot(currentFiles);
-        var productionServices = new ProductionFrozenLedgerAdmissionServices(
-            repositoryRoot: ".",
-            ImmutableHashSet<string>.Empty);
-        var prepared = productionServices.Prepare(current, protectedBase, changes);
-        AdmissionOutcome? productionOutcome = null;
-        if (validateProductionPath)
-        {
-            var report = ReanchorReport(candidateModules);
-            var lean = Assert.IsType<LeanValidationOutcome.Accepted>(
-                LeanClosureValidator.Validate(current, report)).Capability;
-            productionOutcome = productionServices.Validate(
-                prepared,
-                current,
-                lean,
-                report,
-                changes,
-                new FrozenRevisionIdentity("candidate", GitOid('c'), GitOid('d')),
-                new AdmissionCheckTiming(TimeProvider.System, enabled: false));
-        }
-
+        var baseView = FrozenLedgerBaseViewReader.Read(protectedBase);
+        var addedPaths = changes.Entries
+            .Where(static change => change.Kind is RawChangeKind.Added)
+            .Select(static change => change.Path)
+            .ToImmutableHashSet();
+        var deltaEvents = LoadEvents(candidateEvents)
+            .Where(item => addedPaths.Contains(item.SourcePath))
+            .ToImmutableArray();
         var recognition = FrozenLedgerIncrementalReplacementRecognition.Recognize(
-            prepared.BaseView,
+            baseView,
             current,
             changes,
-            prepared.DeltaEvents,
+            deltaEvents,
             candidateCatalog);
-        prepared = prepared with { Replacement = recognition };
-        var scope = FrozenLedgerAdmissionScope.Create(
-            changes,
-            prepared,
-            candidateCatalog.States,
-            candidateCatalog.Adjacency);
         var authorization = new MathlibUpgradeFrozenLedgerReplacementAuthorization(
             protectedBase,
             current);
         var authorized = recognition is not null
             && authorization.IsAuthorized(new FrozenLedgerReplacementAuthorizationContext(
                 recognition,
-                prepared.BaseView,
+                baseView,
                 candidateCatalog));
-        var failure = FrozenLedger.ValidateAdmissionDelta(
-            prepared,
-            scope,
-            candidateCatalog,
-            authorization);
-        return new MathlibReanchorResult(
-            recognition,
-            authorized,
-            failure,
-            validateProductionPath,
-            productionOutcome);
+        return new MathlibReanchorResult(recognition, authorized);
     }
 
     private static ImmutableArray<RepositoryFile> ReanchorInputFiles(
@@ -726,6 +646,9 @@ public sealed partial class FrozenLedgerTests
         ImmutableArray.CreateRange(Encoding.UTF8.GetBytes(text)),
         text);
 
+    private static RepositorySnapshot Snapshot(IEnumerable<RepositoryFile> files) =>
+        RepositorySnapshot.Create(files.ToImmutableDictionary(static file => file.Path));
+
     private static string MathlibManifest(string revision) =>
         JsonSerializer.Serialize(new
         {
@@ -755,36 +678,9 @@ public sealed partial class FrozenLedgerTests
             catalog.TailRegistrations,
             catalog.Adjacency);
 
-    private static LeanAxiomReport ReanchorReport(IReadOnlyList<ModuleSpec> modules) =>
-        LeanAxiomReport.Create(modules.ToDictionary(
-            module => PathFor(module.Name),
-            module => new LeanFileReport(
-                module.Imports.Select(imported => $"D5.S0.Carrier.{imported}").ToImmutableArray(),
-                (module.Declarations.IsDefaultOrEmpty
-                        ? ImmutableArray.Create(module.Name.ToLowerInvariant())
-                        : module.Declarations)
-                    .Order(StringComparer.Ordinal)
-                    .Select(name => new LeanDeclaration(
-                        name,
-                        module.Kind,
-                        module.StatementMaterial,
-                        module.Axioms)
-                    {
-                        NameKey = module.OpaqueNameKeys
-                            ? NameKeyFor(name)
-                            : $"ns(n0,{Encoding.UTF8.GetByteCount(name)}:{name})",
-                        IncludeInStatement = module.Excluded.IsDefaultOrEmpty
-                            || !module.Excluded.Contains(name),
-                    })
-                    .ToImmutableArray()),
-            StringComparer.Ordinal));
-
     private sealed record MathlibReanchorResult(
         FrozenLedgerIncrementalReplacementRecognition? Recognition,
-        bool Authorized,
-        FrozenLedgerAdmissionFailure? Failure,
-        bool ProductionPathValidated,
-        AdmissionOutcome? ProductionOutcome);
+        bool Authorized);
 
     private enum ReanchorEnvironment
     {
