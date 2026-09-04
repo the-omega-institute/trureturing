@@ -197,21 +197,20 @@ public sealed class TypeModelTests
         Assert.True(RuleId.TryCreate("SL-025", out _));
         Assert.False(RuleId.TryCreate("SL-027", out _));
         Assert.True(RuleId.TryCreate("SL-028", out _));
-        Assert.True(RuleId.TryCreate("SL-029", out _));
-        Assert.True(RuleId.TryCreate("SL-030", out _));
         Assert.False(RuleId.TryCreate("SL-031", out _));
         Assert.True(CaseId.TryCreate("D5-T0016", out _));
     }
 
     [Theory]
+    [InlineData(5, false)]
     [InlineData(23, true)]
     [InlineData(24, false)]
     [InlineData(25, true)]
     [InlineData(26, true)]
     [InlineData(27, false)]
     [InlineData(28, true)]
-    [InlineData(29, true)]
-    [InlineData(30, true)]
+    [InlineData(29, false)]
+    [InlineData(30, false)]
     [InlineData(31, false)]
     public void RuleIdKnownDomainPreservesTheIntentionalGapAndUpperBoundary(
         int number,
@@ -358,6 +357,7 @@ public sealed class TypeModelTests
     [InlineData("tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml")]
     [InlineData("Golden/Projection/x.json")]
     [InlineData("Golden/Frozen/accepted/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json")]
+    [InlineData("Golden/Frozen/state/D5/S0/Carrier/Ring.lean.json")]
     [InlineData("Golden/values-kernels.toml")]
     public void CanonicalGoldenDataResidencesAreClosedWorldRegistered(string value)
     {
@@ -378,6 +378,7 @@ public sealed class TypeModelTests
     [InlineData("Golden/Projection/caf\u00e9.json")]
     [InlineData("Golden/Frozen/accepted/nested/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json")]
     [InlineData("Golden/Frozen/other/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json")]
+    [InlineData("Golden/Frozen/state/D5/S0/Carrier/Ring.json")]
     public void CanonicalGoldenDataResidencesRejectNoncanonicalNeighbors(string value)
     {
         var path = RepoPath.CreateKnown(value);
