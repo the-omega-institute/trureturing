@@ -72,6 +72,22 @@ theorem agreesB_eq_true_iff {X : Type u} (b : PrimitiveBundle X) (x y : X) :
         simp)
   simpa using foldCharacterization
 
+instance decidableAgrees {X : Type u} (b : PrimitiveBundle X) (x y : X) :
+    Decidable (b.agrees x y) :=
+  decidable_of_iff (b.agreesB x y = true) (b.agreesB_eq_true_iff x y)
+
+private def boolPairBundle : PrimitiveBundle (Bool × Bool) where
+  Index := Bool
+  indexFintype := inferInstance
+  indexDecidableEq := inferInstance
+  atom
+    | false => ⟨.cut, cutKernel Prod.fst⟩
+    | true => ⟨.cut, cutKernel Prod.snd⟩
+
+example : boolPairBundle.agrees (true, true) (true, true) := by decide
+
+example : ¬ boolPairBundle.agrees (false, true) (false, false) := by decide
+
 /-- Agreement inherited from a family of kernels is itself an equivalence relation. -/
 theorem agrees_equivalence {X : Type u} (b : PrimitiveBundle X) :
     Equivalence b.agrees := by
@@ -129,8 +145,13 @@ theorem bundle_agrees_iff_jointKernel_quotientCuts
       (b.atom i).kernel.quotientCut y at hi
     exact (quotient_cut_kernel_normal_form (b.atom i).kernel x y).2 hi
 
-/-- CIRPT-IE-016: equal joint relations force equal logical and Boolean agreement. -/
-theorem primitive_bundle_kernel_invariance
+/--
+Bundle-level congruence for equal packaged relations. The engine will use this
+result to prove CIRPT-IE-016 in
+`D5/S3/ConceptDynamics/InformationEscape/PrimitiveResidualBridge.lean` once
+`uniqueCaptureCount` exists.
+-/
+theorem agrees_congr_of_kernel_eq
     {X : Type u} (first : PrimitiveBundle.{u, v} X)
     (second : PrimitiveBundle.{u, w} X)
     (sameKernel : forall x y,
