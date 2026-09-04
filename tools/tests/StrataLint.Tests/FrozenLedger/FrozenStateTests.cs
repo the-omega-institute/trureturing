@@ -11,14 +11,16 @@ public sealed class FrozenStateTests
     private const string Pin =
         "sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef";
 
-    [Fact]
-    public void StatePathAndModulePathAreExactInverses()
+    [Theory]
+    [InlineData(ModulePath, StatePath)]
+    [InlineData("Trureturing.lean", "Golden/Frozen/state/Trureturing.lean.json")]
+    public void StatePathAndModulePathAreExactInverses(string modulePath, string statePath)
     {
-        var module = RepoPath.CreateKnown(ModulePath);
+        var module = RepoPath.CreateKnown(modulePath);
 
         var state = FrozenStatePath.FromModulePath(module);
 
-        Assert.Equal(StatePath, state.Value);
+        Assert.Equal(statePath, state.Value);
         Assert.True(FrozenStatePath.TryToModulePath(state.Value, out var decoded));
         Assert.Equal(module, decoded);
     }
@@ -55,11 +57,15 @@ public sealed class FrozenStateTests
     public void CatalogLoadsSelectorToPinAndRejectsIllegalPathsUnderTheRoot()
     {
         var valid = RepositoryStateFile(StatePath, Encoding.UTF8.GetBytes($"{{\"statement_id\":\"{Pin}\"}}\n"));
-        var catalog = FrozenStateCatalog.Load(Snapshot(valid));
+        const string rootStatePath = "Golden/Frozen/state/Trureturing.lean.json";
+        var root = RepositoryStateFile(
+            rootStatePath,
+            Encoding.UTF8.GetBytes($"{{\"statement_id\":\"{Pin}\"}}\n"));
+        var catalog = FrozenStateCatalog.Load(Snapshot(valid, root));
 
-        var record = Assert.Single(catalog.Records);
-        Assert.Equal(ModulePath, record.Key.Value);
-        Assert.Equal(Pin, record.Value.StatementId.Value);
+        Assert.Equal(2, catalog.Records.Count);
+        Assert.Equal(Pin, catalog.Records[RepoPath.CreateKnown(ModulePath)].StatementId.Value);
+        Assert.Equal(Pin, catalog.Records[RepoPath.CreateKnown("Trureturing.lean")].StatementId.Value);
 
         const string invalidPath = "Golden/Frozen/state/not-a-module.json";
         var invalid = RepositoryStateFile(invalidPath, Encoding.UTF8.GetBytes($"{{\"statement_id\":\"{Pin}\"}}\n"));

@@ -174,6 +174,34 @@ public sealed class LedgerAlignWriterTests
     }
 
     [Fact]
+    public void FromAcceptedMaterializesRootAndNestedRepositoryLeanModules()
+    {
+        var nested = BuildCatalog(Module("A"));
+        var rootPath = RepoPath.CreateKnown("Trureturing.lean");
+        var rootPin = StatementId.Create(Sha256("root-module-with-no-declarations"));
+        var rootMaterial = new FrozenNodeMaterial(
+            rootPath,
+            [],
+            rootPin,
+            FrozenNodeId.Create(Sha256("unused-root-node-id")),
+            [],
+            []);
+        var rootEvent = EventFile(
+            "Freeze",
+            FrozenLedgerCanonicalWriter.FreezeElement(
+                FrozenLedgerCanonicalWriter.FreezePayload(rootMaterial)));
+        using var fixture = new AlignFixture();
+        fixture.InstallAccepted(EventFiles(nested).Append(rootEvent));
+
+        var exitCode = RunFromAcceptedCli(fixture);
+
+        Assert.Equal(0, exitCode);
+        Assert.Equal(2, fixture.StateFileCount());
+        Assert.Equal(fixture.EventPin("A"), fixture.StatePin("A"));
+        Assert.Equal(rootPin.Value, fixture.StatePin(rootPath));
+    }
+
+    [Fact]
     public void FromAcceptedNamesContradictoryDuplicateSelectorAndWritesNothing()
     {
         var first = BuildCatalog(ModuleWithReport("A", Source("A"), "True"));
@@ -423,10 +451,12 @@ public sealed class LedgerAlignWriterTests
         }
 
         internal string StatePin(string name)
+            => StatePin(RepoPathFor(name));
+
+        internal string StatePin(RepoPath module)
         {
-            var module = RepoPathFor(name);
             var path = FrozenStatePath.FromModulePath(module);
-            var absolute = StateFile(name);
+            var absolute = StateFile(module);
             return FrozenStateRecordLoader.Load(new RepositoryFile(
                 path,
                 ImmutableArray.CreateRange(File.ReadAllBytes(absolute)),
@@ -465,9 +495,11 @@ public sealed class LedgerAlignWriterTests
                 item => item.DescriptorPath == RepoPathFor(name));
         }
 
-        private string StateFile(string name) => Path.Combine(
+        private string StateFile(string name) => StateFile(RepoPathFor(name));
+
+        private string StateFile(RepoPath module) => Path.Combine(
             temporary.Path,
-            FrozenStatePath.FromModulePath(RepoPathFor(name)).Value.Replace(
+            FrozenStatePath.FromModulePath(module).Value.Replace(
                 '/',
                 Path.DirectorySeparatorChar));
 
