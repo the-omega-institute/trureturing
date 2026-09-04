@@ -1,0 +1,83 @@
+## 285. 为什么完整对称不够
+
+任意：
+
+$$
+M\in SL_2(\mathbb R)
+$$
+
+都保存标准辛形式：
+
+$$
+\Omega
+=
+\begin{pmatrix}
+0&1\\
+-1&0
+\end{pmatrix}.
+$$
+
+这只保证本征值成 reciprocal pair：
+
+$$
+u,\quad u^{-1}.
+$$
+
+它不保证：
+
+$$
+|u|=1.
+$$
+
+若还存在正定矩阵 \(G>0\)，使：
+
+$$
+M^TGM=G,
+$$
+
+那么对本征向量 \(Mv=uv\)：
+
+$$
+\langle v,v\rangle_G
+=
+\langle Mv,Mv\rangle_G
+=
+|u|^2
+\langle v,v\rangle_G.
+$$
+
+因 \(G>0\)，可得：
+
+$$
+|u|=1.
+$$
+
+因此：
+
+$$
+\boxed{
+\text{symplectic symmetry}
+\Longrightarrow
+\text{reciprocal pairing},
+}
+$$
+
+而：
+
+$$
+\boxed{
+\text{positive invariant metric}
+\Longrightarrow
+\text{unit-circle localization}.
+}
+$$
+
+这彻底解决了此前的逻辑困惑：
+
+> 完整对称完全允许离线零点；
+> 真正禁止离线零点的不是对称，而是与对称兼容的正性。
+
+这正是 Weil 正性路线应承担的角色。
+
+---
+

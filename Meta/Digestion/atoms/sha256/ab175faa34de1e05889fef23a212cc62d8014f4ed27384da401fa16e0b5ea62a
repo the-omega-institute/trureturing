@@ -1,0 +1,36 @@
+## 556. 从单位圆到 Casimir 区间
+
+令：
+
+$$
+u=e^{i\theta},
+$$
+
+定义：
+
+$$
+t=\frac{u+u^{-1}}2=\cos\theta,
+$$
+
+以及：
+
+$$
+\boxed{
+x=\frac{1-t}{2}
+=
+\sin^2\frac\theta2.
+}
+$$
+
+于是：
+
+$$
+u\leftrightarrow u^{-1}
+$$
+
+被折叠为同一个 \(x\)。
+
+这就是从 Cayley 单位圆到反射 Casimir 区间的平方折叠。
+
+---
+

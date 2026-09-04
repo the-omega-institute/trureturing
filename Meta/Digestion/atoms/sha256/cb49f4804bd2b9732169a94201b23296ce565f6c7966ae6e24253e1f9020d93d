@@ -1,0 +1,13 @@
+## 339. Cayley Klein 作用
+
+```lean
+theorem cayley_symmetry_actions
+    (s : ℂ) (hs : s ≠ 0) (h1s : s ≠ 1) :
+    cayley (1 - s) = (cayley s)⁻¹ ∧
+    cayley (conj s) = conj (cayley s) ∧
+    cayley (1 - conj s) =
+      (conj (cayley s))⁻¹
+```
+
+---
+

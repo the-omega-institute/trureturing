@@ -1,0 +1,16 @@
+### 关于孪生、三元组、四元组
+
+它们确实分别是二、三、四阶 connected source jets，但还要附加反射表示：
+
+$$
+\boxed{
+\begin{aligned}
+\text{twin}&:\text{二阶、mirror-even};\\
+\text{triplet difference}&:\text{三阶、mirror-odd};\\
+\text{quadruplet}&:\text{四阶、mirror-even}.
+\end{aligned}
+}
+$$
+
+所以三元组 chirality，而不是孪生本身，是最早能够线性耦合零点 transverse-odd sector 的候选。
+

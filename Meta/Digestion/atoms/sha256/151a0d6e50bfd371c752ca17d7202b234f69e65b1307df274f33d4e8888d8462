@@ -1,0 +1,39 @@
+## 570. 非 Noether 不等于不可解析压缩
+
+必须注意：
+
+$$
+\mathbb Q[X_p:p\in\mathbb P]
+$$
+
+虽然不是 Noether 环，但：
+
+$$
+\zeta(s)
+=
+\prod_p(1-p^{-s})^{-1}
+$$
+
+仍然用一个有限公式压缩了全部 multiplicative prime coordinates。
+
+因此：
+
+$$
+\boxed{
+\text{非有限代数生成}
+\not\Rightarrow
+\text{不存在有限解析描述}.
+}
+$$
+
+真正缺失的是：
+
+$$
+\boxed{
+\text{对加法平移相关也具有类似 Euler product 的统一生成对象。}
+}
+$$
+
+它很可能不是普通标量乘积，而是：
+
+* transfer operator；

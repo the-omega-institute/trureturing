@@ -1,0 +1,49 @@
+## 385. 最新结构零正是双宇称的 divisor 实现
+
+仓库最新已经证明，第三阶黄金 germ 的 reciprocal factors 在：
+
+$$
+\frac1{2\varphi^2}
+$$
+
+和：
+
+$$
+\frac1{2\varphi^3}
+$$
+
+产生真正的简单结构零。
+
+这两个位置正是：
+
+$$
+2\varphi^2s=1,
+$$
+
+$$
+2\varphi^3s=1.
+$$
+
+也就是说：
+
+* \(\varphi^2,\varphi^3\) 来自黄金能量轴；
+* \(2\) 来自占据宇称／double-occupancy 排斥；
+* \(1\) 是普通 ζ 的完成极点；
+* 三者合成真实 structural divisor。
+
+所以这些结构零可以解释为：
+
+$$
+\boxed{
+\text{黄金坐标宇称}
+\times
+\text{占据宇称}
+\times
+\text{Euler 完成极点}.
+}
+$$
+
+它们不是 Riemann 非平凡零点，因此必须从 coherent divisor 中扣除。
+
+---
+

@@ -1,0 +1,18 @@
+## 160. Jet 投影层级原则
+
+$$
+\boxed{
+\begin{aligned}
+\det&:\text{只读零点与重数};\\
+\operatorname{tr}R&:\text{只读重数 residue};\\
+R&:\text{读取 nilpotent jet chain};\\
+\log\det L_{\varepsilon}
+&:\text{读取 connected source cycles}.
+\end{aligned}
+}
+$$
+
+这给“ζ 是动力学投影”一个严格而不误伤 RH 的含义。
+
+---
+

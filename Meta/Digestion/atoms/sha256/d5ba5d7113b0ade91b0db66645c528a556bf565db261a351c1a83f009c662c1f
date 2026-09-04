@@ -1,0 +1,66 @@
+# 一、第一个新命题：全局偶闭合 RH
+
+定义：
+
+$$
+\boxed{
+\mathrm{RH}_{\mathrm{even}}
+:
+\quad
+\Delta_\zeta=-\Delta_\zeta.
+}
+$$
+
+也就是：
+
+$$
+\delta\in\Delta_\zeta
+\Longrightarrow
+-\delta\in\Delta_\zeta.
+$$
+
+大白话是：
+
+> 全局视角不允许只有右边而没有左边；任何横向偏移都必须拥有取反伙伴。
+
+它来自 completed zeta 的反射：
+
+$$
+J(s)=1-\overline s.
+$$
+
+因为：
+
+$$
+\rho=\frac12+\delta+i\gamma
+$$
+
+经过 \(J\) 后变成：
+
+$$
+J\rho
+=
+\frac12-\delta+i\gamma.
+$$
+
+所以：
+
+$$
+\delta_{J\rho}=-\delta_\rho.
+$$
+
+项目已经机器证明了零点上的共轭反射作用，以及镜像指标固定当且仅当零点位于临界线；非实离线零点则形成四点自由 Klein 轨道。
+
+因此，对经典 ζ 来说：
+
+$$
+\boxed{
+\mathrm{RH}_{\mathrm{even}}
+\text{ 已经成立。}
+}
+$$
+
+它不是尚未解决的部分，而是函数方程已经给出的全局偶性。
+
+---
+

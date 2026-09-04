@@ -1,0 +1,26 @@
+## 317. RH-compatible 测度下没有永久残余
+
+由于 \(\nu\) 支撑于紧区间 \([0,1]\)，多项式在连续函数中稠密，而连续函数在 \(L^2(\nu)\) 中稠密。
+
+因此：
+
+$$
+\overline{
+\bigcup_NV_N
+}
+=
+L^2(\nu).
+$$
+
+所以：
+
+$$
+\boxed{
+R_\infty=0.
+}
+$$
+
+这说明全部 Casimir moments 联合起来原则上足以恢复整个 cyclic spectral state。
+
+---
+

@@ -1,0 +1,106 @@
+# 第两千零四十七部　奇偶递归不会终止，因为奇偶只是一次极粗取商
+
+对每个素数只保留指数奇偶：
+
+$$
+\epsilon_p(n)
+=
+v_p(n)\bmod2.
+$$
+
+则整数的 squarefree 部分对应：
+
+$$
+\boxed{
+\mathcal X_{\mathrm{fin}}
+=
+\bigoplus_{p\in\mathbb P}\mathbb Z_2.
+}
+\tag{2047.1}
+$$
+
+这是全部有限支撑 \(0/1\) 素数构型。
+
+总素因子宇称是：
+
+$$
+\boxed{
+\chi(n)
+=
+(-1)^{\Omega(n)}
+=
+(-1)^{\sum_p\epsilon_p(n)}.
+}
+\tag{2047.2}
+$$
+
+因为每个整数只有有限支撑，上式完全良定义。
+
+但它只把整个无限素数向量压缩成一个 bit：
+
+$$
+\boxed{
+\mathcal X_{\mathrm{fin}}
+\longrightarrow
+\mathbb Z_2.
+}
+$$
+
+所以即使先分成：
+
+$$
+\text{偶}
+\quad\text{和}\quad
+\text{奇},
+$$
+
+每个扇区内部仍然包含无限多素数坐标。
+
+更精确地：
+
+$$
+\boxed{
+\mathcal X_{\mathrm{even}}
+=
+\bigcup_{k\ge0}
+\mathcal X_{2k},
+}
+$$
+
+$$
+\boxed{
+\mathcal X_{\mathrm{odd}}
+=
+\bigcup_{k\ge0}
+\mathcal X_{2k+1},
+}
+$$
+
+其中 \(\mathcal X_k\) 表示恰好占据 \(k\) 个素数的构型。
+
+即使固定 \(k\)，仍有无限多个不同 \(k\)-素数子集。
+
+所以这里存在两层不同的无限：
+
+$$
+\boxed{
+\begin{aligned}
+&k\to\infty
+&&\text{占据数层级无限};\\
+&p\to\infty
+&&\text{每层内部的素数标签无限}.
+\end{aligned}
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{偶／奇分解只完成第一次二分，
+绝不等于完成了所有条件。}
+}
+$$
+
+---
+

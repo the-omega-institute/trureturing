@@ -1,0 +1,36 @@
+# 第两千一百一十三部　真正需要的是 Signed-Kakeya Coercivity
+
+定义有限双通道 Dirichlet packet：
+
+$$
+F_{N,\pm\delta}(t)
+=
+\sum_{n\le N}
+a_n
+n^{-1/2\mp\delta}
+e^{-it\log n}.
+$$
+
+定义联合能量：
+
+$$
+\boxed{
+\mathcal Q_{N,\delta}(t)
+=
+|F_{N,+\delta}(t)|^2
++
+|F_{N,-\delta}(t)|^2.
+}
+\tag{2113.1}
+$$
+
+离线零点的有限模型要求：
+
+$$
+\mathcal Q_{N,\delta}(t)
+$$
+
+在同一时刻非常小，极限中趋于零。
+
+一个真正的 Zeta–Kakeya 定理应该具有下述二分形式。
+

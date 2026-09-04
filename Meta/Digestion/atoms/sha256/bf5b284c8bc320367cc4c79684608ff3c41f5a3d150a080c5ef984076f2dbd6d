@@ -1,0 +1,66 @@
+## 132. 简单零点的一阶响应公式
+
+设：
+
+$$
+\xi(\rho)=0,
+\qquad
+\xi'(\rho)\neq0.
+$$
+
+由隐函数定理，存在零点 branch：
+
+$$
+\rho(\mathbf u).
+$$
+
+对任一 source \(u_h\)，由：
+
+$$
+\Xi_H(\rho(\mathbf u);\mathbf u)=0
+$$
+
+求导得：
+
+$$
+\partial_s\Xi_H(\rho;0)
+\,
+\partial_{u_h}\rho(0)
++
+\partial_{u_h}\Xi_H(\rho;0)
+=
+0.
+$$
+
+所以：
+
+$$
+\boxed{
+\partial_{u_h}\rho(0)
+=
+-
+\frac{
+\partial_{u_h}\Xi_H(\rho;0)
+}{
+\xi'(\rho)
+}.
+}
+$$
+
+这给出构型 source 对每个零点的局部 response charge。
+
+定义：
+
+$$
+q_h(\rho)
+=
+-
+\frac{
+\partial_{u_h}\Xi_H(\rho;0)
+}{
+\xi'(\rho)
+}.
+$$
+
+---
+

@@ -1,0 +1,38 @@
+## 523. Robin 域显示这种不对称非常具体
+
+Robin 判据把 RH 等价地写成一个对所有 \(n>5040\) 的整数不等式。([数字对象识别系统][1])
+
+因此：
+
+* 若 RH 为假，存在某个有限整数反例；
+* 检查前一亿、前一万亿个整数仍不能证明没有更大的反例；
+* 若 RH 为真，证明必须使用一个统一控制全部 \(n\) 的论证。
+
+这正是：
+
+$$
+\boxed{
+\text{falsehood is locally witnessable，}
+\qquad
+\text{truth requires global compression}.
+}
+$$
+
+仓库的 Weil criterion 给出了同样的分析版本：
+
+$$
+\neg\mathrm{RH}
+\Longrightarrow
+\exists g,\ Q_Z(g)<0;
+$$
+
+而：
+
+$$
+\mathrm{RH}
+\Longleftrightarrow
+\forall g,\ Q_Z(g)\ge0.
+$$
+
+---
+

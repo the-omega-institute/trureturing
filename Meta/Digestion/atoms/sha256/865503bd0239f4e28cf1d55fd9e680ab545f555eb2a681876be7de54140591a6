@@ -1,0 +1,14 @@
+### 50.5 正度量缺陷
+
+$$
+\boxed{
+\mathfrak d_{\mathrm{unit}}
+=
+C^*C-I.
+}
+$$
+
+这里的内积必须从 prime-generated 正结构独立产生，不能由待证的 Weil form 正性定义。
+
+---
+

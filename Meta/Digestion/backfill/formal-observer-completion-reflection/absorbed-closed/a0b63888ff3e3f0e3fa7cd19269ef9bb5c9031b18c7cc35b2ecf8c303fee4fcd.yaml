@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:a0b63888ff3e3f0e3fa7cd19269ef9bb5c9031b18c7cc35b2ecf8c303fee4fcd
+  normalized_sha256: sha256:a0b63888ff3e3f0e3fa7cd19269ef9bb5c9031b18c7cc35b2ecf8c303fee4fcd
+cas_ref: sha256:a0b63888ff3e3f0e3fa7cd19269ef9bb5c9031b18c7cc35b2ecf8c303fee4fcd
+coverage_gids:
+  - gid: D5/S3/Observer/Linear/FiniteObservabilityEquivalence.finite_observability_equivalence
+    target_statement_id: sha256:757c8e23b55918d840ccbb6adfd3841364fb764bcc6fbd5f924f71277923e7e6
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/Linear/FiniteObservabilityEquivalence.finite_observability_equivalence
+      definition_sha256: sha256:dc7b3cb18f08e106826008b22b8e56770ed9cc8f500733d86906919f9ddb5e2b
+      emission_sha256: sha256:c9bc76858a525aee6850212ca9b9cbb2f825c6e0bf1da92103f452a0671d9577
+  unresolved_subitems: []

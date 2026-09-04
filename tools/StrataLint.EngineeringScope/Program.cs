@@ -90,26 +90,48 @@ internal static class Program
         EngineeringTestInvocation invocation)
     {
         var resultsDirectory = Directory.CreateTempSubdirectory("stratalint-engineering-tests-").FullName;
-        var startInfo = new ProcessStartInfo
+        (int ExitCode, string StandardError) Run(bool noBuild)
         {
-            FileName = "dotnet",
-            WorkingDirectory = repositoryRoot,
-            UseShellExecute = false,
-        };
-        foreach (var argument in new[] { "test", invocation.ProjectPath, "--configuration", "Release", "--verbosity", "normal" })
-        {
-            startInfo.ArgumentList.Add(argument);
+            var startInfo = new ProcessStartInfo
+            {
+                FileName = "dotnet",
+                WorkingDirectory = repositoryRoot,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+            };
+            startInfo.Environment["DOTNET_CLI_UI_LANGUAGE"] = "en-US";
+            foreach (var argument in new[] { "test", invocation.ProjectPath, "--configuration", "Release", "--verbosity", "normal" })
+            {
+                startInfo.ArgumentList.Add(argument);
+            }
+            if (noBuild) startInfo.ArgumentList.Add("--no-build");
+            startInfo.ArgumentList.Add("--logger");
+            startInfo.ArgumentList.Add("trx;LogFilePrefix=engineering");
+            startInfo.ArgumentList.Add("--results-directory");
+            startInfo.ArgumentList.Add(resultsDirectory);
+
+            using var process = Process.Start(startInfo)
+                ?? throw new InvalidOperationException("could not start dotnet test");
+            var standardError = process.StandardError.ReadToEndAsync();
+            process.WaitForExit();
+            return (process.ExitCode, standardError.GetAwaiter().GetResult());
         }
-        startInfo.ArgumentList.Add("--logger");
-        startInfo.ArgumentList.Add("trx;LogFilePrefix=engineering");
-        startInfo.ArgumentList.Add("--results-directory");
-        startInfo.ArgumentList.Add(resultsDirectory);
 
         try
         {
-            using var process = Process.Start(startInfo) ?? throw new InvalidOperationException("could not start dotnet test");
-            process.WaitForExit();
-            if (process.ExitCode != 0) return process.ExitCode;
+            var result = Run(noBuild: true);
+            Console.Error.Write(result.StandardError);
+            if ((result.ExitCode != 0 && ReportsMissingBuildOutput(result.StandardError))
+                || (result.ExitCode == 0
+                    && !Directory.EnumerateFiles(resultsDirectory, "*.trx").Any()))
+            {
+                Console.WriteLine(
+                    $"ENGINEERING_TEST_RETRY project={JsonSerializer.Serialize(invocation.ProjectPath)} "
+                    + "reason=missing-build-output");
+                result = Run(noBuild: false);
+                Console.Error.Write(result.StandardError);
+            }
+            if (result.ExitCode != 0) return result.ExitCode;
 
             try
             {
@@ -130,6 +152,13 @@ internal static class Program
             Directory.Delete(resultsDirectory, recursive: true);
         }
     }
+
+    private static bool ReportsMissingBuildOutput(string output) =>
+        output.ReplaceLineEndings("\n").Split('\n').Any(static line =>
+            line.StartsWith("The argument ", StringComparison.Ordinal)
+            && line.EndsWith(
+                ".dll is invalid. Please use the /help option to check the list of valid arguments.",
+                StringComparison.Ordinal));
 
     private static int ListTestOwnerAssemblies(
         IReadOnlyList<string> arguments,

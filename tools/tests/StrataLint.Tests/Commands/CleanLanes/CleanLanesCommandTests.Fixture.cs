@@ -8,6 +8,8 @@ public sealed partial class CleanLanesCommandTests
 {
     private sealed partial class CleanLanesFixture
     {
+        private static readonly string TemplateRepositoryPath = CreateTemplateRepository();
+
         internal enum OwnedDirectory
         {
             Temporary,
@@ -36,16 +38,46 @@ public sealed partial class CleanLanesCommandTests
             disposeRepository = repository.Dispose;
             disposeWorktrees = worktrees.Dispose;
             disposeTemp = temp.Dispose;
-            Git(repository.Path, "init", "--initial-branch=dev");
-            Git(repository.Path, "config", "user.email", "stratalint@example.invalid");
-            Git(repository.Path, "config", "user.name", "StrataLint Tests");
+            CopyDirectory(TemplateRepositoryPath, repository.Path);
+            now = new DateTimeOffset(2030, 1, 2, 0, 0, 0, TestBudgets.ZeroDuration);
+        }
+
+        private static string CreateTemplateRepository()
+        {
+            var path = TestScratchRoot.Current.CreateDirectory();
+            Git(path, "init", "--initial-branch=dev");
+            Git(path, "config", "user.email", "stratalint@example.invalid");
+            Git(path, "config", "user.name", "StrataLint Tests");
             File.WriteAllText(
-                Path.Combine(repository.Path, "README.md"),
+                Path.Combine(path, "README.md"),
                 "# clean lanes fixture\n",
                 new UTF8Encoding(false));
-            Git(repository.Path, "add", "README.md");
-            Git(repository.Path, "commit", "-m", "fixture baseline");
-            now = new DateTimeOffset(2030, 1, 2, 0, 0, 0, TestBudgets.ZeroDuration);
+            Git(path, "add", "README.md");
+            Git(path, "commit", "-m", "fixture baseline");
+            return path;
+        }
+
+        private static void CopyDirectory(string sourcePath, string targetPath)
+        {
+            foreach (var directory in Directory.EnumerateDirectories(
+                         sourcePath,
+                         "*",
+                         SearchOption.AllDirectories))
+            {
+                Directory.CreateDirectory(Path.Combine(
+                    targetPath,
+                    Path.GetRelativePath(sourcePath, directory)));
+            }
+
+            foreach (var file in Directory.EnumerateFiles(
+                         sourcePath,
+                         "*",
+                         SearchOption.AllDirectories))
+            {
+                File.Copy(
+                    file,
+                    Path.Combine(targetPath, Path.GetRelativePath(sourcePath, file)));
+            }
         }
 
         internal string RepositoryRoot =>

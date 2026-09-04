@@ -1,0 +1,79 @@
+# 十四、下一步需要的不是更多奇偶拆分，而是有限基底定理
+
+递归拆分：
+
+$$
+E,\ OE,\ OOE,\ldots
+$$
+
+只能告诉我们条件如何分类。
+
+真正把无限问题化为有限问题，需要证明：
+
+$$
+\boxed{
+\text{所有深层 odd defects 都是有限多个原型在对称作用下的像。}
+}
+$$
+
+可以设想一个 RH 障碍理想：
+
+$$
+\mathcal I_{\mathrm{off}}
+$$
+
+由所有能够产生 zero odd energy 的 source relations 组成。
+
+令群或半群：
+
+$$
+\mathcal G
+=
+\langle
+\text{translation},
+\text{reflection},
+\text{prime extraction},
+\text{renormalization}
+\rangle
+$$
+
+作用其上。
+
+真正的有限化命题是：
+
+$$
+\boxed{
+\mathcal I_{\mathrm{off}}
+=
+\left\langle
+\mathcal G\cdot G_1,
+\ldots,
+\mathcal G\cdot G_m
+\right\rangle
+}
+$$
+
+对有限多个原型 \(G_1,\ldots,G_m\) 成立。
+
+这可以称为：
+
+$$
+\boxed{
+\textbf{Equivariant Noetherian RH Theorem}.
+}
+$$
+
+若成立，只需为有限个原型建立正性或矛盾证书，其全部无限平移、反射和递归后代自动被覆盖。
+
+这比逐层奇偶下降更强，因为它一次性证明：
+
+$$
+\boxed{
+\text{无限奇尾没有产生真正的新障碍类型。}
+}
+$$
+
+目前该定理尚未建立。
+
+---
+

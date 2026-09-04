@@ -1,0 +1,40 @@
+## 146. Paired transverse phase
+
+若存在：
+
+$$
+\delta_a\neq0,
+$$
+
+但同时包含：
+
+$$
++\delta_a,\qquad-\delta_a,
+$$
+
+则：
+
+$$
+\mathbb E[\delta]=0,
+$$
+
+而：
+
+$$
+\mathbb E[\delta^2]>0.
+$$
+
+群作用仍完整闭合。
+
+因此这不是普通显式对称破缺，而是：
+
+$$
+\boxed{
+\text{symmetry-preserving paired transverse phase}.
+}
+$$
+
+这正是 RH 为假而函数方程仍完全成立的数学可能性。
+
+---
+

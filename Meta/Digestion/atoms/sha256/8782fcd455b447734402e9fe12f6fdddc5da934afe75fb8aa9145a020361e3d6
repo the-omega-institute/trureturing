@@ -1,0 +1,56 @@
+## 120. 大素数上的完整恢复
+
+假设：
+
+$$
+0=h_1<\cdots<h_k=D
+$$
+
+且取：
+
+$$
+p>D.
+$$
+
+那么：
+
+$$
+0\le h_j<p.
+$$
+
+因此模 \(p\) 约化不发生 wrap-around：
+
+$$
+h_j\bmod p=h_j.
+$$
+
+所以完整有序 residue word 在一个足够大的素数处已经恢复 \(H\)：
+
+$$
+\boxed{
+p>\operatorname{diam}(H)
+\Longrightarrow
+W_p(H)\text{ 唯一决定 }H.
+}
+$$
+
+但是：
+
+$$
+\nu_p(H)=k
+$$
+
+对所有这些大素数都完全相同。
+
+因此：
+
+$$
+\boxed{
+\text{full local word 可恢复构型，}
+\qquad
+\text{scalar local factor 在大素数处反而几乎完全失忆}.
+}
+$$
+
+---
+

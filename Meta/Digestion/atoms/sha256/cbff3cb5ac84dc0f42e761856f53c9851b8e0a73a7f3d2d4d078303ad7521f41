@@ -1,0 +1,68 @@
+## 261. 非平凡目标
+
+真正需要的是从素数相关数据构造：
+
+$$
+Q_{\mathrm{arith}}
+$$
+
+并证明：
+
+$$
+\boxed{
+\mathcal X(q)
+=
+\mathcal X(0)
+\det(I-qQ_{\mathrm{arith}}^{-1}).
+}
+$$
+
+随后若能证明：
+
+$$
+Q_{\mathrm{arith}}
+=
+Q_{\mathrm{arith}}^\ast,
+$$
+
+以及：
+
+$$
+Q_{\mathrm{arith}}\ge\frac14I,
+$$
+
+RH 即成立。
+
+若构造出：
+
+$$
+Q_{\mathrm{arith}}
+$$
+
+却发现其谱含非实共轭对，则 RH 为假。
+
+所以 q-商路线把 Hilbert–Pólya 目标从：
+
+$$
+\text{直接构造高度算子 }\gamma
+$$
+
+改写成：
+
+$$
+\boxed{
+\text{构造正 Casimir 算子 }
+\frac14+\gamma^2.
+}
+$$
+
+这天然消除了：
+
+$$
++\gamma,\ -\gamma
+$$
+
+两张符号页。
+
+---
+

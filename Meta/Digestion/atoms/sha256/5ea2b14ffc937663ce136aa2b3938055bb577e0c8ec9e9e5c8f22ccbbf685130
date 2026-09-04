@@ -1,0 +1,84 @@
+## 460. 局部素数模型中，该项在所有阶都非零
+
+固定素数 \(p\)，令 \(A\) 在：
+
+$$
+\mathbb Z/p\mathbb Z
+$$
+
+上均匀分布。
+
+取互不相同的 residues：
+
+$$
+r_1,\ldots,r_k,
+$$
+
+定义：
+
+$$
+X_i=\mathbf1_{A\neq r_i}.
+$$
+
+其 cumulant generating function 为：
+
+$$
+K(\mathbf t)
+=
+\sum_{i=1}^kt_i
++
+\log
+\left[
+1+
+\frac1p
+\sum_{i=1}^k
+(e^{-t_i}-1)
+\right].
+$$
+
+对全部不同变量作 mixed derivative，得到：
+
+$$
+\boxed{
+\kappa(X_1,\ldots,X_k)
+=
+-\frac{(k-1)!}{p^k},
+\qquad
+k\ge2.
+}
+$$
+
+特别地：
+
+$$
+\kappa_2=-\frac1{p^2},
+$$
+
+$$
+\kappa_3=-\frac2{p^3},
+$$
+
+$$
+\kappa_4=-\frac6{p^4}.
+$$
+
+对任意 \(k\)，选择：
+
+$$
+p>k
+$$
+
+即可取 \(k\) 个不同 residues。
+
+所以：
+
+$$
+\boxed{
+\text{局部素数筛法的 connected cumulant 塔在任意有限阶都不截断。}
+}
+$$
+
+它不是 Gaussian 系统，因为 Gaussian 系统在二阶以后 cumulants 全部消失。
+
+---
+

@@ -1,0 +1,17 @@
+## 40. 构型轴
+
+$$
+k=|H|
+$$
+
+表示多少个不同加法位置参与 connected source derivative：
+
+$$
+\partial_{\varepsilon_{h_1}}
+\cdots
+\partial_{\varepsilon_{h_k}}
+\log\mathcal M.
+$$
+
+---
+

@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:d04a285711e632d159916a95c7b822035ac7e98fff2ed94be7c2f76ca19b933f
 cas_ref: sha256:d04a285711e632d159916a95c7b822035ac7e98fff2ed94be7c2f76ca19b933f
 coverage_gids:
-  - D5/S3/ConceptDynamics/Audits/TargetRelativeCommitment.commitment_protection_is_target_relative
+  - gid: D5/S3/ConceptDynamics/Audits/TargetRelativeCommitment.commitment_protection_is_target_relative
+    target_statement_id: sha256:b40126c47dd32f276fa6e3183cef3f018c359674a3315f43b84bad5a18f390a6
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/Audits/TargetRelativeCommitment.commitment_protection_is_target_relative
-      source_sha256: sha256:d04a285711e632d159916a95c7b822035ac7e98fff2ed94be7c2f76ca19b933f
-      target_statement_id: sha256:b40126c47dd32f276fa6e3183cef3f018c359674a3315f43b84bad5a18f390a6
   scribe:
     - gid: D5/S3/ConceptDynamics/Audits/TargetRelativeCommitment.commitment_protection_is_target_relative
       definition_sha256: sha256:1a1c017ca824ea524669a7e7316be0bbce032d2b9b5528ce1bb9075c88412207

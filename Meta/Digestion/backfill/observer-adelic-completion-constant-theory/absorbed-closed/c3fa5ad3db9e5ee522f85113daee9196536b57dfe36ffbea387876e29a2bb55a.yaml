@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:c3fa5ad3db9e5ee522f85113daee9196536b57dfe36ffbea387876e29a2bb55a
+  normalized_sha256: sha256:c3fa5ad3db9e5ee522f85113daee9196536b57dfe36ffbea387876e29a2bb55a
+cas_ref: sha256:c3fa5ad3db9e5ee522f85113daee9196536b57dfe36ffbea387876e29a2bb55a
+coverage_gids:
+  - gid: D5/S3/Weil/TestFunctions/FiniteAtomicBudgetedCompletion.finite_atomic_budgeted_completion
+    target_statement_id: sha256:c29fad6fa9995c39300e414b90f007302e14f499481aae12078238e002ae328e
+receipts:
+  scribe:
+    - gid: D5/S3/Weil/TestFunctions/FiniteAtomicBudgetedCompletion.finite_atomic_budgeted_completion
+      definition_sha256: sha256:4995cdffa86f8a6899059561cb519c78d6fd98132ce2529cff09961273a6391c
+      emission_sha256: sha256:1a1e5c6b27316544cec789b03e3d952c693fa1fe13dc41a8246c82ab9168c15c
+  unresolved_subitems: []

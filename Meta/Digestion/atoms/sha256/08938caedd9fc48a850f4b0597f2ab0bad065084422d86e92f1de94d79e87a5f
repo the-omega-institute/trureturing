@@ -1,0 +1,31 @@
+## 2006.1 健康的宇称矩阵与黄金裂口
+
+健康的 prime parity block 是：
+
+$$
+G_{\mathrm{par}}
+=
+\begin{pmatrix}
+a&b\\
+b&a
+\end{pmatrix},
+\qquad
+a\ge |b|.
+$$
+
+两个 sector 的范数相等，关系由 Hadamard 对角化。
+
+离线 Pick saturation 则产生：
+
+$$
+G_{\mathrm{off}}
+=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}.
+$$
+
+此时：
+
+* global 基点范数为 \(1\)；

@@ -2143,3 +2143,285 @@ G-f 一席位轮、M3-f 第二级一席位轮(各 codex-cli,独立 worktree,PR-1
 一席位轮(codex-cli,独立 worktree,四条公开定理同模块;deposit 绑 M3-d-2 atom,其余三条走 PR-1b 收据后 PR-2 cover)。M3-d-1 为难点,给足 3 小时;若席位以 open 归位,把它的具名缺口(哪一步在钉版 API 下写不出)追加为增订,并保留 M3-d-4 单独 deposit。
 
 后续增订继续严格追加于本节之后。
+---
+
+# 增订十七　黄金 germ 线 G-g 收口:三阶残余的零点恰为局部因子零点,RH 下延拓 germ 的窗口零点集(G-g-4 / G-g-5 / G-g-6 预登记)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;探针一席(codex-cli,`lake env lean`,标准三公理,以 `golden_window_zero_on_line_of_rh` 与三阶分解的可和性为显式假设整证三条——因该两模块在探针树未编译;实施席须改为直接消费冻结定理);去重由同席执行:dev 已有 `LocalFactorZeroDivisor.G3_eq_zero_iff_exists_local_factor_zero`,但它针对**二阶**残余,三阶残余无对应;`GermProductNonvanishing.germ_product_ne_zero_of_local_factors_ne_zero` 只在 Re s > 1/φ² 且针对原始乘积。散文由 orchestrator(claude 主循环)撰写。判决日:2026-09-03。lane issue:#4589。
+
+## 〇　为什么是这一节
+
+增订十五把「窗口零点 ⟺ RH」的真实缺口定位到三阶残余 G3 在回拉点的非消失性。本节证明 G3 的零点**恰**是局部因子的零点(Mathlib 的 `tprod_one_add_ne_zero_of_summable` + `tprod_of_exists_eq_zero`,配合冻结的偏差可和性;其余四个 Kp 因子在 Re s > 0 上因 |x|,|y| < 1 而非零),于是在 RH 下,延拓 germ 在开窗口内的零点集有一个**精确**描述:ζ(φ²s) 的回拉零点(必在线上)与局部因子零点之并。这把「残余不消失」这个抽象假设换成了「s 不是任何 p 的局部因子零点」这个可数值检验的条件;而 p = 2, 3 的局部因子零点在窗口内确实存在(增订十/十二),故窗口零点集**不只**是回拉的临界线零点——这是 germ 线对 RH 等价陈述的最终修正形态。**边界**:不断言线上的每个点都是零点;不断言局部因子零点与 ζ 回拉零点不重合;不构成 RH 的证明路径。**容量**:`D5/S3/Analytic/EulerGerm/` 现 22/24,本模块落地后 23/24;此后 germ 线新模块须开分桶(第 8 条裂由压力)。
+
+## 一　G-g-4 预登记:G-g-1 对冻结三阶残余的实例化(`GoldenGermThirdOrderWindowZeroCriterion`,落 `D5/S3/Analytic/EulerGerm/`)
+
+**义务**:公开定理 `golden_continued_germ_window_zero_on_line_of_rh (hRH : RiemannHypothesis) : let Kp : Complex -> Nat.Primes -> Complex := fun s p => let x := (p : Complex) ^ (-s * ((Real.goldenRatio ^ 2 : Real) : Complex)); let y := (p : Complex) ^ (-s * ((Real.goldenRatio ^ 3 : Real) : Complex)); (1 - y ^ 2)⁻¹ * (1 - x ^ 2 * y) * (1 - y) * (1 + x)⁻¹ * germLocalFactor s p; let G3 : Complex -> Complex := fun s => ∏' p : Nat.Primes, Kp s p; ∀ continuedGerm : {s : Complex // 1 / Real.goldenRatio ^ 5 < s.re} -> Complex, ((∀ s, 1 / Real.goldenRatio ^ 2 < s.1.re -> continuedGerm s = ∏' p : Nat.Primes, germLocalFactor s.1 p) ∧ (∀ s, continuedGerm s = riemannZeta (((Real.goldenRatio ^ 2 : Real) : Complex) * s.1) * riemannZeta (((Real.goldenRatio ^ 3 : Real) : Complex) * s.1) * (riemannZeta (((2 * Real.goldenRatio ^ 2 : Real) : Complex) * s.1))⁻¹ * ((riemannZeta (((2 * Real.goldenRatio ^ 3 : Real) : Complex) * s.1))⁻¹ * riemannZeta ((((2 * Real.goldenRatio ^ 2 + Real.goldenRatio ^ 3 : Real) : Complex) * s.1)) * G3 s.1))) -> ∀ s, 1 / (2 * Real.goldenRatio ^ 3) < s.1.re -> s.1.re < 1 / Real.goldenRatio ^ 2 -> continuedGerm s = 0 -> G3 s.1 ≠ 0 -> s.1.re = 1 / (2 * Real.goldenRatio ^ 2)`。
+**可证伪预测(写在跑之前)**:若正确,证明只是把冻结 `golden_germ_third_order_factorization` 第二合取的公式改写进 `golden_window_zero_on_line_of_rh`(G := G3),标准三公理;若 `let` 绑定的 Kp/G3 与冻结定理的字面不一致导致 `rw` 失败,则本条须按冻结字面修正而非改冻结。
+**边界**:对任意满足公式的 `continuedGerm` 成立,不依赖 ∃! 的唯一性。
+
+## 二　G-g-5 预登记:三阶残余为零 ⟺ 某局部因子为零(同模块第二条公开定理)
+
+**义务**:公开定理 `golden_third_residual_eq_zero_iff_exists_local_factor_zero (s : Complex) (hs : 1 / Real.goldenRatio ^ 5 < s.re) : let Kp : Complex -> Nat.Primes -> Complex := fun s p => let x := (p : Complex) ^ (-s * ((Real.goldenRatio ^ 2 : Real) : Complex)); let y := (p : Complex) ^ (-s * ((Real.goldenRatio ^ 3 : Real) : Complex)); (1 - y ^ 2)⁻¹ * (1 - x ^ 2 * y) * (1 - y) * (1 + x)⁻¹ * germLocalFactor s p; let G3 : Complex -> Complex := fun s => ∏' p : Nat.Primes, Kp s p; G3 s = 0 ↔ ∃ p : Nat.Primes, germLocalFactor s p = 0`。
+**可证伪预测(写在跑之前)**:若正确,消费冻结三阶分解的第一合取(‖Kp − 1‖ 可和)与 Mathlib `tprod_one_add_ne_zero_of_summable`、`tprod_of_exists_eq_zero`、`multipliable_one_add_of_summable`,标准三公理;若 Kp 的四个非局部因子在 Re s > 1/φ⁵ 上有零点(即 |x| 或 |y| ≥ 1),则本条为假——实际 |x| = p^{−φ² Re s} < 1。
+**边界**:只在 Re s > 1/φ⁵ 陈述(三阶分解的定义域);不涉及零点重数。
+
+## 三　G-g-6 预登记:RH 下延拓 germ 的窗口零点集(同模块第三条公开定理)
+
+**义务**:公开定理 `golden_continued_germ_window_zero_iff_of_rh (hRH : RiemannHypothesis) : let Kp : Complex -> Nat.Primes -> Complex := fun s p => let x := (p : Complex) ^ (-s * ((Real.goldenRatio ^ 2 : Real) : Complex)); let y := (p : Complex) ^ (-s * ((Real.goldenRatio ^ 3 : Real) : Complex)); (1 - y ^ 2)⁻¹ * (1 - x ^ 2 * y) * (1 - y) * (1 + x)⁻¹ * germLocalFactor s p; let G3 : Complex -> Complex := fun s => ∏' p : Nat.Primes, Kp s p; ∀ continuedGerm : {s : Complex // 1 / Real.goldenRatio ^ 5 < s.re} -> Complex, (∀ s, continuedGerm s = riemannZeta (((Real.goldenRatio ^ 2 : Real) : Complex) * s.1) * riemannZeta (((Real.goldenRatio ^ 3 : Real) : Complex) * s.1) * (riemannZeta (((2 * Real.goldenRatio ^ 2 : Real) : Complex) * s.1))⁻¹ * ((riemannZeta (((2 * Real.goldenRatio ^ 3 : Real) : Complex) * s.1))⁻¹ * riemannZeta ((((2 * Real.goldenRatio ^ 2 + Real.goldenRatio ^ 3 : Real) : Complex) * s.1)) * G3 s.1)) -> ∀ s, 1 / (2 * Real.goldenRatio ^ 3) < s.1.re -> s.1.re < 1 / Real.goldenRatio ^ 2 -> (continuedGerm s = 0 ↔ ((riemannZeta (((Real.goldenRatio ^ 2 : Real) : Complex) * s.1) = 0 ∧ s.1.re = 1 / (2 * Real.goldenRatio ^ 2)) ∨ ∃ p : Nat.Primes, germLocalFactor s.1 p = 0))`。
+**可证伪预测(写在跑之前)**:若正确,由 G-g-4 与 G-g-5 加 RH 下其余四个 ζ 因子在窗口内非零(回拉实部 > 1/2 或 > 1)得到;若 ζ(φ³s) 在开窗口内于 RH 下仍有零点(回拉实部 = 1/(2φ³) 恰为下边界,不在开窗口),则本条为假。
+**边界**:等价式右侧的「线上」子句必须与 ζ(φ²s) = 0 合取,不得把整条线并入零点集;s = 1/(2φ²) 处 ζ(2φ²s)⁻¹ 的行为按 Mathlib 约定值处理,若该点使等价式失效须如实报 open 并附反例。
+
+## 四　预算与结算
+
+一席位轮(codex-cli,独立 worktree,三条公开定理同模块;deposit 绑 G-g-6 atom,G-g-4/5 走 PR-1b 收据后 PR-2 cover)。实施须 import 冻结的 `GoldenGermThirdOrderFactorization` 与 `GoldenGermWindowZeroCriterion` 并消费其定理,不得把探针的 `hCrit`/`hSummable` 假设留在公开陈述中。
+
+后续增订继续严格追加于本节之后。
+---
+
+# 增订十八　勘误:M3-d-1 在 s = 1 处为假(Mathlib 约定值),改以 s ≠ 1 预登记(M3-d-1′)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;实施席 codex-cli(flight `la134-impl-m3d`)在动手前核出反例并按增订十六 §五 的回退条款只 deposit 了 M3-d-4(#4995);本节勘误由 orchestrator(claude 主循环)撰写。判决日:2026-09-03。lane issue:#4589。
+
+## 〇　反例与勘误
+
+增订十六 §一 的 M3-d-1 断言对一切 0 < Re s 成立。**反例 s = 1**:钉版 Mathlib 给 `riemannZeta 1` 一个有限约定值,右侧 (1 − 2^{1−1})·ζ(1) = 0·ζ(1) = 0,而左侧交错调和级数的部分和收敛到 log 2 > 0。故原子 `cd9f047e…` 的陈述为假,按「atoms 不删」总则原文不动、本节追加新原子;M3-d-2(实零点)与 M3-d-3(虚部非零)只用到实 x ∈ (0,1) ≠ 1,不受影响,其义务原子不变。**这不是 Mathlib 的缺陷**:(1 − 2^{1−s})ζ(s) 在 s = 1 的真值 log 2 是可去奇点的极限值,而 Mathlib 以 `riemannZeta 1` 的约定值参与乘积后得到 0;正确的陈述须排除 s = 1 或改用极限形式。
+
+## 一　M3-d-1′ 预登记:交错级数的延拓恒等式(s ≠ 1)
+
+**义务**:公开定理 `tendsto_alternating_partialSums_eta_of_ne_one (s : ℂ) (hs : 0 < s.re) (hs1 : s ≠ 1) : Filter.Tendsto (fun N ↦ ∑ n ∈ Finset.range N, (-1 : ℂ) ^ n * ((n + 1 : ℂ) ^ (-s))) Filter.atTop (nhds ((1 - (2 : ℂ) ^ (1 - s)) * riemannZeta s))`。落点 `D5/S3/Weil/ZetaBridge/`(模块 `AlternatingZetaContinuation`,与 M3-d-2、M3-d-3 同模块;M3-d-4 已于 `RealAxisNonvanishing` 单独 deposit)。
+**可证伪预测(写在跑之前)**:若正确,证明为 Re s > 1 上的偶奇拆分恒等式 + 交错部分和在 {0 < Re s} 上的局部一致收敛(配对相邻项)+ 两侧在连通开集 {0 < Re s} ∖ {1} 上解析 + 解析延拓唯一性,只消费钉版 Mathlib,标准三公理;若 {0 < Re s} ∖ {1} 的连通性或配对项的 cpow 差分估计在钉版 API 下写不出,则本条按 open 记,不得以 `sorry` 或公理代替。
+**边界**:s = 1 被显式排除(反例见 §〇);不断言 `tsum`;M3-d-2 取 s = x ∈ (0,1) 实,自动满足 s ≠ 1。
+
+## 二　结算
+
+原子 `cd9f047e…`(M3-d-1 原式)记为**已证伪(refuted,反例 s = 1)**,不 cover;M3-d-1′、M3-d-2、M3-d-3 由 la135 席位同模块实施(deposit 绑 M3-d-2)。
+
+后续增订继续严格追加于本节之后。
+---
+
+# 增订十九　M3-d 收口:去掉 separator 的 `hIm`(M3-d-3′ / M3-e′ / M3-f-6 预登记),并开新桶 `D5/S3/Weil/Separator/`
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;前提为 #5004(la135 席位,codex-cli)已冻结的 `AlternatingZetaContinuation.ZeroData.im_ne_zero`(M3-d-3,kernel 已证,但其带点定理名不能作 GID,`make cover` 判 `PLAYBOOK_INVALID GID does not resolve to a Lean module`——增订十六命名之误);本节由 orchestrator(claude 主循环)撰写,三条皆为对冻结定理的一行绑定,不需探针。判决日:2026-09-03。lane issue:#4589。
+
+## 〇　为什么是这一节
+
+`ZeroData` 的字段 `zero_isNontrivial : ∀ n, IsNontrivialZero (zero n)` 与已冻结的 `ZeroData.im_ne_zero` 合起来,给出每个 `Z.zero n` 的虚部非零;于是增订十一(M3-e)与增订十四(M3-f-5)两条 separator 里的 `hIm` 假设可以去掉。本节把这三件事登记为三条一行定理,同时给 M3-d-3 一个不带点、可作 GID 的别名以便消化账闭合。**容量**:`D5/S3/Weil/ZetaBridge/` 已 23/24,本节按第 8 条「裂由压力」开新桶 `D5/S3/Weil/Separator/`,随首个真实模块出生。
+
+## 一　M3-d-3′ 预登记:`ZeroData` 零点虚部非零(可寻址别名;`OffLineZeroNegativeWeilSquare`,落 `D5/S3/Weil/Separator/`)
+
+**义务**:公开定理 `zeroData_im_ne_zero (Z : ZeroData) (n : ℕ) : (Z.zero n).im ≠ 0`。
+**可证伪预测(写在跑之前)**:若正确,证明为 `ZeroData.im_ne_zero Z n (Z.zero_isNontrivial n)` 一行,标准三公理;若 `ZeroData` 无 `zero_isNontrivial` 字段(与 `D5/S3/Weil/ZeroSum.lean` 字面矛盾)则本条为假。
+**边界**:本条比 M3-d-3 少一个假设(由结构字段供给),是其别名而非重证;M3-d-3 的 atom `1087916e…` 因 GID 语法留 residual-open,本条 atom 由本模块 cover。
+
+## 二　M3-e′ 预登记:截断 separator 去掉 `hIm`(同模块第二条公开定理)
+
+**义务**:公开定理 `offLineZero_negative_truncated_weil_square (Z : ZeroData) (n : ℕ) (T : ℝ) (hn : n ∈ Z.symmetricIndices T) (hOff : (Z.zero n).re ≠ criticalAbscissa) : ∃ g : WeilTestFunction, (truncatedZeroSum Z (convolutionSquare g) T).re < 0`。
+**可证伪预测(写在跑之前)**:若正确,证明为冻结 `offLineZero_yields_negative_truncated_weil_square Z n T hn hOff (zeroData_im_ne_zero Z n)` 一行;若冻结定理的参数顺序或 `hIm` 类型与此不合,按冻结字面调整调用而非改陈述。
+**边界**:不断言零点存在;不断言 O-6 ⟹ RH。
+
+## 三　M3-f-6 预登记:完整 separator 去掉 `hIm`(同模块第三条公开定理)
+
+**义务**:公开定理 `offLineZero_yields_negative_weil_square (Z : ZeroData) (n : ℕ) (hOff : (Z.zero n).re ≠ criticalAbscissa) : ∃ g : WeilTestFunction, ∃ hZero : SymmetricConvergent Z (convolutionSquare g), (zeroSum Z (convolutionSquare g) hZero).re < 0`。
+**可证伪预测(写在跑之前)**:若正确,证明为冻结 `offLineNonrealZero_yields_negative_weil_square Z n hOff (zeroData_im_ne_zero Z n)` 一行,标准三公理。
+**边界**:这是 separator 阶梯的最终形态——**任一**离线非平凡零点(不论虚部)都给出一个偶测试函数使完整 Weil 平方零和的实部为负;它仍不构成 O-6 ⟹ RH 的证明(O-6 本身与 Weil 判据的等价未在本仓形式化)。
+
+## 四　预算与结算
+
+一席位轮(codex-cli,独立 worktree,三条一行定理同模块,新桶 `D5/S3/Weil/Separator/`;同 PR deposit(绑 M3-f-6 atom)+ 三条 cover)。预计 ≤ 40 分钟。
+
+后续增订继续严格追加于本节之后。
+---
+
+# 增订二十　Weil 平方正性判据与 RH 的等价(相对于一个零点枚举 `ZeroData`;W-1 / W-2 预登记)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;本节由 orchestrator(claude 主循环)据已冻结定理推出,两条皆为对冻结定理的短绑定(约 30 行 + 5 行),不需探针:消费 G-g-3(`RightHalfStripRiemannReduction.golden_right_half_strip_implies_rh`,#4946)、M3-f-6(`Separator/OffLineZeroNegativeWeilSquare.offLineZero_yields_negative_weil_square`,增订十九,la141 在飞)、R-F(`RhImpliesWeilPositivity.riemannHypothesis_implies_o6WeilPositivityStatement`,#4761)与 `ZeroData` 的 `zero_exhaustive` 字段。判决日:2026-09-03。lane issue:#4589。
+
+## 〇　为什么是这一节
+
+separator 阶梯到 M3-f-6 为止说的是:**任一**离线非平凡零点都给出一个偶测试函数 g,使 Weil 平方零和 `zeroSum Z (g⋆g)` 的实部为负。取逆否:若对一切 g 该实部非负(本仓 O-6 的形式化陈述),则 `ZeroData` 里没有离线零点;而 `ZeroData` 的 `zero_exhaustive` 保证每个非平凡零点都被枚举,G-g-3 又把「右半带无零点」升为完整 `RiemannHypothesis`。反向由 R-F 给出。于是在**给定一个 `ZeroData`** 的前提下,本仓的 Weil 平方正性陈述与 Mathlib 的 `RiemannHypothesis` 等价。**诚实边界**:①`ZeroData` 的存在性未证(它要求 ζ 非平凡零点的一个可数枚举带重数、反射与共轭对称、局部有限——与 M1-b「零点无穷」同层,本仓 `ZeroSum.lean` 明写 "No inhabitant is asserted");②等价的右侧是**本仓定义**的 `zeroSum`/`convolutionSquare`/`WeilTestFunction` 上的正性,不冒充文献中 Weil 显式公式判据的字面形式;③本节**不构成 RH 的证明**,它把 RH 与一个可对每个 g 独立检验的不等式族捆在一起——那族不等式本身与 RH 同难。
+
+## 一　W-1 预登记:Weil 平方正性 ⟹ RH(`WeilSquarePositivityCriterion`,落 `D5/S3/Weil/Separator/`)
+
+**义务**:公开定理 `weilSquarePositivity_implies_rh (Z : ZeroData) (hPos : ∀ (g : WeilTestFunction) (hZero : SymmetricConvergent Z (convolutionSquare g)), 0 ≤ (zeroSum Z (convolutionSquare g) hZero).re) : RiemannHypothesis`。
+**可证伪预测(写在跑之前)**:若正确,证明为:用 G-g-3 化归到右半带;对右半带零点 ρ(ζ ρ = 0,1/2 < Re ρ < 1)由 `Z.zero_exhaustive` 取 n 使 `Z.zero n = ρ`,`hOff` 由 1/2 < Re ρ ≠ criticalAbscissa(= 1/2,`D5/S3/Weil/Convention.lean:42`)得到,M3-f-6 给出 g、hZero 与实部 < 0,与 hPos 矛盾;标准三公理。若 `zero_exhaustive` 的形状不是 `∀ {rho}, IsNontrivialZero rho → ∃ n, zero n = rho`(与 `ZeroSum.lean` 字面矛盾),则本条为假。
+**边界**:见 §〇;不断言任何 `ZeroData` 存在。
+
+## 二　W-2 预登记:RH ⟺ Weil 平方正性(同模块第二条公开定理)
+
+**义务**:公开定理 `rh_iff_weilSquarePositivity (Z : ZeroData) : RiemannHypothesis ↔ ∀ (g : WeilTestFunction) (hZero : SymmetricConvergent Z (convolutionSquare g)), 0 ≤ (zeroSum Z (convolutionSquare g) hZero).re`。
+**可证伪预测(写在跑之前)**:⟹ 为冻结 `riemannHypothesis_implies_o6WeilPositivityStatement hRH Z`,⟸ 为 W-1;若 R-F 的量词顺序与此不合,按冻结字面调整调用而非改陈述。
+**边界**:同 §〇。
+
+## 三　预算与结算
+
+一席位轮(codex-cli,独立 worktree,`D5/S3/Weil/Separator/` 第二个模块;须在 la141(增订十九模块)合入后开工以绑定 M3-f-6;同 PR deposit(绑 W-2 atom)+ 两条 cover)。预计 ≤ 40 分钟。
+
+后续增订继续严格追加于本节之后。
+---
+
+# 增订二十一　germ 窗口零点的线上/线外二分:线上只剩 ζ(φ²s) 回拉零点与 p = 2, 3 的局部因子(G-g-7 / G-g-8 预登记)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;本节两条皆为对冻结定理的短绑定(G-g-6 `GermWindow.golden_continued_germ_window_zero_iff_of_rh`(#5042)+ G-f `LocalFactorCriticalLineNonvanishing.germLocalFactor_critical_line_nonzero_of_five_le`(#4942)),由 orchestrator(claude 主循环)撰写,不需探针。判决日:2026-09-03。lane issue:#4589。
+
+## 〇　为什么是这一节
+
+G-g-6 给出 RH 下开窗口零点集 = 线上 ζ(φ²s) 回拉零点 ∪ 局部因子零点;G-f 给出 p ≥ 5 的局部因子在回拉临界线上不为零。合起来:**线上**的 germ 零点要么是 ζ(φ²s) 的回拉零点,要么是 p = 2 或 p = 3 的局部因子零点(这两个素数的线上取值本仓只有数值读数,G-c 类问题);**线外**(仍在开窗口内)的 germ 零点只能是局部因子零点。这把「RH 与窗口零点」的关系压到一个可数值检验的残余:若 p = 2, 3 的局部因子在线上处处非零(数值上待查),则 RH 下线上零点恰是 ζ 回拉零点。**边界**:线上点自动落在开窗口内(1/(2φ³) < 1/(2φ²) < 1/φ²),G-g-7 不再带窗口假设;两条都相对于满足冻结公式的任意 `continuedGerm`;不构成 RH 证明路径。**容量**:`D5/S3/Analytic/GermWindow/` 现 1/24。
+
+## 一　G-g-7 预登记:线上零点二分(`GoldenGermWindowLineDichotomy`,落 `D5/S3/Analytic/GermWindow/`)
+
+**义务**:公开定理 `golden_continued_germ_line_zero_iff_of_rh (hRH : RiemannHypothesis) : let Kp : Complex -> Nat.Primes -> Complex := fun s p => let x := (p : Complex) ^ (-s * ((Real.goldenRatio ^ 2 : Real) : Complex)); let y := (p : Complex) ^ (-s * ((Real.goldenRatio ^ 3 : Real) : Complex)); (1 - y ^ 2)⁻¹ * (1 - x ^ 2 * y) * (1 - y) * (1 + x)⁻¹ * germLocalFactor s p; let G3 : Complex -> Complex := fun s => ∏' p : Nat.Primes, Kp s p; ∀ continuedGerm : {s : Complex // 1 / Real.goldenRatio ^ 5 < s.re} -> Complex, (∀ s, continuedGerm s = riemannZeta (((Real.goldenRatio ^ 2 : Real) : Complex) * s.1) * riemannZeta (((Real.goldenRatio ^ 3 : Real) : Complex) * s.1) * (riemannZeta (((2 * Real.goldenRatio ^ 2 : Real) : Complex) * s.1))⁻¹ * ((riemannZeta (((2 * Real.goldenRatio ^ 3 : Real) : Complex) * s.1))⁻¹ * riemannZeta ((((2 * Real.goldenRatio ^ 2 + Real.goldenRatio ^ 3 : Real) : Complex) * s.1)) * G3 s.1)) -> ∀ s, s.1.re = 1 / (2 * Real.goldenRatio ^ 2) -> (continuedGerm s = 0 ↔ (riemannZeta (((Real.goldenRatio ^ 2 : Real) : Complex) * s.1) = 0 ∨ germLocalFactor s.1 2 = 0 ∨ germLocalFactor s.1 3 = 0))`。
+**可证伪预测(写在跑之前)**:若正确,由 G-g-6(线上点满足窗口假设)与 G-g-5/G-g-6 的局部因子分支:∃ p 局部因子为零 ⟹ p = 2 ∨ p = 3(p ≥ 5 由 G-f 排除,须把线上点写成 `((1/(2φ²) : ℝ) : ℂ) + I * t` 的形状,`Complex.re_add_im`);反向 p ∈ {2,3} 的零给出 ∃ p;标准三公理。若 G-f 的陈述不是对一切实 t 的线上点(与冻结字面矛盾),则本条为假。
+**边界**:不断言 p = 2, 3 的线上零点存在或不存在。
+
+## 二　G-g-8 预登记:线外零点只能是局部因子零点(同模块第二条公开定理)
+
+**义务**:公开定理 `golden_continued_germ_off_line_zero_iff_of_rh (hRH : RiemannHypothesis) : let Kp : Complex -> Nat.Primes -> Complex := fun s p => let x := (p : Complex) ^ (-s * ((Real.goldenRatio ^ 2 : Real) : Complex)); let y := (p : Complex) ^ (-s * ((Real.goldenRatio ^ 3 : Real) : Complex)); (1 - y ^ 2)⁻¹ * (1 - x ^ 2 * y) * (1 - y) * (1 + x)⁻¹ * germLocalFactor s p; let G3 : Complex -> Complex := fun s => ∏' p : Nat.Primes, Kp s p; ∀ continuedGerm : {s : Complex // 1 / Real.goldenRatio ^ 5 < s.re} -> Complex, (∀ s, continuedGerm s = riemannZeta (((Real.goldenRatio ^ 2 : Real) : Complex) * s.1) * riemannZeta (((Real.goldenRatio ^ 3 : Real) : Complex) * s.1) * (riemannZeta (((2 * Real.goldenRatio ^ 2 : Real) : Complex) * s.1))⁻¹ * ((riemannZeta (((2 * Real.goldenRatio ^ 3 : Real) : Complex) * s.1))⁻¹ * riemannZeta ((((2 * Real.goldenRatio ^ 2 + Real.goldenRatio ^ 3 : Real) : Complex) * s.1)) * G3 s.1)) -> ∀ s, 1 / (2 * Real.goldenRatio ^ 3) < s.1.re -> s.1.re < 1 / Real.goldenRatio ^ 2 -> s.1.re ≠ 1 / (2 * Real.goldenRatio ^ 2) -> (continuedGerm s = 0 ↔ ∃ p : Nat.Primes, germLocalFactor s.1 p = 0)`。
+**可证伪预测(写在跑之前)**:若正确,由 G-g-6 与「线上」子句被 `s.1.re ≠ 1/(2φ²)` 否定直接得到;标准三公理。
+**边界**:同 §〇。
+
+## 三　预算与结算
+
+一席位轮(codex-cli,独立 worktree,两条同模块;同 PR deposit(绑 G-g-7 atom)+ 两条 cover)。预计 ≤ 60 分钟。
+
+后续增订继续严格追加于本节之后。
+---
+
+# 增订二十二　零点无穷 ⟹ Weil 平方正性 ⟺ RH,不再相对于具体的 `ZeroData`(W-3 / W-4 预登记)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;探针一席(codex-cli,`probe-zerodata`,533s)核出 `Nonempty ZeroData ↔ {ρ | IsNontrivialZero ρ}.Infinite` 已于 2026-09-02 由本 lane 冻结(`ZetaBridge/ZeroDataNonemptyIffInfinite.nonempty_zeroData_iff_infinite`,M1-a),Z1–Z4(可数性、离散性、重数、置换、装配)无需重做;本节两条皆为对冻结 W-2(`Separator/WeilSquarePositivityCriterion.rh_iff_weilSquarePositivity`,#5069)与 M1-a 的短绑定,由 orchestrator(claude 主循环)撰写。判决日:2026-09-03。lane issue:#4589。
+
+## 〇　为什么是这一节
+
+W-2 把 RH 与 Weil 平方正性绑在一起,但量词落在一个给定的 `Z : ZeroData` 上。M1-a 给出 `ZeroData` 恰在非平凡零点集无穷时可居;于是只要假设**零点无穷**(M1-b,本仓仍 open;另一 lane `rh-canonical-zero-data-nonvacuity-*` 由显式 Riemann–von Mangoldt 假设推它),等价就可以对**一切** `Z`(W-3)或**某个** `Z`(W-4)陈述,不再依赖谁提供了枚举。**诚实边界**:①`hInf` 未在本仓证明(M1-b);②`ZeroData` 的构造用了 `Classical.choice`(非构造性枚举),W-3/W-4 只是量词层面的收口;③右侧仍是本仓定义的正性;④不构成 RH 证明。
+
+## 一　W-3 预登记:∀-形(`WeilSquarePositivityCriterionOfInfinite`,落 `D5/S3/Weil/Separator/`)
+
+**义务**:公开定理 `rh_iff_forall_zeroData_weilSquarePositivity (hInf : {rho : ℂ | IsNontrivialZero rho}.Infinite) : RiemannHypothesis ↔ ∀ Z : ZeroData, ∀ (g : WeilTestFunction) (hZero : SymmetricConvergent Z (convolutionSquare g)), 0 ≤ (zeroSum Z (convolutionSquare g) hZero).re`。
+**可证伪预测(写在跑之前)**:若正确,⟹ 对任意 Z 用 W-2 的 ⟹;⟸ 由 `nonempty_zeroData_iff_infinite.mpr hInf` 取一个 Z,再用 W-2 的 ⟸;标准三公理。若 M1-a 的陈述不是 `Nonempty ZeroData ↔ {rho | IsNontrivialZero rho}.Infinite`(与 `ZeroDataNonemptyIffInfinite.lean:237` 字面矛盾),则本条为假。
+**边界**:见 §〇。
+
+## 二　W-4 预登记:∃-形(同模块第二条公开定理)
+
+**义务**:公开定理 `rh_iff_exists_zeroData_weilSquarePositivity (hInf : {rho : ℂ | IsNontrivialZero rho}.Infinite) : RiemannHypothesis ↔ ∃ Z : ZeroData, ∀ (g : WeilTestFunction) (hZero : SymmetricConvergent Z (convolutionSquare g)), 0 ≤ (zeroSum Z (convolutionSquare g) hZero).re`。
+**可证伪预测(写在跑之前)**:⟹ 取 M1-a 给出的 Z 与 W-2 的 ⟹;⟸ 对给定的 Z 用 W-2 的 ⟸;标准三公理。
+**边界**:同 §〇。
+
+## 三　预算与结算
+
+一席位轮(codex-cli,独立 worktree,两条同模块,`Separator/` 第三个模块;同 PR deposit(绑 W-3 atom)+ 两条 cover)。预计 ≤ 40 分钟。
+
+后续增订继续严格追加于本节之后。
+---
+
+# 增订二十三　截断 Weil 平方正性 ⟺ RH:有限对称零和版本(W-5 / W-6 / W-7 预登记)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;本节三条皆为对冻结定理的短绑定——W-5 消费 M3-e′(`Separator/OffLineZeroNegativeWeilSquare.offLineZero_negative_truncated_weil_square`,#5052)、G-g-3(`ZetaBridge/RightHalfStripRiemannReduction.golden_right_half_strip_implies_rh`)、`ZeroData.mem_symmetricIndices`(`ZeroSum.lean:145`)与 `zero_exhaustive`;W-6 消费 R-F 证明所用的两条公开冻结定理 `ConvolutionSquareCriticalLine.critical_line_truncated_sum_real_nonnegative` 与 `zeroData_zero_on_critical_line_of_rh`(R-F 内部的 `hnonneg` 步骤,那一步是证明内部的 `have`,不可寻址);W-7 合之。由 orchestrator(claude 主循环)撰写,不需探针。判决日:2026-09-03。lane issue:#4589。
+
+## 〇　为什么是这一节
+
+W-2 的正性陈述里带着 `SymmetricConvergent` 这个收敛义务和一个极限量 `zeroSum`;截断版本 `truncatedZeroSum Z g T`(`ZeroSum.lean:194`,对 `Z.symmetricIndices T` 的**有限**求和)没有收敛义务,对每个 T 是一个有限和。separator 的截断形(M3-e′)与 R-F 证明内部的截断非负步骤合起来,给出**不含极限**的等价:RH ⟺ 对一切截断高度 T 与一切偶测试函数 g,截断平方零和实部非负。这比 W-2 更接近可数值检验的形态(固定 T、固定 g 是一个有限计算),尽管仍相对于一个 `ZeroData`。**诚实边界**:同增订二十(相对于未证存在的 `ZeroData`;右侧是本仓定义;不构成 RH 证明);另外 `truncatedZeroSum` 的求和范围 `symmetricIndices T` 由 `spectralRadius ≤ T` 决定,不是按虚部截断。
+
+## 一　W-5 预登记:截断正性 ⟹ RH(`TruncatedWeilSquarePositivityCriterion`,落 `D5/S3/Weil/Separator/`)
+
+**义务**:公开定理 `truncatedWeilSquarePositivity_implies_rh (Z : ZeroData) (hPos : ∀ (T : ℝ) (g : WeilTestFunction), 0 ≤ (truncatedZeroSum Z (convolutionSquare g) T).re) : RiemannHypothesis`。
+**可证伪预测(写在跑之前)**:若正确,证明为:G-g-3 化归到右半带零点 ρ;`zero_exhaustive` 取 n;取 T := spectralRadius (Z.zero n),由 `Z.mem_symmetricIndices` 得 n ∈ Z.symmetricIndices T(≤ 自反);`hOff` 由 1/2 < Re ρ;M3-e′ 给 g 与实部 < 0,与 `hPos T g` 矛盾;标准三公理。若 `mem_symmetricIndices` 的右侧不是 `spectralRadius (Z.zero n) ≤ T` 型(与 `ZeroSum.lean:145–147` 字面不合)则按冻结字面调整证明而非改陈述。
+**边界**:见 §〇。
+
+## 二　W-6 预登记:RH ⟹ 截断正性(同模块第二条公开定理)
+
+**义务**:公开定理 `rh_implies_truncatedWeilSquarePositivity (hRH : RiemannHypothesis) (Z : ZeroData) : ∀ (T : ℝ) (g : WeilTestFunction), 0 ≤ (truncatedZeroSum Z (convolutionSquare g) T).re`。
+**可证伪预测(写在跑之前)**:若正确,证明与 R-F 内部 `hnonneg` 同形:RH 下 `zeroData_zero_on_critical_line_of_rh` 使 `symmetricIndices T` 的临界线过滤为全集(`Finset.filter_true_of_mem`),再用 `critical_line_truncated_sum_real_nonnegative Z g T` 的第二分量;标准三公理。这两条都是公开冻结定理,本条不重证它们;R-F 自身只暴露极限版,故本条不是重复。
+**边界**:同 §〇。
+
+## 三　W-7 预登记:RH ⟺ 截断正性(同模块第三条公开定理)
+
+**义务**:公开定理 `rh_iff_truncatedWeilSquarePositivity (Z : ZeroData) : RiemannHypothesis ↔ ∀ (T : ℝ) (g : WeilTestFunction), 0 ≤ (truncatedZeroSum Z (convolutionSquare g) T).re`。
+**可证伪预测(写在跑之前)**:⟹ 为 W-6,⟸ 为 W-5。
+**边界**:同 §〇。
+
+## 四　预算与结算
+
+一席位轮(codex-cli,独立 worktree,三条同模块,`Separator/` 第四个模块;同 PR deposit(绑 W-7 atom)+ 三条 cover)。预计 ≤ 60 分钟。
+
+后续增订继续严格追加于本节之后。
+---
+
+# 增订二十四　高度 T 的窗口判据:「半径 ≤ T 的零点全在线上」⟺「高度 T 的截断 Weil 平方正性」(W-8 / W-9 预登记)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;本节两条皆为对冻结定理的短绑定——W-8 消费 M3-e′(`Separator/OffLineZeroNegativeWeilSquare.offLineZero_negative_truncated_weil_square`)、`ConvolutionSquareCriticalLine.critical_line_truncated_sum_real_nonnegative`、`Finset.filter_true_of_mem`;W-9 消费 `zeroData_zero_on_critical_line_of_rh`、G-g-3、`zero_exhaustive`、`ZeroData.mem_symmetricIndices`。由 orchestrator(claude 主循环)撰写,不需探针。判决日:2026-09-03。lane issue:#4589。
+
+## 〇　为什么是这一节
+
+W-7 把 RH 与「一切高度 T 的截断正性」绑在一起;本节把量词拆开:**固定** T,`Z.symmetricIndices T`(谱半径 ≤ T 的零点指标,有限集)内的零点全在临界线上,当且仅当高度 T 的截断 Weil 平方零和对一切偶测试函数实部非负。这是「RH 到高度 T」的**逐高度**判据,两边都是关于有限零点集与有限和的陈述;W-9 再把「对一切 T 的逐高度线上性」与 RH 等价。**诚实边界**:相对于给定 `ZeroData`;`symmetricIndices T` 按谱半径 `‖Z.gamma n‖ ≤ T` 截断(`ZeroSum.lean:145–147`),不是按虚部;不构成 RH 证明。
+
+## 一　W-8 预登记:逐高度判据(`HeightWindowWeilSquareCriterion`,落 `D5/S3/Weil/Separator/`)
+
+**义务**:公开定理 `heightWindow_rh_iff_truncatedWeilSquarePositivity (Z : ZeroData) (T : ℝ) : (∀ n ∈ Z.symmetricIndices T, (Z.zero n).re = criticalAbscissa) ↔ ∀ g : WeilTestFunction, 0 ≤ (truncatedZeroSum Z (convolutionSquare g) T).re`。
+**可证伪预测(写在跑之前)**:若正确,⟹ 由 `Finset.filter_true_of_mem`(临界线过滤 = 全集)与 `critical_line_truncated_sum_real_nonnegative Z g T` 的第二分量,展开 `truncatedZeroSum`;⟸ 取逆否:若某 n ∈ symmetricIndices T 离线,M3-e′ 给 g 使截断和实部 < 0;标准三公理。
+**边界**:同 §〇。
+
+## 二　W-9 预登记:RH ⟺ 一切高度的线上性(同模块第二条公开定理)
+
+**义务**:公开定理 `rh_iff_forall_heightWindow (Z : ZeroData) : RiemannHypothesis ↔ ∀ T : ℝ, ∀ n ∈ Z.symmetricIndices T, (Z.zero n).re = criticalAbscissa`。
+**可证伪预测(写在跑之前)**:⟹ 由 `zeroData_zero_on_critical_line_of_rh`;⟸ 由 G-g-3:右半带零点 ρ 经 `zero_exhaustive` 为某 `Z.zero n`,取 T := ‖Z.gamma n‖ 使 n ∈ symmetricIndices T(`mem_symmetricIndices`,自反),得 Re ρ = 1/2 与 1/2 < Re ρ 矛盾;标准三公理。
+**边界**:同 §〇。
+
+## 三　预算与结算
+
+一席位轮(codex-cli,独立 worktree,两条同模块,`Separator/` 第五个模块;同 PR deposit(绑 W-8 atom)+ 两条 cover)。预计 ≤ 40 分钟。
+
+后续增订继续严格追加于本节之后。
+---
+
+# 增订二十五　素数侧的 Weil 判据:RH ⟺ 显式公式右侧(极点项 − 素数项 + 阿基米德项)对一切卷积平方非负(W-10 / W-11 预登记)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;本节两条皆为对冻结定理的短绑定——冻结显式公式 `ZetaBridge/ClassicExplicitFormula.weil_explicit_formula (Z) (g) (hZero) (hArch) : zeroSum Z g hZero = poleTerm g - primeTerm g + archimedeanTerm g hArch`、M2-c `ZetaBridge/SymmetricConvergentOfZetaSummable.symmetricConvergent_of_zeroData (Z) (g) : SymmetricConvergent Z g`、W-2 `Separator/WeilSquarePositivityCriterion.rh_iff_weilSquarePositivity`;`poleTerm`/`primeTerm`/`archimedeanTerm`/`ArchimedeanConvergent` 定义于 `D5/S3/Weil/PrimePoleTerms.lean`(素数项为 Λ(n)/√n 加权的 g(±log n) 级数,阿基米德项为 digamma 加权的 Fourier–Laplace 积分)。由 orchestrator(claude 主循环)撰写,不需探针。判决日:2026-09-04。lane issue:#4589。
+
+## 〇　为什么是这一节
+
+W-2 的正性陈述在零点侧;冻结的显式公式把零点和搬到素数侧:`zeroSum Z g = poleTerm g − primeTerm g + archimedeanTerm g`。对卷积平方 g⋆g,零点侧的 `SymmetricConvergent` 由 M2-c 无条件供给,于是 RH 与**素数侧**表达式的非负性等价——这才是文献中 Weil 判据的形状(零点信息完全消失,只剩极点、素数幂与 Γ 因子)。**诚实边界**:①阿基米德积分的可积性 `ArchimedeanConvergent (g⋆g)` 在本仓尚无冻结定理供给(W-11 探针另查;钉版 Mathlib 未见 digamma 增长界),故 W-10 以 `hArch` 为显式假设;②仍相对于一个 `ZeroData`(M1-b);③定义域为本仓 `WeilTestFunction`(偶、C^∞、紧支),不冒充文献中更宽的测试函数类;④不构成 RH 证明。
+
+## 一　W-11 预登记:卷积平方的显式公式(`ExplicitFormulaWeilCriterion`,落 `D5/S3/Weil/Separator/`)
+
+**义务**:公开定理 `explicitFormula_weilSquare (Z : ZeroData) (g : WeilTestFunction) (hArch : ArchimedeanConvergent (convolutionSquare g)) : zeroSum Z (convolutionSquare g) (symmetricConvergent_of_zeroData Z (convolutionSquare g)) = poleTerm (convolutionSquare g) - primeTerm (convolutionSquare g) + archimedeanTerm (convolutionSquare g) hArch`。
+**可证伪预测(写在跑之前)**:若正确,证明为冻结 `weil_explicit_formula Z (convolutionSquare g) (symmetricConvergent_of_zeroData Z (convolutionSquare g)) hArch` 一行;若 `zeroSum` 的 `hZero` 参数为 proof-irrelevant 使两侧按定义相等,则 `rfl`/`exact` 即闭合;标准三公理。
+**边界**:见 §〇。
+
+## 二　W-10 预登记:素数侧判据(同模块第二条公开定理)
+
+**义务**:公开定理 `rh_iff_explicitFormulaPositivity (Z : ZeroData) (hArch : ∀ g : WeilTestFunction, ArchimedeanConvergent (convolutionSquare g)) : RiemannHypothesis ↔ ∀ g : WeilTestFunction, 0 ≤ (poleTerm (convolutionSquare g) - primeTerm (convolutionSquare g) + archimedeanTerm (convolutionSquare g) (hArch g)).re`。
+**可证伪预测(写在跑之前)**:若正确,由 W-2 与 W-11 逐 g 改写:`(rh_iff_weilSquarePositivity Z)` 的右侧在 `hZero := symmetricConvergent_of_zeroData Z (convolutionSquare g)` 下与素数侧表达式相等(需说明 `∀ hZero` 与取特定 `hZero` 的等价——`SymmetricConvergent` 是 Prop,proof-irrelevance 使 `zeroSum Z g hZero` 不依赖 hZero 的具体证明);标准三公理。
+**边界**:见 §〇;`hArch` 为假设,不断言其成立。
+
+## 三　预算与结算
+
+一席位轮(codex-cli,独立 worktree,两条同模块,`Separator/` 第六个模块;同 PR deposit(绑 W-10 atom)+ 两条 cover)。预计 ≤ 40 分钟。W-11′(`ArchimedeanConvergent (g⋆g)` 无条件成立)由探针评估可行性后另行增订。
+
+后续增订继续严格追加于本节之后。
+---
+
+# 增订二十六　阿基米德可积性无条件成立,素数侧 Weil 判据去掉 `hArch`(W-12 / W-13 预登记)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;探针一席(codex-cli,`probe-arch`,`lake env lean` exit 0,标准三公理)在暖树上整证 W-12,消费冻结的闭带衰减 `FourierLaplaceClosedStripDecay.fourierLaplace_decay_closedStrip`(η = 0)、`FourierLaplaceEntire.fourierLaplace_entire`(实轴连续性)、以及本仓 `Zeta23` 层已冻结的 digamma 竖线增长界与可积性(`ZetaExplicit/FullLine.integrable_mul_logDeriv_Gammaℝ_of_decay`、`ZetaExplicit/GammaRBracket.gammaR_bracket`、`ZetaGamma/GammaStirlingVert.digamma_stirling`、`ZetaExplicit/VerticalLine.digamma_growth_strip`);钉版 Mathlib 无 digamma 连续性/增长界(仅定义与特殊值,`Digamma.lean:31` 留有 TODO),故 W-12 是本仓自证。散文由 orchestrator(claude 主循环)撰写。判决日:2026-09-04。lane issue:#4589。探针 import:`D5.S3.Fourier.FourierLaplaceEntire`, `D5.S3.Weil.PrimePoleTerms`, `D5.S3.Weil.TestFunctions.FourierLaplaceClosedStripDecay`, `D5.S3.Weil.ZetaExplicit.FullLine`。
+
+## 〇　为什么是这一节
+
+增订二十五把素数侧判据 W-10 挂在 `hArch : ∀ g, ArchimedeanConvergent (g⋆g)` 上。探针证明该可积性对**每个**测试函数无条件成立:Fourier–Laplace 变换在实轴 O(1/(1+t²)) 衰减(M3-f-2,η=0),digamma 在竖线上至多对数增长(本仓 Zeta23 层),乘积可积。于是 W-13 把 W-10 的假设去掉:RH ⟺ 素数侧表达式对一切卷积平方非负,**只剩** `ZeroData`(M1-b)这一个相对项。**诚实边界**:①仍相对于 `ZeroData`;②测试函数类为本仓 `WeilTestFunction`;③不构成 RH 证明。
+
+## 一　W-12 预登记:每个 Weil 测试函数的阿基米德积分可积(`ArchimedeanConvergence`,落 `D5/S3/Weil/Separator/`)
+
+**义务**:公开定理 `archimedeanConvergent_of_weilTestFunction (g : WeilTestFunction) : ArchimedeanConvergent g`。
+**可证伪预测(写在跑之前)**:若正确,证明为探针路线(连续 + 二次衰减 + digamma 竖线界 ⟹ `Integrable`),消费上列冻结定理,标准三公理;若 `gammaR_bracket` 给出的恒等式与 `archimedeanIntegrand` 的 digamma 形状(`(digamma (1/4 + I t/2)).re − log π`)不一致,则按冻结字面调整证明而非改陈述。
+**边界**:对一切 `g : WeilTestFunction`(不只卷积平方)。
+
+## 二　W-13 预登记:无条件素数侧判据(同模块第二条公开定理)
+
+**义务**:公开定理 `rh_iff_primeSidePositivity (Z : ZeroData) : RiemannHypothesis ↔ ∀ g : WeilTestFunction, 0 ≤ (poleTerm (convolutionSquare g) - primeTerm (convolutionSquare g) + archimedeanTerm (convolutionSquare g) (archimedeanConvergent_of_weilTestFunction (convolutionSquare g))).re`。
+**可证伪预测(写在跑之前)**:由 W-10(`rh_iff_explicitFormulaPositivity Z (fun g => archimedeanConvergent_of_weilTestFunction (convolutionSquare g))`)一行得到;`archimedeanTerm` 对其可积性证明参数 proof-irrelevant。
+**边界**:同 §〇。
+
+## 三　预算与结算
+
+一席位轮(codex-cli,独立 worktree,两条同模块,`Separator/` 第七个模块;同 PR deposit(绑 W-13 atom)+ 两条 cover;须在增订二十五的 la153 模块合入后开工以绑定 W-10)。预计 ≤ 60 分钟(W-12 约 100 行,探针证明可复用)。
+
+后续增订继续严格追加于本节之后。

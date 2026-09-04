@@ -1,0 +1,54 @@
+## 170. Fibonacci torus map 的周期点
+
+令：
+
+$$
+\overline F:\mathbb T^2\to\mathbb T^2
+$$
+
+为 Fibonacci 矩阵模整数格诱导的 torus automorphism。
+
+其 \(n\) 周期固定点数为：
+
+$$
+N_n
+=
+\left|
+\det(F^n-I)
+\right|.
+$$
+
+令 \(L_n\) 为 Lucas 数：
+
+$$
+L_n=\varphi^n+\psi^n.
+$$
+
+由于：
+
+$$
+\det F^n=(-1)^n,
+$$
+
+得到：
+
+$$
+\boxed{
+N_n
+=
+L_n-1-(-1)^n.
+}
+$$
+
+即：
+
+$$
+N_n=
+\begin{cases}
+L_n,&n\text{ 奇},\\
+L_n-2,&n\text{ 偶}.
+\end{cases}
+$$
+
+---
+

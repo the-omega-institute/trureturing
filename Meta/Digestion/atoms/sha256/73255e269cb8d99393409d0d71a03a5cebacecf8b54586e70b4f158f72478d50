@@ -1,0 +1,62 @@
+## 370. 偶素因子与奇素因子状态和
+
+定义：
+
+$$
+Z_{\mathrm e}(s)
+=
+\sum_{\Omega(n)\text{ even}}n^{-s},
+$$
+
+$$
+Z_{\mathrm o}(s)
+=
+\sum_{\Omega(n)\text{ odd}}n^{-s}.
+$$
+
+在 \(\Re s>1\) 中：
+
+$$
+Z_{\mathrm e}+Z_{\mathrm o}
+=
+\zeta(s),
+$$
+
+$$
+Z_{\mathrm e}-Z_{\mathrm o}
+=
+\frac{\zeta(2s)}{\zeta(s)}.
+$$
+
+所以：
+
+$$
+\boxed{
+Z_{\mathrm e}(s)
+=
+\frac12
+\left[
+\zeta(s)
++
+\frac{\zeta(2s)}{\zeta(s)}
+\right],
+}
+$$
+
+$$
+\boxed{
+Z_{\mathrm o}(s)
+=
+\frac12
+\left[
+\zeta(s)
+-
+\frac{\zeta(2s)}{\zeta(s)}
+\right].
+}
+$$
+
+这就是“偶数个素因子”和“奇数个素因子”两种情况合起来成为全部整数的精确版本。
+
+---
+

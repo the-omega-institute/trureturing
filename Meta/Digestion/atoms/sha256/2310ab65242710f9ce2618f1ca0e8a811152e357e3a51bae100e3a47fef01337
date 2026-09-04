@@ -1,0 +1,68 @@
+# 五、\(1/\zeta\) 是另一个更纯粹的奇偶反面
+
+若限制每个素数最多出现一次，也就是只考虑平方自由整数，那么配置相当于从所有素数中选择一个有限子集。
+
+定义：
+
+$$
+\omega(n)
+=
+\#\{p:p\mid n\}.
+$$
+
+在平方自由整数上：
+
+$$
+\mu(n)=(-1)^{\omega(n)}.
+$$
+
+于是：
+
+$$
+\begin{aligned}
+\sum_{n\ge1}
+\frac{\mu(n)}{n^s}
+&=
+\prod_p
+(1-p^{-s})\\
+&=
+\boxed{
+\frac1{\zeta(s)}.
+}
+\end{aligned}
+$$
+
+因此可以作如下区分：
+
+$$
+\boxed{
+\begin{aligned}
+\lambda(n)=(-1)^{\Omega(n)}
+&:
+\text{允许同一素数重复占据的奇偶};\\
+\mu(n)
+&:
+\text{每个素数最多占据一次的 hard-core 奇偶}.
+\end{aligned}}
+$$
+
+这和项目里的 Zeckendorf hard-core language 非常相似：
+
+* 每个位置是否占据；
+* 某些重复占据被禁止；
+* 普通 partition function 把全部配置相加；
+* parity-twisted partition function 按占据数奇偶取反；
+* 对数提取 connected primitive modes。
+
+所以：
+
+$$
+\boxed{
+\frac1\zeta
+}
+$$
+
+不是一个随意的“负 ζ”，而是**对有限素数子集进行奇偶 Möbius 反演后的超迹**。
+
+---
+

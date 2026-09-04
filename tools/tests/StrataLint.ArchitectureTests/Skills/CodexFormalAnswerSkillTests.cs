@@ -10,6 +10,7 @@ namespace StrataLint.ArchitectureTests;
 public sealed partial class CodexFormalAnswerSkillTests
 {
     private const string AuthorityHeading = "5. Settle outcomes and freeze the answer register";
+    private const string ClauseInventoryHeading = "1. Inventory raw clauses";
     private const string GeneralizationHeading = "3. Fix the exact statement echo";
     private const string RepositoryConceptSearchHeading = "2. Search and model";
     private const string InferentialCompletionHeading = "4. Implement the inferential completion";
@@ -127,6 +128,32 @@ public sealed partial class CodexFormalAnswerSkillTests
     }
 
     [Fact]
+    public void BroadNonformalClassificationWithoutFormalizableCoreExtractionIsRejected()
+    {
+        var document = Parse(
+            """
+            ### 1. Inventory raw clauses
+
+            Classify the whole conceptual question as `not-formalizable` when its outer
+            interpretation is ambiguous, and record that no exact `P` exists.
+            """);
+
+        Assert.False(DefinesMaximalFormalizableCoreExtraction(document));
+    }
+
+    [Fact]
+    public void CodexFormalAnswerExtractsTheMaximalFormalizableCore()
+    {
+        var skill = File.ReadAllText(Path.Combine(
+            RepositoryLayout.FindRoot(),
+            "skills",
+            "codex-formal-answer",
+            "SKILL.md"));
+
+        Assert.True(DefinesMaximalFormalizableCoreExtraction(Parse(skill)));
+    }
+
+    [Fact]
     public void GeneralizationWithoutConcreteSpecializationIsRejected()
     {
         var document = Parse(
@@ -223,7 +250,29 @@ public sealed partial class CodexFormalAnswerSkillTests
     }
 
     [Fact]
-    public void CodexFormalAnswerCompletesInferenceAndPersistsCompiledProjectSource()
+    public void TemporaryOnlyFormalSuccessIsRejected()
+    {
+        var document = Parse(
+            """
+            ## 4. Implement the inferential completion
+
+            1. Build a `premise-map`.
+            2. Write a reusable `G` after checking `project-source`, then mark it `tracked-lean`.
+            3. Apply `G` to `P` through `S`.
+
+            ## 6. Persist project source and account for the worktree
+
+            1. `reuse-complete`: cite `project-source`.
+            2. `discard-thin`: delete the successful `run-local` proof.
+            3. `persist-synthesis`: optionally retain `tracked-lean` with `Describe` after `make lean`.
+            4. `open-compile`: record an `open` compiler failure.
+            """);
+
+        Assert.False(DefinesInferentialCompletionAndProjectPersistence(document));
+    }
+
+    [Fact]
+    public void CodexFormalAnswerRequiresReusableLibraryGrowth()
     {
         var skill = File.ReadAllText(Path.Combine(
             RepositoryLayout.FindRoot(),
@@ -250,6 +299,22 @@ public sealed partial class CodexFormalAnswerSkillTests
         return orderedAuthority is not null
             && terminalItemIsCatchAll
             && acceptanceAndDecisionSectionsHaveNoTables;
+    }
+
+    private static bool DefinesMaximalFormalizableCoreExtraction(MarkdownDocument document)
+    {
+        var inventorySection = FindSection(document, ClauseInventoryHeading);
+        var codes = inventorySection
+            .SelectMany(SelfAndDescendants)
+            .SelectMany(InlineCodeValuesFromBlock)
+            .ToHashSet(StringComparer.Ordinal);
+
+        return codes.Contains("not-formalizable")
+            && codes.Contains("formalizable-core")
+            && codes.Contains("conditional-empirical")
+            && codes.Contains("P")
+            && codes.Contains("G")
+            && codes.Contains("S");
     }
 
     private static bool DefinesCompleteGeneralizationBridge(MarkdownDocument document)
@@ -400,8 +465,8 @@ public sealed partial class CodexFormalAnswerSkillTests
         var generalCodes = InlineCodeValuesFromBlock(completionItems[1]).ToHashSet(StringComparer.Ordinal);
         var specializationCodes = InlineCodeValuesFromBlock(completionItems[2]).ToHashSet(StringComparer.Ordinal);
         var reuseCodes = InlineCodeValuesFromBlock(persistenceItems[0]).ToHashSet(StringComparer.Ordinal);
-        var thinCodes = InlineCodeValuesFromBlock(persistenceItems[1]).ToHashSet(StringComparer.Ordinal);
-        var persistenceCodes = InlineCodeValuesFromBlock(persistenceItems[2]).ToHashSet(StringComparer.Ordinal);
+        var persistenceCodes = InlineCodeValuesFromBlock(persistenceItems[1]).ToHashSet(StringComparer.Ordinal);
+        var thinCodes = InlineCodeValuesFromBlock(persistenceItems[2]).ToHashSet(StringComparer.Ordinal);
         var blockedCodes = InlineCodeValuesFromBlock(persistenceItems[3]).ToHashSet(StringComparer.Ordinal);
         var allCodes = document
             .SelectMany(SelfAndDescendants)
@@ -418,17 +483,24 @@ public sealed partial class CodexFormalAnswerSkillTests
 
         return premiseCodes.Contains("premise-map")
             && generalCodes.Contains("G")
+            && generalCodes.Contains("project-source")
+            && generalCodes.Contains("tracked-lean")
+            && generalCodes.Contains("generalization-audit")
             && specializationCodes.Contains("S")
             && specializationCodes.Contains("G")
             && specializationCodes.Contains("P")
             && reuseCodes.Contains("reuse-complete")
             && reuseCodes.Contains("project-source")
-            && thinCodes.Contains("discard-thin")
-            && thinCodes.Contains("run-local")
-            && persistenceCodes.Contains("persist-synthesis")
+            && persistenceCodes.Contains("persist-generalization")
+            && persistenceCodes.Contains("G")
+            && persistenceCodes.Contains("generalization-audit")
             && persistenceCodes.Contains("tracked-lean")
             && persistenceCodes.Contains("Describe")
             && persistenceCodes.Contains("make lean")
+            && thinCodes.Contains("discard-thin")
+            && thinCodes.Contains("run-local")
+            && thinCodes.Contains("generalization-audit")
+            && thinCodes.Contains("open")
             && blockedCodes.Contains("open-compile")
             && blockedCodes.Contains("open")
             && forbiddenTruthDagDependencies.All(code => !allCodes.Contains(code));
