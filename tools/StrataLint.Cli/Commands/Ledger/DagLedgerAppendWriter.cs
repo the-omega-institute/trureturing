@@ -60,11 +60,46 @@ internal static class DagLedgerAppendWriter
                     "generated frozen ledger is invalid: " + rejected.Message),
                 _ => throw new InvalidOperationException("unknown ledger validation outcome"),
             };
-            RequireUnchangedBaseline(context.LedgerPath, context.BaselineFiles, "ledger-append");
-            WriteEventFiles(context.LedgerPath, pending, context.BaselineFiles);
             var freezes = prospective
                 .Where(static item => item.EventType == "Freeze")
                 .ToImmutableArray();
+            var stateBackups = freezes.ToDictionary(
+                static item => item.DescriptorPath,
+                item => FrozenStateWriter.ReadCurrentBytes(repositoryRoot, item.DescriptorPath));
+            RequireUnchangedBaseline(context.LedgerPath, context.BaselineFiles, "ledger-append");
+            var eventsWritten = false;
+            try
+            {
+                WriteEventFiles(context.LedgerPath, pending, context.BaselineFiles);
+                eventsWritten = true;
+                foreach (var freeze in freezes)
+                {
+                    var statementId = StatementId.Create(
+                        freeze.Payload.GetProperty("statement_id").GetString()
+                        ?? throw new FormatException("Freeze statement_id is null."));
+                    _ = FrozenStateWriter.Write(
+                        repositoryRoot,
+                        freeze.DescriptorPath,
+                        statementId);
+                }
+            }
+            catch
+            {
+                if (eventsWritten)
+                {
+                    RollbackCreatedFiles(pending.Select(file => Path.Combine(
+                        context.LedgerPath,
+                        Path.GetFileName(file.Path.Value))));
+                }
+
+                foreach (var (path, previousBytes) in stateBackups)
+                {
+                    FrozenStateWriter.Restore(repositoryRoot, path, previousBytes);
+                }
+
+                throw;
+            }
+
             var output = $"LEDGER_APPEND appended_freezes={freezes.Length} "
                 + $"events={candidate.EventCount} "
                 + $"head={context.BaseView.EventSetRoot(prospective.Select(static item => item.EventHash))}\n"

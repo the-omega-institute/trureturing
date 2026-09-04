@@ -101,6 +101,7 @@ internal static partial class RepositoryRules
         || string.Equals(path, TheoryAtomizerDataLoader.DataPath, StringComparison.Ordinal)
         || DigestionCasStore.IsCanonicalPath(path)
         || FrozenLedgerChangeClassifier.IsAcceptedEventPath(path)
+        || FrozenStatePath.IsUnderRoot(path)
         || (path.StartsWith("Blueprint/", StringComparison.Ordinal)
             && path.EndsWith(".md", StringComparison.Ordinal));
 
@@ -317,6 +318,8 @@ internal static partial class RepositoryRules
             }
 
         }
+
+        findings.AddRange(FrozenStates(context));
 
         return findings.ToImmutable();
     }

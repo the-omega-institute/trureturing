@@ -30,7 +30,10 @@ internal static partial class RepositoryRules
     private static bool HeartsAffected(RuleEvaluationContext context) =>
         Changed(context, static path =>
             path is HeartsPath or HeartsAuthorizationLedger.Path
-            || FrozenLedgerChangeClassifier.IsAcceptedEventPath(path));
+            || FrozenLedgerChangeClassifier.IsAcceptedEventPath(path)
+            || FrozenStatePath.IsUnderRoot(path)
+            || path.StartsWith("D5/", StringComparison.Ordinal)
+                && path.EndsWith(".lean", StringComparison.Ordinal));
 
     private static bool DomainsAffected(RuleEvaluationContext context) =>
         Changed(context, static path =>

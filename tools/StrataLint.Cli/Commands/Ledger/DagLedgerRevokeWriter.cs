@@ -40,17 +40,48 @@ internal static class DagLedgerRevokeWriter
                 RevocationPlanOutcome.Rejected rejected => throw new FormatException(rejected.Message),
             };
             var affected = plan.AffectedFrozenNodeIds.ToHashSet();
-            var eventFiles = context.BaseView.ActiveByPath.Values
+            var affectedEntries = context.BaseView.ActiveByPath.Values
                 .Where(entry => affected.Contains(entry.Material.FrozenNodeId))
+                .ToImmutableArray();
+            var eventFiles = affectedEntries
                 .Select(entry => context.BaselineFiles.Single(file =>
                     file.Path.Value.EndsWith(
                         entry.EventHash[7..] + ".json",
                         StringComparison.Ordinal)))
                 .ToImmutableArray();
-            DagLedgerAppendWriter.DeleteEventFiles(
-                context.LedgerPath,
-                eventFiles,
-                context.BaselineFiles);
+            var stateBackups = affectedEntries.ToDictionary(
+                static entry => entry.Material.RepoPath,
+                entry => FrozenStateWriter.ReadCurrentBytes(
+                    repositoryRoot,
+                    entry.Material.RepoPath));
+            var eventsDeleted = false;
+            try
+            {
+                DagLedgerAppendWriter.DeleteEventFiles(
+                    context.LedgerPath,
+                    eventFiles,
+                    context.BaselineFiles);
+                eventsDeleted = true;
+                foreach (var entry in affectedEntries)
+                {
+                    _ = FrozenStateWriter.Delete(repositoryRoot, entry.Material.RepoPath);
+                }
+            }
+            catch
+            {
+                if (eventsDeleted)
+                {
+                    DagLedgerAppendWriter.WriteEventFiles(context.LedgerPath, eventFiles);
+                }
+
+                foreach (var (path, previousBytes) in stateBackups)
+                {
+                    FrozenStateWriter.Restore(repositoryRoot, path, previousBytes);
+                }
+
+                throw;
+            }
+
             return new CommandResult(
                 true,
                 $"LEDGER_REVOKE removed_freezes={eventFiles.Length} "
