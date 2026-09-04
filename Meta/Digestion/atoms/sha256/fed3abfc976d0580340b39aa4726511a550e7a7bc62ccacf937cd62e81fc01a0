@@ -1,0 +1,74 @@
+## 10.3 临界 Zeckendorf 深度
+
+令
+
+$$
+x=|\delta|\left|\log\frac qp\right|.
+\tag{A10.10}
+$$
+
+定义首次达到非微扰尺度的 shell：
+
+$$
+k_*(x)=\min\{k:F_kx\ge1\}.
+\tag{A10.11}
+$$
+
+由 Binet 渐近，
+
+$$
+\boxed{
+ k_*(x)
+=
+\log_\varphi\frac{\sqrt5}{x}+O(1)
+\qquad(x\downarrow0).
+}
+\tag{A10.12}
+$$
+
+相应合法状态数满足
+
+$$
+\boxed{
+M_{k_*}\asymp\frac1x
+=
+\frac1{|\delta|\,|\log(q/p)|}.
+}
+\tag{A10.13}
+$$
+
+而所需信息熵为
+
+$$
+\boxed{
+\log M_{k_*}
+=
+\log\frac1{|\delta|\,|\log(q/p)|}+O(1).
+}
+\tag{A10.14}
+$$
+
+这给出一个精确 observer-resolution law：横向偏移越小，需要越深的黄金 memory；prime log-gap 越小，需要越深的黄金 memory；深度只对分辨率的对数增长，但状态数按其倒数增长。
+
+若 $q=p+g$ 且 $g\ll p$，则
+
+$$
+\log(q/p)=\frac gp+O(g^2/p^2),
+\tag{A10.15}
+$$
+
+所以
+
+$$
+\boxed{
+ k_*
+=
+\log_\varphi\frac{p}{|\delta|g}+O(1).
+}
+\tag{A10.16}
+$$
+
+这正是 short-gap sticky grain 与 Zeckendorf depth 的定量接点。
+
+---
+
