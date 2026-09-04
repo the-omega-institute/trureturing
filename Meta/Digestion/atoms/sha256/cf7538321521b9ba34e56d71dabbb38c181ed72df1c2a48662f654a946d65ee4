@@ -1,0 +1,25 @@
+## 10.2 等权完全图与 log-prime 方差
+
+在等权完全图下，
+
+$$
+\sum_{i<j}(x_i-x_j)^2
+=
+m\sum_i(x_i-\bar x)^2.
+$$
+
+令 $x_i=\log p_i$，得
+
+$$
+\boxed{
+R_{\mathcal C}(\delta)
+\ge
+\delta^2m
+\sum_{i=1}^m
+\left(\log p_i-\overline{\log p}\right)^2.
+}
+\tag{10.5}
+$$
+
+因此有限 prime cluster 的横向刚度由整个 log-frequency 方差控制，而不是只由最小加法 gap 控制。
+

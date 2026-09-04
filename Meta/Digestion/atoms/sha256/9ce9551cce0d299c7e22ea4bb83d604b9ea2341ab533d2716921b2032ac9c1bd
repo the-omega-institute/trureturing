@@ -1,0 +1,19 @@
+### 定理 A11.1　单局部因子无黄金深度相变
+
+对固定 $p$ 与 $\sigma>0$，Zeckendorf exponent tower 在 Euler Gibbs 权下的二阶 exponent moment 随 $Q\to\infty$ 收敛到式 (A11.3)，不按 $\varphi^{2Q}$ 发散。
+
+因此：
+
+$$
+\boxed{
+\text{组合状态数增长}
+\not\Rightarrow
+\text{Euler 加权能量增长}.
+}
+\tag{A11.4}
+$$
+
+真正的临界现象若存在，必须来自 primes 数量随尺度增长、prime phases 的 collective alignment、Gamma／pole completion、analytic continuation，或 zero-side 与 prime-side 之间的非局部谱输运。
+
+---
+

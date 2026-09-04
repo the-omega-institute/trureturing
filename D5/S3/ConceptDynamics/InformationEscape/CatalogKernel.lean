@@ -37,12 +37,6 @@ universe u v w
 
 namespace Catalog
 
-/-- Two states are indistinguishable by every theorem in a finite selection. -/
-def indistinguishable {arena : Arena.{u}} (catalog : Catalog.{u, v, w} arena)
-    (selected : Finset catalog.Index) (left right : arena.State) : Prop :=
-  forall index, index ∈ selected ->
-    (catalog.theoremAt index).primitives.agrees left right
-
 /-- Executable finite reflection of selected-catalog indistinguishability. -/
 def indistinguishableB {arena : Arena.{u}} (catalog : Catalog.{u, v, w} arena)
     (selected : Finset catalog.Index) (left right : arena.State) : Bool :=
@@ -50,14 +44,28 @@ def indistinguishableB {arena : Arena.{u}} (catalog : Catalog.{u, v, w} arena)
   Finset.fold (fun first second => first && second) true
     (fun index => (catalog.theoremAt index).primitives.agreesB left right) selected
 
+/-- Two states are indistinguishable when the canonical finite test accepts them. -/
+abbrev indistinguishable {arena : Arena.{u}} (catalog : Catalog.{u, v, w} arena)
+    (selected : Finset catalog.Index) (left right : arena.State) : Prop :=
+  catalog.indistinguishableB selected left right = true
+
 /-- The selected finite Boolean test reflects propositional indistinguishability. -/
 theorem indistinguishableB_eq_true_iff
     {arena : Arena.{u}} (catalog : Catalog.{u, v, w} arena)
     (selected : Finset catalog.Index) (left right : arena.State) :
     catalog.indistinguishableB selected left right = true <->
       catalog.indistinguishable selected left right := by
+  rfl
+
+/-- Indistinguishability is agreement with every selected theorem bundle. -/
+theorem indistinguishable_iff_forall
+    {arena : Arena.{u}} (catalog : Catalog.{u, v, w} arena)
+    (selected : Finset catalog.Index) (left right : arena.State) :
+    catalog.indistinguishable selected left right <->
+      forall index, index ∈ selected ->
+        (catalog.theoremAt index).primitives.agrees left right := by
   letI := catalog.indexDecidableEq
-  unfold indistinguishableB indistinguishable
+  unfold indistinguishable indistinguishableB
   have foldCharacterization :=
     Finset.fold_op_rel_iff_and
       (op := fun first second : Bool => first && second)
@@ -74,9 +82,11 @@ theorem indistinguishableB_eq_true_iff
 instance indistinguishableDecidable
     {arena : Arena.{u}} (catalog : Catalog.{u, v, w} arena)
     (selected : Finset catalog.Index) (left right : arena.State) :
-    Decidable (catalog.indistinguishable selected left right) :=
-  decidable_of_iff' (catalog.indistinguishableB selected left right = true)
-    (catalog.indistinguishableB_eq_true_iff selected left right).symm
+    Decidable (indistinguishable catalog selected left right) := by
+  letI := catalog.indexFintype
+  letI := catalog.indexDecidableEq
+  exact decidable_of_iff (catalog.indistinguishableB selected left right = true)
+    (catalog.indistinguishableB_eq_true_iff selected left right)
 
 /-- Every selected-catalog indistinguishability relation is an equivalence. -/
 theorem indistinguishable_equivalence
@@ -84,14 +94,22 @@ theorem indistinguishable_equivalence
     (selected : Finset catalog.Index) :
     Equivalence (catalog.indistinguishable selected) := by
   refine ⟨?_, ?_, ?_⟩
-  · intro x index selectedIndex
-    exact (catalog.theoremAt index).primitives.agrees_equivalence.refl x
-  · intro x y agreement index selectedIndex
-    exact (catalog.theoremAt index).primitives.agrees_equivalence.symm
-      (agreement index selectedIndex)
-  · intro x y z first second index selectedIndex
-    exact (catalog.theoremAt index).primitives.agrees_equivalence.trans
-      (first index selectedIndex) (second index selectedIndex)
+  · intro x
+    apply (catalog.indistinguishable_iff_forall selected x x).2
+    exact fun index _ => (catalog.theoremAt index).primitives.agrees_equivalence.refl x
+  · intro x y agreement
+    apply (catalog.indistinguishable_iff_forall selected y x).2
+    have agreement' := (catalog.indistinguishable_iff_forall selected x y).1 agreement
+    exact fun index selectedIndex =>
+      (catalog.theoremAt index).primitives.agrees_equivalence.symm
+        (agreement' index selectedIndex)
+  · intro x y z first second
+    apply (catalog.indistinguishable_iff_forall selected x z).2
+    have first' := (catalog.indistinguishable_iff_forall selected x y).1 first
+    have second' := (catalog.indistinguishable_iff_forall selected y z).1 second
+    exact fun index selectedIndex =>
+      (catalog.theoremAt index).primitives.agrees_equivalence.trans
+        (first' index selectedIndex) (second' index selectedIndex)
 
 /-- The Set-level common kernel of a selected theorem subfamily. -/
 def jointKernel {arena : Arena.{u}} (catalog : Catalog.{u, v, w} arena)
@@ -167,8 +185,10 @@ theorem indistinguishable_mono
     {left right : arena.State} :
     catalog.indistinguishable larger left right ->
       catalog.indistinguishable smaller left right := by
-  intro agreement index smallerIndex
-  exact agreement index (subset smallerIndex)
+  intro agreement
+  apply (catalog.indistinguishable_iff_forall smaller left right).2
+  have agreement' := (catalog.indistinguishable_iff_forall larger left right).1 agreement
+  exact fun index smallerIndex => agreement' index (subset smallerIndex)
 
 /-- Finite insertion adds exactly one bundle-agreement conjunct. -/
 theorem indistinguishable_insert_iff
@@ -182,44 +202,66 @@ theorem indistinguishable_insert_iff
   letI := catalog.indexDecidableEq
   constructor
   · intro agreement
+    have agreement' :=
+      (catalog.indistinguishable_iff_forall (insert index selected) left right).1 agreement
     exact
-      ⟨agreement index (Finset.mem_insert_self index selected),
-        fun candidate selectedCandidate =>
-          agreement candidate (Finset.mem_insert_of_mem selectedCandidate)⟩
-  · rintro ⟨indexAgreement, selectedAgreement⟩ candidate insertedCandidate
+      ⟨agreement' index (Finset.mem_insert_self index selected),
+        (catalog.indistinguishable_iff_forall selected left right).2
+          (fun candidate selectedCandidate =>
+            agreement' candidate (Finset.mem_insert_of_mem selectedCandidate))⟩
+  · rintro ⟨indexAgreement, selectedAgreement⟩
+    apply (catalog.indistinguishable_iff_forall (insert index selected) left right).2
+    have selectedAgreement' :=
+      (catalog.indistinguishable_iff_forall selected left right).1 selectedAgreement
+    intro candidate insertedCandidate
     rcases Finset.mem_insert.mp insertedCandidate with rfl | selectedCandidate
     · exact indexAgreement
-    · exact selectedAgreement candidate selectedCandidate
+    · exact selectedAgreement' candidate selectedCandidate
 
 end Catalog
 
 private abbrev kernelFixtureArena : Arena :=
   Arena.ofFintype (Bool × Bool)
 
-private abbrev kernelFixtureBundle : PrimitiveBundle (Bool × Bool) where
+private abbrev kernelFixtureBundle (readout : Bool × Bool -> Bool) :
+    PrimitiveBundle (Bool × Bool) where
   Index := Fin 1
   indexFintype := inferInstance
   indexDecidableEq := inferInstance
-  atom := fun _ => ⟨.cut, cutKernel Prod.fst⟩
+  atom := fun _ => ⟨.cut, cutKernel readout⟩
 
-private abbrev kernelFixtureUnit : TheoremUnit kernelFixtureArena where
-  primitives := kernelFixtureBundle
+private abbrev kernelFixtureUnit (readout : Bool × Bool -> Bool) :
+    TheoremUnit kernelFixtureArena where
+  primitives := kernelFixtureBundle readout
   Statement := True
-  proof := True.intro
+  proof := trivial
 
-private abbrev kernelFixtureCatalog : Catalog kernelFixtureArena :=
-  Catalog.ofVector fun _ : Fin 1 => kernelFixtureUnit
+private abbrev kernelFixtureCatalog :=
+  Catalog.ofVector fun index : Fin 2 =>
+    if index = 0 then kernelFixtureUnit Prod.fst else kernelFixtureUnit Prod.snd
 
 /- The executable fold accepts a pair with the same first coordinate. -/
 example :
-    kernelFixtureCatalog.indistinguishableB kernelFixtureCatalog.fullIndexSet
+    kernelFixtureCatalog.indistinguishableB ({0} : Finset (Fin 2))
       (false, false) (false, true) = true := by
   decide
 
 /- The executable fold rejects a pair with different first coordinates. -/
 example :
-    kernelFixtureCatalog.indistinguishableB kernelFixtureCatalog.fullIndexSet
+    kernelFixtureCatalog.indistinguishableB (Finset.univ : Finset (Fin 2))
       (false, false) (true, false) = false := by
+  decide
+
+/- Bare typeclass-driven decision accepts agreement on the selected first CUT. -/
+example :
+    kernelFixtureCatalog.indistinguishable {0}
+      (false, false) (false, true) := by
+  decide
+
+/- Bare typeclass-driven decision rejects disagreement on the full two-CUT catalog. -/
+example :
+    ¬ kernelFixtureCatalog.indistinguishable Finset.univ
+      (false, false) (false, true) := by
   decide
 
 end D5.S3.ConceptDynamics.InformationEscape

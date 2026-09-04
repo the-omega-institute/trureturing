@@ -22,6 +22,9 @@ internal sealed class CatalogKernelDocument : IScribeDocumentDefinition
             TheoremNode("catalog-indistinguishable-reflection", "indistinguishableB_eq_true_iff",
                 "Boolean catalog reflection", ReflectionFormula(),
                 "The finite Boolean conjunction is true exactly when all selected theorem bundles agree."),
+            TheoremNode("catalog-indistinguishable-forall", "indistinguishable_iff_forall",
+                "Catalog indistinguishability is selected agreement", ForallFormula(),
+                "Indistinguishability over a finite selection holds exactly when every selected theorem bundle agrees."),
             TheoremNode("catalog-indistinguishable-equivalence", "indistinguishable_equivalence",
                 "Catalog indistinguishability is an equivalence", EquivalenceFormula(),
                 "Equivalence is inherited coordinatewise from the selected primitive bundles."),
@@ -88,6 +91,10 @@ internal sealed class CatalogKernelDocument : IScribeDocumentDefinition
     private static Formula ReflectionFormula() => Disp(Seq(
         Call("indistinguishableB", F.Id("catalog"), F.Id("S"), F.Id("left"), F.Id("right")),
         Sp, Eq, Sp, F.Id("true"), Sp, Iff, Sp, Agreement(F.Id("S")), Dot));
+
+    private static Formula ForallFormula() => Disp(Seq(
+        Agreement(F.Id("S")), Sp, Iff, Sp,
+        Forall, Sp, F.Id("i"), Sp, InMacro, Sp, F.Id("S"), Comma, Sp, BundleAgreement(), Dot));
 
     private static Formula EquivalenceFormula() => Disp(Seq(
         Call("Equivalence", Seq(
