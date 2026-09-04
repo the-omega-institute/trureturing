@@ -277,7 +277,15 @@ internal static class ScriptTestInputDeriver
         if (IsDirectoryEnumeration(method)) throw Failure(identity, "directory-enumeration");
         if (IsPathTransformation(method)) return;
         if (IsTestProcessRunner(method) && parameterOrdinal == 2)
-            throw Failure(identity, $"repository working directory: {method.ToDisplayString()}");
+        {
+            InspectRepositoryWorkingDirectoryOperands(
+                invocation,
+                expression,
+                callable,
+                identity,
+                inputs);
+            return;
+        }
         if (IsConsumingInvocation(
                 (InvocationExpressionSyntax)invocation.Syntax,
                 method,
@@ -292,6 +300,153 @@ internal static class ScriptTestInputDeriver
             return;
         }
         RejectOperationValue(identity, invocation, callable.SemanticModel);
+    }
+
+    private static void InspectRepositoryWorkingDirectoryOperands(
+        IInvocationOperation invocation,
+        ExpressionSyntax workingDirectoryExpression,
+        ScribeBoundCallable callable,
+        string identity,
+        IDictionary<string, string> inputs)
+    {
+        var workingDirectory = ResolvePath(
+            workingDirectoryExpression,
+            callable.SemanticModel,
+            callable.SemanticModels,
+            new HashSet<ISymbol>(SymbolEqualityComparer.Default));
+        if (workingDirectory.Kind is not (PathValueKind.RepositoryRoot or PathValueKind.RepositoryPath))
+        {
+            throw Failure(
+                identity,
+                $"unresolved repository working directory ({workingDirectoryExpression.GetType().Name})");
+        }
+
+        foreach (var operand in TestProcessRunnerCommandOperands(invocation, callable.SemanticModel))
+        {
+            if (ScribePathProvenance.IsNonRepository(
+                    operand,
+                    callable.SemanticModel,
+                    callable.SemanticModels))
+            {
+                continue;
+            }
+
+            var value = ResolvePath(
+                operand,
+                callable.SemanticModel,
+                callable.SemanticModels,
+                new HashSet<ISymbol>(SymbolEqualityComparer.Default));
+            if (value.Kind == PathValueKind.RepositoryPath)
+            {
+                if (!IsGeneratedControllerOperand(value.Value!))
+                    inputs.TryAdd(value.Value!, identity);
+                continue;
+            }
+            if (value.Kind == PathValueKind.Literal
+                && IsRelativePathShaped(value.Value!))
+            {
+                inputs.TryAdd(
+                    ResolveAgainstRepositoryWorkingDirectory(
+                        workingDirectory,
+                        value.Value!,
+                        operand,
+                        identity),
+                    identity);
+                continue;
+            }
+            if (value.Kind == PathValueKind.Unknown
+                && HasRelativePathEvidence(operand, callable.SemanticModel))
+            {
+                throw Failure(
+                    identity,
+                    $"unresolved repository working-directory command operand "
+                    + $"({operand.GetType().Name})");
+            }
+        }
+    }
+
+    private static IEnumerable<ExpressionSyntax> TestProcessRunnerCommandOperands(
+        IInvocationOperation invocation,
+        SemanticModel model)
+    {
+        foreach (var argument in invocation.Arguments.Where(static argument =>
+                     argument.Parameter?.Ordinal is 0 or 1))
+        {
+            if (argument.Value.Syntax is not ExpressionSyntax expression) continue;
+            if (argument.Parameter?.Ordinal == 0)
+            {
+                yield return expression;
+                continue;
+            }
+            foreach (var operand in StringCollectionOperands(expression, model))
+                yield return operand;
+        }
+    }
+
+    private static bool HasRelativePathEvidence(ExpressionSyntax expression, SemanticModel model)
+    {
+        if (model.GetConstantValue(expression) is { HasValue: true, Value: string constant })
+            return IsRelativePathShaped(constant);
+        if (expression is not InvocationExpressionSyntax invocation
+            || BoundMethod(invocation, model) is not { } method
+            || method.ContainingType.ToDisplayString() != "System.IO.Path"
+            || method.Name != "Combine"
+            || invocation.ArgumentList.Arguments.FirstOrDefault()?.Expression is not { } first
+            || model.GetConstantValue(first) is not { HasValue: true, Value: string prefix })
+        {
+            return false;
+        }
+        return IsRelativeOperand(prefix) && invocation.ArgumentList.Arguments.Count >= 2;
+    }
+
+    private static bool IsRelativePathShaped(string value) =>
+        IsRelativeOperand(value)
+        && (value.Contains('/', StringComparison.Ordinal)
+            || value.Contains('\\', StringComparison.Ordinal));
+
+    private static bool IsRelativeOperand(string value) =>
+        !string.IsNullOrWhiteSpace(value)
+        && !value.StartsWith("-", StringComparison.Ordinal)
+        && !value.StartsWith("/", StringComparison.Ordinal)
+        && !value.StartsWith("\\", StringComparison.Ordinal)
+        && !(value.Length >= 3
+            && char.IsLetter(value[0])
+            && value[1] == ':'
+            && value[2] is '/' or '\\');
+
+    private static string ResolveAgainstRepositoryWorkingDirectory(
+        PathValue workingDirectory,
+        string relative,
+        ExpressionSyntax expression,
+        string identity)
+    {
+        var segments = workingDirectory.Kind == PathValueKind.RepositoryPath
+            ? workingDirectory.Value!.Split('/').ToList()
+            : [];
+        foreach (var segment in relative.Replace('\\', '/').Split('/'))
+        {
+            if (segment is "" or ".") continue;
+            if (segment == "..")
+            {
+                if (segments.Count == 0)
+                {
+                    throw Failure(
+                        identity,
+                        $"repository working-directory command operand escapes repository "
+                        + $"({expression.GetType().Name})");
+                }
+                segments.RemoveAt(segments.Count - 1);
+                continue;
+            }
+            segments.Add(segment);
+        }
+        if (segments.Count == 0)
+        {
+            throw Failure(
+                identity,
+                $"empty repository working-directory command operand ({expression.GetType().Name})");
+        }
+        return string.Join('/', segments);
     }
 
     private static OperationUse FindOperationUse(IOperation operation)
@@ -481,8 +636,8 @@ internal static class ScriptTestInputDeriver
         var arguments = invocation.ArgumentList.Arguments;
         if (arguments.Count < 2) return PathValue.Unknown;
         var current = ResolvePath(arguments[0].Expression, model, models, visited);
-        if (current.Kind is not (PathValueKind.RepositoryRoot or PathValueKind.RepositoryPath
-            or PathValueKind.NonRepository))
+        if (current.Kind is not (PathValueKind.Literal or PathValueKind.RepositoryRoot
+            or PathValueKind.RepositoryPath or PathValueKind.NonRepository))
         {
             return PathValue.Unknown;
         }
@@ -499,8 +654,12 @@ internal static class ScriptTestInputDeriver
             {
                 var prefix = current.Kind == PathValueKind.RepositoryRoot ? string.Empty : current.Value!;
                 current = new PathValue(
-                    PathValueKind.RepositoryPath,
-                    NormalizeRelative(prefix.Length == 0 ? segment : prefix + "/" + segment));
+                    current.Kind == PathValueKind.Literal
+                        ? PathValueKind.Literal
+                        : PathValueKind.RepositoryPath,
+                    current.Kind == PathValueKind.Literal
+                        ? prefix.Length == 0 ? segment : prefix + "/" + segment
+                        : NormalizeRelative(prefix.Length == 0 ? segment : prefix + "/" + segment));
             }
         }
         return current;
