@@ -148,12 +148,25 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeArenas/EndStateOmitsPree
 
 Two CUTs and two coded ADMITS are evaluated at the named trace anchors, including the endpoint-factorization obstruction.
 
+**Theorem 1.13 (Preemption trace arena is nondegenerate).**
+
+$$\operatorname{Nondegenerate}(\operatorname{toArena}(endStateOmitsPreemptingCauseArena))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeArenas/EndStateOmitsPreemptingCause.endStateOmitsPreemptingCauseArena_nondegenerate` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The finite arena has at least two distinct preemption traces.
+
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/EndStateOmitsPreemptingCause.EndStateOmitsPreemptingCauseStatement`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/EndStateOmitsPreemptingCause.PreemptionAnchor`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/EndStateOmitsPreemptingCause.PreemptionReadout`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/EndStateOmitsPreemptingCause.endStateOmitsPreemptingCauseArena`
+- Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/EndStateOmitsPreemptingCause.endStateOmitsPreemptingCauseArena_nondegenerate`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/EndStateOmitsPreemptingCause.instDecidableEqPreemptionAnchor`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/EndStateOmitsPreemptingCause.instDecidableEqPreemptionReadout`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/EndStateOmitsPreemptingCause.instDecidableIsOrderedPreemption`

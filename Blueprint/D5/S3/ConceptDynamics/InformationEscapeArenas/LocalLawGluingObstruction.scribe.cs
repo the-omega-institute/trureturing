@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.InformationEscapeArenas;
 
@@ -30,7 +32,16 @@ internal sealed class LocalLawGluingObstructionDocument : IScribeDocumentDefinit
                 "Frozen gluing statement type",
                 "This alias is definitionally the type of the frozen theorem D5/S3/ConceptDynamics/Gluing/LocalLawGluingObstruction.compatible_local_laws_can_lack_global_state."),
             Node("local-law-gluing-arena", "localLawGluingArena", "Local-law gluing arena",
-                "The law compares existential fibers of the three realization ADMIT slots and rejects a jointly admitted triple."))));
+                "The law compares existential fibers of the three realization ADMIT slots and rejects a jointly admitted triple."),
+            Describe.Lean(
+                DescribeId.Create("local-law-gluing-arena-nondegenerate"),
+                DeclarationHandle.Create(Prefix + "localLawGluingArena_nondegenerate"),
+                H("Local-law gluing arena is nondegenerate"),
+                StatementSource.FromAuthor(NondegenerateFormula("localLawGluingArena")),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The finite arena has at least two distinct attempted global states."))),
+                DescribeRole.Theorem))));
 
     private static DocumentBlock.Describe Node(
         string id, string declaration, string title, string explanation) => Describe.Lean(
@@ -41,4 +52,8 @@ internal sealed class LocalLawGluingObstructionDocument : IScribeDocumentDefinit
             AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(explanation))),
             DescribeRole.Definition);
+
+    private static Formula NondegenerateFormula(string arena) => Disp(Seq(
+        Operatorname, Grp(F.Id("Nondegenerate")), Open,
+        Operatorname, Grp(F.Id("toArena")), Open, F.Id(arena), Close, Close));
 }

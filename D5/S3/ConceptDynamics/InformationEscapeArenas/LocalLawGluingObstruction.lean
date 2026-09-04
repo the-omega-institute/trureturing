@@ -79,4 +79,8 @@ def localLawGluingArena : PrimitiveLawArena where
       r.readout .admit12 state = true /\
       r.readout .admit02 state = true
 
+/-- The finite gluing arena contains at least two distinct attempted global states. -/
+theorem localLawGluingArena_nondegenerate : localLawGluingArena.toArena.Nondegenerate := by
+  decide
+
 end D5.S3.ConceptDynamics.InformationEscapeArenas.LocalLawGluingObstruction

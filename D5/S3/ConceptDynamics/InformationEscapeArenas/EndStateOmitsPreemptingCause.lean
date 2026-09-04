@@ -111,4 +111,9 @@ def endStateOmitsPreemptingCauseArena : PrimitiveLawArena where
       ¬ ∃ recover : Bool -> Option Mechanism,
         r.readout .cutCause = recover ∘ r.readout .cutEnd
 
+/-- The finite preemption arena contains at least two distinct traces. -/
+theorem endStateOmitsPreemptingCauseArena_nondegenerate :
+    endStateOmitsPreemptingCauseArena.toArena.Nondegenerate := by
+  decide
+
 end D5.S3.ConceptDynamics.InformationEscapeArenas.EndStateOmitsPreemptingCause

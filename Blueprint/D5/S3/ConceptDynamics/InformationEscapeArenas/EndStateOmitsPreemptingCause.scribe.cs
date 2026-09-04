@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.InformationEscapeArenas;
 
@@ -41,7 +43,17 @@ internal sealed class EndStateOmitsPreemptingCauseDocument : IScribeDocumentDefi
                 "This alias is definitionally the type of the frozen theorem D5/S3/ConceptDynamics/Attribution/EndStateOmitsPreemptingCause.end_state_omits_preempting_cause."),
             Node("end-state-preemption-arena", "endStateOmitsPreemptingCauseArena",
                 "Preemption trace arena",
-                "Two CUTs and two coded ADMITS are evaluated at the named trace anchors, including the endpoint-factorization obstruction."))));
+                "Two CUTs and two coded ADMITS are evaluated at the named trace anchors, including the endpoint-factorization obstruction."),
+            Describe.Lean(
+                DescribeId.Create("end-state-preemption-arena-nondegenerate"),
+                DeclarationHandle.Create(Prefix + "endStateOmitsPreemptingCauseArena_nondegenerate"),
+                H("Preemption trace arena is nondegenerate"),
+                StatementSource.FromAuthor(NondegenerateFormula(
+                    "endStateOmitsPreemptingCauseArena")),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The finite arena has at least two distinct preemption traces."))),
+                DescribeRole.Theorem))));
 
     private static DocumentBlock.Describe Node(
         string id, string declaration, string title, string explanation) => Describe.Lean(
@@ -52,4 +64,8 @@ internal sealed class EndStateOmitsPreemptingCauseDocument : IScribeDocumentDefi
             AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(explanation))),
             DescribeRole.Definition);
+
+    private static Formula NondegenerateFormula(string arena) => Disp(Seq(
+        Operatorname, Grp(F.Id("Nondegenerate")), Open,
+        Operatorname, Grp(F.Id("toArena")), Open, F.Id(arena), Close, Close));
 }

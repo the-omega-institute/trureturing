@@ -100,6 +100,18 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeArenas/LocalLawGluingObs
 
 The law compares existential fibers of the three realization ADMIT slots and rejects a jointly admitted triple.
 
+**Theorem 1.9 (Local-law gluing arena is nondegenerate).**
+
+$$\operatorname{Nondegenerate}(\operatorname{toArena}(localLawGluingArena))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeArenas/LocalLawGluingObstruction.localLawGluingArena_nondegenerate` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The finite arena has at least two distinct attempted global states.
+
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/LocalLawGluingObstruction.GluingReadout`
@@ -108,6 +120,7 @@ The law compares existential fibers of the three realization ADMIT slots and rej
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/LocalLawGluingObstruction.instDecidableEqGluingReadout`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/LocalLawGluingObstruction.instFintypeGluingReadout`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/LocalLawGluingObstruction.localLawGluingArena`
+- Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/LocalLawGluingObstruction.localLawGluingArena_nondegenerate`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/LocalLawGluingObstruction.localLawGluingSignature`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeArenas/LocalLawGluingObstruction.sameLaw`
 - Dependency: [D5/S3/ConceptDynamics/Gluing/LocalLawGluingObstruction](../Gluing/LocalLawGluingObstruction.md)
