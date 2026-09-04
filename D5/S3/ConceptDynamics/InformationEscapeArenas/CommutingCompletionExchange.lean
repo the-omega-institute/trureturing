@@ -7,7 +7,7 @@
 
 import D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
-import Mathlib.Tactic
+import Mathlib.Tactic.FinCases
 
 /- Library-search audit trail (2026-09-04): exact repository hits
    `KernelEquivalent`, `predictiveProjection`, and the frozen countermodel theorem are

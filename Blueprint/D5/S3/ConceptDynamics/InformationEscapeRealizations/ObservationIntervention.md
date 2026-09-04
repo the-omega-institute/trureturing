@@ -4,9 +4,21 @@
 
 The frozen observation-intervention theorem realizes a 24-class two-CUT kernel.
 
-**Theorem 1.1 (Observation-intervention realization).**
+**Definition 1.1 (Concrete observation-intervention realization).**
 
-$$\operatorname{LegacyPrimitiveRealization}\left(observationInterventionArena, ObservationInterventionStatement, observationInterventionRealization\right).$$
+Lean statement: `D5/S3/ConceptDynamics/InformationEscapeRealizations/ObservationIntervention.observationInterventionRealization`
+
+*Formalization.* `D5/S3/ConceptDynamics/InformationEscapeRealizations/ObservationIntervention.observationInterventionRealization` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The primitive realization assigns the source observation and intervention functions to the two typed CUT slots.
+
+**Theorem 1.2 (Observation-intervention realization).**
+
+$${\exists M, N: DeterministicBoolSCM, Obs\left(M\right) = Obs\left(N\right) \land Int\left(M\right) \neq Int\left(N\right)} \iff observationInterventionArena.Law(observationInterventionRealization).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeRealizations/ObservationIntervention.observation_strictly_weaker_than_intervention_realization` (`✓ std3`). ∎
 
@@ -16,9 +28,9 @@ $$\operatorname{LegacyPrimitiveRealization}\left(observationInterventionArena, O
 
 The equivalence preserves the existential model witnesses in both directions.
 
-**Theorem 1.2 (Twenty-four kernel classes).**
+**Theorem 1.3 (Twenty-four kernel classes).**
 
-$$\operatorname{card}\left(signatureClasses\right) = 24.$$
+$$(Finset.univ.image((model: DeterministicBoolSCM \mapsto (Obs\left(model\right), Int\left(model\right))))).card = 24.$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeRealizations/ObservationIntervention.observation_strictly_weaker_than_intervention_partition_count` (`✓ std3`). ∎
 
@@ -28,9 +40,9 @@ $$\operatorname{card}\left(signatureClasses\right) = 24.$$
 
 Exhaustive evaluation of all 32 source models yields 24 joint signatures.
 
-**Theorem 1.3 (Private pair separation).**
+**Theorem 1.4 (Private pair separation).**
 
-$$\operatorname{Not}\left(\operatorname{agrees}\left(observationInterventionRealization, xCausesYModel, yCausesXModel\right)\right).$$
+$$\neg observationInterventionRealization.toPrimitiveBundle.agrees(xCausesYModel, yCausesXModel).$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeRealizations/ObservationIntervention.observation_strictly_weaker_than_intervention_private_pair` (`✓ std3`). ∎
 
@@ -42,6 +54,7 @@ The named opposite-direction models disagree under intervention.
 
 ## References
 
+- Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeRealizations/ObservationIntervention.observationInterventionRealization`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeRealizations/ObservationIntervention.observation_strictly_weaker_than_intervention_partition_count`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeRealizations/ObservationIntervention.observation_strictly_weaker_than_intervention_private_pair`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeRealizations/ObservationIntervention.observation_strictly_weaker_than_intervention_realization`

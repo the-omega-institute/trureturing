@@ -43,18 +43,7 @@ theorem observation_strictly_weaker_than_intervention_partition_count :
 /-- The named opposite-direction models form the private census pair. -/
 theorem observation_strictly_weaker_than_intervention_private_pair :
     ¬ observationInterventionRealization.toPrimitiveBundle.agrees
-      xCausesYModel yCausesXModel := by
-  intro h
-  have hreadouts :=
-    (PrimitiveRealization.toPrimitiveBundle_agrees_iff
-      observationInterventionRealization xCausesYModel yCausesXModel).1 h |>.1
-  have hintervention := hreadouts ObservationReadout.intervention
-  have hwitness := congrFun (congrFun hintervention false) true
-  have hfalse : false = true := by
-    simpa [observationInterventionRealization,
-      D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.Int,
-      xCausesYModel, yCausesXModel] using congrArg Prod.snd hwitness
-  exact Bool.false_ne_true hfalse
+      xCausesYModel yCausesXModel := by decide
 
 example : observationInterventionArena.toArena.Nondegenerate := by decide
 

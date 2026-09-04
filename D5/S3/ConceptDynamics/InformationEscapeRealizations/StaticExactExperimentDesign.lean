@@ -41,14 +41,7 @@ theorem static_exact_design_partition_count :
 
 /-- The private census pair `0,1` is separated by the compiled bundle. -/
 theorem static_exact_design_private_pair :
-    ¬ staticExactExperimentRealization.toPrimitiveBundle.agrees (0 : Fin 3) 1 := by
-  intro h
-  have hreadouts :=
-    (PrimitiveRealization.toPrimitiveBundle_agrees_iff
-      staticExactExperimentRealization 0 1).1 h |>.1
-  have hchangeX := hreadouts (0 : StaticReadout)
-  change false = true at hchangeX
-  exact Bool.noConfusion hchangeX
+    ¬ staticExactExperimentRealization.toPrimitiveBundle.agrees (0 : Fin 3) 1 := by decide
 
 example : staticExactExperimentArena.toArena.Nondegenerate := by decide
 

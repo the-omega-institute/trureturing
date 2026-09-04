@@ -1,6 +1,4 @@
 using static StrataLint.Scribe.DefinitionDsl;
-using static StrataLint.Scribe.FormulaDsl;
-using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.InformationEscapeArenas;
 
@@ -12,15 +10,21 @@ internal sealed class StaticExactExperimentDesignDocument : IScribeDocumentDefin
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The static exact-design law is carried by two typed Boolean CUT readouts.",
         H("Static Exact Experiment Design Arena"),
-        Blocks(Describe.Lean(
-            DescribeId.Create("static-exact-experiment-arena"),
-            DeclarationHandle.Create(Prefix + "staticExactExperimentArena"),
-            H("Static exact-experiment arena"),
-            StatementSource.FromAuthor(Disp(Seq(
-                F.Id("staticExactExperimentArena"), Colon, Sp,
-                F.Id("PrimitiveLawArena"), Dot))),
-            AssessedProvenance.FromRepo(),
-            Blocks(Paragraph(Text(
-                "The law reproduces individual failure, joint injectivity, and minimal selection using the two realization slots."))),
-            DescribeRole.Definition))));
+        Blocks(
+            Definition("static-readout", "StaticReadout", "Static readout indices",
+                "The readout index type is the two-element finite type of static experiments."),
+            Definition("static-signature", "staticSignature", "Static experiment signature",
+                "The signature assigns a Boolean output to each of the two CUT readout indices."),
+            Definition("static-exact-design-statement", "StaticExactDesignStatement",
+                "Frozen static exact-design statement",
+                "This alias is definitionally the type of the frozen theorem D5/S3/ConceptDynamics/ExperimentDesign/StaticExactExperimentDesign.static_exact_design."),
+            Definition("static-exact-experiment-arena", "staticExactExperimentArena",
+                "Static exact-experiment arena",
+                "The law reproduces individual failure, joint injectivity, and minimal selection using the two realization slots."))));
+
+    private static DocumentBlock.Describe Definition(
+        string id, string declaration, string title, string explanation) => Describe.Lean(
+            DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(explanation))), DescribeRole.Definition);
 }
