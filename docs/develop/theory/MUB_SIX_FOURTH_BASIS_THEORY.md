@@ -1033,3 +1033,305 @@ fixed strict-X edge
 ```
 
 这条路线不要求先解决所有 MUB triplets，也不要求先证明 noncanonical fibre 为空。它把 quartet-specific obstruction 压缩为一个 centered-projector sharp bound，并保留 Hadamard atlas、feature kernels 和 finite symmetry skeleton 作为 branch-complete 后端。
+
+## 25. support-face flatness defect 的锐化
+
+本节区分两个缩放。令 normalized relative unitary 为 `U`，令未归一化 Hadamard multiplier 为 `K=sqrt(6)U`，令当前 Lean 使用的有理 scaled relative Gram 为：
+
+```math
+P=6U=\sqrt6K.
+```
+
+仓库中的第一 defect 是：
+
+```math
+D_{Lean}(P)
+=\frac1{36}\sum_{a,b}
+\left(|P_{ab}|^2-6\right)^2.
+```
+
+它与未平均的 Hadamard entrywise defect 相同：
+
+```math
+D_{Lean}(P)
+=\sum_{a,b}\left(|K_{ab}|^2-1\right)^2.
+```
+
+概率坐标中的平均 defect 为：
+
+```math
+\widehat\Delta(U)
+=\sum_{a,b}
+\left(|U_{ab}|^2-\frac16\right)^2
+=\frac1{36}D_{Lean}(P).
+```
+
+若一行只允许两个 active coordinates，row-Gram 给出这两个位置的 squared norm 总和为 `36`。设其值为 `a,b`，则：
+
+```math
+(a-6)^2+(b-6)^2+4(0-6)^2
+=432+\frac12(a-b)^2.
+```
+
+所以每行 raw defect 至少为 `432`。六行求和并乘以 `1/36`：
+
+```math
+\boxed{D_{Lean}(P)\ge72.}
+```
+
+等价地：
+
+```math
+\boxed{\widehat\Delta(U)\ge2.}
+```
+
+这比只累计 24 个结构零所得的：
+
+```math
+D_{Lean}(P)\ge24,
+\qquad
+\widehat\Delta(U)\ge\frac23
+```
+
+更强。额外裕量来自剩余 12 个 active positions 必须承载全部 row mass。
+
+锐等号要求每个 active pair 平分质量：
+
+```math
+|P_{a,b_0}|^2=|P_{a,b_1}|^2=18.
+```
+
+当前 PR 已新增：
+
+```text
+D5/S3/Quantum/Tomography/SupportFaceFlatnessDefect.lean
+```
+
+以及：
+
+```text
+row_normSq_sum_of_cardSq_rowGram
+sixRowRawDefect_ge_four_hundred_thirty_two
+twoModeSupport_scaledRelativeGramDefect_ge_seventy_two
+twoModeSupport_completionThreeFramePotential_ge_seventy_two
+```
+
+`ZaunerAggregateFlatnessCertificate.lean` 已接入该通用真源，并加入 row-Gram 显式前提下的 `72` 裕量。该状态在 admission 完成前应记为“Lean source 已提交，等待机器裁决”。
+
+## 26. robust leakage certificate
+
+精确结构零适合 canonical branch。noncanonical branch 更需要稳定的近似版本。
+
+对 normalized unitary `U`，固定每行的 two-mode active set `S_a`，定义 off-mode leakage：
+
+```math
+\eta_a=\sum_{b\notin S_a}|U_{ab}|^2.
+```
+
+一行总质量为 `1`。在给定 `eta_a` 时，row defect 的最小值在 active 两项均匀、off-mode 四项均匀时取得。直接投影到 probability simplex 得：
+
+```math
+\boxed{
+\sum_b\left(|U_{ab}|^2-\frac16\right)^2
+\ge
+\frac{(2-3\eta_a)^2}{12}.
+}
+```
+
+令总 leakage：
+
+```math
+L=\sum_a\eta_a.
+```
+
+对六行使用 Cauchy 得：
+
+```math
+\boxed{
+\widehat\Delta(U)
+\ge
+\frac{(4-L)^2}{8}.
+}
+```
+
+在 Lean scaled 坐标中：
+
+```math
+\boxed{
+D_{Lean}(P)
+\ge
+\frac92(4-L)^2.
+}
+```
+
+canonical support face 对应 `L=0`，恢复 `D_Lean>=72`。完全 flat transition 对应 `L=4`，下界降到零。
+
+所以 branch exclusion 不必始终证明精确结构零。只要 exact interval、SOS 或代数证书给出：
+
+```math
+L\le4-\delta
+```
+
+其中 `delta>0`，就得到：
+
+```math
+\boxed{
+D_{Lean}(P)\ge\frac92\delta^2>0.
+}
+```
+
+这提供了从 canonical component 向 noncanonical component 延伸的稳健证书。
+
+## 27. commutator 与 coarse mode transport
+
+令三阶 symmetry 为：
+
+```math
+S=E_0+\omega E_1+\omega^2E_2,
+```
+
+其中每个 `E_i` 的 rank 为 `2`。因为任意两个不同 cube roots 的 squared distance 都为 `3`：
+
+```math
+\|[S,U]\|_{HS}^2
+=3\sum_{i\ne j}\|E_iUE_j\|_{HS}^2
+=3L.
+```
+
+因此 robust leakage bound 也可以写成：
+
+```math
+\boxed{
+\widehat\Delta(U)
+\ge
+\frac18
+\left(
+4-\frac13\|[S,U]\|_{HS}^2
+\right)^2.
+}
+```
+
+canonical mode-local relative transition 与 `S` commute，commutator energy 为零，defect 至少为 `2`。flat transition 的 coarse mode mass 完全均匀，commutator energy 达到 `12`。
+
+还可定义 `3 x 3` coarse mode transport：
+
+```math
+q_{ij}
+=\frac12\sum_{r,s\in Fin 2}
+|U_{(r,i),(s,j)}|^2.
+```
+
+unitarity 使 `q` doubly stochastic。对每个 `2 x 2` block 使用 Cauchy：
+
+```math
+\boxed{
+\widehat\Delta(U)
+\ge
+\sum_{i,j}
+\left(q_{ij}-\frac13\right)^2.
+}
+```
+
+canonical mode-local transition 对应 `q=I_3`，右侧为 `2`。flat transition 对应 `q=J_3/3`，右侧为零。
+
+`q` 也有 fusion-frame 解释。它记录两个由 rank-two mode PVM 诱导的 decomposition 之间的 overlap。quartet 所需的 flat relative transition 会迫使这两个 coarse decompositions mutually unbiased。
+
+该 coarse inequality 与现有：
+
+```text
+threeModeCenteredSquare
+modeCenteredSquareTotal
+modeAffinityTotal
+threeModeCharacterSquare
+```
+
+处于同一坐标系。下一层 Lean 应建立一个薄桥，而不重建 mode-affinity 库：
+
+```text
+relativeModeProbability
+relativeModeTransport
+scaledRelativeGramDefect_ge_modeCenteredEnergy
+scaledRelativeGramDefect_ge_commutatorGap
+```
+
+## 28. 对 global atlas 路线的新影响
+
+现在有两条互补的 scalar route。
+
+第一条针对 individual completions：
+
+```math
+\alpha_S(C)+\alpha_S(D)\le2.
+```
+
+若每个 completion 都满足 `alpha>1`，则 quartet 被排除。
+
+第二条针对 relative multiplier：
+
+```math
+\widehat\Delta(U)
+\ge\|q-J_3/3\|_F^2.
+```
+
+quartet 要求右侧为零。只要 branch compatibility 强制 `q` 与 uniform coarse transport 保持正距离，该 branch 即被排除。
+
+第二条更直接接入 single-relative-Gram 系统，因为未知量已经压缩为一个 `P`。它还揭示一个强制迁移：
+
+```text
+canonical factor pair: q = I, commutator energy = 0
+quartet-compatible pair: q = J/3, commutator energy = 12
+```
+
+所以任何从 canonical fibre 走向 quartet 的代数 component 都必须发生宏观 mode mixing。它不能通过小扰动绕过 structural-zero certificate。
+
+这建议把 generic strict-X 攻击拆为：
+
+```text
+1. 用 Jacobian 或 finite-fibre theorem 建立 canonical points 的局部完备性。
+2. 用 robust leakage bound 给每个 canonical neighborhood 一个显式正裕量。
+3. 把所有剩余候选推到 fibre ramification 或 separate component。
+4. 在剩余 component 上优化 coarse transport distance，而非完整 36-entry potential。
+5. 只有 coarse center 仍可达时，才启用 phase kernel 或高次数 Positivstellensatz。
+```
+
+新的 branch compiler 优先输出：
+
+```text
+support graph
+coarse mode transport constraints
+off-mode leakage interval
+Jacobian nonvanishing certificate
+residual phase equations
+```
+
+这将大幅减少需要进入完整 real-algebraic elimination 的变量和次数。
+
+## 29. 更新后的形式化顺序
+
+```text
+SupportFaceFlatnessDefect
+  -> exact row-mass certificate
+  -> six-row sharp margin 72
+
+ZaunerAggregateFlatnessCertificate
+  -> instantiate structural zeros
+  -> require scaled row-Gram explicitly
+  -> sharp three-frame margin 72
+
+RelativeModeTransportDefect
+  -> coarse 2 x 2 block averaging
+  -> defect >= centered mode energy
+  -> robust leakage and commutator forms
+
+ZaunerThreeFramePotentialDecomposition
+  -> exact phase remainder
+  -> equality locus e_i in {+i,-i}
+  -> paired-column binary constraints
+
+FiniteAtlasPotentialCover
+  -> branchwise support/coarse certificates
+  -> positive finite minimum
+  -> global no-zero theorem
+```
+
+本轮新增的 `72` 证书只排除 canonical two-mode support face。六维四 MUB 全局结论仍依赖 noncanonical branch、exceptional loci 和 complete atlas cover。
