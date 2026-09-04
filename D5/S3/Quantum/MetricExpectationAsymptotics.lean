@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/Quantum/MetricExpectationAsymptotics
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Standard endpoint asymptotics of an abstract upper incomplete-Gamma
-   factor imply the stated small-parameter pole and large-parameter limit. -/
+   digest: Abstract incomplete-Gamma endpoint laws imply the stated closed-form asymptotics. -/
 
 import Mathlib
 
