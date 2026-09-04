@@ -27,6 +27,8 @@ internal sealed class UnifiedResidualDocument : IScribeDocumentDefinition
                 "The ADMIT defect targets equality of admission truth values."),
             DefinitionNode("anchor-defect", "anchorDefect", "ANCHOR defect",
                 "The symmetric ANCHOR defect targets equality of pointed profiles."),
+            DefinitionNode("bundle-role-defect", "bundleRoleDefect", "Bundle role defect",
+                "A role defect contains current-kernel pairs separated by at least one atom carrying that role."),
             TheoremNode("cut-residual-is-canonical-defect",
                 "kernelResidual_cut_eq_defectRelation",
                 "CUT residual is the canonical defect relation", CutBridgeFormula(),
@@ -41,7 +43,11 @@ internal sealed class UnifiedResidualDocument : IScribeDocumentDefinition
             TheoremNode("joint-target-residual-union",
                 "residual_joint_target_eq_iUnion",
                 "Joint-target residual is a union", JointTargetFormula(),
-                "Difference from the bundle intersection is exactly the union of component differences."),
+                "CIRPT-IE-006 holds for an arbitrary indexed target family and its joint kernel."),
+            TheoremNode("bundle-joint-target-residual-union",
+                "residual_joint_target_eq_iUnion_bundle",
+                "Bundle joint-target residual is a union", BundleJointTargetFormula(),
+                "The finite primitive-bundle form is the engine corollary of CIRPT-IE-006."),
             TheoremNode("four-role-residual-union", "four_role_residual_eq_union",
                 "Four-role residual union", FourRoleFormula(),
                 "The combined CUT, FLOW, ADMIT, and ANCHOR target has the exact union of role defects."),
@@ -124,6 +130,15 @@ internal sealed class UnifiedResidualDocument : IScribeDocumentDefinition
     }
 
     private static Formula JointTargetFormula()
+    {
+        Formula component = Call("L", F.Id("j"));
+        return Disp(Seq(
+            Call("kernelResidual", F.Id("K"), F.Id("joint")),
+            Sp, Eq, Sp, Operatorname, Grp(F.Id("bigcup")), F.Id("j"), Sp,
+            Call("kernelResidual", F.Id("K"), component), Dot));
+    }
+
+    private static Formula BundleJointTargetFormula()
     {
         Formula component = Call(
             "kernel", Call("atom", F.Id("b"), F.Id("i")));

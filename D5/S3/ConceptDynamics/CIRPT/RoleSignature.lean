@@ -5,7 +5,7 @@
    anchors: []
    digest: Four-bit signatures partition off-diagonal pairs and recover role counts. -/
 
-import D5.S3.ConceptDynamics.CIRPT.PrimitiveBundle
+import D5.S3.ConceptDynamics.CIRPT.UnifiedResidual
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Data.Fintype.Pi
 import Mathlib.Data.Fintype.Prod
@@ -86,7 +86,9 @@ theorem separatesOnAxis_eq_true_iff
   simpa only [Bool.false_eq_true, false_or, Finset.mem_univ, true_and,
     Bool.and_eq_true_iff, decide_eq_true_eq] using foldCharacterization
 
-/-- The four Boolean coordinates recording which primitive roles separate a pair. -/
+/-- CIRPT-38 raw bundle signature: the four Boolean coordinates recording
+which primitive roles separate a pair, without qualification by a current
+kernel. -/
 def roleSignature {X : Type u} (bundle : PrimitiveBundle X)
     (left right : X) : Fin 4 -> Bool :=
   fun coordinate =>
@@ -134,14 +136,14 @@ def separationPairsOnAxis
   (offDiagonalPairs X).filter fun pair =>
     bundle.separatesOnAxis axis pair.1 pair.2 = true
 
-/-- Exact multiplicity of one four-bit signature among ordered off-diagonal pairs. -/
+/-- CIRPT-38 raw signature multiplicity among ordered off-diagonal pairs. -/
 def signatureHistogram
     {X : Type u} [Fintype X] [DecidableEq X]
     (bundle : PrimitiveBundle X) (signature : Fin 4 -> Bool) : Nat :=
   ((offDiagonalPairs X).filter fun pair =>
     bundle.roleSignature pair.1 pair.2 = signature).card
 
-/-- CIRPT-IE-011: the sixteen role signatures partition all ordered
+/-- CIRPT-38: the sixteen raw bundle signatures partition all ordered
 off-diagonal pairs. -/
 theorem four_role_signature_partition
     {X : Type u} [Fintype X] [DecidableEq X]
@@ -174,6 +176,140 @@ theorem signature_histogram_axis_count
       (Finset.univ.filter fun signature : Fin 4 -> Bool =>
         signature (axisOrdinal axis) = true)
       (fun pair => bundle.roleSignature pair.1 pair.2))
+
+/-- CIRPT-16 / CIRPT-IE-011 defect signature: bit `r` is set exactly when the
+current kernel identifies the pair and bundle role `r` separates it. -/
+def residualRoleSignature {X : Type u} (current : DecidableKernel X)
+    (bundle : PrimitiveBundle X) (left right : X) : Fin 4 -> Bool :=
+  fun coordinate =>
+    decide (current.relation left right) &&
+      bundle.separatesOnAxis (axisOfOrdinal coordinate) left right
+
+/-- The finite restriction of the named bundle-role defect to ordered
+off-diagonal pairs. -/
+def roleDefectPairs
+    {X : Type u} [Fintype X] [DecidableEq X]
+    (current : DecidableKernel X) (bundle : PrimitiveBundle X)
+    (axis : PrimitiveAxis) : Finset (X × X) :=
+  (offDiagonalPairs X).filter fun pair =>
+    (decide (current.relation pair.1 pair.2) &&
+      bundle.separatesOnAxis axis pair.1 pair.2) = true
+
+/-- The executable role-defect finset is exactly the off-diagonal restriction
+of `bundleRoleDefect` from the unified residual calculus. -/
+theorem mem_roleDefectPairs_iff
+    {X : Type u} [Fintype X] [DecidableEq X]
+    (current : DecidableKernel X) (bundle : PrimitiveBundle X)
+    (axis : PrimitiveAxis) (pair : X × X) :
+    pair ∈ bundle.roleDefectPairs current axis <->
+      pair ∈ offDiagonalPairs X ∧
+        pair ∈ bundleRoleDefect current bundle axis := by
+  simp only [roleDefectPairs, Finset.mem_filter, bundleRoleDefect,
+    Set.mem_ofPred_eq, Bool.and_eq_true_iff, decide_eq_true_eq,
+    bundle.separatesOnAxis_eq_true_iff]
+
+/-- CIRPT-16 / CIRPT-IE-011 exact multiplicity of one current-qualified
+defect signature among ordered off-diagonal pairs. -/
+def residualSignatureHistogram
+    {X : Type u} [Fintype X] [DecidableEq X]
+    (current : DecidableKernel X) (bundle : PrimitiveBundle X)
+    (signature : Fin 4 -> Bool) : Nat :=
+  ((offDiagonalPairs X).filter fun pair =>
+    bundle.residualRoleSignature current pair.1 pair.2 = signature).card
+
+/-- CIRPT-IE-011: current-qualified defect signatures partition all ordered
+off-diagonal pairs. -/
+theorem residual_signature_partition
+    {X : Type u} [Fintype X] [DecidableEq X]
+    (current : DecidableKernel X) (bundle : PrimitiveBundle X) :
+    ∑ signature, bundle.residualSignatureHistogram current signature =
+      (offDiagonalPairs X).card := by
+  classical
+  simpa only [residualSignatureHistogram] using
+    (Finset.card_eq_sum_card_fiberwise
+      (s := offDiagonalPairs X)
+      (t := Finset.univ)
+      (f := fun pair => bundle.residualRoleSignature current pair.1 pair.2)
+      (by
+        intro signature _
+        exact Finset.mem_univ _)).symm
+
+/-- CIRPT-IE-011: summing current-qualified histogram classes with role bit
+`r` set gives the cardinality of the corresponding role defect `D_r`. -/
+theorem residual_signature_histogram_role_count
+    {X : Type u} [Fintype X] [DecidableEq X]
+    (current : DecidableKernel X) (bundle : PrimitiveBundle X)
+    (coordinate : Fin 4) :
+    ∑ signature with signature coordinate = true,
+        bundle.residualSignatureHistogram current signature =
+      (bundle.roleDefectPairs current (axisOfOrdinal coordinate)).card := by
+  classical
+  simpa only [residualSignatureHistogram, roleDefectPairs,
+    residualRoleSignature, Finset.mem_filter, Finset.mem_univ, true_and] using
+    (Finset.sum_card_fiberwise_eq_card_filter
+      (offDiagonalPairs X)
+      (Finset.univ.filter fun signature : Fin 4 -> Bool =>
+        signature coordinate = true)
+      (fun pair => bundle.residualRoleSignature current pair.1 pair.2))
+
+/-- CIRPT-16 / CIRPT-IE-011: a pair lies in the residual of the current kernel
+against the bundle precisely when its current-qualified defect signature is
+nonzero. This is the bridge consumed by CIRPT-IE-017. -/
+theorem mem_kernelResidual_iff_residualRoleSignature_ne_zero
+    {X : Type u} (current : DecidableKernel X) (bundle : PrimitiveBundle X)
+    (pair : X × X) :
+    pair ∈ kernelResidual current bundle.toKernel <->
+      bundle.residualRoleSignature current pair.1 pair.2 ≠ fun _ => false := by
+  constructor
+  · rintro ⟨currentRelated, notAgrees⟩ signatureZero
+    apply notAgrees
+    apply (bundle.agrees_iff_roleSignature_zero pair.1 pair.2).2
+    funext coordinate
+    have zeroAt := congrFun signatureZero coordinate
+    simpa [residualRoleSignature, currentRelated, roleSignature] using zeroAt
+  · intro signatureNonzero
+    constructor
+    · by_contra notCurrentRelated
+      apply signatureNonzero
+      funext coordinate
+      simp [residualRoleSignature, notCurrentRelated]
+    · intro agrees
+      apply signatureNonzero
+      have rawZero :=
+        (bundle.agrees_iff_roleSignature_zero pair.1 pair.2).1 agrees
+      funext coordinate
+      have separatedFalse :
+          bundle.separatesOnAxis (axisOfOrdinal coordinate) pair.1 pair.2 =
+            false := by
+        exact congrFun rawZero coordinate
+      simp [residualRoleSignature, separatedFalse]
+
+private def boolPairResidualBundle : PrimitiveBundle (Bool × Bool) where
+  Index := Bool
+  indexFintype := inferInstance
+  indexDecidableEq := inferInstance
+  atom
+    | false => ⟨.cut, cutKernel Prod.fst⟩
+    | true => ⟨.flow, cutKernel Prod.snd⟩
+
+private def boolPairCurrent : DecidableKernel (Bool × Bool) :=
+  cutKernel fun _ => true
+
+example :
+    boolPairResidualBundle.residualSignatureHistogram boolPairCurrent
+        (fun coordinate => coordinate = 0) = 4 ∧
+      boolPairResidualBundle.residualSignatureHistogram boolPairCurrent
+        (fun coordinate => coordinate = 1) = 4 ∧
+      boolPairResidualBundle.residualSignatureHistogram boolPairCurrent
+        (fun coordinate => coordinate = 0 || coordinate = 1) = 4 ∧
+      boolPairResidualBundle.residualSignatureHistogram boolPairCurrent
+        (fun _ => false) = 0 := by
+  decide
+
+#print axioms residual_signature_partition
+#print axioms mem_roleDefectPairs_iff
+#print axioms residual_signature_histogram_role_count
+#print axioms mem_kernelResidual_iff_residualRoleSignature_ne_zero
 
 end PrimitiveBundle
 

@@ -29,7 +29,16 @@ internal sealed class RoleSignatureDocument : IScribeDocumentDefinition
                 "This finset filters off-diagonal pairs by separation on one role axis."),
             DefinitionNode("signature-histogram", "signatureHistogram",
                 "Signature histogram",
-                "The histogram counts ordered off-diagonal pairs with each exact signature."),
+                "The CIRPT-38 raw histogram counts ordered off-diagonal pairs with each exact bundle signature."),
+            DefinitionNode("residual-role-signature", "residualRoleSignature",
+                "Residual role signature",
+                "The CIRPT-16 defect signature qualifies every role-separation bit by the current kernel."),
+            DefinitionNode("role-defect-pairs", "roleDefectPairs",
+                "Finite role-defect pairs",
+                "This finset restricts a named bundle role defect to ordered off-diagonal pairs."),
+            DefinitionNode("residual-signature-histogram", "residualSignatureHistogram",
+                "Residual signature histogram",
+                "The current-qualified histogram counts each CIRPT-IE-011 defect signature."),
             TheoremNode("coordinate-decoding", "axisOfOrdinal_axisOrdinal",
                 "Coordinate decoding returns the role", CoordinateFormula(),
                 "Encoding and then decoding any primitive role returns that role."),
@@ -44,7 +53,17 @@ internal sealed class RoleSignatureDocument : IScribeDocumentDefinition
                 "Summing all exact signature classes recovers the complete off-diagonal carrier."),
             TheoremNode("signature-axis-count", "signature_histogram_axis_count",
                 "Histogram role counts are exact", AxisCountFormula(),
-                "Summing classes with one role bit set recovers that axis separation count."))));
+                "Summing raw CIRPT-38 classes with one role bit set recovers that axis separation count."),
+            TheoremNode("residual-signature-partition", "residual_signature_partition",
+                "Residual signatures partition pairs", ResidualPartitionFormula(),
+                "CIRPT-IE-011 partitions all off-diagonal pairs by current-qualified defect signature."),
+            TheoremNode("residual-signature-role-count", "residual_signature_histogram_role_count",
+                "Residual histogram role counts are exact", ResidualAxisCountFormula(),
+                "CIRPT-IE-011 recovers the exact finite cardinality of every named role defect."),
+            TheoremNode("residual-is-nonzero-signature",
+                "mem_kernelResidual_iff_residualRoleSignature_ne_zero",
+                "Residual membership is a nonzero defect signature", ResidualNonzeroFormula(),
+                "CIRPT-16 identifies residual membership with a nonzero current-qualified signature."))));
 
     private static DocumentBlock.Describe DefinitionNode(
         string id, string declaration, string title, string paragraph) =>
@@ -126,4 +145,28 @@ internal sealed class RoleSignatureDocument : IScribeDocumentDefinition
             Sp, Eq, Sp,
             Call("card", Call("separationPairsOnAxis", F.Id("b"), F.Id("axis"))), Dot));
     }
+
+    private static Formula ResidualPartitionFormula() => Disp(Seq(
+        Sum, Underscore, Grp(F.Id("s")), Sp,
+        Call("residualSignatureHistogram", F.Id("K"), F.Id("b"), F.Id("s")),
+        Sp, Eq, Sp, Call("card", Call("offDiagonalPairs", F.Id("X"))), Dot));
+
+    private static Formula ResidualAxisCountFormula()
+    {
+        Formula condition = Seq(Call("s", F.Id("r")), Sp, Eq, Sp, F.Id("true"));
+        return Disp(Seq(
+            Sum, Underscore, Grp(F.Id("s"), Colon, Sp, condition), Sp,
+            Call("residualSignatureHistogram", F.Id("K"), F.Id("b"), F.Id("s")),
+            Sp, Eq, Sp,
+            Call("card", Call("roleDefectPairs", F.Id("K"), F.Id("b"),
+                Call("axisOfOrdinal", F.Id("r")))), Dot));
+    }
+
+    private static Formula ResidualNonzeroFormula() => Disp(Seq(
+        F.Id("p"), Sp, InMacro, Sp,
+        Call("kernelResidual", F.Id("K"), Call("toKernel", F.Id("b"))),
+        Sp, Iff, Sp,
+        NotEqual(
+            Call("residualRoleSignature", F.Id("K"), F.Id("b"), F.Id("p")),
+            F.Id("zero")), Dot));
 }
