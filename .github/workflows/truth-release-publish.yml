@@ -31,6 +31,9 @@ jobs:
     timeout-minutes: 150
     permissions:
       contents: read
+      # actions:read lets the report-artifact fallback list the selected commit's
+      # dev-push CI run and download its durable raw-lean-reports artifact.
+      actions: read
     outputs:
       artifact_name: ${{ steps.release.outputs.artifact_name }}
       artifact_id: ${{ steps.transfer.outputs.artifact-id }}
@@ -247,9 +250,54 @@ jobs:
           printf 'path=%s\n' "$served" >> "$GITHUB_OUTPUT"
           printf '%s\n' 'canonical Lean report served from cached input address' >> "$GITHUB_STEP_SUMMARY"
 
+      # When the content-addressed cache misses (it is evicted under dev churn: the
+      # 10GB Actions cache holds only a few of the 34MB reports at a time), reuse the
+      # same report from the gate's durable raw-lean-reports artifact instead of falling
+      # into full production, which does not finish in the runner window. The selected
+      # commit is gate-verified, so its dev-push CI run published that artifact. The
+      # report is re-verified against the checked-out tree exactly as the cache-serve
+      # path does, so this stays a pure speed-up that falls through to full production
+      # if the run, the artifact, or the verification is unavailable.
+      - name: Restore the canonical Lean report from the gate artifact
+        id: report-artifact
+        if: steps.source.outputs.publish_ready == 'true' && steps.report-reuse.outcome != 'success'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_COMMIT: ${{ steps.source.outputs.source_commit }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          run_id="$(gh api \
+            "repos/${GITHUB_REPOSITORY}/actions/workflows/ci.yml/runs?event=push&head_sha=${SOURCE_COMMIT}&per_page=1" \
+            --jq '.workflow_runs[0].id // empty')"
+          test -n "$run_id"
+          staging="$RUNNER_TEMP/gate-report-artifact"
+          rm -rf "$staging"
+          mkdir -p "$staging"
+          gh run download "$run_id" --repo "$GITHUB_REPOSITORY" \
+            --name raw-lean-reports --dir "$staging"
+          source="$staging/candidate-lean-report.json"
+          served="$RUNNER_TEMP/canonical-lean-report/raw-lean-report.json"
+          mkdir -p "$(dirname "$served")"
+          for suffix in '' .input.attestation .provenance.json .materials.zip; do
+            test -s "${source}${suffix}"
+            cp "${source}${suffix}" "${served}${suffix}"
+          done
+          read -r declaredSha256 declaredName < "${source}.sha256"
+          reportSha256="$(sha256sum "$served" | cut -d ' ' -f 1)"
+          test "$declaredSha256" = "$reportSha256"
+          test "$declaredName" = "$(basename "$source")"
+          printf '%s  %s\n' "$reportSha256" "$(basename "$served")" > "${served}.sha256"
+          cp -R "${source}.logs" "${served}.logs" 2>/dev/null || true
+          "$GITHUB_WORKSPACE/tools/scripts/report/lean-report-input.sh" verify \
+            --repository "$GITHUB_WORKSPACE" --report "$served"
+          printf 'path=%s\n' "$served" >> "$GITHUB_OUTPUT"
+          printf '%s\n' 'canonical Lean report served from the gate artifact' >> "$GITHUB_STEP_SUMMARY"
+
       - name: Produce the canonical Lean report
         id: report
-        if: steps.source.outputs.publish_ready == 'true' && steps.report-reuse.outcome != 'success'
+        if: steps.source.outputs.publish_ready == 'true' && steps.report-reuse.outcome != 'success' && steps.report-artifact.outcome != 'success'
         shell: bash
         run: |
           set -euo pipefail
@@ -267,7 +315,7 @@ jobs:
           COMMIT_ON_PROTECTED_DEV: ${{ steps.identity.outputs.commit_on_protected_dev }}
           SOURCE_COMMIT: ${{ steps.source.outputs.source_commit }}
           SOURCE_TREE: ${{ steps.identity.outputs.source_tree }}
-          REPORT_PATH: ${{ steps.report-reuse.outputs.path || steps.report.outputs.path }}
+          REPORT_PATH: ${{ steps.report-reuse.outputs.path || steps.report-artifact.outputs.path || steps.report.outputs.path }}
         shell: bash
         run: |
           set -euo pipefail
