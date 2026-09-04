@@ -46,10 +46,11 @@ internal sealed class PrimitiveBundleDocument : IScribeDocumentDefinition
                 "Bundle agreement is the canonical quotient-CUT joint kernel",
                 QuotientBridgeFormula(),
                 "Normalizing each atom through its quotient CUT identifies bundle agreement with the repository jointKernel."),
-            TheoremNode("primitive-bundle-kernel-invariance",
-                "primitive_bundle_kernel_invariance",
-                "Joint-kernel equality preserves finite computation", InvarianceFormula(),
-                "Pointwise equality of packaged relations preserves both logical agreement and its computed Boolean result."),
+            TheoremNode("bundle-agreement-congruence",
+                "agrees_congr_of_kernel_eq",
+                "Equal packaged relations give congruent bundle agreement", CongruenceFormula(),
+                "This bundle-level congruence preserves logical agreement and its Boolean computation; " +
+                "it is an input to the later engine-level invariance proof."),
             TheoremNode("packed-observer-atom-reflection",
                 "toPrimitiveAtom_relation_iff", "Packed observer reflection",
                 ObserverReflectionFormula(),
@@ -111,7 +112,7 @@ internal sealed class PrimitiveBundleDocument : IScribeDocumentDefinition
             pair, Sp, InMacro, Sp, Call("jointKernel", quotientCuts), Dot));
     }
 
-    private static Formula InvarianceFormula() => Disp(Seq(
+    private static Formula CongruenceFormula() => Disp(Seq(
         Open, Forall, Sp, F.Id("x"), Comma, Sp, F.Id("y"), Comma, Sp,
         Call("relation", Call("toKernel", F.Id("b")), F.Id("x"), F.Id("y")), Sp, Iff, Sp,
         Call("relation", Call("toKernel", F.Id("c")), F.Id("x"), F.Id("y")), Close,

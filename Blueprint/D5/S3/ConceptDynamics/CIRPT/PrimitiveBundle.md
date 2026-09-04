@@ -148,17 +148,17 @@ $$\forall x, y, \operatorname{agrees}\left(b, x, y\right) \iff (x,y) \in \operat
 
 Normalizing each atom through its quotient CUT identifies bundle agreement with the repository jointKernel.
 
-**Theorem 1.13 (Joint-kernel equality preserves finite computation).**
+**Theorem 1.13 (Equal packaged relations give congruent bundle agreement).**
 
 $$(\forall x, y, \operatorname{relation}\left(\operatorname{toKernel}\left(b\right), x, y\right) \iff \operatorname{relation}\left(\operatorname{toKernel}\left(c\right), x, y\right)) \Rightarrow ((\forall x, y, \operatorname{agrees}\left(b, x, y\right) \iff \operatorname{agrees}\left(c, x, y\right)) \land\\(\forall x, y, \operatorname{agreesB}\left(b, x, y\right) = \operatorname{agreesB}\left(c, x, y\right))).$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/CIRPT/PrimitiveBundle.primitive_bundle_kernel_invariance` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/CIRPT/PrimitiveBundle.agrees_congr_of_kernel_eq` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-Pointwise equality of packaged relations preserves both logical agreement and its computed Boolean result.
+This bundle-level congruence preserves logical agreement and its Boolean computation; it is an input to the later engine-level invariance proof.
 
 **Theorem 1.14 (Packed observer reflection).**
 
@@ -181,10 +181,10 @@ The generated atom kernel relates precisely the states with equal observed outpu
 - Truth anchor: `D5/S3/ConceptDynamics/CIRPT/PrimitiveBundle.agrees`
 - Truth anchor: `D5/S3/ConceptDynamics/CIRPT/PrimitiveBundle.agreesB`
 - Truth anchor: `D5/S3/ConceptDynamics/CIRPT/PrimitiveBundle.agreesB_eq_true_iff`
+- Truth anchor: `D5/S3/ConceptDynamics/CIRPT/PrimitiveBundle.agrees_congr_of_kernel_eq`
 - Truth anchor: `D5/S3/ConceptDynamics/CIRPT/PrimitiveBundle.agrees_equivalence`
 - Truth anchor: `D5/S3/ConceptDynamics/CIRPT/PrimitiveBundle.bundle_agrees_iff_jointKernel_quotientCuts`
 - Truth anchor: `D5/S3/ConceptDynamics/CIRPT/PrimitiveBundle.primitive_bundle_joint_kernel`
-- Truth anchor: `D5/S3/ConceptDynamics/CIRPT/PrimitiveBundle.primitive_bundle_kernel_invariance`
 - Truth anchor: `D5/S3/ConceptDynamics/CIRPT/PrimitiveBundle.toKernel`
 - Truth anchor: `D5/S3/ConceptDynamics/CIRPT/PrimitiveBundle.toPrimitiveAtom`
 - Truth anchor: `D5/S3/ConceptDynamics/CIRPT/PrimitiveBundle.toPrimitiveAtom_relation_iff`
