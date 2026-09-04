@@ -95,6 +95,8 @@ internal static partial class RepositoryRules
         if (!changedModules.IsEmpty)
         {
             var currentAdjacency = LeanImportAdjacency.Build(context.Current, context.Lean);
+            // RuleEvaluationContext has no baseline report, only the baseline source snapshot.
+            // CLAUDE.md rule 19 keeps base at SHA/object-diff level without checkout or compilation.
             var baselineAdjacency = LeanImportAdjacency.BuildFromSources(context.Baseline);
             var currentDependents = ReverseDependencies(currentAdjacency);
             var baselineDependents = ReverseDependencies(baselineAdjacency);
