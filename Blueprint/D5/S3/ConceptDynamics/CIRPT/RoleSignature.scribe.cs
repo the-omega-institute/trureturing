@@ -48,15 +48,15 @@ internal sealed class RoleSignatureDocument : IScribeDocumentDefinition
             TheoremNode("agreement-is-zero-signature", "agrees_iff_roleSignature_zero",
                 "Agreement is the zero signature", AgreementFormula(),
                 "A bundle relates a pair exactly when none of its four roles separates it."),
-            TheoremNode("four-role-signature-partition", "four_role_signature_partition",
-                "Role signatures partition off-diagonal pairs", PartitionFormula(),
-                "Summing all exact signature classes recovers the complete off-diagonal carrier."),
-            TheoremNode("signature-axis-count", "signature_histogram_axis_count",
-                "Histogram role counts are exact", AxisCountFormula(),
+            TheoremNode("bundle-signature-partition", "bundle_signature_partition",
+                "Raw bundle signatures partition off-diagonal pairs", BundlePartitionFormula(),
+                "CIRPT-38 partitions the complete off-diagonal carrier by raw bundle signature."),
+            TheoremNode("bundle-signature-histogram-axis-count", "bundle_signature_histogram_axis_count",
+                "Raw bundle histogram role counts are exact", BundleAxisCountFormula(),
                 "Summing raw CIRPT-38 classes with one role bit set recovers that axis separation count."),
-            TheoremNode("residual-signature-partition", "residual_signature_partition",
-                "Residual signatures partition pairs", ResidualPartitionFormula(),
-                "CIRPT-IE-011 partitions all off-diagonal pairs by current-qualified defect signature."),
+            TheoremNode("four-role-signature-partition", "four_role_signature_partition",
+                "Current-qualified four-role signatures partition pairs", ResidualPartitionFormula(),
+                "CIRPT-16 / CIRPT-IE-011 partitions all off-diagonal pairs by current-qualified defect signature."),
             TheoremNode("residual-signature-role-count", "residual_signature_histogram_role_count",
                 "Residual histogram role counts are exact", ResidualAxisCountFormula(),
                 "CIRPT-IE-011 recovers the exact finite cardinality of every named role defect."),
@@ -127,7 +127,7 @@ internal sealed class RoleSignatureDocument : IScribeDocumentDefinition
             Sp, Eq, Sp, zero, Dot));
     }
 
-    private static Formula PartitionFormula()
+    private static Formula BundlePartitionFormula()
     {
         Formula summand = Call("signatureHistogram", F.Id("b"), F.Id("s"));
         return Disp(Seq(
@@ -135,7 +135,7 @@ internal sealed class RoleSignatureDocument : IScribeDocumentDefinition
             Sp, Eq, Sp, Call("card", Call("offDiagonalPairs", F.Id("X"))), Dot));
     }
 
-    private static Formula AxisCountFormula()
+    private static Formula BundleAxisCountFormula()
     {
         Formula condition = Seq(
             Call("s", Call("axisOrdinal", F.Id("axis"))), Sp, Eq, Sp, F.Id("true"));

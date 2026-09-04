@@ -145,7 +145,7 @@ def signatureHistogram
 
 /-- CIRPT-38: the sixteen raw bundle signatures partition all ordered
 off-diagonal pairs. -/
-theorem four_role_signature_partition
+theorem bundle_signature_partition
     {X : Type u} [Fintype X] [DecidableEq X]
     (bundle : PrimitiveBundle X) :
     ∑ signature, bundle.signatureHistogram signature =
@@ -160,9 +160,9 @@ theorem four_role_signature_partition
         intro signature _
         exact Finset.mem_univ _)).symm
 
-/-- Summing histogram classes whose role bit is true recovers exactly the
-off-diagonal separation count for that role. -/
-theorem signature_histogram_axis_count
+/-- CIRPT-38: summing raw bundle histogram classes whose role bit is true
+recovers exactly the off-diagonal separation count for that role. -/
+theorem bundle_signature_histogram_axis_count
     {X : Type u} [Fintype X] [DecidableEq X]
     (bundle : PrimitiveBundle X) (axis : PrimitiveAxis) :
     ∑ signature with signature (axisOrdinal axis) = true,
@@ -217,9 +217,9 @@ def residualSignatureHistogram
   ((offDiagonalPairs X).filter fun pair =>
     bundle.residualRoleSignature current pair.1 pair.2 = signature).card
 
-/-- CIRPT-IE-011: current-qualified defect signatures partition all ordered
-off-diagonal pairs. -/
-theorem residual_signature_partition
+/-- CIRPT-16 / CIRPT-IE-011: current-qualified defect signatures partition all
+ordered off-diagonal pairs. -/
+theorem four_role_signature_partition
     {X : Type u} [Fintype X] [DecidableEq X]
     (current : DecidableKernel X) (bundle : PrimitiveBundle X) :
     ∑ signature, bundle.residualSignatureHistogram current signature =
@@ -306,7 +306,9 @@ example :
         (fun _ => false) = 0 := by
   decide
 
-#print axioms residual_signature_partition
+#print axioms bundle_signature_partition
+#print axioms bundle_signature_histogram_axis_count
+#print axioms four_role_signature_partition
 #print axioms mem_roleDefectPairs_iff
 #print axioms residual_signature_histogram_role_count
 #print axioms mem_kernelResidual_iff_residualRoleSignature_ne_zero

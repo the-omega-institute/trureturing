@@ -131,8 +131,16 @@ internal sealed class UnifiedResidualDocument : IScribeDocumentDefinition
 
     private static Formula JointTargetFormula()
     {
+        Formula x = F.Id("x");
+        Formula y = F.Id("y");
+        Formula index = F.Id("j");
         Formula component = Call("L", F.Id("j"));
+        Formula jointHypothesis = Seq(
+            Forall, Sp, x, Comma, Sp, y, Comma, Sp,
+            Relation(F.Id("joint"), x, y), Sp, Iff, Sp,
+            Forall, Sp, index, Comma, Sp, Relation(component, x, y));
         return Disp(Seq(
+            Open, jointHypothesis, Close, Sp, Rightarrow, Sp,
             Call("kernelResidual", F.Id("K"), F.Id("joint")),
             Sp, Eq, Sp, Operatorname, Grp(F.Id("bigcup")), F.Id("j"), Sp,
             Call("kernelResidual", F.Id("K"), component), Dot));
