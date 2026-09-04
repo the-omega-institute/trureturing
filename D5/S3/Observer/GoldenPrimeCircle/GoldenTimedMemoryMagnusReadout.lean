@@ -141,7 +141,16 @@ theorem golden_timed_memory_magnus_readout_swap
     goldenTimedMemoryMagnusReadout prime stable eventQ eventP =
       -goldenTimedMemoryMagnusReadout prime stable eventP eventQ := by
   unfold goldenTimedMemoryMagnusReadout
-  rw [timed_matrix_two_event_doubled_magnus_swap]
+  have hSwapEntry :
+      (doubledMagnusDegreeTwo
+          (chronologicalSignature (timedMatrixObservation stable)
+            [eventQ, eventP])) 0 1 =
+        -(doubledMagnusDegreeTwo
+          (chronologicalSignature (timedMatrixObservation stable)
+            [eventP, eventQ])) 0 1 := by
+    simpa using congrArg (fun matrix => matrix 0 1)
+      (timed_matrix_two_event_doubled_magnus_swap stable eventP eventQ)
+  rw [hSwapEntry]
   ring
 
 /-- Headline contrast: the scalar short/long endpoint is order-blind, while a
