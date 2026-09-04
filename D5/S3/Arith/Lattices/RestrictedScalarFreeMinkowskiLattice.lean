@@ -40,7 +40,6 @@ set_option relaxedAutoImplicit false
 noncomputable section
 
 open Module Set
-open scoped Classical
 
 namespace D5.S3.Arith.Lattices.RestrictedScalarFreeMinkowskiLattice
 
@@ -101,12 +100,14 @@ theorem restrictedMinkowskiLattice_eq_span
       ((restrictedMinkowskiBasis K r).mem_span_iff_repr_mem ℤ x).mp hx ⟨i, j⟩
     simpa only [restrictedMinkowskiBasis, Pi.basis_repr] using hCoordinate
 
+open scoped Classical in
 instance restrictedMinkowskiLattice_discrete
     (K : Type*) [Field K] [NumberField K] (r : ℕ) :
     DiscreteTopology (restrictedMinkowskiLattice K r) := by
   rw [restrictedMinkowskiLattice_eq_span]
   infer_instance
 
+open scoped Classical in
 instance restrictedMinkowskiLattice_isZLattice
     (K : Type*) [Field K] [NumberField K] (r : ℕ) :
     IsZLattice ℝ (restrictedMinkowskiLattice K r) := by
@@ -114,6 +115,7 @@ instance restrictedMinkowskiLattice_isZLattice
   rw [restrictedMinkowskiLattice_eq_span]
   exact ZSpan.span_top (restrictedMinkowskiBasis K r)
 
+open scoped Classical in
 /-- A fundamental domain for the coordinatewise Minkowski lattice. -/
 theorem restrictedMinkowskiLattice_fundamentalDomain
     (K : Type*) [Field K] [NumberField K] (r : ℕ) :
@@ -131,6 +133,7 @@ theorem restrictedScalarFree_finrank
   rw [Module.finrank_pi_fintype]
   simp [NumberField.RingOfIntegers.rank]
 
+open scoped Classical in
 /-- Finite-free restriction of scalars: a rank-`r` module over the integers of
 a degree-`d` number field has integer rank `r*d`, and its full conjugate image
 is a discrete full-rank lattice with the displayed fundamental domain. -/
