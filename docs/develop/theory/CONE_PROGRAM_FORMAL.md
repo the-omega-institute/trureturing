@@ -351,3 +351,11 @@ $$D_\varphi(\rho\|\mathcal{P}\rho) = F(\rho) - F(\mathcal{P}\rho).$$
 **C5 纠缠塔纲要**:任一路径散度 ⟹ E_g := min_SEP 自动 LOCC 单调;塔顶同值(定理 10.5);山腰按 C3。
 **C6 稀有度纲要**:任一代数配置 ⟹ 隙分解、幂律指数与系数由顶点谱几何机械得(定理 5.1 型;深尾常数守三件套铁款)。
 **C7 经济对表纲要**:新市场/对偶结构按四对表模板(定价—执法—处理—均衡)机械译;反身性判据分界。
+
+## 第八章 续:开放问题线候签(第一批;Zauner 猜想之 d = 3 精确证书)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;ChatGPT Pro 文献检索席(flight `op-r1-gptpro-search`,候选 #2「Hesse SIC certificate toward Zauner's conjecture」;文献 arXiv:1103.2030、arXiv:1109.6514、arXiv:quant-ph/0310075、doi:10.1063/1.1737053)提出;探针席 codex-cli(flight `op-p9-hesse-sic`,worktree `trureturing-op-probe-h`,base origin/dev `0e0e991da4`,2151s)以 `lake env lean` 整证并给出 kernel 读数(`#print axioms` 为标准三公理,无 sorry);本候签由 orchestrator(claude 主循环,会话「开放问题」)撰写。判决日 2026-09-05。定义 8.1(SIC)与 Zauner 猜想「属两颗心脏,零输入零输出」不变:本条只是 d = 3 的精确(非数值)证书,不触碰一般 d。
+
+**定理 8.3(Hesse SIC 证书,d = 3)[候签]。**令 ω = exp(2πi/3),取 ℂ³ 中九个向量 (0, 1, −ω^k)/√2、(−ω^k, 0, 1)/√2、(1, −ω^k, 0)/√2(k = 0, 1, 2)。则 (i) 每个向量的范数平方为 1;(ii) 任意两个不同向量的内积模平方为 1/4 = 1/(d+1);(iii) 九个秩一投影之和 ∑_r v_r v_r† = 3·I₃。故 E_r := (1/3) v_r v_r† 构成 ℂ³ 上的 SIC-POVM(定义 8.1 在 d = 3 的精确实例)。落点 `D5/S3/QuantumContext/HesseSicCertificate`(该桶已有 `ZaunerSymplecticMatrix`、`CompleteBasisReconstruction`;直接文件 12/24);向量以 `Fin 9 → (Fin 3 → ℂ)` 显式给出,内积与投影和以钉版 Mathlib 的 `inner`、`Matrix.vecMulVec`、`star` 表达。
+
+**注 8.4(可证伪预测与逃逸见证,写在跑之前)[第 5⁗ 条]。**证明的逃逸内容为 (a) 由同块/异块轨道分类归约到三次单位根恒等式(ω³ = 1、ω ≠ 1、1 + ω + ω² = 0、‖ω‖ = 1)的完整非对角重叠表;(b) 投影和的三条非对角相消恒等式 ∑_{k=0}^{2} ω^k = 0(及其共轭)与对角计数 6·(1/2) = 3。二者位于 (ii)(iii) 的活证明路径上,不由任何冻结定理或 Mathlib 引理实例化得到;判形 content,准入依据 escape-witness。本条不断言一般 d 的存在性,不断言 Weyl–Heisenberg 协变形(轨道形只作注记),不重述 `ZaunerSymplecticMatrix` 的模 3 辛矩阵证书(该模块不给出向量族或单位分解)。若钉版 API 下三次单位根的范数/共轭化简不能闭合九九重叠表,本候签按 open 记,不得以 `sorry` 或公理代替。结算:由一个实施席 `deposit`(绑本条)落地,三席评审后合入;定义 8.1 原子保持 residual-open,不 cover。

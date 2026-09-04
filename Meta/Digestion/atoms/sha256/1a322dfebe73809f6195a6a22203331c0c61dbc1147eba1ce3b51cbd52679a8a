@@ -1,0 +1,14 @@
+## 11.1 均匀 ensemble
+
+在式 (A9.5) 中，每个 exponent $v\in[0,M_Q-1]$ 权重相同，因此
+
+$$
+\mathbb E_Q[v^2]
+=
+\frac{(M_Q-1)(2M_Q-1)}6
+\asymp M_Q^2.
+\tag{A11.1}
+$$
+
+这确实产生黄金深度放大。
+

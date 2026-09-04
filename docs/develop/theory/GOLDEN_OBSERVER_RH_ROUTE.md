@@ -2590,3 +2590,24 @@ W-13、W-14、W-15 的右端**不含 `Z`**:素数侧表达式与 Poincaré 不�
 一席位轮(codex-cli,独立 worktree,绑 CosinePacket、ArchimedeanDivergence 两冻结模块与 `zetaZeroConfig_local_count`;同 PR deposit(绑 Z-6 atom)+ cover;三席评审,报告按第 5⁗ 条列 `proof_shape` / 直接冻结依赖 / `escape_witness` / `admission_basis`)。预计 ≤ 3 小时(探针 16 条声明可复用)。
 
 后续增订继续严格追加于本节之后。
+---
+
+# 增订三十二　固定宽度窗内零点数的对数下界(Z-7 预登记)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;探针一席(codex-cli,`probe-z7-density`,`make lean` exit 0、`lake env lean` exit 0,新增声明全为标准三公理)在 `origin/dev` ≥ `68ccfa1365` 的暖树上、以增订三十一的 Z-6 探针文件为起点整证 Z-7;消费冻结的 `ZeroInfinitude/CosinePacket`、`ZeroInfinitude/ArchimedeanDivergence`、`Zeta23.WeilEF.EF_lit_zetaZeroConfig`、`Zeta23.EF.gamma_term`、`fourierLaplace_decay_closedStrip`、`Zeta23.RvM.zetaZeroConfig_local_count`(AuricStudio lane)与 Z-6 模块 `ZeroInfinitude/WindowZero`(la163 在飞)的公开中间定理。`ZeroConfig.N T₁ T₂` 为载体上满足 T₁ < Im ρ ≤ T₂ 的点按重数的有限和(`D5/S3/Weil/ZetaCore/Defs.lean`)。散文由 orchestrator(claude 主循环)撰写。判决日:2026-09-05。lane issue:#4589。
+
+## 〇　为什么是这一节
+
+增订三十一只用了零点侧「非零」这一位信息。同一分解还给出**计数**:零点侧的范数 ≤ (K/2)·N(T−R, T+R)·2 + 尾项(窗内每一项由闭带衰减界 ≤ mult·K,窗外两侧尾项各由固定半径估计压到 (c/4)·log(T+3) 量级),而右端 ≥ c·log(T+3) − M,于是 K·N(T−R, T+R) ≥ (c/2)·log(T+3) − M − C_tail,即 **N(T−R, T+R) ≥ c′·log(T+3)**,c′ = c/(4K),对一切 T ≥ T₀。与冻结的局部计数上界 A₀·log(|t|+3)(每单位窗)合起来,固定宽度窗内的零点数在本仓内被夹在 c′·log T 与 2R·A₀·log T 之间——**真实阶 log T 的上下界都已冻结**。**诚实边界**:①常数存在性,不给数值;②不涉及零点实部;③不构成 RH 证明。
+
+## 一　Z-7 预登记:窗内零点数对数下界(`ZeroInfinitude/WindowCount`,同桶第五个模块,绑 Z-6 模块)
+
+**义务**:公开定理 `window_count_lower_log : ∃ R T₀ c' : ℝ, 0 < R ∧ 0 < c' ∧ ∀ T : ℝ, T₀ ≤ T → c' * Real.log (T + 3) ≤ (Zeta23.zetaZeroConfig.N (T - R) (T + R) : ℝ)`,连同公开的分解引理 `zero_side_norm_le_window_count`(零点侧范数 ≤ K·N(T−R, T+R) + 对数尾项)与 `exists_radius_shifted_inv_sq_tsum_compl`(窗外补集上的固定半径尾项估计)。
+**逃逸见证(探针已证,写在实施之前)**:零点侧 tsum 按窗 (T−R, T+R] 及其共轭像的**直接分解**——中心部分逐项 ≤ mult·K/2、两侧补集各用固定半径尾项估计——与常数配平 c′ = c/(4K)、T₀ = max(T_R, exp(4D/c));不由 Z-6 的存在性陈述实例化得到(探针明确未用 Z-6 结论)。
+**边界**:同 §〇;`exists_zero_near_every_large_height` 可由 N ≥ 1 与窗内有限非空推出,作伴随推论,不另列义务。
+
+## 二　预算与结算
+
+一席位轮(codex-cli,独立 worktree,绑 CosinePacket / ArchimedeanDivergence / WindowZero 三冻结模块与 `zetaZeroConfig_local_count`;同 PR deposit(绑 Z-7 atom)+ cover;三席评审,报告按第 5⁗ 条)。须在 Z-6 模块合入后开工。预计 ≤ 2 小时(探针证明可复用)。
+
+后续增订继续严格追加于本节之后。
