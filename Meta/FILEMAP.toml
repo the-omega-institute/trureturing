@@ -559,6 +559,16 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
+pattern = "tools/lean-information-audit/**"
+kind = "program"
+admission_plane = "judge"
+produced_by = "none"
+consumed_by = ["Lean"]
+verified_by = ["lean-build"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
 pattern = "tools/lean-inspector/**"
 kind = "program"
 admission_plane = "judge"
