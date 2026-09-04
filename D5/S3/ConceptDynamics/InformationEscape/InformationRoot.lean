@@ -30,14 +30,8 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.ConceptDynamics.InformationEscape.InformationRoot
 
-local instance :
-    DecidableEq
-      _root_.D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.BinaryInterpretationContext :=
+attribute [local instance]
   _root_.D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.contextDecidableEq
-
-local instance :
-    DecidableEq
-      _root_.D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.DeterministicBoolSCM :=
   _root_.D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.modelDecidableEq
 
 /-! The specification's suggested `D5/InformationRoot.lean` location is not a
