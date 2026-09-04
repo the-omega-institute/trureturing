@@ -9,10 +9,12 @@ public sealed class FrozenSurfaceRuleTests
 {
     private const string FrozenPath = RuleFixture.RingPath;
     private const string OtherPath = RuleFixture.BlueprintPath;
-    // Derived once by independently canonicalizing the RuleFixture raw report's
-    // goldenRing/def/Nat declaration and the module-statement-v1 material.
+    // Derived with POSIX printf and shasum -a 256 over the documented statement
+    // domain prefix and canonical declaration/module JSON, outside production code.
     private const string ExpectedFrozenModuleStatementPin =
         "sha256:3d2b9bf06c5fb9076c8206428611c597cc723e59b64f5415e7dae6049ee954e2";
+    private const string ExpectedChangedFrozenModuleStatementPin =
+        "sha256:410bb522f539e28e4d11d468ba910476da9a0462246fc575d54526b3c57d0a2e";
     private static readonly string FrozenStatePathValue =
         FrozenStatePath.FromModulePath(RepoPath.CreateKnown(FrozenPath)).Value;
     [Theory]
@@ -220,10 +222,16 @@ public sealed class FrozenSurfaceRuleTests
     public void Sl008AllowsStatementAndStateToMoveTogetherAndObservesThePinChange()
     {
         var fixture = new RuleFixture();
-        var oldPin = ModuleStatementId(fixture, FrozenPath);
+        var oldPin = StatementId.Create(ExpectedFrozenModuleStatementPin);
+        Assert.Equal(oldPin, ModuleStatementId(fixture, FrozenPath));
         AddState(fixture, FrozenPath, oldPin, includeInBaseline: true);
+        fixture.Files[FrozenPath] = fixture.Files[FrozenPath].Replace(
+            "def goldenRing : Nat := 0",
+            "def goldenRing : Int := 0",
+            StringComparison.Ordinal);
         ChangeStatement(fixture, FrozenPath, "Int");
-        var newPin = ModuleStatementId(fixture, FrozenPath);
+        var newPin = StatementId.Create(ExpectedChangedFrozenModuleStatementPin);
+        Assert.Equal(newPin, ModuleStatementId(fixture, FrozenPath));
         AddState(fixture, FrozenPath, newPin);
 
         var diagnostic = Assert.Single(Evaluate(
@@ -231,10 +239,10 @@ public sealed class FrozenSurfaceRuleTests
             (FrozenPath, RawChangeKind.Modified),
             (FrozenStatePathValue, RawChangeKind.Modified)).Diagnostics);
 
-        Assert.Equal(AdmissionEffect.Observe, diagnostic.AdmissionEffect);
         Assert.Equal(
             $"FROZEN_PIN_CHANGE selector={FrozenPath} old={oldPin.Value} new={newPin.Value}",
             diagnostic.Message);
+        Assert.Equal(AdmissionEffect.Observe, diagnostic.AdmissionEffect);
     }
 
     [Fact]
