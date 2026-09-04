@@ -35,8 +35,9 @@ open D5.S3.Weil.CayleyLaguerre.TruncatedCircleMomentBridge
 
 namespace D5.S3.Observer.BlockStructure.FiniteCommonSpectrumCriterion
 
-noncomputable local instance circleMeasurableSpace : MeasurableSpace Circle := borel Circle
-local instance circleBorelSpace : BorelSpace Circle := ⟨rfl⟩
+attribute [local instance]
+  RationalToeplitzCollapse.circleMeasurableSpace
+  RationalToeplitzCollapse.circleBorelSpace
 
 /-- A matrix is the Gram matrix of the full common-denominator rational feature
 family exactly when its inverse coefficient congruence is a positive
