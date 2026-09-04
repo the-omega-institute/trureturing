@@ -1358,3 +1358,13 @@ $$H(t_i)=\tfrac14\arctan\tfrac{a-d}{2b}$$
 **定理 3.4.7(二十速度中任意十四人的孤独时刻)**〔候签;open;同模块主定理〕。对任意 S ⊆ speedUniverse 且 S.card = 14,存在 t ∈ [0, 1](t : ℚ),使得对一切 s ∈ S,`(1 : ℚ)/15 ≤ torusDist (s · t)`——即孤独跑者猜想(n = 14,界 1/(n+1))对速度取自 {1, …, 20} 的全部 C(20,14) = 38760 个十四元速度集成立,且时刻可取为有理数。
 
 **注 3.4.8(可证伪预测与逃逸见证,写在跑之前)**〔第 5⁗ 条〕。逃逸内容三处,皆在活证明路径上:①定理 3.4.5 的有理—模窗口桥(由 `Int.fract_div_natCast_eq_div_natCast_mod` 与 d 的正性把 1/15 界改写为整数不等式);②经此桥反射的十五条精确掩码等式(`reflected_mask_certificate`);③七例残余覆盖证书(`reflected_cover_certificate`,kernel `decide`,探针实测 elaboration 0.049s、kernel 0.022s)。主定理 3.4.7 经 `certificate_covers_fourteen`(补集—基数提升:十四元集若漏掉某单一速度即被前十三张掩码覆盖,否则其六元补集落在残余集内而含 {9,18} 或 {10,20})与 `safeMask_sound` 传递地使用三者,无死依赖、非结论复述;判形 content,准入依据 escape-witness。对 38760 个子集直接 `decide` 在探针中 279s 未完(exit 130),**不得**改用 `native_decide`;正解即上述补集归约。只依赖钉版 Mathlib,不引入冻结 D5 依赖;落点 `D5/S1/Phase/`(探针实测直接文件 13/24,落地后 14/24)。若钉版 API 下 `Int.fract_div_natCast_eq_div_natCast_mod` 不可用或十五条掩码等式 kernel 判定超时,本候签按 open 记,不得以 `sorry`、公理或 `Lean.ofReduceBool` 代替。结算:三条由一个实施席同 PR `deposit`(绑 3.4.7)+ `cover`(3.4.5 / 3.4.6)落地,三席评审后合入。
+
+## 附录 E 增订六十九(v3.94 候审):Zaremba 猜想在锐常数 5 下的 1024 有限前沿——可靠的 Euclid 连分数检查器与内核判定的见证表(定理 2.2.1–2.2.2 候签;开放问题线第四批)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;ChatGPT Pro 全领域检索席(flight `op-r5-gptpro-open-any`,候选 #9;Bourgain–Kontorovich、Huang、Kan 与 arXiv:2605.02518 之状态描述属检索席自报,未独立核实)提出;探针席 codex-cli(flight `op-p20-zaremba`,worktree `trureturing-la118-germ-gab`,base origin/dev)以 `lake env lean` 整证(exit 0,wall 85s;其中 `decide` 13.4s、类型检查 20.0s)并给出 kernel 读数(`#print axioms` 对全部公开声明为标准三公理之子集,无 native_decide);本节候签由 orchestrator(claude 主循环,会话「开放问题」)撰写。判决日 2026-09-05。落点:卷 II §II.2 不动点的分类学(连分数轨道之有界部分商);Zaremba 猜想本身(任意 q、常数 5)保持 open,q > 1024 不作断言;与 Mathlib `GenContFract.of` 的数字列桥接未证,记 open。
+
+**定理 2.2.1(Euclid 连分数检查器的可靠性)**〔候签;open;落 `D5/S1/Depth/ContinuedFractions/ZarembaFiveFiniteFront`〕。定义燃料化 Euclid 商列 `cfDigitsAux` 与 `cfDigits a q := cfDigitsAux (q+1) a q`,并定义 `ZarembaWitness A a q := Nat.Coprime a q ∧ 0<a ∧ a<q ∧ ∀ d∈cfDigits a q, d≤A` 及独立布尔检查器 `zarembaCheck`;证明每一步取商 `a/q`、以严格较小的余数 `a%q<q` 递归,且 `zarembaCheck A a q=true → ZarembaWitness A a q`。
+
+**定理 2.2.2(Zaremba 常数 5 的 1024 有限前沿)**〔候签;open;落 `D5/S1/Depth/ContinuedFractions/ZarembaFiveFiniteFront`〕。嵌入仓外计算的 1025 项见证表并由 Lean 内核 `decide` 验证其每一行;证明 `∀ q:ℕ, 2≤q → q≤1024 → ∃ a, ZarembaWitness 5 a q`。伴随忠实性证书为 `ZarembaWitness 5 1 2`、`q=54` 的最小见证 `a=17` 及 `cfDigits 17 54=[0,3,5,1,2]`,并以 `cfDigits 1 6=[0,6]` 与检查器拒绝 `1/6` 钉住上界确有约束力。
+
+**注 2.2.3(可证伪预测与逃逸见证,写在跑之前)**〔第 5⁗ 条〕。拟议逃逸见证为公开有限证书 `zarembaFiveCertificate`:内核 `decide` 新证 `(List.range 1025).all (...) = true`,且该命题位于 `zaremba_five_upto` 的活证明路径上;判形 content,准入依据 escape-witness。若 Q=1024 的内核判定不能完成,只允许降到已实测通过的最大二次幂并如实改号,不得用 `native_decide`、`Lean.ofReduceBool`、`sorry` 或新公理。
