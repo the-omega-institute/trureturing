@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:89a2fc97571fe1b1f07b58bd8f02dcec583568882b179c4b72fc443b8405b7d9
+  normalized_sha256: sha256:89a2fc97571fe1b1f07b58bd8f02dcec583568882b179c4b72fc443b8405b7d9
+cas_ref: sha256:89a2fc97571fe1b1f07b58bd8f02dcec583568882b179c4b72fc443b8405b7d9
+coverage_gids:
+  - gid: D5/S3/Analytic/Isolation/PositiveDeterminantCoefficientCompactness.positive_determinant_coefficient_compactness
+    target_statement_id: sha256:806b5a211d7991ec362eb5930ddd752d25d7d356f3fc6e882b64dc1aaf13f54a
+receipts:
+  scribe:
+    - gid: D5/S3/Analytic/Isolation/PositiveDeterminantCoefficientCompactness.positive_determinant_coefficient_compactness
+      definition_sha256: sha256:377fdfc96de1a3ecc6560a58138aa671c73bdf772f8fd68c1c9d137b03f82221
+      emission_sha256: sha256:a6e733a0eddcc9910a34f856e407df243651e2600cfce0cb7c75d8f882db3d8b
+  unresolved_subitems: []

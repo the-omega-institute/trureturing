@@ -1,0 +1,61 @@
+# 第一千八百四十二部　从离散谱响应重建连续 canonical Hamiltonian
+
+定义：
+
+$$
+\boxed{
+m_\xi(z)
+=
+iL_\xi\!\left(\frac12-iz\right),
+\qquad
+z\in\mathbb C_+.
+}
+\tag{1842.1}
+$$
+
+若：
+
+$$
+z=x+iy,
+\qquad
+y>0,
+$$
+
+则：
+
+$$
+\Re\left(\frac12-iz\right)
+=
+\frac12+y
+>
+\frac12.
+$$
+
+因此 RH 成立时：
+
+$$
+\boxed{
+\Im m_\xi(z)
+=
+\Re L_\xi\!\left(\frac12-iz\right)
+>0.
+}
+\tag{1842.2}
+$$
+
+也就是说，\(m_\xi\) 是 Nevanlinna–Herglotz 函数。
+
+反过来，如果 \(m_\xi\) 在整个上半平面是 Herglotz 函数，它必须在那里全纯；任何右侧离线零点都会变成 \(m_\xi\) 在上半平面中的极点。因此：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+m_\xi
+\text{ 是 Herglotz 函数}.
+}
+\tag{1842.3}
+$$
+
+---
+

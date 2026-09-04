@@ -1,0 +1,41 @@
+## 400. 零点镜像宇称
+
+$$
+\Pi_{\mathrm{zero}}:
+\delta\mapsto-\delta.
+$$
+
+它们都具有：
+
+$$
+C_2
+$$
+
+结构，但不能仅仅因为同构就宣布它们是同一个宇称。
+
+真正需要的是一个 intertwiner：
+
+$$
+\boxed{
+\mathcal U\Pi_\Omega
+=
+\Pi_{\mathrm{zero}}\mathcal U,
+}
+$$
+
+以及：
+
+$$
+\boxed{
+\mathcal U\Pi_{\mathrm{obs}}
+=
+\Pi_{\mathrm{zero}}\mathcal U.
+}
+$$
+
+这个 \(\mathcal U\) 就是此前 Trace–Jet Bridge 的 parity-enhanced 版本。
+
+没有它，就不能从“一个整数含奇数个素因子”直接推导“某个零点位于临界线右侧”。
+
+---
+

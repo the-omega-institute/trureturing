@@ -1,0 +1,43 @@
+## 40. ζ 可以是投影，但投影非单射不推出 RH 为假
+
+仓库已证明若干模型中：
+
+\[
+\text{hidden ordered prime memory}
+\longrightarrow
+\text{scalar completed readout}
+\]
+
+不是单射。
+
+这支持下述正式判断：
+
+\[
+\boxed{
+\text{标量 ζ 类读数可能遗忘构造历史}.
+}
+\]
+
+但 RH 是关于经典 \(\xi\) 自身 zero divisor 的命题。
+
+因此：
+
+\[
+\boxed{
+\text{存在隐藏 memory}
+\not\Rightarrow
+\text{经典 }\xi\text{ 有离线零点}.
+}
+\]
+
+要从“ζ 是投影”推出 RH 为假，至少还需要：
+
+1. 一个自然 lift \(\widetilde\Xi\)；
+2. 精确投影/行列式恒等式；
+3. lift 谱中离线分支不能在投影中消失的定理；
+4. 一个经证明或认证的离线零点。
+
+目前这些前件没有闭合。
+
+---
+

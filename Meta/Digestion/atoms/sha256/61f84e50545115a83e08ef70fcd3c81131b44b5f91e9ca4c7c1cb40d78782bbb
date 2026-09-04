@@ -1,0 +1,39 @@
+## 126. 相关 Gibbs family
+
+固定 \(\sigma>1\)，在收敛的源变量邻域内定义：
+
+$$
+\mathbb P_{\sigma,\mathbf u}(N=n)
+=
+\frac{
+n^{-\sigma}
+\exp\left(
+\sum_{h\in H}u_h\Lambda(n+h)
+\right)
+}{
+Z_H(\sigma,\mathbf u)
+},
+$$
+
+其中：
+
+$$
+Z_H(\sigma,\mathbf u)
+=
+\sum_{n\ge1}
+n^{-\sigma}
+\exp\left(
+\sum_{h\in H}u_h\Lambda(n+h)
+\right).
+$$
+
+定义势函数：
+
+$$
+\Phi_H(\sigma,\mathbf u)
+=
+\log Z_H(\sigma,\mathbf u).
+$$
+
+---
+

@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:e2da2cb52176f7af664ad203c036820acb51c349f90d982c9474a1e6db676e2d
+  normalized_sha256: sha256:e2da2cb52176f7af664ad203c036820acb51c349f90d982c9474a1e6db676e2d
+cas_ref: sha256:e2da2cb52176f7af664ad203c036820acb51c349f90d982c9474a1e6db676e2d
+coverage_gids:
+  - gid: D5/S3/Weil/ZetaCore/OffLineStrongNegativeCertificate.off_line_strong_negative_certificate
+    target_statement_id: sha256:c4fbfac3d4a3c74b60237fc06085675b4bf81ad0ed010a4528b0619b0c0965f0
+receipts:
+  scribe:
+    - gid: D5/S3/Weil/ZetaCore/OffLineStrongNegativeCertificate.off_line_strong_negative_certificate
+      definition_sha256: sha256:239def136bba3abf204b57abcc61a4667c304e27899f03742dded41e1a511dad
+      emission_sha256: sha256:4da59a74d8364c16bc0b21f0e8e9060bf5d3d50e07a14c5bbaa82688d115d1d4
+  unresolved_subitems: []

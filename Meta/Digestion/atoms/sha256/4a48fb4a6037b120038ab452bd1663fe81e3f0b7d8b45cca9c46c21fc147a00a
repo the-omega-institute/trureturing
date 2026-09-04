@@ -1,0 +1,31 @@
+## 8. 构型出现集合
+
+定义：
+
+$$
+A_H
+=
+\{n\ge1:n+h\text{ 对所有 }h\in H\text{ 均为素数}\}.
+$$
+
+定义构型 Dirichlet 函数：
+
+$$
+Z_H(s)
+=
+\sum_{n\in A_H}n^{-s}.
+$$
+
+若按照每个构型成员计权，则定义：
+
+$$
+\mathcal B_H(s)
+=
+\sum_{n\in A_H}
+\sum_{h\in H}(n+h)^{-s}.
+$$
+
+当 \(s=1\) 时，\(\mathcal B_H(1)\) 是相应的广义 Brun 型总量。
+
+---
+

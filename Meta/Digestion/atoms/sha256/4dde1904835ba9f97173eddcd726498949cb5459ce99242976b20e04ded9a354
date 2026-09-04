@@ -1,0 +1,16 @@
+# 601. 临界素数 Hilbert 拓扑发生断裂
+
+定义带权素数角色距离：
+
+$$
+\boxed{
+d_\sigma(a,b)^2
+=
+\sum_p
+p^{-2\sigma}
+\left|
+p^{-(a-b)}-1
+\right|^2.
+}
+$$
+

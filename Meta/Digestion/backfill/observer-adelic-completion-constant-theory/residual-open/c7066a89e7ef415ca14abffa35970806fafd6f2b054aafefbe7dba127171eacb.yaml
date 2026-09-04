@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:c7066a89e7ef415ca14abffa35970806fafd6f2b054aafefbe7dba127171eacb
+  normalized_sha256: sha256:c7066a89e7ef415ca14abffa35970806fafd6f2b054aafefbe7dba127171eacb
+cas_ref: sha256:c7066a89e7ef415ca14abffa35970806fafd6f2b054aafefbe7dba127171eacb
+coverage_gids: []
+receipts:
+  scribe: []
+  unresolved_subitems: []
+  quarantine:
+    justification: Retrieval preceded quarantine. D5 searches `arithmetic.?schur|schur.?xi|removable.*(schur|quotient|contact)|xiReading.*UnitDisc|analyticOrderAt.*xiReading` found the canonical `xiReading`, first-Li normalization, analytic-order users, and the partial owner `MinimalRelationalVisibility.minimal_relational_visibility`, but no arithmetic Schur construction, removable-extension theorem, or off-line contact theorem; the partial owner requires an abstract function together with `schur 0 = 0` and `schur a = 1`, so it cannot derive the source contacts. Pinned Mathlib searches `arithmetic.?schur|schur.?riemann|removable.*schur|completedRiemannZeta.*UnitDisc|analyticOrderAt.*completedRiemannZeta` found no matching bridge, although its analytic-order and isolated-zero APIs can express multiplicity. A17 ecosystem GitHub code searches `arithmetic Schur`, `Pick kernel` with `Riemann`, and `removable` with `Schur` found no exact Lean theorem; the only removable-Schur hits were import-only or unrelated compactness files. Local probe `/private/tmp/w73e13-atom2-probe.lean` proved that directly totalizing `(xi'/xi-lambda)/(xi'/xi+lambda)` at a model double zero yields `-1`, then exited 1 only on the absent identifiers `arithmeticSchurXi`, `xiSchurRemovableExtension`, and `xiSchurOffLineContact`; thus assigning the desired value `1` by a piecewise definition would encode the target contact rather than prove the source's removable extension.
+    reentry_condition: Provide a frozen D5, pinned Mathlib, or A17-admissible construction of the arithmetic Schur function from `xiReading` and the first Li coefficient, prove that it is the removable extension of the logarithmic-derivative Cayley quotient at zeros of every finite analytic order, and derive `s(0)=0`, the right off-line image's unit-disk membership, `s(z_rho)=1`, and the nearby derivative dependence on zero multiplicity; then apply the existing `minimal_relational_visibility` owner to obtain the fixed matrix and determinant.
+    blocker_class: missing-prerequisite
+  chain_atoms:
+    - 2996e5294e3048ab9e724bf8678aa05b0114f8db4e994e94de238241ab9a5732
+    - e44f05b6f142468cf3fabb72b5acf60b0d57143e15f4f2cabafe50bc22345b80
+    - 73ee8e4cdeee9b3e0b3917d4bc51c0e8a41a45881d5aa297b1fbe8fe8c3f1e21

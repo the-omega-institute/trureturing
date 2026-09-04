@@ -1,0 +1,51 @@
+# 第一千八百四十六部　离线零点要求 signed／indefinite string
+
+设：
+
+$$
+\rho
+=
+\frac12+\delta+i\gamma,
+\qquad
+\delta>0.
+$$
+
+在匹配观察者：
+
+$$
+t=\gamma
+$$
+
+的平方图表中，该离线共轭对产生：
+
+$$
+\boxed{
+E_{\mathrm{off}}
+=
+-\delta^2.
+}
+\tag{1846.1}
+$$
+
+于是 Stieltjes resolvent 中出现：
+
+$$
+\boxed{
+\frac1{u-\delta^2}.
+}
+\tag{1846.2}
+$$
+
+这在正轴：
+
+$$
+u=\delta^2
+$$
+
+产生极点。
+
+正 string 的谱必须位于非负 self-adjoint 谱轴，并使 Stieltjes 极点位于负 \(u\)-轴；所以式 (1846.2) 不能来自非负 string。
+
+如果仍强行进行 formal continued-fraction synthesis，则某一层最终必须出现：
+
+* 负质量；

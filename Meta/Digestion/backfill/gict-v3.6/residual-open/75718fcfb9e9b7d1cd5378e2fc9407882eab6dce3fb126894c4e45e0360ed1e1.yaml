@@ -4,6 +4,9 @@ fingerprints:
 cas_ref: sha256:75718fcfb9e9b7d1cd5378e2fc9407882eab6dce3fb126894c4e45e0360ed1e1
 coverage_gids: []
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: 'Missing prerequisite: the source requires a concrete C-star crossed product C(X_phi) by Z together with minimal unique ergodicity, simplicity and unique-trace transfer, Bratteli AF identification, ordered operator K0 computation, Effros-Shen identification, rotation-algebra embedding, and the trace-range theorem. D5 search `Zeckendorf|Bratteli|Effros|crossedProduct|uniquely ergodic|Parry|foldbin|digit density|rotation algebra` found the finite Zeckendorf count owner `D5/S1/Words/AdmissibleWords/AdmissibleCount.lean` and a prior audit in `D5/S3/Quantum/Algebra/CovariantCommutator.lean`, but no whole-statement owner or crossed-product/K0 construction. Pinned Mathlib filename and source searches `Crossed|KTheory|Bratteli|Effros|RotationAlgebra` and `crossed product|Bratteli|Effros-Shen|rotation algebra|operator K-theory|K0Group|KTheory|Pimsner|Voiculescu` returned no relevant declaration. Third-party GitHub Lean searches for `Bratteli`, `crossed product`, `K-theory CStar`, `Pimsner Voiculescu`, and `Effros Shen` found only a partial Fibonacci-Bratteli project and an unrelated algebraic crossed-product file, with no exact theorem; the search service then reached its quota. Local probe `/private/tmp/w73e12-golden-algebra-capability-probe.lean` exited 1 with unknown identifiers for `CrossedProduct`, `CStarAlgebra.CrossedProduct`, `KTheory`, `CStarAlgebra.K0`, and `BratteliDiagram`.'
+    reentry_condition: Provide pinned Lean declarations constructing the source C-star crossed product and Bratteli AF algebra, plus the simplicity, unique-trace, ordered K0, Effros-Shen, rotation-embedding, and trace-range theorems on that carrier with standard-three axiom closure.
+    blocker_class: missing-prerequisite

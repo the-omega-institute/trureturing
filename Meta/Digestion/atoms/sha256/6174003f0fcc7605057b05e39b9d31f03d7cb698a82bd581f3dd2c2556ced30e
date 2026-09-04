@@ -1,0 +1,8 @@
+### 8.2 外禀 Zeckendorf 序列化
+
+把任意整数 fingerprint、有限 residue bitmask 或量化坐标写成 Zeckendorf word，只是规范无损编码，不自动产生数论解释。
+
+零点实坐标采用的是外禀 completion thread；零点重数和黄金 germ 指数则具有更直接的内禀意义。
+
+---
+

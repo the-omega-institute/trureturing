@@ -4,19 +4,12 @@ fingerprints:
 cas_ref: sha256:fdf7550308c2364541a81f182ebb7dc34432e9526ac774f1eea129b21ff34802
 coverage_gids: []
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems: []
-  cover_disposition:
-    outcome: partial-closed
-    recorded_at_utc: 2026-08-28T09:30:25.1406920+00:00
-    gids:
-      - D5/S3/Arith/Lattices/EnergyBoundarySelectionLaw.energy_boundary_selection_law
-    gaps:
-      - code: chain-migration-incomplete
-        detail: generic-residual-02c726b0ef40a488b6aa6866b8748e5e9d5d7e31078e93aff75cefa00ca59ffb-c81cf94d151c89a3535e21188b509c5bb5debdd97bfbbe7fb531c70b1fc68a94
-      - code: chain-migration-incomplete
-        detail: generic-residual-821609b6faa295ac4b6416bb153bbefb25047a8d5b030f9a1ed2d791d427445d-d73ed1b4fa9c8c5239ad04dc22e3c739257ced89fe7a18bb17d6a1b161cfd429
+  quarantine:
+    justification: Retrieval preceded quarantine. The uncovered clauses are 「六维格点的实能量，不仅在 ℝ 中定义一个壳层；其模 5 剩余还精确决定了该格点进入哪一种有限二十面体边界类型」 and 「模 5 边界并不是任意选取的有限模型，而是黄金数域唯一有限分歧位置的几何化」. D5 query `icosahedr|boundaryType|orbitType|residueField|GoldenInt.*ZMod|ZMod 5` hit the scalar boundary modules, noncanonical projective-axis cardinality equivalences, generic GoldenMod reduction, and the ramified-square fact, but found no real-energy shell, no typed boundary classifier with O_0/I_+/I_-, no GoldenInt-to-ZMod-5 ring hom with ramified-ideal kernel, and no compatibility between such a residue map and the six-coordinate boundary projection; the axis module explicitly disclaims a geometric or equivariant identification. Pinned Mathlib queries for `Ideal.Quotient`, `RingHom`, `ZMod 5`, residue fields, and number-field ramification hit generic quotient/ramification infrastructure and `ZMod.ker_intCastRingHom`, but no GoldenInt-specific map or lattice-boundary compatibility theorem. A17 ecosystem queries reached Loogle, where `GoldenInt -> ZMod 5` returned unknown identifier, while public GitHub repository/code retrieval returned HTTP 403 rate-limit, recorded as `wait-for-capability`; no exact third-party dependency or port candidate is established. Local proof assessment found that a GoldenInt evaluation map may be constructible from the generic quotient infrastructure, but there is no public map from the six-dimensional lattice carrier to GoldenInt, no equivariance/factorization equation for `boundaryProjection`, and no source-defined real shell or `boundaryType`; supplying these by definition would invent the target carriers and violate carrier fidelity, so the identity clause alone cannot cover the atom.
+    reentry_condition: Freeze in D5 a source-faithful real-energy shell, a typed finite icosahedral `boundaryType` classifier including O_0/I_+/I_- that is determined by `latticeEnergyModFive`, and a GoldenInt-to-ZMod-5 ramified-prime residue map with kernel and public compatibility/factorization for the six-dimensional boundary projection; alternatively atomize the source so the scalar energy-boundary identity is its own named atom.
+    blocker_class: multi-clause-guard
   chain_atoms:
     - 2e20a4f1d9a5c9f2d03f6681ec527c08f7b7df25e19988bdc73e1764c93a947e
     - 821609b6faa295ac4b6416bb153bbefb25047a8d5b030f9a1ed2d791d427445d

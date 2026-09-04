@@ -1,0 +1,30 @@
+* \(0\)：不区分两个方向，或取镜像平均。
+
+所以若未来的 prime–zero bridge 确实反射协变，则最自然的预测不是：
+
+$$
+\text{孪生素数直接产生离线符号},
+$$
+
+而是：
+
+$$
+\boxed{
+\text{三元组镜像不平衡}
+\longrightarrow
+\text{零点 transverse-odd response}.
+}
+$$
+
+孪生与四元组则更自然进入：
+
+$$
+\delta^2,\delta^4,\ldots
+$$
+
+这样的偶 sector。
+
+这是一个非常具体、可被数值和形式模型检验的 selection rule。
+
+---
+

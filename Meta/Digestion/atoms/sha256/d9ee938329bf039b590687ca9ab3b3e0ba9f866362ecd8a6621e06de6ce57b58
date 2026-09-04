@@ -1,0 +1,102 @@
+## 416. Completed \(\xi\) 的偶商
+
+令：
+
+$$
+\xi(s)
+=
+\frac12s(s-1)\pi^{-s/2}
+\Gamma\left(\frac s2\right)\zeta(s).
+$$
+
+定义中心坐标：
+
+$$
+z=s-\frac12.
+$$
+
+函数方程给出：
+
+$$
+\xi\left(\frac12+z\right)
+=
+\xi\left(\frac12-z\right).
+$$
+
+因此存在唯一整函数 \(\mathcal X\)，使：
+
+$$
+\boxed{
+\xi(s)
+=
+\mathcal X\bigl(s(1-s)\bigr).
+}
+$$
+
+定义反射 Casimir：
+
+$$
+q=s(1-s).
+$$
+
+若：
+
+$$
+\rho=\frac12+\delta+i\gamma,
+$$
+
+则：
+
+$$
+q_\rho
+=
+\frac14+\gamma^2-\delta^2-2i\delta\gamma.
+$$
+
+在 RH 下：
+
+$$
+\delta=0,
+$$
+
+故：
+
+$$
+q_\rho
+=
+\frac14+\gamma^2
+\in
+\left[\frac14,\infty\right).
+$$
+
+进一步定义紧化坐标：
+
+$$
+\boxed{
+x_\rho
+=
+\frac1{4q_\rho}.
+}
+$$
+
+若 RH 成立，则：
+
+$$
+\boxed{
+x_\rho
+=
+\frac1{1+4\gamma^2}
+\in(0,1).
+}
+$$
+
+因此 RH 可以看成：
+
+$$
+\boxed{
+\text{全部反射轨道的 Casimir 紧化谱位于 }[0,1].
+}
+$$
+
+---
+

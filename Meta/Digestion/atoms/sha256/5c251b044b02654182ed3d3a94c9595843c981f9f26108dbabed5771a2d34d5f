@@ -1,0 +1,44 @@
+## 推论 32.1　一个 global bit 不足以编码全部素数构型
+
+素数构型 cumulants：
+
+$$
+\kappa_A,
+\qquad
+A\Subset\mathbb Z,
+$$
+
+拥有丰富的 shift dependence。
+
+而对角反射态的全部横向 cumulants 都由单一向量：
+
+$$
+\boldsymbol\delta
+$$
+
+的张量幂产生。
+
+所以：
+
+$$
+\boxed{
+\text{全局径向纠缠只能解释共同取反与共同平衡，}
+}
+$$
+
+不能独自编码全部算术构型。
+
+完整信息还必须存在于：
+
+$$
+\gamma_o,
+\qquad
+\theta_o,
+\qquad
+\gamma_o-\gamma_{o'},
+$$
+
+以及高度—相位和径向—相位的混合 cumulants 中。
+
+---
+

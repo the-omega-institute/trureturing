@@ -4,6 +4,9 @@ fingerprints:
 cas_ref: sha256:2166e975cd5d8ecc9d4a28af64a97c7b65c3993f9daf2ee8d786c9dc8fdb2688
 coverage_gids: []
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Retrieval preceded quarantine. The source feature-family contract 925.1 requires 「全部极点位于临界带之外」, and theorem 926.1 requires 「存在有限共同分母特征空间 V_d」. D5 plus pinned Mathlib supply `D5/S3/Observer/BlockStructure/CommonDenominatorPolynomialBasis.common_denominator_polynomial_basis` and the withdrawn proof's even full multiscale profile, but no public bridge expressing pole location in the source variable: neither a Cayley strip-to-disk map relating the Cayley-scale poles `-1/a_i` to the critical strip `|Im z| <= 1/2`, nor a strip-domain rational feature family. D5 search `git grep -n -iE 'criticalStrip|critical_strip|Cayley|cayley' -- D5` hit only the unrelated support-set `criticalStrip` in `RelativeCurvatureSupportCriterion` and Cayley circle/moment/scale modules, with no pole-location equivalence for this family; pinned Mathlib search `rg -n -i 'criticalStrip|critical_strip|Cayley|cayley' .lake/packages/mathlib` found no `criticalStrip` identifier and only unrelated Cayley graph or Cayley-Hamilton hits. Third-party ecosystem retrieval is `wait-for-capability`: this worker has no registered Loogle or LeanSearch query endpoint. The local proof attempt exhausted the owner's maximum three review passes: pass 1 rejected the reference-subfamily carrier, pass 2 rejected lack of evenness, and pass 3 rejected the pole-clause carrier. Concretely, scale `-1/2` at depth `0` gives composed denominator `1 - w^2/2`, with real poles `w = +/-sqrt(2)` inside the source strip while its unit-circle nonvanishing conjunct still holds."
+    reentry_condition: Freeze in D5 a public Cayley/strip-to-disk bridge that relates the Cayley-scale poles `-1/a_i` to `|Im z| <= 1/2`, or a strip-domain rational feature family satisfying all 925.1 properties, and use it to construct the finite common-denominator feature space `V_d` with the pole-location clause public.
+    blocker_class: missing-prerequisite

@@ -1,0 +1,50 @@
+## 108. 权重序列在模 \(p\) 下周期
+
+Fibonacci 对满足：
+
+$$
+\begin{pmatrix}
+F_{k+1}\\F_k
+\end{pmatrix}
+=
+F^k
+\begin{pmatrix}
+1\\0
+\end{pmatrix}.
+$$
+
+由于：
+
+$$
+F\bmod p
+\in GL_2(\mathbb F_p)
+$$
+
+位于有限群中，所以：
+
+$$
+F_{k+r}\equiv F_k\pmod p
+$$
+
+对某个周期 \(r\) 成立。
+
+因此数位位置权重：
+
+$$
+e_p(aF_k)
+$$
+
+是有限周期序列。
+
+这意味着：
+
+$$
+\boxed{
+\text{每个模 }p\text{ 的构型 Fourier 观察者}
+}
+$$
+
+都可以实现为读取 Zeckendorf word 的有限状态 transducer。
+
+---
+

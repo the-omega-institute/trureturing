@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:d6b9478996f23bc5249891b5f926cbc37ba028e7bb1b0cf25d52cade7a99aef5
+  normalized_sha256: sha256:d6b9478996f23bc5249891b5f926cbc37ba028e7bb1b0cf25d52cade7a99aef5
+cas_ref: sha256:d6b9478996f23bc5249891b5f926cbc37ba028e7bb1b0cf25d52cade7a99aef5
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Control/DynamicProfileCausalClosure.dynamic_profile_causal_closure
+    target_statement_id: sha256:50d7952e986d7fcd0c92a881d973d5bf8119ba2612300bc76f2d6acdf91842c1
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Control/DynamicProfileCausalClosure.dynamic_profile_causal_closure
+      definition_sha256: sha256:bba971b5ae50fb4e37bebbf769c8d96404d41edbebf9bb37219d5b3f6321c42f
+      emission_sha256: sha256:9a25a16f3ffb7419dff5d51f450ea4931c54cbab321b02bb35b94f76b07f91bd
+  unresolved_subitems: []

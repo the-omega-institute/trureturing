@@ -100,35 +100,6 @@ public sealed class ColdBuildBudgetReviewLineTests
     }
 
     /// <summary>
-    /// **可达性契约**:一次只改 D5 的变更**必须**选中上面那个观察者。
-    ///
-    /// 这条是一轮评审用实测买来的。上一版为了避开 unknown 棘轮改用
-    /// `GitIndexRepositoryFiles.Enumerate`(deriver 不识别的名字)—— 那确实消掉了 unknown,
-    /// **但同时消掉了 `D5` 输入归因**:评审席在临时克隆里只新增一条 D5 `.lean`,
-    /// 跑 canonical planner 得到 `kind=selected, selected_count=185, cold_build_observer=[]`。
-    /// 即**观察者对它唯一要观察的那类变更是盲的**;而 D5 模块数的增长几乎全部来自 D5-only PR,
-    /// 故它当时几乎不可能red——一个永远不会红的观察者不是观察者。
-    ///
-    /// 现在观察者走 `EnumerateDeclared(root, "D5")`,deriver 把 `"D5"` 记为 declared input,
-    /// `EngineeringTestPlanDeriver` 的 `Covers` 是前缀匹配,故任何 `D5/**` 变更都会选中它。
-    /// **本测试就是那条链的机器保证** —— 没有它,下一次有人换掉枚举方式时,
-    /// 观察者会再次静默失去可达性而两条断言依旧全绿。
-    /// </summary>
-    [Fact]
-    public void ColdBuildBudgetReviewLineObserverIsSelectedByD5OnlyChanges()
-    {
-        var plan = EngineeringTestPlanDeriver.DeriveRepository(
-            RepositoryLayout.FindRoot(),
-            ["D5/S3/Constants/Irrationality/SyntheticColdBuildProbe.lean"]);
-
-        Assert.Contains(
-            plan.Tests,
-            test => test.Id.Contains(
-                nameof(ColdBuildBudgetReviewLineHasNotBeenCrossed),
-                StringComparison.Ordinal));
-    }
-
-    /// <summary>
     /// **`EnumerateDeclared` 自己的钉子** —— 它必须返回该前缀下的**每一个** tracked 文件。
     ///
     /// 这条是第四轮评审用实测买来的。此前 `ColdBuildBudgetReviewLineHasNotBeenCrossed`

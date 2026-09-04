@@ -1,0 +1,10 @@
+\[
+g_p(s)
+=
+(1-p^{-\varphi^3s})
+(1+p^{-\varphi^2s})^{-1}
+A_p(s).
+\]
+
+固定 \(s\) 时定义 local address set：
+

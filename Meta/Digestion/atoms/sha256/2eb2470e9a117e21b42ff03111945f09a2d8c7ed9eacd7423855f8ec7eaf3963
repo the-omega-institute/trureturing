@@ -1,0 +1,18 @@
+## 1795.1 黄金尺度网格的作用
+
+由于未知零点高度不能预先给出 \(a_*\)，可以使用：
+
+$$
+a_k=a_0\varphi^{2k/m}
+$$
+
+这一交错黄金对数网格。
+
+它不能改变 RH 的真假，但可以保证某个观察尺度位于 \(a_*\) 的固定乘法邻域内。
+
+项目已经机器证明：有限个互异正有理尺度在 lifted golden logarithmic coordinate 中保持互异，并能由有限 golden time window 精确恢复振幅；该结果工作在 universal-cover 坐标，并未声称商圆上的自动良态。
+
+所以该机器结果可作为多尺度 Cayley–Li tomography 的有限接口，但尚未构成实际 Riemann 广义 Li 测度的正性证明。
+
+---
+

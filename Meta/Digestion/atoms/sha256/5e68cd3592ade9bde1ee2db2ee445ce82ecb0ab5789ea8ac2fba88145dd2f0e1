@@ -1,0 +1,73 @@
+# 第一千八百九十六部　单点都“无罪”，关系第一次变负
+
+回到 arithmetic Schur candidate：
+
+$$
+\mathfrak s_\xi(0)=0.
+$$
+
+若存在右侧离线零点，其圆盘像 \(a=z_\rho\in\mathbb D\) 满足：
+
+$$
+\mathfrak s_\xi(a)=1.
+$$
+
+标准 Pick kernel 为：
+
+$$
+K(z,w)
+=
+\frac{
+1-\mathfrak s_\xi(z)
+\overline{\mathfrak s_\xi(w)}
+}{
+1-z\overline w
+}.
+$$
+
+在两个单点上：
+
+$$
+\boxed{
+K(0,0)=1\ge0,
+}
+\tag{1896.1}
+$$
+
+$$
+\boxed{
+K(a,a)=0\ge0.
+}
+\tag{1896.2}
+$$
+
+因此每个 \(1\times1\) positivity test 都通过。
+
+只有把两点放进同一关系矩阵：
+
+$$
+\boxed{
+\begin{pmatrix}
+K(0,0)&K(0,a)\\
+K(a,0)&K(a,a)
+\end{pmatrix}
+=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}
+}
+\tag{1896.3}
+$$
+
+时，才得到：
+
+$$
+\boxed{
+\det=-1.
+}
+\tag{1896.4}
+$$
+
+所以：
+

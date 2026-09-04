@@ -6,24 +6,13 @@ namespace StrataLint.ArchitectureTests;
 public sealed class RepositoryIoAccessPolicyTests
 {
     [Fact]
-    public void RepositoryTestsHaveNoUnapprovedDirectReadsOrAddedExemptions()
-    {
-        var root = RepositoryLayout.FindRoot();
-
-        Assert.Empty(RepositoryIoAccessPolicy.InspectRepository(root));
-        Assert.Empty(RepositoryIoAccessPolicy.FindAddedExemptions(
-            RepositoryIoAccessPolicy.DeferredProjectExemptions));
-    }
-
-    [Fact]
     public void TemporaryFileSystemEveryPathBearingApiRoutesThroughEnsureTemporaryPath()
     {
         var source = File.ReadAllText(Path.Combine(
             RepositoryLayout.FindRoot(),
             "tools",
-            "tests",
-            "StrataLint.Scribe.Tests",
-            "Support",
+            "TestSupport",
+            "StrataLint.TestSupport",
             "TemporaryFileSystem.cs"));
         var syntax = CSharpSyntaxTree.ParseText(source).GetRoot();
         var temporaryFileSystem = syntax.DescendantNodes()

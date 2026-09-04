@@ -5,20 +5,6 @@ namespace StrataLint.Tests;
 
 public sealed partial class CoverAtomTests
 {
-    private static void AssertFailedDispositionDoesNotAdmitCoverage(CoverExecution execution)
-    {
-        Assert.NotEqual(execution.Before, execution.After);
-        var entry = Assert.Single(
-            execution.AfterDocument.RequireDigestionEntries(),
-            candidate => candidate.AtomId == CoverWorld.DefaultAtomId);
-        Assert.NotNull(entry.Receipts.CoverDisposition);
-        Assert.Empty(entry.CoverageGids);
-        Assert.Empty(entry.Receipts.Coverage);
-        Assert.Empty(entry.Receipts.Scribe);
-        Assert.Equal(DigestionMigrationState.Residual, entry.ProjectedStatus.Migration);
-        Assert.Equal(DigestionTruthState.Open, entry.ProjectedStatus.Truth);
-    }
-
     [Fact]
     public void CoverRecordsPartialClosedDispositionWithoutAdmittingCoverage()
     {
@@ -42,9 +28,8 @@ public sealed partial class CoverAtomTests
         var gap = Assert.Single(disposition.Gaps);
         Assert.Equal("unresolved-subitem", gap.Code);
         Assert.Equal("remaining theorem clause", gap.Detail);
-        Assert.Equal(CoverWorld.RecordedAtUtc, disposition.RecordedAtUtc);
         Assert.Empty(entry.CoverageGids);
-        Assert.Empty(entry.Receipts.Coverage);
+        Assert.Empty(entry.Coverage);
         Assert.Empty(entry.Receipts.Scribe);
         Assert.Equal(DigestionMigrationState.Residual, entry.ProjectedStatus.Migration);
         Assert.Equal(DigestionTruthState.Open, entry.ProjectedStatus.Truth);
@@ -85,9 +70,8 @@ public sealed partial class CoverAtomTests
         var gap = Assert.Single(replacement.Gaps);
         Assert.Equal("unresolved-subitem", gap.Code);
         Assert.Equal("new failed retry", gap.Detail);
-        Assert.Equal(CoverWorld.RecordedAtUtc, replacement.RecordedAtUtc);
         Assert.Empty(entry.CoverageGids);
-        Assert.Empty(entry.Receipts.Coverage);
+        Assert.Empty(entry.Coverage);
         Assert.Empty(entry.Receipts.Scribe);
     }
 
@@ -99,8 +83,7 @@ public sealed partial class CoverAtomTests
             [gid],
             [new DigestionDispositionGap(
                 "unresolved-subitem",
-                "prior failed attempt")],
-            new DateTimeOffset(2026, 8, 25, 4, 3, 2, TestBudgets.ZeroDuration));
+                "prior failed attempt")]);
 
     private static CoverExecution ExecuteWithPriorDisposition(
         CoverSpec spec,
@@ -124,8 +107,7 @@ public sealed partial class CoverAtomTests
             BackfillInventoryLoader.LoadRoot(temporary.Path));
 
         var result = CoverWorld.Environment(temporary.Path, inputs, currentFiles).CoverAtom(
-            ["--cover-atom", spec.AtomId, "--gid", inputs.Gid, "--base", "baseline",
-                "--envelope", inputs.EnvelopePath]);
+            ["--cover-atom", spec.AtomId, "--gid", inputs.Gid, "--base", "baseline"]);
 
         var afterDocument = BackfillInventoryLoader.LoadRoot(temporary.Path);
         return new CoverExecution(

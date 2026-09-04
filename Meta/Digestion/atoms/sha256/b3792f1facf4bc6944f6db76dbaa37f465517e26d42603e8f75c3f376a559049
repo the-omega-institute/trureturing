@@ -1,0 +1,1 @@
+**可证伪预测(写在跑之前)**:若正确,定理只依赖 `ZeroSum`、`ClassicExplicitFormula` 两冻结模块与钉版 Mathlib 的有限和重排,公理集为标准三条;若某 `ZeroData` 字段不足以确定 `symmetricIndices` 的传输(例如 `gamma` 的定义不随枚举等价交换),则该字段名记入下一增订,义务改标 `open`。

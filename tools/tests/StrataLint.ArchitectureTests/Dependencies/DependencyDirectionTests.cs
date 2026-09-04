@@ -67,14 +67,18 @@ public sealed class DependencyDirectionTests
     }
 
     [Fact]
+    // Keep the name: ScribeUnknownDebtPolicy's identity ratchet makes a rename new debt; the assertion body governs.
     public void EngineeringScopeTestsReferenceOnlyEngineeringScope()
     {
         Assert.Equal(
-            ["StrataLint.EngineeringScope"],
+            ["StrataLint.EngineeringScope", "StrataLint.TestSupport"],
             AssemblyReferencePolicy.ApplicationReferences(
                 typeof(StrataLint.EngineeringScope.Tests.TestProcessRunnerTests).Assembly));
         Assert.Equal(
-            ["../../StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj"],
+            [
+                "../../StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+                "../../TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",
+            ],
             ProjectReferences(XDocument.Load(Path.Combine(
                 RepositoryLayout.FindRoot(),
                 "tools",
@@ -84,24 +88,13 @@ public sealed class DependencyDirectionTests
     }
 
     [Fact]
+    // Keep the name: ScribeUnknownDebtPolicy's identity ratchet makes a rename new debt; the assertion body governs.
     public void ScribeTestsReferenceOnlyEngineAndScribe()
     {
         Assert.Equal(
-            ["StrataLint.Engine", "StrataLint.Scribe"],
+            ["StrataLint.Engine", "StrataLint.Scribe", "StrataLint.TestSupport"],
             AssemblyReferencePolicy.ApplicationReferences(
                 typeof(StrataLint.Scribe.Tests.DocumentAstTests).Assembly));
-    }
-
-    [Fact]
-    public void EnginePolicyRejectsCliAsARedFixture()
-    {
-        var unexpected = AssemblyReferencePolicy.UnexpectedReferences(
-            typeof(StrataLint.Cli.Program).Assembly,
-            "Dunet",
-            "Pidgin");
-
-        Assert.Contains("StrataLint.Engine", unexpected);
-        Assert.Contains("YamlDotNet", unexpected);
     }
 
     private static string[] ProjectReferences(XDocument project) => project

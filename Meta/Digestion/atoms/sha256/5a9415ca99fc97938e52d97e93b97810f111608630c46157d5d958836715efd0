@@ -1,0 +1,43 @@
+# 第一千七百八十六部　标准 Li 变量就是半尺度中心 Cayley 坐标
+
+对非平凡零点 \(\rho\)，定义：
+
+$$
+\boxed{
+\omega_\rho
+=
+1-\frac1\rho
+=
+\frac{\rho-1}{\rho}.
+}
+\tag{1786.1}
+$$
+
+令中心坐标：
+
+$$
+w_\rho=\rho-\frac12.
+$$
+
+则：
+
+$$
+\boxed{
+\omega_\rho
+=
+\frac{w_\rho-\frac12}
+{w_\rho+\frac12}.
+}
+\tag{1786.2}
+$$
+
+所以标准 Li 变量不是任意重参数化，而是中心 Cayley 图册中尺度
+
+$$
+\boxed{a=\frac12}
+$$
+
+的自然坐标。
+
+---
+

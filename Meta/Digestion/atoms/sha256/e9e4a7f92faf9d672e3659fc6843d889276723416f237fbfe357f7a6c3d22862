@@ -1,0 +1,54 @@
+## 133. 最终缺失对象也需要升级
+
+此前缺失对象写成：
+
+$$
+\Xi(s;\mathbf u).
+$$
+
+现在它至少还要携带角色变量 \(\chi\)、观察层 \(n\) 和内部／外部双坐标：
+
+$$
+\boxed{
+\boldsymbol\Xi
+\left(
+s;
+\mathbf u,
+\chi,
+n
+\right).
+}
+$$
+
+它应满足：
+
+$$
+\boldsymbol\Xi(s;0,1,\infty)=\xi(s),
+$$
+
+并同时具有：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{prime-constellation source jets};\\
+&\text{finite-character Fourier decomposition};\\
+&\text{golden internal/external intertwining};\\
+&\text{completed reflection cocycle};\\
+&\text{zero branch response};\\
+&\text{Paley--Wiener evaluation Gram operator};\\
+&\text{observer inverse-limit compatibility}.
+\end{aligned}
+}
+$$
+
+这才是完整的：
+
+$$
+\boxed{
+\text{Adelic Correlation-Completed Observer Determinant}.
+}
+$$
+
+---
+

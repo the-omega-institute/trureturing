@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:172bdc3d0f4e8d248fe54e5ebc2712e5a46cc6d121a7e5927ea4f3f90fb09fc8
+  normalized_sha256: sha256:172bdc3d0f4e8d248fe54e5ebc2712e5a46cc6d121a7e5927ea4f3f90fb09fc8
+cas_ref: sha256:172bdc3d0f4e8d248fe54e5ebc2712e5a46cc6d121a7e5927ea4f3f90fb09fc8
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Epistemic/FiberInteriorEquivalence.fiber_interior_equivalence
+    target_statement_id: sha256:07483271775ed0112947356143bac6b3953344ada6fde5a1183193b71a34f7a3
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Epistemic/FiberInteriorEquivalence.fiber_interior_equivalence
+      definition_sha256: sha256:72986011c4418af30628e7d72acd3dab78f8d16f258d398a034e503a1d3cb211
+      emission_sha256: sha256:d63be8b83499721deaf4da7f7ab28ee4d939dd1f3fcf246605e16d530edc9b4f
+  unresolved_subitems: []

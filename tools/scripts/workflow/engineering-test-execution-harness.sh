@@ -1,28 +1,19 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if [[ "$#" -ne 2 || -z "$1" || -z "$2" ]]; then
+if [[ "$#" -ne 1 || -z "$1" ]]; then
   printf '%s\n' \
-    'usage: engineering-test-execution-harness.sh <base-harness-root> <plan-file>' >&2
+    'usage: engineering-test-execution-harness.sh <base-harness-root>' >&2
   exit 2
 fi
 
 base_harness_root="$1"
-plan_file="$2"
 : "${GITHUB_WORKSPACE:?}"
 : "${ENGINEERING_HEAD:?}"
 : "${ENGINEERING_BASE:?}"
-: "${ENGINEERING_EXECUTION_FULL_REQUIRED:?}"
-[[ "$ENGINEERING_EXECUTION_FULL_REQUIRED" == "true"
-    || "$ENGINEERING_EXECUTION_FULL_REQUIRED" == "false" ]]
 
 run_engineering_tests() {
-  if [[ "$ENGINEERING_EXECUTION_FULL_REQUIRED" == "true" ]]; then
-    FULL=1 make -C "$base_harness_root/tools" engineering-tests-base-cwd REPOSITORY="$GITHUB_WORKSPACE/candidate" MODE=plan HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$plan_file"
-  else
-    make -C "$base_harness_root/tools" engineering-tests-base-cwd REPOSITORY="$GITHUB_WORKSPACE/candidate" MODE=plan HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$plan_file"
-  fi
-  make -C "$base_harness_root/tools" engineering-tests-base-cwd REPOSITORY="$GITHUB_WORKSPACE/candidate" MODE=execute HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE" PLAN_FILE="$plan_file"
+  make -C "$base_harness_root/tools" engineering-tests-base-cwd REPOSITORY="$GITHUB_WORKSPACE/candidate" HEAD="$ENGINEERING_HEAD" BASE="$ENGINEERING_BASE"
 }
 
 observation_bootstrap="$base_harness_root/tools/scripts/lib/resource-observation-bootstrap.sh"

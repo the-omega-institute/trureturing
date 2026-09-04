@@ -1,0 +1,16 @@
+### 定义 20.1（Combinatorial Ouroboros closure）
+
+上述
+
+\[
+\mathcal M=\exp\mathcal K,
+\qquad
+\mathcal K=\log\mathcal M
+\]
+
+的闭合回路称为 **cumulant Ouroboros**。
+
+本卷认为，这比未经证明的几何 Möbius strip 更接近素数构型中的真实“莫比乌斯”来源：它是 partition lattice 的 Möbius inversion。
+
+---
+

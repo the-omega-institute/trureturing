@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:9f112fc04e94327875815c318abb7944614fc45d6e2f2f17d305681f99d84b3f
+  normalized_sha256: sha256:9f112fc04e94327875815c318abb7944614fc45d6e2f2f17d305681f99d84b3f
+cas_ref: sha256:9f112fc04e94327875815c318abb7944614fc45d6e2f2f17d305681f99d84b3f
+coverage_gids:
+  - gid: D5/S3/Entropy/Forgetting/TrajectoryEntropyTelescoping.deterministic_trajectory_entropy_telescoping
+    target_statement_id: sha256:4af718492f2a7595c0df732a0175df136154c69f0ab255b250ad49d23b241cd7
+receipts:
+  scribe:
+    - gid: D5/S3/Entropy/Forgetting/TrajectoryEntropyTelescoping.deterministic_trajectory_entropy_telescoping
+      definition_sha256: sha256:7668c32aa11029c28ff37569cb7c708610f0e2bb5e140cb33c308271e9811a87
+      emission_sha256: sha256:aa4126877026fe8aa0403950abb70943a0e83e452b8d3298c6cf7f79e8971676
+  unresolved_subitems: []

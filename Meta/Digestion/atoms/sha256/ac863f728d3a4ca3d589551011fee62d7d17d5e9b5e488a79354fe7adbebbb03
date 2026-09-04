@@ -1,0 +1,53 @@
+# 第一千九百七十五部（续）　形式化尾部
+
+```text
+D5/S3/Observer/CoreHairSupport/
+  ExactCommonCore.lean
+  PositiveResidualHair.lean
+  ResidualMomentRepresentationTarget.lean
+  ResidualSupportLocalizer.lean
+  ResidualSupportFloor.lean
+  CoreHairSupportPhaseDiagram.lean
+
+D5/S3/Analytic/Zeta/SignedNormalEnergy/
+  ReflectionInvariantPositiveZeroWeight.lean
+  SignedNormalZeroMeasure.lean
+  SignedNormalFirstMoment.lean
+  SignedNormalEnergyNonnegative.lean
+  SignedNormalEnergyZeroIffRH.lean
+  SignedNormalEnergyNotHolomorphicZeroSum.lean
+
+D5/S3/Analytic/Zeta/OffLineDecoratedBarcode/
+  OffLinePersistenceInterval.lean
+  OffLineOrbitPhaseDecoration.lean
+  OffLineMultiplicityDecoration.lean
+  OffLineSplittingIndexDecoration.lean
+  UniversalPickCellDecoration.lean
+  RHBarcodeEmptyIff.lean
+
+D5/S3/Analytic/Isolation/ZetaRealCriticalStripNonzero/
+  DirichletEtaRealPositive.lean
+  EtaZetaIdentityOnPositiveHalfPlane.lean
+  ZetaRealCriticalStripNegative.lean
+  ZetaRealCriticalStripNonzero.lean
+  OffLineCriticalStripZeroNonreal.lean
+
+D5/S3/Weil/CanonicalCompletedXiDistribution/
+  CompletedXiTestCarrier.lean
+  CompletedXiWeilFunctional.lean
+  PrimePoleGammaExpression.lean
+  SymmetricZeroExpression.lean
+  EnumerationIndependentZeroPairing.lean
+  ConvolutionSquareEvaluation.lean
+
+D5/S3/Weil/ZetaBridge/OffLineToCanonicalNegativeSquare/
+  NotRHProvidesRightOffLineZero.lean
+  RightOffLineZeroIsNonreal.lean
+  AbstractSeparatorInstantiation.lean
+  CanonicalWeilDistributionIdentification.lean
+  NotRHProducesCanonicalNegativeWeilSquare.lean
+  WeilPositivityRHIffTarget.lean
+```
+
+---
+

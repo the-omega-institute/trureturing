@@ -3,20 +3,9 @@ fingerprints:
   normalized_sha256: sha256:f56c104c9e71a4b254689b4f435bb5d5ca0135c48bb502fc8957e5c762b41cc9
 cas_ref: sha256:f56c104c9e71a4b254689b4f435bb5d5ca0135c48bb502fc8957e5c762b41cc9
 coverage_gids:
-  - D5/S3/Observer/Linear/PrimeTimeGramianEnergyIdentity.prime_time_gramian_energy_identity
+  - gid: D5/S3/Observer/Linear/PrimeTimeGramianEnergyIdentity.prime_time_gramian_energy_identity
+    target_statement_id: sha256:38fda4b3645134c1076d9a4adbf4771d4dd02b82a5ec274e152470872ae735e7
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/Linear/PrimeTimeGramianEnergyIdentity.prime_time_gramian_energy_identity
-      source_sha256: sha256:f56c104c9e71a4b254689b4f435bb5d5ca0135c48bb502fc8957e5c762b41cc9
-      target_statement_id: sha256:38fda4b3645134c1076d9a4adbf4771d4dd02b82a5ec274e152470872ae735e7
-      statement_id_history:
-        - statement_id: sha256:71e6daac7ba9981de870a5cdd4cce2df0bd270f756193115e20a42c1452b1f85
-          environment_pin:
-            toolchain: leanprover/lean4:v4.31.0
-            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
-          superseded_by_pin:
-            toolchain: leanprover/lean4:v4.33.0
-            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/Observer/Linear/PrimeTimeGramianEnergyIdentity.prime_time_gramian_energy_identity
       definition_sha256: sha256:1406e2dfc99124da4d07448197ed76ca9703012ef533c64d24dea9627c7c1bc6

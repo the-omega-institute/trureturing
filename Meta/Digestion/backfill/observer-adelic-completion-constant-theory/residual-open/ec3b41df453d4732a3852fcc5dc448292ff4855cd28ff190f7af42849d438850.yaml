@@ -4,6 +4,9 @@ fingerprints:
 cas_ref: sha256:ec3b41df453d4732a3852fcc5dc448292ff4855cd28ff190f7af42849d438850
 coverage_gids: []
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: Retrieval preceded quarantine. D5 search (`spectral complement|support.*zero|atomic.*measure|spectral.*floor|Rayleigh|groundState`) found the adjacent owners EntireZeroSetDichotomy.entire_zero_set_dichotomy, ComplementaryContactSupport.complementary_contact_support, FiniteAtomicBudgetedCompletion.finite_atomic_budgeted_completion, LocalSpectralFloor.white_noise_cone_margin, and WhiteFloorSamplingDuality.white_floor_sampling_frame_duality, but no theorem on the exact source carrier combining the full-window Weil operator, an optimal positive spectral completion, its L2 ground state, and a pointwise entire ground-state Fourier transform. Pinned Mathlib search (`paley.*wiener|fourier.*lp|lp.*fourier|fourier.*l2|l2.*fourier`) found an L2 Fourier isometry and the L1 pointwise Fourier transform, isolated-zero tools, countable Dirac expansion, and smooth approximation, but no bridge from a window-supported L2 class to a pointwise nonzero entire transform or to the local positive-completion representation of Q_L. Live Loogle returned zero declarations containing PaleyWiener; unauthenticated GitHub Lean code search required sign-in, so the broader A17 search is wait-for-capability. Local probe `/private/tmp/w73b13-active-l2-probe.lean` applied the frozen smooth Paley-Wiener owner to `Lp Complex 2 volume` with almost-everywhere window support and exited 1 with unsolved `ContDiff` and `HasCompactSupport` goals; replacing the source carrier by WeilTestFunction would be a strict specialization.
+    reentry_condition: Freeze source-faithful bridges constructing the pointwise nonzero entire Fourier-Laplace transform of a window-supported L2 ground state and representing the full-window Weil quadratic operator by every positive spectral completion; then the existing isolated-zero, support-localization, subtype-countability, and countable Dirac-expansion results can supply all public conclusions.
+    blocker_class: missing-prerequisite

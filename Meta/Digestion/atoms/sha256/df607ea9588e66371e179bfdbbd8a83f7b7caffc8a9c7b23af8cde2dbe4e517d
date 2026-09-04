@@ -1,0 +1,1 @@
+**勘误一**:§R-F 闭合路线第 3 步引用的 `truncatedCriticalConvolutionSquareSum_re_nonnegative` 在 D5 不存在;实际冻结定理为 `D5/S3/Weil/ZetaBridge/ConvolutionSquareCriticalLine.critical_line_truncated_sum_real_nonnegative`。

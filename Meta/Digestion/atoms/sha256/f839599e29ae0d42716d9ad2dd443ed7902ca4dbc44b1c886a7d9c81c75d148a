@@ -1,0 +1,20 @@
+## 593. 黄金奇通道单位
+
+```lean
+theorem goldenRatio_is_unit_negative_odd_localizer :
+    Real.goldenRatio *
+        (1 - Real.goldenRatio) =
+      -1
+```
+
+以及唯一性：
+
+```lean
+theorem oddLocalizer_eq_neg_one_iff :
+    x * (1 - x) = -1 ↔
+      x = Real.goldenRatio ∨
+      x = 1 - Real.goldenRatio
+```
+
+---
+

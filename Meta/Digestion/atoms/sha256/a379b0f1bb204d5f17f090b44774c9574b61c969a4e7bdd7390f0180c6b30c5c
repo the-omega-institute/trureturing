@@ -1,0 +1,1 @@
+**义务**:单一公开定理 `symmetricConvergent_of_zeroData (Z : ZeroData) (g : WeilTestFunction) : SymmetricConvergent Z g`。闭合路线:冻结的 `Zeta23.WeilEF.EF_lit_zetaZeroConfig` 给出重数加权零点项的绝对可和性;经 `ClassicExplicitFormula.zeroEquiv` 将其转写到 `Z` 的枚举,`HasSum` 沿等价传输,`tendsto_symmetricIndices` 把对称截断和的极限接到该和。落点 `D5/S3/Weil/ZetaBridge/`。

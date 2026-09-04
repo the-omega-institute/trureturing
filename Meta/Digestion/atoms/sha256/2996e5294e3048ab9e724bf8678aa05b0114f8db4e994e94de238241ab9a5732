@@ -1,0 +1,29 @@
+## 定理 1810.1（Universal off-line Pick obstruction）
+
+任一右侧离线零点都产生：
+
+$$
+\boxed{
+\begin{pmatrix}
+K(0,0)&K(0,z_\rho)\\
+K(z_\rho,0)&K(z_\rho,z_\rho)
+\end{pmatrix}
+=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}.
+}
+\tag{1810.2}
+$$
+
+其行列式恒为：
+
+$$
+\boxed{-1.}
+\tag{1810.3}
+$$
+
+这个负值与：
+
+* \(\gamma\)；

@@ -1,0 +1,32 @@
+### 命题 15.2（标量商遗忘方向）
+
+前两个有序词的乘积均为 \(-1\)：
+
+\[
+(+1)(-1)=(-1)(+1).
+\]
+
+故仅看字符乘积无法区分：
+
+\[
+(+1,-1)
+\quad\text{与}\quad
+(-1,+1).
+\]
+
+这与仓库的 `GoldenCharacterQuotient`、有序 holonomy 与 scalar blindness 完全一致：
+
+\[
+\boxed{
+\text{ordered character word}
+\longrightarrow
+\text{scalar product quotient}
+}
+\]
+
+会丢失构型方向。
+
+模 \(5\) 特征可作为构型的有限 refinement，但它不可能单独证明孪生素数无穷。
+
+---
+

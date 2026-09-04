@@ -1,0 +1,6 @@
+## 一　M3-d-1′ 预登记:交错级数的延拓恒等式(s ≠ 1)
+
+**义务**:公开定理 `tendsto_alternating_partialSums_eta_of_ne_one (s : ℂ) (hs : 0 < s.re) (hs1 : s ≠ 1) : Filter.Tendsto (fun N ↦ ∑ n ∈ Finset.range N, (-1 : ℂ) ^ n * ((n + 1 : ℂ) ^ (-s))) Filter.atTop (nhds ((1 - (2 : ℂ) ^ (1 - s)) * riemannZeta s))`。落点 `D5/S3/Weil/ZetaBridge/`(模块 `AlternatingZetaContinuation`,与 M3-d-2、M3-d-3 同模块;M3-d-4 已于 `RealAxisNonvanishing` 单独 deposit)。
+**可证伪预测(写在跑之前)**:若正确,证明为 Re s > 1 上的偶奇拆分恒等式 + 交错部分和在 {0 < Re s} 上的局部一致收敛(配对相邻项)+ 两侧在连通开集 {0 < Re s} ∖ {1} 上解析 + 解析延拓唯一性,只消费钉版 Mathlib,标准三公理;若 {0 < Re s} ∖ {1} 的连通性或配对项的 cpow 差分估计在钉版 API 下写不出,则本条按 open 记,不得以 `sorry` 或公理代替。
+**边界**:s = 1 被显式排除(反例见 §〇);不断言 `tsum`;M3-d-2 取 s = x ∈ (0,1) 实,自动满足 s ≠ 1。
+

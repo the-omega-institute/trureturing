@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:dd2e6ca498a02485edea255e3b9f37a9328eb84d2a5fccf2c7c8a67efe733fc2
+  normalized_sha256: sha256:dd2e6ca498a02485edea255e3b9f37a9328eb84d2a5fccf2c7c8a67efe733fc2
+cas_ref: sha256:dd2e6ca498a02485edea255e3b9f37a9328eb84d2a5fccf2c7c8a67efe733fc2
+coverage_gids:
+  - gid: D5/S3/Estimation/ExperimentCost/MinimumCostRoleBasis.greedy_role_scan_is_minimum_cost_basis
+    target_statement_id: sha256:3ca82bfdc3d3720f05aea5922d4f523f75d755bf3219248e594e5ffae32f0703
+receipts:
+  scribe:
+    - gid: D5/S3/Estimation/ExperimentCost/MinimumCostRoleBasis.greedy_role_scan_is_minimum_cost_basis
+      definition_sha256: sha256:a46e4ed6982aa68acff52988cebaf548b0d6aa0e477144d6affc1f019c459951
+      emission_sha256: sha256:436a5e7da6c6986dd57cc8a9d649e0a8a800223acbd642155fef20cb62a208af
+  unresolved_subitems: []

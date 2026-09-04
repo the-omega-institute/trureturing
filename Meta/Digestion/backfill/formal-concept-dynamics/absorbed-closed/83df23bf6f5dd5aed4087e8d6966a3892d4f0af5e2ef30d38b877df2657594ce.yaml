@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:83df23bf6f5dd5aed4087e8d6966a3892d4f0af5e2ef30d38b877df2657594ce
+  normalized_sha256: sha256:83df23bf6f5dd5aed4087e8d6966a3892d4f0af5e2ef30d38b877df2657594ce
+cas_ref: sha256:83df23bf6f5dd5aed4087e8d6966a3892d4f0af5e2ef30d38b877df2657594ce
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Topology/ContinuousRefinementObservationTopology.continuous_refinement_observation_topology
+    target_statement_id: sha256:76a054849157965632020dada395ac8e0350069fdabdbc3377fc11cecbfb9baf
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Topology/ContinuousRefinementObservationTopology.continuous_refinement_observation_topology
+      definition_sha256: sha256:e251e54133131d45d9927a4463875bed995db0ce4388ee49c4a2cbeeb320b167
+      emission_sha256: sha256:e55157903df2d8c68885e40933c17f89c63989222cc446f2d3a256c4eadf7d22
+  unresolved_subitems: []

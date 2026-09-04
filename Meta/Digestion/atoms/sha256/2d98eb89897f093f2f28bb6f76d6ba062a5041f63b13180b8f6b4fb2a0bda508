@@ -1,0 +1,16 @@
+## 70. Zeckendorf–Minkowski Parity Theorem
+
+证明：
+
+$$
+\sum_k\varepsilon_k\psi^k
+=
+\sum_{k\text{ even}}\varepsilon_k\varphi^{-k}
+-
+\sum_{k\text{ odd}}\varepsilon_k\varphi^{-k},
+$$
+
+并将其与仓库现有 Zeckendorf conjugate-error window 接上。
+
+---
+

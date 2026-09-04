@@ -1,0 +1,13 @@
+### ZC-H　镜像奇偶律
+
+```lean
+theorem alternating_gap_mirror_code
+    (H : TwoFourGapConstellation)
+    (h3 : ModThreeAdmissible H) :
+    gapBits H.mirror =
+      if Even H.card then gapBits H
+      else complementBits (gapBits H)
+```
+
+---
+

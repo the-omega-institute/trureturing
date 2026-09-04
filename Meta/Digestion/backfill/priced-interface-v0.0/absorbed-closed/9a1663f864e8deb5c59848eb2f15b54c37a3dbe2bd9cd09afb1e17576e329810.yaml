@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:9a1663f864e8deb5c59848eb2f15b54c37a3dbe2bd9cd09afb1e17576e329810
+  normalized_sha256: sha256:9a1663f864e8deb5c59848eb2f15b54c37a3dbe2bd9cd09afb1e17576e329810
+cas_ref: sha256:9a1663f864e8deb5c59848eb2f15b54c37a3dbe2bd9cd09afb1e17576e329810
+coverage_gids:
+  - gid: D5/S0/Computability/DescriptionComplexity/XorTransformationTightness.xor_transformation_description_tight
+    target_statement_id: sha256:1fd9c468652bbc70033198e235c59937ea139a45590d89b9a632ad93737a601b
+receipts:
+  scribe:
+    - gid: D5/S0/Computability/DescriptionComplexity/XorTransformationTightness.xor_transformation_description_tight
+      definition_sha256: sha256:fed82c0b055995d962557e20acdb15e31bb1b1a5b4be20f90aba26974f5201d6
+      emission_sha256: sha256:e77e1f312f7bf4ee66986c1062972c753d1a46e489c8ebf78c787236018327ff
+  unresolved_subitems: []

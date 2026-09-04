@@ -1,0 +1,16 @@
+### \(q=1/4\)：抛物／轴融合相
+
+两个本征值合并：
+
+$$
+\lambda_+=\lambda_-=\frac12.
+$$
+
+但：
+
+$$
+\mathcal C(1/4)\neq\frac12I,
+$$
+
+所以一般形成 Jordan block。
+

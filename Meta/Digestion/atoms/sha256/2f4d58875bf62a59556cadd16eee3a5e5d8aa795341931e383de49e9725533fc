@@ -1,0 +1,1 @@
+**可证伪预测(写在跑之前)**:若正确,定理为冻结重型结果的中等提取,公理集为标准三条,且 §M2 第 3 条(canonical `SymmetricConvergent`)由此**强于**原文(对所有 `g`,不限卷积平方);若 `EF_lit_zetaZeroConfig` 的光滑性/紧支前提与 `WeilTestFunction` 不匹配,则记所缺前提名并改标 `open`。

@@ -1,0 +1,20 @@
+\[
+\overline{
+(\varepsilon_\delta,d_\delta;
+ \varepsilon_\gamma,d_\gamma;m)
+}^{\,J}
+=
+(-\varepsilon_\delta,d_\delta;
+ \varepsilon_\gamma,d_\gamma;m).
+\]
+
+这才是严格的“反码”：
+
+- 不翻转 Fibonacci 数位；
+- 不破坏 Zeckendorf 无相邻 \(1\) 约束；
+- 只翻转 transverse sign sheet。
+
+bitwise complement 一般不是规范 Zeckendorf word，因此不作为本理论的反码。
+
+---
+

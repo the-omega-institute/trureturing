@@ -1,0 +1,21 @@
+## 标量层
+
+证明：
+
+$$
+\boxed{
+\left|
+\mathfrak s_\xi(z)
+\right|
+\le
+|z|
+\qquad
+\forall z\in\mathbb D.
+}
+\tag{1906.1}
+$$
+
+等价于锚定二点 Pick positivity。
+
+---
+

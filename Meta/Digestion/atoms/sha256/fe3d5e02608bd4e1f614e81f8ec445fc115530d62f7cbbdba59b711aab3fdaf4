@@ -1,0 +1,152 @@
+# 本轮最终结论
+
+这一轮把“离散的名永远描述不了连续的道”推进成了一个更精确、也更有力量的结论。
+
+单个离散名字当然不能成为连续整体。
+
+但全部离散谱所产生的完整正响应：
+
+$$
+m_\xi(z)
+=
+i\frac{\xi'}{\xi}
+\left(
+\frac12-iz
+\right)
+$$
+
+如果是 Herglotz 函数，就能够唯一重建一个 continuum-indexed、正半定、trace-normalized Hamiltonian：
+
+$$
+H_\xi(x).
+$$
+
+因此：
+
+$$
+\boxed{
+\text{离散谱不能等同于连续关系场；
+但完整谱响应可以重建连续关系场。}
+}
+$$
+
+这并没有定义“道”。
+
+它只说明在 Riemann 这个特定命名系统中，完整而正的响应拥有一个规范连续实现。
+
+---
+
+更深的是，所有 Cayley 观察者其实共享一个自伴谱源：
+
+$$
+Gf(\gamma)=\gamma f(\gamma).
+$$
+
+不同观察尺度 \(a\) 只是把它转成不同的相位算子：
+
+$$
+U_a=(iG-aI)(iG+aI)^{-1},
+$$
+
+并选择不同的 resolvent 观察向量：
+
+$$
+\Omega_a(\gamma)
+\propto
+(a^2+\gamma^2)^{-1/2}.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{不同观察者看到不同的相；
+相的差别来自坐标和权重；
+共同谱源保持不变。}
+}
+$$
+
+这比说“每个观察者拥有不同宇宙”更准确。
+
+他们拥有不同图表，却可以被同一个自伴关系源统一。
+
+---
+
+当完整响应被转换为 canonical system 时，仓库一直寻找的 Arithmetic Nevanlinna Gram 也不再神秘。
+
+它应当具有形式：
+
+$$
+\frac{
+m_\xi(z)-\overline{m_\xi(w)}
+}{
+z-\overline w
+}
+=
+\int
+\Psi(x,w)^*
+H_\xi(x)
+\Psi(x,z)\,dx.
+$$
+
+因此：
+
+$$
+\boxed{
+\text{RH 的正性不是一串偶然不等式；
+它是一个连续 Hamiltonian 能量内积。}
+}
+$$
+
+de Branges kernel、Nevanlinna kernel、Pick kernel、Li Toeplitz moments，只是这一能量内积在不同观察图表中的投影。
+
+仓库已经把 de Branges 与 Nevanlinna kernel 的有限 Gram 正性通过 Cayley gauge 严格等同。
+
+真正缺失的只剩下正 Hamiltonian 的算术构造。
+
+---
+
+平方变量又给出同一结构的 string 版本：
+
+$$
+\mathscr T_\xi(u)
+=
+\sum_\gamma
+\frac{m_\gamma}{u+\gamma^2}.
+$$
+
+临界零点产生正 string 模式。
+
+离线零点在匹配观察者下产生：
+
+$$
+\frac1{u-\delta^2},
+$$
+
+迫使正 string 的某个有限 continued-fraction 层出现非正或非实参数。
+
+所以黑洞内部的“负模式”，在这一图表中最准确地表示为：
+
+$$
+\boxed{
+\text{无法由非负质量和非负长度组成的 string mode。}
+}
+$$
+
+---
+
+如果 RH 失败，仍有可能在扩大后的 Pontryagin 空间中建立广义实现。
+
+这意味着离线缺陷不一定摧毁全部数学演化。
+
+它摧毁的是：
+
+$$
+\boxed{
+\text{纯正 Hilbert realization。}
+}
+$$
+
+因此：
+
+* Hilbert 相对应零负平方；

@@ -4,12 +4,10 @@ fingerprints:
 cas_ref: sha256:aa821f1e4715d93a8296c4288fa6ed9b75f401d3dca4ee1b1df24e7210f95cbf
 coverage_gids: []
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems: []
   cover_disposition:
     outcome: partial-closed
-    recorded_at_utc: 2026-08-28T02:20:41.8968570+00:00
     gids:
       - D5/S3/ConceptDynamics/Communication/TruthfulnessSufficiencyIndependence.truthfulness_sufficiency_independence
     gaps:

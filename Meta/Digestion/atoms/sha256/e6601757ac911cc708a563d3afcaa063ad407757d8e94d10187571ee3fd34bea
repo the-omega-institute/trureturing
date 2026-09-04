@@ -1,0 +1,11 @@
+### 150.7 Local survival determinant
+
+```lean
+theorem localSurvivalProbability_eq_covarianceDet :
+    localSurvivalProbability p H =
+      p ^ residueSupportCard p H *
+        Matrix.det (localSieveCovariance p H)
+```
+
+---
+

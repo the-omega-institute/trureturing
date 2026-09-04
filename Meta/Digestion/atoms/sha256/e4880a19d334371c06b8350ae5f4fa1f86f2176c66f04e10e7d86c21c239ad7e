@@ -1,0 +1,14 @@
+\[
+M(z)M(\varphi z)-M(\varphi z)M(z)
+=
+(x-y)
+\begin{pmatrix}
+1&-1\\
+0&-1
+\end{pmatrix}.
+\]
+
+这给出一个具体的黄金尺度 swap curvature。
+
+---
+

@@ -1,0 +1,31 @@
+## 109. 黄金无理尺度与有限名字由同一递归连接
+
+这给出一个真正统一的图：
+
+$$
+\boxed{
+\begin{aligned}
+\text{Zeckendorf digits}
+&\xrightarrow{\text{real embedding}}
+\sum\varepsilon_k\varphi^k;\\
+\text{Zeckendorf digits}
+&\xrightarrow{\bmod p}
+\sum\varepsilon_kF_k\bmod p;\\
+\text{residue}
+&\xrightarrow{\text{character}}
+e_p(ah).
+\end{aligned}
+}
+$$
+
+所以：
+
+* 实观察者看到黄金尺度；
+* 有限观察者看到 Pisano 周期；
+* Fourier 观察者看到 residue characters；
+* 三者读取的是同一个数位线程。
+
+这可能是目前“黄金比例—所有分类方式—频域转换”之间最坚实的桥。
+
+---
+

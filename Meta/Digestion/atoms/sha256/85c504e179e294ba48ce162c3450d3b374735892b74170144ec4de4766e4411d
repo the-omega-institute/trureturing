@@ -1,0 +1,63 @@
+## 1937.1 有限层全可终止，完整历史仍可无有限终点
+
+给定有限指标集合：
+
+$$
+m_1,\ldots,m_k,
+$$
+
+令：
+
+$$
+L=\operatorname{lcm}(m_1,\ldots,m_k).
+$$
+
+若 \(\pi(\theta)=0\)，则：
+
+$$
+L\theta_{m_i}
+=
+\frac{L}{m_i}
+\left(
+m_i\theta_{m_i}
+\right)
+=
+0.
+$$
+
+所以任意有限坐标族都有一个共同有限 annihilator。
+
+但这不意味着存在单一有限 \(L\)，能够消灭全部无限坐标。
+
+在标准识别：
+
+$$
+\ker\pi\simeq\widehat{\mathbb Z}
+$$
+
+中，存在无限阶兼容历史。
+
+因此：
+
+$$
+\boxed{
+\text{每个有限名字都呈现为有限 torsion；
+全部名字的兼容历史却不必是有限 torsion。}
+}
+\tag{1937.3}
+$$
+
+这正是：
+
+$$
+\boxed{
+\text{有限层可终止}
+\quad\text{与}\quad
+\text{完整历史无有限终名}
+}
+$$
+
+同时成立的严格模型。
+
+---
+

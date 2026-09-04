@@ -1,0 +1,13 @@
+### ZC-J　moment–cumulant 分拆公式
+
+```lean
+theorem jointCumulant_eq_partitionMobius
+    (moment : Finset ι → R) (S : Finset ι) :
+    jointCumulant moment S =
+      ∑ partition : SetPartition S,
+        mobiusCoefficient partition *
+          ∏ block in partition.blocks, moment block
+```
+
+---
+

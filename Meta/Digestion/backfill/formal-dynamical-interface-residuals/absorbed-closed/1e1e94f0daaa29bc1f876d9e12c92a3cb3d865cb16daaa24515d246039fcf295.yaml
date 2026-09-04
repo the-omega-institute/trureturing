@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:1e1e94f0daaa29bc1f876d9e12c92a3cb3d865cb16daaa24515d246039fcf295
+  normalized_sha256: sha256:1e1e94f0daaa29bc1f876d9e12c92a3cb3d865cb16daaa24515d246039fcf295
+cas_ref: sha256:1e1e94f0daaa29bc1f876d9e12c92a3cb3d865cb16daaa24515d246039fcf295
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Dialectics/AlgebraDescentEquivalence.descent_algebra_closure_tfae
+    target_statement_id: sha256:1dd8ed2b806631ec198e745bc3ab6f76b16ee4c4657b7f3fa8d5ba3ecb22ebd1
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Dialectics/AlgebraDescentEquivalence.descent_algebra_closure_tfae
+      definition_sha256: sha256:e28b00bd99a575219970a5d6439a105da8cfba02575c1c2846bb6643b80b204e
+      emission_sha256: sha256:2250ce80f903e35c436e7f31161e3af7bb03dde1b950f88b848b2239c2bb4cd1
+  unresolved_subitems: []

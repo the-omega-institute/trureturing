@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:3476fba3972a87e1eaedb13e15739df5c83d839ef885716ac08135f5bca8d89b
+  normalized_sha256: sha256:3476fba3972a87e1eaedb13e15739df5c83d839ef885716ac08135f5bca8d89b
+cas_ref: sha256:3476fba3972a87e1eaedb13e15739df5c83d839ef885716ac08135f5bca8d89b
+coverage_gids:
+  - gid: D5/S3/Weil/Scattering/ScatteringResonanceLines.scattering_resonance_lines
+    target_statement_id: sha256:dd927211e21157863bc127ad2c9b7e80fd9bd370dff5f67652cc6f81dcaa08c2
+receipts:
+  scribe:
+    - gid: D5/S3/Weil/Scattering/ScatteringResonanceLines.scattering_resonance_lines
+      definition_sha256: sha256:1a50814826662871efd4edd616784bd4790a43565e79d83cf5be1aef78723c60
+      emission_sha256: sha256:671ccb9ca166fa63300bee1e738ec719ab8efeeb1e8b06d7a7bae8c2b7b6cad2
+  unresolved_subitems: []

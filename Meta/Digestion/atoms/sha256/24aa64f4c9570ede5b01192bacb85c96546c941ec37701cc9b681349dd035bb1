@@ -1,0 +1,58 @@
+## 31. Zeckendorf index parity
+
+对合法黄金能量 word：
+
+$$
+X_+
+=
+\sum_k\varepsilon_k\varphi^k,
+$$
+
+内部共轭读数为：
+
+$$
+X_-
+=
+\sum_k\varepsilon_k\psi^k.
+$$
+
+由于：
+
+$$
+\psi^k
+=
+(-1)^k\varphi^{-k},
+$$
+
+所以：
+
+$$
+\boxed{
+X_-
+=
+\sum_{k\ \mathrm{even}}
+\varepsilon_k\varphi^{-k}
+-
+\sum_{k\ \mathrm{odd}}
+\varepsilon_k\varphi^{-k}.
+}
+$$
+
+内部坐标本身就是：
+
+$$
+\boxed{
+\text{偶层贡献}
+-
+\text{奇层贡献}.
+}
+$$
+
+Zeckendorf 的无相邻 \(1\) 规则限制了奇偶两组贡献不能在最近尺度上同时激活，从而把 internal coordinate 保持在有界窗口中。
+
+因此，Zeckendorf 不只是整数压缩：
+
+> 它同时编码扩张 physical history 和交替收缩 internal error。
+
+---
+

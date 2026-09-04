@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:9133b3765e35768d5a7f2b79dfe6367d5a7fcda092884bacf49bc2658df93a03
+  normalized_sha256: sha256:9133b3765e35768d5a7f2b79dfe6367d5a7fcda092884bacf49bc2658df93a03
+cas_ref: sha256:9133b3765e35768d5a7f2b79dfe6367d5a7fcda092884bacf49bc2658df93a03
+coverage_gids:
+  - gid: D5/S3/Analytic/Dilation/PartialCircleBoundaryDefect.partial_circle_boundary_defect
+    target_statement_id: sha256:cb9293a6f56a8c15f03f09cf2d4008886f7fc11311927c7a7f91f8bac07edd93
+receipts:
+  scribe:
+    - gid: D5/S3/Analytic/Dilation/PartialCircleBoundaryDefect.partial_circle_boundary_defect
+      definition_sha256: sha256:a02727466b485fdaa1646e8781a7452695b7cf8c65e0414b17ee4ee30b4e8cfa
+      emission_sha256: sha256:11b27170e7d4ecca7b0774260abf6e272b665d72a622f12670a83b6e29aa3c18
+  unresolved_subitems: []

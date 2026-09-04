@@ -1,0 +1,37 @@
+## 129. 局部筛法是 Fisher metric 的有限模型
+
+前文的：
+
+$$
+C_{p,H}
+=
+\frac1pI-\frac1{p^2}J
+$$
+
+正是局部 survival source family 在零源处的 Hessian metric。
+
+它的 coherent eigenvalue：
+
+$$
+\frac{p-\nu_p(H)}{p^2}
+$$
+
+在构型完全覆盖模 \(p\) 时变为零。
+
+因此局部 inadmissibility 可以重写为：
+
+$$
+\boxed{
+\text{局部 Fisher metric 在 coherent source direction 上退化}.
+}
+$$
+
+这提供了一个真正严格的“构型曲率之前的几何对象”：
+
+* metric 来自二阶 cumulant；
+* connection 来自三阶 cumulant；
+* 更高 jet 来自更高 cumulant；
+* metric 退化对应局部不可存活。
+
+---
+

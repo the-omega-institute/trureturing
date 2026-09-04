@@ -4,7 +4,13 @@ fingerprints:
 cas_ref: sha256:b2f2b8721f887793e0426048595c7d7a34e9f14b0b95bde1d2a6614f588d98d1
 coverage_gids: []
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems:
     - generation-mechanism-invariance-undefined
+  cover_disposition:
+    outcome: partial-closed
+    gids:
+      - D5/S3/ConceptDynamics/Refinement/HumeInductiveCore.hume_inductive_core
+    gaps:
+      - code: unresolved-subitem
+        detail: generation-mechanism-invariance-undefined

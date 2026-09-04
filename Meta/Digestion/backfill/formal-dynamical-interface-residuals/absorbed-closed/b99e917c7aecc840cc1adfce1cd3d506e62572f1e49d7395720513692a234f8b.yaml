@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:b99e917c7aecc840cc1adfce1cd3d506e62572f1e49d7395720513692a234f8b
+  normalized_sha256: sha256:b99e917c7aecc840cc1adfce1cd3d506e62572f1e49d7395720513692a234f8b
+cas_ref: sha256:b99e917c7aecc840cc1adfce1cd3d506e62572f1e49d7395720513692a234f8b
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Prediction/PredictiveMemoryEntropyLowerBound.predictive_memory_entropy_lower_bound
+    target_statement_id: sha256:dd6b4f9ce102eb6eb9a55c80948ed6a5df05be840efc159c2a81fdbfe05faf90
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Prediction/PredictiveMemoryEntropyLowerBound.predictive_memory_entropy_lower_bound
+      definition_sha256: sha256:7d816c28dbf2d9ef07d13a663d2cbeb5eac637163923fcab33fc0b1c7649d34b
+      emission_sha256: sha256:b11948c0e1698171479abf4334aba1fcab4a13e5f0d43594e2fe37e4b8708b5d
+  unresolved_subitems: []

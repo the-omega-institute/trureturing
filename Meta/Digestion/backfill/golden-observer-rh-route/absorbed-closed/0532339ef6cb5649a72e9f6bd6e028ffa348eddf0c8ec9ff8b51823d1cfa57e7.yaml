@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:0532339ef6cb5649a72e9f6bd6e028ffa348eddf0c8ec9ff8b51823d1cfa57e7
+  normalized_sha256: sha256:0532339ef6cb5649a72e9f6bd6e028ffa348eddf0c8ec9ff8b51823d1cfa57e7
+cas_ref: sha256:0532339ef6cb5649a72e9f6bd6e028ffa348eddf0c8ec9ff8b51823d1cfa57e7
+coverage_gids:
+  - gid: D5/S1/Deficit/Beatty/GoldenSpectralCoordinate.golden_spectral_im_eq_zero_iff
+    target_statement_id: sha256:d38ed1f5095b555ee7e0670836d946ec70ad0ed12c0b52814e8e8103dffb369e
+receipts:
+  scribe:
+    - gid: D5/S1/Deficit/Beatty/GoldenSpectralCoordinate.golden_spectral_im_eq_zero_iff
+      definition_sha256: sha256:10a183b979112525926bf34a75050108f650e5211434889b11bb7f3ebaaa5f7c
+      emission_sha256: sha256:09d951bfb04693234558846749768aa508a1ad017c0afbf886ea1b1a43bcb8c1
+  unresolved_subitems: []

@@ -1,0 +1,1 @@
+**勘误三**:`o6WeilPositivityStatement` 定义于 `D5/X_Frontier/Hearts`,可冻结模块不得 import X_Frontier,故 R-F 的落地陈述是该定义体的逐字转写(定理名保留 atom 所给),并以导入 Hearts 的 scratch 文件 `exact` 出 `RiemannHypothesis → o6WeilPositivityStatement` 作忠实见证(exit 0,不入库)。

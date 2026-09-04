@@ -1,0 +1,14 @@
+* pairwise holonomy；
+
+统一成一个 Ising interaction graph。
+
+但当前只能标记为：
+
+$$
+\boxed{\text{candidate coupling}}
+$$
+
+因为仓库尚未证明 \(E_{ab}\) 是经典 ξ 零点的实际联合分布耦合。
+
+---
+

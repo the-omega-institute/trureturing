@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:4988cdda348df2ac9b69fc3d9a9f5e08abec56eccbfd0947e70a2786ccf64f34
+  normalized_sha256: sha256:4988cdda348df2ac9b69fc3d9a9f5e08abec56eccbfd0947e70a2786ccf64f34
+cas_ref: sha256:4988cdda348df2ac9b69fc3d9a9f5e08abec56eccbfd0947e70a2786ccf64f34
+coverage_gids:
+  - gid: D5/S3/Observer/InfiniteSourceAugmentationIdeal.infinite_source_augmentation_ideal_not_finitely_generated
+    target_statement_id: sha256:7b399f11c9f14d4dfeeaca57f0f88318e4c013e5737d468220fcdcd2fda38a23
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/InfiniteSourceAugmentationIdeal.infinite_source_augmentation_ideal_not_finitely_generated
+      definition_sha256: sha256:9ea3459ce46179f21d7bcd8ac287655eab73e23f7ee1f4187bf2649fca9604cb
+      emission_sha256: sha256:c9fa6a784195b88a0eff56f3a130d818d7e8cae0870c4ed449e04abd522c4b7c
+  unresolved_subitems: []

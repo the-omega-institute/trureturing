@@ -5,30 +5,68 @@ namespace StrataLint.Tests;
 
 internal static partial class CoverWorld
 {
-    private static void MaterializeOtherAtomFormalizationReceipt(
+    private static List<ScribeEmissionRecord> MaterializeScribeRecords(
         CoverSpec spec,
-        DigestionAtom? atom,
-        IDictionary<string, string> files)
+        ScribeEmissionRecord primary)
     {
-        if (spec.OtherAtomGid is not { } gid || atom is null)
+        var records = new List<ScribeEmissionRecord> { primary };
+        if (spec.SecondaryTarget is { } secondary)
+        {
+            var definition = System.Text.Encoding.UTF8.GetBytes("secondary scribe definition\n");
+            var emission = System.Text.Encoding.UTF8.GetBytes("# secondary emitted narrative\n");
+            records.Add(new ScribeEmissionRecord(
+                secondary.ModuleGid,
+                ScribeEmissionAttestation.DefinitionPath(secondary.ModuleGid),
+                DigestionFingerprint.Compute(definition).RawSha256,
+                ScribeEmissionAttestation.EmissionPath(secondary.ModuleGid),
+                DigestionFingerprint.Compute(emission).RawSha256));
+        }
+
+        return records;
+    }
+
+    private static void MaterializeSecondaryFiles(CoverSpec spec, IDictionary<string, string> files)
+    {
+        if (spec.SecondaryTarget is not { } secondary)
         {
             return;
         }
 
-        var separator = gid.LastIndexOf('.');
-        var receipt = new DigestionFormalizationReceipt(
-            CoverWorld.OtherAtomId,
-            gid,
-            new DigestionFormalizationSignature(
-                gid[(separator + 1)..],
-                spec.ReportKind,
-                spec.ReportType),
-            atom.Fingerprints.RawSha256,
-            atom.Fingerprints.RawSha256);
-        files[DigestionFormalizationReceipt.PathForAtom(CoverWorld.OtherAtomId)] =
-            System.Text.Encoding.UTF8.GetString(
-                DigestionFormalizationReceipt.Write(receipt).AsSpan());
+        files[secondary.ModuleGid + ".lean"] = DigestionTestSupport.Lean(secondary.ModuleGid);
+        files[ScribeEmissionAttestation.DefinitionPath(secondary.ModuleGid)] =
+            "secondary scribe definition\n";
+        files[ScribeEmissionAttestation.EmissionPath(secondary.ModuleGid)] =
+            "# secondary emitted narrative\n";
     }
+
+    private static LeanAxiomReport MaterializeReport(
+        CoverSpec spec,
+        string targetPath,
+        ImmutableArray<LeanDeclaration> primaryDeclarations)
+    {
+        var reportFiles = new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)
+        {
+            [targetPath] = new LeanFileReport(ImmutableArray<string>.Empty, primaryDeclarations),
+        };
+        if (spec.SecondaryTarget is { } secondary)
+        {
+            reportFiles[secondary.ModuleGid + ".lean"] = new LeanFileReport(
+                ImmutableArray<string>.Empty,
+                [new LeanDeclaration(
+                    secondary.Declaration,
+                    "theorem",
+                    "True",
+                    ImmutableArray<string>.Empty)]);
+        }
+
+        return LeanAxiomReport.Create(reportFiles);
+    }
+
+    private static IEnumerable<string> MaterializeVerifiedGids(CoverSpec spec) =>
+        (spec.Declaration is null ? [] : new[] { spec.Gid })
+            .Concat(spec.SecondaryTarget is { } secondary
+                ? [secondary.ModuleGid + "." + secondary.Declaration]
+                : []);
 
     private static BackfillInventoryDocument BuildLedger(
         CoverSpec spec,
@@ -146,12 +184,9 @@ internal static partial class CoverWorld
         string? emissionSha256,
         ImmutableArray<string> unresolvedSubitems)
     {
-        var coverageReceipts = coverage.Length == 1 && targetStatementId is not null
-            ? ImmutableArray.Create(new DigestionCoverageReceipt(
-                coverage[0],
-                fingerprints.RawSha256,
-                targetStatementId))
-            : [];
+        var coverageEdges = coverage
+            .Select(gid => new DigestionCoverageEdge(gid, targetStatementId))
+            .ToImmutableArray();
         var scribeReceipts = coverage.Length == 1
             && definitionSha256 is not null
             && emissionSha256 is not null
@@ -169,9 +204,8 @@ internal static partial class CoverWorld
             SyntheticNumberedAtomizer.Id,
             atomId,
             fingerprints,
-            coverage,
+            coverageEdges,
             new DigestionReceipts(
-                coverageReceipts,
                 scribeReceipts,
                 unresolvedSubitems,
                 [],
@@ -235,7 +269,16 @@ internal static partial class CoverWorld
             })
             .ToArray();
         FrozenStatementReceiptTestData.AddLedger(files, frozenModules);
-        FrozenStatementReceiptTestData.AddLedger(baseline, frozenModules);
+        var baselineModules = spec.FrozenTargetInBaseline
+            ? frozenModules
+            : frozenModules.Where(module => !string.Equals(
+                module.Path,
+                targetPath,
+                StringComparison.Ordinal)).ToArray();
+        if (baselineModules.Length > 0)
+        {
+            FrozenStatementReceiptTestData.AddLedger(baseline, baselineModules);
+        }
     }
 
     private static DigestionMigrationState Migration(string value) => value switch

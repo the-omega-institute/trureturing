@@ -287,15 +287,6 @@ artifact_id = "none"
 runtime_disposition = "committed-source"
 
 [[files]]
-pattern = "Meta/Digestion/formalizations/*.v1.json"
-kind = "ledger"
-produced_by = "EmitFormalizationReceiptCommand"
-consumed_by = ["CoverAtomCommand"]
-verified_by = ["DigestionFormalizationReceipt"]
-artifact_id = "none"
-runtime_disposition = "committed-ledger"
-
-[[files]]
 pattern = "Meta/FILEMAP.toml"
 kind = "data"
 produced_by = "none"
@@ -483,6 +474,15 @@ kind = "program"
 produced_by = "none"
 consumed_by = ["CoverageAnalyzer"]
 verified_by = ["make-gate"]
+artifact_id = "none"
+runtime_disposition = "committed-source"
+
+[[files]]
+pattern = "tools/TestSupport/**"
+kind = "program"
+produced_by = "none"
+consumed_by = ["dotnet"]
+verified_by = ["dotnet-test"]
 artifact_id = "none"
 runtime_disposition = "committed-source"
 

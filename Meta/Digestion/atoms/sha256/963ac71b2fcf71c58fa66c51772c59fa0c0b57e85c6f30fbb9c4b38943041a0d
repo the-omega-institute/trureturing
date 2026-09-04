@@ -1,0 +1,6 @@
+## 二　G-g-2 预登记:条件逆命题(右半带,同模块第二条公开定理)
+
+**义务**:公开定理 `golden_window_zero_right_half_strip_converse (G : Complex -> Complex) (hResidual : forall rho : Complex, riemannZeta rho = 0 -> (1 : Real) / 2 < rho.re -> rho.re < 1 -> G (rho / ((Real.goldenRatio ^ 2 : Real) : Complex)) ≠ 0) (hConfinement : forall s : Complex, 1 / (2 * Real.goldenRatio ^ 3) < s.re -> s.re < 1 / Real.goldenRatio ^ 2 -> riemannZeta (((Real.goldenRatio ^ 2 : Real) : Complex) * s) * riemannZeta (((Real.goldenRatio ^ 3 : Real) : Complex) * s) * (riemannZeta (((2 * Real.goldenRatio ^ 2 : Real) : Complex) * s))⁻¹ * ((riemannZeta (((2 * Real.goldenRatio ^ 3 : Real) : Complex) * s))⁻¹ * riemannZeta ((((2 * Real.goldenRatio ^ 2 + Real.goldenRatio ^ 3 : Real) : Complex) * s)) * G s) = 0 -> G s ≠ 0 -> s.re = 1 / (2 * Real.goldenRatio ^ 2)) : forall rho : Complex, riemannZeta rho = 0 -> (1 : Real) / 2 < rho.re -> rho.re < 1 -> False`。闭合路线:取 s := ρ/φ²,由 1/2 < Re ρ 得 1/(2φ) < Re ρ 故 s ∈ W;乘积首因子 ζ(φ²·ρ/φ²) = ζ ρ = 0(`mul_div_cancel_left₀`);hResidual 给 G s ≠ 0;hConfinement 得 Re s = 1/(2φ²) 即 Re ρ = 1/2,与 1/2 < Re ρ 矛盾。
+**可证伪预测(写在跑之前)**:若正确,标准三公理、零 sorry;若 W 的下边界 1/(2φ³) 与 1/(2φ) 的比较方向写反(须 1/(2φ) > 1/(2φ³)·φ²… 即 β > 1/(2φ) ≈ 0.309 蕴含 s ∈ W),则本条为假。
+**边界**:hResidual 是**未知假设**(G3 在回拉点不消失),本条不断言其成立,也不断言 G3 的零点集;结论只是右半带无零点,完整 RH 由 G-g-3 接手。
+

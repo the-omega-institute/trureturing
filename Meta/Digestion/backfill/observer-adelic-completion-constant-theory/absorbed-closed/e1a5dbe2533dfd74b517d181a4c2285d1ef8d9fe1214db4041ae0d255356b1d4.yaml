@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:e1a5dbe2533dfd74b517d181a4c2285d1ef8d9fe1214db4041ae0d255356b1d4
+  normalized_sha256: sha256:e1a5dbe2533dfd74b517d181a4c2285d1ef8d9fe1214db4041ae0d255356b1d4
+cas_ref: sha256:e1a5dbe2533dfd74b517d181a4c2285d1ef8d9fe1214db4041ae0d255356b1d4
+coverage_gids:
+  - gid: D5/S3/Analytic/GammaThermal/ArchimedeanQuarterPairThermalEnvelope.archimedean_quarter_pair_thermal_envelope
+    target_statement_id: sha256:ff728857a63eb56e49e7663c67ec6f61efcc0383a9be04078b2d47bcb9b3d5ba
+receipts:
+  scribe:
+    - gid: D5/S3/Analytic/GammaThermal/ArchimedeanQuarterPairThermalEnvelope.archimedean_quarter_pair_thermal_envelope
+      definition_sha256: sha256:1e962b512cf97155e2468e27b8be1e44b5c120cfbe6e05fb6c0ab3227a9d7513
+      emission_sha256: sha256:8a793141b1c1299274a928eb102e36a4ff91d84143a30b6b30d55afdd0434ab1
+  unresolved_subitems: []

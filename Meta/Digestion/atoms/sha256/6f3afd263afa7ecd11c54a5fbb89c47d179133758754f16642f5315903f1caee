@@ -1,0 +1,6 @@
+## 三　G-g-3 预登记:右半带无零点 ⟹ RH(`RightHalfStripRiemannReduction`,落 `D5/S3/Weil/ZetaBridge/`)
+
+**义务**:公开定理 `golden_right_half_strip_implies_rh (hRight : forall rho : Complex, riemannZeta rho = 0 -> (1 : Real) / 2 < rho.re -> rho.re < 1 -> False) : RiemannHypothesis`。闭合路线:Re ρ ≥ 1 由 `riemannZeta_ne_zero_of_one_le_re` 排除;1/2 < Re ρ < 1 由假设排除;0 < Re ρ < 1/2 以 `riemannZeta_one_sub`(s := 1 − ρ)反射到右半带;Re ρ ≤ 0 时 ρ ≠ 0(`riemannZeta_zero`),对 t := 1 − ρ 用函数方程,ζ t、Γ t(`Complex.Gamma_ne_zero_of_re_pos`)、(2π)^(−t)(`Complex.cpow_def_of_ne_zero` + `Complex.exp_ne_zero`)皆非零,故 cos(πt/2) = 0,`Complex.cos_eq_zero_iff` 给出 ρ = −2(n+1),与 Mathlib 的非平凡性矛盾。落点 `D5/S3/Weil/ZetaBridge/`(origin/dev 现 20/24)。
+**可证伪预测(写在跑之前)**:若正确,定理只消费钉版 Mathlib(`riemannZeta_one_sub`、`riemannZeta_ne_zero_of_one_le_re`、`riemannZeta_zero`、`Complex.cos_eq_zero_iff`),标准三公理;若 `riemannZeta_one_sub` 的侧条件 `s ≠ -n` 在 Re ρ ≤ 0 分支中不可满足(t = 1 − ρ 的实部 ≥ 1,故可满足),则本条为假。
+**边界**:本条是纯 Mathlib 归约,不含黄金结构;它把 G-g-2 的结论升为完整 RH,但 G-g-2 的 hResidual 仍是未知假设,故三条合起来**不构成 RH 的证明路径**,只把「germ 窗口除子 ⟺ RH」的真实缺口定位到 G3 在回拉点的非消失性(G-c 类问题的对偶)。
+

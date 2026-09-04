@@ -4,6 +4,9 @@ fingerprints:
 cas_ref: sha256:930ed4db566cff51a06f22311baaacdb4e70f9cca6d3b72dcc911dd9394adb79
 coverage_gids: []
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: 'Missing prerequisites on the source carrier. D5 search `bilateral.*(subshift|golden|Fibonacci)|Fibonacci.*Hamilton|common spectrum|spectrum.*phase|phase.*spectrum|Weyl criterion|minimal.*spectrum` found only one-sided golden word-subshift minimality on `Nat -> Bool` and unrelated bilateral Fibonacci recurrence lifts, with no bilateral golden symbolic hull, Fibonacci Hamiltonian on `lp (fun _ : Int => Complex) 2`, or common-spectrum theorem. Pinned Mathlib search `bilateral.*shift|Weyl.*criterion|approximate.*eigen|mem_spectrum.*approx|IsSelfAdjoint.*spectrum|spectrum.*isClosed|lp.single` found closed/real spectrum facts, finite-support density ingredients, and conjugation invariance, but `Analysis/InnerProductSpace/Spectrum.lean` explicitly leaves bounded self-adjoint spectral theory as TODO and supplies no infinite-dimensional Weyl approximate-vector criterion. Installed third-party packages plausible, proofwidgets, batteries, Cli, aesop, importGraph, LeanSearchClient, and Qq returned zero hits for `Fibonacci Hamilton|Weyl criterion|bilateral subshift|common spectrum`. The local proof reduction can obtain orbitwise unitary spectrum invariance and spectrum closedness, but cannot extend it from one orbit to the minimal hull without the missing finite-support Weyl criterion and bilateral golden recurrence/minimality bridge; replacing the Hamiltonian by an abstract spectrum-valued proxy or one-sided carrier would violate source-carrier fidelity.'
+    reentry_condition: Freeze a canonical bilateral golden subshift with minimal Int-shift action, the source's bounded self-adjoint nearest-neighbor Hamiltonian on complex l2(Int), and an infinite-dimensional self-adjoint Weyl criterion with finitely supported approximation; then transport local words to prove phase-independent real spectrum.
+    blocker_class: missing-prerequisite

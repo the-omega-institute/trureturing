@@ -1,0 +1,5 @@
+## 四　预算与结算
+
+两席位轮,可并行:席 A 在 `EulerGerm/GoldenGermWindowZeroCriterion.lean` 同模块证 G-g-1 与 G-g-2(deposit 绑 G-g-1 atom;G-g-2 走 PR-1b 收据后 PR-2 cover);席 B 在 `ZetaBridge/RightHalfStripRiemannReduction.lean` 证 G-g-3(deposit 绑其 atom)。二者互不依赖。
+
+后续增订继续严格追加于本节之后。

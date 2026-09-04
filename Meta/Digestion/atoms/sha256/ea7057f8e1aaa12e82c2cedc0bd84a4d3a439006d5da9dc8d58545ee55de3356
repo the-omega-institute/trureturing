@@ -1,0 +1,20 @@
+* 全部观察者 Gram 关系。
+
+它是一个完整输入—输出实现问题，而不只是特征值匹配问题。
+
+最深的一句话是：
+
+$$
+\boxed{
+\text{道不可被某个 Hamiltonian 命名；
+但一个完整的正响应可以唯一生成一个 Hamiltonian 等价类。
+临界零点允许离散谱、圆周相位、正 string 与连续 canonical field
+成为同一正关系的不同实现；
+离线零点则表示这些实现无法同时保持正性，
+迫使连续完成进入 Pontryagin 负指标世界。}
+$$
+
+[1]: https://arxiv.org/abs/2201.01522?utm_source=chatgpt.com "Canonical systems whose Weyl coefficients have regularly varying asymptotics"
+[2]: https://arxiv.org/abs/1305.3100 "https://arxiv.org/abs/1305.3100"
+[3]: https://arxiv.org/abs/1203.2271 "https://arxiv.org/abs/1203.2271"
+[4]: https://arxiv.org/abs/1905.12397 "https://arxiv.org/abs/1905.12397"

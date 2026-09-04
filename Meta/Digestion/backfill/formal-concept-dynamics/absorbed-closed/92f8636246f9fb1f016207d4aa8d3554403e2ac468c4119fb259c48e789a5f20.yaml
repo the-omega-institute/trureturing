@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:92f8636246f9fb1f016207d4aa8d3554403e2ac468c4119fb259c48e789a5f20
 cas_ref: sha256:92f8636246f9fb1f016207d4aa8d3554403e2ac468c4119fb259c48e789a5f20
 coverage_gids:
-  - D5/S3/ConceptDynamics/DecisionValueScale/PublicGoodsDominanceWelfareContrast.public_goods_dominance_welfare_contrast
+  - gid: D5/S3/ConceptDynamics/DecisionValueScale/PublicGoodsDominanceWelfareContrast.public_goods_dominance_welfare_contrast
+    target_statement_id: sha256:a802e95062b197ae123e37cdde2c0153990a4eebead685a4a97a2b8efe710260
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/DecisionValueScale/PublicGoodsDominanceWelfareContrast.public_goods_dominance_welfare_contrast
-      source_sha256: sha256:92f8636246f9fb1f016207d4aa8d3554403e2ac468c4119fb259c48e789a5f20
-      target_statement_id: sha256:a802e95062b197ae123e37cdde2c0153990a4eebead685a4a97a2b8efe710260
   scribe:
     - gid: D5/S3/ConceptDynamics/DecisionValueScale/PublicGoodsDominanceWelfareContrast.public_goods_dominance_welfare_contrast
       definition_sha256: sha256:82a5bcf9c5f44144b77e5518a12025455da88a9432eaac1525bf05cf11c6f487

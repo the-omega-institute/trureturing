@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:81e1f4b100440f0b47e3566a0fd3c2f0c604ba6b5d9c0f9cfbd80c9869ff5d2a
+  normalized_sha256: sha256:81e1f4b100440f0b47e3566a0fd3c2f0c604ba6b5d9c0f9cfbd80c9869ff5d2a
+cas_ref: sha256:81e1f4b100440f0b47e3566a0fd3c2f0c604ba6b5d9c0f9cfbd80c9869ff5d2a
+coverage_gids:
+  - gid: D5/S3/Weil/ZetaBridge/RhImpliesWeilPositivity.riemannHypothesis_implies_o6WeilPositivityStatement
+    target_statement_id: sha256:e404c4220959fdcc223cd27b976778366fe50d498e3d9c5e1a3fd012f10d22e0
+receipts:
+  scribe:
+    - gid: D5/S3/Weil/ZetaBridge/RhImpliesWeilPositivity.riemannHypothesis_implies_o6WeilPositivityStatement
+      definition_sha256: sha256:583b4c1ca14eea5d1c6a01c09439b577c74f5bd30e3e5323e97a91bfda86ce31
+      emission_sha256: sha256:3fe11e2bf2476479a1960d33cd8a35536d47774149bfc93553dcc44b27c17c9f
+  unresolved_subitems: []

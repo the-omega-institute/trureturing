@@ -1,0 +1,12 @@
+* \(\varepsilon=-1\)：odd completion。
+
+对 Riemann ζ，Gamma、\(\pi\) 和极点消去因子把原始扭曲函数方程重规范化为：
+
+$$
+\xi(1-s)=\xi(s).
+$$
+
+所以 completed \(\xi\) 是 cocycle 被完全平凡化后的 even state。
+
+---
+

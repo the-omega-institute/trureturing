@@ -8,10 +8,6 @@ namespace StrataLint.Engine;
 
 internal static partial class RepositoryRules
 {
-    /// <summary>The theory tree the digestion machine reads; its volumes are the append-only ones.</summary>
-    private static bool IsTheoryVolumePath(string path) =>
-        path.StartsWith("docs/develop/theory/", StringComparison.Ordinal);
-
     private static bool ImportAllowed(string source, string target)
     {
         if (source == "Trureturing.lean")

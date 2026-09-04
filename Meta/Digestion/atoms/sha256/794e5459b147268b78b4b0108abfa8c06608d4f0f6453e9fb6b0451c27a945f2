@@ -1,0 +1,14 @@
+### 150.2 Orbit Walsh inversion
+
+```lean
+theorem quartetWalsh_inversion
+    (f : Fin 2 → Fin 2 → ℂ) :
+    ∀ ε η, f ε η =
+      ∑ a, ∑ b,
+        walshCharacter a ε *
+        walshCharacter b η *
+        quartetWalshCoefficient f a b
+```
+
+---
+

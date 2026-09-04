@@ -1,0 +1,11 @@
+## 34. Poisson holonomy 耦合图
+
+对右侧离线代表：
+
+\[
+\rho_a=\frac12+\delta_a+i\gamma_a,
+\qquad \delta_a>0,
+\]
+
+仓库已有的二点 Poisson energy 给出候选边权：
+

@@ -1,0 +1,4 @@
+## P7　高阶 connected sector 必须减去 partitions
+
+若把原始 \(k\)-point moment 直接称为纯 \(k\)-体纠缠，在由低阶变量乘积构造的测试数据上会产生假阳性。
+

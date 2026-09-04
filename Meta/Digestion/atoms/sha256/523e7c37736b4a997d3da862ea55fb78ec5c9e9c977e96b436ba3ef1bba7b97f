@@ -1,0 +1,11 @@
+\[
+\boxed{
+\beta(v)
+=
+\sum_{k\in\operatorname{wdigits}(v)}
+\varphi^k.
+}
+\]
+
+这里黄金数位是对象生成律的一部分。
+

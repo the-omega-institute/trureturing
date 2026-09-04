@@ -1,0 +1,77 @@
+## 定理 1910.1（Minimal positive repair）
+
+令：
+
+$$
+R\succeq0
+$$
+
+并要求：
+
+$$
+\mathbb F+R\succeq0.
+$$
+
+则必有：
+
+$$
+\boxed{
+\|R\|_{\mathrm{op}}
+\ge
+\varphi^{-1}.
+}
+\tag{1910.5}
+$$
+
+等号由唯一最小谱修复：
+
+$$
+\boxed{
+R_{\min}
+=
+\varphi^{-1}P_-
+}
+\tag{1910.6}
+$$
+
+达到。
+
+修复后：
+
+$$
+\boxed{
+\mathbb F+R_{\min}
+=
+\varphi P_+
+\succeq0,
+}
+\tag{1910.7}
+$$
+
+并且秩降为 \(1\)。
+
+### 证明
+
+在负本征方向上：
+
+$$
+u_-^*\mathbb Fu_-=-\varphi^{-1}.
+$$
+
+若 \(\mathbb F+R\succeq0\)，则：
+
+$$
+u_-^*Ru_-\ge\varphi^{-1}.
+$$
+
+所以：
+
+$$
+\|R\|_{\mathrm{op}}
+\ge\varphi^{-1}.
+$$
+
+取 \(R=\varphi^{-1}P_-\) 即达到。∎
+
+---
+

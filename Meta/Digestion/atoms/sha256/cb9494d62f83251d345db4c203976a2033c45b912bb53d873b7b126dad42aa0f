@@ -1,0 +1,33 @@
+* \(\beta_T\) 检验该正状态的法向支撑是否临界。
+
+因此新的双 floor 目标为：
+
+$$
+\boxed{
+\alpha_T\ge0,
+\qquad
+\beta_T\ge0
+\quad
+\forall T.
+}
+\tag{1944.5}
+$$
+
+由于 signed-normal 节点本身不大于零，第二个不等式会强迫：
+
+$$
+\beta_T=0.
+$$
+
+这条路线把 RH 转成：
+
+$$
+\boxed{
+\text{正质量实现}
++
+\text{非负法向 localizer}.
+}
+$$
+
+---
+

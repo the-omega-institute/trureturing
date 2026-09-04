@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:2b9b3011100c40fa92734ae4cca222dd901e9cdf417ffe5339c7e8adc23389b2
+  normalized_sha256: sha256:2b9b3011100c40fa92734ae4cca222dd901e9cdf417ffe5339c7e8adc23389b2
+cas_ref: sha256:2b9b3011100c40fa92734ae4cca222dd901e9cdf417ffe5339c7e8adc23389b2
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/MeasurableRefinement/DoobDynkinFactorization.measurable_refinement_iff_generated_information_inclusion
+    target_statement_id: sha256:e55c3aa47b18a40821305ff140de6195017dcb204ba01d10b8517a3ae5af05f8
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/MeasurableRefinement/DoobDynkinFactorization.measurable_refinement_iff_generated_information_inclusion
+      definition_sha256: sha256:391fdb17546d77f994b38e6d6dbd76082b0dd8b2396442a41a842bfb93a0df44
+      emission_sha256: sha256:af4cc0696ff62769720be6026ba3dd8e05af3e90b25e5a48a44a3f639e8f343d
+  unresolved_subitems: []

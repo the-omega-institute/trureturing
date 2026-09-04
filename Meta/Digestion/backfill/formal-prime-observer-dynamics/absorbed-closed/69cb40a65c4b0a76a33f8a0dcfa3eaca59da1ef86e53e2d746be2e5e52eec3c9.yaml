@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:69cb40a65c4b0a76a33f8a0dcfa3eaca59da1ef86e53e2d746be2e5e52eec3c9
+  normalized_sha256: sha256:69cb40a65c4b0a76a33f8a0dcfa3eaca59da1ef86e53e2d746be2e5e52eec3c9
+cas_ref: sha256:69cb40a65c4b0a76a33f8a0dcfa3eaca59da1ef86e53e2d746be2e5e52eec3c9
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Gluing/GlobalFrameCoboundaryCriterion.global_frame_iff_transition_coboundary
+    target_statement_id: sha256:551e44d881627b10e03ca7e418367cf72e323c7947fcf7d945c21147bad22203
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Gluing/GlobalFrameCoboundaryCriterion.global_frame_iff_transition_coboundary
+      definition_sha256: sha256:3477e687ec8f67628058e05a5cf13893db6d96ccee82aef87d8c2525aee08a9c
+      emission_sha256: sha256:e808331a067e38be5a06f4cf5a1ba636b12bbba0cc89270cd0bc1ab530602289
+  unresolved_subitems: []

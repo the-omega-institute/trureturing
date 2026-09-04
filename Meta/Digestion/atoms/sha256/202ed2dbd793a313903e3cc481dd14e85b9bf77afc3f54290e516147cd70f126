@@ -1,0 +1,8 @@
+### 定义 34.1（Poisson orbit graph）
+
+以离线 mirror orbits 为顶点，以 \(E_{ab}\) 为边权，形成有限窗口图。
+
+这给出一个自然的二点 coupling candidate，但仓库现有定理明确没有证明它就是经典 ζ 零点之间的物理量。
+
+---
+

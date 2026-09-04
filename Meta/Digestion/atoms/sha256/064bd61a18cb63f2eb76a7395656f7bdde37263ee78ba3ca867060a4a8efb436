@@ -1,0 +1,16 @@
+## 44. 不自动成立的几何 Möbius strip
+
+把临界线两侧视为两张 sign sheets，并不能自动得到 Möbius strip。
+
+临界条带按：
+
+\[
+(\gamma,\varepsilon)
+\sim
+(\gamma+L,-\varepsilon)
+\]
+
+粘合，才会产生 Möbius monodromy。
+
+经典 ζ 没有给出一个已证明的自然高度周期 \(L\)，因此该粘合是额外假设。
+

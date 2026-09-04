@@ -11,24 +11,6 @@ ATOM_ID="${3:-}"
 GID="${4:-}"
 BATCH_ATOM_IDS=()
 BATCH_GIDS=()
-PREPARED_RECEIPT_PATH=""
-PREPARED_RECEIPT_ORIGINAL_PATH=""
-PREPARED_RECEIPT_REPLACES_EXISTING=0
-
-cleanup_prepared_receipt() {
-  [[ -z "$PREPARED_RECEIPT_PATH" ]] || rm -f -- "$PREPARED_RECEIPT_PATH"
-  [[ -z "$PREPARED_RECEIPT_ORIGINAL_PATH" ]] \
-    || rm -f -- "$PREPARED_RECEIPT_ORIGINAL_PATH"
-}
-
-finish_playbook() {
-  local rc=$?
-  trap - EXIT
-  set +e
-  cleanup_prepared_receipt
-  exit "$rc"
-}
-trap finish_playbook EXIT
 
 run_cli() {
   dotnet run --project "$PROJECT" --configuration Release -- "$@"
@@ -38,10 +20,6 @@ run_digest_status() {
   run_cli digest-status --base "$BASE"
 }
 
-receipts_stage() {
-  make align-digestion-status BASE="$BASE"
-  run_digest_status
-}
 
 begin_step() {
   local label="$1"
@@ -68,7 +46,6 @@ require_transaction_arguments() {
 
   DOCUMENT_GID="${GID%.*}"
   MODULE_PATH="${DOCUMENT_GID}.lean"
-  RECEIPT_PATH="Meta/Digestion/formalizations/${ATOM_ID}.v1.json"
   if [[ "$DOCUMENT_GID" == "$GID" || ! -f "$MODULE_PATH" ]]; then
     echo "PLAYBOOK_INVALID GID does not resolve to a Lean module: $GID" >&2
     return 2
@@ -120,13 +97,6 @@ derive_cover_batch_row_state() {
   require_transaction_arguments
 }
 
-cleanup_cover_batch_temporaries() {
-  local index
-  for index in "${!BATCH_ATOM_IDS[@]}"; do
-    derive_cover_batch_row_state "$index"
-    cleanup_transaction_temporaries
-  done
-}
 
 require_new_module_blueprint_mirror() {
   local mirror_path="Blueprint/${MODULE_PATH%.lean}.md"
@@ -143,37 +113,6 @@ require_new_module_blueprint_mirror() {
   fi
 }
 
-cleanup_transaction_temporaries() {
-  local temporary
-  for temporary in "${RECEIPT_PATH}.tmp."*; do
-    [[ -e "$temporary" ]] || continue
-    printf 'PLAYBOOK_CLEANUP command=%s path=%s reason=interrupted-transaction\n' \
-      "$COMMAND" "$temporary" >&2
-    rm -f -- "$temporary"
-  done
-}
-
-commit_phase_a_if_needed() {
-  git add -A
-  git reset --quiet HEAD -- "$FROZEN_LEDGER" "$RECEIPT_PATH"
-  if git diff --cached --quiet; then
-    printf 'PLAYBOOK_SKIP command=deposit detail=phase-a-tree-unchanged\n' >&2
-    return
-  fi
-
-  git commit -m "formalize: deposit $GID"
-}
-
-commit_all_if_needed() {
-  local message="$1"
-  git add -A
-  if git diff --cached --quiet; then
-    printf 'PLAYBOOK_SKIP command=%s detail=final-tree-unchanged\n' "$COMMAND" >&2
-    return
-  fi
-
-  git commit -m "$message"
-}
 
 freeze_exists() {
   local active_state grep_output grep_status ledger_file
@@ -333,118 +272,11 @@ verify_added_frozen_events_v5() {
   rm -f -- "$added_paths"
 }
 
-prepare_formalization_receipt() {
-  local receipt_gid="$GID" temporary original="" receipt_existed=0
-  if [[ -f "$RECEIPT_PATH" ]]; then
-    receipt_existed=1
-    if ! receipt_gid="$(jq -er \
-        '.primary_gid | select(type == "string" and length > 0)' "$RECEIPT_PATH")"; then
-      echo "PLAYBOOK_INVALID formalization receipt has no primary_gid: $RECEIPT_PATH" >&2
-      return 2
-    fi
-
-    original="$(mktemp "${RECEIPT_PATH}.tmp.original.XXXXXX")"
-    if ! cp -- "$RECEIPT_PATH" "$original"; then
-      rm -f -- "$original"
-      echo "PLAYBOOK_INVALID failed to snapshot formalization receipt: $RECEIPT_PATH" >&2
-      return 1
-    fi
-  fi
-
-  mkdir -p "$(dirname "$RECEIPT_PATH")"
-  temporary="$(mktemp "${RECEIPT_PATH}.tmp.XXXXXX")"
-  local receipt_arguments=(
-    emit-formalization-receipt
-    --atom-id "$ATOM_ID"
-    --gid "$GID"
-    --out "$temporary"
-  )
-
-  if run_cli "${receipt_arguments[@]}"; then
-    :
-  else
-    local status=$?
-    rm -f -- "$temporary" "$original"
-    return "$status"
-  fi
-
-  if [[ "$receipt_existed" -eq 1 ]]; then
-    if [[ ! -f "$RECEIPT_PATH" ]]; then
-      rm -f -- "$temporary" "$original"
-      echo "PLAYBOOK_INVALID formalization receipt disappeared during extension validation: $RECEIPT_PATH" >&2
-      return 1
-    fi
-    if ! cmp -s "$original" "$RECEIPT_PATH"; then
-      rm -f -- "$temporary" "$original"
-      echo "PLAYBOOK_INVALID formalization receipt changed during extension validation: $RECEIPT_PATH" >&2
-      return 1
-    fi
-
-    if cmp -s "$temporary" "$RECEIPT_PATH"; then
-      rm -f -- "$temporary" "$original"
-      printf 'PLAYBOOK_HOST path=%s atom_id=%s gid=%s mode=existing-atom-receipt\n' \
-        "$RECEIPT_PATH" "$ATOM_ID" "$receipt_gid" >&2
-      return
-    fi
-
-    if [[ "$GID" != "$receipt_gid" ]]; then
-      PREPARED_RECEIPT_PATH="$temporary"
-      PREPARED_RECEIPT_ORIGINAL_PATH="$original"
-      PREPARED_RECEIPT_REPLACES_EXISTING=1
-      printf 'PLAYBOOK_PREPARED path=%s mode=hosted-extension gid=%s\n' \
-        "$RECEIPT_PATH" "$GID" >&2
-      return
-    fi
-
-    rm -f -- "$temporary" "$original"
-    echo "PLAYBOOK_INVALID existing formalization receipt conflicts with current atom/GID: $RECEIPT_PATH" >&2
-    return 1
-  fi
-
-  PREPARED_RECEIPT_PATH="$temporary"
-  printf 'PLAYBOOK_PREPARED path=%s mode=canonical-temporary\n' "$RECEIPT_PATH" >&2
-}
-
-install_prepared_formalization_receipt() {
-  [[ -n "$PREPARED_RECEIPT_PATH" ]] || return 0
-  if [[ "$PREPARED_RECEIPT_REPLACES_EXISTING" -eq 1 ]]; then
-    if [[ ! -f "$RECEIPT_PATH" ]]; then
-      echo "PLAYBOOK_INVALID formalization receipt disappeared after extension validation: $RECEIPT_PATH" >&2
-      return 1
-    fi
-    if [[ -z "$PREPARED_RECEIPT_ORIGINAL_PATH" \
-        || ! -f "$PREPARED_RECEIPT_ORIGINAL_PATH" ]]; then
-      echo "PLAYBOOK_INVALID formalization receipt validation snapshot is missing: $RECEIPT_PATH" >&2
-      return 1
-    fi
-    if ! cmp -s "$PREPARED_RECEIPT_ORIGINAL_PATH" "$RECEIPT_PATH"; then
-      echo "PLAYBOOK_INVALID formalization receipt changed after extension validation: $RECEIPT_PATH" >&2
-      return 1
-    fi
-
-    mv "$PREPARED_RECEIPT_PATH" "$RECEIPT_PATH"
-    rm -f -- "$PREPARED_RECEIPT_ORIGINAL_PATH"
-    PREPARED_RECEIPT_PATH=""
-    PREPARED_RECEIPT_ORIGINAL_PATH=""
-    PREPARED_RECEIPT_REPLACES_EXISTING=0
-    printf 'PLAYBOOK_WRITE path=%s mode=hosted-extension\n' "$RECEIPT_PATH" >&2
-    return
-  fi
-
-  if [[ -e "$RECEIPT_PATH" ]]; then
-    echo "PLAYBOOK_INVALID formalization receipt appeared after canonical validation: $RECEIPT_PATH" >&2
-    return 1
-  fi
-
-  mv "$PREPARED_RECEIPT_PATH" "$RECEIPT_PATH"
-  PREPARED_RECEIPT_PATH=""
-  printf 'PLAYBOOK_WRITE path=%s mode=atom-derived\n' "$RECEIPT_PATH" >&2
-}
 
 cover_atom_or_resume() {
   local output
   if output="$(run_cli cover-atom --cover-atom "$ATOM_ID" --gid "$GID" \
-      --base "$BASE" --envelope "$RECEIPT_PATH" 2>&1)"; then
+      --base "$BASE" 2>&1)"; then
     [[ -z "$output" ]] || printf '%s\n' "$output"
     return
   else
@@ -466,37 +298,12 @@ cover_row() {
   else
     local status=$?
     complete_step failed
-    step stage-final-tree commit_all_if_needed \
-      "formalize: record failed cover disposition for $ATOM_ID"
     exit "$status"
   fi
-  step align-scribe-receipt run_cli \
-    align-scribe-receipt --atom-id "$ATOM_ID" --gid "$GID" --base "$BASE"
 }
 
 cover_batch_row() {
-  local output status
-  begin_step cover-atom-aligned
-  if output="$(run_cli cover-atom --cover-atom "$ATOM_ID" --gid "$GID" \
-      --base "$BASE" --envelope "$RECEIPT_PATH" --align-scribe-receipt 2>&1)"; then
-    [[ -z "$output" ]] || printf '%s\n' "$output"
-    if grep -Fq "COVER_ATOM_ALIGNED cover=resumed align=passed" <<<"$output"; then
-      printf 'PLAYBOOK_SKIP command=cover detail=coverage-already-applied atom_id=%s gid=%s\n' \
-        "$ATOM_ID" "$GID" >&2
-    fi
-    complete_step passed
-    return
-  else
-    status=$?
-  fi
-
-  printf '%s\n' "$output" >&2
-  complete_step failed
-  if grep -Fq "COVER_ATOM_ALIGNED cover=failed" <<<"$output"; then
-    step stage-final-tree commit_all_if_needed \
-      "formalize: record failed cover disposition for $ATOM_ID"
-  fi
-  exit "$status"
+  cover_row
 }
 
 cd "$ROOT"
@@ -504,7 +311,8 @@ case "$COMMAND" in
   deliver-check)
     make lean-report
     make emit
-    receipts_stage
+    make align-digestion-status BASE="$BASE"
+    run_digest_status
     # Freeze last among all mutating derivations so the proposition snapshot is current.
     verify_added_frozen_events_v5
     run_cli ledger-append --candidate-lean-report "$REPORT"
@@ -512,54 +320,40 @@ case "$COMMAND" in
     make preflight BASE="$BASE"
     verify_added_frozen_events_v5
     ;;
-  receipts-stage)
-    receipts_stage
-    ;;
   deposit)
     require_transaction_arguments
     require_new_module_blueprint_mirror
-    cleanup_transaction_temporaries
+    step lean-report make lean-report
+    step deposit-header-check run_cli deposit-header-check --target "$MODULE_PATH"
+    step emit make emit
     if freeze_exists; then
       freeze_precheck=1
-      printf 'PLAYBOOK_SKIP command=deposit detail=phase-a-already-committed path=%s\n' \
+      printf 'PLAYBOOK_SKIP command=deposit detail=module-already-frozen path=%s\n' \
         "$MODULE_PATH" >&2
-      step deposit-header-check run_cli deposit-header-check --target "$MODULE_PATH"
     else
       status=$?
       [[ "$status" -eq 1 ]] || exit "$status"
       freeze_precheck=0
-      step lean-report make lean-report
-      step deposit-header-check run_cli deposit-header-check --target "$MODULE_PATH"
-      step emit make emit
-      step stage-phase-a commit_phase_a_if_needed
     fi
-    step validate-formalization-receipt prepare_formalization_receipt
     freeze_module_if_needed "$freeze_precheck"
-    install_prepared_formalization_receipt
-    step stage-final-tree commit_all_if_needed "formalize: record deposit receipt for $GID"
     ;;
   cover)
     require_transaction_arguments
-    cleanup_transaction_temporaries
     step lean-report make lean-report
     cover_row
-    step emit-post-alignment make emit
-    step stage-final-tree commit_all_if_needed "formalize: cover $ATOM_ID with $GID"
+    step emit make emit
     ;;
   cover-batch)
     require_cover_batch_arguments
-    cleanup_cover_batch_temporaries
     step lean-report make lean-report
     for index in "${!BATCH_ATOM_IDS[@]}"; do
       derive_cover_batch_row_state "$index"
       cover_batch_row
-      step stage-final-tree commit_all_if_needed "formalize: cover $ATOM_ID with $GID"
     done
-    step emit-post-alignment make emit
-    step stage-final-tree commit_all_if_needed "formalize: emit projections after cover batch"
+    step emit make emit
     ;;
   *)
-    echo "usage: playbook-workflows.sh deliver-check|receipts-stage|deposit|cover|cover-batch [BASE] [ATOM_ID GID|ATOMS_FILE]" >&2
+    echo "usage: playbook-workflows.sh deliver-check|deposit|cover|cover-batch [BASE] [ATOM_ID GID|ATOMS_FILE]" >&2
     exit 2
     ;;
 esac

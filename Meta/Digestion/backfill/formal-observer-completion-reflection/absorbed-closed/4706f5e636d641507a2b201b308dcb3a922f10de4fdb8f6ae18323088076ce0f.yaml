@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:4706f5e636d641507a2b201b308dcb3a922f10de4fdb8f6ae18323088076ce0f
+  normalized_sha256: sha256:4706f5e636d641507a2b201b308dcb3a922f10de4fdb8f6ae18323088076ce0f
+cas_ref: sha256:4706f5e636d641507a2b201b308dcb3a922f10de4fdb8f6ae18323088076ce0f
+coverage_gids:
+  - gid: D5/S3/Entropy/Observation/ConditionalChoiceOutcomeChainRule.conditional_choice_outcome_chain_rule
+    target_statement_id: sha256:91cca72fab34ead9bc791e01418752ccdbad0a94da5ecdc51e08779d43bb6217
+receipts:
+  scribe:
+    - gid: D5/S3/Entropy/Observation/ConditionalChoiceOutcomeChainRule.conditional_choice_outcome_chain_rule
+      definition_sha256: sha256:04fed6e18aa802e4937d6d8bcc3d6ee076da4c2f87a2c872c183dd5ac0cc9f5d
+      emission_sha256: sha256:0f65170885549669b5f1310679fd279073b72db47b98589df717e91902d2d118
+  unresolved_subitems: []

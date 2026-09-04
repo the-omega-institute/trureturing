@@ -1,0 +1,69 @@
+## 24. 对数流是奇的
+
+定义对数连接：
+
+$$
+A(z)
+=
+\frac{\widetilde\Xi'(z)}
+{\widetilde\Xi(z)}.
+$$
+
+由于 \(\widetilde\Xi\) 为偶函数：
+
+$$
+\boxed{
+A(-z)=-A(z).
+}
+$$
+
+于是出现一对完全精确的对象：
+
+$$
+\boxed{
+\widetilde\Xi
+=
+\text{even completed state},
+}
+$$
+
+$$
+\boxed{
+d\log\widetilde\Xi
+=
+\text{odd defect current}.
+}
+$$
+
+微分本身会切换奇偶：
+
+$$
+D:
+\mathcal H^+\to\mathcal H^-,
+$$
+
+$$
+D:
+\mathcal H^-\to\mathcal H^+.
+$$
+
+而：
+
+$$
+D^2
+$$
+
+保持奇偶通道。
+
+所以：
+
+$$
+\boxed{
+\text{一次微分产生破缺流，}
+\qquad
+\text{二次微分回到完成通道}.
+}
+$$
+
+---
+
