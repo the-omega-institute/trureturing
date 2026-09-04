@@ -128,6 +128,23 @@ public sealed class FrozenSurfaceRuleTests
     }
 
     [Fact]
+    public void Sl008C2RequiresTheClosedStateSchema()
+    {
+        var fixture = new RuleFixture();
+        fixture.Files[FrozenStatePathValue] =
+            $"{{\"statement_id\":\"{ExpectedFrozenModuleStatementPin}\",\"history\":[]}}\n";
+
+        var diagnostic = Assert.Single(
+            Evaluate(fixture, (FrozenStatePathValue, RawChangeKind.Added)).Diagnostics);
+
+        Assert.Equal($"frozen state {FrozenStatePathValue}", diagnostic.Path);
+        Assert.Contains(
+            "record keys must be exactly {statement_id}",
+            diagnostic.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void Sl008RejectsStateWhoseModuleIsNotClosed()
     {
         var fixture = new RuleFixture();
@@ -143,7 +160,7 @@ public sealed class FrozenSurfaceRuleTests
     }
 
     [Fact]
-    public void Sl008RejectsAcceptedFreezeWhosePinDiffersFromTheStateFragment()
+    public void Sl008DoesNotCompareAcceptedFreezePinsWithCurrentState()
     {
         var fixture = new RuleFixture();
         var statePin = ModuleStatementId(fixture, FrozenPath);
@@ -151,13 +168,9 @@ public sealed class FrozenSurfaceRuleTests
         AddState(fixture, FrozenPath, statePin);
         _ = AddFreeze(fixture, FrozenPath, eventPin);
 
-        var diagnostic = Assert.Single(
-            Evaluate(fixture, (FrozenStatePathValue, RawChangeKind.Added)).Diagnostics);
+        var evaluation = Evaluate(fixture, (FrozenStatePathValue, RawChangeKind.Added));
 
-        Assert.Equal($"frozen state {FrozenStatePathValue}", diagnostic.Path);
-        Assert.Contains(FrozenPath, diagnostic.Message, StringComparison.Ordinal);
-        Assert.Contains($"state={statePin.Value}", diagnostic.Message, StringComparison.Ordinal);
-        Assert.Contains($"accepted={eventPin.Value}", diagnostic.Message, StringComparison.Ordinal);
+        Assert.Empty(evaluation.Diagnostics);
     }
 
     [Fact]
@@ -172,6 +185,122 @@ public sealed class FrozenSurfaceRuleTests
         var evaluation = Evaluate(fixture, (FrozenPath, RawChangeKind.Modified));
 
         Assert.Empty(evaluation.Diagnostics);
+    }
+
+    [Fact]
+    public void Sl008RejectsStatementChangeWhenCurrentStateRetainsTheOldPin()
+    {
+        var fixture = new RuleFixture();
+        var stored = ModuleStatementId(fixture, FrozenPath);
+        AddState(fixture, FrozenPath, stored, includeInBaseline: true);
+        ChangeStatement(fixture, FrozenPath, "Int");
+        var actual = ModuleStatementId(fixture, FrozenPath);
+        Assert.NotEqual(stored, actual);
+
+        var diagnostic = Assert.Single(
+            Evaluate(fixture, (FrozenPath, RawChangeKind.Modified)).Diagnostics);
+
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
+        Assert.Equal($"frozen state {FrozenStatePathValue}", diagnostic.Path);
+        Assert.Contains($"selector {FrozenPath}", diagnostic.Message, StringComparison.Ordinal);
+        Assert.Contains($"stored={stored.Value}", diagnostic.Message, StringComparison.Ordinal);
+        Assert.Contains($"actual={actual.Value}", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void Sl008AllowsStatementAndStateToMoveTogetherAndObservesThePinChange()
+    {
+        var fixture = new RuleFixture();
+        var oldPin = ModuleStatementId(fixture, FrozenPath);
+        AddState(fixture, FrozenPath, oldPin, includeInBaseline: true);
+        ChangeStatement(fixture, FrozenPath, "Int");
+        var newPin = ModuleStatementId(fixture, FrozenPath);
+        AddState(fixture, FrozenPath, newPin);
+
+        var diagnostic = Assert.Single(Evaluate(
+            fixture,
+            (FrozenPath, RawChangeKind.Modified),
+            (FrozenStatePathValue, RawChangeKind.Modified)).Diagnostics);
+
+        Assert.Equal(AdmissionEffect.Observe, diagnostic.AdmissionEffect);
+        Assert.Equal(
+            $"FROZEN_PIN_CHANGE selector={FrozenPath} old={oldPin.Value} new={newPin.Value}",
+            diagnostic.Message);
+    }
+
+    [Fact]
+    public void Sl008EmitsOnePinChangeObservationPerSelectorInOrdinalOrder()
+    {
+        var fixture = new RuleFixture();
+        var modules = new[] { RuleFixture.ValuesBindingPath, FrozenPath };
+        var changes = new List<(string Path, RawChangeKind Kind)>();
+        var expected = new List<string>();
+        foreach (var module in modules)
+        {
+            var oldPin = ModuleStatementId(fixture, module);
+            AddState(fixture, module, oldPin, includeInBaseline: true);
+            ChangeStatement(fixture, module, "String");
+            var newPin = ModuleStatementId(fixture, module);
+            AddState(fixture, module, newPin);
+            var statePath = FrozenStatePath.FromModulePath(RepoPath.CreateKnown(module)).Value;
+            changes.Add((statePath, RawChangeKind.Modified));
+            expected.Add(
+                $"FROZEN_PIN_CHANGE selector={module} old={oldPin.Value} new={newPin.Value}");
+        }
+
+        var diagnostics = Evaluate(fixture, changes.ToArray()).Diagnostics;
+
+        Assert.All(diagnostics, diagnostic =>
+            Assert.Equal(AdmissionEffect.Observe, diagnostic.AdmissionEffect));
+        Assert.Equal(expected.Order(StringComparer.Ordinal), diagnostics.Select(static item => item.Message));
+    }
+
+    [Fact]
+    public void Sl008RechecksFrozenReverseImportDependentsOfAChangedModule()
+    {
+        var fixture = new RuleFixture();
+        var downstream = RuleFixture.ValuesBindingPath;
+        var stored = ModuleStatementId(fixture, downstream);
+        AddState(fixture, downstream, stored, includeInBaseline: true);
+        fixture.Reports[downstream] = new LeanFileReport(
+            ["D5.S0.Carrier.Ring"],
+            [new LeanDeclaration(
+                "fixtureValue",
+                "def",
+                "Nat",
+                ImmutableArray.Create("Classical.choice", "Quot.sound", "propext"))]);
+        var actual = ModuleStatementId(fixture, downstream);
+        Assert.NotEqual(stored, actual);
+
+        var diagnostic = Assert.Single(
+            Evaluate(fixture, (FrozenPath, RawChangeKind.Modified)).Diagnostics);
+
+        Assert.Contains($"selector {downstream}", diagnostic.Message, StringComparison.Ordinal);
+        Assert.Contains($"stored={stored.Value}", diagnostic.Message, StringComparison.Ordinal);
+        Assert.Contains($"actual={actual.Value}", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("lean-toolchain")]
+    [InlineData("tools/scripts/report/lean-report-input.sh")]
+    public void Sl008RechecksEveryCurrentStateForReportEnvironmentOrProducerChanges(string changedPath)
+    {
+        var fixture = new RuleFixture();
+        var modules = new[] { FrozenPath, RuleFixture.ValuesBindingPath };
+        foreach (var module in modules)
+        {
+            AddState(
+                fixture,
+                module,
+                StatementId.Create("sha256:" + new string(module == FrozenPath ? 'a' : 'b', 64)));
+        }
+
+        var diagnostics = Evaluate(fixture, (changedPath, RawChangeKind.Modified)).Diagnostics;
+
+        Assert.Equal(modules.Length, diagnostics.Length);
+        Assert.Equal(
+            modules.Order(StringComparer.Ordinal),
+            diagnostics.Select(static diagnostic => diagnostic.Message.Split(' ')[1]));
     }
 
     private static RuleFixture FrozenFixture(out string eventPath)
@@ -211,6 +340,20 @@ public sealed class FrozenSurfaceRuleTests
     {
         var path = RepoPath.CreateKnown(modulePath);
         return FrozenContentAddress.ComputeModuleStatementId(path, fixture.Reports[modulePath]);
+    }
+
+    private static void ChangeStatement(
+        RuleFixture fixture,
+        string modulePath,
+        string statementMaterial)
+    {
+        var report = fixture.Reports[modulePath];
+        fixture.Reports[modulePath] = report with
+        {
+            Declarations = report.Declarations
+                .Select(declaration => declaration with { TypeRepresentation = statementMaterial })
+                .ToImmutableArray(),
+        };
     }
 
     private static void AddState(
