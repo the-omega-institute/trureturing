@@ -1,0 +1,12 @@
+### 14.1 横向 carry
+
+隐藏余量穿过 FLOW，变成未来 CUT 差异：
+
+\[
+r\ne r'
+\quad\leadsto\quad
+\beta_F(b,r)\ne\beta_F(b,r').
+\]
+
+它阻碍 FLOW 在商空间上的下降。
+

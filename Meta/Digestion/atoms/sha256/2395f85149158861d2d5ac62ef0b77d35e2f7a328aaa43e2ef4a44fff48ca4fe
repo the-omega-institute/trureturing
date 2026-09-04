@@ -1,0 +1,40 @@
+\[
+\boxed{
+\mathfrak M
+=
+(
+\mathsf{CUT},
+\mathsf{FLOW},
+\mathsf{ADMIT},
+\mathsf{ANCHOR}
+).
+}
+\]
+
+其依赖纤维正规形为：
+
+\[
+\boxed{
+X
+\simeq
+\sum_{b:B}R_q(b).
+}
+\]
+
+其中：
+
+\[
+\begin{aligned}
+\mathsf{CUT}
+&:\ (b,r)\mapsto b;\\
+\mathsf{FLOW}
+&:\ (b,r)\mapsto(\beta(b,r),\rho(b,r));\\
+\mathsf{ADMIT}
+&:\ A^\sharp(b,r);\\
+\mathsf{ANCHOR}
+&:\ (b_a,r_a,A^\sharp(b_a,r_a)).
+\end{aligned}
+\]
+
+---
+

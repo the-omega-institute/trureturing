@@ -1,0 +1,104 @@
+# 第两千一百二十四部　PrimeGaps 的复化：从 \(\sin\) 到 \(\sinh+\sin\)
+
+现在进入最关键的新桥。
+
+令两个素数频率为：
+
+$$
+\omega_p=\log p,
+\qquad
+\omega_q=\log q.
+$$
+
+定义两个观察点：
+
+$$
+s_1=\sigma+\delta+it_1,
+$$
+
+$$
+s_2=\sigma-\delta+it_2.
+$$
+
+定义交替二槽核：
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal K_{p,q}
+(\sigma,\delta;t_1,t_2)
+={}&
+p^{-s_1}q^{-s_2}\\
+&-
+q^{-s_1}p^{-s_2}.
+\end{aligned}
+}
+\tag{2124.1}
+$$
+
+令：
+
+$$
+\tau=t_1-t_2,
+\qquad
+\Delta_{p,q}
+=
+\log\frac qp.
+$$
+
+直接因子分解得到：
+
+$$
+\boxed{
+\begin{aligned}
+|\mathcal K_{p,q}|^2
+=
+4(pq)^{-2\sigma}
+\Bigg[
+&
+\sinh^2
+\left(
+\delta\Delta_{p,q}
+\right)\\
++
+&
+\sin^2
+\left(
+\frac{\tau\Delta_{p,q}}2
+\right)
+\Bigg].
+\end{aligned}
+}
+\tag{2124.2}
+$$
+
+也就是：
+
+$$
+\boxed{
+\frac{(pq)^{2\sigma}}4
+|\mathcal K_{p,q}|^2
+=
+\sinh^2
+\left(
+\delta\log\frac qp
+\right)
++
+\sin^2
+\left(
+\frac{\tau}{2}\log\frac qp
+\right).
+}
+\tag{2124.3}
+$$
+
+这里使用的是精确恒等式：
+
+$$
+|\sinh(a+ib)|^2
+=
+\sinh^2a+\sin^2b.
+$$
+
+---
+

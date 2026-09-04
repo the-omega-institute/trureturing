@@ -1,0 +1,128 @@
+# 第二百四十二部　短间隔真正提供的是“值—导数二通道”
+
+接上前面的黄金检测尺度。令
+
+$$
+\delta=\varphi^{-H},
+\qquad
+p\asymp e^{1/\delta}=e^{\varphi^H},
+$$
+
+并取一对满足
+
+$$
+p<q,\qquad q-p\le 186
+$$
+
+的素数。则其对数频率距离满足
+
+$$
+\Delta_{p,q}
+=
+\log q-\log p
+=
+\log\frac qp
+\le
+\frac{186}{p}.
+$$
+
+在此尺度上，
+
+$$
+\Delta_{p,q}
+\lesssim
+186e^{-\varphi^H}.
+$$
+
+所以两只素数时钟在 \(\log p\) 坐标中已经几乎重合。
+
+但“重合”并不意味着信息消失。两个近邻采样点恰好可以重组为：
+
+$$
+\text{偶平均}
+\quad+\quad
+\text{奇差分}.
+$$
+
+对任意复数 \(s\)，定义
+
+$$
+E_{p,q}(s)
+=
+\frac{p^{-s}+q^{-s}}{2},
+$$
+
+以及归一化奇通道
+
+$$
+J_{p,q}(s)
+=
+\frac{q^{-s}-p^{-s}}
+{\log q-\log p}.
+$$
+
+由微积分基本定理：
+
+$$
+\boxed{
+J_{p,q}(s)
+=
+-s
+\int_0^1
+p^{-s(1-u)}q^{-su}\,du.
+}
+$$
+
+因此，当
+
+$$
+\log(q/p)\to0
+$$
+
+时，
+
+$$
+p^sE_{p,q}(s)\to1,
+$$
+
+并且
+
+$$
+\boxed{
+p^sJ_{p,q}(s)\to-s.
+}
+$$
+
+所以一个 bounded prime pair 并不是简单重复了两次同一信息，而是渐近产生一个二分量对象：
+
+$$
+\boxed{
+\Psi_{p,q}(s)
+=
+\left(
+p^sE_{p,q}(s),
+\,
+p^sJ_{p,q}(s)
+\right)
+\longrightarrow
+(1,-s).
+}
+$$
+
+它同时读取：
+
+* 函数值通道 \(1\)；
+* 一阶导数通道 \(-s\)。
+
+这给出了一个相当严格的“坐标轴融合”：
+
+$$
+\boxed{
+\text{两个渐近重合的 prime coordinates}
+\longrightarrow
+\text{一个 value–jet frame}.
+}
+$$
+
+---
+

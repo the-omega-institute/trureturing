@@ -1,0 +1,75 @@
+# 第两千一百三十八部　为什么该桥不会由标量 Euler 乘积自动给出
+
+项目已经证明，标量 Fourier phase product 只保留频率总和，会遗忘频率列表顺序。分裂能量依赖：
+
+$$
+\log p-\log q.
+$$
+
+所以它是二体关系量，不能从单个局部因子：
+
+$$
+(1-p^{-s})^{-1}
+$$
+
+或其标量乘积直接恢复。
+
+必须保留：
+
+$$
+\boxed{
+\text{prime pair}
+\quad\text{或}\quad
+\text{exterior square}.
+}
+$$
+
+更准确地说：
+
+$$
+\zeta(s)
+$$
+
+活在交换 trace 层。
+
+而：
+
+$$
+\sinh^2
+\left(
+\delta\log(q/p)
+\right)
+$$
+
+活在二阶 relation layer。
+
+所以 PrimeGaps 升级必须从：
+
+$$
+\boxed{
+\text{Euler scalar}
+}
+$$
+
+进入：
+
+$$
+\boxed{
+\Lambda^2
+\left(
+\text{prime-frequency space}
+\right).
+}
+$$
+
+这与此前反复得到的结论完全一致：
+
+$$
+\boxed{
+\text{单点标量可能看不见异常；
+第一非平凡信息位于关系空间。}
+}
+$$
+
+---
+

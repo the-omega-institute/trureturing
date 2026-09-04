@@ -1,0 +1,54 @@
+## 7. 最小 C-IRPT 适配器 `[N]`
+
+只需把已有观察者结构与 FLOW 过程族配对：
+
+```lean
+abbrev CIRPTSystem
+    (X : Type u)
+    (Index : Type v)
+    (Value : Index → Type w)
+    (U : Type z) :=
+  ObserverStructure X Index Value × (U → X → X)
+```
+
+这不是新原语，只是重组已有接口。
+
+对系统 \(S\)，定义：
+
+\[
+\begin{aligned}
+J_S(x)
+&=
+\bigl(S.\mathrm{readout}_i(x)\bigr)_i,
+\\
+A_S(x)
+&=
+S.\mathrm{admissible}(J_S(x)),
+\\
+a_S
+&=
+S.\mathrm{anchor},
+\\
+F^S_u
+&=
+S.\mathrm{flow}(u).
+\end{aligned}
+\]
+
+已有字段给出：
+
+\[
+A_S(a_S).
+\]
+
+因此实际锚可规范包装为：
+
+\[
+\boxed{
+\widehat a_S:
+\sum_{x:X}A_S(x).
+}
+\]
+
+---
+

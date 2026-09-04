@@ -1,0 +1,80 @@
+# 第二百五十部　长间隔与短间隔共同产生非均匀观察几何
+
+此前 `trureturing` 中的长间隔模块使用剩余类覆盖，把一个有限区间中的全部位置变为合数；其贪心步将 survivor 数量压到
+
+$$
+|S|
+\prod_{p\in P}
+\left(1-\frac1p\right)
+$$
+
+以下。
+
+短间隔则产生无限多个 bounded prime pairs。
+
+所以 prime observation geometry 同时包含：
+
+$$
+\boxed{
+\text{空洞}
+}
+$$
+
+和
+
+$$
+\boxed{
+\text{碰撞}.
+}
+$$
+
+在原整数坐标中：
+
+* 长间隔给出异常大的空窗；
+* 短间隔给出有界双点。
+
+在对数频率坐标中：
+
+* 长间隔表现为相对较大的局部频率空隙；
+* bounded gaps 仍使绝对频率差趋于零。
+
+在黄金深度坐标
+
+$$
+H_\varphi(p)=\log_\varphi\log p
+$$
+
+中，bounded pair 满足
+
+$$
+H_\varphi(q)-H_\varphi(p)
+=
+O\left(
+\frac1{p\log p}
+\right).
+$$
+
+所以素数观察者不是均匀采样网格，而是一个同时具有：
+
+$$
+\boxed{
+\text{局部空窗}
++
+\text{局部近重合}
++
+\text{不断变化条件数}
+}
+$$
+
+的多尺度集合。
+
+这比“素数无法逼近某个偏移”更准确：
+
+$$
+\boxed{
+\text{素数可以逼近，但其观察 frame 并不稳定。}
+}
+$$
+
+---
+
