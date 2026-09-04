@@ -40,7 +40,19 @@ $$\operatorname{indistinguishableB}(catalog, S, left, right) = true \iff \operat
 
 The finite Boolean conjunction is true exactly when all selected theorem bundles agree.
 
-**Theorem 1.4 (Catalog indistinguishability is an equivalence).**
+**Theorem 1.4 (Catalog indistinguishability is selected agreement).**
+
+$$\operatorname{indistinguishable}(catalog, S, left, right) \iff \forall i \in S, \operatorname{agrees}(\operatorname{primitives}(\operatorname{theoremAt}(catalog, i)), left, right).$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscape/CatalogKernel.indistinguishable_iff_forall` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Indistinguishability over a finite selection holds exactly when every selected theorem bundle agrees.
+
+**Theorem 1.5 (Catalog indistinguishability is an equivalence).**
 
 $$\operatorname{Equivalence}(\lambda left, right, \operatorname{indistinguishable}(catalog, S, left, right)).$$
 
@@ -52,7 +64,7 @@ $$\operatorname{Equivalence}(\lambda left, right, \operatorname{indistinguishabl
 
 Equivalence is inherited coordinatewise from the selected primitive bundles.
 
-**Definition 1.5 (Catalog joint kernel).**
+**Definition 1.6 (Catalog joint kernel).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscape/CatalogKernel.jointKernel`
 
@@ -64,7 +76,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscape/CatalogKernel.jointKern
 
 The structural kernel is the set of pairs agreeing for every theorem in a Set-level selection.
 
-**Theorem 1.6 (Catalog kernels use the canonical joint kernel).**
+**Theorem 1.7 (Catalog kernels use the canonical joint kernel).**
 
 $$\operatorname{jointKernel}(catalog, S) = \operatorname{jointKernel}(\lambda i: S, \operatorname{quotientCut}(\operatorname{toKernel}(\operatorname{primitives}(\operatorname{theoremAt}(catalog, i))))).$$
 
@@ -76,7 +88,7 @@ $$\operatorname{jointKernel}(catalog, S) = \operatorname{jointKernel}(\lambda i:
 
 Quotient-CUT normalization identifies the catalog relation with the repository's dependent jointKernel.
 
-**Theorem 1.7 (Joint kernels are antitone).**
+**Theorem 1.8 (Joint kernels are antitone).**
 
 $$S \subseteq T \Rightarrow \operatorname{jointKernel}(catalog, T) \subseteq \operatorname{jointKernel}(catalog, S).$$
 
@@ -88,7 +100,7 @@ $$S \subseteq T \Rightarrow \operatorname{jointKernel}(catalog, T) \subseteq \op
 
 Every agreement for a larger theorem selection remains an agreement for a smaller selection.
 
-**Theorem 1.8 (Insertion intersects joint kernels).**
+**Theorem 1.9 (Insertion intersects joint kernels).**
 
 $$\operatorname{jointKernel}(catalog, \operatorname{insert}(i, S)) = \operatorname{intersection}(\operatorname{jointKernel}(catalog, S), \{p \mid \operatorname{agrees}(\operatorname{primitives}(\operatorname{theoremAt}(catalog, i)), \operatorname{fst}(p), \operatorname{snd}(p))\}).$$
 
@@ -100,7 +112,7 @@ $$\operatorname{jointKernel}(catalog, \operatorname{insert}(i, S)) = \operatorna
 
 Adding one theorem intersects the old common kernel with that theorem bundle's kernel.
 
-**Theorem 1.9 (Finite indistinguishability is antitone).**
+**Theorem 1.10 (Finite indistinguishability is antitone).**
 
 $$S \subseteq T \Rightarrow \operatorname{indistinguishable}(catalog, T, left, right) \Rightarrow \operatorname{indistinguishable}(catalog, S, left, right).$$
 
@@ -112,7 +124,7 @@ $$S \subseteq T \Rightarrow \operatorname{indistinguishable}(catalog, T, left, r
 
 Agreement for a larger finite selection restricts to every smaller selection.
 
-**Theorem 1.10 (Finite insertion adds one conjunct).**
+**Theorem 1.11 (Finite insertion adds one conjunct).**
 
 $$\operatorname{indistinguishable}(catalog, \operatorname{insert}(i, S), left, right) \iff \operatorname{agrees}(\operatorname{primitives}(\operatorname{theoremAt}(catalog, i)), left, right) \land \operatorname{indistinguishable}(catalog, S, left, right).$$
 
@@ -130,6 +142,7 @@ Indistinguishability after insertion is exactly the new bundle agreement and the
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/CatalogKernel.indistinguishableB`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/CatalogKernel.indistinguishableB_eq_true_iff`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/CatalogKernel.indistinguishable_equivalence`
+- Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/CatalogKernel.indistinguishable_iff_forall`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/CatalogKernel.indistinguishable_insert_iff`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/CatalogKernel.indistinguishable_mono`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscape/CatalogKernel.jointKernel`
