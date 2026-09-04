@@ -156,7 +156,8 @@ internal sealed class StubCliEnvironment(
     ExplicitCommandResult? echoVerify = null,
     ExplicitCommandResult? fileMapConform = null,
     CommandResult? cleanLanes = null,
-    ExplicitCommandResult? capacityAudit = null) : ICliEnvironment
+    ExplicitCommandResult? capacityAudit = null,
+    Func<IReadOnlyList<string>, CommandResult>? alignLedger = null) : ICliEnvironment
 {
     internal IReadOnlyList<string> CleanLanesArguments { get; private set; } = [];
 
@@ -211,7 +212,8 @@ internal sealed class StubCliEnvironment(
         new(false, string.Empty, "dag rendering is not configured in this fixture");
 
     public CommandResult AlignLedger(IReadOnlyList<string> arguments) =>
-        new(false, string.Empty, "ledger align is not configured in this fixture");
+        alignLedger?.Invoke(arguments)
+            ?? new(false, string.Empty, "ledger align is not configured in this fixture");
 
     public CommandResult AppendLedger(IReadOnlyList<string> arguments) =>
         new(false, string.Empty, "ledger append is not configured in this fixture");

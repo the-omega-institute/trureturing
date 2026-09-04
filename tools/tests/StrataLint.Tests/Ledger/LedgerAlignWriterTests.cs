@@ -8,6 +8,9 @@ namespace StrataLint.Tests;
 
 public sealed class LedgerAlignWriterTests
 {
+    private const string ExpectedAddedModuleStatementPin =
+        "sha256:2737dabb279d14181efe09f7531e5c4664421bdbc19bbcf8b588f8d71123954c";
+
     [Fact]
     public void RegisteredDriftIsAlignedAndSecondRunDoesNotWrite()
     {
@@ -75,7 +78,8 @@ public sealed class LedgerAlignWriterTests
             "LEDGER_ALIGN selectors_considered=1 changed=0 added=1 unchanged=0 conflicts=0\n",
             result.Output,
             StringComparison.Ordinal);
-        Assert.Equal(fixture.StatePin("A"), fixture.EventPin("A"));
+        Assert.Equal(ExpectedAddedModuleStatementPin, fixture.StatePin("A"));
+        Assert.Equal(ExpectedAddedModuleStatementPin, fixture.EventPin("A"));
     }
 
     [Fact]
@@ -167,6 +171,35 @@ public sealed class LedgerAlignWriterTests
     }
 
     [Fact]
+    public void FromAcceptedCliReturnsZeroOnSuccessAndNonZeroOnConflict()
+    {
+        var catalog = BuildCatalog(Module("A"), Module("B"));
+        using var successful = new AlignFixture();
+        successful.InstallAccepted(catalog);
+        var successConsole = new BufferedConsole();
+        var success = CliApplication.Run(
+            ["ledger-align", "--from-accepted"],
+            new StubCliEnvironment(
+                new AdmissionOutcome.InfrastructureFailure("unused"),
+                alignLedger: successful.Invoke),
+            successConsole);
+
+        using var conflicted = new AlignFixture();
+        conflicted.InstallAccepted(catalog);
+        conflicted.InstallState("A", StatementId.Create(Sha256("conflict")));
+        var conflictConsole = new BufferedConsole();
+        var conflict = CliApplication.Run(
+            ["ledger-align", "--from-accepted"],
+            new StubCliEnvironment(
+                new AdmissionOutcome.InfrastructureFailure("unused"),
+                alignLedger: conflicted.Invoke),
+            conflictConsole);
+
+        Assert.Equal(0, success);
+        Assert.NotEqual(0, conflict);
+    }
+
+    [Fact]
     public void AppendAliasAndExplicitAddPublishIdenticalBytes()
     {
         var module = ModuleWithReport("A", Source("A"), "True");
@@ -242,10 +275,13 @@ public sealed class LedgerAlignWriterTests
             FrozenLedgerChangeClassifier.AcceptedRoot.Replace('/', Path.DirectorySeparatorChar));
 
         internal CommandResult Align(params string[] options) =>
+            Invoke([.. options, "--candidate-lean-report", reportPath]);
+
+        internal CommandResult Invoke(IReadOnlyList<string> options) =>
             DagLedgerAlignWriter.Align(
                 temporary.Path,
                 Repository,
-                [.. options, "--candidate-lean-report", reportPath]);
+                options);
 
         internal CommandResult AlignWithAcceptedWritesDenied()
         {
