@@ -265,7 +265,12 @@ public sealed partial class MakeWorkflowTests
         string? environmentBase,
         string? commandLineBase)
     {
-        var arguments = new List<string>();
+        // MAKEFLAGS carries an ancestor make's command-line variables and a nested make
+        // re-reads them as command-line origin, so clearing only BASE would let an outer
+        // `make ... BASE=<sha>` decide this test's verdict. CI proved it: the engineering
+        // job runs `make ... BASE=$ENGINEERING_BASE`, and this case observed that SHA
+        // instead of the cleared file default. Judge the Makefile, not the ancestor.
+        var arguments = new List<string> { "-u", "MAKEFLAGS", "-u", "MAKELEVEL" };
         if (environmentBase is null) arguments.AddRange(["-u", "BASE"]);
         else arguments.Add($"BASE={environmentBase}");
         arguments.Add("make");
