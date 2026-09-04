@@ -61,7 +61,8 @@ internal sealed class StaticExactExperimentDesignDocument : IScribeDocumentDefin
             changeY, changeX);
         Formula selectedJoint = Call("Injective", Call("jointReadout",
             Lambda(Seq(selectedExperiment, Colon, Sp,
-                    new Formula.SetBuilder(F.Id("candidate"), F.Id("candidate"), selected)),
+                    Seq(OpenBrace, F.Id("candidate"), Sp, Slash, Slash, Sp,
+                        F.Id("candidate"), Sp, InMacro, Sp, selected, CloseBrace)),
                 selectedResponse)));
         Formula minimal = Seq(
             Forall, Sp, selected, Colon, Sp, Call("Finset", F.Id("Bool")), Comma, Sp,
@@ -72,7 +73,7 @@ internal sealed class StaticExactExperimentDesignDocument : IScribeDocumentDefin
             F.Id("let"), Sp, changeX, Eq,
             Lambda(Seq(model, Colon, Sp, finThree),
                 Call("decide", Seq(model, Sp, Eq, Sp, D(1)))), Semi, Sp,
-            changeY, Eq,
+            F.Id("let"), Sp, changeY, Eq,
             Lambda(Seq(model, Colon, Sp, finThree),
                 Call("decide", Seq(model, Sp, Eq, Sp, D(2)))), Semi, RowBreak, Grp(),
             Grp(individual), Sp, Land, RowBreak, Grp(),
