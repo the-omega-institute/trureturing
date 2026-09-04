@@ -34,8 +34,8 @@ internal sealed class SemanticIntegrityDocument : IScribeDocumentDefinition
                 "Every pair accepted by the extended bundle still satisfies every old atom."),
             TheoremNode("admit-preserves-off-diagonal-domain",
                 "admit_atom_preserves_offDiagonalPairs",
-                "ADMIT preserves the carrier domain", AdmitDomainFormula(),
-                "The off-diagonal carrier is independent of atoms, while agreement is antitone."),
+                "ADMIT is antitone off diagonal", AdmitDomainFormula(),
+                "On every full-carrier off-diagonal pair, extended agreement implies old agreement."),
             TheoremNode("certificate-anchor-erasure", "certificate_anchor_erasure",
                 "Certificates erase to object anchors", AnchorFormula(),
                 "The anchor kernel retains only equality with the anchored object."),
@@ -74,27 +74,53 @@ internal sealed class SemanticIntegrityDocument : IScribeDocumentDefinition
         return Seq([.. items]);
     }
 
+    private static Formula QualifiedCall(
+        string owner, string name, params Formula[] arguments)
+    {
+        var items = new List<Formula>
+        {
+            Operatorname, Grp(F.Id(owner), Dot, F.Id(name)), Open
+        };
+        for (var index = 0; index < arguments.Length; index++)
+        {
+            if (index > 0) items.AddRange([Comma, Sp]);
+            items.Add(arguments[index]);
+        }
+        items.Add(Close);
+        return Seq([.. items]);
+    }
+
+    private static Formula AdmitAtom(Formula admit) => Seq(
+        Langle, Dot, F.Id("admit"), Comma, Sp,
+        Call("admitKernel", admit), Rangle);
+
     private static Formula ConstantKernelFormula() => Disp(Seq(
-        Forall, Sp, F.Id("c"), Comma, Sp, F.Id("x"), Comma, Sp, F.Id("y"), Comma, Sp,
+        Forall, Sp, F.Id("X"), Comma, Sp, F.Id("B"), Comma, Sp,
+        F.Id("c"), Comma, Sp, F.Id("x"), Comma, Sp, F.Id("y"), Comma, Sp,
         Call("relation", Call("cutKernel", Seq(LambdaLower, Sp, F.Id("z"), Comma, Sp,
             F.Id("c"))), F.Id("x"), F.Id("y")), Dot));
 
     private static Formula ConstantBundleFormula() => Disp(Seq(
-        Forall, Sp, F.Id("v"), Comma, Sp, F.Id("x"), Comma, Sp, F.Id("y"), Comma, Sp,
+        Forall, Sp, F.Id("X"), Comma, Sp, F.Id("I"), Comma, Sp, F.Id("B"), Comma, Sp,
+        F.Id("v"), Comma, Sp, F.Id("x"), Comma, Sp, F.Id("y"), Comma, Sp,
         Call("agrees", Call("constantCutBundle", F.Id("v")), F.Id("x"), F.Id("y")), Dot));
 
     private static Formula AdmitEncodingFormula() => Disp(Seq(
-        Forall, Sp, F.Id("A"), Comma, Sp, Call("admitKernel", F.Id("A")), Sp, Eq, Sp,
+        Forall, Sp, F.Id("X"), Comma, Sp, F.Id("A"), Comma, Sp,
+        Call("admitKernel", F.Id("A")), Sp, Eq, Sp,
         Call("cutKernel", Seq(LambdaLower, Sp, F.Id("x"), Comma, Sp,
             Call("decide", Call("A", F.Id("x"))))), Dot));
 
     private static Formula AdmitAntitoneBody() => Seq(
-        Call("agrees", Call("bundleWithAtom", F.Id("b"), Call("admitAtom", F.Id("A"))),
+        Call("agrees", Call("bundleWithAtom", F.Id("b"), AdmitAtom(F.Id("A"))),
             F.Id("x"), F.Id("y")), Sp, Rightarrow, Sp,
         Call("agrees", F.Id("b"), F.Id("x"), F.Id("y")));
 
     private static Formula AdmitAntitoneFormula() =>
-        Disp(Seq(AdmitAntitoneBody(), Dot));
+        Disp(Seq(
+            Forall, Sp, F.Id("X"), Comma, Sp, F.Id("b"), Comma, Sp,
+            F.Id("A"), Comma, Sp, F.Id("x"), Comma, Sp, F.Id("y"), Comma, Sp,
+            AdmitAntitoneBody(), Dot));
 
     private static Formula AdmitDomainFormula()
     {
@@ -103,7 +129,7 @@ internal sealed class SemanticIntegrityDocument : IScribeDocumentDefinition
             Call("offDiagonalPairs", F.Id("X")));
         Formula extendedAgreement = Call(
             "agrees",
-            Call("bundleWithAtom", F.Id("b"), Call("admitAtom", F.Id("A"))),
+            Call("bundleWithAtom", F.Id("b"), AdmitAtom(F.Id("A"))),
             Call("fst", pair),
             Call("snd", pair));
         Formula oldAgreement = Call(
@@ -116,24 +142,28 @@ internal sealed class SemanticIntegrityDocument : IScribeDocumentDefinition
                 FormulaLogicOperator.Implies,
                 oldAgreement));
         return Disp(Seq(
-            Call("offDiagonalPairs", F.Id("X")), Sp, Eq, Sp,
-            Call("offDiagonalPairs", F.Id("X")), Sp, Land, RowBreak,
-            Forall, Sp, pair, Comma, Sp, pairClause, Dot));
+            Forall, Sp, F.Id("X"), Comma, Sp, F.Id("b"), Comma, Sp,
+            F.Id("A"), Comma, Sp, pair, Comma, Sp, pairClause, Dot));
     }
 
     private static Formula AnchorFormula() => Disp(Seq(
+        Forall, Sp, F.Id("X"), Comma, Sp, F.Id("a"), Comma, Sp,
         Call("relation", Call("anchorKernel", F.Id("a"))), Sp, Eq, Sp,
-        Call("ker", Seq(LambdaLower, Sp, F.Id("x"), Comma, Sp,
+        QualifiedCall("Setoid", "ker", Seq(LambdaLower, Sp, F.Id("x"), Comma, Sp,
             Call("decide", Seq(F.Id("x"), Sp, Eq, Sp, F.Id("a"))))), Dot));
 
     private static Formula ObserverFormula() => Disp(Seq(
+        Forall, Sp, F.Id("X"), Comma, Sp, F.Id("axis"), Comma, Sp,
+        F.Id("o"), Comma, Sp, F.Id("c"), Comma, Sp,
         Open, Forall, Sp, F.Id("x"), Comma, Sp,
         Call("observe", F.Id("o"), F.Id("x")), Sp, Eq, Sp, F.Id("c"), Close,
         Sp, Rightarrow, Sp, Open, Forall, Sp, F.Id("x"), Comma, Sp, F.Id("y"), Comma, Sp,
-        Call("relation", Call("kernel", Call("toPrimitiveAtom", F.Id("r"), F.Id("o"))),
+        Call("relation", Call("kernel", Call("toPrimitiveAtom", F.Id("axis"), F.Id("o"))),
             F.Id("x"), F.Id("y")), Close, Dot));
 
     private static Formula NeutralityFormula() => Disp(Seq(
+        Forall, Sp, F.Id("X"), Comma, Sp, F.Id("b"), Comma, Sp,
+        F.Id("p"), Comma, Sp, F.Id("x"), Comma, Sp, F.Id("y"), Comma, Sp,
         Open, Forall, Sp, F.Id("x"), Comma, Sp, F.Id("y"), Comma, Sp,
         Call("relation", Call("kernel", F.Id("p")), F.Id("x"), F.Id("y")), Close,
         Sp, Rightarrow, Sp,

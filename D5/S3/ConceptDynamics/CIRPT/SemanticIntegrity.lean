@@ -100,18 +100,16 @@ theorem adding_admit_atom_cannot_increase_agreement
   intro extended i
   exact extended (some i)
 
-/-- ADMIT changes agreement only; its insertion leaves the full finite
-off-diagonal carrier domain untouched. -/
+/-- On the full finite off-diagonal carrier, inserting ADMIT cannot create a
+newly agreeing pair. -/
 theorem admit_atom_preserves_offDiagonalPairs
     {X : Type u} [Fintype X] [DecidableEq X]
     (bundle : PrimitiveBundle.{u, v} X)
     (admit : X -> Prop) [DecidablePred admit] :
-    offDiagonalPairs X = offDiagonalPairs X /\
-      forall pair, pair ∈ offDiagonalPairs X ->
-        (bundleWithAtom bundle { axis := .admit, kernel := admitKernel admit }).agrees
-            pair.1 pair.2 ->
-          bundle.agrees pair.1 pair.2 := by
-  refine ⟨rfl, ?_⟩
+    forall pair, pair ∈ offDiagonalPairs X ->
+      (bundleWithAtom bundle { axis := .admit, kernel := admitKernel admit }).agrees
+          pair.1 pair.2 ->
+        bundle.agrees pair.1 pair.2 := by
   intro pair _ extended
   exact adding_admit_atom_cannot_increase_agreement bundle admit pair.1 pair.2 extended
 
@@ -131,9 +129,9 @@ theorem constant_packed_observer_has_universal_kernel
     {X : Type u} (axis : PrimitiveAxis) (observer : PackedObserver X)
     (constant : observer.Output)
     (isConstant : forall x, observer.observe x = constant) (x y : X) :
-    ((observer.toPrimitiveAtom axis).kernel.relation x y) := by
-  apply (observer.toPrimitiveAtom_relation_iff axis x y).2
-  exact (isConstant x).trans (isConstant y).symm
+    ((observer.toPrimitiveAtom axis).kernel.relation x y) :=
+  (observer.toPrimitiveAtom_relation_iff axis x y).mpr
+    ((isConstant x).trans (isConstant y).symm)
 
 /-- Engine bridge: inserting an atom with a universal kernel does not change
 bundle agreement. -/
@@ -171,5 +169,41 @@ example :
 example :
     ((constantProofObserver.toPrimitiveAtom .anchor).kernel.relation
       (false, false) (true, true)) := by decide
+
+example :
+    admitKernel (fun state : Bool × Bool => state.1 = true) =
+      cutKernel (fun state : Bool × Bool => decide (state.1 = true)) :=
+  full_domain_admit_encoding (fun state : Bool × Bool => state.1 = true)
+
+example :
+    (anchorKernel true).relation =
+      Setoid.ker (fun state : Bool => decide (state = true)) :=
+  certificate_anchor_erasure true
+
+example :
+    (bundleWithAtom
+        (constantCutBundle (X := Bool × Bool) (fun bit : Bool => bit))
+        { axis := .admit
+          kernel := admitKernel (fun state : Bool × Bool => state.1 = true) }).agrees
+          (false, false) (false, true) ->
+      (constantCutBundle (X := Bool × Bool) (fun bit : Bool => bit)).agrees
+        (false, false) (false, true) :=
+  adding_admit_atom_cannot_increase_agreement
+    (constantCutBundle (X := Bool × Bool) (fun bit : Bool => bit))
+    (fun state : Bool × Bool => state.1 = true) (false, false) (false, true)
+
+example :
+    (bundleWithAtom
+        (constantCutBundle (X := Bool × Bool) (fun bit : Bool => bit))
+        (constantProofObserver.toPrimitiveAtom .anchor)).agrees
+          (false, false) (true, true) <->
+      (constantCutBundle (X := Bool × Bool) (fun bit : Bool => bit)).agrees
+        (false, false) (true, true) :=
+  universal_kernel_atom_does_not_change_agrees
+    (constantCutBundle (X := Bool × Bool) (fun bit : Bool => bit))
+    (constantProofObserver.toPrimitiveAtom .anchor)
+    (constant_packed_observer_has_universal_kernel .anchor constantProofObserver true
+      (fun _ => rfl))
+    (false, false) (true, true)
 
 end D5.S3.ConceptDynamics.CIRPT
