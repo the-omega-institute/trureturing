@@ -5,6 +5,31 @@ namespace StrataLint.ArchitectureTests;
 
 public sealed partial class ScriptTestGateClosureTests
 {
+    /// <summary>
+    /// 判官在依赖偏序下方、引用不到测试程序集,故只能以**名字**指代这几个脚手架类型。
+    /// 名字与类型之间因此是一条没有编译器把关的引用 —— PR #5324 正是踩在这里:
+    /// 脚手架迁移到另一个程序集后,判官侧的字符串未同步,编译不红,dev 合入后才红。
+    ///
+    /// 这条断言就是那条引用的机器判据:`typeof` 使类型名成为**编译期**绑定,
+    /// 改名或删除该类型即 CS0246;改动判官侧常量则断言红。两侧任一漂移都在 PR 期暴露。
+    /// </summary>
+    [Fact]
+    public void JudgeNamedHelperTypesResolveToDeclaredTypes()
+    {
+        Assert.Equal(
+            ScriptTestInputDeriver.RepositoryLayoutTypeName,
+            typeof(StrataLint.Tests.TestRepositoryLayout).Name);
+        Assert.Equal(
+            ScriptTestInputDeriver.RepositoryRelativePathTypeName,
+            typeof(StrataLint.Tests.RepositoryRelativePath).Name);
+        Assert.Equal(
+            ScriptTestInputDeriver.ScriptHarnessScratchTypeName,
+            typeof(StrataLint.Tests.ScriptHarnessScratch).Name);
+        Assert.Equal(
+            ScriptTestInputDeriver.ProcessRunnerTypeName,
+            typeof(StrataLint.Tests.TestProcessRunner).Name);
+    }
+
     private const string ScriptTestsProject =
         "tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj";
     private const string PlaybookScript =
