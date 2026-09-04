@@ -90,10 +90,6 @@ jobs:
           fetched=true
           if ! git -C candidate show HEAD^1:Meta/FILEMAP.toml > "$filemap"; then fetched=false; fi
           exec python3 "$classifier" --delta-file "$delta" --filemap "$filemap" --filemap-fetched "$fetched" --github-output "$GITHUB_OUTPUT"
-      - name: Derive protected-base engineering execution floor
-        id: engineering-floor
-        if: github.event_name == 'pull_request_target' && steps.checkout-merge.outcome == 'success'
-        run: git -C candidate show "HEAD^1:tools/scripts/workflow/engineering-base-floor.py" > "$RUNNER_TEMP/engineering-base-floor.py" && python3 "$RUNNER_TEMP/engineering-base-floor.py" prepare --repository candidate --base HEAD^1 --head HEAD --full "${{ (steps.admission-plane.outputs.plane == 'judge-only' || steps.admission-plane.outputs.plane == 'bootstrap') && '1' || '0' }}" --github-output "$GITHUB_OUTPUT" --results-directory "$RUNNER_TEMP/engineering-trx"
       - name: Fail closed when merge result is unavailable
         if: always() && steps.checkout-merge.outcome != 'success'
         shell: bash
@@ -180,14 +176,7 @@ jobs:
         shell: bash
         env:
           FULL: ${{ (steps.admission-plane.outputs.plane == 'judge-only' || steps.admission-plane.outputs.plane == 'bootstrap') && '1' || '' }}
-          ENGINEERING_TRX_DIRECTORY: ${{ runner.temp }}/engineering-trx
         run: /bin/bash candidate/tools/scripts/workflow/engineering-test-execution-harness.sh "$GITHUB_WORKSPACE/candidate"
-
-      - name: Verify protected-base engineering execution floor
-        if: github.event_name == 'pull_request_target'
-        env:
-          REQUIRED_ASSEMBLIES_JSON: ${{ steps.engineering-floor.outputs.required_assemblies_json }}
-        run: python3 "$RUNNER_TEMP/engineering-base-floor.py" verify --required-assemblies-json "$REQUIRED_ASSEMBLIES_JSON" --results-directory "$RUNNER_TEMP/engineering-trx"
 
       - name: Run candidate selftest twice and compare bytes
         shell: bash

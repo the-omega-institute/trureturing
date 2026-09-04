@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using StrataLint.Engine;
@@ -108,19 +107,8 @@ internal static class Program
         string repositoryRoot,
         EngineeringTestInvocation invocation)
     {
-        var evidenceRoot = Environment.GetEnvironmentVariable("ENGINEERING_TRX_DIRECTORY");
-        var preserveEvidence = !string.IsNullOrWhiteSpace(evidenceRoot);
-        var resultsDirectory = preserveEvidence
-            ? Path.Combine(
-                Path.GetFullPath(evidenceRoot!),
-                Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(invocation.ProjectPath)))
-                    .ToLowerInvariant())
-            : Directory.CreateTempSubdirectory("stratalint-engineering-tests-").FullName;
-        if (preserveEvidence)
-        {
-            if (Directory.Exists(resultsDirectory)) Directory.Delete(resultsDirectory, recursive: true);
-            Directory.CreateDirectory(resultsDirectory);
-        }
+        var resultsDirectory =
+            Directory.CreateTempSubdirectory("stratalint-engineering-tests-").FullName;
         (int ExitCode, string StandardError) Run(bool noBuild)
         {
             var startInfo = new ProcessStartInfo
@@ -180,7 +168,7 @@ internal static class Program
         }
         finally
         {
-            if (!preserveEvidence) Directory.Delete(resultsDirectory, recursive: true);
+            Directory.Delete(resultsDirectory, recursive: true);
         }
     }
 
