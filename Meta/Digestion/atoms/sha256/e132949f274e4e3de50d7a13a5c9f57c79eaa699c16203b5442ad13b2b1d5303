@@ -1,0 +1,1 @@
+**可证伪预测(写在跑之前)**:若三条不等式为真且 Mathlib 的 `Complex.exp_bound`/`Real.exp_bound`、`Real.log` 级数包络、`Real.pi` 20 位界、`Real.goldenRatio` 的 √5 代数界足以在相位约简后逐项封闭,则一次生成式证书(预计 300–380 条原始实不等式,`ASSUMED-UNVERIFIED`)可闭合;若数值上 ‖g₆₀(c)‖ ≥ 4·10⁻¹⁰ 或 Re g₆₀′(c) ≤ 1.87,则须调整 V 或阈值并**重新预登记**,不得事后改标;若包络精度不足,登记具名缺口(所缺的 Mathlib 引理或求值层)为 `open`。

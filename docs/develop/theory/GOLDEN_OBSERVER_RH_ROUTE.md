@@ -2611,3 +2611,30 @@ W-13、W-14、W-15 的右端**不含 `Z`**:素数侧表达式与 Poincaré 不�
 一席位轮(codex-cli,独立 worktree,绑 CosinePacket / ArchimedeanDivergence / WindowZero 三冻结模块与 `zetaZeroConfig_local_count`;同 PR deposit(绑 Z-7 atom)+ cover;三席评审,报告按第 5⁗ 条)。须在 Z-6 模块合入后开工。预计 ≤ 2 小时(探针证明可复用)。
 
 后续增订继续严格追加于本节之后。
+---
+
+# 增订三十三　G-c 的两层认证:显式尾项界与条件化 Rouché 归约(第一层预登记),中心 jet 证书(第二层预登记)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;思考面板三席并发盲评——certificate-design(GPT PRO,`panel-gc-design-a1`)/ numerics-infrastructure(codex,`panel-gc-numerics`)/ route-adversary(codex,`panel-gc-adversary`),只读 dev `11a2dc2c63`;元裁判 orchestrator(claude 主循环):三席一致「矩形 Rouché 冻结后 G-c 有 kernel 路径,但完整证书需要有限模和在中心的认证 jet」,分歧只在成本估计(GPT PRO 席:仿射-Rouché 路线约 300–380 条原始实不等式;codex 两席:需可复用的认证求值层,重型);取两层拆分。探针一席(codex,`probe-gc-layer1`,`make lean` exit 0、`lake env lean` exit 0,全部标准三公理)整证第一层全部子项。消费冻结的 `germLocalFactor`、`o5_beta_growth`、`o5_beta_power_law`、`germLocalFactor_analyticOnNhd_pos`、`real_local_factor_summable`、`local_mode_norm_le`,他驱动者冻结的 `ZetaAnalytic/RoucheZeroCount.rectangle_zero_count_eq_of_norm_sub_lt`(#5300)与 `RectangleLogDeriv.finite_zeros_rectangle`,以及 Mathlib `Real.log_two_gt_d9`/`lt_d9`、`Summable.sum_add_tsum_nat_add`、`tsum_geometric_of_lt_one`。**勘误**:面板 brief 曾写 β(1) = φ;冻结的 `o5_beta_power_law` 给 β(1) = φ²(⌊2φ⌋ = 3),两项模型 1 + 2^{−φ²s} 的零点纵坐标为 (2k+1)π/(φ² log 2) ≈ 1.73, 5.19, 8.66,最近者 5.19 与候选纵坐标 5.2567 相差 0.063 且实部为 0,故候选零点不是两项主项现象。散文由 orchestrator 撰写。判决日:2026-09-05。lane issue:#4589。
+
+## 〇　为什么是这一节
+
+增订十 §三把 G-c 记为「open,不派席」,理由是钉版 Mathlib 无 Rouché/辐角原理。他驱动者已冻结矩形 Rouché(`rectangle_zero_count_eq_of_norm_sub_lt`:边界严格不等式 ⇒ 两解析函数按重数计的矩形内零点数相等)。于是 G-c 分成两层:**第一层**(本节预登记,探针已整证)——候选方块 Q(中心 c = ⟨0.23815329946211908, 5.256712292901926⟩,半宽 h = 1/(2·10⁸))的几何(Q ⊆ 10⁻⁸ 球、Q ⊆ {Re s > 0}、c 在黄金窗口内)、截断恒等式、**显式几何尾项界** ‖F(s) − g_V(s)‖ ≤ 2^{−σ(√5(V+1)+1/φ−1)}/(1 − 2^{−σ√5})(σ ≤ Re s)及其 V = 60 实例 ∀ s ∈ Q, ‖F(s) − g₆₀(s)‖ < 5.8·10⁻¹⁰,以及**条件化归约** `germ_zero_of_center_jet`:只要中心 jet 的三条数值不等式成立——‖g₆₀(c)‖ < 4·10⁻¹⁰、Re g₆₀′(c) > 1.87、Q 上 ‖g₆₀″‖ ≤ 400——则 Q 内(从而 10⁻⁸ 球内)存在 F 的零点。证明路线:仿射 A₀(s) = g₆₀(c) + g₆₀′(c)(s − c) 在 Q 内恰一个单零点(根位移 < 4·10⁻¹⁰/1.87 < h),Taylor 余项 ‖g₆₀ − A₀‖ ≤ 400·2h² = 2·10⁻¹⁴ 与尾项 5.8·10⁻¹⁰ 之和远小于边界下界 1.87h − 4·10⁻¹⁰ ≈ 8.95·10⁻⁹,两次 Rouché 把零点数 1 从 A₀ 传到 F。**第二层**(本节预登记为独立义务,尚无探针)——把三条中心 jet 不等式本身 kernel 化:61 项有限指数和在 c 的值、导数与 Q 上二阶导上界的有理包络,需相位约简 + `Complex.exp_bound` 级 Taylor 证书;GPT PRO 席估计 300–380 条原始实不等式(4000–7000 生成行),codex 席估计需可复用求值层。**诚实边界**:①第一层不断言 G-c 为真,只把它归约到三条可判定的有限数值命题;②第二层的成本估计为预测,`ASSUMED-UNVERIFIED`,以探针为准;③两层合起来若成功,证的是 p = 2 局部因子在窗口内有零点,即增订十「窗口内无消去」为假的 kernel 证实,不涉及 RH 本身。
+
+## 一　G-c-L1 预登记:尾项界与条件化归约(`D5/S3/Analytic/GermWindow/GermZeroCertificateReduction`)
+
+**义务**:公开定理 `germLocalFactor_two_tail_le {σ : ℝ} (hσ : 0 < σ) {s : ℂ} (hs : σ ≤ s.re) (V : ℕ) : ‖germLocalFactor s 2 - ∑ v ∈ Finset.range (V + 1), (2 : ℂ) ^ (-s * (o5Beta v : ℂ))‖ ≤ (2 : ℝ) ^ (-σ * (Real.sqrt 5 * ((V + 1 : ℕ) : ℝ) + 1 / Real.goldenRatio - 1)) / (1 - (2 : ℝ) ^ (-σ * Real.sqrt 5))`;公开定理 `germ_zero_of_center_jet (hval : ‖g 60 c‖ < 4 / 10 ^ 10) (hder : 187 / 100 < (deriv (g 60) c).re) (hcurv : ∀ s ∈ Q, ‖deriv (deriv (g 60)) s‖ ≤ 400) : ∃ z ∈ Metric.ball c (1 / 10 ^ 8), germLocalFactor z 2 = 0`(c、h、Q、g 为同模块公开定义,各有 earning theorem:`Q_subset_ball`、`Q_subset_re_pos`、`c_in_golden_window`、`c_mem_Q`、`germLocalFactor_two_tail_Q_V60`);伴随公开定理 `germLocalFactor_eq_trunc_add_tail`、`rouche_exists_zero_rectangle_of_unique_simple`、`truncation_taylor_remainder_of_curv`。
+**逃逸见证(探针已证,写在实施之前)**:尾项界的显式几何优函数 A·qᵏ(q = 2^{−σ√5})与其闭式求和;V = 60 实例的认证链 q < 0.69139、B < 1.07、q⁶¹B/(1−q) < 5.8·10⁻¹⁰;条件化归约中的仿射根位移估计与两次 Rouché 组装。均非冻结前置的实例化。
+**边界**:同 §〇 ①。
+
+## 二　G-c-L2 预登记:中心 jet 证书(`GermWindow/GermZeroCertificateJet`,绑第一层)
+
+**义务**:公开定理 `germLocalFactor_two_has_zero_near_candidate : ∃ z ∈ Metric.ball c (1 / 10 ^ 8), germLocalFactor z 2 = 0`(即增订十 §三的具名缺口原文),经 `germ_zero_of_center_jet` 与三条公开的认证不等式 `g60_center_norm_lt : ‖g 60 c‖ < 4 / 10 ^ 10`、`g60_center_deriv_re_gt : 187 / 100 < (deriv (g 60) c).re`、`g60_curvature_le : ∀ s ∈ Q, ‖deriv (deriv (g 60)) s‖ ≤ 400`。
+**可证伪预测(写在跑之前)**:若三条不等式为真且 Mathlib 的 `Complex.exp_bound`/`Real.exp_bound`、`Real.log` 级数包络、`Real.pi` 20 位界、`Real.goldenRatio` 的 √5 代数界足以在相位约简后逐项封闭,则一次生成式证书(预计 300–380 条原始实不等式,`ASSUMED-UNVERIFIED`)可闭合;若数值上 ‖g₆₀(c)‖ ≥ 4·10⁻¹⁰ 或 Re g₆₀′(c) ≤ 1.87,则须调整 V 或阈值并**重新预登记**,不得事后改标;若包络精度不足,登记具名缺口(所缺的 Mathlib 引理或求值层)为 `open`。
+**边界**:同 §〇 ②③;此层的成本可能超出单席预算,允许以 `open` + 生成器脚本入仓(`tools/scripts/agent/`,器律⑨)结算。
+
+## 三　预算与结算
+
+第一层一席位轮(codex-cli,独立 worktree,`GermWindow/` 桶;同 PR deposit(绑 G-c-L1 atom)+ cover;三席评审)。第二层在第一层合入后以探针开始(预算 2 小时),按探针读数决定实施或 `open`。
+
+后续增订继续严格追加于本节之后。
