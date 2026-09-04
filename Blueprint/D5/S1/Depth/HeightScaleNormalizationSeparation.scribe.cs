@@ -62,10 +62,10 @@ internal sealed class HeightScaleNormalizationSeparationDocument : IScribeDocume
 
     private static Formula TheoremFormula()
     {
-        var denominatorScale = Id("d_den");
-        var depthScale = Id("d_cf");
-        var denominatorWeight = Id("w_den");
-        var depthWeight = Id("w_cf");
+        var denominatorScale = Id("dDen");
+        var depthScale = Id("dCf");
+        var denominatorWeight = Id("wDen");
+        var depthWeight = Id("wCf");
         var weight = Id("w");
         var denominatorLimit = Id("a");
         var depthLimit = Id("b");
@@ -74,12 +74,12 @@ internal sealed class HeightScaleNormalizationSeparationDocument : IScribeDocume
 
         var denominatorWitness = new Formula.Bind(
             FormulaQuantifier.Exists,
-            FormulaIdentifier.Create("w_den"),
+            FormulaIdentifier.Create("wDen"),
             weights,
             Normalizes(denominatorWeight, denominatorScale, Num(1)));
         var depthWitness = new Formula.Bind(
             FormulaQuantifier.Exists,
-            FormulaIdentifier.Create("w_cf"),
+            FormulaIdentifier.Create("wCf"),
             weights,
             Normalizes(depthWeight, depthScale, Num(1)));
 
