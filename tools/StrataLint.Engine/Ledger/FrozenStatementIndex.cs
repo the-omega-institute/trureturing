@@ -4,18 +4,23 @@ namespace StrataLint.Engine;
 
 internal sealed class FrozenStatementIndex
 {
-    private readonly ImmutableDictionary<RepoPath, FrozenActiveEntry> activeByPath;
+    private readonly FrozenStateCatalog state;
+    private readonly LeanAxiomReport report;
 
-    private FrozenStatementIndex(ImmutableDictionary<RepoPath, FrozenActiveEntry> activeByPath) =>
-        this.activeByPath = activeByPath;
-
-    internal static FrozenStatementIndex Load(RepositorySnapshot snapshot)
+    private FrozenStatementIndex(FrozenStateCatalog state, LeanAxiomReport report)
     {
-        ArgumentNullException.ThrowIfNull(snapshot);
-        return new FrozenStatementIndex(FrozenLedgerBaseViewReader.Read(snapshot).ActiveByPath);
+        this.state = state;
+        this.report = report;
     }
 
-    internal bool ContainsModule(RepoPath path) => activeByPath.ContainsKey(path);
+    internal static FrozenStatementIndex Create(FrozenStateCatalog state, LeanAxiomReport report)
+    {
+        ArgumentNullException.ThrowIfNull(state);
+        ArgumentNullException.ThrowIfNull(report);
+        return new FrozenStatementIndex(state, report);
+    }
+
+    internal bool ContainsModule(RepoPath path) => state.Records.ContainsKey(path);
 
     internal bool TryResolve(Gid gid, out StatementId? statementId, out string message)
     {
@@ -27,21 +32,30 @@ internal sealed class FrozenStatementIndex
             return false;
         }
 
-        if (!activeByPath.TryGetValue(formal.Path, out var active))
+        if (!state.Records.TryGetValue(formal.Path, out var frozen))
         {
-            message = $"host module is not active in the frozen ledger: {formal.Path.Value}";
+            message = $"host module is not a member of frozen state: {formal.Path.Value}";
             return false;
         }
 
         if (formal.Declaration is null)
         {
-            statementId = active.Material.StatementId;
+            statementId = frozen.StatementId;
             message = string.Empty;
             return true;
         }
 
+        if (!report.Files.TryGetValue(formal.Path, out var module)
+            || !string.IsNullOrEmpty(module.Error))
+        {
+            message = $"coverage GID resolves to 0 current report declarations: {gid.Value}";
+            return false;
+        }
+
         var matches = ImmutableArray.CreateBuilder<StatementId>();
-        foreach (var declaration in active.Material.DeclarationStatementIds)
+        foreach (var declaration in CanonicalStatementWriter.DeclarationStatementIds(
+                     formal.Path,
+                     module))
         {
             string decoded;
             int consumedCharacters;
@@ -54,13 +68,13 @@ internal sealed class FrozenStatementIndex
             }
             catch (FormatException)
             {
-                message = $"frozen declaration has an invalid name key: {formal.Path.Value}";
+                message = $"current report declaration has an invalid name key: {formal.Path.Value}";
                 return false;
             }
 
             if (consumedCharacters != declaration.DeclarationNameKey.Length)
             {
-                message = $"frozen declaration has an invalid name key: {formal.Path.Value}";
+                message = $"current report declaration has an invalid name key: {formal.Path.Value}";
                 return false;
             }
 
@@ -70,7 +84,7 @@ internal sealed class FrozenStatementIndex
             {
                 if (!CanonicalLeanNameDecoder.IsRepositoryNameKey(declaration.DeclarationNameKey))
                 {
-                    message = $"frozen target declaration has an invalid name key: "
+                    message = $"current report target declaration has an invalid name key: "
                         + formal.Path.Value;
                     return false;
                 }
@@ -81,7 +95,7 @@ internal sealed class FrozenStatementIndex
 
         if (matches.Count != 1)
         {
-            message = $"coverage GID resolves to {matches.Count} frozen declarations: {gid.Value}";
+            message = $"coverage GID resolves to {matches.Count} current report declarations: {gid.Value}";
             return false;
         }
 

@@ -10,11 +10,13 @@ internal static class BackfillDeltaImpactResolver
     internal static BackfillDeltaImpact Resolve(
         RepositorySnapshot current,
         RepositorySnapshot baseline,
+        LeanAxiomReport report,
         BackfillInventoryDocument document,
         RawChangeSet repositoryChanges)
     {
         ArgumentNullException.ThrowIfNull(current);
         ArgumentNullException.ThrowIfNull(baseline);
+        ArgumentNullException.ThrowIfNull(report);
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(repositoryChanges);
 
@@ -30,11 +32,10 @@ internal static class BackfillDeltaImpactResolver
             .Select(EntryPath)
             .ToHashSet(StringComparer.Ordinal);
 
-        AddFrozenStatementDependants(
+        AddCurrentResolutionDependants(
             current,
-            baseline,
+            report,
             document,
-            repositoryChanges,
             affectedEntryPaths);
 
         // Raw frozen and Lean paths have historically widened one dependency change to every
@@ -42,6 +43,7 @@ internal static class BackfillDeltaImpactResolver
         var evaluationEntries = repositoryChanges.Entries
             .Where(static change =>
                 !FrozenLedgerChangeClassifier.IsAcceptedEventPath(change.Path.Value)
+                && !FrozenStatePath.IsUnderRoot(change.Path.Value)
                 && !(change.Path.Value.StartsWith("D5/", StringComparison.Ordinal)
                     && change.Path.Value.EndsWith(".lean", StringComparison.Ordinal)))
             .ToDictionary(static change => change.Path.Value, StringComparer.Ordinal);
@@ -97,16 +99,6 @@ internal static class BackfillDeltaImpactResolver
 
         foreach (var gid in entry.CoverageGids)
         {
-            if (Gid.TryParse(gid, out var parsedGid)
-                && FileValueChanged(
-                    parsedGid.Path.Value,
-                    current,
-                    baseline,
-                    changedPaths))
-            {
-                return true;
-            }
-
             var documentGid = ScribeEmissionAttestation.DocumentGid(gid);
             if (FileValueChanged(
                     ScribeEmissionAttestation.DefinitionPath(documentGid),
@@ -126,77 +118,48 @@ internal static class BackfillDeltaImpactResolver
         return false;
     }
 
-    private static void AddFrozenStatementDependants(
+    private static void AddCurrentResolutionDependants(
         RepositorySnapshot current,
-        RepositorySnapshot baseline,
+        LeanAxiomReport report,
         BackfillInventoryDocument document,
-        RawChangeSet repositoryChanges,
         ISet<string> affectedEntryPaths)
     {
-        if (!repositoryChanges.Paths.Any(static path =>
-                FrozenLedgerChangeClassifier.IsAcceptedEventPath(path.Value)))
-        {
-            return;
-        }
-
-        var reverseIndex = BuildCoverageReverseIndex(document);
         FrozenStatementIndex currentStatements;
-        FrozenStatementIndex baselineStatements;
         try
         {
-            currentStatements = FrozenStatementIndex.Load(current);
-            baselineStatements = FrozenStatementIndex.Load(baseline);
+            currentStatements = FrozenStatementIndex.Create(
+                FrozenStateCatalog.Load(current),
+                report);
         }
         catch (Exception exception) when (
             exception is FormatException or InvalidOperationException)
         {
-            // Frozen-ledger shape and history have their own admission owner. An invalid
-            // projection has no comparable statement value for SL-016 to propagate.
+            // Frozen-state shape and the Lean report have their own admission owners. An
+            // invalid authority has no comparable statement value for SL-016 to propagate.
             return;
         }
 
-        foreach (var (gidText, entryPaths) in reverseIndex)
-        {
-            if (!Gid.TryParse(gidText, out var gid)
-                || FrozenStatementValue(currentStatements, gid)
-                    == FrozenStatementValue(baselineStatements, gid))
-            {
-                continue;
-            }
-
-            foreach (var entryPath in entryPaths)
-            {
-                affectedEntryPaths.Add(entryPath);
-            }
-        }
-    }
-
-    private static Dictionary<string, HashSet<string>> BuildCoverageReverseIndex(
-        BackfillInventoryDocument document)
-    {
-        var result = new Dictionary<string, HashSet<string>>(StringComparer.Ordinal);
         foreach (var entry in document.RequireDigestionEntries())
         {
-            var entryPath = EntryPath(entry);
-            foreach (var gid in entry.CoverageGids.Distinct(StringComparer.Ordinal))
+            foreach (var edge in entry.Coverage)
             {
-                if (!result.TryGetValue(gid, out var paths))
+                var currentResolution = Gid.TryParse(edge.Gid, out var gid)
+                    && currentStatements.TryResolve(gid, out var statementId, out _)
+                        ? statementId!.Value
+                        : null;
+                if (string.Equals(
+                        edge.TargetStatementId,
+                        currentResolution,
+                        StringComparison.Ordinal))
                 {
-                    paths = new HashSet<string>(StringComparer.Ordinal);
-                    result.Add(gid, paths);
+                    continue;
                 }
 
-                paths.Add(entryPath);
+                affectedEntryPaths.Add(EntryPath(entry));
+                break;
             }
         }
-
-        return result;
     }
-
-    private static string FrozenStatementValue(FrozenStatementIndex index, Gid gid) =>
-        index.TryResolve(gid, out var statementId, out var message)
-            ? "resolved:" + statementId!.Value
-            : "unresolved:" + message;
 
     private static bool EntryPathIsInDelta(
         DigestionLedgerEntry entry,

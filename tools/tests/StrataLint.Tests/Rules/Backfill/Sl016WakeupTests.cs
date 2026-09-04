@@ -119,6 +119,7 @@ public sealed class Sl016WakeupTests
         var impact = BackfillDeltaImpactResolver.Resolve(
             context.Current,
             context.Baseline,
+            context.Lean.Report,
             document,
             context.Changes);
         var entry = Assert.Single(document.RequireDigestionEntries());
@@ -147,6 +148,7 @@ public sealed class Sl016WakeupTests
         var impact = BackfillDeltaImpactResolver.Resolve(
             context.Current,
             context.Baseline,
+            context.Lean.Report,
             document,
             context.Changes);
 
@@ -159,7 +161,7 @@ public sealed class Sl016WakeupTests
     }
 
     [Fact]
-    public void ReferencedLeanTargetValueChangeEntersAuthorityAndReceiptScopes()
+    public void LeanHeaderChangeWithStableTargetValueDoesNotWakeReferencedEdge()
     {
         const string targetGid = "D5/S0/Carrier/BackfillTarget";
         var targetPath = targetGid + ".lean";
@@ -175,14 +177,14 @@ public sealed class Sl016WakeupTests
         var impact = BackfillDeltaImpactResolver.Resolve(
             context.Current,
             context.Baseline,
+            context.Lean.Report,
             document,
             context.Changes);
         var entry = Assert.Single(document.RequireDigestionEntries());
 
-        Assert.True(DigestionCasStore.EntryChanged(entry, impact.EvaluationChanges));
-        Assert.Contains(
-            impact.ReceiptVerificationChanges.Paths,
-            path => path.Value == targetPath);
+        Assert.False(BackfillInventoryRule.IsAffectedBy(context));
+        Assert.False(impact.HasAffectedEdges);
+        Assert.False(DigestionCasStore.EntryChanged(entry, impact.EvaluationChanges));
     }
 
     [Fact]
@@ -538,9 +540,11 @@ public sealed class Sl016WakeupTests
     private static string[] FrozenLedgerDelta(RuleFixture fixture)
     {
         var current = fixture.Files.Keys
-            .Where(static path => FrozenLedgerChangeClassifier.IsAcceptedEventPath(path));
+            .Where(static path => FrozenLedgerChangeClassifier.IsAcceptedEventPath(path)
+                || FrozenStatePath.IsUnderRoot(path));
         var baseline = fixture.Baseline.Keys
-            .Where(static path => FrozenLedgerChangeClassifier.IsAcceptedEventPath(path));
+            .Where(static path => FrozenLedgerChangeClassifier.IsAcceptedEventPath(path)
+                || FrozenStatePath.IsUnderRoot(path));
         var delta = current
             .Except(baseline, StringComparer.Ordinal)
             .Concat(baseline.Except(current, StringComparer.Ordinal))

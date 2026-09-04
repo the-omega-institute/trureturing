@@ -65,6 +65,7 @@ internal static class BackfillInventoryRule
         return BackfillDeltaImpactResolver.Resolve(
             context.Current,
             context.Baseline,
+            context.Lean.Report,
             document,
             context.Changes).HasAffectedEdges;
     }
@@ -90,6 +91,7 @@ internal static class BackfillInventoryRule
                 var impact = BackfillDeltaImpactResolver.Resolve(
                     context.Current,
                     context.Baseline,
+                    context.Lean.Report,
                     document,
                     changes);
                 evaluationChanges = impact.EvaluationChanges;

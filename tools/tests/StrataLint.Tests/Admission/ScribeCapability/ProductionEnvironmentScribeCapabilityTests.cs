@@ -135,7 +135,11 @@ public sealed partial class ProductionEnvironmentTests
                 "protectedTargetFixture",
                 "def",
                 "Unit",
-                ImmutableArray<string>.Empty)]);
+                ImmutableArray<string>.Empty)
+            {
+                NameKey = "ns(n0,22:protectedTargetFixture)",
+                PrecomputedStatementId = targetStatementId,
+            }]);
         fixture.Reports[targetPath] = targetReport;
         fixture.BaselineReports[targetPath] = targetReport;
         AddFrozenTarget(fixture.Files, targetPath);
@@ -271,7 +275,11 @@ public sealed partial class ProductionEnvironmentTests
             "protectedTargetFixture",
             "def",
             "Unit",
-            []);
+            [])
+        {
+            NameKey = "ns(n0,22:protectedTargetFixture)",
+            PrecomputedStatementId = FrozenStatementReceiptTestData.Id('b'),
+        };
         var reportAxioms = ImmutableArray.Create("Classical.choice", "Quot.sound", "propext");
         fixture.Reports[targetPath] = new LeanFileReport(
             [],

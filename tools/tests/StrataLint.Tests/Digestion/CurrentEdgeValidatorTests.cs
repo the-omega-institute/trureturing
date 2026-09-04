@@ -57,7 +57,7 @@ public sealed class CurrentEdgeValidatorTests
             snapshot,
             report,
             states,
-            FrozenStatementIndex.Load(snapshot));
+            FrozenStatementIndex.Create(FrozenStateCatalog.Load(snapshot), report));
 
         Assert.Equal(expectedResolved, result.IsResolved);
         Assert.False(result.IsClosed);
