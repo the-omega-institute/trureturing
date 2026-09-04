@@ -30,14 +30,12 @@ internal static partial class IngestCommand
             }
 
             var repositoryChanges = repository.ReadChanges(options.BaselineRevision);
-            var emptyReport = LeanAxiomReport.Create(
-                new Dictionary<string, LeanFileReport>(StringComparer.Ordinal));
             var plan = Plan(inputs, repositoryChanges);
             var prepared = Prepare(
                 inputs,
                 repositoryChanges,
                 plan,
-                emptyReport);
+                report: null);
             classification = IngestTruthAlignmentClassifier.ClassifyPlanned(
                 prepared.CurrentDocument,
                 prepared.BaselineDocument,

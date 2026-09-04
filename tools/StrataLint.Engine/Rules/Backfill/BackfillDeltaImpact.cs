@@ -10,13 +10,12 @@ internal static class BackfillDeltaImpactResolver
     internal static BackfillDeltaImpact Resolve(
         RepositorySnapshot current,
         RepositorySnapshot baseline,
-        LeanAxiomReport report,
+        LeanAxiomReport? report,
         BackfillInventoryDocument document,
         RawChangeSet repositoryChanges)
     {
         ArgumentNullException.ThrowIfNull(current);
         ArgumentNullException.ThrowIfNull(baseline);
-        ArgumentNullException.ThrowIfNull(report);
         ArgumentNullException.ThrowIfNull(document);
         ArgumentNullException.ThrowIfNull(repositoryChanges);
 
@@ -32,11 +31,14 @@ internal static class BackfillDeltaImpactResolver
             .Select(EntryPath)
             .ToHashSet(StringComparer.Ordinal);
 
-        AddCurrentResolutionDependants(
-            current,
-            report,
-            document,
-            affectedEntryPaths);
+        if (report is not null)
+        {
+            AddCurrentResolutionDependants(
+                current,
+                report,
+                document,
+                affectedEntryPaths);
+        }
 
         // Raw frozen and Lean paths have historically widened one dependency change to every
         // edge. Their value changes are represented by the affected entry paths above instead.

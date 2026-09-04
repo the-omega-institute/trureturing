@@ -209,7 +209,7 @@ internal static partial class IngestCommand
         IngestInputs inputs,
         RawChangeSet repositoryChanges,
         DigestionIngestPlan plan,
-        LeanAxiomReport report)
+        LeanAxiomReport? report)
     {
         var currentRaw = inputs.CurrentRaw;
         var current = inputs.Current;

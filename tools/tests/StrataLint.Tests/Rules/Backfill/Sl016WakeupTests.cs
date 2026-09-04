@@ -188,6 +188,32 @@ public sealed class Sl016WakeupTests
     }
 
     [Fact]
+    public void ReportFreeIngestDoesNotComparePersistedTargetAgainstMissingReport()
+    {
+        const string targetGid = "D5/S0/Carrier/BackfillTarget";
+        var fixture = CoverageReceiptFixture(
+            targetGid,
+            FrozenStatementReceiptTestData.Id('a'));
+        var context = fixture.Build(RawChangeSet.Create(["README.md"]));
+        var document = BackfillInventoryLoader.LoadCandidateDelta(
+            context.Current,
+            context.Baseline,
+            context.Changes);
+
+        var impact = BackfillDeltaImpactResolver.Resolve(
+            context.Current,
+            context.Baseline,
+            report: null,
+            document,
+            context.Changes);
+
+        Assert.False(impact.HasAffectedEdges);
+        Assert.False(DigestionCasStore.EntryChanged(
+            Assert.Single(document.RequireDigestionEntries()),
+            impact.EvaluationChanges));
+    }
+
+    [Fact]
     public void UnchangedBaseEntryDuplicateCoverageIsNotRepublishedForUnrelatedDelta()
     {
         var fixture = new RuleFixture();
