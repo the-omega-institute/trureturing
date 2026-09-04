@@ -9,6 +9,10 @@ public sealed class FrozenSurfaceRuleTests
 {
     private const string FrozenPath = RuleFixture.RingPath;
     private const string OtherPath = RuleFixture.BlueprintPath;
+    // Derived once by independently canonicalizing the RuleFixture raw report's
+    // goldenRing/def/Nat declaration and the module-statement-v1 material.
+    private const string ExpectedFrozenModuleStatementPin =
+        "sha256:3d2b9bf06c5fb9076c8206428611c597cc723e59b64f5415e7dae6049ee954e2";
     private static readonly string FrozenStatePathValue =
         FrozenStatePath.FromModulePath(RepoPath.CreateKnown(FrozenPath)).Value;
     [Theory]
@@ -80,8 +84,9 @@ public sealed class FrozenSurfaceRuleTests
     public void Sl008RejectsStatePinThatDiffersFromTheCurrentReport()
     {
         var fixture = new RuleFixture();
-        var actual = ModuleStatementId(fixture, FrozenPath);
+        var actual = StatementId.Create(ExpectedFrozenModuleStatementPin);
         var stored = StatementId.Create("sha256:" + new string('f', 64));
+        Assert.NotEqual(stored, actual);
         AddState(fixture, FrozenPath, stored);
 
         var diagnostic = Assert.Single(
@@ -144,7 +149,7 @@ public sealed class FrozenSurfaceRuleTests
     public void Sl008AllowsHeaderOrCommentChangesWhenTheModulePinIsUnchanged()
     {
         var fixture = new RuleFixture();
-        var pin = ModuleStatementId(fixture, FrozenPath);
+        var pin = StatementId.Create(ExpectedFrozenModuleStatementPin);
         AddState(fixture, FrozenPath, pin, includeInBaseline: true);
         _ = AddFreeze(fixture, FrozenPath, pin);
         fixture.Files[FrozenPath] += "-- comment-only candidate change\n";
