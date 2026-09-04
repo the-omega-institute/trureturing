@@ -21,7 +21,8 @@ public sealed class DependencyDirectionTests
     {
         Assert.Equal(
             ["Dunet", "Markdig", "Microsoft.CodeAnalysis", "Microsoft.CodeAnalysis.CSharp", "Pidgin", "Trureturing.Truth"],
-            AssemblyReferencePolicy.NonPlatformReferences(typeof(AdmissionPipeline).Assembly));
+            global::StrataLint.ArchitectureTests.AssemblyReferencePolicy.NonPlatformReferences(
+                typeof(AdmissionPipeline).Assembly));
     }
 
     [Fact]
@@ -29,7 +30,8 @@ public sealed class DependencyDirectionTests
     {
         Assert.Equal(
             ["StrataLint.Engine", "StrataLint.Scribe", "Tomlyn", "Trureturing.Truth", "YamlDotNet"],
-            AssemblyReferencePolicy.NonPlatformReferences(typeof(StrataLint.Cli.Program).Assembly));
+            global::StrataLint.ArchitectureTests.AssemblyReferencePolicy.NonPlatformReferences(
+                typeof(StrataLint.Cli.Program).Assembly));
     }
 
     /// <summary>
@@ -44,7 +46,8 @@ public sealed class DependencyDirectionTests
     {
         Assert.Equal(
             ["Jint", "QuestPDF", "StrataLint.Engine", "Tomlyn", "Trureturing.Truth"],
-            AssemblyReferencePolicy.NonPlatformReferences(typeof(ScribeEmitter).Assembly));
+            global::StrataLint.ArchitectureTests.AssemblyReferencePolicy.NonPlatformReferences(
+                typeof(ScribeEmitter).Assembly));
     }
 
     [Fact]
@@ -52,7 +55,7 @@ public sealed class DependencyDirectionTests
     {
         Assert.Equal(
             ["StrataLint", "StrataLint.Engine", "StrataLint.Scribe"],
-            AssemblyReferencePolicy.ApplicationReferences(
+            global::StrataLint.ArchitectureTests.AssemblyReferencePolicy.ApplicationReferences(
                 typeof(StrataLint.Tests.AdmissionTests).Assembly));
         Assert.Equal(
             // Engine 经 Cli 传递可得,故这条直接引用是多余的 extra-production-reference 存量债;
@@ -72,7 +75,7 @@ public sealed class DependencyDirectionTests
     {
         Assert.Equal(
             ["StrataLint.EngineeringScope", "StrataLint.TestSupport"],
-            AssemblyReferencePolicy.ApplicationReferences(
+            global::StrataLint.ArchitectureTests.AssemblyReferencePolicy.ApplicationReferences(
                 typeof(StrataLint.EngineeringScope.Tests.TestProcessRunnerTests).Assembly));
         Assert.Equal(
             [
@@ -93,7 +96,7 @@ public sealed class DependencyDirectionTests
     {
         Assert.Equal(
             ["StrataLint.Engine", "StrataLint.Scribe", "StrataLint.TestSupport"],
-            AssemblyReferencePolicy.ApplicationReferences(
+            global::StrataLint.ArchitectureTests.AssemblyReferencePolicy.ApplicationReferences(
                 typeof(StrataLint.Scribe.Tests.DocumentAstTests).Assembly));
     }
 
@@ -137,4 +140,19 @@ public sealed class DependencyDirectionTests
         .OfType<string>()
         .Order(StringComparer.Ordinal)
         .ToArray();
+
+    private static class AssemblyReferencePolicy
+    {
+        [CompileTimeInputUniverse("tools/tests/StrataLint.ArchitectureTests/", ".cs")]
+        [CompileTimeInputUniverse("tools/tests/StrataLint.ArchitectureTests/", ".csproj")]
+        internal static string[] ApplicationReferences(System.Reflection.Assembly assembly) =>
+            assembly.GetReferencedAssemblies()
+                .Select(static reference => reference.Name
+                    ?? throw new InvalidOperationException("Assembly reference has no name."))
+                .Where(static name =>
+                    name == "StrataLint"
+                    || name.StartsWith("StrataLint.", StringComparison.Ordinal))
+                .Order(StringComparer.Ordinal)
+                .ToArray();
+    }
 }
