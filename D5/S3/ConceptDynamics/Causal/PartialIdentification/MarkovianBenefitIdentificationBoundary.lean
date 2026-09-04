@@ -107,7 +107,6 @@ def benefitResponseLaw
     cases control <;> cases treated <;>
       simp [benefitResponseVector] <;> linarith
   · simp [benefitResponseVector]
-    ring
 
 @[simp] theorem benefitResponseLaw_controlMarginal
     (controlSuccess treatedSuccess benefit : ℚ)
@@ -181,12 +180,13 @@ theorem markovian_benefit_target_feasible_iff
             model.outcomeLaw.mass (false, true) +
             model.outcomeLaw.mass (true, false) +
             model.outcomeLaw.mass (true, true) = 1 := by
-      simpa [Fintype.sum_prod_type] using model.outcomeLaw.total
+      simpa [Fintype.sum_prod_type, Fintype.sum_bool] using
+        model.outcomeLaw.total
     constructor
     · rw [max_le_iff]
       constructor
-      · simpa [benefitResponseMass] using
-          benefit_outcome_eq ▸ m01_nonnegative
+      · unfold benefitResponseMass at benefit_outcome_eq
+        linarith
       · unfold controlSuccessMarginal at control_eq
         unfold treatmentSuccessMarginal at treated_eq
         unfold benefitResponseMass at benefit_outcome_eq
