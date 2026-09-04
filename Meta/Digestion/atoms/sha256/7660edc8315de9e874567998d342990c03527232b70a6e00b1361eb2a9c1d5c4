@@ -1,0 +1,25 @@
+## 36. ANCHOR 的多种实例
+
+同一依赖见证角色可实例化为：
+
+\[
+\begin{aligned}
+a_X &: \sum_{x:X}A_X(x)
+&&\text{实际状态锚};\\
+a_{\mathrm{data}} &: \mathrm{Dataset}
+&&\text{经验记录锚};\\
+a_{\mathrm{counterexample}} &: \operatorname{Residual}(q,T)
+&&\text{反例锚};\\
+a_{\mathrm{proof}} &: P
+&&\text{命题 }P\text{ 的证明锚};\\
+a_{\mathrm{path}} &: \sum_{\gamma:\mathrm{Path}}A_{\mathrm{Path}}(\gamma)
+&&\text{历史锚};\\
+a_{\mathrm{model}} &: \sum_{m:\mathrm{Model}}A_{\mathrm{Model}}(m)
+&&\text{实现模型锚}.
+\end{aligned}
+\]
+
+因此 `CERTIFY` 不必成为第五基础角色。证书就是某个证书类型或命题类型中的 ANCHOR。
+
+---
+

@@ -1,0 +1,28 @@
+\[
+\boxed{
+\Omega_F^{\mathrm{future}}(q,T)
+=
+\mathsf B_F(q)
+\cap
+\ker T
+\cap
+\mathsf B_F(T)^c.
+}
+\]
+
+它精确表示：
+
+\[
+\forall w,\ q(F_wx)=q(F_wy),
+\qquad
+T(x)=T(y),
+\]
+
+但：
+
+\[
+\exists w,\ T(F_wx)\ne T(F_wy).
+\]
+
+---
+

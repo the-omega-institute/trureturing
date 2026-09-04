@@ -1,0 +1,19 @@
+\[
+\widetilde F
+=
+\Phi_{q_Y}
+\circ F
+\circ\Phi_{q_X}^{-1}.
+\]
+
+其类型为：
+
+\[
+\widetilde F:
+\sum_{b:B}R_{q_X}(b)
+\longrightarrow
+\sum_{c:C}R_{q_Y}(c).
+\]
+
+写作：
+

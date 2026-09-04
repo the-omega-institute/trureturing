@@ -1,0 +1,45 @@
+\[
+\boxed{
+\operatorname{Core}_F(T)
+=
+\bigcap_{w\in U^*}
+\ker(T\circ F_w).
+}
+\]
+
+即：
+
+\[
+x\sim_{\operatorname{Core}_F(T)}y
+\iff
+\forall w,\quad
+T(F_wx)=T(F_wy).
+\]
+
+它是所有：
+
+- 对 FLOW 稳定；
+- 对目标全部未来行为充分；
+
+的等价关系中最粗的一个。
+
+所以：
+
+\[
+\boxed{
+X/\operatorname{Core}_F(T)
+}
+\]
+
+是固定 \((X,F,T)\) 下的最小充分动态状态。
+
+这意味着：
+
+\[
+\boxed{
+\text{固定任务内部可以存在真正的规范最终概念。}
+}
+\]
+
+---
+

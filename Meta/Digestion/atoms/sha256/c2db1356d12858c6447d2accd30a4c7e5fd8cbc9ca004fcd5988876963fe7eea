@@ -1,0 +1,56 @@
+## 版本 C：黄金深度 \(H\) 的全部合法状态
+
+若状态数为：
+
+$$
+F_{H+2}\asymp\varphi^H,
+$$
+
+而希望每个状态都获得一个独立 prime survivor，则 Maynard 型预算约为：
+
+$$
+\boxed{
+\exp(C\varphi^H),
+}
+$$
+
+即关于 \(H\) 的双指数。
+
+所以今后建议固定三个记号：
+
+$$
+\boxed{
+H
+=
+\text{黄金递归深度},
+}
+$$
+
+$$
+\boxed{
+k
+=
+\text{候选平移数},
+}
+$$
+
+$$
+\boxed{
+m
+=
+\text{保证的 prime survivors 数}.
+}
+$$
+
+否则：
+
+$$
+\varphi H,\qquad
+\varphi^H,\qquad
+e^{\varphi H}
+$$
+
+很容易在不同信息单位之间混淆。
+
+---
+

@@ -1,0 +1,38 @@
+# 第二百五十三部　新的核心对象：Prime Pair Jet Spinor
+
+可以将上述结构凝聚为：
+
+$$
+\boxed{
+\operatorname{PPJ}_{p,q}(s)
+=
+\begin{pmatrix}
+\dfrac{p^s}{2}(p^{-s}+q^{-s})\\[8pt]
+\dfrac{p^s(q^{-s}-p^{-s})}{\log q-\log p}
+\end{pmatrix}.
+}
+$$
+
+若
+
+$$
+p_n<q_n,\qquad
+q_n-p_n\le B,\qquad
+p_n\to\infty,
+$$
+
+则：
+
+$$
+\boxed{
+\operatorname{PPJ}_{p_n,q_n}(s)
+\longrightarrow
+\begin{pmatrix}
+1\\
+-s
+\end{pmatrix}.
+}
+$$
+
+它有两个规范变换：
+
