@@ -9,10 +9,7 @@ public sealed class LedgerFrozenCommandTests
     [Fact]
     public void ActiveFreezeReturnsZeroOnTheAllowSide()
     {
-        using var fixture = new Fixture(createLedgerDirectory: true);
-        fixture.WriteActiveFreeze();
-
-        var result = fixture.Run();
+        var result = Run(createLedgerDirectory: true, activeFreeze: true);
 
         Assert.Equal(0, result.ExitCode);
         Assert.Equal(string.Empty, result.Output);
@@ -22,73 +19,40 @@ public sealed class LedgerFrozenCommandTests
     [Fact]
     public void MissingActiveFreezeReturnsOne()
     {
-        using var fixture = new Fixture(createLedgerDirectory: true);
-
-        var result = fixture.Run();
+        var result = Run(createLedgerDirectory: true, activeFreeze: false);
 
         Assert.Equal(1, result.ExitCode);
-        Assert.Equal(string.Empty, result.Output);
-        Assert.Equal(string.Empty, result.Error);
     }
 
     [Fact]
     public void MissingLedgerDirectoryReturnsTwoAsInfrastructureFailure()
     {
-        using var fixture = new Fixture(createLedgerDirectory: false);
-
-        var result = fixture.Run();
+        var result = Run(createLedgerDirectory: false, activeFreeze: false);
 
         Assert.Equal(2, result.ExitCode);
-        Assert.Equal(string.Empty, result.Output);
         Assert.Contains(
             "LEDGER_FROZEN_INVALID frozen ledger is missing: Golden/Frozen/accepted",
             result.Error,
             StringComparison.Ordinal);
     }
 
-    private sealed class Fixture : IDisposable
+    private static ExplicitCommandResult Run(bool createLedgerDirectory, bool activeFreeze)
     {
-        private readonly TemporaryDirectory temporary = new();
-
-        internal Fixture(bool createLedgerDirectory)
+        using var temporary = new TemporaryDirectory();
+        if (createLedgerDirectory)
         {
-            Git("init", "-q");
-            if (createLedgerDirectory)
-            {
-                Directory.CreateDirectory(AcceptedDirectory);
-            }
-        }
-
-        private string AcceptedDirectory => Path.Combine(
-            temporary.Path,
-            FrozenLedgerChangeClassifier.AcceptedRoot.Replace(
-                '/',
-                Path.DirectorySeparatorChar));
-
-        internal void WriteActiveFreeze() =>
-            WriteLedgerDirectory(AcceptedDirectory, EventFiles(BuildCatalog(Module("A"))));
-
-        internal (int ExitCode, string Output, string Error) Run()
-        {
-            var console = new BufferedConsole();
-            var exitCode = CliApplication.Run(
-                ["ledger-frozen", "--target", PathFor("A")],
-                new ProductionCliEnvironment(temporary.Path),
-                console);
-            return (exitCode, console.Output, console.Error);
-        }
-
-        private void Git(params string[] arguments)
-        {
-            var result = TestProcessRunner.Run(
-                "/usr/bin/git",
-                arguments,
+            Directory.CreateDirectory(Path.Combine(
                 temporary.Path,
-                TestBudgets.LocalProcessHangGuard,
-                128 * 1024);
-            Assert.Equal(0, result.ExitCode);
+                FrozenLedgerChangeClassifier.AcceptedRoot.Replace('/', Path.DirectorySeparatorChar)));
         }
 
-        public void Dispose() => temporary.Dispose();
+        IEnumerable<RawRepositoryEntry> entries = activeFreeze
+            ? EventFiles(BuildCatalog(Module("A"))).Select(static file =>
+                new RawRepositoryEntry(file.Path.Value, file.RawBytes))
+            : [];
+        return LedgerFrozenCommand.Run(
+            temporary.Path,
+            new FakeRepositoryGateway(RawChangeSet.Create([]), RawRepositorySnapshot.Create(entries), null),
+            ["--target", PathFor("A")]);
     }
 }

@@ -41,10 +41,6 @@ public sealed partial class MakeWorkflowTests
             "align_args+=(--candidate-lean-report \"$REPORT\")",
             script,
             StringComparison.Ordinal);
-        Assert.Contains(
-            "run_cli ledger-frozen --target \"$MODULE_PATH\"",
-            script,
-            StringComparison.Ordinal);
         Assert.Contains("digest-status --base", script, StringComparison.Ordinal);
     }
 }

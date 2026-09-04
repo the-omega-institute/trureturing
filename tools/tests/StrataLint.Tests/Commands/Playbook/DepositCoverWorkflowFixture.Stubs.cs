@@ -104,22 +104,10 @@ public sealed partial class DepositCoverWorkflowScriptTests
                   echo 'LEDGER_FROZEN_INVALID synthetic target transport mismatch' >&2
                   exit 96
                 fi
-                target_module=${parts[2]}
-                ledger_files=(Golden/Frozen/accepted/*.json)
-                if [[ ! -e ${ledger_files[0]} ]]; then
-                  exit 1
-                fi
-                active=1
-                for ledger_file in "${ledger_files[@]}"; do
-                  if ! descriptor=$(jq -er \
-                      'select(.event_type == "Freeze" and .schema_version == 5) | .payload.descriptor_selector' \
-                      "$ledger_file"); then
-                    echo 'LEDGER_FROZEN_INVALID synthetic non-canonical ledger' >&2
-                    exit 2
-                  fi
-                  [[ $descriptor != "$target_module" ]] || active=0
-                done
-                exit "$active"
+                status=1
+                [[ ! -f .ledger-frozen-status ]] || status=$(<.ledger-frozen-status)
+                [[ $status != 2 ]] || echo 'LEDGER_FROZEN_INVALID synthetic failure' >&2
+                exit "$status"
                 ;;
               ledger-align)
                 if [[ ${parts[1]:-} == --add ]]; then
@@ -141,6 +129,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 printf '{"event_hash":"sha256:%s","event_type":"Freeze","payload":{"declaration_statement_ids":[],"descriptor_selector":"%s","prerequisite_frozen_node_ids":[],"statement_id":"sha256:%s"},"schema_version":5}\n' \
                   "$event_id" "$target_module" "$event_id" \
                   > "Golden/Frozen/accepted/${event_id}.json"
+                printf '0\n' > .ledger-frozen-status
                 if [[ -f fail-ledger-once ]]; then
                   rm fail-ledger-once
                   echo 'LEDGER_ALIGN_INTERRUPTED synthetic kill after align' >&2

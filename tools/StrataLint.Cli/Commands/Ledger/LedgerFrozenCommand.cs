@@ -12,31 +12,32 @@ internal static class LedgerFrozenCommand
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentNullException.ThrowIfNull(repository);
         ArgumentNullException.ThrowIfNull(arguments);
-        var target = ParseTarget(arguments);
-        if (target is null)
+        if (arguments.Count != 2
+            || !string.Equals(arguments[0], "--target", StringComparison.Ordinal)
+            || !RepoPath.TryCreate(arguments[1], out var target))
         {
-            return Usage();
+            return new(2, string.Empty, "USAGE: StrataLint ledger-frozen --target D5/.../*.lean\n");
         }
 
         var ledgerDirectory = Path.Combine(
             repositoryRoot,
-            FrozenLedgerChangeClassifier.AcceptedRoot.Replace(
-                '/',
-                Path.DirectorySeparatorChar));
+            FrozenLedgerChangeClassifier.AcceptedRoot.Replace('/', Path.DirectorySeparatorChar));
         if (!Directory.Exists(ledgerDirectory))
         {
-            return Invalid(
-                $"frozen ledger is missing: {FrozenLedgerChangeClassifier.AcceptedRoot}");
+            return Invalid($"frozen ledger is missing: {FrozenLedgerChangeClassifier.AcceptedRoot}");
         }
 
         try
         {
-            var current = Decode(repository.ReadCurrent());
-            var view = FrozenLedgerBaseViewReader.Read(current);
-            return new ExplicitCommandResult(
-                view.ActiveByPath.ContainsKey(target) ? 0 : 1,
-                string.Empty,
-                string.Empty);
+            var decoded = SnapshotDecoder.Decode(repository.ReadCurrent());
+            if (decoded is SnapshotDecodeOutcome.InfrastructureFailure failure)
+            {
+                return Invalid(failure.Message);
+            }
+
+            var snapshot = ((SnapshotDecodeOutcome.Decoded)decoded).Snapshot;
+            var frozen = FrozenLedgerBaseViewReader.Read(snapshot).ActiveByPath.ContainsKey(target);
+            return new ExplicitCommandResult(frozen ? 0 : 1, string.Empty, string.Empty);
         }
         catch (Exception exception)
         {
@@ -44,30 +45,6 @@ internal static class LedgerFrozenCommand
         }
     }
 
-    private static RepoPath? ParseTarget(IReadOnlyList<string> arguments)
-    {
-        return arguments.Count == 2
-            && string.Equals(arguments[0], "--target", StringComparison.Ordinal)
-            && RepoPath.TryCreate(arguments[1], out var target)
-                ? target
-                : null;
-    }
-
-    private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
-        SnapshotDecoder.Decode(raw) switch
-        {
-            SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,
-            SnapshotDecodeOutcome.InfrastructureFailure failure =>
-                throw new InvalidOperationException(failure.Message),
-        };
-
-    private static ExplicitCommandResult Usage() => new(
-        2,
-        string.Empty,
-        "USAGE: StrataLint ledger-frozen --target D5/.../*.lean\n");
-
-    private static ExplicitCommandResult Invalid(string message) => new(
-        2,
-        string.Empty,
-        $"LEDGER_FROZEN_INVALID {message}\n");
+    private static ExplicitCommandResult Invalid(string message) =>
+        new(2, string.Empty, $"LEDGER_FROZEN_INVALID {message}\n");
 }
