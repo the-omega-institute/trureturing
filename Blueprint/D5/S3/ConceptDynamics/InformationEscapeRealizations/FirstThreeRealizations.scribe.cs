@@ -121,7 +121,6 @@ internal sealed class FirstThreeRealizationsDocument : IScribeDocumentDefinition
         return Seq([.. items]);
     }
 
-    private static Formula Sensor(string name) => Qualified("ResidueSensor", name);
 
     private static Formula FinWitness(byte value) =>
         Seq(Langle, D(value), Comma, Sp, F.Id("by"), Sp, F.Id("decide"), Rangle);
@@ -163,7 +162,7 @@ internal sealed class FirstThreeRealizationsDocument : IScribeDocumentDefinition
         Formula protocol = F.Id("protocol");
         Formula history = F.Id("history");
         Formula residueState = F.Id("ResidueState");
-        Formula readTwo = Call("residueReadout", Sensor("two"), state);
+        Formula readTwo = Call("residueReadout", Qualified("ResidueSensor", "two"), state);
         Formula falseFiber = ForallTyped(state, residueState, Seq(
             Equal(readTwo, F.Id("false")), Sp, Iff, Sp,
             Or(Equal(state, F.Id("zeroState")), Equal(state, F.Id("tenState")))));
@@ -175,13 +174,13 @@ internal sealed class FirstThreeRealizationsDocument : IScribeDocumentDefinition
         Formula firstQuestion = ForallTyped(history, Arrow(Call("Fin", D(0)), F.Id("Bool")),
             Equal(
                 ApplyExact(question, FinWitness(0), history),
-                Call("residueReadout", Sensor("two"))));
+                Call("residueReadout", Qualified("ResidueSensor", "two"))));
         Formula secondQuestion = ForallTyped(history, Arrow(Call("Fin", D(1)), F.Id("Bool")),
             Equal(
                 ApplyExact(question, FinWitness(1), history),
                 Call("if", Call("history", D(0)),
-                    Call("residueReadout", Sensor("five")),
-                    Call("residueReadout", Sensor("three")))));
+                    Call("residueReadout", Qualified("ResidueSensor", "five")),
+                    Call("residueReadout", Qualified("ResidueSensor", "three")))));
         Formula protocolExists = ExistsTyped(
             protocol, Call("BinaryProtocol", residueState, D(2)), And(
                 firstQuestion,
