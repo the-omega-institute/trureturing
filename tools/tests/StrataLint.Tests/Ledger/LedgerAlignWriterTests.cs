@@ -20,7 +20,7 @@ public sealed class LedgerAlignWriterTests
 
         var first = fixture.Align();
         var bytesAfterFirst = fixture.AllPublishedBytes();
-        var second = fixture.Align();
+        var second = fixture.AlignWithAcceptedWritesDenied();
 
         Assert.True(first.Success, first.Error);
         Assert.Contains(
@@ -246,6 +246,32 @@ public sealed class LedgerAlignWriterTests
                 temporary.Path,
                 Repository,
                 [.. options, "--candidate-lean-report", reportPath]);
+
+        internal CommandResult AlignWithAcceptedWritesDenied()
+        {
+            if (OperatingSystem.IsWindows())
+            {
+                return Align();
+            }
+
+            var original = File.GetUnixFileMode(AcceptedPath);
+            File.SetUnixFileMode(
+                AcceptedPath,
+                UnixFileMode.UserRead
+                    | UnixFileMode.UserExecute
+                    | UnixFileMode.GroupRead
+                    | UnixFileMode.GroupExecute
+                    | UnixFileMode.OtherRead
+                    | UnixFileMode.OtherExecute);
+            try
+            {
+                return Align();
+            }
+            finally
+            {
+                File.SetUnixFileMode(AcceptedPath, original);
+            }
+        }
 
         internal CommandResult AppendAlias() =>
             DagLedgerAlignWriter.AppendAlias(
