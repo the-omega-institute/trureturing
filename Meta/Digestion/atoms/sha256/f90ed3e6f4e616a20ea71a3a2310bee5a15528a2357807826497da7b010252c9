@@ -1,0 +1,40 @@
+## B9.1 反射行向量
+
+固定有限 prime cluster
+
+$$
+\mathcal C=\{p_1,\ldots,p_m\},
+\qquad
+\omega_j=\log p_j,
+\tag{B9.1}
+$$
+
+以及正权 $w_j>0$。定义
+
+$$
+r_+(\delta)_j
+=\sqrt{w_j}e^{\delta\omega_j},
+\qquad
+r_-(\delta)_j
+=\sqrt{w_j}e^{-\delta\omega_j}.
+\tag{B9.2}
+$$
+
+组成矩阵
+
+$$
+A(\delta)=
+\begin{pmatrix}
+r_+(\delta)\\
+r_-(\delta)
+\end{pmatrix}.
+\tag{B9.3}
+$$
+
+令
+
+$$
+G(\delta)=A(\delta)A(\delta)^\mathsf T.
+\tag{B9.4}
+$$
+

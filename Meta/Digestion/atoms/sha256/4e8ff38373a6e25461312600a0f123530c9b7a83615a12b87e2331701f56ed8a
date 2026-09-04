@@ -1,0 +1,51 @@
+## B1.1 加权一步记忆系统
+
+令
+
+$$
+T(z)=
+\begin{pmatrix}
+1&z\\
+1&0
+\end{pmatrix},
+\qquad z\in\mathbb C.
+\tag{B1.1}
+$$
+
+若状态向量的两个分量分别表示“末位未占据”和“末位已占据”，则一次长度增长由 $T(z)$ 完成。其特征多项式为
+
+$$
+\boxed{
+\chi_z(\lambda)
+=\det(\lambda I-T(z))
+=\lambda^2-\lambda-z.
+}
+\tag{B1.2}
+$$
+
+定义判别式
+
+$$
+\boxed{D(z)=1+4z.}
+\tag{B1.3}
+$$
+
+在选择平方根以后，两条谱支为
+
+$$
+\boxed{
+\lambda_\pm(z)
+=\frac{1\pm\sqrt{D(z)}}2.
+}
+\tag{B1.4}
+$$
+
+并满足
+
+$$
+\lambda_++\lambda_-=1,
+\qquad
+\lambda_+\lambda_-=-z.
+\tag{B1.5}
+$$
+

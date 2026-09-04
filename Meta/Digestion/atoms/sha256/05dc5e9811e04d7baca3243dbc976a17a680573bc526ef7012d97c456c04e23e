@@ -1,0 +1,22 @@
+## B7.3 self-adjoint 到 unitary 的候选路线
+
+若 $H=H^*$，则其 Cayley transform
+
+$$
+U=(H-iI)(H+iI)^{-1}
+\tag{B7.6}
+$$
+
+为 unitary。有限特征多项式
+
+$$
+\det(wI-U)
+\tag{B7.7}
+$$
+
+的根全部位于单位圆。
+
+因此存在另一条严格目标路线：从 prime--Zeckendorf--Gamma 数据构造 self-adjoint $H_T$，证明其 Cayley determinant 在有限窗内收敛到 transformed $\Xi$。困难全部集中在“canonical construction”和“convergence to $\Xi$”，不能由 unitary 这个名称代替。
+
+---
+

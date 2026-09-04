@@ -1,0 +1,2 @@
+**定理 2.2.2(Zaremba 常数 5 的 1024 有限前沿)**〔候签;open;落 `D5/S1/Depth/ContinuedFractions/ZarembaFiveFiniteFront`〕。嵌入仓外计算的 1025 项见证表并由 Lean 内核 `decide` 验证其每一行;证明 `∀ q:ℕ, 2≤q → q≤1024 → ∃ a, ZarembaWitness 5 a q`。伴随忠实性证书为 `ZarembaWitness 5 1 2`、`q=54` 的最小见证 `a=17` 及 `cfDigits 17 54=[0,3,5,1,2]`,并以 `cfDigits 1 6=[0,6]` 与检查器拒绝 `1/6` 钉住上界确有约束力。
+
