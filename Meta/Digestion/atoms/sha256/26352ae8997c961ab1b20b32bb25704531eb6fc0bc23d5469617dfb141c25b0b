@@ -1,0 +1,4 @@
+## 六　预算与结算
+
+三席位轮(codex-cli,各自独立 worktree):Z-1+Z-2+Z-3 一模块与 Z-4 一模块**并行**(互不绑定),Z-5 在两者合入后串行;每模块同 PR deposit + cover,三席评审,报告须按第 5⁗ 条列 `proof_shape` / 直接冻结依赖 / `escape_witness` / `admission_basis`。预计 Z-1/2/3 与 Z-4 各 ≤ 2 小时(探针证明可复用),Z-5 ≤ 3 小时。
+

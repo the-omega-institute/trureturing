@@ -1,0 +1,51 @@
+## 6.1 联合配分函数
+
+定义
+
+$$
+\boxed{
+\mathcal Z_Q(x,z)
+=
+\sum_{\eta\in\Omega_Q}
+ x^{E_Q(\eta)}z^{N_Q(\eta)}.
+}
+\tag{A6.1}
+$$
+
+按最高数位分类得到非齐次 Fibonacci transfer：
+
+$$
+\boxed{
+\mathcal Z_Q(x,z)
+=
+\mathcal Z_{Q-1}(x,z)
++z x^{F_{Q+1}}
+\mathcal Z_{Q-2}(x,z),
+}
+\tag{A6.2}
+$$
+
+其中
+
+$$
+\mathcal Z_0=1,
+\qquad
+\mathcal Z_1=1+zx.
+\tag{A6.3}
+$$
+
+两个截面分别为
+
+$$
+\mathcal Z_Q(x,1)=Z_Q^{\mathrm{exp}}(x),
+\tag{A6.4}
+$$
+
+$$
+\mathcal Z_Q(1,z)=H_Q(z).
+\tag{A6.5}
+$$
+
+因此同一个状态空间在两个 observer 下呈现完全不同的零点几何：
+
+- 指数 observer 看见单位圆几何级数；

@@ -1,0 +1,2 @@
+**候签定理 4.93(端口复合律)**〔open;同模块,本案核心〕。令 `portDelta R c B := c * B − R * squarefreeDeriv B`(ℕ 减法,在本案的使用域内不截断)。对互素的 A B,`portDelta R c (A * B) = portDelta (R * A) (portDelta R c A) B`。
+

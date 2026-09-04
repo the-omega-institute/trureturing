@@ -1,0 +1,26 @@
+## B16.1 离线零点是 bulk--boundary 精确平衡事件
+
+任何精确的 two-channel representation 中，一个零点首先满足 zero-balance identity：bulk modulus gap 与 boundary coefficient imbalance 必须精确抵消。对有限 $N$，即使两条边界系数都非零且保持横截，一个有限的 coefficient imbalance 也可以把零点从严格等模集合移动 $O(N^{-1})$；因此不能把每个有限离轴零点直接归结为“bulk gap closing”或“boundary coefficient 等于零”。
+
+真正可用于 completed 极限的结论是：若 $N_L\to\infty$ 时仍有零点停留在一个与等模集合正距离分离的紧集内，那么至少有下列一项失效：
+
+1. bulk singular-value gap 没有保持统一正下界；
+2. boundary coefficient ratio 不是次指数的，或 dominant coupling 以指数速度消失；
+3. two-channel 近似、determinant 表示或 completion error 在该极限中不可忽略。
+
+所以：
+
+$$
+\boxed{
+\begin{aligned}
+\text{persistent off-axis zero}
+\Longrightarrow{}&
+\text{bulk dominated-splitting failure}\\
+&\lor\ \text{boundary subexponentiality/transversality failure}\\
+&\lor\ \text{two-channel completion-error failure}.
+\end{aligned}}
+\tag{B16.2}
+$$
+
+前一理论只讨论了 scalar-to-relation coercivity closing；本式说明 completed transfer 证明必须分别审计 bulk、boundary 与 representation error，不能把三者压成一个未分解的“相变”字段。
+

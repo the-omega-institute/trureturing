@@ -1,0 +1,12 @@
+### 定理 A2.1　有限 Zeckendorf 能量双射
+
+映射
+
+$$
+E_Q:\Omega_Q\longrightarrow
+\{0,1,\ldots,M_Q-1\}
+\tag{A2.4}
+$$
+
+是双射。
+

@@ -1,0 +1,61 @@
+## 11.2 紧窗可比性
+
+固定有限高度 $0\le t\le T$ 和闭横向窗
+
+$$
+|\delta|\le\frac12-\eta_0,
+\qquad
+\eta_0>0.
+$$
+
+由于
+
+$$
+\partial_\delta\eta_a(t,0)
+=
+\frac{2a}{a^2+t^2}>0
+$$
+
+且
+
+$$
+R_{\mathcal C}(\delta)
+=
+\mathfrak m_{\mathcal C}^2\delta^2+O(\delta^4),
+$$
+
+比值
+
+$$
+\frac{R_{\mathcal C}(\delta)}{\eta_a(t,\delta)^2}
+$$
+
+在 $\delta=0$ 处具有严格正的连续延拓。紧性给出常数
+
+$$
+0<c_{a,\mathcal C,T,\eta_0}
+\le
+C_{a,\mathcal C,T,\eta_0}<\infty
+$$
+
+使
+
+$$
+\boxed{
+c_{a,\mathcal C,T,\eta_0}
+\eta_a(t,\delta)^2
+\le
+R_{\mathcal C}(\delta)
+\le
+C_{a,\mathcal C,T,\eta_0}
+\eta_a(t,\delta)^2.
+}
+\tag{11.2}
+$$
+
+所以在任何有限谱窗内，prime 双曲关系能量都是 Lee–Yang 径向偏移的一个等价二次度量。
+
+这是一条纯坐标—度量定理。它不声称 prime side 已经生成或控制 zeta 零点，但它证明两种候选序参量确实测量同一个法向自由度。
+
+---
+

@@ -1,0 +1,51 @@
+## B4.2 两步 transfer 是 proper boost
+
+有
+
+$$
+A^2=
+\begin{pmatrix}
+2&1\\
+1&1
+\end{pmatrix},
+\qquad
+(A^2)^\mathsf TJ_1A^2=J_1.
+\tag{B4.5}
+$$
+
+其本征值为
+
+$$
+\varphi^2,
+\qquad
+\varphi^{-2}.
+\tag{B4.6}
+$$
+
+令标准 boost
+
+$$
+B(u)=
+\begin{pmatrix}
+\cosh u&\sinh u\\
+\sinh u&\cosh u
+\end{pmatrix}.
+\tag{B4.7}
+$$
+
+则 $A^2$ 在一个实正交坐标变换后等价于
+
+$$
+\boxed{B(2\log\varphi).}
+\tag{B4.8}
+$$
+
+因此黄金递推深度的两步增长，是离散 rapidity
+
+$$
+2\log\varphi
+\tag{B4.9}
+$$
+
+的 Lorentz boost。
+

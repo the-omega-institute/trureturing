@@ -1,0 +1,29 @@
+## 7.3 精确创新场
+
+扣除平均漂移，定义
+
+$$
+\boxed{
+\xi_v=\Delta b_v-\sqrt5.
+}
+\tag{A7.11}
+$$
+
+由
+
+$$
+\varphi^2-\sqrt5=\varphi^{-2},
+\qquad
+\varphi-\sqrt5=-\varphi^{-1},
+\tag{A7.12}
+$$
+
+得到
+
+$$
+\boxed{
+\xi_v\in\{\varphi^{-2},-\varphi^{-1}\}.
+}
+\tag{A7.13}
+$$
+

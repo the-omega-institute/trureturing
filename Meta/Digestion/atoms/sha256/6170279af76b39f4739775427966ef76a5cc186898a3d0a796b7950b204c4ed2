@@ -1,0 +1,32 @@
+## B5.5 最近零点的精确距离
+
+最接近 $-1/4$ 的根为
+
+$$
+z_Q^{\mathrm{near}}
+=-\frac1{4\cos^2(\pi/(Q+2))}.
+\tag{B5.8}
+$$
+
+因此
+
+$$
+\boxed{
+-\frac14-z_Q^{\mathrm{near}}
+=\frac14\tan^2\frac{\pi}{Q+2}.
+}
+\tag{B5.9}
+$$
+
+并有渐近
+
+$$
+\boxed{
+-\frac14-z_Q^{\mathrm{near}}
+\sim
+\frac{\pi^2}{4(Q+2)^2}.}
+\tag{B5.10}
+$$
+
+这是一条精确的 $Q^{-2}$ zero-pinching law。
+

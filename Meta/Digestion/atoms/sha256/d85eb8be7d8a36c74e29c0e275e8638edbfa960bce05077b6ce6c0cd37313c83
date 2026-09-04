@@ -1,0 +1,2 @@
+**勘误正案 4.80(Lehmer 欧拉函数问题与本案范围)**〔ledger;开放问题线第四批〕。Lehmer (1932) 问题问是否存在合数 n 使 Nat.totient n ∣ n - 1，至今开放；P7 已证合数候选的结构包，但其候选假设没有已知见证，故不得冻结。本案不触碰合数存在性，只把同一数学改写成可见证的析取：假设 1 < n 且 Nat.totient n ∣ n - 1，结论为 n.Prime，或 n 具有合数侧完整结构包。令 `IsKorselt n := Squarefree n ∧ ∀ p ∈ n.primeFactors, p - 1 ∣ n - 1`；钉版 Mathlib 中 `Nat.IsCarmichael` 与 `Korselt` 均无声明。假设由 n = 2 与 n = 7 的 `by decide` 见证，n = 15 以 `by decide` 证伪其整除条件；Lehmer 合数存在性仍为 open。
+
