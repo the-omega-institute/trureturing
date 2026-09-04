@@ -285,10 +285,15 @@ theorem step_frequency_eq_bidegree_letter
       (Real.goldenRatio ^ 2 - (shortStepIndicator event : Real)) *
         Real.log ((event.prime : Nat) : Real) := by
   rw [step_frequency_zeckendorf_parity]
-  unfold shortStepIndicator
   by_cases hEven : Even ((Nat.zeckendorf (event.layer + 1)).getLastD 0)
-  · simp [hEven]
-  · simp [hEven, Real.goldenRatio_sq]
+  · have hIndicator : shortStepIndicator event = 0 := by
+      simp only [shortStepIndicator, if_pos hEven]
+    rw [if_pos hEven, hIndicator]
+    ring
+  · have hIndicator : shortStepIndicator event = 1 := by
+      simp only [shortStepIndicator, if_neg hEven]
+    rw [if_neg hEven, hIndicator, Real.goldenRatio_sq]
+    ring
 
 /-- All events in the word use one fixed prime channel. -/
 def IsSinglePrimeWord
