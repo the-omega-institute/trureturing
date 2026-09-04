@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:61e900793bb6ebf09c35a095efb9a7d7f51cdaf906d6ad7a6a485b161f1b8a22
+  normalized_sha256: sha256:61e900793bb6ebf09c35a095efb9a7d7f51cdaf906d6ad7a6a485b161f1b8a22
+cas_ref: sha256:61e900793bb6ebf09c35a095efb9a7d7f51cdaf906d6ad7a6a485b161f1b8a22
+coverage_gids:
+  - gid: D5/S3/ArithUnits/CyclicPlaneTwelveMultiplierObstruction.thirteenResidues_witness
+    target_statement_id: sha256:f6b17d7f97884c67da8a529f2aea88036df447b72b00fd3e1b09ff37aa34b316
+receipts:
+  scribe:
+    - gid: D5/S3/ArithUnits/CyclicPlaneTwelveMultiplierObstruction.thirteenResidues_witness
+      definition_sha256: sha256:f48e0a9b2d67cc5aa1447a8a8bc37a30a3f0622abff26b4ec0e83092b87c8858
+      emission_sha256: sha256:9de51ce852bcb80037095ddec815ea68b4b92f42e66ea3e3b68e4b1da575d8aa
+  unresolved_subitems: []
