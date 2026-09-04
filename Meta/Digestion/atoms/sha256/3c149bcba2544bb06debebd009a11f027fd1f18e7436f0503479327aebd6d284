@@ -1,0 +1,17 @@
+## B2.1 围绕分歧点的解析 monodromy
+
+令 $z$ 沿一个小闭环绕 $-1/4$ 一周。平方根
+
+$$
+\sqrt{1+4z}
+$$
+
+改变符号，因此解析延拓执行
+
+$$
+\lambda_+\longleftrightarrow\lambda_-.
+\tag{B2.1}
+$$
+
+这正是 deck involution $\iota$。
+

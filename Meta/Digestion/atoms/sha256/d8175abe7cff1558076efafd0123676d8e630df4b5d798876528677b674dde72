@@ -1,0 +1,25 @@
+## B15.1 completed two-channel cocycle
+
+设存在由 prime、prime powers、Zeckendorf carry 与 Gamma block 规范构造的矩阵 cocycle
+
+$$
+\mathcal M_L(s)
+=G_\Gamma(s;L)
+\prod_{p\le P(L)}^{\longrightarrow}
+G_p(s),
+\tag{B15.1}
+$$
+
+乘积保留规定的有序或可证明的顺序无关结构。
+
+要求每个非分歧 local block 位于黄金 split torus 的 normalizer，并且其 Weyl projection 满足
+
+$$
+\boxed{
+\operatorname{Weyl}(G_p)
+=\chi_5(p).}
+\tag{B15.2}
+$$
+
+这把 `GoldenCharacterQuotient` 从独立二值标签提升为 local channel Frobenius 的投影；但式 (B15.1) 的具体 block 仍待构造。
+
