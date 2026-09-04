@@ -54,7 +54,7 @@ theorem constant_cut_bundle_has_universal_agreement
   exact closed_truth_readout_has_universal_kernel (value i) x y
 
 /-- Insert one atom without changing the carrier or the old atom indices. -/
-def PrimitiveBundle.withAtom {X : Type u} (bundle : PrimitiveBundle.{u, v} X)
+def bundleWithAtom {X : Type u} (bundle : PrimitiveBundle.{u, v} X)
     (extra : PrimitiveAtom X) : PrimitiveBundle.{u, v} X := by
   let _ := bundle.indexFintype
   let _ := bundle.indexDecidableEq
@@ -95,7 +95,7 @@ theorem full_domain_admit_encoding
 theorem adding_admit_atom_cannot_increase_agreement
     {X : Type u} (bundle : PrimitiveBundle.{u, v} X)
     (admit : X -> Prop) [DecidablePred admit] (x y : X) :
-    (bundle.withAtom { axis := .admit, kernel := admitKernel admit }).agrees x y ->
+    (bundleWithAtom bundle { axis := .admit, kernel := admitKernel admit }).agrees x y ->
       bundle.agrees x y := by
   intro extended i
   exact extended (some i)
@@ -108,7 +108,7 @@ theorem admit_atom_preserves_offDiagonalPairs
     (admit : X -> Prop) [DecidablePred admit] :
     offDiagonalPairs X = offDiagonalPairs X /\
       forall pair, pair ∈ offDiagonalPairs X ->
-        (bundle.withAtom { axis := .admit, kernel := admitKernel admit }).agrees
+        (bundleWithAtom bundle { axis := .admit, kernel := admitKernel admit }).agrees
             pair.1 pair.2 ->
           bundle.agrees pair.1 pair.2 := by
   refine ⟨rfl, ?_⟩
@@ -141,7 +141,7 @@ theorem universal_kernel_atom_does_not_change_agrees
     {X : Type u} (bundle : PrimitiveBundle.{u, v} X)
     (atom : PrimitiveAtom X)
     (universal : forall x y, atom.kernel.relation x y) (x y : X) :
-    (bundle.withAtom atom).agrees x y <-> bundle.agrees x y := by
+    (bundleWithAtom bundle atom).agrees x y <-> bundle.agrees x y := by
   constructor
   · intro extended i
     exact extended (some i)

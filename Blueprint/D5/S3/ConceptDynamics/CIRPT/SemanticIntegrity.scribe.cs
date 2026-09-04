@@ -23,7 +23,7 @@ internal sealed class SemanticIntegrityDocument : IScribeDocumentDefinition
                 "constant_cut_bundle_has_universal_agreement",
                 "Constant CUT bundles agree universally", ConstantBundleFormula(),
                 "Coordinatewise universality makes the joint bundle relation universal."),
-            DefinitionNode("bundle-with-atom", "PrimitiveBundle.withAtom", "Atom insertion",
+            DefinitionNode("bundle-with-atom", "bundleWithAtom", "Atom insertion",
                 "An Option index inserts one atom while retaining every old atom index."),
             TheoremNode("full-domain-admit-encoding", "full_domain_admit_encoding",
                 "ADMIT is its Boolean CUT", AdmitEncodingFormula(),
@@ -89,7 +89,7 @@ internal sealed class SemanticIntegrityDocument : IScribeDocumentDefinition
             Call("decide", Call("A", F.Id("x"))))), Dot));
 
     private static Formula AdmitAntitoneBody() => Seq(
-        Call("agrees", Call("withAtom", F.Id("b"), Call("admitAtom", F.Id("A"))),
+        Call("agrees", Call("bundleWithAtom", F.Id("b"), Call("admitAtom", F.Id("A"))),
             F.Id("x"), F.Id("y")), Sp, Rightarrow, Sp,
         Call("agrees", F.Id("b"), F.Id("x"), F.Id("y")));
 
@@ -117,7 +117,7 @@ internal sealed class SemanticIntegrityDocument : IScribeDocumentDefinition
         Open, Forall, Sp, F.Id("x"), Comma, Sp, F.Id("y"), Comma, Sp,
         Call("relation", Call("kernel", F.Id("p")), F.Id("x"), F.Id("y")), Close,
         Sp, Rightarrow, Sp,
-        Open, Call("agrees", Call("withAtom", F.Id("b"), F.Id("p")),
+        Open, Call("agrees", Call("bundleWithAtom", F.Id("b"), F.Id("p")),
             F.Id("x"), F.Id("y")), Sp, Iff, Sp,
         Call("agrees", F.Id("b"), F.Id("x"), F.Id("y")), Close, Dot));
 }
