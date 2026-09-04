@@ -224,6 +224,8 @@ private theorem bounded_witness_complexity_le {Witness : Type*} [DecidableEq Wit
   apply Nat.find_min'
   exact ⟨code.get, by simpa using hruns⟩
 
+end TimePricedMachine
+
 /-- Finite bounded diagonalization gives a uniformly defined target family. Every fast witness
 has a half-length price up to the explicit compiler overhead; every eventually quarter-short
 witness is slow. The literal table and bounded-code enumerator are concrete witnesses, and at
@@ -339,8 +341,6 @@ theorem time_bounded_two_point_price_frontier {Witness : Type*} [DecidableEq Wit
   refine ⟨?_, htableFast.trans_lt (henumerator length).2.2⟩
   omega
 
-end TimePricedMachine
-
-#print axioms TimePricedMachine.time_bounded_two_point_price_frontier
+#print axioms time_bounded_two_point_price_frontier
 
 end D5.S0.Computability.DescriptionComplexity.TimeBoundedTwoPointPrice
