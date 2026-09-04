@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/Analytic/ZetaCompletionFlow/ShiftedZeroWorldlineVelocity
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: The shifted affine zero has a fixed horizontal label and crossing
-     parameter, with universal velocity minus i. -/
+   digest: A shifted affine zero has a fixed horizontal label and crossing parameter, with universal velocity minus i. -/
 
 import Mathlib.Analysis.Complex.Basic
 import Mathlib.Tactic
