@@ -21,6 +21,6 @@ globs = ["Trureturing", "D5.+"]
 
 [[lean_lib]]
 name = "LeanInformationAudit"
-srcDir = "tools/lean-information-audit"
+srcDir = "tools/lean-inspector"
 roots = ["LeanInformationAudit"]
 globs = ["LeanInformationAudit.+"]
