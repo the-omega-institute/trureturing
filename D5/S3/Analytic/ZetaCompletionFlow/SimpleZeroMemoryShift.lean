@@ -3,8 +3,7 @@
    mirror-B: D5/B/S3/Analytic/ZetaCompletionFlow/SimpleZeroMemoryShift
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Construct the locally unique simple-zero branch and its quadratic
-     memory-shift expansion. -/
+   digest: Construct the locally unique simple-zero branch and its quadratic memory-shift expansion. -/
 
 import Mathlib.Analysis.Analytic.Order
 import Mathlib.Analysis.Asymptotics.Lemmas
