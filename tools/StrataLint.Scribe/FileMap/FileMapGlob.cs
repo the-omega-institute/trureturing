@@ -39,6 +39,21 @@ internal sealed class FileMapGlob
             throw new FileMapPatternException(pattern);
         }
 
+        return Compile(pattern);
+    }
+
+    internal static FileMapGlob CreateForAdmissionPlane(string pattern)
+    {
+        if (pattern.Contains('?'))
+        {
+            throw new FileMapPatternException(pattern);
+        }
+
+        return Compile(pattern);
+    }
+
+    private static FileMapGlob Compile(string pattern)
+    {
         var expression = new StringBuilder("\\A");
         for (var index = 0; index < pattern.Length; index++)
         {

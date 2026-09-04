@@ -50,12 +50,15 @@ public sealed partial class ProductionEnvironmentTests
         var outcome = CheckWithReports(environment, fixture);
 
         var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
-        Assert.Contains(
+        var diagnostic = Assert.Single(
             rejected.Diagnostics,
-            static diagnostic => diagnostic.AdmissionEffect is AdmissionEffect.Block
-                && diagnostic.Message.Contains(
-                    "ADMISSION-PLANE-MIXED",
-                    StringComparison.Ordinal));
+            static item => item.Message.Contains(
+                "ADMISSION-PLANE-MIXED",
+                StringComparison.Ordinal));
+        Assert.Equal(RuleId.CreateKnown(29), diagnostic.RuleId);
+        Assert.Equal("Admission plane partition", diagnostic.Title);
+        Assert.Equal(DisplaySeverity.Error, diagnostic.DisplaySeverity);
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
     }
 
     [Fact]
@@ -111,6 +114,78 @@ public sealed partial class ProductionEnvironmentTests
             "docs/change.md");
 
         Assert.Null(outcome);
+        Assert.False(usedBootstrap);
+    }
+
+    [Fact]
+    public void RealGitCopyClassifiesOnlyAddedDestination()
+    {
+        using var repository = new TemporaryDirectory();
+        ReviewRegressionTests.RunGit(repository.Path, "init");
+        ReviewRegressionTests.RunGit(
+            repository.Path,
+            "config",
+            "user.email",
+            "stratalint@example.invalid");
+        ReviewRegressionTests.RunGit(
+            repository.Path,
+            "config",
+            "user.name",
+            "StrataLint Tests");
+        var sourcePath = Path.Combine(repository.Path, "judge", "source.txt");
+        var destinationPath = Path.Combine(repository.Path, "content", "copy.txt");
+        var fileMapPath = Path.Combine(repository.Path, FileMapPath);
+        Directory.CreateDirectory(Path.GetDirectoryName(sourcePath)!);
+        Directory.CreateDirectory(Path.GetDirectoryName(destinationPath)!);
+        Directory.CreateDirectory(Path.GetDirectoryName(fileMapPath)!);
+        File.WriteAllText(sourcePath, "copy source\n", new UTF8Encoding(false));
+        File.WriteAllText(
+            fileMapPath,
+            Manifest(("content/**", "content"), ("judge/**", "judge")),
+            new UTF8Encoding(false));
+        ReviewRegressionTests.RunGit(repository.Path, "add", ".");
+        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "baseline");
+        var baseline = ReviewRegressionTests.RunGit(
+            repository.Path,
+            "rev-parse",
+            "HEAD").Trim();
+        File.Copy(sourcePath, destinationPath);
+        ReviewRegressionTests.RunGit(repository.Path, "add", ".");
+        ReviewRegressionTests.RunGit(repository.Path, "commit", "-m", "candidate");
+        var gateway = new GitRepositoryGateway(repository.Path);
+
+        var prepared = gateway.Prepare(baseline);
+        var outcome = ProductionCliEnvironment.EvaluateAdmissionPlane(
+            gateway.ReadRevision(baseline),
+            prepared.Changes,
+            out var usedBootstrap);
+
+        Assert.Contains(prepared.Changes.Entries, change =>
+            change.Path.Value == "judge/source.txt" && change.Kind == RawChangeKind.Copied);
+        Assert.Contains(prepared.Changes.Entries, change =>
+            change.Path.Value == "content/copy.txt" && change.Kind == RawChangeKind.Added);
+        Assert.Null(outcome);
+        Assert.False(usedBootstrap);
+    }
+
+    [Fact]
+    public void RenameDeleteAndAddSidesBothParticipateInClassification()
+    {
+        var changes = RawChangeSet.CreateWithKinds(
+        [
+            ("judge/source.txt", RawChangeKind.Deleted),
+            ("content/destination.txt", RawChangeKind.Added),
+        ]);
+
+        var outcome = ProductionCliEnvironment.EvaluateAdmissionPlane(
+            AdmissionPlaneSnapshot(Encoding.UTF8.GetBytes(
+                Manifest(("content/**", "content"), ("judge/**", "judge")))),
+            changes,
+            out var usedBootstrap);
+
+        var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
+        Assert.Contains(rejected.Diagnostics, static item =>
+            item.Message.Contains("ADMISSION-PLANE-MIXED", StringComparison.Ordinal));
         Assert.False(usedBootstrap);
     }
 
@@ -227,17 +302,39 @@ public sealed partial class ProductionEnvironmentTests
     }
 
     [Fact]
-    public void InvalidFileMapSchemaDuringRepairFailsClosed()
+    public void RepairWithClassifiableLegacySchemaUsesProtectedBasePolicy()
     {
-        var invalid = Manifest((CiPath, "judge"), (FileMapPath, "judge")).Replace(
-            "schema_version = 2",
-            "schema_version = 1",
-            StringComparison.Ordinal);
+        var legacy = $"""
+            schema_version = 1
+            legacy_metadata = "ignored by admission-plane classification"
 
-        var outcome = EvaluateAdmissionPlane(invalid, out var usedBootstrap, FileMapPath);
+            [[files]]
+            pattern = "{CiPath}"
+            admission_plane = "judge"
 
-        var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
-        Assert.Contains("schema_version must be 2", failure.Message, StringComparison.Ordinal);
+            [[files]]
+            pattern = "{FileMapPath}"
+            admission_plane = "judge"
+            """;
+
+        var outcome = EvaluateAdmissionPlane(legacy, out var usedBootstrap, FileMapPath);
+
+        Assert.Null(outcome);
+        Assert.False(usedBootstrap);
+    }
+
+    [Fact]
+    public void ClassifiableLegacyFileMapIgnoresNonCoreFormattingAndFields()
+    {
+        var legacy = "schema_version = 1\r\n"
+            + "legacy_metadata = true\r\n"
+            + "[[files]]\r\n"
+            + "pattern = \"docs/**\"\r\n"
+            + "admission_plane = \"content\"";
+
+        var outcome = EvaluateAdmissionPlane(legacy, out var usedBootstrap, "docs/change.md");
+
+        Assert.Null(outcome);
         Assert.False(usedBootstrap);
     }
 
@@ -293,6 +390,20 @@ public sealed partial class ProductionEnvironmentTests
 
         Assert.Null(outcome);
         Assert.True(usedBootstrap);
+    }
+
+    [Fact]
+    public void MalformedBaseFileMapDoesNotBootstrapWhenRepairDeltaContainsNonReservedPath()
+    {
+        var outcome = EvaluateAdmissionPlane(
+            "files = [\n",
+            out var usedBootstrap,
+            FileMapPath,
+            "docs/change.md");
+
+        var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
+        Assert.Contains("protected-base FILEMAP cannot be parsed", failure.Message, StringComparison.Ordinal);
+        Assert.False(usedBootstrap);
     }
 
     [Fact]

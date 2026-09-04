@@ -8,6 +8,16 @@ internal sealed partial class ProductionCliEnvironment
 {
     private static readonly string[] AdmissionPlaneRepairPaths =
         [".github/workflows/ci.yml", FileMapLoader.RelativePath];
+    // This gate runs before canonical FILEMAP validation so a malformed FILEMAP can repair
+    // itself. Registering a post-canonical NoFindings stand-in would misstate enforcement.
+    private static readonly RuleDescriptor AdmissionPlaneRule = new(
+        RuleId.CreateKnown(29),
+        "Admission plane partition",
+        DisplaySeverity.Error,
+        "repository",
+        AdmissionEffect.Block,
+        RuleLifecycle.Active,
+        null);
 
     internal static AdmissionOutcome? EvaluateAdmissionPlane(
         RawRepositorySnapshot protectedBase,
@@ -17,12 +27,13 @@ internal sealed partial class ProductionCliEnvironment
         ArgumentNullException.ThrowIfNull(protectedBase);
         ArgumentNullException.ThrowIfNull(changes);
         usedBootstrap = false;
-        if (changes.Paths.IsEmpty)
+        var changedPaths = AdmissionPlaneChangedPaths(changes);
+        if (changedPaths.IsEmpty)
         {
             return null;
         }
 
-        var isRepair = changes.Paths.All(path =>
+        var isRepair = changedPaths.All(path =>
             AdmissionPlaneRepairPaths.Contains(path.Value, StringComparer.Ordinal));
         var fileMap = protectedBase.Entries.FirstOrDefault(
             static entry => entry.Path == FileMapLoader.RelativePath);
@@ -34,10 +45,10 @@ internal sealed partial class ProductionCliEnvironment
                 : Failure("protected-base FILEMAP is unavailable outside the repair boundary");
         }
 
-        FileMapManifest manifest;
+        AdmissionPlaneFileMap manifest;
         try
         {
-            manifest = FileMapLoader.Parse(
+            manifest = AdmissionPlaneFileMapLoader.Parse(
                 fileMap.Bytes.AsSpan(),
                 $"protected-base:{FileMapLoader.RelativePath}");
         }
@@ -59,7 +70,7 @@ internal sealed partial class ProductionCliEnvironment
 
         var hasJudgePath = false;
         var hasContentPath = false;
-        foreach (var path in changes.Paths)
+        foreach (var path in changedPaths)
         {
             var matches = manifest.Match(path.Value);
             if (matches is not [var match])
@@ -85,14 +96,28 @@ internal sealed partial class ProductionCliEnvironment
 
         return hasJudgePath && hasContentPath
             ? new AdmissionOutcome.RuleRejected(ImmutableArray.Create(new Diagnostic(
-                RuleId.CreateKnown(1),
-                "Admission plane partition",
-                DisplaySeverity.Error,
-                AdmissionEffect.Block,
+                AdmissionPlaneRule.Id,
+                AdmissionPlaneRule.Title,
+                AdmissionPlaneRule.DisplaySeverity,
+                AdmissionPlaneRule.AdmissionEffect,
                 FileMapLoader.RelativePath,
                 "ADMISSION-PLANE-MIXED: judge and content paths cannot be submitted together")))
             : null;
     }
+
+    private static ImmutableArray<RepoPath> AdmissionPlaneChangedPaths(RawChangeSet changes) =>
+        changes.Entries
+            .Where(static change => change.Kind switch
+            {
+                RawChangeKind.Added => true,
+                RawChangeKind.Modified => true,
+                RawChangeKind.Deleted => true,
+                RawChangeKind.Copied => false,
+                _ => throw new InvalidOperationException(
+                    $"unsupported raw change kind: {change.Kind}"),
+            })
+            .Select(static change => change.Path)
+            .ToImmutableArray();
 
     private static AdmissionOutcome.InfrastructureFailure Failure(string message) => new(message);
 

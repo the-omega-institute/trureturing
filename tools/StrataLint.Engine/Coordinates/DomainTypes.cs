@@ -96,7 +96,7 @@ public sealed record RuleId
                 CultureInfo.InvariantCulture,
                 out var number)
             && (number is >= 0 and <= 23 && number != 5
-                || number is 25 or 26 or 28))
+                || number is 25 or 26 or 28 or 29))
         {
             ruleId = new RuleId(value);
             return true;
