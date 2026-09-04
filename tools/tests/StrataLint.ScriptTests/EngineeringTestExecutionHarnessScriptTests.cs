@@ -52,16 +52,74 @@ public sealed class EngineeringTestExecutionHarnessScriptTests
     public void MissingObservationLibraryEmitsUnavailableAndPreservesMakeExitCode()
     {
         if (OperatingSystem.IsWindows()) return;
-        using var run = RunHarness(new HarnessScenario(
-            MakeExitCode: 23,
-            ObservationLibraryAvailable: false));
+        AssertUnavailableAndPreservesMakeExitCodes(
+            ObservationLibraryState.Missing,
+            "missing");
+    }
 
-        Assert.Equal(23, run.Process.ExitCode);
-        Assert.Contains(
-            "RESOURCE_OBSERVATION_LOADER status=UNAVAILABLE reason=missing exit=0",
-            run.StandardOutput,
-            StringComparison.Ordinal);
-        Assert.Single(run.MakeArguments, "engineering-tests");
+    [Fact]
+    public void NotRegularObservationLibraryEmitsUnavailableAndPreservesMakeExitCode()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        AssertUnavailableAndPreservesMakeExitCodes(
+            ObservationLibraryState.NotRegular,
+            "not-regular");
+    }
+
+    [Fact]
+    public void UnreadableObservationLibraryEmitsUnavailableAndPreservesMakeExitCode()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        AssertUnavailableAndPreservesMakeExitCodes(
+            ObservationLibraryState.Unreadable,
+            "unreadable");
+    }
+
+    [Fact]
+    public void SyntaxInvalidObservationLibraryEmitsUnavailableAndPreservesMakeExitCode()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        AssertUnavailableAndPreservesMakeExitCodes(
+            ObservationLibraryState.SyntaxInvalid,
+            "syntax-error");
+    }
+
+    [Fact]
+    public void SourceNonzeroObservationLibraryEmitsUnavailableAndPreservesMakeExitCode()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        AssertUnavailableAndPreservesMakeExitCodes(
+            ObservationLibraryState.SourceNonzero,
+            "source-nonzero");
+    }
+
+    [Fact]
+    public void EntrypointMissingObservationLibraryEmitsUnavailableAndPreservesMakeExitCode()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        AssertUnavailableAndPreservesMakeExitCodes(
+            ObservationLibraryState.EntrypointMissing,
+            "entrypoint-missing");
+    }
+
+    [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
+    private static void AssertUnavailableAndPreservesMakeExitCodes(
+        ObservationLibraryState observationLibraryState,
+        string expectedReason)
+    {
+        foreach (var makeExitCode in new[] { 7, 0 })
+        {
+            using var run = RunHarness(new HarnessScenario(
+                MakeExitCode: makeExitCode,
+                ObservationLibraryState: observationLibraryState));
+
+            Assert.True(run.Process.ExitCode == makeExitCode, run.Diagnostics);
+            Assert.Contains(
+                $"RESOURCE_OBSERVATION_LOADER status=UNAVAILABLE reason={expectedReason}",
+                run.StandardOutput,
+                StringComparison.Ordinal);
+            Assert.Single(run.MakeArguments, "engineering-tests");
+        }
     }
 
     [Fact]
@@ -109,17 +167,33 @@ public sealed class EngineeringTestExecutionHarnessScriptTests
             fi
             exit "${MAKE_EXIT_CODE:?}"
             """);
-        if (scenario.ObservationLibraryAvailable)
+        var observationLibrary = Path.Combine(
+            toolsDirectory,
+            "scripts",
+            "lib",
+            "resource-observation-lib.sh");
+        if (scenario.ObservationLibraryState == ObservationLibraryState.NotRegular)
         {
-            var observationLibrary = Path.Combine(
-                toolsDirectory,
-                "scripts",
-                "lib",
-                "resource-observation-lib.sh");
+            ScriptHarnessScratch.EnsureDirectory(observationLibrary);
+        }
+        else if (scenario.ObservationLibraryState != ObservationLibraryState.Missing)
+        {
             ScriptHarnessScratch.EnsureDirectory(Path.GetDirectoryName(observationLibrary)!);
             ScriptHarnessScratch.WriteScratchText(
                 observationLibrary,
-                "resource_observe_run_periodic() { \"$@\"; }\n");
+                scenario.ObservationLibraryState switch
+                {
+                    ObservationLibraryState.Available =>
+                        "resource_observe_run_periodic() { \"$@\"; }\n",
+                    ObservationLibraryState.Unreadable =>
+                        "resource_observe_run_periodic() { \"$@\"; }\n",
+                    ObservationLibraryState.SyntaxInvalid =>
+                        "resource_observe_run_periodic() {\n",
+                    ObservationLibraryState.SourceNonzero => "return 41\n",
+                    ObservationLibraryState.EntrypointMissing => ":\n",
+                    _ => throw new InvalidOperationException(
+                        $"Unsupported observation library state: {scenario.ObservationLibraryState}"),
+                });
         }
 
         RunGit(candidateRoot, "init", "--quiet");
@@ -136,6 +210,10 @@ public sealed class EngineeringTestExecutionHarnessScriptTests
                 "candidate change\n");
             RunGit(candidateRoot, "add", ".");
             RunGit(candidateRoot, "commit", "--quiet", "-m", "candidate");
+        }
+        if (scenario.ObservationLibraryState == ObservationLibraryState.Unreadable)
+        {
+            File.SetUnixFileMode(observationLibrary, UnixFileMode.None);
         }
 
         var repository = GitText(candidateRoot, "rev-parse", "--show-toplevel");
@@ -224,8 +302,19 @@ public sealed class EngineeringTestExecutionHarnessScriptTests
     private sealed record HarnessScenario(
         int MakeExitCode = 0,
         string? Full = null,
-        bool ObservationLibraryAvailable = true,
+        ObservationLibraryState ObservationLibraryState = ObservationLibraryState.Available,
         bool HeadHasFirstParent = true);
+
+    private enum ObservationLibraryState
+    {
+        Available,
+        Missing,
+        NotRegular,
+        Unreadable,
+        SyntaxInvalid,
+        SourceNonzero,
+        EntrypointMissing,
+    }
 
     private sealed record HarnessRun(
         TemporaryDirectory Temporary,

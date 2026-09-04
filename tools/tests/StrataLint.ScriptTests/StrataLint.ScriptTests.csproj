@@ -26,5 +26,8 @@
     <None Include="../../scripts/workflow/engineering-test-execution-harness.sh"
           Link="engineering-test-execution-harness.sh"
           CopyToOutputDirectory="PreserveNewest" />
+    <None Include="../../scripts/workflow/engineering-base-floor.py"
+          Link="engineering-base-floor.py"
+          CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>
