@@ -51,8 +51,22 @@ internal sealed class ProductionSourceGraph
             .Where(file => !IsScribeSource(file.RelativePath)
                 || file.Text.Contains(HistoricalFreezeMatcherName, StringComparison.Ordinal))
             .ToArray();
-        var sources = selectedFiles
-            .Select(file => (
+
+        return FromSources(
+            selectedFiles.Select(static file => (file.RelativePath, file.Text)),
+            projects);
+    }
+
+    internal static ProductionSourceGraph FromSources(
+        IEnumerable<(string RelativePath, string Text)> sourceFiles) =>
+        FromSources(sourceFiles, []);
+
+    private static ProductionSourceGraph FromSources(
+        IEnumerable<(string RelativePath, string Text)> sourceFiles,
+        IReadOnlyList<ProductionProject> projects)
+    {
+        var sources = sourceFiles
+            .Select(static file => (
                 file.RelativePath,
                 Tree: CSharpSyntaxTree.ParseText(
                     file.Text,
