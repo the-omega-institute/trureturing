@@ -1,4 +1,6 @@
 using System.Diagnostics;
+using System.Security.Cryptography;
+using System.Text;
 using System.Text.Json;
 using StrataLint.EngineeringScope;
 using StrataLint.TestSupport;
@@ -197,6 +199,10 @@ public sealed class EngineeringScopeProgramTests
     {
         var evidence = TemporaryFileSystem.Directory.CreateTempSubdirectory(
             "stratalint-engineering-evidence-").FullName;
+        var projectDirectory = Path.Combine(
+            evidence,
+            Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(ProductTestsProject)))
+                .ToLowerInvariant());
         var original = Environment.GetEnvironmentVariable("ENGINEERING_TRX_DIRECTORY");
         try
         {
@@ -206,7 +212,7 @@ public sealed class EngineeringScopeProgramTests
                 root => WriteSmokeTest(root, "ExportsEvidence", "Assert.True(true);"));
 
             Assert.True(result.ExitCode == 0, result.Diagnostic);
-            Assert.NotEmpty(Directory.GetFiles(evidence, "*.trx", SearchOption.AllDirectories));
+            Assert.NotEmpty(Directory.GetFiles(projectDirectory, "*.trx", SearchOption.TopDirectoryOnly));
         }
         finally
         {
