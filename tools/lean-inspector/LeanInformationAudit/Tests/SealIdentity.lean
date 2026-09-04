@@ -44,4 +44,6 @@ example :
 
 #check idTheorem.__lowers_escape
 
+#print axioms idTheorem.__lowers_escape
+
 end LeanInformationAudit.Tests.SealIdentity

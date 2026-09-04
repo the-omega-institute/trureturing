@@ -1,8 +1,8 @@
 import LeanInformationAudit.SealCommand
 
 /-! T-005: the fst, snd, and combined coordinate kernels are overcomplete.
-The seal reads no JSON: `SealCommand` prepares and kernel-checks declarations
-before its optional output-only write, and never reads that artifact back. -/
+T-015/T-016: the seal reads no JSON. `SealCommand` prepares and kernel-checks
+declarations before its optional output-only write and never reads it back. -/
 
 open D5.S3.ConceptDynamics.InformationEscape
 
