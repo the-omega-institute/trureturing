@@ -238,19 +238,7 @@ internal static class DagLedgerAlignWriter
             .Select(path => replacementByPath[path])
             .ToImmutableArray();
 
-        if (!newEventFiles.IsEmpty || !stateEvents.IsEmpty)
-        {
-            FrozenLedgerPublication.PublishSnapshot(
-                repositoryRoot,
-                ledgerPath,
-                replacementFiles,
-                acceptedFiles,
-                stateEvents,
-                [],
-                "ledger-align");
-        }
-
-        return new CommandResult(
+        var result = new CommandResult(
             true,
             RenderSummary(
                 considered.Length,
@@ -259,6 +247,20 @@ internal static class DagLedgerAlignWriter
                 considered.Length - changedPaths.Count - addedPaths.Count,
                 conflicts: 0),
             string.Empty);
+        if (newEventFiles.IsEmpty && stateEvents.IsEmpty)
+        {
+            return result;
+        }
+
+        FrozenLedgerPublication.PublishSnapshot(
+            repositoryRoot,
+            ledgerPath,
+            replacementFiles,
+            acceptedFiles,
+            stateEvents,
+            [],
+            "ledger-align");
+        return result;
     }
 
     private static void ValidateRequestedPaths(
