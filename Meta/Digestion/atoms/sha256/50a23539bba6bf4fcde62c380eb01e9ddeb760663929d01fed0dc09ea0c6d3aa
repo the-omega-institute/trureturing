@@ -1,0 +1,4 @@
+## 〇　为什么是这一节
+
+W-12 使阿基米德可积性对每个测试函数无条件成立,M2-c 使零点和对每个测试函数对称收敛。于是本仓所有挂在 `hZero`/`hArch` 上的冻结恒等式都可以**去假设化**成关于 `ZeroData` 的无条件公开节点:显式公式本身(W-16),以及 mstudio3 驱动者的素数–阿基米德能量恒等式(W-17)。第三条(W-18)是一个**归约**:当支撑半径 L 满足 exp(2L) < 2 时,活跃素数幂集为空(⌊exp 2L⌋ ≤ 1 而 Λ(1) = 0),W-14 的 Poincaré 不等式退化为只含边界读数与阿基米德跳跃能量的**纯阿基米德不等式** (−archimedeanConstant)·‖f‖² ≤ 2|∫e^{x/2}f|² + archimedeanJumpEnergy f。**诚实边界与归属**:①三条皆相对于 `ZeroData`(M1-b);②W-18 只做归约,**不断言**纯阿基米德不等式无条件成立——该不等式本身(小支撑 Weil 正性)是 ZetaGamma 层他驱动者的活线(`ShiftFiberPoincareInequality`、`ArchimedeanConfinement`),本路线不进入,只把归约后的目标以公开定理形式交出;③不构成 RH 证明。
+
