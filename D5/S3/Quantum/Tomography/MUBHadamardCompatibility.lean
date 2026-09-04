@@ -6,7 +6,6 @@
    digest: Four MUBs in dimension six reduce to a gauge-retaining compatibility problem over exact complex-Hadamard atlases. -/
 
 import D5.S3.Quantum.Tomography.MutuallyUnbiasedDiagonalPlanes
-import Mathlib.Data.Matrix.Notation
 import Mathlib.Tactic.FinCases
 
 /- Library-search audit trail (2026-09-03):
