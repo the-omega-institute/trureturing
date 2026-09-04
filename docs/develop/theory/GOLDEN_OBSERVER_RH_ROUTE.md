@@ -2456,3 +2456,36 @@ $$(2\,\mathrm{totalPrimeWeight}(L) - \mathrm{archimedeanConstant})\,\|f\|_2^2 \;
 一席位轮(codex-cli,独立 worktree,`Separator/` 第八个模块;同 PR deposit(绑 W-14 atom)+ 两条 cover;须在增订二十六的 la155 模块合入后开工以绑定 W-12)。预计 ≤ 45 分钟(探针证明 74 行可复用)。
 
 后续增订继续严格追加于本节之后。
+---
+
+# 增订二十八　无条件显式公式、无条件能量恒等式与小支撑归约(W-16 / W-17 / W-18 预登记)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;探针一席(codex-cli,`probe-w16-unconditional`,`make lean` exit 0、`lake env lean` exit 0,四条声明全为标准三公理)在 `origin/dev` = `f58cfd16a7`(增订二十六之 la155 模块 `Separator/ArchimedeanConvergence` 已合入)的暖树上整证,消费冻结的 W-12 `archimedeanConvergent_of_weilTestFunction`、M2-c `symmetricConvergent_of_zeroData`、`ZetaBridge.ClassicExplicitFormula.weil_explicit_formula`、mstudio3 驱动者的 `ZetaBridge.PrimeArchimedeanEnergyIdentity.prime_archimedean_energy_identity` 与 `ZetaBridge.PrimeJumpDecomposition.{activePrimePowers,totalPrimeWeight,arithmeticJumpEnergy}`,以及 Mathlib `ArithmeticFunction.vonMangoldt_apply_one`、`Nat.floor_lt`、`Finset.eq_empty_of_forall_notMem`。检索留痕:`git grep -n 'activePrimePowers L = ∅\|totalPrimeWeight.*= 0\|explicitFormula_unconditional\|energyIdentity' -- 'D5/**/*.lean'` 无等价公开定理(`energyIdentity` 的 13 处命中皆为 Gramian/观测能量的无关同名)。散文由 orchestrator(claude 主循环)撰写。判决日:2026-09-04。lane issue:#4589。
+
+## 〇　为什么是这一节
+
+W-12 使阿基米德可积性对每个测试函数无条件成立,M2-c 使零点和对每个测试函数对称收敛。于是本仓所有挂在 `hZero`/`hArch` 上的冻结恒等式都可以**去假设化**成关于 `ZeroData` 的无条件公开节点:显式公式本身(W-16),以及 mstudio3 驱动者的素数–阿基米德能量恒等式(W-17)。第三条(W-18)是一个**归约**:当支撑半径 L 满足 exp(2L) < 2 时,活跃素数幂集为空(⌊exp 2L⌋ ≤ 1 而 Λ(1) = 0),W-14 的 Poincaré 不等式退化为只含边界读数与阿基米德跳跃能量的**纯阿基米德不等式** (−archimedeanConstant)·‖f‖² ≤ 2|∫e^{x/2}f|² + archimedeanJumpEnergy f。**诚实边界与归属**:①三条皆相对于 `ZeroData`(M1-b);②W-18 只做归约,**不断言**纯阿基米德不等式无条件成立——该不等式本身(小支撑 Weil 正性)是 ZetaGamma 层他驱动者的活线(`ShiftFiberPoincareInequality`、`ArchimedeanConfinement`),本路线不进入,只把归约后的目标以公开定理形式交出;③不构成 RH 证明。
+
+## 一　W-16 预登记:无条件显式公式(`UnconditionalExplicitFormula`,落 `D5/S3/Weil/Separator/`)
+
+**义务**:公开定理 `explicitFormula_unconditional (Z : ZeroData) (g : WeilTestFunction) : zeroSum Z g (symmetricConvergent_of_zeroData Z g) = poleTerm g - primeTerm g + archimedeanTerm g (archimedeanConvergent_of_weilTestFunction g)`。
+**可证伪预测(写在跑之前)**:冻结 `weil_explicit_formula Z g (symmetricConvergent_of_zeroData Z g) (archimedeanConvergent_of_weilTestFunction g)` 一行;标准三公理。探针已整证。
+**边界**:对一切 `g : WeilTestFunction`,不限卷积平方。
+
+## 二　W-17 预登记:无条件能量恒等式(同模块第二条公开定理)
+
+**义务**:公开定理 `energyIdentity_unconditional (Z : ZeroData) (f : WeilTestFunction) (L : ℝ) (hSupport : tsupport (f : ℝ → ℂ) ⊆ Set.Icc (-L) L) : zeroSum Z (convolutionSquare f) (symmetricConvergent_of_zeroData Z (convolutionSquare f)) = ((2 * Complex.normSq (∫ x : ℝ, Complex.exp ((x : ℂ) / 2) * f x) + archimedeanJumpEnergy f + arithmeticJumpEnergy L f - (2 * totalPrimeWeight L - archimedeanConstant) * l2Mass f : ℝ) : ℂ)`。
+**可证伪预测(写在跑之前)**:冻结 `prime_archimedean_energy_identity Z f L hSupport (symmetricConvergent_of_zeroData …) (archimedeanConvergent_of_weilTestFunction …)` 的第一分量;标准三公理。探针已整证。
+**边界**:同 §〇;能量恒等式属他驱动者冻结节点,只绑定不复证。
+
+## 三　W-18 预登记:小支撑归约(同模块第三条公开定理)
+
+**义务**:公开定理 `smallSupport_poincare_reduction (f : WeilTestFunction) (L : ℝ) (hL : Real.exp (2 * L) < 2) : ((2 * totalPrimeWeight L - archimedeanConstant) * l2Mass f ≤ 2 * Complex.normSq (∫ x : ℝ, Complex.exp ((x : ℂ) / 2) * f x) + archimedeanJumpEnergy f + arithmeticJumpEnergy L f) ↔ (-archimedeanConstant) * l2Mass f ≤ 2 * Complex.normSq (∫ x : ℝ, Complex.exp ((x : ℂ) / 2) * f x) + archimedeanJumpEnergy f`。
+**可证伪预测(写在跑之前)**:辅助公开引理 `activePrimePowers_eq_empty_of_exp_lt_two (L : ℝ) (hL : Real.exp (2 * L) < 2) : activePrimePowers L = ∅`(`Nat.floor_lt` 给 ⌊exp 2L⌋₊ < 2,`Ioc 0 n ⊆ {1}`,`vonMangoldt_apply_one`),随后 `totalPrimeWeight L = 0`、`arithmeticJumpEnergy L f = 0` 由 `Finset.sum_empty`,恒等变形得 iff;标准三公理。探针已整证。辅助引理不另列义务。
+**边界**:阈值 exp(2L) < 2 即 L < (log 2)/2;不断言归约后的不等式成立。
+
+## 四　预算与结算
+
+一席位轮(codex-cli,独立 worktree,`Separator/` 第八个模块;同 PR deposit(绑 W-16 atom)+ 三条 cover)。预计 ≤ 40 分钟(探针证明可复用)。
+
+后续增订继续严格追加于本节之后。
