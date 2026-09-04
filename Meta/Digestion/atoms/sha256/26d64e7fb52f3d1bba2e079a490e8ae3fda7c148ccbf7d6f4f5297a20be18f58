@@ -1,0 +1,27 @@
+## 2.1 横向零相纤维
+
+定义高度 $t$ 上的横向零相集合
+
+$$
+\mathcal P_t
+:=
+\left\{
+\delta\in\left(-\frac12,\frac12\right):
+X(t,\delta)=0
+\right\}.
+\tag{2.1}
+$$
+
+由定理 1.1，
+
+$$
+\boxed{
+\delta\in\mathcal P_t
+\Longleftrightarrow
+-\delta\in\mathcal P_t.
+}
+\tag{2.2}
+$$
+
+所以每一条横向零相纤维都是 $\mathbb Z_2$ 对称的。
+
