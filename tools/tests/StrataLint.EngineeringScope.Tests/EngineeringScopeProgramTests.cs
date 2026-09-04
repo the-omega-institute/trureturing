@@ -15,6 +15,8 @@ public sealed class EngineeringScopeProgramTests
     private const string NewProductProject = "tools/NewProduct/NewProduct.csproj";
     private const string NewProductTestsProject =
         "tools/tests/NewProduct.Tests/NewProduct.Tests.csproj";
+    private const string ScriptTestsProject =
+        "tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj";
 
     [Fact]
     public void CandidateNewTestProjectIsSelectedOnItsIntroducingChange()
@@ -84,6 +86,20 @@ public sealed class EngineeringScopeProgramTests
     }
 
     [Fact]
+    public void FullOverrideSkipsGateDerivationWhenCandidateControllerInputIsMissing()
+    {
+        const string missingRuntimeInput = "tools/scripts/report/report-supervisor.sh";
+        var result = RunBoundary(
+            static _ => { },
+            root => TemporaryFileSystem.File.Delete(Path.Combine(root, missingRuntimeInput)),
+            full: true);
+
+        Assert.True(result.ExitCode == 0, result.Diagnostic);
+        Assert.Contains(ScriptTestsProject, result.SelectedProjects);
+        Assert.Contains("ENGINEERING_TEST_PLAN state=full", result.Output, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void MissingBuildOutputRetriesOnce() =>
         AssertRunTestsScenario(
             "RunsAfterFallback", "Assert.True(true);", prebuild: false, expectedExitCode: 0, expectedRetryCount: 1);
@@ -144,7 +160,8 @@ public sealed class EngineeringScopeProgramTests
     private static BoundaryResult RunBoundary(
         Action<string> writeBase,
         Action<string> writeCandidate,
-        Action<string>? prepareExecution = null)
+        Action<string>? prepareExecution = null,
+        bool full = false)
     {
         var root = TemporaryFileSystem.Directory.CreateTempSubdirectory(
             "stratalint-engineering-scope-").FullName;
@@ -156,6 +173,7 @@ public sealed class EngineeringScopeProgramTests
             RunGit(root, "init", "--quiet");
             RunGit(root, "config", "user.email", "engineering-scope@example.invalid");
             RunGit(root, "config", "user.name", "Engineering Scope Tests");
+            WriteGateInfrastructure(root);
             writeBase(root);
             RunGit(root, "add", ".");
             RunGit(root, "commit", "--quiet", "-m", "base");
@@ -164,7 +182,7 @@ public sealed class EngineeringScopeProgramTests
             RunGit(root, "commit", "--quiet", "-m", "candidate");
             prepareExecution?.Invoke(root);
 
-            Environment.SetEnvironmentVariable("FULL", null);
+            Environment.SetEnvironmentVariable("FULL", full ? "1" : null);
 
             var head = GitText(root, "rev-parse", "HEAD");
             var @base = GitText(root, "rev-parse", "HEAD^1");
@@ -277,6 +295,35 @@ public sealed class EngineeringScopeProgramTests
     {
         WriteProject(root, ProductProject, isTest: false);
         WriteProject(root, ProductTestsProject, isTest: true, ProductProject);
+    }
+
+    private static void WriteGateInfrastructure(string root)
+    {
+        WriteProject(root, ScriptTestsProject, isTest: true);
+        WriteFile(
+            root,
+            "tools/tests/StrataLint.ScriptTests/packages.lock.json",
+            """
+            {
+              "version": 2,
+              "dependencies": {
+                "net10.0": {
+                  "xunit.assert": { "type": "Transitive", "resolved": "2.9.3" },
+                  "xunit.extensibility.core": { "type": "Transitive", "resolved": "2.9.3" }
+                }
+              }
+            }
+
+            """);
+        WriteProject(
+            root,
+            "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+            isTest: false);
+        WriteFile(root, "Directory.Build.props", "<Project />\n");
+        WriteFile(root, "Directory.Packages.props", "<Project />\n");
+        WriteFile(root, "tools/scripts/workflow/pure-revert-detect.sh", "exit 0\n");
+        WriteFile(root, "tools/scripts/workflow/self-lock-probe.sh", "exit 0\n");
+        WriteFile(root, "tools/scripts/report/report-supervisor.sh", "exit 0\n");
     }
 
     private static void WriteFile(string root, string path, string content)
