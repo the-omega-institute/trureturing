@@ -353,7 +353,7 @@ public sealed partial class ProductionEnvironmentTests
         fixture.Baseline[FileMapPath] = manifest;
     }
 
-    private static void InstallDefaultAdmissionPlaneFileMap(RuleFixture fixture)
+    internal static void InstallDefaultAdmissionPlaneFileMap(RuleFixture fixture)
     {
         fixture.Files[FileMapPath] = DefaultAdmissionPlaneFileMap;
         fixture.Baseline[FileMapPath] = DefaultAdmissionPlaneFileMap;
