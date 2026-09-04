@@ -86,6 +86,13 @@ def negativeWittFactors : BivariateSeries :=
     [oneMinusMonomial 2 0, oneMinusMonomial 0 2,
       oneMinusMonomial 3 1, oneMinusMonomial 2 2]
 
+set_option maxHeartbeats 2000000 in
+private theorem degree_five_grid_computation :
+    forall a b : Fin 6, (a : Nat) + (b : Nat) <= 5 ->
+      convolution goldenPrefix positiveWittFactors a b =
+        negativeWittFactors a b := by
+  decide
+
 /-- **Golden cyclotomic table through total degree five.** After clearing the
 positive-exponent Euler factors, the golden word prefix agrees coefficientwise
 with the negative-exponent factors in every bidegree `a + b <= 5`.
@@ -102,10 +109,9 @@ theorem golden_cyclotomic_table_degree_five :
   fail_if_success rfl
   fail_if_success (solve | simp)
   intro a b hab
-  have ha : a <= 5 := by omega
-  have hb : b <= 5 := by omega
-  interval_cases a <;> interval_cases b <;> try omega
-  all_goals native_decide
+  have ha : a < 6 := by omega
+  have hb : b < 6 := by omega
+  exact degree_five_grid_computation ⟨a, ha⟩ ⟨b, hb⟩ hab
 
 #print axioms golden_cyclotomic_table_degree_five
 
