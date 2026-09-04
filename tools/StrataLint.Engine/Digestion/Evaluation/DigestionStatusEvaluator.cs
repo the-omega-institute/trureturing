@@ -288,41 +288,44 @@ internal static partial class DigestionStatusEvaluator
         ImmutableArray<string>.Builder findings)
     {
         var gaps = new List<DigestionGap>();
-        // Scribe retains its existing baseline-only full check. Coverage can trust a committed
-        // receipt outside a nonempty, authoritative git delta even when the
-        // query omitted --base; an empty delta retains the explicit whole-tree diagnostic.
+        // Scribe retains its existing baseline-only full check. Coverage edges are always
+        // judged against the current report and frozen statement index below.
         var verificationChanges = baselineEntryPresent ? changes : null;
-        var canReuseCoverageWithoutBaseline = changes is not null
-            && changes.Paths.Any()
-            && !DigestionCasStore.EntryChanged(entry, changes);
-        var coverageVerificationChanges = !baselineEntryPresent
-            && canReuseCoverageWithoutBaseline
-                ? changes
-                : verificationChanges;
         var structured = VerifyStructuredAlignment(entry, alignment, gaps, findings);
         var targetStates = new List<(string Gid, TruthState State)>();
-        var existingTargets = new Dictionary<string, RepositoryFile>(StringComparer.Ordinal);
+        var edgeValidations = new Dictionary<string, CurrentEdgeValidation>(StringComparer.Ordinal);
         foreach (var gidText in entry.CoverageGids.Distinct(StringComparer.Ordinal))
         {
-            if (!Gid.TryParse(gidText, out var gid)
-                || !snapshot.TryGetFile(gid.Path.Value, out var target))
+            CurrentEdgeValidation edge;
+            try
             {
-                gaps.Add(new DigestionGap(
-                    "target-gid-missing",
+                edge = CurrentEdgeValidator.Validate(
                     gidText,
-                    DigestionGapSeverity.NonFatal));
-                continue;
+                    snapshot,
+                    leanReport,
+                    states,
+                    frozenStatements.Value);
             }
-
-            if (!DeclarationExists(gid, leanReport, gaps))
+            catch (Exception exception) when (exception is FormatException or InvalidOperationException)
             {
+                edge = new CurrentEdgeValidation(
+                    false,
+                    false,
+                    null,
+                    null,
+                    TruthState.Semantic,
+                    "target-statement-unresolved",
+                    gidText,
+                    $"current edge GID {gidText} has no readable frozen statement index: {exception.Message}");
+            }
+            edgeValidations.Add(gidText, edge);
+            if (!edge.IsResolved)
+            {
+                gaps.Add(edge.ResolutionGap!);
                 continue;
             }
 
-            existingTargets.Add(gidText, target);
-            targetStates.Add((
-                gidText,
-                states.TryGetValue(target.Path, out var state) ? state : TruthState.Semantic));
+            targetStates.Add((gidText, edge.State));
         }
 
         if (entry.CoverageGids.Length == 0)
@@ -333,11 +336,9 @@ internal static partial class DigestionStatusEvaluator
                 DigestionGapSeverity.NonFatal));
         }
 
-        var coverage = VerifyCoverageReceipts(
+        var coverage = VerifyCoverageEdges(
             entry,
-            existingTargets,
-            frozenStatements,
-            coverageVerificationChanges,
+            edgeValidations,
             gaps,
             findings);
         var scribe = VerifyScribeReceipts(
@@ -376,14 +377,17 @@ internal static partial class DigestionStatusEvaluator
             && !authorityChanged;
         var localComplete = !baselineKeepsLocalIncomplete
             && structured
-            && existingTargets.Count == entry.CoverageGids.Distinct(StringComparer.Ordinal).Count()
+            && edgeValidations.Values.Count(static edge => edge.IsResolved)
+                == entry.CoverageGids.Distinct(StringComparer.Ordinal).Count()
             && entry.CoverageGids.Length > 0
             && coverage
             && scribe
             && entry.Receipts.UnresolvedSubitems.Length == 0;
-        var hasProgress = existingTargets.Count > 0
-            || entry.Receipts.Coverage.Length > 0
+        var hasProgress = edgeValidations.Values.Any(static edge => edge.IsResolved)
+            || entry.Coverage.Length > 0
             || entry.Receipts.Scribe.Length > 0;
+        var hasUnresolvedCoverageTarget = edgeValidations.Values.Any(static edge => !edge.IsResolved)
+            || entry.Coverage.Any(static edge => edge.TargetStatementId is null);
         return new EntryWork(
             entry,
             alignment,
@@ -392,6 +396,7 @@ internal static partial class DigestionStatusEvaluator
             targetStates,
             localComplete,
             hasProgress,
+            hasUnresolvedCoverageTarget,
             authorityChanged);
     }
 
@@ -515,42 +520,6 @@ internal static partial class DigestionStatusEvaluator
         return changedAtomIds.ToImmutableHashSet(StringComparer.Ordinal);
     }
 
-    private static bool DeclarationExists(
-        Gid gid,
-        LeanAxiomReport leanReport,
-        ICollection<DigestionGap> gaps)
-    {
-        if (gid.ToTarget() is not Target.Formal { Declaration: { } declaration } formal)
-        {
-            return true;
-        }
-
-        if (!leanReport.Files.TryGetValue(formal.Path, out var module)
-            || !string.IsNullOrEmpty(module.Error))
-        {
-            gaps.Add(new DigestionGap(
-                "target-declaration-missing",
-                gid.Value,
-                DigestionGapSeverity.NonFatal));
-            return false;
-        }
-
-        var suffix = "." + declaration;
-        var matches = module.Declarations.Count(candidate =>
-            string.Equals(candidate.Name, declaration, StringComparison.Ordinal)
-            || candidate.Name.EndsWith(suffix, StringComparison.Ordinal));
-        if (matches == 1)
-        {
-            return true;
-        }
-
-        gaps.Add(new DigestionGap(
-            matches == 0 ? "target-declaration-missing" : "target-declaration-ambiguous",
-            gid.Value,
-            DigestionGapSeverity.NonFatal));
-        return false;
-    }
-
     private static Dictionary<string, T> UniqueByGid<T>(
         string label,
         IEnumerable<T> values,
@@ -621,7 +590,8 @@ internal static partial class DigestionStatusEvaluator
         RepositorySnapshot snapshot,
         RawChangeSet? changes)
     {
-        if (item.TargetStates.Count == 0
+        if (item.HasUnresolvedCoverageTarget
+            || item.TargetStates.Count == 0
             || item.TargetStates.Any(static target => target.State is TruthState.Open or TruthState.Semantic))
         {
             foreach (var target in item.TargetStates.Where(static target =>
@@ -684,6 +654,7 @@ internal static partial class DigestionStatusEvaluator
         List<(string Gid, TruthState State)> targetStates,
         bool localComplete,
         bool hasProgress,
+        bool hasUnresolvedCoverageTarget,
         bool statusAuthorityChanged)
     {
         internal DigestionLedgerEntry Entry { get; } = entry;
@@ -699,6 +670,8 @@ internal static partial class DigestionStatusEvaluator
         internal bool LocalComplete { get; } = localComplete;
 
         internal bool HasProgress { get; } = hasProgress;
+
+        internal bool HasUnresolvedCoverageTarget { get; } = hasUnresolvedCoverageTarget;
 
         internal bool StatusAuthorityChanged { get; } = statusAuthorityChanged;
 

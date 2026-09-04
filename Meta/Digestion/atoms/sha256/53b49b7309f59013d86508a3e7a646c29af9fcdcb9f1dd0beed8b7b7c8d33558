@@ -1,0 +1,80 @@
+## 373. 零点附近的 parity singularity
+
+将 \(Z_{\mathrm e},Z_{\mathrm o}\) 亚纯延拓。
+
+设：
+
+$$
+\zeta(\rho)=0
+$$
+
+是简单零点，并且：
+
+$$
+\zeta(2\rho)\neq0.
+$$
+
+则：
+
+$$
+\zeta(s)
+=
+\zeta'(\rho)(s-\rho)+O((s-\rho)^2),
+$$
+
+所以：
+
+$$
+\frac{\zeta(2s)}{\zeta(s)}
+\sim
+\frac{\zeta(2\rho)}
+{\zeta'(\rho)}
+\frac1{s-\rho}.
+$$
+
+于是：
+
+$$
+\boxed{
+Z_{\mathrm e}(s)
+\sim
++
+\frac{\zeta(2\rho)}
+{2\zeta'(\rho)}
+\frac1{s-\rho},
+}
+$$
+
+$$
+\boxed{
+Z_{\mathrm o}(s)
+\sim
+-
+\frac{\zeta(2\rho)}
+{2\zeta'(\rho)}
+\frac1{s-\rho}.
+}
+$$
+
+两个 parity sector 分别发散，但具有完全相反的主部。
+
+它们相加时：
+
+$$
+Z_{\mathrm e}+Z_{\mathrm o}
+=
+\zeta(s)
+$$
+
+反而在该点为零。
+
+所以：
+
+$$
+\boxed{
+\text{ζ 零点是两个宇称 sector 的无穷反相位抵消点。}
+}
+$$
+
+---
+

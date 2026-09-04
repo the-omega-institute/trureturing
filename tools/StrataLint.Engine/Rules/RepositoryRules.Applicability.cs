@@ -14,19 +14,6 @@ internal static partial class RepositoryRules
         artifact.Path.Value.StartsWith("D5/", StringComparison.Ordinal)
         && artifact.Path.Value.EndsWith(".lean", StringComparison.Ordinal);
 
-    private static bool ChronicleScoped(RepositoryFile artifact, RuleApplicabilityContext context) =>
-        artifact.Path.Value.StartsWith("Chronicle/", StringComparison.Ordinal);
-
-    private static bool TheoryVolumeScoped(RepositoryFile artifact, RuleApplicabilityContext context) =>
-        IsTheoryVolumePath(artifact.Path.Value);
-
-    private static bool FormalizationReceiptScoped(
-        RepositoryFile artifact,
-        RuleApplicabilityContext context) =>
-        artifact.Path.Value.StartsWith(
-            DigestionFormalizationReceipt.RootPath,
-            StringComparison.Ordinal);
-
     private static bool StatusScoped(RepositoryFile artifact, RuleApplicabilityContext context) =>
         IsStatusScope(artifact.Path.Value);
 
@@ -81,7 +68,7 @@ internal static partial class RepositoryRules
         artifact.Path.Value.EndsWith(".json", StringComparison.Ordinal)
         || artifact.Path.Value.EndsWith(".yaml", StringComparison.Ordinal)
         || artifact.Path.Value.EndsWith(".yml", StringComparison.Ordinal)
-        || ChronicleScoped(artifact, context);
+        || artifact.Path.Value.StartsWith("Chronicle/", StringComparison.Ordinal);
 
     private static bool InstantiationScoped(
         RepositoryFile artifact,

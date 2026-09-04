@@ -1,0 +1,49 @@
+## 94. \(2\) 与 \(5\) 是两种不同障碍
+
+黄金 Galois involution：
+
+$$
+\sigma(\varphi)=\psi
+$$
+
+的偶、奇投影为：
+
+$$
+e_+=\frac{1+\sigma}{2},
+\qquad
+e_-=\frac{1-\sigma}{2}.
+$$
+
+它们需要除以 \(2\)。
+
+因此：
+
+$$
+\boxed{
+2=\text{奇偶角色分解的积分分母}.
+}
+$$
+
+而 trace duality 的判别式为：
+
+$$
+\boxed{
+5=\text{黄金格自对偶的算术障碍}.
+}
+$$
+
+所以有一个双重障碍：
+
+$$
+\boxed{
+\begin{aligned}
+2&:\text{parity splitting obstruction};\\
+5&:\text{golden ramification / duality obstruction}.
+\end{aligned}
+}
+$$
+
+这两个数不能混为一谈。
+
+---
+

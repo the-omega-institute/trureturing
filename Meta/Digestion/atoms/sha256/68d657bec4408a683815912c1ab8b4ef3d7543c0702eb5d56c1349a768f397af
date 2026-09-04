@@ -1,0 +1,48 @@
+## 297. Casimir power traces
+
+定义：
+
+$$
+x_j=\frac1{4q_j}.
+$$
+
+对 \(n\ge1\)，定义：
+
+$$
+\boxed{
+p_n
+=
+\sum_jm_jx_j^n.
+}
+$$
+
+由 canonical product：
+
+$$
+\log\frac{\mathcal X(q)}{\mathcal X(0)}
+=
+-\sum_{n\ge1}
+\frac{(4q)^n}{n}p_n.
+$$
+
+因此：
+
+$$
+\boxed{
+p_n
+=
+-\frac1{4^n(n-1)!}
+\left.
+\frac{d^n}{dq^n}
+\log\mathcal X(q)
+\right|_{q=0}.
+}
+$$
+
+这是重要的一步：
+
+> \(p_n\) 可以从 \(\xi\) 在固定点附近的 Taylor 数据直接定义，
+> 不需要先枚举零点。
+
+---
+

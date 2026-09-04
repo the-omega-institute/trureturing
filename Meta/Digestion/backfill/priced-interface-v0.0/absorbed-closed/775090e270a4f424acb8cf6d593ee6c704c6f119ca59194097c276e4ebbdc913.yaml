@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:775090e270a4f424acb8cf6d593ee6c704c6f119ca59194097c276e4ebbdc913
+  normalized_sha256: sha256:775090e270a4f424acb8cf6d593ee6c704c6f119ca59194097c276e4ebbdc913
+cas_ref: sha256:775090e270a4f424acb8cf6d593ee6c704c6f119ca59194097c276e4ebbdc913
+coverage_gids:
+  - gid: D5/S3/Observer/VisibleDescent/CanonicalVerdictReduction.canonical_verdict_reduction
+    target_statement_id: sha256:bf6c675132c1b13c2b21db86eac5ba657e928aad175b55276898071a797ff3e4
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/VisibleDescent/CanonicalVerdictReduction.canonical_verdict_reduction
+      definition_sha256: sha256:90ba0186e5941a62930a3eeb3558d3f5ccbcb9e2e2aa612cf87dc9405802927a
+      emission_sha256: sha256:8222fca0bd0555e9caf991e07f990265084644d1ef5a0a37e5e4c7448f93f110
+  unresolved_subitems: []

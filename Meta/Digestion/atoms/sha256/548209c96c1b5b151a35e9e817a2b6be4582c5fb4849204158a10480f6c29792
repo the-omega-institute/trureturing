@@ -1,0 +1,53 @@
+## 125. 局部 cumulant 与奇异级数的区别
+
+奇异级数局部因子只读取 all-survival event：
+
+$$
+\mathbb P(X_1=\cdots=X_k=1).
+$$
+
+而 \(K_{p,H}(\mathbf u)\) 读取所有局部 cumulants。
+
+所以：
+
+$$
+\boxed{
+L_p(H)
+=
+\text{局部 cumulant field 的一个极端边界读数},
+}
+$$
+
+不是完整局部场本身。
+
+更完整的局部对象应是：
+
+$$
+\mathscr K_p(H)
+=
+\left\{
+\kappa_{p,A}:A\subseteq H
+\right\}.
+$$
+
+全局构型状态则是：
+
+$$
+\boxed{
+\mathscr K(H)
+=
+\bigotimes_p
+\mathscr K_p(H).
+}
+$$
+
+这比单个：
+
+$$
+\mathfrak S(H)
+$$
+
+保留更多信息。
+
+---
+

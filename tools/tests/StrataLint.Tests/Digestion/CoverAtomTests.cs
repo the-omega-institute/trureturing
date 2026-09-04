@@ -6,12 +6,10 @@ using StrataLint.Engine;
 namespace StrataLint.Tests;
 
 // Phase 1 cover transaction gate matrix. cover binds one already-proven Lean
-// declaration to an existing open residual atom by writing coverage_gids +
-// coverage/scribe receipts, all-or-nothing. Precondition and integrity rejects
+// declaration to an existing open residual atom by writing a coverage edge plus
+// its Scribe receipt, all-or-nothing. Precondition and integrity rejects
 // leave the ledger unchanged; a terminal initial-cover failure writes only its
-// disposition. The envelope / pre-committed-receipt /
-// declaration-signature gates (spec §11.21) live in the CoverAtomEnvelopeTests.cs
-// partial (kept there so this file stays under the SL-003 800-line cap).
+// disposition.
 public sealed partial class CoverAtomTests
 {
     [Fact]
@@ -29,7 +27,7 @@ public sealed partial class CoverAtomTests
             afterDocument.RequireDigestionEntries(),
             candidate => candidate.AtomId == CoverWorld.DefaultAtomId);
         Assert.Equal(["D5/S0/Carrier/Probe.probe"], entry.CoverageGids.ToArray());
-        Assert.Single(entry.Receipts.Coverage);
+        Assert.Single(entry.Coverage);
         Assert.Single(entry.Receipts.Scribe);
         Assert.Equal(DigestionMigrationState.Absorbed, entry.ProjectedStatus.Migration);
         Assert.Equal(DigestionTruthState.Closed, entry.ProjectedStatus.Truth);
@@ -66,11 +64,9 @@ public sealed partial class CoverAtomTests
     public void CoverRejectsAtomAbsentFromLedger()
     {
         var spec = new CoverSpec();
-        var envelopePath = "Meta/Digestion/formalizations/" + spec.AtomId + ".v1.json";
         var (result, after, before, _) = Execute(
             spec,
-            ["--cover-atom", "no-such-atom", "--gid", spec.Gid, "--base", "baseline",
-                "--envelope", envelopePath]);
+            ["--cover-atom", "no-such-atom", "--gid", spec.Gid, "--base", "baseline"]);
 
         Assert.False(result.Success);
         Assert.Contains("is absent", result.Error, StringComparison.Ordinal);
@@ -106,7 +102,7 @@ public sealed partial class CoverAtomTests
             execution.AfterDocument.RequireDigestionEntries(),
             candidate => candidate.AtomId == CoverWorld.DefaultAtomId);
         Assert.Equal(["D5/S0/Carrier/Probe.probe"], entry.CoverageGids.ToArray());
-        Assert.Single(entry.Receipts.Coverage);
+        Assert.Single(entry.Coverage);
         Assert.Single(entry.Receipts.Scribe);
     }
 
@@ -120,7 +116,7 @@ public sealed partial class CoverAtomTests
 
         Assert.False(result.Success);
         Assert.Contains("resolves to 0 report declarations", result.Error, StringComparison.Ordinal);
-        Assert.DoesNotContain("coverage-receipt-mismatch", result.Error, StringComparison.Ordinal);
+        Assert.DoesNotContain("coverage-target-mismatch", result.Error, StringComparison.Ordinal);
         Assert.DoesNotContain("target-declaration-missing", result.Error, StringComparison.Ordinal);
         Assert.Equal(before, after);
     }
@@ -135,7 +131,7 @@ public sealed partial class CoverAtomTests
 
         Assert.False(execution.Result.Success);
         Assert.Contains("lean-state-open", execution.Result.Error, StringComparison.Ordinal);
-        AssertFailedDispositionDoesNotAdmitCoverage(execution);
+        Assert.Equal(execution.Before, execution.After);
     }
 
     [Fact]
@@ -177,9 +173,8 @@ public sealed partial class CoverAtomTests
         });
 
         Assert.False(execution.Result.Success);
-        Assert.Contains("Closed", execution.Result.Error, StringComparison.Ordinal);
-        Assert.Contains("absorbed-tail", execution.Result.Error, StringComparison.Ordinal);
-        AssertFailedDispositionDoesNotAdmitCoverage(execution);
+        Assert.Contains("lean-state-tail", execution.Result.Error, StringComparison.Ordinal);
+        Assert.Equal(execution.Before, execution.After);
     }
 
     [Fact]
@@ -208,8 +203,7 @@ public sealed partial class CoverAtomTests
             new FakeScribeEmissionVerifier(inputs.VerifiedEmissions),
             CoverWorld.TimeProvider);
         var result = environment.CoverAtom(
-            ["--cover-atom", CoverWorld.DefaultAtomId, "--gid", inputs.Gid, "--base", "baseline",
-                "--envelope", inputs.EnvelopePath]);
+            ["--cover-atom", CoverWorld.DefaultAtomId, "--gid", inputs.Gid, "--base", "baseline"]);
 
         Assert.False(result.Success);
         Assert.Contains("changed under us", result.Error, StringComparison.Ordinal);
@@ -244,8 +238,7 @@ public sealed partial class CoverAtomTests
             CoverWorld.TimeProvider);
 
         var result = environment.CoverAtom(
-            ["--cover-atom", CoverWorld.DefaultAtomId, "--gid", inputs.Gid, "--base", "baseline",
-                "--envelope", inputs.EnvelopePath]);
+            ["--cover-atom", CoverWorld.DefaultAtomId, "--gid", inputs.Gid, "--base", "baseline"]);
 
         Assert.False(result.Success);
         Assert.Contains("missing", result.Error, StringComparison.Ordinal);
@@ -274,8 +267,7 @@ public sealed partial class CoverAtomTests
             ["--cover-atom", spec.AtomId,
                 "--gid", inputs.Gid,
                 "--gid", inputs.Gid,
-                "--base", "baseline",
-                "--envelope", inputs.EnvelopePath]);
+                "--base", "baseline"]);
 
         Assert.False(result.Success);
         Assert.Contains("USAGE: StrataLint cover-atom", result.Error, StringComparison.Ordinal);
@@ -304,7 +296,8 @@ public sealed partial class CoverAtomTests
 
     private static CoverExecution Execute(CoverSpec spec,
         IReadOnlyList<string>? args = null,
-        RawChangeSet? changes = null)
+        RawChangeSet? changes = null,
+        LeanAxiomReport? currentReport = null)
     {
         var inputs = spec.Materialize();
         var currentFiles = DirectoryLedgerTestSupport.Project(inputs.Files);
@@ -319,12 +312,11 @@ public sealed partial class CoverAtomTests
                 changes ?? RawChangeSet.Create(Array.Empty<string>()),
                 CoverWorld.Raw(currentFiles),
                 CoverWorld.Raw(baselineFiles)),
-            new FakeLeanReportSource(inputs.Report),
+            new FakeLeanReportSource(currentReport ?? inputs.Report),
             new FakeScribeEmissionVerifier(inputs.VerifiedEmissions),
             CoverWorld.TimeProvider);
         var effectiveArgs = args
-            ?? ["--cover-atom", spec.AtomId, "--gid", inputs.Gid, "--base", "baseline",
-                "--envelope", inputs.EnvelopePath];
+            ?? ["--cover-atom", spec.AtomId, "--gid", inputs.Gid, "--base", "baseline"];
         var result = environment.CoverAtom(effectiveArgs);
 
         var afterDocument = BackfillInventoryLoader.LoadRoot(temporary.Path);
@@ -366,7 +358,6 @@ internal sealed record CoverInputs(
     LeanAxiomReport Report,
     VerifiedScribeEmissions? VerifiedEmissions,
     string Gid,
-    string EnvelopePath,
     string Ledger,
     BackfillInventoryDocument Document);
 
@@ -402,46 +393,12 @@ internal sealed partial record CoverSpec
 
     internal ImmutableArray<string> ReportDeclarations { get; init; } = ImmutableArray.Create("probe");
 
-    // Deposited declaration signature (kind/type) in the raw Lean report. The
-    // pre-committed receipt signature defaults to match these, so the happy path
-    // is a signature match; a gate test flips one side to force a mismatch.
     internal string ReportKind { get; init; } = "theorem";
 
     internal string ReportType { get; init; } = "True";
 
     internal ImmutableArray<string> TargetAxioms { get; init; } = ImmutableArray<string>.Empty;
     internal bool VerifyScribe { get; init; } = true;
-    // Pre-committed formalization receipt (digestion-formalization-v1, spec §11.21).
-    // Defaults produce a receipt that binds this atom and pins a signature equal to
-    // the deposited declaration; each envelope gate test flips exactly one field.
-    internal bool IncludeEnvelope { get; init; } = true;
-
-    // Base-owned receipt (§11.21 hardening): in the honest two-phase deposit the
-    // receipt is committed in PR-1 and is therefore part of the baseline at PR-2.
-    // Default true keeps the receipt pre-committed in the baseline. Setting it
-    // false models a same-PR (spec A16 hostile-fork) attack where the receipt is
-    // fabricated in the candidate only and never pre-committed to the baseline.
-    internal bool EnvelopeInBaseline { get; init; } = true;
-
-    // When set, the baseline receipt pins this (divergent) signature while the
-    // candidate copy of the receipt pins PrecommittedSignature/default. Models a
-    // same-PR statement swap where the attacker co-tampers the candidate receipt
-    // to match the swapped declaration: base-owned load must read the baseline
-    // receipt and reject the swap.
-    internal DigestionFormalizationSignature? BaselinePrecommittedSignature { get; init; }
-
-    internal bool MalformedEnvelope { get; init; }
-    internal bool NoncanonicalBaselineEnvelope { get; init; }
-    internal string? EnvelopeAtomId { get; init; }
-
-    internal string? EnvelopePrimaryGid { get; init; }
-
-    internal DigestionFormalizationSignature? PrecommittedSignature { get; init; }
-
-    internal string? EnvelopeCasRef { get; init; }
-
-    internal string? EnvelopeRawSha256 { get; init; }
-
     internal string? BaselineCoverageGid { get; init; }
 
     internal string? OtherAtomGid { get; init; }
@@ -462,12 +419,6 @@ internal sealed partial record CoverSpec
 
     internal (string ModuleGid, string Declaration)? SecondaryTarget { get; init; }
 
-    internal bool IncludeSecondaryPrecommittedSignature { get; init; } = true;
-
-    internal DigestionFormalizationSignature? SecondaryPrecommittedSignature { get; init; }
-
-    internal ImmutableArray<DigestionFormalizationExtension> AdditionalHostedExtensions { get; init; } = [];
-
     internal CoverUnrelatedSiblingSpec? UnrelatedSibling { get; init; }
 
     internal string Gid => Declaration is null ? ModuleGid : ModuleGid + "." + Declaration;
@@ -485,12 +436,13 @@ internal static partial class CoverWorld
         "# Synthetic\n\n**定理 1.1(A)**。unrelated sibling atom body。\n";
     private const string OtherSourcePath = "docs/COVER_SIBLING.md";
     private const string UnrelatedSourcePath = "docs/CONTRIBUTING.md";
+    private const string GovernanceDocumentAnchor = "  - \"docs/CONTRIBUTING.md\"\n";
 
     internal static readonly string DefaultAtomId = AtomIdFor(DefaultSourceText);
     internal static readonly string OtherAtomId = AtomIdFor(OtherSourceText);
     internal static readonly string UnrelatedAtomId = AtomIdFor(UnrelatedSourceText);
-    internal static readonly DateTimeOffset RecordedAtUtc = new(2026, 8, 26, 4, 3, 2, TestBudgets.ZeroDuration);
-    internal static TimeProvider TimeProvider { get; } = new FixedTimeProvider(RecordedAtUtc);
+    internal static readonly DateTimeOffset FixtureUtc = new(2026, 8, 26, 4, 3, 2, TestBudgets.ZeroDuration);
+    internal static TimeProvider TimeProvider { get; } = new FixedTimeProvider(FixtureUtc);
 
     internal static CoverSpec StaleReceiptSpec() => new()
     {
@@ -577,10 +529,15 @@ internal static partial class CoverWorld
             UnrelatedSourcePath,
             useUnrelatedBaselineCoverage: false);
         var ledger = DirectoryLedgerTestSupport.Image(document);
-        var envelopePath = "Meta/Digestion/formalizations/" + spec.AtomId + ".v1.json";
+        var registry = spec.OtherAtomGid is null
+            ? TestRegistry.Canonical
+            : TestRegistry.Canonical.Replace(
+                GovernanceDocumentAnchor,
+                GovernanceDocumentAnchor + $"  - \"{OtherSourcePath}\"\n",
+                StringComparison.Ordinal);
         var files = new Dictionary<string, string>(StringComparer.Ordinal)
         {
-            ["Meta/registry.yaml"] = TestRegistry.Canonical,
+            ["Meta/registry.yaml"] = registry,
             ["Meta/domains.yaml"] = TestRegistry.Domains,
             [RuleFixture.FixtureDigestionSourcePath] = Encoding.UTF8.GetString(sourceBytes),
             [targetPath] = Encoding.UTF8.GetString(targetBytes),
@@ -602,11 +559,6 @@ internal static partial class CoverWorld
             files[unrelatedCasPath] = Encoding.UTF8.GetString(unrelatedCasBytes);
         }
         MaterializeSecondaryFiles(spec, files);
-        if (spec.IncludeEnvelope)
-        {
-            files[envelopePath] = Encoding.UTF8.GetString(Envelope(spec, atom).AsSpan());
-        }
-        MaterializeOtherAtomFormalizationReceipt(spec, otherAtom, files);
         if (spec.IncludeCasBlob)
         {
             var (casPath, casBytes) = DigestionTestSupport.CasFile(atom);
@@ -644,29 +596,6 @@ internal static partial class CoverWorld
             baseline.Remove(targetPath);
         }
 
-        // Base-owned receipt (§11.21 hardening): the receipt is authoritative only
-        // when it is pre-committed to the baseline. A same-PR attack fabricates the
-        // receipt in the candidate only (EnvelopeInBaseline=false) — drop it from
-        // the baseline so the base-owned load sees no pre-commitment.
-        if (spec.IncludeEnvelope && !spec.EnvelopeInBaseline)
-        {
-            baseline.Remove(envelopePath);
-        }
-
-        // Co-tampered same-PR swap: the baseline holds the honest receipt while the
-        // candidate copy is overwritten to match a swapped declaration. Only the
-        // baseline receipt is authoritative under base-owned load.
-        if (spec.IncludeEnvelope && spec.EnvelopeInBaseline && spec.BaselinePrecommittedSignature is not null)
-        {
-            baseline[envelopePath] = Encoding.UTF8.GetString(
-                Envelope(spec with { PrecommittedSignature = spec.BaselinePrecommittedSignature }, atom).AsSpan());
-        }
-
-        if (spec.IncludeEnvelope && spec.EnvelopeInBaseline && spec.NoncanonicalBaselineEnvelope)
-        {
-            baseline[envelopePath] = baseline[envelopePath].Replace("\": ", "\":", StringComparison.Ordinal);
-        }
-
         var declarations = spec.ReportDeclarations
             .Select(name => new LeanDeclaration(name, spec.ReportKind, spec.ReportType, spec.TargetAxioms))
             .ToImmutableArray();
@@ -684,7 +613,6 @@ internal static partial class CoverWorld
             report,
             verified,
             spec.Gid,
-            envelopePath,
             ledger,
             document);
     }
@@ -698,58 +626,6 @@ internal static partial class CoverWorld
         return atom.Fingerprints.RawSha256["sha256:".Length..];
     }
 
-    // Build the pre-committed digestion-formalization-v1 receipt bytes. Defaults
-    // bind this atom (atom_id + content fingerprint) and pin a signature equal to
-    // the deposited declaration; MalformedEnvelope writes non-receipt bytes so the
-    // fail-closed loader is exercised.
-    private static ImmutableArray<byte> Envelope(CoverSpec spec, DigestionAtom atom)
-    {
-        if (spec.MalformedEnvelope)
-        {
-            return ImmutableArray.CreateRange(Encoding.UTF8.GetBytes("{ not a receipt"));
-        }
-
-        var declarationName = spec.Declaration ?? "probe";
-        var primaryGid = spec.EnvelopePrimaryGid
-            ?? (spec.Declaration is null ? spec.ModuleGid + ".probe" : spec.Gid);
-        var signature = spec.PrecommittedSignature
-            ?? new DigestionFormalizationSignature(declarationName, spec.ReportKind, spec.ReportType);
-        return DigestionFormalizationReceipt.Write(new DigestionFormalizationReceipt(
-            spec.EnvelopeAtomId ?? spec.AtomId,
-            primaryGid,
-            signature,
-            spec.EnvelopeCasRef ?? atom.Fingerprints.RawSha256,
-            spec.EnvelopeRawSha256 ?? atom.Fingerprints.RawSha256,
-            HostedExtensions(spec, primaryGid)));
-    }
-
-    private static ImmutableArray<DigestionFormalizationExtension> HostedExtensions(
-        CoverSpec spec,
-        string primaryGid)
-    {
-        var extensions = spec.AdditionalHostedExtensions
-            .Where(extension => !string.Equals(extension.Gid, primaryGid, StringComparison.Ordinal))
-            .ToList();
-        if (spec.IncludeSecondaryPrecommittedSignature
-            && spec.SecondaryTarget is { } secondary)
-        {
-            var extension = new DigestionFormalizationExtension(
-                secondary.ModuleGid + "." + secondary.Declaration,
-                spec.SecondaryPrecommittedSignature
-                    ?? new DigestionFormalizationSignature(
-                        secondary.Declaration,
-                        spec.ReportKind,
-                        spec.ReportType));
-            if (!string.Equals(extension.Gid, primaryGid, StringComparison.Ordinal))
-            {
-                extensions.Add(extension);
-            }
-        }
-
-        return extensions
-            .OrderBy(static extension => extension.Gid, StringComparer.Ordinal)
-            .ToImmutableArray();
-    }
 }
 
 internal sealed class FixedTimeProvider(DateTimeOffset utcNow) : TimeProvider { public override DateTimeOffset GetUtcNow() => utcNow; }

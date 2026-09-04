@@ -1,0 +1,40 @@
+## 18. O-5 黄金能量
+
+若整数 \(v\) 的 Zeckendorf 数位集合为 \(\operatorname{wdigits}(v)\)，仓库中的 O-5 指数满足：
+
+$$
+\boxed{
+\beta(v)
+=
+\sum_{k\in\operatorname{wdigits}(v)}
+\varphi^k.
+}
+$$
+
+因此定义 universal hard-core partition function：
+
+$$
+\boxed{
+\mathcal H_\varphi(z)
+=
+\sum_{v\ge0}e^{-z\beta(v)}.
+}
+$$
+
+按最低数位是否占据分解合法 Zeckendorf words，得到：
+
+$$
+\boxed{
+\mathcal H_\varphi(z)
+=
+\mathcal H_\varphi(\varphi z)
++
+e^{-\varphi^2z}
+\mathcal H_\varphi(\varphi^2z).
+}
+$$
+
+这是一条真正由 hard-core 数位语言产生的 Mahler 型递归。
+
+---
+

@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:890e04a0261319259ccf7a93c52fca074c41cead5c364e990c29200a9137cdcb
+  normalized_sha256: sha256:890e04a0261319259ccf7a93c52fca074c41cead5c364e990c29200a9137cdcb
+cas_ref: sha256:890e04a0261319259ccf7a93c52fca074c41cead5c364e990c29200a9137cdcb
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Closure/ProtocolRelationClosureLaws.protocol_relation_closure_laws
+    target_statement_id: sha256:8b0dabc850e480a8952bc9e71c2a94d087a883d4fc45d904cc9ab392d177c613
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/Closure/ProtocolRelationClosureLaws.protocol_relation_closure_laws
+      definition_sha256: sha256:3b1e95d01d5ac4648bc619444a780173f5a8fef6a52e11cb2d44496e24d10ba9
+      emission_sha256: sha256:c4a50708d11b8ea2239d069d8a1755eb5974be67d02ad009f9c217c236488256
+  unresolved_subitems: []

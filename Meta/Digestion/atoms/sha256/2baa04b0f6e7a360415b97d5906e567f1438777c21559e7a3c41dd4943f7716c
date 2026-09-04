@@ -1,0 +1,37 @@
+# 十八、建议的新形式化层
+
+```text
+D5/S3/Observer/SeamRenormalization/
+  NestedBlindFiber.lean
+  ConditionalRescalingFixedPoint.lean
+  ReflectionQuotientPileup.lean
+  GoldenBayesEvidenceLadder.lean
+
+D5/S3/Observer/SeamInformation/
+  GoldenDepth.lean
+  DepthModularGapIdentity.lean
+  GlobalOrientationEntropy.lean
+  ReflectionInformationTax.lean
+
+D5/S3/Weil/ZetaBridge/
+  ConvolutionPowerGibbsFilter.lean
+  WeilPassivityCriterion.lean
+  SpectralAffinityDissipation.lean
+
+D5/S3/Weil/ZetaGamma/
+  PrimeArchimedeanJumpOperator.lean
+  PositiveThresholdGroundState.lean
+  JumpGroundStateTransform.lean
+
+D5/X_Frontier/ConstellationZero/
+  ConstellationGroundStateSource.lean
+  PrimitiveLoopDetailedBalance.lean
+  PrimeArchimedeanDetailedBalanceRH.lean
+```
+
+其中前几组主要是有限分析、概率和代数，可以独立于 RH 形式化。
+
+最后一组才是真正的开放生成桥。
+
+---
+

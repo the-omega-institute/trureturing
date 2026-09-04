@@ -1,0 +1,62 @@
+## 235. 解析观察模型
+
+设 \(\mathcal H\) 是某个环域上的解析函数 Hilbert 空间。
+
+取黄金尺度圆上的稠密采样点：
+
+$$
+\zeta_1,\zeta_2,\ldots.
+$$
+
+令：
+
+$$
+V_n
+=
+\operatorname{span}
+\{
+k_{\zeta_1},\ldots,k_{\zeta_n}
+\},
+$$
+
+其中 \(k_\zeta\) 是 evaluation kernel。
+
+则：
+
+$$
+R_n
+=
+\{
+f\in\mathcal H:
+f(\zeta_1)=\cdots=f(\zeta_n)=0
+\}.
+$$
+
+每个有限 \(R_n\) 通常仍无限维。
+
+但若采样点在定义域内部有聚点，则解析恒等定理给出：
+
+$$
+\boxed{
+\bigcap_nR_n=\{0\}.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{所有名字联合起来可以唯一确定对象，}
+}
+$$
+
+尽管：
+
+$$
+\boxed{
+\text{任意有限名字集合都远远不够}.
+}
+$$
+
+---
+

@@ -52,58 +52,11 @@ public sealed partial class DigestionQuarantineTests
     {
         var atom = Atom(AtomId, Quarantine).Replace(
             "coverage_gids: []",
-            "coverage_gids:\n  - D5/S0/Carrier/Probe.probe",
+            "coverage_gids:\n  - gid: D5/S0/Carrier/Probe.probe\n    target_statement_id: null",
             StringComparison.Ordinal);
 
         var error = Assert.Throws<FormatException>(() =>
             BackfillInventoryLoader.Load(DirectorySnapshot(atom)).RequireDigestionEntries());
-
-        Assert.Contains("machine-form", error.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void DirectoryLoaderRejectsQuarantineWhenFormalizationMarkerExists()
-    {
-        var marker = FormalizationMarker();
-        var snapshot = DirectorySnapshot(
-            Atom(AtomId, Quarantine),
-            (DigestionFormalizationReceipt.RootPath + AtomId
-                + DigestionFormalizationReceipt.PathSuffix, marker.ToArray()));
-
-        var error = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(snapshot));
-
-        Assert.Contains("machine-form", error.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void SnapshotLoaderRejectsLegacyStorageBeforeInspectingFormalizationMarkers()
-    {
-        var snapshot = DigestionTestSupport.Snapshot(
-        [
-            (BackfillInventoryLoader.RelativePath,
-                Encoding.UTF8.GetBytes("schema_version: 3\n")),
-            (DigestionFormalizationReceipt.RootPath + AtomId
-                + DigestionFormalizationReceipt.PathSuffix,
-                FormalizationMarker()),
-        ]);
-
-        var error = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(snapshot));
-
-        Assert.Contains("legacy digestion ledger is unsupported", error.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void DiskRootLoaderRejectsQuarantineWhenFormalizationMarkerExists()
-    {
-        using var temporary = new TemporaryDirectory();
-        WriteSnapshot(temporary.Path, DirectorySnapshot(
-            Atom(AtomId, Quarantine),
-            (DigestionFormalizationReceipt.RootPath + AtomId
-                + DigestionFormalizationReceipt.PathSuffix,
-                FormalizationMarker())));
-
-        var error = Assert.Throws<FormatException>(() =>
-            BackfillInventoryLoader.LoadRoot(temporary.Path));
 
         Assert.Contains("machine-form", error.Message, StringComparison.Ordinal);
     }
@@ -206,7 +159,6 @@ public sealed partial class DigestionQuarantineTests
             + $"cas_ref: {Digest}\n"
             + "coverage_gids: []\n"
             + "receipts:\n"
-            + "  coverage: []\n"
             + "  scribe: []\n"
             + Indent(unresolved, 2)
             + quarantineBlock
@@ -235,24 +187,6 @@ public sealed partial class DigestionQuarantineTests
         return DigestionTestSupport.Snapshot([.. files]);
     }
 
-    private static byte[] FormalizationMarker() =>
-        DigestionFormalizationReceipt.Write(new DigestionFormalizationReceipt(
-            AtomId,
-            "D5/S0/Carrier/Probe.probe",
-            new DigestionFormalizationSignature("probe", "theorem", "True"),
-            Digest,
-            Digest)).ToArray();
-
-    private static void WriteSnapshot(string root, RepositorySnapshot snapshot)
-    {
-        foreach (var (path, file) in snapshot.Files)
-        {
-            var outputPath = Path.Combine(root, path.Value.Replace('/', Path.DirectorySeparatorChar));
-            Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
-            File.WriteAllBytes(outputPath, file.RawBytes.AsSpan());
-        }
-    }
-
     private static DigestionLedgerEntry TypedAtom(
         string atomId,
         DigestionQuarantine? quarantine,
@@ -263,7 +197,7 @@ public sealed partial class DigestionQuarantineTests
             atomId,
             new DigestionFingerprints(Digest, Digest),
             [],
-            new DigestionReceipts([], [], [.. unresolvedSubitems], [], null, quarantine),
+            new DigestionReceipts([], [.. unresolvedSubitems], [], null, quarantine),
             new DigestionStatus(DigestionMigrationState.Residual, DigestionTruthState.Open),
             Digest);
 

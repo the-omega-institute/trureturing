@@ -3,20 +3,9 @@ fingerprints:
   normalized_sha256: sha256:3e7e543483a6143fc47a8b0d41f0e88ee6abb80de66d11f77b869d4e94db0b0b
 cas_ref: sha256:3e7e543483a6143fc47a8b0d41f0e88ee6abb80de66d11f77b869d4e94db0b0b
 coverage_gids:
-  - D5/S3/ObserverMemory/Trajectories/CompletionKernelIntersection.completion_kernel_eq_iterated_pullback_intersection
+  - gid: D5/S3/ObserverMemory/Trajectories/CompletionKernelIntersection.completion_kernel_eq_iterated_pullback_intersection
+    target_statement_id: sha256:001f545539c28bf715386d5a3499b8811f62ac348e46d1c57efd605bb42a87b8
 receipts:
-  coverage:
-    - gid: D5/S3/ObserverMemory/Trajectories/CompletionKernelIntersection.completion_kernel_eq_iterated_pullback_intersection
-      source_sha256: sha256:3e7e543483a6143fc47a8b0d41f0e88ee6abb80de66d11f77b869d4e94db0b0b
-      target_statement_id: sha256:001f545539c28bf715386d5a3499b8811f62ac348e46d1c57efd605bb42a87b8
-      statement_id_history:
-        - statement_id: sha256:c1672d7cd2b85ade202a72155774639f3a76e2822d2ef556fa02ebfee14ff5cb
-          environment_pin:
-            toolchain: leanprover/lean4:v4.31.0
-            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
-          superseded_by_pin:
-            toolchain: leanprover/lean4:v4.33.0
-            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ObserverMemory/Trajectories/CompletionKernelIntersection.completion_kernel_eq_iterated_pullback_intersection
       definition_sha256: sha256:513db1bae81540aa78599022779efaf7fe92ce942184f47d4ae28d2f956a16b1

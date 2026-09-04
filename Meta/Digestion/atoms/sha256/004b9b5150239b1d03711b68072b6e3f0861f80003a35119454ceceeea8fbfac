@@ -1,0 +1,35 @@
+## 324. 最新 β 定理给出了规范的奇偶 carry clock
+
+仓库现已证明：
+
+$$
+\beta(v+1)-\beta(v)
+$$
+
+只取：
+
+$$
+\varphi
+\quad\text{或}\quad
+\varphi^2,
+$$
+
+并由 \(v+1\) 的 Zeckendorf 最小指标奇偶精确决定。
+
+因此可把每一步写成：
+
+$$
+\boxed{
+\Delta\beta_v
+=
+\varphi+\varepsilon_v,
+\qquad
+\varepsilon_v\in\{0,1\}.
+}
+$$
+
+这一位 \(\varepsilon_v\) 不是普通交替 bit，而是由黄金机械词控制的 carry clock。
+
+它可以用于公平调度两个无界观察轴：
+
+* 一个轴增加 source/correlation order；

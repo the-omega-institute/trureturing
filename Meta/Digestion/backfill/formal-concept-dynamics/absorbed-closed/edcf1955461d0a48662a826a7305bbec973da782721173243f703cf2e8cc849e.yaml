@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:edcf1955461d0a48662a826a7305bbec973da782721173243f703cf2e8cc849e
+  normalized_sha256: sha256:edcf1955461d0a48662a826a7305bbec973da782721173243f703cf2e8cc849e
+cas_ref: sha256:edcf1955461d0a48662a826a7305bbec973da782721173243f703cf2e8cc849e
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/DecisionValueScale/OptimalAcceptanceThreshold.optimal_acceptance_threshold
+    target_statement_id: sha256:63b7e67692d0d3c0de1426d38dc90d1cdc958ef30093fd97bcb11e2c57568067
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/DecisionValueScale/OptimalAcceptanceThreshold.optimal_acceptance_threshold
+      definition_sha256: sha256:243cbee79b3e1f220f6cfb1795d3ffcc891782a415c8977e1633f878997683b0
+      emission_sha256: sha256:384505a82929c86b0464bccb2af492a27556f7fb7e9fbacc4f1b937190f7e99e
+  unresolved_subitems: []

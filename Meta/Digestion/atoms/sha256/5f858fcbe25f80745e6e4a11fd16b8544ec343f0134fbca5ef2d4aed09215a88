@@ -1,0 +1,62 @@
+## 354. 有限差配置 groupoid
+
+考虑所有素数子集：
+
+$$
+A\subseteq\mathbb P.
+$$
+
+定义：
+
+$$
+A\sim B
+\iff
+A\triangle B
+\text{ 为有限集},
+$$
+
+其中：
+
+$$
+A\triangle B
+=
+(A\setminus B)\cup(B\setminus A)
+$$
+
+是对称差。
+
+在同一个有限差分量中，定义相对宇称：
+
+$$
+\boxed{
+\varepsilon(A,B)
+=
+(-1)^{|A\triangle B|}.
+}
+$$
+
+它满足：
+
+$$
+\varepsilon(A,A)=1,
+$$
+
+$$
+\varepsilon(A,B)=\varepsilon(B,A),
+$$
+
+以及 cocycle 关系：
+
+$$
+\boxed{
+\varepsilon(A,B)
+\varepsilon(B,C)
+=
+\varepsilon(A,C).
+}
+$$
+
+所以宇称天然不是一个对象函数，而是配置之间箭头上的 \(C_2\)-值 cocycle。
+
+---
+

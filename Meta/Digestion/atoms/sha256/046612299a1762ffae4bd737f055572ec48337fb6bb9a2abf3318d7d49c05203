@@ -1,0 +1,29 @@
+## 293. Transform entanglement
+
+若：
+
+$$
+E_R(PW_R)
+=
+\prod_\rho
+E_{\rho,R}(PW_R),
+$$
+
+每个轨道可以独立赋值。
+
+但 entire 函数的取值一般不能在无限离散集上无条件独立指定。
+
+因此自然定义：
+
+$$
+\boxed{
+\text{transform entanglement}
+=
+E_R(PW_R)
+\text{ 不能分解为各轨道评价空间的笛卡尔积}.
+}
+$$
+
+这是一种严格的全局相关：
+
+* 每个轨道拥有自己的负方向；

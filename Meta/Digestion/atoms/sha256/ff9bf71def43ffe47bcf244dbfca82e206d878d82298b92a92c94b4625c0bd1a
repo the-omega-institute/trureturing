@@ -1,0 +1,65 @@
+## 243. 内部两页由 companion lift 恢复
+
+在：
+
+$$
+\mathcal H\oplus\mathcal H
+$$
+
+上定义：
+
+$$
+\mathfrak C_Q
+=
+\begin{pmatrix}
+I&-Q\\
+I&0
+\end{pmatrix}.
+$$
+
+若：
+
+$$
+Qx=qx,
+$$
+
+则 \(\mathfrak C_Q\) 的对应本征值 \(s\) 满足：
+
+$$
+s^2-s+q=0,
+$$
+
+即：
+
+$$
+s(1-s)=q.
+$$
+
+所以：
+
+$$
+\boxed{
+\text{外部 Casimir }Q
+}
+$$
+
+通过一个二维 companion fiber 恢复：
+
+$$
+\boxed{
+s
+=
+\frac12
+\pm
+\sqrt{\frac14-Q}.
+}
+$$
+
+这正是“坐标系在下一维”最严格的 operator 版本：
+
+* 外部完成对象是一维谱 \(q\)；
+* 内部需要二维 block 才能恢复两个反射页；
+* RH 要求这个 block 的两条内部本征线都位于 \(\Re s=1/2\)。
+
+---
+

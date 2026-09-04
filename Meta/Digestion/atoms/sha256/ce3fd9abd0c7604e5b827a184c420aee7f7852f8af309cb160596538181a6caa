@@ -1,0 +1,46 @@
+## 560. Hankel 秩无限
+
+由正定性：
+
+$$
+\operatorname{rank}H_N=N+1.
+$$
+
+所以 Hankel 秩无界：
+
+$$
+\boxed{
+\sup_N\operatorname{rank}H_N=\infty.
+}
+$$
+
+任何固定 \(d\) 阶常系数线性递推：
+
+$$
+a_{n+d}
+=
+c_{d-1}a_{n+d-1}
++\cdots+
+c_0a_n
+$$
+
+都会使 Hankel 列在第 \(d\) 阶后线性相关，从而：
+
+$$
+\operatorname{rank}H_N\le d.
+$$
+
+矛盾。
+
+所以：
+
+$$
+\boxed{
+(a_n)\text{ 不满足任何固定有限阶线性递推。}
+}
+$$
+
+其生成函数也不可能是有理函数。
+
+---
+

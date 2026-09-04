@@ -95,7 +95,8 @@ public sealed record RuleId
                 NumberStyles.None,
                 CultureInfo.InvariantCulture,
                 out var number)
-            && (number is >= 0 and <= 23 || number is 25 or 26 or 28 or 29 or 30 or 31))
+            && (number is >= 0 and <= 23 && number != 5
+                || number is 25 or 26 or 28))
         {
             ruleId = new RuleId(value);
             return true;

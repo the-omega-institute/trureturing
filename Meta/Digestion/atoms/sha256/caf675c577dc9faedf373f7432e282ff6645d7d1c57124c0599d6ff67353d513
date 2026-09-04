@@ -1,0 +1,64 @@
+## 181. \(r\) 阶破缺获得 \(r\) 阶完成深度
+
+反复差分：
+
+$$
+\Delta^r f_s(n)
+=
+(s)_r
+\int_{[0,1]^r}
+\left(
+n+t_1+\cdots+t_r
+\right)^{-s-r}
+dt_1\cdots dt_r,
+$$
+
+其中：
+
+$$
+(s)_r=s(s+1)\cdots(s+r-1).
+$$
+
+所以：
+
+$$
+\boxed{
+\Delta^r n^{-s}
+=
+O\left(n^{-\Re s-r}\right).
+}
+$$
+
+相应级数在：
+
+$$
+\boxed{
+\Re s>1-r
+}
+$$
+
+收敛。
+
+因此：
+
+$$
+\boxed{
+\text{每增加一个 vanishing moment，}
+\text{就消去一层共同渐近信息}.
+}
+$$
+
+这给“jet 深度”新增一个精确解释：
+
+$$
+\boxed{
+\text{observer jet order}
+=
+\text{低频零点的阶数}
+=
+\text{额外完成深度}.
+}
+$$
+
+---
+

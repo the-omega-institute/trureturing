@@ -135,38 +135,12 @@ internal static class DigestStatusCommand
 
             if (options.Readiness)
             {
-                var readinessEntries = evaluation.Entries
-                    .Where(static item =>
-                        item.DerivedStatus.Migration == DigestionMigrationState.Residual
-                        && item.DerivedStatus.Truth == DigestionTruthState.Open)
-                    .ToArray();
-                var presentReceiptAtomIds = readinessEntries
-                    .Where(item => snapshot.TryGetFile(
-                        DigestionFormalizationReceipt.PathForAtom(item.Entry.AtomId),
-                        out _))
-                    .Select(static item => item.Entry.AtomId)
-                    .ToImmutableHashSet(StringComparer.Ordinal);
-                var currentReceipts = readinessEntries
-                    .Select(item => (
-                        item.Entry.AtomId,
-                        Receipt: CurrentFormalizationReceiptModel(
-                            item.Entry,
-                            snapshot,
-                            leanReport)))
-                    .Where(static item => item.Receipt is not null)
-                    .ToDictionary(
-                        static item => item.AtomId,
-                        static item => item.Receipt!,
-                        StringComparer.Ordinal);
                 return new CommandResult(
                     true,
                     RenderReadiness(DigestionReadinessQuery.Classify(
                         document,
                         evaluation,
-                        DigestionContentKindResolver.Resolve(snapshot, document),
-                        currentReceipts,
-                        presentReceiptAtomIds,
-                        verifiedScribeEmissions)),
+                        DigestionContentKindResolver.Resolve(snapshot, document))),
                     string.Empty);
             }
 
@@ -315,7 +289,7 @@ internal static class DigestStatusCommand
 
     internal static string RenderDetail(string detail) => JsonSerializer.Serialize(detail, JsonOptions);
 
-    private static string RenderJson(DigestionLedgerEvaluation evaluation)
+    internal static string RenderJson(DigestionLedgerEvaluation evaluation)
     {
         var material = new
         {
@@ -329,6 +303,7 @@ internal static class DigestStatusCommand
                 {
                     source_id = item.Entry.SourceId,
                     atom_id = item.Entry.AtomId,
+                    coverage_gids = item.Entry.CoverageGids,
                     alignment = DigestionReceiptAlignmentNames.Render(item.Alignment),
                     migration = DigestionStatusNames.Migration(item.DerivedStatus.Migration),
                     truth = DigestionStatusNames.Truth(item.DerivedStatus.Truth),
@@ -353,6 +328,7 @@ internal static class DigestStatusCommand
             {
                 source_id = item.SourceId,
                 atom_id = item.AtomId,
+                coverage_gids = item.CoverageGids,
                 action = item.Action,
                 ordered_blockers = item.OrderedBlockers,
                 unknown_predicates = item.UnknownPredicates,
@@ -382,7 +358,6 @@ internal static class DigestStatusCommand
                 item,
                 snapshot,
                 contentKinds,
-                leanReport,
                 retryDispositions))
             .Where(static item => item is not null)
             .OrderBy(static item => item!.SourceId, StringComparer.Ordinal)
@@ -391,16 +366,11 @@ internal static class DigestStatusCommand
             .ToArray();
         var material = new
         {
-            // v4 (2026-08-30, #4125): 新增顶层结果族 `quarantined[]`;本仓惯例是每加一个顶层结果族就升一版
-            // (v1→v2 加 withheld,v2→v3 加 recorded_formalizations)。消费者按 schema 值接受,见测试断言。
-            schema = "stratalint-formalize-candidates-v4",
+            schema = "stratalint-formalize-candidates-v5",
             ledger_sha256 = DigestionLedgerPreimage.ComputeSha256(ledger),
             candidates = projections
                 .Where(static item => item.Candidate is not null)
                 .Select(static item => item.Candidate!),
-            recorded_formalizations = projections
-                .Where(static item => item.RecordedFormalization is not null)
-                .Select(static item => item.RecordedFormalization!),
             quarantined = projections
                 .Where(static item => item.Quarantined is not null)
                 .Select(static item => item.Quarantined!),
@@ -415,7 +385,6 @@ internal static class DigestStatusCommand
         DigestionEntryEvaluation evaluation,
         RepositorySnapshot snapshot,
         IReadOnlyDictionary<string, string> contentKinds,
-        LeanAxiomReport leanReport,
         bool retryDispositions)
     {
         var entry = evaluation.Entry;
@@ -434,7 +403,6 @@ internal static class DigestStatusCommand
                 entry.SourceId,
                 entry.AtomId,
                 null,
-                null,
                 new QuarantinedFormalizeCandidate(
                     entry.SourceId,
                     entry.AtomId,
@@ -451,25 +419,10 @@ internal static class DigestStatusCommand
                 entry.AtomId,
                 null,
                 null,
-                null,
                 new WithheldFormalizeCandidate(
                     entry.AtomId,
                     DigestionCoverDispositionSelector.WithholdReason,
                     null));
-        }
-
-        var recordedFormalization = dispositionSelection == DigestionCoverDispositionSelection.Retry
-            ? null
-            : CurrentFormalizationProjection(entry, snapshot, leanReport);
-        if (recordedFormalization is not null)
-        {
-            return new FormalizeProjection(
-                entry.SourceId,
-                entry.AtomId,
-                null,
-                recordedFormalization,
-                null,
-                null);
         }
 
         var casPath = DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..];
@@ -499,7 +452,6 @@ internal static class DigestStatusCommand
                 entry.AtomId,
                 null,
                 null,
-                null,
                 new WithheldFormalizeCandidate(
                     entry.AtomId,
                     "malformed-status-marker",
@@ -516,7 +468,6 @@ internal static class DigestStatusCommand
             return new FormalizeProjection(
                 entry.SourceId,
                 entry.AtomId,
-                null,
                 null,
                 null,
                 new WithheldFormalizeCandidate(
@@ -536,79 +487,7 @@ internal static class DigestStatusCommand
                 entry.Fingerprints.RawSha256,
                 atomText),
             null,
-            null,
             null);
-    }
-
-    private static RecordedFormalization? CurrentFormalizationProjection(
-        DigestionLedgerEntry entry,
-        RepositorySnapshot snapshot,
-        LeanAxiomReport leanReport)
-    {
-        var receipt = CurrentFormalizationReceiptModel(entry, snapshot, leanReport);
-        return receipt is null
-            ? null
-            : new RecordedFormalization(
-                entry.SourceId,
-                entry.AtomId,
-                "current-formalization-receipt",
-                receipt.PrimaryGid,
-                receipt.RegisteredGids,
-                DigestionFormalizationReceipt.PathForAtom(entry.AtomId));
-    }
-
-    private static DigestionFormalizationReceipt? CurrentFormalizationReceiptModel(
-        DigestionLedgerEntry entry,
-        RepositorySnapshot snapshot,
-        LeanAxiomReport leanReport)
-    {
-        var path = DigestionFormalizationReceipt.PathForAtom(entry.AtomId);
-        if (!DigestionFormalizationReceipt.IsCanonicalPath(path))
-        {
-            return null;
-        }
-
-        if (!snapshot.TryGetFile(path, out _))
-        {
-            return null;
-        }
-
-        try
-        {
-            var receipt = DigestionFormalizationReceipt.Load(snapshot, path);
-            if (!string.Equals(receipt.AtomId, entry.AtomId, StringComparison.Ordinal)
-                || !string.Equals(receipt.CasRef, entry.CasRef, StringComparison.Ordinal)
-                || !string.Equals(
-                    receipt.RawSha256,
-                    entry.Fingerprints.RawSha256,
-                    StringComparison.Ordinal)
-                || !Gid.TryParse(receipt.PrimaryGid, out var gid))
-            {
-                return null;
-            }
-
-            var currentSignature = DigestionFormalizationReceipt.ResolveSignature(gid, leanReport);
-            if (receipt.Signature != currentSignature)
-            {
-                return null;
-            }
-
-            foreach (var extension in receipt.HostedExtensions)
-            {
-                if (!Gid.TryParse(extension.Gid, out var extensionGid)
-                    || extension.Signature
-                        != DigestionFormalizationReceipt.ResolveSignature(extensionGid, leanReport))
-                {
-                    return null;
-                }
-            }
-
-            return receipt;
-        }
-        catch (Exception exception) when (exception is FormatException or JsonException)
-        {
-            return null;
-        }
     }
 
     private static CommandResult InvalidEvaluation(DigestionLedgerEvaluation evaluation)
@@ -673,15 +552,6 @@ internal static class DigestStatusCommand
         string SourceId,
         string AtomId,
         FormalizeCandidate? Candidate,
-        RecordedFormalization? RecordedFormalization,
         QuarantinedFormalizeCandidate? Quarantined,
         WithheldFormalizeCandidate? Withheld);
-
-    private sealed record RecordedFormalization(
-        string SourceId,
-        string AtomId,
-        string EvidenceKind,
-        string PrimaryGid,
-        ImmutableArray<string> Gids,
-        string ReceiptPath);
 }

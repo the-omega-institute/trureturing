@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:b5a80f379a5914543e2b721642b6cecc249479219421289b965655305122e983
+  normalized_sha256: sha256:b5a80f379a5914543e2b721642b6cecc249479219421289b965655305122e983
+cas_ref: sha256:b5a80f379a5914543e2b721642b6cecc249479219421289b965655305122e983
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/OperationalOntology/ActionExpansionIndistinguishabilityLaw.action_expansion_indistinguishability_law
+    target_statement_id: sha256:2358d976e4344730316c25292cf9e8b7c8cf76b85e64932061cfa1d6c8568852
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/OperationalOntology/ActionExpansionIndistinguishabilityLaw.action_expansion_indistinguishability_law
+      definition_sha256: sha256:af7e3e5fd95093d2ff62b9c60e09c79a1ccd00512d7d156fae17ebc190a5570c
+      emission_sha256: sha256:f8c0fcd97a1f34860f4d1a3e91854e310246e8e53d65ec888b94d24f3c120a1a
+  unresolved_subitems: []

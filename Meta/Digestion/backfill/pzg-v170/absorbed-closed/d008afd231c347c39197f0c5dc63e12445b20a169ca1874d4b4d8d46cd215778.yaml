@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:d008afd231c347c39197f0c5dc63e12445b20a169ca1874d4b4d8d46cd215778
+  normalized_sha256: sha256:d008afd231c347c39197f0c5dc63e12445b20a169ca1874d4b4d8d46cd215778
+cas_ref: sha256:d008afd231c347c39197f0c5dc63e12445b20a169ca1874d4b4d8d46cd215778
+coverage_gids:
+  - gid: D5/S3/Analytic/EulerGerm/GoldenGermZetaContinuation.golden_germ_zeta_continuation
+    target_statement_id: sha256:ebff941227cca64dff5a22b7cb1ff5fbe5e4b2d20734a27298312f472257756e
+receipts:
+  scribe:
+    - gid: D5/S3/Analytic/EulerGerm/GoldenGermZetaContinuation.golden_germ_zeta_continuation
+      definition_sha256: sha256:5e203a67cfdc2e527bcafaa783ed28aafb4ef45ab9de28928482bd6e01e9f818
+      emission_sha256: sha256:267a533f204316f3f6f5585648ff69fa2124b35ee93472ec9d8f9fdd624b8305
+  unresolved_subitems: []

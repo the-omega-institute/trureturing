@@ -1,0 +1,56 @@
+## 148. 从 projective infinity 产生第一次有限坐标
+
+在射影直线上：
+
+$$
+\infty=[1:0].
+$$
+
+Fibonacci 矩阵作用给出：
+
+$$
+\infty
+\longmapsto
+1
+\longmapsto
+2
+\longmapsto
+\frac32
+\longmapsto
+\frac53
+\longmapsto
+\frac85
+\longmapsto\cdots.
+$$
+
+一般：
+
+$$
+\boxed{
+G^n(\infty)
+=
+\frac{F_{n+1}}{F_n}.
+}
+$$
+
+这可以解释为：
+
+> 第一次观察并不需要预先给出有限坐标；
+> 从“纯方向” \(\infty\) 出发，内部／外部交换算子会自动产生有理坐标线程。
+
+且：
+
+$$
+\frac{F_{n+1}}{F_n}-\varphi
+=
+\frac{\psi^n}{F_n}.
+$$
+
+因此奇偶两条逼近支分别从两侧逼近同一个 \(\varphi\)。
+
+这正是你所说的：
+
+> 不是最后以奇结束或以偶结束，而是奇、偶两条路径在重完点融合。
+
+---
+

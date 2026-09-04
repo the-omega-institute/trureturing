@@ -1,0 +1,16 @@
+## 粘滞情形
+
+若这一强制下界接近失败，则大量频率必须在一座嵌套的 log-frequency cluster tree 中保持相干：
+
+$$
+\boxed{
+\text{small joint energy}
+\Longrightarrow
+\text{multiscale arithmetic stickiness}.
+}
+\tag{2113.3}
+$$
+
+随后再证明这种 stickiness 与：
+
+* 素数对数频率的算术结构；

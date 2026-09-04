@@ -1,0 +1,40 @@
+## 229. pole 与 zero 在每个黄金区间中严格交错
+
+因为：
+
+$$
+\varphi<2<\varphi^2,
+$$
+
+所以：
+
+$$
+\boxed{
+\frac1{\varphi^{k+1}}
+>
+\frac1{2\varphi^k}
+>
+\frac1{\varphi^{k+2}}.
+}
+$$
+
+因此每个 dyadic exclusion zero 都严格落在两个连续黄金 completion scales 之间。
+
+并且它在每个黄金区间中的相对位置不变。
+
+所以：
+
+$$
+\boxed{
+\text{pole ladder 是黄金整数相位，}
+}
+$$
+
+$$
+\boxed{
+\text{exclusion-zero ladder 是固定无理相位}.
+}
+$$
+
+---
+

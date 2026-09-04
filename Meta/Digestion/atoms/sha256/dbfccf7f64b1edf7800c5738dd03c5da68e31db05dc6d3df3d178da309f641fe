@@ -1,0 +1,16 @@
+## 613.2 黄金深度 Hurwitz 下界
+
+```lean
+theorem inverse_phi_pow_rational_lower_bound
+    (H : ℕ) (hH : 0 < H) (a : ℤ) (q : ℕ)
+    (hq : 0 < q) :
+    1 /
+      (Real.sqrt 5 * Nat.fib H * q ^ 2 + q)
+      <
+    |Real.goldenRatio ^ (-(H : ℤ)) - a / q|
+```
+
+需要规范整数到实数的强制转换。
+
+---
+

@@ -10,78 +10,6 @@ public sealed class DigestionReadinessQueryTests
 {
     private const string ReadyGid = "D5/S0/Synthetic/Readiness.ready";
 
-    private const string UnreadyGid = "D5/S0/Synthetic/Readiness.unready";
-
-    [Fact]
-    public void CurrentReceiptAndScribeLeafSelectsCoverNow()
-    {
-        var entry = Entry("source", "ready", "theorem/1");
-
-        var result = Classify([entry], receipts: [Receipt(entry)]);
-
-        var record = Assert.Single(result);
-        Assert.Equal("cover-now", record.Action);
-        Assert.Equal(
-            [
-                "cover-atom:frozen-statement-resolution",
-                "cover-atom:baseline-precommitment-ownership",
-            ],
-            record.UnknownPredicates.ToArray());
-    }
-
-    [Fact]
-    public void ReceiptWithoutScribeSelectsRepairScribe()
-    {
-        var entry = Entry("source", "repair", "theorem/2");
-
-        var result = Classify(
-            [entry],
-            receipts: [Receipt(entry)],
-            scribeEmissions: VerifiedScribeEmissions.Empty);
-
-        var record = Assert.Single(result);
-        Assert.Equal("repair-scribe", record.Action);
-        Assert.Contains("scribe-emission-missing:" + ReadyGid, record.OrderedBlockers);
-    }
-
-    [Fact]
-    public void ReceiptWhoseScribeEmissionDoesNotReferenceDeclarationSelectsRepairScribe()
-    {
-        var entry = Entry("source", "missing-reference", "theorem/2-reference");
-
-        var result = Classify(
-            [entry],
-            receipts: [Receipt(entry)],
-            scribeEmissions: ReadyScribe(referencesDeclaration: false));
-
-        var record = Assert.Single(result);
-        Assert.Equal("repair-scribe", record.Action);
-        Assert.Equal(
-            ["scribe-declaration-reference-missing:" + ReadyGid],
-            record.OrderedBlockers.ToArray());
-        Assert.DoesNotContain(
-            "scribe-emission-missing:" + ReadyGid,
-            record.OrderedBlockers);
-    }
-
-    [Fact]
-    public void ReceiptWithNonDeclarationGidSelectsRepairScribeWithUnknownPredicate()
-    {
-        const string invalidGid = "not-a-declaration-gid";
-        var entry = Entry("source", "invalid-gid", "theorem/2-invalid-gid");
-
-        var result = Classify(
-            [entry],
-            receipts: [Receipt(entry, invalidGid)]);
-
-        var record = Assert.Single(result);
-        Assert.Equal("repair-scribe", record.Action);
-        Assert.Equal(["scribe-readiness-unknown:" + invalidGid], record.OrderedBlockers.ToArray());
-        Assert.Equal(
-            ["scribe-readiness:formalization-gid-not-declaration"],
-            record.UnknownPredicates.ToArray());
-    }
-
     [Fact]
     public void NoReceiptFormalizableLeafSelectsDeposit()
     {
@@ -89,7 +17,7 @@ public sealed class DigestionReadinessQueryTests
 
         var record = Assert.Single(result);
         Assert.Equal("deposit", record.Action);
-        Assert.Equal(["formalization-receipt-missing"], record.OrderedBlockers.ToArray());
+        Assert.Empty(record.OrderedBlockers);
     }
 
     [Fact]
@@ -122,7 +50,6 @@ public sealed class DigestionReadinessQueryTests
 
         var result = Classify(
             [entry],
-            receipts: [Receipt(entry)],
             acknowledgedStale: [entry.Entry.AtomId]);
 
         Assert.Equal("refresh-stale", Assert.Single(result).Action);
@@ -171,23 +98,6 @@ public sealed class DigestionReadinessQueryTests
     }
 
     [Fact]
-    public void GidUsedByAnotherAtomDoesNotBlockCoverNow()
-    {
-        var target = Entry("source", "target", "theorem/7");
-        var other = Entry(
-            "source",
-            "other",
-            "theorem/8",
-            migration: DigestionMigrationState.Absorbed,
-            truth: DigestionTruthState.Closed,
-            coverageGids: [ReadyGid]);
-
-        var result = Classify([target, other], receipts: [Receipt(target)]);
-
-        Assert.Equal("cover-now", Assert.Single(result).Action);
-    }
-
-    [Fact]
     public void EveryResidualOpenEntryAppearsExactlyOnce()
     {
         var first = Entry("source-b", "atom-b", "definition/9");
@@ -230,23 +140,6 @@ public sealed class DigestionReadinessQueryTests
     }
 
     [Fact]
-    public void PresentReceiptAtomIdsInputDistinguishesStaleReceiptFromMissingReceipt()
-    {
-        var entry = Entry("source", "present-receipt", "theorem/present-receipt");
-        var result = DigestionReadinessQuery.Classify(
-            Document([entry]),
-            Evaluation([entry]),
-            Kinds([entry]),
-            new Dictionary<string, DigestionFormalizationReceipt>(StringComparer.Ordinal),
-            ImmutableHashSet.Create(StringComparer.Ordinal, entry.Entry.AtomId),
-            ReadyScribe());
-
-        var record = Assert.Single(result);
-        Assert.Equal("deposit", record.Action);
-        Assert.Equal(["formalization-receipt-stale"], record.OrderedBlockers.ToArray());
-    }
-
-    [Fact]
     public void OrderingIsDeterministicAndEmitsNoNumericScore()
     {
         var deposit = Entry("source-z", "deposit", "theorem/12");
@@ -261,17 +154,11 @@ public sealed class DigestionReadinessQueryTests
         var first = DigestionReadinessQuery.Classify(
             document,
             evaluation,
-            Kinds([deposit, routing, quarantine]),
-            new Dictionary<string, DigestionFormalizationReceipt>(StringComparer.Ordinal),
-            ImmutableHashSet<string>.Empty,
-            ReadyScribe());
+            Kinds([deposit, routing, quarantine]));
         var second = DigestionReadinessQuery.Classify(
             document,
             evaluation,
-            Kinds([deposit, routing, quarantine]),
-            new Dictionary<string, DigestionFormalizationReceipt>(StringComparer.Ordinal),
-            ImmutableHashSet<string>.Empty,
-            ReadyScribe());
+            Kinds([deposit, routing, quarantine]));
 
         var firstJson = DigestStatusCommand.RenderReadiness(first);
         var secondJson = DigestStatusCommand.RenderReadiness(second);
@@ -286,6 +173,30 @@ public sealed class DigestionReadinessQueryTests
         Assert.DoesNotContain("score", firstJson, StringComparison.OrdinalIgnoreCase);
         Assert.DoesNotContain("rank", firstJson, StringComparison.OrdinalIgnoreCase);
         Assert.DoesNotContain("roi", firstJson, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void ReadinessJsonExposesSortedCoverageGidsDerivedFromCoverageEdges()
+    {
+        var covered = Entry(
+            "source",
+            "covered",
+            "theorem/coverage-view",
+            coverageGids:
+            [
+                "D5/S0/Carrier/Zeta",
+                "D5/S0/Carrier/Alpha",
+            ]);
+
+        var jsonText = DigestStatusCommand.RenderReadiness(Classify([covered]));
+
+        using var json = JsonDocument.Parse(jsonText);
+        var entry = Assert.Single(json.RootElement.GetProperty("entries").EnumerateArray());
+        Assert.Equal(
+            ["D5/S0/Carrier/Alpha", "D5/S0/Carrier/Zeta"],
+            entry.GetProperty("coverage_gids")
+                .EnumerateArray()
+                .Select(static item => item.GetString()));
     }
 
     [Fact]
@@ -319,8 +230,7 @@ public sealed class DigestionReadinessQueryTests
             coverDisposition: new DigestionCoverDisposition(
                 new DigestionStatus(DigestionMigrationState.Partial, DigestionTruthState.Closed),
                 [ReadyGid],
-                [new DigestionDispositionGap("unresolved-subitem", "remaining")],
-                new DateTimeOffset(2026, 8, 30, 0, 0, 0, TestBudgets.ZeroDuration)));
+                [new DigestionDispositionGap("unresolved-subitem", "remaining")]));
 
         var result = Classify([withheld, quarantined]);
 
@@ -336,8 +246,6 @@ public sealed class DigestionReadinessQueryTests
     public void ActionPriorityOrderIsTheFullApprovedSequence()
     {
         var stale = Entry("s", "a-stale", "theorem/1");
-        var coverNow = Entry("s", "b-cover", "theorem/2");
-        var repairScribe = Entry("s", "c-repair", "theorem/3");
         var deposit = Entry("s", "d-deposit", "theorem/4");
         var child = Entry("s", "e-child", "lemma/5");
         var closeChain = Entry(
@@ -360,12 +268,10 @@ public sealed class DigestionReadinessQueryTests
             coverDisposition: new DigestionCoverDisposition(
                 new DigestionStatus(DigestionMigrationState.Partial, DigestionTruthState.Closed),
                 [ReadyGid],
-                [new DigestionDispositionGap("unresolved-subitem", "remaining")],
-                new DateTimeOffset(2026, 8, 30, 0, 0, 0, TestBudgets.ZeroDuration)));
+                [new DigestionDispositionGap("unresolved-subitem", "remaining")]));
 
         var result = Classify(
-            [deposit, coverNow, repairScribe, stale, closeChain, child, needsRouting, notFormalizable, quarantined, withheld],
-            receipts: [Receipt(stale), Receipt(coverNow), Receipt(repairScribe, UnreadyGid)],
+            [deposit, stale, closeChain, child, needsRouting, notFormalizable, quarantined, withheld],
             acknowledgedStale: [stale.Entry.AtomId]);
 
         Assert.Equal(
@@ -376,8 +282,6 @@ public sealed class DigestionReadinessQueryTests
                 "not-formalizable",
                 "needs-routing",
                 "close-chain",
-                "cover-now",
-                "repair-scribe",
                 "deposit",
             ],
             result.Select(static item => item.Action).Distinct());
@@ -411,43 +315,14 @@ public sealed class DigestionReadinessQueryTests
         Assert.Equal(["open-child"], record.OrderedBlockers.ToArray());
     }
 
-    // 第三轮 architecture/tests 两席实测:把 receipt.RegisteredGids 改为 .Take(1) 后定向 81/81 全绿,
-    // 即 hosted extension 的 Scribe 就绪从未被检查。RegisteredGids = [PrimaryGid, ..HostedExtensions]。
-    [Fact]
-    public void HostedExtensionScribeReadinessIsNotSkipped()
-    {
-        var entry = Entry("source", "multi-gid", "theorem/30");
-        var receipt = new DigestionFormalizationReceipt(
-            entry.Entry.AtomId,
-            ReadyGid,
-            new DigestionFormalizationSignature("ready", "theorem", "True"),
-            entry.Entry.CasRef,
-            entry.Entry.Fingerprints.RawSha256,
-            [new DigestionFormalizationExtension(UnreadyGid, new DigestionFormalizationSignature("unready", "theorem", "True"))]);
-
-        var record = Assert.Single(Classify([entry], receipts: [receipt]));
-
-        Assert.Equal("repair-scribe", record.Action);
-        Assert.Contains(
-            record.OrderedBlockers,
-            blocker => blocker.Contains(UnreadyGid, StringComparison.Ordinal));
-    }
-
     private static ImmutableArray<DigestionReadinessRecord> Classify(
         ImmutableArray<DigestionEntryEvaluation> entries,
-        ImmutableArray<DigestionFormalizationReceipt> receipts = default,
-        VerifiedScribeEmissions? scribeEmissions = null,
         ImmutableArray<string> acknowledgedStale = default)
     {
-        var receiptMap = (receipts.IsDefault ? [] : receipts)
-            .ToDictionary(static item => item.AtomId, StringComparer.Ordinal);
         return DigestionReadinessQuery.Classify(
             Document(entries, acknowledgedStale),
             Evaluation(entries),
-            Kinds(entries),
-            receiptMap,
-            receiptMap.Keys.ToImmutableHashSet(StringComparer.Ordinal),
-            scribeEmissions ?? ReadyScribe());
+            Kinds(entries));
     }
 
     private static DigestionLedgerEvaluation Evaluation(
@@ -506,9 +381,11 @@ public sealed class DigestionReadinessQueryTests
             AtomizerRegistry.GenericId,
             atomId,
             fingerprints,
-            coverageGids.IsDefault ? [] : coverageGids,
+            coverageGids.IsDefault
+                ? []
+                : coverageGids.Select(static gid => new DigestionCoverageEdge(gid, null))
+                    .ToImmutableArray(),
             new DigestionReceipts(
-                [],
                 [],
                 [],
                 chainAtoms.IsDefault ? [] : chainAtoms,
@@ -531,27 +408,4 @@ public sealed class DigestionReadinessQueryTests
             gaps.IsDefault ? [] : gaps);
     }
 
-    private static DigestionFormalizationReceipt Receipt(
-        DigestionEntryEvaluation entry,
-        string gid = ReadyGid) => new(
-        entry.Entry.AtomId,
-        gid,
-        new DigestionFormalizationSignature("ready", "theorem", "True"),
-        entry.Entry.CasRef,
-        entry.Entry.Fingerprints.RawSha256);
-
-    private static VerifiedScribeEmissions ReadyScribe(bool referencesDeclaration = true)
-    {
-        var documentGid = ScribeEmissionAttestation.DocumentGid(ReadyGid);
-        return VerifiedScribeEmissions.Create(
-            [
-                new ScribeEmissionRecord(
-                    documentGid,
-                    ScribeEmissionAttestation.DefinitionPath(documentGid),
-                    "sha256:" + new string('c', 64),
-                    ScribeEmissionAttestation.EmissionPath(documentGid),
-                    "sha256:" + new string('d', 64)),
-            ],
-            referencesDeclaration ? [ReadyGid] : []);
-    }
 }

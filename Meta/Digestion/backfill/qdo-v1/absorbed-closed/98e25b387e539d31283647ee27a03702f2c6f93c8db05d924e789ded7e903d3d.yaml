@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:98e25b387e539d31283647ee27a03702f2c6f93c8db05d924e789ded7e903d3d
+  normalized_sha256: sha256:98e25b387e539d31283647ee27a03702f2c6f93c8db05d924e789ded7e903d3d
+cas_ref: sha256:98e25b387e539d31283647ee27a03702f2c6f93c8db05d924e789ded7e903d3d
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/BackwardChains/BackwardChainLayerPeriodicity.backward_chain_and_layer_iff_periodic
+    target_statement_id: sha256:b00fd9191bf3e84762c85c0902f6fdb8803ae4bcc7863aea2dca0fea5e65e62e
+receipts:
+  scribe:
+    - gid: D5/S3/ObserverMemory/BackwardChains/BackwardChainLayerPeriodicity.backward_chain_and_layer_iff_periodic
+      definition_sha256: sha256:048c7abb53f6606c167c2c685cfdebebcc00f8783b7f3c5582d928cc60b8431d
+      emission_sha256: sha256:731fd6e8a4b1a85a3575b36c266513a9535e084062601a1549e7ce2a67abec3d
+  unresolved_subitems: []
