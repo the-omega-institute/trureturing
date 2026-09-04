@@ -1,8 +1,11 @@
-# mathlib 4.33 集成分支的 Lean 构建缓存发布。
+# 集成分支的 Lean 构建缓存发布(当前:ie0904 信息逃逸战线的 judge 面分支 `lane/math/ie0904-c`)。
 #
 # 【临时件 —— 退出条件写在这里,不是待办】
-# 本文件只为 `integration-mathlib-upgarde-to-433` 存在。该分支一旦合入 dev
-# 或关闭,**本文件连同 RepositoryPathPolicy 里的登记一并删除**。分支名硬编码
+# 本文件只为一条正在改 `lakefile.toml` 的集成分支存在(前任:`integration-mathlib-upgarde-to-433`,
+# 已合入 dev;现任:`lane/math/ie0904-c`,PR #5266,新增 `[[lean_lib]] LeanInformationAudit`)。
+# 改 lakefile 会改 `config_sha256`,而 ci.yml 的 lean 门只取 release cache、不回落编译,
+# 故新 config 的 cache 必须先由 dev 上的定时 publisher 从该分支发布(#5270 记录了同族困境)。
+# 该分支一旦合入 dev 或关闭,**本文件连同 RepositoryPathPolicy 里的登记一并删除**。分支名硬编码
 # 是有意的:一个临时件不值得为它建注册表(第 8 条:不预建空壳)。
 #
 # 【为什么是独立文件而不是 lean-cache-publish.yml 里的第二个 job】
@@ -23,7 +26,7 @@
 # 【错开 cron】
 # 与 lean-cache-publish.yml 的 '0 */6 * * *' 错开 3 小时,避免两份全量构建同时
 # 抢 runner 额度。
-name: Lean build cache publication (integration 4.33)
+name: Lean build cache publication (integration branch)
 
 on:
   schedule:
@@ -64,7 +67,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           path: candidate
-          ref: integration-mathlib-upgarde-to-433
+          ref: lane/math/ie0904-c
           fetch-depth: 2
       - name: Strip checkout remote state
         if: steps.checkout-publish.outcome == 'success'
