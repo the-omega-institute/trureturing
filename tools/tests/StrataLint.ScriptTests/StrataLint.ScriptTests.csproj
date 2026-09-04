@@ -23,5 +23,8 @@
     <None Include="../../scripts/workflow/admission-plane-classify.py"
           Link="admission-plane-classify.py"
           CopyToOutputDirectory="PreserveNewest" />
+    <None Include="../../scripts/workflow/engineering-test-execution-harness.sh"
+          Link="engineering-test-execution-harness.sh"
+          CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

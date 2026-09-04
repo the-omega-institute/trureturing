@@ -262,9 +262,8 @@ public sealed partial class MakeWorkflowTests
             StringComparison.Ordinal);
         var engineeringTestsRecipe = Recipe(makefile, "engineering-tests");
         Assert.Contains("REPOSITORY ?= $(HERE)/..", makefile, StringComparison.Ordinal);
-        Assert.Contains("ENGINEERING_TESTS_CWD := $(REPOSITORY)", makefile, StringComparison.Ordinal);
         Assert.Equal(
-            "\t@cd \"$(ENGINEERING_TESTS_CWD)\" && dotnet run --project \"$(HERE)/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj\" --configuration Release --no-launch-profile -- --repository \"$(REPOSITORY)\" --head \"$(HEAD)\" --base \"$(BASE)\"",
+            "\t@cd \"$(REPOSITORY)\" && dotnet run --project \"$(HERE)/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj\" --configuration Release --no-launch-profile -- --repository \"$(REPOSITORY)\" --head \"$(HEAD)\" --base \"$(BASE)\"",
             engineeringTestsRecipe);
         Assert.Single(
             Regex.Matches(
