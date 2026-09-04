@@ -6,7 +6,7 @@ public sealed partial class ScriptTestGateClosureTests
         "tools/tests/StrataLint.Tests/Fixtures/fixture-registry.yaml";
 
     [Fact]
-    public void RegistryTestsDeclareFixtureReadThroughStaticFieldInitializers()
+    public void ScribeTestMapDeclaresRegistryFixtureReadThroughStaticFieldInitializers()
     {
         string[] testNames =
         [
