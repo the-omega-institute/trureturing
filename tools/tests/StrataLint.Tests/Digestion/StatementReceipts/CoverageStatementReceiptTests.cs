@@ -10,6 +10,10 @@ public sealed class CoverageStatementReceiptTests
     private const string ModuleGid = "D5/S0/Carrier/StatementReceipt";
     private const string ModulePath = ModuleGid + ".lean";
     private const string DeclarationGid = ModuleGid + ".target";
+    // Derived once by independently canonicalizing the declaration-statement-v1 material:
+    // ModulePath, ns(n0,6:target), theorem, and True.
+    private const string ExpectedDeclarationStatementPin =
+        "sha256:3550644baaf9611be033c032903cdd16576de334d42f76ee9a3d673ad7e336f0";
 
     [Fact]
     public void ModuleGidResolutionTracksFrozenStatePin()
@@ -36,7 +40,6 @@ public sealed class CoverageStatementReceiptTests
     [Fact]
     public void DeclarationGidResolutionComesFromCurrentReportAndMissingDeclarationIsUnresolved()
     {
-        var path = RepoPath.CreateKnown(ModulePath);
         var declaration = new LeanDeclaration(
             "D5.S0.Carrier.StatementReceipt.target",
             "theorem",
@@ -51,8 +54,6 @@ public sealed class CoverageStatementReceiptTests
             {
                 [ModulePath] = fileReport,
             });
-        var expected = Assert.Single(
-            CanonicalStatementWriter.DeclarationStatementIds(path, fileReport)).StatementId;
         var state = FrozenStateCatalog.Load(StateSnapshot(FrozenStatementReceiptTestData.Id('1')));
         Assert.True(Gid.TryParse(DeclarationGid, out var gid));
 
@@ -62,7 +63,7 @@ public sealed class CoverageStatementReceiptTests
             LeanAxiomReport.Create(new Dictionary<string, LeanFileReport>(StringComparer.Ordinal)));
 
         Assert.True(present.TryResolve(gid, out var statementId, out var message), message);
-        Assert.Equal(expected, statementId);
+        Assert.Equal(ExpectedDeclarationStatementPin, statementId!.Value);
         Assert.False(missing.TryResolve(gid, out var missingStatementId, out var missingMessage));
         Assert.Null(missingStatementId);
         Assert.Contains("0 current report declarations", missingMessage, StringComparison.Ordinal);
