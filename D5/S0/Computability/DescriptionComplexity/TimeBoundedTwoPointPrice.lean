@@ -1,6 +1,6 @@
-/- GID: D5/S0/Computability/TimeBoundedTwoPointPrice
+/- GID: D5/S0/Computability/DescriptionComplexity/TimeBoundedTwoPointPrice
    generality: G
-   mirror-B: D5/B/S0/Computability/TimeBoundedTwoPointPrice
+   mirror-B: D5/B/S0/Computability/DescriptionComplexity/TimeBoundedTwoPointPrice
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    digest: Finite bounded search constructs incomparable fast-long and short-slow witnesses. -/
@@ -26,7 +26,7 @@ Library-search and duplication audit (2026-09-05):
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S0.Computability.TimeBoundedTwoPointPrice
+namespace D5.S0.Computability.DescriptionComplexity.TimeBoundedTwoPointPrice
 
 /-- A length-indexed binary word, represented by its lexicographic rank. -/
 abbrev BitWord (length : Nat) := Fin (2 ^ length)
@@ -343,4 +343,4 @@ end TimePricedMachine
 
 #print axioms TimePricedMachine.time_bounded_two_point_price_frontier
 
-end D5.S0.Computability.TimeBoundedTwoPointPrice
+end D5.S0.Computability.DescriptionComplexity.TimeBoundedTwoPointPrice
