@@ -112,7 +112,7 @@ internal static partial class RepositoryRules
     internal static bool IsLeanReportProducerInput(string path) =>
         path.StartsWith("tools/", StringComparison.Ordinal)
             && !path.StartsWith("tools/tests/", StringComparison.Ordinal)
-        || StrataLintEngineBuildInputs.IsInheritedBuildInput(path)
+        || StrataLintEngineBuildInputs.Contains(path)
         || path.StartsWith(".github/workflows/", StringComparison.Ordinal)
         || FrozenLedgerDeltaPredicate.IsEnvironmentInput(path);
 

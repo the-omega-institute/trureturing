@@ -64,7 +64,7 @@ internal static class StrataLintEngineBuildInputs
         || path.StartsWith("Blueprint/", StringComparison.Ordinal)
             && path.EndsWith(".scribe.cs", StringComparison.Ordinal);
 
-    internal static bool IsInheritedBuildInput(string path)
+    private static bool IsInheritedBuildInput(string path)
     {
         var separator = path.LastIndexOf('/');
         var directory = separator < 0 ? string.Empty : path[..separator];
