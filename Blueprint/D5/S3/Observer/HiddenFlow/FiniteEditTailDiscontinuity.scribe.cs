@@ -58,8 +58,8 @@ internal sealed class FiniteEditTailDiscontinuityDocument : IScribeDocumentDefin
         Formula y = F.Id("y");
         Formula a = F.Id("a");
         Formula b = F.Id("b");
-        Formula disagreement = new Formula.SetBuilder(
-            NotEqual(At(x, index), At(y, index)), index, positiveNaturals);
+        Formula disagreement = SetOf(
+            index, positiveNaturals, NotEqual(At(x, index), At(y, index)));
         Formula invariance = Seq(
             Forall, Sp, x, Comma, Sp, y, Colon, Sp, product, Comma, Sp,
             Call("Finite", disagreement), Sp, Rightarrow, Sp,
@@ -84,4 +84,9 @@ internal sealed class FiniteEditTailDiscontinuityDocument : IScribeDocumentDefin
             Neg, Sp, Call("ContinuousAt", observable, x), Dot,
             End, Grp(F.Id("gathered"))));
     }
+
+    private static Formula SetOf(Formula element, Formula domain, Formula predicate) =>
+        Seq(
+            Left, OpenBrace, element, Sp, Colon, Sp, domain,
+            Sp, Mid, Sp, predicate, Right, CloseBrace);
 }

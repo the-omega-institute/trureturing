@@ -6,7 +6,7 @@ A nonconstant Boolean tail observable on a product is continuous nowhere.
 
 **Theorem 1.1 (A nonconstant finite-edit tail observable is nowhere continuous).**
 
-$$\begin{gathered}\forall X: \mathbb{N}_{>0} \to \operatorname{Type},\\{}[\forall n: \mathbb{N}_{>0}, \operatorname{TopologicalSpace}\left(X(n)\right)],\\{}F: \prod_{n\in \mathbb{N}_{>0}} X(n) \to Bool,\\{}(\forall x, y: \prod_{n\in \mathbb{N}_{>0}} X(n), \operatorname{Finite}\left(\left\{x(n) \ne y(n) \mid n \in \mathbb{N}_{>0}\right\}\right) \Rightarrow F(x) = F(y)) \land (\exists a, b: \prod_{n\in \mathbb{N}_{>0}} X(n), F(a) \ne F(b)) \Rightarrow\\{}\forall x: \prod_{n\in \mathbb{N}_{>0}} X(n), \neg \operatorname{ContinuousAt}\left(F, x\right).\end{gathered}$$
+$$\begin{gathered}\forall X: \mathbb{N}_{>0} \to \operatorname{Type},\\{}[\forall n: \mathbb{N}_{>0}, \operatorname{TopologicalSpace}\left(X(n)\right)],\\{}F: \prod_{n\in \mathbb{N}_{>0}} X(n) \to Bool,\\{}(\forall x, y: \prod_{n\in \mathbb{N}_{>0}} X(n), \operatorname{Finite}\left(\left\{n : \mathbb{N}_{>0} \mid x(n) \ne y(n)\right\}\right) \Rightarrow F(x) = F(y)) \land (\exists a, b: \prod_{n\in \mathbb{N}_{>0}} X(n), F(a) \ne F(b)) \Rightarrow\\{}\forall x: \prod_{n\in \mathbb{N}_{>0}} X(n), \neg \operatorname{ContinuousAt}\left(F, x\right).\end{gathered}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/HiddenFlow/FiniteEditTailDiscontinuity.nonconstant_finite_edit_invariant_nowhere_continuous` (`✓ std3`). ∎
 
