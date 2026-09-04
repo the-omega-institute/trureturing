@@ -3,6 +3,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using StrataLint.Engine;
+using StrataLint.Scribe;
 
 namespace StrataLint.EngineeringScope;
 
@@ -74,7 +75,16 @@ internal static class Program
         var protectedBase = RevisionSnapshot(options.RepositoryRoot, @base, "protected base");
         var candidate = RevisionSnapshot(options.RepositoryRoot, head, "candidate");
         var changedPaths = GitPaths(options.RepositoryRoot, @base, head);
-        if (full == "1")
+        var admissionPlane = AdmissionPlaneDeltaPolicy.Evaluate(
+            protectedBase,
+            RawChangeSet.Create(changedPaths));
+        if (!admissionPlane.IsAdmissible)
+        {
+            throw new InvalidOperationException(
+                $"{admissionPlane.Code} {admissionPlane.Path}: {admissionPlane.Message}");
+        }
+
+        if (full == "1" || admissionPlane.RequiresFullEngineering())
         {
             return ExecutePlan(
                 options.RepositoryRoot,

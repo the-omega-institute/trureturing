@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using System.Text.Json;
 using StrataLint.Engine;
+using StrataLint.Scribe;
 
 namespace StrataLint.Cli;
 
@@ -270,6 +271,35 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 });
             var current = snapshots.Current;
             var baseline = snapshots.Baseline;
+            var admissionPlane = timing.Measure(
+                "admission-plane",
+                () => AdmissionPlaneDeltaPolicy.Evaluate(baseline, prepared.Changes),
+                static result => !result.IsAdmissible);
+            if (!admissionPlane.IsAdmissible)
+            {
+                if (admissionPlane.Classification is AdmissionPlaneDeltaClassification.Mixed)
+                {
+                    var diagnostics = ImmutableArray.CreateBuilder<Diagnostic>();
+                    if (bootstrap is BootstrapOutcome.ProtectedSurfaceVerificationRequired protectedChange)
+                    {
+                        diagnostics.AddRange(BootstrapGate.CreateSl022Diagnostics(
+                            protectedChange.ChangeSet));
+                    }
+
+                    diagnostics.Add(new Diagnostic(
+                        RuleId.CreateKnown(1),
+                        "Admission plane partition",
+                        DisplaySeverity.Error,
+                        AdmissionEffect.Block,
+                        admissionPlane.Path,
+                        $"{admissionPlane.Code}: {admissionPlane.Message}"));
+                    return new AdmissionOutcome.RuleRejected(diagnostics.ToImmutable());
+                }
+
+                return new AdmissionOutcome.InfrastructureFailure(
+                    $"{admissionPlane.Code} {admissionPlane.Path}: {admissionPlane.Message}");
+            }
+
             var candidateLeanReport = timing.Measure(
                 "lean-report-load",
                 () => RawLeanReportArtifact.ReadFile(

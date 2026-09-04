@@ -166,7 +166,8 @@
       "stratalint.engineeringscope": {
         "type": "Project",
         "dependencies": {
-          "StrataLint.Engine": "[1.0.0, )"
+          "StrataLint.Engine": "[1.0.0, )",
+          "StrataLint.Scribe": "[1.0.0, )"
         }
       },
       "stratalint.engineeringscope.tests": {
