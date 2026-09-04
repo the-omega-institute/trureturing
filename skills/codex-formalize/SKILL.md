@@ -162,13 +162,13 @@ Only after Step 6 passes, run:
 ```sh
 make deposit ATOM_ID=<id> GID=<D5/Path/Module.theorem_name>
 make cover ATOM_ID=<id> GID=<gid>
-make preflight   # early feedback only; NOT a gate (CLAUDE.md 器律②)
+make preflight BASE="$(git rev-parse HEAD^1)"   # early feedback only; NOT a gate (CLAUDE.md 器律②)
 ```
 
 Deposit and cover operate on the same working tree and may land in the same pull request. Neither
 command creates an intermediate commit.
 
-`make deposit` and `make cover` must exit 0. `make preflight` is local early feedback: report its exit code and every rejected rule verbatim, but a nonzero local preflight does not stop the lane — the three remote required checks are the only judgment (CLAUDE.md 器律②, user 2026-08-26; ②′ push and local verification run in parallel). This macOS host has known preflight noise (Perl `C.UTF-8` locale crashes in script tests, `ENGINEERING_TEST_EVIDENCE_FAILED` without TRX, an `SL-022` observation line); stop only on a content-level red you caused (Lean error, `SL-008` frozen-surface diff, `SL-010` generality, digestion coverage), and then end as `open`. Judge them only by exit code, and never pipe a judgment command: `cmd | tail -1` reports the pipe's exit status, not the command's, and three landed incidents (a merge that silently failed, validation run on a stale base, a cover failure read as success) trace to exactly this. Run the command bare, or capture `$?` on the command itself before any formatting.
+`make deposit` and `make cover` must exit 0. `make preflight BASE="$(git rev-parse HEAD^1)"` is local early feedback: report its exit code and every rejected rule verbatim, but a nonzero local preflight does not stop the lane — the three remote required checks are the only judgment (CLAUDE.md 器律②, user 2026-08-26; ②′ push and local verification run in parallel). This macOS host has known preflight noise (Perl `C.UTF-8` locale crashes in script tests, `ENGINEERING_TEST_EVIDENCE_FAILED` without TRX, an `SL-022` observation line); stop only on a content-level red you caused (Lean error, `SL-008` frozen-surface diff, `SL-010` generality, digestion coverage), and then end as `open`. Judge them only by exit code, and never pipe a judgment command: `cmd | tail -1` reports the pipe's exit status, not the command's, and three landed incidents (a merge that silently failed, validation run on a stale base, a cover failure read as success) trace to exactly this. Run the command bare, or capture `$?` on the command itself before any formatting.
 
 If `make deposit` or `make cover` exits nonzero, stop and end as `open`. Report the failed command and exit code, machine diagnostics, touched paths, and the actual resulting tree state; deposit and cover do not commit their changes.
 
