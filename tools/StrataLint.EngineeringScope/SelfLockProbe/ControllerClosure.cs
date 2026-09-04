@@ -31,19 +31,74 @@ internal static class ControllerClosure
     {
         var root = ProcessTools.RequireRepositoryRoot(controllerRoot);
         var commit = ProcessTools.GitText(root, "rev-parse", "HEAD");
-        var snapshot = SnapshotDecoder.Decode(GitRepositorySnapshotReader.ReadRevision(root, commit)) switch
-        {
-            SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,
-            SnapshotDecodeOutcome.InfrastructureFailure failure =>
-                throw new InvalidDataException($"controller snapshot is invalid: {failure.Message}"),
-            _ => throw new InvalidDataException("controller snapshot decode returned an unknown outcome"),
-        };
-        var paths = DeriveCore(snapshot);
+        // Only the tracked path list and the handful of project files are needed. Reading the
+        // whole tree here (GitRepositorySnapshotReader.ReadRevision materialises every tracked
+        // blob) made each self-lock-probe invocation walk the entire repository, which pushed
+        // the SelfLockProbeScriptTests process budget past its 10s hang guard in CI while
+        // staying fast on a warm local checkout. The derivation below is unchanged; only the
+        // way its two inputs are supplied is.
+        var tracked = TrackedPathsAt(root, commit);
+        var paths = DeriveCore(tracked, project => ReadTextAt(root, commit, project));
         return new ControllerClosureSnapshot(commit, paths.EvaluatorPaths, paths.OwnerPaths);
     }
 
-    internal static ControllerClosurePaths Derive(RepositorySnapshot snapshot) =>
-        DeriveCore(snapshot);
+    internal static ControllerClosurePaths Derive(RepositorySnapshot snapshot)
+    {
+        ArgumentNullException.ThrowIfNull(snapshot);
+        var tracked = snapshot.Files.Values
+            .Select(static file => file.Path.Value)
+            .ToHashSet(StringComparer.Ordinal);
+        return DeriveCore(tracked, project => snapshot.TryGetFile(project, out var file)
+            ? file.Text
+            : throw new InvalidDataException("controller project reference is absent from base"));
+    }
+
+    private static readonly UTF8Encoding StrictUtf8 = new(false, true);
+
+    private static IEnumerable<ReadOnlyMemory<byte>> SplitNul(ReadOnlyMemory<byte> bytes)
+    {
+        var start = 0;
+        for (var index = 0; index < bytes.Length; index++)
+        {
+            if (bytes.Span[index] != 0) continue;
+            if (index > start) yield return bytes[start..index];
+            start = index + 1;
+        }
+        if (start < bytes.Length) yield return bytes[start..];
+    }
+
+    private static IReadOnlySet<string> TrackedPathsAt(string root, string commit)
+    {
+        var output = ProcessTools.Run(
+            "/usr/bin/git",
+            ["-C", root, "ls-tree", "-r", "--name-only", "-z", commit],
+            root);
+        if (output.ExitCode != 0 || output.StandardError.Length != 0)
+        {
+            throw new InvalidDataException("controller tree enumeration failed");
+        }
+        var result = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var bytes in SplitNul(output.StandardOutput))
+        {
+            var path = StrictUtf8.GetString(bytes.Span);
+            EnsureCanonical(path);
+            result.Add(path);
+        }
+        return result;
+    }
+
+    private static string ReadTextAt(string root, string commit, string path)
+    {
+        var output = ProcessTools.Run(
+            "/usr/bin/git",
+            ["-C", root, "show", $"{commit}:{path}"],
+            root);
+        if (output.ExitCode != 0 || output.StandardError.Length != 0)
+        {
+            throw new InvalidDataException("controller project reference is absent from base");
+        }
+        return StrictUtf8.GetString(output.StandardOutput);
+    }
 
     internal static byte[] ReadAtHead(string controllerRoot, string relativePath)
     {
@@ -95,13 +150,13 @@ internal static class ControllerClosure
         return files;
     }
 
-    private static ControllerClosurePaths DeriveCore(RepositorySnapshot snapshot)
+    private static ControllerClosurePaths DeriveCore(
+        IReadOnlySet<string> tracked,
+        Func<string, string> readProjectText)
     {
-        ArgumentNullException.ThrowIfNull(snapshot);
-        var tracked = snapshot.Files.Values
-            .Select(static file => file.Path.Value)
-            .ToHashSet(StringComparer.Ordinal);
-        var projects = ProjectClosure(snapshot, tracked);
+        ArgumentNullException.ThrowIfNull(tracked);
+        ArgumentNullException.ThrowIfNull(readProjectText);
+        var projects = ProjectClosure(readProjectText, tracked);
         var evaluator = new HashSet<string>(StringComparer.Ordinal);
         foreach (var project in projects)
         {
@@ -114,7 +169,7 @@ internal static class ControllerClosure
                 && !path.Contains("/obj/", StringComparison.Ordinal)));
             var lockFile = directory + "/packages.lock.json";
             if (tracked.Contains(lockFile)) evaluator.Add(lockFile);
-            AddProjectInputs(snapshot, project, evaluator, tracked);
+            AddProjectInputs(readProjectText, project, evaluator, tracked);
         }
 
         AddIfTracked(evaluator, tracked, "Directory.Build.props");
@@ -133,7 +188,7 @@ internal static class ControllerClosure
     }
 
     private static HashSet<string> ProjectClosure(
-        RepositorySnapshot snapshot,
+        Func<string, string> readProjectText,
         IReadOnlySet<string> tracked)
     {
         var pending = new Stack<string>();
@@ -147,7 +202,7 @@ internal static class ControllerClosure
                     throw new InvalidDataException("controller project reference is absent from base");
                 continue;
             }
-            var document = ReadProject(snapshot, project);
+            var document = ReadProject(readProjectText, project);
             foreach (var reference in document.Descendants()
                          .Where(static element => element.Name.LocalName == "ProjectReference"))
             {
@@ -158,12 +213,12 @@ internal static class ControllerClosure
     }
 
     private static void AddProjectInputs(
-        RepositorySnapshot snapshot,
+        Func<string, string> readProjectText,
         string project,
         HashSet<string> evaluator,
         IReadOnlySet<string> tracked)
     {
-        var document = ReadProject(snapshot, project);
+        var document = ReadProject(readProjectText, project);
         foreach (var input in document.Descendants().Where(static element =>
                      element.Name.LocalName is "AdditionalFiles" or "Compile"))
         {
@@ -182,13 +237,11 @@ internal static class ControllerClosure
         }
     }
 
-    private static XDocument ReadProject(RepositorySnapshot snapshot, string project)
+    private static XDocument ReadProject(Func<string, string> readProjectText, string project)
     {
         try
         {
-            if (!snapshot.TryGetFile(project, out var file))
-                throw new InvalidDataException("controller project reference is absent from base");
-            return XDocument.Parse(file.Text, LoadOptions.None);
+            return XDocument.Parse(readProjectText(project), LoadOptions.None);
         }
         catch (Exception exception) when (exception is DecoderFallbackException or System.Xml.XmlException)
         {
