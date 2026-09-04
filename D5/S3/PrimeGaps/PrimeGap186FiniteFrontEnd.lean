@@ -38,28 +38,41 @@ theorem admissibleTuple186_le_186 : ∀ h ∈ admissibleTuple186, h ≤ 186 := b
 
 /-- The integer presentation also has cardinality forty. -/
 theorem admissibleTuple186Int_card : admissibleTuple186Int.card = 40 := by
-  unfold admissibleTuple186Int
-  apply Finset.card_image_of_injective
-  exact Int.ofNat_injective
+  rw [admissibleTuple186Int, Finset.card_image_of_injective _ Int.ofNat_injective]
   exact admissibleTuple186_card
 
-/-- Any translate of the explicit tuple containing at least two primes already contains two
-distinct primes in an interval of length 186. The analytic `DHL[40,2]` input is required only
-to prove that such translates occur infinitely often. -/
+/-- Any translate of the explicit tuple containing at least two primes contains two distinct
+primes in an interval of length 186. -/
 theorem two_prime_translate_yields_pair186
     (n : Nat) (hocc : 2 ≤ primeTranslateOccupancy admissibleTuple186 n) :
     BoundedPrimePairAt 186 n :=
   two_prime_occupancy_yields_bounded_pair admissibleTuple186 186 n
     admissibleTuple186_le_186 hocc
 
+/-- The same two-hit translate already contains an actual consecutive-prime gap of width at
+most 186. This closes the finite combinatorial passage used after `DHL[40,2]`. -/
+theorem two_prime_translate_yields_consecutive_gap186
+    (n : Nat) (hocc : 2 ≤ primeTranslateOccupancy admissibleTuple186 n) :
+    BoundedConsecutivePrimeGapAt 186 n :=
+  two_prime_occupancy_yields_consecutive_gap admissibleTuple186 186 n
+    admissibleTuple186_le_186 hocc
+
 /-- If the source-level infinite-translate conclusion is available, then bounded prime pairs of
-width 186 occur after every prescribed translation threshold. This is a proof-producing bridge
-from the imported short-gap source contract to the repository's finite occupancy geometry. -/
+width 186 occur after every prescribed translation threshold. -/
 theorem arbitrarily_late_bounded_pair186
     (hsource : InfiniteTwoPrimeTranslates186) (N : Nat) :
     ∃ n : Nat, N < n ∧ BoundedPrimePairAt 186 n := by
   obtain ⟨n, hn, hNn⟩ := Set.Infinite.exists_gt hsource N
   exact ⟨n, hNn, two_prime_translate_yields_pair186 n hn⟩
+
+/-- Under the source-level infinite-translate conclusion, consecutive prime gaps of width at
+most 186 occur after every translation threshold. This is the exact finite statement needed
+before passing to an `EReal` liminf formulation. -/
+theorem arbitrarily_late_consecutive_gap186
+    (hsource : InfiniteTwoPrimeTranslates186) (N : Nat) :
+    ∃ n : Nat, N < n ∧ BoundedConsecutivePrimeGapAt 186 n := by
+  obtain ⟨n, hn, hNn⟩ := Set.Infinite.exists_gt hsource N
+  exact ⟨n, hNn, two_prime_translate_yields_consecutive_gap186 n hn⟩
 
 /-- For every modulus larger than forty, the explicit integer tuple automatically leaves a
 strictly positive residue survivor budget. Thus only the small moduli can obstruct
@@ -77,7 +90,9 @@ theorem admissibleTuple186_large_modulus_survives
 #print axioms admissibleTuple186_le_186
 #print axioms admissibleTuple186Int_card
 #print axioms two_prime_translate_yields_pair186
+#print axioms two_prime_translate_yields_consecutive_gap186
 #print axioms arbitrarily_late_bounded_pair186
+#print axioms arbitrarily_late_consecutive_gap186
 #print axioms admissibleTuple186_large_modulus_survives
 
 end D5.S3.PrimeGaps.PrimeGap186FiniteFrontEnd
