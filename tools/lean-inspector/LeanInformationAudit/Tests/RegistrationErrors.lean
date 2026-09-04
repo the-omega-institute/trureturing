@@ -56,6 +56,24 @@ register_information_theorem legacyExample
   primitives fixtureBundle
   realization legacyRealization
 
+namespace ImportedFixture
+
+theorem importedExample : True :=
+  trivial
+
+theorem importedRealization :
+    LegacyPrimitiveRealization fixtureLawArena True fixtureRealization where
+  equivalence := Iff.rfl
+
+end ImportedFixture
+
+open ImportedFixture
+
+register_information_theorem importedExample
+  in fixtureLawArena
+  primitives fixtureBundle
+  realization importedRealization
+
 /-- error: IE-C002 DuplicateRegistration: LeanInformationAudit.Tests.RegistrationErrors.legacyExample -/
 #guard_msgs (error) in
 register_information_theorem legacyExample
