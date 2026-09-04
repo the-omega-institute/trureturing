@@ -3,16 +3,17 @@
    mirror-B: D5/B/S3/Quantum/Tomography/ZaunerAggregateFlatnessCertificate
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: All twenty-four off-mode zeros of a canonical order-six Zauner transition aggregate to a normalized defect margin two-thirds and a scaled-relative-Gram three-frame margin twenty-four. -/
+   digest: Canonical order-six Zauner transitions have twenty-four structural zeros; row-Gram mass conservation sharpens their scaled three-frame-potential margin from twenty-four to seventy-two. -/
 
-import D5.S3.Quantum.Tomography.MUBCompletionThreeFramePotential
+import D5.S3.Quantum.Tomography.SupportFaceFlatnessDefect
 
 /- Library-search audit trail (2026-09-04):
    * Reuses the correct fixed-edge structural-zero theorem, the normalized
-     scalar defect, and the scaled-relative-Gram three-frame potential.
+     scalar defect, the scaled-relative-Gram three-frame potential, and the
+     support-face row-mass theorem.
    * Reuses `Fintype.sum_prod_type`, `Fin.sum_univ_two`, and
      `Fin.sum_univ_three` to enumerate the exact order-six carrier. No new
-     zero-count or matrix carrier is introduced.
+     zero-count, matrix carrier, or flatness objective is introduced.
 -/
 
 open scoped BigOperators Matrix
@@ -28,6 +29,7 @@ open Matrix
 open D5.S3.Quantum.Tomography.MUBHadamardCompatibility
 open D5.S3.Quantum.Tomography.ZaunerCompletionFibre
 open D5.S3.Quantum.Tomography.MUBCompletionThreeFramePotential
+open D5.S3.Quantum.Tomography.SupportFaceFlatnessDefect
 
 /-- All twenty-four entries connecting distinct three-cycle modes vanish in
 the normalized canonical transition. Summing their exact `1/36` contributions
@@ -60,9 +62,8 @@ theorem zaunerCanonicalCompletion_normalized_defect_ge_two_thirds
   norm_num
   positivity
 
-/-- In the rational scaled-relative-Gram coordinate `P = 6 M`, each of the
-same twenty-four structural zeros contributes one full unit. Hence the first
-term of the three-frame potential is at least twenty-four. -/
+/-- Counting only the twenty-four structural zeros in the rational scaled
+relative Gram gives the preliminary lower bound twenty-four. -/
 theorem zaunerCanonical_scaledRelativeGramDefect_ge_twenty_four
     (F : Matrix (Fin 3) (Fin 3) ℂ)
     (x x' : Fin 3 → ℂ)
@@ -86,8 +87,7 @@ theorem zaunerCanonical_scaledRelativeGramDefect_ge_twenty_four
   norm_num
   positivity
 
-/-- Strong canonical-branch certificate: the complete three-frame potential
-has margin at least twenty-four. -/
+/-- The preliminary zero-count bound transfers to the full potential. -/
 theorem zaunerCanonicalCompletion_threeFramePotential_ge_twenty_four
     (F : Matrix (Fin 3) (Fin 3) ℂ)
     (x x' : Fin 3 → ℂ)
@@ -100,8 +100,69 @@ theorem zaunerCanonicalCompletion_threeFramePotential_ge_twenty_four
     (scaledRelativeGramEntrywiseDefect_le_completionThreeFramePotential
       X Y (zaunerScaledRelativeGram F x x'))
 
+/-- Sharp support-face certificate on the scaled-Hadamard row-Gram variety.
+The structural zeros leave only two active positions in every row. Row-Gram
+mass conservation forces those positions to carry total squared norm `36`,
+which raises the normalized defect floor from `24` to `72`. -/
+theorem zaunerCanonical_scaledRelativeGramDefect_ge_seventy_two
+    (F : Matrix (Fin 3) (Fin 3) ℂ)
+    (x x' : Fin 3 → ℂ)
+    (hF : F * Fᴴ = (1 : Matrix (Fin 3) (Fin 3) ℂ))
+    (hPGram :
+      zaunerScaledRelativeGram F x x' *
+          (zaunerScaledRelativeGram F x x')ᴴ =
+        (36 : ℂ) • (1 : ComplexSquare (Fin 2 × Fin 3))) :
+    (72 : ℝ) ≤
+      scaledRelativeGramEntrywiseDefect
+        (zaunerScaledRelativeGram F x x') := by
+  apply twoModeSupport_scaledRelativeGramDefect_ge_seventy_two
+    (zaunerScaledRelativeGram F x x') hPGram
+  intro r s i j hij
+  exact zaunerScaledRelativeGram_offMode_zero
+    F x x' hF r s i j hij
+
+/-- The same sharp margin applies to the complete fixed-edge three-frame
+potential. -/
+theorem zaunerCanonicalCompletion_threeFramePotential_ge_seventy_two
+    (F : Matrix (Fin 3) (Fin 3) ℂ)
+    (x x' : Fin 3 → ℂ)
+    (hF : F * Fᴴ = (1 : Matrix (Fin 3) (Fin 3) ℂ))
+    (hPGram :
+      zaunerScaledRelativeGram F x x' *
+          (zaunerScaledRelativeGram F x x')ᴴ =
+        (36 : ℂ) • (1 : ComplexSquare (Fin 2 × Fin 3)))
+    (X Y : ComplexSquare (Fin 2 × Fin 3)) :
+    (72 : ℝ) ≤ completionThreeFramePotential X Y
+      (zaunerScaledRelativeGram F x x') := by
+  exact le_trans
+    (zaunerCanonical_scaledRelativeGramDefect_ge_seventy_two
+      F x x' hF hPGram)
+    (scaledRelativeGramEntrywiseDefect_le_completionThreeFramePotential
+      X Y (zaunerScaledRelativeGram F x x'))
+
+/-- A canonical Zauner scaled relative Gram satisfying its required row-Gram
+law cannot lie on the zero locus of the three-frame potential. -/
+theorem zaunerCanonicalCompletion_threeFramePotential_ne_zero_of_rowGram
+    (F : Matrix (Fin 3) (Fin 3) ℂ)
+    (x x' : Fin 3 → ℂ)
+    (hF : F * Fᴴ = (1 : Matrix (Fin 3) (Fin 3) ℂ))
+    (hPGram :
+      zaunerScaledRelativeGram F x x' *
+          (zaunerScaledRelativeGram F x x')ᴴ =
+        (36 : ℂ) • (1 : ComplexSquare (Fin 2 × Fin 3)))
+    (X Y : ComplexSquare (Fin 2 × Fin 3)) :
+    completionThreeFramePotential X Y
+      (zaunerScaledRelativeGram F x x') ≠ 0 := by
+  have hMargin :=
+    zaunerCanonicalCompletion_threeFramePotential_ge_seventy_two
+      F x x' hF hPGram X Y
+  linarith
+
 #print axioms zaunerCanonicalCompletion_normalized_defect_ge_two_thirds
 #print axioms zaunerCanonical_scaledRelativeGramDefect_ge_twenty_four
 #print axioms zaunerCanonicalCompletion_threeFramePotential_ge_twenty_four
+#print axioms zaunerCanonical_scaledRelativeGramDefect_ge_seventy_two
+#print axioms zaunerCanonicalCompletion_threeFramePotential_ge_seventy_two
+#print axioms zaunerCanonicalCompletion_threeFramePotential_ne_zero_of_rowGram
 
 end D5.S3.Quantum.Tomography.ZaunerAggregateFlatnessCertificate
