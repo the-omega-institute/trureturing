@@ -11,7 +11,13 @@ open Lean.Meta
 private def theoremUnitSuffix := "__information_unit"
 
 private def declarationName (id : TSyntax `ident) : CommandElabM Name := do
-  return (← getCurrNamespace) ++ id.getId
+  let name := id.getId
+  if (`_root_).isPrefixOf name then
+    return name.replacePrefix `_root_ .anonymous
+  return (← getCurrNamespace) ++ name
+
+private def absoluteIdentFrom (ref : Syntax) (name : Name) : Ident :=
+  mkIdentFrom ref (`_root_ ++ name)
 
 private def ensureRegisterableName (env : Environment) (theoremName : Name) :
     CommandElabM Unit := do
@@ -100,7 +106,7 @@ elab "information_theorem " theoremId:ident ppLine
       throwErrorAt arenaId "IE-C003 ArenaResolutionFailed: {arenaId.getId}"
     elabCommand (← `(command| theorem $theoremId : $statement := $proof))
     let unitName := theoremName.str theoremUnitSuffix
-    let unitId := mkIdentFrom theoremId (theoremId.getId.str theoremUnitSuffix)
+    let unitId := absoluteIdentFrom theoremId unitName
     elabCommand (← `(command| def $unitId :
         D5.S3.ConceptDynamics.InformationEscape.TheoremUnit ($arenaId:ident).toArena :=
       { primitives := $primitives
@@ -136,7 +142,7 @@ private def elabRegisterInformationTheorem : CommandElab := fun stx => do
       throwError "IE-C006 StatementProofMismatch: {theoremName}"
     checkLegacyBinding theoremName arenaName realizationName primitiveTerm
     let unitName := theoremName.str theoremUnitSuffix
-    let unitId := mkIdentFrom theoremId (theoremId.getId.str theoremUnitSuffix)
+    let unitId := absoluteIdentFrom theoremId unitName
     let unitType <- `(term|
       D5.S3.ConceptDynamics.InformationEscape.TheoremUnit ($arenaId:ident).toArena)
     let unitValue <- `(term|
