@@ -1,0 +1,4 @@
+# 增订二·14　CIRPT 原语分层与联合 kernel
+
+增订一指出，Zeckendorf 的信息价值在关系层。当前项目的 `PrimitiveBundle` 已经把有限原语族的联合观察 kernel 定义为各 atom kernel 的交。因此本理论可以用四类原语重新表达。
+

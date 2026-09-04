@@ -1,0 +1,64 @@
+## B6.4 最优 fidelity 与最近配分零点
+
+令 $N\ge2$ 且 $Q=N-1$。由式 (B5.8) 与式 (B6.9)：
+
+$$
+\boxed{
+z_{N-1}^{\mathrm{near}}
+=-\frac1{4F_N^*}.}
+\tag{B6.10}
+$$
+
+定义最优 reference-frame tax
+
+$$
+\tau_N=1-F_N^*.
+\tag{B6.11}
+$$
+
+则最近零点到热力学边缘的距离精确为
+
+$$
+\boxed{
+-\frac14-z_{N-1}^{\mathrm{near}}
+=
+\frac{\tau_N}{4(1-\tau_N)}.}
+\tag{B6.12}
+$$
+
+因为
+
+$$
+\tau_N
+=\sin^2\frac{\pi}{N+1},
+\tag{B6.13}
+$$
+
+所以
+
+$$
+\tau_N
+\sim\frac{\pi^2}{(N+1)^2},
+\tag{B6.14}
+$$
+
+且
+
+$$
+-\frac14-z_{N-1}^{\mathrm{near}}
+\sim\frac{\pi^2}{4(N+1)^2}.
+\tag{B6.15}
+$$
+
+这给出精确字典：
+
+$$
+\boxed{
+\text{有限 reference fidelity 的缺口}
+\quad\longleftrightarrow\quad
+\text{有限 hard-core 零点尚未压到临界边缘的距离}.}
+\tag{B6.16}
+$$
+
+该字典来自同一个 path spectrum，不是把两个独立渐近式强行比较。
+
