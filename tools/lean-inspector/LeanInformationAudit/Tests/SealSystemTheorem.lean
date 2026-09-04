@@ -1,27 +1,46 @@
 import LeanInformationAudit.SealCommand
 
-/-! T-013: the engine's own finite unique-capture characterization is
-registered and sealed by the same leave-one-out rule as every other theorem. -/
+/-! T-013: a stage readout computes the engine's own leave-one-out census. -/
 
+open D5.S3.ConceptDynamics.CIRPT
 open D5.S3.ConceptDynamics.InformationEscape
 
 namespace LeanInformationAudit.Tests.SealSystemTheorem
 
-abbrev SystemCharacterization : Prop :=
-  ∀ {candidateArena : Arena.{0}} (catalog : Catalog.{0, 0, 0} candidateArena)
-      (index : catalog.Index) (_nondegenerate : candidateArena.Nondegenerate),
-    catalog.LowersEscape index ↔ 0 < catalog.uniqueCaptureCount index
+private abbrev censusArena : Arena := Arena.ofFintype Bool
 
-private def identityReadout : Fin 2 → (Bool × Bool) → Bool :=
-  ![Prod.fst, Prod.snd]
+private abbrev censusBundle (stage : Bool) : PrimitiveBundle.{0, 0} Bool where
+  Index := Fin 1
+  indexFintype := inferInstance
+  indexDecidableEq := inferInstance
+  atom := fun _ =>
+    { axis := .cut
+      kernel := cutKernel fun state => if stage then state else false }
+
+private abbrev censusUnit (stage : Bool) : TheoremUnit.{0, 0} censusArena := by
+  exact ⟨censusBundle stage, True, True.intro⟩
+
+abbrev censusCatalog (stage : Bool) : Catalog.{0, 0, 0} censusArena :=
+  { Index := Fin 1
+    indexFintype := inferInstance
+    indexDecidableEq := inferInstance
+    theoremAt := fun _ => censusUnit stage }
+
+abbrev systemReadout (stage : Bool) : Nat :=
+  (censusCatalog stage).uniqueCaptureCount (0 : Fin 1)
+
+abbrev SystemCharacterization : Prop :=
+  ∀ stage : Bool,
+    (censusCatalog stage).LowersEscape (0 : Fin 1) ↔
+      0 < (censusCatalog stage).uniqueCaptureCount (0 : Fin 1)
 
 def arena : PrimitiveLawArena where
-  toArena := Arena.ofFintype (Bool × Bool)
+  toArena := Arena.ofFintype Bool
   signature :=
-    { Index := Fin 2
+    { Index := Fin 1
       indexFintype := inferInstance
       indexDecidableEq := inferInstance
-      Output := fun _ => Bool
+      Output := fun _ => Nat
       outputDecidableEq := fun _ => inferInstance
       axis := fun _ => .cut
       readoutAxisNotAnchor := by simp
@@ -29,33 +48,28 @@ def arena : PrimitiveLawArena where
       anchorFintype := inferInstance
       anchorDecidableEq := inferInstance }
   Law := fun candidate =>
-    (∀ i state, candidate.readout i state = identityReadout i state) ∧
+    (∀ stage, candidate.readout 0 stage = systemReadout stage) ∧
       SystemCharacterization
 
 local instance : DecidableEq arena.State := arena.toArena.stateDecidableEq
 
 def systemRealization : PrimitiveRealization arena.signature where
-  readout := identityReadout
+  readout := fun (_ : Fin 1) (stage : Bool) => systemReadout stage
   anchor := Fin.elim0
 
-abbrev SystemStatement : Prop := arena.Law systemRealization
-
-theorem systemLegacyRealization :
-    LegacyPrimitiveRealization arena SystemStatement systemRealization :=
-  ⟨Iff.rfl⟩
-
-theorem systemTheorem : SystemStatement := by
-  constructor
-  · intro i state
-    rfl
-  intro candidateArena catalog index nondegenerate
-  exact Catalog.lowersEscape_iff_uniqueCaptureCount_pos
-    catalog index nondegenerate
-
-register_information_theorem systemTheorem
+information_theorem systemTheorem
   in arena
-  primitives systemRealization.toPrimitiveBundle
-  realization systemLegacyRealization
+  primitives systemRealization
+  : arena.Law systemRealization := by
+    constructor
+    · intro stage
+      rfl
+    intro stage
+    exact Catalog.lowersEscape_iff_uniqueCaptureCount_pos
+      (censusCatalog stage) (0 : Fin 1) (by decide)
+
+example : systemReadout false = 0 := by decide
+example : systemReadout true = 2 := by decide
 
 #seal_information_theory
 
@@ -64,7 +78,7 @@ register_information_theorem systemTheorem
 #print axioms systemTheorem.__lowers_escape
 
 example :
-    arena.__information_catalog.uniqueCaptureCount (0 : Fin 1) = 12 := by
+    arena.__information_catalog.uniqueCaptureCount (0 : Fin 1) = 2 := by
   decide
 
 end LeanInformationAudit.Tests.SealSystemTheorem

@@ -1,20 +1,21 @@
 import LeanInformationAudit.SealCommand
 
-/-! T-005: the fst, snd, and combined coordinate kernels are overcomplete.
-T-015/T-016: the seal reads no JSON. `SealCommand` prepares and kernel-checks
-declarations before its optional output-only write and never reads it back. -/
+/-! T-005: the fst, snd, and product identity kernels are overcomplete. The
+seal reports the first sorted zero-marginal member; three count assertions
+cover every member. -/
 
 open D5.S3.ConceptDynamics.InformationEscape
+open D5.S3.ConceptDynamics.CIRPT
 
 namespace LeanInformationAudit.Tests.SealOvercomplete
 
 def arena : PrimitiveLawArena where
   toArena := Arena.ofFintype (Bool × Bool)
   signature :=
-    { Index := Fin 2
+    { Index := Fin 1
       indexFintype := inferInstance
       indexDecidableEq := inferInstance
-      Output := fun _ => Bool
+      Output := fun _ => Bool × Bool
       outputDecidableEq := fun _ => inferInstance
       axis := fun _ => .cut
       readoutAxisNotAnchor := by simp
@@ -26,18 +27,15 @@ def arena : PrimitiveLawArena where
 local instance : DecidableEq arena.State := arena.toArena.stateDecidableEq
 
 def fstRealization : PrimitiveRealization arena.signature where
-  readout := fun _ state => state.1
+  readout := fun _ state => (state.1, false)
   anchor := Fin.elim0
 
 def sndRealization : PrimitiveRealization arena.signature where
-  readout := fun _ state => state.2
+  readout := fun _ state => (state.2, false)
   anchor := Fin.elim0
 
-private def identityReadout : Fin 2 → (Bool × Bool) → Bool :=
-  ![Prod.fst, Prod.snd]
-
 def idRealization : PrimitiveRealization arena.signature where
-  readout := identityReadout
+  readout := fun _ state => state
   anchor := Fin.elim0
 
 information_theorem fstTheorem
@@ -54,6 +52,66 @@ information_theorem idTheorem
   in arena
   primitives idRealization
   : arena.Law idRealization := by trivial
+
+example : ∀ x y : arena.State,
+    fstRealization.toPrimitiveBundle.agrees x y ↔
+      (cutKernel Prod.fst).relation x y := by
+  intro x y
+  rw [PrimitiveRealization.toPrimitiveBundle_agrees_iff]
+  constructor
+  · rintro ⟨agreement, _⟩
+    change x.1 = y.1
+    have coordinateAgreement := agreement (0 : Fin 1)
+    change (x.1, false) = (y.1, false) at coordinateAgreement
+    exact (Prod.ext_iff.mp coordinateAgreement).1
+  · intro agreement
+    constructor
+    · intro _
+      change (x.1, false) = (y.1, false)
+      change x.1 = y.1 at agreement
+      exact Prod.ext agreement rfl
+    · intro impossible
+      exact Fin.elim0 impossible
+
+example : ∀ x y : arena.State,
+    sndRealization.toPrimitiveBundle.agrees x y ↔
+      (cutKernel Prod.snd).relation x y := by
+  intro x y
+  rw [PrimitiveRealization.toPrimitiveBundle_agrees_iff]
+  constructor
+  · rintro ⟨agreement, _⟩
+    change x.2 = y.2
+    have coordinateAgreement := agreement (0 : Fin 1)
+    change (x.2, false) = (y.2, false) at coordinateAgreement
+    exact (Prod.ext_iff.mp coordinateAgreement).1
+  · intro agreement
+    constructor
+    · intro _
+      change (x.2, false) = (y.2, false)
+      change x.2 = y.2 at agreement
+      exact Prod.ext agreement rfl
+    · intro impossible
+      exact Fin.elim0 impossible
+
+example : ∀ x y : arena.State,
+    idRealization.toPrimitiveBundle.agrees x y ↔
+      (cutKernel (id : Bool × Bool -> Bool × Bool)).relation x y := by
+  intro x y
+  rw [PrimitiveRealization.toPrimitiveBundle_agrees_iff]
+  constructor
+  · rintro ⟨agreement, _⟩
+    change x = y
+    have identityAgreement := agreement (0 : Fin 1)
+    change x = y at identityAgreement
+    exact identityAgreement
+  · intro agreement
+    constructor
+    · intro _
+      change x = y
+      change x = y at agreement
+      exact agreement
+    · intro impossible
+      exact Fin.elim0 impossible
 
 private def fixtureCatalog : Catalog arena.toArena :=
   Catalog.ofVector ![

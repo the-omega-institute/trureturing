@@ -1,6 +1,6 @@
 import LeanInformationAudit.SealCommand
 
-/-! T-006: the combined Bool coordinate readout captures all 12 ordered
+/-! T-006: one product-valued identity readout captures all 12 ordered
 off-diagonal pairs in the four-state arena. -/
 
 open D5.S3.ConceptDynamics.InformationEscape
@@ -10,10 +10,10 @@ namespace LeanInformationAudit.Tests.SealIdentity
 def arena : PrimitiveLawArena where
   toArena := Arena.ofFintype (Bool × Bool)
   signature :=
-    { Index := Fin 2
+    { Index := Fin 1
       indexFintype := inferInstance
       indexDecidableEq := inferInstance
-      Output := fun _ => Bool
+      Output := fun _ => Bool × Bool
       outputDecidableEq := fun _ => inferInstance
       axis := fun _ => .cut
       readoutAxisNotAnchor := by simp
@@ -24,11 +24,8 @@ def arena : PrimitiveLawArena where
 
 local instance : DecidableEq arena.State := arena.toArena.stateDecidableEq
 
-private def identityReadout : Fin 2 → (Bool × Bool) → Bool :=
-  ![Prod.fst, Prod.snd]
-
 def idRealization : PrimitiveRealization arena.signature where
-  readout := identityReadout
+  readout := fun _ state => state
   anchor := Fin.elim0
 
 information_theorem idTheorem
