@@ -21,9 +21,9 @@ internal sealed class TimeOrderedMemoryChronologySignatureBridgeDocument
                 H("Nonzero swap curvature detects event order"),
                 StatementSource.FromAuthor(Disp(Seq(
                     Operatorname, Grp(F.Id("primeSwapCurvature")), Sp,
-                    Ne, Sp, D(0), Sp, Rightarrow, RowBreak, Grp(),
+                    Neq, Sp, D(0), Sp, Rightarrow, RowBreak, Grp(),
                     Operatorname, Grp(F.Id("doubledMagnusDegreeTwo")), Sp,
-                    Ne, Sp, D(0), Dot))),
+                    Neq, Sp, D(0), Dot))),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
