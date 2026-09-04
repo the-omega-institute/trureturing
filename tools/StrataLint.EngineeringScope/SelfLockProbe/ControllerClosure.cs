@@ -22,7 +22,6 @@ internal static class ControllerClosure
         "tools/StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj";
     internal static IReadOnlyList<string> RuntimePaths { get; } =
     [
-        "tools/scripts/workflow/pure-revert-detect.sh",
         "tools/scripts/workflow/self-lock-probe.sh",
         "tools/scripts/report/report-supervisor.sh",
     ];

@@ -15,7 +15,6 @@ public sealed partial class SelfLockProbeScriptTests
         AssertDecision(
             RunProbe(fixture, ["engineering"], ["engineering"]),
             "PROBE_INDETERMINATE",
-            allowExactRevert: false,
             exitCode: 2);
     }
 
@@ -30,7 +29,6 @@ public sealed partial class SelfLockProbeScriptTests
         AssertDecision(
             RunProbe(fixture, ["engineering"], ["engineering"]),
             "PROBE_INDETERMINATE",
-            allowExactRevert: false,
             exitCode: 2);
     }
 
@@ -49,7 +47,6 @@ public sealed partial class SelfLockProbeScriptTests
         AssertDecision(
             RunProbe(fixture, ["engineering"], ["engineering"]),
             "PROBE_INDETERMINATE",
-            allowExactRevert: false,
             exitCode: 2);
     }
 
@@ -67,7 +64,6 @@ public sealed partial class SelfLockProbeScriptTests
         AssertDecision(
             RunProbe(fixture, ["engineering"], ["engineering"]),
             "PROBE_INDETERMINATE",
-            allowExactRevert: false,
             exitCode: 2);
     }
 
@@ -82,7 +78,6 @@ public sealed partial class SelfLockProbeScriptTests
         AssertDecision(
             RunProbe(fixture, ["engineering"], ["engineering"]),
             "PROBE_INDETERMINATE",
-            allowExactRevert: false,
             exitCode: 2);
     }
 
@@ -96,7 +91,6 @@ public sealed partial class SelfLockProbeScriptTests
         AssertDecision(
             RunProbe(fixture, ["engineering"], ["engineering"]),
             "PROBE_INDETERMINATE",
-            allowExactRevert: false,
             exitCode: 2);
     }
 
@@ -110,7 +104,6 @@ public sealed partial class SelfLockProbeScriptTests
         AssertDecision(
             RunProbe(fixture, ["engineering"], ["engineering"]),
             "PROBE_INDETERMINATE",
-            allowExactRevert: false,
             exitCode: 2);
     }
 }
