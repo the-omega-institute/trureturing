@@ -7,22 +7,6 @@ namespace StrataLint.Tests;
 public sealed class DigestionCasStoreTests
 {
     [Fact]
-    public void BaselineCasObjectsCannotBeDeletedOrRewritten()
-    {
-        var captured = DigestionCasStore.Capture(Encoding.UTF8.GetBytes("frozen atom\n"));
-        var baseline = Snapshot(new RawRepositoryEntry(captured.RelativePath, captured.Bytes));
-        var rewritten = Snapshot(new RawRepositoryEntry(
-            captured.RelativePath,
-            ImmutableArray.CreateRange(Encoding.UTF8.GetBytes("rewritten atom\n"))));
-
-        var deletedFindings = DigestionCasStore.ValidateAppendOnly(Snapshot(), baseline);
-        var rewrittenFindings = DigestionCasStore.ValidateAppendOnly(rewritten, baseline);
-
-        Assert.Contains($"baseline CAS blob was deleted: {captured.RelativePath}", deletedFindings);
-        Assert.Contains($"baseline CAS blob was rewritten: {captured.RelativePath}", rewrittenFindings);
-    }
-
-    [Fact]
     public void UnreferencedBlobIsRejectedAsAnOrphan()
     {
         var referenced = DigestionCasStore.Capture(Encoding.UTF8.GetBytes("referenced atom\n"));

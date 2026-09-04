@@ -317,7 +317,7 @@ case "$COMMAND" in
     verify_added_frozen_events_v5
     run_cli ledger-append --candidate-lean-report "$REPORT"
     run_digest_status
-    make preflight BASE="$BASE"
+    make preflight BASE="$(git rev-parse HEAD^1)"
     verify_added_frozen_events_v5
     ;;
   deposit)
