@@ -23,9 +23,6 @@ open MulAction Set Subgroup
 
 noncomputable section
 
-local instance classicalDecidableEq (T : Type*) : DecidableEq T :=
-  Classical.decEq T
-
 private theorem connected_edge_transpositions_generate
     {V : Type*} [Finite V] (graph : SimpleGraph V)
     (connected : graph.Connected) :
@@ -88,6 +85,7 @@ theorem edge_transposition_group
         generated = ⊤ ∧
           ∀ first last,
             ∃ sigma : generated, (sigma : Equiv.Perm V) first = last) := by
+  classical
   constructor
   · intro component
     exact connected_edge_transpositions_generate component.toSimpleGraph
