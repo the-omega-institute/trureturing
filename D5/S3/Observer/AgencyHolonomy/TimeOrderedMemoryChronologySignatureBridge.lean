@@ -3,7 +3,7 @@
    mirror-B: none(waiver:new-cross-library-adapter)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: The step-two logarithm of the time-ordered memory matrix word recovers the oriented swap curvature, and the Hopf antipode reverses the event word. -/
+   digest: The time-ordered matrix logarithm recovers swap curvature and its Hopf reversal. -/
 
 import D5.S3.Observer.AgencyHolonomy.TimeOrderedMemoryMatrixRepresentation
 import D5.S3.Observer.Chronology.ChronologicalSignatureHopf
@@ -37,7 +37,6 @@ namespace D5.S3.Observer.AgencyHolonomy.TimeOrderedMemoryChronologySignatureBrid
 open D5.S3.Observer.AgencyHolonomy.TimeOrderedPrimeMemoryCocycle
 open D5.S3.Observer.AgencyHolonomy.PrimeSwapCurvature
 open D5.S3.Observer.AgencyHolonomy.TimeOrderedMemoryMatrixRepresentation
-open D5.S3.Observer.HiddenFlow.ProjectionCommutatorIdentity
 open D5.S3.Observer.Chronology.StepTwoChronologicalSignature
 open D5.S3.Observer.Chronology.StepTwoChronologicalLogarithm
 open D5.S3.Observer.Chronology.ChronologicalSignatureHopf
@@ -59,7 +58,7 @@ theorem timed_matrix_two_event_doubled_magnus_eq_commutator
     doubledMagnusDegreeTwo
         (chronologicalSignature (timedMatrixObservation stable)
           [eventP, eventQ]) =
-      commutator
+      D5.S3.Observer.HiddenFlow.ProjectionCommutatorIdentity.commutator
         (timedEventMatrix stable eventP)
         (timedEventMatrix stable eventQ) := by
   exact doubled_magnus_two_events_eq_commutator
@@ -71,7 +70,7 @@ convention that the earlier event acts first, hence word matrices multiply in
 reverse chronological order. -/
 theorem timed_matrix_commutator_upper_right
     (stable : ℂ) (eventP eventQ : TimedPrimeMemoryEvent) :
-    commutator
+    D5.S3.Observer.HiddenFlow.ProjectionCommutatorIdentity.commutator
         (timedEventMatrix stable eventP)
         (timedEventMatrix stable eventQ) 0 1 =
       -primeSwapCurvature stable
@@ -107,7 +106,7 @@ theorem timed_matrix_commutator_upper_right
           time_ordered_word_matrix_singleton]
   have hSwap := two_event_matrix_swap_upper_right stable eventP eventQ
   rw [hPQ, hQP] at hSwap
-  unfold commutator
+  unfold D5.S3.Observer.HiddenFlow.ProjectionCommutatorIdentity.commutator
   change
     (timedEventMatrix stable eventP * timedEventMatrix stable eventQ) 0 1 -
         (timedEventMatrix stable eventQ * timedEventMatrix stable eventP) 0 1 =
