@@ -7,8 +7,7 @@
 
 import D5.S3.Observer.Chronology.PrimeGoldenThirdOrderChronologyEscape
 import D5.S3.Observer.Chronology.StepTwoFreeLieBridge
-import Mathlib.Data.Matrix.Notation
-import Mathlib.Tactic
+import Mathlib
 
 /-!
 # A strict third-order free-Lie chronology refinement
