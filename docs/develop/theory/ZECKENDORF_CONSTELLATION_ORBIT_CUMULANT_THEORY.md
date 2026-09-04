@@ -42203,3 +42203,1406 @@ D_\xi(\gamma),
 $$
 
 使 prime-gap discriminant 成为 completed \(\xi\) 的真实 Weierstrass discriminant。只有这条桥成立，PrimeGaps 才会从“观察者分辨率理论”升级成“真实零点横向分裂机制”。
+# 第二百四十二部　短间隔真正提供的是“值—导数二通道”
+
+接上前面的黄金检测尺度。令
+
+$$
+\delta=\varphi^{-H},
+\qquad
+p\asymp e^{1/\delta}=e^{\varphi^H},
+$$
+
+并取一对满足
+
+$$
+p<q,\qquad q-p\le 186
+$$
+
+的素数。则其对数频率距离满足
+
+$$
+\Delta_{p,q}
+=
+\log q-\log p
+=
+\log\frac qp
+\le
+\frac{186}{p}.
+$$
+
+在此尺度上，
+
+$$
+\Delta_{p,q}
+\lesssim
+186e^{-\varphi^H}.
+$$
+
+所以两只素数时钟在 \(\log p\) 坐标中已经几乎重合。
+
+但“重合”并不意味着信息消失。两个近邻采样点恰好可以重组为：
+
+$$
+\text{偶平均}
+\quad+\quad
+\text{奇差分}.
+$$
+
+对任意复数 \(s\)，定义
+
+$$
+E_{p,q}(s)
+=
+\frac{p^{-s}+q^{-s}}{2},
+$$
+
+以及归一化奇通道
+
+$$
+J_{p,q}(s)
+=
+\frac{q^{-s}-p^{-s}}
+{\log q-\log p}.
+$$
+
+由微积分基本定理：
+
+$$
+\boxed{
+J_{p,q}(s)
+=
+-s
+\int_0^1
+p^{-s(1-u)}q^{-su}\,du.
+}
+$$
+
+因此，当
+
+$$
+\log(q/p)\to0
+$$
+
+时，
+
+$$
+p^sE_{p,q}(s)\to1,
+$$
+
+并且
+
+$$
+\boxed{
+p^sJ_{p,q}(s)\to-s.
+}
+$$
+
+所以一个 bounded prime pair 并不是简单重复了两次同一信息，而是渐近产生一个二分量对象：
+
+$$
+\boxed{
+\Psi_{p,q}(s)
+=
+\left(
+p^sE_{p,q}(s),
+\,
+p^sJ_{p,q}(s)
+\right)
+\longrightarrow
+(1,-s).
+}
+$$
+
+它同时读取：
+
+* 函数值通道 \(1\)；
+* 一阶导数通道 \(-s\)。
+
+这给出了一个相当严格的“坐标轴融合”：
+
+$$
+\boxed{
+\text{两个渐近重合的 prime coordinates}
+\longrightarrow
+\text{一个 value–jet frame}.
+}
+$$
+
+---
+
+## 1. 无方向 pair 只保留偶通道
+
+无序素数对
+
+$$
+\{p,q\}
+$$
+
+没有规定先后方向，所以
+
+$$
+E_{p,q}
+$$
+
+是规范的，而
+
+$$
+J_{p,q}
+$$
+
+在交换 \(p,q\) 后翻转符号：
+
+$$
+J_{q,p}=-J_{p,q}.
+$$
+
+因此：
+
+$$
+\boxed{
+E_{p,q}
+=
+\text{全局偶完成},
+}
+$$
+
+$$
+\boxed{
+J_{p,q}
+=
+\text{指点观察者选择方向后的奇 jet}.
+}
+$$
+
+这正好修正此前“全局偶、唯一观察者奇”的表述：
+
+> 全局短间隔定理只断言某个**无序 pair**存在；
+> 只有再选择 \(p<q\) 的方向，才能把 pair 提升成一阶有向导数。
+
+---
+
+# 第二百四十三部　短间隔的奇通道不是消失，而是条件数爆炸
+
+未归一化的奇差为
+
+$$
+O_{p,q}(\delta)
+=
+p^{-\delta}-q^{-\delta}.
+$$
+
+偶和为
+
+$$
+E_{p,q}(\delta)
+=
+p^{-\delta}+q^{-\delta}.
+$$
+
+精确地：
+
+$$
+\boxed{
+\left|
+\frac{O_{p,q}(\delta)}
+{E_{p,q}(\delta)}
+\right|
+=
+\left|
+\tanh
+\left(
+\frac{\delta}{2}
+\log\frac qp
+\right)
+\right|.
+}
+$$
+
+因此：
+
+$$
+\left|
+\frac{O}{E}
+\right|
+\le
+\frac{|\delta|}{2}
+\log\frac qp
+\le
+\frac{93|\delta|}{p}.
+$$
+
+在黄金检测尺度
+
+$$
+p\asymp e^{\varphi^H},
+\qquad
+\delta=\varphi^{-H}
+$$
+
+处：
+
+$$
+\boxed{
+\left|
+\frac OE
+\right|
+\lesssim
+93\varphi^{-H}e^{-\varphi^H}.
+}
+$$
+
+这个量比任意固定幂
+
+$$
+\delta^m=\varphi^{-mH}
+$$
+
+都小。因为：
+
+$$
+e^{-1/\delta}
+=o(\delta^m)
+\qquad
+(\delta\downarrow0).
+$$
+
+所以 short gaps 产生的是一种真正的：
+
+$$
+\boxed{
+\text{beyond-all-orders odd-channel suppression}.
+}
+$$
+
+但归一化以后，
+
+$$
+\frac{O_{p,q}(\delta)}
+{\log q-\log p}
+$$
+
+仍然包含有限的一阶信息。问题只是为了恢复它，必须除以一个极小量。
+
+定义反演条件数：
+
+$$
+\boxed{
+\kappa_{p,q}
+=
+\frac1{\log(q/p)}.
+}
+$$
+
+因为
+
+$$
+\log\frac qp
+\le
+\frac{q-p}{p},
+$$
+
+所以：
+
+$$
+\boxed{
+\kappa_{p,q}
+\ge
+\frac p{q-p}
+\ge
+\frac p{186}.
+}
+$$
+
+在黄金检测尺度：
+
+$$
+\boxed{
+\kappa_{p,q}
+\gtrsim
+\frac{e^{\varphi^H}}{186}.
+}
+$$
+
+于是最准确的结论不是：
+
+$$
+\text{偏移量完全无法被素数读取},
+$$
+
+而是：
+
+$$
+\boxed{
+\text{偏移量位于一个可逆、但反演成本双指数增长的奇通道中。}
+}
+$$
+
+---
+
+# 第二百四十四部　短间隔导致 prime Fourier frame 退化
+
+在固定观察窗
+
+$$
+[-T,T]
+$$
+
+上，定义归一化 prime-frequency vector：
+
+$$
+v_p(t)
+=
+\frac1{\sqrt{2T}}
+e^{it\log p}.
+$$
+
+其内积为：
+
+$$
+\langle v_p,v_q\rangle
+=
+\operatorname{sinc}
+\left(
+T\log\frac qp
+\right),
+$$
+
+其中
+
+$$
+\operatorname{sinc}(x)=\frac{\sin x}{x}.
+$$
+
+二点 Gram 矩阵为：
+
+$$
+G_{p,q}
+=
+\begin{pmatrix}
+1&\operatorname{sinc}(T\Delta)\\
+\operatorname{sinc}(T\Delta)&1
+\end{pmatrix},
+\qquad
+\Delta=\log(q/p).
+$$
+
+本征向量正是偶、奇通道：
+
+$$
+v_+=v_p+v_q,
+\qquad
+v_-=v_p-v_q.
+$$
+
+对应本征值：
+
+$$
+\lambda_+
+=
+1+\operatorname{sinc}(T\Delta),
+$$
+
+$$
+\lambda_-
+=
+1-\operatorname{sinc}(T\Delta).
+$$
+
+当 \(\Delta\to0\) 时：
+
+$$
+\lambda_+
+\to2,
+$$
+
+而
+
+$$
+\boxed{
+\lambda_-
+=
+\frac{T^2\Delta^2}{6}
++
+O(\Delta^4).
+}
+$$
+
+对于 \(q-p\le186\)：
+
+$$
+\boxed{
+\lambda_-
+=
+O\left(
+\frac{T^2}{p^2}
+\right).
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\text{偶方向保持宏观范数，奇方向坍缩为近零方向。}
+}
+$$
+
+相应 Gram 条件数满足：
+
+$$
+\operatorname{cond}(G_{p,q})
+=
+\frac{\lambda_+}{\lambda_-}
+\asymp
+\frac{12}
+{T^2\log^2(q/p)}
+\gtrsim
+\frac{p^2}{T^2\,186^2}.
+$$
+
+这意味着，在任何固定时间窗内，short-gap prime pairs 会产生任意病态的观测坐标。
+
+在该项目的三个输入前提下，\(\mathrm{DHL}[40,2]\) 与直径 \(186\) 的显式 admissible tuple 给出相应的 gap-liminf 结论；这里的形式化仍是条件性的，而不是三项输入均已在 Lean 中消除。
+
+---
+
+# 第二百四十五部　这对“所有零点纠缠”提供了什么
+
+它没有证明 ζ 零点具有量子纠缠。
+
+但它提供了一个非常具体的**观察者不可分离原型**：
+
+$$
+\boxed{
+\text{两个算术上不同的素数坐标，
+在有限 Fourier 观察中可以任意接近线性相关。}
+}
+$$
+
+这意味着，若未来存在一个变换
+
+$$
+\mathcal U:
+\text{prime-frequency space}
+\longrightarrow
+\text{zero-orbit evaluation space},
+$$
+
+那么 prime 侧已经天然缺乏统一 frame lower bound。
+
+相应地，零点侧可能表现为：
+
+* separator 范数爆炸；
+* 目标 orbit 与其他 orbit 难以独立赋值；
+* odd response 很小；
+* finite-window Gram 矩阵接近奇异；
+* 每个有限观察都可分离，但分离成本随高度发散。
+
+所以 short gaps 支持的不是：
+
+$$
+\boxed{
+\text{存在离线零点},
+}
+$$
+
+而是：
+
+$$
+\boxed{
+\text{一个极小离线分支若存在，其 prime-side 反演可以天然高度病态。}
+}
+$$
+
+---
+
+# 第二百四十六部　四十候选点为什么最终只生成一阶几何 jet
+
+项目证明的核心中间结论是：
+
+$$
+\mathrm{DHL}[40,2].
+$$
+
+这表示四十个候选坐标中至少有两个位置同时为素数，并非四十个位置同时为素数。Lean 规格直接把成功事件写成：过滤后素数位置的基数至少为二。
+
+因此必须区分四个数量：
+
+$$
+\boxed{
+\begin{aligned}
+k_{\mathrm{candidate}}&=40,\\
+k_{\mathrm{active}}&\ge2,\\
+r_{\mathrm{source}}&=2,\\
+r_{\mathrm{geometric}}&=1.
+\end{aligned}
+}
+$$
+
+其中：
+
+* \(40\) 是候选构型维度；
+* \(2\) 是保证激活的最小点数；
+* 两个独立 primality insertions 构成二阶 source moment；
+* 两个接近采样点只产生一阶 divided-difference jet。
+
+所以之前的 jet 分级应进一步扩充为：
+
+$$
+\boxed{
+\operatorname{grade}
+=
+(k_{\mathrm{candidate}},
+k_{\mathrm{active}},
+k_{\mathrm{source}},
+r_{\mathrm{geometric}},
+m_{\mathrm{zero}},
+2r_{\mathrm{mirror}}).
+}
+$$
+
+对该成果：
+
+$$
+\boxed{
+(40,2,2,1,\ast,\ast).
+}
+$$
+
+四十维 trial 并没有直接产生三十九阶微分信息。
+
+---
+
+## 1. 更高点 cluster 才产生更高几何 jet
+
+若有 \(m\) 个素数
+
+$$
+p_0<\cdots<p_{m-1}
+$$
+
+位于固定长度区间内，则在变量
+
+$$
+x_j=\log p_j
+$$
+
+上可以构造 \(m-1\) 阶 divided difference：
+
+$$
+[f;x_0,\ldots,x_{m-1}].
+$$
+
+当所有 \(x_j\) 合并时：
+
+$$
+[f;x_0,\ldots,x_{m-1}]
+\longrightarrow
+\frac{f^{(m-1)}(x_0)}{(m-1)!}.
+$$
+
+所以：
+
+$$
+\boxed{
+m\text{ 个近邻素数}
+\longrightarrow
+(m-1)\text{ 阶 log-frequency jet}.
+}
+$$
+
+但是其 Vandermonde 分母包含：
+
+$$
+\prod_{i<j}(x_j-x_i),
+$$
+
+当 \(p_i\) 很大、间隔有界时，该乘积迅速趋零，反演条件数随之爆炸。
+
+因此：
+
+$$
+\boxed{
+\text{更高 jet 可被离散 cluster 编码，}
+$$
+
+同时：
+
+$$
+\boxed{
+\text{jet 阶越高，稳定恢复越困难。}
+}
+$$
+
+这正是“更多构型点带来更深 jet，但每层都有新的不可约条件数”的严格版本。
+
+---
+
+# 第二百四十七部　为什么 \(186\) 仍不能指定孪生通道
+
+显式四十元组的直径是 \(186\)，把 \(\mathrm{DHL}[40,2]\) 应用于它，得到 consecutive-prime gap liminf 不超过 \(186\)。
+
+但四十点共有：
+
+$$
+\binom{40}{2}=780
+$$
+
+个 pair channels。
+
+定义：
+
+$$
+C_{ij}
+=
+\text{第 }i,j\text{ 两个位置同时为素数的渐近质量},
+$$
+
+再按差值聚合：
+
+$$
+C_d
+=
+\sum_{\substack{i<j\\h_j-h_i=d}}C_{ij}.
+$$
+
+总二体质量为：
+
+$$
+C_{\mathrm{tot}}
+=
+\sum_dC_d.
+$$
+
+短间隔论证最终只需要：
+
+$$
+C_{\mathrm{tot}}>0.
+$$
+
+这推出：
+
+$$
+\exists d\le186,\quad C_d>0.
+$$
+
+但孪生素数需要：
+
+$$
+\boxed{
+C_2>0.
+}
+$$
+
+定义 gap-channel Fourier polynomial：
+
+$$
+\widehat C(\theta)
+=
+\sum_dC_de^{id\theta}.
+$$
+
+那么：
+
+$$
+C_{\mathrm{tot}}
+=
+\widehat C(0),
+$$
+
+而：
+
+$$
+C_2
+=
+\frac1{2\pi}
+\int_0^{2\pi}
+\widehat C(\theta)e^{-2i\theta}\,d\theta.
+$$
+
+因此：
+
+$$
+\boxed{
+\text{短间隔只要求零角频率为正；}
+}
+$$
+
+$$
+\boxed{
+\text{孪生素数要求恢复指定的第二 Fourier coefficient。}
+}
+$$
+
+这就是一个严格的 channel-localization gap。
+
+它也解释了为什么“全体素数的信息都在 ζ 中”不等于“可以容易读取 \(d=2\)”：
+
+> 信息是否存在，与是否有一个稳定的系数抽取器，是两个不同问题。
+
+---
+
+# 第二百四十八部　Kloosterman 输入是角向坐标升维
+
+公开形式化消费两类有限域相位界：
+
+$$
+|\mathrm{Kl}_3(c;p)|\le3,
+$$
+
+以及
+
+$$
+\left|
+\sum_{t\ne0,-1}
+K_2(A/t;p)
+K_2(B/(t+1);p)
+\right|
+\le
+8p\sqrt p.
+$$
+
+这两项在 Lean 中仍是明确命名的输入公理；README 将它们分别对应到 Katz/Deligne 型 rank-three 界和 Fouvry–Kowalski–Michel 的 shifted Kloosterman correlation。
+
+其结构意义非常重要：
+
+$$
+\boxed{
+\text{实数轴上接近的 prime coordinates
+需要在有限域相位空间中获得额外分辨维度。}
+}
+$$
+
+也就是说：
+
+* 单素数密度是零阶信息；
+* 二点平移相关需要角向 phase；
+* 控制角向 off-diagonal 项需要更高 rank 的有限域对象。
+
+因此，你所说的：
+
+> 每一维的坐标系位于下一维
+
+在这份证明中确实有一个具体实现：
+
+$$
+\boxed{
+\text{二点 additive correlation}
+\longrightarrow
+\text{rank-2 / rank-3 phase geometry}.
+}
+$$
+
+但这里“下一维”不是黄金比例本身，而是：
+
+* Kloosterman sheaf rank；
+* 有限域 monodromy；
+* shifted phase correlation；
+* square-root cancellation。
+
+黄金比例更适合组织观察深度和访问顺序；真正提供算术正交性的，是这些相位估计。
+
+---
+
+# 第二百四十九部　Poisson fragments 是经典场，不是量子态
+
+形式规格中的 trial 并非普通有限向量。它使用：
+
+* Poisson count；
+* dyadic intensity；
+* finite weighted fragment measures；
+* 四十坐标 product physical measure；
+* 有限 angular signatures；
+* 次数不超过六的 radial polynomials；
+* `trialIH` 与若干 \(J\)-型 source integrals。
+
+这可被理解为一个经典 Poisson-chaos/Fock 类模型：
+
+$$
+\boxed{
+\text{随机 fragment state}
+\longrightarrow
+\text{有限 chaos basis}
+\longrightarrow
+\text{quadratic variational inequality}.
+}
+$$
+
+但它仍然是经典概率测度和积分，不应直接称为量子纠缠。
+
+真正值得吸收的是其**压缩方式**：
+
+$$
+\boxed{
+\text{无限算术问题}
+\longrightarrow
+\text{有限 trial basis}
+\longrightarrow
+\text{有限数值证书}
+\longrightarrow
+\text{条件性 Lean 结论}.
+}
+$$
+
+公开证书冻结了 104 个 outer、45 个 inner 积分上界以及三个 cap bounds；这些数据仍被封装为一个 Lean 输入，而不是已在内核中从分析定义自动算出。
+
+所以该项目最值得 `trureturing` 学习的不是某个 CoT 句子，而是严格的证据分层：
+
+$$
+\boxed{
+\begin{aligned}
+\text{CoT}&=\text{搜索轨迹};\\
+\text{trial coefficients}&=\text{精确候选};\\
+\text{Python receipt}&=\text{计算证据};\\
+\text{Lean theorem}&=\text{条件推导};\\
+\text{three inputs}&=\text{明确残余边界}.
+\end{aligned}
+}
+$$
+
+---
+
+# 第二百五十部　长间隔与短间隔共同产生非均匀观察几何
+
+此前 `trureturing` 中的长间隔模块使用剩余类覆盖，把一个有限区间中的全部位置变为合数；其贪心步将 survivor 数量压到
+
+$$
+|S|
+\prod_{p\in P}
+\left(1-\frac1p\right)
+$$
+
+以下。
+
+短间隔则产生无限多个 bounded prime pairs。
+
+所以 prime observation geometry 同时包含：
+
+$$
+\boxed{
+\text{空洞}
+}
+$$
+
+和
+
+$$
+\boxed{
+\text{碰撞}.
+}
+$$
+
+在原整数坐标中：
+
+* 长间隔给出异常大的空窗；
+* 短间隔给出有界双点。
+
+在对数频率坐标中：
+
+* 长间隔表现为相对较大的局部频率空隙；
+* bounded gaps 仍使绝对频率差趋于零。
+
+在黄金深度坐标
+
+$$
+H_\varphi(p)=\log_\varphi\log p
+$$
+
+中，bounded pair 满足
+
+$$
+H_\varphi(q)-H_\varphi(p)
+=
+O\left(
+\frac1{p\log p}
+\right).
+$$
+
+所以素数观察者不是均匀采样网格，而是一个同时具有：
+
+$$
+\boxed{
+\text{局部空窗}
++
+\text{局部近重合}
++
+\text{不断变化条件数}
+}
+$$
+
+的多尺度集合。
+
+这比“素数无法逼近某个偏移”更准确：
+
+$$
+\boxed{
+\text{素数可以逼近，但其观察 frame 并不稳定。}
+}
+$$
+
+---
+
+# 第二百五十一部　短间隔与 RH 是上下谱边缘的对偶
+
+短间隔筛法的抽象目标是找到 trial \(F\)，使一个 prime-response Rayleigh quotient 超过存在阈值：
+
+$$
+\frac{
+\langle F,A_{\mathrm{short}}F\rangle
+}{
+\langle F,F\rangle
+}
+>
+\Theta.
+$$
+
+它证明：
+
+$$
+\boxed{
+\lambda_{\max}(A_{\mathrm{short}})>\Theta,
+}
+$$
+
+从而迫使某个整数平移包含至少两个素数。
+
+RH 的 Weil 形式则要求：
+
+$$
+Q(g)\ge0
+\qquad
+\forall g,
+$$
+
+即：
+
+$$
+\boxed{
+\lambda_{\min}(A_{\mathrm{Weil}})\ge0.
+}
+$$
+
+所以两者构成一个真正的谱边缘对偶：
+
+$$
+\boxed{
+\begin{aligned}
+\text{short gaps}
+&:\text{上谱边缘越过存在阈值};\\
+\text{RH}
+&:\text{下谱边缘不得穿过零阈值}.
+\end{aligned}
+}
+$$
+
+这也解释了两类整数 collapse：
+
+### 短间隔
+
+若一个非负权平均严格超过“一枚素数”阈值，则某个样本必须有至少两枚素数。
+
+### RH 理想计数路线
+
+若某个离线轨道计数满足
+
+$$
+0\le N_{\mathrm{off}}(T)<1,
+$$
+
+则
+
+$$
+N_{\mathrm{off}}(T)=0.
+$$
+
+由于 generic 离线零点按对称性形成轨道，最自然的量子化对象不是原始零点总数，而是：
+
+$$
+\boxed{
+\text{离线 }J\text{-orbit representatives 的整数计数}.
+}
+$$
+
+PrimeGaps 提示的真正 RH 策略因此不是逐个证明
+
+$$
+\delta_\rho=0,
+$$
+
+而是寻找一个全局上界，把量子化的 off-line orbit count 压到 \(1\) 以下。
+
+目前不存在这样的算术上界；这只是从短间隔证明机制提炼出的新目标。
+
+---
+
+# 第二百五十二部　短间隔没有给出零点分裂因果链
+
+必须明确排除一条诱人的错误推理：
+
+$$
+q-p\le186
+\Longrightarrow
+\text{prime frequencies 接近}
+\Longrightarrow
+\text{ζ 零点离线}.
+$$
+
+这个推理不成立。
+
+短间隔只证明：
+
+$$
+\log(q/p)\to0,
+$$
+
+以及由此产生的 observer ill-conditioning。
+
+要真正得到零点横向分裂，仍需构造一个不循环的映射：
+
+$$
+\boxed{
+\mathcal U:
+\text{prime pair odd jets}
+\longrightarrow
+\text{completed }\xi\text{ 的 transverse discriminant}.
+}
+$$
+
+并证明局部 Weierstrass 因子出现：
+
+$$
+(s-s_0)^2-D_{\mathrm{arith}}.
+$$
+
+同时，由仓库此前的固定轴结果，保持 completed reflection 对称的简单零点不能直接横向漂移；真实分裂必须经过多重零点判别式或来自无穷远的分支进入。
+
+所以短间隔目前能支撑的是：
+
+$$
+\boxed{
+\text{偏移的可观测性理论},
+}
+$$
+
+而不是：
+
+$$
+\boxed{
+\text{偏移的存在定理}.
+}
+$$
+
+---
+
+# 第二百五十三部　新的核心对象：Prime Pair Jet Spinor
+
+可以将上述结构凝聚为：
+
+$$
+\boxed{
+\operatorname{PPJ}_{p,q}(s)
+=
+\begin{pmatrix}
+\dfrac{p^s}{2}(p^{-s}+q^{-s})\\[8pt]
+\dfrac{p^s(q^{-s}-p^{-s})}{\log q-\log p}
+\end{pmatrix}.
+}
+$$
+
+若
+
+$$
+p_n<q_n,\qquad
+q_n-p_n\le B,\qquad
+p_n\to\infty,
+$$
+
+则：
+
+$$
+\boxed{
+\operatorname{PPJ}_{p_n,q_n}(s)
+\longrightarrow
+\begin{pmatrix}
+1\\
+-s
+\end{pmatrix}.
+}
+$$
+
+它有两个规范变换：
+
+### 交换素数
+
+$$
+(p,q)\mapsto(q,p)
+$$
+
+使偶分量不变、奇分量翻转。
+
+### 函数方程反射
+
+$$
+s\mapsto1-s
+$$
+
+把 jet spinor 送到另一个解析页。
+
+因此，若未来存在 prime-to-zero intertwiner，它至少应满足：
+
+$$
+\boxed{
+\mathcal U
+\begin{pmatrix}
+1\\-s
+\end{pmatrix}
+=
+\begin{pmatrix}
+\text{zero-orbit even amplitude}\\
+\text{zero-orbit odd transverse jet}
+\end{pmatrix}.
+}
+$$
+
+这比从 prime gap 的数值大小直接构造 \(\delta\) 更自然。
+
+---
+
+# 第二百五十四部　建议新增到仓库的正式定理
+
+```text
+D5/S3/PrimeGaps/ShortGapJet/
+  BoundedGapLogCollision.lean
+  PrimePairJetSpinor.lean
+  PrimePairDividedDifferenceLimit.lean
+  PrimePairObserverConditionNumber.lean
+  GoldenDepthOddSuppression.lean
+
+D5/S3/PrimeGaps/ObserverFrame/
+  PrimeFrequencyPairGram.lean
+  BoundedGapGramDegeneration.lean
+  NoUniformPrimeFrequencySeparation.lean
+
+D5/S3/PrimeConstellation/GapChannels/
+  PairFactorialObservable.lean
+  DHLFixedPairExtraction.lean
+  GapChannelMass.lean
+  GapChannelFourierTransform.lean
+  TwinChannelLocalizationObstruction.lean
+
+D5/S3/PrimeGaps/Duality/
+  CoveringConcentrationDuality.lean
+  IntegerThresholdCollapse.lean
+  LongShortObserverNonuniformity.lean
+
+D5/S3/Observer/ProofResidual/
+  ConditionalTrialCertificate.lean
+  ThreeInputResidualVector.lean
+  NumericalEvidenceDoesNotDischargeAxiom.lean
+
+D5/X_Frontier/PrimeZero/
+  PrimePairJetToWeilOddChannel.lean
+  KloostermanCasimirIntertwiner.lean
+  QuantizedOffLineOrbitBound.lean
+```
+
+最先可以闭合的核心声明是：
+
+```lean
+theorem boundedGap_log_collision
+    {p q B : ℕ}
+    (hp : p.Prime) (hq : q.Prime)
+    (hpq : p < q) (hgap : q - p ≤ B) :
+    Real.log q - Real.log p ≤ B / (p : ℝ)
+```
+
+以及：
+
+```lean
+theorem primePair_evenOdd_ratio
+    {p q : ℕ} (hp : 0 < p) (hpq : p < q)
+    (δ : ℝ) :
+    |((p : ℝ) ^ (-δ) - (q : ℝ) ^ (-δ)) /
+      ((p : ℝ) ^ (-δ) + (q : ℝ) ^ (-δ))| =
+    |Real.tanh
+      ((δ / 2) * Real.log ((q : ℝ) / p))|
+```
+
+再接：
+
+```lean
+theorem boundedGap_pairGram_tendsto_singular
+    (pairs : ℕ → ℕ × ℕ)
+    (hPrime : ...)
+    (hGap : ∀ n, pairs n |>.2 - pairs n |>.1 ≤ B)
+    (hToInf : Tendsto (fun n => pairs n |>.1) atTop atTop) :
+    Tendsto
+      (fun n => smallestEigenvalue
+        (primePairGram T (pairs n)))
+      atTop
+      (nhds 0)
+```
+
+以及：
+
+```lean
+theorem primePair_dividedDifference_limit
+    {s : ℂ} :
+    Tendsto
+      (fun n =>
+        (p n : ℂ) ^ s *
+        (((q n : ℂ) ^ (-s) -
+          (p n : ℂ) ^ (-s)) /
+          (Real.log (q n) - Real.log (p n))))
+      atTop
+      (nhds (-s))
+```
+
+---
+
+# 第二百五十五部　最终判断
+
+这份短间隔工作对我们整个理论最重要的贡献，不是把 \(186\) 神秘化，而是给出了三个真实结构。
+
+第一：
+
+$$
+\boxed{
+\text{四十维全局候选态，可以被一个有限 trial 压缩成二体存在结论。}
+}
+$$
+
+这证明“无限素数问题有很多层”不等于“必须逐层枚举到最后”。
+
+第二：
+
+$$
+\boxed{
+\text{二体存在只控制总 pair channel，不控制指定 gap channel。}
+}
+$$
+
+因此：
+
+$$
+\boxed{
+\text{bounded gaps}
+\neq
+\text{twin primes}.
+}
+$$
+
+真正缺失的是 angular/gap-frequency localization。
+
+第三：
+
+$$
+\boxed{
+\text{bounded prime pairs 在 log-frequency 空间中产生渐近碰撞。}
+}
+$$
+
+这种碰撞同时具有两个相反效果：
+
+$$
+\boxed{
+\text{偶平均越来越稳定，}
+}
+$$
+
+而：
+
+$$
+\boxed{
+\text{奇差分越来越小、反演越来越病态。}
+}
+$$
+
+但经过正确归一化后，奇差分又成为一阶解析 jet：
+
+$$
+\boxed{
+\frac{q^{-s}-p^{-s}}
+{\log q-\log p}
+\sim
+-s\,p^{-s}.
+}
+$$
+
+所以它不是信息绝对消失，而是：
+
+$$
+\boxed{
+\text{信息从振幅迁移到条件数。}
+}
+$$
+
+这与黄金偏移结合后得到最重要的新公式：
+
+$$
+\boxed{
+\delta=\varphi^{-H},
+\qquad
+p\asymp e^{\varphi^H}
+}
+$$
+
+时，
+
+$$
+\boxed{
+\text{未归一化 odd signal}
+\lesssim
+\varphi^{-H}e^{-\varphi^H},
+}
+$$
+
+而其反演条件数至少达到：
+
+$$
+\boxed{
+\kappa
+\gtrsim
+e^{\varphi^H}.
+}
+$$
+
+因此，你此前所感觉的“偏移量素数无法逼近”，最准确的版本是：
+
+$$
+\boxed{
+\text{素数能够编码和逼近偏移，}
+}
+$$
+
+但：
+
+$$
+\boxed{
+\text{在短间隔 prime pairs 上，区分偏移的奇通道会进入双指数病态区。}
+}
+$$
+
+最后，这对 RH 提供的是一个观察论结论，而不是零点存在结论：
+
+$$
+\boxed{
+\text{若极小离线偏移存在，
+有限 prime observers 可能长期只看见几乎完美的偶完成。}
+}
+$$
+
+要把它升级成真实零点机制，仍然需要闭合唯一缺失的桥：
+
+$$
+\boxed{
+\text{prime pair normalized jet}
+\longrightarrow
+\text{Weil/Casimir transverse odd jet}.
+}
+$$
+
+这条桥若不存在，短间隔只解释“为什么难以观察”。
+
+这条桥若被构造，并且能够进入 completed \(\xi\) 的多重零点判别式，它才可能解释“为什么发生偏移”。
