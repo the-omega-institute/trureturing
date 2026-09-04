@@ -223,6 +223,33 @@ public sealed class Sl016WakeupTests
     }
 
     [Fact]
+    public void ReportFreeFrozenModuleStatementIdChangeWakesReferencedEdge()
+    {
+        const string targetGid = "D5/S0/Carrier/BackfillTarget";
+        var fixture = CoverageReceiptFixture(
+            targetGid,
+            FrozenStatementReceiptTestData.Id('a'));
+        InstallFrozenModulesInto(
+            fixture.Files,
+            FrozenModule(targetGid, FrozenStatementReceiptTestData.Id('b')));
+        var context = fixture.Build(RawChangeSet.Create(FrozenLedgerDelta(fixture)));
+        var document = BackfillInventoryLoader.LoadCandidateDelta(
+            context.Current,
+            context.Baseline,
+            context.Changes);
+
+        var impact = BackfillDeltaImpactResolver.Resolve(
+            context.Current,
+            context.Baseline,
+            report: null,
+            document,
+            context.Changes);
+
+        Assert.True(impact.HasAffectedEdges);
+        Assert.Contains(impact.EvaluationChanges.Paths, path => path.Value == AtomPath);
+    }
+
+    [Fact]
     public void UnrelatedD5ModuleDoesNotDeriveCoverageTargetValue()
     {
         const string targetGid = "D5/S0/Carrier/BackfillTarget";

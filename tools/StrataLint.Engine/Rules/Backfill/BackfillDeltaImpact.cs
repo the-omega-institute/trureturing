@@ -38,16 +38,13 @@ internal static class BackfillDeltaImpactResolver
             .Select(EntryPath)
             .ToHashSet(StringComparer.Ordinal);
 
-        if (report is not null)
-        {
-            AddCurrentResolutionDependants(
-                current,
-                report,
-                document,
-                repositoryChanges,
-                affectedEntryPaths,
-                statementResolutionObserved);
-        }
+        AddCurrentResolutionDependants(
+            current,
+            report,
+            document,
+            repositoryChanges,
+            affectedEntryPaths,
+            statementResolutionObserved);
 
         // Raw frozen and Lean paths have historically widened one dependency change to every
         // edge. Their value changes are represented by the affected entry paths above instead.
@@ -147,7 +144,7 @@ internal static class BackfillDeltaImpactResolver
 
     private static void AddCurrentResolutionDependants(
         RepositorySnapshot current,
-        LeanAxiomReport report,
+        LeanAxiomReport? report,
         BackfillInventoryDocument document,
         RawChangeSet repositoryChanges,
         ISet<string> affectedEntryPaths,
@@ -166,12 +163,14 @@ internal static class BackfillDeltaImpactResolver
             return;
         }
 
-        FrozenStatementIndex currentStatements;
+        FrozenStateCatalog frozenState;
+        FrozenStatementIndex? currentStatements;
         try
         {
-            currentStatements = FrozenStatementIndex.Create(
-                FrozenStateCatalog.Load(current),
-                report);
+            frozenState = FrozenStateCatalog.Load(current);
+            currentStatements = report is null
+                ? null
+                : FrozenStatementIndex.Create(frozenState, report);
         }
         catch (Exception exception) when (
             exception is FormatException or InvalidOperationException)
@@ -183,14 +182,31 @@ internal static class BackfillDeltaImpactResolver
 
         foreach (var (gidText, dependencies) in candidates)
         {
-            statementResolutionObserved?.Invoke(gidText);
             var gid = dependencies[0].Gid;
-            var currentResolution = currentStatements.TryResolve(
-                gid,
-                out var statementId,
-                out _)
-                    ? statementId!.Value
+            string? currentResolution;
+            if (gid.ToTarget() is Target.Formal { Declaration: null } formal)
+            {
+                currentResolution = frozenState.Records.TryGetValue(formal.Path, out var frozen)
+                    ? frozen.StatementId.Value
                     : null;
+            }
+            else if (currentStatements is null)
+            {
+                // Declaration statement identity is report-derived. A report-free caller has no
+                // current declaration value to compare, so absence must not mean unresolved.
+                continue;
+            }
+            else
+            {
+                currentResolution = currentStatements.TryResolve(
+                    gid,
+                    out var statementId,
+                    out _)
+                        ? statementId!.Value
+                        : null;
+            }
+
+            statementResolutionObserved?.Invoke(gidText);
             foreach (var dependency in dependencies)
             {
                 if (string.Equals(
