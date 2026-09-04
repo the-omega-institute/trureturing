@@ -40,9 +40,73 @@ def fixtureBundle :=
 
 information_theorem nativeExample
   in fixtureLawArena
-  primitives fixtureBundle
+  primitives fixtureRealization
   : fixtureLawArena.Law fixtureRealization := by
     trivial
+
+example : nativeExample.__information_unit.primitives =
+    fixtureRealization.toPrimitiveBundle := rfl
+
+/-- error: IE-C006 StatementProofMismatch:
+LeanInformationAudit.Tests.RegistrationErrors.unrelatedNative -/
+#guard_msgs (error) in
+information_theorem unrelatedNative
+  in fixtureLawArena
+  primitives fixtureRealization
+  : 2 + 2 = 4 := by
+    rfl
+
+def alternativeRealization : PrimitiveRealization fixtureLawArena.signature where
+  readout := fun _ _ => false
+  anchor := Fin.elim0
+
+theorem nativeBundleTarget : fixtureLawArena.Law fixtureRealization :=
+  trivial
+
+def mismatchedNativeBundleUnit : TheoremUnit fixtureLawArena.toArena :=
+  { «primitives» := alternativeRealization.toPrimitiveBundle
+    Statement := fixtureLawArena.Law fixtureRealization
+    proof := nativeBundleTarget }
+
+/-- info: IE-C006 StatementProofMismatch:
+LeanInformationAudit.Tests.RegistrationErrors.nativeBundleTarget -/
+#guard_msgs in
+run_cmd do
+  let result ← Lean.Elab.Command.liftTermElabM <|
+    validateNewEntry (← getEnv) {
+      theoremName := `LeanInformationAudit.Tests.RegistrationErrors.nativeBundleTarget
+      unitName :=
+        `LeanInformationAudit.Tests.RegistrationErrors.mismatchedNativeBundleUnit
+      arenaName := `LeanInformationAudit.Tests.RegistrationErrors.fixtureLawArena
+      realizationName := `LeanInformationAudit.Tests.RegistrationErrors.fixtureRealization
+    }
+  match result with
+  | .error message => logInfo message
+  | .ok () => throwError "mismatched native bundle passed validation"
+
+theorem nativeLawMismatchTarget : 2 + 2 = 4 :=
+  rfl
+
+def nativeLawMismatchUnit : TheoremUnit fixtureLawArena.toArena :=
+  { «primitives» := fixtureRealization.toPrimitiveBundle
+    Statement := 2 + 2 = 4
+    proof := nativeLawMismatchTarget }
+
+/-- info: IE-C006 StatementProofMismatch:
+LeanInformationAudit.Tests.RegistrationErrors.nativeLawMismatchTarget -/
+#guard_msgs in
+run_cmd do
+  let result ← Lean.Elab.Command.liftTermElabM <|
+    validateNewEntry (← getEnv) {
+      theoremName :=
+        `LeanInformationAudit.Tests.RegistrationErrors.nativeLawMismatchTarget
+      unitName := `LeanInformationAudit.Tests.RegistrationErrors.nativeLawMismatchUnit
+      arenaName := `LeanInformationAudit.Tests.RegistrationErrors.fixtureLawArena
+      realizationName := `LeanInformationAudit.Tests.RegistrationErrors.fixtureRealization
+    }
+  match result with
+  | .error message => logInfo message
+  | .ok () => throwError "unrelated native law passed validation"
 
 theorem legacyExample : True :=
   trivial
@@ -74,6 +138,22 @@ register_information_theorem importedExample
   primitives fixtureBundle
   realization importedRealization
 
+theorem definitionBackedTarget : True :=
+  trivial
+
+set_option linter.defProp false in
+def definitionBackedRealization :
+    LegacyPrimitiveRealization fixtureLawArena True fixtureRealization where
+  equivalence := Iff.rfl
+
+/-- error: IE-C006 StatementProofMismatch:
+LeanInformationAudit.Tests.RegistrationErrors.definitionBackedTarget -/
+#guard_msgs (error) in
+register_information_theorem definitionBackedTarget
+  in fixtureLawArena
+  primitives fixtureBundle
+  realization definitionBackedRealization
+
 /-- error: IE-C002 DuplicateRegistration:
 LeanInformationAudit.Tests.RegistrationErrors.legacyExample -/
 #guard_msgs (error) in
@@ -83,8 +163,8 @@ register_information_theorem legacyExample
   realization legacyRealization
 
 set_option linter.style.nameCheck false in
-  theorem generated.__lowers_escape : True :=
-    trivial
+theorem generated.__lowers_escape : True :=
+  trivial
 
 theorem generatedRealization :
     LegacyPrimitiveRealization fixtureLawArena True fixtureRealization where
@@ -126,11 +206,11 @@ LeanInformationAudit.Tests.RegistrationErrors.mismatchTarget -/
 #guard_msgs in
 run_cmd do
   let result ← Lean.Elab.Command.liftTermElabM <|
-    validateEntryTypes (← getEnv) {
+    validateNewEntry (← getEnv) {
       theoremName := `LeanInformationAudit.Tests.RegistrationErrors.mismatchTarget
       unitName := `LeanInformationAudit.Tests.RegistrationErrors.mismatchedUnit
       arenaName := `LeanInformationAudit.Tests.RegistrationErrors.fixtureLawArena
-      realizationName := .anonymous
+      realizationName := `LeanInformationAudit.Tests.RegistrationErrors.legacyRealization
     }
   match result with
   | .error message => logInfo message
@@ -143,11 +223,12 @@ def notATheorem : Prop :=
 LeanInformationAudit.Tests.RegistrationErrors.notATheorem -/
 #guard_msgs in
 run_cmd do
-  let result := validateEntry (← getEnv) {
+  let result ← Lean.Elab.Command.liftTermElabM <|
+    validateNewEntry (← getEnv) {
     theoremName := `LeanInformationAudit.Tests.RegistrationErrors.notATheorem
     unitName := `LeanInformationAudit.Tests.RegistrationErrors.mismatchedUnit
     arenaName := `LeanInformationAudit.Tests.RegistrationErrors.fixtureLawArena
-    realizationName := .anonymous
+    realizationName := `LeanInformationAudit.Tests.RegistrationErrors.legacyRealization
   }
   match result with
   | .error message => logInfo message
@@ -157,11 +238,12 @@ run_cmd do
 LeanInformationAudit.Tests.RegistrationErrors.missingArena -/
 #guard_msgs in
 run_cmd do
-  let result := validateEntry (← getEnv) {
+  let result ← Lean.Elab.Command.liftTermElabM <|
+    validateNewEntry (← getEnv) {
     theoremName := `LeanInformationAudit.Tests.RegistrationErrors.mismatchTarget
     unitName := `LeanInformationAudit.Tests.RegistrationErrors.mismatchedUnit
     arenaName := `LeanInformationAudit.Tests.RegistrationErrors.missingArena
-    realizationName := .anonymous
+    realizationName := `LeanInformationAudit.Tests.RegistrationErrors.legacyRealization
   }
   match result with
   | .error message => logInfo message
@@ -174,11 +256,12 @@ theorem wrongUnitHead : True :=
 LeanInformationAudit.Tests.RegistrationErrors.mismatchTarget -/
 #guard_msgs in
 run_cmd do
-  let result := validateEntry (← getEnv) {
+  let result ← Lean.Elab.Command.liftTermElabM <|
+    validateNewEntry (← getEnv) {
     theoremName := `LeanInformationAudit.Tests.RegistrationErrors.mismatchTarget
     unitName := `LeanInformationAudit.Tests.RegistrationErrors.wrongUnitHead
     arenaName := `LeanInformationAudit.Tests.RegistrationErrors.fixtureLawArena
-    realizationName := .anonymous
+    realizationName := `LeanInformationAudit.Tests.RegistrationErrors.legacyRealization
   }
   match result with
   | .error message => logInfo message

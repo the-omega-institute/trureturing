@@ -39,4 +39,23 @@ run_cmd do
   unless env.contains importedEntry.unitName do
     throwError "resolved companion declaration is missing"
 
+#guard_msgs in
+run_cmd do
+  let env ← getEnv
+  let some entry := InformationRegistry.find? env
+      `LeanInformationAudit.Tests.RegistrationErrors.nativeExample
+    | throwError "missing persisted native registration"
+  match ← Lean.Elab.Command.liftTermElabM <| validatePersistedEntry env entry with
+  | .ok () => pure ()
+  | .error message => throwError message
+
+/-- error: IE-C002 DuplicateRegistration:
+LeanInformationAudit.Tests.RegistrationErrors.legacyExample -/
+#guard_msgs (error) in
+register_information_theorem
+  LeanInformationAudit.Tests.RegistrationErrors.legacyExample
+  in LeanInformationAudit.Tests.RegistrationErrors.fixtureLawArena
+  primitives LeanInformationAudit.Tests.RegistrationErrors.fixtureBundle
+  realization LeanInformationAudit.Tests.RegistrationErrors.legacyRealization
+
 end LeanInformationAudit.Tests.RegistrationPersistence

@@ -8,8 +8,6 @@ open Lean.Elab.Command
 open Lean.Elab.Term
 open Lean.Meta
 
-private def theoremUnitSuffix := "__information_unit"
-
 private def declarationName (id : TSyntax `ident) : CommandElabM Name := do
   let name := id.getId
   if (`_root_).isPrefixOf name then
@@ -37,37 +35,13 @@ private def resolveTheorem (id : TSyntax `ident) : CommandElabM Name := do
   | _ => throwErrorAt id "IE-C001 UnregisteredTheoremUnit: {theoremName}"
 
 private def registerEntry (entry : InformationRegistryEntry) : CommandElabM Unit := do
-  let result <- liftTermElabM <| validateEntryTypes (← getEnv) entry
-  match result with
-  | .ok () =>
-      modifyEnv fun env => informationRegistryExt.addEntry env entry
-  | .error message => throwError message
+  registerValidatedEntry entry
 
-private def checkLegacyBinding (theoremName arenaName realizationName : Name)
-    (primitiveTerm : TSyntax `term) :
-    CommandElabM Unit := do
+private def checkRealizationBundle (theoremName arenaName : Name)
+    (typedRealization : Expr) (primitiveTerm : TSyntax `term) : CommandElabM Unit := do
   let valid <- liftTermElabM do
     try
-      let theoremExpr <- mkConstWithFreshMVarLevels theoremName
-      let theoremType <- instantiateMVars (← whnfR (← inferType theoremExpr))
       let arenaExpr <- mkConstWithFreshMVarLevels arenaName
-      let arenaType <- instantiateMVars (← whnfR (← inferType arenaExpr))
-      unless arenaType.getAppFn.constName? ==
-          some `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena do
-        return false
-      let realizationConst <- mkConstWithFreshMVarLevels realizationName
-      let realizationType <- instantiateMVars (← whnfR (← inferType realizationConst))
-      unless realizationType.getAppFn.constName? ==
-          some `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization do
-        return false
-      let legacyArgs := realizationType.getAppArgs
-      unless legacyArgs.size == 3 do
-        return false
-      unless ← isDefEq legacyArgs[0]! arenaExpr do
-        return false
-      unless ← isDefEq legacyArgs[1]! theoremType do
-        return false
-      let typedRealization := legacyArgs[2]!
       let typedRealizationType <- instantiateMVars (← whnfR (← inferType typedRealization))
       unless typedRealizationType.getAppFn.constName? ==
           some `D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization do
@@ -75,20 +49,27 @@ private def checkLegacyBinding (theoremName arenaName realizationName : Name)
       let realizationArgs := typedRealizationType.getAppArgs
       unless realizationArgs.size == 2 do
         return false
-      let arenaValue <- mkAppM
-        `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.toArena
-        #[arenaExpr]
-      let stateType <- mkAppM
-        `D5.S3.ConceptDynamics.InformationEscape.Arena.State #[arenaValue]
-      let stateDecidableEq <- mkAppM
-        `D5.S3.ConceptDynamics.InformationEscape.Arena.stateDecidableEq #[arenaValue]
-      let compiler <- mkConstWithFreshMVarLevels
-        `D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle
-      let compiledBundle := mkAppN compiler
-        #[stateType, realizationArgs[1]!, stateDecidableEq, typedRealization]
+      let compiledBundle <- compilePrimitiveBundle arenaExpr typedRealization
       let suppliedBundle <- elabTerm primitiveTerm none
       synthesizeSyntheticMVarsNoPostponing
       return ← isDefEq suppliedBundle compiledBundle
+    catch _ =>
+      return false
+  unless valid do
+    throwError "IE-C006 StatementProofMismatch: {theoremName}"
+
+private def checkNativeStatement (theoremName arenaName realizationName : Name)
+    (statement : TSyntax `term) : CommandElabM Unit := do
+  let valid <- liftTermElabM do
+    try
+      let arenaExpr <- mkConstWithFreshMVarLevels arenaName
+      let realizationExpr <- mkConstWithFreshMVarLevels realizationName
+      let expectedLaw <- mkAppM
+        `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.Law
+        #[arenaExpr, realizationExpr]
+      let statementExpr <- elabTerm statement (some (mkSort .zero))
+      synthesizeSyntheticMVarsNoPostponing
+      return ← isDefEq statementExpr expectedLaw
     catch _ =>
       return false
   unless valid do
@@ -100,23 +81,29 @@ elab "information_theorem " theoremId:ident ppLine
     ": " statement:term " := " proof:term : command => do
     let theoremName <- declarationName theoremId
     ensureRegisterableName (← getEnv) theoremName
-    let _ <- try
+    let arenaName <- try
       liftCoreM <| realizeGlobalConstNoOverloadWithInfo arenaId
     catch _ =>
       throwErrorAt arenaId "IE-C003 ArenaResolutionFailed: {arenaId.getId}"
+    let realizationName := theoremName.str primitiveRealizationSuffix
+    let realizationId := absoluteIdentFrom theoremId realizationName
+    elabCommand (← `(command| def $realizationId :
+        D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization
+          ($arenaId:ident).signature := $primitives))
+    checkNativeStatement theoremName arenaName realizationName statement
     elabCommand (← `(command| theorem $theoremId : $statement := $proof))
     let unitName := theoremName.str theoremUnitSuffix
     let unitId := absoluteIdentFrom theoremId unitName
     elabCommand (← `(command| def $unitId :
         D5.S3.ConceptDynamics.InformationEscape.TheoremUnit ($arenaId:ident).toArena :=
-      { primitives := $primitives
+      { primitives := ($realizationId:ident).toPrimitiveBundle
         Statement := $statement
         proof := $theoremId }))
     registerEntry {
       theoremName
       unitName
-      arenaName := (← liftCoreM <| realizeGlobalConstNoOverloadWithInfo arenaId)
-      realizationName := .anonymous
+      arenaName
+      realizationName
     }
 
 syntax (name := registerInformationTheoremCmd)
@@ -140,7 +127,26 @@ private def elabRegisterInformationTheorem : CommandElab := fun stx => do
       liftCoreM <| realizeGlobalConstNoOverloadWithInfo realizationId
     catch _ =>
       throwError "IE-C006 StatementProofMismatch: {theoremName}"
-    checkLegacyBinding theoremName arenaName realizationName primitiveTerm
+    match (← getEnv).find? realizationName with
+    | some (.thmInfo _) => pure ()
+    | _ => throwError "IE-C006 StatementProofMismatch: {theoremName}"
+    let theoremExpr <- liftTermElabM <| mkConstWithFreshMVarLevels theoremName
+    let theoremType <- liftTermElabM do
+      instantiateMVars (← whnfR (← inferType theoremExpr))
+    let realizationExpr <- liftTermElabM <| mkConstWithFreshMVarLevels realizationName
+    let realizationType <- liftTermElabM do
+      instantiateMVars (← whnfR (← inferType realizationExpr))
+    let legacyArgs := realizationType.getAppArgs
+    unless realizationType.getAppFn.constName? ==
+        some `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization &&
+        legacyArgs.size == 3 do
+      throwError "IE-C006 StatementProofMismatch: {theoremName}"
+    let validLegacy <- liftTermElabM do
+      return (← isDefEq legacyArgs[0]! (← mkConstWithFreshMVarLevels arenaName)) &&
+        (← isDefEq legacyArgs[1]! theoremType)
+    unless validLegacy do
+      throwError "IE-C006 StatementProofMismatch: {theoremName}"
+    checkRealizationBundle theoremName arenaName legacyArgs[2]! primitiveTerm
     let unitName := theoremName.str theoremUnitSuffix
     let unitId := absoluteIdentFrom theoremId unitName
     let unitType <- `(term|

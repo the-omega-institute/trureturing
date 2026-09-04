@@ -12,16 +12,24 @@ private def theoremUnitName : Name :=
 private def primitiveLawArenaName : Name :=
   `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena
 
+private def primitiveRealizationName : Name :=
+  `D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization
+
+private def legacyPrimitiveRealizationName : Name :=
+  `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization
+
+def theoremUnitSuffix := "__information_unit"
+
+def primitiveRealizationSuffix := "__primitive_realization"
+
 structure InformationRegistryEntry where
   theoremName : Name
   unitName : Name
   arenaName : Name
-  /-- `realizationName = Name.anonymous` iff the unit is native. This deviation
-  from the spec section 25.1 three-field entry is required by the realization
-  validation in sections 24.2, 24.4, and 26.4. -/
+  /-- The declaration holding the native realization or the legacy witness. -/
   realizationName : Name
 
-initialize informationRegistryExt :
+private initialize informationRegistryExt :
     SimplePersistentEnvExtension InformationRegistryEntry
       (Array InformationRegistryEntry) ←
   registerSimplePersistentEnvExtension {
@@ -47,8 +55,8 @@ def isCompanionName : Name -> Bool
   | .str _ suffix =>
       suffix == "__lowers_escape" ||
         suffix == "__escape_enriched" ||
-        suffix == "__information_unit" ||
-        suffix == "__primitive_realization"
+        suffix == theoremUnitSuffix ||
+        suffix == primitiveRealizationSuffix
   | _ => false
 
 private def duplicateError (name : Name) : String :=
@@ -57,11 +65,9 @@ private def duplicateError (name : Name) : String :=
 private def statementMismatchError (name : Name) : String :=
   s!"IE-C006 StatementProofMismatch: {name}"
 
-/-- Perform the environment-only portion of registry integrity validation.
-
-The command layer follows this with `validateEntryTypes`, whose metavariable
-instantiation and reducible weak-head normalization require `MetaM`. -/
-def validateEntry (env : Environment) (entry : InformationRegistryEntry) :
+/-- Perform the environment-only checks shared by admission and sealing. -/
+private def validateEntryDeclarations (env : Environment)
+    (entry : InformationRegistryEntry) :
     Except String Unit := do
   if isCompanionName entry.theoremName then
     throw s!"IE-C011 GeneratedCertificateRegistered: {entry.theoremName}"
@@ -72,23 +78,40 @@ def validateEntry (env : Environment) (entry : InformationRegistryEntry) :
     throw (statementMismatchError entry.theoremName)
   unless env.contains entry.arenaName do
     throw s!"IE-C003 ArenaResolutionFailed: {entry.arenaName}"
-  if InformationRegistry.hasTheorem env entry.theoremName then
-    throw (duplicateError entry.theoremName)
-  if InformationRegistry.hasUnit env entry.unitName then
-    throw (duplicateError entry.unitName)
+  unless env.contains entry.realizationName do
+    throw (statementMismatchError entry.theoremName)
   let unitInfo := env.find? entry.unitName |>.get!
   unless unitInfo.type.getAppFn.constName? == some theoremUnitName do
     throw (statementMismatchError entry.theoremName)
 
-/-- Complete §25.4 validation using kernel definitional equality.
+def compilePrimitiveBundle (arenaExpr realizationExpr : Expr) : MetaM Expr := do
+  let realizationType <- instantiateMVars (← whnfR (← inferType realizationExpr))
+  unless realizationType.getAppFn.constName? == some primitiveRealizationName do
+    throwError "realization type mismatch"
+  let realizationArgs := realizationType.getAppArgs
+  unless realizationArgs.size == 2 do
+    throwError "realization argument mismatch"
+  let expectedSignature <- mkAppM
+    `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.signature
+    #[arenaExpr]
+  unless ← isDefEq realizationArgs[1]! expectedSignature do
+    throwError "realization signature mismatch"
+  let arenaValue <- mkAppM
+    `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.toArena
+    #[arenaExpr]
+  let stateType <- mkAppM
+    `D5.S3.ConceptDynamics.InformationEscape.Arena.State #[arenaValue]
+  let stateDecidableEq <- mkAppM
+    `D5.S3.ConceptDynamics.InformationEscape.Arena.stateDecidableEq #[arenaValue]
+  let compiler <- mkConstWithFreshMVarLevels
+    `D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle
+  return mkAppN compiler
+    #[stateType, realizationArgs[1]!, stateDecidableEq, realizationExpr]
 
-The exact cheap check instantiates metavariables, applies reducible WHNF to the
-registered theorem type, `unit.Statement`, and the inferred type of
-`unit.proof`, then asks the kernel's definitional equality procedure to compare
-both projection types with the theorem type. -/
-def validateEntryTypes (env : Environment) (entry : InformationRegistryEntry) :
+/-- Complete the declaration and definitional-equality checks shared by both phases. -/
+private def validateEntryCore (env : Environment) (entry : InformationRegistryEntry) :
     MetaM (Except String Unit) := do
-  match validateEntry env entry with
+  match validateEntryDeclarations env entry with
   | .error message => return .error message
   | .ok () => pure ()
   try
@@ -122,8 +145,91 @@ def validateEntryTypes (env : Environment) (entry : InformationRegistryEntry) :
       return .error (statementMismatchError entry.theoremName)
     unless ← isDefEq proofType theoremType do
       return .error (statementMismatchError entry.theoremName)
+    let realizationExpr <- mkConstWithFreshMVarLevels entry.realizationName
+    let realizationType <- instantiateMVars (← whnfR (← inferType realizationExpr))
+    let realizationHead := realizationType.getAppFn.constName?
+    if realizationHead == some primitiveRealizationName then
+      let expectedLaw <- mkAppM
+        `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.Law
+        #[arenaExpr, realizationExpr]
+      unless ← isDefEq theoremType expectedLaw do
+        return .error (statementMismatchError entry.theoremName)
+      let primitivesExpr <- mkAppM
+        `D5.S3.ConceptDynamics.InformationEscape.TheoremUnit.primitives
+        #[unitExpr]
+      let compiledBundle <- compilePrimitiveBundle arenaExpr realizationExpr
+      unless ← isDefEq primitivesExpr compiledBundle do
+        return .error (statementMismatchError entry.theoremName)
+    else if realizationHead == some legacyPrimitiveRealizationName then
+      match env.find? entry.realizationName with
+      | some (.thmInfo _) =>
+        let legacyArgs := realizationType.getAppArgs
+        unless legacyArgs.size == 3 do
+          return .error (statementMismatchError entry.theoremName)
+        unless ← isDefEq legacyArgs[0]! arenaExpr do
+          return .error (statementMismatchError entry.theoremName)
+        unless ← isDefEq legacyArgs[1]! theoremType do
+          return .error (statementMismatchError entry.theoremName)
+        let primitivesExpr <- mkAppM
+          `D5.S3.ConceptDynamics.InformationEscape.TheoremUnit.primitives
+          #[unitExpr]
+        let compiledBundle <- compilePrimitiveBundle arenaExpr legacyArgs[2]!
+        unless ← isDefEq primitivesExpr compiledBundle do
+          return .error (statementMismatchError entry.theoremName)
+      | _ => return .error (statementMismatchError entry.theoremName)
+    else
+      return .error (statementMismatchError entry.theoremName)
     return .ok ()
   catch _ =>
     return .error (statementMismatchError entry.theoremName)
+
+private def sameEntry (left right : InformationRegistryEntry) : Bool :=
+  left.theoremName == right.theoremName &&
+    left.unitName == right.unitName &&
+    left.arenaName == right.arenaName &&
+    left.realizationName == right.realizationName
+
+/-- Validate a prospective entry before insertion; neither registry key may exist yet. -/
+def validateNewEntry (env : Environment) (entry : InformationRegistryEntry) :
+    MetaM (Except String Unit) := do
+  match ← validateEntryCore env entry with
+  | .error message => return .error message
+  | .ok () => pure ()
+  let entries := InformationRegistry.entries env
+  if entries.any fun candidate => candidate.theoremName == entry.theoremName then
+    return .error (duplicateError entry.theoremName)
+  if entries.any fun candidate => candidate.unitName == entry.unitName then
+    return .error (duplicateError entry.unitName)
+  return .ok ()
+
+/-- Validate an entry already stored in the persistent registry exactly once. -/
+def validatePersistedEntry (env : Environment) (entry : InformationRegistryEntry) :
+    MetaM (Except String Unit) := do
+  match ← validateEntryCore env entry with
+  | .error message => return .error message
+  | .ok () => pure ()
+  let entries := InformationRegistry.entries env
+  let theoremMatches := entries.filter fun candidate =>
+    candidate.theoremName == entry.theoremName
+  match theoremMatches.toList with
+  | [candidate] =>
+    unless sameEntry candidate entry do
+      return .error (duplicateError entry.theoremName)
+  | _ => return .error (duplicateError entry.theoremName)
+  let unitMatches := entries.filter fun candidate => candidate.unitName == entry.unitName
+  match unitMatches.toList with
+  | [candidate] =>
+    unless sameEntry candidate entry do
+      return .error (duplicateError entry.unitName)
+  | _ => return .error (duplicateError entry.unitName)
+  return .ok ()
+
+def registerValidatedEntry (entry : InformationRegistryEntry) :
+    Lean.Elab.Command.CommandElabM Unit := do
+  let result <- Lean.Elab.Command.liftTermElabM <|
+    validateNewEntry (← getEnv) entry
+  match result with
+  | .ok () => modifyEnv fun env => informationRegistryExt.addEntry env entry
+  | .error message => throwError message
 
 end LeanInformationAudit

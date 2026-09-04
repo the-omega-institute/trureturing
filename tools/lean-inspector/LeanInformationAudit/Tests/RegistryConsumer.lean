@@ -29,3 +29,13 @@ run_cmd do
   if InformationRegistry.hasTheorem env
       `LeanInformationAudit.Tests.freshTheorem then
     throwError "fresh theorem name unexpectedly present"
+
+#guard_msgs in
+run_cmd do
+  let env ← getEnv
+  let some entry := InformationRegistry.find? env
+      `LeanInformationAudit.Tests.probeTheorem
+    | throwError "missing imported singleton"
+  match ← Lean.Elab.Command.liftTermElabM <| validatePersistedEntry env entry with
+  | .ok () => pure ()
+  | .error message => throwError message
