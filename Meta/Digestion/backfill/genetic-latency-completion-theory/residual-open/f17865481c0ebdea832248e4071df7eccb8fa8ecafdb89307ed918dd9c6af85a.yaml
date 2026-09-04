@@ -1,0 +1,12 @@
+fingerprints:
+  raw_sha256: sha256:f17865481c0ebdea832248e4071df7eccb8fa8ecafdb89307ed918dd9c6af85a
+  normalized_sha256: sha256:f17865481c0ebdea832248e4071df7eccb8fa8ecafdb89307ed918dd9c6af85a
+cas_ref: sha256:f17865481c0ebdea832248e4071df7eccb8fa8ecafdb89307ed918dd9c6af85a
+coverage_gids: []
+receipts:
+  scribe: []
+  unresolved_subitems: []
+  quarantine:
+    justification: 'Whole-atom multi-clause guard after review pass 2. The frozen public owner `D5/S3/Observer/Separation/FiniteFutureCongruence.finite_future_maximal_congruence` returns `FiniteFutureCongruenceLaws`: `finiteStabilization`, `belowKernel`, `invariant`, `maximal`, `base`, and `intersection` carry finite stabilization, the maximal forward-invariant relation, kernel containment, and `E_infinity = intersection_n E_n`. The boxed clause has no public owner. Source lines 1094-1108 say "若 aa 与 ab 当前等价，定义" `d_rev = inf {n : (x_aa, x_ab) notin E_n}` and "有限正数：延迟显现"; lines 1112-1134 state `E_infinity = E_m_star`, maximal forward invariance inside the observation kernel, box "E_∞ = E_0 - 全部未来会破裂的伪等价状态对", and say "稳定显性就是当前显性 residual 中经未来闭包检验后仍存活的等价". The owner exposes neither a future-breaking-pairs set nor this set-difference equality. Unfolding `base` and `intersection` to derive the box is definitional substitution, which does not count as whole-atom public coverage.'
+    reentry_condition: Deposit a public corollary stating `infiniteFutureRelation = finiteFutureRelation 0 \ {p | exists n, p notin finiteFutureRelation n}` under 第 5⁗ 条 with admission basis `atom-required-bridge`, naming atom `f17865481c0ebdea832248e4071df7eccb8fa8ecafdb89307ed918dd9c6af85a` as the consumer; then run `make cover` for that public GID.
+    blocker_class: multi-clause-guard
