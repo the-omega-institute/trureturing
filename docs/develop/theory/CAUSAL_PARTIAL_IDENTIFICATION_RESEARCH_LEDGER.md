@@ -16,7 +16,7 @@ causal and statistical assumptions
   -> Lean sharpness theorem
 ```
 
-For convex finite models, exact endpoint witnesses and affine interpolation fill the complete interval. Polynomial cross-world restrictions and unions over graph completions can produce nonconvex or disconnected identified ranges.
+For convex finite models, exact endpoint witnesses and affine interpolation fill the complete interval. Polynomial cross-world restrictions, Markovian product families, and unions over graph completions can produce nonconvex or disconnected identified ranges.
 
 ## 2. Reused library layer
 
@@ -28,8 +28,11 @@ The causal lane reuses the following repository truth sources.
 - `D5/S3/ConceptDynamics/Causal/NonconvexSharpIdentification` separates exact endpoints from full range sharpness and transports valid bounds from outer relaxations.
 - `D5/S3/ConceptDynamics/Causal/FiniteLinearCausalIdentification` packages finite causal LP rows with data, structural, and sensitivity provenance.
 - `D5/S3/ConceptDynamics/Causal/StructuralEvaluationSemantics` supplies the canonical finite order semantics used by causal evaluation.
+- `D5/S3/Entropy/Submodularity/MarkovDataProcessing` supplies finite single-world Markov factorization and mutual-information data processing.
+- `D5/S3/ConceptDynamics/Completion/PositivePriorConditionalIndependence` relates positive-prior kernel descent to conditional independence.
+- `D5/S3/Estimation/DecisionRisk/StochasticDescentEquivalence` identifies quotient-kernel descent, strong lumpability, and observed transition factorization.
 
-The library audit found no pre-existing exact compiler from required edges, forbidden edges, query-order admissibility, and finite causal-event marginals to one joint completion-signature polytope.
+The library audit found no pre-existing exact compiler from required edges, forbidden edges, query-order admissibility, and finite causal-event marginals to one joint completion-signature polytope. It also found no cross-world theorem proving that independent exogenous components remain product-factorized after deterministic response pushforward, or that a counterfactual event becomes a certified LP objective after all but one component law are fixed.
 
 ## 3. Finite sharp-bounds layer
 
@@ -177,7 +180,58 @@ The module also proves a finite exogenous pushforward identity. Mapping each exo
 
 Diagram refinement preserves all event rows and removes admissible support. Consequently, every mass feasible under stronger graph information is feasible under the weaker event compiler, and rational lower or upper certificates for the weaker problem remain valid on the refined problem.
 
-## 10. Semantic boundary: mixture versus one global graph
+## 10. Markovian response-law factorization
+
+`MarkovianResponseLawFactorization` moves the Markov assumption to the level that directly constrains counterfactual couplings.
+
+A normalized local response law is a nonnegative rational mass vector with total mass one. Two independent components combine as
+
+```text
+mu(left, right) = mu_left(left) * mu_right(right).
+```
+
+The module proves nonnegativity, normalization, and recovery of both component marginals. More importantly, it proves the deterministic pushforward identity
+
+```text
+(f x g)_*(mu_left x mu_right)
+  = f_*(mu_left) x g_*(mu_right).
+```
+
+Thus independent finite exogenous components induce a product-factorized response law after componentwise deterministic structural maps. The displayed components can represent individual disturbances in a Markovian SCM or whole confounded blocks in a quasi-Markovian SCM. Dependence inside each block remains unrestricted.
+
+For a Boolean counterfactual event `E(left, right)`, the product-law probability is
+
+```text
+sum_left sum_right
+  1[E(left, right)] * mu_left(left) * mu_right(right).
+```
+
+This is bilinear when both component laws are unknown. After fixing `mu_right`, the exact left coefficient becomes
+
+```text
+c(left) = sum_right 1[E(left, right)] * mu_right(right),
+```
+
+and the event probability is exactly the rational linear objective
+
+```text
+sum_left c(left) * mu_left(left).
+```
+
+The module connects this fixed-component slice directly to `LinearObjectiveDual`. Exact rational lower and upper certificates for the remaining component law replay as valid bounds on the original Markovian counterfactual event probability.
+
+The product-law family is globally nonconvex. Two degenerate independent Boolean response laws have a midpoint supported on the two diagonal response states. That midpoint violates the two-by-two determinant identity and therefore cannot be product-factorized. Exact endpoint witnesses cannot be interpolated inside the Markovian family without an additional inner witness construction.
+
+This formalizes the main optimization boundary reported in recent quasi-Markovian work:
+
+```text
+several unknown component laws -> multilinear program
+all but one component law fixed -> linear program.
+```
+
+The module does not infer confounded components from a graph, compile observational distributions to component-law constraints, or solve the general multilinear optimization problem.
+
+## 11. Semantic boundary: mixture versus one global graph
 
 The support and event-row compilers have latent-completion mixture semantics. Different units may receive mass from different admissible completions.
 
@@ -189,18 +243,24 @@ union over admissible completions of completion-specific identified ranges.
 
 Convexifying that union silently changes the causal model by introducing a latent graph index. Future compilers must expose this choice in their type and certificate payload.
 
-## 11. Interfaces to 2026 research
+A similar warning applies to Markovian response laws. Mixing two product-factorized laws can create dependence between components. A latent mixture index must therefore be represented explicitly and cannot be silently absorbed into a claim of exogenous independence.
+
+## 12. Interfaces to current research
 
 The current literature interface is organized as follows.
 
 - Partial causal diagrams: Xie and Li, arXiv:2602.14503. Structural and auxiliary statistical information is represented as constraints on counterfactual distributions. The event-row compiler formalizes the finite zero-one-row kernel of those statistical constraints, without claiming completeness for the paper's full language.
 - Causal orders: Rossetto and Antonucci, arXiv:2608.24427. Counterfactual queries induce precedence constraints, compatible total orders support canonical response-function programs, and tightness is tied to constructing attaining structural models.
+- Markovian canonical counterfactual models: de Lara, arXiv:2507.16370. Canonical counterfactual representations separate interventional restrictions from additional counterfactual choices in Markovian SCMs.
+- Quasi-Markovian partial identification: Arroyo et al., arXiv:2509.03548. General bounds are formulated as multilinear programs, while a single intervened confounded component admits a linear-program route and column-generation reduction.
+- Probabilities of causation in quasi-Markovian models: Laurentino et al., arXiv:2509.02535. Latent confounding and component structure are used to obtain tighter PoC bounds and root-cause scores.
+- Canonical domain reduction: Choe et al., UAI 2026. Counterfactual states indistinguishable to every objective and constraint row are quotiented without changing sharp LP bounds.
 - Covariates and mediators: Shu, Lei, and Li, arXiv:2608.12657. Additional causal knowledge can tighten multivalued probabilities of causation. Mediator factorization may leave the polyhedral lane and enter polynomial feasibility.
 - Continuous outcomes: Chaoge et al., arXiv:2605.01883. Copula restrictions constrain infinite-dimensional counterfactual coupling families.
 
 The repository claim boundary is narrower than these papers. The PR proves reusable logical kernels and finite concrete instances. It does not claim a complete reproduction of any paper's general algorithm or theorem family.
 
-## 12. Verification ledger
+## 13. Verification ledger
 
 Required protected-branch checks are:
 
@@ -212,9 +272,32 @@ Content-addressed dev baseline admission
 
 A truth source is considered machine-verified only after the current PR head passes the protected workflow. Scribe freshness is likewise determined by the repository renderer rather than by hand-edited Markdown.
 
-## 13. Next formal research sequence
+## 14. Next formal research sequence
 
-The partial-diagram lane now advances to:
+The Markovian lane now advances through:
+
+```text
+MarkovianResponseLawFactorization
+  -> finite component decomposition from a causal graph
+  -> componentwise observational and interventional likelihood rows
+  -> multilinear event polynomial semantics
+  -> fixed-component linear slices
+  -> branch or alternating certificate payloads
+  -> attaining Markovian structural models
+  -> sharp PoC bounds.
+```
+
+The next high-value instance should use a small quasi-Markovian graph with two confounded components and one probability-of-causation query. It should compare:
+
+```text
+unrestricted response-law coupling bound
+versus
+component-factorized Markovian or quasi-Markovian bound,
+```
+
+and provide either a closed-form sharp interval or a finite exact branch certificate.
+
+The partial-diagram lane continues with:
 
 ```text
 PartialDiagramEventRowCompilerSoundness
@@ -227,17 +310,6 @@ PartialDiagramEventRowCompilerSoundness
   -> exact interval-union normalization across one-global-graph completions.
 ```
 
-The immediate next truth source should separate three related statements:
-
-```text
-syntactic event expression
-  -> Boolean evaluation on one completion-signature atom
-  -> exact zero-one row
-  -> equality with finite SCM event probability.
-```
-
-This will prevent the compiler from accepting arbitrary Boolean tables without proving that they correspond to valid observational, interventional, or nested-counterfactual semantics.
-
 The causal-order lane continues in parallel:
 
 ```text
@@ -247,4 +319,4 @@ finite linear-extension swap connectivity
   -> permutation transport of primal-dual certificates.
 ```
 
-The nonlinear lane remains separate for mediator cross-world factorization and continuous copula restrictions.
+Continuous copula restrictions remain in the measure-coupling lane, while mediator and multi-component Markovian factorization remain in the polynomial or multilinear lane.
