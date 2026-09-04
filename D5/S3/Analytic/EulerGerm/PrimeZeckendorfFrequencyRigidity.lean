@@ -3,7 +3,7 @@
    mirror-B: none(waiver:new-cross-library-adapter)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: The calibrated first golden frequency removes prime relabeling freedom and remains independent across finite prime superpositions. -/
+   digest: Calibrated golden frequency removes prime relabeling and is rationally independent across primes. -/
 
 import D5.S3.Analytic.EulerGerm.PrimeRelabelingUnderdetermination
 import D5.S3.Analytic.EulerGerm.PrimeZeckendorfFrequencyBridge
@@ -37,6 +37,7 @@ theorem first_excited_frequency_injective :
     Function.Injective
       (fun prime : Nat.Primes => goldenSpectrum (prime, 0)) := by
   intro first second hfrequency
+  change goldenSpectrum (first, 0) = goldenSpectrum (second, 0) at hfrequency
   rw [first_excited_prime_frequency,
     first_excited_prime_frequency] at hfrequency
   have hscale : 0 < Real.goldenRatio ^ 2 :=
@@ -128,12 +129,14 @@ theorem first_excited_frequency_rational_independence :
   intro primes coefficients hsum prime hprime
   have hscaled :
       Real.goldenRatio ^ 2 *
-          (∑ p ∈ primes, (coefficients p : ℝ) * Real.log (p : ℝ)) = 0 := by
+          (∑ p ∈ primes,
+            (algebraMap ℚ ℝ) (coefficients p) * Real.log (p : ℝ)) = 0 := by
     calc
       Real.goldenRatio ^ 2 *
-          (∑ p ∈ primes, (coefficients p : ℝ) * Real.log (p : ℝ)) =
+          (∑ p ∈ primes,
+            (algebraMap ℚ ℝ) (coefficients p) * Real.log (p : ℝ)) =
         ∑ p ∈ primes,
-          (coefficients p : ℝ) *
+          (algebraMap ℚ ℝ) (coefficients p) *
             (Real.goldenRatio ^ 2 * Real.log (p : ℝ)) := by
               rw [Finset.mul_sum]
               apply Finset.sum_congr rfl
@@ -143,11 +146,13 @@ theorem first_excited_frequency_rational_independence :
         apply Finset.sum_congr rfl
         intro p _
         rw [Algebra.smul_def, first_excited_prime_frequency]
+        ring
       _ = 0 := hsum
   have hscale : Real.goldenRatio ^ 2 ≠ 0 :=
     ne_of_gt (sq_pos_of_pos Real.goldenRatio_pos)
   have hlogSum :
-      (∑ p ∈ primes, (coefficients p : ℝ) * Real.log (p : ℝ)) = 0 :=
+      (∑ p ∈ primes,
+        (algebraMap ℚ ℝ) (coefficients p) * Real.log (p : ℝ)) = 0 :=
     (mul_eq_zero.mp hscaled).resolve_left hscale
   have hindependent := linearIndependent_iff'.mp
     D5.S3.Weil.PrimeAddress.PrimeLogIndependence.prime_log_rational_independence
