@@ -1,0 +1,24 @@
+## 确定性结果三：所有整数确实拆为偶／奇素因子扇区
+
+$$
+\mathbb N
+=
+\mathcal N_{\mathrm e}
+\sqcup
+\mathcal N_{\mathrm o}.
+$$
+
+并且：
+
+$$
+Z_{\mathrm e}+Z_{\mathrm o}=\zeta,
+$$
+
+$$
+Z_{\mathrm e}-Z_{\mathrm o}
+=
+\frac{\zeta(2s)}{\zeta(s)}.
+$$
+
+---
+

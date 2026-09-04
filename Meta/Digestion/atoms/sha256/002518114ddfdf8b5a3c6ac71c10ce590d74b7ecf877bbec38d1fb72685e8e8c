@@ -1,0 +1,30 @@
+## 513. 多轴观察域
+
+设观察条件由有向集合 \(I\) 标记：
+
+$$
+i=(P,k,T,N,L,\ldots).
+$$
+
+残余族满足：
+
+$$
+i\le j
+\Longrightarrow
+R_j\subseteq R_i.
+$$
+
+选择一个子集：
+
+$$
+J\subseteq I
+$$
+
+称为共尾，如果对每个 \(i\in I\)，存在 \(j\in J\)：
+
+$$
+i\le j.
+$$
+
+---
+

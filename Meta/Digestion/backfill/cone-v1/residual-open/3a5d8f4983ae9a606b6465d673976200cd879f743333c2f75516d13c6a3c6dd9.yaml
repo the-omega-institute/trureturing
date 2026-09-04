@@ -4,6 +4,9 @@ fingerprints:
 cas_ref: sha256:3a5d8f4983ae9a606b6465d673976200cd879f743333c2f75516d13c6a3c6dd9
 coverage_gids: []
 receipts:
-  coverage: []
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Missing prerequisite after a whole-statement construction attempt, with a source endpoint defect. D5 query chsh_cubic_coefficient|chsh_spectrum|Haar.*pure|Dirichlet|epsilon.*cub|variance.*small|gap.*coefficient hit CHSHSpectrum.chsh_cubic_coefficient and chsh_spectrum, but its Blueprint commentary states that spectrum equality and multiplicities, the norm-to-spectrum bridge, and the epsilon-cubed Dirichlet-volume law are absent; no whole owner was found. Pinned Mathlib queries dirichlet distribution|uniform.*simplex|simplex.*volume|sphere.*haar|haar.*sphere|probability.*asymptotic|small.ball hit Measure.toSphere polar infrastructure but no Dirichlet weight law or quadratic-variance sublevel asymptotic; local Loogle exited 255 because its executable is unavailable. Reachable A17 GitHub Lean search found Econlib Dirichlet normalization on incompatible pins and zblore/csd-lean4 fs_volume_eq_dirichlet on the exact local Lean and Mathlib pins under Apache-2.0, but no quadratic-variance sublevel asymptotic. Probe /private/tmp/w73a31-atom1-probe.lean exited 1 after the frozen coefficient theorem elaborated, at exact goal (fun epsilon => dirichletOneMeasure.real {x | spectralVariance lambda (fullWeight x) < epsilon} - gapCoefficient lambda * epsilon ^ 3) =O[nhdsWithin 0 (Set.Ioi 0)] fun epsilon => epsilon ^ 4 under pairwise distinct lambda. The source permits N=0 or N=4, where repeated eigenvalues invalidate its nondegenerate cubic regime; the frozen coefficient owner requires 0<N<4."
+    reentry_condition: "Freeze a generic theorem giving the fourth-order remainder for quadratic-variance sublevel volumes under the uniform measure on the three-simplex, expose an admissible Fubini-Study-to-Dirichlet weight pushforward, and prove the CHSH commutator-norm-to-four-eigenvalue multiplicity bridge under the corrected domain 0<N<4; then combine them with the existing coefficient owner."
+    blocker_class: missing-prerequisite

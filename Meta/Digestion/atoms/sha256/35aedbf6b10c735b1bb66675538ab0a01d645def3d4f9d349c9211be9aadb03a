@@ -1,0 +1,52 @@
+## 543. 一般紧致见证原理
+
+设 \(W\) 是紧 Hausdorff 空间，并有一列嵌套闭集：
+
+$$
+W_0\supseteq W_1\supseteq W_2\supseteq\cdots.
+$$
+
+若：
+
+$$
+W_N\neq\varnothing
+\qquad
+\forall N,
+$$
+
+则有限交性质给出：
+
+$$
+\boxed{
+\bigcap_{N=0}^{\infty}W_N\neq\varnothing.
+}
+$$
+
+因此，只要“候选全局见证”生活在一个固定紧空间中，并且每个有限条件定义闭子集，就不可能出现：
+
+$$
+\text{每个有限前缀都可满足，}
+$$
+
+但：
+
+$$
+\text{所有条件同时不可满足。}
+$$
+
+真正的对角逃逸必须来自至少一种非紧性：
+
+$$
+\boxed{
+\begin{aligned}
+&\text{候选复杂度不断增长；}\\
+&\text{候选空间本身不紧；}\\
+&\text{约束不是闭条件；}\\
+&\text{有限见证之间缺乏兼容性；}\\
+&\text{极限映射不连续。}
+\end{aligned}
+}
+$$
+
+---
+

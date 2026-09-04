@@ -1,0 +1,18 @@
+* 零点 orbit Krein blocks；
+
+放入同一个 inertia-preserving congruence diagram。
+
+若闭合，则会得到：
+
+$$
+\boxed{
+\text{Weil separator negative direction}
+\iff
+\text{Casimir Hausdorff matrix negative direction}.
+}
+$$
+
+这可能是比继续孤立发展 Weil 与 Li 两条线更有价值的项目目标。
+
+---
+

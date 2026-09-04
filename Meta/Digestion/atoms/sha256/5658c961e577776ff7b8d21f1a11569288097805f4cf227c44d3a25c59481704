@@ -1,0 +1,66 @@
+## 102. 非零频率保存构型形状
+
+当：
+
+$$
+a\neq0,
+$$
+
+全体 residue 的字符和为零，因此：
+
+$$
+\boxed{
+\widehat f_{p,H}(a)
+=
+-\frac1p
+\sum_{r\in R_p(H)}
+e^{-2\pi iar/p}.
+}
+$$
+
+如果 \(H\) 在模 \(p\) 下没有碰撞，则：
+
+$$
+\boxed{
+\widehat f_{p,H}(a)
+=
+-\frac1p
+\sum_{h\in H}
+e^{2\pi iah/p}.
+}
+$$
+
+全部系数：
+
+$$
+\left(
+\widehat f_{p,H}(a)
+\right)_{a\bmod p}
+$$
+
+通过 Fourier inversion 唯一恢复：
+
+$$
+R_p(H).
+$$
+
+因此：
+
+$$
+\boxed{
+\text{zero mode}
+=
+\text{构型存活率};
+}
+$$
+
+$$
+\boxed{
+\text{nonzero modes}
+=
+\text{被 singular series 丢弃的方向、相位与形状 memory}.
+}
+$$
+
+---
+

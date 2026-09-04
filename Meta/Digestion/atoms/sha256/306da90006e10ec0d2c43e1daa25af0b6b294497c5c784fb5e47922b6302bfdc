@@ -1,0 +1,13 @@
+## 613.4 临界角色断裂
+
+```lean
+theorem critical_prime_character_distance_infinite
+    {a b : ℝ} (hab : a ≠ b) :
+    ¬ Summable
+      (fun p : Nat.Primes =>
+        ((p : ℝ) : ℝ)⁻¹ *
+          |(p : ℝ) ^ (-(a - b)) - 1| ^ 2)
+```
+
+---
+

@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:3041ee719325eff1e6f14fd7cd2aa5ffc2e107b61deb71ce5d7d62b401ae9cbc
+  normalized_sha256: sha256:3041ee719325eff1e6f14fd7cd2aa5ffc2e107b61deb71ce5d7d62b401ae9cbc
+cas_ref: sha256:3041ee719325eff1e6f14fd7cd2aa5ffc2e107b61deb71ce5d7d62b401ae9cbc
+coverage_gids:
+  - gid: D5/S1/Deficit/Beatty/BetaBeattyClosedForms.betaReal_eq_displacement_sub_goldenConj
+    target_statement_id: sha256:bbf883eca47acd637856a61ddb65760a2834bbeaf129e4d5dc98c454b05f1f7b
+receipts:
+  scribe:
+    - gid: D5/S1/Deficit/Beatty/BetaBeattyClosedForms.betaReal_eq_displacement_sub_goldenConj
+      definition_sha256: sha256:5368e031ad64cd564d3e987a6cbc1b8d2b4a7879cc04792c2ca6d1c78f85db08
+      emission_sha256: sha256:8f2ec5acf72251b502a3bb3e03b51da61bf2590c584ab54018835b54bae73eee
+  unresolved_subitems: []

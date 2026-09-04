@@ -1,0 +1,82 @@
+## 193. 有序素数词的非交换 holonomy
+
+对有序 prime word：
+
+$$
+w=(p_1,\ldots,p_n)
+$$
+
+定义：
+
+$$
+K(w)=K_{p_1}\cdots K_{p_n}.
+$$
+
+则：
+
+$$
+\boxed{
+\det K(w)
+=
+\prod_j\chi_5(p_j).
+}
+$$
+
+右侧正是仓库已有黄金字符 quotient 所保留的标量。
+
+但是对两个标量 \(a,b\)：
+
+$$
+\mathcal C(a)\mathcal C(b)
+-
+\mathcal C(b)\mathcal C(a)
+=
+(b-a)
+\begin{pmatrix}
+1&-1\\
+0&-1
+\end{pmatrix}.
+$$
+
+所以 split 与 inert 类型的顺序通常不可交换。
+
+例如：
+
+$$
+\mathcal C(-1)\mathcal C(1)
+=
+\begin{pmatrix}
+2&-1\\
+1&-1
+\end{pmatrix},
+$$
+
+而：
+
+$$
+\mathcal C(1)\mathcal C(-1)
+=
+\begin{pmatrix}
+0&1\\
+1&1
+\end{pmatrix}.
+$$
+
+二者 determinant 相同，trace 也相同，但完整矩阵不同。
+
+因此：
+
+$$
+\boxed{
+\text{character product}
+\quad\text{与}\quad
+\text{ordered companion holonomy}
+}
+$$
+
+之间存在严格的信息层级。
+
+这与仓库已经证明的 scalar memory blindness 和 ordered-prime holonomy 结构一致：标量完成可能完全丢失内部有序 memory。
+
+---
+

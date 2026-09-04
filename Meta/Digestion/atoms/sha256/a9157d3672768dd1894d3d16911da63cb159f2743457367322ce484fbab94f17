@@ -1,0 +1,55 @@
+## 45. Möbius 重完定理
+
+若 \(d(\tau)\) 是实连续函数且：
+
+$$
+d(\tau+L)=-d(\tau),
+$$
+
+则在每个区间：
+
+$$
+[\tau,\tau+L]
+$$
+
+中至少存在一点：
+
+$$
+d(\tau_\ast)=0.
+$$
+
+因为端点值符号相反，介值定理强制过零。
+
+所以：
+
+$$
+\boxed{
+\text{实 odd defect 若具有 Möbius monodromy，}
+\text{每一周期都必须经历一次 recompletion}.
+}
+$$
+
+对零点 branch 而言：
+
+$$
+\delta(\tau_\ast)=0
+$$
+
+意味着镜像对在临界线上合并。
+
+如果两条零点分支在同一高度合并，就进入多重零点判别式。
+
+因此 Möbius 模型与此前的：
+
+$$
+\text{simple zeros}
+\to
+\text{double collision}
+\to
+\text{off-line pair}
+$$
+
+机制完全兼容。
+
+---
+

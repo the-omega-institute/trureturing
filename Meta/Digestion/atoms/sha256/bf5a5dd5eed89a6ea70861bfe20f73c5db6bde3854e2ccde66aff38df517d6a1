@@ -1,0 +1,70 @@
+## 89. 同一个矩阵有实数面和有限周期面
+
+取：
+
+$$
+F=
+\begin{pmatrix}
+1&1\\
+1&0
+\end{pmatrix}
+\in GL_2(\mathbb Z).
+$$
+
+在实数域上，它有本征值：
+
+$$
+\varphi,
+\qquad
+\psi=-\varphi^{-1}.
+$$
+
+所以实观察者看到：
+
+$$
+\text{扩张}
+\quad+\quad
+\text{翻转收缩}.
+$$
+
+但对任意模数 \(m\)，矩阵：
+
+$$
+F\bmod m
+$$
+
+属于有限群：
+
+$$
+GL_2(\mathbb Z/m\mathbb Z).
+$$
+
+因此存在某个正整数 \(r_m\)，使：
+
+$$
+\boxed{
+F^{r_m}\equiv I\pmod m.
+}
+$$
+
+所以有限模观察者看到的是周期。
+
+这给出一个非常强的统一：
+
+$$
+\boxed{
+\begin{aligned}
+\text{real place}
+&:\text{黄金无理本征尺度};\\
+\text{finite mod }m\text{ places}
+&:\text{有限周期分类};\\
+\text{same integral matrix}
+&:\text{二者共同来源}.
+\end{aligned}
+}
+$$
+
+不是“黄金比例和周期偶然相关”，而是同一个整数动力学在不同完成中的不同投影。
+
+---
+

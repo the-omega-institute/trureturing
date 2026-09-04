@@ -3,20 +3,9 @@ fingerprints:
   normalized_sha256: sha256:70c4b8dc0bd79d70e0f2bde3825c8730f06b71a340cfcb9151e32ee7d6bb1995
 cas_ref: sha256:70c4b8dc0bd79d70e0f2bde3825c8730f06b71a340cfcb9151e32ee7d6bb1995
 coverage_gids:
-  - D5/S3/ContinuousObservables/ObserverHorizonRefinement.observer_horizon_mono_of_refinement
+  - gid: D5/S3/ContinuousObservables/ObserverHorizonRefinement.observer_horizon_mono_of_refinement
+    target_statement_id: sha256:35bc006056cee5773bdc5065b4286bec7cdfd7a2f463cd9257c2094c9560bebc
 receipts:
-  coverage:
-    - gid: D5/S3/ContinuousObservables/ObserverHorizonRefinement.observer_horizon_mono_of_refinement
-      source_sha256: sha256:70c4b8dc0bd79d70e0f2bde3825c8730f06b71a340cfcb9151e32ee7d6bb1995
-      target_statement_id: sha256:35bc006056cee5773bdc5065b4286bec7cdfd7a2f463cd9257c2094c9560bebc
-      statement_id_history:
-        - statement_id: sha256:eac0f4e73214ffb5553e6ba9abcaca1d0ea948343a9e8d2bb96359800ebd0e0d
-          environment_pin:
-            toolchain: leanprover/lean4:v4.31.0
-            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
-          superseded_by_pin:
-            toolchain: leanprover/lean4:v4.33.0
-            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ContinuousObservables/ObserverHorizonRefinement.observer_horizon_mono_of_refinement
       definition_sha256: sha256:2fbd307b0e37eb650a2feefe339de24e287f21acc1140a68e56cbfb83b88355b

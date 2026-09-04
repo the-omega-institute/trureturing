@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:fe592fbb867e7d565160acfd99a7d477b72aa267c3e458a5e07e81177f9261e3
+  normalized_sha256: sha256:fe592fbb867e7d565160acfd99a7d477b72aa267c3e458a5e07e81177f9261e3
+cas_ref: sha256:fe592fbb867e7d565160acfd99a7d477b72aa267c3e458a5e07e81177f9261e3
+coverage_gids:
+  - gid: D5/S3/Observer/Residuals/InfiniteCompletionDefect.infinite_completion_defect_eq_zero_iff
+    target_statement_id: sha256:942d522278312209c4fe0dfbb3a70c5c5f76ea5c2d075577a99251480fda9803
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/Residuals/InfiniteCompletionDefect.infinite_completion_defect_eq_zero_iff
+      definition_sha256: sha256:ef5b9b13731c682370a2c911635558d4270f24cd023c196d78dc75db77481a18
+      emission_sha256: sha256:5a46012b538cd7907fc69cf468bdf184600a59804dc7f251b9058db47527ec85
+  unresolved_subitems: []

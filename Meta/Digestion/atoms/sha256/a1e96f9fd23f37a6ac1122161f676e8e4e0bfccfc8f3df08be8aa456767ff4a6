@@ -1,0 +1,5 @@
+# 二十一、项目的 Parity Weyl Interval 可能正是下一座桥
+
+仓库已经有一个抽象的 `ParityWeylInterval`：
+
+* even channels 给出一组下界；

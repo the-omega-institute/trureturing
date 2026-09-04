@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:1e46561e382f3bb68f2d6476687e637bc9ad0f2a5e55de4cd3ceb7a796e3acbb
 cas_ref: sha256:1e46561e382f3bb68f2d6476687e637bc9ad0f2a5e55de4cd3ceb7a796e3acbb
 coverage_gids:
-  - D5/S3/ConceptDynamics/NormativeStructure/CurrentConsentFactorization.current_consent_not_history_only
+  - gid: D5/S3/ConceptDynamics/NormativeStructure/CurrentConsentFactorization.current_consent_not_history_only
+    target_statement_id: sha256:11c508d998da542bc3fb112a6cc8e30e173e802a295230c8a560c527379f2639
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/NormativeStructure/CurrentConsentFactorization.current_consent_not_history_only
-      source_sha256: sha256:1e46561e382f3bb68f2d6476687e637bc9ad0f2a5e55de4cd3ceb7a796e3acbb
-      target_statement_id: sha256:11c508d998da542bc3fb112a6cc8e30e173e802a295230c8a560c527379f2639
   scribe:
     - gid: D5/S3/ConceptDynamics/NormativeStructure/CurrentConsentFactorization.current_consent_not_history_only
       definition_sha256: sha256:f97137f2badb49511f2b54b36c4bb800ccbee223bb6e364c0a0593117d059fd0

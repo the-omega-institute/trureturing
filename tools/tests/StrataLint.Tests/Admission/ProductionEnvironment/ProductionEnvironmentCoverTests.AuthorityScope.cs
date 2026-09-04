@@ -7,7 +7,7 @@ namespace StrataLint.Tests;
 public sealed partial class ProductionEnvironmentTests
 {
     [Fact]
-    public void CoverAtomIgnoresUnchangedBadReceiptOutsideBaseOwnedFrozenClosure()
+    public void CoverAtomValidatesCurrentCoverageOutsideBaseOwnedFrozenClosure()
     {
         const string siblingModuleGid = "D5/S0/Carrier/CoverSibling";
         const string siblingGid = siblingModuleGid + ".sibling";
@@ -21,15 +21,13 @@ public sealed partial class ProductionEnvironmentTests
         });
         var inputs = DirectoryInputs(WithSiblingReceiptMismatch(
             materialized,
-            "coverage-receipt-mismatch"));
+            "coverage-target-mismatch"));
         var withFrozenEvent = WithUnrelatedFrozenAcceptedEvent(inputs);
         inputs = withFrozenEvent.Inputs;
         var frozenEventPath = withFrozenEvent.EventPath;
-        var backlogAtom = Assert.Single(inputs.Files, pair => pair.Key.EndsWith(
-            "/" + CoverWorld.UnrelatedAtomId + ".yaml",
-            StringComparison.Ordinal));
         using var temporary = new TemporaryDirectory();
         DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
+        var before = DirectoryLedgerTestSupport.RepositoryImage(temporary);
         var environment = BuildCoverEnvironment(
             temporary.Path,
             inputs,
@@ -38,25 +36,19 @@ public sealed partial class ProductionEnvironmentTests
 
         var result = environment.CoverAtom(CoverArgs(inputs));
 
-        Assert.True(result.Success, result.Error);
-        Assert.DoesNotContain(
-            CoverWorld.UnrelatedAtomId + ":coverage-receipt-mismatch",
-            result.Output,
-            StringComparison.Ordinal);
+        Assert.False(result.Success);
         Assert.Contains(
-            backlogAtom.Key
-            + "\0"
-            + Convert.ToBase64String(Encoding.UTF8.GetBytes(backlogAtom.Value))
-            + "\n",
-            DirectoryLedgerTestSupport.RepositoryImage(temporary),
+            CoverWorld.UnrelatedAtomId + ":coverage-target-mismatch",
+            result.Error,
             StringComparison.Ordinal);
+        Assert.Equal(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
     }
 
     [Theory]
-    [InlineData("coverage-receipt-mismatch")]
+    [InlineData("coverage-target-mismatch")]
     [InlineData("scribe-definition-mismatch")]
     [InlineData("scribe-emission-mismatch")]
-    public void CoverAtomIgnoresUnchangedReceiptIntegrityBacklogAtForkPoint(
+    public void CoverAtomAlwaysValidatesCurrentCoverageButScopesForkPointScribeBacklog(
         string mismatchCode)
     {
         var materialized = CoverWorld.Materialize(new CoverSpec
@@ -75,9 +67,18 @@ public sealed partial class ProductionEnvironmentTests
 
         var result = environment.CoverAtom(CoverArgs(inputs));
 
-        Assert.True(result.Success, result.Error);
-        Assert.Contains("ledger_changed=true", result.Output, StringComparison.Ordinal);
-        Assert.NotEqual(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
+        if (mismatchCode == "coverage-target-mismatch")
+        {
+            Assert.False(result.Success);
+            Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
+            Assert.Equal(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
+        }
+        else
+        {
+            Assert.True(result.Success, result.Error);
+            Assert.Contains("ledger_changed=true", result.Output, StringComparison.Ordinal);
+            Assert.NotEqual(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
+        }
     }
 
     private static (CoverInputs Inputs, string EventPath) WithUnrelatedFrozenAcceptedEvent(

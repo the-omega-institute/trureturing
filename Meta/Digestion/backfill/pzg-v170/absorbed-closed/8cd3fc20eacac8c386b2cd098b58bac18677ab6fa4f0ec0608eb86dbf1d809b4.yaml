@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:8cd3fc20eacac8c386b2cd098b58bac18677ab6fa4f0ec0608eb86dbf1d809b4
+  normalized_sha256: sha256:8cd3fc20eacac8c386b2cd098b58bac18677ab6fa4f0ec0608eb86dbf1d809b4
+cas_ref: sha256:8cd3fc20eacac8c386b2cd098b58bac18677ab6fa4f0ec0608eb86dbf1d809b4
+coverage_gids:
+  - gid: D5/S0/Asymptotics/Interference/FiniteLagAutocorrelation.finite_lag_autocorrelation_expansion
+    target_statement_id: sha256:2992d9fd61dcef287a3239edd114ba29f51b1b3a2dc624fd47577c60c387a5c0
+receipts:
+  scribe:
+    - gid: D5/S0/Asymptotics/Interference/FiniteLagAutocorrelation.finite_lag_autocorrelation_expansion
+      definition_sha256: sha256:777003df55ec643b8db67c679642b5d5d07beadb63bc303b27cefda571cdc06a
+      emission_sha256: sha256:2d988caea0cd7ba5cc7e1933e49c575470c40eda6cb9d85f93a6c7df19e08dc4
+  unresolved_subitems: []

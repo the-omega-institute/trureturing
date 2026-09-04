@@ -72,9 +72,9 @@ public sealed partial class ProductionEnvironmentTests
 
     // 「旧侧」有两个不同的语义,#1146 只修好了一个。
     //   保守比较问「候选在扩展哪个受保护状态」→ protected base;
-    //   append-only 保留性问「候选是否删了它出发时就有的东西」→ **fork point(merge-base)**。
+    //   冻结保留性问「候选是否删了它出发时就有的东西」→ **fork point(merge-base)**。
     // 二者被同一个 `baseline` 快照回答,于是 #1146 之后,dev 在候选分叉之后追加的任何
-    // append-only 条目(Chronicle、冻结账本证书、Digestion CAS)都会被读成
+    // 冻结账本证书都会被读成
     // 「候选删除了受保护之物」。
     //
     // 生产实证:PR #1150 撞上
@@ -83,17 +83,15 @@ public sealed partial class ProductionEnvironmentTests
     // ——其分支点到 dev tip 之间,`Golden/Frozen/accepted/` 新增 4 个由保守扩展仪式产出的证书。
     // 实测近 60 次 dev 合并中 38 次(63%)追加此类证书,故这是常态而非边角。
     //
-    // 本测试取 Chronicle 作最小复现(同一缺陷类,装置最简)。
+    // 本测试直接使用仍现役的 SL-008 冻结事件复现。
     [Fact]
     public void CheckDoesNotBlameTheCandidateForAppendOnlyEntriesAddedToTheProtectedBaseAfterTheFork()
     {
         using var candidate = new TemporaryDirectory();
         using var reports = new TemporaryDirectory();
         var fixture = new RuleFixture();
-        const string forkChronicle = "Chronicle/2026/08/10-fork-point.md";
-        const string devChronicle = "Chronicle/2026/08/11-dev-appended-after-the-fork.md";
-        fixture.Baseline[forkChronicle] = "# fork point entry\n";
-        fixture.Files[forkChronicle] = fixture.Baseline[forkChronicle];
+        var candidateFreeze = FreezeEvent(fixture, RuleFixture.RingPath);
+        var devFreeze = FreezeEvent(fixture, RuleFixture.ValuesBindingPath);
 
         // A —— 分叉点。
         InitializeRepository(candidate.Path);
@@ -101,22 +99,23 @@ public sealed partial class ProductionEnvironmentTests
         ReviewRegressionTests.RunGit(candidate.Path, "add", ".");
         ReviewRegressionTests.RunGit(candidate.Path, "commit", "-m", "fork point");
 
-        // C —— 候选自 A 分出,完整保留了分叉点的全部 append-only 条目。
+        // C —— 候选自 A 分出并冻结一个节点。
         ReviewRegressionTests.RunGit(candidate.Path, "checkout", "-b", "candidate");
         fixture.Files[RuleFixture.BlueprintPath] += "\n";
+        fixture.Files[candidateFreeze.Path] = candidateFreeze.Text;
         WriteFiles(candidate.Path, fixture.Files);
         ReviewRegressionTests.RunGit(candidate.Path, "add", ".");
         ReviewRegressionTests.RunGit(candidate.Path, "commit", "-m", "candidate ordinary change");
 
-        // B —— dev 在候选在飞期间追加了一条 Chronicle。候选当然没有它。
+        // B —— dev 在候选在飞期间冻结另一个节点。候选当然没有它。
         ReviewRegressionTests.RunGit(candidate.Path, "checkout", "dev");
         var protectedFiles = new Dictionary<string, string>(fixture.Baseline, StringComparer.Ordinal)
         {
-            [devChronicle] = "# appended on dev while the candidate was in flight\n",
+            [devFreeze.Path] = devFreeze.Text,
         };
         WriteFiles(candidate.Path, protectedFiles);
         ReviewRegressionTests.RunGit(candidate.Path, "add", ".");
-        ReviewRegressionTests.RunGit(candidate.Path, "commit", "-m", "dev appends a Chronicle entry");
+        ReviewRegressionTests.RunGit(candidate.Path, "commit", "-m", "dev freezes another node");
         var protectedBase = GitText(candidate.Path, "rev-parse", "HEAD");
 
         ReviewRegressionTests.RunGit(candidate.Path, "checkout", "candidate");
@@ -137,14 +136,39 @@ public sealed partial class ProductionEnvironmentTests
             "--candidate-lean-report", candidateReport,
         ]);
 
-        var appendOnlyBlame = outcome is AdmissionOutcome.RuleRejected rejected
+        var frozenBlame = outcome is AdmissionOutcome.RuleRejected rejected
             ? rejected.Diagnostics
-                .Where(static item => item.Message.Contains("append-only", StringComparison.Ordinal))
+                .Where(static item => item.RuleId == RuleId.CreateKnown(8))
                 .Select(static item => $"{item.RuleId} {item.Path}: {item.Message}")
                 .ToArray()
             : [];
 
-        Assert.Empty(appendOnlyBlame);
+        Assert.Empty(frozenBlame);
+    }
+
+    private static (string Path, string Text) FreezeEvent(
+        RuleFixture fixture,
+        string descriptorSelector)
+    {
+        var path = RepoPath.CreateKnown(descriptorSelector);
+        var declarations = CanonicalStatementWriter.DeclarationStatementIds(
+            path,
+            fixture.Reports[descriptorSelector]);
+        var material = new FrozenNodeMaterial(
+            path,
+            declarations,
+            StatementId.Create(FrozenContentHash.Compute(
+                FrozenHashDomains.Statement,
+                CanonicalStatementWriter.WriteModule(path, declarations).AsSpan())),
+            FrozenNodeId.Create("sha256:" + new string('0', 64)),
+            [],
+            []);
+        var payload = FrozenLedgerCanonicalWriter.FreezeElement(
+            FrozenLedgerCanonicalWriter.FreezePayload(material));
+        var encoded = FrozenLedgerCanonicalWriter.WriteDagEvent("Freeze", payload);
+        return (
+            FrozenLedgerChangeClassifier.AcceptedPath(encoded.Hash),
+            Encoding.UTF8.GetString(encoded.Bytes.AsSpan()));
     }
 
     private static void InitializeRepository(string root)

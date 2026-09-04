@@ -1,0 +1,64 @@
+## 1998.1 全指数局部传输
+
+若 prime exponent 可以是：
+
+$$
+0,1,2,\ldots,
+$$
+
+则局部传输为：
+
+$$
+\begin{aligned}
+\widetilde T_p(s)
+&=
+\sum_{k=0}^{\infty}
+p^{-ks}X^k\\
+&=
+(I-p^{-s}X)^{-1}\\
+&=
+\frac1{1-p^{-2s}}
+\begin{pmatrix}
+1&p^{-s}\\
+p^{-s}&1
+\end{pmatrix}.
+\end{aligned}
+\tag{1998.3}
+$$
+
+它在 \(u_+\) 上的本征值是：
+
+$$
+\boxed{
+\frac1{1-p^{-s}},
+}
+$$
+
+在 \(u_-\) 上的本征值是：
+
+$$
+\boxed{
+\frac1{1+p^{-s}}.
+}
+$$
+
+全局乘积于是分别成为：
+
+$$
+\boxed{
+\zeta(s)
+}
+$$
+
+和：
+
+$$
+\boxed{
+\frac{\zeta(2s)}{\zeta(s)}.
+}
+$$
+
+这不是类比，而是精确的二态宇称传输。
+
+---
+

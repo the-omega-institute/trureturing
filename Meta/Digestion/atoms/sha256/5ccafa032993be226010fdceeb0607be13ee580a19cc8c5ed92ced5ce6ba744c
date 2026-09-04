@@ -1,0 +1,19 @@
+## Asymptotic transverse confinement conjecture
+
+$$
+\boxed{
+\zeta(\rho)=0
+\Longrightarrow
+\left|
+\Re\rho-\frac12
+\right|
+\log(2+|\Im\rho|)
+\le C.
+}
+\tag{2091.3}
+$$
+
+它比 RH 弱，却可能比直接证明 RH 更接近 Kakeya 式多尺度技术。
+
+---
+

@@ -9,7 +9,7 @@ namespace StrataLint.Tests;
 public sealed class Sl016WakeupTests
 {
     private const string AtomPath =
-        "Meta/Digestion/backfill/delta-v0.1/partial-closed/"
+        "Meta/Digestion/backfill/delta-v0.1/partial-open/"
         + RuleFixture.FixtureAtomId
         + ".yaml";
     // 理论卷改按路径规则治理后,GovernanceDocuments 里已无理论路径。若 IsAffectedBy
@@ -82,7 +82,7 @@ public sealed class Sl016WakeupTests
         Assert.Contains(
             BackfillInventoryRule.EvaluateCandidateDelta(context),
             static finding => finding.Message.Contains(
-                "coverage-receipt-mismatch",
+                "coverage-target-mismatch",
                 StringComparison.Ordinal));
     }
 
@@ -98,7 +98,7 @@ public sealed class Sl016WakeupTests
         Assert.Contains(
             BackfillInventoryRule.EvaluateCandidateDelta(context),
             static finding => finding.Message.Contains(
-                "coverage-receipt-mismatch",
+                "coverage-target-mismatch",
                 StringComparison.Ordinal));
     }
 
@@ -128,7 +128,7 @@ public sealed class Sl016WakeupTests
         Assert.Contains(
             BackfillInventoryRule.EvaluateCandidateDelta(context),
             static finding => finding.Message.Contains(
-                "coverage-receipt-mismatch",
+                "coverage-target-mismatch",
                 StringComparison.Ordinal));
     }
 
@@ -193,8 +193,9 @@ public sealed class Sl016WakeupTests
         foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
         {
             files[AtomPath] = files[AtomPath].Replace(
-                "coverage_gids:\n  - D5/S0/Carrier/BackfillTarget",
-                "coverage_gids:\n  - D5/S0/Carrier/BackfillTarget\n  - D5/S0/Carrier/BackfillTarget",
+                "coverage_gids:\n  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null",
+                "coverage_gids:\n  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null\n"
+                    + "  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null",
                 StringComparison.Ordinal);
         }
 
@@ -212,8 +213,9 @@ public sealed class Sl016WakeupTests
         var fixture = new RuleFixture();
         fixture.UseValidDirectoryBackfill();
         fixture.Files[AtomPath] = fixture.Files[AtomPath].Replace(
-            "coverage_gids:\n  - D5/S0/Carrier/BackfillTarget",
-            "coverage_gids:\n  - D5/S0/Carrier/BackfillTarget\n  - D5/S0/Carrier/BackfillTarget",
+            "coverage_gids:\n  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null",
+            "coverage_gids:\n  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null\n"
+                + "  - gid: D5/S0/Carrier/BackfillTarget\n    target_statement_id: null",
             StringComparison.Ordinal);
 
         var findings = BackfillInventoryRule.EvaluateCandidateDelta(
@@ -259,15 +261,15 @@ public sealed class Sl016WakeupTests
     }
 
     [Fact]
-    public void RuleImplementationChangeStillEvaluatesOnlyCandidateDelta()
+    public void RuleImplementationChangeStillValidatesCurrentCoverageEdges()
     {
         var (context, evaluation) = EvaluateReceiptIntegrityGap(
-            "coverage-receipt-mismatch",
+            "coverage-target-mismatch",
             gapExistsInBaseline: true);
 
         Assert.True(context.RuleImplementationChanged);
-        Assert.DoesNotContain(evaluation.Diagnostics, item => item.Message.Contains(
-            "coverage-receipt-mismatch",
+        Assert.Contains(evaluation.Diagnostics, item => item.Message.Contains(
+            "coverage-target-mismatch",
             StringComparison.Ordinal));
     }
 
@@ -275,13 +277,13 @@ public sealed class Sl016WakeupTests
     public void FullEvaluateRemainsAvailableForProducerRecomputation()
     {
         var (context, _) = EvaluateReceiptIntegrityGap(
-            "coverage-receipt-mismatch",
+            "coverage-target-mismatch",
             gapExistsInBaseline: true);
 
         Assert.Contains(
             BackfillInventoryRule.Evaluate(context),
             static finding => finding.Message.Contains(
-                "coverage-receipt-mismatch",
+                "coverage-target-mismatch",
                 StringComparison.Ordinal));
     }
 
@@ -289,11 +291,11 @@ public sealed class Sl016WakeupTests
     public void NewReceiptIntegrityGapIsBlockingAtSl016Admission()
     {
         var (_, evaluation) = EvaluateReceiptIntegrityGap(
-            "coverage-receipt-mismatch",
+            "coverage-target-mismatch",
             gapExistsInBaseline: false);
 
         var diagnostic = Assert.Single(evaluation.Diagnostics, item => item.Message.Contains(
-            "coverage-receipt-mismatch",
+            "coverage-target-mismatch",
             StringComparison.Ordinal));
         Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
     }
@@ -396,10 +398,10 @@ public sealed class Sl016WakeupTests
         fixture.Files[definitionPath] = candidateDefinition;
         fixture.Files[emissionPath] = candidateEmission;
 
-        var receiptProjection = "coverage:\n"
-            + $"    - gid: {coverageGid}\n"
-            + $"      source_sha256: {RuleFixture.FixtureCasReference}\n"
-            + $"      target_statement_id: {(mismatchCode == "coverage-receipt-mismatch" ? mismatchSha256 : targetStatementId)}\n"
+        var receiptProjection = "coverage_gids:\n"
+            + $"  - gid: {coverageGid}\n"
+            + $"    target_statement_id: {(mismatchCode == "coverage-target-mismatch" ? mismatchSha256 : targetStatementId)}\n"
+            + "receipts:\n"
             + "  scribe:\n"
             + $"    - gid: {coverageGid}\n"
             + $"      definition_sha256: {(mismatchCode == "scribe-definition-mismatch" ? mismatchSha256 : baselineDefinitionSha256)}\n"
@@ -458,7 +460,11 @@ public sealed class Sl016WakeupTests
     }
 
     private static string AddReceipts(string atom, string receiptProjection) => atom.Replace(
-        "coverage: []\n  scribe: []",
+        "coverage_gids:\n"
+            + "  - gid: D5/S0/Carrier/BackfillTarget\n"
+            + "    target_statement_id: null\n"
+            + "receipts:\n"
+            + "  scribe: []",
         receiptProjection,
         StringComparison.Ordinal);
 
@@ -491,17 +497,14 @@ public sealed class Sl016WakeupTests
     private static RuleFixture CoverageReceiptFixture(string targetGid, string targetStatementId)
     {
         var fixture = PreparedCoverageFixture();
-        var receipt = "coverage:\n"
-            + $"    - gid: {targetGid}\n"
-            + $"      source_sha256: {RuleFixture.FixtureCasReference}\n"
-            + $"      target_statement_id: {targetStatementId}\n"
+        var receipt = "coverage_gids:\n"
+            + $"  - gid: {targetGid}\n"
+            + $"    target_statement_id: {targetStatementId}\n"
+            + "receipts:\n"
             + "  scribe: []";
         foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
         {
-            files[AtomPath] = files[AtomPath].Replace(
-                "coverage: []\n  scribe: []",
-                receipt,
-                StringComparison.Ordinal);
+            files[AtomPath] = AddReceipts(files[AtomPath], receipt);
         }
 
         return fixture;

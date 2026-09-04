@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:fc4dca4c920321fffba6d57dcf5d6522ebb290b6b7d2a9fdf0f434e37dd2d482
+  normalized_sha256: sha256:fc4dca4c920321fffba6d57dcf5d6522ebb290b6b7d2a9fdf0f434e37dd2d482
+cas_ref: sha256:fc4dca4c920321fffba6d57dcf5d6522ebb290b6b7d2a9fdf0f434e37dd2d482
+coverage_gids:
+  - gid: D5/S3/Observer/ArithmeticTomography/ResidueCoordinateDimension.statistical_dimension_eq_three
+    target_statement_id: sha256:06895f9c3830326386a2a9e07fc7b14653b34d5a5722e70e42374d55b825d157
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/ArithmeticTomography/ResidueCoordinateDimension.statistical_dimension_eq_three
+      definition_sha256: sha256:450761751bf8cff0b3a71011b4092b3e9d421ee9d570cd46c8f9c46015112400
+      emission_sha256: sha256:570285bf7778b57eb64ca329dcc3621e0881e000bf6aef2f179e6c4e3fdc1365
+  unresolved_subitems: []
+  chain_atoms:
+    - 9695c764669769f6398a9717ff4f501e81c76c087ef1540f0d36199cbf8cad58
+    - 9b2a63ce0c88c8672a62adca9e21e6adcf955012d6ef6e34d37602df845ae4b5
+    - 3e3a4540ec9cb1fa7f4915c82a4640c44b68ebcd6832b53cf0b53d357f0e76f8

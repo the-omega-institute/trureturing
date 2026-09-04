@@ -1,0 +1,62 @@
+## 40. 构型的有限傅立叶展开
+
+令：
+
+$$
+e_p(x)
+=
+e^{2\pi ix/p}.
+$$
+
+则：
+
+$$
+\mathbf1_{x=0}
+=
+\frac1p
+\sum_{a\bmod p}
+e_p(ax).
+$$
+
+所以：
+
+$$
+\mathbf1_{x\neq-h}
+=
+1-
+\frac1p
+\sum_{a\bmod p}
+e_p(a(x+h)).
+$$
+
+把所有 \(h\in H\) 相乘并对 \(x\) 平均，只有满足：
+
+$$
+\sum_{h\in H}a_h=0\pmod p
+$$
+
+的频率组合存活。
+
+于是：
+
+$$
+\boxed{
+\text{局部 prime-constellation condition}
+=
+\text{总频率守恒的有限 Fourier loops}.
+}
+$$
+
+这与此前得到的：
+
+$$
+k\text{-point source jet}
+=
+k\text{-step connected closed trace}
+$$
+
+完全一致。
+
+所以：
+
+* 时域坐标是 offsets \(h\)；

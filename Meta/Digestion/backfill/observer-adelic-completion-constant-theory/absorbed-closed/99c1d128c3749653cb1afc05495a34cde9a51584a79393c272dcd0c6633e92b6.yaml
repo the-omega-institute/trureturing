@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:99c1d128c3749653cb1afc05495a34cde9a51584a79393c272dcd0c6633e92b6
+  normalized_sha256: sha256:99c1d128c3749653cb1afc05495a34cde9a51584a79393c272dcd0c6633e92b6
+cas_ref: sha256:99c1d128c3749653cb1afc05495a34cde9a51584a79393c272dcd0c6633e92b6
+coverage_gids:
+  - gid: D5/S3/Weil/ZetaLinear/PoleCapacityRankOne.pole_capacity_rank_one
+    target_statement_id: sha256:84d34974811335b603d13854d93b4ff5207a733c15c2e85314bf7e1d6d5129f0
+receipts:
+  scribe:
+    - gid: D5/S3/Weil/ZetaLinear/PoleCapacityRankOne.pole_capacity_rank_one
+      definition_sha256: sha256:3f705d8960976e755f60dfed5819ed7e9152bfc24f465d697a256cebbf972601
+      emission_sha256: sha256:7c6d9ff2c6d5700eb09795c72ee6ba0f25f361dc576f93b501a017270dba74c0
+  unresolved_subitems: []

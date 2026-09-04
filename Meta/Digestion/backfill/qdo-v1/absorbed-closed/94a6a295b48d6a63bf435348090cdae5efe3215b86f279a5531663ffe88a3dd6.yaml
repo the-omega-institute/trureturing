@@ -3,12 +3,9 @@ fingerprints:
   normalized_sha256: sha256:94a6a295b48d6a63bf435348090cdae5efe3215b86f279a5531663ffe88a3dd6
 cas_ref: sha256:94a6a295b48d6a63bf435348090cdae5efe3215b86f279a5531663ffe88a3dd6
 coverage_gids:
-  - D5/S3/Observer/Conditioning/RankOneBornPairingWeight.rank_one_born_pairing_weight
+  - gid: D5/S3/Observer/Conditioning/RankOneBornPairingWeight.rank_one_born_pairing_weight
+    target_statement_id: sha256:4979d5a21dd2871fd14c495d2841415afc4c1c836ebc2091fd41d0b486cb996b
 receipts:
-  coverage:
-    - gid: D5/S3/Observer/Conditioning/RankOneBornPairingWeight.rank_one_born_pairing_weight
-      source_sha256: sha256:94a6a295b48d6a63bf435348090cdae5efe3215b86f279a5531663ffe88a3dd6
-      target_statement_id: sha256:4979d5a21dd2871fd14c495d2841415afc4c1c836ebc2091fd41d0b486cb996b
   scribe:
     - gid: D5/S3/Observer/Conditioning/RankOneBornPairingWeight.rank_one_born_pairing_weight
       definition_sha256: sha256:ceb68177888121c5a08b7b2d67b1627596c816a26f4f1cbf4743061bc9d3a384

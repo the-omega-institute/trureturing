@@ -1,0 +1,100 @@
+# 第一千九百四十三部　signed-normal defect energy
+
+对有限高度窗口 \(T\)，从每一个右侧离线反射轨道取：
+
+$$
+\delta_\rho
+=
+\Re\rho-\frac12>0.
+$$
+
+定义法向缺陷测度：
+
+$$
+\boxed{
+\nu_T^{\mathrm n}
+=
+\sum_{\substack{
+0<\Im\rho\le T\\
+\Re\rho>1/2
+}}
+m_\rho
+\delta_{-\delta_\rho^2}.
+}
+\tag{1943.1}
+$$
+
+其零阶矩为：
+
+$$
+\boxed{
+M_0(T)
+=
+\sum_\rho m_\rho.
+}
+\tag{1943.2}
+$$
+
+一次 localizing 矩为：
+
+$$
+\boxed{
+M_1(T)
+=
+-\sum_\rho
+m_\rho\delta_\rho^2
+\le0.
+}
+\tag{1943.3}
+$$
+
+因此定义：
+
+$$
+\boxed{
+\mathcal E_{\mathrm{off}}(T)
+=
+-M_1(T)
+=
+\sum_\rho
+m_\rho\delta_\rho^2
+\ge0.
+}
+\tag{1943.4}
+$$
+
+则：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal E_{\mathrm{off}}(T)=0
+\qquad
+\forall T.
+}
+\tag{1943.5}
+$$
+
+这是一个无抵消的零点侧 order parameter。
+
+每一个离线轨道都贡献严格正量。
+
+但它不是标准全纯 Weil 测试的直接输出，因为：
+
+$$
+\delta_\rho^2
+$$
+
+依赖反射配对和实部，而不是单一全纯变量的值。
+
+所以真正困难变成：
+
+$$
+\boxed{
+\text{能否从 prime–Gamma 数据直接构造这一 signed-normal 能量？}
+}
+$$
+
+---
+

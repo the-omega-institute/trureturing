@@ -1,0 +1,55 @@
+## 280. 完整四元轨道的 Cayley 形式
+
+generic 离线零点轨道在 \(u\)-平面中变成：
+
+$$
+\boxed{
+u,\quad
+u^{-1},\quad
+\overline u,\quad
+\overline u^{-1}.
+}
+$$
+
+若：
+
+$$
+u=e^{\eta+i\theta},
+$$
+
+四点就是：
+
+$$
+e^{\eta+i\theta},
+\quad
+e^{-\eta-i\theta},
+\quad
+e^{\eta-i\theta},
+\quad
+e^{-\eta+i\theta}.
+$$
+
+当：
+
+$$
+\eta=0,
+$$
+
+倒数与共轭融合：
+
+$$
+u^{-1}=\overline u,
+$$
+
+四点降为二点。
+
+因此 RH 的 Cayley 语言是：
+
+$$
+\boxed{
+\text{reciprocal quartet collapses to a unitary conjugate pair}.
+}
+$$
+
+---
+

@@ -1,0 +1,69 @@
+## 447. E-RH/O-RH 还可以继续分
+
+前面定义了 Casimir 差分条件：
+
+$$
+C_{n,k}=D^ka_n,
+\qquad
+D=I-S.
+$$
+
+传统 RH 被写成：
+
+$$
+C_{n,k}\ge0
+\qquad
+\forall n,k\in\mathbb N.
+$$
+
+第一层拆分是：
+
+$$
+k=2r
+$$
+
+和：
+
+$$
+k=2r+1.
+$$
+
+继续递归，可以对任意 \(m\ge1\) 定义：
+
+$$
+\boxed{
+\mathrm{RH}_{m,j}:
+\quad
+C_{n,\,2^mr+j}\ge0
+\quad
+\forall n,r,
+}
+$$
+
+其中：
+
+$$
+0\le j<2^m.
+$$
+
+对每个固定 \(m\)：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\bigwedge_{j=0}^{2^m-1}
+\mathrm{RH}_{m,j}.
+}
+$$
+
+所以奇偶只是第一层：
+
+$$
+m=1.
+$$
+
+模 \(4\)、模 \(8\)、模 \(16\) 可以无限分下去。
+
+---
+

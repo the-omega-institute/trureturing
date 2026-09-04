@@ -1,0 +1,61 @@
+## 312. GNS 范数公式
+
+Hausdorff 测度满足：
+
+$$
+d\nu(x)
+=
+\sum_jm_jx_j\,\delta_{x_j}.
+$$
+
+所以：
+
+$$
+\begin{aligned}
+\lambda_n
+&=
+\sum_j
+m_j
+\left[
+2-2T_n(1-2x_j)
+\right]\\
+&=
+4\int_0^1
+U_{n-1}(\sqrt{1-x})^2
+\,d\nu(x).
+\end{aligned}
+$$
+
+于是：
+
+$$
+\boxed{
+\lambda_n
+=
+4
+\left\|
+U_{n-1}
+\left(
+\sqrt{I-J_\xi}
+\right)
+\Omega
+\right\|^2.
+}
+$$
+
+这给出一个非常清楚的层级：
+
+$$
+\boxed{
+\text{Hausdorff 正性}
+\Longrightarrow
+\text{正收缩算子}
+\Longrightarrow
+\text{Li 系数是范数平方}.
+}
+$$
+
+仓库理论层已经预留了 `LiHilbertSchmidtDisplacement`、`LiChebyshevTrace` 和相应 Hausdorff 模块，但目前仍处于规划层。
+
+---
+

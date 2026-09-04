@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:77f99aaca2cfc1b58312012b337731e83d7866c4fb2d390fc1ad83186b6b409d
+  normalized_sha256: sha256:77f99aaca2cfc1b58312012b337731e83d7866c4fb2d390fc1ad83186b6b409d
+cas_ref: sha256:77f99aaca2cfc1b58312012b337731e83d7866c4fb2d390fc1ad83186b6b409d
+coverage_gids:
+  - gid: D5/S3/Observer/BlockStructure/ObserverInnovationEquation.observer_innovation_equation
+    target_statement_id: sha256:1b6773a4712288ca270b326fd494f00288b3d3a2f2be183aa13023c46552a9d5
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/BlockStructure/ObserverInnovationEquation.observer_innovation_equation
+      definition_sha256: sha256:2f1749070211c170fd8943a9e525355504a589b5c052548b9db565ddbe0872bd
+      emission_sha256: sha256:3ccb7f4fd588dbd80a199f88ccb743d5b86e3da4c686664d0ce375777ccb4e8b
+  unresolved_subitems: []

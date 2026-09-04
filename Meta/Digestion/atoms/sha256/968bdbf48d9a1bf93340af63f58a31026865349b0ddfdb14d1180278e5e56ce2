@@ -1,0 +1,21 @@
+## 55. Source–orbit charge
+
+对构型 \(A\) 和零点轨道 \(o\)，定义：
+
+$$
+\boxed{
+q_A(o)
+=
+\operatorname{Res}_{s=\rho_o}
+\left(
+[\varepsilon_A]
+\partial_s
+\log\Delta_H(s;\varepsilon)
+\right).
+}
+$$
+
+它表示构型 source channel 对该零点轨道的谱响应。
+
+---
+

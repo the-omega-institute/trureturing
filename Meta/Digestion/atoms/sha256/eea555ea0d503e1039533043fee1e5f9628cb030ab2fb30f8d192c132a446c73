@@ -1,0 +1,45 @@
+## 378. 四个基本 Euler 状态
+
+$$
+\boxed{
+\begin{array}{c|cc}
+&\text{trace}&\text{supertrace}\\
+\hline
+\text{unbounded occupancy}
+&
+\zeta(s)
+&
+\dfrac{\zeta(2s)}{\zeta(s)}
+\\[8pt]
+\text{hard-core occupancy}
+&
+\dfrac{\zeta(s)}{\zeta(2s)}
+&
+\dfrac1{\zeta(s)}
+\end{array}
+}
+$$
+
+它们满足：
+
+$$
+\boxed{
+\zeta(s)\cdot\frac1{\zeta(s)}=1,
+}
+$$
+
+以及：
+
+$$
+\boxed{
+\frac{\zeta(2s)}{\zeta(s)}
+\cdot
+\frac{\zeta(s)}{\zeta(2s)}
+=1.
+}
+$$
+
+这是一组严格的 trace–supertrace Ouroboros。
+
+---
+

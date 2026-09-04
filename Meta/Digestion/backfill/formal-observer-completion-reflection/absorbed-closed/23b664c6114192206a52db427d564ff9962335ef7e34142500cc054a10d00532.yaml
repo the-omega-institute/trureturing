@@ -3,20 +3,9 @@ fingerprints:
   normalized_sha256: sha256:23b664c6114192206a52db427d564ff9962335ef7e34142500cc054a10d00532
 cas_ref: sha256:23b664c6114192206a52db427d564ff9962335ef7e34142500cc054a10d00532
 coverage_gids:
-  - D5/S3/ConceptDynamics/ExperimentDesign/EvidenceRelativeExperimentCoverCriterion.evidence_relative_experiment_cover_criterion
+  - gid: D5/S3/ConceptDynamics/ExperimentDesign/EvidenceRelativeExperimentCoverCriterion.evidence_relative_experiment_cover_criterion
+    target_statement_id: sha256:752669e04e67ecbbf5e02bada7edbbfedbb8e99a5f0f580cb13e5fa1dbb52cd3
 receipts:
-  coverage:
-    - gid: D5/S3/ConceptDynamics/ExperimentDesign/EvidenceRelativeExperimentCoverCriterion.evidence_relative_experiment_cover_criterion
-      source_sha256: sha256:23b664c6114192206a52db427d564ff9962335ef7e34142500cc054a10d00532
-      target_statement_id: sha256:752669e04e67ecbbf5e02bada7edbbfedbb8e99a5f0f580cb13e5fa1dbb52cd3
-      statement_id_history:
-        - statement_id: sha256:c029a2d1f530608dbf9b84290f8b7c6e4818938691e9bf1188c8ea076bac9821
-          environment_pin:
-            toolchain: leanprover/lean4:v4.31.0
-            mathlib_revision: fabf563a7c95a166b8d7b6efca11c8b4dc9d911f
-          superseded_by_pin:
-            toolchain: leanprover/lean4:v4.33.0
-            mathlib_revision: db584cd6d46c92f209a44c0f1c829460d327499d
   scribe:
     - gid: D5/S3/ConceptDynamics/ExperimentDesign/EvidenceRelativeExperimentCoverCriterion.evidence_relative_experiment_cover_criterion
       definition_sha256: sha256:1f3f05ce0fb29485bc7097c26207af0085e93d7b4b905fed41afd6dfa7a85724

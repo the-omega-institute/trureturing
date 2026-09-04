@@ -1,0 +1,41 @@
+## 103. 中心化构型频谱
+
+设构型直径为 \(D\)，定义：
+
+$$
+S_H(\theta)
+=
+\sum_{h\in H}
+e^{i\theta(h-D/2)}.
+$$
+
+构型反射：
+
+$$
+H^\vee=\{D-h:h\in H\}
+$$
+
+满足：
+
+$$
+S_{H^\vee}(\theta)
+=
+\overline{S_H(\theta)}.
+$$
+
+所以：
+
+$$
+\Re S_H
+$$
+
+是 mirror-even sector，
+
+$$
+\Im S_H
+$$
+
+是 mirror-odd sector。
+
+---
+

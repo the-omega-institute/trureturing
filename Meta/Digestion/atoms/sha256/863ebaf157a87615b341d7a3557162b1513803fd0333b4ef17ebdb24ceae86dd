@@ -1,0 +1,46 @@
+## 16. 零点轨道码
+
+设：
+
+$$
+\rho=\frac12+\delta+i\gamma
+$$
+
+且重数为 \(m_\rho\)。
+
+定义第 \(N\) 层轨道码：
+
+$$
+\boxed{
+\operatorname{ZOC}_N(\rho)
+=
+\left(
+\operatorname{sgn}\delta,
+\mathsf Z_N(|\delta|),
+\operatorname{sgn}\gamma,
+\mathsf Z_N(|\gamma|),
+\operatorname{wdigits}(m_\rho)
+\right).
+}
+$$
+
+反射不翻转 Zeckendorf 幅值数位，只翻转对应的符号页。
+
+这给出：
+
+$$
+\begin{aligned}
+C:\;&(\operatorname{sgn}\delta,\operatorname{sgn}\gamma)
+\mapsto
+(\operatorname{sgn}\delta,-\operatorname{sgn}\gamma),\\
+J:\;&(\operatorname{sgn}\delta,\operatorname{sgn}\gamma)
+\mapsto
+(-\operatorname{sgn}\delta,\operatorname{sgn}\gamma),\\
+R:\;&(\operatorname{sgn}\delta,\operatorname{sgn}\gamma)
+\mapsto
+(-\operatorname{sgn}\delta,-\operatorname{sgn}\gamma).
+\end{aligned}
+$$
+
+---
+
