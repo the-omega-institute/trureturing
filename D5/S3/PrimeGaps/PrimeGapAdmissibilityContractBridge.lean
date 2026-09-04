@@ -3,15 +3,17 @@
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Equate the repository's forbidden-residue count with the direct admissibility contract used by DHL prime tuples. -/
+   digest: Equate forbidden-residue counts with the direct admissibility contract used by DHL prime tuples. -/
 
 import D5.S3.Analytic.PrimeProducts.FiniteLocalResidueBlockingCriterion
-import D5.S3.PrimeGaps.PrimeGap186SourceContract
 
 namespace D5.S3.PrimeGaps.PrimeGapAdmissibilityContractBridge
 
 open D5.S3.Analytic.PrimeProducts.FiniteLocalResidueBlockingCriterion
-open D5.S3.PrimeGaps.PrimeGap186SourceContract
+
+/-- Direct prime-tuple admissibility, stated independently of any fixed tuple size or gap bound. -/
+def DirectTupleAdmissible (H : Finset Int) : Prop :=
+  ∀ p : Nat, p.Prime → ∃ a : ZMod p, ∀ h ∈ H, (h : ZMod p) ≠ a
 
 /-- The direct residue classes occupied by the offsets modulo `p`. -/
 def directResidueSet (H : Finset Int) (p : Nat) : Finset (ZMod p) :=
@@ -24,7 +26,11 @@ theorem directResidueSet_card_eq_localResidueCount
     (directResidueSet H p).card = localResidueCount H p := by
   classical
   unfold directResidueSet localResidueCount localResidueSet
-  let e : ZMod p ≃ ZMod p := Equiv.neg (ZMod p)
+  let e : ZMod p ≃ ZMod p :=
+    { toFun := fun x => -x
+      invFun := fun x => -x
+      left_inv := fun x => neg_neg x
+      right_inv := fun x => neg_neg x }
   have himage :
       (H.image fun h : Int => -(h : ZMod p)) =
         (H.image fun h : Int => (h : ZMod p)).image e := by
@@ -32,8 +38,8 @@ theorem directResidueSet_card_eq_localResidueCount
     simp [e]
   rw [himage, Finset.card_image_of_injective _ e.injective]
 
-/-- A finite tuple satisfies the source's direct admissibility condition modulo a positive
-modulus exactly when its occupied residue set does not fill the whole residue ring. -/
+/-- A finite tuple satisfies the direct admissibility condition modulo a positive modulus
+exactly when its occupied residue set does not fill the whole residue ring. -/
 theorem direct_admissibility_iff_card_lt
     (H : Finset Int) (p : Nat) (hp : 0 < p) :
     (∃ a : ZMod p, ∀ h ∈ H, (h : ZMod p) ≠ a) ↔
@@ -45,13 +51,17 @@ theorem direct_admissibility_iff_card_lt
     have hproper : directResidueSet H p ⊂ (Finset.univ : Finset (ZMod p)) := by
       refine Finset.ssubset_iff_subset_ne.mpr ⟨Finset.subset_univ _, ?_⟩
       intro heq
-      have hamem : a ∈ directResidueSet H p := by simpa [heq]
+      have hamem : a ∈ directResidueSet H p := by
+        rw [heq]
+        exact Finset.mem_univ a
       rcases Finset.mem_image.mp hamem with ⟨h, hh, hha⟩
       exact ha h hh hha
-    simpa [huniv] using Finset.card_lt_card hproper
+    have hc := Finset.card_lt_card hproper
+    rwa [huniv] at hc
   · intro hcard
-    have hcard' : (directResidueSet H p).card < (Finset.univ : Finset (ZMod p)).card := by
-      simpa [huniv] using hcard
+    have hcard' :
+        (directResidueSet H p).card < (Finset.univ : Finset (ZMod p)).card := by
+      rwa [huniv]
     obtain ⟨a, ha⟩ := Finset.sdiff_nonempty_of_card_lt_card hcard'
     refine ⟨a, ?_⟩
     intro h hh hha
@@ -59,8 +69,8 @@ theorem direct_admissibility_iff_card_lt
       Finset.mem_image.mpr ⟨h, hh, hha⟩
     exact (Finset.mem_sdiff.mp ha).2 hamem
 
-/-- For a positive modulus, the repository's local-residue inequality is exactly the direct
-admissibility contract appearing in the upstream `DHL[40,2]` theorem. -/
+/-- For a positive modulus, the repository's local-residue inequality is exactly direct tuple
+admissibility modulo that modulus. -/
 theorem local_residue_count_lt_iff_direct_admissible
     (H : Finset Int) (p : Nat) (hp : 0 < p) :
     localResidueCount H p < p ↔
@@ -68,23 +78,23 @@ theorem local_residue_count_lt_iff_direct_admissible
   rw [← directResidueSet_card_eq_localResidueCount H p]
   exact (direct_admissibility_iff_card_lt H p hp).symm
 
-/-- Consequently, the all-primes source admissibility predicate is equivalent to the
-repository's all-primes local survivor condition. -/
-theorem admissibleIntegerTuple_iff_local_residue
+/-- All-primes direct admissibility is equivalent to the repository's all-primes local survivor
+condition. -/
+theorem directTupleAdmissible_iff_local_residue
     (H : Finset Int) :
-    AdmissibleIntegerTuple H ↔
+    DirectTupleAdmissible H ↔
       ∀ p : Nat, p.Prime → localResidueCount H p < p := by
   constructor
   · intro hadm p hp
-    have hp0 := hp.pos
-    exact (local_residue_count_lt_iff_direct_admissible H p hp0).2 (hadm p hp)
+    exact (local_residue_count_lt_iff_direct_admissible H p hp.pos).2 (hadm p hp)
   · intro hlocal p hp
     exact (local_residue_count_lt_iff_direct_admissible H p hp.pos).1 (hlocal p hp)
 
+#print axioms DirectTupleAdmissible
 #print axioms directResidueSet
 #print axioms directResidueSet_card_eq_localResidueCount
 #print axioms direct_admissibility_iff_card_lt
 #print axioms local_residue_count_lt_iff_direct_admissible
-#print axioms admissibleIntegerTuple_iff_local_residue
+#print axioms directTupleAdmissible_iff_local_residue
 
 end D5.S3.PrimeGaps.PrimeGapAdmissibilityContractBridge
