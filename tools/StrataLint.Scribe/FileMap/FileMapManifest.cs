@@ -38,6 +38,9 @@ internal sealed class FileMapAdmissionPlaneException(
     internal string Path { get; } = path;
 }
 
+internal sealed class FileMapParseException(string location, string message, Exception? inner = null)
+    : FormatException($"Invalid FILEMAP at {location}: {message}.", inner);
+
 internal sealed record FileMapEntry
 {
     private readonly FileMapGlob glob;
@@ -138,13 +141,15 @@ internal static class FileMapLoader
     internal static FileMapManifest Parse(ReadOnlySpan<byte> bytes, string location)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(location);
-        if (bytes.IsEmpty
-            || bytes[^1] != (byte)'\n'
-            || bytes.Contains((byte)'\r')
-            || bytes.Length >= 3
-                && bytes[0] == 0xEF
-                && bytes[1] == 0xBB
-                && bytes[2] == 0xBF)
+        if (bytes.Length >= 3
+            && bytes[0] == 0xEF
+            && bytes[1] == 0xBB
+            && bytes[2] == 0xBF)
+        {
+            throw new FileMapParseException(location, "bytes contain a UTF-8 BOM");
+        }
+
+        if (bytes.IsEmpty || bytes[^1] != (byte)'\n' || bytes.Contains((byte)'\r'))
         {
             throw Invalid(location, "bytes must be strict UTF-8 without BOM/CR and end in LF");
         }
@@ -156,7 +161,7 @@ internal static class FileMapLoader
         }
         catch (DecoderFallbackException exception)
         {
-            throw Invalid(location, "bytes are not strict UTF-8", exception);
+            throw new FileMapParseException(location, "bytes are not strict UTF-8", exception);
         }
 
         TomlTable root;
@@ -167,7 +172,7 @@ internal static class FileMapLoader
         }
         catch (TomlException exception)
         {
-            throw Invalid(location, $"invalid TOML: {exception.Message}", exception);
+            throw new FileMapParseException(location, $"invalid TOML: {exception.Message}", exception);
         }
 
         RequireExactKeys(root, location, "files", "residence_policy", "schema_version");

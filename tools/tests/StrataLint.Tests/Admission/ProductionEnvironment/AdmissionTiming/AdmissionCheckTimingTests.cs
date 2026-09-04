@@ -62,6 +62,7 @@ public sealed partial class ProductionEnvironmentTests
             Assert.Equal(
                 [
                     "repository-prepare",
+                    "admission-plane",
                     "snapshot-load",
                     "lean-report-load",
                     "scribe-verify",

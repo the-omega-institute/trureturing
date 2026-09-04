@@ -6,6 +6,5 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="../StrataLint.Engine/StrataLint.Engine.csproj" />
-    <ProjectReference Include="../StrataLint.Scribe/StrataLint.Scribe.csproj" />
   </ItemGroup>
 </Project>

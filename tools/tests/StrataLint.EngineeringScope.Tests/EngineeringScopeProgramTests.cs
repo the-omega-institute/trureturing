@@ -299,28 +299,6 @@ public sealed class EngineeringScopeProgramTests
 
     private static void WriteGateInfrastructure(string root)
     {
-        WriteFile(
-            root,
-            "Meta/FILEMAP.toml",
-            """
-            schema_version = 2
-
-            [residence_policy]
-            case_id = "RESIDENCE-EPOCH"
-            desired = "data-must-live-outside-tools"
-            known_violation_count = 0
-            status = "closed"
-
-            [[files]]
-            pattern = "**"
-            kind = "program"
-            admission_plane = "content"
-            produced_by = "none"
-            consumed_by = ["AdmissionPlaneDeltaPolicy"]
-            verified_by = ["AdmissionPlaneDeltaPolicy"]
-            artifact_id = "none"
-            runtime_disposition = "committed-source"
-            """ + "\n");
         WriteProject(root, ScriptTestsProject, isTest: true);
         WriteFile(
             root,

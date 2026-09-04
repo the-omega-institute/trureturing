@@ -124,7 +124,7 @@ internal interface IFrozenLedgerAdmissionServices
         AdmissionCheckTiming timing);
 }
 
-internal sealed class ProductionCliEnvironment : ICliEnvironment
+internal sealed partial class ProductionCliEnvironment : ICliEnvironment
 {
     private static readonly JsonSerializerOptions RouteJsonOptions = new()
     {
@@ -254,12 +254,34 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                     "check requires --candidate-lean-report FILE");
             }
 
+            var currentRaw = repository.ReadCurrent();
+            var baselineRaw = repository.ReadRevision(prepared.Revision);
+            var admissionPlaneEvaluation = timing.Measure(
+                "admission-plane",
+                () =>
+                {
+                    var outcome = EvaluateAdmissionPlane(
+                        baselineRaw,
+                        prepared.Changes,
+                        out var usedBootstrap);
+                    return (Outcome: outcome, UsedBootstrap: usedBootstrap);
+                },
+                static result => result.Outcome is not null);
+            var admissionPlane = admissionPlaneEvaluation.Outcome;
+            var admissionPlaneBootstrap = admissionPlaneEvaluation.UsedBootstrap;
+            if (admissionPlane is not null)
+            {
+                return admissionPlane;
+            }
+
             var snapshots = timing.Measure(
                 "snapshot-load",
                 () =>
                 {
-                    var current = Decode(repository.ReadCurrent());
-                    var baseline = Decode(repository.ReadRevision(prepared.Revision));
+                    var current = Decode(currentRaw);
+                    var baseline = Decode(admissionPlaneBootstrap
+                        ? WithoutFileMap(baselineRaw)
+                        : baselineRaw);
                     // Fork-point consumers compare repository structure and ledger bytes, not Lean facts.
                     var forkPoint = string.Equals(
                         prepared.ChangeBase,
@@ -271,35 +293,6 @@ internal sealed class ProductionCliEnvironment : ICliEnvironment
                 });
             var current = snapshots.Current;
             var baseline = snapshots.Baseline;
-            var admissionPlane = timing.Measure(
-                "admission-plane",
-                () => AdmissionPlaneDeltaPolicy.Evaluate(baseline, prepared.Changes),
-                static result => !result.IsAdmissible);
-            if (!admissionPlane.IsAdmissible)
-            {
-                if (admissionPlane.Classification is AdmissionPlaneDeltaClassification.Mixed)
-                {
-                    var diagnostics = ImmutableArray.CreateBuilder<Diagnostic>();
-                    if (bootstrap is BootstrapOutcome.ProtectedSurfaceVerificationRequired protectedChange)
-                    {
-                        diagnostics.AddRange(BootstrapGate.CreateSl022Diagnostics(
-                            protectedChange.ChangeSet));
-                    }
-
-                    diagnostics.Add(new Diagnostic(
-                        RuleId.CreateKnown(1),
-                        "Admission plane partition",
-                        DisplaySeverity.Error,
-                        AdmissionEffect.Block,
-                        admissionPlane.Path,
-                        $"{admissionPlane.Code}: {admissionPlane.Message}"));
-                    return new AdmissionOutcome.RuleRejected(diagnostics.ToImmutable());
-                }
-
-                return new AdmissionOutcome.InfrastructureFailure(
-                    $"{admissionPlane.Code} {admissionPlane.Path}: {admissionPlane.Message}");
-            }
-
             var candidateLeanReport = timing.Measure(
                 "lean-report-load",
                 () => RawLeanReportArtifact.ReadFile(
