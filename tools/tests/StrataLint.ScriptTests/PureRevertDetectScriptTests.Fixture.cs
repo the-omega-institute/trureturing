@@ -29,7 +29,7 @@ public sealed partial class PureRevertDetectScriptTests
                 script,
                 .. arguments,
             ],
-            TestScratchRoot.Current.Path,
+            root,
             TestBudgets.ScriptProcessHangGuard,
             64 * 1024);
     }

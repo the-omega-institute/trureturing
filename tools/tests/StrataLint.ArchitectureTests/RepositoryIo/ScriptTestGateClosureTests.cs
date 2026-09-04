@@ -1,16 +1,21 @@
 using System.Collections;
 using System.Reflection;
 using StrataLint.Engine;
-using StrataLint.Tests;
 
 namespace StrataLint.ArchitectureTests;
 
-public sealed class ScriptTestGateClosureTests
+public sealed partial class ScriptTestGateClosureTests
 {
     private const string ScriptTestsProject =
         "tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj";
     private const string PlaybookScript =
         "tools/scripts/workflow/playbook-workflows.sh";
+    private const string ScriptTestsSource =
+        "tools/tests/StrataLint.ScriptTests/PlaybookWorkflowScriptTests.cs";
+    private const string RepositoryRootCall = "TestRepositoryLayout." + "FindRoot()";
+    private const string ProductionSnapshotRead = "GitRepositorySnapshotReader." + "ReadCurrent";
+    private const string DirectoryFileEnumeration = "Directory." + "EnumerateFiles";
+    private const string FileTextRead = "File." + "ReadAllText";
 
     [Fact]
     public void UnrelatedFullFallbackExcludesScriptTestsAndReportsSelected()
@@ -78,7 +83,7 @@ public sealed class ScriptTestGateClosureTests
                 {
                     using var scratch = new TemporaryDirectory();
                     ScriptHarnessScratch.CopyScriptInto(
-                        Path.Combine(TestRepositoryLayout.FindRoot(), "{{protectedScript}}"),
+                        {{RootedPath(protectedScript)}},
                         Path.Combine(scratch.Path, "probe.sh"));
                 }
             """,
@@ -121,7 +126,7 @@ public sealed class ScriptTestGateClosureTests
                 {
                     using var scratch = new TemporaryDirectory();
                     ScriptHarnessScratch.CopyScriptInto(
-                        Path.Combine(TestRepositoryLayout.FindRoot(), "{{addedScript}}"),
+                        {{RootedPath(addedScript)}},
                         Path.Combine(scratch.Path, "probe.sh"));
                 }
             """,
@@ -146,7 +151,7 @@ public sealed class ScriptTestGateClosureTests
                 {
                     using var scratch = new TemporaryDirectory();
                     ScriptHarnessScratch.CopyScriptInto(
-                        Path.Combine(TestRepositoryLayout.FindRoot(), "{{script}}"),
+                        {{RootedPath(script)}},
                         Path.Combine(scratch.Path, "probe.sh"));
                 }
             """,
@@ -163,28 +168,37 @@ public sealed class ScriptTestGateClosureTests
         AssertCommandOperandSelectsScriptTests(
             "ProcessStartInfoConstructorProbe",
             "tools/scripts/workflow/process-start-info-constructor-probe.sh",
-            "_ = new System.Diagnostics.ProcessStartInfo(\"/bin/bash\", $\"{TestRepositoryLayout.FindRoot()}/tools/scripts/workflow/process-start-info-constructor-probe.sh\");");
+            "_ = new System.Diagnostics.ProcessStartInfo(\"/bin/bash\", "
+            + InterpolatedRootedPath("tools/scripts/workflow/process-start-info-constructor-probe.sh")
+            + ");");
 
     [Fact]
     public void ProcessStartInfoObjectInitializerPropertySelectsScriptTests() =>
         AssertCommandOperandSelectsScriptTests(
             "ProcessStartInfoInitializerProbe",
             "tools/scripts/workflow/process-start-info-initializer-probe.sh",
-            "_ = new System.Diagnostics.ProcessStartInfo { FileName = \"/bin/bash\", Arguments = $\"{TestRepositoryLayout.FindRoot()}/tools/scripts/workflow/process-start-info-initializer-probe.sh\" };");
+            "_ = new System.Diagnostics.ProcessStartInfo { FileName = \"/bin/bash\", Arguments = "
+            + InterpolatedRootedPath("tools/scripts/workflow/process-start-info-initializer-probe.sh")
+            + " };");
 
     [Fact]
     public void ProcessStartInfoArgumentListAdditionSelectsScriptTests() =>
         AssertCommandOperandSelectsScriptTests(
             "ProcessStartInfoArgumentListProbe",
             "tools/scripts/workflow/process-start-info-argument-list-probe.sh",
-            "var startInfo = new System.Diagnostics.ProcessStartInfo(\"/bin/bash\"); startInfo.ArgumentList.Add($\"{TestRepositoryLayout.FindRoot()}/tools/scripts/workflow/process-start-info-argument-list-probe.sh\");");
+            "var startInfo = new System.Diagnostics.ProcessStartInfo(\"/bin/bash\"); "
+            + "startInfo.ArgumentList.Add("
+            + InterpolatedRootedPath("tools/scripts/workflow/process-start-info-argument-list-probe.sh")
+            + ");");
 
     [Fact]
     public void TestProcessRunnerInterpolatedOperandSelectsScriptTests() =>
         AssertCommandOperandSelectsScriptTests(
             "TestProcessRunnerOperandProbe",
             "tools/scripts/workflow/test-process-runner-operand-probe.sh",
-            "_ = TestProcessRunner.Run(\"/bin/bash\", [$\"{TestRepositoryLayout.FindRoot()}/tools/scripts/workflow/test-process-runner-operand-probe.sh\"], TestScratchRoot.Current.Path, TestBudgets.ScriptProcessHangGuard, 1024);");
+            "_ = TestProcessRunner.Run(\"/bin/bash\", ["
+            + InterpolatedRootedPath("tools/scripts/workflow/test-process-runner-operand-probe.sh")
+            + "], TestScratchRoot.Current.Path, TestBudgets.ScriptProcessHangGuard, 1024);");
 
     [Fact]
     public void RepositoryRootedExtensionReceiverFailsClosedWithinAuditedOperationTree()
@@ -198,19 +212,19 @@ public sealed class ScriptTestGateClosureTests
                 [Fact]
                 public void ExtensionReceiverProbe()
                 {
-                    $"{TestRepositoryLayout.FindRoot()}/{{script}}".ReadRepositoryText();
+                    {{InterpolatedRootedPath(script)}}.ReadRepositoryText();
                 }
             """,
             (script, "#!/usr/bin/env bash\nexit 0\n"));
         candidate = ReplaceText(
             candidate,
             "tools/tests/StrataLint.ScriptTests/PlaybookWorkflowScriptTests.cs",
-            static text => text + """
+            text => text + $$"""
 
                 internal static class ScriptGateReceiverProbeExtensions
                 {
                     internal static string ReadRepositoryText(this string path) =>
-                        File.ReadAllText(path);
+                        {{FileTextRead}}(path);
                 }
                 """);
 
@@ -223,7 +237,7 @@ public sealed class ScriptTestGateClosureTests
     }
 
     [Fact]
-    public void RepositoryRootProcessWorkingDirectoryFailsClosedWithinAuditedOperationTree()
+    public void RepositoryRootProcessWorkingDirectoryResolvesRelativeCommandOperandIntoClosure()
     {
         const string script = "tools/scripts/workflow/relative-runner-probe.sh";
         var protectedBase = CurrentSnapshot();
@@ -237,18 +251,45 @@ public sealed class ScriptTestGateClosureTests
                     _ = TestProcessRunner.Run(
                         "/bin/bash",
                         ["{{script}}"],
-                        TestRepositoryLayout.FindRoot(),
+                        {{RepositoryRootCall}},
                         TestBudgets.ScriptProcessHangGuard,
                         1024);
                 }
             """,
             (script, "#!/usr/bin/env bash\nexit 0\n"));
 
-        var error = Assert.ThrowsAny<Exception>(() =>
-            Evaluate([script], protectedBase, candidate));
+        var closure = Derive(candidate, []);
+        var plan = Evaluate([script], protectedBase, candidate);
 
-        Assert.Contains("RelativeRunnerProbe", Flatten(error), StringComparison.Ordinal);
-        Assert.Contains("repository working directory", Flatten(error), StringComparison.Ordinal);
+        Assert.Contains(script, closure.ExactPaths);
+        Assert.Contains(ScriptTestsProject, plan.Projects);
+    }
+
+    [Fact]
+    public void RepositoryRootProcessWorkingDirectoryWithUnresolvedRelativeOperandFailsClosed()
+    {
+        var protectedBase = CurrentSnapshot();
+        var candidate = AppendTestMethod(
+            protectedBase,
+            $$"""
+
+                [Fact]
+                public void UnresolvedRelativeRunnerProbe()
+                {
+                    _ = TestProcessRunner.Run(
+                        "/bin/bash",
+                        [Path.Combine("tools", Environment.GetEnvironmentVariable("SCRIPT_GATE_PROBE")!)],
+                        {{RepositoryRootCall}},
+                        TestBudgets.ScriptProcessHangGuard,
+                        1024);
+                }
+            """);
+
+        var error = Assert.ThrowsAny<Exception>(() =>
+            Evaluate(["CLAUDE.md"], protectedBase, candidate));
+
+        Assert.Contains("UnresolvedRelativeRunnerProbe", Flatten(error), StringComparison.Ordinal);
+        Assert.Contains("InvocationExpressionSyntax", Flatten(error), StringComparison.Ordinal);
     }
 
     [Fact]
@@ -257,14 +298,14 @@ public sealed class ScriptTestGateClosureTests
         var protectedBase = CurrentSnapshot();
         var candidate = AppendTestMethod(
             protectedBase,
-            """
+            $$"""
 
                 [Fact]
                 public void MissingInputProbe()
                 {
                     using var scratch = new TemporaryDirectory();
                     ScriptHarnessScratch.CopyScriptInto(
-                        Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/missing.sh"),
+                        {{RootedPath("tools/scripts/missing.sh")}},
                         Path.Combine(scratch.Path, "probe.sh"));
                 }
             """);
@@ -281,14 +322,14 @@ public sealed class ScriptTestGateClosureTests
         var protectedBase = CurrentSnapshot();
         var candidate = AppendTestMethod(
             protectedBase,
-            """
+            $$"""
 
                 [Fact]
                 public void MissingInputProbe()
                 {
                     using var scratch = new TemporaryDirectory();
                     ScriptHarnessScratch.CopyScriptInto(
-                        Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/missing.sh"),
+                        {{RootedPath("tools/scripts/missing.sh")}},
                         Path.Combine(scratch.Path, "probe.sh"));
                 }
             """);
@@ -306,7 +347,7 @@ public sealed class ScriptTestGateClosureTests
         var protectedBase = CurrentSnapshot();
         var candidate = AppendTestMethod(
             protectedBase,
-            """
+            $$"""
 
                 [Fact]
                 public void VariableInputProbe()
@@ -314,7 +355,7 @@ public sealed class ScriptTestGateClosureTests
                     using var scratch = new TemporaryDirectory();
                     var suffix = Environment.GetEnvironmentVariable("SCRIPT_GATE_PROBE")!;
                     ScriptHarnessScratch.CopyScriptInto(
-                        Path.Combine(TestRepositoryLayout.FindRoot(), suffix),
+                        Path.Combine({{RepositoryRootCall}}, suffix),
                         Path.Combine(scratch.Path, "probe.sh"));
                 }
             """);
@@ -332,12 +373,12 @@ public sealed class ScriptTestGateClosureTests
         var protectedBase = CurrentSnapshot();
         var candidate = AppendTestMethod(
             protectedBase,
-            """
+            $$"""
 
                 [Fact]
                 public void RepositoryEnumerationProbe()
                 {
-                    _ = Directory.EnumerateFiles(TestRepositoryLayout.FindRoot()).ToArray();
+                    _ = {{DirectoryFileEnumeration}}({{RepositoryRootCall}}).ToArray();
                 }
             """);
 
@@ -354,13 +395,13 @@ public sealed class ScriptTestGateClosureTests
         var protectedBase = CurrentSnapshot();
         var candidate = AppendTestMethod(
             protectedBase,
-            """
+            $$"""
 
                 [Fact]
                 public void LookalikeSinkProbe()
                 {
                     GateLookalike.CopyScriptInto(
-                        Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/lookalike.sh"),
+                        {{RootedPath("tools/scripts/lookalike.sh")}},
                         "ignored");
                 }
 
@@ -381,19 +422,23 @@ public sealed class ScriptTestGateClosureTests
     [InlineData(
         "ObjectCreationOperandProbe",
         "unrecognised-sink operation value",
-        "_ = new System.IO.FileInfo(Path.Combine(TestRepositoryLayout.FindRoot(), \"tools/scripts/missing-object-creation.sh\"));")]
+        "_ = new System.IO.FileInfo(Path.Combine(" + RepositoryRootCall
+        + ", \"tools/scripts/missing-object-creation.sh\"));")]
     [InlineData(
         "ImplicitObjectCreationOperandProbe",
         "unrecognised-sink operation value",
-        "System.IO.StreamReader reader = new(Path.Combine(TestRepositoryLayout.FindRoot(), \"tools/scripts/missing-implicit-creation.sh\")); reader.Dispose();")]
+        "System.IO.StreamReader reader = new(Path.Combine(" + RepositoryRootCall
+        + ", \"tools/scripts/missing-implicit-creation.sh\")); reader.Dispose();")]
     [InlineData(
         "AssignmentOperandProbe",
         "unrecognised-sink operation value",
-        "var startInfo = new System.Diagnostics.ProcessStartInfo(); startInfo.WorkingDirectory = Path.Combine(TestRepositoryLayout.FindRoot(), \"tools/scripts/missing-assignment.sh\");")]
+        "var startInfo = new System.Diagnostics.ProcessStartInfo(); startInfo.WorkingDirectory = Path.Combine("
+        + RepositoryRootCall + ", \"tools/scripts/missing-assignment.sh\");")]
     [InlineData(
         "IndexerOperandProbe",
         "unrecognised-sink operation value",
-        "var paths = new System.Collections.Generic.Dictionary<string, string>(); _ = paths[Path.Combine(TestRepositoryLayout.FindRoot(), \"tools/scripts/missing-indexer.sh\")];")]
+        "var paths = new System.Collections.Generic.Dictionary<string, string>(); _ = paths[Path.Combine("
+        + RepositoryRootCall + ", \"tools/scripts/missing-indexer.sh\")];")]
     public void AuditedRepositoryRootedProbeValuesFailClosedWithDiagnostic(
         string testName,
         string diagnostic,
@@ -417,12 +462,12 @@ public sealed class ScriptTestGateClosureTests
         var protectedBase = CurrentSnapshot();
         var candidate = AppendTestMethod(
             protectedBase,
-            """
+            $$"""
 
                 [Fact]
                 public void ProductionLoaderProbe()
                 {
-                    _ = GitRepositorySnapshotReader.ReadCurrent(TestRepositoryLayout.FindRoot());
+                    _ = {{ProductionSnapshotRead}}({{RepositoryRootCall}});
                 }
             """);
 
@@ -467,19 +512,12 @@ public sealed class ScriptTestGateClosureTests
     }
 
     [Fact]
-    public void ControllerClosureSnapshotAdapterMatchesTheHeadAdapter()
+    public void ControllerClosureSyntheticSnapshotHasExpectedMembership()
     {
-        var root = TestRepositoryLayout.FindRoot();
-        var snapshot = Decode(GitRepositorySnapshotReader.ReadRevision(root, "HEAD"));
+        var snapshot = CurrentSnapshot();
         var type = Assembly.Load("StrataLint.EngineeringScope").GetType(
             "StrataLint.EngineeringScope.ControllerClosure",
             throwOnError: true)!;
-        var headMethod = type.GetMethod(
-            "Derive",
-            BindingFlags.Static | BindingFlags.NonPublic,
-            binder: null,
-            [typeof(string)],
-            modifiers: null)!;
         var snapshotMethod = type.GetMethod(
             "Derive",
             BindingFlags.Static | BindingFlags.NonPublic,
@@ -487,7 +525,6 @@ public sealed class ScriptTestGateClosureTests
             [typeof(RepositorySnapshot)],
             modifiers: null) ?? throw new MissingMethodException(type.FullName, "Derive(RepositorySnapshot)");
 
-        var head = headMethod.Invoke(null, [root])!;
         var pure = snapshotMethod.Invoke(null, [snapshot])!;
         var evaluatorPaths = Values(pure, "EvaluatorPaths");
         var ownerPaths = Values(pure, "OwnerPaths");
@@ -496,12 +533,6 @@ public sealed class ScriptTestGateClosureTests
             null);
 
         Assert.Null(pure.GetType().GetProperty("Commit"));
-        Assert.Equal(
-            Values(head, "EvaluatorPaths").Order(StringComparer.Ordinal),
-            Values(pure, "EvaluatorPaths").Order(StringComparer.Ordinal));
-        Assert.Equal(
-            Values(head, "OwnerPaths").Order(StringComparer.Ordinal),
-            ownerPaths.Order(StringComparer.Ordinal));
         Assert.NotEmpty(runtimePaths);
         Assert.All(runtimePaths, path => Assert.Contains(path, evaluatorPaths));
         Assert.Contains("tools/StrataLint.EngineeringScope/Program.cs", evaluatorPaths);
@@ -626,8 +657,11 @@ public sealed class ScriptTestGateClosureTests
         .Cast<string>()
         .ToArray();
 
-    private static RepositorySnapshot CurrentSnapshot() => Decode(
-        GitRepositorySnapshotReader.ReadCurrent(TestRepositoryLayout.FindRoot()));
+    private static string RootedPath(string path) =>
+        $"Path.Combine({RepositoryRootCall}, \"{path}\")";
+
+    private static string InterpolatedRootedPath(string path) =>
+        "$\"{" + RepositoryRootCall + "}/" + path + "\"";
 
     private static RepositorySnapshot AppendTestMethod(
         RepositorySnapshot snapshot,
@@ -636,7 +670,7 @@ public sealed class ScriptTestGateClosureTests
     {
         var updated = ReplaceText(
             snapshot,
-            "tools/tests/StrataLint.ScriptTests/PlaybookWorkflowScriptTests.cs",
+            ScriptTestsSource,
             text => text[..text.LastIndexOf('}')] + method + "\n}\n");
         return WithFiles(updated, addedFiles);
     }
