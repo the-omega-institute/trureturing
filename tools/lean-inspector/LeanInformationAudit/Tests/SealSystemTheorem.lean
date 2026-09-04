@@ -68,6 +68,10 @@ information_theorem systemTheorem
     exact Catalog.lowersEscape_iff_uniqueCaptureCount_pos
       (censusCatalog stage) (0 : Fin 1) (by decide)
 
+#check (systemTheorem :
+  (∀ stage : Bool, systemReadout stage = systemReadout stage) ∧
+    SystemCharacterization)
+
 example : systemReadout false = 0 := by decide
 example : systemReadout true = 2 := by decide
 
