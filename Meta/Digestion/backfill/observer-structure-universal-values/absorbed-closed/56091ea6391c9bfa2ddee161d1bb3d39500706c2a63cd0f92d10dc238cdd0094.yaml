@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:56091ea6391c9bfa2ddee161d1bb3d39500706c2a63cd0f92d10dc238cdd0094
+  normalized_sha256: sha256:56091ea6391c9bfa2ddee161d1bb3d39500706c2a63cd0f92d10dc238cdd0094
+cas_ref: sha256:56091ea6391c9bfa2ddee161d1bb3d39500706c2a63cd0f92d10dc238cdd0094
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/NormativeOrbits/RoleSwapOrbitFactorization.role_swap_full_invariance_orbit_factorization
+    target_statement_id: sha256:1d806f69f38e547de529a420dcce677c022d004bae82d52dbdcfa96952c8184b
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/NormativeOrbits/RoleSwapOrbitFactorization.role_swap_full_invariance_orbit_factorization
+      definition_sha256: sha256:f1763199a61ce3bf0928579d8499379046b972679940e1fd193b20eb77df95a0
+      emission_sha256: sha256:c762627bc2de51a657b2c8df1ecee0bfebf28190a021e3a9aa20a85447b284df
+  unresolved_subitems: []
