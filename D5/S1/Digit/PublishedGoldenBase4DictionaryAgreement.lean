@@ -2,13 +2,12 @@
    generality: I
    mirror-B: D5/B/S1/Digit/PublishedGoldenBase4DictionaryAgreement
    mirror-E: none(waiver:published-dictionary-evidence)
-   anchors: [mathlib/module/Mathlib.Tactic.NativeDecide]
+   anchors: [mathlib/module/Mathlib]
    digest: The published 201-record base-four golden-ratio dictionary agrees with the exact repository oracle after isolating its zero anchor and 200 power records. -/
 
 import D5.S1.Digit.GoldenBase4AutomataOracle
 import D5.S1.Deficit.ZeckendorfDisplacementReading
-import Mathlib.Tactic.NativeDecide
-import Mathlib.Tactic.Omega
+import Mathlib
 
 /- Library-search and source audit trail (2026-09-04):
    * `GoldenBase4AutomataOracle` already owns the canonical MSD-first
