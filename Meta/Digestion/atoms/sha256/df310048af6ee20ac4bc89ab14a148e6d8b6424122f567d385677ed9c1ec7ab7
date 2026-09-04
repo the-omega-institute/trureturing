@@ -1,0 +1,20 @@
+## B6.3 fidelity edge
+
+项目的有限 channel-to-fidelity bridge 给出，对归一化参考向量 $c$：
+
+$$
+F_e(c)=\|J_Nc\|_2^2.
+\tag{B6.8}
+$$
+
+当 $N\ge2$ 时，其最大值为
+
+$$
+\boxed{
+F_N^*
+=\cos^2\frac{\pi}{N+1}.}
+\tag{B6.9}
+$$
+
+该最大值的完整 eigenspace 是由 $k=1$ 与 $k=N$ 两个反射配对 mode 张成的二维空间。
+

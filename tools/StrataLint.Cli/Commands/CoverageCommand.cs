@@ -97,23 +97,7 @@ internal static class CoverageCommand
         };
 
     private static ImmutableArray<RepoPath> LoadFrozenPaths(RepositorySnapshot snapshot)
-    {
-        var files = snapshot.Files.Values
-            .Where(file => FrozenLedgerChangeClassifier.IsAcceptedEventPath(file.Path.Value))
-            .ToArray();
-        if (files.Length == 0)
-        {
-            throw new InvalidOperationException("frozen ledger is missing");
-        }
-
-        var events = DagLedgerCommandPreparation.LoadTrustedLedgerFiles(files, "frozen ledger");
-        return FrozenCoverageLedger.Load(events) switch
-        {
-            FrozenCoverageLoadOutcome.Loaded loaded => loaded.ActiveFrozenPaths,
-            FrozenCoverageLoadOutcome.Invalid invalid =>
-                throw new InvalidOperationException(invalid.Message),
-        };
-    }
+        => FrozenStateCatalog.Load(snapshot).Selectors;
 
     private static TowerManifestSyntax LoadTower(RepositorySnapshot snapshot)
     {

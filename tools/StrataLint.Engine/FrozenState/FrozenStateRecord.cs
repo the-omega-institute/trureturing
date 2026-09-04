@@ -107,6 +107,10 @@ internal sealed class FrozenStateCatalog
 
     internal ImmutableDictionary<RepoPath, FrozenStateRecord> Records { get; }
 
+    internal ImmutableArray<RepoPath> Selectors => Records.Keys
+        .OrderBy(static path => path.Value, StringComparer.Ordinal)
+        .ToImmutableArray();
+
     internal static FrozenStateCatalog Load(RepositorySnapshot snapshot)
     {
         ArgumentNullException.ThrowIfNull(snapshot);

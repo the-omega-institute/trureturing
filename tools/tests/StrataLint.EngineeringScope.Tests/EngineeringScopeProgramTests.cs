@@ -321,7 +321,6 @@ public sealed class EngineeringScopeProgramTests
             isTest: false);
         WriteFile(root, "Directory.Build.props", "<Project />\n");
         WriteFile(root, "Directory.Packages.props", "<Project />\n");
-        WriteFile(root, "tools/scripts/workflow/pure-revert-detect.sh", "exit 0\n");
         WriteFile(root, "tools/scripts/workflow/self-lock-probe.sh", "exit 0\n");
         WriteFile(root, "tools/scripts/report/report-supervisor.sh", "exit 0\n");
     }
