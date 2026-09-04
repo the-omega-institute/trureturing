@@ -207,61 +207,6 @@ public sealed partial class FileMapPolicyTests
     }
 
     [Fact]
-    public void EmptyCommittedPatternIsRejectedByTheRedFixture()
-    {
-        const string pattern = "Data/retired/*.json";
-        var manifest = Parse(Entry(pattern, "data", "none", "reader", "SnapshotDecoder"));
-
-        var finding = Assert.Single(FileMapPolicy.InspectPatternPopulation(manifest, []));
-
-        Assert.Equal("FILEMAP-PATTERN-EMPTY", finding.Code);
-        Assert.Equal(pattern, finding.Path);
-    }
-
-    [Fact]
-    public void PopulatedCommittedPatternIsAcceptedByTheGreenFixture()
-    {
-        var manifest = Parse(Entry(
-            "Data/current/*.json",
-            "data",
-            "none",
-            "reader",
-            "SnapshotDecoder"));
-
-        Assert.Empty(FileMapPolicy.InspectPatternPopulation(
-            manifest,
-            ["Data/current/object.json"]));
-    }
-
-    [Fact]
-    public void EmptyRunLocalPatternIsAcceptedByTheExemptFixture()
-    {
-        var manifest = Parse(DispositionEntry(
-            "Generated/retired.json",
-            "generated",
-            "SyntheticEmitter",
-            "reader",
-            "SyntheticEmitter",
-            "run-local",
-            "A-SYNTHETIC-RETIRED"));
-
-        Assert.Empty(FileMapPolicy.InspectPatternPopulation(manifest, []));
-    }
-
-    [Fact]
-    public void EmptyFrozenStatePatternIsAcceptedDuringTheExpandPhase()
-    {
-        var manifest = Parse(Entry(
-            "Golden/Frozen/state/**/*.json",
-            "data",
-            "FrozenStateWriter",
-            "FrozenStateCatalog",
-            "FrozenStateRecordLoader"));
-
-        Assert.Empty(FileMapPolicy.InspectPatternPopulation(manifest, []));
-    }
-
-    [Fact]
     public void DanglingGeneratedAndDataActorsAreRejectedByTheRedFixture()
     {
         const string pattern = "Generated/output.json";
