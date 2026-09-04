@@ -1335,3 +1335,180 @@ FiniteAtlasPotentialCover
 ```
 
 本轮新增的 `72` 证书只排除 canonical two-mode support face。六维四 MUB 全局结论仍依赖 noncanonical branch、exceptional loci 和 complete atlas cover。
+
+## 30. affinity equality locus 的列谱排除
+
+在 fixed strict-X edge 上，假设 branch lower bound 已经给出每个 completion 的：
+
+```math
+\alpha_S(C)\ge1.
+```
+
+若两个 completions 彼此 MUB，则 symmetry-plane budget 给出：
+
+```math
+\alpha_S(C)+\alpha_S(D)\le2.
+```
+
+所以双方都必须满足 `alpha=1`。现有真源进一步推出每一行的 three-mode collision 都精确为：
+
+```math
+\sum_kp_{ik}^2=\frac23.
+```
+
+projector-plane saturation 需要提供下一条非平凡二次关系：
+
+```math
+\boxed{
+(p_{ik}-p_{jk})(p_{ik}+p_{jk}-1)=0.
+}
+```
+
+固定一个 mode column `k`，令 `x_i=p_{ik}`。列和由 rank-two mode projector 给出：
+
+```math
+\sum_i x_i=2.
+```
+
+相对任一 reference value，饱和二次关系迫使其余五个值分别等于该 reference，或者等于其补数 `1-reference`。消去 reference 后，整列只能具有以下三种谱，直到排列：
+
+```math
+\left(\frac13,\frac13,\frac13,\frac13,\frac13,\frac13\right),
+```
+
+```math
+\left(\frac34,\frac14,\frac14,\frac14,\frac14,\frac14\right),
+```
+
+或：
+
+```math
+(1,1,0,0,0,0).
+```
+
+相应 column collision 只可能是：
+
+```math
+\boxed{
+\frac23,\quad\frac78,\quad2.
+}
+```
+
+另一方面，六个 row collisions 的总和为：
+
+```math
+6\cdot\frac23=4.
+```
+
+它也等于三个 column collisions 的总和。三个元素从 `{2/3,7/8,2}` 中任取并带重复时，可能的总和只有：
+
+```math
+2,\ \frac{53}{24},\ \frac{29}{12},\ \frac{21}{8},\
+\frac{10}{3},\ \frac{85}{24},\ \frac{15}{4},\
+\frac{14}{3},\ \frac{39}{8},\ 6.
+```
+
+其中不含 `4`。因此 equality locus 为空。
+
+该结论已经集中写入一个公共 Lean 定理：
+
+```text
+D5/S3/Quantum/Tomography/MUBModeAffinityEqualityObstruction.lean
+
+no_saturated_mode_probability_table
+```
+
+形式声明有意更强。最终矛盾只需要 column sums、row collision values 与 saturation quadratic，非负性和 row normalization 在这一阶段已经冗余。
+
+### 定量间隙
+
+允许总和集合与目标 `4` 的最小距离为：
+
+```math
+\boxed{\frac14.}
+```
+
+定义 column-spectrum polynomial：
+
+```math
+q(t)=
+\left(t-\frac23\right)
+\left(t-\frac78\right)
+(t-2).
+```
+
+对任意实数 `t`，令 `r` 为其到三个根的最小距离，则：
+
+```math
+r^3\le |q(t)|.
+```
+
+所以若三个 column collisions `s_0,s_1,s_2` 满足：
+
+```math
+s_0+s_1+s_2=4,
+```
+
+则至少一个 column 必须满足：
+
+```math
+\boxed{
+|q(s_k)|\ge\frac1{1728}.
+}
+```
+
+否则每个 `s_k` 都距离某个允许根小于 `1/12`，三个最近根的和距离 `4` 小于 `1/4`，与上述离散间隙矛盾。
+
+这给出 exact equality obstruction 的稳定版本。未来 interval、SOS 或 algebraic branch certificate 无需首先证明二次关系完全为零。只要能把三个 `q(s_k)` 同时压到 `1/1728` 以下，就已经产生矛盾。
+
+### 剩余的唯一高价值桥
+
+下一项形式化不再增加新的 scalar wrapper。应直接从 projector saturation 推出二次关系。
+
+令 rank-two mode projector 为 `E_k`，并定义：
+
+```math
+X_k=E_k-I/3.
+```
+
+则：
+
+```math
+X_k^2=\frac13X_k+\frac29I.
+```
+
+当 MUB symmetry budget 取等时，`X_k` 完全落入两个互相正交的 completion context planes 之和，可写为：
+
+```math
+X_k=A_k+B_k.
+```
+
+在第一 completion 的 rank-one projector `P_i` 上取期望。利用第二 completion 与第一 completion 的 MUB overlap，以及两个 centered coefficient sums 都为零，得到：
+
+```math
+a_{ik}^2+\frac16\sum_jb_{jk}^2
+=\frac13a_{ik}+\frac29.
+```
+
+对 `i` 与 `j` 相减：
+
+```math
+(a_{ik}-a_{jk})
+\left(a_{ik}+a_{jk}-\frac13\right)=0.
+```
+
+代入 `a_{ik}=p_{ik}-1/3`，正好得到：
+
+```math
+(p_{ik}-p_{jk})(p_{ik}+p_{jk}-1)=0.
+```
+
+因此 strict-X 主线现在只剩两个实质性任务：
+
+```text
+1. 对每个 completion 证明 alpha_S >= 1。
+2. 从 alpha_S(C)+alpha_S(D)=2 的 projector saturation
+   机器推出上述二次关系。
+```
+
+完成第二项后，`no_saturated_mode_probability_table` 立即排除 equality。后续不再扩展零元证书、初等碰撞恒等式或同义 frame-potential 包装。
