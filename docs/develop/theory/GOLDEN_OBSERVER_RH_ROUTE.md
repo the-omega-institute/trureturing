@@ -2489,3 +2489,36 @@ W-12 使阿基米德可积性对每个测试函数无条件成立,M2-c 使零点
 一席位轮(codex-cli,独立 worktree,`Separator/` 第八个模块;同 PR deposit(绑 W-16 atom)+ 三条 cover)。预计 ≤ 40 分钟(探针证明可复用)。
 
 后续增订继续严格追加于本节之后。
+---
+
+# 增订二十九　零点无穷假设下不含 `ZeroData` 的 Weil 判据(W-19 / W-20 / W-21 预登记)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;探针一席(codex-cli,`probe-w19-zfree`,`make lean` exit 0、`lake env lean` exit 0,三条声明全为标准三公理)在 `origin/dev` = `1b0cb4fed6`(增订二十七之 la156 模块已合入)的暖树上整证,消费冻结的 M1-a 桥 `ZetaBridge.ZeroDataNonemptyIffInfinite.nonempty_zeroData_iff_infinite`、W-13 `Separator.ArchimedeanConvergence.rh_iff_primeSidePositivity`、W-14/W-15 `Separator.PrimeArchimedeanPoincareCriterion.{rh_iff_primeArchimedeanPoincare, rh_iff_exists_supportRadius_primeArchimedeanPoincare}`;`IsNontrivialZero` 取 `D5.S3.Weil.ZeroSum` 命名空间(与 `WeilSquarePositivityCriterionOfInfinite` 同)。检索留痕:`git grep -n 'of_infinite\|hInf : {rho' -- 'D5/**/*.lean'` 命中仅 `WeilSquarePositivityCriterionOfInfinite.lean:40,59,80` 与 `ZeroDataNonemptyIffInfinite.lean:191,239`(零点侧判据的 ∀Z/∃Z 形),素数侧与 Poincaré 形无 Z-free 陈述;三个候选名零命中。散文由 orchestrator(claude 主循环)撰写。判决日:2026-09-04。lane issue:#4589。
+
+## 〇　为什么是这一节
+
+W-13、W-14、W-15 的右端**不含 `Z`**:素数侧表达式与 Poincaré 不等式只涉及测试函数、素数幂权、边界读数与 digamma 常数;`Z` 只在证明中经显式公式出现。于是任意一个 `ZeroData` 都足以建立等价,而 M1-a 桥说 `ZeroData` 非空 ⟺ 非平凡零点无穷。合起来:**在零点无穷这一个经典假设下(Hardy 1914;钉版 Mathlib 无此定理,故留作显式假设),RH 等价于一条完全不提零点、不提 ζ、不提零点枚举的实不等式**。这是本路线判据阶梯的收口形式;`ZeroDataFreeCriteria` 落 `D5/S3/Weil/Separator/`。**诚实边界**:①`hInf` 是假设,本仓未证;②测试函数类为本仓 `WeilTestFunction`;③不构成 RH 证明。
+
+## 一　W-19 预登记:Z-free 的 Poincaré 判据(`ZeroDataFreeCriteria`,落 `D5/S3/Weil/Separator/`)
+
+**义务**:公开定理 `rh_iff_primeArchimedeanPoincare_of_infinite (hInf : {rho : ℂ | IsNontrivialZero rho}.Infinite) : RiemannHypothesis ↔ ∀ (f : WeilTestFunction) (L : ℝ), tsupport (f : ℝ → ℂ) ⊆ Set.Icc (-L) L → (2 * totalPrimeWeight L - archimedeanConstant) * l2Mass f ≤ 2 * Complex.normSq (∫ x : ℝ, Complex.exp ((x : ℂ) / 2) * f x) + archimedeanJumpEnergy f + arithmeticJumpEnergy L f`。
+**可证伪预测(写在跑之前)**:`obtain ⟨Z⟩ := nonempty_zeroData_iff_infinite.mpr hInf` 后即 W-14 `Z`;标准三公理。探针已整证。
+**边界**:同 §〇。
+
+## 二　W-20 预登记:Z-free 的素数侧判据(同模块第二条公开定理)
+
+**义务**:公开定理 `rh_iff_primeSidePositivity_of_infinite (hInf : {rho : ℂ | IsNontrivialZero rho}.Infinite) : RiemannHypothesis ↔ ∀ g : WeilTestFunction, 0 ≤ (poleTerm (convolutionSquare g) - primeTerm (convolutionSquare g) + archimedeanTerm (convolutionSquare g) (archimedeanConvergent_of_weilTestFunction (convolutionSquare g))).re`。
+**可证伪预测(写在跑之前)**:同上,经 W-13;标准三公理。探针已整证。
+**边界**:同 §〇。
+
+## 三　W-21 预登记:Z-free 的 ∃-半径形(同模块第三条公开定理)
+
+**义务**:公开定理 `rh_iff_exists_supportRadius_primeArchimedeanPoincare_of_infinite (hInf : {rho : ℂ | IsNontrivialZero rho}.Infinite) : RiemannHypothesis ↔ ∀ f : WeilTestFunction, ∃ L : ℝ, tsupport (f : ℝ → ℂ) ⊆ Set.Icc (-L) L ∧ (2 * totalPrimeWeight L - archimedeanConstant) * l2Mass f ≤ 2 * Complex.normSq (∫ x : ℝ, Complex.exp ((x : ℂ) / 2) * f x) + archimedeanJumpEnergy f + arithmeticJumpEnergy L f`。
+**可证伪预测(写在跑之前)**:同上,经 W-15;标准三公理。探针已整证。
+**边界**:同 §〇。
+
+## 四　预算与结算
+
+一席位轮(codex-cli,独立 worktree,`Separator/` 第十个模块;同 PR deposit(绑 W-19 atom)+ 三条 cover)。预计 ≤ 30 分钟(探针证明可复用)。
+
+后续增订继续严格追加于本节之后。
