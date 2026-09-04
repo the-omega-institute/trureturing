@@ -1,0 +1,2 @@
+**候签定理 4.82(Lehmer 整除条件强制无平方因子)**〔open;L-2;同模块〕。对任意 n : ℕ，若 1 < n 且 Nat.totient n ∣ n - 1，则 Squarefree n。
+

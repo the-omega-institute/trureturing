@@ -9215,3 +9215,43 @@ v1.6 冠军二度更正 → v1.7 闭式与模板 → v1.8 幸存全证 → v2.0 
 **候签定理 4.95(单素与双素继承律及数值链)**〔open;同模块伴随声明〕。(i) 若 `IsPPN K` 且 K + 1 为素数,则 `IsPPN (K * (K + 1))`;(ii) 对不整除 K 的不同素数 p q,`IsPPN (K * p * q) ↔ (p − K) * (q − K) = K^2 + 1`(在 K < p, q 的使用域内以 ℕ 减法陈述,或以 ℤ 陈述);(iii) 数值链 `IsPPN 2`、`IsPPN 6`、`IsPPN 42`、`IsPPN 1806`、`IsPPN 47058`。
 
 **评注 27.796(4.91–4.95 之可证伪预测与逃逸见证,写在跑之前)**〔remark;第 5⁗ 条〕。4.91 的逃逸内容为新恒等式 `n * ∑_{p|n} 1/p = (squarefreeDeriv n : ℚ)`(逐项整除与 `cast_div`);4.92 由素因子集的不交并与商的传输构造(公开结论本身即见证,第 5⁗ 条形态 (2));4.93 在活路径上使用 4.92 与代换律;4.94 在活路径上使用 4.92 与一条新的消去论证;4.95 为 4.93/4.94 的伴随(方向边 4.95 → 4.94 → 4.92,消费者 → 前置),数值链以 `decide`/`norm_num` 判定。判形:4.91/4.92/4.93/4.94 content,4.95 依活路径而定;准入依据 escape-witness;只依赖钉版 Mathlib。落点 `D5/S3/PrimeForms/`(直接文件 12/24)。若钉版下 `Nat.primeFactors_mul` 一类互素引理不足以承载 4.92,本候签按 open 记,不得以 `sorry` 或公理代替。结算:五条由一个实施席同 PR `deposit`(绑 4.93)+ `cover`(4.91 / 4.92 / 4.94 / 4.95)落地,三席评审后合入;本案不 cover 任何既有原子。
+
+**评注 27.797(开放问题线:Lehmer 欧拉函数问题之可见证析取;勘误正案 4.80 与候签定理 4.81–4.89 立案)**〔remark;开放问题线第四批〕。Lehmer(1932)问是否存在合数 n 使 φ(n) ∣ n−1,至今开放。本评注下的勘误正案与九条候签定理不触碰合数存在性,只把「φ(n) ∣ n−1 ⟹ n 为素数或具合数侧结构包」写成可见证的析取(见证 n=2、n=7;n=15 证伪前件),产地(第 9′ 条):skill=consensus-rnd:sshx;ChatGPT Pro arXiv 检索席(flight `op-r1-gptpro-arxiv`,Lehmer 候选)提出;探针席 codex-cli(flight `op-p14-lehmer-dichotomy`,worktree `trureturing-la120-m3e`,base origin/dev)以 `lake env lean` 整证并给出 kernel 读数(`#print axioms` 只含标准三公理,无 native_decide);本案与候签由 orchestrator(claude 主循环,会话「开放问题」)撰写。判决日 2026-09-05。
+
+**勘误正案 4.80(Lehmer 欧拉函数问题与本案范围)**〔ledger;开放问题线第四批〕。Lehmer (1932) 问题问是否存在合数 n 使 Nat.totient n ∣ n - 1，至今开放；P7 已证合数候选的结构包，但其候选假设没有已知见证，故不得冻结。本案不触碰合数存在性，只把同一数学改写成可见证的析取：假设 1 < n 且 Nat.totient n ∣ n - 1，结论为 n.Prime，或 n 具有合数侧完整结构包。令 `IsKorselt n := Squarefree n ∧ ∀ p ∈ n.primeFactors, p - 1 ∣ n - 1`；钉版 Mathlib 中 `Nat.IsCarmichael` 与 `Korselt` 均无声明。假设由 n = 2 与 n = 7 的 `by decide` 见证，n = 15 以 `by decide` 证伪其整除条件；Lehmer 合数存在性仍为 open。
+
+**候签定理 4.81(重复素因子进入欧拉函数)**〔open;L-1;落 `D5/S3/Factorization/LehmerTotientDichotomy`〕。对任意 p n : ℕ，若 p.Prime 且 p ^ 2 ∣ n，则 p ∣ Nat.totient n。
+
+**候签定理 4.82(Lehmer 整除条件强制无平方因子)**〔open;L-2;同模块〕。对任意 n : ℕ，若 1 < n 且 Nat.totient n ∣ n - 1，则 Squarefree n。
+
+**候签定理 4.83(无平方因子数的欧拉函数乘积式)**〔open;L-3;同模块〕。对任意非零 n : ℕ，若 Squarefree n，则 `Nat.totient n = ∏ p ∈ n.primeFactors, (p - 1)`。
+
+**候签定理 4.84(合数分支为奇数)**〔open;L-4;同模块〕。对任意 n : ℕ，若 1 < n、Nat.totient n ∣ n - 1 且 ¬n.Prime，则 Odd n。
+
+**候签定理 4.85(素因子减一乘积整除前驱)**〔open;L-5;同模块〕。对任意 n : ℕ，若 1 < n 且 Nat.totient n ∣ n - 1，则 `(∏ p ∈ n.primeFactors, (p - 1)) ∣ n - 1`。
+
+**候签定理 4.86(Lehmer 条件到 Korselt 条件之桥)**〔open;L-6;同模块〕。对任意 n : ℕ，若 1 < n 且 Nat.totient n ∣ n - 1，则 IsKorselt n。
+
+**候签定理 4.87(二幂整除前驱)**〔open;L-7;同模块〕。对任意 n : ℕ，若 1 < n、Nat.totient n ∣ n - 1 且 ¬n.Prime，则 `2 ^ n.primeFactors.card ∣ n - 1`。
+
+**候签定理 4.88(合数分支至少三个不同素因子)**〔open;L-8;同模块,本案定量逃逸〕。对任意 n : ℕ，若 1 < n、Nat.totient n ∣ n - 1 且 ¬n.Prime，则 `3 ≤ n.primeFactors.card`。
+
+**候签定理 4.89(欧拉函数整除前驱之析取结构包)**〔open;L-9;同模块,本案主定理〕。对任意 n : ℕ，若 1 < n 且 Nat.totient n ∣ n - 1，则 `n.Prime ∨ (Odd n ∧ Squarefree n ∧ IsKorselt n ∧ (∏ p ∈ n.primeFactors, (p - 1)) ∣ n - 1 ∧ 2 ^ n.primeFactors.card ∣ n - 1 ∧ 3 ≤ n.primeFactors.card)`。
+
+**评注 27.802(开放问题线:阶 12 射影平面之循环情形——乘子 2 的有限轨道障碍;候签定理 9.12–9.18 立案)**〔remark;开放问题线第四批〕。阶 12 射影平面是否存在至今开放;其**循环**情形等价于 ℤ/157 中的循环 (157, 13, 1) 差集(Singer),经乘子定理与有限检验已知不存在。本评注下七条候签只立案一条自足的有限轨道障碍:不存在 13 元 D ⊂ ℤ/157 与 g 使 2·D = D + g——由仿射定点共轭、素模非零乘子轨道的自由作用、`orderOf (2 : ZMod 157) = 52` 与基数剩余 {0, 1} 装配;**不**触碰第一乘子定理之桥、Singer 等价与非循环情形(皆记 open),乘子 3(阶 78)只作外部算术核对、未形式化。产地(第 9′ 条):skill=consensus-rnd:sshx;ChatGPT Pro 全领域检索席(flight `op-r5-gptpro-open-any`,候选 #11;文献 Pott 等 arXiv:math/0304502 之状态描述属检索席自报,未独立核实)提出;探针席 codex-cli(flight `op-p17-cyclic-plane-12`,worktree `trureturing-la108-m1a-v2`,base origin/dev)以 `lake env lean` 整证七条与非空洞见证,`#print axioms` 对全部公开声明为标准三公理之子集;本案与候签由 orchestrator(claude 主循环,会话「开放问题」)撰写。判决日 2026-09-05。落点 `D5/S3/ArithUnits/CyclicPlaneTwelveMultiplierObstruction`(ArithUnits 桶直接计数文件 12/24,落地后 13/24)。
+
+**候签定理 9.12(仿射乘子关系的定点共轭)**〔open;落 `D5/S3/ArithUnits/CyclicPlaneTwelveMultiplierObstruction`〕。对交换环 R、有限集 D 与 m,t,c : R，若 m*c=c+t 且 mD=D+t，则 D-c 在乘 m 下不变。
+
+**候签定理 9.13(素模非零乘子轨道整除)**〔open;落 `D5/S3/ArithUnits/CyclicPlaneTwelveMultiplierObstruction`〕。若 p 为素数、u : (ZMod p)^x 且有限集 S 在乘 u 下不变，则 orderOf(u) 整除 (S.erase 0).card。
+
+**候签定理 9.14(模 157 中 2 的乘法阶)**〔open;落 `D5/S3/ArithUnits/CyclicPlaneTwelveMultiplierObstruction`〕。`orderOf (2 : ZMod 157) = 52`。
+
+**候签定理 9.15(模 157 倍增不变集的基数剩余)**〔open;落 `D5/S3/ArithUnits/CyclicPlaneTwelveMultiplierObstruction`〕。若 `S.image (fun x => 2*x)=S`，则 `S.card % 52` 属于 `{0,1}`。
+
+**候签定理 9.16(阶 12 循环射影平面的乘子 2 障碍)**〔open;落 `D5/S3/ArithUnits/CyclicPlaneTwelveMultiplierObstruction`〕。不存在满足 `D.card=13` 且对某 `g : ZMod 157` 有 `D.image (fun x => 2*x)=D.image (fun x => x+g)` 的 `D : Finset (ZMod 157)`。
+
+**候签定理 9.17(十三元非空洞见证)**〔open;落 `D5/S3/ArithUnits/CyclicPlaneTwelveMultiplierObstruction`〕。显式集合 `{0,1,...,12} : Finset (ZMod 157)` 的基数为 13，且其倍增像不等于其零平移像。
+
+**候签定理 9.18(模 7 锐性见证)**〔open;落 `D5/S3/ArithUnits/CyclicPlaneTwelveMultiplierObstruction`〕。`orderOf (2 : ZMod 7)=3`，且 `{1,2,4}` 的基数为 3 并在倍增下不变。
+
+**评注 27.803(可证伪预测与逃逸见证,写在跑之前)**〔第 5⁗ 条;开放问题线第四批〕。逃逸链皆在活证明路径上:仿射重标(9.12)→ 非零不变子集上 `zpowers u` 的自由作用与轨道商积等价(9.13)→ 阶 52 整除 → 剩余 {0, 1} 二分(9.15)→ 13 之矛盾(9.16);9.14 为 kernel 判定的有界素因子阶计算(2^52 = 1、2^26 ≠ 1、2^4 ≠ 1 mod 157),9.17/9.18 为 kernel 判定的显式有限集见证(内容由计算产出)。判形 content,准入依据 escape-witness。只依赖钉版 Mathlib,不引入冻结 D5 依赖。若钉版 API 下 `MulAction.stabilizer`/轨道商的积等价不能闭合 9.13,本候签按 open 记,不得以 `sorry` 或公理代替;禁 native_decide。结算:七条由一个实施席同 PR `deposit`(绑 9.16)+ `cover`(其余六条)落地,三席评审后合入。

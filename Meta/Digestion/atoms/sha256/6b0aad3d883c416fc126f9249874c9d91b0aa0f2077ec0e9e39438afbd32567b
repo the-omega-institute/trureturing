@@ -1,0 +1,12 @@
+## B10.4 边界横截性不能省略
+
+即使 $|\lambda_+|>|\lambda_-|$，若 $a_+$ 恰为零或指数级微小，dominant channel 也可能从 matrix coefficient 中消失。因此仅证明 cocycle 有 Lyapunov gap 不足以排除零点。
+
+必须分开证明：
+
+1. bulk channel gap；
+2. boundary vectors 对 dominant line 的非消失耦合；
+3. coefficient ratio 的次指数控制。
+
+将“canonical boundary”写入结构字段而不证明这三点，会把承重信息从 theorem body 逃逸到命名中。
+
