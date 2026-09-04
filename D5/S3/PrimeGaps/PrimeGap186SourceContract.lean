@@ -5,7 +5,7 @@
    anchors: []
    digest: Stabilize the public theorem surface of the 2026 conditional PrimeGaps186 formalization without importing its unproved inputs as repository axioms. -/
 
-import Mathlib
+import D5.S3.PrimeGaps.PrimeGapAdmissibilityContractBridge
 
 /-!
 # PrimeGaps186 external source contract
@@ -24,9 +24,11 @@ its Lean/mathlib pin and source-bound admission have been reconciled.
 
 namespace D5.S3.PrimeGaps.PrimeGap186SourceContract
 
-/-- Admissibility in the exact form used by the upstream `DHL[40,2]` theorem. -/
-def AdmissibleIntegerTuple (H : Finset Int) : Prop :=
-  ∀ p : Nat, p.Prime → ∃ a : ZMod p, ∀ h ∈ H, (h : ZMod p) ≠ a
+open D5.S3.PrimeGaps.PrimeGapAdmissibilityContractBridge
+
+/-- Admissibility in the exact form used by the upstream `DHL[40,2]` theorem. The generic
+owner is `DirectTupleAdmissible`; this fixed-source name is only a compatibility alias. -/
+abbrev AdmissibleIntegerTuple := DirectTupleAdmissible
 
 /-- The exact theorem-level `DHL[40,2]` proposition exported by the upstream source. -/
 def DHL40Two : Prop :=
