@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/InformationEscapeArenas/EndStateOmitsPreemptingCause
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Ordered preemption is a law of endpoint and cause CUTs, coded ADMITS, and trace anchors. -/
+   digest: Preemption is coded by endpoint and cause CUTs, ADMITS, and trace anchors. -/
 
 import D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit

@@ -56,7 +56,6 @@ theorem compatible_local_laws_can_lack_global_state_realization :
         decide (state.1 ≠ state.2.2) = true
     decide
   · intro hLaw
-    change LocalLawGluingStatement
     constructor
     · refine ⟨?_, ?_, ?_⟩
       · ext bit
