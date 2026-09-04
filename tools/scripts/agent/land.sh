@@ -55,7 +55,7 @@ for pair in "${COVERS[@]}"; do
   echo "COVER_EXIT=$C atom=${A:17:8}"
   [ "$C" -eq 0 ] || { echo HALT_COVER_RED; exit 93; }
 done
-make preflight BASE=$BASE > "$L/flights/$TAG-preflight.log" 2>&1; P=$?; echo "PREFLIGHT_EXIT=$P"
+make preflight BASE="$BASE" > "$L/flights/$TAG-preflight.log" 2>&1; P=$?; echo "PREFLIGHT_EXIT=$P"
 if [ "$P" -ne 0 ]; then
   # 本机负载伪影豁免(#3670):该具名测试的 120s 子进程超时属机器性能型判词,CI 云端为权威
   N=$(grep -E "\[FAIL\]" "$L/flights/$TAG-preflight.log" | grep -v LeanCachePublish | grep -cv "PreflightEngineeringScopeUsesCompleteCandidateDeltaAcrossMultipleCommits" || true)
