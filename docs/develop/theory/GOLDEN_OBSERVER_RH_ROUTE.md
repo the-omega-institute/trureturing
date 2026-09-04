@@ -2522,3 +2522,46 @@ W-13、W-14、W-15 的右端**不含 `Z`**:素数侧表达式与 Poincaré 不�
 一席位轮(codex-cli,独立 worktree,`Separator/` 第十个模块;同 PR deposit(绑 W-19 atom)+ 三条 cover)。预计 ≤ 30 分钟(探针证明可复用)。
 
 后续增订继续严格追加于本节之后。
+---
+
+# 增订三十　零点无穷:显式公式沿余弦调制波包的反证(Z-1 … Z-5 预登记;第一条按第 5⁗ 条选出的靶)
+
+> 产地(第 9′ 条):skill=consensus-rnd:sshx;思考面板三席并发盲评——analytic-route(GPT PRO,nyxid `company-chatgpt-pro`,client-ref `panel-hinf-analytic-a1`)/ machinery-inventory(codex-cli,`panel-hinf-machinery`)/ route-adversary(codex-cli,`panel-hinf-adversary`),只读 `origin/dev`=`baad9bda0b`;元裁判为 orchestrator(claude 主循环):取 GPT PRO 的余弦调制固定支撑波包路线为主(固定支撑正好回应对手席「收缩支撑下阿基米德振荡积分不受逐点 Stirling 控制」的反对),machinery 席的「log 2 素数尖峰 + Gamma 项 x-空间局部化」为备选,对手席的 Hadamard-lite(R2)因三条重引理搁置。两个探针席(codex-cli,`probe-z13-packet`、`probe-z4-archimedean`)在暖树整证:`probe-z13-packet`(`make lean` exit 0、`lake env lean` exit 0,304 行,13 条声明全为标准三公理)整证 Z-1、Z-2、Z-3 全部子项,自报判形 content 者 9 条(含 `H_ge_half_near_zero`、`paperFT_cosineModulation`、`paperFT_cosineModulation_tendsto_zero`、`modulated_prime_tsum_uniformly_bounded`、`finite_zero_side_tendsto_zero`),bind-only 者 4 条(`H_real_nonneg`、`H_integrable`、两条极点特化);`probe-z4-archimedean`(`lake env lean` exit 0,428 行,全部标准三公理)以抽象 H 整证 Z-4:可积性(由 |H| ≤ K/(1+x²))、量化下界 `archimedean_lower_bound`(δ ≤ T 时 δ/2·(μ(T−δ)+1) − ∫H ≤ ∫packet·μ)、实/复两形发散与 `gamma_term` 改写;两探针消费的冻结名:`standardBump.normed`、`fourierLaplace_convolutionSquare_real(_nonnegative)`、`paperFT_eq_fourierLaplace`、`fourierLaplace_entire`、`fourierLaplace_decay_closedStrip`、`Zeta23.WeilEF.abs_gammaOf_im_le`、`primeSummand_hasFiniteSupport`、`mu_stirling`、`mu_monotoneOn`、`mu_zero_le`、`neg_one_lt_mu_zero`、`mu_smooth`、`Zeta23.EF.gamma_term` 及 Mathlib 平移不变积分引理。orchestrator 亲验的仓内事实:`Zeta23.EF.EF_lit`(`D5/S3/Weil/ZetaCore/ExplicitFormula.lean:90`)对任意基数的 `ZeroConfig.carrier` 成立且由 `EF_lit_zetaZeroConfig`(`ZetaExplicit/Main.lean:279`)无条件实例化;`literatureRHS`(`:79-83`)= 两极点项 − 素数 tsum + (1/2π)∫paperFT·gammaBracket,`gamma_term`(`:273`)把末项写成 ∫paperFT·μ;`fourierLaplace_convolutionSquare_real`(`TestFunctions/ConvolutionSquarePositivity.lean:29`)、`paperFT_eq_fourierLaplace`(`ZetaBridge/ClassicExplicitFormula.lean:55`)、`norm_paperFT_le`(`ZetaCore/PaperFT.lean:89`)、`mu_monotoneOn`/`mu_zero_le`/`neg_one_lt_mu_zero`(`ZetaGamma/GammaMu.lean:149-171`)、`mu_stirling`(`ZetaGamma/GammaStirlingVert.lean:625`:|τ| ≥ 1 时 |μ(τ) − (1/2π)log(|τ|/2π)| ≤ C/τ²)均存在。检索留痕:`rg` 钉版 Mathlib 无零点无穷定理(`LSeries/ZetaZeros.lean` 只有零点集闭、离散、紧集内有限),`Analysis/Complex/Hadamard.lean` 为三线定理而非因子分解;仓内 `D5/S3/Weil/ZetaRvm/**` 的 RvM 主项与计数为他驱动者活线(卷 L2295),本路线不依赖。判决日:2026-09-04。lane issue:#4589。
+
+## 〇　为什么是这一节
+
+本路线所有 Z-free 判据(增订二十九)挂在 `hInf : {ρ | IsNontrivialZero ρ}.Infinite` 上;M1-a 桥说它等价于 `Nonempty ZeroData`。本仓已无条件冻结了文献形显式公式 `EF_lit zetaZeroConfig`,而它对**任意基数**的零点载体成立。于是零点无穷可以由显式公式本身反证:若零点有限,则沿一族测试函数零点侧趋于零而右端发散。选取偶的归一化 `ψ`,`q = ψ⋆ψ`,`H = paperFT q` 在实轴上等于 |ψ̂|² ≥ 0、H(0)=1、连续故在 [−δ,δ] 上 ≥ 1/2;调制 `k_T(x) = cos(Tx)·q(x)` 使 `paperFT k_T(z) = (H(z+T)+H(z−T))/2`,支撑不随 T 变。则:①素数项一致有界(固定支撑,只有 n ≤ e^L 参与,|cos| ≤ 1;**不需要** Chebyshev 或素数定理);②两极点项与有限零点侧趋于零(闭带衰减);③阿基米德项 ∫F_T·μ ≥ (δ/2)(μ(T−δ)+1) − M → +∞(F_T ≥ 0,在 [T−δ,T+δ] 上 ≥ 1/4,μ 在 [0,∞) 单调且 μ+1 > 0,`mu_stirling` 给 (1/2π)log T 增长)。矛盾。**逃逸内容**:③的量化下界是本仓从未有过的新命题,证明用到的非冻结输入是「非负平移波包限制在 [T−δ,T+δ] 上的质量下界与 μ 的 Stirling 增长的合成」;①的一致界与②的有限和衰减是新的中间命题。**诚实边界**:①本节证的是「非平凡零点集无穷」,不是 Hardy 的「临界线上无穷多零点」;②不构成 RH 证明;③`Nonempty ZeroData` 只作 bind-only 伴随结果与 Z-5 同模块落地。
+
+## 一　Z-1 预登记:正波包种子(`ZeroInfinitude/CosinePacket`,新桶 `D5/S3/Weil/ZeroInfinitude/`,`ZetaBridge/` 已满 24)
+
+**义务**:公开构造 `packetSeed : WeilTestFunction` 与 `packetSquare := convolutionSquare packetSeed`,并公开定理 `packetTransform_ge_half_near_zero : ∃ δ : ℝ, 0 < δ ∧ ∀ t : ℝ, |t| ≤ δ → 1/2 ≤ (Zeta23.paperFT (packetSquare : ℝ → ℂ) t).re`,连同 `packetTransform_real_nonneg`、`packetTransform_zero : Zeta23.paperFT packetSquare 0 = 1`、`packetTransform_integrable`。
+**拟议逃逸见证(写在探针之前)**:`∃ δ > 0, ∀ |t| ≤ δ, 1/2 ≤ H t`——由 H(0)=1、H 连续(整函数限制)与 |ψ̂|² 非负合成;非冻结输入是归一化 bump 的积分计算与连续性论证。
+**边界**:ψ 的具体形状不承重,只用其归一化与偶性。
+
+## 二　Z-2:余弦调制(同模块伴随声明,不列义务)
+
+`cosineModulation (q : WeilTestFunction) (T : ℝ) : WeilTestFunction`(值 cos(Tx)·q(x))与 `paperFT_cosineModulation : paperFT (cosineModulation q T) z = (paperFT q (z+T) + paperFT q (z−T))/2`。判形预期 bind-only(积分线性 + 余弦指数恒等式),作为 Z-1/Z-3 内容模块的具名伴随结果落地,不单独预登记。
+
+## 三　Z-3 预登记:有限侧控制(同模块第二组公开定理)
+
+**义务**:公开定理 `primeTerm_cosineModulation_bounded : ∃ B : ℝ, ∀ T : ℝ, ‖∑' n : ℕ, ((ArithmeticFunction.vonMangoldt n / Real.sqrt n : ℝ) : ℂ) * (cosineModulation packetSquare T (Real.log n) + cosineModulation packetSquare T (-Real.log n))‖ ≤ B`;`paperFT_cosineModulation_tendsto_zero (z : ℂ) (hz : |z.im| ≤ 1) : Tendsto (fun T => Zeta23.paperFT (cosineModulation packetSquare T) z) atTop (nhds 0)`;`finiteCarrier_zeroSide_tendsto_zero (Z : Zeta23.EF.ZeroConfig) (hZ : Z.carrier.Finite) : Tendsto (fun T => ∑' ρ : Z.carrier, (Z.mult ρ : ℂ) * Zeta23.paperFT (cosineModulation packetSquare T) (Zeta23.gammaOf ρ)) atTop (nhds 0)`。
+**拟议逃逸见证**:T-无关的素数界(由固定支撑 + 有限和)与「闭带 O(1/(1+Re²)) 衰减经平移 z±T 传递到固定点的极限」——后者是非冻结的分析步骤。
+**边界**:只对有限载体断言零点侧趋零;对无限载体不作断言。
+
+## 四　Z-4 预登记:阿基米德项发散(`ZeroInfinitude/ArchimedeanDivergence`,抽象 H 形,不绑 Z-1,可与 Z-1 并行)
+
+**义务**:对 `H : ℝ → ℝ` 与 `packet H T r := (H (r + T) + H (r - T)) / 2`,在假设 `Integrable H`、`∀ r, 0 ≤ H r`、`∃ δ > 0, ∀ t, |t| ≤ δ → 1/2 ≤ H t`、`∃ K ≥ 0, ∀ x, |H x| ≤ K / (1 + x ^ 2)` 下,公开定理 `archimedean_lower_bound`(δ ≤ T 时 `δ / 2 * (Zeta23.mu (T - δ) + 1) - ∫ r, H r ≤ ∫ r, packet H T r * Zeta23.mu r`)、`archimedean_divergence_of_decay : Tendsto (fun T => ∫ r, packet H T r * Zeta23.mu r) atTop atTop`,以及复形 `archimedean_divergence_complex_of_decay : Tendsto (fun T => (∫ r, (packet H T r : ℂ) * (Zeta23.mu r : ℂ)).re) atTop atTop`;伴随:`mu_add_one_pos`、`mu_tendsto_atTop`、`packet_weighted_integrable_of_decay`。
+**逃逸见证(探针已证,写在实施之前)**:`archimedean_lower_bound` 这条量化不等式——非冻结输入为「非负平移波包在 [T−δ,T+δ] 上 ≥ 1/4 的质量下界、μ+1 > 0 丢弃余集、μ 在 Ici 0 单调」的合成;`mu_tendsto_atTop` 由 `mu_stirling` 得。
+**边界**:抽象 H;与具体波包的对接在 Z-5。可积性用 |H| ≤ K/(1+x²)(由冻结闭带衰减供给)。
+
+## 五　Z-5 预登记:反证收口(`ZeroInfinitude/ExplicitFormulaObstruction`,绑 Z-1/2/3 与 Z-4)
+
+**义务**:公开定理 `carrier_infinite_of_EF_lit (Z : Zeta23.EF.ZeroConfig) (hEF : Zeta23.EF.EF_lit Z) : Z.carrier.Infinite` 与 `isNontrivialZero_infinite : {ρ : ℂ | IsNontrivialZero ρ}.Infinite`(经 `EF_lit_zetaZeroConfig` 与 `zetaZeroConfig.carrier` 的字面);伴随(bind-only,同模块):`nonempty_zeroData : Nonempty ZeroData`(M1-a 桥)。
+**拟议逃逸见证(写在探针之前;Z-5 尚无探针)**:对接引理 `re_paperFT_cosineModulation_eq_packet : (Zeta23.paperFT (cosineModulation packet T) r).re = packet (fun t => (H t).re) T r`(由 `paperFT_cosineModulation` 与 H 在实轴取实值)与闭带衰减给出的 `|Re H| ≤ K/(1+t²)`,再把 `literatureRHS (cosineModulation packet T)` 的实部拆成「两极点 → 0、素数项有界、阿基米德项 → +∞」,与「有限载体时零点侧 → 0」矛盾;矛盾组装本身是新命题。预测:若正确,Z-5 用 Z-1/2/3/4 的公开定理与 `Zeta23.EF.gamma_term` 一次组装闭合,标准三公理;若 `literatureRHS` 的 Gamma 项与 `gamma_term` 的常数约定不合,按冻结字面调整证明而非改陈述。
+**边界**:同 §〇。
+
+## 六　预算与结算
+
+三席位轮(codex-cli,各自独立 worktree):Z-1+Z-2+Z-3 一模块与 Z-4 一模块**并行**(互不绑定),Z-5 在两者合入后串行;每模块同 PR deposit + cover,三席评审,报告须按第 5⁗ 条列 `proof_shape` / 直接冻结依赖 / `escape_witness` / `admission_basis`。预计 Z-1/2/3 与 Z-4 各 ≤ 2 小时(探针证明可复用),Z-5 ≤ 3 小时。
+
+后续增订继续严格追加于本节之后。
