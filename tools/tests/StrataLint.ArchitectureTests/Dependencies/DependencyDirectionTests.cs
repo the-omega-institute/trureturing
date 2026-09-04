@@ -146,13 +146,7 @@ public sealed class DependencyDirectionTests
         [CompileTimeInputUniverse("tools/tests/StrataLint.ArchitectureTests/", ".cs")]
         [CompileTimeInputUniverse("tools/tests/StrataLint.ArchitectureTests/", ".csproj")]
         internal static string[] ApplicationReferences(System.Reflection.Assembly assembly) =>
-            assembly.GetReferencedAssemblies()
-                .Select(static reference => reference.Name
-                    ?? throw new InvalidOperationException("Assembly reference has no name."))
-                .Where(static name =>
-                    name == "StrataLint"
-                    || name.StartsWith("StrataLint.", StringComparison.Ordinal))
-                .Order(StringComparer.Ordinal)
-                .ToArray();
+            global::StrataLint.ArchitectureTests.AssemblyReferencePolicy.ApplicationReferenceNames(
+                assembly.GetReferencedAssemblies());
     }
 }
