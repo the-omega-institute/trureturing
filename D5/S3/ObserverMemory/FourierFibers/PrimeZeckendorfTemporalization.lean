@@ -78,12 +78,17 @@ theorem finite_first_excited_phase_recurrence
   · exact (lt_div_iff₀ hscale).2 hξ
   · intro prime hprime
     have hargument :
-        (ξ / Real.goldenRatio ^ 2) *
-            (Real.goldenRatio ^ 2 * Real.log (prime : ℕ)) =
+        (ξ / Real.goldenRatio ^ 2) * goldenSpectrum (prime, 0) =
           ξ * Real.log (prime : ℕ) := by
+      rw [first_excited_prime_frequency]
       field_simp [ne_of_gt hscale]
     unfold firstExcitedPhaseMultiplier
-    rw [first_excited_prime_frequency, hargument]
+    change
+      ‖Complex.exp
+          (Complex.I *
+            (((ξ / Real.goldenRatio ^ 2) *
+              goldenSpectrum (prime, 0) : ℝ) : ℂ)) - 1‖ < ε
+    rw [hargument]
     exact hclose prime hprime
 
 /-- A positive heat observer and a wrapped phase observer therefore have
