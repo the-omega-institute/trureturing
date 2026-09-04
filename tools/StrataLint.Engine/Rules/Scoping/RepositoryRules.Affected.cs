@@ -114,13 +114,15 @@ internal static partial class RepositoryRules
         || FrozenLedgerDeltaPredicate.IsDeltaDefinitionInput(path)
         || path.StartsWith("tools/lean-inspector/", StringComparison.Ordinal);
 
+    private static bool IsNonSourceLeanReportInput(string path) =>
+        IsLeanReportInput(path) && !IsManagedLeanPath(path);
+
     internal static bool IsLeanClosureFactAffected(
         RuleEvaluationContext context,
         RepoPath source) =>
         LeanImportClosure.RepositoryPaths(context.Lean.Report, source)
             .Any(path => context.IsBaseFactAffected(path.Value))
-        || context.Changes.Paths.Any(path =>
-            IsLeanReportInput(path.Value) && !IsManagedLeanPath(path.Value));
+        || Changed(context, IsNonSourceLeanReportInput);
 
     private static bool LiteratureReferenceChanged(RuleEvaluationContext context)
     {

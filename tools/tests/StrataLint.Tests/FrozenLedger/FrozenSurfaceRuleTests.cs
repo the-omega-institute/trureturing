@@ -325,6 +325,20 @@ public sealed class FrozenSurfaceRuleTests
         Assert.Empty(evaluation.Diagnostics);
     }
 
+    [Fact]
+    public void Sl008DoesNotWakeUnrelatedStateForManagedLeanChange()
+    {
+        var fixture = new RuleFixture();
+        AddState(
+            fixture,
+            RuleFixture.ValuesBindingPath,
+            StatementId.Create("sha256:" + new string('f', 64)));
+
+        var evaluation = Evaluate(fixture, (FrozenPath, RawChangeKind.Modified));
+
+        Assert.Empty(evaluation.Diagnostics);
+    }
+
     private static RuleFixture FrozenFixture(out string eventPath)
     {
         var fixture = new RuleFixture();

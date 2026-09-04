@@ -132,7 +132,7 @@ internal static partial class RepositoryRules
 
     private static bool AllFrozenStatesAffected(RuleEvaluationContext context) =>
         context.RuleImplementationChanged
-        || LeanReportAffected(context);
+        || Changed(context, IsNonSourceLeanReportInput);
 
     private static ImmutableArray<RepositoryFile> AllCurrentFrozenStateFiles(
         RuleEvaluationContext context) =>
