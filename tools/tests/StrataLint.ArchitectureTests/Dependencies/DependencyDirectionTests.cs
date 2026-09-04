@@ -97,6 +97,39 @@ public sealed class DependencyDirectionTests
                 typeof(StrataLint.Scribe.Tests.DocumentAstTests).Assembly));
     }
 
+    [Fact]
+    public void ArchitectureTestsReferenceOnlyDeclaredDependencies()
+    {
+        Assert.Equal(
+            [
+                "StrataLint",
+                "StrataLint.Engine",
+                "StrataLint.EngineeringScope",
+                "StrataLint.EngineeringScope.Tests",
+                "StrataLint.Scribe",
+                "StrataLint.Scribe.Tests",
+                "StrataLint.Tests",
+            ],
+            AssemblyReferencePolicy.ApplicationReferences(
+                typeof(DependencyDirectionTests).Assembly));
+        Assert.Equal(
+            [
+                "../../StrataLint.Cli/StrataLint.Cli.csproj",
+                "../../StrataLint.Engine/StrataLint.Engine.csproj",
+                "../../StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj",
+                "../../StrataLint.Scribe/StrataLint.Scribe.csproj",
+                "../StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj",
+                "../StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
+                "../StrataLint.Tests/StrataLint.Tests.csproj",
+            ],
+            ProjectReferences(XDocument.Load(Path.Combine(
+                RepositoryLayout.FindRoot(),
+                "tools",
+                "tests",
+                "StrataLint.ArchitectureTests",
+                "StrataLint.ArchitectureTests.csproj"))));
+    }
+
     private static string[] ProjectReferences(XDocument project) => project
         .Descendants()
         .Where(static element => element.Name.LocalName == "ProjectReference")
