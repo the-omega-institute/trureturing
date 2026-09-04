@@ -24,6 +24,7 @@ def parse_arguments():
     parser.add_argument("--delta-file", required=True)
     parser.add_argument("--filemap", required=True)
     parser.add_argument("--filemap-fetched", choices=("true", "false"), required=True)
+    parser.add_argument("--github-output")
     return parser.parse_args()
 
 
@@ -39,13 +40,21 @@ def detail_suffix(detail):
     return "" if detail is None else f" detail={json.dumps(detail)}"
 
 
-def policy_unavailable(reason, is_repair, detail=None):
+def publish_plane(path, plane):
+    if path is None:
+        return
+    with Path(path).open("a", encoding="utf-8") as stream:
+        stream.write(f"plane={plane}\n")
+
+
+def policy_unavailable(reason, is_repair, github_output, detail=None):
     suffix = detail_suffix(detail)
     if is_repair:
         print(
             "ADMISSION_PLANE_PARTITION status=policy-unavailable "
             f"reason={reason} self-repair=bootstrap{suffix}"
         )
+        publish_plane(github_output, "bootstrap")
         raise SystemExit(0)
     print(
         "ADMISSION_PLANE_PARTITION status=policy-unavailable "
@@ -87,17 +96,19 @@ def compile_glob(pattern):
     return re.compile("".join(expression))
 
 
-def load_entries(path, fetched, is_repair):
+def load_entries(path, fetched, is_repair, github_output):
     if not fetched:
-        policy_unavailable("base-filemap-unavailable", is_repair)
+        policy_unavailable("base-filemap-unavailable", is_repair, github_output)
     if tomllib is None:
-        policy_unavailable("tomllib-unavailable", is_repair)
+        policy_unavailable("tomllib-unavailable", is_repair, github_output)
 
     try:
         with Path(path).open("rb") as stream:
             document = tomllib.load(stream)
     except (OSError, UnicodeError, tomllib.TOMLDecodeError) as exception:
-        policy_unavailable("base-filemap-parse-failed", is_repair, str(exception))
+        policy_unavailable(
+            "base-filemap-parse-failed", is_repair, github_output, str(exception)
+        )
 
     entries = document.get("files", [])
     if not isinstance(entries, list):
@@ -140,6 +151,7 @@ def main():
 
     if not changed_paths:
         print("ADMISSION_PLANE_PARTITION status=empty judge=0 content=0")
+        publish_plane(arguments.github_output, "empty")
         return 0
 
     is_repair = set(changed_paths).issubset(REPAIR_PATHS)
@@ -147,6 +159,7 @@ def main():
         arguments.filemap,
         arguments.filemap_fetched == "true",
         is_repair,
+        arguments.github_output,
     )
 
     by_plane = {"judge": [], "content": []}
@@ -187,12 +200,14 @@ def main():
             "ADMISSION_PLANE_PARTITION status=judge-only "
             f"judge={len(judge_paths)} content=0{repair_suffix}"
         )
+        publish_plane(arguments.github_output, "judge-only")
         return 0
     if content_paths:
         print(
             "ADMISSION_PLANE_PARTITION status=content-only "
             f"judge=0 content={len(content_paths)}"
         )
+        publish_plane(arguments.github_output, "content-only")
         return 0
     classification_failed("no-classified-paths")
 
