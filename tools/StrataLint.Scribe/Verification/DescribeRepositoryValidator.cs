@@ -108,16 +108,20 @@ internal static class DescribeRepositoryValidator
         var inspectedProblems = problemInspection ?? ProblemCandidateCatalog.Inspect(repositoryRoot);
         findings.AddRange(inspectedProblems.Findings.Select(static finding =>
             new DescribeRedFinding(finding.Code, finding.Path, finding.Message)));
+        var frozenState = inspectedProblems.Candidates.IsEmpty
+            ? null
+            : LoadFrozenStateCatalog(repositoryRoot);
         foreach (var candidate in inspectedProblems.Candidates)
         {
             foreach (var reference in candidate.MotivationGids)
             {
-                ValidateGid(
+                ValidateProblemMotivationGid(
                     repositoryRoot,
                     candidate.RelativePath,
                     reference,
                     generatedPaths,
                     leanReport,
+                    frozenState!,
                     findings,
                     "dangling-problem-gid");
             }
@@ -130,6 +134,79 @@ internal static class DescribeRepositoryValidator
             .ThenBy(static finding => finding.Code, StringComparer.Ordinal)
             .ThenBy(static finding => finding.Message, StringComparer.Ordinal)
             .ToImmutableArray();
+    }
+
+    private static FrozenStateCatalog LoadFrozenStateCatalog(string repositoryRoot)
+    {
+        var stateRoot = new DirectoryInfo(Path.Combine(
+            repositoryRoot,
+            "Golden",
+            "Frozen",
+            "state"));
+        var entries = stateRoot.Exists
+            ? stateRoot.EnumerateFiles("*.json", SearchOption.AllDirectories)
+                .OrderBy(static file => file.FullName, StringComparer.Ordinal)
+                .Select(file =>
+                {
+                    using var stream = file.OpenRead();
+                    if (stream.Length > int.MaxValue)
+                    {
+                        throw new FormatException($"Frozen state file is too large: {file.FullName}");
+                    }
+
+                    var bytes = new byte[(int)stream.Length];
+                    stream.ReadExactly(bytes);
+                    var relativePath = Path.GetRelativePath(repositoryRoot, file.FullName)
+                        .Replace(Path.DirectorySeparatorChar, '/');
+                    return new RawRepositoryEntry(relativePath, ImmutableArray.CreateRange(bytes));
+                })
+            : [];
+        var snapshot = SnapshotDecoder.Decode(RawRepositorySnapshot.Create(entries)) switch
+        {
+            SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,
+            SnapshotDecodeOutcome.InfrastructureFailure failure =>
+                throw new FormatException(failure.Message),
+        };
+        return FrozenStateCatalog.Load(snapshot);
+    }
+
+    private static void ValidateProblemMotivationGid(
+        string repositoryRoot,
+        string source,
+        GidRef reference,
+        IReadOnlySet<string> generatedPaths,
+        LeanAxiomReport? leanReport,
+        FrozenStateCatalog frozenState,
+        ImmutableArray<DescribeRedFinding>.Builder findings,
+        string code)
+    {
+        if (!reference.IsFormalDeclaration && !reference.IsFormalModule)
+        {
+            findings.Add(new DescribeRedFinding(
+                code,
+                source,
+                $"motivation GID must select the Formal plane: {reference.Value}"));
+            return;
+        }
+
+        if (!frozenState.Records.ContainsKey(reference.Path))
+        {
+            findings.Add(new DescribeRedFinding(
+                code,
+                source,
+                $"motivation GID host selector {reference.Path.Value} is not a frozen state member: "
+                + reference.Value));
+            return;
+        }
+
+        ValidateGid(
+            repositoryRoot,
+            source,
+            reference,
+            generatedPaths,
+            leanReport,
+            findings,
+            code);
     }
 
     /// <summary>
