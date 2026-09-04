@@ -42,9 +42,6 @@ public sealed class WorkflowTestProhibitionTests
             ["tools/tests/StrataLint.Tests/Commands/LeanReport/LeanReportInputScriptTests.cs"] =
                 "生产脚本 lean-report-input.sh 自己解析 ci.yml(缺 job boundaries 即 SystemExit),"
                 + "夹具必须喂它;被测的是该脚本的 producer-paths 派生。",
-            ["tools/tests/StrataLint.Tests/FrozenLedger/FrozenLedgerDeltaPredicateTests.cs"] =
-                "FrozenLedgerDeltaPredicate 把 ci.yml 列为 direct ledger input;测试复述生产数据,"
-                + "不读该文件内容。",
         };
 
     private static readonly Regex WorkflowReference = new(
