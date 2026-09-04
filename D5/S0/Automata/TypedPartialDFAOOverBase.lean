@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S0/Automata/TypedPartialDFAOOverBase
    mirror-E: none(waiver:proof-carrying-partial-automata)
-   anchors: [mathlib/module/Mathlib.Computability.DFA]
+   anchors: [mathlib/module/Mathlib.Computability.MyhillNerode]
    digest: Typed partial DFAOs preserve an underlying numeration automaton and separate global correctness from finite-prefix fitting. -/
 
 import D5.S0.Automata.DFAOStateLowerBound
