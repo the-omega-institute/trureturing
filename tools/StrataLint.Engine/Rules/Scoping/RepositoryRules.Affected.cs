@@ -34,7 +34,8 @@ internal static partial class RepositoryRules
             || FrozenLedgerChangeClassifier.IsAcceptedEventPath(path)
             || FrozenStatePath.IsUnderRoot(path)
             || path.StartsWith("D5/", StringComparison.Ordinal)
-                && path.EndsWith(".lean", StringComparison.Ordinal));
+                && path.EndsWith(".lean", StringComparison.Ordinal))
+        || Changed(context, IsLeanReportProducerInput);
 
     private static bool DomainsAffected(RuleEvaluationContext context) =>
         Changed(context, static path =>

@@ -61,6 +61,13 @@ public sealed class FrozenSurfaceRuleTests
         "lake-manifest.json",
     };
 
+    public static TheoryData<string> CatalogProducerWakeupInputs => new()
+    {
+        "lean-toolchain",
+        ".github/workflows/ci.yml",
+        "tools/StrataLint.Cli/Program.cs",
+    };
+
     [Theory]
     [InlineData(RawChangeKind.Modified)]
     [InlineData(RawChangeKind.Deleted)]
@@ -456,6 +463,43 @@ public sealed class FrozenSurfaceRuleTests
             diagnostics.Select(static diagnostic => diagnostic.Message.Split(' ')[1]));
     }
 
+    [Theory]
+    [MemberData(nameof(CatalogProducerWakeupInputs))]
+    public void Sl008CatalogExecutionBlocksStalePinWhenProducerInputChanges(string changedPath)
+    {
+        var fixture = new RuleFixture();
+        AddState(
+            fixture,
+            FrozenPath,
+            StatementId.Create("sha256:" + new string('f', 64)),
+            includeInBaseline: true);
+
+        var completed = ExecuteCatalogWithOnlyModifiedPath(fixture, changedPath);
+
+        var diagnostic = Assert.Single(completed.Diagnostics.Where(static diagnostic =>
+            diagnostic.RuleId == RuleId.CreateKnown(8)));
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
+        Assert.Contains("pin mismatch", diagnostic.Message, StringComparison.Ordinal);
+        Assert.Contains(RuleId.CreateKnown(8), completed.ExecutedRules);
+    }
+
+    [Fact]
+    public void Sl008CatalogExecutionDoesNotReportStalePinForUnrelatedDocsChange()
+    {
+        var fixture = new RuleFixture();
+        AddState(
+            fixture,
+            FrozenPath,
+            StatementId.Create("sha256:" + new string('f', 64)),
+            includeInBaseline: true);
+
+        var completed = ExecuteCatalogWithOnlyModifiedPath(fixture, "docs/x.md");
+
+        Assert.DoesNotContain(completed.Diagnostics, static diagnostic =>
+            diagnostic.RuleId == RuleId.CreateKnown(8));
+        Assert.Contains(RuleId.CreateKnown(8), completed.SkippedRules);
+    }
+
     [Fact]
     public void Sl008DoesNotRecheckCurrentStatesForAnUnrelatedPath()
     {
@@ -597,5 +641,17 @@ public sealed class FrozenSurfaceRuleTests
         RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(8),
             fixture.Build(RawChangeSet.CreateWithKinds(changes)));
+
+    private static CompletedRuleSet ExecuteCatalogWithOnlyModifiedPath(
+        RuleFixture fixture,
+        string changedPath)
+    {
+        fixture.Baseline[changedPath] = "baseline\n";
+        fixture.ForkPoint[changedPath] = "baseline\n";
+        fixture.Files[changedPath] = "candidate\n";
+        return Assert.IsType<RuleExecutionOutcome.Completed>(
+            RuleCatalog.Default.Execute(fixture.Build(
+                RawChangeSet.CreateWithKinds([(changedPath, RawChangeKind.Modified)])))).Capability;
+    }
 
 }
