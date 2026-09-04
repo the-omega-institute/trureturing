@@ -11,8 +11,9 @@ namespace StrataLint.Engine;
 internal static partial class ScriptTestInputDeriver
 {
     // 判官须指名这几个测试脚手架类型,但 Engine 在依赖偏序的下方、引用不到测试程序集,
-    // 故只能以名字指代。**按类型名而非全限定名匹配**:脚手架在程序集之间迁移
-    // (`StrataLint.Tests` → `StrataLint.TestSupport`)时,判据不应随之失效。
+    // 故只能以名字指代。**按 metadata type name 而非全限定名匹配**:脚手架在程序集之间迁移
+    // (`StrataLint.Tests` → `StrataLint.TestSupport`)时,判据不应随之失效。仓库根 provider
+    // 还须由方法符号证明是 static、parameterless、string-returning FindRoot。
     //
     // 案由(第 20″ 条):PR #5324 把 TestRepositoryLayout / RepositoryRelativePath
     // 迁入 StrataLint.TestSupport,此处 6 处硬编码的 "StrataLint.Tests.*" 未同步,
@@ -88,7 +89,7 @@ internal static partial class ScriptTestInputDeriver
             && BoundMethod(invocation, model) is { } method)
         {
             var owner = method.ContainingType.ToDisplayString();
-            if (method.ContainingType.Name == RepositoryLayoutTypeName && method.Name == "FindRoot")
+            if (IsRepositoryRootProvider(method))
                 return PathValue.RepositoryRoot;
             if (owner == "System.IO.Path" && method.Name == "Combine")
                 return ResolveCombine(invocation, model, models, visited);
@@ -264,6 +265,13 @@ internal static partial class ScriptTestInputDeriver
     private static IMethodSymbol? BoundMethod(InvocationExpressionSyntax invocation, SemanticModel model) =>
         model.GetSymbolInfo(invocation).Symbol as IMethodSymbol
         ?? (model.GetOperation(invocation) as Microsoft.CodeAnalysis.Operations.IInvocationOperation)?.TargetMethod;
+
+    private static bool IsRepositoryRootProvider(IMethodSymbol method) =>
+        method.ContainingType.MetadataName == RepositoryLayoutTypeName
+        && method.Name == "FindRoot"
+        && method.IsStatic
+        && method.Parameters.Length == 0
+        && method.ReturnType.SpecialType == SpecialType.System_String;
 
     private static bool IsPathBearing(ExpressionSyntax expression, SemanticModel model)
     {
