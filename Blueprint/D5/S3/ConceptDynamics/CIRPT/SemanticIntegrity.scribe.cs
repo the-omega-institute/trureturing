@@ -88,15 +88,18 @@ internal sealed class SemanticIntegrityDocument : IScribeDocumentDefinition
         Call("cutKernel", Seq(LambdaLower, Sp, F.Id("x"), Comma, Sp,
             Call("decide", Call("A", F.Id("x"))))), Dot));
 
-    private static Formula AdmitAntitoneFormula() => Disp(Seq(
+    private static Formula AdmitAntitoneBody() => Seq(
         Call("agrees", Call("withAtom", F.Id("b"), Call("admitAtom", F.Id("A"))),
             F.Id("x"), F.Id("y")), Sp, Rightarrow, Sp,
-        Call("agrees", F.Id("b"), F.Id("x"), F.Id("y")), Dot));
+        Call("agrees", F.Id("b"), F.Id("x"), F.Id("y")));
+
+    private static Formula AdmitAntitoneFormula() =>
+        Disp(Seq(AdmitAntitoneBody(), Dot));
 
     private static Formula AdmitDomainFormula() => Disp(Seq(
         Call("offDiagonalPairs", F.Id("X")), Sp, Eq, Sp,
         Call("offDiagonalPairs", F.Id("X")), Sp, Land, RowBreak,
-        AdmitAntitoneFormula()));
+        AdmitAntitoneBody(), Dot));
 
     private static Formula AnchorFormula() => Disp(Seq(
         Call("relation", Call("anchorKernel", F.Id("a"))), Sp, Eq, Sp,
