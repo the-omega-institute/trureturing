@@ -1,0 +1,32 @@
+### 定理 7.2　第一离线高度处的 Mahler 跳跃
+
+若 $T_{\mathrm{off}}$ 存在，则
+
+$$
+\mathcal F_a(T)=0
+\qquad
+(T<T_{\mathrm{off}}),
+\tag{7.8}
+$$
+
+而
+
+$$
+\boxed{
+\mathcal F_a(T_{\mathrm{off}})>0.
+}
+\tag{7.9}
+$$
+
+若该高度只有一个重数为 $m$ 的反射零点对，且外侧根模长为 $r_*>1$，则跳跃量为
+
+$$
+\boxed{
+\Delta\mathcal F_a(T_{\mathrm{off}})
+=m\log r_*.
+}
+\tag{7.10}
+$$
+
+这给出第二种严格相变读法：在线零点增加多项式次数，却不改变 Mahler 自由能；第一对离圆根则使自由能第一次产生正跳跃。
+
