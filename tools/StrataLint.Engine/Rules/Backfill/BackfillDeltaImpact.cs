@@ -7,12 +7,19 @@ internal sealed record BackfillDeltaImpact(
 
 internal static class BackfillDeltaImpactResolver
 {
+    private sealed record CoverageTargetDependency(
+        Gid Gid,
+        RepoPath HostModule,
+        string EntryPath,
+        string? TargetStatementId);
+
     internal static BackfillDeltaImpact Resolve(
         RepositorySnapshot current,
         RepositorySnapshot baseline,
         LeanAxiomReport? report,
         BackfillInventoryDocument document,
-        RawChangeSet repositoryChanges)
+        RawChangeSet repositoryChanges,
+        Action<string>? statementResolutionObserved = null)
     {
         ArgumentNullException.ThrowIfNull(current);
         ArgumentNullException.ThrowIfNull(baseline);
@@ -37,7 +44,9 @@ internal static class BackfillDeltaImpactResolver
                 current,
                 report,
                 document,
-                affectedEntryPaths);
+                repositoryChanges,
+                affectedEntryPaths,
+                statementResolutionObserved);
         }
 
         // Raw frozen and Lean paths have historically widened one dependency change to every
@@ -120,12 +129,43 @@ internal static class BackfillDeltaImpactResolver
         return false;
     }
 
+    internal static bool HasPotentialStatementDependants(
+        BackfillInventoryDocument document,
+        RawChangeSet repositoryChanges)
+    {
+        ArgumentNullException.ThrowIfNull(document);
+        ArgumentNullException.ThrowIfNull(repositoryChanges);
+        var changedModules = ChangedStatementModules(repositoryChanges);
+        if (changedModules.Count == 0)
+        {
+            return false;
+        }
+
+        return BuildCoverageReverseIndex(document).Values.Any(dependencies =>
+            changedModules.Contains(dependencies[0].HostModule));
+    }
+
     private static void AddCurrentResolutionDependants(
         RepositorySnapshot current,
         LeanAxiomReport report,
         BackfillInventoryDocument document,
-        ISet<string> affectedEntryPaths)
+        RawChangeSet repositoryChanges,
+        ISet<string> affectedEntryPaths,
+        Action<string>? statementResolutionObserved)
     {
+        var reverseIndex = BuildCoverageReverseIndex(document);
+        var changedModules = ChangedStatementModules(repositoryChanges);
+        var candidates = reverseIndex
+            .Where(item =>
+                changedModules.Contains(item.Value[0].HostModule)
+                || item.Value.Any(dependency =>
+                    affectedEntryPaths.Contains(dependency.EntryPath)))
+            .ToArray();
+        if (candidates.Length == 0)
+        {
+            return;
+        }
+
         FrozenStatementIndex currentStatements;
         try
         {
@@ -141,26 +181,80 @@ internal static class BackfillDeltaImpactResolver
             return;
         }
 
-        foreach (var entry in document.RequireDigestionEntries())
+        foreach (var (gidText, dependencies) in candidates)
         {
-            foreach (var edge in entry.Coverage)
+            statementResolutionObserved?.Invoke(gidText);
+            var gid = dependencies[0].Gid;
+            var currentResolution = currentStatements.TryResolve(
+                gid,
+                out var statementId,
+                out _)
+                    ? statementId!.Value
+                    : null;
+            foreach (var dependency in dependencies)
             {
-                var currentResolution = Gid.TryParse(edge.Gid, out var gid)
-                    && currentStatements.TryResolve(gid, out var statementId, out _)
-                        ? statementId!.Value
-                        : null;
                 if (string.Equals(
-                        edge.TargetStatementId,
+                        dependency.TargetStatementId,
                         currentResolution,
                         StringComparison.Ordinal))
                 {
                     continue;
                 }
 
-                affectedEntryPaths.Add(EntryPath(entry));
-                break;
+                affectedEntryPaths.Add(dependency.EntryPath);
             }
         }
+    }
+
+    private static Dictionary<string, List<CoverageTargetDependency>> BuildCoverageReverseIndex(
+        BackfillInventoryDocument document)
+    {
+        var result = new Dictionary<string, List<CoverageTargetDependency>>(StringComparer.Ordinal);
+        foreach (var entry in document.RequireDigestionEntries())
+        {
+            var entryPath = EntryPath(entry);
+            foreach (var edge in entry.Coverage)
+            {
+                if (!Gid.TryParse(edge.Gid, out var gid)
+                    || gid.ToTarget() is not Target.Formal formal)
+                {
+                    continue;
+                }
+
+                if (!result.TryGetValue(edge.Gid, out var dependencies))
+                {
+                    dependencies = [];
+                    result.Add(edge.Gid, dependencies);
+                }
+
+                dependencies.Add(new CoverageTargetDependency(
+                    gid,
+                    formal.Path,
+                    entryPath,
+                    edge.TargetStatementId));
+            }
+        }
+
+        return result;
+    }
+
+    private static HashSet<RepoPath> ChangedStatementModules(RawChangeSet repositoryChanges)
+    {
+        var result = new HashSet<RepoPath>();
+        foreach (var path in repositoryChanges.Paths)
+        {
+            if (FrozenStatePath.TryToModulePath(path.Value, out var stateModule))
+            {
+                result.Add(stateModule);
+            }
+            else if (path.Value.StartsWith("D5/", StringComparison.Ordinal)
+                && path.Value.EndsWith(".lean", StringComparison.Ordinal))
+            {
+                result.Add(path);
+            }
+        }
+
+        return result;
     }
 
     private static bool EntryPathIsInDelta(
