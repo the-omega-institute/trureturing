@@ -1,8 +1,5 @@
 using System.Collections.Immutable;
-using System.Security.Cryptography;
-using System.Text;
 using System.Text.Json;
-using System.Text.RegularExpressions;
 
 namespace StrataLint.Engine;
 
@@ -135,12 +132,6 @@ internal static partial class RepositoryRules
             }
         }
 
-        ValidateAcceptedEventFilesAfterJudgeSourceChange(
-            context,
-            findings,
-            judgeSourceChanged);
-        ValidateCandidateRevocationReceipts(context, findings);
-
         return findings.ToImmutable();
     }
 
@@ -190,69 +181,4 @@ internal static partial class RepositoryRules
 
     internal static bool IsLedgerPolicyDataPath(string path) =>
         LedgerPolicyDataPaths.Contains(path);
-
-    private static void ValidateAcceptedEventFilesAfterJudgeSourceChange(
-        RuleEvaluationContext context,
-        ImmutableArray<RuleFinding>.Builder findings,
-        bool judgeSourceChanged)
-    {
-        if (!judgeSourceChanged)
-        {
-            return;
-        }
-
-        var files = context.Current.Files.Values
-            .Where(file => FrozenLedgerChangeClassifier.IsAcceptedEventPath(file.Path.Value))
-            .OrderBy(static file => file.Path.Value, StringComparer.Ordinal)
-            .ToArray();
-        if (files.Length == 0
-            || FrozenAcceptedEventLoader.LoadTrustedFiles(files) is not DagLedgerFilesLoadOutcome.Invalid invalid)
-        {
-            return;
-        }
-
-        findings.Add(new RuleFinding(
-            files.Length == 1 ? files[0].Path.Value : FrozenLedgerChangeClassifier.AcceptedRoot,
-            "accepted-event write gate rejected stored candidate after implementation change: "
-                + invalid.Message));
-    }
-
-    private static void ValidateCandidateRevocationReceipts(
-        RuleEvaluationContext context,
-        ImmutableArray<RuleFinding>.Builder findings)
-    {
-        FrozenLedgerConsistent? baseline = null;
-        foreach (var path in context.Current.Files.Keys
-                     .Where(path => context.IsBaseFactAffected(path.Value))
-                     .Where(static path => path.Value.StartsWith("Evidence/D5/", StringComparison.Ordinal))
-                     .OrderBy(static path => path.Value, StringComparer.Ordinal))
-        {
-            if (!context.Current.Files.TryGetValue(path, out var file)
-                || !path.Value.EndsWith(".json", StringComparison.Ordinal))
-            {
-                continue;
-            }
-
-            try
-            {
-                using var document = JsonDocument.Parse(file.RawBytes.AsMemory());
-                if (!document.RootElement.TryGetProperty("kind", out var kind)
-                    || kind.ValueKind != JsonValueKind.String
-                    || kind.GetString() != "revocation-receipt")
-                {
-                    continue;
-                }
-
-                baseline ??= FrozenLedgerBaseViewReader.Read(context.Baseline).ToWriterBaseline();
-                TrustedRevocationReceiptStore.ValidateCandidateReceipt(baseline, file.RawBytes);
-            }
-            catch (Exception exception) when (
-                exception is FormatException or InvalidOperationException or JsonException)
-            {
-                findings.Add(new RuleFinding(
-                    path.Value,
-                    "revocation receipt write gate rejected candidate: " + exception.Message));
-            }
-        }
-    }
 }

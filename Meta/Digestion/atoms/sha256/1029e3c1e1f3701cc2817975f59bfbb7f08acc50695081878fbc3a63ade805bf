@@ -1,0 +1,33 @@
+## B12.2 exponent multiplication 与 prime gradient
+
+定义 exponent multiplication operator
+
+$$
+(\mathsf Nf)(v)=vf(v).
+\tag{B12.3}
+$$
+
+对 edge $i<j$，定义 weighted gradient
+
+$$
+(d_{\mathcal C}h)_{ij}
+=\sqrt{W_{ij}}(h_j-h_i).
+\tag{B12.4}
+$$
+
+特别地，对 frequency vector
+
+$$
+\omega_i=\log p_i,
+\tag{B12.5}
+$$
+
+有
+
+$$
+\|d_{\mathcal C}\omega\|^2
+=
+\sum_{i<j}W_{ij}(\log p_j-\log p_i)^2.
+\tag{B12.6}
+$$
+
