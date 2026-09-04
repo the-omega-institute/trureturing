@@ -1,0 +1,56 @@
+## B3.3 判别式就是 metric determinant
+
+有
+
+$$
+\boxed{
+\det J_z
+=-\frac{1+4z}{4}
+=-\frac{D(z)}4.
+}
+\tag{B3.6}
+$$
+
+所以谱判别式和关系 metric 的非退化判别式完全相同。
+
+对实 $z$：
+
+### 双曲相
+
+若
+
+$$
+z>-\frac14,
+$$
+
+则 $D(z)>0$、$\det J_z<0$，故 $q_z$ 不定并具有两条实 null rays。两条 transfer channels 可在实数上区分。
+
+### 抛物临界相
+
+若
+
+$$
+z=-\frac14,
+$$
+
+则 $J_z$ 退化，两条 null rays 合并。这是 transfer collision 与 metric degeneration 的同一点。
+
+### 椭圆相
+
+若
+
+$$
+z<-\frac14,
+$$
+
+则 $D(z)<0$。此时 $q_z$ 为负定，实 null directions 消失，而两条本征值成为等模复共轭对。
+
+因此：
+
+$$
+\boxed{
+\text{hard-core edge 不只是根的聚点；它是关系 metric 从双曲型经退化转为椭圆型的签名相变。}
+}
+\tag{B3.7}
+$$
+

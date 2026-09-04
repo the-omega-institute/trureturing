@@ -1,0 +1,21 @@
+## B8.2 平稳占据密度
+
+令状态 $1$ 表示当前位置被占据，则平稳占据概率为
+
+$$
+\boxed{
+\rho
+=\frac1{\varphi+2}.}
+\tag{B8.3}
+$$
+
+其单点方差为
+
+$$
+\boxed{
+\operatorname{Var}(\eta_0)
+=\rho(1-\rho)
+=\frac15.}
+\tag{B8.4}
+$$
+
