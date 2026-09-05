@@ -135,15 +135,25 @@ internal static partial class RepositoryRules
     }
 
     private static ImmutableArray<RuleFinding> Capacity(RuleEvaluationContext context)
+        => EvaluateCapacity(context, ScribeTestMapDeriver.DeriveSnapshot);
+
+    internal static ImmutableArray<RuleFinding> EvaluateCapacity(
+        RuleEvaluationContext context,
+        Func<RepositorySnapshot, ScribeTestMap> deriveSnapshot)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
-        findings.AddRange(ScribeUnknownDebtPolicy.Evaluate(
-                ScribeTestMapDeriver.DeriveSnapshot(context.Current),
-                ScribeTestMapDeriver.DeriveSnapshot(context.ForkPoint))
-            .Select(static finding => new RuleFinding(
-                finding.Path,
-                finding.Message,
-                finding.Effect)));
+        if (context.Changes.Paths.Any(static path =>
+                ScribeTestMapDeriver.IsDerivationInput(path.Value)))
+        {
+            findings.AddRange(ScribeUnknownDebtPolicy.Evaluate(
+                    deriveSnapshot(context.Current),
+                    deriveSnapshot(context.ForkPoint))
+                .Select(static finding => new RuleFinding(
+                    finding.Path,
+                    finding.Message,
+                    finding.Effect)));
+        }
+
         foreach (var (path, file) in context.Current.Files)
         {
             if (IsCapacityExcluded(path.Value))
