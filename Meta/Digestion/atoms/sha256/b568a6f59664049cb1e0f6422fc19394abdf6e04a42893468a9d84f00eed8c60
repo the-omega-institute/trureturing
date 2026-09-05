@@ -1,0 +1,30 @@
+## 定理 52.1　累计辐射形成物理精化链
+
+有：
+
+$$
+\boxed{
+\mathcal N_{n-1}
+=
+\operatorname{Tr}_{r_n}\circ\mathcal N_n.
+}
+\tag{52.4}
+$$
+
+因此，在累计辐射被完整保留的模型中：
+
+$$
+\boxed{
+\ker\mathcal N_n
+\subseteq
+\ker\mathcal N_{n-1}.
+}
+\tag{52.5}
+$$
+
+### 证明
+
+对 \(B_n,r_n\) 一并取偏迹，等价于在等距映射 \(W_n\) 之前对 \(B_{n-1}\) 取偏迹。
+
+于是得到式（52.4），再由函数复合得到核包含。∎
+

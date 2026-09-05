@@ -1,0 +1,71 @@
+# 四、这也是一个真实的量子条件操作，但不能遗漏成功概率
+
+定义密度矩阵：
+
+$$
+\boxed{
+\rho_d=\frac{K_d}{a_1}.
+}
+$$
+
+因为 \(\operatorname{Tr}K_d=a_1\)，所以 \(\operatorname{Tr}\rho_d=1\)。
+
+对两结果投影测量：
+
+$$
+\{\Pi_d,\ I-\Pi_d\},
+$$
+
+保留 \(u_d^\perp\) 的成功概率为：
+
+$$
+\begin{aligned}
+p_d
+&=\operatorname{Tr}(\Pi_d\rho_d)\\
+&=
+1-\frac{\langle u_d,K_du_d\rangle}{a_1}\\
+&=
+1-\frac1d.
+\end{aligned}
+$$
+
+因此：
+
+$$
+\boxed{p_d=\frac{d-1}{d}.}
+\tag{B10}
+$$
+
+成功后的条件态：
+
+$$
+\frac{\Pi_d\rho_d\Pi_d}{p_d}
+=
+\frac{K_{d-1}^{\mathrm{new}}}{a_1}.
+$$
+
+所以，**Jensen 层的下降，可以由一次测量后的归一化精确实现。**
+
+但这项固定成功率针对的是指定输入 \(\rho_d=K_d/a_1\)。对任意输入态，成功率未必相同；不能把条件归一化当成一个对全部状态线性的保迹操作。
+
+还有一个全局限制。
+
+若从第 \(D\) 层连续下降到固定第 \(m\) 层，并且每一步都保留对应分支，总成功率为：
+
+$$
+\boxed{
+\prod_{d=m+1}^{D}\frac{d-1}{d}
+=
+\frac mD.
+}
+\tag{B11}
+$$
+
+于是：
+
+$$
+D\to\infty
+\quad\Longrightarrow\quad
+\frac mD\to0.
+$$
+

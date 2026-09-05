@@ -1,0 +1,27 @@
+## 4.4 现在，反例检查只剩一个整数不等式
+
+写：
+
+$$
+\overline U_k(n)=\frac{A_{n,k}}{B_{n,k}},
+\qquad
+A_{n,k},B_{n,k}\in\mathbb N_+.
+$$
+
+对分拆 \(a\)，定义：
+
+$$
+\boxed{
+\operatorname{Bad}(a,k)
+\iff
+B_{N(a),k}\Sigma(a)
+\ge
+A_{N(a),k}N(a).
+}
+\tag{11}
+$$
+
+这是一个**可判定的有限整数谓词**。
+
+它不调用 ζ 零点，不调用实数比较，也不需要一个“知道 \(\gamma\) 所有位”的预言机。
+

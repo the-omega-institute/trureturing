@@ -1,0 +1,41 @@
+## 定理 141.4　该临界方向族上 mana 严格下降
+
+$$
+\boxed{
+\forall\,\varphi\in T,\ \varphi\neq0:\quad
+\sum_{(q,p)\notin Z_0}\operatorname{sgn}\bigl(W_\psi(q,p)\bigr)W_\varphi(q,p)
++\sum_{(q,p)\in Z_0}\bigl|W_\varphi(q,p)\bigr|
+-L(\psi)\|\varphi\|^2<0 .
+}
+$$
+
+因此沿归一化扰动 \(\psi_\varepsilon=(\psi+\varepsilon\varphi)/\|\psi+\varepsilon\varphi\|\),对充分小的实 \(\varepsilon\neq0\),
+
+$$
+\boxed{
+L(\psi_\varepsilon)-L(\psi)
+=\frac{\varepsilon^2\,C(\varphi)}{1+\varepsilon^2\|\varphi\|^2}<0,
+}
+$$
+
+其中 \(C(\varphi)\) 即上式左端;mana 为 \(\log L\) 的单调函数,故同号严格下降。
+
+### 证明
+
+由定理 141.3,只需三十二个 \(M_s\) 皆负定。对每个 \(s\),给出显式的下三角 \(L_s\) 与对角 \(d_s\),
+使 \(-M_s=L_s\operatorname{diag}(d_s)L_s^{\mathsf T}\) 且 \(d_s\) 的四个分量皆为正,
+共一百二十八个主元;其元素落在实四次域 \(K=\mathbb{Q}(R)\),\(R=\sqrt{10+2\sqrt5}\),
+即 \(\mathbb{Q}(\zeta_{20})\) 的实子域,主元的正性由 \(R^4-20R^2+80\) 的孤立实根处的有理区间算术判定。
+由定理 141.2,一阶项为零,故上述二阶量即为 \(L\) 的变化的主导项;直接展开
+\(L(\psi_\varepsilon)\) 并用 \(\psi^{\dagger}\varphi=0\) 化简得所示精确表达式。∎
+
+### 解释与边界
+
+这判定了原文留下的那一族方向:**沿每条一阶变分在所有零 Wigner 格点上消失的非零方向,归一化扰动的 mana 严格下降。**
+故该临界点在这族方向上不是极小,也不是平坦。
+
+**本增订不判定**:该态在 \(T\) 之外方向上的行为、其余维数的临界点、以及 mana 极值问题的一般结构。
+**载体域是本判定的实际难点**:\(\mathbb{Q}(\zeta_5)\) 不是有序域,实化后的证书系数落在 \(K=\mathbb{Q}(R)\) 而非 \(\mathbb{Q}(\sqrt5)\);
+故形式化时正定性只能由**显式 LDL 恒等式加主元不等式**给出,不能依赖判定过程。
+
+[q1]: https://arxiv.org/abs/2512.19657 "Extremizing Measures of Magic on Pure States by Clifford-stabilizer States"

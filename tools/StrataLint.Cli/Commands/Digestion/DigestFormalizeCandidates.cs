@@ -148,7 +148,7 @@ internal static class DigestFormalizeCandidates
         string AtomId,
         string Justification,
         string ReentryCondition,
-        string? BlockerClass);
+        string BlockerClass);
 
     internal sealed record FormalizeProjection(
         string SourceId,

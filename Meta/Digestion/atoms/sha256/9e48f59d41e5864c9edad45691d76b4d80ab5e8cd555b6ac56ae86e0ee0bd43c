@@ -1,0 +1,29 @@
+# 47．辐射的能量来自哪里？不能把空间或时间当作燃料
+
+对准静态 Schwarzschild 黑洞，
+
+$$
+T_H=\frac{\hbar c^3}{8\pi GMk_B},
+$$
+
+$$
+S_{\mathrm{BH}}
+=
+\frac{k_Bc^3A}{4G\hbar}
+=
+\frac{4\pi k_BGM^2}{\hbar c}.
+$$
+
+因此
+
+$$
+\boxed{
+d(Mc^2)=T_H\,dS_{\mathrm{BH}}.
+}
+\tag{47.1}
+$$
+
+这些是黑洞热力学中的标准半经典关系。([Springer][4])
+
+---
+

@@ -44,9 +44,7 @@ internal static class DigestionReadinessQuery
         DigestionFrontierDisposition.Quarantined => Record(
                 frontier.Entry,
                 "quarantined",
-                frontier.PrimaryDetail == "untyped"
-                    ? ["quarantine"]
-                    : ["quarantine:" + frontier.PrimaryDetail]),
+                ["quarantine:" + frontier.PrimaryDetail]),
         DigestionFrontierDisposition.Withheld =>
             frontier.PrimaryDetail == "acknowledged-stale"
                 ? Record(frontier.Entry, "refresh-stale", [frontier.PrimaryDetail])

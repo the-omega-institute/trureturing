@@ -1,0 +1,23 @@
+# 八、数据并未永久丢失：实际 Jensen 层之间有精确的回读映射
+
+上面的反例说明平均可以隐藏缺陷，但不说明高阶系数中无法恢复低阶证据。
+
+对实际 \(P_d\)，若 \(n\le d\)，定义：
+
+$$
+\boxed{
+\mathcal R_{n\leftarrow d}[P](v)
+=
+\sum_{k=0}^{n}
+\frac{\omega_{n,k}}{\omega_{d,k}}
+[v^k]P(v)\,v^k,
+}
+\tag{M24}
+$$
+
+其中：
+
+$$
+\omega_{d,k}=\frac{(d)_k}{d^k}.
+$$
+

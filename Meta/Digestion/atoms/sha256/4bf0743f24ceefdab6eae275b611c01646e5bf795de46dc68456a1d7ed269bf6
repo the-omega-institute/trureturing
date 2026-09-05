@@ -1,0 +1,35 @@
+## 定理 J3：严格平方下降律
+
+$$
+\boxed{
+\mathcal E_C'(r)
+=
+-\frac14
+\|A_C(r)A_C(r)^*-A_C(r)^*A_C(r)\|_{\mathrm{HS}}^2.
+}
+\tag{J8}
+$$
+
+因此：
+
+$$
+\boxed{
+\mathcal E_C(r)\text{ 单调不增},
+}
+$$
+
+且：
+
+$$
+\boxed{
+\mathcal V_C''(r)
+=
+-\frac12
+\|[A_C(r),A_C(r)^*]\|_{\mathrm{HS}}^2
+\le0.
+}
+\tag{J9}
+$$
+
+也就是说，对数体积一直增长，但增长率持续下降。
+

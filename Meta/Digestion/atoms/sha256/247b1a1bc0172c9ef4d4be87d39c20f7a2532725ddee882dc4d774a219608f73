@@ -1,0 +1,26 @@
+# 53．信息输出的正确增量：条件互信息，而不是辐射熵
+
+为检验任意量子输入是否保留，引入与 \(L\) 最大纠缠的参照系统 \(A\)：
+
+$$
+|\Phi_d\rangle_{AL}
+=
+\frac1{\sqrt d}\sum_{j=1}^d|j\rangle_A|j\rangle_L.
+$$
+
+经过 \(V_n\) 后：
+
+$$
+|\Psi_n\rangle_{AB_nR^n}
+=
+(I_A\otimes V_n)|\Phi_d\rangle.
+$$
+
+该态仍为纯态，并且：
+
+$$
+S(A)=\log d.
+$$
+
+所有熵采用自然对数。
+

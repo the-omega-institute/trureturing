@@ -1,0 +1,42 @@
+## 例 75.1　没有精确碰撞，却不能物理逆转
+
+取
+
+$$
+c_n=\frac1{\sqrt{N+1}},
+\qquad n=0,\ldots,N.
+$$
+
+则
+
+$$
+\gamma_\ell=
+1-\frac{|\ell|}{N+1}
+\qquad(|\ell|\le N).
+$$
+
+如果系统标签跨度不超过 \(N\)，全部相关 \(\gamma_\ell\) 非零。因此，式（74.2）在矩阵集合上单射：
+
+$$
+\Lambda_c(\rho)=\Lambda_c(\sigma)
+\Longrightarrow
+\rho=\sigma.
+$$
+
+但只要存在两个不同标签，定理 75.2 就排除完美物理恢复。
+
+例如 \(N=2\)，两个标签相差一，则
+
+$$
+\gamma_1=\frac23,
+$$
+
+而
+
+$$
+\boxed{
+\text{最坏情形恢复误差}\ge\frac16.
+}
+\tag{75.4}
+$$
+

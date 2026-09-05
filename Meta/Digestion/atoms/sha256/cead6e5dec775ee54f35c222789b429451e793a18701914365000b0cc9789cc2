@@ -1,0 +1,47 @@
+## 证明：RH 推出线性能量界
+
+沿用上一轮已经剥离素数幂所得的式子：
+
+$$
+Z(T)
+=
+4e^{T/2}
+-\frac14T^2-aT+b
+-2\mathscr G(T)+\varepsilon(T),
+\qquad
+\varepsilon(T)\to0.
+$$
+
+因为 \(Q_h(S_h)\) 消去前三种背景，
+
+$$
+\mathcal D_h(T)
+=
+-2Q_h(S_h)\mathscr G(T)+o(1).
+$$
+
+在 RH 前件下，按不同的正零点纵坐标 \(\gamma\) 分组，令其重数为 \(m_\gamma\)，则
+
+$$
+\boxed{
+\mathcal D_h(T)
+=
+2\operatorname{Re}
+\sum_{\gamma>0}
+\frac{
+m_\gamma Q_h(e^{ih\gamma})
+}{\gamma^2}
+e^{i\gamma T}
++o(1).
+}
+\tag{19}
+$$
+
+由于
+
+$$
+\sum_{\gamma>0}\frac{m_\gamma}{\gamma^2}<\infty,
+$$
+
+该三角级数一致绝对收敛，故固定 \(h\) 时 \(\mathcal D_h\) 有界，得到式（18）。零点级数的绝对收敛和相应时间函数表示可由 Suzuki 的公式直接取得。([arXiv][1])
+

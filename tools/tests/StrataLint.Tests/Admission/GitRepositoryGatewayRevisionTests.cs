@@ -154,6 +154,59 @@ public sealed class GitRepositoryGatewayRevisionTests
             change.Path.Value == "renamed.txt" && change.Kind == RawChangeKind.Added);
     }
 
+    [Fact]
+    public void ReadChangesDropsCopySourcePathsBecauseTheirBytesAreUnchanged()
+    {
+        using var repository = new TemporaryDirectory();
+        var runner = new PrepareGitProcessRunner(
+            "C055\0Meta/Digestion/backfill/d-zcoct/source.toml\0"
+            + "Meta/Digestion/backfill/quantum-rh/source.toml\0");
+        var gateway = new GitRepositoryGateway(repository.Path, runner, "git");
+
+        var changes = gateway.ReadChanges("synthetic-base");
+
+        Assert.Equal(
+            new[] { ("Meta/Digestion/backfill/quantum-rh/source.toml", RawChangeKind.Added) },
+            changes.Entries.Select(static change => (change.Path.Value, change.Kind)));
+    }
+
+    [Fact]
+    public void ReadChangesKeepsAModifiedCopySourceAndAddsTheCopy()
+    {
+        using var repository = new TemporaryDirectory();
+        var runner = new PrepareGitProcessRunner(
+            "M\0source.txt\0C069\0source.txt\0copy.txt\0");
+        var gateway = new GitRepositoryGateway(repository.Path, runner, "git");
+
+        var changes = gateway.ReadChanges("synthetic-base");
+
+        Assert.Equal(
+            new[]
+            {
+                ("copy.txt", RawChangeKind.Added),
+                ("source.txt", RawChangeKind.Modified),
+            },
+            changes.Entries.Select(static change => (change.Path.Value, change.Kind)));
+    }
+
+    [Fact]
+    public void ReadChangesReportsARenameAsDeleteAndAdd()
+    {
+        using var repository = new TemporaryDirectory();
+        var runner = new PrepareGitProcessRunner("R100\0old.txt\0new.txt\0");
+        var gateway = new GitRepositoryGateway(repository.Path, runner, "git");
+
+        var changes = gateway.ReadChanges("synthetic-base");
+
+        Assert.Equal(
+            new[]
+            {
+                ("new.txt", RawChangeKind.Added),
+                ("old.txt", RawChangeKind.Deleted),
+            },
+            changes.Entries.Select(static change => (change.Path.Value, change.Kind)));
+    }
+
     private static void AssertEntry(RawRepositoryEntry entry, string path, string expected)
     {
         Assert.Equal(path, entry.Path);

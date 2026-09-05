@@ -214,7 +214,7 @@ internal sealed class DigestionFrontierProjection
         if (entry.Receipts.Quarantine is { } quarantine)
         {
             disposition = DigestionFrontierDisposition.Quarantined;
-            detail = quarantine.BlockerClass ?? "untyped";
+            detail = quarantine.BlockerClass;
         }
         else
         {

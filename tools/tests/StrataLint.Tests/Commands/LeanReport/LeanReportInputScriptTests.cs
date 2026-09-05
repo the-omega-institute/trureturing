@@ -212,6 +212,44 @@ public sealed class LeanReportInputScriptTests
     }
 
     [Fact]
+    public void JudgeLibraryLeanSourceChangesAddressButUnrelatedFileDoesNot()
+    {
+        using var fixture = new LeanReportInputFixture();
+        const string judgeSource =
+            "tools/lean-inspector/LeanInformationAudit/Nested/ProofBuilder.lean";
+        const string unrelated = "tools/lean-inspector/LeanInformationAudit/README.md";
+        fixture.WriteSource(judgeSource, "def judgeFixture : True := by trivial\n");
+        fixture.WriteSource(unrelated, "fixture documentation\n");
+        var before = fixture.Address();
+
+        fixture.Append(unrelated, "x");
+        Assert.Equal(before, fixture.Address());
+
+        fixture.Append(judgeSource, "x");
+        Assert.NotEqual(before, fixture.Address());
+    }
+
+    [Fact]
+    public void AbsentJudgeLibraryContributesNoSourcesAndAddressSucceeds()
+    {
+        using var fixture = new LeanReportInputFixture();
+        fixture.RemoveInspectorDirectory();
+
+        var result = fixture.RunCommand("address");
+
+        Assert.True(
+            result.ExitCode == 0,
+            Encoding.UTF8.GetString(result.StandardError));
+        var parts = Encoding.UTF8.GetString(result.StandardOutput)
+            .Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        Assert.Equal(4, parts.Length);
+        Assert.Matches("^[0-9a-f]{64}$", parts[0]);
+        Assert.Equal(
+            fixture.ManifestHash("Trureturing.lean", "D5/Probe.lean"),
+            parts[2]);
+    }
+
+    [Fact]
     public void AddingASecondSourceWithIdenticalContentsChangesTheSourcesHash()
     {
         using var fixture = new LeanReportInputFixture();
@@ -294,29 +332,58 @@ public sealed class LeanReportInputScriptTests
             Write(TestSourcePath, "// fixture\n");
             Write(BlueprintSourcePath, "// fixture\n");
             Write(ScribeSourcePath, "// fixture\n");
-            var root = TestRepositoryLayout.FindRoot();
-            Write(PairScriptPath, File.ReadAllText(Path.Combine(root, PairScriptPath), Encoding.UTF8));
+            Write(
+                PairScriptPath,
+                File.ReadAllText(
+                    Path.Combine(
+                        TestRepositoryLayout.FindRoot(),
+                        "tools", "scripts", "lean-report-pair.sh"),
+                    Encoding.UTF8));
             Write(
                 SupervisorScriptPath,
-                File.ReadAllText(Path.Combine(root, SupervisorScriptPath), Encoding.UTF8));
+                File.ReadAllText(
+                    Path.Combine(
+                        TestRepositoryLayout.FindRoot(),
+                        "tools", "scripts", "report", "report-supervisor.sh"),
+                    Encoding.UTF8));
             Write(
                 CiBaselineScriptPath,
-                File.ReadAllText(Path.Combine(root, CiBaselineScriptPath), Encoding.UTF8));
+                File.ReadAllText(
+                    Path.Combine(
+                        TestRepositoryLayout.FindRoot(),
+                        "tools", "scripts", "report", "lean-report-ci-baseline.sh"),
+                    Encoding.UTF8));
             Write(CacheEnsureScriptPath, "#!/usr/bin/env bash\n");
             Write(
                 CachePublishScriptPath,
-                File.ReadAllText(Path.Combine(root, CachePublishScriptPath), Encoding.UTF8));
+                File.ReadAllText(
+                    Path.Combine(
+                        TestRepositoryLayout.FindRoot(),
+                        "tools", "scripts", "worktree", "lean-cache-publish.sh"),
+                    Encoding.UTF8));
             Write(
                 ResourceObservationLibraryPath,
-                File.ReadAllText(Path.Combine(root, ResourceObservationLibraryPath), Encoding.UTF8));
+                File.ReadAllText(
+                    Path.Combine(
+                        TestRepositoryLayout.FindRoot(),
+                        "tools", "scripts", "lib", "resource-observation-lib.sh"),
+                    Encoding.UTF8));
             Write(ToolchainInstallerPath, "#!/usr/bin/env bash\n");
             Write(
                 JudgeContentAddressPath,
-                File.ReadAllText(Path.Combine(root, JudgeContentAddressPath), Encoding.UTF8));
+                File.ReadAllText(
+                    Path.Combine(
+                        TestRepositoryLayout.FindRoot(),
+                        "tools", "scripts", "workflow", "judge-content-address.sh"),
+                    Encoding.UTF8));
             Write(ScribeContentChecksPath, "#!/usr/bin/env bash\n");
             Write(
                 WorkflowPath,
-                File.ReadAllText(Path.Combine(root, WorkflowPath), Encoding.UTF8));
+                File.ReadAllText(
+                    Path.Combine(
+                        TestRepositoryLayout.FindRoot(),
+                        ".github", "workflows", "ci.yml"),
+                    Encoding.UTF8));
             Write("Directory.Build.props", "<Project />\n");
             Write("Directory.Packages.props", "<Project />\n");
             Write(CliProjectPath, "<Project Sdk=\"Microsoft.NET.Sdk\" />\n");
@@ -474,6 +541,14 @@ public sealed class LeanReportInputScriptTests
                 .Split(' ', StringSplitOptions.RemoveEmptyEntries)[1];
         }
 
+        internal string Address()
+        {
+            var result = Run("address");
+            Assert.Equal(0, result.ExitCode);
+            return Encoding.UTF8.GetString(result.StandardOutput)
+                .Split(' ', StringSplitOptions.RemoveEmptyEntries)[0];
+        }
+
         internal (string Sources, string Config) CacheIdentity()
         {
             var result = Run("address");
@@ -488,6 +563,25 @@ public sealed class LeanReportInputScriptTests
             Path.Combine(repository, relativePath.Replace('/', Path.DirectorySeparatorChar)),
             contents,
             new UTF8Encoding(false));
+
+        internal void RemoveInspectorDirectory() => Directory.Delete(
+            Path.Combine(repository, "tools", "lean-inspector"),
+            recursive: true);
+
+        internal string ManifestHash(params string[] relativePaths)
+        {
+            var manifest = new StringBuilder();
+            foreach (var relativePath in relativePaths)
+            {
+                var path = Path.Combine(
+                    repository,
+                    relativePath.Replace('/', Path.DirectorySeparatorChar));
+                var digest = Convert.ToHexStringLower(SHA256.HashData(File.ReadAllBytes(path)));
+                manifest.Append(digest).Append("  ").Append(relativePath).Append('\n');
+            }
+            return Convert.ToHexStringLower(
+                SHA256.HashData(Encoding.UTF8.GetBytes(manifest.ToString())));
+        }
 
         private ProcessOutput Run(string command)
         {

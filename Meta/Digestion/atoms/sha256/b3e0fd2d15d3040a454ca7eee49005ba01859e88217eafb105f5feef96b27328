@@ -1,0 +1,69 @@
+### 反向证明
+
+虽然 \(G_q(0)\) 只有秩一，但对每个 \(r>0\)，它严格正定。
+
+它满足与上一轮同型的方差演化：
+
+$$
+G_q'
+=
+C_q^*G_qC_q
+-\frac12(C_q^*)^2G_q
+-\frac12G_qC_q^2.
+$$
+
+令：
+
+$$
+A_q(r)=G_q(r)^{1/2}C_qG_q(r)^{-1/2}.
+$$
+
+同样的迹计算得到：
+
+$$
+\boxed{
+\frac d{dr}\log\det G_q(r)
+=
+2\left\|
+\frac{A_q(r)-A_q(r)^*}{2i}
+\right\|_{\mathrm{HS}}^2.
+}
+$$
+
+对 \(A_q(r)\) 作酉 Schur 分解，有：
+
+$$
+\left\|
+\frac{A_q(r)-A_q(r)^*}{2i}
+\right\|_{\mathrm{HS}}^2
+\ge
+\sum_j(\Im\lambda_j)^2.
+$$
+
+记：
+
+$$
+E_q=\sum_j(\Im\lambda_j)^2.
+$$
+
+因此，对任何固定 \(r_0>0\)：
+
+$$
+\log\det G_q(r)
+\ge
+\log\det G_q(r_0)+2E_q(r-r_0).
+$$
+
+若有非实根，则 \(E_q>0\)。于是：
+
+$$
+\log\mathcal Z_q(r)
+\ge
+2E_qr-\nu_d\log r+O_q(1)
+\longrightarrow+\infty.
+$$
+
+所以 \(\mathcal Z_q(r)\) 不可能始终小于等于一。证毕。
+
+这里没有假设根简单，所以重根不会形成漏洞。
+

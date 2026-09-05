@@ -1,0 +1,65 @@
+# 结论：从“吞噬”推进到可恢复的时序关联理论
+
+这一轮最重要的推进，是把前文的三个过程区分得更明确：
+
+$$
+\boxed{
+\text{历史进入内部}
+\longrightarrow
+\text{内部与历史建立关联};
+}
+$$
+
+$$
+\boxed{
+\text{内部产生辐射}
+\longrightarrow
+\text{某些关联进入外侧联合态};
+}
+$$
+
+$$
+\boxed{
+\text{外侧观察者能够解码}
+\longrightarrow
+\text{这些关联成为可用记忆}.
+}
+$$
+
+其中，第二步不由“辐射是热的”保证；第三步也不由“信息在数学上存在”保证。
+
+本轮得到的两个最强约束是：
+
+$$
+\boxed{
+\text{完全独立、对全部内部输入相同的混合发射，}
+\quad
+\text{要求内部保留甚至增加纯化容量。}
+}
+$$
+
+以及：
+
+$$
+\boxed{
+\text{非平凡的内部时间演化，}
+\quad
+\text{不能在严格可加能量守恒下，}
+\quad
+\text{被编码成所有单份都完全不依赖输入的辐射。}
+}
+$$
+
+因此，一个自洽的“量子观察者—黑洞—辐射”理论不能只描述热谱或内部时间。它必须同时说明：
+
+**哪些历史区别被保存，哪些关联真正向外转移，哪些操作能够恢复它们，以及这种转移怎样与能量和因果结构相容。**
+
+**观察者的记忆不是吞下时间的体积；它是可恢复的时序关联。黑洞辐射也不是自动吐出的记忆；它只有在完整过程把原输入区别转移到可访问联合结构，并允许相应恢复时，才承担这一功能。**
+
+[1]: https://arxiv.org/abs/quant-ph/0304007?utm_source=chatgpt.com "Structure of states which satisfy strong subadditivity of quantum entropy with equality"
+[2]: https://arxiv.org/abs/0708.4025?utm_source=chatgpt.com "Black holes as mirrors: quantum information in random subsystems"
+[3]: https://arxiv.org/html/0907.5391v4 "General conditions for approximate quantum error correction and near-optimal recovery channels"
+[4]: https://arxiv.org/abs/0909.1038?utm_source=chatgpt.com "The information paradox: A pedagogical introduction"
+[5]: https://arxiv.org/abs/quant-ph/9901025 "[quant-ph/9901025] How to share a quantum secret"
+[6]: https://arxiv.org/html/1902.07714v1 "Continuous symmetries and approximate quantum error correction"
+[7]: https://arxiv.org/html/0705.1574v1 "Quantum Error Correction of Observables"

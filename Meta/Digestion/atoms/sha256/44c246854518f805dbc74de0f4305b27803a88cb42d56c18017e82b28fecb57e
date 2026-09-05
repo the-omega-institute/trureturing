@@ -1,0 +1,98 @@
+## 定理 132.1　多项式精确性与权重范数
+
+对任何次数不超过三的多项式 \(P\)，
+
+$$
+\boxed{
+\sum_jw_j^{(\alpha)}P(x_j)
+=
+\partial^\alpha P(p).
+}
+\tag{132.5}
+$$
+
+同时，
+
+$$
+\boxed{
+\sum_j|w_j^{(\alpha)}|^2
+=
+\frac{(\alpha!)^2}{Nh^{2|\alpha|}}
+e_\alpha^{\mathsf T}G_h^{-1}e_\alpha
+\le
+\frac{(\alpha!)^2}
+{N\gamma h^{2|\alpha|}},
+}
+\tag{132.6}
+$$
+
+以及
+
+$$
+\boxed{
+\sum_j|w_j^{(\alpha)}|
+\le
+\frac{\alpha!}{\sqrt\gamma\,h^{|\alpha|}}.
+}
+\tag{132.7}
+$$
+
+### 证明
+
+把 \(P(p+hz)\) 展开为
+
+$$
+P(p+hz)=\sum_{\beta\in\mathcal B_3}a_\beta z^\beta.
+$$
+
+则
+
+$$
+\partial^\alpha P(p)=\alpha!h^{-|\alpha|}a_\alpha.
+$$
+
+由 \(G_h\) 的定义，
+
+$$
+\frac1N\sum_jG_h^{-1}v(z_j)v(z_j)^{\mathsf T}=I.
+$$
+
+代入权重即可得到式（132.5）。
+
+权重平方和由同一 Gram 恒等式直接得到；再用 \(G_h^{-1}\le\gamma^{-1}I\)，得到式（132.6）。
+
+最后应用
+
+$$
+\|w\|_1\le\sqrt N\,\|w\|_2.
+$$
+
+∎
+
+### 有限实例
+
+在一维中，取采样点
+
+$$
+-h,\quad-\frac h2,\quad0,\quad\frac h2,\quad h.
+$$
+
+上述构造给出
+
+$$
+\boxed{
+\widehat{f''}(0)
+=
+\frac{
+8Y_{-h}-4Y_{-h/2}-8Y_0-4Y_{h/2}+8Y_h
+}{7h^2}.
+}
+\tag{132.8}
+$$
+
+它对全部三次以下多项式精确成立。
+
+这些权重允许出现负数：它们是估计器系数，不是量子态概率。
+
+---
+

@@ -1,0 +1,30 @@
+## 假设 123.1　初始乘积结构
+
+设
+
+$$
+\sigma_0=\bigotimes_{x\in\Lambda}\sigma_x,
+$$
+
+并令
+
+$$
+\sigma_m=\mathcal U_m\sigma_0\mathcal U_m^\dagger.
+$$
+
+对每个节点给定 Hermitian 读数 \(R_x\)，其谱满足共同界：
+
+$$
+r_-I\le R_x\le r_+I,
+\qquad
+0<r_-<r_+.
+$$
+
+记
+
+$$
+\Delta_R=\frac{r_+-r_-}{2}.
+$$
+
+---
+

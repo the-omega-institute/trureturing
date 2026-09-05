@@ -1,0 +1,81 @@
+### 证明
+
+这里使用 Andréief 与同一个酉积分公式的另一个形式。
+
+记：
+
+$$
+\mathcal I_\lambda(\mathbf t)
+=
+\int_{U(d)}
+e^{-i\operatorname{Tr}(\Lambda U\operatorname{diag}(\mathbf t)U^*)}\,dU.
+$$
+
+由 HCIZ 恒等式：
+
+$$
+\det G_q(r)
+=
+\frac1{d!h_d^2}
+\int_{\mathbb R^d}
+\Delta(\mathbf t)^2
+|\mathcal I_\lambda(\mathbf t)|^2
+\prod_i g_r(t_i)\,dt_i.
+\tag{K20}
+$$
+
+取：
+
+$$
+L_d=\frac{\log(3/2)}{dM},
+\qquad
+r_{0,d}=L_d^2.
+$$
+
+当所有 \(|t_i|\le L_d\) 时：
+
+$$
+\left|
+\operatorname{Tr}
+(\Lambda U\operatorname{diag}(\mathbf t)U^*)
+\right|
+\le dML_d=\log(3/2).
+$$
+
+所以：
+
+$$
+|\mathcal I_\lambda(\mathbf t)-1|\le\frac12,
+\qquad
+|\mathcal I_\lambda(\mathbf t)|\ge\frac12.
+$$
+
+在 \([-L_d/2,L_d/2]\) 中取 \(d\) 个等间距小区间。让每个 \(t_i\) 落入一个不同区间，则：
+
+$$
+|t_i-t_j|
+\ge
+\frac{L_d}{2d}|i-j|.
+$$
+
+将这些区域及其全部排列代入式（K20），高斯密度有统一下界，得到例如：
+
+$$
+\boxed{
+\det G_q(r_{0,d})
+\ge
+\frac14
+\left(\frac{L_d}{2d}\right)^{d(d-1)}
+\left(
+\frac{e^{-1/2}}{2\sqrt{2\pi}\,d}
+\right)^d.
+}
+\tag{K21}
+$$
+
+取对数即得式（K19）。重根情况由连续性得到。证毕。
+
+这一估计使用的群积分与行列式积分都是经典工具；关键是应用后得到一个只依赖根的统一模长界、而不依赖根间距的下界。
+
+---
+

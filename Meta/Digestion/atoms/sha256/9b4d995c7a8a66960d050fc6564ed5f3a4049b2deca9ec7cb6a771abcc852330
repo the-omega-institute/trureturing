@@ -1,0 +1,14 @@
+### 定理 4.4：坏证书的可靠性与完备性
+
+对固定 \(n>5040\)：
+
+$$
+\boxed{
+\exists k,\ \operatorname{Bad}(a,k)
+\iff
+\frac{\sigma(n)}n>e^\gamma\ln\ln n,
+\qquad n=N(a).
+}
+\tag{12}
+$$
+

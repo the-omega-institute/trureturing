@@ -1,0 +1,20 @@
+## 定义 91.1　量子态的统计几何
+
+设参数态族为 \(\rho_\theta\)，对称对数导数 \(L_\alpha\) 满足
+
+$$
+\partial_\alpha\rho
+=
+\frac12(L_\alpha\rho+\rho L_\alpha).
+$$
+
+量子 Fisher 信息矩阵为
+
+$$
+J_{\alpha\beta}
+=
+\operatorname{Re}\operatorname{Tr}(\rho L_\alpha L_\beta).
+$$
+
+它控制参数估计的局部可分辨性，是量子计量中的统计对象。([APS Journals][2])
+

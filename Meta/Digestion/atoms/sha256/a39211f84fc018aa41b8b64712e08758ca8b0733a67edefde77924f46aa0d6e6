@@ -1,0 +1,45 @@
+## 定理 27.1　四阶残差估计界
+
+定义
+
+$$
+\widehat A_2(k)
+=
+-\frac{\widetilde F(k)}{|k|^4}.
+$$
+
+则
+
+$$
+\boxed{
+|\widehat A_2(k)-A_2|
+\le
+\frac{\epsilon}{|k|^4}
++
+C|k|^2.
+}
+\tag{27.1}
+$$
+
+### 证明
+
+由三角不等式，
+
+$$
+\begin{aligned}
+|\widehat A_2-A_2|
+&=
+\frac{
+|\widetilde F+A_2|k|^4|
+}{
+|k|^4
+}\\
+&\le
+\frac{|\widetilde F-F|+|R(k)|}{|k|^4}.
+\end{aligned}
+$$
+
+代入假设即得。∎
+
+---
+

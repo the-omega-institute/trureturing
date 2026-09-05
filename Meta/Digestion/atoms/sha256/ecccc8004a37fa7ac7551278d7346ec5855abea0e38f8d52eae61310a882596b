@@ -1,0 +1,97 @@
+## 定理 8.4　因数状态的最优分块额外预算
+
+固定整数 \(n\)，发送 \(r\) 个因数状态：
+
+$$
+\mathbf d=(d_1,\ldots,d_r)\in\operatorname{Div}(n)^r.
+$$
+
+定义最优最坏额外开销：
+
+$$
+\mathcal R_r(n)
+=
+\inf_C
+\max_{\mathbf d}
+\left[
+L_C(\mathbf d)
+-
+\sum_{i=1}^r\log_2d_i
+\right],
+$$
+
+其中下确界遍历二进制前缀码。
+
+则：
+
+$$
+\boxed{
+r\log_2Z(n)
+\le
+\mathcal R_r(n)
+<
+r\log_2Z(n)+1.
+}
+\tag{8.4}
+$$
+
+因而：
+
+$$
+\boxed{
+\mathcal R_\infty(n)
+=
+\lim_{r\to\infty}\frac{\mathcal R_r(n)}r
+=
+\log_2Z(n).
+}
+\tag{8.5}
+$$
+
+### 证明
+
+若某编码的最坏额外开销为 \(u\)，则：
+
+$$
+L_C(\mathbf d)
+\le
+\sum_i\log_2d_i+u.
+$$
+
+Kraft 不等式给出：
+
+$$
+\begin{aligned}
+1
+&\ge\sum_{\mathbf d}2^{-L_C(\mathbf d)}\\
+&\ge2^{-u}\sum_{\mathbf d}\prod_i d_i^{-1}\\
+&=2^{-u}Z(n)^r.
+\end{aligned}
+$$
+
+所以 \(u\ge r\log_2Z(n)\)。
+
+反过来，取：
+
+$$
+\ell(\mathbf d)
+=
+\left\lceil
+\sum_i\log_2d_i+r\log_2Z(n)
+\right\rceil.
+$$
+
+则：
+
+$$
+\sum_{\mathbf d}2^{-\ell(\mathbf d)}\le1.
+$$
+
+满足 Kraft 条件的有限整数长度可以构造为前缀码：按长度排列，在单位区间中依次分配相应长度的二进制区间即可。
+
+取整损失不足 1，比特长度上界成立。除以 \(r\) 后用夹逼定理得到极限。证毕。
+
+这使 \(Z(n)\) 不再只是形式上的“配分函数”，而具有明确的最优编码预算解释。
+
+---
+

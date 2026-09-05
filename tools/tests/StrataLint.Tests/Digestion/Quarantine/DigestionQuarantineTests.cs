@@ -13,6 +13,7 @@ public sealed partial class DigestionQuarantineTests
         quarantine:
           justification: interpretive statement has no machine predicate
           reentry_condition: typed predicate or frozen witness
+          blocker_class: missing-prerequisite
         """;
 
     [Theory]
@@ -78,7 +79,8 @@ public sealed partial class DigestionQuarantineTests
                         "atom-quarantined",
                         new DigestionQuarantine(
                             "interpretive statement has no machine predicate",
-                            "typed predicate or frozen witness"),
+                            "typed predicate or frozen witness",
+                            "missing-prerequisite"),
                         "semantic-one",
                         "semantic-two"),
                 ]),
@@ -130,7 +132,7 @@ public sealed partial class DigestionQuarantineTests
               - not_formalizable: 1
               - formalizable_claim: 0
 
-            ## quarantined residuals
+            ### quarantined residuals
 
             - quarantined_subitems: 2
             - mother_quarantined_atom_ids: 1
@@ -138,6 +140,7 @@ public sealed partial class DigestionQuarantineTests
             Quarantined residual atoms:
 
             - `fixture-source/atom-quarantined` (2)
+              - blocker_class: `missing-prerequisite`
               - justification: `interpretive statement has no machine predicate`
               - reentry_condition: `typed predicate or frozen witness`
               - `semantic-one`

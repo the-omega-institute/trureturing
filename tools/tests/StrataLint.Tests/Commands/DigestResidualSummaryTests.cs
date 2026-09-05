@@ -41,7 +41,10 @@ public sealed class DigestResidualSummaryTests
             {
                 Receipts = quarantined.Entry.Receipts with
                 {
-                    Quarantine = new DigestionQuarantine("because", "when-ready")
+                    Quarantine = new DigestionQuarantine(
+                        "because",
+                        "when-ready",
+                        "missing-prerequisite")
                 }
             }
         };
@@ -52,6 +55,10 @@ public sealed class DigestResidualSummaryTests
 
         Assert.Equal(2, shards.Count);
         Assert.Contains("`atom-q` (1)", shards["Generated/echo-residuals/source-a.md"], StringComparison.Ordinal);
+        Assert.Contains(
+            "blocker_class: `missing-prerequisite`",
+            shards["Generated/echo-residuals/source-a.md"],
+            StringComparison.Ordinal);
         Assert.Contains("`held`", shards["Generated/echo-residuals/source-a.md"], StringComparison.Ordinal);
         Assert.Contains("Mother residual atoms: none.", shards["Generated/echo-residuals/source-b.md"], StringComparison.Ordinal);
     }
@@ -148,7 +155,7 @@ public sealed class DigestResidualSummaryTests
               - not_formalizable: 0
               - formalizable_claim: 0
 
-            ## quarantined residuals
+            ### quarantined residuals
 
             - quarantined_subitems: 0
             - mother_quarantined_atom_ids: 0
