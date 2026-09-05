@@ -1,0 +1,79 @@
+## 定理 3.1　离散增长与连续分辨率
+
+有：
+
+$$
+\varphi^L\le G_L\le\varphi^{L+1},
+\qquad
+\varphi=\frac{1+\sqrt5}{2}.
+$$
+
+因而：
+
+$$
+\boxed{
+\lim_{L\to\infty}\frac{\ln|\mathcal W_L|}{L}
+=
+\ln\varphi.
+}
+\tag{3.1}
+$$
+
+另外，对无限合法序列定义：
+
+$$
+x(b)=\sum_{j\ge0}b_j\varphi^{-(j+1)}.
+$$
+
+若 \(b,c\) 的前 \(L\) 位相同，则：
+
+$$
+\boxed{
+|x(b)-x(c)|\le\varphi^{-L}.
+}
+\tag{3.2}
+$$
+
+### 证明
+
+增长界由初值及恒等式：
+
+$$
+\varphi^{L+2}=\varphi^{L+1}+\varphi^L
+$$
+
+归纳得到。结合 \(|\mathcal W_L|=G_L\)，得到式（3.1）。
+
+对连续读出，合法尾串的最大值由交替序列实现：
+
+$$
+\varphi^{-1}+\varphi^{-3}+\varphi^{-5}+\cdots
+=
+\frac{\varphi^{-1}}{1-\varphi^{-2}}
+=1.
+$$
+
+共同前缀之后的尾部多出因子 \(\varphi^{-L}\)，故式（3.2）成立。证毕。
+
+因此：
+
+$$
+\boxed{
+\text{可区分的离散状态数}\asymp\varphi^L,
+\qquad
+\text{连续读出的误差}\lesssim\varphi^{-L}.
+}
+$$
+
+这是本理论中连续与离散之间的明确联系。
+
+不过，连续读出不自动唯一。例如：
+
+$$
+\varphi^{-1}
+=
+\varphi^{-2}+\varphi^{-4}+\varphi^{-6}+\cdots.
+$$
+
+因此，无限实数展开的唯一性需要额外的边界约定。
+

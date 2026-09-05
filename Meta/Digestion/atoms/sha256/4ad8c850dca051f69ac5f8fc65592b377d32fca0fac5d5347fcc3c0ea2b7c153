@@ -1,0 +1,50 @@
+## 定理 B2：删除一个均衡方向，得到低一阶的缩放模型
+
+假设：
+
+$$
+K_d>0,
+\qquad
+\det(xI-K_d)=q_d(x).
+$$
+
+取均衡谱参考向量 \(u_d\)，令：
+
+$$
+\Pi_d=I-|u_d\rangle\langle u_d|,
+$$
+
+并在 \(u_d^\perp\) 上定义压缩：
+
+$$
+C_d=\Pi_dK_d\Pi_d\big|_{u_d^\perp}.
+$$
+
+则：
+
+$$
+\boxed{
+\det(xI-C_d)=\frac1d q_d'(x).
+}
+\tag{B8}
+$$
+
+所以：
+
+$$
+\boxed{
+K_{d-1}^{\mathrm{new}}
+=
+\frac d{d-1}C_d
+}
+\tag{B9}
+$$
+
+满足：
+
+$$
+\det(xI-K_{d-1}^{\mathrm{new}})
+=
+q_{d-1}(x).
+$$
+

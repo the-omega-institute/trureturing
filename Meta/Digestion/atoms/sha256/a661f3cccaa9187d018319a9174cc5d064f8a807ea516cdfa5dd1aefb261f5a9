@@ -1,0 +1,72 @@
+# 四、这个伪原子一定能被某个有限测试发现
+
+这里明确使用 \(\mathbf H_+\)，并设：
+
+$$
+d\nu(u)=\frac{d\omega(u)}{4+u},
+\qquad
+\nu([0,R])=\Delta.
+$$
+
+取多项式：
+
+$$
+\boxed{
+p_N(u)=
+\left(\frac{R-u}{R+4}\right)^N.
+}
+$$
+
+它满足：
+
+$$
+p_N(-4)=1,
+$$
+
+而在真实支持 \([0,R]\) 上：
+
+$$
+|p_N(u)|
+\le
+\left(\frac R{R+4}\right)^N.
+$$
+
+记：
+
+$$
+q=\frac R{R+4}<1.
+$$
+
+如果 \(\varepsilon<0\)，则：
+
+$$
+\int p_N(u)^2\,d\widetilde\nu(u)
+\le
+\Delta q^{2N}+\varepsilon.
+$$
+
+充分大的有限 \(N\) 使右边为负。
+
+如果 \(\varepsilon>0\)，则：
+
+$$
+\int u\,p_N(u)^2\,d\widetilde\nu(u)
+\le
+R\Delta q^{2N}-4\varepsilon.
+$$
+
+同样在某个有限 \(N\) 后为负。
+
+因此：
+
+$$
+\boxed{
+\varepsilon\ne0
+\Longrightarrow
+\text{某个有限阶的质量或支持正性测试失败}.
+}
+\tag{E12}
+$$
+
+这里的失败是**错误校准对象的失败**，不是实际 RH 的反例。
+

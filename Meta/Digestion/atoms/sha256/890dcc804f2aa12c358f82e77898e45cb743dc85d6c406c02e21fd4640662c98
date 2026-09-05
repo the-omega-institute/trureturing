@@ -1,0 +1,68 @@
+# |\Psi\rangle
+
+\frac{
+|0\rangle|e_0\rangle|m_0\rangle
++
+|1\rangle|e_1\rangle|m_1\rangle
+}{\sqrt2}.
+
+$$
+
+其中 \(e\) 是后续仍被操控的参照，\(m\) 是不再参与回声操作的附加记录。
+
+若后续操作将参照部分恢复为同一个态：
+
+$$
+
+|0\rangle|e_0\rangle\mapsto|0\rangle|e_*\rangle,
+
+$$
+$$
+
+|1\rangle|e_1\rangle\mapsto|1\rangle|e_*\rangle,
+
+$$
+
+则最终态为
+
+$$
+
+\frac{
+|0\rangle|m_0\rangle+
+|1\rangle|m_1\rangle
+}{\sqrt2}
+\otimes|e_*\rangle.
+
+$$
+
+---
+
+## 定理 88.1　未撤销的可区分记录限制相干回归
+
+最终探针可见度为
+
+$$
+
+\boxed{
+\mathcal V=|\langle m_1|m_0\rangle|.
+}
+\tag{88.1}
+
+$$
+
+若附加记录能够完美区分两个探针分支，即
+
+$$
+
+\langle m_1|m_0\rangle=0,
+
+$$
+
+则仅恢复参照 \(e\) 不能恢复探针相干。
+
+### 证明
+
+对记录 \(m\) 取偏迹，直接读取探针密度矩阵的非对角项。∎
+
+因此，第 82 节的完整回归意味着相关的分支区别被重新相干组合，而不是在外部留下了一份永久、完美可读的分支记录。
+

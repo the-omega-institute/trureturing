@@ -65,74 +65,6 @@ public sealed class StatementProjectionPilotTests
     }
 
     [Fact]
-    public void DocumentDefinitionsLoadFromExplicitRepositoryRoot()
-    {
-        var repositoryRoot = RepositoryAccessor.Discover(RepositoryRootCriterion.LakefileInvalidOperation).Root.FullPath;
-        var definitions = DocumentDefinitions.Discover(
-            typeof(DocumentDefinitions).Assembly,
-            repositoryRoot);
-
-        Assert.NotEmpty(definitions);
-    }
-
-    [Fact]
-    public void PinnedProjectionFixturesConstructEveryDocumentWithoutALiveReport()
-    {
-        var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.LakefileInvalidOperation);
-        var repositoryRoot = TemporaryFileSystem.Directory.CreateTempSubdirectory(
-            "stratalint-scribe-pinned-");
-        var projectionRoot = TemporaryFileSystem.Directory.CreateDirectory(
-            Path.Combine(repositoryRoot.FullName, "Golden", "Projection"));
-        try
-        {
-            foreach (var name in new[]
-                     {
-                         "statement-projection-pilot-v1.json",
-                         "statement-projection-expansion-v1.json",
-                     })
-            {
-                repository.CopyTo(
-                    RepositoryRelativePath.Create($"Golden/Projection/{name}"),
-                    Path.Combine(projectionRoot.FullName, name));
-            }
-
-            var definitions = DocumentDefinitions.Discover(
-                typeof(DocumentDefinitions).Assembly,
-                repositoryRoot.FullName);
-
-            Assert.Contains(definitions, static definition =>
-                definition.Document.Header.Gid.Value == "D5/S3/Zeros/OffLineWitness");
-        }
-        finally
-        {
-            repositoryRoot.Delete(recursive: true);
-        }
-    }
-
-    [Fact]
-    public void DocumentDefinitionsFailClosedWithFixturePathForExplicitRepository()
-    {
-        var repositoryRoot = TemporaryFileSystem.Directory.CreateTempSubdirectory("stratalint-scribe-missing-");
-        try
-        {
-            var exception = Assert.Throws<FileNotFoundException>(() =>
-                DocumentDefinitions.Discover(
-                    typeof(DocumentDefinitions).Assembly,
-                    repositoryRoot.FullName));
-
-            Assert.Contains(repositoryRoot.FullName, exception.Message, StringComparison.Ordinal);
-            Assert.Contains(
-                "statement-projection-pilot-v1.json",
-                exception.Message,
-                StringComparison.Ordinal);
-        }
-        finally
-        {
-            repositoryRoot.Delete(recursive: true);
-        }
-    }
-
-    [Fact]
     public void DecoderCoversEveryInspectorExpressionConstructor()
     {
         const string encoded = "statement-v1(uparams=[ns(n0,1:u)],type=ee(0,es(l0),ei(ln(7)),ej(ns(n0,1:S),0,ed(el(bd,ef(ns(n0,1:x)),ea(em(ns(n0,1:m)),eb(0)))))))";
@@ -359,6 +291,7 @@ public sealed class StatementProjectionPilotTests
         var error = new StringWriter();
 
         var exit = ScribeCli.Run(
+            DocumentlessAssembly.Value,
             ["projections", "--check", "--report", "live-report.json"],
             repository.Path,
             output,
@@ -380,6 +313,7 @@ public sealed class StatementProjectionPilotTests
         var error = new StringWriter();
 
         var exit = ScribeCli.Run(
+            DocumentlessAssembly.Value,
             ["projections", "--check", "--report", "live-report.json"],
             repository.Path,
             TextWriter.Null,
@@ -389,8 +323,8 @@ public sealed class StatementProjectionPilotTests
         Assert.Equal(1, exit);
         Assert.Equal(
             [
-                "pinned statement projection differs from live report: D5.Test.declaration",
-                "pinned statement projection is missing from live report: D5.Test.missing",
+                "pinned statement projection differs from live report: D5.Test.declaration (D5/Test.lean)",
+                "pinned statement projection is missing from live report: D5.Test.missing (D5/Test.lean)",
             ],
             error.ToString().Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries));
     }
@@ -406,6 +340,7 @@ public sealed class StatementProjectionPilotTests
         var error = new StringWriter();
 
         var exit = ScribeCli.Run(
+            DocumentlessAssembly.Value,
             arguments,
             TemporaryFileSystem.Directory.GetCurrentDirectory(),
             TextWriter.Null,
@@ -424,10 +359,8 @@ public sealed class StatementProjectionPilotTests
         using var pilot = LoadPinnedFixture("statement-projection-pilot-v1.json");
         using var expansion = LoadPinnedFixture("statement-projection-expansion-v1.json");
 
-        // The engineering CI job runs without a raw Lean report and decides projectability from
-        // these files alone. If a non-theorem were pinned here it would be judged projectable
-        // without a report and unprojectable with one, so the same tree would emit two different
-        // documents depending on which machine built it.
+        // These pins are the projection corpus in every environment. Their theorem kinds make
+        // their types eligible for statement projection.
         foreach (var declaration in ReadFixtureDeclarations(pilot, expansion))
         {
             Assert.True(
@@ -452,6 +385,55 @@ public sealed class StatementProjectionPilotTests
                 LeanDeclarationRef.Create("D5/S1/Solenoid/HiddenFiberCompact.hiddenFiber_closed_compact_seqCompact")));
 
         Assert.IsType<ProjectionOutcome.Projected>(outcome);
+    }
+
+    [Fact]
+    public void PinnedHiddenFiberRemainsProjectableWithoutReport()
+    {
+        const string sourcePath = "D5/S1/Solenoid/HiddenFiberCompact.lean";
+        using var repository = new StatementProjectionTestRepository(new StatementProjectionTestRepository.Pin(
+            "D5.S1.Solenoid.hiddenFiber_closed_compact_seqCompact", sourcePath,
+            StatementProjectionResolutionTests.Equality(1)));
+
+        repository.Run(() => StatementProjectionResolutionTests.AssertProjected(
+            LeanDeclarationRef.Create(sourcePath[..^5] + ".hiddenFiber_closed_compact_seqCompact"),
+            "1 = 1", StatementProjectionResolutionTests.Equality(1)));
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    [InlineData(" ")]
+    [InlineData("D5/S0/Test/Probe.cs")]
+    public void FixtureLoaderRejectsMissingOrInvalidSourcePath(string? sourcePath)
+    {
+        using var repository = new StatementProjectionTestRepository(new StatementProjectionTestRepository.Pin(
+            "D5.Test.claim", sourcePath, StatementProjectionResolutionTests.Equality(1)));
+
+        var error = Assert.Throws<FormatException>(() => repository.Run(() =>
+            StatementProjectionFixtureLoader.Assess(LeanDeclarationRef.Create("D5/S0/Test/Probe.claim"))));
+
+        Assert.Contains("D5.Test.claim", error.Message, StringComparison.Ordinal);
+        Assert.Contains("source_path", error.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void FixtureLoaderRejectsDuplicateIdentityButKeepsDifferentOwnersDistinct()
+    {
+        var pin = new StatementProjectionTestRepository.Pin(
+            "D5.Test.claim", "D5/S0/Test/Probe.lean", StatementProjectionResolutionTests.Equality(1));
+        using (var duplicate = new StatementProjectionTestRepository(pin))
+        {
+            duplicate.WriteFixture("expansion", pin);
+            var error = Assert.Throws<FormatException>(() => duplicate.Run(() =>
+                StatementProjectionFixtureLoader.Assess(LeanDeclarationRef.Create("D5/S0/Test/Probe.claim"))));
+            Assert.Contains(pin.Name, error.Message, StringComparison.Ordinal);
+        }
+        using var distinct = new StatementProjectionTestRepository(
+            pin, pin with { SourcePath = "D5/S0/Test/Foreign.lean", Type = StatementProjectionResolutionTests.Equality(2) });
+
+        distinct.Run(() => StatementProjectionResolutionTests.AssertProjected(
+            LeanDeclarationRef.Create("D5/S0/Test/Probe.claim"), "1 = 1", pin.Type));
     }
 
     private static JsonDocument LoadPinnedFixture(string name) => JsonDocument.Parse(
@@ -496,7 +478,7 @@ public sealed class StatementProjectionPilotTests
             var declarations = string.Join(
                 ",",
                 pinnedDeclarations.Select(static item =>
-                    $$"""{"name":{{JsonSerializer.Serialize(item.Name)}},"type":{{JsonSerializer.Serialize(item.Type)}}}"""));
+                    $$"""{"name":{{JsonSerializer.Serialize(item.Name)}},"source_path":"D5/Test.lean","kind":"theorem","type":{{JsonSerializer.Serialize(item.Type)}}}"""));
             TemporaryFileSystem.File.WriteAllText(
                 System.IO.Path.Combine(Path, "Golden", "Projection", "statement-projection-pilot-v1.json"),
                 $$"""{"schema":"statement-projection-pilot-fixture-v1","declarations":[{{declarations}}]}""");

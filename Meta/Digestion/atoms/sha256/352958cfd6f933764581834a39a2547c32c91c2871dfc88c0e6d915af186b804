@@ -1,0 +1,14 @@
+## 定理 P4：任意半径的有限截断界
+
+$$
+\boxed{
+\|\mathsf B-\mathsf B_N\|_{\mathrm{op}}
+\le
+\frac{\mathcal M_R}{1-R^{-2}}
+\sqrt{2R^{-2N}-R^{-4N}}.
+}
+\tag{P21}
+$$
+
+这里 \(\mathsf B_N\) 在其余坐标补零。
+

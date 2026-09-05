@@ -1,0 +1,30 @@
+**尚未得到的是式（P35）的全体非负证明，也没有找到实际负证书。** 但现在可以更集中地研究真实算术：不是问“量子概率是否为正”，而是问：
+
+> **实际 theta 核的尺度权重、模关系与导数结构，为什么能够——或者不能够——使这些明确带有正负项的双副本关系，在每一阶都共同非负？**
+
+这一步所需要的是原始算术分布的特殊关系，而不是再次调整观察尺度、增加辅助维数，或把本来不定的读出改成一个自动非负的模平方。
+
+[1]: https://dlmf.nist.gov/25.4 "DLMF: §25.4 Reflection Formulas ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"
+[2]: https://arxiv.org/abs/1504.03438 "[1504.03438] A complete Riemann zeta distribution and the Riemann hypothesis"
+[3]: https://arxiv.org/abs/1911.01745?utm_source=chatgpt.com "The Hermite-Sylvester criterion for real-rooted polynomials"
+[4]: https://dlmf.nist.gov/1.10 "DLMF: §1.10 Functions of a Complex Variable ‣ Topics of Discussion ‣ Chapter 1 Algebraic and Analytic Methods"
+[5]: https://dlmf.nist.gov/5.11 "DLMF: §5.11 Asymptotic Expansions ‣ Properties ‣ Chapter 5 Gamma Function"
+继续。这次可以**真正算掉一部分此前尚未分离的相关贡献**，而不只是把它重新命名。
+
+结论是：
+
+> **局部同余条件给出的奇异级数，确实能够消去均方展开中的对数主项；但在倍长区间 \((x,2x]\) 上，消去之后的基准竟然趋于一个严格负常数。**
+>
+> **因此，真实算术相关与局部同余模型之间的余项，不能被当作趋零误差。它必须补回至少**
+>
+> $$
+> \boxed{
+> c_0=\log2\left(\gamma_{\mathrm E}+\log\frac{\pi}{2}\right)
+> \approx0.7131086897.
+> }
+> $$
+
+随后还能证明：只要对这个**已经扣除局部同余贡献的余项**建立一个对数幂上界，就足以推出 RH。
+
+本轮使用的经典输入，是素数定理、ζ 的对数导数，以及 Montgomery–Soundararajan 已证明的奇异级数平均公式；后者不是尚未证明的素数对猜想。下面给出这些输入之间的具体推导，不把它们称作新的经典定理。新增综合证明尚未进行 Lean 编译。([arXiv][1])
+

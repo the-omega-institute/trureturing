@@ -1,0 +1,71 @@
+### 证明
+
+先使用上一轮高斯历史嵌入得到的有限边界恒等式：
+
+$$
+\boxed{
+[A_C(r),A_C(r)^*]\preceq\frac1rI.
+}
+\tag{J13}
+$$
+
+它可以再次直接验证：在历史空间上取：
+
+$$
+\mathcal A_r
+=
+i\frac d{d\tau}+\frac{i\tau}{2r},
+$$
+
+则：
+
+$$
+[\mathcal A_r,\mathcal A_r^*]=\frac1rI.
+$$
+
+历史子空间对 \(\mathcal A_r\) 不变。将其伴随作用后逸出该子空间的部分记为 \(R_r\)，便有：
+
+$$
+R_r^*R_r
+=
+\frac1rI-[A_C(r),A_C(r)^*]\succeq0.
+$$
+
+接着，对 \(A_C(r)\) 作酉 Schur 分解：
+
+$$
+A_C(r)\sim\Lambda+N,
+$$
+
+其中 \(\Lambda=\operatorname{diag}(\lambda_j)\)，\(N\) 严格上三角。
+
+对前 \(k\) 个坐标的投影，式（J13）给出：
+
+$$
+\sum_{i\le k<j}|N_{ij}|^2\le\frac{k}{r}.
+$$
+
+对 \(k=1,\ldots,d-1\) 求和：
+
+$$
+\|N\|_{\mathrm{HS}}^2
+\le
+\frac{d(d-1)}{2r}.
+$$
+
+另一方面：
+
+$$
+\boxed{
+\mathcal E_C(r)
+=
+\sum_j(\Im\lambda_j)^2
++
+\frac12\|N\|_{\mathrm{HS}}^2.
+}
+$$
+
+合并即得。证毕。
+
+---
+

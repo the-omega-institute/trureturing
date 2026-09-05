@@ -1,0 +1,84 @@
+## 定理 133.1　导数重建的偏差与方差
+
+令 \(k=|\alpha|\le2\)。则
+
+$$
+\boxed{
+\left|
+\mathbb E[\widehat{\partial^\alpha f}]
+-\partial^\alpha f(p)
+\right|
+\le
+\frac{\alpha!}{\sqrt\gamma}
+\left(
+\frac{\beta}{h^k}
++
+\frac{M_4}{24}h^{4-k}
+\right),
+}
+\tag{133.1}
+$$
+
+并且
+
+$$
+\boxed{
+\operatorname{Var}
+\bigl(\widehat{\partial^\alpha f}\bigr)
+\le
+\frac{
+\Gamma(\alpha!)^2
+}{
+N\gamma h^{2k}
+}.
+}
+\tag{133.2}
+$$
+
+### 证明
+
+在 \(p\) 处取三阶 Taylor 多项式 \(P_3\)。余项满足
+
+$$
+|f(x_j)-P_3(x_j)|
+\le
+\frac{M_4h^4}{24}.
+$$
+
+由定理 132.1，多项式部分被精确重建，因此总偏差不超过
+
+$$
+\sum_j|w_j^{(\alpha)}|
+\left(
+\beta+\frac{M_4h^4}{24}
+\right).
+$$
+
+应用式（132.7），得到式（133.1）。
+
+设协方差矩阵为 \(\Sigma\)。则
+
+$$
+\operatorname{Var}\left(\sum_jw_jY_j\right)
+=
+w^{\mathsf T}\Sigma w.
+$$
+
+利用
+
+$$
+2|w_iw_j|\le w_i^2+w_j^2
+$$
+
+和式（131.2），有
+
+$$
+w^{\mathsf T}\Sigma w
+\le
+\Gamma\sum_jw_j^2.
+$$
+
+再代入式（132.6）。∎
+
+---
+

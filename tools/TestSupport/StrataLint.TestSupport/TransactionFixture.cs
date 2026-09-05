@@ -401,11 +401,8 @@ internal sealed partial class TransactionFixture
             existing_atom=$(sed -n 's/^atom_id: //p' Meta/BACKFILL.yaml)
             if [[ $existing_atom == "$atom" ]] \
                 && grep -q '^coverage: true$' Meta/BACKFILL.yaml; then
-              [[ $gid == D5/S3/Observer/WindowRegisterCRT.window_register_crt_decomposition ]] || {
-                echo 'COVER_INVALID hosted cover omitted the selected secondary GID' >&2
-                exit 1
-              }
-              secondary='secondary: true'
+              echo "COVER_INVALID cover atom $atom already has coverage: $gid" >&2
+              exit 1
             fi
             printf 'atom_id: %s\ncoverage: true\naligned: false\n%s\n' \
               "$atom" "$secondary" > Meta/BACKFILL.yaml

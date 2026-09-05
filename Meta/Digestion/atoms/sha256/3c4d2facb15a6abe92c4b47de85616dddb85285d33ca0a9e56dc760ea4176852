@@ -1,0 +1,23 @@
+## 定理 2：有限同余核始终半正定
+
+对任意有限复向量 \((z_n)\)，
+
+$$
+\boxed{
+\sum_{n,m}\overline{z_n}z_m\mathscr K_Q(n,m)
+=
+\sum_{2\le q\le Q}
+\frac{\mu(q)^2}{\varphi(q)^2}
+\sum_{\substack{a\bmod q\\(a,q)=1}}
+\left|\sum_nz_ne(-an/q)\right|^2
+\ge0.
+}
+\tag{11}
+$$
+
+### 证明
+
+把 Ramanujan 和展开，再交换有限求和，直接得到平方和。证毕。
+
+所以，\(\mathscr K_Q\) 是一个实际构造出来的 Gram 核，而不是先写“假设某个正核存在”。
+

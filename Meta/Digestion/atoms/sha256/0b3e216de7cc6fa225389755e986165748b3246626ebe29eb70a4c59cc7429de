@@ -1,0 +1,85 @@
+## 定理 99.1　平均钟律可以严格为二次，而实际约化钟非酉
+
+对钟的能级差
+
+$$
+\Delta E=\hbar\omega,
+$$
+
+忽略控制寄存器后，钟相干被乘以：
+
+$$
+\begin{aligned}
+\chi_v(t)
+&=
+\frac12
+\left[
+e^{-i\omega n_0(v)t}
++
+e^{-i2\omega n_0(v)t}
+\right]\\
+&=
+\boxed{
+e^{-i\frac32\omega n_0(v)t}
+\cos\left(\frac12\omega n_0(v)t\right).
+}
+\end{aligned}
+\tag{99.1}
+$$
+
+由初始相位变化率推得的平均钟速为：
+
+$$
+\overline n(v)=\frac32n_0(v).
+$$
+
+所以：
+
+$$
+\boxed{
+\overline n(v)^2=\frac94r_0(v),
+}
+\tag{99.2}
+$$
+
+它严格对应一个洛伦兹度量：
+
+$$
+\boxed{
+g_{\mathrm{mean}}=\frac94g_0.
+}
+\tag{99.3}
+$$
+
+但完整约化钟动力学不能由这个确定度量上的理想酉钟描述。
+
+### 证明
+
+式（99.1）由两个分支的部分迹直接得到。
+
+初始相位导数给出 \(\overline n=\tfrac32n_0\)，从而得到式（99.2）、（99.3）。
+
+若用确定平均钟速描述，则相干因子应该为：
+
+$$
+\chi_{\mathrm{ideal}}(t)
+=
+e^{-i\frac32\omega n_0t},
+$$
+
+模长恒为一。
+
+真实因子却满足：
+
+$$
+|\chi_v(t)|
+=
+\left|
+\cos\left(\frac12\omega n_0t\right)
+\right|.
+$$
+
+对初始叠加态，在适当 \(t\) 上输出为混合态；确定 Hamiltonian 的酉作用不可能把纯态变成混合态。∎
+
+---
+

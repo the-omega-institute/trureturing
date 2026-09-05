@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:79bd660ff77c21775d3c0916af1fd1954836f6a177ef58df18463c0d6e951549
+  normalized_sha256: sha256:79bd660ff77c21775d3c0916af1fd1954836f6a177ef58df18463c0d6e951549
+cas_ref: sha256:79bd660ff77c21775d3c0916af1fd1954836f6a177ef58df18463c0d6e951549
+coverage_gids:
+  - gid: D5/S3/Factorization/PrimePowers/FiniteCompatibleCrt.finite_crt_gluing
+    target_statement_id: sha256:db97366374e92940a2b0e67ccc179813ed01fa86df532806637f2c440ed58e88
+receipts:
+  scribe:
+    - gid: D5/S3/Factorization/PrimePowers/FiniteCompatibleCrt.finite_crt_gluing
+      definition_sha256: sha256:6e140b9ac2e4eaffd6dc96dc1c638ae022677ffbddce65cc7cae7b1ffd716c16
+      emission_sha256: sha256:2127f0d096db488b2b7aebf65706c2e8404507d91968f6e797a36da917beba00
+  unresolved_subitems: []

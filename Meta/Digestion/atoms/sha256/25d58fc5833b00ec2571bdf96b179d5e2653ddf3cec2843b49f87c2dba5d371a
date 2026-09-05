@@ -1,0 +1,52 @@
+## 推论 138.1　固定钟相位协议可以收敛，而引力源项仍不消失
+
+固定一条受控轨迹 \(\gamma\)，假设：
+
+$$
+-g_0(\dot\gamma,\dot\gamma)\ge\nu^2>0,
+$$
+
+并且其坐标速度有一致上界。
+
+则
+
+$$
+\boxed{
+|\tau_\varepsilon[\gamma]-\tau_0[\gamma]|
+=O(\varepsilon).
+}
+\tag{138.6}
+$$
+
+对于固定有限维钟 \(H_C\)，相应内部酉过程满足
+
+$$
+\boxed{
+\frac12\|\mathcal U_\varepsilon-\mathcal U_0\|_\diamond
+\le
+\frac{\|H_C\|}{\hbar}
+|\tau_\varepsilon-\tau_0|
+=O(\varepsilon).
+}
+\tag{138.7}
+$$
+
+### 证明
+
+由度量一致收敛与轨迹远离 null 边界，
+
+$$
+\left|
+\sqrt{-g_\varepsilon(\dot\gamma,\dot\gamma)}
+-
+\sqrt{-g_0(\dot\gamma,\dot\gamma)}
+\right|
+\le C\varepsilon.
+$$
+
+沿有限参数区间积分得到式（138.6）。
+
+再用同一个 \(H_C\) 的指数差界，即得式（138.7）。∎
+
+这只覆盖指定的、固定资源的钟相位协议，不覆盖可以随 \(\varepsilon\) 提高分辨率的潮汐或高频探测实验。
+

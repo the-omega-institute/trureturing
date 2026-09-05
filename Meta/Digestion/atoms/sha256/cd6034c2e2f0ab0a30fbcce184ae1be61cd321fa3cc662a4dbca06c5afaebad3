@@ -1,0 +1,29 @@
+## 定义 5：对应的隧穿矩阵
+
+定义下双对角矩阵：
+
+$$
+L_w=
+\begin{pmatrix}
+\sqrt{w_1}&0&0&\cdots\\
+\sqrt{w_2}&\sqrt{w_3}&0&\cdots\\
+0&\sqrt{w_4}&\sqrt{w_5}&\cdots\\
+\vdots&&\ddots&\ddots
+\end{pmatrix}.
+$$
+
+再定义：
+
+$$
+\boxed{
+T_w=
+\begin{pmatrix}
+0&L_w\\
+L_w^{\mathsf T}&0
+\end{pmatrix}.
+}
+\tag{10}
+$$
+
+它是实对称矩阵，重新排列基底以后，就是一条 \(2d\) 位置近邻隧穿链。
+

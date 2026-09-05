@@ -1,0 +1,32 @@
+# 十三、与项目现有模块的连接
+
+本轮读取了前文固定快照中的相关声明，没有把它们描述成新增推导已经编译完成。
+
+`DiscountedObservabilityGramianEquation.lean` 证明的是离散折扣 Gramian 的 Lyapunov 方程，并保留明确的收敛前件。它不自动提供本轮的高斯方差流、对数行列式恒等式或平方下降律。
+
+`JensenPolynomialObstruction.lean` 则明确把实际 Jensen 塔与 RH 的两向分析关系作为输入，没有无条件构造全阶实根性。
+
+本轮可以单独整理成的证明链是：
+
+$$
+\boxed{
+\begin{aligned}
+\text{高斯历史积分}
+&\longrightarrow
+\text{线性度量流}\\
+&\longrightarrow
+\text{保谱非线性矩阵流}\\
+&\longrightarrow
+\text{非正规性的精确平方消耗}\\
+&\longrightarrow
+\text{不可消去的谱虚部平方和}.
+\end{aligned}
+}
+$$
+
+这些有限维恒等式不依赖 RH。
+
+真正的算术桥仍在最后：实际 \(C_d\) 的不可消去部分，是否在无界阶数上为零。
+
+---
+

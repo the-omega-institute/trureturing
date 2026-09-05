@@ -1,0 +1,15 @@
+## 定理 Q3：实际两模态判据
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+R_n(t)\ge0
+\quad
+\forall n\ge0,\ \forall t\in\mathbb R.
+}
+\tag{Q19}
+$$
+
+这就是广义 Laguerre 判据在当前协议中的表达，不是另外宣称发现了一条未经比较的 RH 新判据。
+

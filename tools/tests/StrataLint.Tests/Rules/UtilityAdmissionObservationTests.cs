@@ -98,8 +98,8 @@ public sealed class UtilityAdmissionObservationTests
     }
 
     [Fact]
-    [BaseFactScopeProbe(30)]
-    public void Sl030EvaluateScopesFirstFreezeDeltaAndKeepsImplementationWakeup()
+    [BaseFactScopeProbe(31)]
+    public void Sl031EvaluateScopesFirstFreezeDeltaAndKeepsImplementationWakeup()
     {
         var historical = new RuleFixture();
         AddExistingFrozenState(historical);

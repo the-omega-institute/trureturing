@@ -1,0 +1,24 @@
+### RH 推出局部均方上界
+
+RH 下的经典估计为
+
+$$
+\psi(x)-x=O(\sqrt x\,\log^2x).
+$$
+
+这里使用的是 von Koch–Schoenfeld 型误差控制；相应显式版本也见 Büthe 的研究。([arXiv][4])
+
+所以
+
+$$
+Y(x)=O(\sqrt x\,\log^2x),
+$$
+
+从而
+
+$$
+\mathfrak J(X)=O(\log^4X).
+$$
+
+取 \(X=2^j\)，得到式（28），可取 \(A=4\)。
+

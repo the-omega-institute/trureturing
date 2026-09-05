@@ -1,0 +1,57 @@
+## 定理 97.2　从重建度量构造局部钟尺标架
+
+取一个可逆矩阵 \(S\)，满足
+
+$$
+C=S^\mathsf TS.
+$$
+
+定义：
+
+$$
+e^0=Ndt,
+$$
+
+$$
+\begin{pmatrix}
+e^1\\ \vdots\\ e^d
+\end{pmatrix}
+=
+S(dx-wdt).
+$$
+
+则
+
+$$
+\boxed{
+g=-(e^0)^2+\sum_{a=1}^d(e^a)^2.
+}
+\tag{97.3}
+$$
+
+任意另一组给出相同 \(g\) 的局部标架，与该标架之间相差一个 Lorentz 变换。
+
+### 证明
+
+第一式由定理 92.1 的完成平方形式。
+
+若 \(g=e^\mathsf T\eta e=\widetilde e^\mathsf T\eta\widetilde e\)，定义
+
+$$
+\Lambda=\widetilde e\,e^{-1}.
+$$
+
+则
+
+$$
+\Lambda^\mathsf T\eta\Lambda=\eta.
+$$
+
+∎
+
+这补上前一轮的一项输入：**钟尺标架现在可以由钟律重建，而不必始终预先给定。**
+
+但把实际量子输运认定为该度量的 Levi–Civita 输运，仍需检验度量相容与无挠条件。度量存在，不会自动排除其他连接。标准微分几何正是分别定义这些对象和相容关系。([David Tong][5])
+
+---
+

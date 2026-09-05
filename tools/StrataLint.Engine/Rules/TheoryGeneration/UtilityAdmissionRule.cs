@@ -2,7 +2,7 @@ using System.Collections.Immutable;
 
 namespace StrataLint.Engine;
 
-// SL-030. First-freeze utility admission for computational content.
+// SL-031. First-freeze utility admission for computational content.
 internal static class UtilityAdmissionRule
 {
     internal static bool IsAffectedBy(RuleEvaluationContext context) =>

@@ -1,0 +1,86 @@
+## 定理 3：同余项的完整展开
+
+$$
+\boxed{
+\mathfrak D_{\mathrm{cong}}(X)
+=
+-(\log2)\log X
+-\frac12(\log2)^2
++
+A_0\log2
++o(1).
+}
+\tag{15}
+$$
+
+### 证明
+
+固定 \(x\)。区间 \((x,2x]\) 中恰有 \(M(x)\) 个连续整数。
+
+在这些整数中，差为 \(d>0\) 的有序递增对共有
+
+$$
+(M(x)-d)_+
+$$
+
+个。因此
+
+$$
+\sum_nW_X(n,n+d)
+=
+\int_X^{2X}\frac{(M(x)-d)_+}{x^2}\,dx.
+$$
+
+代入式（9）：
+
+$$
+\mathfrak D_{\mathrm{cong}}(X)
+=
+\int_X^{2X}
+\frac{R_2(M(x))}{x^2}\,dx.
+$$
+
+因为 \(M(x)=x+O(1)\)，式（14）给出
+
+$$
+R_2(M(x))
+=
+-x\log x+A_0x
++O_\varepsilon(x^{1/2+\varepsilon}+\log x).
+$$
+
+取 \(0<\varepsilon<1/2\)，积分余项趋于零。
+
+所以
+
+$$
+\begin{aligned}
+\mathfrak D_{\mathrm{cong}}(X)
+&=
+\int_X^{2X}\frac{-\log x+A_0}{x}\,dx+o(1)\\
+&=
+-(\log2)\log X
+-\frac12(\log2)^2
++A_0\log2+o(1).
+\end{aligned}
+$$
+
+证毕。
+
+---
+
+现在，两个发散项真的抵消了：
+
+$$
+\boxed{
++(\log2)\log X
+\quad+\quad
+-(\log2)\log X
+=0.
+}
+$$
+
+**这部分抵消已经有无条件的数学依据。**
+
+但剩下的常数不能忽略。
+

@@ -1,0 +1,32 @@
+**欧拉常数固定的整体回返也是明确的：**
+
+$$
+\boxed{
+\lim_{d\to\infty}
+d\,g_d^*(I+C_d/4)^{-1}g_d
+=
+4\left[
+a_1-1-\frac{\gamma_{\mathrm E}}2+\frac12\log4\pi
+\right],
+}
+$$
+
+其中正回返解释需要相应正实现，代数极限则由实际系数定义。
+
+因此，前文“总量闭合却可能仍有局部缺陷”的问题，现在有了精确版本：
+
+> **四阶累积量决定新增耦合的总量；更高阶统计决定这份总量在各个通道之间如何分配；欧拉常数约束这些通道的整体回返。真正的 RH 条件，是每一层的分配都不能要求负的耦合平方。**
+
+这既没有把难点藏进量子模型的定义，也没有把“整体”降格成一个平均数。它把下一项需要攻克的算术内容，集中到了**实际高阶矩为何始终落在正确的延拓区间内**。
+
+[1]: https://dlmf.nist.gov/25.4 "DLMF: §25.4 Reflection Formulas ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"
+[2]: https://arxiv.org/abs/1902.07321 "[1902.07321] Jensen polynomials for the Riemann zeta function and other sequences"
+[3]: https://doi.org/10.1016%2FS0022-247X%2803%2900465-7?utm_source=chatgpt.com "Differentiators and the geometry of polynomials - ScienceDirect"
+[4]: https://dlmf.nist.gov/25.2 "DLMF: §25.2 Definition and Expansions ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"
+[5]: https://dlmf.nist.gov/18.2 "DLMF: §18.2 General Orthogonal Polynomials ‣ General Orthogonal Polynomials ‣ Chapter 18 Orthogonal Polynomials"
+这次可以把上一轮的 Bézout 正性，推进成一个更具体的“观察者相容性”定理：
+
+> **某一有限层有没有负方向，不必通过寻找它的根来判断；取足够多个普通复频率读数，就能完整恢复其负方向数。**
+
+而且可以进一步证明：
+

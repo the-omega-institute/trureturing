@@ -1,0 +1,96 @@
+## 定理 138.2　极限具有非零、正的 null 型有效源
+
+对极限度量 \(g_0\)，
+
+$$
+\boxed{
+\mathscr G[g_0]
+=
+\Omega^2\,du\otimes du.
+}
+\tag{138.3}
+$$
+
+而
+
+$$
+\operatorname{Scal}(g_0)=0.
+$$
+
+因此
+
+$$
+\boxed{
+\mathfrak B
+=
+\Omega^2\,du\otimes du\ne0.
+}
+\tag{138.4}
+$$
+
+若使用引力耦合常数 \(\kappa_E=8\pi G/c^4\)，定义
+
+$$
+\boxed{
+\tau_{\mathrm{eff}}
+=
+\frac{\Omega^2}{\kappa_E}
+\,du\otimes du,
+}
+\tag{138.5}
+$$
+
+则它无迹，并满足弱能量条件。
+
+### 证明
+
+在极限中 \(p=0\)，由式（137.4），
+
+$$
+R_{uu}(g_0)
+=
+-2\frac{b_0''}{b_0}
+=
+\Omega^2.
+$$
+
+只有这一 Ricci 分量非零，而 \(g_0^{uu}=0\)，故标量曲率为零，Einstein 张量即式（138.3）。
+
+对任意类时向量 \(V\)，
+
+$$
+\tau_{\mathrm{eff}}(V,V)
+=
+\frac{\Omega^2}{\kappa_E}[du(V)]^2
+\ge0.
+$$
+
+无迹性来自 \(g_0^{-1}(du,du)=0\)。∎
+
+### 两个重要结果
+
+首先：
+
+$$
+\boxed{
+\forall\varepsilon>0,\quad
+\mathscr G[g_\varepsilon]=0,
+}
+$$
+
+但
+
+$$
+\boxed{
+\mathscr G[g_0]\ne0.
+}
+$$
+
+其次，所有微观度量与极限度量的标量曲率都为零。因此，**只检查标量曲率，也不能判断一个几何是否真空。**
+
+这里的有效源具有单向无质量辐射的应力形式。它不表示产生了热光子，也不是霍金辐射；它是被宏观描述舍弃的短波引力结构所留下的动力学贡献。
+
+真空波的高频极限表现为有效辐射应力，是 Isaacson、Burnett 及后续严格反作用框架中的核心现象；本例给出了一个直接可算的局部实现。([APS Journals][1])
+
+---
+

@@ -1,0 +1,65 @@
+## 11.1　背景、接口与驱动
+
+固定前文的一个联合能量分支 \(\boldsymbol e_0\)，并平移结构坐标：
+
+$$
+\boldsymbol x
+=
+\boldsymbol\varphi+gK^{-1}\boldsymbol e_0.
+$$
+
+略去该分支上的常数能量，结构 Hamiltonian 为
+
+$$
+\boxed{
+H_{\mathrm G}
+=
+\frac12\boldsymbol\Pi^{\mathsf T}M^{-1}\boldsymbol\Pi
++
+\frac12\boldsymbol x^{\mathsf T}K\boldsymbol x,
+}
+\tag{11.1}
+$$
+
+其中
+
+$$
+M=M^{\mathsf T}>0,
+\qquad
+K=K^{\mathsf T}>0.
+$$
+
+令
+
+$$
+C:\mathbb R^N\to\mathbb R^m
+$$
+
+为已标定的观察接口，定义可读结构扰动
+
+$$
+\boxed{
+\boldsymbol y=gC\boldsymbol x.
+}
+\tag{11.2}
+$$
+
+它可以表示若干局部钟速扰动，或这些扰动的线性组合。
+
+选取与该读数共轭的驱动：
+
+$$
+\boxed{
+H_{\mathrm{drv}}(t)
+=
+\boldsymbol f(t)^{\mathsf T}\boldsymbol y.
+}
+\tag{11.3}
+$$
+
+因此，驱动与读数使用同一个 \(C\)。这一“共轭接口”条件是后续互易性与正性的重要前提。
+
+\(\boldsymbol f(t)\) 表示经过独立制备与标定的控制协议。它不意味着原自治 Hamiltonian 中守恒的源能量会自行变化；将驱动器纳入完整闭合系统时，仍须记录其能量与控制资源。
+
+---
+

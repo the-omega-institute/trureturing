@@ -476,6 +476,7 @@ producer_compile_paths() {
   elif [[ "$scope" == "scribe-content" ]]; then
     projects=(
       tools/StrataLint.Scribe/StrataLint.Scribe.csproj
+      tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj
       tools/StrataLint.Engine/StrataLint.Engine.csproj
       tools/Trureturing.Truth/Trureturing.Truth.csproj)
   else
@@ -520,6 +521,8 @@ scribe_declared_paths() {
   local relative
   for relative in \
     tools/StrataLint.Scribe/StrataLint.Scribe.csproj \
+    tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj \
+    tools/StrataLint.Scribe.Documents/packages.lock.json \
     tools/StrataLint.Scribe/packages.lock.json; do
     [[ -f "$REPOSITORY/$relative" ]] && printf '%s\n' "$relative"
   done
@@ -577,10 +580,14 @@ managed_modules() {
       done
 }
 
+# Repository address preimage v1 hashes the resident inspector producer,
+# Trureturing.lean + D5/**/*.lean + tools/lean-inspector/**/*.lean sources,
+# and the Lean toolchain/lake configuration as three named SHA-256 fields.
 repository_address() {
   local resident_manifest="$TMP_ROOT/resident-inspector.manifest"
   local sources_manifest="$TMP_ROOT/sources.manifest"
   local sources_list="$TMP_ROOT/sources.list"
+  local inspector_sources_list="$TMP_ROOT/inspector-sources.list"
   local config_manifest="$TMP_ROOT/config.manifest"
   local preimage="$TMP_ROOT/repository-input.preimage"
   local resident_sha256 sources_sha256 config_sha256 lakefile_count=0 lakefile
@@ -597,6 +604,13 @@ repository_address() {
   while IFS= read -r path; do
     append_manifest_entry "$sources_manifest" "${path#"$REPOSITORY/"}"
   done < "$sources_list"
+  if [[ -d "$REPOSITORY/tools/lean-inspector" ]]; then
+    find "$REPOSITORY/tools/lean-inspector" -type f -name '*.lean' -print \
+      | sort > "$inspector_sources_list"
+    while IFS= read -r path; do
+      append_manifest_entry "$sources_manifest" "${path#"$REPOSITORY/"}"
+    done < "$inspector_sources_list"
+  fi
   materialize_manifest "$sources_manifest"
   sources_sha256="$(hash_file "$sources_manifest")"
 

@@ -4,7 +4,7 @@ namespace StrataLint.Tests;
 
 internal static class UtilityAdmissionTestSupport
 {
-    internal static readonly RuleId UtilityRuleId = RuleId.CreateKnown(30);
+    internal static readonly RuleId UtilityRuleId = RuleId.CreateKnown(31);
 
     internal static IReadOnlyList<Diagnostic> EvaluateFirstFreeze(string? utility)
     {

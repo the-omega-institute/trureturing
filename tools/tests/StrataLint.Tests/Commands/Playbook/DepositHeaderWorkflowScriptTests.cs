@@ -255,7 +255,7 @@ public sealed class DepositHeaderUtilityTests
         fixture.Files[statePath] =
             "{\"statement_id\":\"sha256:0000000000000000000000000000000000000000000000000000000000000000\"}\n";
         var firstFreeze = RuleCatalog.Default.EvaluateSingle(
-            RuleId.CreateKnown(30),
+            RuleId.CreateKnown(31),
             fixture.Build(RawChangeSet.CreateWithKinds(
                 [(statePath, RawChangeKind.Added)]))).Diagnostics;
 

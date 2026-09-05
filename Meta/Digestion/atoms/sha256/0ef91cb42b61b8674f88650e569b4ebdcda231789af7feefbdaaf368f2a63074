@@ -1,0 +1,16 @@
+## 定义 118.1　涨落尺度算子
+
+对乘积态 \(\tau^{\otimes N}\)，定义：
+
+$$
+F_N(A)
+=
+\frac1{\sqrt N}
+\sum_{j=1}^N
+\left(A^{(j)}-\langle A\rangle_\tau I\right).
+$$
+
+与宏观平均不同，它保留 \(N^{-1/2}\) 尺度的偏离。
+
+---
+

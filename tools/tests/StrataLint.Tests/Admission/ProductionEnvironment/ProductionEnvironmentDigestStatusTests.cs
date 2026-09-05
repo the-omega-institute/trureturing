@@ -492,7 +492,6 @@ public sealed partial class ProductionEnvironmentTests
         var fixture = new RuleFixture();
         fixture.AddBackfillTargets();
         fixture.Baseline[targetPath] = fixture.Files[targetPath];
-        fixture.ForkPoint[targetPath] = fixture.Files[targetPath];
         var definitionPath = ScribeEmissionAttestation.DefinitionPath(gid);
         var emissionPath = ScribeEmissionAttestation.EmissionPath(gid);
         const string definition = "fixture definition\n";
@@ -513,7 +512,7 @@ public sealed partial class ProductionEnvironmentTests
                 + $"      definition_sha256: {definitionSha256}\n"
                 + $"      emission_sha256: {emissionSha256}",
                 StringComparison.Ordinal);
-        foreach (var files in new[] { fixture.Files, fixture.Baseline, fixture.ForkPoint })
+        foreach (var files in new[] { fixture.Files, fixture.Baseline })
         {
             files.Remove(RuleFixture.FixtureBackfillAtomPath);
             files[absorbedPath] = atom;

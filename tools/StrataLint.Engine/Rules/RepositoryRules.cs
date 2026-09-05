@@ -156,6 +156,14 @@ internal static partial class RepositoryRules
             AdmissionEffect.Observe),
         Register(
             30,
+            "Judge surface reads no other revision",
+            new RepositoryRule(
+                JudgeSurfaceScoped,
+                JudgeSurfaceRevisionMaterialization,
+                JudgeSurfaceAffected),
+            category: "trust"),
+        Register(
+            31,
             "Computational utility admission",
             new RepositoryRule(
                 Formal,

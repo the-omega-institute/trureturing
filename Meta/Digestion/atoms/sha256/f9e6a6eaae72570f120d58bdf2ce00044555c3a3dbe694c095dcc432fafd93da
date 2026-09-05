@@ -1,0 +1,98 @@
+## 定理 103.1　平均二阶读数总能给出一个洛伦兹候选
+
+定义：
+
+$$
+\overline r_2(v)
+=
+\operatorname{Tr}[\sigma\widehat R(v)].
+$$
+
+则：
+
+$$
+\overline r_2(v)
+=
+a+2b^{\mathsf T}v-v^{\mathsf T}Cv,
+$$
+
+其中：
+
+$$
+a=\operatorname{Tr}(\sigma\widehat A)>0,
+$$
+
+$$
+b_i=\operatorname{Tr}(\sigma\widehat B_i),
+$$
+
+$$
+C_{ij}=\operatorname{Tr}(\sigma\widehat C_{ij}),
+\qquad
+C>0.
+$$
+
+因而：
+
+$$
+\boxed{
+g_{\mathrm{second}}
+=
+\begin{pmatrix}
+-a&-b^{\mathsf T}\\
+-b&C
+\end{pmatrix}
+}
+\tag{103.4}
+$$
+
+具有一个负方向和 \(d\) 个正方向。
+
+### 证明
+
+取迹保持线性，故得到二次函数。
+
+由假设：
+
+$$
+a\ge a_*>0,
+$$
+
+且：
+
+$$
+\xi^{\mathsf T}C\xi
+=
+\operatorname{Tr}
+\left[
+\sigma\sum_{i,j}\xi_i\xi_j\widehat C_{ij}
+\right]
+\ge c_*\|\xi\|^2.
+$$
+
+最后完成平方，或者应用上一轮洛伦兹重建定理。∎
+
+### 关键限制
+
+即使式（103.4）对每个结构态都成立，仍可能：
+
+$$
+\boxed{
+\operatorname{Var}_\sigma(\widehat n(v))>0.
+}
+$$
+
+此时：
+
+$$
+\bigl(\operatorname{Tr}\sigma\widehat n(v)\bigr)^2
+\ne
+\operatorname{Tr}\sigma\widehat R(v).
+$$
+
+所以，两种不同的“平均几何”甚至可能从不同统计读数中出现。
+
+**真正需要的不是选一个看起来更漂亮的平均，而是检验完整钟过程是否沿同一个经典几何下降。**
+
+---
+

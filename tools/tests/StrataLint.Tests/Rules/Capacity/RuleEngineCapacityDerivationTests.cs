@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using StrataLint.Cli;
 using StrataLint.Engine;
 
@@ -30,11 +31,174 @@ public sealed class RuleEngineCapacityDerivationTests
 
         RepositoryRules.EvaluateCapacity(context, _ =>
         {
-            calls++;
+            Interlocked.Increment(ref calls);
             return EmptyTestMap();
         });
 
         Assert.Equal(2, calls);
+    }
+
+    [Fact]
+    public void Sl003StartsCurrentAndBaselineDerivationsBeforeEitherCompletes()
+    {
+        var fixture = new RuleFixture();
+        var context = fixture.Build(RawChangeSet.Create([RuleFixture.BlueprintSourcePath]));
+        var invokingThreadId = Environment.CurrentManagedThreadId;
+        var bothStarted = new TaskCompletionSource<bool>(
+            TaskCreationOptions.RunContinuationsAsynchronously);
+        var events = new ConcurrentQueue<string>();
+        var started = 0;
+        var completedBeforeBothStarted = 0;
+
+        RepositoryRules.EvaluateCapacity(context, snapshot =>
+        {
+            var side = ReferenceEquals(snapshot, context.Current) ? "Current" : "Baseline";
+            events.Enqueue(side + ":started");
+            if (Interlocked.Increment(ref started) == 2)
+            {
+                bothStarted.SetResult(true);
+            }
+
+            if (Environment.CurrentManagedThreadId == invokingThreadId)
+            {
+                Assert.Fail($"SL-003 serialized regression: {side} derivation ran inline");
+            }
+
+            if (!bothStarted.Task.Wait(TestBudgets.CapacityDerivationStartHangGuard))
+            {
+                throw new SkipException(
+                    "infrastructure-hang-guard expired: SL-003 concurrency gate — Baseline derivation never started (serialized regression suspected)");
+            }
+
+            if (Volatile.Read(ref started) < 2)
+            {
+                Interlocked.Exchange(ref completedBeforeBothStarted, 1);
+            }
+
+            events.Enqueue(side + ":completed");
+            return EmptyTestMap();
+        });
+
+        Assert.Equal(2, started);
+        Assert.Equal(0, completedBeforeBothStarted);
+        var recorded = events.ToArray();
+        Assert.Equal(4, recorded.Length);
+        Assert.All(recorded.Take(2), static item => Assert.EndsWith(":started", item));
+        Assert.Contains("Current:started", recorded.Take(2));
+        Assert.Contains("Baseline:started", recorded.Take(2));
+    }
+
+    [Fact]
+    public async Task Sl003PassesDerivedMapsToUnknownDebtPolicyInCurrentBaselineOrder()
+    {
+        var fixture = new RuleFixture();
+        var context = fixture.Build(RawChangeSet.Create([RuleFixture.BlueprintSourcePath]));
+        var currentMap = UnknownTestMap("CurrentDebt");
+
+        var findings = await RepositoryRules.EvaluateCapacityAsync(
+            context,
+            Task.FromResult(currentMap),
+            Task.FromResult(EmptyTestMap()));
+
+        var finding = Assert.Single(findings, static item =>
+            item.Message.Contains("unknown test method introduced", StringComparison.Ordinal));
+        Assert.Equal("tools/tests/Synthetic.Tests/DebtTests.cs", finding.Path);
+        Assert.Equal(
+            "conservative unknown test method introduced after protected baseline: "
+            + "tools/tests/Synthetic.Tests::DebtTests.CurrentDebt",
+            finding.Message);
+    }
+
+    [Fact]
+    public void Sl003ProductionEntryBindsCurrentAndBaselineSnapshotsToPolicyOrder()
+    {
+        var fixture = new RuleFixture();
+        var context = fixture.Build(RawChangeSet.Create([RuleFixture.BlueprintSourcePath]));
+        var currentMap = UnknownTestMap("CurrentDebt");
+        var baselineMap = UnknownTestMap("BaselineDebt");
+
+        var findings = RepositoryRules.EvaluateCapacity(context, snapshot =>
+        {
+            if (ReferenceEquals(snapshot, context.Current))
+            {
+                return currentMap;
+            }
+
+            Assert.Same(context.Baseline, snapshot);
+            return baselineMap;
+        });
+
+        var finding = Assert.Single(findings, static item =>
+            item.Message.Contains("unknown test method introduced", StringComparison.Ordinal));
+        Assert.Equal("tools/tests/Synthetic.Tests/DebtTests.cs", finding.Path);
+        Assert.Equal(
+            "conservative unknown test method introduced after protected baseline: "
+            + "tools/tests/Synthetic.Tests::DebtTests.CurrentDebt",
+            finding.Message);
+    }
+
+    [Fact]
+    public async Task Sl003WaitsForFaultedBaselineBeforeRethrowingCurrentFailure()
+    {
+        var fixture = new RuleFixture();
+        var context = fixture.Build(RawChangeSet.Create([RuleFixture.BlueprintSourcePath]));
+        var currentFailure = new InvalidOperationException("current derivation failed");
+        var baselineFailure = new InvalidOperationException("baseline derivation failed");
+        var baselineDerivation = new TaskCompletionSource<ScribeTestMap>(
+            TaskCreationOptions.RunContinuationsAsynchronously);
+
+        var evaluation = RepositoryRules.EvaluateCapacityAsync(
+            context,
+            Task.FromException<ScribeTestMap>(currentFailure),
+            baselineDerivation.Task);
+        Assert.False(
+            evaluation.IsCompleted,
+            "EvaluateCapacityAsync returned before awaiting Baseline");
+
+        baselineDerivation.SetException(baselineFailure);
+        var thrown = await Assert.ThrowsAsync<InvalidOperationException>(() => evaluation);
+
+        Assert.Same(currentFailure, thrown);
+    }
+
+    [Fact]
+    public async Task Sl003DoesNotSwallowBaselineDerivationFailureWhenCurrentSucceeds()
+    {
+        var fixture = new RuleFixture();
+        var context = fixture.Build(RawChangeSet.Create([RuleFixture.BlueprintSourcePath]));
+        var baselineFailure = new InvalidOperationException("baseline derivation failed");
+
+        var thrown = await Assert.ThrowsAsync<InvalidOperationException>(() =>
+            RepositoryRules.EvaluateCapacityAsync(
+                context,
+                Task.FromResult(EmptyTestMap()),
+                Task.FromException<ScribeTestMap>(baselineFailure)));
+
+        Assert.Same(baselineFailure, thrown);
+    }
+
+    [Fact]
+    public void Sl003StartsOnlyOneDerivationWhenCurrentAndBaselineAreSameSnapshot()
+    {
+        var fixture = new RuleFixture();
+        var context = fixture.Build(RawChangeSet.Create([RuleFixture.BlueprintSourcePath]));
+        var sameSnapshotContext = RuleEvaluationContext.Create(
+            context.Current,
+            context.Current,
+            context.Policy,
+            context.Lean,
+            context.Changes,
+            context.MetaEvaluation,
+            context.VerifiedScribeEmissions);
+        var calls = 0;
+
+        RepositoryRules.EvaluateCapacity(sameSnapshotContext, _ =>
+        {
+            Interlocked.Increment(ref calls);
+            return EmptyTestMap();
+        });
+
+        Assert.Equal(1, calls);
     }
 
     [Fact]
@@ -52,7 +216,7 @@ public sealed class RuleEngineCapacityDerivationTests
         {
             RepositoryRules.EvaluateCapacity(context, _ =>
             {
-                calls++;
+                Interlocked.Increment(ref calls);
                 return EmptyTestMap();
             });
         }
@@ -92,4 +256,18 @@ public sealed class RuleEngineCapacityDerivationTests
     }
 
     private static ScribeTestMap EmptyTestMap() => new([], [], [], [], []);
+
+    private static ScribeTestMap UnknownTestMap(string methodId) =>
+        new(
+            [
+                new ScribeTestMethod(
+                    "tools/tests/Synthetic.Tests",
+                    "tools/tests/Synthetic.Tests/DebtTests.cs",
+                    "DebtTests." + methodId,
+                    [TestMapUnknownReason.Other]),
+            ],
+            [],
+            [],
+            [],
+            []);
 }

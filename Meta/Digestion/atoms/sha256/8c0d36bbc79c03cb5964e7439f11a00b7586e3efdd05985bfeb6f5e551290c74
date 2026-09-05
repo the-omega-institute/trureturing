@@ -1,0 +1,58 @@
+## 定理 14.2　隐藏结构的时域记忆方程
+
+定义隐藏延迟 Green 核
+
+$$
+G_H(t)
+=
+\Theta(t)\,
+M_H^{-1/2}\Omega_H^{-1}
+\sin(\Omega_Ht)M_H^{-1/2},
+$$
+
+其中
+
+$$
+\Omega_H^2=M_H^{-1/2}K_{HH}M_H^{-1/2}.
+$$
+
+则可见坐标满足
+
+$$
+\boxed{
+M_V\ddot x_V(t)+K_{VV}x_V(t)
+-
+\int_0^t\Sigma(t-s)x_V(s)\,ds
+=
+-gf(t)+\eta(t),
+}
+\tag{14.3}
+$$
+
+其中
+
+$$
+\boxed{
+\Sigma(t)=K_{VH}G_H(t)K_{HV},
+\qquad
+\eta(t)=-K_{VH}x_H^{\mathrm{hom}}(t).
+}
+\tag{14.4}
+$$
+
+\(x_H^{\mathrm{hom}}\) 是由隐藏初始坐标与动量决定的齐次解。
+
+### 证明
+
+隐藏方程的精确解为
+
+$$
+x_H(t)
+=
+x_H^{\mathrm{hom}}(t)
+-
+\int_0^tG_H(t-s)K_{HV}x_V(s)\,ds.
+$$
+
+代回可见方程即得。∎
+

@@ -1,0 +1,21 @@
+## 定义 55.1　边缘不可区分性
+
+称第 \(j\) 个辐射片段对初始输入边缘不可区分，若：
+
+$$
+\boxed{
+\operatorname{Tr}_{\overline{r_j}}
+(V_n\rho V_n^\dagger)
+=
+\tau_j
+\qquad\forall\rho.
+}
+\tag{55.1}
+$$
+
+\(\tau_j\) 可以是指定 Hamiltonian 下的热态。
+
+该条件只约束单个辐射片段，不约束它与其他片段之间的关联。
+
+---
+

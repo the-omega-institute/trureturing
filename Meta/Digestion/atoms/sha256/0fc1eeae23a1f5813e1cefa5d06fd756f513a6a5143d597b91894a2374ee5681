@@ -1,0 +1,97 @@
+## 定理 10.2　一般矩形单元证书
+
+固定 \(m\ge3\)，其指数为 \(b_p\)。考虑有限矩形：
+
+$$
+\mathscr Q
+=
+\left\{
+m\prod_pp^{r_p}:
+0\le r_p\le R_p
+\right\},
+$$
+
+其中仅有限多个 \(R_p>0\)。
+
+令：
+
+$$
+E=\ln m,
+\qquad
+U=\sum_pR_p\ln p,
+$$
+
+$$
+c=\frac1{(E+U)\ln(E+U)}.
+$$
+
+则对所有 \(n\in\mathscr Q\)：
+
+$$
+\boxed{
+\Delta(n)
+\ge
+\Delta(m)
++
+\sum_p
+\left[
+cr_p\ln p
+-
+f_p(b_p+r_p)+f_p(b_p)
+\right].
+}
+\tag{10.1}
+$$
+
+因而：
+
+$$
+\boxed{
+\min_{n\in\mathscr Q}\Delta(n)
+\ge
+\Delta(m)
++
+\sum_p
+\min_{0\le r\le R_p}
+\left[
+cr\ln p-f_p(b_p+r)+f_p(b_p)
+\right].
+}
+\tag{10.2}
+$$
+
+### 证明
+
+令：
+
+$$
+u=\ln(n/m)=\sum_pr_p\ln p.
+$$
+
+有：
+
+$$
+\Delta(n)-\Delta(m)
+=
+\ln\ln(E+u)-\ln\ln E
+-
+\sum_p[f_p(b_p+r_p)-f_p(b_p)].
+$$
+
+由于：
+
+$$
+\frac{d}{dt}\ln\ln t=\frac1{t\ln t}
+$$
+
+在 \(t>1\) 上递减，并且 \(0\le u\le U\)，所以：
+
+$$
+\ln\ln(E+u)-\ln\ln E
+=
+\int_E^{E+u}\frac{dt}{t\ln t}
+\ge cu.
+$$
+
+代入得到式（10.1）。随后分别对每个坐标取最小值，得到式（10.2）。证毕。
+

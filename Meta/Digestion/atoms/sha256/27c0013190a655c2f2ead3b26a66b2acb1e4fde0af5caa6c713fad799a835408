@@ -1,0 +1,28 @@
+## 这确实可以实现为量子信道
+
+对有界函数 \(f\)，定义
+
+$$
+(\mathcal E_hf)(T)=\sum_{j=0}^4\pi_jf(T+jh).
+$$
+
+在 \(L^2(\mathbb R)\) 上取平移幺正算子
+
+$$
+(U_a\psi)(T)=\psi(T-a).
+$$
+
+则
+
+$$
+\Phi_h(\rho)
+=
+\sum_j\pi_jU_{jh}\rho U_{jh}^{*}
+$$
+
+是一个完全正、保迹映射，其对偶作用把乘法观测量 \(M_f\) 变为 \(M_{\mathcal E_hf}\)。
+
+这里概率来自已知的尺度分解，**不是假设素数彼此独立随机**。
+
+仓库已有 `FiniteKrausInstrumentBornMarginal.lean`，明确处理归一化 Kraus 家族的分支迹与 Born 权重关系；本轮的有限离散版本可以接到这种接口，但上述跨尺度恒等式本身尚未在 Lean 中验证。
+

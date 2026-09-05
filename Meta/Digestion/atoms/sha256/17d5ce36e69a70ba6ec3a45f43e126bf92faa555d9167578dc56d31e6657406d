@@ -1,0 +1,2 @@
+**候签定理 9.19(p-群陪集划分的极大指数重数)**〔open;落 `D5/S3/Factorization/PrimePowers/FiniteCosetPartitionMaximalIndexMultiplicity`〕。设有限群 G 的阶为 p^N(p 素数),`(g_i H_i)_{i<r}`(r ≥ 2)为 G 的两两不交左陪集划分。令 `d := max_i [G : H_i]`。则 `p ∣ #{i | [G : H_i] = d}`。
+

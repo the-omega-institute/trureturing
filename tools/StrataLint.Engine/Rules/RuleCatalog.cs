@@ -35,7 +35,7 @@ public sealed class RuleCatalog
         RuleId.CreateKnown(2),
         RuleId.CreateKnown(18),
         RuleId.CreateKnown(12),
-        RuleId.CreateKnown(30),
+        RuleId.CreateKnown(31),
         RuleId.CreateKnown(26),
         RuleId.CreateKnown(6),
         RuleId.CreateKnown(25),
@@ -52,6 +52,9 @@ public sealed class RuleCatalog
         RuleId.CreateKnown(17),
         RuleId.CreateKnown(16),
         RuleId.CreateKnown(3),
+        // SL-030 (added 2026-09-05) has no timing measurement yet: it is a per-line text scan over
+        // the few judge-surface files in the delta, so it runs last until a measurement window exists.
+        RuleId.CreateKnown(30),
     ];
 
     private readonly ImmutableArray<RuleRegistration> registrations;
@@ -154,6 +157,7 @@ public sealed class RuleCatalog
                 .Append(26)
                 .Append(28)
                 .Append(30)
+                .Append(31)
                 .Select(RuleId.CreateKnown)
                 .ToImmutableArray();
             var registeredIds = Descriptors.Select(static item => item.Id).ToImmutableArray();
