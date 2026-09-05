@@ -29,11 +29,13 @@ public sealed partial class ProductionEnvironmentTests
                 Snapshot(fixture.Files),
                 Snapshot(fixture.Baseline)),
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
-            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
+            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty),
+            atomHistorySource: FakeAtomHistorySource.ForPaths(fixture.Files.Keys));
 
         var emitted = environment.EchoVerify(["--emit", "--base", "baseline"]);
 
         Assert.Equal(0, emitted.ExitCode);
+        Assert.Contains("## age", emitted.Output, StringComparison.Ordinal);
         Assert.StartsWith(
             "<!-- echo-residual-summary:v3 residual=sha256:",
             emitted.Output,
@@ -51,5 +53,7 @@ public sealed partial class ProductionEnvironmentTests
             .Order(StringComparer.Ordinal)
             .ToArray();
         Assert.Equal(expectedFileNames, actualFileNames);
+        foreach (var name in actualFileNames)
+            Assert.DoesNotContain("## age", File.ReadAllText(Path.Combine(output, name!)), StringComparison.Ordinal);
     }
 }
