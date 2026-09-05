@@ -1074,8 +1074,10 @@ registration modules，且仍不取得 discharge 或 exemption 权限。辅助 r
 ## 9. 平凡与冗余的纯数学定义
 
 本节每个“平凡”“冗余”“可恢复”判词均相对于 occurrence 所在的 $(R,A,C_{R,A})$。
-同一个 theorem declaration 在另一个 root 或 catalog 中是另一个 occurrence，必须重新
-结算；“在某处为正”不蕴含当前 occurrence 为正。
+同一个 occurrence（`(canonical arena declaration, theoremName)`）可以出现在多个 root import
+closures 或 analysis views 中而不改变其 identity；其 $K_{-i},U_i,\delta_i$ 必须针对它出现于其中的
+每个 $C_{R,A}$ 重新计算。只有通过另一个具名、kernel-checked realization 登记到不同 canonical
+arena 上，才产生新的 occurrence；“在某处为正”不蕴含它在当前 $C_{R,A}$ 中为正。
 
 ### 9.1 平凡定理对象
 
@@ -3202,8 +3204,10 @@ E^R_A
 =K^R_{A,I_{R,A}}\setminus\Delta_A.
 $$
 
-同一 theorem declaration 在另一个 catalog/root 的登记是另一个 occurrence；其
-$K_{-i},U_i,\delta_i$ 必须按那里的 peers 重算。
+同一个 occurrence（`(canonical arena declaration, theoremName)`）可以出现在多个 root import
+closures 或 analysis views 中而不改变其 identity；其 $K_{-i},U_i,\delta_i$ 必须针对它出现于其中的
+每个 $C_{R,A}$ 重新计算。只有通过另一个具名、kernel-checked realization 登记到不同 canonical
+arena 上，才产生新的 occurrence。
 
 ---
 
