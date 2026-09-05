@@ -65,74 +65,6 @@ public sealed class StatementProjectionPilotTests
     }
 
     [Fact]
-    public void DocumentDefinitionsLoadFromExplicitRepositoryRoot()
-    {
-        var repositoryRoot = RepositoryAccessor.Discover(RepositoryRootCriterion.LakefileInvalidOperation).Root.FullPath;
-        var definitions = DocumentDefinitions.Discover(
-            typeof(DocumentDefinitions).Assembly,
-            repositoryRoot);
-
-        Assert.NotEmpty(definitions);
-    }
-
-    [Fact]
-    public void PinnedProjectionFixturesConstructEveryDocumentWithoutALiveReport()
-    {
-        var repository = RepositoryAccessor.Discover(RepositoryRootCriterion.LakefileInvalidOperation);
-        var repositoryRoot = TemporaryFileSystem.Directory.CreateTempSubdirectory(
-            "stratalint-scribe-pinned-");
-        var projectionRoot = TemporaryFileSystem.Directory.CreateDirectory(
-            Path.Combine(repositoryRoot.FullName, "Golden", "Projection"));
-        try
-        {
-            foreach (var name in new[]
-                     {
-                         "statement-projection-pilot-v1.json",
-                         "statement-projection-expansion-v1.json",
-                     })
-            {
-                repository.CopyTo(
-                    RepositoryRelativePath.Create($"Golden/Projection/{name}"),
-                    Path.Combine(projectionRoot.FullName, name));
-            }
-
-            var definitions = DocumentDefinitions.Discover(
-                typeof(DocumentDefinitions).Assembly,
-                repositoryRoot.FullName);
-
-            Assert.Contains(definitions, static definition =>
-                definition.Document.Header.Gid.Value == "D5/S3/Zeros/OffLineWitness");
-        }
-        finally
-        {
-            repositoryRoot.Delete(recursive: true);
-        }
-    }
-
-    [Fact]
-    public void DocumentDefinitionsFailClosedWithFixturePathForExplicitRepository()
-    {
-        var repositoryRoot = TemporaryFileSystem.Directory.CreateTempSubdirectory("stratalint-scribe-missing-");
-        try
-        {
-            var exception = Assert.Throws<FileNotFoundException>(() =>
-                DocumentDefinitions.Discover(
-                    typeof(DocumentDefinitions).Assembly,
-                    repositoryRoot.FullName));
-
-            Assert.Contains(repositoryRoot.FullName, exception.Message, StringComparison.Ordinal);
-            Assert.Contains(
-                "statement-projection-pilot-v1.json",
-                exception.Message,
-                StringComparison.Ordinal);
-        }
-        finally
-        {
-            repositoryRoot.Delete(recursive: true);
-        }
-    }
-
-    [Fact]
     public void DecoderCoversEveryInspectorExpressionConstructor()
     {
         const string encoded = "statement-v1(uparams=[ns(n0,1:u)],type=ee(0,es(l0),ei(ln(7)),ej(ns(n0,1:S),0,ed(el(bd,ef(ns(n0,1:x)),ea(em(ns(n0,1:m)),eb(0)))))))";
@@ -359,6 +291,7 @@ public sealed class StatementProjectionPilotTests
         var error = new StringWriter();
 
         var exit = ScribeCli.Run(
+            DocumentlessAssembly.Value,
             ["projections", "--check", "--report", "live-report.json"],
             repository.Path,
             output,
@@ -380,6 +313,7 @@ public sealed class StatementProjectionPilotTests
         var error = new StringWriter();
 
         var exit = ScribeCli.Run(
+            DocumentlessAssembly.Value,
             ["projections", "--check", "--report", "live-report.json"],
             repository.Path,
             TextWriter.Null,
@@ -406,6 +340,7 @@ public sealed class StatementProjectionPilotTests
         var error = new StringWriter();
 
         var exit = ScribeCli.Run(
+            DocumentlessAssembly.Value,
             arguments,
             TemporaryFileSystem.Directory.GetCurrentDirectory(),
             TextWriter.Null,

@@ -476,6 +476,7 @@ producer_compile_paths() {
   elif [[ "$scope" == "scribe-content" ]]; then
     projects=(
       tools/StrataLint.Scribe/StrataLint.Scribe.csproj
+      tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj
       tools/StrataLint.Engine/StrataLint.Engine.csproj
       tools/Trureturing.Truth/Trureturing.Truth.csproj)
   else
@@ -520,6 +521,8 @@ scribe_declared_paths() {
   local relative
   for relative in \
     tools/StrataLint.Scribe/StrataLint.Scribe.csproj \
+    tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj \
+    tools/StrataLint.Scribe.Documents/packages.lock.json \
     tools/StrataLint.Scribe/packages.lock.json; do
     [[ -f "$REPOSITORY/$relative" ]] && printf '%s\n' "$relative"
   done

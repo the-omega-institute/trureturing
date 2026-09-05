@@ -19,7 +19,12 @@ public sealed partial class FileMapPolicyTests
             StringComparer.Ordinal);
         var root = RepositoryLayout.FindRoot();
         var manifest = FileMapLoader.LoadRepository(root);
-        var artifacts = GeneratedArtifactInventory.All
+        // 文档已迁出本程序集(住 StrataLint.Scribe.Documents),而本测试判的是 FILEMAP 声明
+        // 与发射器产物身份的一致性,不判语料内容。故喂一条与下方 manifest.Match 同一字面的
+        // 文档路径即可:六个固定工件与文档集无关,Blueprint/**/*.md 那条只需一个同形路径。
+        var inventory = GeneratedArtifactInventory.Create(
+            ["Blueprint/D5/S0/Carrier/Ring.md"]);
+        var artifacts = inventory
             .Where(artifact => expectedPaths.Contains(artifact.Path))
             .ToArray();
 
@@ -42,7 +47,7 @@ public sealed partial class FileMapPolicyTests
             entry.ConsumedBy.ToArray());
         Assert.Equal(["ScribeEmitter"], entry.VerifiedBy.ToArray());
         Assert.Contains(
-            GeneratedArtifactInventory.All,
+            inventory,
             artifact => entry.Matches(artifact.Path));
         Assert.DoesNotContain(
             FileMapPolicy.InspectRepository(root),

@@ -39,12 +39,6 @@ public sealed record DocumentDefinition
 
 public static class DocumentDefinitions
 {
-    private static readonly Lazy<ImmutableArray<DocumentDefinition>> Definitions = new(
-        () => Discover(typeof(DocumentDefinitions).Assembly));
-
-    [CompileTimeInputUniverse("Blueprint/", ".scribe.cs")]
-    public static ImmutableArray<DocumentDefinition> All => Definitions.Value;
-
     [CompileTimeInputUniverse("Blueprint/", ".scribe.cs")]
     public static ImmutableArray<DocumentDefinition> Discover(Assembly assembly)
     {
@@ -98,6 +92,12 @@ public static class DocumentDefinitions
             .Select(CreateDefinition)
             .OrderBy(static definition => definition.RelativePath.Value, StringComparer.Ordinal)
             .ToImmutableArray();
+
+        if (definitions.IsEmpty)
+        {
+            throw new InvalidOperationException(
+                $"Assembly {assembly.GetName().Name} contains no Scribe document definitions.");
+        }
 
         var duplicate = definitions
             .GroupBy(static definition => definition.RelativePath.Value, StringComparer.Ordinal)

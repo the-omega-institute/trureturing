@@ -1,3 +1,4 @@
+using System.Reflection;
 using StrataLint.Engine;
 
 namespace StrataLint.Scribe;
@@ -11,16 +12,20 @@ public static class ScribeEmitter
     internal static string AttestationRelativePath => ScribeEmissionAttestation.RelativePath;
 
     public static int Emit(
+        Assembly documentsAssembly,
         string repositoryRoot,
         bool check,
         TextWriter output,
         TextWriter error)
     {
         return Run(repositoryRoot, check, output, error, LeanCompiledArtifactReports.InspectRepository,
-            validateRepository: true, tolerateAbsentDocuments: false).ExitCode;
+            validateRepository: true,
+            tolerateAbsentDocuments: false,
+            documentsAssembly: documentsAssembly).ExitCode;
     }
 
     internal static int Emit(
+        Assembly documentsAssembly,
         string repositoryRoot,
         bool check,
         TextWriter output,
@@ -35,10 +40,12 @@ public static class ScribeEmitter
             error,
             _ => leanReport,
             validateRepository: false,
-            tolerateAbsentDocuments: false).ExitCode;
+            tolerateAbsentDocuments: false,
+            documentsAssembly: documentsAssembly).ExitCode;
     }
 
     internal static int Emit(
+        Assembly documentsAssembly,
         string repositoryRoot,
         bool check,
         TextWriter output,
@@ -54,7 +61,8 @@ public static class ScribeEmitter
             error,
             _ => leanReport,
             validateRepository,
-            tolerateAbsentDocuments: false).ExitCode;
+            tolerateAbsentDocuments: false,
+            documentsAssembly: documentsAssembly).ExitCode;
     }
 
     internal static int Emit(
@@ -90,7 +98,7 @@ public static class ScribeEmitter
         TextWriter error,
         LeanAxiomReport leanReport,
         MarkdownFormulaScope scope,
-        IReadOnlyList<DocumentDefinition>? definitions = null)
+        IReadOnlyList<DocumentDefinition> definitions)
     {
         ArgumentNullException.ThrowIfNull(leanReport);
         ArgumentNullException.ThrowIfNull(scope);
@@ -123,6 +131,7 @@ public static class ScribeEmitter
     }
 
     internal static VerifiedScribeEmissions? Verify(
+        Assembly documentsAssembly,
         string repositoryRoot,
         TextWriter error,
         LeanAxiomReport leanReport)
@@ -135,7 +144,8 @@ public static class ScribeEmitter
             error,
             _ => leanReport,
             validateRepository: true,
-            tolerateAbsentDocuments: true).Verification;
+            tolerateAbsentDocuments: true,
+            documentsAssembly: documentsAssembly).Verification;
     }
 
     private static ScribeEmissionRun Run(
@@ -146,6 +156,7 @@ public static class ScribeEmitter
         Func<string, LeanAxiomReport> loadLeanReport,
         bool validateRepository,
         bool tolerateAbsentDocuments,
+        Assembly? documentsAssembly = null,
         IReadOnlyList<DocumentDefinition>? suppliedDefinitions = null,
         MarkdownFormulaScope? markdownScope = null)
     {
@@ -153,6 +164,12 @@ public static class ScribeEmitter
         ArgumentNullException.ThrowIfNull(output);
         ArgumentNullException.ThrowIfNull(error);
         ArgumentNullException.ThrowIfNull(loadLeanReport);
+        if (documentsAssembly is null && suppliedDefinitions is null)
+        {
+            throw new ArgumentException(
+                "Either a documents assembly or supplied definitions are required.",
+                nameof(documentsAssembly));
+        }
 
         try
         {
@@ -160,7 +177,7 @@ public static class ScribeEmitter
 
             // Emission runs against the binary's own tree, where every document's
             // .scribe.cs source must be present; a missing source there is a real fault, so the strict path
-            // keeps the full DocumentDefinitions.All (an absent source dangling-fails or "emit failed").
+            // keeps the full injected document catalog (an absent source dangling-fails or "emit failed").
             //
             // Capability verification (Verify), by contrast, judges an arbitrary tree that may predate some
             // of this binary's documents. A document this binary knows about is only materialized in that
@@ -172,7 +189,7 @@ public static class ScribeEmitter
             // A document whose source IS present stays in scope. The capability is issued from the
             // current validated render and never from tracked reader-snapshot bytes.
             var repositoryDefinitions = suppliedDefinitions ?? DocumentDefinitions.Discover(
-                typeof(DocumentDefinitions).Assembly,
+                documentsAssembly!,
                 repositoryRoot);
             if (check && !tolerateAbsentDocuments)
             {

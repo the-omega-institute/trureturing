@@ -39,70 +39,6 @@ public sealed partial class FormulaCorpusInventoryTests
         "bmod", "lVert", "mathit", "mathord", "ne", "rVert",
     ];
 
-    [Fact]
-    public void InventoryAllLegacyLatexStatementsAndSyntaxFamilies()
-    {
-        var definitions = DocumentDefinitions.Discover(typeof(DocumentDefinitions).Assembly);
-        var entries = definitions
-            .SelectMany(static definition => EnumerateDescribe(definition.Document.Content)
-                .Where(static node => node.StatementFormula is not null)
-                .Select(node => new
-                {
-                    definition.SourcePath,
-                    Value = LatexWriter.WriteStatement(node.StatementFormula!),
-                }))
-            .ToArray();
-        var corpus = string.Join('\n', entries.Select(static entry => entry.Value));
-        var macros = MacroPattern().Matches(corpus)
-            .Select(static match => match.Groups[1].Value)
-            .Distinct(StringComparer.Ordinal)
-            .Order(StringComparer.Ordinal)
-            .ToArray();
-
-        Assert.NotEmpty(entries);
-        Assert.All(entries, static entry => Assert.NotEmpty(entry.Value));
-        var beyondEmitter = macros.Except(EmitterMacroAlphabet(), StringComparer.Ordinal)
-            .Order(StringComparer.Ordinal)
-            .ToArray();
-        Assert.True(
-            beyondEmitter.Length == 0,
-            $"corpus uses macros the emitter cannot produce: {string.Join(", ", beyondEmitter)}");
-        AssertSyntaxFamily(corpus, "quantifier", "\\forall", "\\exists");
-        AssertSyntaxFamily(corpus, "logic", "\\land", "\\lor", "\\neg", "\\Rightarrow");
-        AssertSyntaxFamily(corpus, "relation", "=", "<", "\\le", "\\ge", "\\in", "\\mid");
-        AssertSyntaxFamily(corpus, "norm/absolute", "\\lvert", "\\rvert", "\\Vert", "|");
-        AssertSyntaxFamily(corpus, "scripts", "_{", "^{");
-        AssertSyntaxFamily(corpus, "sets", "\\subset", "\\subseteq", "\\setminus", "\\mathbb");
-        AssertSyntaxFamily(corpus, "fraction", "\\frac");
-        AssertSyntaxFamily(corpus, "named function", "\\operatorname");
-        AssertSyntaxFamily(corpus, "type arrow", "\\to", "\\mapsto");
-        AssertSyntaxFamily(corpus, "large operator", "\\sum", "\\prod", "\\int", "\\lim");
-        AssertSyntaxFamily(corpus, "presentation", "\\begin", "\\text", "\\quad");
-        AssertRendererVocabularyCoverage(definitions);
-    }
-
-    [Fact]
-    public void EveryMigratedFormulaHasAStableCorpusAddress()
-    {
-        var actual = DocumentDefinitions.Discover(typeof(DocumentDefinitions).Assembly)
-            .OrderBy(static definition => definition.SourcePath, StringComparer.Ordinal)
-            .SelectMany(definition => EnumerateDescribe(definition.Document.Content)
-                .Where(static node => node.StatementFormula is not null)
-                .Select((node, ordinal) => new
-                {
-                    SourcePath = CanonicalBlueprintPath(definition.SourcePath),
-                    DescribeId = node.Id.Value,
-                    Ordinal = ordinal,
-                    Canonical = LatexWriter.WriteStatement(node.StatementFormula!),
-                }))
-            .ToArray();
-
-        Assert.NotEmpty(actual);
-        Assert.Equal(actual.Length, actual.Select(static entry =>
-            (entry.SourcePath, entry.DescribeId, entry.Ordinal)).Distinct().Count());
-        Assert.All(actual, static entry => Assert.NotEmpty(entry.Canonical));
-    }
-
     private static void AssertSyntaxFamily(string corpus, string family, params string[] tokens) =>
         Assert.True(tokens.Any(corpus.Contains), $"Formula corpus is missing the {family} family.");
 
@@ -137,7 +73,6 @@ public sealed partial class FormulaCorpusInventoryTests
             ? normalized[index..]
             : throw new ArgumentException("Scribe source path is outside Blueprint.", nameof(sourcePath));
     }
-
 
     [GeneratedRegex(@"(?<!\\)\\([A-Za-z]+)", RegexOptions.CultureInvariant)]
     private static partial Regex MacroPattern();

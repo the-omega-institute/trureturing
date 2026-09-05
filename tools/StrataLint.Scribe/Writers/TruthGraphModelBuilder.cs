@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Reflection;
 using StrataLint.Engine;
 using Trureturing.Truth;
 
@@ -205,14 +206,16 @@ public static class DocumentGraphExportProjectionExtensions
     extension(DocumentGraphExportProjection)
     {
         public static DocumentGraphExportProjection AssembleRepository(
+            Assembly documentsAssembly,
             string repositoryRoot,
             DeclarationCatalog catalog,
             IReadOnlySet<string> formalTruthRepoPaths)
         {
+            ArgumentNullException.ThrowIfNull(documentsAssembly);
             ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
             ArgumentNullException.ThrowIfNull(catalog);
             ArgumentNullException.ThrowIfNull(formalTruthRepoPaths);
-            var definitions = DocumentDefinitions.Discover(typeof(DocumentDefinitions).Assembly, repositoryRoot);
+            var definitions = DocumentDefinitions.Discover(documentsAssembly, repositoryRoot);
             var documents = definitions.Select(definition => definition.Document.ResolveDeclarations(catalog)).ToArray();
             var census = ReceiptFreeDocumentCatalog.Load(repositoryRoot, documents);
             var graph = DocumentGraphAssembler.Assemble(

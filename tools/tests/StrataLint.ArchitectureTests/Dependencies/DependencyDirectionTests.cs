@@ -25,10 +25,17 @@ public sealed class DependencyDirectionTests
     }
 
     [Fact]
-    public void CliReferencesExactlyEngineScribeTomlynTruthAndYamlDotNet()
+    public void CliReferencesExactlyEngineScribeDocumentsTomlynTruthAndYamlDotNet()
     {
         Assert.Equal(
-            ["StrataLint.Engine", "StrataLint.Scribe", "Tomlyn", "Trureturing.Truth", "YamlDotNet"],
+            [
+                "StrataLint.Engine",
+                "StrataLint.Scribe",
+                "StrataLint.Scribe.Documents",
+                "Tomlyn",
+                "Trureturing.Truth",
+                "YamlDotNet",
+            ],
             AssemblyReferencePolicy.NonPlatformReferences(typeof(StrataLint.Cli.Program).Assembly));
     }
 
@@ -53,7 +60,7 @@ public sealed class DependencyDirectionTests
         // 此处曾另有一条产物层(IL)断言,钉 `["StrataLint", "StrataLint.Engine",
         // "StrataLint.Scribe", "StrataLint.TestSupport"]`。**已删,且没有丢失可达的检测**:
         // 该项目直接声明的只有 Cli 与 TestSupport,而 Cli 的引用集由
-        // CliReferencesExactlyEngineScribeTomlynTruthAndYamlDotNet 钉死,
+        // CliReferencesExactlyEngineScribeDocumentsTomlynTruthAndYamlDotNet 钉死,
         // 故传递可达的 StrataLint* 集合**恰好等于**原 IL 断言钉住的那个集合 ——
         // 再钉一遍不增加信息(第〇节:f 与真源都已被守,投影必然对)。
         // 要让第四个 StrataLint* 程序集变得可达,必须改 Cli 的引用集(已钉)

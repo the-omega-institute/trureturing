@@ -126,13 +126,16 @@ public sealed class DagEmitterTests
     {
         // FileMapPolicy cross-checks this inventory against Meta/FILEMAP.toml, so an artifact that
         // ships without an entry is an ungoverned generated file.
+        // 这两条是清单里与文档集无关的固定工件,故空文档列表足以判它们;
+        // 文档已迁出本程序集(住 StrataLint.Scribe.Documents),本测试不引用它。
+        var inventory = GeneratedArtifactInventory.Create(Array.Empty<string>());
         var artifact = Assert.Single(
-            GeneratedArtifactInventory.All.Where(static item => item.Path == DagEmitter.RelativePath));
+            inventory.Where(static item => item.Path == DagEmitter.RelativePath));
 
         Assert.Equal(nameof(DagEmitter), artifact.Producer);
 
         var truthArtifact = Assert.Single(
-            GeneratedArtifactInventory.All.Where(static item => item.Path == DagEmitter.TruthGraphRelativePath));
+            inventory.Where(static item => item.Path == DagEmitter.TruthGraphRelativePath));
         Assert.Equal(nameof(DagEmitter), truthArtifact.Producer);
     }
 
