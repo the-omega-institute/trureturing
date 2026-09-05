@@ -84,7 +84,8 @@ private theorem count_mono_of_phase_le (i j : Nat)
   have h : (goldenWindowTrueCount i m : Int) ≤
       (goldenWindowTrueCount j m : Int) := by
     rw [count_eq_floor_fract, count_eq_floor_fract]
-    exact Int.floor_mono (add_le_add_right hphase _)
+    apply Int.floor_mono
+    linarith [hphase]
   exact_mod_cast h
 
 /-- Any two golden starts have prefix-count vectors comparable in one common
