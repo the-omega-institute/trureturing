@@ -48,7 +48,6 @@ public sealed class Sl017LiteratureScopeTests
         var fixture = new RuleFixture();
         fixture.Files["Library/queries.yaml"] = InvalidQueries;
         fixture.Baseline["Library/queries.yaml"] = InvalidQueries;
-        fixture.ForkPoint["Library/queries.yaml"] = InvalidQueries;
         return fixture;
     }
 }

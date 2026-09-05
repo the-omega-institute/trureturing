@@ -42,7 +42,6 @@ public sealed class RuleEngineCapacityTests
             var path = $"Meta/Capacity{index:00}.txt";
             fixture.Files[path] = "fixture\n";
             fixture.Baseline[path] = "fixture\n";
-            fixture.ForkPoint[path] = "fixture\n";
         }
 
         fixture.Changes.Add("Meta/Capacity00.txt");
@@ -126,7 +125,7 @@ public sealed class RuleEngineCapacityTests
     [Fact]
     public void Sl003RefusesNetGrowthOfAnOverfullBucket()
     {
-        var fixture = OverfullBucket(forkPointCount: (L - 1), currentCount: (L + 1));
+        var fixture = OverfullBucket(baselineCount: (L - 1), currentCount: (L + 1));
         var changes = RawChangeSet.CreateWithKinds(
         [
             (OverfullMemberPath((L - 1)), RawChangeKind.Added),
@@ -144,9 +143,9 @@ public sealed class RuleEngineCapacityTests
     }
 
     [Fact]
-    public void Sl003RefusesNewOverfullBucketAbsentFromForkPoint()
+    public void Sl003RefusesNewOverfullBucketAbsentFromBaseline()
     {
-        var fixture = OverfullBucket(forkPointCount: 0, currentCount: (L + 1));
+        var fixture = OverfullBucket(baselineCount: 0, currentCount: (L + 1));
         var changes = RawChangeSet.CreateWithKinds(
             Enumerable.Range(0, (L + 1))
                 .Select(static index => (OverfullMemberPath(index), RawChangeKind.Added)));
@@ -159,7 +158,7 @@ public sealed class RuleEngineCapacityTests
     [Fact]
     public void Sl003ObservesAModificationInsideAnOverfullBucket()
     {
-        var fixture = OverfullBucket(forkPointCount: (L + 1), currentCount: (L + 1));
+        var fixture = OverfullBucket(baselineCount: (L + 1), currentCount: (L + 1));
         var changes = RawChangeSet.CreateWithKinds(
             [(OverfullMemberPath(0), RawChangeKind.Modified)]);
         var diagnostics = RuleCatalog.Default.EvaluateSingle(
@@ -171,12 +170,12 @@ public sealed class RuleEngineCapacityTests
     [Fact]
     public void Sl003ObservesADeletionThatLeavesTheBucketOverfull()
     {
-        var fixture = OverfullBucket(forkPointCount: (L + 2), currentCount: (L + 1));
+        var fixture = OverfullBucket(baselineCount: (L + 2), currentCount: (L + 1));
         var deletedPath = OverfullMemberPath((L + 1));
         var changes = RawChangeSet.CreateWithKinds(
             [(deletedPath, RawChangeKind.Deleted)]);
 
-        Assert.Contains(deletedPath, fixture.ForkPoint.Keys);
+        Assert.Contains(deletedPath, fixture.Baseline.Keys);
         Assert.DoesNotContain(deletedPath, fixture.Files.Keys);
         var diagnostics = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(3),
@@ -187,7 +186,7 @@ public sealed class RuleEngineCapacityTests
     [Fact]
     public void Sl003StillRefusesAnAdditionToAnOverfullBucket()
     {
-        var fixture = OverfullBucket(forkPointCount: (L + 1), currentCount: (L + 2));
+        var fixture = OverfullBucket(baselineCount: (L + 1), currentCount: (L + 2));
         var changes = RawChangeSet.CreateWithKinds(
             [(OverfullMemberPath((L + 1)), RawChangeKind.Added)]);
         var diagnostic = Assert.Single(
@@ -205,7 +204,7 @@ public sealed class RuleEngineCapacityTests
     [Fact]
     public void Sl003RefusesSameDirectoryRenameBecauseRawChangesDoNotProveIdentity()
     {
-        var fixture = OverfullBucket(forkPointCount: (L + 1), currentCount: (L + 1));
+        var fixture = OverfullBucket(baselineCount: (L + 1), currentCount: (L + 1));
         var oldPath = OverfullMemberPath(L);
         var renamedPath = $"{OverfullBucketPath}/RenamedMember.scribe.cs";
         fixture.Files.Remove(oldPath);
@@ -226,7 +225,7 @@ public sealed class RuleEngineCapacityTests
     [Fact]
     public void Sl003ObservesACopySourceInAnOverfullBucketWithoutBlocking()
     {
-        var fixture = OverfullBucket(forkPointCount: (L + 1), currentCount: (L + 1));
+        var fixture = OverfullBucket(baselineCount: (L + 1), currentCount: (L + 1));
         var sourcePath = OverfullMemberPath(0);
         const string copyPath = "D5/S0/CopyTarget/Member00Copy.lean";
         fixture.Files[copyPath] = "-- copied member\n";
@@ -246,7 +245,7 @@ public sealed class RuleEngineCapacityTests
     public void Sl003RefusesDeleteAddAtToleranceBecauseTheNewPathBreaksUnionClosure()
     {
         var count = RepositoryRules.DirectoryToleranceLimit;
-        var fixture = OverfullBucket(forkPointCount: count, currentCount: count);
+        var fixture = OverfullBucket(baselineCount: count, currentCount: count);
         var deletedPath = OverfullMemberPath(0);
         var addedPath = $"{OverfullBucketPath}/BranchA.scribe.cs";
         fixture.Files.Remove(deletedPath);
@@ -268,8 +267,8 @@ public sealed class RuleEngineCapacityTests
     [Fact]
     public void Sl003ObservesEachNonGrowingBranchInsideTheToleranceBand()
     {
-        var first = OverfullBucket(forkPointCount: (L + 1), currentCount: (L + 1));
-        var second = OverfullBucket(forkPointCount: (L + 1), currentCount: (L + 1));
+        var first = OverfullBucket(baselineCount: (L + 1), currentCount: (L + 1));
+        var second = OverfullBucket(baselineCount: (L + 1), currentCount: (L + 1));
         var firstDiagnostics = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(3),
             first.Build(RawChangeSet.CreateWithKinds(
@@ -283,29 +282,25 @@ public sealed class RuleEngineCapacityTests
     }
 
     [Fact]
-    public void Sl003AdmitsCandidateAtLimitAfterBaselineAdvancesPastItsForkPoint()
+    public void Sl003AdmitsCandidateAtDirectoryLimit()
     {
-        var fixture = OverfullBucket(forkPointCount: (L - 1), currentCount: L);
-        fixture.Baseline[OverfullMemberPath((L - 1))] = $"// dev member {L - 1}\n";
-        fixture.Baseline[OverfullMemberPath(L)] = $"// dev member {L}\n";
+        var fixture = OverfullBucket(baselineCount: (L - 1), currentCount: L);
         var changes = RawChangeSet.CreateWithKinds(
             [(OverfullMemberPath((L - 1)), RawChangeKind.Added)]);
 
         var context = fixture.Build(changes);
-        Assert.Equal((L - 1), CapacityPathCount(context.ForkPoint));
-        Assert.Equal((L + 1), CapacityPathCount(context.Baseline));
+        Assert.Equal((L - 1), CapacityPathCount(context.Baseline));
         Assert.Equal(L, CapacityPathCount(context.Current));
         var diagnostics = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(3), context).Diagnostics;
-        // The admission limit is the boundary, so this in-flight candidate remains admitted
-        // even after dev advances beyond it.
+        // The admission limit is the boundary, so reaching it remains admitted.
         Assert.DoesNotContain(diagnostics, item => item.Path == OverfullBucketPath);
     }
 
     [Fact]
-    public void Sl003UsesForkPointPathsInsteadOfTheMovingBaselineForAnOverfullCandidate()
+    public void Sl003BlocksPathGrowthRelativeToBaselineForAnOverfullCandidate()
     {
-        var fixture = OverfullBucket(forkPointCount: (L + 1), currentCount: (L + 1));
+        var fixture = OverfullBucket(baselineCount: (L + 1), currentCount: (L + 1));
         fixture.Baseline.Remove(OverfullMemberPath(L));
         fixture.Baseline[$"{OverfullBucketPath}/DevOnly.scribe.cs"] = "// dev-only member\n";
         var changes = RawChangeSet.CreateWithKinds(
@@ -313,27 +308,25 @@ public sealed class RuleEngineCapacityTests
         var diagnostics = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(3),
             fixture.Build(changes)).Diagnostics;
-        // Current is a subset of its own ForkPoint but not of the independently moving
-        // Baseline. Replacing ForkPoint with Baseline must turn this assertion red.
-        AssertNonGrowingBucketIsObserved(diagnostics, (L + 1));
+        AssertOverfullBucketIsBlocked(diagnostics, (L + 1));
     }
 
     [Fact]
-    public void Sl003ExcludesBlueprintProjectionPathsFromForkPointCapacityMembership()
+    public void Sl003ExcludesBlueprintProjectionPathsFromBaselineCapacityMembership()
     {
-        var fixture = OverfullBucket(forkPointCount: (L + 1), currentCount: (L + 1));
+        var fixture = OverfullBucket(baselineCount: (L + 1), currentCount: (L + 1));
         var context = fixture.Build(RawChangeSet.CreateWithKinds(
             [(OverfullMemberPath(0), RawChangeKind.Modified)]));
-        var forkPointPaths = RepositoryRules.CapacityPathsByDirectory(
-            context.ForkPoint.Files.Keys);
-        Assert.Equal((L + 1), forkPointPaths[OverfullBucketPath].Count);
-        Assert.DoesNotContain(OverfullExcludedPath, forkPointPaths[OverfullBucketPath]);
+        var baselinePaths = RepositoryRules.CapacityPathsByDirectory(
+            context.Baseline.Files.Keys);
+        Assert.Equal((L + 1), baselinePaths[OverfullBucketPath].Count);
+        Assert.DoesNotContain(OverfullExcludedPath, baselinePaths[OverfullBucketPath]);
     }
 
     [Fact]
     public void Sl003LeavesAnOverfullBucketAloneWhenTheChangeDoesNotTouchIt()
     {
-        var fixture = OverfullBucket(forkPointCount: (L + 1), currentCount: (L + 1));
+        var fixture = OverfullBucket(baselineCount: (L + 1), currentCount: (L + 1));
         var diagnostics = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(3),
             fixture.Build()).Diagnostics;
@@ -344,7 +337,7 @@ public sealed class RuleEngineCapacityTests
     public void Sl003DoesNotBlockUntouchedBucketBeyondRepositoryTolerance()
     {
         var count = RepositoryRules.DirectoryToleranceLimit + 1;
-        var fixture = OverfullBucket(forkPointCount: count, currentCount: count);
+        var fixture = OverfullBucket(baselineCount: count, currentCount: count);
         var diagnostics = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(3),
             fixture.Build()).Diagnostics;
@@ -358,7 +351,7 @@ public sealed class RuleEngineCapacityTests
     public void Sl003RefusesFirstCapacityCountedPathPastAdmissionLimit()
     {
         var fixture = OverfullBucket(
-            forkPointCount: RepositoryRules.DirectoryFileLimit,
+            baselineCount: RepositoryRules.DirectoryFileLimit,
             currentCount: RepositoryRules.DirectoryFileLimit + 1);
         var changes = RawChangeSet.CreateWithKinds(
             [(OverfullMemberPath(RepositoryRules.DirectoryFileLimit), RawChangeKind.Added)]);
@@ -376,7 +369,7 @@ public sealed class RuleEngineCapacityTests
     public void Sl003RefusesNewPathEvenWhenBucketAlreadyExceedsRepositoryTolerance()
     {
         var fixture = OverfullBucket(
-            forkPointCount: RepositoryRules.DirectoryToleranceLimit + 1,
+            baselineCount: RepositoryRules.DirectoryToleranceLimit + 1,
             currentCount: RepositoryRules.DirectoryToleranceLimit + 2);
         var changes = RawChangeSet.CreateWithKinds(
             [(OverfullMemberPath(RepositoryRules.DirectoryToleranceLimit + 1), RawChangeKind.Added)]);
@@ -391,12 +384,12 @@ public sealed class RuleEngineCapacityTests
     }
 
     [Fact]
-    public void Sl003DoesNotChargeCandidateForUnknownDebtAlreadyPresentAtItsForkPoint()
+    public void Sl003DoesNotChargeCandidateForUnknownDebtAlreadyPresentAtItsBaseline()
     {
         var methods = UnknownMethodNames(281);
         var fixture = UnknownDebtFixture(
             current: [("Synthetic.Tests", methods)],
-            forkPoint: [("Synthetic.Tests", methods)]);
+            baseline: [("Synthetic.Tests", methods)]);
 
         var diagnostics = RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(3),
@@ -408,11 +401,11 @@ public sealed class RuleEngineCapacityTests
     [Fact]
     public void Sl003BlocksAndNamesTheUnknownMethodIntroducedByTheCandidate()
     {
-        var forkMethods = UnknownMethodNames(280);
-        var currentMethods = forkMethods.Append("Debt280").ToArray();
+        var baselineMethods = UnknownMethodNames(280);
+        var currentMethods = baselineMethods.Append("Debt280").ToArray();
         var fixture = UnknownDebtFixture(
             current: [("Synthetic.Tests", currentMethods)],
-            forkPoint: [("Synthetic.Tests", forkMethods)]);
+            baseline: [("Synthetic.Tests", baselineMethods)]);
 
         var diagnostic = Assert.Single(
             RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(3), fixture.Build()).Diagnostics,
@@ -421,7 +414,7 @@ public sealed class RuleEngineCapacityTests
         Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
         Assert.Equal(
             "SL-003 tools/tests/Synthetic.Tests/DebtTests.cs: conservative unknown test method "
-            + "introduced after fork point: tools/tests/Synthetic.Tests::DebtTests.Debt280",
+            + "introduced after protected baseline: tools/tests/Synthetic.Tests::DebtTests.Debt280",
             diagnostic.Render());
     }
 
@@ -433,13 +426,13 @@ public sealed class RuleEngineCapacityTests
         var unionMethods = firstMethods.Union(secondMethods, StringComparer.Ordinal).ToArray();
         var first = UnknownDebtFixture(
             current: [("Synthetic.Tests", firstMethods)],
-            forkPoint: [("Synthetic.Tests", firstMethods)]);
+            baseline: [("Synthetic.Tests", firstMethods)]);
         var second = UnknownDebtFixture(
             current: [("Synthetic.Tests", secondMethods)],
-            forkPoint: [("Synthetic.Tests", secondMethods)]);
+            baseline: [("Synthetic.Tests", secondMethods)]);
         var union = UnknownDebtFixture(
             current: [("Synthetic.Tests", unionMethods)],
-            forkPoint: [("Synthetic.Tests", unionMethods)]);
+            baseline: [("Synthetic.Tests", unionMethods)]);
 
         AssertNoBlockingUnknownDebt(RuleCatalog.Default.EvaluateSingle(
             RuleId.CreateKnown(3), first.Build()).Diagnostics);
@@ -456,7 +449,7 @@ public sealed class RuleEngineCapacityTests
         var methods = UnknownMethodNames(282);
         var fixture = UnknownDebtFixture(
             current: [("Synthetic.Tests", methods)],
-            forkPoint: [("Synthetic.Tests", methods)]);
+            baseline: [("Synthetic.Tests", methods)]);
 
         var diagnostic = Assert.Single(
             RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(3), fixture.Build()).Diagnostics,
@@ -472,7 +465,7 @@ public sealed class RuleEngineCapacityTests
     {
         var fixture = UnknownDebtFixture(
             current: [("Synthetic.Tests", ["RenamedDebt"])],
-            forkPoint: [("Synthetic.Tests", ["OriginalDebt"])]);
+            baseline: [("Synthetic.Tests", ["OriginalDebt"])]);
 
         var diagnostic = Assert.Single(
             RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(3), fixture.Build()).Diagnostics,
@@ -487,7 +480,7 @@ public sealed class RuleEngineCapacityTests
     {
         var fixture = UnknownDebtFixture(
             current: [("Beta.Tests", ["MovedDebt"])],
-            forkPoint: [("Alpha.Tests", ["MovedDebt"])]);
+            baseline: [("Alpha.Tests", ["MovedDebt"])]);
 
         var diagnostic = Assert.Single(
             RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(3), fixture.Build()).Diagnostics,
@@ -502,17 +495,15 @@ public sealed class RuleEngineCapacityTests
 
     private const string OverfullExcludedPath = $"{OverfullBucketPath}/Projection.md";
 
-    private static RuleFixture OverfullBucket(int forkPointCount, int currentCount)
+    private static RuleFixture OverfullBucket(int baselineCount, int currentCount)
     {
         var fixture = new RuleFixture();
         fixture.Files[OverfullExcludedPath] = "# projection\n";
         fixture.Baseline[OverfullExcludedPath] = "# projection\n";
-        fixture.ForkPoint[OverfullExcludedPath] = "# projection\n";
-        for (var index = 0; index < forkPointCount; index++)
+        for (var index = 0; index < baselineCount; index++)
         {
             var path = OverfullMemberPath(index);
             fixture.Baseline[path] = "-- member\n";
-            fixture.ForkPoint[path] = "-- member\n";
         }
 
         for (var index = 0; index < currentCount; index++)
@@ -533,18 +524,17 @@ public sealed class RuleEngineCapacityTests
 
     private static RuleFixture UnknownDebtFixture(
         IReadOnlyList<(string Partition, IReadOnlyList<string> Methods)> current,
-        IReadOnlyList<(string Partition, IReadOnlyList<string> Methods)> forkPoint)
+        IReadOnlyList<(string Partition, IReadOnlyList<string> Methods)> baseline)
     {
         var fixture = new RuleFixture();
         foreach (var (partition, methods) in current)
         {
             AddUnknownDebtPartition(fixture.Files, partition, methods);
-            AddUnknownDebtPartition(fixture.Baseline, partition, methods);
         }
 
-        foreach (var (partition, methods) in forkPoint)
+        foreach (var (partition, methods) in baseline)
         {
-            AddUnknownDebtPartition(fixture.ForkPoint, partition, methods);
+            AddUnknownDebtPartition(fixture.Baseline, partition, methods);
         }
 
         fixture.Changes.Clear();
@@ -589,7 +579,7 @@ public sealed class RuleEngineCapacityTests
             $"directory is overfull at {currentCount} files (admission limit "
             + $"{RepositoryRules.DirectoryFileLimit}, repository tolerance "
             + $"{RepositoryRules.DirectoryToleranceLimit}), but this change introduced no "
-            + "capacity-counted path absent from its fork point; split per CLAUDE.md 8",
+            + "capacity-counted path absent from the protected baseline; split per CLAUDE.md 8",
             diagnostic.Message);
     }
 
@@ -623,7 +613,6 @@ public sealed class RuleEngineCapacityTests
             + string.Concat(Enumerable.Repeat("-- pad\n", 801));
         fixture.Files[RuleFixture.RingPath] = oversize;
         fixture.Baseline[RuleFixture.RingPath] = oversize;
-        fixture.ForkPoint[RuleFixture.RingPath] = oversize;
 
         var diagnostic = Assert.Single(
             RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(3), fixture.Build()).Diagnostics);
@@ -635,11 +624,10 @@ public sealed class RuleEngineCapacityTests
     public void Sl003BlocksTheCandidateThatGrewAnAlreadyOversizeArtifact()
     {
         var fixture = new RuleFixture();
-        var forkOversize = fixture.Files[RuleFixture.RingPath]
+        var baselineOversize = fixture.Files[RuleFixture.RingPath]
             + string.Concat(Enumerable.Repeat("-- pad\n", 801));
-        fixture.Files[RuleFixture.RingPath] = forkOversize + "-- one more line\n";
-        fixture.Baseline[RuleFixture.RingPath] = forkOversize;
-        fixture.ForkPoint[RuleFixture.RingPath] = forkOversize;
+        fixture.Files[RuleFixture.RingPath] = baselineOversize + "-- one more line\n";
+        fixture.Baseline[RuleFixture.RingPath] = baselineOversize;
 
         var diagnostic = Assert.Single(
             RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(3), fixture.Build()).Diagnostics);
@@ -647,7 +635,7 @@ public sealed class RuleEngineCapacityTests
         Assert.Equal("artifact exceeds 800 lines", diagnostic.Message);
     }
 
-    // 分叉点上没有这个文件 = 本次改动新建了它,那它当然是"长出来的",阻断。
+    // Baseline absence means this change created the file, so the artifact grew and blocks.
     [Fact]
     public void Sl003BlocksAnOversizeArtifactThisChangeCreated()
     {

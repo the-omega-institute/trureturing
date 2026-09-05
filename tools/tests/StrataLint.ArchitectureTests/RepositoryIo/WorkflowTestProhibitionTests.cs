@@ -26,7 +26,7 @@ public sealed class WorkflowTestProhibitionTests
 {
     // 扫描面是 "tools/tests";**每处都直接写字面量,不抽成常量**——
     // ScribeTestMapDeriver 只静态折叠字面量实参,传标识符会 fail-closed 记 VariablePath,
-    // 于是这些 [Fact] 变成 "conservative unknown test method introduced after fork point"
+    // 于是这些 [Fact] 变成 "conservative unknown test method introduced after protected baseline"
     // 而被 SL-003 拒绝(2026-08-29 实测,PR #4021 首轮 admission rc=1,三条全中)。
 
     /// <summary>

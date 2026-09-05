@@ -235,6 +235,7 @@ public sealed class DigestionReadinessQueryTests
         var result = Classify([withheld, quarantined]);
 
         Assert.Equal("quarantined", result[0].Action);
+        Assert.Equal(["quarantine:missing-prerequisite"], result[0].OrderedBlockers.ToArray());
         Assert.Equal("withheld", result[1].Action);
     }
 

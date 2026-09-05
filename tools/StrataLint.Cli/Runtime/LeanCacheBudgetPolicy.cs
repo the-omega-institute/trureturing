@@ -37,7 +37,8 @@ internal static class LeanCacheBudgetPolicy
     /// 当时 census 为 1575 个 `.lean`,取建成数为分母使 s/模块偏大,是保守方向)× 2672 =
     /// 5762.40,**ceil 为 5763s**,即 7200 的 80.0%,首次收口的取值依据按其自设判据到期;
     /// ⑤(2026-08-30;#4122 第 2/3/5 轮三次勘正,最终**不作读数使用**)CI 侧的检查点种子 workflow
-    /// (`lean-cache-seed-manual.yml`,v4.33 集成分支,ubuntu-24.04-arm)三轮 run 33281766132 → 33283129303
+    /// (`lean-cache-seed-manual.yml`——**该 workflow 已于 4.33 迁移完成后按其退出条件删除**,
+    ///  历史归 git;此处仅作读数出处)三轮 run 33281766132 → 33283129303
     /// → 33286112262 都检出同一棵集成候选树 `ab396a337a16aedc5a7c9cf0d7c1bc1becc8a4d8`(2649 个 D5 `.lean`;
     /// 三份 checkout 日志各命中一次)。**它不是冷建耗时读数**:每个 12 分钟检查点以 `exit=124` 强杀 `make lean`
     /// (两轮各 6 次,亲验),快照只保留已完成的产物、丢掉被杀时在飞的编译;第 5 轮 quality 席进一步读出
@@ -67,8 +68,10 @@ internal static class LeanCacheBudgetPolicy
     ///      届时本值不再需要覆盖冷建。在那之前它**必须**覆盖冷建 —— 现有守卫 `AllCold`
     ///      是合取,结构上放过「mathlib 热 / 内容层冷」这一真实未命中态,故冷建当前无人拦。
     ///      **① 是一个动作,不可机器判**,故它不能单独承担「非永久」。〔2026-08-30 勘注:生产者侧
-    ///      的种子 workflow `.github/workflows/lean-cache-seed-manual.yml` 已实际存在并跑过
-    ///      (负读数⑤),#3029 「新 config 的首个 PR 结构上必无种子」这一前提因此改变;
+    ///      的种子 workflow `lean-cache-seed-manual.yml` 曾实际存在并跑过(负读数⑤),
+    ///      #3029 「新 config 的首个 PR 结构上必无种子」这一前提因此改变;
+    ///      〔2026-09-06 勘注:该 workflow 已随 4.33 迁移收尾删除,当前树中不存在;
+    ///       上述前提改变的结论不受影响,但不得据此断言现有种子器〕
     ///      门的**消费侧**仍未建,由 #4120 的后续单承接,本次不建(16′ 剥洋葱)。〕
     ///   ② D5 内容层模块数达到 <see cref="ColdBuildBudgetReviewModuleCount"/>(2026-08-30 重算)——
     ///      #3029 复审条件的**先行指标**分支,可机器判且有观察者。

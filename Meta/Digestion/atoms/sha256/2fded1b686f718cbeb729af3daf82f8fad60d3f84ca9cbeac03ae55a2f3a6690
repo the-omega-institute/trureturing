@@ -1,0 +1,102 @@
+## 定理 5：尾部可忽略的尺度条件
+
+若
+
+$$
+X\to\infty,
+\qquad
+\frac QX\to\infty,
+$$
+
+则
+
+$$
+\boxed{
+\mathfrak B(X,Q)
+\sim
+2\mathfrak a\,\frac XQ.
+}
+\tag{28}
+$$
+
+相反，如果 \(Q/X\) 沿某个子序列保持有界，那么这些尾部读出不能沿该子序列趋零。
+
+### 证明
+
+窗口含有 \(M(x)\) 个连续整数，所以
+
+$$
+\left|
+\sum_{x<n\le2x}e(n/q)
+\right|^2
+=
+\frac{\sin^2(\pi M(x)/q)}{\sin^2(\pi/q)}.
+$$
+
+当 \(q>Q\gg X\) 时，一致地有
+
+$$
+\frac{\sin^2(\pi M(x)/q)}{\sin^2(\pi/q)}
+=
+M(x)^2
+\left[1+O\!\left(\frac{X^2}{q^2}\right)\right].
+$$
+
+由引理 1 的分部求和，
+
+$$
+\sum_{q>Q}\frac{\alpha(q)}{q^2}
+=
+\frac{\mathfrak a}{Q}+o(Q^{-1}),
+$$
+
+以及
+
+$$
+\sum_{q>Q}\frac{\alpha(q)}{q^4}=O(Q^{-3}).
+$$
+
+又因为
+
+$$
+\int_X^{2X}\frac{M(x)^2}{x^2}\,dx
+=
+X+O(1),
+$$
+
+得到
+
+$$
+\mathfrak B(X,Q)
+=
+2\mathfrak a\frac XQ(1+o(1))
++
+O\!\left(\frac{X^3}{Q^3}\right).
+$$
+
+即式（28）。
+
+反之，若 \(Q\le CX\)，就在 \(Q\) 以上选择一个固定比例模数带
+
+$$
+AX<q\le2AX,
+\qquad A>C.
+$$
+
+定理 3—4 的同样证明给出该模数带的严格正极限。而整个尾部是它再加上其他正核，所以整体读出不可能趋零。证毕。
+
+---
+
+因此，对这一明确的相干通道族，
+
+$$
+\boxed{
+\text{要把模数尾部作为整体删掉，需要 }Q/X\to\infty.
+}
+\tag{29}
+$$
+
+只知道 \(Q\to\infty\)，甚至只取 \(Q\) 与窗口 \(X\) 同阶，都不够。
+
+这个结论只针对这里保留的两个原始频率通道；**不能未经进一步估计，就宣称它已经控制完整 Ramanujan 核的全部频率尾部。**
+

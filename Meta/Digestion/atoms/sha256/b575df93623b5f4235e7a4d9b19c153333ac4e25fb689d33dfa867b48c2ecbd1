@@ -1,0 +1,31 @@
+## 定理 141.3　二阶判定到三十二个二次型的等价归约
+
+取 \(D=\operatorname{diag}(1,1,\zeta^{3},1,\zeta^{2})\),并取 \(B\) 为 \(T\) 在实化坐标下的一组基,
+使 \(\varphi=D(r+it)\) 且 \((r,t)=Ba\),\(a\in\mathbb{R}^4\)。记 \(H_{q,p}\) 为 \(D^{\dagger}A(q,p)D\) 的实化,
+\(G=B^{\mathsf T}B\),\(Q_{q,p}=B^{\mathsf T}H_{q,p}B/5\),并对每个符号向量 \(s\in\{\pm1\}^{Z_0}\) 记
+
+$$
+M_s=\sum_{(q,p)\notin Z_0}\operatorname{sgn}\bigl(W_\psi(q,p)\bigr)Q_{q,p}
++\sum_{(q,p)\in Z_0}s_{q,p}\,Q_{q,p}
+-L(\psi)\,G .
+$$
+
+则对每个 \(\varphi\in T\),
+
+$$
+\boxed{
+\sum_{(q,p)\notin Z_0}\operatorname{sgn}\bigl(W_\psi(q,p)\bigr)W_\varphi(q,p)
++\sum_{(q,p)\in Z_0}\bigl|W_\varphi(q,p)\bigr|
+-L(\psi)\|\varphi\|^2
+=\max_{s\in\{\pm1\}^{5}}a^{\mathsf T}M_s\,a .
+}
+$$
+
+因而该量对一切非零 \(\varphi\in T\) 严格为负,**当且仅当**全部三十二个 \(M_s\) 皆负定。
+
+### 证明
+
+对每个实数 \(x\) 有 \(|x|=\max_{\sigma\in\{\pm1\}}\sigma x\),而 \(Z_0\) 上的五个 \(W_\varphi\) 相互独立地取遍符号,
+故对 \(|{\cdot}|\) 求和等于对 \(s\) 取最大。「当且仅当」的必要方向由每个分支值不超过最大值给出;
+充分方向由三十二个分支各自可被某个实 \(a\) 取到给出(每个符号型都有显式整数见证)。∎
+

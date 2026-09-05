@@ -66,17 +66,16 @@ internal static class ScribeUnknownDebtPolicy
 
     internal static ImmutableArray<ScribeUnknownDebtFinding> Evaluate(
         ScribeTestMap currentMap,
-        ScribeTestMap forkPointMap)
+        ScribeTestMap baselineMap)
     {
         var current = ScribeUnknownDebtBaselineV1.Create(currentMap);
-        var forkPoint = ScribeUnknownDebtBaselineV1.Create(forkPointMap);
-        var forkPointIdentities = forkPointMap.Methods
+        var baselineIdentities = baselineMap.Methods
             .Select(static method => (method.PartitionKey, method.SourcePath, method.Id))
             .ToHashSet();
         var findings = ImmutableArray.CreateBuilder<ScribeUnknownDebtFinding>();
         AddManagedTestLayoutFindings(currentMap, findings);
         var introduced = current.UnknownMethods()
-            .Where(method => !forkPointIdentities.Contains(
+            .Where(method => !baselineIdentities.Contains(
                 (method.PartitionKey, method.SourcePath, method.Id)))
             .OrderBy(static method => method.PartitionKey, StringComparer.Ordinal)
             .ThenBy(static method => method.SourcePath, StringComparer.Ordinal)
@@ -106,7 +105,7 @@ internal static class ScribeUnknownDebtPolicy
         {
             findings.Add(new ScribeUnknownDebtFinding(
                 method.SourcePath,
-                $"conservative unknown test method introduced after fork point: "
+                $"conservative unknown test method introduced after protected baseline: "
                     + method.DisplayIdentity,
                 AdmissionEffect.Block));
         }

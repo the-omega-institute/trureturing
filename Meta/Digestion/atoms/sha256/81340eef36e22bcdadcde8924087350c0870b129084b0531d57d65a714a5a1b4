@@ -1,0 +1,45 @@
+## 定理 151.1　有限量子碰撞的约化通道
+
+若辅助寄存器初态为 \(|0\rangle\)，则：
+
+$$
+W_p(|\psi\rangle|0\rangle)
+=
+\sqrt{1-p}\,|\psi\rangle|0\rangle
++
+\sqrt p\,X_D|\psi\rangle|1\rangle.
+$$
+
+对辅助寄存器取偏迹，得到：
+
+$$
+\boxed{
+\mathcal C_p(\rho)
+=
+(1-p)\rho+pX_D\rho X_D.
+}
+\tag{151.2}
+$$
+
+其 Kraus 算子为：
+
+$$
+K_0=\sqrt{1-p}\,I,
+\qquad
+K_1=\sqrt p\,X_D,
+$$
+
+满足：
+
+$$
+K_0^\dagger K_0+K_1^\dagger K_1=I.
+$$
+
+### 证明
+
+由 \(Y|0\rangle=i|1\rangle\)，得到联合态表达式。
+
+两种辅助记录正交，所以偏迹删除交叉项，剩余两项恰为式（151.2）。归一化直接计算。∎
+
+---
+
