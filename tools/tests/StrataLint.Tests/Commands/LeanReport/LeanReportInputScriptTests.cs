@@ -230,6 +230,26 @@ public sealed class LeanReportInputScriptTests
     }
 
     [Fact]
+    public void AbsentJudgeLibraryContributesNoSourcesAndAddressSucceeds()
+    {
+        using var fixture = new LeanReportInputFixture();
+        fixture.RemoveInspectorDirectory();
+
+        var result = fixture.RunCommand("address");
+
+        Assert.True(
+            result.ExitCode == 0,
+            Encoding.UTF8.GetString(result.StandardError));
+        var parts = Encoding.UTF8.GetString(result.StandardOutput)
+            .Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        Assert.Equal(4, parts.Length);
+        Assert.Matches("^[0-9a-f]{64}$", parts[0]);
+        Assert.Equal(
+            fixture.ManifestHash("Trureturing.lean", "D5/Probe.lean"),
+            parts[2]);
+    }
+
+    [Fact]
     public void AddingASecondSourceWithIdenticalContentsChangesTheSourcesHash()
     {
         using var fixture = new LeanReportInputFixture();
@@ -514,6 +534,25 @@ public sealed class LeanReportInputScriptTests
             Path.Combine(repository, relativePath.Replace('/', Path.DirectorySeparatorChar)),
             contents,
             new UTF8Encoding(false));
+
+        internal void RemoveInspectorDirectory() => Directory.Delete(
+            Path.Combine(repository, "tools", "lean-inspector"),
+            recursive: true);
+
+        internal string ManifestHash(params string[] relativePaths)
+        {
+            var manifest = new StringBuilder();
+            foreach (var relativePath in relativePaths)
+            {
+                var path = Path.Combine(
+                    repository,
+                    relativePath.Replace('/', Path.DirectorySeparatorChar));
+                var digest = Convert.ToHexStringLower(SHA256.HashData(File.ReadAllBytes(path)));
+                manifest.Append(digest).Append("  ").Append(relativePath).Append('\n');
+            }
+            return Convert.ToHexStringLower(
+                SHA256.HashData(Encoding.UTF8.GetBytes(manifest.ToString())));
+        }
 
         private ProcessOutput Run(string command)
         {

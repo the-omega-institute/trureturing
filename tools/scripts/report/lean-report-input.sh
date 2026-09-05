@@ -604,13 +604,13 @@ repository_address() {
   while IFS= read -r path; do
     append_manifest_entry "$sources_manifest" "${path#"$REPOSITORY/"}"
   done < "$sources_list"
-  [[ -d "$REPOSITORY/tools/lean-inspector" ]] \
-    || { echo "lean-report-input: inspector Lean root is absent: $REPOSITORY/tools/lean-inspector" >&2; return 2; }
-  find "$REPOSITORY/tools/lean-inspector" -type f -name '*.lean' -print \
-    | sort > "$inspector_sources_list"
-  while IFS= read -r path; do
-    append_manifest_entry "$sources_manifest" "${path#"$REPOSITORY/"}"
-  done < "$inspector_sources_list"
+  if [[ -d "$REPOSITORY/tools/lean-inspector" ]]; then
+    find "$REPOSITORY/tools/lean-inspector" -type f -name '*.lean' -print \
+      | sort > "$inspector_sources_list"
+    while IFS= read -r path; do
+      append_manifest_entry "$sources_manifest" "${path#"$REPOSITORY/"}"
+    done < "$inspector_sources_list"
+  fi
   materialize_manifest "$sources_manifest"
   sources_sha256="$(hash_file "$sources_manifest")"
 
