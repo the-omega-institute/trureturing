@@ -1,0 +1,12 @@
+# 四、一个可计算的 Euler 平均常数
+
+为了研究随窗口一起移动的模数，定义
+
+$$
+\boxed{
+\alpha(q)=
+\mu(q)^2\left(\frac q{\varphi(q)}\right)^2.
+}
+\tag{14}
+$$
+

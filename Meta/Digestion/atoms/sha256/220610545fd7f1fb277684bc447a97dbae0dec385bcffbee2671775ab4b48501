@@ -1,0 +1,67 @@
+# 八、把误差预算写成观察者真正需要的形式
+
+对有限矩阵误差 \(E_X(n,m)\)，定义观察误差
+
+$$
+\delta_X(E_X)
+=
+\left|
+\sum_{n,m}W_X(n,m)E_X(n,m)
+\right|.
+$$
+
+因为 \(W_X(n,m)\ge0\)，并且
+
+$$
+\begin{aligned}
+\sum_{n,m}W_X(n,m)
+&=
+\int_X^{2X}\frac{M(x)^2}{x^2}\,dx\\
+&=X+O(1),
+\end{aligned}
+$$
+
+所以
+
+$$
+\boxed{
+\sup_{n,m}|E_X(n,m)|\le\varepsilon_X
+\Longrightarrow
+\delta_X(E_X)
+\le
+\varepsilon_X\,[X+O(1)].
+}
+\tag{30}
+$$
+
+于是：
+
+$$
+\boxed{
+\varepsilon_X=o(1)
+}
+$$
+
+并不足以保证观察误差趋零。
+
+通过这种逐项估计路线，至少需要
+
+$$
+\boxed{
+\varepsilon_X=o(X^{-1}).
+}
+\tag{31}
+$$
+
+本轮的 \(\mathscr P_X\) 恰好位于临界尺度：
+
+$$
+\varepsilon_X=O(X^{-1}),
+$$
+
+并且它真的留下了非零常数贡献，而不是上界估计虚构出来的可能性。
+
+这给“信息逃逸”一个更准确的表达：
+
+> **一个通道在每个固定状态对上的读出都消失，不代表它在随尺度增长的联合观察中消失。需要控制的是观察误差，而不仅是逐项误差。**
+

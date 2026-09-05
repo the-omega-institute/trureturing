@@ -1,0 +1,90 @@
+## 但它的第一阶干涉判据已经可以失败
+
+先取 \(\varepsilon=0\)，记：
+
+$$
+d=e^{1/4}.
+$$
+
+归一化 Fourier 变换为：
+
+$$
+\boxed{
+A_0(t)
+=
+e^{-t^2/4}
+\frac{c+d\cos(t/2)}{c+d}.
+}
+\tag{Q27}
+$$
+
+在 \(t_0=2\pi\) 处，直接计算：
+
+$$
+\boxed{
+L_1(t_0;A_0)
+=
+e^{-2\pi^2}
+\frac{(c-d)(2c-3d)}{4(c+d)^2}<0.
+}
+\tag{Q28}
+$$
+
+因为：
+
+$$
+1<d<c=\frac32,
+$$
+
+所以 \(c-d>0\)，而 \(2c-3d=3(1-d)<0\)。
+
+当 \(\varepsilon\downarrow0\)，\(A_\varepsilon\) 及其前两阶导数在固定紧集上一致收敛到 \(A_0\)。因此，对所有足够小但严格为正的 \(\varepsilon\)：
+
+$$
+\boxed{
+L_1(2\pi;A_\varepsilon)<0.
+}
+\tag{Q29}
+$$
+
+这一步不是仅凭数值连续性猜测。令未归一化变换为：
+
+$$
+F_\varepsilon(t)=
+\int e^{-x^2-\varepsilon x^4}(c+\cosh x)e^{itx}\,dx.
+$$
+
+则对 \(k=0,1,2\)：
+
+$$
+|F_\varepsilon^{(k)}(t_0)-F_0^{(k)}(t_0)|
+\le
+\varepsilon
+\int |x|^{k+4}e^{-x^2}(c+\cosh x)\,dx.
+$$
+
+右边是明确有限的高斯矩，因此能给出保持式（Q28）严格负性的正 \(\varepsilon\) 范围。
+
+对于这样的 \(\varepsilon>0\)，核具有超高斯衰减，其 Fourier 变换属于适用实根乘积判据的整函数类别。式（Q29）排除了全部零点为实的可能。
+
+于是：
+
+$$
+\boxed{
+\begin{gathered}
+p>0,\quad p\text{ 偶、光滑、快速衰减},\\
+\left(V'(x)/x\right)'>0,\\
+\text{全部二次倾斜的相邻矩不等式成立}
+\end{gathered}
+\quad\not\Rightarrow\quad
+\text{Fourier 变换全部实根}.
+}
+\tag{Q30}
+$$
+
+**这个反例不是实际 ξ。它严格说明：即使补实了上一轮的形状前件，仍然不能把它当成完整 RH 正性。**
+
+缺少的确实是更深的两模态关联约束，而不是还没把普通集中性证明得足够强。
+
+---
+
