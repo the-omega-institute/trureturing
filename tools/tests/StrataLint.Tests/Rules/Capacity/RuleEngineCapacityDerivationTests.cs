@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using StrataLint.Cli;
 using StrataLint.Engine;
 
@@ -30,11 +31,137 @@ public sealed class RuleEngineCapacityDerivationTests
 
         RepositoryRules.EvaluateCapacity(context, _ =>
         {
-            calls++;
+            Interlocked.Increment(ref calls);
             return EmptyTestMap();
         });
 
         Assert.Equal(2, calls);
+    }
+
+    [Fact]
+    public void Sl003StartsCurrentAndForkPointDerivationsBeforeEitherCompletes()
+    {
+        var fixture = new RuleFixture();
+        var context = fixture.Build(RawChangeSet.Create([RuleFixture.BlueprintSourcePath]));
+        var invokingThreadId = Environment.CurrentManagedThreadId;
+        var bothStarted = new TaskCompletionSource<bool>(
+            TaskCreationOptions.RunContinuationsAsynchronously);
+        var events = new ConcurrentQueue<string>();
+        var started = 0;
+        var completedBeforeBothStarted = 0;
+
+        RepositoryRules.EvaluateCapacity(context, snapshot =>
+        {
+            var side = ReferenceEquals(snapshot, context.Current) ? "Current" : "ForkPoint";
+            events.Enqueue(side + ":started");
+            if (Interlocked.Increment(ref started) == 2)
+            {
+                bothStarted.SetResult(true);
+            }
+
+            // The current serial implementation runs on the invoking thread. Let it finish
+            // so the red test reports an assertion instead of hanging at the synchronization gate.
+            if (Environment.CurrentManagedThreadId != invokingThreadId)
+            {
+                bothStarted.Task.GetAwaiter().GetResult();
+            }
+
+            if (Volatile.Read(ref started) < 2)
+            {
+                Interlocked.Exchange(ref completedBeforeBothStarted, 1);
+            }
+
+            events.Enqueue(side + ":completed");
+            return EmptyTestMap();
+        });
+
+        Assert.Equal(2, started);
+        Assert.Equal(0, completedBeforeBothStarted);
+        var recorded = events.ToArray();
+        Assert.Equal(4, recorded.Length);
+        Assert.All(recorded.Take(2), static item => Assert.EndsWith(":started", item));
+        Assert.Contains("Current:started", recorded.Take(2));
+        Assert.Contains("ForkPoint:started", recorded.Take(2));
+    }
+
+    [Fact]
+    public async Task Sl003PassesDerivedMapsToUnknownDebtPolicyInCurrentForkPointOrder()
+    {
+        var fixture = new RuleFixture();
+        var context = fixture.Build(RawChangeSet.Create([RuleFixture.BlueprintSourcePath]));
+        var currentMap = UnknownTestMap("CurrentDebt");
+
+        var findings = await RepositoryRules.EvaluateCapacityAsync(
+            context,
+            Task.FromResult(currentMap),
+            Task.FromResult(EmptyTestMap()));
+
+        var finding = Assert.Single(findings, static item =>
+            item.Message.Contains("unknown test method introduced", StringComparison.Ordinal));
+        Assert.Equal("tools/tests/Synthetic.Tests/DebtTests.cs", finding.Path);
+        Assert.Equal(
+            "conservative unknown test method introduced after fork point: "
+            + "tools/tests/Synthetic.Tests::DebtTests.CurrentDebt",
+            finding.Message);
+    }
+
+    [Fact]
+    public async Task Sl003PrefersCurrentFailureAfterObservingBothDerivationFailures()
+    {
+        var fixture = new RuleFixture();
+        var context = fixture.Build(RawChangeSet.Create([RuleFixture.BlueprintSourcePath]));
+        var currentFailure = new InvalidOperationException("current derivation failed");
+        var forkPointFailure = new InvalidOperationException("fork-point derivation failed");
+        var currentTask = Task.FromException<ScribeTestMap>(currentFailure);
+        var forkPointTask = Task.FromException<ScribeTestMap>(forkPointFailure);
+
+        var thrown = await Assert.ThrowsAsync<InvalidOperationException>(() =>
+            RepositoryRules.EvaluateCapacityAsync(context, currentTask, forkPointTask));
+
+        Assert.Same(currentFailure, thrown);
+        var observedForkPointFailure = Assert.IsType<AggregateException>(forkPointTask.Exception);
+        Assert.Same(forkPointFailure, Assert.Single(observedForkPointFailure.InnerExceptions));
+    }
+
+    [Fact]
+    public async Task Sl003DoesNotSwallowForkPointDerivationFailureWhenCurrentSucceeds()
+    {
+        var fixture = new RuleFixture();
+        var context = fixture.Build(RawChangeSet.Create([RuleFixture.BlueprintSourcePath]));
+        var forkPointFailure = new InvalidOperationException("fork-point derivation failed");
+
+        var thrown = await Assert.ThrowsAsync<InvalidOperationException>(() =>
+            RepositoryRules.EvaluateCapacityAsync(
+                context,
+                Task.FromResult(EmptyTestMap()),
+                Task.FromException<ScribeTestMap>(forkPointFailure)));
+
+        Assert.Same(forkPointFailure, thrown);
+    }
+
+    [Fact]
+    public void Sl003StartsOnlyOneDerivationWhenCurrentAndForkPointAreSameSnapshot()
+    {
+        var fixture = new RuleFixture();
+        var context = fixture.Build(RawChangeSet.Create([RuleFixture.BlueprintSourcePath]));
+        var sameSnapshotContext = RuleEvaluationContext.Create(
+            context.Current,
+            context.Baseline,
+            context.Policy,
+            context.Lean,
+            context.Changes,
+            context.MetaEvaluation,
+            context.VerifiedScribeEmissions,
+            context.Current);
+        var calls = 0;
+
+        RepositoryRules.EvaluateCapacity(sameSnapshotContext, _ =>
+        {
+            Interlocked.Increment(ref calls);
+            return EmptyTestMap();
+        });
+
+        Assert.Equal(1, calls);
     }
 
     [Fact]
@@ -52,7 +179,7 @@ public sealed class RuleEngineCapacityDerivationTests
         {
             RepositoryRules.EvaluateCapacity(context, _ =>
             {
-                calls++;
+                Interlocked.Increment(ref calls);
                 return EmptyTestMap();
             });
         }
@@ -92,4 +219,18 @@ public sealed class RuleEngineCapacityDerivationTests
     }
 
     private static ScribeTestMap EmptyTestMap() => new([], [], [], [], []);
+
+    private static ScribeTestMap UnknownTestMap(string methodId) =>
+        new(
+            [
+                new ScribeTestMethod(
+                    "tools/tests/Synthetic.Tests",
+                    "tools/tests/Synthetic.Tests/DebtTests.cs",
+                    "DebtTests." + methodId,
+                    [TestMapUnknownReason.Other]),
+            ],
+            [],
+            [],
+            [],
+            []);
 }
