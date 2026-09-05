@@ -1,0 +1,2 @@
+**评注 27.814(4.101 之可证伪预测与逃逸见证，写在实施之前)**〔remark;第 5⁗ 条〕。拟议逃逸内容为三段活路径：(i) 新的 p 块分解 `∑_{i<q*p}(i : ZMod p)^k = (q : ZMod p) * ∑_{a<p}(a : ZMod p)^k`；(ii) `Fin p` 到 `ZMod p`、再到单位群的显式求和搬运；(iii) 由 `p^2 ∣ m−1` 推出 `p ∣ (m−1)/p` 并与 `(m−1)/p ≡ −1 (mod p)` 冲突。`FiniteField.sum_pow_units` 的直接实例化单独只属 bind-only，不作见证。公开定理判形 content，直接冻结依赖为空，准入依据 escape-witness，只依赖钉版 Mathlib；全案保持一个公开合取定理，不拆出 `squarefree_of_erdos_moser` 伴随声明。忠实见证 `(m,k,p)=(3,1,2)` 由 `norm_num` 核验。若实施时上述任一活路径退化为纯绑定，须重新预登记，不得事后追认。
+
