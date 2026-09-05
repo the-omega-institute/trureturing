@@ -1,0 +1,2 @@
+**拟议逃逸见证(面板原文,写在探针之前)**:`scaled_gc_orbit_window_iff` 是活路径上的新一致估计——对球内每点,乘以 log 2/log 3 后仍严格高于窗口下沿并严格低于拉回线,自身严格高于拉回线并低于窗口上沿,而对每个 p ≥ 5 乘以 log 2/log p 后严格低于窗口下沿;其证明须建立 log 2/log 3 与 log 2/log p(p ≥ 5)的新有理包络(钉版 Mathlib `Real.log` 单调性与 `Real.log_two_gt_d9`/`lt_d9`、`Real.goldenRatio` 的有理界),并把球的度量条件化为实部区间。这不是 `germLocalFactor_prime_scaling` 的实例化:缩放定理只输运零点,对轨道点越不越过窗口边界一无所言。**bind-only 部分(如实标注)**:由 G-c 取 z;由缩放定理得 `germLocalFactor (λ_p z) p = 0`;由 G-g-5 与冻结三阶分解得两个延拓 germ 的线外窗口零点——后者只作具名伴随结果落地,不单独立义务。
+

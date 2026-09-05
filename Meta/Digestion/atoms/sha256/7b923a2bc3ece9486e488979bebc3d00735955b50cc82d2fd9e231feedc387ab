@@ -1,0 +1,5 @@
+## 三　residual-open 对账勘注(消化账,零 Lean)
+
+面板两席核实:`Meta/Digestion/backfill/golden-observer-rh-route/residual-open/` 现有 798 条,其中含已冻结定理的旧 atom(G-g-3 已由 `ZetaBridge/RightHalfStripRiemannReduction.golden_right_half_strip_implies_rh` 冻结;G-g-5、G-g-7/8、Z-7、G-c 各层亦然)——是卷尾追加重键与旧版 atom 留存的消化滞后,不是数学缺口。选题只以冻结定理名与陈述同一性为准;对账(bind cover)另行走 `make cover`,不占实施席。
+
+后续增订继续严格追加于本节之后。
