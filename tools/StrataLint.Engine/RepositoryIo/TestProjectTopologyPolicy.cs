@@ -447,7 +447,19 @@ internal static partial class RepositoryRules
                 || !string.Equals(before.Content, after.Content, StringComparison.Ordinal))
             .ToHashSet(StringComparer.Ordinal);
 
-        return baseGraph.Participants.Values.Any(paths => paths.Overlaps(changedProjectPaths));
+        // test→test 债的参与者**不**计入路径级触发:该债的性质是一条 ProjectReference 关系,
+        // 而改同一个 csproj 里的 PackageReference 版本或任何无关属性并没有碰那条关系。
+        // 若计入,则「改这五个 csproj 之一」的每个 PR 都必须当场删掉一条 test→test 边 ——
+        // 实测近 7 天这五个文件共被改 28 次(约 4 次/天),而可还的边总共只有 4 条,
+        // 于是第五个这样的 PR 起合法候选集合为空(局部无解态),并诱发三类规避:
+        // 夹带无关还债、复制助手以抢付一条债、或改用 ReferenceOutputAssembly=false 把边藏起来。
+        //
+        // 压力并未放松:新增第五条边仍由 candidateDebt ⊆ baseDebt 当场拒;
+        // 等量换债(删一加一)同样因集合包含而非计数比较被拒;删边仍使债严格收缩。
+        // 一个 csproj 若同时参与某个**拥有关系**债,仍由那条债触发严格减债。
+        return baseGraph.Participants
+            .Where(static entry => entry.Key.Kind != OwnedTestToOwnedTestReference)
+            .Any(entry => entry.Value.Overlaps(changedProjectPaths));
     }
 
     private static bool CreatesMissingOwnedProject(DebtGraph baseGraph, DebtGraph candidateGraph)
