@@ -1,0 +1,42 @@
+## 定理 56.2　任意两份足以恢复输入
+
+对第一、二份，定义置换酉：
+
+$$
+\boxed{
+D_{12}|a,b\rangle
+=
+|b-a,\;2b-a\rangle.
+}
+\tag{56.3}
+$$
+
+则：
+
+$$
+\boxed{
+(D_{12}\otimes I)V|\psi\rangle
+=
+|\psi\rangle
+\otimes
+\frac1{\sqrt3}\sum_{r=0}^2|r,r\rangle.
+}
+\tag{56.4}
+$$
+
+### 证明
+
+对编码中的基底项：
+
+$$
+|j,j+s\rangle
+\longmapsto
+|s,j+2s\rangle.
+$$
+
+第三份正好也是 \(j+2s\)。令 \(r=j+2s\)，对 \(j\) 求和，得到式（56.4）。
+
+编码在三份循环置换下保持同样形式，因此任意两份都可以恢复。∎
+
+---
+

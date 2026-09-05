@@ -1,0 +1,32 @@
+## 假设 19.1　两个局域实场
+
+考虑两个线性场 \(q,r\)。先在有限空间区域和适当边界条件下建立模式分解，随后研究其局部均匀 Fourier 表示。
+
+取二次 Lagrangian 密度
+
+$$
+\begin{aligned}
+\mathcal L
+={}&
+\frac12\dot q^2+\frac12\dot r^2
+-\frac{c_0^2}{2}|\nabla q|^2
+-\frac{c_h^2}{2}|\nabla r|^2\\
+&-\frac{\Omega_0^2}{2}q^2
+-\frac{\Omega_h^2}{2}r^2
+-\lambda qr,
+\end{aligned}
+\tag{19.1}
+$$
+
+其中
+
+$$
+\Omega_0,\Omega_h>0,
+\qquad
+\Omega_0^2\Omega_h^2>\lambda^2.
+$$
+
+这保证零动量处的恢复矩阵正定；非负梯度项保持稳定性。
+
+---
+

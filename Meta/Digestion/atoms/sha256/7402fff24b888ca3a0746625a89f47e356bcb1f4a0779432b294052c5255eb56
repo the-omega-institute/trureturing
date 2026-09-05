@@ -1,0 +1,51 @@
+### 证明
+
+当正实现存在时，写：
+
+$$
+K_d=
+\begin{pmatrix}
+a_1/d&g_d^*\\
+g_d&C_d
+\end{pmatrix},
+$$
+
+其中：
+
+$$
+\|g_d\|^2=\sum_i\eta_{d,i}.
+$$
+
+均衡谱参考向量满足：
+
+$$
+\langle u_d,K_d^2u_d\rangle
+=
+\frac1d\operatorname{Tr}K_d^2.
+$$
+
+而由 \(P_d\) 的二阶系数：
+
+$$
+\operatorname{Tr}K_d^2
+=
+a_1^2-2\frac{d-1}{d}a_2.
+$$
+
+因此：
+
+$$
+\begin{aligned}
+\|g_d\|^2
+&=
+\frac1d\operatorname{Tr}K_d^2
+-\left(\frac{a_1}{d}\right)^2\\
+&=
+\frac{d-1}{d^2}(a_1^2-2a_2).
+\end{aligned}
+$$
+
+证毕。
+
+对候选 \(\eta_{d,i}\) 尚未证明非负的情况，同一恒等式也可直接由式（B15）在无穷远处比较 \(1/x\) 系数得到。
+

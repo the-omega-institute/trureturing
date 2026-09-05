@@ -1,0 +1,11 @@
+**跨层下降是明确的：**
+
+$$
+\boxed{
+K_{d-1}
+\sim
+\frac d{d-1}
+\Pi_dK_d\Pi_d\big|_{u_d^\perp}.
+}
+$$
+

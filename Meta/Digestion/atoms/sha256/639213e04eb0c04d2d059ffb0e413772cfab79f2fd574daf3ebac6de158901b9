@@ -1,0 +1,61 @@
+# 十、现在怎样把它变成严格的有限计算？
+
+对固定 \(d\)，计算路径可以完全写成：
+
+$$
+\boxed{
+a_0,\ldots,a_d
+\longrightarrow
+q_d
+\longrightarrow
+r_d,n_d
+\longrightarrow
+B_d.
+}
+$$
+
+不需要先定位任何根。
+
+若已得到近似矩阵 \(\widetilde B_d\)，并严格认证每个元素的误差不超过 \(\varepsilon\)，那么矩阵维数为 \(d-1\)，故：
+
+$$
+\|B_d-\widetilde B_d\|_{\mathrm{op}}
+\le(d-1)\varepsilon.
+$$
+
+因此：
+
+$$
+\boxed{
+\lambda_{\min}(\widetilde B_d)>(d-1)\varepsilon
+\Longrightarrow
+B_d>0.
+}
+\tag{C33}
+$$
+
+反方向，若存在实向量 \(u\)，满足：
+
+$$
+\boxed{
+u^{\mathsf T}\widetilde B_du
++
+\varepsilon\|u\|_1^2<0,
+}
+\tag{C34}
+$$
+
+就严格得到：
+
+$$
+u^{\mathsf T}B_du<0.
+$$
+
+由定理 C1，该实际 \(q_d\) 有非实根；再由 Jensen 判据，RH 不成立。
+
+如果误差跨过零，结果只能是未定。
+
+这项程序并不声称很低成本。高阶系数、矩阵基底与小主子式可能非常病态。可以换基改善条件数，但必须同时运输误差与二次型，不能把换基后的数值稳定误认成原问题的正性已经证明。
+
+---
+

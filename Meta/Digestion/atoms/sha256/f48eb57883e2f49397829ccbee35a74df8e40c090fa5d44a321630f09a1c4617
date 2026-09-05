@@ -1,0 +1,42 @@
+## 收束
+
+这一轮补出了三项具体结果。
+
+欧拉校准误差具有精确的谱含义：
+
+$$
+\boxed{
+\widetilde\Delta-\Delta=\varepsilon
+\quad\Longrightarrow\quad
+\widetilde{\mathfrak T}-\mathfrak T
+=
+\frac{\varepsilon}{z+4}.
+}
+$$
+
+端点相容性可以逐层检验，并有误差控制：
+
+$$
+\boxed{
+L_N\le a_1-c\le U_N,
+\qquad
+U_N-L_N
+\le
+\left(1+\frac R4\right)\Delta
+\left(\frac R{R+4}\right)^{2N},
+}
+$$
+
+其中不等式的正谱解释保留明确前件。
+
+真正嵌套的回返链可以构造，但它的有效节点还必须接受：
+
+$$
+\boxed{
+\frac{\text{谱原子权重}}{(\text{谱位置})^2}
+\in\mathbb Z_{\ge1}
+}
+$$
+
+这一实际整函数重数检查，才能被解释成 ξ 的真实零点。
+

@@ -1,0 +1,26 @@
+## 定理 58.1　分离侧重建的交换性约束
+
+若式（58.1）—（58.2）成立，则：
+
+$$
+\boxed{[a,b]=0.}
+\tag{58.3}
+$$
+
+### 证明
+
+有：
+
+$$
+\begin{aligned}
+Vab
+&=(A_R\otimes I)Vb\\
+&=(A_R\otimes I)(I\otimes B_B)V\\
+&=(I\otimes B_B)(A_R\otimes I)V\\
+&=(I\otimes B_B)Va\\
+&=Vba.
+\end{aligned}
+$$
+
+因 \(V\) 为等距映射，故可消去 \(V\)，得到 \(ab=ba\)。∎
+

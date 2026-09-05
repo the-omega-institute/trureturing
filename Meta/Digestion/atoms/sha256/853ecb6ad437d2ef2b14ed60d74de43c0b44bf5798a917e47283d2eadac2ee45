@@ -1,0 +1,37 @@
+## 定义 13.1　响应矩与块 Hankel 矩阵
+
+定义
+
+$$
+T_k=B^{\mathsf T}A^kB,
+\qquad k\ge0.
+$$
+
+在充分大的 \(|z|\) 上，
+
+$$
+\boxed{
+\chi(z)
+=
+-\sum_{k=0}^\infty\frac{T_k}{z^{2k+2}}.
+}
+\tag{13.1}
+$$
+
+对 \(r\ge0\)，定义
+
+$$
+\mathbb H_r=[T_{i+j}]_{i,j=0}^r,
+$$
+
+以及
+
+$$
+\mathcal K_r
+=
+\operatorname{span}
+\{A^kBv:0\le k\le r,\ v\in\mathbb R^m\}.
+$$
+
+---
+

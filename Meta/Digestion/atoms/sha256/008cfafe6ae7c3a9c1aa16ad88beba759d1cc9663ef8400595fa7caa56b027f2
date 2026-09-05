@@ -1,0 +1,44 @@
+## 最终解释
+
+你的句子可以保留成如下更严格的版本：
+
+> **观察者把可访问的过去写成自身的关联记忆。黑洞的因果结构使某些原本的空间选择变成内部不可回避的时间方向；同一结构对量子场的传播和频率分解产生作用，在适当场态下表现为霍金辐射。辐射是否进一步携带形成黑洞的历史，则由完整信息转移与恢复结构决定。**
+
+因此，最深的对应不是：
+
+$$
+\text{时间}\to\text{记忆物质},
+\qquad
+\text{空间}\to\text{时间物质与辐射}.
+$$
+
+而是：
+
+$$
+\boxed{
+\text{因果结构决定哪些关系能够形成，}
+}
+$$
+
+$$
+\boxed{
+\text{量子动力学决定这些关系怎样被编码，}
+}
+$$
+
+$$
+\boxed{
+\text{观察接口决定其中哪些区别成为记忆或辐射读数。}
+}
+$$
+
+**这使“观察者—黑洞”的联系从吞噬比喻，转变成一个统一的关联生成、访问分割与能量约束问题。**
+
+黑洞内部并不会因此自动成为一个唯一观察者；但若要研究内部观察者，它的钟、记忆和行动必须同时服从内部因果结构。霍金辐射也不是这个内部观察者把自己的时间直接吐向外部，而是整个几何—量子场过程在外侧可访问代数上的可测表现。
+
+[1]: https://arxiv.org/abs/0809.4098?utm_source=chatgpt.com "[0809.4098] Minimal Energy Cost for Thermodynamic ..."
+[2]: https://davidtong.org/teaching/general-relativity/grhtml/S6.html "6 Black Holes‣ General Relativity by David Tong"
+[3]: https://arxiv.org/html/2502.13026v1 "Deriving the paradox: original derivation of Hawking radiation"
+[4]: https://link.springer.com/article/10.12942/lrr-2001-6 "The Thermodynamics of Black Holes | Living Reviews in Relativity | Springer Nature Link"
+[5]: https://arxiv.org/pdf/2209.09980?utm_source=chatgpt.com "arXiv:2209.09980v1 [gr-qc] 20 Sep 2022"
+[6]: https://arxiv.org/abs/gr-qc/0603046?utm_source=chatgpt.com "Quantum information cannot be completely hidden in correlations: implications for the black-hole information paradox"

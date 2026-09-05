@@ -1,0 +1,39 @@
+## 定义 33.1　径向 null 膨胀率
+
+定义两类未来径向 null 法向量：
+
+$$
+k_\pm
+=
+\partial_T+(-v\pm c)\partial_r.
+$$
+
+它们满足归一化
+
+$$
+g(k_+,k_-)=-2c^2.
+$$
+
+定义球面面积沿其变化的膨胀率：
+
+$$
+\theta_\pm
+=
+\frac1{\mathcal A}k_\pm(\mathcal A).
+$$
+
+由此：
+
+$$
+\boxed{
+\theta_+=\frac{2(c-v)}r,
+\qquad
+\theta_-=-\frac{2(c+v)}r.
+}
+\tag{33.1}
+$$
+
+用双 null 膨胀率描述球对称俘获结构，是黑洞局部几何的标准方法。它与依赖完整未来的事件视界定义相关，但不相同。([arXiv][2])
+
+---
+
