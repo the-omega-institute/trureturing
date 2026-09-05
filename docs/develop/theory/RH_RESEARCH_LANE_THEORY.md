@@ -6698,3 +6698,33 @@ $$
 本轮的具体增量是复用既有实数行和 owner，给出复混合级数的缩放证书、重数加权严格余量和可核查回归例，并提供配套 Scribe。要成为实际 Weil 局部化常数改进，仍须从 #5065 的实际 mixedSummand 构造 $B$、证明相应对称性、给出真正的 $p$ 与 $\lambda$，再通过实际 full Gram API 消费它们；本分支不把泛型前件当成已解除的 zeta 分析输入。
 
 原始 physical integral inequalities 独立解除计数仍为 **0/152**。两个 Kloosterman 输入、全局 prime-side positivity、固定支撑窗口的统一局部化及 RH 均未由本轮证明。下一步最有价值的工作是实际通道主要项与余项矩阵的有效估计，而不是重复三探针极化。
+
+
+### 6. 本轮源码交付补记：缩放证书与 Scribe 已写回
+
+本节记录晚于前述推导的实际交付状态。`ScaledComplexQuadraticRowBound.lean` 已在 `49d90eabbe049ca488544f894c798f6d9187cf91` 写入，包含以下七个带证明体的公开声明：
+
+```text
+norm_complex_quadratic_le_scaled_rows
+norm_series_quadratic_le_scaled_rows
+geometric_matrix_envelope_bound
+scaled_rows_robust_coercive_bound
+scaled_rows_robust_strict_negativity
+two_channel_scaling_iff
+two_channel_scaled_regression
+```
+
+因而上节关于两通道等价“尚未提交 Lean”的阶段性记录已被本段更新。实际定理只要求 r>0 与 d1>0；行列式不等式会推出所需的 d0 正性，无须额外假设。旧 `weighted_energy_pos` 仅从 private 改为公开，证明体未改；新模块直接复用它。`QuadraticProbeIrredundance` 的重复候选定义已移除，根入口直接引用 `QuadraticObserverPolarization` 的原有三探针及六个结构定理。
+
+截至 `e3ae73e5ca01dae205d3065ed1710383b19f8e4f`，五个数学模块与一个导入根均有同路径的 `Blueprint/.../*.scribe.cs` 配套：FragmentLaw、FragmentMeshTruncation、ComplexQuadraticRowBound、QuadraticObserverPolarization、ScaledComplexQuadraticRowBound、PrimeWeilFoundationsRoot。数学声明通过 `StatementSource.FromLean()` 引用；没有手写生成的 Markdown 投影。Scribe 发射与声明解析须在本地工具链完成。
+
+已逐步复核证明的正性、除法方向和完整交叉项。额外的精确 Fraction/SymPy 检查验证了缩放约去恒等式、两条复系数平方和恒等式、210 组有理参数的区间判据和中点见证。特别地，令 a0=x+iy、a1=u+iv，则
+
+$$
+\frac23(|a_0|^2+9|a_1|^2)\mp4\Re(a_0\overline{a_1})
+=\frac23|a_0\mp3a_1|^2\ge0.
+$$
+
+这些代数检查是开发期验证，不等同于 Lean kernel 检查。本轮新增源码未运行 Lean 编译或 Scribe reconciliation，保留 Candidate 状态，由本地固定工具链验收。旧 `244a3c...` 的成功日志不覆盖新模块。本轮没有处理 GitHub CI、改变准入规则、合并或自动合并；用于追加本卷的临时文件运输工作流会自删除。
+
+另须在接入 #5065 时核对复系数约定：本模块使用 sum(a_i*conj(a_j)*K_ij)，而标准 Gram 写作 star(a)*G*a。两者通过有限双重和交换取 K_ij=G_ji 对齐，不能未经证明直接把不同约定的矩阵符号认作同一项。本分支未完成该实际 Gram 适配或实际 majorant 的有效缩放搜索。
