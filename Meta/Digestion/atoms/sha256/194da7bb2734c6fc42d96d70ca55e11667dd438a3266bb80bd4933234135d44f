@@ -1,0 +1,87 @@
+# 一、固定实际读数：仍然不输入未知零点
+
+沿用：
+
+$$
+D(b^2)=\frac{\xi(\frac12+b)}{\xi(\frac12)},
+\qquad
+D(v)=\sum_{k\ge0}a_kv^k,
+$$
+
+其中：
+
+$$
+a_0=1,\qquad a_k>0.
+$$
+
+ξ 始终采用标准 completed 定义，反射折叠通过偶幂级数完成。([DLMF][1])
+
+定义实际累积量：
+
+$$
+\log D(v)
+=
+\sum_{m\ge1}\frac{\chi_{2m}}{(2m)!}v^m,
+$$
+
+以及前文的幂和读数：
+
+$$
+\boxed{
+s_m=
+(-1)^{m+1}\frac{m\chi_{2m}}{(2m)!}.
+}
+\tag{O1}
+$$
+
+因此：
+
+$$
+\frac{D'(v)}{D(v)}
+=
+s_1-s_2v+s_3v^2-\cdots,
+$$
+
+其中：
+
+$$
+s_1=a_1,
+$$
+
+$$
+s_2=-\frac{\chi_4}{12},
+\qquad
+s_3=\frac{\chi_6}{240},
+\qquad
+s_4=-\frac{\chi_8}{10080}.
+$$
+
+上一轮研究的固定滤波器为：
+
+$$
+f(z)=\sum_{j=1}^{N}c_jz^j,
+$$
+
+其带符号读数是：
+
+$$
+\mathcal Q_\infty(f)
+=
+\sum_{i,j=1}^{N}c_ic_js_{i+j}.
+$$
+
+我们已经证明：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+\mathcal Q_\infty(f)\ge0
+\quad
+\forall f\in\mathbb R[z],\ f(0)=0.
+}
+\tag{O2}
+$$
+
+有限版本的基本原理，就是 Hermite–Sylvester 的实根二次型判据：实根产生平方非负；非实共轭对可以被实系数插值多项式转成严格负贡献。([arXiv][2])
+

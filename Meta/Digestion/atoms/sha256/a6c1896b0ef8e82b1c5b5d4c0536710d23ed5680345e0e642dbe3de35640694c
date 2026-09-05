@@ -1,0 +1,62 @@
+# 结论
+
+这一轮把上一轮的宏观经典化条件向前推进了三步。
+
+**第一，关联界不再只能作为输入。**在局域电路与初始乘积条件下，它可以从有限因果支持直接证明：
+
+$$
+\boxed{
+\text{局域交互}
+\longrightarrow
+\text{过去域重叠}
+\longrightarrow
+\text{协方差增长界}.
+}
+$$
+
+**第二，经典描述出现于一个尺度窗口，而不是无限平均。**
+
+$$
+\boxed{
+\text{关联影响尺度}
+\ll
+\text{平均尺度}
+\ll
+\text{背景变化尺度}.
+}
+$$
+
+**第三，得到这个平均本身也必须满足因果与资源限制。**一个局域观察者不能因为数学上写出了 \(\widehat R_Q\)，就被赋予对整个区域的瞬时访问。
+
+最后，曲率反例说明：即使经典钟过程已经得到很好的近似，通向引力仍需额外的导数控制。
+
+因此，当前理论可以进一步收紧为：
+
+> **物理时空不是一个对量子世界任意平均后得到的背景，而是局域交互、关联传播、有限观察资源和空间正则性共同允许的一种尺度相关描述。**
+
+其核心对象不再只是
+
+$$
+g_{\mu\nu}(x),
+$$
+
+而是一个带证书的实现：
+
+$$
+\boxed{
+\left(
+g_{\mu\nu},
+\ \text{适用区域},
+\ \text{适用时间},
+\ \text{允许实验},
+\ \text{误差界},
+\ \text{导数控制}
+\right).
+}
+$$
+
+**只有这些内容共同成立，“由量子观察者导出时空”才不仅是构造出一个形式正确的度量，而是证明一个有限观察者确实能够在自己的因果与资源范围内，稳定地使用这张时空。**
+
+[1]: https://arxiv.org/html/quant-ph/0603121v1 "Lieb-Robinson bounds and the generation of correlationsand topological quantum order"
+[2]: https://arxiv.org/abs/1810.02428 "[1810.02428] Quasi-Locality Bounds for Quantum Lattice Systems. Part I. Lieb-Robinson Bounds, Quasi-Local Maps, and Spectral Flow Automorphisms"
+[3]: https://davidtong.org/teaching/general-relativity/grhtml/S3.html "3 Introducing Riemannian Geometry‣ General Relativity by David Tong"

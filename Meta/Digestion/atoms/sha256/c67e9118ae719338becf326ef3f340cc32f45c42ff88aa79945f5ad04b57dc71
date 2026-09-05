@@ -1,0 +1,25 @@
+## 定义 123.1　实际过去影响域
+
+沿具体电路逆向追踪输出节点 \(x\)，得到一个初始节点集合：
+
+$$
+\mathsf P_m(x).
+$$
+
+它满足
+
+$$
+\mathcal U_m^\dagger R_x\mathcal U_m
+\in\mathcal A_{\mathsf P_m(x)},
+$$
+
+以及
+
+$$
+\mathsf P_m(x)\subseteq B_{mr_0}(x).
+$$
+
+它可以由有限门支持的并集递归计算，不必通过模拟全部量子态求出。
+
+---
+

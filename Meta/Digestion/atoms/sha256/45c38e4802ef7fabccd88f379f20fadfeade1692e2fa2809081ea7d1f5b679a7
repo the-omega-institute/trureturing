@@ -1,0 +1,10 @@
+**本轮没有证明实际 \(\mathsf K\) 非负，也没有找到实际负证书。** 已经推进的是：把“怎样寻找观察者”变成一个规范的变分问题，把“无限部分可能遗漏多少”变成几何误差界，并把“负方向到底代表什么”精确对应到实际离线轨道。新增结果仍是纸面推导，没有修改文件或标记为 Lean 已验证。
+
+[1]: https://dlmf.nist.gov/25.4 "https://dlmf.nist.gov/25.4"
+[2]: https://arxiv.org/abs/1911.01745 "https://arxiv.org/abs/1911.01745"
+[3]: https://dlmf.nist.gov/1.10 "https://dlmf.nist.gov/1.10"
+[4]: https://arxiv.org/abs/math-ph/9906008 "https://arxiv.org/abs/math-ph/9906008"
+[5]: https://arxiv.org/abs/1806.01838 "https://arxiv.org/abs/1806.01838"
+[6]: https://journals.aps.org/pra/abstract/10.1103/PhysRevA.89.052117 "https://journals.aps.org/pra/abstract/10.1103/PhysRevA.89.052117"
+继续。这一轮可以证明两个更明确的结论。
+

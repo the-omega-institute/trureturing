@@ -1,0 +1,50 @@
+## 定理 122.1　有限因果域足以决定输出
+
+存在完全正、保迹映射
+
+$$
+\overline\Phi_{X,m}:\mathcal D(\mathcal H_Z)
+\to\mathcal D(\mathcal H_X),
+$$
+
+使对全部联合初态——包括具有初始纠缠的状态——成立：
+
+$$
+\boxed{
+q_X(\mathcal U_m\rho\mathcal U_m^\dagger)
+=
+\overline\Phi_{X,m}(q_Z(\rho)).
+}
+\tag{122.1}
+$$
+
+### 证明
+
+对输出区域任意效果 \(E_X\)，定理 121.1 保证
+
+$$
+\mathcal U_m^\dagger(E_X\otimes I)\mathcal U_m
+$$
+
+只支持于 \(Z\)。
+
+因此其期望只依赖输入约化态 \(q_Z(\rho)\)。
+
+为显式构造通道，任选一个固定的外部辅助态 \(\tau_{\Lambda\setminus Z}\)，定义
+
+$$
+\overline\Phi_{X,m}(\sigma)
+=
+q_X\!\left(
+\mathcal U_m
+(\sigma\otimes\tau)
+\mathcal U_m^\dagger
+\right).
+$$
+
+该映射完全正、保迹。由于所有输出效果的拉回都只支持于 \(Z\)，它与原联合态的外部部分及关联无关，故得到式（122.1）。∎
+
+这里的固定辅助态只用于构造下降映射，不表示真实过程每一步都重新初始化环境。
+
+---
+
