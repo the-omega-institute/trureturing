@@ -5,9 +5,14 @@ cas_ref: sha256:6bebf294113a6b30dbce4cba1840f66e788434aa2c3bbe126fdc427516f4ae6f
 coverage_gids:
   - gid: D5/S3/Analytic/Characterizations/GoldenTransferTriangle.golden_transfer_triangle
     target_statement_id: sha256:ea0467e601a4109190f47ef71e9188bdaf32061b81ba706e8feb76de997b5294
+  - gid: D5/S3/Observer/GoldenCoding/GoldenTransferFourfoldCharacterization.golden_transfer_fourfold_characterization
+    target_statement_id: sha256:c26335da9c52d697b2087cfe6775a5d682dd703c0d92804c8497701fe98bf321
 receipts:
   scribe:
     - gid: D5/S3/Analytic/Characterizations/GoldenTransferTriangle.golden_transfer_triangle
       definition_sha256: sha256:43e8eaefd1ad1740cfe5293af450cded3ccfdf580b7144dfa1baf0247810acd7
       emission_sha256: sha256:66e0500f867f5ab6f0824950e102524d566ed19fda1e8725d9f4adeedba6ee83
+    - gid: D5/S3/Observer/GoldenCoding/GoldenTransferFourfoldCharacterization.golden_transfer_fourfold_characterization
+      definition_sha256: sha256:815f653ea3866f72e5e197c2c9d0efb8d087bef841792582f8a28c13903bb361
+      emission_sha256: sha256:7bd29bbcd0b4a5bf196b79d0becdc51b4f6a2f6d7a016be76f1258100eb03b81
   unresolved_subitems: []

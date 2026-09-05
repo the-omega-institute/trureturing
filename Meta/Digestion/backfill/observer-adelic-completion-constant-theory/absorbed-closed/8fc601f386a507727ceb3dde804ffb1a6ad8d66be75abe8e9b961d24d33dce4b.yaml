@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:8fc601f386a507727ceb3dde804ffb1a6ad8d66be75abe8e9b961d24d33dce4b
+  normalized_sha256: sha256:8fc601f386a507727ceb3dde804ffb1a6ad8d66be75abe8e9b961d24d33dce4b
+cas_ref: sha256:8fc601f386a507727ceb3dde804ffb1a6ad8d66be75abe8e9b961d24d33dce4b
+coverage_gids:
+  - gid: D5/S3/Observer/GoldenCoding/GoldenTransferFourfoldCharacterization.golden_transfer_fourfold_characterization
+    target_statement_id: sha256:c26335da9c52d697b2087cfe6775a5d682dd703c0d92804c8497701fe98bf321
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/GoldenCoding/GoldenTransferFourfoldCharacterization.golden_transfer_fourfold_characterization
+      definition_sha256: sha256:815f653ea3866f72e5e197c2c9d0efb8d087bef841792582f8a28c13903bb361
+      emission_sha256: sha256:7bd29bbcd0b4a5bf196b79d0becdc51b4f6a2f6d7a016be76f1258100eb03b81
+  unresolved_subitems: []
