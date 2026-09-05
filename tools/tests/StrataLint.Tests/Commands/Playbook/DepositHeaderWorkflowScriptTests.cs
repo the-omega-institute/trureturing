@@ -95,7 +95,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
     public void DepositHeaderCommandUsesRegisteredSl012ForSevenLineWrappedDigest()
     {
         var fixture = new RuleFixture();
-        fixture.Files[RuleFixture.RingPath] = SevenLineWrappedDigest(
+        fixture.Files[RuleFixture.RingPath] = TransactionFixture.SevenLineWrappedDigest(
             "D5/S0/Carrier/Ring",
             "def goldenRing : Nat := 0\n");
         var current = RawRepositorySnapshot.Create(
@@ -121,16 +121,4 @@ public sealed partial class DepositCoverWorkflowScriptTests
             console.Output);
         Assert.Empty(console.Error);
     }
-
-    // TransactionFixture 提升为顶层类后不再能访问本类的 private 成员;
-    // 该辅助被夹具与本类共同使用,故改 internal(同程序集可见,行为与签名不变)。
-    internal static string SevenLineWrappedDigest(string documentGid, string declaration) =>
-        $"/- GID: {documentGid}\n"
-        + "   generality: G\n"
-        + $"   mirror-B: D5/B/{documentGid[3..]}\n"
-        + "   mirror-E: none(waiver:pure-definition)\n"
-        + "   anchors: []\n"
-        + "   digest: Synthetic deposit workflow digest\n"
-        + "   wraps onto physical line seven. -/\n"
-        + declaration;
 }
