@@ -1,0 +1,26 @@
+## 定理 E1：在正表示下，这是另一份正谱测度
+
+在 \(\mathbf H_+\) 下：
+
+$$
+\boxed{
+\mathfrak T(z)
+=
+\int_{[0,R]}
+\frac{d\omega(u)}{(4+u)(z-u)}.
+}
+\tag{E7}
+$$
+
+因此：
+
+$$
+\boxed{
+\ell_n
+=
+\int_{[0,R]}
+\frac{u^n}{4+u}\,d\omega(u).
+}
+\tag{E8}
+$$
+

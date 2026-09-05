@@ -1,0 +1,76 @@
+## 定理 43.1　指数时间映射给出热关联形式
+
+在上述二维自由场模型中，导数场二点关联的几何因子为
+
+$$
+\mathcal C_p(u,u')
+=
+\frac{p'(u)p'(u')}
+{\bigl[p(u)-p(u')\bigr]^2}.
+$$
+
+对式（43.2），有
+
+$$
+\boxed{
+\mathcal C_p(u,u')
+=
+\frac{\lambda^2}
+{4\sinh^2\!\left[\lambda(u-u')/2\right]}.
+}
+\tag{43.3}
+$$
+
+### 证明
+
+由
+
+$$
+p'(u)=A\lambda e^{-\lambda u},
+$$
+
+以及
+
+$$
+p(u)-p(u')
+=
+2A e^{-\lambda(u+u')/2}
+\sinh\!\left[\lambda(u-u')/2\right],
+$$
+
+直接代入得到。∎
+
+配上入射真空给出的正确 Wightman 边界值与解析性，这一关联满足热态的 KMS 条件，温度为
+
+$$
+\boxed{
+T_H
+=
+\frac{\hbar\lambda}{2\pi k_B}
+=
+\frac{\hbar\kappa}{2\pi ck_B}.
+}
+\tag{43.4}
+$$
+
+等价的模式计算给出 Bose 占据数
+
+$$
+\boxed{
+\bar n_\omega
+=
+\frac1{e^{2\pi\omega/\lambda}-1}.
+}
+\tag{43.5}
+$$
+
+这里采用的是标准半经典霍金机制，不是由虚时间周期这一条形式性质单独断言热性。([arXiv][3])
+
+### 项目上的重要边界
+
+仓库的 `GoldenHawkingTemperatureNormalization.lean` 已构造一个明确反例：同样的尺度数据，在不同的物理时间归一化下产生不同温度。
+
+所以，**某个比例、指数或黄金尺度本身不能唯一决定霍金温度；必须保留实际钟标定。**
+
+---
+

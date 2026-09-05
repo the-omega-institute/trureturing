@@ -1,0 +1,59 @@
+## 定理 44.1　外侧约化态为 Gibbs 态
+
+有
+
+$$
+\boxed{
+\rho_R
+=
+(1-q_\omega)
+\sum_{n=0}^{\infty}
+q_\omega^n|n\rangle\langle n|.
+}
+\tag{44.2}
+$$
+
+若
+
+$$
+H_R=\hbar\omega N_R,
+$$
+
+则
+
+$$
+\boxed{
+\rho_R
+=
+\frac{e^{-\beta_HH_R}}
+{\operatorname{Tr}e^{-\beta_HH_R}},
+\qquad
+\beta_H=\frac1{k_BT_H}.
+}
+\tag{44.3}
+$$
+
+### 证明
+
+对 \(B\) 取偏迹，正交性消去所有 \(n\ne m\) 项，得到式（44.2）。
+
+再使用
+
+$$
+q_\omega=e^{-\beta_H\hbar\omega}
+$$
+
+即可。∎
+
+其平均粒子数为
+
+$$
+\langle N_R\rangle
+=
+\frac{q_\omega}{1-q_\omega},
+$$
+
+与式（43.5）一致。
+
+---
+
