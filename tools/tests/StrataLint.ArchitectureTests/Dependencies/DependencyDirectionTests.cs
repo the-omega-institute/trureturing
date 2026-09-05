@@ -17,10 +17,11 @@ public sealed class DependencyDirectionTests
     /// against it adds exactly one name here and nothing beneath it.
     /// </summary>
     [Fact]
-    public void EngineReferencesExactlyBclDunetMarkdigPidginRoslynAndTruth()
+    public void EngineReferencesExactlyBclDunetMarkdigPidginRoslynTruthAndYamlDotNet()
     {
+        // YamlDotNet: SL-030 reads `.github/**` YAML with the parser family the Actions runner uses.
         Assert.Equal(
-            ["Dunet", "Markdig", "Microsoft.CodeAnalysis", "Microsoft.CodeAnalysis.CSharp", "Pidgin", "Tomlyn", "Trureturing.Truth"],
+            ["Dunet", "Markdig", "Microsoft.CodeAnalysis", "Microsoft.CodeAnalysis.CSharp", "Pidgin", "Tomlyn", "Trureturing.Truth", "YamlDotNet"],
             AssemblyReferencePolicy.NonPlatformReferences(typeof(AdmissionPipeline).Assembly));
     }
 

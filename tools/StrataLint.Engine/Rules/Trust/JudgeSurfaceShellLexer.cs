@@ -212,8 +212,16 @@ internal static class JudgeSurfaceShellLexer
                     continue;
 
                 case '#' when !inWord:
+                    // A comment runs to the end of its line only; the lines after it (a decoded
+                    // YAML `\n`, a folded block) are still shell (review round 11).
                     EndCommand();
-                    return;
+                    index = text.IndexOf('\n', index, end - index);
+                    if (index < 0)
+                    {
+                        return;
+                    }
+
+                    continue;
 
                 case '&' when inWord && wordIsRedirection && word.Length == redirectionOperatorLength && word[^1] is '>' or '<':
                     // `2>&1`, `>&2`: the descriptor duplication belongs to the redirection operator.

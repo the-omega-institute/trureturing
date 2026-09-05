@@ -110,6 +110,17 @@ public sealed class JudgeSurfaceRevisionRuleTests
     [InlineData("git restore --no-recurse-submodules -s HEAD^1 tools/scripts/workflow/x.sh")]
     [InlineData("git checkout --recurse-submodules=on-demand HEAD^1 -- tools/scripts/workflow/x.sh")]
     [InlineData("\\g\"i\"t show HEAD^1:tools/scripts/workflow/x.sh")]
+    [InlineData("git cat-file --textcon --path=CLAUDE.md \"$(git rev-parse HEAD^1:CLAUDE.md)\" >out")]
+    [InlineData("git cat-file --textconv --path=p HEAD^1:p")]
+    [InlineData("git show --pretty HEAD^1:tools/scripts/workflow/x.sh")]
+    [InlineData("git show --decorate-refs=x HEAD^1:tools/scripts/workflow/x.sh")]
+    [InlineData("git show -3 HEAD^1:tools/scripts/workflow/x.sh")]
+    [InlineData("git show :tools/scripts/workflow/x.sh")]
+    [InlineData("git archive --remote=/tmp/other HEAD")]
+    [InlineData("git checkout --track=direct HEAD^1 -- p")]
+    [InlineData("git restore --sour HEAD^1 -- p")]
+    [InlineData("git restore --no-recurse-submodules --source HEAD^1 p")]
+    [InlineData("git worktree add --orphan -b br /tmp/w HEAD^1")]
     [InlineData("git restore --stag --source=HEAD^1 -- tools/scripts/workflow/x.sh")]
     [InlineData("git restore --sou=HEAD^1 -- tools/scripts/workflow/x.sh")]
     [InlineData("time -p git show HEAD^1:tools/scripts/workflow/x.sh >out")]
@@ -192,10 +203,28 @@ public sealed class JudgeSurfaceRevisionRuleTests
     [InlineData("{fd}>/tmp/out git show HEAD:tools/scripts/workflow/x.sh")]
     [InlineData("$'git' show HEAD:tools/scripts/workflow/x.sh")]
     [InlineData("git read-tree --recurse-submodules=on-demand HEAD")]
+    [InlineData("git restore --no-recurse-submodules -s HEAD tools/scripts/workflow/x.sh")]
+    [InlineData("git worktree add --no-detach /tmp/h HEAD")]
+    [InlineData("git restore --no-quiet --source HEAD -- tools/scripts/workflow/x.sh")]
+    [InlineData("git read-tree --no-verbose HEAD")]
     [InlineData("git restore --recurse-submodules --source=HEAD -- tools/scripts/workflow/x.sh")]
     [InlineData("git restore --recurse-submodules=on-demand --source HEAD tools/scripts/workflow/x.sh")]
     [InlineData("git checkout --recurse-submodules=on-demand HEAD -- tools/scripts/workflow/x.sh")]
     [InlineData("g\"\\i\"t show HEAD^1:tools/scripts/workflow/x.sh")]
+    [InlineData("git archive --no-verbose HEAD >/dev/null")]
+    [InlineData("git archive --no-worktree-attributes --no-prefix HEAD")]
+    [InlineData("git archive -9 --format tar HEAD")]
+    [InlineData("git show --decorate-refs 'HEAD^1:foo' HEAD")]
+    [InlineData("git show -n 1 -S HEAD^1:x HEAD")]
+    [InlineData("git show -L1,2:tools/scripts/workflow/x.sh HEAD")]
+    [InlineData("git show --unknown-flag HEAD:tools/scripts/workflow/x.sh")]
+    [InlineData("git checkout -d HEAD")]
+    [InlineData("git checkout --track=direct -2 -3 --pathspec-file-nul HEAD")]
+    [InlineData("git restore --sour=HEAD -- p")]
+    [InlineData("git restore --no-source p")]
+    [InlineData("git cat-file --no-mailmap -t HEAD^1")]
+    [InlineData("git read-tree --index-output=/tmp/i --no-recurse-submodules -m HEAD HEAD^{tree}")]
+    [InlineData("git worktree add --no-checkout -B br /tmp/w HEAD")]
     [InlineData("git read-tree --no-recurse-submodules -u HEAD^{tree}")]
     [InlineData("git restore --staged --source=HEAD -- tools/scripts/workflow/x.sh")]
     [InlineData("git restore --conflict=diff3 tools/scripts/workflow/x.sh")]
@@ -282,11 +311,10 @@ public sealed class JudgeSurfaceRevisionRuleTests
     [InlineData("      # ref: ${{ github.base_ref }} — a comment, not a checkout")]
     [InlineData("        run: \"git show HEAD:tools/scripts/workflow/x.sh\" # ok")]
     [InlineData("        run: \"git cat-file -p HEAD\\u000Agit rev-parse HEAD^1\"")]
-    [InlineData("        run: \"\\uD800 git rev-parse HEAD\"")]
-    [InlineData("        run: \"\\U00110000 git rev-parse HEAD\"")]
     [InlineData("        run: !!str 'git rev-parse HEAD^1'")]
     [InlineData("    steps: [{run: \"echo ready\"}, {run: \"git show HEAD:tools/scripts/workflow/x.sh\"}]")]
     [InlineData("        run: !!str\t'git rev-parse HEAD^1'")]
+    [InlineData("        run: !custom\t'git show HEAD:tools/scripts/workflow/x.sh'")]
     public void WorkflowLinesWithoutAMaterializationAreAllowed(string line)
     {
         Assert.Empty(Evaluate(WorkflowPath, line + "\n"));
@@ -329,7 +357,7 @@ public sealed class JudgeSurfaceRevisionRuleTests
     [Fact]
     public void InlineWorkflowBaseRefIsRejected()
     {
-        const string workflow = "steps:\n  - with: { ref: ${{ github.base_ref }} }\n";
+        const string workflow = "steps:\n  - with: { ref: '${{ github.base_ref }}' }\n";
         var finding = Assert.Single(Evaluate(WorkflowPath, workflow));
         Assert.Equal(WorkflowPath, finding.Path);
         Assert.Contains("a `ref:` naming the protected base", finding.Message, StringComparison.Ordinal);
@@ -366,11 +394,59 @@ public sealed class JudgeSurfaceRevisionRuleTests
         Assert.Empty(Evaluate(WorkflowPath, workflow));
     }
 
-    [Fact]
-    public void UnterminatedQuotedRunScalarIsJudgedAtEndOfFile()
+    [Theory]
+    [InlineData("      - run: \"git show HEAD^1:tools/scripts/workflow/x.sh\n")]
+    [InlineData("        run: \"\\U00110000 git rev-parse HEAD\"\n")]
+    [InlineData("steps: [{run: \"git rev-parse HEAD\"}\n")]
+    [InlineData("run: &a [*a]\nrun: x\n")]
+    public void YamlThatDoesNotParseIsFailClosed(string workflow)
     {
-        const string workflow = "      - run: \"git show HEAD^1:tools/scripts/workflow/x.sh\n";
+        var finding = Assert.Single(Evaluate(WorkflowPath, workflow));
+        Assert.Contains("does not parse", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void RunWithANonScalarValueIsFailClosed()
+    {
+        const string workflow = "steps:\n  - run: [git, show, 'HEAD^1:tools/scripts/workflow/x.sh']\n";
+        var finding = Assert.Single(Evaluate(WorkflowPath, workflow));
+        Assert.Contains("not a scalar", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void AnchoredRunScalarReachedThroughAnAliasIsJudgedOnce()
+    {
+        const string workflow = "x-steps: &steps\n  - run: git show HEAD^1:tools/scripts/workflow/x.sh\njobs:\n  a:\n    steps: *steps\n  b:\n    steps: *steps\n";
         Assert.Single(Evaluate(WorkflowPath, workflow));
+    }
+
+    [Fact]
+    public void MergeKeyMappingIsWalked()
+    {
+        const string workflow = "base: &base\n  run: git show HEAD^1:tools/scripts/workflow/x.sh\nstep:\n  <<: *base\n  name: x\n";
+        Assert.Single(Evaluate(WorkflowPath, workflow));
+    }
+
+    [Fact]
+    public void MultiLinePlainRunScalarIsOneShellCommand()
+    {
+        const string workflow = "      - run: git show\n          HEAD^1:tools/scripts/workflow/x.sh\n";
+        Assert.Single(Evaluate(WorkflowPath, workflow));
+    }
+
+    [Fact]
+    public void CommentInsideADecodedRunScalarEndsAtItsLine()
+    {
+        const string workflow = "      - run: \"echo ready # note\\ngit show HEAD^1:tools/scripts/workflow/x.sh\"\n";
+        Assert.Single(Evaluate(WorkflowPath, workflow));
+    }
+
+    [Fact]
+    public void SecondDocumentIsScannedToo()
+    {
+        const string workflow = "run: echo one\n---\nrun: git show HEAD^1:tools/scripts/workflow/x.sh\n";
+        var finding = Assert.Single(Evaluate(WorkflowPath, workflow));
+        Assert.Contains("line 3:", finding.Message, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -390,7 +466,7 @@ public sealed class JudgeSurfaceRevisionRuleTests
     [Fact]
     public void EveryRefOnOneLineIsJudged()
     {
-        const string workflow = "    steps: [{uses: actions/checkout@v4, with: {ref: main}}, {uses: actions/checkout@v4, with: {ref: ${{ github.base_ref }}}}]\n";
+        const string workflow = "    steps: [{uses: actions/checkout@v4, with: {ref: main}}, {uses: actions/checkout@v4, with: {ref: '${{ github.base_ref }}'}}]\n";
         var finding = Assert.Single(Evaluate(WorkflowPath, workflow));
         Assert.Contains("a `ref:` naming the protected base", finding.Message, StringComparison.Ordinal);
     }
@@ -413,7 +489,7 @@ public sealed class JudgeSurfaceRevisionRuleTests
     [Fact]
     public void TaggedBaseRefWithATabIsRejected()
     {
-        const string workflow = "steps:\n  - uses: actions/checkout@v4\n    with:\n      ref: !!str\t\"${{ github.base_ref }}\"\n";
+        const string workflow = "steps:\n  - uses: actions/checkout@v4\n    with:\n      ref: !!str\t\"${{github.base_ref}}\"\n";
         Assert.Single(Evaluate(WorkflowPath, workflow));
     }
 

@@ -120,7 +120,8 @@
           "Microsoft.CodeAnalysis.CSharp": "[5.0.0, )",
           "Pidgin": "[3.5.1, )",
           "Tomlyn": "[2.10.1, )",
-          "Trureturing.Truth": "[0.1.0, )"
+          "Trureturing.Truth": "[0.1.0, )",
+          "YamlDotNet": "[16.3.0, )"
         }
       },
       "stratalint.engineeringscope": {
@@ -168,6 +169,12 @@
         "requested": "[2.10.1, )",
         "resolved": "2.10.1",
         "contentHash": "ykjOY3IpYmC4SpPcAZRTl/w2jTmhPMDydHq8xcV7tTBAQ22nKBsOkPqauIrZlMjHm03cmKfV23UOPscKp+J4Og=="
+      },
+      "YamlDotNet": {
+        "type": "CentralTransitive",
+        "requested": "[16.3.0, )",
+        "resolved": "16.3.0",
+        "contentHash": "SgMOdxbz8X65z8hraIs6hOEdnkH6hESTAIUa7viEngHOYaH+6q5XJmwr1+yb9vJpNQ19hCQY69xbFsLtXpobQA=="
       }
     }
   }
