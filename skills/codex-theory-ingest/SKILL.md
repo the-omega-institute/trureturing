@@ -377,8 +377,8 @@ does not perform that work.
 
 ## What this skill does not own
 
-- Repository policy and the two-PR registration obligation are owned by the
-  specification and `Meta/registry.yaml` consumers.
+- Repository policy is owned by the specification; theory volumes are governed
+  by the path rule (`DigestionOpaquePathPolicy`) with no registration obligation.
 - Source discovery, source-id derivation, atom boundaries, CAS writes, and
   digestion status are owned by the live ingestion engine and canonical doors.
 - Claim truth, Lean declarations, freezing, and coverage edges are owned by

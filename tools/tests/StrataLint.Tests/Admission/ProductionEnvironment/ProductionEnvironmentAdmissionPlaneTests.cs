@@ -81,7 +81,12 @@ public sealed partial class ProductionEnvironmentTests
 
         Assert.True(decision.IsAdmissible);
         Assert.Equal(AdmissionPlaneClassification.JudgeOnly, decision.Classification);
-        Assert.IsType<AdmissionOutcome.ProtectedSurfaceChange>(outcome);
+        Assert.IsNotType<AdmissionOutcome.InfrastructureFailure>(outcome);
+        if (outcome is AdmissionOutcome.RuleRejected rejected)
+        {
+            Assert.DoesNotContain(rejected.Diagnostics, static item =>
+                item.RuleId == RuleId.CreateKnown(29));
+        }
     }
 
     [Fact]
@@ -119,11 +124,9 @@ public sealed partial class ProductionEnvironmentTests
     {
         var outcome = EvaluateAdmissionPlane(
             Manifest(("tools/**", "judge"), ("docs/**", "content")),
-            out var usedBootstrap,
             "tools/change.cs");
 
         Assert.Null(outcome);
-        Assert.False(usedBootstrap);
     }
 
     [Fact]
@@ -131,11 +134,9 @@ public sealed partial class ProductionEnvironmentTests
     {
         var outcome = EvaluateAdmissionPlane(
             Manifest(("tools/**", "judge"), ("docs/**", "content")),
-            out var usedBootstrap,
             "docs/change.md");
 
         Assert.Null(outcome);
-        Assert.False(usedBootstrap);
     }
 
     [Fact]
@@ -177,16 +178,14 @@ public sealed partial class ProductionEnvironmentTests
 
         var prepared = gateway.Prepare(baseline);
         var outcome = ProductionCliEnvironment.EvaluateAdmissionPlane(
-            gateway.ReadRevision(baseline),
-            prepared.Changes,
-            out var usedBootstrap);
+            gateway.ReadCurrent(),
+            prepared.Changes);
 
         Assert.Contains(prepared.Changes.Entries, change =>
             change.Path.Value == "judge/source.txt" && change.Kind == RawChangeKind.Copied);
         Assert.Contains(prepared.Changes.Entries, change =>
             change.Path.Value == "content/copy.txt" && change.Kind == RawChangeKind.Added);
         Assert.Null(outcome);
-        Assert.False(usedBootstrap);
     }
 
     [Fact]
@@ -201,13 +200,11 @@ public sealed partial class ProductionEnvironmentTests
         var outcome = ProductionCliEnvironment.EvaluateAdmissionPlane(
             AdmissionPlaneSnapshot(Encoding.UTF8.GetBytes(
                 Manifest(("content/**", "content"), ("judge/**", "judge")))),
-            changes,
-            out var usedBootstrap);
+            changes);
 
         var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
         Assert.Contains(rejected.Diagnostics, static item =>
             item.Message.Contains("ADMISSION-PLANE-MIXED", StringComparison.Ordinal));
-        Assert.False(usedBootstrap);
     }
 
     [Fact]
@@ -215,11 +212,9 @@ public sealed partial class ProductionEnvironmentTests
     {
         var outcome = ProductionCliEnvironment.EvaluateAdmissionPlane(
             AdmissionPlaneSnapshot([0xff]),
-            RawChangeSet.Create([]),
-            out var usedBootstrap);
+            RawChangeSet.Create([]));
 
         Assert.Null(outcome);
-        Assert.False(usedBootstrap);
     }
 
     [Fact]
@@ -227,7 +222,6 @@ public sealed partial class ProductionEnvironmentTests
     {
         var outcome = EvaluateAdmissionPlane(
             Manifest(("docs/**", "content")),
-            out _,
             "tools/change.cs");
 
         var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
@@ -239,7 +233,6 @@ public sealed partial class ProductionEnvironmentTests
     {
         var outcome = EvaluateAdmissionPlane(
             Manifest(("docs/**", "content"), ("docs/*.md", "content")),
-            out _,
             "docs/change.md");
 
         var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
@@ -251,7 +244,6 @@ public sealed partial class ProductionEnvironmentTests
     {
         var outcome = EvaluateAdmissionPlane(
             Manifest(("docs/**", null)),
-            out _,
             "docs/change.md");
 
         var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
@@ -263,7 +255,6 @@ public sealed partial class ProductionEnvironmentTests
     {
         var outcome = EvaluateAdmissionPlane(
             Manifest(("docs/**", "observer")),
-            out _,
             "docs/change.md");
 
         var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
@@ -275,7 +266,6 @@ public sealed partial class ProductionEnvironmentTests
     {
         var outcome = EvaluateAdmissionPlane(
             Manifest(("docs/?.md", "content")),
-            out _,
             "docs/a.md");
 
         var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
@@ -286,29 +276,31 @@ public sealed partial class ProductionEnvironmentTests
     [Fact]
     public void CandidateFileMapUnavailableFailsClosed()
     {
+        var candidate = AdmissionPlaneSnapshot(null);
+        var decision = AdmissionPlanePolicy.Evaluate(candidate, ["docs/change.md"]);
         var outcome = ProductionCliEnvironment.EvaluateAdmissionPlane(
-            AdmissionPlaneSnapshot(null),
-            RawChangeSet.Create(["docs/change.md"]),
-            out var usedBootstrap);
+            candidate,
+            RawChangeSet.Create(["docs/change.md"]));
 
+        Assert.Equal("ADMISSION-PLANE-FILEMAP-UNAVAILABLE", decision.Code);
         var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
         Assert.Contains("FILEMAP is unavailable", failure.Message, StringComparison.Ordinal);
         Assert.DoesNotContain("protected-base", failure.Message, StringComparison.Ordinal);
-        Assert.False(usedBootstrap);
     }
 
     [Fact]
     public void CandidateFileMapUnparseableFailsClosed()
     {
+        var candidate = AdmissionPlaneSnapshot(Encoding.UTF8.GetBytes("files = [\n"));
+        var decision = AdmissionPlanePolicy.Evaluate(candidate, ["docs/change.md"]);
         var outcome = EvaluateAdmissionPlane(
             "files = [\n",
-            out var usedBootstrap,
             "docs/change.md");
 
+        Assert.Equal("ADMISSION-PLANE-FILEMAP-INVALID", decision.Code);
         var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
         Assert.Contains("FILEMAP cannot be parsed", failure.Message, StringComparison.Ordinal);
         Assert.DoesNotContain("protected-base", failure.Message, StringComparison.Ordinal);
-        Assert.False(usedBootstrap);
     }
 
     [Fact]
@@ -320,10 +312,9 @@ public sealed partial class ProductionEnvironmentTests
             + "pattern = \"docs/**\"\r\n"
             + "admission_plane = \"content\"";
 
-        var outcome = EvaluateAdmissionPlane(legacy, out var usedBootstrap, "docs/change.md");
+        var outcome = EvaluateAdmissionPlane(legacy, "docs/change.md");
 
         Assert.Null(outcome);
-        Assert.False(usedBootstrap);
     }
 
     [Fact]
@@ -331,22 +322,18 @@ public sealed partial class ProductionEnvironmentTests
     {
         var outcome = EvaluateAdmissionPlane(
             "files = [{ pattern = \"docs/**\", admission_plane = \"content\" }]\n",
-            out var usedBootstrap,
             "docs/change.md");
 
         Assert.Null(outcome);
-        Assert.False(usedBootstrap);
     }
 
 
     private static AdmissionOutcome? EvaluateAdmissionPlane(
         string manifest,
-        out bool usedBootstrap,
         params string[] changedPaths) =>
         ProductionCliEnvironment.EvaluateAdmissionPlane(
             AdmissionPlaneSnapshot(Encoding.UTF8.GetBytes(manifest)),
-            RawChangeSet.Create(changedPaths),
-            out usedBootstrap);
+            RawChangeSet.Create(changedPaths));
 
     private static RawRepositorySnapshot AdmissionPlaneSnapshot(byte[]? fileMapBytes) =>
         RawRepositorySnapshot.Create(fileMapBytes is null

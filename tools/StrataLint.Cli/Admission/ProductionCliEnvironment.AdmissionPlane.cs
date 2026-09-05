@@ -6,8 +6,8 @@ namespace StrataLint.Cli;
 
 internal sealed partial class ProductionCliEnvironment
 {
-    // This gate runs before canonical FILEMAP validation so a malformed FILEMAP can repair
-    // itself. Registering a post-canonical NoFindings stand-in would misstate enforcement.
+    // This gate runs before canonical FILEMAP validation and fails closed on a malformed
+    // candidate FILEMAP. A repair change carries a valid FILEMAP, so no bootstrap is needed.
     private static readonly RuleDescriptor AdmissionPlaneRule = new(
         RuleId.CreateKnown(29),
         "Admission plane partition",
@@ -18,18 +18,15 @@ internal sealed partial class ProductionCliEnvironment
         null);
 
     internal static AdmissionOutcome? EvaluateAdmissionPlane(
-        RawRepositorySnapshot protectedBase,
-        RawChangeSet changes,
-        out bool usedBootstrap)
+        RawRepositorySnapshot candidate,
+        RawChangeSet changes)
     {
-        ArgumentNullException.ThrowIfNull(protectedBase);
+        ArgumentNullException.ThrowIfNull(candidate);
         ArgumentNullException.ThrowIfNull(changes);
-        usedBootstrap = false;
         var changedPaths = AdmissionPlaneChangedPaths(changes);
         var decision = AdmissionPlanePolicy.Evaluate(
-            protectedBase,
+            candidate,
             changedPaths.Select(static path => path.Value).ToImmutableArray());
-        usedBootstrap = decision.Classification is AdmissionPlaneClassification.Bootstrap;
         if (decision.IsAdmissible)
         {
             return null;
@@ -61,8 +58,4 @@ internal sealed partial class ProductionCliEnvironment
             .ToImmutableArray();
 
     private static AdmissionOutcome.InfrastructureFailure Failure(string message) => new(message);
-
-    private static RawRepositorySnapshot WithoutFileMap(RawRepositorySnapshot snapshot) =>
-        RawRepositorySnapshot.Create(snapshot.Entries.Where(
-            static entry => entry.Path != FileMapLoader.RelativePath));
 }

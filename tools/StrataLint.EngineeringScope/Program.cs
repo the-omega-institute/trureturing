@@ -73,21 +73,18 @@ internal static class Program
 
         var changedPaths = GitPaths(options.RepositoryRoot, @base, head);
         var protectedBaseRaw = GitRepositorySnapshotReader.ReadRevision(options.RepositoryRoot, @base);
+        var candidateRaw = GitRepositorySnapshotReader.ReadRevision(options.RepositoryRoot, head);
         var admissionPlane = full == "1"
             ? null
-            : AdmissionPlanePolicy.Evaluate(protectedBaseRaw, changedPaths);
+            : AdmissionPlanePolicy.Evaluate(candidateRaw, changedPaths);
         if (admissionPlane is { IsAdmissible: false })
         {
             throw new InvalidDataException(
                 $"{admissionPlane.Code} {admissionPlane.Path}: {admissionPlane.Message}");
         }
 
-        var protectedBase = DecodeSnapshot(
-            full == "1" || admissionPlane?.Classification is AdmissionPlaneClassification.Bootstrap
-                ? WithoutFileMap(protectedBaseRaw)
-                : protectedBaseRaw,
-            "protected base");
-        var candidate = RevisionSnapshot(options.RepositoryRoot, head, "candidate");
+        var protectedBase = DecodeSnapshot(protectedBaseRaw, "protected base");
+        var candidate = DecodeSnapshot(candidateRaw, "candidate");
         if (full == "1" || admissionPlane!.RequiresFullEngineering())
         {
             var fullPlan = EngineeringTestPlanPolicy.EvaluateOrdinary(
@@ -99,7 +96,7 @@ internal static class Program
             {
                 fullPlan = fullPlan with
                 {
-                    Reason = $"protected-base admission plane "
+                    Reason = $"candidate admission plane "
                         + $"{admissionPlane!.Classification!.Value.ToString().ToLowerInvariant()} "
                         + "requires full engineering",
                 };
@@ -330,12 +327,6 @@ internal static class Program
             .Split('\0', StringSplitOptions.RemoveEmptyEntries);
     }
 
-    private static RepositorySnapshot RevisionSnapshot(
-        string repositoryRoot,
-        string revision,
-        string description) =>
-        DecodeSnapshot(GitRepositorySnapshotReader.ReadRevision(repositoryRoot, revision), description);
-
     private static RepositorySnapshot DecodeSnapshot(
         RawRepositorySnapshot raw,
         string description) =>
@@ -346,10 +337,6 @@ internal static class Program
                 throw new InvalidDataException($"{description} snapshot is invalid: {failure.Message}"),
             _ => throw new InvalidDataException($"{description} snapshot decode returned an unknown outcome"),
         };
-
-    private static RawRepositorySnapshot WithoutFileMap(RawRepositorySnapshot snapshot) =>
-        RawRepositorySnapshot.Create(snapshot.Entries.Where(
-            static entry => entry.Path != AdmissionPlanePolicy.FileMapPath));
 
     private sealed record Options(string RepositoryRoot, string Head, string Base)
     {
