@@ -1,0 +1,2 @@
+**候签定理 5.97(三层 (2,2,2) 铺砌多项式的 Laguerre 实根障碍)**〔open;落 `D5/S1/Recurrence/TilingLaguerreObstruction`(Recurrence 18/24);产地分层:Laguerre 不等式 `FromLiterature`(经典,附 L 平面注),P₅₆ 非实根陈述 `FromLiterature`(Ahlberg–Alexandersson 例 9 之计算报告,Describe 注明本库给出独立内核证书)〕。(i) 对任意 `p : Polynomial ℝ`,若 `p.Splits`(在 ℝ 上分裂),则对任意 `t : ℝ`,`0 ≤ (derivative p).eval t ^ 2 − p.eval t * (derivative (derivative p)).eval t`;(ii) 令 `tilingPolynomial n` 为上述递推所定义的 ℤ[X] 序列,`realTilingPolynomial n` 为其到 ℝ[X] 的映像,则 `¬ (realTilingPolynomial 56).Splits`。伴随命题(具名,数值):`P_1 … P_5` 与递推一致的小值核验;一个小二次实根例的 Laguerre 值为 5(非空性)。
+
