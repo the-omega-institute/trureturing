@@ -5,6 +5,8 @@ open D5.S3.ConceptDynamics.InformationEscape
 
 namespace LeanInformationAudit.Tests.Seal.DirectBudget
 
+set_option linter.style.longLine false
+
 def objectArena : Arena := Arena.ofFintype (Fin 257)
 
 def lawArena : PrimitiveLawArena where
@@ -39,5 +41,10 @@ set_option maxRecDepth 100000 in
 /-- error: IE-C032 SizeBudgetRequiresReflectedSeal root=LeanInformationAudit.Tests.Seal.DirectBudget catalog=oversized pair_budget=65792 limit=65536 seal=LeanInformationAudit.Tests.Seal.DirectBudget -/
 #guard_msgs (error) in
 #seal_information_theory
+
+#print axioms
+  target.«LeanInformationAudit.Tests.Seal.DirectBudget/LeanInformationAudit.Tests.Seal.DirectBudget.objectArena/oversized».__primitive_realization
+#print axioms
+  target.«LeanInformationAudit.Tests.Seal.DirectBudget/LeanInformationAudit.Tests.Seal.DirectBudget.objectArena/oversized».__information_unit
 
 end LeanInformationAudit.Tests.Seal.DirectBudget

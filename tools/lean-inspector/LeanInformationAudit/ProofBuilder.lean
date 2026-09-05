@@ -142,9 +142,12 @@ private def validateRoleHistogram (theoremName : Name) (uniqueCount : Nat)
 private def natArrayJson (values : Array Nat) : String :=
   (Json.arr <| values.map toJson).compress
 
-/-- Independently check that a negative certificate names every zero index. -/
+/-- Independently derive and check every zero index from the complete count vector. -/
 def validateRedundantIndices (rootId : Name) (catalogId : CatalogId)
-    (expected certified : Array Nat) (phase : String) : Except String Unit := do
+    (uniqueCounts certified : Array Nat) (phase : String) : Except String Unit := do
+  let expected := (uniqueCounts.foldl (init := (#[], 0))
+    (fun (result, index) count =>
+      (if count == 0 then result.push index else result, index + 1))).1
   unless expected == certified do
     throw s!"IE-C033 IncompleteRedundantIndexSet key={rootId}/{catalogId} \
 expected={natArrayJson expected} certified={natArrayJson certified} phase={phase}"
@@ -310,7 +313,7 @@ catalog={record.catalogId} pair_budget={pairBudget} limit=65536 seal={record.roo
           let actualToFused <- mkAppM ``Eq.symm #[fusedEq]
           mkAppM ``Eq.trans #[actualToFused, fusedZero]
     certifiedRedundantIndices := certifiedRedundantIndices.push indexNat
-  match validateRedundantIndices record.rootId record.catalogId redundantIndices
+  match validateRedundantIndices record.rootId record.catalogId uniqueCounts
       certifiedRedundantIndices "complete-scan" with
   | .ok () => pure ()
   | .error message => throwError message

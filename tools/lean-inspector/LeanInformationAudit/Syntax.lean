@@ -54,7 +54,7 @@ private def ensureOccurrenceRegisterable (env : Environment) (rootId objectArena
     throwError "IE-C011 GeneratedCertificateRegistered: {theoremName}"
   if InformationRegistry.hasOccurrence env objectArenaName theoremName then
     throwError "IE-C002 DuplicateRegistration: {theoremName}"
-  for generatedName in #[unitName] do
+  for generatedName in #[unitName, realizationName] do
     if env.contains generatedName then
       let prospective : InformationRegistryEntry := {
         theoremName
@@ -263,22 +263,25 @@ private def elabRegisterInformationTheoremOccurrence : CommandElab := fun stx =>
   let theoremName <- resolveTheorem theoremId
   let lawArenaName <- resolveArena lawArenaId
   let objectArenaName <- resolveArena objectArenaId
-  let realizationName <- try
+  let suppliedRealizationName <- try
     liftCoreM <| realizeGlobalConstNoOverloadWithInfo realizationId
   catch _ =>
     throwError "IE-C006 StatementProofMismatch: {theoremName}"
-  match (← getEnv).find? realizationName with
+  match (← getEnv).find? suppliedRealizationName with
   | some (.thmInfo _) => pure ()
   | _ => throwError "IE-C006 StatementProofMismatch: {theoremName}"
   let rootId := (← getEnv).header.mainModule
   let unitName := catalogQualifiedName rootId objectArenaName catalogId theoremName
     theoremUnitSuffix
+  let realizationName := catalogQualifiedName rootId objectArenaName catalogId theoremName
+    primitiveRealizationSuffix
   ensureOccurrenceRegisterable (← getEnv) rootId objectArenaName catalogId theoremName
     unitName realizationName
   let theoremExpr <- liftTermElabM <| mkConstWithFreshMVarLevels theoremName
   let theoremType <- liftTermElabM do
     instantiateMVars (← whnfR (← inferType theoremExpr))
-  let realizationExpr <- liftTermElabM <| mkConstWithFreshMVarLevels realizationName
+  let realizationExpr <- liftTermElabM <|
+    mkConstWithFreshMVarLevels suppliedRealizationName
   let realizationType <- liftTermElabM do
     instantiateMVars (← whnfR (← inferType realizationExpr))
   let legacyArgs := realizationType.getAppArgs
@@ -292,12 +295,14 @@ private def elabRegisterInformationTheoremOccurrence : CommandElab := fun stx =>
   unless validLegacy do
     throwError "IE-C006 StatementProofMismatch: {theoremName}"
   checkRealizationBundle theoremName lawArenaName legacyArgs[2]! primitiveTerm
+  let qualifiedRealizationId := absoluteIdentFrom theoremId realizationName
+  elabCommand (← `(command| def $qualifiedRealizationId := $realizationId))
   let unitId := absoluteIdentFrom theoremId unitName
   let unitType <- `(term|
     D5.S3.ConceptDynamics.InformationEscape.TheoremUnit $objectArenaId:ident)
   let unitValue <- `(term|
     D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit
-      $realizationId:ident $theoremId:ident)
+      $qualifiedRealizationId:ident $theoremId:ident)
   elabCommand (← `(command| def $unitId : $unitType := $unitValue))
   registerEntry {
     theoremName

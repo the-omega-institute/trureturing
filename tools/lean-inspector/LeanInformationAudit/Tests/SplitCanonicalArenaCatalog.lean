@@ -5,6 +5,8 @@ open D5.S3.ConceptDynamics.InformationEscape
 
 namespace LeanInformationAudit.Tests.SplitCanonicalArenaCatalog
 
+set_option linter.style.longLine false
+
 def objectArena : Arena := Arena.ofFintype (Bool × Bool)
 
 def lawArena : PrimitiveLawArena where
@@ -49,5 +51,14 @@ information_theorem sndTheorem
 /-- error: IE-C024 SplitCanonicalArenaCatalog root=LeanInformationAudit.Tests.SplitCanonicalArenaCatalog arena=LeanInformationAudit.Tests.SplitCanonicalArenaCatalog.objectArena catalogs=["left","right"] -/
 #guard_msgs (error) in
 #seal_information_theory
+
+#print axioms
+  fstTheorem.«LeanInformationAudit.Tests.SplitCanonicalArenaCatalog/LeanInformationAudit.Tests.SplitCanonicalArenaCatalog.objectArena/left».__primitive_realization
+#print axioms
+  fstTheorem.«LeanInformationAudit.Tests.SplitCanonicalArenaCatalog/LeanInformationAudit.Tests.SplitCanonicalArenaCatalog.objectArena/left».__information_unit
+#print axioms
+  sndTheorem.«LeanInformationAudit.Tests.SplitCanonicalArenaCatalog/LeanInformationAudit.Tests.SplitCanonicalArenaCatalog.objectArena/right».__primitive_realization
+#print axioms
+  sndTheorem.«LeanInformationAudit.Tests.SplitCanonicalArenaCatalog/LeanInformationAudit.Tests.SplitCanonicalArenaCatalog.objectArena/right».__information_unit
 
 end LeanInformationAudit.Tests.SplitCanonicalArenaCatalog

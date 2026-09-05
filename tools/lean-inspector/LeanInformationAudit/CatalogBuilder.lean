@@ -173,6 +173,8 @@ def prepareCatalogs : CommandElabM (Array PreparedCatalog) := do
   let catalogs <- liftTermElabM <| groups.mapM fun group =>
     prepareCatalog rootId group.1 compatibilityV2 group.2
   pure <| catalogs.qsort fun left right =>
-    nameLess left.record.catalogId right.record.catalogId
+    nameLess left.record.catalogId right.record.catalogId ||
+      (left.record.catalogId == right.record.catalogId &&
+        nameLess left.record.arenaName right.record.arenaName)
 
 end LeanInformationAudit

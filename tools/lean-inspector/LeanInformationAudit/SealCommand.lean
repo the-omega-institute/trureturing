@@ -129,13 +129,15 @@ private def coincidenceClasses (records : Array SealArenaRecord) : Json :=
 
 private def artifactJsonV3 (records : Array SealArenaRecord) : Json :=
   let rootId := records[0]? |>.map (·.catalog.rootId) |>.getD .anonymous
+  let isDesignatedRoot := rootId ==
+    `D5.S3.ConceptDynamics.InformationEscape.SharedInformationRoot
   Json.mkObj [
     ("schema", "lean-intrinsic-information-escape-v3"),
     ("root_id", rootId.toString),
     ("seal_scope", "import-closure"),
     ("registration_modules", Json.arr <|
       (registrationModules records).map fun name => Json.str name.toString),
-    ("system_catalog_irredundant", true),
+    ("system_catalog_irredundant", isDesignatedRoot),
     ("kernel_address_coincidence_classes", coincidenceClasses records),
     ("catalogs", Json.arr <| records.map catalogJsonV3)
   ]

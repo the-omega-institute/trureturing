@@ -5,6 +5,8 @@ open D5.S3.ConceptDynamics.InformationEscape
 
 namespace LeanInformationAudit.Tests.ImportClosureProducer
 
+set_option linter.style.longLine false
+
 def objectArena : Arena := Arena.ofFintype Bool
 
 def lawArena : PrimitiveLawArena where
@@ -34,5 +36,10 @@ information_theorem importedTheorem
   catalog importedBool
   primitives fixtureRealization
   : lawArena.Law fixtureRealization := by trivial
+
+#print axioms
+  importedTheorem.«LeanInformationAudit.Tests.ImportClosureProducer/LeanInformationAudit.Tests.ImportClosureProducer.objectArena/importedBool».__primitive_realization
+#print axioms
+  importedTheorem.«LeanInformationAudit.Tests.ImportClosureProducer/LeanInformationAudit.Tests.ImportClosureProducer.objectArena/importedBool».__information_unit
 
 end LeanInformationAudit.Tests.ImportClosureProducer
