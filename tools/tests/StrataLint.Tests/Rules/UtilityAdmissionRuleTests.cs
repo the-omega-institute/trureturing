@@ -1,0 +1,534 @@
+using StrataLint.Engine;
+
+namespace StrataLint.Tests;
+
+public sealed class UtilityAdmissionRuleTests
+{
+    private static readonly RuleId UtilityRuleId = RuleId.CreateKnown(29);
+
+    [Fact]
+    public void FirstFreezeWithoutUtilityIsBlocked()
+    {
+        var diagnostic = Assert.Single(EvaluateFirstFreeze(utility: null));
+
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
+        Assert.Equal(RuleFixture.RingPath, diagnostic.Path);
+        Assert.Contains(
+            $"UTILITY-MISSING module={RuleFixture.RingPath}",
+            diagnostic.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void UnknownUtilityRoleIsRejected()
+    {
+        var diagnostic = Assert.Single(EvaluateFirstFreeze(
+            "kind=certified-instance; basis=terminal=task:D5-T0001; role=answer"));
+
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
+        Assert.Contains(
+            $"UTILITY-SYNTAX module={RuleFixture.RingPath}",
+            diagnostic.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void PendingConsumerIsRejected()
+    {
+        var diagnostic = Assert.Single(EvaluateFirstFreeze(
+            "kind=certified-instance; basis=pending-consumer=D5/S0/Carrier/Ring.goldenRing"));
+
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
+        Assert.Contains(
+            $"UTILITY-SYNTAX module={RuleFixture.RingPath}",
+            diagnostic.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void CheckerWithoutInstanceIsBlocked()
+    {
+        var diagnostic = Assert.Single(EvaluateFirstFreeze(
+            "kind=checker; basis=terminal=task:D5-T0001"));
+
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
+        Assert.Contains(
+            $"UTILITY-INSTANCE-MISSING module={RuleFixture.RingPath}",
+            diagnostic.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ReductionWithoutPremisesIsBlocked()
+    {
+        var diagnostic = Assert.Single(EvaluateFirstFreeze(
+            "kind=numeric-reduction; basis=consumer=D5/S0/Carrier/Ring.goldenRing"));
+
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
+        Assert.Contains(
+            $"UTILITY-PREMISES-MISSING module={RuleFixture.RingPath}",
+            diagnostic.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void DanglingConsumerDeclarationIsBlocked()
+    {
+        var diagnostics = EvaluateFirstFreeze(
+            "kind=certified-instance; basis=consumer=D5/S0/Carrier/Ring.missing");
+
+        var diagnostic = Assert.Single(
+            diagnostics,
+            item => item.AdmissionEffect is AdmissionEffect.Block);
+        Assert.Contains(
+            $"UTILITY-TARGET-DANGLING module={RuleFixture.RingPath}",
+            diagnostic.Message,
+            StringComparison.Ordinal);
+        Assert.Contains("target=D5/S0/Carrier/Ring.missing", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ConsumerWithoutImportPathIsBlocked()
+    {
+        var diagnostics = EvaluateFirstFreeze(
+            "kind=certified-instance; basis=consumer=D5/S0/Carrier/ValuesBinding.fixtureValue");
+
+        var diagnostic = Assert.Single(
+            diagnostics,
+            item => item.AdmissionEffect is AdmissionEffect.Block);
+        Assert.Contains(
+            $"UTILITY-CONSUMER-UNREACHABLE module={RuleFixture.RingPath}",
+            diagnostic.Message,
+            StringComparison.Ordinal);
+        Assert.Contains(
+            $"consumer_module={RuleFixture.ValuesBindingPath}",
+            diagnostic.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void SameModuleConsumerIsAllowed()
+    {
+        var diagnostics = EvaluateFirstFreeze(
+            "kind=certified-instance; basis=consumer=D5/S0/Carrier/Ring.goldenRing");
+
+        Assert.DoesNotContain(
+            diagnostics,
+            item => item.AdmissionEffect is AdmissionEffect.Block);
+    }
+
+    [Fact]
+    public void TransitiveConsumerIsAllowed()
+    {
+        const string intermediatePath = "D5/S0/Carrier/Intermediate.lean";
+        var fixture = new RuleFixture();
+        fixture.Files[RuleFixture.RingPath] = WithUtility(
+            fixture.Files[RuleFixture.RingPath],
+            "kind=certified-instance; basis=consumer=D5/S0/Carrier/ValuesBinding.fixtureValue");
+        fixture.Files[intermediatePath] = fixture.Files[RuleFixture.RingPath].Replace(
+            "D5/S0/Carrier/Ring",
+            "D5/S0/Carrier/Intermediate",
+            StringComparison.Ordinal);
+        fixture.Reports[RuleFixture.ValuesBindingPath] = fixture.Reports[RuleFixture.ValuesBindingPath] with
+        {
+            Imports = ["D5.S0.Carrier.Intermediate"],
+        };
+        fixture.Reports[intermediatePath] = new LeanFileReport(
+            ["D5.S0.Carrier.Ring"],
+            [new LeanDeclaration("intermediate", "def", "Unit", [])]);
+
+        var diagnostics = EvaluateFirstFreeze(fixture);
+
+        Assert.DoesNotContain(
+            diagnostics,
+            item => item.AdmissionEffect is AdmissionEffect.Block);
+    }
+
+    [Fact]
+    public void MissingReportInputFailsClosedInsteadOfMeaningZeroEdges()
+    {
+        var fixture = new RuleFixture();
+        fixture.Files[RuleFixture.RingPath] = WithUtility(
+            fixture.Files[RuleFixture.RingPath],
+            "kind=certified-instance; basis=consumer=D5/S0/Carrier/ValuesBinding.fixtureValue");
+        fixture.Reports.Remove(RuleFixture.RingPath);
+
+        var diagnostics = EvaluateFirstFreeze(fixture, validateLean: false);
+
+        var diagnostic = Assert.Single(
+            diagnostics,
+            item => item.AdmissionEffect is AdmissionEffect.Block);
+        Assert.Contains(
+            $"UTILITY-INPUT-UNKNOWN module={RuleFixture.RingPath}",
+            diagnostic.Message,
+            StringComparison.Ordinal);
+        Assert.Contains("reason=current-lean-report-missing", diagnostic.Message, StringComparison.Ordinal);
+        Assert.DoesNotContain("UTILITY-CONSUMER-UNREACHABLE", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("instance", "D5/S0/Carrier/Ring.missing")]
+    [InlineData("premises", "D5/S0/Carrier/Ring.goldenRing,D5/S0/Carrier/Ring.missing")]
+    [InlineData("result", "D5/S0/Carrier/Ring.missing")]
+    public void DanglingOptionalDeclarationIsBlocked(string key, string value)
+    {
+        var kind = key == "premises" ? "numeric-reduction" : "certified-instance";
+        var diagnostic = Assert.Single(EvaluateFirstFreeze(
+            $"kind={kind}; basis=refutes=gid:D5/S0/Carrier/Ring.goldenRing; {key}={value}"),
+            item => item.AdmissionEffect is AdmissionEffect.Block);
+
+        Assert.Contains(
+            $"UTILITY-TARGET-DANGLING module={RuleFixture.RingPath}",
+            diagnostic.Message,
+            StringComparison.Ordinal);
+        Assert.Contains("target=D5/S0/Carrier/Ring.missing", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void RefutesTaskIsObservedNotBlocked()
+    {
+        var diagnostics = EvaluateTaskUtility(
+            "kind=bounded-enumeration; basis=refutes=task:D5-T0098");
+
+        AssertSoftObservation(
+            diagnostics,
+            "kind=bounded-enumeration basis=refutes target=task:D5-T0098");
+    }
+
+    [Fact]
+    public void TerminalIsObservedNotBlocked()
+    {
+        var diagnostics = EvaluateTaskUtility(
+            "kind=certified-instance; basis=terminal=task:D5-T0098");
+
+        AssertSoftObservation(
+            diagnostics,
+            "kind=certified-instance basis=terminal target=task:D5-T0098");
+    }
+
+    [Fact]
+    public void NoneIsObservedNotBlocked()
+    {
+        var diagnostics = EvaluateFirstFreeze("none");
+
+        AssertSoftObservation(diagnostics, "kind=none basis=none target=none");
+    }
+
+    [Fact]
+    public void RefutesAtomWithoutExactCoverageEdgeIsBlocked()
+    {
+        var fixture = AtomUtilityFixture(
+            "sha256:0000000000000000000000000000000000000000000000000000000000000000");
+
+        var diagnostic = Assert.Single(
+            EvaluateFirstFreeze(fixture),
+            item => item.AdmissionEffect is AdmissionEffect.Block);
+
+        Assert.Contains(
+            $"UTILITY-REFUTES-ATOM-NO-COVERAGE module={RuleFixture.RingPath}",
+            diagnostic.Message,
+            StringComparison.Ordinal);
+        Assert.Contains($"atom={RuleFixture.FixtureAtomId}", diagnostic.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void RefutesAtomWithNullTargetIsBlocked()
+    {
+        var fixture = AtomUtilityFixture(targetStatementId: null);
+
+        var diagnostic = Assert.Single(
+            EvaluateFirstFreeze(fixture),
+            item => item.AdmissionEffect is AdmissionEffect.Block);
+
+        Assert.Contains(
+            $"UTILITY-REFUTES-ATOM-NO-COVERAGE module={RuleFixture.RingPath}",
+            diagnostic.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void RefutesAtomWithExactCoverageEdgeIsObserved()
+    {
+        var fixture = new RuleFixture();
+        var statementId = Assert.Single(CanonicalStatementWriter.DeclarationStatementIds(
+            RepoPath.CreateKnown(RuleFixture.RingPath),
+            fixture.Reports[RuleFixture.RingPath])).StatementId.Value;
+        SetAtomUtility(fixture, statementId);
+
+        var diagnostics = EvaluateFirstFreeze(fixture);
+
+        AssertSoftObservation(
+            diagnostics,
+            $"kind=bounded-enumeration basis=refutes target=atom:{RuleFixture.FixtureAtomId}");
+    }
+
+    [Fact]
+    public void ExistingFrozenSixLineHeaderIsOutsideDelta()
+    {
+        var fixture = new RuleFixture();
+        var statePath = AddExistingFrozenState(fixture);
+
+        var diagnostics = RuleCatalog.Default.EvaluateSingle(
+            UtilityRuleId,
+            fixture.Build(RawChangeSet.CreateWithKinds(
+                [(statePath, RawChangeKind.Added)]))).Diagnostics;
+
+        Assert.Empty(diagnostics);
+    }
+
+    [Fact]
+    [BaseFactScopeProbe(29)]
+    public void Sl029EvaluateScopesFirstFreezeDeltaAndKeepsImplementationWakeup()
+    {
+        var historical = new RuleFixture();
+        AddExistingFrozenState(historical);
+        Assert.Empty(RuleCatalog.Default.EvaluateSingle(
+            UtilityRuleId,
+            historical.Build(RawChangeSet.Create([RuleFixture.BlueprintPath]))).Diagnostics);
+
+        var firstFreezeDiagnostic = Assert.Single(EvaluateFirstFreeze(utility: null));
+        Assert.Contains("UTILITY-MISSING", firstFreezeDiagnostic.Message, StringComparison.Ordinal);
+
+        const string implementation =
+            "tools/StrataLint.Engine/Rules/TheoryGeneration/UtilityAdmissionRule.cs";
+        var implementationOnly = new RuleFixture();
+        implementationOnly.Files[implementation] = "// candidate rule implementation\n";
+        var implementationContext = implementationOnly.Build(RawChangeSet.Create([implementation]));
+        Assert.True(UtilityAdmissionRule.IsAffectedBy(implementationContext));
+        Assert.Empty(RuleCatalog.Default.EvaluateSingle(
+            UtilityRuleId,
+            implementationContext).Diagnostics);
+    }
+
+    [Fact]
+    public void FrozenUtilityRatchetBlocksChange()
+    {
+        var fixture = new RuleFixture();
+        AddExistingFrozenState(fixture);
+        fixture.Baseline[RuleFixture.RingPath] = WithUtility(
+            fixture.Baseline[RuleFixture.RingPath],
+            "kind=certified-instance; basis=terminal=task:D5-T0001");
+        fixture.Files[RuleFixture.RingPath] = WithUtility(
+            fixture.Files[RuleFixture.RingPath],
+            "none");
+
+        var diagnostic = Assert.Single(RuleCatalog.Default.EvaluateSingle(
+            UtilityRuleId,
+            fixture.Build(RawChangeSet.Create([RuleFixture.RingPath]))).Diagnostics);
+
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
+        Assert.Equal(RuleFixture.RingPath, diagnostic.Path);
+        Assert.Contains(
+            $"UTILITY-RATCHET module={RuleFixture.RingPath}",
+            diagnostic.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void MalformedAddedFrozenStatePathFailsClosed()
+    {
+        const string malformed = "Golden/Frozen/state/not-a-module.json";
+        var fixture = new RuleFixture();
+        fixture.Files[malformed] = "{}\n";
+
+        var diagnostic = Assert.Single(RuleCatalog.Default.EvaluateSingle(
+            UtilityRuleId,
+            fixture.Build(RawChangeSet.CreateWithKinds(
+                [(malformed, RawChangeKind.Added)]))).Diagnostics);
+
+        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
+        Assert.Equal(malformed, diagnostic.Path);
+        Assert.Contains(
+            $"UTILITY-INPUT-UNKNOWN module={malformed} reason=invalid-frozen-state-path",
+            diagnostic.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void LegacySixLineHeaderStillParses()
+    {
+        var fixture = new RuleFixture();
+
+        Assert.True(RepositoryRules.TryHeader(
+            fixture.Files[RuleFixture.RingPath],
+            out var header));
+        Assert.Null(header.Utility);
+    }
+
+    [Fact]
+    public void SevenLineHeaderCapturesUtility()
+    {
+        var fixture = new RuleFixture();
+        const string utility = "kind=certified-instance; basis=terminal=task:D5-T0001";
+
+        Assert.True(RepositoryRules.TryHeader(
+            WithUtility(fixture.Files[RuleFixture.RingPath], utility),
+            out var header));
+        Assert.Equal(utility, header.Utility);
+    }
+
+    [Fact]
+    public void BodyOnlyLeanEditDoesNotWakeUtilityRule()
+    {
+        var fixture = new RuleFixture();
+        fixture.Files[RuleFixture.RingPath] += "-- body-only change\n";
+        var context = fixture.Build(RawChangeSet.Create([RuleFixture.RingPath]));
+
+        Assert.False(UtilityAdmissionRule.IsAffectedBy(context));
+    }
+
+    [Fact]
+    public void RuleImplementationChangeWakesWithoutExpandingFirstFreezeSet()
+    {
+        const string implementation =
+            "tools/StrataLint.Engine/Rules/TheoryGeneration/UtilityAdmissionRule.cs";
+        var fixture = new RuleFixture();
+        fixture.Files[implementation] = "// candidate rule implementation\n";
+        var context = fixture.Build(RawChangeSet.Create([implementation]));
+
+        Assert.True(UtilityAdmissionRule.IsAffectedBy(context));
+        Assert.Empty(RuleCatalog.Default.EvaluateSingle(UtilityRuleId, context).Diagnostics);
+    }
+
+    [Theory]
+    [InlineData("atom:0000000000000000000000000000000000000000000000000000000000000000")]
+    [InlineData("task:D5-T0099")]
+    public void DanglingSoftTargetIsBlocked(string target)
+    {
+        var diagnostic = Assert.Single(EvaluateFirstFreeze(
+            $"kind=bounded-enumeration; basis=terminal={target}"),
+            item => item.AdmissionEffect is AdmissionEffect.Block);
+
+        Assert.Contains(
+            $"UTILITY-TARGET-DANGLING module={RuleFixture.RingPath} target={target}",
+            diagnostic.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void MalformedBackfillFailsClosed()
+    {
+        var fixture = new RuleFixture();
+        fixture.Files[RuleFixture.FixtureBackfillAtomPath] = "not: canonical\n";
+        fixture.Files[RuleFixture.RingPath] = WithUtility(
+            fixture.Files[RuleFixture.RingPath],
+            $"kind=bounded-enumeration; basis=terminal=atom:{RuleFixture.FixtureAtomId}");
+
+        var diagnostic = Assert.Single(
+            EvaluateFirstFreeze(fixture),
+            item => item.AdmissionEffect is AdmissionEffect.Block);
+
+        Assert.Contains(
+            $"UTILITY-INPUT-UNKNOWN module={RuleFixture.RingPath} reason=backfill-load-failed",
+            diagnostic.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void RefutesGidIsObservedNotBlocked()
+    {
+        var diagnostics = EvaluateFirstFreeze(
+            "kind=bounded-enumeration; basis=refutes=gid:D5/S0/Carrier/Ring.goldenRing");
+
+        AssertSoftObservation(
+            diagnostics,
+            "kind=bounded-enumeration basis=refutes "
+            + "target=gid:D5/S0/Carrier/Ring.goldenRing");
+    }
+
+    private static IReadOnlyList<Diagnostic> EvaluateFirstFreeze(string? utility)
+    {
+        var fixture = new RuleFixture();
+        if (utility is not null)
+        {
+            fixture.Files[RuleFixture.RingPath] = WithUtility(
+                fixture.Files[RuleFixture.RingPath],
+                utility);
+        }
+
+        return EvaluateFirstFreeze(fixture);
+    }
+
+    private static IReadOnlyList<Diagnostic> EvaluateTaskUtility(string utility)
+    {
+        var fixture = new RuleFixture();
+        fixture.AddSyntheticUnregisteredFrontierTask("D5-T0098");
+        fixture.Files[RuleFixture.RingPath] = WithUtility(
+            fixture.Files[RuleFixture.RingPath],
+            utility);
+        return EvaluateFirstFreeze(fixture);
+    }
+
+    private static RuleFixture AtomUtilityFixture(string? targetStatementId)
+    {
+        var fixture = new RuleFixture();
+        SetAtomUtility(fixture, targetStatementId);
+        return fixture;
+    }
+
+    private static void SetAtomUtility(RuleFixture fixture, string? targetStatementId)
+    {
+        fixture.Files[RuleFixture.RingPath] = WithUtility(
+            fixture.Files[RuleFixture.RingPath],
+            $"kind=bounded-enumeration; basis=refutes=atom:{RuleFixture.FixtureAtomId}");
+        fixture.Files[RuleFixture.FixtureBackfillAtomPath] =
+            fixture.Files[RuleFixture.FixtureBackfillAtomPath]
+                .Replace(
+                    "gid: D5/S0/Carrier/BackfillTarget",
+                    "gid: D5/S0/Carrier/Ring.goldenRing",
+                    StringComparison.Ordinal)
+                .Replace(
+                    "target_statement_id: null",
+                    $"target_statement_id: {targetStatementId ?? "null"}",
+                    StringComparison.Ordinal);
+    }
+
+    private static string AddExistingFrozenState(RuleFixture fixture)
+    {
+        var statePath = FrozenStatePath.FromModulePath(
+            RepoPath.CreateKnown(RuleFixture.RingPath)).Value;
+        const string state =
+            "{\"statement_id\":\"sha256:0000000000000000000000000000000000000000000000000000000000000000\"}\n";
+        fixture.Files[statePath] = state;
+        fixture.Baseline[statePath] = state;
+        return statePath;
+    }
+
+    private static IReadOnlyList<Diagnostic> EvaluateFirstFreeze(
+        RuleFixture fixture,
+        bool validateLean = true)
+    {
+        var statePath = FrozenStatePath.FromModulePath(
+            RepoPath.CreateKnown(RuleFixture.RingPath)).Value;
+        fixture.Files[statePath] =
+            "{\"statement_id\":\"sha256:0000000000000000000000000000000000000000000000000000000000000000\"}\n";
+        var changes = RawChangeSet.CreateWithKinds([(statePath, RawChangeKind.Added)]);
+        var context = validateLean
+            ? fixture.Build(changes)
+            : fixture.BuildForRuleCompatibility(changes);
+        return RuleCatalog.Default.EvaluateSingle(UtilityRuleId, context).Diagnostics;
+    }
+
+    private static string WithUtility(string text, string utility) =>
+        text.Replace(
+            "   anchors: []\n",
+            $"   anchors: []\n   utility: {utility}\n",
+            StringComparison.Ordinal);
+
+    private static void AssertSoftObservation(
+        IReadOnlyList<Diagnostic> diagnostics,
+        string fields)
+    {
+        Assert.DoesNotContain(
+            diagnostics,
+            item => item.AdmissionEffect is AdmissionEffect.Block);
+        var observation = Assert.Single(
+            diagnostics,
+            item => item.AdmissionEffect is AdmissionEffect.Observe);
+        Assert.Equal(RuleFixture.RingPath, observation.Path);
+        Assert.Equal(
+            $"UTILITY-OBSERVED module={RuleFixture.RingPath} {fields} "
+            + "semantics=unverified-by-machine",
+            observation.Message);
+    }
+}

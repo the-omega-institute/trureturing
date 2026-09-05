@@ -8,9 +8,11 @@ internal static class DepositHeaderCheckCommand
 
     internal static ExplicitCommandResult Run(
         IRepositoryGateway repository,
+        ILeanReportSource leanReportSource,
         IReadOnlyList<string> arguments)
     {
         ArgumentNullException.ThrowIfNull(repository);
+        ArgumentNullException.ThrowIfNull(leanReportSource);
         ArgumentNullException.ThrowIfNull(arguments);
         if (!TryParseTarget(arguments, out var target))
         {
@@ -58,6 +60,85 @@ internal static class DepositHeaderCheckCommand
                     1,
                     string.Concat(evaluation.Diagnostics.Select(diagnostic => diagnostic.Render() + "\n")),
                     string.Empty);
+            }
+
+            var statePath = FrozenStatePath.FromModulePath(targetFile.Path);
+            if (!current.Files.ContainsKey(statePath))
+            {
+                _ = RepositoryRules.TryHeader(targetFile.Text, out var header);
+                if (!UtilitySyntax.TryParse(header.Utility, out var utility, out var failure))
+                {
+                    var code = failure switch
+                    {
+                        UtilityParseFailure.Missing => "DEPOSIT_HEADER_UTILITY_MISSING",
+                        UtilityParseFailure.InstanceMissing => "DEPOSIT_HEADER_UTILITY_INSTANCE_MISSING",
+                        UtilityParseFailure.PremisesMissing => "DEPOSIT_HEADER_UTILITY_PREMISES_MISSING",
+                        _ => "DEPOSIT_HEADER_UTILITY_SYNTAX",
+                    };
+                    return new ExplicitCommandResult(
+                        1,
+                        $"{code} module={target}\n",
+                        string.Empty);
+                }
+
+                if (utility!.Kind is not UtilityKind.None)
+                {
+                    var report = leanReportSource.Load(current);
+                    foreach (var gid in UtilityAdmissionRule.DeclarationReferences(utility))
+                    {
+                        var targetPath = ((Target.Formal)gid.ToTarget()).Path;
+                        if (!report.Files.TryGetValue(targetPath, out var targetReport)
+                            || targetReport.Error is not null)
+                        {
+                            return UtilityFailure(
+                                "DEPOSIT_HEADER_UTILITY_INPUT_UNKNOWN",
+                                target,
+                                $"target_module={targetPath.Value} reason=current-lean-report-missing");
+                        }
+
+                        if (!UtilityAdmissionRule.TryResolveDeclaration(gid, targetReport, out _))
+                        {
+                            return UtilityFailure(
+                                "DEPOSIT_HEADER_UTILITY_TARGET_DANGLING",
+                                target,
+                                $"target={gid.Value}");
+                        }
+                    }
+
+                    var softTarget = utility.BasisTarget;
+                    if (softTarget is { Kind: UtilityTargetKind.Atom or UtilityTargetKind.Task })
+                    {
+                        BackfillInventoryDocument inventory;
+                        try
+                        {
+                            inventory = BackfillInventoryLoader.Load(current);
+                        }
+                        catch (FormatException)
+                        {
+                            return UtilityFailure(
+                                "DEPOSIT_HEADER_UTILITY_INPUT_UNKNOWN",
+                                target,
+                                "reason=backfill-load-failed");
+                        }
+
+                        var exists = softTarget.Kind switch
+                        {
+                            UtilityTargetKind.Atom => inventory.RequireDigestionEntries().Any(entry =>
+                                string.Equals(entry.AtomId, softTarget.Value, StringComparison.Ordinal)),
+                            UtilityTargetKind.Task => inventory.RequireTickets().Any(ticket =>
+                                string.Equals(ticket.CaseId, softTarget.Value, StringComparison.Ordinal)),
+                            _ => true,
+                        };
+                        if (!exists)
+                        {
+                            var prefix = softTarget.Kind is UtilityTargetKind.Atom ? "atom:" : "task:";
+                            return UtilityFailure(
+                                "DEPOSIT_HEADER_UTILITY_TARGET_DANGLING",
+                                target,
+                                $"target={prefix}{softTarget.Value}");
+                        }
+                    }
+                }
             }
 
             return new ExplicitCommandResult(
@@ -121,4 +202,13 @@ internal static class DepositHeaderCheckCommand
         2,
         string.Empty,
         "USAGE: StrataLint deposit-header-check --target D5/.../*.lean\n");
+
+    private static ExplicitCommandResult UtilityFailure(
+        string code,
+        string module,
+        string detail) =>
+        new(
+            1,
+            $"{code} module={module} {detail}\n",
+            string.Empty);
 }

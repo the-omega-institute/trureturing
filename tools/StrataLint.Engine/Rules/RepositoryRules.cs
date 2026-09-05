@@ -14,6 +14,7 @@ internal static partial class RepositoryRules
         + "   mirror-B: (?<mirrorB>[^\\n]+)\\n"
         + "   mirror-E: (?<mirrorE>[^\\n]+)\\n"
         + "   anchors: \\[(?<anchors>[^\\n]*)\\]\\n"
+        + "(?:   utility: (?<utility>[^\\n]*)\\n)?"
         + "   digest: (?<digest>[^\\n]+) -/\\n?",
         RegexOptions.CultureInvariant);
 
@@ -153,6 +154,14 @@ internal static partial class RepositoryRules
                 DuplicateStatementAdvisory.Evaluate,
                 DuplicateStatementAdvisory.IsAffectedBy),
             AdmissionEffect.Observe),
+        Register(
+            29,
+            "Computational utility admission",
+            new RepositoryRule(
+                Formal,
+                UtilityAdmissionRule.Evaluate,
+                UtilityAdmissionRule.IsAffectedBy,
+                UtilityAdmissionRule.Evaluate)),
     ];
 
     private static RuleRegistration Register(
