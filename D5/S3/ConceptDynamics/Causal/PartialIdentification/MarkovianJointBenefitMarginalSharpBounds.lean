@@ -61,7 +61,7 @@ theorem nonnegative_product_interval_iff
         nlinarith
       · apply (div_le_iff₀ positive).2
         nlinarith
-      · field_simp [ne_of_gt positive]
+      · field_simp [ne_of_gt positive] <;> ring
   · rintro ⟨x, y, xl, xu, yl, yu, product⟩
     have lower := mul_le_mul xl yl hl2 (hl1.trans xl)
     have upper := mul_le_mul xu yu (hl2.trans yl) (hl1.trans h1)
