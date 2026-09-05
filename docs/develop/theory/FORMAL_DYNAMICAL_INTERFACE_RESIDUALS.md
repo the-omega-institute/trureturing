@@ -1,7 +1,7 @@
 # 动力接口—余量演算
 ## ——商下降、carry、交换子流、预测闭包、记忆与因果查询的统一形式理论
 
-**版本：v1.0，2026-08-22**
+**版本：v1.1，2026-09-05。第 27 节增补数据实现与降阶误差；第 5.3 节勘正全局精确下降的多步含义。**
 
 ---
 
@@ -581,7 +581,7 @@ V\text{ reducing for }T
 PTQ=QTP=0.
 \]
 
-注意：**一步可见下降只要求 \(PTQ=0\)**；它不要求可见方向永不泄漏到隐藏方向。若泄漏随后反馈回来，多步预测仍可能失败，这正是未来词塔继续精化的原因。
+**勘正，2026-09-05：** 一步可见下降只要求 \(PTQ=0\)，不要求 \(QTP=0\)。但对固定的 \(P,T\)，若该条件是全局算子恒等式，则 \(PT=\overline TP\) 归纳推出 \(PT^n=\overline T^{\,n}P\) 对所有 \(n\) 成立。因此向隐藏方向的泄漏不能在保持 \(PTQ=0\) 的同时于未来反馈破坏可见下降。原文“若泄漏随后反馈回来，多步预测仍可能失败”在此全局假设下错误，现予删除。有限采样上的一步吻合、单条轨道的吻合或随时间改变的接口不具有同样的全局前提，须另行处理。第 27.7 节给出有外部输入的精确下降版本。
 
 ## 定理 5.4（交换子就是双向交叉块）
 
@@ -2270,3 +2270,272 @@ P_\alpha x\to x
 \]
 
 这条链给出一个统一但不混同层级的答案：所谓观察者缺失的信息，不是一个无类型的“隐藏量”；它是目标、动力学与接口共同决定的余量。只有把 kernel、carry、image、coupling、gauge 与 completion topology 分账，才能精确知道下一步究竟应增加读数、增加记忆、改变实验、约束动力学、补 gluing，还是承认目标在当前接口上根本不可识别。
+
+---
+
+# 27. 从完整行为构造最小线性实现与残差可认证降阶
+
+## 27.1 本次增补的真值状态与已有接口
+
+本节给出完整的数学推导，并对应三份已提交的 Lean 证明候选及配套 Scribe。**本次会话未运行 Lean 编译器或 Scribe 发射器，因此以下新声明不能标记为本轮已取得机器验证的 Lean 锚点。** 没有添加新的公理或证明占位，也没有手写冻结、覆盖或准入记录。有限有理数检验只用于排查公式错误，不能替代内核检查。
+
+最小实现源文件位于 PR #5578：
+
+`D5/S3/Observer/Hankel/SequenceHankelRealization.lean`。
+
+降阶与精确下降源文件位于 PR #5580：
+
+`D5/S3/Observer/Hankel/ProjectedRealizationError.lean`；
+
+`D5/S3/Observer/Hankel/ProjectedExactDescent.lean`。
+
+三份 Scribe 均位于 `Blueprint/` 下的同名 `.scribe.cs` 路径，并通过 `StatementSource.FromLean()` 引用声明。这里沿用 `HankelMinimalStateDimension` 的 `FiniteLinearRealization`，以及现有的 `markovParameter`、`reachableSubspace`、`eventualKernel` 和有限 Hankel 秩定理。现有商空间构造以给定的状态实现为起点，本节补充从完整数据本身产生实现的方向。
+
+## 27.2 数据尾空间及其规范动力学
+
+令 \(K\) 为域，\(U,Y\) 为 \(K\)-向量空间，给定完整输入输出参数序列
+
+\[
+m_n:U\longrightarrow Y\qquad(n\ge0).
+\]
+
+每个 \(m_n\) 都是线性映射。对年龄 \(j\) 和输入方向 \(u\)，定义尾序列
+
+\[
+h_{j,u}(i):=m_{i+j}u,
+\qquad
+\mathcal R_m:=\operatorname{span}_K\{h_{j,u}:j\ge0,\ u\in U\}
+\subseteq Y^{\mathbb N}.
+\]
+
+\(\mathcal R_m\) 是无限块 Hankel 对象的列空间。这里“有限秩”严格表示 \(\mathcal R_m\) 有限维；在 Lean 中使用 `FiniteDimensional K (tailSpace m)`。不能用未经有限维前提保护的自然数 `finrank` 判别有限性，因为其对无限维空间采用零值约定。
+
+定义
+
+\[
+(A_mx)(i):=x(i+1),\qquad B_mu:=h_{0,u},\qquad C_mx:=x(0).
+\]
+
+由于
+
+\[
+A_mh_{j,u}=h_{j+1,u},
+\]
+
+左移保持 \(\mathcal R_m\)，故 \(A_m\) 确实是该状态空间上的线性自映射。归纳得到
+
+\[
+(A_m^nx)(i)=x(i+n),\qquad
+A_m^nB_mu=h_{n,u},\qquad
+\boxed{C_mA_m^nB_m=m_n.}
+\]
+
+这个构造无需预先给出状态空间，也不要求指数模态分解、简单特征值或可对角化。零序列对应零维状态空间。
+
+对应公开声明为 `sequenceDynamics_pow_apply`、`sequenceDynamics_pow_input`、`sequenceOutput_pow` 和 `sequence_markovParameter_eq`。
+
+## 27.3 有限秩刻画及最小维数的达到
+
+**定理 27.1。** \(\mathcal R_m\) 有限维，当且仅当 \(m\) 存在有限维线性实现。此时上述构造达到全部线性实现中的最小状态维数：
+
+\[
+\boxed{
+\min\{\dim_K V:m_n=CA^nB\text{ 对所有 }n\}
+=\dim_K\mathcal R_m.
+}
+\]
+
+**证明。** 正向由第 27.2 节的构造。反向设 \((V,A,B,C)\) 是任意匹配完整数据的有限维实现，定义其全未来观察映射
+
+\[
+\mathcal O:V\to Y^{\mathbb N},\qquad
+\mathcal O(v)(i)=CA^iv.
+\]
+
+对每个生成元，
+
+\[
+\mathcal O(A^jBu)(i)=CA^{i+j}Bu=m_{i+j}u=h_{j,u}(i).
+\]
+
+因此 \(\mathcal R_m\subseteq\operatorname{ran}\mathcal O\)。像空间有限维，且
+
+\[
+\dim_K\mathcal R_m
+\le\dim_K\operatorname{ran}\mathcal O
+\le\dim_K V.
+\]
+
+规范构造本身的状态空间恰为 \(\mathcal R_m\)，故下界达到。\(\square\)
+
+对应声明：`tailSpace_le_futureOutput_range`、`finite_tailSpace_of_realization`、`tailSpace_finrank_le_stateDimension`、`finite_tailSpace_iff_exists_realization`、`realizationFromSequence_is_minimal`。
+
+标量情形取 \(U=Y=K\)、\(m_n(u)=a_nu\)，得到 \(a_n=C_mA_m^nb\)，其中 \(b=B_m1\)。这刻画线性状态维数，不给出一般非线性观察者的最小记忆，也不等于 DFA 状态数。
+
+## 27.4 有限窗口达到全局秩，以及压缩失败见证
+
+规范系统可达，因为其输入迭代正好是张成状态空间的全部尾序列。它可观，因为
+
+\[
+C_mA_m^nx=x(n),
+\]
+
+全部未来读数为零即全部坐标为零。由仓库现有的稳定有限 Hankel 秩定理，若 \(r=\dim_K\mathcal R_m\)，且两个窗口边长 \(p,q\ge r\)，则直接由数据定义的块矩阵满足
+
+\[
+\boxed{\operatorname{rank}[m_{i+j}]_{0\le i<p,\,0\le j<q}=r.}
+\]
+
+这个步骤实际消费已有 `hankel_rank_eq_reachable_dim_sub_inter_unobservable_dim`，在新构造上代入可达空间为顶、不可见空间为底。对应声明为 `sequence_reachable_eq_top`、`sequence_eventualKernel_eq_bot`、`dataHankel_rank_eq_tailSpace`。
+
+**定理 27.2。** 对任意线性压缩 \(L:\mathcal R_m\to W\)，若 \(W\) 有限维且 \(\dim_KW<r\)，则存在 \(x\) 与有限时间 \(n\)，使
+
+\[
+\boxed{Lx=0,\qquad C_mA_m^nx\ne0.}
+\]
+
+**证明。** 若所有被压成零的状态在每个未来时刻都不可见，则可观性给出 \(\ker L=0\)。秩零度定理推出 \(r=\dim\operatorname{ran}L\le\dim W\)，与假设矛盾。\(\square\)
+
+对应声明 `smaller_compression_has_future_witness`。该 \(x\) 是有限多个输入历史方向的线性组合；本定理没有声称两个离散输入词发生同样的碰撞。窗口秩达到的结论也不自动提供从任意有限噪声样本识别未知无限序列的算法。
+
+## 27.5 合法降阶模型与从递推推导的残差方程
+
+以下取实赋范空间与连续线性映射。给定全系统 \(A:V\to V\)、\(B:U\to V\)、\(C:V\to Y\)，选择约化载体 \(W\)、压缩 \(P:V\to W\) 和提升 \(J:W\to V\)。实际构造
+
+\[
+\boxed{A_r=PAJ,\qquad B_r=PB,\qquad C_r=CJ.}
+\]
+
+当 \(W\) 有限维，这三张映射包装为已有 `FiniteLinearRealization`。要称为降维还须实际选择 \(\dim W<\dim V\)；该不等式不由构造名称保证。\(PJ=I_W\) 给出通常的回缩解释，下面的误差估计不需要这个附加等式。
+
+令零初态全系统和约化系统分别满足
+
+\[
+x_{n+1}=Ax_n+Bu_n,\qquad
+z_{n+1}=A_rz_n+B_ru_n,\qquad x_0=z_0=0.
+\]
+
+定义实际残差映射和状态误差
+
+\[
+R_A:=AJ-JA_r,\qquad R_B:=B-JB_r,\qquad e_n:=x_n-Jz_n.
+\]
+
+直接展开两条更新并使用线性性，得到
+
+\[
+\boxed{e_{n+1}=Ae_n+R_Az_n+R_Bu_n.}
+\]
+
+误差等式是证明的结论，未作为调用者必须提供的假设。对应声明 `stateError_succ`。
+
+**定理 27.3，有限时间证书。** 对任意输入、任意 \(n\)，
+
+\[
+\boxed{
+\|e_n\|\le
+\sum_{k=0}^{n-1}\|A\|^{n-1-k}
+\bigl(\|R_A\|\|z_k\|+\|R_B\|\|u_k\|\bigr).
+}
+\]
+
+因此
+
+\[
+\|Cx_n-C_rz_n\|
+\le\|C\|\sum_{k=0}^{n-1}\|A\|^{n-1-k}
+\bigl(\|R_A\|\|z_k\|+\|R_B\|\|u_k\|\bigr).
+\]
+
+**证明。** 残差方程给出
+
+\[
+\|e_{n+1}\|\le\|A\|\|e_n\|+\|R_A\|\|z_n\|+\|R_B\|\|u_n\|.
+\]
+
+从 \(e_0=0\) 归纳展开有限卷积。输出差为 \(Ce_n\)，再使用算子范数不等式。\(\square\)
+
+对应声明 `stateError_le_residual_sum`、`outputError_le_residual_sum`。本结论不要求稳定性，所需残差均来自构造出的合法状态系统。
+
+## 27.6 收缩条件下的显式一致输出误差
+
+设 \(M\ge0\)、\(\|u_k\|\le M\)，且在所选范数下
+
+\[
+\alpha:=\|A\|<1,\qquad\beta:=\|A_r\|<1.
+\]
+
+由约化状态递推归纳可得
+
+\[
+\|z_n\|\le Z:=\frac{\|B_r\|M}{1-\beta}.
+\]
+
+记 \(\delta=\|R_A\|\)、\(\varepsilon=\|R_B\|\)。量
+
+\[
+E:=\frac{\delta Z+\varepsilon M}{1-\alpha}
+\]
+
+满足 \(\alpha E+\delta Z+\varepsilon M=E\)。从初始误差零和第 27.5 节的递推，再次归纳得到 \(\|e_n\|\le E\)。于是
+
+\[
+\boxed{
+\|Cx_n-C_rz_n\|
+\le
+\frac{\|C\|M}{1-\alpha}
+\left(\frac{\delta\|B_r\|}{1-\beta}+\varepsilon\right)
+\quad\text{对所有 }n.
+}
+\]
+
+对应声明 `drivenState_norm_le_of_contraction`、`outputError_uniform_of_contraction`。分母为正由两条严格收缩假设保证。谱半径小于一不能直接替换这些算子范数条件；需要另行构造适合的范数或幂次增长界。
+
+若 \(R_A=R_B=0\)，有限时间证书直接给出对全部输入和时刻的精确输出一致，且无须收缩。对应 `zero_residuals_preserve_outputs`。
+
+这是残差型可认证降阶。当前没有证明平衡坐标构造、平衡截断的稳定性保持、Hankel 范数最优性或 \(2\sum\sigma_k\) 型误差界，也没有把普通矩阵低秩逼近当作动力学降阶。
+
+## 27.7 精确可见下降与全状态重建误差的区分
+
+**定理 27.4。** 若固定映射满足全局下降恒等式
+
+\[
+PA=A_rP,
+\]
+
+则对同一输入与零初态，
+
+\[
+\boxed{Px_n=z_n\quad\text{对所有 }n.}
+\]
+
+若还有 \(C=C_rP\)，则 \(Cx_n=C_rz_n\) 对所有 \(n\) 成立。
+
+**证明。** 初始时等式显然。若 \(Px_n=z_n\)，则
+
+\[
+Px_{n+1}=PAx_n+PBu_n=A_rPx_n+B_ru_n
+=A_rz_n+B_ru_n=z_{n+1}.
+\]
+
+输出结论再代入 \(C=C_rP\)。\(\square\)
+
+对应 `ProjectedExactDescent.projectedState_eq_of_descent` 与 `ProjectedExactDescent.outputs_eq_of_descent`。这给出第 5.3 节勘正的带输入版本。精确可见输出并不要求 \(x_n=Jz_n\)，也不要求提升残差 \(R_A\) 为零。
+
+例如
+
+\[
+A=\begin{pmatrix}1/2&0\\3&1/3\end{pmatrix},\quad
+P=\begin{pmatrix}1&0\end{pmatrix},\quad J=P^\mathsf T,\quad
+B=\begin{pmatrix}1\\0\end{pmatrix},\quad C=P.
+\]
+
+此时 \(A_r=1/2\)，\(PA=A_rP\)，但 \(AJ-JA_r=(0,3)^\mathsf T\ne0\)。隐藏坐标可以持续获得输入影响，可见输出仍在所有时刻精确闭合。该矩阵例是本节的显式数学示例，本轮对其另做了 50 步精确有理数回归；没有将这项有限检验冒充一个独立的已编译 Lean 实例。
+
+## 27.8 验证范围、归属及剩余工程
+
+本批单会话数学审查之外，实际完成了确定性种子 `20260905` 的精确有理数检验：60 个状态实现案例、60 个投影模型案例、1,260 项有限时间误差检查及在双收缩假设成立处的 1,155 项一致界检查。案例包含多输入多输出、零行为、幂零 Jordan 块、重复特征值、非正交回缩及谱稳定但所选算子范数大于一的情形。全部这些有限检查通过；它们不证明全称命题，也不产生 Lean 内核或 Scribe 发射状态。
+
+一般有限秩实现与残差传播是经典数学结构。本批不主张数学首创或首次形式化；仓库增量是消除预先提供实现的假设，实际构造可达可观状态，消费既有有限 Hankel 秩结果，并为合法降阶给出完整的残差误差链。
+
+还需分别完成：坐标化并可执行的有限数据 Ho–Kalman 构造；噪声与扰动稳定性；平衡截断及其专门误差界；一般稳定系统的幂次范数控制。无限 Herglotz／强 Szegő、黄金编码素数语言免疫性、Petz／Fawzi–Renner 和黄金 Denjoy–Koksma 属于另外的既定目标，本节没有将它们记为已完成。
