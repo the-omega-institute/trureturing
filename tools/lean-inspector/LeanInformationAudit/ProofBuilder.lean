@@ -18,7 +18,9 @@ universe u v w
 structure SealTheoremRecord where
   theoremName : Name
   unitName : Name
+  realizationName : Name
   certificateName : Name
+  registrationModuleName : Name
   index : Nat
   primitiveCount : Nat
   primitiveAxes : Array String
@@ -32,6 +34,7 @@ structure SealTheoremRecord where
 /-- Computed arena data retained for summaries and the optional artifact. -/
 structure SealArenaRecord where
   catalog : CatalogRecord
+  irredundantCertificateName : Name
   proofMethod : String
   stateCard : Nat
   offDiagonalPairCount : Nat
@@ -327,7 +330,7 @@ full {fullCount} without {withoutCounts[firstZero]!}"
     let unitName := unit.unitName
     let indexNat := unit.index
     let index ← finValue indexNat record.units.size
-    let unitExpr := mkConst unitName
+    let unitExpr := mkConst unit.sourceUnitName
     let primitives ← mkAppM
       `D5.S3.ConceptDynamics.InformationEscape.TheoremUnit.primitives
       #[unitExpr]
@@ -423,7 +426,9 @@ full {fullCount} without {withoutCounts[firstZero]!}"
     theoremRecords := theoremRecords.push {
       theoremName
       unitName
+      realizationName := unit.realizationName
       certificateName := lowersName
+      registrationModuleName := unit.registrationModuleName
       index := indexNat
       primitiveCount
       primitiveAxes
@@ -451,6 +456,7 @@ full {fullCount} without {withoutCounts[firstZero]!}"
   }
   pure (declarations, {
     catalog := record
+    irredundantCertificateName := irredundantName
     proofMethod := match route with
       | .decide => if record.compatibilityV2 then "decide" else "direct"
       | .reflected _ => "reflected-fused-counts"

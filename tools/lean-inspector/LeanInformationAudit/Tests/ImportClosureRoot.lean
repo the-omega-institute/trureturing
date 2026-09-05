@@ -2,17 +2,24 @@ import LeanInformationAudit.SealCommand
 import LeanInformationAudit.Tests.ImportClosureProducer
 
 open Lean
+open LeanInformationAudit
 open LeanInformationAudit.Tests.ImportClosureProducer
 
 namespace LeanInformationAudit.Tests.ImportClosureRoot
 
 set_option linter.style.longLine false
 
+expect_information_occurrence importedTheorem
+  in objectArena
+  from "LeanInformationAudit.Tests.ImportClosureProducer"
+
 #seal_information_theory output "/tmp/lean-information-audit-import-closure.json"
 
-/-- info: import-closure artifact provenance passed -/
+/-- info: import-closure qualified identity passed -/
 #guard_msgs (info) in
 run_cmd do
+  let env <- getEnv
+  let root := env.header.mainModule
   let contents <- Lean.Elab.Command.liftIO <|
     IO.FS.readFile "/tmp/lean-information-audit-import-closure.json"
   let json <- match Json.parse contents with
@@ -21,23 +28,28 @@ run_cmd do
   let schema <- match Json.getObjVal? json "schema" >>= Json.getStr? with
     | .ok value => pure value
     | .error message => throwError message
-  let scope <- match Json.getObjVal? json "seal_scope" >>= Json.getStr? with
-    | .ok value => pure value
-    | .error message => throwError message
-  let modules <- match Json.getObjVal? json "registration_modules" >>= Json.getArr? with
-    | .ok value => pure value
-    | .error message => throwError message
-  let systemVerdict <- match Json.getObjVal? json "system_catalog_irredundant" >>= Json.getBool? with
-    | .ok value => pure value
-    | .error message => throwError message
-  unless schema == "lean-intrinsic-information-escape-v3" &&
-      scope == "import-closure" &&
-      !systemVerdict &&
-      modules.any (fun value => value.getStr? ==
-        .ok "LeanInformationAudit.Tests.ImportClosureProducer") do
-    throwError "missing import-closure schema or registration provenance"
-  logInfo "import-closure artifact provenance passed"
+  let occurrences := SealRecords.occurrencesForRoot env root
+  let some occurrence := occurrences[0]?
+    | throwError "missing staged occurrence state"
+  let qualifier := root.toString ++ "/" ++
+    (`LeanInformationAudit.Tests.ImportClosureProducer.objectArena).toString ++
+    "/importedBool"
+  let qualifierOf : Name -> Option String
+    | .str (.str _ value) _ => some value
+    | _ => none
+  unless schema == "lean-intrinsic-information-escape-v2" &&
+      occurrences.size == 1 && occurrence.rootId == root &&
+      occurrence.catalogId == `importedBool &&
+      qualifierOf occurrence.unitName == some qualifier &&
+      qualifierOf occurrence.realizationName == some qualifier &&
+      qualifierOf occurrence.certificateName == some qualifier do
+    throwError "sealed occurrence identity is not root/catalog qualified"
+  logInfo "import-closure qualified identity passed"
 
+#print axioms
+  importedTheorem.«LeanInformationAudit.Tests.ImportClosureRoot/LeanInformationAudit.Tests.ImportClosureProducer.objectArena/importedBool».__primitive_realization
+#print axioms
+  importedTheorem.«LeanInformationAudit.Tests.ImportClosureRoot/LeanInformationAudit.Tests.ImportClosureProducer.objectArena/importedBool».__information_unit
 #print axioms
   objectArena.«LeanInformationAudit.Tests.ImportClosureRoot/LeanInformationAudit.Tests.ImportClosureProducer.objectArena/importedBool».__information_catalog
 #print axioms

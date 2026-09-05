@@ -1,4 +1,5 @@
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
+import LeanInformationAudit.Sha256
 import Lean
 
 namespace LeanInformationAudit
@@ -35,12 +36,10 @@ abbrev CatalogId := Name
 
 inductive CatalogKind where
   | canonicalMaximal
-  | analysisView
   deriving BEq, Inhabited, Repr
 
 def CatalogKind.artifactName : CatalogKind -> String
   | .canonicalMaximal => "canonical_maximal"
-  | .analysisView => "analysis_view"
 
 structure InformationRegistryEntry where
   theoremName : Name
@@ -49,10 +48,15 @@ structure InformationRegistryEntry where
   arenaName : Name
   /-- The declaration holding the native realization or the legacy witness. -/
   realizationName : Name
+  /-- Original declarations used to compute a seal-qualified occurrence alias. -/
+  producerUnitName : Name := .anonymous
+  producerRealizationName : Name := .anonymous
   catalogId : CatalogId := .anonymous
   catalogKind : CatalogKind := .canonicalMaximal
   registrationModuleName : Name := .anonymous
   objectArenaName : Name := .anonymous
+  /-- Stable identity of the elaborated theorem statement captured at registration. -/
+  statementIdentity : String := ""
   /-- False exactly for registrations using the occurrence-aware v4.2 syntax. -/
   legacyNaming : Bool := true
 
@@ -71,6 +75,17 @@ def InformationRegistryEntry.occurrenceKey
     (entry : InformationRegistryEntry) : Name × Name :=
   (entry.canonicalObjectArenaName, entry.theoremName)
 
+def InformationRegistryEntry.computationalUnitName
+    (entry : InformationRegistryEntry) : Name :=
+  if entry.producerUnitName.isAnonymous then entry.unitName else entry.producerUnitName
+
+def InformationRegistryEntry.computationalRealizationName
+    (entry : InformationRegistryEntry) : Name :=
+  if entry.producerRealizationName.isAnonymous then
+    entry.realizationName
+  else
+    entry.producerRealizationName
+
 /-- The one naming function used for all v4.2 occurrence companions. -/
 def catalogQualifiedName (rootId objectArenaName : Name) (catalogId : CatalogId)
     (theoremName : Name) (suffix : String) : Name :=
@@ -79,17 +94,18 @@ def catalogQualifiedName (rootId objectArenaName : Name) (catalogId : CatalogId)
       catalogId.toString)
     |>.str suffix
 
-private def jsonNameArray (names : Array Name) : String :=
-  (Json.arr <| names.map fun name => Json.str name.toString).compress
+private def jsonStringArray (values : Array String) : String :=
+  (Json.arr <| values.map Json.str).compress
 
-private def occurrenceLabel (entry : InformationRegistryEntry) : Name :=
-  entry.canonicalObjectArenaName.str entry.theoremName.toString
+def InformationRegistryEntry.occurrenceKeyString
+    (entry : InformationRegistryEntry) : String :=
+  entry.canonicalObjectArenaName.toString ++ "/" ++ entry.theoremName.toString
 
 def qualifiedNameCollisionError (rootId : Name) (catalogId : CatalogId)
     (generatedName : Name) (entries : Array InformationRegistryEntry) : String :=
-  let occurrences := entries.map occurrenceLabel |>.qsort (fun left right => left.lt right)
+  let occurrences := entries.map (·.occurrenceKeyString) |>.qsort (· < ·)
   s!"IE-C025 QualifiedNameCollision root={rootId} catalog={catalogId} \
-generated_name={generatedName} occurrences={jsonNameArray occurrences}"
+generated_name={generatedName} occurrences={jsonStringArray occurrences}"
 
 def rejectKernelAddressSemanticUse (rootId : Name) (catalogId : CatalogId)
     (address consumer : String) : Except String Unit :=
@@ -122,6 +138,89 @@ def InformationRegistry.hasOccurrence (env : Environment)
 
 def InformationRegistry.hasUnit (env : Environment) (n : Name) : Bool :=
   (entries env).any fun entry => entry.unitName == n
+
+/-- A deterministic identity for the theorem type stored in the elaborated environment. -/
+def theoremStatementIdentity (env : Environment) (theoremName : Name) : String :=
+  match env.find? theoremName with
+  | some (.thmInfo info) => "sha256:" ++ Sha256.hex (toString info.type).toUTF8
+  | _ => ""
+
+/-- One independently declared row in a sealing root's expected-occurrence manifest. -/
+structure ExpectedOccurrence where
+  rootId : Name
+  objectArenaName : Name
+  theoremName : Name
+  statementIdentity : String
+  registrationModuleName : Name
+  deriving Inhabited, Repr
+
+private initialize expectedOccurrenceExt :
+    SimplePersistentEnvExtension ExpectedOccurrence (Array ExpectedOccurrence) ←
+  registerSimplePersistentEnvExtension {
+    addEntryFn := Array.push
+    addImportedFn := fun ess => ess.foldl (· ++ ·) #[]
+  }
+
+namespace ExpectedOccurrenceManifest
+
+def declaredEntries (env : Environment) (rootId : Name) : Array ExpectedOccurrence :=
+  expectedOccurrenceExt.getState env |>.filter (·.rootId == rootId)
+
+def addEntry (env : Environment) (entry : ExpectedOccurrence) : Environment :=
+  expectedOccurrenceExt.addEntry env entry
+
+end ExpectedOccurrenceManifest
+
+def frozenInformationRootId : Name :=
+  `D5.S3.ConceptDynamics.InformationEscape.InformationRoot
+
+def designatedInformationRootId : Name :=
+  `D5.S3.ConceptDynamics.InformationEscape.SharedInformationRoot
+
+private def fixedSnapshotKeys : Array (Name × Name) := #[
+  (`D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.agendaPowerArena,
+    `D5.S3.ConceptDynamics.Aggregation.AgendaPower.agenda_power),
+  (`D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.residueArena,
+    `D5.S3.ConceptDynamics.Coding.AdaptiveResidueIdentification.two_step_adaptive_residue_identification),
+  (`D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.spectrumArena,
+    `D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.spectrum_atom_index_bijective),
+  (`D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.contextArena,
+    `D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.context_parameters_can_select_distinct_fixed_points),
+  (`D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.interventionArena,
+    `D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.intervention_strictly_weaker_than_counterfactual),
+  (`D5.S3.ConceptDynamics.InformationEscapeArenas.ObservationIntervention.observationInterventionArena,
+    `D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.observation_strictly_weaker_than_intervention),
+  (`D5.S3.ConceptDynamics.InformationEscapeArenas.StaticExactExperimentDesign.staticExactExperimentArena,
+    `D5.S3.ConceptDynamics.ExperimentDesign.StaticExactExperimentDesign.static_exact_design),
+  (`D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange.commutingCompletionArena,
+    `D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.commutativity_hypothesis_is_necessary),
+  (`D5.S3.ConceptDynamics.InformationEscapeArenas.LocalLawGluingObstruction.localLawGluingArena,
+    `D5.S3.ConceptDynamics.Gluing.LocalLawGluingObstruction.compatible_local_laws_can_lack_global_state),
+  (`D5.S3.ConceptDynamics.InformationEscapeArenas.EndStateOmitsPreemptingCause.endStateOmitsPreemptingCauseArena,
+    `D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.end_state_omits_preempting_cause),
+  (`D5.S3.ConceptDynamics.InformationEscape.SystemUnit.arena,
+    `D5.S3.ConceptDynamics.InformationEscape.SystemUnit.engine_census_self_application)
+]
+
+/-- Fixed source-snapshot rows used by the frozen root and inherited designated root. -/
+def fixedSnapshotOccurrences (env : Environment) (rootId : Name) :
+    Array ExpectedOccurrence :=
+  fixedSnapshotKeys.map fun key => {
+    rootId
+    objectArenaName := key.1
+    theoremName := key.2
+    statementIdentity := theoremStatementIdentity env key.2
+    registrationModuleName := frozenInformationRootId
+  }
+
+/-- Resolve the independent expectation source for one sealing root. -/
+def expectedOccurrencesForRoot (env : Environment) (rootId : Name) :
+    Array ExpectedOccurrence :=
+  let declared := ExpectedOccurrenceManifest.declaredEntries env rootId
+  if rootId == frozenInformationRootId || rootId == designatedInformationRootId then
+    fixedSnapshotOccurrences env rootId ++ declared
+  else
+    declared
 
 def isCompanionName : Name -> Bool
   | .str _ suffix =>
@@ -270,10 +369,13 @@ private def sameEntry (left right : InformationRegistryEntry) : Bool :=
     left.unitName == right.unitName &&
     left.arenaName == right.arenaName &&
     left.realizationName == right.realizationName &&
+    left.producerUnitName == right.producerUnitName &&
+    left.producerRealizationName == right.producerRealizationName &&
     left.effectiveCatalogId == right.effectiveCatalogId &&
     left.catalogKind == right.catalogKind &&
     left.registrationModuleName == right.registrationModuleName &&
     left.canonicalObjectArenaName == right.canonicalObjectArenaName &&
+    left.statementIdentity == right.statementIdentity &&
     left.legacyNaming == right.legacyNaming
 
 private def normalizedEntry (env : Environment)
@@ -282,7 +384,11 @@ private def normalizedEntry (env : Environment)
     registrationModuleName := if entry.registrationModuleName.isAnonymous then
       env.header.mainModule
     else
-      entry.registrationModuleName }
+      entry.registrationModuleName
+    statementIdentity := if entry.statementIdentity.isEmpty then
+      theoremStatementIdentity env entry.theoremName
+    else
+      entry.statementIdentity }
 
 /-- Validate a prospective entry before insertion; neither registry key may exist yet. -/
 def validateNewEntry (env : Environment) (entry : InformationRegistryEntry) :

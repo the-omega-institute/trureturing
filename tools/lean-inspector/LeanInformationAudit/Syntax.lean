@@ -66,7 +66,41 @@ private def ensureOccurrenceRegisterable (env : Environment) (rootId objectArena
         objectArenaName
         legacyNaming := false
       }
-      throwError (qualifiedNameCollisionError rootId catalogId generatedName #[prospective])
+      let owners := InformationRegistry.entries env |>.filter fun entry =>
+        entry.unitName == generatedName || entry.realizationName == generatedName
+      throwError (qualifiedNameCollisionError rootId catalogId generatedName
+        (owners.push prospective))
+
+private def addExpectedOccurrence (theoremId arenaId : TSyntax `ident)
+    (registrationModule statementIdentityOverride : String) : CommandElabM Unit := do
+  let theoremName <- resolveTheorem theoremId
+  let objectArenaName <- resolveArena arenaId
+  let env <- getEnv
+  let statementIdentity := if statementIdentityOverride.isEmpty then
+    theoremStatementIdentity env theoremName
+  else
+    statementIdentityOverride
+  modifyEnv fun current => ExpectedOccurrenceManifest.addEntry current {
+    rootId := env.header.mainModule
+    objectArenaName
+    theoremName
+    statementIdentity
+    registrationModuleName := registrationModule.toName
+  }
+
+/-- Declare one independently expected auxiliary-root occurrence. -/
+elab "expect_information_occurrence " theoremId:ident ppLine
+    "in " arenaId:ident ppLine
+    "from " registrationModule:str : command =>
+  addExpectedOccurrence theoremId arenaId registrationModule.getString ""
+
+/-- Negative-fixture form for pinning an independently supplied statement identity. -/
+elab "expect_information_occurrence " theoremId:ident ppLine
+    "in " arenaId:ident ppLine
+    "from " registrationModule:str ppLine
+    "statement_id " statementIdentity:str : command =>
+  addExpectedOccurrence theoremId arenaId registrationModule.getString
+    statementIdentity.getString
 
 private def checkRealizationBundle (theoremName arenaName : Name)
     (typedRealization : Expr) (primitiveTerm : TSyntax `term) : CommandElabM Unit := do

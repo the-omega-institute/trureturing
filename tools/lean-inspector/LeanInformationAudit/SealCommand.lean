@@ -29,29 +29,6 @@ private def theoremJson (denominator : Nat) (record : SealTheoremRecord) : Json 
     ("proof_method", record.proofMethod)
   ]
 
-private def occurrenceJson (rootId : Name) (catalogId : CatalogId)
-    (denominator : Nat) (record : SealTheoremRecord) : Json :=
-  Json.mkObj [
-    ("theorem", record.theoremName.toString),
-    ("catalog_membership", Json.mkObj [
-      ("root_id", rootId.toString),
-      ("catalog_id", catalogId.toString)
-    ]),
-    ("unit", record.unitName.toString),
-    ("primitive_count", record.primitiveCount),
-    ("primitive_axes", Json.arr <| record.primitiveAxes.map Json.str),
-    ("primitive_kernel_address", record.primitiveKernelAddress),
-    ("full_escape_count", record.fullEscapeCount),
-    ("without_escape_count", record.withoutEscapeCount),
-    ("unique_capture_count", record.uniqueCaptureCount),
-    ("unique_capture_by_role_signature", Json.mkObj <|
-      record.roleSignatureHistogram.toList.map fun entry =>
-        (entry.1, toJson entry.2)),
-    ("gain_rate", rateJson record.uniqueCaptureCount denominator),
-    ("lowers_escape", true),
-    ("certificate", record.certificateName.toString)
-  ]
-
 private def arenaJson (record : SealArenaRecord) : Json :=
   Json.mkObj [
     ("arena", record.catalog.arenaName.toString),
@@ -72,79 +49,58 @@ private def artifactJson (records : Array SealArenaRecord) : Json :=
     ("arenas", Json.arr <| records.map arenaJson)
   ]
 
-private def v3VerdictCertificate (record : SealArenaRecord) : Name :=
-  catalogQualifiedName record.catalog.rootId record.catalog.arenaName
-    record.catalog.catalogId record.catalog.arenaName "__catalog_irredundant"
+/-- Serialize the unchanged schema-v2 artifact projection. -/
+def serializeV2Artifact (records : Array SealArenaRecord) : String :=
+  (artifactJson records).pretty
 
-private def catalogJsonV3 (record : SealArenaRecord) : Json :=
-  Json.mkObj [
-    ("catalog_id", record.catalog.catalogId.toString),
-    ("catalog_kind", record.catalog.catalogKind.artifactName),
-    ("object_arena", record.catalog.arenaName.toString),
-    ("proof_method", record.proofMethod),
-    ("state_card", record.stateCard),
-    ("off_diagonal_pair_count", record.offDiagonalPairCount),
-    ("full_escape_count", record.fullEscapeCount),
-    ("full_escape_rate", rateJson record.fullEscapeCount
-      record.offDiagonalPairCount),
-    ("catalog_verdict", "irredundant"),
-    ("redundant_theorems", Json.arr #[]),
-    ("verdict_certificate", v3VerdictCertificate record |>.toString),
-    ("theorems", Json.arr <| record.theorems.map
-      (occurrenceJson record.catalog.rootId record.catalog.catalogId
-        record.offDiagonalPairCount))
-  ]
+/-- Fixture-inspectable identity state retained for the later analysis projection. -/
+structure SealedOccurrenceState where
+  rootId : Name
+  catalogId : CatalogId
+  objectArenaName : Name
+  theoremName : Name
+  unitName : Name
+  realizationName : Name
+  certificateName : Name
+  registrationModuleName : Name
+  deriving Inhabited, Repr
 
-private def distinctSortedNames (names : Array Name) : Array Name :=
-  names.foldl (init := #[]) (fun result name =>
-    if result.contains name then result else result.push name)
-    |>.qsort fun left right => left.lt right
+private initialize sealRecordExt :
+    SimplePersistentEnvExtension SealArenaRecord (Array SealArenaRecord) ←
+  registerSimplePersistentEnvExtension {
+    addEntryFn := Array.push
+    addImportedFn := fun ess => ess.foldl (· ++ ·) #[]
+  }
 
-private def registrationModules (records : Array SealArenaRecord) : Array Name :=
-  distinctSortedNames <| records.foldl (init := #[]) fun modules record =>
-    modules ++ record.catalog.units.map (·.registrationModuleName)
+namespace SealRecords
 
-private def occurrenceQualifiedName (record : SealArenaRecord)
-    (theoremRecord : SealTheoremRecord) : Name :=
-  catalogQualifiedName record.catalog.rootId record.catalog.arenaName
-    record.catalog.catalogId theoremRecord.theoremName "__occurrence"
+def entries (env : Environment) : Array SealArenaRecord :=
+  sealRecordExt.getState env
 
-private def coincidenceClasses (records : Array SealArenaRecord) : Json :=
-  let groups := records.foldl (init := #[]) fun groups record =>
-    record.theorems.foldl (init := groups) fun groups theoremRecord =>
-      let occurrence := occurrenceQualifiedName record theoremRecord
-      match groups.findIdx? fun group =>
-          group.1 == theoremRecord.primitiveKernelAddress with
-      | some index => groups.modify index fun group => (group.1, group.2.push occurrence)
-      | none => groups.push (theoremRecord.primitiveKernelAddress, #[occurrence])
-  let collisions := groups.filter (fun group => group.2.size > 1)
-    |>.qsort fun left right => left.1 < right.1
-  Json.arr <| collisions.map fun group => Json.mkObj [
-    ("primitive_kernel_address", group.1),
-    ("occurrences", Json.arr <| (group.2.qsort fun left right => left.lt right).map
-      (fun name => Json.str name.toString)),
-    ("serializer", "primitive-kernel-classes-v1"),
-    ("diagnostic_only", true)
-  ]
+def forRoot (env : Environment) (rootId : Name) : Array SealArenaRecord :=
+  entries env |>.filter (·.catalog.rootId == rootId)
 
-private def artifactJsonV3 (records : Array SealArenaRecord) : Json :=
-  let rootId := records[0]? |>.map (·.catalog.rootId) |>.getD .anonymous
-  let isDesignatedRoot := rootId ==
-    `D5.S3.ConceptDynamics.InformationEscape.SharedInformationRoot
-  Json.mkObj [
-    ("schema", "lean-intrinsic-information-escape-v3"),
-    ("root_id", rootId.toString),
-    ("seal_scope", "import-closure"),
-    ("registration_modules", Json.arr <|
-      (registrationModules records).map fun name => Json.str name.toString),
-    ("system_catalog_irredundant", isDesignatedRoot),
-    ("kernel_address_coincidence_classes", coincidenceClasses records),
-    ("catalogs", Json.arr <| records.map catalogJsonV3)
-  ]
+def occurrencesForRoot (env : Environment) (rootId : Name) :
+    Array SealedOccurrenceState :=
+  forRoot env rootId |>.foldl (init := #[]) fun occurrences record =>
+    occurrences ++ record.theorems.map fun theoremRecord => {
+      rootId := record.catalog.rootId
+      catalogId := record.catalog.catalogId
+      objectArenaName := record.catalog.arenaName
+      theoremName := theoremRecord.theoremName
+      unitName := theoremRecord.unitName
+      realizationName := theoremRecord.realizationName
+      certificateName := theoremRecord.certificateName
+      registrationModuleName := theoremRecord.registrationModuleName
+    }
 
-private def sealArtifactJson (records : Array SealArenaRecord) : Json :=
-  if records.all (·.catalog.compatibilityV2) then artifactJson records
-  else artifactJsonV3 records
+/-- A root verdict is true only when every retained record names a staged proof. -/
+def systemCatalogIrredundant (env : Environment) (rootId : Name) : Bool :=
+  let records := forRoot env rootId
+  !records.isEmpty && records.all fun record =>
+    env.contains record.irredundantCertificateName
+
+end SealRecords
 
 private def logSummary (record : SealArenaRecord) : CommandElabM Unit := do
   for theoremRecord in record.theorems do
@@ -163,8 +119,9 @@ private def declarationNames (declarations : Array Declaration) : List Name :=
 private def catalogForGeneratedName? (records : Array SealArenaRecord) (name : Name) :
     Option SealArenaRecord :=
   records.find? fun record =>
-    record.catalog.catalogName == name || v3VerdictCertificate record == name ||
-      record.theorems.any fun theoremRecord => theoremRecord.certificateName == name ||
+    record.catalog.catalogName == name || record.irredundantCertificateName == name ||
+      record.theorems.any fun theoremRecord => theoremRecord.unitName == name ||
+        theoremRecord.realizationName == name || theoremRecord.certificateName == name ||
         catalogQualifiedName record.catalog.rootId record.catalog.arenaName
           record.catalog.catalogId theoremRecord.theoremName "__escape_enriched" == name
 
@@ -187,24 +144,47 @@ private def preflightNames (env : Environment) (records : Array SealArenaRecord)
           throwError "IE-C009 ProofConstructionFailed: {name}\ngenerated name collision"
     seen := seen.push name
 
-private def occurrenceKeyStringsFromRecords (records : Array SealArenaRecord) : Array String :=
-  records.foldl (init := #[]) fun keys record =>
-    keys ++ record.theorems.map fun theoremRecord =>
-      record.catalog.arenaName.toString ++ "/" ++ theoremRecord.theoremName.toString
+private def expectedKey (entry : ExpectedOccurrence) : String :=
+  entry.objectArenaName.toString ++ "/" ++ entry.theoremName.toString
 
-private def occurrenceKeyStringsFromRegistry (env : Environment) : Array String :=
-  InformationRegistry.entries env |>.map fun entry =>
-    entry.canonicalObjectArenaName.toString ++ "/" ++ entry.theoremName.toString
+private def actualKey (entry : InformationRegistryEntry) : String :=
+  entry.occurrenceKeyString
 
-private def validateRegistrySnapshot (env : Environment) (records : Array SealArenaRecord) :
-    CommandElabM Unit := do
-  let expected := occurrenceKeyStringsFromRecords records |>.qsort (· < ·)
-  let actual := occurrenceKeyStringsFromRegistry env |>.qsort (· < ·)
-  unless expected == actual do
-    let rootId := env.header.mainModule
-    throwError
-      "IE-C028 AnalysisCertificateMismatch root={rootId} catalog=registry-snapshot \
-component=member-set expected={(toJson expected).compress} actual={(toJson actual).compress}"
+private def expectedIdentity (entry : ExpectedOccurrence) : String :=
+  expectedKey entry ++ "=" ++ entry.statementIdentity
+
+private def actualIdentity (entry : InformationRegistryEntry) : String :=
+  actualKey entry ++ "=" ++ entry.statementIdentity
+
+private def expectedContributor (entry : ExpectedOccurrence) : String :=
+  expectedKey entry ++ "=" ++ entry.registrationModuleName.toString
+
+private def actualContributor (entry : InformationRegistryEntry) : String :=
+  actualKey entry ++ "=" ++ entry.registrationModuleName.toString
+
+private def throwSnapshotMismatch (rootId : Name) (component : String)
+    (expected actual : Array String) : CommandElabM Unit :=
+  throwError
+    "IE-C028 AnalysisCertificateMismatch root={rootId} catalog=registry-snapshot \
+component={component} expected={(toJson expected).compress} actual={(toJson actual).compress}"
+
+/-- Compare the independent root manifest with the sealed import-closure registry. -/
+def validateRegistrySnapshot (env : Environment) : CommandElabM Unit := do
+  let rootId := env.header.mainModule
+  let expectedEntries := expectedOccurrencesForRoot env rootId
+  let actualEntries := InformationRegistry.entries env
+  let expectedKeys := expectedEntries.map expectedKey |>.qsort (· < ·)
+  let actualKeys := actualEntries.map actualKey |>.qsort (· < ·)
+  unless expectedKeys == actualKeys do
+    throwSnapshotMismatch rootId "member-set" expectedKeys actualKeys
+  let expectedIdentities := expectedEntries.map expectedIdentity |>.qsort (· < ·)
+  let actualIdentities := actualEntries.map actualIdentity |>.qsort (· < ·)
+  unless expectedIdentities == actualIdentities do
+    throwSnapshotMismatch rootId "statement-identities" expectedIdentities actualIdentities
+  let expectedContributors := expectedEntries.map expectedContributor |>.qsort (· < ·)
+  let actualContributors := actualEntries.map actualContributor |>.qsort (· < ·)
+  unless expectedContributors == actualContributors do
+    throwSnapshotMismatch rootId "contributor-modules" expectedContributors actualContributors
 
 private def stageDeclarations (env : Environment) (declarations : Array Declaration) :
     CommandElabM Environment := do
@@ -219,6 +199,61 @@ private def stageDeclarations (env : Environment) (declarations : Array Declarat
         throwError "IE-C009 ProofConstructionFailed: {name}\n{error.toMessageData options}"
   pure stagedEnv
 
+private def rootQualifiedEntry (rootId : Name) (compatibilityV2 : Bool)
+    (entry : InformationRegistryEntry) : InformationRegistryEntry :=
+  if compatibilityV2 then entry else
+    { entry with
+      producerUnitName := entry.unitName
+      producerRealizationName := entry.realizationName
+      unitName := catalogQualifiedName rootId entry.canonicalObjectArenaName
+        entry.effectiveCatalogId entry.theoremName theoremUnitSuffix
+      realizationName := catalogQualifiedName rootId entry.canonicalObjectArenaName
+        entry.effectiveCatalogId entry.theoremName primitiveRealizationSuffix }
+
+private def aliasDeclaration (env : Environment) (sourceName targetName : Name) :
+    CommandElabM Declaration := do
+  let some info := env.find? sourceName
+    | throwError "IE-C009 ProofConstructionFailed: {sourceName}\nmissing alias source"
+  let levels := info.levelParams.map Level.param
+  pure <| .defnDecl {
+    name := targetName
+    levelParams := info.levelParams
+    type := info.type
+    value := mkConst sourceName levels
+    hints := .abbrev
+    safety := .safe
+  }
+
+private def prepareRootQualifiedEntries (env : Environment)
+    (entries : Array InformationRegistryEntry) :
+    CommandElabM (Array Declaration × Array InformationRegistryEntry) := do
+  let rootId := env.header.mainModule
+  let compatibilityV2 := entries.all fun entry =>
+    entry.legacyNaming && entry.registrationModuleName == rootId
+  let qualified := entries.map (rootQualifiedEntry rootId compatibilityV2)
+  for entry in qualified do
+    for generatedName in #[entry.unitName, entry.realizationName] do
+      let owners := qualified.filter fun candidate =>
+        candidate.unitName == generatedName || candidate.realizationName == generatedName
+      let sourceOwner := entries.any fun candidate =>
+        (candidate.unitName == generatedName || candidate.realizationName == generatedName) &&
+          candidate.occurrenceKey == entry.occurrenceKey
+      if owners.size > 1 || (env.contains generatedName && !sourceOwner) then
+        throwError (qualifiedNameCollisionError rootId entry.effectiveCatalogId
+          generatedName owners)
+  let mut declarations := #[]
+  for (source, target) in entries.zip qualified do
+    if source.realizationName != target.realizationName then
+      declarations := declarations.push (← aliasDeclaration env source.realizationName
+        target.realizationName)
+    if source.unitName != target.unitName then
+      declarations := declarations.push (← aliasDeclaration env source.unitName target.unitName)
+  pure (declarations, qualified)
+
+private def retainSealRecords (env : Environment) (records : Array SealArenaRecord) :
+    Environment :=
+  records.foldl (init := env) fun current record => sealRecordExt.addEntry current record
+
 /-! The seal has four phases: validate and prepare catalogs; compute counts and
 proof declarations; preflight and kernel-check every declaration in a local persistent
 environment; then publish that environment with one `setEnv`. The optional JSON is
@@ -227,18 +262,26 @@ written before publication and is output-only: no seal decision reads it back. -
 @[command_elab sealInformationTheoryCmd]
 private def elabSealInformationTheory : CommandElab := fun stx => do
   let baseEnv ← getEnv
-  let catalogs ← prepareCatalogs
-  let proofs ← prepareProofs catalogs
-  let declarations := catalogs.map (·.declaration) ++ proofs.declarations
-  validateRegistrySnapshot baseEnv proofs.records
-  preflightNames baseEnv proofs.records declarations
-  let stagedEnv ← stageDeclarations baseEnv declarations
-  match stx with
-  | `(#seal_information_theory output $path:str) =>
-      liftIO <| IO.FS.writeFile path.raw.isStrLit?.get!
-        (sealArtifactJson proofs.records).pretty
-  | _ => pure ()
-  setEnv stagedEnv
-  proofs.records.forM logSummary
+  try
+    validateRegistrySnapshot baseEnv
+    let sourceEntries := InformationRegistry.entries baseEnv
+    let (aliasDeclarations, catalogEntries) ←
+      prepareRootQualifiedEntries baseEnv sourceEntries
+    let catalogs ← prepareCatalogsFromEntries sourceEntries catalogEntries
+    let proofs ← prepareProofs catalogs
+    let declarations := aliasDeclarations ++ catalogs.map (·.declaration) ++ proofs.declarations
+    preflightNames baseEnv proofs.records declarations
+    let stagedEnv ← stageDeclarations baseEnv declarations
+    let stagedEnv := retainSealRecords stagedEnv proofs.records
+    match stx with
+    | `(#seal_information_theory output $path:str) =>
+        liftIO <| IO.FS.writeFile path.raw.isStrLit?.get!
+          (serializeV2Artifact proofs.records)
+    | _ => pure ()
+    setEnv stagedEnv
+    proofs.records.forM logSummary
+  catch error =>
+    setEnv baseEnv
+    throw error
 
 end LeanInformationAudit

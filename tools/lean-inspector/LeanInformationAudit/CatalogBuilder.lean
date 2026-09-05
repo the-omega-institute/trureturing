@@ -14,6 +14,7 @@ open D5.S3.ConceptDynamics.InformationEscape
 structure CatalogUnitRecord where
   theoremName : Name
   unitName : Name
+  sourceUnitName : Name
   realizationName : Name
   registrationModuleName : Name
   index : Nat
@@ -84,7 +85,7 @@ private def distinctNames (names : Array Name) : Array Name :=
   names.foldl (init := #[]) fun result name =>
     if result.contains name then result else result.push name
 
-private def validateMaximalCatalog (rootId arenaName : Name)
+def validateMaximalCatalog (rootId arenaName : Name)
     (entries : Array InformationRegistryEntry) : Except String CatalogId := do
   let catalogIds := distinctNames (entries.map (·.effectiveCatalogId))
     |>.qsort nameLess
@@ -96,9 +97,6 @@ catalogs={nameArrayJson catalogIds}"
     let occurrences := entries.map (·.theoremName) |>.qsort nameLess
     throw s!"IE-C026 MissingMaximalCatalog root={rootId} arena={arenaName} \
 occurrences={nameArrayJson occurrences}"
-  if maximal.size != entries.size then
-    throw s!"IE-C024 SplitCanonicalArenaCatalog root={rootId} arena={arenaName} \
-catalogs={nameArrayJson catalogIds}"
   pure catalogIds[0]!
 
 private def prepareCatalog (rootId arenaName : Name) (compatibilityV2 : Bool)
@@ -115,7 +113,7 @@ private def prepareCatalog (rootId arenaName : Name) (compatibilityV2 : Bool)
     `D5.S3.ConceptDynamics.InformationEscape.Arena.Nondegenerate #[arena]
   unless ← propositionIsTrue nondegenerate do
     throwError "IE-C004 DegenerateArena: {arenaName}"
-  let unitExprs := sorted.map fun entry => mkConst entry.unitName
+  let unitExprs := sorted.map fun entry => mkConst entry.computationalUnitName
   let vector ← makeUnitVector unitExprs
   let value ← mkAppM
     `D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector #[vector]
@@ -123,6 +121,7 @@ private def prepareCatalog (rootId arenaName : Name) (compatibilityV2 : Bool)
   let units := sorted.mapIdx fun index entry => {
     theoremName := entry.theoremName
     unitName := entry.unitName
+    sourceUnitName := entry.computationalUnitName
     realizationName := entry.realizationName
     registrationModuleName := entry.registrationModuleName
     index
@@ -159,22 +158,27 @@ private def groupEntries (entries : Array InformationRegistryEntry) :
     | some index => groups.modify index fun group => (group.1, group.2.push entry)
     | none => groups.push (entry.canonicalObjectArenaName, #[entry])
 
-/-- Validate the registry and prepare catalogs without changing the environment. -/
-def prepareCatalogs : CommandElabM (Array PreparedCatalog) := do
+/-- Validate source entries and prepare catalogs from their seal-qualified forms. -/
+def prepareCatalogsFromEntries (sourceEntries catalogEntries :
+    Array InformationRegistryEntry) : CommandElabM (Array PreparedCatalog) := do
   let env ← getEnv
-  let entries := InformationRegistry.entries env
-  if entries.isEmpty then
+  if sourceEntries.isEmpty then
     throwError "IE-C001 UnregisteredTheoremUnit: registry is empty"
-  liftTermElabM <| entries.forM (validateEntry env)
+  liftTermElabM <| sourceEntries.forM (validateEntry env)
   let rootId := env.header.mainModule
-  let compatibilityV2 := entries.all fun entry =>
+  let compatibilityV2 := sourceEntries.all fun entry =>
     entry.legacyNaming && entry.registrationModuleName == rootId
-  let groups := (groupEntries entries).qsort fun left right => nameLess left.1 right.1
+  let groups := (groupEntries catalogEntries).qsort fun left right => nameLess left.1 right.1
   let catalogs <- liftTermElabM <| groups.mapM fun group =>
     prepareCatalog rootId group.1 compatibilityV2 group.2
   pure <| catalogs.qsort fun left right =>
     nameLess left.record.catalogId right.record.catalogId ||
       (left.record.catalogId == right.record.catalogId &&
         nameLess left.record.arenaName right.record.arenaName)
+
+/-- Validate the registry and prepare catalogs without changing the environment. -/
+def prepareCatalogs : CommandElabM (Array PreparedCatalog) := do
+  let entries := InformationRegistry.entries (← getEnv)
+  prepareCatalogsFromEntries entries entries
 
 end LeanInformationAudit
