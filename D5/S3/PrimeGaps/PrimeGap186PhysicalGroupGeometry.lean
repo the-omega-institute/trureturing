@@ -119,7 +119,7 @@ theorem physicalSourceGroup_dimensions :
 
 theorem physicalSourceGroup_orders :
     List.ofFn (fun g : Fin 6 => (physicalSourceGroup g).order) =
-      [2, 5 / 2, 2, 5 / 2, 2, 5 / 2] := by decide
+      [2, 5 / 2, 2, 5 / 2, 2, 5 / 2] := by rfl
 
 theorem physicalSourceLowCounts :
     List.ofFn physicalSourceLowCount = [10, 22, 5, 7, 6, 11] := by decide
