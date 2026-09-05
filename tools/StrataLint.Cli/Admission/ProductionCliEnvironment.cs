@@ -324,6 +324,9 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
     public ExplicitCommandResult DepositHeaderCheck(IReadOnlyList<string> arguments) =>
         DepositHeaderCheckCommand.Run(repository, arguments);
 
+    public ExplicitCommandResult LedgerFrozen(IReadOnlyList<string> arguments) =>
+        LedgerFrozenCommand.Run(repositoryRoot, repository, arguments);
+
     public CommandResult Ingest(IReadOnlyList<string> arguments) =>
         IngestCommand.RunReportFree(
             repositoryRoot,

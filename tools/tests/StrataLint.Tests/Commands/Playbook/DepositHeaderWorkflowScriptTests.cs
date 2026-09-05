@@ -69,7 +69,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
         fixture.ChangeFormalizationToSevenLineWrappedDigest();
-        fixture.WriteActiveFreezeForCurrentModule();
+        fixture.WriteActiveFreeze();
         var commitsBefore = fixture.CommitCount();
         var blueprintBefore = fixture.BlueprintState();
         var ledgerBefore = fixture.LedgerState();
