@@ -1,0 +1,22 @@
+## C9.2 两个极端
+
+只观察 charge、不观察 phase 时，只有一个 phase class $n_1=p$：
+
+$$
+\boxed{
+\varepsilon_{\rm charge}
+=
+\frac{p-1}{cp-1}.
+}
+\tag{C9.6}
+$$
+
+phase 也被完全分离时，所有 $n_j=1$：
+
+$$
+\boxed{
+\varepsilon_{\rm charge+phase}=0.
+}
+\tag{C9.7}
+$$
+

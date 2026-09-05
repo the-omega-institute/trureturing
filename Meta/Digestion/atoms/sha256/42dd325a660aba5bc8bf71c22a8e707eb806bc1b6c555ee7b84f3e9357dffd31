@@ -1,0 +1,5 @@
+## C0.2 本增订新推导的地位
+
+以下是本增订中的纯数学推导，但尚未作为新的 Lean 真源登记：
+
+- centered prime power thread 的显式构造；

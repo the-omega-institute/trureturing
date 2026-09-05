@@ -1,0 +1,39 @@
+## C5.2 charge 与 phase 的观察非对称
+
+charge 具有 finite-coordinate recovery：
+
+$$
+Q_p(u)
+=
+m\log\|Z_{p,u}(m)\|
+\tag{C5.4}
+$$
+
+对任意一个 $m$ 成立。
+
+phase 则是 inverse-limit data：任意有限 levels 在全实轴上都保留非平凡 alias period。
+
+所以 complex-power equivalence：
+
+$$
+\operatorname{ComplexPowerThread}
+\simeq
+\mathbb R\times\mathcal S
+\tag{C5.5}
+$$
+
+在观察论上是不对称的：
+
+$$
+\boxed{
+\mathbb R\text{-charge 是有限层可见的，}
+\qquad
+\mathcal S\text{-phase 的全局忠实性需要逆极限。}
+}
+\tag{C5.6}
+$$
+
+这解释了为什么 off-line displacement 产生 phase-independent hyperbolic floor，而 tangential time phase 可以具有任意深的 recurrence。
+
+---
+

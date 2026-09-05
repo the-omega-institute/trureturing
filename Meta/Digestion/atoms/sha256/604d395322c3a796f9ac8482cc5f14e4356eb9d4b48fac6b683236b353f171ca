@@ -1,0 +1,35 @@
+## C12.1 离轴有理矩形
+
+令 $\mathfrak R_{\mathbb Q}^{\rm off}$ 为所有闭矩形：
+
+$$
+R=[x_0,x_1]+i[y_0,y_1],
+\tag{C12.1}
+$$
+
+其中：
+
+$$
+x_0,x_1,y_0,y_1\in\mathbb Q,
+\qquad
+x_0<x_1,
+\qquad
+y_0<y_1,
+\tag{C12.2}
+$$
+
+且整个矩形位于 critical strip 内并与临界线保持正距离：
+
+$$
+\overline R
+\subset
+\left\{
+s:
+0<\Re s<1,\,
+\Re s\ne\frac12
+\right\}.
+\tag{C12.3}
+$$
+
+该 family 可数。
+

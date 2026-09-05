@@ -1,0 +1,136 @@
+## C14.2 hidden block 与 Schur complement
+
+把：
+
+$$
+E_N
+=
+\begin{pmatrix}
+A&B\\
+B^*&D
+\end{pmatrix},
+\tag{C14.5}
+$$
+
+并假设在某个集合上：
+
+$$
+D\succeq dI,
+\qquad
+d>0,
+\tag{C14.6}
+$$
+
+$$
+S
+:=
+A-BD^{-1}B^*
+\succeq\kappa I,
+\qquad
+\kappa>0,
+\tag{C14.7}
+$$
+
+$$
+\|B\|\le b.
+\tag{C14.8}
+$$
+
+令：
+
+$$
+C=D^{-1}B^*.
+\tag{C14.9}
+$$
+
+完成平方给出：
+
+$$
+\langle E_N(x,y),(x,y)\rangle
+=
+\langle Sx,x\rangle
++
+\langle D(y+Cx),y+Cx\rangle.
+\tag{C14.10}
+$$
+
+定义 triangular map：
+
+$$
+L(x,y)=(x,y+Cx).
+\tag{C14.11}
+$$
+
+则：
+
+$$
+E_N
+=
+L^*
+\begin{pmatrix}
+S&0\\
+0&D
+\end{pmatrix}
+L.
+\tag{C14.12}
+$$
+
+又有：
+
+$$
+\|L^{-1}\|
+\le
+1+\|C\|
+\le
+1+\frac bd.
+\tag{C14.13}
+$$
+
+### 定理 C14.1　Schur-to-singular-value floor
+
+$$
+\boxed{
+E_N
+\succeq
+\mu I,
+\qquad
+\mu
+=
+\frac{
+\min\{\kappa,d\}
+}{
+(1+b/d)^2
+}.
+}
+\tag{C14.14}
+$$
+
+#### 证明
+
+由式 (C14.12)：
+
+$$
+\langle E_Nv,v\rangle
+\ge
+\min\{\kappa,d\}\|Lv\|^2.
+$$
+
+而：
+
+$$
+\|Lv\|
+\ge
+\frac{\|v\|}{\|L^{-1}\|}.
+$$
+
+代入式 (C14.13) 即得。
+
+所以：
+
+$$
+\sigma_{\min}(T_N)
+\ge
+\sqrt\mu.
+\tag{C14.15}
+$$
+

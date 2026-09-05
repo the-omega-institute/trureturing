@@ -1,0 +1,11 @@
+## 摘要
+
+增订二已经把假想离线零点收紧为一个 visible–hidden Schur margin 的饱和事件，并区分了 holomorphic transfer 与 Hermitian energy。本增订进一步接入项目最新闭合的三个真源：
+
+1. `D5/S1/Solenoid/ComplexPowerSolenoidDecomposition`：任意非零 compatible complex power thread 构造性地分解为一个实对数荷与一个 universal-solenoid phase thread；
+2. `D5/S3/Weil/ZetaAnalytic/RoucheZeroCount`：矩形边界上的严格扰动不等式保持解析零点计数；
+3. `D5/S3/Zeros/RationalNegativeCountCertificate`：一旦负径向计数区域非空且开放，必存在有理参数证书。
+
+同时使用：
+
+- `D5/S3/ConceptDynamics/InformationEscape/EscapePairs`；

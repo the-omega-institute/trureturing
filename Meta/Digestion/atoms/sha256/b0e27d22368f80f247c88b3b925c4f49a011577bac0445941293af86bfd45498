@@ -1,0 +1,40 @@
+## C15.3 minimal transfer 的代价
+
+同一 hard-core count behavior 具有二阶递推和 $2\times2$ transfer。其 Hankel rank 恰为 $2$，所以可见行为只需二态记忆。
+
+若 analytic determinant representation 可以在不改变目标 scalar 零集的前提下压缩到 minimal realization rank $r_N$，则维数税从：
+
+$$
+\frac{d_N}{2}\log\frac1\mu
+$$
+
+降为：
+
+$$
+\frac{r_N}{2}\log\frac1\mu.
+\tag{C15.6}
+$$
+
+在 Zeckendorf hard-core 原型中：
+
+$$
+r_N=2.
+\tag{C15.7}
+$$
+
+于是本轮得到一个新的解释：
+
+$$
+\boxed{
+\text{Zeckendorf/Hankel 的证明论价值，
+不是制造指数多状态，
+而是把指数多历史压缩成最小二态 memory，
+从而降低 determinant zero certificate 的维数税。}
+}
+\tag{C15.8}
+$$
+
+这里仍需保留一个前件：state-space 压缩必须保持 analytic determinant，至多乘以无零 unit。Hankel 行为等价本身不自动保证任意 chosen determinant 不变。
+
+---
+

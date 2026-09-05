@@ -1,0 +1,21 @@
+## C9.1 finite product arena
+
+取有限 charge set $C$，$|C|=c$，有限 phase set $P$，$|P|=p$。状态空间为：
+
+$$
+\Omega=C\times P.
+\tag{C9.1}
+$$
+
+假设 charge observer 完全区分 $C$。某个有限 phase observer family 将 $P$ 分成等价类：
+
+$$
+P=P_1\sqcup\cdots\sqcup P_r,
+\qquad
+|P_j|=n_j.
+\tag{C9.2}
+$$
+
+联合 observers 下，两个状态不可区分，当且仅当：
+
+- charge 相同；
