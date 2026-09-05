@@ -100,7 +100,10 @@ public sealed partial class DigestionQuarantineTests
                     .ToImmutableArray()))
             .ToImmutableArray();
 
-        var summary = DigestResidualSummary.Render(new DigestionLedgerEvaluation(entries, []));
+        var evaluation = new DigestionLedgerEvaluation(entries, []);
+        var summary = DigestResidualSummary.Render(
+            evaluation,
+            DigestionFrontierTestProjection.Create(evaluation));
 
         var expected = """
             # Echo Residual Summary
@@ -108,7 +111,28 @@ public sealed partial class DigestionQuarantineTests
             - unresolved_subitems: 2
             - mother_residual_atom_ids: 1
 
-            ## quarantined residuals
+            ## frontier
+
+            - residual_open: 2
+            - formalization_frontier: 0
+            - quarantined: 1
+            - withheld: 0
+            - chain_child: 0
+            - not_formalizable: 1
+            - formalizable_claim: 0
+
+            Per-source frontier:
+
+            - `fixture-source`
+              - residual_open: 2
+              - formalization_frontier: 0
+              - quarantined: 1
+              - withheld: 0
+              - chain_child: 0
+              - not_formalizable: 1
+              - formalizable_claim: 0
+
+            ### quarantined residuals
 
             - quarantined_subitems: 2
             - mother_quarantined_atom_ids: 1

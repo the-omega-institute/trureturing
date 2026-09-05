@@ -4,10 +4,14 @@ namespace StrataLint.Engine;
 
 internal delegate AtomizedTheoryDocument TheoryAtomizer(ReadOnlySpan<byte> bytes, TheoryAtomizerRules rules);
 
+internal delegate AtomizedTheoryDocument TheoryAtomizerWithContentKinds(
+    ReadOnlySpan<byte> bytes,
+    TheoryAtomizerRules rules,
+    IDictionary<string, string>? contentKinds);
+
 internal sealed record AtomizerRegistration(
     TheoryAtomizer Atomize,
-    Func<ReadOnlyMemory<byte>, TheoryAtomizerRules, ImmutableDictionary<string, string>>
-        ResolveContentKinds,
+    TheoryAtomizerWithContentKinds AtomizeWithContentKinds,
     bool EmitsClausePlans = false);
 
 internal static class AtomizerRegistry
@@ -32,32 +36,32 @@ internal static class AtomizerRegistry
                 GenericId,
                 new AtomizerRegistration(
                     GenericAtomizer.Atomize,
-                    GenericAtomizer.ResolveContentKinds))
+                    GenericAtomizer.AtomizeWithContentKinds))
             .Add(
                 ConeId,
-                new AtomizerRegistration(ConeAtomizer.Atomize, ConeAtomizer.ResolveContentKinds))
+                new AtomizerRegistration(ConeAtomizer.Atomize, ConeAtomizer.AtomizeWithContentKinds))
             .Add(
                 GictId,
-                new AtomizerRegistration(GictAtomizer.Atomize, GictAtomizer.ResolveContentKinds))
+                new AtomizerRegistration(GictAtomizer.Atomize, GictAtomizer.AtomizeWithContentKinds))
             .Add(
                 ObserverId,
                 new AtomizerRegistration(
                     ObserverAtomizer.Atomize,
-                    ObserverAtomizer.ResolveContentKinds))
+                    ObserverAtomizer.AtomizeWithContentKinds))
             .Add(
                 PeriodicTreeId,
                 new AtomizerRegistration(
                     PeriodicTreeAtomizer.Atomize,
-                    PeriodicTreeAtomizer.ResolveContentKinds))
+                    PeriodicTreeAtomizer.AtomizeWithContentKinds))
             .Add(
                 PzgId,
                 new AtomizerRegistration(
                     PzgAtomizer.Atomize,
-                    PzgAtomizer.ResolveContentKinds,
+                    PzgAtomizer.AtomizeWithContentKinds,
                     EmitsClausePlans: true))
             .Add(
                 WmId,
-                new AtomizerRegistration(WmAtomizer.Atomize, WmAtomizer.ResolveContentKinds));
+                new AtomizerRegistration(WmAtomizer.Atomize, WmAtomizer.AtomizeWithContentKinds));
 
     internal static ImmutableArray<string> RegisteredIds { get; } =
         Atomizers.Keys.Order(StringComparer.Ordinal).ToImmutableArray();
@@ -81,8 +85,12 @@ internal static class AtomizerRegistry
     internal static ImmutableDictionary<string, string> ResolveContentKinds(
         string id,
         ReadOnlySpan<byte> bytes,
-        TheoryAtomizerRules rules) =>
-        Require(id).ResolveContentKinds(bytes.ToArray(), rules);
+        TheoryAtomizerRules rules)
+    {
+        var kinds = new Dictionary<string, string>(StringComparer.Ordinal);
+        Require(id).AtomizeWithContentKinds(bytes, rules, kinds);
+        return kinds.ToImmutableDictionary(StringComparer.Ordinal);
+    }
 
     /// <summary>
     /// A dialect declared in atomizer data rather than registered in code. Its identity is
@@ -102,10 +110,12 @@ internal static class AtomizerRegistry
             : IsDeclaredDialect(id)
                 ? new AtomizerRegistration(
                     (bytes, rules) => DeclaredDialectAtomizer.Atomize(id, bytes, rules),
-                    (bytes, rules) => DeclaredDialectAtomizer.ResolveContentKinds(
-                        id,
-                        bytes,
-                        rules))
+                    (bytes, rules, contentKinds) =>
+                        DeclaredDialectAtomizer.AtomizeWithContentKinds(
+                            id,
+                            bytes,
+                            rules,
+                            contentKinds))
                 : throw Unknown(id);
 
     internal static ImmutableDictionary<string, string> CaptureContentKinds(
