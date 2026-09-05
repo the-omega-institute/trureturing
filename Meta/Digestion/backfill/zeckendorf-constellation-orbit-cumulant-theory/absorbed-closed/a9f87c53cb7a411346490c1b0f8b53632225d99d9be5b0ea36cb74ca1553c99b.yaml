@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:a9f87c53cb7a411346490c1b0f8b53632225d99d9be5b0ea36cb74ca1553c99b
+  normalized_sha256: sha256:a9f87c53cb7a411346490c1b0f8b53632225d99d9be5b0ea36cb74ca1553c99b
+cas_ref: sha256:a9f87c53cb7a411346490c1b0f8b53632225d99d9be5b0ea36cb74ca1553c99b
+coverage_gids:
+  - gid: D5/S3/Observer/ArithmeticTomography/FinitePrimeEvenDefect.finite_prime_even_defect_eq_zero_iff
+    target_statement_id: sha256:2f86e31b5738f027ba2da8745b55488191363df5644d8a3e58fa758653da11e5
+receipts:
+  scribe:
+    - gid: D5/S3/Observer/ArithmeticTomography/FinitePrimeEvenDefect.finite_prime_even_defect_eq_zero_iff
+      definition_sha256: sha256:12f09ad570a3fb2982fa0f8f39cda9b2498036d792b6ce2d36a1e588d9308b39
+      emission_sha256: sha256:863edd9a47a36a13bac06e818f6929680a01f75ac05c8209f75063ae71f442f9
+  unresolved_subitems: []
