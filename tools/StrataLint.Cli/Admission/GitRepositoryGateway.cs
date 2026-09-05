@@ -134,7 +134,9 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
                 "protected base equals clean candidate HEAD; history comparison would be vacuous");
         }
 
-        return new PreparedRepository(revision, ReadChanges(revision));
+        return new PreparedRepository(
+            revision,
+            RawChangeSet.CreateWithKinds(ReadRawChanges(revision)));
     }
 
     public RawChangeSet ReadCurrentChanges()
@@ -143,7 +145,14 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
         return ReadChanges(head);
     }
 
-    public RawChangeSet ReadChanges(string revision)
+    // The working-tree delta for digestion and ledger readers. A copy source is reported by
+    // git for provenance only: its working-tree bytes are unchanged, so it is not a change here.
+    // Prepare keeps the raw record because admission consumers classify Copied themselves.
+    public RawChangeSet ReadChanges(string revision) =>
+        RawChangeSet.CreateWithKinds(ReadRawChanges(revision)
+            .Where(static change => change.Kind != RawChangeKind.Copied));
+
+    private (string Path, RawChangeKind Kind)[] ReadRawChanges(string revision)
     {
         var changes = ParseChanges(GitBytes(
                 "diff",
@@ -162,7 +171,7 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
                 .First())
             .OrderBy(static change => change.Path, StringComparer.Ordinal)
             .ToArray();
-        return RawChangeSet.CreateWithKinds(changes);
+        return changes;
     }
 
     private static int ChangeKindPriority(RawChangeKind kind) => kind switch

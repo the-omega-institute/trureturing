@@ -1,0 +1,88 @@
+## 定理 37.1　相对钟速不确定性与位置宽度
+
+有
+
+$$
+\overline N=\frac{\kappa\ell_0}{c^2},
+$$
+
+$$
+\operatorname{Var}(N)
+=
+\frac{\kappa^2\sigma_\ell^2}{c^4},
+$$
+
+因而
+
+$$
+\boxed{
+\frac{\sqrt{\operatorname{Var}(N)}}{\overline N}
+=
+\frac{\sigma_\ell}{\ell_0}.
+}
+\tag{37.2}
+$$
+
+对于钟的能级差 \(\Delta E\)，约化相干因子为
+
+$$
+\boxed{
+\chi(T)
+=
+\int p(\ell)
+e^{-i\Delta E\,N(\ell)T/\hbar}\,d\ell.
+}
+\tag{37.3}
+$$
+
+若二阶矩存在，则
+
+$$
+\boxed{
+|\chi(T)|^2
+=
+1-
+\left(\frac{\Delta E\,T}{\hbar}\right)^2
+\frac{\kappa^2\sigma_\ell^2}{c^4}
++
+o(T^2).
+}
+\tag{37.4}
+$$
+
+### 证明
+
+前两式由 \(N\) 对 \(\ell\) 的线性关系得到。对位置自由度取偏迹，得到式（37.3）。
+
+最后对特征函数在零点展开：
+
+$$
+|\langle e^{-iaN}\rangle|^2
+=
+1-a^2\operatorname{Var}(N)+o(a^2),
+$$
+
+取 \(a=\Delta E T/\hbar\) 即得。∎
+
+### 一个重要细节
+
+在坐标 \(r\) 下，
+
+$$
+\frac{d\sqrt f}{dr}
+$$
+
+在非退化边界附近发散；但在径向固有距离 \(\ell\) 下，
+
+$$
+\frac{dN}{d\ell}\sim\frac{\kappa}{c^2}
+$$
+
+有限。
+
+所以，不能仅凭某个坐标导数发散，就宣布量子钟的绝对噪声必然无限大。
+
+真正困难的是：**当平均钟速趋近零时，要保持固定的相对精度，位置分布必须相应收窄。**
+
+---
+

@@ -1,0 +1,50 @@
+## 定义 3：不碰撞权重与有限多项式
+
+对 \(d\ge1\)，定义：
+
+$$
+\omega_{d,k}
+=
+\begin{cases}
+\dfrac{d(d-1)\cdots(d-k+1)}{d^k},
+&0\le k\le d,\\[2mm]
+0,&k>d.
+\end{cases}
+$$
+
+其中 \(\omega_{d,0}=1\)。
+
+定义：
+
+$$
+\boxed{
+P_d(v)=\sum_{k=0}^{d}\omega_{d,k}a_kv^k.
+}
+\tag{6}
+$$
+
+记：
+
+$$
+c_{d,k}=\omega_{d,k}a_k.
+$$
+
+于是：
+
+$$
+c_{d,0}=1,\qquad c_{d,k}>0\quad(1\le k\le d).
+$$
+
+特别地：
+
+$$
+\boxed{
+c_{d,1}=a_1,
+\qquad
+c_{d,2}=\frac{d-1}{d}a_2.
+}
+\tag{7}
+$$
+
+这里的有限化保留了实际的 \(a_k\)，只是按照规定权重组织前 \(d\) 阶关系，并没有把某些整数模式宣布为不存在。
+

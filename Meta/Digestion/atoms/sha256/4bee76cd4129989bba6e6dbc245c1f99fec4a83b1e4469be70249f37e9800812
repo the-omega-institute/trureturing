@@ -1,0 +1,39 @@
+### 证明
+
+首先，由 Cauchy–Schwarz：
+
+$$
+M_0^2
+=
+\left(\int 1\,d\omega\right)^2
+\le
+\left(\int(4+u)\,d\omega\right)
+\left(\int\frac{d\omega}{4+u}\right).
+$$
+
+所以：
+
+$$
+\Delta\ge\frac{M_0^2}{4M_0+M_1}.
+$$
+
+另一方面：
+
+$$
+\Delta
+=
+\frac{M_0}{4}
+-\frac14\int\frac{u}{4+u}\,d\omega.
+$$
+
+对正测度 \(u\,d\omega\) 再使用 Cauchy–Schwarz：
+
+$$
+M_1^2
+\le
+(4M_1+M_2)
+\int\frac{u}{4+u}\,d\omega.
+$$
+
+代回即得上界。证毕。
+

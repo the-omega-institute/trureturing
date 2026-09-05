@@ -1,0 +1,68 @@
+## 定理 17.1　有限谐振结构的涨落—响应关系
+
+有
+
+$$
+\boxed{
+C_\beta(t)
+=
+\sum_a
+\frac{\hbar}{2\nu_a}
+\coth\!\left(\frac{\beta\hbar\nu_a}{2}\right)
+W_a\cos(\nu_at).
+}
+\tag{17.1}
+$$
+
+并在分布意义下满足
+
+$$
+\boxed{
+S_\beta(\omega)
+=
+\hbar
+\coth\!\left(\frac{\beta\hbar\omega}{2}\right)
+\operatorname{Im}\chi(\omega+i0).
+}
+\tag{17.2}
+$$
+
+### 证明
+
+在正常模坐标中，
+
+$$
+H_{\mathrm G}
+=
+\sum_\alpha
+\frac12(p_\alpha^2+\nu_\alpha^2q_\alpha^2).
+$$
+
+单模热平衡关联为
+
+$$
+\frac12\langle\{q_\alpha(t),q_\alpha(0)\}\rangle_\beta
+=
+\frac{\hbar}{2\nu_\alpha}
+\coth\!\left(\frac{\beta\hbar\nu_\alpha}{2}\right)
+\cos(\nu_\alpha t).
+$$
+
+各模式相互独立，再按 \(B\) 投影，得到式（17.1）。
+
+另一方面，
+
+$$
+\operatorname{Im}\chi(\omega+i0)
+=
+\frac\pi2
+\sum_a\frac{W_a}{\nu_a}
+\left[
+\delta(\omega-\nu_a)-\delta(\omega+\nu_a)
+\right].
+$$
+
+对式（17.1）作 Fourier 变换，并利用 \(\coth\) 为奇函数，即得式（17.2）。∎
+
+这是 Kubo 涨落—耗散关系在当前有限谐振、共轭接口模型中的直接实现。符号取决于驱动项及 Fourier 约定；本文已在式（11.3）—（11.7）固定这些约定。([Weizmann Institute of Science][3])
+

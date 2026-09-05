@@ -1,0 +1,127 @@
+## 定理 5：系数驱动的正链构造
+
+在 \(H_d^{\mathrm{str}}\) 下，可以仅由 \(c_1,\ldots,c_d\)，通过有限次四则运算、正平方根与线性方程求解，构造：
+
+$$
+w_1,\ldots,w_{2d-1}>0
+$$
+
+使：
+
+$$
+\boxed{P=C_w.}
+$$
+
+### 证明与构造
+
+定义线性泛函：
+
+$$
+\mathcal L(x^n)=s_n.
+$$
+
+在商空间：
+
+$$
+\mathcal V=\mathbb R[x]/(q)
+$$
+
+上，令：
+
+$$
+\langle f,g\rangle=\mathcal L(fg).
+$$
+
+由于 \(G_d>0\)，这是正内积。
+
+按 \(1,x,\ldots,x^{d-1}\) 的顺序正交化，得到首一正交多项式 \(p_j\)。记：
+
+$$
+h_j=\mathcal L(p_j^2)>0.
+$$
+
+乘以 \(x\) 在该基底中具有三对角形式：
+
+$$
+K=
+\begin{pmatrix}
+\alpha_0&\sqrt{\beta_1}&0&\cdots\\
+\sqrt{\beta_1}&\alpha_1&\sqrt{\beta_2}&\cdots\\
+0&\sqrt{\beta_2}&\alpha_2&\ddots\\
+\vdots&\vdots&\ddots&\ddots
+\end{pmatrix},
+$$
+
+其中：
+
+$$
+\boxed{
+\alpha_j=\frac{\mathcal L(xp_j^2)}{h_j},
+\qquad
+\beta_j=\frac{h_j}{h_{j-1}}>0.
+}
+\tag{18}
+$$
+
+三对角性来自：当 \(i<j-1\) 时，
+
+$$
+\langle xp_j,p_i\rangle
+=
+\langle p_j,xp_i\rangle=0.
+$$
+
+乘法算子的特征多项式就是 \(q\)，而定理 4 保证 \(q\) 的根全部为正，所以：
+
+$$
+K>0.
+$$
+
+这些正交多项式、矩行列式与 Jacobi 矩阵之间的公式是经典的。([DLMF][6])
+
+接着对这个正三对角矩阵作 Cholesky 分解。权重可以递归定义：
+
+$$
+\boxed{w_1=\alpha_0,}
+$$
+
+$$
+\boxed{
+w_{2j}=\frac{\beta_j}{w_{2j-1}},
+\qquad
+w_{2j+1}=\alpha_j-w_{2j},
+\quad1\le j<d.
+}
+\tag{19}
+$$
+
+正定性保证每个 Cholesky 主元严格为正，因此全部权重严格为正。
+
+于是：
+
+$$
+K=L_wL_w^{\mathsf T},
+$$
+
+从而：
+
+$$
+P(v)
+=
+\det(I+vK)
+=
+\det(I+vL_w^{\mathsf T}L_w)
+=
+C_w(v).
+$$
+
+证毕。
+
+### 重根情形不能直接套这套除法
+
+若 \(G_d\succeq0\) 但不严格正定，某些正交化分母会为零。这不一定是 RH 反例，可能只是有限多项式有重根。
+
+此时定理 4 仍成立，但可能需要断开的链、平方自由分解及显式保留重数。不能把退化方向直接删除以后，再声称特征行列式及重数都没有改变。
+
+---
+

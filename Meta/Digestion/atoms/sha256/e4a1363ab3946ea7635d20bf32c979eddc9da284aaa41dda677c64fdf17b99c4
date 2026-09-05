@@ -1,0 +1,58 @@
+## 定理 17.3　固定响应与谱隙下的涨落下界
+
+令
+
+$$
+V_\beta=C_\beta(0),
+$$
+
+并设所有被当前接口看见的模式满足
+
+$$
+\nu_a\ge\nu_*>0.
+$$
+
+则
+
+$$
+\boxed{
+V_\beta\ge\beta^{-1}\chi(0),
+}
+\tag{17.5}
+$$
+
+以及
+
+$$
+\boxed{
+V_\beta\ge
+\frac{\hbar\nu_*}{2}\chi(0).
+}
+\tag{17.6}
+$$
+
+### 证明
+
+将协方差改写为
+
+$$
+V_\beta
+=
+\sum_a
+\left[
+\frac{\hbar\nu_a}{2}
+\coth\!\left(\frac{\beta\hbar\nu_a}{2}\right)
+\right]
+\frac{W_a}{\nu_a^2}.
+$$
+
+对 \(x>0\)，有
+
+$$
+x\coth x\ge1,
+\qquad
+\coth x\ge1.
+$$
+
+于是方括号中的系数分别不小于 \(\beta^{-1}\) 和 \(\hbar\nu_*/2\)。每个 \(W_a\) 半正定，逐项求和即得。∎
+
