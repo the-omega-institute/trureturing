@@ -22,11 +22,19 @@ REPO="${1:-}"
 [ -d "$REPO/.git" ] || [ -f "$REPO/.git" ] || { echo "SCRIBE_GAP_BAD_REPO=$REPO" >&2; exit 65; }
 [ -d "$REPO/Golden/Frozen/state" ] || { echo "SCRIBE_GAP_NO_FROZEN_STATE=$REPO" >&2; exit 66; }
 [ -d "$REPO/Blueprint" ] || { echo "SCRIBE_GAP_NO_BLUEPRINT=$REPO" >&2; exit 67; }
-OUT="${2:-/dev/stdout}"
+# OUT 为空即写继承来的 stdout —— **不得**默认成 /dev/stdout。
+# 独立复审席 2026-09-06 实测:`scribe_gap.sh repo > out.txt` 时,`sort > /dev/stdout`
+# 重新打开该普通文件写入**不推进原 stdout 的文件偏移**,随后 `echo` 哨兵从原偏移覆盖名单,
+# 结果文件里只剩哨兵、黑名单全丢,而 exit 仍为 0 —— 又一条「成功哨兵盖住静默丢结果」。
+# 该缺陷在本器首版即存在,不是 find 修复引入的。
+OUT="${2:-}"
 cd "$REPO"
+# trap 必须先于 mktemp 注册:否则第二次 mktemp 失败时 errexit 会在注册前退出,遗留第一个临时文件。
+tmp=""
+states=""
+trap 'rm -f "$tmp" "$states"' EXIT
 tmp=$(mktemp)
 states=$(mktemp)
-trap 'rm -f "$tmp" "$states"' EXIT
 # find 的失败必须传回主流程。进程替换 `< <(find …)` 会把 find 的退出码丢在子 shell 里:
 # 遍历中途因不可读目录而失败时,循环照常正常结束,哨兵照常打印 SCRIBE_GAP_OK 且 exit=0
 # —— 那是器律④ 所禁的坏原材料(部分结果冒充完整结果)。
@@ -50,5 +58,9 @@ while IFS= read -r state; do
   fi
 done < "$states"
 [ "$frozen" -gt 0 ] || { echo "SCRIBE_GAP_EMPTY_FROZEN_STATE" >&2; exit 68; }
-sort -u "$tmp" > "$OUT"
+if [ -n "$OUT" ]; then
+  sort -u "$tmp" > "$OUT"
+else
+  sort -u "$tmp"
+fi
 echo "SCRIBE_GAP_OK frozen=$frozen missing=$missing"
