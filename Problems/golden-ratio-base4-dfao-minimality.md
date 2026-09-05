@@ -562,3 +562,189 @@ is either a smaller all-powers-correct machine or complete certified exclusion
 of machines with at most twenty states. The seven budget rectangles recorded
 above remain the relevant coupled lower-bound targets. All-integer distinguishing
 suffixes cannot replace the powers-only sample obligations in those targets.
+
+## 2026-09-06 structural continuation: one zero generator and exact response rank
+
+The target remains the minimum state count on the original power inputs. This
+continuation derives structural constraints on every slot candidate and an exact
+certificate for the already constructed reference machine. It does not increase
+the total-state lower bound 15, prove that the powers-only minimum is 21, or
+resolve the discrepancy with the paper's reported 22-state Walnut object.
+
+### Literature and the precise transfer being used
+
+Barnoff, Bright and Shallit, *Computing the base-b representation of quadratic
+irrationals using automata*, TCS 1071 (2026), 115843, distinguish all-integer
+correctness from correctness only on powers. Their incomplete-data minimization
+problem remains the target; no output on an arbitrary nonpower may be added to
+its lower-bound sample set. DOI: `10.1016/j.tcs.2026.115843`.
+
+Moradi, Rampersad and Shallit, *Complexity of Linear Subsequences of
+Fibonacci-Automatic Sequences*, arXiv:2603.21645v1, 23 March 2026, construct
+Fibonacci automata for arithmetic relations and give polynomial bounds for
+linear subsequences. Their explicit treatment of MSD-first input, leading-zero
+loops and omitted dead states is relevant to matching conventions. Their
+linear-subsequence result does not establish the exponential restriction
+`h(4^n)` or a minimality transfer to that restriction.
+Source: `https://arxiv.org/html/2603.21645v1`.
+
+Lacroce, Balle, Panangaden and Rabusseau, *Optimal approximate minimization of
+one-letter weighted finite automata*, MSCS, online 8 November 2024, volume 2025,
+provides the one-letter Hankel/realization setting. We use only the exact
+factorization principle, not an approximate singular-value bound. Linear rank
+is a necessary deterministic state-capacity constraint; arbitrary low-rank
+completion is not sufficient for a deterministic typed machine.
+DOI: `10.1017/S0960129524000276`.
+
+Dumitru, Yoshinaka and Shinohara, *Learning deterministic finite-state machines
+from the prefixes of a single string is NP-complete*, arXiv:2601.12621v1,
+18 January 2026, explains why a generic prefix-tree presentation does not itself
+make exact identification easy. This result is not a hardness proof for the
+single fixed golden-ratio instance.
+Source: `https://arxiv.org/html/2601.12621v1`.
+
+The repository already has the general linear-system result in
+`D5/S3/Observer/Hankel/HankelRankMinimality.lean` and its reachable-observable
+minimal-realization companion. The new source supplies the deterministic slot
+bridge; it reuses `Skeleton`, `SlotWitness`, upstream iterates, `Matrix.mul`, and
+`Matrix.rank`. It introduces no alternate DFAO, run semantics, or rank definition.
+
+### Every gap length uses the same zero map
+
+For an existing `SlotWitness`, write
+
+\[
+A:R\to R,\qquad B:R\to T,\qquad C:T\to R,
+\]
+
+for `zeroTarget`, `slotOf`, and `returnTarget`. Let `F` be the recurrent digit
+output and `G` the transient digit output. Starting in transient slot `t`, the
+word `0^(k+1)1` selects
+
+\[
+\boxed{H_{k+1}(t)=B(A^k(C(t))).}
+\]
+
+Thus separate gap lengths cannot be chosen independently in a genuine machine.
+The old three-slot refutation allowed such independence as a relaxation, which
+was sound for that exclusion but lost this shared-generator structure.
+
+`evalFrom_zero_prefix` proves the equation for every continuation using the
+existing Option-valued block evaluation. `evalFrom_one_zero_gap` then identifies
+the original evaluation of `10 0^k 1` with
+`G(B(A^k(C(B(q)))))`. The source takes the existing serialization equations as
+its only machine interface. No ordinary self-loop or unused capacity is removed.
+
+### Joint responses factor through the actual recurrent carrier
+
+A probe asks either whether the current output equals a specified digit, or
+whether the next one edge selects a specified transient slot. Its value is the
+rational indicator 0 or 1. The slot probe is latent structural information for
+an unknown candidate; it is not an externally known digit label.
+
+Choose row origins `q_i`, row delays `a_i`, column delays `b_j`, and probes `p_j`.
+The sampled response is
+
+\[
+H_{ij}=p_j(A^{a_i+b_j}(q_i)).
+\]
+
+Define
+
+\[
+L_{iq}=\mathbf1_{A^{a_i}(q_i)=q},
+\qquad U_{qj}=p_j(A^{b_j}(q)).
+\]
+
+The unique intermediate state and the iterate-addition identity give
+
+\[
+\boxed{H=LU,\qquad \operatorname{rank}_{\mathbb Q}H\le |R|.}
+\]
+
+Here `|R|` is the number of recurrent states. The Lean names are
+`response_factorization` and `response_rank_le`. Every square sampled response
+of order greater than the recurrent capacity has determinant zero, proved as
+`response_det_eq_zero`. A right inverse supplies an exact finite rank certificate
+through `capacity_ge_of_right_inverse`. These are algebraic consequences of the
+actual transition system, so they require no additional symmetry-breaking premise.
+
+### A concrete unimodular reference certificate
+
+`GoldenBase4ZeroResponse.lean` reads the outputs of
+`GoldenBase4IntervalMachine.machine` directly. Three finite table equalities
+identify its zero rows, one-edge selectors, and transient returns with the
+existing machine. Its explicit `SlotWitness` has fourteen recurrent positions
+and seven transient slots.
+
+Row access from the start or a named return, followed by a finite zero delay,
+exhausts all fourteen recurrent states. Joint probes at depths zero through
+three contain a 14 by 14 submatrix `profileMinor`. The source supplies an
+integer-valued matrix `profileInverse` and a finite proof body for
+
+\[
+\operatorname{profileMinor}\,\operatorname{profileInverse}=I_{14}.
+\]
+
+This establishes the source theorem `profile_rank_fourteen`. The executable
+checker additionally verifies the reverse product and determinant -1. The ranks
+of the full joint response through one, two, three and four zero-depth levels
+are respectively `9,12,13,14`. These are exact rational ranks.
+
+Consequently, any deterministic slot realization of this same labelled profile
+requires at least fourteen recurrent states. This scope is explicit in
+`same_profile_recurrent_lower_bound`. Slot labels may be renamed consistently,
+but arbitrary powers-correct candidates are not required to have this profile.
+
+### The remaining arithmetic requirement
+
+The reference rank certificate must not be substituted for a powers-only lower
+bound. In particular, copying the reference slot readouts or its unconstrained
+nonpower outputs into an unknown candidate would assume information that the
+original task does not specify.
+
+A valid application to the remaining capacity cases must keep these entries
+as unknowns, impose the exact observed power labels and shared transition
+equations, and prove that every compatible completion violates the relevant
+rank bound or another necessary deterministic constraint. Low rank alone does
+not certify existence of a deterministic machine. The one-hot state and slot
+conditions, type restrictions, common shift action, and signature budget remain
+part of the problem. The current source proves the necessary rank constraints;
+it does not prove that all compatible completions have rank fourteen.
+
+The seven previously recorded budget-20 cases therefore remain unrefuted in
+this continuation. A reference-profile rigidity result is useful for designing
+structural exclusions, but it is stronger data than the powers-only task supplies.
+
+### Executed checks and source status
+
+The two new Lean modules are
+`D5/S0/Certificates/SkeletonSlotZeroResponse.lean` and
+`D5/S1/Digit/GoldenBase4ZeroResponse.lean`. Each has a Scribe companion covering
+all its public declarations. There are fourteen theorem declarations in total.
+No new axioms, `sorry`, or admitted claims are used. The proof scripts have been
+logically reviewed but have not been elaborated or kernel-checked in this
+session; inherited source dependencies are not newly certified here.
+
+The standard-library-only checker reads the original and new Lean table
+literals. It verifies both inverse products, all row accesses, probe metadata,
+and the exact determinant. Across 1,164 small slot tables it checks 122,724
+factorization entries, 129,696 zero-prefix evaluation equations, and 9,264
+gap-evaluation equations. The set includes 876 models with zero self-loops,
+520 with unused slots, and 260 with duplicate output-return pairs. Four altered
+return, probe, origin and inverse cases are rejected. These executed checks do
+not replace the general Lean proof or establish a new powers-only bound.
+
+Reproduce from a checkout with
+
+```sh
+python Evidence/D5/Automata/GoldenBase4/check_zero_response.py .
+```
+
+The exact minor, inverse and measured results are retained in
+`zero_response_minor14.json` and `zero_response_validation.json` in the same
+Evidence directory. The generic Hankel factorization is established mathematics;
+no priority claim is made for it. The contributions here are its source-level
+transport from the existing typed slot semantics, the explicit exact reference
+certificate, and the precise separation between latent completion variables
+and the arithmetic observations allowed by the original open problem.
