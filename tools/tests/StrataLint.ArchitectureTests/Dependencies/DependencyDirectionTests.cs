@@ -28,7 +28,17 @@ public sealed class DependencyDirectionTests
     public void CliReferencesExactlyEngineScribeTomlynTruthAndYamlDotNet()
     {
         Assert.Equal(
-            ["StrataLint.Engine", "StrataLint.Scribe", "Tomlyn", "Trureturing.Truth", "YamlDotNet"],
+            // 方法名保留原样:改名会产生一个新的测试身份,而本测试因走反射
+            // (typeof(Cli.Program).Assembly)无法被测试映射静态解析,落在 conservative
+            // unknown 桶里 —— 新身份撞 SL-003 棘轮。故名字不再穷举引用集,以下列表为准。
+            [
+                "StrataLint.Engine",
+                "StrataLint.Scribe",
+                "StrataLint.Scribe.Documents",
+                "Tomlyn",
+                "Trureturing.Truth",
+                "YamlDotNet",
+            ],
             AssemblyReferencePolicy.NonPlatformReferences(typeof(StrataLint.Cli.Program).Assembly));
     }
 

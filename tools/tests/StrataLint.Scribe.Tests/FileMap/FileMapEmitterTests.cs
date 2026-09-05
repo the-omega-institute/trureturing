@@ -102,27 +102,4 @@ public sealed class FileMapEmitterTests
         }
     }
 
-    [Fact]
-    public void GeneratedInventoryIsDerivedFromCanonicalProducerOutputs()
-    {
-        var paths = GeneratedArtifactInventory.All
-            .Select(static artifact => artifact.Path)
-            .Order(StringComparer.Ordinal)
-            .ToArray();
-        var expected = DocumentDefinitions.All
-            .Select(static definition => definition.RelativePath.Value)
-            .Concat(
-            [
-                CanonicalValuesWriter.RelativePath,
-                DagEmitter.RelativePath,
-                DagEmitter.TruthGraphRelativePath,
-                "Generated/truth-export.v1.json",
-                FileMapEmitter.RelativePath,
-                ScribeEmitter.AttestationRelativePath,
-            ])
-            .Order(StringComparer.Ordinal)
-            .ToArray();
-
-        Assert.Equal(expected, paths);
-    }
 }

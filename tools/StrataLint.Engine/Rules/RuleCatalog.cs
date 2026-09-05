@@ -129,19 +129,22 @@ public sealed class RuleCatalog
 
     internal RuleExecutionOutcome Execute(
         RuleEvaluationContext context,
-        RuleEvaluationMeasure? measureRule = null) =>
-        ExecuteInOrder(context, ExecutionOrder, measureRule);
+        RuleEvaluationMeasure? measureRule = null,
+        RuleApplicabilityMeasure? measureApplicability = null) =>
+        ExecuteInOrder(context, ExecutionOrder, measureRule, measureApplicability);
 
     internal RuleExecutionOutcome ExecuteInOrderForTesting(
         RuleEvaluationContext context,
         ImmutableArray<RuleId> executionOrder,
-        RuleEvaluationMeasure? measureRule = null) =>
-        ExecuteInOrder(context, executionOrder, measureRule);
+        RuleEvaluationMeasure? measureRule = null,
+        RuleApplicabilityMeasure? measureApplicability = null) =>
+        ExecuteInOrder(context, executionOrder, measureRule, measureApplicability);
 
     private RuleExecutionOutcome ExecuteInOrder(
         RuleEvaluationContext context,
         ImmutableArray<RuleId> executionOrder,
-        RuleEvaluationMeasure? measureRule)
+        RuleEvaluationMeasure? measureRule,
+        RuleApplicabilityMeasure? measureApplicability)
     {
         try
         {
@@ -206,7 +209,11 @@ public sealed class RuleCatalog
             {
                 var registration = RegistrationFor(ruleId);
                 var descriptor = registration.Descriptor;
-                if (!context.RuleImplementationChanged && !registration.Rule.IsAffectedBy(context))
+                var isAffected = context.RuleImplementationChanged
+                    || (measureApplicability is null
+                        ? registration.Rule.IsAffectedBy(context)
+                        : measureApplicability(() => registration.Rule.IsAffectedBy(context)));
+                if (!isAffected)
                 {
                     skipped.Add(descriptor.Id);
                     continue;

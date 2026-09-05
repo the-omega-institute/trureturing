@@ -14,6 +14,79 @@ internal sealed record BackfillInventoryValidationContext(
     RawChangeSet? CasChanges = null,
     RawChangeSet? ProjectedStatusChanges = null);
 
+internal sealed class BackfillCandidateDeltaSession
+{
+    private readonly RepositorySnapshot current;
+    private readonly RepositorySnapshot baseline;
+    private readonly ImmutableArray<(string Path, RawChangeKind Kind)> initialChangeKey;
+    private readonly Lazy<BackfillInventoryDocument> initialDocument;
+    private int loadCount;
+
+    internal BackfillCandidateDeltaSession(
+        RepositorySnapshot current,
+        RepositorySnapshot baseline,
+        RawChangeSet initialChanges)
+    {
+        this.current = current ?? throw new ArgumentNullException(nameof(current));
+        this.baseline = baseline ?? throw new ArgumentNullException(nameof(baseline));
+        ArgumentNullException.ThrowIfNull(initialChanges);
+        initialChangeKey = ChangeKey(initialChanges);
+        initialDocument = new Lazy<BackfillInventoryDocument>(() => Load(initialChanges));
+    }
+
+    internal int LoadCount => loadCount;
+
+    internal BackfillInventoryDocument GetDocument(RawChangeSet changes)
+    {
+        ArgumentNullException.ThrowIfNull(changes);
+        var requestedChangeKey = ChangeKey(changes);
+        return initialChangeKey.SequenceEqual(requestedChangeKey)
+            || HasEquivalentBackfillSelection(requestedChangeKey)
+                ? initialDocument.Value
+                : Load(changes);
+    }
+
+    private BackfillInventoryDocument Load(RawChangeSet changes)
+    {
+        loadCount++;
+        return BackfillInventoryLoader.LoadCandidateDelta(current, baseline, changes);
+    }
+
+    private bool HasEquivalentBackfillSelection(
+        ImmutableArray<(string Path, RawChangeKind Kind)> requestedChangeKey)
+    {
+        var differingPaths = initialChangeKey
+            .Select(static change => change.Path)
+            .Where(BackfillInventoryLoader.IsCanonicalPath)
+            .ToHashSet(StringComparer.Ordinal);
+        differingPaths.SymmetricExceptWith(requestedChangeKey
+            .Select(static change => change.Path)
+            .Where(BackfillInventoryLoader.IsCanonicalPath));
+        return differingPaths.All(CandidateAndBaselineBytesMatch);
+    }
+
+    private bool CandidateAndBaselineBytesMatch(string path)
+    {
+        _ = current.TryGetFile(path, out var candidateFile);
+        _ = baseline.TryGetFile(path, out var baselineFile);
+        return (candidateFile, baselineFile) switch
+        {
+            (null, null) => true,
+            ({ } candidateValue, { } baselineValue) =>
+                candidateValue.RawBytes.AsSpan().SequenceEqual(baselineValue.RawBytes.AsSpan()),
+            _ => false,
+        };
+    }
+
+    private static ImmutableArray<(string Path, RawChangeKind Kind)> ChangeKey(
+        RawChangeSet changes) =>
+        changes.Entries
+            .Select(static change => (change.Path.Value, change.Kind))
+            .OrderBy(static change => change.Value, StringComparer.Ordinal)
+            .ThenBy(static change => change.Kind)
+            .ToImmutableArray();
+}
+
 internal static class BackfillInventoryRule
 {
     private const string BackfillPath = BackfillInventoryLoader.RelativePath;
@@ -63,10 +136,7 @@ internal static class BackfillInventoryRule
             return true;
         }
 
-        var document = BackfillInventoryLoader.LoadCandidateDelta(
-            context.Current,
-            context.Baseline,
-            context.Changes);
+        var document = context.BackfillCandidateDeltaSession.GetDocument(context.Changes);
         return BackfillDeltaImpactResolver.HasPotentialStatementDependants(
             document,
             context.Changes);
@@ -84,10 +154,7 @@ internal static class BackfillInventoryRule
         {
             document = changes is null
                 ? BackfillInventoryLoader.Load(context.Current)
-                : BackfillInventoryLoader.LoadCandidateDelta(
-                    context.Current,
-                    context.Baseline,
-                    changes);
+                : context.BackfillCandidateDeltaSession.GetDocument(changes);
             if (changes is not null)
             {
                 var impact = BackfillDeltaImpactResolver.Resolve(
@@ -102,10 +169,7 @@ internal static class BackfillInventoryRule
                     .Select(static path => path.Value)
                     .ToHashSet(StringComparer.Ordinal);
                 isBaseFactAffected = affectedPaths.Contains;
-                document = BackfillInventoryLoader.LoadCandidateDelta(
-                    context.Current,
-                    context.Baseline,
-                    evaluationChanges);
+                document = context.BackfillCandidateDeltaSession.GetDocument(evaluationChanges);
             }
         }
         catch (FormatException exception)

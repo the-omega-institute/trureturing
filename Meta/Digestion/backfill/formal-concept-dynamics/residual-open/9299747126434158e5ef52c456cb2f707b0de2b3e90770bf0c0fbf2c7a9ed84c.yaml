@@ -6,3 +6,7 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Whole-clause guard for `* 交叉审计；`. The source supplies no auditor family, cross-audit operator, acceptance rule, or relation to its report `R` and true-event readout `O`. D5 search found `MinimumAuditSetCover`, whose public theorem characterizes target-complete test suites as covers of a target defect relation, and `OutcomeCorrectnessWithoutProcedureAudit`, which separates outcome correctness from procedure auditability; neither states cross-audit validation of `R` against `O`. The pinned Mathlib search for cross/independent audit and auditor exited 1. GitHub Lean code search for `cross audit` exited 0 with one unrelated certificate comment. Local probe `/private/tmp/w73e36-atom1-probe.lean` exited 0 with a cross-audit readout equal to `O` while `R x ≠ O x`, so a bare audit carrier does not formalize the listed remedy."
+    reentry_condition: "Specify typed auditors, their cross-check rule, and an acceptance semantics, then freeze a public theorem connecting accepted cross-audit evidence to agreement between the submitted report and true-event readout."
+    blocker_class: multi-clause-guard

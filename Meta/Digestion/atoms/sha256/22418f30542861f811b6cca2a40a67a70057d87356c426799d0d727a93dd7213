@@ -1,0 +1,2 @@
+**候签定理 4.102(错排数的奇偶律与精确二进赋值)**〔open;落 `D5/S3/Arith/DerangementTwoAdicValuation`;新推导,`FromRepo`,Describe 以文献注引 Sun 2025(OEIS A000166)与 Miska 2016 为语境〕。以 Mathlib 的 `numDerangements` 记 D_n。则:(i) 对任意 n,`Odd (numDerangements n) ↔ Even n`;(ii) 对任意 n ≥ 2,`padicValNat 2 (numDerangements n) = padicValNat 2 (n − 1)`;(iii) 对任意 n ≥ 2 与 b k : ℕ,若 `numDerangements n = b ^ k`,则 `k ∣ padicValNat 2 (n − 1)`(统一覆盖 b = 0,因 Mathlib 约定 `padicValNat 2 0 = 0`)。
+
