@@ -369,6 +369,7 @@ internal static class UtilityDeclarationValidator
         }
 
         BackfillInventoryDocument? backfill = null;
+        DigestionLedgerEntry? atomTarget = null;
         var softTarget = declaration.BasisTarget;
         if (softTarget is { Kind: UtilityTargetKind.Atom or UtilityTargetKind.Task })
         {
@@ -384,15 +385,35 @@ internal static class UtilityDeclarationValidator
                     "reason=backfill-load-failed");
             }
 
-            var targetExists = softTarget.Kind switch
+            if (softTarget.Kind is UtilityTargetKind.Atom)
             {
-                UtilityTargetKind.Atom => backfill.RequireDigestionEntries()
-                    .Any(entry => string.Equals(entry.AtomId, softTarget.Value, StringComparison.Ordinal)),
-                UtilityTargetKind.Task => backfill.RequireTickets()
-                    .Any(ticket => string.Equals(ticket.CaseId, softTarget.Value, StringComparison.Ordinal)),
-                _ => true,
-            };
-            if (!targetExists)
+                var matches = backfill.RequireDigestionEntries()
+                    .Where(entry => string.Equals(
+                        entry.AtomId,
+                        softTarget.Value,
+                        StringComparison.Ordinal))
+                    .ToArray();
+                switch (matches)
+                {
+                    case []:
+                        return Failure(
+                            declaration,
+                            UtilityValidationFailure.TargetDangling,
+                            $"target={TargetDisplay(softTarget)}");
+                    case [var only]:
+                        atomTarget = only;
+                        break;
+                    default:
+                        return Failure(
+                            declaration,
+                            UtilityValidationFailure.InputUnknown,
+                            $"reason=ambiguous-atom-target:{softTarget.Value}");
+                }
+            }
+            else if (!backfill.RequireTickets().Any(ticket => string.Equals(
+                         ticket.CaseId,
+                         softTarget.Value,
+                         StringComparison.Ordinal)))
             {
                 return Failure(
                     declaration,
@@ -409,8 +430,7 @@ internal static class UtilityDeclarationValidator
         if (declaration.BasisKind is UtilityBasisKind.Refutes
             && softTarget is { Kind: UtilityTargetKind.Atom }
             && !HasExactCoverage(
-                backfill!.RequireDigestionEntries().Single(entry =>
-                    string.Equals(entry.AtomId, softTarget.Value, StringComparison.Ordinal)),
+                atomTarget!,
                 modulePath,
                 moduleReport!))
         {
@@ -659,7 +679,7 @@ internal static class UtilityAdmissionRule
         UtilityDeclaration? declaration)
     {
         var declaredFields = declaration is null
-            ? "kind=unparsed"
+            ? "kind=unparsed basis=n/a target=n/a"
             : $"kind={KindDisplay(declaration.Kind)} "
                 + $"basis={BasisDisplay(declaration.BasisKind)} "
                 + $"target={BasisTargetDisplay(declaration)}";

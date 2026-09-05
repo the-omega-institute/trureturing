@@ -237,6 +237,43 @@ public sealed class DepositHeaderUtilityTests
     }
 
     [Fact]
+    public void AmbiguousAtomTargetClassifiedConsistentlyAcrossPhases()
+    {
+        var fixture = new RuleFixture();
+        AddUtility(
+            fixture,
+            $"kind=bounded-enumeration; basis=refutes=atom:{RuleFixture.FixtureAtomId}");
+        fixture.Files[RuleFixture.FixtureBackfillAtomPath.Replace(
+            "/partial-open/",
+            "/residual-open/",
+            StringComparison.Ordinal)] = fixture.Files[RuleFixture.FixtureBackfillAtomPath];
+        var source = new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports));
+
+        var preDeposit = Run(fixture, source);
+        var statePath = FrozenStatePath.FromModulePath(
+            RepoPath.CreateKnown(RuleFixture.RingPath)).Value;
+        fixture.Files[statePath] =
+            "{\"statement_id\":\"sha256:0000000000000000000000000000000000000000000000000000000000000000\"}\n";
+        var firstFreeze = RuleCatalog.Default.EvaluateSingle(
+            RuleId.CreateKnown(30),
+            fixture.Build(RawChangeSet.CreateWithKinds(
+                [(statePath, RawChangeKind.Added)]))).Diagnostics;
+
+        Assert.Equal(1, preDeposit.ExitCode);
+        Assert.Equal(
+            $"DEPOSIT_HEADER_UTILITY_INPUT_UNKNOWN module={RuleFixture.RingPath} "
+            + $"reason=ambiguous-atom-target:{RuleFixture.FixtureAtomId}\n",
+            preDeposit.Output);
+        var firstFreezeBlock = Assert.Single(
+            firstFreeze,
+            diagnostic => diagnostic.AdmissionEffect is AdmissionEffect.Block);
+        Assert.Equal(
+            $"UTILITY-INPUT-UNKNOWN module={RuleFixture.RingPath} "
+            + $"reason=ambiguous-atom-target:{RuleFixture.FixtureAtomId}",
+            firstFreezeBlock.Message);
+    }
+
+    [Fact]
     public void DepositHeaderCheckDoesNotRequireConsumerImportPath()
     {
         var fixture = new RuleFixture();

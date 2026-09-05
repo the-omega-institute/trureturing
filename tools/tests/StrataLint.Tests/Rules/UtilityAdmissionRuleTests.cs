@@ -9,16 +9,10 @@ public sealed class UtilityAdmissionRuleTests
     [Fact]
     public void FirstFreezeWithoutUtilityIsBlocked()
     {
-        var diagnostic = Assert.Single(
+        AssertBlockedObservationPair(
             EvaluateFirstFreeze(utility: null),
-            item => item.AdmissionEffect is AdmissionEffect.Block);
-
-        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
-        Assert.Equal(RuleFixture.RingPath, diagnostic.Path);
-        Assert.Contains(
-            $"UTILITY-MISSING module={RuleFixture.RingPath}",
-            diagnostic.Message,
-            StringComparison.Ordinal);
+            "UTILITY-MISSING",
+            "kind=unparsed basis=n/a target=n/a");
     }
 
     [Fact]
@@ -35,7 +29,22 @@ public sealed class UtilityAdmissionRuleTests
             (
                 Diagnostics: EvaluateFirstFreeze(utility: null),
                 BlockCode: "UTILITY-MISSING",
-                ObservationFields: "kind=unparsed"),
+                ObservationFields: "kind=unparsed basis=n/a target=n/a"),
+            (
+                Diagnostics: EvaluateFirstFreeze(
+                    "kind=certified-instance; basis=terminal=task:D5-T0001; role=answer"),
+                BlockCode: "UTILITY-SYNTAX",
+                ObservationFields: "kind=unparsed basis=n/a target=n/a"),
+            (
+                Diagnostics: EvaluateFirstFreeze(
+                    "kind=checker; basis=terminal=task:D5-T0001"),
+                BlockCode: "UTILITY-INSTANCE-MISSING",
+                ObservationFields: "kind=unparsed basis=n/a target=n/a"),
+            (
+                Diagnostics: EvaluateFirstFreeze(
+                    "kind=numeric-reduction; basis=consumer=D5/S0/Carrier/Ring.goldenRing"),
+                BlockCode: "UTILITY-PREMISES-MISSING",
+                ObservationFields: "kind=unparsed basis=n/a target=n/a"),
             (
                 Diagnostics: EvaluateFirstFreeze(
                     "kind=certified-instance; basis=consumer=D5/S0/Carrier/Ring.missing"),
@@ -75,60 +84,40 @@ public sealed class UtilityAdmissionRuleTests
     [Fact]
     public void UnknownUtilityRoleIsRejected()
     {
-        var diagnostic = Assert.Single(
+        AssertBlockedObservationPair(
             EvaluateFirstFreeze(
                 "kind=certified-instance; basis=terminal=task:D5-T0001; role=answer"),
-            item => item.AdmissionEffect is AdmissionEffect.Block);
-
-        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
-        Assert.Contains(
-            $"UTILITY-SYNTAX module={RuleFixture.RingPath}",
-            diagnostic.Message,
-            StringComparison.Ordinal);
+            "UTILITY-SYNTAX",
+            "kind=unparsed basis=n/a target=n/a");
     }
 
     [Fact]
     public void PendingConsumerIsRejected()
     {
-        var diagnostic = Assert.Single(
+        AssertBlockedObservationPair(
             EvaluateFirstFreeze(
                 "kind=certified-instance; basis=pending-consumer=D5/S0/Carrier/Ring.goldenRing"),
-            item => item.AdmissionEffect is AdmissionEffect.Block);
-
-        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
-        Assert.Contains(
-            $"UTILITY-SYNTAX module={RuleFixture.RingPath}",
-            diagnostic.Message,
-            StringComparison.Ordinal);
+            "UTILITY-SYNTAX",
+            "kind=unparsed basis=n/a target=n/a");
     }
 
     [Fact]
     public void CheckerWithoutInstanceIsBlocked()
     {
-        var diagnostic = Assert.Single(
+        AssertBlockedObservationPair(
             EvaluateFirstFreeze("kind=checker; basis=terminal=task:D5-T0001"),
-            item => item.AdmissionEffect is AdmissionEffect.Block);
-
-        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
-        Assert.Contains(
-            $"UTILITY-INSTANCE-MISSING module={RuleFixture.RingPath}",
-            diagnostic.Message,
-            StringComparison.Ordinal);
+            "UTILITY-INSTANCE-MISSING",
+            "kind=unparsed basis=n/a target=n/a");
     }
 
     [Fact]
     public void ReductionWithoutPremisesIsBlocked()
     {
-        var diagnostic = Assert.Single(
+        AssertBlockedObservationPair(
             EvaluateFirstFreeze(
                 "kind=numeric-reduction; basis=consumer=D5/S0/Carrier/Ring.goldenRing"),
-            item => item.AdmissionEffect is AdmissionEffect.Block);
-
-        Assert.Equal(AdmissionEffect.Block, diagnostic.AdmissionEffect);
-        Assert.Contains(
-            $"UTILITY-PREMISES-MISSING module={RuleFixture.RingPath}",
-            diagnostic.Message,
-            StringComparison.Ordinal);
+            "UTILITY-PREMISES-MISSING",
+            "kind=unparsed basis=n/a target=n/a");
     }
 
     [Fact]
@@ -519,6 +508,99 @@ public sealed class UtilityAdmissionRuleTests
                     $"UTILITY-INPUT-UNKNOWN module={malformedState} "
                     + "reason=invalid-frozen-state-path",
                     StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void DuplicateAtomTargetIsInputUnknownNotInfrastructureFailure()
+    {
+        var fixture = AtomUtilityFixture(targetStatementId: null);
+        fixture.Files[RuleFixture.FixtureBackfillAtomPath.Replace(
+            "/partial-open/",
+            "/residual-open/",
+            StringComparison.Ordinal)] = fixture.Files[RuleFixture.FixtureBackfillAtomPath];
+        var statePath = FrozenStatePath.FromModulePath(
+            RepoPath.CreateKnown(RuleFixture.RingPath)).Value;
+        fixture.Files[statePath] =
+            "{\"statement_id\":\"sha256:0000000000000000000000000000000000000000000000000000000000000000\"}\n";
+
+        var outcome = RuleCatalog.Default.Execute(fixture.Build(
+            RawChangeSet.CreateWithKinds([(statePath, RawChangeKind.Added)])));
+
+        if (outcome is RuleExecutionOutcome.InfrastructureFailure failure)
+        {
+            Assert.Fail(failure.Message);
+        }
+
+        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(outcome);
+        Assert.Contains(
+            completed.Capability.Diagnostics,
+            diagnostic => diagnostic.RuleId == UtilityRuleId
+                && diagnostic.AdmissionEffect is AdmissionEffect.Block
+                && diagnostic.Message == $"UTILITY-INPUT-UNKNOWN module={RuleFixture.RingPath} "
+                    + $"reason=ambiguous-atom-target:{RuleFixture.FixtureAtomId}");
+    }
+
+    [Fact]
+    public void AmbiguousAtomModuleStillEmitsObserveAndDoesNotStopLaterFirstFreezeModules()
+    {
+        var fixture = AtomUtilityFixture(targetStatementId: null);
+        fixture.Files[RuleFixture.FixtureBackfillAtomPath.Replace(
+            "/partial-open/",
+            "/residual-open/",
+            StringComparison.Ordinal)] = fixture.Files[RuleFixture.FixtureBackfillAtomPath];
+        fixture.Files[RuleFixture.ValuesBindingPath] = WithUtility(
+            fixture.Files[RuleFixture.ValuesBindingPath],
+            "none");
+        var ringStatePath = FrozenStatePath.FromModulePath(
+            RepoPath.CreateKnown(RuleFixture.RingPath)).Value;
+        var valuesStatePath = FrozenStatePath.FromModulePath(
+            RepoPath.CreateKnown(RuleFixture.ValuesBindingPath)).Value;
+        const string state =
+            "{\"statement_id\":\"sha256:0000000000000000000000000000000000000000000000000000000000000000\"}\n";
+        fixture.Files[ringStatePath] = state;
+        fixture.Files[valuesStatePath] = state;
+
+        var outcome = RuleCatalog.Default.Execute(fixture.Build(
+            RawChangeSet.CreateWithKinds(
+            [
+                (ringStatePath, RawChangeKind.Added),
+                (valuesStatePath, RawChangeKind.Added),
+            ])));
+
+        if (outcome is RuleExecutionOutcome.InfrastructureFailure failure)
+        {
+            Assert.Fail(failure.Message);
+        }
+
+        var completed = Assert.IsType<RuleExecutionOutcome.Completed>(outcome);
+        var utilityDiagnostics = completed.Capability.Diagnostics
+            .Where(diagnostic => diagnostic.RuleId == UtilityRuleId)
+            .ToArray();
+        Assert.Contains(
+            utilityDiagnostics,
+            diagnostic => diagnostic.AdmissionEffect is AdmissionEffect.Block
+                && diagnostic.Path == RuleFixture.RingPath
+                && diagnostic.Message == $"UTILITY-INPUT-UNKNOWN module={RuleFixture.RingPath} "
+                    + $"reason=ambiguous-atom-target:{RuleFixture.FixtureAtomId}");
+        var ambiguousObservation = Assert.Single(
+            utilityDiagnostics,
+            diagnostic => diagnostic.AdmissionEffect is AdmissionEffect.Observe
+                && diagnostic.Path == RuleFixture.RingPath);
+        Assert.Equal(
+            $"UTILITY-OBSERVED module={RuleFixture.RingPath} "
+            + $"kind=bounded-enumeration basis=refutes target=atom:{RuleFixture.FixtureAtomId} "
+            + "semantics=unverified-by-machine",
+            ambiguousObservation.Message);
+        Assert.Contains(
+            utilityDiagnostics,
+            diagnostic => diagnostic.AdmissionEffect is AdmissionEffect.Observe
+                && diagnostic.Path == RuleFixture.ValuesBindingPath
+                && diagnostic.Message == $"UTILITY-OBSERVED module={RuleFixture.ValuesBindingPath} "
+                    + "kind=none basis=none target=none semantics=unverified-by-machine");
+        Assert.DoesNotContain(
+            utilityDiagnostics,
+            diagnostic => diagnostic.AdmissionEffect is AdmissionEffect.Block
+                && diagnostic.Path == RuleFixture.ValuesBindingPath);
     }
 
     [Fact]
