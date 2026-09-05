@@ -349,6 +349,9 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                 timeProvider.GetUtcNow(),
                 arguments);
 
+    public CommandResult QuarantineAtom(IReadOnlyList<string> arguments) =>
+        QuarantineAtomCommand.Run(repositoryRoot, repository, arguments);
+
     public CommandResult AlignScribeReceipt(IReadOnlyList<string> arguments)
     {
         if (scribeEmissionVerifier is null)
