@@ -1,0 +1,61 @@
+{
+  "schema": "exact-rational-polynomial-certificate-v1",
+  "variables": ["alpha", "beta", "mu_re", "mu_im"],
+  "interpretation": "Normalized trace energies of two complementary context components. The matrix reduction is proved in OrderThreeComplementaryContextRigidity.lean when that source is admitted.",
+  "requires_matrix_reduction": true,
+  "generators": {
+    "mass": [
+      {"exponents": [0, 0, 0, 0], "coefficient": "-1"},
+      {"exponents": [0, 1, 0, 0], "coefficient": "1"},
+      {"exponents": [1, 0, 0, 0], "coefficient": "1"}
+    ],
+    "projected_cubic": [
+      {"exponents": [0, 0, 0, 2], "coefficient": "-1"},
+      {"exponents": [0, 0, 2, 0], "coefficient": "-1"},
+      {"exponents": [1, 0, 0, 0], "coefficient": "-1"},
+      {"exponents": [2, 0, 0, 0], "coefficient": "1"}
+    ],
+    "balanced_alpha": [
+      {"exponents": [0, 0, 0, 0], "coefficient": "-1/2"},
+      {"exponents": [1, 0, 0, 0], "coefficient": "1"}
+    ]
+  },
+  "nonnegative_identity": {
+    "lhs": [
+      {"exponents": [0, 0, 0, 2], "coefficient": "1"},
+      {"exponents": [0, 0, 2, 0], "coefficient": "1"},
+      {"exponents": [1, 1, 0, 0], "coefficient": "1"}
+    ],
+    "rhs_ideal_multipliers": {
+      "mass": [{"exponents": [1, 0, 0, 0], "coefficient": "1"}],
+      "projected_cubic": [{"exponents": [0, 0, 0, 0], "coefficient": "-1"}]
+    }
+  },
+  "balanced_refutation": {
+    "lhs": "-1",
+    "squares": [
+      [{"exponents": [0, 0, 1, 0], "coefficient": "2"}],
+      [{"exponents": [0, 0, 0, 1], "coefficient": "2"}]
+    ],
+    "ideal_multipliers": {
+      "projected_cubic": [{"exponents": [0, 0, 0, 0], "coefficient": "4"}],
+      "balanced_alpha": [
+        {"exponents": [0, 0, 0, 0], "coefficient": "2"},
+        {"exponents": [1, 0, 0, 0], "coefficient": "-4"}
+      ]
+    }
+  },
+  "audit": {
+    "coefficient_domain": "fractions.Fraction",
+    "floating_point_used": false,
+    "nonnegative_identity": "exact coefficient equality checked locally on 2026-09-05",
+    "balanced_refutation": "exact coefficient equality checked locally on 2026-09-05",
+    "robust_threshold_arithmetic_only": {
+      "epsilon": "1/2500",
+      "upper": "21/100",
+      "lower": "6249999/25000000",
+      "scope": "Checks the rational comparison only; the norm estimates in the theory volume are a separate mathematical derivation."
+    },
+    "lean_elaboration": "not executed in the local runtime; remote admission remains authoritative"
+  }
+}
