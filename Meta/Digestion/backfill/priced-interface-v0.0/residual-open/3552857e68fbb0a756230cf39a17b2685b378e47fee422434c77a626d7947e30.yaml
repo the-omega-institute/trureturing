@@ -6,6 +6,10 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Chain-parent multi-clause guard. Mathematical child `b4b1d00ea2d7a1cbbd75500510cf0ae8a1859047c4b80d689a8024f516a54bff` is absorbed-closed by frozen GID `D5/S3/ConceptDynamics/Interpretation/JointLawCertificationValueSeparation.joint_law_certification_value_separation`. Its public statement carries the source's two-world identical-transcript and value-separation clause through `coSelected.2 = independentlySampled.2` at `JointLawCertificationValueSeparation.lean:50`, `transcript coSelected = transcript independentlySampled` at line 52, the distinct certification values and exponential comparison at lines 62-66, and the two `¬ Function.FactorsThrough` conjuncts for certification value and independent-law status at lines 68-71. Signing child `c00009d3d539f65305c7330a757f50d400a21cb0bc9aa3b2057a01e62095d8da` remains guarded: its existing quarantine records that this owner has no signing object, institutional witness, or carrier relation, while the source calls signing the transcript-external institutional carrier and expressly excludes signing semantics. The parent therefore has a carried mathematical clause and an uncarried signing and institutional-carrier corollary, so no whole-atom GID is faithful."
+    reentry_condition: "First satisfy child `c00009d3d539f65305c7330a757f50d400a21cb0bc9aa3b2057a01e62095d8da` by adding source-sanctioned signing semantics, an institutional witness, and a public carrier relation to the joint law, then close that child. Reenter this parent last, after both declared chain children are closed."
+    blocker_class: multi-clause-guard
   chain_atoms:
     - b4b1d00ea2d7a1cbbd75500510cf0ae8a1859047c4b80d689a8024f516a54bff
     - c00009d3d539f65305c7330a757f50d400a21cb0bc9aa3b2057a01e62095d8da
