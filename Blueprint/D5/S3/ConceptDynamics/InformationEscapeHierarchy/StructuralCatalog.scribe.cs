@@ -37,6 +37,11 @@ internal sealed class StructuralCatalogDocument : IScribeDocumentDefinition
                 "trivialInCatalog_iff_not_lowersEscape",
                 "Finite triviality is failure to lower escape", FiniteTrivialFormula(),
                 "On a nondegenerate finite arena, the landed positive-count criterion turns empty unique capture into the negated rate verdict."),
+            TheoremNode("set-selection-kernel-embedding",
+                "toStructuralCatalog_jointKernel_relation_iff_set",
+                "Set selection kernels are preserved", SetJointKernelBridgeFormula(),
+                "For every Set-indexed selection, the embedded structural relation " +
+                "is exactly the landed joint kernel relation."),
             TheoremNode("finite-selection-kernel-embedding",
                 "toStructuralCatalog_jointKernel_relation_iff",
                 "Finite selection kernels are preserved", JointKernelBridgeFormula(),
@@ -127,6 +132,27 @@ internal sealed class StructuralCatalogDocument : IScribeDocumentDefinition
             Grp(IffFormula(
                 Call("TrivialInCatalog", F.Id("catalog"), F.Id("i")),
                 Seq(Neg, Call("LowersEscape", F.Id("catalog"), F.Id("i")))))), Dot));
+
+    private static Formula SetJointKernelBridgeFormula()
+    {
+        Formula selected = F.Id("S");
+        Formula left = F.Id("x");
+        Formula right = F.Id("y");
+        Formula pair = Seq(Open, left, Comma, Sp, right, Close);
+        Formula selectedType = Call("Set", Call("Index", F.Id("catalog")));
+        return Disp(Seq(
+            Forall, Sp, selected, Colon, Sp, selectedType, Comma, Sp,
+            left, Comma, Sp, right, Comma, Sp,
+            IffFormula(
+                Call("relation",
+                    Call("jointKernel", Call("toStructuralCatalog", F.Id("catalog")),
+                        selected), left, right),
+                new Formula.Relation(
+                    pair,
+                    FormulaRelationOperator.MemberOf,
+                    Call("jointKernel", F.Id("catalog"), selected))),
+            Dot));
+    }
 
     private static Formula JointKernelBridgeFormula() => Disp(Seq(
         Forall, Sp, F.Id("S"), Comma, Sp, F.Id("x"), Comma, Sp, F.Id("y"), Comma, Sp,

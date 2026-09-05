@@ -88,7 +88,19 @@ $$\operatorname{Nondegenerate}(arena) \Rightarrow {\operatorname{TrivialInCatalo
 
 On a nondegenerate finite arena, the landed positive-count criterion turns empty unique capture into the negated rate verdict.
 
-**Theorem 1.8 (Finite selection kernels are preserved).**
+**Theorem 1.8 (Set selection kernels are preserved).**
+
+$$\forall S: \operatorname{Set}(\operatorname{Index}(catalog)), x, y, \operatorname{relation}(\operatorname{jointKernel}(\operatorname{toStructuralCatalog}(catalog), S), x, y) \Leftrightarrow (x, y) \in \operatorname{jointKernel}(catalog, S).$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeHierarchy/StructuralCatalog.toStructuralCatalog_jointKernel_relation_iff_set` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every Set-indexed selection, the embedded structural relation is exactly the landed joint kernel relation.
+
+**Theorem 1.9 (Finite selection kernels are preserved).**
 
 $$\forall S, x, y, \operatorname{relation}(\operatorname{jointKernel}(\operatorname{toStructuralCatalog}(catalog), \operatorname{coe}(S)), x, y) \Leftrightarrow \operatorname{indistinguishable}(catalog, S, x, y).$$
 
@@ -100,7 +112,7 @@ $$\forall S, x, y, \operatorname{relation}(\operatorname{jointKernel}(\operatorn
 
 For every finite selection, the embedded structural relation is the landed indistinguishability relation.
 
-**Definition 1.9 (Finite witness to structural certificate).**
+**Definition 1.10 (Finite witness to structural certificate).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/StructuralCatalog.toStructuralCatalog_certificate_of_uniqueCapture_witness`
 
@@ -112,7 +124,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/StructuralCata
 
 A finite unique-capture pair constructs a structural certificate with exactly the same left and right states.
 
-**Theorem 1.10 (Structural certificate to finite witness).**
+**Theorem 1.11 (Structural certificate to finite witness).**
 
 $$\forall certificate: \operatorname{StructuralStrictnessCertificate}(\operatorname{toStructuralCatalog}(catalog), i), \operatorname{left}(certificate) \neq \operatorname{right}(certificate) \land \left({\forall j, j \neq i \Rightarrow \operatorname{agrees}(catalog, j, \operatorname{left}(certificate), \operatorname{right}(certificate))} \land \neg\operatorname{agrees}(catalog, i, \operatorname{left}(certificate), \operatorname{right}(certificate))\right).$$
 
@@ -124,7 +136,7 @@ $$\forall certificate: \operatorname{StructuralStrictnessCertificate}(\operatorn
 
 An embedded certificate preserves its pair and yields distinctness, leave-one-out agreement, and separation by the removed theorem.
 
-**Theorem 1.11 (Structural certificates are positive finite capture).**
+**Theorem 1.12 (Structural certificates are positive finite capture).**
 
 $$\operatorname{Nonempty}(\operatorname{StructuralStrictnessCertificate}(\operatorname{toStructuralCatalog}(catalog), i)) \Leftrightarrow 0 < \operatorname{uniqueCaptureCount}(catalog, i).$$
 
@@ -136,7 +148,7 @@ $$\operatorname{Nonempty}(\operatorname{StructuralStrictnessCertificate}(\operat
 
 The landed finite witness theorem transports the same separating pair in both directions.
 
-**Theorem 1.12 (Finite structural verdicts are preserved).**
+**Theorem 1.13 (Finite structural verdicts are preserved).**
 
 $$\operatorname{StructurallyLowersEscape}(\operatorname{toStructuralCatalog}(catalog), i) \Leftrightarrow \operatorname{StructurallyLowersEscape}(catalog, i).$$
 
@@ -148,7 +160,7 @@ $$\operatorname{StructurallyLowersEscape}(\operatorname{toStructuralCatalog}(cat
 
 The universal pointwise-order verdict agrees with the landed finite Set-level verdict.
 
-**Theorem 1.13 (Finite rate verdicts are preserved).**
+**Theorem 1.14 (Finite rate verdicts are preserved).**
 
 $$\operatorname{Nondegenerate}(arena) \Rightarrow {\operatorname{StructurallyLowersEscape}(\operatorname{toStructuralCatalog}(catalog), i) \Leftrightarrow \operatorname{LowersEscape}(catalog, i)}.$$
 
@@ -171,6 +183,7 @@ On a nondegenerate arena, the structural embedding agrees with the exact finite 
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/StructuralCatalog.toStructuralCatalog_certificate_of_uniqueCapture_witness`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/StructuralCatalog.toStructuralCatalog_exists_certificate_iff_uniqueCaptureCount_pos`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/StructuralCatalog.toStructuralCatalog_jointKernel_relation_iff`
+- Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/StructuralCatalog.toStructuralCatalog_jointKernel_relation_iff_set`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/StructuralCatalog.toStructuralCatalog_structurallyLowersEscape_iff`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/StructuralCatalog.toStructuralCatalog_structurallyLowersEscape_iff_lowersEscape`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/StructuralCatalog.trivialInCatalog_iff_not_lowersEscape`

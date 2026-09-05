@@ -164,7 +164,7 @@ theorem trivialInCatalog_iff_not_lowersEscape
     exact notLowers
       ((catalog.lowersEscape_iff_uniqueCaptureCount_pos index nondegenerate).2 positive)
 
-private theorem toStructuralCatalog_jointKernel_relation_iff_set
+theorem toStructuralCatalog_jointKernel_relation_iff_set
     {arena : Arena.{u}} (catalog : Catalog.{u, v, w} arena)
     (selected : Set catalog.Index) (left right : arena.State) :
     (catalog.toStructuralCatalog.jointKernel selected).relation left right ↔
