@@ -1,0 +1,19 @@
+## 主定理
+
+以下等价：
+
+$$
+\boxed{
+\begin{aligned}
+&\mathrm{RH};\\
+&\forall d,\ G_d\succeq0;\\
+&\forall d,\ \exists w_{d,1},\ldots,w_{d,2d-1}\ge0,
+\quad P_d=C_{w_d};\\
+&\exists d_j\to\infty,\ 
+\exists K_{d_j}\ge0,
+\quad P_{d_j}(v)=\det(I+vK_{d_j}).
+\end{aligned}
+}
+\tag{32}
+$$
+

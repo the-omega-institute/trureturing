@@ -1,0 +1,87 @@
+## 定理 18.1　量子钟的精确去相干模长
+
+设 \(E_a,E_b\) 为两个钟能级，
+
+$$
+\Delta E=E_a-E_b.
+$$
+
+相应非对角元可写为
+
+$$
+\rho_{ab}(t)
+=
+\rho_{ab}(0)
+e^{-i\Delta Et/\hbar}
+e^{i\vartheta_{ab}(t)}
+e^{-\Gamma_{ab}(t)},
+$$
+
+其中 \(\vartheta_{ab}\) 为实相位，并且
+
+$$
+\boxed{
+\Gamma_{ab}(t)
+=
+\frac{(\Delta E)^2}{2\hbar}
+\sum_a
+\frac{v^{\mathsf T}W_av}{\nu_a^3}
+\coth\!\left(\frac{\beta\hbar\nu_a}{2}\right)
+\bigl(1-\cos\nu_at\bigr).
+}
+\tag{18.2}
+$$
+
+等价地，
+
+$$
+\boxed{
+\Gamma_{ab}(t)
+=
+\frac{(\Delta E)^2}{2\hbar^2}
+\int_0^t\!\!\int_0^t
+v^{\mathsf T}C_\beta(s-s')v\,ds\,ds'.
+}
+\tag{18.3}
+$$
+
+### 证明
+
+由于 \(H_C\) 与结构算子可交换，在每个钟能级上，结构经历一个能级相关的线性力。
+
+对单个正常模，两个钟能级产生的条件位移之差，其模平方为
+
+$$
+|\delta\alpha(t)|^2
+=
+\frac{(\Delta E)^2b_\alpha^2}
+{\hbar\nu_\alpha^3}
+(1-\cos\nu_\alpha t),
+$$
+
+其中 \(b_\alpha\) 为 \(Bv\) 在该正常模中的分量。
+
+热态中 Weyl 位移算子的期望模长为
+
+$$
+\exp\left[
+-\frac12|\delta\alpha|^2
+\coth\!\left(\frac{\beta\hbar\nu_\alpha}{2}\right)
+\right].
+$$
+
+对全部模式相乘并合并同频权重，得到式（18.2）。
+
+再用
+
+$$
+\int_0^t\!\!\int_0^t
+\cos\bigl(\nu(s-s')\bigr)\,ds\,ds'
+=
+\frac{2(1-\cos\nu t)}{\nu^2}
+$$
+
+即可得到式（18.3）。∎
+
+这种线性谐振环境中的纯去相干模型可精确求解，不需要把二阶近似误当成一般强耦合结论。([arXiv][4])
+

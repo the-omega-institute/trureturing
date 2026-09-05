@@ -1,0 +1,33 @@
+## 正表示前件 \(\mathbf H_+\)
+
+后文凡使用正谱积分时，明确采用：
+
+$$
+\boxed{
+\mathfrak S(z)=
+\int_{[0,R]}\frac{d\omega(u)}{z-u},
+\qquad
+\omega\ge0,
+\quad R<\infty.
+}
+\tag{H+}
+$$
+
+对当前实际 \(D\)，前文已证明这一正表示存在与 RH 等价。
+
+在 RH 前件下，可以取：
+
+$$
+\omega
+=
+\sum_{\gamma>0}
+m_\gamma\gamma^{-4}\,
+\delta_{\gamma^{-2}}.
+$$
+
+这里 \(\gamma\) 是互异正零点高度，\(m_\gamma\) 保留重数。
+
+**以下代数对象全部能无条件定义；将它们解释成正谱能量时，才使用 \(\mathbf H_+\)。**
+
+---
+

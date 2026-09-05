@@ -1,0 +1,24 @@
+## 定理 E2：下界是一个最佳多项式逼近问题
+
+在 \(\mathbf H_+\) 下：
+
+$$
+\boxed{
+\Delta-L_N
+=
+\min_{\deg p<N}
+\int
+\frac{[1-(4+u)p(u)]^2}{4+u}\,d\omega(u).
+}
+\tag{E15}
+$$
+
+所以：
+
+$$
+\boxed{
+0\le L_N\le L_{N+1}\le\Delta.
+}
+\tag{E16}
+$$
+

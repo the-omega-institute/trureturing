@@ -1,0 +1,109 @@
+# 一、固定前文对象
+
+采用标准 completed 函数：
+
+$$
+\xi(s)=\frac12s(s-1)\pi^{-s/2}\Gamma(s/2)\zeta(s),
+$$
+
+并定义实际反射折叠函数：
+
+$$
+\boxed{
+D(b^2)=\frac{\xi(\frac12+b)}{\xi(\frac12)},
+\qquad
+D(v)=\sum_{k\ge0}a_kv^k.
+}
+$$
+
+其中：
+
+$$
+a_k=\frac{m_{2k}}{(2k)!}>0,
+\qquad a_0=1,
+$$
+
+\(m_{2k}\) 是前文实际 theta 概率态的偶阶矩。反射折叠通过偶幂级数定义，不需要选取全局平方根分支。标准 ξ 的定义与反射关系见 DLMF。([DLMF][1])
+
+定义：
+
+$$
+\boxed{
+P_d(v)=
+\sum_{k=0}^d\frac{(d)_k}{d^k}a_kv^k,
+}
+\tag{B1}
+$$
+
+以及反转多项式：
+
+$$
+\boxed{
+q_d(x)=x^dP_d(-1/x).
+}
+\tag{B2}
+$$
+
+因此：
+
+$$
+q_d(x)
+=
+x^d-a_1x^{d-1}
++\frac{d-1}{d}a_2x^{d-2}
+-\cdots
++(-1)^d\frac{d!}{d^d}a_d.
+$$
+
+前文已给出：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+P_d\text{ 的根全部为负实数，}\ \forall d.
+}
+$$
+
+等价地：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+q_d\text{ 的根全部为正实数，}\ \forall d.
+}
+\tag{B3}
+$$
+
+这是实际 ξ 的 Jensen–Pólya 判据在当前归一化下的形式。一般判据及现代研究已有文献；本轮研究的是这些有限层之间的具体算子连接。([arXiv][2])
+
+再记：
+
+$$
+\boxed{
+c=\frac{\xi'(1)}{\xi(1)}
+=
+1+\frac{\gamma_{\mathrm E}}2-\frac12\log4\pi,
+}
+$$
+
+以及：
+
+$$
+\boxed{
+\frac{D'(1/4)}{D(1/4)}=c.
+}
+\tag{B4}
+$$
+
+必须继续区分：
+
+$$
+a_1\ne c.
+$$
+
+前者是中心展开的第一系数，后者是移到 \(s=1\) 后的响应。
+
+---
+

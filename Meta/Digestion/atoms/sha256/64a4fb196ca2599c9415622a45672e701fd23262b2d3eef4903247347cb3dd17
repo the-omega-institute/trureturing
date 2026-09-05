@@ -1,0 +1,45 @@
+## 定理 56.1　每一份都与任意输入无关
+
+对任意输入态 \(\rho\) 及任意单份 \(r_i\)：
+
+$$
+\boxed{
+\operatorname{Tr}_{\overline{r_i}}
+(V\rho V^\dagger)=\frac{I_3}{3}.
+}
+\tag{56.2}
+$$
+
+### 证明
+
+对矩阵单位 \(|s\rangle\langle t|\) 展开编码。
+
+以保留第一份为例，偏迹要求：
+
+$$
+j+s=k+t,
+\qquad
+j+2s=k+2t.
+$$
+
+相减得：
+
+$$
+s=t,
+$$
+
+继而 \(j=k\)。
+
+所以：
+
+$$
+\operatorname{Tr}_{23}
+(V|s\rangle\langle t|V^\dagger)
+=
+\delta_{st}\frac{I_3}{3}.
+$$
+
+另外两份同理。∎
+
+---
+

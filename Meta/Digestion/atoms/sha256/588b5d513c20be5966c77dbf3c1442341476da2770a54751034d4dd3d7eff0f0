@@ -1,0 +1,34 @@
+## 定义 51.1　边缘接口与联合接口
+
+对联合量子态 \(\rho_{12}\)，定义：
+
+$$
+q_1(\rho)=\operatorname{Tr}_2\rho,
+\qquad
+q_2(\rho)=\operatorname{Tr}_1\rho.
+$$
+
+分别保存两个边缘态的接口为：
+
+$$
+\boxed{
+q_{\mathrm{sep}}(\rho)
+=
+\bigl(q_1(\rho),q_2(\rho)\bigr).
+}
+\tag{51.1}
+$$
+
+保存完整联合态的接口为：
+
+$$
+\boxed{
+q_{\mathrm{joint}}(\rho)=\rho_{12}.
+}
+\tag{51.2}
+$$
+
+这两个接口不是同一个对象。
+
+---
+

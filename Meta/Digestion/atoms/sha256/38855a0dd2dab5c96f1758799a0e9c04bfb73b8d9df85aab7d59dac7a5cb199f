@@ -1,0 +1,52 @@
+# 十、有限计算怎样成为证明，而不是“看起来正”？
+
+最后补上认证边界。
+
+假设已经通过带尾界的积分与 Newton 递推，得到近似矩阵 \(\widetilde G_d\)，且每个矩阵元的误差不超过 \(\varepsilon\)：
+
+$$
+|(G_d)_{ij}-(\widetilde G_d)_{ij}|\le\varepsilon.
+$$
+
+则：
+
+$$
+\|G_d-\widetilde G_d\|_{\mathrm{op}}\le d\varepsilon.
+$$
+
+因此：
+
+$$
+\boxed{
+\lambda_{\min}(\widetilde G_d)>d\varepsilon
+\Longrightarrow
+G_d>0.
+}
+\tag{33}
+$$
+
+反方向，如果有一个实向量 \(u\) 满足：
+
+$$
+\boxed{
+u^{\mathsf T}\widetilde G_du
++
+\varepsilon\|u\|_1^2<0,
+}
+\tag{34}
+$$
+
+那么：
+
+$$
+u^{\mathsf T}G_du<0.
+$$
+
+由定理 4，这证明实际 \(P_d\) 有非实根；再由定理 2，足以否证 RH。
+
+但如果误差区间跨过零，结果只是未定，不能把“没有认证正性”写成“已经发现负方向”。
+
+此外，矩行列式通常病态。DLMF 在给出递推系数的行列式表达后，也明确提醒其数值条件问题。**有精确公式不等于普通浮点计算就足够可靠。**([DLMF][6])
+
+---
+

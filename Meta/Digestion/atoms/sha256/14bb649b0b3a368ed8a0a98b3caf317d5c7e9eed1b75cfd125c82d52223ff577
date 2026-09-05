@@ -1,0 +1,19 @@
+**找到这种重组的统一算术规律，才可能把 Fibonacci、量子隧穿和 ξ 从精确表示关系，进一步推进为真正的零点定位证明。** 当前已经给出了有限构造与障碍；尚未获得全阶算术正性，也未把这些纸面推导标记为 Lean 已验证的结果。
+
+[1]: https://dlmf.nist.gov/25.4 "DLMF: §25.4 Reflection Formulas ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"
+[2]: https://dlmf.nist.gov/25.5 "DLMF: §25.5 Integral Representations ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"
+[3]: https://arxiv.org/abs/1902.07321 "[1902.07321] Jensen polynomials for the Riemann zeta function and other sequences"
+[4]: https://collaborate.princeton.edu/en/publications/theory-of-monomer-dimer-systems-2/?utm_source=chatgpt.com "Theory of monomer-dimer systems - Princeton University"
+[5]: https://arxiv.org/abs/1911.01745 "[1911.01745] The Hermite-Sylvester criterion for real-rooted polynomials"
+[6]: https://dlmf.nist.gov/18.2 "DLMF: §18.2 General Orthogonal Polynomials ‣ General Orthogonal Polynomials ‣ Chapter 18 Orthogonal Polynomials"
+[7]: https://arxiv.org/abs/1910.01227?utm_source=chatgpt.com "Jensen Polynomials for the Riemann Xi Function"
+在前文基础上，这次可以补上一个关键结构：
+
+> **不同阶的正权量子链，不必原样嵌套，但可以通过“压缩一个方向，再重新归一化”精确连接。反过来，从低阶增加到高阶时，真正待证明的内容，是新加入的各条耦合是否都能取成非负平方。**
+
+而欧拉–马歇罗尼常数可以进一步进入这套结构：它不仅校准一个端点值，还能校准**被压缩方向的整体回返响应**。
+
+下面继续采用定义、有限假设、定理和证明。**不把“全阶正实现存在”当作假设偷偷加入；只在明确标注的有限层使用正性前件。**
+
+---
+

@@ -1,0 +1,78 @@
+## 定理 35.2　近边界的径向几何具有 Rindler 形式
+
+定义外部静态切片上的径向固有距离
+
+$$
+\ell(r)
+=
+\int_{r_h}^r\frac{ds}{\sqrt{f(s)}}.
+$$
+
+则在边界附近，
+
+$$
+\ell
+\sim
+\sqrt{\frac{2c^2(r-r_h)}{\kappa}},
+$$
+
+以及
+
+$$
+\boxed{
+\sqrt f\sim\frac{\kappa\ell}{c^2}.
+}
+\tag{35.4}
+$$
+
+因此径向度量的领先阶为
+
+$$
+\boxed{
+ds_{\mathrm{rad}}^2
+=
+-\left(\frac{\kappa\ell}{c}\right)^2dt^2+d\ell^2.
+}
+\tag{35.5}
+$$
+
+### 证明
+
+使用
+
+$$
+f(r)
+=
+\frac{2\kappa}{c^2}(r-r_h)
++
+O((r-r_h)^2)
+$$
+
+计算积分并反解即可。∎
+
+式（35.5）正是 Rindler 型径向结构。适当坐标变换
+
+$$
+cT_M=\ell\sinh(\kappa t/c),
+$$
+
+$$
+X_M=\ell\cosh(\kappa t/c)
+$$
+
+把该径向部分写成平直形式。
+
+**因此，观察者加速视界与非退化黑洞近视界之间，确实存在局部几何联系；但局部径向形式相同，不意味着全局曲率、拓扑、量子态和全部可访问区域相同。**
+
+在量子场论中，选择相应真空或平衡态后，这种联系进一步表现为 Unruh 与 Hawking 温度结构：
+
+$$
+T_U=\frac{\hbar a}{2\pi ck_B},
+\qquad
+T_H=\frac{\hbar\kappa}{2\pi ck_B}.
+$$
+
+温度结论还依赖量子场态与相应条件，不能只由“出现视界”四个字无条件推出。([arXiv][5])
+
+---
+
