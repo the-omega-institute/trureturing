@@ -2642,3 +2642,1146 @@ $$
 [3]: https://doi.org/10.1016%2FS0022-247X%2803%2900465-7?utm_source=chatgpt.com "Differentiators and the geometry of polynomials - ScienceDirect"
 [4]: https://dlmf.nist.gov/25.2 "DLMF: §25.2 Definition and Expansions ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"
 [5]: https://dlmf.nist.gov/18.2 "DLMF: §18.2 General Orthogonal Polynomials ‣ General Orthogonal Polynomials ‣ Chapter 18 Orthogonal Polynomials"
+这次可以把上一轮的 Bézout 正性，推进成一个更具体的“观察者相容性”定理：
+
+> **某一有限层有没有负方向，不必通过寻找它的根来判断；取足够多个普通复频率读数，就能完整恢复其负方向数。**
+
+而且可以进一步证明：
+
+**三个单独读数都正常，任意两个读数之间也都相容，三个读数放在一起却可能不相容。**
+
+这正是你一直强调的“整体”可以具有的严格含义：不是存在一个最高观察者，而是**全部观察结果能否来自同一个正内积实现**。
+
+最后，我们还可以把这些有限回返函数取极限，得到一个由实际 ξ 定义的单一函数。它消去了纯高斯方差背景，留下真正需要研究的高阶关联；欧拉常数则校准这个函数在一个固定点的值。
+
+下面分开定义与证明。
+
+---
+
+# 一、把有限系数矩阵，变成一个复频率观测核
+
+沿用前文：
+
+$$
+D(b^2)=\frac{\xi(\frac12+b)}{\xi(\frac12)},
+\qquad
+D(v)=\sum_{k\ge0}a_kv^k,
+$$
+
+$$
+P_d(v)=\sum_{k=0}^{d}\frac{(d)_k}{d^k}a_kv^k,
+$$
+
+$$
+q_d(x)=x^dP_d(-1/x).
+$$
+
+其中全部 \(a_k\) 来自实际 theta 态，不是自由参数。
+
+前文的 Jensen 判据是：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+q_d\text{ 的全部根为正实数，}\quad\forall d.
+}
+$$
+
+这是经典 Jensen–Pólya 路线在当前归一化下的表达，不是量子模型自动给出的结论。([arXiv][1])
+
+定义：
+
+$$
+r_d(x)=\frac1d q_d'(x),
+\qquad
+\mu_d=\frac{a_1}{d},
+$$
+
+$$
+n_d(x)=(x-\mu_d)r_d(x)-q_d(x),
+$$
+
+以及回返函数：
+
+$$
+\boxed{
+\Sigma_d(z)=\frac{n_d(z)}{r_d(z)}.
+}
+\tag{D1}
+$$
+
+它是从实际有限系数直接算出的有理函数。此时尚未假定它具有正量子实现。
+
+上一轮定义的 Bézout 核为：
+
+$$
+\mathcal B_d(x,y)
+=
+\frac{r_d(x)n_d(y)-n_d(x)r_d(y)}{x-y},
+$$
+
+写成：
+
+$$
+\mathcal B_d(x,y)
+=
+\mathbf v(x)^{\mathsf T}B_d\mathbf v(y),
+$$
+
+其中：
+
+$$
+\mathbf v(x)=(1,x,\ldots,x^{d-2})^{\mathsf T}.
+$$
+
+现在引入复频率核：
+
+$$
+\boxed{
+\mathcal K_d(z,w)
+=
+-\frac{\Sigma_d(z)-\overline{\Sigma_d(w)}}
+{z-\overline w},
+}
+\tag{D2}
+$$
+
+定义域取在上半平面内，并避开 \(r_d\) 的零点。
+
+直接通分：
+
+$$
+\boxed{
+\mathcal K_d(z,w)
+=
+\frac{
+\mathbf v(z)^{\mathsf T}B_d\overline{\mathbf v(w)}
+}{
+r_d(z)\overline{r_d(w)}
+}.
+}
+\tag{D3}
+$$
+
+这种差商核及其负平方数属于经典 Nevanlinna／不定内积理论；本轮要用的是式（D3）给出的明确系数对应。([Springer][2])
+
+---
+
+## 定理 D1：任意足够多的不同采样点，都保留全部负方向
+
+令：
+
+$$
+m=d-1.
+$$
+
+在上半平面取 \(m\) 个互异点：
+
+$$
+z_1,\ldots,z_m,
+\qquad
+r_d(z_j)\ne0.
+$$
+
+构造：
+
+$$
+G_d=\bigl(\mathcal K_d(z_i,z_j)\bigr)_{i,j=1}^{m}.
+$$
+
+那么：
+
+$$
+\boxed{
+n_-(G_d)=n_-(B_d).
+}
+\tag{D4}
+$$
+
+结合前文的 Bézout 惯性定理：
+
+$$
+\boxed{
+n_-(G_d)
+=
+q_d\text{ 的互异非实共轭根对数}.
+}
+\tag{D5}
+$$
+
+### 证明
+
+定义矩阵：
+
+$$
+W_{j,k}
+=
+\frac{z_j^{k-1}}{r_d(z_j)},
+\qquad 1\le j,k\le m.
+$$
+
+式（D3）给出：
+
+$$
+G_d=WB_dW^*.
+$$
+
+\(W\) 是一个可逆对角矩阵与 Vandermonde 矩阵的乘积。因为采样点互异，且 \(r_d(z_j)\ne0\)，所以 \(W\) 可逆。
+
+可逆合同变换保持正负惯性，因此式（D4）成立。再使用上一轮的根对计数结论，即得式（D5）。证毕。
+
+这里的根对计数来自 Hermite–Sylvester／Bézout 实根理论，重根会改变零空间维数，不应被重复计为独立负方向。([剑桥大学出版社][3])
+
+### 这项定理具体意味着什么？
+
+**为了判断这个固定有限多项式是否出现非实根，不必先去未知根附近找采样点。**
+
+可以选取远离疑似根的普通点，读取 \(\Sigma_d(z_j)\)，再检验它们组成的联合矩阵。
+
+但这是精确算术意义上的结论。若采样矩阵严重病态，有限精度仍然可能看不见负方向。**“有限个读数足够”不等于“这些读数只需低精度”。**
+
+---
+
+# 二、为什么这个核能检验量子回返，而不是只检验一个形式矩阵？
+
+先定义我们要求的具体表示类型。
+
+## 定义 D1：正谱回返实现
+
+称 \(\Sigma\) 具有正谱回返实现，若存在正内积空间、一个自伴算子 \(H\) 和向量 \(g\)，使：
+
+$$
+\boxed{
+\Sigma(z)=\langle g,(zI-H)^{-1}g\rangle.
+}
+\tag{D6}
+$$
+
+有限维时，若 \(H\) 的本征值为 \(t_j\)，则：
+
+$$
+\Sigma(z)=\sum_j\frac{|g_j|^2}{z-t_j}.
+$$
+
+这种形式正是自伴系统消去隐藏通道后出现的回返项之一。Feshbach–Schur 方法提供了相应的有效算子结构。([arXiv][4])
+
+**这里限定的是式（D6）这一类响应，不是宣称所有量子响应函数都必须具有这一个形式。**
+
+由预解式恒等式：
+
+$$
+\begin{aligned}
+\mathcal K(z,w)
+&=
+-\frac{\Sigma(z)-\overline{\Sigma(w)}}{z-\overline w}\\
+&=
+\langle g,
+(zI-H)^{-1}(\overline wI-H)^{-1}g\rangle.
+\end{aligned}
+$$
+
+它是向量：
+
+$$
+(\overline zI-H)^{-1}g
+$$
+
+的 Gram 核，因此：
+
+$$
+\boxed{
+\bigl(\mathcal K(z_i,z_j)\bigr)\succeq0.
+}
+\tag{D7}
+$$
+
+所以，如果实际 \(\Sigma_d\) 的某张采样矩阵具有负方向，就不可能存在同样读数的正谱回返实现。
+
+这不是负概率，而是：
+
+> **这些数值不能同时被解释为同一个正内积系统中的回返关系。**
+
+反过来，当实际 \(B_d\succeq0\) 时，前文已经证明 \(q_d\) 全部为正实根；由临界点交错和非负留数，可以构造式（D6）的有限实现。退化时需先保留并处理可去因子，不能把重数任意删除。
+
+因此，在当前实际有限多项式类别中：
+
+$$
+\boxed{
+\text{系数正性}
+\iff
+\text{全部采样关系正性}
+\iff
+\text{正谱回返实现存在}.
+}
+\tag{D8}
+$$
+
+---
+
+# 三、一个精确反例：每个单点、每两个点都正常，三个点却不能共同实现
+
+这个例子仍然位于上一轮的多项式—回返结构中，而不只是随便写一个负矩阵。
+
+取：
+
+$$
+\boxed{
+q(x)=(x-3)^4-2(x-3)^2-\frac1{10}.
+}
+$$
+
+展开为：
+
+$$
+q(x)=x^4-12x^3+52x^2-96x+\frac{629}{10}.
+$$
+
+其反转多项式：
+
+$$
+P(v)=1+12v+52v^2+96v^3+\frac{629}{10}v^4
+$$
+
+具有严格正系数。
+
+但 \(q\) 有两个实根，以及一对非实根：
+
+$$
+3\pm i\sqrt{\sqrt{11/10}-1}.
+$$
+
+按前述定义计算：
+
+$$
+\boxed{
+\Sigma(z)
+=
+\frac{11}{20(z-2)}
+-\frac1{10(z-3)}
++\frac{11}{20(z-4)}.
+}
+\tag{D9}
+$$
+
+总留数为一，但中间留数为负。
+
+取：
+
+$$
+z_1=3+i,\qquad z_2=3+2i,\qquad z_3=3+3i.
+$$
+
+得到：
+
+$$
+\boxed{
+G=
+\begin{pmatrix}
+\frac9{20}&\frac7{25}&\frac{14}{75}\\[1mm]
+\frac7{25}&\frac{39}{200}&\frac{103}{750}\\[1mm]
+\frac{14}{75}&\frac{103}{750}&\frac{89}{900}
+\end{pmatrix}.
+}
+\tag{D10}
+$$
+
+三个对角元都为正。
+
+三个二阶主子式分别为：
+
+$$
+\frac{187}{20000},\qquad
+\frac{869}{90000},\qquad
+\frac{1903}{4500000},
+$$
+
+也全部为正。
+
+所以，任取一个点或两个点，相关矩阵都正定。
+
+但：
+
+$$
+\boxed{
+\det G=-\frac{121}{90000000}<0.
+}
+$$
+
+更直接，取：
+
+$$
+u=(1,-5,5)^{\mathsf T},
+$$
+
+有：
+
+$$
+\boxed{
+u^{\mathsf T}Gu=-\frac1{360}.
+}
+\tag{D11}
+$$
+
+这个反例说明：
+
+$$
+\boxed{
+\text{每个观察者单独正常}
++
+\text{任意两个观察者相容}
+\not\Rightarrow
+\text{三个观察者共同相容}.
+}
+$$
+
+但不要把它混成量子基础中的一般上下文性定理。这里检验的是**指定差商核能否由同一正谱回返表示实现**。
+
+它也不是实际 ξ 的反例。它告诉我们，在实际计算中只检查单点符号、两点相关或总留数，可能漏掉什么。
+
+---
+
+# 四、负方向还能给出“正模型至少必须改动多少”的下界
+
+## 定理 D2：正实现的最低读数失配
+
+取 \(m=d-1\) 个采样点，满足：
+
+$$
+\Im z_j\ge h>0.
+$$
+
+设实际采样矩阵 \(G_d\) 的最小特征值为：
+
+$$
+\lambda_{\min}(G_d)=-\nu<0.
+$$
+
+若另一个函数 \(\widetilde\Sigma\) 具有正谱回返实现，并且：
+
+$$
+|\widetilde\Sigma(z_j)-\Sigma_d(z_j)|\le\varepsilon
+\quad\forall j,
+$$
+
+那么必须：
+
+$$
+\boxed{
+\varepsilon\ge\frac{h\nu}{m}.
+}
+\tag{D12}
+$$
+
+### 证明
+
+对应的核矩阵差满足：
+
+$$
+|(\widetilde G_d-G_d)_{ij}|
+\le
+\frac{2\varepsilon}{\Im z_i+\Im z_j}
+\le
+\frac{\varepsilon}{h}.
+$$
+
+因此：
+
+$$
+\|\widetilde G_d-G_d\|_{\mathrm{op}}
+\le
+\frac{m\varepsilon}{h}.
+$$
+
+但把一个特征值为 \(-\nu\) 的 Hermitian 矩阵改成正半定矩阵，扰动算子范数至少为 \(\nu\)。于是式（D12）成立。证毕。
+
+因此：
+
+> **不能把一个实际负核“解释成正量子模型”，却声称读数几乎没有改变。改变至少要达到一个可计算的幅度。**
+
+这与 Herglotz 函数的正测度表示，以及有符号测度对非正响应的建模相衔接；一般的正化与逼近问题已有相关理论。([arXiv][5])
+
+---
+
+# 五、如果负通道很弱，需要多深的观察才能把它看见？
+
+这一节增加一个明确前件：假设 \(r_d\) 的根 \(t_i\) 全部实且互异，因此：
+
+$$
+\Sigma_d(z)=\sum_i\frac{\eta_i}{z-t_i}.
+$$
+
+设某条通道：
+
+$$
+\eta_j=-\epsilon<0.
+$$
+
+定义与其他极点的最小距离：
+
+$$
+\Delta_j=\min_{i\ne j}|t_i-t_j|>0,
+$$
+
+以及全部正留数之和：
+
+$$
+E_+=\sum_{\eta_i>0}\eta_i.
+$$
+
+在：
+
+$$
+z=t_j+ih
+$$
+
+处：
+
+$$
+-\Im\Sigma_d(z)
+=
+h\sum_i\frac{\eta_i}{(t_j-t_i)^2+h^2}.
+$$
+
+忽略其他负项，只保留最不利的正项，得到：
+
+$$
+-\Im\Sigma_d(t_j+ih)
+\le
+-\frac{\epsilon}{h}
++\frac{hE_+}{\Delta_j^2}.
+$$
+
+因此，当 \(E_+>0\) 且：
+
+$$
+\boxed{
+h^2\le
+\frac{\epsilon\Delta_j^2}{2E_+},
+}
+\tag{D13}
+$$
+
+就有：
+
+$$
+\boxed{
+-\Im\Sigma_d(t_j+ih)
+\le
+-\frac{\epsilon}{2h}<0.
+}
+\tag{D14}
+$$
+
+也就是说，靠近负留数极点，单点符号最终也会暴露问题。
+
+但它要求更精细的复频率分辨率。
+
+### 把分辨率换成回返历史长度
+
+定义有限记忆函数：
+
+$$
+R(\tau)=\sum_i\eta_i e^{-it_i\tau}.
+$$
+
+在 \(\Im z=h>0\) 时：
+
+$$
+\boxed{
+\Sigma_d(z)
+=
+-i\int_0^\infty e^{iz\tau}R(\tau)\,d\tau.
+}
+\tag{D15}
+$$
+
+令：
+
+$$
+M=\sum_i|\eta_i|.
+$$
+
+只保留 \(0\le\tau\le T\)，截断误差不超过：
+
+$$
+\boxed{
+\frac{M}{h}e^{-hT}.
+}
+$$
+
+因此，结合式（D14），一个充分的认证条件是：
+
+$$
+\boxed{
+T>
+\frac1h\log\frac{4M}{\epsilon}.
+}
+\tag{D16}
+$$
+
+这不是适用于所有算法的复杂度下界，而是这个明确检测协议的充分条件。
+
+它说明：
+
+**负方向在逻辑上已经存在，不等于一个固定带宽、固定历史长度的观察者立刻能看见。**
+
+同时，\(\tau\) 在此首先是回返函数的变换变量，不应直接认作 ζ 的高度参数或某套实验装置的物理时间。
+
+---
+
+# 六、把所有有限层重新合起来：存在一个固定的“去高斯背景回返函数”
+
+前面一直是有限 \(d\)。现在寻找它们共同逼近的对象。
+
+记：
+
+$$
+f_d(v)=\frac{P_d'(v)}{P_d(v)},
+\qquad
+f(v)=\frac{D'(v)}{D(v)}.
+$$
+
+由：
+
+$$
+q_d(z)=z^dP_d(-1/z),
+$$
+
+可得：
+
+$$
+\frac{q_d'(z)}{q_d(z)}
+=
+\frac dz+\frac{f_d(-1/z)}{z^2}.
+$$
+
+代入 \(\Sigma_d\) 的定义：
+
+$$
+\boxed{
+d\Sigma_d(z)
+=
+\frac{f_d(-1/z)}
+{1+\frac{f_d(-1/z)}{dz}}
+-a_1.
+}
+\tag{D17}
+$$
+
+由于 \(P_d\to D\) 及其导数在紧集上一致收敛，在避开 \(z=0\) 和实际极点的紧集上：
+
+$$
+\boxed{
+d\Sigma_d(z)\longrightarrow
+\mathfrak S(z),
+}
+\tag{D18}
+$$
+
+其中：
+
+$$
+\boxed{
+\mathfrak S(z)
+=
+\frac{D'(-1/z)}{D(-1/z)}-a_1.
+}
+\tag{D19}
+$$
+
+这是一个由实际 ξ 唯一固定的亚纯函数，不需要输入未知零点。
+
+### 为什么说它去掉了高斯背景？
+
+如果给原概率变量加入独立方差为 \(\tau\) 的高斯变量，则：
+
+$$
+D(v)\longmapsto D_\tau(v)=e^{\tau v/2}D(v).
+$$
+
+于是：
+
+$$
+\frac{D_\tau'}{D_\tau}
+=
+\frac{\tau}{2}+\frac{D'}D,
+\qquad
+a_1\longmapsto a_1+\frac{\tau}{2}.
+$$
+
+所以：
+
+$$
+\boxed{
+\mathfrak S_\tau(z)=\mathfrak S(z).
+}
+\tag{D20}
+$$
+
+**整体方差可以增加，但这份回返函数完全不变。**
+
+因此，它没有把普通高斯背景与决定零点形状的高阶关联混在一起。
+
+---
+
+# 七、RH 等价于这份实际回返函数拥有正谱表示
+
+## 定理 D3：共同正回返表示
+
+对实际 \(D\)，以下等价：
+
+$$
+\boxed{
+\mathrm{RH}
+}
+$$
+
+与：
+
+$$
+\boxed{
+\mathfrak S(z)
+=
+\int_{[0,\infty)}
+\frac{d\omega(u)}{z-u},
+}
+\tag{D21}
+$$
+
+其中 \(\omega\) 是一份有限正测度；该表示在非实域成立。
+
+### 正向证明
+
+在 RH 前件下：
+
+$$
+D(v)=
+\prod_{\gamma>0}
+\left(1+\frac v{\gamma^2}\right)^{m_\gamma}.
+$$
+
+这里对互异正高度求和，重数由 \(m_\gamma\) 保留。
+
+令：
+
+$$
+\theta_\gamma=\gamma^{-2}.
+$$
+
+那么：
+
+$$
+a_1=\sum_{\gamma>0}m_\gamma\theta_\gamma,
+$$
+
+并且：
+
+$$
+\begin{aligned}
+\mathfrak S(z)
+&=
+\sum_{\gamma>0}
+m_\gamma
+\left[
+\frac{\theta_\gamma}{1-\theta_\gamma/z}
+-\theta_\gamma
+\right]\\
+&=
+\sum_{\gamma>0}
+\frac{m_\gamma\theta_\gamma^2}{z-\theta_\gamma}.
+\end{aligned}
+$$
+
+因此取：
+
+$$
+\boxed{
+\omega
+=
+\sum_{\gamma>0}
+m_\gamma\theta_\gamma^2\,\delta_{\theta_\gamma}.
+}
+\tag{D22}
+$$
+
+其总质量有限，得到式（D21）。
+
+### 反向证明
+
+假设式（D21）成立。
+
+右边在非实平面全纯。因此，实际 \(D\) 不能有非实零点：若 \(v_0\) 是一个非实零点，则：
+
+$$
+z_0=-\frac1{v_0}
+$$
+
+也是非实点，而 \(D'(-1/z)/D(-1/z)\) 在 \(z_0\) 必有极点。零点重数不会消除这个对数导数极点。
+
+这与正测度 Cauchy 变换的解析性矛盾。
+
+因此，\(D\) 的全部零点都为实数。又因全部系数正：
+
+$$
+D(v)>0\qquad(v\ge0),
+$$
+
+所以全部零点为负实数，得到 RH。证毕。
+
+这里用到的实际 ξ 解析结构来自其标准 completed 定义；不能对任意随意构造的函数套用同样的零点结论。([DLMF][6])
+
+### 这比“有一个正量子态”强在哪里？
+
+前文的 theta 态：
+
+$$
+\psi=\sqrt{\Phi/\xi(1/2)}
+$$
+
+无条件存在。
+
+但式（D21）要求的是**由对数导数经过特定变换得到的另一份实际函数**具有正谱实现。
+
+原概率为正，并不保证经过这些非线性关系运算后仍然正。
+
+**这里才是量子表示真正需要增加的算术约束。**
+
+---
+
+# 八、高阶关联出现一条新的必要不等式，而且完全不含二阶方差
+
+定义实际累积量：
+
+$$
+\log\frac{\xi(\frac12+b)}{\xi(\frac12)}
+=
+\sum_{k\ge1}
+\frac{\chi_{2k}}{(2k)!}b^{2k}.
+$$
+
+于是：
+
+$$
+\log D(v)
+=
+\sum_{k\ge1}
+\frac{\chi_{2k}}{(2k)!}v^k.
+$$
+
+将式（D19）在无穷远展开：
+
+$$
+\boxed{
+\mathfrak S(z)
+=
+-\frac{\chi_4}{12z}
++\frac{\chi_6}{240z^2}
+-\frac{\chi_8}{10080z^3}
++\cdots.
+}
+\tag{D23}
+$$
+
+定义这里的回返矩：
+
+$$
+M_0=-\frac{\chi_4}{12},
+\qquad
+M_1=\frac{\chi_6}{240},
+\qquad
+M_2=-\frac{\chi_8}{10080}.
+$$
+
+若正谱表示成立，它们满足：
+
+$$
+M_k=\int u^k\,d\omega(u).
+$$
+
+因此：
+
+$$
+M_0M_2-M_1^2\ge0.
+$$
+
+化简得：
+
+$$
+\boxed{
+\mathrm{RH}
+\Longrightarrow
+10\chi_4\chi_8\ge21\chi_6^2.
+}
+\tag{D24}
+$$
+
+这条式子与此前的：
+
+$$
+3\chi_2\chi_6\ge10\chi_4^2
+$$
+
+不同。它完全剥离了二阶方差，只比较四、六、八阶不可约关联。
+
+### 对实际 ξ 的核对
+
+本轮分别用 50 位与 80 位精度计算，得到：
+
+$$
+\boxed{
+10\chi_4\chi_8-21\chi_6^2
+\approx
+4.6696468507366871\times10^{-9}>0.
+}
+$$
+
+两次计算相符。
+
+**这只是高精度必要条件核对，不是区间认证，也不是全阶证明。**
+
+更高阶对应：
+
+$$
+\left(M_{i+j}\right)_{0\le i,j\le N}\succeq0.
+$$
+
+它们检验的是同一份回返谱能否同时解释全部阶数，而不是每个累积量单独有没有“正确符号”。
+
+---
+
+# 九、欧拉常数进一步给出一个非常窄的跨阶兼容区间
+
+沿用：
+
+$$
+c=
+1+\frac{\gamma_{\mathrm E}}2-\frac12\log4\pi
+=
+\frac{D'(1/4)}{D(1/4)}.
+$$
+
+该端点常数由 ζ 的 Laurent 展开和 Gamma 补偿固定。([DLMF][7])
+
+在式（D19）中取 \(z=-4\)：
+
+$$
+\boxed{
+\mathfrak S(-4)=c-a_1.
+}
+$$
+
+若正谱表示成立，记：
+
+$$
+\Delta=a_1-c,
+$$
+
+则：
+
+$$
+\boxed{
+\Delta=\int\frac{d\omega(u)}{4+u}.
+}
+\tag{D25}
+$$
+
+现在不仅知道总质量 \(M_0\)，还知道 \(M_1,M_2\)。这能给出比前文更窄的区间。
+
+## 定理 D4：三矩—端点兼容界
+
+在正谱表示前件下：
+
+$$
+\boxed{
+\frac{M_0^2}{4M_0+M_1}
+\le
+a_1-c
+\le
+\frac{M_0}{4}
+-
+\frac{M_1^2}{4(4M_1+M_2)}.
+}
+\tag{D26}
+$$
+
+### 证明
+
+首先，由 Cauchy–Schwarz：
+
+$$
+M_0^2
+=
+\left(\int 1\,d\omega\right)^2
+\le
+\left(\int(4+u)\,d\omega\right)
+\left(\int\frac{d\omega}{4+u}\right).
+$$
+
+所以：
+
+$$
+\Delta\ge\frac{M_0^2}{4M_0+M_1}.
+$$
+
+另一方面：
+
+$$
+\Delta
+=
+\frac{M_0}{4}
+-\frac14\int\frac{u}{4+u}\,d\omega.
+$$
+
+对正测度 \(u\,d\omega\) 再使用 Cauchy–Schwarz：
+
+$$
+M_1^2
+\le
+(4M_1+M_2)
+\int\frac{u}{4+u}\,d\omega.
+$$
+
+代回即得上界。证毕。
+
+### 实际数值
+
+本轮计算得到：
+
+$$
+\boxed{
+9.2841476793071\times10^{-6}
+\le
+a_1-c
+\le
+9.2841492985777\times10^{-6}.
+}
+$$
+
+实际端点差额为：
+
+$$
+\boxed{
+a_1-c
+\approx
+9.2841492979370\times10^{-6}.
+}
+$$
+
+它位于这个很窄的兼容区间内。
+
+这里依然不能倒转逻辑：**满足这一条必要区间，并不证明正谱测度存在。**
+
+但欧拉常数的角色更清楚了：
+
+> **它不是一个模糊的“宇宙剩余”，而是检验高阶回返矩能否与实际端点响应共同实现的精确校准量。**
+
+加入独立高斯背景时，\(a_1\) 与端点对数导数同时增加 \(\tau/2\)，所以 \(\Delta\) 不变；\(M_0,M_1,M_2\) 也不变。整条式（D26）因此保持不变。
+
+---
+
+# 十、对项目而言，现在能明确划开三项职责
+
+本轮沿用前文固定快照，读取了相关声明，没有把新推导当作已经编译的结果。
+
+`HermitianKernelNegativeSquares.lean` 已经定义：
+
+$$
+\text{所有有限采样的负指标都有统一上界，且某次采样达到该上界}.
+$$
+
+它还构造了一个具有一项负平方的简单核。但它没有自动把实际 ξ 的系数送进这个核。
+
+本轮补出的有限连接是：
+
+$$
+\boxed{
+G_d=WB_dW^*,
+}
+$$
+
+从而把“实际 Bézout 负方向”与“有限复频率观察的不相容”精确对应。
+
+`JensenPolynomialObstruction.lean` 仍将 Jensen 塔与 RH 之间的分析桥作为显式前件，不能把文件名或类型定义当成全阶正性证明。
+
+现在有三项不同任务：
+
+**算术任务：**从实际 theta／质数结构计算并约束 \(\Sigma_d\) 或 \(\mathfrak S\)。
+
+**表示任务：**证明这些指定函数确实具有正谱回返表示，而不是另造一个正函数替代它。
+
+**观察任务：**在有限精度和有限历史条件下，判断它们的正性或构造负证书。
+
+这三项不能互相冒充。尤其不能先把 \(\mathfrak S\) 写成：
+
+$$
+\langle g,(z-H)^{-1}g\rangle
+$$
+
+再用自伴性证明它正——**除非已经从实际算术独立构造了这个 \(H,g\)，并证明等式成立。**
+
+---
+
+## 收束
+
+这一轮最实质的推进，是把“整体关系是否正”变成了三种可互相校验的形式：
+
+$$
+\boxed{
+\text{实际系数的 Bézout 矩阵}
+\longleftrightarrow
+\text{有限复频率观测核}
+\longleftrightarrow
+\text{正谱回返实现}.
+}
+$$
+
+有限层上：
+
+$$
+\boxed{
+n_-(G_d)
+=
+q_d\text{ 的非实共轭根对数}.
+}
+$$
+
+无限极限中：
+
+$$
+\boxed{
+d\Sigma_d(z)\longrightarrow
+\frac{D'(-1/z)}{D(-1/z)}-a_1.
+}
+$$
+
+而欧拉常数固定：
+
+$$
+\boxed{
+-\mathfrak S(-4)=a_1-c.
+}
+$$
+
+因此，你所说的“整体不能被某个局部观察者替代”，现在具有一个很具体的数学版本：
+
+> **每个读数都正常、任意两项都相容，仍然可能不存在容纳全部读数的同一个正结构；但这种失败并非不可言说，它会留下一个有限负二次型，以及无法任意缩小的拟合误差。**
+
+目前尚未证明实际 \(\mathfrak S\) 的正谱表示存在，也没有找到实际负证书。真正需要攻克的算术问题已经集中为：
+
+$$
+\boxed{
+\text{为什么实际 ξ 的高阶回返关系，
+能够——或者不能够——共享同一份正谱测度？}
+}
+$$
+
+继续增加量子空间、黄金编码或参考系，本身不会回答它；只有当这些结构能够给出这个指定回返函数的**实际正分解或严格负测试**时，它们才开始承担零点定位的证明。
+
+[1]: https://arxiv.org/abs/1902.07321?utm_source=chatgpt.com "Jensen polynomials for the Riemann zeta function and other sequences"
+[2]: https://link.springer.com/article/10.1007/s00020-020-02600-w?utm_source=chatgpt.com "Generalized Schur–Nevanlinna functions and their realizations | Integral Equations and Operator Theory | Springer Nature Link"
+[3]: https://www.cambridge.org/core/journals/mathematical-gazette/article/10506-the-hermitesylvester-criterion-for-realrooted-polynomials/7F5C5395F235F18A21A6816C0A78799C?utm_source=chatgpt.com "105.06 The Hermite-Sylvester criterion for real-rooted polynomials | The Mathematical Gazette | Cambridge Core"
+[4]: https://arxiv.org/abs/2105.02058?utm_source=chatgpt.com "The Feshbach-Schur map and perturbation theory"
+[5]: https://arxiv.org/abs/1812.08319?utm_source=chatgpt.com "Quasi-Herglotz functions and convex optimization"
+[6]: https://dlmf.nist.gov/25.4 "DLMF: §25.4 Reflection Formulas ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"
+[7]: https://dlmf.nist.gov/25.2 "DLMF: §25.2 Definition and Expansions ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"
