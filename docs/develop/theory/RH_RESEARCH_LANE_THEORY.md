@@ -6397,3 +6397,334 @@ RH
 \rightarrow
 \texttt{OfflineZeroPickIndexLowerBound}.
 }
+
+
+---
+
+## [PR #5562] POISSON_FRAGMENT_MESH_AND_QUADRATIC_CERTIFICATES
+
+### 地位、来源与实际边界
+
+本节同步此前会话的数学推导及已经写入远端的源码。唯一累计理论卷仍为本文件；Lean 是数学真源。本节不把源码写入、文献移植、算术检查与完整解析证明混为同一完成状态。
+
+研究分支为 `work/prime-weil-foundations-probe-20260905`。同步起点是 `a1c05f63d8d544613fa59c02db7d9735712d6317`。在该提交的实际运行 `33951917793`、job `101268201736` 中，`FragmentLaw` 与 `ComplexQuadraticRowBound` 已通过 Lean 4.33.0；其已打印的主定理依赖仅为 `propext`、`Classical.choice`、`Quot.sound`。同一 root 因 `FragmentMeshTruncation` 和 `QuadraticObserverPolarization` 的具体证明错误失败。因此该起点不是完整绿色 root，更不是已冻结 truth release。
+
+本节参考 `docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md` v4.3，读取 blob 为 `bba1875f68c733b925582ffc81f1344cfce96931`。应用其对象语义、共同 arena、严格核包含和局部/系统 root 分离原则；不修改治理规则，不声称已经获得 maximal-catalog seal 或 AnalysisDisposition 全覆盖。
+
+产地：ChatGPT 主循环直接实施，零独立模型评审席。碎片测度分支与复二次型分支无相互证明依赖，由同一 Lake root 调度编译。编译器检查是实际机器检查，不冒充独立科研同行评审。
+
+上游来源为 `openai/PrimeGaps186` 提交 `61340d0b74163003b32756bb16e91d9209a5e330` 的真实 `PrimeGaps186.lean`，不是 `Challenge.lean` 的占位证明。上游代码按 Apache-2.0 发布，原有第三方 notices 继续适用。`FragmentLaw.lean` 是依赖隔离与固定工具链适配的移植，保留原数学对象和声明名称；它不构成本仓独立发现的 Poisson 期望定理。复数行和估计直接复用本仓 `LongGapsBetweenPrimes.abs_quadratic_form_le_rows`。
+
+原始 physical integral inequalities 独立解除计数仍为 **0/152**。两个 Kloosterman 输入未证明，上游完整 DHL 主链尚未移植。本节不证明 RH、不降低 186、不声称全局 prime-side positivity。
+
+### 1. 碎片测度：先在扩展非负实数中建立总质量
+
+对 zeta > 0，令
+
+\[
+I_k=(0,\zeta]\cap(2^k,2^{k+1}],\qquad
+\mu_k(du)=\mathbf1_{I_k}(u)\frac{du}{u}.
+\]
+
+在每个有限强度区间生成 Poisson 个位置，每个原子以其位置为权重：
+
+\[
+X_k=\sum_{j=1}^{N_k}U_{k,j}\delta_{U_{k,j}}.
+\]
+
+先令 S=sum_k X_k(R) 取值于 ENNReal；不提前假设有限性。复合 Poisson 期望与非负积分交换给出
+
+\[
+\mathbb E\int h\,dX_k=\int_{I_k}h(u)\,du,
+\qquad
+\mathbb E S=\sum_k|I_k|=\zeta.
+\]
+
+因此 S 几乎处处有限。源码的 `finiteFragments` 零测度回退分支几乎处处不触发。`FragmentLaw` 还证明推前映射可测、真实 fragmentLaw 是概率测度，以及任意非负可测 h 的第一矩公式。
+
+对应声明：
+
+```text
+PrimeGap186.ae_isFiniteMeasure_fragment_sum
+PrimeGap186.measurable_finiteFragments
+PrimeGap186.fragmentLaw_isProbabilityMeasure
+PrimeGap186.lintegral_fragmentLaw
+```
+
+删除位置在 (0,epsilon] 中的碎片，其加权质量 D_epsilon 满足
+
+\[
+\mathbb ED_\epsilon=\min(\epsilon,\zeta),\qquad
+\Pr(D_\epsilon\ge\delta)\le\frac{\min(\epsilon,\zeta)}{\delta}
+\quad(\delta>0).
+\]
+
+这是上游已有证明的真实移植 `fragmentLaw_small_seed_tail`。此前把这一层说成尚待从零研究的缺口不准确；库优先检查后应直接消化现有证明。
+
+### 2. 新的截断接口必须保留网格边界误差
+
+令 X 是原始总质量，Y 是删除小碎片后的保留质量，D=X-Y >= 0。对于网格宽度 h>0，记 j=floor(Y/h)。若原始与保留质量的 cell index 不同，则
+
+\[
+\lfloor X/h\rfloor\ne\lfloor Y/h\rfloor
+\quad\Longrightarrow\quad
+D\ge\delta\ \lor\ (j+1)h-\delta\le Y.
+\]
+
+证明：非负增量使 floor 单调；不同就至少增加 1，所以 (j+1)h <= Y+D。若 D<delta，则保留质量已在下一个边界之前的 delta 条带中。
+
+在真实 `FiniteMeasure R` 的 fragmentLaw 上得到
+
+\[
+\Pr(\text{cell changes})
+\le\frac{\min(\epsilon,\zeta)}{\delta}
++\Pr\big((\lfloor Y/h\rfloor+1)h-\delta\le Y\big).
+\]
+
+第二项明确保留在结论中，没有假设零边界概率、密度界或统一反集中。它正是下一解析目标。只知道删除质量的第一矩，不能忽略 floor 的不连续性。
+
+源码 owner 为 `D5/S3/PrimeGaps/FragmentMeshTruncation.lean`。首次失败出在 set membership 未显式展开、cast/trans 类型推断、以及加法单调性应用方向；这些是候选证明的编译问题，不能因为推导正确就提前称其 kernel-closed。
+
+### 3. 复二次型的完整交叉项控制
+
+对于有限复系数 a_i 和矩阵 K，若 |K_ij|=|K_ji|，则由已有实数行和界得到
+
+\[
+\left|\sum_{i,j}a_i\overline{a_j}K_{ij}\right|
+\le\sum_i|a_i|^2\sum_j|K_{ij}|.
+\]
+
+若逐行满足 sum_j |K_ij| <= eta*w_i，则完整形式有界于 eta*sum_i w_i|a_i|^2。这个结论控制全部交叉项，不能由分别检查基向量上的二次值代替。
+
+对实际可求和的矩阵系数级数 K_ij=sum_n term(n,i,j)，先以 sum_n |term(n,i,j)| 控制每个矩阵项，再使用同一个行和定理。源码 owner 为 `ComplexQuadraticRowBound`。这里的 summability 和 row estimates 都是明确前件；没有凭空断言任何实际 zeta 实例满足它们。
+
+若 w_i>0 且 eta<margin，则
+
+\[
+-\mathrm{margin}\sum_iw_i|a_i|^2+\Re(a^*Ka)<0
+\quad(a\ne0),
+\]
+
+相应正号也给出严格正性。因此这层可分别服务有限 Weil 负性与 sieve threshold 的正余量，但二者的具体矩阵语义和解析估计仍需分别建立。
+
+### 4. 按 spec 检查交叉项的对象信息
+
+使用 Mathlib 的完整对象空间
+
+```text
+QuadraticForm R (Fin 2 -> R), R = Real
+```
+
+作为无限 arena，不选择人为样本，不把已证明闭命题的 true 值、proof identity、文件名或提交历史塞入读出。
+
+标准向量 e_0,e_1 给出三个真实读出
+
+\[
+c_0(Q)=Q(e_0),\quad c_1(Q)=Q(e_1),\quad c_2(Q)=Q(e_0+e_1).
+\]
+
+极化公式为
+
+\[
+Q(x,y)=x^2c_0(Q)+y^2c_1(Q)
++xy\big(c_2(Q)-c_0(Q)-c_1(Q)\big).
+\]
+
+所以三个读出联合单射。它们组成的固定数学族具有逐项留一见证：
+
+- 删除 c_0：零二次型与 x^2-xy，在 c_1,c_2 上相同，在 c_0 上不同。
+- 删除 c_1：零二次型与 y^2-xy，在 c_0,c_2 上相同，在 c_1 上不同。
+- 删除 c_2：零二次型与 xy，在 c_0,c_1 上相同，在 c_2 上不同。
+
+由本仓唯一 `jointKernel`/`SemanticClosure` 真源得到每个留一核严格大于完整核。这里计算的是这个明确的数学族，不能提升为整个系统 maximal canonical catalog 的准入结论；无限 arena 也不能输出有限 exact escape rate。极化重构 theorem 是数学定理，不把其 proof 作为第四个对象坐标。
+
+### 5. RH 卷积幂路线：固定常数之后再增加深度
+
+本段保存此前完成的理论推导，状态为 **待接入实际 WeilTestFunction/ZeroData API**。#5065 已有并行的 common Burnol packet 路线，接入前必须读取其最新代码，复用能直接命中的证明，避免另造第二套 zero predicate、multiplicity 或 convolution owner。
+
+若使用固定 `frameOddSynthesis F`，相应余项 R 也固定。不能要求同一个 R 被任意趋零的 epsilon_N 控制，却不解释合成函数如何随 N 变化。要构造新的真实测试函数族 g_(a,N)，再应用既有通用二次型扰动定理。
+
+在紧支撑光滑偶复值测试类与 Fourier-Laplace 约定 FT(g)(z)=int g(x) exp(-i*z*x) dx 下，设零点数据有固定闭条带、局部有限性、共轭和负号对称以及
+
+\[
+C_Z=\sum_\gamma m_\gamma(1+|\gamma|)^{-2}<\infty.
+\]
+
+选择有限分离的非实离线四点轨道。先用有限偶插值构造共同 b，在全部目标节点取 B=FT(b)=1；由闭条带衰减取 C>=1 和固定 R，使
+
+\[
+|B(z)|\le C/(1+|z|),\qquad |z|>R\Rightarrow |B(z)|\le1/2.
+\]
+
+再对 R 内的有限零点按 z~-z 合并，以 z^2 为变量做一次多项式插值。P_i 在目标 gamma_j^2 上取 delta_ij，在 conjugate(gamma_j)^2 上取 -delta_ij，并在所有其他低处节点取零。选择共同 D 与 A_i，使
+
+\[
+|P_i(z^2)|\le A_i(1+|z|)^D.
+\]
+
+至此 b、R、P_i、D、A_i 已固定。令 N0=D+1，构造
+
+\[
+\widehat g_{a,N}(z)=\left(\sum_i a_iP_i(z^2)\right)B(z)^{N0+N}.
+\]
+
+此式在测试函数侧对应 b 的卷积幂再施加 P_i(-d^2/dx^2)。目标值保持为 +a_i/-a_i；低处例外点精确消失。对于剩余零点，Cauchy-Schwarz 给出
+
+\[
+|\widehat g_{a,N}(\gamma)|^2
+\le\|a\|^2\Big(\sum_iA_i^2\Big)C^{2N0}4^{-N}(1+|\gamma|)^{-2}.
+\]
+
+因此完整剩余零点和的绝对值由
+
+\[
+|R_N(a)|\le K_F4^{-N}\|a\|^2,
+\qquad K_F=C_ZC^{2N0}\sum_iA_i^2
+\]
+
+一致控制。取深度使 K_F4^-N<4 min_i m_i，则选定轨道的 -4 sum_i m_i|a_i|^2 严格支配余项。
+
+这是一条有限负性族的构造论证，仍需核对 Fourier 约定、测试类闭合、微分乘子、零点和重排和实际幅值常数。支撑随卷积次数增长，没有固定支撑窗口结论。它也没有提供证明 RH 还需要的独立 prime-side/global positivity。
+
+### 6. 可验收的后续边界
+
+先完成当前 root 的实际编译与完整主声明 axiom 检查；再将网格边界项与实际 scalar/outer/inner 积分连接。解析输入解除只按原始积分命题计数，不把 97 行算术、单纯正性或辅助 Markov 界计入 152。
+
+同时保持 #5065 的真实混合零点和为 RH owner，把可用的行和证书应用到它的实际矩阵；多项式路线只在带来新的有效常数或支撑/conditioning 控制时继续，而不是重证已有存在性。
+
+最终的 186 去公理化须同时检查主定理类型无 unresolved analytic hypotheses、依赖闭包无项目公理，以及真实主证明链确实消费了这些已闭合输入。规范的局部结构证书、全局 catalog seal、Lean 编译、仓库冻结和数学新纪录是不同验收项，任何一项都不能冒充另一项。
+
+
+---
+
+## [PR #5562] MULTIPLICITY_WEIGHTED_SCHUR_CONTINUATION
+
+### 1. 远端事实勘正与本轮交付范围
+
+2026-09-05 重新读取 GitHub：PR #5562 已存在，open、draft，head 为 `work/prime-weil-foundations-probe-20260905`，本轮起点 `e3370a7b504365075371294cf2e0a2a95cbd1add`。本卷上一节 `[PR #5562] POISSON_FRAGMENT_MESH_AND_QUADRATIC_CERTIFICATES` 已实际存在。此前会话末尾关于“尚未确认创建 PR、尚未追加理论卷”的表述不准确，以远端对象为准。
+
+已保存的 `244a3c949c4414c3baf1598d7f2189f3fcccf8fe` 编译日志包含 `Build completed successfully (8723 jobs)`，四个数学模块的 19 个主声明打印仅有 `propext`、`Classical.choice`、`Quot.sound`。它是该旧提交的证据，不能用来证明后续新增文件已编译。现有 `QuadraticObserverPolarization` 已有三探针留一见证，后续 `QuadraticProbeIrredundance` 不应另立重复的 probe 定义；本轮将直接复用已有 owner。
+
+本轮继续遵守 spec v4.3（blob `bba1875f68c733b925582ffc81f1344cfce96931`）的共同对象空间、既有 kernel owner 与局部结果/指定系统 root 分离。以下预条件缩放向量属于数学不等式的证明见证，不是信息逃逸系统的评分权重。它不改变对象 arena、catalog 或 primitive 语义。
+
+产地：ChatGPT 主循环直接推导和实施，未使用独立模型评审。新增 Lean/Scribe 在本轮是待固定工具链检查的 Candidate。此次文件运输只追加本卷并删除先前临时 probe workflow，不运行编译或更改现有 admission 规则。
+
+### 2. 已有统一局部化之后，应保留每个通道的重数
+
+PR #5065 本轮读取的 head 为 `fd45ade20ab1ab80f0cbeadf34ee93c554ba1ee3`。其现有候选主线构造同一个有限轨道族上的共同 Burnol 包，并使用全体混合项估计实际余项。其数学目标形状为
+
+$$
+W(f_{N,a})=-4\sum_i m_i|a_i|^2+R_N(a),
+\qquad |R_N(a)|\le 4^{-(N+1)}C\sum_i|a_i|^2.
+$$
+
+本轮不重新实现 ZeroData、测试函数、卷积或 Burnol 包。应在有限混合矩阵层保留 $m_i$，建立可直接检查的较精细充分条件。设实际余项矩阵 $K$ 的元素范数对称，并取任意正向量 $p_i$。若
+
+$$
+\sum_j |K_{ij}|p_j\le \eta m_i p_i\quad(\forall i),
+$$
+
+则
+
+$$
+\left|\sum_{i,j}a_i\overline{a_j}K_{ij}\right|
+\le\eta\sum_i m_i|a_i|^2.
+$$
+
+证明复用本仓 `LongGapsBetweenPrimes.abs_quadratic_form_le_rows`：在该实数定理中代入 $c_i=|a_i|/p_i$ 与 $L_{ij}=p_ip_j|K_{ij}|$。其右侧为
+
+$$
+\sum_i \frac{|a_i|^2}{p_i^2}\,p_i\sum_j |K_{ij}|p_j
+\le\eta\sum_i m_i|a_i|^2.
+$$
+
+左侧先由三角不等式控制完整复二次型，再精确约去正的 $p_i$。全部交叉项仍在式中。取 $p_i=1$ 恢复旧行和条件；任意正 $p$ 给出更大的可认证集合，但不是每个 $p$ 都改善数值。
+
+### 3. 收敛级数、几何深度与严格余量
+
+对实际矩阵级数 $K_{ij}=\sum_n T_{n,ij}$，要求每个 $\sum_n|T_{n,ij}|$ 有限，并对完整 $K$ 验证范数对称。若
+
+$$
+\sum_j p_j\sum_n |T_{n,ij}|\le\eta m_i p_i,
+$$
+
+则同一个界适用于所有系数 $a$。这里没有交换条件收敛级数，没有假设每个单独的零点混合项都 Hermitian。
+
+若局部化后的实际矩阵族有
+
+$$
+|K^{(N)}_{ij}|\le4^{-(N+1)}B_{ij},
+\quad B_{ij}=B_{ji}\ge0,
+\quad\sum_jB_{ij}p_j\le\lambda m_i p_i,
+$$
+
+则可使用 $\eta_N=4^{-(N+1)}\lambda$，得到
+
+$$
+W(f_{N,a})\le-(4-\eta_N)\sum_i m_i|a_i|^2.
+$$
+
+若另有独立扰动 $E(a)$ 满足 $|E(a)|\le\tau\sum_i m_i|a_i|^2$，则
+
+$$
+W(f_{N,a})+\Re E(a)
+\le-(4-\eta_N-\tau)\sum_i m_i|a_i|^2.
+$$
+
+因而 $\eta_N+\tau<4$ 是统一严格负性的充分条件。这个扰动界必须独立证明，不能把它当成 prime-side 输入已经解决。严格负性的余量是显式保留的 $4-\eta_N-\tau$，可用于后续截断、插值数值误差或表示运输。
+
+### 4. 一个精确反例说明缩放为何有用
+
+令 $m=(1,9)$，$K$ 的对角元为零、两个非对角元均为 2，目标对角余量取 1。未缩放行和条件要求 $2\le\eta$，因此不能用 $\eta<1$ 认证。取 $p=(3,1)$，则
+
+$$
+|K|p=(2,6)=\frac23\operatorname{diag}(1,9)p.
+$$
+
+新条件以 $\eta=2/3$ 认证全部复系数向量，余量至少为 $(|a_0|^2+9|a_1|^2)/3$。它仅是精确回归例，不是伪造的 zeta 数据或信息逃逸 arena。
+
+更一般地，两个通道的非对角幅值为 $r>0$、对角预算为 $d_0,d_1>0$ 时，存在正比率 $t=p_1/p_0$ 同时满足
+
+$$
+rt<d_0,\qquad r/t<d_1
+$$
+
+当且仅当 $r^2<d_0d_1$。正向将两个不等式相乘；反向在开区间 $(r/d_1,d_0/r)$ 中取 $t$。这说明二维时缩放恢复精确的行列式阈值；本段一般等价目前是理论推导，不冒领为已提交 Lean 定理。
+
+### 5. 文献定位与未完成目标
+
+上述方法属于经典 Schur test / 正对角缩放，而非新发现的泛函分析定理。文献参照：I. Schur, *Bemerkungen zur Theorie der beschränkten Bilinearformen mit unendlich vielen Veränderlichen*, J. reine angew. Math. 140 (1911), 1–28；N. Holighaus and F. Voigtlaender, *Schur-type Banach modules of integral kernels acting on mixed-norm Lebesgue spaces*, arXiv:2006.01083。后者提供现代加权 Schur 语境，本轮不移植其混合范数广义定理。
+
+本轮的具体增量是复用既有实数行和 owner，给出复混合级数的缩放证书、重数加权严格余量和可核查回归例，并提供配套 Scribe。要成为实际 Weil 局部化常数改进，仍须从 #5065 的实际 mixedSummand 构造 $B$、证明相应对称性、给出真正的 $p$ 与 $\lambda$，再通过实际 full Gram API 消费它们；本分支不把泛型前件当成已解除的 zeta 分析输入。
+
+原始 physical integral inequalities 独立解除计数仍为 **0/152**。两个 Kloosterman 输入、全局 prime-side positivity、固定支撑窗口的统一局部化及 RH 均未由本轮证明。下一步最有价值的工作是实际通道主要项与余项矩阵的有效估计，而不是重复三探针极化。
+
+
+### 6. 本轮源码交付补记：缩放证书与 Scribe 已写回
+
+本节记录晚于前述推导的实际交付状态。`ScaledComplexQuadraticRowBound.lean` 已在 `49d90eabbe049ca488544f894c798f6d9187cf91` 写入，包含以下七个带证明体的公开声明：
+
+```text
+norm_complex_quadratic_le_scaled_rows
+norm_series_quadratic_le_scaled_rows
+geometric_matrix_envelope_bound
+scaled_rows_robust_coercive_bound
+scaled_rows_robust_strict_negativity
+two_channel_scaling_iff
+two_channel_scaled_regression
+```
+
+因而上节关于两通道等价“尚未提交 Lean”的阶段性记录已被本段更新。实际定理只要求 r>0 与 d1>0；行列式不等式会推出所需的 d0 正性，无须额外假设。旧 `weighted_energy_pos` 仅从 private 改为公开，证明体未改；新模块直接复用它。`QuadraticProbeIrredundance` 的重复候选定义已移除，根入口直接引用 `QuadraticObserverPolarization` 的原有三探针及六个结构定理。
+
+截至 `e3ae73e5ca01dae205d3065ed1710383b19f8e4f`，五个数学模块与一个导入根均有同路径的 `Blueprint/.../*.scribe.cs` 配套：FragmentLaw、FragmentMeshTruncation、ComplexQuadraticRowBound、QuadraticObserverPolarization、ScaledComplexQuadraticRowBound、PrimeWeilFoundationsRoot。数学声明通过 `StatementSource.FromLean()` 引用；没有手写生成的 Markdown 投影。Scribe 发射与声明解析须在本地工具链完成。
+
+已逐步复核证明的正性、除法方向和完整交叉项。额外的精确 Fraction/SymPy 检查验证了缩放约去恒等式、两条复系数平方和恒等式、210 组有理参数的区间判据和中点见证。特别地，令 a0=x+iy、a1=u+iv，则
+
+$$
+\frac23(|a_0|^2+9|a_1|^2)\mp4\Re(a_0\overline{a_1})
+=\frac23|a_0\mp3a_1|^2\ge0.
+$$
+
+这些代数检查是开发期验证，不等同于 Lean kernel 检查。本轮新增源码未运行 Lean 编译或 Scribe reconciliation，保留 Candidate 状态，由本地固定工具链验收。旧 `244a3c...` 的成功日志不覆盖新模块。本轮没有处理 GitHub CI、改变准入规则、合并或自动合并；用于追加本卷的临时文件运输工作流会自删除。
+
+另须在接入 #5065 时核对复系数约定：本模块使用 sum(a_i*conj(a_j)*K_ij)，而标准 Gram 写作 star(a)*G*a。两者通过有限双重和交换取 K_ij=G_ji 对齐，不能未经证明直接把不同约定的矩阵符号认作同一项。本分支未完成该实际 Gram 适配或实际 majorant 的有效缩放搜索。
