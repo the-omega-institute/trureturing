@@ -120,7 +120,7 @@ public sealed class DependencyDirectionTests
         Assert.Equal(
             ["StrataLint.Engine", "StrataLint.Scribe", "StrataLint.Scribe.Documents", "StrataLint.TestSupport"],
             AssemblyReferencePolicy.ApplicationReferences(
-                System.Reflection.Assembly.Load("StrataLint.Scribe.Documents.Tests")));
+                SiblingTestAssemblyLoader.Load("StrataLint.Scribe.Documents.Tests")));
     }
 
     [Fact]
@@ -135,7 +135,6 @@ public sealed class DependencyDirectionTests
                 "../../StrataLint.Scribe/StrataLint.Scribe.csproj",
                 "../../TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj",
                 "../StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj",
-                "../StrataLint.Scribe.Documents.Tests/StrataLint.Scribe.Documents.Tests.csproj",
                 "../StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
                 "../StrataLint.Tests/StrataLint.Tests.csproj",
             ],

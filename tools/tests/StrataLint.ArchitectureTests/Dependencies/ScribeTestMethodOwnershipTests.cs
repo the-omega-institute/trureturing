@@ -19,7 +19,7 @@ public sealed class ScribeTestMethodOwnershipTests
         var readings = new[]
         {
             ScribeTestMethodOwnershipPolicy.Inspect(
-                Assembly.Load("StrataLint.Scribe.Documents.Tests"),
+                SiblingTestAssemblyLoader.Load("StrataLint.Scribe.Documents.Tests"),
                 documentsAssembly,
                 mustTouchDocuments: true),
             ScribeTestMethodOwnershipPolicy.Inspect(
@@ -39,6 +39,22 @@ public sealed class ScribeTestMethodOwnershipTests
 
         var violations = readings.SelectMany(static reading => reading.Violations).ToArray();
         Assert.True(violations.Length == 0, Format(readings, violations));
+    }
+
+    [Fact]
+    public void ScribeDocumentsTestAssemblyLoaderLoadsSiblingOutputAndFailsClosedWithAttemptedPaths()
+    {
+        const string assemblyName = "StrataLint.Scribe.Documents.Tests";
+        var loaded = SiblingTestAssemblyLoader.Load(assemblyName);
+
+        Assert.Equal(assemblyName, loaded.GetName().Name);
+
+        const string missingAssemblyName = "StrataLint.Scribe.Documents.Tests.Missing";
+        var exception = Assert.Throws<FileNotFoundException>(
+            () => SiblingTestAssemblyLoader.Load(missingAssemblyName));
+
+        Assert.Contains("Attempted paths:", exception.Message, StringComparison.Ordinal);
+        Assert.Contains(missingAssemblyName + ".dll", exception.Message, StringComparison.Ordinal);
     }
 
     [Fact]

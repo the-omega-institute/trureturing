@@ -13,7 +13,6 @@
     <ProjectReference Include="../../StrataLint.EngineeringScope/StrataLint.EngineeringScope.csproj" />
     <ProjectReference Include="../StrataLint.Tests/StrataLint.Tests.csproj" />
     <ProjectReference Include="../StrataLint.EngineeringScope.Tests/StrataLint.EngineeringScope.Tests.csproj" />
-    <ProjectReference Include="../StrataLint.Scribe.Documents.Tests/StrataLint.Scribe.Documents.Tests.csproj" />
     <ProjectReference Include="../StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj" />
     <ProjectReference Include="../../TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj" />
     <!-- The official analyzer is admitted because compiler diagnostics enforce source

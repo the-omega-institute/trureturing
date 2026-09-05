@@ -16,6 +16,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.Scribe.Tests", "tests\StrataLint.Scribe.Tests\StrataLint.Scribe.Tests.csproj", "{B26A0B2F-7288-4C1F-AE3F-C8742C534876}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.ArchitectureTests", "tests\StrataLint.ArchitectureTests\StrataLint.ArchitectureTests.csproj", "{1597A91E-2EAD-4E6E-BA67-1EAFA7182300}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F697FF04-9C23-49E0-9799-083241AFF71E} = {F697FF04-9C23-49E0-9799-083241AFF71E}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrataLint.EngineeringScope", "StrataLint.EngineeringScope\StrataLint.EngineeringScope.csproj", "{2055AE1E-5F31-4AB4-91ED-369E4D248596}"
 EndProject
