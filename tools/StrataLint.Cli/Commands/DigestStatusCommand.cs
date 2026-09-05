@@ -546,7 +546,7 @@ internal static class DigestStatusCommand
         string AtomId,
         string Justification,
         string ReentryCondition,
-        string? BlockerClass);
+        string BlockerClass);
 
     private sealed record FormalizeProjection(
         string SourceId,
