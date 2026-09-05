@@ -136,6 +136,52 @@ public sealed class MsBuildCompileOracleProjectionTests
     }
 
     [Fact]
+    public void DynamicPropertyInExistsConditionRequiresFullSnapshot()
+    {
+        var snapshot = Snapshot(
+            ("src/App.csproj", Project(
+                "<PropertyGroup Condition=\"Exists('$(SomeDir)/x.props')\"><Enabled>true</Enabled></PropertyGroup>")));
+
+        var projection = ScribeTestMapDeriver.CreateEffectiveDerivationInputProjection(snapshot);
+
+        Assert.Equal(DerivationInputProjectionMode.Full, projection.Mode);
+    }
+
+    [Fact]
+    public void OrdinaryPropertyReferencesInPropertyBodyAndConditionKeepSparseProjection()
+    {
+        var snapshot = Snapshot(
+            ("Directory.Build.props", """
+                <Project>
+                  <PropertyGroup Condition="'$(CI)' == 'true'">
+                    <WarningsAsErrors>$(WarningsAsErrors);NU1605</WarningsAsErrors>
+                  </PropertyGroup>
+                </Project>
+                """),
+            ("src/App.csproj", Project()),
+            ("README.md", "outside projection\n"));
+
+        var projection = ScribeTestMapDeriver.CreateEffectiveDerivationInputProjection(snapshot);
+
+        Assert.Equal(DerivationInputProjectionMode.Sparse, projection.Mode);
+        Assert.Equal(
+            ["Directory.Build.props", "src/App.csproj"],
+            projection.Files.Select(static file => file.Path.Value));
+    }
+
+    [Fact]
+    public void OrdinaryPropertyNameContainingExistsKeepsSparseProjection()
+    {
+        var snapshot = Snapshot(
+            ("src/App.csproj", Project(
+                "<PropertyGroup Condition=\"'$(FileExistsFlag)' == 'true'\"><Enabled>true</Enabled></PropertyGroup>")));
+
+        var projection = ScribeTestMapDeriver.CreateEffectiveDerivationInputProjection(snapshot);
+
+        Assert.Equal(DerivationInputProjectionMode.Sparse, projection.Mode);
+    }
+
+    [Fact]
     public void PropertyBodyFileReadRequiresFullSnapshot()
     {
         var snapshot = Snapshot(

@@ -68,12 +68,7 @@ internal static class MsBuildCompileOracle
             }
 
             if (document.Root?.Name.LocalName != "Project"
-                || HasUnclosedDirectoryEnumeration(path, document))
-            {
-                return EffectiveDerivationInputProjection.Full(snapshot);
-            }
-
-            if (HasUnclosedPropertyBody(document))
+                || HasUnclosedPropertyFunctionUsage(document))
             {
                 return EffectiveDerivationInputProjection.Full(snapshot);
             }
@@ -83,8 +78,7 @@ internal static class MsBuildCompileOracle
                          .Where(static attribute => attribute.Name.LocalName == "Condition")
                          .Select(static attribute => attribute.Value))
             {
-                if (HasUnclosedCondition(condition)
-                    || !TryCollectExistsReferences(path, condition, existsReferences))
+                if (!TryCollectExistsReferences(path, condition, existsReferences))
                 {
                     return EffectiveDerivationInputProjection.Full(snapshot);
                 }
@@ -250,50 +244,15 @@ internal static class MsBuildCompileOracle
     private static string DirectoryOf(string path) =>
         path.LastIndexOf('/') is var separator && separator >= 0 ? path[..separator] : string.Empty;
 
-    private static bool HasUnclosedPropertyBody(XDocument document) =>
-        document.Descendants()
-            .Where(static element => element.Parent?.Name.LocalName == "PropertyGroup")
-            .Any(static element => ContainsDynamicReference(element.Value)
-                || ContainsPropertyFunction(element.Value));
-
-    private static bool HasUnclosedCondition(string condition)
-    {
-        var withoutThisFileDirectory = condition.Replace(
-            "$(MSBuildThisFileDirectory)",
-            string.Empty,
-            StringComparison.Ordinal);
-        return ContainsDynamicReference(withoutThisFileDirectory)
-            || ContainsPropertyFunction(condition);
-    }
-
-    private static bool HasUnclosedDirectoryEnumeration(string importingPath, XDocument document)
-    {
-        foreach (var element in document.Descendants())
-        {
-            foreach (var attribute in element.Attributes())
-            {
-                var value = attribute.Value;
-                if (value.Contains("$([System.IO.Directory]::", StringComparison.OrdinalIgnoreCase)
-                    || value.Contains("GetFiles(", StringComparison.OrdinalIgnoreCase)
-                    || value.Contains("GetDirectories(", StringComparison.OrdinalIgnoreCase))
-                {
-                    return true;
-                }
-
-                if ((value.Contains('*') || value.Contains('?'))
-                    && !IsClosedCompileWildcard(
-                        importingPath,
-                        element.Name.LocalName,
-                        attribute.Name.LocalName,
-                        value))
-                {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
+    private static bool HasUnclosedPropertyFunctionUsage(XDocument document) =>
+        document.DescendantNodes()
+            .OfType<XText>()
+            .Any(static text => ContainsPropertyFunction(text.Value))
+        || document.Descendants()
+            .SelectMany(static element => element.Attributes())
+            .Where(static attribute => attribute.Parent?.Name.LocalName != "Import"
+                || attribute.Name.LocalName != "Project")
+            .Any(static attribute => ContainsPropertyFunction(attribute.Value));
 
     private static bool TryCloseItemPathAttribute(
         RepositorySnapshot snapshot,
@@ -348,8 +307,7 @@ internal static class MsBuildCompileOracle
         || value.Contains("%(", StringComparison.Ordinal);
 
     private static bool ContainsPropertyFunction(string value) =>
-        value.Contains("[System.IO.", StringComparison.OrdinalIgnoreCase)
-        || value.Contains("[MSBuild]::", StringComparison.OrdinalIgnoreCase);
+        value.Contains("$([", StringComparison.Ordinal);
 
     private static bool TryCollectExistsReferences(
         string importingPath,
@@ -359,11 +317,19 @@ internal static class MsBuildCompileOracle
         var offset = 0;
         while ((offset = condition.IndexOf("Exists", offset, StringComparison.OrdinalIgnoreCase)) >= 0)
         {
+            if (offset > 0
+                && (char.IsLetterOrDigit(condition[offset - 1]) || condition[offset - 1] == '_'))
+            {
+                offset += "Exists".Length;
+                continue;
+            }
+
             var cursor = offset + "Exists".Length;
             SkipWhitespace(condition, ref cursor);
             if (cursor >= condition.Length || condition[cursor++] != '(')
             {
-                return false;
+                offset += "Exists".Length;
+                continue;
             }
             SkipWhitespace(condition, ref cursor);
             if (cursor >= condition.Length || condition[cursor] is not ('\'' or '"'))
