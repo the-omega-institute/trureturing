@@ -1,0 +1,12 @@
+fingerprints:
+  raw_sha256: sha256:95b346cb037d080fa5b41c90823c8a90187fab86acb909e8f81fed1a43f86eef
+  normalized_sha256: sha256:95b346cb037d080fa5b41c90823c8a90187fab86acb909e8f81fed1a43f86eef
+cas_ref: sha256:95b346cb037d080fa5b41c90823c8a90187fab86acb909e8f81fed1a43f86eef
+coverage_gids: []
+receipts:
+  scribe: []
+  unresolved_subitems: []
+  quarantine:
+    justification: "Chain child fragment `* 或增加领域前件。` names no canonical admitted-domain premise, restriction operation, or bridge to the passive-boundary statement. The broad D5 Lean `rg` search for object change, intervention, observation expansion, domain premises, and new experiments exited 0; the parallel Scribe-title/body search exited 0. The closest frozen hit D5/S3/ConceptDynamics/TransportValidity/PredicateRestrictedValidity.lean:33 states predicate validity after a standalone admission restriction, but its public statement does not mention the passive experiment family, its joint readout, `notRefines`, or a bridge showing that an added domain premise crosses this boundary. The exact passive-boundary `rg` search exited 0 and found only the duplicate theorem and a proposition-identical forwarding wrapper, not an admitted-domain bridge."
+    reentry_condition: "Add canonical admitted-domain-premise semantics and a frozen public bridge from that carrier and operation to parent atom 702f09e2955c0c9fad8c4c8d9d4abb9f30bcf8772cda57aeb17d1c9d13356054, then re-cover this child."
+    blocker_class: multi-clause-guard
