@@ -15,15 +15,26 @@ public sealed record RawChange(RepoPath Path, RawChangeKind Kind);
 
 public sealed class RawChangeSet
 {
-    private RawChangeSet(ImmutableArray<RawChange> entries)
+    private readonly HashSet<string> exactPaths;
+
+    private RawChangeSet(
+        ImmutableArray<RawChange> entries,
+        HashSet<string> exactPaths)
     {
         Entries = entries;
         Paths = entries.Select(static entry => entry.Path).ToImmutableArray();
+        this.exactPaths = exactPaths;
     }
 
     public ImmutableArray<RawChange> Entries { get; }
 
     public ImmutableArray<RepoPath> Paths { get; }
+
+    public bool ContainsPath(string path)
+    {
+        ArgumentNullException.ThrowIfNull(path);
+        return exactPaths.Contains(path);
+    }
 
     public static RawChangeSet Create(IEnumerable<string> paths) =>
         CreateWithKinds(paths.Select(static path => (path, RawChangeKind.Modified)));
@@ -52,7 +63,7 @@ public sealed class RawChangeSet
             builder.Add(new RawChange(path, kind));
         }
 
-        return new RawChangeSet(builder.ToImmutable());
+        return new RawChangeSet(builder.ToImmutable(), exact);
     }
 }
 
