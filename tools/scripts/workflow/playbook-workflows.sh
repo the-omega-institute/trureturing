@@ -161,70 +161,7 @@ require_new_module_blueprint_mirror() {
 
 
 freeze_exists() {
-  local active_state grep_output grep_status ledger_file
-  local module_ledger_files=()
-  if ! command -v jq >/dev/null 2>&1; then
-    echo "PLAYBOOK_INVALID jq is required to inspect $FROZEN_LEDGER" >&2
-    return 2
-  fi
-  if [[ ! -d "$FROZEN_LEDGER" ]]; then
-    echo "PLAYBOOK_INVALID frozen ledger is missing: $FROZEN_LEDGER" >&2
-    return 2
-  fi
-
-  if grep_output="$(git grep --untracked -l -F -e "$MODULE_PATH" \
-      -- "$FROZEN_LEDGER/*.json" 2>&1)"; then
-    while IFS= read -r ledger_file; do
-      [[ -z "$ledger_file" ]] || module_ledger_files+=("$ledger_file")
-    done <<< "$grep_output"
-  else
-    grep_status=$?
-    if [[ "$grep_status" -eq 1 ]]; then
-      return 1
-    fi
-    echo "PLAYBOOK_INVALID failed to locate target module ledger shards: $grep_output" >&2
-    return 2
-  fi
-
-  if ! active_state="$(jq -sc --arg node "$MODULE_PATH" '
-      def exact_keys($expected): (keys | sort) == ($expected | sort);
-      if all(.[];
-          exact_keys(["event_hash", "event_type", "payload", "schema_version"])
-          and .event_type == "Freeze"
-          and .schema_version == 5
-          and (.payload | exact_keys([
-            "declaration_statement_ids",
-            "descriptor_selector",
-            "prerequisite_frozen_node_ids",
-            "statement_id"
-          ]))
-          and (.payload.descriptor_selector | type) == "string"
-          and (.payload.statement_id | type) == "string"
-          and (.payload.declaration_statement_ids | type) == "array"
-          and all(.payload.declaration_statement_ids[];
-            type == "object"
-            and exact_keys(["declaration_name_key", "kind", "statement_id"])
-            and (.declaration_name_key | type) == "string"
-            and (.kind | type) == "string"
-            and (.statement_id | type) == "string")
-          and (.payload.prerequisite_frozen_node_ids | type) == "array"
-          and all(.payload.prerequisite_frozen_node_ids[]; type == "string"))
-      then any(.[]; .payload.descriptor_selector == $node)
-      else error("matching shard is not a canonical v5 Freeze")
-      end
-    ' "${module_ledger_files[@]}" 2>&1)"; then
-    echo "PLAYBOOK_INVALID failed to inspect target module v5 Freeze shards: $active_state" >&2
-    return 2
-  fi
-
-  case "$active_state" in
-    true) return 0 ;;
-    false) return 1 ;;
-    *)
-      echo "PLAYBOOK_INVALID frozen ledger query returned an invalid state: $active_state" >&2
-      return 2
-      ;;
-  esac
+  run_cli ledger-frozen --target "$MODULE_PATH"
 }
 
 freeze_module_if_needed() {
