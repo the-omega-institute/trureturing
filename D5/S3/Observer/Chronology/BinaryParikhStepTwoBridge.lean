@@ -85,7 +85,16 @@ theorem binary_letter_counts_length (word : List Bool) :
     word.count true + word.count false = word.length := by
   induction word with
   | nil => rfl
-  | cons head tail ih => cases head <;> simp_all <;> omega
+  | cons head tail ih =>
+      cases head
+      · have ht : (false :: tail).count true = tail.count true := by simp
+        have hf : (false :: tail).count false = tail.count false + 1 := by simp
+        rw [ht, hf, List.length_cons]
+        omega
+      · have ht : (true :: tail).count true = tail.count true + 1 := by simp
+        have hf : (true :: tail).count false = tail.count false := by simp
+        rw [ht, hf, List.length_cons]
+        omega
 
 /-- The usual binary Parikh matrix is a literal ordered product of unipotent
 integer matrices. -/
