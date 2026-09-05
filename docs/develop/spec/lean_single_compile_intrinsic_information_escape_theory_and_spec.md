@@ -3942,8 +3942,9 @@ def PrimitiveBundle.agreesB
     (left right : arena.State) : Bool := by
   letI := bundle.indexFintype
   letI := bundle.indexDecidableEq
-  exact Finset.univ.all fun index =>
-    decide ((bundle.atom index).kernel.relation left right)
+  exact Finset.fold (fun left right => left && right) true
+    (fun index =>
+      decide ((bundle.atom index).kernel.relation left right)) Finset.univ
 ```
 
 必须证明：
@@ -3953,6 +3954,9 @@ theorem agreesB_eq_true_iff :
   bundle.agreesB left right = true ↔
     bundle.agrees left right
 ```
+
+反射证明必须使用 pin 中已存在的 `Finset.fold_op_rel_iff_and`（或同强度、已在 pin
+实测存在的引理）。
 
 以及：
 
@@ -4050,9 +4054,16 @@ def PrimitiveBundle.separatesOnAxis
     (left right : arena.State) : Bool := by
   letI := bundle.indexFintype
   letI := bundle.indexDecidableEq
-  exact Finset.univ.any fun index =>
-    decide ((bundle.atom index).axis = axis) &&
-      decide (¬(bundle.atom index).kernel.relation left right)
+  exact Finset.fold (fun left right => left || right) false
+    (fun index =>
+      decide ((bundle.atom index).axis = axis) &&
+        decide (¬(bundle.atom index).kernel.relation left right)) Finset.univ
+
+theorem PrimitiveBundle.separatesOnAxis_eq_true_iff :
+  bundle.separatesOnAxis axis left right = true ↔
+    ∃ index,
+      (bundle.atom index).axis = axis ∧
+        ¬(bundle.atom index).kernel.relation left right
 
 def PrimitiveBundle.roleSignature
     (bundle : PrimitiveBundle arena)
@@ -4060,6 +4071,9 @@ def PrimitiveBundle.roleSignature
   fun coordinate =>
     bundle.separatesOnAxis (axisOfOrdinal coordinate) left right
 ```
+
+`separatesOnAxis_eq_true_iff` 的反射证明必须使用 pin 中已存在的
+`Finset.fold_op_rel_iff_or`（或同强度、已在 pin 实测存在的引理）。
 
 必须证明：
 
@@ -4390,21 +4404,22 @@ v3 的规范形状为：
 | catalog membership | `root_id` | enclosing root identity | E |
 | catalog membership | `catalog_id` | enclosing catalog identity | E |
 
-上表中的每个 v3 occurrence 记录必须包含对应字段；以下仅展示 role 分解片段：
+上表中的每个 v3 occurrence 记录必须包含对应字段；以下仅展示 role 分解的示意结构,
+数值由封印实测：
 
 ```json
 {
-  "primitive_count": 4,
+  "primitive_count": "<Nat>",
   "primitive_axes": ["cut", "flow", "admit", "anchor"],
-  "unique_capture_count": 12,
+  "unique_capture_count": "<Nat>",
   "unique_capture_by_role_signature": {
-    "1000": 3,
-    "0100": 2,
-    "0010": 1,
-    "0001": 1,
-    "1100": 2,
-    "1010": 1,
-    "1111": 2
+    "1000": "<Nat>",
+    "0100": "<Nat>",
+    "0010": "<Nat>",
+    "0001": "<Nat>",
+    "1100": "<Nat>",
+    "1010": "<Nat>",
+    "1111": "<Nat>"
   }
 }
 ```
@@ -6034,21 +6049,21 @@ read-only JSON / CSV / DOT artifacts
 }
 ```
 
-v3 catalog record 必须另含：
+v3 catalog record 必须另含。下列为示意结构,数值由封印实测：
 
 ```json
 {
-  "catalog_id": "causal-unified-transitions",
-  "catalog_kind": "canonical_maximal",
-  "object_arena": "D5.S3.Example.UnifiedArena",
-  "state_card": 48,
-  "off_diagonal_pair_count": 2256,
-  "full_escape_count": 0,
-  "full_escape_rate": {"numerator": 0, "denominator": 2256},
-  "catalog_verdict": "irredundant",
+  "catalog_id": "<CatalogId>",
+  "catalog_kind": "<CatalogKind>",
+  "object_arena": "<ArenaName>",
+  "state_card": "<Nat>",
+  "off_diagonal_pair_count": "<Nat>",
+  "full_escape_count": "<Nat>",
+  "full_escape_rate": {"numerator": "<Nat>", "denominator": "<Nat>"},
+  "catalog_verdict": "<CatalogVerdict>",
   "redundant_theorems": [],
-  "verdict_certificate": "...",
-  "exclusive_capture_total": 8,
+  "verdict_certificate": "<LeanName>",
+  "exclusive_capture_total": "<Nat>",
   "pairwise_capture_overlap": [],
   "kernel_refinement": [],
   "kernel_equivalence_classes": [],
@@ -7155,16 +7170,17 @@ def agreesB (bundle : PrimitiveBundle arena)
     (left right : arena.State) : Bool := by
   letI := bundle.indexFintype
   letI := bundle.indexDecidableEq
-  exact Finset.univ.all fun index =>
-    @decide ((bundle.atom index).kernel.relation left right)
-      ((bundle.atom index).kernel.decidableRelation left right)
+  exact Finset.fold (fun left right => left && right) true
+    (fun index =>
+      @decide ((bundle.atom index).kernel.relation left right)
+        ((bundle.atom index).kernel.decidableRelation left right)) Finset.univ
 
 theorem agreesB_eq_true_iff
     (bundle : PrimitiveBundle arena)
     (left right : arena.State) :
     bundle.agreesB left right = true ↔
       bundle.agrees left right := by
-  -- finite all/reflection proof
+  -- Finset.fold_op_rel_iff_and reflection proof
   sorry
 
 end PrimitiveBundle
@@ -7904,8 +7920,8 @@ v4.2 不推翻第 48 节；它在 v4.1 kernel-residual 内核上作 additive 扩
 8. nested cumulative flat catalog 的粗成员必为零，严格 chain 的相邻 increments 可同时非空；
 9. overlap/refinement matrices、multiplicity spectrum、role totals、verdict 与 layer chain 都由 Lean theorem 加 reflected equality 认证；
 10. kernel-address coincidence 仅是 diagnostic digest group，不是 `Equiv`、transport、rate 或 verdict 证据；
-11. 48-state `IC ⊕ OI` 是 causal alignment device，保留两个 frozen theorems 的 faithful realizations并证明三层 strict chain；
-12. 512-state `OI × IC` 也是 alignment device，仅在 refl lane 满足第 33 节预算后可采用；
+11. 48-state `IC.Model ⊕ OI.Model` 是 causal alignment device，保留两个 frozen theorems 的 faithful realizations 并证明三层 strict chain；
+12. 512-state `OI.Model × IC.Model` 也是 alignment device，仅在 refl lane 满足第 33 节预算后可采用；
 13. 两种 carrier 都不声称两个 frozen SCM encodings 是同一个 causal ontology；
 14. schema v3 只承载新 shared analysis；v2 artifact 与 frozen `InformationRoot` 的十一项 singleton counts 保持原义。
 
