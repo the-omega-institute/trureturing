@@ -554,7 +554,7 @@ public sealed partial class MakeWorkflowTests
 
         foreach (Match match in Regex.Matches(
             shell,
-            """(?m)^[ \t]*(?:(?:STRATALINT_LEAN_REPORT="\$report"[ \t]+)?dotnet[ \t]+"\$scribe"|run_scribe)[ \t]+(?<arguments>(?:projections|emit|emit-values|describe-report|markdown-check)[^\r\n]*)$""",
+            """(?m)^[ \t]*(?:(?:STRATALINT_LEAN_REPORT="\$report"[ \t]+)?dotnet[ \t]+"\$scribe"|run_scribe)[ \t]+(?<arguments>(?:projections|emit|emit-values|describe-report|markdown-check)[^\\\r\n]*)(?:[ \t]+\\)?[ \t]*$""",
             RegexOptions.CultureInvariant | RegexOptions.NonBacktracking))
         {
             yield return Regex.Replace(
@@ -602,7 +602,7 @@ public sealed partial class MakeWorkflowTests
         Assert.Equal(
             [
                 "projections --check --report \"$REPORT\"",
-                "describe-report --check",
+                "describe-report --check --paths-from -",
                 "markdown-check --report \"$REPORT\" --paths-from -",
             ],
             canonicalCommands);

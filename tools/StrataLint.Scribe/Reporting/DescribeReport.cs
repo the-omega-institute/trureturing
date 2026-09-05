@@ -75,6 +75,68 @@ internal sealed class DescribeReport
         var material = documents
             .OrderBy(static document => document.Header.Gid.Value, StringComparer.Ordinal)
             .ToImmutableArray();
+        return BuildCore(
+            repositoryRoot,
+            material,
+            material,
+            leanReport,
+            validateContentGovernance,
+            leanSourcePaths: null,
+            scope: null,
+            libraryInspection: null,
+            problemInspection: null,
+            graph: null);
+    }
+
+    internal static DescribeReport BuildIncremental(
+        string repositoryRoot,
+        IEnumerable<ScribeDocument> documents,
+        IEnumerable<string> changedPaths,
+        LeanAxiomReport? leanReport = null,
+        bool validateContentGovernance = false)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
+        ArgumentNullException.ThrowIfNull(documents);
+        ArgumentNullException.ThrowIfNull(changedPaths);
+        var universe = documents
+            .OrderBy(static document => document.Header.Gid.Value, StringComparer.Ordinal)
+            .ToImmutableArray();
+        var pathMaterial = changedPaths.ToImmutableArray();
+        var libraryInspection = LibraryNoteCatalog.Inspect(repositoryRoot);
+        var problemInspection = ProblemCandidateCatalog.Inspect(repositoryRoot);
+        var catalog = leanReport is null ? null : DeclarationCatalog.Create(leanReport);
+        var graph = DocumentGraphAssembler.Assemble(universe, catalog);
+        var scope = DescribeCheckScope.Create(
+            universe,
+            pathMaterial,
+            graph,
+            libraryInspection,
+            problemInspection);
+        return BuildCore(
+            repositoryRoot,
+            scope.Documents,
+            universe,
+            leanReport,
+            validateContentGovernance,
+            scope.IsFull ? null : scope.LeanSourcePaths,
+            scope,
+            libraryInspection,
+            problemInspection,
+            graph);
+    }
+
+    private static DescribeReport BuildCore(
+        string repositoryRoot,
+        ImmutableArray<ScribeDocument> material,
+        ImmutableArray<ScribeDocument> universe,
+        LeanAxiomReport? leanReport,
+        bool validateContentGovernance,
+        IEnumerable<string>? leanSourcePaths,
+        DescribeCheckScope? scope,
+        LibraryNoteCatalogInspection? libraryInspection,
+        ProblemCandidateCatalogInspection? problemInspection,
+        DocumentGraph? graph)
+    {
         var nodes = ImmutableArray.CreateBuilder<DescribeNodeRecord>();
         var observations = ImmutableArray.CreateBuilder<DescribeObservation>();
         var formulaContentSlots = 0;
@@ -90,9 +152,11 @@ internal sealed class DescribeReport
                 ref formulaContentSlots);
         }
 
-        observations.AddRange(ObserveLeanDocstrings(repositoryRoot));
-        var libraryInspection = LibraryNoteCatalog.Inspect(repositoryRoot);
-        var notes = libraryInspection.Notes;
+        observations.AddRange(ObserveLeanDocstrings(repositoryRoot, leanSourcePaths));
+        libraryInspection ??= LibraryNoteCatalog.Inspect(repositoryRoot);
+        var notes = scope is null
+            ? libraryInspection.Notes
+            : libraryInspection.Notes.Where(note => scope.LibraryPaths.Contains(note.RelativePath));
         observations.AddRange(notes
             .Where(static note => note.Doi is not null)
             .Select(static note => new DescribeObservation(
@@ -122,18 +186,35 @@ internal sealed class DescribeReport
             orderedNodes.Count(static node => node.StatementKind == "lean-declaration"),
             byKind,
             byProvenance);
-        var redFindings = DescribeRepositoryValidator.Validate(
-            repositoryRoot,
-            material,
-            leanReport,
-            libraryInspection).ToBuilder();
-        if (validateContentGovernance)
-        {
-            redFindings.AddRange(DescribeContentGovernance.Validate(
+        var redFindings = (scope is null
+            ? DescribeRepositoryValidator.Validate(
                 repositoryRoot,
                 material,
-                stats,
-                libraryInspection));
+                leanReport,
+                libraryInspection)
+            : DescribeRepositoryValidator.ValidateIncremental(
+                repositoryRoot,
+                universe,
+                leanReport,
+                libraryInspection,
+                problemInspection!,
+                graph!,
+                scope)).ToBuilder();
+        if (validateContentGovernance)
+        {
+            redFindings.AddRange(scope is null
+                ? DescribeContentGovernance.Validate(
+                    repositoryRoot,
+                    material,
+                    stats,
+                    libraryInspection)
+                : DescribeContentGovernance.ValidateIncremental(
+                    repositoryRoot,
+                    universe,
+                    material,
+                    stats,
+                    libraryInspection,
+                    scope));
         }
 
         return new DescribeReport(
@@ -279,7 +360,9 @@ internal sealed class DescribeReport
         }
     }
 
-    private static ImmutableArray<DescribeObservation> ObserveLeanDocstrings(string repositoryRoot)
+    private static ImmutableArray<DescribeObservation> ObserveLeanDocstrings(
+        string repositoryRoot,
+        IEnumerable<string>? sourcePaths)
     {
         var root = Path.Combine(repositoryRoot, "D5");
         if (!Directory.Exists(root))
@@ -288,8 +371,14 @@ internal sealed class DescribeReport
         }
 
         var observations = ImmutableArray.CreateBuilder<DescribeObservation>();
-        foreach (var path in Directory.EnumerateFiles(root, "*.lean", SearchOption.AllDirectories)
-                     .Order(StringComparer.Ordinal))
+        var paths = sourcePaths is null
+            ? Directory.EnumerateFiles(root, "*.lean", SearchOption.AllDirectories)
+            : sourcePaths
+                .Where(static path => path.StartsWith("D5/", StringComparison.Ordinal)
+                    && path.EndsWith(".lean", StringComparison.Ordinal))
+                .Select(path => Path.Combine(repositoryRoot, path))
+                .Where(File.Exists);
+        foreach (var path in paths.Order(StringComparer.Ordinal))
         {
             var inDocstring = false;
             var lines = File.ReadAllLines(path);

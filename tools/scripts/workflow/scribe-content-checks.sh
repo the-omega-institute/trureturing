@@ -59,7 +59,7 @@ if [[ "${#CHANGED_PATHS[@]}" -gt 0 ]]; then
         requires_markdown_check=1
         ;;
       D5/*.lean|Trureturing.lean|lean-toolchain|lake-manifest.json|lakefile.toml|lakefile.lean|\
-      Library/*|Problems/*|Meta/BACKFILL.yaml|Meta/Digestion/backfill/*|\
+      Library/*|Problems/*|Golden/Frozen/state/*.json|Meta/BACKFILL.yaml|Meta/Digestion/backfill/*|\
       tools/lean-inspector/*|tools/scripts/report/lean-report-input.sh)
         requires_describe_check=1
         ;;
@@ -97,10 +97,12 @@ if [[ "$requires_projection_check" == "1" ]]; then
   run_scribe projections --check --report "$REPORT"
 fi
 if [[ "$requires_describe_check" == "1" ]]; then
-  run_scribe describe-report --check
+  run_scribe describe-report --check --paths-from - \
+    < <(printf '%s\0' "${CHANGED_PATHS[@]}")
 fi
 # 判词只落在改动触及的那几篇文档上;路径经本块的标准输入交付,NUL 分隔,与 git 同口径,
 # 因而不必落一个还要清理的临时文件。
 if [[ "$requires_markdown_check" == "1" ]]; then
-  run_scribe markdown-check --report "$REPORT" --paths-from -
-fi < <(printf '%s\0' "${CHANGED_PATHS[@]}")
+  run_scribe markdown-check --report "$REPORT" --paths-from - \
+    < <(printf '%s\0' "${CHANGED_PATHS[@]}")
+fi
