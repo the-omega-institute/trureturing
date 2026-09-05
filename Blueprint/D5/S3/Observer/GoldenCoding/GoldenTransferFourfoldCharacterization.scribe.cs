@@ -11,12 +11,12 @@ internal sealed class GoldenTransferFourfoldCharacterizationDocument : IScribeDo
         + "golden_transfer_fourfold_characterization";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Four independent transfer and orbit conditions characterize the golden ratio.",
+        "Four analytic transfer-scale conditions characterize the golden ratio.",
         H("Golden Transfer Fourfold Characterization"),
         Blocks(Describe.Lean(
             DescribeId.Create("golden-transfer-fourfold-characterization"),
             DeclarationHandle.Create(Declaration),
-            H("The golden transfer data and shortest orbit agree uniquely"),
+            H("The golden transfer data agree uniquely"),
             StatementSource.FromAuthor(TheoremFormula()),
             AssessedProvenance.FromRepo(),
             Blocks(
@@ -26,30 +26,23 @@ internal sealed class GoldenTransferFourfoldCharacterizationDocument : IScribeDo
                         + "derivative has magnitude phi to the minus two, while the golden axis "
                         + "exponential scale is phi to the minus four.")),
                 Paragraph(Text(
-                    "Every integral hyperbolic trace has absolute value at least three. "
-                        + "Monotonicity and injectivity of arcosh therefore make the trace-three "
-                        + "golden axis shortest, with equality exactly at absolute trace three.")),
-                Paragraph(Text(
                     "For every candidate radius greater than one, each of the sharp-domain, "
-                        + "fixed-point, observed-derivative, and shortest-orbit scale conditions "
+                        + "fixed-point, observed-derivative, and exponential-scale conditions "
                         + "holds exactly when that candidate is phi.")),
                 Paragraph(Text(
-                    "Repository and pinned-library searches found the three imported partial "
-                        + "owners and the required arcosh order lemmas, but no existing theorem "
-                        + "stating the integral-trace minimum and fourfold characterization."))),
+                    "The public theorem does not claim shortest closed-orbit minimality: the "
+                        + "available frozen modules expose a numeric trace-three scale but no "
+                        + "typed closed-geodesic carrier with a translation-length map."))),
             DescribeRole.Theorem))));
 
     private static Formula TheoremFormula()
     {
         Formula real = Seq(Mathbb, Grp(F.Id("R")));
-        Formula integers = Seq(Mathbb, Grp(F.Id("Z")));
-        Formula one = D(1), two = D(2), three = D(3), four = D(4);
+        Formula one = D(1), two = D(2), four = D(4);
         Formula phiInverse = Power(Varphi, Seq(Minus, one));
         Formula phiInverseSquared = Power(Varphi, Seq(Minus, two));
         Formula phiInverseFourth = Power(Varphi, Seq(Minus, four));
-        Formula ell = Multiply(
-            two,
-            Call("arcosh", new Formula.Fraction(three, two)));
+        Formula ell = F.Id("goldenAxisTranslationLength");
 
         Formula sharpRadius = Call("IsLUB", RadiusSet(F.Id("r")), Varphi);
         Formula reciprocal = Equal(Subtract(Varphi, one), phiInverse);
@@ -66,19 +59,6 @@ internal sealed class GoldenTransferFourfoldCharacterizationDocument : IScribeDo
                 "deriv", Branch(), Subtract(Varphi, one))),
             phiInverseSquared);
         Formula orbitScale = Equal(Call("exp", Neg(ell)), phiInverseFourth);
-
-        Formula traceAbs = new Formula.Absolute(F.Id("t"));
-        Formula traceLength = Multiply(
-            two,
-            Call("arcosh", new Formula.Fraction(traceAbs, two)));
-        Formula shortestTrace = ForAll(
-            "t",
-            integers,
-            Implies(
-                Less(two, traceAbs),
-                All(
-                    LessOrEqual(ell, traceLength),
-                    Iff(Equal(ell, traceLength), Equal(traceAbs, three)))));
 
         Formula r = F.Id("r");
         Formula candidateFixedPoint = Apply(Branch(), Subtract(r, one));
@@ -106,7 +86,6 @@ internal sealed class GoldenTransferFourfoldCharacterizationDocument : IScribeDo
             fixedPoint,
             derivative,
             orbitScale,
-            shortestTrace,
             candidateCharacterizations));
     }
 
@@ -149,9 +128,6 @@ internal sealed class GoldenTransferFourfoldCharacterizationDocument : IScribeDo
 
     private static Formula Subtract(Formula left, Formula right) =>
         new Formula.Binary(left, FormulaBinaryOperator.Subtract, right);
-
-    private static Formula Multiply(Formula left, Formula right) =>
-        new Formula.Binary(left, FormulaBinaryOperator.Multiply, right);
 
     private static Formula Equal(Formula left, Formula right) =>
         new Formula.Relation(left, FormulaRelationOperator.Equal, right);

@@ -3,8 +3,9 @@
    mirror-B: D5/B/S3/Observer/GoldenCoding/GoldenTransferFourfoldCharacterization
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Four independent transfer and orbit conditions characterize the golden ratio. -/
+   digest: Four analytic transfer-scale conditions characterize the golden ratio. -/
 
+import D5.S3.Analytic.Characterizations.GoldenTransferTriangle
 import D5.S3.Analytic.Characterizations.GoldenInverseBranchFixedPoint
 import D5.S3.Observer.GoldenCoding.GoldenHyperbolicAxis
 
@@ -12,11 +13,10 @@ import D5.S3.Observer.GoldenCoding.GoldenHyperbolicAxis
 Library-search audit trail (2026-09-05): `GoldenTransferTriangle` supplies the sharp disk
 radius, reciprocal identity, local derivative, and exponential scale;
 `GoldenInverseBranchFixedPoint` supplies the positive fixed-point characterization; and
-`GoldenHyperbolicAxis` supplies the trace-three axis length. Repository searches for shortest
-closed orbits, geodesic length minimality, and hyperbolic trace minimality found no public theorem
-comparing that length with every integral hyperbolic trace. Pinned Mathlib supplies
-`Real.arcosh_le_arcosh` and `Real.strictMonoOn_arcosh`, but no combined result. GitHub Lean code
-searches for `arcosh` with `trace` and for `closed geodesic` both returned zero hits.
+`GoldenHyperbolicAxis` supplies the numeric trace-three scale. Repository searches of frozen
+`GoldenCoding` and `HyperbolicTransport` modules found no typed hyperbolic-axis or closed-geodesic
+carrier equipped with a translation-length map. The former integer/arcosh comparison was therefore
+retracted: arithmetic monotonicity on bare traces does not state shortest closed-orbit minimality.
 -/
 
 set_option autoImplicit false
@@ -29,37 +29,6 @@ namespace D5.S3.Observer.GoldenCoding.GoldenTransferFourfoldCharacterization
 open D5.S3.Analytic.Characterizations.GoldenTransferTriangle
 open D5.S3.Analytic.Characterizations.GoldenInverseBranchFixedPoint
 open D5.S3.Observer.GoldenCoding.GoldenHyperbolicAxis
-
-private theorem integral_hyperbolic_trace_length_minimal (t : Int)
-    (ht : 2 < t.natAbs) :
-    goldenAxisTranslationLength ≤
-        2 * Real.arcosh ((t.natAbs : Real) / 2) ∧
-      (goldenAxisTranslationLength =
-          2 * Real.arcosh ((t.natAbs : Real) / 2) ↔
-        t.natAbs = 3) := by
-  have hthree : 3 ≤ t.natAbs := by omega
-  have harg : (3 / 2 : Real) ≤ (t.natAbs : Real) / 2 := by
-    exact div_le_div_of_nonneg_right (by exact_mod_cast hthree) (by norm_num)
-  have hthreePos : 0 < (3 / 2 : Real) := by norm_num
-  have htPos : 0 < (t.natAbs : Real) / 2 := by positivity
-  have harcosh : Real.arcosh (3 / 2) ≤
-      Real.arcosh ((t.natAbs : Real) / 2) :=
-    (Real.arcosh_le_arcosh hthreePos htPos).2 harg
-  constructor
-  · unfold goldenAxisTranslationLength
-    linarith
-  · constructor
-    · intro hlength
-      have heq : Real.arcosh (3 / 2) =
-          Real.arcosh ((t.natAbs : Real) / 2) := by
-        unfold goldenAxisTranslationLength at hlength
-        linarith
-      have hinput : (3 / 2 : Real) = (t.natAbs : Real) / 2 :=
-        Real.strictMonoOn_arcosh.injOn hthreePos htPos heq
-      symm
-      exact_mod_cast (show (3 : Real) = t.natAbs by linarith)
-    · intro htrace
-      simp [goldenAxisTranslationLength, htrace]
 
 private theorem golden_four_conditions_characterize (r : Real) (hr : 1 < r) :
     (IsLUB {s : Real | 1 ≤ s ∧ s < 2 ∧ 1 / (2 - s) < 1 + s} r ↔
@@ -134,9 +103,8 @@ private theorem golden_four_conditions_characterize (r : Real) (hr : 1 < r) :
     · rintro rfl
       rfl
 
-/-- The sharp invariant disk, positive inverse-branch fixed point, local multiplier, and shortest
-integral-trace orbit all select the golden ratio. The trace comparison also states that the golden
-axis length is attained exactly at absolute trace three. -/
+/-- The sharp invariant disk, positive inverse-branch fixed point, local multiplier, and
+exponential scale each select the golden ratio. -/
 theorem golden_transfer_fourfold_characterization :
     IsLUB {r : Real | 1 ≤ r ∧ r < 2 ∧ 1 / (2 - r) < 1 + r}
         Real.goldenRatio ∧
@@ -148,12 +116,6 @@ theorem golden_transfer_fourfold_characterization :
           (Real.goldenRatio - 1)| = (Real.goldenRatio⁻¹) ^ 2 ∧
       Real.exp (-goldenAxisTranslationLength) =
         (Real.goldenRatio⁻¹) ^ 4 ∧
-      (∀ t : Int, 2 < t.natAbs →
-        goldenAxisTranslationLength ≤
-            2 * Real.arcosh ((t.natAbs : Real) / 2) ∧
-          (goldenAxisTranslationLength =
-              2 * Real.arcosh ((t.natAbs : Real) / 2) ↔
-            t.natAbs = 3)) ∧
       (∀ r : Real, 1 < r →
         (IsLUB {s : Real | 1 ≤ s ∧ s < 2 ∧ 1 / (2 - s) < 1 + s} r ↔
             r = Real.goldenRatio) ∧
@@ -166,8 +128,7 @@ theorem golden_transfer_fourfold_characterization :
   have htriangle := golden_transfer_triangle
   refine ⟨htriangle.1, htriangle.2.1,
     golden_inverse_branch_positive_fixed_point_iff,
-    htriangle.2.2.1, ?_, integral_hyperbolic_trace_length_minimal,
-    golden_four_conditions_characterize⟩
+    htriangle.2.2.1, ?_, golden_four_conditions_characterize⟩
   have hlength : goldenAxisTranslationLength =
       4 * Real.log Real.goldenRatio :=
     golden_hyperbolic_axis.2.2.2.2.2.2.2.2.2.2.2.2.2.1

@@ -5,14 +5,9 @@ cas_ref: sha256:6baa2ab8c0970617d6c3cd90fee74a0ea729116d95f60bd0248e9335001dca5e
 coverage_gids:
   - gid: D5/S3/Analytic/Characterizations/GoldenInverseBranchFixedPoint.golden_inverse_branch_positive_fixed_point_iff
     target_statement_id: sha256:c90833237857f6cbf1a5611f63bec39f9a37a511f0849a8bd7d39e1de6a9db93
-  - gid: D5/S3/Observer/GoldenCoding/GoldenTransferFourfoldCharacterization.golden_transfer_fourfold_characterization
-    target_statement_id: sha256:c26335da9c52d697b2087cfe6775a5d682dd703c0d92804c8497701fe98bf321
 receipts:
   scribe:
     - gid: D5/S3/Analytic/Characterizations/GoldenInverseBranchFixedPoint.golden_inverse_branch_positive_fixed_point_iff
       definition_sha256: sha256:f754bb1c16ea673011c469bb75f6f57e06e7f2feace5c7828918fb82d82402e8
       emission_sha256: sha256:44899c8255d22ab43c76fe777828ce48d0709d191a2baf404f9709f103c1f40f
-    - gid: D5/S3/Observer/GoldenCoding/GoldenTransferFourfoldCharacterization.golden_transfer_fourfold_characterization
-      definition_sha256: sha256:815f653ea3866f72e5e197c2c9d0efb8d087bef841792582f8a28c13903bb361
-      emission_sha256: sha256:7bd29bbcd0b4a5bf196b79d0becdc51b4f6a2f6d7a016be76f1258100eb03b81
   unresolved_subitems: []

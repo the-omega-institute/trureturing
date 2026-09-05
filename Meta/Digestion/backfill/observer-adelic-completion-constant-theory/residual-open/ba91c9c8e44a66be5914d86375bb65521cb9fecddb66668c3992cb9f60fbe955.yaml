@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:ba91c9c8e44a66be5914d86375bb65521cb9fecddb66668c3992cb9f60fbe955
+  normalized_sha256: sha256:ba91c9c8e44a66be5914d86375bb65521cb9fecddb66668c3992cb9f60fbe955
+cas_ref: sha256:ba91c9c8e44a66be5914d86375bb65521cb9fecddb66668c3992cb9f60fbe955
+coverage_gids: []
+receipts:
+  scribe: []
+  unresolved_subitems: []
+  quarantine:
+    justification: "Whole-atom multi-clause guard for Theorem 145.1 after the frozen-carrier audit. The redeposited GID D5/S3/Observer/GoldenCoding/GoldenTransferFourfoldCharacterization.golden_transfer_fourfold_characterization publicly carries the three identities in (145.5), sharp-radius maximality, positive fixed-point uniqueness, derivative magnitude, the numeric exponential-scale identity in (145.6), and four separate candidate-radius iff characterizations. The source's `最短闭测地线` and `最短闭轨道` clauses remain uncarried: GoldenHyperbolicAxis.golden_hyperbolic_axis exposes a concrete trace-three matrix equality and a real constant defined as `2 * arcosh (3 / 2)`, but no hyperbolic-element or closed-geodesic carrier, no translation-length map on such a carrier, and no public bridge from that numeric expression to a closed orbit. The numeric (145.6) equality and the fourth candidate scale iff are therefore carried only as analytic scale identities, not as shortest-orbit assertions."
+    reentry_condition: Freeze a source-faithful hyperbolic-element or closed-geodesic carrier with a translation-length map and a public bridge proving the golden axis universally minimal, with its equality characterization; then reconsider whole-atom coverage alongside the redeposited analytic GID.
+    blocker_class: multi-clause-guard
+  chain_atoms:
+    - 6b1c040394c522eb22662ac74b98062ffa7d7268f336f1c4c53748a2b3c5a87c
+    - 6baa2ab8c0970617d6c3cd90fee74a0ea729116d95f60bd0248e9335001dca5e
+    - 6bebf294113a6b30dbce4cba1840f66e788434aa2c3bbe126fdc427516f4ae6f
+    - 8fc601f386a507727ceb3dde804ffb1a6ad8d66be75abe8e9b961d24d33dce4b
