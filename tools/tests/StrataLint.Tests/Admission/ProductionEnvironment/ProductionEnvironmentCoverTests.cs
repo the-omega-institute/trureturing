@@ -458,14 +458,14 @@ public sealed partial class ProductionEnvironmentTests
             byteIdenticalBaseline: true));
         using var temporary = new TemporaryDirectory();
         DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
-        var before = DirectoryLedgerTestSupport.Image(temporary.Path);
+        var before = DirectoryLedgerTestSupport.RepositoryImage(temporary);
         var environment = BuildCoverEnvironment(temporary.Path, inputs, inputs.Files);
 
         var result = environment.AlignScribeReceipt(CoverWorld.AlignArgs(inputs));
 
         Assert.False(result.Success);
         Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
-        Assert.Equal(before, DirectoryLedgerTestSupport.Image(temporary.Path));
+        Assert.Equal(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
     }
 
     [Fact]
