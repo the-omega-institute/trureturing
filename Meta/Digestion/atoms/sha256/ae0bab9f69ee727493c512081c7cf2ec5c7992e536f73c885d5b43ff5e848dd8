@@ -1,0 +1,26 @@
+## 推论 B1.1：高阶延拓是一项带常数的积分问题
+
+定义：
+
+$$
+\boxed{
+R_d(x)
+=
+\int_0^x
+d\alpha_d^{\,d-1}q_{d-1}(u/\alpha_d)\,du.
+}
+$$
+
+那么：
+
+$$
+\boxed{
+q_d(x)=R_d(x)+\beta_d,
+\qquad
+\beta_d=(-1)^d\frac{d!}{d^d}a_d.
+}
+\tag{B6}
+$$
+
+这很重要：
+
