@@ -6,6 +6,10 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Whole-atom coverage is guarded after clause-level review. Frozen GID `D5/S3/ConceptDynamics/Policy/StrictPolicyPowerGrowth.strict_policy_power_growth` publicly carries the fine-policy witness outside coarse capability and universal coarse-policy non-separation; children `88533d07cd0c9e4a8fd62bfea8bdc7240f08ab2c4b61a05c7cda8b4887305425` and `ccdedf265100dd1614988e6cbf6f5ebea6fb83f709e6964c008ed5ac6e8d95b8` are absorbed by that GID. The boxed ruler-commitment comparison is a status annotation, while the open children `独立授权`, `可审计日志`, and `或真正有效的否决结构` are bare doctrine labels with no typed carrier, operator, or conclusion. Retrieval receipts: D5/Blueprint searches for independent authorization, audit-log accountability, effective veto, and contestability exited 0 and found only adjacent owners with different public statements; pinned Mathlib searches exited 1 with no exact hits; GitHub Lean-code searches for the three exact English phrases exited 0 with no hits. Local probes `/private/tmp/w73a38-independent-authorization-probe.lean`, `/private/tmp/w73a38-auditable-log-probe.lean`, and `/private/tmp/w73a38-effective-veto-probe.lean` each exited 1 after the frozen policy theorem closed, at exact goals `⊢ independentAuthorization`, `⊢ auditableLog`, and `⊢ effectiveVetoStructure`."
+    reentry_condition: "Add canonical policy-linked carriers and frozen bridge theorems for independent authorization, audit-based detection and blocking of non-factorizing policies, and a veto relation excluding every policy outside coarse capability; then cover the three open child atoms and re-cover the parent."
+    blocker_class: multi-clause-guard
   chain_atoms:
     - 88533d07cd0c9e4a8fd62bfea8bdc7240f08ab2c4b61a05c7cda8b4887305425
     - ccdedf265100dd1614988e6cbf6f5ebea6fb83f709e6964c008ed5ac6e8d95b8

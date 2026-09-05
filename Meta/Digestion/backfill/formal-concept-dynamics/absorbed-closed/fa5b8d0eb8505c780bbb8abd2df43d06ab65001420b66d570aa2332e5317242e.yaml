@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:fa5b8d0eb8505c780bbb8abd2df43d06ab65001420b66d570aa2332e5317242e
+  normalized_sha256: sha256:fa5b8d0eb8505c780bbb8abd2df43d06ab65001420b66d570aa2332e5317242e
+cas_ref: sha256:fa5b8d0eb8505c780bbb8abd2df43d06ab65001420b66d570aa2332e5317242e
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/InstitutionalCapture/TwoTruthReportVector.two_truth_report_vector_exists
+    target_statement_id: sha256:114d58ab74728888da66e73172e6a68f9f4adeef2d4d39fcbdf11f50f453be09
+receipts:
+  scribe:
+    - gid: D5/S3/ConceptDynamics/InstitutionalCapture/TwoTruthReportVector.two_truth_report_vector_exists
+      definition_sha256: sha256:e26be0960d95a978e077da4737390451cac14d2cef98a3129a020b8f478b28f8
+      emission_sha256: sha256:a2f11de7efa37e15048deb90b7f8de1d5a6abffe40ff0b538ff435329d0c263f
+  unresolved_subitems: []
