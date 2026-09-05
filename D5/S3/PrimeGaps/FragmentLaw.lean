@@ -3,7 +3,7 @@
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:analytic-source-port)
    anchors: []
-   digest: Realize the weighted Poisson fragment law, its finite mass, and its first-moment tail bound without analytic input axioms. -/
+   digest: Prove the actual Poisson fragment law and its first-moment tail. -/
 
 /-
 Ported from openai/PrimeGaps186 at 61340d0b74163003b32756bb16e91d9209a5e330.
@@ -12,13 +12,15 @@ SPDX-License-Identifier: Apache-2.0
 The upstream attribution notices remain applicable; see the provenance section
 in RH_RESEARCH_LANE_THEORY.md. Modified on 2026-09-05: dependency-isolated port
 onto the repository's pinned Mathlib, with original public names preserved.
+The probability-map proofs now explicitly use the proved measurable maps.
 No main-module or Challenge import and no project axiom is used.
 -/
 
-import Mathlib.Probability.ProductMeasure
+import Mathlib.Probability.Independence.InfinitePi
 import Mathlib.Probability.Distributions.Poisson.Basic
 import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
 import Mathlib.MeasureTheory.Integral.Lebesgue.Markov
+import Mathlib.Order.SuccPred.IntervalSucc
 import Mathlib.Tactic
 
 open scoped BigOperators ENNReal NNReal Topology
@@ -168,7 +170,7 @@ theorem lintegral_weighted_finitePoissonLaw
 theorem finitePoissonLaw_isProbabilityMeasure (μ : FiniteMeasure ℝ) :
     IsProbabilityMeasure (finitePoissonLaw μ) := by
   unfold finitePoissonLaw
-  infer_instance
+  exact Measure.isProbabilityMeasure_map measurable_weightedEmpirical_sample.aemeasurable
 
 theorem measurable_fragment_sum :
     Measurable (fun ω : ℤ → FiniteMeasure ℝ =>
@@ -260,7 +262,7 @@ theorem fragmentLaw_isProbabilityMeasure (ζ : ℝ) : IsProbabilityMeasure (frag
   let : ∀ k : ℤ, IsProbabilityMeasure (finitePoissonLaw (cappedDyadicIntensity ζ k)) :=
     fun k => finitePoissonLaw_isProbabilityMeasure _
   unfold fragmentLaw
-  infer_instance
+  exact Measure.isProbabilityMeasure_map measurable_finiteFragments.aemeasurable
 
 theorem lintegral_fragmentLaw (ζ : ℝ) (h : ℝ → ℝ≥0∞) (hh : Measurable h) :
     (∫⁻ c, ∫⁻ u, h u ∂(c : Measure ℝ) ∂(fragmentLaw ζ)) =
