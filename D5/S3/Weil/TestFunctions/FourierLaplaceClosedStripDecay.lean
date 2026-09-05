@@ -125,12 +125,16 @@ private theorem fourierLaplace_bound_closedStrip_raw
     _ = |w.im| * |x| := abs_mul _ _
     _ ≤ η * |x| := mul_le_mul_of_nonneg_right hw (abs_nonneg x)
 
-/-- For every nonnegative strip width, the transform decays quadratically in
-the real direction, uniformly over the closed strip. -/
-theorem fourierLaplace_decay_closedStrip
+/-- The specific weighted zeroth-plus-second-derivative constant. -/
+def closedStripJetBudget (b : WeilTestFunction) (η : ℝ) : ℝ :=
+  (∫ x : ℝ, Real.exp (η * |x|) * ‖b x‖) +
+    ∫ x : ℝ, Real.exp (η * |x|) * ‖((deriv^[2]) (b : ℝ → ℂ)) x‖
+
+/-- The original integration-by-parts proof gives this specific two-jet budget. -/
+theorem closedStripJetBudget_spec
     (b : WeilTestFunction) (η : ℝ) (_hη : 0 ≤ η) :
-    ∃ C : ℝ, 0 ≤ C ∧ ∀ w : ℂ, |w.im| ≤ η →
-      ‖fourierLaplace b w‖ ≤ C / (1 + w.re ^ 2) := by
+    0 ≤ closedStripJetBudget b η ∧ ∀ w : ℂ, |w.im| ≤ η →
+      ‖fourierLaplace b w‖ ≤ closedStripJetBudget b η / (1 + w.re ^ 2) := by
   let d2 : ℝ → ℂ := (deriv^[2]) (b : ℝ → ℂ)
   let C0 : ℝ := ∫ x : ℝ, Real.exp (η * |x|) * ‖b x‖
   let C2 : ℝ := ∫ x : ℝ, Real.exp (η * |x|) * ‖d2 x‖
@@ -144,7 +148,9 @@ theorem fourierLaplace_decay_closedStrip
           rw [Function.iterate_succ_apply']
           exact ih.deriv
     exact hcompact 2
-  refine ⟨C0 + C2, ?_, ?_⟩
+  change 0 ≤ C0 + C2 ∧ ∀ w : ℂ, |w.im| ≤ η →
+    ‖fourierLaplace b w‖ ≤ (C0 + C2) / (1 + w.re ^ 2)
+  constructor
   · dsimp only [C0, C2]
     exact add_nonneg (integral_nonneg fun x =>
       mul_nonneg (Real.exp_pos _).le (norm_nonneg _))
@@ -190,12 +196,68 @@ theorem fourierLaplace_decay_closedStrip
     apply (le_div_iff₀ hden).2
     simpa only [C0, C2, mul_comm] using hcombined
 
+/-- The original public existential interface is preserved. -/
+theorem fourierLaplace_decay_closedStrip
+    (b : WeilTestFunction) (η : ℝ) (hη : 0 ≤ η) :
+    ∃ C : ℝ, 0 ≤ C ∧ ∀ w : ℂ, |w.im| ≤ η →
+      ‖fourierLaplace b w‖ ≤ C / (1 + w.re ^ 2) :=
+  ⟨closedStripJetBudget b η, closedStripJetBudget_spec b η hη⟩
+
+private theorem weighted_norm_integral_le_support
+    (g : ℝ → ℂ) (hg : Continuous g) (hc : HasCompactSupport g)
+    (B η J : ℝ) (hη : 0 ≤ η)
+    (hs : tsupport g ⊆ Set.Icc (-B) B) (hJ : (∫ x : ℝ, ‖g x‖) ≤ J) :
+    (∫ x : ℝ, Real.exp (η * |x|) * ‖g x‖) ≤ Real.exp (η * B) * J := by
+  have hi := hg.integrable_of_hasCompactSupport hc
+  have hw : Integrable (fun x : ℝ => Real.exp (η * |x|) * ‖g x‖) :=
+    (by fun_prop : Continuous (fun x : ℝ => Real.exp (η * |x|) * ‖g x‖)).integrable_of_hasCompactSupport
+      hc.norm.mul_left
+  calc
+    _ ≤ ∫ x : ℝ, Real.exp (η * B) * ‖g x‖ := by
+      apply integral_mono hw (hi.norm.const_mul _)
+      intro x
+      by_cases hx : g x = 0
+      · simp [hx]
+      · have habs : |x| ≤ B := abs_le.mpr (hs (subset_tsupport g hx))
+        exact mul_le_mul_of_nonneg_right
+          (Real.exp_le_exp.mpr (mul_le_mul_of_nonneg_left habs hη)) (norm_nonneg _)
+    _ = Real.exp (η * B) * (∫ x : ℝ, ‖g x‖) := integral_const_mul _ _
+    _ ≤ _ := mul_le_mul_of_nonneg_left hJ (Real.exp_pos _).le
+
+/-- Two finite unweighted L1 enclosures and a support radius bound the exact
+closed-strip budget. The derivative support is inherited from the original test. -/
+theorem closedStripJetBudget_le_support_jets
+    (b : WeilTestFunction) (B η J0 J2 : ℝ) (hη : 0 ≤ η)
+    (hs : tsupport (b : ℝ → ℂ) ⊆ Set.Icc (-B) B)
+    (hJ0 : (∫ x : ℝ, ‖b x‖) ≤ J0)
+    (hJ2 : (∫ x : ℝ, ‖((deriv^[2]) (b : ℝ → ℂ)) x‖) ≤ J2) :
+    closedStripJetBudget b η ≤ Real.exp (η * B) * (J0 + J2) := by
+  have hd2Smooth : ContDiff ℝ ∞ ((deriv^[2]) (b : ℝ → ℂ)) :=
+    ContDiff.iterate_deriv 2 b.contDiff
+  have hd2Compact : HasCompactSupport ((deriv^[2]) (b : ℝ → ℂ)) := by
+    simpa only [Function.iterate_succ_apply', Function.iterate_zero_apply] using
+      b.hasCompactSupport.deriv.deriv
+  have hd2support : tsupport ((deriv^[2]) (b : ℝ → ℂ)) ⊆ Set.Icc (-B) B := by
+    have h := (tsupport_deriv_subset (f := deriv (b : ℝ → ℂ))).trans
+      ((tsupport_deriv_subset (f := (b : ℝ → ℂ))).trans hs)
+    simpa only [Function.iterate_succ_apply', Function.iterate_zero_apply] using h
+  have h0 := weighted_norm_integral_le_support (b : ℝ → ℂ) b.continuous
+    b.hasCompactSupport B η J0 hη hs hJ0
+  have h2 := weighted_norm_integral_le_support ((deriv^[2]) (b : ℝ → ℂ))
+    hd2Smooth.continuous hd2Compact B η J2 hη hd2support hJ2
+  unfold closedStripJetBudget
+  calc
+    _ ≤ Real.exp (η * B) * J0 + Real.exp (η * B) * J2 := add_le_add h0 h2
+    _ = _ := by ring
+
 example : Nonempty WeilTestFunction := ⟨standardTestFunction⟩
 
 example (η : ℝ) (hη : 0 ≤ η) : ∃ C : ℝ, 0 ≤ C := by
   rcases fourierLaplace_decay_closedStrip standardTestFunction η hη with ⟨C, hC, _⟩
   exact ⟨C, hC⟩
 
+#print axioms closedStripJetBudget_spec
+#print axioms closedStripJetBudget_le_support_jets
 #print axioms fourierLaplace_decay_closedStrip
 
 end D5.S3.Weil.TestFunctions.FourierLaplaceClosedStripDecay

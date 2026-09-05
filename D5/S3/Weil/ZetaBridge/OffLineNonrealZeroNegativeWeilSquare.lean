@@ -50,14 +50,14 @@ open scoped ComplexConjugate ContDiff Convolution
 
 noncomputable section
 
-private noncomputable def reflectionRep (Z : ZeroData) (j : ℕ) : ℕ :=
+noncomputable def reflectionRep (Z : ZeroData) (j : ℕ) : ℕ :=
   min j (Z.reflection j)
 
 noncomputable def zeroOrbit (Z : ZeroData) (n : ℕ) : Finset ℕ :=
   {n, Z.reflection n, Z.conjugation n,
     Z.conjugation (Z.reflection n)}
 
-private theorem gamma_injective (Z : ZeroData) : Function.Injective Z.gamma := by
+theorem gamma_injective (Z : ZeroData) : Function.Injective Z.gamma := by
   intro i j hij
   apply Z.zero_injective
   rw [Z.zero_eq_critical_add_I_mul_gamma i,
@@ -70,7 +70,7 @@ private theorem reflectionRep_le (Z : ZeroData) (j : ℕ) :
   · have hj' : Z.reflection j ≤ j := Nat.le_of_not_ge hj
     simp [reflectionRep, hj']
 
-private theorem reflectionRep_freq (Z : ZeroData) (j : ℕ) :
+theorem reflectionRep_freq (Z : ZeroData) (j : ℕ) :
     Z.gamma (reflectionRep Z j) = Z.gamma j ∨
       Z.gamma (reflectionRep Z j) = -Z.gamma j := by
   by_cases hle : j ≤ Z.reflection j
@@ -80,7 +80,7 @@ private theorem reflectionRep_freq (Z : ZeroData) (j : ℕ) :
     have hle' : Z.reflection j ≤ j := Nat.le_of_not_ge hle
     simp [reflectionRep, Nat.min_eq_right hle']
 
-private theorem reflectionRep_eq_or (Z : ZeroData) (i j : ℕ)
+theorem reflectionRep_eq_or (Z : ZeroData) (i j : ℕ)
     (hij : reflectionRep Z i = reflectionRep Z j) :
     i = j ∨ i = Z.reflection j := by
   by_cases hi : i ≤ Z.reflection i
@@ -105,7 +105,7 @@ private theorem reflectionRep_eq_or (Z : ZeroData) (i j : ℕ)
       simpa [reflectionRep, Nat.min_eq_right hi',
         Nat.min_eq_right hj'] using hij
 
-private theorem reflectionRep_image_sep (Z : ZeroData) (I : Finset ℕ) :
+theorem reflectionRep_image_sep (Z : ZeroData) (I : Finset ℕ) :
     ∀ ⦃z w : ℂ⦄,
       z ∈ I.image (fun j => Z.gamma (reflectionRep Z j)) →
       w ∈ I.image (fun j => Z.gamma (reflectionRep Z j)) →
@@ -396,7 +396,7 @@ theorem exists_peak_and_finite_exception_killer
 
 /-- The frozen zeta-zero absolute summability theorem, transported to an arbitrary
 duplicate-free `ZeroData` enumeration. -/
-private theorem zeroSummand_summable_of_zeroData
+theorem zeroSummand_summable_of_zeroData
     (Z : ZeroData) (g : WeilTestFunction) : Summable (zeroSummand Z g) := by
   obtain ⟨hsummable, _hsum⟩ :=
     Zeta23.WeilEF.EF_lit_zetaZeroConfig (g : ℝ → ℂ)
@@ -546,7 +546,7 @@ theorem burnol_power_tail_bound
 
 /-- A nonnegative finite majorant is eventually beaten by the geometric
 `(1/4)^(N+1)` factor. -/
-private theorem exists_quarter_power_mul_lt
+theorem exists_quarter_power_mul_lt
     (S epsilon : ℝ) (hS : 0 ≤ S) (hepsilon : 0 < epsilon) :
     ∃ N : ℕ, (1 / 4 : ℝ) ^ (N + 1) * S < epsilon := by
   by_cases hSzero : S = 0
@@ -565,7 +565,7 @@ private theorem exists_quarter_power_mul_lt
 
 /-- Absolute summability identifies every symmetric `zeroSum` witness with the
 ordinary `tsum` over the supplied enumeration. -/
-private theorem zeroSum_eq_tsum_of_zeroData
+theorem zeroSum_eq_tsum_of_zeroData
     (Z : ZeroData) (g : WeilTestFunction) (hZero : SymmetricConvergent Z g) :
     zeroSum Z g hZero = ∑' j : ℕ, zeroSummand Z g j := by
   apply zeroSum_eq_of_tendsto Z g hZero
