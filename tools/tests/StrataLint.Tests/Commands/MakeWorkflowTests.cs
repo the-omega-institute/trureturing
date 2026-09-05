@@ -319,30 +319,39 @@ public sealed partial class MakeWorkflowTests
             dotnetPath,
             UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
 
-        ProcessOutput Run(params string[] arguments) => TestProcessRunner.Run(
+        ProcessOutput Run(int fakeDotnetExit, params string[] arguments) => TestProcessRunner.Run(
             "env",
-            [$"PATH={binDirectory}:/usr/bin:/bin", "/bin/bash", scriptPath, .. arguments],
+            [
+                $"PATH={binDirectory}:/usr/bin:/bin",
+                $"FAKE_DOTNET_EXIT={fakeDotnetExit}",
+                "/bin/bash",
+                scriptPath,
+                .. arguments,
+            ],
             fixture.Path,
             TestBudgets.ScriptProcessHangGuard,
             64 * 1024);
 
-        var set = Run("quarantine", "baseline", "request.toml");
+        var set = Run(0, "quarantine", "baseline", "request.toml");
         Assert.Equal(0, set.ExitCode);
         Assert.Contains(
             "quarantine-atom --request request.toml --base baseline",
             Encoding.UTF8.GetString(set.StandardOutput),
             StringComparison.Ordinal);
 
-        var clear = Run("quarantine-clear", "baseline", "atom-id");
+        var clear = Run(0, "quarantine-clear", "baseline", "atom-id");
         Assert.Equal(0, clear.ExitCode);
         Assert.Contains(
             "quarantine-atom --clear atom-id --base baseline",
             Encoding.UTF8.GetString(clear.StandardOutput),
             StringComparison.Ordinal);
 
-        Assert.Equal(2, Run("quarantine").ExitCode);
-        Assert.Equal(2, Run("quarantine", "baseline").ExitCode);
-        Assert.Equal(2, Run("quarantine-clear", "baseline").ExitCode);
+        Assert.Equal(23, Run(23, "quarantine", "baseline", "request.toml").ExitCode);
+        Assert.Equal(23, Run(23, "quarantine-clear", "baseline", "atom-id").ExitCode);
+
+        Assert.Equal(2, Run(0, "quarantine").ExitCode);
+        Assert.Equal(2, Run(0, "quarantine", "baseline").ExitCode);
+        Assert.Equal(2, Run(0, "quarantine-clear", "baseline").ExitCode);
     }
 
     [Fact]

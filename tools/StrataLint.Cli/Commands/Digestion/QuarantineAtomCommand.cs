@@ -120,15 +120,14 @@ internal static class QuarantineAtomCommand
                     : entry));
             var replayed = BackfillInventoryLoader.Load(Decode(overlaid));
             var replayedEntry = LocateTarget(replayed, updated.AtomId);
-            if (replayedEntry != updated
-                || !writeAtom(replayedEntry).AsSpan().SequenceEqual(bytes.AsSpan()))
+            if (!writeAtom(replayedEntry).AsSpan().SequenceEqual(bytes.AsSpan()))
             {
                 throw new FormatException("serialized shard did not replay byte-identically");
             }
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
-            throw Invalid("ROUND_TRIP_FAILED", exception.Message);
+            throw Invalid("ROUND_TRIP_FAILED", $"atom_id={updated.AtomId} {exception.Message}");
         }
 
         IngestCommand.ApplyLedgerUpdatesAtomically(
@@ -187,25 +186,26 @@ internal static class QuarantineAtomCommand
         }
 
         var atomId = RequiredString(table, "atom_id");
-        var blockerClass = RequiredString(table, "blocker_class");
-        var justification = RequiredString(table, "justification");
-        var reentryCondition = RequiredString(table, "reentry_condition");
+        var blockerClass = RequiredString(table, "blocker_class", atomId);
+        var justification = RequiredString(table, "justification", atomId);
+        var reentryCondition = RequiredString(table, "reentry_condition", atomId);
         if (!DigestionQuarantine.BlockerClasses.Contains(blockerClass, StringComparer.Ordinal))
         {
             throw Invalid(
                 "BLOCKER_CLASS_UNKNOWN",
-                $"blocker_class={blockerClass}; expected one of "
+                $"atom_id={atomId} blocker_class={blockerClass}; expected one of "
                 + string.Join(',', DigestionQuarantine.BlockerClasses));
         }
 
         return new QuarantineRequest(atomId, blockerClass, justification, reentryCondition);
     }
 
-    private static string RequiredString(TomlTable table, string key)
+    private static string RequiredString(TomlTable table, string key, string? atomId = null)
     {
         if (table[key] is not string value || string.IsNullOrWhiteSpace(value))
         {
-            throw Invalid("REQUEST_VALUE_BLANK", $"key={key}");
+            var atomDetail = atomId is null ? string.Empty : $" atom_id={atomId}";
+            throw Invalid("REQUEST_VALUE_BLANK", $"key={key}{atomDetail}");
         }
 
         return value.Trim();
