@@ -3082,38 +3082,43 @@ $$
 
 ## CIRPT-23　完整 theorem catalog 的 primitive kernel
 
-设当前同一次编译中的 theorem index 为 $I$，每个 theorem 有 kernel $K_i$。
+设当前 sealing root 为 $R$，canonical object arena 为 $A$，其唯一 maximal catalog
+$C_{R,A}$ 的 occurrence index 为 $I_{R,A}$，每个 occurrence 有 kernel $K_{A,i}$。
+本节以下省略的 $R,A$ 仅是排版简写，绝不表示跨 arena 的一个 catalog。
 
 完整 catalog kernel：
 
 $$
 \boxed{
-K_I
+K^R_{A,I_{R,A}}
 =
-\bigcap_{i:I}K_i.
+\bigcap_{i:I_{R,A}}K_{A,i}.
 }
 $$
 
 留一 kernel：
 
 $$
-K_{-i}
+K^{R,-i}_A
 =
-\bigcap_{j\ne i}K_j.
+\bigcap_{j\in I_{R,A},\ j\ne i}K_{A,j}.
 $$
 
 原 SPEC 的绝对 escape 为：
 
 $$
-E_I
-=K_I\setminus\Delta_X.
+E^R_A
+=K^R_{A,I_{R,A}}\setminus\Delta_A.
 $$
+
+同一 theorem declaration 在另一个 catalog/root 的登记是另一个 occurrence；其
+$K_{-i},U_i,\delta_i$ 必须按那里的 peers 重算。
 
 ---
 
 ## CIRPT-24　留一增益本身就是统一 residual
 
-定理 $i$ 的独有捕获集合：
+固定 $(R,A,C_{R,A})$ 后，occurrence $i$ 的独有捕获集合：
 
 $$
 U_i
@@ -3144,7 +3149,8 @@ $$
 
 > 删除 theorem $i$ 后，其他 theorem 形成当前 CUT；theorem $i$ 的 primitive bundle 形成目标 CUT；其独有信息就是其他 theorem 无法向该目标下降的 residual。
 
-因此当前规范没有人为 target。这里的 target $K_i$ 是 theorem 自身的 primitive kernel，由当前 theorem catalog 内生给出。
+因此当前规范没有人为 target。这里的 target $K_i$ 是 theorem occurrence 自身的
+primitive kernel，由当前 maximal catalog 内生给出。
 
 进一步：
 
@@ -3159,6 +3165,74 @@ K_{-i}\not\subseteq K_i,
 $$
 
 等价于 theorem $i$ 的 primitive bundle 不属于其他 theorem 的语义闭包。
+
+### CIRPT-24.1　平坦累计 catalog 的粗成员归零
+
+### 定理 CIRPT-IE-024　`nested_flat_catalog_coarse_member_zero`
+
+若同一 flat catalog 中 $i\neq j$ 且：
+
+$$
+K_j\subseteq K_i,
+$$
+
+则 $K_{-i}\subseteq K_j\subseteq K_i$，故：
+
+$$
+\boxed{U_i=K_{-i}\setminus K_i=\varnothing.}
+$$
+
+所以 cumulative readouts 的严格层级不蕴含每个成员都有正 leave-one-out capture。
+若 $K_{cf}\subsetneq K_{int}\subsetneq K_{obs}$ 同时作为 flat members，则：
+
+$$
+U_{obs}=U_{int}=\varnothing,
+\qquad
+U_{cf}=D_A\cap(K_{int}\setminus K_{cf}).
+$$
+
+这与 T-005 中 product member 被其坐标 peers 捕获是同一个数学现象；T-005/T-006
+的既有期望保持不变。
+
+### CIRPT-24.2　certified chain 的相邻增量
+
+对携带 $K_\ell\subseteq\cdots\subseteq K_0$ inclusion proofs 的 `LayerChain`，定义：
+
+$$
+L_0=D_A\setminus K_0,
+\qquad
+L_r=D_A\cap(K_{r-1}\setminus K_r)\ (r>0),
+\qquad
+R_\ell=D_A\cap K_\ell.
+$$
+
+### 定理 CIRPT-IE-025　`kernelChain_increment_partition_and_telescope`
+
+$L_0,\ldots,L_\ell,R_\ell$ 两两不交，且：
+
+$$
+D_A=L_0\;\dot\cup\cdots\dot\cup\;L_\ell\;\dot\cup\;R_\ell.
+$$
+
+因此 $L_0,\ldots,L_\ell$ 分割 $D_A\setminus K_\ell$，并有相邻 telescoping count
+identity。layered count/rate 是 chain analysis，不是 theorem unit，也不生成第三个
+theorem registration。
+
+### CIRPT-24.3　严格 refinement 的精确判据
+
+### 定理 CIRPT-IE-026　`kernelChain_increment_nonempty_iff_strict`
+
+对 $r>0$：
+
+$$
+L_r\neq\varnothing
+\Longleftrightarrow
+K_r\subsetneq K_{r-1}.
+$$
+
+chain inclusion、partition 与 strictness 必须由 Lean theorem 证明；具体有限 count 与
+exact rational rate 可由同一 kernel 的 reflected equality 认证。缺少 proof 的有序
+kernel 列表不是 `LayerChain`。
 
 ---
 
@@ -3293,6 +3367,16 @@ $$
 
 对于不等价 arena，不存在本规范内生给出的比较或聚合标量。引入这种标量必然需要额外测度或权重，因而属于另一个数学问题，不能进入本硬门。
 
+v4.2 允许输出 `kernel_address_coincidence_classes` 作为**纯诊断 digest group**：若两个
+occurrences 的 output-only `primitive_kernel_address` 字符串相同，可把它们列在同一
+class，并标记 serializer version 与 `diagnostic_only: true`。这个相等只表示当前
+serializer 的 ordinal-partition bytes 具有同一 SHA-256 digest；即使外部假设 SHA-256
+无碰撞，它也至多是该序列化相同的证据。
+
+kernel address coincidence 绝不证明 carrier `Equiv`、semantic kernel transport、
+theorem equivalence、role equality、refinement 或跨 arena rate equality，也不得参与
+grouping 与 accept/reject。任何语义比较仍须显式 `Equiv` 与 CIRPT-IE-022 proof。
+
 ### 定理 CIRPT-IE-023　Uniform residual valuation uniqueness
 
 固定有限 arena $X$，令：
@@ -3382,6 +3466,32 @@ $$
 $$
 
 角色分解只解释数学来源，不参与加权。
+
+对同一个 $(R,A)$，定义 role-histogram matrix：
+
+$$
+H^R_{A,i}(s)=
+|\{p\in U^R_{A,i}\mid\rho_i(p)=s\}|,
+\qquad s\in\{0,1\}^4\setminus\{0000\},
+$$
+
+以及 catalog column total：
+
+$$
+H^R_A(s)=\sum_iH^R_{A,i}(s).
+$$
+
+`RoleProfileEq(i,j)` 当且仅当每个 signature column 都相等；pairwise difference 是
+$H_i(s)-H_j(s)$ 的 exact integer vector，不压成 score。由已落地的
+`roleHistogram_sum_eq_uniqueCaptureCount` 逐行求和：
+
+$$
+\sum_sH^R_A(s)=\sum_i|U^R_{A,i}|=h^R_A(1).
+$$
+
+该比较依赖登记的 primitive axes。只有 atom reindex、role-preserving kernel
+replacement 或 role-preserving arena transport 保持它；任意同 kernel bundle 替换并
+不保证 role histogram 不变。catalog totals 与 unweighted deltas 均只在同 arena 报告。
 
 ---
 
@@ -3590,6 +3700,9 @@ CIRPT-IE-020 full_domain_admit_encoding
 CIRPT-IE-021 closed_truth_readout_has_universal_kernel
 CIRPT-IE-022 arena_equiv_preserves_escape_and_gain
 CIRPT-IE-023 uniform_residual_valuation_unique
+CIRPT-IE-024 nested_flat_catalog_coarse_member_zero
+CIRPT-IE-025 kernelChain_increment_partition_and_telescope
+CIRPT-IE-026 kernelChain_increment_nonempty_iff_strict
 ```
 
 ---
@@ -3821,6 +3934,122 @@ theorem uniqueCapture_roleSignature_nonzero :
       pair.1 pair.2 ≠ fun _ => false
 ```
 
+### CIRPT-38.1　共享 catalog 与 layered analysis API
+
+以下是 v4.2 新 API 的规范级 Lean signature；实现可把计算拆到多个模块，但不得改变
+这些对象的 typed ownership。
+
+```lean
+namespace Catalog
+
+def capturePairs (catalog : Catalog arena) (index : catalog.Index) :
+    Finset (arena.State × arena.State)
+
+def exclusiveCaptureVector (catalog : Catalog arena) :
+    catalog.Index → Nat :=
+  fun index => catalog.uniqueCaptureCount index
+
+def pairwiseCaptureOverlapPairs (catalog : Catalog arena)
+    (left right : catalog.Index) :
+    Finset (arena.State × arena.State)
+
+def pairwiseCaptureOverlapCount (catalog : Catalog arena)
+    (left right : catalog.Index) : Nat
+
+def pairwiseCaptureOverlapRate (catalog : Catalog arena)
+    (left right : catalog.Index) : Rat
+
+def KernelRefines (catalog : Catalog arena)
+    (finer coarser : catalog.Index) : Prop :=
+  ∀ x y, catalog.theoremAgrees finer x y →
+    catalog.theoremAgrees coarser x y
+
+def KernelEquivalent (catalog : Catalog arena)
+    (left right : catalog.Index) : Prop :=
+  catalog.KernelRefines left right ∧ catalog.KernelRefines right left
+
+instance (catalog : Catalog arena) (i j : catalog.Index) :
+    Decidable (catalog.KernelRefines i j)
+
+inductive KernelComparison
+  | equal | strictlyFiner | strictlyCoarser | incomparable
+  deriving DecidableEq, Repr
+
+def kernelComparison (catalog : Catalog arena)
+    (left right : catalog.Index) : KernelComparison
+
+def refinementWitness? (catalog : Catalog arena)
+    (finer coarser : catalog.Index) :
+    Option (arena.State × arena.State)
+
+def captureMultiplicity (catalog : Catalog arena)
+    (pair : arena.State × arena.State) : Nat
+
+def captureSpectrum (catalog : Catalog arena) :
+    Fin (Fintype.card catalog.Index + 1) → Nat
+
+def roleHistogramTotal (catalog : Catalog arena)
+    (signature : Fin 4 → Bool) : Nat
+
+def roleProfileEq (catalog : Catalog arena)
+    (left right : catalog.Index) : Prop
+
+def roleHistogramDifference (catalog : Catalog arena)
+    (left right : catalog.Index) (signature : Fin 4 → Bool) : Int
+
+def redundantIndices (catalog : Catalog arena) : Finset catalog.Index
+
+def CatalogRedundant (catalog : Catalog arena) : Prop :=
+  ∃ index, catalog.uniqueCaptureCount index = 0
+
+end Catalog
+
+structure LayerChain (arena : Arena) where
+  length : Nat
+  kernel : Fin (length + 1) → DecidableKernel arena.State
+  refines : ∀ r : Fin length,
+    (kernel r.succ).relation ≤ (kernel r.castSucc).relation
+
+namespace LayerChain
+
+def layeredCapturePairs (chain : LayerChain arena)
+    (layer : Fin (chain.length + 1)) :
+    Finset (arena.State × arena.State)
+
+def layeredCaptureCount (chain : LayerChain arena)
+    (layer : Fin (chain.length + 1)) : Nat
+
+def layeredCaptureRate (chain : LayerChain arena)
+    (layer : Fin (chain.length + 1)) : Rat
+
+def unresolvedPairs (chain : LayerChain arena) :
+    Finset (arena.State × arena.State)
+
+def unresolvedCount (chain : LayerChain arena) : Nat
+
+def unresolvedRate (chain : LayerChain arena) : Rat
+
+end LayerChain
+```
+
+必须提供以下 reflection/certificate theorem；artifact 中的 Bool 或 numeral 不能替代它们：
+
+```lean
+Catalog.pairwiseCaptureOverlap_comm
+Catalog.pairwiseCaptureOverlap_diag
+Catalog.kernelRefines_preorder
+Catalog.kernelRefines_implies_zero_uniqueCapture
+Catalog.captureSpectrum_sum_eq_denominator
+Catalog.captureSpectrum_zero_eq_fullEscape
+Catalog.captureSpectrum_one_eq_sum_unique
+Catalog.captureSpectrum_incidence_doubleCount
+Catalog.pairwiseOverlap_spectrum_doubleCount
+Catalog.catalogRoleHistogram_sum
+Catalog.catalogRedundant_iff_not_irredundant
+LayerChain.layeredCapture_partition
+LayerChain.strictRefinement_iff_layeredCapture_nonempty
+```
+
 ---
 
 ## CIRPT-39　建议模块布局增量
@@ -3882,10 +4111,62 @@ InformationEscape finite engine
 8. role signature histogram 总和等于 unique capture count；
 9. 最终 accept/reject 仍只由 `uniqueCaptureCount > 0` 决定；
 10. JSON 只投影结果，不参与任何证明。
+11. 以 canonical object `Arena` declaration 分组，并为每个 $(R,A)$ 构造唯一 maximal catalog；
+12. occurrence key `(root_id, catalog_id, theoremName)` 在 root 内恰出现一次；
+13. 所有 generated companion names 都由 root/catalog/occurrence identity 限定；
+14. overlap、refinement、spectrum、role totals、verdict 与 layer-chain inclusion/count identity 均有 Lean certificate；
+15. refinement matrix 的 true cell 有 inclusion proof，false cell 有确定性 witness pair；
+16. 在触发 IE-C007 前计算并验证完整 `redundantIndices`，不得 first-zero 短路；
+17. canonical maximal catalog 失败时不写 artifact；显式 `analysis_view` 只有在全部 exact negative certificates staged 且 kernel-checked 后才可写 redundant projection；
+18. seal 只消费命令所在模块本地 elaborated registrations；imported `.olean` registrations 不进入 root；
+19. designated root 的 `SystemCatalogIrredundant` 是其全部 maximal catalogs 的 conjunction；
+20. kernel-address coincidence 只进入 diagnostic projection，绝不进入证明、grouping 或 verdict；
+21. 超过第 33 节 ordered-pair budget 的 catalog 必须使用 refl lane 提供的 reflected seal，否则 fail closed。
 
 ---
 
 ## CIRPT-41　新增 artifact 字段
+
+v4.2 新共享分析 artifact 使用 additive schema
+`lean-intrinsic-information-escape-v3`。已落地 v2 文件、字段与语义保持有效且不原位升级。
+v3 的规范形状为：
+
+```json
+{
+  "schema": "lean-intrinsic-information-escape-v3",
+  "root_id": "D5.S3.ConceptDynamics.InformationEscape.SharedInformationRoot",
+  "seal_scope": "module-local",
+  "system_catalog_irredundant": true,
+  "kernel_address_coincidence_classes": [],
+  "catalogs": []
+}
+```
+
+root 与 arena/catalog 字段如下：
+
+| scope | field | normative value |
+|---|---|---|
+| root | `schema` | new shared artifacts 固定为 `lean-intrinsic-information-escape-v3` |
+| root | `root_id` | canonical sealing-root `Name` |
+| root | `seal_scope` | 固定为 `module-local` |
+| root | `system_catalog_irredundant` | designated root 全部 maximal catalogs 的 universal verdict |
+| root | `kernel_address_coincidence_classes` | address、occurrences、serializer 与 `diagnostic_only: true` |
+| catalog | `catalog_id` | stable root-scoped identity |
+| catalog | `catalog_kind` | `canonical_maximal` 或 `analysis_view`，不得由 namespace 推断 |
+| catalog | `object_arena` | grouping 使用的 canonical `Arena` declaration |
+| catalog | `catalog_verdict` | `irredundant` 或 `redundant` |
+| catalog | `redundant_theorems` | 完整零 unique-capture occurrence names |
+| catalog | `verdict_certificate` | catalog-qualified positive 或 negative Lean certificate |
+| catalog | `exclusive_capture_total` | $\sum_i|U_i|$ |
+| catalog | `pairwise_capture_overlap` | canonical upper triangle 的 exact count/rate rows |
+| catalog | `kernel_refinement` | directed cells；proof 或 counterexample reference |
+| catalog | `kernel_equivalence_classes` | mutual-refinement classes |
+| catalog | `catalog_unique_capture_by_role_signature` | exact role column totals |
+| catalog | `capture_multiplicity_spectrum` | decimal $k$ 到 exact count/rate 的映射 |
+| catalog | `layer_chains` | ordered kernels、adjacent counts/rates、unresolved 与 certificates |
+| occurrence | `catalog_membership` | `root_id` 与 `catalog_id` |
+| occurrence | `certificate` | catalog-qualified companion `Name` |
+| occurrence | `gain_rate` | 既有 exact per-arena normalization |
 
 每个 theorem 记录可以新增：
 
@@ -3973,6 +4254,53 @@ legacy theorem 与 primitive bundle 之间没有 Lean realization theorem。
 
 两个 arena 声称只是表示变化，却没有提供 Lean `Equiv` 及 primitive-kernel transport correctness theorem。
 
+### IE-C024　SplitCanonicalArenaCatalog
+
+同一 root 内属于同一 canonical object `Arena` 的 occurrences 被 namespace、wrapper、
+cloned arena 或 sub-catalog 拆开，或试图用分析 view 替代 maximal catalog。
+
+### IE-C025　DuplicateCatalogOccurrence
+
+同一 `(root_id, catalog_id, theoremName)` occurrence key 出现不止一次。
+
+### IE-C026　MissingMaximalCatalog
+
+root 有归属于某 canonical arena 的 occurrence，却没有构造包含全部这些 occurrences 的
+唯一 `canonical_maximal` catalog。
+
+### IE-C027　UncertifiedKernelRefinement
+
+refinement cell 没有 inclusion proof，或否定 cell 没有可复查的 witness pair。
+
+### IE-C028　AnalysisCertificateMismatch
+
+overlap、spectrum、role total、verdict、redundant set 或 layer count 与其 Lean/reflected
+certificate 不一致或不完整。
+
+### IE-C029　UnfaithfulCrossArenaRealization
+
+所谓 legacy realization 没有通过 injection/restriction 方程 faithful 地消费输入 law；
+尤其禁止用忽略 hypothesis 的两个既有 existential proofs 拼成空洞 `Iff`。
+
+### IE-C030　KernelAddressUsedAsSemanticEvidence
+
+把 `primitive_kernel_address` 或其 coincidence class 用于 arena grouping、`Equiv`、kernel
+transport、refinement、rate equality 或 accept/reject。
+
+### IE-C031　InvalidLayerChain
+
+有序 kernels 缺少相邻 inclusion proof、顺序与证书不一致，或 layered partition/reflected
+count 未通过 kernel 检查。
+
+### IE-C032　SizeBudgetRequiresReflectedSeal
+
+catalog 的 ordered-pair workload 超过第 33 节声明预算，却没有 refl lane 的 reflected seal。
+
+### IE-C033　IncompleteRedundantIndexSet
+
+negative diagnostics 在 IE-C007 前没有收集并证明全部 zero unique-capture members，或在
+canonical admission failure 后仍写出 artifact。
+
 ---
 
 ## CIRPT-43　新增测试矩阵
@@ -4053,6 +4381,16 @@ legacy theorem 与 primitive bundle 之间没有 Lean realization theorem。
 
 同一次 seal 中存在两个不等价 arena；验证分别输出 typed results，且不存在全局加权总分字段。
 
+### T-CIRPT-020　capture spectrum identities
+
+在有限 fixtures 上逐项验证 spectrum partition、$h(0)$、$h(1)$、incidence first moment
+与 overlap second moment；修改任一 reflected numeral 必须使 certificate 失败。
+
+### T-CIRPT-021　layer-chain transport
+
+经已证明 arena `Equiv` transport 后，每个 layered count/rate 与 unresolved count/rate
+保持；缺少 transport proof 时得到 IE-C023，不以 address coincidence 代替。
+
 ---
 
 ## CIRPT-44　新增完成条件
@@ -4100,6 +4438,30 @@ primitive normalization、kernel computation、companion theorem construction �
 ### AC-CIRPT-011　Closed truth erasure
 
 闭 theorem 的 proof truth 不得成为对象层 primitive；只有显式 object primitive law 可进入 object kernel。
+
+### AC-CIRPT-012　Scoped maximal catalogs
+
+每个 root-local canonical arena 恰有一个 maximal catalog；occurrence identity 与所有
+companions 都由 root/catalog 限定，analysis view 不承担 positivity。
+
+### AC-CIRPT-013　Certified shared analysis
+
+exclusive vector、overlap/refinement matrices、multiplicity spectrum、role totals 与
+positive/negative verdict 均由一般 theorem 加 reflected equalities kernel-certify。
+
+### AC-CIRPT-014　Layered capture distinctness
+
+`LayerChain` 的 inclusions、partition、strictness 与 exact rates 都被认证；任何输出或
+测试都不把 layered increments 称为 cumulative flat unique capture。
+
+### AC-CIRPT-015　Diagnostic address isolation
+
+kernel address coincidence 只以 `diagnostic_only` 输出；没有 theorem 或准入路径消费它。
+
+### AC-CIRPT-016　Complete negative diagnostics
+
+seal 在 IE-C007 前计算全部 zero members。canonical failure 不写 artifact；redundant
+analysis view 仅在完整 negative certificates staged 后写 v3 projection。
 
 ---
 
