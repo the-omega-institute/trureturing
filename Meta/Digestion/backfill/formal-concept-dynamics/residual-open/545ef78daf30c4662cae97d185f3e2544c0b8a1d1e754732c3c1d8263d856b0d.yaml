@@ -6,7 +6,10 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
-  quarantine:
-    justification: "Chain child fragment `* 改变对象；` names no canonical object-change carrier, operation, or bridge to the passive-boundary statement. The broad D5 Lean `rg` search for object change, intervention, observation expansion, domain premises, and new experiments exited 0; the parallel Scribe-title/body search exited 0. Inspected frozen hits D5/S3/ConceptDynamics/Termination/ClosureMethodStopThreeParameterCompletionReopening.lean:97 and :311 define a three-parameter change and prove a Boolean object-domain reopening, but neither public statement mentions the passive experiment family, its joint readout, `notRefines`, or a bridge from object change across that boundary. The exact passive-boundary `rg` search exited 0 and found only the duplicate theorem and a proposition-identical forwarding wrapper, not an object-change bridge."
-    reentry_condition: "Add canonical object-change semantics and a frozen public bridge from that carrier and operation to parent atom 702f09e2955c0c9fad8c4c8d9d4abb9f30bcf8772cda57aeb17d1c9d13356054, then re-cover this child."
-    blocker_class: multi-clause-guard
+  cover_disposition:
+    outcome: partial-closed
+    gids:
+      - D5/S3/ConceptDynamics/Termination/ClosureMethodStopThreeParameterCompletionReopening.object_domain_expansion_creates_genuine_reopening
+    gaps:
+      - code: scribe-declaration-reference-missing
+        detail: D5/S3/ConceptDynamics/Termination/ClosureMethodStopThreeParameterCompletionReopening.object_domain_expansion_creates_genuine_reopening
