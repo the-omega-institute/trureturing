@@ -270,6 +270,12 @@ internal sealed partial class RuleFixture
                 Changes.Clear();
                 Changes.Add(BlueprintSourcePath);
                 break;
+            case "base-judge":
+                Files[HarnessGatePath] =
+                    "git -C candidate worktree add --detach \"$RUNNER_TEMP/base\" \"$ENGINEERING_BASE\"\n";
+                Changes.Clear();
+                Changes.Add(HarnessGatePath);
+                break;
             default: throw new ArgumentOutOfRangeException(nameof(mutation));
         }
     }
@@ -287,6 +293,7 @@ internal sealed partial class RuleFixture
         "anomaly" => "Evidence/D5/S0/Carrier/Result.run.json",
         "future" => "D8/S0/Carrier/Ring.lean",
         "blueprint-skeleton" or "legacy-scribe" => BlueprintSourcePath,
+        "base-judge" => HarnessGatePath,
         _ => throw new ArgumentOutOfRangeException(nameof(mutation)),
     };
 

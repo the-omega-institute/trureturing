@@ -27,6 +27,7 @@ public sealed class RuleEngineTests
         { 21, "future" },
         { 25, "blueprint-skeleton" },
         { 26, "legacy-scribe" },
+        { 30, "base-judge" },
     };
 
     public static TheoryData<int, string> AffectedInputs => new()
@@ -39,6 +40,7 @@ public sealed class RuleEngineTests
         { 23, RuleFixture.BlueprintSourcePath },
         { 23, "Directory.Build.props" },
         { 25, RuleFixture.BlueprintPath },
+        { 30, RuleFixture.HarnessGatePath },
     };
 
     public static TheoryData<int, string?> UnaffectedInputs => new()
@@ -63,6 +65,7 @@ public sealed class RuleEngineTests
         { 23, "Chronicle/2026/07/10-old.md" },
         { 25, "Chronicle/2026/07/10-old.md" },
         { 26, "Chronicle/2026/07/10-old.md" },
+        { 30, RuleFixture.BlueprintPath },
     };
 
     [Fact]
@@ -694,7 +697,7 @@ public sealed class RuleEngineTests
             .Order()
             .ToArray();
 
-        Assert.Equal(Enumerable.Range(1, 23).Except([5]).Append(25).Append(26), exercised);
+        Assert.Equal(Enumerable.Range(1, 23).Except([5]).Append(25).Append(26).Append(30), exercised);
     }
 
     [Fact]
