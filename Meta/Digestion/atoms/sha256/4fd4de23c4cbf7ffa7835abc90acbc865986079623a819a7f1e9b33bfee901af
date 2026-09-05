@@ -1,0 +1,20 @@
+# 119．宏观极限本身也必须由具体耦合决定
+
+第 114 节选择：
+
+$$
+\widehat n_N
+=
+\sqrt{\frac1N\sum_j\widehat R_j}.
+$$
+
+另一种同样可以定义的过程是：
+
+$$
+\widehat n_N'
+=
+\frac1N\sum_j\sqrt{\widehat R_j}.
+$$
+
+两者一般不相同。
+

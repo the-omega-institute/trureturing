@@ -1,0 +1,56 @@
+## 定理 3：均值保持与精确方差分解
+
+$$
+\boxed{
+\mathbb E[M_{n+1}\mid\mathcal F_n]=M_n.
+}
+\tag{18}
+$$
+
+所以 \((M_n)\) 是鞅，并且
+
+$$
+\boxed{
+\mathbb EM_n=\mathcal B_H(T)
+\qquad\forall n.
+}
+\tag{19}
+$$
+
+定义条件新增方差
+
+$$
+\sigma_n^2
+=
+\mathbb E[(M_{n+1}-M_n)^2\mid\mathcal F_n].
+$$
+
+则对每个有限 \(N\)，
+
+$$
+\boxed{
+\mathbb EM_N^2
+=
+\mathcal B_H(T)^2
++
+\sum_{n=0}^{N-1}\mathbb E\sigma_n^2.
+}
+\tag{20}
+$$
+
+### 证明
+
+式（18）就是在位置 \(T+Y_n\) 使用式（15）。
+
+再由
+
+$$
+\mathbb E[M_{n+1}^2\mid\mathcal F_n]
+=
+M_n^2+\sigma_n^2
+$$
+
+取期望并逐层相加，得到式（20）。证毕。
+
+这是标准鞅的正交增量结构在当前观察系统中的实例。它只保证每个有限层的关系，不能自动允许把 \(N\) 换成无穷。
+

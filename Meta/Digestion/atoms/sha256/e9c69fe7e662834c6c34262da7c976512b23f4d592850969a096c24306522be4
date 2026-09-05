@@ -1,0 +1,32 @@
+## 定理 4.3　黄金观察的基本性质
+
+对全部 \(n,m\ge1\)：
+
+$$
+\mathcal G(n)\mid n,
+$$
+
+$$
+\mathcal G(\mathcal G(n))=\mathcal G(n),
+$$
+
+并且：
+
+$$
+n\mid m\Longrightarrow\mathcal G(n)\mid\mathcal G(m).
+$$
+
+### 证明
+
+第一式来自 \(b(a)\le a\)。
+
+当 \(a=G_L-1\) 时，\(a+1=G_L\)，所以再次应用分层仍返回 \(G_L-1\)，得到幂等性。
+
+最后，\(n\mid m\) 意味着每个素数指数满足：
+
+$$
+a_p(n)\le a_p(m).
+$$
+
+函数 \(b(a)\) 单调不减，因此观察后的指数仍逐项有序。证毕。
+

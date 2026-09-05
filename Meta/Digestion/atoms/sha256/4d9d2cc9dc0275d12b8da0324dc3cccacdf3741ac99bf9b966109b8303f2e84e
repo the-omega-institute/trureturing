@@ -1,0 +1,47 @@
+## 定理 N3：固定滤波器的定量稳定性
+
+$$
+\boxed{
+|\mathcal Q_d(f)-\mathcal Q_\infty(f)|
+\le
+\frac{E_R(f)}d,
+}
+\tag{N20}
+$$
+
+其中：
+
+$$
+\boxed{
+E_R(f)
+=
+A_R
+\sum_{i,j=1}^{k}
+(i+j)|c_ic_j|R^{-(i+j)}.
+}
+$$
+
+特别地，若：
+
+$$
+\mathcal Q_\infty(f)\le-\eta<0,
+$$
+
+则所有满足：
+
+$$
+\boxed{
+d\ge\frac{2E_R(f)}{\eta}
+}
+\tag{N21}
+$$
+
+的阶数都有：
+
+$$
+\boxed{
+\mathcal Q_d(f)\le-\frac\eta2.
+}
+\tag{N22}
+$$
+

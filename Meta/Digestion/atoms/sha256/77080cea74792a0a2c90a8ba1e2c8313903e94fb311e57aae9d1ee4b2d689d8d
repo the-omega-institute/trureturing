@@ -1,0 +1,29 @@
+# q_{\mathrm{edge}}(\mathfrak M_1)
+
+q_{\mathrm{edge}}(\mathfrak M_2),
+
+$$
+
+但
+
+$$
+
+T_{\mathrm{loop}}(\mathfrak M_1)
+\ne
+T_{\mathrm{loop}}(\mathfrak M_2).
+
+$$
+
+因此
+
+$$
+
+\boxed{
+\operatorname{Residual}
+(q_{\mathrm{edge}},T_{\mathrm{loop}})
+\ne\varnothing.
+}
+\tag{82.5}
+
+$$
+

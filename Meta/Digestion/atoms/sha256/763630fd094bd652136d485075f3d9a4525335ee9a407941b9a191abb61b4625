@@ -1,0 +1,55 @@
+## 例 72.1　一个无法填写下降证明的量子实例
+
+令观察接口只读取
+
+$$
+q(\rho)=\rho_{00}.
+$$
+
+取两个合法纯态密度矩阵：
+
+$$
+\rho_\pm
+=
+\frac12
+\begin{pmatrix}
+1&\pm1\\
+\pm1&1
+\end{pmatrix}.
+$$
+
+二者满足
+
+$$
+q(\rho_+)=q(\rho_-)=\frac12.
+$$
+
+取实酉矩阵
+
+$$
+U=
+\begin{pmatrix}
+3/5&4/5\\
+-4/5&3/5
+\end{pmatrix}.
+$$
+
+直接计算：
+
+$$
+\boxed{
+q(U\rho_+U^\dagger)=\frac{49}{50},
+\qquad
+q(U\rho_-U^\dagger)=\frac1{50}.
+}
+\tag{72.2}
+$$
+
+因此，不存在仅作用于原读数 \(q(\rho)\) 的映射 \(\overline F\)，使
+
+$$
+q(U\rho U^\dagger)=\overline F(q(\rho))
+$$
+
+对全部合法 \(\rho\) 成立。
+

@@ -1,0 +1,55 @@
+# 九、这个新体积的起始变化，恰好读取四阶累积量
+
+由式（K8），使用 Haar 平均：
+
+$$
+\int_{U(d)}U\Lambda^*U^*\,dU
+=
+\frac{\overline{\operatorname{Tr}\Lambda}}dI,
+$$
+
+得到：
+
+$$
+\boxed{
+\mathcal Z_q'(0)
+=
+-\Re\operatorname{Tr}C_q^2
++
+\frac{|\operatorname{Tr}C_q|^2}{d}.
+}
+\tag{K15}
+$$
+
+对实际 \(q_d\)，有：
+
+$$
+\operatorname{Tr}C_q=a_1,
+$$
+
+$$
+\operatorname{Tr}C_q^2
+=
+a_1^2-2\frac{d-1}{d}a_2.
+$$
+
+又因为：
+
+$$
+a_1^2-2a_2=-\frac{\chi_4}{12},
+$$
+
+所以：
+
+$$
+\boxed{
+\mathcal Z_{q_d}(r)
+=
+1+
+\frac{d-1}{12d}\chi_4\,r
++
+O(r^2).
+}
+\tag{K16}
+$$
+

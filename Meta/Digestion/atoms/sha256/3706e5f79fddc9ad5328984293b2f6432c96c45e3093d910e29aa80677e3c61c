@@ -1,0 +1,122 @@
+## 定理 7：RH 加全部零点简单，推出明确尺度律
+
+现在额外假设全部非平凡零点简单。则
+
+$$
+\boxed{
+\mathcal V(h)
+\sim
+\frac83h^3\log\frac1h
+\qquad(h\downarrow0).
+}
+\tag{30}
+$$
+
+这里的简单零点条件必须单独保留，不能从 RH 中直接省略。
+
+### 证明
+
+在简单零点前件下，
+
+$$
+\mathcal V(h)
+=
+2\sum_{\gamma>0}
+\frac{
+|e^{ih\gamma}-e^{h/2}|^2
+|e^{ih\gamma}-1|^6
+}{\gamma^4}.
+$$
+
+令 \(u=h\gamma\)。使用零点计数公式
+
+$$
+N(Y)
+=
+\frac{Y}{2\pi}\log\frac{Y}{2\pi}
+-\frac{Y}{2\pi}
++O(\log(Y+2)),
+$$
+
+作 Stieltjes 分部积分，得到
+
+$$
+\boxed{
+\mathcal V(h)
+\sim
+\frac{h^3\log(1/h)}{\pi}
+\int_0^\infty
+\frac{|e^{iu}-1|^8}{u^4}\,du.
+}
+\tag{31}
+$$
+
+所需极限可以控制：在 \(u=0\) 附近，被积函数为 \(O(u^4)\)；在无穷远为 \(O(u^{-4})\)。把 \(e^{h/2}\) 保留在计算中时，原点附近多出的项为 \(O(h^2u^2)\)，同样可积。零点计数误差经分部积分后为更低阶。上述零点计数公式及更强的显式误差界已有文献。([arXiv][5])
+
+最后，
+
+$$
+|e^{iu}-1|^8
+=
+70-112\cos u+56\cos2u-16\cos3u+2\cos4u.
+$$
+
+这些系数同时消去常数项和二次项。使用
+
+$$
+\int_0^\infty
+\frac{\cos(au)-1+(au)^2/2}{u^4}\,du
+=
+\frac{\pi a^3}{12},
+\qquad a\ge0,
+$$
+
+得到
+
+$$
+\begin{aligned}
+\int_0^\infty
+\frac{|e^{iu}-1|^8}{u^4}\,du
+&=
+\frac\pi{12}
+(-112+56\cdot8-16\cdot27+2\cdot64)\\
+&=\frac{8\pi}{3}.
+\end{aligned}
+$$
+
+代入式（31），即得式（30）。证毕。
+
+---
+
+因此，未归一化读数的长期均方根尺度为
+
+$$
+\boxed{
+h^{3/2}\sqrt{\log(1/h)},
+}
+$$
+
+而不是 \(h^4\)。
+
+对重标定读数，
+
+$$
+\mathcal B_h=\mathcal D_h/c(h),
+\qquad
+c(h)\sim h^4/2,
+$$
+
+于是
+
+$$
+\boxed{
+\lim_{L\to\infty}
+\frac1L\int_0^L|\mathcal B_h(T)|^2\,dT
+\sim
+\frac{32}{3}h^{-5}\log\frac1h.
+}
+\tag{32}
+$$
+
+即使在“RH 加全部零点简单”的情形下，这个均方也随着 \(h\to0\) 发散。
+

@@ -1,0 +1,59 @@
+# 收束
+
+上一轮证明，固定分辨率的全体平均可能把真实缺陷稀释。
+
+这一轮进一步证明：**这种稀释不是不可避免的。**
+
+对于一个明确的非实谱模型：
+
+$$
+\boxed{
+f(x)=\frac{x(x+1)(x+2)}{10}
+}
+$$
+
+就能在任意增加实辅助模式后保持：
+
+$$
+\boxed{
+\operatorname{Tr}f(C_N)^2=-2.
+}
+$$
+
+对实际 ξ，结论更强但保留条件：
+
+$$
+\boxed{
+\neg\mathrm{RH}
+\Longrightarrow
+\exists\text{固定有理多项式 }f,\ 
+\exists\eta>0,\ 
+\forall d\gg1,\ 
+\operatorname{Tr}f(C_d)^2\le-\eta.
+}
+$$
+
+这个负号可以成为合法量子干涉的相对相位；它不要求负概率，也不会因为给系统增加更多零辅助模式而自动消失。
+
+但选择性观察的代价仍然存在：**条件信号可能很清楚，选中该条件的概率和制备误差却必须计入。**
+
+因此，对“整体量子观察者”的理解可以再收紧一步：
+
+> **整体不是把所有模式永远平均在一起，而是允许选择性地观察某些关系，同时严格保留滤波方式、相位符号、未选中部分的尾界和成功概率。**
+
+这样的观察不会因为“更局部”而必然不可靠。相反，只要目标关系和误差被忠实保留，**一个有限、固定的观察就足以承载一个无限命题的反例证书**。当前真正需要继续攻克的，是从实际 theta／质数结构中找到或排除这样的符号证书，而不是继续等待高维平均自行给出答案。
+
+[1]: https://dlmf.nist.gov/25.4 "DLMF: §25.4 Reflection Formulas ‣ Riemann Zeta Function ‣ Chapter 25 Zeta and Related Functions"
+[2]: https://arxiv.org/abs/1902.07321 "[1902.07321] Jensen polynomials for the Riemann zeta function and other sequences"
+[3]: https://arxiv.org/abs/1911.01745 "[1911.01745] The Hermite-Sylvester criterion for real-rooted polynomials"
+[4]: https://arxiv.org/abs/1806.01838 "[1806.01838] Quantum singular value transformation and beyond: exponential improvements for quantum matrix arithmetics"
+[5]: https://dlmf.nist.gov/1.10 "DLMF: §1.10 Functions of a Complex Variable ‣ Topics of Discussion ‣ Chapter 1 Algebraic and Analytic Methods"
+[6]: https://dlmf.nist.gov/5.11 "DLMF: §5.11 Asymptotic Expansions ‣ Properties ‣ Chapter 5 Gamma Function"
+继续。这次可以把“缺什么相关项”精确算出来：
+
+> **局部素数读出的长期均方中，单个素数的自贡献会产生一个明确的 \(L^2\) 主项；要达到与 RH 等价的 \(O(L)\) 控制，跨素数的带符号相关必须把整个二次主项抵消掉。**
+
+同时，我们能构造一个精确的跨尺度正权平均，并证明两种容易误入的路线都不成立：**缩小窗口后读数趋零，不足以支持 RH；补回尺度因子后要求所有微观读数一致有界，又会被单个素数直接否定。**
+
+以下给出定义和证明。有限差分与尺度恒等式由代数直接推出；零点侧使用已有显式公式。新增综合结论尚未进行 Lean 编译，不将它们标记为机器验证结果。时间函数与零点展开的经典输入仍来自 Suzuki 的工作。([arXiv][1])
+

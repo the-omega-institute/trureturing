@@ -1,0 +1,37 @@
+## 推论：线性尺度上的体积确实趋零
+
+在前件 \(S_*>0\) 下，对：
+
+$$
+0<\vartheta<L^{-2},
+$$
+
+有：
+
+$$
+\boxed{
+e^{d\vartheta S_d}\mathcal Z_d(d\vartheta)
+\longrightarrow
+\mathcal F_\xi(\vartheta)>0.
+}
+$$
+
+所以：
+
+$$
+\boxed{
+\mathcal Z_d(d\vartheta)\longrightarrow0,
+}
+\tag{M15}
+$$
+
+并且：
+
+$$
+\boxed{
+\frac1d\log\mathcal Z_d(d\vartheta)
+\longrightarrow-\vartheta S_*.
+}
+\tag{M16}
+$$
+

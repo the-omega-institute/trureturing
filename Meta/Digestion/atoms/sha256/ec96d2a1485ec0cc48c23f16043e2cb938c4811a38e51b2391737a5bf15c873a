@@ -1,0 +1,92 @@
+## 推论 105.1　由有限采样误差控制其他方向
+
+令十点插值系数为 \(\ell_s(v)\)，使：
+
+$$
+\widehat R(v)=\sum_s\ell_s(v)\widehat R(v_s).
+$$
+
+定义候选：
+
+$$
+\widetilde r(v)=\sum_s\ell_s(v)n_s^2.
+$$
+
+则：
+
+$$
+\boxed{
+\left\|
+[\widehat R(v)-\widetilde r(v)I]\sigma^{1/2}
+\right\|_2
+\le
+\sum_s|\ell_s(v)|
+\bigl(\|\widehat n(v_s)\|+n_s\bigr)\delta_s.
+}
+\tag{105.3}
+$$
+
+若进一步有：
+
+$$
+\widehat n(v)\ge\nu_*I,
+\qquad
+\sqrt{\widetilde r(v)}\ge\nu_*>0,
+$$
+
+则：
+
+$$
+\boxed{
+\left\|
+[\widehat n(v)-\sqrt{\widetilde r(v)}I]\sigma^{1/2}
+\right\|_2
+\le
+\frac1{2\nu_*}
+\left\|
+[\widehat R(v)-\widetilde r(v)I]\sigma^{1/2}
+\right\|_2.
+}
+\tag{105.4}
+$$
+
+### 证明
+
+首先使用：
+
+$$
+\widehat R(v_s)-n_s^2I
+=
+[\widehat n(v_s)+n_sI]
+[\widehat n(v_s)-n_sI],
+$$
+
+再用三角不等式，得到式（105.3）。
+
+对式（105.4），使用：
+
+$$
+\widehat n-\widetilde nI
+=
+(\widehat n+\widetilde nI)^{-1}
+(\widehat R-\widetilde n^2I),
+$$
+
+以及逆算子范数不超过 \(1/(2\nu_*)\)。∎
+
+因此：
+
+$$
+\boxed{
+\text{有限方向上的过程证书}
+\longrightarrow
+\text{其他方向的钟律误差}
+\longrightarrow
+\text{完整有限实验的误差}.
+}
+$$
+
+这比仅对平均度量系数给出误差界更强。
+
+---
+

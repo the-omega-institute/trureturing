@@ -1,0 +1,64 @@
+## 定理 117.2　固定时间经典化不等于全部时间统一经典化
+
+在 \(\sigma_{\mathrm{ind}}\) 上，取结构自由 Hamiltonian 为零，钟能级差为 \(\hbar\omega\)。则：
+
+$$
+\boxed{
+\chi_N(t)
+=
+e^{-i\omega t}
+\left[
+\cos\left(\frac{\alpha\omega t}{N}\right)
+\right]^N.
+}
+\tag{117.3}
+$$
+
+固定 \(t\) 时：
+
+$$
+\chi_N(t)\longrightarrow e^{-i\omega t}.
+$$
+
+但若：
+
+$$
+t_N=\frac{s\sqrt N}{\alpha\omega},
+$$
+
+则：
+
+$$
+\boxed{
+|\chi_N(t_N)|
+\longrightarrow e^{-s^2/2}.
+}
+\tag{117.4}
+$$
+
+### 证明
+
+不同单元的 \(Z_j\) 可交换，初态为乘积态，所以特征函数分解为 \(N\) 个余弦因子的乘积。
+
+固定 \(t\) 时，用 \(\log\cos x=-x^2/2+O(x^4)\)，得到模长趋于一。
+
+对 \(t_N\)，余弦自变量为 \(s/\sqrt N\)，所以：
+
+$$
+N\log\cos(s/\sqrt N)\longrightarrow-\frac{s^2}{2}.
+$$
+
+∎
+
+因此，量子差别可以在较长的相干询问时间上重新变得可见。
+
+这与第 115 节不矛盾：其误差取决于
+
+$$
+\mathcal B(T)/\sqrt N,
+$$
+
+而不是只取决于 \(N\)。
+
+---
+

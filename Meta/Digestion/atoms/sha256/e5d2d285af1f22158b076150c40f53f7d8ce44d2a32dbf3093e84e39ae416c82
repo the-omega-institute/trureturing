@@ -1,0 +1,33 @@
+## 定理 M3：双尺度极限
+
+对足够小的复数 \(\vartheta\)，具体地：
+
+$$
+|\vartheta|L^2<1,
+$$
+
+有局部一致收敛：
+
+$$
+\boxed{
+\mathcal H_d(d\vartheta)
+\longrightarrow
+\mathcal F_\xi(\vartheta),
+}
+\tag{M12}
+$$
+
+其中：
+
+$$
+\boxed{
+\mathcal F_\xi(\vartheta)
+=
+\exp\left[
+\sum_{m=2}^{\infty}
+\frac{|\rho_m|^2}{m}\vartheta^m
+\right].
+}
+\tag{M13}
+$$
+

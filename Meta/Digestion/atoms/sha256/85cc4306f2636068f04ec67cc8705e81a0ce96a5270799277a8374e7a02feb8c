@@ -1,0 +1,24 @@
+## 定理 4：固定尺度的均方判据
+
+以下命题等价：
+
+$$
+\boxed{\mathrm{RH};}
+$$
+
+$$
+\boxed{
+\mathcal E_h(L)=O_h(L)
+\qquad(L\to\infty).
+}
+\tag{18}
+$$
+
+甚至，如果只能证明对某个固定有限指数 \(A\)，
+
+$$
+\mathcal E_h(L)=O_h((1+L)^A),
+$$
+
+也足以推出 RH。
+

@@ -1,0 +1,54 @@
+## 定理 112.1　最大稳定经典子空间
+
+\(\mathcal K_\nu\) 是包含于 \(\mathcal E_\nu\) 的最大 \(H_G\)-不变线性子空间。
+
+并且：
+
+$$
+\boxed{
+\mathcal K_\nu
+=
+\bigcap_{k=0}^{D-1}
+\ker(C_\nu H_G^k).
+}
+\tag{112.3}
+$$
+
+### 证明
+
+由 \(k=0\) 的条件：
+
+$$
+\mathcal K_\nu\subseteq\ker C_\nu=\mathcal E_\nu.
+$$
+
+若 \(\psi\in\mathcal K_\nu\)，则对任意 \(k\)：
+
+$$
+C_\nu H_G^k(H_G\psi)
+=
+C_\nu H_G^{k+1}\psi=0.
+$$
+
+所以 \(H_G\mathcal K_\nu\subseteq\mathcal K_\nu\)。
+
+若另一子空间 \(W\subseteq\mathcal E_\nu\) 对 \(H_G\) 不变，则对任意 \(\psi\in W\)，全部 \(H_G^k\psi\) 仍在 \(W\)，故：
+
+$$
+C_\nu H_G^k\psi=0.
+$$
+
+因此 \(W\subseteq\mathcal K_\nu\)。
+
+最后，Cayley–Hamilton 定理把 \(H_G^D\) 表示为较低次幂的线性组合；递归得到所有更高次幂也在前 \(D\) 个幂的线性包内，故式（112.3）成立。∎
+
+项目的 `MaximalUnobservableSubspace.lean` 已有：
+
+```text
+future_kernel_is_maximal_invariant
+```
+
+其结论正是“全部未来读数核的交，是当前核内最大的动力不变子空间”。本节将其中的读数具体取为 \(C_\nu\)，并增加有限维的幂截断。
+
+---
+

@@ -1,0 +1,93 @@
+## 定理 92.1　局部洛伦兹重建
+
+在假设 92.1 下，存在唯一的
+
+$$
+a>0,\qquad b\in\mathbb R^d,\qquad C=C^\mathsf T>0,
+$$
+
+使
+
+$$
+\boxed{
+r(v)=a+2b^\mathsf Tv-v^\mathsf TCv.
+}
+\tag{92.3}
+$$
+
+定义
+
+$$
+\boxed{
+g=
+\begin{pmatrix}
+-a&-b^\mathsf T\\
+-b&C
+\end{pmatrix}.
+}
+\tag{92.4}
+$$
+
+则 \(g\) 恰好具有一个负方向和 \(d\) 个正方向，并且
+
+$$
+\boxed{
+-g((1,v),(1,v))=r(v).
+}
+\tag{92.5}
+$$
+
+### 证明
+
+由全部三阶偏导为零，Hessian 在连通集 \(U\) 上为常矩阵。因此 Taylor 展开精确终止于二阶：
+
+$$
+r(v)
+=
+r(0)+\nabla r(0)^\mathsf Tv
++\frac12v^\mathsf T(\operatorname{Hess}r)v.
+$$
+
+取
+
+$$
+a=r(0),
+\qquad
+b=\frac12\nabla r(0),
+\qquad
+C=-\frac12\operatorname{Hess}r,
+$$
+
+即得式（92.3），且由假设知 \(a>0,C>0\)。
+
+令
+
+$$
+w=C^{-1}b,
+\qquad
+N^2=a+b^\mathsf TC^{-1}b>0.
+$$
+
+对任意 \(T=(t,x)\)，完成平方：
+
+$$
+\boxed{
+g(T,T)
+=
+(x-wt)^\mathsf TC(x-wt)-N^2t^2.
+}
+\tag{92.6}
+$$
+
+变换 \((t,x)\mapsto(t,x-wt)\) 可逆，所以 \(g\) 与
+
+$$
+\operatorname{diag}(-N^2,C)
+$$
+
+合同，恰有一个负方向。
+
+式（92.5）由直接代入得到。唯一性来自二次多项式系数的唯一性。∎
+
+---
+

@@ -1,0 +1,67 @@
+# 七、寻找滤波器变成一个规范的最小能量问题
+
+定义：
+
+$$
+\lambda_N=\lambda_{\min}(\mathsf K_N|_{\mathbb C^N}).
+$$
+
+那么：
+
+$$
+\boxed{
+\lambda_N
+=
+\min_{\substack{c\in\mathbb R^N\\\|c\|_2=1}}
+\mathcal Q_\infty(f_c).
+}
+\tag{O19}
+$$
+
+因此，最小特征向量直接给出该次数范围内的最优归一化滤波器。
+
+不需要先猜：
+
+$$
+f(z)=z^nL(z)(Az+B).
+$$
+
+那个插值构造证明“反例存在时必有证书”；这里的有限特征值问题则给出“怎样从实际系数寻找证书”。
+
+因为允许的滤波器空间逐层增加：
+
+$$
+\boxed{\lambda_{N+1}\le\lambda_N.}
+$$
+
+并且：
+
+$$
+\boxed{
+\lambda_N\longrightarrow
+\lambda_*:=\inf\operatorname{spec}\mathsf K.
+}
+\tag{O20}
+$$
+
+由于 \(\mathsf K\) 是无限维空间上的紧算子，零必然属于其谱，所以：
+
+$$
+\lambda_*\le0.
+$$
+
+结合式（O18）：
+
+$$
+\boxed{
+\min(0,\lambda_N)-\delta_N
+\le
+\lambda_*
+\le
+\min(0,\lambda_N).
+}
+\tag{O21}
+$$
+
+这给出一套几何收敛的有限逼近。
+

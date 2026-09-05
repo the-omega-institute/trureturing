@@ -1,0 +1,35 @@
+## 定理 124.2　一次局部快照的统计证书
+
+同一时刻，不同节点的 \(R_x\) 可分别测量。把测得的本征值平均，记为 \(\widehat r_{\mathrm{sample}}\)，则
+
+$$
+\mathbb E[\widehat r_{\mathrm{sample}}]=r_Q(m),
+$$
+
+且
+
+$$
+\boxed{
+\Pr\!\left(
+|\widehat r_{\mathrm{sample}}-r_Q(m)|\ge\varepsilon
+\right)
+\le
+\frac{
+\Delta_R^2b_Q(m)
+}{
+N_Q\varepsilon^2
+}.
+}
+\tag{124.5}
+$$
+
+### 证明
+
+这些局部读数彼此可交换，所以它们的联合测量给出一个经典联合分布。平均结果的方差等于 \(\widehat R_Q\) 的量子方差。
+
+应用式（124.1）及 Chebyshev 不等式。∎
+
+这提供了一个实际统计读取方式，但结果还要通过合法通信汇总。测量也可能改变后续结构态，不能把一次快照的统计定理当成无扰、永久读取能力。
+
+---
+

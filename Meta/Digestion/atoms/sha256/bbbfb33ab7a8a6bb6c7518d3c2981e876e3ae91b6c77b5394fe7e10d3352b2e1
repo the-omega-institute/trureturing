@@ -1,0 +1,43 @@
+# 四、这个负号能够被合法量子实验读出，但不是负概率
+
+令：
+
+$$
+B=f(C_d),
+\qquad
+H_B=\operatorname{Tr}(B^*B).
+$$
+
+假设 \(B\ne0\)，故 \(H_B>0\)。
+
+引入两个 \(d\) 维寄存器，准备最大纠缠态：
+
+$$
+|\Omega_d\rangle
+=
+\frac1{\sqrt d}\sum_{j=1}^{d}|j,j\rangle.
+$$
+
+定义两种归一化条件态：
+
+$$
+\boxed{
+|\phi_B\rangle
+=
+\frac{(B\otimes I)|\Omega_d\rangle}
+{\sqrt{H_B/d}},
+}
+$$
+
+$$
+\boxed{
+|\phi_{B^*}\rangle
+=
+\frac{(B^*\otimes I)|\Omega_d\rangle}
+{\sqrt{H_B/d}}.
+}
+\tag{N8}
+$$
+
+因为 \(B\) 与 \(B^*\) 的 Hilbert–Schmidt 范数相同，两态使用同一个归一化。
+

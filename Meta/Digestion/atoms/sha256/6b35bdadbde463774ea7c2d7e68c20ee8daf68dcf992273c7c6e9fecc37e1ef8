@@ -1,0 +1,91 @@
+### 第二步：过小的能量增长会排除相应极点
+
+记
+
+$$
+L_{\mathbb P}(s)=\sum_p\frac{\log p}{p^s}.
+$$
+
+前文已经得到
+
+$$
+\boxed{
+\widehat{\mathcal D_h}(r)
+=
+Q_h(e^{hr})
+\frac{L_{\mathbb P}(1/2+r)}{r^2}
+-
+B_h(r),
+}
+\tag{7}
+$$
+
+其中 \(B_h\) 为整函数。
+
+Euler 乘积给出
+
+$$
+L_{\mathbb P}(s)
+=
+-\frac{\zeta'(s)}{\zeta(s)}
++\frac{\zeta'(2s)}{\zeta(2s)}
+-J_{\mathrm o}(s),
+$$
+
+其中 \(J_{\mathrm o}\) 在 \(\Re s>1/3\) 解析。这是把一次幂、偶数次幂和奇数高次幂分开后的恒等式。([DLMF][3])
+
+因此，若
+
+$$
+\rho=\frac12+\delta+i\gamma,
+\qquad \delta>0,
+$$
+
+则式（7）在
+
+$$
+r_0=\delta+i\gamma
+$$
+
+有不可去极点。因为
+
+$$
+1<|e^{hr_0}|<e^{h/2},
+$$
+
+而 \(Q_h\) 的根只有 \(1\) 与 \(e^{h/2}\)，所以滤波器不能消去该极点。
+
+现在反设式（5）左边严格小于 \(2\Delta_\zeta\)。选择
+
+$$
+\frac12
+\limsup_{L\to\infty}
+\frac{\log(1+\mathcal E_h(L))}{L}
+<
+\alpha<\Delta_\zeta.
+$$
+
+则充分大的 \(L\) 满足
+
+$$
+\mathcal E_h(L)\le C e^{2\alpha L}.
+$$
+
+对任意 \(\sigma>\alpha\)，在整数时间段上使用 Cauchy–Schwarz：
+
+$$
+\begin{aligned}
+\int_n^{n+1}e^{-\sigma T}|\mathcal D_h(T)|\,dT
+&\le
+e^{-\sigma n}
+\left(\int_n^{n+1}|\mathcal D_h(T)|^2\,dT\right)^{1/2}\\
+&\le C_\alpha e^{-(\sigma-\alpha)n}.
+\end{aligned}
+$$
+
+因此 Laplace 变换在 \(\Re r>\alpha\) 内解析。
+
+但由 \(\alpha<\Delta_\zeta\)，存在右侧零点满足 \(\Re\rho-1/2>\alpha\)，其不可去极点位于该区域，矛盾。证毕。
+
+---
+

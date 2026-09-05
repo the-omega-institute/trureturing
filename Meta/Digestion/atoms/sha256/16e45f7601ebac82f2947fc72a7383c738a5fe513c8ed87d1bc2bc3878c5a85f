@@ -1,0 +1,39 @@
+### 制备成功率必须一起记录
+
+取：
+
+$$
+\alpha\ge\|B\|_{\mathrm{op}}.
+$$
+
+则 \(B/\alpha\) 与 \(B^*/\alpha\) 都是合法的收缩滤波算子，可以补上失败分支构成完整量子操作。
+
+成功概率为：
+
+$$
+\boxed{
+p_{\mathrm{succ}}
+=
+\frac{H_B}{d\alpha^2}.
+}
+\tag{N11}
+$$
+
+因此：
+
+$$
+\boxed{
+\mathcal Q_d(f)
+=
+d\alpha^2p_{\mathrm{succ}}\,
+\langle\sigma_x\rangle.
+}
+\tag{N12}
+$$
+
+这三项必须共同保留。
+
+此外，这里需要实际实现 \(f(C_d)\)，不能把对奇异值的变换直接当作对特征值的多项式变换。标准 QSVT 的基本对象正是奇异值；对一般非自伴矩阵，两者不同。([arXiv][4])
+
+---
+

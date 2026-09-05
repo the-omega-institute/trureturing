@@ -1,0 +1,44 @@
+# 十一、与项目的连接：这次需要保留的是符号关系，而不是再增加一个正空间
+
+本轮读取的仓库快照中：
+
+`HermitianKernelNegativeSquares.lean` 已定义有限采样的负指标及其达到条件，并给出一个负平方的实例。它能够承载“有一个严格负方向”的结论，但没有自行供应实际 ξ 的负方向。
+
+`JensenPolynomialObstruction.lean` 仍将 Jensen 塔与 RH 的分析桥作为显式前件；不能把有限多项式已经定义出来，误认成已经证明了它们全部实根。
+
+`StaticEffectSequentialSeparation.lean` 则证明：两种仪器可以具有相同的静态效应，却具有不同的两步联合规律。它与本轮“模平方相同，不等于代数相位关系相同”的区分相容。
+
+现在可明确提出三段桥：
+
+$$
+\boxed{
+\text{实际 theta 累积量}
+\longrightarrow
+\mathcal Q_\infty(f)
+}
+$$
+
+$$
+\boxed{
+\mathcal Q_\infty(f)<0
+\longrightarrow
+\text{同一个有限测试在高阶模型中持久为负}
+}
+$$
+
+$$
+\boxed{
+\mathcal Q_d(f)
+\longrightarrow
+\text{带成功概率记录的量子干涉读出}.
+}
+$$
+
+第二段与第三段，本轮已经给出了具体公式与证明。
+
+真正没有完成的仍是第一段中的算术判定：**实际累积量是否对所有合法 \(f\) 都非负，还是某个有限 \(f\) 已经能够得到严格负值。**
+
+本轮没有找到实际负证书，也没有证明全体测试非负。
+
+---
+

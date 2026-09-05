@@ -1,0 +1,45 @@
+## 定理 I2：有限观察空间的边界缺额
+
+令：
+
+$$
+P_T=E_TE_T^*
+$$
+
+是历史子空间的正交投影，并定义：
+
+$$
+R_T=(I-P_T)\mathcal A_T^*E_T.
+$$
+
+那么：
+
+$$
+\boxed{
+R_T^*R_T
+=
+\frac1{T^2}I-
+(A_TA_T^*-A_T^*A_T).
+}
+\tag{I10}
+$$
+
+因此：
+
+$$
+\boxed{
+A_TA_T^*-A_T^*A_T
+\preceq\frac1{T^2}I.
+}
+\tag{I11}
+$$
+
+而且：
+
+$$
+\boxed{
+\|R_T\|_{\mathrm{HS}}^2=\frac d{T^2}.
+}
+\tag{I12}
+$$
+

@@ -1,0 +1,36 @@
+### 正向证明
+
+若根全部实，令：
+
+$$
+\Lambda=\operatorname{diag}(z_1,\ldots,z_d).
+$$
+
+此时 \(\Lambda\) 自伴，且：
+
+$$
+\operatorname{Tr}\Lambda^2=S_q.
+$$
+
+定义实随机变量：
+
+$$
+X(U)=\operatorname{Tr}(\Lambda U\Lambda U^*).
+$$
+
+由 Hilbert–Schmidt Cauchy–Schwarz：
+
+$$
+|X(U)|\le S_q.
+$$
+
+同时：
+
+$$
+b_{q,k}
+=
+\frac1{k!}\int X(U)^k\,dU.
+$$
+
+这个积分非负已由定理 L1 保证；上界则由 \(|X|\le S_q\) 给出。证毕。
+

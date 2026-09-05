@@ -1,0 +1,104 @@
+## 定理 2：对角项的完整常数阶展开
+
+当 \(X\to\infty\) 时，
+
+$$
+\boxed{
+\mathfrak D_{\mathrm{self}}(X)
+=
+(\log2)\log X
++\frac52(\log2)^2
+-2\log2
++o(1).
+}
+\tag{12}
+$$
+
+### 证明
+
+令
+
+$$
+B(t)=\sum_{n\le t}a(n)^2.
+$$
+
+展开得
+
+$$
+B(t)
+=
+\sum_{n\le t}\Lambda(n)^2
+-2\psi(t)+\lfloor t\rfloor.
+$$
+
+由无条件素数定理及分部求和，
+
+$$
+\sum_{p\le t}(\log p)^2
+=
+t\log t-t+o(t).
+$$
+
+更高素数幂对 \(\sum\Lambda(n)^2\) 的贡献为 \(o(t)\)，于是
+
+$$
+\sum_{n\le t}\Lambda(n)^2
+=
+t\log t-t+o(t).
+$$
+
+再使用 \(\psi(t)=t+o(t)\)，得到
+
+$$
+\boxed{
+B(t)=t\log t-2t+o(t).
+}
+\tag{13}
+$$
+
+所需误差远弱于经典无条件素数定理的已知误差；不使用 RH。([DLMF][3])
+
+由定义，
+
+$$
+\mathfrak D_{\mathrm{self}}(X)
+=
+\int_X^{2X}\frac{B(2x)-B(x)}{x^2}\,dx.
+$$
+
+而
+
+$$
+B(2x)-B(x)
+=
+x\log x+(2\log2-2)x+o(x).
+$$
+
+所以
+
+$$
+\begin{aligned}
+\mathfrak D_{\mathrm{self}}(X)
+&=
+\int_X^{2X}
+\frac{\log x+2\log2-2}{x}\,dx+o(1)\\
+&=
+(\log2)\log X
++\frac52(\log2)^2-2\log2+o(1).
+\end{aligned}
+$$
+
+证毕。
+
+---
+
+这就是单点统计提供的发散部分：
+
+$$
+\boxed{
+\mathfrak D_{\mathrm{self}}(X)\sim(\log2)\log X.
+}
+$$
+
+下一步不能把跨位置贡献设为零。
+

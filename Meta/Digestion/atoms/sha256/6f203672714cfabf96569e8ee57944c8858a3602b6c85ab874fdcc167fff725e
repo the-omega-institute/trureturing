@@ -1,0 +1,70 @@
+**增加 \(d\)、增加 \(k\)、增加 \(r\)，不是同一件事。**
+
+设 \(q_d\) 的根为 \(\theta_{d,j}\)，按代数重数计。令：
+
+$$
+z_{d,j}=\theta_{d,j}-\frac{a_1}{d},
+\qquad
+\sum_{j=1}^{d}z_{d,j}=0.
+$$
+
+定义中心化代数平方总量：
+
+$$
+S_d=\sum_jz_{d,j}^2.
+$$
+
+由 Newton 恒等式：
+
+$$
+\boxed{
+S_d=\frac{d-1}{d}S_*,
+\qquad
+S_*=a_1^2-2a_2=-\frac{\chi_4}{12}.
+}
+\tag{M2}
+$$
+
+沿用前文的群积分与相对历史体积：
+
+$$
+\mathcal H_d(r)
+=
+\int_{U(d)}
+\exp\!\left[
+r\,\operatorname{Tr}
+(\Lambda_dU\Lambda_d^*U^*)
+\right]dU,
+$$
+
+$$
+\boxed{
+\mathcal Z_d(r)=e^{-rS_d}\mathcal H_d(r),
+}
+\tag{M3}
+$$
+
+其中 \(\Lambda_d=\operatorname{diag}(z_{d,1},\ldots,z_{d,d})\)。
+
+根只用于证明和解释；这两个量仍可由实际系数、伴随矩阵与历史 Gramian 定义，不需要先输入根。
+
+前文已经得到 Schur 平方展开：
+
+$$
+\boxed{
+\mathcal H_d(r)
+=
+\sum_{k\ge0}b_{d,k}r^k,
+\qquad
+b_{d,k}
+=
+\sum_{\substack{\lambda\vdash k\\\ell(\lambda)\le d}}
+\frac{|s_\lambda(z_d)|^2}{(d)_\lambda}\ge0.
+}
+\tag{M4}
+$$
+
+这里的 HCIZ—Schur—不变子空间关系是经典工具。([arXiv][3])
+
+---
+

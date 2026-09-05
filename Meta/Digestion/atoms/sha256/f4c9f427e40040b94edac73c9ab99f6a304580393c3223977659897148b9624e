@@ -1,0 +1,25 @@
+## 定义 94.1　钟律残差
+
+由十个读数得到的重建函数记为
+
+$$
+r_{\mathrm{quad}}(v)
+=
+a+2b^\mathsf Tv-v^\mathsf TCv.
+$$
+
+对更多允许方向定义
+
+$$
+\boxed{
+\Delta_{\mathrm{clock}}(v)
+=
+r_{\mathrm{actual}}(v)-r_{\mathrm{quad}}(v).
+}
+\tag{94.1}
+$$
+
+若它在某个已认证实验中显著非零，则否定的是当前二次钟律实现，而不是量子理论本身。
+
+---
+

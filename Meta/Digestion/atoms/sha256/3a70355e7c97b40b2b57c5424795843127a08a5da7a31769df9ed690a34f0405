@@ -1,0 +1,123 @@
+# 一、固定对象，并先消除无关的整体平移
+
+沿用：
+
+$$
+D(b^2)=\frac{\xi(\frac12+b)}{\xi(\frac12)},
+\qquad
+D(v)=\sum_{k\ge0}a_kv^k,
+$$
+
+以及：
+
+$$
+P_d(v)=
+\sum_{k=0}^{d}\frac{(d)_k}{d^k}a_kv^k,
+\qquad
+q_d(x)=x^dP_d(-1/x).
+$$
+
+这里 ξ 始终采用标准 completed 定义，全部 \(a_k\) 由同一个实际 theta 核固定。([DLMF][1])
+
+前文的 Jensen 判据是：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+q_d\text{ 全部为正实根，}\quad\forall d.
+}
+\tag{L1}
+$$
+
+这项分析桥属于经典 Jensen–Pólya 理论。([arXiv][2])
+
+现在先对任意实系数首一多项式 \(q\) 研究。设其次数为 \(d\)，根为：
+
+$$
+\lambda_1,\ldots,\lambda_d,
+$$
+
+按代数重数计。
+
+令 \(C_q\) 为前文的观察型伴随矩阵，定义：
+
+$$
+\mu=\frac1d\operatorname{Tr}C_q\in\mathbb R,
+\qquad
+A=C_q-\mu I.
+$$
+
+于是：
+
+$$
+\operatorname{Tr}A=0.
+$$
+
+记中心化根：
+
+$$
+z_j=\lambda_j-\mu.
+$$
+
+定义三个不同的量：
+
+$$
+\boxed{
+S_q=\operatorname{Tr}(A^2)=\sum_jz_j^2\in\mathbb R,
+}
+\tag{L2}
+$$
+
+$$
+\boxed{
+N_q=\operatorname{Tr}(A^*A),
+}
+$$
+
+$$
+\boxed{
+Q_q=\sum_j|z_j|^2.
+}
+$$
+
+它们满足：
+
+$$
+N_q\ge Q_q,
+$$
+
+以及：
+
+$$
+\boxed{
+Q_q-S_q
+=
+2\sum_j(\Im\lambda_j)^2.
+}
+\tag{L3}
+$$
+
+因此：
+
+**\(N_q-Q_q\) 测量表示中的非正规部分；\(Q_q-S_q\) 测量实际谱的非实部分。**
+
+这正好对应前几轮已经分开的两种残差。
+
+对实际 \(q_d\)，Newton 恒等式给出：
+
+$$
+\boxed{
+S_d
+=
+\frac{d-1}{d}(a_1^2-2a_2)
+=
+-\frac{d-1}{12d}\chi_4.
+}
+\tag{L4}
+$$
+
+所以，整体中心位置由 \(a_1\) 决定，中心化的代数平方总量则由四阶累积量决定。
+
+---
+
