@@ -3,7 +3,7 @@ using TestProjectTopologyPolicy = StrataLint.Engine.RepositoryRules;
 
 namespace StrataLint.ArchitectureTests;
 
-public sealed class TestProjectTopologyPolicyTests
+public sealed partial class TestProjectTopologyPolicyTests
 {
     private const string CanonicalHarnessPath =
         "tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj";
