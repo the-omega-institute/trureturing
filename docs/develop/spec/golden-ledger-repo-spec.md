@@ -1,4 +1,4 @@
-# trureturing / D5 —— 仓库规范全卷 v7.20(定本:宪法·地层·编码·执法·八官·管线·治理·引导)
+# trureturing / D5 —— 仓库规范全卷 v7.21(定本:宪法·地层·编码·执法·八官·管线·治理·引导)
 
 > ⚑ **铭牌**。组织:**trureturing**(收据三张:27.99 真理为攀登而不可达之 ν、27.90 理论过自家分类器返回原点、仪文"账本的最后一行永远是下一轮的第一行")。仓库名:**trureturing**——**仓库即模空间,单库承全族**(v7.4 裁决,撤姊妹分库):`Metallic/`(G 层参数化机器)+ `D5/ D8/ …`(实例层,按需生长)+ `Moduli/`(跨理论比较定理之家);分库仅当已证实压力(治理/许可/规模),**裂由压力,不预裂**。
 > README 首行:*trureturing — the last line of the ledger is always the first line of the next round.*
