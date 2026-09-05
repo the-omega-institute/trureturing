@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:6b5b9d89d5eb8bc848951c54662bea2c842c47f0283ac7b22852e62f4838f24a
+  normalized_sha256: sha256:6b5b9d89d5eb8bc848951c54662bea2c842c47f0283ac7b22852e62f4838f24a
+cas_ref: sha256:6b5b9d89d5eb8bc848951c54662bea2c842c47f0283ac7b22852e62f4838f24a
+coverage_gids:
+  - gid: D5/S3/QuantumContext/MubDimensionSixTensor.qutrit_three_mubs
+    target_statement_id: sha256:1191e23ff8b09d83e0154e4557d59e7c2e6c9b01e537091455b50a676b1cbc49
+receipts:
+  scribe:
+    - gid: D5/S3/QuantumContext/MubDimensionSixTensor.qutrit_three_mubs
+      definition_sha256: sha256:da7a20befbf8db01c792fe097a0f5de1281c9a82f2185d42092599680984aae1
+      emission_sha256: sha256:ca4c9cd46b70b2da2ce0f7607266e1940799ae9394a6549f60f40b96cc238a53
+  unresolved_subitems: []
