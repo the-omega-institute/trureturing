@@ -654,3 +654,7 @@ jobs:
           path: ${{ runner.temp }}/gate-timing.jsonl
           if-no-files-found: warn
           retention-days: 7
+
+# ARM 验证载荷(器律⑦):本分支只为在 base=integration-ci-arm-tests 上触发一次真实运行,
+# 使三门跑在 ubuntu-24.04-arm 上,取得 engineering/admission 的 ARM 耗时与通过率。
+# 验证完毕即删除,不合入 dev。
