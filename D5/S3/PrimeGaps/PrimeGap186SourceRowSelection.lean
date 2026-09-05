@@ -114,7 +114,7 @@ theorem effective_two_excludes_source_order_three
     (g : PhysicalSourceGroup) (ν : Fin 2) (t : ℕ)
     (heff : g.effectiveOrder = 2) (hsel : selectedByGroup g ν t) :
     physicalSourceOrder t ≠ 3 := by
-  cases g <;> simp [PhysicalSourceGroup.effectiveOrder, selectedByGroup] at heff hsel ⊢
+  cases g <;> norm_num [PhysicalSourceGroup.effectiveOrder, selectedByGroup] at heff hsel ⊢
   all_goals omega
 
 #print axioms selectedByGroup
