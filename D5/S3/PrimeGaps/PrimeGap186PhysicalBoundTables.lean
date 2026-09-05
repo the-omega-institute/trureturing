@@ -71,7 +71,7 @@ def innerBaseOrderTwoBounds : List InnerBoundRow :=
 
 def innerBaseOrderFiveHalvesBounds : List InnerBoundRow :=
   [(1, 1), (3229104, 1), (29825526, 1), (77797373079, 692),
-   (131978724894, 1173), (292684783730, 2600),
+   (131978724894, 1173), (29268478373079, 2600),
    (5548294545493, 49286), (30283518217418, 269010),
    (12009121688668, 106678), (686922192553, 6102)]
 
@@ -91,6 +91,7 @@ def innerEnlargedOrderFiveHalvesBounds : List InnerBoundRow :=
    (6136054632765, 6141229), (3690866567521, 3693979),
    (737132501820, 737755)]
 
+set_option maxRecDepth 4096 in
 theorem bound_table_lengths :
     outerOrderTwoBounds.length = 17 ∧
     outerOrderFiveHalvesBounds.length = 35 ∧
@@ -98,9 +99,10 @@ theorem bound_table_lengths :
     innerBaseOrderFiveHalvesBounds.length = 10 ∧
     innerEnlargedOrderTwoBounds.length = 11 ∧
     innerEnlargedOrderFiveHalvesBounds.length = 17 := by
-  native_decide
+  decide
 
 /-- Rounded budget-column sums, in units of `10^-12`, for the six exact tables. -/
+set_option maxRecDepth 4096 in
 theorem rounded_budget_sums :
     (outerOrderTwoBounds.map (fun r => r.2.2.2)).sum = 38927522 ∧
     (outerOrderFiveHalvesBounds.map (fun r => r.2.2.2)).sum = 622829241 ∧
@@ -108,9 +110,10 @@ theorem rounded_budget_sums :
     (innerBaseOrderFiveHalvesBounds.map (fun r => r.2)).sum = 435544 ∧
     (innerEnlargedOrderTwoBounds.map (fun r => r.2)).sum = 1405159 ∧
     (innerEnlargedOrderFiveHalvesBounds.map (fun r => r.2)).sum = 32422390 := by
-  native_decide
+  decide
 
 /-- Total rounded budget mass across all six source tables. -/
+set_option maxRecDepth 4096 in
 theorem total_rounded_budget_sum :
     (outerOrderTwoBounds.map (fun r => r.2.2.2)).sum +
     (outerOrderFiveHalvesBounds.map (fun r => r.2.2.2)).sum +
@@ -118,7 +121,7 @@ theorem total_rounded_budget_sum :
     (innerBaseOrderFiveHalvesBounds.map (fun r => r.2)).sum +
     (innerEnlargedOrderTwoBounds.map (fun r => r.2)).sum +
     (innerEnlargedOrderFiveHalvesBounds.map (fun r => r.2)).sum = 696075110 := by
-  native_decide
+  decide
 
 #print axioms outerOrderTwoBounds
 #print axioms outerOrderFiveHalvesBounds
