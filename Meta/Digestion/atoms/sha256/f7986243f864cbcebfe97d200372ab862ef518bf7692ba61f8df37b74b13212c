@@ -1,0 +1,61 @@
+**二阶累积量完全消失了。**
+
+这时：
+
+$$
+\widehat r_4(y)=\frac14\widehat q_4'(y)
+=
+y^3+\frac p2y+\frac q4,
+$$
+
+$$
+\widehat n_4(y)
+=
+-\frac p2y^2-\frac{3q}{4}y-r.
+$$
+
+直接按定义 C2 构造矩阵：
+
+$$
+\boxed{
+\widehat B_4=
+\begin{pmatrix}
+-\dfrac{pr}{2}+\dfrac{3q^2}{16}
+&
+\dfrac{pq}{8}
+&
+-r\\[2mm]
+\dfrac{pq}{8}
+&
+\dfrac{p^2}{4}-r
+&
+-\dfrac{3q}{4}\\[2mm]
+-r
+&
+-\dfrac{3q}{4}
+&
+-\dfrac p2
+\end{pmatrix}.
+}
+\tag{C22}
+$$
+
+由定理 C1：
+
+$$
+\boxed{
+\widehat B_4\succeq0
+\iff
+q_4\text{ 的全部根为正实数}.
+}
+\tag{C23}
+$$
+
+变量平移只对应多项式基底的可逆变化，不改变正负惯性。
+
+因此，第四层可以直接通过一个由 \(\chi_4,\chi_6,\chi_8\) 构成的 \(3\times3\) 矩阵认证，**不需要先求 \(q_4\) 的根**。
+
+仅检查行列式还不够；必须检查正半定性本身，或等价的全部主子式条件。
+
+---
+

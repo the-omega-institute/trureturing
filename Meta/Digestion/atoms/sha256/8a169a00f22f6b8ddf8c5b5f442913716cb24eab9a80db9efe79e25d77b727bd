@@ -1,0 +1,55 @@
+## 已知分析输入 A：正 theta 核表示
+
+沿用前面的正偶核 \(\Phi\)，满足：
+
+$$
+\boxed{
+\xi\!\left(\frac12+b\right)
+=
+\int_{\mathbb R}\Phi(x)e^{bx}\,dx,
+\qquad b\in\mathbb C.
+}
+\tag{1}
+$$
+
+其中：
+
+$$
+\Phi(x)>0,\qquad \Phi(-x)=\Phi(x),
+$$
+
+并且对每个 \(R>0\)：
+
+$$
+\int_{\mathbb R}\Phi(x)e^{R|x|}\,dx<\infty.
+$$
+
+这些是由经典 theta–Mellin 表示得到的性质，不是为证明 RH 临时加入的假设。([DLMF][2])
+
+定义正概率测度：
+
+$$
+d\nu(x)=\frac{\Phi(x)}{\xi(1/2)}\,dx.
+$$
+
+令：
+
+$$
+m_{2k}=\int_{\mathbb R}x^{2k}\,d\nu(x),
+$$
+
+以及：
+
+$$
+\boxed{
+a_k=\frac{m_{2k}}{(2k)!}.
+}
+\tag{2}
+$$
+
+于是：
+
+$$
+a_0=1,\qquad a_k>0.
+$$
+
