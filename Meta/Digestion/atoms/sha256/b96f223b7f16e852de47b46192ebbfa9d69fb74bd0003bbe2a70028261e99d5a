@@ -1,0 +1,16 @@
+## 推论：实际 RH 的新有限载体
+
+由式（C2）：
+
+$$
+\boxed{
+\mathrm{RH}
+\iff
+B_d\succeq0
+\quad\forall d\ge2.
+}
+\tag{C13}
+$$
+
+与前文相比，区别不是又增加一个抽象等价，而是：
+

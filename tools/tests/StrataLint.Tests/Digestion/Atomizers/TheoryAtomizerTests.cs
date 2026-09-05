@@ -614,4 +614,3 @@ public sealed partial class TheoryAtomizerTests
             DigestionAlignmentMode.Ingest);
     }
 }
-internal static class SyntheticNumberedAtomizer { internal static string Id => AtomizerRegistry.GictId; }

@@ -1,0 +1,14 @@
+**第二，静止钟速与径向可达性由同一函数控制。**
+
+在度量（32.1）的外部区域，
+
+$$
+\boxed{
+\left(\frac{d\tau_{\mathrm{stat}}}{dT}\right)^2
+=
+g^{-1}(dr,dr)
+=
+-\frac{r^2}{4c^2}\theta_+\theta_-.
+}
+$$
+

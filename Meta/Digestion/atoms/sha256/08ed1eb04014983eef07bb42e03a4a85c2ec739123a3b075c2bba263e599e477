@@ -1,0 +1,49 @@
+## 假设 24.1　一个可见场与若干独立隐藏场
+
+取可见场 \(q\)，以及隐藏场 \(r_a\)，其二次 Lagrangian 为
+
+$$
+\begin{aligned}
+\mathcal L
+={}&
+\frac12\dot q^2
+-\frac{c_0^2}{2}|\nabla q|^2
+-\frac{\Omega_0^2}{2}q^2\\
+&+
+\sum_a
+\left[
+\frac12\dot r_a^2
+-\frac{c_a^2}{2}|\nabla r_a|^2
+-\frac{\Omega_a^2}{2}r_a^2
+-\lambda_aqr_a
+\right].
+\end{aligned}
+\tag{24.1}
+$$
+
+要求
+
+$$
+\Omega_a>0,
+\qquad
+c_0>0,
+\qquad
+c_a\ge0,
+$$
+
+以及稳定性条件
+
+$$
+\boxed{
+m_*^2
+:=
+\Omega_0^2-\sum_a\frac{\lambda_a^2}{\Omega_a^2}
+>0.
+}
+\tag{24.2}
+$$
+
+这里没有加入导数耦合，也没有加入可以任意调节的裸四阶导数项。以下刚性结论限定在这一模型族中。
+
+---
+
