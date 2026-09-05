@@ -333,7 +333,7 @@ internal sealed partial class TransactionFixture
               exit 96
             fi
             if [[ ${PLAYBOOK_REJECT_DEPOSIT_HEADER:-0} == 1 ]]; then
-              printf 'SL-012 %s: expected the exact six-line header at byte zero\n' \
+              printf 'SL-012 %s: expected the canonical Lean header at byte zero (six-line legacy header or seven-line header with utility)\n' \
                 "${parts[2]}"
               exit 1
             fi

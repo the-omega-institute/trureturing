@@ -14,6 +14,7 @@ internal static partial class RepositoryRules
         + "   mirror-B: (?<mirrorB>[^\\n]+)\\n"
         + "   mirror-E: (?<mirrorE>[^\\n]+)\\n"
         + "   anchors: \\[(?<anchors>[^\\n]*)\\]\\n"
+        + "(?:   utility: (?<utility>[^\\n]*)\\n)?"
         + "   digest: (?<digest>[^\\n]+) -/\\n?",
         RegexOptions.CultureInvariant);
 
@@ -77,7 +78,7 @@ internal static partial class RepositoryRules
             "trust"),
         Register(10, "Generality closure", new RepositoryRule(GeneralSource, Generality, LeanReportAffected)),
         Register(11, "Controlled domains", new RepositoryRule(DomainScoped, Domains, DomainsAffected)),
-        Register(12, "Six-line Lean header", new RepositoryRule(Formal, Headers, FormalSourceAffected)),
+        Register(12, "Canonical Lean header", new RepositoryRule(Formal, Headers, FormalSourceAffected)),
         // SL-013 remains deferred and has no rejection predicate. Keep this descriptor in place:
         // positional consumers would silently bind later registrations to the wrong rule otherwise.
         Register(
@@ -153,6 +154,14 @@ internal static partial class RepositoryRules
                 DuplicateStatementAdvisory.Evaluate,
                 DuplicateStatementAdvisory.IsAffectedBy),
             AdmissionEffect.Observe),
+        Register(
+            30,
+            "Computational utility admission",
+            new RepositoryRule(
+                Formal,
+                UtilityAdmissionRule.Evaluate,
+                UtilityAdmissionRule.IsAffectedBy,
+                UtilityAdmissionRule.Evaluate)),
     ];
 
     private static RuleRegistration Register(

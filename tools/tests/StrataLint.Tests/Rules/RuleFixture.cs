@@ -370,6 +370,33 @@ internal sealed partial class RuleFixture
             forkPoint: forkPoint);
     }
 
+    internal RuleEvaluationContext BuildForRuleCompatibility(RawChangeSet changes)
+    {
+        var current = Decode(Files);
+        var baseline = Decode(Baseline);
+        var forkPoint = Decode(ForkPoint);
+        var policyOutcome = RegistryLoader.Load(
+            Encoding.UTF8.GetBytes(TestRegistry.Canonical),
+            Encoding.UTF8.GetBytes(TestRegistry.Domains));
+        var policy = RegistryLoadAssert.Accepted(policyOutcome).Policy;
+        var bootstrap = BootstrapGate.Evaluate(changes);
+        var meta = bootstrap switch
+        {
+            BootstrapOutcome.Clear clear => MetaEvaluationProfile.ForClear(clear.Capability),
+            BootstrapOutcome.ProtectedSurfaceVerificationRequired protectedSurface =>
+                MetaEvaluationProfile.ForProtectedSurface(protectedSurface.ChangeSet),
+            _ => throw new InvalidOperationException("unexpected bootstrap outcome"),
+        };
+        return RuleEvaluationContext.Create(
+            current,
+            baseline,
+            policy,
+            AcceptedLeanClosure.Create(LeanAxiomReport.Create(Reports)),
+            changes,
+            meta,
+            forkPoint: forkPoint);
+    }
+
     internal RuleEvaluationContext BuildForProtectedRuleCompatibility()
     {
         var current = Decode(Files);
