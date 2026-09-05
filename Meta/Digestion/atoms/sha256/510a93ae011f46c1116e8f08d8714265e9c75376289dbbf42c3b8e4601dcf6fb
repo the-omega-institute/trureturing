@@ -1,0 +1,28 @@
+## 定义 55.2　普遍的单步替换发射
+
+对一步映射：
+
+$$
+W_n:B_{n-1}\to B_n\otimes r_n,
+$$
+
+若：
+
+$$
+\boxed{
+\operatorname{Tr}_{B_n}
+(W_n\sigma W_n^\dagger)
+=
+\tau_n
+\qquad
+\forall\sigma\in\mathcal D(B_{n-1}),
+}
+\tag{55.2}
+$$
+
+则称该步为普遍替换发射。
+
+式（55.2）的量词遍历整个内部输入空间，强于式（55.1）对实际编码输入族的边缘限制。
+
+---
+

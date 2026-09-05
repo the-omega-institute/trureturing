@@ -136,19 +136,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/GeneratedKerne
 
 A finer node relation is pointwise contained in a coarser node relation.
 
-**Theorem 1.12 (Generated-kernel extensionality).**
-
-$$\forall x, y, \operatorname{relation}(P, x, y) \iff \operatorname{relation}(Q, x, y) \Rightarrow P = Q.$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/InformationEscapeHierarchy/GeneratedKernel.ext` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The certificate is proved from the extensional quotient and the landed catalog kernel laws.
-
-**Definition 1.13 (Escape at a node).**
+**Definition 1.12 (Escape at a node).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/GeneratedKernel.escapeAt`
 
@@ -160,7 +148,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/GeneratedKerne
 
 Escape is the finite set of off-diagonal pairs still related by the node kernel.
 
-**Definition 1.14 (Edge capture).**
+**Definition 1.13 (Edge capture).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/GeneratedKernel.edgeCapture`
 
@@ -172,7 +160,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/GeneratedKerne
 
 An edge captures the source escape pairs absent from its target.
 
-**Theorem 1.15 (Node escape agrees with landed escape).**
+**Theorem 1.14 (Node escape agrees with landed escape).**
 
 $$\operatorname{escapeAt}(\operatorname{generatedKernel}(C, S)) = \operatorname{escapePairs}(C, S).$$
 
@@ -184,7 +172,7 @@ $$\operatorname{escapeAt}(\operatorname{generatedKernel}(C, S)) = \operatorname{
 
 The certificate is proved from the extensional quotient and the landed catalog kernel laws.
 
-**Definition 1.16 (Node escape count).**
+**Definition 1.15 (Node escape count).**
 
 $$\operatorname{escapeCount}(P) = \operatorname{card}(\operatorname{escapeAt}(P)).$$
 
@@ -196,7 +184,7 @@ $$\operatorname{escapeCount}(P) = \operatorname{card}(\operatorname{escapeAt}(P)
 
 The node escape count is the cardinality of its finite escape set.
 
-**Definition 1.17 (Node escape rate).**
+**Definition 1.16 (Node escape rate).**
 
 $$\operatorname{escapeRate}(P) = \frac{\operatorname{escapeCount}(P)}{\operatorname{escapeDenominator}(A)}.$$
 
@@ -208,7 +196,7 @@ $$\operatorname{escapeRate}(P) = \frac{\operatorname{escapeCount}(P)}{\operatorn
 
 The exact node rate uses the canonical arena escape denominator.
 
-**Definition 1.18 (Edge capture count).**
+**Definition 1.17 (Edge capture count).**
 
 $$\operatorname{edgeCaptureCount}(P, Q) = \operatorname{card}(\operatorname{edgeCapture}(P, Q)).$$
 
@@ -220,7 +208,7 @@ $$\operatorname{edgeCaptureCount}(P, Q) = \operatorname{card}(\operatorname{edge
 
 The edge capture count is the cardinality of the removed escape set.
 
-**Definition 1.19 (Edge capture rate).**
+**Definition 1.18 (Edge capture rate).**
 
 $$\operatorname{edgeCaptureRate}(P, Q) = \frac{\operatorname{edgeCaptureCount}(P, Q)}{\operatorname{escapeDenominator}(A)}.$$
 
@@ -232,7 +220,7 @@ $$\operatorname{edgeCaptureRate}(P, Q) = \frac{\operatorname{edgeCaptureCount}(P
 
 The exact edge rate uses the canonical arena escape denominator.
 
-**Theorem 1.20 (Node rate agrees with landed catalog rate).**
+**Theorem 1.19 (Node rate agrees with landed catalog rate).**
 
 $$\operatorname{escapeRate}(\operatorname{generatedKernel}(C, S)) = \operatorname{escapeRate}(C, S).$$
 
@@ -244,7 +232,7 @@ $$\operatorname{escapeRate}(\operatorname{generatedKernel}(C, S)) = \operatornam
 
 The certificate is proved from the extensional quotient and the landed catalog kernel laws.
 
-**Theorem 1.21 (Generator union computes meet).**
+**Theorem 1.20 (Generator union computes meet).**
 
 $$\operatorname{generatedKernel}(C, \operatorname{union}(S, T)) = \operatorname{inf}(\operatorname{generatedKernel}(C, S), \operatorname{generatedKernel}(C, T)).$$
 
@@ -256,7 +244,7 @@ $$\operatorname{generatedKernel}(C, \operatorname{union}(S, T)) = \operatorname{
 
 The certificate is proved from the extensional quotient and the landed catalog kernel laws.
 
-**Theorem 1.22 (The generated lattice is finite).**
+**Theorem 1.21 (The generated lattice is finite).**
 
 $$\operatorname{Finite}(\operatorname{GeneratedKernel}(C)).$$
 
@@ -268,7 +256,7 @@ $$\operatorname{Finite}(\operatorname{GeneratedKernel}(C)).$$
 
 The certificate is proved from the extensional quotient and the landed catalog kernel laws.
 
-**Theorem 1.23 (Top is the empty-selection kernel).**
+**Theorem 1.22 (Top is the empty-selection kernel).**
 
 $$\operatorname{top}(\operatorname{GeneratedKernel}(C)) = \operatorname{generatedKernel}(C, \operatorname{empty}()).$$
 
@@ -280,7 +268,7 @@ $$\operatorname{top}(\operatorname{GeneratedKernel}(C)) = \operatorname{generate
 
 The certificate is proved from the extensional quotient and the landed catalog kernel laws.
 
-**Theorem 1.24 (Bottom is the full-catalog kernel).**
+**Theorem 1.23 (Bottom is the full-catalog kernel).**
 
 $$\operatorname{bottom}(\operatorname{GeneratedKernel}(C)) = \operatorname{generatedKernel}(C, \operatorname{fullIndexSet}(C)).$$
 
@@ -292,7 +280,7 @@ $$\operatorname{bottom}(\operatorname{GeneratedKernel}(C)) = \operatorname{gener
 
 The certificate is proved from the extensional quotient and the landed catalog kernel laws.
 
-**Theorem 1.25 (Meet is generator union).**
+**Theorem 1.24 (Meet is generator union).**
 
 $$\operatorname{inf}(\operatorname{generatedKernel}(C, S), \operatorname{generatedKernel}(C, T)) = \operatorname{generatedKernel}(C, \operatorname{union}(S, T)).$$
 
@@ -304,7 +292,7 @@ $$\operatorname{inf}(\operatorname{generatedKernel}(C, S), \operatorname{generat
 
 The certificate is proved from the extensional quotient and the landed catalog kernel laws.
 
-**Theorem 1.26 (Meet has the greatest-lower-bound law).**
+**Theorem 1.25 (Meet has the greatest-lower-bound law).**
 
 $$\operatorname{IsGLB}(\operatorname{pair}(P, Q), \operatorname{inf}(P, Q)).$$
 
@@ -316,7 +304,7 @@ $$\operatorname{IsGLB}(\operatorname{pair}(P, Q), \operatorname{inf}(P, Q)).$$
 
 The certificate is proved from the extensional quotient and the landed catalog kernel laws.
 
-**Theorem 1.27 (Internal join has the least-upper-bound law).**
+**Theorem 1.26 (Internal join has the least-upper-bound law).**
 
 $$\operatorname{IsLUB}(\operatorname{pair}(P, Q), \operatorname{sup}(P, Q)).$$
 
@@ -328,7 +316,7 @@ $$\operatorname{IsLUB}(\operatorname{pair}(P, Q), \operatorname{sup}(P, Q)).$$
 
 The certificate is proved from the extensional quotient and the landed catalog kernel laws.
 
-**Definition 1.28 (Generator step).**
+**Definition 1.27 (Generator step).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/GeneratedKernel.GeneratorStep`
 
@@ -340,7 +328,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/GeneratedKerne
 
 A step inserts one catalog generator into a representative and certifies downward refinement.
 
-**Definition 1.29 (Strict generator step).**
+**Definition 1.28 (Strict generator step).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/GeneratedKernel.StrictGeneratorStep`
 
@@ -352,7 +340,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/GeneratedKerne
 
 A generator step is strict exactly when reverse refinement fails.
 
-**Definition 1.30 (Collapsed addition).**
+**Definition 1.29 (Collapsed addition).**
 
 Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/GeneratedKernel.CollapsedAddition`
 
@@ -364,7 +352,7 @@ Lean statement: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/GeneratedKerne
 
 A collapsed addition is a certified generator step whose endpoints are one extensional node.
 
-**Theorem 1.31 (Generator insertion respects extensional equality).**
+**Theorem 1.30 (Generator insertion respects extensional equality).**
 
 $$\operatorname{generatedKernel}(C, S) = \operatorname{generatedKernel}(C, T) \Rightarrow \operatorname{generatedKernel}(C, \operatorname{insert}(i, S)) = \operatorname{generatedKernel}(C, \operatorname{insert}(i, T)).$$
 
@@ -376,7 +364,7 @@ $$\operatorname{generatedKernel}(C, S) = \operatorname{generatedKernel}(C, T) \R
 
 The certificate is proved from the extensional quotient and the landed catalog kernel laws.
 
-**Theorem 1.32 (Escape is antitone on generator steps).**
+**Theorem 1.31 (Escape is antitone on generator steps).**
 
 $$\operatorname{GeneratorStep}(C, P, Q, i) \Rightarrow \operatorname{escapeAt}(Q) \subseteq \operatorname{escapeAt}(P).$$
 
@@ -388,7 +376,7 @@ $$\operatorname{GeneratorStep}(C, P, Q, i) \Rightarrow \operatorname{escapeAt}(Q
 
 The certificate is proved from the extensional quotient and the landed catalog kernel laws.
 
-**Theorem 1.33 (Strict refinement exactly means nonempty capture).**
+**Theorem 1.32 (Strict refinement exactly means nonempty capture).**
 
 $$\operatorname{GeneratorStep}(C, P, Q, i) \Rightarrow \neg\operatorname{KernelRefines}(P, Q) \iff \operatorname{edgeCapture}(P, Q) \neq \operatorname{empty}().$$
 
@@ -400,7 +388,7 @@ $$\operatorname{GeneratorStep}(C, P, Q, i) \Rightarrow \neg\operatorname{KernelR
 
 The certificate is proved from the extensional quotient and the landed catalog kernel laws.
 
-**Theorem 1.34 (Strict generator steps have nonempty increments).**
+**Theorem 1.33 (Strict generator steps have nonempty increments).**
 
 $$\operatorname{StrictGeneratorStep}(C, P, Q, i) \iff \operatorname{GeneratorStep}(C, P, Q, i) \land \operatorname{Nonempty}(\operatorname{edgeCapture}(P, Q)).$$
 
@@ -412,7 +400,7 @@ $$\operatorname{StrictGeneratorStep}(C, P, Q, i) \iff \operatorname{GeneratorSte
 
 The certificate is proved from the extensional quotient and the landed catalog kernel laws.
 
-**Theorem 1.35 (Collapsed additions capture nothing).**
+**Theorem 1.34 (Collapsed additions capture nothing).**
 
 $$\operatorname{CollapsedAddition}(C, P, i) \Rightarrow \operatorname{edgeCapture}(P, P) = \emptyset.$$
 
@@ -424,7 +412,7 @@ $$\operatorname{CollapsedAddition}(C, P, i) \Rightarrow \operatorname{edgeCaptur
 
 The certificate is proved from the extensional quotient and the landed catalog kernel laws.
 
-**Theorem 1.36 (Strict refinement exactly means positive capture count).**
+**Theorem 1.35 (Strict refinement exactly means positive capture count).**
 
 $$\operatorname{GeneratorStep}(C, P, Q, i) \Rightarrow \neg\operatorname{KernelRefines}(P, Q) \iff 0 < \operatorname{card}(\operatorname{edgeCapture}(P, Q)).$$
 
@@ -454,7 +442,6 @@ The certificate is proved from the extensional quotient and the landed catalog k
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/GeneratedKernel.escapeRate`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/GeneratedKernel.escapeRate_generatedKernel_eq_escapeRate`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/GeneratedKernel.escape_antitone_on_step`
-- Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/GeneratedKernel.ext`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/GeneratedKernel.generatedKernel`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/GeneratedKernel.generatedKernelRelation`
 - Truth anchor: `D5/S3/ConceptDynamics/InformationEscapeHierarchy/GeneratedKernel.generatedKernelSetoid`

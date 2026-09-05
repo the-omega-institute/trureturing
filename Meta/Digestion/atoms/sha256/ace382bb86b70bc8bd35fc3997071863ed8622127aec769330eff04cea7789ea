@@ -1,0 +1,71 @@
+## 定理 48.1　纠缠恢复过程的加权能流约束
+
+有
+
+$$
+\boxed{
+\mathcal F(u)
+=
+\frac{\hbar\nu}{12\pi}
+\frac{\psi''(u)}{\psi(u)}.
+}
+\tag{48.1}
+$$
+
+从而
+
+$$
+\boxed{
+\int_{-\infty}^{\infty}
+\mathcal F(u)\psi(u)\,du=0.
+}
+\tag{48.2}
+$$
+
+若过程非平凡，则 \(\mathcal F\) 不能处处非负，也不能处处非正。
+
+### 证明
+
+由
+
+$$
+\frac{\psi''}{\psi}
+=
+\frac6\nu\mathcal S''
++
+\frac{36}{\nu^2}(\mathcal S')^2,
+$$
+
+结合式（45.3）得到式（48.1）。
+
+由于 \(\mathcal S\) 紧支撑，\(\psi'\) 在两端为零，因此
+
+$$
+\int\mathcal F\psi\,du
+=
+\frac{\hbar\nu}{12\pi}\int\psi''\,du=0.
+$$
+
+又因 \(\psi>0\)，若 \(\mathcal F\) 不变号，则只能恒为零。此时 \(\psi''=0\)，结合两端条件得到 \(\psi=1\)、\(\mathcal S=0\)，与非平凡性矛盾。∎
+
+同时，
+
+$$
+\boxed{
+\int\mathcal F(u)\,du
+=
+\frac{3\hbar}{\pi\nu}
+\int(\mathcal S'(u))^2\,du
+>0.
+}
+\tag{48.3}
+$$
+
+所以，出现局部负能流不意味着总辐射能量为负。
+
+这类能流—纠缠约束由 Bianchi 与 Smerlak 在二维共形场模型中建立。它不能未经推广就当成所有四维黑洞蒸发的普遍定理。
+
+### 对当前理论的意义
+
+不能一边任意指定“关联不断增加后又完整释放”，一边独立指定“永远是同样的正热流”，却不检查两者能否由同一个场态和传播映射产生。
+

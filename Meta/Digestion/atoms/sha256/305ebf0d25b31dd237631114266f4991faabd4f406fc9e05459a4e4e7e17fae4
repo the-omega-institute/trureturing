@@ -1,0 +1,65 @@
+# 六、这些区间不仅收紧，还具有明确的几何收敛率
+
+假设正谱支持位于 \([0,R]\)。
+
+取：
+
+$$
+p_{N-1}(u)
+=
+\frac1{R+4}
+\sum_{k=0}^{N-1}
+\left(\frac{R-u}{R+4}\right)^k.
+$$
+
+由有限几何级数：
+
+$$
+1-(4+u)p_{N-1}(u)
+=
+\left(\frac{R-u}{R+4}\right)^N.
+$$
+
+代入定理 E2：
+
+$$
+\boxed{
+0\le\Delta-L_N
+\le
+\Delta\left(\frac R{R+4}\right)^{2N}.
+}
+\tag{E20}
+$$
+
+同样：
+
+$$
+\boxed{
+0\le U_N-\Delta
+\le
+\frac{R\Delta}{4}
+\left(\frac R{R+4}\right)^{2N}.
+}
+\tag{E21}
+$$
+
+因此：
+
+$$
+\boxed{
+U_N-L_N
+\le
+\left(1+\frac R4\right)\Delta
+\left(\frac R{R+4}\right)^{2N}.
+}
+\tag{E22}
+$$
+
+在 RH 前件下，所有谱点 \(u=\gamma^{-2}\) 满足：
+
+$$
+u\le\sum_{\gamma>0}m_\gamma\gamma^{-2}=a_1,
+$$
+
+所以可以取 \(R=a_1\)，不必先输入第一个零点的坐标。
+
