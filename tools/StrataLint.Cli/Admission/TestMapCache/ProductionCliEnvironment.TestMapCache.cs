@@ -18,7 +18,7 @@ internal sealed partial class ProductionCliEnvironment
                 "dotnet",
                 ["--version"],
                 repositoryRoot,
-                TimeSpan.FromSeconds(30),
+                BoundedProcessRunner.HangDetectionBudget,
                 maximumOutputBytes: 4096);
             if (output.ExitCode != 0)
             {
