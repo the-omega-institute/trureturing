@@ -6,3 +6,7 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Whole-atom coverage is guarded after clause-level review. Frozen GID `D5/S3/Quantum/Dynamics/ConservationAutonomySeparation.conservation_and_autonomy_are_distinct` conjunct 1 carries the conservation clause `[H,A]=0` implies `forall t, U_H(-t) A U_H(t)=A`. Its qubit witness conjunct carries the final contrast: `qubitX` lies in the trace-zero linear space, commutation with `qubitZ` preserves that space, and `[qubitZ,qubitX]` is nonzero. The general clause `若 [H,O] ⊆ O,则 O 中的读数可以彼此演化而不逃出观察语言` remains uncarried: it quantifies general `H` and operator space `O` and concludes finite-time evolution membership, while the frozen owner fixes `H=qubitZ` and `O=ker(trace)` and states commutator closure only. The nearby frozen `AnalyticFlowGeneration.analytic_flow_generates_commutator_closure` states an equality of the span of conjugation orbits with the span of iterated commutators, but its public statement does not expose the required closure premise-to-membership implication. The trace-zero carrier is a commutator-invariant linear space, not a multiplication-closed subalgebra."
+    reentry_condition: "Freeze a theorem at general `H` and operator space `O` stating `[H,O] ⊆ O -> forall t, forall A in O, U_H(-t) A U_H(t) in O`, for example by an exponential-series or Lie-closure argument, then re-cover every clause of this atom."
+    blocker_class: multi-clause-guard

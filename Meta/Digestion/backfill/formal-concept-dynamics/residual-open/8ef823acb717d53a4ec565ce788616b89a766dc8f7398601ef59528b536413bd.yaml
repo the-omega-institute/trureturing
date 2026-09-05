@@ -6,3 +6,7 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Chain child fragment `- 承诺；` is a bare bridge label and states no commitment carrier, update law, or conclusion that a public theorem can cover. Retrieval receipts: D5 search `commitment|committed|承诺` exited 0; the nearest frozen owners `CommitmentNormativeMemory.committed_permissions_do_not_factor_through_physical_state` and `CommitmentNormativeStateJoin.commitment_normative_state_join` assume a history-indexed committed-permission readout and do not connect a commitment to this descriptive model. Pinned Mathlib search exited 0 only on unrelated Turing-machine comments. GitHub Lean-code search `normative commitment` exited 0 with no hits. Local construction probe `/private/tmp/w73e33-atom1-probe.lean` exited 1 after the exact separation conclusion closed, at the exact unsolved goal `⊢ commitment`; assuming that goal would be hollow."
+    reentry_condition: "Add a canonical commitment ledger on the source state-action carrier and a frozen bridge theorem deriving the constrained permission predicate from that ledger."
+    blocker_class: multi-clause-guard

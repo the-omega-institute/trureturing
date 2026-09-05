@@ -6,6 +6,13 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    gids:
+      - D5/S0/Computability/DescriptionComplexity/ProgramCostFiltration.program_cost_filtration_classification
+    gaps:
+      - code: chain-migration-incomplete
+        detail: 0c632fe4e1bb2da6cb9b53bc86e16a022133ee7c9724304938cd54f6ab497bfc
   chain_atoms:
     - ee61119f9b0cc903e688b666ecd715d7c76de4c6751644cad1c2f79d9aa022c1
     - 0c632fe4e1bb2da6cb9b53bc86e16a022133ee7c9724304938cd54f6ab497bfc

@@ -6,3 +6,7 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Chain child fragment `- 或其他可审计桥梁。` is an open-ended bridge label and states no evidence carrier, audit relation, or conclusion that a public theorem can cover. Retrieval receipts: exact D5 search `auditable bridge|auditBridge|bridge.*normative|normative.*bridge|可审计桥梁` exited 1; broader search found specific audit results such as `CorrectnessLegitimacySeparation.correct_result_does_not_determine_legitimacy` and `ViolationEnforceabilityCriterion.violation_enforceability_criterion`, neither of which supplies a bridge selected by this fragment. Pinned Mathlib search exited 1. GitHub Lean-code search `auditable bridge` exited 0 with no hits. Local construction probe `/private/tmp/w73e33-atom1-probe.lean` exited 1 after the exact separation conclusion closed, at the exact unsolved goal `⊢ auditableBridge`; assuming that goal would be hollow."
+    reentry_condition: "Add a canonical audit-evidence carrier and a frozen soundness theorem connecting that evidence to a permission predicate on DescriptiveStructure."
+    blocker_class: multi-clause-guard

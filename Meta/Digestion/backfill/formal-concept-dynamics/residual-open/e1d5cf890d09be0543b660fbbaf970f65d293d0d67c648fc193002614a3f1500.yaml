@@ -6,3 +6,7 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Chain child fragment `- 权利约束；` is a bare bridge label and states no rights carrier, constraint relation, or conclusion that a public theorem can cover. Retrieval receipts: exact D5 search `rights constraint|entitlement|rightConstraint|权利约束` exited 0 only on an unrelated local identifier; broader search found `ActionStateRightsSeparation.no_action_state_separates_rights` and `Rights.FiniteActionRightsInvariance.finite_action_sequence_preserves_rights`, whose explicit allowed-action and safe-set carriers are not linked to DescriptiveStructure. Pinned Mathlib search exited 1. GitHub Lean-code search `rights constraint` exited 0 with no hits. Local construction probe `/private/tmp/w73e33-atom1-probe.lean` exited 1 after the exact separation conclusion closed, at the exact unsolved goal `⊢ rightsConstraint`; assuming that goal would be hollow."
+    reentry_condition: "Add a canonical rights constraint on the same state-action permission carrier used by DescriptiveStructure, and a frozen bridge theorem deriving a permission restriction from that constraint."
+    blocker_class: multi-clause-guard
