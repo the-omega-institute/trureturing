@@ -1,0 +1,9 @@
+**所以，现在需要算术承担的，不只是“某个有限矩阵看起来正”，而是：全部高阶矩是否共同产生一份支持正确、锚定正确，并与实际整函数解析结构一致的正谱表示。**
+
+本轮给出了新的校准缺陷公式、单调区间、可嵌套近似及重数障碍；没有获得实际全阶正性证明，也没有找到实际离线负证书。有限数据的三层核对已经可以执行，但不能把它们在无限层上的成立预先写进模型定义。
+
+[1]: https://dlmf.nist.gov/25.4 "https://dlmf.nist.gov/25.4"
+[2]: https://dlmf.nist.gov/25.2 "https://dlmf.nist.gov/25.2"
+[3]: https://dlmf.nist.gov/18.2 "https://dlmf.nist.gov/18.2"
+[4]: https://dlmf.nist.gov/3.5 "https://dlmf.nist.gov/3.5"
+[5]: https://arxiv.org/abs/math-ph/9906008 "https://arxiv.org/abs/math-ph/9906008"
