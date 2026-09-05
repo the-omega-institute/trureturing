@@ -6,6 +6,10 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Chain-parent multi-clause guard. Frozen GID `D5/S3/ConceptDynamics/Audits/LedgerIntegrityVeracitySeparation.ledger_integrity_does_not_imply_input_veracity` carries the source's mathematical core through public encoder injectivity, `L := E ∘ R`, exact report distinction, systematic `R x ≠ O x`, ledger injectivity, and integrity/veracity non-equivalence. Child `a535b2e39f189322f4e73422f0e86a9a4446bc8ebb64b3603522a0ea66facb8f` is already absorbed by that GID, but the owner's public statement does not state its trailing remedy `* 多来源验证；`; the five remaining remedy children are also uncarried. D5 searches for report/ledger bridges to sources, sensors, signatures, audits, causal checks, and truth found the owner plus nearby Byzantine recovery, sensor-family, provenance-admission, audit-cover, and factual-intervention theorems, but none connects its remedy to this `R` and `O`. Pinned Mathlib searches found no such bridge; GitHub Lean code searches found no relevant external declaration. Local construction probe `/private/tmp/w73e36-atom1-probe.lean` exited 0 and constructs all six auxiliary readouts equal to `O` while retaining `R x ≠ O x`, showing that bare remedy carriers do not supply the missing validation relations."
+    reentry_condition: "Add source-sanctioned typed semantics and frozen public validation bridges relating each of multi-source verification, external sensing, signed identity, cross-audit, causal consistency, and a reality anchor to the submitted report and true-event readouts; repair or close every declared child, then reenter this parent last."
+    blocker_class: multi-clause-guard
   chain_atoms:
     - a535b2e39f189322f4e73422f0e86a9a4446bc8ebb64b3603522a0ea66facb8f
     - 111571c05f49a428a63b3d3ed48192790526c3c6372a5d98c232cbe982968cf5

@@ -6,3 +6,7 @@ coverage_gids: []
 receipts:
   scribe: []
   unresolved_subitems: []
+  quarantine:
+    justification: "Whole-clause guard for `* 或现实锚点。`. The source supplies no reality-anchor carrier, grounding relation, or rule connecting an anchor to its report `R` and true-event readout `O`. D5 search for reality/ground-truth anchors and report/ledger bridges found no exact theorem; `RobustKnowledgeFactivity` concludes truth at an admissible evidence anchor from an already assumed robust-knowledge predicate and does not validate `R`. The pinned Mathlib search for reality/ground-truth/real-world anchors exited 1. GitHub Lean code search for `reality anchor` exited 0 with no hits. Local probe `/private/tmp/w73e36-atom1-probe.lean` exited 0 with a reality-anchor readout equal to `O` while `R x ≠ O x`, so mere anchor data leaves the report relation unspecified."
+    reentry_condition: "Specify a typed reality-anchor carrier and grounding relation, then freeze a public theorem connecting grounded report evidence to agreement between the submitted report and true-event readout."
+    blocker_class: multi-clause-guard
