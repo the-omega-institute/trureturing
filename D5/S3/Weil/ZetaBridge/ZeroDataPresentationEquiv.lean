@@ -79,7 +79,10 @@ theorem mirrorIndex_symm (Z : ZeroData) :
   apply Equiv.ext
   intro n
   apply (mirrorIndex Z).injective
-  simp [mirrorIndex_involutive]
+  calc
+    mirrorIndex Z ((mirrorIndex Z).symm n) = n :=
+      (mirrorIndex Z).apply_symm_apply n
+    _ = mirrorIndex Z (mirrorIndex Z n) := (mirrorIndex_involutive Z n).symm
 
 /-- A mirror index is fixed exactly at the critical-line fixed locus. -/
 theorem mirrorIndex_fixed_iff_critical (Z : ZeroData) (n : ℕ) :
@@ -104,7 +107,7 @@ theorem zeroDataPresentationEquiv_multiplicity (Z Z' : ZeroData) (n : ℕ) :
     zeroDataPresentationEquiv_zero]
 
 /-- The presentation equivalence preserves the complex spectral parameter. -/
-theorem zeroDataPresentationEquiv_gamma (Z Z' : ZeroData) (n : ℕ) :
+theorem zeroDataPresentationEquiv_gamma (Z : ZeroData) (n : ℕ) :
     Z'.gamma (zeroDataPresentationEquiv Z Z' n) = Z.gamma n := by
   unfold ZeroData.gamma
   rw [zeroDataPresentationEquiv_zero]
@@ -173,6 +176,7 @@ theorem zeroDataPresentationEquiv_trans (Z Z' Z'' : ZeroData) :
     zeroDataPresentationEquiv_zero]
 
 #print axioms mirrorIndex_fixed_iff_critical
+#print axioms mirrorIndex_symm
 #print axioms zeroDataPresentationEquiv_unique
 #print axioms zeroDataPresentationEquiv_reflection
 #print axioms zeroDataPresentationEquiv_conjugation
