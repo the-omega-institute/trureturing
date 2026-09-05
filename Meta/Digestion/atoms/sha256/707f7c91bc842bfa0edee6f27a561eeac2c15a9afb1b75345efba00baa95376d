@@ -1,0 +1,37 @@
+## B8.4 积分 susceptibility
+
+定义双边积分协方差
+
+$$
+\chi_{\rm hc}
+=
+\sum_{n\in\mathbb Z}
+\operatorname{Cov}(\eta_0,\eta_n).
+\tag{B8.6}
+$$
+
+由几何级数：
+
+$$
+\boxed{
+\chi_{\rm hc}
+=
+\frac15
+\frac{1-\varphi^{-2}}{1+\varphi^{-2}}
+=
+\frac1{5\sqrt5}.}
+\tag{B8.7}
+$$
+
+更一般地，若 activity 为 $z>0$，单位长度 pressure 的 log-activity 二阶导数为
+
+$$
+\boxed{
+\chi_{\rm hc}(z)
+=
+\frac{z}{(1+4z)^{3/2}}.}
+\tag{B8.8}
+$$
+
+在 $z=1$ 恰得到 $1/(5\sqrt5)$。
+

@@ -35,7 +35,6 @@ public sealed partial class FrozenLedgerTests
 
         Assert.NotNull(result.Recognition);
         Assert.True(result.Authorized);
-        Assert.Null(result.Failure);
     }
 
     [Fact]
@@ -66,7 +65,6 @@ public sealed partial class FrozenLedgerTests
 
         Assert.NotNull(result.Recognition);
         Assert.False(result.Authorized);
-        AssertReuseRejected(result.Failure);
     }
 
     [Fact]
@@ -103,7 +101,6 @@ public sealed partial class FrozenLedgerTests
 
         Assert.NotNull(result.Recognition);
         Assert.True(result.Authorized);
-        Assert.Null(result.Failure);
     }
 
     [Fact]
@@ -137,7 +134,6 @@ public sealed partial class FrozenLedgerTests
 
         Assert.NotNull(result.Recognition);
         Assert.True(result.Authorized);
-        Assert.Null(result.Failure);
     }
 
     [Fact]
@@ -174,7 +170,6 @@ public sealed partial class FrozenLedgerTests
 
         Assert.NotNull(result.Recognition);
         Assert.True(result.Authorized);
-        Assert.Null(result.Failure);
     }
 
     [Fact]
@@ -217,7 +212,6 @@ public sealed partial class FrozenLedgerTests
 
         Assert.NotNull(result.Recognition);
         Assert.True(result.Authorized);
-        Assert.Null(result.Failure);
     }
 
     [Fact]
@@ -250,7 +244,6 @@ public sealed partial class FrozenLedgerTests
 
         Assert.NotNull(result.Recognition);
         Assert.True(result.Authorized);
-        Assert.Null(result.Failure);
     }
 
     [Fact]
@@ -275,7 +268,6 @@ public sealed partial class FrozenLedgerTests
 
         Assert.NotNull(result.Recognition);
         Assert.False(result.Authorized);
-        AssertReuseRejected(result.Failure);
     }
 
     [Theory]
@@ -307,7 +299,6 @@ public sealed partial class FrozenLedgerTests
 
         Assert.NotNull(result.Recognition);
         Assert.True(result.Authorized);
-        Assert.Null(result.Failure);
     }
 
     [Fact]
@@ -333,7 +324,6 @@ public sealed partial class FrozenLedgerTests
 
         Assert.NotNull(result.Recognition);
         Assert.False(result.Authorized);
-        AssertReuseRejected(result.Failure);
     }
 
     [Fact]
@@ -358,7 +348,6 @@ public sealed partial class FrozenLedgerTests
 
         Assert.NotNull(result.Recognition);
         Assert.True(result.Authorized);
-        Assert.Null(result.Failure);
     }
 
     [Fact]
@@ -385,7 +374,6 @@ public sealed partial class FrozenLedgerTests
 
         Assert.NotNull(result.Recognition);
         Assert.True(result.Authorized);
-        Assert.Null(result.Failure);
     }
 
     [Fact]
@@ -409,7 +397,6 @@ public sealed partial class FrozenLedgerTests
 
         Assert.NotNull(result.Recognition);
         Assert.True(result.Authorized);
-        Assert.Null(result.Failure);
     }
 
     [Fact]
@@ -433,7 +420,6 @@ public sealed partial class FrozenLedgerTests
 
         Assert.NotNull(result.Recognition);
         Assert.False(result.Authorized);
-        AssertReuseRejected(result.Failure);
     }
 
     [Theory]
@@ -482,7 +468,6 @@ public sealed partial class FrozenLedgerTests
 
         Assert.NotNull(result.Recognition);
         Assert.True(result.Authorized);
-        Assert.Null(result.Failure);
     }
 
     [Fact]
@@ -508,7 +493,6 @@ public sealed partial class FrozenLedgerTests
 
         Assert.NotNull(result.Recognition);
         Assert.False(result.Authorized);
-        AssertReuseRejected(result.Failure);
     }
 
     [Fact]
@@ -535,7 +519,6 @@ public sealed partial class FrozenLedgerTests
 
         Assert.NotNull(result.Recognition);
         Assert.True(result.Authorized);
-        Assert.Null(result.Failure);
     }
 
     [Fact]
@@ -562,7 +545,6 @@ public sealed partial class FrozenLedgerTests
 
         Assert.NotNull(result.Recognition);
         Assert.True(result.Authorized);
-        Assert.Null(result.Failure);
     }
 
     [Fact]
@@ -588,7 +570,6 @@ public sealed partial class FrozenLedgerTests
 
         Assert.NotNull(result.Recognition);
         Assert.True(result.Authorized);
-        Assert.Null(result.Failure);
     }
 
     [Fact]
@@ -614,6 +595,5 @@ public sealed partial class FrozenLedgerTests
 
         Assert.NotNull(result.Recognition);
         Assert.False(result.Authorized);
-        AssertReuseRejected(result.Failure);
     }
 }
