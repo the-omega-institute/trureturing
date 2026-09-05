@@ -341,7 +341,8 @@ theorem exists_common_depth_strictly_negative (P : OrbitBurnolPacket F) :
  off-line orbits yields an injective finite linear synthesis whose every
 nonzero coefficient vector has a strictly negative actual full Weil zero sum.
 There is no supplied uniform remainder assumption. -/
-theorem finite_multiOrbit_full_weil_negative_family :
+theorem finite_multiOrbit_full_weil_negative_family
+    (F : FiniteEvenWeilOrbitFrame Z ι) :
     ∃ basis : ι → WeilTestFunction,
       Function.Injective (fun a : ι → ℂ => finiteWeilLinearCombination a basis) ∧
       ∀ a : ι → ℂ, a ≠ 0 →
