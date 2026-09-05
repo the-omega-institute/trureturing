@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:9d86bfd26937949035ed51b8862cf558fcb9e4a207ceea0dabf7370ad75f3016
+  normalized_sha256: sha256:9d86bfd26937949035ed51b8862cf558fcb9e4a207ceea0dabf7370ad75f3016
+cas_ref: sha256:9d86bfd26937949035ed51b8862cf558fcb9e4a207ceea0dabf7370ad75f3016
+coverage_gids:
+  - gid: D5/S3/Factorization/LehmerTotientDichotomy.squarefree_of_totient_dvd_pred
+    target_statement_id: sha256:821ab26f41b42c4295fb1639e3a4e2fdf1c7ca0163f98d1fb2d1e7b49fe3dfb9
+receipts:
+  scribe:
+    - gid: D5/S3/Factorization/LehmerTotientDichotomy.squarefree_of_totient_dvd_pred
+      definition_sha256: sha256:3998fce2ef4cd9a627b1ecd990c9fca31600fbdfd0eb55943efe53d66ca97e18
+      emission_sha256: sha256:e46966863a79bef5ee60ada8aee234eead301d077d8249dd8d79057f553ec69c
+  unresolved_subitems: []

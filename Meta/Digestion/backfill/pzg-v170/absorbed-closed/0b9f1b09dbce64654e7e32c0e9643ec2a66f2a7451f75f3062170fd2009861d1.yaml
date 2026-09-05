@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:0b9f1b09dbce64654e7e32c0e9643ec2a66f2a7451f75f3062170fd2009861d1
+  normalized_sha256: sha256:0b9f1b09dbce64654e7e32c0e9643ec2a66f2a7451f75f3062170fd2009861d1
+cas_ref: sha256:0b9f1b09dbce64654e7e32c0e9643ec2a66f2a7451f75f3062170fd2009861d1
+coverage_gids:
+  - gid: D5/S3/Factorization/LehmerTotientDichotomy.isKorselt_of_totient_dvd_pred
+    target_statement_id: sha256:b003ed9856be04235f99d22aad4257f1d9a95b4d687961d47c4996c142dfcd23
+receipts:
+  scribe:
+    - gid: D5/S3/Factorization/LehmerTotientDichotomy.isKorselt_of_totient_dvd_pred
+      definition_sha256: sha256:3998fce2ef4cd9a627b1ecd990c9fca31600fbdfd0eb55943efe53d66ca97e18
+      emission_sha256: sha256:e46966863a79bef5ee60ada8aee234eead301d077d8249dd8d79057f553ec69c
+  unresolved_subitems: []
