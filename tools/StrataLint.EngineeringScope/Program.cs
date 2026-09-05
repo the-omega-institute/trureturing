@@ -218,7 +218,7 @@ internal static class Program
             "--configuration",
             "Release",
             "--verbosity",
-            "normal",
+            "minimal",
         };
         if (noBuild) arguments.Add("--no-build");
         arguments.Add("--logger");
