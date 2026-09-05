@@ -66,78 +66,15 @@ internal static class DepositHeaderCheckCommand
             if (!current.Files.ContainsKey(statePath))
             {
                 _ = RepositoryRules.TryHeader(targetFile.Text, out var header);
-                if (!UtilitySyntax.TryParse(header.Utility, out var utility, out var failure))
+                var validation = UtilityDeclarationValidator.Validate(
+                    UtilityValidationPhase.PreDeposit,
+                    targetFile.Path,
+                    header.Utility,
+                    current,
+                    () => leanReportSource.Load(current));
+                if (!validation.IsAccepted)
                 {
-                    var code = failure switch
-                    {
-                        UtilityParseFailure.Missing => "DEPOSIT_HEADER_UTILITY_MISSING",
-                        UtilityParseFailure.InstanceMissing => "DEPOSIT_HEADER_UTILITY_INSTANCE_MISSING",
-                        UtilityParseFailure.PremisesMissing => "DEPOSIT_HEADER_UTILITY_PREMISES_MISSING",
-                        _ => "DEPOSIT_HEADER_UTILITY_SYNTAX",
-                    };
-                    return new ExplicitCommandResult(
-                        1,
-                        $"{code} module={target}\n",
-                        string.Empty);
-                }
-
-                if (utility!.Kind is not UtilityKind.None)
-                {
-                    var report = leanReportSource.Load(current);
-                    foreach (var gid in UtilityAdmissionRule.DeclarationReferences(utility))
-                    {
-                        var targetPath = ((Target.Formal)gid.ToTarget()).Path;
-                        if (!report.Files.TryGetValue(targetPath, out var targetReport)
-                            || targetReport.Error is not null)
-                        {
-                            return UtilityFailure(
-                                "DEPOSIT_HEADER_UTILITY_INPUT_UNKNOWN",
-                                target,
-                                $"target_module={targetPath.Value} reason=current-lean-report-missing");
-                        }
-
-                        if (!UtilityAdmissionRule.TryResolveDeclaration(gid, targetReport, out _))
-                        {
-                            return UtilityFailure(
-                                "DEPOSIT_HEADER_UTILITY_TARGET_DANGLING",
-                                target,
-                                $"target={gid.Value}");
-                        }
-                    }
-
-                    var softTarget = utility.BasisTarget;
-                    if (softTarget is { Kind: UtilityTargetKind.Atom or UtilityTargetKind.Task })
-                    {
-                        BackfillInventoryDocument inventory;
-                        try
-                        {
-                            inventory = BackfillInventoryLoader.Load(current);
-                        }
-                        catch (FormatException)
-                        {
-                            return UtilityFailure(
-                                "DEPOSIT_HEADER_UTILITY_INPUT_UNKNOWN",
-                                target,
-                                "reason=backfill-load-failed");
-                        }
-
-                        var exists = softTarget.Kind switch
-                        {
-                            UtilityTargetKind.Atom => inventory.RequireDigestionEntries().Any(entry =>
-                                string.Equals(entry.AtomId, softTarget.Value, StringComparison.Ordinal)),
-                            UtilityTargetKind.Task => inventory.RequireTickets().Any(ticket =>
-                                string.Equals(ticket.CaseId, softTarget.Value, StringComparison.Ordinal)),
-                            _ => true,
-                        };
-                        if (!exists)
-                        {
-                            var prefix = softTarget.Kind is UtilityTargetKind.Atom ? "atom:" : "task:";
-                            return UtilityFailure(
-                                "DEPOSIT_HEADER_UTILITY_TARGET_DANGLING",
-                                target,
-                                $"target={prefix}{softTarget.Value}");
-                        }
-                    }
+                    return UtilityFailure(target, validation);
                 }
             }
 
@@ -204,11 +141,26 @@ internal static class DepositHeaderCheckCommand
         "USAGE: StrataLint deposit-header-check --target D5/.../*.lean\n");
 
     private static ExplicitCommandResult UtilityFailure(
-        string code,
         string module,
-        string detail) =>
+        UtilityValidationResult validation) =>
         new(
             1,
-            $"{code} module={module} {detail}\n",
+            $"{DepositFailureCode(validation.Failure)} module={module}"
+                + (validation.Detail.Length == 0 ? "\n" : $" {validation.Detail}\n"),
             string.Empty);
+
+    private static string DepositFailureCode(UtilityValidationFailure failure) => failure switch
+    {
+        UtilityValidationFailure.Missing => "DEPOSIT_HEADER_UTILITY_MISSING",
+        UtilityValidationFailure.Syntax => "DEPOSIT_HEADER_UTILITY_SYNTAX",
+        UtilityValidationFailure.InstanceMissing => "DEPOSIT_HEADER_UTILITY_INSTANCE_MISSING",
+        UtilityValidationFailure.PremisesMissing => "DEPOSIT_HEADER_UTILITY_PREMISES_MISSING",
+        UtilityValidationFailure.InputUnknown => "DEPOSIT_HEADER_UTILITY_INPUT_UNKNOWN",
+        UtilityValidationFailure.TargetDangling => "DEPOSIT_HEADER_UTILITY_TARGET_DANGLING",
+        UtilityValidationFailure.RefutesAtomNoCoverage =>
+            "DEPOSIT_HEADER_UTILITY_REFUTES_ATOM_NO_COVERAGE",
+        UtilityValidationFailure.ConsumerUnreachable =>
+            "DEPOSIT_HEADER_UTILITY_CONSUMER_UNREACHABLE",
+        _ => throw new ArgumentOutOfRangeException(nameof(failure)),
+    };
 }

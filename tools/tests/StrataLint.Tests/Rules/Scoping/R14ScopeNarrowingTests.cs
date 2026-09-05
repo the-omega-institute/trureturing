@@ -175,7 +175,8 @@ public sealed class R14ScopeNarrowingTests
     public void Sl012LeanHeaderScopesHistoryAndKeepsDeltaAndImplementationRechecks()
     {
         const string malformed = "def goldenRing : Nat := 0\n";
-        const string message = "expected the exact six-line header at byte zero";
+        const string message = "expected the canonical Lean header at byte zero "
+            + "(six-line legacy header or seven-line header with utility)";
 
         var unrelated = new RuleFixture();
         SetHistorical(unrelated, RuleFixture.RingPath, malformed);

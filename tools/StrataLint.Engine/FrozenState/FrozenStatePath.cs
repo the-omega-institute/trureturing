@@ -36,20 +36,34 @@ internal static class FrozenStatePath
     internal static RepoPath FromModulePath(RepoPath modulePath)
     {
         ArgumentNullException.ThrowIfNull(modulePath);
-        if (!IsCanonicalModulePath(modulePath))
+        if (!TryFromModulePath(modulePath, out var statePath))
         {
             throw new ArgumentException(
                 $"Module path is not a canonical repository Lean module: {modulePath.Value}.",
                 nameof(modulePath));
         }
 
-        var statePath = RepoPath.CreateKnown(Root + modulePath.Value + ".json");
-        if (!TryToModulePath(statePath.Value, out var inverse) || inverse != modulePath)
+        return statePath;
+    }
+
+    internal static bool TryFromModulePath(
+        RepoPath? modulePath,
+        [NotNullWhen(true)] out RepoPath? statePath)
+    {
+        statePath = null;
+        if (modulePath is null || !IsCanonicalModulePath(modulePath))
         {
-            throw new InvalidOperationException("Frozen state path does not have an exact module inverse.");
+            return false;
         }
 
-        return statePath;
+        var candidate = RepoPath.CreateKnown(Root + modulePath.Value + ".json");
+        if (!TryToModulePath(candidate.Value, out var inverse) || inverse != modulePath)
+        {
+            return false;
+        }
+
+        statePath = candidate;
+        return true;
     }
 
     internal static bool IsCanonicalModulePath(RepoPath path)

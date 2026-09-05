@@ -76,8 +76,8 @@ __main() {
       sed -n "1,${endline}p" "$f" | sed 's/^/      | /'
       bad=1; continue
     fi
-    if [ "$endline" -eq 7 ] && ! sed -n '6p' "$f" | grep -q '^   utility:'; then
-      echo "  ✗ $f  <- 7 行头部的第 6 行必须是 '   utility:'"
+    if [ "$endline" -eq 7 ] && ! sed -n '6p' "$f" | grep -q '^   utility: '; then
+      echo "  ✗ $f  <- 7 行头部的第 6 行必须是 '   utility: '"
       bad=1; continue
     fi
     local keys ok=1 k
