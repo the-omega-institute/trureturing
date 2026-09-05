@@ -45,8 +45,6 @@ internal sealed class FiniteHermitianInertiaStabilityDocument
                     + "Hermitian signature coordinate.")),
         [
             DocumentEdge.Dependency.Create(GidRef.Create(
-                "D5/S3/Weil/ZetaLinear/Weyl")),
-            DocumentEdge.Dependency.Create(GidRef.Create(
                 "D5/S3/SpectralTopology/PointGapExactInertia")),
             DocumentEdge.Dependency.Create(GidRef.Create(
                 "D5/S3/SpectralTopology/FiniteSpectralLocalizer")),
