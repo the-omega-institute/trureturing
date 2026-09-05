@@ -203,30 +203,19 @@ private def rootQualifiedEntry (rootId : Name) (compatibilityV2 : Bool)
     (entry : InformationRegistryEntry) : InformationRegistryEntry :=
   if compatibilityV2 then entry else
     { entry with
-      producerUnitName := entry.unitName
-      producerRealizationName := entry.realizationName
       unitName := catalogQualifiedName rootId entry.canonicalObjectArenaName
         entry.effectiveCatalogId entry.theoremName theoremUnitSuffix
       realizationName := catalogQualifiedName rootId entry.canonicalObjectArenaName
         entry.effectiveCatalogId entry.theoremName primitiveRealizationSuffix }
 
-private def aliasDeclaration (env : Environment) (sourceName targetName : Name) :
-    CommandElabM Declaration := do
-  let some info := env.find? sourceName
-    | throwError "IE-C009 ProofConstructionFailed: {sourceName}\nmissing alias source"
-  let levels := info.levelParams.map Level.param
-  pure <| .defnDecl {
-    name := targetName
-    levelParams := info.levelParams
-    type := info.type
-    value := mkConst sourceName levels
-    hints := .abbrev
-    safety := .safe
-  }
+private def stageAlias (sourceName targetName : Name) : CommandElabM Unit := do
+  let sourceId := mkIdent (`_root_ ++ sourceName)
+  let targetId := mkIdent (`_root_ ++ targetName)
+  elabCommand (← `(command| abbrev $targetId := $sourceId))
 
 private def prepareRootQualifiedEntries (env : Environment)
     (entries : Array InformationRegistryEntry) :
-    CommandElabM (Array Declaration × Array InformationRegistryEntry) := do
+    CommandElabM (Array (Name × Name) × Array InformationRegistryEntry) := do
   let rootId := env.header.mainModule
   let compatibilityV2 := entries.all fun entry =>
     entry.legacyNaming && entry.registrationModuleName == rootId
@@ -241,14 +230,13 @@ private def prepareRootQualifiedEntries (env : Environment)
       if owners.size > 1 || (env.contains generatedName && !sourceOwner) then
         throwError (qualifiedNameCollisionError rootId entry.effectiveCatalogId
           generatedName owners)
-  let mut declarations := #[]
+  let mut aliases := #[]
   for (source, target) in entries.zip qualified do
     if source.realizationName != target.realizationName then
-      declarations := declarations.push (← aliasDeclaration env source.realizationName
-        target.realizationName)
+      aliases := aliases.push (source.realizationName, target.realizationName)
     if source.unitName != target.unitName then
-      declarations := declarations.push (← aliasDeclaration env source.unitName target.unitName)
-  pure (declarations, qualified)
+      aliases := aliases.push (source.unitName, target.unitName)
+  pure (aliases, qualified)
 
 private def retainSealRecords (env : Environment) (records : Array SealArenaRecord) :
     Environment :=
@@ -265,13 +253,17 @@ private def elabSealInformationTheory : CommandElab := fun stx => do
   try
     validateRegistrySnapshot baseEnv
     let sourceEntries := InformationRegistry.entries baseEnv
-    let (aliasDeclarations, catalogEntries) ←
+    let (aliases, catalogEntries) ←
       prepareRootQualifiedEntries baseEnv sourceEntries
+    for pair in aliases do
+      stageAlias pair.1 pair.2
+    let aliasEnv ← getEnv
     let catalogs ← prepareCatalogsFromEntries sourceEntries catalogEntries
     let proofs ← prepareProofs catalogs
-    let declarations := aliasDeclarations ++ catalogs.map (·.declaration) ++ proofs.declarations
-    preflightNames baseEnv proofs.records declarations
-    let stagedEnv ← stageDeclarations baseEnv declarations
+    let declarations := catalogs.map (·.declaration) ++ proofs.declarations
+    preflightNames aliasEnv proofs.records declarations
+    let stagedEnv ← stageDeclarations aliasEnv
+      (catalogs.map (·.declaration) ++ proofs.declarations)
     let stagedEnv := retainSealRecords stagedEnv proofs.records
     match stx with
     | `(#seal_information_theory output $path:str) =>

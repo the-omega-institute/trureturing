@@ -48,9 +48,6 @@ structure InformationRegistryEntry where
   arenaName : Name
   /-- The declaration holding the native realization or the legacy witness. -/
   realizationName : Name
-  /-- Original declarations used to compute a seal-qualified occurrence alias. -/
-  producerUnitName : Name := .anonymous
-  producerRealizationName : Name := .anonymous
   catalogId : CatalogId := .anonymous
   catalogKind : CatalogKind := .canonicalMaximal
   registrationModuleName : Name := .anonymous
@@ -74,17 +71,6 @@ def InformationRegistryEntry.effectiveCatalogId
 def InformationRegistryEntry.occurrenceKey
     (entry : InformationRegistryEntry) : Name × Name :=
   (entry.canonicalObjectArenaName, entry.theoremName)
-
-def InformationRegistryEntry.computationalUnitName
-    (entry : InformationRegistryEntry) : Name :=
-  if entry.producerUnitName.isAnonymous then entry.unitName else entry.producerUnitName
-
-def InformationRegistryEntry.computationalRealizationName
-    (entry : InformationRegistryEntry) : Name :=
-  if entry.producerRealizationName.isAnonymous then
-    entry.realizationName
-  else
-    entry.producerRealizationName
 
 /-- The one naming function used for all v4.2 occurrence companions. -/
 def catalogQualifiedName (rootId objectArenaName : Name) (catalogId : CatalogId)
@@ -375,8 +361,6 @@ private def sameEntry (left right : InformationRegistryEntry) : Bool :=
     left.unitName == right.unitName &&
     left.arenaName == right.arenaName &&
     left.realizationName == right.realizationName &&
-    left.producerUnitName == right.producerUnitName &&
-    left.producerRealizationName == right.producerRealizationName &&
     left.effectiveCatalogId == right.effectiveCatalogId &&
     left.catalogKind == right.catalogKind &&
     left.registrationModuleName == right.registrationModuleName &&

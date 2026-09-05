@@ -14,7 +14,6 @@ open D5.S3.ConceptDynamics.InformationEscape
 structure CatalogUnitRecord where
   theoremName : Name
   unitName : Name
-  sourceUnitName : Name
   realizationName : Name
   registrationModuleName : Name
   index : Nat
@@ -113,7 +112,7 @@ private def prepareCatalog (rootId arenaName : Name) (compatibilityV2 : Bool)
     `D5.S3.ConceptDynamics.InformationEscape.Arena.Nondegenerate #[arena]
   unless ← propositionIsTrue nondegenerate do
     throwError "IE-C004 DegenerateArena: {arenaName}"
-  let unitExprs := sorted.map fun entry => mkConst entry.computationalUnitName
+  let unitExprs := sorted.map fun entry => mkConst entry.unitName
   let vector ← makeUnitVector unitExprs
   let value ← mkAppM
     `D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector #[vector]
@@ -121,7 +120,6 @@ private def prepareCatalog (rootId arenaName : Name) (compatibilityV2 : Bool)
   let units := sorted.mapIdx fun index entry => {
     theoremName := entry.theoremName
     unitName := entry.unitName
-    sourceUnitName := entry.computationalUnitName
     realizationName := entry.realizationName
     registrationModuleName := entry.registrationModuleName
     index

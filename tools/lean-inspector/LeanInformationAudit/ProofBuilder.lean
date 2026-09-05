@@ -330,7 +330,7 @@ full {fullCount} without {withoutCounts[firstZero]!}"
     let unitName := unit.unitName
     let indexNat := unit.index
     let index ← finValue indexNat record.units.size
-    let unitExpr := mkConst unit.sourceUnitName
+    let unitExpr := mkConst unitName
     let primitives ← mkAppM
       `D5.S3.ConceptDynamics.InformationEscape.TheoremUnit.primitives
       #[unitExpr]
