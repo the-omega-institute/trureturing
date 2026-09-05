@@ -1,5 +1,6 @@
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import LeanInformationAudit.Sha256
+import LeanInformationAudit.FixedSnapshot
 import Lean
 
 namespace LeanInformationAudit
@@ -174,50 +175,24 @@ def frozenInformationRootId : Name :=
 def designatedInformationRootId : Name :=
   `D5.S3.ConceptDynamics.InformationEscape.SharedInformationRoot
 
-private def fixedSnapshotKeys : Array (Name × Name) := #[
-  (`D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.agendaPowerArena,
-    `D5.S3.ConceptDynamics.Aggregation.AgendaPower.agenda_power),
-  (`D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.residueArena,
-    `D5.S3.ConceptDynamics.Coding.AdaptiveResidueIdentification.two_step_adaptive_residue_identification),
-  (`D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.spectrumArena,
-    `D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.spectrum_atom_index_bijective),
-  (`D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.contextArena,
-    `D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.context_parameters_can_select_distinct_fixed_points),
-  (`D5.S3.ConceptDynamics.InformationEscapeArenas.FourthFifthArenas.interventionArena,
-    `D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.intervention_strictly_weaker_than_counterfactual),
-  (`D5.S3.ConceptDynamics.InformationEscapeArenas.ObservationIntervention.observationInterventionArena,
-    `D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.observation_strictly_weaker_than_intervention),
-  (`D5.S3.ConceptDynamics.InformationEscapeArenas.StaticExactExperimentDesign.staticExactExperimentArena,
-    `D5.S3.ConceptDynamics.ExperimentDesign.StaticExactExperimentDesign.static_exact_design),
-  (`D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange.commutingCompletionArena,
-    `D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.commutativity_hypothesis_is_necessary),
-  (`D5.S3.ConceptDynamics.InformationEscapeArenas.LocalLawGluingObstruction.localLawGluingArena,
-    `D5.S3.ConceptDynamics.Gluing.LocalLawGluingObstruction.compatible_local_laws_can_lack_global_state),
-  (`D5.S3.ConceptDynamics.InformationEscapeArenas.EndStateOmitsPreemptingCause.endStateOmitsPreemptingCauseArena,
-    `D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.end_state_omits_preempting_cause),
-  (`D5.S3.ConceptDynamics.InformationEscape.SystemUnit.arena,
-    `D5.S3.ConceptDynamics.InformationEscape.SystemUnit.engine_census_self_application)
-]
-
-/-- Fixed source-snapshot rows used by the frozen root and inherited designated root. -/
-def fixedSnapshotOccurrences (env : Environment) (rootId : Name) :
+/-- Read-only expectations captured by SnapshotEnumerator, independently of the root. -/
+def fixedSnapshotOccurrences (rootId : Name) :
     Array ExpectedOccurrence :=
-  fixedSnapshotKeys.map fun key => {
+  fixedInformationSourceSnapshot.occurrences.map fun row => {
     rootId
-    objectArenaName := key.1
-    theoremName := key.2
-    statementIdentity := theoremStatementIdentity env key.2
-    registrationModuleName := frozenInformationRootId
+    objectArenaName := row.objectArenaName
+    theoremName := row.theoremName
+    statementIdentity := row.statementIdentity
+    registrationModuleName := row.registrationModuleName
   }
 
 /-- Resolve the independent expectation source for one sealing root. -/
 def expectedOccurrencesForRoot (env : Environment) (rootId : Name) :
     Array ExpectedOccurrence :=
-  let declared := ExpectedOccurrenceManifest.declaredEntries env rootId
   if rootId == frozenInformationRootId || rootId == designatedInformationRootId then
-    fixedSnapshotOccurrences env rootId ++ declared
+    fixedSnapshotOccurrences rootId
   else
-    declared
+    ExpectedOccurrenceManifest.declaredEntries env rootId
 
 def isCompanionName : Name -> Bool
   | .str _ suffix =>
