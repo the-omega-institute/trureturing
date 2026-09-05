@@ -69,6 +69,11 @@ private def validateEntry (env : Environment) (entry : InformationRegistryEntry)
   unless ← propositionIsTrue nonempty do
     throwError "IE-C013 MissingPrimitiveBundle: {entry.theoremName}"
 
+/-- Validate every persisted source entry before any seal declaration is staged. -/
+def validateSourceEntries (env : Environment)
+    (entries : Array InformationRegistryEntry) : CommandElabM Unit :=
+  liftTermElabM <| entries.forM (validateEntry env)
+
 private def makeUnitVector (units : Array Expr) : Lean.Elab.Term.TermElabM Expr := do
   let finZero := mkApp (mkConst ``Fin) (mkNatLit 0)
   let mut vector ← withLocalDeclD `impossible finZero fun impossible => do
@@ -162,7 +167,7 @@ def prepareCatalogsFromEntries (sourceEntries catalogEntries :
   let env ← getEnv
   if sourceEntries.isEmpty then
     throwError "IE-C001 UnregisteredTheoremUnit: registry is empty"
-  liftTermElabM <| sourceEntries.forM (validateEntry env)
+  validateSourceEntries env sourceEntries
   let rootId := env.header.mainModule
   let compatibilityV2 := sourceEntries.all fun entry =>
     entry.legacyNaming && entry.registrationModuleName == rootId

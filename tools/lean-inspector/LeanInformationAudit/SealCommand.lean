@@ -253,6 +253,7 @@ private def elabSealInformationTheory : CommandElab := fun stx => do
   try
     validateRegistrySnapshot baseEnv
     let sourceEntries := InformationRegistry.entries baseEnv
+    validateSourceEntries baseEnv sourceEntries
     let (aliases, catalogEntries) ←
       prepareRootQualifiedEntries baseEnv sourceEntries
     for pair in aliases do

@@ -48,6 +48,14 @@ information_theorem sndTheorem
   primitives sndRealization
   : lawArena.Law sndRealization := by trivial
 
+expect_information_occurrence fstTheorem
+  in objectArena
+  from "LeanInformationAudit.Tests.SplitCanonicalArenaCatalog"
+
+expect_information_occurrence sndTheorem
+  in objectArena
+  from "LeanInformationAudit.Tests.SplitCanonicalArenaCatalog"
+
 /-- error: IE-C024 SplitCanonicalArenaCatalog root=LeanInformationAudit.Tests.SplitCanonicalArenaCatalog arena=LeanInformationAudit.Tests.SplitCanonicalArenaCatalog.objectArena catalogs=["left","right"] -/
 #guard_msgs (error) in
 #seal_information_theory

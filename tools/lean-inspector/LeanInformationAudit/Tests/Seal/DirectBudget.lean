@@ -37,6 +37,10 @@ information_theorem target
   primitives fixtureRealization
   : lawArena.Law fixtureRealization := by trivial
 
+expect_information_occurrence target
+  in objectArena
+  from "LeanInformationAudit.Tests.Seal.DirectBudget"
+
 set_option maxRecDepth 100000 in
 /-- error: IE-C032 SizeBudgetRequiresReflectedSeal root=LeanInformationAudit.Tests.Seal.DirectBudget catalog=oversized pair_budget=65792 limit=65536 seal=LeanInformationAudit.Tests.Seal.DirectBudget -/
 #guard_msgs (error) in
