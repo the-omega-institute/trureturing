@@ -54,12 +54,18 @@ public sealed class EngineeringScopeProgramTests
             root => WriteRunnableTestProjectWithoutMarker(
                 root,
                 NewProductTestsProject,
-                ProductProject));
+                ProductProject),
+            // Keep the new project cold without racing two builds of their shared dependency.
+            root => RunDotNet(
+                root, "build", ProductTestsProject, "--configuration", "Release", "--nologo"));
 
         Assert.True(result.ExitCode == 0, result.Diagnostic);
         Assert.Equal(
             [NewProductTestsProject, ProductTestsProject],
             result.SelectedProjects);
+        Assert.Equal(1, result.RetryCount);
+        Assert.Contains("\"newproduct.tests::SmokeTests.Runs\"", result.Output, StringComparison.Ordinal);
+        Assert.Contains("\"product.tests::SmokeTests.Runs\"", result.Output, StringComparison.Ordinal);
     }
 
     [Fact]
