@@ -45,15 +45,14 @@ theorem reflectionRep_value (Z : ZeroData) (a : ℕ → ℂ)
   · rw [reflectionRep, Nat.min_eq_left h]
   · rw [reflectionRep, Nat.min_eq_right (Nat.le_of_not_ge h), ha]
 
-/-- Every finite reflection-compatible assignment is realized by an actual
-smooth compactly supported even Weil test. The finite index set need not be
-reflection closed. Compatibility is imposed on the assignment, and the
-existing sign-separated interpolation theorem supplies the test. -/
-theorem even_weil_interpolation_on_finite_indices
+/-- Every finite reflection-compatible assignment is realized in the explicit
+unit support window. The finite index set need not be reflection closed. -/
+theorem even_weil_interpolation_on_finite_indices_unit_support
     (Z : ZeroData) (E : Finset ℕ) (a : ℕ → ℂ)
     (ha : ∀ j, a (Z.reflection j) = a j) :
-    ∃ g : WeilTestFunction, ∀ j ∈ E,
-      fourierLaplace g (Z.gamma j) = a j := by
+    ∃ g : WeilTestFunction,
+      (∀ j ∈ E, fourierLaplace g (Z.gamma j) = a j) ∧
+      tsupport (g : ℝ → ℂ) ⊆ Set.Icc (-1) 1 := by
   classical
   let S : Finset ℂ := E.image (fun j => Z.gamma (reflectionRep Z j))
   let chosen (z : {z : ℂ // z ∈ S}) : ℕ :=
@@ -66,8 +65,8 @@ theorem even_weil_interpolation_on_finite_indices
   have hsep : ∀ ⦃z w : ℂ⦄,
       z ∈ S → w ∈ S → z ≠ w → z ≠ -w :=
     reflectionRep_image_sep Z E
-  obtain ⟨g, hg⟩ :=
-    even_weilTestFunction_finite_interpolation S hsep values
+  obtain ⟨g, hg, hsupport⟩ :=
+    even_weilTestFunction_finite_interpolation_unit_support S hsep values
   have hrep (j : ℕ) (hj : j ∈ E) :
       fourierLaplace g (Z.gamma (reflectionRep Z j)) = a j := by
     let z : {z : ℂ // z ∈ S} :=
@@ -79,7 +78,7 @@ theorem even_weil_interpolation_on_finite_indices
       a (reflectionRep Z (chosen z)) at hread
     rw [heq, reflectionRep_value Z a ha j] at hread
     exact hread
-  refine ⟨g, ?_⟩
+  refine ⟨g, ?_, hsupport⟩
   intro j hj
   rcases reflectionRep_freq Z j with hsame | hneg
   · rw [← hsame]
@@ -91,6 +90,16 @@ theorem even_weil_interpolation_on_finite_indices
       _ = fourierLaplace g (Z.gamma (reflectionRep Z j)) := by rw [hneg]
       _ = a j := hrep j hj
 
+/-- Preserve the original public interpolation interface by forgetting only
+its now-proved unit support budget. -/
+theorem even_weil_interpolation_on_finite_indices
+    (Z : ZeroData) (E : Finset ℕ) (a : ℕ → ℂ)
+    (ha : ∀ j, a (Z.reflection j) = a j) :
+    ∃ g : WeilTestFunction, ∀ j ∈ E,
+      fourierLaplace g (Z.gamma j) = a j := by
+  obtain ⟨g, hg, _⟩ := even_weil_interpolation_on_finite_indices_unit_support Z E a ha
+  exact ⟨g, hg⟩
+
 /-- A simultaneous unit peak exists on every finite zero set, including sets
 containing several unrelated off-line orbits. -/
 theorem exists_even_weil_finite_unit_peak (Z : ZeroData) (E : Finset ℕ) :
@@ -99,7 +108,16 @@ theorem exists_even_weil_finite_unit_peak (Z : ZeroData) (E : Finset ℕ) :
   exact even_weil_interpolation_on_finite_indices Z E (fun _ => 1)
     (fun _ => rfl)
 
+/-- The simultaneous peak can itself be constructed in the fixed unit window. -/
+theorem exists_even_weil_finite_unit_peak_unit_support (Z : ZeroData) (E : Finset ℕ) :
+    ∃ b : WeilTestFunction,
+      (∀ j ∈ E, fourierLaplace b (Z.gamma j) = 1) ∧
+      tsupport (b : ℝ → ℂ) ⊆ Set.Icc (-1) 1 :=
+  even_weil_interpolation_on_finite_indices_unit_support Z E (fun _ => 1) (fun _ => rfl)
+
 #print axioms even_weil_interpolation_on_finite_indices
 #print axioms exists_even_weil_finite_unit_peak
+#print axioms even_weil_interpolation_on_finite_indices_unit_support
+#print axioms exists_even_weil_finite_unit_peak_unit_support
 
 end D5.S3.Weil.ZetaBridge.FiniteReflectionCompatibleWeilInterpolation
