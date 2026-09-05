@@ -341,8 +341,7 @@ internal sealed partial class RuleFixture
             lean,
             changes,
             meta,
-            verifiedScribeEmissions,
-            baseline);
+            verifiedScribeEmissions);
     }
 
     internal RuleEvaluationContext BuildForRuleCompatibility()
@@ -362,8 +361,7 @@ internal sealed partial class RuleFixture
             AcceptedLeanClosure.Create(LeanAxiomReport.Create(Reports)),
             RawChangeSet.Create(Changes),
             meta,
-            null,
-            baseline);
+            null);
     }
 
     internal RuleEvaluationContext BuildForProtectedRuleCompatibility()
@@ -383,8 +381,7 @@ internal sealed partial class RuleFixture
             AcceptedLeanClosure.Create(LeanAxiomReport.Create(Reports)),
             RawChangeSet.Create(Changes),
             MetaEvaluationProfile.ForProtectedSurface(meta),
-            null,
-            baseline);
+            null);
     }
 
     internal void AddUpwardImport()

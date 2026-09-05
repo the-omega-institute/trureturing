@@ -75,7 +75,7 @@ internal static partial class RepositoryRules
     // of limit+1 turns the repository-wide scan red - blocking every unrelated PR until
     // someone splits. That is what made strict (now forbidden, 19) load-bearing. The
     // admission rule keeps the unbanded limit, so the next change that introduces a
-    // capacity-counted path absent from its ForkPoint is still refused and the split
+    // capacity-counted path absent from its protected baseline is still refused and the split
     // pressure lands exactly where it belongs.
     // Thresholds raised 12/24 -> 24/48 by the owner on 2026-08-30 (wave-71 readings: nine
     // Weil/Analytic/Observer buckets at 12 and Weil/Budget at 13 within one day; the band
@@ -147,7 +147,7 @@ internal static partial class RepositoryRules
         {
             findings.AddRange(ScribeUnknownDebtPolicy.Evaluate(
                     deriveSnapshot(context.Current),
-                    deriveSnapshot(context.ForkPoint))
+                    deriveSnapshot(context.Baseline))
                 .Select(static finding => new RuleFinding(
                     finding.Path,
                     finding.Message,
@@ -164,8 +164,8 @@ internal static partial class RepositoryRules
             var lineCount = CountArtifactLines(file.Text);
             if (lineCount > ArtifactHardLineLimit)
             {
-                // 阻断落在把它推过线的那个候选身上,不落在无辜候选身上。判据取自分叉点:
-                // 本次改动有没有让它变长。与目录轴同构(带内候选只有引入了分叉点上不存在的
+                // 阻断落在把它推过线的那个候选身上,不落在无辜候选身上。判据取自受保护基线:
+                // 本次改动有没有让它变长。与目录轴同构(带内候选只有引入了基线上不存在的
                 // 路径才阻断,见下方 DirectoryToleranceLimit 注释与 2026-08-13 判例)。
                 //
                 // 案由(2026-08-15):dev 上 DigestionLedgerAligner.cs 因两个 PR 的**并集**
@@ -176,10 +176,10 @@ internal static partial class RepositoryRules
                 //
                 // 检测不降级:超线仍然出 finding,无辜者那条是 Observe;全仓检测由 push
                 // 侧的 capacity-audit 承担。第20条要的正是这个形状:窄化阻断须以加强检测为对价。
-                var forkPointLineCount = context.ForkPoint.Files.TryGetValue(path, out var forkFile)
-                    ? CountArtifactLines(forkFile.Text)
+                var baselineLineCount = context.Baseline.Files.TryGetValue(path, out var baselineFile)
+                    ? CountArtifactLines(baselineFile.Text)
                     : 0;
-                findings.Add(lineCount > forkPointLineCount
+                findings.Add(lineCount > baselineLineCount
                     ? new RuleFinding(path.Value, "artifact exceeds 800 lines")
                     : new RuleFinding(
                         path.Value,
@@ -200,7 +200,7 @@ internal static partial class RepositoryRules
         }
 
         var directories = CapacityPathsByDirectory(context.Current.Files.Keys);
-        var forkPointDirectories = CapacityPathsByDirectory(context.ForkPoint.Files.Keys);
+        var baselineDirectories = CapacityPathsByDirectory(context.Baseline.Files.Keys);
 
         // Occupancy is counted over the whole tree so the number reported is the real one, but
         // only buckets this change touches are reported. DirectoryToleranceLimit above was added
@@ -211,13 +211,14 @@ internal static partial class RepositoryRules
         // D5/S3/Constants, deposits f2296a0 and eb759dc each saw twelve and admitted, and union
         // 0ba924d held thirteen and stopped dev and every unrelated branch. Every member of that
         // bucket is frozen, so moving one out is not an available split. Admission therefore
-        // compares capacity-counted path membership with the ForkPoint: an overfull candidate blocks
-        // if any current path is absent there, and otherwise emits a non-blocking Observe.
+        // compares capacity-counted path membership with the protected baseline: an overfull
+        // candidate blocks if any current path is absent there, and otherwise emits a non-blocking
+        // Observe.
         //
-        // Closure: for each admitted overfull candidate C, relative to its own merge base F,
-        // Added_C(d) = C(d) \ F(d) is empty because CurrentPaths_C(d) is a subset of
-        // MergeBasePaths_C(d). A git three-way merge can introduce only paths in Added_C(d), so
-        // every such merge is non-growing in d; the candidates need not share a fork point.
+        // Closure: for each admitted overfull candidate C relative to protected baseline B,
+        // Added_C(d) = C(d) \ B(d) is empty because CurrentPaths_C(d) is a subset of
+        // BaselinePaths_C(d). A git three-way merge can introduce only paths in Added_C(d), so
+        // every such merge is non-growing in d.
         //
         // Residual: candidates at or below DirectoryFileLimit are not constrained by this
         // predicate. The 2026-08-13 union mechanism in that regime is unchanged by this change;
@@ -237,8 +238,8 @@ internal static partial class RepositoryRules
         foreach (var item in directories.Where(item => item.Value.Count > DirectoryFileLimit
             && touched.Contains(item.Key)))
         {
-            var forkPointPaths = forkPointDirectories.GetValueOrDefault(item.Key);
-            if (forkPointPaths is null || !item.Value.IsSubsetOf(forkPointPaths))
+            var baselinePaths = baselineDirectories.GetValueOrDefault(item.Key);
+            if (baselinePaths is null || !item.Value.IsSubsetOf(baselinePaths))
             {
                 findings.Add(new RuleFinding(
                     item.Key,
@@ -253,7 +254,7 @@ internal static partial class RepositoryRules
                     $"directory is overfull at {item.Value.Count} files (admission limit "
                     + $"{DirectoryFileLimit}, repository tolerance "
                     + $"{DirectoryToleranceLimit}), but this change introduced no capacity-counted "
-                    + "path absent from its fork point; split per CLAUDE.md 8",
+                    + "path absent from the protected baseline; split per CLAUDE.md 8",
                     AdmissionEffect.Observe));
             }
         }

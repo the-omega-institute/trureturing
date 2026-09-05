@@ -119,23 +119,13 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
                 "clean checkout requires --protected-base; candidate HEAD cannot protect itself");
         }
 
-        // 「旧侧」有两个不同的问题,不可先验地合并成一个:
-        //
-        //   Revision —— 「候选在扩展哪个受保护状态?」答案只能是 protected base 本身。
-        //       准入的旧侧快照由它解出;旧侧 Lean 已不参与 admission。
-        //
-        //   changeBase —— 「受审树相对其 dev 状态净改了什么?」CI checkout
-        //       refs/pull/N/merge,并把该 merge commit 的第一父提交作为 protected base,
-        //       故 CI 中 changeBase == Revision,而 diff(HEAD^1, HEAD) 正是落地净增量。
-        //
-        // 下方 merge-base fallback 只服务本地 dirty/preflight 调用者:若它显式传入的
-        // protected base 不是 HEAD 祖先,仍须隔离调用者自己的净改动。它不是 CI 的
-        // PR delta 定义;CI 的两个地址由同一个 GitHub merge 对象机械绑定。
-        var changeBase = revision;
+        // The protected base is the state the candidate extends. CI supplies HEAD^1 of its
+        // pull-request merge object; local callers must likewise supply an ancestor of HEAD.
         var ancestor = GitRaw(new[] { "merge-base", "--is-ancestor", revision, head }, allowNonzero: true);
         if (ancestor.ExitCode != 0)
         {
-            changeBase = GitText("merge-base", revision, head).Trim();
+            throw new InvalidOperationException(
+                "protected base must be an ancestor of HEAD; merge origin/dev into the lane first");
         }
 
         if (!dirty && revision == head)
@@ -144,7 +134,7 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
                 "protected base equals clean candidate HEAD; history comparison would be vacuous");
         }
 
-        return new PreparedRepository(revision, changeBase, ReadChanges(changeBase));
+        return new PreparedRepository(revision, ReadChanges(revision));
     }
 
     public RawChangeSet ReadCurrentChanges()
@@ -153,7 +143,7 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
         return ReadChanges(head);
     }
 
-    public RawChangeSet ReadChanges(string changeBase)
+    public RawChangeSet ReadChanges(string revision)
     {
         var changes = ParseChanges(GitBytes(
                 "diff",
@@ -162,7 +152,7 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
                 "-M",
                 "-C",
                 "--find-copies-harder",
-                changeBase,
+                revision,
                 "--"))
             .Concat(ParseNulStrings(GitBytes("ls-files", "--others", "--exclude-standard", "-z"))
                 .Select(static path => (Path: path, Kind: RawChangeKind.Added)))
