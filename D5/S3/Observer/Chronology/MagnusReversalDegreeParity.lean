@@ -63,9 +63,11 @@ theorem step_three_grade_negation_mul
       stepThreeGradeNegation left * stepThreeGradeNegation right := by
   rcases left with ⟨leftOne, leftTwo, leftThree⟩
   rcases right with ⟨rightOne, rightTwo, rightThree⟩
-  ext <;>
-    simp [stepThreeGradeNegation, StepThreeSignature.compose] <;>
-    noncomm_ring
+  ext
+  · change -(leftOne + rightOne) = -leftOne + -rightOne
+    abel
+  · simp [stepThreeGradeNegation, StepThreeSignature.compose] <;> noncomm_ring
+  · simp [stepThreeGradeNegation, StepThreeSignature.compose] <;> noncomm_ring
 
 /-- The grading action is a monoid endomorphism. -/
 def stepThreeGradeNegationHom
@@ -80,9 +82,7 @@ theorem step_three_grade_negation_event
     {A : Type u} [Ring A] (value : A) :
     stepThreeGradeNegation (eventStepThreeSignature value) =
       eventStepThreeSignature (-value) := by
-  ext <;>
-    simp [stepThreeGradeNegation, eventStepThreeSignature] <;>
-    noncomm_ring
+  ext <;> simp [stepThreeGradeNegation, eventStepThreeSignature]
 
 /-- Negating every observation without reversing the word applies the grading
 involution to its complete step-three signature. -/
@@ -149,7 +149,6 @@ theorem doubled_magnus_grade_negation
   simp [doubledMagnusDegreeTwoOfStepThree, truncateStepTwo,
     StepTwoChronologicalSignature.doubledMagnusDegreeTwo,
     stepThreeGradeNegation]
-  noncomm_ring
 
 /-- The grading involution negates the degree-three Magnus primitive. -/
 theorem duodecupled_magnus_grade_negation
