@@ -1,0 +1,2 @@
+**候签定理 4.101(Erdős–Moser 方程在 m−1 的素数局部障碍)**〔open;落 `D5/S3/PrimeForms/Obstructions/ErdosMoserLocalObstruction`〕。对任意 m k : ℕ，若 1 < m、0 < k 且 `∑ i ∈ Finset.range m, i ^ k = m ^ k`（指标为 0,…,m−1；由 k>0，零项贡献为 0），则 `(∀ p : ℕ, p.Prime → p ∣ m − 1 → (p − 1 ∣ k ∧ p ∣ (m − 1) / p + 1 ∧ ¬p ^ 2 ∣ m − 1)) ∧ Squarefree (m − 1)`。本候签只给 Moser 的已证局部障碍，不声称解决 Erdős–Moser 开放问题。
+

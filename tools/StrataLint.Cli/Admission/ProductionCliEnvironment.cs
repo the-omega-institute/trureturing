@@ -304,19 +304,10 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                     Baseline: repository.ReadRevision(prepared.Revision)));
             var currentRaw = rawSnapshots.Current;
             var baselineRaw = rawSnapshots.Baseline;
-            var admissionPlaneEvaluation = timing.Measure(
+            var admissionPlane = timing.Measure(
                 "admission-plane",
-                () =>
-                {
-                    var outcome = EvaluateAdmissionPlane(
-                        baselineRaw,
-                        prepared.Changes,
-                        out var usedBootstrap);
-                    return (Outcome: outcome, UsedBootstrap: usedBootstrap);
-                },
-                static result => result.Outcome is not null);
-            var admissionPlane = admissionPlaneEvaluation.Outcome;
-            var admissionPlaneBootstrap = admissionPlaneEvaluation.UsedBootstrap;
+                () => EvaluateAdmissionPlane(currentRaw, prepared.Changes),
+                static result => result is not null);
             if (admissionPlane is not null)
             {
                 return admissionPlane;
@@ -327,9 +318,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                 () =>
                 {
                     var current = Decode(currentRaw);
-                    var baseline = Decode(admissionPlaneBootstrap
-                        ? WithoutFileMap(baselineRaw)
-                        : baselineRaw);
+                    var baseline = Decode(baselineRaw);
                     // Fork-point consumers compare repository structure and ledger bytes, not Lean facts.
                     var forkPoint = string.Equals(
                         prepared.ChangeBase,

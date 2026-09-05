@@ -1,0 +1,2 @@
+**生成器**:`tools/scripts/agent/germ_jet_certificate.py`(器律⑨;由探针原型 `gen.py` 收敛而来),输入模式列表与模块路径,输出模块 B 的 Lean 源与元数据;带 `--check` 自校验(重生成并与 tracked 源逐字节比对,退出码可辨)。生成器是 producer、模块 B 是其投影,但模块 B 同时是 Lean 的真值载体(kernel 检查它),故两者皆 tracked,一致性由 `--check` 验算(第〇节投影律的验算项,不进保护面)。
+
