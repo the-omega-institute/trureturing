@@ -21,6 +21,7 @@ theorem extraCausalTheorem :
 /-- Simulate the content lane's registration module without adding D5 source. -/
 def registerCausalFixture (second : Bool := true) (extra : Bool := false) :
     CommandElabM Unit := do
+  let catalogId := mkIdent `unifiedCausal
   let originalModule := (← getEnv).header.mainModule
   modifyEnv (·.setMainModule
     `D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalRegistration)
@@ -29,7 +30,7 @@ def registerCausalFixture (second : Bool := true) (extra : Bool := false) :
       register_information_theorem observation_strictly_weaker_than_intervention
         in observationInterventionLawArena
         object_arena unifiedArena
-        catalog unifiedCausal
+        catalog $catalogId
         primitives observationInterventionUnifiedRealization.toPrimitiveBundle
         realization observation_intervention_unified_realization))
     if second then
@@ -37,7 +38,7 @@ def registerCausalFixture (second : Bool := true) (extra : Bool := false) :
         register_information_theorem intervention_strictly_weaker_than_counterfactual
           in interventionCounterfactualLawArena
           object_arena unifiedArena
-          catalog unifiedCausal
+          catalog $catalogId
           primitives interventionCounterfactualUnifiedRealization.toPrimitiveBundle
           realization intervention_counterfactual_unified_realization))
     if extra then
@@ -45,7 +46,7 @@ def registerCausalFixture (second : Bool := true) (extra : Bool := false) :
         register_information_theorem extraCausalTheorem
           in observationInterventionLawArena
           object_arena unifiedArena
-          catalog unifiedCausal
+          catalog $catalogId
           primitives observationInterventionUnifiedRealization.toPrimitiveBundle
           realization observation_intervention_unified_realization))
   finally

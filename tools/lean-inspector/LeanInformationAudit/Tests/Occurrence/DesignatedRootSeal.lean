@@ -19,6 +19,12 @@ run_cmd do
     let expected := expectedOccurrencesForRoot env designatedInformationRootId
     unless actual.size == 13 && expected.size == 13 do
       throwError "ROOT-B-designated-seal: expected actual=expected=13"
+    let causal := actual.filter (fun row => row.registrationModuleName ==
+      `D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalRegistration)
+    unless causal.size == 2 && causal.all (fun row =>
+        row.catalogId == `unifiedCausal && row.objectArenaName ==
+          `D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalAlignment.unifiedArena) do
+      throwError "ROOT-B-designated-seal: causal contributor/catalog identity mismatch"
     unless SealRecords.systemCatalogIrredundant env designatedInformationRootId do
       throwError "ROOT-B-designated-seal: system_catalog_irredundant lacks staged proofs"
     for record in SealRecords.forRoot env designatedInformationRootId do
