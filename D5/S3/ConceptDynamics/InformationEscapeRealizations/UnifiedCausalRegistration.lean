@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/ConceptDynamics/InformationEscapeRealizations/UnifiedCausalRegistration
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Register the two faithful causal transitions on the unified arena. -/
 
 import D5.S3.ConceptDynamics.InformationEscapeRealizations.UnifiedCausalAlignment
