@@ -78,7 +78,7 @@ internal static partial class JudgeSurfaceRevisionScanner
             {
                 // Deliberately over-match: this line scanner cannot see YAML structure; a visible Block beats a silent miss.
                 var reference = WorkflowRef.Match(line);
-                if (reference.Success && BaseRefIndicator.IsMatch(reference.Groups["value"].Value))
+                if (reference.Success && BaseRefIndicator.IsMatch(DecodeYamlScalar(reference.Groups["value"].Value.Trim())))
                 {
                     messages.Add(
                         $"line {index + 1}: a `ref:` naming the protected base "
@@ -123,9 +123,17 @@ internal static partial class JudgeSurfaceRevisionScanner
         }
     }
 
+    // Block scalar indicators may carry an indentation digit and a chomping sign in either order
+    // (`>2`, `>-2`, `|2-`; review round 8).
     private static readonly Regex FoldedBlockStart = new(
-        @"^(?<indent>\s*)(?:-\s+)?[""']?run[""']?:\s*>[-+]?\s*$",
+        @"^(?<indent>\s*)(?:-\s+)?[""']?run[""']?:\s*>(?:[-+]?\d?|\d[-+]?)\s*(?:#.*)?$",
         RegexOptions.CultureInvariant | RegexOptions.Compiled);
+
+    private static readonly Regex BlockIndicator = new(
+        @"^[|>](?:[-+]?\d?|\d[-+]?)\s*(?:#.*)?$",
+        RegexOptions.CultureInvariant | RegexOptions.Compiled);
+
+    private static bool IsBlockIndicator(string scalar) => BlockIndicator.IsMatch(scalar);
 
     private static bool IsFoldedBlockStart(string line, out int indent)
     {
@@ -169,8 +177,14 @@ internal static partial class JudgeSurfaceRevisionScanner
     }
 
     // The key may itself be quoted in YAML (`"run":`, `'run':`).
+    // Line-anchored `run:` (block mapping) or a `run:` inside a flow mapping `{ …, run: … }`
+    // (review round 8: `steps: [{run: "git show …"}]`); a flow value ends at `,` or `}` unless quoted.
     private static readonly Regex RunScalar = new(
         @"^\s*(?:-\s+)?[""']?run[""']?:\s*(?<shell>.*)$",
+        RegexOptions.CultureInvariant | RegexOptions.Compiled);
+
+    private static readonly Regex FlowRunScalar = new(
+        @"[{,]\s*[""']?run[""']?:\s*(?<shell>""(?:[^""\\]|\\.)*""|'(?:[^']|'')*'|[^,}]*)",
         RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
     // `run: <one-line shell>` (or `- run: …`) in a workflow: the scalar after `run:` is shell; a
@@ -182,62 +196,79 @@ internal static partial class JudgeSurfaceRevisionScanner
         var match = RunScalar.Match(line);
         if (!match.Success)
         {
-            return line;
+            var flow = FlowRunScalar.Match(line);
+            return flow.Success ? DecodeYamlScalar(flow.Groups["shell"].Value.Trim()) : line;
         }
 
         var shell = match.Groups["shell"].Value.Trim();
-        if (shell is "|" or "|-" or "|+" or ">" or ">-" or ">+")
+        if (IsBlockIndicator(shell))
         {
             return string.Empty;
         }
 
-        // A YAML flow scalar (`run: "git …"` / `run: 'git …'`) is shell once the YAML quotes are
-        // removed; whatever follows the closing quote (a YAML comment) is not part of the scalar.
-        // Double-quoted escapes `\xHH` / `\uHHHH` / `\UHHHHHHHH` decode to the character (review
-        // round 7: `"\x67it show …"` is `git show …`), `\n` / `\t` are whitespace, `\"` is a quote.
-        // Single-quoted `''` is one quote.
-        if (shell.Length >= 2 && shell[0] == '"')
+        return DecodeYamlScalar(shell);
+    }
+
+    // A YAML flow scalar (`"…"` / `'…'`) decoded the way YAML does, up to its closing quote;
+    // whatever follows (a YAML comment) is not part of the value. Double-quoted escapes:
+    // `\xHH` / `\uHHHH` / `\UHHHHHHHH` decode to the character (`"\x67it show …"` is `git show …`),
+    // `\n` is a real newline — i.e. a command separator for the shell lexer (review round 8:
+    // `"echo ready\ngit show HEAD^1:… > out"` runs two commands) — `\t` a tab, `\"` a quote;
+    // an escape outside the Unicode scalar range or in the surrogate block becomes U+FFFD instead
+    // of throwing. Single-quoted `''` is one quote. Unquoted scalars are returned as they are.
+    private static string DecodeYamlScalar(string scalar)
+    {
+        // An explicit tag (`!!str "git …"`, `!custom …`) does not change the value that follows.
+        if (scalar.StartsWith('!'))
+        {
+            var space = scalar.IndexOf(' ', StringComparison.Ordinal);
+            scalar = space < 0 ? string.Empty : scalar[(space + 1)..].TrimStart();
+        }
+
+        if (scalar.Length >= 2 && scalar[0] == '"')
         {
             var value = new System.Text.StringBuilder();
-            for (var index = 1; index < shell.Length; index++)
+            for (var index = 1; index < scalar.Length; index++)
             {
-                if (shell[index] == '\\' && index + 1 < shell.Length)
+                if (scalar[index] == '\\' && index + 1 < scalar.Length)
                 {
-                    var escape = shell[index + 1];
+                    var escape = scalar[index + 1];
                     var width = escape switch { 'x' => 2, 'u' => 4, 'U' => 8, _ => 0 };
                     if (width > 0
-                        && index + 1 + width < shell.Length
-                        && int.TryParse(shell.AsSpan(index + 2, width), System.Globalization.NumberStyles.HexNumber, null, out var code))
+                        && index + 1 + width < scalar.Length
+                        && int.TryParse(scalar.AsSpan(index + 2, width), System.Globalization.NumberStyles.HexNumber, null, out var code))
                     {
-                        value.Append(char.ConvertFromUtf32(code));
+                        value.Append(code is >= 0 and <= 0x10FFFF and (< 0xD800 or > 0xDFFF)
+                            ? char.ConvertFromUtf32(code)
+                            : "\uFFFD");
                         index += 1 + width;
                         continue;
                     }
 
-                    value.Append(escape is 'n' or 't' ? ' ' : escape);
+                    value.Append(escape switch { 'n' => '\n', 't' => '\t', 'r' => '\r', _ => escape });
                     index++;
                     continue;
                 }
 
-                if (shell[index] == '"')
+                if (scalar[index] == '"')
                 {
                     break;
                 }
 
-                value.Append(shell[index]);
+                value.Append(scalar[index]);
             }
 
             return value.ToString();
         }
 
-        if (shell.Length >= 2 && shell[0] == '\'')
+        if (scalar.Length >= 2 && scalar[0] == '\'')
         {
             var value = new System.Text.StringBuilder();
-            for (var index = 1; index < shell.Length; index++)
+            for (var index = 1; index < scalar.Length; index++)
             {
-                if (shell[index] == '\'')
+                if (scalar[index] == '\'')
                 {
-                    if (index + 1 < shell.Length && shell[index + 1] == '\'')
+                    if (index + 1 < scalar.Length && scalar[index + 1] == '\'')
                     {
                         value.Append('\'');
                         index++;
@@ -247,13 +278,13 @@ internal static partial class JudgeSurfaceRevisionScanner
                     break;
                 }
 
-                value.Append(shell[index]);
+                value.Append(scalar[index]);
             }
 
             return value.ToString();
         }
 
-        return shell;
+        return scalar;
     }
 
     private static string? JudgeCommand(ImmutableArray<string> words, out string verb)
@@ -261,10 +292,46 @@ internal static partial class JudgeSurfaceRevisionScanner
         verb = string.Empty;
         // `X=1 git …`, `! git …`: assignment prefixes and negation do not change what runs.
         var first = 0;
-        while (first < words.Length
-            && (words[first] == "!" || CommandPrefixKeywords.Contains(words[first]) || IsAssignmentWord(words[first])))
+        while (first < words.Length)
         {
-            first++;
+            var word = words[first];
+            if (word == "!" || IsAssignmentWord(word))
+            {
+                first++;
+                continue;
+            }
+
+            if (word == "time")
+            {
+                // `time [-p] [--] cmd` (review round 8: `time -p git show …`).
+                first++;
+                while (first < words.Length && words[first].StartsWith('-'))
+                {
+                    first++;
+                }
+
+                continue;
+            }
+
+            if (word == "coproc")
+            {
+                // `coproc [NAME] cmd`: an optional coprocess name precedes the command.
+                first++;
+                if (first + 1 < words.Length && !IsGit(words[first]) && !words[first].StartsWith('-'))
+                {
+                    first++;
+                }
+
+                continue;
+            }
+
+            if (CommandPrefixKeywords.Contains(word))
+            {
+                first++;
+                continue;
+            }
+
+            break;
         }
 
         if (first >= words.Length || !IsGit(words[first]))
@@ -326,7 +393,7 @@ internal static partial class JudgeSurfaceRevisionScanner
     // (review round 7: `if git show HEAD^1:… >/dev/null; then :; fi`).
     private static readonly HashSet<string> CommandPrefixKeywords = new(StringComparer.Ordinal)
     {
-        "if", "then", "elif", "else", "while", "until", "do", "time", "coproc",
+        "if", "then", "elif", "else", "while", "until", "do",
     };
 
     private static bool IsGit(string word) =>

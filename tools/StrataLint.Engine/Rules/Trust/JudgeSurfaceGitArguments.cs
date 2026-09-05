@@ -14,6 +14,21 @@ internal static partial class JudgeSurfaceRevisionScanner
     // `-s HEAD^1` (review round 6). Short flags restore knows; any other short letter fails closed.
     private static readonly HashSet<char> RestoreShortFlags = ['W', 'S', 'q', 'p', 'm', '2', '3'];
 
+    // Long options restore knows. Git accepts unambiguous abbreviations (`--sour=HEAD^1` is
+    // `--source=HEAD^1`, review round 8), so any long option outside this table fails closed
+    // instead of being skipped.
+    private static readonly HashSet<string> RestoreLongFlags = new(StringComparer.Ordinal)
+    {
+        "--staged", "--worktree", "--quiet", "--progress", "--no-progress", "--ours", "--theirs",
+        "--merge", "--ignore-unmerged", "--ignore-skip-worktree-bits", "--recurse-submodules",
+        "--no-recurse-submodules", "--overlay", "--no-overlay", "--pathspec-file-nul", "--patch",
+    };
+
+    private static readonly HashSet<string> RestoreLongOptionsWithValue = new(StringComparer.Ordinal)
+    {
+        "--conflict", "--pathspec-from-file", "--recurse-submodules",
+    };
+
     private static string? RestoreSource(string[] tokens)
     {
         for (var index = 0; index < tokens.Length; index++)
@@ -32,6 +47,19 @@ internal static partial class JudgeSurfaceRevisionScanner
             else if (token.StartsWith("--source=", StringComparison.Ordinal))
             {
                 source = token["--source=".Length..];
+            }
+            else if (token.StartsWith("--", StringComparison.Ordinal))
+            {
+                if (RestoreLongOptionsWithValue.Contains(token))
+                {
+                    index++;
+                    continue;
+                }
+
+                if (!(RestoreLongFlags.Contains(token) || HasKnownValuePrefix(token, RestoreLongOptionsWithValue)))
+                {
+                    return $"option '{token}' is not in the closed option table (fail-closed)";
+                }
             }
             else if (token.Length > 1 && token[0] == '-' && token[1] != '-')
             {
@@ -124,8 +152,9 @@ internal static partial class JudgeSurfaceRevisionScanner
 
     private static readonly HashSet<string> ReadTreeFlags = new(StringComparer.Ordinal)
     {
-        "-m", "-u", "-i", "-n", "-v", "--reset", "--empty", "--dry-run", "--trivial", "--aggressive",
-        "--no-sparse-checkout", "--debug-unpack", "--",
+        "-m", "-u", "-i", "-n", "-v", "-q", "--quiet", "--verbose", "--reset", "--empty", "--dry-run",
+        "--trivial", "--aggressive", "--sparse-checkout", "--no-sparse-checkout", "--debug-unpack",
+        "--recurse-submodules", "--no-recurse-submodules", "--",
     };
 
     private static readonly HashSet<string> ReadTreeOptionsWithValue = new(StringComparer.Ordinal)

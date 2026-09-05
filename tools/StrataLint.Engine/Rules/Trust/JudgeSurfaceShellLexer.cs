@@ -167,6 +167,30 @@ internal static class JudgeSurfaceShellLexer
                     index = LexDollarSubstitution(text, index, end, depth, commands, word, ref truncated);
                     continue;
 
+                case '$' when index + 1 < end && text[index + 1] == '\'':
+                {
+                    // ANSI-C quoting `$'…'`: a quoted word whose backslash escapes decode
+                    // (review round 8: `$'git' show …` runs git).
+                    index += 2;
+                    inWord = true;
+                    wordHasQuotedContent = true;
+                    while (index < end && text[index] != '\'')
+                    {
+                        if (text[index] == '\\' && index + 1 < end)
+                        {
+                            word.Append(text[index + 1] switch { 'n' => '\n', 't' => '\t', 'r' => '\r', var other => other });
+                            index += 2;
+                            continue;
+                        }
+
+                        word.Append(text[index]);
+                        index++;
+                    }
+
+                    index++;
+                    continue;
+                }
+
                 case '`':
                     inWord = true;
                     index = LexBacktickSubstitution(text, index, end, depth, commands, word, ref truncated);
@@ -226,6 +250,12 @@ internal static class JudgeSurfaceShellLexer
                     // Unquoted group boundaries: `{ git show …; }` runs git show. Braces inside a
                     // word (`${X}`, `HEAD^{tree}`) are ordinary characters.
                     EndCommand();
+                    index++;
+                    continue;
+
+                case '|' when inWord && wordIsRedirection && word.Length > 0 && word[^1] == '>':
+                    // `>|file` (clobber) is one redirection operator, not a pipe (review round 8).
+                    word.Append('|');
                     index++;
                     continue;
 
@@ -330,13 +360,18 @@ internal static class JudgeSurfaceShellLexer
         StringBuilder word,
         ref bool truncated)
     {
-        var close = text.IndexOf('`', index + 1, end - index - 1);
-        if (close < 0)
+        // Old-style substitution: the closing backtick is the first UNESCAPED one; an escaped
+        // backtick inside is a nested substitution, so the inner text is lexed with `\`` unescaped
+        // (review round 8: x=`echo \`git show HEAD^1:p\``).
+        var cursor = index + 1;
+        while (cursor < end && text[cursor] != '`')
         {
-            close = end;
+            cursor += text[cursor] == '\\' ? 2 : 1;
         }
 
-        Lex(text, index + 1, close, depth + 1, commands, ref truncated);
+        var close = cursor < end ? cursor : end;
+        var inner = text[(index + 1)..close].Replace("\\`", "`", StringComparison.Ordinal);
+        Lex(inner, 0, inner.Length, depth + 1, commands, ref truncated);
         word.Append(SubstitutionPlaceholder);
         return close + 1;
     }

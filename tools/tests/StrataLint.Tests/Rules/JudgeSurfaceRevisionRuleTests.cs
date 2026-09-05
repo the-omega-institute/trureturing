@@ -94,6 +94,13 @@ public sealed class JudgeSurfaceRevisionRuleTests
     [InlineData("git worktree add -d \\2>out HEAD^1")]
     [InlineData("if git show HEAD^1:tools/scripts/workflow/x.sh >/dev/null; then :; fi")]
     [InlineData("while git show HEAD^1:tools/scripts/workflow/x.sh; do :; done")]
+    [InlineData("git restore --sour=HEAD^1 -- tools/scripts/workflow/x.sh")]
+    [InlineData("git worktree add -d /tmp/review >|log HEAD^1")]
+    [InlineData("git restore --stag --source=HEAD^1 -- tools/scripts/workflow/x.sh")]
+    [InlineData("git restore --sou=HEAD^1 -- tools/scripts/workflow/x.sh")]
+    [InlineData("time -p git show HEAD^1:tools/scripts/workflow/x.sh >out")]
+    [InlineData("coproc fetch git show HEAD^1:tools/scripts/workflow/x.sh")]
+    [InlineData("x=`echo \\`git show HEAD^1:tools/scripts/workflow/x.sh\\``")]
     public void MaterializingAnotherRevisionIsRejected(string line)
     {
         var finding = Assert.Single(Evaluate(ScriptPath, line + "\n"));
@@ -165,6 +172,11 @@ public sealed class JudgeSurfaceRevisionRuleTests
     [InlineData("git worktree add -d '2'>out HEAD")]
     [InlineData("git worktree add -d 2>out HEAD")]
     [InlineData("if git rev-parse HEAD^1; then :; fi")]
+    [InlineData("git worktree add -d /tmp/review >|log HEAD")]
+    [InlineData("git restore --staged --source=HEAD -- tools/scripts/workflow/x.sh")]
+    [InlineData("git restore --conflict=diff3 tools/scripts/workflow/x.sh")]
+    [InlineData("git read-tree --sparse-checkout HEAD")]
+    [InlineData("time -p git rev-parse HEAD^1")]
     public void ReadingHeadOrMetadataIsAllowed(string line)
     {
         Assert.Empty(Evaluate(ScriptPath, line + "\n"));
@@ -220,6 +232,10 @@ public sealed class JudgeSurfaceRevisionRuleTests
     [InlineData("        \"run\": git show HEAD^1:tools/scripts/workflow/x.sh > out")]
     [InlineData("        run: \"\\x67it show HEAD^1:tools/scripts/workflow/x.sh > out\"")]
     [InlineData("      - run: \"git\\u0020show\\u0020HEAD^1:tools/scripts/workflow/x.sh >out\"")]
+    [InlineData("        run: \"echo ready\\ngit show HEAD^1:tools/scripts/workflow/x.sh > out\"")]
+    [InlineData("    steps: [{run: \"git show HEAD^1:tools/scripts/workflow/x.sh >out\"}]")]
+    [InlineData("    steps: [{name: x, run: git show HEAD^1:tools/scripts/workflow/x.sh >out}]")]
+    [InlineData("        run: !!str \"git show HEAD^1:tools/scripts/workflow/x.sh >out\"")]
     public void WorkflowRunScalarsAreShell(string line)
     {
         var finding = Assert.Single(Evaluate(WorkflowPath, line + "\n"));
@@ -233,6 +249,10 @@ public sealed class JudgeSurfaceRevisionRuleTests
     [InlineData("          git show HEAD:tools/scripts/workflow/x.sh")]
     [InlineData("      # ref: ${{ github.base_ref }} — a comment, not a checkout")]
     [InlineData("        run: \"git show HEAD:tools/scripts/workflow/x.sh\" # ok")]
+    [InlineData("        run: \"git cat-file -p HEAD\\u000Agit rev-parse HEAD^1\"")]
+    [InlineData("        run: \"\\uD800 git rev-parse HEAD\"")]
+    [InlineData("        run: \"\\U00110000 git rev-parse HEAD\"")]
+    [InlineData("        run: !!str 'git rev-parse HEAD^1'")]
     public void WorkflowLinesWithoutAMaterializationAreAllowed(string line)
     {
         Assert.Empty(Evaluate(WorkflowPath, line + "\n"));
@@ -279,6 +299,20 @@ public sealed class JudgeSurfaceRevisionRuleTests
         var finding = Assert.Single(Evaluate(WorkflowPath, workflow));
         Assert.Equal(WorkflowPath, finding.Path);
         Assert.Contains("a `ref:` naming the protected base", finding.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void FoldedRunBlockWithIndentationIndicatorIsOneShellCommand()
+    {
+        const string workflow = "      - run: >2\n          git\n          show HEAD^1:tools/scripts/workflow/x.sh >out\n";
+        Assert.Single(Evaluate(WorkflowPath, workflow));
+    }
+
+    [Fact]
+    public void EscapedBaseRefInAWorkflowIsRejected()
+    {
+        const string workflow = "steps:\n  - uses: actions/checkout@v4\n    with:\n      \"ref\": \"${{ github.\\u0062ase_ref }}\"\n";
+        Assert.Single(Evaluate(WorkflowPath, workflow));
     }
 
     [Fact]
