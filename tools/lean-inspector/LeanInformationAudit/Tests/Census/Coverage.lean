@@ -26,6 +26,11 @@ def frozenRows : Array StatementKey :=
 
 def frozenKeys : Finset StatementKey := frozenRows.toList.toFinset
 
+def encodeNameKey : Name → String
+  | .anonymous => "n0"
+  | .str parent text => s!"ns({encodeNameKey parent},{text.utf8ByteSize}:{text})"
+  | .num parent index => s!"nn({encodeNameKey parent},{index})"
+
 theorem exactCoverage : fourRows.ExactlyCovers "fixture-head" frozenKeys := by decide
 
 /-- info: 'LeanInformationAudit.Tests.Census.exactCoverage' depends on axioms: [propext, Classical.choice, Quot.sound] -/

@@ -60,8 +60,9 @@ private def typed (key : StatementKey) (className field : String)
 private def canonicalArgument (key : StatementKey) (actual : Expr)
     (expected : Name) : MetaM Unit := do
   unless actual.isConstOf expected do
-    throwError (identityError key.theoremName "canonical_arena" expected.toString
-      (actual.getAppFn.constName?.map Name.toString |>.getD "noncanonical-expression"))
+    throwError (identityError key.theoremName "canonical_arena"
+      (actual.getAppFn.constName?.map Name.toString |>.getD "noncanonical-expression")
+      expected.toString)
 
 private def validateFinite (root : Name) (key : StatementKey)
     (payload : FiniteOccurrenceDisposition key) : MetaM Unit := do

@@ -40,11 +40,14 @@ def report : FrozenReport := ⟨"fixture-head", "fixture-report-sha256", frozenR
   { fourRows with entries := fourRows.entries.reverse }).map Json.compress
 
 def reportBytes : String := (Json.mkObj [
-  ("schema", toJson "lean-information-frozen-elaborated-report-v1"),
-  ("head_sha", toJson "fixture-head"),
-  ("modules", Json.arr #[Json.mkObj [("declarations", Json.arr <|
+  ("schema", toJson "stratalint.truth-export"),
+  ("schema_version", toJson (1 : Nat)),
+  ("dialect", toJson "stratalint.truth-export.v1"),
+  ("producer", toJson "TruthExportCommand"),
+  ("source_commit", toJson "fixture-head"),
+  ("nodes", Json.arr #[Json.mkObj [("declarations", Json.arr <|
     (frozenRows.map fun key => Json.mkObj [
-      ("kind", toJson "theorem"), ("name", toJson key.theoremName.toString),
+      ("kind", toJson "theorem"), ("declaration_name_key", toJson (encodeNameKey key.theoremName)),
       ("statement_id", toJson key.statementId)]).push
     (Json.mkObj [("kind", toJson "def"), ("name", toJson "Fixture.definition")]))]])]).compress
 
@@ -63,5 +66,29 @@ def reportDigest := "sha256:" ++ Sha256.hex reportBytes.toUTF8
 /-- info: Except.error "IE-C036 DispositionIdentityMismatch theorem=[anonymous] component=head expected=stale-head actual=fixture-head" -/
 #guard_msgs in
 #eval (parseReport "stale-head" reportDigest reportBytes).map (fun _ => ())
+
+/-- info: Except.ok "A.3" -/
+#guard_msgs in
+#eval (parseNameKey "nn(ns(n0,1:A),3)").map Name.toString
+
+/-- info: true -/
+#guard_msgs in
+#eval parseNameKey "ns(n0,3:a.b)" == .ok (Name.mkSimple "a.b")
+
+/-- info: true -/
+#guard_msgs in
+#eval parseNameKey "ns(n0,2:é)" == .ok (Name.mkSimple "é")
+
+/-- info: true -/
+#guard_msgs in
+#eval match parseNameKey "ns(n0,1:é)" with
+  | .error _ => true
+  | .ok _ => false
+
+/-- info: true -/
+#guard_msgs in
+#eval match parseNameKey "nn(ns(n0,1:A),3)garbage" with
+  | .error _ => true
+  | .ok _ => false
 
 end LeanInformationAudit.Tests.Census

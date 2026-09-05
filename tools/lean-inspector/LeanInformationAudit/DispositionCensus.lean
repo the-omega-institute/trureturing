@@ -1,6 +1,7 @@
 import LeanInformationAudit.AnalysisDisposition
 import LeanInformationAudit.Sha256
 import LeanInformationAudit.DispositionEvidence
+import Std.Internal.Parsec.ByteArray
 
 namespace LeanInformationAudit
 
@@ -8,23 +9,38 @@ open Lean
 
 namespace DispositionCensus
 
+private def checkFrozenKeys (head : String) (keys : Array StatementKey) : Except String Unit := do
+  let mut names : Std.HashSet Name := {}
+  let mut ids : Std.HashSet String := {}
+  for key in keys do
+    if names.contains key.theoremName || ids.contains key.statementId then
+      throw <| censusError head "frozen_keys" "unique" (toJson key).compress
+    names := names.insert key.theoremName
+    ids := ids.insert key.statementId
+
 /-- Duplicate statement IDs are checked before identity and missing-row diagnostics. -/
 def checkCoverage (head : String) (frozen : Array StatementKey)
     (inventory : DispositionInventory) : Except String Unit := do
   let expected := frozen.qsort StatementKey.lt
+  checkFrozenKeys head expected
   for key in expected do
     unless inventory.headSha == head do
       throw <| identityError key.theoremName "head" head inventory.headSha
   unless inventory.headSha == head do
     throw <| identityError .anonymous "head" head inventory.headSha
+  let mut records : Std.HashMap String (Array Nat) := {}
   for i in [:inventory.entries.size] do
-    let key := inventory.entries[i]!.1
-    let duplicates := (List.range inventory.entries.size).filter fun j =>
-      inventory.entries[j]!.1.statementId == key.statementId
-    if duplicates.length > 1 then
+    let id := inventory.entries[i]!.1.statementId
+    records := records.insert id ((records.getD id #[]).push i)
+  for entry in inventory.entries do
+    let key := entry.1
+    let duplicates := records.getD key.statementId #[]
+    if duplicates.size > 1 then
       throw s!"IE-C035 DuplicateAnalysisDisposition theorem={key.theoremName} statement_id={key.statementId} records={(toJson duplicates).compress}"
+  let names : Std.HashMap Name StatementKey :=
+    expected.foldl (init := {}) fun result key => result.insert key.theoremName key
   for entry in inventory.sortedEntries do
-    match expected.find? (·.theoremName == entry.1.theoremName) with
+    match names[entry.1.theoremName]? with
     | some key =>
       unless key.statementId == entry.1.statementId do
         throw <| identityError key.theoremName "statement_id" key.statementId entry.1.statementId
@@ -33,7 +49,7 @@ def checkCoverage (head : String) (frozen : Array StatementKey)
         (·.theoremName.toString) |>.getD "absent"
       throw <| identityError entry.1.theoremName "theorem_name" expectedName entry.1.theoremName.toString
   for key in expected do
-    unless inventory.entries.any (·.1 == key) do
+    unless records.contains key.statementId do
       throw s!"IE-C034 MissingAnalysisDisposition theorem={key.theoremName} statement_id={key.statementId} head={head}"
   unless inventory.ExactlyCovers head frozen.toList.toFinset do
     throw <| censusError head "keys" (toJson expected).compress
@@ -159,33 +175,63 @@ structure FrozenReport where
   reportSha256 : String
   theorems : Array StatementKey
 
-/-- The input envelope has schema, head_sha, and modules. Modules retain the native
-inspector declarations (kind/name/statement_id); non-theorems do not enter the census.
-The expected report digest and HEAD are caller inputs, not claims trusted from the file. -/
+open Std.Internal.Parsec Std.Internal.Parsec.ByteArray in
+private partial def nameKeyParser : Std.Internal.Parsec.ByteArray.Parser Name := do
+    skipByteChar 'n'
+    match ← any with
+    | 48 => return .anonymous
+    | 115 =>
+      skipByteChar '('
+      let parent ← nameKeyParser
+      skipByteChar ','
+      let size ← digits
+      skipByteChar ':'
+      let bytes ← take size
+      let some text := String.fromUTF8? bytes.toByteArray | fail "invalid UTF-8 name component"
+      skipByteChar ')'
+      return .str parent text
+    | 110 =>
+      skipByteChar '('
+      let parent ← nameKeyParser
+      skipByteChar ','
+      let index ← digits
+      skipByteChar ')'
+      return .num parent index
+    | _ => fail "invalid Lean name key"
+
+/-- Decode the inspector's structured, byte-length-prefixed Name encoding. -/
+def parseNameKey (text : String) : Except String Name :=
+  (nameKeyParser <* Std.Internal.Parsec.eof).run text.toUTF8
+
+/-- Consume the existing strict frozen truth export, produced from an elaborated
+report by TruthExportCommand. source_commit binds HEAD; declaration_name_key
+preserves Lean Name structure; statement_id is read verbatim. Non-theorems are ignored.
+The caller pins the report bytes independently with expectedSha256. -/
 def parseReport (expectedHead expectedSha256 bytes : String) : Except String FrozenReport := do
   let actualSha256 := "sha256:" ++ Sha256.hex bytes.toUTF8
   unless actualSha256 == expectedSha256 do
     throw <| identityError .anonymous "report_sha256" expectedSha256 actualSha256
   let json ← Json.parse bytes
-  unless (← stringField json "schema") == "lean-information-frozen-elaborated-report-v1" do
-    throw <| censusError expectedHead "schema" "lean-information-frozen-elaborated-report-v1"
-      (← stringField json "schema")
-  let head ← stringField json "head_sha"
+  for (field, expected) in [("schema", "stratalint.truth-export"),
+      ("dialect", "stratalint.truth-export.v1"), ("producer", "TruthExportCommand")] do
+    unless (← stringField json field) == expected do
+      throw <| censusError expectedHead field expected (← stringField json field)
+  unless (← json.getObjValAs? Nat "schema_version") == 1 do
+    throw <| censusError expectedHead "schema_version" "1"
+      (toString (← json.getObjValAs? Nat "schema_version"))
+  let head ← stringField json "source_commit"
   unless head == expectedHead do
     throw <| identityError .anonymous "head" expectedHead head
-  let modules ← json.getObjValAs? (Array Json) "modules"
+  let modules ← json.getObjValAs? (Array Json) "nodes"
   let mut keys : Array StatementKey := #[]
   for moduleRow in modules do
     let declarations ← moduleRow.getObjValAs? (Array Json) "declarations"
     for declaration in declarations do
       if (← stringField declaration "kind") == "theorem" then
-        keys := keys.push ⟨← nameField declaration "name", ← stringField declaration "statement_id"⟩
+        keys := keys.push ⟨← parseNameKey (← stringField declaration "declaration_name_key"),
+          ← stringField declaration "statement_id"⟩
   let sorted := keys.qsort StatementKey.lt
-  for i in [:sorted.size] do
-    for j in [:i] do
-      if sorted[i]!.theoremName == sorted[j]!.theoremName ||
-          sorted[i]!.statementId == sorted[j]!.statementId then
-        throw <| censusError head "frozen_keys" "unique" (toJson sorted[i]!).compress
+  checkFrozenKeys head sorted
   return { headSha := head, reportSha256 := actualSha256, theorems := sorted }
 
 def artifact (report : FrozenReport) (inventory : DispositionInventory) : Except String Json := do
@@ -204,7 +250,9 @@ def checkArtifact (report : FrozenReport) (inventory : DispositionInventory)
   let expected ← artifact report inventory
   for field in ["schema", "head_sha", "report_sha256", "theorem_count", "counts", "rows"] do
     let expectedValue ← expected.getObjVal? field
-    let actual ← candidate.getObjVal? field
+    let actual ← match candidate.getObjVal? field with
+      | .ok value => pure value
+      | .error _ => throw <| censusError report.headSha field expectedValue.compress "missing"
     unless expectedValue.compress == actual.compress do
       throw <| censusError report.headSha field expectedValue.compress actual.compress
 
@@ -273,7 +321,7 @@ private def readUtf8 (path : String) : IO String := do
 
 /-- Report-only command. It stages a coverage theorem only after checking the
 full inventory and its semantic evidence. Optional JSON is output, never seal input.
-Input: frozen report envelope plus the JSON encoding of DispositionInventory. -/
+Input: stratalint.truth-export.v1 plus the JSON encoding of DispositionInventory. -/
 elab "#disposition_census" &"root" root:ident &"report" reportPath:str
     &"head" head:str &"report_sha256" reportSha:str &"inventory" inventoryPath:str
     &"certificate" certificate:ident " output " outputPath:str : command => do
@@ -282,11 +330,11 @@ elab "#disposition_census" &"root" root:ident &"report" reportPath:str
   let report ← ofExcept <| parseReport head.getString reportSha.getString reportBytes
   let inventory ← ofExcept <| (Json.parse inventoryBytes).bind parseInventory
   ofExcept <| checkCoverage report.headSha report.theorems inventory
-  let certificateName := (← getCurrNamespace) ++ certificate.getId
+  let certificateName := (← getCurrNamespace) ++ certificate.getId.eraseMacroScopes
   if (← getEnv).contains certificateName then
     throwError "disposition census certificate already exists: {certificateName}"
   let proof ← liftTermElabM do
-    validateEvidence root.getId inventory
+    validateEvidence root.getId.eraseMacroScopes inventory
     coverageProof report inventory
   let proofType ← liftTermElabM <| inferType proof
   let projection ← ofExcept <| artifact report inventory
