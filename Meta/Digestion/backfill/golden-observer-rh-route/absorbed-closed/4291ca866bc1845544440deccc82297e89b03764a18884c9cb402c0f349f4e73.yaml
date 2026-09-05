@@ -3,16 +3,16 @@ fingerprints:
   normalized_sha256: sha256:4291ca866bc1845544440deccc82297e89b03764a18884c9cb402c0f349f4e73
 cas_ref: sha256:4291ca866bc1845544440deccc82297e89b03764a18884c9cb402c0f349f4e73
 coverage_gids:
-  - gid: D5/S3/Analytic/GermWindow/GermJetModeLemma.mode_deriv_enclosure
-    target_statement_id: sha256:d680bd200ff77a4892e272cddc36396afab9554b2de5b9d6f597ebbb97623b7f
   - gid: D5/S3/Analytic/GermWindow/GermJetModeLemma.mode_term_enclosure
     target_statement_id: sha256:8dcadc96558a7c89fa4fb8b72dc4d38a3ce4cc419b5fca386538546d04a356f1
+  - gid: D5/S3/Analytic/GermWindow/GermJetModeLemma.mode_deriv_enclosure
+    target_statement_id: sha256:d680bd200ff77a4892e272cddc36396afab9554b2de5b9d6f597ebbb97623b7f
 receipts:
   scribe:
-    - gid: D5/S3/Analytic/GermWindow/GermJetModeLemma.mode_deriv_enclosure
+    - gid: D5/S3/Analytic/GermWindow/GermJetModeLemma.mode_term_enclosure
       definition_sha256: sha256:a13cec71426f6dfdc5949d0936f5d57c433d16339023b300c2e340272e2525f2
       emission_sha256: sha256:c0bd8c706a6bc6f34291d2af137d8d2456b600fddebd97535c96c2e931991c88
-    - gid: D5/S3/Analytic/GermWindow/GermJetModeLemma.mode_term_enclosure
+    - gid: D5/S3/Analytic/GermWindow/GermJetModeLemma.mode_deriv_enclosure
       definition_sha256: sha256:a13cec71426f6dfdc5949d0936f5d57c433d16339023b300c2e340272e2525f2
       emission_sha256: sha256:c0bd8c706a6bc6f34291d2af137d8d2456b600fddebd97535c96c2e931991c88
   unresolved_subitems: []

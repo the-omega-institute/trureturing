@@ -3,21 +3,21 @@ fingerprints:
   normalized_sha256: sha256:edd4677dbe21ffd515328f4b8cc52b3ab91f6508e1799621196037fff2cf4c41
 cas_ref: sha256:edd4677dbe21ffd515328f4b8cc52b3ab91f6508e1799621196037fff2cf4c41
 coverage_gids:
-  - gid: D5/S3/Analytic/GermWindow/GermZeroCertificate.g60_center_deriv_re_gt
-    target_statement_id: sha256:7457071c1c2dfa1fe8dac41d977d0cf2ccce77fc1d8e640ab63ae3487a580110
-  - gid: D5/S3/Analytic/GermWindow/GermZeroCertificate.g60_center_norm_lt
-    target_statement_id: sha256:3f2a56353505fbe78567cec52597d34f1018188d8c572125f9ee5c9f7156b14e
   - gid: D5/S3/Analytic/GermWindow/GermZeroCertificate.germLocalFactor_two_has_zero_near_candidate
     target_statement_id: sha256:95b28930e5aaace37bee50f69c7417869e1233645af88075bc5382426f6bad4d
+  - gid: D5/S3/Analytic/GermWindow/GermZeroCertificate.g60_center_norm_lt
+    target_statement_id: sha256:3f2a56353505fbe78567cec52597d34f1018188d8c572125f9ee5c9f7156b14e
+  - gid: D5/S3/Analytic/GermWindow/GermZeroCertificate.g60_center_deriv_re_gt
+    target_statement_id: sha256:7457071c1c2dfa1fe8dac41d977d0cf2ccce77fc1d8e640ab63ae3487a580110
 receipts:
   scribe:
-    - gid: D5/S3/Analytic/GermWindow/GermZeroCertificate.g60_center_deriv_re_gt
+    - gid: D5/S3/Analytic/GermWindow/GermZeroCertificate.germLocalFactor_two_has_zero_near_candidate
       definition_sha256: sha256:3cea136ccedacc07de3aef95158aeae342e82ef069e3994b513c869df6744199
       emission_sha256: sha256:a1009f1c12d618d2cf45819a13dbf28edf3c1e75e97769144b521bbc5da69902
     - gid: D5/S3/Analytic/GermWindow/GermZeroCertificate.g60_center_norm_lt
       definition_sha256: sha256:3cea136ccedacc07de3aef95158aeae342e82ef069e3994b513c869df6744199
       emission_sha256: sha256:a1009f1c12d618d2cf45819a13dbf28edf3c1e75e97769144b521bbc5da69902
-    - gid: D5/S3/Analytic/GermWindow/GermZeroCertificate.germLocalFactor_two_has_zero_near_candidate
+    - gid: D5/S3/Analytic/GermWindow/GermZeroCertificate.g60_center_deriv_re_gt
       definition_sha256: sha256:3cea136ccedacc07de3aef95158aeae342e82ef069e3994b513c869df6744199
       emission_sha256: sha256:a1009f1c12d618d2cf45819a13dbf28edf3c1e75e97769144b521bbc5da69902
   unresolved_subitems: []
