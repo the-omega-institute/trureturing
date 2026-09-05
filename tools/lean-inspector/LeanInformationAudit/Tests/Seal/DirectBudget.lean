@@ -24,7 +24,7 @@ def lawArena : PrimitiveLawArena where
 
 local instance : DecidableEq lawArena.State := lawArena.toArena.stateDecidableEq
 
-def realization : PrimitiveRealization lawArena.signature where
+def fixtureRealization : PrimitiveRealization lawArena.signature where
   readout := fun _ state => state
   anchor := Fin.elim0
 
@@ -32,9 +32,10 @@ information_theorem target
   in lawArena
   object_arena objectArena
   catalog oversized
-  primitives realization
-  : lawArena.Law realization := by trivial
+  primitives fixtureRealization
+  : lawArena.Law fixtureRealization := by trivial
 
+set_option maxRecDepth 100000 in
 /-- error: IE-C032 SizeBudgetRequiresReflectedSeal root=LeanInformationAudit.Tests.Seal.DirectBudget catalog=oversized pair_budget=65792 limit=65536 seal=LeanInformationAudit.Tests.Seal.DirectBudget -/
 #guard_msgs (error) in
 #seal_information_theory

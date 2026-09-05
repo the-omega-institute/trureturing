@@ -24,7 +24,7 @@ def lawArena : PrimitiveLawArena where
 
 local instance : DecidableEq lawArena.State := lawArena.toArena.stateDecidableEq
 
-def realization : PrimitiveRealization lawArena.signature where
+def fixtureRealization : PrimitiveRealization lawArena.signature where
   readout := fun _ state => state
   anchor := Fin.elim0
 
@@ -32,7 +32,7 @@ information_theorem importedTheorem
   in lawArena
   object_arena objectArena
   catalog importedBool
-  primitives realization
-  : lawArena.Law realization := by trivial
+  primitives fixtureRealization
+  : lawArena.Law fixtureRealization := by trivial
 
 end LeanInformationAudit.Tests.ImportClosureProducer

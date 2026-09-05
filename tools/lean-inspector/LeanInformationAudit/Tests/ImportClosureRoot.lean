@@ -15,9 +15,15 @@ run_cmd do
   let json <- match Json.parse contents with
     | .ok value => pure value
     | .error message => throwError message
-  let schema <- Json.getObjVal? json "schema" >>= Json.getStr?
-  let scope <- Json.getObjVal? json "seal_scope" >>= Json.getStr?
-  let modules <- Json.getObjVal? json "registration_modules" >>= Json.getArr?
+  let schema <- match Json.getObjVal? json "schema" >>= Json.getStr? with
+    | .ok value => pure value
+    | .error message => throwError message
+  let scope <- match Json.getObjVal? json "seal_scope" >>= Json.getStr? with
+    | .ok value => pure value
+    | .error message => throwError message
+  let modules <- match Json.getObjVal? json "registration_modules" >>= Json.getArr? with
+    | .ok value => pure value
+    | .error message => throwError message
   unless schema == "lean-intrinsic-information-escape-v3" &&
       scope == "import-closure" &&
       modules.any (fun value => value.getStr? ==
