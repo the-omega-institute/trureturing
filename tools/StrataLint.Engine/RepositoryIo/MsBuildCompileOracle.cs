@@ -68,7 +68,12 @@ internal static class MsBuildCompileOracle
             }
 
             if (document.Root?.Name.LocalName != "Project"
-                || HasUnclosedDirectoryEnumeration(document))
+                || HasUnclosedDirectoryEnumeration(path, document))
+            {
+                return EffectiveDerivationInputProjection.Full(snapshot);
+            }
+
+            if (HasUnclosedPropertyBody(document))
             {
                 return EffectiveDerivationInputProjection.Full(snapshot);
             }
@@ -78,9 +83,28 @@ internal static class MsBuildCompileOracle
                          .Where(static attribute => attribute.Name.LocalName == "Condition")
                          .Select(static attribute => attribute.Value))
             {
-                if (!TryCollectExistsReferences(path, condition, existsReferences))
+                if (HasUnclosedCondition(condition)
+                    || !TryCollectExistsReferences(path, condition, existsReferences))
                 {
                     return EffectiveDerivationInputProjection.Full(snapshot);
+                }
+            }
+
+            foreach (var element in document.Descendants())
+            {
+                foreach (var attribute in element.Attributes().Where(static attribute =>
+                             attribute.Name.LocalName is "Include" or "Exclude" or "Remove"))
+                {
+                    if (!TryCloseItemPathAttribute(
+                            snapshot,
+                            path,
+                            element.Name.LocalName,
+                            attribute.Name.LocalName,
+                            attribute.Value,
+                            included))
+                    {
+                        return EffectiveDerivationInputProjection.Full(snapshot);
+                    }
                 }
             }
 
@@ -103,6 +127,12 @@ internal static class MsBuildCompileOracle
                 included[importedPath] = importedFile;
                 pending.Enqueue(importedPath);
             }
+        }
+
+        // A file-only snapshot cannot preserve directory existence in a sparse checkout.
+        if (existsReferences.Any(path => SnapshotContainsDirectory(snapshot, path)))
+        {
+            return EffectiveDerivationInputProjection.Full(snapshot);
         }
 
         if (existsReferences.Any(path =>
@@ -220,7 +250,23 @@ internal static class MsBuildCompileOracle
     private static string DirectoryOf(string path) =>
         path.LastIndexOf('/') is var separator && separator >= 0 ? path[..separator] : string.Empty;
 
-    private static bool HasUnclosedDirectoryEnumeration(XDocument document)
+    private static bool HasUnclosedPropertyBody(XDocument document) =>
+        document.Descendants()
+            .Where(static element => element.Parent?.Name.LocalName == "PropertyGroup")
+            .Any(static element => ContainsDynamicReference(element.Value)
+                || ContainsPropertyFunction(element.Value));
+
+    private static bool HasUnclosedCondition(string condition)
+    {
+        var withoutThisFileDirectory = condition.Replace(
+            "$(MSBuildThisFileDirectory)",
+            string.Empty,
+            StringComparison.Ordinal);
+        return ContainsDynamicReference(withoutThisFileDirectory)
+            || ContainsPropertyFunction(condition);
+    }
+
+    private static bool HasUnclosedDirectoryEnumeration(string importingPath, XDocument document)
     {
         foreach (var element in document.Descendants())
         {
@@ -235,8 +281,11 @@ internal static class MsBuildCompileOracle
                 }
 
                 if ((value.Contains('*') || value.Contains('?'))
-                    && !(element.Name.LocalName == "Compile"
-                        && value.EndsWith(".cs", StringComparison.Ordinal)))
+                    && !IsClosedCompileWildcard(
+                        importingPath,
+                        element.Name.LocalName,
+                        attribute.Name.LocalName,
+                        value))
                 {
                     return true;
                 }
@@ -245,6 +294,62 @@ internal static class MsBuildCompileOracle
 
         return false;
     }
+
+    private static bool TryCloseItemPathAttribute(
+        RepositorySnapshot snapshot,
+        string importingPath,
+        string itemName,
+        string attributeName,
+        string value,
+        IDictionary<string, RepositoryFile> included)
+    {
+        if (ContainsPropertyFunction(value)
+            || value.Contains("@(", StringComparison.Ordinal)
+            || value.Contains("%(", StringComparison.Ordinal))
+        {
+            return false;
+        }
+
+        if (value.Contains("$(", StringComparison.Ordinal))
+        {
+            if (!TryResolveThisFileDirectoryPath(importingPath, value, out var referencedPath)
+                || referencedPath is null
+                || SnapshotContainsDirectory(snapshot, referencedPath))
+            {
+                return false;
+            }
+
+            if (snapshot.TryGetFile(referencedPath, out var referencedFile))
+            {
+                included[referencedPath] = referencedFile;
+            }
+        }
+
+        return !(value.Contains('*') || value.Contains('?'))
+            || IsClosedCompileWildcard(importingPath, itemName, attributeName, value);
+    }
+
+    private static bool IsClosedCompileWildcard(
+        string importingPath,
+        string itemName,
+        string attributeName,
+        string value) =>
+        itemName == "Compile"
+        && attributeName is "Include" or "Exclude" or "Remove"
+        && !ContainsDynamicReference(value)
+        && !value.Contains(';')
+        && !value.Contains(':')
+        && ResolveRepositoryRelativePath(importingPath, value) is not null
+        && value.EndsWith(".cs", StringComparison.Ordinal);
+
+    private static bool ContainsDynamicReference(string value) =>
+        value.Contains("$(", StringComparison.Ordinal)
+        || value.Contains("@(", StringComparison.Ordinal)
+        || value.Contains("%(", StringComparison.Ordinal);
+
+    private static bool ContainsPropertyFunction(string value) =>
+        value.Contains("[System.IO.", StringComparison.OrdinalIgnoreCase)
+        || value.Contains("[MSBuild]::", StringComparison.OrdinalIgnoreCase);
 
     private static bool TryCollectExistsReferences(
         string importingPath,
@@ -276,17 +381,17 @@ internal static class MsBuildCompileOracle
             var value = condition[cursor..end];
             cursor = end + 1;
             SkipWhitespace(condition, ref cursor);
-            if (cursor >= condition.Length || condition[cursor++] != ')'
-                || !IsLiteralPath(value))
+            if (cursor >= condition.Length || condition[cursor++] != ')')
             {
                 return false;
             }
 
-            var resolved = ResolveRepositoryRelativePath(importingPath, value);
-            if (resolved is not null)
+            if (!TryResolveStaticPathExpression(importingPath, value, out var resolved)
+                || resolved is null)
             {
-                references.Add(resolved);
+                return false;
             }
+            references.Add(resolved);
             offset = cursor;
         }
 
@@ -310,10 +415,12 @@ internal static class MsBuildCompileOracle
         if (IsLiteralPath(value))
         {
             importedPath = ResolveRepositoryRelativePath(importingPath, value);
-            return true;
+            return importedPath is not null;
         }
 
-        return TryResolveDirectoryBuildFileAbove(snapshot, importingPath, value, out importedPath);
+        return TryResolveThisFileDirectoryPath(importingPath, value, out importedPath)
+            || TryResolvePathOfFileAbove(snapshot, importingPath, value, out importedPath)
+            || TryResolveDirectoryNameOfFileAbove(snapshot, importingPath, value, out importedPath);
     }
 
     private static bool IsLiteralPath(string value) =>
@@ -325,30 +432,87 @@ internal static class MsBuildCompileOracle
         && !value.Contains('?')
         && !value.Contains(';');
 
-    private static bool TryResolveDirectoryBuildFileAbove(
+    private static bool TryResolvePathOfFileAbove(
         RepositorySnapshot snapshot,
         string importingPath,
         string value,
         out string? importedPath)
     {
         const string Prefix = "$([MSBuild]::GetPathOfFileAbove('";
-        const string Suffix = "', '$(MSBuildThisFileDirectory)..'))";
+        const string CurrentDirectorySuffix = "', '$(MSBuildThisFileDirectory)'))";
+        const string ParentDirectorySuffix = "', '$(MSBuildThisFileDirectory)..'))";
         importedPath = null;
-        if (!value.StartsWith(Prefix, StringComparison.Ordinal)
-            || !value.EndsWith(Suffix, StringComparison.Ordinal))
+        if (!value.StartsWith(Prefix, StringComparison.Ordinal))
         {
             return false;
         }
 
-        var fileName = value[Prefix.Length..^Suffix.Length];
-        if (!IsDirectoryBuildChainFileName(fileName)
-            || fileName.Contains('/')
-            || fileName.Contains('\\'))
+        var startsAtParent = value.EndsWith(ParentDirectorySuffix, StringComparison.Ordinal);
+        var suffix = startsAtParent ? ParentDirectorySuffix : CurrentDirectorySuffix;
+        if (!startsAtParent && !value.EndsWith(suffix, StringComparison.Ordinal))
         {
             return false;
         }
 
-        var directory = DirectoryOf(DirectoryOf(importingPath));
+        var fileName = value[Prefix.Length..^suffix.Length];
+        if (!IsLiteralFileName(fileName))
+        {
+            return false;
+        }
+
+        var directory = DirectoryOf(importingPath);
+        if (startsAtParent)
+        {
+            directory = DirectoryOf(directory);
+        }
+        return TryFindFileAbove(snapshot, directory, fileName, out importedPath);
+    }
+
+    private static bool TryResolveDirectoryNameOfFileAbove(
+        RepositorySnapshot snapshot,
+        string importingPath,
+        string value,
+        out string? importedPath)
+    {
+        const string Prefix =
+            "$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), '";
+        const string FunctionSuffix = "'))";
+        importedPath = null;
+        if (!value.StartsWith(Prefix, StringComparison.Ordinal))
+        {
+            return false;
+        }
+
+        var functionEnd = value.IndexOf(FunctionSuffix, Prefix.Length, StringComparison.Ordinal);
+        if (functionEnd < 0)
+        {
+            return false;
+        }
+
+        var fileName = value[Prefix.Length..functionEnd];
+        var relativeSuffix = value[(functionEnd + FunctionSuffix.Length)..];
+        if (!IsLiteralFileName(fileName)
+            || relativeSuffix.Length < 2
+            || relativeSuffix[0] is not ('/' or '\\')
+            || relativeSuffix[1..] != fileName)
+        {
+            return false;
+        }
+
+        return TryFindFileAbove(
+            snapshot,
+            DirectoryOf(importingPath),
+            fileName,
+            out importedPath);
+    }
+
+    private static bool TryFindFileAbove(
+        RepositorySnapshot snapshot,
+        string directory,
+        string fileName,
+        out string? importedPath)
+    {
+        importedPath = null;
         while (true)
         {
             var candidate = directory.Length == 0 ? fileName : directory + "/" + fileName;
@@ -363,6 +527,54 @@ internal static class MsBuildCompileOracle
             }
             directory = DirectoryOf(directory);
         }
+    }
+
+    private static bool IsLiteralFileName(string value) =>
+        IsLiteralPath(value)
+        && !value.Contains('/')
+        && !value.Contains('\\');
+
+    private static bool TryResolveStaticPathExpression(
+        string importingPath,
+        string value,
+        out string? resolvedPath)
+    {
+        if (IsLiteralPath(value))
+        {
+            resolvedPath = ResolveRepositoryRelativePath(importingPath, value);
+            return resolvedPath is not null;
+        }
+
+        return TryResolveThisFileDirectoryPath(importingPath, value, out resolvedPath);
+    }
+
+    private static bool TryResolveThisFileDirectoryPath(
+        string importingPath,
+        string value,
+        out string? resolvedPath)
+    {
+        const string Prefix = "$(MSBuildThisFileDirectory)";
+        resolvedPath = null;
+        if (!value.StartsWith(Prefix, StringComparison.Ordinal))
+        {
+            return false;
+        }
+
+        var relativePath = value[Prefix.Length..];
+        if (!IsLiteralPath(relativePath))
+        {
+            return false;
+        }
+
+        resolvedPath = ResolveRepositoryRelativePath(importingPath, relativePath);
+        return resolvedPath is not null;
+    }
+
+    private static bool SnapshotContainsDirectory(RepositorySnapshot snapshot, string path)
+    {
+        var prefix = path.Length == 0 ? string.Empty : path + "/";
+        return snapshot.Files.Keys.Any(candidate =>
+            candidate.Value.StartsWith(prefix, StringComparison.Ordinal));
     }
 
     private static string? ResolveRepositoryRelativePath(string importingPath, string value)

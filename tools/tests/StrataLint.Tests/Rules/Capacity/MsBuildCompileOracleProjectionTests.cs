@@ -29,14 +29,16 @@ public sealed class MsBuildCompileOracleProjectionTests
             ("README.md", "outside projection\n"));
 
         var projection = ScribeTestMapDeriver.CreateEffectiveDerivationInputProjection(snapshot);
-        var expected = snapshot.Files.Values
-            .Where(file => ScribeTestMapDeriver.IsDerivationInput(file.Path.Value))
-            .Select(static file => file.Path.Value)
-            .Order(StringComparer.Ordinal)
-            .ToArray();
 
         Assert.Equal(DerivationInputProjectionMode.Sparse, projection.Mode);
-        Assert.Equal(expected, projection.Files.Select(static file => file.Path.Value));
+        Assert.Equal(
+            [
+                "build/common.props",
+                "src/App.cs",
+                "src/App.csproj",
+                "src/packages.lock.json",
+            ],
+            projection.Files.Select(static file => file.Path.Value));
     }
 
     [Fact]
@@ -73,6 +75,7 @@ public sealed class MsBuildCompileOracleProjectionTests
     }
 
     [Theory]
+    [InlineData("$(SomeProp).props")]
     [InlineData("$(BuildRoot)/shared.custom")]
     [InlineData("../build/*.props")]
     public void NonLiteralImportRequiresFullSnapshot(string importPath)
@@ -113,6 +116,147 @@ public sealed class MsBuildCompileOracleProjectionTests
             ("src/App.csproj", Project(
                 "<PropertyGroup Condition=\"Exists('../build/enabled.flag')\"><Enabled>true</Enabled></PropertyGroup>")),
             ("build/enabled.flag", "enabled\n"));
+
+        var projection = ScribeTestMapDeriver.CreateEffectiveDerivationInputProjection(snapshot);
+
+        Assert.Equal(DerivationInputProjectionMode.Full, projection.Mode);
+    }
+
+    [Fact]
+    public void ExistsConditionOnRepositoryDirectoryRequiresFullSnapshot()
+    {
+        var snapshot = Snapshot(
+            ("src/App.csproj", Project(
+                "<PropertyGroup Condition=\"Exists('../build')\"><Enabled>true</Enabled></PropertyGroup>")),
+            ("build/enabled.flag", "enabled\n"));
+
+        var projection = ScribeTestMapDeriver.CreateEffectiveDerivationInputProjection(snapshot);
+
+        Assert.Equal(DerivationInputProjectionMode.Full, projection.Mode);
+    }
+
+    [Fact]
+    public void PropertyBodyFileReadRequiresFullSnapshot()
+    {
+        var snapshot = Snapshot(
+            ("src/App.csproj", Project(
+                "<PropertyGroup><Value>$([System.IO.File]::ReadAllText('../config/value.txt'))</Value></PropertyGroup>")),
+            ("config/value.txt", "value\n"));
+
+        var projection = ScribeTestMapDeriver.CreateEffectiveDerivationInputProjection(snapshot);
+
+        Assert.Equal(DerivationInputProjectionMode.Full, projection.Mode);
+    }
+
+    [Fact]
+    public void DynamicDirectoryBuildFileNameInGetPathOfFileAboveRequiresFullSnapshot()
+    {
+        var snapshot = Snapshot(
+            ("Directory.Build.Release.props", "<Project />\n"),
+            ("src/App.csproj", Project(
+                "<Import Project=\"$([MSBuild]::GetPathOfFileAbove('Directory.Build.$(Flavor).props', '$(MSBuildThisFileDirectory)..'))\" />")));
+
+        var projection = ScribeTestMapDeriver.CreateEffectiveDerivationInputProjection(snapshot);
+
+        Assert.Equal(DerivationInputProjectionMode.Full, projection.Mode);
+    }
+
+    [Fact]
+    public void GetPathOfFileAboveLiteralAncestorKeepsSparseProjectionAndIncludesAncestor()
+    {
+        var snapshot = Snapshot(
+            ("Directory.Build.props", "<Project />\n"),
+            ("src/tests/App.csproj", Project(
+                "<Import Project=\"$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)..'))\" />")),
+            ("README.md", "outside projection\n"));
+
+        var projection = ScribeTestMapDeriver.CreateEffectiveDerivationInputProjection(snapshot);
+
+        Assert.Equal(DerivationInputProjectionMode.Sparse, projection.Mode);
+        Assert.Equal(
+            ["Directory.Build.props", "src/tests/App.csproj"],
+            projection.Files.Select(static file => file.Path.Value));
+    }
+
+    [Fact]
+    public void GetDirectoryNameOfFileAboveLiteralAncestorKeepsSparseProjectionAndIncludesAncestor()
+    {
+        var snapshot = Snapshot(
+            ("Directory.Build.props", "<Project />\n"),
+            ("src/tests/App.csproj", Project(
+                "<Import Project=\"$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'Directory.Build.props'))/Directory.Build.props\" />")),
+            ("README.md", "outside projection\n"));
+
+        var projection = ScribeTestMapDeriver.CreateEffectiveDerivationInputProjection(snapshot);
+
+        Assert.Equal(DerivationInputProjectionMode.Sparse, projection.Mode);
+        Assert.Equal(
+            ["Directory.Build.props", "src/tests/App.csproj"],
+            projection.Files.Select(static file => file.Path.Value));
+    }
+
+    [Fact]
+    public void ThisFileDirectoryLiteralItemPathKeepsSparseProjectionAndIncludesFile()
+    {
+        var snapshot = Snapshot(
+            ("src/App.csproj", Project(
+                "<ItemGroup><AdditionalFiles Include=\"$(MSBuildThisFileDirectory)../config/rules.txt\" /></ItemGroup>")),
+            ("config/rules.txt", "rules\n"),
+            ("README.md", "outside projection\n"));
+
+        var projection = ScribeTestMapDeriver.CreateEffectiveDerivationInputProjection(snapshot);
+
+        Assert.Equal(DerivationInputProjectionMode.Sparse, projection.Mode);
+        Assert.Equal(
+            ["config/rules.txt", "src/App.csproj"],
+            projection.Files.Select(static file => file.Path.Value));
+    }
+
+    [Fact]
+    public void ThisFileDirectoryExistsOnProjectionFileKeepsSparseProjection()
+    {
+        var snapshot = Snapshot(
+            ("src/App.csproj", Project(
+                "<PropertyGroup Condition=\"Exists('$(MSBuildThisFileDirectory)marker.props')\"><Enabled>true</Enabled></PropertyGroup>")),
+            ("src/marker.props", "<Project />\n"),
+            ("README.md", "outside projection\n"));
+
+        var projection = ScribeTestMapDeriver.CreateEffectiveDerivationInputProjection(snapshot);
+
+        Assert.Equal(DerivationInputProjectionMode.Sparse, projection.Mode);
+        Assert.Equal(
+            ["src/App.csproj", "src/marker.props"],
+            projection.Files.Select(static file => file.Path.Value));
+    }
+
+    [Fact]
+    public void CompileCsWildcardKeepsSparseProjectionWhenMatchesAreDerivationSeeds()
+    {
+        var snapshot = Snapshot(
+            ("tools/StrataLint.Scribe/StrataLint.Scribe.csproj", Project(
+                "<ItemGroup><Compile Include=\"../../Blueprint/**/*.scribe.cs\" /></ItemGroup>")),
+            ("Blueprint/D5/Definition.scribe.cs", "internal sealed class Definition;\n"),
+            ("README.md", "outside projection\n"));
+
+        var projection = ScribeTestMapDeriver.CreateEffectiveDerivationInputProjection(snapshot);
+
+        Assert.Equal(DerivationInputProjectionMode.Sparse, projection.Mode);
+        Assert.Equal(
+            [
+                "Blueprint/D5/Definition.scribe.cs",
+                "tools/StrataLint.Scribe/StrataLint.Scribe.csproj",
+            ],
+            projection.Files.Select(static file => file.Path.Value));
+    }
+
+    [Theory]
+    [InlineData("/external/**/*.cs")]
+    [InlineData("../../../external/**/*.cs")]
+    public void CompileCsWildcardOutsideRepositoryRequiresFullSnapshot(string include)
+    {
+        var snapshot = Snapshot(
+            ("src/App.csproj", Project(
+                $"<ItemGroup><Compile Include=\"{include}\" /></ItemGroup>")));
 
         var projection = ScribeTestMapDeriver.CreateEffectiveDerivationInputProjection(snapshot);
 
