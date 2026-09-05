@@ -503,6 +503,13 @@ internal static class JudgeSurfaceShellLexer
                 return index + 2 + digits;
             }
         }
+        else if (escape == 'c' && index + 2 < end)
+        {
+            // `\cX` is the control character of X (`\c@` is NUL, `\cA` is 1; review round 15:
+            // `$'\163how\c@tail'` is `show`).
+            nul = AppendByte(word, char.ToUpperInvariant(text[index + 2]) & 0x1F);
+            return index + 3;
+        }
         else if (escape is >= '0' and <= '7')
         {
             var digits = 1;

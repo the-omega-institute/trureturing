@@ -15,8 +15,10 @@ internal static partial class JudgeSurfaceRevisionScanner
     private const string Suffix =
         " (SL-030, CLAUDE.md rule 19: base data enters the candidate judge through its snapshot reader)";
 
+    // `github.base_ref`, `github.event.pull_request.base.sha` and the bracket spelling
+    // `pull_request['base']['sha']` of the same expression (review round 15).
     private static readonly Regex BaseRefIndicator = new(
-        @"base_ref|pull_request\.base\b",
+        @"base_ref|pull_request(\.base\b|\s*\[\s*[""']base[""']\s*\])",
         RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
     // Git's own global options (`git [global options] <verb> …`). Options that take a value may
@@ -261,6 +263,15 @@ internal static partial class JudgeSurfaceRevisionScanner
             {
                 index++;
                 continue;
+            }
+
+            if (dynamicCommand)
+            {
+                // `"$gate" --candidate …`, `[[ "$rc" -ne 0 ]]`: a dynamic command word followed by
+                // something that is not git's option grammar is not git (review round 15: this
+                // branch fired 13 times on the real judge surface before the verb was even looked
+                // for).
+                return null;
             }
 
             verb = "(global options)";

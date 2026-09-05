@@ -136,6 +136,8 @@ public sealed class JudgeSurfaceRevisionRuleTests
     [InlineData("$'git\\000tail' show HEAD^1:tools/scripts/workflow/x.sh")]
     [InlineData("$'git\\x00tail' show HEAD^1:tools/scripts/workflow/x.sh")]
     [InlineData("git $'show\\400x' HEAD^1:tools/scripts/workflow/x.sh")]
+    [InlineData("git $'\\163how\\c@tail' HEAD^1:tools/scripts/workflow/x.sh")]
+    [InlineData("$'\\147it\\c@' show HEAD^1:tools/scripts/workflow/x.sh")]
     [InlineData("git archive --no-remote --remote=/tmp/other HEAD")]
     [InlineData("git $(printf show) HEAD^1:tools/scripts/workflow/x.sh")]
     [InlineData("git \"$(printf show)\" HEAD^1:tools/scripts/workflow/x.sh")]
@@ -257,12 +259,17 @@ public sealed class JudgeSurfaceRevisionRuleTests
     [InlineData("git show HEAD -- \"$path\"")]
     [InlineData("git show \"HEAD:$path\" > \"$out\"")]
     [InlineData("$'git\\000tail' show HEAD:tools/scripts/workflow/x.sh")]
+    [InlineData("git $'\\163how\\c@tail' HEAD:tools/scripts/workflow/x.sh")]
+    [InlineData("git $'\\cA' show HEAD:tools/scripts/workflow/x.sh")]
     [InlineData("git archive --remote=/tmp/other --no-remote HEAD")]
     [InlineData("$GIT show HEAD:tools/scripts/workflow/x.sh")]
     [InlineData("\"$(command -v git)\" rev-parse HEAD^1")]
     [InlineData("\"$HOME/.elan/bin/lake\" --version")]
     [InlineData("\"$HOME/.elan/bin/elan\" toolchain install HEAD^1")]
     [InlineData("$X $Y HEAD^1:tools/scripts/workflow/x.sh")]
+    [InlineData("\"$gate\" --candidate x --base y")]
+    [InlineData("[[ \"$rc\" -ne 0 && \"$rc\" -ne 3 ]]")]
+    [InlineData("\"$tool\" --producer HEAD^1:tools/scripts/workflow/x.sh")]
     [InlineData("git restore --source=HEAD^1 --source=HEAD -- tools/scripts/workflow/x.sh")]
     [InlineData("git restore --source=HEAD^1 --no-source tools/scripts/workflow/x.sh")]
     [InlineData("git read-tree --no-recurse-submodules -u HEAD^{tree}")]
@@ -628,6 +635,14 @@ public sealed class JudgeSurfaceRevisionRuleTests
     {
         const string workflow = "steps:\n  - uses: actions/checkout@v4\n    with:\n      \"ref\": \"${{ github.\\u0062ase_ref }}\"\n";
         Assert.Single(Evaluate(WorkflowPath, workflow));
+    }
+
+    [Fact]
+    public void BracketSpelledBaseRefInAWorkflowIsRejected()
+    {
+        const string workflow = "steps:\n  - uses: actions/checkout@v4\n    with:\n      ref: \"${{ github.event.pull_request['base']['sha'] }}\"\n";
+        var finding = Assert.Single(Evaluate(WorkflowPath, workflow));
+        Assert.Contains("a `ref:` naming the protected base", finding.Message, StringComparison.Ordinal);
     }
 
     [Fact]
