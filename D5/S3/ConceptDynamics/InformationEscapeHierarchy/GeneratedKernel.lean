@@ -3,9 +3,9 @@
    mirror-B: D5/B/S3/ConceptDynamics/InformationEscapeHierarchy/GeneratedKernel
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Extensional catalog kernels form a finite bounded lattice with certified escape increments. -/
+   digest: Extensional catalog kernels form a finite lattice with certified escape increments. -/
 
-import D5.S3.ConceptDynamics.InformationEscape.EscapePairs
+import D5.S3.ConceptDynamics.InformationEscape.ExactRate
 import Mathlib.Data.Fintype.Lattice
 
 /- Library-search audit trail (2026-09-05):
@@ -109,6 +109,16 @@ theorem relationB_eq_true_iff
   induction node using Quotient.inductionOn with
   | _ selected => exact catalog.indistinguishableB_eq_true_iff selected left right
 
+/-- Executable node equality compares the complete finite relation truth table. -/
+def nodesEqB {arena : Arena.{u}} {catalog : Catalog.{u, v, w} arena}
+    (first second : catalog.GeneratedKernel) : Bool := by
+  let _ := arena.stateFintype
+  let _ := arena.stateDecidableEq
+  exact Finset.fold (fun left right => left && right) true
+    (fun pair => decide
+      (first.relationB pair.1 pair.2 = second.relationB pair.1 pair.2))
+    ((Finset.univ : Finset arena.State) ×ˢ Finset.univ)
+
 /-- Every generated-kernel relation remains decidable after quotienting. -/
 instance relationDecidable
     {arena : Arena.{u}} {catalog : Catalog.{u, v, w} arena}
@@ -132,6 +142,49 @@ def KernelRefines {arena : Arena.{u}} {catalog : Catalog.{u, v, w} arena}
   | _ firstSelected =>
       induction second using Quotient.inductionOn with
       | _ secondSelected => exact Quotient.sound same
+
+/-- Complete reflected truth-table equality is exactly generated-node equality. -/
+theorem nodesEqB_eq_true_iff
+    {arena : Arena.{u}} {catalog : Catalog.{u, v, w} arena}
+    (first second : catalog.GeneratedKernel) :
+    nodesEqB first second = true ↔ first = second := by
+  letI := arena.stateFintype
+  letI := arena.stateDecidableEq
+  unfold nodesEqB
+  have foldCharacterization :=
+    Finset.fold_op_rel_iff_and
+      (op := fun left right : Bool => left && right)
+      (r := fun _ actual : Bool => actual = true)
+      (b := true)
+      (f := fun pair : arena.State × arena.State => decide
+        (first.relationB pair.1 pair.2 = second.relationB pair.1 pair.2))
+      (s := (Finset.univ : Finset arena.State) ×ˢ Finset.univ)
+      (c := true) (by
+        intro expected left right
+        simp)
+  constructor
+  · intro scan
+    apply ext
+    intro left right
+    have booleanEquality :
+        first.relationB left right = second.relationB left right := by
+      apply of_decide_eq_true
+      exact (foldCharacterization.mp scan).2 (left, right) (by simp)
+    rw [← first.relationB_eq_true_iff, ← second.relationB_eq_true_iff,
+      booleanEquality]
+  · intro same
+    subst second
+    apply foldCharacterization.mpr
+    refine ⟨rfl, ?_⟩
+    intro pair _
+    exact decide_eq_true rfl
+
+/-- Generated nodes have executable equality via their complete reflected truth tables. -/
+instance instDecidableEq
+    {arena : Arena.{u}} {catalog : Catalog.{u, v, w} arena} :
+    DecidableEq catalog.GeneratedKernel := fun first second =>
+  decidable_of_iff (nodesEqB first second = true)
+    (nodesEqB_eq_true_iff first second)
 
 instance instLE {arena : Arena.{u}} {catalog : Catalog.{u, v, w} arena} :
     LE catalog.GeneratedKernel where
@@ -171,6 +224,34 @@ theorem escapeAt_generatedKernel_eq_escapePairs
   letI := arena.stateFintype
   letI := arena.stateDecidableEq
   rfl
+
+/-- Number of ordered off-diagonal pairs still indistinguishable at a node. -/
+def escapeCount {arena : Arena.{u}} {catalog : Catalog.{u, v, w} arena}
+    (node : catalog.GeneratedKernel) : Nat :=
+  node.escapeAt.card
+
+/-- Exact node escape rate, normalized by the canonical arena denominator. -/
+def escapeRate {arena : Arena.{u}} {catalog : Catalog.{u, v, w} arena}
+    (node : catalog.GeneratedKernel) : Rat :=
+  (node.escapeCount : Rat) / (escapeDenominator arena : Rat)
+
+/-- Number of source escape pairs removed by an edge. -/
+def edgeCaptureCount {arena : Arena.{u}} {catalog : Catalog.{u, v, w} arena}
+    (source target : catalog.GeneratedKernel) : Nat :=
+  (source.edgeCapture target).card
+
+/-- Exact edge capture rate, normalized by the canonical arena denominator. -/
+def edgeCaptureRate {arena : Arena.{u}} {catalog : Catalog.{u, v, w} arena}
+    (source target : catalog.GeneratedKernel) : Rat :=
+  (source.edgeCaptureCount target : Rat) / (escapeDenominator arena : Rat)
+
+/-- A represented node's exact rate is the landed rate of its generator set. -/
+theorem escapeRate_generatedKernel_eq_escapeRate
+    {arena : Arena.{u}} (catalog : Catalog.{u, v, w} arena)
+    (selected : Finset catalog.Index) :
+    (catalog.generatedKernel selected).escapeRate = catalog.escapeRate selected := by
+  unfold escapeRate escapeCount Catalog.escapeRate Catalog.escapeNumerator
+  rw [escapeAt_generatedKernel_eq_escapePairs catalog selected]
 
 end GeneratedKernel
 
@@ -520,6 +601,32 @@ theorem strict_kernel_iff_nonempty_increment
       apply Finset.mem_filter.mpr
       exact ⟨sourceParts.1, reverse pair.1 pair.2 sourceParts.2⟩)
 
+/-- Strict generator steps are exactly generator steps with a nonempty increment. -/
+theorem strictGeneratorStep_iff_generatorStep_and_nonempty_increment
+    {arena : Arena.{u}} {catalog : Catalog.{u, v, w} arena}
+    {source target : catalog.GeneratedKernel} {added : catalog.Index} :
+    catalog.StrictGeneratorStep source target added ↔
+      catalog.GeneratorStep source target added ∧
+        (source.edgeCapture target).Nonempty := by
+  constructor
+  · rintro ⟨step, strict⟩
+    refine ⟨step, ?_⟩
+    rw [Finset.nonempty_iff_ne_empty]
+    exact (catalog.strict_kernel_iff_nonempty_increment step).mp strict
+  · rintro ⟨step, nonempty⟩
+    refine ⟨step, ?_⟩
+    apply (catalog.strict_kernel_iff_nonempty_increment step).mpr
+    exact Finset.nonempty_iff_ne_empty.mp nonempty
+
+/-- A certified collapsed addition captures no escape pair. -/
+theorem collapsedAddition_edgeCapture_eq_empty
+    {arena : Arena.{u}} {catalog : Catalog.{u, v, w} arena}
+    {node : catalog.GeneratedKernel} {added : catalog.Index}
+    (collapsed : catalog.CollapsedAddition node added) :
+    node.edgeCapture node = ∅ := by
+  rcases collapsed with ⟨_, _, _, _⟩
+  simp [GeneratedKernel.edgeCapture]
+
 /-- The count form of IE-044: strict shrinkage is equivalent to positive capture. -/
 theorem strict_kernel_iff_edgeCapture_card_pos
     {arena : Arena.{u}} {catalog : Catalog.{u, v, w} arena}
@@ -530,5 +637,61 @@ theorem strict_kernel_iff_edgeCapture_card_pos
     Finset.nonempty_iff_ne_empty]
 
 end Catalog
+
+private abbrev generatedKernelDecEqArena : Arena :=
+  Arena.ofFintype (Bool × Bool)
+
+private abbrev generatedKernelDecEqFirstBundle : PrimitiveBundle (Bool × Bool) where
+  Index := Fin 1
+  indexFintype := inferInstance
+  indexDecidableEq := inferInstance
+  atom := fun _ => ⟨.cut, cutKernel Prod.fst⟩
+
+private abbrev generatedKernelDecEqSecondBundle : PrimitiveBundle (Bool × Bool) where
+  Index := Fin 1
+  indexFintype := inferInstance
+  indexDecidableEq := inferInstance
+  atom := fun _ => ⟨.cut, cutKernel Prod.snd⟩
+
+private abbrev generatedKernelDecEqIdentityBundle : PrimitiveBundle (Bool × Bool) where
+  Index := Fin 1
+  indexFintype := inferInstance
+  indexDecidableEq := inferInstance
+  atom := fun _ => ⟨.cut, cutKernel id⟩
+
+private abbrev generatedKernelDecEqFirstUnit : TheoremUnit generatedKernelDecEqArena where
+  primitives := generatedKernelDecEqFirstBundle
+  Statement := True
+  proof := True.intro
+
+private abbrev generatedKernelDecEqSecondUnit : TheoremUnit generatedKernelDecEqArena where
+  primitives := generatedKernelDecEqSecondBundle
+  Statement := True
+  proof := True.intro
+
+private abbrev generatedKernelDecEqIdentityUnit : TheoremUnit generatedKernelDecEqArena where
+  primitives := generatedKernelDecEqIdentityBundle
+  Statement := True
+  proof := True.intro
+
+private abbrev generatedKernelDecEqCatalog : Catalog generatedKernelDecEqArena where
+  Index := Fin 3
+  indexFintype := inferInstance
+  indexDecidableEq := inferInstance
+  theoremAt := Fin.cases generatedKernelDecEqFirstUnit
+    (Fin.cases generatedKernelDecEqSecondUnit fun _ => generatedKernelDecEqIdentityUnit)
+
+/- The truth-table equality and node-relation instances both execute without local overrides. -/
+example :
+    generatedKernelDecEqCatalog.generatedKernel {0, 1} =
+        generatedKernelDecEqCatalog.generatedKernel {0, 1, 2} ∧
+      (generatedKernelDecEqCatalog.generatedKernel {0}).relation
+        (false, false) (false, true) := by
+  constructor
+  · decide
+  · exact @of_decide_eq_true _
+      ((inferInstance : DecidableRel
+        (generatedKernelDecEqCatalog.generatedKernel {0}).relation)
+          (false, false) (false, true)) (by decide)
 
 end D5.S3.ConceptDynamics.InformationEscape

@@ -3,9 +3,10 @@
    mirror-B: D5/B/S3/ConceptDynamics/InformationEscapeHierarchy/KernelChain
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Classified generator schedules compress to strict paths with disjoint telescoping increments. -/
+   digest: Generator schedules compress to strict paths with telescoping increments. -/
 
 import D5.S3.ConceptDynamics.InformationEscapeHierarchy.GeneratedKernel
+import Mathlib.Algebra.BigOperators.Field
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Order.Fin.Basic
 
@@ -99,6 +100,16 @@ private def StrictPath.node
     path.node 0 = source := by
   cases path <;> rfl
 
+@[simp] private theorem StrictPath.node_last
+    {arena : Arena.{u}} {catalog : Catalog.{u, v, w} arena}
+    {source target : catalog.GeneratedKernel} (path : StrictPath catalog source target) :
+    path.node ⟨path.length, Nat.lt_succ_self path.length⟩ = target := by
+  induction path with
+  | nil node => rfl
+  | @cons source middle target added firstStep tail inductionHypothesis =>
+      change tail.node ⟨tail.length, Nat.lt_succ_self tail.length⟩ = target
+      exact inductionHypothesis
+
 private theorem StrictPath.step
     {arena : Arena.{u}} {catalog : Catalog.{u, v, w} arena}
     {source target : catalog.GeneratedKernel} (path : StrictPath catalog source target) :
@@ -168,6 +179,41 @@ noncomputable def strictSubsequence
   (classifiedPath catalog schedule.length schedule.added schedule.node
     schedule.classification).toChain
 
+/-- Removing stutters preserves the schedule's first node. -/
+theorem strictSubsequence_node_zero
+    {arena : Arena.{u}} {catalog : Catalog.{u, v, w} arena}
+    (schedule : GeneratorSchedule catalog) :
+    schedule.strictSubsequence.node 0 = schedule.node 0 := by
+  change
+    (classifiedPath catalog schedule.length schedule.added schedule.node
+      schedule.classification).node 0 = schedule.node 0
+  exact StrictPath.node_zero _
+
+/-- Removing stutters preserves the schedule's terminal node. -/
+theorem strictSubsequence_node_last
+    {arena : Arena.{u}} {catalog : Catalog.{u, v, w} arena}
+    (schedule : GeneratorSchedule catalog) :
+    schedule.strictSubsequence.node
+        ⟨schedule.strictSubsequence.length,
+          Nat.lt_succ_self schedule.strictSubsequence.length⟩ =
+      schedule.node ⟨schedule.length, Nat.lt_succ_self schedule.length⟩ := by
+  change
+    (classifiedPath catalog schedule.length schedule.added schedule.node
+      schedule.classification).node
+        ⟨(classifiedPath catalog schedule.length schedule.added schedule.node
+          schedule.classification).length, Nat.lt_succ_self _⟩ =
+      schedule.node ⟨schedule.length, Nat.lt_succ_self schedule.length⟩
+  exact StrictPath.node_last _
+
+/-- Every retained strict-step label occurs among the original schedule labels. -/
+theorem strictSubsequence_added_mem
+    {arena : Arena.{u}} {catalog : Catalog.{u, v, w} arena}
+    (schedule : GeneratorSchedule catalog) (r : Fin schedule.strictSubsequence.length) :
+    schedule.strictSubsequence.added r ∈ Finset.univ.image schedule.added := by
+  obtain ⟨position, same⟩ :=
+    schedule.added_bijective.2 (schedule.strictSubsequence.added r)
+  exact Finset.mem_image.mpr ⟨position, Finset.mem_univ position, same⟩
+
 /-- Escape pairs captured by one classified schedule step. -/
 def increment {arena : Arena.{u}} {catalog : Catalog.{u, v, w} arena}
     (schedule : GeneratorSchedule catalog) (r : Fin schedule.length) :
@@ -178,6 +224,11 @@ def increment {arena : Arena.{u}} {catalog : Catalog.{u, v, w} arena}
 def incrementCount {arena : Arena.{u}} {catalog : Catalog.{u, v, w} arena}
     (schedule : GeneratorSchedule catalog) (r : Fin schedule.length) : Nat :=
   (schedule.increment r).card
+
+/-- Exact classified-step capture rate with the canonical arena denominator. -/
+def incrementRate {arena : Arena.{u}} {catalog : Catalog.{u, v, w} arena}
+    (schedule : GeneratorSchedule catalog) (r : Fin schedule.length) : Rat :=
+  (schedule.incrementCount r : Rat) / (escapeDenominator arena : Rat)
 
 end GeneratorSchedule
 
@@ -193,6 +244,11 @@ def increment {arena : Arena.{u}} {catalog : Catalog.{u, v, w} arena}
 def incrementCount {arena : Arena.{u}} {catalog : Catalog.{u, v, w} arena}
     (chain : StrictKernelChain catalog) (r : Fin chain.length) : Nat :=
   (chain.increment r).card
+
+/-- Exact strict-chain capture rate with the canonical arena denominator. -/
+def incrementRate {arena : Arena.{u}} {catalog : Catalog.{u, v, w} arena}
+    (chain : StrictKernelChain catalog) (r : Fin chain.length) : Rat :=
+  (chain.incrementCount r : Rat) / (escapeDenominator arena : Rat)
 
 end StrictKernelChain
 
@@ -348,6 +404,20 @@ theorem chain_count_telescopes
   exact sum_sdiff_card_add_last
     (fun r => (schedule.node r).escapeAt) (schedule_escape_antitone schedule)
 
+/-- Exact increment rates telescope against the terminal and initial node rates. -/
+theorem chain_rate_telescopes
+    {arena : Arena.{u}} {catalog : Catalog.{u, v, w} arena}
+    (schedule : GeneratorSchedule catalog) :
+    (∑ r : Fin schedule.length, schedule.incrementRate r) +
+        (schedule.node ⟨schedule.length,
+          Nat.lt_succ_self schedule.length⟩).escapeRate =
+      (schedule.node 0).escapeRate := by
+  unfold GeneratorSchedule.incrementRate Catalog.GeneratedKernel.escapeRate
+    GeneratorSchedule.incrementCount Catalog.GeneratedKernel.escapeCount
+  rw [← Finset.sum_div, ← add_div]
+  congr 1
+  exact_mod_cast chain_count_telescopes schedule
+
 private theorem strict_path_terminal_eq_generatedKernel_union
     {arena : Arena.{u}} (catalog : Catalog.{u, v, w} arena)
     (n : Nat) (added : Fin n → catalog.Index)
@@ -459,7 +529,10 @@ theorem schedule_terminal_eq_generatedKernel_full
       catalog.generatedKernel catalog.fullIndexSet :=
   schedule.ends_at_bottom
 
-/-- IE-049: a certified leave-one-out penultimate node gives the unique last capture. -/
+/--
+IE-049 is stronger than its scheduled-label reading: once the penultimate and terminal
+endpoints are fixed, no premise identifying the last-added generator is needed.
+-/
 theorem last_step_eq_uniqueCapture
     {arena : Arena.{u}} {catalog : Catalog.{u, v, w} arena}
     (schedule : GeneratorSchedule catalog) (index : catalog.Index)
@@ -467,10 +540,7 @@ theorem last_step_eq_uniqueCapture
     (beforeLast :
       schedule.node ⟨schedule.length - 1,
         by omega⟩ =
-          catalog.generatedKernel (catalog.without index))
-    (lastAdded :
-      schedule.added ⟨schedule.length - 1,
-        by omega⟩ = index) :
+          catalog.generatedKernel (catalog.without index)) :
     schedule.increment ⟨schedule.length - 1,
       by omega⟩ = catalog.uniqueCapturePairs index := by
   letI := arena.stateFintype
