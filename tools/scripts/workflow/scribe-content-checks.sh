@@ -10,7 +10,7 @@ REPORT="$1"
 SCRIBE_DLL="${2:-}"
 BASE="${3:-${STRATALINT_SCRIBE_BASE:-}}"
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
-PROJECT="$REPO_ROOT/tools/StrataLint.Scribe/StrataLint.Scribe.csproj"
+PROJECT="$REPO_ROOT/tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj"
 if [[ ! -s "$REPORT" ]]; then
   echo "scribe-content-checks: raw Lean report is missing or empty at $REPORT" >&2
   exit 2
@@ -64,7 +64,8 @@ if [[ "${#CHANGED_PATHS[@]}" -gt 0 ]]; then
         requires_describe_check=1
         ;;
       .github/workflows/ci.yml|Directory.Build.props|Directory.Build.targets|Directory.Packages.props|\
-      global.json|tools/StrataLint.Scribe/*|tools/StrataLint.Engine/*|tools/StrataLint.Cli/*|\
+      global.json|tools/StrataLint.Scribe/*|tools/StrataLint.Scribe.Documents/*|\
+      tools/StrataLint.Engine/*|tools/StrataLint.Cli/*|\
       tools/Architecture/BannedSymbols*.txt|tools/scripts/workflow/scribe-content-checks.sh)
         requires_projection_check=1
         requires_describe_check=1
