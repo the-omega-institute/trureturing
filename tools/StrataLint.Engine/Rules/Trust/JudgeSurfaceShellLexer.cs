@@ -479,7 +479,8 @@ internal static class JudgeSurfaceShellLexer
                 digits++;
             }
 
-            word.Append((char)Convert.ToInt32(text.Substring(index + 1, digits), 8));
+            // Bash keeps the low byte of an octal escape (`\547` is 359 → 103 = `g`; review round 13).
+            word.Append((char)(Convert.ToInt32(text.Substring(index + 1, digits), 8) & 0xFF));
             return index + 1 + digits;
         }
 

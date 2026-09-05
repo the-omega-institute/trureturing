@@ -36,6 +36,27 @@ internal sealed record ParsedOptions(
     string? Error)
 {
     internal bool Has(string name) => Options.Any(option => option.Name == name);
+
+    // The effective state of a boolean option: git applies `--x` / `--no-x` in order, the last
+    // one wins (review round 13: `archive --list --no-list HEAD^1` archives HEAD^1).
+    internal bool Effective(string name, params string[] aliases)
+    {
+        var negation = "--no-" + name[2..];
+        var state = false;
+        foreach (var (optionName, _) in Options)
+        {
+            if (optionName == name || aliases.Contains(optionName))
+            {
+                state = true;
+            }
+            else if (optionName == negation)
+            {
+                state = false;
+            }
+        }
+
+        return state;
+    }
 }
 
 internal static partial class JudgeSurfaceRevisionScanner

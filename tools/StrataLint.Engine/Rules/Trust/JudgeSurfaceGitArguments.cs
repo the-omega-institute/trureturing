@@ -43,6 +43,15 @@ internal static partial class JudgeSurfaceRevisionScanner
     private static string? RevisionPathOperand(string operand)
     {
         var colon = operand.IndexOf(':', StringComparison.Ordinal);
+        var revision = colon < 0 ? operand : operand[..colon];
+        if (revision.Contains('$'))
+        {
+            // `$rev:p`, `"$obj"`, `$(printf %s HEAD^1:p)`: the lexer keeps `$` for a variable and a
+            // placeholder for a substitution — a dynamic revision fails closed (review round 13);
+            // `HEAD:$path` is fine, its revision is the literal HEAD.
+            return $"operand '{operand}' names a revision of unknown provenance (fail-closed)";
+        }
+
         if (colon < 0)
         {
             return null;
@@ -53,7 +62,6 @@ internal static partial class JudgeSurfaceRevisionScanner
             return $"operand '{operand}' reads index contents whose provenance is not a revision (fail-closed)";
         }
 
-        var revision = operand[..colon];
         return revision == Head ? null : $"operand '{operand}' materializes another revision's file";
     }
 
@@ -119,7 +127,7 @@ internal static partial class JudgeSurfaceRevisionScanner
             return parsed.Error;
         }
 
-        if (parsed.Has("--list") || parsed.Has("-l"))
+        if (parsed.Effective("--list", "-l"))
         {
             return null;
         }
@@ -208,7 +216,7 @@ internal static partial class JudgeSurfaceRevisionScanner
             return parsed.Error;
         }
 
-        if (parsed.Has("--empty"))
+        if (parsed.Effective("--empty"))
         {
             return null;
         }
