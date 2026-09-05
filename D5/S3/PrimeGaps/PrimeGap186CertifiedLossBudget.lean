@@ -3,7 +3,7 @@
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: Replay all 97 weighted rounding checks and prove a quantitative additional-loss allowance for the conditional sieve score. -/
+   digest: Replay all 97 weighted rounding checks and prove quantitative additional-loss allowances for the conditional sieve score. -/
 
 import D5.S3.PrimeGaps.PrimeGap186PhysicalBoundTables
 import D5.S3.PrimeGaps.PrimeGap186ExactCertificateIndex
@@ -15,9 +15,10 @@ The finite arithmetic proved here is distinct from the 152 physical-integral ine
 Actual root, face, inner-mass and scalar values remain explicit real-valued inputs.
 No theorem in this file proves an integral bound, DHL[40,2], or a prime-gap record.
 
-The new numerical content is the exact replay of every weighted rounding inequality and
-an explicit loss headroom. This permits aggregate certificate refinement instead of
-requiring every future analytic enclosure to reproduce an unnecessarily tight row value.
+The numerical content is the exact replay of every weighted rounding inequality and an
+explicit loss headroom. The stronger certificate preserves a score above 1 + 1/50000,
+allowing additional normalized loss 1/100000. A weaker certificate preserves a score above
+one with additional loss 1/12500. Neither substitutes for the upstream analytic proof.
 -/
 
 namespace D5.S3.PrimeGaps.PrimeGap186CertifiedLossBudget
@@ -119,9 +120,9 @@ theorem totalLoss_le_recordedBudget (root face : OuterRowAddress → ℝ)
         (∑ r : OuterRowAddress, (outerBudget r : ℝ)) +
           ∑ r : InnerRowAddress, (innerBudget r : ℝ) := add_le_add ho hi
     _ = (totalRoundedBudget : ℝ) := by
-      exact_mod_cast (rfl :
-        (∑ r : OuterRowAddress, outerBudget r) +
-          (∑ r : InnerRowAddress, innerBudget r) = totalRoundedBudget)
+      unfold totalRoundedBudget
+      push_cast
+      rfl
 
 /-- Effective source density after its exact safety decrement. -/
 def rhoStar : ℚ := physicalSourceRho - 1 / 10000000
@@ -136,7 +137,7 @@ theorem recorded_score_margin :
     rhoStar * (recordedJLower / recordedIUpper - totalRoundedBudget) - 1 =
       55329972518846778463969 / 2368531789000000000000000000 := by
   rw [totalRoundedBudget_eq]
-  norm_num [rhoStar, physicalSourceRho, recordedJLower, recordedIUpper]
+  decide
 
 /-- The baseline arithmetic margin is strictly greater than 2 * 10^-5. -/
 theorem recorded_score_margin_gt :
@@ -151,29 +152,65 @@ theorem recorded_additional_loss_is_safe :
   rw [totalRoundedBudget_eq]
   norm_num [rhoStar, physicalSourceRho, recordedJLower, recordedIUpper]
 
-/-- Aggregate sufficiency: individual rows need not reproduce the recorded caps if an
-independent analytic certificate directly proves this aggregate loss bound. -/
+/-- Additional loss 10^-5 preserves the stronger 2 * 10^-5 score margin. -/
+theorem recorded_strict_margin_is_safe :
+    1 + 1 / 50000 < rhoStar *
+      (recordedJLower / recordedIUpper - (totalRoundedBudget + 1 / 100000)) := by
+  rw [totalRoundedBudget_eq]
+  decide
+
+/-- Transfer an exact rational threshold certificate to arbitrary real data meeting the
+three recorded scalar endpoints and an aggregate loss bound. -/
+theorem score_gt_of_aggregate_loss (extra threshold : ℚ)
+    (hsafe : threshold < rhoStar *
+      (recordedJLower / recordedIUpper - (totalRoundedBudget + extra)))
+    (I J loss : ℝ)
+    (hIlower : (recordedILower : ℝ) ≤ I)
+    (hIupper : I ≤ (recordedIUpper : ℝ))
+    (hJlower : (recordedJLower : ℝ) ≤ J)
+    (hloss : loss ≤ (totalRoundedBudget : ℝ) + (extra : ℝ)) :
+    (threshold : ℝ) < (rhoStar : ℝ) * (J / I - loss) := by
+  have hI : 0 < I :=
+    (by norm_num [recordedILower] : 0 < (recordedILower : ℝ)).trans_le hIlower
+  have hU : 0 < (recordedIUpper : ℝ) := by norm_num [recordedIUpper]
+  have hJ : 0 ≤ (recordedJLower : ℝ) := by norm_num [recordedJLower]
+  have hρ : 0 ≤ (rhoStar : ℝ) := by norm_num [rhoStar, physicalSourceRho]
+  have hratio : (recordedJLower : ℝ) / (recordedIUpper : ℝ) ≤ J / I := by
+    apply (div_le_div_iff₀ hU hI).2
+    calc
+      (recordedJLower : ℝ) * I ≤
+          (recordedJLower : ℝ) * (recordedIUpper : ℝ) :=
+        mul_le_mul_of_nonneg_left hIupper hJ
+      _ ≤ J * (recordedIUpper : ℝ) :=
+        mul_le_mul_of_nonneg_right hJlower hU.le
+  have hsafe' : (threshold : ℝ) < (rhoStar : ℝ) *
+      ((recordedJLower : ℝ) / (recordedIUpper : ℝ) -
+        ((totalRoundedBudget : ℝ) + (extra : ℝ))) := by
+    exact_mod_cast hsafe
+  exact hsafe'.trans_le (mul_le_mul_of_nonneg_left (sub_le_sub hratio hloss) hρ)
+
+/-- Aggregate sufficiency for a score above one with additional loss 8 * 10^-5. -/
 theorem score_gt_one_of_aggregate_loss (I J loss : ℝ)
     (hIlower : (recordedILower : ℝ) ≤ I)
     (hIupper : I ≤ (recordedIUpper : ℝ))
     (hJlower : (recordedJLower : ℝ) ≤ J)
     (hloss : loss ≤ (totalRoundedBudget : ℝ) + 1 / 12500) :
     1 < (rhoStar : ℝ) * (J / I - loss) := by
-  have hI : 0 < I :=
-    (by norm_num [recordedILower] : 0 < (recordedILower : ℝ)).trans_le hIlower
-  have hJ : 0 ≤ (recordedJLower : ℝ) := by norm_num [recordedJLower]
-  have hρ : 0 ≤ (rhoStar : ℝ) := by norm_num [rhoStar, physicalSourceRho]
-  have hratio : (recordedJLower : ℝ) / (recordedIUpper : ℝ) ≤ J / I :=
-    (div_le_div_of_nonneg_left hJ hI hIupper).trans
-      (div_le_div_of_nonneg_right hJlower hI.le)
-  have hsafe : 1 < (rhoStar : ℝ) *
-      ((recordedJLower : ℝ) / (recordedIUpper : ℝ) -
-        ((totalRoundedBudget : ℝ) + 1 / 12500)) := by
-    exact_mod_cast recorded_additional_loss_is_safe
-  exact hsafe.trans_le (mul_le_mul_of_nonneg_left (sub_le_sub hratio hloss) hρ)
+  simpa using score_gt_of_aggregate_loss (1 / 12500) 1
+    recorded_additional_loss_is_safe I J loss hIlower hIupper hJlower hloss
 
-/-- Full typed conditional arithmetic assembly with explicit additional-error allowance.
-The 149 component caps and three scalar endpoints remain hypotheses, not axioms or conclusions. -/
+/-- Aggregate sufficiency retaining the stronger margin used by the numerical comparison. -/
+theorem score_gt_strict_margin_of_aggregate_loss (I J loss : ℝ)
+    (hIlower : (recordedILower : ℝ) ≤ I)
+    (hIupper : I ≤ (recordedIUpper : ℝ))
+    (hJlower : (recordedJLower : ℝ) ≤ J)
+    (hloss : loss ≤ (totalRoundedBudget : ℝ) + 1 / 100000) :
+    1 + 1 / 50000 < (rhoStar : ℝ) * (J / I - loss) := by
+  simpa using score_gt_of_aggregate_loss (1 / 100000) (1 + 1 / 50000)
+    recorded_strict_margin_is_safe I J loss hIlower hIupper hJlower hloss
+
+/-- Full typed conditional arithmetic assembly. The 149 component caps and three scalar
+endpoints remain hypotheses, not axioms or conclusions. -/
 theorem score_gt_one_with_additional_loss
     (root face : OuterRowAddress → ℝ) (mass : InnerRowAddress → ℝ)
     (I J extra : ℝ)
@@ -195,7 +232,10 @@ theorem score_gt_one_with_additional_loss
 #print axioms recorded_score_margin
 #print axioms recorded_score_margin_gt
 #print axioms recorded_additional_loss_is_safe
+#print axioms recorded_strict_margin_is_safe
+#print axioms score_gt_of_aggregate_loss
 #print axioms score_gt_one_of_aggregate_loss
+#print axioms score_gt_strict_margin_of_aggregate_loss
 #print axioms score_gt_one_with_additional_loss
 
 end D5.S3.PrimeGaps.PrimeGap186CertifiedLossBudget
