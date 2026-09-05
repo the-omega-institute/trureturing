@@ -5,9 +5,14 @@ cas_ref: sha256:7a9fd9715c5336465f1f62c1d9c469ff1eaa452a93138f535552b7192a7347c5
 coverage_gids:
   - gid: D5/S3/Observer/GoldenCoding/FiniteZeckendorfEulerIdentity.finite_zeckendorf_interval_and_euler
     target_statement_id: sha256:54164db5d402f7eadf47d54eece74989ea8ef37e9cbbac2080191134a450921d
+  - gid: D5/S1/Words/ZeckendorfOrder.zeckendorf_lex_iff_lt
+    target_statement_id: sha256:fcaa1d77438410107aba82f2cd05c5a007d101a54cae717e5f19a3a6f9eaaea9
 receipts:
   scribe:
     - gid: D5/S3/Observer/GoldenCoding/FiniteZeckendorfEulerIdentity.finite_zeckendorf_interval_and_euler
       definition_sha256: sha256:fb0f758b11a5575fb339526d08e691ce348b66604bc0588b10d1fcbb6a3274d4
       emission_sha256: sha256:771b2abef2ee779ed6f6d9234287885ee0931462245b8a291a43163ebe8462ca
+    - gid: D5/S1/Words/ZeckendorfOrder.zeckendorf_lex_iff_lt
+      definition_sha256: sha256:569e59a64cdf4945204da390319e7afe2c6ea37a92bd4b20d5509e1333287b98
+      emission_sha256: sha256:687f824f4fe9d6c0c4b22c7d7552e3e33fefab9c8e6b43a49b7c18db28762494
   unresolved_subitems: []
