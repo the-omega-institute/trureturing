@@ -55,32 +55,47 @@ internal static class SnapshotAdmissionCore
                 "lean-closure",
                 () => ValidateLean(current, currentReport));
 
+            var applicabilityTiming = phaseTiming.CreateAccumulator("rule-applicability");
             var admission = phaseTiming.Measure(
                 "rule-passes",
-                () => bootstrap switch
+                () =>
                 {
-                    BootstrapOutcome.Clear clear => AdmissionPipeline.EvaluateWithScribe(
-                        current,
-                        baseline,
-                        registry.Policy,
-                        lean,
-                        changes,
-                        clear.Capability,
-                        verifiedScribeEmissions,
-                        forkPoint,
-                        MeasureRule),
-                    BootstrapOutcome.ProtectedSurfaceVerificationRequired protectedSurfaceVerification =>
-                        AdmissionPipeline.EvaluateProtectedSurface(
-                            current,
-                            baseline,
-                            registry.Policy,
-                            lean,
-                            changes,
-                            protectedSurfaceVerification.ChangeSet,
-                            verifiedScribeEmissions,
-                            forkPoint,
-                            MeasureRule),
-                    _ => throw new InvalidOperationException("unknown bootstrap outcome"),
+                    try
+                    {
+                        return bootstrap switch
+                        {
+                            BootstrapOutcome.Clear clear => AdmissionPipeline.EvaluateWithScribe(
+                                current,
+                                baseline,
+                                registry.Policy,
+                                lean,
+                                changes,
+                                clear.Capability,
+                                verifiedScribeEmissions,
+                                forkPoint,
+                                MeasureRule,
+                                MeasureApplicability,
+                                MeasureCanonicalization),
+                            BootstrapOutcome.ProtectedSurfaceVerificationRequired protectedSurfaceVerification =>
+                                AdmissionPipeline.EvaluateProtectedSurface(
+                                    current,
+                                    baseline,
+                                    registry.Policy,
+                                    lean,
+                                    changes,
+                                    protectedSurfaceVerification.ChangeSet,
+                                    verifiedScribeEmissions,
+                                    forkPoint,
+                                    MeasureRule,
+                                    MeasureApplicability,
+                                    MeasureCanonicalization),
+                            _ => throw new InvalidOperationException("unknown bootstrap outcome"),
+                        };
+                    }
+                    finally
+                    {
+                        applicabilityTiming.CompletePassed();
+                    }
                 },
                 static outcome => outcome is not AdmissionOutcome.Admitted
                     && outcome is not AdmissionOutcome.ProtectedSurfaceChange);
@@ -93,6 +108,19 @@ internal static class SnapshotAdmissionCore
             return new SnapshotAdmissionEvaluation(
                 admission,
                 lean);
+
+            bool MeasureApplicability(Func<bool> isAffectedBy) =>
+                applicabilityTiming.Measure(isAffectedBy);
+
+            CanonicalizationOutcome MeasureCanonicalization(
+                Func<CanonicalizationOutcome> canonicalize)
+            {
+                applicabilityTiming.CompletePassed();
+                return phaseTiming.Measure(
+                    "canonicalization",
+                    canonicalize,
+                    static outcome => outcome is CanonicalizationOutcome.InfrastructureFailure);
+            }
 
             ImmutableArray<RuleFinding> MeasureRule(
                 RuleId ruleId,

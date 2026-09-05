@@ -15,7 +15,7 @@ internal static class BaseFactImpact
         bool ruleImplementationChanged,
         string path) =>
         ruleImplementationChanged
-        || changes.Paths.Any(change => string.Equals(change.Value, path, StringComparison.Ordinal));
+        || changes.ContainsPath(path);
 }
 
 public sealed record Diagnostic(
@@ -37,6 +37,11 @@ internal delegate ImmutableArray<RuleFinding> RuleEvaluationMeasure(
     RuleId ruleId,
     AdmissionEffect admissionEffect,
     Func<ImmutableArray<RuleFinding>> evaluate);
+
+internal delegate bool RuleApplicabilityMeasure(Func<bool> isAffectedBy);
+
+internal delegate CanonicalizationOutcome CanonicalizationMeasure(
+    Func<CanonicalizationOutcome> canonicalize);
 
 internal enum FindingEdgeKind
 {
